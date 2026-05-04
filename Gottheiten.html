@@ -14,6 +14,7 @@
 <script src="assets/components/nav.jsx" type="text/babel"></script>
 <script src="assets/components/page-header.jsx" type="text/babel"></script>
 <script src="assets/components/particle-field.jsx" type="text/babel"></script>
+<script src="assets/components/floating-hex-field.jsx" type="text/babel"></script>
 
 
 </head>
@@ -44,7 +45,7 @@ function OctSvg({ size = 24, color = 'currentColor', fill = 'none', strokeWidth 
   );
 }
 const { gods, pantheons, demons, naturgeister } = window.GODS_DATA;
-const { useTweaks, TweaksPanel, TweakSection, TweakSlider, TweakToggle, SiteNav, ParticleField } = window;
+const { useTweaks, TweaksPanel, TweakSection, TweakSlider, TweakToggle, SiteNav, ParticleField, FloatingHexField } = window;
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "showParticles": true,
@@ -484,6 +485,7 @@ function App() {
   return (
     <div onMouseMove={handleMouseMove} style={{ position: 'relative', minHeight: '100vh' }}>
       {tweaks.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} />}
+      <FloatingHexField mouseX={mouse.x} mouseY={mouse.y} />
 
       {/* HEADER */}
       <PageHeader height={tweaks.headerHeight} />

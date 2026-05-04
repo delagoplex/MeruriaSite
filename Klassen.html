@@ -14,6 +14,7 @@
 <script src="assets/components/nav.jsx" type="text/babel"></script>
 <script src="assets/components/page-header.jsx" type="text/babel"></script>
 <script src="assets/components/particle-field.jsx" type="text/babel"></script>
+<script src="assets/components/floating-hex-field.jsx" type="text/babel"></script>
 
 </head>
 <body>
@@ -21,7 +22,7 @@
 <script type="text/babel">
 
 const { useState, useEffect, useRef, useCallback } = React;
-const { useTweaks, TweaksPanel, TweakSection, TweakSlider, TweakToggle, SiteNav, ParticleField } = window;
+const { useTweaks, TweaksPanel, TweakSection, TweakSlider, TweakToggle, SiteNav, ParticleField, FloatingHexField } = window;
 const { klassen } = window.KLASSEN_DATA;
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
@@ -382,6 +383,7 @@ function App() {
   return (
     <div onMouseMove={handleMouseMove} style={{ position:'relative', minHeight:'100vh' }}>
       {tweaks.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} />}
+      <FloatingHexField mouseX={mouse.x} mouseY={mouse.y} />
 
       {/* HEADER */}
       <PageHeader height={tweaks.headerHeight} />
