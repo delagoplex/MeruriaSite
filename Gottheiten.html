@@ -470,7 +470,7 @@ function App() {
     const measure = () => {
       if (pageTitleRef.current) {
         const rect = pageTitleRef.current.getBoundingClientRect();
-        setHeaderBottom(rect.bottom + window.scrollY);
+        setHeaderBottom(rect.bottom + window.scrollY - 10);
       }
     };
     measure();
