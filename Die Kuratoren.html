@@ -151,7 +151,7 @@ function TOCSidebar({ navHeight, headerBottom }) {
   useEffect(() => {
     const update = () => {
       const ideal = (headerBottom || 0) - window.scrollY;
-      const val = Math.max(navHeight, ideal);
+      const val = Math.max(0, ideal);
       if (asideRef.current) { asideRef.current.style.top = val + 'px'; asideRef.current.style.height = `calc(100vh - ${val}px)`; }
     };
     update();

@@ -149,7 +149,8 @@ function TOCSidebar({ navHeight, headerBottom }) {
   const [activeId, setActiveId] = useState('uebersicht');
 
   useEffect(() => {
-    const update = () => { const ideal = (headerBottom || 0) - window.scrollY; const val = Math.max(navHeight, ideal); if (asideRef.current) { asideRef.current.style.top = val + 'px'; asideRef.current.style.height = `calc(100vh - ${val}px)`; } };
+    const update = () => { const ideal = (headerBottom || 0) - window.scrollY;
+        const val = Math.max(0, ideal); if (asideRef.current) { asideRef.current.style.top = val + 'px'; asideRef.current.style.height = `calc(100vh - ${val}px)`; } };
     update();
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update, { passive: true });
