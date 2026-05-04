@@ -17,6 +17,7 @@
 <script src="assets/components/particle-field.jsx" type="text/babel"></script>
 <script src="assets/components/floating-hex-field.jsx" type="text/babel"></script>
 <script src="assets/components/footer.jsx" type="text/babel"></script>
+<script src="assets/components/section-banner.jsx" type="text/babel"></script>
 
 </head>
 <body>
@@ -144,15 +145,6 @@ function DivisionPage({ division, heroRef }) {
   const accent = division.accent;
   const pal = division.palette;
 
-  const SectionHeader = ({ label }) => (
-    <div className="reveal-left div-section-header">
-      <svg width="8" height="8" viewBox="0 0 8 8"><polygon points={hexPoints(8)} fill={`${accent}44`} stroke={accent} strokeWidth="0.8" /></svg>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:`${accent}77`, textTransform:'uppercase' }}>{label}</div>
-      <div style={{ flex:1, height:'1px', background:`linear-gradient(90deg, ${accent}44, rgba(124,77,255,0.2), transparent)` }} />
-      <svg width="5" height="5" viewBox="0 0 5 5"><polygon points={hexPoints(5)} fill="rgba(124,77,255,0.3)" stroke="rgba(124,77,255,0.5)" strokeWidth="0.6" /></svg>
-    </div>
-  );
-
   return (
     <div>
       {/* Hero — full bleed */}
@@ -218,7 +210,7 @@ function DivisionPage({ division, heroRef }) {
 
         {/* Beschreibung */}
         <section id="beschreibung" className="div-section">
-          <SectionHeader label="Beschreibung" />
+          <SectionBanner label="Beschreibung" accent={accent} />
           <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'14px', lineHeight:1.9, color:'rgba(240,238,255,0.78)', letterSpacing:'0.02em', textWrap:'pretty', borderLeft:`1px solid ${accent}22`, paddingLeft:'16px' }}>
             {division.beschreibung}
           </p>
@@ -226,7 +218,7 @@ function DivisionPage({ division, heroRef }) {
 
         {/* Auftragseindruck */}
         <section id="auftraege" className="div-section">
-          <SectionHeader label="Auftragseindruck" />
+          <SectionBanner label="Auftragseindruck" accent={accent} />
           <ul className="auftraege-list">
             {division.auftraege.map((auftrag, i) => (
               <li key={i} className="reveal-up" style={{ display:'flex', gap:'14px', alignItems:'flex-start', padding:'14px 18px', border:`1px solid ${accent}18`, borderRadius:'3px', background:`linear-gradient(135deg, ${accent}06 0%, transparent 100%)`, borderLeft:`2px solid ${accent}55`, position:'relative', overflow:'hidden' }}>
@@ -244,7 +236,7 @@ function DivisionPage({ division, heroRef }) {
 
         {/* Rangsystem */}
         <section id="rangsystem" className="div-section">
-          <SectionHeader label="Rangsystem" />
+          <SectionBanner label="Rangsystem" accent={accent} />
           <div className="rang-list">
             {division.raenge.map((r) => {
               const isTop = r.rang <= 3;
