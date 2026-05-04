@@ -73,18 +73,18 @@ Static layout and typography are in CSS files. Dynamic styles — those that dep
 
 ## Asset pipeline scripts
 
-These `.mjs` scripts were used to unbundle pages that were originally packed by a Framer/bundler format (`__bundler/manifest` + `__bundler/template`). They are utility scripts, not part of the site itself.
+These `.mjs` scripts live in `tools/` and were used to unbundle pages originally packed by a Framer/bundler format (`__bundler/manifest` + `__bundler/template`). They are utility scripts, not part of the site itself. Each script resolves paths relative to the project root via `import.meta.url`, so they can be run from any directory.
 
-- `extract-all.mjs` — unpacks all bundled HTML files, decoding base64+gzip assets and writing them to `extracted/`
-- `organize-extracted.mjs` — moves assets from `extracted/` into `assets/{fonts,scripts,components,images}/` with readable names; writes `file-mapping.json`
-- `update-html-refs.mjs` — rewrites `extracted/<uuid>.*` references in HTML files to their new `assets/...` paths using `file-mapping.json`
-- `fix-extensions.mjs`, `fix-remaining-refs.mjs` — one-off fixup scripts from the migration
+- `tools/extract-all.mjs` — unpacks all bundled HTML files, decoding base64+gzip assets and writing them to `extracted/`
+- `tools/organize-extracted.mjs` — moves assets from `extracted/` into `assets/{fonts,scripts,components,images}/` with readable names; writes `file-mapping.json`
+- `tools/update-html-refs.mjs` — rewrites `extracted/<uuid>.*` references in HTML files to their new `assets/...` paths using `file-mapping.json`
+- `tools/fix-extensions.mjs`, `tools/fix-remaining-refs.mjs` — one-off fixup scripts from the migration
 
 Run these with Node.js when processing newly bundled pages:
 ```bash
-node extract-all.mjs
-node organize-extracted.mjs
-node update-html-refs.mjs
+node tools/extract-all.mjs
+node tools/organize-extracted.mjs
+node tools/update-html-refs.mjs
 ```
 
 ## Development
