@@ -15,6 +15,7 @@
 <script src="assets/components/page-header.jsx" type="text/babel"></script>
 <script src="assets/components/particle-field.jsx" type="text/babel"></script>
 <script src="assets/components/floating-hex-field.jsx" type="text/babel"></script>
+<script src="assets/components/footer.jsx" type="text/babel"></script>
 
 </head>
 <body>
@@ -319,11 +320,7 @@ function App() {
         </div>
       </div>
 
-      {/* FOOTER */}
-      <div style={{ position:'relative', zIndex:10, padding:'10px 32px', borderTop:`1px solid ${ACCENT}0a`, display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:`${ACCENT}22`, letterSpacing:'0.2em' }}>◈ ARCHIV-STATUS: NOMINAL ◈ EPOCHE: UNBEKANNT</div>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:`${ACCENT}22`, letterSpacing:'0.2em' }}>MERURIA // DIE VERWOBENEN REICHE</div>
-      </div>
+      <SiteFooter accent={ACCENT} />
 
       <TweaksPanel>
         <TweakSection label="Darstellung" />
