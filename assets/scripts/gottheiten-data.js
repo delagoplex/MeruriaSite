@@ -28,7 +28,7 @@ window.GODS_DATA = {
       name: "Elysarion", title: "The Silver Weaver",
       domain: "Fate · Memory · Silver Thread",
       palette: ["#0d1a3e","#1e3a7c","#4d7cff","#b8cfff"],
-      insigniaSrc: "assets/images/old_aurelia.png",
+      insigniaSrc: "assets/images/Insignie_Elysarion.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><path d="M20 40 C20 28 32 22 40 30 C48 38 60 32 60 40 C60 48 48 54 40 50 C32 46 20 52 20 40Z" stroke="currentColor" stroke-width="1.5"/><circle cx="40" cy="40" r="3" fill="currentColor"/><circle cx="22" cy="40" r="2" stroke="currentColor" stroke-width="1"/><circle cx="58" cy="40" r="2" stroke="currentColor" stroke-width="1"/></svg>`,
       description: LOREM, lore: LOREM_LORE,
