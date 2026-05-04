@@ -5,6 +5,7 @@
 <title>Meruria — Die Friedenshüter</title>
 <link rel="stylesheet" href="assets/styles/fonts.css">
 <link rel="stylesheet" href="assets/styles/base.css">
+<link rel="stylesheet" href="assets/styles/division.css">
 <link rel="stylesheet" href="assets/styles/Friedenshueter.css">
 <script src="assets/scripts/vendor/react.development.js"></script>
 <script src="assets/scripts/vendor/react-dom.development.js"></script>
@@ -112,7 +113,7 @@ function TOCSidebar({ navHeight, headerBottom }) {
   };
 
   return (
-    <aside ref={asideRef} style={{ width:'var(--sidebar-w)', flexShrink:0, position:'fixed', top:`${navHeight}px`, left:0, height:`calc(100vh - ${navHeight}px)`, borderRight:`1px solid ${ACCENT}18`, padding:'28px 0', background:'rgba(10,3,3,0.90)', backdropFilter:'blur(12px)', zIndex:50, overflowY:'auto' }}>
+    <aside ref={asideRef} className="div-aside" style={{ borderRight:`1px solid ${ACCENT}18`, background:'rgba(10,3,3,0.90)' }}>
 
       <div style={{ padding:'0 20px 16px', borderBottom:`1px solid ${ACCENT}12`, marginBottom:'8px' }}>
         <div style={{ display:'flex', alignItems:'center', gap:'6px', marginBottom:'6px' }}>
@@ -145,7 +146,7 @@ function DivisionPage({ division, heroRef }) {
   const pal = division.palette;
 
   const SectionHeader = ({ label }) => (
-    <div className="reveal-left" style={{ display:'flex', alignItems:'center', gap:'10px', marginBottom:'22px' }}>
+    <div className="reveal-left div-section-header">
       <svg width="8" height="8" viewBox="0 0 8 8"><polygon points={hexPoints(8)} fill={`${accent}44`} stroke={accent} strokeWidth="0.8" /></svg>
       <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:`${accent}77`, textTransform:'uppercase' }}>{label}</div>
       <div style={{ flex:1, height:'1px', background:`linear-gradient(90deg, ${accent}44, rgba(124,77,255,0.2), transparent)` }} />
@@ -206,7 +207,7 @@ function DivisionPage({ division, heroRef }) {
       <div ref={heroRef} style={{ height:0 }} />
 
       {/* Content */}
-      <div style={{ padding:'48px 40px 80px', maxWidth:'760px', position:'relative' }}>
+      <div className="div-content">
 
         {/* Watermarks behind content */}
         <div style={{ position:'absolute', right:'-60px', top:'40px', pointerEvents:'none', zIndex:0, opacity:0.02, filter:`drop-shadow(0 0 30px ${accent})` }}>
@@ -217,7 +218,7 @@ function DivisionPage({ division, heroRef }) {
         </div>
 
         {/* Beschreibung */}
-        <section id="beschreibung" style={{ marginBottom:'52px', scrollMarginTop:`${NAV_H+16}px`, position:'relative', zIndex:1 }}>
+        <section id="beschreibung" className="div-section">
           <SectionHeader label="Beschreibung" />
           <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'14px', lineHeight:1.9, color:'rgba(240,238,255,0.78)', letterSpacing:'0.02em', textWrap:'pretty', borderLeft:`1px solid ${accent}22`, paddingLeft:'16px' }}>
             {division.beschreibung}
@@ -225,9 +226,9 @@ function DivisionPage({ division, heroRef }) {
         </section>
 
         {/* Auftragseindruck */}
-        <section id="auftraege" style={{ marginBottom:'52px', scrollMarginTop:`${NAV_H+16}px`, position:'relative', zIndex:1 }}>
+        <section id="auftraege" className="div-section">
           <SectionHeader label="Auftragseindruck" />
-          <ul style={{ display:'flex', flexDirection:'column', gap:'10px', listStyle:'none', padding:0, margin:0 }}>
+          <ul className="auftraege-list">
             {division.auftraege.map((auftrag, i) => (
               <li key={i} className="reveal-up" style={{ display:'flex', gap:'14px', alignItems:'flex-start', padding:'14px 18px', border:`1px solid ${accent}18`, borderRadius:'3px', background:`linear-gradient(135deg, ${accent}06 0%, transparent 100%)`, borderLeft:`2px solid ${accent}55`, position:'relative', overflow:'hidden' }}>
                 <div style={{ position:'absolute', right:'-8px', bottom:'-8px', opacity:0.06, pointerEvents:'none' }}>
@@ -243,9 +244,9 @@ function DivisionPage({ division, heroRef }) {
         </section>
 
         {/* Rangsystem */}
-        <section id="rangsystem" style={{ scrollMarginTop:`${NAV_H+16}px`, position:'relative', zIndex:1 }}>
+        <section id="rangsystem" className="div-section">
           <SectionHeader label="Rangsystem" />
-          <div style={{ display:'flex', flexDirection:'column', gap:'2px' }}>
+          <div className="rang-list">
             {division.raenge.map((r) => {
               const isTop = r.rang <= 3;
               const barW = `${100 - (r.rang - 1) * 8}%`;
@@ -301,7 +302,7 @@ function App() {
   useScrollReveal();
 
   return (
-    <div onMouseMove={handleMouseMove} style={{ position:'relative', minHeight:'100vh' }}>
+    <div onMouseMove={handleMouseMove} className="page-root">
       {tweaks.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} accentR={ACCENT_R} accentG={ACCENT_G} accentB={ACCENT_B} clipTop={232} />}
       <FloatingHexField mouseX={mouse.x} mouseY={mouse.y} accent={ACCENT} />
 
@@ -312,9 +313,9 @@ function App() {
       <SiteNav rightLabel="DIVISIONS-ARCHIV v1.0" />
 
       {/* BODY */}
-      <div style={{ display:'flex', alignItems:'flex-start', position:'relative', zIndex:5, minHeight:'calc(100vh - var(--nav-h))', paddingLeft:'var(--sidebar-w)' }}>
+      <div className="page-body">
         <TOCSidebar navHeight={NAV_H} headerBottom={headerBottom} />
-        <div style={{ flex:1, minWidth:0 }}>
+        <div className="div-col">
           <DivisionPage division={DIVISION} heroRef={heroRef} />
         </div>
       </div>

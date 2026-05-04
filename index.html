@@ -46,7 +46,7 @@ function App() {
   }, []);
 
   return (
-    <div onMouseMove={handleMouseMove} style={{position:'relative', minHeight:'100vh'}}>
+    <div onMouseMove={handleMouseMove} className="page-root">
       {tweaks.showParticles && <ParticleFieldEnhanced mouseX={mouse.x} mouseY={mouse.y}/>}
 
       {/* HEADER */}
@@ -56,57 +56,16 @@ function App() {
       <SiteNav rightLabel="PANTHEON ARCHIVE v2.7"/>
 
       {/* ── MAIN CONTENT (homepage placeholder) ── */}
-      <div style={{
-        position:'relative', zIndex:5,
-        padding:'80px 64px', minHeight:'calc(100vh - 52px)',
-        display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
-      }}>
-        <div style={{
-          textAlign:'center',
-          maxWidth:'600px',
-        }}>
-          <div style={{
-            fontFamily:'var(--font-mono)', fontSize:'9px',
-            letterSpacing:'0.3em', color:'rgba(124,77,255,0.6)',
-            textTransform:'uppercase', marginBottom:'20px',
-          }}>
-            Willkommen in
-          </div>
-          <h1 style={{
-            fontFamily:'var(--font-display)',
-            fontSize:'clamp(48px,7vw,96px)', fontWeight:'300',
-            letterSpacing:'0.25em', color:'#f0eeff',
-            textShadow:'0 0 60px rgba(124,77,255,0.5)',
-            animation:'flicker-mid 11s infinite',
-            marginBottom:'24px',
-          }}>
-            MERURIA
-          </h1>
-          <p style={{
-            fontFamily:'var(--font-body)', fontWeight:'300',
-            fontSize:'13px', lineHeight:1.9,
-            color:'rgba(200,190,240,0.55)', letterSpacing:'0.06em',
-            marginBottom:'40px',
-          }}>
+      <div className="home-main">
+        <div className="home-center">
+          <div className="home-eyebrow">Willkommen in</div>
+          <h1 className="home-title">MERURIA</h1>
+          <p className="home-subtitle">
             Erkunde die Welten, Götter und Geheimnisse des Meruria-Universums.<br/>
             Navigiere über das Menü oben.
           </p>
-          <div style={{ display:'flex', gap:'12px', justifyContent:'center', flexWrap:'wrap' }}>
-            <a href="Gottheiten.html" style={{
-              fontFamily:'var(--font-display)', fontSize:'11px',
-              letterSpacing:'0.2em', padding:'12px 28px',
-              border:'1px solid rgba(124,77,255,0.5)',
-              color:'#c9b8ff', textDecoration:'none',
-              borderRadius:'3px', textTransform:'uppercase',
-              background:'rgba(124,77,255,0.1)',
-              transition:'all 0.2s',
-              display:'inline-block',
-            }}
-            onMouseEnter={e => {e.currentTarget.style.background='rgba(124,77,255,0.22)'; e.currentTarget.style.borderColor='rgba(124,77,255,0.8)'; e.currentTarget.style.color='#f0eeff';}}
-            onMouseLeave={e => {e.currentTarget.style.background='rgba(124,77,255,0.1)'; e.currentTarget.style.borderColor='rgba(124,77,255,0.5)'; e.currentTarget.style.color='#c9b8ff';}}
-            >
-              Gottheiten
-            </a>
+          <div className="home-links">
+            <a href="Gottheiten.html" className="home-link">Gottheiten</a>
           </div>
         </div>
       </div>

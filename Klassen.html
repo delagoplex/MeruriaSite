@@ -382,7 +382,7 @@ function App() {
   };
 
   return (
-    <div onMouseMove={handleMouseMove} style={{ position:'relative', minHeight:'100vh' }}>
+    <div onMouseMove={handleMouseMove} className="page-root">
       {tweaks.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} />}
       <FloatingHexField mouseX={mouse.x} mouseY={mouse.y} />
 
@@ -395,7 +395,7 @@ function App() {
       </div>
 
       {/* BODY */}
-      <div style={{ display:'flex', alignItems:'flex-start', position:'relative', zIndex:5, minHeight:'calc(100vh - var(--nav-h))', paddingLeft:'var(--sidebar-w)' }}>
+      <div className="page-body">
         <TOCSidebar navHeight={NAV_H} headerBottom={headerBottom} cols={cols} />
 
         <div style={{ flex:1, padding:'32px 28px 64px', minWidth:0 }}>

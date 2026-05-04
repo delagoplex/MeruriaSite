@@ -22,3 +22,6 @@ body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-in
 .reveal-left { opacity: 0; transform: translateX(-28px); transition: opacity 0.65s ease, transform 0.65s ease; }
 .reveal-up.visible   { opacity: 1; transform: translateY(0); }
 .reveal-left.visible { opacity: 1; transform: translateX(0); }
+
+.page-root { position: relative; min-height: 100vh; }
+.page-body { display: flex; align-items: flex-start; position: relative; z-index: 5; min-height: calc(100vh - var(--nav-h)); padding-left: var(--sidebar-w); }
