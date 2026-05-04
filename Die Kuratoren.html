@@ -247,13 +247,14 @@ const TOC_SECTIONS = [
 ];
 
 function TOCSidebar({ navHeight, headerBottom }) {
-  const [topOffset, setTopOffset] = useState(navHeight);
+  const asideRef = React.useRef(null);
   const [activeId, setActiveId] = useState('uebersicht');
 
   useEffect(() => {
     const update = () => {
       const ideal = (headerBottom || 0) - window.scrollY;
-      setTopOffset(Math.max(navHeight, ideal));
+      const val = Math.max(navHeight, ideal);
+      if (asideRef.current) { asideRef.current.style.top = val + 'px'; asideRef.current.style.height = `calc(100vh - ${val}px)`; }
     };
     update();
     window.addEventListener('scroll', update, { passive: true });
@@ -279,7 +280,7 @@ function TOCSidebar({ navHeight, headerBottom }) {
   };
 
   return (
-    <aside style={{ width: 'var(--sidebar-w)', flexShrink: 0, position: 'fixed', top: `${topOffset}px`, left: 0, height: `calc(100vh - ${topOffset}px)`, borderRight: '1px solid rgba(61,191,140,0.1)', padding: '28px 0', background: 'rgba(3,10,7,0.88)', backdropFilter: 'blur(12px)', zIndex: 50, overflowY: 'auto', transition: 'top 0.05s linear, height 0.05s linear' }}>
+    <aside ref={asideRef} style={{ width: 'var(--sidebar-w)', flexShrink: 0, position: 'fixed', top: `${topOffset}px`, left: 0, height: `calc(100vh - ${topOffset}px)`, borderRight: '1px solid rgba(61,191,140,0.1)', padding: '28px 0', background: 'rgba(3,10,7,0.88)', backdropFilter: 'blur(12px)', zIndex: 50, overflowY: 'auto', transition: 'top 0.05s linear, height 0.05s linear' }}>
 
       {/* Division label */}
       <div style={{ padding: '0 20px 16px', borderBottom: '1px solid rgba(61,191,140,0.08)', marginBottom: '8px' }}>

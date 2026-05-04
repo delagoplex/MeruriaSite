@@ -167,11 +167,11 @@ const TOC_SECTIONS = [
 ];
 
 function TOCSidebar({ navHeight, headerBottom }) {
-  const [topOffset, setTopOffset] = useState(navHeight);
+  const asideRef = React.useRef(null);
   const [activeId, setActiveId] = useState('uebersicht');
 
   useEffect(() => {
-    const update = () => { const ideal = (headerBottom || 0) - window.scrollY; setTopOffset(Math.max(navHeight, ideal)); };
+    const update = () => { const ideal = (headerBottom || 0) - window.scrollY; const val = Math.max(navHeight, ideal); if (asideRef.current) { asideRef.current.style.top = val + 'px'; asideRef.current.style.height = `calc(100vh - ${val}px)`; } };
     update();
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update, { passive: true });
@@ -193,7 +193,7 @@ function TOCSidebar({ navHeight, headerBottom }) {
   };
 
   return (
-    <aside style={{ width:'var(--sidebar-w)', flexShrink:0, position:'fixed', top:`${topOffset}px`, left:0, height:`calc(100vh - ${topOffset}px)`, borderRight:`1px solid ${ACCENT}18`, padding:'28px 0', background:'rgba(10,3,3,0.90)', backdropFilter:'blur(12px)', zIndex:50, overflowY:'auto', transition:'top 0.05s linear, height 0.05s linear' }}>
+    <aside ref={asideRef} style={{ width:'var(--sidebar-w)', flexShrink:0, position:'fixed', top:`${navHeight}px`, left:0, height:`calc(100vh - ${navHeight}px)`, borderRight:`1px solid ${ACCENT}18`, padding:'28px 0', background:'rgba(10,3,3,0.90)', backdropFilter:'blur(12px)', zIndex:50, overflowY:'auto' }}>
 
       <div style={{ padding:'0 20px 16px', borderBottom:`1px solid ${ACCENT}12`, marginBottom:'8px' }}>
         <div style={{ display:'flex', alignItems:'center', gap:'6px', marginBottom:'6px' }}>

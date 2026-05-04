@@ -325,12 +325,13 @@ function SectionHeading({ title, subtitle, accentColor }) {
 
 // ── TOC SIDEBAR ────────────────────────────────────────
 function TOCSidebar({ navHeight, headerBottom, cols }) {
-  const [topOffset, setTopOffset] = useState(navHeight);
+  const asideRef = React.useRef(null);
 
   useEffect(() => {
     const update = () => {
       const ideal = (headerBottom || 0) - window.scrollY;
-      setTopOffset(Math.max(navHeight, ideal));
+      const val = Math.max(navHeight, ideal);
+      if (asideRef.current) { asideRef.current.style.top = val + 'px'; asideRef.current.style.height = `calc(100vh - ${val}px)`; }
     };
     update();
     window.addEventListener('scroll', update, { passive: true });
@@ -352,7 +353,7 @@ function TOCSidebar({ navHeight, headerBottom, cols }) {
   }
 
   return (
-    <aside style={{ width:'var(--sidebar-w)', flexShrink:0, position:'fixed', top:`${topOffset}px`, left:0, height:`calc(100vh - ${topOffset}px)`, borderRight:'1px solid rgba(160,140,255,0.1)', padding:'28px 0', background:'rgba(5,4,15,0.85)', backdropFilter:'blur(12px)', zIndex:50, overflowY:'auto', transition:'top 0.05s linear, height 0.05s linear' }}>
+    <aside ref={asideRef} style={{ width:'var(--sidebar-w)', flexShrink:0, position:'fixed', top:`${navHeight}px`, left:0, height:`calc(100vh - ${navHeight}px)`, borderRight:'1px solid rgba(160,140,255,0.1)', padding:'28px 0', background:'rgba(5,4,15,0.85)', backdropFilter:'blur(12px)', zIndex:50, overflowY:'auto' }}>
       <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:'rgba(160,140,255,0.4)', textTransform:'uppercase', padding:'0 20px', marginBottom:'4px' }}>Klassen</div>
       {entries.map(entry => (
         <button key={entry.id} onClick={()=>scrollTo(entry.id)}
