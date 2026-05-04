@@ -13,6 +13,7 @@
 <script src="assets/components/tweaks-panel-5.jsx" type="text/babel"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
 <script src="assets/components/page-header.jsx" type="text/babel"></script>
+<script src="assets/components/particle-field.jsx" type="text/babel"></script>
 
 </head>
 <body>
@@ -20,7 +21,7 @@
 <script type="text/babel">
 
 const { useState, useEffect, useRef, useCallback } = React;
-const { useTweaks, TweaksPanel, TweakSection, TweakToggle, SiteNav } = window;
+const { useTweaks, TweaksPanel, TweakSection, TweakToggle, SiteNav, ParticleField } = window;
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "showParticles": true
@@ -80,37 +81,6 @@ function FloatingHexField({ mouseX, mouseY }) {
       })}
     </div>
   );
-}
-
-// ── PARTICLES ───────────────────────────────────────────
-function ParticleField({ mouseX, mouseY }) {
-  const canvasRef = useRef(null);
-  const animRef = useRef(null);
-  const particles = useRef([]);
-  const mouse = useRef({ x:0.5, y:0.5 });
-  useEffect(() => { mouse.current = { x:mouseX, y:mouseY }; }, [mouseX, mouseY]);
-  useEffect(() => {
-    const canvas = canvasRef.current; if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const resize = () => { canvas.width=canvas.offsetWidth; canvas.height=canvas.offsetHeight; };
-    resize(); window.addEventListener('resize', resize);
-    particles.current = Array.from({length:50}, ()=>({ x:Math.random(), y:Math.random(), r:Math.random()*2.2+1.0, vx:(Math.random()-0.5)*0.03, vy:(Math.random()-0.5)*0.03, alpha:Math.random()*0.15+0.03 }));
-    const tick = () => {
-      const w=canvas.width, h=canvas.height;
-      const shiftX=(mouse.current.x-0.5)*-14, shiftY=(mouse.current.y-0.5)*-14;
-      ctx.clearRect(0,0,w,h);
-      particles.current.forEach(p => {
-        p.x+=p.vx/w*60; p.y+=p.vy/h*60;
-        if(p.x<0)p.x=1; if(p.x>1)p.x=0; if(p.y<0)p.y=1; if(p.y>1)p.y=0;
-        ctx.beginPath(); ctx.arc(p.x*w+shiftX, p.y*h+shiftY, p.r, 0, Math.PI*2);
-        ctx.fillStyle=`rgba(${ACCENT_R},${ACCENT_G},${ACCENT_B},${p.alpha})`; ctx.fill();
-      });
-      animRef.current = requestAnimationFrame(tick);
-    };
-    tick();
-    return () => { cancelAnimationFrame(animRef.current); window.removeEventListener('resize', resize); };
-  }, []);
-  return <canvas ref={canvasRef} style={{ position:'fixed', inset:0, width:'100%', height:'100%', pointerEvents:'none', zIndex:0, clipPath:'inset(232px 0 0 0)' }} />;
 }
 
 // ── SCROLL REVEAL ────────────────────────────────────────
@@ -370,7 +340,7 @@ function App() {
 
   return (
     <div onMouseMove={handleMouseMove} style={{ position:'relative', minHeight:'100vh' }}>
-      {tweaks.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} />}
+      {tweaks.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} accentR={ACCENT_R} accentG={ACCENT_G} accentB={ACCENT_B} clipTop={232} />}
       <FloatingHexField mouseX={mouse.x} mouseY={mouse.y} />
 
       {/* HEADER */}
