@@ -39,7 +39,7 @@ window.GODS_DATA = {
       name: "Sienna", title: "The Stormcaller",
       domain: "Thunder · War · Courage",
       palette: ["#0a1a2e","#1a4a7c","#4da6ff","#b8e4ff"],
-      insigniaSrc: "assets/images/old_aurelia.png",
+      insigniaSrc: "assets/images/Insignie_Sienna.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><polygon points="44,8 28,44 40,44 36,72 52,36 40,36" stroke="currentColor" stroke-width="1.5"/><line x1="20" y1="20" x2="26" y2="26" stroke="currentColor" stroke-width="1" opacity="0.5"/><line x1="60" y1="20" x2="54" y2="26" stroke="currentColor" stroke-width="1" opacity="0.5"/><line x1="12" y1="40" x2="20" y2="40" stroke="currentColor" stroke-width="1" opacity="0.5"/><line x1="68" y1="40" x2="60" y2="40" stroke="currentColor" stroke-width="1" opacity="0.5"/></svg>`,
       description: LOREM, lore: LOREM_LORE,
