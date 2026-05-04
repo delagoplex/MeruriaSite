@@ -9,6 +9,7 @@
 <script src="assets/scripts/vendor/react.development.js"></script>
 <script src="assets/scripts/vendor/react-dom.development.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/scripts/divisions-data.js"></script>
 <script src="assets/components/tweaks-panel-12.jsx" type="text/babel"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
 <script src="assets/components/page-header.jsx" type="text/babel"></script>
@@ -30,32 +31,7 @@ const ACCENT = '#d4681a';
 const ACCENT_R = 212, ACCENT_G = 104, ACCENT_B = 26;
 
 
-const DIVISION = {
-  id: 'outfitters',
-  nummer: 'V',
-  name: 'Die Outfitters',
-  subtitle: 'Waffen-, Rüstungs- und Zubehörentwicklung',
-  beschreibung: 'Fokussiert auf die Entwicklung von Waffen und Rüstungen, um die Kolonisten im Kampf zu stärken. Stellen diverse Tränke, Gifte und andere Hilfsmittel her, um die Kolonisten zu unterstützen.',
-  auftraege: [
-    'Dauerhafter Auftrag: Neue Materialien liefern.',
-    'Feldtest neu entwickelter Ausrüstung.',
-    'Auslieferung der Ausrüstung.',
-  ],
-  raenge: [
-    { rang: 1,  titel: 'Chefschmied',       beschreibung: 'Höchster Rang. Leitet die gesamte Division, genehmigt neue Entwicklungsprojekte und bestimmt die strategische Ausrüstungsversorgung der Kolonie.' },
-    { rang: 2,  titel: 'Waffenmeister',     beschreibung: 'Verantwortlich für die Entwicklung und Qualitätskontrolle der bedeutendsten Waffen und Rüstungen. Leitet Großprojekte.' },
-    { rang: 3,  titel: 'Konstrukteur',      beschreibung: 'Entwirft eigenständig neue Ausrüstungslinien. Koordiniert Produktionsteams und überwacht Feldtests.' },
-    { rang: 4,  titel: 'Alchemist',         beschreibung: 'Spezialist für Tränke, Gifte und Sonderanfertigungen. Entwickelt chemische Kampfmittel und Heilmittel.' },
-    { rang: 5,  titel: 'Prüfer',            beschreibung: 'Führt eigenständige Feldtests durch und bewertet die Praxistauglichkeit neuer Ausrüstung unter realen Bedingungen.' },
-    { rang: 6,  titel: 'Outfitter',         beschreibung: 'Vollwertiges Mitglied. Stellt Ausrüstung her, liefert sie aus und nimmt Materialanfragen entgegen.' },
-    { rang: 7,  titel: 'Handwerker',        beschreibung: 'Fertigt standardisierte Ausrüstungsgegenstände und unterstützt bei der Umsetzung größerer Projekte.' },
-    { rang: 8,  titel: 'Zuträger',          beschreibung: 'Beschafft Rohmaterialien und koordiniert Lieferungen zwischen Lagerhäusern und Werkstätten.' },
-    { rang: 9,  titel: 'Lehrling',          beschreibung: 'Erlernt unter Anleitung die Grundlagen der Waffenschmiedekunst, Rüstungsherstellung und Alchemie.' },
-    { rang: 10, titel: 'Rohling',           beschreibung: 'Niedrigster Rang. Neue Mitglieder, die noch keine Fertigkeiten nachgewiesen haben und einfache Hilfsarbeiten übernehmen.' },
-  ],
-  accent: ACCENT,
-  palette: ['#160a02', '#281400', ACCENT],
-};
+const DIVISION = window.DIVISIONS_DATA.find(d => d.id === 'outfitters');
 
 // ── HEX HELPER ──────────────────────────────────────────
 function hexPoints(s) {

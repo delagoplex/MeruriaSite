@@ -9,6 +9,7 @@
 <script src="assets/scripts/vendor/react.development.js"></script>
 <script src="assets/scripts/vendor/react-dom.development.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/scripts/divisions-data.js"></script>
 <script src="assets/components/tweaks-panel-10.jsx" type="text/babel"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
 <script src="assets/components/page-header.jsx" type="text/babel"></script>
@@ -30,31 +31,7 @@ const ACCENT = '#f06040';
 const ACCENT_R = 192, ACCENT_G = 57, ACCENT_B = 43;
 
 
-const DIVISION = {
-  id: 'sturmritter',
-  nummer: 'II',
-  name: 'Die Sturmritter',
-  subtitle: 'Jagd gefährlicher Kreaturen',
-  beschreibung: 'Fokussiert auf die Jagd und Bekämpfung gefährlicher Kreaturen, um die Sicherheit der Kolonisten zu gewährleisten.',
-  auftraege: [
-    'Eliminierung von Bedrohungen.',
-    'Säuberung von Gebieten wie neuen Lebensräumen und Orientierungspunkten.',
-  ],
-  raenge: [
-    { rang: 1,  titel: 'Kriegsmarschall',  beschreibung: 'Höchster Rang. Kommandiert die gesamte Division, setzt Jagdprioritäten und autorisiert Einsätze gegen die gefährlichsten Bedrohungen.' },
-    { rang: 2,  titel: 'Sturmhauptmann',   beschreibung: 'Führt größere Operationen und koordiniert mehrere Jagdtrupps bei der Bekämpfung besonders schwerwiegender Bedrohungslagen.' },
-    { rang: 3,  titel: 'Klingenführer',    beschreibung: 'Erfahrener Truppenführer, der eigenständige Einsätze leitet und komplexe Jagdmissionen plant und ausführt.' },
-    { rang: 4,  titel: 'Scharfrichter',    beschreibung: 'Spezialisiert auf die Ausschaltung besonders gefährlicher Einzelziele. Wird bei Hochrisikoeinsätzen bevorzugt eingesetzt.' },
-    { rang: 5,  titel: 'Grenzwächter',     beschreibung: 'Überwacht und sichert neue Siedlungsgebiete. Koordiniert Frühwarnsysteme und reagiert auf Erstsichtungen.' },
-    { rang: 6,  titel: 'Sturmritter',      beschreibung: 'Vollwertiges Divisionsmitglied mit Recht auf eigenständige Jagdaufträge. Spezialisiert auf eine bestimmte Kreaturenkategorie.' },
-    { rang: 7,  titel: 'Jäger',            beschreibung: 'Führt standardisierte Eliminierungsaufträge durch und meldet Aktivitätsmuster gefährlicher Kreaturen.' },
-    { rang: 8,  titel: 'Späher',           beschreibung: 'Kundschaftet Gebiete auf Kreaturenpräsenz und liefert Lageberichte für geplante Einsätze.' },
-    { rang: 9,  titel: 'Schildknappe',     beschreibung: 'Unterstützt erfahrene Sturmritter im Einsatz. Erlernt Kampftechniken und Verhaltensweisen bekannter Bedrohungen.' },
-    { rang: 10, titel: 'Rekrut',           beschreibung: 'Niedrigster Rang. Neue Mitglieder in der Grundausbildung, noch ohne Einsatzgenehmigung.' },
-  ],
-  accent: ACCENT,
-  palette: ['#1a0302', '#2e0604', ACCENT],
-};
+const DIVISION = window.DIVISIONS_DATA.find(d => d.id === 'sturmritter');
 
 // ── HEX HELPER ──────────────────────────────────────────
 function hexPoints(s) {

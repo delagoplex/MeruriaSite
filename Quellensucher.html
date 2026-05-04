@@ -9,6 +9,7 @@
 <script src="assets/scripts/vendor/react.development.js"></script>
 <script src="assets/scripts/vendor/react-dom.development.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/scripts/divisions-data.js"></script>
 <script src="assets/components/tweaks-panel-8.jsx" type="text/babel"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
 <script src="assets/components/page-header.jsx" type="text/babel"></script>
@@ -30,31 +31,7 @@ const ACCENT = '#1aacb8';
 const ACCENT_R = 181, ACCENT_G = 131, ACCENT_B = 42;
 
 
-const DIVISION = {
-  id: 'quellensucher',
-  nummer: 'VII',
-  name: 'Die Quellensucher',
-  subtitle: 'Ressourcenabbau und Sicherung von Vorkommen',
-  beschreibung: 'Sichern die Lebensgrundlagen der Kolonisten durch den Abbau von Ressourcen wie Holz, Mineralien und Trinkwasser.',
-  auftraege: [
-    'Orientierungspunkte im Gelände analysieren.',
-    'Abbau und Lieferung von Ressourcen.',
-  ],
-  raenge: [
-    { rang: 1,  titel: 'Quellenmeister',      beschreibung: 'Höchster Rang. Leitet die Division, bestimmt Abbauschwerpunkte und verantwortet die langfristige Ressourcenversorgung der Kolonie.' },
-    { rang: 2,  titel: 'Chefprospektor',     beschreibung: 'Koordiniert Großprojekte zur Erschließung neuer Vorkommen. Genehmigt den Abbau strategisch wichtiger Ressourcen.' },
-    { rang: 3,  titel: 'Schürfleiter',      beschreibung: 'Führt eigenständige Abbautrupps. Plant Förderoperationen und sichert neu erschlossene Lagerstätten.' },
-    { rang: 4,  titel: 'Geologe',            beschreibung: 'Analysiert Gesteinsformationen und Geländestrukturen auf verwertbare Vorkommen. Bewertet Abbaurisiken.' },
-    { rang: 5,  titel: 'Förderer',            beschreibung: 'Eigenständiger Abbauspezialist. Betreibt Förderanlagen und koordiniert Ressourcentransporte zur Kolonie.' },
-    { rang: 6,  titel: 'Quellensucher',     beschreibung: 'Vollwertiges Mitglied. Sucht, sichert und erschließt Ressourcenvorkommen im Auftrag der Division.' },
-    { rang: 7,  titel: 'Schürfer',          beschreibung: 'Führt standardisierte Abbauaufträge durch. Dokumentiert Funde und Erträge für die Divisionsdatenbank.' },
-    { rang: 8,  titel: 'Sondengänger',      beschreibung: 'Analysiert Orientierungspunkte im Gelände auf Ressourcenpotenzial. Erste Spezialisierungsphase im Abbaudienst.' },
-    { rang: 9,  titel: 'Träger',            beschreibung: 'Unterstützt erfahrene Mitglieder bei Transporten und einfachen Abbauarbeiten. Erlernt Grundlagen der Ressourcenkunde.' },
-    { rang: 10, titel: 'Taube',            beschreibung: 'Niedrigster Rang. Unerfahrene Neumitglieder, die noch keine verwertbaren Vorkommen eigenständig identifizieren können.' },
-  ],
-  accent: ACCENT,
-  palette: ['#021418', '#031e22', ACCENT],
-};
+const DIVISION = window.DIVISIONS_DATA.find(d => d.id === 'quellensucher');
 
 // ── HEX HELPER ──────────────────────────────────────────
 function hexPoints(s) {

@@ -9,6 +9,7 @@
 <script src="assets/scripts/vendor/react.development.js"></script>
 <script src="assets/scripts/vendor/react-dom.development.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/scripts/divisions-data.js"></script>
 <script src="assets/components/tweaks-panel-7.jsx" type="text/babel"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
 <script src="assets/components/page-header.jsx" type="text/babel"></script>
@@ -30,32 +31,7 @@ const ACCENT = '#c8b800';
 const ACCENT_R = 26, ACCENT_G = 172, ACCENT_B = 184;
 
 
-const DIVISION = {
-  id: 'pathfinders',
-  nummer: 'VI',
-  name: 'Die Pathfinders',
-  subtitle: 'Erkunden des Planeten',
-  beschreibung: 'Entdecken neuer Gebiete und installieren von informationsliefernden Datensonden, um geeignete Lebensräume für die verschiedenen Rassen der Kolonisten zu sichern.',
-  auftraege: [
-    'Auskundschaften neuer Gebiete.',
-    'Installieren und Warten von Datensonden.',
-    'Finden von Orientierungspunkten im Gelände, um Aufträge zur Erkundung dieser auszustellen.',
-  ],
-  raenge: [
-    { rang: 1,  titel: 'Kartograph',        beschreibung: 'Höchster Rang. Leitet die gesamte Division, bestimmt Erkundungsprioritäten und verantwortet die vollständige Planetenkartierung.' },
-    { rang: 2,  titel: 'Cheferkunder',      beschreibung: 'Koordiniert Großexpeditionen in unbekannte Regionen und genehmigt die Platzierung strategisch wichtiger Datensonden.' },
-    { rang: 3,  titel: 'Geländeführer',     beschreibung: 'Leitet eigenständige Erkundungstrupps. Plant Routen, bewertet Gefahrenlagen und sichert neue Orientierungspunkte.' },
-    { rang: 4,  titel: 'Sondierer',         beschreibung: 'Spezialist für Installation und Wartung von Datensonden. Auswertet eingehende Sondendaten und leitet Erkenntnisse weiter.' },
-    { rang: 5,  titel: 'Wegbereiter',       beschreibung: 'Eigenständiger Erkunder mit Recht auf Erstbegehung neuer Gebiete. Erstellt detaillierte Geländeberichte.' },
-    { rang: 6,  titel: 'Pathfinder',        beschreibung: 'Vollwertiges Mitglied. Führt Erkundungsaufträge durch und meldet Orientierungspunkte sowie Anomalien.' },
-    { rang: 7,  titel: 'Vorposten',         beschreibung: 'Sichert bereits erkundete Gebiete und hält Datensonden in Betrieb. Unterstützt nachfolgende Erkundungsteams.' },
-    { rang: 8,  titel: 'Läufer',            beschreibung: 'Bricht als erster in neue Gebiete vor, um schnelle Lageberichte zu liefern. Hohe Eigeninitiative, wenig Ausrüstung.' },
-    { rang: 9,  titel: 'Orientant',         beschreibung: 'Erlernt Navigation, Geländelesen und den Umgang mit Datensonden unter Anleitung erfahrener Pathfinders.' },
-    { rang: 10, titel: 'Grünschnabel',      beschreibung: 'Niedrigster Rang. Neue Mitglieder ohne Felderfahrung, noch in der Basisausbildung für Überleben und Orientierung.' },
-  ],
-  accent: ACCENT,
-  palette: ['#131200', '#1e1b00', ACCENT],
-};
+const DIVISION = window.DIVISIONS_DATA.find(d => d.id === 'pathfinders');
 
 // ── HEX HELPER ──────────────────────────────────────────
 function hexPoints(s) {

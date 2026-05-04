@@ -9,6 +9,7 @@
 <script src="assets/scripts/vendor/react.development.js"></script>
 <script src="assets/scripts/vendor/react-dom.development.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/scripts/divisions-data.js"></script>
 <script src="assets/components/tweaks-panel-1.jsx" type="text/babel"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
 <script src="assets/components/page-header.jsx" type="text/babel"></script>
@@ -30,33 +31,7 @@ const ACCENT = '#6ec6f0';
 const ACCENT_R = 41, ACCENT_G = 128, ACCENT_B = 185;
 
 
-const DIVISION = {
-  id: 'sentinels',
-  nummer: 'III',
-  name: 'Die Sentinels',
-  subtitle: 'Schutz, Rettung und Verteidigung',
-  beschreibung: 'Verantwortlich für den Schutz von Expeditionsteams, die Rettung von Kolonisten und die Verteidigung der gestrandeten Stadt.',
-  auftraege: [
-    'Eskortieren von Träumern.',
-    'Rettung von Kolonisten.',
-    'Schutz von Karawanen.',
-    'Aufstellung von Patrouillen und Wachposten.',
-  ],
-  raenge: [
-    { rang: 1,  titel: 'Aegis',            beschreibung: 'Höchster Rang. Trägt die Gesamtverantwortung für Schutz und Verteidigung der Kolonie. Koordiniert alle Schutzoperationen und Notfalleinsätze.' },
-    { rang: 2,  titel: 'Schirmherr',       beschreibung: 'Leitet größere Verteidigungs- und Rettungsoperationen. Koordiniert mehrere Sentinel-Trupps bei kritischen Einsätzen.' },
-    { rang: 3,  titel: 'Bollwerk',         beschreibung: 'Erfahrener Einsatzleiter, der selbstständig Schutzformationen führt und komplexe Rettungsmissionen plant.' },
-    { rang: 4,  titel: 'Schanzenwart',     beschreibung: 'Spezialist für die Planung und Errichtung von Verteidigungsstellungen. Verantwortlich für die Sicherung dauerhafter Außenposten.' },
-    { rang: 5,  titel: 'Eskortführer',     beschreibung: 'Leitet Schutzeskorte für hochrangige Personen und gefährdete Gruppen. Bewertet Bedrohungslagen eigenständig.' },
-    { rang: 6,  titel: 'Sentinel',         beschreibung: 'Vollwertiges Divisionsmitglied mit Recht auf eigenständige Schutz- und Rettungsaufträge.' },
-    { rang: 7,  titel: 'Wächter',          beschreibung: 'Übernimmt Patrouillendienste und Wachposten. Meldet Bedrohungen und sichert zugewiesene Zonen.' },
-    { rang: 8,  titel: 'Hüter',            beschreibung: 'Unterstützt Rettungseinsätze und sichert Rückzugsrouten. Erste Spezialisierungsphase im Schutzdienst.' },
-    { rang: 9,  titel: 'Schildwache',      beschreibung: 'Begleitet erfahrene Sentinels auf Einsätzen. Erlernt Grundlagen der Schutzformation und Evakuierungsverfahren.' },
-    { rang: 10, titel: 'Novize',           beschreibung: 'Niedrigster Rang. Neue Mitglieder in der Basisausbildung, noch ohne eigenständige Wachberechtigung.' },
-  ],
-  accent: ACCENT,
-  palette: ['#0e2e4a', '#1a4a6e', ACCENT],
-};
+const DIVISION = window.DIVISIONS_DATA.find(d => d.id === 'sentinels');
 
 // ── HEX HELPER ──────────────────────────────────────────
 function hexPoints(s) {

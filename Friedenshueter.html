@@ -9,6 +9,7 @@
 <script src="assets/scripts/vendor/react.development.js"></script>
 <script src="assets/scripts/vendor/react-dom.development.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/scripts/divisions-data.js"></script>
 <script src="assets/components/tweaks-panel-5.jsx" type="text/babel"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
 <script src="assets/components/page-header.jsx" type="text/babel"></script>
@@ -30,33 +31,7 @@ const ACCENT = '#c47fa8';
 const ACCENT_R = 196, ACCENT_G = 127, ACCENT_B = 168;
 
 
-const DIVISION = {
-  id: 'friedenshueter',
-  nummer: 'IV',
-  name: 'Die Friedenshüter',
-  subtitle: 'Lösen von Bürgeranliegen',
-  beschreibung: 'Engagiert in der Lösung von Problemen der Bürger und der Förderung des sozialen Zusammenhalts.',
-  auftraege: [
-    'Lösen kleinerer Probleme der Bürger.',
-    'Vermitteln zwischen Fronten und Unterstützen beim Lösen der Uneinigkeiten.',
-    'Detektivarbeit. Informationen sammeln und Verbrecher festnehmen.',
-    'Eingliederung von Träumern in die Gesellschaft.',
-  ],
-  raenge: [
-    { rang: 1,  titel: 'Konsul',            beschreibung: 'Höchster Rang. Leitet die gesamte Division, vertritt die Bürgerinteressen auf höchster Ebene und genehmigt die größten Interventionen.' },
-    { rang: 2,  titel: 'Oberrichter',       beschreibung: 'Zuständig für schwerwiegende Rechtsfälle und Konflikte zwischen Gruppen. Spricht verbindliche Urteile in Streitfragen.' },
-    { rang: 3,  titel: 'Vermittler',        beschreibung: 'Führt eigenständig Verhandlungen und Schlichtungen. Koordiniert Teams bei komplexen sozialen Krisenlagen.' },
-    { rang: 4,  titel: 'Inspektor',         beschreibung: 'Leitet Ermittlungen und Detektivfälle. Überwacht die Eingliederung von Träumern und komplexe Bürgeranliegen.' },
-    { rang: 5,  titel: 'Friedenswahrer',    beschreibung: 'Eigenständiger Vollstrecker der Divisionsaufgaben. Vermittelt, ermittelt und schlichtet je nach Bedarf.' },
-    { rang: 6,  titel: 'Friedenshüter',     beschreibung: 'Vollwertiges Mitglied mit Recht auf selbstständige Aufträge im Bürger- und Rechtsdienst.' },
-    { rang: 7,  titel: 'Ermittler',         beschreibung: 'Führt Befragungen, sammelt Informationen und erstellt Berichte für übergeordnete Stellen.' },
-    { rang: 8,  titel: 'Beistand',          beschreibung: 'Unterstützt Bürger bei alltäglichen Anliegen und begleitet Träumer in der Eingliederungsphase.' },
-    { rang: 9,  titel: 'Läufer',            beschreibung: 'Überbringt Nachrichten, dokumentiert Bürgerbeschwerden und assistiert erfahrenen Mitgliedern.' },
-    { rang: 10, titel: 'Zuhörer',           beschreibung: 'Niedrigster Rang. Erlernt die Grundlagen der Bürgerkommunikation und Konfliktdeeskalation.' },
-  ],
-  accent: ACCENT,
-  palette: ['#160a10', '#280d1c', ACCENT],
-};
+const DIVISION = window.DIVISIONS_DATA.find(d => d.id === 'friedenshueter');
 
 // ── HEX HELPER ──────────────────────────────────────────
 function hexPoints(s) {

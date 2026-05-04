@@ -9,6 +9,7 @@
 <script src="assets/scripts/vendor/react.development.js"></script>
 <script src="assets/scripts/vendor/react-dom.development.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/scripts/divisions-data.js"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
 <script src="assets/components/page-header.jsx" type="text/babel"></script>
 <script src="assets/components/tweaks-panel-11.jsx" type="text/babel"></script>
@@ -29,32 +30,7 @@ const NAV_H = 52;
 const ACCENT = '#8b5e3c';
 const ACCENT_R = 122, ACCENT_G = 158, ACCENT_B = 181;
 
-const DIVISION = {
-  id: 'bergungsgarde',
-  nummer: 'VIII',
-  name: 'Die Bergungsgarde',
-  subtitle: 'Wrackteile bergen und Träumer retten',
-  beschreibung: 'Suchen nach Wrackteilen des Weißen Wals und retten Träumer aus Lebenserhaltungskapseln, die auf dem Planeten verstreut sind.',
-  auftraege: [
-    'Aufspüren und inspizieren von Wrackteilen des Weißen Wals.',
-    'Eskortieren der Träumer.',
-    'Eingliederung von Träumern in die Gesellschaft.',
-  ],
-  raenge: [
-    { rang: 1,  titel: 'Bergungsadmiral',   beschreibung: 'Höchster Rang. Leitet die gesamte Division, koordiniert Großbergungen und verantwortet die Rettung und Eingliederung aller aufgefundenen Träumer.' },
-    { rang: 2,  titel: 'Wrackinspekteur',  beschreibung: 'Bewertet bedeutende Wrackfunde und leitet komplexe Bergungsoperationen mit mehreren Teams.' },
-    { rang: 3,  titel: 'Taucherführer',    beschreibung: 'Führt eigenständige Bergungstrupps in schwer zugängliche Wrackzonen. Koordiniert Träumerrettungen vor Ort.' },
-    { rang: 4,  titel: 'Kapselorter',      beschreibung: 'Spezialist für das Aufspüren und Öffnen von Lebenserhaltungskapseln. Bewertet den Zustand der darin befindlichen Träumer.' },
-    { rang: 5,  titel: 'Wrackläufer',      beschreibung: 'Eigenständiger Erkunder von Wrackgebieten. Erstellt Lageberichte und kennzeichnet bergungswürdige Sektoren.' },
-    { rang: 6,  titel: 'Berger',           beschreibung: 'Vollwertiges Mitglied. Führt Bergungsaufträge durch und eskortiert gerettete Träumer zur Kolonie.' },
-    { rang: 7,  titel: 'Sondengänger',     beschreibung: 'Durchsucht Wrackteile nach verwertbaren Materialien und Überlebenszeichen. Dokumentiert Funde systematisch.' },
-    { rang: 8,  titel: 'Taucher',          beschreibung: 'Dringt in Wracks vor und sichert gefundene Kapseln für den Transport. Erlernt fortgeschrittene Bergetechniken.' },
-    { rang: 9,  titel: 'Bergknecht',       beschreibung: 'Unterstützt erfahrene Berger beim Transport und der Sicherung von Fundstücken. Grundausbildung in Bergungsprotokollen.' },
-    { rang: 10, titel: 'Ankömmling',       beschreibung: 'Niedrigster Rang. Neumitglieder, die selbst oft erst kürzlich als Träumer gerettet wurden und nun der Division beitreten.' },
-  ],
-  accent: ACCENT,
-  palette: ['#140e02', '#221600', ACCENT],
-};
+const DIVISION = window.DIVISIONS_DATA.find(d => d.id === 'bergungsgarde');
 
 // ── HEX HELPER ──────────────────────────────────────────
 function hexPoints(s) {

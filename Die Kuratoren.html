@@ -9,6 +9,7 @@
 <script src="assets/scripts/vendor/react.development.js"></script>
 <script src="assets/scripts/vendor/react-dom.development.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/scripts/divisions-data.js"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
 <script src="assets/components/page-header.jsx" type="text/babel"></script>
 <script src="assets/components/tweaks-panel-2.jsx" type="text/babel"></script>
@@ -28,35 +29,7 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
 const NAV_H = 52;
 const ACCENT = '#3dbf8c';
 
-// ── NAV DATA ────────────────────────────────────────────
-// ── DIVISION DATA ───────────────────────────────────────
-const DIVISIONS = [
-  {
-    id: 'kuratoren',
-    nummer: 'I',
-    name: 'Die Kuratoren',
-    subtitle: 'Erkundung und Materialsammlung',
-    beschreibung: 'Die Kuratoren spezialisieren sich auf das Sammeln von Materialien aus der Natur, sowie von Tieren und Monstern. Wurde eine Bestie erlegt, wird ein Team von Kuratoren geschickt, um diese auszunehmen und die Materialien sicher zum gewünschten Ort zu bringen. Friedliche Lebensformen, sowie die Flora des Planeten, wird von den Kuratoren beobachtet und erforscht, um Informationen zu erhalten, die sie in einer riesigen Datenbank ansammeln. Diese Division verfügt frei über etliche Lagerhäuser in der gestrandeten Stadt.',
-    auftraege: [
-      'Liefern einer genauen Anzahl von Materialien, die auf Meruria gefunden werden müssen. Gewöhnliche auf niedrigen Rängen und seltene auf hohen Rängen.',
-      'Bearbeiten von Anfragen großer Mengen an Materialien von anderen Divisionen.',
-    ],
-    raenge: [
-      { rang: 1, titel: 'Archivat',       beschreibung: 'Höchster Rang. Leitet die gesamte Division, entscheidet über Forschungsprioritäten und verwaltet das vollständige Archiv.' },
-      { rang: 2, titel: 'Chefkurator',    beschreibung: 'Verantwortlich für große Expeditionen und die Koordination mehrerer Kuratorenteams im Feld.' },
-      { rang: 3, titel: 'Feldleiter',      beschreibung: 'Führt eigenständige Expeditionsteams an und ist für die sichere Rückführung seltener Materialien zuständig.' },
-      { rang: 4, titel: 'Präparator',      beschreibung: 'Spezialist für die Verarbeitung und Konservierung erlegter Bestien. Bildet Nachwuchs in Präparationstechniken aus.' },
-      { rang: 5, titel: 'Geländekundiger', beschreibung: 'Erfahrener Erkunder, der neue Habitate kartiert und gefährliche Regionen für Expeditionen vorbereitet.' },
-      { rang: 6, titel: 'Feldkurator',     beschreibung: 'Vollwertiges Mitglied mit Recht auf eigenständige Sammelaufträge. Spezialisiert auf eine bestimmte Material- oder Lebensformkategorie.' },
-      { rang: 7, titel: 'Sammler',         beschreibung: 'Führt standardisierte Sammelaufträge durch und dokumentiert Funde für die Datenbank.' },
-      { rang: 8, titel: 'Beobachter',      beschreibung: 'Kartiert Flora und Fauna ohne Eingriff. Erste Spezialisierungsphase nach der Grundausbildung.' },
-      { rang: 9, titel: 'Gehilfe',         beschreibung: 'Unterstützt erfahrene Kuratoren im Feld und in den Lagerhäusern. Lernt die Grundlagen der Materialidentifikation.' },
-      { rang: 10, titel: 'Anwärter',       beschreibung: 'Niedrigster Rang. Frisch aufgenommene Mitglieder in der Probezeit, noch ohne Feldrechte.' },
-    ],
-    accent: ACCENT,
-    palette: ['#031a10', '#062b1a', ACCENT],
-  },
-];
+const DIVISIONS = [window.DIVISIONS_DATA.find(d => d.id === 'kuratoren')];
 
 // ── HEX SVG ─────────────────────────────────────────────
 function hexPoints(s) {
