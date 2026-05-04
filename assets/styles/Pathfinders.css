@@ -1,0 +1,13 @@
+:root {
+  --nav-h: 52px;
+  --sidebar-w: 220px;
+  --accent: #c8b800;
+}
+
+@keyframes pulse-glow { 0%,100%{opacity:0.5} 50%{opacity:1} }
+@keyframes hexFloat0 { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-18px) rotate(4deg)} }
+@keyframes hexFloat1 { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-12px) rotate(-3deg)} }
+@keyframes hexFloat2 { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-22px) rotate(6deg)} }
+@keyframes hexFloat3 { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-8px) rotate(-2deg)} }
+@keyframes heroScan  { 0%{opacity:0;top:-2px} 18%{opacity:0.7} 82%{opacity:0.5} 100%{opacity:0;top:100%} }
+@keyframes fadeInUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }

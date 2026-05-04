@@ -1,0 +1,61 @@
+:root {
+  --nav-h: 52px;
+  --sidebar-w: 220px;
+  --accent: #3dbf8c;
+}
+
+@keyframes flicker-mid { 0%,80%,100%{opacity:1} 82%{opacity:0.55} 84%{opacity:1} 87%{opacity:0.7} 89%{opacity:1} 91%{opacity:0.4} 93%{opacity:1} }
+@keyframes slideDown { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
+@keyframes pulse-glow { 0%,100%{opacity:0.5} 50%{opacity:1} }
+@keyframes floatSymbol { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-7px) rotate(2deg)} }
+@keyframes fadeInUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+@keyframes dissolveIn { 0%{opacity:0;filter:blur(10px) brightness(1.8);transform:scale(1.03)} 100%{opacity:1;filter:blur(0) brightness(1);transform:scale(1)} }
+@keyframes scanH { 0%{transform:translateY(-100%)} 100%{transform:translateY(100vh)} }
+@keyframes hexFloat0 { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-18px) rotate(4deg)} }
+@keyframes hexFloat1 { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-12px) rotate(-3deg)} }
+@keyframes hexFloat2 { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-22px) rotate(6deg)} }
+@keyframes hexFloat3 { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-8px) rotate(-2deg)} }
+@keyframes heroScan  { 0%{opacity:0;top:-2px} 18%{opacity:0.7} 82%{opacity:0.5} 100%{opacity:0;top:100%} }
+@keyframes neu-bg-glitch {
+  0%{opacity:0;clip-path:inset(50% 0 50% 0);background:transparent}
+  5%{opacity:1;clip-path:inset(0% 0 72% 0);transform:translateX(-8px);background:rgba(124,77,255,0.45)}
+  15%{clip-path:inset(55% 0 8% 0);transform:translateX(10px);background:rgba(180,140,255,0.50)}
+  25%{clip-path:inset(18% 0 48% 0);transform:translateX(-6px);background:rgba(80,50,200,0.40)}
+  35%{clip-path:inset(68% 0 4% 0);transform:translateX(8px);background:rgba(180,140,255,0.45)}
+  45%{clip-path:inset(8% 0 62% 0);transform:translateX(-5px);background:rgba(124,77,255,0.35)}
+  55%{clip-path:inset(40% 0 20% 0);transform:translateX(6px);background:rgba(80,50,200,0.30)}
+  70%{opacity:0.4}100%{opacity:0}
+}
+@keyframes neu-bg-glitch2 {
+  0%{opacity:0;clip-path:inset(50% 0 50% 0);background:transparent}
+  8%{opacity:1;clip-path:inset(58% 0 0% 0);transform:translateX(12px) scaleX(1.03);background:rgba(180,140,255,0.55)}
+  18%{clip-path:inset(4% 0 58% 0);transform:translateX(-10px);background:rgba(124,77,255,0.48)}
+  28%{clip-path:inset(32% 0 28% 0);transform:translateX(8px);background:rgba(80,50,200,0.45)}
+  38%{clip-path:inset(78% 0 0% 0);transform:translateX(-7px);background:rgba(180,140,255,0.40)}
+  50%{clip-path:inset(12% 0 45% 0);transform:translateX(6px);background:rgba(124,77,255,0.32)}
+  70%{opacity:0.3}100%{opacity:0}
+}
+@keyframes neu-scanline {
+  0%{opacity:0;top:0%}5%{opacity:0.9;top:10%}15%{top:75%}25%{top:35%}35%{top:90%}45%{top:20%}55%{top:60%}70%{opacity:0.3;top:50%}100%{opacity:0}
+}
+@keyframes neu-txt-main {
+  0%{transform:translate(0,0) skewX(0)}8%{transform:translate(-5px,0) skewX(-1deg)}16%{transform:translate(5px,0) skewX(1deg)}24%{transform:translate(-4px,0) skewX(-0.6deg)}32%{transform:translate(4px,0) skewX(0.6deg)}40%{transform:translate(-2px,0)}50%{transform:translate(2px,0) skewX(-0.3deg)}65%{transform:translate(0,0)}100%{transform:translate(0,0) skewX(0)}
+}
+@keyframes neu-txt-a {
+  0%{opacity:0;clip-path:inset(50% 0 50% 0);transform:translate(0,0)}
+  5%{opacity:0.9;clip-path:inset(10% 0 50% 0);transform:translate(-6px,0)}
+  15%{clip-path:inset(60% 0 5% 0);transform:translate(7px,0)}
+  25%{clip-path:inset(25% 0 38% 0);transform:translate(-5px,0)}
+  35%{clip-path:inset(75% 0 0% 0);transform:translate(6px,0)}
+  45%{clip-path:inset(5% 0 55% 0);transform:translate(-4px,0)}
+  60%{opacity:0.5;clip-path:inset(40% 0 20% 0)}80%{opacity:0}100%{opacity:0}
+}
+@keyframes neu-txt-b {
+  0%{opacity:0;clip-path:inset(50% 0 50% 0);transform:translate(0,0)}
+  8%{opacity:0.75;clip-path:inset(38% 0 22% 0);transform:translate(7px,0)}
+  18%{clip-path:inset(4% 0 65% 0);transform:translate(-6px,0)}
+  28%{clip-path:inset(52% 0 12% 0);transform:translate(5px,0)}
+  38%{clip-path:inset(15% 0 45% 0);transform:translate(-5px,0)}
+  50%{clip-path:inset(70% 0 5% 0);transform:translate(4px,0)}
+  65%{opacity:0.4}85%{opacity:0}100%{opacity:0}
+}
