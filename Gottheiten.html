@@ -217,11 +217,10 @@ function EntityCard({ entity, onClick, accentLabel }) {
               : 'opacity 0.3s ease, bottom 0.4s ease, transform 0.45s cubic-bezier(0.23,1,0.32,1)',
             zIndex:32, pointerEvents:'none',
             display:'flex', alignItems:'center', justifyContent:'center',
-            overflow:'hidden'
           }}>
             {entity.insigniaSrc
-              ? <img src={entity.insigniaSrc} alt={entity.name} style={{ width:'100%', height:'100%', objectFit:'contain', filter:`drop-shadow(0 0 18px ${accent}aa)` }} />
-              : <div style={{ width:'60%', height:'60%', color:accent, filter:`drop-shadow(0 0 12px ${accent})` }} dangerouslySetInnerHTML={{ __html: entity.symbolSvg }} />
+              ? <img src={entity.insigniaSrc} alt={entity.name} style={{ width:'100%', height:'100%', objectFit:'contain', filter:`drop-shadow(0 0 4px ${accent}) drop-shadow(0 0 16px ${accent}bb) drop-shadow(0 0 40px ${accent}66) drop-shadow(0 0 70px ${accent}33)` }} />
+              : <div style={{ width:'60%', height:'60%', color:accent, filter:`drop-shadow(0 0 4px ${accent}) drop-shadow(0 0 16px ${accent}bb) drop-shadow(0 0 40px ${accent}66)` }} dangerouslySetInnerHTML={{ __html: entity.symbolSvg }} />
             }
           </div>
 
