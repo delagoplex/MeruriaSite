@@ -50,7 +50,7 @@ window.GODS_DATA = {
       name: "Avalaste", title: "The Eternal Vigil",
       domain: "Protection · Stars · Silence",
       palette: ["#0a0f2e","#1a2a6c","#3a5acc","#a8c0ff"],
-      insigniaSrc: "assets/images/old_aurelia.png",
+      insigniaSrc: "assets/images/Insignie_Avalaste.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><polygon points="40,8 47,30 70,30 52,44 59,66 40,52 21,66 28,44 10,30 33,30" stroke="currentColor" stroke-width="1.5"/><circle cx="40" cy="40" r="8" stroke="currentColor" stroke-width="1" opacity="0.5"/></svg>`,
       description: LOREM, lore: LOREM_LORE,
