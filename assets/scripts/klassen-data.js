@@ -1,4 +1,3 @@
-// Klassen Data — 13 classes for Meruria
 window.KLASSEN_DATA = {
   klassen: [
     {
