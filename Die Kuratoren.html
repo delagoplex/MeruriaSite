@@ -9,6 +9,7 @@
 <script src="assets/scripts/vendor/react.development.js"></script>
 <script src="assets/scripts/vendor/react-dom.development.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/components/nav.jsx" type="text/babel"></script>
 <script src="assets/components/tweaks-panel-2.jsx" type="text/babel"></script>
 
 </head>
@@ -27,14 +28,6 @@ const NAV_H = 52;
 const ACCENT = '#3dbf8c';
 
 // ── NAV DATA ────────────────────────────────────────────
-const NAV = [
-  { id: 'spielerhandbuch', label: 'Spielerhandbuch', items: [{ label: 'Einleitung', href: '#' }, { label: 'Charaktererstellung', href: '#' }, { label: 'Regeln', href: '#' }, { label: 'Ausrüstung', href: '#' }] },
-  { id: 'charaktererstellung', label: 'Charaktererstellung', items: [{ label: 'Neuer Charakter', href: '#', dividerAfter: true }, { label: 'Rassen', href: 'Rassen.html' }, { label: 'Klassen', href: 'Klassen.html' }, { label: 'Talente', href: '#' }, { label: 'Hintergründe', href: '#' }, { label: 'Zauber', href: '#' }, { label: 'Ausrüstung', href: '#' }] },
-  { id: 'enzyklopaedie', label: 'Enzyklopädie', items: [{ label: 'Gottheiten', href: 'Gottheiten.html' }, { label: 'Völker', href: '#' }, { label: 'Orte', href: '#' }, { label: 'Geschichte', href: '#' }] },
-  { id: 'divisionen', label: 'Divisionen', items: [{ label: 'I — Die Kuratoren', href: 'Divisionen.html' }, { label: 'II — Die Sturmritter', href: 'Sturmritter.html' }, { label: 'III — Die Sentinels', href: 'Sentinels.html' }, { label: 'IV — Die Friedenshüter', href: 'Friedenshueter.html' }, { label: 'V — Die Outfitters', href: 'Outfitters.html' }, { label: 'VI — Die Pathfinders', href: 'Pathfinders.html' }, { label: 'VII — Die Quellensucher', href: 'Quellensucher.html' }, { label: 'VIII — Die Bergungsgarde', href: '#' }] },
-  { id: 'tab5', label: 'Tab', items: [{ label: 'Seite 1', href: '#' }, { label: 'Seite 2', href: '#' }] }
-];
-
 // ── DIVISION DATA ───────────────────────────────────────
 const DIVISIONS = [
   {
@@ -169,75 +162,6 @@ function useScrollReveal() {
   }, []);
 }
 
-// ── NAV ITEM ─────────────────────────────────────────────
-function NavItem({ tab }) {
-  const [open, setOpen] = useState(false);
-  const [glitchKey, setGlitchKey] = useState(0);
-  const [glitchActive, setGlitchActive] = useState(false);
-  const t = useRef(null);
-  const glitchInterval = useRef(null);
-  const glitchTimeout = useRef(null);
-  const fireGlitch = () => {
-    setGlitchActive(false);
-    clearTimeout(glitchTimeout.current);
-    glitchTimeout.current = setTimeout(() => { setGlitchKey(k=>k+1); setGlitchActive(true); }, 20);
-  };
-  const show = () => {
-    clearTimeout(t.current);
-    if (!open) {
-      setOpen(true);
-      clearInterval(glitchInterval.current); clearTimeout(glitchTimeout.current);
-      glitchTimeout.current = setTimeout(() => { fireGlitch(); glitchInterval.current = setInterval(fireGlitch, 2800); }, 400);
-    }
-  };
-  const hide = () => {
-    t.current = setTimeout(() => { setOpen(false); setGlitchActive(false); clearInterval(glitchInterval.current); }, 300);
-  };
-  useEffect(() => () => { clearTimeout(t.current); clearTimeout(glitchTimeout.current); clearInterval(glitchInterval.current); }, []);
-  const dur = '1.4s';
-  const isActive = tab.id === 'divisionen';
-  return (
-    <div onMouseEnter={show} onMouseLeave={hide} style={{ position:'relative' }}>
-      <button style={{ fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:'400', letterSpacing:'0.18em', padding:'10px 20px', background: isActive ? 'rgba(124,77,255,0.1)' : 'transparent', border: isActive ? '1px solid rgba(160,140,255,0.45)' : '1px solid rgba(160,140,255,0.15)', color: isActive ? '#c9b8ff' : 'rgba(200,190,240,0.7)', cursor:'pointer', borderRadius:'3px', transition:'all 0.2s', textTransform:'uppercase', whiteSpace:'nowrap' }}
-        onMouseEnter={e=>{e.currentTarget.style.color='#f0eeff';e.currentTarget.style.borderColor='rgba(160,140,255,0.45)';e.currentTarget.style.background='rgba(124,77,255,0.1)';}}
-        onMouseLeave={e=>{e.currentTarget.style.color=isActive?'#c9b8ff':'rgba(200,190,240,0.7)';e.currentTarget.style.borderColor=isActive?'rgba(160,140,255,0.45)':'rgba(160,140,255,0.15)';e.currentTarget.style.background=isActive?'rgba(124,77,255,0.1)':'transparent';}}>
-        {tab.label}
-      </button>
-      {open && (
-        <div onMouseEnter={show} onMouseLeave={hide} style={{ position:'absolute', top:'calc(100% + 6px)', left:0, minWidth:'200px', background:'rgba(8,6,22,0.96)', border:'1px solid rgba(160,140,255,0.2)', borderRadius:'4px', boxShadow:'0 8px 32px rgba(0,0,0,0.6)', animation:'slideDown 0.18s ease forwards', zIndex:200, backdropFilter:'blur(12px)' }}>
-          {tab.items.map((item, i) => (
-            <React.Fragment key={i}>
-              {item.dividerAfter ? (
-                <div style={{ position:'relative', overflow:'hidden' }}>
-                  {glitchActive && <div key={`bga-${glitchKey}`} aria-hidden="true" style={{ position:'absolute', inset:0, pointerEvents:'none', zIndex:0, animation:`neu-bg-glitch ${dur} ease forwards` }} />}
-                  {glitchActive && <div key={`bgb-${glitchKey}`} aria-hidden="true" style={{ position:'absolute', inset:0, pointerEvents:'none', zIndex:0, animation:`neu-bg-glitch2 ${dur} ease forwards` }} />}
-                  {glitchActive && <div key={`sc-${glitchKey}`} aria-hidden="true" style={{ position:'absolute', left:0, right:0, height:'2px', background:'rgba(200,185,255,0.7)', pointerEvents:'none', zIndex:1, animation:`neu-scanline ${dur} ease forwards` }} />}
-                  <div style={{ position:'relative', zIndex:2 }}>
-                    {glitchActive && <div key={`txa-${glitchKey}`} aria-hidden="true" style={{ position:'absolute', inset:0, padding:'10px 18px', fontFamily:'var(--font-body)', fontWeight:'500', fontSize:'12px', letterSpacing:'0.1em', color:'#c9b8ff', pointerEvents:'none', zIndex:1, animation:`neu-txt-a ${dur} ease forwards` }}>{item.label}</div>}
-                    {glitchActive && <div key={`txb-${glitchKey}`} aria-hidden="true" style={{ position:'absolute', inset:0, padding:'10px 18px', fontFamily:'var(--font-body)', fontWeight:'500', fontSize:'12px', letterSpacing:'0.1em', color:'#7c4dff', pointerEvents:'none', zIndex:1, animation:`neu-txt-b ${dur} ease forwards` }}>{item.label}</div>}
-                    <a key={`lnk-${glitchKey}`} href={item.href} style={{ display:'block', padding:'10px 18px', fontFamily:'var(--font-body)', fontWeight:'500', fontSize:'12px', letterSpacing:'0.1em', color:'#c9b8ff', textDecoration:'none', transition:'color 0.15s, padding-left 0.15s', textShadow:'0 0 10px rgba(124,77,255,0.8), 0 0 20px rgba(124,77,255,0.4)', background:'rgba(124,77,255,0.08)', position:'relative', zIndex:2, ...(glitchActive?{animation:`neu-txt-main ${dur} ease forwards`}:{}) }}
-                      onMouseEnter={e=>{e.currentTarget.style.color='#f0eeff';e.currentTarget.style.background='rgba(124,77,255,0.18)';e.currentTarget.style.paddingLeft='24px';}}
-                      onMouseLeave={e=>{e.currentTarget.style.color='#c9b8ff';e.currentTarget.style.background='rgba(124,77,255,0.08)';e.currentTarget.style.paddingLeft='18px';}}>
-                      {item.label}
-                    </a>
-                  </div>
-                </div>
-              ) : (
-                <a href={item.href} style={{ display:'block', padding:'10px 18px', fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', letterSpacing:'0.1em', color:'rgba(200,190,240,0.65)', textDecoration:'none', borderBottom: i<tab.items.length-1?'1px solid rgba(160,140,255,0.08)':'none', transition:'all 0.15s' }}
-                  onMouseEnter={e=>{e.currentTarget.style.color='#f0eeff';e.currentTarget.style.background='rgba(124,77,255,0.12)';e.currentTarget.style.paddingLeft='24px';}}
-                  onMouseLeave={e=>{e.currentTarget.style.color='rgba(200,190,240,0.65)';e.currentTarget.style.background='transparent';e.currentTarget.style.paddingLeft='18px';}}>
-                  {item.label}
-                </a>
-              )}
-              {item.dividerAfter && <div style={{ height:'1px', background:'rgba(160,140,255,0.2)', margin:'2px 0' }} />}
-            </React.Fragment>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
 // ── TOC SIDEBAR ──────────────────────────────────────────
 const TOC_SECTIONS = [
   { id: 'uebersicht',    label: 'Übersicht',          indent: false },
@@ -280,7 +204,7 @@ function TOCSidebar({ navHeight, headerBottom }) {
   };
 
   return (
-    <aside ref={asideRef} style={{ width: 'var(--sidebar-w)', flexShrink: 0, position: 'fixed', top: `${topOffset}px`, left: 0, height: `calc(100vh - ${topOffset}px)`, borderRight: '1px solid rgba(61,191,140,0.1)', padding: '28px 0', background: 'rgba(3,10,7,0.88)', backdropFilter: 'blur(12px)', zIndex: 50, overflowY: 'auto', transition: 'top 0.05s linear, height 0.05s linear' }}>
+    <aside ref={asideRef} style={{ width: 'var(--sidebar-w)', flexShrink: 0, position: 'fixed', top: `${navHeight}px`, left: 0, height: `calc(100vh - ${navHeight}px)`, borderRight: '1px solid rgba(61,191,140,0.1)', padding: '28px 0', background: 'rgba(3,10,7,0.88)', backdropFilter: 'blur(12px)', zIndex: 50, overflowY: 'auto' }}>
 
       {/* Division label */}
       <div style={{ padding: '0 20px 16px', borderBottom: '1px solid rgba(61,191,140,0.08)', marginBottom: '8px' }}>
@@ -525,17 +449,7 @@ function App() {
       </div>
 
       {/* NAV */}
-      <div style={{ position: 'sticky', top: 0, zIndex: 100, width: '100%', background: 'rgba(5,4,15,0.92)', borderBottom: '1px solid rgba(160,140,255,0.1)', backdropFilter: 'blur(16px)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', padding: '0 32px', height: '52px' }}>
-          <a href="index.html" style={{ marginRight: '32px', whiteSpace: 'nowrap', flexShrink: 0, textDecoration: 'none' }}>
-            <span style={{ fontFamily: 'var(--font-display)', fontSize: '20px', fontWeight: '300', letterSpacing: '0.3em', color: '#f0eeff', textShadow: '0 0 28px rgba(124,77,255,0.55)', animation: 'flicker-mid 9s infinite' }}>MERURIA</span>
-          </a>
-          <nav style={{ display: 'flex', gap: '6px', alignItems: 'center', flex: 1 }}>
-            {NAV.map(tab => <NavItem key={tab.id} tab={tab} />)}
-          </nav>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', color: 'rgba(160,140,255,0.35)', letterSpacing: '0.15em', flexShrink: 0 }}>DIVISIONS-ARCHIV v1.0</div>
-        </div>
-      </div>
+      <SiteNav rightLabel="DIVISIONS-ARCHIV v1.0"/>
 
       {/* BODY */}
       <div style={{ display: 'flex', alignItems: 'flex-start', position: 'relative', zIndex: 5, minHeight: `calc(100vh - var(--nav-h))`, paddingLeft: 'var(--sidebar-w)' }}>
