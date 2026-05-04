@@ -19,6 +19,7 @@
 <script src="assets/scripts/vendor/react-dom.development.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/page-header.jsx" type="text/babel"></script>
 <script src="assets/components/tweaks-panel-6.jsx" type="text/babel"></script>
 
 </head>
@@ -128,33 +129,8 @@ function App() {
     <div onMouseMove={handleMouseMove} style={{position:'relative', minHeight:'100vh'}}>
       {tweaks.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y}/>}
 
-      {/* ── HEADER IMAGE ── */}
-      <div style={{
-        position:'relative', zIndex:10,
-        width:'100%', height:`${tweaks.headerHeight}px`,
-        background:'linear-gradient(180deg, rgba(20,10,50,0.95) 0%, rgba(10,8,30,0.98) 100%)',
-        borderBottom:'1px solid rgba(160,140,255,0.15)',
-        overflow:'hidden',
-        display:'flex', alignItems:'center', justifyContent:'center',
-      }}>
-        {/* Header art placeholder */}
-        <div style={{
-          position:'absolute', inset:0,
-          background:`
-            radial-gradient(ellipse at 20% 50%, rgba(124,77,255,0.18) 0%, transparent 50%),
-            radial-gradient(ellipse at 80% 50%, rgba(45,125,255,0.14) 0%, transparent 50%),
-            repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(160,140,255,0.04) 60px, rgba(160,140,255,0.04) 61px),
-            repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(160,140,255,0.03) 40px, rgba(160,140,255,0.03) 41px)
-          `,
-        }}/>
-        <div style={{
-          fontFamily:'var(--font-mono)', fontSize:'9px',
-          color:'rgba(160,140,255,0.3)', letterSpacing:'0.3em',
-          textTransform:'uppercase', position:'relative', zIndex:1,
-        }}>
-          header image — drop artwork here
-        </div>
-      </div>
+      {/* HEADER */}
+      <PageHeader height={tweaks.headerHeight} />
 
       {/* ── NAV BAR ── */}
       <SiteNav rightLabel="PANTHEON ARCHIVE v2.7"/>

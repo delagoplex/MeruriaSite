@@ -12,6 +12,7 @@
 <script src="assets/scripts/script-cca1ef2f.js"></script>
 <script src="assets/components/tweaks-panel-4.jsx" type="text/babel"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/page-header.jsx" type="text/babel"></script>
 
 </head>
 <body>
@@ -353,7 +354,7 @@ function TOCSidebar({ navHeight, headerBottom, cols }) {
   }
 
   return (
-    <aside ref={asideRef} style={{ width:'var(--sidebar-w)', flexShrink:0, position:'fixed', top:`${navHeight}px`, left:0, height:`calc(100vh - ${navHeight}px)`, borderRight:'1px solid rgba(160,140,255,0.1)', padding:'28px 0', background:'rgba(5,4,15,0.85)', backdropFilter:'blur(12px)', zIndex:50, overflowY:'auto' }}>
+    <aside ref={asideRef} style={{ width:'var(--sidebar-w)', flexShrink:0, position:'fixed', top:`275px`, left:0, height:`calc(100vh - ${navHeight}px)`, borderRight:'1px solid rgba(160,140,255,0.1)', padding:'28px 0', background:'rgba(5,4,15,0.85)', backdropFilter:'blur(12px)', zIndex:50, overflowY:'auto' }}>
       <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:'rgba(160,140,255,0.4)', textTransform:'uppercase', padding:'0 20px', marginBottom:'4px' }}>Klassen</div>
       {entries.map(entry => (
         <button key={entry.id} onClick={()=>scrollTo(entry.id)}
@@ -413,10 +414,7 @@ function App() {
       {tweaks.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} />}
 
       {/* HEADER */}
-      <div style={{ position:'relative', zIndex:10, width:'100%', height:`${tweaks.headerHeight}px`, background:'linear-gradient(180deg,rgba(20,10,50,0.95) 0%,rgba(10,8,30,0.98) 100%)', borderBottom:'1px solid rgba(160,140,255,0.15)', overflow:'hidden', display:'flex', alignItems:'center', justifyContent:'center' }}>
-        <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse at 20% 50%,rgba(124,77,255,0.18) 0%,transparent 50%),radial-gradient(ellipse at 80% 50%,rgba(45,125,255,0.14) 0%,transparent 50%),repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(160,140,255,0.04) 60px,rgba(160,140,255,0.04) 61px)` }} />
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(160,140,255,0.3)', letterSpacing:'0.3em', textTransform:'uppercase', position:'relative', zIndex:1 }}>Kopfbild — Artwork hier ablegen</div>
-      </div>
+      <PageHeader height={tweaks.headerHeight} />
 
       {/* NAV */}
       <SiteNav rightLabel="KLASSEN-ARCHIV v1.0" />
