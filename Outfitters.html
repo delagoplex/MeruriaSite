@@ -32,8 +32,7 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
 }/*EDITMODE-END*/;
 
 const NAV_H = 52;
-const ACCENT = '#d4681a';
-const ACCENT_R = 212, ACCENT_G = 104, ACCENT_B = 26;
+const ACCENT = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
 
 
 const DIVISION = window.DIVISIONS_DATA.find(d => d.id === 'outfitters');
@@ -295,7 +294,7 @@ function App() {
 
   return (
     <div onMouseMove={handleMouseMove} className="page-root">
-      {tweaks.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} accentR={ACCENT_R} accentG={ACCENT_G} accentB={ACCENT_B} clipTop={232} />}
+      {tweaks.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} accent={ACCENT} clipTop={232} />}
       <FloatingHexField mouseX={mouse.x} mouseY={mouse.y} accent={ACCENT} />
 
       {/* HEADER */}

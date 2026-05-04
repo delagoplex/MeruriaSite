@@ -3,8 +3,14 @@
 
 const { useRef, useEffect } = React;
 
+function hexToRgb(hex) {
+  const h = hex.replace('#', '');
+  return [parseInt(h.slice(0,2),16), parseInt(h.slice(2,4),16), parseInt(h.slice(4,6),16)];
+}
+
 // Single-canvas variant used on all pages except index.html
-function ParticleField({ mouseX, mouseY, accentR=160, accentG=140, accentB=255, clipTop=0 }) {
+function ParticleField({ mouseX, mouseY, accent='#a08cff', clipTop=0 }) {
+  const [accentR, accentG, accentB] = hexToRgb(accent);
   const canvasRef = useRef(null);
   const animRef = useRef(null);
   const particles = useRef([]);
