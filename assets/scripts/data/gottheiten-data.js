@@ -13,7 +13,7 @@ window.GODS_DATA = {
   gods: [
     // ── CELESTIAL (4) ──────────────────────────────────────────
     {
-      id: "aurelia", pantheon: "himmlisch",
+      id: "aurelia", pantheon: "celestisch",
       name: "Aurelia", title: "The Gilded Dawn",
       domain: "CELESTISCH · Aurelia · RECHTSCHAFFEN-GUT",
       palette: ["#1a0a3e","#3b1f8c","#7c4dff","#c9b8ff"],
@@ -24,7 +24,7 @@ window.GODS_DATA = {
       power: "Solar Dominion", alignment: "Lawful Radiant", worshippers: LOREM_SHORT,
     },
     {
-      id: "elysarion", pantheon: "himmlisch",
+      id: "elysarion", pantheon: "celestisch",
       name: "Elysarion", title: "The Silver Weaver",
       domain: "Fate · Memory · Silver Thread",
       palette: ["#0d1a3e","#1e3a7c","#4d7cff","#b8cfff"],
@@ -35,7 +35,7 @@ window.GODS_DATA = {
       power: "Thread of Fate", alignment: "True Neutral", worshippers: LOREM_SHORT,
     },
     {
-      id: "sienna", pantheon: "himmlisch",
+      id: "sienna", pantheon: "celestisch",
       name: "Sienna", title: "The Stormcaller",
       domain: "Thunder · War · Courage",
       palette: ["#0a1a2e","#1a4a7c","#4da6ff","#b8e4ff"],
@@ -46,7 +46,7 @@ window.GODS_DATA = {
       power: "Stormwright", alignment: "Chaotic Neutral", worshippers: LOREM_SHORT,
     },
     {
-      id: "avalaste", pantheon: "himmlisch",
+      id: "avalaste", pantheon: "celestisch",
       name: "Avalaste", title: "The Eternal Vigil",
       domain: "Protection · Stars · Silence",
       palette: ["#0a0f2e","#1a2a6c","#3a5acc","#a8c0ff"],
@@ -59,18 +59,18 @@ window.GODS_DATA = {
 
     // ── ABYSSAL (4) ────────────────────────────────────────────
     {
-      id: "cecillia", pantheon: "abyssal",
+      id: "cecillia", pantheon: "celestisch",
       name: "Cecillia", title: "The Hollow Queen",
       domain: "Entropy · Silence · The Unmade",
       palette: ["#0f0a1e","#2a1050","#6b3fa0","#c4a0ff"],
-      insigniaSrc: "assets/images/insignia/old_aurelia.png",
+      insigniaSrc: "assets/images/insignia/Insignie_Cecillia.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="28" stroke="currentColor" stroke-width="1"/><circle cx="40" cy="40" r="18" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3"/><circle cx="40" cy="40" r="8" stroke="currentColor" stroke-width="1"/><circle cx="40" cy="40" r="2" fill="currentColor" opacity="0.4"/></svg>`,
       description: LOREM, lore: LOREM_LORE,
       power: "Void Erasure", alignment: "Neutral Evil", worshippers: LOREM_SHORT,
     },
     {
-      id: "lorelei", pantheon: "abyssal",
+      id: "lorelei", pantheon: "celestisch",
       name: "Lorelei", title: "The Dream Devourer",
       domain: "Nightmares · Illusion · Hunger",
       palette: ["#12051f","#2e0d52","#7b2fa0","#e0a0ff"],
@@ -81,7 +81,7 @@ window.GODS_DATA = {
       power: "Dream Consumption", alignment: "Chaotic Evil", worshippers: LOREM_SHORT,
     },
     {
-      id: "vindeah", pantheon: "abyssal",
+      id: "vindeah", pantheon: "celestisch",
       name: "Vindeah", title: "The Crimson Tide",
       domain: "Blood · Sacrifice · Rebirth",
       palette: ["#1a0510","#501030","#a03060","#ffb0c0"],
@@ -92,7 +92,7 @@ window.GODS_DATA = {
       power: "Sanguine Cycle", alignment: "Lawful Neutral", worshippers: LOREM_SHORT,
     },
     {
-      id: "ferys", pantheon: "abyssal",
+      id: "ferys", pantheon: "celestisch",
       name: "Ferys", title: "The Ashen Mirror",
       domain: "Reflection · Deception · Shadow",
       palette: ["#100a1a","#301840","#703080","#d090ff"],
@@ -105,7 +105,7 @@ window.GODS_DATA = {
 
     // ── PRIMORDIAL (4) ─────────────────────────────────────────
     {
-      id: "daramur", pantheon: "uralt",
+      id: "daramur", pantheon: "celestisch",
       name: "Daramur", title: "The Deep Shaper",
       domain: "Earth · Memory · Time",
       palette: ["#0a1205","#1a3010","#4a8020","#b0e070"],
@@ -116,7 +116,7 @@ window.GODS_DATA = {
       power: "Tectonic Memory", alignment: "True Neutral", worshippers: LOREM_SHORT,
     },
     {
-      id: "eiritha", pantheon: "uralt",
+      id: "eiritha", pantheon: "celestisch",
       name: "Eiritha", title: "The Breathless Voice",
       domain: "Wind · Speech · Change",
       palette: ["#0a1525","#1a3555","#3a75b5","#a0d0f0"],
@@ -127,7 +127,7 @@ window.GODS_DATA = {
       power: "Resonant Wind", alignment: "Chaotic Good", worshippers: LOREM_SHORT,
     },
     {
-      id: "hadir", pantheon: "uralt",
+      id: "hadir", pantheon: "celestisch",
       name: "Hadir", title: "The First Flame",
       domain: "Fire · Creation · Destruction",
       palette: ["#1f0a00","#5a2000","#d05000","#ffb050"],
@@ -138,7 +138,7 @@ window.GODS_DATA = {
       power: "Primal Combustion", alignment: "Chaotic Neutral", worshippers: LOREM_SHORT,
     },
     {
-      id: "selunara", pantheon: "uralt",
+      id: "selunara", pantheon: "celestisch",
       name: "Selunara", title: "The Tidal Mother",
       domain: "Water · Birth · Cycles",
       palette: ["#050f20","#0a2550","#0a6080","#50d0d0"],
@@ -151,7 +151,7 @@ window.GODS_DATA = {
 
     // ── MACHINE (4) ────────────────────────────────────────────
     {
-      id: "aetherius", pantheon: "maschine",
+      id: "aetherius", pantheon: "celestisch",
       name: "Aetherius", title: "The Eternal Architect",
       domain: "Mathematics · Order · The Grid",
       palette: ["#050f1f","#0a2550","#0a5090","#50b0ff"],
@@ -162,7 +162,7 @@ window.GODS_DATA = {
       power: "Systemic Precision", alignment: "Lawful Neutral", worshippers: LOREM_SHORT,
     },
     {
-      id: "serenith", pantheon: "maschine",
+      id: "serenith", pantheon: "celestisch",
       name: "Serenith", title: "The Wired Oracle",
       domain: "Information · Network · Prophecy",
       palette: ["#050f20","#0a2a5e","#1a6ab5","#70d0ff"],
@@ -173,7 +173,7 @@ window.GODS_DATA = {
       power: "Omniscient Signal", alignment: "True Neutral", worshippers: LOREM_SHORT,
     },
     {
-      id: "hydea", pantheon: "maschine",
+      id: "hydea", pantheon: "celestisch",
       name: "Hydea", title: "The Iron Memory",
       domain: "Metal · Time · Persistence",
       palette: ["#0a0a10","#1a1a35","#4a4a80","#c0c0e0"],
@@ -184,7 +184,7 @@ window.GODS_DATA = {
       power: "Enduring Form", alignment: "Lawful Good", worshippers: LOREM_SHORT,
     },
     {
-      id: "melion", pantheon: "maschine",
+      id: "melion", pantheon: "celestisch",
       name: "Melion", title: "The Clockwork Sovereign",
       domain: "Gears · Precision · Time",
       palette: ["#0a0f18","#1a2540","#304080","#80a0e0"],
@@ -197,7 +197,7 @@ window.GODS_DATA = {
 
     // ── VOID (3) ───────────────────────────────────────────────
     {
-      id: "ophelis", pantheon: "leere",
+      id: "ophelis", pantheon: "celestisch",
       name: "Ophelis", title: "The Nameless Between",
       domain: "Silence · The Gap · Transition",
       palette: ["#080810","#101025","#252550","#8080b0"],
@@ -208,7 +208,7 @@ window.GODS_DATA = {
       power: "Suspended Moment", alignment: "True Neutral", worshippers: LOREM_SHORT,
     },
     {
-      id: "thraxis", pantheon: "leere",
+      id: "thraxis", pantheon: "celestisch",
       name: "Thraxis", title: "The Unwritten End",
       domain: "Endings · Completion · Release",
       palette: ["#05080f","#0a1530","#152560","#6080d0"],
@@ -219,7 +219,7 @@ window.GODS_DATA = {
       power: "Final Culmination", alignment: "Lawful Neutral", worshippers: LOREM_SHORT,
     },
     {
-      id: "maledor", pantheon: "leere",
+      id: "maledor", pantheon: "celestisch",
       name: "Maledor", title: "The Paradox Sovereign",
       domain: "Contradiction · Chaos · The Impossible",
       palette: ["#100510","#301030","#702080","#e080ff"],
