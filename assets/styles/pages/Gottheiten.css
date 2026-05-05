@@ -3,8 +3,8 @@
   --sidebar-w: 200px;
 }
 
-@keyframes dissolveIn  { 0%{opacity:0;filter:blur(10px) brightness(1.8);transform:scale(1.03)} 100%{opacity:1;filter:blur(0) brightness(1);transform:scale(1)} }
-@keyframes dissolveOut { 0%{opacity:1} 100%{opacity:0;filter:blur(10px) brightness(0.4)} }
+@keyframes dissolveIn  { 0%{opacity:0;filter:blur(4px);transform:scale(1.01)} 100%{opacity:1;filter:blur(0);transform:scale(1)} }
+@keyframes dissolveOut { 0%{opacity:1;filter:blur(0)} 100%{opacity:0;filter:blur(4px)} }
 @keyframes floatSymbol { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-7px) rotate(2deg)} }
 @keyframes pulse-glow  { 0%,100%{opacity:0.5} 50%{opacity:1} }
 @keyframes glitch-clip  { 0%{clip-path:inset(40% 0 61% 0);transform:translate(-3px,0)} 25%{clip-path:inset(92% 0 1% 0);transform:translate(3px,0)} 50%{clip-path:inset(25% 0 58% 0);transform:translate(-2px,0)} 75%{clip-path:inset(54% 0 7% 0);transform:translate(2px,0)} 100%{clip-path:inset(43% 0 40% 0);transform:translate(-1px,0)} }

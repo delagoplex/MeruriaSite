@@ -9,6 +9,7 @@
   --font-mono: 'Share Tech Mono', monospace;
 }
 
+html { scrollbar-gutter: stable; }
 html, body { width: 100%; min-height: 100%; background: var(--bg); color: var(--white); font-family: var(--font-body); overflow-x: hidden; }
 #root { width: 100%; min-height: 100vh; }
 

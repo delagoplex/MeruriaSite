@@ -280,7 +280,9 @@ function EntityCard({ entity, onClick, accentLabel }) {
 function EntityDetail({ entity, onBack, typeLabel }) {
   const [visible, setVisible] = useState(false);
   const [leaving, setLeaving] = useState(false);
+  const [copiedIndex, setCopiedIndex] = useState(null);
   const pal = getPalette(entity);
+  const copyHex = (hex, i) => { navigator.clipboard.writeText(hex); setCopiedIndex(i); setTimeout(() => setCopiedIndex(null), 1500); };
   useEffect(() => {const t = setTimeout(() => setVisible(true), 30);return () => clearTimeout(t);}, []);
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -350,12 +352,23 @@ function EntityDetail({ entity, onBack, typeLabel }) {
             <p style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '13px', lineHeight: 1.85, color: 'rgba(240,238,255,0.78)', letterSpacing: '0.015em' }}>{entity.description}</p>
           </div>
           <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', borderTop: `1px solid ${pal[2]}18`, paddingTop: '22px', ...s(0.34) }}>
-            {[['Symbol', entity.symbol], ['Gesinnung', entity.alignment], ['Anhänger', entity.worshippers]].map(([label, val]) =>
+            {[['Gesinnung', entity.alignment], ['Symbol', entity.symbol]].map(([label, val]) =>
             <div key={label} style={{ flex: 1, minWidth: '140px' }}>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '7px', color: pal[2] + '66', letterSpacing: '0.25em', textTransform: 'uppercase', marginBottom: '5px' }}>{label}</div>
-                <div style={{ fontFamily: 'var(--font-body)', fontWeight: '400', fontSize: '11px', color: pal[3] + 'bb', letterSpacing: '0.04em' }}>{val}</div>
-              </div>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '7px', color: pal[2] + '66', letterSpacing: '0.25em', textTransform: 'uppercase', marginBottom: '5px' }}>{label}</div>
+              <div style={{ fontFamily: 'var(--font-body)', fontWeight: '400', fontSize: '11px', color: pal[3] + 'bb', letterSpacing: '0.04em' }}>{val}</div>
+            </div>
             )}
+            <div style={{ flex: 1, minWidth: '140px' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '7px', color: pal[2] + '66', letterSpacing: '0.25em', textTransform: 'uppercase', marginBottom: '8px' }}>Farbschema</div>
+              <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                {pal.map((hex, i) => (
+                  <div key={i} onClick={() => copyHex(hex, i)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
+                    <div style={{ width: '18px', height: '18px', borderRadius: '2px', background: hex, boxShadow: copiedIndex === i ? `0 0 12px ${hex}` : `0 0 6px ${hex}88`, transition: 'box-shadow 0.2s' }} />
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '6px', color: copiedIndex === i ? hex : pal[2] + '88', letterSpacing: '0.05em', transition: 'color 0.2s', width: '34px', minHeight: '9px', textAlign: 'center', display: 'block' }}>{copiedIndex === i ? '✓' : hex}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
