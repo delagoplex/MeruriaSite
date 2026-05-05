@@ -16,7 +16,7 @@ window.GODS_DATA = {
       id: "aurelia", pantheon: "celestisch",
       name: "Aurelia", title: "The Gilded Dawn",
       domain: "CELESTISCH · Aurelia · RECHTSCHAFFEN-GUT",
-      palette: ["#1a0a3e","#3b1f8c","#7c4dff","#c9b8ff"],
+      palette: ["#0a163d","#1f3e8c","#4D7CFF","#B8CDFF"],
       insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="14" stroke="currentColor" stroke-width="1.5"/><line x1="40" y1="6" x2="40" y2="20" stroke="currentColor" stroke-width="1.2"/><line x1="40" y1="60" x2="40" y2="74" stroke="currentColor" stroke-width="1.2"/><line x1="6" y1="40" x2="20" y2="40" stroke="currentColor" stroke-width="1.2"/><line x1="60" y1="40" x2="74" y2="40" stroke="currentColor" stroke-width="1.2"/><line x1="16.7" y1="16.7" x2="26.7" y2="26.7" stroke="currentColor" stroke-width="1.2"/><line x1="53.3" y1="53.3" x2="63.3" y2="63.3" stroke="currentColor" stroke-width="1.2"/><line x1="63.3" y1="16.7" x2="53.3" y2="26.7" stroke="currentColor" stroke-width="1.2"/><line x1="26.7" y1="53.3" x2="16.7" y2="63.3" stroke="currentColor" stroke-width="1.2"/><circle cx="40" cy="40" r="5" fill="currentColor" opacity="0.6"/></svg>`,
