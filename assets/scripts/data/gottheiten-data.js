@@ -22,7 +22,6 @@ window.GODS_DATA = {
   },
 
   gods: [
-    // ── CELESTIAL (4) ──────────────────────────────────────────
     {
       id: "aurelia", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Aurelia", title: "Göttin der Stärke, der Ehre und des Kampfgeschicks",
@@ -67,8 +66,6 @@ window.GODS_DATA = {
       description: "Avalastes göttliche Domäne liegt in den äußeren Ebenen und wird Die Wiege genannt.", lore: "\"Ehre sowohl den Mond, als auch die Sonne, die Heilung und auch den Verfall, sowie den natürlichen Kreislauf aller Dinge. Akzeptiere Freude und auch Trauer. Tu Gutes, damit auch dir Gutes wiederfährt. Gib anderen eine zweite Chance und Raum, um zu wachsen. Kümmere dich sowohl um die, die das Licht der Welt erblicken, als auch um die, deren letztes Licht bald erlischt. Wage Neuanfänge, erkunde und übe dich in neuen Fertigkeiten.\"",
       symbol: "Astral Ward", alignment: "neutral-gut", worshippers: LOREM_SHORT,
     },
-
-    // ── ABYSSAL (4) ────────────────────────────────────────────
     {
       id: "cecillia", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Cecillia", title: "Göttin der Harmonie und Genesung",
@@ -113,8 +110,6 @@ window.GODS_DATA = {
       description: "Ferys' göttliche Domäne liegt in den äußeren Ebenen und wird Das Roulette genannt.", lore: "\"Verliere nicht die Hoffnung, sollte dir Unheil wiederfahren und scheue dich nicht, Risiken einzugehen, um deine Liebsten zu beschützen. Schätze das Glück der Freundschaft und bringe deinen Frohsinn denen, die Trauer empfinden. Zeige Begeisterung für alle Geschöpfe und deren Eigenarten. Lasse nichts unversucht, um jeden Moment deines Lebens voll auszukosten, stets Neues zu erleben und dich zu amüsieren.\"",
       symbol: "Shadow Mirror", alignment: "chaotisch-gut", worshippers: LOREM_SHORT,
     },
-
-    // ── PRIMORDIAL (4) ─────────────────────────────────────────
     {
       id: "daramur", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Daramur", title: "Gott der Erde, des Gesteins und der Standhaftigkeit",
@@ -159,8 +154,6 @@ window.GODS_DATA = {
       description: "Selunaras göttliche Domäne liegt in den äußeren Ebenen und wird Das Urmeer genannt.", lore: "\"Schätze sowohl die Dämmerung, als auch das Licht, denn ohne des Lichtes Existenz könnte keine Dämmerung geschehen. Ehre sowohl die Bewohner des Meeres, als auch die des Landes und behandle seine Wesen gleichermaßen mit Respekt. Sei sanftmütig, verständnisvoll und geduldig. Kontrolliere dein Temperament und bewahre Gleichgewicht. Erlaube dir, dich auszuruhen, um neue Kraft zu schöpfen. Fürchte nicht das Ende, denn das Ende ist auch der Anfang von etwas Neuem.\"",
       symbol: "Tidal Resonance", alignment: "rechtschaffen-neutral", worshippers: LOREM_SHORT,
     },
-
-    // ── MACHINE (4) ────────────────────────────────────────────
     {
       id: "aetherius", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Aetherius", title: "Gott der Illusionen, der Magie und der Wunder",
@@ -205,8 +198,6 @@ window.GODS_DATA = {
       description: "Melions göttliche Domäne liegt in den äußeren Ebenen und wird Die Bühne genannt.", lore: "\"Nutze dein Wissen und das des Volkes, um mystische Sagen zu schaffen, von denen in vielen Jahrtausenden noch erzählt wird. Nutze Rythmus oder Melodie, um deine Kameraden zu Tapferkeit und Heldenmut anzutreiben. Lasse dein Lied deine Kämpfer mit Magie ermutigen und bestärken. Webe Magie in deine Musik und Worte, um Verbündete zu inspirieren, Feinde zu entmutigen und Wunden zu heilen.\"",
       symbol: "Temporal Gearing", alignment: "chaotisch-neutral", worshippers: LOREM_SHORT,
     },
-
-    // ── VOID (3) ───────────────────────────────────────────────
     {
       id: "ophelis", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Ophelis", title: "Gott der Ordnung, der Reinheit und der Perfektion",
@@ -242,7 +233,6 @@ window.GODS_DATA = {
     },
   ],
 
-  // ── DEMONS ─────────────────────────────────────────────────
   demons: [
     {
       id: "baalbrezan", name: "Baalbrezan", title: "Der Aschefürst",
@@ -327,7 +317,6 @@ window.GODS_DATA = {
     },
   ],
 
-  // ── NATURGEISTER ───────────────────────────────────────────
   naturgeister: [
     { id: "ng-waldgeist",   name: "Waldgeist",   title: "Geist des Alten Waldes",   domain: "Wald · Wachstum · Schutz",    palette: ["#081208","#142814","#306030","#80c080"], insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
  symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><polygon points="40,10 55,35 40,30 25,35" stroke="currentColor" stroke-width="1.5" fill="none"/><polygon points="40,28 58,55 40,48 22,55" stroke="currentColor" stroke-width="1.5" fill="none"/><line x1="40" y1="55" x2="40" y2="70" stroke="currentColor" stroke-width="2"/><line x1="32" y1="65" x2="48" y2="65" stroke="currentColor" stroke-width="1.5"/></svg>`, description: LOREM_SHORT, lore: LOREM_LORE, symbol: "Waldatem", alignment: "Neutral Good", worshippers: LOREM_SHORT },
