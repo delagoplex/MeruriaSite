@@ -180,7 +180,7 @@ function EntityCard({ entity, onClick, accentLabel }) {
             <div style={{
               position:'absolute',
               inset:0,
-              backgroundImage:'url(assets/images/races/placeholder-race.png)',
+              backgroundImage:`url(${entity.backgroundSrc || 'assets/images/races/placeholder-race.png'})`,
               backgroundSize:'cover',
               backgroundPosition:'center',
               transition:'filter 0.5s ease'
