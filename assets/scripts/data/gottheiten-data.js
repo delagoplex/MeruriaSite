@@ -74,7 +74,7 @@ window.GODS_DATA = {
       name: "Lorelei", title: "The Dream Devourer",
       domain: "Nightmares · Illusion · Hunger",
       palette: ["#12051f","#2e0d52","#7b2fa0","#e0a0ff"],
-      insigniaSrc: "assets/images/insignia/old_aurelia.png",
+      insigniaSrc: "assets/images/insignia/Insignie_Lorelei.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><path d="M40 12 A28 28 0 1 0 40 68 A20 20 0 1 1 40 12Z" stroke="currentColor" stroke-width="1.5"/><circle cx="40" cy="40" r="4" fill="currentColor" opacity="0.5"/><path d="M32 28 Q40 22 48 28" stroke="currentColor" stroke-width="1"/><path d="M28 36 Q40 30 52 36" stroke="currentColor" stroke-width="0.8" opacity="0.5"/></svg>`,
       description: LOREM, lore: LOREM_LORE,
