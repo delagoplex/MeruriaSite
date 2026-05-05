@@ -12,6 +12,8 @@
 @keyframes fadeInUp    { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
 @keyframes slideInLeft { from{opacity:0;transform:translateX(-28px)} to{opacity:1;transform:translateX(0)} }
 
+html.detail-open::-webkit-scrollbar { display: none; }
+
 .hex-clip { clip-path: polygon(25% 0%,75% 0%,100% 50%,75% 100%,25% 100%,0% 50%); }
 @keyframes hex-spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
 @keyframes hex-pulse { 0%,100%{opacity:0.18;transform:scale(1)} 50%{opacity:0.32;transform:scale(1.04)} }

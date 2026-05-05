@@ -230,14 +230,14 @@ function EntityCard({ entity, onClick, accentLabel }) {
           <div style={{
             position:'absolute', inset:0, zIndex:30, transform:'translateZ(1px)',
             display:'flex', flexDirection:'column', justifyContent:'flex-end',
-            padding:'20px 18px',
+            padding:'20px 18px 18px 21px',
             opacity: hov ? 0 : 1, transition:'opacity 0.35s ease'
           }}>
             <h3 style={{ fontFamily:'var(--font-display)', fontSize:'15px', fontWeight:'400', letterSpacing:'0.16em', color:'#f0eeff', textShadow:'0 2px 12px rgba(0,0,0,0.8)', textTransform:'uppercase', marginBottom:'3px' }}>{entity.name}</h3>
             <div style={{ width: '50px', height: '1px', background: `linear-gradient(90deg,${accent}cc,transparent)`, animation: 'pulse-glow 3s infinite', marginBottom: '6px' }} />
             <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:accent+'99', textTransform:'uppercase', marginBottom:'6px' }}>{accentLabel || entity.pantheon || 'Gottheit'}</div>
             <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'10px', lineHeight:1.75, color:'rgba(200,190,240,0.65)', letterSpacing:'0.03em', display:'-webkit-box', WebkitLineClamp:3, WebkitBoxOrient:'vertical', overflow:'hidden' }}>{entity.title}</p>
-            <div style={{ height:'1px', background:`linear-gradient(90deg, ${accent}55, transparent)`, marginTop:'10px', opacity:0.5 }} />
+              {/*<div style={{ height:'1px', background:`linear-gradient(90deg, ${accent}55, transparent)`, marginTop:'10px', opacity:0.5 }} />*/}
           </div>
 
           {/* Hover vignette wedge — below sigil */}
@@ -282,6 +282,16 @@ function EntityDetail({ entity, onBack, typeLabel }) {
   const [leaving, setLeaving] = useState(false);
   const pal = getPalette(entity);
   useEffect(() => {const t = setTimeout(() => setVisible(true), 30);return () => clearTimeout(t);}, []);
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    document.documentElement.classList.add('detail-open');
+    return () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      document.documentElement.classList.remove('detail-open');
+    };
+  }, []);
   const handleBack = () => {setLeaving(true);setTimeout(onBack, 340);};
   const s = (delay = 0) => ({ animation: visible ? `fadeInUp 0.55s ${delay}s both` : 'none', opacity: visible ? undefined : 0 });
 
@@ -311,13 +321,23 @@ function EntityDetail({ entity, onBack, typeLabel }) {
           </div>
           <div style={{ position: 'absolute', bottom: '22px', right: '22px', width: '72px', height: '72px', color: pal[2], opacity: 0.65, filter: `drop-shadow(0 0 10px ${pal[2]})`, animation: 'floatSymbol 3.2s ease-in-out infinite', zIndex: 4 }} dangerouslySetInnerHTML={{ __html: entity.symbolSvg }} />
         </div>
-        <div style={{ flex: 1, padding: '44px 48px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '28px' }}>
+        <style>{`
+          .detail-scroll-${entity.id}::-webkit-scrollbar { width: 4px; }
+          .detail-scroll-${entity.id}::-webkit-scrollbar-track { background: transparent; }
+          .detail-scroll-${entity.id}::-webkit-scrollbar-thumb { background: ${pal[2]}66; border-radius: 2px; }
+          .detail-scroll-${entity.id}::-webkit-scrollbar-thumb:hover { background: ${pal[2]}99; }
+        `}</style>
+        <div className={`detail-scroll-${entity.id}`} style={{ flex: 1, padding: '44px 48px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '28px' }}>
           <div style={s(0.1)}>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.3em', color: pal[2] + '88', textTransform: 'uppercase', marginBottom: '8px' }}>{typeLabel || entity.pantheon}</div>
             <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(34px,4.5vw,60px)', fontWeight: '300', letterSpacing: '0.12em', color: '#f0eeff', lineHeight: 1.1, textShadow: `0 0 36px ${pal[2]}77` }}>{entity.name}</h1>
             <div style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '13px', letterSpacing: '0.25em', color: pal[3] + 'bb', marginTop: '7px', textTransform: 'uppercase' }}>{entity.title}</div>
           </div>
           <div style={s(0.16)}>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: pal[2] + '77', marginBottom: '10px', textTransform: 'uppercase' }}>Glaubensgrundsätze</div>
+            <p style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: 1.85, color: 'rgba(240,238,255,0.55)', letterSpacing: '0.015em', fontStyle: 'italic', borderLeft: `1px solid ${pal[2]}33`, paddingLeft: '14px' }}>{entity.lore}</p>
+          </div>
+          <div style={s(0.22)}>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: pal[2] + '77', marginBottom: '9px', textTransform: 'uppercase' }}>Domäne</div>
             <div style={{ display: 'flex', gap: '7px', flexWrap: 'wrap' }}>
               {entity.domain.split(' · ').map((d, i) =>
@@ -325,16 +345,12 @@ function EntityDetail({ entity, onBack, typeLabel }) {
               )}
             </div>
           </div>
-          <div style={s(0.22)}>
+          <div style={s(0.28)}>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: pal[2] + '77', marginBottom: '10px', textTransform: 'uppercase' }}>Reich</div>
             <p style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '13px', lineHeight: 1.85, color: 'rgba(240,238,255,0.78)', letterSpacing: '0.015em' }}>{entity.description}</p>
           </div>
-          <div style={s(0.28)}>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: pal[2] + '77', marginBottom: '10px', textTransform: 'uppercase' }}>Glaubensgrundsätze</div>
-            <p style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: 1.85, color: 'rgba(240,238,255,0.55)', letterSpacing: '0.015em', fontStyle: 'italic', borderLeft: `1px solid ${pal[2]}33`, paddingLeft: '14px' }}>{entity.lore}</p>
-          </div>
           <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', borderTop: `1px solid ${pal[2]}18`, paddingTop: '22px', ...s(0.34) }}>
-            {[['Macht', entity.power], ['Gesinnung', entity.alignment], ['Anhänger', entity.worshippers]].map(([label, val]) =>
+            {[['Symbol', entity.symbol], ['Gesinnung', entity.alignment], ['Anhänger', entity.worshippers]].map(([label, val]) =>
             <div key={label} style={{ flex: 1, minWidth: '140px' }}>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: '7px', color: pal[2] + '66', letterSpacing: '0.25em', textTransform: 'uppercase', marginBottom: '5px' }}>{label}</div>
                 <div style={{ fontFamily: 'var(--font-body)', fontWeight: '400', fontSize: '11px', color: pal[3] + 'bb', letterSpacing: '0.04em' }}>{val}</div>
