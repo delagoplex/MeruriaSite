@@ -1,0 +1,32 @@
+/* Shared structural styles for all division pages */
+
+.div-aside {
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  position: fixed;
+  left: 0;
+  top: var(--nav-h);
+  height: calc(100vh - var(--nav-h));
+  padding: 28px 0;
+  backdrop-filter: blur(12px);
+  z-index: 50;
+  overflow-y: auto;
+}
+
+.div-col { flex: 1; min-width: 0; }
+
+.div-content { padding: 48px 40px 80px; max-width: 760px; position: relative; }
+
+.div-section {
+  margin-bottom: 52px;
+  scroll-margin-top: 68px;
+  position: relative;
+  z-index: 1;
+}
+.div-section:last-of-type { margin-bottom: 0; }
+
+.div-section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; }
+
+.auftraege-list { display: flex; flex-direction: column; gap: 10px; list-style: none; padding: 0; margin: 0; }
+
+.rang-list { display: flex; flex-direction: column; gap: 2px; }

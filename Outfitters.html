@@ -3,18 +3,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Meruria — Die Outfitters</title>
-<link rel="stylesheet" href="assets/styles/fonts.css">
-<link rel="stylesheet" href="assets/styles/base.css">
-<link rel="stylesheet" href="assets/styles/Outfitters.css">
+<link rel="stylesheet" href="assets/styles/global/fonts.css">
+<link rel="stylesheet" href="assets/styles/global/base.css">
+<link rel="stylesheet" href="assets/styles/global/division.css">
+<link rel="stylesheet" href="assets/styles/pages/Outfitters.css">
 <script src="assets/scripts/vendor/react.development.js"></script>
 <script src="assets/scripts/vendor/react-dom.development.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
-<script src="assets/scripts/divisions-data.js"></script>
+<script src="assets/scripts/data/divisions-data.js"></script>
 <script src="assets/components/tweaks-panel-12.jsx" type="text/babel"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
 <script src="assets/components/page-header.jsx" type="text/babel"></script>
 <script src="assets/components/particle-field.jsx" type="text/babel"></script>
 <script src="assets/components/floating-hex-field.jsx" type="text/babel"></script>
+<script src="assets/components/footer.jsx" type="text/babel"></script>
+<script src="assets/components/section-banner.jsx" type="text/babel"></script>
 
 </head>
 <body>
@@ -29,8 +32,7 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
 }/*EDITMODE-END*/;
 
 const NAV_H = 52;
-const ACCENT = '#d4681a';
-const ACCENT_R = 212, ACCENT_G = 104, ACCENT_B = 26;
+const ACCENT = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
 
 
 const DIVISION = window.DIVISIONS_DATA.find(d => d.id === 'outfitters');
@@ -84,12 +86,12 @@ const TOC_SECTIONS = [
   { id: 'rangsystem',   label: 'Rangsystem',       indent: true  },
 ];
 
-function TOCSidebar({ 0, headerBottom }) {
+function TOCSidebar({ navHeight, headerBottom }) {
   const asideRef = React.useRef(null);
   const [activeId, setActiveId] = useState('uebersicht');
 
   useEffect(() => {
-    const update = () => { const ideal = (headerBottom || 0) - window.scrollY; const val = Math.max(navHeight, ideal); if (asideRef.current) { asideRef.current.style.top = val + 'px'; asideRef.current.style.height = `calc(100vh - ${val}px)`; } };
+    const update = () => { const ideal = (headerBottom || 0) - window.scrollY; const val = Math.max(0, ideal); if (asideRef.current) { asideRef.current.style.top = val + 'px'; asideRef.current.style.height = `calc(100vh - ${val}px)`; } };
     update();
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update, { passive: true });
@@ -111,7 +113,7 @@ function TOCSidebar({ 0, headerBottom }) {
   };
 
   return (
-    <aside ref={asideRef} style={{ width:'var(--sidebar-w)', flexShrink:0, position:'fixed', top:`${navHeight}px`, left:0, height:`calc(100vh - ${navHeight}px)`, borderRight:`1px solid ${ACCENT}18`, padding:'28px 0', background:'rgba(10,3,3,0.90)', backdropFilter:'blur(12px)', zIndex:50, overflowY:'auto' }}>
+    <aside ref={asideRef} className="div-aside" style={{ borderRight:`1px solid ${ACCENT}18`, background:'rgba(10,3,3,0.90)' }}>
 
       <div style={{ padding:'0 20px 16px', borderBottom:`1px solid ${ACCENT}12`, marginBottom:'8px' }}>
         <div style={{ display:'flex', alignItems:'center', gap:'6px', marginBottom:'6px' }}>
@@ -142,15 +144,6 @@ function TOCSidebar({ 0, headerBottom }) {
 function DivisionPage({ division, heroRef }) {
   const accent = division.accent;
   const pal = division.palette;
-
-  const SectionHeader = ({ label }) => (
-    <div className="reveal-left" style={{ display:'flex', alignItems:'center', gap:'10px', marginBottom:'22px' }}>
-      <svg width="8" height="8" viewBox="0 0 8 8"><polygon points={hexPoints(8)} fill={`${accent}44`} stroke={accent} strokeWidth="0.8" /></svg>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:`${accent}77`, textTransform:'uppercase' }}>{label}</div>
-      <div style={{ flex:1, height:'1px', background:`linear-gradient(90deg, ${accent}44, rgba(124,77,255,0.2), transparent)` }} />
-      <svg width="5" height="5" viewBox="0 0 5 5"><polygon points={hexPoints(5)} fill="rgba(124,77,255,0.3)" stroke="rgba(124,77,255,0.5)" strokeWidth="0.6" /></svg>
-    </div>
-  );
 
   return (
     <div>
@@ -205,7 +198,7 @@ function DivisionPage({ division, heroRef }) {
       <div ref={heroRef} style={{ height:0 }} />
 
       {/* Content */}
-      <div style={{ padding:'48px 40px 80px', maxWidth:'760px', position:'relative' }}>
+      <div className="div-content">
 
         {/* Watermarks behind content */}
         <div style={{ position:'absolute', right:'-60px', top:'40px', pointerEvents:'none', zIndex:0, opacity:0.02, filter:`drop-shadow(0 0 30px ${accent})` }}>
@@ -216,17 +209,17 @@ function DivisionPage({ division, heroRef }) {
         </div>
 
         {/* Beschreibung */}
-        <section id="beschreibung" style={{ marginBottom:'52px', scrollMarginTop:`${NAV_H+16}px`, position:'relative', zIndex:1 }}>
-          <SectionHeader label="Beschreibung" />
+        <section id="beschreibung" className="div-section">
+          <SectionBanner label="Beschreibung" accent={accent} />
           <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'14px', lineHeight:1.9, color:'rgba(240,238,255,0.78)', letterSpacing:'0.02em', textWrap:'pretty', borderLeft:`1px solid ${accent}22`, paddingLeft:'16px' }}>
             {division.beschreibung}
           </p>
         </section>
 
         {/* Auftragseindruck */}
-        <section id="auftraege" style={{ marginBottom:'52px', scrollMarginTop:`${NAV_H+16}px`, position:'relative', zIndex:1 }}>
-          <SectionHeader label="Auftragseindruck" />
-          <ul style={{ display:'flex', flexDirection:'column', gap:'10px', listStyle:'none', padding:0, margin:0 }}>
+        <section id="auftraege" className="div-section">
+          <SectionBanner label="Auftragseindruck" accent={accent} />
+          <ul className="auftraege-list">
             {division.auftraege.map((auftrag, i) => (
               <li key={i} className="reveal-up" style={{ display:'flex', gap:'14px', alignItems:'flex-start', padding:'14px 18px', border:`1px solid ${accent}18`, borderRadius:'3px', background:`linear-gradient(135deg, ${accent}06 0%, transparent 100%)`, borderLeft:`2px solid ${accent}55`, position:'relative', overflow:'hidden' }}>
                 <div style={{ position:'absolute', right:'-8px', bottom:'-8px', opacity:0.06, pointerEvents:'none' }}>
@@ -242,9 +235,9 @@ function DivisionPage({ division, heroRef }) {
         </section>
 
         {/* Rangsystem */}
-        <section id="rangsystem" style={{ scrollMarginTop:`${NAV_H+16}px`, position:'relative', zIndex:1 }}>
-          <SectionHeader label="Rangsystem" />
-          <div style={{ display:'flex', flexDirection:'column', gap:'2px' }}>
+        <section id="rangsystem" className="div-section">
+          <SectionBanner label="Rangsystem" accent={accent} />
+          <div className="rang-list">
             {division.raenge.map((r) => {
               const isTop = r.rang <= 3;
               const barW = `${100 - (r.rang - 1) * 8}%`;
@@ -300,8 +293,8 @@ function App() {
   useScrollReveal();
 
   return (
-    <div onMouseMove={handleMouseMove} style={{ position:'relative', minHeight:'100vh' }}>
-      {tweaks.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} accentR={ACCENT_R} accentG={ACCENT_G} accentB={ACCENT_B} clipTop={232} />}
+    <div onMouseMove={handleMouseMove} className="page-root">
+      {tweaks.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} accent={ACCENT} clipTop={232} />}
       <FloatingHexField mouseX={mouse.x} mouseY={mouse.y} accent={ACCENT} />
 
       {/* HEADER */}
@@ -311,18 +304,14 @@ function App() {
       <SiteNav rightLabel="DIVISIONS-ARCHIV v1.0" />
 
       {/* BODY */}
-      <div style={{ display:'flex', alignItems:'flex-start', position:'relative', zIndex:5, minHeight:'calc(100vh - var(--nav-h))', paddingLeft:'var(--sidebar-w)' }}>
+      <div className="page-body">
         <TOCSidebar navHeight={NAV_H} headerBottom={headerBottom} />
-        <div style={{ flex:1, minWidth:0 }}>
+        <div className="div-col">
           <DivisionPage division={DIVISION} heroRef={heroRef} />
         </div>
       </div>
 
-      {/* FOOTER */}
-      <div style={{ position:'relative', zIndex:10, padding:'10px 32px', borderTop:`1px solid ${ACCENT}0a`, display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:`${ACCENT}22`, letterSpacing:'0.2em' }}>◈ ARCHIV-STATUS: NOMINAL ◈ EPOCHE: UNBEKANNT</div>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:`${ACCENT}22`, letterSpacing:'0.2em' }}>MERURIA // DIE VERWOBENEN REICHE</div>
-      </div>
+      <SiteFooter accent={ACCENT} />
 
       <TweaksPanel>
         <TweakSection label="Darstellung" />

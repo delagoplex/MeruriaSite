@@ -3,18 +3,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Meruria — Klassen</title>
-<link rel="stylesheet" href="assets/styles/fonts.css">
-<link rel="stylesheet" href="assets/styles/base.css">
-<link rel="stylesheet" href="assets/styles/Klassen.css">
+<link rel="stylesheet" href="assets/styles/global/fonts.css">
+<link rel="stylesheet" href="assets/styles/global/base.css">
+<link rel="stylesheet" href="assets/styles/pages/Klassen.css">
 <script src="assets/scripts/vendor/react.development.js"></script>
 <script src="assets/scripts/vendor/react-dom.development.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
-<script src="assets/scripts/klassen-data.js"></script>
+<script src="assets/scripts/data/klassen-data.js"></script>
 <script src="assets/components/tweaks-panel-4.jsx" type="text/babel"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
 <script src="assets/components/page-header.jsx" type="text/babel"></script>
 <script src="assets/components/particle-field.jsx" type="text/babel"></script>
 <script src="assets/components/floating-hex-field.jsx" type="text/babel"></script>
+<script src="assets/components/footer.jsx" type="text/babel"></script>
 
 </head>
 <body>
@@ -381,7 +382,7 @@ function App() {
   };
 
   return (
-    <div onMouseMove={handleMouseMove} style={{ position:'relative', minHeight:'100vh' }}>
+    <div onMouseMove={handleMouseMove} className="page-root">
       {tweaks.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} />}
       <FloatingHexField mouseX={mouse.x} mouseY={mouse.y} />
 
@@ -394,7 +395,7 @@ function App() {
       </div>
 
       {/* BODY */}
-      <div style={{ display:'flex', alignItems:'flex-start', position:'relative', zIndex:5, minHeight:'calc(100vh - var(--nav-h))', paddingLeft:'var(--sidebar-w)' }}>
+      <div className="page-body">
         <TOCSidebar navHeight={NAV_H} headerBottom={headerBottom} cols={cols} />
 
         <div style={{ flex:1, padding:'32px 28px 64px', minWidth:0 }}>
@@ -420,10 +421,7 @@ function App() {
       </div>
 
       {/* FOOTER */}
-      <div style={{ position:'relative', zIndex:10, padding:'10px 32px', borderTop:'1px solid rgba(160,140,255,0.07)', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:'rgba(160,140,255,0.22)', letterSpacing:'0.2em' }}>◈ ARCHIV-STATUS: NOMINAL ◈ EPOCHE: UNBEKANNT</div>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:'rgba(160,140,255,0.22)', letterSpacing:'0.2em' }}>MERURIA // DIE VERWOBENEN REICHE</div>
-      </div>
+      <SiteFooter />
 
       {/* DETAIL OVERLAY */}
       {selectedKlasse && <KlasseDetail klasse={selectedKlasse} onBack={()=>setSelectedKlasse(null)} />}

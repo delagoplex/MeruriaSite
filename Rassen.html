@@ -3,17 +3,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Meruria — Rassen</title>
-<link rel="stylesheet" href="assets/styles/fonts.css">
-<link rel="stylesheet" href="assets/styles/base.css">
-<link rel="stylesheet" href="assets/styles/Rassen.css">
+<link rel="stylesheet" href="assets/styles/global/fonts.css">
+<link rel="stylesheet" href="assets/styles/global/base.css">
+<link rel="stylesheet" href="assets/styles/pages/Rassen.css">
 <script src="assets/scripts/vendor/react.development.js"></script>
 <script src="assets/scripts/vendor/react-dom.development.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/scripts/data/rassen-data.js"></script>
 <script src="assets/components/tweaks-panel-3.jsx" type="text/babel"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
 <script src="assets/components/page-header.jsx" type="text/babel"></script>
 <script src="assets/components/particle-field.jsx" type="text/babel"></script>
 <script src="assets/components/floating-hex-field.jsx" type="text/babel"></script>
+<script src="assets/components/footer.jsx" type="text/babel"></script>
 
 
 
@@ -39,72 +41,7 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
 // Each entry is either:
 //   { type: 'race',    id, name }                    — simple race card
 //   { type: 'group',  id, name, subraces: [{id,name}] } — section header + subrace cards
-const ENTRIES = [
-  { type:'race',  id:'aarakocra',      name:'Aarakocra' },
-  { type:'race',  id:'aasimar',        name:'Aasimar' },
-  { type:'race',  id:'dhampire',       name:'Dhampire' },
-  { type:'group', id:'drachenbluetige', name:'Drachenblütige', subraces:[
-    { id:'chromatische', name:'Chromatische Drachenblütige' },
-    { id:'edelstein',    name:'Edelstein Drachenblütige' },
-    { id:'metallische',  name:'Metallische Drachenblütige' }
-  ]},
-  { type:'race',  id:'echsenmenschen', name:'Echsenmenschen' },
-  { type:'group', id:'elfen',          name:'Elfen', subraces:[
-    { id:'dunkelelfen',  name:'Dunkelelfen' },
-    { id:'eladrin',      name:'Eladrin' },
-    { id:'hochelfen',    name:'Hochelfen' },
-    { id:'meereselfen',  name:'Meereselfen' },
-    { id:'schattenfeen', name:'Schattenfeen' },
-    { id:'waldelfen',    name:'Waldelfen' }
-  ]},
-  { type:'race',  id:'feen',           name:'Feen' },
-  { type:'race',  id:'firbolg',        name:'Firbolg' },
-  { type:'group', id:'genasi',         name:'Genasi', subraces:[
-    { id:'erd-genasi',   name:'Erd-Genasi' },
-    { id:'feuer-genasi', name:'Feuer-Genasi' },
-    { id:'luft-genasi',  name:'Luft-Genasi' },
-    { id:'wasser-genasi',name:'Wasser-Genasi' }
-  ]},
-  { type:'race',  id:'githyanki',      name:'Githyanki' },
-  { type:'race',  id:'githzerai',      name:'Githzerai' },
-  { type:'group', id:'gnome',          name:'Gnome', subraces:[
-    { id:'felsengnome',  name:'Felsengnome' },
-    { id:'tiefengnome',  name:'Tiefengnome' },
-    { id:'waldgnome',    name:'Waldgnome' }
-  ]},
-  { type:'race',  id:'goblins',        name:'Goblins' },
-  { type:'race',  id:'goliaths',       name:'Goliaths' },
-  { type:'race',  id:'grottenschrate', name:'Grottenschrate' },
-  { type:'race',  id:'halbelfen',      name:'Halbelfen' },
-  { type:'group', id:'halblinge',      name:'Halblinge', subraces:[
-    { id:'leichtfuesse', name:'Leichtfüße' },
-    { id:'staemmige',    name:'Stämmige' }
-  ]},
-  { type:'race',  id:'halborks',       name:'Halborks' },
-  { type:'race',  id:'harengons',      name:'Harengons' },
-  { type:'race',  id:'hexblute',       name:'Hexblute' },
-  { type:'race',  id:'hobgoblins',     name:'Hobgoblins' },
-  { type:'race',  id:'kenku',          name:'Kenku' },
-  { type:'race',  id:'kobolde',        name:'Kobolde' },
-  { type:'race',  id:'menschen',       name:'Menschen' },
-  { type:'race',  id:'minotauren',     name:'Minotauren' },
-  { type:'race',  id:'orks',           name:'Orks' },
-  { type:'race',  id:'satyrn',         name:'Satyrn' },
-  { type:'race',  id:'tabaxi',         name:'Tabaxi' },
-  { type:'race',  id:'tieflinge',      name:'Tieflinge' },
-  { type:'race',  id:'tortels',        name:'Tortels' },
-  { type:'race',  id:'tritons',        name:'Tritons' },
-  { type:'race',  id:'wandler',        name:'Wandler' },
-  { type:'race',  id:'wechselbälger',  name:'Wechselbälger' },
-  { type:'race',  id:'wiedergeborene', name:'Wiedergeborene' },
-  { type:'race',  id:'yuan-ti',        name:'Yuan-ti' },
-  { type:'race',  id:'zentauren',      name:'Zentauren' },
-  { type:'group', id:'zwerge',         name:'Zwerge', subraces:[
-    { id:'gebirgszwerge',name:'Gebirgszwerge' },
-    { id:'grauzwerge',   name:'Grauzwerge' },
-    { id:'huegelzwerge', name:'Hügelzwerge' }
-  ]}
-];
+const ENTRIES = window.RASSEN_DATA;
 
 // ── HEX POINTS ──────────────────────────────────────────
 function hexPoints(s) {
@@ -222,7 +159,7 @@ function CardInner({ name, accent, hov, tilt, cardRef, onMouseMove, onMouseEnter
             {/* Background image */}
             <div style={{
               position:'absolute', inset:0,
-              backgroundImage:'url(assets/images/placeholder-race.png)',
+              backgroundImage:'url(assets/images/races/placeholder-race.png)',
               backgroundSize:'cover', backgroundPosition:'center',
               filter: hov ? 'brightness(0.55) saturate(0.9)' : 'brightness(0.38) saturate(0.7)',
               transition:'filter 0.5s ease'
@@ -479,7 +416,7 @@ function App() {
   const accent = tweaks.cardAccent || '#7c4dff';
 
   return (
-    <div onMouseMove={handleMouseMove} style={{ position:'relative', minHeight:'100vh' }}>
+    <div onMouseMove={handleMouseMove} className="page-root">
       {tweaks.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} />}
       <FloatingHexField mouseX={mouse.x} mouseY={mouse.y} />
 
@@ -490,7 +427,7 @@ function App() {
       <SiteNav rightLabel="RASSEN-ARCHIV v1.0" />
 
       {/* BODY */}
-      <div style={{ display:'flex', alignItems:'flex-start', position:'relative', zIndex:5, minHeight:'calc(100vh - var(--nav-h))', paddingLeft:'var(--sidebar-w)' }}>
+      <div className="page-body">
         <TOCSidebar headerBottom={headerBottom} navHeight={NAV_H} cols={tweaks.columns || 3} />
 
         <div style={{ flex:1, padding:'32px 28px 64px', minWidth:0 }}>
@@ -551,11 +488,7 @@ function App() {
         </div>
       </div>
 
-      {/* FOOTER */}
-      <div style={{ position:'relative', zIndex:10, padding:'10px 32px', borderTop:'1px solid rgba(160,140,255,0.07)', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:'rgba(160,140,255,0.22)', letterSpacing:'0.2em' }}>◈ ARCHIV-STATUS: NOMINAL ◈ EPOCHE: UNBEKANNT</div>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:'rgba(160,140,255,0.22)', letterSpacing:'0.2em' }}>MERURIA // DIE VERWOBENEN REICHE</div>
-      </div>
+      <SiteFooter />
 
       {/* TWEAKS */}
       <TweaksPanel>
