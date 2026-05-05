@@ -45,7 +45,7 @@ function OctSvg({ size = 24, color = 'currentColor', fill = 'none', strokeWidth 
     </svg>
   );
 }
-const { gods, pantheons, demons, naturgeister } = window.GODS_DATA;
+const { gods, demons, naturgeister } = window.GODS_DATA;
 const { useTweaks, TweaksPanel, TweakSection, TweakSlider, TweakToggle, SiteNav, ParticleField, FloatingHexField } = window;
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
@@ -233,11 +233,9 @@ function EntityCard({ entity, onClick, accentLabel }) {
             padding:'20px 18px',
             opacity: hov ? 0 : 1, transition:'opacity 0.35s ease'
           }}>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:accent+'99', textTransform:'uppercase', marginBottom:'4px' }}>{accentLabel || entity.pantheon || 'Gottheit'}</div>
-            <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'6px' }}>
-              <h3 style={{ fontFamily:'var(--font-display)', fontSize:'15px', fontWeight:'400', letterSpacing:'0.16em', color:'#f0eeff', textShadow:'0 2px 12px rgba(0,0,0,0.8)', textTransform:'uppercase' }}>{entity.name}</h3>
-              <OctSvg size={10} color={accent} fill={accent+'44'} strokeWidth={1} />
-            </div>
+            <h3 style={{ fontFamily:'var(--font-display)', fontSize:'15px', fontWeight:'400', letterSpacing:'0.16em', color:'#f0eeff', textShadow:'0 2px 12px rgba(0,0,0,0.8)', textTransform:'uppercase', marginBottom:'3px' }}>{entity.name}</h3>
+            <div style={{ width: '50px', height: '1px', background: `linear-gradient(90deg,${accent}cc,transparent)`, animation: 'pulse-glow 3s infinite', marginBottom: '6px' }} />
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:accent+'99', textTransform:'uppercase', marginBottom:'6px' }}>{accentLabel || entity.pantheon || 'Gottheit'}</div>
             <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'10px', lineHeight:1.75, color:'rgba(200,190,240,0.65)', letterSpacing:'0.03em', display:'-webkit-box', WebkitLineClamp:3, WebkitBoxOrient:'vertical', overflow:'hidden' }}>{entity.title}</p>
             <div style={{ height:'1px', background:`linear-gradient(90deg, ${accent}55, transparent)`, marginTop:'10px', opacity:0.5 }} />
           </div>
@@ -316,11 +314,11 @@ function EntityDetail({ entity, onBack, typeLabel }) {
             </div>
           </div>
           <div style={s(0.22)}>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: pal[2] + '77', marginBottom: '10px', textTransform: 'uppercase' }}>Natur</div>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: pal[2] + '77', marginBottom: '10px', textTransform: 'uppercase' }}>Reich</div>
             <p style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '13px', lineHeight: 1.85, color: 'rgba(240,238,255,0.78)', letterSpacing: '0.015em' }}>{entity.description}</p>
           </div>
           <div style={s(0.28)}>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: pal[2] + '77', marginBottom: '10px', textTransform: 'uppercase' }}>Ursprung</div>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: pal[2] + '77', marginBottom: '10px', textTransform: 'uppercase' }}>Glaubensgrundsätze</div>
             <p style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: 1.85, color: 'rgba(240,238,255,0.55)', letterSpacing: '0.015em', fontStyle: 'italic', borderLeft: `1px solid ${pal[2]}33`, paddingLeft: '14px' }}>{entity.lore}</p>
           </div>
           <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', borderTop: `1px solid ${pal[2]}18`, paddingTop: '22px', ...s(0.34) }}>
@@ -536,7 +534,7 @@ function App() {
                 const rowId = `${secId}-row-${offset + Math.floor(i / cols)}`;
                 rows.push(
                   <div key={rowId} id={rowId} style={{ display:'grid', gridTemplateColumns:`repeat(${cols},1fr)`, gap:'16px', marginBottom:'16px', scrollMarginTop:`${NAV_H+8}px`, overflow:'visible' }}>
-                    {row.map(god => <EntityCard key={god.id} entity={god} onClick={e => handleEntityClick(e)} accentLabel={god.pantheon} />)}
+                    {row.map(god => <EntityCard key={god.id} entity={god} onClick={e => handleEntityClick(e)} accentLabel={god.alignment} />)}
                   </div>
                 );
               }

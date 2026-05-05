@@ -3,17 +3,10 @@ const LOREM_SHORT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, se
 const LOREM_LORE = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
 window.GODS_DATA = {
-  pantheons: [
-    { id: "celestial",  label: "Himmlisch"  },
-    { id: "abyssal",    label: "Abyssal"    },
-    { id: "primordial", label: "Uralt"      },
-    { id: "machine",    label: "Maschine"   },
-    { id: "void",       label: "Leere"      },
-  ],
   gods: [
     // ── CELESTIAL (4) ──────────────────────────────────────────
     {
-      id: "aurelia", pantheon: "celestisch · Merurisches Pantheon",
+      id: "aurelia", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Aurelia", title: "Göttin der Stärke, der Ehre und des Kampfgeschicks",
       domain: "Domäne des Grabes · Domäne des Kriegs · Domäne der Schmiede · Domäne des Sturms",
       palette: ["#06081B","#83632a","#ffbd38","#f5d98a"],
@@ -24,7 +17,7 @@ window.GODS_DATA = {
       power: "Solar Dominion", alignment: "rechtschaffen-gut", worshippers: LOREM_SHORT,
     },
     {
-      id: "elysarion", pantheon: "celestisch",
+      id: "elysarion", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Elysarion", title: "Gott der Liebe und Leidenschaft",
       domain: "Domäne des Lebens · Domäne des Lichts · Domäne des Sturms",
       palette: ["#350813","#d31f42","#FF5D7A","#f9cad1"],
@@ -35,7 +28,7 @@ window.GODS_DATA = {
       power: "Thread of Fate", alignment: "rechtschaffen-gut", worshippers: LOREM_SHORT,
     },
     {
-      id: "sienna", pantheon: "celestisch",
+      id: "sienna", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Sienna", title: "Göttin des Feuers, der Sonne und der Wüste",
       domain: "Domäne des Lebens · Domäne des Lichts · Domäne der List · Domäne der Natur · Domäne der Ordnung · Domäne des Sturms",
       palette: ["#1C0E06","#de8900","#FFCA39","#FFDC7B"],
@@ -46,7 +39,7 @@ window.GODS_DATA = {
       power: "Stormwright", alignment: "rechtschaffen-gut", worshippers: LOREM_SHORT,
     },
     {
-      id: "avalaste", pantheon: "celestisch",
+      id: "avalaste", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Avalaste", title: "Göttin der Jahreszeiten und Wiedergeburt",
       domain: "Domäne der Dämmerung · Domäne des Grabes · Domäne des Lichts · Domäne der Natur · Domäne des Sturms",
       palette: ["#0C1B03","#053B0E","#40cd84","#8de7f6"],
@@ -59,7 +52,7 @@ window.GODS_DATA = {
 
     // ── ABYSSAL (4) ────────────────────────────────────────────
     {
-      id: "cecillia", pantheon: "celestisch",
+      id: "cecillia", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Cecillia", title: "Göttin der Harmonie und Genesung",
       domain: "Domäne des Friedens · Domäne des Grabes · Domäne des Lebens · Domäne der Ordnung",
       palette: ["#001f13","#54C472","#FF76B8","#FFDBEC"],
@@ -70,7 +63,7 @@ window.GODS_DATA = {
       power: "Void Erasure", alignment: "neutral-gut", worshippers: LOREM_SHORT,
     },
     {
-      id: "lorelei", pantheon: "celestisch",
+      id: "lorelei", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Lorelei", title: "Göttin der Landwirtschaft und Fruchtbarkeit",
       domain: "Domäne des Lebens · Domäne des Lichts · Domäne der Natur · Domäne des Wissens",
       palette: ["#080e02","#3e6e18","#94DA48","#d8f0b0"],
@@ -81,7 +74,7 @@ window.GODS_DATA = {
       power: "Dream Consumption", alignment: "neutral-gut", worshippers: LOREM_SHORT,
     },
     {
-      id: "vindeah", pantheon: "celestisch",
+      id: "vindeah", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Vindeah", title: "Göttin der Ruhe, der Gelassenheit und des Windes",
       domain: "Domäne der Arkana · Domäne der Dämmerung · Domäne des Friedens · Domäne des Grabes · Domäne des Lebens · Domäne der Natur · Domäne des Sturms · Domäne des Wissens",
       palette: ["#00211E","#21B0B0","#3EFFCC","#C4FFF0"],
@@ -92,7 +85,7 @@ window.GODS_DATA = {
       power: "Sanguine Cycle", alignment: "neutral-gut", worshippers: LOREM_SHORT,
     },
     {
-      id: "ferys", pantheon: "celestisch",
+      id: "ferys", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Ferys", title: "Gottheit der Hoffnung, des Glücks, der Spiele und des Vergnügens",
       domain: "Domäne des Friedens · Domäne des Lebens · Domäne der List · Domäne des Lichts · Domäne des Wissens",
       palette: ["#1B0B0E","#9F6266","#FF99AF","#eeddff"],
@@ -105,7 +98,7 @@ window.GODS_DATA = {
 
     // ── PRIMORDIAL (4) ─────────────────────────────────────────
     {
-      id: "daramur", pantheon: "celestisch",
+      id: "daramur", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Daramur", title: "Gott der Erde, des Gesteins und der Standhaftigkeit",
       domain: "Domäne des Grabes · Domäne des Krieges · Domäne des Lebens · Domäne der Natur · Domäne der Ordnung · Domäne der Schmiede · Domäne des Wissens",
       palette: ["#210000","#9e5d0e","#ff9f22","#ffdeb8"],
@@ -116,7 +109,7 @@ window.GODS_DATA = {
       power: "Tectonic Memory", alignment: "rechtschaffen-neutral", worshippers: LOREM_SHORT,
     },
     {
-      id: "eiritha", pantheon: "celestisch",
+      id: "eiritha", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Eiritha", title: "Göttin der Weisheit und des Mutes",
       domain: "Domäne der Arkana · Domäne des Friedens · Domäne des Kriegs · Domäne des Lichts · Domäne des Wissens",
       palette: ["#0B0529","#473f95","#595EFF","#EEDDFF"],
@@ -127,7 +120,7 @@ window.GODS_DATA = {
       power: "Resonant Wind", alignment: "rechtschaffen-neutral", worshippers: LOREM_SHORT,
     },
     {
-      id: "hadir", pantheon: "celestisch",
+      id: "hadir", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Hadir", title: "Gott des Handwerks, des Reichtums und des Handels",
       domain: "Domäne des Lichts · Domäne der Schmiede · Domäne des Wissens",
       palette: ["#290a00","#731e00","#FF6200","#ff9750"],
@@ -138,7 +131,7 @@ window.GODS_DATA = {
       power: "Primal Combustion", alignment: "rechtschaffen-neutral", worshippers: LOREM_SHORT,
     },
     {
-      id: "selunara", pantheon: "celestisch",
+      id: "selunara", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Selunara", title: "Göttin des Mondes, der Gezeiten und der Neuanfänge",
       domain: "Domäne der Arkana · Domäne der Dämmerung · Domäne des Friedens · Domäne des Grabes · Domäne des Lichts · Domäne der Natur · Domäne des Sturms",
       palette: ["#020814","#2040a0","#287AFF","#c0d8f8"],
@@ -151,7 +144,7 @@ window.GODS_DATA = {
 
     // ── MACHINE (4) ────────────────────────────────────────────
     {
-      id: "aetherius", pantheon: "celestisch",
+      id: "aetherius", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Aetherius", title: "Gott der Illusionen, der Magie und der Wunder",
       domain: "Domäne der Arkana · Domäne der Dämmerung · Domäne des Lichts · Domäne der List",
       palette: ["#0b020d","#7c3197","#e848d2","#edd0f2"],
@@ -162,7 +155,7 @@ window.GODS_DATA = {
       power: "Systemic Precision", alignment: "neutral", worshippers: LOREM_SHORT,
     },
     {
-      id: "serenith", pantheon: "celestisch",
+      id: "serenith", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Serenith", title: "Göttin der Kälte, des Eises und der Schmerzen",
       domain: "Domäne der Dämmerung · Domäne der List · Domäne des Sturms · Domäne der Natur · Domäne des Todes",
       palette: ["#01000d","#42A4AD","#67fff2","#C1FFFA"],
@@ -173,7 +166,7 @@ window.GODS_DATA = {
       power: "Omniscient Signal", alignment: "neutral", worshippers: LOREM_SHORT,
     },
     {
-      id: "hydea", pantheon: "celestisch",
+      id: "hydea", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Hydea", title: "Göttin der Blitze und Unwetter",
       domain: "Domäne der List · Domäne der Natur · Domäne des Sturms",
       palette: ["#000B1D","#108552","#FFF159","#FDFFD8"],
@@ -184,7 +177,7 @@ window.GODS_DATA = {
       power: "Enduring Form", alignment: "chaotisch-neutral", worshippers: LOREM_SHORT,
     },
     {
-      id: "melion", pantheon: "celestisch",
+      id: "melion", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Melion", title: "Gottheit der Kunst, der Poesie, des Tanzes und der Musik",
       domain: "Domäne der Arkana · Domäne der Dämmerung · Domäne des Grabes · Domäne des Lebens · Domäne des Lichts · Domäne der List · Domäne des Wissens",
       palette: ["#210D38","#833493","#ff80f9","#ffec8f"],
@@ -197,7 +190,7 @@ window.GODS_DATA = {
 
     // ── VOID (3) ───────────────────────────────────────────────
     {
-      id: "ophelis", pantheon: "celestisch",
+      id: "ophelis", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Ophelis", title: "Gott der Ordnung, der Reinheit und der Perfektion",
       domain: "Domäne des Grabes · Domäne des Lebens · Domäne des Lichts · Domäne der Ordnung · Domäne der Schmiede · Domäne des Wissens",
       palette: ["#100f0e","#876d43","#D8C99D","#fff4d2"],
@@ -208,7 +201,7 @@ window.GODS_DATA = {
       power: "Suspended Moment", alignment: "rechtschaffen-böse", worshippers: LOREM_SHORT,
     },
     {
-      id: "thraxis", pantheon: "celestisch",
+      id: "thraxis", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Thraxis", title: "Gott des Blutes und der ewigen Qualen",
       domain: "Domäne des Kriegs · Domäne der List · Domäne des Todes",
       palette: ["#100000","#901010","#d85050","#f8c0c0"],
@@ -219,7 +212,7 @@ window.GODS_DATA = {
       power: "Final Culmination", alignment: "neutral-böse", worshippers: LOREM_SHORT,
     },
     {
-      id: "maledor", pantheon: "celestisch",
+      id: "maledor", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Maledor", title: "Gott der Flüche, der Krankheit und der Nekromantie",
       domain: "Domäne der Arkana · Domäne der List · Domäne des Todes · Domäne des Wissens",
       palette: ["#0A000D","#003616","#40CD21","#D4A9FF"],
