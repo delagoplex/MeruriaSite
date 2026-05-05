@@ -27,7 +27,7 @@ window.GODS_DATA = {
       name: "Aurelia", title: "Göttin der Stärke, der Ehre und des Kampfgeschicks",
       domain: "Domäne des Grabes · Domäne des Krieges · Domäne der Schmiede · Domäne des Sturms",
       palette: ["#06081B","#83632a","#ffbd38","#f5d98a"],
-      insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="14" stroke="currentColor" stroke-width="1.5"/><line x1="40" y1="6" x2="40" y2="20" stroke="currentColor" stroke-width="1.2"/><line x1="40" y1="60" x2="40" y2="74" stroke="currentColor" stroke-width="1.2"/><line x1="6" y1="40" x2="20" y2="40" stroke="currentColor" stroke-width="1.2"/><line x1="60" y1="40" x2="74" y2="40" stroke="currentColor" stroke-width="1.2"/><line x1="16.7" y1="16.7" x2="26.7" y2="26.7" stroke="currentColor" stroke-width="1.2"/><line x1="53.3" y1="53.3" x2="63.3" y2="63.3" stroke="currentColor" stroke-width="1.2"/><line x1="63.3" y1="16.7" x2="53.3" y2="26.7" stroke="currentColor" stroke-width="1.2"/><line x1="26.7" y1="53.3" x2="16.7" y2="63.3" stroke="currentColor" stroke-width="1.2"/><circle cx="40" cy="40" r="5" fill="currentColor" opacity="0.6"/></svg>`,
       description: "Aurelias göttliche Domäne liegt in den äußeren Ebenen und wird Das Kolosseum genannt.", lore: "\"Ehrenhafte Stärke dient nicht dazu, die Schwächeren zu unterdrücken, sondern dazu, sie zu schützen. Finde und pflege deine ehrenhafte Ausrüstung und lege deine Priorität auf die Verbesserung dieser, anstatt auf das Neuschmieden einer anderen. Übe dich regelmäßig in Kampfesgeschick und setze dir als Ziel, dich stetig zu verbessern. Respektiere deinen Gegner, akzeptiere Niederlagen, doch lasse dich nicht entmutigen. Ehre die Gefallenen, sowohl deine Gegner, als auch Kameraden. Sei denen loyal, deren Ehre sich als würdig erweist.\"",
@@ -38,7 +38,7 @@ window.GODS_DATA = {
       name: "Elysarion", title: "Gott der Liebe und Leidenschaft",
       domain: "Domäne des Lebens · Domäne des Lichts · Domäne des Sturms",
       palette: ["#350813","#d31f42","#FF5D7A","#f9cad1"],
-      insigniaSrc: "assets/images/insignia/Insignie_Elysarion.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Elysarion.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><path d="M20 40 C20 28 32 22 40 30 C48 38 60 32 60 40 C60 48 48 54 40 50 C32 46 20 52 20 40Z" stroke="currentColor" stroke-width="1.5"/><circle cx="40" cy="40" r="3" fill="currentColor"/><circle cx="22" cy="40" r="2" stroke="currentColor" stroke-width="1"/><circle cx="58" cy="40" r="2" stroke="currentColor" stroke-width="1"/></svg>`,
       description: "Elysarions göttliche Domäne liegt in den äußeren Ebenen und wird Das Paradies genannt.", lore: "\"Nutze jeden Moment des Lebens, um deiner Leidenschaft nachzugehen und diese zu entfachen. Glaube an die Liebe und lasse sie dich erfüllen, unabhängig deiner Form und Farbe. Liebe dich selbst und deine Nächsten und glaube an euer Potenzial. Lasse deine Kreativität fließen und erschaffe. Verbreite Freude und bringe Licht in das Herz all derer, die trauern oder die Hoffnung verloren haben.\"",
@@ -49,7 +49,7 @@ window.GODS_DATA = {
       name: "Sienna", title: "Göttin des Feuers, der Sonne und der Wüste",
       domain: "Domäne des Lebens · Domäne des Lichts · Domäne der List · Domäne der Natur · Domäne der Ordnung · Domäne des Sturms",
       palette: ["#1C0E06","#de8900","#FFCA39","#FFDC7B"],
-      insigniaSrc: "assets/images/insignia/Insignie_Sienna.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Sienna.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><polygon points="44,8 28,44 40,44 36,72 52,36 40,36" stroke="currentColor" stroke-width="1.5"/><line x1="20" y1="20" x2="26" y2="26" stroke="currentColor" stroke-width="1" opacity="0.5"/><line x1="60" y1="20" x2="54" y2="26" stroke="currentColor" stroke-width="1" opacity="0.5"/><line x1="12" y1="40" x2="20" y2="40" stroke="currentColor" stroke-width="1" opacity="0.5"/><line x1="68" y1="40" x2="60" y2="40" stroke="currentColor" stroke-width="1" opacity="0.5"/></svg>`,
       description: "Siennas göttliche Domäne liegt in den äußeren Ebenen und wird Der Zenit genannt.", lore: "\"Erfülle deine alltäglichen Pflichten so gut es dir möglich ist. Sei ein Leuchtfeuer für andere und weise sie auf den richtigen Pfad. Teile die Wärme deines Herzens mit deinen Nächsten. Lege Wert auf die Ansichten anderer, doch stehe niemals in deren Schatten. Offenbare niemandem deine Schwächen und sei allen immer einen Schritt voraus. Unterdrücke niemals negative Gefühle, die andere in dir ausgelöst haben.\"",
@@ -60,7 +60,7 @@ window.GODS_DATA = {
       name: "Avalaste", title: "Göttin der Jahreszeiten und Wiedergeburt",
       domain: "Domäne der Dämmerung · Domäne des Grabes · Domäne des Lichts · Domäne der Natur · Domäne des Sturms",
       palette: ["#0C1B03","#053B0E","#40cd84","#8de7f6"],
-      insigniaSrc: "assets/images/insignia/Insignie_Avalaste.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Avalaste.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><polygon points="40,8 47,30 70,30 52,44 59,66 40,52 21,66 28,44 10,30 33,30" stroke="currentColor" stroke-width="1.5"/><circle cx="40" cy="40" r="8" stroke="currentColor" stroke-width="1" opacity="0.5"/></svg>`,
       description: "Avalastes göttliche Domäne liegt in den äußeren Ebenen und wird Die Wiege genannt.", lore: "\"Ehre sowohl den Mond, als auch die Sonne, die Heilung und auch den Verfall, sowie den natürlichen Kreislauf aller Dinge. Akzeptiere Freude und auch Trauer. Tu Gutes, damit auch dir Gutes wiederfährt. Gib anderen eine zweite Chance und Raum, um zu wachsen. Kümmere dich sowohl um die, die das Licht der Welt erblicken, als auch um die, deren letztes Licht bald erlischt. Wage Neuanfänge, erkunde und übe dich in neuen Fertigkeiten.\"",
@@ -71,7 +71,7 @@ window.GODS_DATA = {
       name: "Cecillia", title: "Göttin der Harmonie und Genesung",
       domain: "Domäne des Friedens · Domäne des Grabes · Domäne des Lebens · Domäne der Ordnung",
       palette: ["#001f13","#54C472","#FF76B8","#FFDBEC"],
-      insigniaSrc: "assets/images/insignia/Insignie_Cecillia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Cecillia.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="28" stroke="currentColor" stroke-width="1"/><circle cx="40" cy="40" r="18" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3"/><circle cx="40" cy="40" r="8" stroke="currentColor" stroke-width="1"/><circle cx="40" cy="40" r="2" fill="currentColor" opacity="0.4"/></svg>`,
       description: "Cecillias göttliche Domäne liegt in den äußeren Ebenen und wird Der Himmel genannt.", lore: "\"Akzeptiere jeden so, wie er ist und siehe immer das Gute in ihnen, denn jedes Leben ist heilig und sollte beschützt werden. Lege deine Priorität darauf, Konflikte friedlich zu lösen und niemanden zu verletzen. Behandele andere so, wie du selbst auch behandelt werden möchtest. Erlöse Kreaturen von Krankheit und bringe ihnen Genesung.\"",
@@ -82,7 +82,7 @@ window.GODS_DATA = {
       name: "Lorelei", title: "Göttin der Landwirtschaft und Fruchtbarkeit",
       domain: "Domäne des Lebens · Domäne des Lichts · Domäne der Natur · Domäne des Wissens",
       palette: ["#080e02","#3e6e18","#94DA48","#d8f0b0"],
-      insigniaSrc: "assets/images/insignia/Insignie_Lorelei.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Lorelei.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><path d="M40 12 A28 28 0 1 0 40 68 A20 20 0 1 1 40 12Z" stroke="currentColor" stroke-width="1.5"/><circle cx="40" cy="40" r="4" fill="currentColor" opacity="0.5"/><path d="M32 28 Q40 22 48 28" stroke="currentColor" stroke-width="1"/><path d="M28 36 Q40 30 52 36" stroke="currentColor" stroke-width="0.8" opacity="0.5"/></svg>`,
       description: "Loreleis göttliche Domäne liegt in den äußeren Ebenen und wird Das Urbeet genannt.", lore: "\"Pflege die Erde und ernte ihre Früchte. Ehre die Tierwelt und behandle ihre Wesen mit Respekt. Nimm immer nur so viel, wie du auch brauchst und wenn du etwas nimmst, gib auch etwas zurück. Gehe fürsorglich mit deiner Familie um und schätze das Wesen eines jeden ihrer Mitglieder. Sei bei der Erziehung liebevoll und bereite deinen Nachwuchs auf das Leben vor.\"",
@@ -93,7 +93,7 @@ window.GODS_DATA = {
       name: "Vindeah", title: "Göttin der Ruhe, der Gelassenheit und des Windes",
       domain: "Domäne der Arkana · Domäne der Dämmerung · Domäne des Friedens · Domäne des Grabes · Domäne des Lebens · Domäne der Natur · Domäne des Sturms · Domäne des Wissens",
       palette: ["#00211E","#21B0B0","#3EFFCC","#C4FFF0"],
-      insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><polygon points="40,10 62,23 62,57 40,70 18,57 18,23" stroke="currentColor" stroke-width="1.5"/><polygon points="40,24 52,31 52,49 40,56 28,49 28,31" stroke="currentColor" stroke-width="1" opacity="0.6"/><circle cx="40" cy="40" r="6" stroke="currentColor" stroke-width="1"/></svg>`,
       description: "Vindeahs göttliche Domäne liegt in den äußeren Ebenen und wird Der Äther genannt.", lore: "\"Bewahre Ruhe inmitten des Chaos und finde Gelassenheit selbst im Sturm. Lerne zuzuhören, bevor du handelst, und sprich nur, wenn deine Worte Gewicht tragen. Erlaube dir, loszulassen, was dich belastet, so wie der Wind alte Spuren verweht. Bringe Frieden dorthin, wo Unruhe herrscht, und Trost zu jenen, deren Herzen schwer sind. Bewege dich frei, doch zwinge niemanden deinem Willen auf. Akzeptiere Wandel, ohne ihn zu erzwingen, und vertraue darauf, dass alles seinen natürlichen Lauf findet.\“",
@@ -104,7 +104,7 @@ window.GODS_DATA = {
       name: "Ferys", title: "Gottheit der Hoffnung, des Glücks, der Spiele und des Vergnügens",
       domain: "Domäne des Friedens · Domäne des Lebens · Domäne der List · Domäne des Lichts · Domäne des Wissens",
       palette: ["#1B0B0E","#9F6266","#FF99AF","#eeddff"],
-      insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><rect x="20" y="14" width="40" height="52" rx="2" stroke="currentColor" stroke-width="1.5"/><line x1="20" y1="40" x2="60" y2="40" stroke="currentColor" stroke-width="0.8" stroke-dasharray="2 3"/><circle cx="40" cy="27" r="6" stroke="currentColor" stroke-width="1"/><circle cx="40" cy="53" r="6" stroke="currentColor" stroke-width="1" opacity="0.4"/></svg>`,
       description: "Ferys' göttliche Domäne liegt in den äußeren Ebenen und wird Das Roulette genannt.", lore: "\"Verliere nicht die Hoffnung, sollte dir Unheil wiederfahren und scheue dich nicht, Risiken einzugehen, um deine Liebsten zu beschützen. Schätze das Glück der Freundschaft und bringe deinen Frohsinn denen, die Trauer empfinden. Zeige Begeisterung für alle Geschöpfe und deren Eigenarten. Lasse nichts unversucht, um jeden Moment deines Lebens voll auszukosten, stets Neues zu erleben und dich zu amüsieren.\"",
@@ -115,7 +115,7 @@ window.GODS_DATA = {
       name: "Daramur", title: "Gott der Erde, des Gesteins und der Standhaftigkeit",
       domain: "Domäne des Grabes · Domäne des Krieges · Domäne des Lebens · Domäne der Natur · Domäne der Ordnung · Domäne der Schmiede · Domäne des Wissens",
       palette: ["#210000","#9e5d0e","#ff9f22","#ffdeb8"],
-      insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><rect x="40" y="10" width="30" height="30" transform="rotate(45 40 40)" stroke="currentColor" stroke-width="1.5"/><rect x="40" y="22" width="18" height="18" transform="rotate(45 40 40)" stroke="currentColor" stroke-width="1" opacity="0.6"/><circle cx="40" cy="40" r="4" fill="currentColor" opacity="0.4"/></svg>`,
       description: "Daramurs göttliche Domäne liegt in den äußeren Ebenen und wird Der Grundstein genannt.", lore: "\"Stehe fest zu deinen Überzeugungen und bewahre deine Haltung, auch wenn sich die Welt um dich verändert. Baue dein Leben auf einem soliden Fundament aus Disziplin, Geduld und Verantwortung. Trage deine Lasten mit Würde und halte dein Wort, denn Verlässlichkeit ist die wahre Stärke. Schütze, was dir anvertraut wurde, und prüfe Veränderungen mit Bedacht, bevor du ihnen folgst. Handle überlegt und mit Weitblick, denn alles, was Bestand haben soll, braucht Zeit. Sei ein Fels für jene, die Halt suchen, und bleibe standhaft, wenn Prüfungen über dich hereinbrechen.\“",
@@ -126,7 +126,7 @@ window.GODS_DATA = {
       name: "Eiritha", title: "Göttin der Weisheit und des Mutes",
       domain: "Domäne der Arkana · Domäne des Friedens · Domäne des Krieges · Domäne des Lichts · Domäne des Wissens",
       palette: ["#0B0529","#473f95","#595EFF","#EEDDFF"],
-      insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><path d="M15 30 Q30 20 40 30 Q50 40 65 30" stroke="currentColor" stroke-width="1.5"/><path d="M15 40 Q30 30 40 40 Q50 50 65 40" stroke="currentColor" stroke-width="1.2" opacity="0.7"/><path d="M15 50 Q30 40 40 50 Q50 60 65 50" stroke="currentColor" stroke-width="1" opacity="0.4"/><circle cx="15" cy="40" r="2" fill="currentColor" opacity="0.5"/><circle cx="65" cy="40" r="2" fill="currentColor" opacity="0.5"/></svg>`,
       description: "Eirithas göttliche Domäne liegt in den äußeren Ebenen und wird Die Akademie genannt.", lore: "\"Nur du kannst entscheiden, welcher Weg der richtige für dein Leben ist. Sei sorgfältig, plane dein Vorhaben und finde den Mut, diesen Weg zu gehen. Lerne aus deinen Fehlern und denen anderer. Aufkommende Konflikte sollten akzeptiert, respektiert und für Verbesserung genutzt werden. Pflege Körper und Geist und bilde deinen Verstand. Halte dein Wissen für die Nachwelt fest und lehre die, die wissbegierig sind. Sei ein Vorbild für all jene, die offen für Beistand sind und schenke denen, die der Dunkelheit verfallen sind, dein Licht.\"",
@@ -137,7 +137,7 @@ window.GODS_DATA = {
       name: "Hadir", title: "Gott des Handwerks, des Reichtums und des Handels",
       domain: "Domäne des Lichts · Domäne der Schmiede · Domäne des Wissens",
       palette: ["#290a00","#731e00","#FF6200","#ff9750"],
-      insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><polygon points="40,10 68,65 12,65" stroke="currentColor" stroke-width="1.5"/><polygon points="40,22 58,58 22,58" stroke="currentColor" stroke-width="1" opacity="0.6"/><polygon points="40,34 50,52 30,52" stroke="currentColor" stroke-width="1" opacity="0.3"/><circle cx="40" cy="65" r="3" stroke="currentColor" stroke-width="1"/></svg>`,
       description: "Hadirs göttliche Domäne liegt in den äußeren Ebenen und wird Die Urschmiede genannt.", lore: "\"Sei ein Vorbild und gebe dein Wissen geduldig an die Novizen deiner Zunft weiter. Lasse allem und jedem die Chance, sich zu beweisen. Fülle deinen Alltag mit produktivem Schaffen, bilde dich stets fort und verkaufe dich nicht unter deinem Wert. Sei wohltätig und nutze deinen Reichtum, um auch deinen Nächsten Wohlstand zu bringen. Schmiede wertvolle Beziehungen und inspiriere diese mit deiner Kreativität.\"",
@@ -148,7 +148,7 @@ window.GODS_DATA = {
       name: "Selunara", title: "Göttin des Mondes, der Gezeiten und der Neuanfänge",
       domain: "Domäne der Arkana · Domäne der Dämmerung · Domäne des Friedens · Domäne des Grabes · Domäne des Lichts · Domäne der Natur · Domäne des Sturms",
       palette: ["#020814","#2040a0","#287AFF","#c0d8f8"],
-      insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><path d="M14 50 Q20 30 40 28 Q60 26 66 50" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M14 50 Q20 62 40 64 Q60 66 66 50" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="40" cy="46" r="8" stroke="currentColor" stroke-width="1"/><line x1="40" y1="14" x2="40" y2="28" stroke="currentColor" stroke-width="1" opacity="0.5"/></svg>`,
       description: "Selunaras göttliche Domäne liegt in den äußeren Ebenen und wird Das Urmeer genannt.", lore: "\"Schätze sowohl die Dämmerung, als auch das Licht, denn ohne des Lichtes Existenz könnte keine Dämmerung geschehen. Ehre sowohl die Bewohner des Meeres, als auch die des Landes und behandle seine Wesen gleichermaßen mit Respekt. Sei sanftmütig, verständnisvoll und geduldig. Kontrolliere dein Temperament und bewahre Gleichgewicht. Erlaube dir, dich auszuruhen, um neue Kraft zu schöpfen. Fürchte nicht das Ende, denn das Ende ist auch der Anfang von etwas Neuem.\"",
@@ -159,7 +159,7 @@ window.GODS_DATA = {
       name: "Aetherius", title: "Gott der Illusionen, der Magie und der Wunder",
       domain: "Domäne der Arkana · Domäne der Dämmerung · Domäne des Lichts · Domäne der List",
       palette: ["#0b020d","#7c3197","#e848d2","#edd0f2"],
-      insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><rect x="14" y="14" width="24" height="24" stroke="currentColor" stroke-width="1.5"/><rect x="42" y="14" width="24" height="24" stroke="currentColor" stroke-width="1.5"/><rect x="14" y="42" width="24" height="24" stroke="currentColor" stroke-width="1.5"/><rect x="42" y="42" width="24" height="24" stroke="currentColor" stroke-width="1.5"/><circle cx="40" cy="40" r="3" fill="currentColor" opacity="0.7"/></svg>`,
       description: "Aetherius' göttliche Domäne liegt in den äußeren Ebenen und wird Der Spiegel genannt.", lore: "\"Mache dir die Magie zu Nutze, um Aufgaben des Alltags zu erleichtern und neue Möglichkeiten zu schaffen. Fürchte weder das Licht, noch die Dunkelheit, denn nur durch das perfekte Zusammenspiel beider, kannst du die Welt visuell wahrnehmen. Nutze Illusionen, um die zu täuschen, die dir schaden wollen, oder um die zu erfreuen, die du für würdig genug hältst, um wundervolle Dinge zu erblicken.\"",
@@ -170,7 +170,7 @@ window.GODS_DATA = {
       name: "Serenith", title: "Göttin der Kälte, des Eises und der Schmerzen",
       domain: "Domäne der Dämmerung · Domäne der List · Domäne des Sturms · Domäne der Natur · Domäne des Todes",
       palette: ["#01000d","#42A4AD","#67fff2","#C1FFFA"],
-      insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="24" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="40" x2="64" y2="40" stroke="currentColor" stroke-width="1"/><line x1="40" y1="16" x2="40" y2="64" stroke="currentColor" stroke-width="1"/><line x1="22.9" y1="22.9" x2="57.1" y2="57.1" stroke="currentColor" stroke-width="0.8" opacity="0.6"/><line x1="57.1" y1="22.9" x2="22.9" y2="57.1" stroke="currentColor" stroke-width="0.8" opacity="0.6"/><circle cx="40" cy="40" r="5" stroke="currentColor" stroke-width="1"/></svg>`,
       description: "Sereniths göttliche Domäne liegt in den äußeren Ebenen und wird Der Immerfrost genannt.", lore: "\"Schätze die Einsamkeit, denn sie schützt dich davor, dein Ziel aus den Augen zu verlieren. Lasse niemanden in dein Herz sehen, denn dies macht dich angreifbar. Empfange Schmerz und wachse daran, denn nur dieser zeigt dir, dass du lebendig bist. Nimm das Leid von denen, die du liebst. Bringe Erlösung zu denen, die verdorben sind oder denen, die dich verletzt haben. Vergib all jenen, die es verdienen, aber vergiss niemals, wenn dir Unrecht getan wurde.\"",
@@ -181,7 +181,7 @@ window.GODS_DATA = {
       name: "Hydea", title: "Göttin der Blitze und Unwetter",
       domain: "Domäne der List · Domäne der Natur · Domäne des Sturms",
       palette: ["#000B1D","#108552","#FFF159","#FDFFD8"],
-      insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="24" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="40" x2="64" y2="40" stroke="currentColor" stroke-width="1.5"/><line x1="40" y1="16" x2="40" y2="64" stroke="currentColor" stroke-width="1.5"/><circle cx="40" cy="40" r="8" stroke="currentColor" stroke-width="1"/><circle cx="40" cy="40" r="3" fill="currentColor" opacity="0.6"/></svg>`,
       description: "Hydeas göttliche Domäne liegt in den äußeren Ebenen und wird Der Taifun genannt.", lore: "\"Fürchte keine Zerstörung, denn diese dient dazu, um Neues aufbauen zu können. Strebe nach Veränderung und gib dich nicht dem Stillstand hin. Locke deine Feinde in den Sturm, um die Überhand über sie zu gewinnen. Sei dankbar für den Regen, der deine Felder bewässert und die Erde reinigt. Sei dankbar für das Feuer, das dich warm hält und dessen Asche fruchtbaren Boden schafft. Sei dankbar für die Erde, die dich nährt und dein Haus stützt. Sei dankbar für den Wind, der in dein Segel jagt.\"",
@@ -192,7 +192,7 @@ window.GODS_DATA = {
       name: "Melion", title: "Gottheit der Kunst, der Poesie, des Tanzes und der Musik",
       domain: "Domäne der Arkana · Domäne der Dämmerung · Domäne des Grabes · Domäne des Lebens · Domäne des Lichts · Domäne der List · Domäne des Wissens",
       palette: ["#210D38","#833493","#ff80f9","#ffec8f"],
-      insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="22" stroke="currentColor" stroke-width="1.5"/><circle cx="40" cy="40" r="10" stroke="currentColor" stroke-width="1"/><line x1="40" y1="18" x2="40" y2="28" stroke="currentColor" stroke-width="2"/><line x1="40" y1="52" x2="40" y2="62" stroke="currentColor" stroke-width="2"/><line x1="18" y1="40" x2="28" y2="40" stroke="currentColor" stroke-width="2"/><line x1="52" y1="40" x2="62" y2="40" stroke="currentColor" stroke-width="2"/><circle cx="40" cy="40" r="3" fill="currentColor" opacity="0.6"/></svg>`,
       description: "Melions göttliche Domäne liegt in den äußeren Ebenen und wird Die Bühne genannt.", lore: "\"Nutze dein Wissen und das des Volkes, um mystische Sagen zu schaffen, von denen in vielen Jahrtausenden noch erzählt wird. Nutze Rythmus oder Melodie, um deine Kameraden zu Tapferkeit und Heldenmut anzutreiben. Lasse dein Lied deine Kämpfer mit Magie ermutigen und bestärken. Webe Magie in deine Musik und Worte, um Verbündete zu inspirieren, Feinde zu entmutigen und Wunden zu heilen.\"",
@@ -203,7 +203,7 @@ window.GODS_DATA = {
       name: "Ophelis", title: "Gott der Ordnung, der Reinheit und der Perfektion",
       domain: "Domäne des Grabes · Domäne des Lebens · Domäne des Lichts · Domäne der Ordnung · Domäne der Schmiede · Domäne des Wissens",
       palette: ["#100f0e","#876d43","#D8C99D","#fff4d2"],
-      insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><line x1="10" y1="40" x2="70" y2="40" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="40" r="2" fill="currentColor" opacity="0.5"/><circle cx="70" cy="40" r="2" fill="currentColor" opacity="0.5"/><circle cx="40" cy="40" r="3" stroke="currentColor" stroke-width="1"/><line x1="40" y1="20" x2="40" y2="34" stroke="currentColor" stroke-width="0.8" opacity="0.4"/><line x1="40" y1="46" x2="40" y2="60" stroke="currentColor" stroke-width="0.8" opacity="0.4"/></svg>`,
       description: "Ophelis' göttliche Domäne liegt in den äußeren Ebenen und wird Der Waagsaal genannt.", lore: "\"So wie jedem Lebewesen eine Seele geschenkt wurde, wird sie diesem auch irgendwann genommen. Beschütze die natürliche Ordnung aller Dinge, denn diese beschreibt Perfektion. Veränderung ist Gift für die Reinheit und darf nicht auf die Ordnung einwirken. Schmiede deine Waffen aus reinem Material und sorge mit diesen dafür, dass alle Regeln eingehalten werden, denn nichts darf willkürlich geschehen und alles muss seinem vorherbestimmten Ablauf Folge leisten.\"",
@@ -214,7 +214,7 @@ window.GODS_DATA = {
       name: "Thraxis", title: "Gott des Blutes und der ewigen Qualen",
       domain: "Domäne des Krieges · Domäne der List · Domäne des Todes",
       palette: ["#100000","#901010","#d85050","#f8c0c0"],
-      insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="26" stroke="currentColor" stroke-width="1"/><circle cx="40" cy="40" r="18" stroke="currentColor" stroke-width="0.8" opacity="0.6"/><circle cx="40" cy="40" r="10" stroke="currentColor" stroke-width="0.6" opacity="0.3"/><circle cx="40" cy="40" r="2" fill="currentColor" opacity="0.2"/></svg>`,
       description: "Thraxis' göttliche Domäne liegt in den äußeren Ebenen und wird Die Hölle genannt.", lore: "\"Du wurdest geschaffen, um deine eigene Reise des Lebens anzutreten, darum lasse nicht zu, dass sich jemand in deinen Weg stellt und es wagt, dich von deinen Zielen abbringen zu wollen. Sollte dich jemand infrage stellen, lasse ihn spüren, wozu du fähig bist und höre nicht auf, bis er dies auch verstanden hat. Trainiere immer härter, um alles und jeden zu übertreffen. Akzeptiere niemals weniger Anerkennung, als dir zusteht. Bändige niemals deine Wut, denn diese ist das aufrichtigste all deiner Gefühle.\"",
@@ -225,7 +225,7 @@ window.GODS_DATA = {
       name: "Maledor", title: "Gott der Flüche, der Krankheit und der Nekromantie",
       domain: "Domäne der Arkana · Domäne der List · Domäne des Todes · Domäne des Wissens",
       palette: ["#0A000D","#003616","#40CD21","#D4A9FF"],
-      insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="22" stroke="currentColor" stroke-width="1.5"/><line x1="22" y1="58" x2="58" y2="22" stroke="currentColor" stroke-width="1.5"/><circle cx="40" cy="40" r="6" stroke="currentColor" stroke-width="1" opacity="0.6"/><circle cx="40" cy="22" r="3" stroke="currentColor" stroke-width="0.8" opacity="0.4"/><circle cx="40" cy="58" r="3" stroke="currentColor" stroke-width="0.8" opacity="0.4"/></svg>`,
       description: "Maledors göttliche Domäne liegt in den äußeren Ebenen und wird Die Fäulnis genannt.", lore: "\"Fürchte dich nicht davor, hemmungslos Emotionen zu zeigen, da es keinen Grund gibt, diese zu kontrollieren oder zu unterdrücken. Lasse dich nicht einschränken, nicht einmal vom Tod. Experimentiere, um Neues zu entdecken, das du für deine Zwecke nutzen kannst. Wenn dir etwas nicht gefällt, zerstöre oder verändere es, damit es deinen Ansprüchen gerecht wird. Solltest du etwas begehren, lasse nicht zu, dass dich etwas daran hindert, dies auch zu bekommen.\"",
@@ -238,7 +238,7 @@ window.GODS_DATA = {
       id: "baalbrezan", name: "Baalbrezan", title: "Der Aschefürst",
       domain: "Feuer · Vernichtung · Herrschaft",
       palette: ["#1a0500","#5a1000","#c03000","#ff7040"],
-      insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><polygon points="40,8 72,68 8,68" stroke="currentColor" stroke-width="1.5"/><polygon points="40,20 62,62 18,62" stroke="currentColor" stroke-width="1" opacity="0.5"/><line x1="40" y1="8" x2="40" y2="68" stroke="currentColor" stroke-width="0.8" opacity="0.3"/><circle cx="40" cy="48" r="8" stroke="currentColor" stroke-width="1"/></svg>`,
       description: LOREM, lore: LOREM_LORE, symbol: "Aschenfluch", alignment: "Chaotic Evil", worshippers: LOREM_SHORT,
@@ -247,7 +247,7 @@ window.GODS_DATA = {
       id: "cahbri", name: "Cahbri", title: "Die Flüsternde Leere",
       domain: "Wahnsinn · Stille · Verderbnis",
       palette: ["#0a0015","#250040","#600090","#c060ff"],
-      insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><path d="M40 14 C22 14 10 26 10 40 C10 54 22 66 40 66 C58 66 70 54 70 40" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M55 18 C65 24 70 32 70 40" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3"/><circle cx="40" cy="40" r="6" stroke="currentColor" stroke-width="1"/><circle cx="40" cy="40" r="2" fill="currentColor" opacity="0.4"/></svg>`,
       description: LOREM, lore: LOREM_LORE, symbol: "Gedankenkorruption", alignment: "Neutral Evil", worshippers: LOREM_SHORT,
@@ -256,7 +256,7 @@ window.GODS_DATA = {
       id: "grikuuth", name: "Grikuuth", title: "Der Knochen-Wandler",
       domain: "Tod · Mutation · Fleisch",
       palette: ["#0a0f05","#1a2a08","#406015","#90c030"],
-      insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><path d="M30 20 Q40 10 50 20 L55 40 Q60 55 40 65 Q20 55 25 40 Z" stroke="currentColor" stroke-width="1.5" fill="none"/><line x1="40" y1="10" x2="40" y2="65" stroke="currentColor" stroke-width="0.8" opacity="0.4"/><circle cx="40" cy="38" r="7" stroke="currentColor" stroke-width="1"/><line x1="25" y1="38" x2="33" y2="38" stroke="currentColor" stroke-width="1"/><line x1="47" y1="38" x2="55" y2="38" stroke="currentColor" stroke-width="1"/></svg>`,
       description: LOREM, lore: LOREM_LORE, symbol: "Fleischformung", alignment: "Chaotic Evil", worshippers: LOREM_SHORT,
@@ -265,7 +265,7 @@ window.GODS_DATA = {
       id: "kizrovidus", name: "Kizrovidus", title: "Der Ewige Hunger",
       domain: "Gier · Konsum · Leere",
       palette: ["#100808","#301010","#702020","#e05050"],
-      insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="26" stroke="currentColor" stroke-width="1.5"/><path d="M28 32 Q40 20 52 32" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M26 44 Q40 60 54 44" stroke="currentColor" stroke-width="1" fill="none"/><circle cx="32" cy="36" r="3" fill="currentColor" opacity="0.5"/><circle cx="48" cy="36" r="3" fill="currentColor" opacity="0.5"/></svg>`,
       description: LOREM, lore: LOREM_LORE, symbol: "Ewiger Konsum", alignment: "Neutral Evil", worshippers: LOREM_SHORT,
@@ -274,7 +274,7 @@ window.GODS_DATA = {
       id: "meleshor", name: "Meleshor", title: "Der Silberne Lügner",
       domain: "Täuschung · Spiegel · Doppelgänger",
       palette: ["#0a0a18","#181830","#404080","#a0a0e0"],
-      insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><rect x="22" y="12" width="36" height="56" rx="2" stroke="currentColor" stroke-width="1.5"/><line x1="22" y1="40" x2="58" y2="40" stroke="currentColor" stroke-width="0.8" stroke-dasharray="2 3"/><ellipse cx="40" cy="28" rx="8" ry="10" stroke="currentColor" stroke-width="1"/><ellipse cx="40" cy="54" rx="8" ry="10" stroke="currentColor" stroke-width="1" opacity="0.35"/></svg>`,
       description: LOREM, lore: LOREM_LORE, symbol: "Spiegeltäuschung", alignment: "Lawful Evil", worshippers: LOREM_SHORT,
@@ -283,7 +283,7 @@ window.GODS_DATA = {
       id: "nalphimex", name: "Nalphimex", title: "Der Kettengott",
       domain: "Knechtschaft · Kontrolle · Metall",
       palette: ["#080810","#151530","#303070","#7070c0"],
-      insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><circle cx="26" cy="26" r="8" stroke="currentColor" stroke-width="1.5"/><circle cx="54" cy="54" r="8" stroke="currentColor" stroke-width="1.5"/><line x1="32" y1="32" x2="48" y2="48" stroke="currentColor" stroke-width="2"/><circle cx="54" cy="26" r="8" stroke="currentColor" stroke-width="1.5"/><circle cx="26" cy="54" r="8" stroke="currentColor" stroke-width="1.5"/><line x1="48" y1="32" x2="32" y2="48" stroke="currentColor" stroke-width="2"/></svg>`,
       description: LOREM, lore: LOREM_LORE, symbol: "Kettenzwang", alignment: "Lawful Evil", worshippers: LOREM_SHORT,
@@ -292,7 +292,7 @@ window.GODS_DATA = {
       id: "netrosk", name: "Netrosk", title: "Die Pesthand",
       domain: "Seuche · Verfall · Vergessen",
       palette: ["#081008","#102010","#285028","#60b060"],
-      insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="20" stroke="currentColor" stroke-width="1.5"/><path d="M40 20 L40 14" stroke="currentColor" stroke-width="1"/><path d="M40 60 L40 66" stroke="currentColor" stroke-width="1"/><path d="M20 40 L14 40" stroke="currentColor" stroke-width="1"/><path d="M60 40 L66 40" stroke="currentColor" stroke-width="1"/><circle cx="40" cy="40" r="8" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2"/><circle cx="40" cy="40" r="3" fill="currentColor" opacity="0.35"/></svg>`,
       description: LOREM, lore: LOREM_LORE, symbol: "Pesthauch", alignment: "Neutral Evil", worshippers: LOREM_SHORT,
@@ -301,7 +301,7 @@ window.GODS_DATA = {
       id: "vezvoriak", name: "Vezvoriak", title: "Der Zeitfresser",
       domain: "Zeit · Auslöschung · Chronos",
       palette: ["#050510","#101030","#282880","#5858e0"],
-      insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="24" stroke="currentColor" stroke-width="1.5"/><line x1="40" y1="16" x2="40" y2="40" stroke="currentColor" stroke-width="2"/><line x1="40" y1="40" x2="56" y2="50" stroke="currentColor" stroke-width="1.5"/><circle cx="40" cy="40" r="3" fill="currentColor" opacity="0.7"/><line x1="40" y1="16" x2="38" y2="22" stroke="currentColor" stroke-width="1"/><line x1="40" y1="16" x2="42" y2="22" stroke="currentColor" stroke-width="1"/></svg>`,
       description: LOREM, lore: LOREM_LORE, symbol: "Zeitkorruption", alignment: "Chaotic Evil", worshippers: LOREM_SHORT,
@@ -310,7 +310,7 @@ window.GODS_DATA = {
       id: "yxlarak", name: "Yx'larak", title: "Das Gesichtslose",
       domain: "Identität · Auflösung · Chaos",
       palette: ["#0f050f","#2a102a","#602060","#d060d0"],
-      insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="24" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="40" x2="64" y2="40" stroke="currentColor" stroke-width="0.8" stroke-dasharray="3 3"/><line x1="40" y1="16" x2="40" y2="64" stroke="currentColor" stroke-width="0.8" stroke-dasharray="3 3"/><circle cx="40" cy="40" r="10" stroke="currentColor" stroke-width="1" stroke-dasharray="2 4"/><circle cx="40" cy="40" r="2" fill="currentColor" opacity="0.3"/></svg>`,
       description: LOREM, lore: LOREM_LORE, symbol: "Identitätsauflösung", alignment: "Chaotic Evil", worshippers: LOREM_SHORT,
@@ -318,15 +318,15 @@ window.GODS_DATA = {
   ],
 
   naturgeister: [
-    { id: "ng-waldgeist",   name: "Waldgeist",   title: "Geist des Alten Waldes",   domain: "Wald · Wachstum · Schutz",    palette: ["#081208","#142814","#306030","#80c080"], insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
- symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><polygon points="40,10 55,35 40,30 25,35" stroke="currentColor" stroke-width="1.5" fill="none"/><polygon points="40,28 58,55 40,48 22,55" stroke="currentColor" stroke-width="1.5" fill="none"/><line x1="40" y1="55" x2="40" y2="70" stroke="currentColor" stroke-width="2"/><line x1="32" y1="65" x2="48" y2="65" stroke="currentColor" stroke-width="1.5"/></svg>`, description: LOREM_SHORT, lore: LOREM_LORE, symbol: "Waldatem", alignment: "Neutral Good", worshippers: LOREM_SHORT },
-    { id: "ng-steingeist",  name: "Steingeist",  title: "Stimme des Gebirges",       domain: "Stein · Ausdauer · Tiefe",    palette: ["#101010","#252525","#555555","#b0b0b0"], insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
- symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><polygon points="40,12 68,60 12,60" stroke="currentColor" stroke-width="1.5" fill="none"/><polygon points="40,28 56,56 24,56" stroke="currentColor" stroke-width="1" fill="none" opacity="0.5"/><circle cx="40" cy="46" r="5" stroke="currentColor" stroke-width="1"/></svg>`, description: LOREM_SHORT, lore: LOREM_LORE, symbol: "Erdgedächtnis", alignment: "True Neutral", worshippers: LOREM_SHORT },
-    { id: "ng-flussgeist",  name: "Flussgeist",  title: "Stimme des fließenden Wassers", domain: "Wasser · Bewegung · Zeit", palette: ["#050f20","#0a2040","#1a5080","#60b0e0"], insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
- symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><path d="M14 35 Q27 25 40 35 Q53 45 66 35" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M14 45 Q27 35 40 45 Q53 55 66 45" stroke="currentColor" stroke-width="1.2" fill="none" opacity="0.7"/><path d="M14 55 Q27 45 40 55 Q53 65 66 55" stroke="currentColor" stroke-width="1" fill="none" opacity="0.4"/></svg>`, description: LOREM_SHORT, lore: LOREM_LORE, symbol: "Strömung", alignment: "True Neutral", worshippers: LOREM_SHORT },
-    { id: "ng-windgeist",   name: "Windgeist",   title: "Atem des freien Himmels",   domain: "Wind · Freiheit · Wandel",    palette: ["#080f18","#101e30","#204060","#80b0d0"], insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
- symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><path d="M15 30 Q30 20 40 30 Q50 40 65 30" stroke="currentColor" stroke-width="1.5"/><path d="M15 40 Q30 30 40 40 Q50 50 65 40" stroke="currentColor" stroke-width="1.2" opacity="0.7"/><path d="M15 50 Q30 40 40 50 Q50 60 65 50" stroke="currentColor" stroke-width="1" opacity="0.4"/><circle cx="15" cy="40" r="2" fill="currentColor" opacity="0.5"/></svg>`, description: LOREM_SHORT, lore: LOREM_LORE, symbol: "Windstimme", alignment: "Chaotic Good", worshippers: LOREM_SHORT },
-    { id: "ng-feuergeist",  name: "Feuergeist",  title: "Glut der Urkraft",          domain: "Feuer · Erneuerung · Licht",  palette: ["#180800","#402000","#904010","#e08030"], insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
- symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><path d="M40 65 C25 55 18 42 26 30 C30 24 36 28 34 36 C40 28 44 16 52 22 C60 28 58 50 40 65Z" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="40" cy="48" r="6" stroke="currentColor" stroke-width="1"/></svg>`, description: LOREM_SHORT, lore: LOREM_LORE, symbol: "Urglut", alignment: "Chaotic Neutral", worshippers: LOREM_SHORT },
+    { id: "ng-waldgeist",   name: "Waldgeist",   title: "Geist des Alten Waldes",   domain: "Wald · Wachstum · Schutz",    palette: ["#081208","#142814","#306030","#80c080"], insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
+ symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><polygon points="40,10 55,35 40,30 25,35" stroke="currentColor" stroke-width="1.5" fill="none"/><polygon points="40,28 58,55 40,48 22,55" stroke="currentColor" stroke-width="1.5" fill="none"/><line x1="40" y1="55" x2="40" y2="70" stroke="currentColor" stroke-width="2"/><line x1="32" y1="65" x2="48" y2="65" stroke="currentColor" stroke-width="1.5"/></svg>`, description: LOREM_SHORT, lore: LOREM_LORE, power: "Waldatem", alignment: "Neutral Good", worshippers: LOREM_SHORT },
+    { id: "ng-steingeist",  name: "Steingeist",  title: "Stimme des Gebirges",       domain: "Stein · Ausdauer · Tiefe",    palette: ["#101010","#252525","#555555","#b0b0b0"], insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
+ symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><polygon points="40,12 68,60 12,60" stroke="currentColor" stroke-width="1.5" fill="none"/><polygon points="40,28 56,56 24,56" stroke="currentColor" stroke-width="1" fill="none" opacity="0.5"/><circle cx="40" cy="46" r="5" stroke="currentColor" stroke-width="1"/></svg>`, description: LOREM_SHORT, lore: LOREM_LORE, power: "Erdgedächtnis", alignment: "True Neutral", worshippers: LOREM_SHORT },
+    { id: "ng-flussgeist",  name: "Flussgeist",  title: "Stimme des fließenden Wassers", domain: "Wasser · Bewegung · Zeit", palette: ["#050f20","#0a2040","#1a5080","#60b0e0"], insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
+ symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><path d="M14 35 Q27 25 40 35 Q53 45 66 35" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M14 45 Q27 35 40 45 Q53 55 66 45" stroke="currentColor" stroke-width="1.2" fill="none" opacity="0.7"/><path d="M14 55 Q27 45 40 55 Q53 65 66 55" stroke="currentColor" stroke-width="1" fill="none" opacity="0.4"/></svg>`, description: LOREM_SHORT, lore: LOREM_LORE, power: "Strömung", alignment: "True Neutral", worshippers: LOREM_SHORT },
+    { id: "ng-windgeist",   name: "Windgeist",   title: "Atem des freien Himmels",   domain: "Wind · Freiheit · Wandel",    palette: ["#080f18","#101e30","#204060","#80b0d0"], insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
+ symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><path d="M15 30 Q30 20 40 30 Q50 40 65 30" stroke="currentColor" stroke-width="1.5"/><path d="M15 40 Q30 30 40 40 Q50 50 65 40" stroke="currentColor" stroke-width="1.2" opacity="0.7"/><path d="M15 50 Q30 40 40 50 Q50 60 65 50" stroke="currentColor" stroke-width="1" opacity="0.4"/><circle cx="15" cy="40" r="2" fill="currentColor" opacity="0.5"/></svg>`, description: LOREM_SHORT, lore: LOREM_LORE, power: "Windstimme", alignment: "Chaotic Good", worshippers: LOREM_SHORT },
+    { id: "ng-feuergeist",  name: "Feuergeist",  title: "Glut der Urkraft",          domain: "Feuer · Erneuerung · Licht",  palette: ["#180800","#402000","#904010","#e08030"], insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
+ symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><path d="M40 65 C25 55 18 42 26 30 C30 24 36 28 34 36 C40 28 44 16 52 22 C60 28 58 50 40 65Z" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="40" cy="48" r="6" stroke="currentColor" stroke-width="1"/></svg>`, description: LOREM_SHORT, lore: LOREM_LORE, power: "Urglut", alignment: "Chaotic Neutral", worshippers: LOREM_SHORT },
   ],
 };
