@@ -3,12 +3,30 @@ const LOREM_SHORT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, se
 const LOREM_LORE = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
 window.GODS_DATA = {
+
+  domainMap: {
+    "Domäne der Arkana":    "Arkana",
+    "Domäne der Dämmerung": "Dämmerung",
+    "Domäne des Friedens":  "Frieden",
+    "Domäne des Grabes":    "Grab",
+    "Domäne des Krieges":   "Krieg",
+    "Domäne des Lebens":    "Leben",
+    "Domäne des Lichts":    "Licht",
+    "Domäne der List":      "List",
+    "Domäne der Natur":     "Natur",
+    "Domäne der Ordnung":   "Ordnung",
+    "Domäne der Schmiede":  "Schmiede",
+    "Domäne des Sturms":    "Sturm",
+    "Domäne des Todes":     "Tod",
+    "Domäne des Wissens":   "Wissen",
+  },
+
   gods: [
     // ── CELESTIAL (4) ──────────────────────────────────────────
     {
       id: "aurelia", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Aurelia", title: "Göttin der Stärke, der Ehre und des Kampfgeschicks",
-      domain: "Domäne des Grabes · Domäne des Kriegs · Domäne der Schmiede · Domäne des Sturms",
+      domain: "Domäne des Grabes · Domäne des Krieges · Domäne der Schmiede · Domäne des Sturms",
       palette: ["#06081B","#83632a","#ffbd38","#f5d98a"],
       insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
 
@@ -111,7 +129,7 @@ window.GODS_DATA = {
     {
       id: "eiritha", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Eiritha", title: "Göttin der Weisheit und des Mutes",
-      domain: "Domäne der Arkana · Domäne des Friedens · Domäne des Kriegs · Domäne des Lichts · Domäne des Wissens",
+      domain: "Domäne der Arkana · Domäne des Friedens · Domäne des Krieges · Domäne des Lichts · Domäne des Wissens",
       palette: ["#0B0529","#473f95","#595EFF","#EEDDFF"],
       insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
 
@@ -203,7 +221,7 @@ window.GODS_DATA = {
     {
       id: "thraxis", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Thraxis", title: "Gott des Blutes und der ewigen Qualen",
-      domain: "Domäne des Kriegs · Domäne der List · Domäne des Todes",
+      domain: "Domäne des Krieges · Domäne der List · Domäne des Todes",
       palette: ["#100000","#901010","#d85050","#f8c0c0"],
       insigniaSrc: "assets/images/insignia/Insignie_Aurelia.png",
 

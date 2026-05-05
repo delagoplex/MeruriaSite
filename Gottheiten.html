@@ -45,7 +45,7 @@ function OctSvg({ size = 24, color = 'currentColor', fill = 'none', strokeWidth 
     </svg>
   );
 }
-const { gods, demons, naturgeister } = window.GODS_DATA;
+const { gods, demons, naturgeister, domainMap } = window.GODS_DATA;
 const { useTweaks, TweaksPanel, TweakSection, TweakSlider, TweakToggle, SiteNav, ParticleField, FloatingHexField } = window;
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
@@ -251,10 +251,22 @@ function EntityCard({ entity, onClick, accentLabel }) {
 
           {/* Name badge on hover — above everything */}
           <div style={{
-            position:'absolute', bottom:'14px', left:'14px', zIndex:33,
+            position:'absolute', bottom:'14px', left:'14px', right:'14px', zIndex:33,
             transform:'translateZ(3px)',
             opacity: hov ? 1 : 0, transition:'opacity 0.35s ease'
           }}>
+            <div style={{ display:'flex', flexDirection:'column', alignItems:'flex-start', gap:'6px', marginBottom:'12px' }}>
+              {entity.domain.split(' · ').map((d, i) => (
+                <span key={i} style={{
+                  fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.18em',
+                  padding:'4px 10px', borderRadius:'2px',
+                  border:`1px solid ${accent}55`, color:accent,
+                  background:`${accent}12`, textTransform:'uppercase',
+                  transition:`opacity 0.3s ease ${i * 0.04}s`,
+                  opacity: hov ? 1 : 0,
+                }}>{domainMap[d] ?? d}</span>
+              ))}
+            </div>
             <h3 style={{ fontFamily:'var(--font-display)', fontSize:'15px', fontWeight:'400', letterSpacing:'0.16em', color:'#f0eeff', textShadow:`0 0 24px ${accent}cc, 0 2px 8px rgba(0,0,0,0.9)`, textTransform:'uppercase' }}>{entity.name}</h3>
           </div>
 
