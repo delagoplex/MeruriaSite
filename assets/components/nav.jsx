@@ -80,7 +80,7 @@
 const { useState, useEffect, useRef } = React;
 
 const NAV = [
-  { id: 'spielerhandbuch', label: 'Spielerhandbuch', items: [{ label: 'Einleitung', href: '#' }, { label: 'Charaktererstellung', href: '#' }, { label: 'Regeln', href: '#' }, { label: 'Ausrüstung', href: 'Ausrüstung.html' }] },
+  { id: 'spielerhandbuch', label: 'Spielerhandbuch', items: [{ label: 'Einleitung', href: '#' }, { label: 'Charaktererstellung', href: '#' }, { label: 'Regeln', href: '#' }, { label: 'Ausrüstung', href: 'Ausrüstung.html'}] },
   { id: 'charaktererstellung', label: 'Charaktererstellung', items: [{ label: 'Neuer Charakter', href: '#', dividerAfter: true }, { label: 'Rassen', href: 'Rassen.html' }, { label: 'Klassen', href: 'Klassen.html' }, { label: 'Talente', href: '#' }, { label: 'Hintergründe', href: '#' }, { label: 'Zauber', href: '#' }, { label: 'Ausrüstung', href: 'Ausrüstung.html' }] },
   { id: 'enzyklopaedie', label: 'Enzyklopädie', items: [{ label: 'Gottheiten', href: 'Gottheiten.html' }, { label: 'Völker', href: '#' }, { label: 'Orte', href: '#' }, { label: 'Geschichte', href: '#' }] },
   { id: 'divisionen', label: 'Divisionen', items: [{ label: 'I — Die Kuratoren', href: 'Die Kuratoren.html' }, { label: 'II — Die Sturmritter', href: 'Sturmritter.html' }, { label: 'III — Die Sentinels', href: 'Sentinels.html' }, { label: 'IV — Die Friedenshüter', href: 'Friedenshueter.html' }, { label: 'V — Die Outfitters', href: 'Outfitters.html' }, { label: 'VI — Die Pathfinders', href: 'Pathfinders.html' }, { label: 'VII — Die Quellensucher', href: 'Quellensucher.html' }, { label: 'VIII — Die Bergungsgarde', href: 'Bergungsgarde.html' }] },
