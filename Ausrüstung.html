@@ -16,6 +16,7 @@
 <script src="assets/components/page-header.jsx" type="text/babel"></script>
 <script src="assets/components/particle-field.jsx" type="text/babel"></script>
 <script src="assets/components/footer.jsx" type="text/babel"></script>
+<script src="assets/components/float-nav.jsx" type="text/babel"></script>
 
 </head>
 <body>
@@ -23,7 +24,7 @@
 <script type="text/babel">
 
 const { useState, useEffect, useRef, useCallback } = React;
-const { useTweaks, TweaksPanel, TweakSection, TweakToggle, TweakColor, SiteNav, SiteFooter, ParticleField, PageHeader } = window;
+const { useTweaks, TweaksPanel, TweakSection, TweakToggle, TweakColor, SiteNav, SiteFooter, ParticleField, PageHeader, FloatNav } = window;
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "showParticles": true,
@@ -1758,6 +1759,7 @@ function App() {
       <SiteFooter accent={accent} />
 
       {/* TWEAKS */}
+      <FloatNav />
       <TweaksPanel>
         <TweakSection label="Darstellung" />
         <TweakColor id="accentColor" label="Akzentfarbe" />

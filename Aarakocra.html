@@ -10,6 +10,7 @@
 <script src="assets/scripts/vendor/react-dom.development.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
 <script src="assets/scripts/vendor/image-slot.js"></script>
+<script src="assets/components/float-nav.jsx" type="text/babel"></script>
 </head>
 <body>
 <div id="root"></div>
@@ -547,36 +548,7 @@ function CharakterQuiz() {
   );
 }
 
-// ── FLOATING SCROLL BUTTONS ───────────────────────────────
-function FloatNav() {
-  const [visible, setVisible] = useState(true);
-  useEffect(() => {}, []);
-
-  const toTop = () => window.scrollTo({ top:0, behavior:'smooth' });
-  const toStatblock = () => {
-    const el = document.getElementById('statblock');
-    if (el) el.scrollIntoView({ behavior:'smooth', block:'start' });
-  };
-
-  if (!visible) return null;
-  return (
-    <div style={{ position:'fixed', right:'20px', bottom:'28px', zIndex:200, display:'flex', flexDirection:'column', gap:'8px' }}>
-      <button className="float-nav-btn" onClick={toTop} title="Nach oben">
-        <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.5">
-          <path d="M4 10l4-4 4 4"/>
-        </svg>
-      </button>
-      <button className="float-nav-btn" onClick={toStatblock} title="Zum Statblock" style={{ fontSize:'8px', letterSpacing:'0.05em', fontFamily:'var(--font-mono)', width:'36px', height:'36px', borderRadius:'50%' }}>
-        <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.5">
-          <rect x="3" y="2" width="10" height="12" rx="1.5"/>
-          <line x1="6" y1="6" x2="10" y2="6"/>
-          <line x1="6" y1="9" x2="10" y2="9"/>
-          <line x1="6" y1="12" x2="9" y2="12"/>
-        </svg>
-      </button>
-    </div>
-  );
-}
+const { FloatNav } = window;
 
 // ── APP ───────────────────────────────────────────────────
 function App() {
