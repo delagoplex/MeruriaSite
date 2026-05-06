@@ -80,11 +80,12 @@
 const { useState, useEffect, useRef } = React;
 
 const NAV = [
-  { id: 'spielerhandbuch', label: 'Spielerhandbuch', items: [{ label: 'Einleitung', href: '#' }, { label: 'Charaktererstellung', href: '#' }, { label: 'Regeln', href: '#' }, { label: 'Ausrüstung', href: 'Ausrüstung.html'}] },
+  { id: 'einleitung', label: 'Einleitung', items: [{ label: 'Informationen', href: '#' }, { label: 'Vorgeschichte', href: '#' }, { label: 'Sitzung Null', href: '#'}] },
+   { id: 'spielerhandbuch', label: 'Spielerhandbuch', items: [{ label: 'Realismus', href: '#' }, { label: 'Handwerk', href: '#' }, { label: 'Schutzherren', href: '#'}, { label: 'Gesinnungen', href: '#'}, { label: 'Regierungsformen', href: '#'}] },
   { id: 'charaktererstellung', label: 'Charaktererstellung', items: [{ label: 'Neuer Charakter', href: '#', dividerAfter: true }, { label: 'Rassen', href: 'Rassen.html' }, { label: 'Klassen', href: 'Klassen.html' }, { label: 'Talente', href: '#' }, { label: 'Hintergründe', href: '#' }, { label: 'Zauber', href: '#' }, { label: 'Ausrüstung', href: 'Ausrüstung.html' }] },
-  { id: 'enzyklopaedie', label: 'Enzyklopädie', items: [{ label: 'Gottheiten', href: 'Gottheiten.html' }, { label: 'Völker', href: '#' }, { label: 'Orte', href: '#' }, { label: 'Geschichte', href: '#' }] },
+  { id: 'enzyklopaedie', label: 'Enzyklopädie', items: [{ label: 'Völker', href: '#' }, { label: 'Organisationen', href: '#' }, { label: 'Orte', href: '#' }, { label: 'Gottheiten', href: 'Gottheiten.html' }, { label: 'Religionen', href: '#' }] },
   { id: 'divisionen', label: 'Divisionen', items: [{ label: 'I — Die Kuratoren', href: 'Die Kuratoren.html' }, { label: 'II — Die Sturmritter', href: 'Sturmritter.html' }, { label: 'III — Die Sentinels', href: 'Sentinels.html' }, { label: 'IV — Die Friedenshüter', href: 'Friedenshueter.html' }, { label: 'V — Die Outfitters', href: 'Outfitters.html' }, { label: 'VI — Die Pathfinders', href: 'Pathfinders.html' }, { label: 'VII — Die Quellensucher', href: 'Quellensucher.html' }, { label: 'VIII — Die Bergungsgarde', href: 'Bergungsgarde.html' }] },
-  { id: 'tab5', label: 'Tab', items: [{ label: 'Seite 1', href: '#' }, { label: 'Seite 2', href: '#' }] }
+  { id: 'charaktere', label: 'Charaktere', items: [{ label: 'Spielercharaktere', href: '#' }, { label: 'NSC', href: '#' }] }
 ];
 
 function NavItem({ tab }) {
