@@ -76,7 +76,7 @@ window.GODS_DATA = {
       domain: "Domäne des Friedens · Domäne des Grabes · Domäne des Lebens · Domäne der Ordnung",
       palette: ["#001f13","#54C472","#FF76B8","#FFDBEC"],
       insigniaSrc: "assets/images/gods/insignia/Insignie_Cecillia.png",
-      backgroundSrc: "assets/images/gods/backgrounds/BG_Cecillia.webp",
+      backgroundSrc: "assets/images/gods/backgrounds/BG_Cecillia.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="28" stroke="currentColor" stroke-width="1"/><circle cx="40" cy="40" r="18" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3"/><circle cx="40" cy="40" r="8" stroke="currentColor" stroke-width="1"/><circle cx="40" cy="40" r="2" fill="currentColor" opacity="0.4"/></svg>`,
       description: "Cecillias göttliche Domäne liegt in den äußeren Ebenen und wird Der Himmel genannt.", lore: "\"Akzeptiere jeden so, wie er ist und siehe immer das Gute in ihnen, denn jedes Leben ist heilig und sollte beschützt werden. Lege deine Priorität darauf, Konflikte friedlich zu lösen und niemanden zu verletzen. Behandele andere so, wie du selbst auch behandelt werden möchtest. Erlöse Kreaturen von Krankheit und bringe ihnen Genesung.\"",
