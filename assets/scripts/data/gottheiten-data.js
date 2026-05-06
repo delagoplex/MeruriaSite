@@ -88,7 +88,7 @@ window.GODS_DATA = {
       domain: "Domäne des Lebens · Domäne des Lichts · Domäne der Natur · Domäne des Wissens",
       palette: ["#080e02","#3e6e18","#94DA48","#d8f0b0"],
       insigniaSrc: "assets/images/gods/insignia/Insignie_Lorelei.png",
-      backgroundSrc: null,
+      backgroundSrc: "assets/images/gods/backgrounds/BG_Lorelei.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><path d="M40 12 A28 28 0 1 0 40 68 A20 20 0 1 1 40 12Z" stroke="currentColor" stroke-width="1.5"/><circle cx="40" cy="40" r="4" fill="currentColor" opacity="0.5"/><path d="M32 28 Q40 22 48 28" stroke="currentColor" stroke-width="1"/><path d="M28 36 Q40 30 52 36" stroke="currentColor" stroke-width="0.8" opacity="0.5"/></svg>`,
       description: "Loreleis göttliche Domäne liegt in den äußeren Ebenen und wird Das Urbeet genannt.", lore: "\"Pflege die Erde und ernte ihre Früchte. Ehre die Tierwelt und behandle ihre Wesen mit Respekt. Nimm immer nur so viel, wie du auch brauchst und wenn du etwas nimmst, gib auch etwas zurück. Gehe fürsorglich mit deiner Familie um und schätze das Wesen eines jeden ihrer Mitglieder. Sei bei der Erziehung liebevoll und bereite deinen Nachwuchs auf das Leben vor.\"",
@@ -100,7 +100,7 @@ window.GODS_DATA = {
       domain: "Domäne der Arkana · Domäne der Dämmerung · Domäne des Friedens · Domäne des Grabes · Domäne des Lebens · Domäne der Natur · Domäne des Sturms · Domäne des Wissens",
       palette: ["#00211E","#21B0B0","#3EFFCC","#C4FFF0"],
       insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
-      backgroundSrc: null,
+      backgroundSrc: "assets/images/gods/backgrounds/BG_Vindeah.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><polygon points="40,10 62,23 62,57 40,70 18,57 18,23" stroke="currentColor" stroke-width="1.5"/><polygon points="40,24 52,31 52,49 40,56 28,49 28,31" stroke="currentColor" stroke-width="1" opacity="0.6"/><circle cx="40" cy="40" r="6" stroke="currentColor" stroke-width="1"/></svg>`,
       description: "Vindeahs göttliche Domäne liegt in den äußeren Ebenen und wird Der Äther genannt.", lore: "\"Bewahre Ruhe inmitten des Chaos und finde Gelassenheit selbst im Sturm. Lerne zuzuhören, bevor du handelst, und sprich nur, wenn deine Worte Gewicht tragen. Erlaube dir, loszulassen, was dich belastet, so wie der Wind alte Spuren verweht. Bringe Frieden dorthin, wo Unruhe herrscht, und Trost zu jenen, deren Herzen schwer sind. Bewege dich frei, doch zwinge niemanden deinem Willen auf. Akzeptiere Wandel, ohne ihn zu erzwingen, und vertraue darauf, dass alles seinen natürlichen Lauf findet.\“",
@@ -110,9 +110,9 @@ window.GODS_DATA = {
       id: "ferys", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Ferys", title: "Gottheit der Hoffnung, des Glücks, der Spiele und des Vergnügens",
       domain: "Domäne des Friedens · Domäne des Lebens · Domäne der List · Domäne des Lichts · Domäne des Wissens",
-      palette: ["#1B0B0E","#9F6266","#FF99AF","#eeddff"],
+      palette: ["#222b37","#9fb5be","#ff4949","#ffcdd5"],
       insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
-      backgroundSrc: null,
+      backgroundSrc: "assets/images/gods/backgrounds/BG_Ferys.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><rect x="20" y="14" width="40" height="52" rx="2" stroke="currentColor" stroke-width="1.5"/><line x1="20" y1="40" x2="60" y2="40" stroke="currentColor" stroke-width="0.8" stroke-dasharray="2 3"/><circle cx="40" cy="27" r="6" stroke="currentColor" stroke-width="1"/><circle cx="40" cy="53" r="6" stroke="currentColor" stroke-width="1" opacity="0.4"/></svg>`,
       description: "Ferys' göttliche Domäne liegt in den äußeren Ebenen und wird Das Roulette genannt.", lore: "\"Verliere nicht die Hoffnung, sollte dir Unheil wiederfahren und scheue dich nicht, Risiken einzugehen, um deine Liebsten zu beschützen. Schätze das Glück der Freundschaft und bringe deinen Frohsinn denen, die Trauer empfinden. Zeige Begeisterung für alle Geschöpfe und deren Eigenarten. Lasse nichts unversucht, um jeden Moment deines Lebens voll auszukosten, stets Neues zu erleben und dich zu amüsieren.\"",
@@ -124,7 +124,7 @@ window.GODS_DATA = {
       domain: "Domäne des Grabes · Domäne des Krieges · Domäne des Lebens · Domäne der Natur · Domäne der Ordnung · Domäne der Schmiede · Domäne des Wissens",
       palette: ["#210000","#9e5d0e","#ff9f22","#ffdeb8"],
       insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
-      backgroundSrc: null,
+      backgroundSrc: "assets/images/gods/backgrounds/BG_Daramur.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><rect x="40" y="10" width="30" height="30" transform="rotate(45 40 40)" stroke="currentColor" stroke-width="1.5"/><rect x="40" y="22" width="18" height="18" transform="rotate(45 40 40)" stroke="currentColor" stroke-width="1" opacity="0.6"/><circle cx="40" cy="40" r="4" fill="currentColor" opacity="0.4"/></svg>`,
       description: "Daramurs göttliche Domäne liegt in den äußeren Ebenen und wird Der Grundstein genannt.", lore: "\"Stehe fest zu deinen Überzeugungen und bewahre deine Haltung, auch wenn sich die Welt um dich verändert. Baue dein Leben auf einem soliden Fundament aus Disziplin, Geduld und Verantwortung. Trage deine Lasten mit Würde und halte dein Wort, denn Verlässlichkeit ist die wahre Stärke. Schütze, was dir anvertraut wurde, und prüfe Veränderungen mit Bedacht, bevor du ihnen folgst. Handle überlegt und mit Weitblick, denn alles, was Bestand haben soll, braucht Zeit. Sei ein Fels für jene, die Halt suchen, und bleibe standhaft, wenn Prüfungen über dich hereinbrechen.\“",
@@ -136,7 +136,7 @@ window.GODS_DATA = {
       domain: "Domäne der Arkana · Domäne des Friedens · Domäne des Krieges · Domäne des Lichts · Domäne des Wissens",
       palette: ["#0B0529","#473f95","#595EFF","#EEDDFF"],
       insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
-      backgroundSrc: null,
+      backgroundSrc: "assets/images/gods/backgrounds/BG_Eiritha.webp",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><path d="M15 30 Q30 20 40 30 Q50 40 65 30" stroke="currentColor" stroke-width="1.5"/><path d="M15 40 Q30 30 40 40 Q50 50 65 40" stroke="currentColor" stroke-width="1.2" opacity="0.7"/><path d="M15 50 Q30 40 40 50 Q50 60 65 50" stroke="currentColor" stroke-width="1" opacity="0.4"/><circle cx="15" cy="40" r="2" fill="currentColor" opacity="0.5"/><circle cx="65" cy="40" r="2" fill="currentColor" opacity="0.5"/></svg>`,
       description: "Eirithas göttliche Domäne liegt in den äußeren Ebenen und wird Die Akademie genannt.", lore: "\"Nur du kannst entscheiden, welcher Weg der richtige für dein Leben ist. Sei sorgfältig, plane dein Vorhaben und finde den Mut, diesen Weg zu gehen. Lerne aus deinen Fehlern und denen anderer. Aufkommende Konflikte sollten akzeptiert, respektiert und für Verbesserung genutzt werden. Pflege Körper und Geist und bilde deinen Verstand. Halte dein Wissen für die Nachwelt fest und lehre die, die wissbegierig sind. Sei ein Vorbild für all jene, die offen für Beistand sind und schenke denen, die der Dunkelheit verfallen sind, dein Licht.\"",
