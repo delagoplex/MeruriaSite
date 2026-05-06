@@ -3,7 +3,7 @@
 
 // ── DATA ─────────────────────────────────────────────────
 
-const ABENTEUER_ITEMS = [
+var ABENTEUER_ITEMS = [
 { name: 'Abakus', kosten: '200 Hade', pfund: '2' },
 { name: 'Alchemistenfeuer (Flasche)', kosten: '5.000 Hade', pfund: '1', desc: true },
 { name: 'Angelausrüstung', kosten: '100 Hade', pfund: '4', desc: true },
@@ -89,31 +89,31 @@ const ABENTEUER_ITEMS = [
 { name: 'Zunderkästchen', kosten: '50 Hade', pfund: '0.5', desc: true }];
 
 
-const ARKANER_FOKUS = [
+var ARKANER_FOKUS = [
 { name: 'Kristall', kosten: '1.000 Hade', pfund: '1' },
 { name: 'Kugel', kosten: '2.000 Hade', pfund: '3' },
 { name: 'Rute', kosten: '1.000 Hade', pfund: '2' },
 { name: 'Stab', kosten: '500 Hade', pfund: '4' },
 { name: 'Zauberstab', kosten: '1.000 Hade', pfund: '1' }];
 
-const DRUIDISCHER_FOKUS = [
+var DRUIDISCHER_FOKUS = [
 { name: 'Holzstab', kosten: '500 Hade', pfund: '4' },
 { name: 'Eibenzauberstab', kosten: '1.000 Hade', pfund: '1' },
 { name: 'Mistelzweigsprössling', kosten: '100 Hade', pfund: '—' },
 { name: 'Totem', kosten: '100 Hade', pfund: '—' }];
 
-const HEILIGES_SYMBOL = [
+var HEILIGES_SYMBOL = [
 { name: 'Amulett', kosten: '500 Hade', pfund: '1' },
 { name: 'Emblem', kosten: '500 Hade', pfund: '—' },
 { name: 'Reliquie', kosten: '500 Hade', pfund: '2' }];
 
-const GESCHOSSE = [
+var GESCHOSSE = [
 { name: 'Armbrustbolzen (20 Stk.)', kosten: '100 Hade', pfund: '1.5' },
 { name: 'Blasrohrpfeile (50 Stk.)', kosten: '100 Hade', pfund: '1' },
 { name: 'Pfeile (20 Stk.)', kosten: '100 Hade', pfund: '1' },
 { name: 'Schleuderkugeln (20 Stk.)', kosten: '4 Hade', pfund: '1.5' }];
 
-const BEHAELTER = [
+var BEHAELTER = [
 { name: 'Becher oder Tonhumpen', kapazitaet: '0.5 Liter Flüssigkeit' },
 { name: 'Beutel', kapazitaet: '6 Liter Fassungsvermögen / 6 Pfd. Ausrüstung' },
 { name: 'Eimer', kapazitaet: '12 Liter Fassungsvermögen' },
@@ -129,7 +129,7 @@ const BEHAELTER = [
 { name: 'Wasserschlauch', kapazitaet: '2 Liter Flüssigkeit' }];
 
 
-const ITEM_DESCRIPTIONS = {
+var ITEM_DESCRIPTIONS = {
   'Alchemistenfeuer (Flasche)': 'Diese zähe, klebrige Flüssigkeit entzündet sich, wenn sie in Kontakt mit Luft kommt. Als Aktion kannst du das Fläschchen bis zu 6 m weit werfen, wo es beim Aufprall zerspringt. Führe einen Fernkampfangriff gegen ein Objekt oder eine Kreatur aus, wobei das Alchemistenfeuer als improvisierte Waffe behandelt wird. Bei einem Treffer erleidet das Ziel zu Beginn jedes seiner Züge 1W4 Feuerschaden. Eine Kreatur kann diesen Schaden beenden, indem es eine Aktion aufwendet und einen Geschicklichkeitswurf gegen SG 10 ablegt, um die Flammen zu löschen.',
   'Angelausrüstung': 'Diese Zusammenstellung beinhaltet eine Angelrute, Angelschnur, Korkschwimmer, Stahlhaken, Bleigewichte, Seidenköder und engmaschige Netze.',
   'Behälter (Armbrustbolzen)': 'Dieser hölzerne Kasten fasst bis zu 20 Armbrustbolzen.',
@@ -173,7 +173,7 @@ const ITEM_DESCRIPTIONS = {
 };
 
 // ── WAFFEN DATA ───────────────────────────────────────────
-const EINFACHE_NAHKAMPF = [
+var EINFACHE_NAHKAMPF = [
   { name: 'Beil',            kosten: '500 Hade',  schaden: '1W6 Hieb',  pfund: '2',    eigenschaften: 'Leicht, Wurfwaffe (Reichweite 6/18)' },
   { name: 'Dolch',           kosten: '200 Hade',  schaden: '1W4 Stich', pfund: '1',    eigenschaften: 'Finesse, leicht, Wurfwaffe (Reichweite 6/18)' },
   { name: 'Hammer, leicht',  kosten: '200 Hade',  schaden: '1W4 Wucht', pfund: '2',    eigenschaften: 'Leicht, Wurfwaffe (Reichweite 6/18)' },
@@ -185,13 +185,13 @@ const EINFACHE_NAHKAMPF = [
   { name: 'Wurfspeer',       kosten: '50 Hade',   schaden: '1W6 Stich', pfund: '2',    eigenschaften: 'Wurfwaffe (Reichweite 9/36)' },
   { name: 'Zweihandknüppel', kosten: '20 Hade',   schaden: '1W8 Wucht', pfund: '10',   eigenschaften: 'Zweihändig' },
 ];
-const EINFACHE_FERNKAMPF = [
+var EINFACHE_FERNKAMPF = [
   { name: 'Armbrust, leicht', kosten: '2.500 Hade', schaden: '1W8 Stich', pfund: '5',    eigenschaften: 'Geschosse (Reichweite 24/96), laden, zweihändig' },
   { name: 'Kurzbogen',        kosten: '2.500 Hade', schaden: '1W6 Stich', pfund: '2',    eigenschaften: 'Geschosse (Reichweite 24/96), zweihändig' },
   { name: 'Schleuder',        kosten: '10 Hade',    schaden: '1W4 Wucht', pfund: '—',    eigenschaften: 'Geschosse (Reichweite 9/36)' },
   { name: 'Wurfpfeil',        kosten: '5 Hade',     schaden: '1W4 Stich', pfund: '0.25', eigenschaften: 'Finesse, Wurfwaffe (Reichweite 6/18)' },
 ];
-const KRIEGS_NAHKAMPF = [
+var KRIEGS_NAHKAMPF = [
   { name: 'Dreizack',       kosten: '500 Hade',   schaden: '1W6 Stich',  pfund: '4',  eigenschaften: 'Wurfwaffe (Reichweite 6/18), vielseitig (1W8)' },
   { name: 'Flegel',         kosten: '1.000 Hade', schaden: '1W8 Wucht',  pfund: '2',  eigenschaften: '—' },
   { name: 'Gleve',          kosten: '2.000 Hade', schaden: '1W10 Hieb',  pfund: '6',  eigenschaften: 'Schwer, weitreichend, zweihändig' },
@@ -211,7 +211,7 @@ const KRIEGS_NAHKAMPF = [
   { name: 'Zweihandhammer', kosten: '1.000 Hade', schaden: '2W6 Wucht',  pfund: '10', eigenschaften: 'Schwer, zweihändig' },
   { name: 'Zweihandschwert',kosten: '5.000 Hade', schaden: '2W6 Hieb',   pfund: '6',  eigenschaften: 'Schwer, zweihändig' },
 ];
-const KRIEGS_FERNKAMPF = [
+var KRIEGS_FERNKAMPF = [
   { name: 'Handarmbrust',    kosten: '7.500 Hade', schaden: '1W6 Stich',  pfund: '3',  eigenschaften: 'Geschosse (Reichweite 9/36), leicht, laden' },
   { name: 'Armbrust, schwere',kosten: '5.000 Hade', schaden: '1W10 Stich', pfund: '18', eigenschaften: 'Geschosse (Reichweite 30/120), schwer, laden, zweihändig' },
   { name: 'Blasrohr',        kosten: '1.000 Hade', schaden: '1 Stich',    pfund: '1',  eigenschaften: 'Geschosse (Reichweite 7,50/30), laden' },
@@ -219,7 +219,7 @@ const KRIEGS_FERNKAMPF = [
   { name: 'Netz',            kosten: '100 Hade',   schaden: '—',          pfund: '3',  eigenschaften: 'Speziell, Wurfwaffe (Reichweite 1,50/4,50)' },
 ];
 
-const WAFFEN_EIGENSCHAFTEN = {
+var WAFFEN_EIGENSCHAFTEN = {
   'Finesse': 'Führst du einen Angriff mit einer Waffe aus, die über diese Eigenschaft verfügt, kannst du wählen, ob du deinen Stärke- oder Geschicklichkeitsmodifikator zu den Angriffs- und Schadenswürfen addieren willst. Du musst den gleichen Modifikator für beide Würfe verwenden.',
   'Geschosse': 'Du kannst eine Waffe mit der Eigenschaft Geschosse nur dann für einen Fernkampfangriff verwenden, wenn du entsprechende Munition besitzt. Jeder Angriff mit der Waffe verbraucht ein Geschoss. Am Ende des Kampfes kannst du die Hälfte der verbrauchten Geschosse wieder einsammeln.',
   'Laden': 'Das Laden dieser Waffe benötigt eine gewisse Zeit. Wendest du für einen Angriff eine Aktion, Bonusaktion oder Reaktion auf, kannst du nur ein Geschoss verschießen, unabhängig davon, wie viele Angriffe dir zur Verfügung stehen.',
@@ -233,7 +233,7 @@ const WAFFEN_EIGENSCHAFTEN = {
   'Zweihändig': 'Diese Waffe erfordert beide Hände, um mit ihr angreifen zu können.',
 };
 
-const AUSRUESTUNGSPAKETE = [
+var AUSRUESTUNGSPAKETE = [
 { name: 'Diplomatenausrüstung', kosten: '3.900 Hade', inhalt: 'Enthält eine Truhe, 2 Behälter für Karten und Schriftrollen, einen Satz feine Kleidung, eine Flasche Tinte, eine Schreibfeder, eine Lampe, 2 Flaschen Öl, 5 Blatt Papier, eine Phiole mit Parfüm, Siegelwachs und Seife.' },
 { name: 'Einbrecherausrüstung', kosten: '1.600 Hade', inhalt: 'Enthält einen Rucksack, einen Beutel mit 1.000 Metallkügelchen, eine 3 m lange Kette, eine Glocke, 5 Kerzen, eine Brechstange, einen Hammer, 10 Kletterhaken, eine abdeckbare Laterne, 2 Flaschen Öl, 5 Tagesrationen, ein Zunderkästchen, einen Trinkschlauch und ein 15 m langes Seil aus Hanf.' },
 { name: 'Entdeckerausrüstung', kosten: '1.000 Hade', inhalt: 'Enthält einen Rucksack, einen Schlafsack, ein Reisegeschirr, ein Zunderkästchen, 10 Fackeln, 10 Tagesrationen, einen Trinkschlauch und ein 15 m langes Seil aus Hanf.' },
@@ -244,7 +244,7 @@ const AUSRUESTUNGSPAKETE = [
 
 
 // ── REITTIERE & FAHRZEUGE DATA ────────────────────────────
-const REIT_LASTTIERE = [
+var REIT_LASTTIERE = [
   { tier: 'Elefant',           kosten: '20.000 Hade',    bewegung: '12 m',  traglast: '1.320 Pfd.' },
   { tier: 'Esel oder Maultier',kosten: '800 Hade',       bewegung: '12 m',  traglast: '420 Pfd.' },
   { tier: 'Kamel',             kosten: '5.000 Hade',     bewegung: '15 m',  traglast: '480 Pfd.' },
@@ -255,7 +255,7 @@ const REIT_LASTTIERE = [
   { tier: 'Zugpferd',          kosten: '5.000 Hade',     bewegung: '12 m',  traglast: '540 Pfd.' },
 ];
 
-const ZAUMZEUG_ITEMS = [
+var ZAUMZEUG_ITEMS = [
   { name: 'Futter (pro Tag)',       kosten: '5 Hade',        gewicht: '10 Pfd.' },
   { name: 'Geschirr und Zaumzeug', kosten: '200 Hade',      gewicht: '1 Pfd.' },
   { name: 'Karren',                kosten: '1.500 Hade',    gewicht: '200 Pfd.' },
@@ -272,7 +272,7 @@ const ZAUMZEUG_ITEMS = [
   { name: 'Wagen',                 kosten: '3.500 Hade',    gewicht: '400 Pfd.' },
 ];
 
-const WASSERFAHRZEUGE = [
+var WASSERFAHRZEUGE = [
   { name: 'Galeere',      kosten: '3.000.000 Hade',  geschwindigkeit: '6 km/h' },
   { name: 'Kielboot',     kosten: '300.000 Hade',    geschwindigkeit: '1,5 km/h' },
   { name: 'Kriegsschiff', kosten: '2.500.000 Hade',  geschwindigkeit: '3,75 km/h' },
@@ -282,7 +282,7 @@ const WASSERFAHRZEUGE = [
 ];
 
 // ── TAND DATA ─────────────────────────────────────────────
-const TAND_ITEMS = [
+var TAND_ITEMS = [
   'Eine mumifizierte Goblinhand.',
   'Ein Stück Kristall, das im Mondlicht schwach aufglüht.',
   'Eine in einem fremden Land geprägte Goldmünze.',
@@ -385,7 +385,7 @@ const TAND_ITEMS = [
   'Eine Metallurne mit der Asche eines Helden.',
 ];
 
-const SCHAURIGER_TAND_ITEMS = [
+var SCHAURIGER_TAND_ITEMS = [
   'Bild, das du als Kind von deinem Fantasiefreund gemalt hast.',
   'Schloss, das sich öffnet, wenn Blut ins Schlüsselloch gelangt.',
   'Kleider, von einer Vogelscheuche gestohlen.',
@@ -488,7 +488,7 @@ const SCHAURIGER_TAND_ITEMS = [
   'Sonnenfeuer-Amulett mit einem roten Stein in der Mitte.',
 ];
 
-const ERSTAUNLICHER_TAND_ITEMS = [
+var ERSTAUNLICHER_TAND_ITEMS = [
   'Ein 60 cm langer Eisenschlüssel mit einem grinsenden Schädel als Griff.',
   'Eine große Sanduhr, bei der der Sand von unten nach oben fließt.',
   'Ein Beutel mit mandelförmigen... Samen? Sie schmecken furchtbar, sind aber nicht giftig. Sie sind nicht magisch, aber unidentifizierbar. Es sind Eier.',
@@ -511,7 +511,7 @@ const ERSTAUNLICHER_TAND_ITEMS = [
   'Eine exquisite Handglocke. Der Klöppel der Glocke bewegt sich, berührt aber nicht die Seiten der Glocke.',
 ];
 
-const CATEGORIES = [
+var CATEGORIES = [
 { id: 'abenteuer', label: 'Abenteuerausrüstung' },
 { id: 'waffen', label: 'Waffen' },
 { id: 'ruestung', label: 'Rüstung & Schilde' },
@@ -520,41 +520,41 @@ const CATEGORIES = [
 { id: 'tand', label: 'Tand' }];
 
 // ── RÜSTUNG DATA ──────────────────────────────────────────
-const LEICHTE_RUESTUNG = [
+var LEICHTE_RUESTUNG = [
   { name: 'Gefütterte Rüstung',    kosten: '500 Hade',    rk: '11 + GES-Modifikator', staerke: '—', heimlichkeit: 'Nachteil', pfund: '8' },
   { name: 'Lederrüstung',          kosten: '1.000 Hade',  rk: '11 + GES-Modifikator', staerke: '—', heimlichkeit: '—',        pfund: '10' },
   { name: 'Beschlagene Lederrüstung', kosten: '4.500 Hade', rk: '12 + GES-Modifikator', staerke: '—', heimlichkeit: '—',      pfund: '13' },
 ];
-const MITTELSCHWERE_RUESTUNG = [
+var MITTELSCHWERE_RUESTUNG = [
   { name: 'Fellrüstung',   kosten: '1.000 Hade',  rk: '12 + GES-Modifikator (max. +2)', staerke: '—',    heimlichkeit: '—',        pfund: '12' },
   { name: 'Kettenhemd',    kosten: '5.000 Hade',  rk: '13 + GES-Modifikator (max. +2)', staerke: '—',    heimlichkeit: '—',        pfund: '20' },
   { name: 'Schuppenpanzer',kosten: '5.000 Hade',  rk: '14 + GES-Modifikator (max. +2)', staerke: '—',    heimlichkeit: 'Nachteil', pfund: '45' },
   { name: 'Brustplatte',   kosten: '40.000 Hade', rk: '14 + GES-Modifikator (max. +2)', staerke: '—',    heimlichkeit: '—',        pfund: '20' },
   { name: 'Plattenpanzer', kosten: '75.000 Hade', rk: '15 + GES-Modifikator (max. +2)', staerke: '—',    heimlichkeit: 'Nachteil', pfund: '40' },
 ];
-const SCHWERE_RUESTUNG = [
+var SCHWERE_RUESTUNG = [
   { name: 'Ringpanzer',    kosten: '3.000 Hade',   rk: '14',  staerke: '—',    heimlichkeit: 'Nachteil', pfund: '40' },
   { name: 'Kettenpanzer',  kosten: '7.500 Hade',   rk: '16',  staerke: 'STR 13', heimlichkeit: 'Nachteil', pfund: '55' },
   { name: 'Schienenpanzer',kosten: '20.000 Hade',  rk: '17',  staerke: 'STR 15', heimlichkeit: 'Nachteil', pfund: '60' },
   { name: 'Ritterrüstung', kosten: '150.000 Hade', rk: '18',  staerke: 'STR 15', heimlichkeit: 'Nachteil', pfund: '65' },
 ];
-const SCHILDE = [
+var SCHILDE = [
   { name: 'Schild', kosten: '1.000 Hade', rk: '+2', staerke: '—', heimlichkeit: '—', pfund: '6' },
 ];
-const KLEIDUNG = [
+var KLEIDUNG = [
   { name: 'Kleidung, fein',       kosten: '1.500 Hade', pfund: '6' },
   { name: 'Kleidung, gewöhnlich', kosten: '500 Hade',   pfund: '3' },
   { name: 'Kleidung, Kostüm',     kosten: '500 Hade',   pfund: '4' },
   { name: 'Kleidung, Reise-',     kosten: '200 Hade',   pfund: '4' },
 ];
-const ANLEGEN_ABLEGEN = [
+var ANLEGEN_ABLEGEN = [
   { kategorie: 'Leichte Rüstung',       anlegen: '1 Minute',   ablegen: '1 Minute' },
   { kategorie: 'Mittelschwere Rüstung', anlegen: '5 Minuten',  ablegen: '1 Minute' },
   { kategorie: 'Schwere Rüstung',       anlegen: '10 Minuten', ablegen: '5 Minuten' },
   { kategorie: 'Schilde',               anlegen: '1 Aktion',   ablegen: '1 Aktion' },
 ];
 
-const RUESTUNG_DESCS = {
+var RUESTUNG_DESCS = {
   'Gefütterte Rüstung': 'Gefütterte beziehungsweise wattierte Rüstungen bestehen aus verwobenen Schichten von Stoff und Futtermaterial.',
   'Lederrüstung': 'Brust- und Schulterschutz dieser Rüstung sind aus Leder gemacht, das versteift wurde, bevor man es in Öl gekocht hat. Die übrigen Teile der Rüstung sind aus weichen und flexiblen Materialien gefertigt.',
   'Beschlagene Lederrüstung': 'Diese Rüstung wurde aus strapazierfähigem oder flexiblem Leder hergestellt und mit eng aneinanderliegenden Nieten oder Stacheln verstärkt.',
@@ -570,7 +570,7 @@ const RUESTUNG_DESCS = {
 };
 
 // ── WERKZEUGE DATA ────────────────────────────────────────
-const WERKZEUGE_ITEMS = [
+var WERKZEUGE_ITEMS = [
   { name: 'Fälscherausrüstung',       kosten: '1.500 Hade', pfund: '5' },
   { name: 'Diebeswerkzeug',           kosten: '2.500 Hade', pfund: '1' },
   { name: 'Giftmischerausrüstung',    kosten: '5.000 Hade', pfund: '2' },
@@ -579,7 +579,7 @@ const WERKZEUGE_ITEMS = [
   { name: 'Verkleidungsausrüstung',   kosten: '2.500 Hade', pfund: '3' },
 ];
 
-const HANDWERKSZEUGE_ITEMS = [
+var HANDWERKSZEUGE_ITEMS = [
   { name: 'Alchemistenlabor',         kosten: '5.000 Hade',  pfund: '8' },
   { name: 'Brauereivorräte',          kosten: '2.000 Hade',  pfund: '9' },
   { name: 'Glasbläserwerkzeuge',      kosten: '3.000 Hade',  pfund: '5' },
@@ -599,7 +599,7 @@ const HANDWERKSZEUGE_ITEMS = [
   { name: 'Weberwerkzeuge',           kosten: '100 Hade',    pfund: '5' },
 ];
 
-const MUSIKINSTRUMENTE_ITEMS = [
+var MUSIKINSTRUMENTE_ITEMS = [
   { name: 'Dudelsack',   kosten: '3.000 Hade', pfund: '6' },
   { name: 'Flöte',       kosten: '200 Hade',   pfund: '1' },
   { name: 'Gambe',       kosten: '3.000 Hade', pfund: '1' },
@@ -612,7 +612,7 @@ const MUSIKINSTRUMENTE_ITEMS = [
   { name: 'Trommel',     kosten: '600 Hade',   pfund: '3' },
 ];
 
-const SPIELE_ITEMS = [
+var SPIELE_ITEMS = [
   { name: 'Drachenschach-Spielsatz',    kosten: '100 Hade', pfund: '0.5' },
   { name: 'Satz Spielkarten',           kosten: '500 Hade', pfund: '—' },
   { name: 'Satz Würfel',                kosten: '100 Hade', pfund: '—' },
@@ -620,7 +620,7 @@ const SPIELE_ITEMS = [
 ];
 
 // ── WERKZEUG DETAILS DATA ─────────────────────────────────
-const WERKZEUG_DETAILS = {
+var WERKZEUG_DETAILS = {
   // ── WERKZEUGE (special tools) ──
   'Alchemistenlabor': {
     intro: 'Mithilfe eines Alchemistenlabors kann ein Charakter mächtige Mixturen brauen, beispielsweise Säure oder Alchemistenfeuer.',
@@ -980,7 +980,7 @@ const WERKZEUG_DETAILS = {
   'Drei-Drachen-Kartensatz': { shared: 'spiel' },
 };
 
-const SHARED_DESCRIPTIONS = {
+var SHARED_DESCRIPTIONS = {
   musikinstrument: {
     intro: 'Wenn du den Umgang mit einem Musikinstrument beherrschst, bist du mit den Spieltechniken des jeweiligen Instruments vertraut. Du kennst außerdem einige Lieder für dieses Instrument, die häufig aufgeführt werden.',
     abschnitte: [
