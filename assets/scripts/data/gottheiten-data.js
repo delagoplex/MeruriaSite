@@ -40,7 +40,7 @@ window.GODS_DATA = {
       domain: "Domäne des Lebens · Domäne des Lichts · Domäne des Sturms",
       palette: ["#350813","#d31f42","#FF5D7A","#f9cad1"],
       insigniaSrc: "assets/images/gods/insignia/Insignie_Elysarion.png",
-      backgroundSrc: null,
+      backgroundSrc: "assets/images/gods/backgrounds/BG_Elysarion.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><path d="M20 40 C20 28 32 22 40 30 C48 38 60 32 60 40 C60 48 48 54 40 50 C32 46 20 52 20 40Z" stroke="currentColor" stroke-width="1.5"/><circle cx="40" cy="40" r="3" fill="currentColor"/><circle cx="22" cy="40" r="2" stroke="currentColor" stroke-width="1"/><circle cx="58" cy="40" r="2" stroke="currentColor" stroke-width="1"/></svg>`,
       description: "Elysarions göttliche Domäne liegt in den äußeren Ebenen und wird Das Paradies genannt.", lore: "\"Nutze jeden Moment des Lebens, um deiner Leidenschaft nachzugehen und diese zu entfachen. Glaube an die Liebe und lasse sie dich erfüllen, unabhängig deiner Form und Farbe. Liebe dich selbst und deine Nächsten und glaube an euer Potenzial. Lasse deine Kreativität fließen und erschaffe. Verbreite Freude und bringe Licht in das Herz all derer, die trauern oder die Hoffnung verloren haben.\"",
@@ -52,7 +52,7 @@ window.GODS_DATA = {
       domain: "Domäne des Lebens · Domäne des Lichts · Domäne der List · Domäne der Natur · Domäne der Ordnung · Domäne des Sturms",
       palette: ["#1C0E06","#de8900","#FFCA39","#FFDC7B"],
       insigniaSrc: "assets/images/gods/insignia/Insignie_Sienna.png",
-      backgroundSrc: null,
+      backgroundSrc: "assets/images/gods/backgrounds/BG_Sienna.webp",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><polygon points="44,8 28,44 40,44 36,72 52,36 40,36" stroke="currentColor" stroke-width="1.5"/><line x1="20" y1="20" x2="26" y2="26" stroke="currentColor" stroke-width="1" opacity="0.5"/><line x1="60" y1="20" x2="54" y2="26" stroke="currentColor" stroke-width="1" opacity="0.5"/><line x1="12" y1="40" x2="20" y2="40" stroke="currentColor" stroke-width="1" opacity="0.5"/><line x1="68" y1="40" x2="60" y2="40" stroke="currentColor" stroke-width="1" opacity="0.5"/></svg>`,
       description: "Siennas göttliche Domäne liegt in den äußeren Ebenen und wird Der Zenit genannt.", lore: "\"Erfülle deine alltäglichen Pflichten so gut es dir möglich ist. Sei ein Leuchtfeuer für andere und weise sie auf den richtigen Pfad. Teile die Wärme deines Herzens mit deinen Nächsten. Lege Wert auf die Ansichten anderer, doch stehe niemals in deren Schatten. Offenbare niemandem deine Schwächen und sei allen immer einen Schritt voraus. Unterdrücke niemals negative Gefühle, die andere in dir ausgelöst haben.\"",
@@ -64,7 +64,7 @@ window.GODS_DATA = {
       domain: "Domäne der Dämmerung · Domäne des Grabes · Domäne des Lichts · Domäne der Natur · Domäne des Sturms",
       palette: ["#0C1B03","#053B0E","#40cd84","#8de7f6"],
       insigniaSrc: "assets/images/gods/insignia/Insignie_Avalaste.png",
-      backgroundSrc: null,
+      backgroundSrc: "assets/images/gods/backgrounds/BG_Avalaste.webp",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><polygon points="40,8 47,30 70,30 52,44 59,66 40,52 21,66 28,44 10,30 33,30" stroke="currentColor" stroke-width="1.5"/><circle cx="40" cy="40" r="8" stroke="currentColor" stroke-width="1" opacity="0.5"/></svg>`,
       description: "Avalastes göttliche Domäne liegt in den äußeren Ebenen und wird Die Wiege genannt.", lore: "\"Ehre sowohl den Mond, als auch die Sonne, die Heilung und auch den Verfall, sowie den natürlichen Kreislauf aller Dinge. Akzeptiere Freude und auch Trauer. Tu Gutes, damit auch dir Gutes wiederfährt. Gib anderen eine zweite Chance und Raum, um zu wachsen. Kümmere dich sowohl um die, die das Licht der Welt erblicken, als auch um die, deren letztes Licht bald erlischt. Wage Neuanfänge, erkunde und übe dich in neuen Fertigkeiten.\"",
@@ -76,7 +76,7 @@ window.GODS_DATA = {
       domain: "Domäne des Friedens · Domäne des Grabes · Domäne des Lebens · Domäne der Ordnung",
       palette: ["#001f13","#54C472","#FF76B8","#FFDBEC"],
       insigniaSrc: "assets/images/gods/insignia/Insignie_Cecillia.png",
-      backgroundSrc: null,
+      backgroundSrc: "assets/images/gods/backgrounds/BG_Cecillia.webp",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="28" stroke="currentColor" stroke-width="1"/><circle cx="40" cy="40" r="18" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3"/><circle cx="40" cy="40" r="8" stroke="currentColor" stroke-width="1"/><circle cx="40" cy="40" r="2" fill="currentColor" opacity="0.4"/></svg>`,
       description: "Cecillias göttliche Domäne liegt in den äußeren Ebenen und wird Der Himmel genannt.", lore: "\"Akzeptiere jeden so, wie er ist und siehe immer das Gute in ihnen, denn jedes Leben ist heilig und sollte beschützt werden. Lege deine Priorität darauf, Konflikte friedlich zu lösen und niemanden zu verletzen. Behandele andere so, wie du selbst auch behandelt werden möchtest. Erlöse Kreaturen von Krankheit und bringe ihnen Genesung.\"",
