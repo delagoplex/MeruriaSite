@@ -1409,7 +1409,6 @@ function TandRollTable({ title, items, accent, diceLabel }) {
           transform: open ? 'rotate(45deg)' : 'none',
         }}>+</span>
         <span style={{ fontFamily: 'var(--font-display)', fontSize: '14px', fontWeight: '300', letterSpacing: '0.18em', color: open ? '#f0eeff' : 'rgba(210,205,255,0.75)', textTransform: 'uppercase', flex: 1, transition: 'color 0.15s' }}>{title}</span>
-        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: `${accent}55`, letterSpacing: '0.15em' }}>{diceLabel} · {items.length} Einträge</span>
         {/* Roll button */}
         <button
           onClick={handleRoll}
@@ -1560,9 +1559,9 @@ function TandContent({ accent }) {
       </div>
 
       {/* The three roll tables */}
-      <TandRollTable title="Tand" items={TAND_ITEMS} accent={accent} diceLabel="W100" />
-      <TandRollTable title="Schauriger Tand" items={SCHAURIGER_TAND_ITEMS} accent={accent} diceLabel="W100" />
-      <TandRollTable title="Erstaunlicher Tand" items={ERSTAUNLICHER_TAND_ITEMS} accent={accent} diceLabel="W20" />
+      <TandRollTable title="Tand" items={TAND_ITEMS} accent={accent} diceLabel="" />
+      <TandRollTable title="Schauriger Tand" items={SCHAURIGER_TAND_ITEMS} accent={accent} diceLabel="" />
+      <TandRollTable title="Erstaunlicher Tand" items={ERSTAUNLICHER_TAND_ITEMS} accent={accent} diceLabel="" />
     </div>
   );
 }
