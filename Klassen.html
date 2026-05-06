@@ -132,8 +132,8 @@ function KlasseCard({ klasse, onClick }) {
             <div style={{ position:'absolute', inset:0, background:`linear-gradient(160deg, ${pal[0]} 0%, ${pal[1]}cc 100%)` }} />
             {/* Accent tint */}
             <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse at 30% 20%, ${accent}22 0%, transparent 60%)` }} />
-            {/* Dark vignette — fades out on hover */}
-            <div style={{ position:'absolute', inset:0, background:'linear-gradient(to top, rgba(4,2,14,0.92) 0%, rgba(4,2,14,0.45) 50%, rgba(4,2,14,0.12) 100%)', opacity:hov?0:1, transition:'opacity 0.45s ease' }} />
+            {/* Dark vignette — fades in on hover */}
+            <div style={{ position:'absolute', inset:0, background:'linear-gradient(to top, rgba(4,2,14,0.92) 0%, rgba(4,2,14,0.45) 50%, rgba(4,2,14,0.12) 100%)', opacity:hov?1:0, transition:'opacity 0.45s ease' }} />
             {/* Shimmer on hover */}
             <div style={{ position:'absolute', inset:0, pointerEvents:'none', background:hov?`radial-gradient(ellipse at ${50+tilt.ry*1.5}% ${50-tilt.rx*1.5}%, ${accent}22 0%, transparent 65%)`:'none' }} />
             {/* Diagonal line texture */}
@@ -147,14 +147,14 @@ function KlasseCard({ klasse, onClick }) {
 
           {/* Resting state text */}
           <div style={{ position:'absolute', inset:0, zIndex:30, transform:'translateZ(1px)', display:'flex', flexDirection:'column', justifyContent:'flex-end', padding:'20px 18px', opacity:hov?0:1, transition:'opacity 0.35s ease' }}>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:accent+'99', textTransform:'uppercase', marginBottom:'4px' }}>{klasse.rolle}</div>
-            <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'6px' }}>
-              <h3 style={{ fontFamily:'var(--font-display)', fontSize:'15px', fontWeight:'400', letterSpacing:'0.16em', color:'#f0eeff', textShadow:'0 2px 12px rgba(0,0,0,0.8)', textTransform:'uppercase' }}>{klasse.name}</h3>
-              <OctSvg size={10} color={accent} fill={accent+'44'} strokeWidth={1} />
-            </div>
+            <h3 style={{ fontFamily:'var(--font-display)', fontSize:'15px', fontWeight:'400', letterSpacing:'0.16em', color:'#f0eeff', textShadow:'0 2px 12px rgba(0,0,0,0.8)', textTransform:'uppercase', marginBottom:'3px' }}>{klasse.name}</h3>
+            <div style={{ width:'50px', height:'1px', background:`linear-gradient(90deg,${accent}cc,transparent)`, animation:'pulse-glow 3s infinite', marginBottom:'6px' }} />
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:accent+'99', textTransform:'uppercase', marginBottom:'6px' }}>{klasse.rolle}</div>
             <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'10px', lineHeight:1.75, color:'rgba(200,190,240,0.65)', letterSpacing:'0.03em', display:'-webkit-box', WebkitLineClamp:2, WebkitBoxOrient:'vertical', overflow:'hidden' }}>{klasse.subtitle}</p>
-            <div style={{ height:'1px', background:`linear-gradient(90deg,${accent}55,transparent)`, marginTop:'10px', opacity:0.5 }} />
           </div>
+
+          {/* Resting text gradient — fades out on hover */}
+          <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'100px', zIndex:9, background:'linear-gradient(to top, rgba(2,1,10,0.92) 0%, rgba(2,1,10,0.88) 97%, transparent 99%)', opacity:hov?0:1, transition:'opacity 0.35s ease', pointerEvents:'none' }} />
 
           {/* Hover vignette wedge */}
           <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'80px', zIndex:10, transform:'translateZ(2px)', background:'linear-gradient(to top, rgba(2,1,10,0.88) 0%, transparent 100%)', clipPath:'polygon(0% 40%, 100% 0%, 100% 100%, 0% 100%)', opacity:hov?1:0, transition:'opacity 0.35s ease', pointerEvents:'none' }} />
