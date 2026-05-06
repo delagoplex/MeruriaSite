@@ -178,7 +178,7 @@ function WaffenContent({ accent }) {
 
   return (
     <div>
-      <SectionHeader label="Waffen" accent={accent} mono="Spielerhandbuch · Ausrüstung" />
+      <SectionHeader label="Waffen" accent={accent} mono="Ausrüstung" />
 
       <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(200,190,240,0.55)', letterSpacing:'0.04em', marginBottom:'10px', maxWidth:'680px' }}>
         Deine Klasse verleiht dir Übung im Umgang mit bestimmten Waffen. Ob du nun ein Langschwert bevorzugst oder einen Langbogen — die Wahl deiner Waffen und deine Fähigkeit, sie effektiv zu führen, können auf deinen Abenteuern den Unterschied zwischen Leben und Tod ausmachen.
@@ -323,7 +323,7 @@ function RuestungTable({ title, rows, accent }) {
 function RuestungContent({ accent }) {
   return (
     <div>
-      <SectionHeader label="Rüstung & Schilde" accent={accent} mono="Spielerhandbuch · Ausrüstung" />
+      <SectionHeader label="Rüstung & Schilde" accent={accent} mono="Ausrüstung" />
 
       <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(200,190,240,0.55)', letterSpacing:'0.04em', marginBottom:'10px', maxWidth:'680px' }}>
         Abenteurer haben Zugang zu einer Vielzahl von Rüstungsarten — von Lederrüstungen über Kettenpanzer bis zu kostspieligen Plattenrüstungen. Die Tabelle unterteilt sie in drei Kategorien: leichte, mittelschwere und schwere Rüstungen.
@@ -1134,7 +1134,7 @@ function WerkzeugeContent({ accent }) {
           onClose={() => setPopup(null)}
         />
       )}
-      <SectionHeader label="Werkzeuge" accent={accent} mono="Spielerhandbuch · Ausrüstung" />
+      <SectionHeader label="Werkzeuge" accent={accent} mono="Ausrüstung" />
 
       <p className="reveal-up" style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: '1.9', color: 'rgba(200,190,240,0.55)', letterSpacing: '0.04em', marginBottom: '10px', maxWidth: '680px' }}>
         Der folgende Abschnitt geht im Detail auf die Werkzeuge ein, die im Players Handbook (Spielerhandbuch) vorgestellt werden, und gibt Tipps, wie du sie in einer Kampagne verwenden kannst.
@@ -1191,7 +1191,7 @@ function WerkzeugeContent({ accent }) {
 function ReittiereContent({ accent }) {
   return (
     <div>
-      <SectionHeader label="Reittiere & Fahrzeuge" accent={accent} mono="Spielerhandbuch · Ausrüstung" />
+      <SectionHeader label="Reittiere & Fahrzeuge" accent={accent} mono="Ausrüstung" />
 
       <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(200,190,240,0.55)', letterSpacing:'0.04em', marginBottom:'10px', maxWidth:'680px' }}>
         Mit einem guten Reittier vermagst du dich schneller durch die Wildnis zu bewegen, doch seine primäre Aufgabe ist es, die Ausrüstung zu tragen, die dich andernfalls verlangsamen würde. Ein Tier, das einen Wagen, Karren, Schlitten oder Streitwagen zieht, kann bis zum fünffachen seiner Traglast damit transportieren. Ziehen mehrere Tiere dasselbe Fahrzeug, summiert sich ihre Traglast.
@@ -1498,7 +1498,7 @@ function TandContent({ accent }) {
 
   return (
     <div>
-      <SectionHeader label="Tand" accent={accent} mono="Spielerhandbuch · Ausrüstung" />
+      <SectionHeader label="Tand" accent={accent} mono="Ausrüstung" />
 
       <p className="reveal-up" style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: '1.9', color: 'rgba(200,190,240,0.55)', letterSpacing: '0.04em', marginBottom: '28px', maxWidth: '680px' }}>
         Bei der Erschaffung deines Charakters darfst du mit Hilfe der Tabelle für Tand zufällig einen Gegenstand bestimmen, den du zu Beginn erhältst und der etwas leicht Mystisches besitzt. Der SL kann diese Tabelle verwenden, um Räume in Gewölben auszuschmücken oder die Taschen von Monstern zu füllen.
@@ -1580,7 +1580,7 @@ function PlaceholderSection({ label, accent }) {
 function AbenteuerContent({ accent }) {
   return (
     <div>
-      <SectionHeader label="Abenteuerausrüstung" accent={accent} mono="Spielerhandbuch · Ausrüstung" />
+      <SectionHeader label="Abenteuerausrüstung" accent={accent} mono="Ausrüstung" />
 
       {/* Intro text */}
       <p className="reveal-up" style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: '1.9', color: 'rgba(200,190,240,0.55)', letterSpacing: '0.04em', marginBottom: '28px', maxWidth: '680px' }}>Vom einfachen Seil bis zur magischen Phiole — die richtige Ausrüstung entscheidet über Leben und Tod. Hier findest du alles, was ein Abenteurer auf seinen Reisen durch die Neue Welt benötigt.
@@ -1618,7 +1618,7 @@ function AbenteuerContent({ accent }) {
 
       {/* Ausrüstungspakete */}
       <div className="reveal-left" style={{ marginBottom: '22px', paddingBottom: '12px', borderBottom: `1px solid ${accent}22`, marginTop: '36px' }}>
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.3em', color: `${accent}55`, textTransform: 'uppercase', marginBottom: '5px' }}>Spielerhandbuch · Ausrüstung</div>
+        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.3em', color: `${accent}55`, textTransform: 'uppercase', marginBottom: '5px' }}>Ausrüstung</div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <OctSvg size={8} color={`${accent}66`} fill={`${accent}22`} strokeWidth={1} />
           <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '18px', fontWeight: '300', letterSpacing: '0.2em', color: 'rgba(230,225,255,0.85)', textTransform: 'uppercase' }}>Ausrüstungspakete</h2>
