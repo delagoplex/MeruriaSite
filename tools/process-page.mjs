@@ -1,3 +1,9 @@
+/**
+ * Unpack a single bundled HTML page.
+ *
+ * Usage:  node tools/process-page.mjs <PageName.html>
+ * E.g.:   node tools/process-page.mjs Dhampir.html
+ */
 import fs from 'fs';
 import path from 'path';
 import zlib from 'zlib';
@@ -7,7 +13,16 @@ import { fileURLToPath } from 'url';
 
 const gunzip = promisify(zlib.gunzip);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const TARGET = path.join(ROOT, 'Ausrüstung.html');
+
+const filename = process.argv[2];
+if (!filename) {
+  console.error('Usage: node tools/process-page.mjs <PageName.html>');
+  process.exit(1);
+}
+
+const TARGET   = path.join(ROOT, filename);
+const baseName = path.basename(filename, '.html');                      // e.g. "Dhampir"
+const prefix   = baseName.toLowerCase().replace(/ü/g,'ue').replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/[^a-z0-9]/g, '-'); // e.g. "dhampir"
 
 const DIRS = {
   fonts:      path.join(ROOT, 'assets/styles/fonts'),
@@ -19,11 +34,10 @@ const DIRS = {
   globalCSS:  path.join(ROOT, 'assets/styles/global'),
 };
 
-// ── Build a hash → relative-path index of every existing asset ──────────────
 function sha256(buf) { return crypto.createHash('sha256').update(buf).digest('hex'); }
 
 function indexExistingAssets() {
-  const index = new Map(); // sha256 → relative path from ROOT
+  const index = new Map();
   function walk(dir) {
     if (!fs.existsSync(dir)) return;
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -37,18 +51,16 @@ function indexExistingAssets() {
   return index;
 }
 
-// ── Determine next available counter for a naming pattern ────────────────────
-function nextCounter(dir, prefix, ext) {
+function nextCounter(dir, stem, ext) {
   if (!fs.existsSync(dir)) { fs.mkdirSync(dir, { recursive: true }); return 1; }
   let max = 0;
   for (const f of fs.readdirSync(dir)) {
-    const m = f.match(new RegExp(`^${prefix}-(\\d+)\\.${ext}$`));
+    const m = f.match(new RegExp(`^${stem}-(\\d+)\\.${ext}$`));
     if (m) max = Math.max(max, parseInt(m[1], 10));
   }
   return max + 1;
 }
 
-// ── Classify asset by MIME and content ──────────────────────────────────────
 function classify(mime, content) {
   if (mime.includes('woff')) return 'font';
   if (mime.includes('png') || mime.includes('jpeg') || mime.includes('jpg') ||
@@ -65,45 +77,44 @@ function classify(mime, content) {
   return 'binary';
 }
 
-// ── Main ─────────────────────────────────────────────────────────────────────
 (async () => {
-  const html = fs.readFileSync(TARGET, 'utf8');
+  if (!fs.existsSync(TARGET)) {
+    console.error(`❌ File not found: ${filename}`);
+    process.exit(1);
+  }
 
+  const html = fs.readFileSync(TARGET, 'utf8');
   if (!html.includes('__bundler/manifest')) {
-    console.log('⚠️  Ausrüstung.html is already unpacked, nothing to do.');
+    console.log(`⚠️  ${filename} is already unpacked, nothing to do.`);
     process.exit(0);
   }
 
   const manifestMatch = html.match(/<script type="__bundler\/manifest">([\s\S]*?)<\/script>/);
   const templateMatch = html.match(/<script type="__bundler\/template">([\s\S]*?)<\/script>/);
   if (!manifestMatch || !templateMatch) {
-    console.error('❌ Could not find manifest or template in Ausrüstung.html');
+    console.error(`❌ Could not find manifest or template in ${filename}`);
     process.exit(1);
   }
 
   const manifest = JSON.parse(manifestMatch[1]);
   let template = JSON.parse(templateMatch[1]);
 
-  console.log(`\n📦 Ausrüstung.html — ${Object.keys(manifest).length} bundled assets\n`);
+  console.log(`\n📦 ${filename} — ${Object.keys(manifest).length} bundled assets\n`);
 
   const existingByHash = indexExistingAssets();
   console.log(`   ${existingByHash.size} existing assets indexed for deduplication\n`);
 
-  // Counters for new files (start after highest existing)
-  let fontNext   = nextCounter(DIRS.fonts,      'font',          'woff2');
-  let panelNext  = nextCounter(DIRS.components, 'tweaks-panel',  'jsx');
-
+  let fontNext  = nextCounter(DIRS.fonts,      'font',         'woff2');
+  let panelNext = nextCounter(DIRS.components, 'tweaks-panel', 'jsx');
   let reused = 0, created = 0;
 
   for (const [uuid, entry] of Object.entries(manifest)) {
-    // Decompress
     let bytes = Buffer.from(entry.data, 'base64');
     if (entry.compressed) bytes = await gunzip(bytes);
 
     const hash = sha256(bytes);
     const kind = classify(entry.mime, bytes);
 
-    // Check if this exact content already exists
     if (existingByHash.has(hash)) {
       const existing = existingByHash.get(hash);
       template = template.split(uuid).join(existing);
@@ -112,17 +123,14 @@ function classify(mime, content) {
       continue;
     }
 
-    // New asset — save it
     let destPath;
     switch (kind) {
       case 'font': {
         fs.mkdirSync(DIRS.fonts, { recursive: true });
-        const fname = `font-${fontNext++}.woff2`;
-        destPath = path.join(DIRS.fonts, fname);
+        destPath = path.join(DIRS.fonts, `font-${fontNext++}.woff2`);
         break;
       }
       case 'vendor-react': {
-        // Always use existing vendor file — never overwrite tested versions
         const existing = 'assets/scripts/vendor/react.development.js';
         template = template.split(uuid).join(existing);
         console.log(`  ⊘ ${uuid.slice(0,8)}… [vendor-react] → keeping ${existing}`);
@@ -150,19 +158,14 @@ function classify(mime, content) {
       }
       case 'script': {
         fs.mkdirSync(DIRS.dataScripts, { recursive: true });
-        const short = uuid.slice(0, 8);
-        destPath = path.join(DIRS.dataScripts, `script-${short}.js`);
+        destPath = path.join(DIRS.dataScripts, `${prefix}-${uuid.slice(0,8)}.js`);
         break;
       }
       case 'css': {
         fs.mkdirSync(DIRS.pagesCSS, { recursive: true });
-        // Name it after the page unless it looks like global CSS
-        const cssText = bytes.toString('utf8');
-        const isGlobal = cssText.includes('@font-face') && !cssText.includes(':root');
-        if (isGlobal) {
-          destPath = path.join(DIRS.globalCSS, `ausrustung-global.css`);
-        } else {
-          destPath = path.join(DIRS.pagesCSS, 'Ausrüstung.css');
+        destPath = path.join(DIRS.pagesCSS, `${baseName}.css`);
+        if (fs.existsSync(destPath)) {
+          destPath = path.join(DIRS.pagesCSS, `${baseName}-${uuid.slice(0,8)}.css`);
         }
         break;
       }
@@ -170,39 +173,28 @@ function classify(mime, content) {
         fs.mkdirSync(DIRS.images, { recursive: true });
         let ext = entry.mime.split('/')[1] || 'bin';
         if (ext === 'jpeg') ext = 'jpg';
-        const short = uuid.slice(0, 8);
-        destPath = path.join(DIRS.images, `ausrustung-${short}.${ext}`);
+        destPath = path.join(DIRS.images, `${prefix}-${uuid.slice(0,8)}.${ext}`);
         break;
       }
       default: {
-        // binary/unknown — skip, keep UUID as-is so we notice it
         console.log(`  ⚠  ${uuid.slice(0,8)}… [${kind}/${entry.mime}] — unknown type, skipping`);
         continue;
       }
     }
 
-    // Handle name collision for CSS (if we're somehow called twice)
-    if (fs.existsSync(destPath) && kind === 'css') {
-      const base = path.basename(destPath, '.css');
-      const short = uuid.slice(0, 8);
-      destPath = path.join(path.dirname(destPath), `${base}-${short}.css`);
-    }
-
     fs.writeFileSync(destPath, bytes);
     const rel = path.relative(ROOT, destPath).replace(/\\/g, '/');
-    existingByHash.set(hash, rel); // register so later dupes in same bundle reuse it
+    existingByHash.set(hash, rel);
     template = template.split(uuid).join(rel);
     console.log(`  ✓ ${uuid.slice(0,8)}… [${kind}] → ${rel}`);
     created++;
   }
 
-  // Strip bundler metadata and integrity attributes
   let output = template
     .replace(/\s+integrity="[^"]*"/gi, '')
     .replace(/\s+crossorigin="[^"]*"/gi, '');
 
   fs.writeFileSync(TARGET, output);
-
   console.log(`\n✅ Done — ${reused} reused, ${created} new assets`);
-  console.log(`   Wrote unpacked Ausrüstung.html`);
+  console.log(`   Wrote unpacked ${filename}`);
 })();

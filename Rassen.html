@@ -43,6 +43,8 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
 //   { type: 'group',  id, name, subraces: [{id,name}] } — section header + subrace cards
 const ENTRIES = window.RASSEN_DATA;
 
+const RACE_PAGES = window.RACE_PAGES;
+
 // ── HEX POINTS ──────────────────────────────────────────
 function hexPoints(s) {
   const cx = s/2, cy = s/2, r = s/2;
@@ -116,9 +118,9 @@ function RaceImagePlaceholder({ name, accent, height=200 }) {
 }
 
 // ── CARD INNER (shared between RaceCard and SubraceCard) ──
-function CardInner({ name, accent, hov, tilt, cardRef, onMouseMove, onMouseEnter, onMouseLeave, href }) {
+function CardInner({ name, accent, hov, tilt, cardRef, onMouseMove, onMouseEnter, onMouseLeave, href, onClick }) {
   return (
-    <a href={href} style={{ textDecoration:'none', display:'block' }}>
+    <a href={href} onClick={onClick} style={{ textDecoration:'none', display:'block' }}>
       {/* Outer wrapper: overflow visible so sigil bleeds out; handles perspective + tilt */}
       <div className="reveal-up"
         ref={cardRef}
@@ -246,7 +248,7 @@ function CardInner({ name, accent, hov, tilt, cardRef, onMouseMove, onMouseEnter
 }
 
 // ── RACE CARD ─────────────────────────────────────────────
-function RaceCard({ name, id, accent }) {
+function RaceCard({ name, id, accent, onSelect }) {
   const cardRef = useRef(null);
   const [tilt, setTilt] = useState({ rx:0, ry:0 });
   const [hov, setHov] = useState(false);
@@ -266,11 +268,11 @@ function RaceCard({ name, id, accent }) {
 
   return <CardInner name={name} accent={accent} hov={hov} tilt={tilt} cardRef={cardRef}
     onMouseMove={handleMouseMove} onMouseEnter={()=>setHov(true)} onMouseLeave={handleMouseLeave}
-    href={`${id}.html`} />;
+    href={`${id}.html`} onClick={(e)=>{ e.preventDefault(); onSelect({ id, name, accent }); }} />;
 }
 
 // ── SUBRACE CARD ─────────────────────────────────────────
-function SubraceCard({ subrace, accent, parentId }) {
+function SubraceCard({ subrace, accent, parentId, onSelect }) {
   const cardRef = useRef(null);
   const [tilt, setTilt] = useState({ rx:0, ry:0 });
   const [hov, setHov] = useState(false);
@@ -290,11 +292,11 @@ function SubraceCard({ subrace, accent, parentId }) {
 
   return <CardInner name={subrace.name} accent={accent} hov={hov} tilt={tilt} cardRef={cardRef}
     onMouseMove={handleMouseMove} onMouseEnter={()=>setHov(true)} onMouseLeave={handleMouseLeave}
-    href={`${parentId}-${subrace.id}.html`} />;
+    href={`${parentId}-${subrace.id}.html`} onClick={(e)=>{ e.preventDefault(); onSelect({ id:subrace.id, name:subrace.name, accent }); }} />;
 }
 
 // ── GROUP SECTION (race with subraces) ───────────────────
-function GroupSection({ entry, accent, cols, navHeight }) {
+function GroupSection({ entry, accent, cols, navHeight, onSelect }) {
   return (
     <div id={entry.id} style={{ marginBottom:'48px', scrollMarginTop:`${navHeight+8}px` }}>
       {/* Group header */}
@@ -309,9 +311,75 @@ function GroupSection({ entry, accent, cols, navHeight }) {
       {/* Subrace cards grid */}
       <div style={{ display:'grid', gridTemplateColumns:`repeat(${cols}, 1fr)`, gap:'16px', overflow:'visible' }}>
         {entry.subraces.map(sr => (
-          <SubraceCard key={sr.id} subrace={sr} accent={accent} parentId={entry.id} />
+          <SubraceCard key={sr.id} subrace={sr} accent={accent} parentId={entry.id} onSelect={onSelect} />
         ))}
       </div>
+    </div>
+  );
+}
+
+// ── ENTITY DETAIL PLACEHOLDER ────────────────────────────
+function EntityDetailPlaceholder({ race, onClose }) {
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+  const btnStyle = { display:'inline-flex', alignItems:'center', gap:'8px', fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', letterSpacing:'0.12em', color:'rgba(200,192,232,0.55)', background:'rgba(124,77,255,0.06)', border:'1px solid rgba(124,77,255,0.18)', padding:'7px 14px', borderRadius:'3px', cursor:'pointer', transition:'all 0.2s' };
+  return (
+    <div style={{ minHeight:'100vh', background:'var(--bg)' }}>
+      <div style={{ position:'fixed', top:'16px', left:'16px', zIndex:10 }}>
+        <button style={btnStyle} onClick={onClose}
+          onMouseEnter={e=>{ e.currentTarget.style.color='#f0eeff'; e.currentTarget.style.background='rgba(124,77,255,0.14)'; e.currentTarget.style.borderColor='rgba(124,77,255,0.45)'; }}
+          onMouseLeave={e=>{ e.currentTarget.style.color='rgba(200,192,232,0.55)'; e.currentTarget.style.background='rgba(124,77,255,0.06)'; e.currentTarget.style.borderColor='rgba(124,77,255,0.18)'; }}>
+          <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M10 4L6 8l4 4"/></svg>
+          Alle Rassen
+        </button>
+      </div>
+      <div style={{ maxWidth:'720px', margin:'0 auto', padding:'80px 40px 64px' }}>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.35em', color:'rgba(124,77,255,0.5)', textTransform:'uppercase', marginBottom:'12px' }}>Charaktererstellung · Rassen</div>
+        <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(36px,6vw,60px)', fontWeight:'300', letterSpacing:'0.12em', color:'#f0eeff', textTransform:'uppercase', marginBottom:'20px', textShadow:'0 0 40px rgba(124,77,255,0.35)' }}>{race.name}</h1>
+        <div style={{ width:'48px', height:'1px', background:'linear-gradient(90deg,rgba(124,77,255,0.8),transparent)', marginBottom:'48px' }} />
+        <div style={{ border:'1px dashed rgba(124,77,255,0.2)', borderRadius:'4px', padding:'48px 40px', textAlign:'center', background:'rgba(124,77,255,0.03)' }}>
+          <OctSvg size={32} color="rgba(124,77,255,0.25)" fill="rgba(124,77,255,0.08)" strokeWidth={1} style={{ margin:'0 auto 20px' }} />
+          <div style={{ fontFamily:'var(--font-display)', fontSize:'13px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(200,192,232,0.4)', textTransform:'uppercase', marginBottom:'12px' }}>In Bearbeitung</div>
+          <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(200,192,232,0.3)', maxWidth:'400px', margin:'0 auto' }}>
+            Der Eintrag für <span style={{ color:'rgba(200,192,232,0.5)' }}>{race.name}</span> wird noch ausgearbeitet. Komm später wieder.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── DETAIL OVERLAY ───────────────────────────────────────
+function DetailOverlay({ race, onClose }) {
+  const page = RACE_PAGES[race.id];
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [onClose]);
+  const closeBtnStyle = { display:'inline-flex', alignItems:'center', gap:'8px', fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', letterSpacing:'0.12em', color:'rgba(200,192,232,0.55)', background:'rgba(5,4,15,0.85)', border:'1px solid rgba(124,77,255,0.25)', padding:'7px 14px', borderRadius:'3px', cursor:'pointer', transition:'all 0.2s', backdropFilter:'blur(8px)' };
+  return (
+    <div style={{ position:'fixed', inset:0, zIndex:200, background:'var(--bg)', display:'flex', flexDirection:'column' }}>
+      {page ? (
+        <>
+          <div style={{ position:'absolute', top:'16px', left:'16px', zIndex:201 }}>
+            <button style={closeBtnStyle} onClick={onClose}
+              onMouseEnter={e=>{ e.currentTarget.style.color='#f0eeff'; e.currentTarget.style.borderColor='rgba(124,77,255,0.55)'; }}
+              onMouseLeave={e=>{ e.currentTarget.style.color='rgba(200,192,232,0.55)'; e.currentTarget.style.borderColor='rgba(124,77,255,0.25)'; }}>
+              <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M10 4L6 8l4 4"/></svg>
+              Alle Rassen
+            </button>
+          </div>
+          <iframe src={page} title={race.name} style={{ flex:1, border:'none', width:'100%' }} />
+        </>
+      ) : (
+        <EntityDetailPlaceholder race={race} onClose={onClose} />
+      )}
     </div>
   );
 }
@@ -393,7 +461,10 @@ function App() {
   const [mouse, setMouse] = useState({ x:0.5, y:0.5 });
   const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
   const [headerBottom, setHeaderBottom] = useState(0);
+  const [selectedRace, setSelectedRace] = useState(null);
   const NAV_H = 52;
+
+  const handleSelect = useCallback((race) => setSelectedRace(race), []);
 
   const pageTitleRef = useRef(null);
 
@@ -462,7 +533,7 @@ function App() {
                 const rowId = `race-batch-${batchIdx}-row-${Math.floor(i / cols)}`;
                 output.push(
                   <div key={rowId} id={rowId} style={{ display:'grid', gridTemplateColumns:`repeat(${cols}, 1fr)`, gap:'16px', marginBottom:'16px', scrollMarginTop:`${NAV_H + 8}px`, overflow:'visible' }}>
-                    {row.map(r => <RaceCard key={r.id} id={r.id} name={r.name} accent={accent} />)}
+                    {row.map(r => <RaceCard key={r.id} id={r.id} name={r.name} accent={accent} onSelect={handleSelect} />)}
                   </div>
                 );
               }
@@ -477,7 +548,7 @@ function App() {
               } else {
                 flushBatch();
                 output.push(
-                  <GroupSection key={entry.id} entry={entry} accent={accent} cols={cols} navHeight={NAV_H} />
+                  <GroupSection key={entry.id} entry={entry} accent={accent} cols={cols} navHeight={NAV_H} onSelect={handleSelect} />
                 );
               }
             });
@@ -489,6 +560,8 @@ function App() {
       </div>
 
       <SiteFooter />
+
+      {selectedRace && <DetailOverlay race={selectedRace} onClose={() => setSelectedRace(null)} />}
 
       {/* TWEAKS */}
       <TweaksPanel>

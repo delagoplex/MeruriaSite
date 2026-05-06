@@ -73,19 +73,19 @@ Static layout and typography are in CSS files. Dynamic styles — those that dep
 
 ## Asset pipeline scripts
 
-These `.mjs` scripts live in `tools/` and were used to unbundle pages originally packed by a Framer/bundler format (`__bundler/manifest` + `__bundler/template`). They are utility scripts, not part of the site itself. Each script resolves paths relative to the project root via `import.meta.url`, so they can be run from any directory.
+`tools/process-page.mjs` unpacks a single bundled HTML page (Framer/bundler format with `__bundler/manifest` + `__bundler/template` script tags). It decodes base64+gzip assets, deduplicates against existing files by SHA-256 hash, places new assets in the correct `assets/` subdirectory, and rewrites the HTML to reference them.
 
-- `tools/extract-all.mjs` — unpacks all bundled HTML files, decoding base64+gzip assets and writing them to `extracted/`
-- `tools/organize-extracted.mjs` — moves assets from `extracted/` into `assets/{fonts,scripts,components,images}/` with readable names; writes `file-mapping.json`
-- `tools/update-html-refs.mjs` — rewrites `extracted/<uuid>.*` references in HTML files to their new `assets/...` paths using `file-mapping.json`
-- `tools/fix-extensions.mjs`, `tools/fix-remaining-refs.mjs` — one-off fixup scripts from the migration
-
-Run these with Node.js when processing newly bundled pages:
 ```bash
-node tools/extract-all.mjs
-node tools/organize-extracted.mjs
-node tools/update-html-refs.mjs
+node tools/process-page.mjs <PageName.html>
+# e.g.
+node tools/process-page.mjs Dhampir.html
 ```
+
+After running, the inline `<style>` font block and page CSS still need to be manually extracted:
+1. Replace the `@font-face` `<style>` block with `<link rel="stylesheet" href="assets/styles/global/fonts.css">`
+2. Add `<link rel="stylesheet" href="assets/styles/global/base.css">`
+3. Move the page `<style>` block to `assets/styles/pages/<PageName>.css`, stripping rules already covered by `base.css` (resets, `html`/`body`, `body::after`, `--bg`/`--white`/`--silver`/`--font-*` variables)
+4. Add `<link rel="stylesheet" href="assets/styles/pages/<PageName>.css">`
 
 ## Development
 
