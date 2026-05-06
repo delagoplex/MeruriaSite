@@ -11,6 +11,10 @@
 <script src="assets/scripts/vendor/react-dom.development.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
 <script src="assets/components/tweaks-panel-8.jsx" type="text/babel"></script>
+<script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/page-header.jsx" type="text/babel"></script>
+<script src="assets/components/particle-field.jsx" type="text/babel"></script>
+<script src="assets/components/footer.jsx" type="text/babel"></script>
 
 </head>
 <body>
@@ -18,7 +22,7 @@
 <script type="text/babel">
 
 const { useState, useEffect, useRef, useCallback } = React;
-const { useTweaks, TweaksPanel, TweakSection, TweakToggle, TweakColor } = window;
+const { useTweaks, TweaksPanel, TweakSection, TweakToggle, TweakColor, SiteNav, SiteFooter, ParticleField, PageHeader } = window;
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "showParticles": true,
@@ -535,14 +539,6 @@ const ERSTAUNLICHER_TAND_ITEMS = [
   'Eine exquisite Handglocke. Der Klöppel der Glocke bewegt sich, berührt aber nicht die Seiten der Glocke.',
 ];
 
-const NAV_ITEMS = [
-{ id: 'spielerhandbuch', label: 'Spielerhandbuch', items: [{ label: 'Einleitung', href: '#' }, { label: 'Charaktererstellung', href: '#' }, { label: 'Regeln', href: '#' }, { label: 'Ausrüstung', href: 'Ausrüstung.html' }] },
-{ id: 'charaktererstellung', label: 'Charaktererstellung', items: [{ label: 'Neuer Charakter', href: '#', dividerAfter: true }, { label: 'Rassen', href: 'Rassen.html' }, { label: 'Klassen', href: 'Klassen.html' }, { label: 'Talente', href: '#' }, { label: 'Hintergründe', href: '#' }, { label: 'Zauber', href: '#' }, { label: 'Ausrüstung', href: 'Ausrüstung.html' }] },
-{ id: 'enzyklopaedie', label: 'Enzyklopädie', items: [{ label: 'Gottheiten', href: 'Gottheiten.html' }, { label: 'Völker', href: '#' }, { label: 'Orte', href: '#' }, { label: 'Geschichte', href: '#' }] },
-{ id: 'divisionen', label: 'Divisionen', items: [{ label: 'I — Die Kuratoren', href: 'Divisionen.html' }, { label: 'II — Die Sturmritter', href: 'Sturmritter.html' }, { label: 'III — Die Sentinels', href: '#' }, { label: 'IV — Die Friedenshüter', href: '#' }, { label: 'V — Die Outfitters', href: '#' }, { label: 'VI — Die Pathfinders', href: '#' }, { label: 'VII — Die Quellensucher', href: '#' }, { label: 'VIII — Die Bergungsgarde', href: '#' }] },
-{ id: 'tab5', label: 'Tab', items: [{ label: 'Seite 1', href: '#' }, { label: 'Seite 2', href: '#' }] }];
-
-
 const CATEGORIES = [
 { id: 'abenteuer', label: 'Abenteuerausrüstung' },
 { id: 'waffen', label: 'Waffen' },
@@ -566,37 +562,6 @@ function OctSvg({ size = 24, color = 'currentColor', fill = 'none', strokeWidth 
 
 }
 
-// ── PARTICLES ────────────────────────────────────────────
-function ParticleField({ mouseX, mouseY }) {
-  const canvasRef = useRef(null);
-  const animRef = useRef(null);
-  const particles = useRef([]);
-  const mouse = useRef({ x: 0.5, y: 0.5 });
-  useEffect(() => {mouse.current = { x: mouseX, y: mouseY };}, [mouseX, mouseY]);
-  useEffect(() => {
-    const canvas = canvasRef.current;if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const resize = () => {canvas.width = canvas.offsetWidth;canvas.height = canvas.offsetHeight;};
-    resize();window.addEventListener('resize', resize);
-    particles.current = Array.from({ length: 50 }, () => ({ x: Math.random(), y: Math.random(), r: Math.random() * 2.2 + 1.0, vx: (Math.random() - 0.5) * 0.03, vy: (Math.random() - 0.5) * 0.03, alpha: Math.random() * 0.22 + 0.05 }));
-    const tick = () => {
-      const w = canvas.width,h = canvas.height;
-      const sx = (mouse.current.x - 0.5) * -14,sy = (mouse.current.y - 0.5) * -14;
-      ctx.clearRect(0, 0, w, h);
-      particles.current.forEach((p) => {
-        p.x += p.vx / w * 60;p.y += p.vy / h * 60;
-        if (p.x < 0) p.x = 1;if (p.x > 1) p.x = 0;if (p.y < 0) p.y = 1;if (p.y > 1) p.y = 0;
-        ctx.beginPath();ctx.arc(p.x * w + sx, p.y * h + sy, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(160,140,255,${p.alpha})`;ctx.fill();
-      });
-      animRef.current = requestAnimationFrame(tick);
-    };
-    tick();
-    return () => {cancelAnimationFrame(animRef.current);window.removeEventListener('resize', resize);};
-  }, []);
-  return <canvas ref={canvasRef} style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }} />;
-}
-
 // ── SCROLL REVEAL ─────────────────────────────────────────
 function useScrollReveal(dep) {
   useEffect(() => {
@@ -617,68 +582,6 @@ function useScrollReveal(dep) {
     const t = setTimeout(init, 80);
     return () => {clearTimeout(t);observer && observer.disconnect();};
   }, [dep]);
-}
-
-// ── NAV ITEM ─────────────────────────────────────────────
-function NavItem({ tab }) {
-  const [open, setOpen] = useState(false);
-  const [glitchKey, setGlitchKey] = useState(0);
-  const [glitchActive, setGlitchActive] = useState(false);
-  const t = useRef(null);
-  const glitchInterval = useRef(null);
-  const glitchTimeout = useRef(null);
-
-  const fireGlitch = () => {
-    setGlitchActive(false);
-    clearTimeout(glitchTimeout.current);
-    glitchTimeout.current = setTimeout(() => {setGlitchKey((k) => k + 1);setGlitchActive(true);}, 20);
-  };
-  const show = () => {
-    clearTimeout(t.current);
-    if (!open) {
-      setOpen(true);
-      clearInterval(glitchInterval.current);clearTimeout(glitchTimeout.current);
-      glitchTimeout.current = setTimeout(() => {fireGlitch();glitchInterval.current = setInterval(fireGlitch, 2800);}, 400);
-    }
-  };
-  const hide = () => {t.current = setTimeout(() => {setOpen(false);setGlitchActive(false);clearInterval(glitchInterval.current);}, 300);};
-  useEffect(() => () => {clearTimeout(t.current);clearTimeout(glitchTimeout.current);clearInterval(glitchInterval.current);}, []);
-
-  const dur = '1.4s';
-  return (
-    <div onMouseEnter={show} onMouseLeave={hide} style={{ position: 'relative' }}>
-      <button style={{ fontFamily: 'var(--font-display)', fontSize: '11px', fontWeight: '400', letterSpacing: '0.18em', padding: '10px 20px', background: 'transparent', border: '1px solid rgba(160,140,255,0.15)', color: 'rgba(200,190,240,0.7)', cursor: 'pointer', borderRadius: '3px', transition: 'all 0.2s', textTransform: 'uppercase', whiteSpace: 'nowrap' }}
-      onMouseEnter={(e) => {e.currentTarget.style.color = '#f0eeff';e.currentTarget.style.borderColor = 'rgba(160,140,255,0.45)';e.currentTarget.style.background = 'rgba(124,77,255,0.1)';}}
-      onMouseLeave={(e) => {e.currentTarget.style.color = 'rgba(200,190,240,0.7)';e.currentTarget.style.borderColor = 'rgba(160,140,255,0.15)';e.currentTarget.style.background = 'transparent';}}>{tab.label}</button>
-      {open &&
-      <div onMouseEnter={show} onMouseLeave={hide} style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, minWidth: '180px', background: 'rgba(8,6,22,0.96)', border: '1px solid rgba(160,140,255,0.2)', borderRadius: '4px', boxShadow: '0 8px 32px rgba(0,0,0,0.6)', animation: 'slideDown 0.18s ease forwards', zIndex: 200, backdropFilter: 'blur(12px)' }}>
-          {tab.items.map((item, i) =>
-        <React.Fragment key={i}>
-              {item.dividerAfter ?
-          <div style={{ position: 'relative', overflow: 'hidden' }}>
-                  {glitchActive && <div key={`bga-${glitchKey}`} aria-hidden="true" style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, animation: `neu-bg-glitch ${dur} ease forwards` }} />}
-                  {glitchActive && <div key={`bgb-${glitchKey}`} aria-hidden="true" style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, animation: `neu-bg-glitch2 ${dur} ease forwards` }} />}
-                  {glitchActive && <div key={`sc-${glitchKey}`} aria-hidden="true" style={{ position: 'absolute', left: 0, right: 0, height: '2px', background: 'rgba(160,255,220,0.7)', pointerEvents: 'none', zIndex: 1, animation: `neu-scanline ${dur} ease forwards` }} />}
-                  <div style={{ position: 'relative', zIndex: 2 }}>
-                    {glitchActive && <div key={`txa-${glitchKey}`} aria-hidden="true" style={{ position: 'absolute', inset: 0, padding: '10px 18px', fontFamily: 'var(--font-body)', fontWeight: '500', fontSize: '12px', letterSpacing: '0.1em', color: '#c9b8ff', pointerEvents: 'none', zIndex: 1, animation: `neu-txt-a ${dur} ease forwards` }}>{item.label}</div>}
-                    {glitchActive && <div key={`txb-${glitchKey}`} aria-hidden="true" style={{ position: 'absolute', inset: 0, padding: '10px 18px', fontFamily: 'var(--font-body)', fontWeight: '500', fontSize: '12px', letterSpacing: '0.1em', color: '#7c4dff', pointerEvents: 'none', zIndex: 1, animation: `neu-txt-b ${dur} ease forwards` }}>{item.label}</div>}
-                    <a href={item.href} style={{ display: 'block', padding: '10px 18px', fontFamily: 'var(--font-body)', fontWeight: '500', fontSize: '12px', letterSpacing: '0.1em', color: '#c9b8ff', textDecoration: 'none', transition: 'color 0.15s,padding-left 0.15s', textShadow: '0 0 10px rgba(124,77,255,0.8), 0 0 20px rgba(124,77,255,0.4)', background: 'rgba(124,77,255,0.08)', position: 'relative', zIndex: 2, ...(glitchActive ? { animation: `neu-txt-main ${dur} ease forwards` } : {}) }}
-              onMouseEnter={(e) => {e.currentTarget.style.color = '#f0eeff';e.currentTarget.style.background = 'rgba(124,77,255,0.18)';e.currentTarget.style.paddingLeft = '24px';}}
-              onMouseLeave={(e) => {e.currentTarget.style.color = '#c9b8ff';e.currentTarget.style.background = 'rgba(124,77,255,0.08)';e.currentTarget.style.paddingLeft = '18px';}}>{item.label}</a>
-                  </div>
-                </div> :
-
-          <a href={item.href} style={{ display: 'block', padding: '10px 18px', fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', letterSpacing: '0.1em', color: 'rgba(200,190,240,0.65)', textDecoration: 'none', borderBottom: i < tab.items.length - 1 ? '1px solid rgba(160,140,255,0.08)' : 'none', transition: 'all 0.15s' }}
-          onMouseEnter={(e) => {e.currentTarget.style.color = '#f0eeff';e.currentTarget.style.background = 'rgba(124,77,255,0.12)';e.currentTarget.style.paddingLeft = '24px';}}
-          onMouseLeave={(e) => {e.currentTarget.style.color = 'rgba(200,190,240,0.65)';e.currentTarget.style.background = 'transparent';e.currentTarget.style.paddingLeft = '18px';}}>{item.label}</a>
-          }
-              {item.dividerAfter && <div style={{ height: '1px', background: 'rgba(160,140,255,0.2)', margin: '2px 0' }} />}
-            </React.Fragment>
-        )}
-        </div>
-      }
-    </div>);
-
 }
 
 // ── SECTION HEADER ────────────────────────────────────────
@@ -2790,21 +2693,14 @@ function App() {
   };
 
   return (
-    <div onMouseMove={handleMouseMove} style={{ position: 'relative', minHeight: '100vh' }}>
-      {tweaks.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} />}
+    <div onMouseMove={handleMouseMove} className="page-root">
+      {tweaks.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} accent={accent} />}
+
+      {/* HEADER */}
+      <PageHeader height={180} showHex />
 
       {/* NAV */}
-      <div style={{ position: 'sticky', top: 0, zIndex: 100, width: '100%', background: 'rgba(5,4,15,0.92)', borderBottom: '1px solid rgba(160,140,255,0.1)', backdropFilter: 'blur(16px)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', padding: '0 32px', height: '52px' }}>
-          <a href="Meruria.html" style={{ marginRight: '32px', whiteSpace: 'nowrap', flexShrink: 0, textDecoration: 'none' }}>
-            <span style={{ fontFamily: 'var(--font-display)', fontSize: '20px', fontWeight: '300', letterSpacing: '0.3em', color: '#f0eeff', textShadow: '0 0 28px rgba(124,77,255,0.55)', animation: 'flicker-mid 9s infinite' }}>MERURIA</span>
-          </a>
-          <nav style={{ display: 'flex', gap: '6px', alignItems: 'center', flex: 1 }}>
-            {NAV_ITEMS.map((tab) => <NavItem key={tab.id} tab={tab} />)}
-          </nav>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', color: 'rgba(160,140,255,0.35)', letterSpacing: '0.15em', flexShrink: 0 }}>AUSRÜSTUNGS-ARCHIV v1.0</div>
-        </div>
-      </div>
+      <SiteNav rightLabel="AUSRÜSTUNGS-ARCHIV v1.0" />
 
       {/* BODY */}
       <div style={{ display: 'flex', alignItems: 'flex-start', position: 'relative', zIndex: 5, minHeight: 'calc(100vh - 52px)' }}>
@@ -2850,10 +2746,7 @@ function App() {
       </div>
 
       {/* FOOTER */}
-      <div style={{ position: 'relative', zIndex: 10, padding: '10px 32px', borderTop: '1px solid rgba(160,140,255,0.07)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '7px', color: 'rgba(160,140,255,0.22)', letterSpacing: '0.2em' }}>◈ ARCHIV-STATUS: NOMINAL ◈ EPOCHE: UNBEKANNT</div>
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '7px', color: 'rgba(160,140,255,0.22)', letterSpacing: '0.2em' }}>MERURIA // DIE VERWOBENEN REICHE</div>
-      </div>
+      <SiteFooter accent={accent} />
 
       {/* TWEAKS */}
       <TweaksPanel>
