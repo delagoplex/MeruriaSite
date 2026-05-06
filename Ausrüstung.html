@@ -1648,9 +1648,27 @@ function AbenteuerContent({ accent }) {
 }
 
 // ── SIDEBAR ───────────────────────────────────────────────
+const PAGE_HEADER_H = 180 + 52; // PageHeader + nav
 function Sidebar({ activeCategory, onSelect, accent }) {
+  const asideRef = React.useRef(null);
+
+  useEffect(() => {
+    const update = () => {
+      const ideal = PAGE_HEADER_H - window.scrollY;
+      const val = Math.max(52, ideal);
+      if (asideRef.current) {
+        asideRef.current.style.top = val + 'px';
+        asideRef.current.style.height = `calc(100vh - ${val}px)`;
+      }
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    return () => { window.removeEventListener('scroll', update); window.removeEventListener('resize', update); };
+  }, []);
+
   return (
-    <aside style={{ width: 'var(--sidebar-w)', flexShrink: 0, position: 'sticky', top: '52px', height: 'calc(100vh - 52px)', borderRight: '1px solid rgba(160,140,255,0.1)', padding: '28px 0', background: 'rgba(5,4,15,0.85)', backdropFilter: 'blur(12px)', zIndex: 50, overflowY: 'auto', alignSelf: 'flex-start' }}>
+    <aside ref={asideRef} style={{ width: 'var(--sidebar-w)', flexShrink: 0, position: 'fixed', left: 0, top: `${PAGE_HEADER_H}px`, height: `calc(100vh - ${PAGE_HEADER_H}px)`, borderRight: '1px solid rgba(160,140,255,0.1)', padding: '28px 0', background: 'rgba(5,4,15,0.85)', backdropFilter: 'blur(12px)', zIndex: 50, overflowY: 'auto' }}>
       <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: 'rgba(160,140,255,0.4)', textTransform: 'uppercase', padding: '0 20px', marginBottom: '12px' }}>Ausrüstung</div>
       {CATEGORIES.map((cat) => {
         const isActive = cat.id === activeCategory;
@@ -1696,7 +1714,7 @@ function App() {
       <SiteNav rightLabel="AUSRÜSTUNGS-ARCHIV v1.0" />
 
       {/* BODY */}
-      <div style={{ display: 'flex', alignItems: 'flex-start', position: 'relative', zIndex: 5, minHeight: 'calc(100vh - 52px)' }}>
+      <div className="page-body" style={{ position: 'relative', zIndex: 5 }}>
         <Sidebar activeCategory={activeCategory} onSelect={handleSelect} accent={accent} />
 
         <div style={{ flex: 1, padding: '32px 36px 64px', minWidth: 0, maxWidth: '1100px' }}>
