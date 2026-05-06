@@ -16,6 +16,7 @@
 <script src="assets/components/particle-field.jsx" type="text/babel"></script>
 <script src="assets/components/floating-hex-field.jsx" type="text/babel"></script>
 <script src="assets/components/footer.jsx" type="text/babel"></script>
+<script src="assets/components/float-nav.jsx" type="text/babel"></script>
 
 
 
@@ -25,7 +26,7 @@
 <script type="text/babel">
 
 const { useState, useEffect, useRef, useCallback } = React;
-const { useTweaks, TweaksPanel, TweakSection, TweakSlider, TweakToggle, TweakRadio, SiteNav, ParticleField, FloatingHexField } = window;
+const { useTweaks, TweaksPanel, TweakSection, TweakSlider, TweakToggle, TweakRadio, SiteNav, ParticleField, FloatingHexField, FloatNav } = window;
 
 // ── TWEAK DEFAULTS ──────────────────────────────────────
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
@@ -581,6 +582,7 @@ function App() {
       {selectedRace && <DetailOverlay race={selectedRace} onClose={() => setSelectedRace(null)} />}
 
       {/* TWEAKS */}
+      {!selectedRace && <FloatNav />}
       <TweaksPanel>
         <TweakSection label="Layout" />
         <TweakSlider id="columns" label="Spalten" min={2} max={4} step={1} />
