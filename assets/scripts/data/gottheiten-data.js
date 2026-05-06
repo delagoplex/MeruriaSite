@@ -110,7 +110,7 @@ window.GODS_DATA = {
       id: "ferys", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Ferys", title: "Gottheit der Hoffnung, des Glücks, der Spiele und des Vergnügens",
       domain: "Domäne des Friedens · Domäne des Lebens · Domäne der List · Domäne des Lichts · Domäne des Wissens",
-      palette: ["#222b37","#9fb5be","#ff4949","#ffcdd5"],
+      palette: ["#0F1318","#9fb5be","#ff4949","#ffcdd5"],
       insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
       backgroundSrc: "assets/images/gods/backgrounds/BG_Ferys.png",
 
