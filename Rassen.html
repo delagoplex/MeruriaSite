@@ -118,7 +118,7 @@ function RaceImagePlaceholder({ name, accent, height=200 }) {
 }
 
 // ── CARD INNER (shared between RaceCard and SubraceCard) ──
-function CardInner({ name, accent, hov, tilt, cardRef, onMouseMove, onMouseEnter, onMouseLeave, href, onClick }) {
+function CardInner({ name, accent, hov, tilt, cardRef, onMouseMove, onMouseEnter, onMouseLeave, href, onClick, insigniaSrc }) {
   return (
     <a href={href} onClick={onClick} style={{ textDecoration:'none', display:'block' }}>
       {/* Outer wrapper: overflow visible so sigil bleeds out; handles perspective + tilt */}
@@ -163,14 +163,21 @@ function CardInner({ name, accent, hov, tilt, cardRef, onMouseMove, onMouseEnter
               position:'absolute', inset:0,
               backgroundImage:'url(assets/images/races/placeholder-race.png)',
               backgroundSize:'cover', backgroundPosition:'center',
-              filter: hov ? 'brightness(0.55) saturate(0.9)' : 'brightness(0.38) saturate(0.7)',
               transition:'filter 0.5s ease'
             }} />
-            {/* Dark gradient overlay — fades out on hover */}
+            {/* Accent colour tint — glows in on hover */}
+            <div style={{
+              position:'absolute', inset:0,
+              background:`linear-gradient(135deg, ${accent}55 0%, ${accent}22 50%, transparent 100%)`,
+              mixBlendMode:'screen',
+              opacity: hov ? 1 : 0,
+              transition:'opacity 0.5s ease'
+            }} />
+            {/* Dark gradient overlay — fades in on hover */}
             <div style={{
               position:'absolute', inset:0,
               background:'linear-gradient(to top, rgba(4,2,14,0.92) 0%, rgba(4,2,14,0.55) 50%, rgba(4,2,14,0.18) 100%)',
-              opacity: hov ? 0 : 1,
+              opacity: hov ? 1 : 0,
               transition:'opacity 0.45s ease'
             }} />
             {/* Accent shimmer */}
@@ -183,19 +190,20 @@ function CardInner({ name, accent, hov, tilt, cardRef, onMouseMove, onMouseEnter
           {/* Sigil — translateZ makes it genuinely float in front in 3D */}
           <div style={{
             position:'absolute',
-            right:'-12%', bottom: hov ? '-5%' : '-18%',
-            width:'65%', aspectRatio:'3/4',
-            backgroundImage:`url(${(window.__resources && window.__resources.sigilPlaceholder) || 'assets/sigil-placeholder.png'})`,
-            backgroundSize:'contain', backgroundPosition:'center', backgroundRepeat:'no-repeat',
+            right:'0%', bottom: hov ? '-5%' : '-18%',
+            width:'65%', maxWidth:'min(280px, 30vw)', aspectRatio:'3/4',
             opacity: hov ? 0.85 : 0,
-            transform: `translateZ(${hov ? 16 : 0}px)`,
+            transform:`translateZ(${hov ? 16 : 0}px)`,
             transition: hov
               ? 'opacity 0.5s ease, bottom 0.6s cubic-bezier(0.23,1,0.32,1), transform 0.08s linear'
               : 'opacity 0.3s ease, bottom 0.4s ease, transform 0.45s cubic-bezier(0.23,1,0.32,1)',
-            zIndex:32,
-            pointerEvents:'none',
-            filter:`drop-shadow(0 0 22px ${accent}aa)`
-          }} />
+            zIndex:32, pointerEvents:'none',
+            display:'flex', alignItems:'center', justifyContent:'center',
+          }}>
+            <img src={insigniaSrc} alt=""
+              style={{ width:'100%', height:'100%', objectFit:'contain',
+                filter:`drop-shadow(0 0 4px ${accent}) drop-shadow(0 0 16px ${accent}bb) drop-shadow(0 0 40px ${accent}66) drop-shadow(0 0 70px ${accent}33)` }} />
+          </div>
 
           {/* Text content — fades out on hover */}
           <div style={{
@@ -206,18 +214,25 @@ function CardInner({ name, accent, hov, tilt, cardRef, onMouseMove, onMouseEnter
             opacity: hov ? 0 : 1,
             transition:'opacity 0.35s ease'
           }}>
-            <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'10px' }}>
+            <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'3px' }}>
               <h3 style={{ fontFamily:'var(--font-display)', fontSize:'15px', fontWeight:'400', letterSpacing:'0.16em',
                 color:'#f0eeff', textShadow:`0 2px 12px rgba(0,0,0,0.8)`, textTransform:'uppercase' }}>{name}</h3>
               <OctSvg size={10} color={accent} fill={`${accent}44`} strokeWidth={1} />
             </div>
+            <div style={{ width:'50px', height:'1px', background:`linear-gradient(90deg,${accent}cc,transparent)`, animation:'pulse-glow 3s infinite', marginBottom:'8px' }} />
             <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'10px', lineHeight:1.75,
               color:'rgba(200,190,240,0.65)', letterSpacing:'0.03em',
               display:'-webkit-box', WebkitLineClamp:4, WebkitBoxOrient:'vertical', overflow:'hidden' }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </p>
-            <div style={{ height:'1px', background:`linear-gradient(90deg, ${accent}55, transparent)`, marginTop:'12px', opacity:0.5 }} />
           </div>
+
+          {/* Resting text gradient — fades out on hover */}
+          <div style={{
+            position:'absolute', bottom:0, left:0, right:0, height:'100px', zIndex:9,
+            background:'linear-gradient(to top, rgba(2,1,10,0.92) 0%, rgba(2,1,10,0.88) 97%, transparent 99%)',
+            opacity: hov ? 0 : 1, transition:'opacity 0.35s ease', pointerEvents:'none'
+          }} />
 
           {/* Hover vignette wedge — below sigil */}
           <div style={{
@@ -248,7 +263,7 @@ function CardInner({ name, accent, hov, tilt, cardRef, onMouseMove, onMouseEnter
 }
 
 // ── RACE CARD ─────────────────────────────────────────────
-function RaceCard({ name, id, accent, onSelect }) {
+function RaceCard({ name, id, accent, onSelect, insigniaSrc }) {
   const cardRef = useRef(null);
   const [tilt, setTilt] = useState({ rx:0, ry:0 });
   const [hov, setHov] = useState(false);
@@ -268,7 +283,8 @@ function RaceCard({ name, id, accent, onSelect }) {
 
   return <CardInner name={name} accent={accent} hov={hov} tilt={tilt} cardRef={cardRef}
     onMouseMove={handleMouseMove} onMouseEnter={()=>setHov(true)} onMouseLeave={handleMouseLeave}
-    href={`${id}.html`} onClick={(e)=>{ e.preventDefault(); onSelect({ id, name, accent }); }} />;
+    href={`${id}.html`} onClick={(e)=>{ e.preventDefault(); onSelect({ id, name, accent }); }}
+    insigniaSrc={insigniaSrc} />;
 }
 
 // ── SUBRACE CARD ─────────────────────────────────────────
@@ -292,7 +308,8 @@ function SubraceCard({ subrace, accent, parentId, onSelect }) {
 
   return <CardInner name={subrace.name} accent={accent} hov={hov} tilt={tilt} cardRef={cardRef}
     onMouseMove={handleMouseMove} onMouseEnter={()=>setHov(true)} onMouseLeave={handleMouseLeave}
-    href={`${parentId}-${subrace.id}.html`} onClick={(e)=>{ e.preventDefault(); onSelect({ id:subrace.id, name:subrace.name, accent }); }} />;
+    href={`${parentId}-${subrace.id}.html`} onClick={(e)=>{ e.preventDefault(); onSelect({ id:subrace.id, name:subrace.name, accent }); }}
+    insigniaSrc={subrace.insigniaSrc} />;
 }
 
 // ── GROUP SECTION (race with subraces) ───────────────────
@@ -533,7 +550,7 @@ function App() {
                 const rowId = `race-batch-${batchIdx}-row-${Math.floor(i / cols)}`;
                 output.push(
                   <div key={rowId} id={rowId} style={{ display:'grid', gridTemplateColumns:`repeat(${cols}, 1fr)`, gap:'16px', marginBottom:'16px', scrollMarginTop:`${NAV_H + 8}px`, overflow:'visible' }}>
-                    {row.map(r => <RaceCard key={r.id} id={r.id} name={r.name} accent={accent} onSelect={handleSelect} />)}
+                    {row.map(r => <RaceCard key={r.id} id={r.id} name={r.name} accent={accent} onSelect={handleSelect} insigniaSrc={r.insigniaSrc} />)}
                   </div>
                 );
               }
