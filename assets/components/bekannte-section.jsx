@@ -78,7 +78,7 @@ function BekannteSection({ division, sidebar = false }) {
         <div style={{ border:`1px solid ${accent}28`, borderRadius:'6px', background:`linear-gradient(135deg,${accent}09 0%,rgba(10,8,28,0.9) 100%)`, overflow:'hidden', transition:'border-color 0.2s' }}
           onMouseEnter={e=>e.currentTarget.style.borderColor=`${accent}55`}
           onMouseLeave={e=>e.currentTarget.style.borderColor=`${accent}28`}>
-          <_BekannteImg label="Porträt" width="100%" height="360px" accent={accent} style={{ borderRadius:'5px 5px 0 0', border:'none', borderBottom:`1px solid ${accent}22` }} />
+          <_BekannteImg label="Porträt" width="100%" height="520px" accent={accent} style={{ borderRadius:'5px 5px 0 0', border:'none', borderBottom:`1px solid ${accent}22` }} />
           <div style={{ padding:'20px 22px' }}>
             <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:`${accent}66`, textTransform:'uppercase', marginBottom:'8px' }}>Führendes Mitglied</div>
             <div style={{ fontFamily:'var(--font-display)', fontSize:'20px', fontWeight:'300', letterSpacing:'0.14em', color:'var(--white)', textTransform:'uppercase', marginBottom:'4px' }}>{featured ? featured.name : '— Unbekannt —'}</div>
