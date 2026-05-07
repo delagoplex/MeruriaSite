@@ -324,11 +324,10 @@ function TOCSidebar({ navHeight, headerBottom, cols }) {
   };
 
   const entries = [];
-  entries.push({ id:'klassen-section', label:'Klassen', isSection:true });
   for (let i=0; i<klassen.length; i+=cols) {
     const row = klassen.slice(i, i+cols);
     const rowId = `klassen-row-${Math.floor(i/cols)}`;
-    entries.push({ id:rowId, label:row.map(k=>k.name).join(' ● '), isSection:false });
+    entries.push({ id:rowId, label:row.map(k=>k.name).join(' ● '), isSection:true });
   }
 
   return (

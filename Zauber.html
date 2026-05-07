@@ -70,6 +70,7 @@ const SCHOOL_COLORS = {
   'Weissagung':     'oklch(0.62 0.18 200)',
 };
 const schoolColor = s => SCHOOL_COLORS[s] || 'oklch(0.62 0.18 270)';
+const alpha = (c, a) => c.replace(')', ` / ${a})`);
 
 // ─── FILTER CHIP ──────────────────────────────────────────────────────────────
 function Chip({ label, active, onClick, color }) {
@@ -170,7 +171,7 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch }) {
         <div style={{ display:'flex', flexDirection:'column', gap:'3px' }}>
           {classes.map(c => (
             <button key={c} onClick={() => toggle('klassen', c)} style={{ display:'flex', alignItems:'center', gap:'7px', padding:'5px 7px', background: filters.klassen.includes(c) ? 'rgba(124,77,255,0.12)' : 'transparent', border:`1px solid ${filters.klassen.includes(c) ? 'rgba(124,77,255,0.4)' : 'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', textAlign:'left' }}>
-              <OctSvg size={8} color="var(--purple)" fill={filters.klassen.includes(c) ? 'var(--purple)' : 'none'} strokeWidth={1.2} opacity={filters.klassen.includes(c) ? 1 : 0.35} />
+              <OctSvg size={6} color={filters.klassen.includes(c) ? 'rgba(124,77,255,0.9)' : 'rgba(124,77,255,0.5)'} fill={filters.klassen.includes(c) ? 'rgba(124,77,255,0.5)' : 'rgba(124,77,255,0.25)'} strokeWidth={1} />
               <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color: filters.klassen.includes(c) ? '#f0eeff' : 'var(--silver)', letterSpacing:'0.03em' }}>{c}</span>
             </button>
           ))}
@@ -189,7 +190,7 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch }) {
         <div style={{ display:'flex', flexDirection:'column', gap:'3px' }}>
           {zeitaufwaende.map(z => (
             <button key={z} onClick={() => toggle('zeitaufwand', z)} style={{ display:'flex', alignItems:'center', gap:'7px', padding:'5px 7px', background: filters.zeitaufwand.includes(z) ? 'rgba(124,77,255,0.12)' : 'transparent', border:`1px solid ${filters.zeitaufwand.includes(z) ? 'rgba(124,77,255,0.4)' : 'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', textAlign:'left' }}>
-              <OctSvg size={8} color="var(--purple)" fill={filters.zeitaufwand.includes(z) ? 'var(--purple)' : 'none'} strokeWidth={1.2} opacity={filters.zeitaufwand.includes(z) ? 1 : 0.35} />
+              <OctSvg size={6} color={filters.zeitaufwand.includes(z) ? 'rgba(124,77,255,0.9)' : 'rgba(124,77,255,0.5)'} fill={filters.zeitaufwand.includes(z) ? 'rgba(124,77,255,0.5)' : 'rgba(124,77,255,0.25)'} strokeWidth={1} />
               <span style={{ fontFamily:'var(--font-body)', fontSize:'10.5px', fontWeight:'300', color: filters.zeitaufwand.includes(z) ? '#f0eeff' : 'var(--silver)', letterSpacing:'0.03em' }}>{z}</span>
             </button>
           ))}
@@ -227,10 +228,10 @@ function SpellRow({ zauber, active, onClick, compact }) {
   const sc = schoolColor(zauber.schule);
   return (
     <div onClick={() => onClick(zauber)} style={{ display:'flex', alignItems:'center', gap:'10px', padding: compact ? '7px 12px' : '10px 12px', cursor:'pointer', borderBottom:'1px solid rgba(160,140,255,0.06)', background: active ? 'rgba(124,77,255,0.12)' : 'transparent', borderLeft: active ? `2px solid ${sc}` : '2px solid transparent', transition:'all 0.15s' }}
-      onMouseEnter={e => { if (!active) { e.currentTarget.style.background='rgba(124,77,255,0.06)'; e.currentTarget.style.borderLeftColor=sc+'55'; } }}
+      onMouseEnter={e => { if (!active) { e.currentTarget.style.background='rgba(124,77,255,0.06)'; e.currentTarget.style.borderLeftColor=alpha(sc, 0.33); } }}
       onMouseLeave={e => { if (!active) { e.currentTarget.style.background='transparent'; e.currentTarget.style.borderLeftColor='transparent'; } }}>
       {/* Grade badge */}
-      <div style={{ width:'22px', height:'22px', borderRadius:'2px', background: active ? sc+'33' : 'rgba(124,77,255,0.1)', border:`1px solid ${active ? sc+'66' : 'rgba(160,140,255,0.15)'}`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, transition:'all 0.15s' }}>
+      <div style={{ width:'22px', height:'22px', borderRadius:'2px', background: active ? alpha(sc, 0.22) : 'rgba(124,77,255,0.1)', border:`1px solid ${active ? alpha(sc, 0.5) : 'rgba(160,140,255,0.28)'}`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, transition:'all 0.15s' }}>
         <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color: active ? '#f0eeff' : 'var(--silver)', fontWeight:'400' }}>{zauber.grad}</span>
       </div>
       {/* Name + school */}
@@ -390,9 +391,7 @@ function App() {
 
   // Auto-select first when filter changes
   useEffect(() => {
-    if (selected && !filtered.includes(selected)) {
-      setSelected(filtered[0] || null);
-    }
+    setSelected(prev => (prev && !filtered.includes(prev)) ? filtered[0] || null : prev);
   }, [filtered]);
 
   // Group by grade
