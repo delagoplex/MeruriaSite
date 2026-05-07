@@ -111,7 +111,7 @@ window.GODS_DATA = {
       name: "Ferys", title: "Gottheit der Hoffnung, des Glücks, der Spiele und des Vergnügens",
       domain: "Domäne des Friedens · Domäne des Lebens · Domäne der List · Domäne des Lichts · Domäne des Wissens",
       palette: ["#0F1318","#9fb5be","#ff4949","#ffcdd5"],
-      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Ferys.png",
       backgroundSrc: "assets/images/gods/backgrounds/BG_Ferys.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><rect x="20" y="14" width="40" height="52" rx="2" stroke="currentColor" stroke-width="1.5"/><line x1="20" y1="40" x2="60" y2="40" stroke="currentColor" stroke-width="0.8" stroke-dasharray="2 3"/><circle cx="40" cy="27" r="6" stroke="currentColor" stroke-width="1"/><circle cx="40" cy="53" r="6" stroke="currentColor" stroke-width="1" opacity="0.4"/></svg>`,
