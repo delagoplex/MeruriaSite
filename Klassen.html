@@ -152,11 +152,11 @@ function KlasseCard({ klasse, onClick }) {
           </div>
 
           {/* Resting state text */}
-          <div style={{ position:'absolute', inset:0, zIndex:30, transform:'translateZ(1px)', display:'flex', flexDirection:'column', justifyContent:'flex-end', padding:'20px 18px', opacity:hov?0:1, transition:'opacity 0.35s ease' }}>
-            <h3 style={{ fontFamily:'var(--font-display)', fontSize:'15px', fontWeight:'400', letterSpacing:'0.16em', color:'#f0eeff', textShadow:'0 2px 12px rgba(0,0,0,0.8)', textTransform:'uppercase', marginBottom:'3px' }}>{klasse.name}</h3>
+          <div style={{ position:'absolute', inset:0, zIndex:35, transform:'translateZ(4px)', display:'flex', flexDirection:'column', justifyContent:'flex-end', padding:'20px 18px', opacity:hov?0:1, transition:'opacity 0.35s ease' }}>
+            <h3 style={{ fontFamily:'var(--font-display)', fontSize:'15px', fontWeight:'400', letterSpacing:'0.16em', color:'#f0eeff', textShadow:hov?`0 0 18px ${accent}, 0 0 36px ${accent}88, 0 2px 16px rgba(0,0,0,1)`:'0 2px 16px rgba(0,0,0,1), 0 0 32px rgba(0,0,0,0.9)', textTransform:'uppercase', marginBottom:'3px', transition:'text-shadow 0.35s ease' }}>{klasse.name}</h3>
             <div style={{ width:'50px', height:'1px', background:`linear-gradient(90deg,${accent}cc,transparent)`, animation:'pulse-glow 3s infinite', marginBottom:'6px' }} />
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:accent+'99', textTransform:'uppercase', marginBottom:'6px' }}>{klasse.rolle}</div>
-            <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'10px', lineHeight:1.75, color:'rgba(200,190,240,0.65)', letterSpacing:'0.03em', display:'-webkit-box', WebkitLineClamp:2, WebkitBoxOrient:'vertical', overflow:'hidden' }}>{klasse.subtitle}</p>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:accent+'bb', textTransform:'uppercase', marginBottom:'6px', textShadow:'0 1px 8px rgba(0,0,0,1), 0 0 16px rgba(0,0,0,0.9)' }}>{klasse.rolle}</div>
+            <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'10px', lineHeight:1.75, color:'rgba(200,190,240,0.78)', letterSpacing:'0.03em', display:'-webkit-box', WebkitLineClamp:2, WebkitBoxOrient:'vertical', overflow:'hidden', textShadow:'0 1px 8px rgba(0,0,0,1), 0 0 16px rgba(0,0,0,0.9)' }}>{klasse.subtitle}</p>
           </div>
 
           {/* Resting text gradient — fades out on hover */}
@@ -166,9 +166,9 @@ function KlasseCard({ klasse, onClick }) {
           <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'80px', zIndex:10, transform:'translateZ(2px)', background:'linear-gradient(to top, rgba(2,1,10,0.88) 0%, transparent 100%)', clipPath:'polygon(0% 40%, 100% 0%, 100% 100%, 0% 100%)', opacity:hov?1:0, transition:'opacity 0.35s ease', pointerEvents:'none' }} />
 
           {/* Hover name badge */}
-          <div style={{ position:'absolute', bottom:'14px', left:'14px', zIndex:33, transform:'translateZ(3px)', opacity:hov?1:0, transition:'opacity 0.35s ease' }}>
+          <div style={{ position:'absolute', bottom:'14px', left:'14px', zIndex:33, transform:'translateZ(40px)', opacity:hov?1:0, transition:'opacity 0.35s ease' }}>
             <h3 style={{ fontFamily:'var(--font-display)', fontSize:'15px', fontWeight:'400', letterSpacing:'0.16em', color:'#f0eeff', textShadow:`0 0 24px ${accent}cc, 0 2px 8px rgba(0,0,0,0.9)`, textTransform:'uppercase' }}>{klasse.name}</h3>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em', color:accent+'bb', marginTop:'3px' }}>{klasse.fähigkeit}</div>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em', color:accent+'bb', marginTop:'3px', display:'flex', flexDirection:'column', gap:'2px' }}>{klasse.fähigkeit.split(' · ').map((f,i)=><span key={i}>{f}</span>)}</div>
           </div>
 
         </div>
