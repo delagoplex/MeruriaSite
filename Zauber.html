@@ -344,7 +344,9 @@ function App() {
   const handleMouseMove = useCallback((e) => setMouse({ x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight }), []);
 
   const [search, setSearch] = useState('');
-  const [selected, setSelected] = useState(allZauber[0] || null);
+  const [selected, setSelected] = useState(
+    [...allZauber].filter(z => z.grad === 0).sort((a, b) => a.name.localeCompare(b.name))[0] || allZauber[0] || null
+  );
   const [filters, setFilters] = useState({ schule:[], grad:[], klassen:[], komponenten:[], konzentration:null, ritual:null, zeitaufwand:[] });
   const [classFilter, setClassFilter] = useState(null);
 

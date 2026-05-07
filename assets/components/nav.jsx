@@ -179,7 +179,7 @@ function SiteNav({ rightLabel }) {
   return (
     <div style={{ position: 'sticky', top: 0, zIndex: 100, width: '100%', background: 'rgba(5,4,15,0.92)', borderBottom: '1px solid rgba(160,140,255,0.1)', backdropFilter: 'blur(16px)' }}>
       <div style={{ display: 'flex', alignItems: 'center', padding: '0 24px', height: '52px' }}>
-        <a href="index.html" style={{ marginRight: '32px', whiteSpace: 'nowrap', flexShrink: 0, textDecoration: 'none' }}>
+        <a href="index.html" style={{ marginRight: '70px', whiteSpace: 'nowrap', flexShrink: 0, textDecoration: 'none' }}>
           <span style={{ fontFamily: 'var(--font-display)', fontSize: '20px', fontWeight: '300', letterSpacing: '0.3em', color: '#f0eeff', textShadow: '0 0 28px rgba(124,77,255,0.55)', animation: 'flicker-mid 9s infinite' }}>MERURIA</span>
         </a>
         <nav style={{ display: 'flex', gap: '6px', alignItems: 'center', flex: 1 }}>
