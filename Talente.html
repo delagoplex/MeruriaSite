@@ -9,6 +9,7 @@
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
 <script src="assets/scripts/data/talente-data.js"></script>
 <script src="assets/components/tweaks-panel-8.jsx" type="text/babel"></script>
+<script src="assets/components/filter-utils.jsx" type="text/babel"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
 <script src="assets/components/particle-field.jsx" type="text/babel"></script>
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
@@ -20,7 +21,7 @@
 <div id="root"></div>
 <script type="text/babel">
 const { useState, useEffect, useRef, useMemo } = React;
-const { useTweaks, TweaksPanel, TweakSection, TweakToggle, SiteNav, ParticleField } = window;
+const { useTweaks, TweaksPanel, TweakSection, TweakToggle, SiteNav, ParticleField, useDragScroll, XBtn, FilterGroup } = window;
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "showParticles": true,
@@ -81,42 +82,8 @@ function KategorieBadge({ k }) {
 }
 
 
-// ─── X BUTTON ─────────────────────────────────────────────────────────────────
-function XBtn({ onClick }) {
-  return (
-    <button onClick={onClick} style={{ width:'16px', height:'16px', fontFamily:'var(--font-mono)', fontSize:'8px', color:'rgba(230,90,90,0.9)', background:'rgba(200,60,60,0.15)', border:'1px solid rgba(220,80,80,0.5)', borderRadius:'2px', cursor:'pointer', padding:0, lineHeight:1, flexShrink:0, display:'flex', alignItems:'center', justifyContent:'center' }}
-      onMouseEnter={e=>{e.currentTarget.style.color='#fff';e.currentTarget.style.background='rgba(200,60,60,0.35)';}}
-      onMouseLeave={e=>{e.currentTarget.style.color='rgba(230,90,90,0.9)';e.currentTarget.style.background='rgba(200,60,60,0.15)';}}>
-      ✕
-    </button>
-  );
-}
-
-// ─── FILTER GROUP ─────────────────────────────────────────────────────────────
-function FilterGroup({ title, active, onReset, children, collapsible }) {
-  const [open, setOpen] = useState(true);
-  return (
-    <div style={{ marginBottom:'20px' }}>
-      <div
-        onClick={collapsible ? () => setOpen(o => !o) : undefined}
-        style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom: open ? '8px' : '0', paddingBottom:'5px', borderBottom:'1px solid rgba(160,140,255,0.08)', cursor: collapsible ? 'pointer' : 'default', userSelect:'none' }}>
-        <div style={{ display:'flex', alignItems:'center', gap:'6px' }}>
-          {collapsible && (
-            <svg width="8" height="8" viewBox="0 0 8 8" style={{ flexShrink:0, transition:'transform 0.18s', transform: open ? 'rotate(90deg)' : 'rotate(0deg)', opacity:0.45 }}>
-              <polygon points="1,1 7,4 1,7" fill="rgba(160,140,255,1)" />
-            </svg>
-          )}
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>{title}</div>
-        </div>
-        {active && onReset && <XBtn onClick={e => { e.stopPropagation(); onReset(); }} />}
-      </div>
-      {(!collapsible || open) && <div style={{ animation: collapsible ? 'fadeIn 0.15s ease' : 'none' }}>{children}</div>}
-    </div>
-  );
-}
-
 // ─── FILTER SIDEBAR ───────────────────────────────────────────────────────────
-function FilterSidebar({ search, setSearch, filters, setFilters, allData }) {
+function FilterSidebar({ search, setSearch, filters, setFilters, allData, dragRef }) {
   const allKategorien = useMemo(() => {
     const set = new Set();
     allData.forEach(t => { if (t.kategorie) set.add(t.kategorie); });
@@ -140,7 +107,7 @@ function FilterSidebar({ search, setSearch, filters, setFilters, allData }) {
   const hasAny = (filters.kategorien || []).length > 0 || (filters.rassen || []).length > 0 || filters.nurOhneVoraussetzung;
 
   return (
-    <div style={{ width:'var(--filter-w)', flexShrink:0, background:'rgba(8,6,20,0.6)', borderRight:'1px solid var(--border)', padding:'16px 14px 14px 24px', overflowY:'auto', display:'flex', flexDirection:'column', position:'relative', zIndex:10 }}>
+    <div ref={dragRef.ref} onMouseDown={dragRef.onMouseDown} onClickCapture={dragRef.onClickCapture} style={{ width:'var(--filter-w)', flexShrink:0, background:'rgba(8,6,20,0.6)', borderRight:'1px solid var(--border)', padding:'16px 14px 14px 24px', overflowY:'auto', display:'flex', flexDirection:'column', position:'relative', zIndex:10, cursor:'grab' }}>
       {/* Search */}
       <div style={{ position:'relative', marginBottom:'14px' }}>
         <input
@@ -335,7 +302,10 @@ function App() {
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState(allData[0] || null);
   const [filters, setFilters] = useState({ kategorien: [], rassen: [], nurOhneVoraussetzung: false });
-  const [typeFilter, setTypeFilter] = useState(null); // null | 'angeboren' | 'erlernbar'
+  const [typeFilter, setTypeFilter] = useState(null);
+
+  const sidebarDrag = useDragScroll({ vertical: true });
+  const listDrag = useDragScroll({ vertical: true });
 
   const filtered = useMemo(() => {
     return allData.filter(t => {
@@ -375,10 +345,10 @@ function App() {
 
       {/* Main body */}
       <div style={{ flex:1, display:'flex', overflow:'hidden', position:'relative', zIndex:5 }}>
-        <FilterSidebar search={search} setSearch={setSearch} filters={filters} setFilters={setFilters} allData={allData} />
+        <FilterSidebar search={search} setSearch={setSearch} filters={filters} setFilters={setFilters} allData={allData} dragRef={sidebarDrag} />
 
         {/* List */}
-        <div style={{ width:'280px', flexShrink:0, borderRight:'1px solid var(--border)', overflowY:'auto', background:'rgba(6,5,18,0.5)' }}>
+        <div ref={listDrag.ref} onMouseDown={listDrag.onMouseDown} onClickCapture={listDrag.onClickCapture} style={{ width:'280px', flexShrink:0, borderRight:'1px solid var(--border)', overflowY:'auto', background:'rgba(6,5,18,0.5)', cursor:'grab' }}>
           {filtered.length === 0
             ? <EmptyState msg="Keine Talente gefunden" />
             : filtered.map(t => (
