@@ -24,7 +24,7 @@ window.KLASSEN_DATA = {
       rüstung: "Leichte Rüstung",
       waffen: "Einfache Waffen, Handarmbrüste, Langschwert, Rapier, Kurzschwert",
       rettungswürfe: "Geschicklichkeit · Charisma",
-      fähigkeit: "Bardische Inspiration",
+      fähigkeit: "Bardische Inspiration · Expertise",
       beschreibung: "Barden verweben Magie in Worte und Melodien, um zu heilen, zu inspirieren und zu verzaubern. Sie sammeln Wissen und Erfahrungen, wo immer sie hinreisen.",
       lore: "Barden sind die Chronisten und Unterhalter der Welt. Ihre Magie entspringt dem Glauben an die Kraft von Geschichten und Musik, die Realität selbst zu formen.",
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><path d="M30 20 Q40 10 50 20 L55 55 Q50 65 40 65 Q30 65 25 55 Z" stroke="currentColor" stroke-width="1.5"/><path d="M35 30 Q40 26 45 30" stroke="currentColor" stroke-width="1.2" opacity="0.7"/><path d="M33 40 Q40 35 47 40" stroke="currentColor" stroke-width="1.2" opacity="0.7"/><path d="M34 50 Q40 45 46 50" stroke="currentColor" stroke-width="1.2" opacity="0.7"/><circle cx="40" cy="20" r="3" stroke="currentColor" stroke-width="1"/></svg>`,
