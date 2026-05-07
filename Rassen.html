@@ -119,7 +119,7 @@ function RaceImagePlaceholder({ name, accent, height=200 }) {
 }
 
 // ── CARD INNER (shared between RaceCard and SubraceCard) ──
-function CardInner({ name, accent, hov, tilt, cardRef, onMouseMove, onMouseEnter, onMouseLeave, href, onClick, insigniaSrc }) {
+function CardInner({ name, subtitle, tags, accent, hov, tilt, cardRef, onMouseMove, onMouseEnter, onMouseLeave, href, onClick, insigniaSrc }) {
   return (
     <a href={href} onClick={onClick} style={{ textDecoration:'none', display:'block' }}>
       {/* Outer wrapper: overflow visible so sigil bleeds out; handles perspective + tilt */}
@@ -220,16 +220,22 @@ function CardInner({ name, accent, hov, tilt, cardRef, onMouseMove, onMouseEnter
                 color:'#f0eeff', textShadow:`0 2px 12px rgba(0,0,0,0.8)`, textTransform:'uppercase' }}>{name}</h3>
             </div>
             <div style={{ width:'50px', height:'1px', background:`linear-gradient(90deg,${accent}cc,transparent)`, animation:'pulse-glow 3s infinite', marginBottom:'8px' }} />
-            <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'10px', lineHeight:1.75,
-              color:'rgba(200,190,240,0.65)', letterSpacing:'0.03em',
-              display:'-webkit-box', WebkitLineClamp:4, WebkitBoxOrient:'vertical', overflow:'hidden' }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </p>
+            {subtitle && <div style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontStyle:'italic', fontSize:'10px',
+              color:'rgba(200,190,240,0.48)', letterSpacing:'0.05em', lineHeight:1.55, marginBottom: tags && tags.length ? '8px' : 0 }}>{subtitle}</div>}
+            {tags && tags.length > 0 && (
+              <div style={{ display:'flex', gap:'4px', flexWrap:'wrap', minHeight:'32px', alignContent:'flex-start' }}>
+                {tags.map(tag => (
+                  <span key={tag} style={{ fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.12em',
+                    color:'rgba(160,140,255,0.55)', background:'rgba(124,77,255,0.07)', border:'1px solid rgba(124,77,255,0.16)',
+                    padding:'2px 6px', borderRadius:'2px', textTransform:'uppercase' }}>{tag}</span>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Resting text gradient — fades out on hover */}
           <div style={{
-            position:'absolute', bottom:0, left:0, right:0, height:'100px', zIndex:9,
+            position:'absolute', bottom:0, left:0, right:0, height:'120px', zIndex:9,
             background:'linear-gradient(to top, rgba(2,1,10,0.92) 0%, rgba(2,1,10,0.88) 97%, transparent 99%)',
             opacity: hov ? 0 : 1, transition:'opacity 0.35s ease', pointerEvents:'none'
           }} />
@@ -245,13 +251,26 @@ function CardInner({ name, accent, hov, tilt, cardRef, onMouseMove, onMouseEnter
             pointerEvents:'none'
           }} />
 
-          {/* Name badge on hover — above everything */}
+          {/* Hover badge — tags stacked vertically above name */}
           <div style={{
-            position:'absolute', bottom:'14px', left:'14px', zIndex:33,
+            position:'absolute', bottom:'14px', left:'14px', right:'14px', zIndex:33,
             transform:'translateZ(3px)',
-            opacity: hov ? 1 : 0,
-            transition:'opacity 0.35s ease'
+            opacity: hov ? 1 : 0, transition:'opacity 0.35s ease'
           }}>
+            {tags && tags.length > 0 && (
+              <div style={{ display:'flex', flexDirection:'column', alignItems:'flex-start', gap:'5px', marginBottom:'10px' }}>
+                {tags.map((tag, i) => (
+                  <span key={tag} style={{
+                    fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.16em',
+                    padding:'3px 9px', borderRadius:'2px',
+                    border:`1px solid ${accent}55`, color:accent,
+                    background:`${accent}12`, textTransform:'uppercase',
+                    transition:`opacity 0.3s ease ${i * 0.04}s`,
+                    opacity: hov ? 1 : 0,
+                  }}>{tag}</span>
+                ))}
+              </div>
+            )}
             <h3 style={{ fontFamily:'var(--font-display)', fontSize:'15px', fontWeight:'400', letterSpacing:'0.16em',
               color:'#f0eeff', textShadow:`0 0 24px ${accent}cc, 0 2px 8px rgba(0,0,0,0.9)`, textTransform:'uppercase' }}>{name}</h3>
           </div>
@@ -263,7 +282,7 @@ function CardInner({ name, accent, hov, tilt, cardRef, onMouseMove, onMouseEnter
 }
 
 // ── RACE CARD ─────────────────────────────────────────────
-function RaceCard({ name, id, accent, onSelect, insigniaSrc }) {
+function RaceCard({ name, id, subtitle, tags, accent, onSelect, insigniaSrc }) {
   const cardRef = useRef(null);
   const [tilt, setTilt] = useState({ rx:0, ry:0 });
   const [hov, setHov] = useState(false);
@@ -281,7 +300,7 @@ function RaceCard({ name, id, accent, onSelect, insigniaSrc }) {
 
   const handleMouseLeave = () => { setHov(false); cancelAnimationFrame(frameRef.current); setTilt({ rx:0, ry:0 }); };
 
-  return <CardInner name={name} accent={accent} hov={hov} tilt={tilt} cardRef={cardRef}
+  return <CardInner name={name} subtitle={subtitle} tags={tags} accent={accent} hov={hov} tilt={tilt} cardRef={cardRef}
     onMouseMove={handleMouseMove} onMouseEnter={()=>setHov(true)} onMouseLeave={handleMouseLeave}
     href={`${id}.html`} onClick={(e)=>{ e.preventDefault(); onSelect({ id, name, accent }); }}
     insigniaSrc={insigniaSrc} />;
@@ -306,7 +325,7 @@ function SubraceCard({ subrace, accent, parentId, onSelect }) {
 
   const handleMouseLeave = () => { setHov(false); cancelAnimationFrame(frameRef.current); setTilt({ rx:0, ry:0 }); };
 
-  return <CardInner name={subrace.name} accent={accent} hov={hov} tilt={tilt} cardRef={cardRef}
+  return <CardInner name={subrace.name} subtitle={subrace.subtitle} tags={subrace.tags} accent={accent} hov={hov} tilt={tilt} cardRef={cardRef}
     onMouseMove={handleMouseMove} onMouseEnter={()=>setHov(true)} onMouseLeave={handleMouseLeave}
     href={`${parentId}-${subrace.id}.html`} onClick={(e)=>{ e.preventDefault(); onSelect({ id:subrace.id, name:subrace.name, accent }); }}
     insigniaSrc={subrace.insigniaSrc} />;
@@ -546,7 +565,7 @@ function App() {
                 const rowId = `race-batch-${batchIdx}-row-${Math.floor(i / cols)}`;
                 output.push(
                   <div key={rowId} id={rowId} style={{ display:'grid', gridTemplateColumns:`repeat(${cols}, 1fr)`, gap:'16px', marginBottom:'16px', scrollMarginTop:`${NAV_H + 8}px`, overflow:'visible' }}>
-                    {row.map(r => <RaceCard key={r.id} id={r.id} name={r.name} accent={accent} onSelect={handleSelect} insigniaSrc={r.insigniaSrc} />)}
+                    {row.map(r => <RaceCard key={r.id} id={r.id} name={r.name} subtitle={r.subtitle} tags={r.tags} accent={accent} onSelect={handleSelect} insigniaSrc={r.insigniaSrc} />)}
                   </div>
                 );
               }
