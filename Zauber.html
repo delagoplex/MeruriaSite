@@ -83,14 +83,24 @@ function XBtn({ onClick }) {
   );
 }
 
-function FilterGroup({ title, active, onReset, children }) {
+function FilterGroup({ title, active, onReset, children, collapsible }) {
+  const [open, setOpen] = useState(true);
   return (
     <div style={{ marginBottom:'20px' }}>
-      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'8px', paddingBottom:'5px', borderBottom:'1px solid rgba(160,140,255,0.08)' }}>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>{title}</div>
-        {active && onReset && <XBtn onClick={onReset} />}
+      <div
+        onClick={collapsible ? () => setOpen(o => !o) : undefined}
+        style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom: open ? '8px' : '0', paddingBottom:'5px', borderBottom:'1px solid rgba(160,140,255,0.08)', cursor: collapsible ? 'pointer' : 'default', userSelect:'none' }}>
+        <div style={{ display:'flex', alignItems:'center', gap:'6px' }}>
+          {collapsible && (
+            <svg width="8" height="8" viewBox="0 0 8 8" style={{ flexShrink:0, transition:'transform 0.18s', transform: open ? 'rotate(90deg)' : 'rotate(0deg)', opacity:0.45 }}>
+              <polygon points="1,1 7,4 1,7" fill="rgba(160,140,255,1)" />
+            </svg>
+          )}
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>{title}</div>
+        </div>
+        {active && onReset && <XBtn onClick={e => { e.stopPropagation(); onReset(); }} />}
       </div>
-      {children}
+      {(!collapsible || open) && <div style={{ animation: collapsible ? 'fadeIn 0.15s ease' : 'none' }}>{children}</div>}
     </div>
   );
 }
@@ -128,7 +138,7 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch }) {
         {hasAny && <XBtn onClick={reset} />}
       </div>
 
-      <FilterGroup title="Schule" active={filters.schule.length > 0} onReset={() => setFilters(f => ({ ...f, schule:[] }))}>
+      <FilterGroup title="Schule" active={filters.schule.length > 0} onReset={() => setFilters(f => ({ ...f, schule:[] }))} collapsible>
         <div style={{ display:'flex', flexDirection:'column', gap:'3px' }}>
           {schools.map(s => (
             <button key={s} onClick={() => toggle('schule', s)} style={{ display:'flex', alignItems:'center', gap:'7px', padding:'5px 7px', background: filters.schule.includes(s) ? 'rgba(124,77,255,0.12)' : 'transparent', border:`1px solid ${filters.schule.includes(s) ? schoolColor(s)+'66' : 'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', textAlign:'left' }}>
@@ -139,7 +149,7 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch }) {
         </div>
       </FilterGroup>
 
-      <FilterGroup title="Grad" active={filters.grad.length > 0} onReset={() => setFilters(f => ({ ...f, grad:[] }))}>
+      <FilterGroup title="Grad" active={filters.grad.length > 0} onReset={() => setFilters(f => ({ ...f, grad:[] }))} collapsible>
         <div style={{ display:'flex', flexWrap:'wrap', gap:'4px' }}>
           {grades.map(g => (
             <Chip key={g} label={g === 0 ? 'Trick' : `${g}`} active={filters.grad.includes(g)} onClick={() => toggle('grad', g)} />
@@ -147,7 +157,7 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch }) {
         </div>
       </FilterGroup>
 
-      <FilterGroup title="Klassen" active={filters.klassen.length > 0} onReset={() => setFilters(f => ({ ...f, klassen:[] }))}>
+      <FilterGroup title="Klassen" active={filters.klassen.length > 0} onReset={() => setFilters(f => ({ ...f, klassen:[] }))} collapsible>
         <div style={{ display:'flex', flexDirection:'column', gap:'3px' }}>
           {classes.map(c => (
             <button key={c} onClick={() => toggle('klassen', c)} style={{ display:'flex', alignItems:'center', gap:'7px', padding:'5px 7px', background: filters.klassen.includes(c) ? 'rgba(124,77,255,0.12)' : 'transparent', border:`1px solid ${filters.klassen.includes(c) ? 'rgba(124,77,255,0.4)' : 'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', textAlign:'left' }}>
@@ -158,7 +168,7 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch }) {
         </div>
       </FilterGroup>
 
-      <FilterGroup title="Komponenten" active={filters.komponenten.length > 0} onReset={() => setFilters(f => ({ ...f, komponenten:[] }))}>
+      <FilterGroup title="Komponenten" active={filters.komponenten.length > 0} onReset={() => setFilters(f => ({ ...f, komponenten:[] }))} collapsible>
         <div style={{ display:'flex', gap:'4px' }}>
           {komponenten.map(k => (
             <Chip key={k} label={k} active={filters.komponenten.includes(k)} onClick={() => toggle('komponenten', k)} />
@@ -166,7 +176,7 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch }) {
         </div>
       </FilterGroup>
 
-      <FilterGroup title="Zeitaufwand" active={filters.zeitaufwand.length > 0} onReset={() => setFilters(f => ({ ...f, zeitaufwand:[] }))}>
+      <FilterGroup title="Zeitaufwand" active={filters.zeitaufwand.length > 0} onReset={() => setFilters(f => ({ ...f, zeitaufwand:[] }))} collapsible>
         <div style={{ display:'flex', flexDirection:'column', gap:'3px' }}>
           {zeitaufwaende.map(z => (
             <button key={z} onClick={() => toggle('zeitaufwand', z)} style={{ display:'flex', alignItems:'center', gap:'7px', padding:'5px 7px', background: filters.zeitaufwand.includes(z) ? 'rgba(124,77,255,0.12)' : 'transparent', border:`1px solid ${filters.zeitaufwand.includes(z) ? 'rgba(124,77,255,0.4)' : 'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', textAlign:'left' }}>
@@ -177,7 +187,7 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch }) {
         </div>
       </FilterGroup>
 
-      <FilterGroup title="Eigenschaften" active={filters.konzentration !== null || filters.ritual !== null} onReset={() => setFilters(f => ({ ...f, konzentration:null, ritual:null }))}>
+      <FilterGroup title="Eigenschaften" active={filters.konzentration !== null || filters.ritual !== null} onReset={() => setFilters(f => ({ ...f, konzentration:null, ritual:null }))} collapsible>
         <div style={{ display:'flex', flexDirection:'column', gap:'4px' }}>
               {/* Konzentration: 3-state toggle null → true → false → null */}
           {[['konzentration', 'Konzentration'], ['ritual', 'Ritual']].map(([key, label]) => {

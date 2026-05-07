@@ -427,6 +427,7 @@ function SectionHeading({ title, subtitle, accentColor }) {
 // ── TOC SIDEBAR ────────────────────────────────────────
 function TOCSidebar({ headerBottom, navHeight, cols }) {
   const asideRef = React.useRef(null);
+  const [collapsed, setCollapsed] = useState({});
 
   useEffect(() => {
     const update = () => {
@@ -448,6 +449,8 @@ function TOCSidebar({ headerBottom, navHeight, cols }) {
     }
   };
 
+  const toggleSection = (id) => setCollapsed(c => ({ ...c, [id]: !c[id] }));
+
   // Build TOC: section headers + entity name rows (grouped by cols)
   const buildEntries = () => {
     const entries = [];
@@ -463,16 +466,18 @@ function TOCSidebar({ headerBottom, navHeight, cols }) {
 
     sections.forEach(sec => {
       entries.push({ id: sec.id, label: sec.label, isSection: true });
-      let globalRowIdx = 0;
-      (sec.subsections || []).forEach(sub => {
-        const ents = sub.entities || [];
-        for (let i = 0; i < ents.length; i += cols) {
-          const row = ents.slice(i, i + cols);
-          const rowId = `${sec.id}-row-${globalRowIdx}`;
-          entries.push({ id: rowId, label: row.map(e => e.name).join(' ● '), isSection: false });
-          globalRowIdx++;
-        }
-      });
+      if (!collapsed[sec.id]) {
+        let globalRowIdx = 0;
+        (sec.subsections || []).forEach(sub => {
+          const ents = sub.entities || [];
+          for (let i = 0; i < ents.length; i += cols) {
+            const row = ents.slice(i, i + cols);
+            const rowId = `${sec.id}-row-${globalRowIdx}`;
+            entries.push({ id: rowId, label: row.map(e => e.name).join(' ● '), isSection: false });
+            globalRowIdx++;
+          }
+        });
+      }
     });
     return entries;
   };
@@ -483,11 +488,18 @@ function TOCSidebar({ headerBottom, navHeight, cols }) {
     <aside ref={asideRef} style={{ width:'var(--sidebar-w)', flexShrink:0, position:'fixed', top:`${navHeight}px`, left:0, height:`calc(100vh - ${navHeight}px)`, borderRight:'1px solid rgba(160,140,255,0.1)', padding:'28px 0', background:'rgba(5,4,15,0.85)', backdropFilter:'blur(12px)', zIndex:50, overflowY:'auto' }}>
       <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:'rgba(160,140,255,0.4)', textTransform:'uppercase', padding:'0 20px', marginBottom:'4px' }}>Gottheiten</div>
       {tocEntries.map(entry => (
-        <button key={entry.id} onClick={() => scrollTo(entry.id)}
+        <button key={entry.id}
+          onClick={() => entry.isSection ? toggleSection(entry.id) : scrollTo(entry.id)}
           style={{ display:'flex', alignItems:'flex-start', gap:'8px', width:'100%', textAlign:'left', padding:'7px 20px', background:'transparent', border:'none', cursor:'pointer', fontFamily:'var(--font-body)', fontWeight:'400', fontSize:'11px', letterSpacing:'0.1em', fontVariant:'small-caps', color: entry.isSection ? 'rgba(200,190,240,0.75)' : 'rgba(200,190,240,0.6)', borderLeft:'2px solid transparent', transition:'all 0.15s', lineHeight:1.55 }}
           onMouseEnter={e=>{ e.currentTarget.style.color='#f0eeff'; e.currentTarget.style.borderLeftColor='rgba(124,77,255,0.6)'; e.currentTarget.style.background='rgba(124,77,255,0.06)'; }}
           onMouseLeave={e=>{ e.currentTarget.style.color=entry.isSection?'rgba(200,190,240,0.75)':'rgba(200,190,240,0.6)'; e.currentTarget.style.borderLeftColor='transparent'; e.currentTarget.style.background='transparent'; }}>
-          <OctSvg size={entry.isSection ? 6 : 4} color={entry.isSection ? 'rgba(124,77,255,0.6)' : 'rgba(124,77,255,0.3)'} fill={entry.isSection ? 'rgba(124,77,255,0.3)' : 'transparent'} strokeWidth={1} style={{ flexShrink:0, marginTop:'3px' }} />
+          {entry.isSection ? (
+            <svg width="8" height="8" viewBox="0 0 8 8" style={{ flexShrink:0, marginTop:'3px', transition:'transform 0.18s', transform: collapsed[entry.id] ? 'rotate(0deg)' : 'rotate(90deg)', opacity:0.5 }}>
+              <polygon points="1,1 7,4 1,7" fill="rgba(160,140,255,1)" />
+            </svg>
+          ) : (
+            <OctSvg size={4} color="rgba(124,77,255,0.3)" fill="transparent" strokeWidth={1} style={{ flexShrink:0, marginTop:'3px' }} />
+          )}
           <span style={{ display:'block', minWidth:0, wordBreak:'normal', overflowWrap:'anywhere', fontWeight: entry.isSection ? '500' : '400' }}>{entry.label}</span>
         </button>
       ))}
