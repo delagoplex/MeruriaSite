@@ -194,7 +194,7 @@ function WaffenContent({ accent }) {
       <WaffenTable title="Fernkampf-Kriegswaffen" rows={KRIEGS_FERNKAMPF} accent={accent} />
 
       {/* Waffeneigenschaften */}
-      <div className="reveal-left" style={{ marginBottom:'22px', paddingBottom:'12px', borderBottom:`1px solid ${accent}22`, marginTop:'36px' }}>
+      <div id="sec-waffen-eigenschaften" className="reveal-left" style={{ marginBottom:'22px', paddingBottom:'12px', borderBottom:`1px solid ${accent}22`, marginTop:'36px' }}>
         <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.3em', color:`${accent}55`, textTransform:'uppercase', marginBottom:'5px' }}>Regelwerk</div>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={8} color={`${accent}66`} fill={`${accent}22`} strokeWidth={1} />
@@ -221,7 +221,7 @@ function WaffenContent({ accent }) {
       )}
 
       {/* Improvisierte Waffen */}
-      <div className="reveal-left" style={{ marginBottom:'22px', paddingBottom:'12px', borderBottom:`1px solid ${accent}22`, marginTop:'12px' }}>
+      <div id="sec-improvisiert" className="reveal-left" style={{ marginBottom:'22px', paddingBottom:'12px', borderBottom:`1px solid ${accent}22`, marginTop:'12px' }}>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={8} color={`${accent}66`} fill={`${accent}22`} strokeWidth={1} />
           <h2 style={{ fontFamily:'var(--font-display)', fontSize:'18px', fontWeight:'300', letterSpacing:'0.2em', color:'rgba(230,225,255,0.85)', textTransform:'uppercase' }}>Improvisierte Waffen</h2>
@@ -236,7 +236,7 @@ function WaffenContent({ accent }) {
       </p>
 
       {/* Versilberte Waffen */}
-      <div className="reveal-left" style={{ marginBottom:'22px', paddingBottom:'12px', borderBottom:`1px solid ${accent}22` }}>
+      <div id="sec-versilbert" className="reveal-left" style={{ marginBottom:'22px', paddingBottom:'12px', borderBottom:`1px solid ${accent}22` }}>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={8} color={`${accent}66`} fill={`${accent}22`} strokeWidth={1} />
           <h2 style={{ fontFamily:'var(--font-display)', fontSize:'18px', fontWeight:'300', letterSpacing:'0.2em', color:'rgba(230,225,255,0.85)', textTransform:'uppercase' }}>Versilberte Waffen</h2>
@@ -248,7 +248,7 @@ function WaffenContent({ accent }) {
       </p>
 
       {/* Spezielle Waffen */}
-      <div className="reveal-left" style={{ marginBottom:'22px', paddingBottom:'12px', borderBottom:`1px solid ${accent}22`, marginTop:'32px' }}>
+      <div id="sec-spezielle" className="reveal-left" style={{ marginBottom:'22px', paddingBottom:'12px', borderBottom:`1px solid ${accent}22`, marginTop:'32px' }}>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={8} color={`${accent}66`} fill={`${accent}22`} strokeWidth={1} />
           <h2 style={{ fontFamily:'var(--font-display)', fontSize:'18px', fontWeight:'300', letterSpacing:'0.2em', color:'rgba(230,225,255,0.85)', textTransform:'uppercase' }}>Spezielle Waffen</h2>
@@ -334,7 +334,7 @@ function RuestungContent({ accent }) {
       </p>
 
       {/* Leichte Rüstung */}
-      <div className="reveal-left" style={{ marginBottom:'10px', paddingBottom:'10px', borderBottom:`1px solid ${accent}18` }}>
+      <div id="sec-leicht" className="reveal-left" style={{ marginBottom:'10px', paddingBottom:'10px', borderBottom:`1px solid ${accent}18` }}>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={7} color={`${accent}55`} fill={`${accent}18`} strokeWidth={1} />
           <span style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(210,205,255,0.75)', textTransform:'uppercase' }}>Leichte Rüstung</span>
@@ -346,7 +346,7 @@ function RuestungContent({ accent }) {
       <RuestungTable title="leichte Rüstung" rows={LEICHTE_RUESTUNG} accent={accent} />
 
       {/* Mittelschwere Rüstung */}
-      <div className="reveal-left" style={{ marginBottom:'10px', paddingBottom:'10px', borderBottom:`1px solid ${accent}18`, marginTop:'8px' }}>
+      <div id="sec-mittel" className="reveal-left" style={{ marginBottom:'10px', paddingBottom:'10px', borderBottom:`1px solid ${accent}18`, marginTop:'8px' }}>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={7} color={`${accent}55`} fill={`${accent}18`} strokeWidth={1} />
           <span style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(210,205,255,0.75)', textTransform:'uppercase' }}>Mittelschwere Rüstung</span>
@@ -358,7 +358,7 @@ function RuestungContent({ accent }) {
       <RuestungTable title="mittelschwere Rüstung" rows={MITTELSCHWERE_RUESTUNG} accent={accent} />
 
       {/* Schwere Rüstung */}
-      <div className="reveal-left" style={{ marginBottom:'10px', paddingBottom:'10px', borderBottom:`1px solid ${accent}18`, marginTop:'8px' }}>
+      <div id="sec-schwer" className="reveal-left" style={{ marginBottom:'10px', paddingBottom:'10px', borderBottom:`1px solid ${accent}18`, marginTop:'8px' }}>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={7} color={`${accent}55`} fill={`${accent}18`} strokeWidth={1} />
           <span style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(210,205,255,0.75)', textTransform:'uppercase' }}>Schwere Rüstung</span>
@@ -370,7 +370,7 @@ function RuestungContent({ accent }) {
       <RuestungTable title="schwere Rüstung" rows={SCHWERE_RUESTUNG} accent={accent} />
 
       {/* Schilde */}
-      <div className="reveal-left" style={{ marginBottom:'10px', paddingBottom:'10px', borderBottom:`1px solid ${accent}18`, marginTop:'8px' }}>
+      <div id="sec-schilde" className="reveal-left" style={{ marginBottom:'10px', paddingBottom:'10px', borderBottom:`1px solid ${accent}18`, marginTop:'8px' }}>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={7} color={`${accent}55`} fill={`${accent}18`} strokeWidth={1} />
           <span style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(210,205,255,0.75)', textTransform:'uppercase' }}>Schilde</span>
@@ -382,7 +382,7 @@ function RuestungContent({ accent }) {
       <RuestungTable title="Schilde" rows={SCHILDE} accent={accent} />
 
       {/* Kleidung */}
-      <div className="reveal-left" style={{ marginBottom:'10px', paddingBottom:'10px', borderBottom:`1px solid ${accent}18`, marginTop:'8px' }}>
+      <div id="sec-kleidung" className="reveal-left" style={{ marginBottom:'10px', paddingBottom:'10px', borderBottom:`1px solid ${accent}18`, marginTop:'8px' }}>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={7} color={`${accent}55`} fill={`${accent}18`} strokeWidth={1} />
           <span style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(210,205,255,0.75)', textTransform:'uppercase' }}>Kleidung</span>
@@ -410,7 +410,7 @@ function RuestungContent({ accent }) {
       </div>
 
       {/* Anlegen & Ablegen */}
-      <div className="reveal-left" style={{ marginBottom:'22px', paddingBottom:'12px', borderBottom:`1px solid ${accent}22`, marginTop:'32px' }}>
+      <div id="sec-anlegen" className="reveal-left" style={{ marginBottom:'22px', paddingBottom:'12px', borderBottom:`1px solid ${accent}22`, marginTop:'32px' }}>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={8} color={`${accent}66`} fill={`${accent}22`} strokeWidth={1} />
           <h2 style={{ fontFamily:'var(--font-display)', fontSize:'18px', fontWeight:'300', letterSpacing:'0.2em', color:'rgba(230,225,255,0.85)', textTransform:'uppercase' }}>Rüstungen an- und ablegen</h2>
@@ -1153,6 +1153,7 @@ function WerkzeugeContent({ accent }) {
         <strong style={{ color: 'rgba(220,210,255,0.7)', fontWeight: '500' }}>Beispiel-SG.</strong> Am Ende jeder Beschreibung führt eine Tabelle unterschiedliche Aktivitäten auf, die mithilfe eines Werkzeuges durchgeführt werden können, sowie den vorgeschlagenen SG für den jeweils notwendigen Fähigkeitswurf.
       </p>
 
+      <div id="sec-werkzeuge" />
       <RollTable title="Werkzeuge" rows={WERKZEUGE_ITEMS} accent={accent} />
       <WerkzeugGrid
         title="Werkzeuge"
@@ -1161,6 +1162,7 @@ function WerkzeugeContent({ accent }) {
         onOpen={setPopup}
       />
 
+      <div id="sec-handwerk" />
       <RollTable title="Handwerkszeuge" rows={HANDWERKSZEUGE_ITEMS} accent={accent} />
       <WerkzeugGrid
         title="Handwerkszeuge"
@@ -1169,6 +1171,7 @@ function WerkzeugeContent({ accent }) {
         onOpen={setPopup}
       />
 
+      <div id="sec-musik" />
       <RollTable title="Musikinstrumente" rows={MUSIKINSTRUMENTE_ITEMS} accent={accent} />
       <WerkzeugGrid
         title="Musikinstrumente"
@@ -1177,6 +1180,7 @@ function WerkzeugeContent({ accent }) {
         onOpen={setPopup}
       />
 
+      <div id="sec-spiele" />
       <RollTable title="Spiele" rows={SPIELE_ITEMS} accent={accent} />
       <WerkzeugGrid
         title="Spiele"
@@ -1202,7 +1206,7 @@ function ReittiereContent({ accent }) {
       </p>
 
       {/* Reit- und Lasttiere */}
-      <div className="reveal-left" style={{ marginBottom:'10px', paddingBottom:'10px', borderBottom:`1px solid ${accent}18` }}>
+      <div id="sec-lasttiere" className="reveal-left" style={{ marginBottom:'10px', paddingBottom:'10px', borderBottom:`1px solid ${accent}18` }}>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={7} color={`${accent}55`} fill={`${accent}18`} strokeWidth={1} />
           <span style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(210,205,255,0.75)', textTransform:'uppercase' }}>Reit- und Lasttiere</span>
@@ -1245,7 +1249,7 @@ function ReittiereContent({ accent }) {
       </div>
 
       {/* Zaumzeug, Harnische und gezogene Fahrzeuge */}
-      <div className="reveal-left" style={{ marginBottom:'10px', paddingBottom:'10px', borderBottom:`1px solid ${accent}18` }}>
+      <div id="sec-zaumzeug" className="reveal-left" style={{ marginBottom:'10px', paddingBottom:'10px', borderBottom:`1px solid ${accent}18` }}>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={7} color={`${accent}55`} fill={`${accent}18`} strokeWidth={1} />
           <span style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(210,205,255,0.75)', textTransform:'uppercase' }}>Zaumzeug, Harnische & gezogene Fahrzeuge</span>
@@ -1273,7 +1277,7 @@ function ReittiereContent({ accent }) {
       </div>
 
       {/* Wasserfahrzeuge */}
-      <div className="reveal-left" style={{ marginBottom:'10px', paddingBottom:'10px', borderBottom:`1px solid ${accent}18` }}>
+      <div id="sec-wasser" className="reveal-left" style={{ marginBottom:'10px', paddingBottom:'10px', borderBottom:`1px solid ${accent}18` }}>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={7} color={`${accent}55`} fill={`${accent}18`} strokeWidth={1} />
           <span style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(210,205,255,0.75)', textTransform:'uppercase' }}>Wasserfahrzeuge</span>
@@ -1301,7 +1305,7 @@ function ReittiereContent({ accent }) {
       </div>
 
       {/* Land- und Wasserfahrzeuge Info */}
-      <div className="reveal-left" style={{ marginBottom:'22px', paddingBottom:'12px', borderBottom:`1px solid ${accent}22` }}>
+      <div id="sec-fahrzeuge" className="reveal-left" style={{ marginBottom:'22px', paddingBottom:'12px', borderBottom:`1px solid ${accent}22` }}>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={8} color={`${accent}66`} fill={`${accent}22`} strokeWidth={1} />
           <h2 style={{ fontFamily:'var(--font-display)', fontSize:'18px', fontWeight:'300', letterSpacing:'0.2em', color:'rgba(230,225,255,0.85)', textTransform:'uppercase' }}>Land- und Wasserfahrzeuge</h2>
@@ -1354,8 +1358,10 @@ function ReittiereContent({ accent }) {
 }
 
 // ── TAND ROLL TABLE ───────────────────────────────────────
-function TandRollTable({ title, items, accent, diceLabel }) {
-  const [open, setOpen] = useState(false);
+function TandRollTable({ title, items, accent, diceLabel, open: openProp, onOpenChange }) {
+  const [openLocal, setOpenLocal] = useState(false);
+  const open = openProp !== undefined ? openProp : openLocal;
+  const setOpen = onOpenChange !== undefined ? onOpenChange : setOpenLocal;
   const [highlighted, setHighlighted] = useState(null);
   const [rolling, setRolling] = useState(false);
   const rowRefs = useRef([]);
@@ -1479,6 +1485,20 @@ function TandRollTable({ title, items, accent, diceLabel }) {
 function TandContent({ accent }) {
   const [rolling, setRolling] = useState(false);
   const [selectedTable, setSelectedTable] = useState(null);
+  const [openTand, setOpenTand] = useState(false);
+  const [openSchaurig, setOpenSchaurig] = useState(false);
+  const [openErstaunlich, setOpenErstaunlich] = useState(false);
+
+  useEffect(() => {
+    const handler = (e) => {
+      const { id } = e.detail;
+      if (id === 'sec-tand') setOpenTand(true);
+      else if (id === 'sec-schaurig') setOpenSchaurig(true);
+      else if (id === 'sec-erstaunlich') setOpenErstaunlich(true);
+    };
+    window.addEventListener('toc-navigate', handler);
+    return () => window.removeEventListener('toc-navigate', handler);
+  }, []);
 
   const handleW3Roll = () => {
     if (rolling) return;
@@ -1560,9 +1580,12 @@ function TandContent({ accent }) {
       </div>
 
       {/* The three roll tables */}
-      <TandRollTable title="Tand" items={TAND_ITEMS} accent={accent} diceLabel="" />
-      <TandRollTable title="Schauriger Tand" items={SCHAURIGER_TAND_ITEMS} accent={accent} diceLabel="" />
-      <TandRollTable title="Erstaunlicher Tand" items={ERSTAUNLICHER_TAND_ITEMS} accent={accent} diceLabel="" />
+      <div id="sec-tand" />
+      <TandRollTable title="Tand" items={TAND_ITEMS} accent={accent} diceLabel="" open={openTand} onOpenChange={setOpenTand} />
+      <div id="sec-schaurig" />
+      <TandRollTable title="Schauriger Tand" items={SCHAURIGER_TAND_ITEMS} accent={accent} diceLabel="" open={openSchaurig} onOpenChange={setOpenSchaurig} />
+      <div id="sec-erstaunlich" />
+      <TandRollTable title="Erstaunlicher Tand" items={ERSTAUNLICHER_TAND_ITEMS} accent={accent} diceLabel="" open={openErstaunlich} onOpenChange={setOpenErstaunlich} />
     </div>
   );
 }
@@ -1618,7 +1641,7 @@ function AbenteuerContent({ accent }) {
       <SubTable title="Behälter" rows={BEHAELTER} accent={accent} hasKapazitaet={true} />
 
       {/* Ausrüstungspakete */}
-      <div className="reveal-left" style={{ marginBottom: '22px', paddingBottom: '12px', borderBottom: `1px solid ${accent}22`, marginTop: '36px' }}>
+      <div id="sec-pakete" className="reveal-left" style={{ marginBottom: '22px', paddingBottom: '12px', borderBottom: `1px solid ${accent}22`, marginTop: '36px' }}>
         <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.3em', color: `${accent}55`, textTransform: 'uppercase', marginBottom: '5px' }}>Ausrüstung</div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <OctSvg size={8} color={`${accent}66`} fill={`${accent}22`} strokeWidth={1} />
@@ -1646,6 +1669,52 @@ function AbenteuerContent({ accent }) {
 
 }
 
+// ── SECTION ANCHORS ───────────────────────────────────────
+const SECTION_ANCHORS = {
+  abenteuer: [
+    { id: 'sec-pakete', label: 'Ausrüstungspakete' },
+  ],
+  waffen: [
+    { id: 'sec-waffen-eigenschaften', label: 'Waffeneigenschaften' },
+    { id: 'sec-improvisiert', label: 'Improvisierte Waffen' },
+    { id: 'sec-versilbert', label: 'Versilberte Waffen' },
+    { id: 'sec-spezielle', label: 'Spezielle Waffen' },
+  ],
+  ruestung: [
+    { id: 'sec-leicht', label: 'Leichte Rüstung' },
+    { id: 'sec-mittel', label: 'Mittelschwere Rüstung' },
+    { id: 'sec-schwer', label: 'Schwere Rüstung' },
+    { id: 'sec-schilde', label: 'Schilde' },
+    { id: 'sec-kleidung', label: 'Kleidung' },
+    { id: 'sec-anlegen', label: 'An- & Ablegen' },
+  ],
+  werkzeuge: [
+    { id: 'sec-werkzeuge', label: 'Werkzeuge' },
+    { id: 'sec-handwerk', label: 'Handwerkszeuge' },
+    { id: 'sec-musik', label: 'Musikinstrumente' },
+    { id: 'sec-spiele', label: 'Spiele' },
+  ],
+  reittiere: [
+    { id: 'sec-lasttiere', label: 'Reit- & Lasttiere' },
+    { id: 'sec-zaumzeug', label: 'Zaumzeug & Fahrzeuge' },
+    { id: 'sec-wasser', label: 'Wasserfahrzeuge' },
+    { id: 'sec-fahrzeuge', label: 'Land- & Wasserfahrzeuge' },
+  ],
+  tand: [
+    { id: 'sec-tand', label: 'Tand' },
+    { id: 'sec-schaurig', label: 'Schauriger Tand' },
+    { id: 'sec-erstaunlich', label: 'Erstaunlicher Tand' },
+  ],
+};
+
+function scrollToSection(id) {
+  window.dispatchEvent(new CustomEvent('toc-navigate', { detail: { id } }));
+  const el = document.getElementById(id);
+  if (!el) return;
+  const top = el.getBoundingClientRect().top + window.scrollY - 70;
+  window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+}
+
 // ── SIDEBAR ───────────────────────────────────────────────
 const PAGE_HEADER_H = 180 + 52; // PageHeader + nav
 function Sidebar({ activeCategory, onSelect, accent }) {
@@ -1671,14 +1740,26 @@ function Sidebar({ activeCategory, onSelect, accent }) {
       <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: 'rgba(160,140,255,0.4)', textTransform: 'uppercase', padding: '0 20px', marginBottom: '12px' }}>Ausrüstung</div>
       {CATEGORIES.map((cat) => {
         const isActive = cat.id === activeCategory;
+        const subItems = SECTION_ANCHORS[cat.id] || [];
         return (
-          <button key={cat.id} onClick={() => onSelect(cat.id)}
-          style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '9px 20px', background: isActive ? `${accent}12` : 'transparent', border: 'none', borderLeft: isActive ? `2px solid ${accent}` : '2px solid transparent', cursor: 'pointer', fontFamily: 'var(--font-body)', fontWeight: isActive ? '500' : '400', fontSize: '12px', letterSpacing: '0.06em', color: isActive ? '#f0eeff' : 'rgba(200,190,240,0.6)', transition: 'all 0.15s' }}
-          onMouseEnter={(e) => {if (!isActive) {e.currentTarget.style.color = '#f0eeff';e.currentTarget.style.borderLeftColor = `${accent}55`;e.currentTarget.style.background = `${accent}08`;}}}
-          onMouseLeave={(e) => {if (!isActive) {e.currentTarget.style.color = 'rgba(200,190,240,0.6)';e.currentTarget.style.borderLeftColor = 'transparent';e.currentTarget.style.background = 'transparent';}}}>
-            <OctSvg size={6} color={isActive ? accent : 'rgba(124,77,255,0.4)'} fill={isActive ? `${accent}44` : 'rgba(124,77,255,0.12)'} strokeWidth={1} style={{ flexShrink: 0 }} />
-            <span>{cat.label}</span>
-          </button>);
+          <React.Fragment key={cat.id}>
+            <button onClick={() => onSelect(cat.id)}
+            style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '9px 20px', background: isActive ? `${accent}12` : 'transparent', border: 'none', borderLeft: isActive ? `2px solid ${accent}` : '2px solid transparent', cursor: 'pointer', fontFamily: 'var(--font-body)', fontWeight: isActive ? '500' : '400', fontSize: '12px', letterSpacing: '0.06em', color: isActive ? '#f0eeff' : 'rgba(200,190,240,0.6)', transition: 'all 0.15s' }}
+            onMouseEnter={(e) => {if (!isActive) {e.currentTarget.style.color = '#f0eeff';e.currentTarget.style.borderLeftColor = `${accent}55`;e.currentTarget.style.background = `${accent}08`;}}}
+            onMouseLeave={(e) => {if (!isActive) {e.currentTarget.style.color = 'rgba(200,190,240,0.6)';e.currentTarget.style.borderLeftColor = 'transparent';e.currentTarget.style.background = 'transparent';}}}>
+              <OctSvg size={6} color={isActive ? accent : 'rgba(124,77,255,0.4)'} fill={isActive ? `${accent}44` : 'rgba(124,77,255,0.12)'} strokeWidth={1} style={{ flexShrink: 0 }} />
+              <span>{cat.label}</span>
+            </button>
+            {isActive && subItems.map(sub => (
+              <button key={sub.id} onClick={() => scrollToSection(sub.id)}
+              style={{ display: 'flex', alignItems: 'center', gap: '7px', width: '100%', textAlign: 'left', padding: '5px 20px 5px 32px', background: 'transparent', border: 'none', borderLeft: '2px solid transparent', cursor: 'pointer', fontFamily: 'var(--font-body)', fontSize: '11px', letterSpacing: '0.04em', color: 'rgba(180,165,255,0.5)', transition: 'all 0.15s' }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = 'rgba(220,210,255,0.85)'; e.currentTarget.style.borderLeftColor = `${accent}44`; e.currentTarget.style.background = `${accent}07`; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(180,165,255,0.5)'; e.currentTarget.style.borderLeftColor = 'transparent'; e.currentTarget.style.background = 'transparent'; }}>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: `${accent}44`, flexShrink: 0 }}>·</span>
+                <span>{sub.label}</span>
+              </button>
+            ))}
+          </React.Fragment>);
 
       })}
     </aside>);
