@@ -166,7 +166,7 @@ function KlasseCard({ klasse, onClick }) {
           <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'80px', zIndex:10, transform:'translateZ(2px)', background:'linear-gradient(to top, rgba(2,1,10,0.88) 0%, transparent 100%)', clipPath:'polygon(0% 40%, 100% 0%, 100% 100%, 0% 100%)', opacity:hov?1:0, transition:'opacity 0.35s ease', pointerEvents:'none' }} />
 
           {/* Hover name badge */}
-          <div style={{ position:'absolute', bottom:'14px', left:'14px', zIndex:33, transform:'translateZ(40px)', opacity:hov?1:0, transition:'opacity 0.35s ease' }}>
+          <div style={{ position:'absolute', bottom:'22px', left:'22px', zIndex:33, transform:'translateZ(10px)', opacity:hov?1:0, transition:'opacity 0.35s ease' }}>
             <h3 style={{ fontFamily:'var(--font-display)', fontSize:'15px', fontWeight:'400', letterSpacing:'0.16em', color:'#f0eeff', textShadow:`0 0 24px ${accent}cc, 0 2px 8px rgba(0,0,0,0.9)`, textTransform:'uppercase' }}>{klasse.name}</h3>
             <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em', color:accent+'bb', marginTop:'3px', display:'flex', flexDirection:'column', gap:'2px' }}>{klasse.fähigkeit.split(' · ').map((f,i)=><span key={i}>{f}</span>)}</div>
           </div>
