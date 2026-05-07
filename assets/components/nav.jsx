@@ -85,7 +85,8 @@ const NAV = [
   { id: 'charaktererstellung', label: 'Charaktererstellung', items: [{ label: 'Neuer Charakter', href: '#', dividerAfter: true }, { label: 'Rassen', href: 'Rassen.html' }, { label: 'Klassen', href: 'Klassen.html' }, { label: 'Talente', href: 'Talente.html' }, { label: 'Hintergründe', href: 'Hintergruende.html' }, { label: 'Zauber', href: 'Zauber.html' }, { label: 'Ausrüstung', href: 'Ausrüstung.html' }] },
   { id: 'enzyklopaedie', label: 'Enzyklopädie', items: [{ label: 'Völker', href: '#' }, { label: 'Organisationen', href: '#' }, { label: 'Orte', href: '#' }, { label: 'Gottheiten', href: 'Gottheiten.html' }, { label: 'Religionen', href: '#' }] },
   { id: 'divisionen', label: 'Divisionen', items: [{ label: 'I — Die Kuratoren', href: 'Die Kuratoren.html' }, { label: 'II — Die Sturmritter', href: 'Sturmritter.html' }, { label: 'III — Die Sentinels', href: 'Sentinels.html' }, { label: 'IV — Die Friedenshüter', href: 'Friedenshueter.html' }, { label: 'V — Die Outfitters', href: 'Outfitters.html' }, { label: 'VI — Die Pathfinders', href: 'Pathfinders.html' }, { label: 'VII — Die Quellensucher', href: 'Quellensucher.html' }, { label: 'VIII — Die Bergungsgarde', href: 'Bergungsgarde.html' }] },
-  { id: 'charaktere', label: 'Charaktere', items: [{ label: 'Spielercharaktere', href: '#' }, { label: 'NSC', href: '#' }] }
+  { id: 'charaktere', label: 'Charaktere', items: [{ label: 'Spielercharaktere', href: '#' }, { label: 'NSC', href: '#' }] },
+  { id: 'galerie', label: 'Galerie', href: 'galerie.html' }
 ];
 
 function NavItem({ tab }) {
@@ -132,6 +133,16 @@ function NavItem({ tab }) {
   }, []);
 
   const dur = '1.4s';
+
+  if (tab.href) {
+    return (
+      <a href={tab.href} style={{ fontFamily: 'var(--font-display)', fontSize: '11px', fontWeight: '400', letterSpacing: '0.18em', padding: '10px 20px', background: 'transparent', border: '1px solid rgba(160,140,255,0.15)', color: 'rgba(200,190,240,0.7)', borderRadius: '3px', transition: 'all 0.2s', textTransform: 'uppercase', whiteSpace: 'nowrap', textDecoration: 'none', display: 'inline-block' }}
+        onMouseEnter={(e) => { e.currentTarget.style.color = '#f0eeff'; e.currentTarget.style.borderColor = 'rgba(160,140,255,0.45)'; e.currentTarget.style.background = 'rgba(124,77,255,0.1)'; }}
+        onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(200,190,240,0.7)'; e.currentTarget.style.borderColor = 'rgba(160,140,255,0.15)'; e.currentTarget.style.background = 'transparent'; }}>
+        {tab.label}
+      </a>
+    );
+  }
 
   return (
     <div onMouseEnter={show} onMouseLeave={hide} style={{ position: 'relative' }}>
