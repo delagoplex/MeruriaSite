@@ -218,7 +218,6 @@ function CardInner({ name, accent, hov, tilt, cardRef, onMouseMove, onMouseEnter
             <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'3px' }}>
               <h3 style={{ fontFamily:'var(--font-display)', fontSize:'15px', fontWeight:'400', letterSpacing:'0.16em',
                 color:'#f0eeff', textShadow:`0 2px 12px rgba(0,0,0,0.8)`, textTransform:'uppercase' }}>{name}</h3>
-              <OctSvg size={10} color={accent} fill={`${accent}44`} strokeWidth={1} />
             </div>
             <div style={{ width:'50px', height:'1px', background:`linear-gradient(90deg,${accent}cc,transparent)`, animation:'pulse-glow 3s infinite', marginBottom:'8px' }} />
             <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'10px', lineHeight:1.75,
