@@ -18,6 +18,7 @@
 <script src="assets/components/floating-hex-field.jsx" type="text/babel"></script>
 <script src="assets/components/footer.jsx" type="text/babel"></script>
 <script src="assets/components/section-banner.jsx" type="text/babel"></script>
+<script src="assets/components/bekannte-section.jsx" type="text/babel"></script>
 <script src="assets/components/float-nav.jsx" type="text/babel"></script>
 
 </head>
@@ -83,6 +84,7 @@ const TOC_SECTIONS = [
   { id: 'uebersicht',   label: 'Übersicht',       indent: false },
   { id: 'beschreibung', label: 'Beschreibung',     indent: true  },
   { id: 'auftraege',    label: 'Auftragseindruck', indent: true  },
+  { id: 'bekannte',    label: 'Bekannte Mitglieder', indent: true },
   { id: 'rangsystem',   label: 'Rangsystem',       indent: true  },
 ];
 
@@ -233,6 +235,9 @@ function DivisionPage({ division, heroRef }) {
             ))}
           </ul>
         </section>
+
+        {/* Bekannte Mitglieder */}
+        <BekannteSection division={division} />
 
         {/* Rangsystem */}
         <section id="rangsystem" className="div-section">
