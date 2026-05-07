@@ -223,9 +223,9 @@ function CardInner({ name, subtitle, tags, accent, hov, tilt, cardRef, onMouseMo
             {tags && tags.length > 0 && (
               <div style={{ display:'flex', gap:'4px', flexWrap:'wrap', minHeight:'32px', alignContent:'flex-start' }}>
                 {tags.map(tag => (
-                  <span key={tag} style={{ fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.12em',
+                  <span key={tag} style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.12em',
                     color:'rgba(160,140,255,0.55)', background:'rgba(124,77,255,0.07)', border:'1px solid rgba(124,77,255,0.16)',
-                    padding:'2px 6px', borderRadius:'2px', textTransform:'uppercase' }}>{tag}</span>
+                    padding:'3px 8px', borderRadius:'2px', textTransform:'uppercase' }}>{tag}</span>
                 ))}
               </div>
             )}
