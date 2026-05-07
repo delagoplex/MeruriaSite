@@ -171,7 +171,7 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch }) {
         <div style={{ display:'flex', flexDirection:'column', gap:'3px' }}>
           {classes.map(c => (
             <button key={c} onClick={() => toggle('klassen', c)} style={{ display:'flex', alignItems:'center', gap:'7px', padding:'5px 7px', background: filters.klassen.includes(c) ? 'rgba(124,77,255,0.12)' : 'transparent', border:`1px solid ${filters.klassen.includes(c) ? 'rgba(124,77,255,0.4)' : 'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', textAlign:'left' }}>
-              <OctSvg size={8} color="var(--purple)" fill={filters.klassen.includes(c) ? 'var(--purple)' : 'none'} strokeWidth={1.2} opacity={filters.klassen.includes(c) ? 1 : 0.35} />
+              <OctSvg size={6} color={filters.klassen.includes(c) ? 'rgba(124,77,255,0.9)' : 'rgba(124,77,255,0.5)'} fill={filters.klassen.includes(c) ? 'rgba(124,77,255,0.5)' : 'rgba(124,77,255,0.25)'} strokeWidth={1} />
               <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color: filters.klassen.includes(c) ? '#f0eeff' : 'var(--silver)', letterSpacing:'0.03em' }}>{c}</span>
             </button>
           ))}
@@ -190,7 +190,7 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch }) {
         <div style={{ display:'flex', flexDirection:'column', gap:'3px' }}>
           {zeitaufwaende.map(z => (
             <button key={z} onClick={() => toggle('zeitaufwand', z)} style={{ display:'flex', alignItems:'center', gap:'7px', padding:'5px 7px', background: filters.zeitaufwand.includes(z) ? 'rgba(124,77,255,0.12)' : 'transparent', border:`1px solid ${filters.zeitaufwand.includes(z) ? 'rgba(124,77,255,0.4)' : 'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', textAlign:'left' }}>
-              <OctSvg size={8} color="var(--purple)" fill={filters.zeitaufwand.includes(z) ? 'var(--purple)' : 'none'} strokeWidth={1.2} opacity={filters.zeitaufwand.includes(z) ? 1 : 0.35} />
+              <OctSvg size={6} color={filters.zeitaufwand.includes(z) ? 'rgba(124,77,255,0.9)' : 'rgba(124,77,255,0.5)'} fill={filters.zeitaufwand.includes(z) ? 'rgba(124,77,255,0.5)' : 'rgba(124,77,255,0.25)'} strokeWidth={1} />
               <span style={{ fontFamily:'var(--font-body)', fontSize:'10.5px', fontWeight:'300', color: filters.zeitaufwand.includes(z) ? '#f0eeff' : 'var(--silver)', letterSpacing:'0.03em' }}>{z}</span>
             </button>
           ))}
