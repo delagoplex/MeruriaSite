@@ -16,7 +16,8 @@ window.TALENTE_DATA = [
       "Du besitzt eine Resistenz gegen Schaden, der von Fallen verursacht wird.",
       "Wenn du dich mit Reisetempo fortbewegst, leidest du nicht unter dem −5 Abzug auf deinen passiven Weisheitswert (Wahrnehmung)."
     ],
-    kategorie: "Allgemein"
+    kategorie: "Allgemein",
+    angeboren: false
   },
   {
     id: "meisterschaft-schwerer-waffen",
@@ -30,7 +31,8 @@ window.TALENTE_DATA = [
       "Wenn du in deinem Zug einen kritischen Treffer mit einer Nahkampfwaffe erzielst oder eine Kreatur mit einer Nahkampfwaffe auf 0 Trefferpunkte reduzierst, kannst du deine Bonusaktion aufwenden, um einen weiteren Nahkampfangriff durchzuführen.",
       "Bevor du einen Nahkampfangriff mit einer schweren Waffe ausführst, in deren Umgang du geübt bist, kannst du dich dazu entscheiden, einen Malus von −5 auf den Angriffswurf hinzunehmen, um den verursachten Schaden bei einem Treffer um 10 zu erhöhen."
     ],
-    kategorie: "Kampf"
+    kategorie: "Kampf",
+    angeboren: false
   },
   {
     id: "scharfer-verstand",
@@ -46,7 +48,8 @@ window.TALENTE_DATA = [
       "Du weißt immer, wie viele Stunden es zum nächsten Sonnenauf- oder -untergang sind.",
       "Du kannst dich genau an alles erinnern, was du im vergangenen Monat gesehen oder gehört hast."
     ],
-    kategorie: "Allgemein"
+    kategorie: "Allgemein",
+    angeboren: false
   },
   {
     id: "abgesandter-der-luefte",
@@ -60,7 +63,8 @@ window.TALENTE_DATA = [
       "Deine Bewegungsrate erhöht sich um 1,5 m.",
       "Wenn du von einem Angriff getroffen wirst, kannst du deine Reaktion nutzen, um deinen Körper in Wind zu verwandeln und sofort in einem unbesetzten Feld innerhalb von 9 m wieder aufzutauchen, wodurch der Angriff verfehlt. Du kannst diese Fähigkeit nach einer kurzen oder langen Rast wieder einsetzen."
     ],
-    kategorie: "Rasse"
+    kategorie: "Kampf",
+    angeboren: true
   },
   {
     id: "beruehrung-von-sessinek",
@@ -76,7 +80,8 @@ window.TALENTE_DATA = [
       "Du erhältst Widerstand gegen Feuer- und Giftschaden.",
       "Du erhältst einen Vorteil bei Rettungswürfen gegen Vergiftung."
     ],
-    kategorie: "Rasse"
+    kategorie: "Allgemein",
+    angeboren: true
   },
   {
     id: "armbrustexperte",
@@ -91,7 +96,8 @@ window.TALENTE_DATA = [
       "Du erleidest keinen Nachteil auf Fernkampfangriffe, wenn sich eine feindliche Kreatur innerhalb von 1,5 m von dir befindet.",
       "Wenn du die Angriffsaktion ausführst und dabei eine einhändige Waffe verwendest, kannst du deine Bonusaktion nutzen, um mit einer Handarmbrust einen zusätzlichen Angriff durchzuführen."
     ],
-    kategorie: "Kampf"
+    kategorie: "Kampf",
+    angeboren: false
   },
   {
     id: "athlet",
@@ -107,7 +113,8 @@ window.TALENTE_DATA = [
       "Klettern kostet dich keine zusätzliche Bewegung.",
       "Du kannst einen weiten Sprung oder hohen Sprung ausführen, nachdem du dich nur 1,5 m weit fortbewegt hast anstatt der üblichen 3 m."
     ],
-    kategorie: "Allgemein"
+    kategorie: "Allgemein",
+    angeboren: false
   },
   {
     id: "aufmerksam",
@@ -122,7 +129,8 @@ window.TALENTE_DATA = [
       "Du kannst Lippen lesen und verstehst den Inhalt einer Unterhaltung, die du sehen, aber nicht hören kannst, wenn du die verwendete Sprache kennst und die Sprechenden klar zu sehen sind.",
       "Du erhältst einen Bonus von +5 auf deinen passiven Weisheitswert (Wahrnehmung) und deinen passiven Intelligenzwert (Nachforschungen)."
     ],
-    kategorie: "Allgemein"
+    kategorie: "Allgemein",
+    angeboren: false
   },
   {
     id: "begabt",
@@ -135,7 +143,8 @@ window.TALENTE_DATA = [
     vorzuege: [
       "Du erlangst Übung in einer beliebigen Kombination aus drei Fertigkeiten oder Werkzeugen deiner Wahl."
     ],
-    kategorie: "Allgemein"
+    kategorie: "Allgemein",
+    angeboren: false
   },
   {
     id: "belastbar",
@@ -149,7 +158,8 @@ window.TALENTE_DATA = [
       "Erhöhe einen Attributswert deiner Wahl um 1 Punkt, bis zu einem maximalen Attributswert von 20.",
       "Du erlangst Übung in Rettungswürfen mit dem gewählten Attribut."
     ],
-    kategorie: "Allgemein"
+    kategorie: "Allgemein",
+    angeboren: false
   },
   {
     id: "berittener-kampf",
@@ -164,7 +174,8 @@ window.TALENTE_DATA = [
       "Wenn ein Angriff, der auf dein Reittier zielt, einen Treffer erzielen würde, kannst du stattdessen dich selbst als Ziel des Angriffs bestimmen.",
       "Wenn dein Reittier einem Effekt unterworfen ist, bei dem ein erfolgreicher Geschicklichkeitsrettungswurf den Schaden halbiert, erleidet es bei einem erfolgreichen Rettungswurf keinen Schaden und bei einem misslungenen Rettungswurf nur den halben Schaden."
     ],
-    kategorie: "Kampf"
+    kategorie: "Kampf",
+    angeboren: false
   },
   {
     id: "defensiver-duellant",
@@ -177,7 +188,8 @@ window.TALENTE_DATA = [
     vorzuege: [
       "Wenn du eine Waffe mit der Eigenschaft Finesse hältst und mit der du geübt bist, und eine andere Kreatur dich mit einem Nahkampfangriff trifft, kannst du deine Reaktion einsetzen, um deinen Rüstungsklassewert um deinen Übungsbonus zu erhöhen und den auslösenden Angriff möglicherweise verfehlen zu lassen."
     ],
-    kategorie: "Kampf"
+    kategorie: "Kampf",
+    angeboren: false
   },
   {
     id: "eingeweihter-der-magie",
@@ -192,7 +204,8 @@ window.TALENTE_DATA = [
       "Du erlernst außerdem einen Zauber des 1. Grades deiner Wahl aus derselben Klassenliste. Du kannst diesen Zauber einmal einsetzen, ohne einen Zauberplatz dafür aufwenden zu müssen. Nach einer langen Rast steht dir dieser Zauber wieder zur Verfügung.",
       "Dein Zauberattribut für diese Zauber ist Intelligenz, Weisheit oder Charisma — je nachdem welche Klasse du gewählt hast (Zauberer: Intelligenz; Kleriker oder Druide: Weisheit; Barde, Hexenmeister oder Paladin: Charisma)."
     ],
-    kategorie: "Magie"
+    kategorie: "Magie",
+    angeboren: false
   },
   {
     id: "elementarer-adept",
@@ -207,7 +220,8 @@ window.TALENTE_DATA = [
       "Deine Zauber ignorieren Resistenzen der gewählten Schadensart.",
       "Bei Zaubern, die die entsprechende Schadensart verursachen, darfst du jede gewürfelte 1 beim Schadenswurf wie eine 2 behandeln."
     ],
-    kategorie: "Magie"
+    kategorie: "Magie",
+    angeboren: false
   },
   {
     id: "glueckspilz",
@@ -222,7 +236,8 @@ window.TALENTE_DATA = [
       "Außerdem kannst du einen Glückspunkt aufwenden, wenn ein Angriffswurf gegen dich ausgeführt wird. Würfle einen W20 und wähle, ob dein Ergebnis oder das des Angreifers für den Angriffswurf verwendet wird.",
       "Wenn mehr als eine Kreatur Glückspunkte einsetzt, um denselben Wurf zu beeinflussen, heben sie sich gegenseitig auf — es wird kein zusätzlicher Würfel geworfen."
     ],
-    kategorie: "Allgemein"
+    kategorie: "Allgemein",
+    angeboren: false
   },
   {
     id: "heiler",
@@ -236,7 +251,8 @@ window.TALENTE_DATA = [
       "Wenn du eine Heilerausrüstung einsetzt, um eine sterbende Kreatur zu stabilisieren, erhält sie zusätzlich 1 Trefferpunkt zurück.",
       "Als Aktion kannst du eine Anwendung der Heilerausrüstung aufbrauchen, um eine Kreatur zu behandeln und bei ihr 1W6 + 4 Trefferpunkte wiederherzustellen, zuzüglich so vieler Trefferpunkte, wie es ihrer maximalen Anzahl an Trefferwürfeln entspricht. Die Kreatur kann erst erneut mit diesem Talent geheilt werden, nachdem sie eine kurze oder lange Rast beendet hat."
     ],
-    kategorie: "Allgemein"
+    kategorie: "Allgemein",
+    angeboren: false
   },
   {
     id: "inspirierender-anfuehrer",
@@ -249,7 +265,8 @@ window.TALENTE_DATA = [
     vorzuege: [
       "Wähle bis zu sechs verbündete Kreaturen (du darfst auch dich selbst bestimmen), die sich innerhalb von 9 m befinden, dich hören oder sehen können und dich verstehen. Jede dieser Kreaturen erhält temporäre Trefferpunkte in Höhe deiner Stufe + deines Charismamodifikators. Eine Kreatur kann durch dieses Talent erst wieder temporäre Trefferpunkte erhalten, wenn sie eine kurze oder lange Rast beendet hat."
     ],
-    kategorie: "Allgemein"
+    kategorie: "Allgemein",
+    angeboren: false
   },
   {
     id: "kampferprobter-zauberwirker",
@@ -264,7 +281,8 @@ window.TALENTE_DATA = [
       "Du kannst die Gestenkomponenten von Zaubern auch dann ausführen, wenn du eine Waffe oder einen Schild in einer oder beiden Händen hältst.",
       "Provoziert die Bewegung einer feindlichen Kreatur einen Gelegenheitsangriff von dir, kannst du als Reaktion einen Zauber auf die Kreatur wirken, anstatt einen Angriff auszuführen. Der Zauber muss einen Zeitaufwand von einer Aktion haben und darf nur diese Kreatur als Ziel haben."
     ],
-    kategorie: "Magie"
+    kategorie: "Magie",
+    angeboren: false
   },
   {
     id: "kneipenschlaeger",
@@ -280,7 +298,8 @@ window.TALENTE_DATA = [
       "Deine waffenlosen Schläge verursachen 1W4 Schaden.",
       "Wenn du eine Kreatur in deinem Zug mit einer improvisierten Waffe oder einem waffenlosen Schlag triffst, kannst du deine Bonusaktion für den Versuch verwenden, mit dem Ziel zu ringen."
     ],
-    kategorie: "Kampf"
+    kategorie: "Kampf",
+    angeboren: false
   },
   {
     id: "leichtfuessig",
@@ -295,7 +314,8 @@ window.TALENTE_DATA = [
       "Wenn du die Rennenaktion nutzt, kostet dich schwieriges Gelände in dieser Runde keine zusätzliche Bewegungsrate.",
       "Führst du einen Nahkampfangriff gegen eine Kreatur aus, provozierst du für den Rest des Zuges von dieser keinen Gelegenheitsangriff, ob du triffst oder nicht."
     ],
-    kategorie: "Allgemein"
+    kategorie: "Allgemein",
+    angeboren: false
   },
   {
     id: "leicht-geruestet",
@@ -309,7 +329,8 @@ window.TALENTE_DATA = [
       "Erhöhe deine Stärke oder Geschicklichkeit um 1 Punkt, bis zu einem maximalen Attributswert von 20.",
       "Du bist geübt im Umgang mit leichten Rüstungen."
     ],
-    kategorie: "Kampf"
+    kategorie: "Kampf",
+    angeboren: false
   },
   {
     id: "linguist",
@@ -324,7 +345,8 @@ window.TALENTE_DATA = [
       "Du erlernst drei Sprachen deiner Wahl.",
       "Du bist in der Lage, Geheimschriften zu entwerfen. Andere können deine Geheimschriften nicht entziffern, bis du es ihnen beigebracht hast, sie einen Intelligenzwurf bestehen (SG = dein Intelligenzwert + dein Übungsbonus) oder Magie anwenden, um die Schrift zu entschlüsseln."
     ],
-    kategorie: "Allgemein"
+    kategorie: "Allgemein",
+    angeboren: false
   },
   {
     id: "magiertoeter",
@@ -339,7 +361,8 @@ window.TALENTE_DATA = [
       "Kreaturen, die sich auf Zauber konzentrieren, sind beim Rettungswurf zum Aufrechterhalten der Konzentration im Nachteil, wenn du ihnen Schaden zufügst.",
       "Du bist im Vorteil bei Rettungswürfen gegen Zaubersprüche, die von Kreaturen innerhalb von 1,50 m gewirkt werden."
     ],
-    kategorie: "Kampf"
+    kategorie: "Kampf",
+    angeboren: false
   },
   {
     id: "meister-der-kampfkunst",
@@ -354,7 +377,8 @@ window.TALENTE_DATA = [
       "Wenn das Kampfmanöver, das du anwendest, vom Ziel einen Rettungswurf verlangt, um Effekten des Manövers zu widerstehen, ist der SG des Rettungswurfs gleich 8 + deinem Übungsbonus + deinem Stärke- oder Geschicklichkeitsmodifikator (deine Wahl).",
       "Du erhältst einen Überlegenheitswürfel (W6). Besitzt du bereits Überlegenheitswürfel, wird dieser hinzugefügt. Der Würfel gilt nach der Anwendung als verbraucht und steht dir nach einer kurzen oder langen Rast wieder zur Verfügung."
     ],
-    kategorie: "Kampf"
+    kategorie: "Kampf",
+    angeboren: false
   },
   {
     id: "meister-der-mittelschweren-ruestungen",
@@ -368,7 +392,8 @@ window.TALENTE_DATA = [
       "Du bist durch das Tragen von mittelschweren Rüstungen bei Würfen auf Geschicklichkeit (Heimlichkeit) nicht im Nachteil.",
       "Wenn du eine mittelschwere Rüstung trägst und eine Geschicklichkeit von 16 oder höher besitzt, darfst du 3 Punkte anstatt 2 auf deine Rüstungsklasse addieren."
     ],
-    kategorie: "Kampf"
+    kategorie: "Kampf",
+    angeboren: false
   },
   {
     id: "meister-der-schweren-ruestungen",
@@ -382,7 +407,8 @@ window.TALENTE_DATA = [
       "Erhöhe deine Stärke um 1 Punkt, bis zu einem maximalen Attributswert von 20.",
       "Solange du schwere Rüstungen trägst, wird der Hieb-, Stich- oder Wuchtschaden nicht-magischer Waffen um 3 Punkte reduziert."
     ],
-    kategorie: "Kampf"
+    kategorie: "Kampf",
+    angeboren: false
   },
   {
     id: "mittelschwer-geruestet",
@@ -396,7 +422,8 @@ window.TALENTE_DATA = [
       "Erhöhe deine Stärke oder Geschicklichkeit um 1 Punkt, bis zu einem maximalen Attributswert von 20.",
       "Du bist im Umgang mit mittelschweren Rüstungen und Schilden geübt."
     ],
-    kategorie: "Kampf"
+    kategorie: "Kampf",
+    angeboren: false
   },
   {
     id: "ringer",
@@ -410,7 +437,8 @@ window.TALENTE_DATA = [
       "Du bist bei Angriffswürfen gegen Kreaturen im Vorteil, die du gepackt hast.",
       "Du kannst deine Aktion dazu verwenden, eine Kreatur, die du gepackt hast, festzusetzen. Lege dazu einen zweiten Ringkampfwurf ab. Wenn dieser erfolgreich ist, erhaltet ihr beide den Zustand festgesetzt, bis der Zustand gepackt endet."
     ],
-    kategorie: "Kampf"
+    kategorie: "Kampf",
+    angeboren: false
   },
   {
     id: "ritualwirker",
@@ -424,7 +452,8 @@ window.TALENTE_DATA = [
       "Wenn du dieses Talent wählst, erhältst du ein Ritualbuch mit zwei Zaubern des 1. Grades deiner Wahl. Entscheide dich für eine Klasse: Barde, Druide, Kleriker, Magier, Hexenmeister oder Zauberer. Die zwei Zauber müssen aus der Spruchliste dieser Klasse stammen und als Ritual gekennzeichnet sein. Die Klasse bestimmt das Zauberattribut: Charisma (Barde, Hexenmeister, Zauberer), Weisheit (Druide, Kleriker) oder Intelligenz (Magier).",
       "Findest du einen als Ritual gekennzeichneten Zauber der gewählten Klassenliste in geschriebener Form, kannst du ihn in dein Ritualbuch übertragen. Sein Grad darf nicht mehr als die Hälfte deiner Stufe (aufgerundet) betragen. Der Vorgang dauert 2 Stunden pro Grad und kostet 50 GM pro Grad (für Materialkomponenten und spezielle Tinte)."
     ],
-    kategorie: "Magie"
+    kategorie: "Magie",
+    angeboren: false
   },
   {
     id: "scharfschuetze",
@@ -439,7 +468,8 @@ window.TALENTE_DATA = [
       "Deine Fernkampfangriffe ignorieren Teil- und Dreivierteldeckung.",
       "Bevor du einen Angriff mit einer Fernkampfwaffe ausführst, in deren Umgang du geübt bist, kannst du dich entscheiden, einen Malus von −5 auf den Angriffswurf hinzunehmen, um den verursachten Schaden bei einem Treffer um 10 zu erhöhen."
     ],
-    kategorie: "Kampf"
+    kategorie: "Kampf",
+    angeboren: false
   },
   {
     id: "schauspieler",
@@ -454,7 +484,8 @@ window.TALENTE_DATA = [
       "Du bist bei Würfen auf Charisma (Täuschen) und Charisma (Auftreten) im Vorteil, wenn du dich als eine andere Person ausgeben willst.",
       "Du bist in der Lage, die Stimme einer anderen Person oder die Laute einer Kreatur nahezu perfekt nachzuahmen. Dazu musst du dem Ziel mindestens 1 Minute lang zugehört haben. Ein erfolgreicher Weisheitswurf (Motiv erkennen) gegen deinen Wurf auf Charisma (Täuschen) lässt den Zuhörer die Täuschung bemerken."
     ],
-    kategorie: "Allgemein"
+    kategorie: "Allgemein",
+    angeboren: false
   },
   {
     id: "schildmeister",
@@ -469,7 +500,8 @@ window.TALENTE_DATA = [
       "Solange du nicht kampfunfähig bist, kannst du den Rüstungsklassebonus deines Schildes zu jedem Geschicklichkeitsrettungswurf addieren, den du aufgrund eines Zaubereffekts oder einer anderen schädlichen Quelle ablegen musst, sofern dieser Effekt nur dich betrifft.",
       "Wirst du von einem Effekt betroffen, der dir erlaubt, durch einen erfolgreichen Geschicklichkeitsrettungswurf nur den halben Schaden zu nehmen, kannst du deine Reaktion aufwenden, um bei einem gelungenen Rettungswurf keinen Schaden zu erleiden."
     ],
-    kategorie: "Kampf"
+    kategorie: "Kampf",
+    angeboren: false
   },
   {
     id: "schleicher",
@@ -484,7 +516,8 @@ window.TALENTE_DATA = [
       "Wenn du vor einer Kreatur versteckt bist und mit einem Fernkampfangriff verfehlst, offenbart der Angriff nicht deine Position.",
       "Dämmriges Licht sorgt nicht dafür, dass du bei Würfen auf Weisheit (Wahrnehmung) im Nachteil bist, wenn sie von Sicht abhängen."
     ],
-    kategorie: "Allgemein"
+    kategorie: "Allgemein",
+    angeboren: false
   },
   {
     id: "schwer-gepanzert",
@@ -498,7 +531,8 @@ window.TALENTE_DATA = [
       "Erhöhe deine Stärke um 1 Punkt, bis zu einem maximalen Attributswert von 20.",
       "Du bist geübt im Umgang mit schweren Rüstungen."
     ],
-    kategorie: "Kampf"
+    kategorie: "Kampf",
+    angeboren: false
   },
   {
     id: "stangenwaffenmeister",
@@ -512,7 +546,8 @@ window.TALENTE_DATA = [
       "Wenn du die Angriffsaktion wählst und nur mit einer Glefe, Hellebarde, einem Kampfstab oder einem Speer angreifst, kannst du deine Bonusaktion aufwenden, um einen weiteren Angriff mit dem anderen Ende der Waffe auszuführen. Dieser Angriff verwendet denselben Attributsmodifikator wie der erste und verursacht 1W4 Wuchtschaden.",
       "Solange du eine Glefe, Hellebarde, Pike, einen Kampfstab oder einen Speer führst, provozieren andere Kreaturen einen Gelegenheitsangriff durch dich, wenn sie sich in Reichweite der Waffe begeben."
     ],
-    kategorie: "Kampf"
+    kategorie: "Kampf",
+    angeboren: false
   },
   {
     id: "stuermer",
@@ -525,7 +560,8 @@ window.TALENTE_DATA = [
     vorzuege: [
       "Wenn du deine Aktion verwendest, um zu spurten, kannst du als Bonusaktion einen Nahkampfangriff ausführen oder eine Kreatur wegstoßen. Hast du vor dieser Bonusaktion mindestens 3 m in einer geraden Linie zurückgelegt, erhältst du entweder einen Bonus von +5 auf den Schadenswurf (wenn du den Nahkampfangriff gewählt hast und triffst) oder du stößt das Ziel bis zu 3 m von dir weg (wenn du dich entschieden hast, den Gegner wegzustoßen, und erfolgreich bist)."
     ],
-    kategorie: "Kampf"
+    kategorie: "Kampf",
+    angeboren: false
   },
   {
     id: "wachsam",
@@ -540,7 +576,8 @@ window.TALENTE_DATA = [
       "Du kannst nicht überrascht werden, solange du bei Bewusstsein bist.",
       "Kreaturen, die du nicht sehen kannst, sind nicht im Vorteil bei Angriffswürfen gegen dich."
     ],
-    kategorie: "Allgemein"
+    kategorie: "Allgemein",
+    angeboren: false
   },
   {
     id: "waechter",
@@ -555,7 +592,8 @@ window.TALENTE_DATA = [
       "Kreaturen provozieren Gelegenheitsangriffe durch dich, obwohl sie die Aktion Rückzug gewählt haben, bevor sie deine Reichweite verlassen.",
       "Wenn eine Kreatur innerhalb von 1,50 m ein anderes Ziel als dich angreift (und das Ziel dieses Talent nicht besitzt), kannst du deine Reaktion aufwenden, um einen Nahkampf-Waffenangriff gegen diese Kreatur auszuführen."
     ],
-    kategorie: "Kampf"
+    kategorie: "Kampf",
+    angeboren: false
   },
   {
     id: "waffenmeister",
@@ -569,7 +607,8 @@ window.TALENTE_DATA = [
       "Erhöhe deine Stärke oder Geschicklichkeit um 1 Punkt, bis zu einem maximalen Attributswert von 20.",
       "Du bist geübt im Umgang mit vier Waffen deiner Wahl. Jede muss eine einfache Waffe oder eine Kriegswaffe sein."
     ],
-    kategorie: "Kampf"
+    kategorie: "Kampf",
+    angeboren: false
   },
   {
     id: "widerstandsfaehig",
@@ -583,7 +622,8 @@ window.TALENTE_DATA = [
       "Erhöhe deine Konstitution um 1 Punkt, bis zu einem maximalen Attributswert von 20.",
       "Wenn du mit einem Trefferwürfel Trefferpunkte regenerierst, erhältst du minimal immer so viele Trefferpunkte, wie es dem Doppelten deines Konstitutionsmodifikators entspricht (mindestens 2)."
     ],
-    kategorie: "Allgemein"
+    kategorie: "Allgemein",
+    angeboren: false
   },
   {
     id: "wilder-angreifer",
@@ -596,7 +636,8 @@ window.TALENTE_DATA = [
     vorzuege: [
       "Einmal pro Zug darfst du bei einem erfolgreichen Nahkampf-Waffenangriff den Schaden ein zweites Mal auswürfeln und wählen, welches Ergebnis angewendet wird."
     ],
-    kategorie: "Kampf"
+    kategorie: "Kampf",
+    angeboren: false
   },
   {
     id: "zaeh",
@@ -609,7 +650,8 @@ window.TALENTE_DATA = [
     vorzuege: [
       "Mit der Wahl dieses Talents erhöht sich dein Trefferpunktemaximum einmalig um das Doppelte deiner Stufe. Immer wenn du danach eine Stufe aufsteigst, erhöht sich dein Trefferpunktemaximum um weitere 2 Punkte."
     ],
-    kategorie: "Allgemein"
+    kategorie: "Allgemein",
+    angeboren: false
   },
   {
     id: "zielgenauer-zauberschuetze",
@@ -624,7 +666,8 @@ window.TALENTE_DATA = [
       "Deine Angriffszauber ignorieren Teil- und Dreivierteldeckung.",
       "Du lernst einen Zaubertrick, der einen Angriffswurf erfordert. Wähle einen Zaubertrick aus der Spruchliste des Barden, Druiden, Klerikers, Magiers, Hexenmeisters oder Zauberers. Dein Zauberattribut hängt von der gewählten Spruchliste ab: Charisma (Barde, Hexenmeister, Zauberer), Weisheit (Druide, Kleriker) oder Intelligenz (Magier)."
     ],
-    kategorie: "Magie"
+    kategorie: "Magie",
+    angeboren: false
   },
   {
     id: "zwei-waffen-kaempfer",
@@ -639,6 +682,7 @@ window.TALENTE_DATA = [
       "Du kannst mit zwei Waffen kämpfen, auch wenn die einhändigen Nahkampfwaffen, die du führst, nicht leicht sind.",
       "Du kannst gleichzeitig zwei einhändige Waffen ziehen beziehungsweise verstauen statt nur einer."
     ],
-    kategorie: "Kampf"
+    kategorie: "Kampf",
+    angeboren: false
   }
 ];

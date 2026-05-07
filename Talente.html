@@ -37,6 +37,25 @@ const KATEGORIE_STYLE = {
   'Magie':     { bg: 'rgba(60,120,200,0.12)', border: 'rgba(80,150,230,0.35)', color: 'rgba(120,170,240,0.9)' },
 };
 
+// ─── VORAUSSETZUNG KÜRZEN ─────────────────────────────────────────────────────
+function shortenVoraussetzung(v) {
+  const map = {
+    'Fähigkeit, mindestens einen Zauber zu wirken': 'Zauberwirker',
+    'geübt im Umgang mit mittelschweren Rüstungen': 'Mittelschwere Rüstung',
+    'geübt im Umgang mit schweren Rüstungen':       'Schwere Rüstung',
+    'geübt im Umgang mit leichten Rüstungen':       'Leichte Rüstung',
+  };
+  if (map[v]) return map[v];
+  return v
+    .replace(' oder höher', '+')
+    .replace('Geschicklichkeit', 'GES')
+    .replace('Konstitution', 'KON')
+    .replace('Intelligenz', 'INT')
+    .replace('Weisheit', 'WEI')
+    .replace('Charisma', 'CHA')
+    .replace('Stärke', 'STÄ');
+}
+
 // ─── FILTER CHIP ──────────────────────────────────────────────────────────────
 function Chip({ label, active, onClick }) {
   return (
@@ -100,7 +119,13 @@ function FilterGroup({ title, active, onReset, children, collapsible }) {
 function FilterSidebar({ search, setSearch, filters, setFilters, allData }) {
   const allKategorien = useMemo(() => {
     const set = new Set();
-    allData.forEach(t => { if (t.kategorie && t.kategorie !== 'Rasse') set.add(t.kategorie); });
+    allData.forEach(t => { if (t.kategorie) set.add(t.kategorie); });
+    return [...set].sort();
+  }, [allData]);
+
+  const allRassen = useMemo(() => {
+    const set = new Set();
+    allData.forEach(t => { if (t.angeboren && t.voraussetzung) set.add(t.voraussetzung); });
     return [...set].sort();
   }, [allData]);
 
@@ -111,8 +136,8 @@ function FilterSidebar({ search, setSearch, filters, setFilters, allData }) {
     return { ...f, [key]: arr.includes(val) ? arr.filter(x => x !== val) : [...arr, val] };
   });
 
-  const reset = () => setFilters({ kategorien: [], nurOhneVoraussetzung: false });
-  const hasAny = (filters.kategorien || []).length > 0 || filters.nurOhneVoraussetzung;
+  const reset = () => setFilters({ kategorien: [], rassen: [], nurOhneVoraussetzung: false });
+  const hasAny = (filters.kategorien || []).length > 0 || (filters.rassen || []).length > 0 || filters.nurOhneVoraussetzung;
 
   return (
     <div style={{ width:'var(--filter-w)', flexShrink:0, background:'rgba(8,6,20,0.6)', borderRight:'1px solid var(--border)', padding:'16px 14px 14px 24px', overflowY:'auto', display:'flex', flexDirection:'column', position:'relative', zIndex:10 }}>
@@ -146,13 +171,34 @@ function FilterSidebar({ search, setSearch, filters, setFilters, allData }) {
             const active = (filters.kategorien||[]).includes(k);
             return (
               <button key={k} onClick={() => toggle('kategorien', k)} style={{ display:'flex', alignItems:'center', gap:'7px', padding:'5px 7px', background: active ? 'rgba(124,77,255,0.12)' : 'transparent', border:`1px solid ${active ? 'rgba(124,77,255,0.4)' : 'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', textAlign:'left' }}>
-                <div style={{ width:'7px', height:'7px', background: active ? s.color : 'rgba(160,140,255,0.2)', borderRadius:'1px', flexShrink:0, transition:'background 0.15s', border: active ? `1px solid ${s.border}` : '1px solid transparent' }} />
+                <svg width="9" height="10" viewBox="0 0 9 10" style={{ flexShrink:0 }}>
+                  <polygon points="4.5,0.8 8.2,2.9 8.2,7.1 4.5,9.2 0.8,7.1 0.8,2.9" fill={active ? s.color : 'rgba(160,140,255,0.2)'} stroke={active ? s.border : 'transparent'} strokeWidth="1.1" style={{ transition:'fill 0.15s, stroke 0.15s' }}/>
+                </svg>
                 <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color: active ? '#f0eeff' : 'var(--silver)', letterSpacing:'0.03em' }}>{k}</span>
               </button>
             );
           })}
         </div>
       </FilterGroup>
+
+      {/* Rassen */}
+      {allRassen.length > 0 && (
+        <FilterGroup title="Rasse" active={(filters.rassen||[]).length > 0} onReset={() => setFilters(f => ({...f, rassen:[]}))} collapsible>
+          <div style={{ display:'flex', flexDirection:'column', gap:'3px' }}>
+            {allRassen.map(r => {
+              const active = (filters.rassen||[]).includes(r);
+              return (
+                <button key={r} onClick={() => toggle('rassen', r)} style={{ display:'flex', alignItems:'center', gap:'7px', padding:'5px 7px', background: active ? 'rgba(60,160,120,0.12)' : 'transparent', border:`1px solid ${active ? 'rgba(80,190,140,0.4)' : 'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', textAlign:'left' }}>
+                  <svg width="9" height="10" viewBox="0 0 9 10" style={{ flexShrink:0 }}>
+                    <polygon points="4.5,0.8 8.2,2.9 8.2,7.1 4.5,9.2 0.8,7.1 0.8,2.9" fill={active ? 'rgba(100,220,170,0.9)' : 'rgba(160,140,255,0.2)'} stroke={active ? 'rgba(80,190,140,0.6)' : 'transparent'} strokeWidth="1.1" style={{ transition:'fill 0.15s, stroke 0.15s' }}/>
+                  </svg>
+                  <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color: active ? '#f0eeff' : 'var(--silver)', letterSpacing:'0.03em' }}>{r}</span>
+                </button>
+              );
+            })}
+          </div>
+        </FilterGroup>
+      )}
 
       {/* Voraussetzung */}
       {hasVoraussetzung && (
@@ -182,8 +228,8 @@ function TalentRow({ t, active, onClick, compact }) {
       <div style={{ flex:1, minWidth:0 }}>
         <span style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight: active ? '400' : '300', color: active ? '#f0eeff' : 'rgba(220,212,255,0.85)', letterSpacing:'0.04em' }}>{t.name}</span>
         {!compact && t.voraussetzung && (
-          <div style={{ marginTop:'2px' }}>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.08em', padding:'1px 6px', background:'rgba(200,80,60,0.1)', border:'1px solid rgba(220,100,80,0.25)', borderRadius:'2px', color:'rgba(240,140,120,0.75)' }}>{t.voraussetzung}</span>
+          <div style={{ marginTop:'0' }}>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.08em', padding:'1px 6px', background:'rgba(200,80,60,0.1)', border:'1px solid rgba(220,100,80,0.25)', borderRadius:'2px', color:'rgba(240,140,120,0.75)' }}>{shortenVoraussetzung(t.voraussetzung)}</span>
           </div>
         )}
         {!compact && (
@@ -220,18 +266,16 @@ function TalentDetail({ t, showBullets }) {
           <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(18px,2.2vw,26px)', fontWeight:'400', letterSpacing:'0.14em', color:'#f0eeff', lineHeight:1.2, textTransform:'uppercase' }}>{t.name}</h1>
           {t.kategorie && <KategorieBadge k={t.kategorie} />}
         </div>
+        {t.voraussetzung && (
+          <div style={{ display:'inline-flex', alignItems:'center', gap:'8px', padding:'4px 10px', background:'rgba(200,80,60,0.08)', border:'1px solid rgba(220,100,80,0.25)', borderRadius:'3px', marginBottom:'8px' }}>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.2em', color:'rgba(240,140,120,0.6)', textTransform:'uppercase' }}>Voraussetzung</span>
+            <span style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', color:'rgba(240,160,140,0.85)', letterSpacing:'0.02em' }}>{t.voraussetzung}</span>
+          </div>
+        )}
         {t.kurzbeschreibung && (
           <p style={{ fontFamily:'var(--font-body)', fontSize:'12.5px', fontWeight:'300', color:'rgba(200,190,240,0.55)', letterSpacing:'0.02em', lineHeight:1.6 }}>{t.kurzbeschreibung}</p>
         )}
       </div>
-
-      {/* Voraussetzung */}
-      {t.voraussetzung && (
-        <div style={{ display:'inline-flex', alignItems:'center', gap:'8px', padding:'6px 12px', background:'rgba(200,80,60,0.08)', border:'1px solid rgba(220,100,80,0.25)', borderRadius:'3px', marginBottom:'18px' }}>
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.2em', color:'rgba(240,140,120,0.6)', textTransform:'uppercase' }}>Voraussetzung</span>
-          <span style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', color:'rgba(240,160,140,0.85)', letterSpacing:'0.02em' }}>{t.voraussetzung}</span>
-        </div>
-      )}
 
       {/* Beschreibung */}
       {t.beschreibung && t.beschreibung.length > 0 && (
@@ -290,16 +334,17 @@ function App() {
 
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState(allData[0] || null);
-  const [filters, setFilters] = useState({ kategorien: [], nurOhneVoraussetzung: false });
+  const [filters, setFilters] = useState({ kategorien: [], rassen: [], nurOhneVoraussetzung: false });
   const [typeFilter, setTypeFilter] = useState(null); // null | 'angeboren' | 'erlernbar'
 
   const filtered = useMemo(() => {
     return allData.filter(t => {
       if (search && !t.name.toLowerCase().includes(search.toLowerCase()) && !(t.kurzbeschreibung||'').toLowerCase().includes(search.toLowerCase())) return false;
       if ((filters.kategorien||[]).length && !filters.kategorien.includes(t.kategorie)) return false;
+      if ((filters.rassen||[]).length && !filters.rassen.includes(t.voraussetzung)) return false;
       if (filters.nurOhneVoraussetzung && t.voraussetzung) return false;
-      if (typeFilter === 'angeboren' && t.kategorie !== 'Rasse') return false;
-      if (typeFilter === 'erlernbar' && t.kategorie === 'Rasse') return false;
+      if (typeFilter === 'angeboren' && !t.angeboren) return false;
+      if (typeFilter === 'erlernbar' && t.angeboren) return false;
       return true;
     });
   }, [allData, search, filters, typeFilter]);
