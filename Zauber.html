@@ -72,6 +72,58 @@ const SCHOOL_COLORS = {
 const schoolColor = s => SCHOOL_COLORS[s] || 'oklch(0.62 0.18 270)';
 const alpha = (c, a) => c.replace(')', ` / ${a})`);
 
+// ─── DRAG SCROLL ──────────────────────────────────────────────────────────────
+function useDragScroll({ horizontal = false, vertical = false } = {}) {
+  const ref = useRef(null);
+  const drag = useRef({ active: false, moved: false, startX: 0, startY: 0, scrollLeft: 0, scrollTop: 0 });
+
+  const onMouseDown = useCallback((e) => {
+    if (!ref.current) return;
+    const d = drag.current;
+    d.active = true;
+    d.moved = false;
+    d.startX = e.pageX;
+    d.startY = e.pageY;
+    d.scrollLeft = ref.current.scrollLeft;
+    d.scrollTop = ref.current.scrollTop;
+  }, []);
+
+  const onClickCapture = useCallback((e) => {
+    if (drag.current.moved) { e.stopPropagation(); e.preventDefault(); }
+  }, []);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const onMove = (e) => {
+      const d = drag.current;
+      if (!d.active) return;
+      const dx = e.pageX - d.startX;
+      const dy = e.pageY - d.startY;
+      if (!d.moved && (Math.abs(dx) > 4 || Math.abs(dy) > 4)) {
+        d.moved = true;
+        el.style.cursor = 'grabbing';
+        el.style.userSelect = 'none';
+      }
+      if (!d.moved) return;
+      if (horizontal) el.scrollLeft = d.scrollLeft - dx;
+      if (vertical) el.scrollTop = d.scrollTop - dy;
+    };
+    const onUp = () => {
+      const d = drag.current;
+      if (!d.active) return;
+      d.active = false;
+      el.style.cursor = '';
+      el.style.userSelect = '';
+    };
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+    return () => { window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp); };
+  }, [horizontal, vertical]);
+
+  return { ref, onMouseDown, onClickCapture };
+}
+
 // ─── FILTER CHIP ──────────────────────────────────────────────────────────────
 function Chip({ label, active, onClick, color }) {
   const c = color || 'var(--purple)';
@@ -115,7 +167,7 @@ function FilterGroup({ title, active, onReset, children, collapsible }) {
   );
 }
 
-function FilterSidebar({ filters, setFilters, allData, search, setSearch }) {
+function FilterSidebar({ filters, setFilters, allData, search, setSearch, dragRef }) {
   const schools = useMemo(() => [...new Set(allData.map(z => z.schule))].sort(), [allData]);
   const grades = useMemo(() => [...new Set(allData.map(z => z.grad))].sort((a,b)=>a-b), [allData]);
   const classes = useMemo(() => [...new Set(allData.flatMap(z => z.klassen))].filter(Boolean).sort(), [allData]);
@@ -135,7 +187,7 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch }) {
   const hasAny = Object.values(filters).some(v => Array.isArray(v) ? v.length > 0 : v !== null);
 
   return (
-    <div style={{ width:'var(--filter-w)', flexShrink:0, background:'rgba(8,6,20,0.6)', borderRight:'1px solid var(--border)', padding:'16px 14px 14px 24px', overflowY:'auto', display:'flex', flexDirection:'column', position:'relative', zIndex:10 }}>
+    <div ref={dragRef.ref} onMouseDown={dragRef.onMouseDown} onClickCapture={dragRef.onClickCapture} style={{ width:'var(--filter-w)', flexShrink:0, background:'rgba(8,6,20,0.6)', borderRight:'1px solid var(--border)', padding:'16px 14px 14px 24px', overflowY:'auto', display:'flex', flexDirection:'column', position:'relative', zIndex:10, cursor:'grab' }}>
       {/* Search inside sidebar */}
       <div style={{ position:'relative', marginBottom:'14px' }}>
         <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Zauber suchen…" style={{ fontFamily:'var(--font-body)', fontSize:'11.5px', fontWeight:'300', padding:'6px 10px 6px 28px', background:'rgba(124,77,255,0.06)', border:'1px solid rgba(160,140,255,0.18)', borderRadius:'3px', color:'#f0eeff', outline:'none', width:'100%', letterSpacing:'0.03em', transition:'border-color 0.2s' }}
@@ -373,6 +425,10 @@ function App() {
   // Derive all classes for top chips
   const allClasses = useMemo(() => [...new Set(allZauber.flatMap(z => z.klassen))].filter(Boolean).sort(), [allZauber]);
 
+  const chipsDrag = useDragScroll({ horizontal: true });
+  const listDrag = useDragScroll({ vertical: true });
+  const sidebarDrag = useDragScroll({ vertical: true });
+
   // Filter logic
   const filtered = useMemo(() => {
     return allZauber.filter(z => {
@@ -418,7 +474,7 @@ function App() {
           <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(160,140,255,0.35)', letterSpacing:'0.15em' }}>{filtered.length} / {allZauber.length}</span>
         </div>
         {/* Class quick-filter chips */}
-        <div style={{ flex:1, padding:'10px 14px', display:'flex', alignItems:'center', gap:'5px', flexWrap:'wrap' }}>
+        <div ref={chipsDrag.ref} onMouseDown={chipsDrag.onMouseDown} onClickCapture={chipsDrag.onClickCapture} className="no-scrollbar" style={{ flex:1, padding:'10px 14px', display:'flex', alignItems:'center', gap:'5px', overflowX:'auto', flexWrap:'nowrap', cursor:'grab' }}>
           <Chip label="Alle" active={!classFilter} onClick={() => setClassFilter(null)} />
           {allClasses.map(c => <Chip key={c} label={c} active={classFilter === c} onClick={() => setClassFilter(classFilter === c ? null : c)} />)}
           {classFilter && <XBtn onClick={() => setClassFilter(null)} />}
@@ -427,10 +483,10 @@ function App() {
 
       {/* Main body */}
       <div style={{ flex:1, display:'flex', overflow:'hidden', position:'relative', zIndex:5 }}>
-        <FilterSidebar filters={filters} setFilters={setFilters} allData={allZauber} search={search} setSearch={setSearch} />
+        <FilterSidebar filters={filters} setFilters={setFilters} allData={allZauber} search={search} setSearch={setSearch} dragRef={sidebarDrag} />
 
         {/* Spell list */}
-        <div style={{ width:'300px', flexShrink:0, borderRight:'1px solid var(--border)', overflowY:'auto', background:'rgba(6,5,18,0.5)' }}>
+        <div ref={listDrag.ref} onMouseDown={listDrag.onMouseDown} onClickCapture={listDrag.onClickCapture} style={{ width:'300px', flexShrink:0, borderRight:'1px solid var(--border)', overflowY:'auto', background:'rgba(6,5,18,0.5)', cursor:'grab' }}>
           {filtered.length === 0 ? (
             <EmptyState msg="Keine Zauber gefunden" />
           ) : (
