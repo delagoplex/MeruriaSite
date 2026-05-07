@@ -66,15 +66,19 @@ function BekannteSection({ division, sidebar = false }) {
       <div style={{ flex:1, minWidth:0, padding:'48px 32px 80px', display:'flex', flexDirection:'column', gap:'20px' }}>
         {popup}
 
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:`${accent}55`, textTransform:'uppercase' }}>
-          Bekannte Mitglieder
-        </div>
+        {/* Alle anzeigen */}
+        <button onClick={()=>_bk_setShowPopup(true)} style={{ display:'inline-flex', alignItems:'center', gap:'7px', fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', letterSpacing:'0.08em', color:`${accent}99`, background:`${accent}0e`, border:`1px solid ${accent}28`, borderRadius:'3px', padding:'8px 16px', cursor:'pointer', transition:'all 0.2s', alignSelf:'flex-start' }}
+          onMouseEnter={e=>{e.currentTarget.style.background=`${accent}20`;e.currentTarget.style.color='var(--white)';}}
+          onMouseLeave={e=>{e.currentTarget.style.background=`${accent}0e`;e.currentTarget.style.color=`${accent}99`;}}>
+          <svg viewBox="0 0 14 14" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.4"><rect x="2" y="2" width="10" height="10" rx="1.5"/><line x1="5" y1="5" x2="9" y2="5"/><line x1="5" y1="7.5" x2="9" y2="7.5"/><line x1="5" y1="10" x2="8" y2="10"/></svg>
+          Alle anzeigen
+        </button>
 
         {/* Featured member */}
         <div style={{ border:`1px solid ${accent}28`, borderRadius:'6px', background:`linear-gradient(135deg,${accent}09 0%,rgba(10,8,28,0.9) 100%)`, overflow:'hidden', transition:'border-color 0.2s' }}
           onMouseEnter={e=>e.currentTarget.style.borderColor=`${accent}55`}
           onMouseLeave={e=>e.currentTarget.style.borderColor=`${accent}28`}>
-          <_BekannteImg label="Porträt" width="100%" height="220px" accent={accent} style={{ borderRadius:'5px 5px 0 0', border:'none', borderBottom:`1px solid ${accent}22` }} />
+          <_BekannteImg label="Porträt" width="100%" height="360px" accent={accent} style={{ borderRadius:'5px 5px 0 0', border:'none', borderBottom:`1px solid ${accent}22` }} />
           <div style={{ padding:'20px 22px' }}>
             <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:`${accent}66`, textTransform:'uppercase', marginBottom:'8px' }}>Führendes Mitglied</div>
             <div style={{ fontFamily:'var(--font-display)', fontSize:'20px', fontWeight:'300', letterSpacing:'0.14em', color:'var(--white)', textTransform:'uppercase', marginBottom:'4px' }}>{featured ? featured.name : '— Unbekannt —'}</div>
@@ -83,11 +87,9 @@ function BekannteSection({ division, sidebar = false }) {
           </div>
         </div>
 
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:`${accent}44`, textTransform:'uppercase' }}>Weitere bekannte Mitglieder</div>
-
         {/* Other members grid */}
         <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(160px,1fr))', gap:'12px' }}>
-          {bekannte.slice(1, 4).map((b, i) => (
+          {bekannte.slice(1, 7).map((b, i) => (
             <div key={i} style={{ padding:'16px', border:`1px solid ${accent}18`, borderRadius:'4px', background:'rgba(10,8,28,0.7)', transition:'border-color 0.2s, transform 0.2s' }}
               onMouseEnter={e=>{e.currentTarget.style.borderColor=`${accent}40`;e.currentTarget.style.transform='translateY(-2px)';}}
               onMouseLeave={e=>{e.currentTarget.style.borderColor=`${accent}18`;e.currentTarget.style.transform='translateY(0)';}}>
@@ -98,14 +100,6 @@ function BekannteSection({ division, sidebar = false }) {
             </div>
           ))}
         </div>
-
-        {/* Alle anzeigen */}
-        <button onClick={()=>_bk_setShowPopup(true)} style={{ display:'inline-flex', alignItems:'center', gap:'7px', fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', letterSpacing:'0.08em', color:`${accent}99`, background:`${accent}0e`, border:`1px solid ${accent}28`, borderRadius:'3px', padding:'8px 16px', cursor:'pointer', transition:'all 0.2s', alignSelf:'flex-start' }}
-          onMouseEnter={e=>{e.currentTarget.style.background=`${accent}20`;e.currentTarget.style.color='var(--white)';}}
-          onMouseLeave={e=>{e.currentTarget.style.background=`${accent}0e`;e.currentTarget.style.color=`${accent}99`;}}>
-          <svg viewBox="0 0 14 14" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.4"><rect x="2" y="2" width="10" height="10" rx="1.5"/><line x1="5" y1="5" x2="9" y2="5"/><line x1="5" y1="7.5" x2="9" y2="7.5"/><line x1="5" y1="10" x2="8" y2="10"/></svg>
-          Alle anzeigen
-        </button>
       </div>
     );
   }
