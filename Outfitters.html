@@ -85,7 +85,6 @@ const TOC_SECTIONS = [
   { id: 'uebersicht',   label: 'Übersicht',       indent: false },
   { id: 'beschreibung', label: 'Beschreibung',     indent: true  },
   { id: 'auftraege',    label: 'Auftragseindruck', indent: true  },
-  { id: 'bekannte',    label: 'Bekannte Mitglieder', indent: true },
   { id: 'rangsystem',   label: 'Rangsystem',       indent: true  },
 ];
 
@@ -201,6 +200,7 @@ function DivisionPage({ division, heroRef }) {
       <div ref={heroRef} style={{ height:0 }} />
 
       {/* Content */}
+      <div style={{ display:'flex', alignItems:'flex-start' }}>
       <div className="div-content">
 
         {/* Watermarks behind content */}
@@ -211,6 +211,7 @@ function DivisionPage({ division, heroRef }) {
           <svg width="180" height="180" viewBox="0 0 180 180"><polygon points={hexPoints(180)} fill="none" stroke="rgba(124,77,255,0.9)" strokeWidth="1" /></svg>
         </div>
 
+        {/* Beschreibung */}
         {/* Beschreibung */}
         <section id="beschreibung" className="div-section">
           <SectionBanner label="Beschreibung" accent={accent} />
@@ -237,8 +238,6 @@ function DivisionPage({ division, heroRef }) {
           </ul>
         </section>
 
-        {/* Bekannte Mitglieder */}
-        <BekannteSection division={division} />
 
         {/* Rangsystem */}
         <section id="rangsystem" className="div-section">
@@ -270,6 +269,10 @@ function DivisionPage({ division, heroRef }) {
           </div>
         </section>
 
+      </div>
+      <div style={{ borderLeft:`1px solid ${accent}14` }}>
+        <BekannteSection division={division} sidebar />
+      </div>
       </div>
     </div>
   );
