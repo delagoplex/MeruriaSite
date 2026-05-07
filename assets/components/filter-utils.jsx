@@ -1,14 +1,21 @@
 // filter-utils.jsx
 // Exposes: window.useDragScroll, window.XBtn, window.FilterGroup
 
-const { useState, useRef, useCallback, useEffect } = React;
+const { useState, useMemo, useRef, useCallback, useEffect } = React;
+
+const FRICTION = 0.88;
+const MIN_V = 0.4;
 
 function useDragScroll({ horizontal = false, vertical = false } = {}) {
   const ref = useRef(null);
-  const drag = useRef({ active: false, moved: false, startX: 0, startY: 0, scrollLeft: 0, scrollTop: 0 });
+  const drag = useRef({ active: false, moved: false, startX: 0, startY: 0, scrollLeft: 0, scrollTop: 0, vx: 0, vy: 0, lastX: 0, lastY: 0 });
+  const rafRef = useRef(null);
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(true); // assume no overflow until measured
 
   const onMouseDown = useCallback((e) => {
     if (!ref.current) return;
+    cancelAnimationFrame(rafRef.current);
     const d = drag.current;
     d.active = true;
     d.moved = false;
@@ -16,6 +23,10 @@ function useDragScroll({ horizontal = false, vertical = false } = {}) {
     d.startY = e.pageY;
     d.scrollLeft = ref.current.scrollLeft;
     d.scrollTop = ref.current.scrollTop;
+    d.vx = 0;
+    d.vy = 0;
+    d.lastX = e.pageX;
+    d.lastY = e.pageY;
   }, []);
 
   const onClickCapture = useCallback((e) => {
@@ -25,6 +36,17 @@ function useDragScroll({ horizontal = false, vertical = false } = {}) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    const updateFade = () => {
+      if (vertical) {
+        setAtStart(el.scrollTop <= 0);
+        setAtEnd(el.scrollTop + el.clientHeight >= el.scrollHeight - 2);
+      } else if (horizontal) {
+        setAtStart(el.scrollLeft <= 0);
+        setAtEnd(el.scrollLeft + el.clientWidth >= el.scrollWidth - 2);
+      }
+    };
+
     const onMove = (e) => {
       const d = drag.current;
       if (!d.active) return;
@@ -36,22 +58,66 @@ function useDragScroll({ horizontal = false, vertical = false } = {}) {
         el.style.userSelect = 'none';
       }
       if (!d.moved) return;
+      // smooth velocity via exponential moving average
+      d.vx = 0.6 * (e.pageX - d.lastX) + 0.4 * d.vx;
+      d.vy = 0.6 * (e.pageY - d.lastY) + 0.4 * d.vy;
+      d.lastX = e.pageX;
+      d.lastY = e.pageY;
       if (horizontal) el.scrollLeft = d.scrollLeft - dx;
       if (vertical) el.scrollTop = d.scrollTop - dy;
     };
+
     const onUp = () => {
       const d = drag.current;
       if (!d.active) return;
       d.active = false;
       el.style.cursor = '';
       el.style.userSelect = '';
+      if (!d.moved) return;
+      let vx = d.vx;
+      let vy = d.vy;
+      const coast = () => {
+        vx *= FRICTION;
+        vy *= FRICTION;
+        if (Math.abs(vx) < MIN_V && Math.abs(vy) < MIN_V) return;
+        if (horizontal) el.scrollLeft -= vx;
+        if (vertical) el.scrollTop -= vy;
+        rafRef.current = requestAnimationFrame(coast);
+      };
+      rafRef.current = requestAnimationFrame(coast);
     };
+
+    updateFade();
+    el.addEventListener('scroll', updateFade);
+    const ro = new ResizeObserver(updateFade);
+    ro.observe(el);
     window.addEventListener('mousemove', onMove);
     window.addEventListener('mouseup', onUp);
-    return () => { window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp); };
+    return () => {
+      cancelAnimationFrame(rafRef.current);
+      el.removeEventListener('scroll', updateFade);
+      ro.disconnect();
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
+    };
   }, [horizontal, vertical]);
 
-  return { ref, onMouseDown, onClickCapture };
+  const fadeStyle = useMemo(() => {
+    const px = 40;
+    let g;
+    if (vertical) {
+      if (!atStart && !atEnd) g = `linear-gradient(to bottom, transparent, black ${px}px, black calc(100% - ${px}px), transparent)`;
+      else if (!atStart)      g = `linear-gradient(to bottom, transparent, black ${px}px)`;
+      else if (!atEnd)        g = `linear-gradient(to bottom, black calc(100% - ${px}px), transparent)`;
+    } else if (horizontal) {
+      if (!atStart && !atEnd) g = `linear-gradient(to right, transparent, black ${px}px, black calc(100% - ${px}px), transparent)`;
+      else if (!atStart)      g = `linear-gradient(to right, transparent, black ${px}px)`;
+      else if (!atEnd)        g = `linear-gradient(to right, black calc(100% - ${px}px), transparent)`;
+    }
+    return g ? { maskImage: g, WebkitMaskImage: g } : {};
+  }, [atStart, atEnd, vertical, horizontal]);
+
+  return { ref, onMouseDown, onClickCapture, fadeStyle };
 }
 
 function XBtn({ onClick }) {

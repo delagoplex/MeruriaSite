@@ -194,7 +194,7 @@ function FilterSidebar({ search, setSearch, filters, setFilters, allData, dragRe
   const hadeHiVal = filters.hadeMax ?? (hadeSteps[hadeSteps.length-1] || 0);
 
   return (
-    <div ref={dragRef.ref} onMouseDown={dragRef.onMouseDown} onClickCapture={dragRef.onClickCapture} style={{ width:'var(--filter-w)', flexShrink:0, background:'rgba(8,6,20,0.6)', borderRight:'1px solid var(--border)', padding:'16px 14px 14px 24px', overflowY:'auto', display:'flex', flexDirection:'column', position:'relative', zIndex:10, cursor:'grab' }}>
+    <div ref={dragRef.ref} onMouseDown={dragRef.onMouseDown} onClickCapture={dragRef.onClickCapture} style={{ width:'var(--filter-w)', flexShrink:0, background:'rgba(8,6,20,0.6)', borderRight:'1px solid var(--border)', padding:'16px 14px 14px 24px', overflowY:'auto', display:'flex', flexDirection:'column', position:'relative', zIndex:10, cursor:'grab', ...dragRef.fadeStyle }}>
       <div style={{ position:'relative', marginBottom:'14px' }}>
         <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Hintergrund suchen…" style={{ fontFamily:'var(--font-body)', fontSize:'11.5px', fontWeight:'300', padding:'6px 10px 6px 28px', background:'rgba(124,77,255,0.06)', border:'1px solid rgba(160,140,255,0.18)', borderRadius:'3px', color:'#f0eeff', outline:'none', width:'100%', letterSpacing:'0.03em', transition:'border-color 0.2s' }}
           onFocus={e=>e.target.style.borderColor='rgba(124,77,255,0.5)'}
@@ -608,7 +608,7 @@ function App() {
         <FilterSidebar search={search} setSearch={setSearch} filters={filters} setFilters={setFilters} allData={allData} dragRef={sidebarDrag} />
 
         {/* List */}
-        <div ref={listDrag.ref} onMouseDown={listDrag.onMouseDown} onClickCapture={listDrag.onClickCapture} style={{ width:'260px', flexShrink:0, borderRight:'1px solid var(--border)', overflowY:'auto', background:'rgba(6,5,18,0.5)', cursor:'grab' }}>
+        <div ref={listDrag.ref} onMouseDown={listDrag.onMouseDown} onClickCapture={listDrag.onClickCapture} style={{ width:'260px', flexShrink:0, borderRight:'1px solid var(--border)', overflowY:'auto', background:'rgba(6,5,18,0.5)', cursor:'grab', ...listDrag.fadeStyle }}>
           {filtered.length === 0
             ? <EmptyState msg="Keine Hintergründe gefunden" />
             : filtered.map(h => (

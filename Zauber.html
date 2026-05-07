@@ -104,7 +104,7 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch, dragRe
   const hasAny = Object.values(filters).some(v => Array.isArray(v) ? v.length > 0 : v !== null);
 
   return (
-    <div ref={dragRef.ref} onMouseDown={dragRef.onMouseDown} onClickCapture={dragRef.onClickCapture} style={{ width:'var(--filter-w)', flexShrink:0, background:'rgba(8,6,20,0.6)', borderRight:'1px solid var(--border)', padding:'16px 14px 14px 24px', overflowY:'auto', display:'flex', flexDirection:'column', position:'relative', zIndex:10, cursor:'grab' }}>
+    <div ref={dragRef.ref} onMouseDown={dragRef.onMouseDown} onClickCapture={dragRef.onClickCapture} style={{ width:'var(--filter-w)', flexShrink:0, background:'rgba(8,6,20,0.6)', borderRight:'1px solid var(--border)', padding:'16px 14px 14px 24px', overflowY:'auto', display:'flex', flexDirection:'column', position:'relative', zIndex:10, cursor:'grab', ...dragRef.fadeStyle }}>
       {/* Search inside sidebar */}
       <div style={{ position:'relative', marginBottom:'14px' }}>
         <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Zauber suchen…" style={{ fontFamily:'var(--font-body)', fontSize:'11.5px', fontWeight:'300', padding:'6px 10px 6px 28px', background:'rgba(124,77,255,0.06)', border:'1px solid rgba(160,140,255,0.18)', borderRadius:'3px', color:'#f0eeff', outline:'none', width:'100%', letterSpacing:'0.03em', transition:'border-color 0.2s' }}
@@ -391,7 +391,7 @@ function App() {
           <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(160,140,255,0.35)', letterSpacing:'0.15em' }}>{filtered.length} / {allZauber.length}</span>
         </div>
         {/* Class quick-filter chips */}
-        <div ref={chipsDrag.ref} onMouseDown={chipsDrag.onMouseDown} onClickCapture={chipsDrag.onClickCapture} className="no-scrollbar" style={{ flex:1, padding:'10px 14px', display:'flex', alignItems:'center', gap:'5px', overflowX:'auto', flexWrap:'nowrap', cursor:'grab' }}>
+        <div ref={chipsDrag.ref} onMouseDown={chipsDrag.onMouseDown} onClickCapture={chipsDrag.onClickCapture} className="no-scrollbar" style={{ flex:1, padding:'10px 14px', display:'flex', alignItems:'center', gap:'5px', overflowX:'auto', flexWrap:'nowrap', cursor:'grab', ...chipsDrag.fadeStyle }}>
           <Chip label="Alle" active={!classFilter} onClick={() => setClassFilter(null)} />
           {allClasses.map(c => <Chip key={c} label={c} active={classFilter === c} onClick={() => setClassFilter(classFilter === c ? null : c)} />)}
           {classFilter && <XBtn onClick={() => setClassFilter(null)} />}
@@ -403,7 +403,7 @@ function App() {
         <FilterSidebar filters={filters} setFilters={setFilters} allData={allZauber} search={search} setSearch={setSearch} dragRef={sidebarDrag} />
 
         {/* Spell list */}
-        <div ref={listDrag.ref} onMouseDown={listDrag.onMouseDown} onClickCapture={listDrag.onClickCapture} style={{ width:'300px', flexShrink:0, borderRight:'1px solid var(--border)', overflowY:'auto', background:'rgba(6,5,18,0.5)', cursor:'grab' }}>
+        <div ref={listDrag.ref} onMouseDown={listDrag.onMouseDown} onClickCapture={listDrag.onClickCapture} style={{ width:'300px', flexShrink:0, borderRight:'1px solid var(--border)', overflowY:'auto', background:'rgba(6,5,18,0.5)', cursor:'grab', ...listDrag.fadeStyle }}>
           {filtered.length === 0 ? (
             <EmptyState msg="Keine Zauber gefunden" />
           ) : (
