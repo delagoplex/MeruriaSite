@@ -82,7 +82,7 @@ const { useState, useEffect, useRef } = React;
 const NAV = [
   { id: 'einleitung', label: 'Einleitung', items: [{ label: 'Informationen', href: '#' }, { label: 'Vorgeschichte', href: '#' }, { label: 'Sitzung Null', href: '#'}] },
    { id: 'spielerhandbuch', label: 'Spielerhandbuch', items: [{ label: 'Realismus', href: '#' }, { label: 'Handwerk', href: '#' }, { label: 'Schutzherren', href: '#'}, { label: 'Gesinnungen', href: '#'}, { label: 'Regierungsformen', href: '#'}] },
-  { id: 'charaktererstellung', label: 'Charaktererstellung', items: [{ label: 'Neuer Charakter', href: '#', dividerAfter: true }, { label: 'Rassen', href: 'Rassen.html' }, { label: 'Klassen', href: 'Klassen.html' }, { label: 'Talente', href: '#' }, { label: 'Hintergründe', href: '#' }, { label: 'Zauber', href: '#' }, { label: 'Ausrüstung', href: 'Ausrüstung.html' }] },
+  { id: 'charaktererstellung', label: 'Charaktererstellung', items: [{ label: 'Neuer Charakter', href: '#', dividerAfter: true }, { label: 'Rassen', href: 'Rassen.html' }, { label: 'Klassen', href: 'Klassen.html' }, { label: 'Talente', href: '#' }, { label: 'Hintergründe', href: '#' }, { label: 'Zauber', href: 'Zauber.html' }, { label: 'Ausrüstung', href: 'Ausrüstung.html' }] },
   { id: 'enzyklopaedie', label: 'Enzyklopädie', items: [{ label: 'Völker', href: '#' }, { label: 'Organisationen', href: '#' }, { label: 'Orte', href: '#' }, { label: 'Gottheiten', href: 'Gottheiten.html' }, { label: 'Religionen', href: '#' }] },
   { id: 'divisionen', label: 'Divisionen', items: [{ label: 'I — Die Kuratoren', href: 'Die Kuratoren.html' }, { label: 'II — Die Sturmritter', href: 'Sturmritter.html' }, { label: 'III — Die Sentinels', href: 'Sentinels.html' }, { label: 'IV — Die Friedenshüter', href: 'Friedenshueter.html' }, { label: 'V — Die Outfitters', href: 'Outfitters.html' }, { label: 'VI — Die Pathfinders', href: 'Pathfinders.html' }, { label: 'VII — Die Quellensucher', href: 'Quellensucher.html' }, { label: 'VIII — Die Bergungsgarde', href: 'Bergungsgarde.html' }] },
   { id: 'charaktere', label: 'Charaktere', items: [{ label: 'Spielercharaktere', href: '#' }, { label: 'NSC', href: '#' }] }
@@ -178,7 +178,7 @@ function NavItem({ tab }) {
 function SiteNav({ rightLabel }) {
   return (
     <div style={{ position: 'sticky', top: 0, zIndex: 100, width: '100%', background: 'rgba(5,4,15,0.92)', borderBottom: '1px solid rgba(160,140,255,0.1)', backdropFilter: 'blur(16px)' }}>
-      <div style={{ display: 'flex', alignItems: 'center', padding: '0 32px', height: '52px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', padding: '0 24px', height: '52px' }}>
         <a href="index.html" style={{ marginRight: '32px', whiteSpace: 'nowrap', flexShrink: 0, textDecoration: 'none' }}>
           <span style={{ fontFamily: 'var(--font-display)', fontSize: '20px', fontWeight: '300', letterSpacing: '0.3em', color: '#f0eeff', textShadow: '0 0 28px rgba(124,77,255,0.55)', animation: 'flicker-mid 9s infinite' }}>MERURIA</span>
         </a>
