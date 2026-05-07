@@ -418,7 +418,10 @@ function SectionHeading({ title, subtitle, accentColor }) {
       {subtitle &&
       <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: col + '77', textTransform: 'uppercase', marginBottom: '6px' }}>{subtitle}</div>
       }
-      <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '22px', fontWeight: '300', letterSpacing: '0.18em', color: '#f0eeff', textShadow: `0 0 24px ${col}44` }}>{title}</h2>
+      <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
+        <OctSvg size={8} color={col+'66'} fill={col+'22'} strokeWidth={1} />
+        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '22px', fontWeight: '300', letterSpacing: '0.18em', color: '#f0eeff', textShadow: `0 0 24px ${col}44` }}>{title}</h2>
+      </div>
       <div style={{ width: '50px', height: '1px', background: `linear-gradient(90deg,${col}99,transparent)`, marginTop: '10px', animation: 'pulse-glow 3s infinite' }} />
     </div>);
 
