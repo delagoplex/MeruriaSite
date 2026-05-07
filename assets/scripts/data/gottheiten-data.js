@@ -99,7 +99,7 @@ window.GODS_DATA = {
       name: "Vindeah", title: "Göttin der Ruhe, der Gelassenheit und des Windes",
       domain: "Domäne der Arkana · Domäne der Dämmerung · Domäne des Friedens · Domäne des Grabes · Domäne des Lebens · Domäne der Natur · Domäne des Sturms · Domäne des Wissens",
       palette: ["#00211E","#21B0B0","#3EFFCC","#C4FFF0"],
-      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Vindeah.png",
       backgroundSrc: "assets/images/gods/backgrounds/BG_Vindeah.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><polygon points="40,10 62,23 62,57 40,70 18,57 18,23" stroke="currentColor" stroke-width="1.5"/><polygon points="40,24 52,31 52,49 40,56 28,49 28,31" stroke="currentColor" stroke-width="1" opacity="0.6"/><circle cx="40" cy="40" r="6" stroke="currentColor" stroke-width="1"/></svg>`,
