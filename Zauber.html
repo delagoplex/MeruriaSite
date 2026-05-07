@@ -21,6 +21,15 @@
 const { useState, useEffect, useRef, useCallback, useMemo } = React;
 const { useTweaks, TweaksPanel, TweakSection, TweakToggle, TweakRadio, SiteNav, ParticleField } = window;
 
+function hexPoints(s) {
+  const cx = s/2, cy = s/2, r = s/2, pts = [];
+  for (let i = 0; i < 8; i++) { const a = (Math.PI/4)*i - Math.PI/8; pts.push(`${cx+r*Math.cos(a)},${cy+r*Math.sin(a)}`); }
+  return pts.join(' ');
+}
+function OctSvg({ size=8, color='currentColor', fill='none', strokeWidth=1, opacity=1 }) {
+  return <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ display:'block', flexShrink:0 }}><polygon points={hexPoints(size)} fill={fill} stroke={color} strokeWidth={strokeWidth} opacity={opacity} /></svg>;
+}
+
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "showParticles": true,
   "compactList": false
@@ -142,7 +151,7 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch }) {
         <div style={{ display:'flex', flexDirection:'column', gap:'3px' }}>
           {schools.map(s => (
             <button key={s} onClick={() => toggle('schule', s)} style={{ display:'flex', alignItems:'center', gap:'7px', padding:'5px 7px', background: filters.schule.includes(s) ? 'rgba(124,77,255,0.12)' : 'transparent', border:`1px solid ${filters.schule.includes(s) ? schoolColor(s)+'66' : 'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', textAlign:'left' }}>
-              <div style={{ width:'6px', height:'6px', borderRadius:'50%', background: schoolColor(s), flexShrink:0, opacity: filters.schule.includes(s) ? 1 : 0.45 }} />
+              <OctSvg size={8} color={schoolColor(s)} fill={filters.schule.includes(s) ? schoolColor(s) : 'none'} strokeWidth={1.2} opacity={filters.schule.includes(s) ? 1 : 0.45} />
               <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color: filters.schule.includes(s) ? '#f0eeff' : 'var(--silver)', letterSpacing:'0.03em' }}>{s}</span>
             </button>
           ))}
@@ -161,7 +170,7 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch }) {
         <div style={{ display:'flex', flexDirection:'column', gap:'3px' }}>
           {classes.map(c => (
             <button key={c} onClick={() => toggle('klassen', c)} style={{ display:'flex', alignItems:'center', gap:'7px', padding:'5px 7px', background: filters.klassen.includes(c) ? 'rgba(124,77,255,0.12)' : 'transparent', border:`1px solid ${filters.klassen.includes(c) ? 'rgba(124,77,255,0.4)' : 'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', textAlign:'left' }}>
-              <div style={{ width:'5px', height:'5px', background: filters.klassen.includes(c) ? 'var(--purple)' : 'rgba(160,140,255,0.2)', borderRadius:'1px', flexShrink:0, transition:'background 0.15s' }} />
+              <OctSvg size={8} color="var(--purple)" fill={filters.klassen.includes(c) ? 'var(--purple)' : 'none'} strokeWidth={1.2} opacity={filters.klassen.includes(c) ? 1 : 0.35} />
               <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color: filters.klassen.includes(c) ? '#f0eeff' : 'var(--silver)', letterSpacing:'0.03em' }}>{c}</span>
             </button>
           ))}
@@ -180,7 +189,7 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch }) {
         <div style={{ display:'flex', flexDirection:'column', gap:'3px' }}>
           {zeitaufwaende.map(z => (
             <button key={z} onClick={() => toggle('zeitaufwand', z)} style={{ display:'flex', alignItems:'center', gap:'7px', padding:'5px 7px', background: filters.zeitaufwand.includes(z) ? 'rgba(124,77,255,0.12)' : 'transparent', border:`1px solid ${filters.zeitaufwand.includes(z) ? 'rgba(124,77,255,0.4)' : 'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', textAlign:'left' }}>
-              <div style={{ width:'5px', height:'5px', background: filters.zeitaufwand.includes(z) ? 'var(--purple)' : 'rgba(160,140,255,0.2)', borderRadius:'1px', flexShrink:0, transition:'background 0.15s' }} />
+              <OctSvg size={8} color="var(--purple)" fill={filters.zeitaufwand.includes(z) ? 'var(--purple)' : 'none'} strokeWidth={1.2} opacity={filters.zeitaufwand.includes(z) ? 1 : 0.35} />
               <span style={{ fontFamily:'var(--font-body)', fontSize:'10.5px', fontWeight:'300', color: filters.zeitaufwand.includes(z) ? '#f0eeff' : 'var(--silver)', letterSpacing:'0.03em' }}>{z}</span>
             </button>
           ))}

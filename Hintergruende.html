@@ -21,6 +21,15 @@
 const { useState, useEffect, useRef, useMemo, useCallback } = React;
 const { useTweaks, TweaksPanel, TweakSection, TweakToggle, SiteNav, ParticleField } = window;
 
+function hexPoints(s) {
+  const cx = s/2, cy = s/2, r = s/2, pts = [];
+  for (let i = 0; i < 8; i++) { const a = (Math.PI/4)*i - Math.PI/8; pts.push(`${cx+r*Math.cos(a)},${cy+r*Math.sin(a)}`); }
+  return pts.join(' ');
+}
+function OctSvg({ size=8, color='currentColor', fill='none', strokeWidth=1, opacity=1 }) {
+  return <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ display:'block', flexShrink:0 }}><polygon points={hexPoints(size)} fill={fill} stroke={color} strokeWidth={strokeWidth} opacity={opacity} /></svg>;
+}
+
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "showParticles": true,
   "compactList": false,
@@ -232,7 +241,7 @@ function FilterSidebar({ search, setSearch, filters, setFilters, allData }) {
         <div style={{ display:'flex', flexDirection:'column', gap:'3px' }}>
           {allFaehigkeiten.map(f => (
             <button key={f} onClick={()=>toggle('faehigkeiten',f)} style={{ display:'flex', alignItems:'center', gap:'7px', padding:'5px 7px', background:(filters.faehigkeiten||[]).includes(f)?'rgba(124,77,255,0.12)':'transparent', border:`1px solid ${(filters.faehigkeiten||[]).includes(f)?'rgba(124,77,255,0.4)':'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', textAlign:'left' }}>
-              <div style={{ width:'5px', height:'5px', background:(filters.faehigkeiten||[]).includes(f)?'var(--purple)':'rgba(160,140,255,0.2)', borderRadius:'1px', flexShrink:0, transition:'background 0.15s' }} />
+              <OctSvg size={8} color="var(--purple)" fill={(filters.faehigkeiten||[]).includes(f)?'var(--purple)':'none'} strokeWidth={1.2} opacity={(filters.faehigkeiten||[]).includes(f)?1:0.35} />
               <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:(filters.faehigkeiten||[]).includes(f)?'#f0eeff':'var(--silver)', letterSpacing:'0.03em' }}>{f}</span>
             </button>
           ))}
@@ -243,7 +252,7 @@ function FilterSidebar({ search, setSearch, filters, setFilters, allData }) {
         <div style={{ display:'flex', flexDirection:'column', gap:'3px' }}>
           {allWerkzeuge.map(w => (
             <button key={w} onClick={()=>toggle('werkzeuge',w)} style={{ display:'flex', alignItems:'center', gap:'7px', padding:'5px 7px', background:(filters.werkzeuge||[]).includes(w)?'rgba(124,77,255,0.12)':'transparent', border:`1px solid ${(filters.werkzeuge||[]).includes(w)?'rgba(124,77,255,0.4)':'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', textAlign:'left' }}>
-              <div style={{ width:'5px', height:'5px', background:(filters.werkzeuge||[]).includes(w)?'var(--purple)':'rgba(160,140,255,0.2)', borderRadius:'1px', flexShrink:0, transition:'background 0.15s' }} />
+              <OctSvg size={8} color="var(--purple)" fill={(filters.werkzeuge||[]).includes(w)?'var(--purple)':'none'} strokeWidth={1.2} opacity={(filters.werkzeuge||[]).includes(w)?1:0.35} />
               <span style={{ fontFamily:'var(--font-body)', fontSize:'10.5px', fontWeight:'300', color:(filters.werkzeuge||[]).includes(w)?'#f0eeff':'var(--silver)', letterSpacing:'0.02em', lineHeight:1.35 }}>{w}</span>
             </button>
           ))}
