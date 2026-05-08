@@ -50,7 +50,7 @@ window.GODS_DATA = {
       id: "sienna", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Sienna", title: "Göttin des Feuers, der Sonne und der Wüste",
       domain: "Domäne des Lebens · Domäne des Lichts · Domäne der List · Domäne der Natur · Domäne der Ordnung · Domäne des Sturms",
-      palette: ["#1C0E06","#de8900","#FFCA39","#FFDC7B"],
+      palette: ["#210000","#9e5d0e","#ff9f22","#ffdeb8"],
       insigniaSrc: "assets/images/gods/insignia/Insignie_Sienna.png",
       backgroundSrc: "assets/images/gods/backgrounds/BG_Sienna.webp",
 
@@ -122,7 +122,7 @@ window.GODS_DATA = {
       id: "daramur", pantheon: "Celestisch · Merurisches Pantheon",
       name: "Daramur", title: "Gott der Erde, des Gesteins und der Standhaftigkeit",
       domain: "Domäne des Grabes · Domäne des Krieges · Domäne des Lebens · Domäne der Natur · Domäne der Ordnung · Domäne der Schmiede · Domäne des Wissens",
-      palette: ["#210000","#9e5d0e","#ff9f22","#ffdeb8"],
+      palette: ["#1C0E06","#de8900","#FFCA39","#FFDC7B"],
       insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
       backgroundSrc: "assets/images/gods/backgrounds/BG_Daramur.png",
 
