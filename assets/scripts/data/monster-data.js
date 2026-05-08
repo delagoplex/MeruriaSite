@@ -135,6 +135,65 @@ window.MONSTER_DATA = [
     source: "Monsterhandbuch"
   },
   {
+    name: "Allosaurus",
+    art: "Tier",
+    unterart: "Dinosaurier",
+    groesse: "Groß",
+    gesinnung: "Gesinnungslos",
+    cr: 2, xp: 450,
+    rk: 13, ruestungstyp: "natürliche Rüstung",
+    tp: 51, tp_wuerfel: "6W10+18",
+    bewegung: { "Gehen": "18 m" },
+    attribute: { STR: 19, DEX: 13, CON: 17, INT: 2, WIS: 12, CHA: 5 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Wahrnehmung": 5 },
+    schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: [], passiveWahrnehmung: 15,
+    sprachen: [],
+    umgebung: ["Tropisch", "Wald", "Grasland"],
+    bild: "assets/images/monster/allosaurus.png",
+    beschreibung: [
+      "Der Allosaurus ist ein sehr großes, starkes und schnelles Raubtier. Er kann im freien Gelände fast jede Beute verfolgen und springt, um Kreaturen mit seinen bösartigen Kiefern zu Boden zu reißen."
+    ],
+    besonderheiten: [
+      { name: "Anspringen", beschreibung: "Wenn sich der Allosaurus mindestens 9 m in gerader Linie auf ein Ziel zu bewegt und dann im gleichen Zug mit seinen Klauen angreift, dann muss das Ziel einen Stärkerettungswurf gegen SG 13 schaffen, um nicht den Zustand liegend zu erleiden. Wenn das Ziel liegt, kann der Allosaurus gegen das Ziel einen Biss-Angriff als Bonusaktion durchführen." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 15 (2W10+4) Stichschaden." },
+      { name: "Klauen", beschreibung: "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 8 (1W8+4) Hiebschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Ankylosaurus",
+    art: "Tier",
+    unterart: "Dinosaurier",
+    groesse: "Riesig",
+    gesinnung: "Gesinnungslos",
+    cr: 3, xp: 700,
+    rk: 15, ruestungstyp: "natürliche Rüstung",
+    tp: 68, tp_wuerfel: "8W12+16",
+    bewegung: { "Gehen": "9 m" },
+    attribute: { STR: 19, DEX: 11, CON: 15, INT: 2, WIS: 12, CHA: 5 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: [], passiveWahrnehmung: 11,
+    sprachen: [],
+    umgebung: ["Tropisch", "Wald", "Grasland"],
+    bild: "assets/images/monster/ankylosaurus.png",
+    beschreibung: [
+      "Dicke Panzerplatten bedecken den Körper des pflanzenfressenden Ankylosaurus, der sich gegen Raubtiere mit einem knubbeligen Schwanz verteidigt, mit dem er vernichtende Schläge austeilen kann. Einige Varianten von Ankylosauriern haben Stachelschwänze, die Stichschaden anstelle von Wuchtschaden verursachen."
+    ],
+    besonderheiten: [],
+    aktionen: [
+      { name: "Schwanz", beschreibung: "Nahkampf-Waffenangriff: +7 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 18 (4W6+4) Wuchtschaden. Wenn das Ziel eine Kreatur ist, muss sie einen Stärkerettungswurf gegen SG 14 schaffen, sonst erleidet sie den Zustand liegend." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
     name: "Ankheg",
     art: "Monstrosität",
     unterart: null,
@@ -338,7 +397,8 @@ window.MONSTER_DATA = [
       { name: "Todeszuckungen", beschreibung: "Wenn ein Balor stirbt, explodiert er, und alle Kreaturen innerhalb von 9 m um ihn müssen einen Geschicklichkeitsrettungswurf gegen SG 20 ablegen. Bei einem misslungenen Rettungswurf erleiden sie 70 (20W6) Feuerschaden, halb so viel Schaden bei einem erfolgreichen Rettungswurf. Die Explosion entzündet brennbare Gegenstände in diesem Bereich, die nicht getragen oder in der Hand gehalten werden, und zerstört die Waffen des Balors." },
       { name: "Feueraura", beschreibung: "Zu Beginn eines jeden Zuges des Balors erleiden alle Kreaturen innerhalb von 1,5 m um ihn 10 (3W6) Feuerschaden. Brennbare Gegenstände in der Aura, die nicht getragen oder in der Hand gehalten werden, gehen in Flammen auf. Eine Kreatur, die den Balor berührt oder ihn mit einem Nahkampfangriff trifft, solange sie sich innerhalb von 1,5 m um ihn befindet, erleidet 10 (3W6) Feuerschaden." },
       { name: "Magieresistenz", beschreibung: "Der Balor hat einen Vorteil bei Rettungswürfen gegen Zauber und andere magische Effekte." },
-      { name: "Magische Waffen", beschreibung: "Die Waffenangriffe des Balors sind magisch." }
+      { name: "Magische Waffen", beschreibung: "Die Waffenangriffe des Balors sind magisch." },
+      { name: "Variante: Dämonenbeschwörung", beschreibung: "Beschwöre Dämon (1/Tag): Der Dämon entscheidet, was er beschwören will und führt eine magische Beschwörung durch. Ein Balor hat eine Chance von 50%, 1W8 Vrocks, 1W6 Hezrous, 1W4 Glabrezus, 1W3 Nalfeshnees, 1W2 Mariliths oder einen Goristro zu beschwören. Ein beschworener Dämon erscheint in einem nicht besetzten Bereich innerhalb von 18 m um seinen Beschwörer, dient als Verbündeter des Beschwörers und kann selbst keine anderen Dämonen beschwören. Er bleibt für 1 Minute, bis sein Beschwörer getötet worden ist oder bis der Beschwörer ihn als Bonusaktion fortschickt." }
     ],
     aktionen: [
       { name: "Mehrfachangriff", beschreibung: "Der Balor führt zwei Angriffe aus: einen mit seinem Langschwert und einen mit seiner Peitsche." },
@@ -376,7 +436,8 @@ window.MONSTER_DATA = [
     besonderheiten: [
       { name: "Angeborenes Zauberwirken", beschreibung: "Das Attribut zum Wirken angeborener Zauber für den Barlgura ist Weisheit (Zauberrettungswurf-SG 13). Der Barlgura kann die folgenden Zaubersprüche angeboren wirken, wobei keine Materialkomponenten notwendig sind: jeweils 1/Tag: Macht der Vorstellungskraft, Verstricken; jeweils 2/Tag: Selbstverkleidung, Unsichtbarkeit (nur selbst)." },
       { name: "Unvorsichtig", beschreibung: "Zu Beginn seines Zuges kann der Barlgura einen Vorteil auf alle Nahkampf-Waffenangriffe erhalten, die er während dieses Zuges ausführt, doch Angriffswürfe gegen ihn haben dann bis zum Beginn seines nächsten Zuges ebenfalls einen Vorteil." },
-      { name: "Laufender Sprung", beschreibung: "Der Weitsprung des Barlguras reicht bis zu 12 m und sein Hochsprung bis zu 6 m, wenn er Anlauf nehmen kann." }
+      { name: "Laufender Sprung", beschreibung: "Der Weitsprung des Barlguras reicht bis zu 12 m und sein Hochsprung bis zu 6 m, wenn er Anlauf nehmen kann." },
+      { name: "Variante: Dämonenbeschwörung", beschreibung: "Beschwöre Dämon (1/Tag): Der Dämon entscheidet, was er beschwören will und führt eine magische Beschwörung durch. Ein Barlgura hat eine Chance von 30%, einen Barlgura zu beschwören. Ein beschworener Dämon erscheint in einem nicht besetzten Bereich innerhalb von 18 m um seinen Beschwörer, dient als Verbündeter des Beschwörers und kann selbst keine anderen Dämonen beschwören. Er bleibt für 1 Minute, bis sein Beschwörer getötet worden ist oder bis der Beschwörer ihn als Bonusaktion fortschickt." }
     ],
     aktionen: [
       { name: "Mehrfachangriff", beschreibung: "Der Barlgura führt drei Angriffe aus: einen mit seinem Biss und zwei mit seinen Fäusten." },
@@ -546,6 +607,183 @@ window.MONSTER_DATA = [
     source: "Monsterhandbuch"
   },
   {
+    name: "Uralter Blauer Drache",
+    art: "Drache",
+    unterart: "Chromatischer Drache",
+    groesse: "Gigantisch",
+    gesinnung: "Rechtschaffen böse",
+    cr: 23, xp: 50000,
+    rk: 22, ruestungstyp: "natürliche Rüstung",
+    tp: 481, tp_wuerfel: "26W20+208",
+    bewegung: { "Gehen": "12 m", "Graben": "12 m", "Fliegen": "24 m" },
+    attribute: { STR: 29, DEX: 10, CON: 27, INT: 18, WIS: 17, CHA: 21 },
+    rettungswuerfe: { GES: 7, KON: 15, WEI: 10, CHA: 12 },
+    fertigkeiten: { "Heimlichkeit": 7, "Wahrnehmung": 17 },
+    schadensresistenzen: [], schadensimmunitaeten: ["Blitz"], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"], passiveWahrnehmung: 27,
+    sprachen: ["Allgemein", "Drakonisch"],
+    umgebung: ["Wüste"],
+    bild: "assets/images/monster/uralter_blauer_drache.png",
+    beschreibung: [
+      "Uralt Blaue Drachen sind eitle und territoriale Herrscher über weite Wüsten. Über Jahrhunderte haben sie Karawanen geplündert, Herden geraubt und Siedlungen in den fruchtbaren Ländern jenseits ihrer Wüste terrorisiert. Kein Kommentar über ihre vermeintliche Schwäche bleibt unbestraft.",
+      "Geduldige Kämpfer. Blaue Drachen sind methodische Kämpfer. Sie greifen aus der Entfernung mit Blitzsalven an, fliegen dann außerhalb der Reichweite und warten, bis sich eine neue Gelegenheit bietet. Ein Kampf kann Stunden oder sogar Tage andauern.",
+      "Gebieter und Schergen. Blaue Drachen begehren die begabtesten Kreaturen als Diener: Barden, Weise, Künstler, Magier und Meuchelmörder. Loyale Dienste werden großzügig belohnt. Die Behausung selbst bleibt geheim – selbst treueste Diener werden kaum hineingelassen. Ankhegs, Riesenskorpione und andere Wüstenkreaturen werden als Wachen ermutigt, in der Nähe zu leben.",
+      "Sammler von Edelsteinen. Blaue Drachen schätzen Juwelen besonders, vor allem Saphire, die sie als die edelste und schönste aller Farben betrachten. Die wertvollsten Schätze vergräbt der Drache tief im Sand, während er weniger wertvolle Gegenstände offen über versteckten Sandlöchern auslegt, um Diebe zu fangen."
+    ],
+    besonderheiten: [
+      { name: "Legendäre Resistenz (3/Tag)", beschreibung: "Wenn der Drache einen Rettungswurf misslingt, kann er sich entscheiden, ihn stattdessen zu bestehen." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Drache kann seine Furchterregende Präsenz einsetzen. Danach führt er drei Angriffe aus: einen mit dem Biss und zwei mit den Klauen." },
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +16 zum Treffen, Reichweite 4,5 m, ein Ziel. Treffer: 20 (2W10+9) Stichschaden plus 11 (2W10) Blitzschaden." },
+      { name: "Klauen", beschreibung: "Nahkampf-Waffenangriff: +16 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 16 (2W6+9) Hiebschaden." },
+      { name: "Schwanz", beschreibung: "Nahkampf-Waffenangriff: +16 zum Treffen, Reichweite 6 m, ein Ziel. Treffer: 18 (2W8+9) Wuchtschaden." },
+      { name: "Furchterregende Präsenz", beschreibung: "Jede Kreatur nach Wahl des Drachen, die sich innerhalb von 36 m von ihm befindet und sich seiner bewusst ist, muss einen Weisheitsrettungswurf gegen SG 20 schaffen, oder sie ist für 1 Minute verängstigt. Eine Kreatur kann den Rettungswurf am Ende jedes ihrer Züge wiederholen, um den Effekt bei Erfolg zu beenden. Wenn der Rettungswurf erfolgreich ist oder der Effekt endet, ist die Kreatur für die nächsten 24 Stunden immun gegen die Furchterregende Präsenz des Drachen." },
+      { name: "Blitzodem (Aufladezeit 5–6)", beschreibung: "Der Drache atmet Blitze in einer Linie von 36 m Länge und 3 m Breite. Jede Kreatur in der Linie muss einen Geschicklichkeitsrettungswurf gegen SG 23 ablegen. Bei einem misslingenden Rettungswurf erleidet sie 88 (16W10) Blitzschaden, bei einem gelungenen nur die Hälfte." }
+    ],
+    bonusaktionen: [],
+    reaktionen: [],
+    legendaere_aktionen: [
+      { name: "Aufspüren", beschreibung: "Der Drache schafft einen Weisheit (Wahrnehmung) Wurf." },
+      { name: "Schwanzangriff", beschreibung: "Der Drache führt einen Schwanzangriff durch." },
+      { name: "Schwingenangriff (kostet 2 Aktionen)", beschreibung: "Der Drache schlägt mit seinen Schwingen. Jede Kreatur innerhalb von 4,5 m vom Drachen muss einen Geschicklichkeitsrettungswurf gegen SG 24 schaffen oder erleidet 16 (2W6+9) Wuchtschaden und wird zu Boden geworfen. Der Drache kann dann bis zu seiner halben Flugbewegungsrate fliegen." }
+    ],
+    hortaktionen: {
+      beschreibung: "Bei Initiative-Rang 20 (bei Gleichstand verliert er) kann der Drache eine der folgenden Hortaktionen nutzen; er kann dieselbe nicht zwei Runden in Folge nutzen:",
+      aktionen: [
+        "Ein Teil der Decke stürzt über einer Kreatur innerhalb von 36 m ein, die der Drache sehen kann. Die Kreatur muss einen Geschicklichkeitsrettungswurf gegen SG 15 schaffen, um nicht 10 (3W6) Wuchtschaden zu erleiden und zu Boden geworfen und festgesetzt zu werden. Eine festgesetzte Kreatur kann weder atmen noch aufstehen; sie kann ihre Aktion nutzen, um einen Stärkewurf gegen SG 10 abzulegen und den Zustand bei einem Erfolg zu beenden.",
+        "Eine Wolke aus Sand füllt eine Sphäre mit einem Radius von 6 m um einen Punkt innerhalb von 36 m um den Drachen. Alle Kreaturen im Bereich müssen einen Konstitutionsrettungswurf gegen SG 15 ablegen, um nicht für 1 Minute blind zu werden. Die Kreatur kann den Rettungswurf am Ende jedes ihrer Züge wiederholen und den Effekt bei einem Erfolg beenden.",
+        "Blitze springen aus den Wänden der Behausung und bilden eine 1,5 m breite Linie zwischen zwei festen Oberflächen innerhalb von 36 m vom Drachen, die nicht weiter als 36 m voneinander entfernt sind. Alle Kreaturen in der Linie müssen einen Geschicklichkeitsrettungswurf gegen SG 15 schaffen, um nicht 10 (3W6) Blitzschaden zu erleiden."
+      ]
+    },
+    regionale_effekte: {
+      beschreibung: "Die Region rund um den Hort eines legendären blauen Drachen ist von der Magie des Drachen deformiert und schafft einen oder mehrere der folgenden Effekte:",
+      effekte: [
+        "Gewitter toben in einem Umkreis von 9 km um die Behausung.",
+        "Staubteufel ziehen durch das Land im Umkreis von 9 km um die Behausung. Ein Staubteufel hat die Spielwerte eines Luftelementars, kann aber nicht fliegen, hat eine Bewegungsrate von 15 m und Intelligenz sowie Charisma von 1 (−5).",
+        "Verborgene Sandlöcher bilden sich in und um die Behausung. Ein Sandloch kann mit einem erfolgreichen Wurf auf Weisheit (Wahrnehmung) gegen SG 20 entdeckt werden. Ansonsten muss die erste Kreatur, die auf die dünne Kruste tritt, einen Geschicklichkeitsrettungswurf gegen SG 15 schaffen oder 1W6 × 3 m tief in das Loch fallen. Wenn der Drache stirbt, verschwinden die Staubteufel sofort und die Gewitter lassen innerhalb von 1W10 Tagen nach; die Sandlöcher bleiben."
+      ]
+    },
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Ausgewachsener Blauer Drache",
+    art: "Drache",
+    unterart: "Chromatischer Drache",
+    groesse: "Riesig",
+    gesinnung: "Rechtschaffen böse",
+    cr: 16, xp: 15000,
+    rk: 19, ruestungstyp: "natürliche Rüstung",
+    tp: 225, tp_wuerfel: "18W12+108",
+    bewegung: { "Gehen": "12 m", "Graben": "9 m", "Fliegen": "24 m" },
+    attribute: { STR: 25, DEX: 10, CON: 23, INT: 16, WIS: 15, CHA: 19 },
+    rettungswuerfe: { GES: 5, KON: 11, WEI: 7, CHA: 9 },
+    fertigkeiten: { "Heimlichkeit": 5, "Wahrnehmung": 12 },
+    schadensresistenzen: [], schadensimmunitaeten: ["Blitz"], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"], passiveWahrnehmung: 22,
+    sprachen: ["Allgemein", "Drakonisch"],
+    umgebung: ["Wüste"],
+    bild: "assets/images/monster/ausgewachsener_blauer_drache.png",
+    beschreibung: [
+      "Ausgewachsene Blaue Drachen haben ihr Revier über Jahrzehnte gefestigt und ihre Behausungen in kristallisierte Kavernen unter dem Wüstensand ausgegraben. Ihre Schuppen knistern mit statischer Elektrizität, besonders wenn der Drache wütend oder angriffbereit ist."
+    ],
+    besonderheiten: [
+      { name: "Legendäre Resistenz (3/Tag)", beschreibung: "Wenn der Drache einen Rettungswurf misslingt, kann er sich entscheiden, ihn stattdessen zu bestehen." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Drache kann seine Furchterregende Präsenz einsetzen. Danach führt er drei Angriffe aus: einen mit dem Biss und zwei mit den Klauen." },
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +12 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 18 (2W10+7) Stichschaden plus 5 (1W10) Blitzschaden." },
+      { name: "Klauen", beschreibung: "Nahkampf-Waffenangriff: +12 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 14 (2W6+7) Hiebschaden." },
+      { name: "Schwanz", beschreibung: "Nahkampf-Waffenangriff: +12 zum Treffen, Reichweite 4,5 m, ein Ziel. Treffer: 16 (2W8+7) Wuchtschaden." },
+      { name: "Furchterregende Präsenz", beschreibung: "Jede Kreatur nach Wahl des Drachen, die sich innerhalb von 36 m von ihm befindet und sich seiner bewusst ist, muss einen Weisheitsrettungswurf gegen SG 17 schaffen, oder sie ist für 1 Minute verängstigt. Eine Kreatur kann den Rettungswurf am Ende jedes ihrer Züge wiederholen, um den Effekt bei Erfolg zu beenden. Wenn der Rettungswurf erfolgreich ist oder der Effekt endet, ist die Kreatur für die nächsten 24 Stunden immun gegen die Furchterregende Präsenz des Drachen." },
+      { name: "Blitzodem (Aufladezeit 5–6)", beschreibung: "Der Drache atmet Blitze in einer Linie von 27 m Länge und 1,5 m Breite. Jede Kreatur in der Linie muss einen Geschicklichkeitsrettungswurf gegen SG 19 ablegen. Bei einem misslingenden Rettungswurf erleidet sie 66 (12W10) Blitzschaden, bei einem gelungenen nur die Hälfte." }
+    ],
+    bonusaktionen: [],
+    reaktionen: [],
+    legendaere_aktionen: [
+      { name: "Aufspüren", beschreibung: "Der Drache schafft einen Weisheit (Wahrnehmung) Wurf." },
+      { name: "Schwanzangriff", beschreibung: "Der Drache führt einen Schwanzangriff durch." },
+      { name: "Schwingenangriff (kostet 2 Aktionen)", beschreibung: "Der Drache schlägt mit seinen Schwingen. Jede Kreatur innerhalb von 3 m vom Drachen muss einen Geschicklichkeitsrettungswurf gegen SG 20 schaffen oder erleidet 14 (2W6+7) Wuchtschaden und wird zu Boden geworfen. Der Drache kann dann bis zu seiner halben Flugbewegungsrate fliegen." }
+    ],
+    hortaktionen: {
+      beschreibung: "Bei Initiative-Rang 20 (bei Gleichstand verliert er) kann der Drache eine der folgenden Hortaktionen nutzen; er kann dieselbe nicht zwei Runden in Folge nutzen:",
+      aktionen: [
+        "Ein Teil der Decke stürzt über einer Kreatur innerhalb von 36 m ein, die der Drache sehen kann. Die Kreatur muss einen Geschicklichkeitsrettungswurf gegen SG 15 schaffen, um nicht 10 (3W6) Wuchtschaden zu erleiden und zu Boden geworfen und festgesetzt zu werden. Eine festgesetzte Kreatur kann weder atmen noch aufstehen; sie kann ihre Aktion nutzen, um einen Stärkewurf gegen SG 10 abzulegen und den Zustand bei einem Erfolg zu beenden.",
+        "Eine Wolke aus Sand füllt eine Sphäre mit einem Radius von 6 m um einen Punkt innerhalb von 36 m um den Drachen. Alle Kreaturen im Bereich müssen einen Konstitutionsrettungswurf gegen SG 15 ablegen, um nicht für 1 Minute blind zu werden. Die Kreatur kann den Rettungswurf am Ende jedes ihrer Züge wiederholen und den Effekt bei einem Erfolg beenden.",
+        "Blitze springen aus den Wänden der Behausung und bilden eine 1,5 m breite Linie zwischen zwei festen Oberflächen innerhalb von 36 m vom Drachen, die nicht weiter als 36 m voneinander entfernt sind. Alle Kreaturen in der Linie müssen einen Geschicklichkeitsrettungswurf gegen SG 15 schaffen, um nicht 10 (3W6) Blitzschaden zu erleiden."
+      ]
+    },
+    regionale_effekte: {
+      beschreibung: "Die Region rund um den Hort eines legendären blauen Drachen ist von der Magie des Drachen deformiert und schafft einen oder mehrere der folgenden Effekte:",
+      effekte: [
+        "Gewitter toben in einem Umkreis von 9 km um die Behausung.",
+        "Staubteufel ziehen durch das Land im Umkreis von 9 km um die Behausung. Ein Staubteufel hat die Spielwerte eines Luftelementars, kann aber nicht fliegen, hat eine Bewegungsrate von 15 m und Intelligenz sowie Charisma von 1 (−5).",
+        "Verborgene Sandlöcher bilden sich in und um die Behausung. Ein Sandloch kann mit einem erfolgreichen Wurf auf Weisheit (Wahrnehmung) gegen SG 20 entdeckt werden. Ansonsten muss die erste Kreatur, die auf die dünne Kruste tritt, einen Geschicklichkeitsrettungswurf gegen SG 15 schaffen oder 1W6 × 3 m tief in das Loch fallen. Wenn der Drache stirbt, verschwinden die Staubteufel sofort und die Gewitter lassen innerhalb von 1W10 Tagen nach; die Sandlöcher bleiben."
+      ]
+    },
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Junger Blauer Drache",
+    art: "Drache",
+    unterart: "Chromatischer Drache",
+    groesse: "Groß",
+    gesinnung: "Rechtschaffen böse",
+    cr: 9, xp: 5000,
+    rk: 18, ruestungstyp: "natürliche Rüstung",
+    tp: 152, tp_wuerfel: "16W10+64",
+    bewegung: { "Gehen": "12 m", "Graben": "6 m", "Fliegen": "24 m" },
+    attribute: { STR: 21, DEX: 10, CON: 19, INT: 14, WIS: 13, CHA: 17 },
+    rettungswuerfe: { GES: 4, KON: 8, WEI: 5, CHA: 7 },
+    fertigkeiten: { "Heimlichkeit": 4, "Wahrnehmung": 9 },
+    schadensresistenzen: [], schadensimmunitaeten: ["Blitz"], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 9 m", "Dunkelsicht 36 m"], passiveWahrnehmung: 19,
+    sprachen: ["Allgemein", "Drakonisch"],
+    umgebung: ["Wüste"],
+    bild: "assets/images/monster/junger_blauer_drache.png",
+    beschreibung: [
+      "Junge Blaue Drachen sind bereits arrogant und brutal. Sie graben sich im Wüstensand ein, bis nur das Horn ihrer Nase herausragt, und lauern dort auf Beute. Wenn sich ein Opfer nähert, schießen sie nach oben – Sand fließt wie eine Lawine von ihren Schwingen."
+    ],
+    besonderheiten: [],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Drache führt drei Angriffe aus: einen mit dem Biss und zwei mit den Klauen." },
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +9 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 16 (2W10+5) Stichschaden plus 5 (1W10) Blitzschaden." },
+      { name: "Klauen", beschreibung: "Nahkampf-Waffenangriff: +9 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 12 (2W6+5) Hiebschaden." },
+      { name: "Blitzodem (Aufladezeit 5–6)", beschreibung: "Der Drache atmet Blitze in einer Linie von 18 m Länge und 1,5 m Breite. Jede Kreatur in der Linie muss einen Geschicklichkeitsrettungswurf gegen SG 16 ablegen. Bei einem misslingenden Rettungswurf erleidet sie 55 (10W10) Blitzschaden, bei einem gelungenen nur die Hälfte." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Blauer Drachennestling",
+    art: "Drache",
+    unterart: "Chromatischer Drache",
+    groesse: "Mittelgroß",
+    gesinnung: "Rechtschaffen böse",
+    cr: 3, xp: 700,
+    rk: 17, ruestungstyp: "natürliche Rüstung",
+    tp: 52, tp_wuerfel: "8W8+16",
+    bewegung: { "Gehen": "9 m", "Graben": "4,5 m", "Fliegen": "18 m" },
+    attribute: { STR: 17, DEX: 10, CON: 15, INT: 12, WIS: 11, CHA: 15 },
+    rettungswuerfe: { GES: 2, KON: 4, WEI: 2, CHA: 4 },
+    fertigkeiten: { "Heimlichkeit": 2, "Wahrnehmung": 4 },
+    schadensresistenzen: [], schadensimmunitaeten: ["Blitz"], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 3 m", "Dunkelsicht 18 m"], passiveWahrnehmung: 14,
+    sprachen: ["Drakonisch"],
+    umgebung: ["Wüste"],
+    bild: "assets/images/monster/blauer_drachennestling.png",
+    beschreibung: [
+      "Blaue Drachennestlinge zeigen früh die Arroganz ihrer Art. Ihr Blitzodem ist bereits gefährlich, auch wenn ihre Körpergröße noch keine Bedrohung für erfahrene Abenteurer darstellt."
+    ],
+    besonderheiten: [],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +5 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 8 (1W10+3) Stichschaden plus 3 (1W6) Blitzschaden." },
+      { name: "Blitzodem (Aufladezeit 5–6)", beschreibung: "Der Drache atmet Blitze in einer Linie von 9 m Länge und 1,5 m Breite. Jede Kreatur in der Linie muss einen Geschicklichkeitsrettungswurf gegen SG 12 ablegen. Bei einem misslingenden Rettungswurf erleidet sie 22 (4W10) Blitzschaden, bei einem gelungenen nur die Hälfte." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
     name: "Blutmücke",
     art: "Tier",
     groesse: "Winzig",
@@ -676,7 +914,8 @@ window.MONSTER_DATA = [
     besonderheiten: [
       { name: "Summen", beschreibung: "Die Chasme gibt ein schreckliches Summen ab, gegen das Dämonen immun sind. Alle anderen Kreaturen, die ihren Zug innerhalb von 9 m um die Chasme beginnen, müssen einen Konstitutionsrettungswurf gegen SG 12 machen, um nicht für 10 Minuten das Bewusstsein zu verlieren. Kreaturen, die das Summen nicht hören können, schaffen den Rettungswurf automatisch. Der Effekt auf die Kreatur endet, wenn sie Schaden erleidet oder eine andere Kreatur eine Aktion nutzt, um sie mit Weihwasser zu bespritzen. Wenn der Rettungswurf erfolgreich ist oder der Effekt endet, dann ist die Kreatur für die nächsten 24 Stunden gegen das Summen immun." },
       { name: "Magieresistenz", beschreibung: "Die Chasme hat einen Vorteil bei Rettungswürfen gegen Zauber und andere magische Effekte." },
-      { name: "Spinnenklettern", beschreibung: "Die Chasme kann an schwierigen Oberflächen klettern, sogar kopfüber an der Decke, ohne einen Attributswurf ablegen zu müssen." }
+      { name: "Spinnenklettern", beschreibung: "Die Chasme kann an schwierigen Oberflächen klettern, sogar kopfüber an der Decke, ohne einen Attributswurf ablegen zu müssen." },
+      { name: "Variante: Dämonenbeschwörung", beschreibung: "Beschwöre Dämon (1/Tag): Der Dämon entscheidet, was er beschwören will und führt eine magische Beschwörung durch. Eine Chasme hat eine Chance von 30%, eine Chasme zu beschwören. Ein beschworener Dämon erscheint in einem nicht besetzten Bereich innerhalb von 18 m um seinen Beschwörer, dient als Verbündeter des Beschwörers und kann selbst keine anderen Dämonen beschwören. Er bleibt für 1 Minute, bis sein Beschwörer getötet worden ist oder bis der Beschwörer ihn als Bonusaktion fortschickt." }
     ],
     aktionen: [
       { name: "Saugrüssel", beschreibung: "Nahkampf-Waffenangriff: +5 zum Treffen, Reichweite 1,5 m, eine Kreatur. Treffer: 16 (4W6+2) Stichschaden plus 24 (7W6) nekrotischer Schaden, und die maximalen Trefferpunkte des Ziels sinken um einen Betrag gleich des erlittenen nekrotischen Schadens. Wenn dieser Effekt die Trefferpunkte einer Kreatur auf 0 senkt, dann stirbt die Kreatur. Diese Verringerung der Trefferpunkte hält an, bis die Kreatur eine lange Rast abschließt oder bis sie Ziel eines Zaubers wie Vollständige Genesung wird." }
@@ -749,6 +988,149 @@ window.MONSTER_DATA = [
       { name: "Mehrfachangriff", beschreibung: "Der Chuul führt zwei Angriffe mit seinen Zangen durch. Wenn der Chuul eine Kreatur gepackt hat, kann er auch einmal seine Tentakel verwenden." },
       { name: "Zangen", beschreibung: "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 11 (2W6+4) Wuchtschaden. Das Ziel wird gepackt (SG zum Entkommen 14), wenn es sich um eine große oder kleinere Kreatur handelt und der Chuul nicht zwei andere Kreaturen im Haltegriff hat." },
       { name: "Tentakel", beschreibung: "Alle Kreaturen in diesem Bereich müssen einen Konstitutionsrettungswurf gegen SG 13 ablegen, um nicht für 1 Minute vergiftet zu werden. Solange das Ziel vergiftet ist, ist es außerdem gelähmt. Das Ziel kann den Rettungswurf am Ende eines jeden seiner Züge wiederholen und den Effekt bei einem Erfolg beenden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Demilich",
+    art: "Untoter",
+    unterart: null,
+    groesse: "Winzig",
+    gesinnung: "Neutral böse",
+    cr: 18, xp: 20000,
+    rk: 20, ruestungstyp: "natürliche Rüstung",
+    tp: 80, tp_wuerfel: "20W4",
+    bewegung: { "Gehen": "0 m", "Fliegen (Schweben)": "9 m" },
+    attribute: { STR: 1, DEX: 20, CON: 10, INT: 20, WIS: 17, CHA: 20 },
+    rettungswuerfe: { KON: 6, INT: 11, WEI: 9, CHA: 11 },
+    fertigkeiten: {},
+    schadensresistenzen: ["Wucht-, Stich- und Hiebschaden durch magische Angriffe"],
+    schadensimmunitaeten: ["Gift", "Nekrotisch", "Psychisch", "Wucht-, Stich- und Hiebschaden durch nicht-magische Angriffe"],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: ["Betäubt", "Bezaubert", "Erschöpft", "Gelähmt", "Liegend", "Taub", "Verängstigt", "Vergiftet", "Versteinert"],
+    sinne: ["Wahre Sicht 36 m"], passiveWahrnehmung: 13,
+    sprachen: [],
+    umgebung: ["Unterirdisch"],
+    bild: "assets/images/monster/demilich.png",
+    beschreibung: [
+      "Die Unsterblichkeit, die einem Lich gewährt wird, hält nur so lange an, wie er sein Seelengefäß mit Seelen füttert. Wenn er in dieser Aufgabe nachlässig wird oder versagt, zerfallen seine Knochen zu Staub, bis nur noch der Schädel übrig ist. Dieser »Demilich« beinhaltet nur ein Bruchstück der bösartigen Lebenskraft des Lichs – gerade genug, um die Überreste aufsteigen und eine geisterhafte Gestalt annehmen zu lassen, wenn er gestört wird. Der Schädel stößt dann ein markerschütterndes Heulen aus, das die, die schwachen Herzens sind, sofort tötet und andere vor Furcht beben lässt. Wenn er in Frieden gelassen wird, sinkt er wieder zu Boden und kehrt zum leeren Frieden seiner Existenz zurück.",
+      "Wenige Lichs wollen Demilichs werden, denn dies bedeutet das Ende einer Existenz, die sie zu bewahren hofften, indem sie Untote wurden. Allerdings kann die Zeit die Vernunft und Erinnerungen eines Lichs zersetzen, sodass er sich in seine uralte Gruft zurückzieht und vergisst, sich von Seelen zu ernähren. Die Zauber, die er einst kannte, schwinden aus seinem Geist, und er kann nicht mehr die arkanen Energien lenken, die ihm als Lich zur Verfügung standen. Doch auch als bloßer Schädel ist er noch ein tödlicher und irritierender Gegner.",
+      "Die Verwandlung in einen Demilich ist nicht für alle Lichs, die sie durchleben, ein bitteres Ende. Wenn er als bewusste Entscheidung getroffen wird, ist der Weg des Demilichs der nächste Schritt einer dunklen Evolution. Der Lich Acererak – ein mächtiger Magier und Dämonologe und der berüchtigte Meister der Gruft der Schrecken – sah seine eigene Verwandlung voraus und bereitete sich vor, indem er verzauberte Juwelen in die Augenhöhlen und Zähne seines Schädels einsetzte. All diese Juwelen hatten die Macht, Seelen zu fangen, von denen sich sein Seelengefäß ernähren würde.",
+      "Acererak gab seinen physischen Körper auf und akzeptierte, dass er verfaulen und zu Staub zerfallen würde, während er als körperloses Bewusstsein durch die Ebenen reiste. Wenn der Schädel, der sein letzter Überrest war, jemals gestört wurde, beanspruchten die Juwelen die Seelen der unverschämten Eindringlinge in die Gruft und übertrugen sie magisch in sein Seelengefäß.",
+      "Lichs, die Acereraks Weg folgen, glauben, dass sie ihre Suche nach Macht jenseits der sterblichen Welt fortsetzen können, indem sie sich ihres Körpers entledigen. Wie es ihr Vorbild tat, sichern sie ihre Überreste in gut geschützten Gruften und nutzen Seelenjuwelen, um ihre Seelengefäße zu erhalten und die Abenteurer zu töten, die ihren Frieden stören."
+    ],
+    besonderheiten: [
+      { name: "Meiden", beschreibung: "Wenn der Demilich Ziel eines Effekts wird, der es ihm erlaubt, einen Rettungswurf abzulegen, um nur halben Schaden zu erleiden, erleidet er stattdessen bei einem gelungenen Rettungswurf gar keinen Schaden und nur halben Schaden, wenn er misslingt." },
+      { name: "Legendäre Resistenz (3/Tag)", beschreibung: "Wenn der Demilich einen Rettungswurf nicht schafft, kann er sich stattdessen entscheiden, ihn zu schaffen." },
+      { name: "Immun gegen Vertreibung", beschreibung: "Der Demilich ist immun gegen die Auswirkung von Untote vertreiben." },
+      { name: "Anhaltende Existenz", beschreibung: "Selbst nachdem ein Lich nur noch ein Demilich ist, überlebt sein Seelengefäß. Solange das Seelengefäß noch intakt ist, kann der Demilich nicht dauerhaft zerstört werden. Der Schädel bildet sich innerhalb von 1W10 Tagen neu, sodass die Kreatur zu ihrem elenden Zustand zurückkehrt. Wenn sein Verstand noch klar genug dazu ist, kann ein Demilich seine ehemalige Macht wiedererlangen, indem er nur eine Seele in sein Seelengefäß speist. Dies macht den Demilich wieder zu einem Lich und stellt seinen untoten Körper wieder her." },
+      { name: "Untote Natur", beschreibung: "Ein Demilich braucht weder Nahrung noch Wasser oder Schlaf. Der Überlebenswille eines Demilichs ist so groß, dass er immer die maximale Anzahl von Trefferpunkten für jeden Trefferwürfel erhält, keinen Durchschnittswert." },
+      { name: "Variante: Acererak und seine Jünger", beschreibung: "Ein Demilich, der wie Acererak verzauberte Juwelen in seinen Schädel eingesetzt hat, erhält folgende zusätzliche Aktionsoption. Seele fangen: Der Demilich wählt eine Kreatur innerhalb von 9 m um sich aus, die er sehen kann. Die Zielkreatur muss einen Charismarettungswurf gegen SG 19 ablegen. Bei einem misslungenen Rettungswurf wird die Seele magisch in einem der Juwelen des Demilichs gefangen. Solange die Seele gefangen ist, hören der Körper des Ziels und all seine Ausrüstung auf zu existieren. Bei einem erfolgreichen Rettungswurf erleidet das Ziel 24 (7W6) nekrotischen Schaden, und wenn dieser Schaden das Ziel auf 0 TP bringt, wird seine Seele wie bei einem misslungenen Rettungswurf gefangen. Eine Seele, die für 24 Stunden in einem Juwel gefangen ist, wird verschlungen und hört auf zu existieren. Wenn der Demilich auf 0 Trefferpunkte fällt, wird er zerstört und zerfällt zu Staub. Seine Juwelen bleiben zurück. Einen Juwel zu zermalmen befreit die Seele, die darin gefangen ist. Der Körper des Ziels bildet sich in einem nicht besetzten Bereich neben dem Juwel neu und ist im gleichen Zustand wie zu dem Zeitpunkt, als er gefangen wurde. Ein solcher Demilich hat einen HG von 20 (24.500 EP) oder 23 (50.000 EP) in seiner Behausung." }
+    ],
+    aktionen: [
+      { name: "Heulen (Aufladung 5–6)", beschreibung: "Der Demilich stößt ein Heulen aus, das das Blut gefrieren lässt. Alle Kreaturen im Umkreis von 9 m um den Demilich, die ihn hören können, müssen einen Konstitutionsrettungswurf gegen SG 15 schaffen, um nicht auf 0 Trefferpunkte zu fallen. Bei einem erfolgreichen Rettungswurf ist die Kreatur bis zum Ende ihres nächsten Zugs verängstigt." },
+      { name: "Lebensentzug", beschreibung: "Der Demilich wählt bis zu drei Kreaturen innerhalb von 3 m um sich aus, die er sehen kann. Alle Ziele müssen einen Konstitutionsrettungswurf gegen SG 19 schaffen, um nicht 21 (6W6) nekrotischen Schaden zu erleiden, und der Demilich erhält Trefferpunkte gleich dem Gesamtschaden, den er den Zielen zugefügt hat, zurück." }
+    ],
+    bonusaktionen: [], reaktionen: [],
+    legendaere_aktionen: [
+      { name: "Energieentzug (kostet 2 Aktionen)", beschreibung: "Alle Kreaturen im Umkreis von 9 m um den Demilich müssen einen Konstitutionsrettungswurf gegen SG 15 ablegen. Bei einem misslungenen Rettungswurf werden die maximalen Trefferpunkte der Kreatur magisch um 10 (3W6) verringert. Wenn dieser Effekt die maximalen Trefferpunkte einer Kreatur auf 0 senkt, dann stirbt die Kreatur. Die maximalen Trefferpunkte einer Kreatur können mit dem Zauber Vollständige Genesung oder ähnlichen Effekten wieder angehoben werden." },
+      { name: "Fliegen", beschreibung: "Der Demilich fliegt bis zu seine halbe Flug-Bewegungsweite weit." },
+      { name: "Staubwolke", beschreibung: "Der Demilich wirbelt auf magische Weise seine zu Staub zerfallenen Überreste auf. Alle Kreaturen im Umkreis von 3 m um den Demilich, auch wenn sie sich um eine Ecke befinden, müssen einen Konstitutionsrettungswurf gegen SG 15 schaffen, um nicht bis zum Ende des nächsten Zugs des Demilichs blind zu werden. Eine Kreatur, die den Rettungswurf schafft, ist bis zum Ende des nächsten Zugs des Demilichs immun gegen diesen Effekt." },
+      { name: "Verderbter Fluch (kostet 3 Aktionen)", beschreibung: "Der Demilich wählt eine Kreatur innerhalb von 9 m um sich aus, die er sehen kann. Die Zielkreatur muss einen Weisheitsrettungswurf gegen SG 15 ablegen, um nicht magisch verflucht zu werden. Bis der Fluch endet, hat das Ziel einen Nachteil bei allen Angriffswürfen und Rettungswürfen. Das Ziel kann den Rettungswurf am Ende eines jeden seiner Züge wiederholen und den Fluch bei einem Erfolg beenden." }
+    ],
+    hortaktionen: {
+      beschreibung: "Bei Initiative 20 (er verliert alle Initiative-Gleichstände) würfelt der Demilich mit einem W20. Bei einer 11 oder höher führt er eine Hortaktion aus, um eine der folgenden Effekte zu verursachen. Er kann nicht den gleichen Effekt in zwei aufeinanderfolgenden Runden verwenden.",
+      aktionen: [
+        "Die Gruft bebt für einen Augenblick heftig. Alle Kreaturen auf dem Boden der Gruft müssen einen Geschicklichkeitsrettungswurf gegen SG 19 schaffen, sonst erleiden sie den Zustand liegend.",
+        "Der Demilich wählt eine Kreatur innerhalb von 18 m, die er sehen kann. Ein antimagisches Feld füllt den Bereich des Ziels und bewegt sich bis Initiative 20 der nächsten Runde mit ihm.",
+        "Der Demilich wählt eine beliebige Anzahl von Kreaturen innerhalb von 9 m, die er sehen kann. Kein Ziel kann bis Initiative 20 der nächsten Runde Trefferpunkte zurückerhalten."
+      ]
+    },
+    regionale_effekte: {
+      beschreibung: "Die Gruft eines Demilichs könnte einen oder mehrere der folgenden Effekte haben:",
+      effekte: [
+        "Das erste Mal, dass eine nicht böse Kreatur den Bereich der Gruft betritt, erleidet sie 16 (3W10) nekrotischen Schaden.",
+        "Monster in der Gruft haben einen Vorteil auf Rettungswürfe, wenn sie bezaubert oder verängstigt werden sollen, sowie gegen Merkmale, die Untote vertreiben.",
+        "Die Gruft ist vor den magischen Reisen von Kreaturen geschützt, denen es der Demilich nicht erlaubt hat. Solche Kreaturen können sich nicht in den Bereich der Gruft oder heraus teleportieren und können keine Reisen über die Ebenen nutzen, um einzudringen oder zu verschwinden. Effekte, die Teleportation oder Ebenenreisen erlauben, funktionieren im Bereich der Gruft durchaus, wenn sie nicht verwendet werden, um in den Bereich der Gruft zu gelangen oder ihn zu verlassen.",
+        "Wenn der Demilich stirbt, schwinden diese Effekte innerhalb von 1W10 Tagen."
+      ]
+    },
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Doppelgänger",
+    art: "Monstrosität",
+    unterart: "Gestaltwandler",
+    groesse: "Mittelgroß",
+    gesinnung: "Neutral",
+    cr: 3, xp: 700,
+    rk: 14, ruestungstyp: null,
+    tp: 52, tp_wuerfel: "8W8+16",
+    bewegung: { "Gehen": "9 m" },
+    attribute: { STR: 11, DEX: 18, CON: 14, INT: 11, WIS: 12, CHA: 14 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Motiv erkennen": 3, "Täuschen": 6 },
+    schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [],
+    zustandsimmunitaeten: ["Bezaubert"],
+    sinne: ["Dunkelsicht 18 m"], passiveWahrnehmung: 11,
+    sprachen: ["Gemeinsprache"],
+    umgebung: ["Stadt", "Unterirdisch"],
+    bild: "assets/images/monster/doppelgaenger.png",
+    beschreibung: [
+      "Doppelgänger sind verschlagene Gestaltwandler, die das Aussehen anderer Humanoider annehmen können, um Verfolger abzuschütteln oder Opfer mit Täuschung und Verkleidung in ihren Untergang zu locken. Wenige Kreaturen sind besser darin, Furcht, Misstrauen und Verrat zu säen als Doppelgänger. Man findet sie in allen Ländern und Kulturen, und sie können das Aussehen von Personen aller Völker annehmen.",
+      "Geheimnisraub. Die angenommene Form eines Doppelgängers erlaubt es ihm, sich in fast jede Gruppe oder Gemeinschaft zu mischen, doch verleiht sie ihm keine Sprachen, Manierismen, Erinnerungen oder Persönlichkeit der Person. Doppelgänger folgen oft Kreaturen, die sie nachahmen wollen, oder fangen sie, um sie zu studieren und ihren Verstand nach Geheimnissen abzusuchen. Doppelgänger können die oberflächlichen Gedanken von Kreaturen lesen, sodass sie den Namen, die Begierden und Ängste der Kreatur in Erfahrung bringen können, zusammen mit einigen zufälligen Erinnerungen.",
+      "Ein Doppelgänger, der als Teil einer langfristigen Intrige eine bestimmte Kreatur nachahmt, hält manchmal sein Double für Wochen am Leben und in seiner Nähe, um täglich seine Gedanken zu sondieren und zu lernen, wie er sich authentisch benehmen und sprechen muss.",
+      "Genusssüchtige Schwindler. Doppelgänger arbeiten alleine oder in kleinen Gruppen, wobei sich die Rollen in der Gruppe von Komplott zu Komplott ändern können. Während ein Doppelgänger den Platz eines ermordeten Kaufmanns oder Adeligen einnimmt, übernehmen die anderen Rollen, die die Umstände erfordern. Sie spielen die Rolle von Familienmitgliedern und Dienern, während sie von den Reichtümern des Opfers leben.",
+      "Wechselbälger. Doppelgänger sind zu faul und selbstsüchtig, um ihre Kinder großzuziehen. Sie nehmen attraktive männliche Gestalten an und verführen Frauen, die sie zurücklassen, um ihre Nachkommenschaft großzuziehen. Ein Doppelgängerkind scheint ein normales Mitglied der Spezies der Mutter zu sein, bis er in die Pubertät kommt; dann erkennt er sein wahres Wesen und verspürt den Drang, andere seiner Art zu finden und sich ihnen anzuschließen."
+    ],
+    besonderheiten: [
+      { name: "Gestaltwandler", beschreibung: "Der Doppelgänger kann seine Aktion verwenden, um sich in die Gestalt eines kleinen oder mittelgroßen Humanoiden zu verwandeln oder seine wahre Gestalt anzunehmen. Seine Spielwerte sind gleich, egal, welche Form er gerade hat. Jede Ausrüstung, die er tragen oder in der Hand halten sollte, wird mit verwandelt. Er nimmt wieder seine wahre Gestalt an, wenn er stirbt." },
+      { name: "Lauerjäger", beschreibung: "In der ersten Kampfrunde hat der Doppelgänger einen Vorteil auf seine Angriffswürfe gegen jede Kreatur, die er überrascht hat." },
+      { name: "Überraschungsangriff", beschreibung: "Wenn der Doppelgänger eine Kreatur überrascht und sie in der ersten Kampfrunde mit einem Angriff trifft, dann erleidet das Ziel zusätzlich 10 (3W6) Schaden durch den Angriff." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Doppelgänger führt zwei Nahkampfangriffe durch." },
+      { name: "Hieb", beschreibung: "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 7 (1W6+4) Wuchtschaden." },
+      { name: "Gedanken lesen", beschreibung: "Der Doppelgänger liest die oberflächlichen Gedanken einer Kreatur innerhalb von 18 m um sich. Der Effekt kann Hindernisse durchdringen, aber 90 cm Holz oder Erde, 60 cm Stein, 5 cm Metall oder eine dünne Schicht Blei blockieren ihn. Solange das Ziel in Reichweite ist, kann der Doppelgänger weiter seine Gedanken lesen, solange die Konzentration des Doppelgängers nicht gebrochen wird (als würde er sich auf einen Zauber konzentrieren). Solange der Doppelgänger die Gedanken eines Ziels liest, hat er einen Vorteil auf Würfe mit Weisheit (Motiv erkennen) und Charisma (Täuschen, Einschüchtern und Überzeugen) gegen das Ziel." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Junger Roter Schattendrache",
+    art: "Drache",
+    unterart: "Schattendrache",
+    groesse: "Groß",
+    gesinnung: "Chaotisch böse",
+    cr: 13, xp: 10000,
+    rk: 18, ruestungstyp: "natürliche Rüstung",
+    tp: 178, tp_wuerfel: "17W10+85",
+    bewegung: { "Gehen": "12 m", "Klettern": "12 m", "Fliegen": "24 m" },
+    attribute: { STR: 23, DEX: 10, CON: 21, INT: 14, WIS: 11, CHA: 19 },
+    rettungswuerfe: { GES: 4, KON: 9, WEI: 4, CHA: 8 },
+    fertigkeiten: { "Heimlichkeit": 8, "Wahrnehmung": 8 },
+    schadensresistenzen: ["Nekrotisch"],
+    schadensimmunitaeten: ["Feuer"],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 9 m", "Dunkelsicht 36 m"], passiveWahrnehmung: 18,
+    sprachen: ["Gemeinsprache", "Drakonisch"],
+    umgebung: ["Gebirge", "Unterirdisch", "Andere Ebenen"],
+    bild: "assets/images/monster/junger_roter_schattendrache.png",
+    beschreibung: [
+      "Ein junger roter Drache, der lange genug im Schattensaum geweilt hat, um von seiner Dunkelheit durchdrungen zu werden. Die einst leuchtend roten Schuppen haben die Farbe von Kohle angenommen, die Schwingen sind durchscheinend geworden. Sein Feueratem ist zu schattengleichem nekrotischem Feuer mutiert, das nicht nur den Körper, sondern auch die Seele verbrennt."
+    ],
+    besonderheiten: [
+      { name: "Lebender Schatten", beschreibung: "Solange er sich in schwachem Licht oder Dunkelheit aufhält, ist der Drache resistent gegen Schaden, der nicht Energieschaden, gleißender oder psychischer Schaden ist." },
+      { name: "Heimlicher Schatten", beschreibung: "Solange er sich in schwachem Licht oder Dunkelheit bewegt, kann der Drache die Aktion Verstecken als Bonusaktion nutzen." },
+      { name: "Empfindlich gegenüber Sonnenlicht", beschreibung: "Solange sich der Drache im hellen Licht befindet, hat er einen Nachteil bei Angriffswürfen und Würfen auf Weisheit (Wahrnehmung), die Sicht verwenden." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Drache führt drei Angriffe aus: einen mit seinem Biss und zwei mit seinen Klauen." },
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +10 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 17 (2W10+6) Stichschaden plus 3 (1W6) nekrotischer Schaden." },
+      { name: "Klauen", beschreibung: "Nahkampf-Waffenangriff: +10 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 13 (2W6+6) Hiebschaden." },
+      { name: "Schattenodem (Aufladung 5–6)", beschreibung: "Der Drache atmet in einem Kegel von 9 m Länge schattengleiches Feuer aus. Alle Kreaturen im Kegel müssen einen Geschicklichkeitsrettungswurf gegen SG 18 ablegen. Bei einem misslungenen Rettungswurf erleiden sie 56 (16W6) nekrotischen Schaden, halb so viel Schaden bei einem erfolgreichen Rettungswurf. Ein Humanoider, dessen Trefferpunkte von diesem Schaden auf 0 reduziert werden, stirbt, und ein untoter Schatten steigt aus seiner Leiche und handelt unmittelbar nach dem Drachen in der Initiativereihenfolge. Der Schatten steht unter der Kontrolle des Drachen." }
     ],
     bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
     source: "Monsterhandbuch"
@@ -846,7 +1228,8 @@ window.MONSTER_DATA = [
     ],
     besonderheiten: [
       { name: "Angeborenes Zauberwirken", beschreibung: "Das Attribut zum Wirken angeborener Zauber für den Glabrezu ist Intelligenz (Zauberrettungswurf-SG 16). Der Glabrezu kann die folgenden Zaubersprüche angeboren wirken, wobei keine Materialkomponenten notwendig sind: willentlich: Dunkelheit, Magie bannen, Magie entdecken; jeweils 1/Tag: Fliegen, Verwirrung, Wort der Macht – Betäubung." },
-      { name: "Magieresistenz", beschreibung: "Der Glabrezu hat einen Vorteil bei Rettungswürfen gegen Zauber und andere magische Effekte." }
+      { name: "Magieresistenz", beschreibung: "Der Glabrezu hat einen Vorteil bei Rettungswürfen gegen Zauber und andere magische Effekte." },
+      { name: "Variante: Dämonenbeschwörung", beschreibung: "Beschwöre Dämon (1/Tag): Der Dämon entscheidet, was er beschwören will und führt eine magische Beschwörung durch. Ein Glabrezu hat eine Chance von 30%, 1W3 Vrocks, 1W2 Hezrous oder einen Glabrezu zu beschwören. Ein beschworener Dämon erscheint in einem nicht besetzten Bereich innerhalb von 18 m um seinen Beschwörer, dient als Verbündeter des Beschwörers und kann selbst keine anderen Dämonen beschwören. Er bleibt für 1 Minute, bis sein Beschwörer getötet worden ist oder bis der Beschwörer ihn als Bonusaktion fortschickt." }
     ],
     aktionen: [
       { name: "Mehrfachangriff", beschreibung: "Der Glabrezu führt vier Angriffe aus: zwei mit seinen Zangen und zwei mit seinen Fäusten. Alternativ kann er zwei Angriffe mit seinen Zangen machen und einen Zauber wirken." },
@@ -897,6 +1280,189 @@ window.MONSTER_DATA = [
     source: "Monsterhandbuch"
   },
   {
+    name: "Uralter Grüner Drache",
+    art: "Drache",
+    unterart: "Chromatischer Drache",
+    groesse: "Gigantisch",
+    gesinnung: "Rechtschaffen böse",
+    cr: 22, xp: 41000,
+    rk: 21, ruestungstyp: "natürliche Rüstung",
+    tp: 385, tp_wuerfel: "22W20+154",
+    bewegung: { "Gehen": "12 m", "Fliegen": "24 m", "Schwimmen": "12 m" },
+    attribute: { STR: 27, DEX: 12, CON: 25, INT: 20, WIS: 17, CHA: 19 },
+    rettungswuerfe: { GES: 8, KON: 14, WEI: 10, CHA: 11 },
+    fertigkeiten: { "Heimlichkeit": 8, "Motiv erkennen": 10, "Täuschen": 11, "Überzeugen": 11, "Wahrnehmung": 17 },
+    schadensresistenzen: [], schadensimmunitaeten: ["Gift"], verwundbarkeiten: [], zustandsimmunitaeten: ["Vergiftet"],
+    sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"], passiveWahrnehmung: 27,
+    sprachen: ["Allgemein", "Drakonisch"],
+    umgebung: ["Wald"],
+    bild: "assets/images/monster/uralter_gruener_drache.png",
+    beschreibung: [
+      "Uralte Grüne Drachen sind die verschlagensten und tückischsten der wahren Drachen. Jahrhunderte der Manipulation haben sie zu Meistern der Intrige gemacht – sie nutzen Irreführung und List, um die Oberhand zu gewinnen, ohne unnötig Kraft aufwenden zu müssen.",
+      "Launische Jäger. Ein grüner Drache patrouilliert sein Revier aus der Luft und am Boden. Er frisst jede Kreatur, die er sehen kann, und verspeist Büsche und kleinere Bäume wenn er hungrig genug ist. Seine liebste Beute sind Elfen. Er verfolgt seine Beute tagelang, genießt den Schrecken, den sein Auftauchen auslöst, und tötet niemals alle Feinde – Einschüchterung ist sein bevorzugtes Werkzeug zur Kontrolle der Überlebenden.",
+      "Manipulative Ränkeschmiede. Grüne Drachen unterwerfen andere ihrem Willen, indem sie deren tiefste Begierden ausnutzen. Gegenüber Schwächeren sind sie redegewandt und schmeichlerisch; untereinander laut und grobschlächtig. Sie akzeptieren die Dienste von Goblinoiden, Atterkopps, Ettins, Kobolden, Orks und Yuan-Ti, und ergötzen sich daran, Elfen zu korrumpieren.",
+      "Lebende Schätze. Die Lieblingsschätze eines grünen Drachen sind die denkenden Kreaturen, die er seinem Willen unterwirft, darunter Helden, Gelehrte und Barden. Als materielle Schätze mögen grüne Drachen Smaragde, Holzschnitzereien, Musikinstrumente und Skulpturen ihrer humanoiden Untergebenen."
+    ],
+    besonderheiten: [
+      { name: "Amphibisch", beschreibung: "Der Drache kann sowohl Luft als auch Wasser atmen." },
+      { name: "Legendäre Resistenz (3/Tag)", beschreibung: "Wenn der Drache einen Rettungswurf misslingt, kann er sich entscheiden, ihn stattdessen zu bestehen." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Drache kann seine Furchterregende Präsenz einsetzen. Danach führt er drei Angriffe aus: einen mit dem Biss und zwei mit den Klauen." },
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +15 zum Treffen, Reichweite 4,5 m, ein Ziel. Treffer: 19 (2W10+8) Stichschaden plus 10 (3W6) Giftschaden." },
+      { name: "Klauen", beschreibung: "Nahkampf-Waffenangriff: +15 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 22 (4W6+8) Hiebschaden." },
+      { name: "Schwanz", beschreibung: "Nahkampf-Waffenangriff: +15 zum Treffen, Reichweite 6 m, ein Ziel. Treffer: 17 (2W8+8) Wuchtschaden." },
+      { name: "Furchterregende Präsenz", beschreibung: "Jede Kreatur nach Wahl des Drachen, die sich innerhalb von 36 m von ihm befindet und sich seiner bewusst ist, muss einen Weisheitsrettungswurf gegen SG 19 schaffen, oder sie ist für 1 Minute verängstigt. Eine Kreatur kann den Rettungswurf am Ende jedes ihrer Züge wiederholen, um den Effekt bei Erfolg zu beenden. Wenn der Rettungswurf erfolgreich ist oder der Effekt endet, ist die Kreatur für die nächsten 24 Stunden immun gegen die Furchterregende Präsenz des Drachen." },
+      { name: "Giftodem (Aufladezeit 5–6)", beschreibung: "Der Drache atmet giftiges Gas in einem Kegel von 27 m Länge. Jede Kreatur im Kegel muss einen Konstitutionsrettungswurf gegen SG 22 ablegen. Bei einem misslingenden Rettungswurf erleidet sie 77 (22W6) Giftschaden, bei einem gelungenen nur die Hälfte." }
+    ],
+    bonusaktionen: [],
+    reaktionen: [],
+    legendaere_aktionen: [
+      { name: "Aufspüren", beschreibung: "Der Drache schafft einen Weisheit (Wahrnehmung) Wurf." },
+      { name: "Schwanzangriff", beschreibung: "Der Drache führt einen Schwanzangriff durch." },
+      { name: "Schwingenangriff (kostet 2 Aktionen)", beschreibung: "Der Drache schlägt mit seinen Schwingen. Jede Kreatur innerhalb von 4,5 m vom Drachen muss einen Geschicklichkeitsrettungswurf gegen SG 23 schaffen oder erleidet 15 (2W6+8) Wuchtschaden und wird zu Boden geworfen. Der Drache kann dann bis zu seiner halben Flugbewegungsrate fliegen." }
+    ],
+    hortaktionen: {
+      beschreibung: "Bei Initiative-Rang 20 (bei Gleichstand verliert er) kann der Drache eine der folgenden Hortaktionen nutzen; er kann dieselbe nicht zwei Runden in Folge nutzen:",
+      aktionen: [
+        "Schlingranken und Lianen wuchern in einem Radius von 6 m um einen Punkt auf dem Boden innerhalb von 36 m. Der Bereich wird schwieriges Gelände, und alle Kreaturen dort müssen einen Stärkerettungswurf gegen SG 15 ablegen, um nicht festgesetzt zu werden. Eine Kreatur kann befreit werden, wenn sie oder eine andere Kreatur eine Aktion aufwendet und einen Stärkewurf gegen SG 15 besteht. Die Ranken verdorren, wenn der Drache diese Hortaktion erneut nutzt oder stirbt.",
+        "Eine Mauer aus dornigem Gebüsch wächst auf einer festen Oberfläche innerhalb von 36 m. Die Mauer ist bis zu 18 m lang, 3 m hoch und 1,5 m dick und blockiert Sichtlinien. Kreaturen in ihrem Bereich beim Erscheinen müssen einen Geschicklichkeitsrettungswurf gegen SG 15 schaffen oder erleiden 18 (4W8) Stichschaden und werden 1,5 m aus dem Bereich geschoben. Bewegung durch die Mauer kostet 4-fache Distanz. Kontakt mit der Mauer: einmal pro Runde GES SG 15 oder 18 (4W8) Stichschaden (halb bei Erfolg). Jeder Mauerabschnitt von 3 m hat RK 5, 15 TP, Empfindlichkeit gegen Feuer, Resistenz gegen Wucht- und Stichschaden sowie Immunität gegen psychischen Schaden. Die Mauer sinkt zurück, wenn der Drache diese Hortaktion erneut nutzt oder stirbt.",
+        "Magischer Nebel wabert um eine Kreatur innerhalb von 36 m auf, die der Drache sehen kann. Die Kreatur muss einen Weisheitsrettungswurf gegen SG 15 ablegen, um nicht bis Initiative 20 der nächsten Runde vom grünen Drachen bezaubert zu werden."
+      ]
+    },
+    regionale_effekte: {
+      beschreibung: "Die Region rund um den Hort eines legendären grünen Drachen ist von der Magie des Drachen deformiert und schafft einen oder mehrere der folgenden Effekte:",
+      effekte: [
+        "Dickichte formen labyrinthartige Durchgänge im Umkreis von 1,5 km um die Behausung. Die Dickichte sind 3 m hohe, 3 m dicke Mauern, die Sichtlinien blockieren. Bewegung durch das Dickicht kostet 4-fache Distanz. Kontakt mit dem Dickicht: einmal pro Runde GES SG 15 oder 3 (1W6) Stichschaden. Jeder Würfel von 3 m Kantenlänge hat RK 5, 30 TP, Resistenz gegen Wucht- und Stichschaden, Empfindlichkeit gegen Feuer sowie Immunität gegen psychischen Schaden und Schallschaden.",
+        "Innerhalb von 1,5 km um die Behausung hinterlässt der Drache keine physischen Spuren seiner Anwesenheit, wenn er es nicht möchte. Seine Fährte ist nur mit magischen Mitteln verfolgbar. Außerdem ignoriert der Drache Bewegungseinschränkungen und Schaden durch Pflanzen in diesem Bereich, einschließlich der Dickichte.",
+        "Nagetiere und Vögel innerhalb von 1,5 km um die Behausung dienen als seine Augen und Ohren. Rehe und andere große Wildtiere sind seltsam abwesend, was auf ein unnatürlich hungriges Raubtier schließen lässt. Wenn der Drache stirbt, verlieren die Nagetiere und Vögel ihre übernatürliche Verbindung. Das Dickicht wird innerhalb von 1W10 Tagen zu gewöhnlichen Pflanzen."
+      ]
+    },
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Ausgewachsener Grüner Drache",
+    art: "Drache",
+    unterart: "Chromatischer Drache",
+    groesse: "Riesig",
+    gesinnung: "Rechtschaffen böse",
+    cr: 15, xp: 13000,
+    rk: 19, ruestungstyp: "natürliche Rüstung",
+    tp: 207, tp_wuerfel: "18W12+90",
+    bewegung: { "Gehen": "12 m", "Fliegen": "24 m", "Schwimmen": "12 m" },
+    attribute: { STR: 23, DEX: 12, CON: 21, INT: 18, WIS: 15, CHA: 17 },
+    rettungswuerfe: { GES: 6, KON: 10, WEI: 7, CHA: 8 },
+    fertigkeiten: { "Heimlichkeit": 6, "Motiv erkennen": 7, "Täuschen": 8, "Überzeugen": 8, "Wahrnehmung": 12 },
+    schadensresistenzen: [], schadensimmunitaeten: ["Gift"], verwundbarkeiten: [], zustandsimmunitaeten: ["Vergiftet"],
+    sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"], passiveWahrnehmung: 22,
+    sprachen: ["Allgemein", "Drakonisch"],
+    umgebung: ["Wald"],
+    bild: "assets/images/monster/ausgewachsener_gruener_drache.png",
+    beschreibung: [
+      "Ausgewachsene Grüne Drachen haben ihren Wald über Jahrzehnte mit List und Einschüchterung unter Kontrolle gebracht. Ein beständiger Nebel mit dem beißenden Geruch ihres Giftatems hängt um ihre Behausung, und die Bäume wachsen zu einem labyrinthartigen Irrgarten zusammen."
+    ],
+    besonderheiten: [
+      { name: "Amphibisch", beschreibung: "Der Drache kann sowohl Luft als auch Wasser atmen." },
+      { name: "Legendäre Resistenz (3/Tag)", beschreibung: "Wenn der Drache einen Rettungswurf misslingt, kann er sich entscheiden, ihn stattdessen zu bestehen." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Drache kann seine Furchterregende Präsenz einsetzen. Danach führt er drei Angriffe aus: einen mit dem Biss und zwei mit den Klauen." },
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +11 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 17 (2W10+6) Stichschaden plus 7 (2W6) Giftschaden." },
+      { name: "Klauen", beschreibung: "Nahkampf-Waffenangriff: +11 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 13 (2W6+6) Hiebschaden." },
+      { name: "Schwanz", beschreibung: "Nahkampf-Waffenangriff: +11 zum Treffen, Reichweite 4,5 m, ein Ziel. Treffer: 15 (2W8+6) Wuchtschaden." },
+      { name: "Furchterregende Präsenz", beschreibung: "Jede Kreatur nach Wahl des Drachen, die sich innerhalb von 36 m von ihm befindet und sich seiner bewusst ist, muss einen Weisheitsrettungswurf gegen SG 16 schaffen, oder sie ist für 1 Minute verängstigt. Eine Kreatur kann den Rettungswurf am Ende jedes ihrer Züge wiederholen, um den Effekt bei Erfolg zu beenden. Wenn der Rettungswurf erfolgreich ist oder der Effekt endet, ist die Kreatur für die nächsten 24 Stunden immun gegen die Furchterregende Präsenz des Drachen." },
+      { name: "Giftodem (Aufladezeit 5–6)", beschreibung: "Der Drache atmet giftiges Gas in einem Kegel von 18 m Länge. Jede Kreatur im Kegel muss einen Konstitutionsrettungswurf gegen SG 18 ablegen. Bei einem misslingenden Rettungswurf erleidet sie 56 (16W6) Giftschaden, bei einem gelungenen nur die Hälfte." }
+    ],
+    bonusaktionen: [],
+    reaktionen: [],
+    legendaere_aktionen: [
+      { name: "Aufspüren", beschreibung: "Der Drache schafft einen Weisheit (Wahrnehmung) Wurf." },
+      { name: "Schwanzangriff", beschreibung: "Der Drache führt einen Schwanzangriff durch." },
+      { name: "Schwingenangriff (kostet 2 Aktionen)", beschreibung: "Der Drache schlägt mit seinen Schwingen. Jede Kreatur innerhalb von 3 m vom Drachen muss einen Geschicklichkeitsrettungswurf gegen SG 19 schaffen oder erleidet 13 (2W6+6) Wuchtschaden und wird zu Boden geworfen. Der Drache kann dann bis zu seiner halben Flugbewegungsrate fliegen." }
+    ],
+    hortaktionen: {
+      beschreibung: "Bei Initiative-Rang 20 (bei Gleichstand verliert er) kann der Drache eine der folgenden Hortaktionen nutzen; er kann dieselbe nicht zwei Runden in Folge nutzen:",
+      aktionen: [
+        "Schlingranken und Lianen wuchern in einem Radius von 6 m um einen Punkt auf dem Boden innerhalb von 36 m. Der Bereich wird schwieriges Gelände, und alle Kreaturen dort müssen einen Stärkerettungswurf gegen SG 15 ablegen, um nicht festgesetzt zu werden. Eine Kreatur kann befreit werden, wenn sie oder eine andere Kreatur eine Aktion aufwendet und einen Stärkewurf gegen SG 15 besteht. Die Ranken verdorren, wenn der Drache diese Hortaktion erneut nutzt oder stirbt.",
+        "Eine Mauer aus dornigem Gebüsch wächst auf einer festen Oberfläche innerhalb von 36 m. Die Mauer ist bis zu 18 m lang, 3 m hoch und 1,5 m dick und blockiert Sichtlinien. Kreaturen in ihrem Bereich beim Erscheinen müssen einen Geschicklichkeitsrettungswurf gegen SG 15 schaffen oder erleiden 18 (4W8) Stichschaden und werden 1,5 m aus dem Bereich geschoben. Bewegung durch die Mauer kostet 4-fache Distanz. Kontakt mit der Mauer: einmal pro Runde GES SG 15 oder 18 (4W8) Stichschaden (halb bei Erfolg). Jeder Mauerabschnitt von 3 m hat RK 5, 15 TP, Empfindlichkeit gegen Feuer, Resistenz gegen Wucht- und Stichschaden sowie Immunität gegen psychischen Schaden. Die Mauer sinkt zurück, wenn der Drache diese Hortaktion erneut nutzt oder stirbt.",
+        "Magischer Nebel wabert um eine Kreatur innerhalb von 36 m auf, die der Drache sehen kann. Die Kreatur muss einen Weisheitsrettungswurf gegen SG 15 ablegen, um nicht bis Initiative 20 der nächsten Runde vom grünen Drachen bezaubert zu werden."
+      ]
+    },
+    regionale_effekte: {
+      beschreibung: "Die Region rund um den Hort eines legendären grünen Drachen ist von der Magie des Drachen deformiert und schafft einen oder mehrere der folgenden Effekte:",
+      effekte: [
+        "Dickichte formen labyrinthartige Durchgänge im Umkreis von 1,5 km um die Behausung. Die Dickichte sind 3 m hohe, 3 m dicke Mauern, die Sichtlinien blockieren. Bewegung durch das Dickicht kostet 4-fache Distanz. Kontakt mit dem Dickicht: einmal pro Runde GES SG 15 oder 3 (1W6) Stichschaden. Jeder Würfel von 3 m Kantenlänge hat RK 5, 30 TP, Resistenz gegen Wucht- und Stichschaden, Empfindlichkeit gegen Feuer sowie Immunität gegen psychischen Schaden und Schallschaden.",
+        "Innerhalb von 1,5 km um die Behausung hinterlässt der Drache keine physischen Spuren seiner Anwesenheit, wenn er es nicht möchte. Seine Fährte ist nur mit magischen Mitteln verfolgbar. Außerdem ignoriert der Drache Bewegungseinschränkungen und Schaden durch Pflanzen in diesem Bereich, einschließlich der Dickichte.",
+        "Nagetiere und Vögel innerhalb von 1,5 km um die Behausung dienen als seine Augen und Ohren. Rehe und andere große Wildtiere sind seltsam abwesend, was auf ein unnatürlich hungriges Raubtier schließen lässt. Wenn der Drache stirbt, verlieren die Nagetiere und Vögel ihre übernatürliche Verbindung. Das Dickicht wird innerhalb von 1W10 Tagen zu gewöhnlichen Pflanzen."
+      ]
+    },
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Junger Grüner Drache",
+    art: "Drache",
+    unterart: "Chromatischer Drache",
+    groesse: "Groß",
+    gesinnung: "Rechtschaffen böse",
+    cr: 8, xp: 3900,
+    rk: 18, ruestungstyp: "natürliche Rüstung",
+    tp: 136, tp_wuerfel: "16W10+48",
+    bewegung: { "Gehen": "12 m", "Fliegen": "24 m", "Schwimmen": "12 m" },
+    attribute: { STR: 19, DEX: 12, CON: 17, INT: 16, WIS: 13, CHA: 15 },
+    rettungswuerfe: { GES: 4, KON: 6, WEI: 4, CHA: 5 },
+    fertigkeiten: { "Heimlichkeit": 4, "Täuschen": 4, "Wahrnehmung": 7 },
+    schadensresistenzen: [], schadensimmunitaeten: ["Gift"], verwundbarkeiten: [], zustandsimmunitaeten: ["Vergiftet"],
+    sinne: ["Blindsicht 9 m", "Dunkelsicht 36 m"], passiveWahrnehmung: 17,
+    sprachen: ["Allgemein", "Drakonisch"],
+    umgebung: ["Wald"],
+    bild: "assets/images/monster/junger_gruener_drache.png",
+    beschreibung: [
+      "Junge Grüne Drachen sind bereits erschreckend gerissen. Sie beobachten ihre Beute tagelang, bevor sie zuschlagen, und beginnen früh damit, schwächere Kreaturen zu manipulieren und als Informanten einzusetzen."
+    ],
+    besonderheiten: [
+      { name: "Amphibisch", beschreibung: "Der Drache kann sowohl Luft als auch Wasser atmen." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Drache führt drei Angriffe aus: einen mit dem Biss und zwei mit den Klauen." },
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +7 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 15 (2W10+4) Stichschaden plus 7 (2W6) Giftschaden." },
+      { name: "Klauen", beschreibung: "Nahkampf-Waffenangriff: +7 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 11 (2W6+4) Hiebschaden." },
+      { name: "Giftodem (Aufladezeit 5–6)", beschreibung: "Der Drache atmet giftiges Gas in einem Kegel von 9 m Länge. Jede Kreatur im Kegel muss einen Konstitutionsrettungswurf gegen SG 14 ablegen. Bei einem misslingenden Rettungswurf erleidet sie 42 (12W6) Giftschaden, bei einem gelungenen nur die Hälfte." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Grüner Drachennestling",
+    art: "Drache",
+    unterart: "Chromatischer Drache",
+    groesse: "Mittelgroß",
+    gesinnung: "Rechtschaffen böse",
+    cr: 2, xp: 450,
+    rk: 17, ruestungstyp: "natürliche Rüstung",
+    tp: 38, tp_wuerfel: "7W8+7",
+    bewegung: { "Gehen": "9 m", "Fliegen": "18 m", "Schwimmen": "9 m" },
+    attribute: { STR: 15, DEX: 12, CON: 13, INT: 14, WIS: 11, CHA: 13 },
+    rettungswuerfe: { GES: 3, KON: 3, WEI: 2, CHA: 3 },
+    fertigkeiten: { "Heimlichkeit": 3, "Wahrnehmung": 4 },
+    schadensresistenzen: [], schadensimmunitaeten: ["Gift"], verwundbarkeiten: [], zustandsimmunitaeten: ["Vergiftet"],
+    sinne: ["Blindsicht 3 m", "Dunkelsicht 18 m"], passiveWahrnehmung: 14,
+    sprachen: ["Drakonisch"],
+    umgebung: ["Wald"],
+    bild: "assets/images/monster/gruener_drachennestling.png",
+    beschreibung: [
+      "Grüne Drachennestlinge haben fast schwarze Schuppen, die sich mit zunehmendem Alter ins Grüne aufhellen. Auch als Nestling sind sie bereits hinterlistig und beobachten neugierig alles um sie herum."
+    ],
+    besonderheiten: [
+      { name: "Amphibisch", beschreibung: "Der Drache kann sowohl Luft als auch Wasser atmen." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 7 (1W10+2) Stichschaden plus 3 (1W6) Giftschaden." },
+      { name: "Giftodem (Aufladezeit 5–6)", beschreibung: "Der Drache atmet giftiges Gas in einem Kegel von 4,5 m Länge. Jede Kreatur im Kegel muss einen Konstitutionsrettungswurf gegen SG 11 ablegen. Bei einem misslingenden Rettungswurf erleidet sie 21 (6W6) Giftschaden, bei einem gelungenen nur die Hälfte." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
     name: "Hezrou",
     art: "Unhold",
     unterart: "Dämon",
@@ -922,7 +1488,8 @@ window.MONSTER_DATA = [
     ],
     besonderheiten: [
       { name: "Magieresistenz", beschreibung: "Der Hezrou hat einen Vorteil bei Rettungswürfen gegen Zauber und andere magische Effekte." },
-      { name: "Gestank", beschreibung: "Alle Kreaturen, die ihren Zug innerhalb von 6 m um den Hezrou beginnen, müssen einen Konstitutionsrettungswurf gegen SG 14 schaffen, um nicht bis zum Beginn ihres nächsten Zuges vergiftet zu werden. Bei einem erfolgreichen Rettungswurf ist die Kreatur für 24 Stunden immun gegen den Gestank des Hezrous." }
+      { name: "Gestank", beschreibung: "Alle Kreaturen, die ihren Zug innerhalb von 6 m um den Hezrou beginnen, müssen einen Konstitutionsrettungswurf gegen SG 14 schaffen, um nicht bis zum Beginn ihres nächsten Zuges vergiftet zu werden. Bei einem erfolgreichen Rettungswurf ist die Kreatur für 24 Stunden immun gegen den Gestank des Hezrous." },
+      { name: "Variante: Dämonenbeschwörung", beschreibung: "Beschwöre Dämon (1/Tag): Der Dämon entscheidet, was er beschwören will und führt eine magische Beschwörung durch. Ein Hezrou hat eine Chance von 30%, 2W6 Dretchs oder einen Hezrou zu beschwören. Ein beschworener Dämon erscheint in einem nicht besetzten Bereich innerhalb von 18 m um seinen Beschwörer, dient als Verbündeter des Beschwörers und kann selbst keine anderen Dämonen beschwören. Er bleibt für 1 Minute, bis sein Beschwörer getötet worden ist oder bis der Beschwörer ihn als Bonusaktion fortschickt." }
     ],
     aktionen: [
       { name: "Mehrfachangriff", beschreibung: "Der Hezrou führt drei Angriffe aus: einen mit seinem Biss und zwei mit seinen Klauen." },
@@ -992,7 +1559,8 @@ window.MONSTER_DATA = [
     besonderheiten: [
       { name: "Magieresistenz", beschreibung: "Die Marilith hat einen Vorteil bei Rettungswürfen gegen Zauber und andere magische Effekte." },
       { name: "Magische Waffen", beschreibung: "Die Waffenangriffe der Marilith sind magisch." },
-      { name: "Reaktiv", beschreibung: "Die Marilith kann in jedem Zug eines Kampfes eine Reaktion durchführen." }
+      { name: "Reaktiv", beschreibung: "Die Marilith kann in jedem Zug eines Kampfes eine Reaktion durchführen." },
+      { name: "Variante: Dämonenbeschwörung", beschreibung: "Beschwöre Dämon (1/Tag): Der Dämon entscheidet, was er beschwören will und führt eine magische Beschwörung durch. Eine Marilith hat eine Chance von 50%, 1W6 Vrocks, 1W4 Hezrous, 1W3 Glabrezus, 1W2 Nalfeshnees oder eine Marilith zu beschwören. Ein beschworener Dämon erscheint in einem nicht besetzten Bereich innerhalb von 18 m um seinen Beschwörer, dient als Verbündeter des Beschwörers und kann selbst keine anderen Dämonen beschwören. Er bleibt für 1 Minute, bis sein Beschwörer getötet worden ist oder bis der Beschwörer ihn als Bonusaktion fortschickt." }
     ],
     aktionen: [
       { name: "Mehrfachangriff", beschreibung: "Die Marilith führt sieben Angriffe aus: sechs mit ihren Langschwertern und einen mit ihrem Schwanz." },
@@ -1005,6 +1573,190 @@ window.MONSTER_DATA = [
       { name: "Parade", beschreibung: "Die Marilith addiert +5 auf ihre RK gegen einen Nahkampfangriff, der sie treffen würde. Dazu muss die Marilith den Angreifer sehen und eine Nahkampfwaffe führen." }
     ],
     legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Uralter Messingdrache",
+    art: "Drache",
+    unterart: "Metallischer Drache",
+    groesse: "Gigantisch",
+    gesinnung: "Chaotisch gut",
+    cr: 20, xp: 25000,
+    rk: 20, ruestungstyp: "natürliche Rüstung",
+    tp: 297, tp_wuerfel: "17W20+119",
+    bewegung: { "Gehen": "12 m", "Graben": "12 m", "Fliegen": "24 m" },
+    attribute: { STR: 27, DEX: 10, CON: 25, INT: 16, WIS: 15, CHA: 19 },
+    rettungswuerfe: { GES: 6, KON: 13, WEI: 8, CHA: 10 },
+    fertigkeiten: { "Geschichte": 9, "Heimlichkeit": 6, "Überzeugen": 10, "Wahrnehmung": 14 },
+    schadensresistenzen: [], schadensimmunitaeten: ["Feuer"], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"], passiveWahrnehmung: 24,
+    sprachen: ["Allgemein", "Drakonisch"],
+    umgebung: ["Wüste"],
+    bild: "assets/images/monster/uralter_messingdrache.png",
+    beschreibung: [
+      "Uralte Messingdrachen sind die geselligsten der wahren Drachen. Über Jahrhunderte haben sie tausende Gespräche geführt und nützliche Informationen gesammelt, die sie gerne im Austausch für Schätze teilen.",
+      "Dreist geschwätzig. Ein Messingdrache folgt jeder Kreatur, die seine Präsenz verlässt, ohne einen Plausch zu halten. Wenn die Kreatur versucht zu entkommen, verwendet der Drache sein Schlafgas, um sie kampfunfähig zu machen. Wenn sie erwacht, hält sie der Drache mit riesigen Klauen auf dem Boden fest oder begräbt sie bis zum Hals im Sand – und stillt dann seinen Gesprächshunger.",
+      "Wertvolle Schätze. Messingdrachen begehren besonders magische Gegenstände, die ihnen interessante Gespräche ermöglichen – eine telepathische Waffe oder eine Lampe mit einem gebundenen Djinn gehören zu den größten Schätzen. Ihren Hort verbergen sie unter Sandhaufen oder an geheimen, weit entfernten Orten."
+    ],
+    besonderheiten: [
+      { name: "Legendäre Resistenz (3/Tag)", beschreibung: "Wenn der Drache einen Rettungswurf misslingt, kann er sich entscheiden, ihn stattdessen zu bestehen." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Drache kann seine Furchterregende Präsenz einsetzen. Danach führt er drei Angriffe aus: einen mit dem Biss und zwei mit den Klauen." },
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +14 zum Treffen, Reichweite 4,5 m, ein Ziel. Treffer: 19 (2W10+8) Stichschaden." },
+      { name: "Klauen", beschreibung: "Nahkampf-Waffenangriff: +14 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 15 (2W6+8) Hiebschaden." },
+      { name: "Schwanz", beschreibung: "Nahkampf-Waffenangriff: +14 zum Treffen, Reichweite 6 m, ein Ziel. Treffer: 17 (2W8+8) Wuchtschaden." },
+      { name: "Furchterregende Präsenz", beschreibung: "Jede Kreatur nach Wahl des Drachen, die sich innerhalb von 36 m von ihm befindet und sich seiner bewusst ist, muss einen Weisheitsrettungswurf gegen SG 18 schaffen, oder sie ist für 1 Minute verängstigt. Eine Kreatur kann den Rettungswurf am Ende jedes ihrer Züge wiederholen, um den Effekt bei Erfolg zu beenden. Wenn der Rettungswurf erfolgreich ist oder der Effekt endet, ist die Kreatur für die nächsten 24 Stunden immun gegen die Furchterregende Präsenz des Drachen." },
+      { name: "Odemwaffen (Aufladezeit 5–6)", beschreibung: "Der Drache verwendet eine der folgenden Odemwaffen." },
+      { name: "Feuerodem", beschreibung: "Der Drache atmet Feuer in einer Linie von 27 m Länge und 3 m Breite. Jede Kreatur in der Linie muss einen Geschicklichkeitsrettungswurf gegen SG 21 ablegen. Bei einem misslingenden Rettungswurf erleidet sie 56 (16W6) Feuerschaden, bei einem gelungenen nur die Hälfte." },
+      { name: "Schlafodem", beschreibung: "Der Drache atmet Schlafgas in einem Kegel von 27 m Länge. Jede Kreatur in diesem Bereich muss einen Konstitutionsrettungswurf gegen SG 21 ablegen, um nicht für 10 Minuten bewusstlos zu werden. Dieser Effekt endet für eine Kreatur, wenn sie Schaden erleidet oder jemand eine Aktion aufwendet, um sie zu wecken." },
+      { name: "Formändern", beschreibung: "Der Drache verwandelt sich auf magische Weise in einen Humanoiden oder ein Tier, dessen Herausforderungsgrad nicht höher als sein eigener ist, oder nimmt wieder seine wahre Gestalt an. Er nimmt wieder seine wahre Gestalt an, wenn er stirbt. In einer neuen Gestalt behält der Drache seine Gesinnung, Trefferpunkte, Trefferwürfel, Sprachfähigkeit, Übungsbonus, Legendäre Resistenz, Hortaktionen sowie seine Intelligenz, Weisheit und Charisma, und diese Aktion. Seine Spielwerte und Fähigkeiten werden ansonsten durch die der neuen Gestalt ersetzt, mit Ausnahme der Klassenmerkmale oder legendären Aktionen dieser Gestalt." }
+    ],
+    bonusaktionen: [],
+    reaktionen: [],
+    legendaere_aktionen: [
+      { name: "Aufspüren", beschreibung: "Der Drache schafft einen Weisheit (Wahrnehmung) Wurf." },
+      { name: "Schwanzangriff", beschreibung: "Der Drache führt einen Schwanzangriff durch." },
+      { name: "Schwingenangriff (kostet 2 Aktionen)", beschreibung: "Der Drache schlägt mit seinen Schwingen. Jede Kreatur innerhalb von 4,5 m vom Drachen muss einen Geschicklichkeitsrettungswurf gegen SG 22 schaffen oder erleidet 15 (2W6+8) Wuchtschaden und wird zu Boden geworfen. Der Drache kann dann bis zu seiner halben Flugbewegungsrate fliegen." }
+    ],
+    hortaktionen: {
+      beschreibung: "Bei Initiative-Rang 20 (bei Gleichstand verliert er) kann der Drache eine der folgenden Hortaktionen nutzen; er kann dieselbe nicht zwei Runden in Folge nutzen:",
+      aktionen: [
+        "Ein starker Wind weht um den Drachen herum. Alle Kreaturen im Umkreis von 18 m müssen einen Stärkerettungswurf gegen SG 15 schaffen, um nicht 4,5 m vom Drachen weggeschoben zu werden und liegend zu landen. Gase und Dämpfe werden zerstreut, ungeschützte Flammen erlöschen. Geschützte Flammen (wie Laternen) haben eine 50%ige Chance zu erlöschen.",
+        "Eine Sandwolke füllt eine Sphäre mit einem Radius von 6 m um einen Punkt innerhalb von 36 m um den Drachen, den er sehen kann. Die Wolke breitet sich um Ecken aus. Alle Kreaturen im Bereich müssen einen Konstitutionsrettungswurf gegen SG 15 ablegen, um nicht für 1 Minute blind zu werden. Die Kreatur kann den Rettungswurf am Ende jedes ihrer Züge wiederholen und den Effekt bei einem Erfolg beenden."
+      ]
+    },
+    regionale_effekte: {
+      beschreibung: "Die Region rund um den Hort eines legendären Messingdrachens ist von der Magie des Drachen deformiert und schafft einen oder mehrere der folgenden Effekte:",
+      effekte: [
+        "Fährten erscheinen innerhalb von 9 km um die Behausung im Sand. Sie führen immer zu sicheren Zufluchten oder verborgenen Wasserquellen, leiten aber auch von Orten weg, die der Drache ungestört lassen möchte.",
+        "Trugbilder von Monstern suchen die Wüste im Umkreis von 1,5 km um die Behausung heim. Diese Illusionen bewegen sich und wirken real, können aber keinen Schaden zufügen. Eine Kreatur kann ein Trugbild mit einem Intelligenz (Nachforschung) Wurf gegen SG 20 als Illusion erkennen. Körperliche Berührung entlarvt es sofort.",
+        "Wenn eine Kreatur mit Intelligenz 3 oder höher sich innerhalb von 9 m um eine Wasserquelle innerhalb von 1,5 km um die Behausung bewegt, wird der Drache ihrer Anwesenheit und Position gewahr. Wenn der Drache stirbt, schwinden die Fährten innerhalb von 1W10 Tagen; die anderen Effekte schwinden sofort."
+      ]
+    },
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Ausgewachsener Messingdrache",
+    art: "Drache",
+    unterart: "Metallischer Drache",
+    groesse: "Riesig",
+    gesinnung: "Chaotisch gut",
+    cr: 13, xp: 10000,
+    rk: 18, ruestungstyp: "natürliche Rüstung",
+    tp: 172, tp_wuerfel: "15W12+75",
+    bewegung: { "Gehen": "12 m", "Graben": "9 m", "Fliegen": "24 m" },
+    attribute: { STR: 23, DEX: 10, CON: 21, INT: 14, WIS: 13, CHA: 17 },
+    rettungswuerfe: { GES: 5, KON: 10, WEI: 6, CHA: 8 },
+    fertigkeiten: { "Geschichte": 7, "Heimlichkeit": 5, "Überzeugen": 8, "Wahrnehmung": 11 },
+    schadensresistenzen: [], schadensimmunitaeten: ["Feuer"], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"], passiveWahrnehmung: 21,
+    sprachen: ["Allgemein", "Drakonisch"],
+    umgebung: ["Wüste"],
+    bild: "assets/images/monster/ausgewachsener_messingdrache.png",
+    beschreibung: [
+      "Ausgewachsene Messingdrachen haben Jahrzehnte damit verbracht, in menschlicher Gestalt durch Städte zu wandern und Gespräche zu sammeln. Sie vertrauen Kreaturen, die ebenso gerne reden wie sie, sind aber schlau genug, Manipulation zu erkennen – und betrachten gegenseitige Beeinflussungsversuche als Spiel."
+    ],
+    besonderheiten: [
+      { name: "Legendäre Resistenz (3/Tag)", beschreibung: "Wenn der Drache einen Rettungswurf misslingt, kann er sich entscheiden, ihn stattdessen zu bestehen." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Drache kann seine Furchterregende Präsenz einsetzen. Danach führt er drei Angriffe aus: einen mit dem Biss und zwei mit den Klauen." },
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +11 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 17 (2W10+6) Stichschaden." },
+      { name: "Klauen", beschreibung: "Nahkampf-Waffenangriff: +11 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 13 (2W6+6) Hiebschaden." },
+      { name: "Schwanz", beschreibung: "Nahkampf-Waffenangriff: +11 zum Treffen, Reichweite 4,5 m, ein Ziel. Treffer: 15 (2W8+6) Wuchtschaden." },
+      { name: "Furchterregende Präsenz", beschreibung: "Jede Kreatur nach Wahl des Drachen, die sich innerhalb von 36 m von ihm befindet und sich seiner bewusst ist, muss einen Weisheitsrettungswurf gegen SG 16 schaffen, oder sie ist für 1 Minute verängstigt. Eine Kreatur kann den Rettungswurf am Ende jedes ihrer Züge wiederholen, um den Effekt bei Erfolg zu beenden. Wenn der Rettungswurf erfolgreich ist oder der Effekt endet, ist die Kreatur für die nächsten 24 Stunden immun gegen die Furchterregende Präsenz des Drachen." },
+      { name: "Odemwaffen (Aufladezeit 5–6)", beschreibung: "Der Drache verwendet eine der folgenden Odemwaffen." },
+      { name: "Feuerodem", beschreibung: "Der Drache atmet Feuer in einer Linie von 18 m Länge und 1,5 m Breite. Jede Kreatur in der Linie muss einen Geschicklichkeitsrettungswurf gegen SG 18 ablegen. Bei einem misslingenden Rettungswurf erleidet sie 45 (13W6) Feuerschaden, bei einem gelungenen nur die Hälfte." },
+      { name: "Schlafodem", beschreibung: "Der Drache atmet Schlafgas in einem Kegel von 18 m Länge. Jede Kreatur in diesem Bereich muss einen Konstitutionsrettungswurf gegen SG 18 ablegen, um nicht für 10 Minuten bewusstlos zu werden. Dieser Effekt endet für eine Kreatur, wenn sie Schaden erleidet oder jemand eine Aktion aufwendet, um sie zu wecken." },
+      { name: "Formändern", beschreibung: "Der Drache verwandelt sich auf magische Weise in einen Humanoiden oder ein Tier, dessen Herausforderungsgrad nicht höher als sein eigener ist, oder nimmt wieder seine wahre Gestalt an. Er nimmt wieder seine wahre Gestalt an, wenn er stirbt. In einer neuen Gestalt behält der Drache seine Gesinnung, Trefferpunkte, Trefferwürfel, Sprachfähigkeit, Übungsbonus, Legendäre Resistenz, Hortaktionen sowie seine Intelligenz, Weisheit und Charisma, und diese Aktion. Seine Spielwerte und Fähigkeiten werden ansonsten durch die der neuen Gestalt ersetzt, mit Ausnahme der Klassenmerkmale oder legendären Aktionen dieser Gestalt." }
+    ],
+    bonusaktionen: [],
+    reaktionen: [],
+    legendaere_aktionen: [
+      { name: "Aufspüren", beschreibung: "Der Drache schafft einen Weisheit (Wahrnehmung) Wurf." },
+      { name: "Schwanzangriff", beschreibung: "Der Drache führt einen Schwanzangriff durch." },
+      { name: "Schwingenangriff (kostet 2 Aktionen)", beschreibung: "Der Drache schlägt mit seinen Schwingen. Jede Kreatur innerhalb von 3 m vom Drachen muss einen Geschicklichkeitsrettungswurf gegen SG 19 schaffen oder erleidet 13 (2W6+6) Wuchtschaden und wird zu Boden geworfen. Der Drache kann dann bis zu seiner halben Flugbewegungsrate fliegen." }
+    ],
+    hortaktionen: {
+      beschreibung: "Bei Initiative-Rang 20 (bei Gleichstand verliert er) kann der Drache eine der folgenden Hortaktionen nutzen; er kann dieselbe nicht zwei Runden in Folge nutzen:",
+      aktionen: [
+        "Ein starker Wind weht um den Drachen herum. Alle Kreaturen im Umkreis von 18 m müssen einen Stärkerettungswurf gegen SG 15 schaffen, um nicht 4,5 m vom Drachen weggeschoben zu werden und liegend zu landen. Gase und Dämpfe werden zerstreut, ungeschützte Flammen erlöschen. Geschützte Flammen (wie Laternen) haben eine 50%ige Chance zu erlöschen.",
+        "Eine Sandwolke füllt eine Sphäre mit einem Radius von 6 m um einen Punkt innerhalb von 36 m um den Drachen, den er sehen kann. Die Wolke breitet sich um Ecken aus. Alle Kreaturen im Bereich müssen einen Konstitutionsrettungswurf gegen SG 15 ablegen, um nicht für 1 Minute blind zu werden. Die Kreatur kann den Rettungswurf am Ende jedes ihrer Züge wiederholen und den Effekt bei einem Erfolg beenden."
+      ]
+    },
+    regionale_effekte: {
+      beschreibung: "Die Region rund um den Hort eines legendären Messingdrachens ist von der Magie des Drachen deformiert und schafft einen oder mehrere der folgenden Effekte:",
+      effekte: [
+        "Fährten erscheinen innerhalb von 9 km um die Behausung im Sand. Sie führen immer zu sicheren Zufluchten oder verborgenen Wasserquellen, leiten aber auch von Orten weg, die der Drache ungestört lassen möchte.",
+        "Trugbilder von Monstern suchen die Wüste im Umkreis von 1,5 km um die Behausung heim. Diese Illusionen bewegen sich und wirken real, können aber keinen Schaden zufügen. Eine Kreatur kann ein Trugbild mit einem Intelligenz (Nachforschung) Wurf gegen SG 20 als Illusion erkennen. Körperliche Berührung entlarvt es sofort.",
+        "Wenn eine Kreatur mit Intelligenz 3 oder höher sich innerhalb von 9 m um eine Wasserquelle innerhalb von 1,5 km um die Behausung bewegt, wird der Drache ihrer Anwesenheit und Position gewahr. Wenn der Drache stirbt, schwinden die Fährten innerhalb von 1W10 Tagen; die anderen Effekte schwinden sofort."
+      ]
+    },
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Junger Messingdrache",
+    art: "Drache",
+    unterart: "Metallischer Drache",
+    groesse: "Groß",
+    gesinnung: "Chaotisch gut",
+    cr: 6, xp: 2300,
+    rk: 17, ruestungstyp: "natürliche Rüstung",
+    tp: 110, tp_wuerfel: "13W10+39",
+    bewegung: { "Gehen": "12 m", "Graben": "6 m", "Fliegen": "24 m" },
+    attribute: { STR: 19, DEX: 10, CON: 17, INT: 12, WIS: 11, CHA: 15 },
+    rettungswuerfe: { GES: 3, KON: 6, WEI: 3, CHA: 5 },
+    fertigkeiten: { "Heimlichkeit": 3, "Überzeugen": 5, "Wahrnehmung": 6 },
+    schadensresistenzen: [], schadensimmunitaeten: ["Feuer"], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 9 m", "Dunkelsicht 36 m"], passiveWahrnehmung: 16,
+    sprachen: ["Allgemein", "Drakonisch"],
+    umgebung: ["Wüste"],
+    bild: "assets/images/monster/junger_messingdrache.png",
+    beschreibung: [
+      "Junge Messingdrachen sind bereits gesprächsfreudig und sammeln eifrig Neuigkeiten von Reisenden. Sie folgen Karawanen oft über weite Strecken, nur um interessante Geschichten zu hören."
+    ],
+    besonderheiten: [],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Drache führt drei Angriffe aus: einen mit dem Biss und zwei mit den Klauen." },
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +7 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 15 (2W10+4) Stichschaden." },
+      { name: "Klauen", beschreibung: "Nahkampf-Waffenangriff: +7 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 11 (2W6+4) Hiebschaden." },
+      { name: "Odemwaffen (Aufladezeit 5–6)", beschreibung: "Der Drache verwendet eine der folgenden Odemwaffen." },
+      { name: "Feuerodem", beschreibung: "Der Drache atmet Feuer in einer Linie von 12 m Länge und 1,5 m Breite. Jede Kreatur in der Linie muss einen Geschicklichkeitsrettungswurf gegen SG 14 ablegen. Bei einem misslingenden Rettungswurf erleidet sie 42 (12W6) Feuerschaden, bei einem gelungenen nur die Hälfte." },
+      { name: "Schlafodem", beschreibung: "Der Drache atmet Schlafgas in einem Kegel von 9 m Länge. Jede Kreatur in diesem Bereich muss einen Konstitutionsrettungswurf gegen SG 14 ablegen, um nicht für 5 Minuten bewusstlos zu werden. Dieser Effekt endet für eine Kreatur, wenn sie Schaden erleidet oder jemand eine Aktion aufwendet, um sie zu wecken." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Messingdrachennestling",
+    art: "Drache",
+    unterart: "Metallischer Drache",
+    groesse: "Mittel",
+    gesinnung: "Chaotisch gut",
+    cr: 1, xp: 200,
+    rk: 16, ruestungstyp: "natürliche Rüstung",
+    tp: 16, tp_wuerfel: "3W8+3",
+    bewegung: { "Gehen": "9 m", "Graben": "4,5 m", "Fliegen": "18 m" },
+    attribute: { STR: 15, DEX: 10, CON: 13, INT: 10, WIS: 11, CHA: 13 },
+    rettungswuerfe: { GES: 2, KON: 3, WEI: 2, CHA: 3 },
+    fertigkeiten: { "Heimlichkeit": 2, "Wahrnehmung": 4 },
+    schadensresistenzen: [], schadensimmunitaeten: ["Feuer"], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 3 m", "Dunkelsicht 18 m"], passiveWahrnehmung: 14,
+    sprachen: ["Drakonisch"],
+    umgebung: ["Wüste"],
+    bild: "assets/images/monster/messingdrachennestling.png",
+    beschreibung: [
+      "Messingdrachennestlinge sind bereits von Natur aus neugierig und geschwätzig, auch wenn sie die Weisheit älterer Artgenossen noch nicht besitzen."
+    ],
+    besonderheiten: [],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 7 (1W10+2) Stichschaden." },
+      { name: "Odemwaffen (Aufladezeit 5–6)", beschreibung: "Der Drache verwendet eine der folgenden Odemwaffen." },
+      { name: "Feuerodem", beschreibung: "Der Drache atmet Feuer in einer Linie von 6 m Länge und 1,5 m Breite. Jede Kreatur in der Linie muss einen Geschicklichkeitsrettungswurf gegen SG 11 ablegen. Bei einem misslingenden Rettungswurf erleidet sie 14 (4W6) Feuerschaden, bei einem gelungenen nur die Hälfte." },
+      { name: "Schlafodem", beschreibung: "Der Drache atmet Schlafgas in einem Kegel von 4,5 m Länge. Jede Kreatur in diesem Bereich muss einen Konstitutionsrettungswurf gegen SG 11 ablegen, um nicht für 1 Minute bewusstlos zu werden. Dieser Effekt endet für eine Kreatur, wenn sie Schaden erleidet oder jemand eine Aktion aufwendet, um sie zu wecken." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
     source: "Monsterhandbuch"
   },
   {
@@ -1034,7 +1786,8 @@ window.MONSTER_DATA = [
       "Nalfeshnees ernähren sich von Hass und Verzweiflung, doch sehnen sie sich mehr als alles andere nach dem Fleisch von Humanoiden. Ihre Speisekammern sind stets voll mit entführten Humanoiden von der Materiellen Ebene. Diese Kreaturen werden während raffinierter Festmähler lebendig gefressen. Nalfeshnees halten sich selbst für gebildet und kultiviert und nutzen besudeltes und rostiges Besteck, wenn sie speisen."
     ],
     besonderheiten: [
-      { name: "Magieresistenz", beschreibung: "Der Nalfeshnee hat einen Vorteil bei Rettungswürfen gegen Zauber und andere magische Effekte." }
+      { name: "Magieresistenz", beschreibung: "Der Nalfeshnee hat einen Vorteil bei Rettungswürfen gegen Zauber und andere magische Effekte." },
+      { name: "Variante: Dämonenbeschwörung", beschreibung: "Beschwöre Dämon (1/Tag): Der Dämon entscheidet, was er beschwören will und führt eine magische Beschwörung durch. Ein Nalfeshnee hat eine Chance von 50%, 1W4 Vrocks, 1W3 Hezrous, 1W2 Glabrezus oder einen Nalfeshnee zu beschwören. Ein beschworener Dämon erscheint in einem nicht besetzten Bereich innerhalb von 18 m um seinen Beschwörer, dient als Verbündeter des Beschwörers und kann selbst keine anderen Dämonen beschwören. Er bleibt für 1 Minute, bis sein Beschwörer getötet worden ist oder bis der Beschwörer ihn als Bonusaktion fortschickt." }
     ],
     aktionen: [
       { name: "Mehrfachangriff", beschreibung: "Der Nalfeshnee verwendet Grauensnimbus, wenn er kann. Danach führt er drei Angriffe aus: einen mit seinem Biss und zwei mit seinen Klauen." },
@@ -1042,6 +1795,66 @@ window.MONSTER_DATA = [
       { name: "Klauen", beschreibung: "Nahkampf-Waffenangriff: +10 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 15 (3W6+5) Hiebschaden." },
       { name: "Grauensnimbus (Aufladung 5–6)", beschreibung: "Der Nalfeshnee gibt auf magische Weise ein flimmerndes, vielfarbiges Licht ab. Alle nicht untoten Kreaturen innerhalb von 4,5 m um den Nalfeshnee, die ihn sehen können, müssen einen Weisheitsrettungswurf gegen SG 15 schaffen, um nicht für 1 Minute verängstigt zu werden. Die Kreatur kann den Rettungswurf am Ende eines jeden ihrer Züge wiederholen und den Effekt bei einem Erfolg beenden. Wenn der Rettungswurf erfolgreich ist oder der Effekt endet, dann ist die Kreatur für die nächsten 24 Stunden gegen den Grauensnimbus des Nalfeshnee immun." },
       { name: "Teleportieren", beschreibung: "Der Nalfeshnee teleportiert sich magisch zusammen mit der Ausrüstung, die er trägt oder in der Hand hält, bis zu 36 m in einen nicht besetzten Bereich, den er sehen kann." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Plesiosaurus",
+    art: "Tier",
+    unterart: "Dinosaurier",
+    groesse: "Groß",
+    gesinnung: "Gesinnungslos",
+    cr: 2, xp: 450,
+    rk: 13, ruestungstyp: "natürliche Rüstung",
+    tp: 68, tp_wuerfel: "8W10+24",
+    bewegung: { "Gehen": "6 m", "Schwimmen": "12 m" },
+    attribute: { STR: 18, DEX: 15, CON: 16, INT: 2, WIS: 12, CHA: 5 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Heimlichkeit": 4, "Wahrnehmung": 3 },
+    schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: [], passiveWahrnehmung: 13,
+    sprachen: [],
+    umgebung: ["Küste", "Sumpf", "Tropisch"],
+    bild: "assets/images/monster/plesiosaurus.png",
+    beschreibung: [
+      "Ein Plesiosaurus ist ein Wasserdinosaurier, dessen kompakter Körper von mächtigen Flossen bewegt wird. Sie sind aggressive Räuber und greifen jede Kreatur an, auf die sie treffen. Ihr flexibler Hals macht ein Drittel ihrer Gesamtlänge aus, sodass sie sich in jede Richtung drehen können, um kräftig zuzubeißen."
+    ],
+    besonderheiten: [
+      { name: "Atem anhalten", beschreibung: "Der Plesiosaurus kann für 1 Stunde den Atem anhalten." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 14 (3W6+4) Stichschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Pteranodon",
+    art: "Tier",
+    unterart: "Dinosaurier",
+    groesse: "Mittelgroß",
+    gesinnung: "Gesinnungslos",
+    cr: 0.25, xp: 50,
+    rk: 13, ruestungstyp: "natürliche Rüstung",
+    tp: 13, tp_wuerfel: "3W8",
+    bewegung: { "Gehen": "3 m", "Fliegen": "18 m" },
+    attribute: { STR: 12, DEX: 15, CON: 10, INT: 2, WIS: 9, CHA: 5 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Wahrnehmung": 1 },
+    schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: [], passiveWahrnehmung: 11,
+    sprachen: [],
+    umgebung: ["Küste", "Tropisch", "Gebirge"],
+    bild: "assets/images/monster/pteranodon.png",
+    beschreibung: [
+      "Diese fliegenden Reptilien haben eine Flügelspannweite von 4,5 bis 6 m und machen normalerweise Sturzflugangriffe auf kleinere Beute, doch sind sie Opportunisten, die jede Kreatur angreifen, die essbar erscheint. Ein Pteranodon hat keine Zähne. Vielmehr nutzt er seinen scharfen Schnabel, um Beute aufzuspießen, die zu groß ist, um sie auf einmal zu verschlucken."
+    ],
+    besonderheiten: [
+      { name: "Vorbeifliegen", beschreibung: "Das Pteranodon provoziert keine Gelegenheitsangriffe, wenn es aus der Reichweite eines Gegners fliegt." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +3 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 6 (2W4+1) Stichschaden." }
     ],
     bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
     source: "Monsterhandbuch"
@@ -1085,6 +1898,183 @@ window.MONSTER_DATA = [
     source: "Monsterhandbuch"
   },
   {
+    name: "Uralter Roter Drache",
+    art: "Drache",
+    unterart: "Chromatischer Drache",
+    groesse: "Gigantisch",
+    gesinnung: "Chaotisch böse",
+    cr: 24, xp: 62000,
+    rk: 22, ruestungstyp: "natürliche Rüstung",
+    tp: 546, tp_wuerfel: "28W20+252",
+    bewegung: { "Gehen": "12 m", "Klettern": "12 m", "Fliegen": "24 m" },
+    attribute: { STR: 30, DEX: 10, CON: 29, INT: 18, WIS: 15, CHA: 23 },
+    rettungswuerfe: { GES: 7, KON: 16, WEI: 9, CHA: 13 },
+    fertigkeiten: { "Heimlichkeit": 7, "Wahrnehmung": 16 },
+    schadensresistenzen: [], schadensimmunitaeten: ["Feuer"], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"], passiveWahrnehmung: 26,
+    sprachen: ["Allgemein", "Drakonisch"],
+    umgebung: ["Gebirge"],
+    bild: "assets/images/monster/uralter_roter_drache.png",
+    beschreibung: [
+      "Uralte Rote Drachen sind die habgierigsten und arrogantesten der wahren Drachen. Der Gestank von Schwefel und Bimsstein umgibt sie, ihre Umrisse werden von nach hinten zeigenden Hörnern und einem charakteristischen Rückenkamm definiert. Ihre Schuppen sind im Alter dunkelrot und so dick wie Metall geworden, ihre Pupillen fast verschwunden – die ältesten haben Augen wie geschmolzene Lavakugeln.",
+      "Arrogante Tyrannen. Rote Drachen betrachten sich als Könige und Kaiser. Kein anderer Drache kommt an ihre Arroganz heran – sie glauben, von Tiamat auserkoren zu sein, in ihrem Namen zu herrschen, und sehen die gesamte Welt und alle Kreaturen auf ihr als ihre Untertanen. Wenn sie gereizt werden, verfallen sie in einen zerstörerischen Zorn.",
+      "Status und Sklaven. Rote Drachen fordern Lehnstreue von chaotisch bösen Humanoiden. Wer sie verweigert, wird abgeschlachtet. Ihre Diener leben in ständiger Angst, geröstet zu werden, und verbringen den Großteil ihrer Zeit damit, sich beim Drachen einzuschmeicheln.",
+      "Zwanghafte Sammler. Rote Drachen kennen den Wert und die genaue Position jedes Gegenstands in ihrem Hort. Das Fehlen einer einzigen Münze erweckt ihren Zorn und treibt sie dazu, den Dieb aufzuspüren und ohne Gnade zu erschlagen."
+    ],
+    besonderheiten: [
+      { name: "Legendäre Resistenz (3/Tag)", beschreibung: "Wenn der Drache einen Rettungswurf misslingt, kann er sich entscheiden, ihn stattdessen zu bestehen." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Drache kann seine Furchterregende Präsenz einsetzen. Danach führt er drei Angriffe aus: einen mit dem Biss und zwei mit den Klauen." },
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +17 zum Treffen, Reichweite 4,5 m, ein Ziel. Treffer: 21 (2W10+10) Stichschaden plus 14 (4W6) Feuerschaden." },
+      { name: "Klauen", beschreibung: "Nahkampf-Waffenangriff: +17 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 17 (2W6+10) Hiebschaden." },
+      { name: "Schwanz", beschreibung: "Nahkampf-Waffenangriff: +17 zum Treffen, Reichweite 6 m, ein Ziel. Treffer: 19 (2W8+10) Wuchtschaden." },
+      { name: "Furchterregende Präsenz", beschreibung: "Jede Kreatur nach Wahl des Drachen, die sich innerhalb von 36 m von ihm befindet und sich seiner bewusst ist, muss einen Weisheitsrettungswurf gegen SG 21 schaffen, oder sie ist für 1 Minute verängstigt. Eine Kreatur kann den Rettungswurf am Ende jedes ihrer Züge wiederholen, um den Effekt bei Erfolg zu beenden. Wenn der Rettungswurf erfolgreich ist oder der Effekt endet, ist die Kreatur für die nächsten 24 Stunden immun gegen die Furchterregende Präsenz des Drachen." },
+      { name: "Feuerodem (Aufladezeit 5–6)", beschreibung: "Der Drache atmet Feuer in einem Kegel von 27 m Länge. Jede Kreatur im Kegel muss einen Geschicklichkeitsrettungswurf gegen SG 24 ablegen. Bei einem misslingenden Rettungswurf erleidet sie 91 (26W6) Feuerschaden, bei einem gelungenen nur die Hälfte." }
+    ],
+    bonusaktionen: [],
+    reaktionen: [],
+    legendaere_aktionen: [
+      { name: "Aufspüren", beschreibung: "Der Drache schafft einen Weisheit (Wahrnehmung) Wurf." },
+      { name: "Schwanzangriff", beschreibung: "Der Drache führt einen Schwanzangriff durch." },
+      { name: "Schwingenangriff (kostet 2 Aktionen)", beschreibung: "Der Drache schlägt mit seinen Schwingen. Jede Kreatur innerhalb von 4,5 m vom Drachen muss einen Geschicklichkeitsrettungswurf gegen SG 25 schaffen oder erleidet 17 (2W6+10) Wuchtschaden und wird zu Boden geworfen. Der Drache kann dann bis zu seiner halben Flugbewegungsrate fliegen." }
+    ],
+    hortaktionen: {
+      beschreibung: "Bei Initiative-Rang 20 (bei Gleichstand verliert er) kann der Drache eine der folgenden Hortaktionen nutzen; er kann dieselbe nicht zwei Runden in Folge nutzen:",
+      aktionen: [
+        "Magma bricht aus einem Punkt auf dem Boden innerhalb von 36 m auf, den der Drache sehen kann, und erschafft einen Geysir von 6 m Höhe und 1,5 m Radius. Alle Kreaturen im Bereich des Geysirs müssen einen Geschicklichkeitsrettungswurf gegen SG 15 ablegen. Bei einem misslingenden Rettungswurf erleiden sie 21 (6W6) Feuerschaden, bei einem gelungenen nur die Hälfte.",
+        "Ein Beben erschüttert den Boden in einem Radius von 18 m um den Drachen. Alle Kreaturen außer dem Drachen, die sich auf dem Boden befinden, müssen einen Geschicklichkeitsrettungswurf gegen SG 15 ablegen, um nicht den Zustand liegend zu erleiden.",
+        "Vulkanische Gase bilden eine Wolke in einer Sphäre mit einem Radius von 6 m um einen Punkt innerhalb von 36 m um den Drachen, den er sehen kann. Die Sphäre breitet sich um Ecken aus und ist leicht verschleiert. Sie hält bis Initiative 20 der nächsten Runde an. Alle Kreaturen, die ihren Zug in der Wolke beginnen, müssen einen Konstitutionsrettungswurf gegen SG 13 schaffen, um nicht bis zum Ende ihres nächsten Zuges vergiftet zu werden. Eine vergiftete Kreatur ist kampfunfähig."
+      ]
+    },
+    regionale_effekte: {
+      beschreibung: "Die Region rund um den Hort eines legendären roten Drachen ist von der Magie des Drachen deformiert und schafft einen oder mehrere der folgenden Effekte:",
+      effekte: [
+        "Kleinere Erdbeben sind im Umkreis von 9 km um die Behausung des Drachen verbreitet.",
+        "Wasserquellen innerhalb von 1,5 km um die Behausung sind übernatürlich warm und mit Schwefel verseucht.",
+        "Steinspalten innerhalb von 1,5 km um die Behausung stellen Portale auf die Elementarebene des Feuers dar, was es Feuerkreaturen erlaubt, in die Welt zu treten und in der Nähe zu hausen. Wenn der Drache stirbt, schwinden diese Effekte innerhalb von 1W10 Tagen."
+      ]
+    },
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Ausgewachsener Roter Drache",
+    art: "Drache",
+    unterart: "Chromatischer Drache",
+    groesse: "Riesig",
+    gesinnung: "Chaotisch böse",
+    cr: 17, xp: 18000,
+    rk: 19, ruestungstyp: "natürliche Rüstung",
+    tp: 256, tp_wuerfel: "19W12+133",
+    bewegung: { "Gehen": "12 m", "Klettern": "12 m", "Fliegen": "24 m" },
+    attribute: { STR: 27, DEX: 10, CON: 25, INT: 16, WIS: 13, CHA: 21 },
+    rettungswuerfe: { GES: 6, KON: 13, WEI: 7, CHA: 11 },
+    fertigkeiten: { "Heimlichkeit": 6, "Wahrnehmung": 13 },
+    schadensresistenzen: [], schadensimmunitaeten: ["Feuer"], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"], passiveWahrnehmung: 23,
+    sprachen: ["Allgemein", "Drakonisch"],
+    umgebung: ["Gebirge"],
+    bild: "assets/images/monster/ausgewachsener_roter_drache.png",
+    beschreibung: [
+      "Ausgewachsene Rote Drachen haben sich ihr Bergreich durch Jahrzehnte der Gewalt und Einschüchterung gesichert. Sie hausen bevorzugt in Kavernen unter schneebedeckten Gipfeln oder in verlassenen Minen und zwergischen Festungen mit geothermaler Aktivität."
+    ],
+    besonderheiten: [
+      { name: "Legendäre Resistenz (3/Tag)", beschreibung: "Wenn der Drache einen Rettungswurf misslingt, kann er sich entscheiden, ihn stattdessen zu bestehen." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Drache kann seine Furchterregende Präsenz einsetzen. Danach führt er drei Angriffe aus: einen mit dem Biss und zwei mit den Klauen." },
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +14 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 19 (2W10+8) Stichschaden plus 7 (2W6) Feuerschaden." },
+      { name: "Klauen", beschreibung: "Nahkampf-Waffenangriff: +14 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 15 (2W6+8) Hiebschaden." },
+      { name: "Schwanz", beschreibung: "Nahkampf-Waffenangriff: +14 zum Treffen, Reichweite 4,5 m, ein Ziel. Treffer: 17 (2W8+8) Wuchtschaden." },
+      { name: "Furchterregende Präsenz", beschreibung: "Jede Kreatur nach Wahl des Drachen, die sich innerhalb von 36 m von ihm befindet und sich seiner bewusst ist, muss einen Weisheitsrettungswurf gegen SG 19 schaffen, oder sie ist für 1 Minute verängstigt. Eine Kreatur kann den Rettungswurf am Ende jedes ihrer Züge wiederholen, um den Effekt bei Erfolg zu beenden. Wenn der Rettungswurf erfolgreich ist oder der Effekt endet, ist die Kreatur für die nächsten 24 Stunden immun gegen die Furchterregende Präsenz des Drachen." },
+      { name: "Feuerodem (Aufladezeit 5–6)", beschreibung: "Der Drache atmet Feuer in einem Kegel von 18 m Länge. Jede Kreatur im Kegel muss einen Geschicklichkeitsrettungswurf gegen SG 21 ablegen. Bei einem misslingenden Rettungswurf erleidet sie 63 (18W6) Feuerschaden, bei einem gelungenen nur die Hälfte." }
+    ],
+    bonusaktionen: [],
+    reaktionen: [],
+    legendaere_aktionen: [
+      { name: "Aufspüren", beschreibung: "Der Drache schafft einen Weisheit (Wahrnehmung) Wurf." },
+      { name: "Schwanzangriff", beschreibung: "Der Drache führt einen Schwanzangriff durch." },
+      { name: "Schwingenangriff (kostet 2 Aktionen)", beschreibung: "Der Drache schlägt mit seinen Schwingen. Jede Kreatur innerhalb von 3 m vom Drachen muss einen Geschicklichkeitsrettungswurf gegen SG 22 schaffen oder erleidet 15 (2W6+8) Wuchtschaden und wird zu Boden geworfen. Der Drache kann dann bis zu seiner halben Flugbewegungsrate fliegen." }
+    ],
+    hortaktionen: {
+      beschreibung: "Bei Initiative-Rang 20 (bei Gleichstand verliert er) kann der Drache eine der folgenden Hortaktionen nutzen; er kann dieselbe nicht zwei Runden in Folge nutzen:",
+      aktionen: [
+        "Magma bricht aus einem Punkt auf dem Boden innerhalb von 36 m auf, den der Drache sehen kann, und erschafft einen Geysir von 6 m Höhe und 1,5 m Radius. Alle Kreaturen im Bereich des Geysirs müssen einen Geschicklichkeitsrettungswurf gegen SG 15 ablegen. Bei einem misslingenden Rettungswurf erleiden sie 21 (6W6) Feuerschaden, bei einem gelungenen nur die Hälfte.",
+        "Ein Beben erschüttert den Boden in einem Radius von 18 m um den Drachen. Alle Kreaturen außer dem Drachen, die sich auf dem Boden befinden, müssen einen Geschicklichkeitsrettungswurf gegen SG 15 ablegen, um nicht den Zustand liegend zu erleiden.",
+        "Vulkanische Gase bilden eine Wolke in einer Sphäre mit einem Radius von 6 m um einen Punkt innerhalb von 36 m um den Drachen, den er sehen kann. Die Sphäre breitet sich um Ecken aus und ist leicht verschleiert. Sie hält bis Initiative 20 der nächsten Runde an. Alle Kreaturen, die ihren Zug in der Wolke beginnen, müssen einen Konstitutionsrettungswurf gegen SG 13 schaffen, um nicht bis zum Ende ihres nächsten Zuges vergiftet zu werden. Eine vergiftete Kreatur ist kampfunfähig."
+      ]
+    },
+    regionale_effekte: {
+      beschreibung: "Die Region rund um den Hort eines legendären roten Drachen ist von der Magie des Drachen deformiert und schafft einen oder mehrere der folgenden Effekte:",
+      effekte: [
+        "Kleinere Erdbeben sind im Umkreis von 9 km um die Behausung des Drachen verbreitet.",
+        "Wasserquellen innerhalb von 1,5 km um die Behausung sind übernatürlich warm und mit Schwefel verseucht.",
+        "Steinspalten innerhalb von 1,5 km um die Behausung stellen Portale auf die Elementarebene des Feuers dar, was es Feuerkreaturen erlaubt, in die Welt zu treten und in der Nähe zu hausen. Wenn der Drache stirbt, schwinden diese Effekte innerhalb von 1W10 Tagen."
+      ]
+    },
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Junger Roter Drache",
+    art: "Drache",
+    unterart: "Chromatischer Drache",
+    groesse: "Groß",
+    gesinnung: "Chaotisch böse",
+    cr: 10, xp: 5900,
+    rk: 18, ruestungstyp: "natürliche Rüstung",
+    tp: 178, tp_wuerfel: "17W10+85",
+    bewegung: { "Gehen": "12 m", "Klettern": "12 m", "Fliegen": "24 m" },
+    attribute: { STR: 23, DEX: 10, CON: 21, INT: 14, WIS: 11, CHA: 19 },
+    rettungswuerfe: { GES: 4, KON: 9, WEI: 4, CHA: 8 },
+    fertigkeiten: { "Heimlichkeit": 4, "Wahrnehmung": 8 },
+    schadensresistenzen: [], schadensimmunitaeten: ["Feuer"], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 9 m", "Dunkelsicht 36 m"], passiveWahrnehmung: 18,
+    sprachen: ["Allgemein", "Drakonisch"],
+    umgebung: ["Gebirge"],
+    bild: "assets/images/monster/junger_roter_drache.png",
+    beschreibung: [
+      "Junge Rote Drachen sind bereits gefährlich arrogant. Sie beanspruchen ein Territorium in Gebirgen und beginnen, schwächere Kreaturen zu unterwerfen. Ihr Feueratem reicht schon aus, um ganze Gruppen von Abenteurern zu vernichten."
+    ],
+    besonderheiten: [],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Drache führt drei Angriffe aus: einen mit dem Biss und zwei mit den Klauen." },
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +10 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 17 (2W10+6) Stichschaden plus 3 (1W6) Feuerschaden." },
+      { name: "Klauen", beschreibung: "Nahkampf-Waffenangriff: +10 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 13 (2W6+6) Hiebschaden." },
+      { name: "Feuerodem (Aufladezeit 5–6)", beschreibung: "Der Drache atmet Feuer in einem Kegel von 9 m Länge. Jede Kreatur im Kegel muss einen Geschicklichkeitsrettungswurf gegen SG 17 ablegen. Bei einem misslingenden Rettungswurf erleidet sie 56 (16W6) Feuerschaden, bei einem gelungenen nur die Hälfte." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Roter Drachennestling",
+    art: "Drache",
+    unterart: "Chromatischer Drache",
+    groesse: "Mittelgroß",
+    gesinnung: "Chaotisch böse",
+    cr: 4, xp: 1100,
+    rk: 17, ruestungstyp: "natürliche Rüstung",
+    tp: 75, tp_wuerfel: "10W8+30",
+    bewegung: { "Gehen": "9 m", "Klettern": "9 m", "Fliegen": "18 m" },
+    attribute: { STR: 19, DEX: 10, CON: 17, INT: 12, WIS: 11, CHA: 15 },
+    rettungswuerfe: { GES: 2, KON: 5, WEI: 2, CHA: 4 },
+    fertigkeiten: { "Heimlichkeit": 2, "Wahrnehmung": 4 },
+    schadensresistenzen: [], schadensimmunitaeten: ["Feuer"], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 3 m", "Dunkelsicht 18 m"], passiveWahrnehmung: 14,
+    sprachen: ["Drakonisch"],
+    umgebung: ["Gebirge"],
+    bild: "assets/images/monster/roter_drachennestling.png",
+    beschreibung: [
+      "Rote Drachennestlinge sind scharlachrot und glänzend. Schon als Nestling zeigen sie die Arroganz ihrer Art und bean spruchen Territorium weit über ihre tatsächliche Macht hinaus."
+    ],
+    besonderheiten: [],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 9 (1W10+4) Stichschaden plus 3 (1W6) Feuerschaden." },
+      { name: "Feuerodem (Aufladezeit 5–6)", beschreibung: "Der Drache atmet Feuer in einem Kegel von 4,5 m Länge. Jede Kreatur im Kegel muss einen Geschicklichkeitsrettungswurf gegen SG 13 ablegen. Bei einem misslingenden Rettungswurf erleidet sie 24 (7W6) Feuerschaden, bei einem gelungenen nur die Hälfte." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
     name: "Schattendämon",
     art: "Unhold",
     unterart: "Dämon",
@@ -1117,6 +2107,189 @@ window.MONSTER_DATA = [
     ],
     aktionen: [
       { name: "Klauen", beschreibung: "Nahkampf-Waffenangriff: +5 zum Treffen, Reichweite 1,5 m, eine Kreatur. Treffer: 10 (2W6+3) psychischer Schaden, oder, wenn der Dämon einen Vorteil beim Angriffswurf hat, 17 (4W6+3) psychischer Schaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Uralter Schwarzer Drache",
+    art: "Drache",
+    unterart: "Chromatischer Drache",
+    groesse: "Gigantisch",
+    gesinnung: "Chaotisch böse",
+    cr: 21, xp: 33000,
+    rk: 22, ruestungstyp: "natürliche Rüstung",
+    tp: 367, tp_wuerfel: "21W20+147",
+    bewegung: { "Gehen": "12 m", "Fliegen": "24 m", "Schwimmen": "12 m" },
+    attribute: { STR: 27, DEX: 14, CON: 25, INT: 16, WIS: 15, CHA: 19 },
+    rettungswuerfe: { GES: 9, KON: 14, WEI: 9, CHA: 11 },
+    fertigkeiten: { "Heimlichkeit": 9, "Wahrnehmung": 16 },
+    schadensresistenzen: [], schadensimmunitaeten: ["Säure"], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"], passiveWahrnehmung: 26,
+    sprachen: ["Allgemein", "Drakonisch"],
+    umgebung: ["Sumpf"],
+    bild: "assets/images/monster/uralter_schwarzer_drache.png",
+    beschreibung: [
+      "Uralt Schwarze Drachen sind die grausamsten und bösartigsten der chromischen Drachen. Sie bewohnen seit Jahrhunderten düstere Sümpfe und modrige Ruinen und hassen alles mit krankhafter Intensität.",
+      "Brutal und grausam. Schwarze Drachen sind sadistische Raubtiere, die es genießen, ihre Beute langsam leiden zu lassen. Sie legen Hinterhalte und nutzen ihre Fähigkeit, in Wasser zu tauchen, um Überraschungsangriffe zu starten. Ein schwarzer Drache verlässt eine Begegnung nur, wenn er sicher ist, dass er zurückkehren und tödliche Rache nehmen kann.",
+      "Feinde und Diener. Schwarze Drachen dominieren schwache Kreaturen des Sumpfes und zwingen Trolle, Krokodile, Hydras und ähnliches Getier in ihre Dienste. Sie verabscheuen andere Drachen und werden jeden angreifen, der ihr Territorium betritt.",
+      "Reichtum der Uralten. Der Hort eines uralten schwarzen Drachen liegt gewöhnlich in einer überfluteten Höhle oder unter einem Sumpfsee. Er bewacht diesen Schatz mit fanatischer Wachheit und kann die Anwesenheit jedes Eindringlings innerhalb seiner legendären Reichweite spüren."
+    ],
+    besonderheiten: [
+      { name: "Amphibisch", beschreibung: "Der Drache kann sowohl Luft als auch Wasser atmen." },
+      { name: "Legendäre Resistenz (3/Tag)", beschreibung: "Wenn der Drache einen Rettungswurf misslingt, kann er sich entscheiden, ihn stattdessen zu bestehen." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Drache kann seine Furchterregende Präsenz einsetzen. Danach führt er drei Angriffe aus: einen mit dem Biss und zwei mit den Klauen." },
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +15 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 19 (2W10+8) Stichschaden plus 9 (2W8) Säureschaden." },
+      { name: "Klauen", beschreibung: "Nahkampf-Waffenangriff: +15 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 15 (2W6+8) Hiebschaden." },
+      { name: "Schwanz", beschreibung: "Nahkampf-Waffenangriff: +15 zum Treffen, Reichweite 6 m, ein Ziel. Treffer: 17 (2W8+8) Wuchtschaden." },
+      { name: "Furchterregende Präsenz", beschreibung: "Jede Kreatur nach Wahl des Drachen, die sich innerhalb von 36 m von ihm befindet und sich seiner bewusst ist, muss einen Weisheitsrettungswurf gegen SG 19 schaffen, oder sie ist für 1 Minute verängstigt. Eine Kreatur kann den Rettungswurf am Ende jedes ihrer Züge wiederholen, um den Effekt bei Erfolg zu beenden. Wenn der Rettungswurf einer Kreatur erfolgreich ist oder der Effekt endet, ist die Kreatur für die nächsten 24 Stunden immun gegen die Furchterregende Präsenz des Drachen." },
+      { name: "Säureodem (Aufladezeit 5–6)", beschreibung: "Der Drache speit Säure in einer Linie von 27 m Länge und 3 m Breite. Jede Kreatur in dieser Linie muss einen Geschicklichkeitsrettungswurf gegen SG 22 schaffen. Bei einem misslingenden Rettungswurf erleidet sie 67 (15W8) Säureschaden, bei einem gelungenen nur die Hälfte." }
+    ],
+    bonusaktionen: [],
+    reaktionen: [],
+    legendaere_aktionen: [
+      { name: "Aufspüren", beschreibung: "Der Drache schafft einen Weisheit (Wahrnehmung) Wurf." },
+      { name: "Schwanzangriff", beschreibung: "Der Drache führt einen Schwanzangriff durch." },
+      { name: "Schwingenangriff (kostet 2 Aktionen)", beschreibung: "Der Drache schlägt mit seinen Schwingen. Jede Kreatur innerhalb von 4,5 m vom Drachen muss einen Geschicklichkeitsrettungswurf gegen SG 23 schaffen oder erleidet 15 (2W6+8) Wuchtschaden und wird zu Boden geworfen. Der Drache kann dann bis zu seiner Bewegungsrate fliegen." }
+    ],
+    hortaktionen: {
+      beschreibung: "Bei Initiative-Rang 20 (bei Gleichstand verliert er) kann der Drache eine der folgenden Hortaktionen nutzen; er kann dieselbe nicht zwei Runden in Folge nutzen:",
+      aktionen: [
+        "Schlamm und modrige Erde füllen einen 6×6 m großen Würfel innerhalb von 36 m vom Drachen. Der Bereich wird bis Initiative 20 der nächsten Runde zu schwierigem Gelände.",
+        "Giftige Dämpfe steigen in einem Radius von 6 m um einen Punkt innerhalb von 36 m auf. Jede Kreatur in dem Bereich muss einen Konstitutionsrettungswurf gegen SG 15 schaffen oder bis zum Ende ihres nächsten Zuges vergiftet sein.",
+        "Jedes stehende Wasser in einem Radius von 36 m um den Drachen brodelt. Kreaturen, die in diesem Wasser waten, müssen am Beginn jedes ihrer Züge einen Stärkerettungswurf gegen SG 15 schaffen oder werden am Schwimmen oder Waten gehindert."
+      ]
+    },
+    regionale_effekte: {
+      beschreibung: "Die Region rund um den Hort eines legendären schwarzen Drachen ist von der Magie des Drachen deformiert und schafft einen oder mehrere der folgenden Effekte:",
+      effekte: [
+        "Flüsse und Bäche in einem Radius von 9 km um den Hort des Drachen werden dunkel, trüb und leicht säurehaltiger als normal.",
+        "Moorige Sümpfe breiten sich in einem Radius von 9 km um den Hort des Drachen aus; in nicht sumpfigen Ebenen erschaffen Bäche und Flüsse neues Sumpfland, wenn sie über ihre Ufer treten.",
+        "Der Drache ist sich bewusst über alle Kreaturen, die sein Territorium betreten. Als Bonusaktion kann der Drache die Augen und Ohren einer beliebigen Kreatur, die sich in dem Territorium befindet, übernehmen, bis er eine weitere Bonusaktion nutzt oder bis der Drache schläft."
+      ]
+    },
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Ausgewachsener Schwarzer Drache",
+    art: "Drache",
+    unterart: "Chromatischer Drache",
+    groesse: "Riesig",
+    gesinnung: "Chaotisch böse",
+    cr: 14, xp: 11500,
+    rk: 19, ruestungstyp: "natürliche Rüstung",
+    tp: 195, tp_wuerfel: "17W12+85",
+    bewegung: { "Gehen": "12 m", "Fliegen": "24 m", "Schwimmen": "12 m" },
+    attribute: { STR: 23, DEX: 14, CON: 21, INT: 14, WIS: 13, CHA: 17 },
+    rettungswuerfe: { GES: 7, KON: 10, WEI: 6, CHA: 8 },
+    fertigkeiten: { "Heimlichkeit": 7, "Wahrnehmung": 11 },
+    schadensresistenzen: [], schadensimmunitaeten: ["Säure"], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"], passiveWahrnehmung: 21,
+    sprachen: ["Allgemein", "Drakonisch"],
+    umgebung: ["Sumpf"],
+    bild: "assets/images/monster/ausgewachsener_schwarzer_drache.png",
+    beschreibung: [
+      "Ausgewachsene Schwarze Drachen haben bereits Jahrhunderte in ihren Sumpfrevieren verbracht und sind zu Meistern des Hinterhalts und der Grausamkeit geworden. Ihre Hörner winden sich dramatisch, und ihre Haut wirkt wie gefärbtes, gefaultes Leder."
+    ],
+    besonderheiten: [
+      { name: "Amphibisch", beschreibung: "Der Drache kann sowohl Luft als auch Wasser atmen." },
+      { name: "Legendäre Resistenz (3/Tag)", beschreibung: "Wenn der Drache einen Rettungswurf misslingt, kann er sich entscheiden, ihn stattdessen zu bestehen." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Drache kann seine Furchterregende Präsenz einsetzen. Danach führt er drei Angriffe aus: einen mit dem Biss und zwei mit den Klauen." },
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +11 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 17 (2W10+6) Stichschaden plus 4 (1W8) Säureschaden." },
+      { name: "Klauen", beschreibung: "Nahkampf-Waffenangriff: +11 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 13 (2W6+6) Hiebschaden." },
+      { name: "Schwanz", beschreibung: "Nahkampf-Waffenangriff: +11 zum Treffen, Reichweite 4,5 m, ein Ziel. Treffer: 15 (2W8+6) Wuchtschaden." },
+      { name: "Furchterregende Präsenz", beschreibung: "Jede Kreatur nach Wahl des Drachen, die sich innerhalb von 36 m von ihm befindet und sich seiner bewusst ist, muss einen Weisheitsrettungswurf gegen SG 16 schaffen, oder sie ist für 1 Minute verängstigt. Eine Kreatur kann den Rettungswurf am Ende jedes ihrer Züge wiederholen, um den Effekt bei Erfolg zu beenden. Wenn der Rettungswurf einer Kreatur erfolgreich ist oder der Effekt endet, ist die Kreatur für die nächsten 24 Stunden immun gegen die Furchterregende Präsenz des Drachen." },
+      { name: "Säureodem (Aufladezeit 5–6)", beschreibung: "Der Drache speit Säure in einer Linie von 18 m Länge und 1,5 m Breite. Jede Kreatur in dieser Linie muss einen Geschicklichkeitsrettungswurf gegen SG 18 schaffen. Bei einem misslingenden Rettungswurf erleidet sie 54 (12W8) Säureschaden, bei einem gelungenen nur die Hälfte." }
+    ],
+    bonusaktionen: [],
+    reaktionen: [],
+    legendaere_aktionen: [
+      { name: "Aufspüren", beschreibung: "Der Drache schafft einen Weisheit (Wahrnehmung) Wurf." },
+      { name: "Schwanzangriff", beschreibung: "Der Drache führt einen Schwanzangriff durch." },
+      { name: "Schwingenangriff (kostet 2 Aktionen)", beschreibung: "Der Drache schlägt mit seinen Schwingen. Jede Kreatur innerhalb von 4,5 m vom Drachen muss einen Geschicklichkeitsrettungswurf gegen SG 19 schaffen oder erleidet 13 (2W6+6) Wuchtschaden und wird zu Boden geworfen. Der Drache kann dann bis zu seiner Bewegungsrate fliegen." }
+    ],
+    hortaktionen: {
+      beschreibung: "Bei Initiative-Rang 20 (bei Gleichstand verliert er) kann der Drache eine der folgenden Hortaktionen nutzen; er kann dieselbe nicht zwei Runden in Folge nutzen:",
+      aktionen: [
+        "Schlamm und modrige Erde füllen einen 6×6 m großen Würfel innerhalb von 36 m vom Drachen. Der Bereich wird bis Initiative 20 der nächsten Runde zu schwierigem Gelände.",
+        "Giftige Dämpfe steigen in einem Radius von 6 m um einen Punkt innerhalb von 36 m auf. Jede Kreatur in dem Bereich muss einen Konstitutionsrettungswurf gegen SG 15 schaffen oder bis zum Ende ihres nächsten Zuges vergiftet sein.",
+        "Jedes stehende Wasser in einem Radius von 36 m um den Drachen brodelt. Kreaturen, die in diesem Wasser waten, müssen am Beginn jedes ihrer Züge einen Stärkerettungswurf gegen SG 15 schaffen oder werden am Schwimmen oder Waten gehindert."
+      ]
+    },
+    regionale_effekte: {
+      beschreibung: "Die Region rund um den Hort eines legendären schwarzen Drachen ist von der Magie des Drachen deformiert und schafft einen oder mehrere der folgenden Effekte:",
+      effekte: [
+        "Flüsse und Bäche in einem Radius von 9 km um den Hort des Drachen werden dunkel, trüb und leicht säurehaltiger als normal.",
+        "Moorige Sümpfe breiten sich in einem Radius von 9 km um den Hort des Drachen aus; in nicht sumpfigen Ebenen erschaffen Bäche und Flüsse neues Sumpfland, wenn sie über ihre Ufer treten.",
+        "Der Drache ist sich bewusst über alle Kreaturen, die sein Territorium betreten. Als Bonusaktion kann der Drache die Augen und Ohren einer beliebigen Kreatur, die sich in dem Territorium befindet, übernehmen, bis er eine weitere Bonusaktion nutzt oder bis der Drache schläft."
+      ]
+    },
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Junger Schwarzer Drache",
+    art: "Drache",
+    unterart: "Chromatischer Drache",
+    groesse: "Groß",
+    gesinnung: "Chaotisch böse",
+    cr: 7, xp: 2900,
+    rk: 18, ruestungstyp: "natürliche Rüstung",
+    tp: 127, tp_wuerfel: "15W10+45",
+    bewegung: { "Gehen": "12 m", "Fliegen": "24 m", "Schwimmen": "12 m" },
+    attribute: { STR: 19, DEX: 14, CON: 17, INT: 12, WIS: 11, CHA: 15 },
+    rettungswuerfe: { GES: 5, KON: 6, WEI: 3, CHA: 5 },
+    fertigkeiten: { "Heimlichkeit": 5, "Wahrnehmung": 6 },
+    schadensresistenzen: [], schadensimmunitaeten: ["Säure"], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 9 m", "Dunkelsicht 36 m"], passiveWahrnehmung: 16,
+    sprachen: ["Allgemein", "Drakonisch"],
+    umgebung: ["Sumpf"],
+    bild: "assets/images/monster/junger_schwarzer_drache.png",
+    beschreibung: [
+      "Junge Schwarze Drachen sind bereits grausam und bösartig, obwohl ihre volle Macht noch nicht entfaltet ist. Sie suchen sich ein Revier in Sümpfen und anderen feuchten Gebieten und beginnen, schwächere Kreaturen zu dominieren."
+    ],
+    besonderheiten: [
+      { name: "Amphibisch", beschreibung: "Der Drache kann sowohl Luft als auch Wasser atmen." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Drache führt drei Angriffe aus: einen mit dem Biss und zwei mit den Klauen." },
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +7 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 15 (2W10+4) Stichschaden plus 4 (1W8) Säureschaden." },
+      { name: "Klauen", beschreibung: "Nahkampf-Waffenangriff: +7 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 11 (2W6+4) Hiebschaden." },
+      { name: "Säureodem (Aufladezeit 5–6)", beschreibung: "Der Drache speit Säure in einer Linie von 9 m Länge und 1,5 m Breite. Jede Kreatur in dieser Linie muss einen Geschicklichkeitsrettungswurf gegen SG 14 schaffen. Bei einem misslingenden Rettungswurf erleidet sie 49 (11W8) Säureschaden, bei einem gelungenen nur die Hälfte." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Schwarzer Drachennestling",
+    art: "Drache",
+    unterart: "Chromatischer Drache",
+    groesse: "Mittelgroß",
+    gesinnung: "Chaotisch böse",
+    cr: 2, xp: 450,
+    rk: 17, ruestungstyp: "natürliche Rüstung",
+    tp: 33, tp_wuerfel: "6W8+6",
+    bewegung: { "Gehen": "9 m", "Fliegen": "18 m", "Schwimmen": "9 m" },
+    attribute: { STR: 15, DEX: 14, CON: 13, INT: 10, WIS: 11, CHA: 13 },
+    rettungswuerfe: { GES: 4, KON: 3, WEI: 2, CHA: 3 },
+    fertigkeiten: { "Heimlichkeit": 4, "Wahrnehmung": 4 },
+    schadensresistenzen: [], schadensimmunitaeten: ["Säure"], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 3 m", "Dunkelsicht 18 m"], passiveWahrnehmung: 14,
+    sprachen: ["Drakonisch"],
+    umgebung: ["Sumpf"],
+    bild: "assets/images/monster/schwarzer_drachennestling.png",
+    beschreibung: [
+      "Schwarze Drachennestlinge sind bereits gefährlich für Unerfahrene. Ihr Instinkt zur Grausamkeit zeigt sich früh, wenn auch ihre Kräfte noch begrenzt sind."
+    ],
+    besonderheiten: [
+      { name: "Amphibisch", beschreibung: "Der Drache kann sowohl Luft als auch Wasser atmen." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 7 (1W10+2) Stichschaden plus 2 (1W4) Säureschaden." },
+      { name: "Säureodem (Aufladezeit 5–6)", beschreibung: "Der Drache speit Säure in einer Linie von 4,5 m Länge und 1,5 m Breite. Jede Kreatur in dieser Linie muss einen Geschicklichkeitsrettungswurf gegen SG 11 schaffen. Bei einem misslingenden Rettungswurf erleidet sie 22 (5W8) Säureschaden, bei einem gelungenen nur die Hälfte." }
     ],
     bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
     source: "Monsterhandbuch"
@@ -1208,6 +2381,68 @@ window.MONSTER_DATA = [
     source: "Monsterhandbuch"
   },
   {
+    name: "Triceratops",
+    art: "Tier",
+    unterart: "Dinosaurier",
+    groesse: "Riesig",
+    gesinnung: "Gesinnungslos",
+    cr: 5, xp: 1800,
+    rk: 13, ruestungstyp: "natürliche Rüstung",
+    tp: 95, tp_wuerfel: "10W12+30",
+    bewegung: { "Gehen": "15 m" },
+    attribute: { STR: 22, DEX: 9, CON: 17, INT: 2, WIS: 11, CHA: 5 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: [], passiveWahrnehmung: 10,
+    sprachen: [],
+    umgebung: ["Tropisch", "Wald", "Grasland"],
+    bild: "assets/images/monster/triceratops.png",
+    beschreibung: [
+      "Der Triceratops gehört zu den aggressivsten Pflanzenfressern. Er hat einen Schädel, der eine schützende Knochenplatte formt. Mit seinen großen Hörnern und seiner beträchtlichen Geschwindigkeit kann der Triceratops Möchtegern-Raubtiere aufspießen und niedertrampeln."
+    ],
+    besonderheiten: [
+      { name: "Trampelnder Sturmangriff", beschreibung: "Wenn sich der Triceratops mindestens 6 m in gerader Linie auf ein Ziel zu bewegt und dann im gleichen Zug mit seinem Aufspießen trifft, dann muss das Ziel einen Stärkerettungswurf gegen SG 13 schaffen, um nicht den Zustand liegend zu erleiden. Wenn das Ziel liegt, kann der Triceratops gegen das Ziel einen Stampfen-Angriff als Bonusaktion durchführen." }
+    ],
+    aktionen: [
+      { name: "Aufspießen", beschreibung: "Nahkampf-Waffenangriff: +9 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 24 (4W8+6) Stichschaden." },
+      { name: "Stampfen", beschreibung: "Nahkampf-Waffenangriff: +9 zum Treffen, Reichweite 1,5 m, eine liegende Kreatur. Treffer: 22 (3W10+6) Wuchtschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Tyrannosaurus Rex",
+    art: "Tier",
+    unterart: "Dinosaurier",
+    groesse: "Riesig",
+    gesinnung: "Gesinnungslos",
+    cr: 8, xp: 3900,
+    rk: 13, ruestungstyp: "natürliche Rüstung",
+    tp: 136, tp_wuerfel: "13W12+52",
+    bewegung: { "Gehen": "15 m" },
+    attribute: { STR: 25, DEX: 10, CON: 19, INT: 2, WIS: 12, CHA: 9 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Wahrnehmung": 4 },
+    schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: [], passiveWahrnehmung: 14,
+    sprachen: [],
+    umgebung: ["Tropisch", "Wald", "Grasland"],
+    bild: "assets/images/monster/tyrannosaurus_rex.png",
+    beschreibung: [
+      "Dieses gewaltige Raubtier terrorisiert alle anderen Kreaturen in seiner Umgebung. Trotz seiner Größe und seines Gewichts ist der Tyrannosaurus ein schneller Läufer. Er jagt alles, was er glaubt, fressen zu können, und es gibt wenige Wesen, bei denen er nicht versuchen wird, sie ganz zu schlucken.",
+      "Während er nach richtiger Beute sucht, ernährt sich ein Tyrannosaurus von Aas und von kleineren Kreaturen, die versuchen, ihm seine Mahlzeit streitig zu machen."
+    ],
+    besonderheiten: [],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Tyrannosaurus führt zwei Angriffe aus: einen mit seinem Biss und einen mit seinem Schwanz. Er kann nicht beide Angriffe gegen dasselbe Ziel richten." },
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +10 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 33 (4W12+7) Stichschaden. Wenn das Ziel eine mittelgroße oder kleinere Kreatur ist, wird es gepackt (Rettungswurf zum Entkommen 17). Bis der Haltegriff endet, ist das Ziel festgesetzt, und der Tyrannosaurus kann kein weiteres Ziel beißen." },
+      { name: "Schwanz", beschreibung: "Nahkampf-Waffenangriff: +10 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 20 (3W8+7) Wuchtschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
     name: "Vrock",
     art: "Unhold",
     unterart: "Dämon",
@@ -1233,7 +2468,8 @@ window.MONSTER_DATA = [
       "Vrocks verschlingen humanoides Fleisch, wenn sie die Gelegenheit haben. Sie betäuben potentielle Opfer mit einem ohrenbetäubenden Schrei und tauchen dann auf sie herab, um sie mit Schnabel und Klauen anzugreifen. Vrocks können ihre Schwingen schütteln, was eine Wolke giftiger Sporen aufsteigen lässt. Sie gieren nach schönen Dingen und fallen auch übereinander her, um die Chance zu bekommen, billigen Schmuck oder Ziersteine in die Finger zu bekommen. Trotz ihrer Liebe für Schätze ist es schwer, Vrocks zu bestechen, da sie keinen Grund für eine Verhandlung sehen, wenn sie das, was sie haben wollen, einfach der Leiche des Möchtegern-Verhandelnden abnehmen können."
     ],
     besonderheiten: [
-      { name: "Magieresistenz", beschreibung: "Der Vrock hat einen Vorteil bei Rettungswürfen gegen Zauber und andere magische Effekte." }
+      { name: "Magieresistenz", beschreibung: "Der Vrock hat einen Vorteil bei Rettungswürfen gegen Zauber und andere magische Effekte." },
+      { name: "Variante: Dämonenbeschwörung", beschreibung: "Beschwöre Dämon (1/Tag): Der Dämon entscheidet, was er beschwören will und führt eine magische Beschwörung durch. Ein Vrock hat eine Chance von 30%, 2W4 Dretchs oder einen Vrock zu beschwören. Ein beschworener Dämon erscheint in einem nicht besetzten Bereich innerhalb von 18 m um seinen Beschwörer, dient als Verbündeter des Beschwörers und kann selbst keine anderen Dämonen beschwören. Er bleibt für 1 Minute, bis sein Beschwörer getötet worden ist oder bis der Beschwörer ihn als Bonusaktion fortschickt." }
     ],
     aktionen: [
       { name: "Mehrfachangriff", beschreibung: "Der Vrock führt zwei Angriffe aus: einen mit seinem Schnabel und einen mit seinen Klauen." },
@@ -1241,6 +2477,187 @@ window.MONSTER_DATA = [
       { name: "Klauen", beschreibung: "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 14 (2W10+3) Hiebschaden." },
       { name: "Sporen (Aufladung 6)", beschreibung: "Eine Wolke aus giftigen Sporen mit einem Radius von 4,5 m breitet sich um den Vrock aus. Die Sporen breiten sich um Ecken aus. Alle Kreaturen in diesem Bereich müssen einen Konstitutionsrettungswurf gegen SG 14 ablegen, um nicht vergiftet zu werden. Solange sie auf diese Weise vergiftet sind, erleiden Ziele zu Beginn eines jeden ihrer Züge 5 (1W10) Giftschaden. Die Kreatur kann den Rettungswurf am Ende eines jeden ihrer Züge wiederholen und den Effekt bei einem Erfolg beenden. Man kann den Effekt auch beenden, indem man eine Phiole Weihwasser über dem Ziel ausleert." },
       { name: "Betäubendes Kreischen (1/Tag)", beschreibung: "Der Vrock stößt ein grauenvolles Kreischen aus. Alle Kreaturen im Umkreis von 6 m um den Vrock, die ihn hören können und keine Dämonen sind, müssen einen Konstitutionsrettungswurf gegen SG 14 schaffen, um nicht bis zum Ende des nächsten Zugs des Vrocks betäubt zu werden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Uralter Weißer Drache",
+    art: "Drache",
+    unterart: "Chromatischer Drache",
+    groesse: "Gigantisch",
+    gesinnung: "Chaotisch böse",
+    cr: 20, xp: 25000,
+    rk: 20, ruestungstyp: "natürliche Rüstung",
+    tp: 333, tp_wuerfel: "18W20+144",
+    bewegung: { "Gehen": "12 m", "Graben": "12 m", "Fliegen": "24 m", "Schwimmen": "12 m" },
+    attribute: { STR: 26, DEX: 10, CON: 26, INT: 10, WIS: 13, CHA: 14 },
+    rettungswuerfe: { GES: 6, KON: 14, WEI: 7, CHA: 8 },
+    fertigkeiten: { "Heimlichkeit": 6, "Wahrnehmung": 13 },
+    schadensresistenzen: [], schadensimmunitaeten: ["Kälte"], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"], passiveWahrnehmung: 23,
+    sprachen: ["Allgemein", "Drakonisch"],
+    umgebung: ["Arktis", "Gebirge"],
+    bild: "assets/images/monster/uralter_weisser_drache.png",
+    beschreibung: [
+      "Uralte Weiße Drachen sind die kleinsten, am wenigsten intelligenten und tierhaftesten der chromatischen Drachen. Jahrhundertelang in arktischen Einöden jagend, haben sie ein bemerkenswertes Gedächtnis entwickelt – sie erinnern sich an jede Beleidigung und Niederlage und sind für bösartige Vendettas bekannt.",
+      "Urtümlich und rachsüchtig. Weiße Drachen haben nicht die Gerissenheit anderer Drachen, aber ihr tierhaftes Wesen macht sie zu den besten Jägern. Sie verschlingen nur eingefrorene Nahrung und bewahren die Leichen ihrer größten Feinde als Trophäen auf, eingefroren und sichtbar aufgestellt als Warnung an Eindringlinge.",
+      "Einsame Gebieter. Weiße Drachen meiden alle anderen Drachen. Sie können keine Rivalen in der Nähe ihrer Behausung ertragen und greifen andere Kreaturen an ohne Provokation. Mächtige Kreaturen können manchmal ihren Gehorsam erlangen – Frostriesen fordern weiße Drachen heraus, und ein bezwungener Drache akzeptiert die Herrschaft der überlegenen Kreatur.",
+      "Schätze unter dem Eis. Weiße Drachen lieben das Funkeln von Eis und bevorzugen Diamanten. Einzelne Münzen und Juwelen liegen verstreut wie Sterne, während größere Schätze hinter klaren Eisschichten verwahrt werden."
+    ],
+    besonderheiten: [
+      { name: "Eiswandeln", beschreibung: "Der Drache kann sich über Eis bewegen und eisige Oberflächen erklimmen, ohne Attributswürfe ablegen zu müssen. Außerdem kostet ihn schwieriges Gelände, das aus Eis oder Schnee besteht, keine zusätzliche Bewegung." },
+      { name: "Legendäre Resistenz (3/Tag)", beschreibung: "Wenn der Drache einen Rettungswurf misslingt, kann er sich entscheiden, ihn stattdessen zu bestehen." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Drache kann seine Furchterregende Präsenz einsetzen. Danach führt er drei Angriffe aus: einen mit dem Biss und zwei mit den Klauen." },
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +14 zum Treffen, Reichweite 4,5 m, ein Ziel. Treffer: 19 (2W10+8) Stichschaden plus 9 (2W8) Kälteschaden." },
+      { name: "Klauen", beschreibung: "Nahkampf-Waffenangriff: +14 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 15 (2W6+8) Hiebschaden." },
+      { name: "Schwanz", beschreibung: "Nahkampf-Waffenangriff: +14 zum Treffen, Reichweite 6 m, ein Ziel. Treffer: 17 (2W8+8) Wuchtschaden." },
+      { name: "Furchterregende Präsenz", beschreibung: "Jede Kreatur nach Wahl des Drachen, die sich innerhalb von 36 m von ihm befindet und sich seiner bewusst ist, muss einen Weisheitsrettungswurf gegen SG 16 schaffen, oder sie ist für 1 Minute verängstigt. Eine Kreatur kann den Rettungswurf am Ende jedes ihrer Züge wiederholen, um den Effekt bei Erfolg zu beenden. Wenn der Rettungswurf erfolgreich ist oder der Effekt endet, ist die Kreatur für die nächsten 24 Stunden immun gegen die Furchterregende Präsenz des Drachen." },
+      { name: "Kälteodem (Aufladezeit 5–6)", beschreibung: "Der Drache atmet eisige Luft in einem Kegel von 27 m Länge. Jede Kreatur im Kegel muss einen Konstitutionsrettungswurf gegen SG 22 ablegen. Bei einem misslingenden Rettungswurf erleidet sie 72 (16W8) Kälteschaden, bei einem gelungenen nur die Hälfte." }
+    ],
+    bonusaktionen: [],
+    reaktionen: [],
+    legendaere_aktionen: [
+      { name: "Aufspüren", beschreibung: "Der Drache schafft einen Weisheit (Wahrnehmung) Wurf." },
+      { name: "Schwanzangriff", beschreibung: "Der Drache führt einen Schwanzangriff durch." },
+      { name: "Schwingenangriff (kostet 2 Aktionen)", beschreibung: "Der Drache schlägt mit seinen Schwingen. Jede Kreatur innerhalb von 4,5 m vom Drachen muss einen Geschicklichkeitsrettungswurf gegen SG 22 schaffen oder erleidet 15 (2W6+8) Wuchtschaden und wird zu Boden geworfen. Der Drache kann dann bis zu seiner halben Flugbewegungsrate fliegen." }
+    ],
+    hortaktionen: {
+      beschreibung: "Bei Initiative-Rang 20 (bei Gleichstand verliert er) kann der Drache eine der folgenden Hortaktionen nutzen; er kann dieselbe nicht zwei Runden in Folge nutzen:",
+      aktionen: [
+        "Gefrorener Nebel füllt eine Sphäre mit einem Radius von 6 m um einen Punkt innerhalb von 36 m um den Drachen. Die Sphäre breitet sich um Ecken aus und ist stark verschleiert. Kreaturen im Nebel beim Erscheinen müssen einen Konstitutionsrettungswurf gegen SG 10 ablegen, um nicht 10 (3W6) Kälteschaden zu erleiden (halb bei Erfolg). Eine Kreatur, die ihren Zug im Nebel beendet, erleidet 10 (3W6) Kälteschaden. Wind ≥ 30 km/h löst den Nebel auf; ansonsten bleibt er bis zur erneuten Verwendung dieser Hortaktion oder bis der Drache stirbt.",
+        "Zackige Eisscherben fallen von der Decke auf bis zu drei Kreaturen darunter, die der Drache sehen kann und die sich nicht weiter als 36 m von ihm entfernen. Der Drache führt einen Fernkampfangriffswurf (+7 zum Treffen) gegen jedes Ziel aus. Bei einem Erfolg erleidet das Ziel 10 (3W6) Stichschaden.",
+        "Der Drache erschafft eine undurchsichtige Eismauer auf einer festen Oberfläche innerhalb von 36 m, die er sehen kann. Die Mauer ist bis zu 9 m lang, 9 m hoch und 30 cm dick. Kreaturen in ihrem Bereich beim Erscheinen werden 1,5 m aus dem Bereich geschoben. Jeder 3 m Abschnitt hat RK 5, 30 TP, Empfindlichkeit gegen Feuer und Immunität gegen Gift-, Kälte-, Säure-, nekrotischen und psychischen Schaden. Die Mauer verschwindet bei erneuter Verwendung dieser Hortaktion oder wenn der Drache stirbt."
+      ]
+    },
+    regionale_effekte: {
+      beschreibung: "Die Region rund um den Hort eines legendären weißen Drachen ist von der Magie des Drachen deformiert und schafft einen oder mehrere der folgenden Effekte:",
+      effekte: [
+        "Eisiger Nebel macht das Land im Umkreis von 9 km um die Behausung leicht verschleiert.",
+        "Eisiger Niederschlag fällt innerhalb von 9 km um die Behausung, sodass es manchmal zu Schneestürmen kommt, wenn der Drache ruht.",
+        "Eisige Mauern blockieren Bereiche in der Behausung. Jede Mauer ist 15 cm dick und hat RK 5, 15 TP, Empfindlichkeit gegen Feuer und Immunität gegen Gift-, Kälte-, Säure-, nekrotischen und psychischen Schaden. Der Drache kann durch diese Mauern hindurchbewegen und zerstört dabei den durchquerten Abschnitt. Wenn der Drache stirbt, lösen sich Nebel und Niederschlag innerhalb eines Tages auf; die Eismauern schmelzen innerhalb von 1W10 Tagen."
+      ]
+    },
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Ausgewachsener Weißer Drache",
+    art: "Drache",
+    unterart: "Chromatischer Drache",
+    groesse: "Riesig",
+    gesinnung: "Chaotisch böse",
+    cr: 13, xp: 10000,
+    rk: 18, ruestungstyp: "natürliche Rüstung",
+    tp: 200, tp_wuerfel: "16W12+96",
+    bewegung: { "Gehen": "12 m", "Graben": "9 m", "Fliegen": "24 m", "Schwimmen": "12 m" },
+    attribute: { STR: 22, DEX: 10, CON: 22, INT: 8, WIS: 12, CHA: 12 },
+    rettungswuerfe: { GES: 5, KON: 11, WEI: 6, CHA: 6 },
+    fertigkeiten: { "Heimlichkeit": 5, "Wahrnehmung": 11 },
+    schadensresistenzen: [], schadensimmunitaeten: ["Kälte"], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"], passiveWahrnehmung: 21,
+    sprachen: ["Allgemein", "Drakonisch"],
+    umgebung: ["Arktis", "Gebirge"],
+    bild: "assets/images/monster/ausgewachsener_weisser_drache.png",
+    beschreibung: [
+      "Ausgewachsene Weiße Drachen haben ihre arktischen Reviere durch schiere Gewalt gesichert. Gebirgskavernen werden durch ihre Anwesenheit eingefroren. Sie ruhen auf hohen Eisplateaus und lassen Eindringlinge sich durch ein tückisches Durcheinander aus Eis, Stein, verborgenen Gruben und rutschigen Abhängen abmühen, während sie von oben herab angreifen."
+    ],
+    besonderheiten: [
+      { name: "Eiswandeln", beschreibung: "Der Drache kann sich über Eis bewegen und eisige Oberflächen erklimmen, ohne Attributswürfe ablegen zu müssen. Außerdem kostet ihn schwieriges Gelände, das aus Eis oder Schnee besteht, keine zusätzliche Bewegung." },
+      { name: "Legendäre Resistenz (3/Tag)", beschreibung: "Wenn der Drache einen Rettungswurf misslingt, kann er sich entscheiden, ihn stattdessen zu bestehen." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Drache kann seine Furchterregende Präsenz einsetzen. Danach führt er drei Angriffe aus: einen mit dem Biss und zwei mit den Klauen." },
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +11 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 17 (2W10+6) Stichschaden plus 4 (1W8) Kälteschaden." },
+      { name: "Klauen", beschreibung: "Nahkampf-Waffenangriff: +11 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 13 (2W6+6) Hiebschaden." },
+      { name: "Schwanz", beschreibung: "Nahkampf-Waffenangriff: +11 zum Treffen, Reichweite 4,5 m, ein Ziel. Treffer: 15 (2W8+6) Wuchtschaden." },
+      { name: "Furchterregende Präsenz", beschreibung: "Jede Kreatur nach Wahl des Drachen, die sich innerhalb von 36 m von ihm befindet und sich seiner bewusst ist, muss einen Weisheitsrettungswurf gegen SG 14 schaffen, oder sie ist für 1 Minute verängstigt. Eine Kreatur kann den Rettungswurf am Ende jedes ihrer Züge wiederholen, um den Effekt bei Erfolg zu beenden. Wenn der Rettungswurf erfolgreich ist oder der Effekt endet, ist die Kreatur für die nächsten 24 Stunden immun gegen die Furchterregende Präsenz des Drachen." },
+      { name: "Kälteodem (Aufladezeit 5–6)", beschreibung: "Der Drache atmet eisige Luft in einem Kegel von 18 m Länge. Jede Kreatur im Kegel muss einen Konstitutionsrettungswurf gegen SG 19 ablegen. Bei einem misslingenden Rettungswurf erleidet sie 54 (12W8) Kälteschaden, bei einem gelungenen nur die Hälfte." }
+    ],
+    bonusaktionen: [],
+    reaktionen: [],
+    legendaere_aktionen: [
+      { name: "Aufspüren", beschreibung: "Der Drache schafft einen Weisheit (Wahrnehmung) Wurf." },
+      { name: "Schwanzangriff", beschreibung: "Der Drache führt einen Schwanzangriff durch." },
+      { name: "Schwingenangriff (kostet 2 Aktionen)", beschreibung: "Der Drache schlägt mit seinen Schwingen. Jede Kreatur innerhalb von 3 m vom Drachen muss einen Geschicklichkeitsrettungswurf gegen SG 19 schaffen oder erleidet 13 (2W6+6) Wuchtschaden und wird zu Boden geworfen. Der Drache kann dann bis zu seiner halben Flugbewegungsrate fliegen." }
+    ],
+    hortaktionen: {
+      beschreibung: "Bei Initiative-Rang 20 (bei Gleichstand verliert er) kann der Drache eine der folgenden Hortaktionen nutzen; er kann dieselbe nicht zwei Runden in Folge nutzen:",
+      aktionen: [
+        "Gefrorener Nebel füllt eine Sphäre mit einem Radius von 6 m um einen Punkt innerhalb von 36 m um den Drachen. Die Sphäre breitet sich um Ecken aus und ist stark verschleiert. Kreaturen im Nebel beim Erscheinen müssen einen Konstitutionsrettungswurf gegen SG 10 ablegen, um nicht 10 (3W6) Kälteschaden zu erleiden (halb bei Erfolg). Eine Kreatur, die ihren Zug im Nebel beendet, erleidet 10 (3W6) Kälteschaden. Wind ≥ 30 km/h löst den Nebel auf; ansonsten bleibt er bis zur erneuten Verwendung dieser Hortaktion oder bis der Drache stirbt.",
+        "Zackige Eisscherben fallen von der Decke auf bis zu drei Kreaturen darunter, die der Drache sehen kann und die sich nicht weiter als 36 m von ihm entfernen. Der Drache führt einen Fernkampfangriffswurf (+7 zum Treffen) gegen jedes Ziel aus. Bei einem Erfolg erleidet das Ziel 10 (3W6) Stichschaden.",
+        "Der Drache erschafft eine undurchsichtige Eismauer auf einer festen Oberfläche innerhalb von 36 m, die er sehen kann. Die Mauer ist bis zu 9 m lang, 9 m hoch und 30 cm dick. Kreaturen in ihrem Bereich beim Erscheinen werden 1,5 m aus dem Bereich geschoben. Jeder 3 m Abschnitt hat RK 5, 30 TP, Empfindlichkeit gegen Feuer und Immunität gegen Gift-, Kälte-, Säure-, nekrotischen und psychischen Schaden. Die Mauer verschwindet bei erneuter Verwendung dieser Hortaktion oder wenn der Drache stirbt."
+      ]
+    },
+    regionale_effekte: {
+      beschreibung: "Die Region rund um den Hort eines legendären weißen Drachen ist von der Magie des Drachen deformiert und schafft einen oder mehrere der folgenden Effekte:",
+      effekte: [
+        "Eisiger Nebel macht das Land im Umkreis von 9 km um die Behausung leicht verschleiert.",
+        "Eisiger Niederschlag fällt innerhalb von 9 km um die Behausung, sodass es manchmal zu Schneestürmen kommt, wenn der Drache ruht.",
+        "Eisige Mauern blockieren Bereiche in der Behausung. Jede Mauer ist 15 cm dick und hat RK 5, 15 TP, Empfindlichkeit gegen Feuer und Immunität gegen Gift-, Kälte-, Säure-, nekrotischen und psychischen Schaden. Der Drache kann durch diese Mauern hindurchbewegen und zerstört dabei den durchquerten Abschnitt. Wenn der Drache stirbt, lösen sich Nebel und Niederschlag innerhalb eines Tages auf; die Eismauern schmelzen innerhalb von 1W10 Tagen."
+      ]
+    },
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Junger Weißer Drache",
+    art: "Drache",
+    unterart: "Chromatischer Drache",
+    groesse: "Groß",
+    gesinnung: "Chaotisch böse",
+    cr: 6, xp: 2300,
+    rk: 17, ruestungstyp: "natürliche Rüstung",
+    tp: 133, tp_wuerfel: "14W10+56",
+    bewegung: { "Gehen": "12 m", "Graben": "6 m", "Fliegen": "24 m", "Schwimmen": "12 m" },
+    attribute: { STR: 18, DEX: 10, CON: 18, INT: 6, WIS: 11, CHA: 12 },
+    rettungswuerfe: { GES: 3, KON: 7, WEI: 3, CHA: 4 },
+    fertigkeiten: { "Heimlichkeit": 3, "Wahrnehmung": 6 },
+    schadensresistenzen: [], schadensimmunitaeten: ["Kälte"], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 9 m", "Dunkelsicht 36 m"], passiveWahrnehmung: 16,
+    sprachen: ["Allgemein", "Drakonisch"],
+    umgebung: ["Arktis", "Gebirge"],
+    bild: "assets/images/monster/junger_weisser_drache.png",
+    beschreibung: [
+      "Junge Weiße Drachen sind tierhaft und unerbittlich. Bereits in jungen Jahren haben sie ein ausgeprägtes Territorium und merken sich jeden Eindringling für spätere Rache."
+    ],
+    besonderheiten: [
+      { name: "Eiswandeln", beschreibung: "Der Drache kann sich über Eis bewegen und eisige Oberflächen erklimmen, ohne Attributswürfe ablegen zu müssen. Außerdem kostet ihn schwieriges Gelände, das aus Eis oder Schnee besteht, keine zusätzliche Bewegung." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Drache führt drei Angriffe aus: einen mit dem Biss und zwei mit den Klauen." },
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +7 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 15 (2W10+4) Stichschaden plus 4 (1W8) Kälteschaden." },
+      { name: "Klauen", beschreibung: "Nahkampf-Waffenangriff: +7 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 11 (2W6+4) Hiebschaden." },
+      { name: "Kälteodem (Aufladezeit 5–6)", beschreibung: "Der Drache atmet eisige Luft in einem Kegel von 9 m Länge. Jede Kreatur im Kegel muss einen Konstitutionsrettungswurf gegen SG 15 ablegen. Bei einem misslingenden Rettungswurf erleidet sie 45 (10W8) Kälteschaden, bei einem gelungenen nur die Hälfte." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Weißer Drachennestling",
+    art: "Drache",
+    unterart: "Chromatischer Drache",
+    groesse: "Mittelgroß",
+    gesinnung: "Chaotisch böse",
+    cr: 2, xp: 450,
+    rk: 16, ruestungstyp: "natürliche Rüstung",
+    tp: 32, tp_wuerfel: "5W8+10",
+    bewegung: { "Gehen": "9 m", "Graben": "4,5 m", "Fliegen": "18 m", "Schwimmen": "9 m" },
+    attribute: { STR: 14, DEX: 10, CON: 14, INT: 5, WIS: 10, CHA: 11 },
+    rettungswuerfe: { GES: 2, KON: 4, WEI: 2, CHA: 2 },
+    fertigkeiten: { "Heimlichkeit": 2, "Wahrnehmung": 4 },
+    schadensresistenzen: [], schadensimmunitaeten: ["Kälte"], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 3 m", "Dunkelsicht 18 m"], passiveWahrnehmung: 14,
+    sprachen: ["Drakonisch"],
+    umgebung: ["Arktis", "Gebirge"],
+    bild: "assets/images/monster/weisser_drachennestling.png",
+    beschreibung: [
+      "Weiße Drachennestlinge haben rein weiße, glänzende Schuppen. Schon jetzt zeigen sie das tierhaft-impulsive Verhalten ihrer Art, wenn auch ohne jede Raffinesse."
+    ],
+    besonderheiten: [],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 7 (1W10+2) Stichschaden plus 2 (1W4) Kälteschaden." },
+      { name: "Kälteodem (Aufladezeit 5–6)", beschreibung: "Der Drache atmet eisige Luft in einem Kegel von 4,5 m Länge. Jede Kreatur im Kegel muss einen Konstitutionsrettungswurf gegen SG 12 ablegen. Bei einem misslingenden Rettungswurf erleidet sie 22 (5W8) Kälteschaden, bei einem gelungenen nur die Hälfte." }
     ],
     bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
     source: "Monsterhandbuch"
@@ -1274,7 +2691,8 @@ window.MONSTER_DATA = [
       { name: "Angeborenes Zauberwirken", beschreibung: "Das Attribut zum Wirken angeborener Zauber für die Yochlol ist Charisma (Zauberrettungswurf-SG 14). Die Yochlol kann die folgenden Zaubersprüche angeboren wirken, wobei keine Materialkomponenten notwendig sind: willentlich: Gedanken entdecken, Spinnennetz; 1/Tag: Person beherrschen." },
       { name: "Netzwandler", beschreibung: "Die Yochlol ignoriert Bewegungseinschränkungen, die durch Netze ausgelöst werden." },
       { name: "Magieresistenz", beschreibung: "Die Yochlol hat einen Vorteil bei Rettungswürfen gegen Zauber und andere magische Effekte." },
-      { name: "Spinnenklettern", beschreibung: "Die Yochlol kann an schwierigen Oberflächen klettern, sogar kopfüber an der Decke, ohne einen Attributswurf ablegen zu müssen." }
+      { name: "Spinnenklettern", beschreibung: "Die Yochlol kann an schwierigen Oberflächen klettern, sogar kopfüber an der Decke, ohne einen Attributswurf ablegen zu müssen." },
+      { name: "Variante: Dämonenbeschwörung", beschreibung: "Beschwöre Dämon (1/Tag): Der Dämon entscheidet, was er beschwören will und führt eine magische Beschwörung durch. Ein Yochlol hat eine Chance von 50%, einen Yochlol zu beschwören. Ein beschworener Dämon erscheint in einem nicht besetzten Bereich innerhalb von 18 m um seinen Beschwörer, dient als Verbündeter des Beschwörers und kann selbst keine anderen Dämonen beschwören. Er bleibt für 1 Minute, bis sein Beschwörer getötet worden ist oder bis der Beschwörer ihn als Bonusaktion fortschickt." }
     ],
     aktionen: [
       { name: "Mehrfachangriff", beschreibung: "Die Yochlol führt zwei Nahkampfangriffe durch." },
@@ -1286,3 +2704,160 @@ window.MONSTER_DATA = [
     source: "Monsterhandbuch"
   }
 ];
+
+window.UNTERART_LORE = {
+  "Drache": {
+    einleitung: "Wahre Drachen sind geflügelte Echsen mit uraltem Stammbaum und schrecklicher Macht. Sie sind für ihre raubtierhafte Gerissenheit und Gier bekannt, wobei die ältesten Drachen zu den mächtigsten Kreaturen in der Welt gehören. Drachen sind außerdem magische Kreaturen, deren angeborene Macht ihre gefürchteten Odemwaffen und andere übernatürliche Fähigkeiten ermöglicht.",
+    abschnitte: [
+      {
+        titel: "Drachenalter-Kategorien",
+        tabelle: {
+          kopf: ["Kategorie", "Größe", "Altersspanne"],
+          zeilen: [
+            ["Nestling", "Mittelgroß", "5 Jahre oder weniger"],
+            ["Jung", "Groß", "6–100 Jahre"],
+            ["Ausgewachsen", "Riesig", "101–800 Jahre"],
+            ["Uralt", "Gigantisch", "801 Jahre und mehr"]
+          ]
+        },
+        inhalt: "Wahre Drachen durchlaufen vier verschiedene Lebensphasen, von den niederen Nestlingen bis hin zu den uralten Drachen, die über tausend Jahre alt werden können. In dieser Zeit kann ihre Macht unvergleichbar werden und ihr Hort die Grenzen der Vorstellungskraft sprengen."
+      }
+    ]
+  },
+  "Chromatischer Drache": {
+    einleitung: "Chromatische Drachen sind die bösartigsten und gefährlichsten Drachen der Welt – selbstsüchtige, grausame Wesen, die Menschen und andere schwächere Geschöpfe als Beute oder als Spielzeug ansehen. Fünf Arten von chromatischen Drachen existieren – schwarz, blau, grün, rot und weiß – und jede Art ist mehr oder weniger eine andere Version derselben bösen Natur.",
+    abschnitte: [
+      {
+        titel: "Chromatische Drachen",
+        inhalt: "Chromatische Drachen sind durch ihre Arroganz und ihr böses Gemüt vereint. Alle chromatischen Drachen betrachten sich als Wesen der überlegenen Macht und halten die vernunftbegabten Rassen der Welt für nichts anderes als potenzielle Sklaven. Von Zeit zu Zeit suchen chromatische Drachen einander, aber abgesehen von der Paarungszeit und der Aufzucht von Jungen leben diese ungeselligenWesen ein solches Territorium für sich alleine."
+      },
+      {
+        titel: "Getrieben von Gier",
+        inhalt: "Chromatische Drachen lieben Gold und Schätze über alles. Ein Drache bewacht seinen Hort mit fanatischer Intensität und ist stets auf der Hut vor Eindringlingen, die seinen Schatz stehlen könnten. Wenn ein Drache einen bestimmten Gegenstand aus einem anderen Hort haben will, überfällt er einfach den anderen Hort und tötet dessen Besitzer. Selten nutzen chromatische Drachen subtilere Methoden – sie bezaubern oder terrorisieren Sterbliche, sodass diese für sie stehlen oder erpressen."
+      },
+      {
+        titel: "Kreaturen aus purem Ego",
+        inhalt: "Chromatische Drachen sind absolut egozentrisch. Sie betrachten alles und jeden nur in Bezug darauf, wie es oder er ihnen nützt. Sie schließen keine echten Freundschaften oder Allianzen, sind aber durchaus bereit, Sterbliche vorübergehend zu dulden, wenn diese ihnen etwas bieten, das sie begehren. Chromatische Drachen halten sich für die Krone der Schöpfung, und die Geschichte der Drachenwelt besteht aus einem endlosen Krieg für Territorium und Überlegenheit."
+      },
+      {
+        titel: "Gefährliche Behausungen",
+        inhalt: "Chromatische Drachen wählen Horte, die zu ihrem Element und ihrer Natur passen. Sie bevorzugen abgelegene, schwer zugängliche Orte weit entfernt von Zivilisation: tiefe Höhlen, verlassene Ruinen, einsame Gipfel oder versunkene Schiffswracks. Ein Drachenhort ist ein Abbild seiner Persönlichkeit – ein Zeugnis seiner Macht, Ausdauer und Gier über die Jahrhunderte."
+      }
+    ]
+  },
+  "Metallischer Drache": {
+    einleitung: "Metallische Drachen wollen bewahren und beschützen. Sie sehen sich als ein mächtiges Volk unter den zahlreichen Völkern, die einen Platz in der Welt haben.",
+    abschnitte: [
+      {
+        titel: "Edle Neugier",
+        inhalt: "Metallische Drachen begehren Schätze wie ihre chromatischen Vettern, doch sind sie nicht so sehr von Gier dominiert. Sie verspüren den Drang nachzuforschen und zu sammeln. Sie nehmen Relikte, auf die niemand Anspruch erhebt, und bewahren sie. Manchmal verstauen sie mächtige magische Gegenstände und böse Artefakte in ihrem Hort, um andere Kreaturen vor gefährlicher Magie zu schützen."
+      },
+      {
+        titel: "Einzelgängerische Gestaltwandler",
+        inhalt: "Metallische Drachen erhalten irgendwann die Fähigkeit, die Gestalt von Humanoiden und Tieren anzunehmen. Ältere Drachen lieben es, in menschlicher Gestalt durch Städte zu wandern, die örtliche Kultur und Küche zu genießen und zu beobachten, wie die kleineren Völker leben. Einige ziehen es vor, weit von der Zivilisation weg zu bleiben, um keine Feinde anzulocken."
+      },
+      {
+        titel: "Die Beständigkeit der Erinnerungen",
+        inhalt: "Metallische Drachen haben ein langes Gedächtnis und bilden sich ihre Meinung über Humanoide basierend auf früherem Kontakt mit verwandten Personen. Gute Drachen können menschliche Abstammung nach dem Geruch erkennen und erinnern sich an Verwandte, mit denen sie im Lauf der Jahre Kontakt hatten. Dies kann zu überraschenden Vorurteilen führen – ein Drache könnte jemanden verabscheuen, weil ein Vorfahr vor Jahrhunderten aus seinem Hort gestohlen hat."
+      },
+      {
+        titel: "König der Guten Drachen",
+        inhalt: "Die Hauptgottheit der metallischen Drachen ist Bahamut, der Platindrache. Er lebt in den Sieben Himmeln von Berg Celestia, streift aber oft durch die Materielle Ebene in der Gestalt eines ehrwürdigen Mannes in bäuerlicher Gewandung – normalerweise begleitet von sieben goldenen Kanarienvögeln, die in Wirklichkeit sieben verwandelte Golddrachen sind. Bahamut mischt sich selten in die Angelegenheiten sterblicher Kreaturen ein, macht aber Ausnahmen, um die Machenschaften von Tiamat und ihrer bösen Brut zu vereiteln."
+      }
+    ]
+  },
+  "Schattendrache": {
+    einleitung: "Schattendrachen sind wahre Drachen, die entweder im Schattensaum geboren worden sind oder verwandelt wurden, weil sie Jahre in ihm zugebracht haben. Einige genießen die trostlosen Landschaften des Schattensaums, andere wollen auf die Materielle Ebene zurückkehren, um Dunkelheit und Böses zu verbreiten.",
+    abschnitte: [
+      {
+        titel: "Dunkle Portale",
+        inhalt: "Portale in den Schattensaum materialisieren sich an abgelegenen Orten und in tiefer unterirdischer Düsternis. Die Drachen, die an solchen Orten hausen, entdecken oft diese Portale und werden in ein neues Reich transportiert. Uralte Drachen, die monate- oder jahrelang schlafen, werden oft hineingesogen, ohne es zu bemerken, da sich das Portal ohne ihr Wissen geformt hat."
+      },
+      {
+        titel: "Im Schatten neu erschaffen",
+        inhalt: "Die Verwandlung dauert Jahre. Die Schuppen verlieren ihren Glanz und nehmen die Farbe von Kohle an, die Schwingen werden durchscheinend, die Augen verblassen zu Tümpeln aus schillerndem Grau. Schattendrachen finden das Sonnenlicht abscheulich. Während Monate und Jahre vergehen, wird der Drache sich der Verwandlung bewusst, kann aber nichts tun, um sie zu verhindern."
+      },
+      {
+        titel: "Zurück in der Welt",
+        inhalt: "Ein Schattendrache ist so von der Macht des Schattensaums erfüllt, dass selbst eine Rückkehr auf die Materielle Ebene seine Verwandlung nicht aufheben kann. Einige locken Kreaturen in den Schattensaum, um Gesellschaft zu haben – zumindest bis sie die Gäste überdrüssig werden und sie verschlingen. Andere sind froh, den Schattensaum für immer hinter sich zu lassen."
+      },
+      {
+        titel: "Schablone für Schattendrachen",
+        inhalt: "Nur ein wahrer Drache kann sich in einen Schattendrachen verwandeln, und nur, wenn er im Schattensaum geboren wird oder dort mehrere Jahre verbringt. Ein Drakolich kann nicht verwandelt werden, da er sein Drachenwesen beim Übergang zum Untoten verliert. Schattendrachen erhalten folgende Anpassungen: Resistenz gegen Nekrotisch; doppelter Übungsbonus für Heimlichkeit; Lebender Schatten (Resistenz gegen nicht-Energie-/gleißenden/psychischen Schaden in schwachem Licht oder Dunkelheit); Heimlicher Schatten (Verstecken als Bonusaktion in schwachem Licht/Dunkelheit); Empfindlichkeit gegenüber Sonnenlicht (Nachteil auf Angriffe und WEI-Wahrnehmung im hellen Licht). Der Biss-Schaden wird zu nekrotisch. Odemwaffen verursachen nekrotischen Schaden – Humanoide, die auf 0 TP reduziert werden, sterben und beschwören einen untoter Schatten unter der Kontrolle des Drachens."
+      }
+    ]
+  },
+  "Dinosaurier": {
+    einleitung: "Dinosaurier oder Behemoths gehören zu den ältesten Reptilien auf der Welt. Raubsaurier sind wilde, territoriale Jäger. Pflanzenfressende Dinosaurier sind weniger aggressiv, aber könnten angreifen, um ihre Jungen zu verteidigen oder wenn sie erschreckt oder belästigt werden.",
+    abschnitte: [
+      {
+        titel: "Verbreitung",
+        inhalt: "Dinosaurier gibt es in vielen Größen und Formen. Größere Varianten haben oft eine einfache Färbung, während kleinere Dinosaurier farbenfroh gezeichnet wie Vögel sind. Dinosaurier streifen durch raue und isolierte Gegenden, die selten von Humanoiden besucht werden, wie abgelegene Gebirgstäler, unerreichbare Plateaus, tropische Inseln und tiefe Sümpfe."
+      }
+    ]
+  },
+  "Dämon": {
+    einleitung: "Dämonen, die in den Unendlichen Schichten des Abyss erschaffen werden, sind eine Verkörperung des Chaos und des Bösen – Maschinen der Zerstörung, die kaum von einer monströsen Gestalt im Zaum gehalten werden. Sie verfügen über kein Mitleid, kein Einfühlungsvermögen, keine Gnade und existieren nur, um zu zerstören.",
+    abschnitte: [
+      {
+        titel: "Typen von Dämonen",
+        inhalt: "Dämonologen organisieren die chaotische Ansammlung von Dämonen in weit gefasste Machtkategorien, die als Typen bekannt sind. Die meisten Dämonen passen in die sechs Hauptarten, wobei die schwächsten Dämonen Typ 1 und die stärksten Typ 6 sind. Dämonen außerhalb der sechs Haupttypen werden als mindere Dämonen und Dämonenfürsten kategorisiert.",
+        tabelle: {
+          kopf: ["Typ", "Beispiele"],
+          zeilen: [
+            ["1", "Barlgura, Schattendämon, Vrock"],
+            ["2", "Chasme, Hezrou"],
+            ["3", "Glabrezu, Yochlol"],
+            ["4", "Nalfeshnee"],
+            ["5", "Marilith"],
+            ["6", "Balor, Goristro"]
+          ]
+        }
+      },
+      {
+        titel: "Wahre Namen von Dämonen",
+        inhalt: "Auch wenn alle Dämonen allgemein bekannte Namen haben, hat jeder Dämonenfürst und jeder Dämon des Typs 1 bis 6 einen wahren Namen, den er geheim hält. Ein Dämon kann gezwungen werden, seinen wahren Namen zu verraten, wenn er bezaubert wird, und es soll uralte Schriftrollen geben, auf denen die wahren Namen der mächtigsten Dämonen verzeichnet sind. Ein Sterblicher, der den wahren Namen eines Dämons in Erfahrung bringt, kann mächtige Beschwörungsmagie nutzen, um den Dämon aus dem Abyss zu rufen und eine gewisse Kontrolle über ihn auszuüben. Allerdings tun die meisten Dämonen, die auf diese Weise auf die Materielle Ebene gebracht werden, alles, was in ihrer Macht steht, um Chaos zu säen oder für Zwietracht und Streit zu sorgen."
+      },
+      {
+        titel: "Brut des Chaos",
+        inhalt: "Der Abyss erschafft Dämonen als Erweiterung seiner selbst und formt die Unholde spontan aus Schmutz und Gewalt. Einige sind einzigartige Monstren, andere stellen einheitliche Arten dar, die untereinander fast identisch sind. Andere Dämonen (wie Manen) werden aus sterblichen Seelen erschaffen, die von den Göttern abgelehnt oder verflucht wurden oder die aus anderen Gründen im Abyss gefangen worden sind."
+      },
+      {
+        titel: "Launenhafter Aufstieg",
+        inhalt: "Dämonen respektieren einzig und allein Macht. Ein mächtiger Dämon befehligt deshalb kreischende Meuten schwächerer Dämonen, weil er schwächere Dämonen, die seinen Befehlen nicht folgen wollen, einfach zerstören kann. Der Status eines Dämons wächst mit dem Blut, das er vergießt; je mehr Feinde ihm zum Opfer fallen, umso machtvoller wird er. Ein Dämon könnte als Mane in die Welt gebracht werden, dann zu einem Dretch werden und sich schließlich in einen Vrock verwandeln, nachdem er unendlich lange im Abyss gekämpft und überlebt hat. Solche Erhebungen sind allerdings selten, da die meisten Dämonen zerstört werden, ehe sie nennenswerte Macht erlangen können. Die Mächtigsten unter jenen, die überleben, sind die Dämonenfürsten, die drohen, den Abyss mit ihren endlosen Kriegen zu zerfetzen. Indem sie beträchtliche magische Macht aufwenden, können Dämonenfürsten schwächere Dämonen zu mächtigeren machen, doch sind solche Beförderungen niemals die Folge der Taten oder Leistungen des Dämons. Vielmehr verwandelt ein Dämonenfürst vielleicht einen Mane in einen Quasit, wenn er einen unsichtbaren Spion braucht, oder er verwandelt eine Armee von Dretchs in Hezrous, wenn er gegen einen feindlichen Fürsten in die Schlacht zieht. Dämonenfürsten erheben Dämonen nur selten in den höchsten Rang, da sie fürchten, Rivalen um ihre eigene Macht zu erschaffen."
+      },
+      {
+        titel: "Invasion aus dem Abyss",
+        inhalt: "Wo auch immer sie durch den Abyss wandern, suchen Dämonen nach Portalen auf andere Ebenen. Sie sehnen sich nach der Gelegenheit, ihrem Heimatreich zu entkommen und ihren dunklen Einfluss im ganzen Multiversum zu verbreiten. Sie wollen die Werke der Götter zunichte machen, Zivilisationen niederreißen und den Kosmos in Verzweiflung und Unheil stürzen. Einige der finstersten Legenden der sterblichen Welt drehen sich um die Zerstörung, die von Dämonen verursacht wird, die in die Welt losgelassen wurden. Und so werden selbst Nationen, die in bittere Auseinandersetzungen verwickelt sind, ihre Meinungsverschiedenheiten beiseite legen, um zu helfen, einen Dämonenausbruch einzudämmen oder Durchbrüche aus dem Abyss zu versiegeln, ehe diese Unholde ausbrechen können."
+      },
+      {
+        titel: "Zeichen der Korruption",
+        inhalt: "Dämonen tragen den Makel der Korruption des Abyss in sich. Ihre bloße Anwesenheit macht die Welt zu einem schlechteren Ort. Pflanzen verdorren und sterben in Gegenden, in denen es zu Durchbrüchen aus dem Abyss kommt und wo Dämonen auftauchen. Tiere meiden Orte, an denen Dämonen getötet haben. Die Stätte einer dämonischen Heimsuchung könnte von einem Gestank verdorben sein, der niemals schwindet, von Gegenden bitterer Kälte oder sengender Hitze oder von dauerhaften Schatten, die die Orte kennzeichnen, wo sich die Unholde aufgehalten haben."
+      },
+      {
+        titel: "Ewiges Böse",
+        inhalt: "Außerhalb des Abyss ist der Tod nur ein unbedeutendes Ärgernis, das kein Dämon fürchtet. Gewöhnliche Waffen können diese Unholde nicht aufhalten, und viele Dämonen sind resistent gegen die Energie der mächtigsten Zauber. Wenn ein glücklicher Held es schafft, einen Dämon im Kampf niederzustrecken, dann löst sich dieser in faulig stinkendes Blut auf. Er formt sich dann augenblicklich im Abyss neu. Sein Geist und seine Essenz sind intakt und sein Hass entflammt. Die einzige Art, einen Dämon wirklich zu töten, ist es, ihn im Abyss ausfindig zu machen und dort zu töten."
+      },
+      {
+        titel: "Geschützte Essenz",
+        inhalt: "Ein mächtiger Dämon kann Schritte einleiten, um seine Lebensessenz zu schützen. Dabei verwendet er geheime Methoden und Metalle aus dem Abyss, um ein Amulett zu erschaffen, in das ein Teil dieser Essenz eingearbeitet wird. Wenn die Gestalt des Dämons im Abyss jemals zerstört wird, erlaubt es ihm das Amulett, sich an einem Ort und einer Zeit seiner Wahl neu zu formen. Ein Dämonenamulett zu erlangen ist ein gefährliches Unterfangen, und es nur zu suchen bringt schon das Risiko, die Aufmerksamkeit des Dämons auf sich zu ziehen, der es erschaffen hat. Eine Kreatur, die ein Dämonenamulett in ihrem Besitz hat, kann dem Dämon, dessen Lebensessenz das Amulett birgt, Gefallen abtrotzen – oder große Schmerzen verursachen, wenn sich der Unhold widersetzt. Wenn das Amulett zerstört wird, ist der Dämon, der es erschaffen hat, für ein Jahr und einen Tag im Abyss gefangen."
+      },
+      {
+        titel: "Dämonenkulte",
+        inhalt: "Trotz der dunklen Risiken, die jeder Umgang mit Unholden birgt, ist das sterbliche Reich voller Kreaturen, die sich nach dämonischer Macht sehnen. Dämonenfürsten manipulieren diese sterblichen Diener, sodass sie immer verderbtere Taten ausführen und so die Pläne des Dämonenfürsten vorantreiben. Im Austausch erhalten sie Magie und andere Gaben. Allerdings betrachtet ein Dämon alle Sterblichen, die ihm dienen, als bloße Werkzeuge, die er verwenden und dann auf eine Laune hin wegwerfen kann, was ihre sterbliche Seele dem Abyss übereignet."
+      },
+      {
+        titel: "Dämonenbeschwörung",
+        inhalt: "Wenige Taten sind so gefährlich wie die Beschwörung eines Dämons. Selbst Magier, die unverhohlen mit Teufeln verhandeln, fürchten die Unholde des Abyss. Auch wenn Dämonen sich danach sehnen, Chaos auf der Materiellen Ebene zu verbreiten, zeigen sie keine Dankbarkeit, wenn sie dorthin gebracht werden. Sie zürnen gegen ihren Kerker und verlangen, freigelassen zu werden. Wer das Risiko eingeht, einen Dämonen zu beschwören, könnte dies tun, um Informationen von ihm zu erhalten, ihn in seinen Dienst zu zwingen oder ihn auf eine Mission auszuschicken, die nur eine Kreatur des absoluten Bösen vollenden kann. Vorbereitung ist der Schlüssel. Erfahrene Beschwörer wissen, welche Zauber und magischen Gegenstände sie nutzen können, um einen Dämon dazu zu zwingen, sich dem Willen eines anderen zu beugen. Wenn nur ein einzelner Fehler gemacht wird, zeigt ein Dämon, der sich losreißt, keine Gnade und macht seinen Beschwörer zum ersten Opfer seines Zorns."
+      },
+      {
+        titel: "Gebundene Dämonen",
+        inhalt: "Das Buch der niederträchtigen Dunkelheit, die Schwarzen Schriftrollen von Ahm und das Demonomicon von Iggwilv sind die wichtigsten Werke zu allen dämonischen Fragen. Diese uralten Schriften beschreiben Techniken, die die Essenz eines Dämons auf der Materiellen Ebene einsperren können, um ihn in eine Waffe, ein Götzenbild oder ein Schmuckstück zu sperren und so seine Rückkehr in den Abyss zu verhindern. Ein Gegenstand, der einen Dämon binden soll, muss speziell mit unheiligen Anrufungen und unschuldigem Blut vorbereitet werden. Er strahlt greifbares Böse aus und lässt die Luft in der Umgebung kühl und übelriechend werden. Eine Kreatur, die einen solchen Gegenstand verwendet, durchlebt verstörende Träume und bösartige Impulse, kann aber den Dämon, dessen Essenz in dem Gegenstand gefangen ist, kontrollieren. Den Gegenstand zu zerstören befreit den Dämon, der sofort Rache gegen den anstrebt, der ihn gebunden hat."
+      },
+      {
+        titel: "Dämonische Besessenheit",
+        inhalt: "Egal, wie sicher er gebunden ist, ein mächtiger Dämon findet oft eine Möglichkeit, einem Gegenstand zu entkommen, der ihn birgt. Wenn eine dämonische Essenz ihrem Behältnis entkommt, kann sie einen sterblichen Wirt in Besitz nehmen. Manchmal kann ein solcher Unhold heimlich genug sein, um diese Inbesitznahme zu verbergen. Zu anderen Zeiten entfesselt er die volle Wucht seiner unheiligen Triebe durch seine neue Gestalt. Solange der Dämon seinen Wirt in Besitz hat, ist die Seele des Wirts in Gefahr, mit dem Dämon in den Abyss gerissen zu werden, wenn dieser aus dem Fleisch ausgetrieben wird oder wenn der Wirtskörper stirbt. Wenn ein Dämon eine Kreatur in Besitz nimmt und der Gegenstand, der den Dämon bindet, zerstört wird, dann hält die Besessenheit an, bis mächtige Magie verwendet wird, um den dämonischen Geist aus seinem Wirt zu vertreiben."
+      }
+    ]
+  }
+};

@@ -605,6 +605,88 @@ function MonsterDetail({ monster }) {
         </div>
       )}
 
+      {/* Art lore (general type knowledge, e.g. "Drache") */}
+      {window.UNTERART_LORE && window.UNTERART_LORE[monster.art] && (() => {
+        const lore = window.UNTERART_LORE[monster.art];
+        return (
+          <div style={{ marginTop:'16px', paddingTop:'16px', borderTop:`1px solid ${a(0.1)}` }}>
+            <SectionLabel title={monster.art} color={tc} />
+            {lore.einleitung && (
+              <p style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.85, color:'rgba(200,192,255,0.65)', letterSpacing:'0.015em', margin:'0 0 14px' }}>{lore.einleitung}</p>
+            )}
+            <div style={{ display:'flex', flexDirection:'column', gap:'14px' }}>
+              {lore.abschnitte.map((s, i) => (
+                <div key={i}>
+                  <div style={{ fontFamily:'var(--font-display)', fontSize:'10px', letterSpacing:'0.22em', color: tc, textTransform:'uppercase', opacity:0.75, marginBottom:'6px' }}>{s.titel}</div>
+                  {s.tabelle && (
+                    <table style={{ width:'100%', borderCollapse:'collapse', marginBottom:'8px', fontFamily:'var(--font-body)', fontSize:'11px' }}>
+                      <thead>
+                        <tr>
+                          {s.tabelle.kopf.map((h, hi) => (
+                            <th key={hi} style={{ textAlign:'left', padding:'4px 10px', fontWeight:'400', letterSpacing:'0.1em', color: tc, opacity:0.7, borderBottom:`1px solid ${a(0.2)}`, fontFamily:'var(--font-mono)', fontSize:'8px', textTransform:'uppercase' }}>{h}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {s.tabelle.zeilen.map((row, ri) => (
+                          <tr key={ri} style={{ background: ri % 2 === 0 ? a(0.03) : 'transparent' }}>
+                            {row.map((cell, ci) => (
+                              <td key={ci} style={{ padding:'4px 10px', color:'rgba(200,192,255,0.7)', fontWeight:'300', lineHeight:1.6 }}>{cell}</td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  )}
+                  <p style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.85, color:'rgba(200,192,255,0.55)', letterSpacing:'0.015em', margin:0 }}>{s.inhalt}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })()}
+
+      {/* Unterart lore (specific subtype knowledge, e.g. "Schattendrache", "Dämon") */}
+      {monster.unterart && monster.unterart !== monster.art && window.UNTERART_LORE && window.UNTERART_LORE[monster.unterart] && (() => {
+        const lore = window.UNTERART_LORE[monster.unterart];
+        return (
+          <div style={{ marginTop:'16px', paddingTop:'16px', borderTop:`1px solid ${a(0.1)}` }}>
+            <SectionLabel title={monster.unterart} color={tc} />
+            {lore.einleitung && (
+              <p style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.85, color:'rgba(200,192,255,0.65)', letterSpacing:'0.015em', margin:'0 0 14px' }}>{lore.einleitung}</p>
+            )}
+            <div style={{ display:'flex', flexDirection:'column', gap:'14px' }}>
+              {lore.abschnitte.map((s, i) => (
+                <div key={i}>
+                  <div style={{ fontFamily:'var(--font-display)', fontSize:'10px', letterSpacing:'0.22em', color: tc, textTransform:'uppercase', opacity:0.75, marginBottom:'6px' }}>{s.titel}</div>
+                  {s.tabelle && (
+                    <table style={{ width:'100%', borderCollapse:'collapse', marginBottom:'8px', fontFamily:'var(--font-body)', fontSize:'11px' }}>
+                      <thead>
+                        <tr>
+                          {s.tabelle.kopf.map((h, hi) => (
+                            <th key={hi} style={{ textAlign:'left', padding:'4px 10px', fontWeight:'400', letterSpacing:'0.1em', color: tc, opacity:0.7, borderBottom:`1px solid ${a(0.2)}`, fontFamily:'var(--font-mono)', fontSize:'8px', textTransform:'uppercase' }}>{h}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {s.tabelle.zeilen.map((row, ri) => (
+                          <tr key={ri} style={{ background: ri % 2 === 0 ? a(0.03) : 'transparent' }}>
+                            {row.map((cell, ci) => (
+                              <td key={ci} style={{ padding:'4px 10px', color:'rgba(200,192,255,0.7)', fontWeight:'300', lineHeight:1.6 }}>{cell}</td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  )}
+                  <p style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.85, color:'rgba(200,192,255,0.55)', letterSpacing:'0.015em', margin:0 }}>{s.inhalt}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })()}
+
       </div>{/* end full-width section */}
 
       {/* Image overlay — portal so no parent stacking context can clip it */}
