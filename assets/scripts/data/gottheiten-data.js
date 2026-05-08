@@ -147,7 +147,7 @@ window.GODS_DATA = {
       name: "Hadir", title: "Gott des Handwerks, des Reichtums und des Handels",
       domain: "Domäne des Lichts · Domäne der Schmiede · Domäne des Wissens",
       palette: ["#290a00","#731e00","#FF6200","#ff9750"],
-      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Hadir.png",
       backgroundSrc: "assets/images/gods/backgrounds/BG_Eiritha.webp",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><polygon points="40,10 68,65 12,65" stroke="currentColor" stroke-width="1.5"/><polygon points="40,22 58,58 22,58" stroke="currentColor" stroke-width="1" opacity="0.6"/><polygon points="40,34 50,52 30,52" stroke="currentColor" stroke-width="1" opacity="0.3"/><circle cx="40" cy="65" r="3" stroke="currentColor" stroke-width="1"/></svg>`,
