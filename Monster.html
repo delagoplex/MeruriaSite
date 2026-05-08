@@ -40,11 +40,12 @@ function mod(score) {
   return (m >= 0 ? '+' : '') + m;
 }
 function moralAxis(gesinnung) {
-  if (!gesinnung) return 'Ungläubig';
+  if (!gesinnung) return 'Gesinnungslos';
   const g = gesinnung.toLowerCase();
   if (g.includes('gut')) return 'Gut';
   if (g.includes('böse')) return 'Böse';
-  if (g === 'ungläubig') return 'Ungläubig';
+  if (g === 'gesinnungslos') return 'Gesinnungslos';
+  if (g === 'ungläubig') return 'Gesinnungslos';
   return 'Neutral';
 }
 function rollDice(expr) {
@@ -57,7 +58,7 @@ function rollDice(expr) {
 }
 
 const CR_ORDER = [0, 0.125, 0.25, 0.5, 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
-const SIZE_ORDER = ['Winzig','Klein','Mittel','Groß','Riesig','Gigantisch'];
+const SIZE_ORDER = ['Winzig','Klein','Mittelgroß','Groß','Riesig','Gigantisch'];
 
 // ─── TYPE COLORS ──────────────────────────────────────────────────────────────
 const TYPE_COLORS = {
@@ -95,7 +96,7 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch, dragRe
   const allCRs    = useMemo(() => [...new Set(allData.map(m => m.cr))].sort((a,b)=>a-b), [allData]);
   const allSizes  = useMemo(() => [...new Set(allData.map(m => m.groesse))].sort((a,b) => SIZE_ORDER.indexOf(a) - SIZE_ORDER.indexOf(b)), [allData]);
   const allEnvs   = useMemo(() => [...new Set(allData.flatMap(m => m.umgebung))].sort(), [allData]);
-  const morals    = ['Gut','Neutral','Böse','Ungläubig'];
+  const morals    = ['Gut','Neutral','Böse','Gesinnungslos'];
 
   const toggle = (key, val) => setFilters(f => {
     const arr = f[key] || [];
@@ -316,6 +317,26 @@ function SectionLabel({ title, color }) {
   );
 }
 
+function SizeGrid({ groesse, color }) {
+  const steps = { 'Winzig':1, 'Klein':1, 'Mittel':1, 'Mittelgroß':1, 'Groß':2, 'Riesig':3, 'Gigantisch':4 };
+  const n = steps[groesse] || 1;
+  const GRID = 4, CELL = 17, GAP = 3;
+  return (
+    <div style={{ display:'flex', flexDirection:'column', gap:`${GAP}px` }}>
+      {Array.from({ length: GRID }, (_, row) => (
+        <div key={row} style={{ display:'flex', gap:`${GAP}px` }}>
+          {Array.from({ length: GRID }, (_, col) => {
+            const lit = row >= GRID - n && col < n;
+            return (
+              <div key={col} style={{ width:`${CELL}px`, height:`${CELL}px`, background: lit ? alpha(color, 0.45) : 'rgba(255,255,255,0.05)', border:`0.5px solid ${lit ? alpha(color, 0.6) : 'rgba(255,255,255,0.12)'}` }} />
+            );
+          })}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function EffectBlock({ title, intro, items, color }) {
   if (!items || items.length === 0) return null;
   const c = color || 'oklch(0.60 0.10 200)';
@@ -521,8 +542,12 @@ function MonsterDetail({ monster }) {
 
         {/* ── Right: sticky image ────────────────────────── */}
         {monster.bild && (
-          <div style={{ width:'450px', flexShrink:0, overflow:'hidden', borderLeft:`1px solid ${a(0.15)}`, padding:'16px' }}>
+          <div style={{ width:'450px', flexShrink:0, overflow:'hidden', borderLeft:`1px solid ${a(0.15)}`, padding:'16px', display:'flex', flexDirection:'column' }}>
             <img src={monster.bild} alt={monster.name} onClick={() => setImgOpen(true)} style={{ width:'100%', height:'auto', maxHeight: statH ? `${Math.round(statH * 1.1)}px` : 'none', display:'block', objectFit:'contain', objectPosition:'top center', cursor:'zoom-in' }} />
+            <div style={{ marginTop:'12px', display:'flex', flexDirection:'column', alignItems:'flex-start', gap:'5px' }}>
+              <SizeGrid groesse={monster.groesse} color={tc} />
+              <span style={{ fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.18em', color:alpha(tc, 0.55), textTransform:'uppercase' }}>{monster.groesse}</span>
+            </div>
           </div>
         )}
 
@@ -585,8 +610,96 @@ function EmptyState({ msg }) {
   );
 }
 
+// ─── PASSWORD GATE ────────────────────────────────────────────────────────────
+function PasswordGate({ onUnlock }) {
+  const [value, setValue] = useState('');
+  const [error, setError] = useState(false);
+  const [shake, setShake] = useState(false);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (value === 'DMKey') {
+      localStorage.setItem('monster_auth', JSON.stringify({ ts: Date.now() }));
+      onUnlock();
+    } else {
+      setError(true);
+      setShake(true);
+      setValue('');
+      setTimeout(() => setShake(false), 400);
+    }
+  }
+
+  const hexPts = (() => {
+    const cx = 20, cy = 20, r = 18;
+    return Array.from({ length: 6 }, (_, i) => {
+      const a = (Math.PI / 3) * i - Math.PI / 6;
+      return `${cx + r * Math.cos(a)},${cy + r * Math.sin(a)}`;
+    }).join(' ');
+  })();
+
+  return (
+    <div style={{ position:'fixed', inset:0, background:'#05040f', display:'flex', alignItems:'center', justifyContent:'center', zIndex:9999 }}>
+      <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'28px', animation:'fadeInUp 0.4s ease' }}>
+        <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'14px' }}>
+          <svg width="40" height="40" viewBox="0 0 40 40">
+            <polygon points={hexPts} fill="rgba(160,140,255,0.08)" stroke="rgba(160,140,255,0.35)" strokeWidth="1.2"/>
+            <text x="20" y="25" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="14" fill="rgba(160,140,255,0.8)">⚿</text>
+          </svg>
+          <div style={{ fontFamily:'var(--font-display)', fontSize:'11px', letterSpacing:'0.45em', color:'rgba(200,190,255,0.45)', textTransform:'uppercase' }}>Meruria — Monster</div>
+        </div>
+
+        <form onSubmit={handleSubmit} style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'12px' }}>
+          <div style={{ position:'relative', animation: shake ? 'pulse-glow 0.4s ease' : 'none' }}>
+            <input
+              type="password"
+              value={value}
+              onChange={e => { setValue(e.target.value); setError(false); }}
+              placeholder="Passwort"
+              autoFocus
+              style={{
+                fontFamily:'var(--font-mono)', fontSize:'13px', letterSpacing:'0.15em',
+                padding:'10px 16px', width:'220px',
+                background:'rgba(160,140,255,0.05)',
+                border:`1px solid ${error ? 'rgba(220,80,80,0.6)' : 'rgba(160,140,255,0.25)'}`,
+                borderRadius:'3px', color:'#f0eeff', outline:'none',
+                transition:'border-color 0.2s', textAlign:'center'
+              }}
+              onFocus={e => { if (!error) e.target.style.borderColor='rgba(160,140,255,0.55)'; }}
+              onBlur={e => { if (!error) e.target.style.borderColor='rgba(160,140,255,0.25)'; }}
+            />
+          </div>
+          {error && (
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:'rgba(220,80,80,0.8)', textTransform:'uppercase', animation:'fadeIn 0.15s ease' }}>
+              Falsches Passwort
+            </div>
+          )}
+          <button type="submit" style={{
+            fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.28em',
+            padding:'8px 24px', background:'rgba(160,140,255,0.1)',
+            border:'1px solid rgba(160,140,255,0.3)', borderRadius:'3px',
+            color:'rgba(200,190,255,0.75)', cursor:'pointer', textTransform:'uppercase',
+            transition:'all 0.15s'
+          }}
+            onMouseEnter={e => { e.currentTarget.style.background='rgba(160,140,255,0.2)'; e.currentTarget.style.borderColor='rgba(160,140,255,0.6)'; e.currentTarget.style.color='#f0eeff'; }}
+            onMouseLeave={e => { e.currentTarget.style.background='rgba(160,140,255,0.1)'; e.currentTarget.style.borderColor='rgba(160,140,255,0.3)'; e.currentTarget.style.color='rgba(200,190,255,0.75)'; }}>
+            Eintreten
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
 // ─── MAIN APP ─────────────────────────────────────────────────────────────────
 function App() {
+  const [authed, setAuthed] = useState(() => {
+    try {
+      const raw = localStorage.getItem('monster_auth');
+      if (!raw) return false;
+      const { ts } = JSON.parse(raw);
+      return Date.now() - ts < 24 * 60 * 60 * 1000;
+    } catch { return false; }
+  });
   const [t] = useTweaks(TWEAK_DEFAULTS);
   const allMonster = window.MONSTER_DATA || [];
 
@@ -631,6 +744,8 @@ function App() {
     });
     return [...map.entries()].sort((a,b) => a[0]-b[0]);
   }, [filtered]);
+
+  if (!authed) return <PasswordGate onUnlock={() => setAuthed(true)} />;
 
   return (
     <div onMouseMove={handleMouseMove} style={{ display:'flex', flexDirection:'column', height:'100vh', position:'relative', zIndex:1 }}>

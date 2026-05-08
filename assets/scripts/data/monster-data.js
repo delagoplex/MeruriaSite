@@ -3,7 +3,7 @@ window.MONSTER_DATA = [
     name: "Aarakocra",
     art: "Humanoid",
     unterart: "Aarakocra",
-    groesse: "Mittel",
+    groesse: "Mittelgroß",
     gesinnung: "Neutral gut",
     cr: 0.25, xp: 50,
     rk: 12, ruestungstyp: null,
