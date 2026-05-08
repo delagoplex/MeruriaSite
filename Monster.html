@@ -62,23 +62,41 @@ const SIZE_ORDER = ['Winzig','Klein','Mittelgroß','Groß','Riesig','Gigantisch'
 
 // ─── TYPE COLORS ──────────────────────────────────────────────────────────────
 const TYPE_COLORS = {
-  'Aberration':      'oklch(0.60 0.18 280)',
-  'Bestie':          'oklch(0.60 0.16 140)',
-  'Drache':          'oklch(0.58 0.22 25)',
-  'Elementar':       'oklch(0.62 0.18 50)',
-  'Fee':             'oklch(0.62 0.16 320)',
-  'Himmelsgeschöpf': 'oklch(0.65 0.15 80)',
-  'Humanoid':        'oklch(0.62 0.10 220)',
-  'Konstrukt':       'oklch(0.58 0.08 195)',
-  'Monstrosität':    'oklch(0.58 0.18 10)',
-  'Pflanze':         'oklch(0.60 0.16 145)',
-  'Riese':           'oklch(0.60 0.15 35)',
-  'Schleim':         'oklch(0.58 0.15 150)',
-  'Teuflisch':       'oklch(0.55 0.22 5)',
-  'Untoter':         'oklch(0.55 0.12 270)',
+  'Aberration':      'oklch(0.58 0.20 285)',  // violet   – cosmic horror
+  'Bestie':          'oklch(0.60 0.15 60)',   // amber    – wild animal
+  'Drache':          'oklch(0.60 0.25 32)',   // orange-red – dragon fire
+  'Elementar':       'oklch(0.65 0.20 85)',   // gold     – raw energy
+  'Fee':             'oklch(0.65 0.20 325)',  // magenta  – fey glamour
+  'Himmelsgeschöpf': 'oklch(0.72 0.15 97)',  // warm gold – celestial light
+  'Humanoid':        'oklch(0.60 0.10 225)',  // steel blue – civilized folk
+  'Konstrukt':       'oklch(0.58 0.12 185)',  // teal – cold machinery
+  'Monstrosität':    'oklch(0.57 0.22 18)',   // red-orange – monstrous
+  'Pflanze':         'oklch(0.63 0.22 142)',  // vivid green – nature
+  'Riese':           'oklch(0.58 0.13 48)',   // warm stone – earth & giants
+  'Schleim':         'oklch(0.65 0.22 115)',  // acid yellow-green – ooze
+  'Tier':            'oklch(0.60 0.15 60)',   // amber    – beast
+  'Teuflisch':       'oklch(0.50 0.24 5)',    // deep crimson – hellfire
+  'Unhold':          'oklch(0.55 0.24 0)',    // blood red – demon/fiend
+  'Untoter':         'oklch(0.52 0.12 268)',  // ghostly blue-violet – undead
 };
 const typeColor = t => TYPE_COLORS[t] || 'oklch(0.60 0.10 200)';
 const alpha = (c, a) => c.replace(')', ` / ${a})`);
+
+const ART_GENDER = { feminine: ['Aberration','Monstrosität','Pflanze','Fee','Ooze'], neuter: ['Konstrukt','Tier'] };
+const SIZE_DECL = {
+  'Winzig':     ['Winziger',     'Winzige',     'Winziges'],
+  'Klein':      ['Kleiner',      'Kleine',       'Kleines'],
+  'Mittelgroß': ['Mittelgroßer', 'Mittelgroße',  'Mittelgroßes'],
+  'Groß':       ['Großer',       'Große',        'Großes'],
+  'Riesig':     ['Riesiger',     'Riesige',      'Riesiges'],
+  'Gigantisch': ['Gigantischer', 'Gigantische',  'Gigantisches'],
+};
+function declineSize(groesse, art) {
+  const decl = SIZE_DECL[groesse];
+  if (!decl) return groesse;
+  const idx = ART_GENDER.feminine.includes(art) ? 1 : ART_GENDER.neuter.includes(art) ? 2 : 0;
+  return decl[idx];
+}
 
 // ─── CHIP ─────────────────────────────────────────────────────────────────────
 function Chip({ label, active, onClick, color }) {
@@ -444,7 +462,7 @@ function MonsterDetail({ monster }) {
             <div style={{ flex:1 }}>
               <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(16px,2vw,24px)', fontWeight:'400', letterSpacing:'0.14em', color:'#f0eeff', lineHeight:1.2, textTransform:'uppercase', marginBottom:'4px' }}>{monster.name}</h1>
               <div style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', color:'rgba(200,185,255,0.55)', letterSpacing:'0.04em', fontStyle:'italic' }}>
-                {monster.groesse} {monster.art}{typeLineUnterart}, {monster.gesinnung}
+                {declineSize(monster.groesse, monster.art)} {monster.art}{typeLineUnterart}, {monster.gesinnung}
               </div>
               <div style={{ display:'flex', alignItems:'center', gap:'7px', marginTop:'6px' }}>
                 <div style={{ width:'8px', height:'8px', borderRadius:'50%', background: tc, flexShrink:0 }} />
@@ -685,6 +703,15 @@ function PasswordGate({ onUnlock }) {
             Eintreten
           </button>
         </form>
+        <a href="index.html" style={{
+          fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em',
+          color:'rgba(160,140,255,0.35)', textDecoration:'none', textTransform:'uppercase',
+          transition:'color 0.15s'
+        }}
+          onMouseEnter={e => { e.currentTarget.style.color='rgba(160,140,255,0.7)'; }}
+          onMouseLeave={e => { e.currentTarget.style.color='rgba(160,140,255,0.35)'; }}>
+          ← Zurück
+        </a>
       </div>
     </div>
   );

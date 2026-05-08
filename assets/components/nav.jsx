@@ -83,7 +83,7 @@ const NAV = [
   { id: 'einleitung', label: 'Einleitung', items: [{ label: 'Informationen', href: '#' }, { label: 'Vorgeschichte', href: '#' }, { label: 'Sitzung Null', href: '#'}] },
   { id: 'spielerhandbuch', label: 'Spielerhandbuch', items: [{ label: 'Realismus', href: '#' }, { label: 'Handwerk', href: '#' }, { label: 'Schutzherren', href: '#'}, { label: 'Gesinnungen', href: '#'}, { label: 'Regierungsformen', href: '#'}] },
   { id: 'charaktererstellung', label: 'Charaktererstellung', items: [{ label: 'Neuer Charakter', href: '#', dividerAfter: true }, { label: 'Rassen', href: 'Rassen.html' }, { label: 'Klassen', href: 'Klassen.html' }, { label: 'Talente', href: 'Talente.html' }, { label: 'Hintergründe', href: 'Hintergruende.html' }, { label: 'Zauber', href: 'Zauber.html' }, { label: 'Ausrüstung', href: 'Ausrüstung.html' }] },
-  { id: 'enzyklopaedie', label: 'Enzyklopädie', items: [{ label: 'Völker', href: '#' }, { label: 'Orte', href: '#' }, { label: 'Organisationen', href: '#' }, { label: 'Gottheiten', href: 'Gottheiten.html' }, { label: 'Religionen', href: '#' }, { label: 'Monster', href: 'Monster.html' }] },
+  { id: 'enzyklopaedie', label: 'Enzyklopädie', items: [{ label: 'Völker', href: '#' }, { label: 'Orte', href: '#' }, { label: 'Organisationen', href: '#' }, { label: 'Gottheiten', href: 'Gottheiten.html' }, { label: 'Religionen', href: '#' }, { label: 'Monster', href: 'Monster.html', locked: true }] },
   { id: 'divisionen', label: 'Divisionen', items: [{ label: 'I — Die Kuratoren', href: 'Die Kuratoren.html' }, { label: 'II — Die Sturmritter', href: 'Sturmritter.html' }, { label: 'III — Die Sentinels', href: 'Sentinels.html' }, { label: 'IV — Die Friedenshüter', href: 'Friedenshueter.html' }, { label: 'V — Die Outfitters', href: 'Outfitters.html' }, { label: 'VI — Die Pathfinders', href: 'Pathfinders.html' }, { label: 'VII — Die Quellensucher', href: 'Quellensucher.html' }, { label: 'VIII — Die Bergungsgarde', href: 'Bergungsgarde.html' }] },
   { id: 'charaktere', label: 'Charaktere', items: [{ label: 'Spielercharaktere', href: '#' }, { label: 'NSC', href: '#' }] },
   { id: 'galerie', label: 'Galerie', href: 'galerie.html' }
@@ -174,7 +174,15 @@ function NavItem({ tab }) {
                 <a href={item.href} style={{ display: 'block', padding: '10px 18px', fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', letterSpacing: '0.1em', color: 'rgba(200,190,240,0.65)', textDecoration: 'none', borderBottom: i < tab.items.length - 1 ? '1px solid rgba(160,140,255,0.08)' : 'none', transition: 'all 0.15s' }}
                   onMouseEnter={(e) => { e.currentTarget.style.color = '#f0eeff'; e.currentTarget.style.background = 'rgba(124,77,255,0.12)'; e.currentTarget.style.paddingLeft = '24px'; }}
                   onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(200,190,240,0.65)'; e.currentTarget.style.background = 'transparent'; e.currentTarget.style.paddingLeft = '18px'; }}>
-                  {item.label}
+                  <span style={{ display:'flex', alignItems:'center', gap:'5px' }}>
+                    {item.label}
+                    {item.locked && (
+                      <svg width="8" height="10" viewBox="0 0 8 10" fill="none" style={{ flexShrink:0, opacity:0.5 }}>
+                        <rect x="0.5" y="4" width="7" height="5.5" rx="1" fill="currentColor"/>
+                        <path d="M1.5 4V2.8a2.5 2.5 0 0 1 5 0V4" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round"/>
+                      </svg>
+                    )}
+                  </span>
                 </a>
               )}
               {item.dividerAfter && <div style={{ height: '1px', background: 'rgba(160,140,255,0.2)', margin: '2px 0' }} />}
