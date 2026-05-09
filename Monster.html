@@ -113,7 +113,7 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch, dragRe
   const allTypes  = useMemo(() => [...new Set(allData.map(m => m.art))].sort(), [allData]);
   const allCRs    = useMemo(() => [...new Set(allData.map(m => m.cr))].sort((a,b)=>a-b), [allData]);
   const allSizes  = useMemo(() => [...new Set(allData.map(m => m.groesse))].sort((a,b) => SIZE_ORDER.indexOf(a) - SIZE_ORDER.indexOf(b)), [allData]);
-  const allEnvs   = useMemo(() => [...new Set(allData.flatMap(m => m.umgebung))].sort(), [allData]);
+  const allEnvs   = useMemo(() => [...new Set(allData.flatMap(m => m.umgebung || []))].sort(), [allData]);
   const morals    = ['Gut','Neutral','Böse','Gesinnungslos'];
 
   const toggle = (key, val) => setFilters(f => {
@@ -514,25 +514,25 @@ function MonsterDetail({ monster }) {
             )).reduce((acc, el, i) => i === 0 ? [el] : [...acc, <span key={`sep${i}`} style={{ color:a(0.3) }}>,</span>, el], [])}
           </div>
         )}
-        {monster.verwundbarkeiten.length > 0 && (
+        {(monster.verwundbarkeiten || []).length > 0 && (
           <div style={{ display:'flex', gap:'6px', flexWrap:'wrap', alignItems:'center' }}>
             <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:a(0.5), textTransform:'uppercase' }}>Verwundbarkeiten</span>
             <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(200,180,255,0.8)' }}>{monster.verwundbarkeiten.join(', ')}</span>
           </div>
         )}
-        {monster.schadensresistenzen.length > 0 && (
+        {(monster.schadensresistenzen || []).length > 0 && (
           <div style={{ display:'flex', gap:'6px', flexWrap:'wrap', alignItems:'center' }}>
             <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:a(0.5), textTransform:'uppercase' }}>Resistenzen</span>
             <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(210,204,255,0.75)' }}>{monster.schadensresistenzen.join('; ')}</span>
           </div>
         )}
-        {monster.schadensimmunitaeten.length > 0 && (
+        {(monster.schadensimmunitaeten || []).length > 0 && (
           <div style={{ display:'flex', gap:'6px', flexWrap:'wrap', alignItems:'center' }}>
             <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:a(0.5), textTransform:'uppercase' }}>Immunitäten</span>
             <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(210,204,255,0.75)' }}>{monster.schadensimmunitaeten.join('; ')}</span>
           </div>
         )}
-        {monster.zustandsimmunitaeten.length > 0 && (
+        {(monster.zustandsimmunitaeten || []).length > 0 && (
           <div style={{ display:'flex', gap:'6px', flexWrap:'wrap', alignItems:'center' }}>
             <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:a(0.5), textTransform:'uppercase' }}>Zustandsimmunitäten</span>
             <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(210,204,255,0.75)' }}>{monster.zustandsimmunitaeten.join(', ')}</span>
@@ -542,13 +542,13 @@ function MonsterDetail({ monster }) {
           <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:a(0.5), textTransform:'uppercase' }}>Sinne</span>
           <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(210,204,255,0.75)' }}>{[...monster.sinne, `passive Wahrnehmung ${monster.passiveWahrnehmung}`].join(', ')}</span>
         </div>
-        {monster.sprachen.length > 0 && (
+        {(monster.sprachen || []).length > 0 && (
           <div style={{ display:'flex', gap:'6px', flexWrap:'wrap', alignItems:'center' }}>
             <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:a(0.5), textTransform:'uppercase' }}>Sprachen</span>
             <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(210,204,255,0.75)' }}>{monster.sprachen.join(', ')}</span>
           </div>
         )}
-        {monster.umgebung.length > 0 && (
+        {(monster.umgebung || []).length > 0 && (
           <div style={{ display:'flex', gap:'6px', flexWrap:'wrap', alignItems:'baseline' }}>
             <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:a(0.5), textTransform:'uppercase', flexShrink:0 }}>Umgebung</span>
             <TagList items={monster.umgebung} color={tc} />
@@ -576,7 +576,7 @@ function MonsterDetail({ monster }) {
 
       {/* Besonderheiten + Aktionen + Bonusaktionen + Reaktionen + Legendäre in a box */}
       <div style={{ display:'flex', flexDirection:'column', gap:'0', marginBottom:'16px', padding:'14px 14px 0', background:a(0.03), border:`1px solid ${a(0.08)}`, borderRadius:'3px' }}>
-        {monster.besonderheiten.length > 0 && (
+        {(monster.besonderheiten || []).length > 0 && (
           <ActionBlock title="Besonderheiten" items={monster.besonderheiten} accentColor={tc} color={tc} />
         )}
         <ActionBlock title="Aktionen" items={monster.aktionen} accentColor={tc} color={tc} />
@@ -833,7 +833,7 @@ function App() {
       if (filters.cr.length && !filters.cr.includes(m.cr)) return false;
       if (filters.groesse.length && !filters.groesse.includes(m.groesse)) return false;
       if (filters.moral.length && !filters.moral.includes(moralAxis(m.gesinnung))) return false;
-      if (filters.umgebung.length && !filters.umgebung.some(u => m.umgebung.includes(u))) return false;
+      if (filters.umgebung.length && !filters.umgebung.some(u => (m.umgebung || []).includes(u))) return false;
       if (filters.legendaer !== null && (!!m.legendaere_aktionen) !== filters.legendaer) return false;
       if (typeFilter && m.art !== typeFilter) return false;
       return true;

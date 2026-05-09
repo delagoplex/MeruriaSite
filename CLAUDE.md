@@ -97,6 +97,127 @@ npx serve .
 python3 -m http.server 8080
 ```
 
+## Monster data entry (`assets/scripts/data/monster-data.js`)
+
+The user regularly pastes raw OCR text from the German D&D 5e Monster Manual. Your job is to parse it, correct OCR errors, and insert a JS object into `window.MONSTER_DATA` **in alphabetical order by name**.
+
+### Full object schema
+
+```javascript
+{
+  name: "Kreaturname",          // German name, title-case
+  art: "Unhold",                // Kreaturtyp: Unhold, Untoter, Konstrukt, Pflanze, Tier,
+                                //   Drache, Elementar, Fee, Humanoid, Ooze, Schleimling,
+                                //   Riesenkreatur, Himmelswesen, Teuflisches Wesen, etc.
+  unterart: "Dämon",            // or null
+  groesse: "Mittelgroß",        // Winzig | Klein | Mittelgroß | Groß | Riesig | Gigantisch
+  gesinnung: "Chaotisch böse",  // full German alignment string, or "Gesinnungslos"
+  cr: 5,                        // number; fractions: 0.125 (1/8), 0.25 (1/4), 0.5 (1/2)
+  xp: 1800,
+  rk: 15, ruestungstyp: "natürliche Rüstung",  // ruestungstyp: null if no type stated
+  tp: 85, tp_wuerfel: "10W8+40",
+  bewegung: { "Gehen": "9 m", "Fliegen": "18 m" },  // keys: Gehen, Fliegen, Schwimmen,
+                                                      //   Klettern, Graben, Schweben
+  attribute: { STR: 18, DEX: 14, CON: 18, INT: 11, WIS: 12, CHA: 7 },
+  rettungswuerfe: { STR: 7, KON: 7 },  // only saving throws that are listed; {} if none
+                                        // keys: STR, GES, KON, INT, WEI, CHA
+  fertigkeiten: { "Wahrnehmung": 4 },  // {} if none; German skill names
+  schadensresistenzen: ["Feuer", "Kälte"],   // [] if none
+  schadensimmunitaeten: ["Gift"],             // [] if none
+  verwundbarkeiten: ["Feuer"],                // [] if none
+  zustandsimmunitaeten: ["Vergiftet"],        // [] if none; German condition names
+  sinne: ["Dunkelsicht 18 m", "Zittersinn 9 m"],  // [] if none
+  passiveWahrnehmung: 14,   // always verify: 10 + WIS mod + (perception skill bonus if listed)
+  sprachen: ["Abyssal", "Gemein"],  // [] if none (OCR often shows "-" for no languages)
+  umgebung: ["Unterirdisch", "Wald"],  // [] if unknown; common: Arktis, Ebenen, Gebirge,
+                                       //   Gewässer, Küste, Ruinen, Sumpf, Unterirdisch,
+                                       //   Stadtgebiete, Wald, Wüste
+  bild: "assets/images/monster/kreaturnname.png",  // lowercase, spaces→underscores,
+                                                    // ü→ue, ö→oe, ä→ae, ß→ss
+  beschreibung: ["Lore-Text..."],  // array of paragraph strings; pull from OCR lore
+  besonderheiten: [
+    { name: "Merkmalname", beschreibung: "Text." }
+  ],
+  aktionen: [
+    { name: "Aktionsname", beschreibung: "Text." }
+  ],
+  bonusaktionen: [],    // same structure as aktionen; [] if none
+  reaktionen: [],       // same structure; [] if none
+  legendaere_aktionen: null,   // null if none; or array of { name, beschreibung }
+  // Optional — only include if the monster has them:
+  hortaktionen: {
+    beschreibung: "Bei Initiative 20...",
+    aktionen: ["Effekt 1.", "Effekt 2.", "Effekt 3."]
+  },
+  regionale_effekte: {
+    beschreibung: "Der Hort...",
+    effekte: ["Effekt 1.", "Effekt 2.", "Effekt 3."]
+  },
+  source: "Monsterhandbuch"
+}
+```
+
+### Alphabetical insertion
+
+- Insert strictly by `name`, A→Z.
+- To find the insertion point: `grep -n 'name:' monster-data.js | grep -E '"[Letter]'`
+- Multi-variant groups (Mephits, Modrons, Lykanthropen) are kept together at the position their group name falls alphabetically.
+- Hyphen `'-'` sorts before letters, so `Myconid-Spross` < `Myconiden-Soldat`.
+
+### Validation (run after every insertion)
+
+```bash
+node -e "
+const fs = require('fs');
+const code = fs.readFileSync('assets/scripts/data/monster-data.js', 'utf8');
+const window = {};
+eval(code);
+['Name1','Name2'].forEach(n => {
+  const m = window.MONSTER_DATA.find(m => m.name === n);
+  if (!m) return console.log(n, 'NOT FOUND');
+  console.log(m.name, '| CR:', m.cr, '| TP:', m.tp);
+});
+console.log('Total:', window.MONSTER_DATA.length);
+"
+```
+
+### Common OCR errors to fix
+
+| OCR shows | Correct |
+|---|---|
+| `lW6`, `lW8`, `lWG`, `lWl0` | `1W6`, `1W8`, `1W6`, `1W10` (lowercase L → digit 1) |
+| `SW6`, `SW8` | `5W6`, `5W8` (S → 5) |
+| `W7` die | `W6` (no d7 exists; check average to confirm) |
+| `SWl0`, `lWl0` | `5W10`, `1W10` |
+| `+l` bonus | `+1` |
+| `SC 17` | `SG 17` (Zauberrettungswurf-SG) |
+| `1NT`, `CES` | `INT`, `GES` |
+| `Humaneiden` | `Humanoiden` |
+| `Terra!` | `Terral` |
+| `lgnal` | `Ignal` |
+| Darkvision `11 m` with passive `18` | Swap: use `18 m` darkvision, recalculate passive as `10 + WIS mod + perception` |
+| `3jTag`, `3/lag` | `3/Tag` |
+| Bewegungsrate stated without unit | Add ` m` |
+| Page numbers or headers mixed into stat block | Discard |
+
+### Fractional CRs
+
+| Book shows | `cr` value |
+|---|---|
+| 1/8 | `0.125` |
+| 1/4 | `0.25` |
+| 1/2 | `0.5` |
+
+### Passive Wahrnehmung — always verify
+
+`passiveWahrnehmung = 10 + WIS modifier + (Wahrnehmung skill bonus if listed)`
+
+OCR frequently swaps the darkvision range and passive perception values. If the stated passive doesn't match the formula, trust the formula.
+
+### Variable AC (Lykanthropen)
+
+Store the highest RK value in `rk`; note the lower humanoid-form value in `ruestungstyp`.
+
 ## CSS design tokens
 
 Defined in `:root` in `base.css` and per-page stylesheets:
