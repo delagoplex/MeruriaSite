@@ -11,6 +11,7 @@
 <script src="assets/components/tweaks-panel-8.jsx" type="text/babel"></script>
 <script src="assets/components/filter-utils.jsx" type="text/babel"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.jsx" type="text/babel"></script>
 <script src="assets/components/particle-field.jsx" type="text/babel"></script>
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
@@ -378,7 +379,7 @@ function App() {
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
+root.render(<SiteGate><App /></SiteGate>);
 </script>
 
 

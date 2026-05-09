@@ -13,6 +13,7 @@
 <script src="assets/scripts/data/ausrüstung-data.js"></script>
 <script src="assets/components/tweaks-panel-8.jsx" type="text/babel"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.jsx" type="text/babel"></script>
 <script src="assets/components/page-header.jsx" type="text/babel"></script>
 <script src="assets/components/particle-field.jsx" type="text/babel"></script>
 <script src="assets/components/footer.jsx" type="text/babel"></script>
@@ -1850,7 +1851,7 @@ function App() {
 
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+ReactDOM.createRoot(document.getElementById('root')).render(<SiteGate><App /></SiteGate>);
 </script>
 
 

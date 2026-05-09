@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="de"><head>
+<base href="../">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meruria — Die Sturmritter</title>
+<title>Meruria — Die Quellensucher</title>
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
 <link rel="stylesheet" href="assets/styles/global/division.css">
-<link rel="stylesheet" href="assets/styles/pages/Sturmritter.css">
+<link rel="stylesheet" href="assets/styles/pages/Quellensucher.css">
 <script src="assets/scripts/vendor/react.development.js"></script>
 <script src="assets/scripts/vendor/react-dom.development.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
 <script src="assets/scripts/data/divisions-data.js"></script>
-<script src="assets/components/tweaks-panel-10.jsx" type="text/babel"></script>
+<script src="assets/components/tweaks-panel-8.jsx" type="text/babel"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.jsx" type="text/babel"></script>
 <script src="assets/components/page-header.jsx" type="text/babel"></script>
 <script src="assets/components/particle-field.jsx" type="text/babel"></script>
 <script src="assets/components/floating-hex-field.jsx" type="text/babel"></script>
@@ -37,7 +39,7 @@ const NAV_H = 52;
 const ACCENT = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
 
 
-const DIVISION = window.DIVISIONS_DATA.find(d => d.id === 'sturmritter');
+const DIVISION = window.DIVISIONS_DATA.find(d => d.id === 'quellensucher');
 
 // ── HEX HELPER ──────────────────────────────────────────
 function hexPoints(s) {
@@ -93,8 +95,7 @@ function TOCSidebar({ navHeight, headerBottom }) {
   const [activeId, setActiveId] = useState('uebersicht');
 
   useEffect(() => {
-    const update = () => { const ideal = (headerBottom || 0) - window.scrollY;
-        const val = Math.max(0, ideal); if (asideRef.current) { asideRef.current.style.top = val + 'px'; asideRef.current.style.height = `calc(100vh - ${val}px)`; } };
+    const update = () => { const ideal = (headerBottom || 0) - window.scrollY; const val = Math.max(0, ideal); if (asideRef.current) { asideRef.current.style.top = val + 'px'; asideRef.current.style.height = `calc(100vh - ${val}px)`; } };
     update();
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update, { passive: true });
@@ -116,21 +117,21 @@ function TOCSidebar({ navHeight, headerBottom }) {
   };
 
   return (
-    <aside ref={asideRef} className="div-aside" style={{ borderRight:`1px solid ${ACCENT}18`, background:'rgba(28,8,6,0.90)' }}>
+    <aside ref={asideRef} className="div-aside" style={{ borderRight:`1px solid ${ACCENT}18`, background:'rgba(10,3,3,0.90)' }}>
 
       <div style={{ padding:'0 20px 16px', borderBottom:`1px solid ${ACCENT}12`, marginBottom:'8px' }}>
         <div style={{ display:'flex', alignItems:'center', gap:'6px', marginBottom:'6px' }}>
           <svg width="10" height="10" viewBox="0 0 10 10"><polygon points={hexPoints(10)} fill={`${ACCENT}22`} stroke={ACCENT} strokeWidth="0.8" /></svg>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.3em', color:`${ACCENT}55`, textTransform:'uppercase' }}>Division II</div>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.3em', color:`${ACCENT}55`, textTransform:'uppercase' }}>Division VII</div>
         </div>
-        <div style={{ fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:'400', letterSpacing:'0.14em', color:`${ACCENT}cc`, lineHeight:1.4 }}>Die Sturmritter</div>
+        <div style={{ fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:'400', letterSpacing:'0.14em', color:`${ACCENT}cc`, lineHeight:1.4 }}>Die Quellensucher</div>
       </div>
 
       {TOC_SECTIONS.map(entry => {
         const isActive = activeId === entry.id;
         return (
           <button key={entry.id} onClick={() => scrollTo(entry.id)}
-            style={{ display:'flex', alignItems:'flex-start', gap:'8px', width:'100%', textAlign:'left', padding: entry.indent ? '6px 20px 6px 28px' : '8px 20px', background: isActive ? `${ACCENT}0e` : 'transparent', border:'none', borderLeft: isActive ? `2px solid ${ACCENT}` : '2px solid transparent', cursor:'pointer', fontFamily:'var(--font-body)', fontWeight: entry.indent ? '300' : '400', fontSize:'11px', letterSpacing:'0.1em', fontVariant:'small-caps', color: isActive ? ACCENT : entry.indent ? 'rgba(255,185,165,0.65)' : 'rgba(255,200,185,0.85)', transition:'all 0.15s', lineHeight:1.55 }}
+            style={{ display:'flex', alignItems:'flex-start', gap:'8px', width:'100%', textAlign:'left', padding: entry.indent ? '6px 20px 6px 28px' : '8px 20px', background: isActive ? `${ACCENT}0e` : 'transparent', border:'none', borderLeft: isActive ? `2px solid ${ACCENT}` : '2px solid transparent', cursor:'pointer', fontFamily:'var(--font-body)', fontWeight: entry.indent ? '300' : '400', fontSize:'11px', letterSpacing:'0.1em', fontVariant:'small-caps', color: isActive ? ACCENT : entry.indent ? 'rgba(140,230,240,0.45)' : 'rgba(160,235,242,0.65)', transition:'all 0.15s', lineHeight:1.55 }}
             onMouseEnter={e => { if (!isActive) { e.currentTarget.style.color='#f0eeff'; e.currentTarget.style.borderLeftColor=`${ACCENT}55`; e.currentTarget.style.background=`${ACCENT}07`; }}}
             onMouseLeave={e => { if (!isActive) { e.currentTarget.style.color = entry.indent ? 'rgba(255,200,190,0.45)' : 'rgba(255,210,200,0.65)'; e.currentTarget.style.borderLeftColor='transparent'; e.currentTarget.style.background='transparent'; }}}>
             <OctSvg size={entry.indent ? 4 : 6} color={isActive ? ACCENT : `${ACCENT}44`} fill={isActive ? `${ACCENT}44` : 'transparent'} strokeWidth={1} style={{ flexShrink:0, marginTop:'3px' }} />
@@ -174,13 +175,13 @@ function DivisionPage({ division, heroRef }) {
         </div>
 
         {/* Scan line */}
-        <div style={{ position:'absolute', left:0, right:0, height:'2px', background:`linear-gradient(90deg, transparent 0%, ${accent}77 30%, rgba(255,200,180,0.92) 50%, ${accent}77 70%, transparent 100%)`, zIndex:4, pointerEvents:'none', animation:'heroScan 6s ease-in-out infinite' }} />
+        <div style={{ position:'absolute', left:0, right:0, height:'2px', background:`linear-gradient(90deg, transparent 0%, ${accent}77 30%, rgba(140,240,245,0.85) 50%, ${accent}77 70%, transparent 100%)`, zIndex:4, pointerEvents:'none', animation:'heroScan 6s ease-in-out infinite' }} />
 
         {/* Placeholder art left */}
         <div style={{ position:'absolute', left:'4%', top:'50%', transform:'translateY(-50%)', zIndex:4, pointerEvents:'none' }}>
           <div style={{ width:'240px', height:'200px', border:`1px dashed ${accent}25`, borderRadius:'3px', background:`repeating-linear-gradient(-45deg, transparent, transparent 8px, ${accent}04 8px, ${accent}04 9px)`, display:'flex', alignItems:'center', justifyContent:'center', position:'relative', overflow:'hidden' }}>
             <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse at 50% 50%, ${accent}07 0%, transparent 70%)` }} />
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', color:`${accent}30`, letterSpacing:'0.1em', textAlign:'center', position:'relative', zIndex:1 }}>divisions-artwork<br />die sturmritter</span>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', color:`${accent}30`, letterSpacing:'0.1em', textAlign:'center', position:'relative', zIndex:1 }}>divisions-artwork<br />die quellensucher</span>
           </div>
         </div>
 
@@ -213,6 +214,7 @@ function DivisionPage({ division, heroRef }) {
         </div>
 
         {/* Beschreibung */}
+        {/* Beschreibung */}
         <section id="beschreibung" className="div-section">
           <SectionBanner label="Beschreibung" accent={accent} />
           <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'14px', lineHeight:1.9, color:'rgba(240,238,255,0.78)', letterSpacing:'0.02em', textWrap:'pretty', borderLeft:`1px solid ${accent}22`, paddingLeft:'16px' }}>
@@ -232,7 +234,7 @@ function DivisionPage({ division, heroRef }) {
                 <svg width="8" height="8" viewBox="0 0 8 8" style={{ flexShrink:0, marginTop:'5px' }}>
                   <polygon points={hexPoints(8)} fill={`${accent}44`} stroke={accent} strokeWidth="0.8" />
                 </svg>
-                <span style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'13px', lineHeight:1.8, color:'rgba(255,232,225,0.85)', letterSpacing:'0.02em', textWrap:'pretty', position:'relative', zIndex:1 }}>{auftrag}</span>
+                <span style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'13px', lineHeight:1.8, color:'rgba(200,245,250,0.72)', letterSpacing:'0.02em', textWrap:'pretty', position:'relative', zIndex:1 }}>{auftrag}</span>
               </li>
             ))}
           </ul>
@@ -259,7 +261,7 @@ function DivisionPage({ division, heroRef }) {
                     <div style={{ position:'absolute', left:0, top:0, bottom:0, width:barW, background:`linear-gradient(90deg, ${accent}${isTop?'10':'07'}, transparent)`, pointerEvents:'none' }} />
                     <div style={{ position:'relative', zIndex:1, display:'flex', alignItems:'baseline', gap:'12px', flexWrap:'wrap' }}>
                       <span style={{ fontFamily:'var(--font-display)', fontSize:'13px', fontWeight:'400', letterSpacing:'0.14em', color:`rgba(240,238,255,${dimAlpha+0.1})`, textTransform:'uppercase', flexShrink:0 }}>{r.titel}</span>
-                      <span style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:1.7, color:`rgba(255,228,220,${dimAlpha + 0.15})`, letterSpacing:'0.01em' }}>{r.beschreibung}</span>
+                      <span style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:1.7, color:`rgba(195,240,245,${dimAlpha})`, letterSpacing:'0.01em' }}>{r.beschreibung}</span>
                     </div>
                   </div>
                   {isTop && <div style={{ position:'absolute', left:0, top:0, bottom:0, width:'2px', background:`linear-gradient(180deg, ${accent}99, ${accent}33)` }} />}
@@ -331,7 +333,7 @@ function App() {
   );
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+ReactDOM.createRoot(document.getElementById('root')).render(<SiteGate><App /></SiteGate>);
 </script>
 
 

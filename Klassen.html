@@ -12,6 +12,7 @@
 <script src="assets/scripts/data/klassen-data.js"></script>
 <script src="assets/components/tweaks-panel-4.jsx" type="text/babel"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.jsx" type="text/babel"></script>
 <script src="assets/components/page-header.jsx" type="text/babel"></script>
 <script src="assets/components/particle-field.jsx" type="text/babel"></script>
 <script src="assets/components/floating-hex-field.jsx" type="text/babel"></script>
@@ -443,7 +444,7 @@ function App() {
   );
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+ReactDOM.createRoot(document.getElementById('root')).render(<SiteGate><App /></SiteGate>);
 </script>
 
 

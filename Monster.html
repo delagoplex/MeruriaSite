@@ -9,8 +9,10 @@
 <script src="assets/scripts/vendor/react.development.js"></script>
 <script src="assets/scripts/vendor/react-dom.development.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/scripts/data/monster/monsterhandbuch-data.js"></script>
 <script src="assets/scripts/data/monster-data.js"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.jsx" type="text/babel"></script>
 <script src="assets/components/particle-field.jsx" type="text/babel"></script>
 <script src="assets/components/tweaks-panel-8.jsx" type="text/babel"></script>
 <script src="assets/components/filter-utils.jsx" type="text/babel"></script>
@@ -62,22 +64,21 @@ const SIZE_ORDER = ['Winzig','Klein','Mittelgroß','Groß','Riesig','Gigantisch'
 
 // ─── TYPE COLORS ──────────────────────────────────────────────────────────────
 const TYPE_COLORS = {
-  'Aberration':      'oklch(0.58 0.20 285)',  // violet   – cosmic horror
-  'Bestie':          'oklch(0.60 0.15 60)',   // amber    – wild animal
-  'Drache':          'oklch(0.60 0.25 32)',   // orange-red – dragon fire
-  'Elementar':       'oklch(0.65 0.20 85)',   // gold     – raw energy
-  'Fee':             'oklch(0.65 0.20 325)',  // magenta  – fey glamour
-  'Himmelsgeschöpf': 'oklch(0.72 0.15 97)',  // warm gold – celestial light
-  'Humanoid':        'oklch(0.60 0.10 225)',  // steel blue – civilized folk
-  'Konstrukt':       'oklch(0.58 0.12 185)',  // teal – cold machinery
-  'Monstrosität':    'oklch(0.57 0.22 18)',   // red-orange – monstrous
-  'Pflanze':         'oklch(0.63 0.22 142)',  // vivid green – nature
-  'Riese':           'oklch(0.58 0.13 48)',   // warm stone – earth & giants
-  'Schleim':         'oklch(0.65 0.22 115)',  // acid yellow-green – ooze
-  'Tier':            'oklch(0.60 0.15 60)',   // amber    – beast
-  'Teuflisch':       'oklch(0.50 0.24 5)',    // deep crimson – hellfire
-  'Unhold':          'oklch(0.55 0.24 0)',    // blood red – demon/fiend
-  'Untoter':         'oklch(0.52 0.12 268)',  // ghostly blue-violet – undead
+  'Unhold':       'oklch(0.50 0.28   5)',  // Blutrot          – Dämonen & Teufel
+  'Drache':       'oklch(0.64 0.30  40)',  // Feuer-Orange     – Drachenmacht
+  'Tier':         'oklch(0.65 0.19  58)',  // Bernstein        – wilde Tiere
+  'Riese':        'oklch(0.62 0.10  72)',  // Erdgold (matt)   – Stein & Erde
+  'Elementar':    'oklch(0.70 0.25  90)',  // Leuchtendes Gold – Elementarenergie
+  'Himmlischer':  'oklch(0.78 0.13 112)',  // Helles Gelbgrün  – göttliches Licht
+  'Schlick':      'oklch(0.67 0.29 128)',  // Säuregrün        – Schleim & Ätzend
+  'Pflanze':      'oklch(0.63 0.25 152)',  // Waldgrün         – Natur & Wachstum
+  'Monstrosität': 'oklch(0.50 0.22 170)',  // Fauliges Teal    – Chimären & Hybriden
+  'Konstrukt':    'oklch(0.60 0.16 196)',  // Kühles Teal      – Mechanismus & Magie
+  'Humanoider':   'oklch(0.62 0.16 242)',  // Indigoblau       – Humanoides Volk
+  'Untoter':      'oklch(0.54 0.18 268)',  // Geisterhaftes Violett – Tod & Geister
+  'Aberration':   'oklch(0.57 0.26 294)',  // Tiefviolett      – kosmischer Horror
+  'Feenwesen':    'oklch(0.61 0.21 316)',  // Orchidee         – Feenwelt
+  'Fee':          'oklch(0.66 0.27 342)',  // Leuchtendes Rosa – Feenzauber & Glamour
 };
 const typeColor = t => TYPE_COLORS[t] || 'oklch(0.60 0.10 200)';
 const alpha = (c, a) => c.replace(')', ` / ${a})`);
@@ -113,14 +114,15 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch, dragRe
   const allTypes  = useMemo(() => [...new Set(allData.map(m => m.art))].sort(), [allData]);
   const allCRs    = useMemo(() => [...new Set(allData.map(m => m.cr))].sort((a,b)=>a-b), [allData]);
   const allSizes  = useMemo(() => [...new Set(allData.map(m => m.groesse))].sort((a,b) => SIZE_ORDER.indexOf(a) - SIZE_ORDER.indexOf(b)), [allData]);
-  const allEnvs   = useMemo(() => [...new Set(allData.flatMap(m => m.umgebung || []))].sort(), [allData]);
+  const allEnvs    = useMemo(() => [...new Set(allData.flatMap(m => m.umgebung || []))].sort(), [allData]);
+  const allSources = useMemo(() => [...new Set(allData.map(m => m.source).filter(Boolean))].sort(), [allData]);
   const morals    = ['Gut','Neutral','Böse','Gesinnungslos'];
 
   const toggle = (key, val) => setFilters(f => {
     const arr = f[key] || [];
     return { ...f, [key]: arr.includes(val) ? arr.filter(x => x !== val) : [...arr, val] };
   });
-  const reset = () => setFilters({ art:[], cr:[], groesse:[], moral:[], umgebung:[], legendaer: null });
+  const reset = () => setFilters({ art:[], cr:[], groesse:[], moral:[], umgebung:[], source:[], legendaer: null });
   const hasAny = Object.values(filters).some(v => Array.isArray(v) ? v.length > 0 : v !== null);
 
   return (
@@ -205,6 +207,20 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch, dragRe
           ))}
         </div>
       </FilterGroup>
+
+      {/* Quelle */}
+      {allSources.length > 1 && (
+        <FilterGroup title="Quelle" active={filters.source.length > 0} onReset={() => setFilters(f => ({ ...f, source:[] }))} collapsible>
+          <div style={{ display:'flex', flexDirection:'column', gap:'3px' }}>
+            {allSources.map(s => (
+              <button key={s} onClick={() => toggle('source', s)}
+                style={{ display:'flex', alignItems:'center', gap:'7px', padding:'5px 7px', background: filters.source.includes(s) ? 'rgba(160,140,255,0.08)' : 'transparent', border:`1px solid ${filters.source.includes(s) ? 'rgba(160,140,255,0.4)' : 'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', textAlign:'left' }}>
+                <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color: filters.source.includes(s) ? '#f0eeff' : 'var(--silver)', letterSpacing:'0.03em' }}>{s}</span>
+              </button>
+            ))}
+          </div>
+        </FilterGroup>
+      )}
 
       {/* Legendär */}
       <FilterGroup title="Eigenschaften" active={filters.legendaer !== null} onReset={() => setFilters(f => ({ ...f, legendaer: null }))} collapsible>
@@ -716,9 +732,11 @@ function PasswordGate({ onUnlock }) {
   const [error, setError] = useState(false);
   const [shake, setShake] = useState(false);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    if (value === 'DMKey') {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value));
+    const hash = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+    if (hash === '5882a49f496cb2a3235c03b6b2c377760888e91281bf3c29cbf33fe1ef32a559') {
       localStorage.setItem('monster_auth', JSON.stringify({ ts: Date.now() }));
       onUnlock();
     } else {
@@ -816,8 +834,8 @@ function App() {
   const handleMouseMove = useCallback((e) => setMouse({ x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight }), []);
 
   const [search, setSearch] = useState('');
-  const [selected, setSelected] = useState(allMonster[0] || null);
-  const [filters, setFilters] = useState({ art:[], cr:[], groesse:[], moral:[], umgebung:[], legendaer: null });
+  const [selected, setSelected] = useState(allMonster.find(m => m.cr === 0) || allMonster[0] || null);
+  const [filters, setFilters] = useState({ art:[], cr:[], groesse:[], moral:[], umgebung:[], source:[], legendaer: null });
   const [typeFilter, setTypeFilter] = useState(null);
 
   const allTypes = useMemo(() => [...new Set(allMonster.map(m => m.art))].sort(), [allMonster]);
@@ -834,6 +852,7 @@ function App() {
       if (filters.groesse.length && !filters.groesse.includes(m.groesse)) return false;
       if (filters.moral.length && !filters.moral.includes(moralAxis(m.gesinnung))) return false;
       if (filters.umgebung.length && !filters.umgebung.some(u => (m.umgebung || []).includes(u))) return false;
+      if (filters.source.length && !filters.source.includes(m.source)) return false;
       if (filters.legendaer !== null && (!!m.legendaere_aktionen) !== filters.legendaer) return false;
       if (typeFilter && m.art !== typeFilter) return false;
       return true;
@@ -921,6 +940,6 @@ function App() {
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
+root.render(<SiteGate><App /></SiteGate>);
 </script>
 </body></html>
