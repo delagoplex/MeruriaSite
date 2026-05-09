@@ -7434,6 +7434,38 @@ window.MONSTER_DATA = [
     source: "Monsterhandbuch"
   },
   {
+    name: "Rabe",
+    art: "Tier",
+    unterart: null,
+    groesse: "Winzig",
+    gesinnung: "Gesinnungslos",
+    cr: 0, xp: 10,
+    rk: 12, ruestungstyp: null,
+    tp: 1, tp_wuerfel: "1W4-1",
+    bewegung: { "Gehen": "3 m", "Fliegen": "15 m" },
+    attribute: { STR: 2, DEX: 14, CON: 8, INT: 2, WIS: 12, CHA: 6 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Wahrnehmung": 3 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 13,
+    sprachen: [],
+    umgebung: ["Wald", "Ebenen", "Stadtgebiete"],
+    bild: "assets/images/monster/rabe.png",
+    beschreibung: [],
+    besonderheiten: [
+      { name: "Stimmnachahmung", beschreibung: "Der Rabe kann einfache Geräusche nachahmen, die er gehört hat, wie das Flüstern einer Person, die Schreie eines Babys oder das Zwitschern eines Tieres. Eine Kreatur, die das Geräusch hört, kann mit einem erfolgreichen Wurf auf Weisheit (Motiv erkennen) gegen SG 10 erkennen, dass er nur nachgeahmt ist." }
+    ],
+    aktionen: [
+      { name: "Schnabel", beschreibung: "Nahkampf Waffenangriff +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 1 Stichschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
     name: "Rakshasa",
     art: "Unhold",
     unterart: null,
@@ -7499,6 +7531,38 @@ window.MONSTER_DATA = [
     aktionen: [
       { name: "Umschlingen", beschreibung: "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 9 (2W6+2) Wuchtschaden, und eine große oder kleinere Kreatur wird gepackt (SG zum Entkommen 12). Bis der Haltegriff endet, ist das Ziel festgesetzt, und die Plage kann kein weiteres Ziel umschlingen." },
       { name: "Fesselnde Pflanzen (Aufladung 5–6)", beschreibung: "Schlingranken und Wurzeln wuchern in einem Radius von 4,5 m, der auf die Plage zentriert ist und sterben nach einer Minute wieder ab. Für die Wirkungsdauer ist das Gebiet schwieriges Gelände für Kreaturen, die keine Pflanzen sind. Außerdem muss jede Kreatur nach der Wahl der Plage, die sich in dem Bereich aufhält, wenn die Pflanzen erscheinen, einen Stärkerettungswurf gegen SG 12 ablegen, um nicht festgesetzt zu werden. Eine Kreatur kann ihre Aktion verwenden, um einen Stärkewurf gegen SG 12 zu machen, um sich oder eine andere festgesetzte Kreatur in Reichweite bei einem Erfolg zu befreien." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Ratte",
+    art: "Tier",
+    unterart: null,
+    groesse: "Winzig",
+    gesinnung: "Gesinnungslos",
+    cr: 0, xp: 10,
+    rk: 10, ruestungstyp: null,
+    tp: 1, tp_wuerfel: "1W4-1",
+    bewegung: { "Gehen": "6 m" },
+    attribute: { STR: 2, DEX: 11, CON: 9, INT: 2, WIS: 10, CHA: 4 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: ["Dunkelsicht 9 m"],
+    passiveWahrnehmung: 10,
+    sprachen: [],
+    umgebung: ["Stadtgebiete", "Unterirdisch"],
+    bild: "assets/images/monster/ratte.png",
+    beschreibung: [],
+    besonderheiten: [
+      { name: "Scharfer Geruchssinn", beschreibung: "Die Ratte hat einen Vorteil bei Würfen auf Weisheit (Wahrnehmung), die mit dem Geruchssinn zusammenhängen." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf Waffenangriff +0 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 1 Stichschaden." }
     ],
     bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
     source: "Monsterhandbuch"
@@ -7607,6 +7671,66 @@ window.MONSTER_DATA = [
       { name: "Klauen", beschreibung: "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, eine Kreatur. Treffer: 4 (1W4+2) Hiebschaden." },
       { name: "Blendender Odem (Aufladung 6)", beschreibung: "Der Mephit atmet einen Kegel von 4,5 m aus blendendem Staub aus. Jede Kreatur in dem Bereich muss einen Geschicklichkeitsrettungswurf gegen SG 10 ablegen, um nicht für 1 Minute blind zu sein. Die Kreatur kann den gleichen Rettungswurf am Ende eines jeden ihrer Züge wiederholen und den Effekt auf sich selbst bei einem Erfolg beenden." },
       { name: "Mephits beschwören (1/Tag)", beschreibung: "Der Mephit hat eine Chance von 25 Prozent, 1W4 Mephits seiner Art zu beschwören. Ein beschworener Mephit erscheint in einem nicht besetzten Bereich innerhalb von 18 m um den Beschwörer, dient als Verbündeter des Beschwörers und kann keine eigenen Mephits beschwören. Er bleibt für 1 Minute, bis der Beschwörer stirbt, oder bis der Beschwörer ihn als Aktion fortschickt." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Reh",
+    art: "Tier",
+    unterart: null,
+    groesse: "Mittelgroß",
+    gesinnung: "Gesinnungslos",
+    cr: 0, xp: 10,
+    rk: 13, ruestungstyp: null,
+    tp: 4, tp_wuerfel: "1W8",
+    bewegung: { "Gehen": "15 m" },
+    attribute: { STR: 11, DEX: 16, CON: 11, INT: 2, WIS: 14, CHA: 5 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 12,
+    sprachen: [],
+    umgebung: ["Wald"],
+    bild: "assets/images/monster/reh.png",
+    beschreibung: [],
+    besonderheiten: [],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf Waffenangriff +2 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 2 (1W4) Stichschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Reitpferd",
+    art: "Tier",
+    unterart: null,
+    groesse: "Groß",
+    gesinnung: "Gesinnungslos",
+    cr: 0.25, xp: 50,
+    rk: 10, ruestungstyp: null,
+    tp: 13, tp_wuerfel: "2W10+2",
+    bewegung: { "Gehen": "18 m" },
+    attribute: { STR: 16, DEX: 10, CON: 12, INT: 2, WIS: 11, CHA: 7 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 10,
+    sprachen: [],
+    umgebung: ["Ebenen"],
+    bild: "assets/images/monster/reitpferd.png",
+    beschreibung: [],
+    besonderheiten: [],
+    aktionen: [
+      { name: "Hufe", beschreibung: "Nahkampf Waffenangriff +5 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 8 (2W4+3) Wuchtschaden." }
     ],
     bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
     source: "Monsterhandbuch"
@@ -8534,6 +8658,41 @@ window.MONSTER_DATA = [
     source: "Monsterhandbuch"
   },
   {
+    name: "Oktopus",
+    art: "Tier",
+    unterart: null,
+    groesse: "Klein",
+    gesinnung: "Gesinnungslos",
+    cr: 0, xp: 10,
+    rk: 12, ruestungstyp: null,
+    tp: 3, tp_wuerfel: "1W6",
+    bewegung: { "Gehen": "1,5 m", "Schwimmen": "9 m" },
+    attribute: { STR: 4, DEX: 15, CON: 11, INT: 3, WIS: 10, CHA: 4 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Heimlichkeit": 4, "Wahrnehmung": 2 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: ["Dunkelsicht 9 m"],
+    passiveWahrnehmung: 12,
+    sprachen: [],
+    umgebung: ["Gewässer"],
+    bild: "assets/images/monster/oktopus.png",
+    beschreibung: [],
+    besonderheiten: [
+      { name: "Atem anhalten", beschreibung: "Solange er sich außerhalb des Wassers befindet, kann der Oktopus für 30 Minuten den Atem anhalten." },
+      { name: "Unterwassertarnung", beschreibung: "Der Oktopus hat einen Vorteil bei Würfen auf Geschicklichkeit (Heimlichkeit), wenn er sich unter Wasser verstecken möchte." },
+      { name: "Wasser atmen", beschreibung: "Der Oktopus kann nur unter Wasser atmen." }
+    ],
+    aktionen: [
+      { name: "Tentakel", beschreibung: "Nahkampf Waffenangriff +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 1 Wuchtschaden, und das Ziel ist gepackt (SG zum Entkommen 10). Bis der Haltegriff endet, kann der Oktopus seine Tentakel nicht gegen ein anderes Ziel verwenden." },
+      { name: "Tintenwolke (Aufladung nach einer Kurzen oder Langen Rast)", beschreibung: "Eine Tintenwolke mit 1,5 m Radius breitet sich um den Oktopus aus, wenn er sich unter Wasser befindet. Der Bereich ist für 1 Minute komplett verschleiert, aber eine starke Strömung kann die Tinte zerstreuen. Nachdem der Oktopus die Tinte abgegeben hat, kann er die Spurt-Aktion als Bonusaktion verwenden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
     name: "Oni",
     art: "Riese",
     unterart: null,
@@ -8737,6 +8896,72 @@ window.MONSTER_DATA = [
     source: "Monsterhandbuch"
   },
   {
+    name: "Panther",
+    art: "Tier",
+    unterart: null,
+    groesse: "Mittelgroß",
+    gesinnung: "Gesinnungslos",
+    cr: 0.25, xp: 50,
+    rk: 12, ruestungstyp: null,
+    tp: 13, tp_wuerfel: "3W8",
+    bewegung: { "Gehen": "15 m", "Klettern": "12 m" },
+    attribute: { STR: 14, DEX: 15, CON: 10, INT: 3, WIS: 14, CHA: 7 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Heimlichkeit": 6, "Wahrnehmung": 4 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 14,
+    sprachen: [],
+    umgebung: ["Wald"],
+    bild: "assets/images/monster/panther.png",
+    beschreibung: [],
+    besonderheiten: [
+      { name: "Scharfer Geruchssinn", beschreibung: "Der Panther hat einen Vorteil bei Würfen auf Weisheit (Wahrnehmung), die mit dem Geruchssinn zusammenhängen." },
+      { name: "Anspringen", beschreibung: "Wenn sich der Panther mindestens 6 m in gerader Linie auf ein Ziel zu bewegt und dann im gleichen Zug mit einem Klauen-Angriff trifft, muss das Ziel einen Stärkerettungswurf gegen SG 12 ablegen, um nicht den Zustand liegend zu erleiden. Wenn das Ziel liegend ist, kann der Panther als Bonusaktion einen Biss-Angriff gegen es ausführen." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf Waffenangriff +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 5 (1W6+2) Stichschaden." },
+      { name: "Klaue", beschreibung: "Nahkampf Waffenangriff +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 4 (1W4+2) Hiebschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Pavian",
+    art: "Tier",
+    unterart: null,
+    groesse: "Klein",
+    gesinnung: "Gesinnungslos",
+    cr: 0, xp: 10,
+    rk: 12, ruestungstyp: null,
+    tp: 3, tp_wuerfel: "1W6",
+    bewegung: { "Gehen": "9 m", "Klettern": "9 m" },
+    attribute: { STR: 8, DEX: 14, CON: 11, INT: 4, WIS: 12, CHA: 6 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 11,
+    sprachen: [],
+    umgebung: ["Wald", "Ebenen"],
+    bild: "assets/images/monster/pavian.png",
+    beschreibung: [],
+    besonderheiten: [
+      { name: "Rudeltaktik", beschreibung: "Der Pavian hat einen Vorteil auf Angriffswürfe gegen eine Kreatur, wenn sich mindestens ein Verbündeter des Pavians innerhalb von 1,5 m zur Kreatur befindet und nicht kampfunfähig ist." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf Waffenangriff +1 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 1 (1W4-1) Stichschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
     name: "Pegasus",
     art: "Himmlischer",
     unterart: null,
@@ -8829,6 +9054,42 @@ window.MONSTER_DATA = [
       { name: "Mehrfachangriff", beschreibung: "Der Pferdegreif führt zwei Angriffe aus: einen mit seinem Schnabel und einen mit seinen Klauen." },
       { name: "Schnabel", beschreibung: "Nahkampf-Waffenangriff: +5 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 8 (1W10+3) Stichschaden." },
       { name: "Klauen", beschreibung: "Nahkampf-Waffenangriff: +5 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 10 (2W6+3) Hiebschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Phasenspinne",
+    art: "Monstrosität",
+    unterart: null,
+    groesse: "Groß",
+    gesinnung: "Gesinnungslos",
+    cr: 3, xp: 700,
+    rk: 13, ruestungstyp: "natürliche Rüstung",
+    tp: 32, tp_wuerfel: "5W10+5",
+    bewegung: { "Gehen": "9 m", "Klettern": "9 m" },
+    attribute: { STR: 15, DEX: 15, CON: 12, INT: 6, WIS: 10, CHA: 6 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Heimlichkeit": 6 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: ["Dunkelsicht 18 m"],
+    passiveWahrnehmung: 10,
+    sprachen: [],
+    umgebung: ["Wald", "Unterirdisch"],
+    bild: "assets/images/monster/phasenspinne.png",
+    beschreibung: [
+      "Eine Phasenspinne besitzt die magische Fähigkeit, in die Ätherebene und wieder zurück zu wechseln. Sie scheint aus dem Nichts zu erscheinen und verschwindet schnell nach dem Angriff. Ihre Bewegungen auf der Ätherebene, ehe sie wieder auf der Materiellen Ebene erscheint, erzeugen den Eindruck, sie könne sich teleportieren."
+    ],
+    besonderheiten: [
+      { name: "Ätherische Bewegung", beschreibung: "Die Spinne kann als Bonusaktion auf magische Weise von der Materiellen Ebene auf die Ätherebene wechseln und andersherum." },
+      { name: "Spinnenklettern", beschreibung: "Die Spinne kann an schwierigen Oberflächen klettern, auch kopfüber an der Decke, ohne Attributswürfe ablegen zu müssen." },
+      { name: "Netzwandler", beschreibung: "Die Spinne ignoriert Bewegungseinschränkungen, die durch Netze ausgelöst werden." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, eine Kreatur. Treffer: 7 (1W10+2) Stichschaden, und das Ziel muss einen Konstitutionsrettungswurf gegen SG 11 schaffen, um nicht 18 (4W8) Giftschaden zu erleiden, halb so viel Schaden bei einem erfolgreichen Rettungswurf. Wenn der Giftschaden das Ziel auf 0 Trefferpunkte bringt, ist das Ziel stabil, aber für 1 Stunde vergiftet, selbst wenn es Trefferpunkte zurückerlangt. Es ist gelähmt, solange es auf diese Weise vergiftet ist." }
     ],
     bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
     source: "Monsterhandbuch"
@@ -8970,6 +9231,36 @@ window.MONSTER_DATA = [
     ],
     aktionen: [
       { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 14 (3W6+4) Stichschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Pony",
+    art: "Tier",
+    unterart: null,
+    groesse: "Mittelgroß",
+    gesinnung: "Gesinnungslos",
+    cr: 0.125, xp: 25,
+    rk: 10, ruestungstyp: null,
+    tp: 11, tp_wuerfel: "2W8+2",
+    bewegung: { "Gehen": "12 m" },
+    attribute: { STR: 15, DEX: 10, CON: 13, INT: 2, WIS: 11, CHA: 7 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 10,
+    sprachen: [],
+    umgebung: ["Ebenen"],
+    bild: "assets/images/monster/pony.png",
+    beschreibung: [],
+    besonderheiten: [],
+    aktionen: [
+      { name: "Hufe", beschreibung: "Nahkampf Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 7 (2W4+2) Wuchtschaden." }
     ],
     bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
     source: "Monsterhandbuch"
@@ -9191,6 +9482,41 @@ window.MONSTER_DATA = [
     source: "Monsterhandbuch"
   },
   {
+    name: "Quipper",
+    art: "Tier",
+    unterart: null,
+    groesse: "Winzig",
+    gesinnung: "Gesinnungslos",
+    cr: 0, xp: 10,
+    rk: 13, ruestungstyp: null,
+    tp: 1, tp_wuerfel: "1W4-1",
+    bewegung: { "Schwimmen": "12 m" },
+    attribute: { STR: 2, DEX: 16, CON: 9, INT: 1, WIS: 7, CHA: 2 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: ["Dunkelsicht 18 m"],
+    passiveWahrnehmung: 8,
+    sprachen: [],
+    umgebung: ["Gewässer", "Unterirdisch"],
+    bild: "assets/images/monster/quipper.png",
+    beschreibung: [
+      "Ein Quipper ist ein fleischfressender Fisch mit scharfen Zähnen. Quipper können sich an jede Umgebung unter Wasser anpassen, auch an kalte, unterirdische Seen. Sie versammeln sich oft in Schwärmen; die Spielwerte für einen Schwarm von Quippern findest du später in diesem Anhang."
+    ],
+    besonderheiten: [
+      { name: "Blutrausch", beschreibung: "Der Quipper hat einen Vorteil auf Nahkampfangriffe gegen Kreaturen, die nicht alle Trefferpunkte besitzen." },
+      { name: "Wasser atmen", beschreibung: "Der Quipper kann nur unter Wasser atmen." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf Waffenangriff: +5 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 1 Stichschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
     name: "Uralter Roter Drache",
     art: "Drache",
     unterart: "Chromatischer Drache",
@@ -9343,6 +9669,972 @@ window.MONSTER_DATA = [
     source: "Monsterhandbuch"
   },
   {
+    name: "Riesenadler",
+    art: "Tier",
+    unterart: null,
+    groesse: "Groß",
+    gesinnung: "Neutral gut",
+    cr: 1, xp: 200,
+    rk: 13, ruestungstyp: null,
+    tp: 26, tp_wuerfel: "4W10+4",
+    bewegung: { "Gehen": "3 m", "Fliegen": "24 m" },
+    attribute: { STR: 16, DEX: 17, CON: 13, INT: 8, WIS: 14, CHA: 10 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Wahrnehmung": 4 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 14,
+    sprachen: ["Riesenadler", "versteht Gemeinsprache und Auran, kann sie aber nicht sprechen"],
+    umgebung: ["Gebirge", "Wald"],
+    bild: "assets/images/monster/riesenadler.png",
+    beschreibung: [
+      "Ein Riesenadler ist eine edle Kreatur, die ihre eigene Sprache spricht und die Gemeinsprache versteht. Ein Paar von Riesenadlern hat normalerweise bis zu vier Eier oder Jungvögel im Nest (behandle diese als normale Adler)."
+    ],
+    besonderheiten: [
+      { name: "Scharfe Sicht", beschreibung: "Der Adler hat einen Vorteil bei Würfen auf Weisheit (Wahrnehmung), die mit der Sicht zusammenhängen." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Adler führt zwei Angriffe durch; einen mit seinem Schnabel und einen mit seinen Krallen." },
+      { name: "Schnabel", beschreibung: "Nahkampf Waffenangriff +5 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 6 (1W6+3) Stichschaden." },
+      { name: "Krallen", beschreibung: "Nahkampf Waffenangriff +5 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 10 (2W6+3) Hiebschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Riesenaffe",
+    art: "Tier",
+    unterart: null,
+    groesse: "Riesig",
+    gesinnung: "Gesinnungslos",
+    cr: 7, xp: 2900,
+    rk: 12, ruestungstyp: null,
+    tp: 157, tp_wuerfel: "15W12+60",
+    bewegung: { "Gehen": "12 m", "Klettern": "12 m" },
+    attribute: { STR: 23, DEX: 14, CON: 18, INT: 7, WIS: 12, CHA: 7 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Athletik": 9, "Wahrnehmung": 4 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 14,
+    sprachen: [],
+    umgebung: ["Wald"],
+    bild: "assets/images/monster/riesenaffe.png",
+    beschreibung: [],
+    besonderheiten: [],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Affe führt zwei Faust-Angriffe durch." },
+      { name: "Faust", beschreibung: "Nahkampf Waffenangriff +9 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 22 (3W10+6) Wuchtschaden." },
+      { name: "Felsbrocken", beschreibung: "Fernkampf Waffenangriff: +9 zum Treffen, Reichweite 15/30 m, ein Ziel. Treffer: 30 (7W6+6) Wuchtschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Riesendachs",
+    art: "Tier",
+    unterart: null,
+    groesse: "Mittelgroß",
+    gesinnung: "Gesinnungslos",
+    cr: 0.25, xp: 50,
+    rk: 10, ruestungstyp: null,
+    tp: 13, tp_wuerfel: "2W8+4",
+    bewegung: { "Gehen": "9 m", "Graben": "3 m" },
+    attribute: { STR: 13, DEX: 10, CON: 15, INT: 2, WIS: 12, CHA: 5 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: ["Dunkelsicht 9 m"],
+    passiveWahrnehmung: 11,
+    sprachen: [],
+    umgebung: ["Wald", "Ebenen"],
+    bild: "assets/images/monster/riesendachs.png",
+    beschreibung: [],
+    besonderheiten: [
+      { name: "Scharfer Geruchssinn", beschreibung: "Der Dachs hat einen Vorteil bei Würfen auf Weisheit (Wahrnehmung), die mit dem Geruchssinn zusammenhängen." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Dachs führt zwei Angriffe durch: einen mit seinem Biss und einen mit seinen Klauen." },
+      { name: "Biss", beschreibung: "Nahkampf Waffenangriff +3 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 4 (1W6+1) Stichschaden." },
+      { name: "Klauen", beschreibung: "Nahkampf Waffenangriff +3 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 6 (2W4+1) Hiebschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Rieseneidechse",
+    art: "Tier",
+    unterart: null,
+    groesse: "Groß",
+    gesinnung: "Gesinnungslos",
+    cr: 0.25, xp: 50,
+    rk: 12, ruestungstyp: "natürliche Rüstung",
+    tp: 19, tp_wuerfel: "3W10+3",
+    bewegung: { "Gehen": "9 m", "Klettern": "9 m" },
+    attribute: { STR: 15, DEX: 12, CON: 13, INT: 2, WIS: 10, CHA: 5 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: ["Dunkelsicht 9 m"],
+    passiveWahrnehmung: 10,
+    sprachen: [],
+    umgebung: ["Wald", "Unterirdisch", "Küste"],
+    bild: "assets/images/monster/rieseneidechse.png",
+    beschreibung: [
+      "Eine Rieseneidechse kann als Reit- oder Zugtier verwendet werden. Echsenmenschen halten sie auch als Haustiere, und unterirdische Rieseneidechsen werden von Drow, Duergar und anderen Bewohnern des Unterreichs als Reit- und Packtiere verwendet."
+    ],
+    besonderheiten: [],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf Waffenangriff +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 6 (1W8+2) Stichschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Riesenelch",
+    art: "Tier",
+    unterart: null,
+    groesse: "Riesig",
+    gesinnung: "Gesinnungslos",
+    cr: 2, xp: 450,
+    rk: 14, ruestungstyp: "natürliche Rüstung",
+    tp: 42, tp_wuerfel: "5W12+10",
+    bewegung: { "Gehen": "18 m" },
+    attribute: { STR: 19, DEX: 16, CON: 14, INT: 7, WIS: 14, CHA: 10 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Wahrnehmung": 4 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 14,
+    sprachen: ["Riesenelch", "versteht Gemeinsprache, Elfisch und Sylvanisch, kann sie aber nicht sprechen"],
+    umgebung: ["Wald", "Ebenen"],
+    bild: "assets/images/monster/riesenelch.png",
+    beschreibung: [
+      "Der majestätische Riesenelch ist so selten, dass sein Erscheinen oft als ein Omen für ein wichtiges Ereignis gedeutet wird, wie etwa die Geburt eines Königs. Legenden sagen, dass manche Götter die Gestalt von Riesenelchen annehmen, wenn sie die Materielle Ebene besuchen. Viele Kulturen glauben deshalb, dass die Jagd auf diese Kreaturen den Zorn der Götter nach sich zieht."
+    ],
+    besonderheiten: [
+      { name: "Sturmangriff", beschreibung: "Wenn sich der Elch mindestens 6 m in gerader Linie auf ein Ziel zu bewegt und dann im gleichen Zug mit einem Rammen-Angriff trifft, dann erleidet das Ziel zusätzlich 7 (2W6) Schaden. Wenn das Ziel eine Kreatur ist, muss sie einen Stärkerettungswurf gegen SG 14 ablegen, um nicht den Zustand liegend zu erleiden." }
+    ],
+    aktionen: [
+      { name: "Rammen", beschreibung: "Nahkampf Waffenangriff +6 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 11 (2W6+4) Wuchtschaden." },
+      { name: "Hufe", beschreibung: "Nahkampf Waffenangriff +6 zum Treffen, Reichweite 1,5 m, eine liegende Kreatur. Treffer: 22 (4W8+4) Wuchtschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Rieseneule",
+    art: "Tier",
+    unterart: null,
+    groesse: "Groß",
+    gesinnung: "Neutral",
+    cr: 0.25, xp: 50,
+    rk: 12, ruestungstyp: null,
+    tp: 19, tp_wuerfel: "3W10+3",
+    bewegung: { "Gehen": "1,5 m", "Fliegen": "18 m" },
+    attribute: { STR: 13, DEX: 15, CON: 12, INT: 8, WIS: 13, CHA: 10 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Heimlichkeit": 4, "Wahrnehmung": 5 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: ["Dunkelsicht 36 m"],
+    passiveWahrnehmung: 15,
+    sprachen: ["Rieseneule", "versteht Gemeinsprache, Elfisch und Sylvanisch, kann sie aber nicht sprechen"],
+    umgebung: ["Wald"],
+    bild: "assets/images/monster/rieseneule.png",
+    beschreibung: [
+      "Rieseneulen freunden sich oft mit Feen und anderen Bewohnern des Waldes an und sind Wächter ihrer Waldreiche."
+    ],
+    besonderheiten: [
+      { name: "Vorbeifliegen", beschreibung: "Die Eule provoziert keine Gelegenheitsangriffe, wenn sie aus der Reichweite des Gegners fliegt." },
+      { name: "Scharfes Gehör und scharfe Sicht", beschreibung: "Die Eule hat einen Vorteil bei Würfen auf Weisheit (Wahrnehmung), die mit dem Gehör oder der Sicht zusammenhängen." }
+    ],
+    aktionen: [
+      { name: "Krallen", beschreibung: "Nahkampf Waffenangriff +3 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 8 (2W6+1) Hiebschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Riesenfeuerkäfer",
+    art: "Tier",
+    unterart: null,
+    groesse: "Klein",
+    gesinnung: "Gesinnungslos",
+    cr: 0, xp: 10,
+    rk: 13, ruestungstyp: "natürliche Rüstung",
+    tp: 4, tp_wuerfel: "1W6+1",
+    bewegung: { "Gehen": "9 m" },
+    attribute: { STR: 8, DEX: 10, CON: 12, INT: 1, WIS: 7, CHA: 3 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 9 m"],
+    passiveWahrnehmung: 8,
+    sprachen: [],
+    umgebung: ["Unterirdisch", "Wald"],
+    bild: "assets/images/monster/riesenfeuerkaefer.png",
+    beschreibung: [
+      "Ein Riesenfeuerkäfer ist eine nächtliche Kreatur, die ihren Namen einem Paar von Leuchtorganen verdankt, die Licht abgeben. Bergarbeiter und Abenteurer schätzen diese Wesen sehr, da die Organe des Feuerkäfers noch 1W6 Tage nach dem Tod des Käfers Licht abgeben. Riesenfeuerkäfer findet man vor allem unter der Erde und in dunklen Wäldern."
+    ],
+    besonderheiten: [
+      { name: "Beleuchtung", beschreibung: "Der Käfer gibt in einem Radius von 3 m Helles Licht und in einem weiteren Radius von 3 m dämmriges Licht ab." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf Waffenangriff +1 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 2 (1W6-1) Hiebschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Riesenfledermaus",
+    art: "Tier",
+    unterart: null,
+    groesse: "Groß",
+    gesinnung: "Gesinnungslos",
+    cr: 0.25, xp: 50,
+    rk: 13, ruestungstyp: null,
+    tp: 22, tp_wuerfel: "4W10",
+    bewegung: { "Gehen": "3 m", "Fliegen": "18 m" },
+    attribute: { STR: 15, DEX: 16, CON: 11, INT: 2, WIS: 12, CHA: 6 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 18 m"],
+    passiveWahrnehmung: 11,
+    sprachen: [],
+    umgebung: ["Unterirdisch", "Wald"],
+    bild: "assets/images/monster/riesenfledermaus.png",
+    beschreibung: [],
+    besonderheiten: [
+      { name: "Echolot", beschreibung: "Die Fledermaus kann ihre Blindsicht nicht verwenden, solange sie taub ist." },
+      { name: "Scharfes Gehör", beschreibung: "Die Fledermaus hat einen Vorteil bei Würfen auf Weisheit (Wahrnehmung), die mit dem Gehör zusammenhängen." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 5 (1W6+2) Stichschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Riesenfrosch",
+    art: "Tier",
+    unterart: null,
+    groesse: "Mittelgroß",
+    gesinnung: "Gesinnungslos",
+    cr: 0.25, xp: 50,
+    rk: 11, ruestungstyp: null,
+    tp: 18, tp_wuerfel: "4W8",
+    bewegung: { "Gehen": "9 m", "Schwimmen": "9 m" },
+    attribute: { STR: 12, DEX: 13, CON: 11, INT: 2, WIS: 10, CHA: 3 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Heimlichkeit": 3, "Wahrnehmung": 2 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: ["Dunkelsicht 9 m"],
+    passiveWahrnehmung: 12,
+    sprachen: [],
+    umgebung: ["Sumpf", "Gewässer"],
+    bild: "assets/images/monster/riesenfrosch.png",
+    beschreibung: [],
+    besonderheiten: [
+      { name: "Amphibisch", beschreibung: "Der Frosch kann Luft und Wasser atmen." },
+      { name: "Stehender Sprung", beschreibung: "Der Frosch springt bis zu 6 m weit und 3 m hoch, mit oder ohne Anlauf." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf Waffenangriff +3 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 4 (1W6+1) Stichschaden, und das Ziel ist gepackt (SG zum Entkommen 11). Bis der Haltegriff endet, ist die Kreatur festgesetzt, und der Frosch kann kein anderes Ziel beißen." },
+      { name: "Verschlucken", beschreibung: "Der Frosch führt einen Biss-Angriff gegen eine Kleine oder kleinere Kreatur durch, die er gepackt hat. Wenn der Angriff trifft, wird die Kreatur verschluckt. Der Haltegriff endet dadurch. Eine verschluckte Kreatur ist blind und festgesetzt, hat vollständige Deckung gegen Angriffe und andere Effekte, die von außerhalb des Froschs kommen, und erleidet 5 (2W4) Säureschaden zu Beginn eines jeden Zugs des Froschs. Der Frosch kann nur eine Kreatur auf einmal verschlucken. Wenn der Frosch stirbt, ist eine verschluckte Kreatur nicht mehr festgesetzt und kann aus dem Kadaver entkommen, indem sie 1,5 m Bewegungsrate aufwendet. Dabei erleidet sie den Zustand liegend." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Riesengeier",
+    art: "Tier",
+    unterart: null,
+    groesse: "Groß",
+    gesinnung: "Neutral böse",
+    cr: 1, xp: 200,
+    rk: 10, ruestungstyp: null,
+    tp: 22, tp_wuerfel: "3W10+6",
+    bewegung: { "Gehen": "3 m", "Fliegen": "18 m" },
+    attribute: { STR: 15, DEX: 10, CON: 15, INT: 6, WIS: 12, CHA: 7 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Wahrnehmung": 3 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 13,
+    sprachen: ["versteht die Gemeinsprache, kann aber nicht sprechen"],
+    umgebung: ["Ebenen", "Wüste"],
+    bild: "assets/images/monster/riesengeier.png",
+    beschreibung: [
+      "Ein Riesengeier verfügt über hochentwickelte Intelligenz und ein böses Wesen. Im Gegensatz zu seinen kleineren Vettern greift er verwundete Kreaturen an, um ihr Ende zu beschleunigen. Riesengeier suchen verhungernde, verdursende Kreaturen oft für Tage heim, um sich an ihrem Leid zu erfreuen."
+    ],
+    besonderheiten: [
+      { name: "Scharfe Sicht und scharfer Geruchssinn", beschreibung: "Der Geier hat einen Vorteil bei Würfen auf Weisheit (Wahrnehmung), die mit der Sicht oder dem Geruchssinn zusammenhängen." },
+      { name: "Rudeltaktik", beschreibung: "Der Geier hat einen Vorteil bei Angriffswürfen gegen eine Kreatur, wenn sich mindestens ein Verbündeter des Geiers innerhalb von 1,5 m zur Kreatur befindet und nicht kampfunfähig ist." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Geier führt zwei Angriffe durch: einen mit seinem Schnabel und einen mit seinen Krallen." },
+      { name: "Schnabel", beschreibung: "Nahkampf Waffenangriff +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 7 (2W4+2) Stichschaden." },
+      { name: "Krallen", beschreibung: "Nahkampf Waffenangriff +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 9 (2W6+2) Hiebschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Riesengiftschlange",
+    art: "Tier",
+    unterart: null,
+    groesse: "Mittelgroß",
+    gesinnung: "Gesinnungslos",
+    cr: 0.25, xp: 50,
+    rk: 14, ruestungstyp: null,
+    tp: 11, tp_wuerfel: "2W8+2",
+    bewegung: { "Gehen": "9 m", "Schwimmen": "9 m" },
+    attribute: { STR: 10, DEX: 18, CON: 13, INT: 2, WIS: 10, CHA: 3 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Wahrnehmung": 2 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 3 m"],
+    passiveWahrnehmung: 12,
+    sprachen: [],
+    umgebung: ["Wald", "Sumpf", "Gewässer"],
+    bild: "assets/images/monster/riesengiftschlange.png",
+    beschreibung: [],
+    besonderheiten: [],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf Waffenangriff +6 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 6 (1W4+4) Stichschaden, und das Ziel muss einen Konstitutionsrettungswurf gegen SG 11 ablegen, um nicht 10 (3W6) Giftschaden zu erleiden, halb so viel Schaden bei einem erfolgreichen Rettungswurf." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Riesenhai",
+    art: "Tier",
+    unterart: null,
+    groesse: "Riesig",
+    gesinnung: "Gesinnungslos",
+    cr: 5, xp: 1800,
+    rk: 13, ruestungstyp: "natürliche Rüstung",
+    tp: 126, tp_wuerfel: "11W12+55",
+    bewegung: { "Schwimmen": "15 m" },
+    attribute: { STR: 23, DEX: 11, CON: 21, INT: 1, WIS: 10, CHA: 5 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Wahrnehmung": 3 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 18 m"],
+    passiveWahrnehmung: 13,
+    sprachen: [],
+    umgebung: ["Gewässer"],
+    bild: "assets/images/monster/riesenhai.png",
+    beschreibung: [
+      "Ein Riesenhai ist 10 m lang und normalerweise in den Tiefen des Ozeans anzutreffen. Er ist absolut furchtlos und jagt alles, was ihm in die Quere kommt, sogar Wale und Schiffe."
+    ],
+    besonderheiten: [
+      { name: "Blutrausch", beschreibung: "Der Hai hat einen Vorteil auf Nahkampfangriffe gegen Kreaturen, die nicht alle Trefferpunkte besitzen." },
+      { name: "Wasser atmen", beschreibung: "Der Hai kann nur unter Wasser atmen." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf Waffenangriff +9 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 22 (3W10+6) Stichschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Riesenhyäne",
+    art: "Tier",
+    unterart: null,
+    groesse: "Groß",
+    gesinnung: "Gesinnungslos",
+    cr: 1, xp: 200,
+    rk: 12, ruestungstyp: null,
+    tp: 45, tp_wuerfel: "6W10+12",
+    bewegung: { "Gehen": "15 m" },
+    attribute: { STR: 16, DEX: 14, CON: 14, INT: 2, WIS: 12, CHA: 7 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Wahrnehmung": 3 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 13,
+    sprachen: [],
+    umgebung: ["Ebenen", "Wüste"],
+    bild: "assets/images/monster/riesenhyaene.png",
+    beschreibung: [],
+    besonderheiten: [
+      { name: "Wüten", beschreibung: "Wenn die Hyäne mit einem Nahkampfangriff in ihrem Zug eine Kreatur auf 0 Trefferpunkte bringt, kann die Hyäne eine Bonusaktion ausführen, um sich bis zu ihre halbe Bewegungsrate zu bewegen und einen Biss-Angriff auszuführen." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf Waffenangriff: +5 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 10 (2W6+3) Stichschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Riesenkrabbe",
+    art: "Tier",
+    unterart: null,
+    groesse: "Mittelgroß",
+    gesinnung: "Gesinnungslos",
+    cr: 0.125, xp: 25,
+    rk: 15, ruestungstyp: "natürliche Rüstung",
+    tp: 13, tp_wuerfel: "3W8",
+    bewegung: { "Gehen": "9 m", "Schwimmen": "9 m" },
+    attribute: { STR: 13, DEX: 15, CON: 11, INT: 1, WIS: 9, CHA: 3 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Heimlichkeit": 4 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 9 m"],
+    passiveWahrnehmung: 9,
+    sprachen: [],
+    umgebung: ["Gewässer", "Küste"],
+    bild: "assets/images/monster/riesenkrabbe.png",
+    beschreibung: [],
+    besonderheiten: [
+      { name: "Amphibisch", beschreibung: "Die Krabbe kann Luft und Wasser atmen." }
+    ],
+    aktionen: [
+      { name: "Klaue", beschreibung: "Nahkampf Waffenangriff +3 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 4 (1W6+1) Wuchtschaden, und das Ziel ist gepackt (SG zum Entkommen 11). Die Krabbe hat zwei Scheren, die jeweils ein Ziel packen können." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Riesenkrokodil",
+    art: "Tier",
+    unterart: null,
+    groesse: "Riesig",
+    gesinnung: "Gesinnungslos",
+    cr: 5, xp: 1800,
+    rk: 14, ruestungstyp: "natürliche Rüstung",
+    tp: 85, tp_wuerfel: "9W12+27",
+    bewegung: { "Gehen": "9 m", "Schwimmen": "15 m" },
+    attribute: { STR: 21, DEX: 9, CON: 17, INT: 2, WIS: 10, CHA: 7 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Heimlichkeit": 5 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 10,
+    sprachen: [],
+    umgebung: ["Sumpf", "Gewässer"],
+    bild: "assets/images/monster/riesenkrokodil.png",
+    beschreibung: [],
+    besonderheiten: [
+      { name: "Atem anhalten", beschreibung: "Das Krokodil kann für 30 Minuten den Atem anhalten." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Das Krokodil führt zwei Angriffe durch: einen mit seinem Biss und einen mit seinem Schwanz." },
+      { name: "Biss", beschreibung: "Nahkampf Waffenangriff: +8 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 21 (3W10+5) Stichschaden, und das Ziel ist gepackt (SG zum Entkommen 16). Bis der Haltegriff endet, ist die Kreatur festgesetzt, und das Krokodil kann kein anderes Ziel beißen." },
+      { name: "Schwanz", beschreibung: "Nahkampf Waffenangriff: +8 zum Treffen, Reichweite 3 m, ein Ziel, das nicht vom Krokodil gepackt ist. Treffer: 14 (2W8+5) Wuchtschaden. Wenn das Ziel eine Kreatur ist, muss sie einen Stärkerettungswurf gegen SG 16 ablegen, um nicht den Zustand liegend zu erleiden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Riesenkröte",
+    art: "Tier",
+    unterart: null,
+    groesse: "Groß",
+    gesinnung: "Gesinnungslos",
+    cr: 1, xp: 200,
+    rk: 11, ruestungstyp: null,
+    tp: 39, tp_wuerfel: "6W10+6",
+    bewegung: { "Gehen": "6 m", "Schwimmen": "12 m" },
+    attribute: { STR: 15, DEX: 13, CON: 13, INT: 2, WIS: 10, CHA: 3 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: ["Dunkelsicht 9 m"],
+    passiveWahrnehmung: 10,
+    sprachen: [],
+    umgebung: ["Sumpf", "Gewässer"],
+    bild: "assets/images/monster/riesenkroete.png",
+    beschreibung: [],
+    besonderheiten: [
+      { name: "Amphibisch", beschreibung: "Die Kröte kann Luft und Wasser atmen." },
+      { name: "Stehender Sprung", beschreibung: "Die Kröte springt bis zu 6 m weit und 3 m hoch, mit oder ohne Anlauf." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 7 (1W10+2) Stichschaden plus 5 (1W10) Giftschaden, und das Ziel ist gepackt (SG zum Entkommen 13). Bis der Haltegriff endet, ist die Kreatur festgesetzt, und die Kröte kann kein anderes Ziel beißen." },
+      { name: "Verschlucken", beschreibung: "Die Kröte führt einen Biss-Angriff gegen eine kleine oder kleinere Kreatur durch, die sie gepackt hat. Wenn der Angriff trifft, wird die Kreatur verschluckt. Der Haltegriff endet dadurch. Eine verschluckte Kreatur ist blind und festgesetzt, hat vollständige Deckung gegen Angriffe und andere Effekte, die von außerhalb der Kröte kommen, und erleidet 10 (3W6) Säureschaden zu Beginn eines jeden Zugs der Kröte. Die Kröte kann nur eine Kreatur auf einmal verschlucken. Wenn die Kröte stirbt, ist eine verschluckte Kreatur nicht mehr festgesetzt und kann aus dem Kadaver entkommen, indem sie 1,5 m Bewegungsrate aufwendet. Dabei erleidet sie den Zustand liegend." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Riesenoktopus",
+    art: "Tier",
+    unterart: null,
+    groesse: "Groß",
+    gesinnung: "Gesinnungslos",
+    cr: 1, xp: 200,
+    rk: 11, ruestungstyp: null,
+    tp: 52, tp_wuerfel: "8W10+8",
+    bewegung: { "Gehen": "3 m", "Schwimmen": "18 m" },
+    attribute: { STR: 17, DEX: 13, CON: 13, INT: 4, WIS: 10, CHA: 4 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Heimlichkeit": 5, "Wahrnehmung": 4 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: ["Dunkelsicht 18 m"],
+    passiveWahrnehmung: 14,
+    sprachen: [],
+    umgebung: ["Gewässer"],
+    bild: "assets/images/monster/riesenoktopus.png",
+    beschreibung: [],
+    besonderheiten: [
+      { name: "Atem anhalten", beschreibung: "Solange der Oktopus sich außerhalb des Wassers befindet, kann er für 1 Stunde den Atem anhalten." },
+      { name: "Unterwassertarnung", beschreibung: "Der Oktopus hat einen Vorteil bei Würfen auf Geschicklichkeit (Heimlichkeit), wenn er sich unter Wasser verstecken möchte." },
+      { name: "Wasser atmen", beschreibung: "Der Oktopus kann nur unter Wasser atmen." }
+    ],
+    aktionen: [
+      { name: "Tentakel", beschreibung: "Nahkampf Waffenangriff +5 zum Treffen, Reichweite 4,5 m, ein Ziel. Treffer: 10 (2W6+3) Wuchtschaden. Wenn das Ziel eine Kreatur ist, wird es gepackt (SG zum Entkommen 16). Bis der Haltegriff endet, ist die Kreatur festgesetzt, und der Oktopus kann seine Tentakel nicht gegen ein anderes Ziel verwenden." },
+      { name: "Tintenwolke (Aufladung nach einer Kurzen oder Langen Rast)", beschreibung: "Eine Tintenwolke mit 6 m Radius breitet sich um den Oktopus aus, wenn er sich unter Wasser befindet. Der Bereich ist für 1 Minute komplett verschleiert, auch wenn eine starke Strömung die Tinte zerstreuen kann. Nachdem der Oktopus die Tinte abgegeben hat, kann er die Spurt-Aktion als Bonusaktion verwenden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Riesenratte",
+    art: "Tier",
+    unterart: null,
+    groesse: "Klein",
+    gesinnung: "Gesinnungslos",
+    cr: 0.125, xp: 25,
+    rk: 12, ruestungstyp: null,
+    tp: 7, tp_wuerfel: "2W6",
+    bewegung: { "Gehen": "9 m" },
+    attribute: { STR: 7, DEX: 15, CON: 11, INT: 2, WIS: 10, CHA: 4 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: ["Dunkelsicht 18 m"],
+    passiveWahrnehmung: 10,
+    sprachen: [],
+    umgebung: ["Stadtgebiete", "Unterirdisch"],
+    bild: "assets/images/monster/riesenratte.png",
+    beschreibung: [],
+    besonderheiten: [
+      { name: "Scharfer Geruchssinn", beschreibung: "Die Ratte hat einen Vorteil bei Würfen auf Weisheit (Wahrnehmung), die mit dem Geruchssinn zusammenhängen." },
+      { name: "Rudeltaktik", beschreibung: "Die Ratte hat einen Vorteil auf Angriffswürfe gegen eine Kreatur, wenn sich mindestens ein Verbündeter der Ratte innerhalb von 1,5 m zur Kreatur befindet und nicht kampfunfähig ist." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf Waffenangriff +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 4 (1W4+2) Stichschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Riesenseepferdchen",
+    art: "Tier",
+    unterart: null,
+    groesse: "Groß",
+    gesinnung: "Gesinnungslos",
+    cr: 0.5, xp: 100,
+    rk: 13, ruestungstyp: "natürliche Rüstung",
+    tp: 16, tp_wuerfel: "3W10",
+    bewegung: { "Schwimmen": "12 m" },
+    attribute: { STR: 12, DEX: 15, CON: 11, INT: 2, WIS: 12, CHA: 5 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 11,
+    sprachen: [],
+    umgebung: ["Gewässer"],
+    bild: "assets/images/monster/riesenseepferdchen.png",
+    beschreibung: [
+      "Wie ihre kleineren Vettern sind Riesenseepferdchen scheue, farbenfrohe Fische mit länglichen Körpern und eingedrehten Schwänzen. Meereselfen bilden sie als Reittiere aus."
+    ],
+    besonderheiten: [
+      { name: "Sturmangriff", beschreibung: "Wenn sich das Seepferdchen mindestens 6 m in gerader Linie auf ein Ziel zu bewegt und dann im gleichen Zug mit einem Rammen-Angriff trifft, dann erleidet das Ziel zusätzlich 7 (2W6) Wuchtschaden. Wenn das Ziel eine Kreatur ist, muss sie einen Stärkerettungswurf gegen SG 11 ablegen, um nicht den Zustand liegend zu erleiden." },
+      { name: "Wasser atmen", beschreibung: "Das Seepferdchen kann nur unter Wasser atmen." }
+    ],
+    aktionen: [
+      { name: "Rammen", beschreibung: "Nahkampf Waffenangriff +3 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 4 (1W6+1) Wuchtschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Riesenskorpion",
+    art: "Tier",
+    unterart: null,
+    groesse: "Groß",
+    gesinnung: "Gesinnungslos",
+    cr: 3, xp: 700,
+    rk: 15, ruestungstyp: "natürliche Rüstung",
+    tp: 52, tp_wuerfel: "7W10+14",
+    bewegung: { "Gehen": "12 m" },
+    attribute: { STR: 15, DEX: 13, CON: 15, INT: 1, WIS: 9, CHA: 3 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 18 m"],
+    passiveWahrnehmung: 9,
+    sprachen: [],
+    umgebung: ["Wüste", "Ebenen"],
+    bild: "assets/images/monster/riesenskorpion.png",
+    beschreibung: [],
+    besonderheiten: [],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Skorpion führt drei Angriffe durch: zwei mit seinen Zangen und einen mit seinem Stachel." },
+      { name: "Zange", beschreibung: "Nahkampf Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 6 (1W8+2) Wuchtschaden, und das Ziel ist gepackt (SG zum Entkommen 12). Der Skorpion hat zwei Zangen, die jeweils ein Ziel packen können." },
+      { name: "Stachel", beschreibung: "Nahkampf Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, eine Kreatur. Treffer: 7 (1W10+2) Stichschaden, und das Ziel muss einen Konstitutionsrettungswurf gegen SG 12 ablegen, um nicht 22 (4W10) Giftschaden zu erleiden, halb so viel Schaden bei einem erfolgreichen Rettungswurf." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Riesenspinne",
+    art: "Tier",
+    unterart: null,
+    groesse: "Groß",
+    gesinnung: "Gesinnungslos",
+    cr: 1, xp: 200,
+    rk: 14, ruestungstyp: "natürliche Rüstung",
+    tp: 26, tp_wuerfel: "4W10+4",
+    bewegung: { "Gehen": "9 m", "Klettern": "9 m" },
+    attribute: { STR: 14, DEX: 16, CON: 12, INT: 2, WIS: 11, CHA: 4 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Heimlichkeit": 7 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 3 m", "Dunkelsicht 18 m"],
+    passiveWahrnehmung: 10,
+    sprachen: [],
+    umgebung: ["Unterirdisch", "Wald"],
+    bild: "assets/images/monster/riesenspinne.png",
+    beschreibung: [
+      "Um ihre Beute zu fangen, weben Riesenspinnen komplexe Netze oder schießen klebrige Stränge aus ihrem Unterleib. Riesenspinnen findet man vor allem unter der Erde, wo sie sich an der Decke oder in dunklen, mit Netzen gefüllten Spalten niederlassen. Solche Behausungen sind oft mit Netzkokons behangen, in denen vorherige Opfer eingesponnen sind."
+    ],
+    besonderheiten: [
+      { name: "Spinnenklettern", beschreibung: "Die Spinne kann an schwierigen Oberflächen klettern, auch kopfüber an der Decke, ohne Attributswürfe ablegen zu müssen." },
+      { name: "Netzsinn", beschreibung: "Solange die Spinne in Kontakt mit einem Spinnenetz ist, weiß sie genau, wo sich andere Kreaturen aufhalten, die in Kontakt mit demselben Netz sind." },
+      { name: "Netzwandler", beschreibung: "Die Spinne ignoriert Bewegungseinschränkungen, die durch Netze ausgelöst werden." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf Waffenangriff: +5 zum Treffen, Reichweite 1,5 m, eine Kreatur. Treffer: 7 (1W8+3) Stichschaden, und das Ziel muss einen Konstitutionsrettungswurf gegen SG 11 ablegen, um nicht 9 (2W8) Giftschaden zu erleiden, halb so viel Schaden bei einem erfolgreichen Rettungswurf. Wenn der Giftschaden das Ziel auf 0 Trefferpunkte bringt, ist das Ziel stabil, aber für 1 Stunde vergiftet, selbst wenn es Trefferpunkte zurückerlangt. Es ist gelähmt, solange es auf diese Weise vergiftet ist." },
+      { name: "Netz (Aufladung 5-6)", beschreibung: "Fernkampf Waffenangriff: +5 zum Treffen, Reichweite 9/18 m, eine Kreatur. Treffer: Das Ziel wird vom Netz festgesetzt. Als Aktion kann das festgesetzte Ziel einen Stärkewurf gegen SG 12 ablegen. Bei einem Erfolg befreit es sich aus den Netzen. Die Netze können auch angegriffen und zerstört werden (RK 10, TP 5, Empfindlichkeit gegenüber Feuerschaden; Immunität gegen Wuchtschaden, Giftschaden und psychischen Schaden)." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Riesentausendfüßler",
+    art: "Tier",
+    unterart: null,
+    groesse: "Klein",
+    gesinnung: "Gesinnungslos",
+    cr: 0.25, xp: 50,
+    rk: 13, ruestungstyp: "natürliche Rüstung",
+    tp: 4, tp_wuerfel: "1W6+1",
+    bewegung: { "Gehen": "9 m", "Klettern": "9 m" },
+    attribute: { STR: 5, DEX: 14, CON: 12, INT: 1, WIS: 7, CHA: 3 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 9 m"],
+    passiveWahrnehmung: 8,
+    sprachen: [],
+    umgebung: ["Unterirdisch", "Wald"],
+    bild: "assets/images/monster/riesentausendfuessler.png",
+    beschreibung: [],
+    besonderheiten: [],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, eine Kreatur. Treffer: 4 (1W4+2) Stichschaden, und das Ziel muss einen Konstitutionsrettungswurf gegen SG 11 ablegen, um nicht 10 (3W6) Giftschaden zu erleiden. Wenn der Giftschaden das Ziel auf 0 Trefferpunkte bringt, ist das Ziel stabil, aber für 1 Stunde vergiftet, selbst wenn es Trefferpunkte zurückerlangt. Es ist gelähmt, solange es auf diese Weise vergiftet ist." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Riesenwespe",
+    art: "Tier",
+    unterart: null,
+    groesse: "Mittelgroß",
+    gesinnung: "Gesinnungslos",
+    cr: 0.5, xp: 100,
+    rk: 12, ruestungstyp: null,
+    tp: 13, tp_wuerfel: "3W8",
+    bewegung: { "Gehen": "3 m", "Fliegen": "15 m" },
+    attribute: { STR: 10, DEX: 14, CON: 10, INT: 1, WIS: 10, CHA: 3 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 10,
+    sprachen: [],
+    umgebung: ["Wald", "Ebenen"],
+    bild: "assets/images/monster/riesenwespe.png",
+    beschreibung: [],
+    besonderheiten: [],
+    aktionen: [
+      { name: "Stachel", beschreibung: "Nahkampf Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, eine Kreatur. Treffer: 5 (1W6+2) Stichschaden, und das Ziel muss einen Konstitutionsrettungswurf gegen SG 11 ablegen, um nicht 10 (3W6) Giftschaden zu erleiden, halb so viel Schaden bei einem erfolgreichen Rettungswurf. Wenn der Giftschaden das Ziel auf 0 Trefferpunkte bringt, ist das Ziel stabil, aber für 1 Stunde vergiftet, selbst wenn es Trefferpunkte zurückerlangt. Es ist gelähmt, solange es auf diese Weise vergiftet ist." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Riesenwiesel",
+    art: "Tier",
+    unterart: null,
+    groesse: "Mittelgroß",
+    gesinnung: "Gesinnungslos",
+    cr: 0.125, xp: 25,
+    rk: 13, ruestungstyp: null,
+    tp: 9, tp_wuerfel: "2W8",
+    bewegung: { "Gehen": "12 m" },
+    attribute: { STR: 11, DEX: 16, CON: 10, INT: 4, WIS: 12, CHA: 5 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Heimlichkeit": 5, "Wahrnehmung": 3 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: ["Dunkelsicht 18 m"],
+    passiveWahrnehmung: 13,
+    sprachen: [],
+    umgebung: ["Wald", "Ebenen"],
+    bild: "assets/images/monster/riesenwiesel.png",
+    beschreibung: [],
+    besonderheiten: [
+      { name: "Scharfes Gehör und scharfer Geruchssinn", beschreibung: "Das Wiesel hat einen Vorteil bei Würfen auf Weisheit (Wahrnehmung), die mit dem Gehör oder dem Geruchssinn zusammenhängen." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf Waffenangriff: +5 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 5 (1W4+3) Stichschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Riesenwildschwein",
+    art: "Tier",
+    unterart: null,
+    groesse: "Groß",
+    gesinnung: "Gesinnungslos",
+    cr: 2, xp: 450,
+    rk: 12, ruestungstyp: "natürliche Rüstung",
+    tp: 42, tp_wuerfel: "5W10+15",
+    bewegung: { "Gehen": "12 m" },
+    attribute: { STR: 17, DEX: 10, CON: 16, INT: 2, WIS: 7, CHA: 5 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 8,
+    sprachen: [],
+    umgebung: ["Wald", "Ebenen"],
+    bild: "assets/images/monster/riesenwildschwein.png",
+    beschreibung: [],
+    besonderheiten: [
+      { name: "Sturmangriff", beschreibung: "Wenn sich das Wildschwein mindestens 6 m in gerader Linie auf ein Ziel zu bewegt und dann im gleichen Zug mit einem Hauer-Angriff trifft, dann erleidet das Ziel zusätzlich 7 (2W6) Hiebschaden. Wenn das Ziel eine Kreatur ist, muss sie einen Stärkerettungswurf gegen SG 13 schaffen, um nicht den Zustand liegend zu erleiden." },
+      { name: "Unnachgiebig (Aufladung nach einer kurzen oder langen Rast)", beschreibung: "Wenn das Wildschwein 10 Schadenspunkte oder weniger erleidet, die es auf 0 Trefferpunkte bringen würden, fällt es stattdessen auf 1 Trefferpunkt." }
+    ],
+    aktionen: [
+      { name: "Hauer", beschreibung: "Nahkampf Waffenangriff: +5 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 10 (2W6+3) Hiebschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Riesenwolfsspinne",
+    art: "Tier",
+    unterart: null,
+    groesse: "Mittelgroß",
+    gesinnung: "Gesinnungslos",
+    cr: 0.25, xp: 50,
+    rk: 13, ruestungstyp: null,
+    tp: 11, tp_wuerfel: "2W8+2",
+    bewegung: { "Gehen": "12 m", "Klettern": "12 m" },
+    attribute: { STR: 12, DEX: 16, CON: 13, INT: 3, WIS: 12, CHA: 4 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Heimlichkeit": 7, "Wahrnehmung": 3 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 3 m", "Dunkelsicht 18 m"],
+    passiveWahrnehmung: 13,
+    sprachen: [],
+    umgebung: ["Wald", "Ebenen", "Unterirdisch"],
+    bild: "assets/images/monster/riesenwolfsspinne.png",
+    beschreibung: [
+      "Die Riesenwolfsspinne ist kleiner als die Riesenspinne. Sie jagt Beute über offenes Gelände oder verbirgt sich in einem Erdloch oder einer Spalte, oder in einer verborgenen Aushöhlung unter Schutt."
+    ],
+    besonderheiten: [
+      { name: "Spinnenklettern", beschreibung: "Die Spinne kann an schwierigen Oberflächen klettern, auch kopfüber an der Decke, ohne Attributswürfe ablegen zu müssen." },
+      { name: "Netzsinn", beschreibung: "Solange die Spinne in Kontakt mit einem Spinnennetz ist, weiß sie genau, wo sich andere Kreaturen aufhalten, die in Kontakt mit demselben Netz sind." },
+      { name: "Netzwandler", beschreibung: "Die Spinne ignoriert Bewegungseinschränkungen, die durch Netze ausgelöst werden." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf Waffenangriff: +3 zum Treffen, Reichweite 1,5 m, eine Kreatur. Treffer: 4 (1W6+1) Stichschaden, und das Ziel muss einen Konstitutionsrettungswurf gegen SG 11 ablegen, um nicht 7 (2W6) Giftschaden zu erleiden, halb so viel Schaden bei einem erfolgreichen Rettungswurf. Wenn der Giftschaden das Ziel auf 0 Trefferpunkte bringt, ist das Ziel stabil, aber für 1 Stunde vergiftet, selbst wenn es Trefferpunkte zurückerlangt. Es ist gelähmt, solange es auf diese Weise vergiftet ist." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Riesenwürgeschlange",
+    art: "Tier",
+    unterart: null,
+    groesse: "Riesig",
+    gesinnung: "Gesinnungslos",
+    cr: 2, xp: 450,
+    rk: 12, ruestungstyp: null,
+    tp: 60, tp_wuerfel: "8W12+8",
+    bewegung: { "Gehen": "9 m", "Schwimmen": "9 m" },
+    attribute: { STR: 19, DEX: 14, CON: 12, INT: 1, WIS: 10, CHA: 3 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Wahrnehmung": 2 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 3 m"],
+    passiveWahrnehmung: 12,
+    sprachen: [],
+    umgebung: ["Wald", "Sumpf", "Gewässer"],
+    bild: "assets/images/monster/riesenwuergeschlange.png",
+    beschreibung: [],
+    besonderheiten: [],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf Waffenangriff: +6 zum Treffen, Reichweite 3 m, eine Kreatur. Treffer: 11 (2W6+4) Stichschaden." },
+      { name: "Umschlingen", beschreibung: "Nahkampf Waffenangriff: +6 zum Treffen, Reichweite 1,5 m, eine Kreatur. Treffer: 13 (2W8+4) Wuchtschaden, und das Ziel ist gepackt (SG zum Entkommen 16). Bis der Haltegriff endet, ist die Kreatur festgesetzt, und die Schlange kann kein anderes Ziel umschlingen." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Riesenziege",
+    art: "Tier",
+    unterart: null,
+    groesse: "Groß",
+    gesinnung: "Gesinnungslos",
+    cr: 0.5, xp: 100,
+    rk: 11, ruestungstyp: "natürliche Rüstung",
+    tp: 19, tp_wuerfel: "3W10+3",
+    bewegung: { "Gehen": "12 m" },
+    attribute: { STR: 17, DEX: 11, CON: 12, INT: 3, WIS: 12, CHA: 6 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 11,
+    sprachen: [],
+    umgebung: ["Gebirge", "Ebenen"],
+    bild: "assets/images/monster/riesenziege.png",
+    beschreibung: [],
+    besonderheiten: [
+      { name: "Sturmangriff", beschreibung: "Wenn sich die Ziege mindestens 6 m in gerader Linie auf ein Ziel zu bewegt und dann im gleichen Zug mit einem Rammen-Angriff trifft, dann erleidet das Ziel zusätzlich 5 (2W4) Wuchtschaden. Wenn das Ziel eine Kreatur ist, muss sie einen Stärkerettungswurf gegen SG 13 schaffen, um nicht den Zustand liegend zu erleiden." },
+      { name: "Sicherer Stand", beschreibung: "Die Ziege hat einen Vorteil auf Geschicklichkeits- und Stärkerettungswürfe gegen Effekte, durch die sie den Zustand liegend erleiden würde." }
+    ],
+    aktionen: [
+      { name: "Rammen", beschreibung: "Nahkampf Waffenangriff: +5 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 8 (2W4+3) Wuchtschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Riffhai",
+    art: "Tier",
+    unterart: null,
+    groesse: "Mittelgroß",
+    gesinnung: "Gesinnungslos",
+    cr: 0.5, xp: 100,
+    rk: 12, ruestungstyp: "natürliche Rüstung",
+    tp: 22, tp_wuerfel: "4W8+4",
+    bewegung: { "Schwimmen": "12 m" },
+    attribute: { STR: 14, DEX: 13, CON: 13, INT: 1, WIS: 10, CHA: 4 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Wahrnehmung": 2 },
+    schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 9 m"],
+    passiveWahrnehmung: 12,
+    sprachen: [],
+    umgebung: ["Gewässer"],
+    bild: "assets/images/monster/riffhai.png",
+    beschreibung: ["Riffhaie sind relativ kleine Haie, die Korallenriffe und seichte Küstengewässer bewohnen. Obwohl kleiner als ihre Verwandten, sind sie schnelle und wendige Jäger, die in Gruppen zusammenarbeiten."],
+    besonderheiten: [
+      { name: "Rudeltaktik", beschreibung: "Der Hai hat einen Vorteil auf Angriffswürfe gegen eine Kreatur, wenn mindestens einer seiner Verbündeten sich in 1,5 m Reichweite der Kreatur befindet und der Verbündete nicht handlungsunfähig ist." },
+      { name: "Wasser atmen", beschreibung: "Der Hai kann nur unter Wasser atmen." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 6 (1W8+2) Stichschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
     name: "Roch",
     art: "Monstrosität",
     unterart: null,
@@ -9442,6 +10734,37 @@ window.MONSTER_DATA = [
     aktionen: [
       { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 9 (1W10+4) Stichschaden plus 3 (1W6) Feuerschaden." },
       { name: "Feuerodem (Aufladezeit 5–6)", beschreibung: "Der Drache atmet Feuer in einem Kegel von 4,5 m Länge. Jede Kreatur im Kegel muss einen Geschicklichkeitsrettungswurf gegen SG 13 ablegen. Bei einem misslingenden Rettungswurf erleidet sie 24 (7W6) Feuerschaden, bei einem gelungenen nur die Hälfte." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Säbelzahntiger",
+    art: "Tier",
+    unterart: null,
+    groesse: "Groß",
+    gesinnung: "Gesinnungslos",
+    cr: 2, xp: 450,
+    rk: 12, ruestungstyp: "natürliche Rüstung",
+    tp: 52, tp_wuerfel: "7W10+14",
+    bewegung: { "Gehen": "12 m" },
+    attribute: { STR: 18, DEX: 14, CON: 15, INT: 3, WIS: 12, CHA: 8 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Heimlichkeit": 6, "Wahrnehmung": 3 },
+    schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 13,
+    sprachen: [],
+    umgebung: ["Arktis", "Gebirge"],
+    bild: "assets/images/monster/saebelzahntiger.png",
+    beschreibung: ["Säbelzahntiger sind urzeitliche Raubtiere mit überlangen, gebogenen Fangzähnen. Diese massiven Katzen sind schnelle und tödliche Angreifer, die in kalten Ebenen und Gebirgsregionen auf der Jagd sind."],
+    besonderheiten: [
+      { name: "Feiner Geruchssinn", beschreibung: "Der Tiger hat einen Vorteil auf Wahrnehmungswürfe, die auf dem Geruchssinn basieren." },
+      { name: "Sprung", beschreibung: "Wenn sich der Tiger mindestens 6 m in gerader Linie auf eine Kreatur zu bewegt und dann im gleichen Zug mit einem Klauenangriff trifft, muss das Ziel einen Stärkerettungswurf gegen SG 14 schaffen, um nicht den Zustand liegend zu erleiden. Wenn das Ziel liegend ist, kann der Tiger im gleichen Zug eine Bonusaktion einsetzen, um einen Biss-Angriff auf das Ziel durchzuführen." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 10 (1W10+5) Stichschaden." },
+      { name: "Klauen", beschreibung: "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 12 (2W6+5) Hiebschaden." }
     ],
     bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
     source: "Monsterhandbuch"
@@ -9675,6 +10998,36 @@ window.MONSTER_DATA = [
       { name: "Kurzschwert", beschreibung: "Nahkampf-Waffenangriff: +5 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 6 (1W6+3) Stichschaden." },
       { name: "Kurzbogen", beschreibung: "Fernkampf-Waffenangriff: +5 zum Treffen, Reichweite 24/96 m, ein Ziel. Treffer: 6 (1W6+3) Stichschaden." },
       { name: "Panflöte (Variante)", beschreibung: "Der Satyr spielt seine Flöte und wählt einen der folgenden magischen Effekte: eine Bezaubernde Melodie, einen Furchterregenden Klang oder ein Sanftes Wiegenlied. Alle Kreaturen im Umkreis von 18 m um den Satyr, die die Flöte hören können, müssen einen Weisheitsrettungswurf gegen SG 13 ablegen, um nicht beeinflusst zu werden. Andere Satyrn und Kreaturen, die nicht bezaubert werden können, sind nicht betroffen. Eine betroffene Kreatur kann den Rettungswurf am Ende eines jeden ihrer Züge wiederholen und den Effekt bei einem Erfolg beenden. Wenn der Rettungswurf einer Kreatur erfolgreich ist oder der Effekt für sie endet, ist die Kreatur für die nächsten 24 Stunden immun gegen diese Panflöte. Bezaubernde Melodie: Die Kreatur ist für 1 Minute vom Satyr bezaubert; wenn der Satyr oder einer seiner Gefährten die Kreatur verletzt, endet der Effekt sofort. Furchterregender Klang: Die Kreatur ist für 1 Minute verängstigt. Sanftes Wiegenlied: Die Kreatur schläft ein und ist für 1 Minute bewusstlos; der Effekt endet, wenn die Kreatur Schaden erleidet oder wenn jemand eine Aktion verwendet, um sie wach zu schütteln." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Schakal",
+    art: "Tier",
+    unterart: null,
+    groesse: "Klein",
+    gesinnung: "Gesinnungslos",
+    cr: 0, xp: 10,
+    rk: 11, ruestungstyp: null,
+    tp: 3, tp_wuerfel: "1W6",
+    bewegung: { "Gehen": "12 m" },
+    attribute: { STR: 8, DEX: 15, CON: 11, INT: 3, WIS: 12, CHA: 6 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Wahrnehmung": 3 },
+    schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 13,
+    sprachen: [],
+    umgebung: ["Ebenen", "Wüste"],
+    bild: "assets/images/monster/schakal.png",
+    beschreibung: ["Schakale sind kleine Raubtiere und opportunistische Aasfresser, die in Rudeln durch Ebenen und Wüstenregionen streifen. Sie sind bekannt für ihre nächtlichen Rufe und ihre Fähigkeit, selbst die kargsten Landschaften zu überleben."],
+    besonderheiten: [
+      { name: "Feiner Gehör- und Geruchssinn", beschreibung: "Der Schakal hat einen Vorteil auf Wahrnehmungswürfe, die auf dem Gehör- oder Geruchssinn basieren." },
+      { name: "Rudeltaktik", beschreibung: "Der Schakal hat einen Vorteil auf Angriffswürfe gegen eine Kreatur, wenn mindestens einer seiner Verbündeten sich in 1,5 m Reichweite der Kreatur befindet und der Verbündete nicht handlungsunfähig ist." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +1 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 1 (1W4-1) Stichschaden." }
     ],
     bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
     source: "Monsterhandbuch"
@@ -10118,6 +11471,257 @@ window.MONSTER_DATA = [
     source: "Monsterhandbuch"
   },
   {
+    name: "Schreckenswolf",
+    art: "Tier",
+    unterart: null,
+    groesse: "Groß",
+    gesinnung: "Gesinnungslos",
+    cr: 1, xp: 200,
+    rk: 14, ruestungstyp: "natürliche Rüstung",
+    tp: 37, tp_wuerfel: "5W10+10",
+    bewegung: { "Gehen": "15 m" },
+    attribute: { STR: 17, DEX: 15, CON: 15, INT: 3, WIS: 12, CHA: 7 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Heimlichkeit": 4, "Wahrnehmung": 3 },
+    schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 13,
+    sprachen: [],
+    umgebung: ["Arktis", "Gebirge", "Wald"],
+    bild: "assets/images/monster/schreckenswolf.png",
+    beschreibung: ["Schreckenswölfe sind urzeitliche Vorläufer des modernen Wolfes – riesige, furchterregende Raubtiere, die in Rudeln durch Wälder und Gebirge streifen. Manchmal werden sie von Goblins oder Orks als Reittiere genutzt."],
+    besonderheiten: [
+      { name: "Feiner Gehör- und Geruchssinn", beschreibung: "Der Wolf hat einen Vorteil auf Wahrnehmungswürfe, die auf dem Gehör- oder Geruchssinn basieren." },
+      { name: "Rudeltaktik", beschreibung: "Der Wolf hat einen Vorteil auf Angriffswürfe gegen eine Kreatur, wenn mindestens einer seiner Verbündeten sich in 1,5 m Reichweite der Kreatur befindet und der Verbündete nicht handlungsunfähig ist." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +5 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 10 (2W6+3) Stichschaden. Wenn das Ziel eine Kreatur ist, muss es einen Stärkerettungswurf gegen SG 13 schaffen, um nicht den Zustand liegend zu erleiden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Schwarm von Fledermäusen",
+    art: "Tier",
+    unterart: null,
+    groesse: "Mittelgroß",
+    gesinnung: "Gesinnungslos",
+    cr: 0.25, xp: 50,
+    rk: 12, ruestungstyp: null,
+    tp: 22, tp_wuerfel: "5W8",
+    bewegung: { "Fliegen": "9 m" },
+    attribute: { STR: 5, DEX: 15, CON: 10, INT: 2, WIS: 12, CHA: 4 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: ["Hiebschaden", "Stichschaden", "Wuchtschaden"],
+    schadensimmunitaeten: [], verwundbarkeiten: [],
+    zustandsimmunitaeten: ["Betäubt", "Bezaubert", "Festgesetzt", "Gelähmt", "Gepackt", "Liegend", "Verängstigt", "Versteinert"],
+    sinne: ["Blindsicht 18 m"],
+    passiveWahrnehmung: 11,
+    sprachen: [],
+    umgebung: ["Unterirdisch"],
+    bild: "assets/images/monster/schwarm_von_fledermaeuse.png",
+    beschreibung: ["Wenn Fledermäuse aufgeschreckt werden, können sie einen dichten Schwarm bilden. In unterirdischen Höhlen und verlassenen Ruinen sind solche Schwärme eine häufige Gefahr für Eindringlinge."],
+    besonderheiten: [
+      { name: "Echolot", beschreibung: "Der Schwarm kann sein Blindsicht nicht nutzen, solange er taub ist." },
+      { name: "Schwarm", beschreibung: "Der Schwarm kann den Raum einer anderen Kreatur besetzen und umgekehrt. Der Schwarm kann sich durch jeden Durchgang bewegen, der groß genug für eine winzige Fledermaus ist. Der Schwarm kann keine Trefferpunkte wiedererlangen und keine temporären Trefferpunkte erhalten." }
+    ],
+    aktionen: [
+      { name: "Bisse", beschreibung: "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 0 m, eine Kreatur im Bereich des Schwarms. Treffer: 5 (2W4) Stichschaden, oder 2 (1W4) Stichschaden, wenn der Schwarm die Hälfte oder weniger seiner Trefferpunkte hat." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Schwarm von Giftschlangen",
+    art: "Tier",
+    unterart: null,
+    groesse: "Mittelgroß",
+    gesinnung: "Gesinnungslos",
+    cr: 2, xp: 450,
+    rk: 14, ruestungstyp: "natürliche Rüstung",
+    tp: 36, tp_wuerfel: "8W8",
+    bewegung: { "Gehen": "9 m", "Schwimmen": "9 m" },
+    attribute: { STR: 8, DEX: 18, CON: 11, INT: 1, WIS: 10, CHA: 3 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: ["Hiebschaden", "Stichschaden", "Wuchtschaden"],
+    schadensimmunitaeten: [], verwundbarkeiten: [],
+    zustandsimmunitaeten: ["Betäubt", "Bezaubert", "Festgesetzt", "Gelähmt", "Gepackt", "Liegend", "Verängstigt", "Versteinert"],
+    sinne: ["Blindsicht 3 m"],
+    passiveWahrnehmung: 10,
+    sprachen: [],
+    umgebung: ["Ebenen", "Sumpf", "Wald", "Wüste"],
+    bild: "assets/images/monster/schwarm_von_giftschlangen.png",
+    beschreibung: ["Ein Schwarm kleiner Giftschlangen, die gemeinsam als eine einzige Bedrohung agieren. Hunderte von Körpern und Zähnen, von denen jeder Biss potenziell tödliches Gift überträgt."],
+    besonderheiten: [
+      { name: "Schwarm", beschreibung: "Der Schwarm kann den Raum einer anderen Kreatur besetzen und umgekehrt. Der Schwarm kann sich durch jeden Durchgang bewegen, der groß genug für eine winzige Schlange ist. Der Schwarm kann keine Trefferpunkte wiedererlangen und keine temporären Trefferpunkte erhalten." }
+    ],
+    aktionen: [
+      { name: "Bisse", beschreibung: "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 0 m, eine Kreatur im Bereich des Schwarms. Treffer: 7 (2W6) Stichschaden, oder 3 (1W6) Stichschaden, wenn der Schwarm die Hälfte oder weniger seiner Trefferpunkte hat. Das Ziel muss außerdem einen Konstitutionsrettungswurf gegen SG 10 ablegen. Bei einem misslingenden Rettungswurf erleidet es 14 (4W6) Giftschaden, bei einem gelungenen nur die Hälfte." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Schwarm von Insekten",
+    art: "Tier",
+    unterart: null,
+    groesse: "Mittelgroß",
+    gesinnung: "Gesinnungslos",
+    cr: 0.5, xp: 100,
+    rk: 12, ruestungstyp: "natürliche Rüstung",
+    tp: 22, tp_wuerfel: "5W8",
+    bewegung: { "Gehen": "6 m", "Klettern": "6 m" },
+    attribute: { STR: 3, DEX: 13, CON: 10, INT: 1, WIS: 7, CHA: 1 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: ["Hiebschaden", "Stichschaden", "Wuchtschaden"],
+    schadensimmunitaeten: [], verwundbarkeiten: [],
+    zustandsimmunitaeten: ["Betäubt", "Bezaubert", "Festgesetzt", "Gelähmt", "Gepackt", "Liegend", "Verängstigt", "Versteinert"],
+    sinne: ["Blindsicht 3 m"],
+    passiveWahrnehmung: 8,
+    sprachen: [],
+    umgebung: ["Ebenen", "Sumpf", "Wald"],
+    bild: "assets/images/monster/schwarm_von_insekten.png",
+    beschreibung: ["Ein wimmelnder Haufen aus Hunderten von Insekten, der wie eine Welle über alles hereinbricht, was sich in seinem Weg befindet. Einzeln harmlos, sind diese Kreaturen in einem Schwarm eine ernsthafte Bedrohung."],
+    besonderheiten: [
+      { name: "Schwarm", beschreibung: "Der Schwarm kann den Raum einer anderen Kreatur besetzen und umgekehrt. Der Schwarm kann sich durch jeden Durchgang bewegen, der groß genug für ein winziges Insekt ist. Der Schwarm kann keine Trefferpunkte wiedererlangen und keine temporären Trefferpunkte erhalten." }
+    ],
+    aktionen: [
+      { name: "Bisse", beschreibung: "Nahkampf-Waffenangriff: +3 zum Treffen, Reichweite 0 m, eine Kreatur im Bereich des Schwarms. Treffer: 10 (4W4) Stichschaden, oder 5 (2W4) Stichschaden, wenn der Schwarm die Hälfte oder weniger seiner Trefferpunkte hat." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Schwarm von Quippern",
+    art: "Tier",
+    unterart: null,
+    groesse: "Mittelgroß",
+    gesinnung: "Gesinnungslos",
+    cr: 1, xp: 200,
+    rk: 13, ruestungstyp: "natürliche Rüstung",
+    tp: 28, tp_wuerfel: "8W8-8",
+    bewegung: { "Schwimmen": "12 m" },
+    attribute: { STR: 13, DEX: 16, CON: 9, INT: 1, WIS: 7, CHA: 2 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: ["Hiebschaden", "Stichschaden", "Wuchtschaden"],
+    schadensimmunitaeten: [], verwundbarkeiten: [],
+    zustandsimmunitaeten: ["Betäubt", "Bezaubert", "Festgesetzt", "Gelähmt", "Gepackt", "Liegend", "Verängstigt", "Versteinert"],
+    sinne: ["Dunkelsicht 18 m"],
+    passiveWahrnehmung: 8,
+    sprachen: [],
+    umgebung: ["Gewässer"],
+    bild: "assets/images/monster/schwarm_von_quippern.png",
+    beschreibung: ["Quippern sind kleine, blutrünstige Fische mit rasiermesserscharfen Zähnen. Ein Schwarm von Quippern kann selbst große Kreaturen in kürzester Zeit skelettieren, besonders wenn diese bereits verletzt sind."],
+    besonderheiten: [
+      { name: "Blutgier", beschreibung: "Der Schwarm hat einen Vorteil auf Nahkampfangriffswürfe gegen jede Kreatur, die nicht alle ihre Trefferpunkte hat." },
+      { name: "Schwarm", beschreibung: "Der Schwarm kann den Raum einer anderen Kreatur besetzen und umgekehrt. Der Schwarm kann sich durch jeden Durchgang bewegen, der groß genug für einen winzigen Quipper ist. Der Schwarm kann keine Trefferpunkte wiedererlangen und keine temporären Trefferpunkte erhalten." },
+      { name: "Wasser atmen", beschreibung: "Der Schwarm kann nur unter Wasser atmen." }
+    ],
+    aktionen: [
+      { name: "Bisse", beschreibung: "Nahkampf-Waffenangriff: +5 zum Treffen, Reichweite 0 m, eine Kreatur im Bereich des Schwarms. Treffer: 14 (4W6) Stichschaden, oder 7 (2W6) Stichschaden, wenn der Schwarm die Hälfte oder weniger seiner Trefferpunkte hat." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Schwarm von Raben",
+    art: "Tier",
+    unterart: null,
+    groesse: "Mittelgroß",
+    gesinnung: "Gesinnungslos",
+    cr: 0.25, xp: 50,
+    rk: 12, ruestungstyp: null,
+    tp: 24, tp_wuerfel: "7W8-7",
+    bewegung: { "Gehen": "3 m", "Fliegen": "15 m" },
+    attribute: { STR: 6, DEX: 14, CON: 8, INT: 3, WIS: 12, CHA: 6 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Wahrnehmung": 5 },
+    schadensresistenzen: ["Hiebschaden", "Stichschaden", "Wuchtschaden"],
+    schadensimmunitaeten: [], verwundbarkeiten: [],
+    zustandsimmunitaeten: ["Betäubt", "Bezaubert", "Festgesetzt", "Gelähmt", "Gepackt", "Liegend", "Verängstigt", "Versteinert"],
+    sinne: [],
+    passiveWahrnehmung: 15,
+    sprachen: [],
+    umgebung: ["Ebenen", "Wald"],
+    bild: "assets/images/monster/schwarm_von_raben.png",
+    beschreibung: ["Raben sind intelligente Vögel, die manchmal in großen, lautstarken Schwärmen auftreten. Ein aufgebrachter Rabenschwarm kann eine bedrohliche Wolke aus Schnäbeln und Krallen bilden, die schwierig zu bekämpfen ist."],
+    besonderheiten: [
+      { name: "Schwarm", beschreibung: "Der Schwarm kann den Raum einer anderen Kreatur besetzen und umgekehrt. Der Schwarm kann sich durch jeden Durchgang bewegen, der groß genug für einen winzigen Raben ist. Der Schwarm kann keine Trefferpunkte wiedererlangen und keine temporären Trefferpunkte erhalten." }
+    ],
+    aktionen: [
+      { name: "Schnäbel", beschreibung: "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 0 m, eine Kreatur im Bereich des Schwarms. Treffer: 7 (2W6) Stichschaden, oder 3 (1W6) Stichschaden, wenn der Schwarm die Hälfte oder weniger seiner Trefferpunkte hat." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Schwarm von Ratten",
+    art: "Tier",
+    unterart: null,
+    groesse: "Mittelgroß",
+    gesinnung: "Gesinnungslos",
+    cr: 0.25, xp: 50,
+    rk: 10, ruestungstyp: null,
+    tp: 24, tp_wuerfel: "7W8-7",
+    bewegung: { "Gehen": "9 m" },
+    attribute: { STR: 9, DEX: 11, CON: 9, INT: 2, WIS: 10, CHA: 3 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: ["Hiebschaden", "Stichschaden", "Wuchtschaden"],
+    schadensimmunitaeten: [], verwundbarkeiten: [],
+    zustandsimmunitaeten: ["Betäubt", "Bezaubert", "Festgesetzt", "Gelähmt", "Gepackt", "Liegend", "Verängstigt", "Versteinert"],
+    sinne: ["Dunkelsicht 9 m"],
+    passiveWahrnehmung: 10,
+    sprachen: [],
+    umgebung: ["Stadtgebiete", "Unterirdisch"],
+    bild: "assets/images/monster/schwarm_von_ratten.png",
+    beschreibung: ["Ratten sind allgegenwärtige Nager, die überall dort zu finden sind, wo es Nahrung und Unterschlupf gibt. Ein Schwarm hungernder Ratten, der von Krankheit oder Hunger angetrieben wird, ist eine ernstzunehmende Bedrohung."],
+    besonderheiten: [
+      { name: "Feiner Geruchssinn", beschreibung: "Der Schwarm hat einen Vorteil auf Wahrnehmungswürfe, die auf dem Geruchssinn basieren." },
+      { name: "Schwarm", beschreibung: "Der Schwarm kann den Raum einer anderen Kreatur besetzen und umgekehrt. Der Schwarm kann sich durch jeden Durchgang bewegen, der groß genug für eine winzige Ratte ist. Der Schwarm kann keine Trefferpunkte wiedererlangen und keine temporären Trefferpunkte erhalten." }
+    ],
+    aktionen: [
+      { name: "Bisse", beschreibung: "Nahkampf-Waffenangriff: +2 zum Treffen, Reichweite 0 m, eine Kreatur im Bereich des Schwarms. Treffer: 7 (2W6) Stichschaden, oder 3 (1W6) Stichschaden, wenn der Schwarm die Hälfte oder weniger seiner Trefferpunkte hat." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Schwarzbär",
+    art: "Tier",
+    unterart: null,
+    groesse: "Mittelgroß",
+    gesinnung: "Gesinnungslos",
+    cr: 0.5, xp: 100,
+    rk: 11, ruestungstyp: "natürliche Rüstung",
+    tp: 19, tp_wuerfel: "3W8+6",
+    bewegung: { "Gehen": "12 m", "Klettern": "9 m" },
+    attribute: { STR: 15, DEX: 10, CON: 14, INT: 2, WIS: 12, CHA: 7 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Wahrnehmung": 3 },
+    schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 13,
+    sprachen: [],
+    umgebung: ["Wald", "Gebirge"],
+    bild: "assets/images/monster/schwarzbaer.png",
+    beschreibung: ["Schwarzbären sind die häufigsten Bären in vielen Regionen. Obwohl sie meist scheu sind, können sie gefährlich werden, wenn sie sich bedroht fühlen oder Nahrung suchen."],
+    besonderheiten: [
+      { name: "Scharfer Geruchssinn", beschreibung: "Der Bär hat einen Vorteil bei Würfen auf Weisheit (Wahrnehmung), die mit dem Geruchssinn zusammenhängen." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Bär führt zwei Angriffe durch: einen mit seinem Biss und einen mit seinen Klauen." },
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +3 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 5 (1W6+2) Stichschaden." },
+      { name: "Klauen", beschreibung: "Nahkampf-Waffenangriff: +3 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 7 (2W4+2) Hiebschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
     name: "Schwarzer Blob",
     art: "Schlick",
     unterart: null,
@@ -10463,6 +12067,33 @@ window.MONSTER_DATA = [
     source: "Monsterhandbuch"
   },
   {
+    name: "Seepferdchen",
+    art: "Tier",
+    unterart: null,
+    groesse: "Winzig",
+    gesinnung: "Gesinnungslos",
+    cr: 0, xp: 0,
+    rk: 11, ruestungstyp: null,
+    tp: 1, tp_wuerfel: "1W4-1",
+    bewegung: { "Schwimmen": "12 m" },
+    attribute: { STR: 1, DEX: 12, CON: 8, INT: 1, WIS: 10, CHA: 2 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 10,
+    sprachen: [],
+    umgebung: ["Gewässer"],
+    bild: "assets/images/monster/seepferdchen.png",
+    beschreibung: ["Seepferdchen sind kleine, elegante Meeresbewohner, die sich langsam durch das Wasser treiben lassen. Trotz ihrer zierlichen Erscheinung können sie sich überraschend gut in Korallenriffen und Seegraswiesen verbergen."],
+    besonderheiten: [
+      { name: "Wasser atmen", beschreibung: "Das Seepferdchen kann nur unter Wasser atmen." }
+    ],
+    aktionen: [],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
     name: "Seevettel",
     art: "Feenwesen",
     unterart: null,
@@ -10637,6 +12268,62 @@ window.MONSTER_DATA = [
     aktionen: [
       { name: "Zweihandaxt", beschreibung: "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 17 (2W12+4) Hiebschaden." },
       { name: "Aufspießen", beschreibung: "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 13 (2W8+4) Stichschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Skorpion",
+    art: "Tier",
+    unterart: null,
+    groesse: "Winzig",
+    gesinnung: "Gesinnungslos",
+    cr: 0, xp: 10,
+    rk: 11, ruestungstyp: "natürliche Rüstung",
+    tp: 1, tp_wuerfel: "1W4-1",
+    bewegung: { "Gehen": "3 m" },
+    attribute: { STR: 2, DEX: 11, CON: 8, INT: 1, WIS: 8, CHA: 2 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 3 m"],
+    passiveWahrnehmung: 9,
+    sprachen: [],
+    umgebung: ["Wüste"],
+    bild: "assets/images/monster/skorpion.png",
+    beschreibung: ["Skorpione sind kleine Spinnentiere mit einem giftigen Stachel am Ende ihres Schwanzes. Sie bevorzugen trockene und felsige Umgebungen und sind vor allem nachts aktiv."],
+    besonderheiten: [],
+    aktionen: [
+      { name: "Stachel", beschreibung: "Nahkampf-Waffenangriff: +2 zum Treffen, Reichweite 1,5 m, eine Kreatur. Treffer: 1 Stichschaden, und das Ziel muss einen Konstitutionsrettungswurf gegen SG 9 ablegen, um nicht 4 (1W8) Giftschaden zu erleiden, halb so viel Schaden bei einem gelungenen Rettungswurf." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Streitross",
+    art: "Tier",
+    unterart: null,
+    groesse: "Groß",
+    gesinnung: "Gesinnungslos",
+    cr: 0.5, xp: 100,
+    rk: 11, ruestungstyp: null,
+    tp: 19, tp_wuerfel: "3W10+3",
+    bewegung: { "Gehen": "18 m" },
+    attribute: { STR: 18, DEX: 12, CON: 13, INT: 2, WIS: 12, CHA: 7 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 11,
+    sprachen: [],
+    umgebung: ["Ebenen"],
+    bild: "assets/images/monster/streitross.png",
+    beschreibung: ["Streitrosse sind kräftige, für den Kampf trainierte Pferde. Sie werden von Rittern und Kriegern als Reittiere eingesetzt und sind an den Lärm und das Chaos des Schlachtfeldes gewöhnt."],
+    besonderheiten: [
+      { name: "Trampelnder Sturmangriff", beschreibung: "Wenn sich das Pferd mindestens 6 m in gerader Linie auf ein Ziel zu bewegt und dann im gleichen Zug mit einem Huf-Angriff trifft, muss das Ziel einen Stärkerettungswurf gegen SG 14 schaffen, um nicht den Zustand liegend zu erleiden. Wenn das Ziel liegend ist, kann das Pferd als Bonusaktion einen Huf-Angriff gegen es ausführen." }
+    ],
+    aktionen: [
+      { name: "Hufe", beschreibung: "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 11 (2W6+4) Wuchtschaden." }
     ],
     bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
     source: "Monsterhandbuch"
@@ -11059,6 +12746,37 @@ window.MONSTER_DATA = [
         "Die Sphinx verschiebt sich und bis zu sieben andere Kreaturen, die sie sehen kann und die sich in ihrem Hort befinden, auf eine andere Existenzebene. Sobald die Sphinx sich außerhalb ihres Horts befindet, kann sie ihre Hortaktionen nicht verwenden, aber sie kann als Bonusaktion in ihrem Zug in ihren Hort zurückkehren und bis zu sieben Kreaturen mit sich nehmen."
       ]
     },
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Spinne",
+    art: "Tier",
+    unterart: null,
+    groesse: "Winzig",
+    gesinnung: "Gesinnungslos",
+    cr: 0, xp: 10,
+    rk: 12, ruestungstyp: null,
+    tp: 1, tp_wuerfel: "1W4-1",
+    bewegung: { "Gehen": "6 m", "Klettern": "6 m" },
+    attribute: { STR: 2, DEX: 14, CON: 8, INT: 1, WIS: 10, CHA: 2 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Heimlichkeit": 4 },
+    schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: ["Dunkelsicht 9 m"],
+    passiveWahrnehmung: 10,
+    sprachen: [],
+    umgebung: ["Wald", "Unterirdisch", "Stadtgebiete"],
+    bild: "assets/images/monster/spinne.png",
+    beschreibung: ["Spinnen sind Spinnentiere, die in beinahe jeder Umgebung zu finden sind. Sie weben Netze, um Beute zu fangen, und nutzen ihr Gift, um diese zu überwältigen."],
+    besonderheiten: [
+      { name: "Spinnenklettern", beschreibung: "Die Spinne kann an schwierigen Oberflächen klettern, auch kopfüber an der Decke, ohne Attributswürfe ablegen zu müssen." },
+      { name: "Netzsinn", beschreibung: "Solange die Spinne in Kontakt mit einem Spinnennetz ist, weiß sie genau, wo sich andere Kreaturen aufhalten, die in Kontakt mit demselben Netz sind." },
+      { name: "Netzwandler", beschreibung: "Die Spinne ignoriert Bewegungseinschränkungen, die durch Netze ausgelöst werden." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, eine Kreatur. Treffer: 1 Stichschaden, und das Ziel muss einen Konstitutionsrettungswurf gegen SG 9 schaffen, um nicht 2 (2W4) Giftschaden zu erleiden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
     source: "Monsterhandbuch"
   },
   {
@@ -11509,6 +13227,37 @@ window.MONSTER_DATA = [
     source: "Monsterhandbuch"
   },
   {
+    name: "Tiger",
+    art: "Tier",
+    unterart: null,
+    groesse: "Groß",
+    gesinnung: "Gesinnungslos",
+    cr: 1, xp: 200,
+    rk: 12, ruestungstyp: null,
+    tp: 37, tp_wuerfel: "5W10+10",
+    bewegung: { "Gehen": "12 m" },
+    attribute: { STR: 17, DEX: 15, CON: 14, INT: 3, WIS: 12, CHA: 8 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Heimlichkeit": 6, "Wahrnehmung": 3 },
+    schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: ["Dunkelsicht 18 m"],
+    passiveWahrnehmung: 13,
+    sprachen: [],
+    umgebung: ["Ebenen", "Wald"],
+    bild: "assets/images/monster/tiger.png",
+    beschreibung: ["Tiger sind majestätische und gefährliche Raubtiere, bekannt für ihre Kraft, Geschwindigkeit und ihre Fähigkeit, sich in Gräsern und Dickichten zu verbergen. Sie jagen allein und ambushieren ihre Beute."],
+    besonderheiten: [
+      { name: "Scharfer Geruchssinn", beschreibung: "Der Tiger hat einen Vorteil bei Würfen auf Weisheit (Wahrnehmung), die mit dem Geruchssinn zusammenhängen." },
+      { name: "Anspringen", beschreibung: "Wenn sich der Tiger mindestens 6 m in gerader Linie auf ein Ziel zu bewegt und dann im gleichen Zug mit einem Klauenangriff trifft, muss das Ziel einen Stärkerettungswurf gegen SG 13 schaffen, um nicht den Zustand liegend zu erleiden. Wenn das Ziel liegend ist, kann der Tiger als Bonusaktion einen Biss-Angriff gegen es ausführen." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +5 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 8 (1W10+3) Stichschaden." },
+      { name: "Klaue", beschreibung: "Nahkampf-Waffenangriff: +5 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 7 (1W8+3) Hiebschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
     name: "Todesalb",
     art: "Untoter",
     unterart: null,
@@ -11582,6 +13331,36 @@ window.MONSTER_DATA = [
       { name: "Verderbende Berührung", beschreibung: "Nahkampfzauberangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 12 (3W6+2) nekrotischer Schaden." },
       { name: "Grauenhaftes Antlitz", beschreibung: "Alle nicht-untoten Kreaturen innerhalb von 18 m um die Todesfee, die sie sehen können, müssen einen Weisheitsrettungswurf gegen SG 13 schaffen, um nicht für 1 Minute verängstigt zu werden. Das Ziel kann den Rettungswurf am Ende eines jeden seiner Züge wiederholen, mit einem Nachteil, wenn die Todesfee noch in Sichtweite ist, und den Effekt auf sich selbst bei einem Erfolg beenden. Wenn der Rettungswurf erfolgreich ist oder der Effekt endet, dann ist die Kreatur für die nächsten 24 Stunden gegen das Grauenhafte Antlitz der Todesfee immun." },
       { name: "Wehklage (1/Tag)", beschreibung: "Die Todesfee stößt eine qualerfüllte Wehklage aus, vorausgesetzt sie befindet sich nicht im Sonnenlicht. Diese Wehklage hat keine Auswirkung auf Konstrukte und Untote. Alle Kreaturen innerhalb von 9 m, die sie hören können, müssen einen Konstitutionsrettungswurf gegen SG 13 ablegen. Bei einem Fehlschlag fällt die Kreatur auf 0 Trefferpunkte. Bei einem Erfolg erleidet die Kreatur 10 (3W6) psychischen Schaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Todeshund",
+    art: "Monstrosität",
+    unterart: null,
+    groesse: "Mittelgroß",
+    gesinnung: "Neutral böse",
+    cr: 1, xp: 200,
+    rk: 12, ruestungstyp: null,
+    tp: 39, tp_wuerfel: "6W8+12",
+    bewegung: { "Gehen": "12 m" },
+    attribute: { STR: 15, DEX: 14, CON: 14, INT: 3, WIS: 13, CHA: 6 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Heimlichkeit": 4, "Wahrnehmung": 5 },
+    schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: ["Dunkelsicht 36 m"],
+    passiveWahrnehmung: 15,
+    sprachen: [],
+    umgebung: ["Ebenen", "Wüste", "Unterirdisch"],
+    bild: "assets/images/monster/todeshund.png",
+    beschreibung: ["Ein Todeshund ist ein hässlicher zweiköpfiger Hund, der durch Ebenen, Wüsten und das Unterreich streift. Hass brennt im Herzen des Todeshundes, und seine Vorliebe für humanoides Fleisch treibt ihn an, Reisende und Forscher anzugreifen. Der Speichel von Todeshunden überträgt eine üble Krankheit, die das Fleisch des Opfers langsam von den Knochen faulen lässt."],
+    besonderheiten: [
+      { name: "Zwei Köpfe", beschreibung: "Der Hund hat einen Vorteil bei Würfen auf Weisheit (Wahrnehmung) und bei Rettungswürfen gegen die Zustände betäubt, bewusstlos, bezaubert, blind, taub und verängstigt." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Hund führt zwei Biss-Angriffe durch." },
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 5 (1W6+2) Stichschaden. Wenn das Ziel eine Kreatur ist, muss sie einen Konstitutionsrettungswurf gegen Krankheit mit SG 12 ablegen, um nicht vergiftet zu werden, bis die Krankheit geheilt ist. Alle 24 Stunden muss das Ziel den Rettungswurf wiederholen und bei einem Fehlschlag seine maximalen Trefferpunkte um 5 (1W10) verringern. Die Kreatur stirbt, wenn die Krankheit ihre maximalen Trefferpunkte auf 0 reduziert." }
     ],
     bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
     source: "Monsterhandbuch"
@@ -12589,6 +14368,127 @@ window.MONSTER_DATA = [
     source: "Monsterhandbuch"
   },
   {
+    name: "Wiesel",
+    art: "Tier",
+    unterart: null,
+    groesse: "Winzig",
+    gesinnung: "Gesinnungslos",
+    cr: 0, xp: 10,
+    rk: 13, ruestungstyp: null,
+    tp: 1, tp_wuerfel: "1W4-1",
+    bewegung: { "Gehen": "9 m" },
+    attribute: { STR: 3, DEX: 16, CON: 8, INT: 2, WIS: 12, CHA: 3 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Heimlichkeit": 5, "Wahrnehmung": 3 },
+    schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 13,
+    sprachen: [],
+    umgebung: ["Wald", "Ebenen"],
+    bild: "assets/images/monster/wiesel.png",
+    beschreibung: ["Wiesel sind flinke, schlanke Raubtiere, die trotz ihrer geringen Größe mutig und aggressiv sind. Sie jagen Nagetiere und Vögel und können sich in enge Spalten und Löcher drängen."],
+    besonderheiten: [
+      { name: "Scharfes Gehör und scharfer Geruchssinn", beschreibung: "Das Wiesel hat einen Vorteil bei Würfen auf Weisheit (Wahrnehmung), die mit dem Gehör oder dem Geruchssinn zusammenhängen." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +5 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 1 Stichschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Wildschwein",
+    art: "Tier",
+    unterart: null,
+    groesse: "Mittelgroß",
+    gesinnung: "Gesinnungslos",
+    cr: 0.25, xp: 50,
+    rk: 11, ruestungstyp: "natürliche Rüstung",
+    tp: 11, tp_wuerfel: "2W8+2",
+    bewegung: { "Gehen": "12 m" },
+    attribute: { STR: 13, DEX: 11, CON: 12, INT: 2, WIS: 9, CHA: 5 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 9,
+    sprachen: [],
+    umgebung: ["Wald", "Ebenen"],
+    bild: "assets/images/monster/wildschwein.png",
+    beschreibung: ["Wildschweine sind robuste und aggressive Tiere. Wenn sie sich in die Enge getrieben fühlen oder ihre Jungen bedroht werden, können sie überraschend gefährlich sein."],
+    besonderheiten: [
+      { name: "Sturmangriff", beschreibung: "Wenn sich das Wildschwein mindestens 6 m in gerader Linie auf ein Ziel zu bewegt und dann im gleichen Zug mit einem Hauer-Angriff trifft, dann erleidet das Ziel zusätzlich 3 (1W6) Hiebschaden. Wenn das Ziel eine Kreatur ist, muss sie einen Stärkerettungswurf gegen SG 11 ablegen, um nicht den Zustand liegend zu erleiden." },
+      { name: "Unnachgiebig", beschreibung: "Wenn das Wildschwein 7 Schadenspunkte oder weniger erleidet, die es auf 0 Trefferpunkte bringen würden, fällt es stattdessen auf 1 Trefferpunkt. Aufladung nach einer kurzen oder langen Rast." }
+    ],
+    aktionen: [
+      { name: "Hauer", beschreibung: "Nahkampf-Waffenangriff: +3 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 4 (1W6+1) Hiebschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Winterwolf",
+    art: "Monstrosität",
+    unterart: null,
+    groesse: "Groß",
+    gesinnung: "Neutral böse",
+    cr: 3, xp: 700,
+    rk: 13, ruestungstyp: "natürliche Rüstung",
+    tp: 75, tp_wuerfel: "10W10+20",
+    bewegung: { "Gehen": "15 m" },
+    attribute: { STR: 18, DEX: 13, CON: 14, INT: 7, WIS: 12, CHA: 8 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Heimlichkeit": 3, "Wahrnehmung": 5 },
+    schadensresistenzen: [], schadensimmunitaeten: ["Kälte"], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 15,
+    sprachen: ["Gemeinsprache", "Riesisch"],
+    umgebung: ["Arktis"],
+    bild: "assets/images/monster/winterwolf.png",
+    beschreibung: ["Der in der Arktis lebende Winterwolf ist so groß wie ein Schreckenswolf, hat aber schneeweißes Fell und blass-blaue Augen. Frostriesen nutzen diese bösen Kreaturen als Wach- und Jagdbegleiter und nutzen den tödlichen Atem dieser Wölfe gegen ihre Feinde. Winterwölfe kommunizieren miteinander mit Knurr- und Bellgeräuschen, doch sprechen sie die Gemeinsprache und Riesisch gut genug, um einfache Gespräche zu führen."],
+    besonderheiten: [
+      { name: "Scharfes Gehör und scharfer Geruchssinn", beschreibung: "Der Winterwolf hat einen Vorteil bei Würfen auf Weisheit (Wahrnehmung), die mit dem Gehör oder dem Geruchssinn zusammenhängen." },
+      { name: "Rudeltaktik", beschreibung: "Der Winterwolf hat einen Vorteil auf Angriffswürfe gegen eine Kreatur, wenn sich mindestens ein Verbündeter des Wolfes innerhalb von 1,5 m zur Kreatur befindet und nicht handlungsunfähig ist." },
+      { name: "Schneetarnung", beschreibung: "Der Winterwolf hat einen Vorteil bei Würfen auf Geschicklichkeit (Heimlichkeit), wenn er sich in verschneitem Gelände verstecken möchte." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 11 (2W6+4) Stichschaden. Wenn das Ziel eine Kreatur ist, muss sie einen Stärkerettungswurf gegen SG 14 schaffen, um nicht den Zustand liegend zu erleiden." },
+      { name: "Kälteodem (Aufladezeit 5–6)", beschreibung: "Der Winterwolf atmet einen Schwall aus eisigem Wind in einem Kegel von 4,5 m aus. Alle Kreaturen in diesem Bereich müssen einen Konstitutionsrettungswurf gegen SG 12 ablegen, um nicht 18 (4W8) Kälteschaden zu erleiden, halb so viel Schaden bei einem gelungenen Rettungswurf." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Wolf",
+    art: "Tier",
+    unterart: null,
+    groesse: "Mittelgroß",
+    gesinnung: "Gesinnungslos",
+    cr: 0.25, xp: 50,
+    rk: 13, ruestungstyp: "natürliche Rüstung",
+    tp: 11, tp_wuerfel: "2W8+2",
+    bewegung: { "Gehen": "12 m" },
+    attribute: { STR: 12, DEX: 15, CON: 12, INT: 3, WIS: 12, CHA: 6 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Heimlichkeit": 4, "Wahrnehmung": 3 },
+    schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 13,
+    sprachen: [],
+    umgebung: ["Arktis", "Gebirge", "Wald"],
+    bild: "assets/images/monster/wolf.png",
+    beschreibung: ["Wölfe sind kluge Rudeltiere, die in Wäldern, Gebirgen und arktischen Regionen leben. Sie jagen kooperativ und koordinieren ihre Angriffe, um größere Beute zu erlegen."],
+    besonderheiten: [
+      { name: "Scharfes Gehör und scharfer Geruchssinn", beschreibung: "Der Wolf hat einen Vorteil bei Würfen auf Weisheit (Wahrnehmung), die mit dem Gehör oder dem Geruchssinn zusammenhängen." },
+      { name: "Rudeltaktik", beschreibung: "Der Wolf hat einen Vorteil auf Angriffswürfe gegen eine Kreatur, wenn sich mindestens ein Verbündeter des Wolfes innerhalb von 1,5 m zur Kreatur befindet und nicht handlungsunfähig ist." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 7 (2W4+2) Stichschaden. Wenn das Ziel eine Kreatur ist, muss sie einen Stärkerettungswurf gegen SG 11 schaffen, um nicht den Zustand liegend zu erleiden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
     name: "Wolkenriese",
     art: "Riese",
     unterart: null,
@@ -12623,6 +14523,63 @@ window.MONSTER_DATA = [
       { name: "Mehrfachangriff", beschreibung: "Der Riese führt zwei Morgenstern-Angriffe aus." },
       { name: "Morgenstern", beschreibung: "Nahkampf-Waffenangriff: +12 zum Treffen, Reichweite 3 m, ein Ziel. Treffer: 21 (3W8+8) Stichschaden." },
       { name: "Felsbrocken", beschreibung: "Fernkampf-Waffenangriff: +12 zum Treffen, Reichweite 18/72 m, ein Ziel. Treffer: 30 (4W10+8) Wuchtschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Worg",
+    art: "Monstrosität",
+    unterart: null,
+    groesse: "Groß",
+    gesinnung: "Neutral böse",
+    cr: 0.5, xp: 100,
+    rk: 13, ruestungstyp: "natürliche Rüstung",
+    tp: 26, tp_wuerfel: "4W10+4",
+    bewegung: { "Gehen": "15 m" },
+    attribute: { STR: 16, DEX: 13, CON: 13, INT: 7, WIS: 11, CHA: 8 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Wahrnehmung": 4 },
+    schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: ["Dunkelsicht 18 m"],
+    passiveWahrnehmung: 14,
+    sprachen: ["Goblinisch", "Worg"],
+    umgebung: ["Wald", "Ebenen", "Gebirge"],
+    bild: "assets/images/monster/worg.png",
+    beschreibung: ["Ein Worg ist ein böses Raubtier, das sich daran erfreut, schwächere Kreaturen zu jagen und zu verschlingen. Worge sind verschlagen und bösartig und werden von Goblins und Hobgoblins als Reittiere genutzt. Ein Worg wird sich jedoch gegen seinen Reiter wenden, wenn er sich schlecht behandelt fühlt."],
+    besonderheiten: [
+      { name: "Scharfes Gehör und scharfer Geruchssinn", beschreibung: "Der Worg hat einen Vorteil bei Würfen auf Weisheit (Wahrnehmung), die mit dem Gehör oder dem Geruchssinn zusammenhängen." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +5 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 10 (2W6+3) Stichschaden. Wenn das Ziel eine Kreatur ist, muss sie einen Stärkerettungswurf gegen SG 13 schaffen, um nicht den Zustand liegend zu erleiden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Würgeschlange",
+    art: "Tier",
+    unterart: null,
+    groesse: "Groß",
+    gesinnung: "Gesinnungslos",
+    cr: 0.25, xp: 50,
+    rk: 12, ruestungstyp: null,
+    tp: 13, tp_wuerfel: "2W10+2",
+    bewegung: { "Gehen": "9 m", "Schwimmen": "9 m" },
+    attribute: { STR: 15, DEX: 14, CON: 12, INT: 1, WIS: 10, CHA: 3 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: ["Blindsicht 3 m"],
+    passiveWahrnehmung: 10,
+    sprachen: [],
+    umgebung: ["Sumpf", "Wald", "Gewässer"],
+    bild: "assets/images/monster/wuergeschlange.png",
+    beschreibung: ["Würgeschlangen sind große, kräftige Schlangen ohne Giftdrüsen. Stattdessen töten sie ihre Beute durch Umschlingen und Würgen, bis diese erstickt oder zerquetscht wird."],
+    besonderheiten: [],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, eine Kreatur. Treffer: 5 (1W6+2) Stichschaden." },
+      { name: "Umschlingen", beschreibung: "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, eine Kreatur. Treffer: 6 (1W8+2) Wuchtschaden, und das Ziel ist gepackt (SG zum Entkommen 14). Bis der Haltegriff endet, ist die Kreatur festgesetzt, und die Schlange kann kein anderes Ziel umschlingen." }
     ],
     bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
     source: "Monsterhandbuch"
@@ -12886,6 +14843,36 @@ window.MONSTER_DATA = [
     source: "Monsterhandbuch"
   },
   {
+    name: "Ziege",
+    art: "Tier",
+    unterart: null,
+    groesse: "Mittelgroß",
+    gesinnung: "Gesinnungslos",
+    cr: 0, xp: 10,
+    rk: 10, ruestungstyp: null,
+    tp: 4, tp_wuerfel: "1W8",
+    bewegung: { "Gehen": "12 m" },
+    attribute: { STR: 12, DEX: 10, CON: 11, INT: 2, WIS: 10, CHA: 5 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 10,
+    sprachen: [],
+    umgebung: ["Gebirge", "Ebenen"],
+    bild: "assets/images/monster/ziege.png",
+    beschreibung: ["Ziegen sind robuste Huftiere, die in felsigem Gelände und auf Bergen zu Hause sind. Obwohl meist zahm, können wilde Ziegen mit ihren Hörnern gefährlich sein."],
+    besonderheiten: [
+      { name: "Sturmangriff", beschreibung: "Wenn sich die Ziege mindestens 6 m in gerader Linie auf ein Ziel zu bewegt und dann im gleichen Zug mit einem Rammen-Angriff trifft, dann erleidet das Ziel zusätzlich 2 (1W4) Wuchtschaden. Wenn das Ziel eine Kreatur ist, muss sie einen Stärkerettungswurf gegen SG 10 schaffen, um nicht den Zustand liegend zu erleiden." },
+      { name: "Sicherer Stand", beschreibung: "Die Ziege hat einen Vorteil auf Geschicklichkeits- und Stärkerettungswürfe gegen Effekte, durch die sie den Zustand liegend erleiden würde." }
+    ],
+    aktionen: [
+      { name: "Rammen", beschreibung: "Nahkampf-Waffenangriff: +3 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 3 (1W4+1) Wuchtschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
     name: "Zombie",
     art: "Untoter",
     unterart: null,
@@ -12917,6 +14904,33 @@ window.MONSTER_DATA = [
     ],
     aktionen: [
       { name: "Hieb", beschreibung: "Nahkampf-Waffenangriff: +3 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 4 (1W6+1) Wuchtschaden." }
+    ],
+    bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
+    name: "Zugpferd",
+    art: "Tier",
+    unterart: null,
+    groesse: "Groß",
+    gesinnung: "Gesinnungslos",
+    cr: 0.25, xp: 50,
+    rk: 10, ruestungstyp: null,
+    tp: 19, tp_wuerfel: "3W10+3",
+    bewegung: { "Gehen": "12 m" },
+    attribute: { STR: 18, DEX: 10, CON: 12, INT: 2, WIS: 11, CHA: 7 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 10,
+    sprachen: [],
+    umgebung: ["Ebenen"],
+    bild: "assets/images/monster/zugpferd.png",
+    beschreibung: ["Zugpferde sind kräftige Arbeitspferde, die zum Ziehen von Karren, Pflügen und anderen schweren Lasten eingesetzt werden. Sie sind nicht für den Kampf ausgebildet und reagieren auf Bedrohungen meist mit Flucht."],
+    besonderheiten: [],
+    aktionen: [
+      { name: "Hufe", beschreibung: "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 9 (2W4+4) Wuchtschaden." }
     ],
     bonusaktionen: [], reaktionen: [], legendaere_aktionen: null,
     source: "Monsterhandbuch"
