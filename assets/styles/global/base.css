@@ -7,7 +7,82 @@
   --font-display: 'Cinzel', serif;
   --font-body: 'Raleway', sans-serif;
   --font-mono: 'Share Tech Mono', monospace;
+  --nav-bg: rgba(5,4,15,0.92);
+  --nav-border: rgba(160,140,255,0.1);
+  --nav-text: rgba(200,190,240,0.7);
+  --nav-btn-border: rgba(160,140,255,0.15);
+  --nav-btn-hover-bg: rgba(124,77,255,0.1);
+  --nav-btn-hover-border: rgba(160,140,255,0.45);
+  --nav-dropdown-bg: rgba(8,6,22,0.96);
+  --nav-dropdown-border: rgba(160,140,255,0.2);
+  --nav-item-text: rgba(200,190,240,0.65);
+  --nav-item-border: rgba(160,140,255,0.08);
+  --nav-item-hover-bg: rgba(124,77,255,0.12);
 }
+
+[data-theme="light"] {
+  --bg: #f9f9fa;
+  --white: #160e2e;
+  --silver: #5c4d8a;
+  --nav-bg: rgba(249,249,250,0.95);
+  --nav-border: rgba(90,60,180,0.2);
+  --nav-text: #3d2b7a;
+  --nav-btn-border: rgba(90,60,180,0.3);
+  --nav-btn-hover-bg: rgba(90,60,180,0.1);
+  --nav-btn-hover-border: rgba(90,60,180,0.6);
+  --nav-dropdown-bg: #f2f0fc;
+  --nav-dropdown-border: rgba(90,60,180,0.25);
+  --nav-item-text: #4a3870;
+  --nav-item-border: rgba(90,60,180,0.12);
+  --nav-item-hover-bg: rgba(90,60,180,0.09);
+}
+
+/* Higher specificity to override per-page :root variable re-declarations */
+html[data-theme="light"] {
+  --bg2: #eceaf8;
+  --border: rgba(90,60,180,0.22);
+  --muted: #6b5a90;
+  --purple-dim: rgba(90,60,180,0.07);
+}
+
+[data-theme="light"] body::after { opacity: 0.12; }
+
+/* Sidebars — inline styles require !important */
+[data-theme="light"] .div-aside { background: rgba(242,240,252,0.97) !important; }
+
+/* Float nav buttons */
+[data-theme="light"] .float-nav-btn { background: #f2f0fc; color: #5a3fb5; }
+[data-theme="light"] .float-nav-btn:hover { background: rgba(90,60,180,0.15); color: var(--white); }
+
+/* Home page */
+[data-theme="light"] .home-title { color: var(--white); text-shadow: 0 0 60px rgba(90,60,180,0.15); }
+[data-theme="light"] .home-subtitle { color: #5c4d8a; }
+[data-theme="light"] .home-eyebrow { color: #5a3fb5; }
+[data-theme="light"] .home-link { color: #3d22a8; }
+[data-theme="light"] .home-link:hover { color: var(--white); }
+
+/* Race/class stat tables */
+[data-theme="light"] .stat-table td { border-bottom-color: rgba(90,60,180,0.12); }
+[data-theme="light"] .stat-table td:first-child { color: #7060a0; }
+[data-theme="light"] .stat-table td:last-child { color: #1e1240; }
+[data-theme="light"] .stat-table tr:hover td { background: rgba(90,60,180,0.04); }
+[data-theme="light"] .roll-table td { border-bottom-color: rgba(90,60,180,0.1); }
+[data-theme="light"] .roll-table td:last-child { color: #1e1240; }
+[data-theme="light"] .roll-table tr.highlight td { color: #160e2e; }
+
+/* Race/class feature blocks and labels */
+[data-theme="light"] .feature-text { color: #3a2860; }
+[data-theme="light"] .name-cell { color: #4a3870; border-bottom-color: rgba(90,60,180,0.1); border-right-color: rgba(90,60,180,0.08); }
+[data-theme="light"] .name-cell:hover { color: var(--white); }
+[data-theme="light"] .name-cell .num { color: #8a72c0; }
+[data-theme="light"] .relation-pill { color: #4a3870; }
+[data-theme="light"] .relation-pill:hover { color: var(--white); }
+[data-theme="light"] .back-btn { color: #5a4888; }
+[data-theme="light"] .back-btn:hover { color: var(--white); }
+
+/* Monster page */
+[data-theme="light"] .section-label { color: #5a3fb5; border-bottom-color: rgba(90,60,180,0.22); }
+[data-theme="light"] .stat-divider { background: rgba(90,60,180,0.2); }
 
 html { scrollbar-gutter: stable; }
 html, body { width: 100%; min-height: 100%; background: var(--bg); color: var(--white); font-family: var(--font-body); overflow-x: hidden; }

@@ -2,7 +2,7 @@
 
 Companion website for the tabletop RPG world **Meruria**, deployed at [meruria.de](https://meruria.de) via GitHub Pages.
 
-Documents the world's factions, races, classes, and deities. Written in German.
+Documents the world's factions, races, classes, deities, and a full monster compendium. Written in German.
 
 ## Running locally
 
@@ -21,6 +21,7 @@ python3 -m http.server 8080
 ├── Rassen.html                 — races
 ├── Klassen.html                — classes
 ├── Gottheiten.html             — deities
+├── Monster.html                — monster compendium (filterable, searchable)
 ├── Sturmritter.html            ┐
 ├── Sentinels.html              │
 ├── Friedenshueter.html         │
@@ -30,11 +31,17 @@ python3 -m http.server 8080
 ├── Bergungsgarde.html          │
 ├── Die Kuratoren.html          ┘
 └── assets/
-    ├── components/             — shared React/JSX components
+    ├── components/             — shared React/JSX components (nav, footer, page-header, tweaks-panel)
     ├── fonts/                  — .woff2 font files
-    ├── images/                 — insignia and race artwork
+    ├── images/
+    │   ├── insignia/           — faction insignia
+    │   ├── races/              — race artwork
+    │   └── monster/
+    │       └── monsterhandbuch/ — monster images
     ├── scripts/
-    │   ├── data/               — page data as window globals
+    │   ├── data/
+    │   │   └── monster/        — monster data split by source book
+    │   │       └── monsterhandbuch-data.js
     │   └── vendor/             — React, ReactDOM, Babel Standalone
     └── styles/
         ├── global/             — base.css, fonts.css, division.css
@@ -44,3 +51,9 @@ python3 -m http.server 8080
 ## Tech
 
 Plain HTML + CSS + React (via Babel Standalone in the browser). No bundler, no npm, no build step.
+
+## Features
+
+- **Dark / light mode** — toggle in the nav bar, persists via `localStorage`
+- **Monster compendium** — 400+ monsters from the German D&D 5e Monster Manual, filterable by type, subtype, CR, size, alignment, environment, and source; legendary monsters flagged separately
+- **Tweaks panel** — live-editable design parameters per page (particle visibility, header height, etc.)

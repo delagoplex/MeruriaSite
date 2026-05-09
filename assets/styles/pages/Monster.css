@@ -4,6 +4,23 @@
   --muted: rgba(200,190,240,0.45);
   --nav-h: 52px;
   --filter-w: 220px;
+
+  /* Monster type colors (gamut-mapped from oklch) */
+  --type-unhold           : #ae0049; /* Dunkelkrimson       – Dämonen & Teufel     */
+  --type-drache           : #f32b00; /* Feuerrot-Orange     – Drachenmacht         */
+  --type-tier             : #d06f00; /* Bernstein           – wilde Tiere          */
+  --type-riese            : #a77a29; /* Erdgold             – Stein & Erde         */
+  --type-himmlisch        : #e5c226; /* Strahlendes Gold    – göttliches Licht     */
+  --type-elementar        : #8ca600; /* Energiegrün         – Elementarenergie     */
+  --type-schlick          : #2b9300; /* Säuregrün           – Schleim & Ätzend     */
+  --type-pflanze          : #009f63; /* Waldgrün            – Natur & Wachstum     */
+  --type-monstositaet     : #006e5e; /* Fauliges Teal       – Chimären & Hybriden  */
+  --type-konstrukt        : #008a99; /* Stahlblau           – Mechanismus & Magie  */
+  --type-humanoid         : #008cdd; /* Indigoblau          – Humanoides Volk      */
+  --type-untoter          : #504bd1; /* Leichenlila         – Tod & Geister        */
+  --type-aberration       : #8f00e1; /* Eldritch-Violett    – kosmischer Horror    */
+  --type-feenwesen        : #f81cb7; /* Feenrosa            – Feenwelt & Glamour   */
+  --type-fallback         : #008a99; /* Fallback                                   */
 }
 
 html, body { overflow: hidden; }

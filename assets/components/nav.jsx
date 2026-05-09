@@ -77,6 +77,11 @@
   document.head.appendChild(s);
 })();
 
+(function() {
+  const saved = localStorage.getItem('theme');
+  document.documentElement.dataset.theme = (saved === 'light') ? 'light' : 'dark';
+})();
+
 const { useState, useEffect, useRef } = React;
 
 const NAV = [
@@ -136,9 +141,9 @@ function NavItem({ tab }) {
 
   if (tab.href) {
     return (
-      <a href={tab.href} style={{ fontFamily: 'var(--font-display)', fontSize: '11px', fontWeight: '400', letterSpacing: '0.18em', padding: '10px 20px', background: 'transparent', border: '1px solid rgba(160,140,255,0.15)', color: 'rgba(200,190,240,0.7)', borderRadius: '3px', transition: 'all 0.2s', textTransform: 'uppercase', whiteSpace: 'nowrap', textDecoration: 'none', display: 'inline-block' }}
-        onMouseEnter={(e) => { e.currentTarget.style.color = '#f0eeff'; e.currentTarget.style.borderColor = 'rgba(160,140,255,0.45)'; e.currentTarget.style.background = 'rgba(124,77,255,0.1)'; }}
-        onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(200,190,240,0.7)'; e.currentTarget.style.borderColor = 'rgba(160,140,255,0.15)'; e.currentTarget.style.background = 'transparent'; }}>
+      <a href={tab.href} style={{ fontFamily: 'var(--font-display)', fontSize: '11px', fontWeight: '400', letterSpacing: '0.18em', padding: '10px 20px', background: 'transparent', border: '1px solid var(--nav-btn-border)', color: 'var(--nav-text)', borderRadius: '3px', transition: 'all 0.2s', textTransform: 'uppercase', whiteSpace: 'nowrap', textDecoration: 'none', display: 'inline-block' }}
+        onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--white)'; e.currentTarget.style.borderColor = 'var(--nav-btn-hover-border)'; e.currentTarget.style.background = 'var(--nav-btn-hover-bg)'; }}
+        onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--nav-text)'; e.currentTarget.style.borderColor = 'var(--nav-btn-border)'; e.currentTarget.style.background = 'transparent'; }}>
         {tab.label}
       </a>
     );
@@ -146,13 +151,13 @@ function NavItem({ tab }) {
 
   return (
     <div onMouseEnter={show} onMouseLeave={hide} style={{ position: 'relative' }}>
-      <button style={{ fontFamily: 'var(--font-display)', fontSize: '11px', fontWeight: '400', letterSpacing: '0.18em', padding: '10px 20px', background: 'transparent', border: '1px solid rgba(160,140,255,0.15)', color: 'rgba(200,190,240,0.7)', cursor: 'pointer', borderRadius: '3px', transition: 'all 0.2s', textTransform: 'uppercase', whiteSpace: 'nowrap' }}
-        onMouseEnter={(e) => { e.currentTarget.style.color = '#f0eeff'; e.currentTarget.style.borderColor = 'rgba(160,140,255,0.45)'; e.currentTarget.style.background = 'rgba(124,77,255,0.1)'; }}
-        onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(200,190,240,0.7)'; e.currentTarget.style.borderColor = 'rgba(160,140,255,0.15)'; e.currentTarget.style.background = 'transparent'; }}>
+      <button style={{ fontFamily: 'var(--font-display)', fontSize: '11px', fontWeight: '400', letterSpacing: '0.18em', padding: '10px 20px', background: 'transparent', border: '1px solid var(--nav-btn-border)', color: 'var(--nav-text)', cursor: 'pointer', borderRadius: '3px', transition: 'all 0.2s', textTransform: 'uppercase', whiteSpace: 'nowrap' }}
+        onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--white)'; e.currentTarget.style.borderColor = 'var(--nav-btn-hover-border)'; e.currentTarget.style.background = 'var(--nav-btn-hover-bg)'; }}
+        onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--nav-text)'; e.currentTarget.style.borderColor = 'var(--nav-btn-border)'; e.currentTarget.style.background = 'transparent'; }}>
         {tab.label}
       </button>
       {open &&
-        <div onMouseEnter={show} onMouseLeave={hide} style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, minWidth: '180px', background: 'rgba(8,6,22,0.96)', border: '1px solid rgba(160,140,255,0.2)', borderRadius: '4px', boxShadow: '0 8px 32px rgba(0,0,0,0.6)', animation: 'slideDown 0.18s ease forwards', zIndex: 200, backdropFilter: 'blur(12px)' }}>
+        <div onMouseEnter={show} onMouseLeave={hide} style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, minWidth: '180px', background: 'var(--nav-dropdown-bg)', border: '1px solid var(--nav-dropdown-border)', borderRadius: '4px', boxShadow: '0 8px 32px rgba(0,0,0,0.35)', animation: 'slideDown 0.18s ease forwards', zIndex: 200, backdropFilter: 'blur(12px)' }}>
           {tab.items.map((item, i) =>
             <React.Fragment key={i}>
               {item.dividerAfter ? (
@@ -171,9 +176,9 @@ function NavItem({ tab }) {
                   </div>
                 </div>
               ) : (
-                <a href={item.href} style={{ display: 'block', padding: '10px 18px', fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', letterSpacing: '0.1em', color: 'rgba(200,190,240,0.65)', textDecoration: 'none', borderBottom: i < tab.items.length - 1 ? '1px solid rgba(160,140,255,0.08)' : 'none', transition: 'all 0.15s' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.color = '#f0eeff'; e.currentTarget.style.background = 'rgba(124,77,255,0.12)'; e.currentTarget.style.paddingLeft = '24px'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(200,190,240,0.65)'; e.currentTarget.style.background = 'transparent'; e.currentTarget.style.paddingLeft = '18px'; }}>
+                <a href={item.href} style={{ display: 'block', padding: '10px 18px', fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', letterSpacing: '0.1em', color: 'var(--nav-item-text)', textDecoration: 'none', borderBottom: i < tab.items.length - 1 ? '1px solid var(--nav-item-border)' : 'none', transition: 'all 0.15s' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--white)'; e.currentTarget.style.background = 'var(--nav-item-hover-bg)'; e.currentTarget.style.paddingLeft = '24px'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--nav-item-text)'; e.currentTarget.style.background = 'transparent'; e.currentTarget.style.paddingLeft = '18px'; }}>
                   <span style={{ display:'flex', alignItems:'center', gap:'5px' }}>
                     {item.label}
                     {item.locked && (
@@ -194,19 +199,45 @@ function NavItem({ tab }) {
   );
 }
 
+function ThemeToggle() {
+  const [dark, setDark] = useState(() => localStorage.getItem('theme') !== 'light');
+
+  function toggle() {
+    const next = !dark;
+    setDark(next);
+    document.documentElement.dataset.theme = next ? 'dark' : 'light';
+    localStorage.setItem('theme', next ? 'dark' : 'light');
+  }
+
+  return (
+    <button
+      onClick={toggle}
+      title={dark ? 'Lichtmodus' : 'Dunkelmodus'}
+      style={{ background: 'transparent', border: '1px solid var(--nav-btn-border)', borderRadius: '3px', color: 'var(--nav-text)', cursor: 'pointer', padding: '5px 9px', fontSize: '15px', lineHeight: 1, flexShrink: 0, transition: 'all 0.15s' }}
+      onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--nav-btn-hover-border)'; e.currentTarget.style.background = 'var(--nav-btn-hover-bg)'; e.currentTarget.style.color = 'var(--white)'; }}
+      onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--nav-btn-border)'; e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--nav-text)'; }}
+    >
+      {dark ? '☀' : '☽'}
+    </button>
+  );
+}
+
 function SiteNav({ rightLabel }) {
   return (
-    <div style={{ position: 'sticky', top: 0, zIndex: 100, width: '100%', background: 'rgba(5,4,15,0.92)', borderBottom: '1px solid rgba(160,140,255,0.1)', backdropFilter: 'blur(16px)' }}>
+    <div style={{ position: 'sticky', top: 0, zIndex: 100, width: '100%', background: 'var(--nav-bg)', borderBottom: '1px solid var(--nav-border)', backdropFilter: 'blur(16px)' }}>
       <div style={{ display: 'flex', alignItems: 'center', padding: '0 24px', height: '52px' }}>
         <a href="index.html" style={{ marginRight: '70px', whiteSpace: 'nowrap', flexShrink: 0, textDecoration: 'none' }}>
-          <span style={{ fontFamily: 'var(--font-display)', fontSize: '20px', fontWeight: '300', letterSpacing: '0.3em', color: '#f0eeff', textShadow: '0 0 28px rgba(124,77,255,0.55)', animation: 'flicker-mid 9s infinite' }}>MERURIA</span>
+          <span style={{ fontFamily: 'var(--font-display)', fontSize: '20px', fontWeight: '300', letterSpacing: '0.3em', color: 'var(--white)', textShadow: '0 0 28px rgba(124,77,255,0.55)', animation: 'flicker-mid 9s infinite' }}>MERURIA</span>
         </a>
         <nav style={{ display: 'flex', gap: '6px', alignItems: 'center', flex: 1 }}>
           {NAV.map((tab) => <NavItem key={tab.id} tab={tab} />)}
         </nav>
-        {rightLabel && (
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', color: 'rgba(160,140,255,0.35)', letterSpacing: '0.15em', flexShrink: 0 }}>{rightLabel}</div>
-        )}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
+          {rightLabel && (
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', color: 'rgba(160,140,255,0.35)', letterSpacing: '0.15em' }}>{rightLabel}</div>
+          )}
+          <ThemeToggle />
+        </div>
       </div>
     </div>
   );

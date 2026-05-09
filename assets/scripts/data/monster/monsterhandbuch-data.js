@@ -89,7 +89,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"], passiveWahrnehmung: 20,
     sprachen: ["Tiefensprache", "Telepathie 36 m"],
-    umgebung: ["Unterwasser", "Unterirdisch", "Andere Ebenen"],
+    umgebung: ["Ozean", "Unterirdisch", "Andere Ebenen"],
     bild: "assets/images/monster/monsterhandbuch/aboleth.png",
     beschreibung: [
       "Ehe die Götter kamen, hausten die Abolethen in den urtümlichen Ozeanen und unterirdischen Seen. Sie streckten ihren Geist aus und übernahmen die Kontrolle über die aufkeimenden Lebensformen der sterblichen Welt, um die Kreaturen zu ihren Sklaven zu machen. Ihre Vorherrschaft ließ sie wie Götter erscheinen. Dann kamen die wahren Götter, zerschmetterten das Imperium der Abolethen und befreiten ihre Sklaven. Die Abolethen haben das niemals vergessen.",
@@ -171,6 +171,43 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     source: "Monsterhandbuch"
   },
   {
+    name: "Adeliger",
+    art: "Humanoid",
+    unterart: "NPC",
+    groesse: "Mittelgroß",
+    gesinnung: "Jede Gesinnung",
+    cr: 0.125, xp: 25,
+    rk: 15, ruestungstyp: "Brustharnisch",
+    tp: 9, tp_wuerfel: "2W8",
+    bewegung: { "Gehen": "9 m" },
+    attribute: { STR: 11, DEX: 12, CON: 11, INT: 12, WIS: 14, CHA: 16 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Motiv erkennen": 4, "Täuschen": 5, "Überzeugen": 5 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: [],
+    passiveWahrnehmung: 12,
+    sprachen: ["Zwei Sprachen nach Wahl"],
+    umgebung: ["Stadt"],
+    bild: "assets/images/monster/monsterhandbuch/adeliger.png",
+    beschreibung: [
+      "Adelige verfügen als Mitglieder der Oberschicht über viel Autorität und großen Einfluss. Sie besitzen Reichtum und Verbindungen, die sie so mächtig wie Monarchen und Generäle machen können.",
+      "Ein Adeliger reist oft in der Gesellschaft von Wachen, sowie Dienern, die Gemeine sind. Die Spielwerte des Adeligen können auch verwendet werden, um Höflinge abzubilden, die nicht von edler Geburt sind."
+    ],
+    besonderheiten: [],
+    aktionen: [
+      { name: "Rapier", beschreibung: "Nahkampf Waffenangriff: +3 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 5 (1W8 + 1) Stichschaden." }
+    ],
+    bonusaktionen: [],
+    reaktionen: [
+      { name: "Parade", beschreibung: "Der Adelige addiert 2 auf seine RK gegen einen Nahkampfangriff, der ihn treffen würde. Dazu muss der Adelige den Angreifer sehen und eine Nahkampfwaffe führen." }
+    ],
+    legendaere_aktionen: null,
+    source: "Monsterhandbuch"
+  },
+  {
     name: "Adler",
     art: "Tier",
     unterart: null,
@@ -187,7 +224,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 14,
     sprachen: [],
-    umgebung: ["Ebenen", "Gebirge"],
+    umgebung: ["Grasland", "Gebirge"],
     bild: "assets/images/monster/monsterhandbuch/adler.png",
     beschreibung: [],
     besonderheiten: [
@@ -201,7 +238,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Akolyth",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "NPC",
     groesse: "Mittelgroß",
     gesinnung: "Jede Gesinnung",
@@ -244,7 +281,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: [], passiveWahrnehmung: 15,
     sprachen: [],
-    umgebung: ["Tropisch", "Wald", "Grasland"],
+    umgebung: ["Dschungel", "Wald", "Grasland"],
     bild: "assets/images/monster/monsterhandbuch/allosaurus.png",
     beschreibung: [
       "Der Allosaurus ist ein sehr großes, starkes und schnelles Raubtier. Er kann im freien Gelände fast jede Beute verfolgen und springt, um Kreaturen mit seinen bösartigen Kiefern zu Boden zu reißen."
@@ -275,7 +312,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: [], passiveWahrnehmung: 11,
     sprachen: [],
-    umgebung: ["Tropisch", "Wald", "Grasland"],
+    umgebung: ["Dschungel", "Wald", "Grasland"],
     bild: "assets/images/monster/monsterhandbuch/ankylosaurus.png",
     beschreibung: [
       "Dicke Panzerplatten bedecken den Körper des pflanzenfressenden Ankylosaurus, der sich gegen Raubtiere mit einem knubbeligen Schwanz verteidigt, mit dem er vernichtende Schläge austeilen kann. Einige Varianten von Ankylosauriern haben Stachelschwänze, die Stichschaden anstelle von Wuchtschaden verursachen."
@@ -338,7 +375,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Wahre Sicht 36 m"],
     passiveWahrnehmung: 17,
     sprachen: ["alle", "Telepathie 36 m"],
-    umgebung: ["Ebenen"],
+    umgebung: ["Andere Ebenen"],
     bild: "assets/images/monster/monsterhandbuch/arcanaloth.png",
     beschreibung: [
       "Arcanalothen sind schakalsköpfige Yugoloths, die als Anwälte, Schreiber und Geheimnisträger der yugolothischen Hierarchie dienen. Mit ihrer herausragenden Intelligenz und ihrem breiten Zauberwirken-Repertoire sind sie die diplomatischen und magischen Spezialisten der Yugoloths.",
@@ -359,7 +396,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Assassine",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "NPC",
     groesse: "Mittelgroß",
     gesinnung: "Jede nicht gute Gesinnung",
@@ -447,7 +484,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 10,
     sprachen: [],
-    umgebung: ["Ebenen", "Wald"],
+    umgebung: ["Grasland", "Wald"],
     bild: "assets/images/monster/monsterhandbuch/axtschnabel.png",
     beschreibung: [],
     besonderheiten: [],
@@ -496,7 +533,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Bandit",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "NPC",
     groesse: "Mittelgroß",
     gesinnung: "Jede nicht rechtschaffene Gesinnung",
@@ -524,7 +561,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Banditenhauptmann",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "NPC",
     groesse: "Mittelgroß",
     gesinnung: "Jede nicht rechtschaffene Gesinnung",
@@ -809,7 +846,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Berserker",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "NPC",
     groesse: "Mittelgroß",
     gesinnung: "Jede chaotische Gesinnung",
@@ -945,7 +982,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Wahre Sicht 36 m"],
     passiveWahrnehmung: 17,
     sprachen: ["Abyssisch", "Infernalisch", "Telepathie 36 m"],
-    umgebung: ["Ebenen"],
+    umgebung: ["Andere Ebenen"],
     bild: "assets/images/monster/monsterhandbuch/ultroloth.png",
     beschreibung: [
       "Ultrolithen sind die mächtigsten der Yugoloths. Sie erscheinen als metergroße, humanoide Gestalten mit einem glatten, ovalen Kopf ohne erkennbare Gesichtszüge – außer zwei großen, weiß leuchtenden Augen. Ihre Anwesenheit strahlt eine lähmende Autorität aus.",
@@ -1402,7 +1439,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     name: "Bronzedrachennestling",
     art: "Drache",
     unterart: "Metallischer Drache",
-    groesse: "Mittel",
+    groesse: "Mittelgroß",
     gesinnung: "Rechtschaffen gut",
     cr: 2, xp: 450,
     rk: 17, ruestungstyp: "natürliche Rüstung",
@@ -1485,7 +1522,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: ["Blitz", "Feuer", "Gift", "Kälte", "Wucht-, Stich- und Hiebschaden durch nicht-magische Angriffe"], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"], passiveWahrnehmung: 14,
     sprachen: ["Abyssisch", "Infernalisch", "Gemeinsprache"],
-    umgebung: ["Andere Ebenen", "Städtisch"],
+    umgebung: ["Andere Ebenen", "Stadt"],
     bild: "assets/images/monster/monsterhandbuch/cambion.png",
     beschreibung: [
       "Ein Cambion ist der Nachkomme eines Unholds (normalerweise eines Sukkubus oder Inkubus) und eines Humanoiden (üblicherweise ein Mensch). Cambions erben Aspekte beider Elternteile, doch ihre Hörner, ledrigen Schwingen und sehnigen Schwänze sind Zeichen ihrer andersweltlichen Abstammung.",
@@ -1629,7 +1666,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Dunkelsicht 9 m"],
     passiveWahrnehmung: 11,
     sprachen: [],
-    umgebung: ["Wald", "Ebenen"],
+    umgebung: ["Wald", "Grasland"],
     bild: "assets/images/monster/monsterhandbuch/dachs.png",
     beschreibung: [],
     besonderheiten: [
@@ -1747,7 +1784,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Deva",
-    art: "Himmlischer",
+    art: "Himmlisch",
     unterart: "Engel",
     groesse: "Mittelgroß",
     gesinnung: "Rechtschaffen gut",
@@ -1801,7 +1838,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 13,
     sprachen: [],
-    umgebung: ["Ebenen", "Stadtgebiete"],
+    umgebung: ["Grasland", "Stadt"],
     bild: "assets/images/monster/monsterhandbuch/dogge.png",
     beschreibung: [],
     besonderheiten: [
@@ -2049,9 +2086,9 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Drow",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Drow",
-    groesse: "Mittel",
+    groesse: "Mittelgroß",
     gesinnung: "Neutral böse",
     cr: 0.25, xp: 50,
     rk: 15, ruestungstyp: "Kettenhemd",
@@ -2063,7 +2100,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"], passiveWahrnehmung: 12,
     sprachen: ["Elfisch", "Gemeinsprache der Unterreiche"],
-    umgebung: ["Unterreich"],
+    umgebung: ["Unterirdisch"],
     bild: "assets/images/monster/monsterhandbuch/drow.png",
     beschreibung: [
       "Drow sind Dunkelelfen – die bösartigsten unter den Elfen – die in den lichtlosen Tiefen des Unterreichs leben. Sie folgen der Spinnenkönigin Lolth und betrachten sich als die berufenen Herrscher der Dunkelheit."
@@ -2082,9 +2119,9 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Drow-Elitekrieger",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Drow",
-    groesse: "Mittel",
+    groesse: "Mittelgroß",
     gesinnung: "Neutral böse",
     cr: 5, xp: 1800,
     rk: 18, ruestungstyp: "beschlagene Lederrüstung, Schild",
@@ -2096,7 +2133,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"], passiveWahrnehmung: 14,
     sprachen: ["Elfisch", "Gemeinsprache der Unterreiche"],
-    umgebung: ["Unterreich"],
+    umgebung: ["Unterirdisch"],
     bild: "assets/images/monster/monsterhandbuch/drow_elitekrieger.png",
     beschreibung: [
       "Drow-Elitekrieger beschützen ihre Häuser und ihre Vorgesetzten gegen alle Feinde, auch wenn sie sich darauf spezialisieren, gegen Zwerge, Gnome und Elfen zu kämpfen (inklusive anderer Drow). Sie überfallen oft im Schutze der Nacht Siedlungen an der Oberfläche und kehren mit Gefangenen und Beute vor der Morgendämmerung ins Unterreich zurück. Elite-Krieger können männlich oder weiblich sein."
@@ -2120,9 +2157,9 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Drow-Magus",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Drow",
-    groesse: "Mittel",
+    groesse: "Mittelgroß",
     gesinnung: "Neutral böse",
     cr: 7, xp: 2900,
     rk: 12, ruestungstyp: "15 mit Magierrüstung",
@@ -2134,7 +2171,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"], passiveWahrnehmung: 14,
     sprachen: ["Elfisch", "Gemeinsprache der Unterreiche"],
-    umgebung: ["Unterreich"],
+    umgebung: ["Unterirdisch"],
     bild: "assets/images/monster/monsterhandbuch/drow_magus.png",
     beschreibung: [
       "Privilegierte Drow-Männer, die nicht die Stärke und Kampfkraft haben, als Krieger ausgebildet zu werden, haben keine andere Wahl, als die Magie zu studieren. Für sie ist dies eine Frage des Überlebens. Weibliche Drow mit einer natürlichen Begabung für die arkanen Künste können auch zu Drow-Magi werden, doch sind sie weit weniger häufig."
@@ -2154,9 +2191,9 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Drow-Priesterin der Lolth",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Drow",
-    groesse: "Mittel",
+    groesse: "Mittelgroß",
     gesinnung: "Neutral böse",
     cr: 8, xp: 3900,
     rk: 16, ruestungstyp: "Schuppenrüstung",
@@ -2168,7 +2205,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"], passiveWahrnehmung: 16,
     sprachen: ["Elfisch", "Gemeinsprache der Unterreiche"],
-    umgebung: ["Unterreich"],
+    umgebung: ["Unterirdisch"],
     bild: "assets/images/monster/monsterhandbuch/drow.png",
     beschreibung: [
       "Weibliche Drow, die Blutsbande zu einem Adelshaus haben, werden von Geburt an geformt und ausgebildet, um Priesterinnen der Lolth zu werden. Die Spinnenkönigin erlaubt es männlichen Drow nicht, solche Positionen einzunehmen. Solche Priesterinnen führen den Willen der Spinnenkönigin aus und haben beträchtliche Macht und Einfluss in der Drow-Gesellschaft."
@@ -2189,7 +2226,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Druide",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "NPC",
     groesse: "Mittelgroß",
     gesinnung: "Jede Gesinnung",
@@ -2218,9 +2255,9 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Dryade",
-    art: "Fee",
+    art: "Feenwesen",
     unterart: null,
-    groesse: "Mittel",
+    groesse: "Mittelgroß",
     gesinnung: "Neutral",
     cr: 1, xp: 200,
     rk: 11, ruestungstyp: "16 mit Rindenhaut",
@@ -2291,9 +2328,9 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Duergar",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Zwerg",
-    groesse: "Mittel",
+    groesse: "Mittelgroß",
     gesinnung: "Rechtschaffen böse",
     cr: 1, xp: 200,
     rk: 16, ruestungstyp: "Schuppenrüstung, Schild",
@@ -2305,7 +2342,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: ["Gift"], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"], passiveWahrnehmung: 10,
     sprachen: ["Zwergisch", "Gemeinsprache der Unterreiche"],
-    umgebung: ["Unterreich"],
+    umgebung: ["Unterirdisch"],
     bild: "assets/images/monster/monsterhandbuch/duergar.png",
     beschreibung: [
       "Die tyrannischen Duergar, auch als Grauzwerge bekannt, leben in fantastischen Städten tief im Unterreich. Mit uraltem Zwergenwissen und unzähligen Sklaven arbeiten sie unermüdlich daran, ihre unterirdischen Königreiche auszuweiten. Die meisten Duergar (auch die Frauen) sind kahl und haben aschgraue Haut. Sie tragen trostlose Gewänder, um besser mit dem Stein zu verschmelzen, zusammen mit einfachem Schmuck, der ihr strenges und zweckbetontes Verhalten unterstreicht.",
@@ -2344,7 +2381,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: ["Blindsicht 18 m"], passiveWahrnehmung: 10,
     sprachen: [],
-    umgebung: ["Unterreich", "Höhle"],
+    umgebung: ["Unterirdisch", "Höhle"],
     bild: "assets/images/monster/monsterhandbuch/duestermantel.png",
     beschreibung: [
       "Ein Düstermantel hängt an Höhlendecken und bleibt vollkommen lautlos, während er auf Kreaturen wartet, die unter ihm vorbeigehen. Aus der Entfernung kann er als Stalaktit oder Felsbrocken durchgehen. Dann lässt er sich von der Decke fallen und spannt sich auf. Er umgibt sich mit magischer Dunkelheit, während er seine Beute umhüllt und zermalmt.",
@@ -2364,9 +2401,9 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Echsenkönig/Echsenkönigin",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Echsenmensch",
-    groesse: "Mittel",
+    groesse: "Mittelgroß",
     gesinnung: "Chaotisch böse",
     cr: 4, xp: 1100,
     rk: 15, ruestungstyp: "natürliche Rüstung",
@@ -2400,9 +2437,9 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Echsenmensch",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Echsenmensch",
-    groesse: "Mittel",
+    groesse: "Mittelgroß",
     gesinnung: "Neutral",
     cr: 0.5, xp: 100,
     rk: 15, ruestungstyp: "natürliche Rüstung, Schild",
@@ -2439,9 +2476,9 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Echsenmenschen-Schamane",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Echsenmensch",
-    groesse: "Mittel",
+    groesse: "Mittelgroß",
     gesinnung: "Neutral",
     cr: 2, xp: 450,
     rk: 13, ruestungstyp: "natürliche Rüstung",
@@ -2500,7 +2537,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Einhorn",
-    art: "Himmlischer",
+    art: "Himmlisch",
     unterart: null,
     groesse: "Groß",
     gesinnung: "Rechtschaffen gut",
@@ -2561,7 +2598,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 10,
     sprachen: [],
-    umgebung: ["Wald", "Ebenen"],
+    umgebung: ["Wald", "Grasland"],
     bild: "assets/images/monster/monsterhandbuch/elch.png",
     beschreibung: [],
     besonderheiten: [
@@ -2591,7 +2628,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 10,
     sprachen: [],
-    umgebung: ["Ebenen", "Wald"],
+    umgebung: ["Grasland", "Wald"],
     bild: "assets/images/monster/monsterhandbuch/elefant.png",
     beschreibung: [],
     besonderheiten: [
@@ -2606,7 +2643,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Empyrier",
-    art: "Himmlischer",
+    art: "Himmlisch",
     unterart: "Titan",
     groesse: "Riesig",
     gesinnung: "Chaotisch gut (75%) oder neutral böse (25%)",
@@ -2620,7 +2657,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: [], schadensimmunitaeten: ["Wucht-, Stich- und Hiebschaden durch nicht-magische Waffen"], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: ["Wahre Sicht 36 m"], passiveWahrnehmung: 16,
     sprachen: ["alle"],
-    umgebung: ["Obere Ebenen"],
+    umgebung: ["Andere Ebenen"],
     bild: "assets/images/monster/monsterhandbuch/empyrier.png",
     beschreibung: [
       "Empyrier sind die himmlischen Kinder der Götter der Oberen Ebenen. Sie sind allesamt wunderschön, statuesk und selbstsicher.",
@@ -2696,7 +2733,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: ["Bezaubert", "Erschöpft", "Gelähmt", "Verängstigt", "Vergiftet", "Versteinert"],
     sinne: ["Dunkelsicht 36 m"], passiveWahrnehmung: 10,
     sprachen: ["Versteht die Sprache seines Erschaffers, kann aber nicht sprechen"],
-    umgebung: ["Ruinen", "Städtisch", "Unterirdisch"],
+    umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
     bild: "assets/images/monster/monsterhandbuch/eisengolem.png",
     beschreibung: [
       "Die mächtigsten Golems, die Eisengolems, sind gewaltige, hoch aufragende Giganten, die aus schwerem Metall geschmiedet sind. Seine Faust kann Kreaturen mit einem einzigen Schlag zerschmettern, und seine scheppernden Schritte lassen die Erde unter seinen Füßen erbeben.",
@@ -2774,7 +2811,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: ["Wucht-, Stich- und Hiebschaden durch nicht-magische Waffen"], schadensimmunitaeten: ["Gift"], verwundbarkeiten: ["Schall"], zustandsimmunitaeten: ["Bewusstlos", "Erschöpft", "Gelähmt", "Vergiftet", "Versteinert"],
     sinne: ["Dunkelsicht 18 m", "Erschütterungssinn 18 m"], passiveWahrnehmung: 10,
     sprachen: ["Terranisch"],
-    umgebung: ["Unterreich", "Höhle"],
+    umgebung: ["Unterirdisch", "Höhle"],
     bild: "assets/images/monster/monsterhandbuch/erdelementar.png",
     beschreibung: [
       "Ein Erdelementar schleppt sich wie ein wandelnder Hügel voran. Seine keulenartigen Arme aus zackigen Steinen schwingen an seiner Seite. Sein Kopf und Körper bestehen aus Erde oder Stein und sind gelegentlich mit Brocken aus Metall, Juwelen und hellen Mineralien durchsetzt.",
@@ -2810,7 +2847,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m", "Erschütterungssinn 18 m"], passiveWahrnehmung: 10,
     sprachen: ["Erdkoloss"],
-    umgebung: ["Unterreich"],
+    umgebung: ["Unterirdisch"],
     bild: "assets/images/monster/monsterhandbuch/erdkoloss.png",
     beschreibung: [
       "Der Erdkoloss ist ein abscheulicher Schrecken von tief unter der Erde. Er gräbt sich auf der Suche nach Nahrung in Höhlenkomplexe, Gewölbe oder Siedlungen des Unterreichs. Wer das Glück hat, einen Erdkoloss-Angriff zu überleben, erinnert sich oft an gnädig wenig von dem Zwischenfall, dank des Blickes des Erdkolosses, der die Gedanken verwirren kann.",
@@ -2937,7 +2974,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Erzmagus",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "NPC",
     groesse: "Mittelgroß",
     gesinnung: "Jede Gesinnung",
@@ -2985,7 +3022,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"], passiveWahrnehmung: 14,
     sprachen: ["Riesisch", "Orkisch"],
-    umgebung: ["Wildnis", "Hügel"],
+    umgebung: ["Wald", "Hügel"],
     bild: "assets/images/monster/monsterhandbuch/ettin.png",
     beschreibung: [
       "Ein Ettin ist ein verdorbener, zweiköpfiger Riese, der die Grobschlächtigkeit eines Orks hat. Er badet sich nie, wenn er es vermeiden kann, und seine dicke Haut ist normalerweise unter den stinkenden Fellen, die er trägt, mit einer dicken Schicht aus Dreck und Ruß bedeckt. Seine langen, strähnigen Haare hängen in einem ungekämmten Gewirr um seine Gesichter, und sein Atem strömt stinkend aus Mündern, die vor krummen Zähnen und Hauern starren.",
@@ -3054,7 +3091,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"], passiveWahrnehmung: 13,
     sprachen: [],
-    umgebung: ["Wald", "Wildnis"],
+    umgebung: ["Wald"],
     bild: "assets/images/monster/monsterhandbuch/eulenbaer.png",
     beschreibung: [
       "Das Kreischen des Eulenbären hallt durch dunkle Täler und nächtliche Wälder und durchdringt die Stille, um seiner Beute den Tod anzukündigen. Federn bedecken das dichte, struppige Fell seines bärenartigen Körpers, und die durchsichtigen Pupillen seiner großen, runden Augen starren zornig aus seinem eulenartigen Kopf.",
@@ -3122,7 +3159,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: [],
     sinne: ["Blindsicht 9 m", "Dunkelsicht 18 m"], passiveWahrnehmung: 8,
     sprachen: [],
-    umgebung: ["Unterreich", "Höhlen"],
+    umgebung: ["Unterirdisch", "Höhle"],
     bild: "assets/images/monster/monsterhandbuch/falldorn.png",
     beschreibung: [
       "Falldornen hängen an Decken von Höhlen und großen unterirdischen Korridoren und verschmelzen perfekt mit dem natürlichen Fels. Lautlos lassen sie sich dann auf arglose Opfer auf dem Boden fallen, um sie zu durchbohren. Ein Falldorn ist die Larvenform eines Seilers, und die beiden Kreaturen greifen oft zusammen an. Der Körper des Falldorns ist von einem felsenartigen Panzer umgeben, sodass er das Aussehen und die Textur eines Stalaktiten hat.",
@@ -3180,7 +3217,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Feengeist",
-    art: "Fee",
+    art: "Feenwesen",
     unterart: null,
     groesse: "Winzig",
     gesinnung: "Neutral gut",
@@ -3232,7 +3269,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: ["Wucht-, Stich- und Hiebschaden durch nicht-magische Waffen"], schadensimmunitaeten: ["Feuer", "Gift"], verwundbarkeiten: [], zustandsimmunitaeten: ["Bewusstlos", "Erschöpft", "Festgesetzt", "Gelähmt", "Gepackt", "Liegend", "Vergiftet", "Versteinert"],
     sinne: ["Dunkelsicht 18 m"], passiveWahrnehmung: 10,
     sprachen: ["Ignanisch"],
-    umgebung: ["Feuerebene"],
+    umgebung: ["Andere Ebenen"],
     bild: "assets/images/monster/monsterhandbuch/feuerelementar.png",
     beschreibung: [
       "Eine schwache humanoide Gestalt ist durch das Innere dieser wilden, beweglichen Flamme gewirkt. Ein Feuerelementar ist eine Macht der launenhaften Zerstörung. Wohin sie sich auch bewegen, sie setzen ihre Umgebung in Brand und verwandeln die Welt in Asche, Rauch und Glut. Wasser kann ihren zerstörerischen Vormarsch aufhalten, sodass der Feuerelementar zurückweicht und in Schmerz und Wut zischt und raucht."
@@ -3375,7 +3412,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: ["Bezaubert", "Erschöpft", "Gelähmt", "Verängstigt", "Vergiftet", "Versteinert"],
     sinne: ["Dunkelsicht 18 m"], passiveWahrnehmung: 10,
     sprachen: ["Versteht die Sprache seines Erschaffers, kann aber nicht sprechen"],
-    umgebung: ["Ruinen", "Städtisch", "Unterirdisch"],
+    umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
     bild: "assets/images/monster/monsterhandbuch/fleischgolem.png",
     beschreibung: [
       "Fleischgolems sind eine grausige Ansammlung humanoider Körperteile, die zu einem muskulösen Rohling großer Kraft zusammengenäht und genietet werden. Das Muskelgewebe des Golems spricht auf Elektrizität an, sodass sie die Kreatur mit Vitalität und Stärke erfüllt.",
@@ -3506,7 +3543,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"], passiveWahrnehmung: 12,
     sprachen: ["Versteht die Gemeinsprache der Unterreiche, kann aber nicht sprechen", "Telepathie 18 m"],
-    umgebung: ["Unterreich"],
+    umgebung: ["Unterirdisch"],
     bild: "assets/images/monster/monsterhandbuch/flumph.png",
     beschreibung: [
       "Die geheimnisvollen Flumphs treiben durch das Unterreich, angetrieben von der Luft, die aus den Düsen strömt, deren Geräusch ihnen ihren Namen eingebracht hat. Ein Flumph leuchtet schwach und spiegelt seine Stimmungen mit seiner Farbe wider. Ein weiches Pink bedeutet, dass er amüsiert ist, Dunkelblau bedeutet Trauer, Grün steht für Neugier, und Karmesinrot für Wut.",
@@ -3545,7 +3582,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"], passiveWahrnehmung: 18,
     sprachen: ["Riesisch", "Gemeinsprache der Unterreiche"],
-    umgebung: ["Unterreich"],
+    umgebung: ["Unterirdisch"],
     bild: "assets/images/monster/monsterhandbuch/fomorianer.png",
     beschreibung: [
       "Die gottlosen Fomorianer sind die grässlichsten und bösesten Riesen. Ihre entstellten Körper spiegeln ihr verderbtes Verhalten wider. Einige haben Gesichtszüge, die zufällig über ihre entstellten, warzigen Köpfe verstreut sind. Andere haben Glieder von ekelhaft unterschiedlicher Größe. Das elende Erscheinungsbild ist aber nur selten ein Grund für Mitleid, da die Fomorianer ihr Unheil durch das Böse, das ihre Herzen und Gedanken beherrscht, selbst verschuldet haben.",
@@ -3646,7 +3683,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: ["Erschöpft", "Gelähmt", "Vergiftet", "Versteinert"],
     sinne: ["Dunkelsicht 18 m", "Erschütterungssinn 18 m"], passiveWahrnehmung: 11,
     sprachen: ["Terranisch"],
-    umgebung: ["Wildnis", "Unterirdisch"],
+    umgebung: ["Gebirge", "Unterirdisch"],
     bild: "assets/images/monster/monsterhandbuch/galeb_duhr.png",
     beschreibung: [
       "Der Galeb Duhr ist eine felsenartige Kreatur mit stummeligen Gliedmaßen, die als Arme und Beine dienen. Sie hat die Fähigkeit, Felsen und Steine in ihrer Umgebung zu beleben, und deshalb trifft man sie normalerweise in felsigem Gelände an. Der Galeb Duhr ist intelligenter als die meisten Elementare, sodass er besser Bedrohungen einschätzen und mit Kreaturen kommunizieren kann, die in das Gebiet eindringen, das er bewacht.",
@@ -3684,7 +3721,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: ["Erschöpft", "Vergiftet", "Versteinert"],
     sinne: ["Dunkelsicht 18 m"], passiveWahrnehmung: 10,
     sprachen: ["Terranisch"],
-    umgebung: ["Städtisch", "Unterirdisch"],
+    umgebung: ["Stadt", "Unterirdisch"],
     bild: "assets/images/monster/monsterhandbuch/gargyl.png",
     beschreibung: [
       "Die unbelebten Gargylen, die auf Gebäuden hocken, sind von diesen bösartigen Kreaturen der elementaren Erde inspiriert, die an groteske, teuflische Statuen erinnern. Ein Gargyl lauert zwischen Steinen und Ruinen, so regungslos wie jede Statue, und erfreut sich an dem Schrecken, den er auslöst, wenn er sich aus seiner Bewegungslosigkeit löst.",
@@ -3796,7 +3833,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 13,
     sprachen: [],
-    umgebung: ["Ebenen", "Wüste"],
+    umgebung: ["Grasland", "Wüste"],
     bild: "assets/images/monster/monsterhandbuch/geier.png",
     beschreibung: [],
     besonderheiten: [
@@ -3828,7 +3865,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: ["Bezaubert", "Erschöpft", "Festgesetzt", "Gelähmt", "Gepackt", "Liegend", "Verängstigt", "Vergiftet", "Versteinert"],
     sinne: ["Dunkelsicht 18 m"], passiveWahrnehmung: 11,
     sprachen: ["Alle Sprachen, die er im Leben kannte"],
-    umgebung: ["Städtisch", "Ruinen", "Unterirdisch"],
+    umgebung: ["Stadt", "Ruinen", "Unterirdisch"],
     bild: "assets/images/monster/monsterhandbuch/geist.png",
     beschreibung: [
       "Ein Geist ist die Seele einer einst lebenden Kreatur, die gebunden ist, einen bestimmten Ort, eine Kreatur oder einen Gegenstand heimzusuchen, der ihr im Leben wichtig war.",
@@ -3883,7 +3920,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Gemeiner",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "NPC",
     groesse: "Mittelgroß",
     gesinnung: "Jede Gesinnung",
@@ -3927,7 +3964,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: ["Bezaubert", "Erschöpft", "Vergiftet"],
     sinne: ["Dunkelsicht 18 m"], passiveWahrnehmung: 10,
     sprachen: ["Gemeinsprache"],
-    umgebung: ["Unterirdisch", "Ruinen", "Wildnis"],
+    umgebung: ["Unterirdisch", "Ruinen"],
     bild: "assets/images/monster/monsterhandbuch/ghul.png",
     beschreibung: [
       "Ghule streifen in Rudeln durch die Nacht, angetrieben von einem unstillbaren Hunger nach dem Fleisch von Humanoiden.",
@@ -3972,7 +4009,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Githyanki-Krieger",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Gith",
     groesse: "Mittelgroß",
     gesinnung: "Rechtschaffen böse",
@@ -3989,7 +4026,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: [],
     sinne: [], passiveWahrnehmung: 11,
     sprachen: ["Gith"],
-    umgebung: ["Wildnis", "Städtisch", "Unterirdisch"],
+    umgebung: ["Andere Ebenen", "Stadt", "Unterirdisch"],
     bild: "assets/images/monster/monsterhandbuch/githyanki_krieger.png",
     beschreibung: [
       "Die Githyanki plündern zahllose Welten von den Decks ihrer astralen Schiffe und von den Rücken roter Drachen aus. Seit sie ihre Freiheit von den Gedankenschindern erlangt haben, sind die Githyanki skrupellose Eroberer unter der Herrschaft der grässlichen Lich-Königin Vlaakith geworden.",
@@ -4008,7 +4045,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Githyanki-Ritter",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Gith",
     groesse: "Mittelgroß",
     gesinnung: "Rechtschaffen böse",
@@ -4025,7 +4062,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: [],
     sinne: [], passiveWahrnehmung: 12,
     sprachen: ["Gith"],
-    umgebung: ["Wildnis", "Städtisch", "Unterirdisch"],
+    umgebung: ["Andere Ebenen", "Stadt", "Unterirdisch"],
     bild: "assets/images/monster/monsterhandbuch/githyanki_ritter.png",
     beschreibung: [
       "Silberschwerter: In uralten Zeiten erschufen die Gith-Ritter besondere Waffen, um ihre Gedankenschinder-Meister zu bekämpfen. Diese Silberschwerter kanalisieren die Macht des Willens dessen, der sie führt. Ein Githyanki kann kein Ritter werden, bis er die einzigartige Disziplin aufbringt, eine solche Klinge durch seinen Willen entstehen zu lassen. Das Silberschwert entspricht einem Zweihandschwert +3 in den Händen seines Erschaffers.",
@@ -4043,7 +4080,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Githzerai-Mönch",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Gith",
     groesse: "Mittelgroß",
     gesinnung: "Rechtschaffen neutral",
@@ -4060,7 +4097,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: [],
     sinne: [], passiveWahrnehmung: 14,
     sprachen: ["Gith"],
-    umgebung: ["Wildnis", "Unterirdisch"],
+    umgebung: ["Andere Ebenen", "Unterirdisch"],
     bild: "assets/images/monster/monsterhandbuch/githzerai_moench.png",
     beschreibung: [
       "Die Githzerai sind fokussierte Philosophen und nüchterne Asketen, die ein Leben strenger Ordnung anstreben. Sie sind schlank und muskulös und tragen ungeschmückte Kleider. Die Githzerai haben ihren kriegerischen Githyanki-Vettern den Rücken zugewandt und führen ein strenges klösterliches Leben auf Inseln der Ordnung im großen See des Chaos, der die Ebene des Limbus ausmacht.",
@@ -4079,7 +4116,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Githzerai-Zerth",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Gith",
     groesse: "Mittelgroß",
     gesinnung: "Rechtschaffen neutral",
@@ -4096,7 +4133,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: [],
     sinne: [], passiveWahrnehmung: 16,
     sprachen: ["Gith"],
-    umgebung: ["Wildnis", "Unterirdisch"],
+    umgebung: ["Andere Ebenen", "Unterirdisch"],
     bild: "assets/images/monster/monsterhandbuch/githzerai_zerth.png",
     beschreibung: [
       "Zerths sind die mächtigsten und diszipliniertesten Githzerai-Mönche, die die Lehren und Prinzipien Zerthimons am besten verkörpern. Diese mächtigen Mönche können nur durch die Kraft ihrer Gedanken ihren Körper von einer Ebene auf die andere wechseln lassen.",
@@ -4167,7 +4204,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: [], schadensimmunitaeten: ["Feuer"], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"], passiveWahrnehmung: 27,
     sprachen: ["Allgemein", "Drakonisch"],
-    umgebung: ["Berg"],
+    umgebung: ["Gebirge"],
     bild: "assets/images/monster/monsterhandbuch/uralter_golddrache.png",
     beschreibung: [
       "Golddrachen sind die mächtigsten und majestätischsten der metallischen Drachen und hingebungsvolle Feinde des Bösen. Sie sind die reserviertesten der guten Drachen und schätzen ihre Privatsphäre so sehr, dass sie sich selten mit anderen Drachen abgeben.",
@@ -4231,7 +4268,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: [], schadensimmunitaeten: ["Feuer"], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"], passiveWahrnehmung: 24,
     sprachen: ["Allgemein", "Drakonisch"],
-    umgebung: ["Berg"],
+    umgebung: ["Gebirge"],
     bild: "assets/images/monster/monsterhandbuch/ausgewachsener_golddrache.png",
     beschreibung: [
       "Ausgewachsene Golddrachen haben Jahrzehnte damit verbracht, als wandernde Händler oder Reisende verkleidet durch die Welt zu ziehen, im Verborgenen Gutes zu tun und das Böse zu beobachten."
@@ -4293,7 +4330,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: [], schadensimmunitaeten: ["Feuer"], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: ["Blindsicht 9 m", "Dunkelsicht 36 m"], passiveWahrnehmung: 19,
     sprachen: ["Allgemein", "Drakonisch"],
-    umgebung: ["Berg"],
+    umgebung: ["Gebirge"],
     bild: "assets/images/monster/monsterhandbuch/junger_golddrache.png",
     beschreibung: [
       "Junge Golddrachen erkunden die Welt in Tiergestalt und knüpfen Freundschaften mit verirrten Reisenden oder Wirten, bevor sie ihre wahre Natur enthüllen oder auch nicht."
@@ -4315,7 +4352,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Gladiator",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "NPC",
     groesse: "Mittelgroß",
     gesinnung: "Jede Gesinnung",
@@ -4351,7 +4388,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Gnoll",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Gnoll",
     groesse: "Mittelgroß",
     gesinnung: "Chaotisch böse",
@@ -4368,7 +4405,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"], passiveWahrnehmung: 10,
     sprachen: ["Gnollisch"],
-    umgebung: ["Wildnis", "Hügel"],
+    umgebung: ["Grasland", "Hügel"],
     bild: "assets/images/monster/monsterhandbuch/gnoll.png",
     beschreibung: [
       "Gnolle sind wilde Humanoide, die ohne Vorwarnung Siedlungen in den Grenzlanden der Zivilisation angreifen, ihre Opfer abschlachten und ihr Fleisch verschlingen.",
@@ -4404,7 +4441,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"], passiveWahrnehmung: 10,
     sprachen: ["Abyssisch", "Gnollisch"],
-    umgebung: ["Wildnis", "Hügel"],
+    umgebung: ["Grasland", "Hügel"],
     bild: "assets/images/monster/monsterhandbuch/gnoll_reisszahn_von_yeenoghu.png",
     beschreibung: [
       "Gnolle feiern ihre Siege mit dämonischen Ritualen und Blutopfern an Yeenoghu. Manchmal belohnt der Dämonenfürst seine Anhänger, indem er es erlaubt, dass einer von ihnen von einem dämonischen Geist besessen wird. Der glückliche Empfänger trägt ein Zeichen von Yeenoghus Gunst und wird zu einem Reißzahn von Yeenoghu.",
@@ -4423,7 +4460,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Gnoll-Rudelfürst",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Gnoll",
     groesse: "Mittelgroß",
     gesinnung: "Chaotisch böse",
@@ -4440,7 +4477,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"], passiveWahrnehmung: 10,
     sprachen: ["Gnollisch"],
-    umgebung: ["Wildnis", "Hügel"],
+    umgebung: ["Grasland", "Hügel"],
     bild: "assets/images/monster/monsterhandbuch/gnoll_rudelfuerst.png",
     beschreibung: [
       "Der Alpha eines Gnoll-Rudels ist der Rudelfürst, und er herrscht durch Macht und Gerissenheit. Ein Rudelfürst erhält die beste Beute, Nahrung und die besten Wertgegenstände des Rudels. Er verziert seinen Körper mit brutalen Schmuckstücken und Trophäen und färbt Dämonensigillen in sein Fell, in der Hoffnung, Yeenoghu werde ihn unverwundbar machen."
@@ -4460,7 +4497,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Tiefengnom (Svirfneblin)",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Gnom",
     groesse: "Klein",
     gesinnung: "Neutral gut",
@@ -4498,7 +4535,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Goblin",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Goblinoider",
     groesse: "Klein",
     gesinnung: "Neutral böse",
@@ -4515,7 +4552,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"], passiveWahrnehmung: 9,
     sprachen: ["Gemeinsprache", "Goblinisch"],
-    umgebung: ["Wildnis", "Unterirdisch", "Hügel"],
+    umgebung: ["Unterirdisch", "Hügel"],
     bild: "assets/images/monster/monsterhandbuch/goblin.png",
     beschreibung: [
       "Goblins sind kleine, verkommene, egoistische Humanoide, die in Höhlen, verlassenen Minen, ausgeplünderten Gewölben und anderen elenden Orten hausen. Goblins sind für sich genommen schwach, versammeln sich aber in großer — oft überwältigender — Zahl.",
@@ -4534,7 +4571,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Goblin-Boss",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Goblinoider",
     groesse: "Klein",
     gesinnung: "Neutral böse",
@@ -4551,7 +4588,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"], passiveWahrnehmung: 9,
     sprachen: ["Gemeinsprache", "Goblinisch"],
-    umgebung: ["Wildnis", "Unterirdisch", "Hügel"],
+    umgebung: ["Unterirdisch", "Hügel"],
     bild: "assets/images/monster/monsterhandbuch/goblin_boss.png",
     beschreibung: [
       "Ein Goblin-Boss herrscht durch Macht und Gerissenheit. Goblin-Bosse sind schnell gestürzt, und viele Goblinstämme werden von Hobgoblin-Kriegsherren oder Grottenschrat-Häuptlingen übernommen."
@@ -4575,7 +4612,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     name: "Golddrachennestling",
     art: "Drache",
     unterart: "Metallischer Drache",
-    groesse: "Mittel",
+    groesse: "Mittelgroß",
     gesinnung: "Rechtschaffen gut",
     cr: 3, xp: 700,
     rk: 17, ruestungstyp: "natürliche Rüstung",
@@ -4587,7 +4624,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: [], schadensimmunitaeten: ["Feuer"], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: ["Blindsicht 3 m", "Dunkelsicht 18 m"], passiveWahrnehmung: 14,
     sprachen: ["Drakonisch"],
-    umgebung: ["Berg"],
+    umgebung: ["Gebirge"],
     bild: "assets/images/monster/monsterhandbuch/golddrachennestling.png",
     beschreibung: [
       "Golddrachennestlinge haben bereits einen edlen Charakter und zeigen instinktiv Abneigung gegenüber bösem Verhalten, noch bevor sie die Weisheit älterer Artgenossen erworben haben."
@@ -4623,7 +4660,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: ["Versteinert"],
     sinne: ["Dunkelsicht 18 m"], passiveWahrnehmung: 14,
     sprachen: [],
-    umgebung: ["Wildnis", "Hügel"],
+    umgebung: ["Grasland", "Hügel"],
     bild: "assets/images/monster/monsterhandbuch/gorgone.png",
     beschreibung: [
       "Wenige Kreaturen, die eine Gorgone antreffen, überleben, um davon zu erzählen. Ihr Körper ist von eisernen Platten bedeckt, und grüner Dampf wabert aus ihren Nasenlöchern.",
@@ -4854,7 +4891,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"], passiveWahrnehmung: 15,
     sprachen: [],
-    umgebung: ["Wildnis", "Hügel", "Berge"],
+    umgebung: ["Hügel", "Gebirge"],
     bild: "assets/images/monster/monsterhandbuch/greif.png",
     beschreibung: [
       "Greifen sind wilde, vogelartige Fleischfresser mit dem muskulösen Körper eines Löwen und dem Kopf, der Vorderbeine und der Schwingen eines Adlers. Im Angriff sind Greifen so schnell und tödlich wie Adler, während sie mit der wilden Macht und Anmut eines Löwen zuschlagen.",
@@ -5139,7 +5176,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: ["Bezaubert", "Erschöpft", "Vergiftet"],
     sinne: ["Dunkelsicht 18 m"], passiveWahrnehmung: 10,
     sprachen: ["Gemeinsprache"],
-    umgebung: ["Unterirdisch", "Ruinen", "Wildnis"],
+    umgebung: ["Unterirdisch", "Ruinen"],
     bild: "assets/images/monster/monsterhandbuch/grul.png",
     beschreibung: [
       "Orcus erfüllt einen Ghul manchmal mit einer größeren Dosis abyssischer Energie, um einen Grul zu erschaffen. Wo Ghule kaum mehr als wilde Bestien sind, sind Grule gerissen und können ein Rudel von Ghulen dazu bringen, ihren Befehlen zu folgen."
@@ -5356,7 +5393,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"], passiveWahrnehmung: 9,
     sprachen: ["Gemeinsprache", "Riesisch"],
-    umgebung: ["Gebirge", "Hügel", "Ebenen"],
+    umgebung: ["Gebirge", "Hügel", "Grasland"],
     bild: "assets/images/monster/monsterhandbuch/halboger.png",
     beschreibung: ["Ein Halboger entsteht, wenn sich ein Oger mit einem Menschen, Hobgoblin, Grottenschrat oder Ork paart. Der Halboger-Nachkomme eines Ogers und eines Orks wird auch Ogrillon genannt. Ein ausgewachsener Halboger ist 2,40 m groß und wiegt im Schnitt 450 Pfund."],
     besonderheiten: [],
@@ -5478,7 +5515,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Hobgoblin",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Goblinoider",
     groesse: "Mittelgroß",
     gesinnung: "Rechtschaffen böse",
@@ -5513,7 +5550,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Hobgoblin-Hauptmann",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Goblinoider",
     groesse: "Mittelgroß",
     gesinnung: "Rechtschaffen böse",
@@ -5546,7 +5583,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Hobgoblin-Kriegsherr",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Goblinoider",
     groesse: "Mittelgroß",
     gesinnung: "Rechtschaffen böse",
@@ -5749,7 +5786,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: [],
     sinne: [], passiveWahrnehmung: 12,
     sprachen: ["Riesisch"],
-    umgebung: ["Ebenen", "Gebirge", "Wald"],
+    umgebung: ["Grasland", "Gebirge", "Wald"],
     bild: "assets/images/monster/monsterhandbuch/huegelriese.png",
     beschreibung: [
       "Hügelriesen sind selbstsüchtige, einfältige Rohlinge, die auf der beständigen Suche nach Nahrung jagen, sammeln und plündern. Sie stolpern durch Hügel und Wälder und verschlingen, was sie können. Ihre Faulheit und Dummheit hätte ihnen vor langer Zeit das Ende gebracht, wenn sie nicht so groß und stark wären.",
@@ -5783,7 +5820,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 13,
     sprachen: [],
-    umgebung: ["Ebenen", "Wüste"],
+    umgebung: ["Grasland", "Wüste"],
     bild: "assets/images/monster/monsterhandbuch/hyaene.png",
     beschreibung: [],
     besonderheiten: [
@@ -5847,7 +5884,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: [], schadensimmunitaeten: ["Feuer"], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"], passiveWahrnehmung: 12,
     sprachen: ["Ignanisch"],
-    umgebung: ["Ebene der Feuers"],
+    umgebung: ["Andere Ebenen"],
     bild: "assets/images/monster/monsterhandbuch/ifriti.png",
     beschreibung: [
       "Ifriti (Singular: Ifrit) sind feurige Dschinnis aus der Elementarebene des Feuers. In ihrer natürlichen Form erscheinen sie als große, muskulöse humanoide Wesen aus lebendiger Flamme, mit glühenden Augen und Haaren wie lodernde Fackeln.",
@@ -5922,7 +5959,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: ["Bewusstlos", "Erschöpft", "Festgesetzt", "Gelähmt", "Gepackt", "Liegend", "Vergiftet"],
     sinne: ["Dunkelsicht 36 m"], passiveWahrnehmung: 12,
     sprachen: ["Die Sprachen, die es im Leben kannte"],
-    umgebung: ["Sumpf", "Wildnis"],
+    umgebung: ["Sumpf", "Wald"],
     bild: "assets/images/monster/monsterhandbuch/irrlicht.png",
     beschreibung: [
       "Irrlichter sind bösartige, zarte Lichtkugeln, die einsame Orte und Schlachtfelder heimsuchen. Sie sind von einem dunklen Schicksal oder dunkler Magie dazu gezwungen, sich von Angst und Verzweiflung zu ernähren.",
@@ -6216,7 +6253,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 13,
     sprachen: [],
-    umgebung: ["Stadtgebiete", "Wald"],
+    umgebung: ["Stadt", "Wald"],
     bild: "assets/images/monster/monsterhandbuch/katze.png",
     beschreibung: [],
     besonderheiten: [
@@ -6230,7 +6267,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Kenku",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Kenku",
     groesse: "Mittelgroß",
     gesinnung: "Chaotisch neutral",
@@ -6244,7 +6281,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: [], passiveWahrnehmung: 12,
     sprachen: ["Versteht Aural und Gemeinsprache, spricht aber durch sein Merkmal Stimmnachahmung"],
-    umgebung: ["Städtisch", "Wald"],
+    umgebung: ["Stadt", "Wald"],
     bild: "assets/images/monster/monsterhandbuch/kenku.png",
     beschreibung: [
       "Kenku sind gefiederte Humanoide, die als gierige Vagabunden durch die Welt streifen. Sie können perfekt jedes Geräusch nachahmen, das sie hören.",
@@ -6409,7 +6446,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Kobold",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Kobold",
     groesse: "Klein",
     gesinnung: "Rechtschaffen böse",
@@ -6444,7 +6481,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Geflügelter Kobold",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Kobold",
     groesse: "Klein",
     gesinnung: "Rechtschaffen böse",
@@ -6520,7 +6557,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: ["Bezaubert", "Erschöpft", "Vergiftet"],
     sinne: ["Blindsicht 9 m (über diesen Radius hinaus blind)"], passiveWahrnehmung: 10,
     sprachen: ["Versteht die Gemeinsprache, kann aber nicht sprechen"],
-    umgebung: ["Städtisch", "Unterirdisch"],
+    umgebung: ["Stadt", "Unterirdisch"],
     bild: "assets/images/monster/monsterhandbuch/krabbelnde_klaue.png",
     beschreibung: [
       "Krabbelnde Klauen sind die abgetrennten Hände von Mördern, die mit dunkler Magie belebt worden sind, sodass sie weiter morden können. Dunkle Magier und Paktierer verwenden sie als zusätzliche Hände in ihren Laboren.",
@@ -6665,7 +6702,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Kultfanatiker",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "NPC",
     groesse: "Mittelgroß",
     gesinnung: "Jede nicht gute Gesinnung",
@@ -6696,7 +6733,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Kultist",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "NPC",
     groesse: "Mittelgroß",
     gesinnung: "Jede nicht gute Gesinnung",
@@ -6725,7 +6762,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Kundschafter",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "NPC",
     groesse: "Mittelgroß",
     gesinnung: "Jede Gesinnung",
@@ -6756,7 +6793,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Kuo-toa",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Kuo-toa",
     groesse: "Mittelgroß",
     gesinnung: "Neutral böse",
@@ -6797,7 +6834,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Kuo-toa-Aufseher",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Kuo-toa",
     groesse: "Mittelgroß",
     gesinnung: "Neutral böse",
@@ -6832,7 +6869,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Kuo-toa-Erzpriester",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Kuo-toa",
     groesse: "Mittelgroß",
     gesinnung: "Neutral böse",
@@ -6868,7 +6905,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Kuo-toa-Geißel",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Kuo-toa",
     groesse: "Mittelgroß",
     gesinnung: "Neutral böse",
@@ -6906,7 +6943,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     name: "Kupferdrachennestling",
     art: "Drache",
     unterart: "Metallischer Drache",
-    groesse: "Mittel",
+    groesse: "Mittelgroß",
     gesinnung: "Chaotisch gut",
     cr: 1, xp: 200,
     rk: 16, ruestungstyp: "natürliche Rüstung",
@@ -7022,7 +7059,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: ["Bezaubert", "Erschöpft", "Gelähmt", "Verängstigt", "Vergiftet", "Versteinert"],
     sinne: ["Dunkelsicht 18 m"], passiveWahrnehmung: 9,
     sprachen: ["Versteht die Sprache seines Erschaffers, kann aber nicht sprechen"],
-    umgebung: ["Ruinen", "Städtisch", "Unterirdisch"],
+    umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
     bild: "assets/images/monster/monsterhandbuch/lehmgolem.png",
     beschreibung: [
       "Diese bulligen Golems werden aus Lehm erschaffen und sind gut einen Kopf größer als die meisten menschengroßen Kreaturen. Lehmgolems werden oft von Priestern großen Glaubens mit göttlicher Macht erfüllt.",
@@ -7149,7 +7186,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 13,
     sprachen: [],
-    umgebung: ["Ebenen"],
+    umgebung: ["Grasland"],
     bild: "assets/images/monster/monsterhandbuch/loewe.png",
     beschreibung: [],
     besonderheiten: [
@@ -7234,7 +7271,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Magus",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "NPC",
     groesse: "Mittelgroß",
     gesinnung: "Jede Gesinnung",
@@ -7278,7 +7315,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 10,
     sprachen: [],
-    umgebung: ["Arktis", "Ebenen"],
+    umgebung: ["Arktis", "Grasland"],
     bild: "assets/images/monster/monsterhandbuch/mammut.png",
     beschreibung: [],
     besonderheiten: [
@@ -7455,7 +7492,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 10,
     sprachen: [],
-    umgebung: ["Ebenen", "Gebirge"],
+    umgebung: ["Grasland", "Gebirge"],
     bild: "assets/images/monster/monsterhandbuch/maultier.png",
     beschreibung: [],
     besonderheiten: [
@@ -7675,7 +7712,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: [], passiveWahrnehmung: 12,
     sprachen: ["Aqual", "Gemeinsprache"],
-    umgebung: ["Küste", "Unterwasser"],
+    umgebung: ["Küste", "Ozean"],
     bild: "assets/images/monster/monsterhandbuch/meervolk.png",
     beschreibung: [
       "Meervolk sind aquatische Humanoide mit dem Oberkörper eines Menschen und dem Unterleib eines Fischs. Sie schmücken ihre Schuppen und Haut mit Dekorationen aus Muscheln. Stämme und Königreiche des Meervolks erstrecken sich über die ganze Welt, und ihre Völker sind so variantenreich, was Farben, Kultur und Einstellungen angeht, wie Menschenvölker an der Oberfläche.",
@@ -7849,7 +7886,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 13,
     sprachen: [],
-    umgebung: ["Wald", "Ebenen", "Stadtgebiete"],
+    umgebung: ["Wald", "Grasland", "Stadt"],
     bild: "assets/images/monster/monsterhandbuch/rabe.png",
     beschreibung: [],
     besonderheiten: [
@@ -7880,7 +7917,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"], passiveWahrnehmung: 13,
     sprachen: ["Gemeinsprache", "Infernalisch"],
-    umgebung: ["Stadtgebiete"],
+    umgebung: ["Stadt"],
     bild: "assets/images/monster/monsterhandbuch/rakshasa.png",
     beschreibung: [
       "Die Rakshasas nutzen Feingefühl und Irreführung, um andere unter ihre Kontrolle zu zwingen. Wenige Kreaturen sehen diese Unholde jemals in ihrer wahren Gestalt, da sie jede Form annehmen können, die sie wollen. Allerdings ziehen sie es vor, sich als einflussreiche oder mächtige Personen zu maskieren, beispielsweise als Adeliger, Kardinal oder reicher Kaufmann. Die wahre Gestalt der Rakshasa verbindet die Merkmale von Mensch und Tiger, mit einer bemerkenswerten Deformierung: ihre Handflächen sind da, wo bei einem normalen Menschen der Handrücken wäre.",
@@ -7951,7 +7988,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Dunkelsicht 9 m"],
     passiveWahrnehmung: 10,
     sprachen: [],
-    umgebung: ["Stadtgebiete", "Unterirdisch"],
+    umgebung: ["Stadt", "Unterirdisch"],
     bild: "assets/images/monster/monsterhandbuch/ratte.png",
     beschreibung: [],
     besonderheiten: [
@@ -8037,7 +8074,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Stammeskrieger",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "NPC",
     groesse: "Mittelgroß",
     gesinnung: "Jede Gesinnung",
@@ -8150,7 +8187,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 10,
     sprachen: [],
-    umgebung: ["Ebenen"],
+    umgebung: ["Grasland"],
     bild: "assets/images/monster/monsterhandbuch/reitpferd.png",
     beschreibung: [],
     besonderheiten: [],
@@ -8235,7 +8272,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     name: "Messingdrachennestling",
     art: "Drache",
     unterart: "Metallischer Drache",
-    groesse: "Mittel",
+    groesse: "Mittelgroß",
     gesinnung: "Chaotisch gut",
     cr: 1, xp: 200,
     rk: 16, ruestungstyp: "natürliche Rüstung",
@@ -8282,7 +8319,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Blindsicht 18 m", "Dunkelsicht 18 m"],
     passiveWahrnehmung: 13,
     sprachen: ["Abyssisch", "Infernalisch", "Telepathie 18 m"],
-    umgebung: ["Ebenen"],
+    umgebung: ["Andere Ebenen"],
     bild: "assets/images/monster/monsterhandbuch/mezzoloth.png",
     beschreibung: [
       "Mezzoloths sind insektenartige Yugoloths, die als einfache Soldaten in den Armeen des Bösen dienen. Mit ihren vier Armen, schützenden Chitinpanzern und Dreizacken sind sie geborene Kämpfer ohne große Intelligenz, aber mit erheblicher Brutalität.",
@@ -8824,7 +8861,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: ["Bezaubert"],
     sinne: ["Dunkelsicht 36 m"], passiveWahrnehmung: 16,
     sprachen: ["Abyssisch", "Gemeinsprache", "Infernalisch", "Urtümlisch"],
-    umgebung: ["Ebenen"],
+    umgebung: ["Andere Ebenen"],
     bild: "assets/images/monster/monsterhandbuch/nachtvettel.png",
     beschreibung: [
       "Nachtvetteln sind verschlagen und subversiv. Sie wollen die Tugendhaften zu Schurken machen, Liebe in Besessenheit verwandeln, Güte in Hass, Hingabe in Missachtung und Großzügigkeit in Selbstsucht. Nachtvetteln empfinden eine perverse Freude daran, Sterbliche zu verderben.",
@@ -8932,7 +8969,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 11,
     sprachen: [],
-    umgebung: ["Ebenen"],
+    umgebung: ["Grasland"],
     bild: "assets/images/monster/monsterhandbuch/nashorn.png",
     beschreibung: [],
     besonderheiten: [
@@ -8998,7 +9035,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Blindsicht 18 m", "Dunkelsicht 18 m"],
     passiveWahrnehmung: 14,
     sprachen: ["Abyssisch", "Infernalisch", "Telepathie 18 m"],
-    umgebung: ["Ebenen"],
+    umgebung: ["Andere Ebenen"],
     bild: "assets/images/monster/monsterhandbuch/nycaloth.png",
     beschreibung: [
       "Nycalothen sind geflügelte Yugoloths von gewaltiger Statur. Mit ihren fledermausartigen Schwingen, muskelbepackten Körpern und axttragenden Klauen sind sie die gefürchteten Stoßtruppen der yugolothischen Armeen. Ihre unheimliche Fähigkeit, sich zu teleportieren, macht sie zu unberechenbaren Gegnern im Kampf.",
@@ -9037,7 +9074,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"], passiveWahrnehmung: 8,
     sprachen: ["Gemeinsprache", "Riesisch"],
-    umgebung: ["Gebirge", "Hügel", "Ebenen"],
+    umgebung: ["Gebirge", "Hügel", "Grasland"],
     bild: "assets/images/monster/monsterhandbuch/oger.png",
     beschreibung: ["Oger sind geistig so faul, wie sie körperlich stark sind. Sie leben als Plünderer und Räuber und töten sowohl für Nahrung als auch aus Freude daran. Der durchschnittliche ausgewachsene Oger ist zwischen 2,7 und 3 m groß und wiegt annähernd tausend Pfund."],
     besonderheiten: [],
@@ -9068,7 +9105,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 8,
     sprachen: ["versteht Gemeinsprache und Riesisch, spricht aber nicht"],
-    umgebung: ["Ebenen", "Unterirdisch"],
+    umgebung: ["Grasland", "Unterirdisch"],
     bild: "assets/images/monster/monsterhandbuch/ogerzombie.png",
     beschreibung: [
       "Ein Ogerzombie ist der riesige, untote Überrest eines Ogers, der durch nekromantische Magie zum Leben erweckt wurde. Er besitzt die brutale Kraft seines lebenden Gegenstücks, ohne den ohnehin schon bescheidenen Verstand — ein stumpfes, gefährliches Werkzeug für jeden Nekromanten, der schwere Truppenstärke benötigt."
@@ -9136,7 +9173,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"], passiveWahrnehmung: 14,
     sprachen: ["Gemeinsprache", "Riesisch"],
-    umgebung: ["Gebirge", "Hügel", "Stadtgebiete"],
+    umgebung: ["Gebirge", "Hügel", "Stadt"],
     bild: "assets/images/monster/monsterhandbuch/oni.png",
     beschreibung: ["Oni sind Butzemänner, die Albträume von Kindern und Erwachsenen heimsuchen – und sehr real sind. Sie können ihre Gestalt verändern und als Humanoide durch Städte reisen, um Opfer aufzuspüren und zu entführen. Oni werden manchmal Oger-Magi genannt, da sie mit magischen Fähigkeiten geboren werden."],
     besonderheiten: [
@@ -9155,7 +9192,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Ork",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Ork",
     groesse: "Mittelgroß",
     gesinnung: "Chaotisch böse",
@@ -9187,7 +9224,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Ork-Auge des Gruumsh",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Ork",
     groesse: "Mittelgroß",
     gesinnung: "Chaotisch böse",
@@ -9220,7 +9257,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Ork-Kriegshäuptling",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Ork",
     groesse: "Mittelgroß",
     gesinnung: "Chaotisch böse",
@@ -9255,7 +9292,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Orog",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "Ork",
     groesse: "Mittelgroß",
     gesinnung: "Chaotisch böse",
@@ -9305,7 +9342,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"], passiveWahrnehmung: 11,
     sprachen: ["Otyugh"],
-    umgebung: ["Gewässer", "Sumpf", "Unterirdisch", "Stadtgebiete"],
+    umgebung: ["Gewässer", "Sumpf", "Unterirdisch", "Stadt"],
     bild: "assets/images/monster/monsterhandbuch/otyugh.png",
     beschreibung: ["Ein Otyugh ist eine groteske, knollige Kreatur auf drei stämmigen Beinen, die sich unter Haufen von Abfällen und Aas vergräbt. Er nutzt eine eingeschränkte Telepathie, um Beute in seine Behausungen zu locken. Unterirdische Wesen können ihn als Müllentsorgung einsetzen – ein gefütteter Otyugh ist ein verlässlicher Wächter."],
     besonderheiten: [
@@ -9374,7 +9411,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 11,
     sprachen: [],
-    umgebung: ["Wald", "Ebenen"],
+    umgebung: ["Wald", "Grasland"],
     bild: "assets/images/monster/monsterhandbuch/pavian.png",
     beschreibung: [],
     besonderheiten: [
@@ -9388,7 +9425,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Pegasus",
-    art: "Himmlischer",
+    art: "Himmlisch",
     unterart: null,
     groesse: "Groß",
     gesinnung: "Chaotisch gut",
@@ -9521,7 +9558,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Pixie",
-    art: "Fee",
+    art: "Feenwesen",
     unterart: null,
     groesse: "Winzig",
     gesinnung: "Neutral gut",
@@ -9553,7 +9590,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Planetar",
-    art: "Himmlischer",
+    art: "Himmlisch",
     unterart: "Engel",
     groesse: "Groß",
     gesinnung: "Rechtschaffen gut",
@@ -9609,7 +9646,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: ["Liegend"],
     sinne: ["Dunkelsicht 18 m"], passiveWahrnehmung: 10,
     sprachen: [],
-    umgebung: ["Unterirdisch", "Feuchtgebiete"],
+    umgebung: ["Unterirdisch", "Sumpf"],
     bild: "assets/images/monster/monsterhandbuch/plapperndes_hundertmaul.png",
     beschreibung: [
       "Von allen Schrecken, die von verderbter Magie erschaffen werden, sind die Plappernden Hundertmäuler mit die Bösartigsten und Verkommensten. Die Kreatur besteht aus den zusammengesetzten Augen, Mündern und der verflüssigten Materie ihrer ehemaligen Opfer. Diese Opfer verlieren durch die Zerstörung ihres Körpers und die Absorption in das Hundertmaul ihren Verstand und brabbeln nur noch unverständlichen Wahnsinn. Sie verspüren den Drang, alles in Reichweite zu verschlingen.",
@@ -9646,7 +9683,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: [], passiveWahrnehmung: 13,
     sprachen: [],
-    umgebung: ["Küste", "Sumpf", "Tropisch"],
+    umgebung: ["Küste", "Sumpf", "Dschungel"],
     bild: "assets/images/monster/monsterhandbuch/plesiosaurus.png",
     beschreibung: [
       "Ein Plesiosaurus ist ein Wasserdinosaurier, dessen kompakter Körper von mächtigen Flossen bewegt wird. Sie sind aggressive Räuber und greifen jede Kreatur an, auf die sie treffen. Ihr flexibler Hals macht ein Drittel ihrer Gesamtlänge aus, sodass sie sich in jede Richtung drehen können, um kräftig zuzubeißen."
@@ -9680,7 +9717,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 10,
     sprachen: [],
-    umgebung: ["Ebenen"],
+    umgebung: ["Grasland"],
     bild: "assets/images/monster/monsterhandbuch/pony.png",
     beschreibung: [],
     besonderheiten: [],
@@ -9692,7 +9729,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Priester",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "NPC",
     groesse: "Mittelgroß",
     gesinnung: "Jede Gesinnung",
@@ -9776,7 +9813,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: [], passiveWahrnehmung: 11,
     sprachen: [],
-    umgebung: ["Küste", "Tropisch", "Gebirge"],
+    umgebung: ["Küste", "Dschungel", "Gebirge"],
     bild: "assets/images/monster/monsterhandbuch/pteranodon.png",
     beschreibung: [
       "Diese fliegenden Reptilien haben eine Flügelspannweite von 4,5 bis 6 m und machen normalerweise Sturzflugangriffe auf kleinere Beute, doch sind sie Opportunisten, die jede Kreatur angreifen, die essbar erscheint. Ein Pteranodon hat keine Zähne. Vielmehr nutzt er seinen scharfen Schnabel, um Beute aufzuspießen, die zu groß ist, um sie auf einmal zu verschlucken."
@@ -10211,7 +10248,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Dunkelsicht 9 m"],
     passiveWahrnehmung: 11,
     sprachen: [],
-    umgebung: ["Wald", "Ebenen"],
+    umgebung: ["Wald", "Grasland"],
     bild: "assets/images/monster/monsterhandbuch/riesendachs.png",
     beschreibung: [],
     besonderheiten: [
@@ -10277,7 +10314,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 14,
     sprachen: ["Riesenelch", "versteht Gemeinsprache, Elfisch und Sylvanisch, kann sie aber nicht sprechen"],
-    umgebung: ["Wald", "Ebenen"],
+    umgebung: ["Wald", "Grasland"],
     bild: "assets/images/monster/monsterhandbuch/riesenelch.png",
     beschreibung: [
       "Der majestätische Riesenelch ist so selten, dass sein Erscheinen oft als ein Omen für ein wichtiges Ereignis gedeutet wird, wie etwa die Geburt eines Königs. Legenden sagen, dass manche Götter die Gestalt von Riesenelchen annehmen, wenn sie die Materielle Ebene besuchen. Viele Kulturen glauben deshalb, dass die Jagd auf diese Kreaturen den Zorn der Götter nach sich zieht."
@@ -10448,7 +10485,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 13,
     sprachen: ["versteht die Gemeinsprache, kann aber nicht sprechen"],
-    umgebung: ["Ebenen", "Wüste"],
+    umgebung: ["Grasland", "Wüste"],
     bild: "assets/images/monster/monsterhandbuch/riesengeier.png",
     beschreibung: [
       "Ein Riesengeier verfügt über hochentwickelte Intelligenz und ein böses Wesen. Im Gegensatz zu seinen kleineren Vettern greift er verwundete Kreaturen an, um ihr Ende zu beschleunigen. Riesengeier suchen verhungernde, verdursende Kreaturen oft für Tage heim, um sich an ihrem Leid zu erfreuen."
@@ -10550,7 +10587,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 13,
     sprachen: [],
-    umgebung: ["Ebenen", "Wüste"],
+    umgebung: ["Grasland", "Wüste"],
     bild: "assets/images/monster/monsterhandbuch/riesenhyaene.png",
     beschreibung: [],
     besonderheiten: [
@@ -10717,7 +10754,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 10,
     sprachen: [],
-    umgebung: ["Stadtgebiete", "Unterirdisch"],
+    umgebung: ["Stadt", "Unterirdisch"],
     bild: "assets/images/monster/monsterhandbuch/riesenratte.png",
     beschreibung: [],
     besonderheiten: [
@@ -10785,7 +10822,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Blindsicht 18 m"],
     passiveWahrnehmung: 9,
     sprachen: [],
-    umgebung: ["Wüste", "Ebenen"],
+    umgebung: ["Wüste", "Grasland"],
     bild: "assets/images/monster/monsterhandbuch/riesenskorpion.png",
     beschreibung: [],
     besonderheiten: [],
@@ -10884,7 +10921,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 10,
     sprachen: [],
-    umgebung: ["Wald", "Ebenen"],
+    umgebung: ["Wald", "Grasland"],
     bild: "assets/images/monster/monsterhandbuch/riesenwespe.png",
     beschreibung: [],
     besonderheiten: [],
@@ -10914,7 +10951,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 13,
     sprachen: [],
-    umgebung: ["Wald", "Ebenen"],
+    umgebung: ["Wald", "Grasland"],
     bild: "assets/images/monster/monsterhandbuch/riesenwiesel.png",
     beschreibung: [],
     besonderheiten: [
@@ -10946,7 +10983,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 8,
     sprachen: [],
-    umgebung: ["Wald", "Ebenen"],
+    umgebung: ["Wald", "Grasland"],
     bild: "assets/images/monster/monsterhandbuch/riesenwildschwein.png",
     beschreibung: [],
     besonderheiten: [
@@ -10979,7 +11016,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Blindsicht 3 m", "Dunkelsicht 18 m"],
     passiveWahrnehmung: 13,
     sprachen: [],
-    umgebung: ["Wald", "Ebenen", "Unterirdisch"],
+    umgebung: ["Wald", "Grasland", "Unterirdisch"],
     bild: "assets/images/monster/monsterhandbuch/riesenwolfsspinne.png",
     beschreibung: [
       "Die Riesenwolfsspinne ist kleiner als die Riesenspinne. Sie jagt Beute über offenes Gelände oder verbirgt sich in einem Erdloch oder einer Spalte, oder in einer verborgenen Aushöhlung unter Schutt."
@@ -11046,7 +11083,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 11,
     sprachen: [],
-    umgebung: ["Gebirge", "Ebenen"],
+    umgebung: ["Gebirge", "Grasland"],
     bild: "assets/images/monster/monsterhandbuch/riesenziege.png",
     beschreibung: [],
     besonderheiten: [
@@ -11091,7 +11128,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Ritter",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "NPC",
     groesse: "Mittelgroß",
     gesinnung: "Jede Gesinnung",
@@ -11510,7 +11547,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 13,
     sprachen: [],
-    umgebung: ["Ebenen", "Wüste"],
+    umgebung: ["Grasland", "Wüste"],
     bild: "assets/images/monster/monsterhandbuch/schakal.png",
     beschreibung: ["Schakale sind kleine Raubtiere und opportunistische Aasfresser, die in Rudeln durch Ebenen und Wüstenregionen streifen. Sie sind bekannt für ihre nächtlichen Rufe und ihre Fähigkeit, selbst die kargsten Landschaften zu überleben."],
     besonderheiten: [
@@ -11544,7 +11581,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 12,
     sprachen: ["Gemeinsprache (kann in der Schakalform nicht sprechen)"],
-    umgebung: ["Ebenen", "Stadtgebiete"],
+    umgebung: ["Grasland", "Stadt"],
     bild: "assets/images/monster/monsterhandbuch/schakalwer.png",
     beschreibung: [
       "Ein Schakalwer ist ein gewöhnlicher Schakal, der von dämonischer Macht befleckt worden ist. Er sucht Straßen und Wege heim und überfällt und ermordet jene, die er trifft.",
@@ -11819,7 +11856,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Blindsicht 3 m", "Dunkelsicht 18 m"],
     passiveWahrnehmung: 10,
     sprachen: ["Versteht Befehle in jeder Sprache, kann aber nicht sprechen"],
-    umgebung: ["Stadtgebiete"],
+    umgebung: ["Stadt"],
     bild: "assets/images/monster/monsterhandbuch/schildwaechter.png",
     beschreibung: [
       "Magier und andere Zauberwirker erschaffen Schildwächter zu ihrem Schutz. Ein Schildwächter bewegt sich an der Seite seines Meisters und absorbiert Schaden, um ihn so lange wie möglich am Leben zu halten.",
@@ -11963,7 +12000,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Schläger",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "NPC",
     groesse: "Mittelgroß",
     gesinnung: "Jede nicht gute Gesinnung",
@@ -12073,7 +12110,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Blindsicht 3 m"],
     passiveWahrnehmung: 10,
     sprachen: [],
-    umgebung: ["Ebenen", "Sumpf", "Wald", "Wüste"],
+    umgebung: ["Grasland", "Sumpf", "Wald", "Wüste"],
     bild: "assets/images/monster/monsterhandbuch/schwarm_von_giftschlangen.png",
     beschreibung: ["Ein Schwarm kleiner Giftschlangen, die gemeinsam als eine einzige Bedrohung agieren. Hunderte von Körpern und Zähnen, von denen jeder Biss potenziell tödliches Gift überträgt."],
     besonderheiten: [
@@ -12104,7 +12141,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Blindsicht 3 m"],
     passiveWahrnehmung: 8,
     sprachen: [],
-    umgebung: ["Ebenen", "Sumpf", "Wald"],
+    umgebung: ["Grasland", "Sumpf", "Wald"],
     bild: "assets/images/monster/monsterhandbuch/schwarm_von_insekten.png",
     beschreibung: ["Ein wimmelnder Haufen aus Hunderten von Insekten, der wie eine Welle über alles hereinbricht, was sich in seinem Weg befindet. Einzeln harmlos, sind diese Kreaturen in einem Schwarm eine ernsthafte Bedrohung."],
     besonderheiten: [
@@ -12168,7 +12205,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 15,
     sprachen: [],
-    umgebung: ["Ebenen", "Wald"],
+    umgebung: ["Grasland", "Wald"],
     bild: "assets/images/monster/monsterhandbuch/schwarm_von_raben.png",
     beschreibung: ["Raben sind intelligente Vögel, die manchmal in großen, lautstarken Schwärmen auftreten. Ein aufgebrachter Rabenschwarm kann eine bedrohliche Wolke aus Schnäbeln und Krallen bilden, die schwierig zu bekämpfen ist."],
     besonderheiten: [
@@ -12199,7 +12236,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Dunkelsicht 9 m"],
     passiveWahrnehmung: 10,
     sprachen: [],
-    umgebung: ["Stadtgebiete", "Unterirdisch"],
+    umgebung: ["Stadt", "Unterirdisch"],
     bild: "assets/images/monster/monsterhandbuch/schwarm_von_ratten.png",
     beschreibung: ["Ratten sind allgegenwärtige Nager, die überall dort zu finden sind, wo es Nahrung und Unterschlupf gibt. Ein Schwarm hungernder Ratten, der von Krankheit oder Hunger angetrieben wird, ist eine ernstzunehmende Bedrohung."],
     besonderheiten: [
@@ -12305,7 +12342,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 10,
     sprachen: ["Versteht alle Sprachen, die es im Leben kannte, kann aber nicht sprechen"],
-    umgebung: ["Ruinen", "Stadtgebiete"],
+    umgebung: ["Ruinen", "Stadt"],
     bild: "assets/images/monster/monsterhandbuch/schreckgespenst.png",
     beschreibung: [
       "Ein Schreckgespenst ist der zornige, entfesselte Geist eines Humanoiden, der daran gehindert wurde, ins Leben nach dem Tod zu gelangen. Schreckgespenster haben keine Verbindung mehr zu dem, wer oder was sie waren, doch sind sie dazu verdammt, für immer durch die Welt zu wandern. Einige entstehen, wenn dunkle Magie oder die Berührung eines Todesalbs eine Seele aus einem lebenden Körper reißt.",
@@ -12405,7 +12442,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: [], schadensimmunitaeten: ["Kälte"], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"], passiveWahrnehmung: 26,
     sprachen: ["Allgemein", "Drakonisch"],
-    umgebung: ["Berg"],
+    umgebung: ["Gebirge"],
     bild: "assets/images/monster/monsterhandbuch/uralter_silberdrache.png",
     beschreibung: [
       "Silberdrachen sind die freundlichsten und sozialsten der metallischen Drachen. Sie unterstützen voller Freude alle guten Kreaturen, die in Not sind, und stellen sich gegen Kreaturen, die böse Taten vollführen.",
@@ -12468,7 +12505,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: [], schadensimmunitaeten: ["Kälte"], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"], passiveWahrnehmung: 21,
     sprachen: ["Allgemein", "Drakonisch"],
-    umgebung: ["Berg"],
+    umgebung: ["Gebirge"],
     bild: "assets/images/monster/monsterhandbuch/ausgewachsener_silberdrache.png",
     beschreibung: [
       "Ausgewachsene Silberdrachen verbringen viel Zeit in humanoider Gestalt, reisen durch die Welt, knüpfen Freundschaften und setzen sich im Verborgenen für Gerechtigkeit ein."
@@ -12529,7 +12566,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: [], schadensimmunitaeten: ["Kälte"], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: ["Blindsicht 9 m", "Dunkelsicht 36 m"], passiveWahrnehmung: 18,
     sprachen: ["Allgemein", "Drakonisch"],
-    umgebung: ["Berg"],
+    umgebung: ["Gebirge"],
     bild: "assets/images/monster/monsterhandbuch/junger_silberdrache.png",
     beschreibung: [
       "Junge Silberdrachen lernen bereits früh, die Gestalt von Humanoiden anzunehmen, und erkunden neugierig die Siedlungen der kleineren Völker, deren Antrieb und Lebenslust sie fasziniert."
@@ -12697,7 +12734,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     name: "Silberdrachennestling",
     art: "Drache",
     unterart: "Metallischer Drache",
-    groesse: "Mittel",
+    groesse: "Mittelgroß",
     gesinnung: "Rechtschaffen gut",
     cr: 2, xp: 450,
     rk: 17, ruestungstyp: "natürliche Rüstung",
@@ -12709,7 +12746,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: [], schadensimmunitaeten: ["Kälte"], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: ["Blindsicht 3 m", "Dunkelsicht 18 m"], passiveWahrnehmung: 14,
     sprachen: ["Drakonisch"],
-    umgebung: ["Berg"],
+    umgebung: ["Gebirge"],
     bild: "assets/images/monster/monsterhandbuch/silberdrachennestling.png",
     beschreibung: [
       "Silberdrachennestlinge zeigen von Anfang an eine natürliche Wärme gegenüber anderen Wesen und erkunden neugierig ihre bergige Heimat, bevor sie die Gestaltswandlerfähigkeit ihrer Eltern erlernen."
@@ -12838,7 +12875,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 11,
     sprachen: [],
-    umgebung: ["Ebenen"],
+    umgebung: ["Grasland"],
     bild: "assets/images/monster/monsterhandbuch/streitross.png",
     beschreibung: ["Streitrosse sind kräftige, für den Kampf trainierte Pferde. Sie werden von Rittern und Kriegern als Reittiere eingesetzt und sind an den Lärm und das Chaos des Schlachtfeldes gewöhnt."],
     besonderheiten: [
@@ -12902,7 +12939,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 11,
     sprachen: ["Slaad", "Telepathie 18 m"],
-    umgebung: ["Ebenen"],
+    umgebung: ["Andere Ebenen"],
     bild: "assets/images/monster/monsterhandbuch/roter_slaad.png",
     beschreibung: [
       "Im Immerwandelnden Chaos des Limbus treiben Stücke von Wäldern und Wiesen, zerstörten Burgen und isolierten Inseln durch einen Tumult von Feuer, Wasser, Erde und Wind. Die wichtigsten Bewohner dieser lebensfeindlichen Ebene sind die krötenartigen Slaadi. Slaadi sind undiszipliniert und haben keine formelle Hierarchie, doch schwächere Slaadi gehorchen den stärkeren, wenn ihnen mit Auslöschung gedroht wird.",
@@ -12942,7 +12979,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 7,
     sprachen: ["Versteht Slaad, kann aber nicht sprechen"],
-    umgebung: ["Ebenen"],
+    umgebung: ["Andere Ebenen"],
     bild: "assets/images/monster/monsterhandbuch/slaad_kaulquappe.png",
     beschreibung: [],
     besonderheiten: [
@@ -12975,7 +13012,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 11,
     sprachen: ["Slaad", "Telepathie 18 m"],
-    umgebung: ["Ebenen"],
+    umgebung: ["Andere Ebenen"],
     bild: "assets/images/monster/monsterhandbuch/blauer_slaad.png",
     beschreibung: [
       "Die Knochenhaken, die aus den Handrücken eines blauen Slaads ragen, fügen Humanoiden, die von ihnen verwundet werden, eine schreckliche verwandelnde Krankheit zu. Diese Infektion, die Chaosphage genannt wird, verwandelt das Opfer in einen ausgewachsenen roten Slaad — oder grünen Slaad, wenn der Wirt ein Zauberwirker war, der Zauber des 3. Grades oder höher wirken konnte."
@@ -13013,7 +13050,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Blindsicht 9 m", "Dunkelsicht 18 m"],
     passiveWahrnehmung: 12,
     sprachen: ["Slaad", "Telepathie 18 m"],
-    umgebung: ["Ebenen"],
+    umgebung: ["Andere Ebenen"],
     bild: "assets/images/monster/monsterhandbuch/gruener_slaad.png",
     beschreibung: [
       "Grüne Slaadi sind überraschend intelligent und verfügen über die angeborene Macht, Zauber zu wirken. Ein grüner Slaad kann seine Gestalt verändern, um als Humanoider zu erscheinen. Zu einem unvorhersehbaren Zeitpunkt in seiner Existenz entdeckt ein grüner Slaad die Methode, um sich magisch in einen grauen Slaad zu verwandeln."
@@ -13055,7 +13092,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Blindsicht 18 m", "Dunkelsicht 18 m"],
     passiveWahrnehmung: 16,
     sprachen: ["Slaad", "Telepathie 18 m"],
-    umgebung: ["Ebenen"],
+    umgebung: ["Andere Ebenen"],
     bild: "assets/images/monster/monsterhandbuch/grauer_slaad.png",
     beschreibung: [
       "Außerhalb des Limbus agieren graue Slaadi als lebende Erweiterung des Willens ihrer Meister, der Todesslaadi. Ein grauer Slaad reist zur Materiellen Ebene, um dort für Unheil zu sorgen, wobei er oft humanoide Gestalt annimmt. Ein grauer Slaad, der den gesamten Leichnam eines Todesslaad verspeist, wird augenblicklich in einen Todesslaad verwandelt."
@@ -13097,7 +13134,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Blindsicht 18 m", "Dunkelsicht 18 m"],
     passiveWahrnehmung: 18,
     sprachen: ["Slaad", "Telepathie 18 m"],
-    umgebung: ["Ebenen"],
+    umgebung: ["Andere Ebenen"],
     bild: "assets/images/monster/monsterhandbuch/todesslaad.png",
     beschreibung: [
       "Todesslaadi sind mit Energie von der Negativen Energieebene erfüllt und verkörpern das Verderben des Chaos durch das Böse. Sie empfinden sadistische Freude dabei, anderen Schaden zuzufügen. Sie verbreiten ihr Volk, indem sie Meuten von roten und blauen Slaadi mit Gewalt zusammentreiben und in andere Ebenen eindringen."
@@ -13120,7 +13157,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Solar",
-    art: "Himmlischer",
+    art: "Himmlisch",
     unterart: "Engel",
     groesse: "Groß",
     gesinnung: "Rechtschaffen gut",
@@ -13287,7 +13324,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Dunkelsicht 9 m"],
     passiveWahrnehmung: 10,
     sprachen: [],
-    umgebung: ["Wald", "Unterirdisch", "Stadtgebiete"],
+    umgebung: ["Wald", "Unterirdisch", "Stadt"],
     bild: "assets/images/monster/monsterhandbuch/spinne.png",
     beschreibung: ["Spinnen sind Spinnentiere, die in beinahe jeder Umgebung zu finden sind. Sie weben Netze, um Beute zu fangen, und nutzen ihr Gift, um diese zu überwältigen."],
     besonderheiten: [
@@ -13303,7 +13340,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Spion",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "NPC",
     groesse: "Mittelgroß",
     gesinnung: "Jede Gesinnung",
@@ -13393,7 +13430,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: ["Bezaubert", "Erschöpft", "Gelähmt", "Verängstigt", "Vergiftet", "Versteinert"],
     sinne: ["Dunkelsicht 36 m"], passiveWahrnehmung: 10,
     sprachen: ["Versteht die Sprache seines Erschaffers, kann aber nicht sprechen"],
-    umgebung: ["Ruinen", "Städtisch", "Unterirdisch"],
+    umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
     bild: "assets/images/monster/monsterhandbuch/steingolem.png",
     beschreibung: [
       "Steingolems zeigen eine gewaltige Vielfalt in Sachen Form und Gestalt. Sie sind behauen und graviert, um wie große, eindrucksvolle Statuen auszusehen. Uralte Steingolems nehmen manchmal die Gestalt riesiger Tiere an.",
@@ -13515,7 +13552,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 15,
     sprachen: ["Abyssisch", "Gemeinsprache", "Infernalisch", "Telepathie 18 m"],
-    umgebung: ["Ebenen"],
+    umgebung: ["Andere Ebenen"],
     bild: "assets/images/monster/monsterhandbuch/inkubus.png",
     beschreibung: [
       "Sukkubi und Inkubi sind dieselbe Kreatur — jeder Sukkubus kann zu einem Inkubus werden und andersherum. Diese lasziven Unholde bewohnen die gesamten Unteren Ebenen und dienen Teufeln, Dämonen, Nachtvetteln und anderen bösen Herren. Sterbliche sehen einen Sukkubus oder Inkubus selten in seiner wahren Gestalt, da der Unhold sein Verderben normalerweise auf verschleierte, hinterhältige Weise beginnt.",
@@ -13555,7 +13592,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 15,
     sprachen: ["Abyssisch", "Gemeinsprache", "Infernalisch", "Telepathie 18 m"],
-    umgebung: ["Ebenen"],
+    umgebung: ["Andere Ebenen"],
     bild: "assets/images/monster/monsterhandbuch/sukkubus.png",
     beschreibung: [
       "Sukkubi und Inkubi sind dieselbe Kreatur — jeder Sukkubus kann zu einem Inkubus werden und andersherum. Diese lasziven Unholde bewohnen die gesamten Unteren Ebenen und dienen Teufeln, Dämonen, Nachtvetteln und anderen bösen Herren. Sterbliche sehen einen Sukkubus oder Inkubus selten in seiner wahren Gestalt, da der Unhold sein Verderben normalerweise auf verschleierte, hinterhältige Weise beginnt.",
@@ -13595,7 +13632,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Blindsicht 36 m"],
     passiveWahrnehmung: 10,
     sprachen: [],
-    umgebung: ["Ebenen"],
+    umgebung: ["Grasland"],
     bild: "assets/images/monster/monsterhandbuch/tarraske.png",
     beschreibung: [
       "Die Tarraske ist das schrecklichste Wesen auf der Materiellen Ebene. Obwohl es keine anderen Tarrasken gibt, fürchten die Menschen seine gelegentlichen Erwachphasen wie den Weltuntergang.",
@@ -13757,7 +13794,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 13,
     sprachen: ["Thri-kreen"],
-    umgebung: ["Wüste", "Ebenen"],
+    umgebung: ["Wüste", "Grasland"],
     bild: "assets/images/monster/monsterhandbuch/thri-kreen.png",
     beschreibung: [
       "Thri-kreen streifen durch die Wüsten und Savannen der Welt und gehen allen anderen Völkern aus dem Weg. Diese insektoiden Humanoiden kommunizieren durch Klacken ihrer Fresswerkzeuge und Wedeln ihrer Fühler – eine Sprache, die andere Kreaturen kaum deuten oder nachahmen können.",
@@ -13797,7 +13834,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 13,
     sprachen: [],
-    umgebung: ["Ebenen", "Wald"],
+    umgebung: ["Grasland", "Wald"],
     bild: "assets/images/monster/monsterhandbuch/tiger.png",
     beschreibung: ["Tiger sind majestätische und gefährliche Raubtiere, bekannt für ihre Kraft, Geschwindigkeit und ihre Fähigkeit, sich in Gräsern und Dickichten zu verbergen. Sie jagen allein und ambushieren ihre Beute."],
     besonderheiten: [
@@ -13906,7 +13943,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 15,
     sprachen: [],
-    umgebung: ["Ebenen", "Wüste", "Unterirdisch"],
+    umgebung: ["Grasland", "Wüste", "Unterirdisch"],
     bild: "assets/images/monster/monsterhandbuch/todeshund.png",
     beschreibung: ["Ein Todeshund ist ein hässlicher zweiköpfiger Hund, der durch Ebenen, Wüsten und das Unterreich streift. Hass brennt im Herzen des Todeshundes, und seine Vorliebe für humanoides Fleisch treibt ihn an, Reisende und Forscher anzugreifen. Der Speichel von Todeshunden überträgt eine üble Krankheit, die das Fleisch des Opfers langsam von den Knochen faulen lässt."],
     besonderheiten: [
@@ -14033,7 +14070,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: [], passiveWahrnehmung: 10,
     sprachen: [],
-    umgebung: ["Tropisch", "Wald", "Grasland"],
+    umgebung: ["Dschungel", "Wald", "Grasland"],
     bild: "assets/images/monster/monsterhandbuch/triceratops.png",
     beschreibung: [
       "Der Triceratops gehört zu den aggressivsten Pflanzenfressern. Er hat einen Schädel, der eine schützende Knochenplatte formt. Mit seinen großen Hörnern und seiner beträchtlichen Geschwindigkeit kann der Triceratops Möchtegern-Raubtiere aufspießen und niedertrampeln."
@@ -14146,7 +14183,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: [], passiveWahrnehmung: 14,
     sprachen: [],
-    umgebung: ["Tropisch", "Wald", "Grasland"],
+    umgebung: ["Dschungel", "Wald", "Grasland"],
     bild: "assets/images/monster/monsterhandbuch/tyrannosaurus_rex.png",
     beschreibung: [
       "Dieses gewaltige Raubtier terrorisiert alle anderen Kreaturen in seiner Umgebung. Trotz seiner Größe und seines Gewichts ist der Tyrannosaurus ein schneller Läufer. Er jagt alles, was er glaubt, fressen zu können, und es gibt wenige Wesen, bei denen er nicht versuchen wird, sie ganz zu schlucken.",
@@ -14220,7 +14257,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 17,
     sprachen: ["die Sprachen, die er im Leben kannte"],
-    umgebung: ["Ruinen", "Stadtgebiete"],
+    umgebung: ["Ruinen", "Stadt"],
     bild: "assets/images/monster/monsterhandbuch/vampir.png",
     beschreibung: [
       "Vampire sind erwacht, um in einer endlosen Nacht zu existieren, und gieren nach dem Leben, das sie verloren haben. Sie stillen diesen Hunger, indem sie das Blut der Lebenden trinken. Vampire verabscheuen das Sonnenlicht, werfen niemals einen Schatten und haben kein Spiegelbild.",
@@ -14281,7 +14318,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 13,
     sprachen: ["die Sprachen, die sie im Leben kannte"],
-    umgebung: ["Ruinen", "Stadtgebiete"],
+    umgebung: ["Ruinen", "Stadt"],
     bild: "assets/images/monster/monsterhandbuch/vampirbrut.png",
     beschreibung: [
       "Vampirbrut sind die untoten Diener eines Vampirs – gierige Kreaturen mit dem Bluthunger eines Vampirs, aber ohne freien Willen. Die Brut eines Vampirs erlangt freien Willen, wenn ihr Schöpfer stirbt. Wenn es ein wahrer Vampir einer Vampirbrut erlaubt, Blut aus seinem Körper zu saugen, verwandelt sich die Brut in einen wahren Vampir."
@@ -14301,7 +14338,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Veteran",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "NPC",
     groesse: "Mittelgroß",
     gesinnung: "Jede Gesinnung",
@@ -14380,7 +14417,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: ["Bewusstlos", "Bezaubert", "Erschöpft", "Gelähmt", "Verängstigt", "Vergiftet"],
     sinne: ["Dunkelsicht 18 m"], passiveWahrnehmung: 10,
     sprachen: ["versteht die Sprachen ihres Erschaffers, spricht aber nicht"],
-    umgebung: ["Wald", "Ebenen"],
+    umgebung: ["Wald", "Grasland"],
     bild: "assets/images/monster/monsterhandbuch/vogelscheuche.png",
     beschreibung: [
       "Eine Vogelscheuche wird vom gebundenen Geist einer getöteten bösen Kreatur belebt, die ihr Antrieb und Beweglichkeit gewährt. Es ist diese unheimliche Präsenz von jenseits des Todes, die es Vogelscheuchen erlaubt, jene, die sie anblicken, mit Angst zu erfüllen. Vetteln und Hexen binden oft Vogelscheuchen an die Geister von Dämonen, aber jeder böse Geist reicht aus.",
@@ -14594,7 +14631,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
   },
   {
     name: "Wache",
-    art: "Humanoider",
+    art: "Humanoid",
     unterart: "NPC",
     groesse: "Mittelgroß",
     gesinnung: "Jede Gesinnung",
@@ -14956,7 +14993,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: ["Betäubt", "Bezaubert", "Erschöpft", "Gelähmt", "Verängstigt", "Vergiftet"],
     sinne: ["Dunkelsicht 18 m"], passiveWahrnehmung: 13,
     sprachen: ["die Sprachen, die er im Leben kannte"],
-    umgebung: ["Ruinen", "Stadtgebiete"],
+    umgebung: ["Ruinen", "Stadt"],
     bild: "assets/images/monster/monsterhandbuch/wiedergaenger.png",
     beschreibung: [
       "Ein Wiedergänger bildet sich aus der Seele eines Sterblichen, der ein grausames, unverdientes Schicksal erlitten hat. Er kämpft sich in die Welt zurück, um Rache an jenen zu suchen, die ihm Unrecht getan haben. Der Wiedergänger nimmt Besitz von seinem sterblichen Körper und ähnelt oberflächlich betrachtet einem Zombie.",
@@ -14995,7 +15032,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 13,
     sprachen: [],
-    umgebung: ["Wald", "Ebenen"],
+    umgebung: ["Wald", "Grasland"],
     bild: "assets/images/monster/monsterhandbuch/wiesel.png",
     beschreibung: ["Wiesel sind flinke, schlanke Raubtiere, die trotz ihrer geringen Größe mutig und aggressiv sind. Sie jagen Nagetiere und Vögel und können sich in enge Spalten und Löcher drängen."],
     besonderheiten: [
@@ -15024,7 +15061,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 9,
     sprachen: [],
-    umgebung: ["Wald", "Ebenen"],
+    umgebung: ["Wald", "Grasland"],
     bild: "assets/images/monster/monsterhandbuch/wildschwein.png",
     beschreibung: ["Wildschweine sind robuste und aggressive Tiere. Wenn sie sich in die Enge getrieben fühlen oder ihre Jungen bedroht werden, können sie überraschend gefährlich sein."],
     besonderheiten: [
@@ -15155,7 +15192,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 14,
     sprachen: ["Goblinisch", "Worg"],
-    umgebung: ["Wald", "Ebenen", "Gebirge"],
+    umgebung: ["Wald", "Grasland", "Gebirge"],
     bild: "assets/images/monster/monsterhandbuch/worg.png",
     beschreibung: ["Ein Worg ist ein böses Raubtier, das sich daran erfreut, schwächere Kreaturen zu jagen und zu verschlingen. Worge sind verschlagen und bösartig und werden von Goblins und Hobgoblins als Reittiere genutzt. Ein Worg wird sich jedoch gegen seinen Reiter wenden, wenn er sich schlecht behandelt fühlt."],
     besonderheiten: [
@@ -15434,7 +15471,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 13,
     sprachen: ["Elfisch", "Sylvanisch"],
-    umgebung: ["Ebenen", "Wald"],
+    umgebung: ["Grasland", "Wald"],
     bild: "assets/images/monster/monsterhandbuch/zentaur.png",
     beschreibung: [
       "Zentauren sind zurückgezogene Wanderer und Omendeuter der Wildnis. Sie gehen Konflikten aus dem Weg, sind aber erbitterte Kämpfer, wenn sie bedrängt werden. Sie streifen durch die unermessliche Wildnis, halten sich Grenzen und Gesetzen fern und meiden die Gesellschaft anderer Wesen.",
@@ -15470,7 +15507,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 10,
     sprachen: [],
-    umgebung: ["Gebirge", "Ebenen"],
+    umgebung: ["Gebirge", "Grasland"],
     bild: "assets/images/monster/monsterhandbuch/ziege.png",
     beschreibung: ["Ziegen sind robuste Huftiere, die in felsigem Gelände und auf Bergen zu Hause sind. Obwohl meist zahm, können wilde Ziegen mit ihren Hörnern gefährlich sein."],
     besonderheiten: [
@@ -15503,7 +15540,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 8,
     sprachen: ["versteht die Sprachen, die er im Leben sprach, spricht aber nicht"],
-    umgebung: ["Ruinen", "Stadtgebiete", "Unterirdisch"],
+    umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
     bild: "assets/images/monster/monsterhandbuch/zombie.png",
     beschreibung: [
       "Finstere nekromantische Magie erfüllt die Überreste der Toten und erhebt sie als Zombies, die ohne Furcht oder Zögern dem Willen ihres Schöpfers folgen. Sie bewegen sich mit ruckartigen, ungleichmäßigen Schritten, sind in schimmlige Gewänder gehüllt und stinken nach Verwesung.",
@@ -15536,7 +15573,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: [],
     passiveWahrnehmung: 10,
     sprachen: [],
-    umgebung: ["Ebenen"],
+    umgebung: ["Grasland"],
     bild: "assets/images/monster/monsterhandbuch/zugpferd.png",
     beschreibung: ["Zugpferde sind kräftige Arbeitspferde, die zum Ziehen von Karren, Pflügen und anderen schweren Lasten eingesetzt werden. Sie sind nicht für den Kampf ausgebildet und reagieren auf Bedrohungen meist mit Flucht."],
     besonderheiten: [],
