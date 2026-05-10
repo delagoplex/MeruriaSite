@@ -5860,7 +5860,7 @@ window.MONSTER_DATA_FOLIANT_DER_FEINDE = [
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 11,
     sprachen: ["Abyssisch", "Telepathie 36 m"],
-    umgebung: ["Gewässer", "Ozean", "Andere Ebenen"],
+    umgebung: ["Gewässer", "Andere Ebenen"],
     bild: "assets/images/monster/foliant/wastrilith.png",
     beschreibung: [
       "Wastriliths sind in den Gewässern des Abyss und anderen von der Essenz der Ebene verseuchten Wassermengen zu finden. Sie festigen ihre Macht und grausame Herrschaft als Fürsten der Tiefe.",

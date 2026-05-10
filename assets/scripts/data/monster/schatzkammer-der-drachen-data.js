@@ -613,7 +613,7 @@ window.MONSTER_DATA_SCHATZKAMMER_DER_DRACHEN = [
     sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 23,
     sprachen: ["Drakonisch", "Gemeinsprache", "Telepathie auf 36 m"],
-    umgebung: ["Gewässer", "Küste", "Ozean", "Sumpf"],
+    umgebung: ["Gewässer", "Küste", "Sumpf"],
     bild: "assets/images/monster/schatzkammer/ausgewachsener_topasdrache.png",
     beschreibung: [],
     besonderheiten: [
@@ -1149,7 +1149,7 @@ window.MONSTER_DATA_SCHATZKAMMER_DER_DRACHEN = [
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 10,
     sprachen: ["Drakonisch"],
-    umgebung: ["Ozean", "Gewässer"],
+    umgebung: ["Gewässer"],
     bild: "assets/images/monster/schatzkammer/drachenschildkroetennestling.png",
     beschreibung: [
       "Drachenschildkröten sind mächtige Kreaturen, deren natürliche Magie eng mit den Ozeanen der materiellen Ebene verbunden ist. Die Drachenschildkröte im Monsterhandbuch ist ein typisches ausgewachsenes Exemplar, mindestens hundert Jahre alt und stolz auf ihren wertvollen Schatz."
@@ -1777,7 +1777,7 @@ window.MONSTER_DATA_SCHATZKAMMER_DER_DRACHEN = [
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 11,
     sprachen: ["Aqual", "Drakonisch"],
-    umgebung: ["Ozean", "Gewässer"],
+    umgebung: ["Gewässer"],
     bild: "assets/images/monster/schatzkammer/junge_drachenschildkroete.png",
     beschreibung: [
       "Drachenschildkröten sind mächtige Kreaturen, deren natürliche Magie eng mit den Ozeanen der materiellen Ebene verbunden ist. Die Drachenschildkröte im Monsterhandbuch ist ein typisches ausgewachsenes Exemplar, mindestens hundert Jahre alt und stolz auf ihren wertvollen Schatz."
@@ -1819,7 +1819,7 @@ window.MONSTER_DATA_SCHATZKAMMER_DER_DRACHEN = [
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 14,
     sprachen: ["Drakonisch", "Gemeinsprache"],
-    umgebung: ["Gewässer", "Küste", "Ozean"],
+    umgebung: ["Gewässer", "Küste"],
     bild: "assets/images/monster/schatzkammer/junge_seeschlange.png",
     beschreibung: [],
     besonderheiten: [
@@ -2108,7 +2108,7 @@ window.MONSTER_DATA_SCHATZKAMMER_DER_DRACHEN = [
     sinne: ["Blindsicht 9 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 18,
     sprachen: ["Drakonisch", "Gemeinsprache", "Telepathie auf 36 m"],
-    umgebung: ["Gewässer", "Küste", "Ozean", "Sumpf"],
+    umgebung: ["Gewässer", "Küste", "Sumpf"],
     bild: "assets/images/monster/schatzkammer/junger_topasdrache.png",
     beschreibung: [],
     besonderheiten: [
@@ -2696,7 +2696,7 @@ window.MONSTER_DATA_SCHATZKAMMER_DER_DRACHEN = [
     sinne: ["Blindsicht 3 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 15,
     sprachen: ["Drakonisch", "Telepathie auf 36 m"],
-    umgebung: ["Gewässer", "Küste", "Ozean", "Sumpf"],
+    umgebung: ["Gewässer", "Küste", "Sumpf"],
     bild: "assets/images/monster/schatzkammer/topasdrachennestling.png",
     beschreibung: [],
     besonderheiten: [
@@ -2735,7 +2735,7 @@ window.MONSTER_DATA_SCHATZKAMMER_DER_DRACHEN = [
     sinne: ["Wahrer Blick 36 m"],
     passiveWahrnehmung: 21,
     sprachen: ["Aqual", "Drakonisch"],
-    umgebung: ["Ozean", "Gewässer"],
+    umgebung: ["Gewässer"],
     bild: "assets/images/monster/schatzkammer/uralte_drachenschildkroete.png",
     beschreibung: [
       "Drachenschildkröten sind mächtige Kreaturen, deren natürliche Magie eng mit den Ozeanen der materiellen Ebene verbunden ist. Die Drachenschildkröte im Monsterhandbuch ist ein typisches ausgewachsenes Exemplar, mindestens hundert Jahre alt und stolz auf ihren wertvollen Schatz.",
@@ -2793,7 +2793,7 @@ window.MONSTER_DATA_SCHATZKAMMER_DER_DRACHEN = [
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 18,
     sprachen: ["Drakonisch", "Gemeinsprache"],
-    umgebung: ["Gewässer", "Küste", "Ozean"],
+    umgebung: ["Gewässer", "Küste"],
     bild: "assets/images/monster/schatzkammer/uralte_seeschlange.png",
     beschreibung: [
       "Seeschlangen gehören mit den Drachenschildkröten zu den gefürchtetsten Räubern der Tiefsee und zu den schlimmsten Albträumen von Seeleuten. Mit ihren starken Flossen können sie sich sehr schnell durchs Wasser bewegen.",
@@ -3275,7 +3275,7 @@ window.MONSTER_DATA_SCHATZKAMMER_DER_DRACHEN = [
     sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 26,
     sprachen: ["Drakonisch", "Gemeinsprache", "Telepathie auf 36 m"],
-    umgebung: ["Gewässer", "Küste", "Ozean", "Sumpf"],
+    umgebung: ["Gewässer", "Küste", "Sumpf"],
     bild: "assets/images/monster/schatzkammer/uralter_topasdrache.png",
     beschreibung: [
       "Beim Schlüpfen haben Topasdrachennestlinge trübe gelb-orange Schuppen, die wie mit einem Film überzogen wirken. Später härten die Schuppen aus und werden klar, durchscheinend und facettiert. Ihr Farbspektrum reicht von strahlendem Gelb bis zu tiefem Bernstein. Die Körper von Topasdrachen sind an der Hüfte am breitesten und werden zum Kopf hin keilförmig schmaler. Ihre Flügel sind geeignet, sie durch Luft sowie Wasser zu befördern. Die psionische Kraft manifestiert sich sichtbar in den edelsteinartigen Stacheln von der Krone des Kopfs bis zur Schwanzspitze. Diese Stacheln schweben über ihrem Rücken und tanzen und bewegen sich mit ihrer Stimmung.",

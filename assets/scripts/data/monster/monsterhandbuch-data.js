@@ -89,7 +89,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"], passiveWahrnehmung: 20,
     sprachen: ["Tiefensprache", "Telepathie 36 m"],
-    umgebung: ["Ozean", "Unterirdisch", "Andere Ebenen"],
+    umgebung: ["Gewässer", "Unterirdisch", "Andere Ebenen"],
     bild: "assets/images/monster/monsterhandbuch/aboleth.png",
     beschreibung: [
       "Ehe die Götter kamen, hausten die Abolethen in den urtümlichen Ozeanen und unterirdischen Seen. Sie streckten ihren Geist aus und übernahmen die Kontrolle über die aufkeimenden Lebensformen der sterblichen Welt, um die Kreaturen zu ihren Sklaven zu machen. Ihre Vorherrschaft ließ sie wie Götter erscheinen. Dann kamen die wahren Götter, zerschmetterten das Imperium der Abolethen und befreiten ihre Sklaven. Die Abolethen haben das niemals vergessen.",
@@ -1944,7 +1944,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: ["Feuer"], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"], passiveWahrnehmung: 11,
     sprachen: ["Aqual", "Drakonisch"],
-    umgebung: ["Küste", "Ozean"],
+    umgebung: ["Küste", "Gewässer"],
     bild: "assets/images/monster/monsterhandbuch/drachenschildkroete.png",
     beschreibung: [
       "Drachenschildkröten gehören zu den schrecklichsten Kreaturen des Ozeans. Sie sind so groß und gefräßig wie ihre Vettern an Land und greifen mit ihren tödlichen Kiefern, ihrem Dampfatem und ihrem zerschmetternden Schwanz an.",
@@ -6028,7 +6028,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: ["Blitz", "Kälte", "Säure"], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: ["Blindsicht 9 m", "Dunkelsicht 36 m"], passiveWahrnehmung: 13,
     sprachen: ["Aqual"],
-    umgebung: ["Ozean"],
+    umgebung: ["Gewässer"],
     bild: "assets/images/monster/monsterhandbuch/marid.png",
     beschreibung: [
       "Die Marids stammen von der Elementarebene des Wassers und sind die wundersamsten Dschinnis. Auch wenn alle Dschinnis große Macht besitzen, sehen sich selbst die niedersten der Marids den unbeständigen Dschinni, den an den Boden gebundenen Dao und den rauchenden Ifriti als klar überlegen. Marids sind riesig und fischartig und wahrlich seltsam anzusehen, besonders wenn sie in die fein genähten Westen und die farbigen Pluderhosen gekleidet sind, die sie schätzen. Sie sprechen in Stimmen so leise wie die Meeresbrise oder so volltönend wie Sturmwellen, die gegen Felsenklippen brechen. Im Flug verwandeln sich ihre Unterleibe in Säulen aus schäumigem Wasser.",
@@ -6594,7 +6594,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     zustandsimmunitaeten: ["Gelähmt", "Verängstigt"],
     sinne: ["Wahre Sicht 36 m"], passiveWahrnehmung: 14,
     sprachen: ["Versteht Abyssisch, Himmlisch, Infernalisch und Urtümlich, kann aber nicht sprechen", "Telepathie 36 m"],
-    umgebung: ["Ozean"],
+    umgebung: ["Gewässer"],
     bild: "assets/images/monster/monsterhandbuch/kraken.png",
     beschreibung: [
       "Unter den Wellen schläft der Kraken für unzählige Zeitalter und wartet auf ein finsteres Zeichen. Sterbliche des Landes, die auf der offenen See segeln, vergessen die Gründe, aus denen ihre Ahnen die Meere fürchteten.",
@@ -7218,7 +7218,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: ["Blitz", "Schall", "Wucht-, Stich- und Hiebschaden durch nicht-magische Waffen"], schadensimmunitaeten: ["Gift"], verwundbarkeiten: [], zustandsimmunitaeten: ["Bewusstlos", "Erschöpft", "Festgesetzt", "Gelähmt", "Gepackt", "Liegend", "Vergiftet", "Versteinert"],
     sinne: ["Dunkelsicht 18 m"], passiveWahrnehmung: 10,
     sprachen: ["Auranisch"],
-    umgebung: ["Luft", "Himmel"],
+    umgebung: ["Andere Ebenen", "Himmel"],
     bild: "assets/images/monster/monsterhandbuch/luftelementar.png",
     beschreibung: [
       "Ein Luftelementar ist eine trichterförmige Wolke aus wirbelnder Luft mit einem vagen Gesicht. Auch wenn er gerne über den Boden rast und dabei Staub und Schutt aufnimmt, kann er auch fliegen und von oben angreifen.",
@@ -7712,7 +7712,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
     sinne: [], passiveWahrnehmung: 12,
     sprachen: ["Aqual", "Gemeinsprache"],
-    umgebung: ["Küste", "Ozean"],
+    umgebung: ["Küste", "Gewässer"],
     bild: "assets/images/monster/monsterhandbuch/meervolk.png",
     beschreibung: [
       "Meervolk sind aquatische Humanoide mit dem Oberkörper eines Menschen und dem Unterleib eines Fischs. Sie schmücken ihre Schuppen und Haut mit Dekorationen aus Muscheln. Stämme und Königreiche des Meervolks erstrecken sich über die ganze Welt, und ihre Völker sind so variantenreich, was Farben, Kultur und Einstellungen angeht, wie Menschenvölker an der Oberfläche.",
@@ -14705,7 +14705,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     schadensresistenzen: ["Säure", "Wucht-, Stich- und Hiebschaden durch nicht-magische Waffen"], schadensimmunitaeten: ["Gift"], verwundbarkeiten: [], zustandsimmunitaeten: ["Bewusstlos", "Erschöpft", "Festgesetzt", "Gelähmt", "Gepackt", "Liegend", "Vergiftet", "Versteinert"],
     sinne: ["Dunkelsicht 18 m"], passiveWahrnehmung: 10,
     sprachen: ["Aqual"],
-    umgebung: ["Ozean", "Küste"],
+    umgebung: ["Gewässer", "Küste"],
     bild: "assets/images/monster/monsterhandbuch/wasserelementar.png",
     beschreibung: [
       "Ein Wasserelementar ist eine ansteigende Welle, die sich über den Boden wälzt und in größeren Gewässern fast unsichtbar wird. Er umschlingt Kreaturen, die in seinem Weg stehen, und füllt ihre Münder und Lungen so mühelos, wie er Flammen erstickt."
