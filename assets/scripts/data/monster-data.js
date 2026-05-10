@@ -2,6 +2,7 @@
 // Neue Bücher: eigene *-data.js anlegen, Variable hier eintragen.
 window.MONSTER_DATA = [
   ...(window.MONSTER_DATA_MONSTERHANDBUCH || []),
+  ...(window.MONSTER_DATA_FOLIANT_DER_FEINDE || []),
 ].sort((a, b) => a.name.localeCompare(b.name, 'de'));
 
 window.UNTERART_LORE = {
