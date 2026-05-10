@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meruria — Ressourcen</title>
+<link rel="stylesheet" href="assets/styles/global/fonts.css">
+<link rel="stylesheet" href="assets/styles/global/base.css">
+<link rel="stylesheet" href="assets/styles/pages/Ressourcen.css">
+<script src="assets/scripts/vendor/react.development.js"></script>
+<script src="assets/scripts/vendor/react-dom.development.js"></script>
+<script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/scripts/data/resources/ff14_fish-data.js"></script>
+<script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.jsx" type="text/babel"></script>
+<script src="assets/components/particle-field.jsx" type="text/babel"></script>
+<script src="assets/components/tweaks-panel-8.jsx" type="text/babel"></script>
+<script src="assets/components/filter-utils.jsx" type="text/babel"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+
+const { useState, useCallback, useMemo } = React;
+const { useTweaks, TweaksPanel, TweakSection, TweakToggle, SiteNav, ParticleField } = window;
+const { FilterGroup, XBtn } = window;
+
+const ALL_FISH = window.FISH_DB;
+
+// ── Klima colours ─────────────────────────────────────────────────────────────
+const KLIMA_COLOR = {
+  'Gemäßigt':    '#4db6e8',
+  'Kalt':        '#90d8f8',
+  'Warm':        '#ffaa44',
+  'Trocken':     '#d4b260',
+  'Tiefsee':     '#3a6abf',
+  'Stürmisch':   '#9898c0',
+  'Sumpfig':     '#58b870',
+  'Toxisch':     '#70e028',
+  'Magisch':     '#c060e8',
+  'Vulkanisch':  '#e85020',
+  'Schattenhaft':'#9050c8',
+  'Kosmisch':    '#5050e0',
+};
+
+const GRÖSSE_ORDER = ['Winzig','Klein','Mittelgroß','Groß','Riesig'];
+
+const STÄRKE_GROUPS = [
+  { label:'1 – 4',   min:1,  max:4  },
+  { label:'5 – 8',   min:5,  max:8  },
+  { label:'9 – 12',  min:9,  max:12 },
+  { label:'13 – 16', min:13, max:16 },
+];
+
+const SG_GROUPS = [
+  { label:'10 – 14', min:10, max:14, hint:'Gewöhnlich'   },
+  { label:'15 – 19', min:15, max:19, hint:'Ungewöhnlich' },
+  { label:'20 – 24', min:20, max:24, hint:'Selten'       },
+  { label:'25 – 29', min:25, max:29, hint:'Sehr selten'  },
+  { label:'30 – 35', min:30, max:35, hint:'Legendär'     },
+];
+
+const SORT_OPTIONS = [
+  { id:'name-az',    label:'Name A – Z' },
+  { id:'name-za',    label:'Name Z – A' },
+  { id:'sg-asc',     label:'SG ↑'        },
+  { id:'sg-desc',    label:'SG ↓'        },
+  { id:'preis-asc',  label:'Preis ↑'    },
+  { id:'preis-desc', label:'Preis ↓'    },
+  { id:'staerke',    label:'Stärke ↓'   },
+  { id:'gewicht',    label:'Gewicht ↓'  },
+];
+
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{ "showParticles": true }/*EDITMODE-END*/;
+
+// ── Tabs ──────────────────────────────────────────────────────────────────────
+const TABS = [
+  { id:'fische',      label:'Fische'      },
+  { id:'pflanzen',    label:'Pflanzen'    },
+  { id:'mineralien',  label:'Mineralien'  },
+  { id:'monsterteile',label:'Monsterteile'},
+];
+
+// ── Parse helpers ─────────────────────────────────────────────────────────────
+function parseGewicht(s) {
+  if (!s) return 0;
+  const m = s.match(/([\d,]+)\s*(g|kg)/);
+  if (!m) return 0;
+  return parseFloat(m[1].replace(',','.')) * (m[2]==='kg' ? 1000 : 1);
+}
+function parsePreis(s) {
+  return s ? parseInt(s.split(' ')[0]) || 0 : 0;
+}
+
+// ── Stärke bar ────────────────────────────────────────────────────────────────
+function barColor(stärke, i) {
+  if (i >= stärke) return 'rgba(255,255,255,0.07)';
+  if (stärke >= 13) return '#ffd700';
+  if (stärke >= 9)  return '#e85020';
+  if (stärke >= 5)  return '#26c6da';
+  return 'rgba(38,198,218,0.55)';
+}
+
+// ── Fish Card ─────────────────────────────────────────────────────────────────
+function FishCard({ fish }) {
+  const [imgOk, setImgOk] = useState(true);
+  const s = fish.stärke ?? 0;
+  return (
+    <div className="fish-card">
+      <div style={{ display:'flex', alignItems:'flex-start', gap:'9px', marginBottom:'2px' }}>
+        <div className="fish-icon">
+          {imgOk
+            ? <img src={fish.icon} alt="" loading="lazy" onError={() => setImgOk(false)} />
+            : <div className="fish-icon-missing">🐟</div>
+          }
+        </div>
+        <div style={{ minWidth:0, flex:1 }}>
+          <div className="fish-name">{fish.name_de}</div>
+          <div className="fish-level">SG {fish.sg ?? '–'}</div>
+        </div>
+      </div>
+
+      <div className="fish-divider" />
+
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'4px', marginBottom:'6px' }}>
+        <span className="fish-size-badge">{fish.größenkategorie}</span>
+        <div className="staerke-bars" title={`Stärke ${s} / 16`}>
+          {Array.from({length:16},(_,i) => (
+            <div key={i} className="staerke-bar" style={{ background: barColor(s,i) }} />
+          ))}
+        </div>
+      </div>
+
+      <div className="fish-klima">
+        {(fish.klima||[]).map(k => {
+          const col = KLIMA_COLOR[k] || '#8888cc';
+          return (
+            <span key={k} className="fish-klima-chip" style={{ background:col+'1e', border:`1px solid ${col}44`, color:col }}>
+              {k}
+            </span>
+          );
+        })}
+      </div>
+
+      <div className="fish-stats">
+        <span className="fish-weight">{fish.gewicht}</span>
+        <span className="fish-price">{fish.verkaufspreis}</span>
+      </div>
+
+      {fish.desc_de && <p className="fish-desc">{fish.desc_de}</p>}
+    </div>
+  );
+}
+
+// ── Filter Chip ───────────────────────────────────────────────────────────────
+function Chip({ label, active, onClick, accentColor }) {
+  const style = accentColor && active
+    ? { borderColor:accentColor+'77', background:accentColor+'1a', color:'#f0eeff' }
+    : accentColor
+    ? { borderColor:accentColor+'33', color:accentColor+'bb' }
+    : {};
+  return (
+    <button className={`filter-chip${active?' active':''}`} style={style} onClick={onClick}>{label}</button>
+  );
+}
+
+// ── Fish Filter Sidebar ───────────────────────────────────────────────────────
+function FishSidebar({ filters, setFilters, total, filtered }) {
+  const allKlimas = useMemo(() => {
+    const s = new Set();
+    ALL_FISH.forEach(f => (f.klima||[]).forEach(k => s.add(k)));
+    return [...s].sort();
+  }, []);
+
+  const set = (key, val) => setFilters(f => ({...f, [key]:val}));
+  const toggle = (key, val) => setFilters(f => {
+    const arr = f[key]||[];
+    return {...f, [key]: arr.includes(val) ? arr.filter(x=>x!==val) : [...arr,val]};
+  });
+  const resetAll = () => setFilters({ search:'', größe:[], klima:[], stärke:[], sg:[], sort:'name-az' });
+  const hasAny = filters.search || filters.größe.length || filters.klima.length ||
+                 filters.stärke.length || filters.sg.length || filters.sort!=='name-az';
+
+  return (
+    <aside className="res-sidebar">
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'14px' }}>
+        <span style={{ fontFamily:'var(--font-display)', fontSize:'10px', letterSpacing:'0.25em', color:'rgba(38,198,218,0.6)', textTransform:'uppercase' }}>Filter</span>
+        {hasAny && <XBtn onClick={resetAll} />}
+      </div>
+
+      {/* Search */}
+      <div style={{ position:'relative', marginBottom:'16px' }}>
+        <input type="text" placeholder="Fisch suchen…"
+          value={filters.search} onChange={e => set('search', e.target.value)} />
+        {filters.search
+          ? <button onClick={()=>set('search','')} style={{ position:'absolute', right:'8px', top:'50%', transform:'translateY(-50%)', background:'none', border:'none', color:'rgba(200,190,240,0.45)', cursor:'pointer', padding:0, fontSize:'10px', lineHeight:1 }}>✕</button>
+          : <svg style={{ position:'absolute', right:'9px', top:'50%', transform:'translateY(-50%)', opacity:0.28, pointerEvents:'none' }} width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <circle cx="5" cy="5" r="3.5" stroke="rgba(38,198,218,1)" strokeWidth="1.2"/>
+              <line x1="8" y1="8" x2="11" y2="11" stroke="rgba(38,198,218,1)" strokeWidth="1.2"/>
+            </svg>
+        }
+      </div>
+
+      <FilterGroup title="Größe" active={filters.größe.length>0} onReset={()=>set('größe',[])} collapsible>
+        <div style={{ display:'flex', flexWrap:'wrap', gap:'4px' }}>
+          {GRÖSSE_ORDER.map(g => <Chip key={g} label={g} active={filters.größe.includes(g)} onClick={()=>toggle('größe',g)} />)}
+        </div>
+      </FilterGroup>
+
+      <FilterGroup title="Klima" active={filters.klima.length>0} onReset={()=>set('klima',[])} collapsible>
+        <div style={{ display:'flex', flexWrap:'wrap', gap:'4px' }}>
+          {allKlimas.map(k => <Chip key={k} label={k} active={filters.klima.includes(k)} accentColor={KLIMA_COLOR[k]} onClick={()=>toggle('klima',k)} />)}
+        </div>
+      </FilterGroup>
+
+      <FilterGroup title="Stärke" active={filters.stärke.length>0} onReset={()=>set('stärke',[])} collapsible>
+        <div style={{ display:'flex', flexWrap:'wrap', gap:'4px' }}>
+          {STÄRKE_GROUPS.map(g => <Chip key={g.label} label={g.label} active={filters.stärke.includes(g.label)} onClick={()=>toggle('stärke',g.label)} />)}
+        </div>
+      </FilterGroup>
+
+      <FilterGroup title="Seltenheitsgrad" active={filters.sg.length>0} onReset={()=>set('sg',[])} collapsible>
+        <div style={{ display:'flex', flexDirection:'column', gap:'3px' }}>
+          {SG_GROUPS.map(g => (
+            <button key={g.label} className={`sort-btn${filters.sg.includes(g.label)?' active':''}`} onClick={()=>toggle('sg',g.label)}
+              style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+              <span>{g.label}</span>
+              <span style={{ opacity:0.5, fontSize:'7.5px', letterSpacing:'0.1em' }}>{g.hint}</span>
+            </button>
+          ))}
+        </div>
+      </FilterGroup>
+
+      <FilterGroup title="Sortierung" active={filters.sort!=='name-az'} onReset={()=>set('sort','name-az')} collapsible>
+        <div style={{ display:'flex', flexDirection:'column', gap:'2px' }}>
+          {SORT_OPTIONS.map(o => (
+            <button key={o.id} className={`sort-btn${filters.sort===o.id?' active':''}`} onClick={()=>set('sort',o.id)}>{o.label}</button>
+          ))}
+        </div>
+      </FilterGroup>
+
+      <div style={{ marginTop:'auto', paddingTop:'14px', borderTop:'1px solid rgba(38,198,218,0.08)' }}>
+        <div className="res-count">{filtered} / {total} Einträge</div>
+        {hasAny && (
+          <button onClick={resetAll}
+            style={{ width:'100%', padding:'6px', background:'rgba(200,60,60,0.08)', border:'1px solid rgba(200,60,60,0.25)', borderRadius:'2px', color:'rgba(230,90,90,0.65)', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.18em', cursor:'pointer', transition:'all 0.15s', textTransform:'uppercase' }}
+            onMouseEnter={e=>{e.currentTarget.style.background='rgba(200,60,60,0.18)';e.currentTarget.style.borderColor='rgba(230,90,90,0.5)';}}
+            onMouseLeave={e=>{e.currentTarget.style.background='rgba(200,60,60,0.08)';e.currentTarget.style.borderColor='rgba(200,60,60,0.25)';}}>
+            Filter löschen
+          </button>
+        )}
+      </div>
+    </aside>
+  );
+}
+
+// ── Placeholder Tab ───────────────────────────────────────────────────────────
+const PLACEHOLDER_ICONS = { pflanzen:'🌿', mineralien:'💎', monsterteile:'🦴' };
+function PlaceholderTab({ id, label }) {
+  const icon = PLACEHOLDER_ICONS[id] || '📦';
+  return (
+    <div style={{ flex:1, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'16px', color:'rgba(38,198,218,0.18)', userSelect:'none' }}>
+      <div style={{ fontSize:'48px', opacity:0.35 }}>{icon}</div>
+      <div style={{ fontFamily:'var(--font-display)', fontSize:'18px', letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(38,198,218,0.25)' }}>{label}</div>
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.28em', color:'rgba(160,140,255,0.2)', textTransform:'uppercase' }}>Daten folgen</div>
+      <div style={{ width:'48px', height:'1px', background:'linear-gradient(90deg,transparent,rgba(38,198,218,0.2),transparent)' }} />
+    </div>
+  );
+}
+
+// ── Fish Tab content ──────────────────────────────────────────────────────────
+function FishTab() {
+  const [filters, setFilters] = useState({ search:'', größe:[], klima:[], stärke:[], sg:[], sort:'name-az' });
+
+  const filtered = useMemo(() => {
+    let r = ALL_FISH;
+    if (filters.search) {
+      const q = filters.search.toLowerCase();
+      r = r.filter(f => f.name_de.toLowerCase().includes(q) || (f.desc_de||'').toLowerCase().includes(q));
+    }
+    if (filters.größe.length)
+      r = r.filter(f => filters.größe.includes(f.größenkategorie));
+    if (filters.klima.length)
+      r = r.filter(f => (f.klima||[]).some(k => filters.klima.includes(k)));
+    if (filters.stärke.length)
+      r = r.filter(f => filters.stärke.some(g => {
+        const grp = STÄRKE_GROUPS.find(x=>x.label===g);
+        return grp && f.stärke>=grp.min && f.stärke<=grp.max;
+      }));
+    if (filters.sg.length)
+      r = r.filter(f => filters.sg.some(g => {
+        const grp = SG_GROUPS.find(x=>x.label===g);
+        return grp && (f.sg||10)>=grp.min && (f.sg||10)<=grp.max;
+      }));
+
+    r = [...r];
+    switch (filters.sort) {
+      case 'name-az':    r.sort((a,b)=>a.name_de.localeCompare(b.name_de,'de')); break;
+      case 'name-za':    r.sort((a,b)=>b.name_de.localeCompare(a.name_de,'de')); break;
+      case 'sg-asc':     r.sort((a,b)=>(a.sg||10)-(b.sg||10)); break;
+      case 'sg-desc':    r.sort((a,b)=>(b.sg||10)-(a.sg||10)); break;
+      case 'preis-asc':  r.sort((a,b)=>parsePreis(a.verkaufspreis)-parsePreis(b.verkaufspreis)); break;
+      case 'preis-desc': r.sort((a,b)=>parsePreis(b.verkaufspreis)-parsePreis(a.verkaufspreis)); break;
+      case 'staerke':    r.sort((a,b)=>(b.stärke||0)-(a.stärke||0)); break;
+      case 'gewicht':    r.sort((a,b)=>parseGewicht(b.gewicht)-parseGewicht(a.gewicht)); break;
+    }
+    return r;
+  }, [filters]);
+
+  return (
+    <div className="res-layout">
+      <FishSidebar filters={filters} setFilters={setFilters} total={ALL_FISH.length} filtered={filtered.length} />
+      <main className="res-main">
+        {filtered.length > 0
+          ? <div className="fish-grid">{filtered.map(f => <FishCard key={f.id} fish={f} />)}</div>
+          : <div className="res-empty">Keine Treffer</div>
+        }
+      </main>
+    </div>
+  );
+}
+
+// ── App ───────────────────────────────────────────────────────────────────────
+function App() {
+  const [mouse, setMouse] = useState({ x:0.5, y:0.5 });
+  const [tweaks] = useTweaks(TWEAK_DEFAULTS);
+  const [activeTab, setActiveTab] = useState('fische');
+
+  const handleMouseMove = useCallback(e => setMouse({ x:e.clientX/window.innerWidth, y:e.clientY/window.innerHeight }), []);
+
+  return (
+    <div onMouseMove={handleMouseMove} style={{ display:'flex', flexDirection:'column', height:'100vh', overflow:'hidden', position:'relative' }}>
+      {tweaks.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} />}
+      <SiteNav rightLabel="RESSOURCEN" />
+
+      {/* Tab bar */}
+      <nav className="res-tabbar">
+        {TABS.map(tab => (
+          <button key={tab.id} className={`res-tab${activeTab===tab.id?' active':''}`} onClick={()=>setActiveTab(tab.id)}>
+            <span className="res-tab-dot" />
+            {tab.label}
+          </button>
+        ))}
+      </nav>
+
+      {/* Tab content */}
+      {activeTab === 'fische'       && <FishTab />}
+      {activeTab === 'pflanzen'     && <PlaceholderTab id="pflanzen"     label="Pflanzen"     />}
+      {activeTab === 'mineralien'   && <PlaceholderTab id="mineralien"   label="Mineralien"   />}
+      {activeTab === 'monsterteile' && <PlaceholderTab id="monsterteile" label="Monsterteile" />}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<SiteGate><App /></SiteGate>);
+</script>
+</body></html>
