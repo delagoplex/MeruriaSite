@@ -13,6 +13,7 @@
 <script src="assets/scripts/data/monster/foliant-der-feinde-data.js"></script>
 <script src="assets/scripts/data/monster/schatzkammer-der-drachen-data.js"></script>
 <script src="assets/scripts/data/monster/almanach-der-monster-data.js"></script>
+<script src="assets/scripts/data/monster/floral-dragons-data.js"></script>
 <script src="assets/scripts/data/monster-data.js"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
 <script src="assets/components/site-gate.jsx" type="text/babel"></script>
@@ -724,6 +725,104 @@ function MonsterDetail({ monster }) {
         )}
         {monster.regionale_effekte && (
           <EffectBlock title="Regionale Effekte" intro={monster.regionale_effekte.beschreibung} items={monster.regionale_effekte.effekte} color={tc} />
+        )}
+        {monster.pleurossa_netzwerk && (
+          <div style={{ marginBottom:'18px' }}>
+            <SectionLabel title="Pleurossa-Netzwerk" color={tc} />
+            {monster.pleurossa_netzwerk.beschreibung && (
+              <p style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.75, color:'rgba(210,204,255,0.65)', letterSpacing:'0.015em', margin:'0 0 10px' }}>{monster.pleurossa_netzwerk.beschreibung}</p>
+            )}
+            <div style={{ display:'flex', flexDirection:'column', gap:'10px' }}>
+              {monster.pleurossa_netzwerk.regeln.map((r, i) => (
+                <div key={i} style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', color:'rgba(210,204,255,0.78)', letterSpacing:'0.015em', lineHeight:1.75 }}>
+                  <span style={{ fontWeight:'600', color:'rgba(220,212,255,0.9)' }}>{r.name}. </span>{r.beschreibung}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        {monster.korruption && (
+          <div style={{ marginBottom:'18px' }}>
+            <SectionLabel title="Korruption" color={tc} />
+            {monster.korruption.beschreibung && (
+              <p style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.75, color:'rgba(210,204,255,0.65)', letterSpacing:'0.015em', margin:'0 0 8px' }}>{monster.korruption.beschreibung}</p>
+            )}
+            {monster.korruption.progression && (
+              <p style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.75, color:'rgba(210,204,255,0.65)', letterSpacing:'0.015em', margin:'0 0 6px' }}>
+                <span style={{ fontWeight:'600', color:'rgba(220,212,255,0.9)' }}>Progression. </span>{monster.korruption.progression}
+              </p>
+            )}
+            {monster.korruption.tod_effekt && (
+              <p style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.75, color:'rgba(210,204,255,0.65)', letterSpacing:'0.015em', margin:'0 0 6px' }}>
+                <span style={{ fontWeight:'600', color:'rgba(220,212,255,0.9)' }}>Tod. </span>{monster.korruption.tod_effekt}
+              </p>
+            )}
+            {monster.korruption.heilung && (
+              <p style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.75, color:'rgba(210,204,255,0.65)', letterSpacing:'0.015em', margin:'0 0 12px' }}>
+                <span style={{ fontWeight:'600', color:'rgba(220,212,255,0.9)' }}>Heilung. </span>{monster.korruption.heilung}
+              </p>
+            )}
+            <div style={{ border:`1px solid ${a(0.15)}`, borderRadius:'4px', overflow:'hidden', background:'rgba(8,6,20,0.5)' }}>
+              <table style={{ width:'100%', borderCollapse:'collapse', fontFamily:'var(--font-body)', fontSize:'11px' }}>
+                <thead>
+                  <tr>
+                    {['Stufe', 'Name', 'Effekt'].map((h, j) => (
+                      <th key={j} style={{ textAlign:'left', padding:'6px 10px', background:a(0.12), color:tc, fontFamily:'var(--font-display)', fontWeight:'400', fontSize:'10px', letterSpacing:'0.14em', textTransform:'uppercase', borderBottom:`1px solid ${a(0.3)}` }}>{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {monster.korruption.stufen.map((s, i) => (
+                    <tr key={i}>
+                      <td style={{ padding:'5px 10px', color:a(0.75), fontFamily:'var(--font-mono)', fontSize:'10px', letterSpacing:'0.08em', borderBottom:'1px solid rgba(255,255,255,0.04)', verticalAlign:'top', whiteSpace:'nowrap' }}>{s.stufe}</td>
+                      <td style={{ padding:'5px 10px', color:a(0.85), fontFamily:'var(--font-body)', fontSize:'11px', borderBottom:'1px solid rgba(255,255,255,0.04)', verticalAlign:'top', whiteSpace:'nowrap' }}>{s.name}</td>
+                      <td style={{ padding:'5px 10px', color:'rgba(200,190,240,0.75)', fontFamily:'var(--font-body)', fontSize:'11px', borderBottom:'1px solid rgba(255,255,255,0.04)', verticalAlign:'top', lineHeight:1.65 }}>{s.beschreibung}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            {monster.korruption.pilz_praesenz_tabelle && (
+              <div style={{ marginTop:'14px' }}>
+                <div style={{ fontFamily:'var(--font-display)', fontSize:'9px', letterSpacing:'0.2em', color:a(0.6), textTransform:'uppercase', marginBottom:'8px' }}>Pilzpräsenz-Stärke</div>
+                <div style={{ border:`1px solid ${a(0.15)}`, borderRadius:'4px', overflow:'hidden', background:'rgba(8,6,20,0.5)' }}>
+                  <table style={{ width:'100%', borderCollapse:'collapse', fontFamily:'var(--font-body)', fontSize:'11px' }}>
+                    <thead>
+                      <tr>
+                        {monster.korruption.pilz_praesenz_tabelle.header.map((h, j) => (
+                          <th key={j} style={{ textAlign:'left', padding:'6px 10px', background:a(0.12), color:tc, fontFamily:'var(--font-display)', fontWeight:'400', fontSize:'10px', letterSpacing:'0.14em', textTransform:'uppercase', borderBottom:`1px solid ${a(0.3)}` }}>{h}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {monster.korruption.pilz_praesenz_tabelle.rows.map((row, k) => (
+                        <tr key={k}>
+                          {row.map((cell, j) => (
+                            <td key={j} style={{ padding:'5px 10px', color: j === 0 ? a(0.75) : 'rgba(200,190,240,0.75)', fontFamily: j === 0 ? 'var(--font-mono)' : 'var(--font-body)', fontSize: j === 0 ? '10px' : '11px', letterSpacing: j === 0 ? '0.08em' : '0', borderBottom:'1px solid rgba(255,255,255,0.04)', verticalAlign:'top', whiteSpace: j < 2 ? 'nowrap' : 'normal' }}>{cell}</td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+        {monster.korrupte_floraldrachen_vorlage && (
+          <div style={{ marginBottom:'18px' }}>
+            <SectionLabel title="Korrumpierte Floraldrachen" color={tc} />
+            {monster.korrupte_floraldrachen_vorlage.beschreibung && (
+              <p style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.75, color:'rgba(210,204,255,0.65)', letterSpacing:'0.015em', margin:'0 0 10px' }}>{monster.korrupte_floraldrachen_vorlage.beschreibung}</p>
+            )}
+            <div style={{ display:'flex', flexDirection:'column', gap:'8px' }}>
+              {monster.korrupte_floraldrachen_vorlage.aenderungen.map((aend, i) => (
+                <div key={i} style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', color:'rgba(210,204,255,0.78)', letterSpacing:'0.015em', lineHeight:1.75 }}>
+                  <span style={{ fontWeight:'600', color:'rgba(220,212,255,0.9)' }}>{aend.name}. </span>{aend.beschreibung}
+                </div>
+              ))}
+            </div>
+          </div>
         )}
       </div>
 
