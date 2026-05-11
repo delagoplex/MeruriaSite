@@ -661,10 +661,14 @@ function getModStr(val) {
   return (m >= 0 ? '+' : '') + m;
 }
 const LS_PLAYERS = 'sim_saved_players';
+const LS_DRAFT   = 'sim_player_draft';
 function loadPlayers() {
   try { return JSON.parse(localStorage.getItem(LS_PLAYERS) || '[]'); } catch { return []; }
 }
 function savePlayers(arr) { localStorage.setItem(LS_PLAYERS, JSON.stringify(arr)); }
+function loadDraft()  { try { return JSON.parse(localStorage.getItem(LS_DRAFT)); } catch { return null; } }
+function saveDraft(f) { try { localStorage.setItem(LS_DRAFT, JSON.stringify(f)); } catch {} }
+function clearDraft() { localStorage.removeItem(LS_DRAFT); }
 function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
 
 const KLASSEN = ['Barbar','Barde','Druide','Kämpfer','Kleriker','Mönch','Paladin','Schurke','Waldläufer','Hexenmeister','Zauberer'];
@@ -872,12 +876,21 @@ function SpellPicker({ onAdd, onClose }) {
 // ── Player Form ───────────────────────────────────────────────────────────────
 function PlayerModal({ initial, savedPlayers, currentGroup, onSave, onAddExisting, onDelete, onClose }) {
   const [tab, setTab] = useState('new');
+  const isNew = !initial;
   const initData = initial ? { ...EMPTY_PLAYER, ...initial, zauber: initial.zauber || [] } : { ...EMPTY_PLAYER };
-  const [form, setForm] = useState(() => ({ ...initData, id: initData.id || uid() }));
+  const [form, setForm] = useState(() => {
+    if (isNew) {
+      const draft = loadDraft();
+      if (draft) return draft;
+    }
+    return { ...initData, id: initData.id || uid() };
+  });
   // Track whether klasse is custom (not in predefined list)
   const [customKlasse, setCustomKlasse] = useState(
-    !!(initData.klasse && !KLASSEN.includes(initData.klasse))
+    !!(form.klasse && !KLASSEN.includes(form.klasse))
   );
+  // Autosave draft on every change (new players only)
+  useEffect(() => { if (isNew) saveDraft(form); }, [form]);
 
   function set(path, val) {
     setForm(f => {
@@ -1110,13 +1123,22 @@ function PlayerModal({ initial, savedPlayers, currentGroup, onSave, onAddExistin
               </div>
               {showSpellPicker && <SpellPicker onAdd={addSpellFromPicker} onClose={() => setShowSpellPicker(false)} />}
 
-              <div style={{ display: 'flex', gap: 10, marginTop: 12 }}>
+              <div style={{ display: 'flex', gap: 10, marginTop: 12, alignItems: 'center' }}>
                 <button className="sim-btn sim-btn-primary" onClick={() => {
                   if (!form.name.trim()) return;
+                  clearDraft();
                   const p = { ...form, _kind: 'player', tp: form.maxTp, aktionen: buildAktionen() };
                   onSave(p);
                   onClose();
                 }}>Speichern & Hinzufügen</button>
+                {isNew && loadDraft() && (
+                  <button className="sim-btn sim-btn-ghost" style={{ fontSize: '0.68rem', opacity: 0.6 }} onClick={() => {
+                    clearDraft();
+                    const blank = { ...EMPTY_PLAYER, id: uid() };
+                    setForm(blank);
+                    setCustomKlasse(false);
+                  }}>Entwurf verwerfen</button>
+                )}
               </div>
             </div>
           )}
