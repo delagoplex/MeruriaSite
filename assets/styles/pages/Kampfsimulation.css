@@ -165,6 +165,32 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.sim-combatant-count {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: rgba(160,140,255,0.9);
+  background: rgba(160,140,255,0.12);
+  border: 1px solid rgba(160,140,255,0.25);
+  border-radius: 3px;
+  padding: 0 5px;
+  flex-shrink: 0;
+}
+.sim-picker-count {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: rgba(160,140,255,0.8);
+  background: rgba(160,140,255,0.1);
+  border: 1px solid rgba(160,140,255,0.2);
+  border-radius: 3px;
+  padding: 0 4px;
+  margin-right: 2px;
+  flex-shrink: 0;
 }
 .sim-combatant-meta {
   font-size: 0.68rem;
@@ -183,6 +209,38 @@
   flex-shrink: 0;
 }
 .sim-combatant-remove:hover { color: rgba(255,80,80,0.8); }
+.sim-count-stepper {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-shrink: 0;
+  border: 1px solid rgba(160,140,255,0.2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.sim-count-btn {
+  background: none;
+  border: none;
+  color: rgba(160,140,255,0.6);
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 2px 7px;
+  transition: background 0.12s, color 0.12s;
+}
+.sim-count-btn:hover {
+  background: rgba(160,140,255,0.15);
+  color: rgba(160,140,255,1);
+}
+.sim-count-num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: rgba(160,140,255,0.9);
+  min-width: 18px;
+  text-align: center;
+  user-select: none;
+}
 
 .sim-group-actions {
   display: flex;
@@ -227,6 +285,12 @@
   color: rgba(255,130,130,0.8);
 }
 .sim-btn-danger:hover { background: rgba(255,80,80,0.15); border-color: rgba(255,80,80,0.5); }
+.sim-btn-revert {
+  background: rgba(255,190,60,0.08);
+  border: 1px solid rgba(255,190,60,0.28);
+  color: rgba(255,210,100,0.85);
+}
+.sim-btn-revert:hover { background: rgba(255,190,60,0.16); border-color: rgba(255,190,60,0.55); }
 .sim-match-bar {
   width: 100%;
   display: flex;
@@ -311,11 +375,19 @@
   background: rgba(80,200,120,0.1);
   border: 1px solid rgba(80,200,120,0.3);
   color: rgba(120,220,150,0.9);
-  width: 100%;
+  flex: 1;
   justify-content: center;
   text-align: center;
 }
 .sim-btn-match:hover { background: rgba(80,200,120,0.18); border-color: rgba(80,200,120,0.55); }
+.sim-btn-addone {
+  background: rgba(80,180,255,0.08);
+  border: 1px solid rgba(80,180,255,0.25);
+  color: rgba(120,190,255,0.85);
+  white-space: nowrap;
+  justify-content: center;
+}
+.sim-btn-addone:hover { background: rgba(80,180,255,0.16); border-color: rgba(80,180,255,0.5); }
 .sim-btn:disabled { opacity: 0.35; cursor: not-allowed; }
 
 /* ── Run button ──────────────────────────────────────────────────────── */
@@ -700,6 +772,113 @@
 .sim-survivor-hp { color: rgba(100,220,140,0.8); }
 .sim-survivor-dead { color: rgba(255,60,60,0.6); text-decoration: line-through; }
 
+/* ── Aggregate win bar ───────────────────────────────────────────────── */
+.sim-agg {
+  padding: 14px 20px 10px;
+  border-bottom: 1px solid rgba(160,140,255,0.08);
+}
+.sim-agg-bar {
+  display: flex;
+  height: 20px;
+  border-radius: 4px;
+  overflow: hidden;
+  gap: 2px;
+  margin-bottom: 6px;
+}
+.sim-agg-seg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  min-width: 16px;
+  transition: flex 0.3s;
+}
+.seg-1    { background: rgba(80,160,255,0.35); color: rgba(160,200,255,0.9); }
+.seg-2    { background: rgba(255,100,80,0.3);  color: rgba(255,160,140,0.9); }
+.seg-draw { background: rgba(160,140,255,0.2); color: rgba(190,175,255,0.7); }
+.sim-agg-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.65rem;
+  font-family: var(--font-mono);
+}
+.sim-agg-g1     { color: rgba(80,160,255,0.7); }
+.sim-agg-g2     { color: rgba(255,100,80,0.7); }
+.sim-agg-rounds { color: rgba(160,140,255,0.4); }
+
+/* ── Per-run log rows ────────────────────────────────────────────────── */
+.sim-runs {
+  border-top: 1px solid rgba(160,140,255,0.08);
+}
+.sim-run + .sim-run {
+  border-top: 1px solid rgba(160,140,255,0.06);
+}
+.sim-run-badge {
+  font-size: 0.6rem;
+  padding: 1px 7px;
+  border-radius: 3px;
+  margin-left: 4px;
+}
+.sim-run-meta {
+  margin-left: auto;
+  color: rgba(160,140,255,0.3);
+  font-size: 0.65rem;
+}
+.sim-run-rounds {
+  border-top: 1px solid rgba(160,140,255,0.06);
+}
+.sim-round-row + .sim-round-row {
+  border-top: 1px solid rgba(160,140,255,0.05);
+}
+.sim-round-header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  padding: 6px 20px 6px 32px;
+  background: transparent;
+  border: none;
+  color: rgba(160,140,255,0.4);
+  font-family: var(--font-mono);
+  font-size: 0.67rem;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.15s, background 0.15s;
+}
+.sim-round-header:hover {
+  color: rgba(160,140,255,0.75);
+  background: rgba(160,140,255,0.03);
+}
+.sim-round-label {
+  min-width: 72px;
+  flex-shrink: 0;
+  letter-spacing: 0.06em;
+}
+.sim-round-hp {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+.sim-hp-chip {
+  font-size: 0.6rem;
+  padding: 1px 5px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+.sim-hp-t1    { background: rgba(80,160,255,0.1);  color: rgba(120,180,255,0.85); border: 1px solid rgba(80,160,255,0.2); }
+.sim-hp-t2    { background: rgba(255,100,80,0.09); color: rgba(255,150,130,0.85); border: 1px solid rgba(255,100,80,0.2); }
+.sim-hp-dead  { background: rgba(255,60,60,0.07);  color: rgba(255,80,80,0.55);   border-color: rgba(255,60,60,0.15); text-decoration: line-through; }
+.sim-hp-sep   { color: rgba(160,140,255,0.2); font-size: 0.65rem; flex-shrink: 0; }
+.sim-log-inner {
+  margin-left: 12px;
+  border-left: 2px solid rgba(160,140,255,0.08);
+}
+
 /* ── Tabs (player modal) ─────────────────────────────────────────────── */
 .sim-tabs {
   display: flex;
@@ -750,3 +929,58 @@
 }
 [data-theme="light"] .sim-modal { background: #e8e4f6; border-color: rgba(90,60,180,0.25); }
 [data-theme="light"] .sim-log { background: rgba(215,210,242,0.4); }
+
+/* ── Encounter Rating ─────────────────────────────────────────────────────── */
+.enc-rating {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  margin: 0 0 4px;
+  padding: 8px 16px;
+}
+.enc-rating-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.enc-pips {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.enc-pip {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(160,140,255,0.12);
+  border: 1px solid rgba(160,140,255,0.18);
+  transition: background 0.2s, border-color 0.2s;
+}
+.enc-pip.enc-trivial.lit  { background: #4caf50; border-color: #66bb6a; }
+.enc-pip.enc-easy.lit     { background: #8bc34a; border-color: #9ccc65; }
+.enc-pip.enc-medium.lit   { background: #ffc107; border-color: #ffca28; }
+.enc-pip.enc-hard.lit     { background: #ff7043; border-color: #ff8a65; }
+.enc-pip.enc-deadly.lit   { background: #e53935; border-color: #ef5350; }
+.enc-label {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  font-weight: 400;
+}
+.enc-label.enc-trivial  { color: #66bb6a; }
+.enc-label.enc-easy     { color: #9ccc65; }
+.enc-label.enc-medium   { color: #ffca28; }
+.enc-label.enc-hard     { color: #ff8a65; }
+.enc-label.enc-deadly   { color: #ef5350; }
+.enc-xp {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: rgba(160,140,255,0.35);
+}
+.enc-sub {
+  font-size: 0.72rem;
+  color: rgba(160,140,255,0.45);
+  font-style: italic;
+  letter-spacing: 0.02em;
+}

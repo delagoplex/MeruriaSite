@@ -52,8 +52,11 @@ const FUNDORT_COLOR = {
 };
 
 const RES_RARITY_TIERS = [
-  { label:'Gewöhnlich', color:'#8888aa', val:1 },
-  { label:'Selten',     color:'#4488ee', val:2 },
+  { label:'Gewöhnlich',   color:'#8888aa', val:1 },
+  { label:'Ungewöhnlich', color:'#4caf50', val:2 },
+  { label:'Selten',       color:'#4488ee', val:3 },
+  { label:'Sehr selten',  color:'#c060e8', val:4 },
+  { label:'Legendär',     color:'#ffaa44', val:5 },
 ];
 function resRarity(item) {
   return RES_RARITY_TIERS.find(r => r.val === item.seltenheitsgrad) || RES_RARITY_TIERS[0];

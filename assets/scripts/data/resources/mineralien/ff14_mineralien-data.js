@@ -5,8 +5,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Wo vulkanische Spalten die Erdkruste durchziehen, verdichtet sich reine Feuerenergie in diesen rotglühenden Koernern. Ein einzelner Brocken kann stundenlang gleichmäßig Glut halten - ohne zu verbrennen.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021456.tex&format=png",
     "level": 139,
-    "verkaufspreis": "1816 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "1170 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Baustein",
     "fundort": [
       "Vulkan",
@@ -20,7 +20,7 @@ window.MINERALIEN_DB = [
     "desc_de": "An Bergkuppen, wo Gewitterfronten jahrein jahraus einschlagen, sammeln sich Sturmspuren in diesen blaeulichen Koernern. Wer sie mit blossen Haenden aufsammelt, spuert ein kribbelndes Taubheitsgefuehl noch Stunden danach.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021461.tex&format=png",
     "level": 139,
-    "verkaufspreis": "1816 Hade",
+    "verkaufspreis": "160 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Baustein",
     "fundort": [
@@ -34,8 +34,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Konzentrierter als gewöhnlicher Feuerkies, tritt diese Form nur in aktiven Vulkanschloten auf, wo selbst Stein sich veraendert. Das Pulsieren seiner Oberflaeche folgt einem Rhythmus, der an Herzschlag erinnert.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021456.tex&format=png",
     "level": 150,
-    "verkaufspreis": "1960 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "2010 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Baustein",
     "fundort": [
       "Vulkan"
@@ -48,7 +48,7 @@ window.MINERALIEN_DB = [
     "desc_de": "Nur dort wo Blitze im selben Gestein einschlagen - Jahr für Jahr, Generation für Generation - entsteht diese strahlende Form. Die gebundene Energie genuegt, um einen Blitzableiter hundert Jahre lang zu versorgen.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021461.tex&format=png",
     "level": 150,
-    "verkaufspreis": "1960 Hade",
+    "verkaufspreis": "590 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Baustein",
     "fundort": [
@@ -62,8 +62,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Massiver als gewöhnlicher Feuerkies, bricht dieses Gestein nur in den tiefsten Lavakammern. Sein inneres Glühen verlöscht selbst unter Wasser nicht - eine Eigenschaft, die Feuermagier um den Verstand bringt.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021471.tex&format=png",
     "level": 145,
-    "verkaufspreis": "3158 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "2610 Hade",
+    "seltenheitsgrad": 3,
     "kategorie": "Baustein",
     "fundort": [
       "Vulkan"
@@ -76,8 +76,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Stuermische Klippen und exponierte Gebirgsgrate sind seine Heimat. Das Gestein knistert und laesst in feuchter Luft Haare zu Berge stehen. In Stuermnachten leuchten Funde davon schwach blau.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021475.tex&format=png",
     "level": 145,
-    "verkaufspreis": "3158 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "940 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Baustein",
     "fundort": [
       "Gebirge",
@@ -91,8 +91,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Nicht aus gewöhlicher Materie geformt - dieser Kies entsteht nur an Orten, wo die Grenze zwischen den Ebenen duentner ist als gewöhlich. Arkane Gelehrte streiten sich, ob er anzieht oder abstosst.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021463.tex&format=png",
     "level": 200,
-    "verkaufspreis": "1188 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "12190 Hade",
+    "seltenheitsgrad": 4,
     "kategorie": "Baustein",
     "fundort": [
       "Arkane Stätte",
@@ -106,8 +106,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Zu einem Barren verarbeitetes Molybdaen ist das Ergebnis tage- wenn nicht wochenlanger Arbeit tiefer Minen. Das Metall ist auffallend hitzebestaendig und macht Legierungen deutlich langlebiger.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/020000/020830.tex&format=png",
     "level": 285,
-    "verkaufspreis": "3468 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "1810 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Metall",
     "fundort": [
       "Gebirge",
@@ -121,7 +121,7 @@ window.MINERALIEN_DB = [
     "desc_de": "Die satten Gruentoene dieser Jade sollen von den getrockneten Traenen eines uralten Drachenfuersten herruehren. Ob Legende oder Wahrheit - handwerklich ist sie von unuebertroffen Qualität und Reinheit.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021295.tex&format=png",
     "level": 285,
-    "verkaufspreis": "5712 Hade",
+    "verkaufspreis": "450 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Baustein",
     "fundort": [
@@ -135,8 +135,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Dieser tiefschwarze Turmalin waechst in hexagonalen Säulen aus Granitfelsen. Unterwelt-Völker tragen ihn als Schutz gegen Verhexung - und schworen, er ward bisher noch nie durchbrochen.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021476.tex&format=png",
     "level": 279,
-    "verkaufspreis": "546 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "940 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Baustein",
     "fundort": [
       "Höhle",
@@ -150,7 +150,7 @@ window.MINERALIEN_DB = [
     "desc_de": "Ein leuchtend gelblicher Stein, der in bestimmten Regionen wertvoller gehandelt wird als Goldmuenzen. Gerüchten zufolge pulsiert er sichtbar, wenn Magie in seiner Nähe gewirkt wird.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/027000/027407.tex&format=png",
     "level": 279,
-    "verkaufspreis": "546 Hade",
+    "verkaufspreis": "470 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Baustein",
     "fundort": [
@@ -165,7 +165,7 @@ window.MINERALIEN_DB = [
     "desc_de": "Der tiefe rotbraune Boden mancher Flussniederungen ist nicht nur fruchtbar - er ist für seine magischen Bindungseigenschaften bekannt. Golem-Bauer nutzen ihn als Basissubstrat für Grundformen.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021466.tex&format=png",
     "level": 340,
-    "verkaufspreis": "6000 Hade",
+    "verkaufspreis": "120 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Baustein",
     "fundort": [
@@ -180,7 +180,7 @@ window.MINERALIEN_DB = [
     "desc_de": "Geformt in den Daurerstürmen der Hochgebirge, traegt dieses Gestein eingravierte Windmuster auf seiner Oberflaeche, als haette der Orkan selbst es geschnitzt. Es pfeift leise im Wind.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021473.tex&format=png",
     "level": 409,
-    "verkaufspreis": "630 Hade",
+    "verkaufspreis": "410 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Baustein",
     "fundort": [
@@ -194,8 +194,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Im Schein von Fackeln oder magischem Licht glitzert dieses Gestein wie ein Sternenhimmel aus der Nähe. Hoehlenlebewohner kennen es als natuerlichen Wegweiser im ewigen Dunkel.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021467.tex&format=png",
     "level": 409,
-    "verkaufspreis": "630 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "1440 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Baustein",
     "fundort": [
       "Höhle"
@@ -208,8 +208,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Schwarz wie die tiefsten Ebenen, scheint dieser Quarz Licht zu verschlucken statt zu reflektieren. Magiegelehrte ordnen ihn der Schattenschule zu - entsprechend hoch ist sein Preis auf dem Schwarzmarkt.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021462.tex&format=png",
     "level": 420,
-    "verkaufspreis": "630 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "790 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Baustein",
     "fundort": [
       "Unterreich",
@@ -223,7 +223,7 @@ window.MINERALIEN_DB = [
     "desc_de": "Dieser schneeweiße Lehm findet sich an Flussbiegungen und Seenufern. Er ist plastischer als jeder andere bekannte Ton und zieht keine Feuchtigkeit an - ideal für alchemistische Behaelter.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/022000/022610.tex&format=png",
     "level": 409,
-    "verkaufspreis": "630 Hade",
+    "verkaufspreis": "570 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Baustein",
     "fundort": [
@@ -238,7 +238,7 @@ window.MINERALIEN_DB = [
     "desc_de": "Aehnlich dem Orkangestein, jedoch von deutlich staerkerem Charakter. Gegenstaende daraus sollen einen dumpfen Donner von sich geben, wenn sie erschuettert werden - kein ideales Material für Schleicheinsaetze.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021482.tex&format=png",
     "level": 460,
-    "verkaufspreis": "1000 Hade",
+    "verkaufspreis": "400 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Baustein",
     "fundort": [
@@ -252,7 +252,7 @@ window.MINERALIEN_DB = [
     "desc_de": "In Gildenwerkstaetten nach alten Normen geschmiedete Eisennaegel, von denen jeder einzeln auf Masshaltigheit geprüft wird. Sie biegen sich nicht, sie zerbrechen - und selbst das nur ungern.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021004.tex&format=png",
     "level": 460,
-    "verkaufspreis": "1050 Hade",
+    "verkaufspreis": "400 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Metall",
     "fundort": [
@@ -266,7 +266,7 @@ window.MINERALIEN_DB = [
     "desc_de": "Hauchtduenne Mithrilringe, gefertigt in spezialisierten Kettenwerkstaetten. Die Handwerkskunst dahinter braucht Jahre der Uebung - und eine Geduld, die Nicht-Zwerge selten aufbringen.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/020000/020913.tex&format=png",
     "level": 460,
-    "verkaufspreis": "1050 Hade",
+    "verkaufspreis": "230 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Metall",
     "fundort": [
@@ -280,7 +280,7 @@ window.MINERALIEN_DB = [
     "desc_de": "Ein kleines Silber-Nugget, gegossen und gereinigt in der Gildenschmiede. Die standardisierte Größe erleichtert die präzise Portionierung für feine Silberarbeiten und Tränke erheblich.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/020000/020829.tex&format=png",
     "level": 460,
-    "verkaufspreis": "1050 Hade",
+    "verkaufspreis": "380 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Metall",
     "fundort": [
@@ -294,7 +294,7 @@ window.MINERALIEN_DB = [
     "desc_de": "Standard-Eisenbarren der Handwerksgilde - in Gewicht und Qualität so einheitlich wie möglich. Das schweigende Rueckgrat jeder Metallarbeit, die laenger halten soll als eine Generation.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/020000/020801.tex&format=png",
     "level": 480,
-    "verkaufspreis": "1050 Hade",
+    "verkaufspreis": "260 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Metall",
     "fundort": [
@@ -308,7 +308,7 @@ window.MINERALIEN_DB = [
     "desc_de": "Duenn wie Pergament, aber stabiler als gewöhliches Eisen - Mithrilplatten aus Gildenwerkstaetten sind das bevorzugte Material für Ruestungsverzierungen und magisch verankerte Schilde.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/020000/020956.tex&format=png",
     "level": 480,
-    "verkaufspreis": "1050 Hade",
+    "verkaufspreis": "560 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Metall",
     "fundort": [
@@ -322,7 +322,7 @@ window.MINERALIEN_DB = [
     "desc_de": "Reinsilber in Barrenform, sorgfaeltig gegossen und auf Verunreinigungen geprüft. Muenzpraeger und Alchemisten streiten sich seit Jahrhunderten, wer ihn dringender braucht.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/020000/020826.tex&format=png",
     "level": 480,
-    "verkaufspreis": "1050 Hade",
+    "verkaufspreis": "370 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Metall",
     "fundort": [
@@ -336,7 +336,7 @@ window.MINERALIEN_DB = [
     "desc_de": "Ein präzise gefertigtes Silberzahnrad für feinmechanische Konstruktionen. Die Zaehne sind auf den Tausendstel Zoll exakt geschliffen - Abweichungen werden angeblich sofort gespuert.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/026000/026270.tex&format=png",
     "level": 500,
-    "verkaufspreis": "1050 Hade",
+    "verkaufspreis": "510 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Metall",
     "fundort": [
@@ -350,7 +350,7 @@ window.MINERALIEN_DB = [
     "desc_de": "Hauchtduenne Wolframplaettchen für hitzeresistente Mechanismen. Ihre Fertigung erfordert Spezialoefen und eine Geduld, die man eher von Gnomen als von Menschen erwartet.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/020000/020961.tex&format=png",
     "level": 500,
-    "verkaufspreis": "1050 Hade",
+    "verkaufspreis": "140 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Metall",
     "fundort": [
@@ -364,8 +364,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Blassblau schimmernd, entsteht Coelestine in Hohlraeumen tief im Gebirge, wo Mineralwasser langsam über Jahrzehnte verdunstet. Heilungsmagie soll durch ihn als Medium erheblich verstärkt werden.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021286.tex&format=png",
     "level": 500,
-    "verkaufspreis": "1050 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "1700 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Baustein",
     "fundort": [
       "Höhle",
@@ -379,8 +379,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Das härteste natuerlich vorkommende Erz der bekannten Welt. Zwergen-Clan-Älteste hueten die wenigen bekannten Abbauorte mit geradezu religioesem Eifer - und toeten ohne Vorwarnung für sie.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021224.tex&format=png",
     "level": 500,
-    "verkaufspreis": "210 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "5810 Hade",
+    "seltenheitsgrad": 3,
     "kategorie": "Baustein",
     "fundort": [
       "Unterreich"
@@ -393,8 +393,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Hellgrau und feinkoernig, entsteht Dazit an den Raendern erloschener Vulkane, wo Lava langsam abkühlte. Alte Schriften nennen ihn die versteinerte Flamme - Geologen nennen ihn schlicht unverzichtbar.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021458.tex&format=png",
     "level": 279,
-    "verkaufspreis": "546 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "1940 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Baustein",
     "fundort": [
       "Vulkan",
@@ -408,7 +408,7 @@ window.MINERALIEN_DB = [
     "desc_de": "Dieser granatartige Edelstein leuchtet in tiefem Beerenrot. Bergvölker tragen ihn als Amulett und behaupten, er wärme das Blut und halte Kaelte fern. Klimaforscher zweifeln. Bergvölker nicht.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021474.tex&format=png",
     "level": 300,
-    "verkaufspreis": "556 Hade",
+    "verkaufspreis": "270 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Baustein",
     "fundort": [
@@ -422,8 +422,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Nur in mondlosen Naechten schimmert dieser Quarz von innen heraus. Tempel der Mondgoettin verlangen ihn für ihre heiligsten Rituale - entsprechend selten und entsprechend teuer.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021459.tex&format=png",
     "level": 534,
-    "verkaufspreis": "1190 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "670 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Baustein",
     "fundort": [
       "Höhle",
@@ -437,8 +437,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Ein Gestein von schier uebernatuerlicher Schwaerze, das selbst magisches Licht zu schlucken scheint. Mauern aus diesem Material sollen Gedankenleser blockieren - was seine Popularität bei Herrscherhäusern erklaert.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021472.tex&format=png",
     "level": 560,
-    "verkaufspreis": "1180 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "1190 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Baustein",
     "fundort": [
       "Unterreich"
@@ -451,8 +451,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Aus dem Himmel gefallen, traegt er kosmische Energie in sich. Schmiede, die ihn verarbeiten, berichten von seltsamen klaren Träumen. Das Eisen laesst sich schwerer formen als irdisches, aber das Ergebnis ist unnachgiebig.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021472.tex&format=png",
     "level": 600,
-    "verkaufspreis": "2 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "4340 Hade",
+    "seltenheitsgrad": 3,
     "kategorie": "Baustein",
     "fundort": [
       "Himmelsfall"
@@ -465,8 +465,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Eine maechtigere Variante des Meteoreisens - so als waere der urspruengliche Brocken bewusst auf diese Welt gefallen. Auf seiner Oberflaeche formen sich bisweilen Runenspuren, ohne dass jemand Hand angelegt haette.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021486.tex&format=png",
     "level": 600,
-    "verkaufspreis": "2 Hade",
-    "seltenheitsgrad": 2,
+    "verkaufspreis": "5390 Hade",
+    "seltenheitsgrad": 3,
     "kategorie": "Baustein",
     "fundort": [
       "Himmelsfall"
@@ -479,8 +479,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Dieser Kristall existiert gleichzeitig in der materiellen und der Geisterwelt. Mit blossem Auge kaum sichtbar, leuchtet er durch arkane Linsen in blendendem Weiss. Vorsicht beim Transport.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021232.tex&format=png",
     "level": 570,
-    "verkaufspreis": "3360 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "12740 Hade",
+    "seltenheitsgrad": 4,
     "kategorie": "Baustein",
     "fundort": [
       "Arkane Stätte",
@@ -494,8 +494,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Gewoehlicher Malachit ist grün. Dieser nicht. Die violette Faerbung deutet auf arkanische Kontamination hin, die ihn sowohl wertvoller als auch unberechenbarer macht als sein harmloses Namensvetter.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021468.tex&format=png",
     "level": 590,
-    "verkaufspreis": "2440 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "900 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Baustein",
     "fundort": [
       "Gebirge",
@@ -509,8 +509,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Aus Schichten gepresst, die kein Tageslicht je gesehen haben. Erdquarz ist nahezu amagisch - was ihn für magieresistente Konstruktionen interessanter macht als jeden glitzernden Edelstein.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021458.tex&format=png",
     "level": 600,
-    "verkaufspreis": "1840 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "1980 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Baustein",
     "fundort": [
       "Höhle",
@@ -524,8 +524,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Ein Meteorstein primitiver Zusammensetzung, der sich von der irdischen Erdkruste grundlegend unterscheidet. Kosmologisten streiten erbittert darüber, aus welchem Himmelskörper er urspruenglich stammt.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021210.tex&format=png",
     "level": 610,
-    "verkaufspreis": "2 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "2450 Hade",
+    "seltenheitsgrad": 3,
     "kategorie": "Baustein",
     "fundort": [
       "Himmelsfall"
@@ -538,8 +538,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Die erhabenere Form des Achondriten pulsiert mit einer Energie, die Spezialisten in die Nähe von Planeschichten verorten. Wer ihn lange beruehrt, berichtet von Visionen fremder Welten unter fremden Himmeln.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021247.tex&format=png",
     "level": 610,
-    "verkaufspreis": "2 Hade",
-    "seltenheitsgrad": 2,
+    "verkaufspreis": "6810 Hade",
+    "seltenheitsgrad": 4,
     "kategorie": "Baustein",
     "fundort": [
       "Himmelsfall",
@@ -553,8 +553,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Erzklumpen von so hoher Reinheit, dass Schmiede ihn direkt einschmelzen koennen. Die goldene Toenwung taeuschtwet - dies ist kein gewöhliches Gold, sondern ein seltenes Metall mit anderen Eigenschaften.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021225.tex&format=png",
     "level": 625,
-    "verkaufspreis": "2640 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "6410 Hade",
+    "seltenheitsgrad": 3,
     "kategorie": "Baustein",
     "fundort": [
       "Gebirge",
@@ -568,7 +568,7 @@ window.MINERALIEN_DB = [
     "desc_de": "Gruenschiefer ist in bestimmten Gebirgsregionen häufig, doch diese Variante enthaelt komprimierte organische Spuren aus Jahrmillionen. Alchemisten destillieren daraus erstaunlich wirksame Konzentrate.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021252.tex&format=png",
     "level": 620,
-    "verkaufspreis": "2 Hade",
+    "verkaufspreis": "100 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Baustein",
     "fundort": [
@@ -582,8 +582,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Die erhabenere Variante enthaelt so viel urzeitliches organisches Material, dass sie unter Druck schwach riecht - nach Wald und Alter. In manchen Kulturen gilt Gruenschiefer als heilig: das Leben im Stein.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021337.tex&format=png",
     "level": 620,
-    "verkaufspreis": "2 Hade",
-    "seltenheitsgrad": 2,
+    "verkaufspreis": "210 Hade",
+    "seltenheitsgrad": 1,
     "kategorie": "Baustein",
     "fundort": [
       "Gebirge"
@@ -596,8 +596,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Rauer, ungeschliffener Onyx aus engen Karsthöhlen. Im Rohen unscheinbar, offenbart sein Inneres beim Schleifen eine Tiefe und Reinheit, die selbst erfahrene Edelsteinschleifer kurz innehalten laesst.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021231.tex&format=png",
     "level": 630,
-    "verkaufspreis": "4050 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "5860 Hade",
+    "seltenheitsgrad": 3,
     "kategorie": "Baustein",
     "fundort": [
       "Höhle",
@@ -611,8 +611,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Wer Astralquarz beruehrt, beschreibt ein Kribbeln, als wuerde man kurz den Sternenhimmel anfassen. Er entsteht nur an Orten, wo arkane Leitlinien sich kreuzen - und in der Nacht glimmt er sachte.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021205.tex&format=png",
     "level": 670,
-    "verkaufspreis": "1230 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "9730 Hade",
+    "seltenheitsgrad": 4,
     "kategorie": "Baustein",
     "fundort": [
       "Arkane Stätte",
@@ -626,8 +626,8 @@ window.MINERALIEN_DB = [
     "desc_de": "In Harzvorkommen tiefer Urwaelder findet sich manchmal dieser honigfarbene Quarz. Er enthaelt oft Einschluesse urzeitlicher Insekten - Naturkundler zahlen Höchstpreise, Sammler noch mehr.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021212.tex&format=png",
     "level": 690,
-    "verkaufspreis": "650 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "1280 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Baustein",
     "fundort": [
       "Wald",
@@ -641,7 +641,7 @@ window.MINERALIEN_DB = [
     "desc_de": "In Hochgebirgsregionen, wo Blitze in der Sturmsaison täglich einschlagen, entstehen diese Quarze, indem Fulminate im Boden zu Kristallen verschmelzen. Sie brummen kaum hoerbar, dauerhaft.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021461.tex&format=png",
     "level": 730,
-    "verkaufspreis": "2000 Hade",
+    "verkaufspreis": "220 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Baustein",
     "fundort": [
@@ -655,8 +655,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Pulverisiert bleibt seine arkanische Natur aktiv - Wundstein ist als alchemistische Zutat kaum zu ersetzen. Der Geruch des frisch gemahlenen Pulvers erinnert eigenartigerweise an Regen nach langer Dürr.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/022000/022616.tex&format=png",
     "level": 205,
-    "verkaufspreis": "333 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "4200 Hade",
+    "seltenheitsgrad": 3,
     "kategorie": "Verschiedenes",
     "fundort": [
       "Arkane Stätte",
@@ -670,8 +670,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Tief unter der Meeresoberflaeche waechst dieser violette Amethyst inmitten von Korallenriffen. Der rosaliche Schimmer ruehrt von den Mineralien des Riffs - eine Symbiose aus Stein und lebendem Riff.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021284.tex&format=png",
     "level": 220,
-    "verkaufspreis": "333 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "1550 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Verschiedenes",
     "fundort": [
       "Küste",
@@ -685,8 +685,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Uralte Pflanzenmasse, über Jahrmillionen zu Kohle gepresst. Sie brennt heisser und laenger als gewöhliche Kohle und hinterlaesst kaum Asche - die erste Wahl für Hochoefen und lange Winter.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021452.tex&format=png",
     "level": 290,
-    "verkaufspreis": "180 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "1380 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Verschiedenes",
     "fundort": [
       "Höhle",
@@ -700,8 +700,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Dieser rostbraune Eisenstein ist für seine hervorragende Eignung als Hochofenerz bekannt. Zwergen-Älteste kennen jeden Abbauort in Tagesrittnaaehe auswendig und geben die Koordinaten nie freiwillig heraus.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021206.tex&format=png",
     "level": 430,
-    "verkaufspreis": "200 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "1380 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Verschiedenes",
     "fundort": [
       "Gebirge",
@@ -715,8 +715,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Aus Flussbetten nahe alten Goldadern: goldhaltige Sandklumpen, die durch Erosion entstanden. Das Gold selbst macht nur einen Bruchteil aus - doch welchen Bruchteil.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021220.tex&format=png",
     "level": 430,
-    "verkaufspreis": "200 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "1380 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Verschiedenes",
     "fundort": [
       "Gebirge",
@@ -730,8 +730,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Eine seltene Silbererz-Variante von ungewöhlicher Reinheit. Gunst-Erze gelten in manchen Bergvölkern als Geschenke des Gebirges - ihr Abbau ist dort rituell geregelt.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021213.tex&format=png",
     "level": 430,
-    "verkaufspreis": "200 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "1900 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Verschiedenes",
     "fundort": [
       "Gebirge",
@@ -745,7 +745,7 @@ window.MINERALIEN_DB = [
     "desc_de": "Eine Legierung aus Titan- und Bronzeerz, die in bestimmten Gebirgsformationen auf natuerlichem Wege entsteht. Nahezu unzerstoerbar wenn verarbeitet - das Roherz verraet davon noch wenig.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021202.tex&format=png",
     "level": 430,
-    "verkaufspreis": "200 Hade",
+    "verkaufspreis": "440 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Verschiedenes",
     "fundort": [
@@ -759,7 +759,7 @@ window.MINERALIEN_DB = [
     "desc_de": "Aus Salinen der Küste oder direkt aus ausgetrockneten Meeresbuchten gewonnen. Diese Klumpen enthalten Spurenelemente, die sie für Trankrezepturen wertvoller machen als gewöhliches Kochsalz.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/022000/022617.tex&format=png",
     "level": 430,
-    "verkaufspreis": "200 Hade",
+    "verkaufspreis": "580 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Verschiedenes",
     "fundort": [
@@ -774,8 +774,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Aus Schichten gepresst, die kein Tageslicht je gesehen haben. Tiefenfels ist nahezu magieimmun - was ihn für Konstruktionen, die vor Zauberei schützen sollen, unersetzlich macht.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021203.tex&format=png",
     "level": 430,
-    "verkaufspreis": "200 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "1050 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Verschiedenes",
     "fundort": [
       "Unterreich"
@@ -788,8 +788,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Ungeschliffener Onyx in seiner rohen Form aus Karsthöhlen. Vor der Verarbeitung wenig beeindruckend - was Edelsteinschleifer daraus machen, grenzt dagegen an Magie.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021231.tex&format=png",
     "level": 430,
-    "verkaufspreis": "200 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "880 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Verschiedenes",
     "fundort": [
       "Höhle",
@@ -803,8 +803,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Wolfram ist das schwerste natuerlich vorkommende Element der bekannten Welt. Dieses Erz muss tief unter Tage mit speziell gehärteten Werkzeugen abgebaut werden - und das macht seinen Preis.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021203.tex&format=png",
     "level": 430,
-    "verkaufspreis": "200 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "2360 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Verschiedenes",
     "fundort": [
       "Gebirge",
@@ -818,8 +818,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Mithril in Sandform tritt selten in Wuestengebieten auf, wo magische Leitlinien das Gestein über Jahrhunderte durchstroemten. Selbst ein Fingerhut voll genuegt für ein Zaubertrank-Rezept.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021218.tex&format=png",
     "level": 430,
-    "verkaufspreis": "200 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "1840 Hade",
+    "seltenheitsgrad": 3,
     "kategorie": "Verschiedenes",
     "fundort": [
       "Wüste",
@@ -833,8 +833,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Silberhaltiger Sand mit ungewöhlich hohem Mana-Gehalt. Als Verstaerker in Ritualen und Tränken beliebt - der Effekt ist subtil, aber er ist bestaendig und kumuliert sich über Zeit.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021219.tex&format=png",
     "level": 430,
-    "verkaufspreis": "200 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "4620 Hade",
+    "seltenheitsgrad": 3,
     "kategorie": "Verschiedenes",
     "fundort": [
       "Wüste",
@@ -848,8 +848,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Eine veredelte Durium-Variante mit blaeulichem Glanz. Durium selbst ist bereits beachtlich hart - diese edle Form uebertriffft es noch einmal und kommt nur in verborgenen Gebirgsadern vor.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021221.tex&format=png",
     "level": 495,
-    "verkaufspreis": "1160 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "1880 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Verschiedenes",
     "fundort": [
       "Gebirge",
@@ -863,7 +863,7 @@ window.MINERALIEN_DB = [
     "desc_de": "Verdichtetes organisches Material aus dem Erdzeitalter, zu gruenem Schiefer verwandelt. An manchen Küstenabschnitten bricht er in perfekten Platten - ein Geschenk für Dachdecker und Bodenhandwerker.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021252.tex&format=png",
     "level": 560,
-    "verkaufspreis": "1810 Hade",
+    "verkaufspreis": "170 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Verschiedenes",
     "fundort": [
@@ -878,7 +878,7 @@ window.MINERALIEN_DB = [
     "desc_de": "Bismut kristallisiert in regenbogenfarbigen Treppenstufenformen, die eher wie Magie wirken als wie Natur. Das daraus gewonnene Metall hat erstaunliche diamagnetische Eigenschaften.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021217.tex&format=png",
     "level": 510,
-    "verkaufspreis": "1610 Hade",
+    "verkaufspreis": "190 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Verschiedenes",
     "fundort": [
@@ -892,8 +892,8 @@ window.MINERALIEN_DB = [
     "desc_de": "In den Eiswüsten des Nordens bilden sich durch wechselndes Gefrieren und Tauen diese reinen Salzklumpen über Jahrzehnte. Puristen behaupten, es schmeckt nach dem Winter selbst.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/022000/022688.tex&format=png",
     "level": 527,
-    "verkaufspreis": "1120 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "1750 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Verschiedenes",
     "fundort": [
       "Arktis",
@@ -907,7 +907,7 @@ window.MINERALIEN_DB = [
     "desc_de": "Aus den legendaeren Phrygien-Bergen, wo Goldfunde einst ganze Königshuaeser um den Verstand brachten. Dieses Gold ist von einer Wärme und Leuchtkraft, die gewöhliches nie erreicht.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021206.tex&format=png",
     "level": 540,
-    "verkaufspreis": "2380 Hade",
+    "verkaufspreis": "550 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Verschiedenes",
     "fundort": [
@@ -921,8 +921,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Ein Eisen, das im Dunkeln glimmt - schwach aber bestaendig. In Höhlensystemen nutzen Bergarbeiter es als Notbeleuchtung. Schmiede schaetzen es zudem wegen seiner aussergewöhlich gleichmäßigen Struktur.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021226.tex&format=png",
     "level": 570,
-    "verkaufspreis": "1330 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "690 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Verschiedenes",
     "fundort": [
       "Höhle",
@@ -936,8 +936,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Zinn von aussergewöhlicher Dichte und Festigkeit, entstanden nur unter extremem geologischem Druck. Verarbeitetes Hartzinn ist widerstandsfaehiger als gewöhliche Bronzelegierungen - bei deutlich geringerem Gewicht.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021211.tex&format=png",
     "level": 570,
-    "verkaufspreis": "2190 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "1600 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Verschiedenes",
     "fundort": [
       "Gebirge",
@@ -951,7 +951,7 @@ window.MINERALIEN_DB = [
     "desc_de": "Durch kontrolliertes Verkohlen von Hartholz entsteht diese russschwarze Substanz. Sie brennt heisser und gleichmäßiger als rohes Holz und dient zugleich als Pigment, Filter und alchemistischer Grundstoff.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/026000/026589.tex&format=png",
     "level": 500,
-    "verkaufspreis": "470 Hade",
+    "verkaufspreis": "230 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Verschiedenes",
     "fundort": [
@@ -965,8 +965,8 @@ window.MINERALIEN_DB = [
     "desc_de": "In alten Waeldern, wo Baumharze jahrmillionenlang unter Erde lagen, findet sich dieser dunkle Bernstein. Er enthaelt oft urzeitliche Einschluesse - und manchmal Dinge, die man dort nicht erwartet.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021270.tex&format=png",
     "level": 655,
-    "verkaufspreis": "660 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "1210 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Verschiedenes",
     "fundort": [
       "Wald",
@@ -980,8 +980,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Eine ungewöhliche Verbindung aus Titan- und Golderz, die in Vulkannähe auf natuerlichem Wege entsteht. Das Metall ist widerstandsfaehiger als reines Gold und leuchtet intensiver.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021212.tex&format=png",
     "level": 670,
-    "verkaufspreis": "1230 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "1550 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Verschiedenes",
     "fundort": [
       "Gebirge",
@@ -995,7 +995,7 @@ window.MINERALIEN_DB = [
     "desc_de": "Magnesiumerz ist für sein weisslich strahlendes Licht bekannt, wenn es erhitzt wird. Alchemisten nutzen es für Signalfeuer, Militaers für blendende Wurfkörper - beide zahlen gut dafür.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021205.tex&format=png",
     "level": 690,
-    "verkaufspreis": "750 Hade",
+    "verkaufspreis": "150 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Verschiedenes",
     "fundort": [
@@ -1009,8 +1009,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Ein Erz, das in den tiefen Höhlensystemen des Unterreiches vorkommt und nach einer laengst vergessenen Kultur benannt ist. Es reagiert auf Magie mit einem schwachen roetlichen Glühen.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021231.tex&format=png",
     "level": 700,
-    "verkaufspreis": "1990 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "3080 Hade",
+    "seltenheitsgrad": 3,
     "kategorie": "Verschiedenes",
     "fundort": [
       "Unterreich",
@@ -1024,8 +1024,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Feinste Asche und Mineralien, die vulkanische Aktivität hinterlaesst. Aussergewöhlich nährstoffreich - für Pflanzen ebenso wie für alchemistische Grundrezepturen. Wenige Boeden sind fruchtbarer.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021233.tex&format=png",
     "level": 700,
-    "verkaufspreis": "580 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "1910 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Verschiedenes",
     "fundort": [
       "Vulkan"
@@ -1038,8 +1038,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Nicht das Schmuckmetall, das Juweliere kennen - echtes Weissgold-Naturerz. Seine natuerliche Platin-Gold-Mischung macht es zu einem der wertvollsten Roherze der bekannten Welt.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021217.tex&format=png",
     "level": 680,
-    "verkaufspreis": "1700 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "3450 Hade",
+    "seltenheitsgrad": 3,
     "kategorie": "Verschiedenes",
     "fundort": [
       "Gebirge",
@@ -1053,7 +1053,7 @@ window.MINERALIEN_DB = [
     "desc_de": "Dieses seltene Erz bildet an seiner Oberflaeche glasartige Strukturen durch Einwirken von Hitze und Druck über Aeonen. Sowohl für Metallurgen als auch für Alchemisten ist es gleichermaessen wertvoll.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021209.tex&format=png",
     "level": 1,
-    "verkaufspreis": "2 Hade",
+    "verkaufspreis": "370 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Anderes",
     "fundort": [
@@ -1067,8 +1067,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Aus den Ebenen von Phaenna, wo die Realitaet anders gewebt ist als in der Sterblichenwelt. Dieser Achat schillert in Farben, für die Maler noch keinen Namen gefunden haben.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021471.tex&format=png",
     "level": 1,
-    "verkaufspreis": "2 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "31620 Hade",
+    "seltenheitsgrad": 5,
     "kategorie": "Anderes",
     "fundort": [
       "Andere Ebenen"
@@ -1081,8 +1081,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Wo Eisen und Magma über Jahrtausende in Kontakt kommen, entsteht dieses glasartige Erz. Es ist sprode wie Glas - doch überschreitet man den Schmelzpunkt, fliesst es wie geschmeicheltes Metall.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021202.tex&format=png",
     "level": 1,
-    "verkaufspreis": "2 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "1010 Hade",
+    "seltenheitsgrad": 2,
     "kategorie": "Anderes",
     "fundort": [
       "Gebirge",
@@ -1096,8 +1096,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Jaspis aus anderen Ebenen. Seine Muster verschieben sich langsam über Stunden, wie lesbare Zeichen einer Sprache, die niemand kennt - aber jeder irgendwie zu verstehen glaubt.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021468.tex&format=png",
     "level": 1,
-    "verkaufspreis": "2 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "16840 Hade",
+    "seltenheitsgrad": 5,
     "kategorie": "Anderes",
     "fundort": [
       "Andere Ebenen"
@@ -1110,7 +1110,7 @@ window.MINERALIEN_DB = [
     "desc_de": "Glasartig und glimmernd, findet sich dieses Erz in Schichten, wo Quarz und Feldspat unter extremem Druck vitrifiziert wurden. Es faengt Licht auf eine Weise, die fast wie Magie wirkt.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021205.tex&format=png",
     "level": 1,
-    "verkaufspreis": "2 Hade",
+    "verkaufspreis": "240 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Anderes",
     "fundort": [
@@ -1124,8 +1124,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Ein poroeses Mineral aus anderen Ebenen, das die Reste winziger fremdartiger Organismen enthaelt. Arkane Filtration ist einer seiner bekanntesten Einsatzbereiche - was sich sonst darin verbirgt, ist weniger klar.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021453.tex&format=png",
     "level": 1,
-    "verkaufspreis": "2 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "19360 Hade",
+    "seltenheitsgrad": 5,
     "kategorie": "Anderes",
     "fundort": [
       "Andere Ebenen"
@@ -1138,8 +1138,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Auf dem Mond abgebaut und in selenischer Hitze gehärtet, ist dieser Barren aus reinstem Adamantit der bekannten Sphären. Selbst Drachen nagen nicht gern an Gegenstaenden daraus.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/020000/020832.tex&format=png",
     "level": 1,
-    "verkaufspreis": "2 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "15130 Hade",
+    "seltenheitsgrad": 4,
     "kategorie": "Anderes",
     "fundort": [
       "Andere Ebenen"
@@ -1152,8 +1152,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Kleiner als ein Barren, aber von ebenso unerbittlicher Qualität. Dieses Nugget direkt aus dem Erz zu gewinnen erfordert Werkzeuge, die selbst aus aussergewöhlichem Material bestehen.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/020000/020831.tex&format=png",
     "level": 1,
-    "verkaufspreis": "2 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "5380 Hade",
+    "seltenheitsgrad": 3,
     "kategorie": "Anderes",
     "fundort": [
       "Unterreich",
@@ -1167,8 +1167,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Chondrite sind kosmischen Ursprungs - und dieser Barren traegt die Reise durch die Sphären noch in seiner Kristallstruktur. Legierungen mit ihm sind von auẞerweltlicher Haltbarkeit.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/020000/020830.tex&format=png",
     "level": 1,
-    "verkaufspreis": "2 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "5200 Hade",
+    "seltenheitsgrad": 3,
     "kategorie": "Anderes",
     "fundort": [
       "Himmelsfall"
@@ -1181,8 +1181,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Ilmenit, ein titaneisenreiches Mineral aus Vulkangestein, hier zu einer Platte makelloser Qualität verarbeitet. Ein begehrtes Grundmaterial für magische Konstruktionen und Golem-Hüllen.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/020000/020965.tex&format=png",
     "level": 1,
-    "verkaufspreis": "2 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "3210 Hade",
+    "seltenheitsgrad": 3,
     "kategorie": "Anderes",
     "fundort": [
       "Gebirge",
@@ -1196,8 +1196,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Auf dem mondabgewandten Teil gesammelt, absorbiert dieser Quarz selbst Mondlicht vollstaendig. Mondpriester verwenden ihn in ihren dunkelsten Ritualen - und sprechen ungern darüber, wozu.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021462.tex&format=png",
     "level": 1,
-    "verkaufspreis": "2 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "5820 Hade",
+    "seltenheitsgrad": 3,
     "kategorie": "Anderes",
     "fundort": [
       "Andere Ebenen"
@@ -1210,8 +1210,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Silberhaltiger Sand von der Mondoberflaeche: kühler im Anfassen als normales Silber, mit einem matten distanzierten Schimmer. Mondpriesterinnen mahlen ihn für Salbungen und Weiherituale.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021219.tex&format=png",
     "level": 1,
-    "verkaufspreis": "2 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "2540 Hade",
+    "seltenheitsgrad": 3,
     "kategorie": "Anderes",
     "fundort": [
       "Andere Ebenen"
@@ -1224,8 +1224,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Kupferoxid-haltiger Sand vom Mond, von charakteristischem Gruenton gepraegt. Er reagiert auf Heilmagie mit einem warmen Leuchten - eine Reaktion, die irdischer Kupfersand niemals zeigt.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021006.tex&format=png",
     "level": 1,
-    "verkaufspreis": "2 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "4830 Hade",
+    "seltenheitsgrad": 3,
     "kategorie": "Anderes",
     "fundort": [
       "Andere Ebenen"
@@ -1238,8 +1238,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Goldhaltiger Mondsand von feinstem Korn. Wo normales Gold warm glaenzt, schimmert dieser kühl und distanziert - wie Mondlicht selbst, das nie wärmt, aber alles erhellt.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021214.tex&format=png",
     "level": 1,
-    "verkaufspreis": "2 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "4940 Hade",
+    "seltenheitsgrad": 3,
     "kategorie": "Anderes",
     "fundort": [
       "Andere Ebenen"
@@ -1252,8 +1252,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Eine zweite Fundstelle am Mond liefert diesen Goldsand mit subtil anderer Zusammensetzung. Kenner bemerken den Unterschied sofort; für andere sieht er identisch aus.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021214.tex&format=png",
     "level": 1,
-    "verkaufspreis": "2 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "2830 Hade",
+    "seltenheitsgrad": 3,
     "kategorie": "Anderes",
     "fundort": [
       "Andere Ebenen"
@@ -1266,8 +1266,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Dieser schwefelgelbe Mondquarz tritt in grossen Kammern der Mondoberflaeche auf. Er ist durchscheinend und scheint selbst im Dunkeln zu leuchten - ein Licht ohne Quelle.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021458.tex&format=png",
     "level": 1,
-    "verkaufspreis": "2 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "2050 Hade",
+    "seltenheitsgrad": 3,
     "kategorie": "Anderes",
     "fundort": [
       "Andere Ebenen"
@@ -1280,8 +1280,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Aus einer anderen Mondkammer als sein Zwilling, mit leicht anderer kristalliner Struktur. Mondmagier koennen beide Varianten einwandfrei unterscheiden - und benutzen sie für unterschiedliche Zwecke.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021458.tex&format=png",
     "level": 1,
-    "verkaufspreis": "2 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "5920 Hade",
+    "seltenheitsgrad": 3,
     "kategorie": "Anderes",
     "fundort": [
       "Andere Ebenen"
@@ -1294,8 +1294,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Durium auf dem Mond bildet kompakte Sandklumpen von aussergewöhlicher Dichte. Das Material widersteht Weltraumbedingungen muehelos - was es auch für irdische Extremstandorte nützlich macht.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021218.tex&format=png",
     "level": 1,
-    "verkaufspreis": "2 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "4600 Hade",
+    "seltenheitsgrad": 3,
     "kategorie": "Anderes",
     "fundort": [
       "Andere Ebenen"
@@ -1308,8 +1308,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Trotz identischen Namens aus einer anderen Mondregion. Der Duriumgehalt variiert erheblich von der anderen Variante - Experten schaetzen diese als geringfuegig reiner ein.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021218.tex&format=png",
     "level": 1,
-    "verkaufspreis": "2 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "3630 Hade",
+    "seltenheitsgrad": 3,
     "kategorie": "Anderes",
     "fundort": [
       "Andere Ebenen"
@@ -1322,8 +1322,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Dritte bekannte Fundstelle für Mond-Durium. Mondgeographen streiten darüber, ob alle drei Vorkommen denselben geologischen Ursprung haben oder drei verschiedene Einschlaege darstellen.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021218.tex&format=png",
     "level": 1,
-    "verkaufspreis": "2 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "3210 Hade",
+    "seltenheitsgrad": 3,
     "kategorie": "Anderes",
     "fundort": [
       "Andere Ebenen"
@@ -1336,8 +1336,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Dieser tiefblaue Mondquarz absorbiert Licht des Vollmondes und gibt es über Stunden als sachtes Leuchten nach Einbruch der Dunkelheit wieder ab - Stunden, nicht Augenblicke.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021457.tex&format=png",
     "level": 1,
-    "verkaufspreis": "2 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "3600 Hade",
+    "seltenheitsgrad": 3,
     "kategorie": "Anderes",
     "fundort": [
       "Andere Ebenen"
@@ -1350,8 +1350,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Zweite Variante des blauen Mondquarzes, ins Tuerkise spielend. Wird für Navigationsinstrumente in der Sphaersnfahrt genutzt - er zeigt immer in Richtung des naechsten Mondes.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021457.tex&format=png",
     "level": 1,
-    "verkaufspreis": "2 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "2590 Hade",
+    "seltenheitsgrad": 3,
     "kategorie": "Anderes",
     "fundort": [
       "Andere Ebenen"
@@ -1364,8 +1364,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Brauneisenstein vom Mond, geformt durch Milliarden Jahre kosmischer Strahlung. Dichter als sein irdisches Pendant und mit Spurenelementen durchsetzt, für die es noch keine Namen gibt.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021206.tex&format=png",
     "level": 1,
-    "verkaufspreis": "2 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "3450 Hade",
+    "seltenheitsgrad": 3,
     "kategorie": "Anderes",
     "fundort": [
       "Andere Ebenen"
@@ -1378,8 +1378,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Aus Schattenspharen gewonnen und zu Barren verarbeitet. Es absorbiert Licht nicht vollstaendig, schwaecht es aber merklich ab. Für Schattenmagie ein unverzichtbarer Rohstoff.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/020000/020832.tex&format=png",
     "level": 1,
-    "verkaufspreis": "4540 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "10050 Hade",
+    "seltenheitsgrad": 4,
     "kategorie": "Anderes",
     "fundort": [
       "Unterreich",
@@ -1393,8 +1393,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Von den Gegangenen zurueckgelassen, existiert dieser Kristall zwischen den Ebenen. Sein Inneres scheint tiefer zu sein als seine Aussenflaeche vermuten laesst. Niemand hat je seinen Boden erreicht.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/026000/026234.tex&format=png",
     "level": 1,
-    "verkaufspreis": "1460 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "22940 Hade",
+    "seltenheitsgrad": 5,
     "kategorie": "Anderes",
     "fundort": [
       "Andere Ebenen",
@@ -1408,8 +1408,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Dieser Quarz verbiegt Schwerkraft in seiner unmittelbaren Umgebung merklich. Gegenstaende in seiner Nähe sinken schneller - oder steigen, je nach Ausrichtung der Kristallachse. Nicht stapelbar.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021463.tex&format=png",
     "level": 1,
-    "verkaufspreis": "770 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "14050 Hade",
+    "seltenheitsgrad": 5,
     "kategorie": "Anderes",
     "fundort": [
       "Unterreich",
@@ -1423,8 +1423,8 @@ window.MINERALIEN_DB = [
     "desc_de": "Aus den Tiefen von Oizys, dem Ort ewiger Schwermut, stammt dieser dunkelrote Jaspis. Er ist kalt im Anfassen selbst in warmer Umgebung - manche behaupten, er raubt Wärme nicht aus der Luft, sondern aus dem Herzen.",
     "icon": "https://v2.xivapi.com/api/asset?path=ui/icon/021000/021495.tex&format=png",
     "level": 1,
-    "verkaufspreis": "1940 Hade",
-    "seltenheitsgrad": 1,
+    "verkaufspreis": "9480 Hade",
+    "seltenheitsgrad": 4,
     "kategorie": "Anderes",
     "fundort": [
       "Andere Ebenen",

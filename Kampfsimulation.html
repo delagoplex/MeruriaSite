@@ -230,8 +230,9 @@ function isIncapacitated(c) {
 
 // ── Simulation ────────────────────────────────────────────────────────────────
 function simulateCombat(rawGroup1, rawGroup2) {
-  const log = [];
-  const push = (cls, text) => log.push({ cls, text });
+  const allRounds = [];
+  let curEntries = [];
+  const push = (cls, text) => curEntries.push({ cls, text });
 
   let uid = 0;
   const g1 = rawGroup1.map(m => buildCombatant(m, 1, uid++));
@@ -239,27 +240,27 @@ function simulateCombat(rawGroup1, rawGroup2) {
   const all = [...g1, ...g2];
 
   // Initiative
-  push('log-round', '── INITIATIVE ──');
   all.forEach(c => {
     c.initiative = d(20) + c.dexMod;
     push('log-init', `${c.name}: Initiative ${c.initiative} (W20${c.dexMod >= 0 ? '+' : ''}${c.dexMod})`);
   });
   all.sort((a, b) => b.initiative - a.initiative || b.dexMod - a.dexMod);
+  allRounds.push({
+    label: 'Initiative',
+    entries: curEntries.splice(0),
+    hpSnapshot: all.map(c => ({ name: c.name, team: c.team, currentHp: c.currentHp, maxHp: c.maxHp, dead: false })),
+  });
 
   // Initialize legendary action pools & recharge
   all.forEach(c => {
     c.legActionsLeft = c.legPerRound;
-    c.actions.forEach(a => {
-      c.rechargeStatus[a.name] = true; // start available
-    });
+    c.actions.forEach(a => { c.rechargeStatus[a.name] = true; });
   });
 
   function aliveIn(team) { return all.filter(c => c.team === team && !c.dead && !(c._kind === 'player' && c.currentHp <= 0 && c.stable)); }
   function combatOver() { return !aliveIn(1).filter(c => c.currentHp > 0).length || !aliveIn(2).filter(c => c.currentHp > 0).length; }
   function enemies(c) { return aliveIn(c.team === 1 ? 2 : 1); }
-  function allies(c) { return aliveIn(c.team); }
 
-  // Pick target: prefer conscious enemies, then lowest HP
   function pickTarget(c) {
     const e = enemies(c);
     if (!e.length) return null;
@@ -275,7 +276,7 @@ function simulateCombat(rawGroup1, rawGroup2) {
     return { success: total >= dc, roll, total, dc };
   }
 
-  function applyDamage(target, dmgExpr, log) {
+  function applyDamage(target, dmgExpr) {
     const res = rollExpr(dmgExpr);
     const real = Math.max(0, res.total);
     target.currentHp = Math.max(-999, target.currentHp - real);
@@ -300,9 +301,7 @@ function simulateCombat(rawGroup1, rawGroup2) {
     if (c.dead || c.currentHp > 0 || c.stable) return;
     const roll = d(20);
     if (roll === 20) {
-      c.currentHp = 1;
-      removeCondition(c, 'Bewusstlos');
-      c.deathSucc = 0; c.deathFail = 0;
+      c.currentHp = 1; removeCondition(c, 'Bewusstlos'); c.deathSucc = 0; c.deathFail = 0;
       push('log-stabilize', `  ✦ ${c.name} erholt sich mit einer 20! (1 TP)`);
     } else if (roll === 1) {
       c.deathFail += 2;
@@ -322,51 +321,8 @@ function simulateCombat(rawGroup1, rawGroup2) {
     c.actions.forEach(a => {
       if (a.recharge === null || c.rechargeStatus[a.name]) return;
       const roll = d(6);
-      if (roll >= a.recharge) {
-        c.rechargeStatus[a.name] = true;
-        push('log-recharge', `  ↺ ${c.name}: "${a.name}" aufgeladen (W6=${roll})`);
-      }
+      if (roll >= a.recharge) { c.rechargeStatus[a.name] = true; push('log-recharge', `  ↺ ${c.name}: "${a.name}" aufgeladen (W6=${roll})`); }
     });
-  }
-
-  // Pick best action for this turn
-  function pickActions(c) {
-    const usable = c.actions.filter(a => {
-      if (a.recharge !== null && !c.rechargeStatus[a.name]) return false;
-      if (a._type === 'legendary') return false;
-      return true;
-    });
-
-    // Prefer AoE save attacks (breath weapons) if multiple enemies
-    const aoe = usable.find(a => a.type === 'save' && a.isAoE);
-    if (aoe && enemies(c).length >= 2) return [aoe];
-
-    // Multi-attack
-    const multiBase = usable.filter(a => a.type === 'attack' && a.isMultiAttack);
-    if (multiBase.length > 0) {
-      // Expand multiattack
-      const expanded = [];
-      if (c.multiNames.length > 0) {
-        c.multiNames.forEach(n => {
-          const act = usable.find(a => a.name === n && a.type === 'attack');
-          if (act) expanded.push(act);
-        });
-        // Fill up to multiCount by repeating last attack
-        while (expanded.length > 0 && expanded.length < c.multiCount) {
-          expanded.push(expanded[expanded.length - 1]);
-        }
-      }
-      if (expanded.length === 0 && multiBase[0]) {
-        for (let i = 0; i < c.multiCount; i++) expanded.push(multiBase[0]);
-      }
-      if (expanded.length > 0) return expanded;
-    }
-
-    // Single best attack (highest avg damage)
-    const attacks = usable.filter(a => a.type === 'attack' || a.type === 'save');
-    if (!attacks.length) return [];
-    attacks.sort((a, b) => avgDmg(b.damage) - avgDmg(a.damage));
-    return [attacks[0]];
   }
 
   function avgDmg(expr) {
@@ -376,32 +332,44 @@ function simulateCombat(rawGroup1, rawGroup2) {
     return parseInt(m[1]) * (parseInt(m[2]) + 1) / 2 + (m[3] ? parseInt(m[3]) : 0);
   }
 
+  function pickActions(c) {
+    const usable = c.actions.filter(a => !(a.recharge !== null && !c.rechargeStatus[a.name]) && a._type !== 'legendary');
+    const aoe = usable.find(a => a.type === 'save' && a.isAoE);
+    if (aoe && enemies(c).length >= 2) return [aoe];
+    const multiBase = usable.filter(a => a.type === 'attack' && a.isMultiAttack);
+    if (multiBase.length > 0) {
+      const expanded = [];
+      if (c.multiNames.length > 0) {
+        c.multiNames.forEach(n => { const act = usable.find(a => a.name === n && a.type === 'attack'); if (act) expanded.push(act); });
+        while (expanded.length > 0 && expanded.length < c.multiCount) expanded.push(expanded[expanded.length - 1]);
+      }
+      if (expanded.length === 0 && multiBase[0]) for (let i = 0; i < c.multiCount; i++) expanded.push(multiBase[0]);
+      if (expanded.length > 0) return expanded;
+    }
+    const attacks = usable.filter(a => a.type === 'attack' || a.type === 'save');
+    if (!attacks.length) return [];
+    attacks.sort((a, b) => avgDmg(b.damage) - avgDmg(a.damage));
+    return [attacks[0]];
+  }
+
   function executeAction(attacker, action, allCombatants) {
     if (action.type === 'attack') {
       const target = pickTarget(attacker);
       if (!target) return;
       const adv = hasCondition(target, 'Liegend') && !action.isFern;
-      const dis = hasCondition(attacker, 'Vergiftet') || hasCondition(attacker, 'Liegend') ||
-                  hasCondition(attacker, 'Verängstigt');
+      const dis = hasCondition(attacker, 'Vergiftet') || hasCondition(attacker, 'Liegend') || hasCondition(attacker, 'Verängstigt');
       const { roll, both, adv: wasAdv, dis: wasDis } = rollD20(adv, dis);
       const advNote = wasAdv ? ' (Vorteil)' : wasDis ? ' (Nachteil)' : '';
       const total = roll + action.bonus;
-      const isCrit = roll === 20;
-      const isFumble = roll === 1;
-
+      const isCrit = roll === 20, isFumble = roll === 1;
       if (isFumble || (!isCrit && total < target.rk)) {
         push('log-miss', `  ${attacker.name} → ${target.name}: ${action.name} — W20=${roll}${both.length > 1 ? `(${both.join(',')})` : ''}${advNote} +${action.bonus}=${total} vs RK${target.rk} VERFEHLT`);
       } else {
         push('log-hit', `  ${attacker.name} → ${target.name}: ${action.name} — W20=${roll}${both.length > 1 ? `(${both.join(',')})` : ''}${advNote} +${action.bonus}=${total} vs RK${target.rk} GETROFFEN${isCrit ? ' ✦ KRITISCH' : ''}`);
         let dmgExpr = action.damage;
-        if (isCrit) {
-          // Double dice
-          const m = dmgExpr.match(/^(\d+)([Ww]\d+)(.*)$/);
-          if (m) dmgExpr = (parseInt(m[1]) * 2) + m[2] + (m[3] || '');
-        }
-        applyDamage(target, dmgExpr, log);
+        if (isCrit) { const m = dmgExpr.match(/^(\d+)([Ww]\d+)(.*)$/); if (m) dmgExpr = (parseInt(m[1]) * 2) + m[2] + (m[3] || ''); }
+        applyDamage(target, dmgExpr);
         checkDeath(target);
-        // Condition on hit from special attacks
         if (/vergiftet|gift/i.test(action.damageType) && !target.dead) {
           const sv = doSave(target, 'KON', 13);
           if (!sv.success) { addCondition(target, 'Vergiftet'); push('log-condition', `  ${target.name} ist vergiftet! (Rettungswurf ${sv.total} vs SG13)`); }
@@ -417,36 +385,26 @@ function simulateCombat(rawGroup1, rawGroup2) {
         const sv = doSave(target, action.saveAttr, action.saveDC);
         if (sv.success) {
           push('log-save-ok', `  ${target.name}: Rettungswurf ${sv.total} vs SG${sv.dc} — ERFOLG${action.halfOnSave ? ' (halber Schaden)' : ' (kein Schaden)'}`);
-          if (action.halfOnSave) applyDamage(target, action.damage, log);
+          if (action.halfOnSave) applyDamage(target, action.damage);
         } else {
           push('log-save-fail', `  ${target.name}: Rettungswurf ${sv.total} vs SG${sv.dc} — FEHLSCHLAG`);
-          applyDamage(target, action.damage, log);
+          applyDamage(target, action.damage);
         }
         checkDeath(target);
       });
     }
   }
 
-  // Legendary actions after each enemy turn
   function doLegendaryActions(legendaryCreature, allCombatants) {
-    if (!legendaryCreature.legActionsLeft) return;
-    if (legendaryCreature.dead) return;
-    const legUsable = legendaryCreature.legActions.filter(a =>
-      legendaryCreature.rechargeStatus[a.name] !== false
-    );
-    if (!legUsable.length) return;
-    if (enemies(legendaryCreature).length === 0) return;
+    if (!legendaryCreature.legActionsLeft || legendaryCreature.dead) return;
+    const legUsable = legendaryCreature.legActions.filter(a => legendaryCreature.rechargeStatus[a.name] !== false);
+    if (!legUsable.length || !enemies(legendaryCreature).length) return;
     const act = legUsable[0];
-    // Parse as attack/save
     const desc = act.beschreibung || '';
     const bonusM = desc.match(/\+(\d+) zum Treffen/i);
     const dmg = parseDamage(desc);
     if (bonusM) {
-      const fakeAction = {
-        name: act.name, type: 'attack', isFern: false,
-        bonus: parseInt(bonusM[1]), damage: dmg || '1W6',
-        damageType: '', recharge: null, isMultiAttack: false,
-      };
+      const fakeAction = { name: act.name, type: 'attack', isFern: false, bonus: parseInt(bonusM[1]), damage: dmg || '1W6', damageType: '', recharge: null, isMultiAttack: false };
       push('log-legendary', `  ⬟ Legendäre Aktion: ${legendaryCreature.name} — ${act.name}`);
       executeAction(legendaryCreature, fakeAction, allCombatants);
     }
@@ -455,39 +413,26 @@ function simulateCombat(rawGroup1, rawGroup2) {
 
   // ── Main loop ──
   const MAX_ROUNDS = 50;
-  let round = 0;
+  let roundNum = 0;
 
-  while (round < MAX_ROUNDS) {
-    round++;
-    push('log-round', `── RUNDE ${round} ──`);
-
-    // Reset legendary action pools
+  while (roundNum < MAX_ROUNDS) {
+    roundNum++;
     all.forEach(c => { c.legActionsLeft = c.legPerRound; });
 
     for (const combatant of all) {
       if (combatant.dead) continue;
-
-      // Check if any side has won
       if (combatOver()) break;
-
-      // Death saves for downed players
       if (combatant._kind === 'player' && combatant.currentHp <= 0 && !combatant.dead && !combatant.stable) {
         push('log-turn', `▸ ${combatant.name} (Ini ${combatant.initiative})`);
         doDeathSave(combatant);
         continue;
       }
-
       if (isIncapacitated(combatant)) {
         push('log-turn', `▸ ${combatant.name} ist handlungsunfähig und überspringt seinen Zug.`);
         continue;
       }
-
       push('log-turn', `▸ ${combatant.name} (Ini ${combatant.initiative}, ${combatant.currentHp}/${combatant.maxHp} TP)`);
-
-      // Recharge at start of turn
       rechargeCheck(combatant);
-
-      // Act
       const acts = pickActions(combatant);
       if (!acts.length) {
         push('log-misc', `  ${combatant.name} hat keine nutzbaren Aktionen.`);
@@ -498,23 +443,22 @@ function simulateCombat(rawGroup1, rawGroup2) {
           executeAction(combatant, act, all);
         }
       }
-
-      // Condition ticks
-      if (hasCondition(combatant, 'Vergiftet')) {
-        push('log-condition', `  ${combatant.name} leidet an Vergiftung (Nachteil auf Würfe).`);
-      }
-
-      // Legendary actions from opponents (after this creature's turn)
-      const legendaryOpponents = all.filter(c =>
-        c.team !== combatant.team && !c.dead && c.legPerRound > 0 && c.legActionsLeft > 0
-      );
-      legendaryOpponents.forEach(leg => doLegendaryActions(leg, all));
+      if (hasCondition(combatant, 'Vergiftet')) push('log-condition', `  ${combatant.name} leidet an Vergiftung (Nachteil auf Würfe).`);
+      all.filter(c => c.team !== combatant.team && !c.dead && c.legPerRound > 0 && c.legActionsLeft > 0)
+        .forEach(leg => doLegendaryActions(leg, all));
     }
+
+    // Save round with end-of-round HP snapshot
+    allRounds.push({
+      label: `Runde ${roundNum}`,
+      entries: curEntries.splice(0),
+      hpSnapshot: all.map(c => ({ name: c.name, team: c.team, currentHp: Math.max(0, c.currentHp), maxHp: c.maxHp, dead: c.dead })),
+    });
 
     if (combatOver()) break;
   }
 
-  // Result
+  // Result — append finale to last round
   const standing1 = all.filter(c => c.team === 1 && !c.dead && c.currentHp > 0);
   const standing2 = all.filter(c => c.team === 2 && !c.dead && c.currentHp > 0);
   let winner = 'draw';
@@ -523,39 +467,42 @@ function simulateCombat(rawGroup1, rawGroup2) {
 
   push('log-round', '── KAMPF ENDE ──');
   if (winner === 'draw') push('log-misc', 'Beide Gruppen wurden vernichtet oder der Kampf endete unentschieden.');
-  else push('log-misc', `Gruppe ${winner} gewinnt nach ${round} Runden!`);
+  else push('log-misc', `Gruppe ${winner} gewinnt nach ${roundNum} Runden!`);
+  if (allRounds.length > 0) allRounds[allRounds.length - 1].entries.push(...curEntries.splice(0));
 
   return {
-    winner, rounds: round, log,
+    winner,
+    roundCount: roundNum,
+    rounds: allRounds,
     survivors1: g1.map(c => ({ name: c.name, currentHp: c.currentHp, maxHp: c.maxHp, dead: c.dead })),
     survivors2: g2.map(c => ({ name: c.name, currentHp: c.currentHp, maxHp: c.maxHp, dead: c.dead })),
   };
 }
 
 // ── Matching opponents ────────────────────────────────────────────────────────
-// XP thresholds per character level [easy, medium, hard, deadly]
+// XP thresholds per character level [trivial, easy, medium, hard, deadly, epic]
 const XP_THRESHOLDS = [
   null,
-  [25,   50,   75,   100],
-  [50,   100,  150,  200],
-  [75,   150,  225,  400],
-  [125,  250,  375,  500],
-  [250,  500,  750,  1100],
-  [300,  600,  900,  1400],
-  [350,  750,  1100, 1700],
-  [450,  900,  1400, 2100],
-  [550,  1100, 1600, 2400],
-  [600,  1200, 1900, 2800],
-  [800,  1600, 2400, 3600],
-  [1000, 2000, 3000, 4500],
-  [1100, 2200, 3400, 5100],
-  [1250, 2500, 3800, 5700],
-  [1400, 2800, 4300, 6400],
-  [1600, 3200, 4800, 7200],
-  [2000, 3900, 5900, 8800],
-  [2100, 4200, 6300, 9500],
-  [2400, 4900, 7300, 11000],
-  [2800, 5700, 8500, 12700],
+  [12,   25,   50,   75,   100,   200],
+  [25,   50,   100,  150,  200,   400],
+  [37,   75,   150,  225,  400,   800],
+  [62,   125,  250,  375,  500,   1000],
+  [125,  250,  500,  750,  1100,  2200],
+  [150,  300,  600,  900,  1400,  2800],
+  [175,  350,  750,  1100, 1700,  3400],
+  [225,  450,  900,  1400, 2100,  4200],
+  [275,  550,  1100, 1600, 2400,  4800],
+  [300,  600,  1200, 1900, 2800,  5600],
+  [400,  800,  1600, 2400, 3600,  7200],
+  [500,  1000, 2000, 3000, 4500,  9000],
+  [550,  1100, 2200, 3400, 5100,  10200],
+  [625,  1250, 2500, 3800, 5700,  11400],
+  [700,  1400, 2800, 4300, 6400,  12800],
+  [800,  1600, 3200, 4800, 7200,  14400],
+  [1000, 2000, 3900, 5900, 8800,  17600],
+  [1050, 2100, 4200, 6300, 9500,  19000],
+  [1200, 2400, 4900, 7300, 11000, 22000],
+  [1400, 2800, 5700, 8500, 12700, 25400],
 ];
 
 function encXpMult(count) {
@@ -567,45 +514,144 @@ function encXpMult(count) {
   return 4;
 }
 
-function generateMatchingOpponents(group1, difficulty, monsterFilter, coherent) {
-  let pool = (window.MONSTER_DATA || []).filter(m => m.xp > 0 && m.tp > 0);
+function calcEncounterDifficulty(party, enemies) {
+  if (!party.length || !enemies.length) return null;
+  const sums = [0, 0, 0, 0, 0, 0];
+  for (const m of party) {
+    const lvl = m._kind === 'player'
+      ? Math.max(1, Math.min(20, m.stufe || 1))
+      : Math.max(1, Math.min(20, Math.round(m.cr || 1)));
+    const t = XP_THRESHOLDS[lvl];
+    for (let i = 0; i < 6; i++) sums[i] += t[i];
+  }
+  const [t0, t1, t2, t3, t4, t5] = sums;
+  const adjXP = enemies.reduce((s, m) => s + (m.xp || 0), 0) * encXpMult(enemies.length);
+
+  // Main zone (always one of the 5 fixed labels)
+  const ZONES = [
+    { label: 'Trivial',  cls: 'enc-trivial', lo: 0,  hi: t1 },
+    { label: 'Leicht',   cls: 'enc-easy',    lo: t1, hi: t2 },
+    { label: 'Normal',   cls: 'enc-medium',  lo: t2, hi: t3 },
+    { label: 'Schwer',   cls: 'enc-hard',    lo: t3, hi: t4 },
+    { label: 'Tödlich',  cls: 'enc-deadly',  lo: t4, hi: t5 },
+  ];
+  const zIdx = adjXP >= t4 ? 4 : adjXP >= t3 ? 3 : adjXP >= t2 ? 2 : adjXP >= t1 ? 1 : 0;
+  const { label, cls, lo, hi } = ZONES[zIdx];
+  const ratio = hi > lo ? Math.max(0, Math.min(1, (adjXP - lo) / (hi - lo))) : 0.5;
+
+  // Sub-text: nuanced feeling within the zone
+  let sub = null;
+  if (zIdx === 0) {
+    // Trivial zone also covers below-trivial (< t0)
+    if (adjXP < t0 * 0.4)        sub = 'Kaum eine Bedrohung';
+    else if (adjXP < t0 * 0.75)  sub = 'Fühlt sich kaum trivial an';
+    else if (adjXP < t0)         sub = 'Fühlt sich trivial an';
+    else if (ratio > 0.65)       sub = 'Fühlt sich leicht an';
+  } else if (zIdx === 4) {
+    if (ratio < 0.35)            sub = 'Fühlt sich kaum tödlich an';
+    else if (ratio > 0.65)       sub = 'Äußerst tödlich';
+  } else {
+    if (ratio < 0.35)            sub = `Fühlt sich kaum ${label.toLowerCase()} an`;
+    else if (ratio > 0.65)       sub = `Fühlt sich ${ZONES[zIdx + 1].label.toLowerCase()} an`;
+  }
+
+  return { label, cls, sub, adjXP };
+}
+
+// Coherence: narrow pool to monsters sharing art/unterart/umgebung with the anchor
+function coherentPool(anchor, xpPool) {
+  const hasUmg = (m, u) => Array.isArray(m.umgebung) ? m.umgebung.includes(u) : m.umgebung === u;
+  const byUnterart = anchor.unterart ? xpPool.filter(m => m.unterart === anchor.unterart) : [];
+  if (byUnterart.length >= 2) return byUnterart;
+  const anchorUmg = Array.isArray(anchor.umgebung) ? anchor.umgebung : (anchor.umgebung ? [anchor.umgebung] : []);
+  const byArtUmg = xpPool.filter(m => m.art === anchor.art && anchorUmg.some(u => hasUmg(m, u)));
+  if (byArtUmg.length >= 2) return byArtUmg;
+  return xpPool.filter(m => m.art === anchor.art);
+}
+
+function applyMonsterFilter(pool, monsterFilter) {
   if (monsterFilter?.art)      pool = pool.filter(m => m.art === monsterFilter.art);
   if (monsterFilter?.unterart) pool = pool.filter(m => m.unterart === monsterFilter.unterart);
   if (monsterFilter?.umgebung) pool = pool.filter(m =>
     Array.isArray(m.umgebung) ? m.umgebung.includes(monsterFilter.umgebung) : m.umgebung === monsterFilter.umgebung
   );
-  if (!pool.length || !group1.length) return [];
+  return pool;
+}
 
-  // Difficulty bracket: index into XP_THRESHOLDS row [easy=0, medium=1, hard=2, deadly=3]
-  const brackets = { leicht: [0, 1], mittel: [1, 2], schwer: [2, 3] };
-  const [iLow, iHigh] = brackets[difficulty] ?? [1, 2];
-
-  // Sum party XP thresholds
-  let budgetLow = 0, budgetHigh = 0;
+function partyBudget(group1, iLow, iHigh) {
+  let lo = 0, hi = 0;
   for (const m of group1) {
     const lvl = m._kind === 'player'
       ? Math.max(1, Math.min(20, m.stufe || 1))
       : Math.max(1, Math.min(20, Math.ceil(m.cr || 1)));
     const t = XP_THRESHOLDS[lvl];
-    budgetLow  += t[iLow];
-    budgetHigh += t[iHigh];
+    lo += t[iLow]; hi += t[iHigh];
+  }
+  return [lo, hi];
+}
+
+function findOneAdditionalOpponent(group1, group2, difficulty, monsterFilter, coherent) {
+  let pool = applyMonsterFilter(
+    (window.MONSTER_DATA || []).filter(m => m.xp > 0 && m.tp > 0),
+    monsterFilter
+  );
+  if (!pool.length || !group1.length) return null;
+
+  // Exclude types already in group2
+  const existingKeys = new Set(
+    group2.filter(c => c._kind === 'monster').map(c => c.name + (c.source || ''))
+  );
+  pool = pool.filter(m => !existingKeys.has(m.name + (m.source || '')));
+  if (!pool.length) return null;
+
+  // Party budget upper bound for selected difficulty
+  const brackets = { trivial: [0, 1], leicht: [1, 2], normal: [2, 3], schwer: [3, 4], toedlich: [4, 5] };
+  const [, iHigh] = brackets[difficulty] ?? [2, 3];
+  const [, budgetHigh] = partyBudget(group1, 0, iHigh);
+
+  // Current state of group2
+  const monsters2 = group2.filter(c => c._kind === 'monster');
+  const rawXP2 = monsters2.reduce((s, c) => s + (c.xp || 0), 0);
+  const newCount = monsters2.length + 1;
+  const newMult = encXpMult(newCount);
+  // Max XP the new monster can have without exceeding budget
+  const maxMonsterXP = budgetHigh / newMult - rawXP2;
+
+  // Apply coherence relative to existing group2 monsters
+  let eligible = pool;
+  if (coherent && monsters2.length > 0) {
+    const anchor = monsters2[0];
+    const cp = coherentPool(anchor, pool);
+    if (cp.length) eligible = cp;
   }
 
-  // Coherence: narrow pool to monsters sharing art/unterart/umgebung with the anchor
-  function coherentPool(anchor, xpPool) {
-    const hasUmg = (m, u) => Array.isArray(m.umgebung) ? m.umgebung.includes(u) : m.umgebung === u;
-    // Prefer same unterart, then same art + any shared umgebung, then same art
-    const byUnterart = anchor.unterart
-      ? xpPool.filter(m => m.unterart === anchor.unterart)
-      : [];
-    if (byUnterart.length >= 2) return byUnterart;
-    const anchorUmg = Array.isArray(anchor.umgebung) ? anchor.umgebung : (anchor.umgebung ? [anchor.umgebung] : []);
-    const byArtUmg = xpPool.filter(m =>
-      m.art === anchor.art && anchorUmg.some(u => hasUmg(m, u))
-    );
-    if (byArtUmg.length >= 2) return byArtUmg;
-    return xpPool.filter(m => m.art === anchor.art);
+  if (maxMonsterXP > 0) {
+    const fitting = eligible.filter(m => m.xp <= maxMonsterXP * 1.15);
+    if (fitting.length) {
+      fitting.sort((a, b) => Math.abs(b.xp - maxMonsterXP) - Math.abs(a.xp - maxMonsterXP));
+      const top = fitting.slice(0, Math.min(8, fitting.length));
+      return { ...top[Math.floor(Math.random() * top.length)], _kind: 'monster' };
+    }
   }
+
+  // Budget exceeded → weakest available monster
+  const fallback = coherent && monsters2.length > 0
+    ? coherentPool(monsters2[0], pool)
+    : pool;
+  const sorted = (fallback.length ? fallback : pool).slice().sort((a, b) => a.xp - b.xp);
+  return sorted[0] ? { ...sorted[0], _kind: 'monster' } : null;
+}
+
+function generateMatchingOpponents(group1, difficulty, monsterFilter, coherent) {
+  let pool = applyMonsterFilter(
+    (window.MONSTER_DATA || []).filter(m => m.xp > 0 && m.tp > 0),
+    monsterFilter
+  );
+  if (!pool.length || !group1.length) return [];
+
+  const brackets = { trivial: [0, 1], leicht: [1, 2], normal: [2, 3], schwer: [3, 4], toedlich: [4, 5] };
+  const [iLow, iHigh] = brackets[difficulty] ?? [2, 3];
+  const [budgetLow, budgetHigh] = partyBudget(group1, iLow, iHigh);
 
   // Try random builds (1–5 monsters, varied count)
   for (let attempt = 0; attempt < 500; attempt++) {
@@ -671,7 +717,7 @@ function saveDraft(f) { try { localStorage.setItem(LS_DRAFT, JSON.stringify(f));
 function clearDraft() { localStorage.removeItem(LS_DRAFT); }
 function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
 
-const KLASSEN = ['Barbar','Barde','Druide','Kämpfer','Kleriker','Mönch','Paladin','Schurke','Waldläufer','Hexenmeister','Zauberer'];
+const KLASSEN = ['Barbar','Barde','Druide','Hexenmeister','Kämpfer','Kleriker','Magier','Magieschmied','Mönch','Paladin','Schurke','Waldläufer','Zauberer'];
 const SAVE_ATTRS = [
   { val: 'GES', label: 'GES – Geschicklichkeit' },
   { val: 'KON', label: 'KON – Konstitution' },
@@ -692,14 +738,15 @@ const EMPTY_PLAYER = {
 };
 
 // ── Combatant Card ─────────────────────────────────────────────────────────────
-function CombatantCard({ c, onRemove, onDetail }) {
+function CombatantCard({ c, count, onRemove, onAddOne, onDetail, onEdit }) {
   const isMonster = c._kind === 'monster';
   const meta = isMonster
     ? `CR ${formatCR(c.cr)} · ${c.tp} TP · RK ${c.rk}`
     : `${c.klasse} Stufe ${c.stufe} · ${c.maxTp} TP · RK ${c.rk}`;
+  const clickHandler = isMonster ? onDetail : onEdit;
   return (
-    <div className={`sim-combatant-card${isMonster ? ' sim-combatant-card-clickable' : ''}`}
-      onClick={isMonster ? onDetail : undefined}>
+    <div className={`sim-combatant-card${clickHandler ? ' sim-combatant-card-clickable' : ''}`}
+      onClick={clickHandler}>
       {isMonster && c.bild
         ? <img src={c.bild} alt={c.name} className="sim-combatant-img" onError={e => { e.target.style.display='none'; }} />
         : <div className="sim-combatant-img-placeholder">{c._kind === 'player' ? '⚔' : '?'}</div>
@@ -716,7 +763,15 @@ function CombatantCard({ c, onRemove, onDetail }) {
         </div>
         <div className="sim-combatant-meta">{meta}</div>
       </div>
-      <button className="sim-combatant-remove" onClick={e => { e.stopPropagation(); onRemove(); }} title="Entfernen">✕</button>
+      {isMonster && onAddOne ? (
+        <div className="sim-count-stepper" onClick={e => e.stopPropagation()}>
+          <button className="sim-count-btn" onClick={onRemove} title="Einen entfernen">−</button>
+          <span className="sim-count-num">{count}</span>
+          <button className="sim-count-btn" onClick={onAddOne} title="Einen hinzufügen">+</button>
+        </div>
+      ) : (
+        <button className="sim-combatant-remove" onClick={e => { e.stopPropagation(); onRemove(); }} title="Entfernen">✕</button>
+      )}
     </div>
   );
 }
@@ -776,16 +831,17 @@ function MonsterPicker({ onAdd, onClose, selected, monsterFilter, onMonsterFilte
           <div className="sim-monster-list">
             {results.map(m => {
               const key = m.name + (m.source || '');
-              const isSelected = selected?.has(key);
+              const count = selected?.get(key) || 0;
               return (
-                <div key={key} className={`sim-monster-row${isSelected ? ' sim-monster-row-dimmed' : ''}`}
-                  onClick={() => { onAdd({ ...m, _kind: 'monster' }); onClose(); }}>
+                <div key={key} className="sim-monster-row"
+                  onClick={() => onAdd({ ...m, _kind: 'monster' })}>
                   {m.bild
                     ? <img src={m.bild} alt={m.name} className="sim-monster-row-img" onError={e => { e.target.style.display='none'; }} />
                     : <div className="sim-monster-row-img" style={{ display:'flex', alignItems:'center', justifyContent:'center', fontSize:'0.6rem', color:'rgba(160,140,255,0.3)' }}>?</div>
                   }
                   <span className="sim-monster-row-name">
-                    {m.name}{isSelected && <span style={{ fontSize:'0.62rem', color:'rgba(160,140,255,0.4)', marginLeft:6 }}>✓</span>}
+                    {count > 0 && <span className="sim-picker-count">×{count}</span>}
+                    {m.name}
                     <span className="sim-tags">
                       {m.art && <span className="sim-tag">{m.art}</span>}
                       {m.unterart && m.unterart !== 'NPC' && <span className="sim-tag sim-tag-sub">{m.unterart}</span>}
@@ -966,12 +1022,14 @@ function PlayerModal({ initial, savedPlayers, currentGroup, onSave, onAddExistin
     <div className="sim-overlay" onClick={e => e.target === e.currentTarget && onClose()}>
       <div className="sim-modal">
         <div className="sim-modal-header">
-          <h3>Spielercharakter</h3>
+          <h3>{initial ? `${initial.name} bearbeiten` : 'Spielercharakter'}</h3>
           <button className="sim-modal-close" onClick={onClose}>✕</button>
         </div>
         <div className="sim-modal-body">
           <div className="sim-tabs">
-            <button className={`sim-tab ${tab === 'new' ? 'active' : ''}`} onClick={() => setTab('new')}>Neu erstellen</button>
+            <button className={`sim-tab ${tab === 'new' ? 'active' : ''}`} onClick={() => setTab('new')}>Neuer Charakter</button>
+            <button className={`sim-tab ${tab === 'npc' ? 'active' : ''}`} onClick={() => setTab('npc')}>NPC</button>
+            <button className={`sim-tab ${tab === 'encyclopedia' ? 'active' : ''}`} onClick={() => setTab('encyclopedia')}>Spielercharakter</button>
             <button className={`sim-tab ${tab === 'load' ? 'active' : ''}`} onClick={() => setTab('load')}>Gespeichert ({savedPlayers.length})</button>
           </div>
 
@@ -991,6 +1049,18 @@ function PlayerModal({ initial, savedPlayers, currentGroup, onSave, onAddExistin
                   );
                 })}
               </div>
+            </div>
+          )}
+
+          {tab === 'npc' && (
+            <div style={{ padding: '32px 20px', textAlign: 'center', color: 'rgba(160,140,255,0.3)', fontSize: '0.8rem' }}>
+              NPC-Erstellung folgt noch.
+            </div>
+          )}
+
+          {tab === 'encyclopedia' && (
+            <div style={{ padding: '32px 20px', textAlign: 'center', color: 'rgba(160,140,255,0.3)', fontSize: '0.8rem' }}>
+              Vorgefertigte Charaktere aus der Enzyklopädie folgen noch.
             </div>
           )}
 
@@ -1169,9 +1239,21 @@ function MonsterDetailPopup({ monster, onClose }) {
 }
 
 // ── Group Panel ───────────────────────────────────────────────────────────────
-function GroupPanel({ label, group, onAdd, onRemove, onAddPlayer, onDetail, showMatch, matchEnabled, onMatch, difficulty, onDifficulty, monsterFilter, onMonsterFilter, coherent, onCoherent }) {
+function GroupPanel({ label, group, onAdd, onRemove, onAddClone, onAddOpponent, onAddPlayer, onDetail, onEditPlayer, showMatch, matchEnabled, onMatch, difficulty, onDifficulty, monsterFilter, onMonsterFilter, coherent, onCoherent, canRevert, onRevert }) {
   const totalXP = group.filter(c => c._kind === 'monster').reduce((s, c) => s + (c.xp || 0), 0);
-  const crList = group.map(c => c._kind === 'monster' ? `CR${formatCR(c.cr)}` : `Stufe ${c.stufe || '?'}`).join(' · ');
+  // Group identical monsters, keep players individual
+  const displayGroups = useMemo(() => {
+    const result = [];
+    const monsterIdx = new Map();
+    for (let i = 0; i < group.length; i++) {
+      const c = group[i];
+      if (c._kind !== 'monster') { result.push({ c, indices: [i] }); continue; }
+      const key = c.name + (c.source || '');
+      if (monsterIdx.has(key)) { result[monsterIdx.get(key)].indices.push(i); }
+      else { monsterIdx.set(key, result.length); result.push({ c, indices: [i] }); }
+    }
+    return result;
+  }, [group]);
   const all = useMemo(() => (window.MONSTER_DATA || []).filter(m => m.name && m.tp), []);
   const allArts      = useMemo(() => [...new Set(all.map(m => m.art).filter(Boolean))].sort((a,b) => a.localeCompare(b,'de')), [all]);
   const allUnterarts = useMemo(() => [...new Set(all.map(m => m.unterart).filter(Boolean))].sort((a,b) => a.localeCompare(b,'de')), [all]);
@@ -1179,9 +1261,11 @@ function GroupPanel({ label, group, onAdd, onRemove, onAddPlayer, onDetail, show
   const setF = (key, val) => onMonsterFilter(f => ({ ...f, [key]: val }));
   const activeFilters = [monsterFilter?.art, monsterFilter?.unterart, monsterFilter?.umgebung].filter(Boolean).length;
   const DIFF_OPTS = [
-    { val: 'leicht', label: 'Leicht' },
-    { val: 'mittel', label: 'Mittel' },
-    { val: 'schwer', label: 'Schwer' },
+    { val: 'trivial',  label: 'Trivial' },
+    { val: 'leicht',   label: 'Leicht' },
+    { val: 'normal',   label: 'Normal' },
+    { val: 'schwer',   label: 'Schwer' },
+    { val: 'toedlich', label: 'Tödlich' },
   ];
   return (
     <div className="sim-group">
@@ -1195,13 +1279,23 @@ function GroupPanel({ label, group, onAdd, onRemove, onAddPlayer, onDetail, show
             Noch keine Kämpfer
           </div>
         )}
-        {group.map((c, i) => <CombatantCard key={c._uid || c.name + i} c={c} onRemove={() => onRemove(i)} onDetail={() => onDetail && onDetail(c)} />)}
-        {crList && <div style={{ fontSize: '0.65rem', color: 'rgba(160,140,255,0.3)', padding: '4px 10px 2px', fontFamily: 'var(--font-mono)' }}>{crList}</div>}
+        {displayGroups.map(({ c, indices }) => (
+          <CombatantCard
+            key={c._uid || c.name + indices[0]}
+            c={c}
+            count={indices.length}
+            onRemove={() => onRemove(indices[indices.length - 1])}
+            onAddOne={c._kind === 'monster' && onAddClone ? () => onAddClone(c) : undefined}
+            onDetail={c._kind === 'monster' ? () => onDetail && onDetail(c) : undefined}
+            onEdit={c._kind === 'player' ? () => onEditPlayer && onEditPlayer(c) : undefined}
+          />
+        ))}
       </div>
       <div className="sim-group-actions">
         <button className="sim-btn sim-btn-ghost" onClick={onAdd}>+ Monster</button>
         <button className="sim-btn sim-btn-ghost" onClick={onAddPlayer}>+ Spieler</button>
         {group.length > 0 && <button className="sim-btn sim-btn-danger" onClick={() => { for (let i = group.length - 1; i >= 0; i--) onRemove(i); }}>Leeren</button>}
+        {canRevert && <button className="sim-btn sim-btn-revert" onClick={onRevert} title="Zur vorherigen Aufstellung zurückkehren">↩ Rückgängig</button>}
         {showMatch && (
           <div className="sim-match-bar">
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 4 }}>
@@ -1221,7 +1315,7 @@ function GroupPanel({ label, group, onAdd, onRemove, onAddPlayer, onDetail, show
             {activeFilters > 0 && (
               <div style={{ fontSize: '0.64rem', color: 'rgba(160,140,255,0.4)', display: 'flex', justifyContent: 'space-between', padding: '2px 1px' }}>
                 <span>{activeFilters} Filter aktiv</span>
-                <button style={{ background:'none', border:'none', color:'rgba(160,140,255,0.45)', cursor:'pointer', fontSize:'0.64rem', padding:0 }} onClick={() => onMonsterFilter({ art:'', unterart:'', umgebung:'' })}>leeren</button>
+                <button style={{ background:'none', border:'none', color:'rgba(160,140,255,0.45)', cursor:'pointer', fontSize:'0.64rem', padding:0 }} onClick={() => onMonsterFilter({ art:'', unterart:'', umgebung:'' })}>Filter leeren</button>
               </div>
             )}
             <div className="sim-diff-toggle">
@@ -1239,10 +1333,16 @@ function GroupPanel({ label, group, onAdd, onRemove, onAddPlayer, onDetail, show
                 </span>
               </label>
             </div>
-            <button className="sim-btn sim-btn-match" disabled={!matchEnabled} onClick={onMatch}
-              title={matchEnabled ? '' : 'Zuerst Gruppe 1 befüllen'}>
-              ⚔ Passende Gegner
-            </button>
+            <div style={{ display: 'flex', gap: 6 }}>
+              <button className="sim-btn sim-btn-match" disabled={!matchEnabled} onClick={onMatch}
+                title={matchEnabled ? '' : 'Zuerst Gruppe 1 befüllen'}>
+                ⚔ Passende Gegner
+              </button>
+              <button className="sim-btn sim-btn-addone" disabled={!matchEnabled} onClick={onAddOpponent}
+                title={matchEnabled ? '+ 1 passenden Gegner hinzufügen' : 'Zuerst Gruppe 1 befüllen'}>
+                + 1 Gegner
+              </button>
+            </div>
           </div>
         )}
       </div>
@@ -1250,61 +1350,169 @@ function GroupPanel({ label, group, onAdd, onRemove, onAddPlayer, onDetail, show
   );
 }
 
-// ── Combat Log Display ────────────────────────────────────────────────────────
-function CombatResults({ result, group1Name, group2Name, onReset }) {
-  const logRef = useRef(null);
-  const [logOpen, setLogOpen] = useState(false);
-  useEffect(() => {
-    if (logOpen && logRef.current) logRef.current.scrollTop = logRef.current.scrollHeight;
-  }, [logOpen, result]);
+function EncounterRating({ group1, group2 }) {
+  const rating = useMemo(() => calcEncounterDifficulty(group1, group2), [group1, group2]);
+  if (!rating) return null;
+  const DIFF_NAMES = ['Trivial','Leicht','Normal','Schwer','Tödlich'];
+  const pips = ['enc-trivial','enc-easy','enc-medium','enc-hard','enc-deadly'];
+  const activePip = pips.indexOf(rating.cls);
+  return (
+    <div className="enc-rating">
+      <div className="enc-rating-main">
+        <div className="enc-pips">
+          {pips.map((cls, i) => (
+            <span key={cls} className={`enc-pip ${cls}${i <= activePip ? ' lit' : ''}`} title={DIFF_NAMES[i]} />
+          ))}
+        </div>
+        <span className={`enc-label ${rating.cls}`}>{rating.label}</span>
+        <span className="enc-xp">{Math.round(rating.adjXP).toLocaleString('de')} XP</span>
+      </div>
+      {rating.sub && <div className="enc-sub">{rating.sub}</div>}
+    </div>
+  );
+}
 
-  const winnerText = result.winner === 1 ? `${group1Name} gewinnt!` : result.winner === 2 ? `${group2Name} gewinnt!` : 'Unentschieden';
-  const winnerCls = result.winner === 1 ? 'sim-winner-1' : result.winner === 2 ? 'sim-winner-2' : 'sim-winner-draw';
+function Chevron({ open }) {
+  return (
+    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" style={{ transition:'transform 0.2s', transform: open ? 'rotate(90deg)' : 'none', flexShrink:0 }}>
+      <path d="M3 2l4 3-4 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+// ── Combat Results (multi-run) ────────────────────────────────────────────────
+function CombatResults({ runs, group1Name, group2Name, onReset, onRerun }) {
+  const [openLogs, setOpenLogs] = useState(new Set());
+
+  const wins1   = runs.filter(r => r.winner === 1).length;
+  const wins2   = runs.filter(r => r.winner === 2).length;
+  const draws   = runs.length - wins1 - wins2;
+  const avgRounds = (runs.reduce((s, r) => s + r.roundCount, 0) / runs.length).toFixed(1);
+
+  function toggleLog(i) {
+    setOpenLogs(s => { const n = new Set(s); n.has(i) ? n.delete(i) : n.add(i); return n; });
+  }
+
+  function aggSurvivors(key) {
+    const names = runs[0][key].map(s => s.name);
+    return names.map(name => {
+      const entries = runs.map(r => r[key].find(s => s.name === name)).filter(Boolean);
+      const alive   = entries.filter(e => !e.dead && e.currentHp > 0);
+      const avgHp   = alive.length ? Math.round(alive.reduce((s, e) => s + e.currentHp, 0) / alive.length) : 0;
+      const avgMaxHp = Math.round(entries.reduce((s, e) => s + e.maxHp, 0) / entries.length);
+      return { name, survived: alive.length, total: runs.length, avgHp, avgMaxHp };
+    });
+  }
+  const agg1 = aggSurvivors('survivors1');
+  const agg2 = aggSurvivors('survivors2');
+
+  const dominant = wins1 > wins2 ? 1 : wins2 > wins1 ? 2 : 'draw';
+  const badgeText = dominant === 1 ? `${group1Name} gewinnt öfter` : dominant === 2 ? `${group2Name} gewinnt öfter` : 'Ausgeglichen';
+  const badgeCls  = dominant === 1 ? 'sim-winner-1' : dominant === 2 ? 'sim-winner-2' : 'sim-winner-draw';
 
   return (
     <div className="sim-results">
       <div className="sim-results-header">
-        <h2>Kampfprotokoll — {result.rounds} Runde{result.rounds !== 1 ? 'n' : ''}</h2>
-        <span className={`sim-winner-badge ${winnerCls}`}>{winnerText}</span>
-      </div>
-      <button className="sim-log-toggle" onClick={() => setLogOpen(o => !o)}>
-        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" style={{ transition: 'transform 0.2s', transform: logOpen ? 'rotate(90deg)' : 'rotate(0deg)' }}>
-          <path d="M3 2l4 3-4 3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-        {logOpen ? 'Protokoll ausblenden' : `Protokoll anzeigen (${result.log.length} Einträge)`}
-      </button>
-      {logOpen && (
-        <div className="sim-log" ref={logRef}>
-          {result.log.map((entry, i) => (
-            <div key={i} className={entry.cls}>{entry.text}</div>
-          ))}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <button className="sim-btn sim-btn-ghost" style={{ padding: '4px 12px', fontSize: '0.7rem' }} onClick={onReset}>← Zurück</button>
+          <button className="sim-btn sim-btn-ghost" style={{ padding: '4px 12px', fontSize: '0.7rem' }} onClick={onRerun}>↺ Wiederholen</button>
         </div>
-      )}
+        <span className={`sim-winner-badge ${badgeCls}`}>{badgeText}</span>
+      </div>
+
+      {/* Win-rate bar */}
+      <div className="sim-agg">
+        <div className="sim-agg-bar">
+          {wins1 > 0 && <div className="sim-agg-seg seg-1" style={{ flex: wins1 }}>{wins1}</div>}
+          {draws > 0  && <div className="sim-agg-seg seg-draw" style={{ flex: draws }}>{draws}</div>}
+          {wins2 > 0 && <div className="sim-agg-seg seg-2" style={{ flex: wins2 }}>{wins2}</div>}
+        </div>
+        <div className="sim-agg-labels">
+          <span className="sim-agg-g1">{group1Name}</span>
+          <span className="sim-agg-rounds">Ø {avgRounds} Runden</span>
+          <span className="sim-agg-g2">{group2Name}</span>
+        </div>
+      </div>
+
+      {/* Survivor aggregate */}
       <div className="sim-survivor-list">
-        <div className="sim-survivor-group">
-          <h4>{group1Name}</h4>
-          {result.survivors1.map((s, i) => (
-            <div key={i} className="sim-survivor-row">
-              <span className={s.dead ? 'sim-survivor-dead' : ''}>{s.name}</span>
-              {!s.dead && <span className="sim-survivor-hp">{Math.max(0, s.currentHp)}/{s.maxHp} TP</span>}
-              {s.dead && <span style={{ color: 'rgba(255,60,60,0.5)', fontSize: '0.7rem' }}>besiegt</span>}
-            </div>
-          ))}
-        </div>
-        <div className="sim-survivor-group">
-          <h4>{group2Name}</h4>
-          {result.survivors2.map((s, i) => (
-            <div key={i} className="sim-survivor-row">
-              <span className={s.dead ? 'sim-survivor-dead' : ''}>{s.name}</span>
-              {!s.dead && <span className="sim-survivor-hp">{Math.max(0, s.currentHp)}/{s.maxHp} TP</span>}
-              {s.dead && <span style={{ color: 'rgba(255,60,60,0.5)', fontSize: '0.7rem' }}>besiegt</span>}
-            </div>
-          ))}
-        </div>
+        {[{ name: group1Name, agg: agg1 }, { name: group2Name, agg: agg2 }].map(({ name, agg }) => (
+          <div key={name} className="sim-survivor-group">
+            <h4>{name}</h4>
+            {agg.map((s, i) => (
+              <div key={i} className="sim-survivor-row">
+                <span className={s.survived === 0 ? 'sim-survivor-dead' : ''}>{s.name}</span>
+                {s.survived === 0
+                  ? <span style={{ color: 'rgba(255,60,60,0.5)', fontSize: '0.7rem' }}>besiegt</span>
+                  : <span className="sim-survivor-hp">{s.survived}/{s.total} überlebt · Ø {s.avgHp} TP</span>
+                }
+              </div>
+            ))}
+          </div>
+        ))}
       </div>
-      <div style={{ padding: '0 20px 16px' }}>
-        <button className="sim-btn sim-btn-ghost" onClick={onReset}>↺ Neuer Kampf</button>
+
+      {/* Individual run logs */}
+      <div className="sim-runs">
+        {runs.map((r, i) => {
+          const wText    = r.winner === 1 ? group1Name : r.winner === 2 ? group2Name : 'Unentschieden';
+          const wCls     = r.winner === 1 ? 'sim-winner-1' : r.winner === 2 ? 'sim-winner-2' : 'sim-winner-draw';
+          const runOpen  = openLogs.has(`r${i}`);
+          const totalEntries = r.rounds.reduce((s, rd) => s + rd.entries.length, 0);
+          return (
+            <div key={i} className="sim-run">
+              <button className="sim-log-toggle" onClick={() => toggleLog(`r${i}`)}>
+                <Chevron open={runOpen} />
+                <span>Durchlauf {i + 1}</span>
+                <span className={`sim-run-badge ${wCls}`}>{wText}</span>
+                <span className="sim-run-meta">{r.roundCount} Runden · {totalEntries} Einträge</span>
+              </button>
+              {runOpen && (
+                <div className="sim-run-rounds">
+                  {r.rounds.map((rd, j) => {
+                    const rdOpen = openLogs.has(`r${i}:${j}`);
+                    return (
+                      <div key={j} className="sim-round-row">
+                        <button className="sim-round-header" onClick={() => toggleLog(`r${i}:${j}`)}>
+                          <Chevron open={rdOpen} />
+                          <span className="sim-round-label">{rd.label}</span>
+                          {rd.hpSnapshot && (
+                            <span className="sim-round-hp">
+                              {rd.hpSnapshot.filter(c => c.team === 1).map((c, k) => {
+                                const short = c.name.length > 10 ? c.name.slice(0, 9) + '…' : c.name;
+                                return (
+                                  <span key={k} className={`sim-hp-chip sim-hp-t1${c.dead || c.currentHp === 0 ? ' sim-hp-dead' : ''}`}>
+                                    {short}{c.dead ? ' ☠' : `: ${c.currentHp}`}
+                                  </span>
+                                );
+                              })}
+                              <span className="sim-hp-sep">|</span>
+                              {rd.hpSnapshot.filter(c => c.team === 2).map((c, k) => {
+                                const short = c.name.length > 10 ? c.name.slice(0, 9) + '…' : c.name;
+                                return (
+                                  <span key={k} className={`sim-hp-chip sim-hp-t2${c.dead || c.currentHp === 0 ? ' sim-hp-dead' : ''}`}>
+                                    {short}{c.dead ? ' ☠' : `: ${c.currentHp}`}
+                                  </span>
+                                );
+                              })}
+                            </span>
+                          )}
+                        </button>
+                        {rdOpen && (
+                          <div className="sim-log sim-log-inner">
+                            {rd.entries.map((entry, k) => <div key={k} className={entry.cls}>{entry.text}</div>)}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
+
     </div>
   );
 }
@@ -1383,18 +1591,24 @@ function saveGroups(g1, g2) {
 function SimApp() {
   const [group1, setGroup1] = useState(() => loadGroups()[0]);
   const [group2, setGroup2] = useState(() => loadGroups()[1]);
+  const [group2Snapshot, setGroup2Snapshot] = useState(null);
   const [modal, setModal] = useState(null); // null | { type: 'monster'|'player', target: 1|2 }
   const [savedPlayers, setSavedPlayers] = useState(loadPlayers);
   const [result, setResult] = useState(null);
-  const [difficulty, setDifficulty] = useState('mittel');
+  const [difficulty, setDifficulty] = useState('normal');
   const [monsterFilter, setMonsterFilter] = useState({ art: '', unterart: '', umgebung: '' });
   const [coherent, setCoherent] = useState(true);
   useEffect(() => { saveGroups(group1, group2); }, [group1, group2]);
   const [detailMonster, setDetailMonster] = useState(null);
   const selectedForModal = useMemo(() => {
-    if (!modal) return new Set();
+    if (!modal) return new Map();
     const grp = modal.target === 1 ? group1 : group2;
-    return new Set(grp.filter(c => c._kind === 'monster').map(c => c.name + (c.source || '')));
+    const map = new Map();
+    grp.filter(c => c._kind === 'monster').forEach(c => {
+      const key = c.name + (c.source || '');
+      map.set(key, (map.get(key) || 0) + 1);
+    });
+    return map;
   }, [modal, group1, group2]);
 
   function addToGroup(setter, item) {
@@ -1411,8 +1625,14 @@ function SimApp() {
     setSavedPlayers(updated);
     savePlayers(updated);
     const target = modal?.target;
-    if (target === 1) addToGroup(setGroup1, player);
-    else addToGroup(setGroup2, player);
+    const setter = target === 1 ? setGroup1 : setGroup2;
+    if (modal?.initial?._uid) {
+      // Editing existing group member — replace in place
+      const origUid = modal.initial._uid;
+      setter(g => g.map(c => c._uid === origUid ? { ...player, _uid: origUid } : c));
+    } else {
+      addToGroup(setter, player);
+    }
   }
 
   function handleDeletePlayer(id) {
@@ -1421,15 +1641,30 @@ function SimApp() {
     savePlayers(updated);
   }
 
+  function saveGroup2Snapshot() { setGroup2Snapshot(group2); }
+  function revertGroup2() { if (group2Snapshot !== null) { setGroup2(group2Snapshot); setGroup2Snapshot(null); } }
+
+  function openModal2(type, opts = {}) {
+    saveGroup2Snapshot();
+    setModal({ type, target: 2, ...opts });
+  }
+
   function handleMatch(fromGroup, setter) {
+    saveGroup2Snapshot();
     const opponents = generateMatchingOpponents(fromGroup, difficulty, monsterFilter, coherent);
     setter(opponents.map(m => ({ ...m, _uid: uid() })));
   }
 
+  function handleAddOpponent() {
+    saveGroup2Snapshot();
+    const pick = findOneAdditionalOpponent(group1, group2, difficulty, monsterFilter, coherent);
+    if (pick) addToGroup(setGroup2, pick);
+  }
+
   function runSimulation() {
     if (!group1.length || !group2.length) return;
-    const res = simulateCombat(group1, group2);
-    setResult(res);
+    const runs = Array.from({ length: 10 }, () => simulateCombat(group1, group2));
+    setResult(runs);
   }
 
   const canRun = group1.length > 0 && group2.length > 0;
@@ -1447,20 +1682,27 @@ function SimApp() {
                 onAdd={() => setModal({ type: 'monster', target: 1 })}
                 onAddPlayer={() => setModal({ type: 'player', target: 1 })}
                 onRemove={i => removeFromGroup(setGroup1, i)}
+                onAddClone={m => addToGroup(setGroup1, m)}
                 onDetail={setDetailMonster}
+                onEditPlayer={p => setModal({ type: 'player', target: 1, initial: p })}
                 showMatch={false}
               />
               <div className="sim-vs">VS</div>
               <GroupPanel
                 label="Gruppe 2"
                 group={group2}
-                onAdd={() => setModal({ type: 'monster', target: 2 })}
-                onAddPlayer={() => setModal({ type: 'player', target: 2 })}
+                onAdd={() => openModal2('monster')}
+                onAddPlayer={() => openModal2('player')}
                 onRemove={i => removeFromGroup(setGroup2, i)}
+                onAddClone={m => { saveGroup2Snapshot(); addToGroup(setGroup2, m); }}
                 onDetail={setDetailMonster}
+                onEditPlayer={p => setModal({ type: 'player', target: 2, initial: p })}
                 showMatch={true}
                 matchEnabled={group1.length > 0}
                 onMatch={() => handleMatch(group1, setGroup2)}
+                onAddOpponent={handleAddOpponent}
+                canRevert={group2Snapshot !== null}
+                onRevert={revertGroup2}
                 difficulty={difficulty}
                 onDifficulty={setDifficulty}
                 monsterFilter={monsterFilter}
@@ -1469,6 +1711,7 @@ function SimApp() {
                 onCoherent={setCoherent}
               />
             </div>
+            <EncounterRating group1={group1} group2={group2} />
             <div className="sim-run-bar">
               <button className="sim-btn-run" disabled={!canRun} onClick={runSimulation}>
                 ⚔ Kampf simulieren
@@ -1485,10 +1728,11 @@ function SimApp() {
         {result && (
           <>
             <CombatResults
-              result={result}
+              runs={result}
               group1Name={group1.map(c => c.name).join(', ') || 'Gruppe 1'}
               group2Name={group2.map(c => c.name).join(', ') || 'Gruppe 2'}
               onReset={() => setResult(null)}
+              onRerun={() => setResult(Array.from({ length: 10 }, () => simulateCombat(group1, group2)))}
             />
           </>
         )}
@@ -1509,7 +1753,7 @@ function SimApp() {
       )}
       {modal?.type === 'player' && (
         <PlayerModal
-          initial={null}
+          initial={modal.initial || null}
           savedPlayers={savedPlayers}
           currentGroup={modal.target === 1 ? group1 : group2}
           onSave={handleSavePlayer}
