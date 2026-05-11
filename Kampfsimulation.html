@@ -156,6 +156,15 @@ function parseActions(monster) {
     }
   }
 
+  // Healing spell actions (tagged with "Heilzauber:" prefix in beschreibung)
+  for (const action of allActions) {
+    const desc = action.beschreibung || '';
+    if (/^Heilzauber:/i.test(desc)) {
+      const diceM = desc.match(/(\d+[Ww]\d+(?:[+-]\d+)?)/i);
+      if (diceM) actions.push({ name: action.name, type: 'heal', healDice: diceM[1], recharge: null, _type: action._type });
+    }
+  }
+
   // If no attacks parsed but multiCount > 1, use the first parsed attack multiCount times
   if (multi && actions.length > 0) {
     // mark first non-legendary as multi if nothing was named
@@ -168,6 +177,22 @@ function parseActions(monster) {
   return { actions, multiCount, multiNames };
 }
 
+function extractHealingDice(beschreibung) {
+  const text = (beschreibung || []).filter(b => typeof b === 'string').join(' ');
+  const m1 = text.match(/höhe\s+von\s+(\d+[Ww]\d+(?:[+-]\d+)?)/i);
+  if (m1) return m1[1];
+  const m2 = text.match(/(\d+[Ww]\d+(?:[+-]\d+)?)\s+trefferpunkte[n]?\s+wieder\s+her/i);
+  if (m2) return m2[1];
+  return null;
+}
+
+function isHealingSpell(z) {
+  const text = (z.beschreibung || []).filter(b => typeof b === 'string').join(' ');
+  return /trefferpunkte[n]?\s+zurück\s+in\s+höhe/i.test(text)
+      || /\d+[Ww]\d+\s+trefferpunkte[n]?\s+wieder\s+her/i.test(text)
+      || /stellt\s+\d+\s+trefferpunkt/i.test(text);
+}
+
 // ── Combatant builder ─────────────────────────────────────────────────────────
 function buildCombatant(data, team, uid) {
   const isMonster = data._kind === 'monster';
@@ -175,9 +200,10 @@ function buildCombatant(data, team, uid) {
   const dex = data.attribute?.DEX ?? 10;
   const con = data.attribute?.CON ?? 10;
   const wis = data.attribute?.WIS ?? 10;
-  const maxHp = isMonster
-    ? (rollExpr(data.tp_wuerfel).total || data.tp)
+  const baseHp = data.currentTp !== undefined ? data.currentTp
+    : isMonster ? (rollExpr(data.tp_wuerfel).total || data.tp)
     : (data.maxTp || data.tp || 10);
+  const maxHp = baseHp + (!isMonster && data.tempTp ? data.tempTp : 0);
 
   const legActions = (data.legendaere_aktionen || []).filter(a => {
     const d = a.beschreibung || '';
@@ -187,6 +213,7 @@ function buildCombatant(data, team, uid) {
 
   return {
     uid, name: data.name, team, _kind: data._kind || 'monster',
+    hasInspiration: !!(data.inspiration),
     data,
     // Stats
     rk: data.rk || 10,
@@ -232,7 +259,16 @@ function isIncapacitated(c) {
 function simulateCombat(rawGroup1, rawGroup2) {
   const allRounds = [];
   let curEntries = [];
+  let curHits = {};
   const push = (cls, text) => curEntries.push({ cls, text });
+  function trackHit(uid, hit) {
+    if (!curHits[uid]) curHits[uid] = { h: 0, m: 0, heal: 0 };
+    if (hit) curHits[uid].h++; else curHits[uid].m++;
+  }
+  function trackHeal(uid) {
+    if (!curHits[uid]) curHits[uid] = { h: 0, m: 0, heal: 0 };
+    curHits[uid].heal++;
+  }
 
   let uid = 0;
   const g1 = rawGroup1.map(m => buildCombatant(m, 1, uid++));
@@ -248,7 +284,7 @@ function simulateCombat(rawGroup1, rawGroup2) {
   allRounds.push({
     label: 'Initiative',
     entries: curEntries.splice(0),
-    hpSnapshot: all.map(c => ({ name: c.name, team: c.team, currentHp: c.currentHp, maxHp: c.maxHp, dead: false })),
+    hpSnapshot: all.map(c => ({ uid: c.uid, name: c.name, team: c.team, currentHp: c.currentHp, maxHp: c.maxHp, dead: false })),
   });
 
   // Initialize legendary action pools & recharge
@@ -289,7 +325,7 @@ function simulateCombat(rawGroup1, rawGroup2) {
     if (c._kind === 'player') {
       if (!hasCondition(c, 'Bewusstlos')) {
         addCondition(c, 'Bewusstlos');
-        push('log-death', `  💀 ${c.name} fällt bewusstlos (0 TP)!`);
+        push('log-death', `  💀 ${c.name} wird bewusstlos (0 TP)!`);
       }
     } else {
       c.dead = true;
@@ -334,6 +370,13 @@ function simulateCombat(rawGroup1, rawGroup2) {
 
   function pickActions(c) {
     const usable = c.actions.filter(a => !(a.recharge !== null && !c.rechargeStatus[a.name]) && a._type !== 'legendary');
+    const healAct = usable.find(a => a.type === 'heal');
+    if (healAct) {
+      const allies = all.filter(t => t.team === c.team && t !== c && !t.dead);
+      const urgentHeal = allies.some(t => t.currentHp <= 0);
+      const woundedHeal = allies.some(t => t.currentHp < t.maxHp * 0.4);
+      if (urgentHeal || woundedHeal) return [healAct];
+    }
     const aoe = usable.find(a => a.type === 'save' && a.isAoE);
     if (aoe && enemies(c).length >= 2) return [aoe];
     const multiBase = usable.filter(a => a.type === 'attack' && a.isMultiAttack);
@@ -356,15 +399,18 @@ function simulateCombat(rawGroup1, rawGroup2) {
     if (action.type === 'attack') {
       const target = pickTarget(attacker);
       if (!target) return;
-      const adv = hasCondition(target, 'Liegend') && !action.isFern;
+      const inspAdv = attacker.hasInspiration ? (attacker.hasInspiration = false, true) : false;
+      const adv = inspAdv || (hasCondition(target, 'Liegend') && !action.isFern);
       const dis = hasCondition(attacker, 'Vergiftet') || hasCondition(attacker, 'Liegend') || hasCondition(attacker, 'Verängstigt');
       const { roll, both, adv: wasAdv, dis: wasDis } = rollD20(adv, dis);
       const advNote = wasAdv ? ' (Vorteil)' : wasDis ? ' (Nachteil)' : '';
       const total = roll + action.bonus;
       const isCrit = roll === 20, isFumble = roll === 1;
       if (isFumble || (!isCrit && total < target.rk)) {
+        trackHit(attacker.uid, false);
         push('log-miss', `  ${attacker.name} → ${target.name}: ${action.name} — W20=${roll}${both.length > 1 ? `(${both.join(',')})` : ''}${advNote} +${action.bonus}=${total} vs RK${target.rk} VERFEHLT`);
       } else {
+        trackHit(attacker.uid, true);
         push('log-hit', `  ${attacker.name} → ${target.name}: ${action.name} — W20=${roll}${both.length > 1 ? `(${both.join(',')})` : ''}${advNote} +${action.bonus}=${total} vs RK${target.rk} GETROFFEN${isCrit ? ' ✦ KRITISCH' : ''}`);
         let dmgExpr = action.damage;
         if (isCrit) { const m = dmgExpr.match(/^(\d+)([Ww]\d+)(.*)$/); if (m) dmgExpr = (parseInt(m[1]) * 2) + m[2] + (m[3] || ''); }
@@ -376,9 +422,26 @@ function simulateCombat(rawGroup1, rawGroup2) {
         }
       }
       if (action.recharge !== null) attacker.rechargeStatus[action.name] = false;
+    } else if (action.type === 'heal') {
+      const allies = all.filter(t => t.team === attacker.team && !t.dead && (t.currentHp < t.maxHp || (t._kind === 'player' && t.currentHp <= 0)));
+      if (!allies.length) return;
+      allies.sort((a, b) => (a.currentHp / a.maxHp) - (b.currentHp / b.maxHp));
+      const target = allies[0];
+      const healRoll = rollExpr(action.healDice);
+      const healed = Math.min(target.maxHp - target.currentHp, healRoll.total);
+      target.currentHp += healed;
+      trackHeal(attacker.uid);
+      if (hasCondition(target, 'Bewusstlos') && target.currentHp > 0) {
+        removeCondition(target, 'Bewusstlos');
+        target.deathSucc = 0; target.deathFail = 0;
+        push('log-heal', `  💚 ${attacker.name} heilt ${target.name} mit ${action.name}: +${healed} TP ${healRoll.text} → aufgewacht (${target.currentHp}/${target.maxHp} TP)`);
+      } else {
+        push('log-heal', `  💚 ${attacker.name} heilt ${target.name} mit ${action.name}: +${healed} TP ${healRoll.text} (${target.currentHp}/${target.maxHp} TP)`);
+      }
     } else if (action.type === 'save') {
       const targets = allCombatants.filter(t => t.team !== attacker.team && !t.dead);
       if (!targets.length) return;
+      trackHit(attacker.uid, true);
       push('log-hit', `  ${attacker.name}: ${action.name} (SG ${action.saveDC} ${action.saveAttr}-Rettungswurf)`);
       if (action.recharge !== null) attacker.rechargeStatus[action.name] = false;
       targets.forEach(target => {
@@ -452,8 +515,10 @@ function simulateCombat(rawGroup1, rawGroup2) {
     allRounds.push({
       label: `Runde ${roundNum}`,
       entries: curEntries.splice(0),
-      hpSnapshot: all.map(c => ({ name: c.name, team: c.team, currentHp: Math.max(0, c.currentHp), maxHp: c.maxHp, dead: c.dead })),
+      hpSnapshot: all.map(c => ({ uid: c.uid, name: c.name, team: c.team, currentHp: Math.max(0, c.currentHp), maxHp: c.maxHp, dead: c.dead })),
+      hits: curHits,
     });
+    curHits = {};
 
     if (combatOver()) break;
   }
@@ -474,8 +539,8 @@ function simulateCombat(rawGroup1, rawGroup2) {
     winner,
     roundCount: roundNum,
     rounds: allRounds,
-    survivors1: g1.map(c => ({ name: c.name, currentHp: c.currentHp, maxHp: c.maxHp, dead: c.dead })),
-    survivors2: g2.map(c => ({ name: c.name, currentHp: c.currentHp, maxHp: c.maxHp, dead: c.dead })),
+    survivors1: g1.map(c => ({ name: c.name, uid: c.uid, currentHp: c.currentHp, maxHp: c.maxHp, dead: c.dead })),
+    survivors2: g2.map(c => ({ name: c.name, uid: c.uid, currentHp: c.currentHp, maxHp: c.maxHp, dead: c.dead })),
   };
 }
 
@@ -539,20 +604,17 @@ function calcEncounterDifficulty(party, enemies) {
   const { label, cls, lo, hi } = ZONES[zIdx];
   const ratio = hi > lo ? Math.max(0, Math.min(1, (adjXP - lo) / (hi - lo))) : 0.5;
 
-  // Sub-text: nuanced feeling within the zone
+  // Sub-text: directional hint within the zone
   let sub = null;
   if (zIdx === 0) {
-    // Trivial zone also covers below-trivial (< t0)
-    if (adjXP < t0 * 0.4)        sub = 'Kaum eine Bedrohung';
-    else if (adjXP < t0 * 0.75)  sub = 'Fühlt sich kaum trivial an';
-    else if (adjXP < t0)         sub = 'Fühlt sich trivial an';
-    else if (ratio > 0.65)       sub = 'Fühlt sich leicht an';
+    if (adjXP < t0 * 0.4)   sub = 'Kaum eine Bedrohung';
+    else if (ratio > 0.65)  sub = 'Fühlt sich eher leicht an';
   } else if (zIdx === 4) {
-    if (ratio < 0.35)            sub = 'Fühlt sich kaum tödlich an';
-    else if (ratio > 0.65)       sub = 'Äußerst tödlich';
+    if (ratio < 0.35)        sub = 'Fühlt sich eher schwer an';
+    else if (ratio > 0.65)   sub = 'Äußerst tödlich';
   } else {
-    if (ratio < 0.35)            sub = `Fühlt sich kaum ${label.toLowerCase()} an`;
-    else if (ratio > 0.65)       sub = `Fühlt sich ${ZONES[zIdx + 1].label.toLowerCase()} an`;
+    if (ratio < 0.35)        sub = `Fühlt sich eher ${ZONES[zIdx - 1].label.toLowerCase()} an`;
+    else if (ratio > 0.65)   sub = `Fühlt sich eher ${ZONES[zIdx + 1].label.toLowerCase()} an`;
   }
 
   return { label, cls, sub, adjXP };
@@ -738,14 +800,19 @@ const EMPTY_PLAYER = {
 };
 
 // ── Combatant Card ─────────────────────────────────────────────────────────────
-function CombatantCard({ c, count, onRemove, onAddOne, onDetail, onEdit }) {
+function CombatantCard({ c, members, count, onRemove, onAddOne, onDetail, onEdit, onSessionChange }) {
   const isMonster = c._kind === 'monster';
   const meta = isMonster
     ? `CR ${formatCR(c.cr)} · ${c.tp} TP · RK ${c.rk}`
-    : `${c.klasse} Stufe ${c.stufe} · ${c.maxTp} TP · RK ${c.rk}`;
+    : `${c.klasse} Stufe ${c.stufe} · RK ${c.rk}`;
   const clickHandler = isMonster ? onDetail : onEdit;
+  const sess = e => e.stopPropagation();
+  const currentTp  = c.currentTp  !== undefined ? c.currentTp  : c.maxTp;
+  const tempTp     = c.tempTp     || 0;
+  const inspiration = !!c.inspiration;
+  const allMembers = members || [c];
   return (
-    <div className={`sim-combatant-card${clickHandler ? ' sim-combatant-card-clickable' : ''}`}
+    <div className={`sim-combatant-card${!isMonster ? ' sim-player-card' : ''}${clickHandler ? ' sim-combatant-card-clickable' : ''}`}
       onClick={clickHandler}>
       {isMonster && c.bild
         ? <img src={c.bild} alt={c.name} className="sim-combatant-img" onError={e => { e.target.style.display='none'; }} />
@@ -762,9 +829,46 @@ function CombatantCard({ c, count, onRemove, onAddOne, onDetail, onEdit }) {
           )}
         </div>
         <div className="sim-combatant-meta">{meta}</div>
+        {isMonster && onSessionChange && (
+          <div className="sim-session-row" onClick={sess} style={{ flexWrap: 'wrap', gap: 4 }}>
+            {allMembers.map((m, i) => (
+              <label key={m._uid} className="sim-session-field" title="Max-TP festlegen (leer = würfeln)">
+                <span className="sim-session-lbl">{allMembers.length > 1 ? i + 1 : 'TP'}</span>
+                <input className="sim-session-input" type="number" min={1} max={9999}
+                  value={m.currentTp !== undefined ? m.currentTp : ''}
+                  placeholder={String(m.tp)}
+                  onChange={e => {
+                    const v = e.target.value === '' ? undefined : Math.max(1, +e.target.value);
+                    onSessionChange(m._uid, 'currentTp', v);
+                  }} />
+              </label>
+            ))}
+          </div>
+        )}
+        {!isMonster && onSessionChange && (
+          <div className="sim-session-row" onClick={sess}>
+            <label className="sim-session-field" title="Aktuelle Trefferpunkte">
+              <span className="sim-session-lbl">TP</span>
+              <input className="sim-session-input" type="number" min={0} max={c.maxTp}
+                value={currentTp}
+                onChange={e => onSessionChange(c._uid, 'currentTp', Math.min(c.maxTp, Math.max(0, +e.target.value)))} />
+              <span className="sim-session-max">/{c.maxTp}</span>
+            </label>
+            <label className="sim-session-field" title="Temporäre Trefferpunkte">
+              <span className="sim-session-lbl">Temp</span>
+              <input className="sim-session-input" type="number" min={0} max={999}
+                value={tempTp}
+                onChange={e => onSessionChange(c._uid, 'tempTp', Math.max(0, +e.target.value))} />
+            </label>
+            <label className="sim-session-field sim-session-insp" title="Inspiration" onClick={e => { e.stopPropagation(); onSessionChange(c._uid, 'inspiration', !inspiration); }}>
+              <span className="sim-session-lbl">Insp.</span>
+              <span className={`sim-insp-dot${inspiration ? ' active' : ''}`}>✦</span>
+            </label>
+          </div>
+        )}
       </div>
       {isMonster && onAddOne ? (
-        <div className="sim-count-stepper" onClick={e => e.stopPropagation()}>
+        <div className="sim-count-stepper" onClick={sess}>
           <button className="sim-count-btn" onClick={onRemove} title="Einen entfernen">−</button>
           <span className="sim-count-num">{count}</span>
           <button className="sim-count-btn" onClick={onAddOne} title="Einen hinzufügen">+</button>
@@ -865,20 +969,29 @@ function MonsterPicker({ onAdd, onClose, selected, monsterFilter, onMonsterFilte
 function SpellPicker({ onAdd, onClose }) {
   const [q, setQ] = useState('');
   const [filterKlasse, setFilterKlasse] = useState('');
-  const all = useMemo(() => {
-    return (window.ZAUBER_DATA || [])
-      .filter(z => z.schaden && (z.rettungswurfAttribut || z.istAngriff))
-      .sort((a, b) => a.name.localeCompare(b.name, 'de'));
-  }, []);
+  const [mode, setMode] = useState('schaden');
+
+  const allDmg = useMemo(() => (window.ZAUBER_DATA || [])
+    .filter(z => z.schaden && (z.rettungswurfAttribut || z.istAngriff))
+    .sort((a, b) => a.name.localeCompare(b.name, 'de')), []);
+
+  const allHeal = useMemo(() => (window.ZAUBER_DATA || [])
+    .filter(z => isHealingSpell(z))
+    .map(z => ({ ...z, _heilungsDice: extractHealingDice(z.beschreibung) }))
+    .filter(z => z._heilungsDice)
+    .sort((a, b) => a.name.localeCompare(b.name, 'de')), []);
+
+  const all = mode === 'heilung' ? allHeal : allDmg;
+
   const results = useMemo(() => {
     let list = all;
     if (filterKlasse) list = list.filter(z => z.klassen?.includes(filterKlasse));
     if (q.trim()) {
       const low = q.toLowerCase();
-      list = list.filter(z => z.name.toLowerCase().includes(low) || (z.schadenTyp||'').toLowerCase().includes(low));
+      list = list.filter(z => z.name.toLowerCase().includes(low));
     }
     return list.slice(0, 120);
-  }, [q, filterKlasse, all]);
+  }, [q, filterKlasse, all, mode]);
 
   const TYPE_COLORS = {
     Feuer:'#f97316', Blitz:'#a78bfa', Kälte:'#38bdf8', Eis:'#7dd3fc',
@@ -896,6 +1009,10 @@ function SpellPicker({ onAdd, onClose }) {
           <button className="sim-modal-close" onClick={onClose}>✕</button>
         </div>
         <div className="sim-modal-body">
+          <div className="sim-tabs" style={{ marginBottom: 10 }}>
+            <button className={`sim-tab ${mode === 'schaden' ? 'active' : ''}`} onClick={() => setMode('schaden')}>Schadenszauber</button>
+            <button className={`sim-tab ${mode === 'heilung' ? 'active' : ''}`} onClick={() => setMode('heilung')}>Heilzauber</button>
+          </div>
           <div style={{ display: 'flex', gap: 8, marginBottom: 10 }}>
             <input className="sim-search" style={{ marginBottom: 0, flex: 1 }}
               placeholder="Zauber suchen…" value={q} onChange={e => setQ(e.target.value)} autoFocus />
@@ -906,10 +1023,16 @@ function SpellPicker({ onAdd, onClose }) {
             </select>
           </div>
           <div style={{ fontSize: '0.68rem', color: 'rgba(160,140,255,0.35)', marginBottom: 8, fontFamily: 'var(--font-mono)' }}>
-            {results.length} Zauber · nur Schadenszauber
+            {results.length} Zauber · {mode === 'heilung' ? 'Heilzauber' : 'nur Schadenszauber'}
           </div>
           <div className="sim-monster-list">
-            {results.map(z => (
+            {mode === 'heilung' ? results.map(z => (
+              <div key={z.name} className="sim-monster-row" onClick={() => { onAdd(z); onClose(); }}>
+                <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'rgba(80,200,120,0.08)', border: '1px solid rgba(80,200,120,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', flexShrink: 0 }}>💚</div>
+                <span className="sim-monster-row-name">{z.name}</span>
+                <span className="sim-monster-row-meta">Grad {z.grad} · {z._heilungsDice} TP</span>
+              </div>
+            )) : results.map(z => (
               <div key={z.name} className="sim-monster-row" onClick={() => { onAdd(z); onClose(); }}>
                 <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'rgba(160,140,255,0.06)', border: '1px solid rgba(160,140,255,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.6rem', color: TYPE_COLORS[z.schadenTyp] || 'rgba(160,140,255,0.4)', flexShrink: 0, fontWeight: 700 }}>
                   {(z.schadenTyp||'?').substring(0, 2)}
@@ -972,15 +1095,16 @@ function PlayerModal({ initial, savedPlayers, currentGroup, onSave, onAddExistin
   const [showSpellPicker, setShowSpellPicker] = useState(false);
 
   function addSpellFromPicker(z) {
-    setForm(f => ({ ...f, zauber: [...(f.zauber||[]), {
-      id: uid(),
-      name: z.name,
+    const isHeil = !!z._heilungsDice;
+    setForm(f => ({ ...f, zauber: [...(f.zauber||[]), isHeil ? {
+      id: uid(), name: z.name,
+      istHeilung: true, heilung: z._heilungsDice,
+      schaden: null, schadenTyp: null, halbiert: false, istAngriff: false, attr: null, sg: 0,
+    } : {
+      id: uid(), name: z.name,
       attr: z.rettungswurfAttribut || 'GES',
-      sg: z.istAngriff ? 5 : 13, // attack spells: attack bonus; save spells: save DC
-      schaden: z.schaden,
-      halbiert: z.halbiert,
-      schadenTyp: z.schadenTyp,
-      istAngriff: z.istAngriff,
+      sg: z.istAngriff ? 5 : 13,
+      schaden: z.schaden, halbiert: z.halbiert, schadenTyp: z.schadenTyp, istAngriff: z.istAngriff,
     }] }));
   }
   function removeSpell(id) {
@@ -1001,11 +1125,15 @@ function PlayerModal({ initial, savedPlayers, currentGroup, onSave, onAddExistin
       name: a.name,
       beschreibung: `Nahkampf-Waffenangriff: +${a.bonus} zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: (${a.schaden}) ${a.schadenstyp}schaden.`,
     }));
-    const spellActions = (form.zauber || []).filter(z => z.name).map(z => ({
+    const spellActions = (form.zauber || []).filter(z => z.name && !z.istHeilung).map(z => ({
       name: z.name,
       beschreibung: z.istAngriff
         ? `Fernkampf-Zauberangriff: +${z.sg} zum Treffen, Reichweite 18 m, ein Ziel. Treffer: (${z.schaden}) ${z.schadenTyp || ''}schaden.`
         : `${ATTR_LABEL_MAP[z.attr] || z.attr}srettungswurf gegen SG ${z.sg}. Treffer: (${z.schaden}) Schaden${z.halbiert ? ', halb so viel bei Erfolg' : ''}.`,
+    }));
+    const healActions = (form.zauber || []).filter(z => z.name && z.istHeilung && z.heilung).map(z => ({
+      name: z.name,
+      beschreibung: `Heilzauber: Stellt ${z.heilung} Trefferpunkte wieder her bei einem Verbündeten.`,
     }));
     const result = [];
     if (n > 1 && attackActions.length > 0) {
@@ -1015,7 +1143,7 @@ function PlayerModal({ initial, savedPlayers, currentGroup, onSave, onAddExistin
         : `Der Charakter führt ${n} Angriffe durch.`;
       result.push({ name: 'Mehrfachangriff', beschreibung: multiDesc });
     }
-    return [...result, ...attackActions, ...spellActions];
+    return [...result, ...attackActions, ...spellActions, ...healActions];
   }
 
   return (
@@ -1169,7 +1297,20 @@ function PlayerModal({ initial, savedPlayers, currentGroup, onSave, onAddExistin
                 </span>
               </div>
               <div className="sim-attack-list">
-                {(form.zauber || []).map(z => (
+                {(form.zauber || []).map(z => z.istHeilung ? (
+                  <div key={z.id} style={{ display: 'grid', gridTemplateColumns: '1fr auto 28px', gap: 6, alignItems: 'center' }}>
+                    <div style={{ fontSize: '0.8rem', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      💚 {z.name}
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                      <span style={{ fontSize: '0.68rem', color: 'rgba(160,140,255,0.4)' }}>Heilung</span>
+                      <input className="sim-form-input" type="text" value={z.heilung || ''}
+                        onChange={e => setSpell(z.id, 'heilung', e.target.value)}
+                        style={{ width: 72 }} title="Heilungswürfel (z.B. 1W8+3)" />
+                    </div>
+                    <button className="sim-combatant-remove" onClick={() => removeSpell(z.id)} title="Zauber entfernen">✕</button>
+                  </div>
+                ) : (
                   <div key={z.id} style={{ display: 'grid', gridTemplateColumns: '1fr auto 60px 28px', gap: 6, alignItems: 'center' }}>
                     <div style={{ fontSize: '0.8rem', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                       {z.name}
@@ -1239,7 +1380,7 @@ function MonsterDetailPopup({ monster, onClose }) {
 }
 
 // ── Group Panel ───────────────────────────────────────────────────────────────
-function GroupPanel({ label, group, onAdd, onRemove, onAddClone, onAddOpponent, onAddPlayer, onDetail, onEditPlayer, showMatch, matchEnabled, onMatch, difficulty, onDifficulty, monsterFilter, onMonsterFilter, coherent, onCoherent, canRevert, onRevert }) {
+function GroupPanel({ label, group, onAdd, onRemove, onAddClone, onAddOpponent, onAddPlayer, onDetail, onEditPlayer, onSessionChange, showMatch, matchEnabled, onMatch, difficulty, onDifficulty, monsterFilter, onMonsterFilter, coherent, onCoherent, canRevert, onRevert }) {
   const totalXP = group.filter(c => c._kind === 'monster').reduce((s, c) => s + (c.xp || 0), 0);
   // Group identical monsters, keep players individual
   const displayGroups = useMemo(() => {
@@ -1247,10 +1388,10 @@ function GroupPanel({ label, group, onAdd, onRemove, onAddClone, onAddOpponent, 
     const monsterIdx = new Map();
     for (let i = 0; i < group.length; i++) {
       const c = group[i];
-      if (c._kind !== 'monster') { result.push({ c, indices: [i] }); continue; }
+      if (c._kind !== 'monster') { result.push({ c, indices: [i], members: [c] }); continue; }
       const key = c.name + (c.source || '');
-      if (monsterIdx.has(key)) { result[monsterIdx.get(key)].indices.push(i); }
-      else { monsterIdx.set(key, result.length); result.push({ c, indices: [i] }); }
+      if (monsterIdx.has(key)) { result[monsterIdx.get(key)].indices.push(i); result[monsterIdx.get(key)].members.push(c); }
+      else { monsterIdx.set(key, result.length); result.push({ c, indices: [i], members: [c] }); }
     }
     return result;
   }, [group]);
@@ -1279,15 +1420,17 @@ function GroupPanel({ label, group, onAdd, onRemove, onAddClone, onAddOpponent, 
             Noch keine Kämpfer
           </div>
         )}
-        {displayGroups.map(({ c, indices }) => (
+        {displayGroups.map(({ c, indices, members }) => (
           <CombatantCard
             key={c._uid || c.name + indices[0]}
             c={c}
+            members={members}
             count={indices.length}
             onRemove={() => onRemove(indices[indices.length - 1])}
             onAddOne={c._kind === 'monster' && onAddClone ? () => onAddClone(c) : undefined}
             onDetail={c._kind === 'monster' ? () => onDetail && onDetail(c) : undefined}
             onEdit={c._kind === 'player' ? () => onEditPlayer && onEditPlayer(c) : undefined}
+            onSessionChange={onSessionChange || undefined}
           />
         ))}
       </div>
@@ -1380,6 +1523,28 @@ function Chevron({ open }) {
   );
 }
 
+const RATINGS = [
+  { key: 'crushing-win',  label: 'Haushoch gewonnen', cls: 'rat-cwin'  },
+  { key: 'win',           label: 'Gewonnen',           cls: 'rat-win'   },
+  { key: 'narrow-win',    label: 'Knapp gewonnen',     cls: 'rat-nwin'  },
+  { key: 'draw',          label: 'Unentschieden',      cls: 'rat-draw'  },
+  { key: 'narrow-loss',   label: 'Knapp verloren',     cls: 'rat-nloss' },
+  { key: 'loss',          label: 'Verloren',           cls: 'rat-loss'  },
+  { key: 'crushing-loss', label: 'Haushoch verloren',  cls: 'rat-closs' },
+];
+function rateRun(run) {
+  if (run.winner === 'draw') return RATINGS.find(r => r.key === 'draw');
+  const winners = run.winner === 1 ? run.survivors1 : run.survivors2;
+  const alive   = winners.filter(c => !c.dead && c.currentHp > 0);
+  const maxHpSum = winners.reduce((s, c) => s + c.maxHp, 0);
+  const curHpSum = alive.reduce((s, c) => s + c.currentHp, 0);
+  const pct = maxHpSum > 0 ? curHpSum / maxHpSum : 0;
+  const won = run.winner === 1;
+  if (pct > 0.6) return RATINGS.find(r => r.key === (won ? 'crushing-win'  : 'crushing-loss'));
+  if (pct > 0.25) return RATINGS.find(r => r.key === (won ? 'win'           : 'loss'));
+  return          RATINGS.find(r => r.key === (won ? 'narrow-win'    : 'narrow-loss'));
+}
+
 // ── Combat Results (multi-run) ────────────────────────────────────────────────
 function CombatResults({ runs, group1Name, group2Name, onReset, onRerun }) {
   const [openLogs, setOpenLogs] = useState(new Set());
@@ -1397,14 +1562,17 @@ function CombatResults({ runs, group1Name, group2Name, onReset, onRerun }) {
     const names = runs[0][key].map(s => s.name);
     return names.map(name => {
       const entries = runs.map(r => r[key].find(s => s.name === name)).filter(Boolean);
-      const alive   = entries.filter(e => !e.dead && e.currentHp > 0);
-      const avgHp   = alive.length ? Math.round(alive.reduce((s, e) => s + e.currentHp, 0) / alive.length) : 0;
-      const avgMaxHp = Math.round(entries.reduce((s, e) => s + e.maxHp, 0) / entries.length);
+      const alive    = entries.filter(e => !e.dead && e.currentHp > 0);
+      const avgHp    = alive.length ? Math.round(alive.reduce((s, e) => s + e.currentHp, 0) / alive.length) : 0;
+      const avgMaxHp = alive.length ? Math.round(alive.reduce((s, e) => s + e.maxHp, 0) / alive.length) : (entries[0]?.staticTp ?? 0);
       return { name, survived: alive.length, total: runs.length, avgHp, avgMaxHp };
     });
   }
   const agg1 = aggSurvivors('survivors1');
   const agg2 = aggSurvivors('survivors2');
+
+  const runRatings = runs.map(rateRun);
+  const ratingDist = RATINGS.map(r => ({ ...r, count: runRatings.filter(x => x.key === r.key).length })).filter(r => r.count > 0);
 
   const dominant = wins1 > wins2 ? 1 : wins2 > wins1 ? 2 : 'draw';
   const badgeText = dominant === 1 ? `${group1Name} gewinnt öfter` : dominant === 2 ? `${group2Name} gewinnt öfter` : 'Ausgeglichen';
@@ -1444,7 +1612,7 @@ function CombatResults({ runs, group1Name, group2Name, onReset, onRerun }) {
                 <span className={s.survived === 0 ? 'sim-survivor-dead' : ''}>{s.name}</span>
                 {s.survived === 0
                   ? <span style={{ color: 'rgba(255,60,60,0.5)', fontSize: '0.7rem' }}>besiegt</span>
-                  : <span className="sim-survivor-hp">{s.survived}/{s.total} überlebt · Ø {s.avgHp} TP</span>
+                  : <span className="sim-survivor-hp">{s.survived}/{s.total} Durchläufen überlebt · Ø {s.avgHp}/{s.avgMaxHp} TP</span>
                 }
               </div>
             ))}
@@ -1452,11 +1620,23 @@ function CombatResults({ runs, group1Name, group2Name, onReset, onRerun }) {
         ))}
       </div>
 
+      {/* Rating distribution */}
+      <div className="sim-rating-dist">
+        {ratingDist.map(r => (
+          <div key={r.key} className="sim-rating-row">
+            <span className={`sim-rating-label ${r.cls}`}>{r.label}</span>
+            <span className="sim-rating-bar-wrap">
+              <span className={`sim-rating-bar ${r.cls}`} style={{ width: `${Math.round(r.count / runs.length * 100)}%` }} />
+            </span>
+            <span className="sim-rating-count">{r.count}×</span>
+          </div>
+        ))}
+      </div>
+
       {/* Individual run logs */}
       <div className="sim-runs">
         {runs.map((r, i) => {
-          const wText    = r.winner === 1 ? group1Name : r.winner === 2 ? group2Name : 'Unentschieden';
-          const wCls     = r.winner === 1 ? 'sim-winner-1' : r.winner === 2 ? 'sim-winner-2' : 'sim-winner-draw';
+          const rating    = runRatings[i];
           const runOpen  = openLogs.has(`r${i}`);
           const totalEntries = r.rounds.reduce((s, rd) => s + rd.entries.length, 0);
           return (
@@ -1464,7 +1644,7 @@ function CombatResults({ runs, group1Name, group2Name, onReset, onRerun }) {
               <button className="sim-log-toggle" onClick={() => toggleLog(`r${i}`)}>
                 <Chevron open={runOpen} />
                 <span>Durchlauf {i + 1}</span>
-                <span className={`sim-run-badge ${wCls}`}>{wText}</span>
+                <span className={`sim-run-badge ${rating.cls}`}>{rating.label}</span>
                 <span className="sim-run-meta">{r.roundCount} Runden · {totalEntries} Einträge</span>
               </button>
               {runOpen && (
@@ -1478,23 +1658,34 @@ function CombatResults({ runs, group1Name, group2Name, onReset, onRerun }) {
                           <span className="sim-round-label">{rd.label}</span>
                           {rd.hpSnapshot && (
                             <span className="sim-round-hp">
-                              {rd.hpSnapshot.filter(c => c.team === 1).map((c, k) => {
-                                const short = c.name.length > 10 ? c.name.slice(0, 9) + '…' : c.name;
-                                return (
-                                  <span key={k} className={`sim-hp-chip sim-hp-t1${c.dead || c.currentHp === 0 ? ' sim-hp-dead' : ''}`}>
-                                    {short}{c.dead ? ' ☠' : `: ${c.currentHp}`}
-                                  </span>
-                                );
-                              })}
-                              <span className="sim-hp-sep">|</span>
-                              {rd.hpSnapshot.filter(c => c.team === 2).map((c, k) => {
-                                const short = c.name.length > 10 ? c.name.slice(0, 9) + '…' : c.name;
-                                return (
-                                  <span key={k} className={`sim-hp-chip sim-hp-t2${c.dead || c.currentHp === 0 ? ' sim-hp-dead' : ''}`}>
-                                    {short}{c.dead ? ' ☠' : `: ${c.currentHp}`}
-                                  </span>
-                                );
-                              })}
+                              {[1, 2].map(team => [
+                                team === 2 && <span key="sep" className="sim-hp-sep">|</span>,
+                                ...rd.hpSnapshot.filter(c => c.team === team).map((c, k) => {
+                                  const dead = c.dead || c.currentHp <= 0;
+                                  const pct  = dead ? 0 : Math.min(100, Math.round(c.currentHp / c.maxHp * 100));
+                                  const short = c.name.length > 10 ? c.name.slice(0, 9) + '…' : c.name;
+                                  const barColor = dead ? 'transparent'
+                                    : pct > 60 ? (team === 1 ? 'rgba(80,160,255,0.75)' : 'rgba(255,100,80,0.75)')
+                                    : pct > 30 ? 'rgba(255,190,60,0.85)'
+                                    : 'rgba(255,60,60,0.85)';
+                                  return (
+                                    <span key={k} className={`sim-hp-chip sim-hp-t${team}${dead ? ' sim-hp-dead' : ''}`}
+                                      title={dead ? `${c.name} ☠` : `${c.name}: ${c.currentHp}/${c.maxHp} TP`}>
+                                      <span className="sim-hp-name">{short}{dead ? ' ☠' : ''}</span>
+                                      <span className="sim-hp-bar">
+                                        <span className="sim-hp-bar-fill" style={{ width: `${pct}%`, background: barColor }} />
+                                      </span>
+                                      {rd.hits?.[c.uid] && (
+                                        <span className="sim-hit-dots">
+                                          {Array.from({ length: rd.hits[c.uid].h }, (_, di) => <span key={`h${di}`} className="sim-hit-dot sim-hit-h" />)}
+                                          {Array.from({ length: rd.hits[c.uid].m }, (_, di) => <span key={`m${di}`} className="sim-hit-dot sim-hit-m" />)}
+                                          {Array.from({ length: rd.hits[c.uid].heal || 0 }, (_, di) => <span key={`heal${di}`} className="sim-hit-dot sim-hit-heal">✚</span>)}
+                                        </span>
+                                      )}
+                                    </span>
+                                  );
+                                })
+                              ])}
                             </span>
                           )}
                         </button>
@@ -1614,6 +1805,13 @@ function SimApp() {
   function addToGroup(setter, item) {
     setter(g => [...g, { ...item, _uid: uid() }]);
   }
+  function updateGroupMember(setter, _uid, field, val) {
+    setter(g => g.map(c => {
+      if (c._uid !== _uid) return c;
+      if (val === undefined) { const n = { ...c }; delete n[field]; return n; }
+      return { ...c, [field]: val };
+    }));
+  }
   function removeFromGroup(setter, idx) {
     setter(g => g.filter((_, i) => i !== idx));
   }
@@ -1663,7 +1861,7 @@ function SimApp() {
 
   function runSimulation() {
     if (!group1.length || !group2.length) return;
-    const runs = Array.from({ length: 10 }, () => simulateCombat(group1, group2));
+    const runs = Array.from({ length: 20 }, () => simulateCombat(group1, group2));
     setResult(runs);
   }
 
@@ -1685,6 +1883,7 @@ function SimApp() {
                 onAddClone={m => addToGroup(setGroup1, m)}
                 onDetail={setDetailMonster}
                 onEditPlayer={p => setModal({ type: 'player', target: 1, initial: p })}
+                onSessionChange={(_uid, field, val) => updateGroupMember(setGroup1, _uid, field, val)}
                 showMatch={false}
               />
               <div className="sim-vs">VS</div>
@@ -1697,6 +1896,7 @@ function SimApp() {
                 onAddClone={m => { saveGroup2Snapshot(); addToGroup(setGroup2, m); }}
                 onDetail={setDetailMonster}
                 onEditPlayer={p => setModal({ type: 'player', target: 2, initial: p })}
+                onSessionChange={(_uid, field, val) => updateGroupMember(setGroup2, _uid, field, val)}
                 showMatch={true}
                 matchEnabled={group1.length > 0}
                 onMatch={() => handleMatch(group1, setGroup2)}
@@ -1732,7 +1932,7 @@ function SimApp() {
               group1Name={group1.map(c => c.name).join(', ') || 'Gruppe 1'}
               group2Name={group2.map(c => c.name).join(', ') || 'Gruppe 2'}
               onReset={() => setResult(null)}
-              onRerun={() => setResult(Array.from({ length: 10 }, () => simulateCombat(group1, group2)))}
+              onRerun={() => setResult(Array.from({ length: 20 }, () => simulateCombat(group1, group2)))}
             />
           </>
         )}
