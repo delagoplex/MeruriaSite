@@ -59,7 +59,7 @@ const RARITY_KLIMA_BONUS = {
 
 const RARITY_TIERS = [
   { label:'Gewöhnlich',   color:'#8888aa' },
-  { label:'Ungewöhnlich', color:'#26c6da' },
+  { label:'Ungewöhnlich', color:'#4caf50' },
   { label:'Selten',       color:'#4488ee' },
   { label:'Sehr selten',  color:'#c060e8' },
   { label:'Legendär',     color:'#ffaa44' },
@@ -434,13 +434,7 @@ function FishSidebar({ filters, setFilters, total, filtered, isOpen, onClose }) 
         </div>
       </FilterGroup>
 
-      <FilterGroup title="Stärke" active={filters.stärke.length>0} onReset={()=>set('stärke',[])} collapsible>
-        <div style={{ display:'flex', flexWrap:'wrap', gap:'4px' }}>
-          {STÄRKE_GROUPS.map(g => <Chip key={g.label} label={g.label} active={filters.stärke.includes(g.label)} onClick={()=>toggle('stärke',g.label)} />)}
-        </div>
-      </FilterGroup>
-
-      <FilterGroup title="Wasserart" active={!!filters.wassersort} onReset={()=>set('wassersort','')} collapsible>
+<FilterGroup title="Wasserart" active={!!filters.wassersort} onReset={()=>set('wassersort','')} collapsible>
         <div style={{ display:'flex', gap:'4px' }}>
           <Chip label="Salzwasser" active={filters.wassersort==='salz'} onClick={()=>set('wassersort', filters.wassersort==='salz' ? '' : 'salz')} accentColor="#26c6da" />
           <Chip label="Süßwasser"  active={filters.wassersort==='süß'}  onClick={()=>set('wassersort', filters.wassersort==='süß'  ? '' : 'süß')}  accentColor="#88bbff" />

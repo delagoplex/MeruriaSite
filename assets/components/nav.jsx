@@ -97,6 +97,7 @@ const NAV = [
   { id: 'enzyklopaedie', label: 'Enzyklopädie', items: [{ label: 'Völker', href: '#' }, { label: 'Orte', href: '#' }, { label: 'Ressourcen', href: 'Ressourcen.html' }, { label: 'Organisationen', href: '#' }, { label: 'Gottheiten', href: 'Gottheiten.html' }, { label: 'Religionen', href: '#' }, { label: 'Monster', href: 'Monster.html', locked: true }] },
   { id: 'divisionen', label: 'Divisionen', items: [{ label: 'I — Die Kuratoren', href: 'divisionen/Die Kuratoren.html' }, { label: 'II — Die Sturmritter', href: 'divisionen/Sturmritter.html' }, { label: 'III — Die Sentinels', href: 'divisionen/Sentinels.html' }, { label: 'IV — Die Friedenshüter', href: 'divisionen/Friedenshueter.html' }, { label: 'V — Die Outfitters', href: 'divisionen/Outfitters.html' }, { label: 'VI — Die Pathfinders', href: 'divisionen/Pathfinders.html' }, { label: 'VII — Die Quellensucher', href: 'divisionen/Quellensucher.html' }, { label: 'VIII — Die Bergungsgarde', href: 'divisionen/Bergungsgarde.html' }] },
   { id: 'charaktere', label: 'Charaktere', items: [{ label: 'Spielercharaktere', href: '#' }, { label: 'NSC', href: '#' }] },
+  { id: 'tools', label: 'Tools', items: [{ label: 'Kampfsimulation', href: 'Kampfsimulation.html', locked: true }] },
   { id: 'galerie', label: 'Galerie', href: 'galerie.html' }
 ];
 
