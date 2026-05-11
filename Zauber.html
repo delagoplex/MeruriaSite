@@ -101,8 +101,8 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch, dragRe
   const toggleBool = (key, val) => {
     setFilters(f => ({ ...f, [key]: f[key] === val ? null : val }));
   };
-  const reset = () => setFilters({ schule:[], grad:[], klassen:[], komponenten:[], konzentration:null, ritual:null, zeitaufwand:[] });
-  const hasAny = Object.values(filters).some(v => Array.isArray(v) ? v.length > 0 : v !== null);
+  const reset = () => setFilters({ schule:[], grad:[], klassen:[], komponenten:[], konzentration:null, ritual:null, zeitaufwand:[], sort:'grad-asc' });
+  const hasAny = filters.schule.length || filters.grad.length || filters.klassen.length || filters.komponenten.length || filters.konzentration !== null || filters.ritual !== null || filters.zeitaufwand.length || filters.sort !== 'grad-asc';
 
   return (
     <div ref={dragRef.ref} onMouseDown={dragRef.onMouseDown} onClickCapture={dragRef.onClickCapture} style={{ width:'var(--filter-w)', flexShrink:0, background:'rgba(8,6,20,0.6)', borderRight:'1px solid var(--border)', padding:'16px 14px 14px 24px', overflowY:'auto', display:'flex', flexDirection:'column', position:'relative', zIndex:10, cursor:'grab', ...dragRef.fadeStyle }}>
@@ -189,6 +189,25 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch, dragRe
           })}
         </div>
       </FilterGroup>
+
+      <FilterGroup title="Sortierung" active={filters.sort !== 'grad-asc'} onReset={() => setFilters(f => ({...f, sort:'grad-asc'}))} collapsible>
+        <div style={{ display:'flex', flexDirection:'column', gap:'2px' }}>
+          {[['grad-asc','Grad ↑'],['grad-desc','Grad ↓'],['name-az','Name A – Z'],['name-za','Name Z – A']].map(([id,label]) => (
+            <button key={id} className={`sort-btn${filters.sort===id?' active':''}`} onClick={() => setFilters(f => ({...f, sort:id}))}>{label}</button>
+          ))}
+        </div>
+      </FilterGroup>
+
+      {hasAny && (
+        <div style={{ marginTop:'auto', paddingTop:'14px', borderTop:'1px solid rgba(160,140,255,0.08)' }}>
+          <button onClick={reset}
+            style={{ width:'100%', padding:'6px', background:'rgba(200,60,60,0.08)', border:'1px solid rgba(200,60,60,0.25)', borderRadius:'2px', color:'rgba(230,90,90,0.65)', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.18em', cursor:'pointer', transition:'all 0.15s', textTransform:'uppercase' }}
+            onMouseEnter={e=>{e.currentTarget.style.background='rgba(200,60,60,0.18)';e.currentTarget.style.borderColor='rgba(230,90,90,0.5)';}}
+            onMouseLeave={e=>{e.currentTarget.style.background='rgba(200,60,60,0.08)';e.currentTarget.style.borderColor='rgba(200,60,60,0.25)';}}>
+            Filter löschen
+          </button>
+        </div>
+      )}
     </div>
   );
 }
@@ -337,7 +356,7 @@ function App() {
   const [selected, setSelected] = useState(
     [...allZauber].filter(z => z.grad === 0).sort((a, b) => a.name.localeCompare(b.name))[0] || allZauber[0] || null
   );
-  const [filters, setFilters] = useState({ schule:[], grad:[], klassen:[], komponenten:[], konzentration:null, ritual:null, zeitaufwand:[] });
+  const [filters, setFilters] = useState({ schule:[], grad:[], klassen:[], komponenten:[], konzentration:null, ritual:null, zeitaufwand:[], sort:'grad-asc' });
   const [classFilter, setClassFilter] = useState(null);
 
   // Derive all classes for top chips
@@ -349,7 +368,7 @@ function App() {
 
   // Filter logic
   const filtered = useMemo(() => {
-    return allZauber.filter(z => {
+    const r = allZauber.filter(z => {
       if (search && !z.name.toLowerCase().includes(search.toLowerCase())) return false;
       if (filters.schule.length && !filters.schule.includes(z.schule)) return false;
       if (filters.grad.length && !filters.grad.includes(z.grad)) return false;
@@ -361,6 +380,13 @@ function App() {
       if (classFilter && !z.klassen.includes(classFilter)) return false;
       return true;
     });
+    switch (filters.sort) {
+      case 'grad-desc': r.sort((a,b) => b.grad - a.grad); break;
+      case 'name-az':   r.sort((a,b) => a.name.localeCompare(b.name, 'de')); break;
+      case 'name-za':   r.sort((a,b) => b.name.localeCompare(a.name, 'de')); break;
+      default:          r.sort((a,b) => a.grad - b.grad); break; // grad-asc
+    }
+    return r;
   }, [allZauber, search, filters, classFilter]);
 
   // Auto-select first when filter changes
@@ -368,16 +394,21 @@ function App() {
     setSelected(prev => (prev && !filtered.includes(prev)) ? filtered[0] || null : prev);
   }, [filtered]);
 
-  // Group by grade
+  // Group by grade only for grad-based sorts; flat otherwise
   const grouped = useMemo(() => {
-    const map = new Map();
-    filtered.forEach(z => {
-      const g = z.grad;
-      if (!map.has(g)) map.set(g, []);
-      map.get(g).push(z);
-    });
-    return [...map.entries()].sort((a,b) => a[0]-b[0]);
-  }, [filtered]);
+    const byGrad = filters.sort === 'grad-asc' || filters.sort === 'grad-desc';
+    if (byGrad) {
+      const map = new Map();
+      filtered.forEach(z => {
+        const g = z.grad;
+        if (!map.has(g)) map.set(g, []);
+        map.get(g).push(z);
+      });
+      const entries = [...map.entries()];
+      return filters.sort === 'grad-desc' ? entries.sort((a,b) => b[0]-a[0]) : entries.sort((a,b) => a[0]-b[0]);
+    }
+    return [[null, filtered]];
+  }, [filtered, filters.sort]);
 
   return (
     <div onMouseMove={handleMouseMove} style={{ display:'flex', flexDirection:'column', height:'100vh', position:'relative', zIndex:1 }}>
@@ -409,11 +440,13 @@ function App() {
             <EmptyState msg="Keine Zauber gefunden" />
           ) : (
             grouped.map(([grad, zauber]) => (
-              <div key={grad}>
-                <div style={{ padding:'8px 12px 4px', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:'rgba(160,140,255,0.4)', textTransform:'uppercase', background:'rgba(124,77,255,0.04)', borderBottom:'1px solid rgba(160,140,255,0.06)', position:'sticky', top:0, backdropFilter:'blur(4px)', zIndex:2 }}>
-                  {grad === 0 ? 'Zaubertricks' : `Grad ${grad}`}
-                  <span style={{ marginLeft:'6px', opacity:0.6 }}>({zauber.length})</span>
-                </div>
+              <div key={grad ?? '__flat__'}>
+                {grad !== null && (
+                  <div style={{ padding:'8px 12px 4px', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:'rgba(160,140,255,0.4)', textTransform:'uppercase', background:'rgba(124,77,255,0.04)', borderBottom:'1px solid rgba(160,140,255,0.06)', position:'sticky', top:0, backdropFilter:'blur(4px)', zIndex:2 }}>
+                    {grad === 0 ? 'Zaubertricks' : `Grad ${grad}`}
+                    <span style={{ marginLeft:'6px', opacity:0.6 }}>({zauber.length})</span>
+                  </div>
+                )}
                 {zauber.map(z => (
                   <SpellRow key={z.name} zauber={z} active={selected && selected.name === z.name} onClick={setSelected} compact={t.compactList} />
                 ))}

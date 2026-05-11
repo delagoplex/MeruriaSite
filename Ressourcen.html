@@ -20,7 +20,7 @@
 <div id="root"></div>
 <script type="text/babel">
 
-const { useState, useCallback, useMemo } = React;
+const { useState, useCallback, useMemo, useEffect } = React;
 const { useTweaks, TweaksPanel, TweakSection, TweakToggle, SiteNav, ParticleField } = window;
 const { FilterGroup, XBtn } = window;
 
@@ -44,30 +44,71 @@ const KLIMA_COLOR = {
 
 const GRÖSSE_ORDER = ['Winzig','Klein','Mittelgroß','Groß','Riesig'];
 
+// Stärke is a D&D ability score; modifier = floor((score - 10) / 2)
+// Ranges map to modifier bands: 1–5 → −5 to −3, 6–9 → −2/−1, 10–11 → ±0, 12+ → +1 or more
 const STÄRKE_GROUPS = [
-  { label:'1 – 4',   min:1,  max:4  },
-  { label:'5 – 8',   min:5,  max:8  },
-  { label:'9 – 12',  min:9,  max:12 },
-  { label:'13 – 16', min:13, max:16 },
+  { label:'−5 bis −3', min:1,  max:5  },
+  { label:'−2 bis −1', min:6,  max:9  },
+  { label:'±0',        min:10, max:11 },
+  { label:'+1 oder mehr', min:12, max:99 },
 ];
 
-const SG_GROUPS = [
-  { label:'10 – 14', min:10, max:14, hint:'Gewöhnlich'   },
-  { label:'15 – 19', min:15, max:19, hint:'Ungewöhnlich' },
-  { label:'20 – 24', min:20, max:24, hint:'Selten'       },
-  { label:'25 – 29', min:25, max:29, hint:'Sehr selten'  },
-  { label:'30 – 35', min:30, max:35, hint:'Legendär'     },
+const RARITY_KLIMA_BONUS = {
+  'Vulkanisch':3,'Magisch':3,'Kosmisch':3,'Schattenhaft':2,'Toxisch':2,'Tiefsee':2,
+};
+
+const RARITY_TIERS = [
+  { label:'Gewöhnlich',   color:'#8888aa' },
+  { label:'Ungewöhnlich', color:'#26c6da' },
+  { label:'Selten',       color:'#4488ee' },
+  { label:'Sehr selten',  color:'#c060e8' },
+  { label:'Legendär',     color:'#ffaa44' },
 ];
+
+const LEGENDARY_NAMES = new Set([
+  'Taniwha','Kleiner Leviathan','Syldra','Riesenkrake','Titansägerochen',
+  'Dunkleosteus','Tiefsee-Dunkleosteus','Hyphalosaurus','Elasmosaurus',
+  'Gharlichthys','Calibanschuppe','Lapisdrache','Gigahai','Schiffshenker',
+  'Tiefenwächter','Tausend-Jahre-Wels','Coccosteus','Fallskipper',
+  'Oktoboss','Thavnairsaurus','Priosaurus','Radzsaurus','Spektralsaurier',
+  'Anomalocaris Saron','Aithons Colt','Tintenkrake','Mondschnapper',
+  'Erstgenuss','Mogul-Mogpom','La Reale','Mogryseele','Bergkrake',
+  'Mehr-Falten-Matamata','Saphirwächter',
+]);
+
+function fishRarityScore(fish) {
+  const base = Math.pow(((fish.sg ?? 10) - 10) / 25, 2) * 10;
+  const bonus = (fish.klima || []).reduce((s, k) => s + (RARITY_KLIMA_BONUS[k] || 0) * 0.6, 0);
+  return base + bonus;
+}
+
+function fishRarityIdx(fish) {
+  if (LEGENDARY_NAMES.has(fish.name_de)) return 4;
+  const s = fishRarityScore(fish);
+  if (s < 3)   return 0;
+  if (s < 5.5) return 1;
+  if (s < 8)   return 2;
+  return 3;
+}
+
+function fishRarity(fish) {
+  return RARITY_TIERS[fishRarityIdx(fish)];
+}
+
+// Price comes from the data file (computed by update-fish-rarity.mjs)
+function fishPrice(fish) { return fish.verkaufspreis || '–'; }
 
 const SORT_OPTIONS = [
-  { id:'name-az',    label:'Name A – Z' },
-  { id:'name-za',    label:'Name Z – A' },
-  { id:'sg-asc',     label:'SG ↑'        },
-  { id:'sg-desc',    label:'SG ↓'        },
-  { id:'preis-asc',  label:'Preis ↑'    },
-  { id:'preis-desc', label:'Preis ↓'    },
-  { id:'staerke',    label:'Stärke ↓'   },
-  { id:'gewicht',    label:'Gewicht ↓'  },
+  { id:'name-az',          label:'Name A – Z'     },
+  { id:'name-za',          label:'Name Z – A'     },
+  { id:'seltenheit-asc',   label:'Seltenheit ↑'   },
+  { id:'seltenheit-desc',  label:'Seltenheit ↓'   },
+  { id:'preis-asc',        label:'Preis ↑'        },
+  { id:'preis-desc',       label:'Preis ↓'        },
+  { id:'staerke-desc',     label:'Stärke ↓'       },
+  { id:'staerke-asc',     label:'Stärke ↑'       },
+  { id:'gewicht-desc',    label:'Gewicht ↓'      },
+  { id:'gewicht-asc',     label:'Gewicht ↑'      },
 ];
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{ "showParticles": true }/*EDITMODE-END*/;
@@ -83,29 +124,192 @@ const TABS = [
 // ── Parse helpers ─────────────────────────────────────────────────────────────
 function parseGewicht(s) {
   if (!s) return 0;
-  const m = s.match(/([\d,]+)\s*(g|kg)/);
+  const m = s.match(/([\d.,]+)\s*Pfd\./);
   if (!m) return 0;
-  return parseFloat(m[1].replace(',','.')) * (m[2]==='kg' ? 1000 : 1);
+  // German format: "." = Tausendertrenner, "," = Dezimalzeichen
+  return parseFloat(m[1].replace(/\./g, '').replace(',', '.'));
 }
 function parsePreis(s) {
-  return s ? parseInt(s.split(' ')[0]) || 0 : 0;
+  if (!s) return 0;
+  return parseInt(s.replace(/\./g, '').split(' ')[0]) || 0;
 }
 
-// ── Stärke bar ────────────────────────────────────────────────────────────────
-function barColor(stärke, i) {
-  if (i >= stärke) return 'rgba(255,255,255,0.07)';
-  if (stärke >= 13) return '#ffd700';
-  if (stärke >= 9)  return '#e85020';
-  if (stärke >= 5)  return '#26c6da';
-  return 'rgba(38,198,218,0.55)';
+// ── Stärke / modifier helpers ─────────────────────────────────────────────────
+function dndMod(score) { return Math.floor((score - 10) / 2); }
+function modStr(m) { return (m >= 0 ? '+' : '') + m; }
+
+// 11-bar bipolar display: indices 0–4 = mods −5 to −1, index 5 = ±0, indices 6–10 = +1 to +5
+// Bars fill from center outward (adjacent to center = smallest magnitude)
+function modBarColor(mod, barIdx) {
+  const barMod = barIdx - 5; // −5 to +5
+  if (barIdx === 5) return 'rgba(255,255,255,0.22)';          // center reference
+  if (mod < 0 && barMod < 0 && barMod >= mod) return 'rgba(200,70,70,0.72)';  // negative filled
+  if (mod > 0 && barMod > 0 && barMod <= mod) return '#26c6da';               // positive filled
+  return 'rgba(255,255,255,0.06)';                            // empty
+}
+
+// ── Fish Detail Modal ─────────────────────────────────────────────────────────
+function FishDetailModal({ fish, onClose }) {
+  const [imgOk, setImgOk] = useState(true);
+  const s = fish.stärke ?? 0;
+  const mod = dndMod(s);
+  const rarity = fishRarity(fish);
+
+  useEffect(() => {
+    const handle = e => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', handle);
+    return () => document.removeEventListener('keydown', handle);
+  }, [onClose]);
+
+  const CRAFTING_PLACEHOLDERS = [
+    { icon:'🍳', label:'Gericht', name:'Unbekanntes Rezept' },
+    { icon:'⚗️', label:'Alchemie', name:'Unbekannte Zutat' },
+    { icon:'🧵', label:'Handwerk', name:'Unbekannte Verarbeitung' },
+  ];
+
+  return (
+    <div className="fish-modal-overlay" onClick={onClose}>
+      <div className="fish-modal" onClick={e => e.stopPropagation()}>
+        <button className="fish-modal-close" onClick={onClose}>✕</button>
+
+        {/* ── Left: Fish Info ── */}
+        <div className="fish-modal-left">
+          <div className="fish-modal-header">
+            <div className="fish-modal-icon">
+              {imgOk
+                ? <img src={fish.icon} alt="" onError={() => setImgOk(false)} />
+                : <div className="fish-icon-missing">🐟</div>
+              }
+            </div>
+            <div style={{ minWidth:0 }}>
+              <div className="fish-modal-name">{fish.name_de}</div>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:'10px', letterSpacing:'0.18em', color: rarity.color, marginTop:'5px' }}>
+                {rarity.label}
+              </div>
+            </div>
+          </div>
+
+          <div className="fish-modal-divider" />
+
+          {/* Badges */}
+          <div className="fish-modal-section">
+            <div style={{ display:'flex', gap:'6px', flexWrap:'wrap' }}>
+              <span className="fish-size-badge">{fish.größenkategorie}</span>
+              {fish.wassersort && (
+                <span className="fish-size-badge" style={{ borderColor: fish.wassersort==='salz' ? 'rgba(38,198,218,0.4)' : 'rgba(100,180,255,0.4)', color: fish.wassersort==='salz' ? '#26c6da' : '#88bbff' }}>
+                  {fish.wassersort === 'salz' ? 'Salzwasser' : 'Süßwasser'}
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* Stärke */}
+          <div className="fish-modal-section">
+            <div className="fish-modal-label">Stärke</div>
+            <div style={{ display:'flex', alignItems:'center', gap:'5px' }}>
+              <div className="staerke-bars">
+                {Array.from({length:5},(_,i) => (
+                  <div key={i} className="staerke-bar" style={{ background:modBarColor(mod,i), width:'5px', height:'13px' }} />
+                ))}
+              </div>
+              <div className="staerke-bar" style={{ background:'rgba(255,255,255,0.22)', height:'16px', width:'2px' }} />
+              <div className="staerke-bars">
+                {Array.from({length:5},(_,i) => (
+                  <div key={i} className="staerke-bar" style={{ background:modBarColor(mod,i+6), width:'5px', height:'13px' }} />
+                ))}
+              </div>
+              <span style={{ fontFamily:'var(--font-mono)', fontSize:'14px', letterSpacing:'0.04em', marginLeft:'6px',
+                color: mod > 0 ? '#26c6da' : mod < 0 ? 'rgba(200,100,100,0.85)' : 'rgba(200,190,240,0.5)' }}>
+                {modStr(mod)}
+              </span>
+              <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(200,190,240,0.28)', marginLeft:'3px' }}>
+                STR {s}
+              </span>
+            </div>
+          </div>
+
+          {/* Weight + Price */}
+          <div className="fish-modal-section" style={{ display:'flex', gap:'32px' }}>
+            <div>
+              <div className="fish-modal-label">Gewicht</div>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:'13px', color:'rgba(200,190,240,0.75)', letterSpacing:'0.06em' }}>{fish.gewicht || '–'}</div>
+            </div>
+            <div>
+              <div className="fish-modal-label">Verkaufspreis</div>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:'13px', color:'rgba(255,214,0,0.88)', letterSpacing:'0.06em' }}>{fish.verkaufspreis || '–'}</div>
+            </div>
+          </div>
+
+          {/* Lebensraum */}
+          <div className="fish-modal-section">
+            <div className="fish-modal-label">Lebensraum</div>
+            {(fish.lebensraum||[]).length > 0
+              ? <div style={{ display:'flex', gap:'5px', flexWrap:'wrap' }}>
+                  {fish.lebensraum.map(l => (
+                    <span key={l} style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.12em', padding:'2px 8px', border:'1px solid rgba(160,140,255,0.25)', borderRadius:'2px', color:'rgba(200,190,240,0.6)', textTransform:'uppercase' }}>{l}</span>
+                  ))}
+                </div>
+              : <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(200,190,240,0.2)', letterSpacing:'0.14em', fontStyle:'italic' }}>Wird noch ergänzt</div>
+            }
+          </div>
+
+          {/* Klima */}
+          {(fish.klima||[]).length > 0 && (
+            <div className="fish-modal-section">
+              <div className="fish-modal-label">Klima</div>
+              <div className="fish-klima" style={{ margin:0 }}>
+                {fish.klima.map(k => {
+                  const col = KLIMA_COLOR[k] || '#8888cc';
+                  return (
+                    <span key={k} className="fish-klima-chip" style={{ background:col+'1e', border:`1px solid ${col}44`, color:col, fontSize:'8px', padding:'2px 8px' }}>
+                      {k}
+                    </span>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Description */}
+          {fish.desc_de && (
+            <div className="fish-modal-section">
+              <div className="fish-modal-label">Beschreibung</div>
+              <p style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:300, lineHeight:1.75, color:'rgba(200,190,240,0.52)', letterSpacing:'0.015em', margin:0 }}>
+                {fish.desc_de}
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* ── Right: Crafting ── */}
+        <div className="fish-modal-right">
+          <div className="fish-modal-label" style={{ marginBottom:'14px' }}>Verarbeitung</div>
+          {CRAFTING_PLACEHOLDERS.map((slot, i) => (
+            <div key={i} className="fish-recipe-slot">
+              <div className="fish-recipe-icon">{slot.icon}</div>
+              <div style={{ minWidth:0 }}>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(38,198,218,0.3)', marginBottom:'3px' }}>{slot.label}</div>
+                <div style={{ fontFamily:'var(--font-body)', fontSize:'10px', color:'rgba(200,190,240,0.2)', letterSpacing:'0.03em' }}>{slot.name}</div>
+              </div>
+            </div>
+          ))}
+          <div style={{ marginTop:'auto', paddingTop:'16px', borderTop:'1px solid rgba(38,198,218,0.06)', fontFamily:'var(--font-mono)', fontSize:'7.5px', color:'rgba(38,198,218,0.18)', letterSpacing:'0.18em', textTransform:'uppercase', textAlign:'center', lineHeight:1.8 }}>
+            Rezepte werden<br />noch ergänzt
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 // ── Fish Card ─────────────────────────────────────────────────────────────────
-function FishCard({ fish }) {
+function FishCard({ fish, onSelect }) {
   const [imgOk, setImgOk] = useState(true);
   const s = fish.stärke ?? 0;
+  const mod = dndMod(s);
+  const rarity = fishRarity(fish);
   return (
-    <div className="fish-card">
+    <div className="fish-card" onClick={() => onSelect(fish)} style={{ cursor:'pointer' }}>
       <div style={{ display:'flex', alignItems:'flex-start', gap:'9px', marginBottom:'2px' }}>
         <div className="fish-icon">
           {imgOk
@@ -115,7 +319,7 @@ function FishCard({ fish }) {
         </div>
         <div style={{ minWidth:0, flex:1 }}>
           <div className="fish-name">{fish.name_de}</div>
-          <div className="fish-level">SG {fish.sg ?? '–'}</div>
+          <div className="fish-level" style={{ color: rarity.color }}>{rarity.label}</div>
         </div>
       </div>
 
@@ -123,10 +327,25 @@ function FishCard({ fish }) {
 
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'4px', marginBottom:'6px' }}>
         <span className="fish-size-badge">{fish.größenkategorie}</span>
-        <div className="staerke-bars" title={`Stärke ${s} / 16`}>
-          {Array.from({length:16},(_,i) => (
-            <div key={i} className="staerke-bar" style={{ background: barColor(s,i) }} />
-          ))}
+        <div style={{ display:'flex', alignItems:'center', gap:'4px' }} title={`STR ${s} (${modStr(mod)})`}>
+          {/* negative zone: mods −5 to −1 */}
+          <div className="staerke-bars">
+            {Array.from({length:5},(_,i) => (
+              <div key={i} className="staerke-bar" style={{ background: modBarColor(mod, i) }} />
+            ))}
+          </div>
+          {/* center bar: modifier ±0 reference */}
+          <div className="staerke-bar" style={{ background:'rgba(255,255,255,0.22)', height:'12px' }} />
+          {/* positive zone: mods +1 to +5 */}
+          <div className="staerke-bars">
+            {Array.from({length:5},(_,i) => (
+              <div key={i} className="staerke-bar" style={{ background: modBarColor(mod, i + 6) }} />
+            ))}
+          </div>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.08em', whiteSpace:'nowrap',
+            color: mod > 0 ? '#26c6da' : mod < 0 ? 'rgba(200,100,100,0.75)' : 'rgba(200,190,240,0.5)' }}>
+            {modStr(mod)}
+          </span>
         </div>
       </div>
 
@@ -143,7 +362,7 @@ function FishCard({ fish }) {
 
       <div className="fish-stats">
         <span className="fish-weight">{fish.gewicht}</span>
-        <span className="fish-price">{fish.verkaufspreis}</span>
+        <span className="fish-price">{fishPrice(fish)}</span>
       </div>
 
       {fish.desc_de && <p className="fish-desc">{fish.desc_de}</p>}
@@ -176,9 +395,9 @@ function FishSidebar({ filters, setFilters, total, filtered }) {
     const arr = f[key]||[];
     return {...f, [key]: arr.includes(val) ? arr.filter(x=>x!==val) : [...arr,val]};
   });
-  const resetAll = () => setFilters({ search:'', größe:[], klima:[], stärke:[], sg:[], sort:'name-az' });
+  const resetAll = () => setFilters({ search:'', größe:[], klima:[], stärke:[], seltenheit:[], wassersort:'', sort:'name-az' });
   const hasAny = filters.search || filters.größe.length || filters.klima.length ||
-                 filters.stärke.length || filters.sg.length || filters.sort!=='name-az';
+                 filters.stärke.length || filters.seltenheit.length || filters.wassersort || filters.sort!=='name-az';
 
   return (
     <aside className="res-sidebar">
@@ -218,13 +437,20 @@ function FishSidebar({ filters, setFilters, total, filtered }) {
         </div>
       </FilterGroup>
 
-      <FilterGroup title="Seltenheitsgrad" active={filters.sg.length>0} onReset={()=>set('sg',[])} collapsible>
+      <FilterGroup title="Wasserart" active={!!filters.wassersort} onReset={()=>set('wassersort','')} collapsible>
+        <div style={{ display:'flex', gap:'4px' }}>
+          <Chip label="Salzwasser" active={filters.wassersort==='salz'} onClick={()=>set('wassersort', filters.wassersort==='salz' ? '' : 'salz')} accentColor="#26c6da" />
+          <Chip label="Süßwasser"  active={filters.wassersort==='süß'}  onClick={()=>set('wassersort', filters.wassersort==='süß'  ? '' : 'süß')}  accentColor="#88bbff" />
+        </div>
+      </FilterGroup>
+
+      <FilterGroup title="Seltenheitsgrad" active={filters.seltenheit.length>0} onReset={()=>set('seltenheit',[])} collapsible>
         <div style={{ display:'flex', flexDirection:'column', gap:'3px' }}>
-          {SG_GROUPS.map(g => (
-            <button key={g.label} className={`sort-btn${filters.sg.includes(g.label)?' active':''}`} onClick={()=>toggle('sg',g.label)}
-              style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-              <span>{g.label}</span>
-              <span style={{ opacity:0.5, fontSize:'7.5px', letterSpacing:'0.1em' }}>{g.hint}</span>
+          {RARITY_TIERS.map(t => (
+            <button key={t.label} className={`sort-btn${filters.seltenheit.includes(t.label)?' active':''}`}
+              onClick={()=>toggle('seltenheit', t.label)}
+              style={filters.seltenheit.includes(t.label) ? { color:t.color, borderColor:t.color+'55' } : {}}>
+              {t.label}
             </button>
           ))}
         </div>
@@ -238,17 +464,16 @@ function FishSidebar({ filters, setFilters, total, filtered }) {
         </div>
       </FilterGroup>
 
-      <div style={{ marginTop:'auto', paddingTop:'14px', borderTop:'1px solid rgba(38,198,218,0.08)' }}>
-        <div className="res-count">{filtered} / {total} Einträge</div>
-        {hasAny && (
+      {hasAny && (
+        <div style={{ marginTop:'auto', paddingTop:'14px', borderTop:'1px solid rgba(38,198,218,0.08)' }}>
           <button onClick={resetAll}
             style={{ width:'100%', padding:'6px', background:'rgba(200,60,60,0.08)', border:'1px solid rgba(200,60,60,0.25)', borderRadius:'2px', color:'rgba(230,90,90,0.65)', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.18em', cursor:'pointer', transition:'all 0.15s', textTransform:'uppercase' }}
             onMouseEnter={e=>{e.currentTarget.style.background='rgba(200,60,60,0.18)';e.currentTarget.style.borderColor='rgba(230,90,90,0.5)';}}
             onMouseLeave={e=>{e.currentTarget.style.background='rgba(200,60,60,0.08)';e.currentTarget.style.borderColor='rgba(200,60,60,0.25)';}}>
             Filter löschen
           </button>
-        )}
-      </div>
+        </div>
+      )}
     </aside>
   );
 }
@@ -268,8 +493,8 @@ function PlaceholderTab({ id, label }) {
 }
 
 // ── Fish Tab content ──────────────────────────────────────────────────────────
-function FishTab() {
-  const [filters, setFilters] = useState({ search:'', größe:[], klima:[], stärke:[], sg:[], sort:'name-az' });
+function FishTab({ onCount, onSelect }) {
+  const [filters, setFilters] = useState({ search:'', größe:[], klima:[], stärke:[], seltenheit:[], wassersort:'', sort:'name-az' });
 
   const filtered = useMemo(() => {
     let r = ALL_FISH;
@@ -286,32 +511,35 @@ function FishTab() {
         const grp = STÄRKE_GROUPS.find(x=>x.label===g);
         return grp && f.stärke>=grp.min && f.stärke<=grp.max;
       }));
-    if (filters.sg.length)
-      r = r.filter(f => filters.sg.some(g => {
-        const grp = SG_GROUPS.find(x=>x.label===g);
-        return grp && (f.sg||10)>=grp.min && (f.sg||10)<=grp.max;
-      }));
+    if (filters.seltenheit.length)
+      r = r.filter(f => filters.seltenheit.includes(fishRarity(f).label));
+    if (filters.wassersort)
+      r = r.filter(f => f.wassersort === filters.wassersort);
 
     r = [...r];
     switch (filters.sort) {
-      case 'name-az':    r.sort((a,b)=>a.name_de.localeCompare(b.name_de,'de')); break;
-      case 'name-za':    r.sort((a,b)=>b.name_de.localeCompare(a.name_de,'de')); break;
-      case 'sg-asc':     r.sort((a,b)=>(a.sg||10)-(b.sg||10)); break;
-      case 'sg-desc':    r.sort((a,b)=>(b.sg||10)-(a.sg||10)); break;
-      case 'preis-asc':  r.sort((a,b)=>parsePreis(a.verkaufspreis)-parsePreis(b.verkaufspreis)); break;
-      case 'preis-desc': r.sort((a,b)=>parsePreis(b.verkaufspreis)-parsePreis(a.verkaufspreis)); break;
-      case 'staerke':    r.sort((a,b)=>(b.stärke||0)-(a.stärke||0)); break;
-      case 'gewicht':    r.sort((a,b)=>parseGewicht(b.gewicht)-parseGewicht(a.gewicht)); break;
+      case 'name-az':         r.sort((a,b)=>a.name_de.localeCompare(b.name_de,'de')); break;
+      case 'name-za':         r.sort((a,b)=>b.name_de.localeCompare(a.name_de,'de')); break;
+      case 'seltenheit-asc':  r.sort((a,b)=>{ const ta=fishRarityIdx(a),tb=fishRarityIdx(b); return ta!==tb ? ta-tb : fishRarityScore(a)-fishRarityScore(b); }); break;
+      case 'seltenheit-desc': r.sort((a,b)=>{ const ta=fishRarityIdx(a),tb=fishRarityIdx(b); return ta!==tb ? tb-ta : fishRarityScore(b)-fishRarityScore(a); }); break;
+      case 'preis-asc':       r.sort((a,b)=>parsePreis(a.verkaufspreis)-parsePreis(b.verkaufspreis)); break;
+      case 'preis-desc':      r.sort((a,b)=>parsePreis(b.verkaufspreis)-parsePreis(a.verkaufspreis)); break;
+      case 'staerke-desc':    r.sort((a,b)=>(b.stärke||0)-(a.stärke||0)); break;
+      case 'staerke-asc':     r.sort((a,b)=>(a.stärke||0)-(b.stärke||0)); break;
+      case 'gewicht-desc':    r.sort((a,b)=>parseGewicht(b.gewicht)-parseGewicht(a.gewicht)); break;
+      case 'gewicht-asc':     r.sort((a,b)=>parseGewicht(a.gewicht)-parseGewicht(b.gewicht)); break;
     }
     return r;
   }, [filters]);
+
+  useEffect(() => { onCount({ filtered: filtered.length, total: ALL_FISH.length }); }, [filtered.length]);
 
   return (
     <div className="res-layout">
       <FishSidebar filters={filters} setFilters={setFilters} total={ALL_FISH.length} filtered={filtered.length} />
       <main className="res-main">
         {filtered.length > 0
-          ? <div className="fish-grid">{filtered.map(f => <FishCard key={f.id} fish={f} />)}</div>
+          ? <div className="fish-grid">{filtered.map(f => <FishCard key={f.id} fish={f} onSelect={onSelect} />)}</div>
           : <div className="res-empty">Keine Treffer</div>
         }
       </main>
@@ -324,8 +552,11 @@ function App() {
   const [mouse, setMouse] = useState({ x:0.5, y:0.5 });
   const [tweaks] = useTweaks(TWEAK_DEFAULTS);
   const [activeTab, setActiveTab] = useState('fische');
+  const [tabCount, setTabCount] = useState(null);
+  const [selectedFish, setSelectedFish] = useState(null);
 
   const handleMouseMove = useCallback(e => setMouse({ x:e.clientX/window.innerWidth, y:e.clientY/window.innerHeight }), []);
+  const handleTabChange = useCallback(id => { setActiveTab(id); if (id !== activeTab) setTabCount(null); }, [activeTab]);
 
   return (
     <div onMouseMove={handleMouseMove} style={{ display:'flex', flexDirection:'column', height:'100vh', overflow:'hidden', position:'relative' }}>
@@ -334,16 +565,22 @@ function App() {
 
       {/* Tab bar */}
       <nav className="res-tabbar">
-        {TABS.map(tab => (
-          <button key={tab.id} className={`res-tab${activeTab===tab.id?' active':''}`} onClick={()=>setActiveTab(tab.id)}>
-            <span className="res-tab-dot" />
-            {tab.label}
-          </button>
-        ))}
+        <div className="res-tabbar-left">
+          {tabCount && <span className="res-tabbar-count">Anzahl: {tabCount.filtered} / {tabCount.total}</span>}
+        </div>
+        <div className="res-tabbar-tabs">
+          {TABS.map(tab => (
+            <button key={tab.id} className={`res-tab${activeTab===tab.id?' active':''}`} onClick={()=>handleTabChange(tab.id)}>
+              <span className="res-tab-dot" />
+              {tab.label}
+            </button>
+          ))}
+        </div>
       </nav>
 
       {/* Tab content */}
-      {activeTab === 'fische'       && <FishTab />}
+      {activeTab === 'fische'       && <FishTab onCount={setTabCount} onSelect={setSelectedFish} />}
+      {selectedFish && <FishDetailModal fish={selectedFish} onClose={() => setSelectedFish(null)} />}
       {activeTab === 'pflanzen'     && <PlaceholderTab id="pflanzen"     label="Pflanzen"     />}
       {activeTab === 'mineralien'   && <PlaceholderTab id="mineralien"   label="Mineralien"   />}
       {activeTab === 'monsterteile' && <PlaceholderTab id="monsterteile" label="Monsterteile" />}

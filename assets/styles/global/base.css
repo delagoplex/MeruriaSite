@@ -104,3 +104,7 @@ body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-in
 
 .float-nav-btn { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: rgba(8,6,22,0.88); border: 1px solid rgba(124,77,255,0.25); color: rgba(124,77,255,0.7); cursor: pointer; transition: all 0.2s; backdrop-filter: blur(8px); }
 .float-nav-btn:hover { background: rgba(124,77,255,0.18); border-color: rgba(124,77,255,0.55); color: var(--white); box-shadow: 0 0 14px rgba(124,77,255,0.25); }
+
+.sort-btn { width: 100%; text-align: left; padding: 5px 8px; background: transparent; border: 1px solid transparent; border-radius: 2px; color: rgba(200,190,240,0.45); font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; cursor: pointer; transition: all 0.15s; }
+.sort-btn.active { background: rgba(160,140,255,0.1); border-color: rgba(160,140,255,0.35); color: #f0eeff; }
+.sort-btn:hover:not(.active) { color: rgba(200,190,240,0.72); background: rgba(160,140,255,0.04); }

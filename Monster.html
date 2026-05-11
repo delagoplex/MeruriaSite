@@ -14,6 +14,7 @@
 <script src="assets/scripts/data/monster/schatzkammer-der-drachen-data.js"></script>
 <script src="assets/scripts/data/monster/almanach-der-monster-data.js"></script>
 <script src="assets/scripts/data/monster/floral-dragons-data.js"></script>
+<script src="assets/scripts/data/monster/ruhm-der-riesen-data.js"></script>
 <script src="assets/scripts/data/monster-data.js"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
 <script src="assets/components/site-gate.jsx" type="text/babel"></script>
@@ -126,8 +127,8 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch, dragRe
     const arr = f[key] || [];
     return { ...f, [key]: arr.includes(val) ? arr.filter(x => x !== val) : [...arr, val] };
   });
-  const reset = () => setFilters({ art:[], unterart:[], cr:[], groesse:[], moral:[], umgebung:[], source:[], legendaer: null, hortaktionen: null });
-  const hasAny = Object.values(filters).some(v => Array.isArray(v) ? v.length > 0 : v !== null);
+  const reset = () => setFilters({ art:[], unterart:[], cr:[], groesse:[], moral:[], umgebung:[], source:[], legendaer: null, hortaktionen: null, sort:'cr-asc' });
+  const hasAny = filters.art.length || filters.unterart.length || filters.cr.length || filters.groesse.length || filters.moral.length || filters.umgebung.length || filters.source.length || filters.legendaer !== null || filters.hortaktionen !== null || filters.sort !== 'cr-asc';
 
   return (
     <div ref={dragRef.ref} onMouseDown={dragRef.onMouseDown} onClickCapture={dragRef.onClickCapture}
@@ -259,6 +260,46 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch, dragRe
           })}
         </div>
       </FilterGroup>
+
+      <FilterGroup title="Sortierung" active={filters.sort !== 'cr-asc'} onReset={() => setFilters(f => ({...f, sort:'cr-asc'}))} collapsible>
+        <div style={{ display:'flex', flexDirection:'column', gap:'2px' }}>
+          {[
+            ['cr-asc',   'HG ↑'],
+            ['cr-desc',  'HG ↓'],
+            ['name-az',  'Name A – Z'],
+            ['name-za',  'Name Z – A'],
+            ['tp-desc',  'TP ↓'],
+            ['tp-asc',   'TP ↑'],
+            ['rk-desc',  'RK ↓'],
+            ['rk-asc',   'RK ↑'],
+            ['str-desc', 'STR ↓'],
+            ['str-asc',  'STR ↑'],
+            ['dex-desc', 'GES ↓'],
+            ['dex-asc',  'GES ↑'],
+            ['con-desc', 'KON ↓'],
+            ['con-asc',  'KON ↑'],
+            ['int-desc', 'INT ↓'],
+            ['int-asc',  'INT ↑'],
+            ['wis-desc', 'WEI ↓'],
+            ['wis-asc',  'WEI ↑'],
+            ['cha-desc', 'CHA ↓'],
+            ['cha-asc',  'CHA ↑'],
+          ].map(([id, label]) => (
+            <button key={id} className={`sort-btn${filters.sort===id?' active':''}`} onClick={() => setFilters(f => ({...f, sort:id}))}>{label}</button>
+          ))}
+        </div>
+      </FilterGroup>
+
+      {hasAny && (
+        <div style={{ marginTop:'auto', paddingTop:'14px', borderTop:'1px solid rgba(160,140,255,0.08)' }}>
+          <button onClick={reset}
+            style={{ width:'100%', padding:'6px', background:'rgba(200,60,60,0.08)', border:'1px solid rgba(200,60,60,0.25)', borderRadius:'2px', color:'rgba(230,90,90,0.65)', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.18em', cursor:'pointer', transition:'all 0.15s', textTransform:'uppercase' }}
+            onMouseEnter={e=>{e.currentTarget.style.background='rgba(200,60,60,0.18)';e.currentTarget.style.borderColor='rgba(230,90,90,0.5)';}}
+            onMouseLeave={e=>{e.currentTarget.style.background='rgba(200,60,60,0.08)';e.currentTarget.style.borderColor='rgba(200,60,60,0.25)';}}>
+            Filter löschen
+          </button>
+        </div>
+      )}
     </div>
   );
 }
@@ -1052,7 +1093,7 @@ function App() {
 
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState(allMonster.find(m => m.cr === 0) || allMonster[0] || null);
-  const [filters, setFilters] = useState({ art:[], unterart:[], cr:[], groesse:[], moral:[], umgebung:[], source:[], legendaer: null, hortaktionen: null });
+  const [filters, setFilters] = useState({ art:[], unterart:[], cr:[], groesse:[], moral:[], umgebung:[], source:[], legendaer: null, hortaktionen: null, sort:'cr-asc' });
   const [typeFilter, setTypeFilter] = useState(null);
 
   const allTypes = useMemo(() => [...new Set(allMonster.map(m => m.art))].sort(), [allMonster]);
@@ -1062,7 +1103,7 @@ function App() {
   const sidebarDrag = useDragScroll({ vertical: true });
 
   const filtered = useMemo(() => {
-    return allMonster.filter(m => {
+    const r = allMonster.filter(m => {
       if (search && !m.name.toLowerCase().includes(search.toLowerCase())) return false;
       if (filters.art.length && !filters.art.includes(m.art)) return false;
       if ((filters.unterart||[]).length && !filters.unterart.some(u => (m.unterart ? m.unterart.split(', ') : []).includes(u))) return false;
@@ -1076,21 +1117,50 @@ function App() {
       if (typeFilter && m.art !== typeFilter) return false;
       return true;
     });
+    const attr = k => m => (m.attribute || {})[k] ?? 0;
+    switch (filters.sort) {
+      case 'cr-desc':  r.sort((a,b) => b.cr - a.cr); break;
+      case 'name-az':  r.sort((a,b) => a.name.localeCompare(b.name, 'de')); break;
+      case 'name-za':  r.sort((a,b) => b.name.localeCompare(a.name, 'de')); break;
+      case 'tp-desc':  r.sort((a,b) => (b.tp||0) - (a.tp||0)); break;
+      case 'tp-asc':   r.sort((a,b) => (a.tp||0) - (b.tp||0)); break;
+      case 'rk-desc':  r.sort((a,b) => (b.rk||0) - (a.rk||0)); break;
+      case 'rk-asc':   r.sort((a,b) => (a.rk||0) - (b.rk||0)); break;
+      case 'str-desc': r.sort((a,b) => attr('STR')(b) - attr('STR')(a)); break;
+      case 'str-asc':  r.sort((a,b) => attr('STR')(a) - attr('STR')(b)); break;
+      case 'dex-desc': r.sort((a,b) => attr('DEX')(b) - attr('DEX')(a)); break;
+      case 'dex-asc':  r.sort((a,b) => attr('DEX')(a) - attr('DEX')(b)); break;
+      case 'con-desc': r.sort((a,b) => attr('CON')(b) - attr('CON')(a)); break;
+      case 'con-asc':  r.sort((a,b) => attr('CON')(a) - attr('CON')(b)); break;
+      case 'int-desc': r.sort((a,b) => attr('INT')(b) - attr('INT')(a)); break;
+      case 'int-asc':  r.sort((a,b) => attr('INT')(a) - attr('INT')(b)); break;
+      case 'wis-desc': r.sort((a,b) => attr('WIS')(b) - attr('WIS')(a)); break;
+      case 'wis-asc':  r.sort((a,b) => attr('WIS')(a) - attr('WIS')(b)); break;
+      case 'cha-desc': r.sort((a,b) => attr('CHA')(b) - attr('CHA')(a)); break;
+      case 'cha-asc':  r.sort((a,b) => attr('CHA')(a) - attr('CHA')(b)); break;
+      default:         r.sort((a,b) => a.cr - b.cr); break; // cr-asc
+    }
+    return r;
   }, [allMonster, search, filters, typeFilter]);
 
   useEffect(() => {
     setSelected(prev => (prev && !filtered.includes(prev)) ? filtered[0] || null : prev);
   }, [filtered]);
 
-  // Group by CR
+  // Group by CR only when sort is cr-based; otherwise flat list as single group
   const grouped = useMemo(() => {
-    const map = new Map();
-    filtered.forEach(m => {
-      if (!map.has(m.cr)) map.set(m.cr, []);
-      map.get(m.cr).push(m);
-    });
-    return [...map.entries()].sort((a,b) => a[0]-b[0]);
-  }, [filtered]);
+    const byCR = filters.sort === 'cr-asc' || filters.sort === 'cr-desc';
+    if (byCR) {
+      const map = new Map();
+      filtered.forEach(m => {
+        if (!map.has(m.cr)) map.set(m.cr, []);
+        map.get(m.cr).push(m);
+      });
+      const entries = [...map.entries()];
+      return filters.sort === 'cr-desc' ? entries.sort((a,b) => b[0]-a[0]) : entries.sort((a,b) => a[0]-b[0]);
+    }
+    return [[null, filtered]];
+  }, [filtered, filters.sort]);
 
   if (!authed) return <PasswordGate onUnlock={() => setAuthed(true)} />;
 
@@ -1129,11 +1199,13 @@ function App() {
             <EmptyState msg="Keine Monster gefunden" />
           ) : (
             grouped.map(([cr, monster]) => (
-              <div key={cr}>
-                <div style={{ padding:'8px 12px 4px', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:'rgba(160,140,255,0.45)', textTransform:'uppercase', background:'rgba(160,140,255,0.04)', borderBottom:'1px solid rgba(160,140,255,0.06)', position:'sticky', top:0, backdropFilter:'blur(4px)', zIndex:2 }}>
-                  HG {formatCR(cr)}
-                  <span style={{ marginLeft:'6px', opacity:0.6 }}>({monster.length})</span>
-                </div>
+              <div key={cr ?? '__flat__'}>
+                {cr !== null && (
+                  <div style={{ padding:'8px 12px 4px', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:'rgba(160,140,255,0.45)', textTransform:'uppercase', background:'rgba(160,140,255,0.04)', borderBottom:'1px solid rgba(160,140,255,0.06)', position:'sticky', top:0, backdropFilter:'blur(4px)', zIndex:2 }}>
+                    HG {formatCR(cr)}
+                    <span style={{ marginLeft:'6px', opacity:0.6 }}>({monster.length})</span>
+                  </div>
+                )}
                 {monster.map(m => (
                   <MonsterRow key={m.name} monster={m} active={selected && selected.name === m.name} onClick={setSelected} compact={t.compactList} />
                 ))}

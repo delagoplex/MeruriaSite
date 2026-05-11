@@ -10,14 +10,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,4 kg",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "2,8 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 4925,
@@ -30,14 +31,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,6 kg",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "3,2 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 2,
-    "sg": 13
+    "stärke": 3,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 4926,
@@ -50,14 +52,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "462 g",
-    "verkaufspreis": "9 Hade",
+    "gewicht": "0,9 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 2,
-    "sg": 12
+    "stärke": 3,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 4869,
@@ -70,14 +73,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "152 g",
-    "verkaufspreis": "12 Hade",
+    "gewicht": "0,3 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 4,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 4870,
@@ -90,14 +94,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,1 kg",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "2,2 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 4927,
@@ -110,14 +115,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "671 g",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "1,3 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 2,
-    "sg": 11
+    "stärke": 3,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 4928,
@@ -130,14 +136,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "498 g",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "1,0 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 4,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 4871,
@@ -150,14 +157,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "534 g",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "1,1 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 2,
-    "sg": 10
+    "stärke": 3,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 4929,
@@ -170,14 +178,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,6 kg",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "3,2 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 5460,
@@ -190,14 +199,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "194 g",
-    "verkaufspreis": "12 Hade",
+    "gewicht": "0,4 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 12
+    "stärke": 2,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 4930,
@@ -210,14 +220,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "584 g",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "1,2 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
     "stärke": 2,
-    "sg": 11
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 4872,
@@ -230,14 +241,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,7 kg",
-    "verkaufspreis": "16 Hade",
+    "gewicht": "3,4 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 14
+    "sg": 14,
+    "wassersort": "süß"
   },
   {
     "id": 4931,
@@ -250,14 +262,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "283 g",
-    "verkaufspreis": "16 Hade",
+    "gewicht": "0,6 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 3,
-    "sg": 12
+    "stärke": 2,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 4873,
@@ -270,14 +283,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "421 g",
-    "verkaufspreis": "18 Hade",
+    "gewicht": "0,8 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 1,
-    "sg": 13
+    "stärke": 2,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 4874,
@@ -290,14 +304,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "775 g",
-    "verkaufspreis": "12 Hade",
+    "gewicht": "1,6 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "salz"
   },
   {
     "id": 4932,
@@ -310,14 +325,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 5,
-    "sg": 12
+    "stärke": 3,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 4933,
@@ -330,14 +346,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "137 g",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "0,3 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 4,
-    "sg": 10
+    "stärke": 1,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 4875,
@@ -350,14 +367,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "902 g",
-    "verkaufspreis": "12 Hade",
+    "gewicht": "1,8 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 10
+    "sg": 10,
+    "wassersort": "salz"
   },
   {
     "id": 4934,
@@ -370,14 +388,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "18 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 11
+    "stärke": 3,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 4876,
@@ -390,14 +409,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,2 kg",
-    "verkaufspreis": "20 Hade",
+    "gewicht": "2,4 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 2,
-    "sg": 13
+    "stärke": 3,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 4935,
@@ -410,14 +430,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "749 g",
-    "verkaufspreis": "18 Hade",
+    "gewicht": "1,5 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 12
+    "stärke": 2,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 4877,
@@ -430,14 +451,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "356 g",
-    "verkaufspreis": "16 Hade",
+    "gewicht": "0,7 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 3,
-    "sg": 11
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 4936,
@@ -450,14 +472,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "28 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 3,
-    "sg": 15
+    "stärke": 2,
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 4937,
@@ -470,14 +493,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "176 g",
-    "verkaufspreis": "38 Hade",
+    "gewicht": "0,4 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 7,
-    "sg": 15
+    "stärke": 1,
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 4938,
@@ -490,14 +514,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,6 kg",
-    "verkaufspreis": "50 Hade",
+    "gewicht": "5,2 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Tiefsee"
     ],
-    "stärke": 6,
-    "sg": 15
+    "stärke": 5,
+    "sg": 15,
+    "wassersort": "salz"
   },
   {
     "id": 4878,
@@ -510,15 +535,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "38 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Stürmisch"
     ],
-    "stärke": 5,
-    "sg": 14
+    "stärke": 4,
+    "sg": 14,
+    "wassersort": "süß"
   },
   {
     "id": 4939,
@@ -531,14 +557,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "645 g",
-    "verkaufspreis": "32 Hade",
+    "gewicht": "1,3 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 2,
-    "sg": 15
+    "stärke": 3,
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 4940,
@@ -551,14 +578,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "513 g",
-    "verkaufspreis": "38 Hade",
+    "gewicht": "1,0 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 3,
-    "sg": 13
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 4941,
@@ -571,14 +599,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,4 kg",
-    "verkaufspreis": "26 Hade",
+    "gewicht": "2,8 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 2,
-    "sg": 15
+    "stärke": 4,
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 4879,
@@ -591,14 +620,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,8 kg",
-    "verkaufspreis": "12 Hade",
+    "gewicht": "3,6 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 3,
-    "sg": 13
+    "stärke": 2,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 4942,
@@ -611,14 +641,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "313 g",
-    "verkaufspreis": "36 Hade",
+    "gewicht": "0,6 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 6,
-    "sg": 14
+    "stärke": 5,
+    "sg": 14,
+    "wassersort": "süß"
   },
   {
     "id": 4880,
@@ -631,14 +662,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "746 g",
-    "verkaufspreis": "36 Hade",
+    "gewicht": "1,5 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 3,
-    "sg": 16
+    "stärke": 2,
+    "sg": 16,
+    "wassersort": "süß"
   },
   {
     "id": 4943,
@@ -651,14 +683,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,0 kg",
-    "verkaufspreis": "10 Hade",
+    "gewicht": "2,0 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 4,
-    "sg": 12
+    "stärke": 2,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 4944,
@@ -671,14 +704,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "887 g",
-    "verkaufspreis": "42 Hade",
+    "gewicht": "1,8 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 5,
-    "sg": 15
+    "stärke": 3,
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 4881,
@@ -691,14 +725,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "422 g",
-    "verkaufspreis": "24 Hade",
+    "gewicht": "0,8 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 4,
-    "sg": 12
+    "stärke": 2,
+    "sg": 12,
+    "wassersort": "salz"
   },
   {
     "id": 4945,
@@ -711,14 +746,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,6 kg",
-    "verkaufspreis": "38 Hade",
+    "gewicht": "3,2 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
     "stärke": 3,
-    "sg": 15
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 4946,
@@ -731,14 +767,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "370 g",
-    "verkaufspreis": "18 Hade",
+    "gewicht": "0,7 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 4,
-    "sg": 13
+    "stärke": 3,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 4882,
@@ -751,14 +788,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "12 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 4,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 4947,
@@ -771,14 +809,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "38 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 2,
-    "sg": 14
+    "stärke": 4,
+    "sg": 14,
+    "wassersort": "süß"
   },
   {
     "id": 4883,
@@ -791,14 +830,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "630 g",
-    "verkaufspreis": "30 Hade",
+    "gewicht": "1,3 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 4,
-    "sg": 15
+    "stärke": 3,
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 4948,
@@ -811,14 +851,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,7 kg",
-    "verkaufspreis": "32 Hade",
+    "gewicht": "7,4 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 3,
-    "sg": 16
+    "stärke": 7,
+    "sg": 16,
+    "wassersort": "süß"
   },
   {
     "id": 4949,
@@ -831,14 +872,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "218 g",
-    "verkaufspreis": "22 Hade",
+    "gewicht": "0,4 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 4,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 4884,
@@ -851,14 +893,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,4 kg",
-    "verkaufspreis": "18 Hade",
+    "gewicht": "2,8 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 4,
-    "sg": 11
+    "stärke": 3,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 4950,
@@ -871,14 +914,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,2 kg",
-    "verkaufspreis": "40 Hade",
+    "gewicht": "2,4 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 3,
-    "sg": 13
+    "stärke": 2,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 4885,
@@ -891,14 +935,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,5 kg",
-    "verkaufspreis": "75 Hade",
+    "gewicht": "9,0 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 3,
-    "sg": 16
+    "stärke": 7,
+    "sg": 16,
+    "wassersort": "süß"
   },
   {
     "id": 4951,
@@ -911,14 +956,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,7 kg",
-    "verkaufspreis": "85 Hade",
+    "gewicht": "5,4 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 3,
-    "sg": 15
+    "stärke": 5,
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 4952,
@@ -931,14 +977,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "823 g",
-    "verkaufspreis": "80 Hade",
+    "gewicht": "1,6 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 3,
-    "sg": 18
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 4953,
@@ -951,14 +998,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,0 kg",
-    "verkaufspreis": "55 Hade",
+    "gewicht": "4,0 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 5,
-    "sg": 15
+    "stärke": 6,
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 4886,
@@ -971,14 +1019,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,5 kg",
-    "verkaufspreis": "60 Hade",
+    "gewicht": "3,0 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch"
     ],
-    "stärke": 3,
-    "sg": 15
+    "stärke": 2,
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 4954,
@@ -991,14 +1040,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "245 g",
-    "verkaufspreis": "65 Hade",
+    "gewicht": "0,5 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 7,
-    "sg": 15
+    "stärke": 4,
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 4955,
@@ -1011,15 +1061,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,1 kg",
-    "verkaufspreis": "55 Hade",
+    "gewicht": "2,2 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Warm",
       "Schattenhaft"
     ],
-    "stärke": 3,
-    "sg": 17
+    "stärke": 4,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 4956,
@@ -1032,14 +1083,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "9,1 kg",
-    "verkaufspreis": "38 Hade",
+    "gewicht": "18,2 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 4,
-    "sg": 14
+    "sg": 14,
+    "wassersort": "süß"
   },
   {
     "id": 4957,
@@ -1052,14 +1104,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,8 kg",
-    "verkaufspreis": "70 Hade",
+    "gewicht": "3,6 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 5,
-    "sg": 15
+    "stärke": 4,
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 4887,
@@ -1072,14 +1125,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,8 kg",
-    "verkaufspreis": "60 Hade",
+    "gewicht": "3,6 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 5,
-    "sg": 18
+    "stärke": 3,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 4958,
@@ -1092,14 +1146,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,0 kg",
-    "verkaufspreis": "85 Hade",
+    "gewicht": "16,0 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 4,
-    "sg": 16
+    "stärke": 5,
+    "sg": 16,
+    "wassersort": "süß"
   },
   {
     "id": 4959,
@@ -1112,14 +1167,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "294 g",
-    "verkaufspreis": "44 Hade",
+    "gewicht": "0,6 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 4,
-    "sg": 13
+    "stärke": 3,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 5461,
@@ -1132,14 +1188,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,7 kg",
-    "verkaufspreis": "55 Hade",
+    "gewicht": "3,4 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 4,
-    "sg": 17
+    "stärke": 2,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 4888,
@@ -1152,14 +1209,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,5 kg",
-    "verkaufspreis": "60 Hade",
+    "gewicht": "3,0 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken"
     ],
     "stärke": 5,
-    "sg": 18
+    "sg": 18,
+    "wassersort": "salz"
   },
   {
     "id": 4960,
@@ -1172,14 +1230,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,2 kg",
-    "verkaufspreis": "65 Hade",
+    "gewicht": "2,4 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 4,
-    "sg": 15
+    "stärke": 2,
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 4961,
@@ -1192,14 +1251,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "60 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 4,
-    "sg": 18
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 4889,
@@ -1212,14 +1272,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "86 g",
-    "verkaufspreis": "38 Hade",
+    "gewicht": "0,2 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Tiefsee"
     ],
-    "stärke": 4,
-    "sg": 13
+    "stärke": 1,
+    "sg": 13,
+    "wassersort": "salz"
   },
   {
     "id": 4890,
@@ -1232,14 +1293,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,7 kg",
-    "verkaufspreis": "50 Hade",
+    "gewicht": "5,4 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 4,
-    "sg": 16
+    "stärke": 6,
+    "sg": 16,
+    "wassersort": "süß"
   },
   {
     "id": 4962,
@@ -1252,14 +1314,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,9 kg",
-    "verkaufspreis": "24 Hade",
+    "gewicht": "5,8 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 5,
-    "sg": 12
+    "stärke": 6,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 4963,
@@ -1272,14 +1335,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "0,9 kg",
-    "verkaufspreis": "60 Hade",
+    "gewicht": "1,8 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
     "stärke": 4,
-    "sg": 17
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 4891,
@@ -1292,14 +1356,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "60 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 5,
-    "sg": 15
+    "stärke": 4,
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 4964,
@@ -1312,16 +1377,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "925 g",
-    "verkaufspreis": "85 Hade",
+    "gewicht": "1,9 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Stürmisch",
       "Schattenhaft"
     ],
-    "stärke": 6,
-    "sg": 15
+    "stärke": 2,
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 4892,
@@ -1334,14 +1400,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "667 g",
-    "verkaufspreis": "85 Hade",
+    "gewicht": "1,3 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 5,
-    "sg": 17
+    "stärke": 4,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 4965,
@@ -1354,14 +1421,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,5 kg",
-    "verkaufspreis": "60 Hade",
+    "gewicht": "17,0 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 7,
-    "sg": 16
+    "stärke": 5,
+    "sg": 16,
+    "wassersort": "süß"
   },
   {
     "id": 4966,
@@ -1374,14 +1442,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "65 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 3,
-    "sg": 15
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 4893,
@@ -1394,14 +1463,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "355 g",
-    "verkaufspreis": "48 Hade",
+    "gewicht": "0,7 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 16
+    "stärke": 4,
+    "sg": 16,
+    "wassersort": "süß"
   },
   {
     "id": 4967,
@@ -1414,14 +1484,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,1 kg",
-    "verkaufspreis": "90 Hade",
+    "gewicht": "2,2 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 6,
-    "sg": 18
+    "stärke": 4,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 4894,
@@ -1434,14 +1505,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,3 kg",
-    "verkaufspreis": "60 Hade",
+    "gewicht": "10,6 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 8,
-    "sg": 16
+    "stärke": 4,
+    "sg": 16,
+    "wassersort": "süß"
   },
   {
     "id": 4968,
@@ -1454,14 +1526,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,9 kg",
-    "verkaufspreis": "115 Hade",
+    "gewicht": "9,8 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 6,
-    "sg": 18
+    "stärke": 7,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 5544,
@@ -1474,14 +1547,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "842 g",
-    "verkaufspreis": "90 Hade",
+    "gewicht": "1,7 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 5,
-    "sg": 17
+    "stärke": 2,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 4895,
@@ -1494,14 +1568,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,1 kg",
-    "verkaufspreis": "120 Hade",
+    "gewicht": "14,2 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 6,
-    "sg": 17
+    "stärke": 5,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 4969,
@@ -1514,14 +1589,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,8 kg",
-    "verkaufspreis": "70 Hade",
+    "gewicht": "3,6 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 6,
-    "sg": 15
+    "stärke": 7,
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 4896,
@@ -1534,14 +1610,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "78 kg",
-    "verkaufspreis": "140 Hade",
+    "gewicht": "156 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 7,
-    "sg": 17
+    "stärke": 11,
+    "sg": 17,
+    "wassersort": "salz"
   },
   {
     "id": 4970,
@@ -1554,15 +1631,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,2 kg",
-    "verkaufspreis": "145 Hade",
+    "gewicht": "16,4 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Toxisch"
     ],
-    "stärke": 8,
-    "sg": 19
+    "stärke": 5,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 4971,
@@ -1575,14 +1653,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "179 g",
-    "verkaufspreis": "65 Hade",
+    "gewicht": "0,4 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken"
     ],
-    "stärke": 5,
-    "sg": 17
+    "stärke": 2,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 4972,
@@ -1595,14 +1674,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,4 kg",
-    "verkaufspreis": "85 Hade",
+    "gewicht": "4,8 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Sumpfig"
     ],
     "stärke": 5,
-    "sg": 18
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 4897,
@@ -1615,14 +1695,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "38 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 6,
-    "sg": 16
+    "stärke": 3,
+    "sg": 16,
+    "wassersort": "süß"
   },
   {
     "id": 4973,
@@ -1635,14 +1716,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "343 g",
-    "verkaufspreis": "65 Hade",
+    "gewicht": "0,7 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 6,
-    "sg": 18
+    "stärke": 3,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 4898,
@@ -1655,14 +1737,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "998 g",
-    "verkaufspreis": "85 Hade",
+    "gewicht": "2,0 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 8,
-    "sg": 18
+    "stärke": 4,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 4974,
@@ -1675,14 +1758,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,1 kg",
-    "verkaufspreis": "65 Hade",
+    "gewicht": "2,2 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 5,
-    "sg": 18
+    "stärke": 4,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 4899,
@@ -1695,14 +1779,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,0 kg",
-    "verkaufspreis": "36 Hade",
+    "gewicht": "2,0 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 6,
-    "sg": 14
+    "sg": 14,
+    "wassersort": "süß"
   },
   {
     "id": 4975,
@@ -1715,14 +1800,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,2 kg",
-    "verkaufspreis": "75 Hade",
+    "gewicht": "2,4 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 4,
-    "sg": 18
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 4976,
@@ -1735,14 +1821,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "45,6 kg",
-    "verkaufspreis": "46 Hade",
+    "gewicht": "91,2 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 5,
-    "sg": 16
+    "stärke": 10,
+    "sg": 16,
+    "wassersort": "süß"
   },
   {
     "id": 4900,
@@ -1755,14 +1842,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "387 g",
-    "verkaufspreis": "80 Hade",
+    "gewicht": "0,8 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 7,
-    "sg": 16
+    "stärke": 2,
+    "sg": 16,
+    "wassersort": "süß"
   },
   {
     "id": 4977,
@@ -1775,14 +1863,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,5 kg",
-    "verkaufspreis": "80 Hade",
+    "gewicht": "3,0 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken"
     ],
-    "stärke": 6,
-    "sg": 17
+    "stärke": 2,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 4978,
@@ -1795,14 +1884,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "443 g",
-    "verkaufspreis": "185 Hade",
+    "gewicht": "0,9 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 6,
-    "sg": 18
+    "stärke": 3,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 4979,
@@ -1815,14 +1905,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,7 kg",
-    "verkaufspreis": "300 Hade",
+    "gewicht": "9,4 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 7,
-    "sg": 20
+    "stärke": 6,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 5032,
@@ -1835,14 +1926,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,5 kg",
-    "verkaufspreis": "80 Hade",
+    "gewicht": "3,0 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken"
     ],
     "stärke": 7,
-    "sg": 15
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 4901,
@@ -1855,14 +1947,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "53 g",
-    "verkaufspreis": "115 Hade",
+    "gewicht": "0,1 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 7,
-    "sg": 17
+    "stärke": 1,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 4980,
@@ -1875,14 +1968,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,7 kg",
-    "verkaufspreis": "155 Hade",
+    "gewicht": "17,4 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 6,
-    "sg": 19
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 4981,
@@ -1895,14 +1989,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "32,0 kg",
-    "verkaufspreis": "120 Hade",
+    "gewicht": "64,0 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 6,
-    "sg": 18
+    "stärke": 12,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 5033,
@@ -1915,14 +2010,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "811 kg",
-    "verkaufspreis": "320 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken"
     ],
-    "stärke": 7,
-    "sg": 20
+    "stärke": 11,
+    "sg": 20,
+    "wassersort": "salz"
   },
   {
     "id": 4902,
@@ -1935,14 +2031,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,8 kg",
-    "verkaufspreis": "150 Hade",
+    "gewicht": "3,6 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 6,
-    "sg": 19
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 4982,
@@ -1955,14 +2052,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "38,1 kg",
-    "verkaufspreis": "170 Hade",
+    "gewicht": "76,2 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 8,
-    "sg": 17
+    "stärke": 9,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 4983,
@@ -1975,14 +2073,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "9,4 kg",
-    "verkaufspreis": "160 Hade",
+    "gewicht": "18,8 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Sumpfig"
     ],
-    "stärke": 7,
-    "sg": 20
+    "stärke": 8,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 5034,
@@ -1995,16 +2094,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,0 kg",
-    "verkaufspreis": "155 Hade",
+    "gewicht": "10,0 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken",
       "Stürmisch",
       "Magisch"
     ],
-    "stärke": 7,
-    "sg": 20
+    "stärke": 5,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 4984,
@@ -2017,14 +2117,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,3 kg",
-    "verkaufspreis": "240 Hade",
+    "gewicht": "6,6 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 6,
-    "sg": 21
+    "stärke": 5,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 5035,
@@ -2037,15 +2138,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,6 kg",
-    "verkaufspreis": "155 Hade",
+    "gewicht": "15,2 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken",
       "Stürmisch"
     ],
-    "stärke": 7,
-    "sg": 18
+    "stärke": 5,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 4985,
@@ -2058,14 +2160,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,6 kg",
-    "verkaufspreis": "90 Hade",
+    "gewicht": "5,2 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 7,
-    "sg": 16
+    "stärke": 4,
+    "sg": 16,
+    "wassersort": "süß"
   },
   {
     "id": 4986,
@@ -2078,14 +2181,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,3 kg",
-    "verkaufspreis": "80 Hade",
+    "gewicht": "12,6 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 9,
-    "sg": 18
+    "stärke": 5,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 4987,
@@ -2098,14 +2202,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,6 kg",
-    "verkaufspreis": "170 Hade",
+    "gewicht": "13,2 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 6,
-    "sg": 18
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 5036,
@@ -2118,16 +2223,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,4 kg",
-    "verkaufspreis": "125 Hade",
+    "gewicht": "16,8 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Trocken",
       "Schattenhaft"
     ],
-    "stärke": 9,
-    "sg": 17
+    "stärke": 6,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 5462,
@@ -2140,14 +2246,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,5 kg",
-    "verkaufspreis": "260 Hade",
+    "gewicht": "3,0 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 7,
-    "sg": 20
+    "stärke": 6,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 4988,
@@ -2160,14 +2267,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,9 kg",
-    "verkaufspreis": "125 Hade",
+    "gewicht": "11,8 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 20
+    "stärke": 7,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 4989,
@@ -2180,14 +2288,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,7 kg",
-    "verkaufspreis": "85 Hade",
+    "gewicht": "17,4 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Vulkanisch"
     ],
-    "stärke": 10,
-    "sg": 15
+    "stärke": 6,
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 5037,
@@ -2200,14 +2309,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "179 kg",
-    "verkaufspreis": "200 Hade",
+    "gewicht": "358 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken"
     ],
-    "stärke": 8,
-    "sg": 19
+    "stärke": 12,
+    "sg": 19,
+    "wassersort": "salz"
   },
   {
     "id": 4903,
@@ -2220,14 +2330,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "781 kg",
-    "verkaufspreis": "320 Hade",
+    "gewicht": "1.562 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 9,
-    "sg": 23
+    "stärke": 13,
+    "sg": 23,
+    "wassersort": "salz"
   },
   {
     "id": 4990,
@@ -2240,14 +2351,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,7 kg",
-    "verkaufspreis": "165 Hade",
+    "gewicht": "13,4 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 17
+    "stärke": 7,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 4991,
@@ -2260,14 +2372,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "702 kg",
-    "verkaufspreis": "220 Hade",
+    "gewicht": "1.404 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 7,
-    "sg": 22
+    "stärke": 11,
+    "sg": 22,
+    "wassersort": "salz"
   },
   {
     "id": 4992,
@@ -2280,14 +2393,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "831 kg",
-    "verkaufspreis": "280 Hade",
+    "gewicht": "600 Pfd.",
+    "verkaufspreis": "250.000 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 8,
-    "sg": 23
+    "stärke": 17,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 4993,
@@ -2300,14 +2414,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,8 kg",
-    "verkaufspreis": "170 Hade",
+    "gewicht": "13,6 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 7,
-    "sg": 18
+    "stärke": 5,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 4904,
@@ -2320,14 +2435,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,7 kg",
-    "verkaufspreis": "125 Hade",
+    "gewicht": "15,4 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 7,
-    "sg": 17
+    "stärke": 6,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 4905,
@@ -2340,14 +2456,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,5 kg",
-    "verkaufspreis": "100 Hade",
+    "gewicht": "5,0 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 17
+    "stärke": 7,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 4994,
@@ -2360,14 +2477,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,9 kg",
-    "verkaufspreis": "140 Hade",
+    "gewicht": "9,8 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 7,
-    "sg": 19
+    "stärke": 6,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 4995,
@@ -2380,14 +2498,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,2 kg",
-    "verkaufspreis": "100 Hade",
+    "gewicht": "10,4 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 9,
-    "sg": 17
+    "stärke": 6,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 5466,
@@ -2400,14 +2519,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,1 kg",
-    "verkaufspreis": "240 Hade",
+    "gewicht": "12,2 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 7,
-    "sg": 22
+    "stärke": 8,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 4996,
@@ -2420,14 +2540,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,4 kg",
-    "verkaufspreis": "180 Hade",
+    "gewicht": "2,8 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 20
+    "stärke": 7,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 4997,
@@ -2440,14 +2561,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,3 kg",
-    "verkaufspreis": "125 Hade",
+    "gewicht": "8,6 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 7,
-    "sg": 19
+    "stärke": 8,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 4998,
@@ -2460,14 +2582,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,9 kg",
-    "verkaufspreis": "130 Hade",
+    "gewicht": "9,8 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 9,
-    "sg": 20
+    "stärke": 5,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 4906,
@@ -2480,14 +2603,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,2 kg",
-    "verkaufspreis": "100 Hade",
+    "gewicht": "12,4 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 7,
-    "sg": 15
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 4999,
@@ -2500,14 +2624,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,8 kg",
-    "verkaufspreis": "100 Hade",
+    "gewicht": "13,6 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 16
+    "stärke": 4,
+    "sg": 16,
+    "wassersort": "süß"
   },
   {
     "id": 5038,
@@ -2520,14 +2645,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,7 kg",
-    "verkaufspreis": "105 Hade",
+    "gewicht": "9,4 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 8,
-    "sg": 18
+    "stärke": 7,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 5000,
@@ -2540,14 +2666,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,9 kg",
-    "verkaufspreis": "85 Hade",
+    "gewicht": "9,8 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 16
+    "stärke": 5,
+    "sg": 16,
+    "wassersort": "süß"
   },
   {
     "id": 5001,
@@ -2560,14 +2687,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,2 kg",
-    "verkaufspreis": "185 Hade",
+    "gewicht": "4,4 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 7,
-    "sg": 20
+    "stärke": 6,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 4907,
@@ -2580,14 +2708,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,3 kg",
-    "verkaufspreis": "195 Hade",
+    "gewicht": "12,6 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 17
+    "stärke": 4,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 5002,
@@ -2600,14 +2729,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,1 kg",
-    "verkaufspreis": "165 Hade",
+    "gewicht": "6,2 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 19
+    "stärke": 11,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 5003,
@@ -2620,14 +2750,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,8 kg",
-    "verkaufspreis": "185 Hade",
+    "gewicht": "3,6 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch"
     ],
-    "stärke": 8,
-    "sg": 18
+    "stärke": 7,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 5039,
@@ -2640,14 +2771,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,0 kg",
-    "verkaufspreis": "165 Hade",
+    "gewicht": "2,0 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 11,
-    "sg": 17
+    "stärke": 7,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 4908,
@@ -2660,14 +2792,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,2 kg",
-    "verkaufspreis": "170 Hade",
+    "gewicht": "10,4 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 10,
-    "sg": 20
+    "stärke": 5,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 5040,
@@ -2680,14 +2813,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,9 kg",
-    "verkaufspreis": "130 Hade",
+    "gewicht": "7,8 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 7,
-    "sg": 20
+    "stärke": 5,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 5004,
@@ -2700,16 +2834,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,2 kg",
-    "verkaufspreis": "130 Hade",
+    "gewicht": "14,4 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch",
       "Magisch",
       "Vulkanisch"
     ],
-    "stärke": 9,
-    "sg": 17
+    "stärke": 7,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 5005,
@@ -2722,14 +2857,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,4 kg",
-    "verkaufspreis": "155 Hade",
+    "gewicht": "10,8 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 20
+    "stärke": 5,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 5041,
@@ -2742,14 +2878,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "194 kg",
-    "verkaufspreis": "280 Hade",
+    "gewicht": "388 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 9,
-    "sg": 21
+    "stärke": 11,
+    "sg": 21,
+    "wassersort": "salz"
   },
   {
     "id": 4909,
@@ -2762,14 +2899,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,7 kg",
-    "verkaufspreis": "95 Hade",
+    "gewicht": "15,4 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 11,
-    "sg": 16
+    "stärke": 5,
+    "sg": 16,
+    "wassersort": "süß"
   },
   {
     "id": 5006,
@@ -2782,14 +2920,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,5 kg",
-    "verkaufspreis": "85 Hade",
+    "gewicht": "13,0 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 15
+    "stärke": 4,
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 5007,
@@ -2802,14 +2941,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,7 kg",
-    "verkaufspreis": "155 Hade",
+    "gewicht": "5,4 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 19
+    "stärke": 6,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 5008,
@@ -2822,14 +2962,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,6 kg",
-    "verkaufspreis": "125 Hade",
+    "gewicht": "13,2 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 20
+    "stärke": 6,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 5042,
@@ -2842,16 +2983,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,1 kg",
-    "verkaufspreis": "130 Hade",
+    "gewicht": "4,2 Pfd.",
+    "verkaufspreis": "360 Hade",
     "lebensraum": [],
     "klima": [
       "Warm",
       "Stürmisch",
       "Magisch"
     ],
-    "stärke": 10,
-    "sg": 19
+    "stärke": 6,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 4910,
@@ -2864,14 +3006,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,0 kg",
-    "verkaufspreis": "145 Hade",
+    "gewicht": "16,0 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 11,
-    "sg": 20
+    "stärke": 6,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 5009,
@@ -2884,14 +3027,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,9 kg",
-    "verkaufspreis": "190 Hade",
+    "gewicht": "13,8 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 8,
-    "sg": 20
+    "stärke": 7,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 5010,
@@ -2904,14 +3048,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,9 kg",
-    "verkaufspreis": "175 Hade",
+    "gewicht": "9,8 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 20
+    "stärke": 9,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 5011,
@@ -2924,14 +3069,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,2 kg",
-    "verkaufspreis": "195 Hade",
+    "gewicht": "16,4 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 11,
-    "sg": 19
+    "stärke": 8,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 5043,
@@ -2944,14 +3090,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "33 g",
-    "verkaufspreis": "195 Hade",
+    "gewicht": "0,1 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken"
     ],
-    "stärke": 9,
-    "sg": 19
+    "stärke": 2,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 5044,
@@ -2964,14 +3111,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,8 kg",
-    "verkaufspreis": "200 Hade",
+    "gewicht": "5,6 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 8,
-    "sg": 18
+    "stärke": 6,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 4911,
@@ -2984,14 +3132,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,2 kg",
-    "verkaufspreis": "160 Hade",
+    "gewicht": "14,4 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 18
+    "stärke": 6,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 5012,
@@ -3004,14 +3153,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,0 kg",
-    "verkaufspreis": "120 Hade",
+    "gewicht": "12,0 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 18
+    "stärke": 4,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 5013,
@@ -3024,14 +3174,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "426 kg",
-    "verkaufspreis": "300 Hade",
+    "gewicht": "852 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 21
+    "stärke": 11,
+    "sg": 21,
+    "wassersort": "salz"
   },
   {
     "id": 4912,
@@ -3044,14 +3195,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,2 kg",
-    "verkaufspreis": "200 Hade",
+    "gewicht": "8,4 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 20
+    "stärke": 7,
+    "sg": 20,
+    "wassersort": "salz"
   },
   {
     "id": 5014,
@@ -3064,14 +3216,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,1 kg",
-    "verkaufspreis": "175 Hade",
+    "gewicht": "12,2 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 17
+    "stärke": 5,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 5015,
@@ -3084,14 +3237,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,1 kg",
-    "verkaufspreis": "170 Hade",
+    "gewicht": "2,2 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 20
+    "stärke": 6,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 4913,
@@ -3104,14 +3258,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "74 kg",
-    "verkaufspreis": "280 Hade",
+    "gewicht": "148 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Tiefsee"
     ],
-    "stärke": 9,
-    "sg": 22
+    "stärke": 13,
+    "sg": 22,
+    "wassersort": "salz"
   },
   {
     "id": 4914,
@@ -3124,14 +3279,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,7 kg",
-    "verkaufspreis": "145 Hade",
+    "gewicht": "13,4 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 19
+    "stärke": 5,
+    "sg": 19,
+    "wassersort": "salz"
   },
   {
     "id": 5016,
@@ -3144,14 +3300,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "781 kg",
-    "verkaufspreis": "135 Hade",
+    "gewicht": "1.562 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 9,
-    "sg": 17
+    "stärke": 14,
+    "sg": 17,
+    "wassersort": "salz"
   },
   {
     "id": 5017,
@@ -3164,14 +3321,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,6 kg",
-    "verkaufspreis": "135 Hade",
+    "gewicht": "17,2 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 19
+    "stärke": 7,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 4915,
@@ -3184,14 +3342,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,1 kg",
-    "verkaufspreis": "220 Hade",
+    "gewicht": "2,2 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 22
+    "stärke": 6,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 4916,
@@ -3204,14 +3363,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,4 kg",
-    "verkaufspreis": "100 Hade",
+    "gewicht": "6,8 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 17
+    "stärke": 5,
+    "sg": 17,
+    "wassersort": "salz"
   },
   {
     "id": 5018,
@@ -3224,14 +3384,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "853 kg",
-    "verkaufspreis": "105 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken"
     ],
-    "stärke": 11,
-    "sg": 20
+    "stärke": 13,
+    "sg": 20,
+    "wassersort": "salz"
   },
   {
     "id": 5019,
@@ -3244,14 +3405,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "9,2 kg",
-    "verkaufspreis": "115 Hade",
+    "gewicht": "18,4 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 19
+    "stärke": 5,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 5020,
@@ -3264,14 +3426,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "592 kg",
-    "verkaufspreis": "220 Hade",
+    "gewicht": "1.184 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 20
+    "stärke": 14,
+    "sg": 20,
+    "wassersort": "salz"
   },
   {
     "id": 5045,
@@ -3284,14 +3447,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,1 kg",
-    "verkaufspreis": "175 Hade",
+    "gewicht": "8,2 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken"
     ],
-    "stärke": 8,
-    "sg": 20
+    "stärke": 7,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 4917,
@@ -3304,14 +3468,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,7 kg",
-    "verkaufspreis": "150 Hade",
+    "gewicht": "3,4 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 9,
-    "sg": 19
+    "stärke": 6,
+    "sg": 19,
+    "wassersort": "salz"
   },
   {
     "id": 4918,
@@ -3324,14 +3489,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,7 kg",
-    "verkaufspreis": "90 Hade",
+    "gewicht": "11,4 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Tiefsee"
     ],
-    "stärke": 9,
-    "sg": 18
+    "stärke": 6,
+    "sg": 18,
+    "wassersort": "salz"
   },
   {
     "id": 5021,
@@ -3344,15 +3510,16 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,0 kg",
-    "verkaufspreis": "200 Hade",
+    "gewicht": "4,0 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Toxisch"
     ],
-    "stärke": 11,
-    "sg": 20
+    "stärke": 6,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 5046,
@@ -3365,15 +3532,16 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "860 kg",
-    "verkaufspreis": "200 Hade",
+    "gewicht": "600 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Stürmisch"
     ],
-    "stärke": 10,
-    "sg": 19
+    "stärke": 13,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 4919,
@@ -3386,14 +3554,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "9,2 kg",
-    "verkaufspreis": "110 Hade",
+    "gewicht": "18,4 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 11,
-    "sg": 19
+    "stärke": 10,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 4920,
@@ -3406,14 +3575,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "276 kg",
-    "verkaufspreis": "280 Hade",
+    "gewicht": "552 Pfd.",
+    "verkaufspreis": "500.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 22
+    "stärke": 16,
+    "sg": 22,
+    "wassersort": "salz"
   },
   {
     "id": 4921,
@@ -3426,14 +3596,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,4 kg",
-    "verkaufspreis": "170 Hade",
+    "gewicht": "8,8 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 18
+    "stärke": 4,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 4922,
@@ -3446,14 +3617,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "432 kg",
-    "verkaufspreis": "135 Hade",
+    "gewicht": "864 Pfd.",
+    "verkaufspreis": "250.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 18
+    "stärke": 17,
+    "sg": 18,
+    "wassersort": "salz"
   },
   {
     "id": 5022,
@@ -3466,14 +3638,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "700 kg",
-    "verkaufspreis": "220 Hade",
+    "gewicht": "1.400 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 20
+    "stärke": 12,
+    "sg": 20,
+    "wassersort": "salz"
   },
   {
     "id": 5023,
@@ -3486,14 +3659,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,9 kg",
-    "verkaufspreis": "85 Hade",
+    "gewicht": "3,8 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 6,
-    "sg": 15
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 5024,
@@ -3506,14 +3680,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,2 kg",
-    "verkaufspreis": "90 Hade",
+    "gewicht": "12,4 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 15
+    "stärke": 6,
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 5025,
@@ -3526,14 +3701,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,6 kg",
-    "verkaufspreis": "240 Hade",
+    "gewicht": "13,2 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 21
+    "stärke": 8,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 5026,
@@ -3546,14 +3722,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,7 kg",
-    "verkaufspreis": "155 Hade",
+    "gewicht": "15,4 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 19
+    "stärke": 5,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 5027,
@@ -3566,14 +3743,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "9,1 kg",
-    "verkaufspreis": "150 Hade",
+    "gewicht": "18,2 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 20
+    "stärke": 5,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 4923,
@@ -3586,14 +3764,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,4 kg",
-    "verkaufspreis": "140 Hade",
+    "gewicht": "4,8 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 10,
-    "sg": 20
+    "stärke": 6,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 4924,
@@ -3606,14 +3785,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "80 kg",
-    "verkaufspreis": "240 Hade",
+    "gewicht": "160 Pfd.",
+    "verkaufspreis": "350.000 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
-    "stärke": 9,
-    "sg": 22
+    "stärke": 18,
+    "sg": 22,
+    "wassersort": "salz"
   },
   {
     "id": 5028,
@@ -3626,14 +3806,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,6 kg",
-    "verkaufspreis": "195 Hade",
+    "gewicht": "3,2 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 11,
-    "sg": 18
+    "stärke": 5,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 5029,
@@ -3646,14 +3827,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,8 kg",
-    "verkaufspreis": "110 Hade",
+    "gewicht": "17,6 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 19
+    "stärke": 6,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 5030,
@@ -3666,14 +3848,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "321 kg",
-    "verkaufspreis": "340 Hade",
+    "gewicht": "642 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch"
     ],
-    "stärke": 11,
-    "sg": 22
+    "stärke": 13,
+    "sg": 22,
+    "wassersort": "salz"
   },
   {
     "id": 5031,
@@ -3686,14 +3869,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,1 kg",
-    "verkaufspreis": "130 Hade",
+    "gewicht": "8,2 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 19
+    "stärke": 7,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 6185,
@@ -3706,14 +3890,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,8 kg",
-    "verkaufspreis": "110 Hade",
+    "gewicht": "9,6 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 20
+    "stärke": 7,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 6191,
@@ -3726,14 +3911,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,0 kg",
-    "verkaufspreis": "150 Hade",
+    "gewicht": "16,0 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 20
+    "stärke": 6,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 7678,
@@ -3746,14 +3932,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,6 kg",
-    "verkaufspreis": "50 Hade",
+    "gewicht": "11,2 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 13,
-    "sg": 13
+    "stärke": 6,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 7679,
@@ -3766,14 +3953,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "9,4 kg",
-    "verkaufspreis": "145 Hade",
+    "gewicht": "18,8 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 18
+    "stärke": 4,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 7680,
@@ -3786,14 +3974,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,4 kg",
-    "verkaufspreis": "48 Hade",
+    "gewicht": "8,8 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 15
+    "stärke": 4,
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 7681,
@@ -3806,15 +3995,16 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,1 kg",
-    "verkaufspreis": "110 Hade",
+    "gewicht": "12,2 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Stürmisch"
     ],
-    "stärke": 11,
-    "sg": 19
+    "stärke": 6,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 7682,
@@ -3827,14 +4017,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,2 kg",
-    "verkaufspreis": "185 Hade",
+    "gewicht": "16,4 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 10,
-    "sg": 19
+    "stärke": 6,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 7683,
@@ -3847,14 +4038,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,6 kg",
-    "verkaufspreis": "160 Hade",
+    "gewicht": "15,2 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 20
+    "stärke": 7,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 7684,
@@ -3867,14 +4059,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "175 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 19
+    "stärke": 7,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 7685,
@@ -3887,14 +4080,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,8 kg",
-    "verkaufspreis": "165 Hade",
+    "gewicht": "7,6 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 17
+    "stärke": 7,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 7686,
@@ -3907,14 +4101,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,6 kg",
-    "verkaufspreis": "195 Hade",
+    "gewicht": "13,2 Pfd.",
+    "verkaufspreis": "200.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 20
+    "stärke": 11,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 7687,
@@ -3927,14 +4122,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,8 kg",
-    "verkaufspreis": "320 Hade",
+    "gewicht": "5,6 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 11,
-    "sg": 22
+    "stärke": 6,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 7688,
@@ -3947,14 +4143,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "191 kg",
-    "verkaufspreis": "240 Hade",
+    "gewicht": "382 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 11,
-    "sg": 23
+    "stärke": 12,
+    "sg": 23,
+    "wassersort": "salz"
   },
   {
     "id": 7689,
@@ -3967,14 +4164,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,1 kg",
-    "verkaufspreis": "165 Hade",
+    "gewicht": "12,2 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 20
+    "stärke": 6,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 7690,
@@ -3987,14 +4185,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,5 kg",
-    "verkaufspreis": "320 Hade",
+    "gewicht": "17,0 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 8,
-    "sg": 23
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 7691,
@@ -4007,14 +4206,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,5 kg",
-    "verkaufspreis": "150 Hade",
+    "gewicht": "11,0 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 17
+    "stärke": 7,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 7692,
@@ -4027,14 +4227,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,2 kg",
-    "verkaufspreis": "200 Hade",
+    "gewicht": "14,4 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 17
+    "stärke": 7,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 7693,
@@ -4047,14 +4248,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,2 kg",
-    "verkaufspreis": "80 Hade",
+    "gewicht": "6,4 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 16
+    "stärke": 4,
+    "sg": 16,
+    "wassersort": "süß"
   },
   {
     "id": 7694,
@@ -4067,14 +4269,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,7 kg",
-    "verkaufspreis": "140 Hade",
+    "gewicht": "3,4 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 20
+    "stärke": 5,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 7695,
@@ -4087,14 +4290,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,4 kg",
-    "verkaufspreis": "100 Hade",
+    "gewicht": "8,8 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch"
     ],
-    "stärke": 9,
-    "sg": 17
+    "stärke": 5,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 7696,
@@ -4107,14 +4311,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,0 kg",
-    "verkaufspreis": "180 Hade",
+    "gewicht": "2,0 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 19
+    "stärke": 6,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 7697,
@@ -4127,15 +4332,16 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,7 kg",
-    "verkaufspreis": "160 Hade",
+    "gewicht": "7,4 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Schattenhaft"
     ],
-    "stärke": 9,
-    "sg": 17
+    "stärke": 6,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 7698,
@@ -4148,14 +4354,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,9 kg",
-    "verkaufspreis": "150 Hade",
+    "gewicht": "15,8 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 19
+    "stärke": 7,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 7699,
@@ -4168,14 +4375,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,5 kg",
-    "verkaufspreis": "300 Hade",
+    "gewicht": "7,0 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 22
+    "stärke": 8,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 7700,
@@ -4188,15 +4396,16 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,1 kg",
-    "verkaufspreis": "175 Hade",
+    "gewicht": "10,2 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Schattenhaft"
     ],
-    "stärke": 10,
-    "sg": 17
+    "stärke": 4,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 7701,
@@ -4209,14 +4418,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,1 kg",
-    "verkaufspreis": "115 Hade",
+    "gewicht": "4,2 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 10,
-    "sg": 17
+    "stärke": 5,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 7702,
@@ -4229,14 +4439,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,6 kg",
-    "verkaufspreis": "110 Hade",
+    "gewicht": "11,2 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 10,
-    "sg": 17
+    "stärke": 5,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 7703,
@@ -4249,14 +4460,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,2 kg",
-    "verkaufspreis": "48 Hade",
+    "gewicht": "10,4 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 15
+    "stärke": 5,
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 7704,
@@ -4269,14 +4481,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,6 kg",
-    "verkaufspreis": "185 Hade",
+    "gewicht": "11,2 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 20
+    "stärke": 7,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 7705,
@@ -4289,14 +4502,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,4 kg",
-    "verkaufspreis": "85 Hade",
+    "gewicht": "8,8 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
-    "stärke": 8,
-    "sg": 16
+    "stärke": 6,
+    "sg": 16,
+    "wassersort": "süß"
   },
   {
     "id": 7706,
@@ -4309,14 +4523,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,0 kg",
-    "verkaufspreis": "85 Hade",
+    "gewicht": "10,0 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 16
+    "stärke": 7,
+    "sg": 16,
+    "wassersort": "süß"
   },
   {
     "id": 7707,
@@ -4329,14 +4544,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,6 kg",
-    "verkaufspreis": "160 Hade",
+    "gewicht": "5,2 Pfd.",
+    "verkaufspreis": "200.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 19
+    "stärke": 12,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 7708,
@@ -4349,14 +4565,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,9 kg",
-    "verkaufspreis": "130 Hade",
+    "gewicht": "9,8 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 10,
-    "sg": 19
+    "stärke": 5,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 7709,
@@ -4369,14 +4586,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,6 kg",
-    "verkaufspreis": "125 Hade",
+    "gewicht": "7,2 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 19
+    "stärke": 6,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 7710,
@@ -4389,14 +4607,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,6 kg",
-    "verkaufspreis": "95 Hade",
+    "gewicht": "13,2 Pfd.",
+    "verkaufspreis": "350.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 15
+    "stärke": 11,
+    "sg": 15,
+    "wassersort": "salz"
   },
   {
     "id": 7711,
@@ -4409,14 +4628,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,4 kg",
-    "verkaufspreis": "140 Hade",
+    "gewicht": "4,8 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 18
+    "stärke": 6,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 7712,
@@ -4429,14 +4649,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,8 kg",
-    "verkaufspreis": "185 Hade",
+    "gewicht": "15,6 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 20
+    "stärke": 7,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 7713,
@@ -4449,14 +4670,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "9,0 kg",
-    "verkaufspreis": "180 Hade",
+    "gewicht": "18,0 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 9,
-    "sg": 17
+    "stärke": 7,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 7714,
@@ -4469,14 +4691,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,4 kg",
-    "verkaufspreis": "105 Hade",
+    "gewicht": "12,8 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 17
+    "stärke": 4,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 7902,
@@ -4489,14 +4712,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,6 kg",
-    "verkaufspreis": "185 Hade",
+    "gewicht": "11,2 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 18
+    "stärke": 7,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 7903,
@@ -4509,14 +4733,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,7 kg",
-    "verkaufspreis": "170 Hade",
+    "gewicht": "11,4 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 19
+    "stärke": 5,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 7904,
@@ -4529,14 +4754,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,9 kg",
-    "verkaufspreis": "195 Hade",
+    "gewicht": "5,8 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 18
+    "stärke": 5,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 7905,
@@ -4549,14 +4775,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,0 kg",
-    "verkaufspreis": "90 Hade",
+    "gewicht": "12,0 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 15
+    "stärke": 5,
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 7906,
@@ -4569,14 +4796,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "443 kg",
-    "verkaufspreis": "175 Hade",
+    "gewicht": "886 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 17
+    "stärke": 11,
+    "sg": 17,
+    "wassersort": "salz"
   },
   {
     "id": 7907,
@@ -4589,14 +4817,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "530 kg",
-    "verkaufspreis": "240 Hade",
+    "gewicht": "1.060 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 20
+    "stärke": 13,
+    "sg": 20,
+    "wassersort": "salz"
   },
   {
     "id": 7908,
@@ -4609,14 +4838,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,9 kg",
-    "verkaufspreis": "175 Hade",
+    "gewicht": "7,8 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 19
+    "stärke": 7,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 7909,
@@ -4629,14 +4859,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,4 kg",
-    "verkaufspreis": "125 Hade",
+    "gewicht": "4,8 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 18
+    "stärke": 7,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 7910,
@@ -4649,14 +4880,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,8 kg",
-    "verkaufspreis": "130 Hade",
+    "gewicht": "13,6 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 11,
-    "sg": 18
+    "stärke": 4,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 7911,
@@ -4669,14 +4901,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,6 kg",
-    "verkaufspreis": "190 Hade",
+    "gewicht": "5,2 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 6,
-    "sg": 19
+    "stärke": 5,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 7912,
@@ -4689,14 +4922,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "859 kg",
-    "verkaufspreis": "340 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 22
+    "stärke": 12,
+    "sg": 22,
+    "wassersort": "salz"
   },
   {
     "id": 7913,
@@ -4709,14 +4943,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,0 kg",
-    "verkaufspreis": "185 Hade",
+    "gewicht": "8,0 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 9,
-    "sg": 19
+    "stärke": 6,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 7914,
@@ -4729,15 +4964,16 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,6 kg",
-    "verkaufspreis": "100 Hade",
+    "gewicht": "15,2 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Stürmisch"
     ],
-    "stärke": 10,
-    "sg": 18
+    "stärke": 6,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 7915,
@@ -4750,14 +4986,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "269 kg",
-    "verkaufspreis": "280 Hade",
+    "gewicht": "538 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 23
+    "stärke": 15,
+    "sg": 23,
+    "wassersort": "salz"
   },
   {
     "id": 7916,
@@ -4770,14 +5007,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,4 kg",
-    "verkaufspreis": "135 Hade",
+    "gewicht": "14,8 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 18
+    "stärke": 7,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 7917,
@@ -4790,14 +5028,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "787 kg",
-    "verkaufspreis": "240 Hade",
+    "gewicht": "1.574 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 23
+    "stärke": 11,
+    "sg": 23,
+    "wassersort": "salz"
   },
   {
     "id": 7918,
@@ -4810,14 +5049,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,5 kg",
-    "verkaufspreis": "180 Hade",
+    "gewicht": "5,0 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 11,
-    "sg": 17
+    "stärke": 5,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 7919,
@@ -4830,14 +5070,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,3 kg",
-    "verkaufspreis": "165 Hade",
+    "gewicht": "14,6 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 6,
-    "sg": 20
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 7920,
@@ -4850,15 +5091,16 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,0 kg",
-    "verkaufspreis": "100 Hade",
+    "gewicht": "16,0 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch",
       "Magisch"
     ],
-    "stärke": 10,
-    "sg": 15
+    "stärke": 5,
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 7921,
@@ -4871,14 +5113,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "340 kg",
-    "verkaufspreis": "145 Hade",
+    "gewicht": "680 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
-    "stärke": 9,
-    "sg": 19
+    "stärke": 12,
+    "sg": 19,
+    "wassersort": "salz"
   },
   {
     "id": 7922,
@@ -4891,14 +5134,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "9,2 kg",
-    "verkaufspreis": "140 Hade",
+    "gewicht": "18,4 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 11,
-    "sg": 18
+    "stärke": 7,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 7923,
@@ -4911,15 +5155,16 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,8 kg",
-    "verkaufspreis": "42 Hade",
+    "gewicht": "13,6 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Toxisch"
     ],
-    "stärke": 11,
-    "sg": 15
+    "stärke": 7,
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 7924,
@@ -4932,14 +5177,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "258 kg",
-    "verkaufspreis": "180 Hade",
+    "gewicht": "516 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken"
     ],
-    "stärke": 11,
-    "sg": 18
+    "stärke": 10,
+    "sg": 18,
+    "wassersort": "salz"
   },
   {
     "id": 7925,
@@ -4952,14 +5198,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,8 kg",
-    "verkaufspreis": "130 Hade",
+    "gewicht": "9,6 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 19
+    "stärke": 5,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 7926,
@@ -4972,14 +5219,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,9 kg",
-    "verkaufspreis": "135 Hade",
+    "gewicht": "5,8 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 8,
-    "sg": 18
+    "stärke": 5,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 7927,
@@ -4992,14 +5240,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,7 kg",
-    "verkaufspreis": "150 Hade",
+    "gewicht": "17,4 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 19
+    "stärke": 6,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 7928,
@@ -5012,15 +5261,16 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,9 kg",
-    "verkaufspreis": "130 Hade",
+    "gewicht": "15,8 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Schattenhaft"
     ],
-    "stärke": 11,
-    "sg": 18
+    "stärke": 6,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 7929,
@@ -5033,14 +5283,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,4 kg",
-    "verkaufspreis": "165 Hade",
+    "gewicht": "12,8 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 10,
-    "sg": 19
+    "stärke": 7,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 7930,
@@ -5053,15 +5304,16 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,1 kg",
-    "verkaufspreis": "190 Hade",
+    "gewicht": "8,2 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Warm",
       "Trocken"
     ],
-    "stärke": 11,
-    "sg": 19
+    "stärke": 8,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 7931,
@@ -5074,8 +5326,8 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "323 kg",
-    "verkaufspreis": "160 Hade",
+    "gewicht": "646 Pfd.",
+    "verkaufspreis": "100 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken",
@@ -5083,7 +5335,8 @@ window.FISH_DB = [
       "Vulkanisch"
     ],
     "stärke": 11,
-    "sg": 19
+    "sg": 19,
+    "wassersort": "salz"
   },
   {
     "id": 7932,
@@ -5096,14 +5349,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,8 kg",
-    "verkaufspreis": "260 Hade",
+    "gewicht": "11,6 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 9,
-    "sg": 23
+    "stärke": 6,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 7933,
@@ -5116,15 +5370,16 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,7 kg",
-    "verkaufspreis": "170 Hade",
+    "gewicht": "13,4 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Schattenhaft"
     ],
-    "stärke": 10,
-    "sg": 17
+    "stärke": 5,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 7934,
@@ -5137,14 +5392,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,1 kg",
-    "verkaufspreis": "95 Hade",
+    "gewicht": "10,2 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 15
+    "stärke": 5,
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 7935,
@@ -5157,14 +5413,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,2 kg",
-    "verkaufspreis": "95 Hade",
+    "gewicht": "14,4 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 10,
-    "sg": 17
+    "stärke": 6,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 7936,
@@ -5177,14 +5434,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,9 kg",
-    "verkaufspreis": "85 Hade",
+    "gewicht": "17,8 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 8,
-    "sg": 15
+    "stärke": 6,
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 7937,
@@ -5197,14 +5455,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,3 kg",
-    "verkaufspreis": "340 Hade",
+    "gewicht": "8,6 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
     "stärke": 8,
-    "sg": 20
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 7938,
@@ -5217,15 +5476,16 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,4 kg",
-    "verkaufspreis": "105 Hade",
+    "gewicht": "14,8 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Schattenhaft"
     ],
-    "stärke": 10,
-    "sg": 20
+    "stärke": 5,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 7939,
@@ -5238,14 +5498,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,3 kg",
-    "verkaufspreis": "110 Hade",
+    "gewicht": "8,6 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 17
+    "stärke": 5,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 7940,
@@ -5258,14 +5519,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,2 kg",
-    "verkaufspreis": "110 Hade",
+    "gewicht": "4,4 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 17
+    "stärke": 5,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 7941,
@@ -5278,14 +5540,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,5 kg",
-    "verkaufspreis": "175 Hade",
+    "gewicht": "15,0 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 18
+    "stärke": 6,
+    "sg": 18,
+    "wassersort": "salz"
   },
   {
     "id": 7942,
@@ -5298,14 +5561,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,5 kg",
-    "verkaufspreis": "300 Hade",
+    "gewicht": "13,0 Pfd.",
+    "verkaufspreis": "400.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 22
+    "stärke": 12,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 7943,
@@ -5318,14 +5582,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,8 kg",
-    "verkaufspreis": "140 Hade",
+    "gewicht": "9,6 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 11,
-    "sg": 20
+    "stärke": 7,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 7944,
@@ -5338,14 +5603,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "77 kg",
-    "verkaufspreis": "260 Hade",
+    "gewicht": "154 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 9,
-    "sg": 20
+    "stärke": 13,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 7945,
@@ -5358,14 +5624,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,4 kg",
-    "verkaufspreis": "155 Hade",
+    "gewicht": "2,8 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Kosmisch"
     ],
-    "stärke": 8,
-    "sg": 17
+    "stärke": 4,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 7946,
@@ -5378,14 +5645,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,9 kg",
-    "verkaufspreis": "170 Hade",
+    "gewicht": "11,8 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 19
+    "stärke": 5,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 7947,
@@ -5398,14 +5666,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,4 kg",
-    "verkaufspreis": "175 Hade",
+    "gewicht": "6,8 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
-    "stärke": 8,
-    "sg": 18
+    "stärke": 5,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 7948,
@@ -5418,14 +5687,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "863 kg",
-    "verkaufspreis": "260 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 23
+    "stärke": 13,
+    "sg": 23,
+    "wassersort": "salz"
   },
   {
     "id": 7949,
@@ -5438,14 +5708,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,9 kg",
-    "verkaufspreis": "180 Hade",
+    "gewicht": "3,8 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 9,
-    "sg": 17
+    "stärke": 6,
+    "sg": 17,
+    "wassersort": "salz"
   },
   {
     "id": 7950,
@@ -5458,14 +5729,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "738 kg",
-    "verkaufspreis": "220 Hade",
+    "gewicht": "1.476 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 9,
-    "sg": 21
+    "stärke": 13,
+    "sg": 21,
+    "wassersort": "salz"
   },
   {
     "id": 7951,
@@ -5478,14 +5750,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,1 kg",
-    "verkaufspreis": "260 Hade",
+    "gewicht": "16,2 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 10,
-    "sg": 23
+    "stärke": 9,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 8752,
@@ -5498,14 +5771,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "9,1 kg",
-    "verkaufspreis": "170 Hade",
+    "gewicht": "18,2 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 13,
-    "sg": 19
+    "stärke": 6,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 8753,
@@ -5518,14 +5792,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "762 kg",
-    "verkaufspreis": "155 Hade",
+    "gewicht": "1.524 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 17
+    "stärke": 11,
+    "sg": 17,
+    "wassersort": "salz"
   },
   {
     "id": 8754,
@@ -5538,15 +5813,16 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "310 kg",
-    "verkaufspreis": "280 Hade",
+    "gewicht": "620 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Warm",
       "Magisch"
     ],
-    "stärke": 10,
-    "sg": 21
+    "stärke": 13,
+    "sg": 21,
+    "wassersort": "salz"
   },
   {
     "id": 8755,
@@ -5559,14 +5835,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,7 kg",
-    "verkaufspreis": "190 Hade",
+    "gewicht": "11,4 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Tiefsee"
     ],
     "stärke": 7,
-    "sg": 19
+    "sg": 19,
+    "wassersort": "salz"
   },
   {
     "id": 8756,
@@ -5579,14 +5856,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,2 kg",
-    "verkaufspreis": "145 Hade",
+    "gewicht": "12,4 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 8,
-    "sg": 20
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 8757,
@@ -5599,14 +5877,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,3 kg",
-    "verkaufspreis": "220 Hade",
+    "gewicht": "16,6 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
-    "stärke": 9,
-    "sg": 22
+    "stärke": 5,
+    "sg": 22,
+    "wassersort": "salz"
   },
   {
     "id": 8758,
@@ -5619,15 +5898,16 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,1 kg",
-    "verkaufspreis": "260 Hade",
+    "gewicht": "6,2 Pfd.",
+    "verkaufspreis": "280 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Vulkanisch"
     ],
-    "stärke": 11,
-    "sg": 22
+    "stärke": 6,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 8759,
@@ -5640,16 +5920,17 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,2 kg",
-    "verkaufspreis": "300 Hade",
+    "gewicht": "8,4 Pfd.",
+    "verkaufspreis": "320 Hade",
     "lebensraum": [],
     "klima": [
       "Warm",
       "Magisch",
       "Schattenhaft"
     ],
-    "stärke": 10,
-    "sg": 22
+    "stärke": 6,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 8760,
@@ -5662,14 +5943,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,9 kg",
-    "verkaufspreis": "130 Hade",
+    "gewicht": "17,8 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 20
+    "stärke": 6,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 8761,
@@ -5682,14 +5964,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,1 kg",
-    "verkaufspreis": "200 Hade",
+    "gewicht": "4,2 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 7,
-    "sg": 17
+    "stärke": 10,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 8762,
@@ -5702,14 +5985,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,2 kg",
-    "verkaufspreis": "130 Hade",
+    "gewicht": "4,4 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 11,
-    "sg": 19
+    "stärke": 7,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 8763,
@@ -5722,14 +6006,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,6 kg",
-    "verkaufspreis": "115 Hade",
+    "gewicht": "17,2 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 17
+    "stärke": 7,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 8764,
@@ -5742,14 +6027,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "810 kg",
-    "verkaufspreis": "520 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 24
+    "stärke": 12,
+    "sg": 24,
+    "wassersort": "salz"
   },
   {
     "id": 8765,
@@ -5762,14 +6048,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,7 kg",
-    "verkaufspreis": "175 Hade",
+    "gewicht": "13,4 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 20
+    "stärke": 5,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 8766,
@@ -5782,14 +6069,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,3 kg",
-    "verkaufspreis": "140 Hade",
+    "gewicht": "8,6 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 17
+    "stärke": 5,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 8767,
@@ -5802,15 +6090,16 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "200 kg",
-    "verkaufspreis": "240 Hade",
+    "gewicht": "400 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Warm"
     ],
-    "stärke": 10,
-    "sg": 21
+    "stärke": 12,
+    "sg": 21,
+    "wassersort": "salz"
   },
   {
     "id": 8768,
@@ -5823,14 +6112,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,7 kg",
-    "verkaufspreis": "185 Hade",
+    "gewicht": "17,4 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 11,
-    "sg": 17
+    "stärke": 6,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 8769,
@@ -5843,14 +6133,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "9,0 kg",
-    "verkaufspreis": "175 Hade",
+    "gewicht": "18,0 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Tiefsee"
     ],
-    "stärke": 8,
-    "sg": 19
+    "stärke": 7,
+    "sg": 19,
+    "wassersort": "salz"
   },
   {
     "id": 8770,
@@ -5863,14 +6154,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,6 kg",
-    "verkaufspreis": "120 Hade",
+    "gewicht": "13,2 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
     "stärke": 8,
-    "sg": 20
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 8771,
@@ -5883,14 +6175,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "88 kg",
-    "verkaufspreis": "280 Hade",
+    "gewicht": "176 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 20
+    "stärke": 11,
+    "sg": 20,
+    "wassersort": "salz"
   },
   {
     "id": 8772,
@@ -5903,14 +6196,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "850 kg",
-    "verkaufspreis": "200 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 9,
-    "sg": 18
+    "stärke": 11,
+    "sg": 18,
+    "wassersort": "salz"
   },
   {
     "id": 8773,
@@ -5923,14 +6217,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,8 kg",
-    "verkaufspreis": "110 Hade",
+    "gewicht": "13,6 Pfd.",
+    "verkaufspreis": "360 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 13,
-    "sg": 19
+    "stärke": 6,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 8774,
@@ -5943,14 +6238,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "443 kg",
-    "verkaufspreis": "220 Hade",
+    "gewicht": "600 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 20
+    "stärke": 14,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 8775,
@@ -5963,14 +6259,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,4 kg",
-    "verkaufspreis": "100 Hade",
+    "gewicht": "8,8 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 15
+    "stärke": 6,
+    "sg": 15,
+    "wassersort": "süß"
   },
   {
     "id": 8776,
@@ -5983,14 +6280,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,8 kg",
-    "verkaufspreis": "170 Hade",
+    "gewicht": "7,6 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 17
+    "stärke": 7,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 10123,
@@ -6003,14 +6301,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,6 kg",
-    "verkaufspreis": "105 Hade",
+    "gewicht": "13,2 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 18
+    "stärke": 8,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 12713,
@@ -6023,14 +6322,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,0 kg",
-    "verkaufspreis": "260 Hade",
+    "gewicht": "6,0 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 10,
-    "sg": 21
+    "stärke": 6,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 12714,
@@ -6043,14 +6343,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "29 g",
-    "verkaufspreis": "150 Hade",
+    "gewicht": "0,1 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 8,
-    "sg": 17
+    "stärke": 2,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 12715,
@@ -6063,14 +6364,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,2 kg",
-    "verkaufspreis": "320 Hade",
+    "gewicht": "2,4 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 10,
-    "sg": 20
+    "stärke": 6,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 12716,
@@ -6083,15 +6385,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,7 kg",
-    "verkaufspreis": "380 Hade",
+    "gewicht": "15,4 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch",
       "Magisch"
     ],
-    "stärke": 10,
-    "sg": 21
+    "stärke": 7,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 12718,
@@ -6104,15 +6407,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,0 kg",
-    "verkaufspreis": "400 Hade",
+    "gewicht": "4,0 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Warm"
     ],
-    "stärke": 9,
-    "sg": 21
+    "stärke": 8,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 12719,
@@ -6125,14 +6429,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,3 kg",
-    "verkaufspreis": "220 Hade",
+    "gewicht": "14,6 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 13,
-    "sg": 20
+    "stärke": 5,
+    "sg": 20,
+    "wassersort": "salz"
   },
   {
     "id": 12720,
@@ -6145,14 +6450,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,0 kg",
-    "verkaufspreis": "360 Hade",
+    "gewicht": "4,0 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 11,
-    "sg": 23
+    "stärke": 6,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 12721,
@@ -6165,14 +6471,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,8 kg",
-    "verkaufspreis": "400 Hade",
+    "gewicht": "7,6 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 21
+    "stärke": 6,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 12722,
@@ -6185,14 +6492,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,0 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "8,0 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 10,
-    "sg": 24
+    "stärke": 6,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 12723,
@@ -6205,16 +6513,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,9 kg",
-    "verkaufspreis": "560 Hade",
+    "gewicht": "5,8 Pfd.",
+    "verkaufspreis": "2.200 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch",
       "Magisch",
       "Kosmisch"
     ],
-    "stärke": 9,
-    "sg": 25
+    "stärke": 8,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 12724,
@@ -6227,15 +6536,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,9 kg",
-    "verkaufspreis": "360 Hade",
+    "gewicht": "17,8 Pfd.",
+    "verkaufspreis": "320 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Magisch"
     ],
-    "stärke": 10,
-    "sg": 22
+    "stärke": 8,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 12725,
@@ -6248,14 +6558,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,5 kg",
-    "verkaufspreis": "320 Hade",
+    "gewicht": "11,0 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 10,
-    "sg": 22
+    "stärke": 8,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 12726,
@@ -6268,14 +6579,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,5 kg",
-    "verkaufspreis": "460 Hade",
+    "gewicht": "9,0 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 9,
-    "sg": 24
+    "stärke": 6,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 12727,
@@ -6288,15 +6600,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,8 kg",
-    "verkaufspreis": "360 Hade",
+    "gewicht": "13,6 Pfd.",
+    "verkaufspreis": "90 Hade",
     "lebensraum": [],
     "klima": [
       "Warm",
       "Vulkanisch"
     ],
-    "stärke": 8,
-    "sg": 20
+    "stärke": 5,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 12728,
@@ -6309,14 +6622,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,7 kg",
-    "verkaufspreis": "420 Hade",
+    "gewicht": "13,4 Pfd.",
+    "verkaufspreis": "100 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 24
+    "stärke": 7,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 12729,
@@ -6329,14 +6643,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,5 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "13,0 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 23
+    "stärke": 7,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 12730,
@@ -6349,14 +6664,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,2 kg",
-    "verkaufspreis": "200 Hade",
+    "gewicht": "10,4 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 11,
-    "sg": 18
+    "stärke": 6,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 12731,
@@ -6369,14 +6685,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,7 kg",
-    "verkaufspreis": "400 Hade",
+    "gewicht": "15,4 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
     "stärke": 8,
-    "sg": 23
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 12732,
@@ -6389,14 +6706,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "757 kg",
-    "verkaufspreis": "420 Hade",
+    "gewicht": "1.514 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 10,
-    "sg": 26
+    "stärke": 15,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 12733,
@@ -6409,14 +6727,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,0 kg",
-    "verkaufspreis": "420 Hade",
+    "gewicht": "2,0 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 23
+    "stärke": 6,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 12734,
@@ -6429,14 +6748,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,7 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "3,4 Pfd.",
+    "verkaufspreis": "220 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 24
+    "stärke": 6,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 12735,
@@ -6449,14 +6769,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,6 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "7,2 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 10,
-    "sg": 23
+    "stärke": 7,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 12736,
@@ -6469,14 +6790,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,6 kg",
-    "verkaufspreis": "360 Hade",
+    "gewicht": "17,2 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 9,
-    "sg": 20
+    "stärke": 6,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 12737,
@@ -6489,14 +6811,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,8 kg",
-    "verkaufspreis": "220 Hade",
+    "gewicht": "9,6 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 10,
-    "sg": 21
+    "stärke": 7,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 12738,
@@ -6509,14 +6832,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,5 kg",
-    "verkaufspreis": "320 Hade",
+    "gewicht": "5,0 Pfd.",
+    "verkaufspreis": "360 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 9,
-    "sg": 23
+    "stärke": 8,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 12739,
@@ -6529,14 +6853,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "190 kg",
-    "verkaufspreis": "660 Hade",
+    "gewicht": "380 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 9,
-    "sg": 25
+    "stärke": 14,
+    "sg": 25,
+    "wassersort": "salz"
   },
   {
     "id": 12740,
@@ -6549,14 +6874,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,4 kg",
-    "verkaufspreis": "220 Hade",
+    "gewicht": "16,8 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 7,
-    "sg": 20
+    "stärke": 5,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 12741,
@@ -6569,14 +6895,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,2 kg",
-    "verkaufspreis": "200 Hade",
+    "gewicht": "14,4 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 17
+    "stärke": 5,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 12742,
@@ -6589,14 +6916,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,5 kg",
-    "verkaufspreis": "280 Hade",
+    "gewicht": "17,0 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 22
+    "stärke": 6,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 12743,
@@ -6609,14 +6937,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,1 kg",
-    "verkaufspreis": "400 Hade",
+    "gewicht": "14,2 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 22
+    "stärke": 7,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 12744,
@@ -6629,14 +6958,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,2 kg",
-    "verkaufspreis": "190 Hade",
+    "gewicht": "12,4 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 18
+    "stärke": 6,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 12745,
@@ -6649,15 +6979,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,8 kg",
-    "verkaufspreis": "300 Hade",
+    "gewicht": "9,6 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Warm",
       "Vulkanisch"
     ],
-    "stärke": 9,
-    "sg": 22
+    "stärke": 8,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 12746,
@@ -6670,16 +7001,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,6 kg",
-    "verkaufspreis": "200 Hade",
+    "gewicht": "3,2 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Warm",
       "Stürmisch"
     ],
-    "stärke": 10,
-    "sg": 20
+    "stärke": 8,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 12747,
@@ -6692,14 +7024,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,6 kg",
-    "verkaufspreis": "240 Hade",
+    "gewicht": "13,2 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 11,
-    "sg": 23
+    "stärke": 6,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 12748,
@@ -6712,14 +7045,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "407 kg",
-    "verkaufspreis": "660 Hade",
+    "gewicht": "814 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 12,
-    "sg": 26
+    "stärke": 15,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 12749,
@@ -6732,14 +7066,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "570 kg",
-    "verkaufspreis": "680 Hade",
+    "gewicht": "1.140 Pfd.",
+    "verkaufspreis": "280 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 10,
-    "sg": 24
+    "stärke": 12,
+    "sg": 24,
+    "wassersort": "salz"
   },
   {
     "id": 12750,
@@ -6752,14 +7087,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,7 kg",
-    "verkaufspreis": "280 Hade",
+    "gewicht": "17,4 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 21
+    "stärke": 7,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 12751,
@@ -6772,14 +7108,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "16,8 kg",
-    "verkaufspreis": "420 Hade",
+    "gewicht": "33,6 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 10,
-    "sg": 23
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 12752,
@@ -6792,14 +7129,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,2 kg",
-    "verkaufspreis": "360 Hade",
+    "gewicht": "14,4 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 21
+    "stärke": 8,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 12753,
@@ -6812,14 +7150,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,7 kg",
-    "verkaufspreis": "240 Hade",
+    "gewicht": "17,4 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
     "stärke": 8,
-    "sg": 20
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 12754,
@@ -6832,16 +7171,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,2 kg",
-    "verkaufspreis": "360 Hade",
+    "gewicht": "4,4 Pfd.",
+    "verkaufspreis": "100 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Warm",
       "Vulkanisch"
     ],
-    "stärke": 12,
-    "sg": 20
+    "stärke": 5,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 12755,
@@ -6854,15 +7194,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,9 kg",
-    "verkaufspreis": "600 Hade",
+    "gewicht": "15,8 Pfd.",
+    "verkaufspreis": "250.000 Hade",
     "lebensraum": [],
     "klima": [
       "Warm",
       "Vulkanisch"
     ],
-    "stärke": 8,
-    "sg": 25
+    "stärke": 11,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 12756,
@@ -6875,14 +7216,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "519 kg",
-    "verkaufspreis": "460 Hade",
+    "gewicht": "1.038 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 23
+    "stärke": 12,
+    "sg": 23,
+    "wassersort": "salz"
   },
   {
     "id": 12757,
@@ -6895,14 +7237,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,9 kg",
-    "verkaufspreis": "400 Hade",
+    "gewicht": "3,8 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 11,
-    "sg": 20
+    "stärke": 8,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 12758,
@@ -6915,14 +7258,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "840 kg",
-    "verkaufspreis": "340 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 20
+    "stärke": 13,
+    "sg": 20,
+    "wassersort": "salz"
   },
   {
     "id": 12759,
@@ -6935,15 +7279,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "144 g",
+    "gewicht": "0,3 Pfd.",
     "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch",
       "Vulkanisch"
     ],
-    "stärke": 12,
-    "sg": 19
+    "stärke": 2,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 12760,
@@ -6956,14 +7301,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "604 kg",
-    "verkaufspreis": "320 Hade",
+    "gewicht": "1.208 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 9,
-    "sg": 23
+    "stärke": 14,
+    "sg": 23,
+    "wassersort": "salz"
   },
   {
     "id": 12761,
@@ -6976,14 +7322,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,0 kg",
-    "verkaufspreis": "360 Hade",
+    "gewicht": "2,0 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 23
+    "stärke": 6,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 12762,
@@ -6996,14 +7343,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,8 kg",
-    "verkaufspreis": "340 Hade",
+    "gewicht": "15,6 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 9,
-    "sg": 22
+    "stärke": 6,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 12763,
@@ -7016,14 +7364,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,7 kg",
-    "verkaufspreis": "300 Hade",
+    "gewicht": "5,4 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 10,
-    "sg": 20
+    "stärke": 6,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 12764,
@@ -7036,15 +7385,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "216 kg",
-    "verkaufspreis": "660 Hade",
+    "gewicht": "432 Pfd.",
+    "verkaufspreis": "360 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Warm"
     ],
-    "stärke": 12,
-    "sg": 24
+    "stärke": 15,
+    "sg": 24,
+    "wassersort": "salz"
   },
   {
     "id": 12765,
@@ -7057,15 +7407,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,6 kg",
-    "verkaufspreis": "320 Hade",
+    "gewicht": "11,2 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Stürmisch"
     ],
-    "stärke": 12,
-    "sg": 21
+    "stärke": 7,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 12766,
@@ -7078,15 +7429,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,5 kg",
-    "verkaufspreis": "220 Hade",
+    "gewicht": "11,0 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Warm"
     ],
-    "stärke": 10,
-    "sg": 22
+    "stärke": 8,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 12767,
@@ -7099,14 +7451,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,4 kg",
-    "verkaufspreis": "340 Hade",
+    "gewicht": "8,8 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 22
+    "stärke": 8,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 12768,
@@ -7119,14 +7472,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,1 kg",
-    "verkaufspreis": "300 Hade",
+    "gewicht": "8,2 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 21
+    "stärke": 5,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 12769,
@@ -7139,15 +7493,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "726 kg",
-    "verkaufspreis": "660 Hade",
+    "gewicht": "1.452 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Schattenhaft"
     ],
-    "stärke": 15,
-    "sg": 26
+    "stärke": 12,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 12770,
@@ -7160,14 +7515,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,4 kg",
-    "verkaufspreis": "320 Hade",
+    "gewicht": "12,8 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 23
+    "stärke": 7,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 12771,
@@ -7180,14 +7536,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,7 kg",
-    "verkaufspreis": "280 Hade",
+    "gewicht": "3,4 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 21
+    "stärke": 7,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 12772,
@@ -7200,15 +7557,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "0,9 kg",
-    "verkaufspreis": "220 Hade",
+    "gewicht": "1,8 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Vulkanisch"
     ],
-    "stärke": 12,
-    "sg": 22
+    "stärke": 7,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 12773,
@@ -7221,14 +7579,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,6 kg",
-    "verkaufspreis": "280 Hade",
+    "gewicht": "5,2 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 22
+    "stärke": 8,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 12774,
@@ -7241,14 +7600,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "168 g",
-    "verkaufspreis": "200 Hade",
+    "gewicht": "0,3 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 17
+    "stärke": 2,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 12775,
@@ -7261,14 +7621,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,0 kg",
-    "verkaufspreis": "260 Hade",
+    "gewicht": "4,0 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 20
+    "stärke": 5,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 12776,
@@ -7281,14 +7642,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,2 kg",
-    "verkaufspreis": "400 Hade",
+    "gewicht": "2,4 Pfd.",
+    "verkaufspreis": "320 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 12,
-    "sg": 23
+    "stärke": 6,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 12777,
@@ -7301,14 +7663,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,0 kg",
-    "verkaufspreis": "280 Hade",
+    "gewicht": "16,0 Pfd.",
+    "verkaufspreis": "360 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 12,
-    "sg": 21
+    "stärke": 6,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 12778,
@@ -7321,14 +7684,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,3 kg",
-    "verkaufspreis": "110 Hade",
+    "gewicht": "12,6 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch"
     ],
-    "stärke": 11,
-    "sg": 18
+    "stärke": 6,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 12779,
@@ -7341,14 +7705,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,1 kg",
-    "verkaufspreis": "360 Hade",
+    "gewicht": "2,2 Pfd.",
+    "verkaufspreis": "90 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 12,
-    "sg": 23
+    "stärke": 8,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 12780,
@@ -7361,14 +7726,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,2 kg",
-    "verkaufspreis": "260 Hade",
+    "gewicht": "2,4 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 12,
-    "sg": 20
+    "stärke": 7,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 12781,
@@ -7381,14 +7747,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "186 kg",
-    "verkaufspreis": "480 Hade",
+    "gewicht": "372 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 26
+    "stärke": 15,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 12782,
@@ -7401,14 +7768,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,2 kg",
-    "verkaufspreis": "420 Hade",
+    "gewicht": "16,4 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 24
+    "stärke": 6,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 12783,
@@ -7421,14 +7789,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,0 kg",
-    "verkaufspreis": "260 Hade",
+    "gewicht": "8,0 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 9,
-    "sg": 21
+    "stärke": 6,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 12784,
@@ -7441,15 +7810,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "707 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "1.414 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch",
       "Magisch"
     ],
-    "stärke": 10,
-    "sg": 25
+    "stärke": 13,
+    "sg": 25,
+    "wassersort": "salz"
   },
   {
     "id": 12785,
@@ -7462,14 +7832,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "166 g",
-    "verkaufspreis": "140 Hade",
+    "gewicht": "0,3 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 10,
-    "sg": 17
+    "stärke": 2,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 12786,
@@ -7482,15 +7853,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,4 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "8,8 Pfd.",
+    "verkaufspreis": "1.200 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch",
       "Vulkanisch"
     ],
-    "stärke": 12,
-    "sg": 23
+    "stärke": 8,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 12787,
@@ -7503,14 +7875,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,3 kg",
-    "verkaufspreis": "360 Hade",
+    "gewicht": "6,6 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Vulkanisch"
     ],
-    "stärke": 9,
-    "sg": 22
+    "stärke": 8,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 12788,
@@ -7523,14 +7896,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,0 kg",
-    "verkaufspreis": "195 Hade",
+    "gewicht": "6,0 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 11,
-    "sg": 17
+    "stärke": 7,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 12789,
@@ -7543,14 +7917,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "9,3 kg",
-    "verkaufspreis": "200 Hade",
+    "gewicht": "18,6 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 10,
-    "sg": 19
+    "stärke": 5,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 12790,
@@ -7563,14 +7938,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,6 kg",
-    "verkaufspreis": "420 Hade",
+    "gewicht": "5,2 Pfd.",
+    "verkaufspreis": "360 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 10,
-    "sg": 23
+    "stärke": 6,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 12791,
@@ -7583,14 +7959,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "222 kg",
-    "verkaufspreis": "560 Hade",
+    "gewicht": "444 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 6,
-    "sg": 23
+    "stärke": 12,
+    "sg": 23,
+    "wassersort": "salz"
   },
   {
     "id": 12792,
@@ -7603,14 +7980,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,6 kg",
-    "verkaufspreis": "280 Hade",
+    "gewicht": "3,2 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 22
+    "stärke": 7,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 12793,
@@ -7623,14 +8001,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,1 kg",
-    "verkaufspreis": "200 Hade",
+    "gewicht": "14,2 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 9,
-    "sg": 17
+    "stärke": 6,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 12794,
@@ -7643,15 +8022,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,3 kg",
-    "verkaufspreis": "300 Hade",
+    "gewicht": "16,6 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch",
       "Kosmisch"
     ],
-    "stärke": 9,
-    "sg": 21
+    "stärke": 8,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 12795,
@@ -7664,14 +8044,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,5 kg",
-    "verkaufspreis": "260 Hade",
+    "gewicht": "7,0 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 10,
-    "sg": 23
+    "stärke": 9,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 12796,
@@ -7684,14 +8065,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,5 kg",
-    "verkaufspreis": "240 Hade",
+    "gewicht": "5,0 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 9,
-    "sg": 20
+    "stärke": 5,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 12797,
@@ -7704,14 +8086,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "600 kg",
-    "verkaufspreis": "600 Hade",
+    "gewicht": "1.200 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
-    "stärke": 10,
-    "sg": 25
+    "stärke": 15,
+    "sg": 25,
+    "wassersort": "salz"
   },
   {
     "id": 12798,
@@ -7724,15 +8107,16 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,6 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "17,2 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch",
       "Magisch"
     ],
-    "stärke": 12,
-    "sg": 25
+    "stärke": 7,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 12799,
@@ -7745,14 +8129,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,1 kg",
-    "verkaufspreis": "240 Hade",
+    "gewicht": "12,2 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 9,
-    "sg": 21
+    "stärke": 7,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 12800,
@@ -7765,14 +8150,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,2 kg",
-    "verkaufspreis": "420 Hade",
+    "gewicht": "14,4 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 23
+    "stärke": 8,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 12801,
@@ -7785,14 +8171,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,6 kg",
-    "verkaufspreis": "420 Hade",
+    "gewicht": "13,2 Pfd.",
+    "verkaufspreis": "280 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 11,
-    "sg": 24
+    "stärke": 8,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 12802,
@@ -7805,14 +8192,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "263 kg",
-    "verkaufspreis": "420 Hade",
+    "gewicht": "526 Pfd.",
+    "verkaufspreis": "320 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 24
+    "stärke": 17,
+    "sg": 24,
+    "wassersort": "salz"
   },
   {
     "id": 12803,
@@ -7825,14 +8213,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,8 kg",
-    "verkaufspreis": "300 Hade",
+    "gewicht": "7,6 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 13,
-    "sg": 20
+    "stärke": 5,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 12804,
@@ -7845,15 +8234,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,2 kg",
-    "verkaufspreis": "150 Hade",
+    "gewicht": "14,4 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Toxisch"
     ],
-    "stärke": 11,
-    "sg": 20
+    "stärke": 5,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 12805,
@@ -7866,14 +8256,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "811 kg",
-    "verkaufspreis": "560 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "90 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 25
+    "stärke": 13,
+    "sg": 25,
+    "wassersort": "salz"
   },
   {
     "id": 12806,
@@ -7886,14 +8277,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "75 g",
-    "verkaufspreis": "175 Hade",
+    "gewicht": "0,1 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 14,
-    "sg": 17
+    "stärke": 2,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 12807,
@@ -7906,14 +8298,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,3 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "8,6 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 12,
-    "sg": 24
+    "stärke": 8,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 12808,
@@ -7926,14 +8319,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "29,5 kg",
-    "verkaufspreis": "420 Hade",
+    "gewicht": "59,0 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
     "stärke": 11,
-    "sg": 23
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 12809,
@@ -7946,14 +8340,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "109 g",
-    "verkaufspreis": "340 Hade",
+    "gewicht": "0,2 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 23
+    "stärke": 3,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 12810,
@@ -7966,14 +8361,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,7 kg",
-    "verkaufspreis": "300 Hade",
+    "gewicht": "9,4 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 20
+    "stärke": 5,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 12811,
@@ -7986,14 +8382,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,7 kg",
-    "verkaufspreis": "220 Hade",
+    "gewicht": "9,4 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 20
+    "stärke": 5,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 12812,
@@ -8006,15 +8403,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,7 kg",
-    "verkaufspreis": "130 Hade",
+    "gewicht": "5,4 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Toxisch"
     ],
-    "stärke": 14,
-    "sg": 17
+    "stärke": 5,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 12813,
@@ -8027,15 +8425,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,7 kg",
-    "verkaufspreis": "260 Hade",
+    "gewicht": "5,4 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch",
       "Magisch"
     ],
-    "stärke": 12,
-    "sg": 20
+    "stärke": 6,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 12814,
@@ -8048,15 +8447,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "710 kg",
-    "verkaufspreis": "960 Hade",
+    "gewicht": "1.420 Pfd.",
+    "verkaufspreis": "400.000 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch",
       "Schattenhaft"
     ],
-    "stärke": 10,
-    "sg": 27
+    "stärke": 18,
+    "sg": 27,
+    "wassersort": "salz"
   },
   {
     "id": 12815,
@@ -8069,14 +8469,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,4 kg",
-    "verkaufspreis": "300 Hade",
+    "gewicht": "16,8 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 22
+    "stärke": 8,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 12816,
@@ -8089,14 +8490,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "9,0 kg",
-    "verkaufspreis": "150 Hade",
+    "gewicht": "18,0 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch"
     ],
-    "stärke": 12,
-    "sg": 18
+    "stärke": 7,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 12817,
@@ -8109,14 +8511,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,4 kg",
-    "verkaufspreis": "300 Hade",
+    "gewicht": "10,8 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 22
+    "stärke": 7,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 12818,
@@ -8129,14 +8532,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,9 kg",
-    "verkaufspreis": "175 Hade",
+    "gewicht": "7,8 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 11,
-    "sg": 20
+    "stärke": 5,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 12819,
@@ -8149,14 +8553,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,7 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "11,4 Pfd.",
+    "verkaufspreis": "100 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 24
+    "stärke": 7,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 12820,
@@ -8169,15 +8574,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,1 kg",
-    "verkaufspreis": "220 Hade",
+    "gewicht": "6,2 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Warm",
       "Vulkanisch"
     ],
-    "stärke": 9,
-    "sg": 21
+    "stärke": 7,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 12821,
@@ -8190,14 +8596,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "360 kg",
-    "verkaufspreis": "660 Hade",
+    "gewicht": "720 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 23
+    "stärke": 13,
+    "sg": 23,
+    "wassersort": "salz"
   },
   {
     "id": 12822,
@@ -8210,14 +8617,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,4 kg",
-    "verkaufspreis": "240 Hade",
+    "gewicht": "14,8 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 11,
-    "sg": 22
+    "stärke": 8,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 12823,
@@ -8230,14 +8638,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "33,1 kg",
-    "verkaufspreis": "240 Hade",
+    "gewicht": "66,2 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
     "stärke": 11,
-    "sg": 23
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 12824,
@@ -8250,14 +8659,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,6 kg",
-    "verkaufspreis": "280 Hade",
+    "gewicht": "9,2 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 22
+    "stärke": 5,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 12825,
@@ -8270,15 +8680,16 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "59,1 kg",
-    "verkaufspreis": "620 Hade",
+    "gewicht": "118 Pfd.",
+    "verkaufspreis": "220 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch",
       "Magisch"
     ],
-    "stärke": 13,
-    "sg": 24
+    "stärke": 9,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 12826,
@@ -8291,8 +8702,8 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,2 kg",
-    "verkaufspreis": "380 Hade",
+    "gewicht": "6,4 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
@@ -8300,8 +8711,9 @@ window.FISH_DB = [
       "Magisch",
       "Vulkanisch"
     ],
-    "stärke": 16,
-    "sg": 20
+    "stärke": 6,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 12827,
@@ -8314,14 +8726,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "248 kg",
-    "verkaufspreis": "580 Hade",
+    "gewicht": "496 Pfd.",
+    "verkaufspreis": "280 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 26
+    "stärke": 13,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 12828,
@@ -8334,14 +8747,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "56,0 kg",
-    "verkaufspreis": "420 Hade",
+    "gewicht": "112 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 13,
-    "sg": 23
+    "stärke": 10,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 12829,
@@ -8354,14 +8768,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,9 kg",
-    "verkaufspreis": "200 Hade",
+    "gewicht": "5,8 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 17
+    "stärke": 7,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 12830,
@@ -8374,14 +8789,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "841 kg",
-    "verkaufspreis": "380 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 21
+    "stärke": 14,
+    "sg": 21,
+    "wassersort": "salz"
   },
   {
     "id": 12831,
@@ -8394,14 +8810,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,6 kg",
-    "verkaufspreis": "400 Hade",
+    "gewicht": "17,2 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 12,
-    "sg": 22
+    "stärke": 8,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 12832,
@@ -8414,15 +8831,16 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,9 kg",
-    "verkaufspreis": "280 Hade",
+    "gewicht": "15,8 Pfd.",
+    "verkaufspreis": "100 Hade",
     "lebensraum": [],
     "klima": [
       "Warm",
       "Vulkanisch"
     ],
-    "stärke": 10,
-    "sg": 23
+    "stärke": 6,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 12833,
@@ -8435,14 +8853,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "46,6 kg",
-    "verkaufspreis": "380 Hade",
+    "gewicht": "93,2 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 13,
-    "sg": 20
+    "stärke": 9,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 12834,
@@ -8455,14 +8874,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,0 kg",
-    "verkaufspreis": "300 Hade",
+    "gewicht": "14,0 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 10,
-    "sg": 22
+    "stärke": 7,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 12835,
@@ -8475,14 +8895,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "31,8 kg",
-    "verkaufspreis": "380 Hade",
+    "gewicht": "63,6 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 13,
-    "sg": 21
+    "stärke": 10,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 12836,
@@ -8495,14 +8916,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "45,2 kg",
-    "verkaufspreis": "420 Hade",
+    "gewicht": "90,4 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 24
+    "stärke": 11,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 12837,
@@ -8515,14 +8937,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,0 kg",
-    "verkaufspreis": "380 Hade",
+    "gewicht": "8,0 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 22
+    "stärke": 8,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 13727,
@@ -8535,14 +8958,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "21,2 kg",
-    "verkaufspreis": "280 Hade",
+    "gewicht": "42,4 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 21
+    "stärke": 8,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 13728,
@@ -8555,14 +8979,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,5 kg",
-    "verkaufspreis": "240 Hade",
+    "gewicht": "7,0 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 11,
-    "sg": 20
+    "stärke": 5,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 13729,
@@ -8575,14 +9000,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "277 kg",
-    "verkaufspreis": "320 Hade",
+    "gewicht": "554 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 23
+    "stärke": 11,
+    "sg": 23,
+    "wassersort": "salz"
   },
   {
     "id": 13730,
@@ -8595,15 +9021,16 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,6 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "5,2 Pfd.",
+    "verkaufspreis": "800 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch",
       "Magisch"
     ],
-    "stärke": 13,
-    "sg": 26
+    "stärke": 8,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 13731,
@@ -8616,15 +9043,16 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,2 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "14,4 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Schattenhaft"
     ],
-    "stärke": 13,
-    "sg": 25
+    "stärke": 8,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 13732,
@@ -8637,14 +9065,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,1 kg",
-    "verkaufspreis": "400 Hade",
+    "gewicht": "16,2 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 20
+    "stärke": 7,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 14215,
@@ -8657,15 +9086,16 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "35,2 kg",
-    "verkaufspreis": "320 Hade",
+    "gewicht": "70,4 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Warm",
       "Vulkanisch"
     ],
     "stärke": 10,
-    "sg": 22
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 14211,
@@ -8678,14 +9108,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "14,7 kg",
-    "verkaufspreis": "200 Hade",
+    "gewicht": "29,4 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 17
+    "stärke": 8,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 14212,
@@ -8698,14 +9129,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,7 kg",
-    "verkaufspreis": "400 Hade",
+    "gewicht": "17,4 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 22
+    "stärke": 6,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 14213,
@@ -8718,15 +9150,16 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "23,2 kg",
-    "verkaufspreis": "280 Hade",
+    "gewicht": "46,4 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch",
       "Magisch"
     ],
-    "stärke": 12,
-    "sg": 20
+    "stärke": 9,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 14214,
@@ -8739,14 +9172,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "230 kg",
-    "verkaufspreis": "700 Hade",
+    "gewicht": "460 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 24
+    "stärke": 13,
+    "sg": 24,
+    "wassersort": "salz"
   },
   {
     "id": 14216,
@@ -8759,14 +9193,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,5 kg",
-    "verkaufspreis": "280 Hade",
+    "gewicht": "15,0 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 11,
-    "sg": 23
+    "stärke": 9,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 14217,
@@ -8779,14 +9214,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "280 kg",
-    "verkaufspreis": "460 Hade",
+    "gewicht": "560 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 11,
-    "sg": 24
+    "stärke": 12,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 14218,
@@ -8799,15 +9235,16 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "304 kg",
-    "verkaufspreis": "480 Hade",
+    "gewicht": "608 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch",
       "Magisch"
     ],
     "stärke": 12,
-    "sg": 24
+    "sg": 24,
+    "wassersort": "salz"
   },
   {
     "id": 14219,
@@ -8820,14 +9257,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,7 kg",
-    "verkaufspreis": "400 Hade",
+    "gewicht": "17,4 Pfd.",
+    "verkaufspreis": "300.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 20
+    "stärke": 13,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 14220,
@@ -8840,14 +9278,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,8 kg",
-    "verkaufspreis": "340 Hade",
+    "gewicht": "15,6 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 22
+    "stärke": 7,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 15439,
@@ -8860,14 +9299,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "27,5 kg",
-    "verkaufspreis": "280 Hade",
+    "gewicht": "55,0 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 13,
-    "sg": 22
+    "stärke": 10,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 15626,
@@ -8880,14 +9320,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,3 kg",
-    "verkaufspreis": "340 Hade",
+    "gewicht": "4,6 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 10,
-    "sg": 20
+    "stärke": 6,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 15627,
@@ -8900,14 +9341,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "132 kg",
-    "verkaufspreis": "660 Hade",
+    "gewicht": "264 Pfd.",
+    "verkaufspreis": "100 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 24
+    "stärke": 13,
+    "sg": 24,
+    "wassersort": "salz"
   },
   {
     "id": 15628,
@@ -8920,14 +9362,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "375 kg",
-    "verkaufspreis": "520 Hade",
+    "gewicht": "750 Pfd.",
+    "verkaufspreis": "400.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 24
+    "stärke": 17,
+    "sg": 24,
+    "wassersort": "salz"
   },
   {
     "id": 15629,
@@ -8940,15 +9383,16 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "330 kg",
-    "verkaufspreis": "400 Hade",
+    "gewicht": "660 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Schattenhaft"
     ],
     "stärke": 13,
-    "sg": 21
+    "sg": 21,
+    "wassersort": "salz"
   },
   {
     "id": 15630,
@@ -8961,14 +9405,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,0 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "14,0 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 24
+    "stärke": 9,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 15631,
@@ -8981,15 +9426,16 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "33,3 kg",
-    "verkaufspreis": "380 Hade",
+    "gewicht": "66,6 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Warm",
       "Vulkanisch"
     ],
-    "stärke": 10,
-    "sg": 23
+    "stärke": 8,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 15632,
@@ -9002,14 +9448,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "120 kg",
-    "verkaufspreis": "540 Hade",
+    "gewicht": "240 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 26
+    "stärke": 12,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 15633,
@@ -9022,14 +9469,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "144 kg",
-    "verkaufspreis": "500 Hade",
+    "gewicht": "288 Pfd.",
+    "verkaufspreis": "220 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 26
+    "stärke": 13,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 15634,
@@ -9042,14 +9490,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "12,7 kg",
-    "verkaufspreis": "460 Hade",
+    "gewicht": "25,4 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
-    "stärke": 11,
-    "sg": 26
+    "stärke": 10,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 15635,
@@ -9062,14 +9511,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,5 kg",
-    "verkaufspreis": "420 Hade",
+    "gewicht": "5,0 Pfd.",
+    "verkaufspreis": "280 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 26
+    "stärke": 8,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 15636,
@@ -9082,14 +9532,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,4 kg",
-    "verkaufspreis": "380 Hade",
+    "gewicht": "6,8 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 23
+    "stärke": 11,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 15637,
@@ -9102,14 +9553,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,8 kg",
-    "verkaufspreis": "95 Hade",
+    "gewicht": "7,6 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 17
+    "stärke": 7,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 15638,
@@ -9122,14 +9574,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "0,9 kg",
-    "verkaufspreis": "195 Hade",
+    "gewicht": "1,8 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 18
+    "stärke": 4,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 16745,
@@ -9142,14 +9595,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,1 kg",
-    "verkaufspreis": "140 Hade",
+    "gewicht": "6,2 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 10,
-    "sg": 17
+    "stärke": 5,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 16746,
@@ -9162,15 +9616,16 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,5 kg",
-    "verkaufspreis": "200 Hade",
+    "gewicht": "13,0 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Magisch"
     ],
-    "stärke": 11,
-    "sg": 19
+    "stärke": 6,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 16747,
@@ -9183,14 +9638,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "33,5 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "67,0 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 26
+    "stärke": 10,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 16748,
@@ -9203,14 +9659,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "68 kg",
-    "verkaufspreis": "300 Hade",
+    "gewicht": "136 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 23
+    "stärke": 13,
+    "sg": 23,
+    "wassersort": "salz"
   },
   {
     "id": 16749,
@@ -9223,14 +9680,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "446 kg",
-    "verkaufspreis": "420 Hade",
+    "gewicht": "892 Pfd.",
+    "verkaufspreis": "450.000 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 10,
-    "sg": 26
+    "stärke": 18,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 16750,
@@ -9243,14 +9701,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "40,4 kg",
-    "verkaufspreis": "420 Hade",
+    "gewicht": "80,8 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 10,
-    "sg": 23
+    "stärke": 11,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 16751,
@@ -9263,14 +9722,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,0 kg",
+    "gewicht": "16,0 Pfd.",
     "verkaufspreis": "220 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 13,
-    "sg": 21
+    "stärke": 5,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 16752,
@@ -9283,14 +9743,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,3 kg",
-    "verkaufspreis": "300 Hade",
+    "gewicht": "12,6 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 12,
-    "sg": 23
+    "stärke": 6,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 16753,
@@ -9303,14 +9764,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "123 g",
-    "verkaufspreis": "160 Hade",
+    "gewicht": "0,2 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 20
+    "stärke": 2,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 16754,
@@ -9323,14 +9785,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "727 kg",
-    "verkaufspreis": "560 Hade",
+    "gewicht": "1.454 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 23
+    "stärke": 13,
+    "sg": 23,
+    "wassersort": "salz"
   },
   {
     "id": 16756,
@@ -9343,15 +9806,16 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "100 kg",
-    "verkaufspreis": "580 Hade",
+    "gewicht": "200 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Stürmisch"
     ],
-    "stärke": 13,
-    "sg": 25
+    "stärke": 14,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 16742,
@@ -9364,15 +9828,16 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "205 kg",
-    "verkaufspreis": "520 Hade",
+    "gewicht": "410 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Stürmisch"
     ],
-    "stärke": 11,
-    "sg": 23
+    "stärke": 14,
+    "sg": 23,
+    "wassersort": "salz"
   },
   {
     "id": 16743,
@@ -9385,14 +9850,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "773 kg",
-    "verkaufspreis": "560 Hade",
+    "gewicht": "1.546 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 10,
-    "sg": 24
+    "stärke": 17,
+    "sg": 24,
+    "wassersort": "salz"
   },
   {
     "id": 16744,
@@ -9405,14 +9871,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "54,1 kg",
-    "verkaufspreis": "320 Hade",
+    "gewicht": "108 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 22
+    "stärke": 8,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 17577,
@@ -9425,14 +9892,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,1 kg",
-    "verkaufspreis": "320 Hade",
+    "gewicht": "4,2 Pfd.",
+    "verkaufspreis": "100 Hade",
     "lebensraum": [],
     "klima": [
       "Kosmisch"
     ],
-    "stärke": 10,
-    "sg": 22
+    "stärke": 5,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 17578,
@@ -9445,15 +9913,16 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "12,8 kg",
-    "verkaufspreis": "360 Hade",
+    "gewicht": "25,6 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch",
       "Vulkanisch"
     ],
-    "stärke": 10,
-    "sg": 20
+    "stärke": 8,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 17579,
@@ -9466,14 +9935,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,5 kg",
-    "verkaufspreis": "280 Hade",
+    "gewicht": "11,0 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 20
+    "stärke": 6,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 17580,
@@ -9486,14 +9956,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "484 kg",
-    "verkaufspreis": "640 Hade",
+    "gewicht": "968 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 25
+    "stärke": 13,
+    "sg": 25,
+    "wassersort": "salz"
   },
   {
     "id": 17581,
@@ -9506,14 +9977,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "48,0 kg",
-    "verkaufspreis": "360 Hade",
+    "gewicht": "96,0 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 12,
-    "sg": 20
+    "stärke": 10,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 17582,
@@ -9526,14 +9998,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "262 kg",
-    "verkaufspreis": "660 Hade",
+    "gewicht": "524 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 10,
-    "sg": 24
+    "stärke": 14,
+    "sg": 24,
+    "wassersort": "salz"
   },
   {
     "id": 17583,
@@ -9546,14 +10019,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "42,6 kg",
-    "verkaufspreis": "260 Hade",
+    "gewicht": "85,2 Pfd.",
+    "verkaufspreis": "220 Hade",
     "lebensraum": [],
     "klima": [
       "Vulkanisch"
     ],
     "stärke": 11,
-    "sg": 21
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 17584,
@@ -9566,15 +10040,16 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,7 kg",
-    "verkaufspreis": "200 Hade",
+    "gewicht": "3,4 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Warm",
       "Vulkanisch"
     ],
-    "stärke": 10,
-    "sg": 19
+    "stärke": 5,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 17585,
@@ -9587,14 +10062,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,5 kg",
-    "verkaufspreis": "320 Hade",
+    "gewicht": "3,0 Pfd.",
+    "verkaufspreis": "280 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 10,
-    "sg": 22
+    "stärke": 6,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 17586,
@@ -9607,14 +10083,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "0,8 kg",
-    "verkaufspreis": "420 Hade",
+    "gewicht": "1,6 Pfd.",
+    "verkaufspreis": "320 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 26
+    "stärke": 7,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 17587,
@@ -9627,14 +10104,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "39,0 kg",
-    "verkaufspreis": "400 Hade",
+    "gewicht": "78,0 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 13,
-    "sg": 20
+    "stärke": 9,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 17588,
@@ -9647,14 +10125,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "37,6 kg",
-    "verkaufspreis": "180 Hade",
+    "gewicht": "75,2 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 17
+    "stärke": 9,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 17589,
@@ -9667,14 +10146,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,4 kg",
-    "verkaufspreis": "200 Hade",
+    "gewicht": "8,8 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 18
+    "stärke": 7,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 17590,
@@ -9687,14 +10167,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "52,4 kg",
-    "verkaufspreis": "280 Hade",
+    "gewicht": "105 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 22
+    "stärke": 11,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 17591,
@@ -9707,16 +10188,17 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,3 kg",
-    "verkaufspreis": "300 Hade",
+    "gewicht": "4,6 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Warm",
       "Stürmisch"
     ],
-    "stärke": 12,
-    "sg": 23
+    "stärke": 6,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 17592,
@@ -9729,14 +10211,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "38,8 kg",
-    "verkaufspreis": "300 Hade",
+    "gewicht": "77,6 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 13,
-    "sg": 22
+    "stärke": 9,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 17593,
@@ -9749,14 +10232,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,9 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "13,8 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 24
+    "stärke": 7,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 17562,
@@ -9769,15 +10253,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,0 kg",
-    "verkaufspreis": "620 Hade",
+    "gewicht": "4,0 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Warm"
     ],
-    "stärke": 11,
-    "sg": 24
+    "stärke": 9,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 17563,
@@ -9790,15 +10275,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,6 kg",
-    "verkaufspreis": "260 Hade",
+    "gewicht": "5,2 Pfd.",
+    "verkaufspreis": "90 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Schattenhaft"
     ],
-    "stärke": 12,
-    "sg": 22
+    "stärke": 5,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 17564,
@@ -9811,14 +10297,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,5 kg",
-    "verkaufspreis": "560 Hade",
+    "gewicht": "3,0 Pfd.",
+    "verkaufspreis": "100 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 9,
-    "sg": 25
+    "stärke": 7,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 17565,
@@ -9831,14 +10318,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,4 kg",
-    "verkaufspreis": "500 Hade",
+    "gewicht": "4,8 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 24
+    "stärke": 7,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 17566,
@@ -9851,14 +10339,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "41,6 kg",
-    "verkaufspreis": "120 Hade",
+    "gewicht": "83,2 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 19
+    "stärke": 9,
+    "sg": 19,
+    "wassersort": "salz"
   },
   {
     "id": 20026,
@@ -9871,16 +10360,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,4 kg",
-    "verkaufspreis": "260 Hade",
+    "gewicht": "12,8 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Stürmisch",
       "Kosmisch"
     ],
-    "stärke": 13,
-    "sg": 20
+    "stärke": 8,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 20029,
@@ -9893,14 +10383,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "15,2 kg",
-    "verkaufspreis": "360 Hade",
+    "gewicht": "30,4 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 20
+    "stärke": 9,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 20042,
@@ -9913,14 +10404,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "49,2 kg",
-    "verkaufspreis": "280 Hade",
+    "gewicht": "98,4 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 21
+    "stärke": 8,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 20045,
@@ -9933,14 +10425,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,4 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "14,8 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 24
+    "stärke": 6,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 20049,
@@ -9953,14 +10446,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "9,3 kg",
-    "verkaufspreis": "340 Hade",
+    "gewicht": "18,6 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 21
+    "stärke": 6,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 20055,
@@ -9973,14 +10467,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "24,8 kg",
-    "verkaufspreis": "240 Hade",
+    "gewicht": "49,6 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 21
+    "stärke": 8,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 20058,
@@ -9993,14 +10488,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "132 kg",
-    "verkaufspreis": "1200 Hade",
+    "gewicht": "264 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 12,
-    "sg": 26
+    "stärke": 13,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 20062,
@@ -10013,14 +10509,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,0 kg",
-    "verkaufspreis": "185 Hade",
+    "gewicht": "8,0 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 20
+    "stärke": 5,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 20064,
@@ -10033,14 +10530,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "28,6 kg",
-    "verkaufspreis": "400 Hade",
+    "gewicht": "57,2 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 20
+    "stärke": 9,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 20065,
@@ -10053,14 +10551,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "11,2 kg",
-    "verkaufspreis": "240 Hade",
+    "gewicht": "22,4 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 20
+    "stärke": 9,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 20070,
@@ -10073,14 +10572,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "19,6 kg",
-    "verkaufspreis": "240 Hade",
+    "gewicht": "39,2 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 8,
-    "sg": 21
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 20072,
@@ -10093,14 +10593,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,1 kg",
-    "verkaufspreis": "175 Hade",
+    "gewicht": "6,2 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 18
+    "stärke": 6,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 20082,
@@ -10113,14 +10614,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,3 kg",
-    "verkaufspreis": "220 Hade",
+    "gewicht": "6,6 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 23
+    "stärke": 9,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 20083,
@@ -10133,14 +10635,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "815 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "360 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
-    "stärke": 10,
-    "sg": 24
+    "stärke": 12,
+    "sg": 24,
+    "wassersort": "salz"
   },
   {
     "id": 20087,
@@ -10153,14 +10656,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "638 kg",
-    "verkaufspreis": "480 Hade",
+    "gewicht": "1.276 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 24
+    "stärke": 13,
+    "sg": 24,
+    "wassersort": "salz"
   },
   {
     "id": 20090,
@@ -10173,14 +10677,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "54,9 kg",
-    "verkaufspreis": "400 Hade",
+    "gewicht": "110 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 21
+    "stärke": 8,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 20033,
@@ -10193,14 +10698,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "30,3 kg",
-    "verkaufspreis": "220 Hade",
+    "gewicht": "60,6 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 11,
-    "sg": 22
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 20047,
@@ -10213,14 +10719,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "46,8 kg",
-    "verkaufspreis": "135 Hade",
+    "gewicht": "93,6 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Vulkanisch"
     ],
-    "stärke": 11,
-    "sg": 17
+    "stärke": 10,
+    "sg": 17,
+    "wassersort": "süß"
   },
   {
     "id": 20136,
@@ -10233,14 +10740,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "55,9 kg",
-    "verkaufspreis": "300 Hade",
+    "gewicht": "112 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 12,
-    "sg": 22
+    "stärke": 10,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 20056,
@@ -10253,14 +10761,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "31,7 kg",
-    "verkaufspreis": "300 Hade",
+    "gewicht": "63,4 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 22
+    "stärke": 9,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 20057,
@@ -10273,14 +10782,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "39,2 kg",
-    "verkaufspreis": "280 Hade",
+    "gewicht": "78,4 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 20
+    "stärke": 9,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 20059,
@@ -10293,14 +10803,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "43,1 kg",
-    "verkaufspreis": "380 Hade",
+    "gewicht": "86,2 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 23
+    "stärke": 14,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 20063,
@@ -10313,14 +10824,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "9,5 kg",
-    "verkaufspreis": "280 Hade",
+    "gewicht": "19,0 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 22
+    "stärke": 6,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 20084,
@@ -10333,14 +10845,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "51,8 kg",
-    "verkaufspreis": "340 Hade",
+    "gewicht": "104 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 20
+    "stärke": 8,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 20085,
@@ -10353,14 +10866,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "25,2 kg",
-    "verkaufspreis": "200 Hade",
+    "gewicht": "50,4 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 19
+    "stärke": 8,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 20086,
@@ -10373,14 +10887,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,8 kg",
-    "verkaufspreis": "240 Hade",
+    "gewicht": "15,6 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 21
+    "stärke": 7,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 20091,
@@ -10393,14 +10908,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "18,5 kg",
-    "verkaufspreis": "220 Hade",
+    "gewicht": "37,0 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 20
+    "stärke": 8,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 20092,
@@ -10413,14 +10929,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "56,7 kg",
-    "verkaufspreis": "280 Hade",
+    "gewicht": "113 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 11,
-    "sg": 23
+    "stärke": 8,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 20093,
@@ -10433,14 +10950,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "28,2 kg",
-    "verkaufspreis": "380 Hade",
+    "gewicht": "56,4 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 10,
-    "sg": 23
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 20094,
@@ -10453,15 +10971,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "25,1 kg",
-    "verkaufspreis": "340 Hade",
+    "gewicht": "50,2 Pfd.",
+    "verkaufspreis": "280 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch",
       "Schattenhaft"
     ],
-    "stärke": 14,
-    "sg": 20
+    "stärke": 10,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 20095,
@@ -10474,14 +10993,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,6 kg",
-    "verkaufspreis": "400 Hade",
+    "gewicht": "13,2 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 23
+    "stärke": 8,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 20096,
@@ -10494,14 +11014,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,7 kg",
-    "verkaufspreis": "460 Hade",
+    "gewicht": "9,4 Pfd.",
+    "verkaufspreis": "360 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 26
+    "stärke": 9,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 20097,
@@ -10514,14 +11035,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "272 kg",
-    "verkaufspreis": "360 Hade",
+    "gewicht": "544 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 11,
-    "sg": 21
+    "sg": 21,
+    "wassersort": "salz"
   },
   {
     "id": 20112,
@@ -10534,14 +11056,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,6 kg",
-    "verkaufspreis": "300 Hade",
+    "gewicht": "5,2 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 21
+    "stärke": 6,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 20037,
@@ -10554,14 +11077,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "31,0 kg",
-    "verkaufspreis": "240 Hade",
+    "gewicht": "62,0 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 21
+    "stärke": 9,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 20050,
@@ -10574,14 +11098,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "50,9 kg",
-    "verkaufspreis": "360 Hade",
+    "gewicht": "102 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Vulkanisch"
     ],
-    "stärke": 12,
-    "sg": 20
+    "stärke": 9,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 20060,
@@ -10594,14 +11119,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,4 kg",
-    "verkaufspreis": "240 Hade",
+    "gewicht": "4,8 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 13,
-    "sg": 21
+    "stärke": 8,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 20066,
@@ -10614,14 +11140,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,5 kg",
-    "verkaufspreis": "360 Hade",
+    "gewicht": "15,0 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 12,
-    "sg": 22
+    "stärke": 7,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 20067,
@@ -10634,14 +11161,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,1 kg",
-    "verkaufspreis": "220 Hade",
+    "gewicht": "16,2 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 11,
-    "sg": 20
+    "stärke": 7,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 20069,
@@ -10654,14 +11182,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "57,0 kg",
-    "verkaufspreis": "420 Hade",
+    "gewicht": "114 Pfd.",
+    "verkaufspreis": "320 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 10,
-    "sg": 26
+    "stärke": 9,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 20071,
@@ -10674,14 +11203,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,6 kg",
-    "verkaufspreis": "160 Hade",
+    "gewicht": "9,2 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 13,
-    "sg": 19
+    "stärke": 6,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 20081,
@@ -10694,14 +11224,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,2 kg",
-    "verkaufspreis": "220 Hade",
+    "gewicht": "10,4 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 21
+    "stärke": 8,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 20089,
@@ -10714,14 +11245,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "53,9 kg",
-    "verkaufspreis": "220 Hade",
+    "gewicht": "108 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 12,
-    "sg": 20
+    "stärke": 10,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 20098,
@@ -10734,14 +11266,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "16,0 kg",
-    "verkaufspreis": "340 Hade",
+    "gewicht": "32,0 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 21
+    "stärke": 8,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 20099,
@@ -10754,14 +11287,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "52,9 kg",
-    "verkaufspreis": "360 Hade",
+    "gewicht": "106 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 12,
-    "sg": 23
+    "stärke": 9,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 20101,
@@ -10774,14 +11308,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "43,6 kg",
-    "verkaufspreis": "360 Hade",
+    "gewicht": "87,2 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 10,
-    "sg": 21
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 20102,
@@ -10794,14 +11329,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "17,8 kg",
-    "verkaufspreis": "320 Hade",
+    "gewicht": "35,6 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 11,
-    "sg": 23
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 20106,
@@ -10814,14 +11350,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "37,8 kg",
-    "verkaufspreis": "260 Hade",
+    "gewicht": "75,6 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 21
+    "stärke": 9,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 20107,
@@ -10834,14 +11371,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,7 kg",
-    "verkaufspreis": "540 Hade",
+    "gewicht": "9,4 Pfd.",
+    "verkaufspreis": "280 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 24
+    "stärke": 7,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 20108,
@@ -10854,14 +11392,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "41,6 kg",
-    "verkaufspreis": "340 Hade",
+    "gewicht": "83,2 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 10,
-    "sg": 23
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 20113,
@@ -10874,14 +11413,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "42,4 kg",
-    "verkaufspreis": "320 Hade",
+    "gewicht": "84,8 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch"
     ],
-    "stärke": 13,
-    "sg": 20
+    "stärke": 9,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 20032,
@@ -10894,14 +11434,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "41,0 kg",
-    "verkaufspreis": "260 Hade",
+    "gewicht": "82,0 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 11,
-    "sg": 23
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 20046,
@@ -10914,14 +11455,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,0 kg",
-    "verkaufspreis": "400 Hade",
+    "gewicht": "2,0 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 22
+    "stärke": 8,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 20137,
@@ -10934,14 +11476,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,4 kg",
-    "verkaufspreis": "220 Hade",
+    "gewicht": "14,8 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 21
+    "stärke": 8,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 20061,
@@ -10954,14 +11497,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "30,9 kg",
-    "verkaufspreis": "130 Hade",
+    "gewicht": "61,8 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 10,
-    "sg": 19
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 20068,
@@ -10974,14 +11518,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "58,6 kg",
-    "verkaufspreis": "400 Hade",
+    "gewicht": "117 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 8,
-    "sg": 22
+    "stärke": 10,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 20088,
@@ -10994,14 +11539,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "34,6 kg",
-    "verkaufspreis": "340 Hade",
+    "gewicht": "69,2 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 11,
-    "sg": 23
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 20118,
@@ -11014,14 +11560,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "41,4 kg",
-    "verkaufspreis": "220 Hade",
+    "gewicht": "82,8 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 20
+    "stärke": 8,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 20120,
@@ -11034,14 +11581,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,0 kg",
-    "verkaufspreis": "400 Hade",
+    "gewicht": "2,0 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 12,
-    "sg": 20
+    "stärke": 6,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 20123,
@@ -11054,14 +11602,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "22,3 kg",
-    "verkaufspreis": "240 Hade",
+    "gewicht": "44,6 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 22
+    "stärke": 10,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 20020,
@@ -11074,14 +11623,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "38,0 kg",
-    "verkaufspreis": "420 Hade",
+    "gewicht": "76,0 Pfd.",
+    "verkaufspreis": "90 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 9,
-    "sg": 24
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 20023,
@@ -11094,14 +11644,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "42,9 kg",
-    "verkaufspreis": "780 Hade",
+    "gewicht": "85,8 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 14,
-    "sg": 25
+    "stärke": 10,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 20036,
@@ -11114,14 +11665,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,9 kg",
-    "verkaufspreis": "600 Hade",
+    "gewicht": "7,8 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 24
+    "stärke": 7,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 20111,
@@ -11134,14 +11686,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "44,2 kg",
-    "verkaufspreis": "195 Hade",
+    "gewicht": "88,4 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 19
+    "stärke": 8,
+    "sg": 19,
+    "wassersort": "süß"
   },
   {
     "id": 20126,
@@ -11154,14 +11707,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,2 kg",
-    "verkaufspreis": "300 Hade",
+    "gewicht": "6,4 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 22
+    "stärke": 6,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 20127,
@@ -11174,14 +11728,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,5 kg",
-    "verkaufspreis": "420 Hade",
+    "gewicht": "17,0 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 25
+    "stärke": 7,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 20128,
@@ -11194,14 +11749,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,5 kg",
-    "verkaufspreis": "500 Hade",
+    "gewicht": "9,0 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 26
+    "stärke": 8,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 20130,
@@ -11214,14 +11770,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "132 g",
-    "verkaufspreis": "115 Hade",
+    "gewicht": "0,3 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 20
+    "stärke": 2,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 20132,
@@ -11234,14 +11791,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "580 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 26
+    "stärke": 6,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 20138,
@@ -11254,14 +11812,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "478 kg",
-    "verkaufspreis": "720 Hade",
+    "gewicht": "956 Pfd.",
+    "verkaufspreis": "100 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 26
+    "stärke": 15,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 20031,
@@ -11274,14 +11833,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,5 kg",
-    "verkaufspreis": "860 Hade",
+    "gewicht": "5,0 Pfd.",
+    "verkaufspreis": "360 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 28
+    "stärke": 7,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 20080,
@@ -11294,14 +11854,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "57,6 kg",
-    "verkaufspreis": "820 Hade",
+    "gewicht": "115 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken"
     ],
-    "stärke": 12,
-    "sg": 26
+    "stärke": 11,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 20124,
@@ -11314,14 +11875,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "864 kg",
-    "verkaufspreis": "1200 Hade",
+    "gewicht": "600 Pfd.",
+    "verkaufspreis": "1.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 29
+    "stärke": 15,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 20125,
@@ -11334,14 +11896,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,3 kg",
-    "verkaufspreis": "880 Hade",
+    "gewicht": "10,6 Pfd.",
+    "verkaufspreis": "100 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 27
+    "stärke": 6,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 20129,
@@ -11354,14 +11917,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,6 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "15,2 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 25
+    "stärke": 8,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 20131,
@@ -11374,15 +11938,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "59,2 kg",
-    "verkaufspreis": "700 Hade",
+    "gewicht": "118 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Warm",
       "Stürmisch"
     ],
     "stärke": 11,
-    "sg": 23
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 20133,
@@ -11395,14 +11960,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,1 kg",
-    "verkaufspreis": "520 Hade",
+    "gewicht": "10,2 Pfd.",
+    "verkaufspreis": "280 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 11,
-    "sg": 24
+    "stärke": 6,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 20134,
@@ -11415,14 +11981,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,2 kg",
-    "verkaufspreis": "240 Hade",
+    "gewicht": "6,4 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 21
+    "stärke": 6,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 20135,
@@ -11435,14 +12002,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,7 kg",
-    "verkaufspreis": "300 Hade",
+    "gewicht": "3,4 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 13,
-    "sg": 23
+    "stärke": 7,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 20140,
@@ -11455,14 +12023,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "38,8 kg",
-    "verkaufspreis": "780 Hade",
+    "gewicht": "77,6 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 24
+    "stärke": 9,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 20027,
@@ -11475,14 +12044,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,7 kg",
-    "verkaufspreis": "880 Hade",
+    "gewicht": "7,4 Pfd.",
+    "verkaufspreis": "220 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 28
+    "stärke": 7,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 20028,
@@ -11495,14 +12065,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,8 kg",
-    "verkaufspreis": "900 Hade",
+    "gewicht": "17,6 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 27
+    "stärke": 7,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 20044,
@@ -11515,15 +12086,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,2 kg",
-    "verkaufspreis": "600 Hade",
+    "gewicht": "16,4 Pfd.",
+    "verkaufspreis": "360 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Warm"
     ],
-    "stärke": 13,
-    "sg": 24
+    "stärke": 7,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 20115,
@@ -11536,14 +12108,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,7 kg",
-    "verkaufspreis": "400 Hade",
+    "gewicht": "3,4 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 23
+    "stärke": 8,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 20116,
@@ -11556,14 +12129,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "811 kg",
-    "verkaufspreis": "780 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Vulkanisch"
     ],
-    "stärke": 14,
-    "sg": 23
+    "stärke": 16,
+    "sg": 23,
+    "wassersort": "salz"
   },
   {
     "id": 20117,
@@ -11576,14 +12150,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "16,9 kg",
-    "verkaufspreis": "880 Hade",
+    "gewicht": "33,8 Pfd.",
+    "verkaufspreis": "3.500 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 14,
-    "sg": 29
+    "stärke": 12,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 20052,
@@ -11596,14 +12171,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,9 kg",
-    "verkaufspreis": "880 Hade",
+    "gewicht": "9,8 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 28
+    "stärke": 9,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 20053,
@@ -11616,14 +12192,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,2 kg",
-    "verkaufspreis": "460 Hade",
+    "gewicht": "8,4 Pfd.",
+    "verkaufspreis": "220 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 24
+    "stärke": 8,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 20076,
@@ -11636,15 +12213,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "224 kg",
-    "verkaufspreis": "1000 Hade",
+    "gewicht": "448 Pfd.",
+    "verkaufspreis": "650 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Stürmisch"
     ],
     "stärke": 13,
-    "sg": 29
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 20077,
@@ -11657,14 +12235,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "40,6 kg",
-    "verkaufspreis": "860 Hade",
+    "gewicht": "81,2 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 28
+    "stärke": 10,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 20079,
@@ -11677,14 +12256,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,5 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "13,0 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 23
+    "stärke": 10,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 20104,
@@ -11697,14 +12277,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "245 kg",
-    "verkaufspreis": "1600 Hade",
+    "gewicht": "490 Pfd.",
+    "verkaufspreis": "18.000 Hade",
     "lebensraum": [],
     "klima": [
       "Tiefsee"
     ],
-    "stärke": 12,
-    "sg": 32
+    "stärke": 13,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 20105,
@@ -11717,14 +12298,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "528 kg",
-    "verkaufspreis": "840 Hade",
+    "gewicht": "1.056 Pfd.",
+    "verkaufspreis": "220 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 28
+    "stärke": 13,
+    "sg": 28,
+    "wassersort": "salz"
   },
   {
     "id": 20110,
@@ -11737,14 +12319,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,5 kg",
-    "verkaufspreis": "620 Hade",
+    "gewicht": "11,0 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 12,
-    "sg": 24
+    "stärke": 9,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 20114,
@@ -11757,14 +12340,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "293 kg",
-    "verkaufspreis": "880 Hade",
+    "gewicht": "586 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 27
+    "stärke": 14,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 20141,
@@ -11777,14 +12361,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "10,3 kg",
-    "verkaufspreis": "420 Hade",
+    "gewicht": "20,6 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 23
+    "stärke": 10,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 20025,
@@ -11797,15 +12382,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "653 kg",
-    "verkaufspreis": "760 Hade",
+    "gewicht": "1.306 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch",
       "Toxisch"
     ],
-    "stärke": 15,
-    "sg": 26
+    "stärke": 14,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 20034,
@@ -11818,14 +12404,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "19,0 kg",
-    "verkaufspreis": "820 Hade",
+    "gewicht": "38,0 Pfd.",
+    "verkaufspreis": "100 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 9,
-    "sg": 28
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 20038,
@@ -11838,14 +12425,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "24,1 kg",
-    "verkaufspreis": "1300 Hade",
+    "gewicht": "48,2 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 27
+    "stärke": 11,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 20039,
@@ -11858,14 +12446,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,8 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "3,6 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 26
+    "stärke": 9,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 20073,
@@ -11878,14 +12467,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "55,1 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "110 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 23
+    "stärke": 10,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 20075,
@@ -11898,14 +12488,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "41,2 kg",
-    "verkaufspreis": "460 Hade",
+    "gewicht": "82,4 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 25
+    "stärke": 11,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 20078,
@@ -11918,14 +12509,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "24,9 kg",
-    "verkaufspreis": "500 Hade",
+    "gewicht": "49,8 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 23
+    "stärke": 9,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 20109,
@@ -11938,14 +12530,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,5 kg",
-    "verkaufspreis": "520 Hade",
+    "gewicht": "3,0 Pfd.",
+    "verkaufspreis": "360 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 26
+    "stärke": 9,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 20119,
@@ -11958,14 +12551,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,4 kg",
-    "verkaufspreis": "740 Hade",
+    "gewicht": "10,8 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 23
+    "stärke": 6,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 20122,
@@ -11978,14 +12572,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,2 kg",
-    "verkaufspreis": "360 Hade",
+    "gewicht": "14,4 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 14,
-    "sg": 21
+    "stärke": 7,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 20018,
@@ -11998,14 +12593,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,9 kg",
-    "verkaufspreis": "720 Hade",
+    "gewicht": "3,8 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 23
+    "stärke": 8,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 20019,
@@ -12018,14 +12614,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,5 kg",
-    "verkaufspreis": "880 Hade",
+    "gewicht": "11,0 Pfd.",
+    "verkaufspreis": "4.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 29
+    "stärke": 10,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 20021,
@@ -12038,15 +12635,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "9,5 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "19,0 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken",
       "Stürmisch"
     ],
-    "stärke": 10,
-    "sg": 23
+    "stärke": 6,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 20022,
@@ -12059,14 +12657,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "327 kg",
-    "verkaufspreis": "840 Hade",
+    "gewicht": "654 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 28
+    "stärke": 13,
+    "sg": 28,
+    "wassersort": "salz"
   },
   {
     "id": 20024,
@@ -12079,14 +12678,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,5 kg",
-    "verkaufspreis": "860 Hade",
+    "gewicht": "17,0 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 11,
-    "sg": 28
+    "stärke": 9,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 20030,
@@ -12099,14 +12699,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,9 kg",
-    "verkaufspreis": "560 Hade",
+    "gewicht": "7,8 Pfd.",
+    "verkaufspreis": "320 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 26
+    "stärke": 8,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 20035,
@@ -12119,14 +12720,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "30,0 kg",
-    "verkaufspreis": "580 Hade",
+    "gewicht": "60,0 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 23
+    "stärke": 9,
+    "sg": 23,
+    "wassersort": "salz"
   },
   {
     "id": 20040,
@@ -12139,14 +12741,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,8 kg",
-    "verkaufspreis": "520 Hade",
+    "gewicht": "15,6 Pfd.",
+    "verkaufspreis": "220 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 25
+    "stärke": 9,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 20041,
@@ -12159,14 +12762,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,6 kg",
-    "verkaufspreis": "560 Hade",
+    "gewicht": "17,2 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 25
+    "stärke": 6,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 20043,
@@ -12179,14 +12783,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "690 kg",
-    "verkaufspreis": "900 Hade",
+    "gewicht": "1.380 Pfd.",
+    "verkaufspreis": "320 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 26
+    "stärke": 13,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 20048,
@@ -12199,14 +12804,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "19,6 kg",
-    "verkaufspreis": "580 Hade",
+    "gewicht": "39,2 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 23
+    "stärke": 8,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 20051,
@@ -12219,14 +12825,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,4 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "14,8 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 24
+    "stärke": 7,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 20054,
@@ -12239,14 +12846,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,1 kg",
-    "verkaufspreis": "800 Hade",
+    "gewicht": "16,2 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 23
+    "stärke": 9,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 20074,
@@ -12259,14 +12867,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "59,8 kg",
-    "verkaufspreis": "840 Hade",
+    "gewicht": "120 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 27
+    "stärke": 11,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 20100,
@@ -12279,14 +12888,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,7 kg",
-    "verkaufspreis": "860 Hade",
+    "gewicht": "17,4 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 26
+    "stärke": 8,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 20121,
@@ -12299,14 +12909,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,0 kg",
-    "verkaufspreis": "600 Hade",
+    "gewicht": "14,0 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 14,
-    "sg": 23
+    "stärke": 7,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 20103,
@@ -12319,14 +12930,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,4 kg",
-    "verkaufspreis": "500 Hade",
+    "gewicht": "8,8 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 25
+    "stärke": 9,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 20142,
@@ -12339,15 +12951,16 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "401 kg",
-    "verkaufspreis": "700 Hade",
+    "gewicht": "802 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Schattenhaft"
     ],
     "stärke": 13,
-    "sg": 24
+    "sg": 24,
+    "wassersort": "salz"
   },
   {
     "id": 20524,
@@ -12360,14 +12973,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,5 kg",
-    "verkaufspreis": "80 Hade",
+    "gewicht": "7,0 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 11,
-    "sg": 16
+    "stärke": 4,
+    "sg": 16,
+    "wassersort": "süß"
   },
   {
     "id": 20143,
@@ -12380,14 +12994,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "17 g",
-    "verkaufspreis": "85 Hade",
+    "gewicht": "0,0 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 18
+    "stärke": 1,
+    "sg": 18,
+    "wassersort": "süß"
   },
   {
     "id": 20785,
@@ -12400,14 +13015,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,6 kg",
-    "verkaufspreis": "400 Hade",
+    "gewicht": "11,2 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 21
+    "stärke": 6,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 20786,
@@ -12420,14 +13036,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,4 kg",
-    "verkaufspreis": "280 Hade",
+    "gewicht": "8,8 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 20
+    "stärke": 6,
+    "sg": 20,
+    "wassersort": "salz"
   },
   {
     "id": 20787,
@@ -12440,14 +13057,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,5 kg",
-    "verkaufspreis": "380 Hade",
+    "gewicht": "9,0 Pfd.",
+    "verkaufspreis": "90 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
-    "stärke": 11,
-    "sg": 23
+    "stärke": 8,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 20788,
@@ -12460,14 +13078,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,7 kg",
-    "verkaufspreis": "360 Hade",
+    "gewicht": "11,4 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 20
+    "stärke": 7,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 20789,
@@ -12480,14 +13099,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,5 kg",
-    "verkaufspreis": "300 Hade",
+    "gewicht": "9,0 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 22
+    "stärke": 8,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 21174,
@@ -12500,14 +13120,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "54,0 kg",
-    "verkaufspreis": "860 Hade",
+    "gewicht": "108 Pfd.",
+    "verkaufspreis": "320 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 12,
-    "sg": 28
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 21175,
@@ -12520,14 +13141,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "50,5 kg",
-    "verkaufspreis": "380 Hade",
+    "gewicht": "101 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 21
+    "stärke": 8,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 21176,
@@ -12540,14 +13162,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "35,0 kg",
-    "verkaufspreis": "540 Hade",
+    "gewicht": "70,0 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 24
+    "stärke": 9,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 21177,
@@ -12560,14 +13183,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "55,1 kg",
-    "verkaufspreis": "620 Hade",
+    "gewicht": "110 Pfd.",
+    "verkaufspreis": "90 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 25
+    "stärke": 10,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 21178,
@@ -12580,14 +13204,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "33,1 kg",
-    "verkaufspreis": "1100 Hade",
+    "gewicht": "66,2 Pfd.",
+    "verkaufspreis": "100 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 28
+    "stärke": 11,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 22392,
@@ -12600,14 +13225,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "98 kg",
-    "verkaufspreis": "380 Hade",
+    "gewicht": "196 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 23
+    "stärke": 14,
+    "sg": 23,
+    "wassersort": "salz"
   },
   {
     "id": 22389,
@@ -12620,14 +13246,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "869 kg",
-    "verkaufspreis": "1200 Hade",
+    "gewicht": "600 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 27
+    "stärke": 14,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 22391,
@@ -12640,14 +13267,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "50,7 kg",
-    "verkaufspreis": "1200 Hade",
+    "gewicht": "101 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 29
+    "stärke": 12,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 22394,
@@ -12660,14 +13288,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "93 g",
-    "verkaufspreis": "400 Hade",
+    "gewicht": "0,2 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 23
+    "stärke": 2,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 22396,
@@ -12680,14 +13309,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,0 kg",
-    "verkaufspreis": "480 Hade",
+    "gewicht": "16,0 Pfd.",
+    "verkaufspreis": "320 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 24
+    "stärke": 7,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 22395,
@@ -12700,14 +13330,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "32,4 kg",
-    "verkaufspreis": "660 Hade",
+    "gewicht": "64,8 Pfd.",
+    "verkaufspreis": "280 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 25
+    "stärke": 10,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 22390,
@@ -12720,14 +13351,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "24,7 kg",
-    "verkaufspreis": "780 Hade",
+    "gewicht": "49,4 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 13,
-    "sg": 25
+    "stärke": 11,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 22393,
@@ -12740,14 +13372,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,7 kg",
-    "verkaufspreis": "800 Hade",
+    "gewicht": "13,4 Pfd.",
+    "verkaufspreis": "220 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 25
+    "stärke": 6,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 22397,
@@ -12760,14 +13393,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,8 kg",
-    "verkaufspreis": "740 Hade",
+    "gewicht": "7,6 Pfd.",
+    "verkaufspreis": "360 Hade",
     "lebensraum": [],
     "klima": [
       "Vulkanisch"
     ],
-    "stärke": 16,
-    "sg": 23
+    "stärke": 8,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 22398,
@@ -12780,14 +13414,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "28,2 kg",
-    "verkaufspreis": "860 Hade",
+    "gewicht": "56,4 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 28
+    "stärke": 12,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 23054,
@@ -12800,14 +13435,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,0 kg",
-    "verkaufspreis": "420 Hade",
+    "gewicht": "6,0 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken"
     ],
-    "stärke": 12,
-    "sg": 26
+    "stärke": 8,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 23055,
@@ -12820,15 +13456,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "12,6 kg",
-    "verkaufspreis": "500 Hade",
+    "gewicht": "25,2 Pfd.",
+    "verkaufspreis": "4.500 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Magisch"
     ],
-    "stärke": 12,
-    "sg": 26
+    "stärke": 11,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 23056,
@@ -12841,15 +13478,16 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,9 kg",
-    "verkaufspreis": "600 Hade",
+    "gewicht": "17,8 Pfd.",
+    "verkaufspreis": "500 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch",
       "Vulkanisch"
     ],
-    "stärke": 12,
-    "sg": 25
+    "stärke": 9,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 23057,
@@ -12862,14 +13500,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "57,2 kg",
-    "verkaufspreis": "840 Hade",
+    "gewicht": "114 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 27
+    "stärke": 12,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 23058,
@@ -12882,14 +13521,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "15,5 kg",
-    "verkaufspreis": "780 Hade",
+    "gewicht": "31,0 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 23
+    "stärke": 8,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 23059,
@@ -12902,14 +13542,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "38,4 kg",
-    "verkaufspreis": "760 Hade",
+    "gewicht": "76,8 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 23
+    "stärke": 9,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 23060,
@@ -12922,14 +13563,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "604 kg",
-    "verkaufspreis": "1300 Hade",
+    "gewicht": "1.208 Pfd.",
+    "verkaufspreis": "360 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 11,
-    "sg": 26
+    "stärke": 13,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 23061,
@@ -12942,14 +13584,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "17,3 kg",
-    "verkaufspreis": "740 Hade",
+    "gewicht": "34,6 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 24
+    "stärke": 10,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 23062,
@@ -12962,14 +13605,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "471 kg",
-    "verkaufspreis": "720 Hade",
+    "gewicht": "942 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 13,
-    "sg": 26
+    "stärke": 14,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 23063,
@@ -12982,14 +13626,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "635 kg",
-    "verkaufspreis": "1000 Hade",
+    "gewicht": "1.270 Pfd.",
+    "verkaufspreis": "2.200 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 14,
-    "sg": 29
+    "stärke": 17,
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 23064,
@@ -13002,14 +13647,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "37,2 kg",
-    "verkaufspreis": "820 Hade",
+    "gewicht": "74,4 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch"
     ],
-    "stärke": 15,
-    "sg": 26
+    "stärke": 12,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 23065,
@@ -13022,14 +13668,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,9 kg",
-    "verkaufspreis": "880 Hade",
+    "gewicht": "3,8 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 27
+    "stärke": 6,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 23066,
@@ -13042,14 +13689,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "50,1 kg",
-    "verkaufspreis": "860 Hade",
+    "gewicht": "100 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 28
+    "stärke": 10,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 23067,
@@ -13062,14 +13710,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "41,9 kg",
-    "verkaufspreis": "600 Hade",
+    "gewicht": "83,8 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 14,
-    "sg": 24
+    "stärke": 9,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 23068,
@@ -13082,15 +13731,16 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "59,3 kg",
-    "verkaufspreis": "540 Hade",
+    "gewicht": "119 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Warm",
       "Stürmisch"
     ],
-    "stärke": 11,
-    "sg": 25
+    "stärke": 10,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 23069,
@@ -13103,14 +13753,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "50,8 kg",
-    "verkaufspreis": "900 Hade",
+    "gewicht": "102 Pfd.",
+    "verkaufspreis": "220 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 26
+    "stärke": 11,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 23070,
@@ -13123,14 +13774,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,6 kg",
-    "verkaufspreis": "480 Hade",
+    "gewicht": "5,2 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 9,
-    "sg": 24
+    "stärke": 8,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 23071,
@@ -13143,14 +13795,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "53,6 kg",
-    "verkaufspreis": "680 Hade",
+    "gewicht": "107 Pfd.",
+    "verkaufspreis": "280 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 8,
-    "sg": 24
+    "stärke": 11,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 23072,
@@ -13163,14 +13816,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,1 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "8,2 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 23
+    "stärke": 6,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 23073,
@@ -13183,14 +13837,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "866 kg",
-    "verkaufspreis": "920 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 12,
-    "sg": 27
+    "stärke": 13,
+    "sg": 27,
+    "wassersort": "salz"
   },
   {
     "id": 23074,
@@ -13203,14 +13858,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "356 kg",
-    "verkaufspreis": "380 Hade",
+    "gewicht": "712 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 23
+    "stärke": 12,
+    "sg": 23,
+    "wassersort": "salz"
   },
   {
     "id": 23075,
@@ -13223,14 +13879,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "9,3 kg",
-    "verkaufspreis": "240 Hade",
+    "gewicht": "18,6 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 22
+    "stärke": 7,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 24203,
@@ -13243,14 +13900,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,9 kg",
-    "verkaufspreis": "640 Hade",
+    "gewicht": "13,8 Pfd.",
+    "verkaufspreis": "320 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 25
+    "stärke": 8,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 24204,
@@ -13263,15 +13921,16 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "18,2 kg",
-    "verkaufspreis": "480 Hade",
+    "gewicht": "36,4 Pfd.",
+    "verkaufspreis": "360 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch",
       "Magisch"
     ],
-    "stärke": 12,
-    "sg": 25
+    "stärke": 11,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 24205,
@@ -13284,14 +13943,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "59,3 kg",
-    "verkaufspreis": "820 Hade",
+    "gewicht": "119 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
     "stärke": 12,
-    "sg": 27
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 24206,
@@ -13304,14 +13964,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,9 kg",
-    "verkaufspreis": "840 Hade",
+    "gewicht": "17,8 Pfd.",
+    "verkaufspreis": "90 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 28
+    "stärke": 7,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 24207,
@@ -13324,14 +13985,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,5 kg",
-    "verkaufspreis": "480 Hade",
+    "gewicht": "3,0 Pfd.",
+    "verkaufspreis": "100 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 14,
-    "sg": 25
+    "stärke": 7,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 24208,
@@ -13344,14 +14006,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "802 kg",
-    "verkaufspreis": "960 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 27
+    "stärke": 13,
+    "sg": 27,
+    "wassersort": "salz"
   },
   {
     "id": 24209,
@@ -13364,14 +14027,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "46,7 kg",
-    "verkaufspreis": "420 Hade",
+    "gewicht": "93,4 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 23
+    "stärke": 10,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 24210,
@@ -13384,14 +14048,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "429 kg",
-    "verkaufspreis": "1000 Hade",
+    "gewicht": "858 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 26
+    "stärke": 14,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 24211,
@@ -13404,14 +14069,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "321 kg",
-    "verkaufspreis": "1000 Hade",
+    "gewicht": "642 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 26
+    "stärke": 14,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 24212,
@@ -13424,16 +14090,17 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "17,1 kg",
-    "verkaufspreis": "740 Hade",
+    "gewicht": "34,2 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Warm",
       "Schattenhaft"
     ],
-    "stärke": 14,
-    "sg": 26
+    "stärke": 12,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 24213,
@@ -13446,14 +14113,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "1200 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "220 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 14,
-    "sg": 27
+    "stärke": 6,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 24214,
@@ -13466,14 +14134,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "40,4 kg",
-    "verkaufspreis": "660 Hade",
+    "gewicht": "80,8 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 25
+    "stärke": 9,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 24215,
@@ -13486,14 +14155,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "865 kg",
-    "verkaufspreis": "1000 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "280 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 28
+    "stärke": 13,
+    "sg": 28,
+    "wassersort": "salz"
   },
   {
     "id": 24216,
@@ -13506,14 +14176,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "864 kg",
-    "verkaufspreis": "1100 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "320 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 28
+    "stärke": 14,
+    "sg": 28,
+    "wassersort": "salz"
   },
   {
     "id": 24217,
@@ -13526,14 +14197,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "378 kg",
-    "verkaufspreis": "1000 Hade",
+    "gewicht": "756 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 29
+    "stärke": 14,
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 24218,
@@ -13546,14 +14218,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,4 kg",
-    "verkaufspreis": "820 Hade",
+    "gewicht": "12,8 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 28
+    "stärke": 9,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 24881,
@@ -13566,14 +14239,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "46,3 kg",
-    "verkaufspreis": "1300 Hade",
+    "gewicht": "92,6 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 27
+    "stärke": 11,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 24882,
@@ -13586,14 +14260,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "49 g",
-    "verkaufspreis": "360 Hade",
+    "gewicht": "0,1 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 23
+    "stärke": 3,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 24883,
@@ -13606,14 +14281,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "561 kg",
-    "verkaufspreis": "920 Hade",
+    "gewicht": "1.122 Pfd.",
+    "verkaufspreis": "100 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 12,
-    "sg": 27
+    "stärke": 14,
+    "sg": 27,
+    "wassersort": "salz"
   },
   {
     "id": 24884,
@@ -13626,14 +14302,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "55,2 kg",
-    "verkaufspreis": "600 Hade",
+    "gewicht": "110 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 23
+    "stärke": 11,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 24885,
@@ -13646,14 +14323,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "20,7 kg",
-    "verkaufspreis": "900 Hade",
+    "gewicht": "41,4 Pfd.",
+    "verkaufspreis": "1.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 29
+    "stärke": 10,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 24886,
@@ -13666,15 +14344,16 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "13,4 kg",
-    "verkaufspreis": "420 Hade",
+    "gewicht": "26,8 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Schattenhaft"
     ],
-    "stärke": 14,
-    "sg": 25
+    "stärke": 9,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 24887,
@@ -13687,14 +14366,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "377 kg",
-    "verkaufspreis": "920 Hade",
+    "gewicht": "754 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 26
+    "stärke": 13,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 24888,
@@ -13707,14 +14387,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,1 kg",
-    "verkaufspreis": "480 Hade",
+    "gewicht": "14,2 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 11,
-    "sg": 23
+    "stärke": 7,
+    "sg": 23,
+    "wassersort": "salz"
   },
   {
     "id": 24889,
@@ -13727,14 +14408,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "572 kg",
-    "verkaufspreis": "1000 Hade",
+    "gewicht": "600 Pfd.",
+    "verkaufspreis": "220 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 26
+    "stärke": 14,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 24890,
@@ -13747,16 +14429,17 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,4 kg",
-    "verkaufspreis": "620 Hade",
+    "gewicht": "14,8 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Stürmisch",
       "Magisch"
     ],
-    "stärke": 14,
-    "sg": 25
+    "stärke": 9,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 24891,
@@ -13769,14 +14452,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "55,6 kg",
-    "verkaufspreis": "480 Hade",
+    "gewicht": "111 Pfd.",
+    "verkaufspreis": "280 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 25
+    "stärke": 11,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 24892,
@@ -13789,14 +14473,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,4 kg",
-    "verkaufspreis": "460 Hade",
+    "gewicht": "4,8 Pfd.",
+    "verkaufspreis": "320 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 13,
-    "sg": 26
+    "stärke": 6,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 24893,
@@ -13809,14 +14494,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,4 kg",
-    "verkaufspreis": "1400 Hade",
+    "gewicht": "4,8 Pfd.",
+    "verkaufspreis": "500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 29
+    "stärke": 7,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 24557,
@@ -13829,14 +14515,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,8 kg",
-    "verkaufspreis": "680 Hade",
+    "gewicht": "9,6 Pfd.",
+    "verkaufspreis": "90 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 13,
-    "sg": 26
+    "stärke": 7,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 24558,
@@ -13849,14 +14536,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "34,9 kg",
-    "verkaufspreis": "400 Hade",
+    "gewicht": "69,8 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 14,
-    "sg": 20
+    "stärke": 9,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 24559,
@@ -13869,14 +14557,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,0 kg",
-    "verkaufspreis": "540 Hade",
+    "gewicht": "6,0 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 14,
-    "sg": 25
+    "stärke": 8,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 24560,
@@ -13889,14 +14578,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,6 kg",
-    "verkaufspreis": "680 Hade",
+    "gewicht": "13,2 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
-    "stärke": 14,
-    "sg": 24
+    "stärke": 8,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 24561,
@@ -13909,14 +14599,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "231 kg",
-    "verkaufspreis": "1000 Hade",
+    "gewicht": "462 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
     "stärke": 14,
-    "sg": 27
+    "sg": 27,
+    "wassersort": "salz"
   },
   {
     "id": 24994,
@@ -13929,14 +14620,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "9,0 kg",
-    "verkaufspreis": "660 Hade",
+    "gewicht": "18,0 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 23
+    "stärke": 8,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 24990,
@@ -13949,14 +14641,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "55,7 kg",
-    "verkaufspreis": "820 Hade",
+    "gewicht": "111 Pfd.",
+    "verkaufspreis": "3.500 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch"
     ],
-    "stärke": 12,
-    "sg": 28
+    "stärke": 9,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 24991,
@@ -13969,14 +14662,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "142 g",
-    "verkaufspreis": "420 Hade",
+    "gewicht": "0,3 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 26
+    "stärke": 2,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 24992,
@@ -13989,14 +14683,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "224 kg",
-    "verkaufspreis": "740 Hade",
+    "gewicht": "448 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 13,
-    "sg": 23
+    "stärke": 12,
+    "sg": 23,
+    "wassersort": "salz"
   },
   {
     "id": 24993,
@@ -14009,14 +14704,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "627 kg",
-    "verkaufspreis": "680 Hade",
+    "gewicht": "1.254 Pfd.",
+    "verkaufspreis": "220 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 25
+    "stärke": 13,
+    "sg": 25,
+    "wassersort": "salz"
   },
   {
     "id": 24995,
@@ -14029,14 +14725,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "50,4 kg",
-    "verkaufspreis": "460 Hade",
+    "gewicht": "101 Pfd.",
+    "verkaufspreis": "280 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 26
+    "stärke": 11,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 26746,
@@ -14049,14 +14746,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,7 kg",
-    "verkaufspreis": "580 Hade",
+    "gewicht": "13,4 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 13,
-    "sg": 26
+    "stärke": 9,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 27417,
@@ -14069,14 +14767,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "9,2 kg",
-    "verkaufspreis": "600 Hade",
+    "gewicht": "18,4 Pfd.",
+    "verkaufspreis": "90 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 14,
-    "sg": 24
+    "stärke": 8,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 27411,
@@ -14089,14 +14788,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "12,5 kg",
-    "verkaufspreis": "600 Hade",
+    "gewicht": "25,0 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 11,
-    "sg": 23
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 27412,
@@ -14109,14 +14809,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "50,8 kg",
-    "verkaufspreis": "780 Hade",
+    "gewicht": "102 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 25
+    "stärke": 9,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 27425,
@@ -14129,14 +14830,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "349 kg",
-    "verkaufspreis": "840 Hade",
+    "gewicht": "698 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 28
+    "stärke": 15,
+    "sg": 28,
+    "wassersort": "salz"
   },
   {
     "id": 27427,
@@ -14149,14 +14851,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,6 kg",
-    "verkaufspreis": "800 Hade",
+    "gewicht": "17,2 Pfd.",
+    "verkaufspreis": "320 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 26
+    "stärke": 7,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 27428,
@@ -14169,14 +14872,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "11,2 kg",
-    "verkaufspreis": "500 Hade",
+    "gewicht": "22,4 Pfd.",
+    "verkaufspreis": "360 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 25
+    "stärke": 10,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 27429,
@@ -14189,14 +14893,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "20,9 kg",
-    "verkaufspreis": "260 Hade",
+    "gewicht": "41,8 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 21
+    "stärke": 9,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 27426,
@@ -14209,14 +14914,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "9,2 kg",
-    "verkaufspreis": "560 Hade",
+    "gewicht": "18,4 Pfd.",
+    "verkaufspreis": "280 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 24
+    "stärke": 6,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 27430,
@@ -14229,14 +14935,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "49,6 kg",
-    "verkaufspreis": "620 Hade",
+    "gewicht": "99,2 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 23
+    "stärke": 10,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 27436,
@@ -14249,14 +14956,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "44,8 kg",
-    "verkaufspreis": "520 Hade",
+    "gewicht": "89,6 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 14,
-    "sg": 26
+    "stärke": 10,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 27431,
@@ -14269,14 +14977,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "22,0 kg",
-    "verkaufspreis": "460 Hade",
+    "gewicht": "44,0 Pfd.",
+    "verkaufspreis": "100 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 25
+    "stärke": 13,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 27438,
@@ -14289,14 +14998,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "22,6 kg",
-    "verkaufspreis": "540 Hade",
+    "gewicht": "45,2 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Kosmisch"
     ],
     "stärke": 11,
-    "sg": 25
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 27439,
@@ -14309,14 +15019,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,0 kg",
-    "verkaufspreis": "1100 Hade",
+    "gewicht": "2,0 Pfd.",
+    "verkaufspreis": "1.500 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 14,
-    "sg": 29
+    "stärke": 10,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 27440,
@@ -14329,14 +15040,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,9 kg",
-    "verkaufspreis": "540 Hade",
+    "gewicht": "3,8 Pfd.",
+    "verkaufspreis": "320 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 26
+    "stärke": 6,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 27449,
@@ -14349,14 +15061,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "17,2 kg",
-    "verkaufspreis": "580 Hade",
+    "gewicht": "34,4 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 10,
-    "sg": 26
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 27448,
@@ -14369,14 +15082,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "17,5 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "35,0 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
-    "stärke": 11,
-    "sg": 24
+    "stärke": 9,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 27446,
@@ -14389,14 +15103,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "58,3 kg",
-    "verkaufspreis": "680 Hade",
+    "gewicht": "117 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 13,
-    "sg": 23
+    "stärke": 11,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 27447,
@@ -14409,14 +15124,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "58,1 kg",
-    "verkaufspreis": "700 Hade",
+    "gewicht": "116 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 24
+    "stärke": 9,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 27451,
@@ -14429,14 +15145,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "9,2 kg",
-    "verkaufspreis": "700 Hade",
+    "gewicht": "18,4 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 15,
-    "sg": 25
+    "stärke": 8,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 27462,
@@ -14449,14 +15166,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "13,3 kg",
-    "verkaufspreis": "860 Hade",
+    "gewicht": "26,6 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken"
     ],
-    "stärke": 11,
-    "sg": 27
+    "stärke": 10,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 27414,
@@ -14469,14 +15187,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "39,2 kg",
-    "verkaufspreis": "780 Hade",
+    "gewicht": "78,4 Pfd.",
+    "verkaufspreis": "320 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 24
+    "stärke": 9,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 27410,
@@ -14489,14 +15208,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,6 kg",
-    "verkaufspreis": "740 Hade",
+    "gewicht": "9,2 Pfd.",
+    "verkaufspreis": "3.500 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 15,
-    "sg": 26
+    "stärke": 9,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 27415,
@@ -14509,14 +15229,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,5 kg",
-    "verkaufspreis": "1300 Hade",
+    "gewicht": "13,0 Pfd.",
+    "verkaufspreis": "360 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 26
+    "stärke": 8,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 27413,
@@ -14529,14 +15250,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "43,5 kg",
-    "verkaufspreis": "520 Hade",
+    "gewicht": "87,0 Pfd.",
+    "verkaufspreis": "280 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 25
+    "stärke": 9,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 27419,
@@ -14549,14 +15271,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,0 kg",
-    "verkaufspreis": "560 Hade",
+    "gewicht": "6,0 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 26
+    "stärke": 6,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 27420,
@@ -14569,14 +15292,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "34 g",
-    "verkaufspreis": "420 Hade",
+    "gewicht": "0,1 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 15,
-    "sg": 24
+    "stärke": 2,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 27422,
@@ -14589,14 +15313,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,8 kg",
-    "verkaufspreis": "740 Hade",
+    "gewicht": "13,6 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 15,
-    "sg": 23
+    "stärke": 7,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 27433,
@@ -14609,14 +15334,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "19,7 kg",
-    "verkaufspreis": "780 Hade",
+    "gewicht": "39,4 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 23
+    "stärke": 8,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 27435,
@@ -14629,14 +15355,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,7 kg",
-    "verkaufspreis": "800 Hade",
+    "gewicht": "15,4 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 15,
-    "sg": 26
+    "stärke": 7,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 27434,
@@ -14649,15 +15376,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "20,1 kg",
-    "verkaufspreis": "560 Hade",
+    "gewicht": "40,2 Pfd.",
+    "verkaufspreis": "500 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Magisch"
     ],
-    "stärke": 14,
-    "sg": 26
+    "stärke": 9,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 27443,
@@ -14670,14 +15398,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "20,5 kg",
-    "verkaufspreis": "1100 Hade",
+    "gewicht": "41,0 Pfd.",
+    "verkaufspreis": "90 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 28
+    "stärke": 11,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 27444,
@@ -14690,14 +15419,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "10,6 kg",
-    "verkaufspreis": "800 Hade",
+    "gewicht": "21,2 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 23
+    "stärke": 10,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 27445,
@@ -14710,14 +15440,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "839 kg",
-    "verkaufspreis": "2600 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "500 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 14,
-    "sg": 32
+    "stärke": 15,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 27457,
@@ -14730,14 +15461,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,5 kg",
-    "verkaufspreis": "620 Hade",
+    "gewicht": "17,0 Pfd.",
+    "verkaufspreis": "100 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 14,
-    "sg": 24
+    "stärke": 7,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 27452,
@@ -14750,14 +15482,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "35,5 kg",
-    "verkaufspreis": "460 Hade",
+    "gewicht": "71,0 Pfd.",
+    "verkaufspreis": "280 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken"
     ],
-    "stärke": 13,
-    "sg": 24
+    "stärke": 11,
+    "sg": 24,
+    "wassersort": "salz"
   },
   {
     "id": 27454,
@@ -14770,14 +15503,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "14,2 kg",
-    "verkaufspreis": "520 Hade",
+    "gewicht": "28,4 Pfd.",
+    "verkaufspreis": "360 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 25
+    "stärke": 9,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 27450,
@@ -14790,14 +15524,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "23,8 kg",
-    "verkaufspreis": "800 Hade",
+    "gewicht": "47,6 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 23
+    "stärke": 10,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 27455,
@@ -14810,14 +15545,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "156 kg",
-    "verkaufspreis": "680 Hade",
+    "gewicht": "312 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
     "stärke": 12,
-    "sg": 23
+    "sg": 23,
+    "wassersort": "salz"
   },
   {
     "id": 27458,
@@ -14830,16 +15566,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "21,3 kg",
-    "verkaufspreis": "760 Hade",
+    "gewicht": "42,6 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Trocken",
       "Stürmisch"
     ],
-    "stärke": 16,
-    "sg": 23
+    "stärke": 10,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 27459,
@@ -14852,15 +15589,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,0 kg",
-    "verkaufspreis": "660 Hade",
+    "gewicht": "12,0 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Trocken"
     ],
-    "stärke": 14,
-    "sg": 24
+    "stärke": 8,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 27463,
@@ -14873,14 +15611,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,6 kg",
-    "verkaufspreis": "800 Hade",
+    "gewicht": "3,2 Pfd.",
+    "verkaufspreis": "220 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 15,
-    "sg": 24
+    "stärke": 7,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 27416,
@@ -14893,14 +15632,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "46,0 kg",
-    "verkaufspreis": "840 Hade",
+    "gewicht": "92,0 Pfd.",
+    "verkaufspreis": "1.200 Hade",
     "lebensraum": [],
     "klima": [
       "Kosmisch"
     ],
-    "stärke": 13,
-    "sg": 26
+    "stärke": 11,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 27418,
@@ -14913,14 +15653,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,5 kg",
-    "verkaufspreis": "820 Hade",
+    "gewicht": "3,0 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 15,
-    "sg": 27
+    "stärke": 9,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 27421,
@@ -14933,14 +15674,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "53,0 kg",
-    "verkaufspreis": "1100 Hade",
+    "gewicht": "106 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken"
     ],
-    "stärke": 12,
-    "sg": 28
+    "stärke": 10,
+    "sg": 28,
+    "wassersort": "salz"
   },
   {
     "id": 27437,
@@ -14953,14 +15695,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,0 kg",
-    "verkaufspreis": "460 Hade",
+    "gewicht": "4,0 Pfd.",
+    "verkaufspreis": "220 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 25
+    "stärke": 8,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 26747,
@@ -14973,14 +15716,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "16,0 kg",
-    "verkaufspreis": "780 Hade",
+    "gewicht": "32,0 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 24
+    "stärke": 9,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 27453,
@@ -14993,14 +15737,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "52,8 kg",
-    "verkaufspreis": "840 Hade",
+    "gewicht": "106 Pfd.",
+    "verkaufspreis": "320 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 14,
-    "sg": 28
+    "stärke": 12,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 27460,
@@ -15013,14 +15758,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "23,0 kg",
-    "verkaufspreis": "860 Hade",
+    "gewicht": "46,0 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken"
     ],
     "stärke": 12,
-    "sg": 28
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 27461,
@@ -15033,16 +15779,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "41,9 kg",
-    "verkaufspreis": "660 Hade",
+    "gewicht": "83,8 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Warm",
       "Trocken"
     ],
-    "stärke": 14,
-    "sg": 25
+    "stärke": 9,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 27470,
@@ -15055,14 +15802,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,8 kg",
-    "verkaufspreis": "640 Hade",
+    "gewicht": "5,6 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 23
+    "stärke": 7,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 27479,
@@ -15075,14 +15823,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "46,9 kg",
-    "verkaufspreis": "780 Hade",
+    "gewicht": "93,8 Pfd.",
+    "verkaufspreis": "320 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 13,
-    "sg": 26
+    "stärke": 11,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 27471,
@@ -15095,14 +15844,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,4 kg",
-    "verkaufspreis": "760 Hade",
+    "gewicht": "14,8 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 26
+    "stärke": 8,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 27469,
@@ -15115,14 +15865,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,4 kg",
-    "verkaufspreis": "900 Hade",
+    "gewicht": "14,8 Pfd.",
+    "verkaufspreis": "90 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 27
+    "stärke": 7,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 27473,
@@ -15135,14 +15886,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "52,9 kg",
-    "verkaufspreis": "680 Hade",
+    "gewicht": "106 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 14,
-    "sg": 25
+    "stärke": 11,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 27423,
@@ -15155,14 +15907,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "56,6 kg",
-    "verkaufspreis": "1100 Hade",
+    "gewicht": "113 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 27
+    "stärke": 11,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 27424,
@@ -15175,14 +15928,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "271 kg",
-    "verkaufspreis": "780 Hade",
+    "gewicht": "542 Pfd.",
+    "verkaufspreis": "650 Hade",
     "lebensraum": [],
     "klima": [
       "Vulkanisch"
     ],
-    "stärke": 14,
-    "sg": 26
+    "stärke": 17,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 27472,
@@ -15195,14 +15949,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,7 kg",
-    "verkaufspreis": "740 Hade",
+    "gewicht": "9,4 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 13,
-    "sg": 26
+    "stärke": 8,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 27468,
@@ -15215,14 +15970,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,1 kg",
-    "verkaufspreis": "580 Hade",
+    "gewicht": "4,2 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 14,
-    "sg": 25
+    "stärke": 6,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 27475,
@@ -15235,14 +15991,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,6 kg",
-    "verkaufspreis": "620 Hade",
+    "gewicht": "7,2 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch"
     ],
-    "stärke": 12,
-    "sg": 25
+    "stärke": 6,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 27476,
@@ -15255,14 +16012,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "6 g",
-    "verkaufspreis": "380 Hade",
+    "gewicht": "0,0 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 22
+    "stärke": 1,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 27477,
@@ -15275,14 +16033,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "53,3 kg",
-    "verkaufspreis": "800 Hade",
+    "gewicht": "107 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 26
+    "stärke": 10,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 27480,
@@ -15295,15 +16054,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "48,9 kg",
-    "verkaufspreis": "580 Hade",
+    "gewicht": "97,8 Pfd.",
+    "verkaufspreis": "360 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Trocken"
     ],
-    "stärke": 15,
-    "sg": 25
+    "stärke": 11,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 27482,
@@ -15316,14 +16076,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,3 kg",
-    "verkaufspreis": "500 Hade",
+    "gewicht": "6,6 Pfd.",
+    "verkaufspreis": "90 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 25
+    "stärke": 6,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 27486,
@@ -15336,14 +16097,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,6 kg",
-    "verkaufspreis": "460 Hade",
+    "gewicht": "13,2 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch"
     ],
-    "stärke": 15,
-    "sg": 23
+    "stärke": 8,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 27487,
@@ -15356,14 +16118,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,5 kg",
-    "verkaufspreis": "400 Hade",
+    "gewicht": "11,0 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 22
+    "stärke": 8,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 26748,
@@ -15376,15 +16139,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "109 kg",
-    "verkaufspreis": "1100 Hade",
+    "gewicht": "218 Pfd.",
+    "verkaufspreis": "2.200 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Magisch"
     ],
-    "stärke": 14,
-    "sg": 26
+    "stärke": 12,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 27474,
@@ -15397,14 +16161,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "0,9 kg",
-    "verkaufspreis": "780 Hade",
+    "gewicht": "1,8 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 13,
-    "sg": 25
+    "stärke": 9,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 27478,
@@ -15417,14 +16182,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "43,9 kg",
-    "verkaufspreis": "500 Hade",
+    "gewicht": "87,8 Pfd.",
+    "verkaufspreis": "280 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 14,
-    "sg": 25
+    "stärke": 10,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 27489,
@@ -15437,14 +16203,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,1 kg",
-    "verkaufspreis": "720 Hade",
+    "gewicht": "14,2 Pfd.",
+    "verkaufspreis": "220 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 25
+    "stärke": 6,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 27485,
@@ -15457,14 +16224,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,5 kg",
-    "verkaufspreis": "720 Hade",
+    "gewicht": "17,0 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
-    "stärke": 12,
-    "sg": 23
+    "stärke": 7,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 27488,
@@ -15477,14 +16245,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "401 kg",
-    "verkaufspreis": "800 Hade",
+    "gewicht": "802 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 24
+    "stärke": 14,
+    "sg": 24,
+    "wassersort": "salz"
   },
   {
     "id": 27484,
@@ -15497,14 +16266,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,6 kg",
-    "verkaufspreis": "740 Hade",
+    "gewicht": "15,2 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 14,
-    "sg": 25
+    "stärke": 7,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 27465,
@@ -15517,14 +16287,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "559 kg",
-    "verkaufspreis": "1100 Hade",
+    "gewicht": "1.118 Pfd.",
+    "verkaufspreis": "280 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 27
+    "stärke": 14,
+    "sg": 27,
+    "wassersort": "salz"
   },
   {
     "id": 27490,
@@ -15537,14 +16308,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,8 kg",
-    "verkaufspreis": "840 Hade",
+    "gewicht": "13,6 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 15,
-    "sg": 26
+    "stärke": 7,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 27491,
@@ -15557,14 +16329,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,1 kg",
-    "verkaufspreis": "260 Hade",
+    "gewicht": "8,2 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 21
+    "stärke": 6,
+    "sg": 21,
+    "wassersort": "süß"
   },
   {
     "id": 27492,
@@ -15577,14 +16350,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,2 kg",
-    "verkaufspreis": "700 Hade",
+    "gewicht": "14,4 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 23
+    "stärke": 7,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 27441,
@@ -15597,14 +16371,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "47,9 kg",
-    "verkaufspreis": "840 Hade",
+    "gewicht": "95,8 Pfd.",
+    "verkaufspreis": "360 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 27
+    "stärke": 11,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 27466,
@@ -15617,14 +16392,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "646 kg",
-    "verkaufspreis": "1800 Hade",
+    "gewicht": "1.292 Pfd.",
+    "verkaufspreis": "4.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 31
+    "stärke": 15,
+    "sg": 31,
+    "wassersort": "salz"
   },
   {
     "id": 27493,
@@ -15637,14 +16413,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,4 kg",
-    "verkaufspreis": "700 Hade",
+    "gewicht": "12,8 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 23
+    "stärke": 8,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 27483,
@@ -15657,14 +16434,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,6 kg",
-    "verkaufspreis": "680 Hade",
+    "gewicht": "5,2 Pfd.",
+    "verkaufspreis": "100 Hade",
     "lebensraum": [],
     "klima": [
       "Kosmisch"
     ],
-    "stärke": 13,
-    "sg": 23
+    "stärke": 6,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 27497,
@@ -15677,16 +16455,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "13,2 kg",
-    "verkaufspreis": "560 Hade",
+    "gewicht": "26,4 Pfd.",
+    "verkaufspreis": "2.800 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch",
       "Magisch",
       "Schattenhaft"
     ],
-    "stärke": 15,
-    "sg": 24
+    "stärke": 9,
+    "sg": 24,
+    "wassersort": "salz"
   },
   {
     "id": 27496,
@@ -15699,14 +16478,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "54,3 kg",
-    "verkaufspreis": "380 Hade",
+    "gewicht": "109 Pfd.",
+    "verkaufspreis": "100 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 14,
-    "sg": 20
+    "stärke": 8,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 27442,
@@ -15719,14 +16499,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "273 kg",
-    "verkaufspreis": "500 Hade",
+    "gewicht": "546 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 24
+    "stärke": 12,
+    "sg": 24,
+    "wassersort": "salz"
   },
   {
     "id": 26749,
@@ -15739,14 +16520,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "231 kg",
-    "verkaufspreis": "780 Hade",
+    "gewicht": "462 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken"
     ],
-    "stärke": 13,
-    "sg": 24
+    "stärke": 12,
+    "sg": 24,
+    "wassersort": "salz"
   },
   {
     "id": 27464,
@@ -15759,15 +16541,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "66 kg",
-    "verkaufspreis": "840 Hade",
+    "gewicht": "132 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Trocken"
     ],
     "stärke": 14,
-    "sg": 27
+    "sg": 27,
+    "wassersort": "salz"
   },
   {
     "id": 27511,
@@ -15780,14 +16563,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "29,6 kg",
-    "verkaufspreis": "540 Hade",
+    "gewicht": "59,2 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 14,
-    "sg": 24
+    "stärke": 9,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 27513,
@@ -15800,15 +16584,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,1 kg",
-    "verkaufspreis": "1400 Hade",
+    "gewicht": "2,2 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Warm"
     ],
-    "stärke": 16,
-    "sg": 27
+    "stärke": 8,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 27498,
@@ -15821,14 +16606,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "31 g",
-    "verkaufspreis": "260 Hade",
+    "gewicht": "0,1 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 15,
-    "sg": 20
+    "stärke": 2,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 27495,
@@ -15841,14 +16627,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "11,3 kg",
-    "verkaufspreis": "580 Hade",
+    "gewicht": "22,6 Pfd.",
+    "verkaufspreis": "90 Hade",
     "lebensraum": [],
     "klima": [
       "Tiefsee"
     ],
-    "stärke": 14,
-    "sg": 24
+    "stärke": 11,
+    "sg": 24,
+    "wassersort": "salz"
   },
   {
     "id": 27499,
@@ -15861,14 +16648,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "813 kg",
-    "verkaufspreis": "660 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "350.000 Hade",
     "lebensraum": [],
     "klima": [
       "Tiefsee"
     ],
-    "stärke": 14,
-    "sg": 26
+    "stärke": 18,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 27506,
@@ -15881,15 +16669,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "9,3 kg",
-    "verkaufspreis": "1700 Hade",
+    "gewicht": "18,6 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Tiefsee"
     ],
-    "stärke": 16,
-    "sg": 30
+    "stärke": 7,
+    "sg": 30,
+    "wassersort": "salz"
   },
   {
     "id": 27509,
@@ -15902,14 +16691,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "18,7 kg",
-    "verkaufspreis": "720 Hade",
+    "gewicht": "37,4 Pfd.",
+    "verkaufspreis": "100 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
-    "stärke": 15,
-    "sg": 23
+    "stärke": 11,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 27504,
@@ -15922,14 +16712,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,4 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "4,8 Pfd.",
+    "verkaufspreis": "280 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 24
+    "stärke": 6,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 27432,
@@ -15942,14 +16733,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,9 kg",
-    "verkaufspreis": "860 Hade",
+    "gewicht": "3,8 Pfd.",
+    "verkaufspreis": "3.500 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 28
+    "stärke": 10,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 27456,
@@ -15962,14 +16754,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,8 kg",
-    "verkaufspreis": "800 Hade",
+    "gewicht": "7,6 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 23
+    "stärke": 7,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 27467,
@@ -15982,14 +16775,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "17,5 kg",
-    "verkaufspreis": "880 Hade",
+    "gewicht": "35,0 Pfd.",
+    "verkaufspreis": "360 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken"
     ],
-    "stärke": 16,
-    "sg": 26
+    "stärke": 12,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 27481,
@@ -16002,14 +16796,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "862 kg",
-    "verkaufspreis": "1000 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "1.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
     "stärke": 15,
-    "sg": 29
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 27494,
@@ -16022,14 +16817,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,8 kg",
-    "verkaufspreis": "620 Hade",
+    "gewicht": "9,6 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 26
+    "stärke": 9,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 27500,
@@ -16042,14 +16838,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "9,5 kg",
-    "verkaufspreis": "1000 Hade",
+    "gewicht": "19,0 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 11,
-    "sg": 28
+    "stärke": 9,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 27501,
@@ -16062,14 +16859,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,2 kg",
-    "verkaufspreis": "480 Hade",
+    "gewicht": "6,4 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Tiefsee"
     ],
-    "stärke": 13,
-    "sg": 26
+    "stärke": 9,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 27507,
@@ -16082,14 +16880,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,1 kg",
-    "verkaufspreis": "720 Hade",
+    "gewicht": "4,2 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 25
+    "stärke": 8,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 27514,
@@ -16102,14 +16901,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,4 kg",
-    "verkaufspreis": "580 Hade",
+    "gewicht": "12,8 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 26
+    "stärke": 8,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 27503,
@@ -16122,14 +16922,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "62 kg",
-    "verkaufspreis": "1000 Hade",
+    "gewicht": "124 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 27
+    "stärke": 12,
+    "sg": 27,
+    "wassersort": "salz"
   },
   {
     "id": 27505,
@@ -16142,14 +16943,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "9,1 kg",
-    "verkaufspreis": "600 Hade",
+    "gewicht": "18,2 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 23
+    "stärke": 7,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 27512,
@@ -16162,16 +16964,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,7 kg",
-    "verkaufspreis": "500 Hade",
+    "gewicht": "7,4 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken",
       "Stürmisch",
       "Kosmisch"
     ],
-    "stärke": 16,
-    "sg": 24
+    "stärke": 7,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 27510,
@@ -16184,14 +16987,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,9 kg",
-    "verkaufspreis": "820 Hade",
+    "gewicht": "3,8 Pfd.",
+    "verkaufspreis": "4.500 Hade",
     "lebensraum": [],
     "klima": [
       "Tiefsee"
     ],
-    "stärke": 14,
-    "sg": 29
+    "stärke": 7,
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 27515,
@@ -16204,14 +17008,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "871 kg",
-    "verkaufspreis": "1100 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "220 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 27
+    "stärke": 14,
+    "sg": 27,
+    "wassersort": "salz"
   },
   {
     "id": 27502,
@@ -16224,14 +17029,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "14,5 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "29,0 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 23
+    "stärke": 11,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 27508,
@@ -16244,14 +17050,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,4 kg",
-    "verkaufspreis": "1200 Hade",
+    "gewicht": "12,8 Pfd.",
+    "verkaufspreis": "2.800 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 29
+    "stärke": 9,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 28719,
@@ -16264,14 +17071,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "9,3 kg",
-    "verkaufspreis": "900 Hade",
+    "gewicht": "18,6 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 15,
-    "sg": 28
+    "stärke": 9,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 28065,
@@ -16284,15 +17092,16 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,1 kg",
-    "verkaufspreis": "900 Hade",
+    "gewicht": "10,2 Pfd.",
+    "verkaufspreis": "22.000 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch",
       "Vulkanisch"
     ],
-    "stärke": 16,
-    "sg": 27
+    "stärke": 7,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 28066,
@@ -16305,14 +17114,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,2 kg",
-    "verkaufspreis": "640 Hade",
+    "gewicht": "2,4 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 24
+    "stärke": 7,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 28067,
@@ -16325,14 +17135,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "27,5 kg",
-    "verkaufspreis": "860 Hade",
+    "gewicht": "55,0 Pfd.",
+    "verkaufspreis": "90 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 27
+    "stärke": 11,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 28068,
@@ -16345,14 +17156,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "56,9 kg",
-    "verkaufspreis": "1500 Hade",
+    "gewicht": "114 Pfd.",
+    "verkaufspreis": "100 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 15,
-    "sg": 28
+    "stärke": 12,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 28069,
@@ -16365,15 +17177,16 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,9 kg",
-    "verkaufspreis": "640 Hade",
+    "gewicht": "13,8 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Warm",
       "Trocken"
     ],
-    "stärke": 11,
-    "sg": 26
+    "stärke": 9,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 28070,
@@ -16386,14 +17199,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
-    "stärke": 16,
-    "sg": 25
+    "stärke": 6,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 28071,
@@ -16406,14 +17220,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "293 kg",
-    "verkaufspreis": "720 Hade",
+    "gewicht": "586 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken"
     ],
-    "stärke": 13,
-    "sg": 26
+    "stärke": 12,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 28072,
@@ -16426,16 +17241,17 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "42,2 kg",
-    "verkaufspreis": "480 Hade",
+    "gewicht": "84,4 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken",
       "Stürmisch",
       "Kosmisch"
     ],
-    "stärke": 16,
-    "sg": 24
+    "stärke": 9,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 28189,
@@ -16448,14 +17264,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "595 kg",
-    "verkaufspreis": "2700 Hade",
+    "gewicht": "1.190 Pfd.",
+    "verkaufspreis": "2.200 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
     "stärke": 13,
-    "sg": 29
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 28190,
@@ -16468,14 +17285,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "30,7 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "61,4 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 12,
-    "sg": 25
+    "stärke": 9,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 28191,
@@ -16488,15 +17306,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,1 kg",
-    "verkaufspreis": "1200 Hade",
+    "gewicht": "6,2 Pfd.",
+    "verkaufspreis": "3.500 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Schattenhaft"
     ],
-    "stärke": 14,
-    "sg": 27
+    "stärke": 7,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 28192,
@@ -16509,14 +17328,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "28,3 kg",
-    "verkaufspreis": "1200 Hade",
+    "gewicht": "56,6 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 10,
-    "sg": 28
+    "stärke": 11,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 28193,
@@ -16529,14 +17349,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "0,9 kg",
-    "verkaufspreis": "620 Hade",
+    "gewicht": "1,8 Pfd.",
+    "verkaufspreis": "280 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 13,
-    "sg": 26
+    "stärke": 8,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 28925,
@@ -16549,14 +17370,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,3 kg",
-    "verkaufspreis": "720 Hade",
+    "gewicht": "6,6 Pfd.",
+    "verkaufspreis": "90 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 24
+    "stärke": 6,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 28926,
@@ -16569,14 +17391,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,9 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "15,8 Pfd.",
+    "verkaufspreis": "100 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 24
+    "stärke": 7,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 28927,
@@ -16589,14 +17412,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,1 kg",
-    "verkaufspreis": "620 Hade",
+    "gewicht": "10,2 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 23
+    "stärke": 7,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 28928,
@@ -16609,14 +17433,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "59,6 kg",
-    "verkaufspreis": "760 Hade",
+    "gewicht": "119 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 15,
-    "sg": 23
+    "stärke": 10,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 28929,
@@ -16629,14 +17454,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "22,1 kg",
-    "verkaufspreis": "540 Hade",
+    "gewicht": "44,2 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 26
+    "stärke": 11,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 28930,
@@ -16649,14 +17475,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "662 kg",
-    "verkaufspreis": "680 Hade",
+    "gewicht": "1.324 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 25
+    "stärke": 14,
+    "sg": 25,
+    "wassersort": "salz"
   },
   {
     "id": 28937,
@@ -16669,14 +17496,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "520 g",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "1,0 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 12
+    "sg": 12,
+    "wassersort": "salz"
   },
   {
     "id": 28938,
@@ -16689,14 +17517,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,2 kg",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "2,4 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 12
+    "stärke": 2,
+    "sg": 12,
+    "wassersort": "salz"
   },
   {
     "id": 29739,
@@ -16709,16 +17538,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Warm",
       "Toxisch",
       "Magisch"
     ],
-    "stärke": 3,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 29722,
@@ -16731,14 +17561,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "10 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 13
+    "stärke": 3,
+    "sg": 13,
+    "wassersort": "salz"
   },
   {
     "id": 29723,
@@ -16751,14 +17582,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "281 g",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "0,6 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 10
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 28941,
@@ -16771,14 +17603,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "959 g",
-    "verkaufspreis": "12 Hade",
+    "gewicht": "1,9 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 13
+    "stärke": 3,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 29728,
@@ -16791,14 +17624,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "2 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch"
     ],
     "stärke": 3,
-    "sg": 10
+    "sg": 10,
+    "wassersort": "salz"
   },
   {
     "id": 29729,
@@ -16811,14 +17645,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 29730,
@@ -16831,15 +17666,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,7 kg",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "3,4 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Tiefsee"
     ],
-    "stärke": 3,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "salz"
   },
   {
     "id": 29736,
@@ -16852,14 +17688,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,7 kg",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "3,4 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 3,
-    "sg": 12
+    "stärke": 2,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 29737,
@@ -16872,14 +17709,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,5 kg",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "3,0 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 5,
-    "sg": 12
+    "stärke": 2,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 29738,
@@ -16892,14 +17730,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,4 kg",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "2,8 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Tiefsee"
     ],
-    "stärke": 1,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "salz"
   },
   {
     "id": 29719,
@@ -16912,14 +17751,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "503 g",
-    "verkaufspreis": "10 Hade",
+    "gewicht": "1,0 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 2,
-    "sg": 13
+    "stärke": 3,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 28942,
@@ -16932,14 +17772,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "782 g",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "1,6 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 28939,
@@ -16952,14 +17793,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "906 g",
-    "verkaufspreis": "10 Hade",
+    "gewicht": "1,8 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 29724,
@@ -16972,14 +17814,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,7 kg",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "3,4 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 12
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 28940,
@@ -16992,14 +17835,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "359 g",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "0,7 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 6,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 29725,
@@ -17012,14 +17856,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,5 kg",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "3,0 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 4,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 29731,
@@ -17032,14 +17877,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "202 g",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "0,4 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 13
+    "stärke": 2,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 29735,
@@ -17052,14 +17898,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 5,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 29733,
@@ -17072,14 +17919,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "335 g",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "0,7 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 4,
-    "sg": 11
+    "stärke": 3,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 29718,
@@ -17092,14 +17940,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,0 kg",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "2,0 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 29740,
@@ -17112,14 +17961,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,7 kg",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "3,4 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 2,
-    "sg": 12
+    "stärke": 3,
+    "sg": 12,
+    "wassersort": "salz"
   },
   {
     "id": 29741,
@@ -17132,14 +17982,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "154 g",
-    "verkaufspreis": "9 Hade",
+    "gewicht": "0,3 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
     "stärke": 3,
-    "sg": 12
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 29734,
@@ -17152,14 +18003,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,7 kg",
-    "verkaufspreis": "10 Hade",
+    "gewicht": "3,4 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 2,
-    "sg": 12
+    "stärke": 3,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 29721,
@@ -17172,15 +18024,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,6 kg",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "3,2 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Warm",
       "Stürmisch"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 3,
+    "sg": 10,
+    "wassersort": "salz"
   },
   {
     "id": 29726,
@@ -17193,15 +18046,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,7 kg",
-    "verkaufspreis": "9 Hade",
+    "gewicht": "3,4 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Warm"
     ],
-    "stärke": 3,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 29727,
@@ -17214,14 +18068,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,5 kg",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "3,0 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 2,
-    "sg": 12
+    "stärke": 3,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 29742,
@@ -17234,15 +18089,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "572 g",
-    "verkaufspreis": "8 Hade",
+    "gewicht": "1,1 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Magisch"
     ],
-    "stärke": 3,
-    "sg": 13
+    "stärke": 4,
+    "sg": 13,
+    "wassersort": "salz"
   },
   {
     "id": 29732,
@@ -17255,14 +18111,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,6 kg",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "3,2 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 29720,
@@ -17275,14 +18132,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,1 kg",
-    "verkaufspreis": "9 Hade",
+    "gewicht": "2,2 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 2,
-    "sg": 13
+    "stärke": 3,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 29743,
@@ -17295,14 +18153,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "661 g",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "1,3 Pfd.",
+    "verkaufspreis": "200.000 Hade",
     "lebensraum": [],
     "klima": [
       "Tiefsee"
     ],
-    "stärke": 5,
-    "sg": 12
+    "stärke": 8,
+    "sg": 12,
+    "wassersort": "salz"
   },
   {
     "id": 29744,
@@ -17315,14 +18174,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "716 g",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "1,4 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 11
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 29745,
@@ -17335,14 +18195,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,4 kg",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "2,8 Pfd.",
+    "verkaufspreis": "300.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 7,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 29746,
@@ -17355,14 +18216,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "714 g",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "1,4 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 4,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 29747,
@@ -17375,14 +18237,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "823 g",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "1,6 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 2,
-    "sg": 11
+    "stärke": 3,
+    "sg": 11,
+    "wassersort": "salz"
   },
   {
     "id": 29766,
@@ -17395,14 +18258,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,5 kg",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "3,0 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 10
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 29749,
@@ -17415,8 +18279,8 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "284 g",
-    "verkaufspreis": "1 Hade",
+    "gewicht": "0,6 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
@@ -17425,7 +18289,8 @@ window.FISH_DB = [
       "Toxisch"
     ],
     "stärke": 4,
-    "sg": 12
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 29750,
@@ -17438,15 +18303,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Schattenhaft"
     ],
-    "stärke": 3,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "salz"
   },
   {
     "id": 29751,
@@ -17459,14 +18325,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,5 kg",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "3,0 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 5,
-    "sg": 12
+    "stärke": 2,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 29752,
@@ -17479,14 +18346,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,7 kg",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "3,4 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "salz"
   },
   {
     "id": 29753,
@@ -17499,14 +18367,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "869 g",
-    "verkaufspreis": "2 Hade",
+    "gewicht": "1,7 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 1,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 29754,
@@ -17519,14 +18388,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "833 g",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "1,7 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 4,
-    "sg": 12
+    "stärke": 3,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 29755,
@@ -17539,8 +18409,8 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "755 g",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "1,5 Pfd.",
+    "verkaufspreis": "360 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
@@ -17548,7 +18418,8 @@ window.FISH_DB = [
       "Schattenhaft"
     ],
     "stärke": 3,
-    "sg": 10
+    "sg": 10,
+    "wassersort": "salz"
   },
   {
     "id": 29756,
@@ -17561,14 +18432,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "416 g",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "0,8 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 12
+    "stärke": 4,
+    "sg": 12,
+    "wassersort": "salz"
   },
   {
     "id": 29757,
@@ -17581,15 +18453,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "373 g",
-    "verkaufspreis": "2 Hade",
+    "gewicht": "0,7 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch",
       "Schattenhaft"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "salz"
   },
   {
     "id": 29758,
@@ -17602,14 +18475,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "1 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
-    "stärke": 1,
-    "sg": 12
+    "stärke": 2,
+    "sg": 12,
+    "wassersort": "salz"
   },
   {
     "id": 29759,
@@ -17622,14 +18496,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "287 g",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "0,6 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 1,
-    "sg": 12
+    "stärke": 2,
+    "sg": 12,
+    "wassersort": "salz"
   },
   {
     "id": 29779,
@@ -17642,14 +18517,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,8 kg",
-    "verkaufspreis": "2 Hade",
+    "gewicht": "3,6 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 12
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 29761,
@@ -17662,15 +18538,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch",
       "Vulkanisch"
     ],
     "stärke": 3,
-    "sg": 13
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 29760,
@@ -17683,14 +18560,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "235 g",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "0,5 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
     "stärke": 2,
-    "sg": 12
+    "sg": 12,
+    "wassersort": "salz"
   },
   {
     "id": 29763,
@@ -17703,14 +18581,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,6 kg",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "3,2 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
     "stärke": 3,
-    "sg": 10
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 29764,
@@ -17723,14 +18602,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,1 kg",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "2,2 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 11
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 29765,
@@ -17743,14 +18623,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "186 g",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "0,4 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 10
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 29775,
@@ -17763,14 +18644,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "191 g",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "0,4 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 4,
-    "sg": 12
+    "stärke": 3,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 29767,
@@ -17783,14 +18665,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "378 g",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "0,8 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 5,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 29768,
@@ -17803,14 +18686,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "688 g",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "1,4 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 3,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 29769,
@@ -17823,14 +18707,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "280 g",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "0,6 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 13
+    "stärke": 3,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 29770,
@@ -17843,14 +18728,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "618 g",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "1,2 Pfd.",
+    "verkaufspreis": "500.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 2,
-    "sg": 12
+    "stärke": 7,
+    "sg": 12,
+    "wassersort": "salz"
   },
   {
     "id": 29771,
@@ -17863,15 +18749,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "168 g",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "0,3 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Warm"
     ],
     "stärke": 3,
-    "sg": 10
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 29772,
@@ -17884,14 +18771,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,2 kg",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "2,4 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 10
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 29780,
@@ -17904,14 +18792,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,4 kg",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "2,8 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 12
+    "stärke": 2,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 29774,
@@ -17924,14 +18813,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "208 g",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "0,4 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 29748,
@@ -17944,14 +18834,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "879 g",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "1,8 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
     "stärke": 3,
-    "sg": 12
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 29776,
@@ -17964,14 +18855,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "450.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 3,
-    "sg": 10
+    "stärke": 8,
+    "sg": 10,
+    "wassersort": "salz"
   },
   {
     "id": 29777,
@@ -17984,14 +18876,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "428 g",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "0,9 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 3,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 29778,
@@ -18004,14 +18897,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,1 kg",
-    "verkaufspreis": "2 Hade",
+    "gewicht": "2,2 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 10
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 29773,
@@ -18024,14 +18918,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "968 g",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "1,9 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "salz"
   },
   {
     "id": 29762,
@@ -18044,14 +18939,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "918 g",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "1,8 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 2,
-    "sg": 13
+    "stärke": 3,
+    "sg": 13,
+    "wassersort": "salz"
   },
   {
     "id": 29781,
@@ -18064,14 +18960,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,2 kg",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "2,4 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
     "stärke": 2,
-    "sg": 10
+    "sg": 10,
+    "wassersort": "salz"
   },
   {
     "id": 29782,
@@ -18084,14 +18981,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "5 g",
-    "verkaufspreis": "8 Hade",
+    "gewicht": "0,0 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 1,
-    "sg": 13
+    "stärke": 2,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 29783,
@@ -18104,14 +19002,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "760 g",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "1,5 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 1,
-    "sg": 11
+    "stärke": 3,
+    "sg": 11,
+    "wassersort": "salz"
   },
   {
     "id": 29784,
@@ -18124,8 +19023,8 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,0 kg",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "2,0 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
@@ -18133,7 +19032,8 @@ window.FISH_DB = [
       "Magisch"
     ],
     "stärke": 3,
-    "sg": 11
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 29785,
@@ -18146,16 +19046,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "447 g",
-    "verkaufspreis": "2 Hade",
+    "gewicht": "0,9 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Warm",
       "Magisch"
     ],
-    "stärke": 3,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 29786,
@@ -18168,16 +19069,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,0 kg",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "2,0 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Warm",
       "Magisch"
     ],
-    "stärke": 3,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 29787,
@@ -18190,16 +19092,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "662 g",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "1,3 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Warm",
       "Magisch"
     ],
-    "stärke": 3,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 29788,
@@ -18212,14 +19115,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "424 kg",
-    "verkaufspreis": "1300 Hade",
+    "gewicht": "848 Pfd.",
+    "verkaufspreis": "500 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 15,
-    "sg": 26
+    "stärke": 13,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 29789,
@@ -18232,14 +19136,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "80 kg",
-    "verkaufspreis": "1000 Hade",
+    "gewicht": "160 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 14,
-    "sg": 27
+    "sg": 27,
+    "wassersort": "salz"
   },
   {
     "id": 29790,
@@ -18252,14 +19157,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "250 kg",
-    "verkaufspreis": "880 Hade",
+    "gewicht": "500 Pfd.",
+    "verkaufspreis": "220 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 28
+    "stärke": 15,
+    "sg": 28,
+    "wassersort": "salz"
   },
   {
     "id": 29791,
@@ -18272,14 +19178,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "604 kg",
-    "verkaufspreis": "1000 Hade",
+    "gewicht": "1.208 Pfd.",
+    "verkaufspreis": "500.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 27
+    "stärke": 17,
+    "sg": 27,
+    "wassersort": "salz"
   },
   {
     "id": 29673,
@@ -18292,14 +19199,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "35,0 kg",
-    "verkaufspreis": "460 Hade",
+    "gewicht": "70,0 Pfd.",
+    "verkaufspreis": "220 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 14,
-    "sg": 25
+    "stärke": 9,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 29678,
@@ -18312,14 +19220,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "769 kg",
-    "verkaufspreis": "1200 Hade",
+    "gewicht": "600 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 27
+    "stärke": 17,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 30487,
@@ -18332,14 +19241,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,6 kg",
-    "verkaufspreis": "1000 Hade",
+    "gewicht": "15,2 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 28
+    "stärke": 8,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 30593,
@@ -18352,14 +19262,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "165 g",
-    "verkaufspreis": "620 Hade",
+    "gewicht": "0,3 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 23
+    "stärke": 2,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 30432,
@@ -18372,14 +19283,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "750 kg",
-    "verkaufspreis": "1200 Hade",
+    "gewicht": "1.500 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 28
+    "stärke": 14,
+    "sg": 28,
+    "wassersort": "salz"
   },
   {
     "id": 30433,
@@ -18392,14 +19304,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "10,8 kg",
-    "verkaufspreis": "820 Hade",
+    "gewicht": "21,6 Pfd.",
+    "verkaufspreis": "90 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 27
+    "stärke": 11,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 30434,
@@ -18412,14 +19325,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "25,8 kg",
-    "verkaufspreis": "680 Hade",
+    "gewicht": "51,6 Pfd.",
+    "verkaufspreis": "100 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 25
+    "stärke": 11,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 30435,
@@ -18432,14 +19346,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "884 kg",
-    "verkaufspreis": "1300 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 28
+    "stärke": 15,
+    "sg": 28,
+    "wassersort": "salz"
   },
   {
     "id": 30436,
@@ -18452,14 +19367,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,0 kg",
-    "verkaufspreis": "740 Hade",
+    "gewicht": "12,0 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 24
+    "stärke": 6,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 30437,
@@ -18472,14 +19388,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "34,8 kg",
-    "verkaufspreis": "540 Hade",
+    "gewicht": "69,6 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 26
+    "stärke": 9,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 30438,
@@ -18492,14 +19409,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "587 kg",
-    "verkaufspreis": "1300 Hade",
+    "gewicht": "1.174 Pfd.",
+    "verkaufspreis": "650 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 14,
-    "sg": 29
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 30439,
@@ -18512,14 +19430,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "48,9 kg",
-    "verkaufspreis": "800 Hade",
+    "gewicht": "97,8 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 24
+    "stärke": 10,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 30488,
@@ -18532,14 +19451,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "25,7 kg",
-    "verkaufspreis": "760 Hade",
+    "gewicht": "51,4 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 26
+    "stärke": 10,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 30489,
@@ -18552,14 +19472,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,1 kg",
-    "verkaufspreis": "500 Hade",
+    "gewicht": "12,2 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 24
+    "stärke": 8,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 30490,
@@ -18572,15 +19493,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "37,5 kg",
-    "verkaufspreis": "540 Hade",
+    "gewicht": "75,0 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Stürmisch"
     ],
-    "stärke": 15,
-    "sg": 23
+    "stärke": 11,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 30491,
@@ -18593,14 +19515,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,2 kg",
-    "verkaufspreis": "840 Hade",
+    "gewicht": "12,4 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 27
+    "stärke": 9,
+    "sg": 27,
+    "wassersort": "salz"
   },
   {
     "id": 30492,
@@ -18613,14 +19536,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,0 kg",
-    "verkaufspreis": "820 Hade",
+    "gewicht": "10,0 Pfd.",
+    "verkaufspreis": "500 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 15,
-    "sg": 29
+    "stärke": 7,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 31129,
@@ -18633,14 +19557,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "10,8 kg",
-    "verkaufspreis": "680 Hade",
+    "gewicht": "21,6 Pfd.",
+    "verkaufspreis": "220 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 26
+    "stärke": 9,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 31134,
@@ -18653,14 +19578,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "56,9 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "114 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 25
+    "stärke": 12,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 32049,
@@ -18673,14 +19599,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "56,8 kg",
-    "verkaufspreis": "780 Hade",
+    "gewicht": "114 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 24
+    "stärke": 10,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 32050,
@@ -18693,14 +19620,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,7 kg",
-    "verkaufspreis": "700 Hade",
+    "gewicht": "13,4 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 24
+    "stärke": 8,
+    "sg": 24,
+    "wassersort": "salz"
   },
   {
     "id": 32051,
@@ -18713,14 +19641,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "851 kg",
-    "verkaufspreis": "1300 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 28
+    "stärke": 15,
+    "sg": 28,
+    "wassersort": "salz"
   },
   {
     "id": 32052,
@@ -18733,14 +19662,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "9,5 kg",
-    "verkaufspreis": "680 Hade",
+    "gewicht": "19,0 Pfd.",
+    "verkaufspreis": "220 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 26
+    "stärke": 9,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 32053,
@@ -18753,14 +19683,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,1 kg",
-    "verkaufspreis": "740 Hade",
+    "gewicht": "14,2 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 15,
-    "sg": 23
+    "stärke": 6,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 32054,
@@ -18773,14 +19704,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,7 kg",
-    "verkaufspreis": "620 Hade",
+    "gewicht": "15,4 Pfd.",
+    "verkaufspreis": "280 Hade",
     "lebensraum": [],
     "klima": [
       "Tiefsee"
     ],
-    "stärke": 13,
-    "sg": 24
+    "stärke": 6,
+    "sg": 24,
+    "wassersort": "salz"
   },
   {
     "id": 32055,
@@ -18793,14 +19725,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "843 g",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "1,7 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 11
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 32056,
@@ -18813,14 +19746,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "559 g",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "1,1 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 13
+    "stärke": 3,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 32057,
@@ -18833,14 +19767,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "572 g",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "1,1 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 32075,
@@ -18853,14 +19788,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,4 kg",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "2,8 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 32076,
@@ -18873,14 +19809,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "274 g",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "0,5 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Kosmisch"
     ],
-    "stärke": 1,
-    "sg": 13
+    "stärke": 2,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 32077,
@@ -18893,14 +19830,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,5 kg",
-    "verkaufspreis": "8 Hade",
+    "gewicht": "3,0 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 32095,
@@ -18913,14 +19851,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "709 g",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "1,4 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 32096,
@@ -18933,14 +19872,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "978 g",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "2,0 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 3,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 32097,
@@ -18953,14 +19893,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "421 g",
-    "verkaufspreis": "9 Hade",
+    "gewicht": "0,8 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 12
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 32058,
@@ -18973,14 +19914,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,4 kg",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "2,8 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 11
+    "stärke": 3,
+    "sg": 11,
+    "wassersort": "salz"
   },
   {
     "id": 32059,
@@ -18993,14 +19935,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "183 g",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "0,4 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 3,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 32060,
@@ -19013,15 +19956,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "937 g",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "1,9 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Toxisch"
     ],
-    "stärke": 4,
-    "sg": 12
+    "stärke": 2,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 32078,
@@ -19034,14 +19978,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "868 g",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "1,7 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 10
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 32079,
@@ -19054,14 +19999,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "950 g",
-    "verkaufspreis": "2 Hade",
+    "gewicht": "1,9 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 12
+    "stärke": 3,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 32080,
@@ -19074,14 +20020,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "677 g",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "1,4 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 13
+    "stärke": 4,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 32098,
@@ -19094,14 +20041,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,6 kg",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "3,2 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 13
+    "stärke": 3,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 32099,
@@ -19114,14 +20062,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 10
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 32100,
@@ -19134,14 +20083,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 5,
-    "sg": 12
+    "stärke": 3,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 32061,
@@ -19154,14 +20104,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "903 g",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "1,8 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 32062,
@@ -19174,15 +20125,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "657 g",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "1,3 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Warm",
       "Vulkanisch"
     ],
     "stärke": 2,
-    "sg": 10
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 32081,
@@ -19195,14 +20147,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,4 kg",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "2,8 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 3,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 32082,
@@ -19215,14 +20168,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "639 g",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "1,3 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "salz"
   },
   {
     "id": 32101,
@@ -19235,14 +20189,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,2 kg",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "2,4 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 2,
-    "sg": 10
+    "stärke": 4,
+    "sg": 10,
+    "wassersort": "salz"
   },
   {
     "id": 32102,
@@ -19255,14 +20210,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,1 kg",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "2,2 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 12
+    "stärke": 2,
+    "sg": 12,
+    "wassersort": "salz"
   },
   {
     "id": 32064,
@@ -19275,14 +20231,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,6 kg",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "3,2 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 3,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 32084,
@@ -19295,14 +20252,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,2 kg",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "2,4 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 32104,
@@ -19315,14 +20273,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 1,
-    "sg": 12
+    "stärke": 2,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 32065,
@@ -19335,14 +20294,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "171 g",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "0,3 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
     "stärke": 3,
-    "sg": 11
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 32066,
@@ -19355,14 +20315,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,8 kg",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "3,6 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 3,
-    "sg": 13
+    "stärke": 4,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 32067,
@@ -19375,14 +20336,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 32068,
@@ -19395,14 +20357,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,4 kg",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "2,8 Pfd.",
+    "verkaufspreis": "250.000 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 1,
-    "sg": 11
+    "stärke": 8,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 32069,
@@ -19415,15 +20378,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "900 g",
-    "verkaufspreis": "10 Hade",
+    "gewicht": "1,8 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Vulkanisch"
     ],
     "stärke": 2,
-    "sg": 11
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 32070,
@@ -19436,15 +20400,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "568 g",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "1,1 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch",
       "Magisch"
     ],
     "stärke": 2,
-    "sg": 12
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 32071,
@@ -19457,14 +20422,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "304 g",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "0,6 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch"
     ],
-    "stärke": 4,
-    "sg": 12
+    "stärke": 3,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 32072,
@@ -19477,14 +20443,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "870 g",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "1,7 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 12
+    "stärke": 3,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 32073,
@@ -19497,14 +20464,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,1 kg",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "2,2 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 12
+    "stärke": 4,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 32085,
@@ -19517,14 +20485,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "322 g",
-    "verkaufspreis": "8 Hade",
+    "gewicht": "0,6 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 2,
-    "sg": 13
+    "stärke": 3,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 32086,
@@ -19537,14 +20506,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,2 kg",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "2,4 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 4,
-    "sg": 10
+    "stärke": 3,
+    "sg": 10,
+    "wassersort": "salz"
   },
   {
     "id": 32087,
@@ -19557,14 +20527,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,7 kg",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "3,4 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 2,
-    "sg": 13
+    "stärke": 4,
+    "sg": 13,
+    "wassersort": "salz"
   },
   {
     "id": 32088,
@@ -19577,14 +20548,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,1 kg",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "2,2 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 4,
-    "sg": 12
+    "stärke": 2,
+    "sg": 12,
+    "wassersort": "salz"
   },
   {
     "id": 32089,
@@ -19597,14 +20569,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "415 g",
-    "verkaufspreis": "2 Hade",
+    "gewicht": "0,8 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 4,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 32090,
@@ -19617,14 +20590,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 12
+    "stärke": 2,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 32091,
@@ -19637,14 +20611,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,2 kg",
-    "verkaufspreis": "9 Hade",
+    "gewicht": "2,4 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 3,
-    "sg": 12
+    "stärke": 2,
+    "sg": 12,
+    "wassersort": "salz"
   },
   {
     "id": 32092,
@@ -19657,14 +20632,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "724 g",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "1,4 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 2,
-    "sg": 11
+    "stärke": 3,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 32093,
@@ -19677,15 +20653,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "994 g",
-    "verkaufspreis": "2 Hade",
+    "gewicht": "2,0 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Magisch"
     ],
     "stärke": 3,
-    "sg": 11
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 32105,
@@ -19698,14 +20675,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "463 g",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "0,9 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 5,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "salz"
   },
   {
     "id": 32106,
@@ -19718,14 +20696,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "794 g",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "1,6 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 10
+    "sg": 10,
+    "wassersort": "salz"
   },
   {
     "id": 32107,
@@ -19738,14 +20717,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "723 g",
-    "verkaufspreis": "8 Hade",
+    "gewicht": "1,4 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
     "stärke": 3,
-    "sg": 10
+    "sg": 10,
+    "wassersort": "salz"
   },
   {
     "id": 32108,
@@ -19758,14 +20738,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "170 g",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "0,3 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
     "stärke": 3,
-    "sg": 10
+    "sg": 10,
+    "wassersort": "salz"
   },
   {
     "id": 32109,
@@ -19778,14 +20759,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,7 kg",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "3,4 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 3,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 32110,
@@ -19798,14 +20780,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,7 kg",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "3,4 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 5,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 32111,
@@ -19818,14 +20801,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,2 kg",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "2,4 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 6,
-    "sg": 12
+    "stärke": 2,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 32112,
@@ -19838,14 +20822,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "380 g",
-    "verkaufspreis": "2 Hade",
+    "gewicht": "0,8 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 4,
-    "sg": 12
+    "stärke": 2,
+    "sg": 12,
+    "wassersort": "salz"
   },
   {
     "id": 32113,
@@ -19858,14 +20843,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "350 g",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "0,7 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 4,
-    "sg": 12
+    "stärke": 3,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 32063,
@@ -19878,16 +20864,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "575 g",
-    "verkaufspreis": "2 Hade",
+    "gewicht": "1,2 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Warm",
       "Magisch"
     ],
-    "stärke": 3,
-    "sg": 12
+    "stärke": 2,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 32083,
@@ -19900,16 +20887,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "496 g",
-    "verkaufspreis": "8 Hade",
+    "gewicht": "1,0 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Warm",
       "Magisch"
     ],
-    "stärke": 3,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 32103,
@@ -19922,16 +20910,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "712 g",
-    "verkaufspreis": "2 Hade",
+    "gewicht": "1,4 Pfd.",
+    "verkaufspreis": "250.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Warm",
       "Magisch"
     ],
-    "stärke": 4,
-    "sg": 11
+    "stärke": 8,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 32074,
@@ -19944,14 +20933,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "152 kg",
-    "verkaufspreis": "800 Hade",
+    "gewicht": "304 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 25
+    "stärke": 12,
+    "sg": 25,
+    "wassersort": "salz"
   },
   {
     "id": 32094,
@@ -19964,14 +20954,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "13,9 kg",
-    "verkaufspreis": "460 Hade",
+    "gewicht": "27,8 Pfd.",
+    "verkaufspreis": "320 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 25
+    "stärke": 11,
+    "sg": 25,
+    "wassersort": "salz"
   },
   {
     "id": 32114,
@@ -19984,14 +20975,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "9,2 kg",
-    "verkaufspreis": "620 Hade",
+    "gewicht": "18,4 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 26
+    "stärke": 9,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 31771,
@@ -20004,14 +20996,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,7 kg",
-    "verkaufspreis": "720 Hade",
+    "gewicht": "7,4 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 26
+    "stärke": 9,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 31770,
@@ -20024,15 +21017,16 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,2 kg",
-    "verkaufspreis": "580 Hade",
+    "gewicht": "10,4 Pfd.",
+    "verkaufspreis": "360 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Vulkanisch"
     ],
-    "stärke": 16,
-    "sg": 23
+    "stärke": 8,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 33316,
@@ -20045,14 +21039,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,8 kg",
-    "verkaufspreis": "680 Hade",
+    "gewicht": "11,6 Pfd.",
+    "verkaufspreis": "320 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 14,
-    "sg": 25
+    "stärke": 8,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 33317,
@@ -20065,14 +21060,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,6 kg",
-    "verkaufspreis": "940 Hade",
+    "gewicht": "5,2 Pfd.",
+    "verkaufspreis": "360 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 28
+    "stärke": 9,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 33318,
@@ -20085,14 +21081,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "23,9 kg",
-    "verkaufspreis": "500 Hade",
+    "gewicht": "47,8 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 26
+    "stärke": 11,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 33319,
@@ -20105,15 +21102,16 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "19,6 kg",
-    "verkaufspreis": "520 Hade",
+    "gewicht": "39,2 Pfd.",
+    "verkaufspreis": "90 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Schattenhaft"
     ],
-    "stärke": 16,
-    "sg": 26
+    "stärke": 12,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 33320,
@@ -20126,14 +21124,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "39,6 kg",
-    "verkaufspreis": "860 Hade",
+    "gewicht": "79,2 Pfd.",
+    "verkaufspreis": "100 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 28
+    "stärke": 9,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 33321,
@@ -20146,14 +21145,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "139 kg",
-    "verkaufspreis": "820 Hade",
+    "gewicht": "278 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 14,
-    "sg": 27
+    "stärke": 13,
+    "sg": 27,
+    "wassersort": "salz"
   },
   {
     "id": 33322,
@@ -20166,14 +21166,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "39,7 kg",
-    "verkaufspreis": "900 Hade",
+    "gewicht": "79,4 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 14,
-    "sg": 26
+    "stärke": 10,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 33323,
@@ -20186,14 +21187,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,2 kg",
-    "verkaufspreis": "620 Hade",
+    "gewicht": "12,4 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 23
+    "stärke": 7,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 33324,
@@ -20206,14 +21208,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "45,7 kg",
-    "verkaufspreis": "580 Hade",
+    "gewicht": "91,4 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch"
     ],
-    "stärke": 14,
-    "sg": 26
+    "stärke": 11,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 33325,
@@ -20226,14 +21229,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "15,7 kg",
-    "verkaufspreis": "880 Hade",
+    "gewicht": "31,4 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 28
+    "stärke": 12,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 33326,
@@ -20246,14 +21250,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "35,3 kg",
-    "verkaufspreis": "480 Hade",
+    "gewicht": "70,6 Pfd.",
+    "verkaufspreis": "220 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 23
+    "stärke": 11,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 33219,
@@ -20266,14 +21271,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "49 g",
-    "verkaufspreis": "460 Hade",
+    "gewicht": "0,1 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 26
+    "stärke": 3,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 33220,
@@ -20286,14 +21292,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "165 g",
-    "verkaufspreis": "480 Hade",
+    "gewicht": "0,3 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 13,
-    "sg": 25
+    "stärke": 3,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 33221,
@@ -20306,15 +21313,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "34,7 kg",
-    "verkaufspreis": "260 Hade",
+    "gewicht": "69,4 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch",
       "Vulkanisch"
     ],
-    "stärke": 15,
-    "sg": 22
+    "stärke": 11,
+    "sg": 22,
+    "wassersort": "süß"
   },
   {
     "id": 33222,
@@ -20327,14 +21335,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "54,8 kg",
-    "verkaufspreis": "480 Hade",
+    "gewicht": "110 Pfd.",
+    "verkaufspreis": "220 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 26
+    "stärke": 9,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 33223,
@@ -20347,14 +21356,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,9 kg",
-    "verkaufspreis": "800 Hade",
+    "gewicht": "17,8 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 23
+    "stärke": 6,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 33239,
@@ -20367,14 +21377,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "32,5 kg",
-    "verkaufspreis": "240 Hade",
+    "gewicht": "65,0 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 23
+    "stärke": 10,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 33240,
@@ -20387,14 +21398,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,9 kg",
-    "verkaufspreis": "720 Hade",
+    "gewicht": "11,8 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 24
+    "stärke": 8,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 33241,
@@ -20407,15 +21419,16 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "27,3 kg",
-    "verkaufspreis": "880 Hade",
+    "gewicht": "54,6 Pfd.",
+    "verkaufspreis": "4.500 Hade",
     "lebensraum": [],
     "klima": [
       "Warm",
       "Trocken"
     ],
-    "stärke": 13,
-    "sg": 29
+    "stärke": 12,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 33242,
@@ -20428,14 +21441,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "42,9 kg",
-    "verkaufspreis": "480 Hade",
+    "gewicht": "85,8 Pfd.",
+    "verkaufspreis": "100 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 26
+    "stärke": 12,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 33243,
@@ -20448,14 +21462,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "886 kg",
-    "verkaufspreis": "980 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 26
+    "stärke": 12,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 33244,
@@ -20468,14 +21483,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "32,7 kg",
-    "verkaufspreis": "860 Hade",
+    "gewicht": "65,4 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 28
+    "stärke": 10,
+    "sg": 28,
+    "wassersort": "salz"
   },
   {
     "id": 36385,
@@ -20488,14 +21504,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,6 kg",
-    "verkaufspreis": "560 Hade",
+    "gewicht": "13,2 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 23
+    "stärke": 9,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 36386,
@@ -20508,14 +21525,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "32,2 kg",
-    "verkaufspreis": "640 Hade",
+    "gewicht": "64,4 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 23
+    "stärke": 8,
+    "sg": 23,
+    "wassersort": "salz"
   },
   {
     "id": 36387,
@@ -20528,14 +21546,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,1 kg",
-    "verkaufspreis": "440 Hade",
+    "gewicht": "2,2 Pfd.",
+    "verkaufspreis": "90 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch"
     ],
-    "stärke": 13,
-    "sg": 24
+    "stärke": 6,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 36388,
@@ -20548,14 +21567,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "34,7 kg",
-    "verkaufspreis": "960 Hade",
+    "gewicht": "69,4 Pfd.",
+    "verkaufspreis": "100 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 28
+    "stärke": 10,
+    "sg": 28,
+    "wassersort": "salz"
   },
   {
     "id": 36389,
@@ -20568,14 +21588,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,3 kg",
-    "verkaufspreis": "1700 Hade",
+    "gewicht": "14,6 Pfd.",
+    "verkaufspreis": "650 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 30
+    "stärke": 9,
+    "sg": 30,
+    "wassersort": "süß"
   },
   {
     "id": 36390,
@@ -20588,14 +21609,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "36,8 kg",
-    "verkaufspreis": "680 Hade",
+    "gewicht": "73,6 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 23
+    "stärke": 10,
+    "sg": 23,
+    "wassersort": "salz"
   },
   {
     "id": 36392,
@@ -20608,14 +21630,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,1 kg",
-    "verkaufspreis": "1600 Hade",
+    "gewicht": "10,2 Pfd.",
+    "verkaufspreis": "1.200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 31
+    "stärke": 10,
+    "sg": 31,
+    "wassersort": "süß"
   },
   {
     "id": 36393,
@@ -20628,14 +21651,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "167 kg",
-    "verkaufspreis": "1500 Hade",
+    "gewicht": "334 Pfd.",
+    "verkaufspreis": "1.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 13,
-    "sg": 29
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 36394,
@@ -20648,14 +21672,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "13,3 kg",
-    "verkaufspreis": "1600 Hade",
+    "gewicht": "26,6 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 14,
-    "sg": 31
+    "stärke": 10,
+    "sg": 31,
+    "wassersort": "süß"
   },
   {
     "id": 36395,
@@ -20668,14 +21693,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "35,1 kg",
-    "verkaufspreis": "460 Hade",
+    "gewicht": "70,2 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 26
+    "stärke": 10,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 36396,
@@ -20688,14 +21714,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,7 kg",
-    "verkaufspreis": "1600 Hade",
+    "gewicht": "15,4 Pfd.",
+    "verkaufspreis": "2.800 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 32
+    "stärke": 9,
+    "sg": 32,
+    "wassersort": "süß"
   },
   {
     "id": 36397,
@@ -20708,14 +21735,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "665 kg",
-    "verkaufspreis": "2600 Hade",
+    "gewicht": "1.330 Pfd.",
+    "verkaufspreis": "3.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 30
+    "stärke": 15,
+    "sg": 30,
+    "wassersort": "salz"
   },
   {
     "id": 36398,
@@ -20728,14 +21756,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,2 kg",
-    "verkaufspreis": "1600 Hade",
+    "gewicht": "10,4 Pfd.",
+    "verkaufspreis": "4.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 11,
-    "sg": 29
+    "stärke": 9,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 36399,
@@ -20748,14 +21777,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "38,5 kg",
-    "verkaufspreis": "640 Hade",
+    "gewicht": "77,0 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 24
+    "stärke": 11,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 36400,
@@ -20768,14 +21798,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "28,3 kg",
-    "verkaufspreis": "1300 Hade",
+    "gewicht": "56,6 Pfd.",
+    "verkaufspreis": "90 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 26
+    "stärke": 9,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 35604,
@@ -20788,14 +21819,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "57,6 kg",
-    "verkaufspreis": "220 Hade",
+    "gewicht": "115 Pfd.",
+    "verkaufspreis": "320 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 20
+    "stärke": 11,
+    "sg": 20,
+    "wassersort": "süß"
   },
   {
     "id": 36402,
@@ -20808,14 +21840,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "13,5 kg",
-    "verkaufspreis": "1000 Hade",
+    "gewicht": "27,0 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 28
+    "stärke": 10,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 36403,
@@ -20828,14 +21861,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,4 kg",
-    "verkaufspreis": "840 Hade",
+    "gewicht": "10,8 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 27
+    "stärke": 8,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 36404,
@@ -20848,14 +21882,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,6 kg",
-    "verkaufspreis": "560 Hade",
+    "gewicht": "11,2 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 24
+    "stärke": 8,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 36405,
@@ -20868,14 +21903,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "365 kg",
-    "verkaufspreis": "2300 Hade",
+    "gewicht": "730 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
     "stärke": 15,
-    "sg": 30
+    "sg": 30,
+    "wassersort": "salz"
   },
   {
     "id": 36407,
@@ -20888,14 +21924,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "9,5 kg",
-    "verkaufspreis": "1000 Hade",
+    "gewicht": "19,0 Pfd.",
+    "verkaufspreis": "220 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 27
+    "stärke": 6,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 36408,
@@ -20908,14 +21945,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "42,4 kg",
-    "verkaufspreis": "1500 Hade",
+    "gewicht": "84,8 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 26
+    "stärke": 9,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 36409,
@@ -20928,14 +21966,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "39,2 kg",
-    "verkaufspreis": "1800 Hade",
+    "gewicht": "78,4 Pfd.",
+    "verkaufspreis": "4.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 29
+    "stärke": 11,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 36410,
@@ -20948,14 +21987,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "51,6 kg",
-    "verkaufspreis": "1800 Hade",
+    "gewicht": "103 Pfd.",
+    "verkaufspreis": "8.000 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 30
+    "stärke": 11,
+    "sg": 30,
+    "wassersort": "süß"
   },
   {
     "id": 36411,
@@ -20968,14 +22008,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,4 kg",
-    "verkaufspreis": "1700 Hade",
+    "gewicht": "8,8 Pfd.",
+    "verkaufspreis": "650 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 29
+    "stärke": 9,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 36412,
@@ -20988,14 +22029,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "41,1 kg",
-    "verkaufspreis": "1500 Hade",
+    "gewicht": "82,2 Pfd.",
+    "verkaufspreis": "800 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 15,
-    "sg": 26
+    "stärke": 11,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 36414,
@@ -21008,14 +22050,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "659 kg",
-    "verkaufspreis": "2200 Hade",
+    "gewicht": "1.318 Pfd.",
+    "verkaufspreis": "1.200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 13,
-    "sg": 30
+    "sg": 30,
+    "wassersort": "salz"
   },
   {
     "id": 36415,
@@ -21028,14 +22071,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "20,6 kg",
-    "verkaufspreis": "980 Hade",
+    "gewicht": "41,2 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 14,
-    "sg": 28
+    "stärke": 10,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 36417,
@@ -21048,14 +22092,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "56,4 kg",
-    "verkaufspreis": "1500 Hade",
+    "gewicht": "113 Pfd.",
+    "verkaufspreis": "2.200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 29
+    "stärke": 11,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 36418,
@@ -21068,14 +22113,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,9 kg",
-    "verkaufspreis": "980 Hade",
+    "gewicht": "13,8 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 26
+    "stärke": 8,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 36419,
@@ -21088,14 +22134,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,6 kg",
-    "verkaufspreis": "1500 Hade",
+    "gewicht": "9,2 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 28
+    "stärke": 9,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 36420,
@@ -21108,14 +22155,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "24,1 kg",
-    "verkaufspreis": "1800 Hade",
+    "gewicht": "48,2 Pfd.",
+    "verkaufspreis": "4.500 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 14,
-    "sg": 31
+    "stärke": 12,
+    "sg": 31,
+    "wassersort": "süß"
   },
   {
     "id": 36421,
@@ -21128,14 +22176,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "1,0 kg",
-    "verkaufspreis": "1700 Hade",
+    "gewicht": "2,0 Pfd.",
+    "verkaufspreis": "10.000 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
-    "stärke": 14,
-    "sg": 32
+    "stärke": 8,
+    "sg": 32,
+    "wassersort": "süß"
   },
   {
     "id": 36422,
@@ -21148,14 +22197,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "802 kg",
-    "verkaufspreis": "660 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "280 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch"
     ],
-    "stärke": 15,
-    "sg": 23
+    "stärke": 12,
+    "sg": 23,
+    "wassersort": "salz"
   },
   {
     "id": 36423,
@@ -21168,14 +22218,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "34,8 kg",
-    "verkaufspreis": "1500 Hade",
+    "gewicht": "69,6 Pfd.",
+    "verkaufspreis": "800 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 29
+    "stärke": 11,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 36425,
@@ -21188,14 +22239,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,3 kg",
-    "verkaufspreis": "960 Hade",
+    "gewicht": "6,6 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 11,
-    "sg": 28
+    "stärke": 9,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 36426,
@@ -21208,15 +22260,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,3 kg",
-    "verkaufspreis": "1400 Hade",
+    "gewicht": "16,6 Pfd.",
+    "verkaufspreis": "1.500 Hade",
     "lebensraum": [],
     "klima": [
       "Tiefsee",
       "Schattenhaft"
     ],
-    "stärke": 13,
-    "sg": 27
+    "stärke": 9,
+    "sg": 27,
+    "wassersort": "salz"
   },
   {
     "id": 36427,
@@ -21229,14 +22282,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "27,3 kg",
-    "verkaufspreis": "1500 Hade",
+    "gewicht": "54,6 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 14,
-    "sg": 29
+    "stärke": 12,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 35605,
@@ -21249,14 +22303,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "5,1 kg",
-    "verkaufspreis": "1300 Hade",
+    "gewicht": "10,2 Pfd.",
+    "verkaufspreis": "3.500 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 15,
-    "sg": 26
+    "stärke": 8,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 36430,
@@ -21269,14 +22324,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "27,6 kg",
-    "verkaufspreis": "1500 Hade",
+    "gewicht": "55,2 Pfd.",
+    "verkaufspreis": "160 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 27
+    "stärke": 10,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 36431,
@@ -21289,14 +22345,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "26,7 kg",
-    "verkaufspreis": "1200 Hade",
+    "gewicht": "53,4 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 13,
-    "sg": 27
+    "stärke": 11,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 36432,
@@ -21309,16 +22366,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "8,7 kg",
-    "verkaufspreis": "1700 Hade",
+    "gewicht": "17,4 Pfd.",
+    "verkaufspreis": "500 Hade",
     "lebensraum": [],
     "klima": [
       "Warm",
       "Trocken",
       "Sumpfig"
     ],
-    "stärke": 12,
-    "sg": 31
+    "stärke": 9,
+    "sg": 31,
+    "wassersort": "süß"
   },
   {
     "id": 36434,
@@ -21331,14 +22389,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,1 kg",
-    "verkaufspreis": "1300 Hade",
+    "gewicht": "6,2 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 13,
-    "sg": 28
+    "stärke": 10,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 36435,
@@ -21351,14 +22410,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "699 kg",
-    "verkaufspreis": "2700 Hade",
+    "gewicht": "1.398 Pfd.",
+    "verkaufspreis": "1.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 30
+    "stärke": 13,
+    "sg": 30,
+    "wassersort": "salz"
   },
   {
     "id": 36436,
@@ -21371,14 +22431,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "444 kg",
-    "verkaufspreis": "1700 Hade",
+    "gewicht": "888 Pfd.",
+    "verkaufspreis": "1.200 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 12,
-    "sg": 31
+    "stärke": 13,
+    "sg": 31,
+    "wassersort": "salz"
   },
   {
     "id": 36438,
@@ -21391,14 +22452,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "51,0 kg",
-    "verkaufspreis": "1500 Hade",
+    "gewicht": "102 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 15,
-    "sg": 29
+    "stärke": 11,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 36439,
@@ -21411,14 +22473,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "11,9 kg",
-    "verkaufspreis": "1700 Hade",
+    "gewicht": "23,8 Pfd.",
+    "verkaufspreis": "2.200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 31
+    "stärke": 12,
+    "sg": 31,
+    "wassersort": "süß"
   },
   {
     "id": 36440,
@@ -21431,14 +22494,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "876 kg",
-    "verkaufspreis": "2000 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "2.800 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 29
+    "stärke": 15,
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 36441,
@@ -21451,14 +22515,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "306 kg",
-    "verkaufspreis": "2900 Hade",
+    "gewicht": "600 Pfd.",
+    "verkaufspreis": "3.500 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 15,
-    "sg": 32
+    "stärke": 16,
+    "sg": 32,
+    "wassersort": "süß"
   },
   {
     "id": 36442,
@@ -21471,14 +22536,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "624 kg",
-    "verkaufspreis": "2600 Hade",
+    "gewicht": "1.248 Pfd.",
+    "verkaufspreis": "4.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 32
+    "stärke": 13,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 36443,
@@ -21491,14 +22557,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "115 kg",
-    "verkaufspreis": "2700 Hade",
+    "gewicht": "230 Pfd.",
+    "verkaufspreis": "500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 31
+    "stärke": 13,
+    "sg": 31,
+    "wassersort": "salz"
   },
   {
     "id": 36444,
@@ -21511,14 +22578,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "56,3 kg",
-    "verkaufspreis": "1600 Hade",
+    "gewicht": "113 Pfd.",
+    "verkaufspreis": "650 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 29
+    "stärke": 14,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 36446,
@@ -21531,14 +22599,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "508 kg",
-    "verkaufspreis": "2000 Hade",
+    "gewicht": "600 Pfd.",
+    "verkaufspreis": "1.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 29
+    "stärke": 14,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 36447,
@@ -21551,14 +22620,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "17 g",
-    "verkaufspreis": "820 Hade",
+    "gewicht": "0,0 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 26
+    "stärke": 3,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 36448,
@@ -21571,14 +22641,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "286 kg",
-    "verkaufspreis": "1600 Hade",
+    "gewicht": "572 Pfd.",
+    "verkaufspreis": "1.500 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
     "stärke": 15,
-    "sg": 29
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 36449,
@@ -21591,14 +22662,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "321 kg",
-    "verkaufspreis": "2200 Hade",
+    "gewicht": "642 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 14,
-    "sg": 31
+    "stärke": 15,
+    "sg": 31,
+    "wassersort": "salz"
   },
   {
     "id": 36450,
@@ -21611,15 +22683,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "559 kg",
-    "verkaufspreis": "1800 Hade",
+    "gewicht": "600 Pfd.",
+    "verkaufspreis": "2.200 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken",
       "Vulkanisch"
     ],
-    "stärke": 16,
-    "sg": 29
+    "stärke": 12,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 36451,
@@ -21632,14 +22705,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "24,9 kg",
-    "verkaufspreis": "1600 Hade",
+    "gewicht": "49,8 Pfd.",
+    "verkaufspreis": "2.800 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 30
+    "stärke": 11,
+    "sg": 30,
+    "wassersort": "süß"
   },
   {
     "id": 36452,
@@ -21652,14 +22726,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "44,4 kg",
-    "verkaufspreis": "1400 Hade",
+    "gewicht": "88,8 Pfd.",
+    "verkaufspreis": "90 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 26
+    "stärke": 13,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 36453,
@@ -21672,14 +22747,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "66 kg",
-    "verkaufspreis": "2200 Hade",
+    "gewicht": "132 Pfd.",
+    "verkaufspreis": "4.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 31
+    "stärke": 15,
+    "sg": 31,
+    "wassersort": "salz"
   },
   {
     "id": 36454,
@@ -21692,14 +22768,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "23,6 kg",
-    "verkaufspreis": "820 Hade",
+    "gewicht": "47,2 Pfd.",
+    "verkaufspreis": "500 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 29
+    "stärke": 12,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 35606,
@@ -21712,14 +22789,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "2,8 kg",
-    "verkaufspreis": "820 Hade",
+    "gewicht": "5,6 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 28
+    "stärke": 9,
+    "sg": 28,
+    "wassersort": "salz"
   },
   {
     "id": 36456,
@@ -21732,14 +22810,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "803 kg",
-    "verkaufspreis": "3500 Hade",
+    "gewicht": "600 Pfd.",
+    "verkaufspreis": "800 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 14,
-    "sg": 32
+    "stärke": 13,
+    "sg": 32,
+    "wassersort": "süß"
   },
   {
     "id": 36457,
@@ -21752,14 +22831,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,4 kg",
-    "verkaufspreis": "1400 Hade",
+    "gewicht": "6,8 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
-    "stärke": 13,
-    "sg": 26
+    "stärke": 7,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 36458,
@@ -21772,14 +22852,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "133 g",
-    "verkaufspreis": "780 Hade",
+    "gewicht": "0,3 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 14,
-    "sg": 26
+    "stärke": 2,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 36459,
@@ -21792,14 +22873,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "9,3 kg",
-    "verkaufspreis": "540 Hade",
+    "gewicht": "18,6 Pfd.",
+    "verkaufspreis": "220 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 14,
-    "sg": 25
+    "stärke": 8,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 36460,
@@ -21812,14 +22894,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "7,5 kg",
-    "verkaufspreis": "1300 Hade",
+    "gewicht": "15,0 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 28
+    "stärke": 9,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 36461,
@@ -21832,14 +22915,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "19,2 kg",
-    "verkaufspreis": "1800 Hade",
+    "gewicht": "38,4 Pfd.",
+    "verkaufspreis": "2.200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 31
+    "stärke": 12,
+    "sg": 31,
+    "wassersort": "süß"
   },
   {
     "id": 36462,
@@ -21852,14 +22936,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "833 kg",
-    "verkaufspreis": "1500 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "320 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 26
+    "stärke": 15,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 36463,
@@ -21872,14 +22957,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,6 kg",
-    "verkaufspreis": "1800 Hade",
+    "gewicht": "9,2 Pfd.",
+    "verkaufspreis": "3.500 Hade",
     "lebensraum": [],
     "klima": [
       "Kosmisch"
     ],
-    "stärke": 13,
-    "sg": 29
+    "stärke": 7,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 36465,
@@ -21892,14 +22978,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "22,7 kg",
-    "verkaufspreis": "1500 Hade",
+    "gewicht": "45,4 Pfd.",
+    "verkaufspreis": "500 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 29
+    "stärke": 11,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 36466,
@@ -21912,16 +22999,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "11,6 kg",
-    "verkaufspreis": "1100 Hade",
+    "gewicht": "23,2 Pfd.",
+    "verkaufspreis": "650 Hade",
     "lebensraum": [],
     "klima": [
       "Warm",
       "Trocken",
       "Kosmisch"
     ],
-    "stärke": 14,
-    "sg": 28
+    "stärke": 11,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 36467,
@@ -21934,14 +23022,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "526 kg",
-    "verkaufspreis": "2100 Hade",
+    "gewicht": "1.052 Pfd.",
+    "verkaufspreis": "800 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 29
+    "stärke": 14,
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 36468,
@@ -21954,15 +23043,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "27,9 kg",
-    "verkaufspreis": "1300 Hade",
+    "gewicht": "55,8 Pfd.",
+    "verkaufspreis": "45.000 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch",
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 29
+    "stärke": 12,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 36470,
@@ -21975,14 +23065,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "841 kg",
-    "verkaufspreis": "1600 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "1.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 30
+    "stärke": 13,
+    "sg": 30,
+    "wassersort": "salz"
   },
   {
     "id": 36471,
@@ -21995,14 +23086,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "300 kg",
-    "verkaufspreis": "1400 Hade",
+    "gewicht": "600 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 28
+    "stärke": 13,
+    "sg": 28,
+    "wassersort": "salz"
   },
   {
     "id": 36472,
@@ -22015,14 +23107,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "15,6 kg",
-    "verkaufspreis": "1200 Hade",
+    "gewicht": "31,2 Pfd.",
+    "verkaufspreis": "220 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken"
     ],
-    "stärke": 15,
-    "sg": 26
+    "stärke": 10,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 36473,
@@ -22035,14 +23128,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "689 kg",
-    "verkaufspreis": "2700 Hade",
+    "gewicht": "1.378 Pfd.",
+    "verkaufspreis": "15.000 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
     "stärke": 14,
-    "sg": 31
+    "sg": 31,
+    "wassersort": "salz"
   },
   {
     "id": 36475,
@@ -22055,14 +23149,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "727 kg",
-    "verkaufspreis": "1600 Hade",
+    "gewicht": "1.454 Pfd.",
+    "verkaufspreis": "4.500 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 29
+    "stärke": 15,
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 36476,
@@ -22075,15 +23170,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "628 kg",
-    "verkaufspreis": "1300 Hade",
+    "gewicht": "1.256 Pfd.",
+    "verkaufspreis": "500 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch",
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 29
+    "stärke": 15,
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 36477,
@@ -22096,14 +23192,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "516 kg",
-    "verkaufspreis": "1400 Hade",
+    "gewicht": "1.032 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 26
+    "stärke": 12,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 36478,
@@ -22116,14 +23213,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "25,1 kg",
-    "verkaufspreis": "1100 Hade",
+    "gewicht": "50,2 Pfd.",
+    "verkaufspreis": "800 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 29
+    "stärke": 10,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 36479,
@@ -22136,14 +23234,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "196 kg",
-    "verkaufspreis": "2000 Hade",
+    "gewicht": "392 Pfd.",
+    "verkaufspreis": "1.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 14,
-    "sg": 29
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 36480,
@@ -22156,14 +23255,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "286 kg",
-    "verkaufspreis": "2800 Hade",
+    "gewicht": "572 Pfd.",
+    "verkaufspreis": "1.200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 29
+    "stärke": 14,
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 36481,
@@ -22176,14 +23276,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "119 g",
-    "verkaufspreis": "1100 Hade",
+    "gewicht": "0,2 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 27
+    "stärke": 3,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 36484,
@@ -22196,14 +23297,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "25,0 kg",
-    "verkaufspreis": "1100 Hade",
+    "gewicht": "50,0 Pfd.",
+    "verkaufspreis": "2.800 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 15,
-    "sg": 26
+    "stärke": 9,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 36485,
@@ -22216,14 +23318,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "31,5 kg",
-    "verkaufspreis": "1200 Hade",
+    "gewicht": "63,0 Pfd.",
+    "verkaufspreis": "3.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 29
+    "stärke": 10,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 35607,
@@ -22236,14 +23339,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "355 kg",
-    "verkaufspreis": "1600 Hade",
+    "gewicht": "710 Pfd.",
+    "verkaufspreis": "500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 31
+    "stärke": 15,
+    "sg": 31,
+    "wassersort": "salz"
   },
   {
     "id": 36487,
@@ -22256,14 +23360,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "533 kg",
-    "verkaufspreis": "1500 Hade",
+    "gewicht": "1.066 Pfd.",
+    "verkaufspreis": "500 Hade",
     "lebensraum": [],
     "klima": [
       "Kosmisch"
     ],
     "stärke": 14,
-    "sg": 27
+    "sg": 27,
+    "wassersort": "salz"
   },
   {
     "id": 36488,
@@ -22276,14 +23381,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "24,1 kg",
-    "verkaufspreis": "1400 Hade",
+    "gewicht": "48,2 Pfd.",
+    "verkaufspreis": "650 Hade",
     "lebensraum": [],
     "klima": [
       "Kosmisch"
     ],
-    "stärke": 15,
-    "sg": 27
+    "stärke": 11,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 36489,
@@ -22296,14 +23402,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "13,8 kg",
-    "verkaufspreis": "1700 Hade",
+    "gewicht": "27,6 Pfd.",
+    "verkaufspreis": "800 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 31
+    "stärke": 12,
+    "sg": 31,
+    "wassersort": "süß"
   },
   {
     "id": 36491,
@@ -22316,16 +23423,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "47,3 kg",
-    "verkaufspreis": "1600 Hade",
+    "gewicht": "94,6 Pfd.",
+    "verkaufspreis": "10.000 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken",
       "Stürmisch",
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 30
+    "stärke": 10,
+    "sg": 30,
+    "wassersort": "süß"
   },
   {
     "id": 36492,
@@ -22338,14 +23446,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "19,9 kg",
-    "verkaufspreis": "1100 Hade",
+    "gewicht": "39,8 Pfd.",
+    "verkaufspreis": "1.500 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 26
+    "stärke": 9,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 36494,
@@ -22358,15 +23467,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "310 kg",
-    "verkaufspreis": "1400 Hade",
+    "gewicht": "620 Pfd.",
+    "verkaufspreis": "2.200 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch",
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 27
+    "stärke": 14,
+    "sg": 27,
+    "wassersort": "salz"
   },
   {
     "id": 36495,
@@ -22379,15 +23489,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "113 g",
-    "verkaufspreis": "1300 Hade",
+    "gewicht": "0,2 Pfd.",
+    "verkaufspreis": "2.800 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Schattenhaft"
     ],
-    "stärke": 16,
-    "sg": 29
+    "stärke": 4,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 36496,
@@ -22400,16 +23511,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "23,9 kg",
-    "verkaufspreis": "1700 Hade",
+    "gewicht": "47,8 Pfd.",
+    "verkaufspreis": "28.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Magisch",
       "Kosmisch"
     ],
-    "stärke": 16,
-    "sg": 32
+    "stärke": 12,
+    "sg": 32,
+    "wassersort": "süß"
   },
   {
     "id": 36497,
@@ -22422,14 +23534,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "785 kg",
-    "verkaufspreis": "2500 Hade",
+    "gewicht": "1.570 Pfd.",
+    "verkaufspreis": "35.000 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
     "stärke": 16,
-    "sg": 32
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 36499,
@@ -22442,14 +23555,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "18,1 kg",
-    "verkaufspreis": "900 Hade",
+    "gewicht": "36,2 Pfd.",
+    "verkaufspreis": "650 Hade",
     "lebensraum": [],
     "klima": [
       "Kosmisch"
     ],
-    "stärke": 15,
-    "sg": 29
+    "stärke": 10,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 36501,
@@ -22462,16 +23576,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "108 kg",
-    "verkaufspreis": "1300 Hade",
+    "gewicht": "216 Pfd.",
+    "verkaufspreis": "10.000 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch",
       "Magisch",
       "Kosmisch"
     ],
-    "stärke": 16,
-    "sg": 27
+    "stärke": 14,
+    "sg": 27,
+    "wassersort": "salz"
   },
   {
     "id": 36502,
@@ -22484,14 +23599,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "871 kg",
-    "verkaufspreis": "2300 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "12.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kosmisch"
     ],
-    "stärke": 14,
-    "sg": 32
+    "stärke": 15,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 36503,
@@ -22504,14 +23620,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "719 kg",
-    "verkaufspreis": "2400 Hade",
+    "gewicht": "1.438 Pfd.",
+    "verkaufspreis": "1.500 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 30
+    "stärke": 15,
+    "sg": 30,
+    "wassersort": "salz"
   },
   {
     "id": 36505,
@@ -22524,15 +23641,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "16,0 kg",
-    "verkaufspreis": "1400 Hade",
+    "gewicht": "32,0 Pfd.",
+    "verkaufspreis": "2.200 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Kosmisch"
     ],
-    "stärke": 16,
-    "sg": 28
+    "stärke": 9,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 36506,
@@ -22545,14 +23663,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "94 kg",
-    "verkaufspreis": "2800 Hade",
+    "gewicht": "188 Pfd.",
+    "verkaufspreis": "2.800 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 15,
-    "sg": 32
+    "stärke": 14,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 36507,
@@ -22565,14 +23684,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "581 kg",
-    "verkaufspreis": "1800 Hade",
+    "gewicht": "1.162 Pfd.",
+    "verkaufspreis": "3.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 29
+    "stärke": 14,
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 36508,
@@ -22585,15 +23705,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "140 kg",
-    "verkaufspreis": "700 Hade",
+    "gewicht": "280 Pfd.",
+    "verkaufspreis": "4.500 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch",
       "Kosmisch"
     ],
-    "stärke": 16,
-    "sg": 26
+    "stärke": 13,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 36509,
@@ -22606,15 +23727,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "151 kg",
-    "verkaufspreis": "1600 Hade",
+    "gewicht": "302 Pfd.",
+    "verkaufspreis": "60.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Kosmisch"
     ],
-    "stärke": 16,
-    "sg": 31
+    "stärke": 15,
+    "sg": 31,
+    "wassersort": "salz"
   },
   {
     "id": 36510,
@@ -22627,14 +23749,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "611 kg",
-    "verkaufspreis": "2800 Hade",
+    "gewicht": "1.222 Pfd.",
+    "verkaufspreis": "650 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 15,
-    "sg": 32
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 36511,
@@ -22647,14 +23770,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "30,7 kg",
-    "verkaufspreis": "1700 Hade",
+    "gewicht": "61,4 Pfd.",
+    "verkaufspreis": "800 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 30
+    "stärke": 12,
+    "sg": 30,
+    "wassersort": "süß"
   },
   {
     "id": 36512,
@@ -22667,14 +23791,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "334 kg",
-    "verkaufspreis": "2800 Hade",
+    "gewicht": "668 Pfd.",
+    "verkaufspreis": "12.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kosmisch"
     ],
-    "stärke": 15,
-    "sg": 30
+    "stärke": 13,
+    "sg": 30,
+    "wassersort": "salz"
   },
   {
     "id": 36513,
@@ -22687,16 +23812,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "56,1 kg",
-    "verkaufspreis": "940 Hade",
+    "gewicht": "112 Pfd.",
+    "verkaufspreis": "1.200 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Schattenhaft",
       "Kosmisch"
     ],
-    "stärke": 16,
-    "sg": 26
+    "stärke": 9,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 36514,
@@ -22709,15 +23835,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "43,5 kg",
-    "verkaufspreis": "1200 Hade",
+    "gewicht": "87,0 Pfd.",
+    "verkaufspreis": "1.500 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch",
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 26
+    "stärke": 10,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 36515,
@@ -22730,14 +23857,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "56,6 kg",
-    "verkaufspreis": "1100 Hade",
+    "gewicht": "113 Pfd.",
+    "verkaufspreis": "360 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 27
+    "stärke": 11,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 36516,
@@ -22750,14 +23878,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "599 kg",
-    "verkaufspreis": "2100 Hade",
+    "gewicht": "1.198 Pfd.",
+    "verkaufspreis": "28.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kosmisch"
     ],
-    "stärke": 14,
-    "sg": 31
+    "stärke": 15,
+    "sg": 31,
+    "wassersort": "salz"
   },
   {
     "id": 36517,
@@ -22770,14 +23899,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "474 kg",
-    "verkaufspreis": "2000 Hade",
+    "gewicht": "948 Pfd.",
+    "verkaufspreis": "35.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kosmisch"
     ],
     "stärke": 15,
-    "sg": 30
+    "sg": 30,
+    "wassersort": "salz"
   },
   {
     "id": 36518,
@@ -22790,15 +23920,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "41,4 kg",
-    "verkaufspreis": "1100 Hade",
+    "gewicht": "82,8 Pfd.",
+    "verkaufspreis": "100 Hade",
     "lebensraum": [],
     "klima": [
       "Warm",
       "Stürmisch"
     ],
-    "stärke": 14,
-    "sg": 27
+    "stärke": 12,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 36519,
@@ -22811,15 +23942,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "53,1 kg",
-    "verkaufspreis": "1300 Hade",
+    "gewicht": "106 Pfd.",
+    "verkaufspreis": "4.500 Hade",
     "lebensraum": [],
     "klima": [
       "Warm",
       "Kosmisch"
     ],
-    "stärke": 15,
-    "sg": 26
+    "stärke": 9,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 36520,
@@ -22832,14 +23964,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "404 kg",
-    "verkaufspreis": "2100 Hade",
+    "gewicht": "808 Pfd.",
+    "verkaufspreis": "500 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 14,
-    "sg": 30
+    "stärke": 13,
+    "sg": 30,
+    "wassersort": "salz"
   },
   {
     "id": 36521,
@@ -22852,16 +23985,17 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "424 kg",
-    "verkaufspreis": "2600 Hade",
+    "gewicht": "848 Pfd.",
+    "verkaufspreis": "10.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Magisch",
       "Kosmisch"
     ],
-    "stärke": 16,
-    "sg": 32
+    "stärke": 14,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 36679,
@@ -22874,14 +24008,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "522 kg",
-    "verkaufspreis": "1800 Hade",
+    "gewicht": "1.044 Pfd.",
+    "verkaufspreis": "1.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 16,
-    "sg": 31
+    "sg": 31,
+    "wassersort": "salz"
   },
   {
     "id": 36680,
@@ -22894,14 +24029,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "261 kg",
-    "verkaufspreis": "2400 Hade",
+    "gewicht": "522 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 29
+    "stärke": 13,
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 36681,
@@ -22914,14 +24050,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "45,1 kg",
-    "verkaufspreis": "1300 Hade",
+    "gewicht": "90,2 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 13,
-    "sg": 27
+    "stärke": 10,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 36682,
@@ -22934,15 +24071,16 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "171 kg",
-    "verkaufspreis": "2800 Hade",
+    "gewicht": "342 Pfd.",
+    "verkaufspreis": "2.800 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Warm"
     ],
-    "stärke": 16,
-    "sg": 29
+    "stärke": 14,
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 36683,
@@ -22955,14 +24093,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "558 kg",
-    "verkaufspreis": "1300 Hade",
+    "gewicht": "1.116 Pfd.",
+    "verkaufspreis": "320 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 27
+    "stärke": 14,
+    "sg": 27,
+    "wassersort": "salz"
   },
   {
     "id": 36684,
@@ -22975,14 +24114,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "805 kg",
-    "verkaufspreis": "1600 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "18.000 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 14,
-    "sg": 32
+    "stärke": 15,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 36685,
@@ -22995,14 +24135,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "12 g",
-    "verkaufspreis": "840 Hade",
+    "gewicht": "0,0 Pfd.",
+    "verkaufspreis": "400 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 28
+    "stärke": 3,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 36686,
@@ -23015,15 +24156,16 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "589 kg",
-    "verkaufspreis": "1600 Hade",
+    "gewicht": "1.178 Pfd.",
+    "verkaufspreis": "650 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Warm"
     ],
     "stärke": 16,
-    "sg": 31
+    "sg": 31,
+    "wassersort": "salz"
   },
   {
     "id": 36660,
@@ -23036,14 +24178,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "6,6 kg",
-    "verkaufspreis": "1800 Hade",
+    "gewicht": "13,2 Pfd.",
+    "verkaufspreis": "2.800 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 13,
-    "sg": 32
+    "stärke": 8,
+    "sg": 32,
+    "wassersort": "süß"
   },
   {
     "id": 36662,
@@ -23056,14 +24199,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "47,6 kg",
-    "verkaufspreis": "2700 Hade",
+    "gewicht": "95,2 Pfd.",
+    "verkaufspreis": "12.000 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 15,
-    "sg": 30
+    "stärke": 11,
+    "sg": 30,
+    "wassersort": "süß"
   },
   {
     "id": 36663,
@@ -23076,14 +24220,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "4,4 kg",
-    "verkaufspreis": "980 Hade",
+    "gewicht": "8,8 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 28
+    "stärke": 9,
+    "sg": 28,
+    "wassersort": "salz"
   },
   {
     "id": 37845,
@@ -23096,14 +24241,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "663 kg",
-    "verkaufspreis": "1600 Hade",
+    "gewicht": "600 Pfd.",
+    "verkaufspreis": "22.000 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 31
+    "stärke": 14,
+    "sg": 31,
+    "wassersort": "süß"
   },
   {
     "id": 37846,
@@ -23116,14 +24262,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "834 kg",
-    "verkaufspreis": "2300 Hade",
+    "gewicht": "600 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Sumpfig"
     ],
-    "stärke": 15,
-    "sg": 29
+    "stärke": 14,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 37847,
@@ -23136,14 +24283,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "333 kg",
-    "verkaufspreis": "1900 Hade",
+    "gewicht": "666 Pfd.",
+    "verkaufspreis": "2.200 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
     "stärke": 15,
-    "sg": 30
+    "sg": 30,
+    "wassersort": "salz"
   },
   {
     "id": 37848,
@@ -23156,14 +24304,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "132 kg",
-    "verkaufspreis": "1500 Hade",
+    "gewicht": "264 Pfd.",
+    "verkaufspreis": "2.800 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
     "stärke": 15,
-    "sg": 27
+    "sg": 27,
+    "wassersort": "salz"
   },
   {
     "id": 37849,
@@ -23176,14 +24325,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "664 kg",
-    "verkaufspreis": "1800 Hade",
+    "gewicht": "1.328 Pfd.",
+    "verkaufspreis": "60.000 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
-    "stärke": 15,
-    "sg": 32
+    "stärke": 13,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 37850,
@@ -23196,15 +24346,16 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "74 kg",
-    "verkaufspreis": "2400 Hade",
+    "gewicht": "148 Pfd.",
+    "verkaufspreis": "4.500 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Stürmisch"
     ],
-    "stärke": 16,
-    "sg": 32
+    "stärke": 14,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 37851,
@@ -23217,14 +24368,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "838 kg",
-    "verkaufspreis": "1600 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "10.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kosmisch"
     ],
-    "stärke": 15,
-    "sg": 32
+    "stärke": 14,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 37852,
@@ -23237,14 +24389,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "26,2 kg",
-    "verkaufspreis": "680 Hade",
+    "gewicht": "52,4 Pfd.",
+    "verkaufspreis": "280 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 25
+    "stärke": 10,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 37853,
@@ -23257,14 +24410,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "20,3 kg",
-    "verkaufspreis": "640 Hade",
+    "gewicht": "40,6 Pfd.",
+    "verkaufspreis": "320 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 25
+    "stärke": 11,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 37697,
@@ -23277,14 +24431,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "44,7 kg",
-    "verkaufspreis": "1400 Hade",
+    "gewicht": "89,4 Pfd.",
+    "verkaufspreis": "320 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 26
+    "stärke": 10,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 38830,
@@ -23297,14 +24452,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "884 kg",
-    "verkaufspreis": "1400 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 29
+    "stärke": 13,
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 38831,
@@ -23317,14 +24473,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "152 g",
-    "verkaufspreis": "540 Hade",
+    "gewicht": "0,3 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 23
+    "stärke": 2,
+    "sg": 23,
+    "wassersort": "süß"
   },
   {
     "id": 38832,
@@ -23337,14 +24494,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "838 kg",
-    "verkaufspreis": "2100 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "800 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 14,
-    "sg": 32
+    "stärke": 15,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 38833,
@@ -23357,14 +24515,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "23,1 kg",
-    "verkaufspreis": "500 Hade",
+    "gewicht": "46,2 Pfd.",
+    "verkaufspreis": "120 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 25
+    "stärke": 11,
+    "sg": 25,
+    "wassersort": "süß"
   },
   {
     "id": 38834,
@@ -23377,14 +24536,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "635 kg",
-    "verkaufspreis": "2800 Hade",
+    "gewicht": "1.270 Pfd.",
+    "verkaufspreis": "1.200 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
     "stärke": 15,
-    "sg": 32
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 38835,
@@ -23397,14 +24557,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "538 kg",
-    "verkaufspreis": "2600 Hade",
+    "gewicht": "1.076 Pfd.",
+    "verkaufspreis": "1.500 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 29
+    "stärke": 15,
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 38836,
@@ -23417,14 +24578,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "54,3 kg",
-    "verkaufspreis": "1200 Hade",
+    "gewicht": "109 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 15,
-    "sg": 28
+    "stärke": 9,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 38810,
@@ -23437,14 +24599,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,5 kg",
-    "verkaufspreis": "1100 Hade",
+    "gewicht": "7,0 Pfd.",
+    "verkaufspreis": "800 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 29
+    "stärke": 8,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 38812,
@@ -23457,14 +24620,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Mittelgroß",
-    "gewicht": "3,5 kg",
-    "verkaufspreis": "2200 Hade",
+    "gewicht": "7,0 Pfd.",
+    "verkaufspreis": "1.200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 32
+    "stärke": 10,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 38814,
@@ -23477,14 +24641,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "105 kg",
-    "verkaufspreis": "2500 Hade",
+    "gewicht": "210 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 29
+    "stärke": 15,
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 38935,
@@ -23497,14 +24662,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "470 kg",
-    "verkaufspreis": "2100 Hade",
+    "gewicht": "940 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 14,
-    "sg": 30
+    "stärke": 13,
+    "sg": 30,
+    "wassersort": "salz"
   },
   {
     "id": 39240,
@@ -23517,14 +24683,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "847 kg",
-    "verkaufspreis": "2400 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "1.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 29
+    "stärke": 15,
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 38792,
@@ -23537,14 +24704,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "315 kg",
-    "verkaufspreis": "3300 Hade",
+    "gewicht": "630 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 32
+    "stärke": 15,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 38793,
@@ -23557,14 +24725,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "39,2 kg",
-    "verkaufspreis": "1200 Hade",
+    "gewicht": "78,4 Pfd.",
+    "verkaufspreis": "100 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 27
+    "stärke": 12,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 38798,
@@ -23577,14 +24746,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "184 kg",
-    "verkaufspreis": "940 Hade",
+    "gewicht": "368 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 14,
-    "sg": 27
+    "sg": 27,
+    "wassersort": "salz"
   },
   {
     "id": 38799,
@@ -23597,14 +24767,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "57,5 kg",
-    "verkaufspreis": "1400 Hade",
+    "gewicht": "115 Pfd.",
+    "verkaufspreis": "220 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 28
+    "stärke": 12,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 39879,
@@ -23617,14 +24788,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "53,4 kg",
-    "verkaufspreis": "1300 Hade",
+    "gewicht": "107 Pfd.",
+    "verkaufspreis": "250 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 28
+    "stärke": 9,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 39880,
@@ -23637,14 +24809,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "678 kg",
-    "verkaufspreis": "2800 Hade",
+    "gewicht": "1.356 Pfd.",
+    "verkaufspreis": "1.500 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 14,
-    "sg": 31
+    "stärke": 13,
+    "sg": 31,
+    "wassersort": "salz"
   },
   {
     "id": 39881,
@@ -23657,14 +24830,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "283 kg",
-    "verkaufspreis": "2100 Hade",
+    "gewicht": "566 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
     "stärke": 16,
-    "sg": 30
+    "sg": 30,
+    "wassersort": "salz"
   },
   {
     "id": 39882,
@@ -23677,14 +24851,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "778 kg",
-    "verkaufspreis": "1400 Hade",
+    "gewicht": "1.556 Pfd.",
+    "verkaufspreis": "2.200 Hade",
     "lebensraum": [],
     "klima": [
       "Vulkanisch"
     ],
-    "stärke": 13,
-    "sg": 27
+    "stärke": 14,
+    "sg": 27,
+    "wassersort": "salz"
   },
   {
     "id": 39883,
@@ -23697,15 +24872,16 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "575 kg",
-    "verkaufspreis": "2900 Hade",
+    "gewicht": "1.150 Pfd.",
+    "verkaufspreis": "15.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 30
+    "stärke": 15,
+    "sg": 30,
+    "wassersort": "salz"
   },
   {
     "id": 40524,
@@ -23718,15 +24894,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Tiefsee",
       "Schattenhaft"
     ],
-    "stärke": 1,
-    "sg": 12
+    "stärke": 2,
+    "sg": 12,
+    "wassersort": "salz"
   },
   {
     "id": 40522,
@@ -23739,14 +24916,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,4 kg",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "2,8 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 4,
-    "sg": 11
+    "stärke": 3,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 40523,
@@ -23759,14 +24937,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "251 g",
-    "verkaufspreis": "8 Hade",
+    "gewicht": "0,5 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 11
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 40541,
@@ -23779,15 +24958,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "8 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Stürmisch"
     ],
     "stärke": 3,
-    "sg": 12
+    "sg": 12,
+    "wassersort": "salz"
   },
   {
     "id": 40542,
@@ -23800,14 +24980,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,2 kg",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "2,4 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 2,
-    "sg": 10
+    "stärke": 3,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 40543,
@@ -23820,14 +25001,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "379 g",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "0,8 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 4,
-    "sg": 13
+    "stärke": 3,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 40561,
@@ -23840,14 +25022,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "218 g",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "0,4 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 40562,
@@ -23860,14 +25043,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "457 g",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "0,9 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 40563,
@@ -23880,14 +25064,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "529 g",
-    "verkaufspreis": "10 Hade",
+    "gewicht": "1,1 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 2,
-    "sg": 12
+    "stärke": 3,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 40581,
@@ -23900,14 +25085,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
     "stärke": 2,
-    "sg": 11
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 40582,
@@ -23920,14 +25106,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,5 kg",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "3,0 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 3,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 40583,
@@ -23940,14 +25127,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
     "stärke": 3,
-    "sg": 11
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 40521,
@@ -23960,14 +25148,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,4 kg",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "2,8 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 12
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 40525,
@@ -23980,14 +25169,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "962 g",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "1,9 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 12
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 40526,
@@ -24000,14 +25190,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 11
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 40544,
@@ -24020,14 +25211,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "747 g",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "1,5 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "salz"
   },
   {
     "id": 40545,
@@ -24040,15 +25232,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Schattenhaft"
     ],
-    "stärke": 3,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 40546,
@@ -24061,14 +25254,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "875 g",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "1,8 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 10
+    "sg": 10,
+    "wassersort": "salz"
   },
   {
     "id": 40564,
@@ -24081,14 +25275,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "945 g",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "1,9 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 12
+    "stärke": 4,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 40567,
@@ -24101,14 +25296,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,4 kg",
-    "verkaufspreis": "8 Hade",
+    "gewicht": "2,8 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 13
+    "stärke": 2,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 40566,
@@ -24121,14 +25317,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,7 kg",
-    "verkaufspreis": "2 Hade",
+    "gewicht": "3,4 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 40584,
@@ -24141,14 +25338,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,0 kg",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "2,0 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 2,
-    "sg": 10
+    "stärke": 3,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 40585,
@@ -24161,14 +25359,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,0 kg",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "2,0 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 1,
-    "sg": 11
+    "stärke": 3,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 40586,
@@ -24181,14 +25380,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,6 kg",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "3,2 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 10
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 40527,
@@ -24201,14 +25401,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "446 g",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "0,9 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 2,
-    "sg": 12
+    "stärke": 3,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 40528,
@@ -24221,14 +25422,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "522 g",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "1,0 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 2,
-    "sg": 10
+    "stärke": 4,
+    "sg": 10,
+    "wassersort": "salz"
   },
   {
     "id": 40547,
@@ -24241,14 +25443,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "767 g",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "1,5 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 10
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 40548,
@@ -24261,14 +25464,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,5 kg",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "3,0 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
     "stärke": 2,
-    "sg": 10
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 40565,
@@ -24281,14 +25485,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,1 kg",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "2,2 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 3,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 40568,
@@ -24301,14 +25506,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "498 g",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "1,0 Pfd.",
+    "verkaufspreis": "350.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 2,
-    "sg": 11
+    "stärke": 8,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 40587,
@@ -24321,14 +25527,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "780 g",
-    "verkaufspreis": "8 Hade",
+    "gewicht": "1,6 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 13
+    "stärke": 2,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 40588,
@@ -24341,14 +25548,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "981 g",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "2,0 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 10
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 40530,
@@ -24361,14 +25569,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "440 g",
-    "verkaufspreis": "2 Hade",
+    "gewicht": "0,9 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
     "stärke": 2,
-    "sg": 11
+    "sg": 11,
+    "wassersort": "salz"
   },
   {
     "id": 40550,
@@ -24381,14 +25590,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "643 g",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "1,3 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 2,
-    "sg": 10
+    "stärke": 3,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 40570,
@@ -24401,15 +25611,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "197 g",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "0,4 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Tiefsee",
       "Stürmisch"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 3,
+    "sg": 10,
+    "wassersort": "salz"
   },
   {
     "id": 40590,
@@ -24422,14 +25633,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,0 kg",
-    "verkaufspreis": "8 Hade",
+    "gewicht": "2,0 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 2,
-    "sg": 12
+    "stärke": 3,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 40531,
@@ -24442,14 +25654,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,6 kg",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "3,2 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 40532,
@@ -24462,14 +25675,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,5 kg",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "3,0 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
     "stärke": 2,
-    "sg": 12
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 40533,
@@ -24482,14 +25696,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "940 g",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "1,9 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 13
+    "stärke": 2,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 40534,
@@ -24502,15 +25717,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "313 g",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "0,6 Pfd.",
+    "verkaufspreis": "90 Hade",
     "lebensraum": [],
     "klima": [
       "Tiefsee",
       "Magisch"
     ],
-    "stärke": 4,
-    "sg": 11
+    "stärke": 3,
+    "sg": 11,
+    "wassersort": "salz"
   },
   {
     "id": 40535,
@@ -24523,14 +25739,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "176 g",
-    "verkaufspreis": "2 Hade",
+    "gewicht": "0,4 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 3,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 40536,
@@ -24543,14 +25760,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "670 g",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "1,3 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 11
+    "stärke": 3,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 40537,
@@ -24563,14 +25781,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "862 g",
-    "verkaufspreis": "8 Hade",
+    "gewicht": "1,7 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 4,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 40538,
@@ -24583,14 +25802,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,1 kg",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "2,2 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 10
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 40539,
@@ -24603,14 +25823,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,4 kg",
-    "verkaufspreis": "2 Hade",
+    "gewicht": "2,8 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 40551,
@@ -24623,14 +25844,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,4 kg",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "2,8 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 11
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 40552,
@@ -24643,14 +25865,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "759 g",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "1,5 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 3,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 40553,
@@ -24663,15 +25886,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "309 g",
-    "verkaufspreis": "2 Hade",
+    "gewicht": "0,6 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Toxisch"
     ],
-    "stärke": 4,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 40554,
@@ -24684,14 +25908,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "9 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 11
+    "sg": 11,
+    "wassersort": "salz"
   },
   {
     "id": 40555,
@@ -24704,14 +25929,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,4 kg",
-    "verkaufspreis": "2 Hade",
+    "gewicht": "2,8 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 11
+    "stärke": 3,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 40556,
@@ -24724,14 +25950,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "601 g",
-    "verkaufspreis": "2 Hade",
+    "gewicht": "1,2 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 1,
-    "sg": 11
+    "stärke": 3,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 40557,
@@ -24744,15 +25971,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,4 kg",
-    "verkaufspreis": "2 Hade",
+    "gewicht": "2,8 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Tiefsee",
       "Stürmisch"
     ],
-    "stärke": 2,
-    "sg": 11
+    "stärke": 3,
+    "sg": 11,
+    "wassersort": "salz"
   },
   {
     "id": 40558,
@@ -24765,14 +25993,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "186 g",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "0,4 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 1,
-    "sg": 12
+    "stärke": 2,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 40559,
@@ -24785,14 +26014,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "711 g",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "1,4 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 13
+    "stärke": 2,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 40571,
@@ -24805,14 +26035,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "321 g",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "0,6 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 3,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 40572,
@@ -24825,14 +26056,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,8 kg",
-    "verkaufspreis": "2 Hade",
+    "gewicht": "3,6 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 40573,
@@ -24845,14 +26077,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "589 g",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "1,2 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 3,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 40574,
@@ -24865,14 +26098,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "506 g",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "1,0 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 4,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 40575,
@@ -24885,14 +26119,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,2 kg",
-    "verkaufspreis": "14 Hade",
+    "gewicht": "2,4 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 4,
-    "sg": 14
+    "stärke": 3,
+    "sg": 14,
+    "wassersort": "süß"
   },
   {
     "id": 40576,
@@ -24905,14 +26140,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,4 kg",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "2,8 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 40577,
@@ -24925,14 +26161,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "162 g",
-    "verkaufspreis": "8 Hade",
+    "gewicht": "0,3 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 2,
-    "sg": 12
+    "stärke": 3,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 40578,
@@ -24945,14 +26182,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,0 kg",
-    "verkaufspreis": "12 Hade",
+    "gewicht": "2,0 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 3,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 40579,
@@ -24965,14 +26203,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "177 g",
-    "verkaufspreis": "8 Hade",
+    "gewicht": "0,4 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 12
+    "stärke": 3,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 40591,
@@ -24985,14 +26224,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,5 kg",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "3,0 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 13
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 40592,
@@ -25005,14 +26245,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,5 kg",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "3,0 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 11
+    "stärke": 3,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 40593,
@@ -25025,14 +26266,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "10 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
     "stärke": 2,
-    "sg": 12
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 40594,
@@ -25045,14 +26287,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,8 kg",
-    "verkaufspreis": "10 Hade",
+    "gewicht": "3,6 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 40595,
@@ -25065,14 +26308,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,2 kg",
-    "verkaufspreis": "8 Hade",
+    "gewicht": "2,4 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 3,
-    "sg": 12
+    "stärke": 2,
+    "sg": 12,
+    "wassersort": "salz"
   },
   {
     "id": 40596,
@@ -25085,15 +26329,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "759 g",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "1,5 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Magisch"
     ],
-    "stärke": 3,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 40597,
@@ -25106,14 +26351,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "804 g",
-    "verkaufspreis": "9 Hade",
+    "gewicht": "1,6 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 12
+    "stärke": 3,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 40598,
@@ -25126,14 +26372,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "587 g",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "1,2 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 2,
-    "sg": 13
+    "stärke": 3,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 40599,
@@ -25146,15 +26393,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "341 g",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "0,7 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Schattenhaft"
     ],
-    "stärke": 2,
-    "sg": 10
+    "stärke": 3,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 40529,
@@ -25167,14 +26415,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "468 g",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "0,9 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
     "stärke": 3,
-    "sg": 11
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 40549,
@@ -25187,14 +26436,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "8 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 4,
-    "sg": 11
+    "stärke": 3,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 40569,
@@ -25207,14 +26457,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "720 g",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "1,4 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 3,
-    "sg": 10
+    "stärke": 4,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 40589,
@@ -25227,14 +26478,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 4,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 40540,
@@ -25247,14 +26499,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "295 kg",
-    "verkaufspreis": "4300 Hade",
+    "gewicht": "590 Pfd.",
+    "verkaufspreis": "350.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 35
+    "stärke": 16,
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 40560,
@@ -25267,14 +26520,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "503 kg",
-    "verkaufspreis": "1500 Hade",
+    "gewicht": "1.006 Pfd.",
+    "verkaufspreis": "300.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 26
+    "stärke": 16,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 40580,
@@ -25287,15 +26541,16 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "40,6 kg",
-    "verkaufspreis": "1500 Hade",
+    "gewicht": "81,2 Pfd.",
+    "verkaufspreis": "650 Hade",
     "lebensraum": [],
     "klima": [
       "Warm",
       "Vulkanisch"
     ],
-    "stärke": 15,
-    "sg": 27
+    "stärke": 10,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 40600,
@@ -25308,14 +26563,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "11,2 kg",
-    "verkaufspreis": "1300 Hade",
+    "gewicht": "22,4 Pfd.",
+    "verkaufspreis": "4.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 29
+    "stärke": 10,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 39912,
@@ -25328,14 +26584,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "744 kg",
-    "verkaufspreis": "1800 Hade",
+    "gewicht": "1.488 Pfd.",
+    "verkaufspreis": "1.200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 31
+    "stärke": 15,
+    "sg": 31,
+    "wassersort": "salz"
   },
   {
     "id": 39809,
@@ -25348,14 +26605,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "877 kg",
-    "verkaufspreis": "2200 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 31
+    "stärke": 13,
+    "sg": 31,
+    "wassersort": "salz"
   },
   {
     "id": 39810,
@@ -25368,14 +26626,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "85 kg",
-    "verkaufspreis": "2100 Hade",
+    "gewicht": "170 Pfd.",
+    "verkaufspreis": "650 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 29
+    "stärke": 13,
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 39815,
@@ -25388,14 +26647,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "202 kg",
-    "verkaufspreis": "2600 Hade",
+    "gewicht": "404 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 15,
-    "sg": 30
+    "sg": 30,
+    "wassersort": "salz"
   },
   {
     "id": 39816,
@@ -25408,14 +26668,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "51,4 kg",
-    "verkaufspreis": "1600 Hade",
+    "gewicht": "103 Pfd.",
+    "verkaufspreis": "2.200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 31
+    "stärke": 10,
+    "sg": 31,
+    "wassersort": "salz"
   },
   {
     "id": 41401,
@@ -25428,14 +26689,15 @@ window.FISH_DB = [
       4
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "321 kg",
-    "verkaufspreis": "1500 Hade",
+    "gewicht": "642 Pfd.",
+    "verkaufspreis": "280 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 14,
-    "sg": 27
+    "sg": 27,
+    "wassersort": "salz"
   },
   {
     "id": 41402,
@@ -25448,14 +26710,15 @@ window.FISH_DB = [
       4
     ],
     "größenkategorie": "Groß",
-    "gewicht": "24,5 kg",
-    "verkaufspreis": "1700 Hade",
+    "gewicht": "49,0 Pfd.",
+    "verkaufspreis": "3.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 30
+    "stärke": 12,
+    "sg": 30,
+    "wassersort": "süß"
   },
   {
     "id": 41403,
@@ -25468,15 +26731,16 @@ window.FISH_DB = [
       4
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "189 kg",
-    "verkaufspreis": "1300 Hade",
+    "gewicht": "378 Pfd.",
+    "verkaufspreis": "4.500 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Schattenhaft"
     ],
-    "stärke": 16,
-    "sg": 28
+    "stärke": 17,
+    "sg": 28,
+    "wassersort": "salz"
   },
   {
     "id": 41404,
@@ -25489,14 +26753,15 @@ window.FISH_DB = [
       4
     ],
     "größenkategorie": "Groß",
-    "gewicht": "35,4 kg",
-    "verkaufspreis": "980 Hade",
+    "gewicht": "70,8 Pfd.",
+    "verkaufspreis": "500 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch"
     ],
-    "stärke": 14,
-    "sg": 29
+    "stärke": 12,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 41405,
@@ -25509,15 +26774,16 @@ window.FISH_DB = [
       4
     ],
     "größenkategorie": "Groß",
-    "gewicht": "13,3 kg",
-    "verkaufspreis": "1100 Hade",
+    "gewicht": "26,6 Pfd.",
+    "verkaufspreis": "650 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Kosmisch"
     ],
-    "stärke": 16,
-    "sg": 28
+    "stärke": 9,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 41406,
@@ -25530,14 +26796,15 @@ window.FISH_DB = [
       4
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "662 kg",
-    "verkaufspreis": "2000 Hade",
+    "gewicht": "1.324 Pfd.",
+    "verkaufspreis": "800 Hade",
     "lebensraum": [],
     "klima": [
       "Kosmisch"
     ],
-    "stärke": 14,
-    "sg": 29
+    "stärke": 13,
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 41058,
@@ -25550,14 +26817,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "810 kg",
-    "verkaufspreis": "2000 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 32
+    "stärke": 15,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 41059,
@@ -25570,14 +26838,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "51,3 kg",
-    "verkaufspreis": "2100 Hade",
+    "gewicht": "103 Pfd.",
+    "verkaufspreis": "2.200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 29
+    "stärke": 11,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 41061,
@@ -25590,16 +26859,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "802 kg",
-    "verkaufspreis": "820 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "3.500 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Warm",
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 29
+    "stärke": 15,
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 41419,
@@ -25612,15 +26882,16 @@ window.FISH_DB = [
       4
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "421 kg",
-    "verkaufspreis": "2100 Hade",
+    "gewicht": "842 Pfd.",
+    "verkaufspreis": "60.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 30
+    "stärke": 13,
+    "sg": 30,
+    "wassersort": "salz"
   },
   {
     "id": 41298,
@@ -25633,15 +26904,16 @@ window.FISH_DB = [
       4
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "812 kg",
-    "verkaufspreis": "1900 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "45.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Schattenhaft"
     ],
     "stärke": 15,
-    "sg": 31
+    "sg": 31,
+    "wassersort": "salz"
   },
   {
     "id": 41299,
@@ -25654,14 +26926,15 @@ window.FISH_DB = [
       4
     ],
     "größenkategorie": "Groß",
-    "gewicht": "14,3 kg",
-    "verkaufspreis": "1100 Hade",
+    "gewicht": "28,6 Pfd.",
+    "verkaufspreis": "360 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 27
+    "stärke": 12,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 41302,
@@ -25674,14 +26947,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "666 kg",
-    "verkaufspreis": "2000 Hade",
+    "gewicht": "1.332 Pfd.",
+    "verkaufspreis": "2.800 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 14,
-    "sg": 29
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 41300,
@@ -25694,14 +26968,15 @@ window.FISH_DB = [
       4
     ],
     "größenkategorie": "Groß",
-    "gewicht": "19,9 kg",
-    "verkaufspreis": "980 Hade",
+    "gewicht": "39,8 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 29
+    "stärke": 10,
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 41301,
@@ -25714,14 +26989,15 @@ window.FISH_DB = [
       4
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "276 kg",
-    "verkaufspreis": "2300 Hade",
+    "gewicht": "552 Pfd.",
+    "verkaufspreis": "2.200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 31
+    "stärke": 13,
+    "sg": 31,
+    "wassersort": "salz"
   },
   {
     "id": 41407,
@@ -25734,14 +27010,15 @@ window.FISH_DB = [
       4
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "517 kg",
-    "verkaufspreis": "3400 Hade",
+    "gewicht": "1.034 Pfd.",
+    "verkaufspreis": "300.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 12,
-    "sg": 33
+    "stärke": 17,
+    "sg": 33,
+    "wassersort": "salz"
   },
   {
     "id": 41408,
@@ -25754,14 +27031,15 @@ window.FISH_DB = [
       4
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "408 kg",
-    "verkaufspreis": "1400 Hade",
+    "gewicht": "816 Pfd.",
+    "verkaufspreis": "350.000 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 15,
-    "sg": 29
+    "stärke": 17,
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 41409,
@@ -25774,15 +27052,16 @@ window.FISH_DB = [
       4
     ],
     "größenkategorie": "Groß",
-    "gewicht": "57,7 kg",
-    "verkaufspreis": "1500 Hade",
+    "gewicht": "115 Pfd.",
+    "verkaufspreis": "1.500 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 27
+    "stärke": 11,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 41410,
@@ -25795,14 +27074,15 @@ window.FISH_DB = [
       4
     ],
     "größenkategorie": "Groß",
-    "gewicht": "45,5 kg",
-    "verkaufspreis": "800 Hade",
+    "gewicht": "91,0 Pfd.",
+    "verkaufspreis": "180 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 24
+    "stärke": 11,
+    "sg": 24,
+    "wassersort": "süß"
   },
   {
     "id": 41411,
@@ -25815,14 +27095,15 @@ window.FISH_DB = [
       4
     ],
     "größenkategorie": "Groß",
-    "gewicht": "47,1 kg",
-    "verkaufspreis": "880 Hade",
+    "gewicht": "94,2 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 28
+    "stärke": 12,
+    "sg": 28,
+    "wassersort": "süß"
   },
   {
     "id": 41412,
@@ -25835,15 +27116,16 @@ window.FISH_DB = [
       4
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "276 kg",
-    "verkaufspreis": "2500 Hade",
+    "gewicht": "552 Pfd.",
+    "verkaufspreis": "12.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Kosmisch"
     ],
-    "stärke": 16,
-    "sg": 32
+    "stärke": 13,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 43664,
@@ -25856,14 +27138,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "16,4 kg",
-    "verkaufspreis": "2900 Hade",
+    "gewicht": "32,8 Pfd.",
+    "verkaufspreis": "1.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 32
+    "stärke": 12,
+    "sg": 32,
+    "wassersort": "süß"
   },
   {
     "id": 43665,
@@ -25876,14 +27159,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "87 kg",
-    "verkaufspreis": "5000 Hade",
+    "gewicht": "174 Pfd.",
+    "verkaufspreis": "22.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 16,
-    "sg": 34
+    "sg": 34,
+    "wassersort": "süß"
   },
   {
     "id": 43666,
@@ -25896,14 +27180,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "21,2 kg",
-    "verkaufspreis": "3400 Hade",
+    "gewicht": "42,4 Pfd.",
+    "verkaufspreis": "28.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 34
+    "stärke": 11,
+    "sg": 34,
+    "wassersort": "süß"
   },
   {
     "id": 43667,
@@ -25916,14 +27201,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "44,9 kg",
-    "verkaufspreis": "2500 Hade",
+    "gewicht": "89,8 Pfd.",
+    "verkaufspreis": "2.800 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 31
+    "stärke": 10,
+    "sg": 31,
+    "wassersort": "süß"
   },
   {
     "id": 43668,
@@ -25936,14 +27222,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "755 kg",
-    "verkaufspreis": "3300 Hade",
+    "gewicht": "1.510 Pfd.",
+    "verkaufspreis": "45.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 33
+    "stärke": 13,
+    "sg": 33,
+    "wassersort": "salz"
   },
   {
     "id": 43669,
@@ -25956,14 +27243,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "170 kg",
-    "verkaufspreis": "2600 Hade",
+    "gewicht": "340 Pfd.",
+    "verkaufspreis": "4.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 14,
-    "sg": 31
+    "sg": 31,
+    "wassersort": "salz"
   },
   {
     "id": 43670,
@@ -25976,14 +27264,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "793 kg",
-    "verkaufspreis": "3100 Hade",
+    "gewicht": "1.586 Pfd.",
+    "verkaufspreis": "8.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 35
+    "stärke": 16,
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 43671,
@@ -25996,14 +27285,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "45,6 kg",
-    "verkaufspreis": "1600 Hade",
+    "gewicht": "91,2 Pfd.",
+    "verkaufspreis": "650 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 31
+    "stärke": 12,
+    "sg": 31,
+    "wassersort": "süß"
   },
   {
     "id": 43672,
@@ -26016,14 +27306,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "594 kg",
-    "verkaufspreis": "6000 Hade",
+    "gewicht": "1.188 Pfd.",
+    "verkaufspreis": "12.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 35
+    "stärke": 17,
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 43673,
@@ -26036,14 +27327,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "689 kg",
-    "verkaufspreis": "4400 Hade",
+    "gewicht": "1.378 Pfd.",
+    "verkaufspreis": "15.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 34
+    "stärke": 14,
+    "sg": 34,
+    "wassersort": "salz"
   },
   {
     "id": 43674,
@@ -26056,14 +27348,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "312 kg",
-    "verkaufspreis": "5500 Hade",
+    "gewicht": "624 Pfd.",
+    "verkaufspreis": "18.000 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
-    "stärke": 16,
-    "sg": 34
+    "stärke": 14,
+    "sg": 34,
+    "wassersort": "salz"
   },
   {
     "id": 43675,
@@ -26076,14 +27369,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "632 kg",
-    "verkaufspreis": "5000 Hade",
+    "gewicht": "1.264 Pfd.",
+    "verkaufspreis": "22.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 33
+    "stärke": 14,
+    "sg": 33,
+    "wassersort": "salz"
   },
   {
     "id": 43676,
@@ -26096,14 +27390,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "612 kg",
-    "verkaufspreis": "3300 Hade",
+    "gewicht": "1.224 Pfd.",
+    "verkaufspreis": "28.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 15,
-    "sg": 34
+    "sg": 34,
+    "wassersort": "salz"
   },
   {
     "id": 43677,
@@ -26116,14 +27411,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "103 g",
-    "verkaufspreis": "1500 Hade",
+    "gewicht": "0,2 Pfd.",
+    "verkaufspreis": "2.200 Hade",
     "lebensraum": [],
     "klima": [
       "Kosmisch"
     ],
-    "stärke": 16,
-    "sg": 29
+    "stärke": 3,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 43678,
@@ -26136,14 +27432,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "299 kg",
-    "verkaufspreis": "4700 Hade",
+    "gewicht": "598 Pfd.",
+    "verkaufspreis": "45.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
     "stärke": 16,
-    "sg": 33
+    "sg": 33,
+    "wassersort": "süß"
   },
   {
     "id": 43679,
@@ -26156,14 +27453,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "54,5 kg",
-    "verkaufspreis": "2700 Hade",
+    "gewicht": "109 Pfd.",
+    "verkaufspreis": "3.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 29
+    "stärke": 12,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 43680,
@@ -26176,14 +27474,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "478 kg",
-    "verkaufspreis": "4800 Hade",
+    "gewicht": "600 Pfd.",
+    "verkaufspreis": "4.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 32
+    "stärke": 13,
+    "sg": 32,
+    "wassersort": "süß"
   },
   {
     "id": 43681,
@@ -26196,14 +27495,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "615 kg",
-    "verkaufspreis": "6500 Hade",
+    "gewicht": "1.230 Pfd.",
+    "verkaufspreis": "10.000 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 16,
-    "sg": 34
+    "stärke": 14,
+    "sg": 34,
+    "wassersort": "salz"
   },
   {
     "id": 43682,
@@ -26216,14 +27516,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "825 kg",
-    "verkaufspreis": "6000 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "650 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 14,
-    "sg": 32
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 43683,
@@ -26236,14 +27537,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "371 kg",
-    "verkaufspreis": "2600 Hade",
+    "gewicht": "742 Pfd.",
+    "verkaufspreis": "800 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 16,
-    "sg": 29
+    "stärke": 14,
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 43684,
@@ -26256,14 +27558,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "420 kg",
-    "verkaufspreis": "2600 Hade",
+    "gewicht": "840 Pfd.",
+    "verkaufspreis": "400.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 32
+    "stärke": 18,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 43685,
@@ -26276,14 +27579,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "30,6 kg",
-    "verkaufspreis": "2000 Hade",
+    "gewicht": "61,2 Pfd.",
+    "verkaufspreis": "1.200 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 29
+    "stärke": 12,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 43686,
@@ -26296,14 +27600,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "43,8 kg",
-    "verkaufspreis": "3600 Hade",
+    "gewicht": "87,6 Pfd.",
+    "verkaufspreis": "28.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 34
+    "stärke": 13,
+    "sg": 34,
+    "wassersort": "süß"
   },
   {
     "id": 43687,
@@ -26316,14 +27621,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "46,6 kg",
-    "verkaufspreis": "2800 Hade",
+    "gewicht": "93,2 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 30
+    "stärke": 10,
+    "sg": 30,
+    "wassersort": "süß"
   },
   {
     "id": 43688,
@@ -26336,14 +27642,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "879 kg",
-    "verkaufspreis": "5500 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "250.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 35
+    "stärke": 17,
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 43689,
@@ -26356,14 +27663,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "92 kg",
-    "verkaufspreis": "3600 Hade",
+    "gewicht": "184 Pfd.",
+    "verkaufspreis": "2.800 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 32
+    "stärke": 14,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 43690,
@@ -26376,14 +27684,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "249 kg",
-    "verkaufspreis": "2900 Hade",
+    "gewicht": "498 Pfd.",
+    "verkaufspreis": "3.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 31
+    "stärke": 14,
+    "sg": 31,
+    "wassersort": "salz"
   },
   {
     "id": 43691,
@@ -26396,14 +27705,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "49 g",
-    "verkaufspreis": "640 Hade",
+    "gewicht": "0,1 Pfd.",
+    "verkaufspreis": "360 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch"
     ],
-    "stärke": 16,
-    "sg": 26
+    "stärke": 3,
+    "sg": 26,
+    "wassersort": "süß"
   },
   {
     "id": 43692,
@@ -26416,14 +27726,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "274 kg",
-    "verkaufspreis": "3200 Hade",
+    "gewicht": "548 Pfd.",
+    "verkaufspreis": "12.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 16,
-    "sg": 35
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 43693,
@@ -26436,14 +27747,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "759 kg",
-    "verkaufspreis": "5500 Hade",
+    "gewicht": "1.518 Pfd.",
+    "verkaufspreis": "15.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 34
+    "stärke": 16,
+    "sg": 34,
+    "wassersort": "salz"
   },
   {
     "id": 43694,
@@ -26456,14 +27768,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "632 kg",
-    "verkaufspreis": "4100 Hade",
+    "gewicht": "1.264 Pfd.",
+    "verkaufspreis": "18.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 35
+    "stärke": 14,
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 43695,
@@ -26476,14 +27789,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "727 kg",
-    "verkaufspreis": "5500 Hade",
+    "gewicht": "1.454 Pfd.",
+    "verkaufspreis": "22.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 34
+    "stärke": 14,
+    "sg": 34,
+    "wassersort": "salz"
   },
   {
     "id": 43696,
@@ -26496,14 +27810,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "11,3 kg",
-    "verkaufspreis": "1900 Hade",
+    "gewicht": "22,6 Pfd.",
+    "verkaufspreis": "1.200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 31
+    "stärke": 11,
+    "sg": 31,
+    "wassersort": "süß"
   },
   {
     "id": 43697,
@@ -26516,14 +27831,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "680 kg",
-    "verkaufspreis": "7000 Hade",
+    "gewicht": "1.360 Pfd.",
+    "verkaufspreis": "35.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 35
+    "stärke": 15,
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 43698,
@@ -26536,15 +27852,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "37,0 kg",
-    "verkaufspreis": "3300 Hade",
+    "gewicht": "74,0 Pfd.",
+    "verkaufspreis": "45.000 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch",
       "Vulkanisch"
     ],
-    "stärke": 16,
-    "sg": 34
+    "stärke": 12,
+    "sg": 34,
+    "wassersort": "süß"
   },
   {
     "id": 43699,
@@ -26557,14 +27874,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "52,6 kg",
-    "verkaufspreis": "1500 Hade",
+    "gewicht": "105 Pfd.",
+    "verkaufspreis": "200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 27
+    "stärke": 11,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 43700,
@@ -26577,14 +27895,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "17,7 kg",
-    "verkaufspreis": "2600 Hade",
+    "gewicht": "35,4 Pfd.",
+    "verkaufspreis": "2.800 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 29
+    "stärke": 12,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 43701,
@@ -26597,14 +27916,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "747 kg",
-    "verkaufspreis": "5500 Hade",
+    "gewicht": "1.494 Pfd.",
+    "verkaufspreis": "10.000 Hade",
     "lebensraum": [],
     "klima": [
       "Vulkanisch"
     ],
-    "stärke": 16,
-    "sg": 35
+    "stärke": 14,
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 43702,
@@ -26617,14 +27937,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "781 kg",
-    "verkaufspreis": "6000 Hade",
+    "gewicht": "1.562 Pfd.",
+    "verkaufspreis": "12.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 35
+    "stärke": 14,
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 43703,
@@ -26637,14 +27958,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "537 kg",
-    "verkaufspreis": "1500 Hade",
+    "gewicht": "1.074 Pfd.",
+    "verkaufspreis": "320 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 28
+    "stärke": 13,
+    "sg": 28,
+    "wassersort": "salz"
   },
   {
     "id": 43704,
@@ -26657,14 +27979,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "676 kg",
-    "verkaufspreis": "4600 Hade",
+    "gewicht": "1.352 Pfd.",
+    "verkaufspreis": "18.000 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
     "stärke": 15,
-    "sg": 34
+    "sg": 34,
+    "wassersort": "salz"
   },
   {
     "id": 43705,
@@ -26677,14 +28000,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "34,0 kg",
-    "verkaufspreis": "2500 Hade",
+    "gewicht": "68,0 Pfd.",
+    "verkaufspreis": "800 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 15,
-    "sg": 31
+    "stärke": 12,
+    "sg": 31,
+    "wassersort": "süß"
   },
   {
     "id": 43706,
@@ -26697,14 +28021,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "769 kg",
-    "verkaufspreis": "2700 Hade",
+    "gewicht": "1.538 Pfd.",
+    "verkaufspreis": "1.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 31
+    "stärke": 15,
+    "sg": 31,
+    "wassersort": "salz"
   },
   {
     "id": 43707,
@@ -26717,14 +28042,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "226 kg",
-    "verkaufspreis": "3000 Hade",
+    "gewicht": "452 Pfd.",
+    "verkaufspreis": "1.200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 32
+    "stärke": 16,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 43708,
@@ -26737,14 +28063,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "50,6 kg",
-    "verkaufspreis": "3800 Hade",
+    "gewicht": "101 Pfd.",
+    "verkaufspreis": "45.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 34
+    "stärke": 11,
+    "sg": 34,
+    "wassersort": "süß"
   },
   {
     "id": 43709,
@@ -26757,14 +28084,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "647 kg",
-    "verkaufspreis": "2200 Hade",
+    "gewicht": "1.294 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 30
+    "stärke": 13,
+    "sg": 30,
+    "wassersort": "salz"
   },
   {
     "id": 43710,
@@ -26777,14 +28105,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "48,2 kg",
-    "verkaufspreis": "1600 Hade",
+    "gewicht": "96,4 Pfd.",
+    "verkaufspreis": "2.200 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch"
     ],
-    "stärke": 16,
-    "sg": 30
+    "stärke": 11,
+    "sg": 30,
+    "wassersort": "süß"
   },
   {
     "id": 43711,
@@ -26797,14 +28126,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "58,7 kg",
-    "verkaufspreis": "1800 Hade",
+    "gewicht": "117 Pfd.",
+    "verkaufspreis": "2.800 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 31
+    "stärke": 11,
+    "sg": 31,
+    "wassersort": "süß"
   },
   {
     "id": 43712,
@@ -26817,14 +28147,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "156 kg",
-    "verkaufspreis": "6500 Hade",
+    "gewicht": "312 Pfd.",
+    "verkaufspreis": "12.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 35
+    "stärke": 17,
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 43713,
@@ -26837,14 +28168,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "776 kg",
-    "verkaufspreis": "3100 Hade",
+    "gewicht": "1.552 Pfd.",
+    "verkaufspreis": "15.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 16,
-    "sg": 34
+    "sg": 34,
+    "wassersort": "salz"
   },
   {
     "id": 43714,
@@ -26857,14 +28189,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "37,6 kg",
-    "verkaufspreis": "3600 Hade",
+    "gewicht": "75,2 Pfd.",
+    "verkaufspreis": "18.000 Hade",
     "lebensraum": [],
     "klima": [
       "Trocken"
     ],
-    "stärke": 15,
-    "sg": 33
+    "stärke": 14,
+    "sg": 33,
+    "wassersort": "süß"
   },
   {
     "id": 43715,
@@ -26877,14 +28210,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "215 kg",
-    "verkaufspreis": "2800 Hade",
+    "gewicht": "430 Pfd.",
+    "verkaufspreis": "650 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 31
+    "stärke": 13,
+    "sg": 31,
+    "wassersort": "salz"
   },
   {
     "id": 43716,
@@ -26897,14 +28231,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "82 kg",
-    "verkaufspreis": "4900 Hade",
+    "gewicht": "164 Pfd.",
+    "verkaufspreis": "28.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 33
+    "stärke": 14,
+    "sg": 33,
+    "wassersort": "salz"
   },
   {
     "id": 43717,
@@ -26917,14 +28252,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "61 kg",
-    "verkaufspreis": "3700 Hade",
+    "gewicht": "122 Pfd.",
+    "verkaufspreis": "35.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 33
+    "stärke": 14,
+    "sg": 33,
+    "wassersort": "salz"
   },
   {
     "id": 43718,
@@ -26937,15 +28273,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "229 kg",
-    "verkaufspreis": "2400 Hade",
+    "gewicht": "458 Pfd.",
+    "verkaufspreis": "1.200 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Schattenhaft"
     ],
-    "stärke": 16,
-    "sg": 30
+    "stärke": 14,
+    "sg": 30,
+    "wassersort": "salz"
   },
   {
     "id": 43719,
@@ -26958,14 +28295,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "497 kg",
-    "verkaufspreis": "3600 Hade",
+    "gewicht": "994 Pfd.",
+    "verkaufspreis": "1.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 32
+    "stärke": 15,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 43720,
@@ -26978,14 +28316,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "51,2 kg",
-    "verkaufspreis": "3100 Hade",
+    "gewicht": "102 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 32
+    "stärke": 12,
+    "sg": 32,
+    "wassersort": "süß"
   },
   {
     "id": 43721,
@@ -26998,14 +28337,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "175 kg",
-    "verkaufspreis": "2000 Hade",
+    "gewicht": "350 Pfd.",
+    "verkaufspreis": "2.200 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch"
     ],
-    "stärke": 16,
-    "sg": 29
+    "stärke": 15,
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 43722,
@@ -27018,14 +28358,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "300 kg",
-    "verkaufspreis": "4100 Hade",
+    "gewicht": "600 Pfd.",
+    "verkaufspreis": "12.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 35
+    "stärke": 14,
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 43723,
@@ -27038,14 +28379,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "26,8 kg",
-    "verkaufspreis": "3100 Hade",
+    "gewicht": "53,6 Pfd.",
+    "verkaufspreis": "15.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 33
+    "stärke": 11,
+    "sg": 33,
+    "wassersort": "süß"
   },
   {
     "id": 43724,
@@ -27058,14 +28400,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "43,2 kg",
-    "verkaufspreis": "3600 Hade",
+    "gewicht": "86,4 Pfd.",
+    "verkaufspreis": "18.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 34
+    "stärke": 12,
+    "sg": 34,
+    "wassersort": "salz"
   },
   {
     "id": 43725,
@@ -27078,14 +28421,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "37,5 kg",
-    "verkaufspreis": "1900 Hade",
+    "gewicht": "75,0 Pfd.",
+    "verkaufspreis": "500 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 29
+    "stärke": 11,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 43726,
@@ -27098,14 +28442,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "887 kg",
-    "verkaufspreis": "4500 Hade",
+    "gewicht": "600 Pfd.",
+    "verkaufspreis": "28.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 34
+    "stärke": 15,
+    "sg": 34,
+    "wassersort": "süß"
   },
   {
     "id": 43727,
@@ -27118,14 +28463,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "43,2 kg",
-    "verkaufspreis": "3100 Hade",
+    "gewicht": "86,4 Pfd.",
+    "verkaufspreis": "35.000 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
-    "stärke": 16,
-    "sg": 34
+    "stärke": 13,
+    "sg": 34,
+    "wassersort": "süß"
   },
   {
     "id": 43728,
@@ -27138,14 +28484,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "262 kg",
-    "verkaufspreis": "4300 Hade",
+    "gewicht": "524 Pfd.",
+    "verkaufspreis": "1.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 32
+    "stärke": 16,
+    "sg": 32,
+    "wassersort": "süß"
   },
   {
     "id": 43729,
@@ -27158,15 +28505,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "23,5 kg",
-    "verkaufspreis": "2900 Hade",
+    "gewicht": "47,0 Pfd.",
+    "verkaufspreis": "60.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Schattenhaft"
     ],
-    "stärke": 16,
-    "sg": 31
+    "stärke": 10,
+    "sg": 31,
+    "wassersort": "süß"
   },
   {
     "id": 43730,
@@ -27179,14 +28527,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "20,2 kg",
-    "verkaufspreis": "2300 Hade",
+    "gewicht": "40,4 Pfd.",
+    "verkaufspreis": "1.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 31
+    "stärke": 10,
+    "sg": 31,
+    "wassersort": "süß"
   },
   {
     "id": 43731,
@@ -27199,14 +28548,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "12,9 kg",
-    "verkaufspreis": "3900 Hade",
+    "gewicht": "25,8 Pfd.",
+    "verkaufspreis": "10.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 13,
-    "sg": 34
+    "stärke": 12,
+    "sg": 34,
+    "wassersort": "süß"
   },
   {
     "id": 43732,
@@ -27219,14 +28569,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "23,4 kg",
-    "verkaufspreis": "2200 Hade",
+    "gewicht": "46,8 Pfd.",
+    "verkaufspreis": "2.200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 29
+    "stärke": 11,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 43733,
@@ -27239,14 +28590,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "165 kg",
-    "verkaufspreis": "3500 Hade",
+    "gewicht": "330 Pfd.",
+    "verkaufspreis": "15.000 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch"
     ],
-    "stärke": 15,
-    "sg": 35
+    "stärke": 16,
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 43734,
@@ -27259,14 +28611,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "23,2 kg",
-    "verkaufspreis": "2200 Hade",
+    "gewicht": "46,4 Pfd.",
+    "verkaufspreis": "3.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 30
+    "stärke": 12,
+    "sg": 30,
+    "wassersort": "süß"
   },
   {
     "id": 43735,
@@ -27279,14 +28632,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "228 kg",
-    "verkaufspreis": "4300 Hade",
+    "gewicht": "456 Pfd.",
+    "verkaufspreis": "22.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 16,
-    "sg": 33
+    "sg": 33,
+    "wassersort": "salz"
   },
   {
     "id": 43736,
@@ -27299,14 +28653,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "47,9 kg",
-    "verkaufspreis": "2900 Hade",
+    "gewicht": "95,8 Pfd.",
+    "verkaufspreis": "500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 31
+    "stärke": 10,
+    "sg": 31,
+    "wassersort": "süß"
   },
   {
     "id": 43737,
@@ -27319,14 +28674,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "102 kg",
-    "verkaufspreis": "2900 Hade",
+    "gewicht": "204 Pfd.",
+    "verkaufspreis": "650 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 30
+    "stärke": 13,
+    "sg": 30,
+    "wassersort": "salz"
   },
   {
     "id": 43738,
@@ -27339,14 +28695,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "284 kg",
-    "verkaufspreis": "10000 Hade",
+    "gewicht": "568 Pfd.",
+    "verkaufspreis": "45.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 35
+    "stärke": 15,
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 43739,
@@ -27359,14 +28716,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "746 kg",
-    "verkaufspreis": "6500 Hade",
+    "gewicht": "1.492 Pfd.",
+    "verkaufspreis": "60.000 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 16,
-    "sg": 35
+    "stärke": 15,
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 43740,
@@ -27379,14 +28737,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "11,4 kg",
-    "verkaufspreis": "3300 Hade",
+    "gewicht": "22,8 Pfd.",
+    "verkaufspreis": "8.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 33
+    "stärke": 12,
+    "sg": 33,
+    "wassersort": "süß"
   },
   {
     "id": 43741,
@@ -27399,14 +28758,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "461 kg",
-    "verkaufspreis": "5000 Hade",
+    "gewicht": "922 Pfd.",
+    "verkaufspreis": "10.000 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
     "stärke": 16,
-    "sg": 33
+    "sg": 33,
+    "wassersort": "salz"
   },
   {
     "id": 43742,
@@ -27419,14 +28779,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "15,0 kg",
-    "verkaufspreis": "2000 Hade",
+    "gewicht": "30,0 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 30
+    "stärke": 12,
+    "sg": 30,
+    "wassersort": "süß"
   },
   {
     "id": 43743,
@@ -27439,14 +28800,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "34,8 kg",
-    "verkaufspreis": "3700 Hade",
+    "gewicht": "69,6 Pfd.",
+    "verkaufspreis": "15.000 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 34
+    "stärke": 11,
+    "sg": 34,
+    "wassersort": "süß"
   },
   {
     "id": 43744,
@@ -27459,14 +28821,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "14,5 kg",
-    "verkaufspreis": "1700 Hade",
+    "gewicht": "29,0 Pfd.",
+    "verkaufspreis": "2.800 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 30
+    "stärke": 13,
+    "sg": 30,
+    "wassersort": "salz"
   },
   {
     "id": 43745,
@@ -27479,14 +28842,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "667 kg",
-    "verkaufspreis": "5000 Hade",
+    "gewicht": "1.334 Pfd.",
+    "verkaufspreis": "22.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 33
+    "stärke": 14,
+    "sg": 33,
+    "wassersort": "salz"
   },
   {
     "id": 43746,
@@ -27499,14 +28863,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "28,0 kg",
-    "verkaufspreis": "2000 Hade",
+    "gewicht": "56,0 Pfd.",
+    "verkaufspreis": "4.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 29
+    "stärke": 11,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 43747,
@@ -27519,16 +28884,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "68 kg",
-    "verkaufspreis": "3100 Hade",
+    "gewicht": "136 Pfd.",
+    "verkaufspreis": "35.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Stürmisch",
       "Schattenhaft"
     ],
-    "stärke": 16,
-    "sg": 32
+    "stärke": 15,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 43748,
@@ -27541,14 +28907,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "40,1 kg",
-    "verkaufspreis": "3900 Hade",
+    "gewicht": "80,2 Pfd.",
+    "verkaufspreis": "45.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 34
+    "stärke": 13,
+    "sg": 34,
+    "wassersort": "süß"
   },
   {
     "id": 43749,
@@ -27561,14 +28928,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "55,3 kg",
-    "verkaufspreis": "2200 Hade",
+    "gewicht": "111 Pfd.",
+    "verkaufspreis": "800 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 31
+    "stärke": 13,
+    "sg": 31,
+    "wassersort": "süß"
   },
   {
     "id": 43750,
@@ -27581,14 +28949,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "45,7 kg",
-    "verkaufspreis": "1500 Hade",
+    "gewicht": "91,4 Pfd.",
+    "verkaufspreis": "1.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 29
+    "stärke": 10,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 43751,
@@ -27601,14 +28970,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "609 kg",
-    "verkaufspreis": "6000 Hade",
+    "gewicht": "600 Pfd.",
+    "verkaufspreis": "10.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 34
+    "stärke": 14,
+    "sg": 34,
+    "wassersort": "süß"
   },
   {
     "id": 43752,
@@ -27621,14 +28991,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "505 kg",
-    "verkaufspreis": "4400 Hade",
+    "gewicht": "1.010 Pfd.",
+    "verkaufspreis": "12.000 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 16,
-    "sg": 33
+    "stärke": 14,
+    "sg": 33,
+    "wassersort": "salz"
   },
   {
     "id": 43753,
@@ -27641,14 +29012,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "363 kg",
-    "verkaufspreis": "5500 Hade",
+    "gewicht": "726 Pfd.",
+    "verkaufspreis": "15.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 14,
-    "sg": 33
+    "stärke": 15,
+    "sg": 33,
+    "wassersort": "salz"
   },
   {
     "id": 43754,
@@ -27661,14 +29033,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "512 kg",
-    "verkaufspreis": "2500 Hade",
+    "gewicht": "1.024 Pfd.",
+    "verkaufspreis": "2.200 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 16,
-    "sg": 30
+    "stärke": 15,
+    "sg": 30,
+    "wassersort": "salz"
   },
   {
     "id": 43755,
@@ -27681,14 +29054,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "731 kg",
-    "verkaufspreis": "6500 Hade",
+    "gewicht": "1.462 Pfd.",
+    "verkaufspreis": "22.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 16,
-    "sg": 35
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 43756,
@@ -27701,14 +29075,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "523 kg",
-    "verkaufspreis": "8500 Hade",
+    "gewicht": "1.046 Pfd.",
+    "verkaufspreis": "28.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 35
+    "stärke": 17,
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 43757,
@@ -27721,14 +29096,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "315 kg",
-    "verkaufspreis": "6500 Hade",
+    "gewicht": "630 Pfd.",
+    "verkaufspreis": "35.000 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 34
+    "stärke": 14,
+    "sg": 34,
+    "wassersort": "salz"
   },
   {
     "id": 43758,
@@ -27741,15 +29117,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "174 g",
-    "verkaufspreis": "1700 Hade",
+    "gewicht": "0,3 Pfd.",
+    "verkaufspreis": "500 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Stürmisch"
     ],
-    "stärke": 15,
-    "sg": 32
+    "stärke": 3,
+    "sg": 32,
+    "wassersort": "süß"
   },
   {
     "id": 43759,
@@ -27762,15 +29139,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "46,6 kg",
-    "verkaufspreis": "1900 Hade",
+    "gewicht": "93,2 Pfd.",
+    "verkaufspreis": "650 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Stürmisch"
     ],
-    "stärke": 16,
-    "sg": 32
+    "stärke": 11,
+    "sg": 32,
+    "wassersort": "süß"
   },
   {
     "id": 43760,
@@ -27783,16 +29161,17 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "20,2 kg",
-    "verkaufspreis": "3500 Hade",
+    "gewicht": "40,4 Pfd.",
+    "verkaufspreis": "8.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Magisch",
       "Schattenhaft"
     ],
-    "stärke": 16,
-    "sg": 34
+    "stärke": 12,
+    "sg": 34,
+    "wassersort": "süß"
   },
   {
     "id": 43761,
@@ -27805,15 +29184,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "733 kg",
-    "verkaufspreis": "5500 Hade",
+    "gewicht": "1.466 Pfd.",
+    "verkaufspreis": "10.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Stürmisch"
     ],
     "stärke": 16,
-    "sg": 35
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 43762,
@@ -27826,14 +29206,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "268 kg",
-    "verkaufspreis": "2800 Hade",
+    "gewicht": "536 Pfd.",
+    "verkaufspreis": "1.200 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 16,
-    "sg": 31
+    "stärke": 15,
+    "sg": 31,
+    "wassersort": "salz"
   },
   {
     "id": 43763,
@@ -27846,14 +29227,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "268 kg",
-    "verkaufspreis": "4100 Hade",
+    "gewicht": "536 Pfd.",
+    "verkaufspreis": "15.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
     "stärke": 16,
-    "sg": 33
+    "sg": 33,
+    "wassersort": "salz"
   },
   {
     "id": 43764,
@@ -27866,14 +29248,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "306 kg",
-    "verkaufspreis": "3300 Hade",
+    "gewicht": "612 Pfd.",
+    "verkaufspreis": "18.000 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 16,
-    "sg": 33
+    "stärke": 13,
+    "sg": 33,
+    "wassersort": "salz"
   },
   {
     "id": 43765,
@@ -27886,14 +29269,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "758 kg",
-    "verkaufspreis": "3800 Hade",
+    "gewicht": "1.516 Pfd.",
+    "verkaufspreis": "22.000 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 16,
-    "sg": 35
+    "stärke": 14,
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 43766,
@@ -27906,14 +29290,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "49,9 kg",
-    "verkaufspreis": "1600 Hade",
+    "gewicht": "99,8 Pfd.",
+    "verkaufspreis": "2.800 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 30
+    "stärke": 11,
+    "sg": 30,
+    "wassersort": "süß"
   },
   {
     "id": 43767,
@@ -27926,14 +29311,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "54,2 kg",
-    "verkaufspreis": "3800 Hade",
+    "gewicht": "108 Pfd.",
+    "verkaufspreis": "3.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 32
+    "stärke": 12,
+    "sg": 32,
+    "wassersort": "süß"
   },
   {
     "id": 43768,
@@ -27946,14 +29332,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "538 kg",
-    "verkaufspreis": "6000 Hade",
+    "gewicht": "1.076 Pfd.",
+    "verkaufspreis": "4.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 32
+    "stärke": 15,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 43769,
@@ -27966,14 +29353,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "897 kg",
-    "verkaufspreis": "7000 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "60.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
     "stärke": 16,
-    "sg": 35
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 43770,
@@ -27986,14 +29374,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "46,7 kg",
-    "verkaufspreis": "2000 Hade",
+    "gewicht": "93,4 Pfd.",
+    "verkaufspreis": "650 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 29
+    "stärke": 12,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 43771,
@@ -28006,14 +29395,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "587 kg",
-    "verkaufspreis": "4600 Hade",
+    "gewicht": "1.174 Pfd.",
+    "verkaufspreis": "10.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 35
+    "stärke": 17,
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 43772,
@@ -28026,15 +29416,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "205 kg",
-    "verkaufspreis": "4400 Hade",
+    "gewicht": "410 Pfd.",
+    "verkaufspreis": "1.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Stürmisch"
     ],
-    "stärke": 16,
-    "sg": 32
+    "stärke": 14,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 43773,
@@ -28047,14 +29438,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "178 kg",
-    "verkaufspreis": "6500 Hade",
+    "gewicht": "356 Pfd.",
+    "verkaufspreis": "15.000 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 16,
-    "sg": 35
+    "stärke": 15,
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 43774,
@@ -28067,14 +29459,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "17,9 kg",
-    "verkaufspreis": "4100 Hade",
+    "gewicht": "35,8 Pfd.",
+    "verkaufspreis": "18.000 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 34
+    "stärke": 12,
+    "sg": 34,
+    "wassersort": "süß"
   },
   {
     "id": 43775,
@@ -28087,14 +29480,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "48,2 kg",
-    "verkaufspreis": "3000 Hade",
+    "gewicht": "96,4 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 16,
-    "sg": 30
+    "stärke": 12,
+    "sg": 30,
+    "wassersort": "süß"
   },
   {
     "id": 43776,
@@ -28107,14 +29501,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "255 kg",
-    "verkaufspreis": "3300 Hade",
+    "gewicht": "510 Pfd.",
+    "verkaufspreis": "28.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 16,
-    "sg": 33
+    "sg": 33,
+    "wassersort": "salz"
   },
   {
     "id": 43777,
@@ -28127,14 +29522,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "29,8 kg",
-    "verkaufspreis": "3900 Hade",
+    "gewicht": "59,6 Pfd.",
+    "verkaufspreis": "35.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 34
+    "stärke": 13,
+    "sg": 34,
+    "wassersort": "süß"
   },
   {
     "id": 43778,
@@ -28147,14 +29543,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "52,2 kg",
-    "verkaufspreis": "2200 Hade",
+    "gewicht": "104 Pfd.",
+    "verkaufspreis": "3.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 30
+    "stärke": 10,
+    "sg": 30,
+    "wassersort": "süß"
   },
   {
     "id": 43779,
@@ -28167,14 +29564,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "23,3 kg",
-    "verkaufspreis": "4400 Hade",
+    "gewicht": "46,6 Pfd.",
+    "verkaufspreis": "60.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 34
+    "stärke": 11,
+    "sg": 34,
+    "wassersort": "süß"
   },
   {
     "id": 43780,
@@ -28187,14 +29585,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "180 kg",
-    "verkaufspreis": "3900 Hade",
+    "gewicht": "360 Pfd.",
+    "verkaufspreis": "8.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 34
+    "stärke": 15,
+    "sg": 34,
+    "wassersort": "salz"
   },
   {
     "id": 43781,
@@ -28207,14 +29606,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "395 kg",
-    "verkaufspreis": "2900 Hade",
+    "gewicht": "790 Pfd.",
+    "verkaufspreis": "650 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 29
+    "stärke": 14,
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 43782,
@@ -28227,14 +29627,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "112 kg",
-    "verkaufspreis": "3400 Hade",
+    "gewicht": "224 Pfd.",
+    "verkaufspreis": "12.000 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
     "stärke": 15,
-    "sg": 34
+    "sg": 34,
+    "wassersort": "süß"
   },
   {
     "id": 43783,
@@ -28247,15 +29648,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "51,9 kg",
-    "verkaufspreis": "2700 Hade",
+    "gewicht": "104 Pfd.",
+    "verkaufspreis": "1.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Toxisch"
     ],
-    "stärke": 16,
-    "sg": 30
+    "stärke": 12,
+    "sg": 30,
+    "wassersort": "süß"
   },
   {
     "id": 43784,
@@ -28268,14 +29670,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "709 kg",
-    "verkaufspreis": "3600 Hade",
+    "gewicht": "600 Pfd.",
+    "verkaufspreis": "1.200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 32
+    "stärke": 16,
+    "sg": 32,
+    "wassersort": "süß"
   },
   {
     "id": 43785,
@@ -28288,14 +29691,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "877 kg",
-    "verkaufspreis": "5500 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "22.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 16,
-    "sg": 33
+    "sg": 33,
+    "wassersort": "salz"
   },
   {
     "id": 43786,
@@ -28308,14 +29712,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "39,7 kg",
-    "verkaufspreis": "2400 Hade",
+    "gewicht": "79,4 Pfd.",
+    "verkaufspreis": "28.000 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 31
+    "stärke": 10,
+    "sg": 31,
+    "wassersort": "süß"
   },
   {
     "id": 43787,
@@ -28328,14 +29733,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "655 kg",
-    "verkaufspreis": "3900 Hade",
+    "gewicht": "1.310 Pfd.",
+    "verkaufspreis": "35.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 33
+    "stärke": 14,
+    "sg": 33,
+    "wassersort": "salz"
   },
   {
     "id": 43788,
@@ -28348,14 +29754,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "130 kg",
-    "verkaufspreis": "3700 Hade",
+    "gewicht": "260 Pfd.",
+    "verkaufspreis": "45.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 34
+    "stärke": 15,
+    "sg": 34,
+    "wassersort": "salz"
   },
   {
     "id": 43789,
@@ -28368,14 +29775,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "581 kg",
-    "verkaufspreis": "6000 Hade",
+    "gewicht": "1.162 Pfd.",
+    "verkaufspreis": "3.500 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
     "stärke": 15,
-    "sg": 32
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 43790,
@@ -28388,14 +29796,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "38,4 kg",
-    "verkaufspreis": "1700 Hade",
+    "gewicht": "76,8 Pfd.",
+    "verkaufspreis": "4.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 31
+    "stärke": 12,
+    "sg": 31,
+    "wassersort": "süß"
   },
   {
     "id": 43791,
@@ -28408,14 +29817,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "20,7 kg",
-    "verkaufspreis": "3700 Hade",
+    "gewicht": "41,4 Pfd.",
+    "verkaufspreis": "10.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kosmisch"
     ],
-    "stärke": 16,
-    "sg": 33
+    "stärke": 13,
+    "sg": 33,
+    "wassersort": "süß"
   },
   {
     "id": 43792,
@@ -28428,14 +29838,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "769 kg",
-    "verkaufspreis": "4700 Hade",
+    "gewicht": "1.538 Pfd.",
+    "verkaufspreis": "12.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 35
+    "stärke": 14,
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 43793,
@@ -28448,14 +29859,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "312 kg",
-    "verkaufspreis": "4600 Hade",
+    "gewicht": "624 Pfd.",
+    "verkaufspreis": "15.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 35
+    "stärke": 14,
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 43794,
@@ -28468,14 +29880,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "41,2 kg",
-    "verkaufspreis": "3000 Hade",
+    "gewicht": "82,4 Pfd.",
+    "verkaufspreis": "1.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 30
+    "stärke": 11,
+    "sg": 30,
+    "wassersort": "süß"
   },
   {
     "id": 43795,
@@ -28488,14 +29901,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Winzig",
-    "gewicht": "132 g",
-    "verkaufspreis": "1100 Hade",
+    "gewicht": "0,3 Pfd.",
+    "verkaufspreis": "1.200 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 15,
-    "sg": 29
+    "stärke": 3,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 43796,
@@ -28508,14 +29922,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "55,8 kg",
-    "verkaufspreis": "2600 Hade",
+    "gewicht": "112 Pfd.",
+    "verkaufspreis": "1.500 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 29
+    "stärke": 11,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 43797,
@@ -28528,15 +29943,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "11,7 kg",
-    "verkaufspreis": "3100 Hade",
+    "gewicht": "23,4 Pfd.",
+    "verkaufspreis": "35.000 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch",
       "Kosmisch"
     ],
-    "stärke": 16,
-    "sg": 35
+    "stärke": 13,
+    "sg": 35,
+    "wassersort": "süß"
   },
   {
     "id": 43798,
@@ -28549,14 +29965,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "295 kg",
-    "verkaufspreis": "4100 Hade",
+    "gewicht": "590 Pfd.",
+    "verkaufspreis": "45.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 16,
-    "sg": 33
+    "sg": 33,
+    "wassersort": "salz"
   },
   {
     "id": 43799,
@@ -28569,14 +29986,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "606 kg",
-    "verkaufspreis": "2500 Hade",
+    "gewicht": "1.212 Pfd.",
+    "verkaufspreis": "2.800 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 32
+    "stärke": 13,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 44339,
@@ -28589,15 +30007,16 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "463 kg",
-    "verkaufspreis": "2500 Hade",
+    "gewicht": "926 Pfd.",
+    "verkaufspreis": "3.500 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Toxisch"
     ],
-    "stärke": 16,
-    "sg": 29
+    "stärke": 13,
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 44340,
@@ -28610,14 +30029,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "421 kg",
-    "verkaufspreis": "4800 Hade",
+    "gewicht": "842 Pfd.",
+    "verkaufspreis": "300.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 16,
-    "sg": 32
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 44341,
@@ -28630,14 +30050,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "670 kg",
-    "verkaufspreis": "3800 Hade",
+    "gewicht": "1.340 Pfd.",
+    "verkaufspreis": "10.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 34
+    "stärke": 15,
+    "sg": 34,
+    "wassersort": "salz"
   },
   {
     "id": 44343,
@@ -28650,14 +30071,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "144 kg",
-    "verkaufspreis": "2900 Hade",
+    "gewicht": "288 Pfd.",
+    "verkaufspreis": "800 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 31
+    "stärke": 15,
+    "sg": 31,
+    "wassersort": "salz"
   },
   {
     "id": 44342,
@@ -28670,14 +30092,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Groß",
-    "gewicht": "55,7 kg",
-    "verkaufspreis": "2200 Hade",
+    "gewicht": "111 Pfd.",
+    "verkaufspreis": "12.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kosmisch"
     ],
-    "stärke": 16,
-    "sg": 30
+    "stärke": 12,
+    "sg": 30,
+    "wassersort": "süß"
   },
   {
     "id": 44345,
@@ -28690,14 +30113,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "372 kg",
-    "verkaufspreis": "2800 Hade",
+    "gewicht": "744 Pfd.",
+    "verkaufspreis": "1.200 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 16,
-    "sg": 31
+    "stärke": 13,
+    "sg": 31,
+    "wassersort": "salz"
   },
   {
     "id": 44346,
@@ -28710,14 +30134,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "338 kg",
-    "verkaufspreis": "5000 Hade",
+    "gewicht": "600 Pfd.",
+    "verkaufspreis": "28.000 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 16,
-    "sg": 34
+    "stärke": 14,
+    "sg": 34,
+    "wassersort": "süß"
   },
   {
     "id": 44344,
@@ -28730,14 +30155,15 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "237 kg",
-    "verkaufspreis": "2700 Hade",
+    "gewicht": "474 Pfd.",
+    "verkaufspreis": "1.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 29
+    "stärke": 15,
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 44347,
@@ -28750,15 +30176,16 @@ window.FISH_DB = [
       1
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "761 kg",
-    "verkaufspreis": "9500 Hade",
+    "gewicht": "1.522 Pfd.",
+    "verkaufspreis": "35.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Stürmisch"
     ],
-    "stärke": 16,
-    "sg": 35
+    "stärke": 15,
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 44334,
@@ -28771,14 +30198,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Groß",
-    "gewicht": "52,0 kg",
-    "verkaufspreis": "3800 Hade",
+    "gewicht": "104 Pfd.",
+    "verkaufspreis": "18.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 34
+    "stärke": 12,
+    "sg": 34,
+    "wassersort": "süß"
   },
   {
     "id": 44335,
@@ -28791,14 +30219,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "332 kg",
-    "verkaufspreis": "3400 Hade",
+    "gewicht": "664 Pfd.",
+    "verkaufspreis": "22.000 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
-    "stärke": 15,
-    "sg": 35
+    "stärke": 16,
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 44336,
@@ -28811,15 +30240,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "815 kg",
-    "verkaufspreis": "3800 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "450.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Schattenhaft"
     ],
-    "stärke": 15,
-    "sg": 33
+    "stärke": 17,
+    "sg": 33,
+    "wassersort": "salz"
   },
   {
     "id": 44337,
@@ -28832,14 +30262,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "87 kg",
-    "verkaufspreis": "5000 Hade",
+    "gewicht": "174 Pfd.",
+    "verkaufspreis": "35.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 33
+    "stärke": 16,
+    "sg": 33,
+    "wassersort": "salz"
   },
   {
     "id": 44338,
@@ -28852,14 +30283,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "866 kg",
-    "verkaufspreis": "4600 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "45.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 15,
-    "sg": 33
+    "stärke": 13,
+    "sg": 33,
+    "wassersort": "salz"
   },
   {
     "id": 47988,
@@ -28872,14 +30304,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "131 kg",
-    "verkaufspreis": "3400 Hade",
+    "gewicht": "262 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 32
+    "stärke": 15,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 47989,
@@ -28892,14 +30325,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "585 kg",
-    "verkaufspreis": "2900 Hade",
+    "gewicht": "1.170 Pfd.",
+    "verkaufspreis": "400.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 30
+    "stärke": 18,
+    "sg": 30,
+    "wassersort": "salz"
   },
   {
     "id": 47990,
@@ -28912,14 +30346,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "627 kg",
-    "verkaufspreis": "4600 Hade",
+    "gewicht": "1.254 Pfd.",
+    "verkaufspreis": "8.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 16,
-    "sg": 35
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 47991,
@@ -28932,14 +30367,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "507 kg",
-    "verkaufspreis": "6000 Hade",
+    "gewicht": "1.014 Pfd.",
+    "verkaufspreis": "3.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 16,
-    "sg": 32
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 47992,
@@ -28952,14 +30388,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "587 kg",
-    "verkaufspreis": "1100 Hade",
+    "gewicht": "1.174 Pfd.",
+    "verkaufspreis": "280 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch"
     ],
-    "stärke": 16,
-    "sg": 26
+    "stärke": 12,
+    "sg": 26,
+    "wassersort": "salz"
   },
   {
     "id": 47993,
@@ -28972,15 +30409,16 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "134 kg",
-    "verkaufspreis": "6000 Hade",
+    "gewicht": "268 Pfd.",
+    "verkaufspreis": "15.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Schattenhaft"
     ],
-    "stärke": 16,
-    "sg": 34
+    "stärke": 14,
+    "sg": 34,
+    "wassersort": "salz"
   },
   {
     "id": 47994,
@@ -28993,15 +30431,16 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "17,2 kg",
-    "verkaufspreis": "2000 Hade",
+    "gewicht": "34,4 Pfd.",
+    "verkaufspreis": "650 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Stürmisch"
     ],
-    "stärke": 16,
-    "sg": 32
+    "stärke": 11,
+    "sg": 32,
+    "wassersort": "süß"
   },
   {
     "id": 47995,
@@ -29014,14 +30453,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "19,0 kg",
-    "verkaufspreis": "900 Hade",
+    "gewicht": "38,0 Pfd.",
+    "verkaufspreis": "800 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch"
     ],
-    "stärke": 16,
-    "sg": 29
+    "stärke": 11,
+    "sg": 29,
+    "wassersort": "süß"
   },
   {
     "id": 46188,
@@ -29034,14 +30474,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "384 kg",
-    "verkaufspreis": "5500 Hade",
+    "gewicht": "768 Pfd.",
+    "verkaufspreis": "45.000 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 16,
-    "sg": 34
+    "stärke": 15,
+    "sg": 34,
+    "wassersort": "salz"
   },
   {
     "id": 46249,
@@ -29054,14 +30495,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "57,1 kg",
-    "verkaufspreis": "3200 Hade",
+    "gewicht": "114 Pfd.",
+    "verkaufspreis": "60.000 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 35
+    "stärke": 11,
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 46779,
@@ -29074,14 +30516,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "267 kg",
-    "verkaufspreis": "3400 Hade",
+    "gewicht": "534 Pfd.",
+    "verkaufspreis": "2.200 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 16,
-    "sg": 32
+    "stärke": 15,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 46189,
@@ -29094,14 +30537,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "555 kg",
-    "verkaufspreis": "6000 Hade",
+    "gewicht": "1.110 Pfd.",
+    "verkaufspreis": "60.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 35
+    "stärke": 15,
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 46190,
@@ -29114,14 +30558,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "15,1 kg",
-    "verkaufspreis": "3300 Hade",
+    "gewicht": "30,2 Pfd.",
+    "verkaufspreis": "650 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 32
+    "stärke": 12,
+    "sg": 32,
+    "wassersort": "süß"
   },
   {
     "id": 46191,
@@ -29134,15 +30579,16 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "711 kg",
-    "verkaufspreis": "2800 Hade",
+    "gewicht": "1.422 Pfd.",
+    "verkaufspreis": "800 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Schattenhaft"
     ],
-    "stärke": 16,
-    "sg": 30
+    "stärke": 15,
+    "sg": 30,
+    "wassersort": "salz"
   },
   {
     "id": 46192,
@@ -29155,14 +30601,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Groß",
-    "gewicht": "51,6 kg",
-    "verkaufspreis": "1400 Hade",
+    "gewicht": "103 Pfd.",
+    "verkaufspreis": "140 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 27
+    "stärke": 12,
+    "sg": 27,
+    "wassersort": "süß"
   },
   {
     "id": 46193,
@@ -29175,15 +30622,16 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "210 kg",
-    "verkaufspreis": "5000 Hade",
+    "gewicht": "420 Pfd.",
+    "verkaufspreis": "15.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Stürmisch"
     ],
-    "stärke": 16,
-    "sg": 35
+    "stärke": 14,
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 46194,
@@ -29196,14 +30644,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "405 kg",
-    "verkaufspreis": "3500 Hade",
+    "gewicht": "810 Pfd.",
+    "verkaufspreis": "18.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 33
+    "stärke": 14,
+    "sg": 33,
+    "wassersort": "salz"
   },
   {
     "id": 46195,
@@ -29216,14 +30665,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "665 kg",
-    "verkaufspreis": "3000 Hade",
+    "gewicht": "1.330 Pfd.",
+    "verkaufspreis": "1.800 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 16,
-    "sg": 29
+    "sg": 29,
+    "wassersort": "salz"
   },
   {
     "id": 46196,
@@ -29236,14 +30686,15 @@ window.FISH_DB = [
       2
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "607 kg",
-    "verkaufspreis": "5000 Hade",
+    "gewicht": "1.214 Pfd.",
+    "verkaufspreis": "2.200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 32
+    "stärke": 15,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 49794,
@@ -29256,14 +30707,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "591 kg",
-    "verkaufspreis": "3600 Hade",
+    "gewicht": "1.182 Pfd.",
+    "verkaufspreis": "18.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 34
+    "stärke": 15,
+    "sg": 34,
+    "wassersort": "salz"
   },
   {
     "id": 49795,
@@ -29276,14 +30728,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "38,6 kg",
-    "verkaufspreis": "3800 Hade",
+    "gewicht": "77,2 Pfd.",
+    "verkaufspreis": "22.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 33
+    "stärke": 12,
+    "sg": 33,
+    "wassersort": "süß"
   },
   {
     "id": 49796,
@@ -29296,14 +30749,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "330 kg",
-    "verkaufspreis": "3400 Hade",
+    "gewicht": "660 Pfd.",
+    "verkaufspreis": "4.500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 32
+    "stärke": 15,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 49797,
@@ -29316,14 +30770,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Groß",
-    "gewicht": "44,7 kg",
-    "verkaufspreis": "2800 Hade",
+    "gewicht": "89,4 Pfd.",
+    "verkaufspreis": "500 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 30
+    "stärke": 12,
+    "sg": 30,
+    "wassersort": "süß"
   },
   {
     "id": 49798,
@@ -29336,14 +30791,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "388 kg",
-    "verkaufspreis": "3100 Hade",
+    "gewicht": "776 Pfd.",
+    "verkaufspreis": "45.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 16,
-    "sg": 34
+    "sg": 34,
+    "wassersort": "salz"
   },
   {
     "id": 49799,
@@ -29356,14 +30812,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "730 kg",
-    "verkaufspreis": "2900 Hade",
+    "gewicht": "1.460 Pfd.",
+    "verkaufspreis": "800 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 16,
-    "sg": 31
+    "stärke": 13,
+    "sg": 31,
+    "wassersort": "salz"
   },
   {
     "id": 49800,
@@ -29376,14 +30833,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "199 kg",
-    "verkaufspreis": "3900 Hade",
+    "gewicht": "398 Pfd.",
+    "verkaufspreis": "8.000 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 16,
-    "sg": 35
+    "stärke": 15,
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 49801,
@@ -29396,14 +30854,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "125 kg",
-    "verkaufspreis": "4500 Hade",
+    "gewicht": "250 Pfd.",
+    "verkaufspreis": "10.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 34
+    "stärke": 15,
+    "sg": 34,
+    "wassersort": "salz"
   },
   {
     "id": 51999,
@@ -29416,14 +30875,15 @@ window.FISH_DB = [
       4
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "104 kg",
-    "verkaufspreis": "3500 Hade",
+    "gewicht": "208 Pfd.",
+    "verkaufspreis": "800 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 32
+    "stärke": 15,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 52000,
@@ -29436,14 +30896,15 @@ window.FISH_DB = [
       4
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "679 kg",
-    "verkaufspreis": "3600 Hade",
+    "gewicht": "1.358 Pfd.",
+    "verkaufspreis": "8.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 34
+    "stärke": 15,
+    "sg": 34,
+    "wassersort": "salz"
   },
   {
     "id": 52001,
@@ -29456,14 +30917,15 @@ window.FISH_DB = [
       4
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "618 kg",
-    "verkaufspreis": "2900 Hade",
+    "gewicht": "600 Pfd.",
+    "verkaufspreis": "1.200 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 16,
-    "sg": 30
+    "sg": 30,
+    "wassersort": "süß"
   },
   {
     "id": 52002,
@@ -29476,14 +30938,15 @@ window.FISH_DB = [
       4
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "840 kg",
-    "verkaufspreis": "3100 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "1.500 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 15,
-    "sg": 32
+    "stärke": 16,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 52003,
@@ -29496,14 +30959,15 @@ window.FISH_DB = [
       4
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "112 kg",
-    "verkaufspreis": "10000 Hade",
+    "gewicht": "224 Pfd.",
+    "verkaufspreis": "15.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 35
+    "stärke": 14,
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 52004,
@@ -29516,14 +30980,15 @@ window.FISH_DB = [
       4
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "673 kg",
-    "verkaufspreis": "8500 Hade",
+    "gewicht": "1.346 Pfd.",
+    "verkaufspreis": "18.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 16,
-    "sg": 35
+    "stärke": 17,
+    "sg": 35,
+    "wassersort": "salz"
   },
   {
     "id": 52005,
@@ -29536,15 +31001,16 @@ window.FISH_DB = [
       4
     ],
     "größenkategorie": "Groß",
-    "gewicht": "20,0 kg",
-    "verkaufspreis": "2400 Hade",
+    "gewicht": "40,0 Pfd.",
+    "verkaufspreis": "22.000 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Schattenhaft"
     ],
-    "stärke": 15,
-    "sg": 31
+    "stärke": 11,
+    "sg": 31,
+    "wassersort": "süß"
   },
   {
     "id": 52006,
@@ -29557,14 +31023,15 @@ window.FISH_DB = [
       4
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "84 kg",
-    "verkaufspreis": "4700 Hade",
+    "gewicht": "168 Pfd.",
+    "verkaufspreis": "28.000 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 16,
-    "sg": 34
+    "stärke": 15,
+    "sg": 34,
+    "wassersort": "salz"
   },
   {
     "id": 51209,
@@ -29577,15 +31044,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Warm",
       "Schattenhaft"
     ],
-    "stärke": 2,
-    "sg": 11
+    "stärke": 3,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 51210,
@@ -29598,15 +31066,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "264 g",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "0,5 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Schattenhaft"
     ],
-    "stärke": 4,
-    "sg": 12
+    "stärke": 3,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 51211,
@@ -29619,14 +31088,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,6 kg",
-    "verkaufspreis": "8 Hade",
+    "gewicht": "3,2 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 2,
-    "sg": 12
+    "stärke": 4,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 51212,
@@ -29639,14 +31109,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "324 g",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "0,6 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Toxisch"
     ],
     "stärke": 2,
-    "sg": 11
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 51213,
@@ -29659,14 +31130,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,6 kg",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "3,2 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 51214,
@@ -29679,14 +31151,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,7 kg",
-    "verkaufspreis": "2 Hade",
+    "gewicht": "3,4 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
     "stärke": 2,
-    "sg": 11
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 51215,
@@ -29699,14 +31172,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,3 kg",
-    "verkaufspreis": "8 Hade",
+    "gewicht": "2,6 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 11
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 51216,
@@ -29719,14 +31193,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "346 g",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "0,7 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 2,
-    "sg": 13
+    "stärke": 3,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 51217,
@@ -29739,15 +31214,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,2 kg",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "2,4 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Magisch"
     ],
-    "stärke": 4,
-    "sg": 11
+    "stärke": 3,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 51218,
@@ -29760,14 +31236,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "574 g",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "1,1 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 2,
-    "sg": 10
+    "stärke": 3,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 51219,
@@ -29780,14 +31257,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "540 g",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "1,1 Pfd.",
+    "verkaufspreis": "22 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 12
+    "stärke": 2,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 51220,
@@ -29800,14 +31278,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "922 g",
-    "verkaufspreis": "9 Hade",
+    "gewicht": "1,8 Pfd.",
+    "verkaufspreis": "25 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 3,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 51221,
@@ -29820,14 +31299,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "673 g",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "1,3 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 13
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 51222,
@@ -29840,14 +31320,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,6 kg",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "3,2 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 10
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 51223,
@@ -29860,14 +31341,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,4 kg",
-    "verkaufspreis": "2 Hade",
+    "gewicht": "2,8 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 3,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 51224,
@@ -29880,14 +31362,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,5 kg",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "3,0 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 2,
-    "sg": 13
+    "stärke": 3,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 51225,
@@ -29900,14 +31383,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "544 g",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "1,1 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 11
+    "stärke": 3,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 51226,
@@ -29920,14 +31404,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "399 g",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "0,8 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
     "stärke": 2,
-    "sg": 11
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 51227,
@@ -29940,14 +31425,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "222 g",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "0,4 Pfd.",
+    "verkaufspreis": "50 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 12
+    "stärke": 2,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 51228,
@@ -29960,14 +31446,15 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "827 kg",
-    "verkaufspreis": "6000 Hade",
+    "gewicht": "1.600 Pfd.",
+    "verkaufspreis": "650 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 16,
-    "sg": 32
+    "stärke": 14,
+    "sg": 32,
+    "wassersort": "salz"
   },
   {
     "id": 51229,
@@ -29980,14 +31467,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "290 g",
-    "verkaufspreis": "2 Hade",
+    "gewicht": "0,6 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 4,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 51230,
@@ -30000,15 +31488,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "292 g",
-    "verkaufspreis": "10 Hade",
+    "gewicht": "0,6 Pfd.",
+    "verkaufspreis": "70 Hade",
     "lebensraum": [],
     "klima": [
       "Warm",
       "Toxisch"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 2,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 51231,
@@ -30021,14 +31510,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,4 kg",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "2,8 Pfd.",
+    "verkaufspreis": "80 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 12
+    "stärke": 3,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 51232,
@@ -30041,14 +31531,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "767 g",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "1,5 Pfd.",
+    "verkaufspreis": "15 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 13
+    "stärke": 4,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 51233,
@@ -30061,14 +31552,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "852 g",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "1,7 Pfd.",
+    "verkaufspreis": "18 Hade",
     "lebensraum": [],
     "klima": [
       "Stürmisch"
     ],
-    "stärke": 1,
-    "sg": 13
+    "stärke": 2,
+    "sg": 13,
+    "wassersort": "süß"
   },
   {
     "id": 51234,
@@ -30081,14 +31573,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "883 g",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "1,8 Pfd.",
+    "verkaufspreis": "20 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 2,
-    "sg": 11
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 51235,
@@ -30101,14 +31594,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,6 kg",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "3,2 Pfd.",
+    "verkaufspreis": "300.000 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 7,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 51237,
@@ -30121,15 +31615,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,5 kg",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "3,0 Pfd.",
+    "verkaufspreis": "28 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Magisch"
     ],
-    "stärke": 4,
-    "sg": 12
+    "stärke": 3,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 51238,
@@ -30142,15 +31637,16 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "684 g",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "1,4 Pfd.",
+    "verkaufspreis": "30 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt",
       "Warm"
     ],
     "stärke": 3,
-    "sg": 10
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 51239,
@@ -30163,14 +31659,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "944 g",
-    "verkaufspreis": "8 Hade",
+    "gewicht": "1,9 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 5,
-    "sg": 11
+    "sg": 11,
+    "wassersort": "salz"
   },
   {
     "id": 51240,
@@ -30183,14 +31680,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,4 kg",
-    "verkaufspreis": "7 Hade",
+    "gewicht": "2,8 Pfd.",
+    "verkaufspreis": "38 Hade",
     "lebensraum": [],
     "klima": [
       "Kalt"
     ],
-    "stärke": 3,
-    "sg": 11
+    "stärke": 2,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 51241,
@@ -30203,14 +31701,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "863 g",
-    "verkaufspreis": "6 Hade",
+    "gewicht": "1,7 Pfd.",
+    "verkaufspreis": "40 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 12
+    "stärke": 2,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 51242,
@@ -30223,14 +31722,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "938 g",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "1,9 Pfd.",
+    "verkaufspreis": "45 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
     "stärke": 2,
-    "sg": 12
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 51243,
@@ -30243,14 +31743,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "682 g",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "1,4 Pfd.",
+    "verkaufspreis": "350.000 Hade",
     "lebensraum": [],
     "klima": [
       "Magisch"
     ],
-    "stärke": 3,
-    "sg": 12
+    "stärke": 8,
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 51244,
@@ -30263,14 +31764,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,4 kg",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "2,8 Pfd.",
+    "verkaufspreis": "55 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
     "stärke": 3,
-    "sg": 12
+    "sg": 12,
+    "wassersort": "süß"
   },
   {
     "id": 51245,
@@ -30283,14 +31785,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,6 kg",
-    "verkaufspreis": "4 Hade",
+    "gewicht": "3,2 Pfd.",
+    "verkaufspreis": "60 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 1,
-    "sg": 11
+    "stärke": 3,
+    "sg": 11,
+    "wassersort": "süß"
   },
   {
     "id": 51687,
@@ -30303,14 +31806,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "184 g",
-    "verkaufspreis": "5 Hade",
+    "gewicht": "0,4 Pfd.",
+    "verkaufspreis": "35 Hade",
     "lebensraum": [],
     "klima": [
       "Warm"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 3,
+    "sg": 10,
+    "wassersort": "salz"
   },
   {
     "id": 51246,
@@ -30323,14 +31827,15 @@ window.FISH_DB = [
       0
     ],
     "größenkategorie": "Klein",
-    "gewicht": "1,4 kg",
-    "verkaufspreis": "3 Hade",
+    "gewicht": "2,8 Pfd.",
+    "verkaufspreis": "500.000 Hade",
     "lebensraum": [],
     "klima": [
       "Gemäßigt"
     ],
-    "stärke": 1,
-    "sg": 10
+    "stärke": 8,
+    "sg": 10,
+    "wassersort": "süß"
   },
   {
     "id": 51247,
@@ -30343,13 +31848,14 @@ window.FISH_DB = [
       3
     ],
     "größenkategorie": "Riesig",
-    "gewicht": "489 kg",
-    "verkaufspreis": "2900 Hade",
+    "gewicht": "978 Pfd.",
+    "verkaufspreis": "35.000 Hade",
     "lebensraum": [],
     "klima": [
       "Schattenhaft"
     ],
-    "stärke": 16,
-    "sg": 31
+    "stärke": 13,
+    "sg": 31,
+    "wassersort": "salz"
   }
 ];

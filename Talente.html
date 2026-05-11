@@ -104,8 +104,8 @@ function FilterSidebar({ search, setSearch, filters, setFilters, allData, dragRe
     return { ...f, [key]: arr.includes(val) ? arr.filter(x => x !== val) : [...arr, val] };
   });
 
-  const reset = () => setFilters({ kategorien: [], rassen: [], nurOhneVoraussetzung: false });
-  const hasAny = (filters.kategorien || []).length > 0 || (filters.rassen || []).length > 0 || filters.nurOhneVoraussetzung;
+  const reset = () => setFilters({ kategorien: [], rassen: [], nurOhneVoraussetzung: false, sort:'name-az' });
+  const hasAny = (filters.kategorien || []).length > 0 || (filters.rassen || []).length > 0 || filters.nurOhneVoraussetzung || filters.sort !== 'name-az';
 
   return (
     <div ref={dragRef.ref} onMouseDown={dragRef.onMouseDown} onClickCapture={dragRef.onClickCapture} style={{ width:'var(--filter-w)', flexShrink:0, background:'rgba(8,6,20,0.6)', borderRight:'1px solid var(--border)', padding:'16px 14px 14px 24px', overflowY:'auto', display:'flex', flexDirection:'column', position:'relative', zIndex:10, cursor:'grab', ...dragRef.fadeStyle }}>
@@ -180,6 +180,25 @@ function FilterSidebar({ search, setSearch, filters, setFilters, allData, dragRe
             <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color: filters.nurOhneVoraussetzung ? '#f0eeff' : 'var(--silver)', letterSpacing:'0.03em' }}>Keine Voraussetzung</span>
           </button>
         </FilterGroup>
+      )}
+
+      <FilterGroup title="Sortierung" active={filters.sort !== 'name-az'} onReset={() => setFilters(f => ({...f, sort:'name-az'}))} collapsible>
+        <div style={{ display:'flex', flexDirection:'column', gap:'2px' }}>
+          {[['name-az','Name A – Z'],['name-za','Name Z – A'],['kategorie','Kategorie']].map(([id,label]) => (
+            <button key={id} className={`sort-btn${filters.sort===id?' active':''}`} onClick={() => setFilters(f => ({...f, sort:id}))}>{label}</button>
+          ))}
+        </div>
+      </FilterGroup>
+
+      {hasAny && (
+        <div style={{ marginTop:'auto', paddingTop:'14px', borderTop:'1px solid rgba(160,140,255,0.08)' }}>
+          <button onClick={reset}
+            style={{ width:'100%', padding:'6px', background:'rgba(200,60,60,0.08)', border:'1px solid rgba(200,60,60,0.25)', borderRadius:'2px', color:'rgba(230,90,90,0.65)', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.18em', cursor:'pointer', transition:'all 0.15s', textTransform:'uppercase' }}
+            onMouseEnter={e=>{e.currentTarget.style.background='rgba(200,60,60,0.18)';e.currentTarget.style.borderColor='rgba(230,90,90,0.5)';}}
+            onMouseLeave={e=>{e.currentTarget.style.background='rgba(200,60,60,0.08)';e.currentTarget.style.borderColor='rgba(200,60,60,0.25)';}}>
+            Filter löschen
+          </button>
+        </div>
       )}
     </div>
   );
@@ -302,14 +321,14 @@ function App() {
 
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState(allData[0] || null);
-  const [filters, setFilters] = useState({ kategorien: [], rassen: [], nurOhneVoraussetzung: false });
+  const [filters, setFilters] = useState({ kategorien: [], rassen: [], nurOhneVoraussetzung: false, sort:'name-az' });
   const [typeFilter, setTypeFilter] = useState(null);
 
   const sidebarDrag = useDragScroll({ vertical: true });
   const listDrag = useDragScroll({ vertical: true });
 
   const filtered = useMemo(() => {
-    return allData.filter(t => {
+    const r = allData.filter(t => {
       if (search && !t.name.toLowerCase().includes(search.toLowerCase()) && !(t.kurzbeschreibung||'').toLowerCase().includes(search.toLowerCase())) return false;
       if ((filters.kategorien||[]).length && !filters.kategorien.includes(t.kategorie)) return false;
       if ((filters.rassen||[]).length && !filters.rassen.includes(t.voraussetzung)) return false;
@@ -318,6 +337,12 @@ function App() {
       if (typeFilter === 'erlernbar' && t.angeboren) return false;
       return true;
     });
+    switch (filters.sort) {
+      case 'name-za':   r.sort((a,b) => b.name.localeCompare(a.name, 'de')); break;
+      case 'kategorie': r.sort((a,b) => (a.kategorie||'').localeCompare(b.kategorie||'', 'de') || a.name.localeCompare(b.name, 'de')); break;
+      default:          r.sort((a,b) => a.name.localeCompare(b.name, 'de')); break;
+    }
+    return r;
   }, [allData, search, filters, typeFilter]);
 
   useEffect(() => {

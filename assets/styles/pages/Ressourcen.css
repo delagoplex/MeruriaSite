@@ -26,10 +26,28 @@ html, body { overflow: hidden; }
   align-items: stretch;
   background: rgba(5,4,15,0.92);
   border-bottom: 1px solid rgba(38,198,218,0.1);
-  padding: 0 20px;
-  gap: 2px;
   position: relative;
   z-index: 20;
+}
+.res-tabbar-left {
+  width: var(--filter-w);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 14px 0 18px;
+  border-right: 1px solid var(--border-r);
+}
+.res-tabbar-count {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: rgba(38,198,218,0.38);
+  letter-spacing: 0.16em;
+}
+.res-tabbar-tabs {
+  display: flex;
+  align-items: stretch;
+  padding: 0 20px;
+  gap: 2px;
 }
 .res-tab {
   position: relative;
@@ -286,3 +304,130 @@ html, body { overflow: hidden; }
 
 .res-count { font-family: var(--font-mono); font-size: 9px; color: rgba(38,198,218,0.38); letter-spacing: 0.16em; margin-bottom: 10px; }
 .res-empty { text-align: center; padding: 80px 20px; color: rgba(38,198,218,0.22); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; }
+
+/* ── Fish Detail Modal ───────────────────────────────────── */
+.fish-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.72);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.15s ease;
+}
+.fish-modal {
+  position: relative;
+  display: flex;
+  width: min(840px, 92vw);
+  max-height: 84vh;
+  background: rgba(8,6,22,0.98);
+  border: 1px solid rgba(38,198,218,0.18);
+  border-radius: 6px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.75), 0 0 40px rgba(38,198,218,0.06);
+  overflow: hidden;
+}
+.fish-modal-close {
+  position: absolute;
+  top: 13px;
+  right: 14px;
+  background: none;
+  border: none;
+  color: rgba(200,190,240,0.32);
+  font-size: 13px;
+  cursor: pointer;
+  z-index: 1;
+  line-height: 1;
+  padding: 4px 6px;
+  transition: color 0.15s;
+}
+.fish-modal-close:hover { color: rgba(200,190,240,0.75); }
+.fish-modal-left {
+  flex: 1;
+  padding: 26px 24px 28px 28px;
+  overflow-y: auto;
+  border-right: 1px solid rgba(38,198,218,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+}
+.fish-modal-right {
+  width: 240px;
+  flex-shrink: 0;
+  padding: 26px 20px 24px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  background: rgba(4,3,14,0.5);
+}
+.fish-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 0;
+}
+.fish-modal-icon {
+  width: 68px;
+  height: 68px;
+  flex-shrink: 0;
+  border: 1px solid rgba(38,198,218,0.22);
+  border-radius: 4px;
+  background: rgba(0,0,0,0.5);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fish-modal-icon img {
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  display: block;
+}
+.fish-modal-name {
+  font-family: var(--font-display);
+  font-size: 17px;
+  letter-spacing: 0.07em;
+  color: #f0eeff;
+  line-height: 1.25;
+}
+.fish-modal-divider {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(38,198,218,0.22), transparent);
+  margin: 16px 0;
+}
+.fish-modal-label {
+  font-family: var(--font-mono);
+  font-size: 7.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(38,198,218,0.42);
+  margin-bottom: 7px;
+}
+.fish-modal-section { margin-bottom: 16px; }
+.fish-modal-section:last-child { margin-bottom: 0; }
+.fish-recipe-slot {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 10px 12px;
+  border: 1px solid rgba(38,198,218,0.07);
+  border-radius: 3px;
+  background: rgba(38,198,218,0.02);
+  margin-bottom: 8px;
+}
+.fish-recipe-icon {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border: 1px dashed rgba(38,198,218,0.14);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  color: rgba(38,198,218,0.12);
+  font-family: var(--font-mono);
+}
