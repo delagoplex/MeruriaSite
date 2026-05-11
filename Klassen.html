@@ -154,10 +154,10 @@ function KlasseCard({ klasse, onClick }) {
 
           {/* Resting state text */}
           <div style={{ position:'absolute', inset:0, zIndex:35, transform:'translateZ(4px)', display:'flex', flexDirection:'column', justifyContent:'flex-end', padding:'20px 18px', opacity:hov?0:1, transition:'opacity 0.35s ease' }}>
-            <h3 style={{ fontFamily:'var(--font-display)', fontSize:'15px', fontWeight:'400', letterSpacing:'0.16em', color:'#f0eeff', textShadow:hov?`0 0 18px ${accent}, 0 0 36px ${accent}88, 0 2px 16px rgba(0,0,0,1)`:'0 2px 16px rgba(0,0,0,1), 0 0 32px rgba(0,0,0,0.9)', textTransform:'uppercase', marginBottom:'3px', transition:'text-shadow 0.35s ease' }}>{klasse.name}</h3>
+            <h3 style={{ fontFamily:'var(--font-display)', fontSize:'15px', fontWeight:'400', letterSpacing:'0.16em', color:'var(--white)', textShadow:hov?`0 0 18px ${accent}, 0 0 36px ${accent}88, 0 2px 16px rgba(0,0,0,1)`:'0 2px 16px rgba(0,0,0,1), 0 0 32px rgba(0,0,0,0.9)', textTransform:'uppercase', marginBottom:'3px', transition:'text-shadow 0.35s ease' }}>{klasse.name}</h3>
             <div style={{ width:'50px', height:'1px', background:`linear-gradient(90deg,${accent}cc,transparent)`, animation:'pulse-glow 3s infinite', marginBottom:'6px' }} />
             <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:accent+'bb', textTransform:'uppercase', marginBottom:'6px', textShadow:'0 1px 8px rgba(0,0,0,1), 0 0 16px rgba(0,0,0,0.9)' }}>{klasse.rolle}</div>
-            <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'10px', lineHeight:1.75, color:'rgba(200,190,240,0.78)', letterSpacing:'0.03em', display:'-webkit-box', WebkitLineClamp:2, WebkitBoxOrient:'vertical', overflow:'hidden', textShadow:'0 1px 8px rgba(0,0,0,1), 0 0 16px rgba(0,0,0,0.9)' }}>{klasse.subtitle}</p>
+            <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'10px', lineHeight:1.75, color:'rgba(var(--text-rgb),0.78)', letterSpacing:'0.03em', display:'-webkit-box', WebkitLineClamp:2, WebkitBoxOrient:'vertical', overflow:'hidden', textShadow:'0 1px 8px rgba(0,0,0,1), 0 0 16px rgba(0,0,0,0.9)' }}>{klasse.subtitle}</p>
           </div>
 
           {/* Resting text gradient — fades out on hover */}
@@ -168,7 +168,7 @@ function KlasseCard({ klasse, onClick }) {
 
           {/* Hover name badge */}
           <div style={{ position:'absolute', bottom:'22px', left:'22px', zIndex:33, transform:'translateZ(10px)', opacity:hov?1:0, transition:'opacity 0.35s ease' }}>
-            <h3 style={{ fontFamily:'var(--font-display)', fontSize:'15px', fontWeight:'400', letterSpacing:'0.16em', color:'#f0eeff', textShadow:`0 0 24px ${accent}cc, 0 2px 8px rgba(0,0,0,0.9)`, textTransform:'uppercase' }}>{klasse.name}</h3>
+            <h3 style={{ fontFamily:'var(--font-display)', fontSize:'15px', fontWeight:'400', letterSpacing:'0.16em', color:'var(--white)', textShadow:`0 0 24px ${accent}cc, 0 2px 8px rgba(0,0,0,0.9)`, textTransform:'uppercase' }}>{klasse.name}</h3>
             <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em', color:accent+'bb', marginTop:'3px', display:'flex', flexDirection:'column', gap:'2px' }}>{klasse.fähigkeit.split(' · ').map((f,i)=><span key={i}>{f}</span>)}</div>
           </div>
 
@@ -191,7 +191,7 @@ function KlasseDetail({ klasse, onBack }) {
   const statRow = (label, val) => (
     <div style={{ display:'flex', flexDirection:'column', gap:'4px' }}>
       <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:accent+'66', letterSpacing:'0.25em', textTransform:'uppercase' }}>{label}</div>
-      <div style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', color:'rgba(240,238,255,0.75)', letterSpacing:'0.03em', lineHeight:1.5 }}>{val}</div>
+      <div style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', color:'rgba(var(--text-rgb),0.75)', letterSpacing:'0.03em', lineHeight:1.5 }}>{val}</div>
     </div>
   );
 
@@ -231,7 +231,7 @@ function KlasseDetail({ klasse, onBack }) {
         <div style={{ flex:1, padding:'44px 48px', overflowY:'auto', display:'flex', flexDirection:'column', gap:'28px' }}>
           <div style={s(0.1)}>
             <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.3em', color:accent+'88', textTransform:'uppercase', marginBottom:'8px' }}>Klasse</div>
-            <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(34px,4.5vw,60px)', fontWeight:'300', letterSpacing:'0.12em', color:'#f0eeff', lineHeight:1.1, textShadow:`0 0 36px ${accent}77` }}>{klasse.name}</h1>
+            <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(34px,4.5vw,60px)', fontWeight:'300', letterSpacing:'0.12em', color:'var(--white)', lineHeight:1.1, textShadow:`0 0 36px ${accent}77` }}>{klasse.name}</h1>
             <div style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'13px', letterSpacing:'0.25em', color:pal[3]+'bb', marginTop:'7px', textTransform:'uppercase' }}>{klasse.subtitle}</div>
           </div>
 
@@ -246,12 +246,12 @@ function KlasseDetail({ klasse, onBack }) {
 
           <div style={s(0.22)}>
             <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:accent+'77', marginBottom:'10px', textTransform:'uppercase' }}>Beschreibung</div>
-            <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'13px', lineHeight:1.85, color:'rgba(240,238,255,0.78)', letterSpacing:'0.015em' }}>{klasse.beschreibung}</p>
+            <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'13px', lineHeight:1.85, color:'rgba(var(--text-rgb),0.78)', letterSpacing:'0.015em' }}>{klasse.beschreibung}</p>
           </div>
 
           <div style={s(0.28)}>
             <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:accent+'77', marginBottom:'10px', textTransform:'uppercase' }}>Hintergrund</div>
-            <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:1.85, color:'rgba(240,238,255,0.55)', letterSpacing:'0.015em', fontStyle:'italic', borderLeft:`1px solid ${accent}33`, paddingLeft:'14px' }}>{klasse.lore}</p>
+            <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:1.85, color:'rgba(var(--text-rgb),0.55)', letterSpacing:'0.015em', fontStyle:'italic', borderLeft:`1px solid ${accent}33`, paddingLeft:'14px' }}>{klasse.lore}</p>
           </div>
 
           {/* Stats grid */}
@@ -297,7 +297,7 @@ function SectionHeading({ title, subtitle, accentColor }) {
   return (
     <div className="reveal-left" style={{ marginBottom:'8px' }}>
       {subtitle && <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:col+'77', textTransform:'uppercase', marginBottom:'6px' }}>{subtitle}</div>}
-      <h2 style={{ fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:'300', letterSpacing:'0.18em', color:'#f0eeff', textShadow:`0 0 24px ${col}44` }}>{title}</h2>
+      <h2 style={{ fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:'300', letterSpacing:'0.18em', color:'var(--white)', textShadow:`0 0 24px ${col}44` }}>{title}</h2>
       <div style={{ width:'50px', height:'1px', background:`linear-gradient(90deg,${col}99,transparent)`, marginTop:'10px', animation:'pulse-glow 3s infinite' }} />
     </div>
   );
@@ -332,13 +332,13 @@ function TOCSidebar({ navHeight, headerBottom, cols }) {
   }
 
   return (
-    <aside ref={asideRef} style={{ width:'var(--sidebar-w)', flexShrink:0, position:'fixed', top:`275px`, left:0, height:`calc(100vh - ${navHeight}px)`, borderRight:'1px solid rgba(160,140,255,0.1)', padding:'28px 0', background:'rgba(5,4,15,0.85)', backdropFilter:'blur(12px)', zIndex:50, overflowY:'auto' }}>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:'rgba(160,140,255,0.4)', textTransform:'uppercase', padding:'0 20px', marginBottom:'4px' }}>Klassen</div>
+    <aside ref={asideRef} style={{ width:'var(--sidebar-w)', flexShrink:0, position:'fixed', top:`275px`, left:0, height:`calc(100vh - ${navHeight}px)`, borderRight:'1px solid rgba(var(--accent-rgb),0.1)', padding:'28px 0', background:'rgba(var(--bg-rgb),0.85)', backdropFilter:'blur(12px)', zIndex:50, overflowY:'auto' }}>
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:'rgba(var(--accent-rgb),0.4)', textTransform:'uppercase', padding:'0 20px', marginBottom:'4px' }}>Klassen</div>
       {entries.map(entry => (
         <button key={entry.id} onClick={()=>scrollTo(entry.id)}
-          style={{ display:'flex', alignItems:'flex-start', gap:'8px', width:'100%', textAlign:'left', padding:'7px 20px', background:'transparent', border:'none', cursor:'pointer', fontFamily:'var(--font-body)', fontWeight:'400', fontSize:'11px', letterSpacing:'0.1em', fontVariant:'small-caps', color:entry.isSection?'rgba(200,190,240,0.75)':'rgba(200,190,240,0.6)', borderLeft:'2px solid transparent', transition:'all 0.15s', lineHeight:1.55 }}
-          onMouseEnter={e=>{ e.currentTarget.style.color='#f0eeff'; e.currentTarget.style.borderLeftColor='rgba(124,77,255,0.6)'; e.currentTarget.style.background='rgba(124,77,255,0.06)'; }}
-          onMouseLeave={e=>{ e.currentTarget.style.color=entry.isSection?'rgba(200,190,240,0.75)':'rgba(200,190,240,0.6)'; e.currentTarget.style.borderLeftColor='transparent'; e.currentTarget.style.background='transparent'; }}>
+          style={{ display:'flex', alignItems:'flex-start', gap:'8px', width:'100%', textAlign:'left', padding:'7px 20px', background:'transparent', border:'none', cursor:'pointer', fontFamily:'var(--font-body)', fontWeight:'400', fontSize:'11px', letterSpacing:'0.1em', fontVariant:'small-caps', color:entry.isSection?'rgba(var(--text-rgb),0.75)':'rgba(var(--text-rgb),0.6)', borderLeft:'2px solid transparent', transition:'all 0.15s', lineHeight:1.55 }}
+          onMouseEnter={e=>{ e.currentTarget.style.color='var(--white)'; e.currentTarget.style.borderLeftColor='rgba(124,77,255,0.6)'; e.currentTarget.style.background='rgba(124,77,255,0.06)'; }}
+          onMouseLeave={e=>{ e.currentTarget.style.color=entry.isSection?'rgba(var(--text-rgb),0.75)':'rgba(var(--text-rgb),0.6)'; e.currentTarget.style.borderLeftColor='transparent'; e.currentTarget.style.background='transparent'; }}>
           <OctSvg size={entry.isSection?6:4} color={entry.isSection?'rgba(124,77,255,0.6)':'rgba(124,77,255,0.3)'} fill={entry.isSection?'rgba(124,77,255,0.3)':'transparent'} strokeWidth={1} style={{ flexShrink:0, marginTop:'3px' }} />
           <span style={{ display:'block', minWidth:0, wordBreak:'normal', overflowWrap:'anywhere', fontWeight:entry.isSection?'500':'400' }}>{entry.label}</span>
         </button>
@@ -408,8 +408,8 @@ function App() {
 
           {/* Page title */}
           <div style={{ marginBottom:'32px' }}>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:'rgba(160,140,255,0.4)', textTransform:'uppercase', marginBottom:'6px' }}>Charaktererstellung</div>
-            <h1 className="reveal-left" style={{ fontFamily:'var(--font-display)', fontSize:'42px', fontWeight:'300', letterSpacing:'0.18em', color:'#f0eeff', textShadow:'0 0 30px rgba(124,77,255,0.35)' }}>Klassen</h1>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:'rgba(var(--accent-rgb),0.4)', textTransform:'uppercase', marginBottom:'6px' }}>Charaktererstellung</div>
+            <h1 className="reveal-left" style={{ fontFamily:'var(--font-display)', fontSize:'42px', fontWeight:'300', letterSpacing:'0.18em', color:'var(--white)', textShadow:'0 0 30px rgba(124,77,255,0.35)' }}>Klassen</h1>
             <div style={{ display:'flex', alignItems:'center', gap:'8px', marginTop:'12px' }}>
               <div style={{ width:'50px', height:'1px', background:'linear-gradient(90deg,rgba(124,77,255,0.8),transparent)', animation:'pulse-glow 3s infinite' }} />
               <OctSvg size={8} color="rgba(124,77,255,0.5)" fill="rgba(124,77,255,0.2)" strokeWidth={1} />

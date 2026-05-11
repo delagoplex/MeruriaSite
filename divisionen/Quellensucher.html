@@ -132,7 +132,7 @@ function TOCSidebar({ navHeight, headerBottom }) {
         return (
           <button key={entry.id} onClick={() => scrollTo(entry.id)}
             style={{ display:'flex', alignItems:'flex-start', gap:'8px', width:'100%', textAlign:'left', padding: entry.indent ? '6px 20px 6px 28px' : '8px 20px', background: isActive ? `${ACCENT}0e` : 'transparent', border:'none', borderLeft: isActive ? `2px solid ${ACCENT}` : '2px solid transparent', cursor:'pointer', fontFamily:'var(--font-body)', fontWeight: entry.indent ? '300' : '400', fontSize:'11px', letterSpacing:'0.1em', fontVariant:'small-caps', color: isActive ? ACCENT : entry.indent ? 'rgba(140,230,240,0.45)' : 'rgba(160,235,242,0.65)', transition:'all 0.15s', lineHeight:1.55 }}
-            onMouseEnter={e => { if (!isActive) { e.currentTarget.style.color='#f0eeff'; e.currentTarget.style.borderLeftColor=`${ACCENT}55`; e.currentTarget.style.background=`${ACCENT}07`; }}}
+            onMouseEnter={e => { if (!isActive) { e.currentTarget.style.color='var(--white)'; e.currentTarget.style.borderLeftColor=`${ACCENT}55`; e.currentTarget.style.background=`${ACCENT}07`; }}}
             onMouseLeave={e => { if (!isActive) { e.currentTarget.style.color = entry.indent ? 'rgba(255,200,190,0.45)' : 'rgba(255,210,200,0.65)'; e.currentTarget.style.borderLeftColor='transparent'; e.currentTarget.style.background='transparent'; }}}>
             <OctSvg size={entry.indent ? 4 : 6} color={isActive ? ACCENT : `${ACCENT}44`} fill={isActive ? `${ACCENT}44` : 'transparent'} strokeWidth={1} style={{ flexShrink:0, marginTop:'3px' }} />
             <span style={{ display:'block', minWidth:0 }}>{entry.label}</span>
@@ -191,7 +191,7 @@ function DivisionPage({ division, heroRef }) {
         {/* Text — right aligned */}
         <div style={{ position:'absolute', bottom:0, left:0, right:0, padding:'32px 40px', background:`linear-gradient(to top, ${pal[0]}f0 0%, ${pal[0]}88 55%, transparent 100%)`, zIndex:5, textAlign:'right' }}>
           <div className="reveal-left" style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.32em', color:`${accent}77`, textTransform:'uppercase', marginBottom:'7px' }}>Division {division.nummer} · {division.subtitle}</div>
-          <h1 className="reveal-left" style={{ fontFamily:'var(--font-display)', fontSize:'clamp(32px,4vw,54px)', fontWeight:'300', letterSpacing:'0.16em', color:'#f0eeff', textShadow:`0 0 50px ${accent}44, 0 0 100px ${accent}1e`, lineHeight:1.1 }}>{division.name}</h1>
+          <h1 className="reveal-left" style={{ fontFamily:'var(--font-display)', fontSize:'clamp(32px,4vw,54px)', fontWeight:'300', letterSpacing:'0.16em', color:'var(--white)', textShadow:`0 0 50px ${accent}44, 0 0 100px ${accent}1e`, lineHeight:1.1 }}>{division.name}</h1>
           <div className="reveal-left" style={{ display:'flex', alignItems:'center', gap:'8px', marginTop:'12px', justifyContent:'flex-end' }}>
             <div style={{ width:'24px', height:'1px', background:`linear-gradient(270deg, ${accent}44, transparent)` }} />
             <svg width="8" height="8" viewBox="0 0 8 8"><polygon points={hexPoints(8)} fill={`${accent}55`} stroke={accent} strokeWidth="0.8" /></svg>
@@ -217,7 +217,7 @@ function DivisionPage({ division, heroRef }) {
         {/* Beschreibung */}
         <section id="beschreibung" className="div-section">
           <SectionBanner label="Beschreibung" accent={accent} />
-          <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'14px', lineHeight:1.9, color:'rgba(240,238,255,0.78)', letterSpacing:'0.02em', textWrap:'pretty', borderLeft:`1px solid ${accent}22`, paddingLeft:'16px' }}>
+          <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'14px', lineHeight:1.9, color:'rgba(var(--text-rgb),0.78)', letterSpacing:'0.02em', textWrap:'pretty', borderLeft:`1px solid ${accent}22`, paddingLeft:'16px' }}>
             {division.beschreibung}
           </p>
         </section>
@@ -260,7 +260,7 @@ function DivisionPage({ division, heroRef }) {
                   <div style={{ flex:1, padding:'12px 18px', position:'relative' }}>
                     <div style={{ position:'absolute', left:0, top:0, bottom:0, width:barW, background:`linear-gradient(90deg, ${accent}${isTop?'10':'07'}, transparent)`, pointerEvents:'none' }} />
                     <div style={{ position:'relative', zIndex:1, display:'flex', alignItems:'baseline', gap:'12px', flexWrap:'wrap' }}>
-                      <span style={{ fontFamily:'var(--font-display)', fontSize:'13px', fontWeight:'400', letterSpacing:'0.14em', color:`rgba(240,238,255,${dimAlpha+0.1})`, textTransform:'uppercase', flexShrink:0 }}>{r.titel}</span>
+                      <span style={{ fontFamily:'var(--font-display)', fontSize:'13px', fontWeight:'400', letterSpacing:'0.14em', color:`rgba(var(--text-rgb),${dimAlpha+0.1})`, textTransform:'uppercase', flexShrink:0 }}>{r.titel}</span>
                       <span style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:1.7, color:`rgba(195,240,245,${dimAlpha})`, letterSpacing:'0.01em' }}>{r.beschreibung}</span>
                     </div>
                   </div>

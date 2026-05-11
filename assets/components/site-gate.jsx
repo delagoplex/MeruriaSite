@@ -56,7 +56,7 @@ function SitePasswordForm({ onUnlock }) {
                 padding:'10px 16px', width:'220px',
                 background:'rgba(80,160,220,0.05)',
                 border:`1px solid ${error ? 'rgba(220,80,80,0.6)' : 'rgba(80,160,220,0.25)'}`,
-                borderRadius:'3px', color:'#f0eeff', outline:'none',
+                borderRadius:'3px', color:'var(--white)', outline:'none',
                 transition:'border-color 0.2s', textAlign:'center'
               }}
               onFocus={e => { if (!error) e.target.style.borderColor = 'rgba(80,160,220,0.55)'; }}
@@ -75,7 +75,7 @@ function SitePasswordForm({ onUnlock }) {
             color:'rgba(150,200,240,0.75)', cursor:'pointer', textTransform:'uppercase',
             transition:'all 0.15s'
           }}
-            onMouseEnter={e => { e.currentTarget.style.background='rgba(80,160,220,0.2)'; e.currentTarget.style.borderColor='rgba(80,160,220,0.6)'; e.currentTarget.style.color='#f0eeff'; }}
+            onMouseEnter={e => { e.currentTarget.style.background='rgba(80,160,220,0.2)'; e.currentTarget.style.borderColor='rgba(80,160,220,0.6)'; e.currentTarget.style.color='var(--white)'; }}
             onMouseLeave={e => { e.currentTarget.style.background='rgba(80,160,220,0.1)'; e.currentTarget.style.borderColor='rgba(80,160,220,0.3)'; e.currentTarget.style.color='rgba(150,200,240,0.75)'; }}>
             Eintreten
           </button>

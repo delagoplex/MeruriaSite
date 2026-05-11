@@ -154,7 +154,7 @@ function FishCard({ fish }) {
 function Chip({ label, active, onClick, accentColor }) {
   const cls = ['filter-chip', active ? (accentColor ? 'active-klima' : 'active') : ''].filter(Boolean).join(' ');
   const style = accentColor && active
-    ? { borderColor: accentColor+'77', background: accentColor+'1a', color:'#f0eeff' }
+    ? { borderColor: accentColor+'77', background: accentColor+'1a', color:'var(--white)' }
     : accentColor
     ? { borderColor: accentColor+'33', color: accentColor+'cc' }
     : {};
@@ -198,7 +198,7 @@ function FilterSidebar({ filters, setFilters, total, filtered }) {
           <line x1="8" y1="8" x2="11" y2="11" stroke="rgba(38,198,218,1)" strokeWidth="1.2"/>
         </svg>
         {filters.search && (
-          <button onClick={() => set('search','')} style={{ position:'absolute', right:'8px', top:'50%', transform:'translateY(-50%)', background:'none', border:'none', color:'rgba(200,190,240,0.5)', cursor:'pointer', padding:'0', fontSize:'10px', lineHeight:1 }}>✕</button>
+          <button onClick={() => set('search','')} style={{ position:'absolute', right:'8px', top:'50%', transform:'translateY(-50%)', background:'none', border:'none', color:'rgba(var(--text-rgb),0.5)', cursor:'pointer', padding:'0', fontSize:'10px', lineHeight:1 }}>✕</button>
         )}
       </div>
 
@@ -320,7 +320,7 @@ function App() {
           {/* Page title */}
           <div style={{ marginBottom:'22px' }}>
             <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:'rgba(38,198,218,0.35)', textTransform:'uppercase', marginBottom:'5px' }}>Ressourcen</div>
-            <h1 style={{ fontFamily:'var(--font-display)', fontSize:'32px', fontWeight:'300', letterSpacing:'0.18em', color:'#f0eeff', textShadow:'0 0 28px rgba(38,198,218,0.3)', lineHeight:1 }}>Fischverzeichnis</h1>
+            <h1 style={{ fontFamily:'var(--font-display)', fontSize:'32px', fontWeight:'300', letterSpacing:'0.18em', color:'var(--white)', textShadow:'0 0 28px rgba(38,198,218,0.3)', lineHeight:1 }}>Fischverzeichnis</h1>
             <div style={{ display:'flex', alignItems:'center', gap:'8px', marginTop:'8px' }}>
               <div style={{ width:'38px', height:'1px', background:'linear-gradient(90deg,rgba(38,198,218,0.65),transparent)', animation:'pulse-glow 3s infinite' }} />
               <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.18em', color:'rgba(38,198,218,0.3)' }}>{filtered.length} Einträge</span>

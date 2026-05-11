@@ -1,9 +1,9 @@
 :root {
   --bg2: #0a0820;
-  --border: rgba(160,140,255,0.13);
+  --border: rgba(var(--accent-rgb),0.13);
   --purple: #7c4dff;
   --purple-dim: rgba(124,77,255,0.12);
-  --muted: rgba(200,190,240,0.45);
+  --muted: rgba(var(--text-rgb),0.45);
   --nav-h: 52px;
   --filter-w: 220px;
   --gold: #7c4dff;
@@ -30,4 +30,9 @@ html, body { overflow: hidden; }
   border-radius: 2px;
   text-transform: uppercase;
   white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  html, body { overflow: auto !important; }
+  #root { height: auto !important; min-height: 100svh; }
 }

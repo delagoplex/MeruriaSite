@@ -78,7 +78,7 @@ const alpha = (c, a) => c.replace(')', ` / ${a})`);
 function Chip({ label, active, onClick, color }) {
   const c = color || 'var(--purple)';
   return (
-    <button onClick={onClick} style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.15em', padding:'0 10px', height:'16px', border:`1px solid ${active ? c : 'rgba(160,140,255,0.18)'}`, background: active ? c + '22' : 'transparent', color: active ? '#f0eeff' : 'var(--muted)', cursor:'pointer', borderRadius:'2px', transition:'all 0.15s', textTransform:'uppercase', whiteSpace:'nowrap', flexShrink:0, display:'flex', alignItems:'center' }}>
+    <button onClick={onClick} style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.15em', padding:'0 10px', height:'16px', border:`1px solid ${active ? c : 'rgba(var(--accent-rgb),0.18)'}`, background: active ? c + '22' : 'transparent', color: active ? 'var(--white)' : 'var(--muted)', cursor:'pointer', borderRadius:'2px', transition:'all 0.15s', textTransform:'uppercase', whiteSpace:'nowrap', flexShrink:0, display:'flex', alignItems:'center' }}>
       {label}
     </button>
   );
@@ -105,16 +105,16 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch, dragRe
   const hasAny = filters.schule.length || filters.grad.length || filters.klassen.length || filters.komponenten.length || filters.konzentration !== null || filters.ritual !== null || filters.zeitaufwand.length || filters.sort !== 'grad-asc';
 
   return (
-    <div ref={dragRef.ref} onMouseDown={dragRef.onMouseDown} onClickCapture={dragRef.onClickCapture} style={{ width:'var(--filter-w)', flexShrink:0, background:'rgba(8,6,20,0.6)', borderRight:'1px solid var(--border)', padding:'16px 14px 14px 24px', overflowY:'auto', display:'flex', flexDirection:'column', position:'relative', zIndex:10, cursor:'grab', ...dragRef.fadeStyle }}>
+    <div ref={dragRef.ref} onMouseDown={dragRef.onMouseDown} onClickCapture={dragRef.onClickCapture} style={{ width:'var(--filter-w)', flexShrink:0, background:'rgba(var(--bg2-rgb),0.6)', borderRight:'1px solid var(--border)', padding:'16px 14px 14px 24px', overflowY:'auto', display:'flex', flexDirection:'column', position:'relative', zIndex:10, cursor:'grab', ...dragRef.fadeStyle }}>
       {/* Search inside sidebar */}
       <div style={{ position:'relative', marginBottom:'14px' }}>
-        <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Zauber suchen…" style={{ fontFamily:'var(--font-body)', fontSize:'11.5px', fontWeight:'300', padding:'6px 10px 6px 28px', background:'rgba(124,77,255,0.06)', border:'1px solid rgba(160,140,255,0.18)', borderRadius:'3px', color:'#f0eeff', outline:'none', width:'100%', letterSpacing:'0.03em', transition:'border-color 0.2s' }}
+        <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Zauber suchen…" style={{ fontFamily:'var(--font-body)', fontSize:'11.5px', fontWeight:'300', padding:'6px 10px 6px 28px', background:'rgba(124,77,255,0.06)', border:'1px solid rgba(var(--accent-rgb),0.18)', borderRadius:'3px', color:'var(--white)', outline:'none', width:'100%', letterSpacing:'0.03em', transition:'border-color 0.2s' }}
           onFocus={e => e.target.style.borderColor='rgba(124,77,255,0.5)'}
-          onBlur={e => e.target.style.borderColor='rgba(160,140,255,0.18)'} />
-        <svg style={{ position:'absolute', left:'8px', top:'50%', transform:'translateY(-50%)', opacity:0.35, pointerEvents:'none' }} width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="5" cy="5" r="3.5" stroke="rgba(160,140,255,1)" strokeWidth="1.2"/><line x1="8" y1="8" x2="11" y2="11" stroke="rgba(160,140,255,1)" strokeWidth="1.2"/></svg>
+          onBlur={e => e.target.style.borderColor='rgba(var(--accent-rgb),0.18)'} />
+        <svg style={{ position:'absolute', left:'8px', top:'50%', transform:'translateY(-50%)', opacity:0.35, pointerEvents:'none' }} width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="5" cy="5" r="3.5" stroke="rgba(var(--accent-rgb),1)" strokeWidth="1.2"/><line x1="8" y1="8" x2="11" y2="11" stroke="rgba(var(--accent-rgb),1)" strokeWidth="1.2"/></svg>
       </div>
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'18px' }}>
-        <div style={{ fontFamily:'var(--font-display)', fontSize:'10px', letterSpacing:'0.25em', color:'rgba(200,192,255,0.7)', textTransform:'uppercase' }}>Filter</div>
+        <div style={{ fontFamily:'var(--font-display)', fontSize:'10px', letterSpacing:'0.25em', color:'rgba(var(--text-rgb),0.7)', textTransform:'uppercase' }}>Filter</div>
         {hasAny && <XBtn onClick={reset} />}
       </div>
 
@@ -123,7 +123,7 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch, dragRe
           {schools.map(s => (
             <button key={s} onClick={() => toggle('schule', s)} style={{ display:'flex', alignItems:'center', gap:'7px', padding:'5px 7px', background: filters.schule.includes(s) ? 'rgba(124,77,255,0.12)' : 'transparent', border:`1px solid ${filters.schule.includes(s) ? schoolColor(s)+'66' : 'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', textAlign:'left' }}>
               <OctSvg size={8} color={schoolColor(s)} fill={filters.schule.includes(s) ? schoolColor(s) : 'none'} strokeWidth={1.2} opacity={filters.schule.includes(s) ? 1 : 0.45} />
-              <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color: filters.schule.includes(s) ? '#f0eeff' : 'var(--silver)', letterSpacing:'0.03em' }}>{s}</span>
+              <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color: filters.schule.includes(s) ? 'var(--white)' : 'var(--silver)', letterSpacing:'0.03em' }}>{s}</span>
             </button>
           ))}
         </div>
@@ -142,7 +142,7 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch, dragRe
           {classes.map(c => (
             <button key={c} onClick={() => toggle('klassen', c)} style={{ display:'flex', alignItems:'center', gap:'7px', padding:'5px 7px', background: filters.klassen.includes(c) ? 'rgba(124,77,255,0.12)' : 'transparent', border:`1px solid ${filters.klassen.includes(c) ? 'rgba(124,77,255,0.4)' : 'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', textAlign:'left' }}>
               <OctSvg size={6} color={filters.klassen.includes(c) ? 'rgba(124,77,255,0.9)' : 'rgba(124,77,255,0.5)'} fill={filters.klassen.includes(c) ? 'rgba(124,77,255,0.5)' : 'rgba(124,77,255,0.25)'} strokeWidth={1} />
-              <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color: filters.klassen.includes(c) ? '#f0eeff' : 'var(--silver)', letterSpacing:'0.03em' }}>{c}</span>
+              <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color: filters.klassen.includes(c) ? 'var(--white)' : 'var(--silver)', letterSpacing:'0.03em' }}>{c}</span>
             </button>
           ))}
         </div>
@@ -161,7 +161,7 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch, dragRe
           {zeitaufwaende.map(z => (
             <button key={z} onClick={() => toggle('zeitaufwand', z)} style={{ display:'flex', alignItems:'center', gap:'7px', padding:'5px 7px', background: filters.zeitaufwand.includes(z) ? 'rgba(124,77,255,0.12)' : 'transparent', border:`1px solid ${filters.zeitaufwand.includes(z) ? 'rgba(124,77,255,0.4)' : 'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', textAlign:'left' }}>
               <OctSvg size={6} color={filters.zeitaufwand.includes(z) ? 'rgba(124,77,255,0.9)' : 'rgba(124,77,255,0.5)'} fill={filters.zeitaufwand.includes(z) ? 'rgba(124,77,255,0.5)' : 'rgba(124,77,255,0.25)'} strokeWidth={1} />
-              <span style={{ fontFamily:'var(--font-body)', fontSize:'10.5px', fontWeight:'300', color: filters.zeitaufwand.includes(z) ? '#f0eeff' : 'var(--silver)', letterSpacing:'0.03em' }}>{z}</span>
+              <span style={{ fontFamily:'var(--font-body)', fontSize:'10.5px', fontWeight:'300', color: filters.zeitaufwand.includes(z) ? 'var(--white)' : 'var(--silver)', letterSpacing:'0.03em' }}>{z}</span>
             </button>
           ))}
         </div>
@@ -176,14 +176,14 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch, dragRe
             const isTrue = val === true;
             const isFalse = val === false;
             const boxBg = isTrue ? 'rgba(60,180,90,0.15)' : isFalse ? 'rgba(200,60,60,0.12)' : 'transparent';
-            const boxBorder = isTrue ? 'rgba(60,200,90,0.5)' : isFalse ? 'rgba(220,80,80,0.5)' : 'rgba(160,140,255,0.2)';
+            const boxBorder = isTrue ? 'rgba(60,200,90,0.5)' : isFalse ? 'rgba(220,80,80,0.5)' : 'rgba(var(--accent-rgb),0.2)';
             const icon = isTrue ? '✓' : isFalse ? '✕' : '';
             const iconColor = isTrue ? 'rgba(80,220,110,0.9)' : isFalse ? 'rgba(230,90,90,0.9)' : 'transparent';
             return (
               <button key={key} onClick={() => setFilters(f => ({ ...f, [key]: next }))} style={{ display:'flex', alignItems:'center', gap:'8px', padding:'5px 7px', background: val !== null ? (isTrue ? 'rgba(60,180,90,0.07)' : 'rgba(200,60,60,0.07)') : 'transparent', border:`1px solid ${val !== null ? boxBorder : 'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.18s', textAlign:'left', width:'100%' }}>
                 <div style={{ width:'14px', height:'14px', border:`1px solid ${boxBorder}`, borderRadius:'2px', background: boxBg, flexShrink:0, display:'flex', alignItems:'center', justifyContent:'center', transition:'all 0.18s', fontSize:'9px', color: iconColor, fontFamily:'var(--font-mono)' }}>{icon}</div>
-                <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color: val !== null ? '#f0eeff' : 'var(--silver)', letterSpacing:'0.03em', flex:1 }}>{label}</span>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.1em', color: isTrue ? 'rgba(80,220,110,0.6)' : isFalse ? 'rgba(230,90,90,0.6)' : 'rgba(160,140,255,0.25)', transition:'color 0.18s' }}>{isTrue ? 'JA' : isFalse ? 'NEIN' : '—'}</span>
+                <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color: val !== null ? 'var(--white)' : 'var(--silver)', letterSpacing:'0.03em', flex:1 }}>{label}</span>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.1em', color: isTrue ? 'rgba(80,220,110,0.6)' : isFalse ? 'rgba(230,90,90,0.6)' : 'rgba(var(--accent-rgb),0.25)', transition:'color 0.18s' }}>{isTrue ? 'JA' : isFalse ? 'NEIN' : '—'}</span>
               </button>
             );
           })}
@@ -199,7 +199,7 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch, dragRe
       </FilterGroup>
 
       {hasAny && (
-        <div style={{ marginTop:'auto', paddingTop:'14px', borderTop:'1px solid rgba(160,140,255,0.08)' }}>
+        <div style={{ marginTop:'auto', paddingTop:'14px', borderTop:'1px solid rgba(var(--accent-rgb),0.08)' }}>
           <button onClick={reset}
             style={{ width:'100%', padding:'6px', background:'rgba(200,60,60,0.08)', border:'1px solid rgba(200,60,60,0.25)', borderRadius:'2px', color:'rgba(230,90,90,0.65)', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.18em', cursor:'pointer', transition:'all 0.15s', textTransform:'uppercase' }}
             onMouseEnter={e=>{e.currentTarget.style.background='rgba(200,60,60,0.18)';e.currentTarget.style.borderColor='rgba(230,90,90,0.5)';}}
@@ -216,21 +216,21 @@ function FilterSidebar({ filters, setFilters, allData, search, setSearch, dragRe
 function SpellRow({ zauber, active, onClick, compact }) {
   const sc = schoolColor(zauber.schule);
   return (
-    <div onClick={() => onClick(zauber)} style={{ display:'flex', alignItems:'center', gap:'10px', padding: compact ? '7px 12px' : '10px 12px', cursor:'pointer', borderBottom:'1px solid rgba(160,140,255,0.06)', background: active ? 'rgba(124,77,255,0.12)' : 'transparent', borderLeft: active ? `2px solid ${sc}` : '2px solid transparent', transition:'all 0.15s' }}
+    <div onClick={() => onClick(zauber)} style={{ display:'flex', alignItems:'center', gap:'10px', padding: compact ? '7px 12px' : '10px 12px', cursor:'pointer', borderBottom:'1px solid rgba(var(--accent-rgb),0.06)', background: active ? 'rgba(124,77,255,0.12)' : 'transparent', borderLeft: active ? `2px solid ${sc}` : '2px solid transparent', transition:'all 0.15s' }}
       onMouseEnter={e => { if (!active) { e.currentTarget.style.background='rgba(124,77,255,0.06)'; e.currentTarget.style.borderLeftColor=alpha(sc, 0.33); } }}
       onMouseLeave={e => { if (!active) { e.currentTarget.style.background='transparent'; e.currentTarget.style.borderLeftColor='transparent'; } }}>
       {/* Grade badge */}
-      <div style={{ width:'22px', height:'22px', borderRadius:'2px', background: active ? alpha(sc, 0.22) : 'rgba(124,77,255,0.1)', border:`1px solid ${active ? alpha(sc, 0.5) : 'rgba(160,140,255,0.28)'}`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, transition:'all 0.15s' }}>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color: active ? '#f0eeff' : 'var(--silver)', fontWeight:'400' }}>{zauber.grad}</span>
+      <div style={{ width:'22px', height:'22px', borderRadius:'2px', background: active ? alpha(sc, 0.22) : 'rgba(124,77,255,0.1)', border:`1px solid ${active ? alpha(sc, 0.5) : 'rgba(var(--accent-rgb),0.28)'}`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, transition:'all 0.15s' }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color: active ? 'var(--white)' : 'var(--silver)', fontWeight:'400' }}>{zauber.grad}</span>
       </div>
       {/* Name + school */}
       <div style={{ flex:1, minWidth:0 }}>
-        <div style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight: active ? '400' : '300', color: active ? '#f0eeff' : 'rgba(220,212,255,0.85)', letterSpacing:'0.03em', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{zauber.name}</div>
+        <div style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight: active ? '400' : '300', color: active ? 'var(--white)' : 'rgba(var(--text-rgb),0.85)', letterSpacing:'0.03em', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{zauber.name}</div>
         {!compact && <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', color: sc, letterSpacing:'0.18em', marginTop:'1px', opacity:0.75 }}>{zauber.schule}</div>}
       </div>
       {/* Badges */}
       <div style={{ display:'flex', gap:'3px', flexShrink:0 }}>
-        {zauber.konzentration && <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.1em', padding:'2px 5px', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.2)', borderRadius:'2px', color:'rgba(160,140,255,0.6)' }}>K</div>}
+        {zauber.konzentration && <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.1em', padding:'2px 5px', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.2)', borderRadius:'2px', color:'rgba(var(--accent-rgb),0.6)' }}>K</div>}
         {zauber.ritual && <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.1em', padding:'2px 5px', background:'rgba(100,200,120,0.08)', border:'1px solid rgba(100,200,120,0.2)', borderRadius:'2px', color:'rgba(120,200,140,0.6)' }}>R</div>}
       </div>
     </div>
@@ -240,17 +240,17 @@ function SpellRow({ zauber, active, onClick, compact }) {
 // ─── DESCRIPTION BLOCK ────────────────────────────────────────────────────────
 function DescBlock({ item }) {
   if (typeof item === 'string') {
-    return <p style={{ fontFamily:'var(--font-body)', fontSize:'12.5px', fontWeight:'300', lineHeight:1.82, color:'rgba(220,212,255,0.8)', letterSpacing:'0.015em', marginBottom:'10px', textWrap:'pretty' }}>{item}</p>;
+    return <p style={{ fontFamily:'var(--font-body)', fontSize:'12.5px', fontWeight:'300', lineHeight:1.82, color:'rgba(var(--text-rgb),0.8)', letterSpacing:'0.015em', marginBottom:'10px', textWrap:'pretty' }}>{item}</p>;
   }
   if (item && item.typ === 'tabelle') {
     return (
       <div style={{ marginBottom:'14px', overflowX:'auto' }}>
-        {item.titel && <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:'rgba(160,140,255,0.55)', textTransform:'uppercase', marginBottom:'6px' }}>{item.titel}</div>}
+        {item.titel && <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),0.55)', textTransform:'uppercase', marginBottom:'6px' }}>{item.titel}</div>}
         <table style={{ width:'100%', borderCollapse:'collapse', fontFamily:'var(--font-body)', fontSize:'11.5px' }}>
           <thead>
             <tr>
               {item.spalten.map((col, i) => (
-                <th key={i} style={{ padding:'6px 10px', textAlign: i === item.spalten.length-1 ? 'center' : 'left', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.18em', color:'rgba(160,140,255,0.65)', fontWeight:'400', textTransform:'uppercase', borderBottom:'1px solid rgba(160,140,255,0.15)', whiteSpace:'nowrap' }}>{col}</th>
+                <th key={i} style={{ padding:'6px 10px', textAlign: i === item.spalten.length-1 ? 'center' : 'left', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.18em', color:'rgba(var(--accent-rgb),0.65)', fontWeight:'400', textTransform:'uppercase', borderBottom:'1px solid rgba(var(--accent-rgb),0.15)', whiteSpace:'nowrap' }}>{col}</th>
               ))}
             </tr>
           </thead>
@@ -258,7 +258,7 @@ function DescBlock({ item }) {
             {item.zeilen.map((row, ri) => (
               <tr key={ri} style={{ background: ri % 2 === 0 ? 'rgba(124,77,255,0.04)' : 'transparent' }}>
                 {row.map((cell, ci) => (
-                  <td key={ci} style={{ padding:'7px 10px', color: ci === row.length-1 ? 'rgba(160,140,255,0.85)' : 'rgba(210,204,255,0.75)', fontWeight: ci === row.length-1 ? '400' : '300', textAlign: ci === row.length-1 ? 'center' : 'left', borderBottom:'1px solid rgba(160,140,255,0.06)', fontFamily: ci === row.length-1 ? 'var(--font-mono)' : 'var(--font-body)', fontSize: ci === row.length-1 ? '11px' : '11.5px', letterSpacing: ci === row.length-1 ? '0.08em' : '0.015em' }}>{cell}</td>
+                  <td key={ci} style={{ padding:'7px 10px', color: ci === row.length-1 ? 'rgba(var(--accent-rgb),0.85)' : 'rgba(var(--text-rgb),0.75)', fontWeight: ci === row.length-1 ? '400' : '300', textAlign: ci === row.length-1 ? 'center' : 'left', borderBottom:'1px solid rgba(var(--accent-rgb),0.06)', fontFamily: ci === row.length-1 ? 'var(--font-mono)' : 'var(--font-body)', fontSize: ci === row.length-1 ? '11px' : '11.5px', letterSpacing: ci === row.length-1 ? '0.08em' : '0.015em' }}>{cell}</td>
                 ))}
               </tr>
             ))}
@@ -274,8 +274,8 @@ function DescBlock({ item }) {
 function MetaItem({ label, value, accent }) {
   return (
     <div style={{ display:'flex', flexDirection:'column', gap:'3px' }}>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.26em', color:'rgba(160,140,255,0.45)', textTransform:'uppercase' }}>{label}</div>
-      <div style={{ fontFamily:'var(--font-body)', fontSize:'11.5px', fontWeight:'300', color: accent || 'rgba(210,204,255,0.8)', letterSpacing:'0.02em', lineHeight:1.4 }}>{value}</div>
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.26em', color:'rgba(var(--accent-rgb),0.45)', textTransform:'uppercase' }}>{label}</div>
+      <div style={{ fontFamily:'var(--font-body)', fontSize:'11.5px', fontWeight:'300', color: accent || 'rgba(var(--text-rgb),0.8)', letterSpacing:'0.02em', lineHeight:1.4 }}>{value}</div>
     </div>
   );
 }
@@ -287,9 +287,9 @@ function SpellDetail({ zauber }) {
   return (
     <div key={zauber.name} style={{ flex:1, overflowY:'auto', padding:'24px 28px', animation:'fadeIn 0.22s ease' }}>
       {/* Header */}
-      <div style={{ marginBottom:'18px', paddingBottom:'16px', borderBottom:`1px solid rgba(160,140,255,0.1)` }}>
+      <div style={{ marginBottom:'18px', paddingBottom:'16px', borderBottom:`1px solid rgba(var(--accent-rgb),0.1)` }}>
         <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', gap:'12px', marginBottom:'8px' }}>
-          <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(18px,2.2vw,26px)', fontWeight:'400', letterSpacing:'0.14em', color:'#f0eeff', lineHeight:1.2, textTransform:'uppercase' }}>{zauber.name}</h1>
+          <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(18px,2.2vw,26px)', fontWeight:'400', letterSpacing:'0.14em', color:'var(--white)', lineHeight:1.2, textTransform:'uppercase' }}>{zauber.name}</h1>
           <div style={{ display:'flex', gap:'5px', flexShrink:0, paddingTop:'3px' }}>
             {zauber.konzentration && <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.12em', padding:'3px 8px', background:'rgba(124,77,255,0.12)', border:'1px solid rgba(124,77,255,0.3)', borderRadius:'2px', color:'rgba(180,160,255,0.8)', textTransform:'uppercase' }}>Konzentration</span>}
             {zauber.ritual && <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.12em', padding:'3px 8px', background:'rgba(80,180,100,0.08)', border:'1px solid rgba(80,180,100,0.25)', borderRadius:'2px', color:'rgba(120,200,140,0.8)', textTransform:'uppercase' }}>Ritual</span>}
@@ -298,13 +298,13 @@ function SpellDetail({ zauber }) {
         <div style={{ display:'flex', alignItems:'center', gap:'8px' }}>
           <div style={{ width:'8px', height:'8px', borderRadius:'50%', background: sc, flexShrink:0 }} />
           <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.2em', color: sc, textTransform:'uppercase' }}>{zauber.schule}</span>
-          <span style={{ color:'rgba(160,140,255,0.25)', fontSize:'10px' }}>·</span>
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.15em', color:'rgba(160,140,255,0.55)' }}>{zauber.grad === 0 ? 'Zaubertrick' : `Grad ${zauber.grad}`}</span>
+          <span style={{ color:'rgba(var(--accent-rgb),0.25)', fontSize:'10px' }}>·</span>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.15em', color:'rgba(var(--accent-rgb),0.55)' }}>{zauber.grad === 0 ? 'Zaubertrick' : `Grad ${zauber.grad}`}</span>
         </div>
       </div>
 
       {/* Meta grid */}
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'12px 18px', marginBottom:'20px', padding:'14px', background:'rgba(124,77,255,0.04)', border:'1px solid rgba(160,140,255,0.08)', borderRadius:'3px' }}>
+      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'12px 18px', marginBottom:'20px', padding:'14px', background:'rgba(124,77,255,0.04)', border:'1px solid rgba(var(--accent-rgb),0.08)', borderRadius:'3px' }}>
         <MetaItem label="Zeitaufwand" value={zauber.zeitaufwand} />
         <MetaItem label="Wirkungsdauer" value={zauber.wirkungsdauer} />
         <MetaItem label="Reichweite" value={zauber.reichweite} />
@@ -316,10 +316,10 @@ function SpellDetail({ zauber }) {
         )}
         {zauber.klassen.length > 0 && (
           <div style={{ gridColumn:'1/-1' }}>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.26em', color:'rgba(160,140,255,0.45)', textTransform:'uppercase', marginBottom:'5px' }}>Klassen</div>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.26em', color:'rgba(var(--accent-rgb),0.45)', textTransform:'uppercase', marginBottom:'5px' }}>Klassen</div>
             <div style={{ display:'flex', flexWrap:'wrap', gap:'4px' }}>
               {[...zauber.klassen].sort().map(k => (
-                <span key={k} style={{ fontFamily:'var(--font-body)', fontSize:'10.5px', fontWeight:'300', padding:'2px 8px', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.22)', borderRadius:'2px', color:'rgba(200,190,255,0.8)', letterSpacing:'0.04em' }}>{k}</span>
+                <span key={k} style={{ fontFamily:'var(--font-body)', fontSize:'10.5px', fontWeight:'300', padding:'2px 8px', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.22)', borderRadius:'2px', color:'rgba(var(--text-rgb),0.8)', letterSpacing:'0.04em' }}>{k}</span>
               ))}
             </div>
           </div>
@@ -338,8 +338,8 @@ function SpellDetail({ zauber }) {
 function EmptyState({ msg }) {
   return (
     <div style={{ flex:1, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'12px', opacity:0.35, padding:'40px' }}>
-      <svg width="36" height="36" viewBox="0 0 36 36"><polygon points="18,2 33,11 33,25 18,34 3,25 3,11" fill="none" stroke="rgba(160,140,255,0.6)" strokeWidth="1.5"/></svg>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.2em', color:'rgba(160,140,255,0.6)', textTransform:'uppercase', textAlign:'center' }}>{msg}</div>
+      <svg width="36" height="36" viewBox="0 0 36 36"><polygon points="18,2 33,11 33,25 18,34 3,25 3,11" fill="none" stroke="rgba(var(--accent-rgb),0.6)" strokeWidth="1.5"/></svg>
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.2em', color:'rgba(var(--accent-rgb),0.6)', textTransform:'uppercase', textAlign:'center' }}>{msg}</div>
     </div>
   );
 }
@@ -416,11 +416,11 @@ function App() {
       <SiteNav />
 
       {/* Page header */}
-      <div style={{ position:'relative', zIndex:10, borderBottom:'1px solid var(--border)', background:'rgba(5,4,15,0.7)', flexShrink:0, backdropFilter:'blur(6px)', display:'flex', alignItems:'stretch' }}>
+      <div style={{ position:'relative', zIndex:10, borderBottom:'1px solid var(--border)', background:'rgba(var(--bg-rgb),0.7)', flexShrink:0, backdropFilter:'blur(6px)', display:'flex', alignItems:'stretch' }}>
         {/* Title block — same left edge as Meruria in nav, fixed width matching filter sidebar */}
         <div style={{ width:'var(--filter-w)', flexShrink:0, padding:'10px 14px 10px 24px', borderRight:'1px solid var(--border)', display:'flex', flexDirection:'column', justifyContent:'center', gap:'2px' }}>
-          <h1 style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'400', letterSpacing:'0.3em', color:'rgba(200,192,255,0.6)', textTransform:'uppercase' }}>Zauber</h1>
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(160,140,255,0.35)', letterSpacing:'0.15em' }}>{filtered.length} / {allZauber.length}</span>
+          <h1 style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'400', letterSpacing:'0.3em', color:'rgba(var(--text-rgb),0.6)', textTransform:'uppercase' }}>Zauber</h1>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(var(--accent-rgb),0.35)', letterSpacing:'0.15em' }}>{filtered.length} / {allZauber.length}</span>
         </div>
         {/* Class quick-filter chips */}
         <div ref={chipsDrag.ref} onMouseDown={chipsDrag.onMouseDown} onClickCapture={chipsDrag.onClickCapture} className="no-scrollbar" style={{ flex:1, padding:'10px 14px', display:'flex', alignItems:'center', gap:'5px', overflowX:'auto', flexWrap:'nowrap', cursor:'grab', ...chipsDrag.fadeStyle }}>
@@ -442,7 +442,7 @@ function App() {
             grouped.map(([grad, zauber]) => (
               <div key={grad ?? '__flat__'}>
                 {grad !== null && (
-                  <div style={{ padding:'8px 12px 4px', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:'rgba(160,140,255,0.4)', textTransform:'uppercase', background:'rgba(124,77,255,0.04)', borderBottom:'1px solid rgba(160,140,255,0.06)', position:'sticky', top:0, backdropFilter:'blur(4px)', zIndex:2 }}>
+                  <div style={{ padding:'8px 12px 4px', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:'rgba(var(--accent-rgb),0.4)', textTransform:'uppercase', background:'rgba(124,77,255,0.04)', borderBottom:'1px solid rgba(var(--accent-rgb),0.06)', position:'sticky', top:0, backdropFilter:'blur(4px)', zIndex:2 }}>
                     {grad === 0 ? 'Zaubertricks' : `Grad ${grad}`}
                     <span style={{ marginLeft:'6px', opacity:0.6 }}>({zauber.length})</span>
                   </div>
@@ -456,7 +456,7 @@ function App() {
         </div>
 
         {/* Detail pane */}
-        <div style={{ flex:1, display:'flex', flexDirection:'column', overflow:'hidden', background:'rgba(8,6,22,0.4)' }}>
+        <div style={{ flex:1, display:'flex', flexDirection:'column', overflow:'hidden', background:'rgba(var(--bg2-rgb),0.4)' }}>
           {selected ? (
             <SpellDetail zauber={selected} />
           ) : (

@@ -217,15 +217,15 @@ function CardInner({ name, subtitle, tags, accent, hov, tilt, cardRef, onMouseMo
             transition:'opacity 0.35s ease'
           }}>
             <h3 style={{ fontFamily:'var(--font-display)', fontSize:'15px', fontWeight:'400', letterSpacing:'0.16em',
-              color:'#f0eeff', textShadow:`0 2px 12px rgba(0,0,0,0.8)`, textTransform:'uppercase', marginBottom:'3px' }}>{name}</h3>
+              color:'var(--white)', textShadow:`0 2px 12px rgba(0,0,0,0.8)`, textTransform:'uppercase', marginBottom:'3px' }}>{name}</h3>
             <div style={{ width:'50px', height:'1px', background:`linear-gradient(90deg,${accent}cc,transparent)`, animation:'pulse-glow 3s infinite', marginBottom:'3px' }} />
             {subtitle && <div style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontStyle:'normal',fontSize:'10px',
-              color:'rgba(200,190,240,0.48)', letterSpacing:'0.05em', lineHeight:1.55, marginBottom: tags && tags.length ? '6px' : 0 }}>{subtitle}</div>}
+              color:'rgba(var(--text-rgb),0.48)', letterSpacing:'0.05em', lineHeight:1.55, marginBottom: tags && tags.length ? '6px' : 0 }}>{subtitle}</div>}
             {tags && tags.length > 0 && (
               <div style={{ display:'flex', gap:'4px', flexWrap:'wrap', alignContent:'flex-start' }}>
                 {tags.map(tag => (
                   <span key={tag} style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.12em',
-                    color:'rgba(160,140,255,0.55)', background:'rgba(124,77,255,0.07)', border:'1px solid rgba(124,77,255,0.16)',
+                    color:'rgba(var(--accent-rgb),0.55)', background:'rgba(124,77,255,0.07)', border:'1px solid rgba(124,77,255,0.16)',
                     padding:'3px 8px', borderRadius:'2px', textTransform:'uppercase' }}>{tag}</span>
                 ))}
               </div>
@@ -271,7 +271,7 @@ function CardInner({ name, subtitle, tags, accent, hov, tilt, cardRef, onMouseMo
               </div>
             )}
             <h3 style={{ fontFamily:'var(--font-display)', fontSize:'17px', fontWeight:'400', letterSpacing:'0.16em',
-              color:'#f0eeff', textShadow:`0 0 24px ${accent}cc, 0 2px 8px rgba(0,0,0,0.9)`, textTransform:'uppercase' }}>{name}</h3>
+              color:'var(--white)', textShadow:`0 0 24px ${accent}cc, 0 2px 8px rgba(0,0,0,0.9)`, textTransform:'uppercase' }}>{name}</h3>
           </div>
 
         </div>{/* end card frame */}
@@ -339,7 +339,7 @@ function GroupSection({ entry, accent, cols, navHeight, onSelect }) {
         <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.3em', color:`${accent}66`, textTransform:'uppercase', marginBottom:'5px' }}>Unterrassen</div>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={8} color={`${accent}66`} fill={`${accent}22`} strokeWidth={1} />
-          <h2 style={{ fontFamily:'var(--font-display)', fontSize:'20px', fontWeight:'300', letterSpacing:'0.2em', color:'rgba(230,225,255,0.85)', textShadow:`0 0 20px ${accent}33`, textTransform:'uppercase' }}>{entry.name}</h2>
+          <h2 style={{ fontFamily:'var(--font-display)', fontSize:'20px', fontWeight:'300', letterSpacing:'0.2em', color:'rgba(var(--text-rgb),0.85)', textShadow:`0 0 20px ${accent}33`, textTransform:'uppercase' }}>{entry.name}</h2>
         </div>
         <div style={{ width:'40px', height:'1px', background:`linear-gradient(90deg,${accent}77,transparent)`, marginTop:'10px', animation:'pulse-glow 3s infinite' }} />
       </div>
@@ -356,26 +356,26 @@ function GroupSection({ entry, accent, cols, navHeight, onSelect }) {
 // ── ENTITY DETAIL PLACEHOLDER ────────────────────────────
 function EntityDetailPlaceholder({ race, onClose }) {
   useEffect(() => { window.scrollTo(0, 0); }, []);
-  const btnStyle = { display:'inline-flex', alignItems:'center', gap:'8px', fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', letterSpacing:'0.12em', color:'rgba(200,192,232,0.55)', background:'rgba(124,77,255,0.06)', border:'1px solid rgba(124,77,255,0.18)', padding:'7px 14px', borderRadius:'3px', cursor:'pointer', transition:'all 0.2s' };
+  const btnStyle = { display:'inline-flex', alignItems:'center', gap:'8px', fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', letterSpacing:'0.12em', color:'rgba(var(--text2-rgb),0.55)', background:'rgba(124,77,255,0.06)', border:'1px solid rgba(124,77,255,0.18)', padding:'7px 14px', borderRadius:'3px', cursor:'pointer', transition:'all 0.2s' };
   return (
     <div style={{ minHeight:'100vh', background:'var(--bg)' }}>
       <div style={{ position:'fixed', top:'16px', left:'16px', zIndex:10 }}>
         <button style={btnStyle} onClick={onClose}
-          onMouseEnter={e=>{ e.currentTarget.style.color='#f0eeff'; e.currentTarget.style.background='rgba(124,77,255,0.14)'; e.currentTarget.style.borderColor='rgba(124,77,255,0.45)'; }}
-          onMouseLeave={e=>{ e.currentTarget.style.color='rgba(200,192,232,0.55)'; e.currentTarget.style.background='rgba(124,77,255,0.06)'; e.currentTarget.style.borderColor='rgba(124,77,255,0.18)'; }}>
+          onMouseEnter={e=>{ e.currentTarget.style.color='var(--white)'; e.currentTarget.style.background='rgba(124,77,255,0.14)'; e.currentTarget.style.borderColor='rgba(124,77,255,0.45)'; }}
+          onMouseLeave={e=>{ e.currentTarget.style.color='rgba(var(--text2-rgb),0.55)'; e.currentTarget.style.background='rgba(124,77,255,0.06)'; e.currentTarget.style.borderColor='rgba(124,77,255,0.18)'; }}>
           <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M10 4L6 8l4 4"/></svg>
           Alle Rassen
         </button>
       </div>
       <div style={{ maxWidth:'720px', margin:'0 auto', padding:'80px 40px 64px' }}>
         <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.35em', color:'rgba(124,77,255,0.5)', textTransform:'uppercase', marginBottom:'12px' }}>Charaktererstellung · Rassen</div>
-        <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(36px,6vw,60px)', fontWeight:'300', letterSpacing:'0.12em', color:'#f0eeff', textTransform:'uppercase', marginBottom:'20px', textShadow:'0 0 40px rgba(124,77,255,0.35)' }}>{race.name}</h1>
+        <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(36px,6vw,60px)', fontWeight:'300', letterSpacing:'0.12em', color:'var(--white)', textTransform:'uppercase', marginBottom:'20px', textShadow:'0 0 40px rgba(124,77,255,0.35)' }}>{race.name}</h1>
         <div style={{ width:'48px', height:'1px', background:'linear-gradient(90deg,rgba(124,77,255,0.8),transparent)', marginBottom:'48px' }} />
         <div style={{ border:'1px dashed rgba(124,77,255,0.2)', borderRadius:'4px', padding:'48px 40px', textAlign:'center', background:'rgba(124,77,255,0.03)' }}>
           <OctSvg size={32} color="rgba(124,77,255,0.25)" fill="rgba(124,77,255,0.08)" strokeWidth={1} style={{ margin:'0 auto 20px' }} />
-          <div style={{ fontFamily:'var(--font-display)', fontSize:'13px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(200,192,232,0.4)', textTransform:'uppercase', marginBottom:'12px' }}>In Bearbeitung</div>
-          <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(200,192,232,0.3)', maxWidth:'400px', margin:'0 auto' }}>
-            Der Eintrag für <span style={{ color:'rgba(200,192,232,0.5)' }}>{race.name}</span> wird noch ausgearbeitet. Komm später wieder.
+          <div style={{ fontFamily:'var(--font-display)', fontSize:'13px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(var(--text2-rgb),0.4)', textTransform:'uppercase', marginBottom:'12px' }}>In Bearbeitung</div>
+          <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(var(--text2-rgb),0.3)', maxWidth:'400px', margin:'0 auto' }}>
+            Der Eintrag für <span style={{ color:'rgba(var(--text2-rgb),0.5)' }}>{race.name}</span> wird noch ausgearbeitet. Komm später wieder.
           </p>
         </div>
       </div>
@@ -397,15 +397,15 @@ function DetailOverlay({ race, onClose }) {
       window.removeEventListener('keydown', onKey);
     };
   }, [onClose]);
-  const closeBtnStyle = { display:'inline-flex', alignItems:'center', gap:'8px', fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', letterSpacing:'0.12em', color:'rgba(200,192,232,0.55)', background:'rgba(5,4,15,0.85)', border:'1px solid rgba(124,77,255,0.25)', padding:'7px 14px', borderRadius:'3px', cursor:'pointer', transition:'all 0.2s', backdropFilter:'blur(8px)' };
+  const closeBtnStyle = { display:'inline-flex', alignItems:'center', gap:'8px', fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', letterSpacing:'0.12em', color:'rgba(var(--text2-rgb),0.55)', background:'rgba(var(--bg-rgb),0.85)', border:'1px solid rgba(124,77,255,0.25)', padding:'7px 14px', borderRadius:'3px', cursor:'pointer', transition:'all 0.2s', backdropFilter:'blur(8px)' };
   return (
     <div style={{ position:'fixed', inset:0, zIndex:200, background:'var(--bg)', display:'flex', flexDirection:'column' }}>
       {page ? (
         <>
           <div style={{ position:'absolute', top:'16px', left:'16px', zIndex:201 }}>
             <button style={closeBtnStyle} onClick={onClose}
-              onMouseEnter={e=>{ e.currentTarget.style.color='#f0eeff'; e.currentTarget.style.borderColor='rgba(124,77,255,0.55)'; }}
-              onMouseLeave={e=>{ e.currentTarget.style.color='rgba(200,192,232,0.55)'; e.currentTarget.style.borderColor='rgba(124,77,255,0.25)'; }}>
+              onMouseEnter={e=>{ e.currentTarget.style.color='var(--white)'; e.currentTarget.style.borderColor='rgba(124,77,255,0.55)'; }}
+              onMouseLeave={e=>{ e.currentTarget.style.color='rgba(var(--text2-rgb),0.55)'; e.currentTarget.style.borderColor='rgba(124,77,255,0.25)'; }}>
               <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M10 4L6 8l4 4"/></svg>
               Alle Rassen
             </button>
@@ -476,13 +476,13 @@ function TOCSidebar({ headerBottom, navHeight, cols }) {
   const tocEntries = buildTocEntries(cols);
 
   return (
-    <aside ref={asideRef} style={{ width:'var(--sidebar-w)', flexShrink:0, position:'fixed', top:`${navHeight}px`, left:0, height:`calc(100vh - ${navHeight}px)`, borderRight:'1px solid rgba(160,140,255,0.1)', padding:'28px 0', background:'rgba(5,4,15,0.85)', backdropFilter:'blur(12px)', zIndex:50, overflowY:'auto' }}>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:'rgba(160,140,255,0.4)', textTransform:'uppercase', padding:'0 20px', marginBottom:'4px' }}>Rassen</div>
+    <aside ref={asideRef} style={{ width:'var(--sidebar-w)', flexShrink:0, position:'fixed', top:`${navHeight}px`, left:0, height:`calc(100vh - ${navHeight}px)`, borderRight:'1px solid rgba(var(--accent-rgb),0.1)', padding:'28px 0', background:'rgba(var(--bg-rgb),0.85)', backdropFilter:'blur(12px)', zIndex:50, overflowY:'auto' }}>
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:'rgba(var(--accent-rgb),0.4)', textTransform:'uppercase', padding:'0 20px', marginBottom:'4px' }}>Rassen</div>
       {tocEntries.map(entry => (
         <button key={entry.id} onClick={()=>scrollTo(entry.id)}
-          style={{ display:'flex', alignItems:'flex-start', gap:'8px', width:'100%', textAlign:'left', padding:'7px 20px', background:'transparent', border:'none', cursor:'pointer', fontFamily:'var(--font-body)', fontWeight:'400', fontSize:'11px', letterSpacing:'0.1em', fontVariant:'small-caps', color:'rgba(200,190,240,0.6)', borderLeft:'2px solid transparent', transition:'all 0.15s', lineHeight:1.55 }}
-          onMouseEnter={e=>{e.currentTarget.style.color='#f0eeff';e.currentTarget.style.borderLeftColor='rgba(124,77,255,0.6)';e.currentTarget.style.background='rgba(124,77,255,0.06)';}}
-          onMouseLeave={e=>{e.currentTarget.style.color='rgba(200,190,240,0.6)';e.currentTarget.style.borderLeftColor='transparent';e.currentTarget.style.background='transparent';}}>
+          style={{ display:'flex', alignItems:'flex-start', gap:'8px', width:'100%', textAlign:'left', padding:'7px 20px', background:'transparent', border:'none', cursor:'pointer', fontFamily:'var(--font-body)', fontWeight:'400', fontSize:'11px', letterSpacing:'0.1em', fontVariant:'small-caps', color:'rgba(var(--text-rgb),0.6)', borderLeft:'2px solid transparent', transition:'all 0.15s', lineHeight:1.55 }}
+          onMouseEnter={e=>{e.currentTarget.style.color='var(--white)';e.currentTarget.style.borderLeftColor='rgba(124,77,255,0.6)';e.currentTarget.style.background='rgba(124,77,255,0.06)';}}
+          onMouseLeave={e=>{e.currentTarget.style.color='rgba(var(--text-rgb),0.6)';e.currentTarget.style.borderLeftColor='transparent';e.currentTarget.style.background='transparent';}}>
           <OctSvg size={6} color="rgba(124,77,255,0.5)" fill="rgba(124,77,255,0.25)" strokeWidth={1} style={{ flexShrink:0, marginTop:'3px' }} />
           <span style={{ display:'block', minWidth:0, textIndent:0, paddingLeft:0, wordBreak:'normal', overflowWrap:'anywhere' }}>{entry.label}</span>
         </button>
@@ -540,8 +540,8 @@ function App() {
 
           {/* Page title */}
           <div style={{ marginBottom:'32px' }}>
-            <div ref={pageTitleRef} style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:'rgba(160,140,255,0.4)', textTransform:'uppercase', marginBottom:'6px' }}>Charaktererstellung</div>
-            <h1 className="reveal-left" style={{ fontFamily:'var(--font-display)', fontSize:'42px', fontWeight:'300', letterSpacing:'0.18em', color:'#f0eeff', textShadow:'0 0 30px rgba(124,77,255,0.35)' }}>Rassen</h1>
+            <div ref={pageTitleRef} style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:'rgba(var(--accent-rgb),0.4)', textTransform:'uppercase', marginBottom:'6px' }}>Charaktererstellung</div>
+            <h1 className="reveal-left" style={{ fontFamily:'var(--font-display)', fontSize:'42px', fontWeight:'300', letterSpacing:'0.18em', color:'var(--white)', textShadow:'0 0 30px rgba(124,77,255,0.35)' }}>Rassen</h1>
             <div style={{ display:'flex', alignItems:'center', gap:'8px', marginTop:'12px' }}>
               <div style={{ width:'50px', height:'1px', background:'linear-gradient(90deg,rgba(124,77,255,0.8),transparent)', animation:'pulse-glow 3s infinite' }} />
               <OctSvg size={8} color="rgba(124,77,255,0.5)" fill="rgba(124,77,255,0.2)" strokeWidth={1} />

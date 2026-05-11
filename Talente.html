@@ -61,7 +61,7 @@ function shortenVoraussetzung(v) {
 // ─── FILTER CHIP ──────────────────────────────────────────────────────────────
 function Chip({ label, active, onClick }) {
   return (
-    <button onClick={onClick} style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.15em', padding:'0 10px', height:'16px', border:`1px solid ${active ? 'var(--purple)' : 'rgba(160,140,255,0.18)'}`, background: active ? 'rgba(124,77,255,0.22)' : 'transparent', color: active ? '#f0eeff' : 'var(--muted)', cursor:'pointer', borderRadius:'2px', transition:'all 0.15s', textTransform:'uppercase', whiteSpace:'nowrap', flexShrink:0, display:'flex', alignItems:'center' }}>
+    <button onClick={onClick} style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.15em', padding:'0 10px', height:'16px', border:`1px solid ${active ? 'var(--purple)' : 'rgba(var(--accent-rgb),0.18)'}`, background: active ? 'rgba(124,77,255,0.22)' : 'transparent', color: active ? 'var(--white)' : 'var(--muted)', cursor:'pointer', borderRadius:'2px', transition:'all 0.15s', textTransform:'uppercase', whiteSpace:'nowrap', flexShrink:0, display:'flex', alignItems:'center' }}>
       {label}
     </button>
   );
@@ -108,26 +108,26 @@ function FilterSidebar({ search, setSearch, filters, setFilters, allData, dragRe
   const hasAny = (filters.kategorien || []).length > 0 || (filters.rassen || []).length > 0 || filters.nurOhneVoraussetzung || filters.sort !== 'name-az';
 
   return (
-    <div ref={dragRef.ref} onMouseDown={dragRef.onMouseDown} onClickCapture={dragRef.onClickCapture} style={{ width:'var(--filter-w)', flexShrink:0, background:'rgba(8,6,20,0.6)', borderRight:'1px solid var(--border)', padding:'16px 14px 14px 24px', overflowY:'auto', display:'flex', flexDirection:'column', position:'relative', zIndex:10, cursor:'grab', ...dragRef.fadeStyle }}>
+    <div ref={dragRef.ref} onMouseDown={dragRef.onMouseDown} onClickCapture={dragRef.onClickCapture} style={{ width:'var(--filter-w)', flexShrink:0, background:'rgba(var(--bg2-rgb),0.6)', borderRight:'1px solid var(--border)', padding:'16px 14px 14px 24px', overflowY:'auto', display:'flex', flexDirection:'column', position:'relative', zIndex:10, cursor:'grab', ...dragRef.fadeStyle }}>
       {/* Search */}
       <div style={{ position:'relative', marginBottom:'14px' }}>
         <input
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder="Talent suchen…"
-          style={{ fontFamily:'var(--font-body)', fontSize:'11.5px', fontWeight:'300', padding:'6px 10px 6px 28px', background:'rgba(124,77,255,0.06)', border:'1px solid rgba(160,140,255,0.18)', borderRadius:'3px', color:'#f0eeff', outline:'none', width:'100%', letterSpacing:'0.03em', transition:'border-color 0.2s' }}
+          style={{ fontFamily:'var(--font-body)', fontSize:'11.5px', fontWeight:'300', padding:'6px 10px 6px 28px', background:'rgba(124,77,255,0.06)', border:'1px solid rgba(var(--accent-rgb),0.18)', borderRadius:'3px', color:'var(--white)', outline:'none', width:'100%', letterSpacing:'0.03em', transition:'border-color 0.2s' }}
           onFocus={e => e.target.style.borderColor='rgba(124,77,255,0.5)'}
-          onBlur={e => e.target.style.borderColor='rgba(160,140,255,0.18)'}
+          onBlur={e => e.target.style.borderColor='rgba(var(--accent-rgb),0.18)'}
         />
         <svg style={{ position:'absolute', left:'8px', top:'50%', transform:'translateY(-50%)', opacity:0.35, pointerEvents:'none' }} width="12" height="12" viewBox="0 0 12 12" fill="none">
-          <circle cx="5" cy="5" r="3.5" stroke="rgba(160,140,255,1)" strokeWidth="1.2"/>
-          <line x1="8" y1="8" x2="11" y2="11" stroke="rgba(160,140,255,1)" strokeWidth="1.2"/>
+          <circle cx="5" cy="5" r="3.5" stroke="rgba(var(--accent-rgb),1)" strokeWidth="1.2"/>
+          <line x1="8" y1="8" x2="11" y2="11" stroke="rgba(var(--accent-rgb),1)" strokeWidth="1.2"/>
         </svg>
       </div>
 
       {/* Filter header */}
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'18px' }}>
-        <div style={{ fontFamily:'var(--font-display)', fontSize:'10px', letterSpacing:'0.25em', color:'rgba(200,192,255,0.7)', textTransform:'uppercase' }}>Filter</div>
+        <div style={{ fontFamily:'var(--font-display)', fontSize:'10px', letterSpacing:'0.25em', color:'rgba(var(--text-rgb),0.7)', textTransform:'uppercase' }}>Filter</div>
         {hasAny && <XBtn onClick={reset} />}
       </div>
 
@@ -140,9 +140,9 @@ function FilterSidebar({ search, setSearch, filters, setFilters, allData, dragRe
             return (
               <button key={k} onClick={() => toggle('kategorien', k)} style={{ display:'flex', alignItems:'center', gap:'7px', padding:'5px 7px', background: active ? 'rgba(124,77,255,0.12)' : 'transparent', border:`1px solid ${active ? 'rgba(124,77,255,0.4)' : 'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', textAlign:'left' }}>
                 <svg width="9" height="10" viewBox="0 0 9 10" style={{ flexShrink:0 }}>
-                  <polygon points="4.5,0.8 8.2,2.9 8.2,7.1 4.5,9.2 0.8,7.1 0.8,2.9" fill={active ? s.color : 'rgba(160,140,255,0.2)'} stroke={active ? s.border : 'transparent'} strokeWidth="1.1" style={{ transition:'fill 0.15s, stroke 0.15s' }}/>
+                  <polygon points="4.5,0.8 8.2,2.9 8.2,7.1 4.5,9.2 0.8,7.1 0.8,2.9" fill={active ? s.color : 'rgba(var(--accent-rgb),0.2)'} stroke={active ? s.border : 'transparent'} strokeWidth="1.1" style={{ transition:'fill 0.15s, stroke 0.15s' }}/>
                 </svg>
-                <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color: active ? '#f0eeff' : 'var(--silver)', letterSpacing:'0.03em' }}>{k}</span>
+                <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color: active ? 'var(--white)' : 'var(--silver)', letterSpacing:'0.03em' }}>{k}</span>
               </button>
             );
           })}
@@ -158,9 +158,9 @@ function FilterSidebar({ search, setSearch, filters, setFilters, allData, dragRe
               return (
                 <button key={r} onClick={() => toggle('rassen', r)} style={{ display:'flex', alignItems:'center', gap:'7px', padding:'5px 7px', background: active ? 'rgba(60,160,120,0.12)' : 'transparent', border:`1px solid ${active ? 'rgba(80,190,140,0.4)' : 'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', textAlign:'left' }}>
                   <svg width="9" height="10" viewBox="0 0 9 10" style={{ flexShrink:0 }}>
-                    <polygon points="4.5,0.8 8.2,2.9 8.2,7.1 4.5,9.2 0.8,7.1 0.8,2.9" fill={active ? 'rgba(100,220,170,0.9)' : 'rgba(160,140,255,0.2)'} stroke={active ? 'rgba(80,190,140,0.6)' : 'transparent'} strokeWidth="1.1" style={{ transition:'fill 0.15s, stroke 0.15s' }}/>
+                    <polygon points="4.5,0.8 8.2,2.9 8.2,7.1 4.5,9.2 0.8,7.1 0.8,2.9" fill={active ? 'rgba(100,220,170,0.9)' : 'rgba(var(--accent-rgb),0.2)'} stroke={active ? 'rgba(80,190,140,0.6)' : 'transparent'} strokeWidth="1.1" style={{ transition:'fill 0.15s, stroke 0.15s' }}/>
                   </svg>
-                  <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color: active ? '#f0eeff' : 'var(--silver)', letterSpacing:'0.03em' }}>{r}</span>
+                  <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color: active ? 'var(--white)' : 'var(--silver)', letterSpacing:'0.03em' }}>{r}</span>
                 </button>
               );
             })}
@@ -174,10 +174,10 @@ function FilterSidebar({ search, setSearch, filters, setFilters, allData, dragRe
           <button
             onClick={() => setFilters(f => ({...f, nurOhneVoraussetzung: !f.nurOhneVoraussetzung}))}
             style={{ display:'flex', alignItems:'center', gap:'8px', padding:'5px 7px', background: filters.nurOhneVoraussetzung ? 'rgba(124,77,255,0.1)' : 'transparent', border:`1px solid ${filters.nurOhneVoraussetzung ? 'rgba(124,77,255,0.4)' : 'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.18s', textAlign:'left', width:'100%' }}>
-            <div style={{ width:'14px', height:'14px', border:`1px solid ${filters.nurOhneVoraussetzung ? 'rgba(124,77,255,0.6)' : 'rgba(160,140,255,0.3)'}`, borderRadius:'2px', background: filters.nurOhneVoraussetzung ? 'rgba(124,77,255,0.25)' : 'transparent', flexShrink:0, display:'flex', alignItems:'center', justifyContent:'center', transition:'all 0.18s', fontSize:'9px', color:'rgba(180,160,255,0.9)', fontFamily:'var(--font-mono)' }}>
+            <div style={{ width:'14px', height:'14px', border:`1px solid ${filters.nurOhneVoraussetzung ? 'rgba(124,77,255,0.6)' : 'rgba(var(--accent-rgb),0.3)'}`, borderRadius:'2px', background: filters.nurOhneVoraussetzung ? 'rgba(124,77,255,0.25)' : 'transparent', flexShrink:0, display:'flex', alignItems:'center', justifyContent:'center', transition:'all 0.18s', fontSize:'9px', color:'rgba(180,160,255,0.9)', fontFamily:'var(--font-mono)' }}>
               {filters.nurOhneVoraussetzung ? '✓' : ''}
             </div>
-            <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color: filters.nurOhneVoraussetzung ? '#f0eeff' : 'var(--silver)', letterSpacing:'0.03em' }}>Keine Voraussetzung</span>
+            <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color: filters.nurOhneVoraussetzung ? 'var(--white)' : 'var(--silver)', letterSpacing:'0.03em' }}>Keine Voraussetzung</span>
           </button>
         </FilterGroup>
       )}
@@ -191,7 +191,7 @@ function FilterSidebar({ search, setSearch, filters, setFilters, allData, dragRe
       </FilterGroup>
 
       {hasAny && (
-        <div style={{ marginTop:'auto', paddingTop:'14px', borderTop:'1px solid rgba(160,140,255,0.08)' }}>
+        <div style={{ marginTop:'auto', paddingTop:'14px', borderTop:'1px solid rgba(var(--accent-rgb),0.08)' }}>
           <button onClick={reset}
             style={{ width:'100%', padding:'6px', background:'rgba(200,60,60,0.08)', border:'1px solid rgba(200,60,60,0.25)', borderRadius:'2px', color:'rgba(230,90,90,0.65)', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.18em', cursor:'pointer', transition:'all 0.15s', textTransform:'uppercase' }}
             onMouseEnter={e=>{e.currentTarget.style.background='rgba(200,60,60,0.18)';e.currentTarget.style.borderColor='rgba(230,90,90,0.5)';}}
@@ -209,18 +209,18 @@ function TalentRow({ t, active, onClick, compact }) {
   return (
     <div
       onClick={() => onClick(t)}
-      style={{ display:'flex', alignItems:'flex-start', gap:'10px', padding: compact ? '7px 12px' : '10px 12px', cursor:'pointer', borderBottom:'1px solid rgba(160,140,255,0.06)', background: active ? 'rgba(124,77,255,0.12)' : 'transparent', borderLeft: active ? '2px solid var(--purple)' : '2px solid transparent', transition:'all 0.15s' }}
+      style={{ display:'flex', alignItems:'flex-start', gap:'10px', padding: compact ? '7px 12px' : '10px 12px', cursor:'pointer', borderBottom:'1px solid rgba(var(--accent-rgb),0.06)', background: active ? 'rgba(124,77,255,0.12)' : 'transparent', borderLeft: active ? '2px solid var(--purple)' : '2px solid transparent', transition:'all 0.15s' }}
       onMouseEnter={e => { if(!active){e.currentTarget.style.background='rgba(124,77,255,0.06)';e.currentTarget.style.borderLeftColor='rgba(124,77,255,0.4)';} }}
       onMouseLeave={e => { if(!active){e.currentTarget.style.background='transparent';e.currentTarget.style.borderLeftColor='transparent';} }}>
       <div style={{ flex:1, minWidth:0 }}>
-        <span style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight: active ? '400' : '300', color: active ? '#f0eeff' : 'rgba(220,212,255,0.85)', letterSpacing:'0.04em' }}>{t.name}</span>
+        <span style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight: active ? '400' : '300', color: active ? 'var(--white)' : 'rgba(var(--text-rgb),0.85)', letterSpacing:'0.04em' }}>{t.name}</span>
         {!compact && t.voraussetzung && (
           <div style={{ marginTop:'0' }}>
             <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.08em', padding:'1px 6px', background:'rgba(200,80,60,0.1)', border:'1px solid rgba(220,100,80,0.25)', borderRadius:'2px', color:'rgba(240,140,120,0.75)' }}>{shortenVoraussetzung(t.voraussetzung)}</span>
           </div>
         )}
         {!compact && (
-          <div style={{ fontFamily:'var(--font-body)', fontSize:'10px', fontWeight:'300', color:'rgba(200,190,240,0.4)', letterSpacing:'0.02em', marginTop:'2px', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{t.kurzbeschreibung}</div>
+          <div style={{ fontFamily:'var(--font-body)', fontSize:'10px', fontWeight:'300', color:'rgba(var(--text-rgb),0.4)', letterSpacing:'0.02em', marginTop:'2px', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{t.kurzbeschreibung}</div>
         )}
       </div>
       {!compact && t.kategorie && (
@@ -236,8 +236,8 @@ function TalentRow({ t, active, onClick, compact }) {
 function SectionHeader({ title }) {
   return (
     <div style={{ display:'flex', alignItems:'center', gap:'12px', marginBottom:'12px', marginTop:'22px' }}>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:'rgba(160,140,255,0.55)', textTransform:'uppercase', flexShrink:0 }}>{title}</div>
-      <div style={{ flex:1, height:'1px', background:'rgba(160,140,255,0.12)' }} />
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),0.55)', textTransform:'uppercase', flexShrink:0 }}>{title}</div>
+      <div style={{ flex:1, height:'1px', background:'rgba(var(--accent-rgb),0.12)' }} />
     </div>
   );
 }
@@ -248,9 +248,9 @@ function TalentDetail({ t, showBullets }) {
     <div key={t.id} style={{ flex:1, overflowY:'auto', padding:'24px 28px', animation:'fadeIn 0.22s ease' }}>
 
       {/* Header */}
-      <div style={{ marginBottom:'18px', paddingBottom:'16px', borderBottom:'1px solid rgba(160,140,255,0.1)' }}>
+      <div style={{ marginBottom:'18px', paddingBottom:'16px', borderBottom:'1px solid rgba(var(--accent-rgb),0.1)' }}>
         <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', gap:'12px', marginBottom:'6px', flexWrap:'wrap' }}>
-          <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(18px,2.2vw,26px)', fontWeight:'400', letterSpacing:'0.14em', color:'#f0eeff', lineHeight:1.2, textTransform:'uppercase' }}>{t.name}</h1>
+          <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(18px,2.2vw,26px)', fontWeight:'400', letterSpacing:'0.14em', color:'var(--white)', lineHeight:1.2, textTransform:'uppercase' }}>{t.name}</h1>
           {t.kategorie && <KategorieBadge k={t.kategorie} />}
         </div>
         {t.voraussetzung && (
@@ -260,7 +260,7 @@ function TalentDetail({ t, showBullets }) {
           </div>
         )}
         {t.kurzbeschreibung && (
-          <p style={{ fontFamily:'var(--font-body)', fontSize:'12.5px', fontWeight:'300', color:'rgba(200,190,240,0.55)', letterSpacing:'0.02em', lineHeight:1.6 }}>{t.kurzbeschreibung}</p>
+          <p style={{ fontFamily:'var(--font-body)', fontSize:'12.5px', fontWeight:'300', color:'rgba(var(--text-rgb),0.55)', letterSpacing:'0.02em', lineHeight:1.6 }}>{t.kurzbeschreibung}</p>
         )}
       </div>
 
@@ -268,7 +268,7 @@ function TalentDetail({ t, showBullets }) {
       {t.beschreibung && t.beschreibung.length > 0 && (
         <div style={{ marginBottom:'18px' }}>
           {t.beschreibung.map((p, i) => (
-            <p key={i} style={{ fontFamily:'var(--font-body)', fontSize:'12.5px', fontWeight:'300', lineHeight:1.82, color:'rgba(220,212,255,0.8)', letterSpacing:'0.015em', marginBottom:'10px', textWrap:'pretty' }}>{p}</p>
+            <p key={i} style={{ fontFamily:'var(--font-body)', fontSize:'12.5px', fontWeight:'300', lineHeight:1.82, color:'rgba(var(--text-rgb),0.8)', letterSpacing:'0.015em', marginBottom:'10px', textWrap:'pretty' }}>{p}</p>
           ))}
         </div>
       )}
@@ -281,17 +281,17 @@ function TalentDetail({ t, showBullets }) {
             {showBullets ? (
               <ul style={{ listStyle:'none', padding:0, margin:0, display:'flex', flexDirection:'column', gap:'0' }}>
                 {t.vorzuege.map((v, i) => (
-                  <li key={i} style={{ display:'flex', gap:'12px', alignItems:'flex-start', padding:'10px 14px', background: i%2===0 ? 'rgba(124,77,255,0.03)' : 'transparent', borderBottom:'1px solid rgba(160,140,255,0.06)' }}>
+                  <li key={i} style={{ display:'flex', gap:'12px', alignItems:'flex-start', padding:'10px 14px', background: i%2===0 ? 'rgba(124,77,255,0.03)' : 'transparent', borderBottom:'1px solid rgba(var(--accent-rgb),0.06)' }}>
                     <HexBullet />
-                    <span style={{ fontFamily:'var(--font-body)', fontSize:'12.5px', fontWeight:'300', lineHeight:1.78, color:'rgba(210,204,255,0.82)', letterSpacing:'0.015em', textWrap:'pretty' }}>{v}</span>
+                    <span style={{ fontFamily:'var(--font-body)', fontSize:'12.5px', fontWeight:'300', lineHeight:1.78, color:'rgba(var(--text-rgb),0.82)', letterSpacing:'0.015em', textWrap:'pretty' }}>{v}</span>
                   </li>
                 ))}
               </ul>
             ) : (
               t.vorzuege.map((v, i) => (
-                <div key={i} style={{ display:'flex', gap:'12px', alignItems:'flex-start', padding:'10px 14px', background:'rgba(124,77,255,0.03)', border:'1px solid rgba(160,140,255,0.08)', borderRadius:'3px' }}>
-                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(160,140,255,0.5)', flexShrink:0, minWidth:'18px', paddingTop:'3px' }}>{i+1}</span>
-                  <span style={{ fontFamily:'var(--font-body)', fontSize:'12.5px', fontWeight:'300', lineHeight:1.78, color:'rgba(210,204,255,0.82)', letterSpacing:'0.015em', textWrap:'pretty' }}>{v}</span>
+                <div key={i} style={{ display:'flex', gap:'12px', alignItems:'flex-start', padding:'10px 14px', background:'rgba(124,77,255,0.03)', border:'1px solid rgba(var(--accent-rgb),0.08)', borderRadius:'3px' }}>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(var(--accent-rgb),0.5)', flexShrink:0, minWidth:'18px', paddingTop:'3px' }}>{i+1}</span>
+                  <span style={{ fontFamily:'var(--font-body)', fontSize:'12.5px', fontWeight:'300', lineHeight:1.78, color:'rgba(var(--text-rgb),0.82)', letterSpacing:'0.015em', textWrap:'pretty' }}>{v}</span>
                 </div>
               ))
             )}
@@ -307,9 +307,9 @@ function EmptyState({ msg }) {
   return (
     <div style={{ flex:1, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'12px', opacity:0.35, padding:'40px' }}>
       <svg width="36" height="36" viewBox="0 0 36 36">
-        <polygon points="18,4 32,12 32,24 18,32 4,24 4,12" fill="none" stroke="rgba(160,140,255,0.6)" strokeWidth="1.5"/>
+        <polygon points="18,4 32,12 32,24 18,32 4,24 4,12" fill="none" stroke="rgba(var(--accent-rgb),0.6)" strokeWidth="1.5"/>
       </svg>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.2em', color:'rgba(160,140,255,0.6)', textTransform:'uppercase', textAlign:'center' }}>{msg}</div>
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.2em', color:'rgba(var(--accent-rgb),0.6)', textTransform:'uppercase', textAlign:'center' }}>{msg}</div>
     </div>
   );
 }
@@ -357,10 +357,10 @@ function App() {
       <SiteNav active="charaktererstellung" />
 
       {/* Page header */}
-      <div style={{ position:'relative', zIndex:10, borderBottom:'1px solid var(--border)', background:'rgba(5,4,15,0.7)', flexShrink:0, backdropFilter:'blur(6px)', display:'flex', alignItems:'stretch' }}>
+      <div style={{ position:'relative', zIndex:10, borderBottom:'1px solid var(--border)', background:'rgba(var(--bg-rgb),0.7)', flexShrink:0, backdropFilter:'blur(6px)', display:'flex', alignItems:'stretch' }}>
         <div style={{ width:'var(--filter-w)', flexShrink:0, padding:'10px 14px 10px 24px', borderRight:'1px solid var(--border)', display:'flex', flexDirection:'column', justifyContent:'center', gap:'2px' }}>
-          <h1 style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'400', letterSpacing:'0.3em', color:'rgba(200,192,255,0.6)', textTransform:'uppercase' }}>Talente</h1>
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(160,140,255,0.35)', letterSpacing:'0.15em' }}>{filtered.length} / {allData.length}</span>
+          <h1 style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'400', letterSpacing:'0.3em', color:'rgba(var(--text-rgb),0.6)', textTransform:'uppercase' }}>Talente</h1>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(var(--accent-rgb),0.35)', letterSpacing:'0.15em' }}>{filtered.length} / {allData.length}</span>
         </div>
         <div style={{ flex:1, padding:'8px 20px', display:'flex', alignItems:'center', gap:'5px', flexWrap:'wrap' }}>
           <Chip label="Alle"       active={typeFilter === null}        onClick={() => setTypeFilter(null)} />
@@ -384,7 +384,7 @@ function App() {
         </div>
 
         {/* Detail */}
-        <div style={{ flex:1, display:'flex', flexDirection:'column', overflow:'hidden', background:'rgba(8,6,22,0.4)' }}>
+        <div style={{ flex:1, display:'flex', flexDirection:'column', overflow:'hidden', background:'rgba(var(--bg2-rgb),0.4)' }}>
           {selected
             ? <TalentDetail t={selected} showBullets={tw.showBullets} />
             : <EmptyState msg="Talent auswählen" />

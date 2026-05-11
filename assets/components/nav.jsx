@@ -73,6 +73,12 @@
       85% { opacity:0; }
       100%{ opacity:0; }
     }
+    .meruria-hamburger { display: none; }
+    @media (max-width: 768px) {
+      .meruria-logo { margin-right: auto !important; }
+      .meruria-desktop-nav { display: none !important; }
+      .meruria-hamburger { display: inline-flex !important; align-items: center; justify-content: center; }
+    }
   `;
   document.head.appendChild(s);
 })();
@@ -169,7 +175,7 @@ function NavItem({ tab }) {
                     {glitchActive && <div key={`txa-${glitchKey}`} aria-hidden="true" style={{ position: 'absolute', inset: 0, padding: '10px 18px', fontFamily: 'var(--font-body)', fontWeight: '500', fontSize: '12px', letterSpacing: '0.1em', color: '#c9b8ff', pointerEvents: 'none', zIndex: 1, animation: `neu-txt-a ${dur} ease forwards` }}>{item.label}</div>}
                     {glitchActive && <div key={`txb-${glitchKey}`} aria-hidden="true" style={{ position: 'absolute', inset: 0, padding: '10px 18px', fontFamily: 'var(--font-body)', fontWeight: '500', fontSize: '12px', letterSpacing: '0.1em', color: '#7c4dff', pointerEvents: 'none', zIndex: 1, animation: `neu-txt-b ${dur} ease forwards` }}>{item.label}</div>}
                     <a key={`lnk-${glitchKey}`} href={item.href} style={{ display: 'block', padding: '10px 18px', fontFamily: 'var(--font-body)', fontWeight: '500', fontSize: '12px', letterSpacing: '0.1em', color: '#c9b8ff', textDecoration: 'none', transition: 'color 0.15s, padding-left 0.15s', textShadow: '0 0 10px rgba(124,77,255,0.8), 0 0 20px rgba(124,77,255,0.4)', background: 'rgba(124,77,255,0.08)', position: 'relative', zIndex: 2, ...(glitchActive ? { animation: `neu-txt-main ${dur} ease forwards` } : {}) }}
-                      onMouseEnter={(e) => { e.currentTarget.style.color = '#f0eeff'; e.currentTarget.style.background = 'rgba(124,77,255,0.18)'; e.currentTarget.style.paddingLeft = '24px'; e.currentTarget.style.textShadow = '0 0 14px rgba(160,140,255,1), 0 0 28px rgba(124,77,255,0.6)'; }}
+                      onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--white)'; e.currentTarget.style.background = 'rgba(124,77,255,0.18)'; e.currentTarget.style.paddingLeft = '24px'; e.currentTarget.style.textShadow = '0 0 14px rgba(var(--accent-rgb),1), 0 0 28px rgba(124,77,255,0.6)'; }}
                       onMouseLeave={(e) => { e.currentTarget.style.color = '#c9b8ff'; e.currentTarget.style.background = 'rgba(124,77,255,0.08)'; e.currentTarget.style.paddingLeft = '18px'; e.currentTarget.style.textShadow = '0 0 10px rgba(124,77,255,0.8), 0 0 20px rgba(124,77,255,0.4)'; }}>
                       {item.label}
                     </a>
@@ -190,7 +196,7 @@ function NavItem({ tab }) {
                   </span>
                 </a>
               )}
-              {item.dividerAfter && <div style={{ height: '1px', background: 'rgba(160,140,255,0.2)', margin: '2px 0' }} />}
+              {item.dividerAfter && <div style={{ height: '1px', background: 'rgba(var(--accent-rgb),0.2)', margin: '2px 0' }} />}
             </React.Fragment>
           )}
         </div>
@@ -222,23 +228,81 @@ function ThemeToggle() {
   );
 }
 
+function MobileNavSection({ tab, onClose }) {
+  const [open, setOpen] = useState(false);
+
+  if (tab.href) {
+    return (
+      <a href={tab.href} onClick={onClose} style={{ display: 'block', padding: '14px 24px', fontFamily: 'var(--font-display)', fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--nav-text)', textDecoration: 'none', borderBottom: '1px solid var(--nav-item-border)', transition: 'color 0.15s' }}>
+        {tab.label}
+      </a>
+    );
+  }
+
+  return (
+    <div>
+      <button onClick={() => setOpen(o => !o)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', padding: '14px 24px', fontFamily: 'var(--font-display)', fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--nav-text)', background: 'transparent', border: 'none', borderBottom: '1px solid var(--nav-item-border)', cursor: 'pointer', transition: 'color 0.15s' }}>
+        {tab.label}
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', opacity: 0.5 }}>{open ? '▲' : '▼'}</span>
+      </button>
+      {open && (
+        <div style={{ background: 'rgba(0,0,0,0.15)' }}>
+          {tab.items.map((item, i) => (
+            <a key={i} href={item.href} onClick={onClose} style={{ display: 'flex', alignItems: 'center', gap: '5px', padding: '11px 24px 11px 36px', fontFamily: 'var(--font-body)', fontSize: '12px', fontWeight: '300', letterSpacing: '0.1em', color: 'var(--nav-item-text)', textDecoration: 'none', borderBottom: i < tab.items.length - 1 ? '1px solid var(--nav-item-border)' : 'none', transition: 'color 0.15s' }}>
+              {item.label}
+              {item.locked && (
+                <svg width="8" height="10" viewBox="0 0 8 10" fill="none" style={{ flexShrink: 0, opacity: 0.5 }}>
+                  <rect x="0.5" y="4" width="7" height="5.5" rx="1" fill="currentColor"/>
+                  <path d="M1.5 4V2.8a2.5 2.5 0 0 1 5 0V4" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round"/>
+                </svg>
+              )}
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function SiteNav({ rightLabel }) {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const close = () => setMobileOpen(false);
+    document.addEventListener('click', close);
+    return () => document.removeEventListener('click', close);
+  }, [mobileOpen]);
+
   return (
     <div style={{ position: 'sticky', top: 0, zIndex: 100, width: '100%', background: 'var(--nav-bg)', borderBottom: '1px solid var(--nav-border)', backdropFilter: 'blur(16px)' }}>
       <div style={{ display: 'flex', alignItems: 'center', padding: '0 24px', height: '52px' }}>
-        <a href="index.html" style={{ marginRight: '70px', whiteSpace: 'nowrap', flexShrink: 0, textDecoration: 'none' }}>
+        <a href="index.html" className="meruria-logo" style={{ marginRight: '70px', whiteSpace: 'nowrap', flexShrink: 0, textDecoration: 'none' }}>
           <span style={{ fontFamily: 'var(--font-display)', fontSize: '20px', fontWeight: '300', letterSpacing: '0.3em', color: 'var(--white)', textShadow: '0 0 28px rgba(124,77,255,0.55)', animation: 'flicker-mid 9s infinite' }}>MERURIA</span>
         </a>
-        <nav style={{ display: 'flex', gap: '6px', alignItems: 'center', flex: 1 }}>
+        <nav className="meruria-desktop-nav" style={{ display: 'flex', gap: '6px', alignItems: 'center', flex: 1 }}>
           {NAV.map((tab) => <NavItem key={tab.id} tab={tab} />)}
         </nav>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
           {rightLabel && (
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', color: 'rgba(160,140,255,0.35)', letterSpacing: '0.15em' }}>{rightLabel}</div>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', color: 'rgba(var(--accent-rgb),0.35)', letterSpacing: '0.15em' }}>{rightLabel}</div>
           )}
           <ThemeToggle />
+          <button
+            className="meruria-hamburger"
+            onClick={(e) => { e.stopPropagation(); setMobileOpen(prev => !prev); }}
+            title="Navigation"
+            style={{ background: 'transparent', border: '1px solid var(--nav-btn-border)', borderRadius: '3px', color: 'var(--nav-text)', cursor: 'pointer', padding: '5px 9px', fontSize: '16px', lineHeight: 1, flexShrink: 0, transition: 'all 0.15s' }}
+          >
+            {mobileOpen ? '✕' : '☰'}
+          </button>
         </div>
       </div>
+      {mobileOpen && (
+        <div onClick={(e) => e.stopPropagation()} style={{ borderTop: '1px solid var(--nav-border)', background: 'var(--nav-dropdown-bg)', backdropFilter: 'blur(16px)', overflowY: 'auto', maxHeight: 'calc(100dvh - 52px)' }}>
+          {NAV.map(tab => <MobileNavSection key={tab.id} tab={tab} onClose={() => setMobileOpen(false)} />)}
+        </div>
+      )}
     </div>
   );
 }

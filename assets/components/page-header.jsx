@@ -13,8 +13,8 @@ function _phHexPoints(s) {
 
 function PageHeader({ height = 180, showHex = false }) {
   return (
-    <div style={{ position: 'relative', zIndex: 10, width: '100%', height: `${height}px`, background: 'linear-gradient(180deg,rgba(20,10,50,0.95) 0%,rgba(10,8,30,0.98) 100%)', borderBottom: '1px solid rgba(160,140,255,0.15)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 20% 50%,rgba(124,77,255,0.18) 0%,transparent 50%),radial-gradient(ellipse at 80% 50%,rgba(45,125,255,0.14) 0%,transparent 50%),repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(160,140,255,0.04) 60px,rgba(160,140,255,0.04) 61px)', pointerEvents: 'none' }} />
+    <div className="ph-root" style={{ position: 'relative', zIndex: 10, width: '100%', height: `${height}px`, background: 'linear-gradient(180deg,rgba(20,10,50,0.95) 0%,rgba(10,8,30,0.98) 100%)', borderBottom: '1px solid rgba(var(--accent-rgb),0.15)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 20% 50%,rgba(124,77,255,0.18) 0%,transparent 50%),radial-gradient(ellipse at 80% 50%,rgba(45,125,255,0.14) 0%,transparent 50%),repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(var(--accent-rgb),0.04) 60px,rgba(var(--accent-rgb),0.04) 61px)', pointerEvents: 'none' }} />
       {showHex && (
         <React.Fragment>
           <div style={{ position: 'absolute', inset: 0, backgroundImage: 'repeating-linear-gradient(135deg,transparent,transparent 18px,rgba(124,77,255,0.03) 18px,rgba(124,77,255,0.03) 19px)', pointerEvents: 'none' }} />
@@ -26,7 +26,7 @@ function PageHeader({ height = 180, showHex = false }) {
           </div>
         </React.Fragment>
       )}
-      <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'rgba(160,140,255,0.3)', letterSpacing: '0.3em', textTransform: 'uppercase', position: 'relative', zIndex: 1 }}>Kopfbild — Artwork hier ablegen</div>
+      <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'rgba(var(--accent-rgb),0.3)', letterSpacing: '0.3em', textTransform: 'uppercase', position: 'relative', zIndex: 1 }}>Kopfbild — Artwork hier ablegen</div>
     </div>
   );
 }
