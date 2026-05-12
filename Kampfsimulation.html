@@ -841,6 +841,12 @@ function CombatantCard({ c, members, count, onRemove, onAddOne, onDetail, onEdit
                     const v = e.target.value === '' ? undefined : Math.max(1, +e.target.value);
                     onSessionChange(m._uid, 'currentTp', v);
                   }} />
+                {m.tp_wuerfel && (
+                  <button className="sim-tp-roll-btn" title={`TP würfeln (${m.tp_wuerfel})`}
+                    onClick={e => { e.stopPropagation(); onSessionChange(m._uid, 'currentTp', rollExpr(m.tp_wuerfel).total); }}>
+                    ⚄
+                  </button>
+                )}
               </label>
             ))}
           </div>
@@ -1546,7 +1552,7 @@ function rateRun(run) {
 }
 
 // ── Combat Results (multi-run) ────────────────────────────────────────────────
-function CombatResults({ runs, group1Name, group2Name, onReset, onRerun }) {
+function CombatResults({ runs, group1Name, group2Name, onReset, onRerun, runCount, onRunCountChange }) {
   const [openLogs, setOpenLogs] = useState(new Set());
 
   const wins1   = runs.filter(r => r.winner === 1).length;
@@ -1584,6 +1590,9 @@ function CombatResults({ runs, group1Name, group2Name, onReset, onRerun }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <button className="sim-btn sim-btn-ghost" style={{ padding: '4px 12px', fontSize: '0.7rem' }} onClick={onReset}>← Zurück</button>
           <button className="sim-btn sim-btn-ghost" style={{ padding: '4px 12px', fontSize: '0.7rem' }} onClick={onRerun}>↺ Wiederholen</button>
+          <input type="number" min={1} max={500} value={runCount}
+            onChange={e => onRunCountChange(Math.max(1, Math.min(500, +e.target.value)))}
+            className="sim-session-input" style={{ width: 44 }} title="Anzahl Durchläufe" />
         </div>
         <span className={`sim-winner-badge ${badgeCls}`}>{badgeText}</span>
       </div>
@@ -1606,7 +1615,6 @@ function CombatResults({ runs, group1Name, group2Name, onReset, onRerun }) {
       <div className="sim-survivor-list">
         {[{ name: group1Name, agg: agg1 }, { name: group2Name, agg: agg2 }].map(({ name, agg }) => (
           <div key={name} className="sim-survivor-group">
-            <h4>{name}</h4>
             {agg.map((s, i) => (
               <div key={i} className="sim-survivor-row">
                 <span className={s.survived === 0 ? 'sim-survivor-dead' : ''}>{s.name}</span>
@@ -1786,6 +1794,7 @@ function SimApp() {
   const [modal, setModal] = useState(null); // null | { type: 'monster'|'player', target: 1|2 }
   const [savedPlayers, setSavedPlayers] = useState(loadPlayers);
   const [result, setResult] = useState(null);
+  const [runCount, setRunCount] = useState(50);
   const [difficulty, setDifficulty] = useState('normal');
   const [monsterFilter, setMonsterFilter] = useState({ art: '', unterart: '', umgebung: '' });
   const [coherent, setCoherent] = useState(true);
@@ -1861,7 +1870,7 @@ function SimApp() {
 
   function runSimulation() {
     if (!group1.length || !group2.length) return;
-    const runs = Array.from({ length: 20 }, () => simulateCombat(group1, group2));
+    const runs = Array.from({ length: runCount }, () => simulateCombat(group1, group2));
     setResult(runs);
   }
 
@@ -1932,7 +1941,9 @@ function SimApp() {
               group1Name={group1.map(c => c.name).join(', ') || 'Gruppe 1'}
               group2Name={group2.map(c => c.name).join(', ') || 'Gruppe 2'}
               onReset={() => setResult(null)}
-              onRerun={() => setResult(Array.from({ length: 20 }, () => simulateCombat(group1, group2)))}
+              runCount={runCount}
+              onRunCountChange={setRunCount}
+              onRerun={() => setResult(Array.from({ length: runCount }, () => simulateCombat(group1, group2)))}
             />
           </>
         )}

@@ -346,7 +346,7 @@ function GroupSection({ entry, accent, cols, navHeight, onSelect }) {
       {/* Subrace cards grid */}
       <div style={{ display:'grid', gridTemplateColumns:`repeat(${cols}, 1fr)`, gap:'16px', overflow:'visible' }}>
         {entry.subraces.map(sr => (
-          <SubraceCard key={sr.id} subrace={sr} accent={accent} parentId={entry.id} onSelect={onSelect} />
+          <SubraceCard key={sr.id} subrace={sr} accent={sr.accent || accent} parentId={entry.id} onSelect={onSelect} />
         ))}
       </div>
     </div>
@@ -565,7 +565,7 @@ function App() {
                 const rowId = `race-batch-${batchIdx}-row-${Math.floor(i / cols)}`;
                 output.push(
                   <div key={rowId} id={rowId} style={{ display:'grid', gridTemplateColumns:`repeat(${cols}, 1fr)`, gap:'16px', marginBottom:'16px', scrollMarginTop:`${NAV_H + 8}px`, overflow:'visible' }}>
-                    {row.map(r => <RaceCard key={r.id} id={r.id} name={r.name} subtitle={r.subtitle} tags={r.tags} accent={accent} onSelect={handleSelect} insigniaSrc={r.insigniaSrc} />)}
+                    {row.map(r => <RaceCard key={r.id} id={r.id} name={r.name} subtitle={r.subtitle} tags={r.tags} accent={r.accent || accent} onSelect={handleSelect} insigniaSrc={r.insigniaSrc} />)}
                   </div>
                 );
               }
@@ -580,7 +580,7 @@ function App() {
               } else {
                 flushBatch();
                 output.push(
-                  <GroupSection key={entry.id} entry={entry} accent={accent} cols={cols} navHeight={NAV_H} onSelect={handleSelect} />
+                  <GroupSection key={entry.id} entry={entry} accent={entry.accent || accent} cols={cols} navHeight={NAV_H} onSelect={handleSelect} />
                 );
               }
             });

@@ -68,14 +68,26 @@ assets/
 │   ├── insignia/      — faction insignia images
 │   ├── races/         — race artwork
 │   └── monster/
-│       └── monsterhandbuch/  — monster images (one per monster, lowercase_underscores)
+│       ├── monsterhandbuch/   — D&D 5e Monster Manual (one PNG per monster)
+│       ├── foliant/           — Mordenkainen's Tome of Foes
+│       ├── drakkenheim/       — Dungeons of Drakkenheim
+│       ├── almanach/          — Monsters of the Multiverse
+│       ├── floral-dragons/    — Floral Dragons
+│       ├── ruhm-der-riesen/   — Bigby Presents: Glory of the Giants
+│       └── schatzkammer/      — Fizban's Treasury of Dragons
 ├── scripts/
 │   ├── data/
-│   │   ├── monster-data.js           — aggregator: merges all sources, exports window.MONSTER_DATA
+│   │   ├── monster-data.js      — aggregator: merges all sources alphabetically → window.MONSTER_DATA
 │   │   ├── monster/
-│   │   │   └── monsterhandbuch-data.js  — 427 monsters as window.MONSTER_DATA_MONSTERHANDBUCH
+│   │   │   ├── monsterhandbuch-data.js        — 427 monsters → window.MONSTER_DATA_MONSTERHANDBUCH
+│   │   │   ├── foliant-der-feinde-data.js     — 139 monsters → window.MONSTER_DATA_FOLIANT_DER_FEINDE
+│   │   │   ├── drakkenheim-data.js            — 166 monsters → window.MONSTER_DATA_DRAKKENHEIM
+│   │   │   ├── almanach-der-monster-data.js   — 124 monsters → window.MONSTER_DATA_ALMANACH_DER_MONSTER
+│   │   │   ├── floral-dragons-data.js         —  30 monsters → window.MONSTER_DATA_FLORAL_DRAGONS
+│   │   │   ├── ruhm-der-riesen-data.js        —  71 monsters → window.MONSTER_DATA_RUHM_DER_RIESEN
+│   │   │   └── schatzkammer-der-drachen-data.js — 70 monsters → window.MONSTER_DATA_SCHATZKAMMER_DER_DRACHEN
 │   │   ├── rassen-data.js, klassen-data.js, …  — other page data
-│   │   └── monster-data.js           — also holds window.UNTERART_LORE
+│   │   └── monster-data.js      — also holds window.UNTERART_LORE
 │   └── vendor/        — React, ReactDOM, Babel Standalone
 └── styles/
     ├── global/
@@ -133,7 +145,54 @@ npx serve .
 python3 -m http.server 8080
 ```
 
-## Monster data entry (`assets/scripts/data/monster/monsterhandbuch-data.js`)
+## Monster data (`assets/scripts/data/monster/`)
+
+### Sources and aggregator
+
+Each book is its own JS file. `monster-data.js` merges them all and sorts the combined array by name:
+
+```js
+window.MONSTER_DATA = [
+  ...(window.MONSTER_DATA_MONSTERHANDBUCH || []),
+  ...(window.MONSTER_DATA_FOLIANT_DER_FEINDE || []),
+  // … all other sources …
+].sort((a, b) => a.name.localeCompare(b.name, 'de'));
+```
+
+Adding a new book: create `<book>-data.js`, declare the window variable, add it to the aggregator spread list, add `<script>` tag in `Monster.html`.
+
+| Datei | Variable | `source`-Wert | Bilder-Verzeichnis |
+|---|---|---|---|
+| `monsterhandbuch-data.js` | `MONSTER_DATA_MONSTERHANDBUCH` | `"Monsterhandbuch"` | `monster/monsterhandbuch/` |
+| `foliant-der-feinde-data.js` | `MONSTER_DATA_FOLIANT_DER_FEINDE` | `"Foliant der Feinde"` | `monster/foliant/` |
+| `drakkenheim-data.js` | `MONSTER_DATA_DRAKKENHEIM` | `"Drakkenheim"` | `monster/drakkenheim/` |
+| `almanach-der-monster-data.js` | `MONSTER_DATA_ALMANACH_DER_MONSTER` | `"Almanach der Monster"` | `monster/almanach/` |
+| `floral-dragons-data.js` | `MONSTER_DATA_FLORAL_DRAGONS` | `"Floral Dragons"` | `monster/floral-dragons/` |
+| `ruhm-der-riesen-data.js` | `MONSTER_DATA_RUHM_DER_RIESEN` | `"Ruhm der Riesen"` | `monster/ruhm-der-riesen/` |
+| `schatzkammer-der-drachen-data.js` | `MONSTER_DATA_SCHATZKAMMER_DER_DRACHEN` | `"Schatzkammer der Drachen"` | `monster/schatzkammer/` |
+
+### `bild` URL — Namenskonvention
+
+Gilt für **alle** Quellen. Muster: `assets/images/monster/<verzeichnis>/<dateiname>.png`
+
+Dateinamen-Regeln (aus dem Monsternamen ableiten):
+- Alles **kleinschreiben**
+- Leerzeichen → Unterstrich `_`
+- Bindestrich `-` bleibt erhalten
+- Umlaute transliterieren: `ä→ae`, `ö→oe`, `ü→ue`, `ß→ss`
+- Artikel im Namen werden mitgenommen (`wandelnde_delerium_geode.png`)
+
+Beispiele:
+
+| Monsternachweis | `bild`-Wert |
+|---|---|
+| `Wandelnde Delerium-Geode` | `assets/images/monster/drakkenheim/wandelnde_delerium-geode.png` |
+| `Greuelverhängnis` | `assets/images/monster/drakkenheim/greuelverhaengnis.png` |
+| `Ritter der Tiefe` | `assets/images/monster/drakkenheim/ritter_der_tiefe.png` |
+| `Großer Frosch` | `assets/images/monster/monsterhandbuch/grosser_frosch.png` |
+| `Fraz-Urb'luu` | `assets/images/monster/foliant/fraz-urb_luu.png` (Sonderzeichen → Unterstrich) |
+
+### Monster data entry — Monsterhandbuch
 
 The user regularly pastes raw OCR text from the German D&D 5e Monster Manual. Your job is to parse it, correct OCR errors, and insert a JS object into `window.MONSTER_DATA_MONSTERHANDBUCH` **in alphabetical order by name**.
 
@@ -168,7 +227,7 @@ The user regularly pastes raw OCR text from the German D&D 5e Monster Manual. Yo
   sprachen: ["Abyssal", "Gemein"],  // [] if none (OCR often shows "-" for no languages)
   umgebung: ["Unterirdisch", "Wald"],  // [] if unknown
   bild: "assets/images/monster/monsterhandbuch/kreaturname.png",
-                                    // lowercase, spaces→underscores, ü→ue, ö→oe, ä→ae, ß→ss
+                                    // Namenskonvention → siehe Abschnitt "`bild` URL" oben
   beschreibung: ["Lore-Text..."],  // array of paragraph strings
   besonderheiten: [
     { name: "Merkmalname", beschreibung: "Text." }
@@ -278,6 +337,53 @@ OCR frequently swaps the darkvision range and passive perception values. If the 
 ### Variable AC (Lykanthropen)
 
 Store the highest RK value in `rk`; note the lower humanoid-form value in `ruestungstyp`.
+
+---
+
+### Monster data entry — Drakkenheim
+
+Drakkenheim-Monster kommen aus dem Buch *Dungeons of Drakkenheim* und werden in `drakkenheim-data.js` gepflegt. Das Schema ist identisch mit dem Monsterhandbuch-Schema, aber:
+
+- `source: "Drakkenheim"` (nicht `"Monsterhandbuch"`)
+- Kein OCR — Daten werden manuell erfasst oder aus Sitzungsprotokollen übernommen
+- `hortaktionen` / `regionale_effekte` kommen in Drakkenheim nicht vor
+- NPC-Monster bekommen `unterart: "NPC"`
+- Validierung analog zum Monsterhandbuch, nur mit `MONSTER_DATA_DRAKKENHEIM`
+
+#### Drakkenheim-Schreibweisen und Namenskonventionen
+
+| Regel | Korrekt | Falsch |
+|---|---|---|
+| Die magische Substanz | `Delerium` | `Delirium` |
+| Greuel-Präfix (Compound) | `Greuelkriecher`, `Greueltroll` | `Eldritscher Kriecher` |
+| Tiefenwesen-Muster | `Ritter der Tiefe`, `Sirene der Tiefe` | `Tiefen-Ritter` |
+| Karmesin-Fraktion | `Karmesin-Gräfin`, `Karmesinritter` | `Scharlachrote Gräfin` |
+
+**Greuel-Präfix**: Drakkenheim-Monster, die auf aberranter Eldritsch-Kontamination basieren, tragen das Präfix `Greuel-` als Kompositum (Greuelkriecher, Greuelelender, Greueltroll, Greuelverhängnis). Das Adjektiv `eldritsch` bleibt in **Fließtext** erhalten, wenn es die Kontamination allgemein beschreibt — nicht als Monsternamensteil. `Eldrischer Strahl` (offizieller D&D-Zaubername) darf **niemals** geändert werden.
+
+**"X der Tiefe"-Muster**: Monster, die tief im Dunst entstanden sind, heißen `<Kreaturtyp> der Tiefe` (z. B. `Elender-Krieger der Tiefe`), nicht `Tiefen-<Kreaturtyp>`.
+
+#### Alphabetische Einordnung
+
+Wie beim Monsterhandbuch — strikt nach `name`, A→Z. Besonderheiten:
+- Bindestrich `-` sortiert vor Buchstaben (`Greuel-X` < `Greuely...`), aber zusammengeschriebene Komposita kommen nach dem Trennstrich: `Greuelkriecher` (kein Bindestrich) < `Kapuzenlaterne-Apotheker`
+- Präfix-Gruppen (z. B. alle `Kapuzenlaterne-*`) bleiben zusammen am alphabetischen Ort des Gruppennamens
+
+#### Validierung (Drakkenheim)
+
+```bash
+node -e "
+const fs = require('fs');
+const window = {};
+eval(fs.readFileSync('assets/scripts/data/monster/drakkenheim-data.js', 'utf8'));
+['Name1','Name2'].forEach(n => {
+  const m = window.MONSTER_DATA_DRAKKENHEIM.find(m => m.name === n);
+  if (!m) return console.log(n, 'NOT FOUND');
+  console.log(m.name, '| CR:', m.cr, '| TP:', m.tp);
+});
+console.log('Total:', window.MONSTER_DATA_DRAKKENHEIM.length);
+"
+```
 
 ## CSS design tokens
 
