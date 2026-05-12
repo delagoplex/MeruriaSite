@@ -12,6 +12,7 @@
 <script src="assets/scripts/data/resources/ff14_fish-data.js"></script>
 <script src="assets/scripts/data/resources/mineralien/ff14_mineralien-data.js"></script>
 <script src="assets/scripts/data/resources/pflanzen/ff14_pflanzen-data.js"></script>
+<script src="assets/scripts/data/resources/pflanzen/fantasy_plant-data.js"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
 <script src="assets/components/site-gate.jsx" type="text/babel"></script>
 <script src="assets/components/particle-field.jsx" type="text/babel"></script>
@@ -28,7 +29,10 @@ const { FilterGroup, XBtn } = window;
 
 const ALL_FISH       = window.FISH_DB;
 const ALL_MINERALIEN = window.MINERALIEN_DB || [];
-const ALL_PFLANZEN   = window.PFLANZEN_DB   || [];
+const ALL_PFLANZEN   = [
+  ...(window.PFLANZEN_DB        || []),
+  ...(window.FANTASY_PLANT_DB   || []),
+].sort((a, b) => a.name_de.localeCompare(b.name_de, 'de', { sensitivity: 'base' }));
 
 // ── Fundort colours ────────────────────────────────────────────────────────────
 const FUNDORT_COLOR = {
@@ -49,6 +53,7 @@ const FUNDORT_COLOR = {
   'Himmelsfall':   '#ffd040',
   'Schmiede':      '#c09050',
   'Ruinen':        '#908060',
+  'Stadt':         '#b07840',
 };
 
 const RES_RARITY_TIERS = [
@@ -76,6 +81,7 @@ const KLIMA_COLOR = {
   'Kalt':        '#90d8f8',
   'Warm':        '#ffaa44',
   'Trocken':     '#d4b260',
+  'Feucht':      '#3aa0d8',
   'Tiefsee':     '#3a6abf',
   'Stürmisch':   '#9898c0',
   'Sumpfig':     '#58b870',
@@ -84,6 +90,11 @@ const KLIMA_COLOR = {
   'Vulkanisch':  '#e85020',
   'Schattenhaft':'#9050c8',
   'Kosmisch':    '#5050e0',
+  'Dunkel':      '#5848a0',
+  'Hell':        '#ffd870',
+  'Tag':         '#ffc850',
+  'Nacht':       '#3848a0',
+  'Windig':      '#a0c0e0',
 };
 
 const GRÖSSE_ORDER = ['Winzig','Klein','Mittelgroß','Groß','Riesig'];
@@ -222,7 +233,7 @@ function FishDetailModal({ fish, onClose }) {
             <div className="fish-modal-icon">
               {imgOk
                 ? <img src={fish.icon} alt="" onError={() => setImgOk(false)} />
-                : <div className="fish-icon-missing">🐟</div>
+                : <div className="fish-icon-missing"><PlaceholderIcon kind="fish" /></div>
               }
             </div>
             <div style={{ minWidth:0 }}>
@@ -358,7 +369,7 @@ function FishCard({ fish, onSelect }) {
         <div className="fish-icon">
           {imgOk
             ? <img src={fish.icon} alt="" loading="lazy" onError={() => setImgOk(false)} />
-            : <div className="fish-icon-missing">🐟</div>
+            : <div className="fish-icon-missing"><PlaceholderIcon kind="fish" /></div>
           }
         </div>
         <div style={{ minWidth:0, flex:1 }}>
@@ -519,6 +530,78 @@ function FishSidebar({ filters, setFilters, total, filtered, isOpen, onClose }) 
   );
 }
 
+// ── Missing-Icon Placeholders (inline SVG, theme-matched) ─────────────────────
+function PlaceholderIcon({ kind = 'plant' }) {
+  const c = 'rgba(38,198,218,0.55)';
+  const fill = 'rgba(38,198,218,0.10)';
+  const dim = 'rgba(38,198,218,0.22)';
+  const common = {
+    viewBox: '0 0 64 64',
+    width: '100%',
+    height: '100%',
+    style: { display:'block', filter:'drop-shadow(0 0 6px rgba(38,198,218,0.18))' },
+    'aria-hidden': true,
+  };
+  if (kind === 'mineral') {
+    return (
+      <svg {...common}>
+        <defs>
+          <radialGradient id="ph-min-g" cx="50%" cy="50%" r="55%">
+            <stop offset="0%" stopColor="rgba(38,198,218,0.22)" />
+            <stop offset="100%" stopColor="rgba(38,198,218,0)" />
+          </radialGradient>
+        </defs>
+        <circle cx="32" cy="32" r="26" fill="url(#ph-min-g)" />
+        <polygon points="32,12 48,24 42,50 22,50 16,24" fill={fill} stroke={c} strokeWidth="1.2" strokeLinejoin="round" />
+        <polyline points="32,12 32,50" stroke={c} strokeWidth="0.9" opacity="0.7" fill="none" />
+        <polyline points="16,24 32,30 48,24" stroke={c} strokeWidth="0.9" opacity="0.7" fill="none" />
+        <polyline points="22,50 32,30 42,50" stroke={c} strokeWidth="0.9" opacity="0.5" fill="none" />
+      </svg>
+    );
+  }
+  if (kind === 'fish') {
+    return (
+      <svg {...common}>
+        <defs>
+          <radialGradient id="ph-fish-g" cx="50%" cy="50%" r="55%">
+            <stop offset="0%" stopColor="rgba(38,198,218,0.20)" />
+            <stop offset="100%" stopColor="rgba(38,198,218,0)" />
+          </radialGradient>
+        </defs>
+        <circle cx="32" cy="32" r="26" fill="url(#ph-fish-g)" />
+        <path d="M14 32 C 20 22, 36 22, 44 32 C 36 42, 20 42, 14 32 Z" fill={fill} stroke={c} strokeWidth="1.2" strokeLinejoin="round" />
+        <path d="M44 32 L 54 24 L 52 32 L 54 40 Z" fill={fill} stroke={c} strokeWidth="1.2" strokeLinejoin="round" />
+        <circle cx="22" cy="30" r="1.5" fill={c} />
+        <path d="M30 28 Q 32 32 30 36" stroke={c} strokeWidth="0.7" fill="none" opacity="0.6" />
+      </svg>
+    );
+  }
+  // default: plant
+  return (
+    <svg {...common}>
+      <defs>
+        <radialGradient id="ph-plant-g" cx="50%" cy="60%" r="55%">
+          <stop offset="0%" stopColor="rgba(38,198,218,0.22)" />
+          <stop offset="100%" stopColor="rgba(38,198,218,0)" />
+        </radialGradient>
+      </defs>
+      <circle cx="32" cy="36" r="26" fill="url(#ph-plant-g)" />
+      <path d="M32 58 V 30" stroke={c} strokeWidth="1.5" strokeLinecap="round" fill="none" />
+      <path d="M32 38 C 22 36, 16 26, 20 16 C 26 20, 32 28, 32 38 Z" fill={fill} stroke={c} strokeWidth="1.2" strokeLinejoin="round" />
+      <path d="M32 34 C 42 32, 48 22, 44 12 C 38 16, 32 24, 32 34 Z" fill={fill} stroke={c} strokeWidth="1.2" strokeLinejoin="round" />
+      <path d="M22 18 Q 28 24, 32 32" stroke={dim} strokeWidth="0.7" fill="none" />
+      <path d="M42 14 Q 36 22, 32 30" stroke={dim} strokeWidth="0.7" fill="none" />
+      <circle cx="32" cy="29" r="1.6" fill={c} />
+    </svg>
+  );
+}
+const PLACEHOLDER_KIND = { '🌿':'plant', '💎':'mineral', '🐟':'fish' };
+function renderFallbackIcon(fallback) {
+  // fallback may be an emoji string (legacy) — map to a kind
+  const kind = PLACEHOLDER_KIND[fallback] || 'plant';
+  return <PlaceholderIcon kind={kind} />;
+}
+
 // ── Placeholder Tab ───────────────────────────────────────────────────────────
 const PLACEHOLDER_ICONS = { pflanzen:'🌿', mineralien:'💎', monsterteile:'🦴' };
 function PlaceholderTab({ id, label }) {
@@ -552,9 +635,9 @@ function ResourceDetailModal({ item, onClose, fallbackIcon }) {
         <div className="fish-modal-left">
           <div className="fish-modal-header">
             <div className="fish-modal-icon">
-              {imgOk
+              {imgOk && item.icon
                 ? <img src={item.icon} alt="" onError={() => setImgOk(false)} />
-                : <div className="fish-icon-missing">{fallbackIcon}</div>
+                : <div className="fish-icon-missing">{renderFallbackIcon(fallbackIcon)}</div>
               }
             </div>
             <div style={{ minWidth:0 }}>
@@ -573,7 +656,7 @@ function ResourceDetailModal({ item, onClose, fallbackIcon }) {
             </div>
           </div>
 
-          <div className="fish-modal-section" style={{ display:'flex', gap:'32px' }}>
+          <div className="fish-modal-section" style={{ display:'flex', gap:'32px', flexWrap:'wrap' }}>
             <div>
               <div className="fish-modal-label">Gewicht</div>
               <div style={{ fontFamily:'var(--font-mono)', fontSize:'13px', color:'rgba(var(--text-rgb),0.75)', letterSpacing:'0.06em' }}>{item.gewicht || '–'}</div>
@@ -582,6 +665,18 @@ function ResourceDetailModal({ item, onClose, fallbackIcon }) {
               <div className="fish-modal-label">Verkaufspreis</div>
               <div style={{ fontFamily:'var(--font-mono)', fontSize:'13px', color:'rgba(255,214,0,0.88)', letterSpacing:'0.06em' }}>{item.verkaufspreis || '–'}</div>
             </div>
+            {item.groesse && (
+              <div>
+                <div className="fish-modal-label">Größe</div>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:'13px', color:'rgba(var(--text-rgb),0.75)', letterSpacing:'0.06em' }}>{item.groesse}</div>
+              </div>
+            )}
+            {item.wachstumsdauer && (
+              <div>
+                <div className="fish-modal-label">Wachstumsdauer</div>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:'13px', color:'rgba(var(--text-rgb),0.75)', letterSpacing:'0.06em' }}>{item.wachstumsdauer}</div>
+              </div>
+            )}
           </div>
 
           {(item.fundort||[]).length > 0 && (
@@ -600,11 +695,66 @@ function ResourceDetailModal({ item, onClose, fallbackIcon }) {
             </div>
           )}
 
+          {(item.klima||[]).length > 0 && (
+            <div className="fish-modal-section">
+              <div className="fish-modal-label">Klima</div>
+              <div className="fish-klima" style={{ margin:0 }}>
+                {item.klima.map(k => {
+                  const col = KLIMA_COLOR[k] || '#8888cc';
+                  return (
+                    <span key={k} className="fish-klima-chip" style={{ background:col+'1e', border:`1px solid ${col}44`, color:col, fontSize:'8px', padding:'2px 8px' }}>
+                      {k}
+                    </span>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {item.eigenschaften && (() => {
+            const eg = item.eigenschaften;
+            const flags = [];
+            if (eg.essbar) flags.push({ label:'Essbar',                col:'#4caf50' });
+            if (eg.essbar_nach_zubereitung) flags.push({ label:'Essbar n. Zubereitung', col:'#88c050' });
+            if (eg.giftig) flags.push({ label:'Giftig',                col:'#e04040' });
+            const hasAny = flags.length || eg.farbe || eg.beschaffenheit;
+            if (!hasAny) return null;
+            return (
+              <div className="fish-modal-section">
+                <div className="fish-modal-label">Eigenschaften</div>
+                {flags.length > 0 && (
+                  <div className="fish-klima" style={{ margin:'0 0 8px 0' }}>
+                    {flags.map(f => (
+                      <span key={f.label} className="fish-klima-chip" style={{ background:f.col+'1e', border:`1px solid ${f.col}55`, color:f.col, fontSize:'8px', padding:'2px 8px' }}>
+                        {f.label}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                {(eg.farbe || eg.beschaffenheit) && (
+                  <div style={{ display:'flex', flexDirection:'column', gap:'4px', fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:300, lineHeight:1.5, color:'rgba(var(--text-rgb),0.6)', letterSpacing:'0.015em' }}>
+                    {eg.farbe && <div><span style={{ color:'rgba(38,198,218,0.55)', fontFamily:'var(--font-mono)', fontSize:'8.5px', letterSpacing:'0.18em', textTransform:'uppercase', marginRight:'8px' }}>Farbe</span>{eg.farbe}</div>}
+                    {eg.beschaffenheit && <div><span style={{ color:'rgba(38,198,218,0.55)', fontFamily:'var(--font-mono)', fontSize:'8.5px', letterSpacing:'0.18em', textTransform:'uppercase', marginRight:'8px' }}>Beschaffenheit</span>{eg.beschaffenheit}</div>}
+                  </div>
+                )}
+              </div>
+            );
+          })()}
+
           {item.desc_de && (
             <div className="fish-modal-section">
               <div className="fish-modal-label">Beschreibung</div>
               <p style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:300, lineHeight:1.75, color:'rgba(var(--text-rgb),0.52)', letterSpacing:'0.015em', margin:0 }}>
                 {item.desc_de}
+              </p>
+            </div>
+          )}
+
+          {item.nutzen && (
+            <div className="fish-modal-section">
+              <div className="fish-modal-label">Nutzen</div>
+              <p style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:300, lineHeight:1.75, color:'rgba(var(--text-rgb),0.52)', letterSpacing:'0.015em', margin:0 }}>
+                {item.nutzen}
               </p>
             </div>
           )}
@@ -642,9 +792,9 @@ function ResourceCard({ item, onSelect, fallbackIcon }) {
     <div className="fish-card" onClick={() => onSelect(item)} style={{ cursor:'pointer' }}>
       <div style={{ display:'flex', alignItems:'flex-start', gap:'9px', marginBottom:'2px' }}>
         <div className="fish-icon">
-          {imgOk
+          {imgOk && item.icon
             ? <img src={item.icon} alt="" loading="lazy" onError={() => setImgOk(false)} />
-            : <div className="fish-icon-missing">{fallbackIcon}</div>
+            : <div className="fish-icon-missing">{renderFallbackIcon(fallbackIcon)}</div>
           }
         </div>
         <div style={{ minWidth:0, flex:1 }}>

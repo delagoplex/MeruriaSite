@@ -8,11 +8,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "260 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Ebene",
-      "Küste"
-    ],
-    "gewicht": "2 Pfd."
+    "fundort": ["Ebene", "Küste"],
+    "gewicht": "2 Pfd.",
+    "klima": ["Feucht", "Gemäßigt"],
+    "nutzen": "Bindungsmittel für Keramik und magische Substrate – sonst nichts Nennenswertes.",
+    "groesse": "Bröckchen, 2–5 cm",
+    "wachstumsdauer": "Jahre durch Wechsel von Feuchte und Trockenheit",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Rötlich-braun",
+      "beschaffenheit": "Bröcklig, feinkörnig"
+    }
   },
   {
     "id": 12969,
@@ -23,10 +31,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "1710 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Sumpf"
-    ],
-    "gewicht": "0,95 Pfd."
+    "fundort": ["Sumpf"],
+    "gewicht": "0,95 Pfd.",
+    "klima": ["Feucht", "Gemäßigt"],
+    "nutzen": "Absorbiert Destillationsflüssigkeiten – bei Alchemisten geschätzt.",
+    "groesse": "Moosschicht, mehrere Meter dick",
+    "wachstumsdauer": "Tausende Jahre durch verwelkte Pflanzen",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Dunkelbraun bis schwarz",
+      "beschaffenheit": "Schwammig, faserig"
+    }
   },
   {
     "id": 15948,
@@ -37,11 +54,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "380 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Zutat",
-    "fundort": [
-      "Gebirge",
-      "Wald"
-    ],
-    "gewicht": "0,2 Pfd."
+    "fundort": ["Gebirge", "Wald"],
+    "gewicht": "0,2 Pfd.",
+    "klima": ["Gemäßigt", "Magisch"],
+    "nutzen": "Tempelritual-Räucherung und Grundlage für Schlaftränke; heilt und beruhigt zugleich.",
+    "groesse": "Baum, 4–6 m",
+    "wachstumsdauer": "Mehrere Jahre bis zur Blattreife",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Blassgrün",
+      "beschaffenheit": "Lederig, stark duftend"
+    }
   },
   {
     "id": 17558,
@@ -52,11 +77,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "890 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Höhle",
-      "Arktis"
-    ],
-    "gewicht": "0,55 Pfd."
+    "fundort": ["Höhle", "Arktis"],
+    "gewicht": "0,55 Pfd.",
+    "klima": ["Kalt", "Feucht"],
+    "nutzen": "Reagenz mit dauerhaft kalter Eigenschaft – bleibt selbst im Sommer kühl.",
+    "groesse": "Stalagmit, 30–60 cm",
+    "wachstumsdauer": "Jahrhunderte tropfenweise",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Kristallklar bis hellblau",
+      "beschaffenheit": "Eishart, kälter als Umgebungseis"
+    }
   },
   {
     "id": 17559,
@@ -67,11 +100,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "1700 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Höhle",
-      "Wald"
-    ],
-    "gewicht": "0,7 Pfd."
+    "fundort": ["Höhle", "Wald"],
+    "gewicht": "0,7 Pfd.",
+    "klima": ["Dunkel", "Hell", "Feucht", "Magisch"],
+    "nutzen": "Wird zur Dämmerung gepflückt; fluoresziert kurzzeitig, dann inert.",
+    "groesse": "Moos, Fingerspanne",
+    "wachstumsdauer": "Mehrjährig in Übergangszonen",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Schimmerndes Grün-Blau",
+      "beschaffenheit": "Weich, kurz fluoreszierend"
+    }
   },
   {
     "id": 19903,
@@ -82,10 +123,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "310 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Schmiede"
-    ],
-    "gewicht": "0,1 Pfd."
+    "fundort": ["Schmiede"],
+    "gewicht": "0,1 Pfd.",
+    "klima": ["Magisch"],
+    "nutzen": "Unverzichtbare Tinte für dauerhafte Runen- und Formelschriften auf Pergament.",
+    "groesse": "Phiole, 50 ml",
+    "wachstumsdauer": "Hergestellt in Werkstatt",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": true,
+      "farbe": "Silbrig metallisch",
+      "beschaffenheit": "Flüssig, langzeit-stabil"
+    }
   },
   {
     "id": 19928,
@@ -96,10 +146,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "240 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Nutzholz",
-    "fundort": [
-      "Wald"
-    ],
-    "gewicht": "9,5 Pfd."
+    "fundort": ["Wald"],
+    "gewicht": "9,5 Pfd.",
+    "klima": ["Gemäßigt"],
+    "nutzen": "Hochwertiges, dichtes Bauholz – Zimmerer schätzen es für knarrfreie Bodendielen.",
+    "groesse": "Baum, 20–30 m",
+    "wachstumsdauer": "Jahrzehnte",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Hellbraun mit dunkler Maserung",
+      "beschaffenheit": "Sehr dicht, schwer schwimmend"
+    }
   },
   {
     "id": 19937,
@@ -110,11 +169,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "540 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Nutzholz",
-    "fundort": [
-      "Wald",
-      "Gebirge"
-    ],
-    "gewicht": "9,5 Pfd."
+    "fundort": ["Wald", "Gebirge"],
+    "gewicht": "9,5 Pfd.",
+    "klima": ["Gemäßigt", "Kalt", "Toxisch"],
+    "nutzen": "Elastischer Bogenrohling für Bogenbauer – mit Handschuhen zu handhaben.",
+    "groesse": "Ast, 1–2 m",
+    "wachstumsdauer": "Jahrzehnte",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": true,
+      "farbe": "Rotbraune Rinde, gelbliches Kernholz",
+      "beschaffenheit": "Elastisch, leicht giftig in der Rinde"
+    }
   },
   {
     "id": 23221,
@@ -125,11 +192,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "390 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Zutat",
-    "fundort": [
-      "Gebirge",
-      "Wald"
-    ],
-    "gewicht": "4,5 Pfd."
+    "fundort": ["Gebirge", "Wald"],
+    "gewicht": "4,5 Pfd.",
+    "klima": ["Kalt", "Gemäßigt"],
+    "nutzen": "Im Mörser zerrieben versiegelt es Wunden schneller als gewöhnliche Heilkräuter.",
+    "groesse": "Krautig, 60–90 cm",
+    "wachstumsdauer": "Mehrjährig",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Stahlgrau-grün",
+      "beschaffenheit": "Eisenharte Stengel"
+    }
   },
   {
     "id": 27809,
@@ -140,11 +215,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "130 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Ebene",
-      "Wald"
-    ],
-    "gewicht": "0,25 Pfd."
+    "fundort": ["Ebene", "Wald"],
+    "gewicht": "0,25 Pfd.",
+    "klima": ["Gemäßigt", "Warm"],
+    "nutzen": "Beliebt bei Köchen und Tränkemachern; frisch am wirkungsstärksten.",
+    "groesse": "Krautig, 30 cm",
+    "wachstumsdauer": "Eine Saison; getrocknet jahrelang haltbar",
+    "eigenschaften": {
+      "essbar": true,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Hellgrün mit weiß-rosa Blüten",
+      "beschaffenheit": "Aromatisch, leicht bitter"
+    }
   },
   {
     "id": 27810,
@@ -155,10 +238,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "1190 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Sumpf"
-    ],
-    "gewicht": "0,6 Pfd."
+    "fundort": ["Sumpf"],
+    "gewicht": "0,6 Pfd.",
+    "klima": ["Feucht", "Warm"],
+    "nutzen": "Geräuchert beruhigt er entzündete Affekte und macht den Behandelten schläfrig.",
+    "groesse": "Krautig, 40–60 cm",
+    "wachstumsdauer": "Mehrjährig in salzigen Sumpfbecken",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Graugrün",
+      "beschaffenheit": "Harzige Blätter"
+    }
   },
   {
     "id": 30592,
@@ -169,10 +261,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "400 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Gebirge"
-    ],
-    "gewicht": "0,25 Pfd."
+    "fundort": ["Gebirge"],
+    "gewicht": "0,25 Pfd.",
+    "klima": ["Kalt", "Magisch"],
+    "nutzen": "Soll Bewusstlose wecken; Geschmack elektrisierend. Wirksamkeit unbewiesen, aber legendär.",
+    "groesse": "Krautig, 25 cm",
+    "wachstumsdauer": "Mehrjährig in Gewitterzonen",
+    "eigenschaften": {
+      "essbar": true,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Bläulich-grün",
+      "beschaffenheit": "Stark prickelnd am Gaumen"
+    }
   },
   {
     "id": 31101,
@@ -183,10 +284,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "450 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Nutzholz",
-    "fundort": [
-      "Schmiede"
-    ],
-    "gewicht": "19 Pfd."
+    "fundort": ["Schmiede"],
+    "gewicht": "19 Pfd.",
+    "klima": ["Gemäßigt"],
+    "nutzen": "Bevorzugtes Bauholz für Schiffe und repräsentative Langhäuser.",
+    "groesse": "Bauholz, mehrere Meter",
+    "wachstumsdauer": "Mehrere Jahre Trocknung und Lagerung",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Warmes Honigbraun",
+      "beschaffenheit": "Stabil, harzgereift"
+    }
   },
   {
     "id": 31107,
@@ -197,10 +307,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "100 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Schmiede"
-    ],
-    "gewicht": "0,85 Pfd."
+    "fundort": ["Schmiede"],
+    "gewicht": "0,85 Pfd.",
+    "klima": ["Gemäßigt"],
+    "nutzen": "Hält fast alles – außer Nässe – zusammen.",
+    "groesse": "Becher, 0,5 l",
+    "wachstumsdauer": "Hergestellt aus Tierknochen",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Bernsteinfarben",
+      "beschaffenheit": "Beim Erhitzen übel riechend, hochbindend"
+    }
   },
   {
     "id": 31108,
@@ -211,10 +330,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "200 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Schmiede"
-    ],
-    "gewicht": "0,45 Pfd."
+    "fundort": ["Schmiede"],
+    "gewicht": "0,45 Pfd.",
+    "klima": ["Gemäßigt"],
+    "nutzen": "Schmiede- und Mechanikeröl: oxidiert kaum, erhitzt sich ohne zu qualmen.",
+    "groesse": "Phiole, 0,3 l",
+    "wachstumsdauer": "Werkstatt-Raffinat aus Tier- und Pflanzenfetten",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Hellgolden",
+      "beschaffenheit": "Dünnflüssig, geruchsneutral"
+    }
   },
   {
     "id": 31109,
@@ -225,10 +353,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "440 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Nutzholz",
-    "fundort": [
-      "Schmiede"
-    ],
-    "gewicht": "18 Pfd."
+    "fundort": ["Schmiede"],
+    "gewicht": "18 Pfd.",
+    "klima": ["Gemäßigt"],
+    "nutzen": "Natürlich harzgeschützt – kein Insekten- und Fäulnisschutz nötig.",
+    "groesse": "Brett, 2–3 m",
+    "wachstumsdauer": "Aus Zedernstamm geschnitten und gehobelt",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Honigbraun mit Maserung",
+      "beschaffenheit": "Glatt, harzhaltig"
+    }
   },
   {
     "id": 31115,
@@ -239,10 +376,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "120 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Schmiede"
-    ],
-    "gewicht": "0,45 Pfd."
+    "fundort": ["Schmiede"],
+    "gewicht": "0,45 Pfd.",
+    "klima": ["Warm"],
+    "nutzen": "Hitze- und wasserdichter Werkstoff für Dichtungen.",
+    "groesse": "Block, 0,5 kg",
+    "wachstumsdauer": "Vulkanisiertes Naturharz, hergestellt",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Dunkelgrau bis schwarz",
+      "beschaffenheit": "Elastisch, formhaltend"
+    }
   },
   {
     "id": 31116,
@@ -253,10 +399,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "130 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Schmiede"
-    ],
-    "gewicht": "0,7 Pfd."
+    "fundort": ["Schmiede"],
+    "gewicht": "0,7 Pfd.",
+    "klima": ["Gemäßigt"],
+    "nutzen": "Starke Haftkraft auf Holz, Stein, Leder; auf Metall schwächer – gut für lösbare Verbindungen.",
+    "groesse": "Tube, 0,3 l",
+    "wachstumsdauer": "Aus Naturharzen hergestellt",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Honigfarben",
+      "beschaffenheit": "Klebrig, dickflüssig"
+    }
   },
   {
     "id": 31750,
@@ -267,11 +422,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "240 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Nutzholz",
-    "fundort": [
-      "Wald",
-      "Gebirge"
-    ],
-    "gewicht": "10 Pfd."
+    "fundort": ["Wald", "Gebirge"],
+    "gewicht": "10 Pfd.",
+    "klima": ["Kalt", "Gemäßigt"],
+    "nutzen": "Speziell harzreich, kombiniert mit Himmelsstahl-Werkzeugen aussergewöhnlich dauerhaft.",
+    "groesse": "Stamm, 8–12 m",
+    "wachstumsdauer": "Jahrzehnte",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Hellbraun mit roter Maserung",
+      "beschaffenheit": "Hochdicht, natürlich harzimprägniert"
+    }
   },
   {
     "id": 31756,
@@ -282,10 +445,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "150 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Schmiede"
-    ],
-    "gewicht": "0,8 Pfd."
+    "fundort": ["Schmiede"],
+    "gewicht": "0,8 Pfd.",
+    "klima": ["Magisch"],
+    "nutzen": "Verstärkt Heilungsmagie als Medium; der Unterschied liegt in der Intention.",
+    "groesse": "Flakon, 0,5 l",
+    "wachstumsdauer": "Gesegnetes Quellwasser, ritueller Prozess",
+    "eigenschaften": {
+      "essbar": true,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Kristallklar",
+      "beschaffenheit": "Geweiht"
+    }
   },
   {
     "id": 31757,
@@ -296,10 +468,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "2090 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Tiefe See"
-    ],
-    "gewicht": "0,8 Pfd."
+    "fundort": ["Tiefe See"],
+    "gewicht": "0,8 Pfd.",
+    "klima": ["Feucht", "Tiefsee"],
+    "nutzen": "Brennt ohne Geruch mit konstantem Licht – das Leuchtmittel der Höhlenlager.",
+    "groesse": "Phiole, 0,5 l",
+    "wachstumsdauer": "Ausgekocht aus Tiefseefischen",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Tiefgolden",
+      "beschaffenheit": "Dickflüssig, geruchsneutral"
+    }
   },
   {
     "id": 33147,
@@ -310,10 +491,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "280 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Wald"
-    ],
-    "gewicht": "1 Pfd."
+    "fundort": ["Wald"],
+    "gewicht": "1 Pfd.",
+    "klima": ["Feucht", "Gemäßigt"],
+    "nutzen": "Bringt selbst widerspenstige Pflanzen zum Gedeihen.",
+    "groesse": "Beutel, 1 Pfd.",
+    "wachstumsdauer": "Jahrzehnte Verrottung",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Tiefschwarz",
+      "beschaffenheit": "Krümelig, intensiver Walderdgeruch"
+    }
   },
   {
     "id": 33148,
@@ -324,11 +514,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "240 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Zutat",
-    "fundort": [
-      "Gebirge",
-      "Ebene"
-    ],
-    "gewicht": "0,6 Pfd."
+    "fundort": ["Gebirge", "Ebene"],
+    "gewicht": "0,6 Pfd.",
+    "klima": ["Warm", "Trocken", "Hell"],
+    "nutzen": "Außerordentlich intensives Aroma – überrascht Unerfahrene beim Öffnen des Beutels.",
+    "groesse": "Krautig, 40 cm",
+    "wachstumsdauer": "Eine Saison",
+    "eigenschaften": {
+      "essbar": true,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Graugrün getrocknet",
+      "beschaffenheit": "Stark aromatisch"
+    }
   },
   {
     "id": 33149,
@@ -339,11 +537,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "690 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Zutat",
-    "fundort": [
-      "Ebene",
-      "Sumpf"
-    ],
-    "gewicht": "0,05 Pfd."
+    "fundort": ["Ebene", "Sumpf"],
+    "gewicht": "0,05 Pfd.",
+    "klima": ["Feucht", "Gemäßigt"],
+    "nutzen": "Senkt Fieber zuverlässig in Heilertränken; macht trübe Aufgüsse zumindest trinkbar.",
+    "groesse": "Krautig, 30 cm",
+    "wachstumsdauer": "Mehrjährig an Bachufern",
+    "eigenschaften": {
+      "essbar": true,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Frischgrün",
+      "beschaffenheit": "Erfrischend, monatelang haltbar"
+    }
   },
   {
     "id": 33150,
@@ -354,11 +560,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "470 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Zutat",
-    "fundort": [
-      "Gebirge",
-      "Ebene"
-    ],
-    "gewicht": "0,55 Pfd."
+    "fundort": ["Gebirge", "Ebene"],
+    "gewicht": "0,55 Pfd.",
+    "klima": ["Trocken", "Windig", "Gemäßigt"],
+    "nutzen": "Stark antiseptisches ätherisches Öl – erfahrene Heiler tragen ihn immer bei sich.",
+    "groesse": "Strauch, 40 cm",
+    "wachstumsdauer": "Mehrjährig auf windgepeitschten Hängen",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Graugrün",
+      "beschaffenheit": "Sparrig, zäh"
+    }
   },
   {
     "id": 33151,
@@ -369,10 +583,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "400 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Gebirge"
-    ],
-    "gewicht": "0,2 Pfd."
+    "fundort": ["Gebirge"],
+    "gewicht": "0,2 Pfd.",
+    "klima": ["Kalt", "Hell", "Magisch"],
+    "nutzen": "Soll Visionen fördern – mindestens aber die Zunge entspannen. Beides bezeugt.",
+    "groesse": "Krautig, 20 cm",
+    "wachstumsdauer": "Mehrjährig auf Hochplateaus",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Blasslila Blüten",
+      "beschaffenheit": "Zarte Blattform"
+    }
   },
   {
     "id": 36287,
@@ -383,11 +606,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "560 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Ebene",
-      "Küste"
-    ],
-    "gewicht": "2,5 Pfd."
+    "fundort": ["Ebene", "Küste"],
+    "gewicht": "2,5 Pfd.",
+    "klima": ["Feucht"],
+    "nutzen": "Reiner Topflehm: bildet beim Brennen keine Risse und ist leicht wasserdicht.",
+    "groesse": "Klumpen, 1–2 kg",
+    "wachstumsdauer": "Aus speziellen Krugbrenner-Quellen",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Hellbeige bis ocker",
+      "beschaffenheit": "Weich, formbar"
+    }
   },
   {
     "id": 36288,
@@ -398,11 +629,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "1850 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Nutzholz",
-    "fundort": [
-      "Küste",
-      "Dschungel"
-    ],
-    "gewicht": "0,65 Pfd."
+    "fundort": ["Küste", "Dschungel"],
+    "gewicht": "0,65 Pfd.",
+    "klima": ["Warm", "Feucht"],
+    "nutzen": "Macht Textilien wasserabweisend; riecht zwischen den Fingern nach Wärme und Salz.",
+    "groesse": "Rindenstück, 50 × 30 cm",
+    "wachstumsdauer": "Mehrjährig an Küstenpalmen",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Dunkelbraun, fasrig",
+      "beschaffenheit": "Harzhaltig, lederartig"
+    }
   },
   {
     "id": 37691,
@@ -413,10 +652,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "2670 Hade",
     "seltenheitsgrad": 3,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Arkane Stätte"
-    ],
-    "gewicht": "0,25 Pfd."
+    "fundort": ["Arkane Stätte"],
+    "gewicht": "0,25 Pfd.",
+    "klima": ["Magisch"],
+    "nutzen": "Komponente für arkanische Tränke; Blütenblätter schimmern wie Glas, sind aber biegsam.",
+    "groesse": "Blume, 10 cm",
+    "wachstumsdauer": "Saisonal an Magie-veränderter Erde",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Kristallklar mit Regenbogenschimmer",
+      "beschaffenheit": "Glasartig, doch biegsam"
+    }
   },
   {
     "id": 37692,
@@ -427,11 +675,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "4030 Hade",
     "seltenheitsgrad": 3,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Arkane Stätte",
-      "Andere Ebenen"
-    ],
-    "gewicht": "0,3 Pfd."
+    "fundort": ["Arkane Stätte", "Andere Ebenen"],
+    "gewicht": "0,3 Pfd.",
+    "klima": ["Magisch"],
+    "nutzen": "Leuchtet von innen heraus, wirft keine Schatten – druidisch umstritten.",
+    "groesse": "Blume, 15 cm",
+    "wachstumsdauer": "Selten und langlebig",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Innenleuchtend, schattenlos",
+      "beschaffenheit": "Glasartig, biegsam, magisch"
+    }
   },
   {
     "id": 38788,
@@ -442,11 +698,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "560 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Wüste",
-      "Ebene"
-    ],
-    "gewicht": "0,6 Pfd."
+    "fundort": ["Wüste", "Ebene"],
+    "gewicht": "0,6 Pfd.",
+    "klima": ["Trocken", "Warm"],
+    "nutzen": "Gepulvert ein verlässliches Adstringens für Wunden jeder Tiefe.",
+    "groesse": "Rindenstück, 40 × 20 cm",
+    "wachstumsdauer": "Jahrzehnte",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Dunkelbraun, rissig",
+      "beschaffenheit": "Sehr dicht, schwer und zäh"
+    }
   },
   {
     "id": 38794,
@@ -457,10 +721,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "1360 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Gebirge"
-    ],
-    "gewicht": "0,1 Pfd."
+    "fundort": ["Gebirge"],
+    "gewicht": "0,1 Pfd.",
+    "klima": ["Kalt", "Magisch"],
+    "nutzen": "Hochkonzentriert: ein Blatt genügt, wo sonst eine Handvoll nötig wäre.",
+    "groesse": "Krautig, 20 cm",
+    "wachstumsdauer": "Mehrjährig in Gewitterzonen",
+    "eigenschaften": {
+      "essbar": true,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Tiefblaugrün",
+      "beschaffenheit": "Stark prickelnd"
+    }
   },
   {
     "id": 38938,
@@ -471,11 +744,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "280 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Ebene",
-      "Wald"
-    ],
-    "gewicht": "0,85 Pfd."
+    "fundort": ["Ebene", "Wald"],
+    "gewicht": "0,85 Pfd.",
+    "klima": ["Gemäßigt"],
+    "nutzen": "Heilkundlich gegen Blutungsneigung – mit messbarer Wirkung.",
+    "groesse": "Kleiner Baum, 3 m; Wurzel 30 cm",
+    "wachstumsdauer": "Mehrere Jahre",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Hellbraun außen, gelblich innen",
+      "beschaffenheit": "Hartschotig, fest"
+    }
   },
   {
     "id": 39234,
@@ -486,11 +767,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "1910 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Höhle",
-      "Sumpf"
-    ],
-    "gewicht": "0,45 Pfd."
+    "fundort": ["Höhle", "Sumpf"],
+    "gewicht": "0,45 Pfd.",
+    "klima": ["Feucht", "Dunkel"],
+    "nutzen": "Wirkt als Notfilter (für Abenteurer) oder Trägersubstanz (für Alchemisten).",
+    "groesse": "Schwammhöhle, faustgroß",
+    "wachstumsdauer": "Mehrjährig an Höhlen-Sickerstellen",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Hellgrau bis gelblich",
+      "beschaffenheit": "Schwammig, saugfähig"
+    }
   },
   {
     "id": 39235,
@@ -501,10 +790,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "1870 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Höhle"
-    ],
-    "gewicht": "0,7 Pfd."
+    "fundort": ["Höhle"],
+    "gewicht": "0,7 Pfd.",
+    "klima": ["Feucht", "Dunkel"],
+    "nutzen": "Unentbehrlich für hochgradige alchemistische Filtration – nimmt keine Unreinheiten an.",
+    "groesse": "Schwammhöhle, 20 cm",
+    "wachstumsdauer": "Langsam an Quellaustritten",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Reines Hellgrau",
+      "beschaffenheit": "Dicht, ultra-saugfähig"
+    }
   },
   {
     "id": 39807,
@@ -515,10 +813,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "1220 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Zutat",
-    "fundort": [
-      "Wald"
-    ],
-    "gewicht": "1 Pfd."
+    "fundort": ["Wald"],
+    "gewicht": "1 Pfd.",
+    "klima": ["Gemäßigt", "Magisch"],
+    "nutzen": "Frisch neutralisiert er leichte Vergiftungen; getrocknet Grundlage komplexerer Antidote.",
+    "groesse": "Frucht, faustgroß",
+    "wachstumsdauer": "Jährlich an Wunderapfelbäumen",
+    "eigenschaften": {
+      "essbar": true,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Goldgelb mit roter Wange",
+      "beschaffenheit": "Saftig, magisch geladen"
+    }
   },
   {
     "id": 39813,
@@ -529,11 +836,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "1250 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Zutat",
-    "fundort": [
-      "Dschungel",
-      "Küste"
-    ],
-    "gewicht": "0,05 Pfd."
+    "fundort": ["Dschungel", "Küste"],
+    "gewicht": "0,05 Pfd.",
+    "klima": ["Warm", "Feucht"],
+    "nutzen": "Betäubt die Zunge minutenlang – Standard in der Zahnheilkunde.",
+    "groesse": "Nelke, 1–2 cm",
+    "wachstumsdauer": "Mehrjährig an tropischen Bäumen",
+    "eigenschaften": {
+      "essbar": true,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Dunkelbraun, glänzend",
+      "beschaffenheit": "Hart, stark würzend"
+    }
   },
   {
     "id": 39906,
@@ -544,11 +859,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "740 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Dschungel",
-      "Ebene"
-    ],
-    "gewicht": "0,2 Pfd."
+    "fundort": ["Dschungel", "Ebene"],
+    "gewicht": "0,2 Pfd.",
+    "klima": ["Warm", "Feucht"],
+    "nutzen": "Als Allheilmittel umstritten – die Wirkung auf die Verdauung ist jedoch dokumentiert.",
+    "groesse": "Blätter, je 15 cm",
+    "wachstumsdauer": "Jährlich am Haritaki-Baum",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Hellgrün",
+      "beschaffenheit": "Getrocknet ledrig"
+    }
   },
   {
     "id": 39907,
@@ -559,11 +882,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "1230 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Dschungel",
-      "Wald"
-    ],
-    "gewicht": "0,8 Pfd."
+    "fundort": ["Dschungel", "Wald"],
+    "gewicht": "0,8 Pfd.",
+    "klima": ["Warm", "Feucht", "Magisch"],
+    "nutzen": "Höherer arkanischer Gehalt als die flüchtige Form.",
+    "groesse": "Blätter, je 20 cm",
+    "wachstumsdauer": "Uralten Bäumen entnommen",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Dunkelgrün mit goldenem Schimmer",
+      "beschaffenheit": "Schwer, dicht"
+    }
   },
   {
     "id": 41286,
@@ -574,10 +905,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "830 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Wald"
-    ],
-    "gewicht": "2 Pfd."
+    "fundort": ["Wald"],
+    "gewicht": "2 Pfd.",
+    "klima": ["Gemäßigt"],
+    "nutzen": "Schiffsabdichtung, Bogensehnenpflege und Wundverklebung – vielseitiger geht kaum.",
+    "groesse": "Block, 1 kg",
+    "wachstumsdauer": "Aus Baumharzen erhitzt",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Tiefschwarz",
+      "beschaffenheit": "Klebrig bei Wärme, hart bei Kälte"
+    }
   },
   {
     "id": 41288,
@@ -588,11 +928,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "2160 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Wald",
-      "Gebirge"
-    ],
-    "gewicht": "1,0 Pfd."
+    "fundort": ["Wald", "Gebirge"],
+    "gewicht": "1,0 Pfd.",
+    "klima": ["Gemäßigt", "Warm"],
+    "nutzen": "Heilkräftiges Wachs jenseits gewöhnlichem Bienenwachs – falls man lebend daran kommt.",
+    "groesse": "Nest, wagenradgroß",
+    "wachstumsdauer": "Über Saisons aufgebaut",
+    "eigenschaften": {
+      "essbar": true,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Goldgelb mit Hexstruktur",
+      "beschaffenheit": "Wachsig, honigreich"
+    }
   },
   {
     "id": 41292,
@@ -603,11 +951,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "820 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Zutat",
-    "fundort": [
-      "Wald",
-      "Höhle"
-    ],
-    "gewicht": "0,3 Pfd."
+    "fundort": ["Wald", "Höhle"],
+    "gewicht": "0,3 Pfd.",
+    "klima": ["Dunkel", "Feucht", "Magisch"],
+    "nutzen": "Leuchtet wie helles Mondlicht; selten – nur an spezifischen Standorten.",
+    "groesse": "Pilz, 8 cm",
+    "wachstumsdauer": "Mehrjährig auf verrottenden Eichenbalken",
+    "eigenschaften": {
+      "essbar": true,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Bläulich-weiß leuchtend",
+      "beschaffenheit": "Fleischig, sanft glühend"
+    }
   },
   {
     "id": 41413,
@@ -618,11 +974,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "5090 Hade",
     "seltenheitsgrad": 3,
     "kategorie": "Zutat",
-    "fundort": [
-      "Wald",
-      "Arkane Stätte"
-    ],
-    "gewicht": "0,35 Pfd."
+    "fundort": ["Wald", "Arkane Stätte"],
+    "gewicht": "0,35 Pfd.",
+    "klima": ["Gemäßigt", "Magisch"],
+    "nutzen": "Geröstet verstärken sie Konzentrationszauber kurzzeitig spürbar.",
+    "groesse": "Bohnen, 1 cm",
+    "wachstumsdauer": "Saisonal an magieaufgeladenem Gestein",
+    "eigenschaften": {
+      "essbar": true,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Honigbraun",
+      "beschaffenheit": "Hart, beim Rösten knusprig"
+    }
   },
   {
     "id": 41414,
@@ -633,11 +997,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "3790 Hade",
     "seltenheitsgrad": 3,
     "kategorie": "Zutat",
-    "fundort": [
-      "Wald",
-      "Arkane Stätte"
-    ],
-    "gewicht": "0,15 Pfd."
+    "fundort": ["Wald", "Arkane Stätte"],
+    "gewicht": "0,15 Pfd.",
+    "klima": ["Gemäßigt", "Magisch"],
+    "nutzen": "Deutlich höhere arkanische Ladung; Magier zahlen das Mehrfache.",
+    "groesse": "Bohnen, 1 cm",
+    "wachstumsdauer": "Selten an magisch starkem Gestein",
+    "eigenschaften": {
+      "essbar": true,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Tiefdunkelbraun mit Goldglanz",
+      "beschaffenheit": "Hart, arkanisch dicht"
+    }
   },
   {
     "id": 43933,
@@ -648,11 +1020,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "380 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Wüste",
-      "Ebene"
-    ],
-    "gewicht": "3 Pfd."
+    "fundort": ["Wüste", "Ebene"],
+    "gewicht": "3 Pfd.",
+    "klima": ["Trocken", "Warm", "Hell"],
+    "nutzen": "Destilliertes Öl heilt Sonnenbrand binnen Stunden.",
+    "groesse": "Strauch, 40 cm",
+    "wachstumsdauer": "Mehrjährig auf felsigem Untergrund",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Metallisch goldglänzendes Laub",
+      "beschaffenheit": "Niederliegend, lederartig"
+    }
   },
   {
     "id": 43934,
@@ -663,10 +1043,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "1860 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Vulkan"
-    ],
-    "gewicht": "0,25 Pfd."
+    "fundort": ["Vulkan"],
+    "gewicht": "0,25 Pfd.",
+    "klima": ["Warm", "Toxisch"],
+    "nutzen": "Asche entwickelt einen Stoff, der Wärme in Rüstungen isoliert.",
+    "groesse": "Gras, 30 cm",
+    "wachstumsdauer": "Mehrjährig an aktiven Vulkanrändern",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Aschgrau-grün",
+      "beschaffenheit": "Feuerresistent, zäh"
+    }
   },
   {
     "id": 46248,
@@ -677,11 +1066,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "1540 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Reagenz",
-    "fundort": [
-      "Sumpf",
-      "Ebene"
-    ],
-    "gewicht": "0,7 Pfd."
+    "fundort": ["Sumpf", "Ebene"],
+    "gewicht": "0,7 Pfd.",
+    "klima": ["Feucht", "Gemäßigt"],
+    "nutzen": "Seit Jahrhunderten belegt gegen Verdauungsbeschwerden und leichte Krämpfe.",
+    "groesse": "Wurzel, 30 cm",
+    "wachstumsdauer": "Mehrjährig",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Hellbraun mit weißem Kern",
+      "beschaffenheit": "Scharf-harziger Duft"
+    }
   },
   {
     "id": 20784,
@@ -692,11 +1089,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "900 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Sumpf",
-      "Ebene"
-    ],
-    "gewicht": "0,65 Pfd."
+    "fundort": ["Sumpf", "Ebene"],
+    "gewicht": "0,65 Pfd.",
+    "klima": ["Feucht", "Gemäßigt", "Toxisch"],
+    "nutzen": "Niedrig dosiert muskelentspannend – in hohen Dosen lähmend.",
+    "groesse": "Wurzel, 50 cm; Ranke mehrere Meter",
+    "wachstumsdauer": "Mehrjährig, schnell rankend",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": true,
+      "giftig": true,
+      "farbe": "Gelblich, dickleibig",
+      "beschaffenheit": "Greifend, allesüberwuchernd"
+    }
   },
   {
     "id": 32992,
@@ -707,10 +1112,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "180 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Wald"
-    ],
-    "gewicht": "1,5 Pfd."
+    "fundort": ["Wald"],
+    "gewicht": "1,5 Pfd.",
+    "klima": ["Gemäßigt"],
+    "nutzen": "Grundlage für Bitterschnäpse und Wundwässer; unverdünnt zu herb.",
+    "groesse": "Phiole, 0,5 l",
+    "wachstumsdauer": "Eingedickt aus Kastaniensaft",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Tiefbraun, fast schwarz",
+      "beschaffenheit": "Dickflüssig, monatelang haltbar"
+    }
   },
   {
     "id": 32993,
@@ -721,10 +1135,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "180 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Wald"
-    ],
-    "gewicht": "1,5 Pfd."
+    "fundort": ["Wald"],
+    "gewicht": "1,5 Pfd.",
+    "klima": ["Gemäßigt"],
+    "nutzen": "Arbeitet kaum, quillt nicht – beliebt bei Wasserkraftwerken und Möbelschreinern.",
+    "groesse": "Bauholz, 2–4 m",
+    "wachstumsdauer": "Jahrzehnte",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Tiefes Rotbraun, dunkelt mit Alter",
+      "beschaffenheit": "Stabil, formhaltend"
+    }
   },
   {
     "id": 32994,
@@ -735,10 +1158,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "490 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Wald"
-    ],
-    "gewicht": "2 Pfd."
+    "fundort": ["Wald"],
+    "gewicht": "2 Pfd.",
+    "klima": ["Gemäßigt"],
+    "nutzen": "Geschmeidiger als Eiche, biegsamer als Weide – ideal für geschwungene Möbelteile und Bogenbau.",
+    "groesse": "Ast, 1–2 m",
+    "wachstumsdauer": "Jahre",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Rotbraun",
+      "beschaffenheit": "Biegsam, formgerecht"
+    }
   },
   {
     "id": 32995,
@@ -749,11 +1181,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "450 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Wald",
-      "Gebirge"
-    ],
-    "gewicht": "3 Pfd."
+    "fundort": ["Wald", "Gebirge"],
+    "gewicht": "3 Pfd.",
+    "klima": ["Gemäßigt", "Kalt"],
+    "nutzen": "Mehlersatz in Bergregionen – nahrhaft, jedoch bitter-nussig.",
+    "groesse": "Frucht, 4–5 cm in stacheliger Hülle",
+    "wachstumsdauer": "Jährliche Ernte",
+    "eigenschaften": {
+      "essbar": true,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Dunkelbraun, glänzend",
+      "beschaffenheit": "In stacheliger Hülle"
+    }
   },
   {
     "id": 32996,
@@ -764,10 +1204,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "440 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Wald"
-    ],
-    "gewicht": "2 Pfd."
+    "fundort": ["Wald"],
+    "gewicht": "2 Pfd.",
+    "klima": ["Gemäßigt"],
+    "nutzen": "Natürliches Konservierungsmittel für Holzoberflächen.",
+    "groesse": "Klumpen, 0,5 kg",
+    "wachstumsdauer": "Frühjahrsfluss aus dem Stamm",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Dunkel wie Pech, waldig riechend",
+      "beschaffenheit": "Klebrig, zähflüssig"
+    }
   },
   {
     "id": 32997,
@@ -778,11 +1227,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "470 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Gebirge",
-      "Wald"
-    ],
-    "gewicht": "10 Pfd."
+    "fundort": ["Gebirge", "Wald"],
+    "gewicht": "10 Pfd.",
+    "klima": ["Kalt", "Feucht"],
+    "nutzen": "Harzreich, feuchtigkeits- und fäulnisresistent – das Bergregion-Bauholz schlechthin.",
+    "groesse": "Scheit, 1 m",
+    "wachstumsdauer": "Jahrzehnte",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Rotbraun, harzhaltig",
+      "beschaffenheit": "Dicht, wetterfest"
+    }
   },
   {
     "id": 32998,
@@ -793,10 +1250,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "190 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Wald"
-    ],
-    "gewicht": "0,55 Pfd."
+    "fundort": ["Wald"],
+    "gewicht": "0,55 Pfd.",
+    "klima": ["Feucht", "Gemäßigt"],
+    "nutzen": "Frisch intensiv erdig; getrocknet und gemahlen ein starkes Immunstimulans.",
+    "groesse": "Pilz, 8–12 cm",
+    "wachstumsdauer": "Saisonal auf Tot-Eichen und -Buchen",
+    "eigenschaften": {
+      "essbar": true,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Tiefbraune Kappe, heller Stiel",
+      "beschaffenheit": "Fleischig, aromatisch"
+    }
   },
   {
     "id": 32999,
@@ -807,11 +1273,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "540 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Gebirge",
-      "Wald"
-    ],
-    "gewicht": "1 Pfd."
+    "fundort": ["Gebirge", "Wald"],
+    "gewicht": "1 Pfd.",
+    "klima": ["Kalt", "Feucht"],
+    "nutzen": "Leicht antiseptisch; hinterlässt auf Holz eine wasserabweisende Schutzschicht.",
+    "groesse": "Phiole, 0,3 l",
+    "wachstumsdauer": "Frisch aus Rindenwunden gefasst",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Klar, leicht gelblich",
+      "beschaffenheit": "Dünnflüssig, harzig duftend"
+    }
   },
   {
     "id": 33000,
@@ -822,11 +1296,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "240 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Wald",
-      "Gebirge"
-    ],
-    "gewicht": "0,8 Pfd."
+    "fundort": ["Wald", "Gebirge"],
+    "gewicht": "0,8 Pfd.",
+    "klima": ["Kalt", "Gemäßigt"],
+    "nutzen": "Destilliert ergibt Terpentin – breite alchemistische Anwendung.",
+    "groesse": "Klumpen, 0,4 kg",
+    "wachstumsdauer": "Frühjahrsfluss",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Bernsteinfarben",
+      "beschaffenheit": "Klebrig, harzig"
+    }
   },
   {
     "id": 33001,
@@ -837,11 +1319,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "110 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Wald",
-      "Gebirge"
-    ],
-    "gewicht": "8,5 Pfd."
+    "fundort": ["Wald", "Gebirge"],
+    "gewicht": "8,5 Pfd.",
+    "klima": ["Kalt", "Gemäßigt"],
+    "nutzen": "Verbrennt langsam mit wenig Rauch; ätherisches Öl reinigt die Luft.",
+    "groesse": "Scheit, 1 m",
+    "wachstumsdauer": "Jahrzehnte",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Hellbraun mit roter Maserung",
+      "beschaffenheit": "Harzreich, langsam brennend"
+    }
   },
   {
     "id": 33002,
@@ -852,11 +1342,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "7730 Hade",
     "seltenheitsgrad": 4,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Wald",
-      "Andere Ebenen"
-    ],
-    "gewicht": "1,5 Pfd."
+    "fundort": ["Wald", "Andere Ebenen"],
+    "gewicht": "1,5 Pfd.",
+    "klima": ["Magisch", "Dunkel"],
+    "nutzen": "Doppelt so süß wie gewöhnliche Äpfel; Kern soll halluzinogen sein.",
+    "groesse": "Apfel, kleiner als eine Faust",
+    "wachstumsdauer": "Mehrjährig in Feenwäldern",
+    "eigenschaften": {
+      "essbar": true,
+      "essbar_nach_zubereitung": true,
+      "giftig": true,
+      "farbe": "Smaragdgrün mit goldenem Schimmer",
+      "beschaffenheit": "Saftig, magisch"
+    }
   },
   {
     "id": 33003,
@@ -867,10 +1365,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "100 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Wald"
-    ],
-    "gewicht": "16 Pfd."
+    "fundort": ["Wald"],
+    "gewicht": "16 Pfd.",
+    "klima": ["Gemäßigt"],
+    "nutzen": "Schwer, hart, fäulnisresistent – Standardholz des erfahrenen Tischlers.",
+    "groesse": "Scheit, 1,5 m",
+    "wachstumsdauer": "Jahrzehnte",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Hellbraun mit feiner Maserung",
+      "beschaffenheit": "Stabil, wassergelagert steinhart"
+    }
   },
   {
     "id": 33004,
@@ -881,11 +1388,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "3020 Hade",
     "seltenheitsgrad": 3,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Wald",
-      "Arkane Stätte"
-    ],
-    "gewicht": "16 Pfd."
+    "fundort": ["Wald", "Arkane Stätte"],
+    "gewicht": "16 Pfd.",
+    "klima": ["Gemäßigt", "Magisch"],
+    "nutzen": "Rotgeädert und außerordentlich dicht – soll Zauberbindungen verstärken.",
+    "groesse": "Scheit, 1,5 m",
+    "wachstumsdauer": "Mehrere Jahrzehnte",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Hellbraun mit rotem Geäder",
+      "beschaffenheit": "Sehr dicht, schwer schwimmend"
+    }
   },
   {
     "id": 33005,
@@ -896,11 +1411,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "350 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Wüste",
-      "Ebene"
-    ],
-    "gewicht": "1 Pfd."
+    "fundort": ["Wüste", "Ebene"],
+    "gewicht": "1 Pfd.",
+    "klima": ["Trocken", "Warm"],
+    "nutzen": "Selbstversiegelnd durch Sandkörnchen im Kern – Wüsten-erste Wahl für Möbel und Türen.",
+    "groesse": "Scheit, 1,2 m",
+    "wachstumsdauer": "Jahrzehnte",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Hellbeige bis ocker",
+      "beschaffenheit": "Dicht, selbstversiegelnd"
+    }
   },
   {
     "id": 33006,
@@ -911,10 +1434,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "360 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Küste"
-    ],
-    "gewicht": "0,2 Pfd."
+    "fundort": ["Küste"],
+    "gewicht": "0,2 Pfd.",
+    "klima": ["Feucht", "Warm"],
+    "nutzen": "Filtert Wasser; getrocknet Polster, frisch Wundauflage, roh Fischköder.",
+    "groesse": "Halme, 60 cm",
+    "wachstumsdauer": "Mehrjährig in Küstengewässern",
+    "eigenschaften": {
+      "essbar": true,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Hellgrün glänzend",
+      "beschaffenheit": "Lang, glatt, schmackhaft"
+    }
   },
   {
     "id": 33007,
@@ -925,11 +1457,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "210 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Wald",
-      "Ebene"
-    ],
-    "gewicht": "0,2 Pfd."
+    "fundort": ["Wald", "Ebene"],
+    "gewicht": "0,2 Pfd.",
+    "klima": ["Gemäßigt", "Hell"],
+    "nutzen": "Schwaches Beruhigungsmittel im Harz – Schlaftrank-Klassiker.",
+    "groesse": "Blüte, 3 cm",
+    "wachstumsdauer": "Saisonal",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Cremeweiß mit goldgelben Harztropfen",
+      "beschaffenheit": "Zart, mit Harzperlen"
+    }
   },
   {
     "id": 33009,
@@ -940,10 +1480,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "1370 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Dschungel"
-    ],
-    "gewicht": "11 Pfd."
+    "fundort": ["Dschungel"],
+    "gewicht": "11 Pfd.",
+    "klima": ["Warm", "Feucht"],
+    "nutzen": "Eines der härtesten Hölzer überhaupt – widersteht Schlägen, die normale Schilde zerbersten.",
+    "groesse": "Scheit, 1,2 m",
+    "wachstumsdauer": "Jahrhunderte im Urwald",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Tiefrot-braun, fast schwarz",
+      "beschaffenheit": "Sinkt im Wasser, quillt nicht"
+    }
   },
   {
     "id": 33010,
@@ -954,11 +1503,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "420 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Ebene",
-      "Wald"
-    ],
-    "gewicht": "0,2 Pfd."
+    "fundort": ["Ebene", "Wald"],
+    "gewicht": "0,2 Pfd.",
+    "klima": ["Gemäßigt", "Magisch"],
+    "nutzen": "Schimmernde Fasern wechseln Farbe je nach Lichteinfall – Weben schwierig, Tragen auffällig.",
+    "groesse": "Samenkapsel, 5 cm",
+    "wachstumsdauer": "Saisonal",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Schimmert in allen Regenbogenfarben",
+      "beschaffenheit": "Flauschig, lichtbrechend"
+    }
   },
   {
     "id": 36302,
@@ -969,10 +1526,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "80 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Wald"
-    ],
-    "gewicht": "4 Pfd."
+    "fundort": ["Wald"],
+    "gewicht": "4 Pfd.",
+    "klima": ["Gemäßigt"],
+    "nutzen": "Im Schiffbau für Kielbalken: bricht, bevor es sich verbiegt.",
+    "groesse": "Scheit, 1,2 m",
+    "wachstumsdauer": "Jahrhunderte",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Tief grau-braun",
+      "beschaffenheit": "Stahlhart, schwer bearbeitbar"
+    }
   },
   {
     "id": 36303,
@@ -983,11 +1549,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "700 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Küste",
-      "Dschungel"
-    ],
-    "gewicht": "7,5 Pfd."
+    "fundort": ["Küste", "Dschungel"],
+    "gewicht": "7,5 Pfd.",
+    "klima": ["Warm", "Feucht"],
+    "nutzen": "Salzwasser- und insektenresistent – Standard für Küstenbauten.",
+    "groesse": "Scheit, 1,5 m",
+    "wachstumsdauer": "Mehrere Jahrzehnte",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Hellbraun mit dunklen Fasern",
+      "beschaffenheit": "Außen hart, Kern faserig"
+    }
   },
   {
     "id": 36304,
@@ -998,11 +1572,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "160 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Wald",
-      "Gebirge"
-    ],
-    "gewicht": "13 Pfd."
+    "fundort": ["Wald", "Gebirge"],
+    "gewicht": "13 Pfd.",
+    "klima": ["Kalt", "Gemäßigt"],
+    "nutzen": "Brennt heiß, arbeitet kaum beim Trocknen, harzig-waldiger Duft.",
+    "groesse": "Scheit, 1,2 m",
+    "wachstumsdauer": "Jahrzehnte",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Rote Maserung im Kernholz",
+      "beschaffenheit": "Dicht, harzig"
+    }
   },
   {
     "id": 36306,
@@ -1013,11 +1595,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "310 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Gebirge",
-      "Wald"
-    ],
-    "gewicht": "0,7 Pfd."
+    "fundort": ["Gebirge", "Wald"],
+    "gewicht": "0,7 Pfd.",
+    "klima": ["Kalt", "Gemäßigt"],
+    "nutzen": "Tiefpurpurnes Fruchtfleisch – ergibt Lykon-Wein, ein Aufputschmittel.",
+    "groesse": "Frucht, faustgroß",
+    "wachstumsdauer": "Jährlich an Hochlandbäumen",
+    "eigenschaften": {
+      "essbar": true,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Außen ledrig braun, innen purpurfarben",
+      "beschaffenheit": "Erfrischend säuerlich"
+    }
   },
   {
     "id": 36310,
@@ -1028,11 +1618,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "1410 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Ebene",
-      "Dschungel"
-    ],
-    "gewicht": "0,1 Pfd."
+    "fundort": ["Ebene", "Dschungel"],
+    "gewicht": "0,1 Pfd.",
+    "klima": ["Gemäßigt", "Warm"],
+    "nutzen": "Enthält die feinsten Naturfasern, die bekannt sind.",
+    "groesse": "Samenkapsel, 3 cm",
+    "wachstumsdauer": "Saisonal",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Cremeweiß",
+      "beschaffenheit": "Außergewöhnlich weich"
+    }
   },
   {
     "id": 43927,
@@ -1043,11 +1641,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "1330 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Wald",
-      "Dschungel"
-    ],
-    "gewicht": "0,35 Pfd."
+    "fundort": ["Wald", "Dschungel"],
+    "gewicht": "0,35 Pfd.",
+    "klima": ["Warm", "Feucht"],
+    "nutzen": "Geröstet und gemahlen ein Getränk für stundenlangen Konzentrationsfokus.",
+    "groesse": "Bohnen, 1 cm",
+    "wachstumsdauer": "Saisonal an Urwaldranken",
+    "eigenschaften": {
+      "essbar": true,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Honigbraun",
+      "beschaffenheit": "Aromatisch nach Rösten"
+    }
   },
   {
     "id": 43928,
@@ -1058,10 +1664,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "1140 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Dschungel"
-    ],
-    "gewicht": "8 Pfd."
+    "fundort": ["Dschungel"],
+    "gewicht": "8 Pfd.",
+    "klima": ["Warm", "Feucht"],
+    "nutzen": "Sinkt in Wasser; in Möbelstücken Jahrhunderte deformationsfrei.",
+    "groesse": "Scheit, 1,5 m",
+    "wachstumsdauer": "Jahrhunderte",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Tiefbraun bis schwarz",
+      "beschaffenheit": "Sehr dicht, harzig duftend"
+    }
   },
   {
     "id": 43929,
@@ -1072,11 +1687,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "90 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Wüste",
-      "Ebene"
-    ],
-    "gewicht": "8 Pfd."
+    "fundort": ["Wüste", "Ebene"],
+    "gewicht": "8 Pfd.",
+    "klima": ["Trocken", "Warm"],
+    "nutzen": "Für Werkzeuge, Speere und Strukturbalken gleich gut geeignet.",
+    "groesse": "Scheit, 1,2 m",
+    "wachstumsdauer": "Schnellwachsend, Jahre",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Hellbraun mit dunkler Maserung",
+      "beschaffenheit": "Schadinsekten-resistent"
+    }
   },
   {
     "id": 43930,
@@ -1087,11 +1710,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "150 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Gebirge",
-      "Küste"
-    ],
-    "gewicht": "0,2 Pfd."
+    "fundort": ["Gebirge", "Küste"],
+    "gewicht": "0,2 Pfd.",
+    "klima": ["Kalt", "Windig", "Feucht"],
+    "nutzen": "Gebraut lindert er Seekrankheit und Schwindel – der Wind in Blattform.",
+    "groesse": "Strauch, 50 cm",
+    "wachstumsdauer": "Mehrjährig in Höhenlagen",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Dunkelgrün, ledrig",
+      "beschaffenheit": "Ätherisch-aromatisch"
+    }
   },
   {
     "id": 44234,
@@ -1102,11 +1733,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "460 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Verschiedenes",
-    "fundort": [
-      "Wüste",
-      "Ebene"
-    ],
-    "gewicht": "0,7 Pfd."
+    "fundort": ["Wüste", "Ebene"],
+    "gewicht": "0,7 Pfd.",
+    "klima": ["Trocken", "Warm"],
+    "nutzen": "Gerber: Leder erster Qualität. Heiler: hartnäckige Wunden.",
+    "groesse": "Rindenstück, 40 × 15 cm",
+    "wachstumsdauer": "Jahrzehnte",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Dunkelbraun, rissig",
+      "beschaffenheit": "Adstringierende Gerbstoffe darunter"
+    }
   },
   {
     "id": 47402,
@@ -1117,11 +1756,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "510 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Anderes",
-    "fundort": [
-      "Wüste",
-      "Ruinen"
-    ],
-    "gewicht": "3 Pfd."
+    "fundort": ["Wüste", "Ruinen"],
+    "gewicht": "3 Pfd.",
+    "klima": ["Trocken", "Warm", "Magisch"],
+    "nutzen": "Der Räucher-Rauch macht Untote unbehaglich – Standard nach Nekromantie-Kontakt.",
+    "groesse": "Blatt, 10 cm",
+    "wachstumsdauer": "Mehrjährig an Ruinen-Standorten",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Olivgrün",
+      "beschaffenheit": "Faserig, harzhaltig"
+    }
   },
   {
     "id": 47404,
@@ -1132,11 +1779,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "910 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Anderes",
-    "fundort": [
-      "Sumpf",
-      "Ebene"
-    ],
-    "gewicht": "1,5 Pfd."
+    "fundort": ["Sumpf", "Ebene"],
+    "gewicht": "1,5 Pfd.",
+    "klima": ["Feucht", "Gemäßigt"],
+    "nutzen": "Klebrige Substanz: natürlicher Klebstoff, betäubt Insekten leicht.",
+    "groesse": "Blüte, kugelrund, 8 cm",
+    "wachstumsdauer": "Saisonal",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Cremegelb, kugelrund",
+      "beschaffenheit": "Klebrig im Inneren"
+    }
   },
   {
     "id": 47406,
@@ -1147,11 +1802,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "1070 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Anderes",
-    "fundort": [
-      "Sumpf",
-      "Wald"
-    ],
-    "gewicht": "2 Pfd."
+    "fundort": ["Sumpf", "Wald"],
+    "gewicht": "2 Pfd.",
+    "klima": ["Feucht", "Nacht", "Magisch"],
+    "nutzen": "Verdauungsenzyme aus der Blütenflüssigkeit – für spezielle Lösungsmittel.",
+    "groesse": "Krautig, 40 cm",
+    "wachstumsdauer": "Mehrjährig, blüht zu Vollmond",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": true,
+      "farbe": "Dunkelgrün mit violetter Blüte",
+      "beschaffenheit": "Fleischfressend, mondzyklisch"
+    }
   },
   {
     "id": 47407,
@@ -1162,11 +1825,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "480 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Anderes",
-    "fundort": [
-      "Wald",
-      "Gebirge"
-    ],
-    "gewicht": "1 Pfd."
+    "fundort": ["Wald", "Gebirge"],
+    "gewicht": "1 Pfd.",
+    "klima": ["Gemäßigt", "Kalt"],
+    "nutzen": "Ätherisches Öl stabilisiert arkanische Konzentrate.",
+    "groesse": "Frucht, in Spiralwindung",
+    "wachstumsdauer": "Jährlich",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Bräunlich-grün gewunden",
+      "beschaffenheit": "Bitter-adstringierend"
+    }
   },
   {
     "id": 47408,
@@ -1177,10 +1848,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "30720 Hade",
     "seltenheitsgrad": 5,
     "kategorie": "Anderes",
-    "fundort": [
-      "Andere Ebenen"
-    ],
-    "gewicht": "0,55 Pfd."
+    "fundort": ["Andere Ebenen"],
+    "gewicht": "0,55 Pfd.",
+    "klima": ["Magisch", "Dunkel"],
+    "nutzen": "Außerirdisches Leuchten; Forschungsobjekt erster Güte.",
+    "groesse": "Pilz, 8 cm",
+    "wachstumsdauer": "Jahrhunderte auf anderen Ebenen",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Tiefblau leuchtend",
+      "beschaffenheit": "Fluoresziert wie nichts Irdisches"
+    }
   },
   {
     "id": 47409,
@@ -1191,10 +1871,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "20150 Hade",
     "seltenheitsgrad": 5,
     "kategorie": "Anderes",
-    "fundort": [
-      "Andere Ebenen"
-    ],
-    "gewicht": "0,45 Pfd."
+    "fundort": ["Andere Ebenen"],
+    "gewicht": "0,45 Pfd.",
+    "klima": ["Magisch", "Dunkel"],
+    "nutzen": "Wirkstoffe zur Behandlung von Geisteskrankheiten durch Heilsorcerer.",
+    "groesse": "Pilz, 7 cm",
+    "wachstumsdauer": "Jahrhunderte auf anderen Ebenen",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Leuchtend gelb",
+      "beschaffenheit": "Auch im Dunkeln sichtbar"
+    }
   },
   {
     "id": 47410,
@@ -1205,11 +1894,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "820 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Anderes",
-    "fundort": [
-      "Sumpf",
-      "Unterreich"
-    ],
-    "gewicht": "1 Pfd."
+    "fundort": ["Sumpf", "Unterreich"],
+    "gewicht": "1 Pfd.",
+    "klima": ["Feucht", "Dunkel", "Toxisch"],
+    "nutzen": "Konzentriertes Kontaktgift aus der nie geöffneten Blüte.",
+    "groesse": "Krautig, 50 cm",
+    "wachstumsdauer": "Über Monate ansammelnd",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": true,
+      "farbe": "Schwarz mit blutroter Innenfärbung",
+      "beschaffenheit": "Wartet, sammelt Giftsekrete"
+    }
   },
   {
     "id": 48676,
@@ -1220,11 +1917,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "2080 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Anderes",
-    "fundort": [
-      "Sumpf",
-      "Dschungel"
-    ],
-    "gewicht": "4 Pfd."
+    "fundort": ["Sumpf", "Dschungel"],
+    "gewicht": "4 Pfd.",
+    "klima": ["Feucht", "Warm"],
+    "nutzen": "Polymerisiert an Luft zu einer halbdurchsichtigen Schicht von bemerkenswerter Härte.",
+    "groesse": "Klumpen, 1 kg",
+    "wachstumsdauer": "Aus seltenen Goldaugen-Bäumen",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Honiggolden",
+      "beschaffenheit": "Anfangs zähflüssig, später hart"
+    }
   },
   {
     "id": 48685,
@@ -1235,11 +1940,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "1550 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Anderes",
-    "fundort": [
-      "Wald",
-      "Höhle"
-    ],
-    "gewicht": "0,45 Pfd."
+    "fundort": ["Wald", "Höhle"],
+    "gewicht": "0,45 Pfd.",
+    "klima": ["Nacht", "Magisch"],
+    "nutzen": "In Wasser angesetzt eine Tinktur gegen Sehschwäche.",
+    "groesse": "Sporenpäckchen, 10 g",
+    "wachstumsdauer": "Nur bei Blaumondphänomen",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Tiefblaue Sporen",
+      "beschaffenheit": "Trocken, in Wasser aktivierend"
+    }
   },
   {
     "id": 48711,
@@ -1250,10 +1963,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "320 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Anderes",
-    "fundort": [
-      "Wald"
-    ],
-    "gewicht": "0,45 Pfd."
+    "fundort": ["Wald"],
+    "gewicht": "0,45 Pfd.",
+    "klima": ["Gemäßigt", "Feucht"],
+    "nutzen": "Essbar und nahrhaft; geschmacklich uninteressant – aber Reisenahrung.",
+    "groesse": "Pilz, 6 cm",
+    "wachstumsdauer": "Saisonal",
+    "eigenschaften": {
+      "essbar": true,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Mattgrün",
+      "beschaffenheit": "Häufig, robust"
+    }
   },
   {
     "id": 48712,
@@ -1264,11 +1986,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "1750 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Anderes",
-    "fundort": [
-      "Höhle",
-      "Wald"
-    ],
-    "gewicht": "0,55 Pfd."
+    "fundort": ["Höhle", "Wald"],
+    "gewicht": "0,55 Pfd.",
+    "klima": ["Dunkel", "Feucht"],
+    "nutzen": "Botanisch identisch, aber doppelter Nährstoffgehalt bei halbem Ertrag.",
+    "groesse": "Pilz, 7 cm",
+    "wachstumsdauer": "Saisonal an Spezial-Standorten",
+    "eigenschaften": {
+      "essbar": true,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Tiefmattgrün",
+      "beschaffenheit": "Außen nicht unterscheidbar"
+    }
   },
   {
     "id": 48713,
@@ -1279,10 +2009,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "890 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Anderes",
-    "fundort": [
-      "Höhle"
-    ],
-    "gewicht": "0,15 Pfd."
+    "fundort": ["Höhle"],
+    "gewicht": "0,15 Pfd.",
+    "klima": ["Dunkel"],
+    "nutzen": "Genau diese Form wird von Alchemisten verwendet – die anderen beiden nicht.",
+    "groesse": "Pilz, 5 cm",
+    "wachstumsdauer": "Saisonal in Höhlen",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Heller, mit mineralischem Beigeschmack",
+      "beschaffenheit": "Mineralisch durchsetzt"
+    }
   },
   {
     "id": 48714,
@@ -1293,11 +2032,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "360 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Anderes",
-    "fundort": [
-      "Wald",
-      "Gebirge"
-    ],
-    "gewicht": "0,25 Pfd."
+    "fundort": ["Wald", "Gebirge"],
+    "gewicht": "0,25 Pfd.",
+    "klima": ["Kalt", "Gemäßigt", "Toxisch"],
+    "nutzen": "Roh giftig, in zwei Wassergängen gekocht ungefährlich und aromatisch.",
+    "groesse": "Pilz, 8 cm",
+    "wachstumsdauer": "Saisonal",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": true,
+      "giftig": true,
+      "farbe": "Tiefrote Kappe",
+      "beschaffenheit": "Verwechslungsgefahr mit Giftarten"
+    }
   },
   {
     "id": 48718,
@@ -1308,11 +2055,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "1710 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Anderes",
-    "fundort": [
-      "Wald",
-      "Sumpf"
-    ],
-    "gewicht": "0,1 Pfd."
+    "fundort": ["Wald", "Sumpf"],
+    "gewicht": "0,1 Pfd.",
+    "klima": ["Feucht", "Magisch", "Toxisch"],
+    "nutzen": "Schamanistisch genutzt – intensive, kurzlebige Visionen; Dosis entscheidet.",
+    "groesse": "Pilz, 6 cm",
+    "wachstumsdauer": "Saisonal",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": true,
+      "giftig": true,
+      "farbe": "Fliederfarben",
+      "beschaffenheit": "Halluzinogen in der Kappe"
+    }
   },
   {
     "id": 48955,
@@ -1323,11 +2078,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "2140 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Anderes",
-    "fundort": [
-      "Ruinen",
-      "Ebene"
-    ],
-    "gewicht": "2 Pfd."
+    "fundort": ["Ruinen", "Ebene"],
+    "gewicht": "2 Pfd.",
+    "klima": ["Gemäßigt", "Magisch"],
+    "nutzen": "Geröstet und gemahlen hebt der Extrakt chronische Erschöpfung vorübergehend auf.",
+    "groesse": "Bohnen, 1,5 cm",
+    "wachstumsdauer": "Ranken über Felsen und Ruinen, mehrjährig",
+    "eigenschaften": {
+      "essbar": true,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Dunkelbraun mit metallischem Schimmer",
+      "beschaffenheit": "Hart, anregend"
+    }
   },
   {
     "id": 48956,
@@ -1338,11 +2101,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "970 Hade",
     "seltenheitsgrad": 2,
     "kategorie": "Anderes",
-    "fundort": [
-      "Dschungel",
-      "Ebene"
-    ],
-    "gewicht": "1 Pfd."
+    "fundort": ["Dschungel", "Ebene"],
+    "gewicht": "1 Pfd.",
+    "klima": ["Warm", "Hell", "Feucht"],
+    "nutzen": "Vielfach höhere anregende Wirkung als gewöhnliche Bohnen.",
+    "groesse": "Bohnen, 1 cm",
+    "wachstumsdauer": "Plantagen, ganzjährig",
+    "eigenschaften": {
+      "essbar": true,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Tiefbraun",
+      "beschaffenheit": "Stark anregend"
+    }
   },
   {
     "id": 48957,
@@ -1353,11 +2124,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "330 Hade",
     "seltenheitsgrad": 1,
     "kategorie": "Anderes",
-    "fundort": [
-      "Wald",
-      "Ebene"
-    ],
-    "gewicht": "1,5 Pfd."
+    "fundort": ["Wald", "Ebene"],
+    "gewicht": "1,5 Pfd.",
+    "klima": ["Gemäßigt", "Nacht", "Magisch"],
+    "nutzen": "Extrakt soll Träume lebhafter machen.",
+    "groesse": "Bohnen, 1 cm",
+    "wachstumsdauer": "Saisonal, blüht nachts",
+    "eigenschaften": {
+      "essbar": true,
+      "essbar_nach_zubereitung": true,
+      "giftig": false,
+      "farbe": "Dunkelviolett mit weißen Sprenkeln",
+      "beschaffenheit": "Traumfördernd"
+    }
   },
   {
     "id": 49929,
@@ -1368,11 +2147,19 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "8330 Hade",
     "seltenheitsgrad": 4,
     "kategorie": "Anderes",
-    "fundort": [
-      "Andere Ebenen",
-      "Wald"
-    ],
-    "gewicht": "17 Pfd."
+    "fundort": ["Andere Ebenen", "Wald"],
+    "gewicht": "17 Pfd.",
+    "klima": ["Magisch", "Dunkel"],
+    "nutzen": "Tischler berichten von einem seltsamen Drang zum Schweigen beim Arbeiten.",
+    "groesse": "Holzstück, 1 m",
+    "wachstumsdauer": "Aus den Wäldern von Oizys",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Tiefbraun, mit moosig-aschigem Duft",
+      "beschaffenheit": "Schwer, dicht, schwermütig"
+    }
   },
   {
     "id": 49930,
@@ -1383,9 +2170,18 @@ window.PFLANZEN_DB = [
     "verkaufspreis": "6600 Hade",
     "seltenheitsgrad": 4,
     "kategorie": "Anderes",
-    "fundort": [
-      "Andere Ebenen"
-    ],
-    "gewicht": "14 Pfd."
+    "fundort": ["Andere Ebenen"],
+    "gewicht": "14 Pfd.",
+    "klima": ["Magisch", "Dunkel"],
+    "nutzen": "Hält extremen Belastungen stand; Räume daraus neigen zur düsteren Stimmung.",
+    "groesse": "Pressholz, 1,5 m",
+    "wachstumsdauer": "Komprimiert unter ewiger Trauer",
+    "eigenschaften": {
+      "essbar": false,
+      "essbar_nach_zubereitung": false,
+      "giftig": false,
+      "farbe": "Tiefschwarz, fast plastisch",
+      "beschaffenheit": "Außerordentlich dicht"
+    }
   }
 ];
