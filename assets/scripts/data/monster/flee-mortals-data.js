@@ -9,6 +9,46 @@
 
 window.MONSTER_DATA_FLEE_MORTALS = [
   {
+    name: "Abgrund-Hyäne",
+    art: "Unhold",
+    unterart: null,
+    groesse: "Mittelgroß",
+    gesinnung: "Typischerweise Chaotisch böse",
+    cr: 1,
+    xp: 40,
+    rk: 11,
+    ruestungstyp: null,
+    tp: 8,
+    tp_wuerfel: "1W8+4",
+    bewegung: { "Gehen": "15 m" },
+    attribute: { STR: 14, DEX: 13, CON: 12, INT: 5, WIS: 12, CHA: 7 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: ["Dunkelsicht 18 m"],
+    passiveWahrnehmung: 11,
+    sprachen: ["versteht Abyssal, kann es jedoch nicht sprechen"],
+    umgebung: ["Wüste", "Grasland", "Andere Ebenen"],
+    bild: "assets/images/monster/flee-mortals/abgrund-hyaene.png",
+    beschreibung: [
+      "Stärker und schlauer als ihre tierischen Pendants kriechen Abgrund-Hyänen aus der Abyssalen Ödnis, um sich an den Kadavern zu laben, die Gnolle in ihrem Gefolge hinterlassen. Werden Verstärkungen benötigt, können Gnoll-Zauberwirker mit Magie Abgrund-Hyänen in Gnolle verwandeln."
+    ],
+    besonderheiten: [
+      { name: "Todesschnapper", beschreibung: "Wenn die Hyäne auf 0 TP reduziert wird, kann sie 1 Stichschaden an einer Kreatur innerhalb von 1,5 m verursachen (keine Aktion nötig), sofern sie nicht Kampfunfähig war, bevor sie auf 0 TP fiel." },
+      { name: "Scherge", beschreibung: "Erleidet die Hyäne Schaden durch einen Angriff oder einen misslungenen Rettungswurf, sinken ihre TP sofort auf 0. Erleidet sie Schaden durch einen anderen Effekt, stirbt sie, wenn der Schaden ihrem TP-Maximum entspricht oder es überschreitet; andernfalls erleidet sie keinen Schaden." }
+    ],
+    aktionen: [
+      { name: "Biss (Gruppenangriff)", beschreibung: "Nahkampfwaffenangriff: +4, Reichweite 1,5 m, ein Ziel. Treffer: 1 Stichschaden. Ist das Ziel eine Kreatur und sind zwei oder mehr Hyänen am Angriff beteiligt, muss das Ziel einen STR-Rettungswurf bestehen oder wird zu Boden geworfen. Der SG entspricht 10 plus der Anzahl der am Angriff beteiligten Hyänen." }
+    ],
+    bonusaktionen: [],
+    reaktionen: [],
+    legendaere_aktionen: null,
+    source: "Flee Mortals"
+  },
+  {
     name: "Angulotl-Ganove",
     art: "Humanoid",
     unterart: "Angulotl",
@@ -268,6 +308,59 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     source: "Flee Mortals"
   },
   {
+    name: "Atæshia",
+    art: "Elementar",
+    unterart: "Luft, Erde, Feuer",
+    groesse: "Mittelgroß",
+    gesinnung: "Neutral",
+    cr: 23,
+    xp: 50000,
+    rk: 20, ruestungstyp: "natürliche Rüstung",
+    tp: 332, tp_wuerfel: "35W8+175",
+    bewegung: { "Gehen": "15 m", "Fliegen": "9 m (schwebend)" },
+    attribute: { STR: 19, DEX: 21, CON: 21, INT: 22, WIS: 23, CHA: 23 },
+    rettungswuerfe: { KON: 12, WEI: 13 },
+    fertigkeiten: { "Arkane Kunde": 13, "Täuschen": 13, "Geschichte": 13, "Naturkunde": 13, "Wahrnehmung": 13, "Überzeugen": 13, "Religion": 13 },
+    schadensresistenzen: ["Kälte", "Nekrotisch", "Gift", "Psychisch", "Gleißend"],
+    schadensimmunitaeten: ["Feuer"],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: ["Bezaubert", "Verängstigt", "Vergiftet"],
+    sinne: ["Blindsicht 36 m"],
+    passiveWahrnehmung: 23,
+    sprachen: ["Alle Sprachen"],
+    umgebung: ["Gebirge", "Andere Ebenen"],
+    bild: "assets/images/monster/flee-mortals/ataeshia.png",
+    beschreibung: [
+      "Atæshia (ah-TAY-shee-ah) gehörte zu den ersten Elementaren, welche die Profanwelt bewohnten, und war die Erste, die gegen die Sterblichen zurückschlug, die versuchten, die wilde Welt zu zähmen. Ihre Armee kämpfte jahrzehntelang gegen Humanoide, doch die Zahl ihrer Feinde war zu groß und ihre Verbündeten zu wenige. Als sich das Blatt des Krieges gegen die Elementare wendete, erkannte Atæshia, dass es besser wäre, wenn die Elementare überlebten, ihre Kräfte wieder aufbauten und auf einen anderen Tag warteten, um zurückzuholen, was einst ihres war.",
+      "Atæshia betrachtet alle Elementare als Teil ihres Ishkrar, und viele würden im Gegenzug unter ihrem Banner kämpfen. Sie hat ihren großen Krieg nicht vergessen und sieht in den Sterblichen und den Göttern, die sie erschufen, die größte Bedrohung für die Zeitlandschaft.",
+      "Geschütztes Reich: Atæshia verbringt den Großteil ihrer Zeit auf dem Tempest, einem großen Berg, dessen obere Hälfte sich in einem gewaltigen Sturm verbirgt. Mächtige Elementare am Gipfel manifestieren Blitze und Hagel von der Größe von Äpfeln, um das Reich der Aschenkönigin zu verbergen. Wer den tückischen Aufstieg wagt, findet im Zentrum des ewigen Sturms ein sonniges Bergparadies. Hier formen Elementare das Land mit ruhigen Teichen, brennenden Lava-Geysiren, Eisskulpturen, üppigen Gärten und allem anderen, was sie manifestieren wollen. Die einzige Bedingung, im Tempest zu verweilen, ist an die Sache der Aschenkönigin zu glauben und ihren Befehlen zu folgen, wenn man dazu aufgerufen wird. Auch Nicht-Elementare dürfen bleiben, sofern sie Atæshias Regeln beachten.",
+      "Jährliche Reise: Einmal im Jahr reist Atæshia vom Tempest zu ihrem Reliquiar, einem Turm, der in den Ruinen ihres gescheiterten Krieges errichtet wurde. Hier nimmt sie sich Zeit, der Verstorbenen zu gedenken und sie zu ehren, indem sie wochenlange Mahnwachen hält, umgeben von elementaren Wächtern."
+    ],
+    besonderheiten: [
+      { name: "Opfer der Erinnerung (3/Tag)", beschreibung: "Wenn Atæshia einen Rettungswurf nicht besteht, kann eine willige Kreatur innerhalb von 18 m, die sie sehen kann, ihr Leben hingeben, um sie zu schützen. Diese Kreatur stirbt sofort, und Atæshia besteht den Rettungswurf." },
+      { name: "Aus dem Krieg wiedergeboren", beschreibung: "Wenn Atæshia auf 0 TP reduziert wird, zerfällt sie in einem feierlichen Wind zu Asche. In den nächsten 100 Jahren gilt: Stirbt ein Himmlischer, ein Elementar oder ein Humanoid mit Herausforderungsgrad oder Stufe 5 oder höher innerhalb von 18 m von dem Ort, an dem Atæshia starb, kehrt Atæshia an diesem Ort mit 25 TP ins Leben zurück." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Atæshia führt drei Fahle-Flamme-Angriffe aus. Sie kann einen Angriff durch einen Einsatz von Moment des Verlusts ersetzen, falls verfügbar." },
+      { name: "Fahle Flamme", beschreibung: "Nahkampf- oder Distanzzauberangriff: +13, Reichweite 1,5 m oder 36 m, ein Ziel. Treffer: 20 (4W6+6) Gleißender Schaden plus 14 (4W6) Feuerschaden. Reduziert dieser Angriff eine Kreatur auf 0 TP, stirbt sie und ihre gesamten Überreste verbrennen zu nichts." },
+      { name: "Moment des Verlusts (Aufladung 6)", beschreibung: "Atæshia verwandelt eine Kreatur, die sie innerhalb von 18 m sehen kann, in die Form einer lebenden Aschewolke. Während sie in Asche verwandelt ist, ist das Ziel immun gegen jeglichen Schaden, kann anderen Kreaturen keine Deckung gewähren und keine Reaktionen ausführen. Zu Beginn des nächsten Zuges des Ziels formt es sich zurück und muss einen KON-Rettungswurf SG 21 ablegen. Misslungen: Das Ziel wird auf 1 TP reduziert. Bei Erfolg: 44 (8W10) Nekrotischer Schaden. Dieser Schaden kann die TP des Ziels nicht unter 1 reduzieren." },
+      { name: "Aus Tod, Leben (1/Tag)", beschreibung: "Atæshia setzt ihre Schurkenaktion Entflammtes Opfer ein, selbst wenn diese nicht verfügbar ist, um sich selbst zu opfern." }
+    ],
+    bonusaktionen: [
+      { name: "Flackernde Flamme", beschreibung: "Atæshia formt sich zu einer Aschewolke, teleportiert sich in einen freien Raum innerhalb von 18 m, den sie sehen kann, und formt sich in ihre wahre Gestalt zurück. Jede Kreatur innerhalb von 1,5 m des Raumes, den sie verlassen hat, muss einen GES-Rettungswurf SG 21 bestehen oder erleidet 5 (1W10) Feuerschaden." }
+    ],
+    reaktionen: [
+      { name: "Anrufung der Asche", beschreibung: "Wenn ein anderer Elementar, den Atæshia innerhalb von 18 m sehen kann, von einem Angriff getroffen wird, wird der Schaden des Angriffs halbiert und das Ziel kann sich bis zur halben Bewegungsweite bewegen, ohne Gelegenheitsangriffe auszulösen." }
+    ],
+    legendaere_aktionen: [
+      { name: "Schurkenaktionen", beschreibung: "Atæshia verfügt über drei Schurkenaktionen. Sie kann jede Aktion einmal pro Begegnung nach dem Zug eines Gegners ausführen. Sie kann diese Aktionen in beliebiger Reihenfolge nutzen, jedoch nur eine pro Runde." },
+      { name: "Aktion 1: Welle der Trauer", beschreibung: "Atæshia entfesselt einen Impuls überwältigender Traurigkeit. Jeder Feind innerhalb von 36 m, den Atæshia sehen kann, muss einen WEI-Rettungswurf SG 21 ablegen. Misslungen: Die Kreatur ist 1 Min. Benommen (Rettungswurf am Ende des Zuges erlaubt). Bei Erfolg: Die Kreatur kann bis zum Ende ihres nächsten Zuges keine Reaktionen ausführen." },
+      { name: "Aktion 2: Entflammtes Opfer", beschreibung: "Atæshia wählt eine willige Kreatur innerhalb von 18 m, die stirbt, damit ihre Verbündeten leben können. Das Ziel stirbt, und bis zu zwei andere tote Kreaturen innerhalb von 18 m vom Ziel kehren ins Leben zurück. Diese wiedererweckten Kreaturen erhalten so viele Trefferpunkte zurück, wie die geopferte Kreatur hatte, bis zum TP-Maximum der wiedererweckten Kreatur." },
+      { name: "Aktion 3: Finale des Lebens", beschreibung: "Atæshia entfesselt einen Strom urzeitlichen Schmerzes, um das Mark der Schöpfung um sich herum aufzulösen. Jeder Feind innerhalb von 18 m muss einen CHA-Rettungswurf SG 21 ablegen. Misslungen: 55 (10W10) Nekrotischer Schaden und das Ziel kann bis zum Ende von Atæshias nächstem Zug keine TP zurückerhalten. Bei Erfolg: halber Schaden, aber keine weiteren Effekte. Ob Erfolg oder Misserfolg: Reduziert dieser Schaden eine Kreatur auf 0 TP, scheitert sie sofort einen Todesrettungswurf." }
+    ],
+    source: "Flee Mortals"
+  },
+  {
     name: "Aurumvas",
     art: "Unhold",
     unterart: "Dämon (Kategorie 6)",
@@ -321,6 +414,93 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     source: "Flee Mortals"
   },
   {
+    name: "Blutkraft",
+    art: "Elementar",
+    unterart: "Erde, Feuer, Wasser",
+    groesse: "Groß",
+    gesinnung: "Beliebige Gesinnung",
+    cr: 19,
+    xp: 22000,
+    rk: 21, ruestungstyp: "natürliche Rüstung",
+    tp: 230, tp_wuerfel: "20W10+120",
+    bewegung: { "Gehen": "15 m" },
+    attribute: { STR: 24, DEX: 20, CON: 22, INT: 19, WIS: 18, CHA: 20 },
+    rettungswuerfe: { KON: 12, WEI: 10, CHA: 11 },
+    fertigkeiten: { "Einschüchtern": 11, "Medizin": 10, "Überzeugen": 11 },
+    schadensresistenzen: ["Feuer", "Nekrotisch"],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: ["Bezaubert", "Erschöpfung", "Verängstigt"],
+    sinne: ["Dunkelsicht 36 m"],
+    passiveWahrnehmung: 14,
+    sprachen: ["Gemein", "Zwergisch", "Elfisch", "Riesisch", "Urzeitlich"],
+    umgebung: ["Andere Ebenen", "Stadt"],
+    bild: "assets/images/monster/flee-mortals/blutkraft.png",
+    beschreibung: [
+      "Blutkräfte, auch Blutfürsten genannt, sind Kriegsherren und Diplomaten, die gleichermaßen die Geburt sterblichen Lebens und den Moment seines Endes verkörpern. Man könnte sie für massive Humanoide halten, die ganz in schwarz-rot gezackte Rüstung gehüllt sind, doch in Wahrheit ist ihre Rüstung geschwärztes, knorriges Fleisch, durchzogen von Adern aus kochendem Rot.",
+      "Sterbliche Monarchen täten gut daran, achtsam zu sein, wenn sich der Scharlachlanze einer Blutkraft nähert. Diese Elementare verstehen Sterbliche tiefgreifend und treten ihnen niemals zu müßigem Zweck entgegen."
+    ],
+    besonderheiten: [
+      { name: "Eingeweide-Sicht", beschreibung: "Die Blutkraft kann jede Kreatur innerhalb von 36 m sehen, die kein Konstrukt oder Untoter ist. Diese Sicht ignoriert Effekte, die die Sicht verschleiern." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Die Blutkraft führt drei Scharlachlanze-Angriffe aus. Sie kann einen Angriff durch einen Zerreißen-von-Innen-Angriff ersetzen." },
+      { name: "Scharlachlanze", beschreibung: "Nahkampf- oder Distanzwaffenangriff: +13, Reichweite 4,5 m oder 9/18 m, ein Ziel. Treffer: 18 (2W10+7) Stichschaden. Ist das Ziel eine Kreatur, erhält die Blutkraft 5 Trefferpunkte zurück." },
+      { name: "Zerreißen von Innen", beschreibung: "Nahkampfzauberangriff: +12, Reichweite 1,5 m, eine Kreatur. Treffer: 13 (2W6+6) Hiebschaden plus 26 (4W12) Nekrotischer Schaden, und das Ziel verbraucht 1 Trefferwürfel ohne Wirkung und kann bis zum Beginn seines nächsten Zuges keine Reaktionen ausführen. Verfehlt: 13 (2W12) Nekrotischer Schaden." }
+    ],
+    bonusaktionen: [
+      { name: "Anrufung des Blutes", beschreibung: "Die Blutkraft verleiht sich selbst oder einem anderen Elementar, den sie innerhalb von 9 m sehen kann, die Kraft des Blutes und gewährt einen der folgenden Effekte nach Wahl dieses Elementars: Kochendes Blut – Der Elementar bringt das Blut einer Kreatur innerhalb von 1,5 m zum Kochen, die kein Konstrukt oder Untoter ist. Das Ziel muss einen KON-Rettungswurf SG 19 ablegen. Misslungen: Das Ziel muss wählen, entweder 27 (5W10) Feuerschaden zu erleiden oder einen Angriff mit einer Waffe mit Schadenswürfel 1W4 oder größer gegen eine Kreatur nach Wahl des Elementars auszuführen. Trifft der Angriff, fügt er zusätzliche 11 (2W10) Feuerschaden zu. Essenzdieb – Der Elementar stiehlt die Essenz zweier Kreaturen, die er innerhalb von 9 m sehen kann. Jedes Ziel muss einen KON-Rettungswurf SG 19 ablegen und erleidet 19 (3W12) Nekrotischen Schaden (halber Schaden bei Erfolg). Der Elementar kann sich anschließend in einen freien Raum innerhalb von 1,5 m eines der Ziele teleportieren, den er sehen kann." }
+    ],
+    reaktionen: [],
+    legendaere_aktionen: null,
+    source: "Flee Mortals"
+  },
+  {
+    name: "Brabbler",
+    art: "Aberration",
+    unterart: null,
+    groesse: "Mittelgroß",
+    gesinnung: "Typischerweise Chaotisch neutral",
+    cr: 2,
+    xp: 450,
+    rk: 11, ruestungstyp: "natürliche Rüstung",
+    tp: 60, tp_wuerfel: "8W8+24",
+    bewegung: { "Gehen": "3 m", "Fliegen": "3 m (schwebend)", "Schwimmen": "3 m" },
+    attribute: { STR: 12, DEX: 12, CON: 16, INT: 7, WIS: 10, CHA: 5 },
+    rettungswuerfe: { KON: 5 },
+    fertigkeiten: {},
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: ["Bezaubert", "Verängstigt", "Liegend"],
+    sinne: ["Dunkelsicht 18 m"],
+    passiveWahrnehmung: 10,
+    sprachen: ["spricht alle Sprachen, versteht jedoch keine"],
+    umgebung: ["Unterirdisch", "Höhle", "Sumpf", "Ruinen", "Andere Ebenen"],
+    bild: "assets/images/monster/flee-mortals/brabbler.png",
+    beschreibung: [
+      "Brabbler sind das fleischgewordene Chaos. Wenn diese Bewohner der sich ewig wandelnden Ebene Primordius reisen, nehmen sie ein Stück Heimat mit. Die Realität beugt sich ihrem Willen: Der Boden brodelt unter ihnen, die Schwerkraft ordnet sich um sie herum neu, und Abenteurer fliehen entweder vor ihnen oder werden ins Chaos gesogen.",
+      "Zermürbende Taxonomie: Brabbler wuseln als ein Wirrwarr ständig wechselnder Körperteile. Ihr Name geht auf einen Entdecker zurück, der berichtete, einen Haufen brabbelnder Mäuler in bekannten und unbekannten Sprachen sprechen zu sehen — und davor zu fliehen. Andere Abenteurer beschrieben ähnliche Verschmelzungen aus Knochen, Muskeln und Gliedmaßen, eine schauerlicher als die andere. Erst kürzlich entdeckten Gelehrte, dass diese Geschöpfe eine gemeinsame chaotische Abstammung teilen, obwohl ihr Aussehen so wandelbar ist, dass sie nie zweimal gleich wahrgenommen werden.",
+      "Chaos-Gourmets: Der Brabbler ernährt sich von Veränderung, wie sich die meisten Kreaturen von Nahrung und Wasser ernähren. Er kann sich allein durch den Weg in die Profanwelt einen Festschmaus gönnen, denn dort sind die Dinge köstlich wandelbar. Selbst reisen können sie nicht, doch sie ergreifen jede Gelegenheit: schleichen durch Magierportale und interdimensionale Risse, die durch Wildmagie entstehen. Manche werden von besonders bösartigen Mächten in die Profanwelt gerufen — eifrigen Kultisten, größenwahnsinnigen Magiern und anderen, die die Welt verändern oder ablenken wollen.",
+      "Unverantwortliche Verwandlung: Lebende Wesen sind besonders anfällig für den realitätsverzerrenden Einfluss des Brabblers. Wer einem solchen Geschöpf ausgesetzt war, kehrt oft mit einem Andenken zurück: einem veränderten Körper. Zunächst sind die Effekte gering — der Körper flackert vielleicht stetig in die Realität hinein und aus ihr heraus, oder dem Gesicht wächst eine zusätzliche Nase. Diese Effekte verschlimmern sich stets und fügen mit der Zeit weitere Körperteile hinzu oder ordnen sie neu an. Schließlich verwandeln sich jene, die keine übernatürliche Hilfe finden, selbst in Brabbler und durchstreifen die Profanwelt auf der Suche nach einem Stück Realität zum Wandeln.",
+      "Brabbel-Freund: Selten findet ein Brabbler einen Abenteurer, der das Chaos selbst verkörpert. Eine solche Verbindung kann eine unwahrscheinliche Freundschaft hervorbringen — der Brabbler dient gerne als treuer Gefährte, solange sein Pfleger ihm reichlich Gelegenheit gibt, die Realität zu verzerren. In noch einzigartigeren Fällen widersteht ein zum Brabbler gewordener Abenteurer dem Ruf des Chaos und bleibt bei seiner Gruppe."
+    ],
+    besonderheiten: [
+      { name: "Unveränderliche Form", beschreibung: "Der Brabbler ist immun gegen jede Macht, jeden Zauber oder Effekt, der seine Form verändern würde." },
+      { name: "Urzeitlicher Einfluss", beschreibung: "Ein benommener Feind, der seinen Zug innerhalb von 6 m vom Brabbler beginnt, muss einen WEI-Rettungswurf SG 13 ablegen. Misslungen: Der Körper der Kreatur wird auf eine jenseitige Weise nach Wahl der SL verändert — sie könnte in die Realität hineinflackern und herausflackern, ihr könnten winzige Finger aus den Fingern sprießen oder ihre körperliche Form könnte ähnlich fremdartig verändert werden. Diese Veränderung hat keinen Einfluss auf die Spielwerte der Kreatur. Eine Krankheit-heilen-Macht 4. Grades oder höher, ein Größere Wiederherstellung-Zauber oder ein ähnlicher übernatürlicher Effekt hebt die Veränderung auf. Solange die Kreatur derart verändert ist, muss sie den Rettungswurf nach jeder langen Rast wiederholen. Misslungen: Die vorherige Veränderung verschlimmert sich oder die Kreatur erfährt eine weitere chaotische Veränderung nach Wahl der SL. Misslingt der Rettungswurf nach der ursprünglichen Veränderung dreimal, verwandelt sich die Kreatur in einen von der SL kontrollierten Brabbler, und nur ein Wunsch-Zauber kann ihre ursprüngliche Form wiederherstellen." },
+      { name: "Zähflüssige Umgebung", beschreibung: "Der Brabbler hüllt seine Umgebung in seine sich wandelnde Realität. Der Bereich innerhalb von 6 m gilt für andere Kreaturen als schwieriges Gelände." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Brabbler führt zwei Realitätsriss-Angriffe aus. Er kann einen Angriff durch einen Einsatz von Sog ersetzen." },
+      { name: "Realitätsriss", beschreibung: "Nahkampf-Machtangriff: +5, Reichweite 1,5 m, ein Ziel. Treffer: 10 (2W6+3) Psychischer Schaden, und das Ziel muss einen WEI-Rettungswurf SG 13 bestehen oder ist bis zum Beginn des nächsten Zuges des Brabblers Benommen." },
+      { name: "Sog", beschreibung: "Der Brabbler verzerrt die Realität um bis zu drei Kreaturen, die er innerhalb von 18 m sehen kann. Jedes Ziel muss einen STR-Rettungswurf SG 13 bestehen oder wird bis zu 9 m direkt zum Brabbler gezogen." }
+    ],
+    bonusaktionen: [],
+    reaktionen: [],
+    legendaere_aktionen: null,
+    source: "Flee Mortals"
+  },
+  {
     name: "Drachling",
     art: "Drache",
     unterart: null,
@@ -363,6 +543,405 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     ],
     bonusaktionen: [],
     reaktionen: [],
+    legendaere_aktionen: null,
+    source: "Flee Mortals"
+  },
+  {
+    name: "Durixaviinox",
+    art: "Drache",
+    unterart: null,
+    groesse: "Gigantisch",
+    gesinnung: "Rechtschaffen böse",
+    cr: 16,
+    xp: 15000,
+    rk: 18, ruestungstyp: "natürliche Rüstung",
+    tp: 370, tp_wuerfel: "20W20+160",
+    bewegung: { "Gehen": "12 m", "Graben": "12 m", "Fliegen": "24 m", "Schwimmen": "12 m" },
+    attribute: { STR: 26, DEX: 10, CON: 26, INT: 18, WIS: 14, CHA: 18 },
+    rettungswuerfe: { KON: 14, WEI: 8, CHA: 10 },
+    fertigkeiten: { "Einschüchtern": 10, "Wahrnehmung": 8, "Überzeugen": 10 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: ["Kälte", "Wucht"],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: ["Bezaubert", "Benommen", "Verängstigt", "Gelähmt", "Versteinert", "Betäubt"],
+    sinne: ["Blindsicht 36 m", "Wahres Sehen 18 m"],
+    passiveWahrnehmung: 18,
+    sprachen: ["Gemein", "Drakonisch"],
+    umgebung: ["Arktis", "Gebirge", "Ruinen"],
+    bild: "assets/images/monster/flee-mortals/durixaviinox.png",
+    beschreibung: [
+      "In einer kalten Weite am Rand der Welt haust Durixaviinox (dur-ih-ZAH-vin-nox) unter den Ruinen der drakonischen Stadt Vexinoth. Obwohl viele ihn heute die Ruinierte Vorsehung nennen, herrschte dieser frostatmende Ruinendrache einst als wohlwollender und allmächtiger Imperator, der so viel Verehrung sammelte, dass er es mit den Göttern aufnehmen konnte.",
+      "Doch Durixaviinox wurde von seiner Schwester Yserthrax verraten, die mit Qazyldrath konspirierte, um die Stadt zu zerstören. Der Konflikt tötete unzählige Drachen auf beiden Seiten, und Durixaviinox wurde für tot zurückgelassen, sein Körper unter den Trümmern einer einst mächtigen Zivilisation begraben.",
+      "Doch die Vorsehung weigerte sich zu sterben und brachte sich allein durch Willenskraft vom Rand des Todes zurück. Während Durixaviinox über ein Jahrtausend des Wundenleckens langsam seine körperliche Macht zurückgewann, schwor er Racheeide gegen seine Schwester und Qazyldrath. Er plant, einen ewigen Winter über die Profanwelt zu bringen und sie zu einem Ort zu machen, der nur für jene mit frostigen Herzen geeignet ist."
+    ],
+    besonderheiten: [
+      { name: "Frostige Resistenz (3/Tag)", beschreibung: "Wenn Durixaviinox einen Rettungswurf nicht besteht, kann er ihn stattdessen bestehen. Wenn er das tut, wird seine Bewegungsrate halbiert und er kann bis zum Ende seines nächsten Zuges keine Rückzug-Aktion ausführen." },
+      { name: "Raureif", beschreibung: "Kälteschaden, den Durixaviinox verursacht, ignoriert Schadensresistenz." },
+      { name: "Eiswanderung", beschreibung: "Durixaviinox kann sich über vereiste Oberflächen bewegen und sie erklimmen, ohne eine Attributsprobe ablegen zu müssen. Zusätzlich kostet ihn schwieriges Gelände aus Eis oder Schnee keine zusätzliche Bewegung." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Durixaviinox führt einen Bissangriff und zwei Klauenangriffe aus." },
+      { name: "Biss", beschreibung: "Nahkampfwaffenangriff: +14, Reichweite 4,5 m, ein Ziel. Treffer: 19 (2W10+8) Stichschaden plus 9 (2W8) Kälteschaden, und das Ziel kann bis zum Ende seines nächsten Zuges keine Reaktionen ausführen." },
+      { name: "Klaue", beschreibung: "Nahkampfwaffenangriff: +14, Reichweite 3 m, ein Ziel. Treffer: 15 (2W6+8) Hiebschaden, und Durixaviinox kann das Ziel bis zu 4,5 m horizontal verschieben." },
+      { name: "Erstarrender Atem (Aufladung 5-6)", beschreibung: "Durixaviinox stößt einen eisigen Schwall in einem 27-m-Kegel aus. Jede Kreatur im Bereich muss einen KON-Rettungswurf SG 22 ablegen. Misslungen: 42 (12W6) Kälteschaden und die Kreatur ist bis zum Ende ihres nächsten Zuges Festgesetzt. Bei Erfolg: halber Schaden und nicht Festgesetzt." }
+    ],
+    bonusaktionen: [
+      { name: "Eisiger Griff", beschreibung: "Durixaviinox hüllt eine Kreatur innerhalb von 18 m, die er sehen kann, in Eis ein. Das Ziel muss einen STR-Rettungswurf SG 18 ablegen. Misslungen: 22 (4W10) Kälteschaden und die Kreatur ist Festgesetzt. Bei Erfolg: halber Schaden und nicht Festgesetzt. Eine Kreatur kann eine Aktion nutzen, um sich selbst oder eine andere Kreatur in Reichweite aus dem Eis zu befreien und so den Festgesetzt-Zustand zu beenden." }
+    ],
+    reaktionen: [
+      { name: "Welkender Frost", beschreibung: "Wenn eine Kreatur innerhalb von 1,5 m von Durixaviinox ihn mit einem Angriff trifft, setzt Durixaviinox einen Stoß kalter Energie frei. Jede Kreatur innerhalb von 1,5 m von ihm muss einen KON-Rettungswurf SG 18 bestehen oder erleidet 10 (3W6) Kälteschaden." }
+    ],
+    legendaere_aktionen: [
+      { name: "Schurkenaktionen", beschreibung: "Durixaviinox verfügt über drei Schurkenaktionen. Er kann jede Aktion einmal pro Begegnung nach dem Zug eines Gegners ausführen. Er kann diese Aktionen in beliebiger Reihenfolge nutzen, jedoch nur eine pro Runde." },
+      { name: "Aktion 1: Tobender Blizzard", beschreibung: "Durixaviinox schlägt mit seinen Schwingen, und frostige Winde und Hagel wirbeln um ihn herum. Jede Kreatur innerhalb von 36 m muss einen STR-Rettungswurf SG 18 ablegen. Misslungen: 21 (6W6) Wuchtschaden, das Ziel wird 18 m direkt von Durixaviinox weggestoßen und zu Boden geworfen. Bei Erfolg: halber Schaden, kein Stoß und kein Sturz." },
+      { name: "Aktion 2: Königliche Verteidigung", beschreibung: "Durixaviinox ruft die treue Seele eines geisterhaften Wächters herbei, der an seiner Seite kämpft. Der Wächter nutzt den Statblock des Frostriesen-Windsprinters, ist jedoch ein Untoter statt eines Riesen. Der Wächter agiert unmittelbar nach Durixaviinox und folgt dessen verbalen Befehlen. Solange sich der Wächter innerhalb von 18 m von Durixaviinox befindet, erhält dieser Resistenz gegen jeglichen Schaden. Stirbt Durixaviinox, wird der Wächter zerstört." },
+      { name: "Aktion 3: Frost-Kataklysmus", beschreibung: "Durixaviinox entfesselt einen Impuls eisiger Energie, gefolgt von einer Wuchtwelle aus Kraft in einer 36-m-Radius-Sphäre um ihn herum. Jeder Feind im Bereich muss einen KON-Rettungswurf SG 18 ablegen und erleidet 45 (10W8) Kälteschaden (halber Schaden bei Erfolg). Unmittelbar danach muss jeder Feind im Bereich einen STR-Rettungswurf SG 18 ablegen und erleidet 45 (10W8) Wuchtschaden (halber Schaden bei Erfolg)." }
+    ],
+    source: "Flee Mortals"
+  },
+  {
+    name: "Eisenkraft",
+    art: "Elementar",
+    unterart: "Erde, Feuer",
+    groesse: "Groß",
+    gesinnung: "Beliebige Gesinnung",
+    cr: 10,
+    xp: 5900,
+    rk: 19, ruestungstyp: "natürliche Rüstung (22 in Schildform)",
+    tp: 150, tp_wuerfel: "12W10+84",
+    bewegung: { "Gehen": "18 m" },
+    attribute: { STR: 21, DEX: 10, CON: 25, INT: 11, WIS: 13, CHA: 12 },
+    rettungswuerfe: { STR: 9 },
+    fertigkeiten: { "Athletik": 9, "Wahrnehmung": 5 },
+    schadensresistenzen: ["Feuer"],
+    schadensimmunitaeten: ["Gift"],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: ["Erschöpfung", "Verängstigt", "Versteinert", "Vergiftet"],
+    sinne: ["Dunkelsicht 18 m", "Zittersinn 9 m"],
+    passiveWahrnehmung: 15,
+    sprachen: ["Gemein", "Ignisch", "Terranisch"],
+    umgebung: ["Gebirge", "Höhle", "Andere Ebenen"],
+    bild: "assets/images/monster/flee-mortals/eisenkraft.png",
+    beschreibung: [
+      "Eine Eisenkraft, auch Eisenkämpe genannt, erscheint als vierarmiger Zentaur aus formbarem Metall mit einem Kopf, der einem leeren Ritterhelm gleicht. Die meisten sind standhaft, loyal und kompromisslos.",
+      "Manche Eisenkräfte erlangen sogar Ruhm, indem sie Bosheit dort entgegentreten, wo sie ihr begegnen — doch andere werden selbst zur Bosheit und nutzen ihre Stärke, um alles zu vernichten, was ihnen auch nur leicht missfällt."
+    ],
+    besonderheiten: [],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Die Eisenkraft setzt Form-Haltung ein und führt anschließend drei Eiserne-Großklinge- oder drei Eisenstachel-Angriffe aus." },
+      { name: "Eiserne Großklinge", beschreibung: "Nahkampfwaffenangriff: +9, Reichweite 1,5 m (6 m in Stangenwaffenform), ein Ziel. Treffer: 19 (4W6+5) Hiebschaden." },
+      { name: "Eisenstachel", beschreibung: "Distanzwaffenangriff: +9, Reichweite 9/18 m, ein Ziel. Treffer: 14 (2W8+5) Stichschaden." },
+      { name: "Form-Haltung", beschreibung: "Die Eisenkraft formt ihren Körper, um bis zum Beginn ihres nächsten Zuges einen der folgenden Vorteile zu erhalten: Stangenwaffenform – Nahkampfangriffe der Eisenkraft haben eine Reichweite von 6 m statt 1,5 m. Rücksichtslose Form – Die Eisenkraft hat Vorteil auf alle Nahkampfangriffswürfe, aber Angriffswürfe gegen sie haben ebenfalls Vorteil. Schildform – Die Eisenkraft erhält einen Bonus von +3 auf ihre RK." },
+      { name: "Feuerform (1/Tag)", beschreibung: "Die Angriffe der Eisenkraft fügen bei Treffer zusätzliche 13 (2W12) Feuerschaden zu." }
+    ],
+    bonusaktionen: [
+      { name: "Anrufung des Eisens (1/Tag)", beschreibung: "Die Eisenkraft verleiht sich selbst oder einem anderen Elementar, den sie innerhalb von 9 m sehen kann, die Kraft des Eisens und gewährt einen der folgenden Effekte nach Wahl dieses Elementars: Erd-Verstärkung – Fünf Erdfunken erscheinen in freien Räumen innerhalb von 6 m vom Elementar. Die Funken verstehen den Elementar, folgen seinen verbalen Befehlen und agieren in der Initiative-Reihenfolge unmittelbar nach ihm. Eisenhaut – Metall überzieht den Elementar und gewährt ihm 1 Min. lang oder bis seine Konzentration unterbrochen wird (wie bei einem Zauber mit Konzentration) Resistenz gegen Wucht-, Stich- und Hiebschaden." }
+    ],
+    reaktionen: [],
+    legendaere_aktionen: null,
+    source: "Flee Mortals"
+  },
+  {
+    name: "Erdkraft",
+    art: "Elementar",
+    unterart: "Erde",
+    groesse: "Groß",
+    gesinnung: "Beliebige Gesinnung",
+    cr: 5,
+    xp: 1800,
+    rk: 18, ruestungstyp: "natürliche Rüstung",
+    tp: 95, tp_wuerfel: "10W10+40",
+    bewegung: { "Gehen": "9 m", "Graben": "6 m" },
+    attribute: { STR: 19, DEX: 9, CON: 18, INT: 10, WIS: 14, CHA: 9 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Athletik": 7, "Geschichte": 6 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: ["Gift"],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: ["Versteinert", "Vergiftet"],
+    sinne: ["Dunkelsicht 18 m", "Zittersinn 9 m"],
+    passiveWahrnehmung: 12,
+    sprachen: ["Gemein", "Terranisch"],
+    umgebung: ["Gebirge", "Höhle", "Unterirdisch", "Andere Ebenen"],
+    bild: "assets/images/monster/flee-mortals/erdkraft.png",
+    beschreibung: [
+      "Eine beschützende Erdelementar-Wesenheit, die Erdkraft, gleicht einem 2,70 m großen Menschenaffen aus rohem Stein. Sie agieren als Wächter und Chronisten ihrer Ishkrar und arbeiten unermüdlich daran, der Gruppe Unheil fernzuhalten. Diese Elementare werden manchmal Erdbollwerke genannt."
+    ],
+    besonderheiten: [
+      { name: "Erdgleiten", beschreibung: "Die Erdkraft kann sich durch mundane, unbearbeitete Erde und Stein graben. Dabei stört sie das Material nicht, durch das sie sich bewegt." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Die Erdkraft führt zwei Erdfessel-Schlag-Angriffe aus." },
+      { name: "Erdfessel-Schlag", beschreibung: "Nahkampfwaffenangriff: +7, Reichweite 1,5 m, ein Ziel. Treffer: 13 (2W8+4) Wuchtschaden, und die Bewegungsweite des Ziels wird bis zum Beginn des nächsten Zuges der Erdkraft auf 0 reduziert." },
+      { name: "Splitterstein", beschreibung: "Distanzwaffenangriff: +7, Reichweite 18/36 m, ein Ziel. Treffer: 23 (3W12+4) Wuchtschaden, oder 47 (6W12+8) Wuchtschaden, wenn das Ziel ein Objekt oder Bauwerk ist." }
+    ],
+    bonusaktionen: [
+      { name: "Anrufung der Erde (1/Tag)", beschreibung: "Die Erdkraft verleiht sich selbst oder einem anderen Elementar, den sie innerhalb von 9 m sehen kann, die Kraft der Erde und gewährt einen der folgenden Effekte nach Wahl dieses Elementars: Erdaura – Steine wirbeln in einer 3-m-Radius-Sphäre für 1 Min. rasch um den Elementar oder bis er getötet oder kampfunfähig wird. Eine Kreatur, die kein Elementar ist, erleidet 5 Hiebschaden für je 1,5 m, die sie sich in den Bereich oder darin bewegt. Steinrüstung – Stein wächst über den Elementar als schützender Panzer und gewährt ihm 20 temporäre Trefferpunkte. Solange der Elementar diese temporären Trefferpunkte besitzt, ist er immun gegen die Zustände Benommen, Gelähmt, Versteinert und Betäubt." }
+    ],
+    reaktionen: [],
+    legendaere_aktionen: null,
+    source: "Flee Mortals"
+  },
+  {
+    name: "Feuerkern",
+    art: "Elementar",
+    unterart: "Feuer",
+    groesse: "Mittelgroß",
+    gesinnung: "Beliebige Gesinnung",
+    cr: 5,
+    xp: 1800,
+    rk: 14, ruestungstyp: "natürliche Rüstung",
+    tp: 75, tp_wuerfel: "10W8+30",
+    bewegung: { "Gehen": "9 m" },
+    attribute: { STR: 9, DEX: 17, CON: 16, INT: 11, WIS: 12, CHA: 16 },
+    rettungswuerfe: { CHA: 6 },
+    fertigkeiten: { "Wahrnehmung": 4, "Vortragen": 6 },
+    schadensresistenzen: ["Gift"],
+    schadensimmunitaeten: ["Feuer"],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: ["Unsichtbar", "Vergiftet"],
+    sinne: ["Dunkelsicht 18 m"],
+    passiveWahrnehmung: 14,
+    sprachen: ["Gemein", "Ignisch"],
+    umgebung: ["Gebirge", "Höhle", "Andere Ebenen"],
+    bild: "assets/images/monster/flee-mortals/feuerkern.png",
+    beschreibung: [
+      "Der Feuerkern, oft Brandbeschwörer genannt, nimmt die Gestalt einer feurigen Echse an. Sie leben oft in heißen Zonen planarer Konvergenz oder in Gebieten vulkanischer Aktivität. Diese territorialen Elementare befragen Eindringlinge meist aus der Ferne — und gefallen ihnen die Antworten nicht, lassen sie Feuer regnen, bevor ihre Feinde näher herankommen können.",
+      "Während viele Elementare ihre angeborenen Gaben in mündliches Geschichtenerzählen einweben, sind Feuerkerne besonders geschickt darin, ihre Geschichten in Silhouetten aus Flammen lebendig werden zu lassen."
+    ],
+    besonderheiten: [
+      { name: "Lodernd", beschreibung: "Der Feuerkern verströmt helles Licht in einem Radius von 6 m und dämmriges Licht für weitere 6 m und kann nicht von Unsichtbarkeit profitieren. Eine Kreatur, die ihren Zug beginnt, während sie den Feuerkern packt oder von ihm gepackt wird, erleidet 7 (2W6) Feuerschaden." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Feuerkern führt zwei Flammenzunge- oder zwei Schwefliger-Krallenhieb-Angriffe aus." },
+      { name: "Schwefliger Krallenhieb", beschreibung: "Nahkampfwaffenangriff: +6, Reichweite 1,5 m, ein Ziel. Treffer: 10 (2W6+3) Hiebschaden, und das Ziel kann in diesem Zug keine Reaktionen ausführen." },
+      { name: "Flammenzunge", beschreibung: "Distanzzauberangriff: +6, Reichweite 30 m, ein Ziel. Treffer: 13 (2W12) Feuerschaden. Ist das Ziel ein brennbares Objekt, das nicht getragen oder geführt wird, entzündet es sich." }
+    ],
+    bonusaktionen: [
+      { name: "Anrufung des Feuers (1/Tag)", beschreibung: "Der Feuerkern verleiht sich selbst oder einem anderen Elementar, den er innerhalb von 9 m sehen kann, die Kraft des Feuers und gewährt einen der folgenden Effekte nach Wahl dieses Elementars: Flammenblüte – Der Elementar schleudert einen Flammensamen an einen sichtbaren Punkt innerhalb von 18 m. Eine 3-m-Radius-Sphäre um diesen Punkt entbrennt mit Feuer und brennt 1 Min. lang. Jede Kreatur, die den Bereich erstmals in einem Zug betritt oder dort ihren Zug beginnt, erleidet 10 (3W6) Feuerschaden. Rauchschleier – Der Elementar verströmt eine Aura aus Rauch in alle Richtungen 3 m weit für 1 Min. oder bis sie von mäßigem oder stärkerem Wind verweht wird. Der rauchige Bereich ist für alle Kreaturen, die keine Feuerelementare sind, schwer verschleiert." },
+      { name: "Flammenstrahl (1/Tag)", beschreibung: "Der Feuerkern erhält bis zum Ende seines Zuges eine Fluggeschwindigkeit von 9 m und kann sich bis zu seiner Bewegungsweite bewegen." }
+    ],
+    reaktionen: [],
+    legendaere_aktionen: null,
+    source: "Flee Mortals"
+  },
+  {
+    name: "Forzaantirilys",
+    art: "Drache",
+    unterart: null,
+    groesse: "Gigantisch",
+    gesinnung: "Rechtschaffen böse",
+    cr: 24,
+    xp: 62000,
+    rk: 20, ruestungstyp: "natürliche Rüstung",
+    tp: 585, tp_wuerfel: "30W20+270",
+    bewegung: { "Gehen": "12 m", "Klettern": "12 m", "Fliegen": "24 m" },
+    attribute: { STR: 30, DEX: 10, CON: 28, INT: 19, WIS: 16, CHA: 22 },
+    rettungswuerfe: { KON: 16, WEI: 10, CHA: 13 },
+    fertigkeiten: { "Athletik": 17, "Wahrnehmung": 10 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: ["Feuer", "Gleißend"],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: ["Bezaubert", "Benommen", "Verängstigt", "Gelähmt", "Versteinert", "Betäubt"],
+    sinne: ["Blindsicht 36 m", "Wahres Sehen 18 m"],
+    passiveWahrnehmung: 20,
+    sprachen: ["Gemein", "Drakonisch"],
+    umgebung: ["Gebirge", "Höhle", "Andere Ebenen"],
+    bild: "assets/images/monster/flee-mortals/forzaantirilys.png",
+    beschreibung: [
+      "Der als Aschenlied bekannte Blutdrache ist ein Geschöpf aus Asche und Glut, ihr Körper umhüllt von Flammen, die mit unirdischer Hitze brennen. Forzaantirilys (for-zan-TILL-ih-riss) haust im Herzen des größten Vulkans der Welt, und wenn die Gerüchte wahr sind, kann sie überall durch Magma- und Lavaströme sehen und hören.",
+      "Forzaantirilys ist ein Inferno aus Zorn, und diese brennende Wut macht sie immun gegen alle Feuer, einschließlich des grellen Lichts der Sonne. Sie hasst Humanoide für ihren Glauben, ein Anrecht auf die Profanwelt zu haben, und sie verabscheut die Götter, die sie erschufen.",
+      "Das Aschenlied verachtet auch den Wyrm Xaantikorijek, der vor fast tausend Jahren ihren Gefährten Frezzelvarax (frezz-el-VAR-ax) tötete. Sie will nichts mehr, als die Welt von ihrem Feuer verzehrt und neu geformt zu sehen, obwohl sie weiß, dass mutwillige Zerstörung zu ihrem Untergang führen würde."
+    ],
+    besonderheiten: [
+      { name: "Höllenfeuer", beschreibung: "Feuerschaden, den Forzaantirilys verursacht, ignoriert Schadensresistenz." },
+      { name: "Zornige Verteidigung (3/Tag)", beschreibung: "Wenn Forzaantirilys einen Rettungswurf nicht besteht, kann sie ihn stattdessen bestehen. Wenn sie das tut, haben Angriffswürfe gegen sie bis zum Ende ihres nächsten Zuges Vorteil." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Forzaantirilys führt einen Bissangriff und zwei Klauenangriffe aus." },
+      { name: "Biss", beschreibung: "Nahkampfwaffenangriff: +17, Reichweite 4,5 m, ein Ziel. Treffer: 21 (2W10+10) Stichschaden plus 14 (4W6) Feuerschaden, und das Ziel steht für 1 Min. in Flammen oder bis das Ziel oder eine erreichbare Kreatur eine Aktion nutzt, um die Flammen zu löschen. Eine Kreatur in Flammen erleidet zu Beginn ihres Zuges 10 (3W6) Feuerschaden. Wird eine Kreatur, die bereits in Flammen steht, in einem folgenden Zug erneut entzündet, ist der Schaden nicht kumulativ, aber die Branddauer wird auf 1 Min. zurückgesetzt." },
+      { name: "Klaue", beschreibung: "Nahkampfwaffenangriff: +17, Reichweite 3 m, ein Ziel. Treffer: 17 (2W6+10) Hiebschaden, und Forzaantirilys kann das Ziel bis zu 4,5 m horizontal verschieben." },
+      { name: "Sengender Atem (Aufladung 5-6)", beschreibung: "Forzaantirilys stößt Feuer in einem 27-m-Kegel aus. Jede Kreatur im Bereich muss einen GES-Rettungswurf SG 24 ablegen. Misslungen: 70 (20W6) Feuerschaden, und alle mundanen Metallgegenstände, die das Ziel trägt oder bei sich führt, werden zu Schlacke geschmolzen und zerstört. Bei Erfolg: halber Schaden und die Ausrüstung wird nicht zerstört. Zusätzlich verbleibt das Feuer im Bereich bis zum Ende von Forzaantirilys' nächstem Zug. Für die Dauer gilt der Bereich als schwieriges Gelände, und eine Kreatur, die den Bereich erstmals in einem Zug betritt oder dort ihren Zug beendet, erleidet 14 (4W6) Feuerschaden." }
+    ],
+    bonusaktionen: [
+      { name: "Lodernder Sturm", beschreibung: "Forzaantirilys bewegt sich bis zur Hälfte ihrer Bewegungsrate. Betritt sie während dieser Bewegung den Raum einer Kreatur, erleidet diese 10 (3W6) Feuerschaden." }
+    ],
+    reaktionen: [
+      { name: "Den Vermessenen entflammen", beschreibung: "Wenn eine Kreatur innerhalb von 36 m Forzaantirilys angreift, muss der Angreifer einen GES-Rettungswurf SG 21 ablegen. Misslungen: Der Angreifer steht für 1 Min. in Flammen oder bis er oder eine erreichbare Kreatur eine Aktion nutzt, um die Flammen zu löschen. Eine Kreatur in Flammen erleidet zu Beginn ihres Zuges 10 (3W6) Feuerschaden. Wird eine Kreatur, die bereits in Flammen steht, in einem folgenden Zug erneut entzündet, ist der Schaden nicht kumulativ, aber die Branddauer wird auf 1 Min. zurückgesetzt." }
+    ],
+    legendaere_aktionen: [
+      { name: "Schurkenaktionen", beschreibung: "Forzaantirilys verfügt über drei Schurkenaktionen. Sie kann jede Aktion einmal pro Begegnung nach dem Zug eines Gegners ausführen. Sie kann diese Aktionen in beliebiger Reihenfolge nutzen, jedoch nur eine pro Runde." },
+      { name: "Aktion 1: Aschenfall", beschreibung: "Eine Wolke aus Rauch und Glut mit 9 m Radius umgibt Forzaantirilys bis zum Ende ihres nächsten Zuges. Dieser Bereich ist für andere Kreaturen als Forzaantirilys schwer verschleiert. Ein Feind, der atmen muss und seinen Zug innerhalb der Wolke beginnt, muss einen KON-Rettungswurf SG 21 bestehen oder ist für 1 Min. Vergiftet (Rettungswurf am Ende des Zuges erlaubt)." },
+      { name: "Aktion 2: Aschenrüstung", beschreibung: "Forzaantirilys' Haut härtet sich zu einer schützenden Rüstung aus aschigen Schuppen und gewährt ihr 100 temporäre Trefferpunkte. Solange diese temporären Trefferpunkte vorhanden sind, erleidet eine Kreatur innerhalb von 1,5 m von Forzaantirilys, die sie berührt oder mit einem Angriff trifft, 14 (4W6) Feuerschaden." },
+      { name: "Aktion 3: Supernova", beschreibung: "Forzaantirilys entfesselt einen gewaltigen Ausbruch aus Licht und Hitze. Jede Kreatur innerhalb von 36 m muss einen KON-Rettungswurf SG 21 ablegen. Misslungen: 35 (10W6) Feuerschaden plus 35 (10W6) Gleißender Schaden und das Ziel ist Geblendet. Bei Erfolg: halber Schaden und nicht Geblendet. Die Blindheit hält an, bis sie durch eine Macht, einen Zauber oder eine vergleichbare übernatürliche Wirkung, die den Geblendet-Zustand entfernt, geheilt wird." }
+    ],
+    source: "Flee Mortals"
+  },
+  {
+    name: "Frostkern",
+    art: "Elementar",
+    unterart: "Wasser",
+    groesse: "Mittelgroß",
+    gesinnung: "Beliebige Gesinnung",
+    cr: 6,
+    xp: 2300,
+    rk: 16, ruestungstyp: "natürliche Rüstung",
+    tp: 135, tp_wuerfel: "30W8",
+    bewegung: { "Gehen": "9 m" },
+    attribute: { STR: 12, DEX: 14, CON: 10, INT: 12, WIS: 16, CHA: 18 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Täuschen": 10, "Motiv erkennen": 9, "Wahrnehmung": 6 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: ["Kälte", "Gift"],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: ["Unsichtbar", "Vergiftet"],
+    sinne: ["Dunkelsicht 18 m"],
+    passiveWahrnehmung: 16,
+    sprachen: ["Aquanisch", "Gemein", "sowie die Sprachen einer durch Vereiste Spiegelung gespiegelten Kreatur"],
+    umgebung: ["Arktis", "Gebirge", "Andere Ebenen"],
+    bild: "assets/images/monster/flee-mortals/frostkern.png",
+    beschreibung: [
+      "Eine Wesenheit aus gespiegeltem Eis, der Frostkern ist fast immer von einer vereisten Fassade bedeckt. Sie werden gemeinhin Eisige Schimmermasken genannt, weil sie Kreaturen unvollkommen imitieren und so übernatürlichen Schrecken über jene bringen können, die sie spiegeln. Diese Furcht macht die gespiegelte Kreatur anfälliger für Schaden, ihre Gestalt und ihr Geist verkümmern unter dem prüfenden Blick des Frostkerns zu einer brüchigen Konsistenz."
+    ],
+    besonderheiten: [
+      { name: "Funkelnd", beschreibung: "Der Frostkern kann nicht von Unsichtbarkeit profitieren." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Frostkern führt zwei Raureifglas-Berührungs-Angriffe aus und kann Vereiste Spiegelung oder Es starrt zurück einsetzen, falls verfügbar." },
+      { name: "Raureifglas-Berührung", beschreibung: "Nahkampf- oder Distanzzauberangriff: +7, Reichweite 1,5 m oder 18 m, ein Ziel. Treffer: 17 (3W8+4) Kälteschaden, und das Ziel kann bis zum Beginn des nächsten Zuges des Frostkerns keine Kreaturen außer sich selbst und dem Frostkern sehen oder hören." },
+      { name: "Vereiste Spiegelung", beschreibung: "Der Frostkern spiegelt das Aussehen einer bestimmten mittelgroßen oder kleinen Kreatur wider, die er innerhalb der letzten Woche gesehen hat. Dieses Aussehen ist illusorisch und unvollkommen und zeigt eine erfrorene Version der Kreatur. Die Illusion hält an, bis der Frostkern Donnerschaden erleidet, diese Aktion erneut einsetzt oder Kampfunfähig wird. Für die Dauer kennt der Frostkern zusätzlich alle Sprachen, die diese Kreatur beherrscht." },
+      { name: "Es starrt zurück (Aufladung 5-6)", beschreibung: "Der Frostkern legt einer Kreatur innerhalb von 18 m Zerbrechlichkeit auf, die durch seine Vereiste Spiegelung gespiegelt wird. Kann das Ziel den Frostkern sehen, muss es einen WEI-Rettungswurf SG 15 ablegen. Misslungen: Das Ziel ist für 1 Min. vor dem Frostkern Verängstigt (Rettungswurf am Ende des Zuges erlaubt) oder bis der Frostkern aufhört, es zu spiegeln. Während es so verängstigt ist, erleidet das Ziel zusätzlich 11 (2W10) Psychischen Schaden, wann immer es Schaden erleidet. Bei Erfolg: Das Ziel ist nicht verängstigt und für 24 Stunden gegen Es starrt zurück aller Frostkerne immun." }
+    ],
+    bonusaktionen: [
+      { name: "Anrufung des Eises (1/Tag)", beschreibung: "Der Frostkern verleiht sich selbst oder einem anderen Elementar, den er innerhalb von 9 m sehen kann, die Kraft des Eises und gewährt einen der folgenden Effekte nach Wahl dieses Elementars: Eisiger Glanz – Der Elementar erhält 1 Min. lang einen Spiegelglanz, der Schaden reflektiert. Wird der Elementar von einer Kreatur, die er innerhalb von 9 m sehen kann, mit einem Angriff getroffen, kann er als Reaktion den Angriff reflektieren. Der Elementar bleibt unbeschadet, und der Angreifer muss einen GES-Rettungswurf SG 15 ablegen. Misslungen: Schaden und Effekte des Angriffs werden auf den Angreifer zurückgeworfen, als hätte der Angriff vom Elementar ausgehend stattgefunden, und der Angreifer wird zum Ziel. Bei Erfolg: Der Angreifer erleidet halben Schaden, aber keine weiteren Effekte. Frostböe – Frost wirbelt 1 Min. lang um den Elementar. Für die Dauer wird die Bewegungsweite jeder Nicht-Elementar-Kreatur, die ihren Zug innerhalb von 4,5 m vom Elementar beginnt, auf 4,5 m reduziert, sofern sie nicht ohnehin niedriger ist, und zwar bis zum Ende ihres Zuges. Bewegt sie sich vor dem Beginn ihres nächsten Zuges erstmals freiwillig, erleidet sie 10 (3W6) Kälteschaden." }
+    ],
+    reaktionen: [],
+    legendaere_aktionen: null,
+    source: "Flee Mortals"
+  },
+  {
+    name: "Gnoll-Abgrundbeschwörer",
+    art: "Unhold",
+    unterart: "Gnoll",
+    groesse: "Mittelgroß",
+    gesinnung: "Typischerweise Chaotisch böse",
+    cr: 6,
+    xp: 2300,
+    rk: 14, ruestungstyp: "Fellrüstung",
+    tp: 97, tp_wuerfel: "13W8+39",
+    bewegung: { "Gehen": "9 m" },
+    attribute: { STR: 18, DEX: 15, CON: 16, INT: 12, WIS: 14, CHA: 16 },
+    rettungswuerfe: { WEI: 5 },
+    fertigkeiten: { "Wahrnehmung": 5, "Religion": 4 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: ["Dunkelsicht 18 m"],
+    passiveWahrnehmung: 15,
+    sprachen: ["Abyssal", "Gnoll"],
+    umgebung: ["Wüste", "Grasland", "Ruinen", "Andere Ebenen"],
+    bild: "assets/images/monster/flee-mortals/gnoll-abgrundbeschwoerer.png",
+    beschreibung: [
+      "Der Gnoll-Abgrundbeschwörer ist ein dämonisch begabter Anführer einer Gnoll-Kriegsbande, der Hyänen aus der Abyssalen Ödnis herbeiruft und mit dunkler Magie in Gnoll-Marodeure verwandeln kann."
+    ],
+    besonderheiten: [],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Beschwörer führt zwei Angriffe aus Biss, Dreischweif-Flegel oder Feuerstoß aus (auch kombiniert). Er kann einen Angriff durch einen Einsatz von Dämonisches Geheul ersetzen, falls verfügbar." },
+      { name: "Biss", beschreibung: "Nahkampfwaffenangriff: +7, Reichweite 1,5 m, ein Ziel. Treffer: 6 (1W4+4) Stichschaden plus 7 (2W6) Nekrotischer Schaden, und ist das Ziel eine Kreatur, erhält eine andere Kreatur, die der Beschwörer innerhalb von 9 m sehen kann, auf magische Weise 7 (2W6) Trefferpunkte zurück. Wird dieser Angriff gegen einen willigen Verbündeten ausgeführt, trifft er automatisch." },
+      { name: "Dreischweif-Flegel", beschreibung: "Nahkampfwaffenangriff: +7, Reichweite 3 m, ein Ziel. Treffer: 11 (3W4+4) Wuchtschaden, und das Ziel wird 1,5 m vom Beschwörer weggestoßen." },
+      { name: "Feuerstoß (Zaubertrick)", beschreibung: "Distanzzauberangriff: +6, Reichweite 18 m, ein Ziel. Treffer: 10 (3W6) Feuerschaden." },
+      { name: "Dämonisches Geheul (Aufladung 5-6)", beschreibung: "Bis zum Beginn des nächsten Zuges des Beschwörers haben alle Verbündeten innerhalb von 9 m, die ihn hören können, Vorteil auf Angriffswürfe." },
+      { name: "Erhebung (3/Tag)", beschreibung: "Der Gnoll verwandelt eine verbündete Abgrund-Hyäne auf magische Weise für 1 Stunde in einen Gnoll-Marodeur." }
+    ],
+    bonusaktionen: [
+      { name: "Abgrund-Hyänen beschwören (3/Tag)", beschreibung: "Der Beschwörer ruft 1W4+1 Abgrund-Hyänen herbei, die in freien Räumen innerhalb von 9 m vom Beschwörer erscheinen. Die Hyänen agieren unmittelbar nach dem Zug des Beschwörers und folgen seinen Befehlen." }
+    ],
+    reaktionen: [
+      { name: "Todesrasen", beschreibung: "Wird ein Verbündeter, den der Beschwörer innerhalb von 9 m sehen kann, auf 0 TP reduziert, bewegt sich der Beschwörer bis zur halben Bewegungsweite und führt einen Biss-Angriff aus." }
+    ],
+    legendaere_aktionen: null,
+    source: "Flee Mortals"
+  },
+  {
+    name: "Gnoll-Knochenspalter",
+    art: "Unhold",
+    unterart: "Gnoll",
+    groesse: "Mittelgroß",
+    gesinnung: "Typischerweise Chaotisch böse",
+    cr: 4,
+    xp: 1100,
+    rk: 13, ruestungstyp: "Fellrüstung",
+    tp: 90, tp_wuerfel: "12W8+36",
+    bewegung: { "Gehen": "9 m" },
+    attribute: { STR: 18, DEX: 12, CON: 17, INT: 10, WIS: 12, CHA: 12 },
+    rettungswuerfe: { KON: 5 },
+    fertigkeiten: {},
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: ["Dunkelsicht 18 m"],
+    passiveWahrnehmung: 11,
+    sprachen: ["Abyssal", "Gnoll"],
+    umgebung: ["Wüste", "Grasland", "Ruinen", "Andere Ebenen"],
+    bild: "assets/images/monster/flee-mortals/gnoll-knochenspalter.png",
+    beschreibung: [
+      "Der Gnoll-Knochenspalter ist ein massiger Brawler einer Gnoll-Kriegsbande, ausgerüstet mit Stachelflegel und scharfen Reißzähnen. Sein blutiges Brüllen treibt Verbündete zu Mordlust an."
+    ],
+    besonderheiten: [],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Der Knochenspalter führt zwei Angriffe aus Biss, Stachelflegel oder beidem aus. Er kann einen Angriff durch einen Einsatz von Blutiges Brüllen ersetzen, falls verfügbar." },
+      { name: "Biss", beschreibung: "Nahkampfwaffenangriff: +6, Reichweite 1,5 m, eine Kreatur. Treffer: 7 (1W6+4) Stichschaden, oder 11 (2W6+4) Stichschaden, falls das Ziel Festgesetzt ist." },
+      { name: "Stachelflegel", beschreibung: "Nahkampfwaffenangriff: +6, Reichweite 1,5 m, ein Ziel. Treffer: 13 (2W8+4) Stichschaden. Ist das Ziel eine mittelgroße oder kleinere Kreatur, wird sie Gepackt (Befreiungs-SG 14). Solange das Greifen anhält, ist das Ziel Festgesetzt und der Knochenspalter kann keine Stachelflegel-Angriffe ausführen." },
+      { name: "Blutiges Brüllen (Aufladung 6)", beschreibung: "Der Knochenspalter brüllt und spuckt einen Blutregen. Jeder Verbündete innerhalb von 3 m, der ihn sehen kann, darf einen Waffenangriff ausführen (keine Aktion nötig), sofern dieser Verbündete nicht Kampfunfähig ist." }
+    ],
+    bonusaktionen: [
+      { name: "Hierher!", beschreibung: "Der Knochenspalter reißt an einer Kreatur, die er packt. Das Ziel muss einen STR-Rettungswurf SG 14 bestehen oder tauscht den Raum mit dem Knochenspalter." }
+    ],
+    reaktionen: [
+      { name: "Todesrasen", beschreibung: "Wird ein Verbündeter, den der Knochenspalter innerhalb von 9 m sehen kann, auf 0 TP reduziert, bewegt sich der Knochenspalter bis zur halben Bewegungsweite und führt einen Biss-Angriff aus." }
+    ],
+    legendaere_aktionen: null,
+    source: "Flee Mortals"
+  },
+  {
+    name: "Gnoll-Marodeur",
+    art: "Unhold",
+    unterart: "Gnoll",
+    groesse: "Mittelgroß",
+    gesinnung: "Typischerweise Chaotisch böse",
+    cr: 0.5,
+    xp: 100,
+    rk: 13, ruestungstyp: "Fellrüstung",
+    tp: 22, tp_wuerfel: "4W8+4",
+    bewegung: { "Gehen": "12 m" },
+    attribute: { STR: 14, DEX: 13, CON: 12, INT: 10, WIS: 12, CHA: 8 },
+    rettungswuerfe: {},
+    fertigkeiten: {},
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: [],
+    sinne: ["Dunkelsicht 18 m"],
+    passiveWahrnehmung: 11,
+    sprachen: ["Abyssal", "Gnoll"],
+    umgebung: ["Wüste", "Grasland", "Ruinen", "Andere Ebenen"],
+    bild: "assets/images/monster/flee-mortals/gnoll-marodeur.png",
+    beschreibung: [
+      "Der Gnoll-Marodeur ist der Fußsoldat einer Gnoll-Kriegsbande, schnell und bissig, der sich im Sturmangriff auf seine Beute stürzt."
+    ],
+    besonderheiten: [
+      { name: "Tobender Sturmangriff", beschreibung: "Bewegt sich der Marodeur in derselben Runde mindestens 3 m geradlinig auf eine Kreatur zu und trifft sie mit einem Flegel-Angriff, kann er als Bonusaktion einen Biss-Angriff gegen dasselbe Ziel ausführen." }
+    ],
+    aktionen: [
+      { name: "Biss", beschreibung: "Nahkampfwaffenangriff: +4, Reichweite 1,5 m, ein Ziel. Treffer: 4 (1W4+2) Stichschaden." },
+      { name: "Flegel", beschreibung: "Nahkampfwaffenangriff: +4, Reichweite 1,5 m, ein Ziel. Treffer: 6 (1W8+2) Wuchtschaden." }
+    ],
+    bonusaktionen: [],
+    reaktionen: [
+      { name: "Todesrasen", beschreibung: "Wird ein Verbündeter, den der Marodeur innerhalb von 9 m sehen kann, auf 0 TP reduziert, bewegt sich der Marodeur bis zur halben Bewegungsweite und führt einen Biss-Angriff aus." }
+    ],
     legendaere_aktionen: null,
     source: "Flee Mortals"
   },
@@ -451,6 +1030,59 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     source: "Flee Mortals"
   },
   {
+    name: "Qazyldrath",
+    art: "Drache",
+    unterart: null,
+    groesse: "Gigantisch",
+    gesinnung: "Chaotisch böse",
+    cr: 22,
+    xp: 41000,
+    rk: 20, ruestungstyp: "natürliche Rüstung",
+    tp: 402, tp_wuerfel: "23W20+161",
+    bewegung: { "Gehen": "12 m", "Fliegen": "24 m", "Schwimmen": "12 m" },
+    attribute: { STR: 27, DEX: 12, CON: 24, INT: 14, WIS: 16, CHA: 18 },
+    rettungswuerfe: { KON: 14, WEI: 10, CHA: 11 },
+    fertigkeiten: { "Arkane Kunde": 9, "Geschichte": 9, "Wahrnehmung": 10, "Heimlichkeit": 8 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: ["Säure", "Nekrotisch"],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: ["Bezaubert", "Benommen", "Verängstigt", "Gelähmt", "Versteinert", "Vergiftet", "Betäubt"],
+    sinne: ["Blindsicht 36 m", "Wahres Sehen 18 m"],
+    passiveWahrnehmung: 20,
+    sprachen: ["Gemein", "Drakonisch"],
+    umgebung: ["Höhle", "Ozean", "Andere Ebenen"],
+    bild: "assets/images/monster/flee-mortals/qazyldrath.png",
+    beschreibung: [
+      "Qazyldrath (KAZZ-ill-drath) ist eine uralte Kreatur aus Albträumen, ein Manipulator von Säure und Schatten, ein Monster, das die Köpfe der Sterblichen heimsucht, seit die Schwingen des Drachen erstmals das Licht der Sonne verschlangen. Das ehrwürdige Alter dieses Düsterdrachen wird nur von der Furcht übertroffen, die er gebietet.",
+      "Auch bekannt als Sonnenfresser und Stiller Verfall, nimmt Qazyldrath eine zentrale Rolle in der mündlichen Überlieferung drakonischer Ahnenreihen ein; er soll einer der Urväter der niederen Drachen sein und für die Boshaftigkeit der Drachenart verantwortlich gemacht werden.",
+      "Obwohl Qazyldrath seit Jahrtausenden nicht mehr gesehen wurde, ist sein Einfluss in der gesamten Zeitlandschaft allgegenwärtig. Viele elfische Dialekte verwenden noch immer Abwandlungen des Drachennamens für das Wort „Sonnenfinsternis“. Manche glauben, dass Dunkelheit Qazyldraths Macht verstärkt und der Sonnenfresser eines Tages zurückkehren wird, um die Welt in ewigen Schatten zu stürzen."
+    ],
+    besonderheiten: [
+      { name: "Amphibisch", beschreibung: "Qazyldrath kann Luft und Wasser atmen." },
+      { name: "Schatten verzehren (3/Tag)", beschreibung: "Wenn Qazyldrath einen Rettungswurf nicht besteht, kann er ihn stattdessen bestehen. Wenn er das tut, werden alle Bereiche magischer Dunkelheit in seinem Hort gebannt, und er kann bis zum Ende seines nächsten Zuges weder Umhüllen noch Heilung vereiteln einsetzen." },
+      { name: "Schattenkraft", beschreibung: "Säure- und nekrotischer Schaden, den Qazyldrath verursacht, ignoriert Schadensresistenz." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Qazyldrath führt einen Bissangriff und zwei Klauenangriffe aus." },
+      { name: "Biss", beschreibung: "Nahkampfwaffenangriff: +15, Reichweite 4,5 m, ein Ziel. Treffer: 19 (2W10+8) Stichschaden plus 9 (2W8) Nekrotischer Schaden. Ist das Ziel eine Lichtquelle oder trägt eine solche, wird dieses Licht ausgelöscht." },
+      { name: "Klaue", beschreibung: "Nahkampfwaffenangriff: +15, Reichweite 3 m, ein Ziel. Treffer: 15 (2W6+8) Hiebschaden, und Qazyldrath kann das Ziel bis zu 4,5 m horizontal verschieben." },
+      { name: "Leerer Atem (Aufladung 5-6)", beschreibung: "Qazyldrath stößt dunkle Energie in einer 27 m langen und 6 m breiten Linie aus. Jede Kreatur im Bereich muss einen GES-Rettungswurf SG 22 ablegen und erleidet 24 (7W6) Säureschaden plus 24 (7W6) Nekrotischen Schaden (halber Schaden bei Erfolg). Zusätzlich wird der Bereich für 1 Min. mit magischer Dunkelheit erfüllt. Eine Kreatur mit Dunkelsicht kann diese Dunkelheit nicht durchdringen, und kein Licht außer einem Tageslicht-Zauber oder einem lichterzeugenden Zauber des 5. Grades oder höher kann sie erhellen." }
+    ],
+    bonusaktionen: [
+      { name: "Umhüllen", beschreibung: "Schatten klammern sich an eine Kreatur, die Qazyldrath innerhalb von 36 m sehen kann. Das Ziel muss einen GES-Rettungswurf SG 19 bestehen oder ist bis zum Beginn von Qazyldraths nächstem Zug Geblendet und verwundbar gegen nekrotischen Schaden." }
+    ],
+    reaktionen: [
+      { name: "Heilung vereiteln", beschreibung: "Wenn eine Kreatur innerhalb von 18 m von Qazyldrath Trefferpunkte zurückerhält, zwingt Qazyldrath sie zu einem KON-Rettungswurf SG 19. Misslungen: Die Kreatur erhält stattdessen nur die Hälfte der Trefferpunkte zurück." }
+    ],
+    legendaere_aktionen: [
+      { name: "Schurkenaktionen", beschreibung: "Qazyldrath verfügt über drei Schurkenaktionen. Er kann jede Aktion einmal pro Begegnung nach dem Zug eines Gegners ausführen. Er kann diese Aktionen in beliebiger Reihenfolge nutzen, jedoch nur eine pro Runde." },
+      { name: "Aktion 1: Brennende Klumpen", beschreibung: "Qazyldrath spuckt Säurekugeln auf jeden Feind, den er innerhalb von 27 m sehen kann. Jedes Ziel muss einen GES-Rettungswurf SG 19 bestehen oder bekommt eine Säurekugel an seinen Körper geheftet. Eine an einer Kugel haftende Kreatur erleidet zu Beginn ihres Zuges 14 (4W6) Säureschaden. Eine Kreatur kann eine Aktion nutzen, um eine Kugel von sich oder einer erreichbaren Kreatur zu entfernen." },
+      { name: "Aktion 2: Schattengestalt", beschreibung: "Qazyldrath wird halbkörperlich und erhält bis zum Ende seines nächsten Zuges Resistenz gegen Wucht-, Stich- und Hiebschaden. Anschließend teleportiert sich Qazyldrath bis zu 36 m in einen freien Raum, den er sehen kann." },
+      { name: "Aktion 3: Sinkende Finsternis", beschreibung: "Qazyldrath beschwört klebrige schwarze Säure, zentriert auf einen sichtbaren Punkt am Boden innerhalb von 36 m, und erzeugt einen 1,5 m tiefen Tümpel mit 6 m Radius. Der Tümpel gilt als schwieriges Gelände und hält 1 Min. an. Ein Feind, der seinen Zug im Tümpel beginnt, erleidet 24 (7W6) Säureschaden und muss einen STR-Rettungswurf SG 19 bestehen oder ist bis zum Beginn seines nächsten Zuges Festgesetzt. Ein Feind, der seinen Zug fliegend innerhalb von 9 m über dem Tümpel beginnt, muss einen GES-Rettungswurf SG 19 bestehen oder wird von lebendiger Säure heruntergezogen, landet im nächstgelegenen freien Raum seiner Wahl innerhalb des Tümpels, erleidet 24 (7W6) Säureschaden und ist bis zum Beginn seines nächsten Zuges Festgesetzt." }
+    ],
+    source: "Flee Mortals"
+  },
+  {
     name: "Ruinant",
     art: "Unhold",
     unterart: "Dämon (Kategorie 2)",
@@ -491,6 +1123,91 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     reaktionen: [
       { name: "Korrumpierende Heilung (Kostet 1 Seele)", beschreibung: "Erhält eine Kreatur innerhalb von 18 m vom Ruinant Trefferpunkte zurück durch eine Macht, einen Zauber oder einen ähnlichen übernatürlichen Effekt, korrumpiert der Ruinant den Effekt. Das Ziel erhält keine TP zurück, und das Ziel sowie jeder Feind des Ruinants innerhalb von 1,5 m müssen einen KON-Rettungswurf SG 15 bestehen oder erleiden Nekrotischen Schaden in Höhe der halben TP-Menge, die der Effekt zurückgegeben hätte." }
     ],
+    legendaere_aktionen: null,
+    source: "Flee Mortals"
+  },
+  {
+    name: "Stoßzahn-Dämon",
+    art: "Unhold",
+    unterart: "Dämon (Kategorie 2)",
+    groesse: "Riesig",
+    gesinnung: "Typischerweise Chaotisch böse",
+    cr: 7,
+    xp: 2900,
+    rk: 13, ruestungstyp: "natürliche Rüstung",
+    tp: 138, tp_wuerfel: "12W12+60",
+    bewegung: { "Gehen": "12 m" },
+    attribute: { STR: 22, DEX: 6, CON: 20, INT: 5, WIS: 10, CHA: 8 },
+    rettungswuerfe: { WEI: 3, CHA: 2 },
+    fertigkeiten: {},
+    schadensresistenzen: ["Wucht, Stich und Hieb von mundanen Angriffen"],
+    schadensimmunitaeten: ["Gift"],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: ["Geblendet", "Taub", "Vergiftet"],
+    sinne: ["Blindsicht 18 m (außerhalb blind)", "Seelensicht 9 m"],
+    passiveWahrnehmung: 10,
+    sprachen: ["versteht Abyssal, kann es jedoch nicht sprechen"],
+    umgebung: ["Wüste", "Grasland", "Andere Ebenen"],
+    bild: "assets/images/monster/flee-mortals/stosszahn-daemon.png",
+    beschreibung: [
+      "Hoch aufragend über einer Gnoll-Kriegsbande dient der elefantenartige Stoßzahn-Dämon als Lasttier und Kriegsmaschine. Stoßzahn-Dämonen haben keine Gesichtsmerkmale außer einer verdrehten Krone aus Stoßzähnen, die ihr gefräßiges Maul umringt. Obwohl Stoßzähne meist Gnoll-Befehlen folgen, stürmen sie bei besonders großem Seelenhunger ohne Rücksicht auf die Verbündeten vor, die sie womöglich zertrampeln.",
+      "Seelenanzahl: 2 (1W4). Der Stoßzahn-Dämon beginnt den Kampf mit einer Reserve von Seelen, die er für bestimmte Fähigkeiten ausgeben kann. Sinkt seine Seelenanzahl auf 0, fällt er in den Lethe-Zustand und greift mit unbeherrschter Wut die nächstgelegene Kreatur an, bis er wieder eine Seele aufnimmt."
+    ],
+    besonderheiten: [
+      { name: "Lethe", beschreibung: "Wenn die Seelenanzahl des Dämons 0 beträgt, hat er Vorteil auf Trefferwürfe, Nachteil auf Rettungswürfe, und sein INT-Wert sinkt auf 3 (-4). Zusätzlich muss er in jedem Zug seine Bewegung nutzen, um sich so nah wie möglich an die nächstgelegene Kreatur zu bewegen, die er mit seiner Seelensicht wahrnehmen kann, und – sofern möglich – seine Aktion nutzen, um diese anzugreifen und zu töten. Der Dämon kann keinem anderen Zweck dienen, bis er seine Seelenanzahl wieder um 1 erhöht." },
+      { name: "Seelenverschlinger", beschreibung: "Reduziert der Dämon eine Kreatur (kein Konstrukt oder Untoter) auf 0 TP oder fügt einer sterbenden Kreatur Schaden zu, muss diese einen WEI-Rettungswurf SG 11 bestehen. Misslungen: Der Dämon verschlingt die Seele der Kreatur und erhöht seine Seelenanzahl um 1. Die Kreatur stirbt sofort und kann nur durch einen Wunsch-Zauber wiederbelebt werden." },
+      { name: "Niedertrampeln", beschreibung: "Der Dämon kann sich durch die Räume von großen oder kleineren Kreaturen bewegen, als wäre es schwieriges Gelände. Wenn der Dämon den Raum einer Kreatur in seinem Zug zum ersten Mal betritt, kann er einen Stampfer-Angriff gegen diese Kreatur ausführen (keine Aktion nötig). Zusätzlich kann der Dämon seinen Zug im Raum einer liegenden Kreatur beenden, die mittelgroß oder kleiner ist, und diese Kreatur kann sich nicht erheben, solange sie im Raum des Dämons liegt." }
+    ],
+    aktionen: [
+      { name: "Aufspießen", beschreibung: "Nahkampfwaffenangriff: +9, Reichweite 3 m, ein Ziel. Treffer: 19 (3W8+6) Stichschaden. Der Dämon kann 1 Seele verbrennen, um das Ziel bis zu 12 m direkt vom Dämon wegzustoßen." },
+      { name: "Stampfer", beschreibung: "Nahkampfwaffenangriff: +9, Reichweite 1,5 m, ein Ziel. Treffer: 13 (2W6+6) Wuchtschaden, und ist das Ziel eine mittelgroße oder kleinere Kreatur, muss sie einen STR-Rettungswurf SG 17 bestehen oder wird zu Boden geworfen." },
+      { name: "Zunge", beschreibung: "Nahkampfwaffenangriff: +9, Reichweite 4,5 m, ein Ziel. Treffer: 16 (3W6+6) Hiebschaden, und ist das Ziel eine Kreatur, muss sie einen STR-Rettungswurf SG 17 bestehen oder wird bis zu 3 m zum Dämon gezogen." }
+    ],
+    bonusaktionen: [],
+    reaktionen: [
+      { name: "Rachsüchtiger Ansturm (Kostet 1 Seele)", beschreibung: "Wenn ein Feind innerhalb von 12 m dem Dämon Schaden zufügt, kann sich der Dämon bis zu seiner Bewegungsweite geradlinig auf ihn zubewegen. Beendet der Dämon diese Bewegung innerhalb von 3 m des Feindes, kann er einen Aufspießen-Angriff gegen ihn ausführen." }
+    ],
+    legendaere_aktionen: null,
+    source: "Flee Mortals"
+  },
+  {
+    name: "Sturmessenz",
+    art: "Elementar",
+    unterart: "Luft",
+    groesse: "Mittelgroß",
+    gesinnung: "Beliebige Gesinnung",
+    cr: 5,
+    xp: 1800,
+    rk: 14, ruestungstyp: "natürliche Rüstung",
+    tp: 78, tp_wuerfel: "12W8+24",
+    bewegung: { "Gehen": "6 m", "Fliegen": "18 m (schwebend)" },
+    attribute: { STR: 12, DEX: 17, CON: 14, INT: 9, WIS: 11, CHA: 13 },
+    rettungswuerfe: {},
+    fertigkeiten: { "Akrobatik": 6, "Wahrnehmung": 6 },
+    schadensresistenzen: ["Blitz", "Gift", "Donner"],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: ["Benommen", "Gepackt", "Gelähmt", "Vergiftet", "Festgesetzt"],
+    sinne: ["Dunkelsicht 18 m"],
+    passiveWahrnehmung: 16,
+    sprachen: ["Aurisch", "Gemein"],
+    umgebung: ["Gebirge", "Küste", "Andere Ebenen"],
+    bild: "assets/images/monster/flee-mortals/sturmessenz.png",
+    beschreibung: [
+      "Aus der Ferne würden die meisten eine Sturmessenz, auch Böenweber genannt, für einen großen Raubvogel halten. Diese majestätische Kreatur besteht aus Schlieren farbigen Wolkenstoffs, gewoben zur Silhouette eines großen Adlers oder Falken.",
+      "Böenweber agieren als Späher für ihre Ishkrars und sind meist die Ersten, die Ärger erkennen. Zudem sind die Essenzen unstillbar neugierig und stürzen sich oft herab, um mit Reisenden zu sprechen, sobald sie diese erblicken."
+    ],
+    besonderheiten: [],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Die Essenz führt zwei Windklauen-Angriffe aus. Sie kann einen Angriff durch einen Einsatz von Brausen oder Blitzböe ersetzen, falls verfügbar." },
+      { name: "Windklauen", beschreibung: "Nahkampfwaffenangriff: +6, Reichweite 1,5 m, ein Ziel. Treffer: 10 (2W6+3) Stichschaden." },
+      { name: "Brausen", beschreibung: "Die Essenz entfesselt einen 9-m-Kegel aus Wind. Jede Kreatur im Bereich muss einen STR-Rettungswurf SG 14 bestehen oder wird bis zu 3 m in eine beliebige Richtung verschoben." },
+      { name: "Blitzböe (3/Tag)", beschreibung: "Die Essenz schleudert einen kleinen Blitzsturm auf eine Kreatur, die sie innerhalb von 9 m sehen kann. Das Ziel muss einen KON-Rettungswurf SG 14 ablegen. Misslungen: 28 (8W6) Blitzschaden und das Ziel ist 1 Min. Benommen (Rettungswurf am Ende des Zuges erlaubt). Bei Erfolg: halber Schaden und nicht Benommen." }
+    ],
+    bonusaktionen: [
+      { name: "Anrufung der Luft (1/Tag)", beschreibung: "Die Essenz verleiht sich selbst oder einem anderen Elementar, den sie innerhalb von 9 m sehen kann, die Kraft der Luft und gewährt einen der folgenden Effekte nach Wahl dieses Elementars: Aufsteigender Wirbelsturm – Jede Kreatur nach Wahl des Elementars innerhalb von 9 m muss einen STR-Rettungswurf SG 14 gegen einen heftigen Wirbelsturm ablegen. Misslungen: Das Ziel steigt 3 m aufwärts und ist 1 Min. Festgesetzt (Rettungswurf am Ende des Zuges erlaubt). Ein so festgesetztes Ziel steigt zu Beginn jedes seiner Züge weitere 3 m auf. Eine andere Kreatur, die das Ziel erreichen kann, kann eine Aktion nutzen, um es aus dem Effekt herauszuziehen, was den Festgesetzt-Zustand für dieses Ziel beendet. Der Wirbelsturm endet, wenn der Elementar stirbt oder ihn beendet (keine Aktion nötig). Wirbelgelände – Ein Wirbel umkreist den Elementar. Für 1 Min. gilt der Bereich innerhalb von 6 m vom Elementar als schwieriges Gelände für Feinde." }
+    ],
+    reaktionen: [],
     legendaere_aktionen: null,
     source: "Flee Mortals"
   },
@@ -757,6 +1474,49 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     source: "Flee Mortals"
   },
   {
+    name: "Wachstumsprinzip",
+    art: "Elementar",
+    unterart: "Erde, Wasser",
+    groesse: "Riesig",
+    gesinnung: "Beliebige Gesinnung",
+    cr: 15,
+    xp: 13000,
+    rk: 17, ruestungstyp: "natürliche Rüstung",
+    tp: 243, tp_wuerfel: "18W12+126",
+    bewegung: { "Gehen": "15 m", "Klettern": "15 m" },
+    attribute: { STR: 21, DEX: 11, CON: 25, INT: 11, WIS: 16, CHA: 14 },
+    rettungswuerfe: { STR: 10, WEI: 8 },
+    fertigkeiten: { "Mit Tieren umgehen": 8, "Naturkunde": 10, "Überlebenskunst": 8 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: [],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: ["Bezaubert", "Verängstigt"],
+    sinne: ["Dunkelsicht 18 m", "Zittersinn 18 m"],
+    passiveWahrnehmung: 13,
+    sprachen: ["Gemein", "Urzeitlich"],
+    umgebung: ["Wald", "Dschungel", "Feenwildnis", "Sumpf"],
+    bild: "assets/images/monster/flee-mortals/wachstumsprinzip.png",
+    beschreibung: [
+      "Das Wachstumsprinzip nimmt die Gestalt eines massiven Tausendfüßlers aus Pflanzenwerk an. Oft als Grüne Urwesen bezeichnet, kämpfen diese Hüter des natürlichen Lebens- (und Todes-) Kreislaufs gegen jene, die diesen Zyklus stören.",
+      "Wachstumsprinzipien streben nicht nur danach, Untote und ihre Erschaffer zu vernichten, sondern auch göttliche Diener zu sabotieren, die leichtfertig mit Wiederbelebungsmagie hantieren."
+    ],
+    besonderheiten: [
+      { name: "Regeneration", beschreibung: "Das Wachstumsprinzip erhält zu Beginn seines Zuges 20 Trefferpunkte zurück, sofern es nicht Kampfunfähig ist. Erleidet es Feuerschaden, erhält es zu Beginn seines nächsten Zuges nur 10 Trefferpunkte zurück." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Das Wachstumsprinzip führt zwei Behindernde-Wurzeln- oder zwei Frühlingspeitsche-Angriffe aus." },
+      { name: "Behindernde Wurzeln", beschreibung: "Nahkampfwaffenangriff: +10, Reichweite 3 m, ein Ziel. Treffer: 23 (4W8+5) Wuchtschaden, und das Ziel wird Gepackt (Befreiungs-SG 15). Solange das Greifen anhält, ist das Ziel Festgesetzt." },
+      { name: "Frühlingspeitsche", beschreibung: "Nahkampfwaffenangriff: +10, Reichweite 18 m, ein Ziel. Treffer: 27 (4W10+5) Hiebschaden, und das Wachstumsprinzip verschiebt das Ziel bis zu 4,5 m horizontal." },
+      { name: "Aus der Erde brechen (1/Tag)", beschreibung: "Das Wachstumsprinzip lässt drei große Bäume mit peitschenden Ästen aus dem Boden sprießen, in freien Räumen, die es innerhalb von 18 m sehen kann. Jeder Baum hat RK 15, 40 Trefferpunkte und Immunität gegen Psychischen Schaden. Ein Feind, der seinen Zug innerhalb von 4,5 m eines dieser Bäume beginnt, muss einen GES-Rettungswurf SG 18 ablegen und erleidet 14 (4W6) Hiebschaden (halber Schaden bei Erfolg)." }
+    ],
+    bonusaktionen: [
+      { name: "Anrufung des Grüns (2/Tag)", beschreibung: "Das Wachstumsprinzip verleiht sich selbst oder einem anderen Elementar, den es innerhalb von 9 m sehen kann, die Kraft der Pflanzenwelt und gewährt einen der folgenden Effekte nach Wahl dieses Elementars: Wurzeln des Geistes – Für 1 Min. kann der Elementar sich mit jedem großen oder größeren Pflanzenobjekt verbinden, das er innerhalb von 27 m sehen kann (keine Aktion nötig). Für die Dauer kann der Elementar wahrnehmen, angreifen und Aktionen ausführen, als befände er sich im Raum einer verbundenen Pflanze. Dornenausbruch – Dornige Ranken brechen aus dem Elementar hervor. Jeder Feind innerhalb von 9 m, den der Elementar sehen kann, muss einen GES-Rettungswurf SG 16 ablegen. Misslungen: 27 (6W8) Stichschaden und das Ziel ist bis zum Ende seines nächsten Zuges Festgesetzt. Bei Erfolg: halber Schaden und nicht Festgesetzt." }
+    ],
+    reaktionen: [],
+    legendaere_aktionen: null,
+    source: "Flee Mortals"
+  },
+  {
     name: "Wobalas",
     art: "Unhold",
     unterart: "Dämon (Kategorie 4)",
@@ -798,6 +1558,58 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     ],
     reaktionen: [],
     legendaere_aktionen: null,
+    source: "Flee Mortals"
+  },
+  {
+    name: "Xaantikorijek",
+    art: "Drache",
+    unterart: null,
+    groesse: "Gigantisch",
+    gesinnung: "Neutral",
+    cr: 23,
+    xp: 50000,
+    rk: 20, ruestungstyp: "natürliche Rüstung",
+    tp: 518, tp_wuerfel: "28W20+224",
+    bewegung: { "Gehen": "12 m", "Graben": "12 m", "Fliegen": "24 m" },
+    attribute: { STR: 28, DEX: 10, CON: 27, INT: 24, WIS: 16, CHA: 20 },
+    rettungswuerfe: { KON: 15, WEI: 10, CHA: 12 },
+    fertigkeiten: { "Arkane Kunde": 21, "Geschichte": 21, "Naturkunde": 21, "Wahrnehmung": 10, "Religion": 21 },
+    schadensresistenzen: [],
+    schadensimmunitaeten: ["Blitz", "Donner"],
+    verwundbarkeiten: [],
+    zustandsimmunitaeten: ["Bezaubert", "Benommen", "Verängstigt", "Gelähmt", "Versteinert", "Betäubt"],
+    sinne: ["Blindsicht 36 m", "Wahres Sehen 18 m"],
+    passiveWahrnehmung: 20,
+    sprachen: ["Alle Sprachen"],
+    umgebung: ["Wüste", "Unterirdisch", "Andere Ebenen"],
+    bild: "assets/images/monster/flee-mortals/xaantikorijek.png",
+    beschreibung: [
+      "Tief unter den kargen Einöden der Welt ruht eine ihrer ältesten Kreaturen — so alt, dass er seinen eigenen Namen vergessen hat. Dieser Sturmdrache ist schlicht als die Stimme der Zeitalter bekannt — oder Xaantikorijek (zan-tih-KOR-eh-jehk) auf Drakonisch.",
+      "Xaantikorijek ist ein Meister von Donner und Blitz, und als Teil der ersten Brut, die auf der Profanwelt schlüpfte, ist er älter als die meisten seiner überlebenden Artgenossen. Eine Legende besagt, dass die Stimme der Zeitalter einst ein Geheimnis kannte, das die Profanwelt in jede beliebige Form neu erschaffen konnte — doch der alternde Wyrm erinnert sich nur an sehr wenig seiner eigenen Vergangenheit. Ob dies der Preis dafür war, das Unheil zu überleben, das die Drachen von einst ereilte, eine selbst auferlegte Bedingung oder eine andere magische Beschwerde — selbst Xaantikorijek weiß es nicht.",
+      "Alle paar Jahrhunderte jedoch erinnert sich Xaantikorijek an ein Detail aus seiner verlorenen Geschichte. Es heißt, wenn dies geschieht, hallt seine Stimme weltweit wider, während er die Wahrheit allen Drachenartigen mitteilt. Die Drachen hoffen inständig, er möge sich eines Tages erinnern, wie man die Welt mit Drachen als Herrschern neu schmieden kann."
+    ],
+    besonderheiten: [
+      { name: "Statischer Schild (3/Tag)", beschreibung: "Wenn Xaantikorijek einen Rettungswurf nicht besteht, kann er ihn stattdessen bestehen. Wenn er das tut, werden seine Sicht, Blindsicht und Wahres Sehen bis zum Beginn seines nächsten Zuges auf eine Reichweite von 9 m reduziert." },
+      { name: "Sturm der Götter", beschreibung: "Blitz- und Donnerschaden, den Xaantikorijek verursacht, ignoriert Schadensresistenz." }
+    ],
+    aktionen: [
+      { name: "Mehrfachangriff", beschreibung: "Xaantikorijek führt einen Bissangriff und zwei Klauenangriffe aus." },
+      { name: "Biss", beschreibung: "Nahkampfwaffenangriff: +16, Reichweite 4,5 m, ein Ziel. Treffer: 20 (2W10+9) Stichschaden plus 5 (1W10) Blitzschaden, und Xaantikorijek kann das Ziel bis zu 6 m in eine beliebige Richtung verschieben." },
+      { name: "Klaue", beschreibung: "Nahkampfwaffenangriff: +16, Reichweite 3 m, ein Ziel. Treffer: 16 (2W6+9) Hiebschaden plus 7 (2W6) Donnerschaden, und das Ziel wird zu Boden geworfen." },
+      { name: "Fulminanter Atem (Aufladung 5-6)", beschreibung: "Xaantikorijek stößt Blitze in einer 36 m langen und 9 m breiten Linie aus. Jede Kreatur im Bereich muss einen GES-Rettungswurf SG 23 ablegen. Misslungen: 66 (12W10) Blitzschaden und Nachteil auf Rettungswürfe bis zum Ende von Xaantikoijeks nächstem Zug. Bei Erfolg: halber Schaden und keine weiteren Effekte." }
+    ],
+    bonusaktionen: [
+      { name: "Blitzentladung", beschreibung: "Xaantikorijek führt einen Bissangriff aus. Bei Treffer sprühen seine Zähne Energie und fügen dem Ziel sowie einem weiteren Feind innerhalb von 18 m vom Ziel zusätzliche 11 (2W10) Blitzschaden zu." }
+    ],
+    reaktionen: [
+      { name: "Stimme der Verneinung", beschreibung: "Wenn eine Kreatur innerhalb von 18 m, die Xaantikorijek sehen kann, eine Aktion oder Bonusaktion nutzt, um einen Zauber zu wirken, spricht Xaantikorijek ein arkanes Wort und zwingt die Kreatur zu einem Rettungswurf SG 23 mit ihrem Zaubereigenschaftswert. Misslungen: Das Ziel erleidet 16 (3W10) Donnerschaden und kann bis zum Ende seines Zuges keine Zauber wirken, der Zauberplatz wird jedoch nicht verbraucht und die Aktion der Kreatur geht nicht verloren." }
+    ],
+    legendaere_aktionen: [
+      { name: "Schurkenaktionen", beschreibung: "Xaantikorijek verfügt über drei Schurkenaktionen. Er kann jede Aktion einmal pro Begegnung nach dem Zug eines Gegners ausführen. Er kann diese Aktionen in beliebiger Reihenfolge nutzen, jedoch nur eine pro Runde." },
+      { name: "Aktion 1: Stimme der Ehrfurcht", beschreibung: "Xaantikorijek spricht ein uraltes Wort der Autorität in den Geist jeder Kreatur seiner Wahl innerhalb von 18 m. Jedes Ziel muss einen WEI-Rettungswurf SG 20 bestehen oder fällt zu Boden. Eine Kreatur, die so zu Boden fällt, erleidet 22 (4W10) Donnerschaden, wenn sie vor dem Ende von Xaantikoijeks nächstem Zug wieder aufsteht." },
+      { name: "Aktion 2: Fulguration", beschreibung: "Xaantikorijek streift seine körperliche Form ab und wird bis zum Ende seines nächsten Zuges zu einem Wesen aus Blitz. In dieser Form erhält Xaantikorijek folgende Vorteile: Er ist resistent gegen jeglichen Schaden. Er kann durch einen Raum von nur 2,5 cm Breite ziehen, ohne sich zu zwängen. Seine Bewegung löst keine Gelegenheitsangriffe aus. Er kann durch den Raum jeder Kreatur ziehen, und wenn er den Raum einer Kreatur zum ersten Mal in einem Zug betritt, erleidet diese Kreatur 16 (3W10) Blitzschaden." },
+      { name: "Aktion 3: Stimme der Zeitalter", beschreibung: "Xaantikorijek rezitiert ein uraltes Klagelied, das in den Seelen in der Nähe widerhallt. Jeder Feind innerhalb von 18 m, der ihn hören kann, muss einen WEI-Rettungswurf SG 20 ablegen. Misslungen: 44 (8W10) Psychischer Schaden, das Ziel fällt zu Boden und kann sich für 1 Min. nicht erheben, während es unkontrolliert weint (Rettungswurf am Ende des Zuges erlaubt). Bei Erfolg: halber Schaden und keine weiteren Effekte." }
+    ],
     source: "Flee Mortals"
   },
   {
