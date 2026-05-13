@@ -74,7 +74,9 @@ assets/
 │       ├── almanach/          — Monsters of the Multiverse
 │       ├── floral-dragons/    — Floral Dragons
 │       ├── ruhm-der-riesen/   — Bigby Presents: Glory of the Giants
-│       └── schatzkammer/      — Fizban's Treasury of Dragons
+│       ├── schatzkammer/      — Fizban's Treasury of Dragons
+│       ├── flee-mortals/      — Flee, Mortals! (MCDM Productions)
+│       └── sonstige/          — Sammelort für nicht-zusammenhängende Einzelmonster
 ├── scripts/
 │   ├── data/
 │   │   ├── monster-data.js      — aggregator: merges all sources alphabetically → window.MONSTER_DATA
@@ -85,7 +87,9 @@ assets/
 │   │   │   ├── almanach-der-monster-data.js   — 124 monsters → window.MONSTER_DATA_ALMANACH_DER_MONSTER
 │   │   │   ├── floral-dragons-data.js         —  30 monsters → window.MONSTER_DATA_FLORAL_DRAGONS
 │   │   │   ├── ruhm-der-riesen-data.js        —  71 monsters → window.MONSTER_DATA_RUHM_DER_RIESEN
-│   │   │   └── schatzkammer-der-drachen-data.js — 70 monsters → window.MONSTER_DATA_SCHATZKAMMER_DER_DRACHEN
+│   │   │   ├── schatzkammer-der-drachen-data.js — 70 monsters → window.MONSTER_DATA_SCHATZKAMMER_DER_DRACHEN
+│   │   │   ├── flee-mortals-data.js           —   Flee, Mortals! (MCDM)  → window.MONSTER_DATA_FLEE_MORTALS
+│   │   │   └── sonstige-data.js               —   Sammelquelle für vereinzelte Monster → window.MONSTER_DATA_SONSTIGE
 │   │   ├── rassen-data.js, klassen-data.js, …  — other page data
 │   │   └── monster-data.js      — also holds window.UNTERART_LORE
 │   └── vendor/        — React, ReactDOM, Babel Standalone
@@ -170,6 +174,8 @@ Adding a new book: create `<book>-data.js`, declare the window variable, add it 
 | `floral-dragons-data.js` | `MONSTER_DATA_FLORAL_DRAGONS` | `"Floral Dragons"` | `monster/floral-dragons/` |
 | `ruhm-der-riesen-data.js` | `MONSTER_DATA_RUHM_DER_RIESEN` | `"Ruhm der Riesen"` | `monster/ruhm-der-riesen/` |
 | `schatzkammer-der-drachen-data.js` | `MONSTER_DATA_SCHATZKAMMER_DER_DRACHEN` | `"Schatzkammer der Drachen"` | `monster/schatzkammer/` |
+| `flee-mortals-data.js` | `MONSTER_DATA_FLEE_MORTALS` | `"Flee Mortals"` | `monster/flee-mortals/` |
+| `sonstige-data.js` | `MONSTER_DATA_SONSTIGE` | `"Sonstige"` | `monster/sonstige/` |
 
 ### `bild` URL — Namenskonvention
 
