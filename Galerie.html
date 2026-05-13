@@ -10,6 +10,8 @@
 <script src="assets/scripts/vendor/react-dom.development.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
 <script src="assets/components/tweaks-panel-13.jsx" type="text/babel"></script>
+<script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/page-header.jsx" type="text/babel"></script>
 <script src="assets/scripts/data/galerie-data.js"></script>
 
 </head>
@@ -21,6 +23,9 @@
      ═══════════════════════════════════════════ -->
 <script type="text/babel">
 const { useState, useEffect, useRef } = React;
+
+/* YYYY-MM-DD → DD-MM-YYYY */
+function fmtDate(d) { const [y,m,day] = d.split('-'); return `${day}-${m}-${y}`; }
 
 /* Striped bg per hue */
 function mkBg(hue) {
@@ -106,7 +111,7 @@ function FeaturedDisplay({ image }) {
             {image.title}
           </h2>
           <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(124,77,255,0.62)', whiteSpace:'nowrap', paddingTop:3 }}>
-            {image.date}
+            {fmtDate(image.date)}
           </span>
         </div>
         <p style={{ fontFamily:'var(--font-body)', fontSize:12, fontWeight:300, color:'var(--silver)', lineHeight:1.7, marginBottom:10 }}>
@@ -120,7 +125,7 @@ function FeaturedDisplay({ image }) {
   );
 }
 
-Object.assign(window, { COLLECTIONS, ALL_IMAGES, DEFAULT_FEATURED, mkBg, Tag, ImgPlaceholder, FeaturedDisplay });
+Object.assign(window, { COLLECTIONS, ALL_IMAGES, DEFAULT_FEATURED, mkBg, fmtDate, Tag, ImgPlaceholder, FeaturedDisplay });
 </script>
 
 
@@ -129,7 +134,7 @@ Object.assign(window, { COLLECTIONS, ALL_IMAGES, DEFAULT_FEATURED, mkBg, Tag, Im
      ═══════════════════════════════════════════ -->
 <script type="text/babel">
 const { useState: useS2, useEffect: useE2, useRef: useR2 } = React;
-const { mkBg: mkB2, Tag: TagC, ImgPlaceholder: ImgPH } = window;
+const { mkBg: mkB2, fmtDate, Tag: TagC, ImgPlaceholder: ImgPH } = window;
 
 /* ── CollectionCard — race-card-inspired ──────── */
 function CollectionCard({ collection, onClick }) {
@@ -197,7 +202,7 @@ function OverlayImageCard({ image, onSelect }) {
           {image.title}
         </div>
         <div style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(124,77,255,0.6)', marginBottom:7 }}>
-          {image.date}
+          {fmtDate(image.date)}
         </div>
         <p style={{ fontFamily:'var(--font-body)', fontSize:11, fontWeight:300, color:'rgba(200,192,232,0.65)', lineHeight:1.65, marginBottom:8, display:'-webkit-box', WebkitLineClamp:2, WebkitBoxOrient:'vertical', overflow:'hidden' }}>
           {image.desc}
@@ -258,7 +263,7 @@ function CollectionOverlay({ collection, onClose, onSelectImage }) {
           <OverlayImageCard
             key={img.id}
             image={img}
-            onSelect={() => onSelectImage({...img, collectionName: collection.name})}
+            onSelect={() => onSelectImage(img)}
           />
         ))}
       </div>
@@ -269,7 +274,7 @@ function CollectionOverlay({ collection, onClose, onSelectImage }) {
 /* ── Carousel ─────────────────────────────────── */
 const CP_W=152, CP_H=196; // portrait
 const CL_W=272, CL_H=196; // landscape — same height, wider
-const CGAP=14;
+const CGAP=28;
 const BASE_SPD=0.036, CFRIC=0.9984;
 
 function imgDims(img) { return img.landscape ? {w:CL_W,h:CL_H} : {w:CP_W,h:CP_H}; }
@@ -378,7 +383,76 @@ function Carousel({ images, reverse }) {
   );
 }
 
-Object.assign(window, { CollectionCard, CollectionOverlay, Carousel });
+/* ── ImageModal ───────────────────────────────── */
+function ImageModal({ image, onClose }) {
+  useE2(() => {
+    document.body.style.overflow = 'hidden';
+    const onKey = e => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => { document.body.style.overflow = ''; window.removeEventListener('keydown', onKey); };
+  }, []);
+
+  return (
+    <div
+      onClick={onClose}
+      style={{ position:'fixed', inset:0, zIndex:700, display:'flex', alignItems:'center', justifyContent:'center', padding:24, background:'rgba(2,1,9,0.82)', backdropFilter:'blur(10px)', animation:'overlayIn 0.18s ease' }}
+    >
+      <div
+        onClick={e => e.stopPropagation()}
+        style={{ display:'flex', width:'100%', maxWidth:940, maxHeight:'88vh', borderRadius:6, overflow:'hidden', border:'1px solid rgba(124,77,255,0.38)', boxShadow:'0 28px 90px rgba(0,0,0,0.85)', background:'rgba(6,4,18,0.99)' }}
+      >
+        {/* Image panel */}
+        <div style={{ flex:'0 0 58%', minHeight:400, position:'relative', background:'#000' }}>
+          {image.img
+            ? <img src={image.img} alt={image.title} style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }} />
+            : <ImgPH label={image.title} height="100%" hue={image.hue} />
+          }
+        </div>
+
+        {/* Info panel */}
+        <div style={{ flex:1, display:'flex', flexDirection:'column', overflowY:'auto', padding:'28px 26px 28px' }}>
+          {/* Close */}
+          <button
+            onClick={onClose}
+            style={{ alignSelf:'flex-end', background:'rgba(124,77,255,0.08)', border:'1px solid rgba(124,77,255,0.22)', borderRadius:3, color:'rgba(200,192,232,0.5)', cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:12, lineHeight:1, padding:'6px 9px', marginBottom:20, transition:'all 0.15s' }}
+            onMouseEnter={e => { e.currentTarget.style.color='#f0eeff'; e.currentTarget.style.background='rgba(124,77,255,0.18)'; e.currentTarget.style.borderColor='rgba(124,77,255,0.5)'; }}
+            onMouseLeave={e => { e.currentTarget.style.color='rgba(200,192,232,0.5)'; e.currentTarget.style.background='rgba(124,77,255,0.08)'; e.currentTarget.style.borderColor='rgba(124,77,255,0.22)'; }}
+          >✕</button>
+
+          {/* Collection badge */}
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(124,77,255,0.55)', textTransform:'uppercase', marginBottom:10 }}>
+            {image.collectionName}
+          </span>
+
+          {/* Title */}
+          <h2 style={{ fontFamily:'var(--font-display)', fontWeight:400, fontSize:18, letterSpacing:'0.18em', color:'var(--white)', textTransform:'uppercase', marginBottom:8, lineHeight:1.3 }}>
+            {image.title}
+          </h2>
+
+          {/* Date */}
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(124,77,255,0.5)', marginBottom:18 }}>
+            {fmtDate(image.date)}
+          </span>
+
+          {/* Divider */}
+          <div style={{ width:32, height:1, background:'rgba(124,77,255,0.4)', marginBottom:18 }} />
+
+          {/* Description */}
+          <p style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:300, color:'var(--silver)', lineHeight:1.75, marginBottom:22, flex:1 }}>
+            {image.desc}
+          </p>
+
+          {/* Tags */}
+          <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
+            {image.tags && image.tags.map(t => <TagC key={t} label={t} />)}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+Object.assign(window, { CollectionCard, CollectionOverlay, Carousel, ImageModal });
 </script>
 
 
@@ -387,82 +461,43 @@ Object.assign(window, { CollectionCard, CollectionOverlay, Carousel });
      ═══════════════════════════════════════════ -->
 <script type="text/babel">
 const { useState: useS3, useEffect: useE3, useRef: useR3 } = React;
-const { COLLECTIONS:COLS, ALL_IMAGES:ALL_IMGS, DEFAULT_FEATURED, FeaturedDisplay:FeatDisp, CollectionCard:ColCard, CollectionOverlay:ColOverlay, Carousel:Car } = window;
-const { useTweaks, TweaksPanel, TweakSection, TweakToggle } = window;
+const { COLLECTIONS:COLS, ALL_IMAGES:ALL_IMGS, DEFAULT_FEATURED, FeaturedDisplay:FeatDisp, CollectionCard:ColCard, CollectionOverlay:ColOverlay, Carousel:Car, ImageModal } = window;
+const { useTweaks, TweaksPanel, TweakSection, TweakToggle, TweakSlider, SiteNav, PageHeader } = window;
 
-const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"carouselReverse":false}/*EDITMODE-END*/;
-
-/* ── Nav ──────────────────────────────────────── */
-const NAV_LINKS = [
-  {id:'hb',label:'Spielerhandbuch',    links:[{l:'Charaktererstellung',h:'Charaktererstellung.html'},{l:'Ausrüstung',h:'Ausrüstung.html'},{l:'Realismus',h:'Realismus.html'}]},
-  {id:'ch',label:'Charaktererstellung',links:[{l:'Rassen',h:'Rassen.html'},{l:'Klassen',h:'Klassen.html'},{l:'Talente',h:'Talente.html'},{l:'Hintergründe',h:'Hintergruende.html'},{l:'Zauber',h:'Zauber.html'}]},
-  {id:'ek',label:'Enzyklopädie',       links:[{l:'Gottheiten',h:'Gottheiten.html'},{l:'Galerie',h:'Galerie.html'}]},
-  {id:'dv',label:'Divisionen',         links:[{l:'Die Kuratoren',h:'Bergungsgarde.html'},{l:'Die Sturmritter',h:'Sturmritter.html'},{l:'Die Sentinels',h:'Sentinels.html'},{l:'Pathfinders',h:'Pathfinders.html'}]},
-];
-
-function NavItem({ tab }) {
-  const [open, setOpen] = useS3(false);
-  const t = useR3(null);
-  const show = () => { clearTimeout(t.current); setOpen(true); };
-  const hide = () => { t.current = setTimeout(() => setOpen(false), 260); };
-  return (
-    <div style={{ position:'relative' }} onMouseEnter={show} onMouseLeave={hide}>
-      <button style={{ fontFamily:'var(--font-display)', fontSize:11, fontWeight:400, letterSpacing:'0.16em', padding:'10px 15px', background:'transparent', border:'1px solid rgba(160,140,255,0.12)', color:'rgba(200,190,240,0.7)', cursor:'pointer', borderRadius:3, transition:'all 0.18s', textTransform:'uppercase', whiteSpace:'nowrap' }}
-        onMouseEnter={e=>{e.currentTarget.style.color='#f0eeff';e.currentTarget.style.borderColor='rgba(160,140,255,0.42)';e.currentTarget.style.background='rgba(124,77,255,0.1)';}}
-        onMouseLeave={e=>{e.currentTarget.style.color='rgba(200,190,240,0.7)';e.currentTarget.style.borderColor='rgba(160,140,255,0.12)';e.currentTarget.style.background='transparent';}}
-      >{tab.label}</button>
-      {open && (
-        <div onMouseEnter={show} onMouseLeave={hide} style={{ position:'absolute', top:'calc(100% + 4px)', left:0, minWidth:185, background:'rgba(8,6,22,0.97)', border:'1px solid rgba(160,140,255,0.2)', borderRadius:4, boxShadow:'0 10px 36px rgba(0,0,0,0.65)', animation:'slideDown 0.15s ease', zIndex:200, backdropFilter:'blur(12px)' }}>
-          {tab.links.map((lk,i) => (
-            <a key={i} href={lk.h} style={{ display:'block', padding:'9px 16px', fontFamily:'var(--font-body)', fontSize:12, fontWeight:300, color:'rgba(200,190,240,0.75)', textDecoration:'none', borderBottom:i<tab.links.length-1?'1px solid rgba(124,77,255,0.07)':'none', transition:'all 0.13s' }}
-              onMouseEnter={e=>{e.currentTarget.style.color='#f0eeff';e.currentTarget.style.background='rgba(124,77,255,0.1)';e.currentTarget.style.paddingLeft='20px';}}
-              onMouseLeave={e=>{e.currentTarget.style.color='rgba(200,190,240,0.75)';e.currentTarget.style.background='transparent';e.currentTarget.style.paddingLeft='16px';}}
-            >{lk.l}</a>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function Nav() {
-  return (
-    <nav style={{ position:'fixed', top:0, left:0, right:0, height:'var(--nav-h)', display:'flex', alignItems:'center', gap:4, padding:'0 24px', background:'rgba(5,4,15,0.96)', backdropFilter:'blur(20px)', borderBottom:'1px solid rgba(124,77,255,0.12)', zIndex:100 }}>
-      <a href="Meruria.html" style={{ fontFamily:'var(--font-display)', fontSize:14, fontWeight:300, letterSpacing:'0.38em', color:'var(--white)', textDecoration:'none', marginRight:14, textTransform:'uppercase', textShadow:'0 0 22px rgba(124,77,255,0.4)' }}>Meruria</a>
-      {NAV_LINKS.map(tab => <NavItem key={tab.id} tab={tab} />)}
-    </nav>
-  );
-}
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"carouselReverse":false,"headerHeight":180}/*EDITMODE-END*/;
 
 /* ── GalleryPage ──────────────────────────────── */
 function GalleryPage() {
-  const [featured,     setFeatured] = useS3(DEFAULT_FEATURED);
-  const [openCol,      setOpenCol]  = useS3(null);
-  const [tweaks, setTweak]          = useTweaks(TWEAK_DEFAULTS);
-
-  function selectImage(img) {
-    setFeatured(img);
-    setOpenCol(null);
-  }
+  const [featured,   setFeatured] = useS3(DEFAULT_FEATURED);
+  const [openCol,    setOpenCol]  = useS3(null);
+  const [modalImg,   setModalImg] = useS3(null);
+  const [tweaks, setTweak]        = useTweaks(TWEAK_DEFAULTS);
 
   const leftCols  = COLS.slice(0, 3);
   const rightCols = COLS.slice(3, 6);
 
   return (
-    <div style={{ minHeight:'100vh', paddingTop:'var(--nav-h)' }}>
-      <Nav />
+    <div style={{ minHeight:'100vh' }}>
+      <PageHeader height={tweaks.headerHeight} />
+      <SiteNav />
 
-      {/* Overlay */}
+      {/* Collection overlay */}
       {openCol && (
         <ColOverlay
           collection={openCol}
           onClose={() => setOpenCol(null)}
-          onSelectImage={selectImage}
+          onSelectImage={img => setModalImg({...img, collectionName: openCol.name})}
         />
       )}
 
+      {/* Image modal */}
+      {modalImg && <ImageModal image={modalImg} onClose={() => setModalImg(null)} />}
+
       {/* Tweaks */}
       <TweaksPanel tweaks={tweaks} setTweak={setTweak}>
+        <TweakSection label="Header">
+          <TweakSlider id="headerHeight" label="Höhe" min={80} max={320} step={10} />
+        </TweakSection>
         <TweakSection label="Karussell">
           <TweakToggle id="carouselReverse" label="Umgekehrt drehen" />
         </TweakSection>
@@ -470,9 +505,6 @@ function GalleryPage() {
 
       {/* Page title */}
       <div style={{ padding:'18px 28px 14px', borderBottom:'1px solid rgba(124,77,255,0.1)' }}>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.3em', color:'rgba(124,77,255,0.5)', textTransform:'uppercase', marginBottom:5 }}>
-          Meruria · Enzyklopädie
-        </div>
         <h1 style={{ fontFamily:'var(--font-display)', fontWeight:300, fontSize:22, letterSpacing:'0.28em', color:'var(--white)', textTransform:'uppercase' }}>
           Galerie
         </h1>

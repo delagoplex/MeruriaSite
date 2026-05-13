@@ -28,7 +28,7 @@ window.GALERIE_COLLECTIONS = [
   ]},
   { id:'artefakte', name:'Artefakte & Relikte', hue:55, images:[
     {id:'a1',title:'Auge des Abgrunds',     desc:'Uraltes Artefakt unbekannter Herkunft — sein Blick soll die Realität verzerren.', tags:['Artefakt','Uralt','Gefährlich'], date:'2026-05-09', hue:275, img:'assets/images/monster/monsterhandbuch/betrachter.png'},
-    {id:'a2',title:'Krone der Gezeiten',    desc:'Herrschaftsinsignie der ersten Meereskönigin Merurias.', tags:['Krone','Meer','Legendär'], date:'2026-04-28', hue:190, img:'assets/images/monster/monsterhandbuch/meervolk.png'},
+    {id:'a2',title:'Krone der Gezeiten',    desc:'Herrschaftsinsignie der ersten Meereskönigin Merurias.', tags:['Krone','Meer','Legendär'], date:'2026-05-13', hue:190, img:'assets/images/monster/monsterhandbuch/meervolk.png'},
     {id:'a3',title:'Splitter des Urlichts', desc:'Kristallsplitter vom ersten Licht der Schöpfung — heilige Reliquie der Lichttempel.', tags:['Heilig','Licht'], date:'2026-03-30', hue:65, img:'assets/images/monster/monsterhandbuch/irrlicht.png'},
     {id:'a4',title:'Schwarzes Herz',        desc:'Artefakt unbekannten Ursprungs — verbreitet Dunkelheit und Verderben.', tags:['Dunkel','Boss'], date:'2026-02-15', hue:290, img:'assets/images/monster/sonstige/schwarzherz-golem.png'},
   ]},
