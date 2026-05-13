@@ -1,0 +1,37 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #05040f; --white: #f0eeff; --silver: #c8c0e8;
+    --font-display: 'Cinzel', serif; --font-body: 'Raleway', sans-serif; --font-mono: 'Share Tech Mono', monospace;
+    --nav-h: 52px;
+  }
+  html, body { width: 100%; min-height: 100%; background: var(--bg); color: var(--white); font-family: var(--font-body); overflow-x: hidden; }
+  #root { width: 100%; min-height: 100vh; }
+  body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9999; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px); }
+
+  @keyframes flicker-mid { 0%,80%,100%{opacity:1} 82%{opacity:0.55} 84%{opacity:1} 87%{opacity:0.7} 89%{opacity:1} 91%{opacity:0.4} 93%{opacity:1} }
+  @keyframes slideDown { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes heroScan { 0%{opacity:0;top:-2px} 18%{opacity:0.7} 82%{opacity:0.5} 100%{opacity:0;top:100%} }
+  @keyframes pulse-glow { 0%,100%{opacity:0.5} 50%{opacity:1} }
+  @keyframes hexFloat0 { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-18px) rotate(4deg)} }
+  @keyframes hexFloat1 { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-12px) rotate(-3deg)} }
+  @keyframes hexFloat2 { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-22px) rotate(6deg)} }
+  @keyframes hexFloat3 { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-8px) rotate(-2deg)} }
+  @keyframes neu-bg-glitch {
+    0%{opacity:0;clip-path:inset(50% 0 50% 0);background:transparent} 5%{opacity:1;clip-path:inset(0% 0 72% 0);transform:translateX(-8px);background:rgba(124,77,255,0.45)}
+    15%{clip-path:inset(55% 0 8% 0);transform:translateX(10px);background:rgba(180,140,255,0.50)} 35%{clip-path:inset(68% 0 4% 0);transform:translateX(8px)} 70%{opacity:0.4} 100%{opacity:0}
+  }
+  @keyframes neu-bg-glitch2 {
+    0%{opacity:0;clip-path:inset(50% 0 50% 0);background:transparent} 8%{opacity:1;clip-path:inset(58% 0 0% 0);transform:translateX(12px) scaleX(1.03);background:rgba(180,140,255,0.55)}
+    18%{clip-path:inset(4% 0 58% 0);transform:translateX(-10px)} 50%{clip-path:inset(12% 0 45% 0)} 70%{opacity:0.3} 100%{opacity:0}
+  }
+  @keyframes neu-scanline { 0%{opacity:0;top:0%} 5%{opacity:0.9;top:10%} 15%{top:75%} 25%{top:35%} 35%{top:90%} 45%{top:20%} 55%{top:60%} 70%{opacity:0.3;top:50%} 100%{opacity:0} }
+  @keyframes neu-txt-main { 0%{transform:translate(0,0) skewX(0)} 8%{transform:translate(-5px,0) skewX(-1deg)} 16%{transform:translate(5px,0) skewX(1deg)} 65%{transform:translate(0,0)} 100%{transform:translate(0,0)} }
+  @keyframes neu-txt-a { 0%{opacity:0;clip-path:inset(50% 0 50% 0)} 5%{opacity:0.9;clip-path:inset(10% 0 50% 0);transform:translate(-6px,0)} 35%{clip-path:inset(75% 0 0% 0);transform:translate(6px,0)} 60%{opacity:0.5} 80%{opacity:0} 100%{opacity:0} }
+  @keyframes neu-txt-b { 0%{opacity:0;clip-path:inset(50% 0 50% 0)} 8%{opacity:0.75;clip-path:inset(38% 0 22% 0);transform:translate(7px,0)} 38%{clip-path:inset(15% 0 45% 0)} 65%{opacity:0.4} 85%{opacity:0} 100%{opacity:0} }
+
+  .reveal-up { opacity: 0; transform: translateY(20px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .reveal-up.visible { opacity: 1; transform: translateY(0); }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(124,77,255,0.3); border-radius: 2px; }
