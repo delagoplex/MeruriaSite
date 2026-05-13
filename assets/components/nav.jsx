@@ -96,7 +96,7 @@ const NAV = [
   { id: 'charaktererstellung', label: 'Charaktererstellung', items: [{ label: 'Neuer Charakter', href: 'Charaktererstellung.html', dividerAfter: true }, { label: 'Rassen', href: 'Rassen.html' }, { label: 'Klassen', href: 'Klassen.html' }, { label: 'Talente', href: 'Talente.html' }, { label: 'Hintergründe', href: 'Hintergruende.html' }, { label: 'Zauber', href: 'Zauber.html' }, { label: 'Ausrüstung', href: 'Ausrüstung.html' }] },
   { id: 'enzyklopaedie', label: 'Enzyklopädie', items: [{ label: 'Völker', href: '#' }, { label: 'Orte', href: '#' }, { label: 'Ressourcen', href: 'Ressourcen.html' }, { label: 'Organisationen', href: '#' }, { label: 'Gottheiten', href: 'Gottheiten.html' }, { label: 'Religionen', href: '#' }, { label: 'Monster', href: 'Monster.html', locked: true }, { label: 'Galerie', href: 'Galerie.html' }] },
   { id: 'divisionen', label: 'Divisionen', items: [{ label: 'Übersicht', href: 'Divisionen.html', dividerAfter: true }, { label: 'I — Die Kuratoren', href: 'divisionen/Die Kuratoren.html' }, { label: 'II — Die Sturmritter', href: 'divisionen/Sturmritter.html' }, { label: 'III — Die Sentinels', href: 'divisionen/Sentinels.html' }, { label: 'IV — Die Friedenshüter', href: 'divisionen/Friedenshueter.html' }, { label: 'V — Die Outfitters', href: 'divisionen/Outfitters.html' }, { label: 'VI — Die Pathfinders', href: 'divisionen/Pathfinders.html' }, { label: 'VII — Die Quellensucher', href: 'divisionen/Quellensucher.html' }, { label: 'VIII — Die Bergungsgarde', href: 'divisionen/Bergungsgarde.html' }] },
-  { id: 'charaktere', label: 'Charaktere', items: [{ label: 'Steckbrief', href: 'Steckbrief.html', dividerAfter: true }, { label: 'Spielercharaktere', href: '#' }, { label: 'NSC', href: '#' }] },
+  { id: 'charaktere', label: 'Charaktere', items: [{ label: 'Mein Charakter', href: 'MeinCharakter.html' }, { label: 'Steckbrief', href: 'Steckbrief.html', dividerAfter: true, glitch: false }, { label: 'Spielercharaktere', href: '#' }, { label: 'NSC', href: '#' }] },
   { id: 'tools', label: 'Tools', items: [{ label: 'Kampfsimulation', href: 'Kampfsimulation.html', locked: true }] }
 ];
 
@@ -166,7 +166,7 @@ function NavItem({ tab }) {
         <div onMouseEnter={show} onMouseLeave={hide} style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, minWidth: '180px', background: 'var(--nav-dropdown-bg)', border: '1px solid var(--nav-dropdown-border)', borderRadius: '4px', boxShadow: '0 8px 32px rgba(0,0,0,0.35)', animation: 'slideDown 0.18s ease forwards', zIndex: 200, backdropFilter: 'blur(12px)' }}>
           {tab.items.map((item, i) =>
             <React.Fragment key={i}>
-              {item.dividerAfter ? (
+              {item.dividerAfter && item.glitch !== false ? (
                 <div style={{ position: 'relative', overflow: 'hidden' }}>
                   {glitchActive && <div key={`bga-${glitchKey}`} aria-hidden="true" style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, animation: `neu-bg-glitch ${dur} ease forwards` }} />}
                   {glitchActive && <div key={`bgb-${glitchKey}`} aria-hidden="true" style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, animation: `neu-bg-glitch2 ${dur} ease forwards` }} />}

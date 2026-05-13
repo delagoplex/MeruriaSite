@@ -9,6 +9,7 @@
 <script src="assets/scripts/vendor/react.development.js"></script>
 <script src="assets/scripts/vendor/react-dom.development.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/components/nav.jsx" type="text/babel"></script>
 <script src="assets/components/tweaks-panel-13.jsx" type="text/babel"></script>
 
 </head>
@@ -54,7 +55,7 @@ const CHAR = {
 
   story:"Ich wurde als Kind eines Arkanheimer Gelehrten und einer Waldelfe in den Bibliothekstürmen der Hauptstadt geboren. Die ersten siebzig Jahre meines Lebens verbrachte ich damit, Bücher zu lesen — bis ich eines Abends ein Notizbuch meines Vaters öffnete und zum ersten Mal wirklich verstand, was Magie bedeutet: Sie erinnert sich an dich, nicht du an sie. Nach einem Jahrzehnt an der Akademie des Lichts schloss ich mich der Bergungsgarde an. Ich suche das uralte Zauberbuch, das meinen Vater im dritten Tiefengewölbe verschlang. Er lächelte immer, wenn er davon sprach.",
 
-  ersteTage:"Als sich die Transportkapsel öffnete und ich zum ersten Mal merkurianische Luft einatmete — schwer von Magie, irgendwie elektrisch — wusste ich sofort, dass dies kein gewöhnlicher Ort ist. Die ersten drei Tage verbrachte ich damit, mich in den Archiven der Ankunftsstation zu verlieren. Am vierten Tag entdeckte ich, dass die Ley-Linien unter Arkanheim eine Struktur haben, die ich noch nie zuvor gesehen hatte. Seitdem kann ich an nichts anderes mehr denken. Das ist eigentlich das Problem.",
+  ersteTage:"Als sich meine Träumerkapsel öffnete, ...",
 
   personality:"Ich zitiere gern aus bedeutenden Werken und finde in jedem Problem eine akademische Parallele. Manchmal ist das hilfreich. Meistens nicht.",
   ideals:"Wissen ist Macht — wer die Magie vollständig versteht, kann die Welt nach seinem Willen formen.",
@@ -74,9 +75,6 @@ const CHAR = {
     { title:"Der Silberne Schlüssel", status:"abgeschlossen", year:"Jahr 3 n.A.",
       short:"Bergung eines Artefakts aus den überschwemmten Ruinen von Port Silberwelle.",
       long:"Dabei verlor ich meinen Lieblingsmantel. Das Artefakt war es wert. Ich glaube." },
-    { title:"Stimmen im Schleier", status:"laufend", year:"Jahr 4 n.A.",
-      short:"Unidentifizierte Signale an der Schleierkante.",
-      long:"Die Signale haben eine Struktur — keine zufällige, sondern eine kodierte. Ich übersetze sie noch. Es dauert länger als erwartet." },
   ],
 
   companions:[
@@ -212,418 +210,23 @@ Object.assign(window, { CHAR, mod, fmtMod, attrKey, skillBonus, ImageSlot, SecTi
 
 
 <!-- ═══════════════════════════════════════════
-     SCRIPT 2 — Sektions-Komponenten
+     SCRIPT 2 — Sektions-Komponenten (extern)
      ═══════════════════════════════════════════ -->
-<script type="text/babel">
-const { useState:useS2 } = React;
-const { CHAR:C, mod, fmtMod, attrKey, skillBonus, ImageSlot, SecTitle, Card, Corners, IRow } = window;
-
-/* ── Division & Rang ──────────────────────── */
-function DivisionRank({ char }) {
-  const roman = ["I","II","III","IV","V"];
-  return (
-    <Card style={{marginBottom:11}}>
-      <SecTitle label="Division & Rang" />
-      <div style={{fontFamily:"var(--font-display)",fontSize:11,letterSpacing:".18em",color:"rgba(210,202,245,0.9)",textTransform:"uppercase",marginBottom:7}}>{char.division}</div>
-      <div style={{display:"flex",alignItems:"center",gap:10}}>
-        <div style={{display:"flex",gap:4}}>
-          {Array.from({length:char.rankMax},(_,i)=>{
-            const filled = i < char.rankLevel;
-            return <span key={i} style={{display:"inline-block",width:9,height:9,
-              transform:"rotate(45deg)",flexShrink:0,
-              background:filled?"rgba(124,77,255,0.68)":"transparent",
-              border:`1px solid rgba(124,77,255,${filled?0.55:0.2})`}} />;
-          })}
-        </div>
-        <span style={{fontFamily:"var(--font-mono)",fontSize:10,color:"var(--white)"}}>{char.rank}
-          <span style={{color:"rgba(124,77,255,0.6)"}}> · </span>
-          <span style={{color:"rgba(124,77,255,0.85)"}}>{roman[char.rankLevel-1]}</span>
-        </span>
-      </div>
-    </Card>
-  );
-}
-
-/* ── Gottheit ─────────────────────────────── */
-function DeityCard({ char }) {
-  return (
-    <Card style={{marginBottom:11}}>
-      <SecTitle label="Gottheit" />
-      <div style={{display:"flex",gap:12,alignItems:"center"}}>
-        <div style={{width:72,height:72,flexShrink:0}}>
-          <ImageSlot slotId="deity-symbol" label="Symbol" height={72} hue={char.deityHue||55} />
-        </div>
-        <div>
-          <div style={{fontFamily:"var(--font-display)",fontSize:12,letterSpacing:".16em",color:"var(--white)",textTransform:"uppercase",marginBottom:4}}>{char.deity}</div>
-          <div style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".12em",color:"rgba(124,77,255,0.5)"}}>{char.deityDomain}</div>
-        </div>
-      </div>
-    </Card>
-  );
-}
-
-/* ── Kampf-Kompakt ────────────────────────── */
-function CombatCompact({ char }) {
-  const stats = [["TP",char.hp],["RK",char.ac],["INIT",fmtMod(char.initiative)],["BEWG",char.speed+"m"]];
-  return (
-    <Card>
-      <SecTitle label="Kampf" />
-      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginBottom:11}}>
-        {stats.map(([l,v])=>(
-          <div key={l} style={{background:"rgba(7,4,18,0.9)",border:"1px solid rgba(124,77,255,0.22)",borderRadius:3,
-            padding:"7px 10px",display:"flex",flexDirection:"column",alignItems:"center"}}>
-            <span style={{fontFamily:"var(--font-mono)",fontSize:18,color:"var(--white)",lineHeight:1}}>{v}</span>
-            <span style={{fontFamily:"var(--font-mono)",fontSize:6.5,letterSpacing:".18em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase",marginTop:3}}>{l}</span>
-          </div>
-        ))}
-      </div>
-      {char.weapons.map((w,i)=>(
-        <div key={i} style={{display:"flex",alignItems:"center",gap:8,padding:"3px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
-          <span style={{fontFamily:"var(--font-body)",fontSize:11,fontWeight:300,color:"var(--silver)",flex:1}}>{w.name}</span>
-          <span style={{fontFamily:"var(--font-mono)",fontSize:10,color:"rgba(124,77,255,0.78)"}}>{w.bonus}</span>
-          <span style={{fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(175,168,210,0.5)"}}>{w.damage}</span>
-        </div>
-      ))}
-    </Card>
-  );
-}
-
-/* ── Attribute ────────────────────────────── */
-const ATTR_DEFS=[{key:"str",label:"STÄRKE"},{key:"dex",label:"GESCHICK."},{key:"con",label:"KONST."},
-  {key:"int",label:"INT."},{key:"wis",label:"WEISHEIT"},{key:"cha",label:"CHARISMA"}];
-
-function AttrBlock({ def, char }) {
-  const [hov,setHov] = useS2(false);
-  const score = char.stats[def.key];
-  const m = mod(score);
-  const hi = score>=16, lo = score<=9;
-  return (
-    <div onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
-      style={{ display:"flex",flexDirection:"column",alignItems:"center",flex:1,
-        background:hov?"rgba(20,12,42,0.97)":"rgba(7,4,18,0.97)",
-        border:`1px solid rgba(124,77,255,${hi?0.55:0.2})`,borderRadius:3,padding:"9px 4px 8px",
-        transform:hov?"translateY(-2px)":"none",
-        boxShadow:hov&&hi?"0 0 18px rgba(124,77,255,0.18)":"none",
-        transition:"all .2s ease",cursor:"default" }}>
-      <span style={{fontFamily:"var(--font-mono)",fontSize:7,letterSpacing:".16em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase",marginBottom:5,textAlign:"center"}}>{def.label}</span>
-      <span style={{fontFamily:"var(--font-mono)",fontSize:22,color:"var(--white)",lineHeight:1}}>{score}</span>
-      <div style={{width:"65%",height:1,background:"rgba(124,77,255,0.15)",margin:"5px 0"}} />
-      <span style={{fontFamily:"var(--font-mono)",fontSize:14,color:`rgba(124,77,255,${hi?0.92:lo?0.38:0.65})`}}>{fmtMod(m)}</span>
-      {hov && <span style={{fontFamily:"var(--font-mono)",fontSize:6,color:"rgba(124,77,255,0.3)",marginTop:2,animation:"fadeInUp .15s ease"}}>({score}−10)÷2</span>}
-    </div>
-  );
-}
-
-function AttributeGrid({ char }) {
-  return (
-    <Card style={{marginBottom:11}}>
-      <SecTitle label="Attribute" />
-      <div style={{display:"flex",gap:6}}>{ATTR_DEFS.map(d=><AttrBlock key={d.key} def={d} char={char}/>)}</div>
-    </Card>
-  );
-}
-
-/* ── Stärken (geübte Skills als Pills) ─────── */
-function SkillPills({ char }) {
-  const profs = char.skills.filter(s=>s.prof>0);
-  return (
-    <Card style={{marginBottom:11}}>
-      <SecTitle label="Stärken · Geübte Fertigkeiten" />
-      <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
-        {profs.map(s=>{
-          const bonus = skillBonus(s,char.stats,char.profBonus);
-          return (
-            <span key={s.name} style={{fontFamily:"var(--font-mono)",fontSize:9,padding:"3px 10px",
-              background:"rgba(124,77,255,0.12)",border:"1px solid rgba(124,77,255,0.32)",borderRadius:2,
-              color:"rgba(200,190,240,0.88)",letterSpacing:".06em",display:"inline-flex",gap:7,alignItems:"center"}}>
-              {s.name}<span style={{color:"rgba(124,77,255,0.92)",fontWeight:600}}>{fmtMod(bonus)}</span>
-            </span>
-          );
-        })}
-      </div>
-      <div style={{fontFamily:"var(--font-mono)",fontSize:7.5,color:"rgba(124,77,255,0.28)",marginTop:8,letterSpacing:".1em"}}>
-        Übungsbonus +{char.profBonus}
-      </div>
-    </Card>
-  );
-}
-
-/* ── Persönlichkeit ───────────────────────── */
-function PersonalitySection({ char }) {
-  const items=[{l:"Merkmale",t:char.personality,acc:true},{l:"Ideale",t:char.ideals},
-    {l:"Bindungen",t:char.bonds},{l:"Makel",t:char.flaws}];
-  return (
-    <Card>
-      <SecTitle label="Persönlichkeit" />
-      {items.map(({l,t,acc})=>(
-        <div key={l} style={{marginBottom:10}}>
-          <div style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".22em",color:`rgba(124,77,255,${acc?0.65:0.38})`,textTransform:"uppercase",marginBottom:4}}>{l}</div>
-          <p style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:300,color:"var(--silver)",lineHeight:1.72,fontStyle:"italic"}}>„{t}"</p>
-        </div>
-      ))}
-    </Card>
-  );
-}
-
-/* ── Quest-Karte ──────────────────────────── */
-function QuestCard({ quest }) {
-  const [open,setOpen] = useS2(false);
-  const done = quest.status==="abgeschlossen";
-  const bc = done?"rgba(80,200,140,0.75)":"rgba(200,145,45,0.8)";
-  const bb = done?"rgba(80,200,140,0.1)":"rgba(200,145,45,0.1)";
-  return (
-    <div onClick={()=>setOpen(o=>!o)} style={{background:"var(--card-bg)",
-      border:`1px solid rgba(124,77,255,${open?0.38:0.18})`,borderRadius:4,
-      padding:"14px 16px",cursor:"pointer",transition:"all .25s ease",
-      transform:open?"translateY(-1px)":"none",
-      boxShadow:open?"0 6px 24px rgba(0,0,0,0.5)":"none"}}>
-      <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:10,marginBottom:6}}>
-        <span style={{fontFamily:"var(--font-display)",fontSize:11,letterSpacing:".14em",color:"rgba(210,202,245,0.92)",textTransform:"uppercase",flex:1}}>{quest.title}</span>
-        <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,padding:"2px 8px",background:bb,
-          border:`1px solid ${bc}`,borderRadius:2,color:bc,letterSpacing:".1em",flexShrink:0,whiteSpace:"nowrap"}}>{quest.status}</span>
-      </div>
-      <div style={{fontFamily:"var(--font-mono)",fontSize:7.5,color:"rgba(124,77,255,0.4)",letterSpacing:".1em",marginBottom:6}}>{quest.year}</div>
-      <p style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:300,color:"var(--silver)",lineHeight:1.65}}>{quest.short}</p>
-      {open && (
-        <p style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:300,color:"rgba(200,190,240,0.72)",lineHeight:1.75,
-          marginTop:10,paddingTop:10,borderTop:"1px solid rgba(124,77,255,0.12)",fontStyle:"italic",animation:"fadeInUp .2s ease"}}>
-          „{quest.long}"</p>
-      )}
-      <div style={{fontFamily:"var(--font-mono)",fontSize:7,color:"rgba(124,77,255,0.28)",marginTop:8,letterSpacing:".1em",textAlign:"right"}}>
-        {open?"▲ einklappen":"▼ mehr lesen"}</div>
-    </div>
-  );
-}
-
-/* ── Begleiter-Karte ──────────────────────── */
-function CompanionCard({ comp }) {
-  return (
-    <div style={{display:"flex",gap:12,background:"var(--card-bg)",border:"1px solid rgba(124,77,255,0.2)",borderRadius:4,padding:"13px 14px"}}>
-      <div style={{width:88,flexShrink:0}}>
-        <ImageSlot slotId={comp.id} label={comp.name} height={88} hue={comp.hue||270} portrait />
-      </div>
-      <div style={{flex:1}}>
-        <div style={{fontFamily:"var(--font-display)",fontSize:12,letterSpacing:".16em",color:"var(--white)",textTransform:"uppercase",marginBottom:4}}>{comp.name}</div>
-        <div style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".1em",color:"rgba(124,77,255,0.5)",marginBottom:8}}>{comp.type}</div>
-        <p style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:300,color:"var(--silver)",lineHeight:1.65,fontStyle:"italic"}}>„{comp.desc}"</p>
-      </div>
-    </div>
-  );
-}
-
-/* ── Kontakte-Tablet ─────────────────────── */
-const RELATION_COL = {
-  "Verbündete":  ["rgba(80,200,140,0.78)","rgba(80,200,140,0.1)"],
-  "Vorgesetzter":["rgba(124,77,255,0.82)","rgba(124,77,255,0.12)"],
-  "Neutral":     ["rgba(170,162,210,0.65)","rgba(170,162,210,0.08)"],
-  "Unbekannt":   ["rgba(200,145,45,0.82)","rgba(200,145,45,0.1)"],
-  "Feind":       ["rgba(220,65,65,0.82)","rgba(220,65,65,0.1)"],
-};
-
-function KontakteTablet({ char }) {
-  const [sel, setSel] = useS2(() => (char.contacts && char.contacts[0]) || null);
-  if (!char.contacts || !char.contacts.length) return null;
-  return (
-    <div style={{ background:"rgba(5,3,15,0.99)", border:"1px solid rgba(124,77,255,0.38)", borderRadius:8,
-      overflow:"hidden", boxShadow:"0 24px 64px rgba(0,0,0,0.75), inset 0 1px 0 rgba(124,77,255,0.12)" }}>
-
-      {/* ── header bar ── */}
-      <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between",
-        padding:"10px 16px", background:"rgba(10,6,26,0.98)", borderBottom:"1px solid rgba(124,77,255,0.18)" }}>
-        <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-          <div style={{ width:7, height:7, borderRadius:"50%", background:"rgba(124,77,255,0.7)", animation:"pulseGlow 2.5s ease-in-out infinite" }} />
-          <span style={{ fontFamily:"var(--font-mono)", fontSize:8.5, letterSpacing:".25em", color:"rgba(124,77,255,0.62)", textTransform:"uppercase" }}>Kontakt-Datenbank</span>
-        </div>
-        <div style={{ display:"flex", alignItems:"center", gap:12 }}>
-          <span style={{ fontFamily:"var(--font-mono)", fontSize:7.5, color:"rgba(124,77,255,0.3)", letterSpacing:".1em" }}>{char.division}</span>
-          <div style={{ display:"flex", gap:4 }}>
-            {["rgba(220,80,80,0.55)","rgba(200,145,45,0.55)","rgba(80,200,140,0.55)"].map((c,i)=>(
-              <div key={i} style={{ width:8, height:8, borderRadius:"50%", background:c }} />
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* ── two-panel body ── */}
-      <div style={{ display:"flex", height:380 }}>
-
-        {/* LEFT — list */}
-        <div style={{ width:236, flexShrink:0, borderRight:"1px solid rgba(124,77,255,0.14)", overflowY:"auto" }}>
-          {char.contacts.map(ct => {
-            const active = sel && sel.id === ct.id;
-            const [rc] = RELATION_COL[ct.relation] || RELATION_COL["Neutral"];
-            return (
-              <div key={ct.id} onClick={()=>setSel(ct)} style={{ display:"flex", alignItems:"center", gap:10,
-                padding:"10px 14px", cursor:"pointer", transition:"all .18s ease",
-                background: active ? "rgba(124,77,255,0.1)" : "transparent",
-                borderLeft: active ? "2.5px solid rgba(124,77,255,0.65)" : "2.5px solid transparent",
-                borderBottom:"1px solid rgba(124,77,255,0.07)" }}>
-                <div style={{ width:36, height:36, flexShrink:0, borderRadius:3, overflow:"hidden" }}>
-                  <ImageSlot slotId={ct.id+"-av"} label="" height={36} hue={ct.hue||270} portrait />
-                </div>
-                <div style={{ flex:1, minWidth:0 }}>
-                  <div style={{ fontFamily:"var(--font-body)", fontSize:11.5, fontWeight:active?400:300,
-                    color:active?"var(--white)":"var(--silver)", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{ct.name}</div>
-                  <div style={{ fontFamily:"var(--font-mono)", fontSize:7.5, color:"rgba(124,77,255,0.42)", marginTop:2,
-                    overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{ct.role}</div>
-                </div>
-                <span style={{ fontFamily:"var(--font-mono)", fontSize:6.5, padding:"1px 5px",
-                  background:(RELATION_COL[ct.relation]||RELATION_COL["Neutral"])[1],
-                  border:`1px solid ${rc}`, borderRadius:2, color:rc, flexShrink:0, whiteSpace:"nowrap" }}>{ct.relation}</span>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* RIGHT — detail */}
-        <div style={{ flex:1, padding:"18px 20px", overflowY:"auto" }}>
-          {sel ? (
-            <div key={sel.id} style={{ animation:"fadeInUp .22s ease" }}>
-              {/* name + portrait */}
-              <div style={{ display:"flex", gap:16, marginBottom:16 }}>
-                <div style={{ flex:1 }}>
-                  <h3 style={{ fontFamily:"var(--font-display)", fontSize:15, fontWeight:400, letterSpacing:".18em",
-                    color:"var(--white)", textTransform:"uppercase", marginBottom:5 }}>{sel.name}</h3>
-                  <div style={{ fontFamily:"var(--font-mono)", fontSize:8, letterSpacing:".1em", color:"rgba(124,77,255,0.5)", marginBottom:11 }}>{sel.role}</div>
-                  <div style={{ display:"flex", gap:5, flexWrap:"wrap" }}>
-                    {[
-                      [sel.relation, RELATION_COL[sel.relation]||RELATION_COL["Neutral"]],
-                      [sel.race,     ["rgba(180,172,210,0.62)","rgba(180,172,210,0.08)"]],
-                      [sel.status,   ["rgba(80,200,140,0.65)","rgba(80,200,140,0.09)"]],
-                    ].map(([label,[tc,bg]],i)=>(
-                      <span key={i} style={{ fontFamily:"var(--font-mono)", fontSize:7.5, padding:"2px 8px",
-                        background:bg, border:`1px solid ${tc}`, borderRadius:2, color:tc, letterSpacing:".08em" }}>{label}</span>
-                    ))}
-                  </div>
-                </div>
-                <div style={{ width:118, flexShrink:0 }}>
-                  <ImageSlot slotId={sel.id+"-portrait"} label={sel.name} height={138} hue={sel.hue||270} portrait />
-                </div>
-              </div>
-              <div style={{ height:1, background:"rgba(124,77,255,0.1)", marginBottom:14 }} />
-              <div style={{ fontFamily:"var(--font-mono)", fontSize:7.5, letterSpacing:".22em", color:"rgba(124,77,255,0.42)",
-                textTransform:"uppercase", marginBottom:8 }}>Was ich über diese Person denke:</div>
-              <p style={{ fontFamily:"var(--font-body)", fontSize:12.5, fontWeight:300, color:"var(--silver)", lineHeight:1.82, fontStyle:"italic" }}>
-                „{sel.note}"</p>
-            </div>
-          ) : (
-            <div style={{ display:"flex", alignItems:"center", justifyContent:"center", height:"100%",
-              fontFamily:"var(--font-mono)", fontSize:9, letterSpacing:".2em", color:"rgba(124,77,255,0.22)", textTransform:"uppercase" }}>
-              ← Kontakt auswählen
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ── Wissenswertes-Karte ─────────────────── */
-function FbCard({ item, index }) {
-  const [hov,setHov] = useS2(false);
-  const num = String(index+1).padStart(2,"0");
-  return (
-    <div onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
-      style={{ background:hov?"rgba(16,10,36,0.97)":"var(--card-bg)",
-        border:`1px solid rgba(124,77,255,${hov?0.38:0.15})`,
-        borderRadius:4, padding:"20px 18px 18px", position:"relative",
-        overflow:"hidden", cursor:"default",
-        transform:hov?"translateY(-2px)":"none",
-        boxShadow:hov?"0 10px 32px rgba(0,0,0,0.5),0 0 16px rgba(124,77,255,0.07)":"none",
-        transition:"all .25s ease" }}>
-      {/* Dekoratives Anführungszeichen */}
-      <div style={{ position:"absolute", top:-14, left:10,
-        fontFamily:"Georgia,serif", fontSize:96, lineHeight:1,
-        color:"rgba(124,77,255,0.055)", pointerEvents:"none", userSelect:"none",
-        transition:"color .25s", ...(hov&&{color:"rgba(124,77,255,0.09)"}) }}>„</div>
-      {/* Nummer */}
-      <div style={{ position:"absolute", top:13, right:15,
-        fontFamily:"var(--font-mono)", fontSize:8.5, letterSpacing:".08em",
-        color:`rgba(124,77,255,${hov?0.4:0.2})`, transition:"color .25s" }}>{num}</div>
-      {/* Frage */}
-      <div style={{ fontFamily:"var(--font-mono)", fontSize:8, letterSpacing:".22em",
-        color:`rgba(124,77,255,${hov?0.72:0.5})`, textTransform:"uppercase",
-        marginBottom:10, paddingRight:28, transition:"color .25s",
-        lineHeight:1.5 }}>{item.frage}</div>
-      {/* Trennlinie */}
-      <div style={{ width:22, height:1, background:`rgba(124,77,255,${hov?0.45:0.22})`,
-        marginBottom:12, transition:"background .25s" }} />
-      {/* Antwort */}
-      <p style={{ fontFamily:"var(--font-body)", fontSize:13, fontWeight:300,
-        lineHeight:1.78, fontStyle:"italic",
-        color:hov?"var(--white)":"var(--silver)",
-        transition:"color .25s ease" }}>{item.antwort}</p>
-    </div>
-  );
-}
-
-Object.assign(window, { DivisionRank, DeityCard, CombatCompact, AttributeGrid,
-  SkillPills, PersonalitySection, QuestCard, CompanionCard, FbCard, KontakteTablet });
-</script>
+<script src="assets/components/steckbrief-components.jsx" type="text/babel"></script>
 
 
 <!-- ═══════════════════════════════════════════
      SCRIPT 3 — Nav · Seite · Render
      ═══════════════════════════════════════════ -->
 <script type="text/babel">
-const { useState:useS3, useRef:useR3 } = React;
+const { useState:useS3 } = React;
 const { CHAR, ImageSlot, SecTitle, Card, Corners, IRow,
   DivisionRank, DeityCard, CombatCompact, AttributeGrid,
   SkillPills, PersonalitySection, QuestCard, CompanionCard, FbCard, KontakteTablet } = window;
 const { useTweaks, TweaksPanel, TweakSection, TweakToggle } = window;
+const { SiteNav } = window;
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"showCompanions":true,"showQuests":true,"showKontakte":true,"showWissenswertes":true}/*EDITMODE-END*/;
-
-const NAV_LINKS = [
-  {id:"hb",label:"Spielerhandbuch",    links:[{l:"Charaktererstellung",h:"Charaktererstellung.html"},{l:"Ausrüstung",h:"Ausrüstung.html"},{l:"Realismus",h:"Realismus.html"}]},
-  {id:"ch",label:"Charaktererstellung",links:[{l:"Rassen",h:"Rassen.html"},{l:"Klassen",h:"Klassen.html"},{l:"Talente",h:"Talente.html"},{l:"Hintergründe",h:"Hintergruende.html"},{l:"Zauber",h:"Zauber.html"}]},
-  {id:"ek",label:"Enzyklopädie",       links:[{l:"Gottheiten",h:"Gottheiten.html"},{l:"Galerie",h:"Galerie.html"}]},
-  {id:"dv",label:"Divisionen",         links:[{l:"Die Kuratoren",h:"Bergungsgarde.html"},{l:"Die Sturmritter",h:"Sturmritter.html"},{l:"Die Sentinels",h:"Sentinels.html"},{l:"Pathfinders",h:"Pathfinders.html"}]},
-];
-
-function NavItem({ tab }) {
-  const [open,setOpen] = useS3(false);
-  const t = useR3(null);
-  const show = () => { clearTimeout(t.current); setOpen(true); };
-  const hide = () => { t.current = setTimeout(()=>setOpen(false),260); };
-  return (
-    <div style={{position:"relative"}} onMouseEnter={show} onMouseLeave={hide}>
-      <button style={{fontFamily:"var(--font-display)",fontSize:11,fontWeight:400,letterSpacing:".16em",padding:"10px 15px",
-        background:"transparent",border:"1px solid rgba(160,140,255,0.12)",color:"rgba(200,190,240,0.7)",
-        cursor:"pointer",borderRadius:3,transition:"all .18s",textTransform:"uppercase",whiteSpace:"nowrap"}}
-        onMouseEnter={e=>{e.currentTarget.style.color="#f0eeff";e.currentTarget.style.borderColor="rgba(160,140,255,0.42)";e.currentTarget.style.background="rgba(124,77,255,0.1)";}}
-        onMouseLeave={e=>{e.currentTarget.style.color="rgba(200,190,240,0.7)";e.currentTarget.style.borderColor="rgba(160,140,255,0.12)";e.currentTarget.style.background="transparent";}}
-      >{tab.label}</button>
-      {open && (
-        <div onMouseEnter={show} onMouseLeave={hide} style={{position:"absolute",top:"calc(100% + 4px)",left:0,minWidth:185,
-          background:"rgba(8,6,22,0.97)",border:"1px solid rgba(160,140,255,0.2)",borderRadius:4,
-          boxShadow:"0 10px 36px rgba(0,0,0,0.65)",animation:"slideDown .15s ease",zIndex:200,backdropFilter:"blur(12px)"}}>
-          {tab.links.map((lk,i)=>(
-            <a key={i} href={lk.h} style={{display:"block",padding:"9px 16px",fontFamily:"var(--font-body)",fontSize:12,
-              fontWeight:300,color:"rgba(200,190,240,0.75)",textDecoration:"none",
-              borderBottom:i<tab.links.length-1?"1px solid rgba(124,77,255,0.07)":"none",transition:"all .13s"}}
-              onMouseEnter={e=>{e.currentTarget.style.color="#f0eeff";e.currentTarget.style.background="rgba(124,77,255,0.1)";e.currentTarget.style.paddingLeft="20px";}}
-              onMouseLeave={e=>{e.currentTarget.style.color="rgba(200,190,240,0.75)";e.currentTarget.style.background="transparent";e.currentTarget.style.paddingLeft="16px";}}
-            >{lk.l}</a>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function Nav() {
-  return (
-    <nav style={{position:"fixed",top:0,left:0,right:0,height:"var(--nav-h)",display:"flex",alignItems:"center",
-      gap:4,padding:"0 24px",background:"rgba(5,4,15,0.96)",backdropFilter:"blur(20px)",
-      borderBottom:"1px solid rgba(124,77,255,0.12)",zIndex:100}}>
-      <a href="Meruria.html" style={{fontFamily:"var(--font-display)",fontSize:14,fontWeight:300,letterSpacing:".38em",
-        color:"var(--white)",textDecoration:"none",marginRight:14,textTransform:"uppercase",
-        textShadow:"0 0 22px rgba(124,77,255,0.4)"}}>Meruria</a>
-      {NAV_LINKS.map(tab=><NavItem key={tab.id} tab={tab}/>)}
-    </nav>
-  );
-}
 
 /* ── Divider ─────────────────────────────── */
 function Divider({ label }) {
@@ -643,7 +246,7 @@ function SteckbriefPage() {
 
   return (
     <div style={{minHeight:"100vh",paddingTop:"var(--nav-h)"}}>
-      <Nav />
+      <SiteNav />
 
       <TweaksPanel tweaks={tweaks} setTweak={setTweak}>
         <TweakSection label="Sektionen">
@@ -766,7 +369,7 @@ function SteckbriefPage() {
       {/* ── Quests ──────────────────────────── */}
       {tweaks.showQuests && (
         <div style={{padding:"22px 22px 8px"}}>
-          <Divider label="Erledigte &amp; Laufende Quests" />
+          <Divider label="Erledigte Quests" />
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))",gap:12}}>
             {char.quests.map((q,i)=><QuestCard key={i} quest={q}/>)}
           </div>
