@@ -1,0 +1,17 @@
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  :root {
+    --bg:#05040f; --white:#f0eeff; --silver:#c8c0e8;
+    --font-display:'Cinzel',serif; --font-body:'Raleway',sans-serif; --font-mono:'Share Tech Mono',monospace;
+    --nav-h:52px; --accent:#7c4dff;
+  }
+  html, body { width:100%; min-height:100%; background:var(--bg); color:var(--white); font-family:var(--font-body); overflow-x:hidden; }
+  #root { width:100%; min-height:100vh; }
+  body::after { content:''; position:fixed; inset:0; pointer-events:none; z-index:9999;
+    background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px); }
+  @keyframes slideDown  { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeInUp   { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes overlayIn  { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes pulseGlow  { 0%,100%{opacity:0.5} 50%{opacity:1} }
+  ::-webkit-scrollbar { width:4px; }
+  ::-webkit-scrollbar-track { background:transparent; }
+  ::-webkit-scrollbar-thumb { background:rgba(124,77,255,0.3); border-radius:2px; }
