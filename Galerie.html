@@ -10,6 +10,7 @@
 <script src="assets/scripts/vendor/react-dom.development.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
 <script src="assets/components/tweaks-panel-13.jsx" type="text/babel"></script>
+<script src="assets/scripts/data/galerie-data.js"></script>
 
 </head>
 <body>
@@ -26,46 +27,9 @@ function mkBg(hue) {
   return `repeating-linear-gradient(-45deg,oklch(0.14 0.05 ${hue}),oklch(0.14 0.05 ${hue}) 12px,oklch(0.105 0.025 ${hue}) 12px,oklch(0.105 0.025 ${hue}) 24px)`;
 }
 
-/* ── Gallery data ─────────────────────────────── */
-const COLLECTIONS = [
-  { id:'staedte', name:'Städte & Orte', hue:220, images:[
-    {id:'s1',title:'Arkanheim',        desc:'Die Hauptstadt Merurias — erbaut über einem Ley-Linien-Knotenpunkt, aus dem arkane Energie strömt.', tags:['Hauptstadt','Magie','Großstadt'], date:'2026-05-10', hue:220},
-    {id:'s2',title:'Tiefenbastion',    desc:'Zwergenfestung im Herzen der Sternengebirge, seit Jahrhunderten uneingenommen.', tags:['Festung','Zwerge'], date:'2026-04-22', hue:210},
-    {id:'s3',title:'Port Silberwelle', desc:'Größte Hafenstadt an der Westküste — Drehscheibe des gesamten Welthandels.', tags:['Hafen','Handel'], date:'2026-03-15', hue:195, landscape:true},
-    {id:'s4',title:'Schattenpforte',   desc:'Geheimnisvolle Grenzstadt am Rand des Schleiers, kaum kartiert.', tags:['Dunkel','Grenze'], date:'2026-02-28', hue:260, landscape:true},
-  ]},
-  { id:'monster', name:'Monster & Kreaturen', hue:25, images:[
-    {id:'m1',title:'Abyssdrache',   desc:'Kreatur der untersten Tiefe — geschaffen aus reiner Abyssenergie.', tags:['Drache','Abyss','Boss'], date:'2026-05-08', hue:18},
-    {id:'m2',title:'Schleiergeist', desc:'Unkörperliches Wesen, das zwischen den Welten wandelt.', tags:['Geist','Schleier'], date:'2026-04-30', hue:270},
-    {id:'m3',title:'Steinkoloss',   desc:'Uralter Golem aus lebendigem Gestein, erschaffen von vergessenen Magiern.', tags:['Konstrukt','Uralt'], date:'2026-04-18', hue:55},
-  ]},
-  { id:'charaktere', name:'Charaktere & NSCs', hue:150, images:[
-    {id:'c1',title:'Aurelia Sturmklinge',    desc:'Anführerin der Kuratoren — legendäre Heilerin und brillante Strategin. Ihr Schwert trägt die Signaturen dreier gefallener Titanen.', tags:['Kuratoren','NSC','Wichtig'], date:'2026-05-11', hue:150},
-    {id:'c2',title:'Malachar der Graue',     desc:'Mysteriöser Ratgeber des Königs, Meister der Divination. Seine Augen sehen, was andere nicht können.', tags:['Magier','NSC'], date:'2026-04-05', hue:200},
-    {id:'c3',title:'Kira Schattenläuferin',  desc:'Meisterdiebin und Informationshändlerin — kennt jeden Geheimgang in Arkanheim.', tags:['Schurke','NSC'], date:'2026-03-20', hue:280},
-    {id:'c4',title:'Borvak Eisenfaust',      desc:'Legendärer Zwergenkämpfer, Anführer der Bergungsgarde.', tags:['Kämpfer','NSC','Bergungsgarde'], date:'2026-03-10', hue:45},
-  ]},
-  { id:'karten', name:'Karten & Regionen', hue:120, images:[
-    {id:'k1',title:'Weltkarte Meruria',   desc:'Vollständige Karte des bekannten Kontinents, überarbeitet nach der Dritten Expedition.', tags:['Weltkarte','Übersicht'], date:'2026-05-01', hue:120, landscape:true},
-    {id:'k2',title:'Tiefengewölbe III',   desc:'Detailkarte des dritten Gewölbes unter Arkanheim — gefüllt mit unbeschrifteten Kammern.', tags:['Dungeon','Arkanheim'], date:'2026-04-14', hue:100, landscape:true},
-    {id:'k3',title:'Schleierzone',        desc:'Kartierung der gefährlichen Randgebiete des Schleiers.', tags:['Schleier','Gefahr'], date:'2026-02-10', hue:250, landscape:true},
-  ]},
-  { id:'landschaften', name:'Landschaften', hue:155, images:[
-    {id:'l1',title:'Flüsternder Wald', desc:'Uralter Elfenwald — in der Nacht hört man dort Stimmen ohne Quelle.', tags:['Wald','Elfen','Magie'], date:'2026-04-25', hue:140, landscape:true},
-    {id:'l2',title:'Aschewüste',       desc:'Trostlose Landschaft aus den Überresten eines alten Feuerkrieges.', tags:['Wüste','Asche'], date:'2026-03-05', hue:40, landscape:true},
-    {id:'l3',title:'Kristallhöhlen',   desc:'Magisch leuchtende Höhlen tief unter den Sternengebirgen.', tags:['Höhle','Kristall'], date:'2026-02-20', hue:185, landscape:true},
-  ]},
-  { id:'artefakte', name:'Artefakte & Relikte', hue:55, images:[
-    {id:'a1',title:'Auge des Abgrunds',     desc:'Uraltes Artefakt unbekannter Herkunft — sein Blick soll die Realität verzerren.', tags:['Artefakt','Uralt','Gefährlich'], date:'2026-05-09', hue:275},
-    {id:'a2',title:'Krone der Gezeiten',    desc:'Herrschaftsinsignie der ersten Meereskönigin Merurias.', tags:['Krone','Meer','Legendär'], date:'2026-04-28', hue:190},
-    {id:'a3',title:'Splitter des Urlichts', desc:'Kristallsplitter vom ersten Licht der Schöpfung — heilige Reliquie der Lichttempel.', tags:['Heilig','Licht'], date:'2026-03-30', hue:65},
-    {id:'a4',title:'Schwarzes Herz',        desc:'Artefakt unbekannten Ursprungs — verbreitet Dunkelheit und Verderben.', tags:['Dunkel','Boss'], date:'2026-02-15', hue:290},
-  ]},
-];
-
-const ALL_IMAGES = COLLECTIONS.flatMap(c => c.images.map(img => ({...img, collectionName: c.name})));
-ALL_IMAGES.sort((a, b) => b.date.localeCompare(a.date));
-const DEFAULT_FEATURED = ALL_IMAGES[0];
+const COLLECTIONS     = window.GALERIE_COLLECTIONS;
+const ALL_IMAGES      = window.GALERIE_ALL_IMAGES;
+const DEFAULT_FEATURED = window.GALERIE_DEFAULT_FEATURED;
 
 /* ── Tag chip ─────────────────────────────────── */
 function Tag({ label, small }) {
@@ -82,7 +46,14 @@ function Tag({ label, small }) {
 }
 
 /* ── Image placeholder — Aarakocra / race-detail style ── */
-function ImgPlaceholder({ label, height, hue }) {
+function ImgPlaceholder({ label, height, hue, img }) {
+  if (img) {
+    return (
+      <div style={{ width:'100%', height: height || 300, position:'relative', overflow:'hidden', borderRadius:'3px', flexShrink:0 }}>
+        <img src={img} alt={label || 'artwork'} style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }} />
+      </div>
+    );
+  }
   const h = hue || 270;
   const ac = `oklch(0.65 0.18 ${h})`;
   const acStripe = `oklch(0.65 0.18 ${h} / 0.14)`;
@@ -117,7 +88,7 @@ function FeaturedDisplay({ image }) {
     <div key={image.id} style={{ display:'flex', flexDirection:'column', animation:'fadeInUp 0.32s ease' }}>
       {/* A — main image */}
       <div style={{ position:'relative', borderRadius:'4px 4px 0 0', overflow:'hidden', border:`1px solid ${accent}0.45)` }}>
-        <ImgPlaceholder label={image.title} height={320} hue={image.hue} />
+        <ImgPlaceholder label={image.title} height={320} hue={image.hue} img={image.img} />
         {/* Corner accents */}
         <div style={{ position:'absolute',top:0,left:0,width:18,height:18,borderTop:`2px solid ${accent}0.62)`,borderLeft:`2px solid ${accent}0.62)`,pointerEvents:'none' }} />
         <div style={{ position:'absolute',top:0,right:0,width:18,height:18,borderTop:`2px solid ${accent}0.62)`,borderRight:`2px solid ${accent}0.62)`,pointerEvents:'none' }} />
@@ -220,7 +191,7 @@ function OverlayImageCard({ image, onSelect }) {
         background:'rgba(8,6,22,0.9)',
       }}
     >
-      <ImgPH label={image.title} height={175} hue={image.hue} />
+      <ImgPH label={image.title} height={175} hue={image.hue} img={image.img} />
       <div style={{ padding:'12px 14px 13px' }}>
         <div style={{ fontFamily:'var(--font-display)', fontSize:11, fontWeight:400, letterSpacing:'0.14em', color:'rgba(240,238,255,0.92)', textTransform:'uppercase', marginBottom:4 }}>
           {image.title}
@@ -377,7 +348,9 @@ function Carousel({ images, reverse }) {
           const ii = gi % n;
           return (
             <div key={gi} style={iStyle(ii)} onMouseEnter={() => setHovIdx(ii)} onMouseLeave={() => setHovIdx(null)}>
-              {/* Aurelia-style placeholder */}
+              {images[ii%n].img ? (
+                <img src={images[ii%n].img} alt={images[ii%n].title} style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }} />
+              ) : (
               <div style={{ width:'100%', height:'100%', position:'relative', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:6,
                 background:`repeating-linear-gradient(-45deg,transparent,transparent 8px,oklch(0.65 0.18 ${images[ii%n].hue||270} / 0.13) 8px,oklch(0.65 0.18 ${images[ii%n].hue||270} / 0.13) 9px),linear-gradient(160deg,rgba(28,16,62,0.97) 0%,rgba(14,9,36,0.98) 100%)`,
               }}>
@@ -391,6 +364,7 @@ function Carousel({ images, reverse }) {
                   artwork
                 </span>
               </div>
+              )}
               <div style={{ position:'absolute', bottom:0, left:0, right:0, padding:'5px 7px', background:'rgba(5,4,15,0.83)', borderTop:'1px solid rgba(124,77,255,0.12)' }}>
                 <div style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(240,238,255,0.6)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{images[ii%n].title}</div>
               </div>
