@@ -98,3 +98,5 @@ function SiteGate({ children }) {
   if (!authed) return <SitePasswordForm onUnlock={() => setAuthed(true)} />;
   return children;
 }
+
+window.SiteGate = SiteGate;
