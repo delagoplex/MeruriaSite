@@ -171,7 +171,7 @@ window.GODS_DATA = {
       name: "Aetherius", title: "Gott der Illusionen, der Magie und der Wunder",
       domain: "Domäne der Arkana · Domäne der Dämmerung · Domäne des Lichts · Domäne der List",
       palette: ["#0b020d","#7c3197","#e848d2","#edd0f2"],
-      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Aetherius.png",
       backgroundSrc: "assets/images/gods/backgrounds/BG_Eiritha.webp",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><rect x="14" y="14" width="24" height="24" stroke="currentColor" stroke-width="1.5"/><rect x="42" y="14" width="24" height="24" stroke="currentColor" stroke-width="1.5"/><rect x="14" y="42" width="24" height="24" stroke="currentColor" stroke-width="1.5"/><rect x="42" y="42" width="24" height="24" stroke="currentColor" stroke-width="1.5"/><circle cx="40" cy="40" r="3" fill="currentColor" opacity="0.7"/></svg>`,
