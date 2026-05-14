@@ -1,9 +1,26 @@
 :root {
   --bg2: #0a0820;
-  --border: rgba(160,140,255,0.13);
-  --muted: rgba(200,190,240,0.45);
+  --border: rgba(var(--accent-rgb),0.13);
+  --muted: rgba(var(--text-rgb),0.45);
   --nav-h: 52px;
   --filter-w: 220px;
+
+  /* Monster type colors (gamut-mapped from oklch) */
+  --type-unhold           : #ae0049; /* Dunkelkrimson       – Dämonen & Teufel     */
+  --type-drache           : #f32b00; /* Feuerrot-Orange     – Drachenmacht         */
+  --type-tier             : #d06f00; /* Bernstein           – wilde Tiere          */
+  --type-riese            : #a77a29; /* Erdgold             – Stein & Erde         */
+  --type-himmlisch        : #e5c226; /* Strahlendes Gold    – göttliches Licht     */
+  --type-elementar        : #8ca600; /* Energiegrün         – Elementarenergie     */
+  --type-schlick          : #2b9300; /* Säuregrün           – Schleim & Ätzend     */
+  --type-pflanze          : #009f63; /* Waldgrün            – Natur & Wachstum     */
+  --type-monstositaet     : #006e5e; /* Fauliges Teal       – Chimären & Hybriden  */
+  --type-konstrukt        : #008a99; /* Stahlblau           – Mechanismus & Magie  */
+  --type-humanoid         : #008cdd; /* Indigoblau          – Humanoides Volk      */
+  --type-untoter          : #504bd1; /* Leichenlila         – Tod & Geister        */
+  --type-aberration       : #8f00e1; /* Eldritch-Violett    – kosmischer Horror    */
+  --type-feenwesen        : #f81cb7; /* Feenrosa            – Feenwelt & Glamour   */
+  --type-fallback         : #008a99; /* Fallback                                   */
 }
 
 html, body { overflow: hidden; }
@@ -13,18 +30,20 @@ html, body { overflow: hidden; }
 @keyframes fadeIn { from{opacity:0} to{opacity:1} }
 @keyframes fadeInUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
 @keyframes pulse-glow { 0%,100%{opacity:0.4} 50%{opacity:0.9} }
+@keyframes dice-spin { 0%{transform:rotateY(0deg)} 100%{transform:rotateY(360deg)} }
+@keyframes result-pop { 0%{transform:scale(0.7) translateY(8px);opacity:0} 60%{transform:scale(1.08) translateY(-2px)} 100%{transform:scale(1) translateY(0);opacity:1} }
 
 ::-webkit-scrollbar { width: 3px; height: 3px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(160,140,255,0.25); border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(160,140,255,0.45); }
+::-webkit-scrollbar-thumb { background: rgba(var(--accent-rgb),0.25); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(var(--accent-rgb),0.45); }
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { scrollbar-width: none; }
 
 .stat-divider {
   height: 1px;
-  background: rgba(160,140,255,0.18);
+  background: rgba(var(--accent-rgb),0.18);
   margin: 14px 0;
 }
 
@@ -32,9 +51,14 @@ html, body { overflow: hidden; }
   font-family: var(--font-mono);
   font-size: 8px;
   letter-spacing: 0.28em;
-  color: rgba(160,140,255,0.55);
+  color: rgba(var(--accent-rgb),0.55);
   text-transform: uppercase;
   padding-bottom: 5px;
-  border-bottom: 1px solid rgba(160,140,255,0.18);
+  border-bottom: 1px solid rgba(var(--accent-rgb),0.18);
   margin-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+  html, body { overflow: auto !important; }
+  #root { height: auto !important; min-height: 100svh; display: flex !important; flex-direction: column !important; }
 }

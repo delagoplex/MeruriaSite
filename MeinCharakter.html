@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meruria — Mein Charakter</title>
+<link rel="stylesheet" href="assets/styles/global/fonts.css">
+<link rel="stylesheet" href="assets/styles/global/base.css">
+<link rel="stylesheet" href="assets/styles/pages/Steckbrief.css">
+<script src="assets/scripts/vendor/react.development.js"></script>
+<script src="assets/scripts/vendor/react-dom.development.js"></script>
+<script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.jsx" type="text/babel"></script>
+<script src="assets/components/tweaks-panel-13.jsx" type="text/babel"></script>
+
+</head>
+<body>
+<div id="root"></div>
+
+
+<!-- ═══════════════════════════════════════════
+     SCRIPT 1 — Utilities · ImageSlot · Atome
+     ═══════════════════════════════════════════ -->
+<script type="text/babel">
+const { useState, useRef } = React;
+
+/* ── Utilities ───────────────────────────── */
+function mod(v)         { return Math.floor((v-10)/2); }
+function fmtMod(n)      { return (n>=0?"+":"")+n; }
+function attrKey(a)     { return {Stä:"str",Ges:"dex",Kon:"con",Int:"int",Wei:"wis",Cha:"cha"}[a]||"str"; }
+function skillBonus(s,stats,pb) { return mod(stats[attrKey(s.attr)])+s.prof*pb; }
+
+/* ── ImageSlot — Meruria-Stil, localStorage ─ */
+function ImageSlot({ slotId, label, height, hue, portrait }) {
+  const [src, setSrc] = useState(() => {
+    try { return localStorage.getItem(`mimg-${slotId}`)||null; } catch(e) { return null; }
+  });
+  const [drag, setDrag] = useState(false);
+  const inp = useRef(null);
+  function load(file) {
+    if (!file||!file.type.startsWith("image/")) return;
+    const r = new FileReader();
+    r.onload = ev => { setSrc(ev.target.result); try { localStorage.setItem(`mimg-${slotId}`,ev.target.result); } catch(e){} };
+    r.readAsDataURL(file);
+  }
+  const h   = hue||270;
+  const ac  = `oklch(0.65 0.18 ${h})`;
+  const str = `oklch(0.65 0.18 ${h} / 0.12)`;
+  const dsh = `oklch(0.65 0.18 ${h} / ${drag?0.85:0.45})`;
+  const base = { width:"100%", height, borderRadius:3, overflow:"hidden", position:"relative",
+    border:`1px dashed ${dsh}`, cursor:"pointer", transition:"border-color .2s", flexShrink:0 };
+  const ev = { onClick:()=>inp.current.click(),
+    onDragOver:e=>{e.preventDefault();setDrag(true);},
+    onDragLeave:()=>setDrag(false),
+    onDrop:e=>{e.preventDefault();setDrag(false);load(e.dataTransfer.files[0]);} };
+  if (src) return (
+    <div style={base} {...ev}>
+      <img src={src} style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}} alt={label} />
+      <div style={{position:"absolute",bottom:5,right:7,fontFamily:"var(--font-mono)",fontSize:6.5,
+        color:"rgba(255,255,255,0.3)",background:"rgba(0,0,0,0.6)",padding:"1px 5px",borderRadius:2,letterSpacing:".12em"}}>ersetzen</div>
+      <input ref={inp} type="file" accept="image/*" style={{display:"none"}} onChange={e=>load(e.target.files[0])} />
+    </div>
+  );
+  return (
+    <div style={{...base,
+      background:`repeating-linear-gradient(-45deg,transparent,transparent 8px,${str} 8px,${str} 9px),linear-gradient(160deg,rgba(28,16,62,0.97),rgba(14,9,36,0.98))`,
+      display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:8}} {...ev}>
+      <div style={{position:"absolute",inset:0,background:`radial-gradient(ellipse at 50% 45%,oklch(0.65 0.18 ${h} / 0.17) 0%,transparent 62%)`}} />
+      {portrait
+        ? <svg viewBox="0 0 32 40" width="22" height="27" fill="none" style={{opacity:0.5,zIndex:1}}>
+            <rect x="1" y="1" width="30" height="38" rx="3" stroke={ac} strokeWidth="1.2"/>
+            <circle cx="16" cy="15" r="7" stroke={ac} strokeWidth="1" opacity="0.8"/>
+            <path d="M2 37 Q16 26 30 37" stroke={ac} strokeWidth="1" opacity="0.7"/>
+          </svg>
+        : <svg viewBox="0 0 40 30" width="26" height="20" fill="none" style={{opacity:0.5,zIndex:1}}>
+            <rect x="1" y="1" width="38" height="28" rx="2" stroke={ac} strokeWidth="1.2"/>
+            <circle cx="12" cy="11" r="4" stroke={ac} strokeWidth="1" opacity="0.8"/>
+            <path d="M1 22 L10 15 L18 20 L26 13 L39 22" stroke={ac} strokeWidth="1.1" opacity="0.8"/>
+          </svg>}
+      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".22em",zIndex:1,
+        color:`oklch(0.65 0.18 ${h} / 0.58)`,textTransform:"uppercase",textAlign:"center",padding:"0 10px"}}>
+        {(label||"artwork").toLowerCase()}</span>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:6.5,letterSpacing:".1em",zIndex:1,
+        color:`oklch(0.65 0.18 ${h} / ${drag?0.9:0.28})`,transition:"color .2s"}}>
+        {drag?"▼ loslassen":"klicken · ziehen"}</span>
+      <input ref={inp} type="file" accept="image/*" style={{display:"none"}} onChange={e=>load(e.target.files[0])} />
+    </div>
+  );
+}
+
+/* ── Atome ───────────────────────────────── */
+function SecTitle({ label }) {
+  return (
+    <div style={{marginBottom:10}}>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".28em",color:"rgba(124,77,255,0.5)",textTransform:"uppercase"}}>{label}</span>
+      <div style={{width:24,height:1,background:"linear-gradient(90deg,rgba(124,77,255,0.65),transparent)",marginTop:4}} />
+    </div>
+  );
+}
+function Card({children,style}) {
+  return <div style={{background:"var(--card-bg)",border:"1px solid rgba(124,77,255,0.2)",borderRadius:4,padding:"13px 14px",position:"relative",...style}}>{children}</div>;
+}
+function Corners({op=0.4,sz=14}) {
+  const b=`1.5px solid rgba(124,77,255,${op})`;
+  return (<>
+    <div style={{position:"absolute",top:0,left:0,  width:sz,height:sz,borderTop:b,borderLeft:b,  pointerEvents:"none"}}/>
+    <div style={{position:"absolute",top:0,right:0, width:sz,height:sz,borderTop:b,borderRight:b, pointerEvents:"none"}}/>
+    <div style={{position:"absolute",bottom:0,left:0,  width:sz,height:sz,borderBottom:b,borderLeft:b,  pointerEvents:"none"}}/>
+    <div style={{position:"absolute",bottom:0,right:0, width:sz,height:sz,borderBottom:b,borderRight:b, pointerEvents:"none"}}/>
+  </>);
+}
+function IRow({label,value,bright}) {
+  return (
+    <div style={{display:"flex",alignItems:"baseline",gap:6,padding:"3.5px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase",flex:"0 0 80px"}}>{label}</span>
+      <span style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:bright?400:300,color:bright?"var(--white)":"var(--silver)",flex:1}}>{value}</span>
+    </div>
+  );
+}
+
+Object.assign(window, { mod, fmtMod, attrKey, skillBonus, ImageSlot, SecTitle, Card, Corners, IRow });
+</script>
+
+
+<!-- ═══════════════════════════════════════════
+     SCRIPT 2 — Sektions-Komponenten (extern)
+     ═══════════════════════════════════════════ -->
+<script src="assets/components/steckbrief-components.jsx" type="text/babel"></script>
+
+
+<!-- ═══════════════════════════════════════════
+     SCRIPT 3 — Haupt-App
+     ═══════════════════════════════════════════ -->
+<script type="text/babel">
+const { useState: useApp, useRef } = React;
+const { ImageSlot, SecTitle, Card, Corners, IRow,
+  DivisionRank, DeityCard, CombatCompact, AttributeGrid,
+  SkillPills, PersonalitySection, QuestCard, CompanionCard, FbCard, KontakteTablet,
+  buildChar } = window;
+const { useTweaks, TweaksPanel, TweakSection, TweakToggle } = window;
+const { SiteNav, SiteGate } = window;
+
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"showCompanions":true,"showQuests":true,"showKontakte":true,"showWissenswertes":true}/*EDITMODE-END*/;
+
+const STORAGE_KEY = 'meruria_characters';
+
+function loadCharacters() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch(e) {}
+  return [];
+}
+
+function charFromEntry(entry) {
+  return entry._char ? { ...entry._char } : buildChar(entry);
+}
+
+function saveCharToDB(id, char) {
+  try {
+    const list = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    const idx = list.findIndex(c => c.id === id);
+    if (idx >= 0) { list[idx] = { ...list[idx], _char: char }; localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); }
+  } catch(e) {}
+}
+
+function deleteChar(id) {
+  try {
+    const list = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    const updated = list.filter(c => c.id !== id);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+    return updated;
+  } catch(e) { return []; }
+}
+
+function exportChars(chars, filename) {
+  const blob = new Blob([JSON.stringify(chars, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename || 'meruria-charaktere.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importCharsFromFile(file, existing, onDone) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!Array.isArray(data)) return;
+      const ids = new Set(existing.map(c => c.id));
+      const merged = [...existing, ...data.filter(c => c.id && !ids.has(c.id))];
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+      onDone(merged);
+    } catch(err) {}
+  };
+  reader.readAsText(file);
+}
+
+/* ── Auswahl-Bildschirm ────────────────────── */
+function CharSelection({ chars, setChars, onSelect, onNew }) {
+  const [confirmDelete, setConfirmDelete] = useApp(null);
+  const importRef = useRef(null);
+
+  function handleDelete(id) {
+    setChars(deleteChar(id));
+    setConfirmDelete(null);
+  }
+
+  function handleImport(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    importCharsFromFile(file, chars, merged => setChars(merged));
+    e.target.value = '';
+  }
+
+  const toolBtn = {
+    fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".18em",textTransform:"uppercase",
+    padding:"7px 16px",background:"transparent",border:"1px solid rgba(124,77,255,0.2)",borderRadius:3,
+    cursor:"pointer",color:"rgba(124,77,255,0.45)",transition:"all .18s"
+  };
+
+  return (
+    <div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center"}}>
+      <div style={{maxWidth:640,width:"100%",padding:"0 24px"}}>
+        <div style={{fontFamily:"var(--font-mono)",fontSize:9,letterSpacing:".3em",color:"rgba(124,77,255,0.5)",textTransform:"uppercase",marginBottom:12,textAlign:"center"}}>
+          Meruria · Charaktere
+        </div>
+        <h1 style={{fontFamily:"var(--font-display)",fontWeight:400,fontSize:24,letterSpacing:".22em",
+          color:"var(--white)",textTransform:"uppercase",textAlign:"center",marginBottom:4,
+          textShadow:"0 0 32px rgba(124,77,255,0.2)"}}>
+          Charakter wählen
+        </h1>
+        <div style={{width:36,height:1,background:"rgba(124,77,255,0.55)",margin:"0 auto 32px"}} />
+
+        <div style={{display:"flex",flexDirection:"column",gap:10,marginBottom:24}}>
+          {chars.map(ch => {
+            const delConfirm = confirmDelete === ch.id;
+            return (
+              <div key={ch.id} style={{display:"flex",alignItems:"center",
+                background:"rgba(7,4,18,0.9)",border:`1px solid rgba(124,77,255,${delConfirm?0.55:0.25})`,
+                borderRadius:4,transition:"all .18s",overflow:"hidden"}}>
+                {delConfirm ? (
+                  <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",
+                    padding:"14px 18px",width:"100%",gap:16}}>
+                    <span style={{fontFamily:"var(--font-mono)",fontSize:8.5,letterSpacing:".12em",
+                      color:"rgba(230,110,110,0.9)",textTransform:"uppercase",flex:1}}>
+                      „{ch.name}" wirklich löschen?
+                    </span>
+                    <div style={{display:"flex",gap:8,flexShrink:0}}>
+                      <button onClick={()=>handleDelete(ch.id)}
+                        style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".14em",textTransform:"uppercase",
+                          padding:"5px 14px",background:"rgba(200,50,50,0.18)",border:"1px solid rgba(200,60,60,0.5)",
+                          borderRadius:3,cursor:"pointer",color:"rgba(240,140,140,0.9)",transition:"all .18s"}}>
+                        Löschen
+                      </button>
+                      <button onClick={()=>setConfirmDelete(null)}
+                        style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".14em",textTransform:"uppercase",
+                          padding:"5px 14px",background:"transparent",border:"1px solid rgba(124,77,255,0.3)",
+                          borderRadius:3,cursor:"pointer",color:"rgba(124,77,255,0.6)",transition:"all .18s"}}>
+                        Abbrechen
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <button onClick={()=>onSelect(ch)}
+                      style={{display:"flex",alignItems:"center",gap:16,padding:"14px 18px",
+                        background:"transparent",border:"none",cursor:"pointer",textAlign:"left",flex:1,minWidth:0,
+                        transition:"background .18s"}}
+                      onMouseEnter={e=>e.currentTarget.style.background="rgba(124,77,255,0.07)"}
+                      onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
+                      <div style={{flex:1,minWidth:0}}>
+                        <div style={{fontFamily:"var(--font-display)",fontSize:14,letterSpacing:".18em",color:"var(--white)",textTransform:"uppercase",marginBottom:4}}>{ch.name}</div>
+                        <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
+                          {[ch.race, ch.class, ch.division].filter(Boolean).map((t,i)=>(
+                            <span key={i} style={{fontFamily:"var(--font-mono)",fontSize:8,padding:"1px 7px",
+                              background:"rgba(124,77,255,0.1)",border:"1px solid rgba(124,77,255,0.25)",borderRadius:2,
+                              color:"rgba(200,190,240,0.7)",letterSpacing:".08em"}}>{t}</span>
+                          ))}
+                        </div>
+                      </div>
+                      <span style={{fontFamily:"var(--font-mono)",fontSize:10,color:"rgba(124,77,255,0.35)",flexShrink:0}}>→</span>
+                    </button>
+                    <div style={{display:"flex",gap:6,padding:"0 14px",flexShrink:0,
+                      borderLeft:"1px solid rgba(124,77,255,0.1)"}}>
+                      <button onClick={()=>exportChars([ch], `${ch.name||'charakter'}.json`)} title="Exportieren"
+                        style={{fontFamily:"var(--font-mono)",fontSize:11,padding:"5px 9px",lineHeight:1,
+                          background:"transparent",border:"1px solid rgba(124,77,255,0.15)",borderRadius:3,
+                          cursor:"pointer",color:"rgba(124,77,255,0.35)",transition:"all .15s"}}
+                        onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.5)";e.currentTarget.style.color="rgba(160,140,255,0.75)";}}
+                        onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.15)";e.currentTarget.style.color="rgba(124,77,255,0.35)";}}>
+                        ↓
+                      </button>
+                      <button onClick={()=>setConfirmDelete(ch.id)} title="Löschen"
+                        style={{fontFamily:"var(--font-mono)",fontSize:14,padding:"2px 8px",lineHeight:1,
+                          background:"transparent",border:"1px solid rgba(200,60,60,0.15)",borderRadius:3,
+                          cursor:"pointer",color:"rgba(200,80,80,0.35)",transition:"all .15s"}}
+                        onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(200,60,60,0.5)";e.currentTarget.style.color="rgba(240,110,110,0.75)";}}
+                        onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(200,60,60,0.15)";e.currentTarget.style.color="rgba(200,80,80,0.35)";}}>
+                        ×
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        <div style={{display:"flex",gap:8,marginBottom:12}}>
+          <button onClick={()=>exportChars(chars)} style={toolBtn}
+            onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.5)";e.currentTarget.style.color="rgba(160,140,255,0.8)";}}
+            onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.2)";e.currentTarget.style.color="rgba(124,77,255,0.45)";}}>
+            ↓ Alle exportieren
+          </button>
+          <button onClick={()=>importRef.current.click()} style={toolBtn}
+            onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.5)";e.currentTarget.style.color="rgba(160,140,255,0.8)";}}
+            onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.2)";e.currentTarget.style.color="rgba(124,77,255,0.45)";}}>
+            ↑ Importieren
+          </button>
+          <input ref={importRef} type="file" accept=".json,application/json" style={{display:"none"}} onChange={handleImport} />
+        </div>
+
+        <button onClick={onNew}
+          style={{width:"100%",padding:"12px",background:"transparent",border:"1px dashed rgba(124,77,255,0.3)",
+            borderRadius:4,cursor:"pointer",fontFamily:"var(--font-mono)",fontSize:9,
+            letterSpacing:".22em",color:"rgba(124,77,255,0.5)",textTransform:"uppercase",transition:"all .18s"}}
+          onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.6)";e.currentTarget.style.color="rgba(160,140,255,0.85)";}}
+          onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.3)";e.currentTarget.style.color="rgba(124,77,255,0.5)";}}>
+          + Neuen Charakter erstellen
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* ── Leer-Zustand ──────────────────────────── */
+function EmptyState() {
+  return (
+    <div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center"}}>
+      <div style={{maxWidth:480,width:"100%",padding:"0 24px",textAlign:"center"}}>
+        <div style={{fontFamily:"var(--font-mono)",fontSize:9,letterSpacing:".3em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase",marginBottom:16}}>
+          Meruria · Charaktere
+        </div>
+        <div style={{fontFamily:"var(--font-display)",fontSize:20,letterSpacing:".22em",color:"rgba(200,192,240,0.6)",textTransform:"uppercase",marginBottom:8}}>
+          Noch kein Charakter
+        </div>
+        <p style={{fontFamily:"var(--font-body)",fontSize:13,fontWeight:300,color:"var(--silver)",lineHeight:1.8,marginBottom:28}}>
+          Du hast noch keinen Charakter erstellt. Starte die Charaktererstellung, um deinen ersten Abenteurer auf Meruria zu erschaffen.
+        </p>
+        <a href="Charaktererstellung.html"
+          style={{display:"inline-flex",alignItems:"center",gap:10,padding:"12px 28px",
+            background:"rgba(124,77,255,0.18)",border:"1px solid rgba(124,77,255,0.55)",
+            borderRadius:3,color:"rgba(200,190,240,0.95)",fontFamily:"var(--font-display)",
+            fontSize:11,letterSpacing:".18em",textTransform:"uppercase",textDecoration:"none",transition:"all .2s"}}
+          onMouseEnter={e=>{e.currentTarget.style.background="rgba(124,77,255,0.32)";e.currentTarget.style.borderColor="rgba(160,140,255,0.8)";e.currentTarget.style.color="#f0eeff";}}
+          onMouseLeave={e=>{e.currentTarget.style.background="rgba(124,77,255,0.18)";e.currentTarget.style.borderColor="rgba(124,77,255,0.55)";e.currentTarget.style.color="rgba(200,190,240,0.95)";}}>
+          Charakter erstellen →
+        </a>
+      </div>
+    </div>
+  );
+}
+
+/* ── Divider ─────────────────────────────── */
+function Divider({ label }) {
+  return (
+    <div style={{display:"flex",alignItems:"center",gap:14,margin:"4px 22px 18px"}}>
+      <div style={{flex:1,height:1,background:"rgba(124,77,255,0.1)"}} />
+      {label && <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".28em",color:"rgba(124,77,255,0.3)",textTransform:"uppercase"}}>{label}</span>}
+      <div style={{flex:1,height:1,background:"rgba(124,77,255,0.1)"}} />
+    </div>
+  );
+}
+
+/* ── Editable IRow ───────────────────────── */
+function ERow({ label, field, char, upd, bright }) {
+  return (
+    <div style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase",flex:"0 0 80px"}}>{label}</span>
+      <input value={char[field]??''} onChange={e=>upd({[field]:e.target.value})}
+        style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:bright?400:300,color:"var(--white)",
+          background:"transparent",border:"none",borderBottom:"1px solid rgba(124,77,255,0.25)",
+          padding:"1px 4px",flex:1,outline:"none",minWidth:0}} />
+    </div>
+  );
+}
+
+/* ── Editable Stats Grid ─────────────────── */
+const STAT_KEYS = [{key:"str",label:"STÄRKE"},{key:"dex",label:"GESCHICK."},{key:"con",label:"KONST."},
+  {key:"int",label:"INT."},{key:"wis",label:"WEISHEIT"},{key:"cha",label:"CHARISMA"}];
+
+function EditableStatsGrid({ char, updStat }) {
+  return (
+    <Card style={{marginBottom:11}}>
+      <SecTitle label="Attribute" />
+      <div style={{display:"flex",gap:6}}>
+        {STAT_KEYS.map(({key,label}) => {
+          const score = char.stats[key];
+          const m = Math.floor((score-10)/2);
+          return (
+            <div key={key} style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",
+              background:"rgba(7,4,18,0.97)",border:"1px solid rgba(124,77,255,0.32)",borderRadius:3,padding:"9px 4px 8px"}}>
+              <span style={{fontFamily:"var(--font-mono)",fontSize:7,letterSpacing:".16em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase",marginBottom:5,textAlign:"center"}}>{label}</span>
+              <input type="number" min="1" max="30" value={score}
+                onChange={e=>updStat(key,e.target.value)}
+                style={{fontFamily:"var(--font-mono)",fontSize:20,color:"var(--white)",lineHeight:1,
+                  background:"transparent",border:"none",textAlign:"center",width:"100%",
+                  outline:"none",padding:"2px 0",WebkitAppearance:"none",MozAppearance:"textfield"}} />
+              <div style={{width:"65%",height:1,background:"rgba(124,77,255,0.15)",margin:"5px 0"}} />
+              <span style={{fontFamily:"var(--font-mono)",fontSize:13,color:"rgba(124,77,255,0.6)"}}>{m>=0?"+":""}{m}</span>
+            </div>
+          );
+        })}
+      </div>
+    </Card>
+  );
+}
+
+/* ── Editable Personality ────────────────── */
+function EditablePersonality({ char, upd, taStyle }) {
+  const items = [{l:"Merkmale",f:"personality"},{l:"Ideale",f:"ideals"},{l:"Bindungen",f:"bonds"},{l:"Makel",f:"flaws"}];
+  return (
+    <Card>
+      <SecTitle label="Persönlichkeit" />
+      {items.map(({l,f})=>(
+        <div key={f} style={{marginBottom:10}}>
+          <div style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".22em",color:"rgba(124,77,255,0.5)",textTransform:"uppercase",marginBottom:4}}>{l}</div>
+          <textarea value={char[f]||''} onChange={e=>upd({[f]:e.target.value})} style={taStyle} />
+        </div>
+      ))}
+    </Card>
+  );
+}
+
+/* ── Steckbrief-Ansicht ────────────────────── */
+function SteckbriefView({ entry, onBack, hasMultiple }) {
+  const [char, setChar] = useApp(() => charFromEntry(entry));
+  const [editing, setEditing] = useApp(false);
+  const [tweaks,setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+  function upd(updates) {
+    const next = { ...char, ...updates };
+    setChar(next);
+    saveCharToDB(entry.id, next);
+  }
+  function updStat(key, val) {
+    const v = Math.max(1, Math.min(30, parseInt(val)||1));
+    upd({ stats: { ...char.stats, [key]: v } });
+  }
+  function updFb(i, antwort) {
+    upd({ freundebuch: char.freundebuch.map((x,j)=>j===i?{...x,antwort}:x) });
+  }
+
+  const taStyle = {
+    fontFamily:"var(--font-body)",fontSize:12,fontWeight:300,color:"var(--silver)",lineHeight:1.75,
+    background:"rgba(124,77,255,0.04)",border:"1px solid rgba(124,77,255,0.2)",borderRadius:2,
+    padding:"7px 9px",width:"100%",resize:"vertical",outline:"none",minHeight:58,boxSizing:"border-box",
+  };
+
+  const E = editing;
+
+  return (
+    <div style={{minHeight:"100vh",paddingTop:"var(--nav-h)"}}>
+      <SiteNav />
+      <TweaksPanel tweaks={tweaks} setTweak={setTweak}>
+        <TweakSection label="Sektionen">
+          <TweakToggle id="showCompanions"  label="Begleiter anzeigen" />
+          <TweakToggle id="showQuests"      label="Quests anzeigen" />
+          <TweakToggle id="showKontakte"    label="Kontakte anzeigen" />
+          <TweakToggle id="showWissenswertes" label="Wissenswertes anzeigen" />
+        </TweakSection>
+      </TweaksPanel>
+
+      {/* ── Seiten-Kopf ────────────────────── */}
+      <div style={{padding:"18px 28px 15px",borderBottom:"1px solid rgba(124,77,255,0.1)"}}>
+        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:6}}>
+          <div style={{display:"flex",alignItems:"center",gap:14}}>
+            {hasMultiple && (
+              <button onClick={onBack} style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".18em",
+                color:"rgba(124,77,255,0.5)",background:"transparent",border:"none",cursor:"pointer",padding:0,
+                textTransform:"uppercase",transition:"color .15s"}}
+                onMouseEnter={e=>e.currentTarget.style.color="rgba(160,140,255,0.85)"}
+                onMouseLeave={e=>e.currentTarget.style.color="rgba(124,77,255,0.5)"}>
+                ← Auswahl
+              </button>
+            )}
+            <div style={{fontFamily:"var(--font-mono)",fontSize:9,letterSpacing:".3em",color:"rgba(124,77,255,0.5)",textTransform:"uppercase"}}>
+              Meruria · Charaktere
+            </div>
+          </div>
+          <button onClick={()=>setEditing(!E)}
+            style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".18em",textTransform:"uppercase",
+              padding:"5px 14px",background:E?"rgba(124,77,255,0.22)":"transparent",
+              border:`1px solid rgba(124,77,255,${E?0.6:0.3})`,borderRadius:3,cursor:"pointer",
+              color:E?"rgba(200,190,240,0.95)":"rgba(124,77,255,0.55)",transition:"all .18s"}}
+            onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.7)";e.currentTarget.style.color="rgba(200,190,240,0.9)";}}
+            onMouseLeave={e=>{e.currentTarget.style.borderColor=E?"rgba(124,77,255,0.6)":"rgba(124,77,255,0.3)";e.currentTarget.style.color=E?"rgba(200,190,240,0.95)":"rgba(124,77,255,0.55)";}}>
+            {E ? "✓ Fertig" : "✎ Bearbeiten"}
+          </button>
+        </div>
+        <div style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between",flexWrap:"wrap",gap:12}}>
+          <div style={{flex:1}}>
+            {E
+              ? <input value={char.name||''} onChange={e=>upd({name:e.target.value})}
+                  style={{fontFamily:"var(--font-display)",fontWeight:400,fontSize:28,letterSpacing:".22em",
+                    color:"var(--white)",textTransform:"uppercase",background:"transparent",border:"none",
+                    borderBottom:"1px solid rgba(124,77,255,0.4)",outline:"none",padding:"0 4px",width:"100%"}} />
+              : <h1 style={{fontFamily:"var(--font-display)",fontWeight:400,fontSize:28,letterSpacing:".22em",
+                    color:"var(--white)",textTransform:"uppercase",textShadow:"0 0 32px rgba(124,77,255,0.2)"}}>{char.name}</h1>
+            }
+            <div style={{display:"flex",gap:6,marginTop:8,flexWrap:"wrap"}}>
+              {[`${char.class} · ${char.subclass}`,`Stufe ${char.level}`,char.race,char.background,`${char.division} · ${char.rank} ${["I","II","III","IV","V"][char.rankLevel-1]}`]
+                .map((t,i)=>(
+                  <span key={i} style={{fontFamily:"var(--font-mono)",fontSize:8.5,padding:"2px 9px",
+                    background:"rgba(124,77,255,0.1)",border:"1px solid rgba(124,77,255,0.28)",borderRadius:2,
+                    color:"rgba(200,190,240,0.82)",letterSpacing:".1em"}}>{t}</span>
+                ))}
+            </div>
+          </div>
+          <div style={{textAlign:"right"}}>
+            <div style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".2em",color:"rgba(124,77,255,0.35)",textTransform:"uppercase",marginBottom:2}}>Erfahrungspunkte</div>
+            <div style={{fontFamily:"var(--font-mono)",fontSize:22,color:"rgba(124,77,255,0.65)"}}>{char.xp.toLocaleString("de-DE")}</div>
+          </div>
+        </div>
+        <div style={{marginTop:10,width:36,height:1,background:"rgba(124,77,255,0.55)"}} />
+      </div>
+
+      {/* ── 3-Spalten-Grid ────────────────── */}
+      <div style={{display:"grid",gridTemplateColumns:"220px 1fr 290px",gap:14,padding:"16px 22px 0",alignItems:"start"}}>
+
+        {/* LINKS */}
+        <div style={{display:"flex",flexDirection:"column",gap:11}}>
+          <Card>
+            <SecTitle label="Identität" />
+            {E ? <>
+              <ERow label="Volk"        field="race"        char={char} upd={upd} bright />
+              <ERow label="Klasse"      field="class"       char={char} upd={upd} bright />
+              <ERow label="Subklasse"   field="subclass"    char={char} upd={upd} />
+              <ERow label="Hintergrund" field="background"  char={char} upd={upd} />
+              <ERow label="Gesinnung"   field="alignment"   char={char} upd={upd} bright />
+              <ERow label="Geschlecht"  field="gender"      char={char} upd={upd} />
+              <ERow label="Herkunft"    field="birthplace"  char={char} upd={upd} />
+            </> : <>
+              <IRow label="Volk"        value={char.race}        bright />
+              <IRow label="Klasse"      value={char.class}       bright />
+              <IRow label="Subklasse"   value={char.subclass} />
+              <IRow label="Hintergrund" value={char.background} />
+              <IRow label="Gesinnung"   value={char.alignment}   bright />
+              <IRow label="Geschlecht"  value={char.gender} />
+              <IRow label="Herkunft"    value={char.birthplace} />
+            </>}
+          </Card>
+          <Card>
+            <SecTitle label="Persönliche Daten" />
+            {E ? <>
+              <ERow label="Geburtstag"   field="birthday"    char={char} upd={upd} />
+              <ERow label="Sternzeichen" field="zodiac"      char={char} upd={upd} bright />
+              <ERow label="Alter"        field="age"         char={char} upd={upd} />
+              <ERow label="Größe"        field="height"      char={char} upd={upd} />
+              <ERow label="Gewicht"      field="weight"      char={char} upd={upd} />
+              <ERow label="Augen"        field="eyes"        char={char} upd={upd} />
+              <ERow label="Haare"        field="hair"        char={char} upd={upd} />
+              <ERow label="Haut"         field="skin"        char={char} upd={upd} />
+            </> : <>
+              <IRow label="Geburtstag"   value={char.birthday} />
+              <IRow label="Sternzeichen" value={char.zodiac}  bright />
+              <IRow label="Alter"        value={`${char.age} Jahre`} />
+              <IRow label="Größe"        value={char.height} />
+              <IRow label="Gewicht"      value={char.weight} />
+              <IRow label="Augen"        value={char.eyes} />
+              <IRow label="Haare"        value={char.hair} />
+              <IRow label="Haut"         value={char.skin} />
+            </>}
+          </Card>
+          <DivisionRank char={char} />
+          <DeityCard     char={char} />
+          <CombatCompact char={char} />
+        </div>
+
+        {/* MITTE */}
+        <div style={{display:"flex",flexDirection:"column",gap:11}}>
+          <Card style={{position:"relative"}}>
+            <Corners op={0.28} />
+            <SecTitle label="Über mich" />
+            {E
+              ? <textarea value={char.story||''} onChange={e=>upd({story:e.target.value})} style={{...taStyle,minHeight:120,fontStyle:"normal"}} />
+              : <p style={{fontFamily:"var(--font-body)",fontSize:13,fontWeight:300,color:"var(--silver)",lineHeight:1.9,textWrap:"pretty"}}>{char.story}</p>
+            }
+          </Card>
+          <div style={{background:"var(--card-bg)",borderLeft:"2px solid rgba(124,77,255,0.5)",
+            border:"1px solid rgba(124,77,255,0.2)",borderLeftWidth:3,
+            borderRadius:"0 4px 4px 0",padding:"13px 14px",position:"relative"}}>
+            <SecTitle label="Meine ersten Tage auf Meruria" />
+            {E
+              ? <textarea value={char.ersteTage||''} onChange={e=>upd({ersteTage:e.target.value})} style={{...taStyle,fontStyle:"italic"}} />
+              : <p style={{fontFamily:"var(--font-body)",fontSize:12.5,fontWeight:300,color:"var(--silver)",lineHeight:1.88,textWrap:"pretty",fontStyle:"italic"}}>„{char.ersteTage}"</p>
+            }
+          </div>
+          {E ? <EditableStatsGrid char={char} updStat={updStat} /> : <AttributeGrid char={char} />}
+          <SkillPills char={char} />
+          {tweaks.showCompanions && char.companions && char.companions.length > 0 && (
+            <div>
+              <div style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".28em",color:"rgba(124,77,255,0.45)",textTransform:"uppercase",marginBottom:8}}>Begleiter</div>
+              <div style={{width:24,height:1,background:"linear-gradient(90deg,rgba(124,77,255,0.65),transparent)",marginBottom:10}} />
+              <div style={{display:"flex",flexDirection:"column",gap:10}}>
+                {char.companions.map(comp=><CompanionCard key={comp.id} comp={comp}/>)}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* RECHTS */}
+        <div style={{display:"flex",flexDirection:"column",gap:11}}>
+          <div style={{position:"relative",borderRadius:4,overflow:"hidden",border:"1px solid rgba(124,77,255,0.38)"}}>
+            <Corners op={0.58} sz={18} />
+            <ImageSlot slotId={`${entry.id}-portrait`} label="Charakter-Portrait" height={310} hue={270} portrait />
+          </div>
+          {E ? <EditablePersonality char={char} upd={upd} taStyle={taStyle} /> : <PersonalitySection char={char} />}
+        </div>
+      </div>
+
+      {/* ── Quests ──────────────────────────── */}
+      {tweaks.showQuests && char.quests && char.quests.length > 0 && (
+        <div style={{padding:"22px 22px 8px"}}>
+          <Divider label="Erledigte Quests" />
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))",gap:12}}>
+            {char.quests.map((q,i)=><QuestCard key={i} quest={q}/>)}
+          </div>
+        </div>
+      )}
+
+      {/* ── Kontakte ────────────────────────── */}
+      {tweaks.showKontakte && char.contacts && char.contacts.length > 0 && (
+        <div style={{padding:"22px 22px 8px"}}>
+          <Divider label="Kontakte" />
+          <KontakteTablet char={char} />
+        </div>
+      )}
+
+      {/* ── Wissenswertes ───────────────────── */}
+      {tweaks.showWissenswertes && char.freundebuch && char.freundebuch.length > 0 && (
+        <div style={{padding:"22px 22px 24px"}}>
+          <div style={{display:"flex",alignItems:"baseline",justifyContent:"space-between",gap:20,marginBottom:20,flexWrap:"wrap"}}>
+            <div>
+              <div style={{fontFamily:"var(--font-mono)",fontSize:9,letterSpacing:".28em",color:"rgba(124,77,255,0.45)",textTransform:"uppercase",marginBottom:4}}>Wissenswertes</div>
+              <div style={{width:28,height:1,background:"linear-gradient(90deg,rgba(124,77,255,0.65),transparent)"}} />
+            </div>
+            <p style={{fontFamily:"var(--font-body)",fontSize:12,fontWeight:300,fontStyle:"italic",
+              color:"rgba(190,182,225,0.45)",flex:1,minWidth:220,textAlign:"right"}}>
+              Was mich ausmacht — in meinen eigenen Worten.
+            </p>
+          </div>
+          {E
+            ? <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))",gap:8}}>
+                {char.freundebuch.map((item,i)=>(
+                  <div key={i} style={{background:"var(--card-bg)",border:"1px solid rgba(124,77,255,0.2)",borderRadius:4,padding:"14px 16px"}}>
+                    <div style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".2em",color:"rgba(124,77,255,0.5)",textTransform:"uppercase",marginBottom:8}}>{item.frage}</div>
+                    <input value={item.antwort||''} onChange={e=>updFb(i,e.target.value)}
+                      style={{fontFamily:"var(--font-body)",fontSize:12.5,fontWeight:300,color:"var(--white)",
+                        background:"transparent",border:"none",borderBottom:"1px solid rgba(124,77,255,0.28)",
+                        padding:"2px 4px",width:"100%",outline:"none"}} />
+                  </div>
+                ))}
+              </div>
+            : <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))",gap:12}}>
+                {char.freundebuch.map((item,i)=><FbCard key={i} item={item} index={i}/>)}
+              </div>
+          }
+        </div>
+      )}
+
+      {/* ── Footer ──────────────────────────── */}
+      <div style={{borderTop:"1px solid rgba(124,77,255,0.07)",margin:"22px 0 0",padding:"13px 28px",display:"flex",justifyContent:"space-between"}}>
+        <span style={{fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(124,77,255,0.26)",letterSpacing:".1em"}}>Meruria — Mein Charakter</span>
+        <span style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(124,77,255,0.2)"}}>D&amp;D 5e · {char.race} {char.class} Stufe {char.level}</span>
+      </div>
+    </div>
+  );
+}
+
+/* ── Haupt-App ─────────────────────────────── */
+function App() {
+  const [chars, setChars] = useApp(() => loadCharacters());
+  const [entry, setEntry] = useApp(null);
+
+  if (chars.length === 0) return <EmptyState />;
+  if (entry) return <SteckbriefView entry={entry} onBack={()=>setEntry(null)} hasMultiple={chars.length > 1} />;
+
+  return (
+    <CharSelection
+      chars={chars}
+      setChars={setChars}
+      onSelect={e => setEntry(e)}
+      onNew={() => { window.location.href = 'Charaktererstellung.html'; }}
+    />
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <SiteGate><App /></SiteGate>
+);
+</script>
+
+
+</body></html>

@@ -1,0 +1,27 @@
+:root {
+  --accent: #7c4dff;
+  --nav-h: 52px;
+  --sidebar-w: 224px;
+}
+@keyframes flicker-mid{0%,80%,100%{opacity:1}82%{opacity:0.55}84%{opacity:1}87%{opacity:0.7}89%{opacity:1}91%{opacity:0.4}93%{opacity:1}}
+@keyframes pulse-glow{0%,100%{opacity:0.5}50%{opacity:1}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes coinSpin{0%{transform:rotateY(0deg) scale(1)}40%{transform:rotateY(720deg) scale(1.2)}100%{transform:rotateY(1440deg) scale(1)}}
+@keyframes diceRoll{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+@keyframes resultPop{0%{transform:scale(0.8) translateY(6px);opacity:0}60%{transform:scale(1.05)}100%{transform:scale(1) translateY(0);opacity:1}}
+.eq-table{width:100%;border-collapse:collapse;font-family:var(--font-body)}
+.eq-table th{background:rgba(124,77,255,0.18);color:#f0eeff;font-family:var(--font-display);font-size:11px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;padding:10px 14px;text-align:left;border-bottom:1px solid rgba(124,77,255,0.35)}
+.eq-table td{padding:9px 14px;font-size:12px;font-weight:300;color:rgba(200,190,240,0.75);border-bottom:1px solid rgba(124,77,255,0.07);vertical-align:top;line-height:1.55}
+.eq-table tr:last-child td{border-bottom:none}
+.eq-table tr:hover td{background:rgba(124,77,255,0.05);color:rgba(220,210,255,0.9)}
+.eq-table td:first-child{color:rgba(180,165,255,0.85);font-weight:400}
+.feat{padding:12px 17px;border-left:2px solid rgba(124,77,255,0.4);background:rgba(124,77,255,0.06);border-radius:0 4px 4px 0;margin-bottom:8px;transition:border-color 0.2s,background 0.2s}
+.feat:hover{border-left-color:rgba(124,77,255,0.8);background:rgba(124,77,255,0.1)}
+.feat-name{font-family:var(--font-display);font-size:10px;font-weight:400;letter-spacing:0.14em;color:rgba(160,140,255,0.9);text-transform:uppercase;margin-bottom:5px}
+.feat-text{font-family:var(--font-body);font-weight:300;font-size:12px;line-height:1.75;color:rgba(200,190,240,0.65)}
+.fml{background:rgba(124,77,255,0.07);border:1px solid rgba(124,77,255,0.22);border-left:2px solid rgba(124,77,255,0.65);padding:11px 17px;border-radius:0 3px 3px 0;margin:10px 0;font-family:var(--font-mono);font-size:11px;letter-spacing:0.05em;color:rgba(160,140,255,0.9)}
+.tag-ok{display:inline-block;font-family:var(--font-mono);font-size:8px;letter-spacing:0.12em;padding:2px 8px;border-radius:2px;text-transform:uppercase;background:rgba(26,184,160,0.12);color:rgba(94,232,208,0.85);border:1px solid rgba(26,184,160,0.3)}
+.tag-warn{display:inline-block;font-family:var(--font-mono);font-size:8px;letter-spacing:0.12em;padding:2px 8px;border-radius:2px;text-transform:uppercase;background:rgba(200,150,30,0.12);color:rgba(240,190,80,0.9);border:1px solid rgba(200,150,30,0.3)}
+.tag-bad{display:inline-block;font-family:var(--font-mono);font-size:8px;letter-spacing:0.12em;padding:2px 8px;border-radius:2px;text-transform:uppercase;background:rgba(200,50,50,0.12);color:rgba(255,110,110,0.9);border:1px solid rgba(200,50,50,0.3)}
+.ref{font-family:var(--font-mono);font-size:8px;letter-spacing:0.18em;color:rgba(124,77,255,0.5);text-transform:uppercase;padding:7px 12px;border:1px solid rgba(124,77,255,0.2);border-radius:3px;display:inline-block;margin-bottom:14px}

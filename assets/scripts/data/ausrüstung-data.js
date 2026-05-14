@@ -6,7 +6,6 @@
 var ABENTEUER_ITEMS = [
 { name: 'Abakus', kosten: '200 Hade', pfund: '2' },
 { name: 'Alchemistenfeuer (Flasche)', kosten: '5.000 Hade', pfund: '1', desc: true },
-{ name: 'Angelausrüstung', kosten: '100 Hade', pfund: '4', desc: true },
 { name: 'Arkaner Fokus', kosten: '—', pfund: '—', sublink: 'arkaner-fokus' },
 { name: 'Behälter (Armbrustbolzen)', kosten: '100 Hade', pfund: '1', desc: true },
 { name: 'Behälter (Karten oder Schriftrollen)', kosten: '100 Hade', pfund: '1', desc: true },
@@ -41,6 +40,9 @@ var ABENTEUER_ITEMS = [
 { name: 'Kletterausrüstung', kosten: '2.500 Hade', pfund: '12', desc: true },
 { name: 'Kletterhaken', kosten: '5 Hade', pfund: '0.25' },
 { name: 'Köcher', kosten: '100 Hade', pfund: '1', desc: true },
+{ name: 'Köder (+1)', kosten: '50 Hade', pfund: '—', desc: true },
+{ name: 'Köder (+2)', kosten: '200 Hade', pfund: '—', desc: true },
+{ name: 'Köder (+3)', kosten: '800 Hade', pfund: '—', desc: true },
 { name: 'Korb', kosten: '40 Hade', pfund: '2' },
 { name: 'Krähenfüße (Beutel, 20 Stk.)', kosten: '100 Hade', pfund: '2', desc: true },
 { name: 'Kreide (1 Stück)', kosten: '1 Hade', pfund: '—' },
@@ -131,7 +133,9 @@ var BEHAELTER = [
 
 var ITEM_DESCRIPTIONS = {
   'Alchemistenfeuer (Flasche)': 'Diese zähe, klebrige Flüssigkeit entzündet sich, wenn sie in Kontakt mit Luft kommt. Als Aktion kannst du das Fläschchen bis zu 6 m weit werfen, wo es beim Aufprall zerspringt. Führe einen Fernkampfangriff gegen ein Objekt oder eine Kreatur aus, wobei das Alchemistenfeuer als improvisierte Waffe behandelt wird. Bei einem Treffer erleidet das Ziel zu Beginn jedes seiner Züge 1W4 Feuerschaden. Eine Kreatur kann diesen Schaden beenden, indem es eine Aktion aufwendet und einen Geschicklichkeitswurf gegen SG 10 ablegt, um die Flammen zu löschen.',
-  'Angelausrüstung': 'Diese Zusammenstellung beinhaltet eine Angelrute, Angelschnur, Korkschwimmer, Stahlhaken, Bleigewichte, Seidenköder und engmaschige Netze.',
+  'Köder (+1)': 'Ein einfacher Köder aus Würmern, Insektenlarven oder einfachen Kunstfliegen. Wird beim Angeln eingesetzt und erhöht die Wahrscheinlichkeit eines erfolgreichen Fangs. Gibt +1 auf den Angelwurf. Ein Köder wird pro Angelversuch verbraucht.',
+  'Köder (+2)': 'Ein sorgfältig hergestellter Köder aus Tierfett, Fischeingeweiden oder kunstvoll gebundenen Fliegen. Der verführerische Geruch und die Bewegung locken auch misstrauischere Fische an. Gibt +2 auf den Angelwurf. Ein Köder wird pro Angelversuch verbraucht.',
+  'Köder (+3)': 'Ein meisterhaft gefertigter Köder aus seltenen Zutaten — etwa leuchtenden Tiefseeparasiten, fermentierten Fischelixieren oder perfekt imitierten Beuteinsekten. Selbst die scheuen Tiefseekreaturen werden unwiderstehlich angelockt. Gibt +3 auf den Angelwurf. Ein Köder wird pro Angelversuch verbraucht.',
   'Behälter (Armbrustbolzen)': 'Dieser hölzerne Kasten fasst bis zu 20 Armbrustbolzen.',
   'Behälter (Karten oder Schriftrollen)': 'Dieser zylindrische Lederbehälter kann bis zu zehn zusammengerollte Blatt Papier oder fünf zusammengerollte Blatt Pergament enthalten.',
   'Beutel': 'Ein Stoff- oder Lederbeutel fasst (neben anderen Dingen) bis zu 20 Schleuderkugeln oder 50 Blasrohrpfeile. Ein Materialkomponentenbeutel, den man für Zauber verwendet, wird separat beschrieben.',
@@ -581,6 +585,7 @@ var WERKZEUGE_ITEMS = [
 
 var HANDWERKSZEUGE_ITEMS = [
   { name: 'Alchemistenlabor',         kosten: '5.000 Hade',  pfund: '8' },
+  { name: 'Angelausrüstung',          kosten: '500 Hade',    pfund: '4' },
   { name: 'Brauereivorräte',          kosten: '2.000 Hade',  pfund: '9' },
   { name: 'Glasbläserwerkzeuge',      kosten: '3.000 Hade',  pfund: '5' },
   { name: 'Holzschnitzwerkzeuge',     kosten: '100 Hade',    pfund: '5' },
@@ -742,6 +747,25 @@ var WERKZEUG_DETAILS = {
   },
 
   // ── HANDWERKSZEUGE ──
+  'Angelausrüstung': {
+    intro: 'Die Angelausrüstung ist das Handwerkszeug des geduldigen Naturkundlers und Überlebenskünstlers. Sie umfasst alles, was nötig ist, um Fische zu fangen — und mit der nötigen Übung auch, um gezielte Köder herzustellen, die selbst die scheuen Bewohner tiefer Gewässer anlocken.',
+    abschnitte: [
+      { titel: 'Bestandteile', text: 'Die Ausrüstung beinhaltet eine stabile Angelrute aus Eschenholz, mehrere Rollen Angelschnur in verschiedenen Stärken, eine Sammlung Stahlhaken in unterschiedlichen Größen, Korkschwimmer, Bleigewichte, eine kleine Federmesserschere zum Sezieren von Ködern sowie ein engmaschiges Handnetz zum Landen des Fangs.' },
+      { titel: 'Naturkunde', text: 'Deine Übung im Umgang mit der Angelausrüstung schärft deinen Blick für Gewässer und ihre Bewohner. Du erhältst bei Würfen auf Naturkunde im Vorteil, wenn es um das Verhalten, den Lebensraum oder die Eigenschaften von Fischen und anderen Wassertieren geht.' },
+      { titel: 'Überlebenskunst', text: 'Wenn du die Angelausrüstung bei einer kurzen oder langen Rast in der Nähe eines Gewässers einsetzt, kannst du einen Würf auf Weisheit (Überlebenskunst) ablegen, um Nahrung zu beschaffen. Der SL legt den SG je nach Verfügbarkeit von Fisch und Tiefe des Gewässers fest (typisch: SG 10–15).' },
+      { titel: 'Köder herstellen', text: 'Als Teil einer kurzen Rast kannst du mit der Angelausrüstung einen Köder herstellen, sofern du geeignete Zutaten zur Hand hast. Lege einen Intelligenz- oder Weisheitswurf (Angelausrüstung) ab: Bei SG 10 gelingt dir ein Köder (+1), bei SG 15 ein Köder (+2) und bei SG 20 ein Köder (+3). Ein misslungener Wurf verbraucht die Zutaten ohne Ergebnis. Für einen Köder (+3) sind seltene Zutaten erforderlich — etwa leuchtende Tiefseeorganismen oder fermentierte Fischelixiere.' },
+      { titel: 'Fischbestimmung', text: 'Du bist in der Lage, gefangene Fische sofort zu identifizieren und ihre besonderen Eigenschaften zu erkennen — etwa ob ihr Fleisch giftig ist, ob ihre Schuppen oder Organe eine besondere Verwendung haben oder ob es sich um eine seltene Art handelt.' },
+    ],
+    sg: [
+      { aktivitaet: 'Einen Fisch in einem Gewässer erspähen', sg: '10' },
+      { aktivitaet: 'Einen Köder (+1) herstellen', sg: '10' },
+      { aktivitaet: 'Einen Fisch an seiner Verhaltensweise identifizieren', sg: '12' },
+      { aktivitaet: 'Einen Köder (+2) herstellen', sg: '15' },
+      { aktivitaet: 'Einen vergifteten oder ungenießbaren Fisch erkennen', sg: '15' },
+      { aktivitaet: 'Einen seltenen Fisch anhand eines Schuppen- oder Schleimfundes nachweisen', sg: '18' },
+      { aktivitaet: 'Einen Köder (+3) herstellen', sg: '20' },
+    ],
+  },
   'Glasbläserwerkzeuge': {
     intro: 'Jemand, der sich auf den Umgang mit Glasbläserwerkzeugen versteht, kann nicht nur Glas formen, sondern bringt auch Fachwissen über die Herstellungstechniken von Glasgegenständen mit.',
     abschnitte: [

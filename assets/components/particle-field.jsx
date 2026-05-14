@@ -68,7 +68,7 @@ function ParticleFieldEnhanced({ mouseX, mouseY }) {
         p.x += p.vx/w*60; p.y += p.vy/h*60;
         if(p.x<0)p.x=1; if(p.x>1)p.x=0; if(p.y<0)p.y=1; if(p.y>1)p.y=0;
         bgCtx.beginPath(); bgCtx.arc(p.x*w+bsx, p.y*h+bsy, p.r, 0, Math.PI*2);
-        bgCtx.fillStyle = `rgba(160,140,255,${p.alpha})`; bgCtx.fill();
+        bgCtx.fillStyle = `rgba(var(--accent-rgb),${p.alpha})`; bgCtx.fill();
       });
       fgCtx.clearRect(0,0,w,h);
       const fsx = (mx-0.5)*28, fsy = (my-0.5)*28;
@@ -81,7 +81,7 @@ function ParticleFieldEnhanced({ mouseX, mouseY }) {
         g.addColorStop(1,`rgba(120,100,255,0)`);
         fgCtx.beginPath(); fgCtx.arc(px,py,p.r*2.5,0,Math.PI*2); fgCtx.fillStyle=g; fgCtx.fill();
         fgCtx.beginPath(); fgCtx.arc(px,py,p.r,0,Math.PI*2);
-        fgCtx.fillStyle=`rgba(220,210,255,${p.alpha*1.3})`; fgCtx.fill();
+        fgCtx.fillStyle=`rgba(var(--text-rgb),${p.alpha*1.3})`; fgCtx.fill();
       });
       animRef.current = requestAnimationFrame(tick);
     };

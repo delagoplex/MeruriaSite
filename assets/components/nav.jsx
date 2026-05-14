@@ -73,20 +73,31 @@
       85% { opacity:0; }
       100%{ opacity:0; }
     }
+    .meruria-hamburger { display: none; }
+    @media (max-width: 768px) {
+      .meruria-logo { margin-right: auto !important; }
+      .meruria-desktop-nav { display: none !important; }
+      .meruria-hamburger { display: inline-flex !important; align-items: center; justify-content: center; }
+    }
   `;
   document.head.appendChild(s);
+})();
+
+(function() {
+  const saved = localStorage.getItem('theme');
+  document.documentElement.dataset.theme = (saved === 'light') ? 'light' : 'dark';
 })();
 
 const { useState, useEffect, useRef } = React;
 
 const NAV = [
-  { id: 'einleitung', label: 'Einleitung', items: [{ label: 'Informationen', href: '#' }, { label: 'Vorgeschichte', href: '#' }, { label: 'Sitzung Null', href: '#'}] },
-  { id: 'spielerhandbuch', label: 'Spielerhandbuch', items: [{ label: 'Realismus', href: '#' }, { label: 'Handwerk', href: '#' }, { label: 'Schutzherren', href: '#'}, { label: 'Gesinnungen', href: '#'}, { label: 'Regierungsformen', href: '#'}] },
-  { id: 'charaktererstellung', label: 'Charaktererstellung', items: [{ label: 'Neuer Charakter', href: '#', dividerAfter: true }, { label: 'Rassen', href: 'Rassen.html' }, { label: 'Klassen', href: 'Klassen.html' }, { label: 'Talente', href: 'Talente.html' }, { label: 'Hintergründe', href: 'Hintergruende.html' }, { label: 'Zauber', href: 'Zauber.html' }, { label: 'Ausrüstung', href: 'Ausrüstung.html' }] },
-  { id: 'enzyklopaedie', label: 'Enzyklopädie', items: [{ label: 'Völker', href: '#' }, { label: 'Orte', href: '#' }, { label: 'Organisationen', href: '#' }, { label: 'Gottheiten', href: 'Gottheiten.html' }, { label: 'Religionen', href: '#' }, { label: 'Monster', href: 'Monster.html', locked: true }] },
-  { id: 'divisionen', label: 'Divisionen', items: [{ label: 'I — Die Kuratoren', href: 'Die Kuratoren.html' }, { label: 'II — Die Sturmritter', href: 'Sturmritter.html' }, { label: 'III — Die Sentinels', href: 'Sentinels.html' }, { label: 'IV — Die Friedenshüter', href: 'Friedenshueter.html' }, { label: 'V — Die Outfitters', href: 'Outfitters.html' }, { label: 'VI — Die Pathfinders', href: 'Pathfinders.html' }, { label: 'VII — Die Quellensucher', href: 'Quellensucher.html' }, { label: 'VIII — Die Bergungsgarde', href: 'Bergungsgarde.html' }] },
-  { id: 'charaktere', label: 'Charaktere', items: [{ label: 'Spielercharaktere', href: '#' }, { label: 'NSC', href: '#' }] },
-  { id: 'galerie', label: 'Galerie', href: 'galerie.html' }
+  { id: 'einleitung', label: 'Einleitung', items: [{ label: 'Informationen', href: '#' }, { label: 'Vorgeschichte', href: 'Vorgeschichte.html' }, { label: 'Sitzung Null', href: '#'}] },
+  { id: 'spielerhandbuch', label: 'Spielerhandbuch', items: [{ label: 'Realismus', href: 'Realismus Standalone.html' }, { label: 'Sammeln & Handwerk', href: '#' }, { label: 'Schutzherren', href: '#'}, { label: 'Gesinnungen', href: '#'}, { label: 'Regierungsformen', href: '#'}] },
+  { id: 'charaktererstellung', label: 'Charaktererstellung', items: [{ label: 'Neuer Charakter', href: 'Charaktererstellung.html', dividerAfter: true }, { label: 'Rassen', href: 'Rassen.html' }, { label: 'Klassen', href: 'Klassen.html' }, { label: 'Talente', href: 'Talente.html' }, { label: 'Hintergründe', href: 'Hintergruende.html' }, { label: 'Zauber', href: 'Zauber.html' }, { label: 'Ausrüstung', href: 'Ausrüstung.html' }] },
+  { id: 'enzyklopaedie', label: 'Enzyklopädie', items: [{ label: 'Völker', href: '#' }, { label: 'Orte', href: '#' }, { label: 'Ressourcen', href: 'Ressourcen.html' }, { label: 'Organisationen', href: '#' }, { label: 'Gottheiten', href: 'Gottheiten.html' }, { label: 'Religionen', href: '#' }, { label: 'Monster', href: 'Monster.html', locked: true }, { label: 'Galerie', href: 'Galerie.html' }] },
+  { id: 'divisionen', label: 'Divisionen', items: [{ label: 'Übersicht', href: 'Divisionen.html', dividerAfter: true }, { label: 'I — Die Kuratoren', href: 'divisionen/Die Kuratoren.html' }, { label: 'II — Die Sturmritter', href: 'divisionen/Sturmritter.html' }, { label: 'III — Die Sentinels', href: 'divisionen/Sentinels.html' }, { label: 'IV — Die Friedenshüter', href: 'divisionen/Friedenshueter.html' }, { label: 'V — Die Outfitters', href: 'divisionen/Outfitters.html' }, { label: 'VI — Die Pathfinders', href: 'divisionen/Pathfinders.html' }, { label: 'VII — Die Quellensucher', href: 'divisionen/Quellensucher.html' }, { label: 'VIII — Die Bergungsgarde', href: 'divisionen/Bergungsgarde.html' }] },
+  { id: 'charaktere', label: 'Charaktere', items: [{ label: 'Mein Charakter', href: 'MeinCharakter.html' }, { label: 'Steckbrief', href: 'Steckbrief.html', dividerAfter: true, glitch: false }, { label: 'Spielercharaktere', href: '#' }, { label: 'NSC', href: '#' }] },
+  { id: 'tools', label: 'Tools', items: [{ label: 'Kampfsimulation', href: 'Kampfsimulation.html', locked: true }] }
 ];
 
 function NavItem({ tab }) {
@@ -136,9 +147,9 @@ function NavItem({ tab }) {
 
   if (tab.href) {
     return (
-      <a href={tab.href} style={{ fontFamily: 'var(--font-display)', fontSize: '11px', fontWeight: '400', letterSpacing: '0.18em', padding: '10px 20px', background: 'transparent', border: '1px solid rgba(160,140,255,0.15)', color: 'rgba(200,190,240,0.7)', borderRadius: '3px', transition: 'all 0.2s', textTransform: 'uppercase', whiteSpace: 'nowrap', textDecoration: 'none', display: 'inline-block' }}
-        onMouseEnter={(e) => { e.currentTarget.style.color = '#f0eeff'; e.currentTarget.style.borderColor = 'rgba(160,140,255,0.45)'; e.currentTarget.style.background = 'rgba(124,77,255,0.1)'; }}
-        onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(200,190,240,0.7)'; e.currentTarget.style.borderColor = 'rgba(160,140,255,0.15)'; e.currentTarget.style.background = 'transparent'; }}>
+      <a href={tab.href} style={{ fontFamily: 'var(--font-display)', fontSize: '11px', fontWeight: '400', letterSpacing: '0.18em', padding: '10px 20px', background: 'transparent', border: '1px solid var(--nav-btn-border)', color: 'var(--nav-text)', borderRadius: '3px', transition: 'all 0.2s', textTransform: 'uppercase', whiteSpace: 'nowrap', textDecoration: 'none', display: 'inline-block' }}
+        onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--white)'; e.currentTarget.style.borderColor = 'var(--nav-btn-hover-border)'; e.currentTarget.style.background = 'var(--nav-btn-hover-bg)'; }}
+        onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--nav-text)'; e.currentTarget.style.borderColor = 'var(--nav-btn-border)'; e.currentTarget.style.background = 'transparent'; }}>
         {tab.label}
       </a>
     );
@@ -146,16 +157,16 @@ function NavItem({ tab }) {
 
   return (
     <div onMouseEnter={show} onMouseLeave={hide} style={{ position: 'relative' }}>
-      <button style={{ fontFamily: 'var(--font-display)', fontSize: '11px', fontWeight: '400', letterSpacing: '0.18em', padding: '10px 20px', background: 'transparent', border: '1px solid rgba(160,140,255,0.15)', color: 'rgba(200,190,240,0.7)', cursor: 'pointer', borderRadius: '3px', transition: 'all 0.2s', textTransform: 'uppercase', whiteSpace: 'nowrap' }}
-        onMouseEnter={(e) => { e.currentTarget.style.color = '#f0eeff'; e.currentTarget.style.borderColor = 'rgba(160,140,255,0.45)'; e.currentTarget.style.background = 'rgba(124,77,255,0.1)'; }}
-        onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(200,190,240,0.7)'; e.currentTarget.style.borderColor = 'rgba(160,140,255,0.15)'; e.currentTarget.style.background = 'transparent'; }}>
+      <button style={{ fontFamily: 'var(--font-display)', fontSize: '11px', fontWeight: '400', letterSpacing: '0.18em', padding: '10px 20px', background: 'transparent', border: '1px solid var(--nav-btn-border)', color: 'var(--nav-text)', cursor: 'pointer', borderRadius: '3px', transition: 'all 0.2s', textTransform: 'uppercase', whiteSpace: 'nowrap' }}
+        onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--white)'; e.currentTarget.style.borderColor = 'var(--nav-btn-hover-border)'; e.currentTarget.style.background = 'var(--nav-btn-hover-bg)'; }}
+        onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--nav-text)'; e.currentTarget.style.borderColor = 'var(--nav-btn-border)'; e.currentTarget.style.background = 'transparent'; }}>
         {tab.label}
       </button>
       {open &&
-        <div onMouseEnter={show} onMouseLeave={hide} style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, minWidth: '180px', background: 'rgba(8,6,22,0.96)', border: '1px solid rgba(160,140,255,0.2)', borderRadius: '4px', boxShadow: '0 8px 32px rgba(0,0,0,0.6)', animation: 'slideDown 0.18s ease forwards', zIndex: 200, backdropFilter: 'blur(12px)' }}>
+        <div onMouseEnter={show} onMouseLeave={hide} style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, minWidth: '180px', background: 'var(--nav-dropdown-bg)', border: '1px solid var(--nav-dropdown-border)', borderRadius: '4px', boxShadow: '0 8px 32px rgba(0,0,0,0.35)', animation: 'slideDown 0.18s ease forwards', zIndex: 200, backdropFilter: 'blur(12px)' }}>
           {tab.items.map((item, i) =>
             <React.Fragment key={i}>
-              {item.dividerAfter ? (
+              {item.dividerAfter && item.glitch !== false ? (
                 <div style={{ position: 'relative', overflow: 'hidden' }}>
                   {glitchActive && <div key={`bga-${glitchKey}`} aria-hidden="true" style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, animation: `neu-bg-glitch ${dur} ease forwards` }} />}
                   {glitchActive && <div key={`bgb-${glitchKey}`} aria-hidden="true" style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, animation: `neu-bg-glitch2 ${dur} ease forwards` }} />}
@@ -164,16 +175,16 @@ function NavItem({ tab }) {
                     {glitchActive && <div key={`txa-${glitchKey}`} aria-hidden="true" style={{ position: 'absolute', inset: 0, padding: '10px 18px', fontFamily: 'var(--font-body)', fontWeight: '500', fontSize: '12px', letterSpacing: '0.1em', color: '#c9b8ff', pointerEvents: 'none', zIndex: 1, animation: `neu-txt-a ${dur} ease forwards` }}>{item.label}</div>}
                     {glitchActive && <div key={`txb-${glitchKey}`} aria-hidden="true" style={{ position: 'absolute', inset: 0, padding: '10px 18px', fontFamily: 'var(--font-body)', fontWeight: '500', fontSize: '12px', letterSpacing: '0.1em', color: '#7c4dff', pointerEvents: 'none', zIndex: 1, animation: `neu-txt-b ${dur} ease forwards` }}>{item.label}</div>}
                     <a key={`lnk-${glitchKey}`} href={item.href} style={{ display: 'block', padding: '10px 18px', fontFamily: 'var(--font-body)', fontWeight: '500', fontSize: '12px', letterSpacing: '0.1em', color: '#c9b8ff', textDecoration: 'none', transition: 'color 0.15s, padding-left 0.15s', textShadow: '0 0 10px rgba(124,77,255,0.8), 0 0 20px rgba(124,77,255,0.4)', background: 'rgba(124,77,255,0.08)', position: 'relative', zIndex: 2, ...(glitchActive ? { animation: `neu-txt-main ${dur} ease forwards` } : {}) }}
-                      onMouseEnter={(e) => { e.currentTarget.style.color = '#f0eeff'; e.currentTarget.style.background = 'rgba(124,77,255,0.18)'; e.currentTarget.style.paddingLeft = '24px'; e.currentTarget.style.textShadow = '0 0 14px rgba(160,140,255,1), 0 0 28px rgba(124,77,255,0.6)'; }}
+                      onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--white)'; e.currentTarget.style.background = 'rgba(124,77,255,0.18)'; e.currentTarget.style.paddingLeft = '24px'; e.currentTarget.style.textShadow = '0 0 14px rgba(var(--accent-rgb),1), 0 0 28px rgba(124,77,255,0.6)'; }}
                       onMouseLeave={(e) => { e.currentTarget.style.color = '#c9b8ff'; e.currentTarget.style.background = 'rgba(124,77,255,0.08)'; e.currentTarget.style.paddingLeft = '18px'; e.currentTarget.style.textShadow = '0 0 10px rgba(124,77,255,0.8), 0 0 20px rgba(124,77,255,0.4)'; }}>
                       {item.label}
                     </a>
                   </div>
                 </div>
               ) : (
-                <a href={item.href} style={{ display: 'block', padding: '10px 18px', fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', letterSpacing: '0.1em', color: 'rgba(200,190,240,0.65)', textDecoration: 'none', borderBottom: i < tab.items.length - 1 ? '1px solid rgba(160,140,255,0.08)' : 'none', transition: 'all 0.15s' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.color = '#f0eeff'; e.currentTarget.style.background = 'rgba(124,77,255,0.12)'; e.currentTarget.style.paddingLeft = '24px'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(200,190,240,0.65)'; e.currentTarget.style.background = 'transparent'; e.currentTarget.style.paddingLeft = '18px'; }}>
+                <a href={item.href} style={{ display: 'block', padding: '10px 18px', fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', letterSpacing: '0.1em', color: 'var(--nav-item-text)', textDecoration: 'none', borderBottom: i < tab.items.length - 1 ? '1px solid var(--nav-item-border)' : 'none', transition: 'all 0.15s' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--white)'; e.currentTarget.style.background = 'var(--nav-item-hover-bg)'; e.currentTarget.style.paddingLeft = '24px'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--nav-item-text)'; e.currentTarget.style.background = 'transparent'; e.currentTarget.style.paddingLeft = '18px'; }}>
                   <span style={{ display:'flex', alignItems:'center', gap:'5px' }}>
                     {item.label}
                     {item.locked && (
@@ -185,7 +196,7 @@ function NavItem({ tab }) {
                   </span>
                 </a>
               )}
-              {item.dividerAfter && <div style={{ height: '1px', background: 'rgba(160,140,255,0.2)', margin: '2px 0' }} />}
+              {item.dividerAfter && <div style={{ height: '1px', background: 'rgba(var(--accent-rgb),0.2)', margin: '2px 0' }} />}
             </React.Fragment>
           )}
         </div>
@@ -194,20 +205,104 @@ function NavItem({ tab }) {
   );
 }
 
-function SiteNav({ rightLabel }) {
+function ThemeToggle() {
+  const [dark, setDark] = useState(() => localStorage.getItem('theme') !== 'light');
+
+  function toggle() {
+    const next = !dark;
+    setDark(next);
+    document.documentElement.dataset.theme = next ? 'dark' : 'light';
+    localStorage.setItem('theme', next ? 'dark' : 'light');
+  }
+
   return (
-    <div style={{ position: 'sticky', top: 0, zIndex: 100, width: '100%', background: 'rgba(5,4,15,0.92)', borderBottom: '1px solid rgba(160,140,255,0.1)', backdropFilter: 'blur(16px)' }}>
+    <button
+      onClick={toggle}
+      title={dark ? 'Lichtmodus' : 'Dunkelmodus'}
+      style={{ background: 'transparent', border: '1px solid var(--nav-btn-border)', borderRadius: '3px', color: 'var(--nav-text)', cursor: 'pointer', padding: '5px 9px', fontSize: '15px', lineHeight: 1, flexShrink: 0, transition: 'all 0.15s' }}
+      onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--nav-btn-hover-border)'; e.currentTarget.style.background = 'var(--nav-btn-hover-bg)'; e.currentTarget.style.color = 'var(--white)'; }}
+      onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--nav-btn-border)'; e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--nav-text)'; }}
+    >
+      {dark ? '☀' : '☽'}
+    </button>
+  );
+}
+
+function MobileNavSection({ tab, onClose }) {
+  const [open, setOpen] = useState(false);
+
+  if (tab.href) {
+    return (
+      <a href={tab.href} onClick={onClose} style={{ display: 'block', padding: '14px 24px', fontFamily: 'var(--font-display)', fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--nav-text)', textDecoration: 'none', borderBottom: '1px solid var(--nav-item-border)', transition: 'color 0.15s' }}>
+        {tab.label}
+      </a>
+    );
+  }
+
+  return (
+    <div>
+      <button onClick={() => setOpen(o => !o)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', padding: '14px 24px', fontFamily: 'var(--font-display)', fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--nav-text)', background: 'transparent', border: 'none', borderBottom: '1px solid var(--nav-item-border)', cursor: 'pointer', transition: 'color 0.15s' }}>
+        {tab.label}
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', opacity: 0.5 }}>{open ? '▲' : '▼'}</span>
+      </button>
+      {open && (
+        <div style={{ background: 'rgba(0,0,0,0.15)' }}>
+          {tab.items.map((item, i) => (
+            <a key={i} href={item.href} onClick={onClose} style={{ display: 'flex', alignItems: 'center', gap: '5px', padding: '11px 24px 11px 36px', fontFamily: 'var(--font-body)', fontSize: '12px', fontWeight: '300', letterSpacing: '0.1em', color: 'var(--nav-item-text)', textDecoration: 'none', borderBottom: i < tab.items.length - 1 ? '1px solid var(--nav-item-border)' : 'none', transition: 'color 0.15s' }}>
+              {item.label}
+              {item.locked && (
+                <svg width="8" height="10" viewBox="0 0 8 10" fill="none" style={{ flexShrink: 0, opacity: 0.5 }}>
+                  <rect x="0.5" y="4" width="7" height="5.5" rx="1" fill="currentColor"/>
+                  <path d="M1.5 4V2.8a2.5 2.5 0 0 1 5 0V4" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round"/>
+                </svg>
+              )}
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SiteNav({ rightLabel }) {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const close = () => setMobileOpen(false);
+    document.addEventListener('click', close);
+    return () => document.removeEventListener('click', close);
+  }, [mobileOpen]);
+
+  return (
+    <div style={{ position: 'sticky', top: 0, zIndex: 100, width: '100%', background: 'var(--nav-bg)', borderBottom: '1px solid var(--nav-border)', backdropFilter: 'blur(16px)' }}>
       <div style={{ display: 'flex', alignItems: 'center', padding: '0 24px', height: '52px' }}>
-        <a href="index.html" style={{ marginRight: '70px', whiteSpace: 'nowrap', flexShrink: 0, textDecoration: 'none' }}>
-          <span style={{ fontFamily: 'var(--font-display)', fontSize: '20px', fontWeight: '300', letterSpacing: '0.3em', color: '#f0eeff', textShadow: '0 0 28px rgba(124,77,255,0.55)', animation: 'flicker-mid 9s infinite' }}>MERURIA</span>
+        <a href="index.html" className="meruria-logo" style={{ marginRight: '70px', whiteSpace: 'nowrap', flexShrink: 0, textDecoration: 'none' }}>
+          <span style={{ fontFamily: 'var(--font-display)', fontSize: '20px', fontWeight: '300', letterSpacing: '0.3em', color: 'var(--white)', textShadow: '0 0 28px rgba(124,77,255,0.55)', animation: 'flicker-mid 9s infinite' }}>MERURIA</span>
         </a>
-        <nav style={{ display: 'flex', gap: '6px', alignItems: 'center', flex: 1 }}>
+        <nav className="meruria-desktop-nav" style={{ display: 'flex', gap: '6px', alignItems: 'center', flex: 1 }}>
           {NAV.map((tab) => <NavItem key={tab.id} tab={tab} />)}
         </nav>
-        {rightLabel && (
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', color: 'rgba(160,140,255,0.35)', letterSpacing: '0.15em', flexShrink: 0 }}>{rightLabel}</div>
-        )}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
+          {rightLabel && (
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', color: 'rgba(var(--accent-rgb),0.35)', letterSpacing: '0.15em' }}>{rightLabel}</div>
+          )}
+          <ThemeToggle />
+          <button
+            className="meruria-hamburger"
+            onClick={(e) => { e.stopPropagation(); setMobileOpen(prev => !prev); }}
+            title="Navigation"
+            style={{ background: 'transparent', border: '1px solid var(--nav-btn-border)', borderRadius: '3px', color: 'var(--nav-text)', cursor: 'pointer', padding: '5px 9px', fontSize: '16px', lineHeight: 1, flexShrink: 0, transition: 'all 0.15s' }}
+          >
+            {mobileOpen ? '✕' : '☰'}
+          </button>
+        </div>
       </div>
+      {mobileOpen && (
+        <div onClick={(e) => e.stopPropagation()} style={{ borderTop: '1px solid var(--nav-border)', background: 'var(--nav-dropdown-bg)', backdropFilter: 'blur(16px)', overflowY: 'auto', maxHeight: 'calc(100dvh - 52px)' }}>
+          {NAV.map(tab => <MobileNavSection key={tab.id} tab={tab} onClose={() => setMobileOpen(false)} />)}
+        </div>
+      )}
     </div>
   );
 }

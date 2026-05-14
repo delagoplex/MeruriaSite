@@ -1,5 +1,5 @@
 :root {
-  --border: rgba(160,140,255,0.15);
+  --border: rgba(var(--accent-rgb),0.15);
   --purple: #7c4dff;
   --blue: #2d7dff;
 }
@@ -50,7 +50,7 @@ html, body { height: 100%; }
 .home-title {
   font-family: var(--font-display);
   font-size: clamp(48px,7vw,96px); font-weight: 300;
-  letter-spacing: 0.25em; color: #f0eeff;
+  letter-spacing: 0.25em; color: var(--white);
   text-shadow: 0 0 60px rgba(124,77,255,0.5);
   animation: flicker-mid 11s infinite;
   margin-bottom: 24px;
@@ -58,7 +58,7 @@ html, body { height: 100%; }
 .home-subtitle {
   font-family: var(--font-body); font-weight: 300;
   font-size: 13px; line-height: 1.9;
-  color: rgba(200,190,240,0.55); letter-spacing: 0.06em;
+  color: rgba(var(--text-rgb),0.55); letter-spacing: 0.06em;
   margin-bottom: 40px;
 }
 .home-links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
@@ -72,4 +72,13 @@ html, body { height: 100%; }
   transition: all 0.2s;
   display: inline-block;
 }
-.home-link:hover { background: rgba(124,77,255,0.22); border-color: rgba(124,77,255,0.8); color: #f0eeff; }
+.home-link:hover { background: rgba(124,77,255,0.22); border-color: rgba(124,77,255,0.8); color: var(--white); }
+
+@media (max-width: 768px) {
+  .home-main { padding: 40px 24px; }
+}
+@media (max-width: 480px) {
+  .home-main { padding: 32px 16px; }
+  .home-links { flex-direction: column; align-items: center; }
+  .home-link { width: 100%; max-width: 280px; text-align: center; }
+}

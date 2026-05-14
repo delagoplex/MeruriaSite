@@ -136,14 +136,14 @@ function FilterGroup({ title, active, onReset, children, collapsible }) {
     <div style={{ marginBottom:'20px' }}>
       <div
         onClick={collapsible ? () => setOpen(o => !o) : undefined}
-        style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom: open ? '8px' : '0', paddingBottom:'5px', borderBottom:'1px solid rgba(160,140,255,0.08)', cursor: collapsible ? 'pointer' : 'default', userSelect:'none' }}>
+        style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom: open ? '8px' : '0', paddingBottom:'5px', borderBottom:'1px solid rgba(var(--accent-rgb),0.08)', cursor: collapsible ? 'pointer' : 'default', userSelect:'none' }}>
         <div style={{ display:'flex', alignItems:'center', gap:'6px' }}>
           {collapsible && (
             <svg width="8" height="8" viewBox="0 0 8 8" style={{ flexShrink:0, transition:'transform 0.18s', transform: open ? 'rotate(90deg)' : 'rotate(0deg)', opacity:0.45 }}>
-              <polygon points="1,1 7,4 1,7" fill="rgba(160,140,255,1)" />
+              <polygon points="1,1 7,4 1,7" fill="rgba(var(--accent-rgb),1)" />
             </svg>
           )}
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>{title}</div>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),0.5)', textTransform:'uppercase' }}>{title}</div>
         </div>
         {active && onReset && <XBtn onClick={e => { e.stopPropagation(); onReset(); }} />}
       </div>

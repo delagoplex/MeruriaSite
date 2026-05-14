@@ -64,11 +64,17 @@
 
 /* Equipment tables */
   .eq-table { width: 100%; border-collapse: collapse; font-family: var(--font-body); }
-  .eq-table th { background: rgba(124,77,255,0.18); color: #f0eeff; font-family: var(--font-display); font-size: 12px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; padding: 10px 14px; text-align: left; border-bottom: 1px solid rgba(124,77,255,0.35); }
-  .eq-table td { padding: 9px 14px; font-size: 12px; font-weight: 300; color: rgba(200,190,240,0.75); border-bottom: 1px solid rgba(124,77,255,0.07); vertical-align: top; line-height: 1.5; }
+  .eq-table th { background: rgba(124,77,255,0.18); color: var(--white); font-family: var(--font-display); font-size: 12px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; padding: 10px 14px; text-align: left; border-bottom: 1px solid rgba(124,77,255,0.35); }
+  .eq-table td { padding: 9px 14px; font-size: 12px; font-weight: 300; color: rgba(var(--text-rgb),0.75); border-bottom: 1px solid rgba(124,77,255,0.07); vertical-align: top; line-height: 1.5; }
   .eq-table tr:last-child td { border-bottom: none; }
   .eq-table tr:hover td { background: rgba(124,77,255,0.05); color: rgba(220,210,255,0.9); }
-  .eq-table td.cost { color: rgba(200,190,240,0.55); white-space: nowrap; }
+  .eq-table td.cost { color: rgba(var(--text-rgb),0.55); white-space: nowrap; }
   .eq-table td.weight { color: rgba(124,77,255,0.8); white-space: nowrap; }
   .eq-table td.name-link { color: rgba(180,165,255,0.85); cursor: pointer; }
-  .eq-table td.name-link:hover { color: #f0eeff; text-decoration: underline; text-decoration-color: rgba(124,77,255,0.4); }
+  .eq-table td.name-link:hover { color: var(--white); text-decoration: underline; text-decoration-color: rgba(124,77,255,0.4); }
+
+@media (max-width: 768px) {
+  html, body { overflow: auto !important; }
+  #root { height: auto !important; min-height: 100svh; }
+  .eq-table th, .eq-table td { padding: 7px 10px; font-size: 11px; }
+}

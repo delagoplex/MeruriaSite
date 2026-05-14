@@ -13,6 +13,7 @@
 <script src="assets/scripts/data/ausrüstung-data.js"></script>
 <script src="assets/components/tweaks-panel-8.jsx" type="text/babel"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.jsx" type="text/babel"></script>
 <script src="assets/components/page-header.jsx" type="text/babel"></script>
 <script src="assets/components/particle-field.jsx" type="text/babel"></script>
 <script src="assets/components/footer.jsx" type="text/babel"></script>
@@ -74,7 +75,7 @@ function SectionHeader({ label, accent, mono }) {
       {mono && <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.3em', color: `${accent}55`, textTransform: 'uppercase', marginBottom: '5px' }}>{mono}</div>}
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
         <OctSvg size={8} color={`${accent}66`} fill={`${accent}22`} strokeWidth={1} />
-        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '18px', fontWeight: '300', letterSpacing: '0.2em', color: 'rgba(230,225,255,0.85)', textShadow: `0 0 20px ${accent}33`, textTransform: 'uppercase' }}>{label}</h2>
+        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '18px', fontWeight: '300', letterSpacing: '0.2em', color: 'rgba(var(--text-rgb),0.85)', textShadow: `0 0 20px ${accent}33`, textTransform: 'uppercase' }}>{label}</h2>
       </div>
       <div style={{ width: '40px', height: '1px', background: `linear-gradient(90deg,${accent}77,transparent)`, marginTop: '10px', animation: 'pulse-glow 3s infinite' }} />
     </div>);
@@ -89,7 +90,7 @@ function ItemRow({ item, accent }) {
   return (
     <>
       <tr style={{ cursor: hasDesc ? 'pointer' : 'default' }} onClick={() => hasDesc && setExpanded((e) => !e)}>
-        <td className={hasDesc ? 'name-link' : ''} style={{ color: hasDesc ? `rgba(180,165,255,0.85)` : 'rgba(200,190,240,0.75)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+        <td className={hasDesc ? 'name-link' : ''} style={{ color: hasDesc ? `rgba(180,165,255,0.85)` : 'rgba(var(--text-rgb),0.75)', display: 'flex', alignItems: 'center', gap: '6px' }}>
           {hasDesc &&
           <span style={{ display: 'inline-block', width: '14px', height: '14px', lineHeight: '14px', textAlign: 'center', borderRadius: '50%', border: `1px solid ${accent}44`, fontSize: '9px', color: `${accent}88`, flexShrink: 0, fontFamily: 'var(--font-mono)', transition: 'all 0.15s', transform: expanded ? 'rotate(45deg)' : 'none' }}>+</span>
           }
@@ -102,7 +103,7 @@ function ItemRow({ item, accent }) {
       {expanded && desc &&
       <tr>
           <td colSpan={3} style={{ padding: '0 14px 12px 34px', background: `${accent}08`, borderBottom: `1px solid ${accent}10` }}>
-            <p style={{ fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: '300', lineHeight: '1.8', color: 'rgba(190,180,240,0.65)', letterSpacing: '0.02em' }}>{desc}</p>
+            <p style={{ fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: '300', lineHeight: '1.8', color: 'rgba(var(--text-rgb),0.65)', letterSpacing: '0.02em' }}>{desc}</p>
           </td>
         </tr>
       }
@@ -130,7 +131,7 @@ function SubTable({ title, rows, accent, hasKapazitaet }) {
                 <td style={{ color: 'rgba(180,165,255,0.8)' }}>{r.name}</td>
                 {!hasKapazitaet && <td className="cost">{r.kosten}</td>}
                 {!hasKapazitaet && <td className="weight">{r.pfund}</td>}
-                {hasKapazitaet && <td style={{ color: 'rgba(200,190,240,0.65)' }}>{r.kapazitaet}</td>}
+                {hasKapazitaet && <td style={{ color: 'rgba(var(--text-rgb),0.65)' }}>{r.kapazitaet}</td>}
               </tr>
             )}
           </tbody>
@@ -145,7 +146,7 @@ function WaffenTable({ title, rows, accent }) {
   return (
     <div className="reveal-up" style={{ marginBottom:'28px' }}>
       <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:`${accent}55`, textTransform:'uppercase', marginBottom:'8px' }}>{title}</div>
-      <div style={{ border:`1px solid ${accent}22`, borderRadius:'3px', overflow:'hidden', background:'rgba(10,8,28,0.6)' }}>
+      <div style={{ border:`1px solid ${accent}22`, borderRadius:'3px', overflow:'hidden', background:'rgba(var(--panel-rgb),0.6)' }}>
         <table className="eq-table" style={{ width:'100%' }}>
           <thead>
             <tr>
@@ -159,11 +160,11 @@ function WaffenTable({ title, rows, accent }) {
           <tbody>
             {rows.map((r,i) => (
               <tr key={i}>
-                <td style={{ color:'rgba(220,210,255,0.85)', fontWeight:'400' }}>{r.name}</td>
+                <td style={{ color:'rgba(var(--text-rgb),0.85)', fontWeight:'400' }}>{r.name}</td>
                 <td className="cost">{r.kosten}</td>
                 <td style={{ color:`${accent}99`, fontFamily:'var(--font-mono)', fontSize:'11px' }}>{r.schaden}</td>
                 <td className="weight">{r.pfund}</td>
-                <td style={{ color:'rgba(190,180,240,0.6)', fontSize:'11px' }}>{r.eigenschaften}</td>
+                <td style={{ color:'rgba(var(--text-rgb),0.6)', fontSize:'11px' }}>{r.eigenschaften}</td>
               </tr>
             ))}
           </tbody>
@@ -181,11 +182,11 @@ function WaffenContent({ accent }) {
     <div>
       <SectionHeader label="Waffen" accent={accent} mono="Ausrüstung" />
 
-      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(200,190,240,0.55)', letterSpacing:'0.04em', marginBottom:'10px', maxWidth:'680px' }}>
+      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(var(--text-rgb),0.55)', letterSpacing:'0.04em', marginBottom:'10px', maxWidth:'680px' }}>
         Deine Klasse verleiht dir Übung im Umgang mit bestimmten Waffen. Ob du nun ein Langschwert bevorzugst oder einen Langbogen — die Wahl deiner Waffen und deine Fähigkeit, sie effektiv zu führen, können auf deinen Abenteuern den Unterschied zwischen Leben und Tod ausmachen.
       </p>
-      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(200,190,240,0.45)', letterSpacing:'0.04em', marginBottom:'32px', maxWidth:'680px' }}>
-        Es gibt zwei Kategorien: <strong style={{ color:'rgba(220,210,255,0.7)', fontWeight:'500' }}>Einfache Waffen</strong> und <strong style={{ color:'rgba(220,210,255,0.7)', fontWeight:'500' }}>Kriegswaffen</strong>. Hast du Übung im Umgang mit einer Waffe, darfst du bei einem Angriff mit dieser deinen Übungsbonus auf den Wurf addieren.
+      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(var(--text-rgb),0.45)', letterSpacing:'0.04em', marginBottom:'32px', maxWidth:'680px' }}>
+        Es gibt zwei Kategorien: <strong style={{ color:'rgba(var(--text-rgb),0.7)', fontWeight:'500' }}>Einfache Waffen</strong> und <strong style={{ color:'rgba(var(--text-rgb),0.7)', fontWeight:'500' }}>Kriegswaffen</strong>. Hast du Übung im Umgang mit einer Waffe, darfst du bei einem Angriff mit dieser deinen Übungsbonus auf den Wurf addieren.
       </p>
 
       <WaffenTable title="Einfache Nahkampfwaffen" rows={EINFACHE_NAHKAMPF} accent={accent} />
@@ -198,25 +199,25 @@ function WaffenContent({ accent }) {
         <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.3em', color:`${accent}55`, textTransform:'uppercase', marginBottom:'5px' }}>Regelwerk</div>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={8} color={`${accent}66`} fill={`${accent}22`} strokeWidth={1} />
-          <h2 style={{ fontFamily:'var(--font-display)', fontSize:'18px', fontWeight:'300', letterSpacing:'0.2em', color:'rgba(230,225,255,0.85)', textTransform:'uppercase' }}>Waffeneigenschaften</h2>
+          <h2 style={{ fontFamily:'var(--font-display)', fontSize:'18px', fontWeight:'300', letterSpacing:'0.2em', color:'rgba(var(--text-rgb),0.85)', textTransform:'uppercase' }}>Waffeneigenschaften</h2>
         </div>
         <div style={{ width:'40px', height:'1px', background:`linear-gradient(90deg,${accent}77,transparent)`, marginTop:'10px', animation:'pulse-glow 3s infinite' }} />
       </div>
-      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(200,190,240,0.45)', letterSpacing:'0.04em', marginBottom:'20px', maxWidth:'680px' }}>
+      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(var(--text-rgb),0.45)', letterSpacing:'0.04em', marginBottom:'20px', maxWidth:'680px' }}>
         Viele Waffen besitzen spezielle Eigenschaften. Klicke auf eine Eigenschaft, um ihre Beschreibung zu lesen.
       </p>
       <div className="reveal-up" style={{ display:'flex', flexWrap:'wrap', gap:'8px', marginBottom:'16px' }}>
         {Object.keys(WAFFEN_EIGENSCHAFTEN).map(prop => (
           <button key={prop} onClick={() => setOpenProp(openProp === prop ? null : prop)}
-            style={{ padding:'5px 14px', fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'400', letterSpacing:'0.08em', background: openProp === prop ? `${accent}28` : 'transparent', border:`1px solid ${openProp === prop ? accent+'77' : accent+'28'}`, color: openProp === prop ? '#f0eeff' : `rgba(200,190,240,0.6)`, borderRadius:'2px', cursor:'pointer', transition:'all 0.15s' }}>
+            style={{ padding:'5px 14px', fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'400', letterSpacing:'0.08em', background: openProp === prop ? `${accent}28` : 'transparent', border:`1px solid ${openProp === prop ? accent+'77' : accent+'28'}`, color: openProp === prop ? 'var(--white)' : `rgba(var(--text-rgb),0.6)`, borderRadius:'2px', cursor:'pointer', transition:'all 0.15s' }}>
             {prop}
           </button>
         ))}
       </div>
       {openProp && (
         <div style={{ padding:'14px 18px', border:`1px solid ${accent}22`, borderRadius:'3px', background:`${accent}08`, marginBottom:'28px', animation:'fadeInUp 0.2s ease forwards' }}>
-          <div style={{ fontFamily:'var(--font-display)', fontSize:'12px', letterSpacing:'0.12em', color:'rgba(220,210,255,0.85)', marginBottom:'6px', textTransform:'uppercase' }}>{openProp}</div>
-          <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.8', color:'rgba(190,180,240,0.65)' }}>{WAFFEN_EIGENSCHAFTEN[openProp]}</p>
+          <div style={{ fontFamily:'var(--font-display)', fontSize:'12px', letterSpacing:'0.12em', color:'rgba(var(--text-rgb),0.85)', marginBottom:'6px', textTransform:'uppercase' }}>{openProp}</div>
+          <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.8', color:'rgba(var(--text-rgb),0.65)' }}>{WAFFEN_EIGENSCHAFTEN[openProp]}</p>
         </div>
       )}
 
@@ -224,14 +225,14 @@ function WaffenContent({ accent }) {
       <div id="sec-improvisiert" className="reveal-left" style={{ marginBottom:'22px', paddingBottom:'12px', borderBottom:`1px solid ${accent}22`, marginTop:'12px' }}>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={8} color={`${accent}66`} fill={`${accent}22`} strokeWidth={1} />
-          <h2 style={{ fontFamily:'var(--font-display)', fontSize:'18px', fontWeight:'300', letterSpacing:'0.2em', color:'rgba(230,225,255,0.85)', textTransform:'uppercase' }}>Improvisierte Waffen</h2>
+          <h2 style={{ fontFamily:'var(--font-display)', fontSize:'18px', fontWeight:'300', letterSpacing:'0.2em', color:'rgba(var(--text-rgb),0.85)', textTransform:'uppercase' }}>Improvisierte Waffen</h2>
         </div>
         <div style={{ width:'40px', height:'1px', background:`linear-gradient(90deg,${accent}77,transparent)`, marginTop:'10px', animation:'pulse-glow 3s infinite' }} />
       </div>
-      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(200,190,240,0.55)', letterSpacing:'0.04em', marginBottom:'10px', maxWidth:'680px' }}>
+      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(var(--text-rgb),0.55)', letterSpacing:'0.04em', marginBottom:'10px', maxWidth:'680px' }}>
         Manchmal haben die Charaktere ihre Waffen nicht bei sich und müssen mit dem angreifen, was gerade in der Nähe ist. Als improvisierte Waffe zählt alles, was für einen Angriff in einer oder zwei Händen geführt werden kann, wie etwa ein zerbrochenes Glas, ein Tischbein, eine Bratpfanne, ein Wagenrad oder ein toter Goblin.
       </p>
-      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(200,190,240,0.45)', letterSpacing:'0.04em', marginBottom:'32px', maxWidth:'680px' }}>
+      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(var(--text-rgb),0.45)', letterSpacing:'0.04em', marginBottom:'32px', maxWidth:'680px' }}>
         Ein Gegenstand, der keine Ähnlichkeit mit einer Waffe besitzt, verursacht 1W4 Schaden. Wird eine improvisierte Waffe geworfen, hat sie eine Grundreichweite von 6 m und eine Maximalreichweite von 18 m.
       </p>
 
@@ -239,30 +240,30 @@ function WaffenContent({ accent }) {
       <div id="sec-versilbert" className="reveal-left" style={{ marginBottom:'22px', paddingBottom:'12px', borderBottom:`1px solid ${accent}22` }}>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={8} color={`${accent}66`} fill={`${accent}22`} strokeWidth={1} />
-          <h2 style={{ fontFamily:'var(--font-display)', fontSize:'18px', fontWeight:'300', letterSpacing:'0.2em', color:'rgba(230,225,255,0.85)', textTransform:'uppercase' }}>Versilberte Waffen</h2>
+          <h2 style={{ fontFamily:'var(--font-display)', fontSize:'18px', fontWeight:'300', letterSpacing:'0.2em', color:'rgba(var(--text-rgb),0.85)', textTransform:'uppercase' }}>Versilberte Waffen</h2>
         </div>
         <div style={{ width:'40px', height:'1px', background:`linear-gradient(90deg,${accent}77,transparent)`, marginTop:'10px', animation:'pulse-glow 3s infinite' }} />
       </div>
-      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(200,190,240,0.55)', letterSpacing:'0.04em', marginBottom:'10px', maxWidth:'680px' }}>
-        Manche Monster, die eine Immunität oder Resistenz gegen nicht-magische Waffen besitzen, sind anfällig für silberne Waffen. Du kannst eine einzelne Waffe oder 10 Geschosse für <strong style={{ color:'rgba(220,210,255,0.7)', fontWeight:'500' }}>100 GM</strong> mit Silber überziehen lassen.
+      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(var(--text-rgb),0.55)', letterSpacing:'0.04em', marginBottom:'10px', maxWidth:'680px' }}>
+        Manche Monster, die eine Immunität oder Resistenz gegen nicht-magische Waffen besitzen, sind anfällig für silberne Waffen. Du kannst eine einzelne Waffe oder 10 Geschosse für <strong style={{ color:'rgba(var(--text-rgb),0.7)', fontWeight:'500' }}>100 GM</strong> mit Silber überziehen lassen.
       </p>
 
       {/* Spezielle Waffen */}
       <div id="sec-spezielle" className="reveal-left" style={{ marginBottom:'22px', paddingBottom:'12px', borderBottom:`1px solid ${accent}22`, marginTop:'32px' }}>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={8} color={`${accent}66`} fill={`${accent}22`} strokeWidth={1} />
-          <h2 style={{ fontFamily:'var(--font-display)', fontSize:'18px', fontWeight:'300', letterSpacing:'0.2em', color:'rgba(230,225,255,0.85)', textTransform:'uppercase' }}>Spezielle Waffen</h2>
+          <h2 style={{ fontFamily:'var(--font-display)', fontSize:'18px', fontWeight:'300', letterSpacing:'0.2em', color:'rgba(var(--text-rgb),0.85)', textTransform:'uppercase' }}>Spezielle Waffen</h2>
         </div>
         <div style={{ width:'40px', height:'1px', background:`linear-gradient(90deg,${accent}77,transparent)`, marginTop:'10px', animation:'pulse-glow 3s infinite' }} />
       </div>
-      <div className="reveal-up" style={{ border:`1px solid ${accent}22`, borderRadius:'3px', background:'rgba(10,8,28,0.6)', overflow:'hidden' }}>
+      <div className="reveal-up" style={{ border:`1px solid ${accent}22`, borderRadius:'3px', background:'rgba(var(--panel-rgb),0.6)', overflow:'hidden' }}>
         <div style={{ padding:'14px 18px', borderBottom:`1px solid ${accent}10` }}>
-          <div style={{ fontFamily:'var(--font-body)', fontWeight:'500', fontSize:'12px', color:'rgba(220,210,255,0.9)', marginBottom:'5px' }}>Lanze</div>
-          <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', lineHeight:'1.75', color:'rgba(190,180,240,0.6)' }}>Du bist bei deinem Angriffswurf im Nachteil, wenn du die Lanze gegen ein Ziel im Umkreis von 1,50 m oder weniger einsetzt. Außerdem benötigst du beide Hände, um die Lanze effektiv zu führen, wenn du nicht auf einem Reittier sitzt.</p>
+          <div style={{ fontFamily:'var(--font-body)', fontWeight:'500', fontSize:'12px', color:'rgba(var(--text-rgb),0.9)', marginBottom:'5px' }}>Lanze</div>
+          <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', lineHeight:'1.75', color:'rgba(var(--text-rgb),0.6)' }}>Du bist bei deinem Angriffswurf im Nachteil, wenn du die Lanze gegen ein Ziel im Umkreis von 1,50 m oder weniger einsetzt. Außerdem benötigst du beide Hände, um die Lanze effektiv zu führen, wenn du nicht auf einem Reittier sitzt.</p>
         </div>
         <div style={{ padding:'14px 18px' }}>
-          <div style={{ fontFamily:'var(--font-body)', fontWeight:'500', fontSize:'12px', color:'rgba(220,210,255,0.9)', marginBottom:'5px' }}>Netz</div>
-          <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', lineHeight:'1.75', color:'rgba(190,180,240,0.6)' }}>Eine Kreatur der Größenkategorie groß oder kleiner, die vom Angriff mit einem Netz getroffen wird, gilt als festgesetzt, bis sie sich befreit. Die betroffene Kreatur kann ihre Aktion verwenden, um einen Stärkewurf gegen SG 10 auszuführen und sich zu befreien. Dem Netz 5 Punkte Hiebschaden zuzufügen (RK 10) befreit die Kreatur ebenfalls. Wenn du eine Aktion, Bonusaktion oder Reaktion verwendest, um mit einem Netz anzugreifen, kannst du nur diesen einen Angriff ausführen.</p>
+          <div style={{ fontFamily:'var(--font-body)', fontWeight:'500', fontSize:'12px', color:'rgba(var(--text-rgb),0.9)', marginBottom:'5px' }}>Netz</div>
+          <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', lineHeight:'1.75', color:'rgba(var(--text-rgb),0.6)' }}>Eine Kreatur der Größenkategorie groß oder kleiner, die vom Angriff mit einem Netz getroffen wird, gilt als festgesetzt, bis sie sich befreit. Die betroffene Kreatur kann ihre Aktion verwenden, um einen Stärkewurf gegen SG 10 auszuführen und sich zu befreien. Dem Netz 5 Punkte Hiebschaden zuzufügen (RK 10) befreit die Kreatur ebenfalls. Wenn du eine Aktion, Bonusaktion oder Reaktion verwendest, um mit einem Netz anzugreifen, kannst du nur diesen einen Angriff ausführen.</p>
         </div>
       </div>
     </div>
@@ -274,7 +275,7 @@ function RuestungTable({ title, rows, accent }) {
   const [expandedRow, setExpandedRow] = useState(null);
   return (
     <div className="reveal-up" style={{ marginBottom:'28px' }}>
-      <div style={{ border:`1px solid ${accent}22`, borderRadius:'3px', overflow:'hidden', background:'rgba(10,8,28,0.6)' }}>
+      <div style={{ border:`1px solid ${accent}22`, borderRadius:'3px', overflow:'hidden', background:'rgba(var(--panel-rgb),0.6)' }}>
         <table className="eq-table" style={{ width:'100%' }}>
           <thead>
             <tr>
@@ -293,20 +294,20 @@ function RuestungTable({ title, rows, accent }) {
               return (
                 <React.Fragment key={i}>
                   <tr style={{ cursor: hasDesc ? 'pointer' : 'default' }} onClick={() => hasDesc && setExpandedRow(isOpen ? null : i)}>
-                    <td style={{ color:'rgba(220,210,255,0.85)', fontWeight:'400', display:'flex', alignItems:'center', gap:'6px' }}>
+                    <td style={{ color:'rgba(var(--text-rgb),0.85)', fontWeight:'400', display:'flex', alignItems:'center', gap:'6px' }}>
                       {hasDesc && <span style={{ display:'inline-block', width:'14px', height:'14px', lineHeight:'14px', textAlign:'center', borderRadius:'50%', border:`1px solid ${accent}44`, fontSize:'9px', color:`${accent}88`, flexShrink:0, fontFamily:'var(--font-mono)', transition:'transform 0.15s', transform: isOpen ? 'rotate(45deg)' : 'none' }}>+</span>}
                       {r.name}
                     </td>
                     <td className="cost">{r.kosten}</td>
                     <td style={{ color:`${accent}99`, fontFamily:'var(--font-mono)', fontSize:'11px' }}>{r.rk}</td>
-                    <td style={{ color: r.staerke !== '—' ? 'rgba(255,180,100,0.8)' : 'rgba(200,190,240,0.35)', fontSize:'11px' }}>{r.staerke}</td>
-                    <td style={{ color: r.heimlichkeit === 'Nachteil' ? 'rgba(255,100,100,0.7)' : 'rgba(200,190,240,0.35)', fontSize:'11px' }}>{r.heimlichkeit}</td>
+                    <td style={{ color: r.staerke !== '—' ? 'rgba(255,180,100,0.8)' : 'rgba(var(--text-rgb),0.35)', fontSize:'11px' }}>{r.staerke}</td>
+                    <td style={{ color: r.heimlichkeit === 'Nachteil' ? 'rgba(255,100,100,0.7)' : 'rgba(var(--text-rgb),0.35)', fontSize:'11px' }}>{r.heimlichkeit}</td>
                     <td className="weight">{r.pfund}</td>
                   </tr>
                   {isOpen && RUESTUNG_DESCS[r.name] && (
                     <tr>
                       <td colSpan={6} style={{ padding:'0 14px 12px 34px', background:`${accent}08`, borderBottom:`1px solid ${accent}10` }}>
-                        <p style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', lineHeight:'1.8', color:'rgba(190,180,240,0.65)', letterSpacing:'0.02em', animation:'fadeInUp 0.2s ease forwards' }}>{RUESTUNG_DESCS[r.name]}</p>
+                        <p style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', lineHeight:'1.8', color:'rgba(var(--text-rgb),0.65)', letterSpacing:'0.02em', animation:'fadeInUp 0.2s ease forwards' }}>{RUESTUNG_DESCS[r.name]}</p>
                       </td>
                     </tr>
                   )}
@@ -326,10 +327,10 @@ function RuestungContent({ accent }) {
     <div>
       <SectionHeader label="Rüstung & Schilde" accent={accent} mono="Ausrüstung" />
 
-      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(200,190,240,0.55)', letterSpacing:'0.04em', marginBottom:'10px', maxWidth:'680px' }}>
+      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(var(--text-rgb),0.55)', letterSpacing:'0.04em', marginBottom:'10px', maxWidth:'680px' }}>
         Abenteurer haben Zugang zu einer Vielzahl von Rüstungsarten — von Lederrüstungen über Kettenpanzer bis zu kostspieligen Plattenrüstungen. Die Tabelle unterteilt sie in drei Kategorien: leichte, mittelschwere und schwere Rüstungen.
       </p>
-      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(200,190,240,0.45)', letterSpacing:'0.04em', marginBottom:'32px', maxWidth:'680px' }}>
+      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(var(--text-rgb),0.45)', letterSpacing:'0.04em', marginBottom:'32px', maxWidth:'680px' }}>
         Nur diejenigen, die im Umgang mit einer Rüstung geübt sind, können sie effizient tragen. Trägst du eine Rüstung ohne Übung, bist du bei sämtlichen Stärke- und Geschicklichkeitswürfen im Nachteil und kannst keine Zauber wirken.
       </p>
 
@@ -337,11 +338,11 @@ function RuestungContent({ accent }) {
       <div id="sec-leicht" className="reveal-left" style={{ marginBottom:'10px', paddingBottom:'10px', borderBottom:`1px solid ${accent}18` }}>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={7} color={`${accent}55`} fill={`${accent}18`} strokeWidth={1} />
-          <span style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(210,205,255,0.75)', textTransform:'uppercase' }}>Leichte Rüstung</span>
+          <span style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(var(--text-rgb),0.75)', textTransform:'uppercase' }}>Leichte Rüstung</span>
         </div>
       </div>
-      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.75', color:'rgba(190,180,240,0.55)', marginBottom:'14px', maxWidth:'680px' }}>
-        Aus weichen und dünnen Materialien gefertigt, begünstigen leichte Rüstungen agile Abenteurer. Wenn du eine leichte Rüstung trägst, addierst du deinen <strong style={{ color:'rgba(220,210,255,0.7)', fontWeight:'500' }}>Geschicklichkeitsmodifikator</strong> zur Basis-Rüstungsklasse.
+      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.75', color:'rgba(var(--text-rgb),0.55)', marginBottom:'14px', maxWidth:'680px' }}>
+        Aus weichen und dünnen Materialien gefertigt, begünstigen leichte Rüstungen agile Abenteurer. Wenn du eine leichte Rüstung trägst, addierst du deinen <strong style={{ color:'rgba(var(--text-rgb),0.7)', fontWeight:'500' }}>Geschicklichkeitsmodifikator</strong> zur Basis-Rüstungsklasse.
       </p>
       <RuestungTable title="leichte Rüstung" rows={LEICHTE_RUESTUNG} accent={accent} />
 
@@ -349,11 +350,11 @@ function RuestungContent({ accent }) {
       <div id="sec-mittel" className="reveal-left" style={{ marginBottom:'10px', paddingBottom:'10px', borderBottom:`1px solid ${accent}18`, marginTop:'8px' }}>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={7} color={`${accent}55`} fill={`${accent}18`} strokeWidth={1} />
-          <span style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(210,205,255,0.75)', textTransform:'uppercase' }}>Mittelschwere Rüstung</span>
+          <span style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(var(--text-rgb),0.75)', textTransform:'uppercase' }}>Mittelschwere Rüstung</span>
         </div>
       </div>
-      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.75', color:'rgba(190,180,240,0.55)', marginBottom:'14px', maxWidth:'680px' }}>
-        Mittelschwere Rüstung bietet mehr Schutz als leichte Rüstung, schränkt die Beweglichkeit aber stärker ein. Du addierst deinen Geschicklichkeitsmodifikator, allerdings nur bis zu einem Maximum von <strong style={{ color:'rgba(220,210,255,0.7)', fontWeight:'500' }}>+2</strong>.
+      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.75', color:'rgba(var(--text-rgb),0.55)', marginBottom:'14px', maxWidth:'680px' }}>
+        Mittelschwere Rüstung bietet mehr Schutz als leichte Rüstung, schränkt die Beweglichkeit aber stärker ein. Du addierst deinen Geschicklichkeitsmodifikator, allerdings nur bis zu einem Maximum von <strong style={{ color:'rgba(var(--text-rgb),0.7)', fontWeight:'500' }}>+2</strong>.
       </p>
       <RuestungTable title="mittelschwere Rüstung" rows={MITTELSCHWERE_RUESTUNG} accent={accent} />
 
@@ -361,11 +362,11 @@ function RuestungContent({ accent }) {
       <div id="sec-schwer" className="reveal-left" style={{ marginBottom:'10px', paddingBottom:'10px', borderBottom:`1px solid ${accent}18`, marginTop:'8px' }}>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={7} color={`${accent}55`} fill={`${accent}18`} strokeWidth={1} />
-          <span style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(210,205,255,0.75)', textTransform:'uppercase' }}>Schwere Rüstung</span>
+          <span style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(var(--text-rgb),0.75)', textTransform:'uppercase' }}>Schwere Rüstung</span>
         </div>
       </div>
-      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.75', color:'rgba(190,180,240,0.55)', marginBottom:'14px', maxWidth:'680px' }}>
-        Von allen Rüstungsarten bietet schwere Rüstung den besten Schutz. Bei schweren Rüstungen darfst du deinen Geschicklichkeitsmodifikator <strong style={{ color:'rgba(220,210,255,0.7)', fontWeight:'500' }}>nicht</strong> auf deine Rüstungsklasse anrechnen.
+      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.75', color:'rgba(var(--text-rgb),0.55)', marginBottom:'14px', maxWidth:'680px' }}>
+        Von allen Rüstungsarten bietet schwere Rüstung den besten Schutz. Bei schweren Rüstungen darfst du deinen Geschicklichkeitsmodifikator <strong style={{ color:'rgba(var(--text-rgb),0.7)', fontWeight:'500' }}>nicht</strong> auf deine Rüstungsklasse anrechnen.
       </p>
       <RuestungTable title="schwere Rüstung" rows={SCHWERE_RUESTUNG} accent={accent} />
 
@@ -373,11 +374,11 @@ function RuestungContent({ accent }) {
       <div id="sec-schilde" className="reveal-left" style={{ marginBottom:'10px', paddingBottom:'10px', borderBottom:`1px solid ${accent}18`, marginTop:'8px' }}>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={7} color={`${accent}55`} fill={`${accent}18`} strokeWidth={1} />
-          <span style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(210,205,255,0.75)', textTransform:'uppercase' }}>Schilde</span>
+          <span style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(var(--text-rgb),0.75)', textTransform:'uppercase' }}>Schilde</span>
         </div>
       </div>
-      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.75', color:'rgba(190,180,240,0.55)', marginBottom:'14px', maxWidth:'680px' }}>
-        Ein Schild ist aus Holz oder Metall gefertigt und wird in einer Hand getragen. Einen Schild zu führen, erhöht die Rüstungsklasse um <strong style={{ color:'rgba(220,210,255,0.7)', fontWeight:'500' }}>2</strong>. Du kannst immer nur von einem Schild gleichzeitig profitieren.
+      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.75', color:'rgba(var(--text-rgb),0.55)', marginBottom:'14px', maxWidth:'680px' }}>
+        Ein Schild ist aus Holz oder Metall gefertigt und wird in einer Hand getragen. Einen Schild zu führen, erhöht die Rüstungsklasse um <strong style={{ color:'rgba(var(--text-rgb),0.7)', fontWeight:'500' }}>2</strong>. Du kannst immer nur von einem Schild gleichzeitig profitieren.
       </p>
       <RuestungTable title="Schilde" rows={SCHILDE} accent={accent} />
 
@@ -385,10 +386,10 @@ function RuestungContent({ accent }) {
       <div id="sec-kleidung" className="reveal-left" style={{ marginBottom:'10px', paddingBottom:'10px', borderBottom:`1px solid ${accent}18`, marginTop:'8px' }}>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={7} color={`${accent}55`} fill={`${accent}18`} strokeWidth={1} />
-          <span style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(210,205,255,0.75)', textTransform:'uppercase' }}>Kleidung</span>
+          <span style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(var(--text-rgb),0.75)', textTransform:'uppercase' }}>Kleidung</span>
         </div>
       </div>
-      <div className="reveal-up" style={{ marginBottom:'28px', border:`1px solid ${accent}22`, borderRadius:'3px', overflow:'hidden', background:'rgba(10,8,28,0.6)' }}>
+      <div className="reveal-up" style={{ marginBottom:'28px', border:`1px solid ${accent}22`, borderRadius:'3px', overflow:'hidden', background:'rgba(var(--panel-rgb),0.6)' }}>
         <table className="eq-table" style={{ width:'100%' }}>
           <thead>
             <tr>
@@ -400,7 +401,7 @@ function RuestungContent({ accent }) {
           <tbody>
             {KLEIDUNG.map((r,i) => (
               <tr key={i}>
-                <td style={{ color:'rgba(200,190,240,0.8)' }}>{r.name}</td>
+                <td style={{ color:'rgba(var(--text-rgb),0.8)' }}>{r.name}</td>
                 <td className="cost">{r.kosten}</td>
                 <td className="weight">{r.pfund}</td>
               </tr>
@@ -413,14 +414,14 @@ function RuestungContent({ accent }) {
       <div id="sec-anlegen" className="reveal-left" style={{ marginBottom:'22px', paddingBottom:'12px', borderBottom:`1px solid ${accent}22`, marginTop:'32px' }}>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={8} color={`${accent}66`} fill={`${accent}22`} strokeWidth={1} />
-          <h2 style={{ fontFamily:'var(--font-display)', fontSize:'18px', fontWeight:'300', letterSpacing:'0.2em', color:'rgba(230,225,255,0.85)', textTransform:'uppercase' }}>Rüstungen an- und ablegen</h2>
+          <h2 style={{ fontFamily:'var(--font-display)', fontSize:'18px', fontWeight:'300', letterSpacing:'0.2em', color:'rgba(var(--text-rgb),0.85)', textTransform:'uppercase' }}>Rüstungen an- und ablegen</h2>
         </div>
         <div style={{ width:'40px', height:'1px', background:`linear-gradient(90deg,${accent}77,transparent)`, marginTop:'10px', animation:'pulse-glow 3s infinite' }} />
       </div>
-      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.75', color:'rgba(190,180,240,0.55)', marginBottom:'20px', maxWidth:'680px' }}>
-        Die Zeit, die man benötigt, um Rüstungen an- und abzulegen, hängt von der Kategorie der Rüstung ab. <strong style={{ color:'rgba(220,210,255,0.7)', fontWeight:'500' }}>Ablegen:</strong> Wenn du dabei Hilfe hast, kannst du die Dauer halbieren.
+      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.75', color:'rgba(var(--text-rgb),0.55)', marginBottom:'20px', maxWidth:'680px' }}>
+        Die Zeit, die man benötigt, um Rüstungen an- und abzulegen, hängt von der Kategorie der Rüstung ab. <strong style={{ color:'rgba(var(--text-rgb),0.7)', fontWeight:'500' }}>Ablegen:</strong> Wenn du dabei Hilfe hast, kannst du die Dauer halbieren.
       </p>
-      <div className="reveal-up" style={{ border:`1px solid ${accent}22`, borderRadius:'3px', overflow:'hidden', background:'rgba(10,8,28,0.6)', marginBottom:'32px', maxWidth:'420px' }}>
+      <div className="reveal-up" style={{ border:`1px solid ${accent}22`, borderRadius:'3px', overflow:'hidden', background:'rgba(var(--panel-rgb),0.6)', marginBottom:'32px', maxWidth:'420px' }}>
         <table className="eq-table" style={{ width:'100%' }}>
           <thead>
             <tr>
@@ -432,7 +433,7 @@ function RuestungContent({ accent }) {
           <tbody>
             {ANLEGEN_ABLEGEN.map((r,i) => (
               <tr key={i}>
-                <td style={{ color:'rgba(200,190,240,0.8)' }}>{r.kategorie}</td>
+                <td style={{ color:'rgba(var(--text-rgb),0.8)' }}>{r.kategorie}</td>
                 <td style={{ color:`${accent}99`, fontFamily:'var(--font-mono)', fontSize:'11px' }}>{r.anlegen}</td>
                 <td style={{ color:`${accent}77`, fontFamily:'var(--font-mono)', fontSize:'11px' }}>{r.ablegen}</td>
               </tr>
@@ -480,7 +481,7 @@ function ToolAccordion({ name, accent }) {
         }}>+</span>
         <span style={{
           fontFamily: 'var(--font-body)', fontSize: '12px', fontWeight: open ? '500' : '300',
-          color: open ? '#f0eeff' : 'rgba(200,190,240,0.8)',
+          color: open ? 'var(--white)' : 'rgba(var(--text-rgb),0.8)',
           letterSpacing: '0.04em', flex: 1,
           transition: 'color 0.15s',
         }}>{name}</span>
@@ -501,13 +502,13 @@ function ToolAccordion({ name, accent }) {
             </div>
           )}
           {data.intro && (
-            <p style={{ fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: '300', lineHeight: '1.8', color: 'rgba(190,180,240,0.6)', marginBottom: '12px', letterSpacing: '0.02em' }}>
+            <p style={{ fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: '300', lineHeight: '1.8', color: 'rgba(var(--text-rgb),0.6)', marginBottom: '12px', letterSpacing: '0.02em' }}>
               {data.intro}
             </p>
           )}
           {data.abschnitte.map((s, i) => (
-            <p key={i} style={{ fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: '300', lineHeight: '1.8', color: 'rgba(190,180,240,0.6)', marginBottom: '8px', letterSpacing: '0.02em' }}>
-              <strong style={{ color: 'rgba(220,210,255,0.75)', fontWeight: '500' }}>{s.titel}. </strong>{s.text}
+            <p key={i} style={{ fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: '300', lineHeight: '1.8', color: 'rgba(var(--text-rgb),0.6)', marginBottom: '8px', letterSpacing: '0.02em' }}>
+              <strong style={{ color: 'rgba(var(--text-rgb),0.75)', fontWeight: '500' }}>{s.titel}. </strong>{s.text}
             </p>
           ))}
           {data.sg && data.sg.length > 0 && (
@@ -522,7 +523,7 @@ function ToolAccordion({ name, accent }) {
                 <tbody>
                   {data.sg.map((row, i) => (
                     <tr key={i}>
-                      <td style={{ fontSize: '11px', color: 'rgba(190,180,240,0.65)' }}>{row.aktivitaet}</td>
+                      <td style={{ fontSize: '11px', color: 'rgba(var(--text-rgb),0.65)' }}>{row.aktivitaet}</td>
                       <td style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: `${accent}99`, textAlign: 'center' }}>{row.sg}</td>
                     </tr>
                   ))}
@@ -833,7 +834,7 @@ function WerkzeugPopup({ name, isGroup, groupRows, accent, onClose }) {
           position: 'sticky', top: 0, zIndex: 10,
           display: 'flex', alignItems: 'center', gap: '12px',
           padding: '14px 24px',
-          background: 'rgba(5,4,15,0.96)',
+          background: 'rgba(var(--bg-rgb),0.96)',
           borderBottom: `1px solid ${accent}18`,
           backdropFilter: 'blur(12px)',
         }}>
@@ -845,7 +846,7 @@ function WerkzeugPopup({ name, isGroup, groupRows, accent, onClose }) {
             fontSize: '11px', letterSpacing: '0.1em',
             cursor: 'pointer', transition: 'all 0.15s',
           }}
-          onMouseEnter={(e) => { e.currentTarget.style.background = `${accent}18`; e.currentTarget.style.color = '#f0eeff'; e.currentTarget.style.borderColor = `${accent}66`; }}
+          onMouseEnter={(e) => { e.currentTarget.style.background = `${accent}18`; e.currentTarget.style.color = 'var(--white)'; e.currentTarget.style.borderColor = `${accent}66`; }}
           onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = `${accent}cc`; e.currentTarget.style.borderColor = `${accent}33`; }}>
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
               <path d="M8 2 L4 6 L8 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -873,7 +874,7 @@ function WerkzeugPopup({ name, isGroup, groupRows, accent, onClose }) {
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.28em', color: `${accent}55`, textTransform: 'uppercase', marginBottom: '6px' }}>
                 {isGroup ? 'Kategorie' : 'Werkzeug'}
               </div>
-              <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '26px', fontWeight: '300', letterSpacing: '0.16em', color: '#f0eeff', textShadow: `0 0 24px ${accent}44`, textTransform: 'uppercase' }}>{name}</h2>
+              <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '26px', fontWeight: '300', letterSpacing: '0.16em', color: 'var(--white)', textShadow: `0 0 24px ${accent}44`, textTransform: 'uppercase' }}>{name}</h2>
               {!isGroup && (
                 <div style={{ display: 'flex', gap: '16px', marginTop: '8px', flexWrap: 'wrap' }}>
                   {(() => {
@@ -905,13 +906,13 @@ function WerkzeugPopup({ name, isGroup, groupRows, accent, onClose }) {
                 </div>
               )}
               {displayData.intro && (
-                <p style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '13px', lineHeight: '1.9', color: 'rgba(200,190,240,0.65)', letterSpacing: '0.03em', marginBottom: '20px' }}>
+                <p style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '13px', lineHeight: '1.9', color: 'rgba(var(--text-rgb),0.65)', letterSpacing: '0.03em', marginBottom: '20px' }}>
                   {displayData.intro}
                 </p>
               )}
               {displayData.abschnitte && displayData.abschnitte.map((s, i) => (
                 <p key={i} style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: '1.9', color: 'rgba(185,175,235,0.6)', marginBottom: '12px', letterSpacing: '0.02em' }}>
-                  <strong style={{ color: 'rgba(220,210,255,0.8)', fontWeight: '500' }}>{s.titel}. </strong>{s.text}
+                  <strong style={{ color: 'rgba(var(--text-rgb),0.8)', fontWeight: '500' }}>{s.titel}. </strong>{s.text}
                 </p>
               ))}
               {displayData.sg && displayData.sg.length > 0 && (
@@ -928,7 +929,7 @@ function WerkzeugPopup({ name, isGroup, groupRows, accent, onClose }) {
                       <tbody>
                         {displayData.sg.map((row, i) => (
                           <tr key={i}>
-                            <td style={{ fontSize: '12px', color: 'rgba(190,180,240,0.65)' }}>{row.aktivitaet}</td>
+                            <td style={{ fontSize: '12px', color: 'rgba(var(--text-rgb),0.65)' }}>{row.aktivitaet}</td>
                             <td style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', color: `${accent}99`, textAlign: 'center' }}>{row.sg}</td>
                           </tr>
                         ))}
@@ -982,7 +983,7 @@ function WerkzeugButton({ name, isGroup, groupRows, accent, onOpen }) {
         fontSize: '10px',
         fontWeight: hovered ? '500' : '300',
         letterSpacing: '0.06em',
-        color: hovered ? '#f0eeff' : 'rgba(200,190,240,0.7)',
+        color: hovered ? 'var(--white)' : 'rgba(var(--text-rgb),0.7)',
         textAlign: 'center',
         lineHeight: '1.3',
         transition: 'color 0.15s',
@@ -1052,7 +1053,7 @@ function RollTable({ title, rows, accent }) {
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 1 }}>
           <OctSvg size={7} color={`${accent}55`} fill={`${accent}18`} strokeWidth={1} />
-          <span style={{ fontFamily: 'var(--font-display)', fontSize: '14px', fontWeight: '300', letterSpacing: '0.18em', color: 'rgba(210,205,255,0.75)', textTransform: 'uppercase' }}>{title}</span>
+          <span style={{ fontFamily: 'var(--font-display)', fontSize: '14px', fontWeight: '300', letterSpacing: '0.18em', color: 'rgba(var(--text-rgb),0.75)', textTransform: 'uppercase' }}>{title}</span>
         </div>
         <button
           onClick={handleRoll}
@@ -1071,7 +1072,7 @@ function RollTable({ title, rows, accent }) {
             transition: 'all 0.15s',
             textTransform: 'uppercase',
           }}
-          onMouseEnter={(e) => { if (!rolling) { e.currentTarget.style.background = `${accent}33`; e.currentTarget.style.color = '#f0eeff'; }}}
+          onMouseEnter={(e) => { if (!rolling) { e.currentTarget.style.background = `${accent}33`; e.currentTarget.style.color = 'var(--white)'; }}}
           onMouseLeave={(e) => { if (!rolling) { e.currentTarget.style.background = `${accent}22`; e.currentTarget.style.color = `${accent}cc`; }}}
         >
           <svg width="11" height="11" viewBox="0 0 11 11" fill="none" style={{ flexShrink: 0, opacity: rolling ? 0.4 : 1 }}>
@@ -1085,7 +1086,7 @@ function RollTable({ title, rows, accent }) {
         </button>
       </div>
 
-      <div style={{ border: `1px solid ${accent}22`, borderRadius: '3px', overflow: 'hidden', background: 'rgba(10,8,28,0.6)' }}>
+      <div style={{ border: `1px solid ${accent}22`, borderRadius: '3px', overflow: 'hidden', background: 'rgba(var(--panel-rgb),0.6)' }}>
         <table className="eq-table" style={{ width: '100%' }}>
           <thead>
             <tr>
@@ -1108,9 +1109,9 @@ function RollTable({ title, rows, accent }) {
                     outlineOffset: '-1px',
                   }}
                 >
-                  <td style={{ color: isHit ? '#f0eeff' : 'rgba(200,190,240,0.8)', fontWeight: isHit ? '500' : '300', transition: 'color 0.08s' }}>{r.name}</td>
+                  <td style={{ color: isHit ? 'var(--white)' : 'rgba(var(--text-rgb),0.8)', fontWeight: isHit ? '500' : '300', transition: 'color 0.08s' }}>{r.name}</td>
                   <td className="cost" style={{ color: isHit ? `${accent}cc` : undefined }}>{r.kosten}</td>
-                  <td className="weight" style={{ color: isHit ? '#f0eeff' : undefined }}>{r.pfund === '—' ? '—' : `${r.pfund} Pfd.`}</td>
+                  <td className="weight" style={{ color: isHit ? 'var(--white)' : undefined }}>{r.pfund === '—' ? '—' : `${r.pfund} Pfd.`}</td>
                 </tr>
               );
             })}
@@ -1137,20 +1138,20 @@ function WerkzeugeContent({ accent }) {
       )}
       <SectionHeader label="Werkzeuge" accent={accent} mono="Ausrüstung" />
 
-      <p className="reveal-up" style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: '1.9', color: 'rgba(200,190,240,0.55)', letterSpacing: '0.04em', marginBottom: '10px', maxWidth: '680px' }}>
+      <p className="reveal-up" style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: '1.9', color: 'rgba(var(--text-rgb),0.55)', letterSpacing: '0.04em', marginBottom: '10px', maxWidth: '680px' }}>
         Der folgende Abschnitt geht im Detail auf die Werkzeuge ein, die im Players Handbook vorgestellt werden, und gibt Tipps, wie du sie in einer Kampagne verwenden kannst.
       </p>
-      <p className="reveal-up" style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: '1.9', color: 'rgba(200,190,240,0.45)', letterSpacing: '0.04em', marginBottom: '10px', maxWidth: '680px' }}>
-        <strong style={{ color: 'rgba(220,210,255,0.7)', fontWeight: '500' }}>Bestandteile.</strong> Der erste Absatz jeder Beschreibung ist den einzelnen Bestandteilen gewidmet, aus denen sich eine Ausrüstung oder ein Werkzeugsatz zusammensetzt. Ein Charakter, der im Umgang mit einem Werkzeug geübt ist, versteht es, alle Bestandteile einer Ausrüstung oder eines Werkzeugsatzes zu nutzen.
+      <p className="reveal-up" style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: '1.9', color: 'rgba(var(--text-rgb),0.45)', letterSpacing: '0.04em', marginBottom: '10px', maxWidth: '680px' }}>
+        <strong style={{ color: 'rgba(var(--text-rgb),0.7)', fontWeight: '500' }}>Bestandteile.</strong> Der erste Absatz jeder Beschreibung ist den einzelnen Bestandteilen gewidmet, aus denen sich eine Ausrüstung oder ein Werkzeugsatz zusammensetzt. Ein Charakter, der im Umgang mit einem Werkzeug geübt ist, versteht es, alle Bestandteile einer Ausrüstung oder eines Werkzeugsatzes zu nutzen.
       </p>
-      <p className="reveal-up" style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: '1.9', color: 'rgba(200,190,240,0.45)', letterSpacing: '0.04em', marginBottom: '10px', maxWidth: '680px' }}>
-        <strong style={{ color: 'rgba(220,210,255,0.7)', fontWeight: '500' }}>Fertigkeiten.</strong> Potenziell bist du dank Werkzeugen im Vorteil bei einem Wurf, wenn besagte Werkzeuge in Verbindung mit bestimmten Fertigkeiten eingesetzt werden. Dies gilt jedoch nur, wenn der Charakter sowohl den Umgang mit dem Werkzeug als auch mit der Fertigkeit beherrscht. Als SL kannst du dann bestimmen, dass ein Charakter bei einem Wurf mit der angegebenen Fertigkeit im Vorteil ist. Wenn zu Beginn eines Absatzes die Bezeichnung einer Fertigkeit steht, wird dort näher auf die hier beschriebenen Möglichkeiten eingegangen. Nur jemand, der mit dem jeweiligen Werkzeug geübt ist, kommt in den Genuss der im jeweiligen Absatz beschriebenen Vorzüge. Es genügt nicht, das Werkzeug lediglich zu besitzen.
+      <p className="reveal-up" style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: '1.9', color: 'rgba(var(--text-rgb),0.45)', letterSpacing: '0.04em', marginBottom: '10px', maxWidth: '680px' }}>
+        <strong style={{ color: 'rgba(var(--text-rgb),0.7)', fontWeight: '500' }}>Fertigkeiten.</strong> Potenziell bist du dank Werkzeugen im Vorteil bei einem Wurf, wenn besagte Werkzeuge in Verbindung mit bestimmten Fertigkeiten eingesetzt werden. Dies gilt jedoch nur, wenn der Charakter sowohl den Umgang mit dem Werkzeug als auch mit der Fertigkeit beherrscht. Als SL kannst du dann bestimmen, dass ein Charakter bei einem Wurf mit der angegebenen Fertigkeit im Vorteil ist. Wenn zu Beginn eines Absatzes die Bezeichnung einer Fertigkeit steht, wird dort näher auf die hier beschriebenen Möglichkeiten eingegangen. Nur jemand, der mit dem jeweiligen Werkzeug geübt ist, kommt in den Genuss der im jeweiligen Absatz beschriebenen Vorzüge. Es genügt nicht, das Werkzeug lediglich zu besitzen.
       </p>
-      <p className="reveal-up" style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: '1.9', color: 'rgba(200,190,240,0.45)', letterSpacing: '0.04em', marginBottom: '10px', maxWidth: '680px' }}>
-        <strong style={{ color: 'rgba(220,210,255,0.7)', fontWeight: '500' }}>Besondere Anwendungsmöglichkeit.</strong> Wie in diesem Absatz beschrieben, bringt deine Übung im Umgang mit einem Werkzeug oftmals eine besondere Anwendungsmöglichkeit in Form eines besonderen Vorzugs mit sich.
+      <p className="reveal-up" style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: '1.9', color: 'rgba(var(--text-rgb),0.45)', letterSpacing: '0.04em', marginBottom: '10px', maxWidth: '680px' }}>
+        <strong style={{ color: 'rgba(var(--text-rgb),0.7)', fontWeight: '500' }}>Besondere Anwendungsmöglichkeit.</strong> Wie in diesem Absatz beschrieben, bringt deine Übung im Umgang mit einem Werkzeug oftmals eine besondere Anwendungsmöglichkeit in Form eines besonderen Vorzugs mit sich.
       </p>
-      <p className="reveal-up" style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: '1.9', color: 'rgba(200,190,240,0.45)', letterSpacing: '0.04em', marginBottom: '32px', maxWidth: '680px' }}>
-        <strong style={{ color: 'rgba(220,210,255,0.7)', fontWeight: '500' }}>Beispiel-SG.</strong> Am Ende jeder Beschreibung führt eine Tabelle unterschiedliche Aktivitäten auf, die mithilfe eines Werkzeuges durchgeführt werden können, sowie den vorgeschlagenen SG für den jeweils notwendigen Fähigkeitswurf.
+      <p className="reveal-up" style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: '1.9', color: 'rgba(var(--text-rgb),0.45)', letterSpacing: '0.04em', marginBottom: '32px', maxWidth: '680px' }}>
+        <strong style={{ color: 'rgba(var(--text-rgb),0.7)', fontWeight: '500' }}>Beispiel-SG.</strong> Am Ende jeder Beschreibung führt eine Tabelle unterschiedliche Aktivitäten auf, die mithilfe eines Werkzeuges durchgeführt werden können, sowie den vorgeschlagenen SG für den jeweils notwendigen Fähigkeitswurf.
       </p>
 
       <div id="sec-werkzeuge" />
@@ -1198,10 +1199,10 @@ function ReittiereContent({ accent }) {
     <div>
       <SectionHeader label="Reittiere & Fahrzeuge" accent={accent} mono="Ausrüstung" />
 
-      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(200,190,240,0.55)', letterSpacing:'0.04em', marginBottom:'10px', maxWidth:'680px' }}>
+      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(var(--text-rgb),0.55)', letterSpacing:'0.04em', marginBottom:'10px', maxWidth:'680px' }}>
         Mit einem guten Reittier vermagst du dich schneller durch die Wildnis zu bewegen, doch seine primäre Aufgabe ist es, die Ausrüstung zu tragen, die dich andernfalls verlangsamen würde. Ein Tier, das einen Wagen, Karren, Schlitten oder Streitwagen zieht, kann bis zum fünffachen seiner Traglast damit transportieren. Ziehen mehrere Tiere dasselbe Fahrzeug, summiert sich ihre Traglast.
       </p>
-      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(200,190,240,0.45)', letterSpacing:'0.04em', marginBottom:'32px', maxWidth:'680px' }}>
+      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(var(--text-rgb),0.45)', letterSpacing:'0.04em', marginBottom:'32px', maxWidth:'680px' }}>
         Andere Reittiere — fliegende Reittiere (Pegasi, Greifen, Hippogreifen) und Meeresreittiere — sind selten und stehen für gewöhnlich nicht zum Verkauf. An ein solches Reittier gelangen Abenteurer meist nur durch Handel oder indem sie ein Ei finden und das Junge aufziehen.
       </p>
 
@@ -1209,10 +1210,10 @@ function ReittiereContent({ accent }) {
       <div id="sec-lasttiere" className="reveal-left" style={{ marginBottom:'10px', paddingBottom:'10px', borderBottom:`1px solid ${accent}18` }}>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={7} color={`${accent}55`} fill={`${accent}18`} strokeWidth={1} />
-          <span style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(210,205,255,0.75)', textTransform:'uppercase' }}>Reit- und Lasttiere</span>
+          <span style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(var(--text-rgb),0.75)', textTransform:'uppercase' }}>Reit- und Lasttiere</span>
         </div>
       </div>
-      <div className="reveal-up" style={{ marginBottom:'32px', border:`1px solid ${accent}22`, borderRadius:'3px', overflow:'hidden', background:'rgba(10,8,28,0.6)' }}>
+      <div className="reveal-up" style={{ marginBottom:'32px', border:`1px solid ${accent}22`, borderRadius:'3px', overflow:'hidden', background:'rgba(var(--panel-rgb),0.6)' }}>
         <table className="eq-table" style={{ width:'100%' }}>
           <thead>
             <tr>
@@ -1225,10 +1226,10 @@ function ReittiereContent({ accent }) {
           <tbody>
             {REIT_LASTTIERE.map((r,i) => (
               <tr key={i}>
-                <td style={{ color:'rgba(220,210,255,0.85)', fontWeight:'400' }}>{r.tier}</td>
+                <td style={{ color:'rgba(var(--text-rgb),0.85)', fontWeight:'400' }}>{r.tier}</td>
                 <td className="cost">{r.kosten}</td>
                 <td style={{ color:`${accent}99`, fontFamily:'var(--font-mono)', fontSize:'11px' }}>{r.bewegung}</td>
-                <td style={{ color:'rgba(200,190,240,0.65)', fontFamily:'var(--font-mono)', fontSize:'11px' }}>{r.traglast}</td>
+                <td style={{ color:'rgba(var(--text-rgb),0.65)', fontFamily:'var(--font-mono)', fontSize:'11px' }}>{r.traglast}</td>
               </tr>
             ))}
           </tbody>
@@ -1242,8 +1243,8 @@ function ReittiereContent({ accent }) {
           { titel: 'Sattel', text: 'Ein Militärsattel stützt den Reiter und hilft ihm dabei, während des Kampfes auf einem Reittier nicht hinunterzufallen. Du bist im Vorteil bei Würfen, um im Sattel zu bleiben. Ein exotischer Sattel wird zum Reiten von fliegenden oder Wasserreittieren benötigt.' },
         ].map((info, i) => (
           <div key={i} style={{ padding:'12px 16px', border:`1px solid ${accent}18`, borderRadius:'3px', background:`${accent}06` }}>
-            <span style={{ fontFamily:'var(--font-body)', fontWeight:'500', fontSize:'12px', color:'rgba(220,210,255,0.85)' }}>{info.titel}. </span>
-            <span style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.8', color:'rgba(190,180,240,0.6)' }}>{info.text}</span>
+            <span style={{ fontFamily:'var(--font-body)', fontWeight:'500', fontSize:'12px', color:'rgba(var(--text-rgb),0.85)' }}>{info.titel}. </span>
+            <span style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.8', color:'rgba(var(--text-rgb),0.6)' }}>{info.text}</span>
           </div>
         ))}
       </div>
@@ -1252,10 +1253,10 @@ function ReittiereContent({ accent }) {
       <div id="sec-zaumzeug" className="reveal-left" style={{ marginBottom:'10px', paddingBottom:'10px', borderBottom:`1px solid ${accent}18` }}>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={7} color={`${accent}55`} fill={`${accent}18`} strokeWidth={1} />
-          <span style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(210,205,255,0.75)', textTransform:'uppercase' }}>Zaumzeug, Harnische & gezogene Fahrzeuge</span>
+          <span style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(var(--text-rgb),0.75)', textTransform:'uppercase' }}>Zaumzeug, Harnische & gezogene Fahrzeuge</span>
         </div>
       </div>
-      <div className="reveal-up" style={{ marginBottom:'32px', border:`1px solid ${accent}22`, borderRadius:'3px', overflow:'hidden', background:'rgba(10,8,28,0.6)' }}>
+      <div className="reveal-up" style={{ marginBottom:'32px', border:`1px solid ${accent}22`, borderRadius:'3px', overflow:'hidden', background:'rgba(var(--panel-rgb),0.6)' }}>
         <table className="eq-table" style={{ width:'100%' }}>
           <thead>
             <tr>
@@ -1267,7 +1268,7 @@ function ReittiereContent({ accent }) {
           <tbody>
             {ZAUMZEUG_ITEMS.map((r,i) => (
               <tr key={i}>
-                <td style={{ color:'rgba(200,190,240,0.8)' }}>{r.name}</td>
+                <td style={{ color:'rgba(var(--text-rgb),0.8)' }}>{r.name}</td>
                 <td className="cost">{r.kosten}</td>
                 <td className="weight">{r.gewicht}</td>
               </tr>
@@ -1280,10 +1281,10 @@ function ReittiereContent({ accent }) {
       <div id="sec-wasser" className="reveal-left" style={{ marginBottom:'10px', paddingBottom:'10px', borderBottom:`1px solid ${accent}18` }}>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={7} color={`${accent}55`} fill={`${accent}18`} strokeWidth={1} />
-          <span style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(210,205,255,0.75)', textTransform:'uppercase' }}>Wasserfahrzeuge</span>
+          <span style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(var(--text-rgb),0.75)', textTransform:'uppercase' }}>Wasserfahrzeuge</span>
         </div>
       </div>
-      <div className="reveal-up" style={{ marginBottom:'32px', border:`1px solid ${accent}22`, borderRadius:'3px', overflow:'hidden', background:'rgba(10,8,28,0.6)' }}>
+      <div className="reveal-up" style={{ marginBottom:'32px', border:`1px solid ${accent}22`, borderRadius:'3px', overflow:'hidden', background:'rgba(var(--panel-rgb),0.6)' }}>
         <table className="eq-table" style={{ width:'100%' }}>
           <thead>
             <tr>
@@ -1295,7 +1296,7 @@ function ReittiereContent({ accent }) {
           <tbody>
             {WASSERFAHRZEUGE.map((r,i) => (
               <tr key={i}>
-                <td style={{ color:'rgba(200,190,240,0.8)' }}>{r.name}</td>
+                <td style={{ color:'rgba(var(--text-rgb),0.8)' }}>{r.name}</td>
                 <td className="cost">{r.kosten}</td>
                 <td style={{ color:`${accent}99`, fontFamily:'var(--font-mono)', fontSize:'11px' }}>{r.geschwindigkeit}</td>
               </tr>
@@ -1308,11 +1309,11 @@ function ReittiereContent({ accent }) {
       <div id="sec-fahrzeuge" className="reveal-left" style={{ marginBottom:'22px', paddingBottom:'12px', borderBottom:`1px solid ${accent}22` }}>
         <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
           <OctSvg size={8} color={`${accent}66`} fill={`${accent}22`} strokeWidth={1} />
-          <h2 style={{ fontFamily:'var(--font-display)', fontSize:'18px', fontWeight:'300', letterSpacing:'0.2em', color:'rgba(230,225,255,0.85)', textTransform:'uppercase' }}>Land- und Wasserfahrzeuge</h2>
+          <h2 style={{ fontFamily:'var(--font-display)', fontSize:'18px', fontWeight:'300', letterSpacing:'0.2em', color:'rgba(var(--text-rgb),0.85)', textTransform:'uppercase' }}>Land- und Wasserfahrzeuge</h2>
         </div>
         <div style={{ width:'40px', height:'1px', background:`linear-gradient(90deg,${accent}77,transparent)`, marginTop:'10px', animation:'pulse-glow 3s infinite' }} />
       </div>
-      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(200,190,240,0.55)', letterSpacing:'0.04em', marginBottom:'10px', maxWidth:'680px' }}>
+      <p className="reveal-up" style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(var(--text-rgb),0.55)', letterSpacing:'0.04em', marginBottom:'10px', maxWidth:'680px' }}>
         Die Übung im Umgang mit Landfahrzeugen deckt ein breites Spektrum an Transportmitteln ab, von Streitwagen über Elefantensänften bis hin zu Wagen und Karren. Die Übung im Umgang mit Wasserfahrzeugen umfasst alle Gefährte, die auf Wasser fahren können. Wer im Umgang mit Fahrzeugen geübt ist, weiß, wie man diese bestimmte Art von Fahrzeugen fährt, repariert und instand hält. Ein Charakter, der den Umgang mit Wasserfahrzeugen beherrscht, kennt sich außerdem mit allem aus, was in den Wissensbereich eines professionellen Seemanns fällt — darunter Wissen über das Meer und Inseln, das Binden von Knoten und die richtige Einschätzung von Witterungsverhältnissen und Seegang.
       </p>
       <div className="reveal-up" style={{ display:'flex', flexDirection:'column', gap:'10px', marginBottom:'28px', maxWidth:'680px' }}>
@@ -1324,8 +1325,8 @@ function ReittiereContent({ accent }) {
           { titel: 'Ruderboot', text: 'Kielboote und Ruderboote werden auf Seen und Flüssen eingesetzt. Wenn du flussabwärts fährst, kannst du die Geschwindigkeit der Strömung mit einrechnen (typischerweise 4,5 km/h). Ein Ruderboot wiegt 100 Pfund, für den Fall, dass Abenteurer es über Land tragen müssen.' },
         ].map((info, i) => (
           <div key={i} style={{ padding:'12px 16px', border:`1px solid ${accent}18`, borderRadius:'3px', background:`${accent}06` }}>
-            <span style={{ fontFamily:'var(--font-body)', fontWeight:'500', fontSize:'12px', color:'rgba(220,210,255,0.85)' }}>{info.titel}. </span>
-            <span style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.8', color:'rgba(190,180,240,0.6)' }}>{info.text}</span>
+            <span style={{ fontFamily:'var(--font-body)', fontWeight:'500', fontSize:'12px', color:'rgba(var(--text-rgb),0.85)' }}>{info.titel}. </span>
+            <span style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.8', color:'rgba(var(--text-rgb),0.6)' }}>{info.text}</span>
           </div>
         ))}
       </div>
@@ -1346,7 +1347,7 @@ function ReittiereContent({ accent }) {
               { aktivitaet: 'Eine enge Kurve mit hoher Geschwindigkeit nehmen', sg: '20' },
             ].map((r,i) => (
               <tr key={i}>
-                <td style={{ color:'rgba(190,180,240,0.65)', fontSize:'12px' }}>{r.aktivitaet}</td>
+                <td style={{ color:'rgba(var(--text-rgb),0.65)', fontSize:'12px' }}>{r.aktivitaet}</td>
                 <td style={{ fontFamily:'var(--font-mono)', fontSize:'12px', color:`${accent}99`, textAlign:'center' }}>{r.sg}</td>
               </tr>
             ))}
@@ -1393,7 +1394,7 @@ function TandRollTable({ title, items, accent, diceLabel, open: openProp, onOpen
   };
 
   return (
-    <div className="reveal-up" style={{ marginBottom: '16px', border: `1px solid ${accent}22`, borderRadius: '4px', overflow: 'hidden', background: 'rgba(8,6,20,0.7)' }}>
+    <div className="reveal-up" style={{ marginBottom: '16px', border: `1px solid ${accent}22`, borderRadius: '4px', overflow: 'hidden', background: 'rgba(var(--bg2-rgb),0.7)' }}>
       {/* Header — clickable to toggle */}
       <div
         onClick={() => setOpen(o => !o)}
@@ -1415,7 +1416,7 @@ function TandRollTable({ title, items, accent, diceLabel, open: openProp, onOpen
           transition: 'transform 0.2s',
           transform: open ? 'rotate(45deg)' : 'none',
         }}>+</span>
-        <span style={{ fontFamily: 'var(--font-display)', fontSize: '14px', fontWeight: '300', letterSpacing: '0.18em', color: open ? '#f0eeff' : 'rgba(210,205,255,0.75)', textTransform: 'uppercase', flex: 1, transition: 'color 0.15s' }}>{title}</span>
+        <span style={{ fontFamily: 'var(--font-display)', fontSize: '14px', fontWeight: '300', letterSpacing: '0.18em', color: open ? 'var(--white)' : 'rgba(var(--text-rgb),0.75)', textTransform: 'uppercase', flex: 1, transition: 'color 0.15s' }}>{title}</span>
         {/* Roll button */}
         <button
           onClick={handleRoll}
@@ -1430,7 +1431,7 @@ function TandRollTable({ title, items, accent, diceLabel, open: openProp, onOpen
             cursor: rolling ? 'not-allowed' : 'pointer', transition: 'all 0.15s',
             textTransform: 'uppercase', flexShrink: 0,
           }}
-          onMouseEnter={e => { if (!rolling) { e.currentTarget.style.background = `${accent}33`; e.currentTarget.style.color = '#f0eeff'; }}}
+          onMouseEnter={e => { if (!rolling) { e.currentTarget.style.background = `${accent}33`; e.currentTarget.style.color = 'var(--white)'; }}}
           onMouseLeave={e => { if (!rolling) { e.currentTarget.style.background = `${accent}22`; e.currentTarget.style.color = `${accent}cc`; }}}
         >
           <svg width="10" height="10" viewBox="0 0 11 11" fill="none" style={{ flexShrink: 0, opacity: rolling ? 0.4 : 1 }}>
@@ -1469,7 +1470,7 @@ function TandRollTable({ title, items, accent, diceLabel, open: openProp, onOpen
                     }}
                   >
                     <td style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: isHit ? `${accent}cc` : `${accent}55`, textAlign: 'center', width: '60px' }}>{i + 1}</td>
-                    <td style={{ color: isHit ? '#f0eeff' : 'rgba(200,190,240,0.75)', fontWeight: isHit ? '500' : '300', fontSize: '12px', transition: 'color 0.08s' }}>{item}</td>
+                    <td style={{ color: isHit ? 'var(--white)' : 'rgba(var(--text-rgb),0.75)', fontWeight: isHit ? '500' : '300', fontSize: '12px', transition: 'color 0.08s' }}>{item}</td>
                   </tr>
                 );
               })}
@@ -1521,7 +1522,7 @@ function TandContent({ accent }) {
     <div>
       <SectionHeader label="Tand" accent={accent} mono="Ausrüstung" />
 
-      <p className="reveal-up" style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: '1.9', color: 'rgba(200,190,240,0.55)', letterSpacing: '0.04em', marginBottom: '28px', maxWidth: '680px' }}>
+      <p className="reveal-up" style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: '1.9', color: 'rgba(var(--text-rgb),0.55)', letterSpacing: '0.04em', marginBottom: '28px', maxWidth: '680px' }}>
         Bei der Erschaffung deines Charakters darfst du mit Hilfe der Tabelle für Tand zufällig einen Gegenstand bestimmen, den du zu Beginn erhältst und der etwas leicht Mystisches besitzt. Der SL kann diese Tabelle verwenden, um Räume in Gewölben auszuschmücken oder die Taschen von Monstern zu füllen.
       </p>
 
@@ -1540,7 +1541,7 @@ function TandContent({ accent }) {
             cursor: rolling ? 'not-allowed' : 'pointer', transition: 'all 0.15s',
             textTransform: 'uppercase',
           }}
-          onMouseEnter={e => { if (!rolling) { e.currentTarget.style.background = `${accent}33`; e.currentTarget.style.color = '#f0eeff'; }}}
+          onMouseEnter={e => { if (!rolling) { e.currentTarget.style.background = `${accent}33`; e.currentTarget.style.color = 'var(--white)'; }}}
           onMouseLeave={e => { if (!rolling) { e.currentTarget.style.background = `${accent}22`; e.currentTarget.style.color = `${accent}cc`; }}}
         >
           <svg width="11" height="11" viewBox="0 0 11 11" fill="none" style={{ flexShrink: 0, opacity: rolling ? 0.4 : 1 }}>
@@ -1556,7 +1557,7 @@ function TandContent({ accent }) {
       </div>
 
       {/* W3 overview table */}
-      <div className="reveal-up" style={{ marginBottom: '32px', border: `1px solid ${accent}22`, borderRadius: '3px', overflow: 'hidden', background: 'rgba(10,8,28,0.6)', maxWidth: '320px' }}>
+      <div className="reveal-up" style={{ marginBottom: '32px', border: `1px solid ${accent}22`, borderRadius: '3px', overflow: 'hidden', background: 'rgba(var(--panel-rgb),0.6)', maxWidth: '320px' }}>
         <table className="eq-table" style={{ width: '100%' }}>
           <thead>
             <tr>
@@ -1572,7 +1573,7 @@ function TandContent({ accent }) {
             ].map((r, i) => (
               <tr key={i} style={{ background: selectedTable === r.key ? `${accent}22` : 'transparent', transition: 'background 0.15s', outline: selectedTable === r.key ? `1px solid ${accent}55` : 'none', outlineOffset: '-1px' }}>
                 <td style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: selectedTable === r.key ? `${accent}cc` : `${accent}55`, textAlign: 'center' }}>{r.w}</td>
-                <td style={{ color: selectedTable === r.key ? '#f0eeff' : 'rgba(200,190,240,0.75)', fontWeight: selectedTable === r.key ? '500' : '300' }}>{r.label}</td>
+                <td style={{ color: selectedTable === r.key ? 'var(--white)' : 'rgba(var(--text-rgb),0.75)', fontWeight: selectedTable === r.key ? '500' : '300' }}>{r.label}</td>
               </tr>
             ))}
           </tbody>
@@ -1607,12 +1608,12 @@ function AbenteuerContent({ accent }) {
       <SectionHeader label="Abenteuerausrüstung" accent={accent} mono="Ausrüstung" />
 
       {/* Intro text */}
-      <p className="reveal-up" style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: '1.9', color: 'rgba(200,190,240,0.55)', letterSpacing: '0.04em', marginBottom: '28px', maxWidth: '680px' }}>Vom einfachen Seil bis zur magischen Phiole — die richtige Ausrüstung entscheidet über Leben und Tod. Hier findest du alles, was ein Abenteurer auf seinen Reisen durch die Neue Welt benötigt.
+      <p className="reveal-up" style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: '1.9', color: 'rgba(var(--text-rgb),0.55)', letterSpacing: '0.04em', marginBottom: '28px', maxWidth: '680px' }}>Vom einfachen Seil bis zur magischen Phiole — die richtige Ausrüstung entscheidet über Leben und Tod. Hier findest du alles, was ein Abenteurer auf seinen Reisen durch die Neue Welt benötigt.
 
       </p>
 
       {/* Main table */}
-      <div className="reveal-up" style={{ marginBottom: '36px', border: `1px solid rgba(124,77,255,0.15)`, borderRadius: '4px', overflow: 'hidden', background: 'rgba(10,8,28,0.6)' }}>
+      <div className="reveal-up" style={{ marginBottom: '36px', border: `1px solid rgba(124,77,255,0.15)`, borderRadius: '4px', overflow: 'hidden', background: 'rgba(var(--panel-rgb),0.6)' }}>
         <table className="eq-table" style={{ width: '100%' }}>
           <thead>
             <tr>
@@ -1645,23 +1646,23 @@ function AbenteuerContent({ accent }) {
         <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.3em', color: `${accent}55`, textTransform: 'uppercase', marginBottom: '5px' }}>Ausrüstung</div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <OctSvg size={8} color={`${accent}66`} fill={`${accent}22`} strokeWidth={1} />
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '18px', fontWeight: '300', letterSpacing: '0.2em', color: 'rgba(230,225,255,0.85)', textTransform: 'uppercase' }}>Ausrüstungspakete</h2>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '18px', fontWeight: '300', letterSpacing: '0.2em', color: 'rgba(var(--text-rgb),0.85)', textTransform: 'uppercase' }}>Ausrüstungspakete</h2>
         </div>
         <div style={{ width: '40px', height: '1px', background: `linear-gradient(90deg,${accent}77,transparent)`, marginTop: '10px', animation: 'pulse-glow 3s infinite' }} />
       </div>
 
-      <p className="reveal-up" style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: '1.9', color: 'rgba(200,190,240,0.55)', letterSpacing: '0.04em', marginBottom: '20px', maxWidth: '680px' }}>
+      <p className="reveal-up" style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: '1.9', color: 'rgba(var(--text-rgb),0.55)', letterSpacing: '0.04em', marginBottom: '20px', maxWidth: '680px' }}>
         Die Anfangsausrüstung, die du durch deine Klasse erhältst, beinhaltet eine in einem Paket zusammmengefasste Sammlung nützlicher Abenteuerausrüstung. Die Inhalte dieser Pakete sind nachfolgend aufgelistet. Wenn du deine Anfangsausrüstung mit Geld selbst zusammenstellst, kannst du ein Paket für den angegebenen Preis erwerben, was möglicherweise günstiger ist, als alle Gegenstände einzeln zu kaufen.
       </p>
 
-      <div className="reveal-up" style={{ border: `1px solid rgba(124,77,255,0.15)`, borderRadius: '4px', overflow: 'hidden', background: 'rgba(10,8,28,0.6)' }}>
+      <div className="reveal-up" style={{ border: `1px solid rgba(124,77,255,0.15)`, borderRadius: '4px', overflow: 'hidden', background: 'rgba(var(--panel-rgb),0.6)' }}>
         {AUSRUESTUNGSPAKETE.map((p, i) =>
         <div key={i} style={{ padding: '14px 18px', borderBottom: i < AUSRUESTUNGSPAKETE.length - 1 ? '1px solid rgba(124,77,255,0.08)' : 'none' }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px', marginBottom: '4px', flexWrap: 'wrap' }}>
-              <span style={{ fontFamily: 'var(--font-body)', fontWeight: '500', fontSize: '12px', color: 'rgba(220,210,255,0.9)', letterSpacing: '0.04em' }}>{p.name}</span>
+              <span style={{ fontFamily: 'var(--font-body)', fontWeight: '500', fontSize: '12px', color: 'rgba(var(--text-rgb),0.9)', letterSpacing: '0.04em' }}>{p.name}</span>
               <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: `${accent}77`, letterSpacing: '0.12em' }}>{p.kosten}</span>
             </div>
-            <p style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '11px', lineHeight: '1.75', color: 'rgba(190,180,240,0.6)' }}>{p.inhalt}</p>
+            <p style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '11px', lineHeight: '1.75', color: 'rgba(var(--text-rgb),0.6)' }}>{p.inhalt}</p>
           </div>
         )}
       </div>
@@ -1736,24 +1737,24 @@ function Sidebar({ activeCategory, onSelect, accent }) {
   }, []);
 
   return (
-    <aside ref={asideRef} style={{ width: 'var(--sidebar-w)', flexShrink: 0, position: 'fixed', left: 0, top: `${PAGE_HEADER_H}px`, height: `calc(100vh - ${PAGE_HEADER_H}px)`, borderRight: '1px solid rgba(160,140,255,0.1)', padding: '28px 0', background: 'rgba(5,4,15,0.85)', backdropFilter: 'blur(12px)', zIndex: 50, overflowY: 'auto' }}>
-      <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: 'rgba(160,140,255,0.4)', textTransform: 'uppercase', padding: '0 20px', marginBottom: '12px' }}>Ausrüstung</div>
+    <aside ref={asideRef} style={{ width: 'var(--sidebar-w)', flexShrink: 0, position: 'fixed', left: 0, top: `${PAGE_HEADER_H}px`, height: `calc(100vh - ${PAGE_HEADER_H}px)`, borderRight: '1px solid rgba(var(--accent-rgb),0.1)', padding: '28px 0', background: 'rgba(var(--bg-rgb),0.85)', backdropFilter: 'blur(12px)', zIndex: 50, overflowY: 'auto' }}>
+      <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: 'rgba(var(--accent-rgb),0.4)', textTransform: 'uppercase', padding: '0 20px', marginBottom: '12px' }}>Ausrüstung</div>
       {CATEGORIES.map((cat) => {
         const isActive = cat.id === activeCategory;
         const subItems = SECTION_ANCHORS[cat.id] || [];
         return (
           <React.Fragment key={cat.id}>
             <button onClick={() => onSelect(cat.id)}
-            style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '9px 20px', background: isActive ? `${accent}12` : 'transparent', border: 'none', borderLeft: isActive ? `2px solid ${accent}` : '2px solid transparent', cursor: 'pointer', fontFamily: 'var(--font-body)', fontWeight: isActive ? '500' : '400', fontSize: '12px', letterSpacing: '0.06em', color: isActive ? '#f0eeff' : 'rgba(200,190,240,0.6)', transition: 'all 0.15s' }}
-            onMouseEnter={(e) => {if (!isActive) {e.currentTarget.style.color = '#f0eeff';e.currentTarget.style.borderLeftColor = `${accent}55`;e.currentTarget.style.background = `${accent}08`;}}}
-            onMouseLeave={(e) => {if (!isActive) {e.currentTarget.style.color = 'rgba(200,190,240,0.6)';e.currentTarget.style.borderLeftColor = 'transparent';e.currentTarget.style.background = 'transparent';}}}>
+            style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '9px 20px', background: isActive ? `${accent}12` : 'transparent', border: 'none', borderLeft: isActive ? `2px solid ${accent}` : '2px solid transparent', cursor: 'pointer', fontFamily: 'var(--font-body)', fontWeight: isActive ? '500' : '400', fontSize: '12px', letterSpacing: '0.06em', color: isActive ? 'var(--white)' : 'rgba(var(--text-rgb),0.6)', transition: 'all 0.15s' }}
+            onMouseEnter={(e) => {if (!isActive) {e.currentTarget.style.color = 'var(--white)';e.currentTarget.style.borderLeftColor = `${accent}55`;e.currentTarget.style.background = `${accent}08`;}}}
+            onMouseLeave={(e) => {if (!isActive) {e.currentTarget.style.color = 'rgba(var(--text-rgb),0.6)';e.currentTarget.style.borderLeftColor = 'transparent';e.currentTarget.style.background = 'transparent';}}}>
               <OctSvg size={6} color={isActive ? accent : 'rgba(124,77,255,0.4)'} fill={isActive ? `${accent}44` : 'rgba(124,77,255,0.12)'} strokeWidth={1} style={{ flexShrink: 0 }} />
               <span>{cat.label}</span>
             </button>
             {isActive && subItems.map(sub => (
               <button key={sub.id} onClick={() => scrollToSection(sub.id)}
               style={{ display: 'flex', alignItems: 'center', gap: '7px', width: '100%', textAlign: 'left', padding: '5px 20px 5px 32px', background: 'transparent', border: 'none', borderLeft: '2px solid transparent', cursor: 'pointer', fontFamily: 'var(--font-body)', fontSize: '11px', letterSpacing: '0.04em', color: 'rgba(180,165,255,0.5)', transition: 'all 0.15s' }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = 'rgba(220,210,255,0.85)'; e.currentTarget.style.borderLeftColor = `${accent}44`; e.currentTarget.style.background = `${accent}07`; }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = 'rgba(var(--text-rgb),0.85)'; e.currentTarget.style.borderLeftColor = `${accent}44`; e.currentTarget.style.background = `${accent}07`; }}
               onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(180,165,255,0.5)'; e.currentTarget.style.borderLeftColor = 'transparent'; e.currentTarget.style.background = 'transparent'; }}>
                 <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: `${accent}44`, flexShrink: 0 }}>·</span>
                 <span>{sub.label}</span>
@@ -1802,7 +1803,7 @@ function App() {
           {/* Page title */}
           <div style={{ marginBottom: '36px' }}>
 
-            <h1 className="reveal-left visible" style={{ fontFamily: 'var(--font-display)', fontSize: '42px', fontWeight: '300', letterSpacing: '0.18em', color: '#f0eeff', textShadow: '0 0 30px rgba(124,77,255,0.35)' }}>Ausrüstung</h1>
+            <h1 className="reveal-left visible" style={{ fontFamily: 'var(--font-display)', fontSize: '42px', fontWeight: '300', letterSpacing: '0.18em', color: 'var(--white)', textShadow: '0 0 30px rgba(124,77,255,0.35)' }}>Ausrüstung</h1>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '12px' }}>
               <div style={{ width: '50px', height: '1px', background: 'linear-gradient(90deg,rgba(124,77,255,0.8),transparent)', animation: 'pulse-glow 3s infinite' }} />
               <OctSvg size={8} color="rgba(124,77,255,0.5)" fill="rgba(124,77,255,0.2)" strokeWidth={1} />
@@ -1815,9 +1816,9 @@ function App() {
               const isActive = cat.id === activeCategory;
               return (
                 <button key={cat.id} onClick={() => handleSelect(cat.id)}
-                style={{ padding: '5px 14px', fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: isActive ? '500' : '300', letterSpacing: '0.08em', background: isActive ? `${accent}22` : 'transparent', border: `1px solid ${isActive ? accent + '66' : 'rgba(124,77,255,0.2)'}`, color: isActive ? '#f0eeff' : 'rgba(200,190,240,0.5)', borderRadius: '2px', cursor: 'pointer', transition: 'all 0.15s' }}
-                onMouseEnter={(e) => {if (!isActive) {e.currentTarget.style.color = 'rgba(220,210,255,0.8)';e.currentTarget.style.borderColor = 'rgba(124,77,255,0.4)';}}}
-                onMouseLeave={(e) => {if (!isActive) {e.currentTarget.style.color = 'rgba(200,190,240,0.5)';e.currentTarget.style.borderColor = 'rgba(124,77,255,0.2)';}}}>
+                style={{ padding: '5px 14px', fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: isActive ? '500' : '300', letterSpacing: '0.08em', background: isActive ? `${accent}22` : 'transparent', border: `1px solid ${isActive ? accent + '66' : 'rgba(124,77,255,0.2)'}`, color: isActive ? 'var(--white)' : 'rgba(var(--text-rgb),0.5)', borderRadius: '2px', cursor: 'pointer', transition: 'all 0.15s' }}
+                onMouseEnter={(e) => {if (!isActive) {e.currentTarget.style.color = 'rgba(var(--text-rgb),0.8)';e.currentTarget.style.borderColor = 'rgba(124,77,255,0.4)';}}}
+                onMouseLeave={(e) => {if (!isActive) {e.currentTarget.style.color = 'rgba(var(--text-rgb),0.5)';e.currentTarget.style.borderColor = 'rgba(124,77,255,0.2)';}}}>
                   {cat.label}
                 </button>);
 
@@ -1850,7 +1851,7 @@ function App() {
 
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+ReactDOM.createRoot(document.getElementById('root')).render(<SiteGate><App /></SiteGate>);
 </script>
 
 

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meruria — Steckbrief</title>
+<link rel="stylesheet" href="assets/styles/global/fonts.css">
+<link rel="stylesheet" href="assets/styles/global/base.css">
+<link rel="stylesheet" href="assets/styles/pages/Steckbrief.css">
+<script src="assets/scripts/vendor/react.development.js"></script>
+<script src="assets/scripts/vendor/react-dom.development.js"></script>
+<script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/tweaks-panel-13.jsx" type="text/babel"></script>
+
+</head>
+<body>
+<div id="root"></div>
+
+
+<!-- ═══════════════════════════════════════════
+     SCRIPT 1 — Daten · ImageSlot · Atome
+     ═══════════════════════════════════════════ -->
+<script type="text/babel">
+const { useState, useRef } = React;
+
+/* ── Charakter-Daten ───────────────────────────────────────────────── */
+const CHAR = {
+  name:"Erevan Lichtpfeil",
+  class:"Magier", subclass:"Schule der Evokation", level:7,
+  race:"Halbelf", background:"Gelehrter", alignment:"Neutral Gut",
+
+  division:"Bergungsgarde", rank:"Archivar", rankLevel:3, rankMax:5,
+  deity:"Aetherius", deityDomain:"Wissen & Zeit", deityHue:55,
+
+  gender:"Männlich", age:124,
+  birthday:"14. Mondensegen, Jahr 1882 v.A.", zodiac:"Der Wanderstern",
+  birthplace:"Arkanheim", height:"1,78 m", weight:"68 kg",
+  eyes:"Silbern", hair:"Hellblond", skin:"Elfenbleich",
+
+  xp:23000, profBonus:3,
+  stats:{str:8,dex:14,con:13,int:18,wis:12,cha:10},
+  ac:13, hp:42, initiative:2, speed:9,
+
+  skills:[
+    {name:"Akrobatik",         attr:"Ges",prof:0},{name:"Arkane Kunde",       attr:"Int",prof:1},
+    {name:"Athletik",          attr:"Stä",prof:0},{name:"Auftreten",          attr:"Cha",prof:0},
+    {name:"Einschüchtern",     attr:"Cha",prof:0},{name:"Fingerfertigkeit",   attr:"Ges",prof:0},
+    {name:"Geschichte",        attr:"Int",prof:1},{name:"Heilkunde",          attr:"Wei",prof:0},
+    {name:"Heimlichkeit",      attr:"Ges",prof:0},{name:"Mit Tieren umgehen", attr:"Wei",prof:0},
+    {name:"Motiv erkennen",    attr:"Wei",prof:0},{name:"Nachforschungen",    attr:"Int",prof:1},
+    {name:"Naturkunde",        attr:"Int",prof:1},{name:"Religion",           attr:"Int",prof:1},
+    {name:"Täuschen",          attr:"Cha",prof:0},{name:"Überlebenskunst",    attr:"Wei",prof:0},
+    {name:"Überzeugen",        attr:"Cha",prof:0},{name:"Wahrnehmung",        attr:"Wei",prof:0},
+  ],
+
+  story:"Ich wurde als Kind eines Arkanheimer Gelehrten und einer Waldelfe in den Bibliothekstürmen der Hauptstadt geboren. Die ersten siebzig Jahre meines Lebens verbrachte ich damit, Bücher zu lesen — bis ich eines Abends ein Notizbuch meines Vaters öffnete und zum ersten Mal wirklich verstand, was Magie bedeutet: Sie erinnert sich an dich, nicht du an sie. Nach einem Jahrzehnt an der Akademie des Lichts schloss ich mich der Bergungsgarde an. Ich suche das uralte Zauberbuch, das meinen Vater im dritten Tiefengewölbe verschlang. Er lächelte immer, wenn er davon sprach.",
+
+  ersteTage:"Als sich meine Träumerkapsel öffnete, ...",
+
+  personality:"Ich zitiere gern aus bedeutenden Werken und finde in jedem Problem eine akademische Parallele. Manchmal ist das hilfreich. Meistens nicht.",
+  ideals:"Wissen ist Macht — wer die Magie vollständig versteht, kann die Welt nach seinem Willen formen.",
+  bonds:"Meine Forschungsnotizen sind mir wichtiger als mein eigenes Leben. Sie dürfen niemals verloren gehen.",
+  flaws:"Ich ignoriere die Gefühle anderer vollständig, sobald mein Geist an einem theoretischen Problem hängt.",
+
+  weapons:[
+    {name:"Quarterstab",  bonus:"+2",    damage:"1W6−1", type:"Stumpf"},
+    {name:"Feuerstoß",    bonus:"+7",    damage:"2W10",  type:"Feuer"},
+    {name:"Donnerwelle",  bonus:"SG 15", damage:"2W8",   type:"Donner"},
+  ],
+
+  quests:[
+    { title:"Das Schweigen unter Arkanheim", status:"abgeschlossen", year:"Jahr 3 n.A.",
+      short:"Untersuchung arkaner Anomalien im dritten Tiefengewölbe.",
+      long:"Dort fand ich Hinweise auf das Notizbuch meines Vaters. Und etwas anderes — eine Struktur in der Dunkelheit, die mich zu beobachten schien." },
+    { title:"Der Silberne Schlüssel", status:"abgeschlossen", year:"Jahr 3 n.A.",
+      short:"Bergung eines Artefakts aus den überschwemmten Ruinen von Port Silberwelle.",
+      long:"Dabei verlor ich meinen Lieblingsmantel. Das Artefakt war es wert. Ich glaube." },
+  ],
+
+  companions:[
+    { id:"comp1", name:"Schatten", type:"Magischer Vertrauter · Rabe",
+      desc:"Seit meinem dritten Studienjahr bei mir. Klüger als die meisten Menschen und deutlich weniger nervig. Versteht jede zweite meiner Witze — was für einen Raben bemerkenswert ist.",
+      hue:260 },
+  ],
+
+  freundebuch:[
+    {frage:"Meine Lieblingsfarbe",            antwort:"Das tiefe Violett des Abyssspiegels bei Mondlicht."},
+    {frage:"Mein Lieblingsessen",              antwort:"Gegrillter Mondbarsch aus dem Arkanheimer Hafen. Aber bitte frisch."},
+    {frage:"Meine Lieblingsbeschäftigung",     antwort:"Alte Schriftrollen entziffern, am liebsten allein im dritten Turm der Akademie."},
+    {frage:"Wen ich bewundere",                antwort:"Aurelia Sturmklinge — sie verwechselt Stärke nie mit Brutalität."},
+    {frage:"Mein größter Traum",               antwort:"Das Zauberbuch meines Vaters zu finden und seine Geschichte zu vollenden."},
+    {frage:"Meine größte Angst",               antwort:"Allein zu sterben, bevor ich die Wahrheit erfahre."},
+    {frage:"Wenn ich ein Tier wäre...",        antwort:"Eine Eule. Wachsam, nachtaktiv und meistens missverstanden."},
+    {frage:"Mein Motto",                       antwort:"\"Wer liest, stirbt vorbereitet.\""},
+    {frage:"Was mich auf Meruria überraschte", antwort:"Dass die Magie hier anders klingt. Buchstäblich. Sie hat einen anderen Ton."},
+  ],
+
+  contacts:[
+    { id:"k1", name:"Aurelia Sturmklinge",  role:"Anführerin der Kuratoren",  relation:"Verbündete",
+      race:"Mensch",  status:"Aktiv",    hue:150,
+      note:"Ich bewundere sie mehr als ich zugeben würde. Ihre Entscheidungen sind immer durchdacht — auch die, die wehtun. Sie sieht mich als nützlich an. Das reicht mir." },
+    { id:"k2", name:"Malachar der Graue",   role:"Königlicher Berater",       relation:"Unbekannt",
+      race:"Mensch",  status:"Aktiv",    hue:200,
+      note:"Ich bin nicht sicher, ob er mein Verbündeter oder mein größtes Problem ist. Täglich erscheinen mir beide Optionen gleich wahrscheinlich." },
+    { id:"k3", name:"Kira Schattenläuferin",role:"Informationshändlerin",     relation:"Neutral",
+      race:"Halbelf", status:"Aktiv",    hue:280,
+      note:"Nützlich. Vertrauenswürdig genug, solange man bezahlt. Ich versuche, nicht zu viel über ihre Methoden nachzudenken." },
+    { id:"k4", name:"Borvak Eisenfaust",    role:"Kommandant, Bergungsgarde", relation:"Vorgesetzter",
+      race:"Zwerg",   status:"Aktiv",    hue:45,
+      note:"Er fragt nie nach meinen Methoden, solange die Ergebnisse stimmen. Das ist die beste Arbeitsbeziehung, die ich je hatte." },
+  ],
+};
+
+/* ── Utilities ───────────────────────────── */
+function mod(v)         { return Math.floor((v-10)/2); }
+function fmtMod(n)      { return (n>=0?"+":"")+n; }
+function attrKey(a)     { return {Stä:"str",Ges:"dex",Kon:"con",Int:"int",Wei:"wis",Cha:"cha"}[a]||"str"; }
+function skillBonus(s,stats,pb) { return mod(stats[attrKey(s.attr)])+s.prof*pb; }
+
+/* ── ImageSlot — Meruria-Stil, localStorage ─ */
+function ImageSlot({ slotId, label, height, hue, portrait }) {
+  const [src, setSrc] = useState(() => {
+    try { return localStorage.getItem(`mimg-${slotId}`)||null; } catch(e) { return null; }
+  });
+  const [drag, setDrag] = useState(false);
+  const inp = useRef(null);
+  function load(file) {
+    if (!file||!file.type.startsWith("image/")) return;
+    const r = new FileReader();
+    r.onload = ev => { setSrc(ev.target.result); try { localStorage.setItem(`mimg-${slotId}`,ev.target.result); } catch(e){} };
+    r.readAsDataURL(file);
+  }
+  const h   = hue||270;
+  const ac  = `oklch(0.65 0.18 ${h})`;
+  const str = `oklch(0.65 0.18 ${h} / 0.12)`;
+  const dsh = `oklch(0.65 0.18 ${h} / ${drag?0.85:0.45})`;
+  const base = { width:"100%", height, borderRadius:3, overflow:"hidden", position:"relative",
+    border:`1px dashed ${dsh}`, cursor:"pointer", transition:"border-color .2s", flexShrink:0 };
+  const ev = { onClick:()=>inp.current.click(),
+    onDragOver:e=>{e.preventDefault();setDrag(true);},
+    onDragLeave:()=>setDrag(false),
+    onDrop:e=>{e.preventDefault();setDrag(false);load(e.dataTransfer.files[0]);} };
+  if (src) return (
+    <div style={base} {...ev}>
+      <img src={src} style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}} alt={label} />
+      <div style={{position:"absolute",bottom:5,right:7,fontFamily:"var(--font-mono)",fontSize:6.5,
+        color:"rgba(255,255,255,0.3)",background:"rgba(0,0,0,0.6)",padding:"1px 5px",borderRadius:2,letterSpacing:".12em"}}>ersetzen</div>
+      <input ref={inp} type="file" accept="image/*" style={{display:"none"}} onChange={e=>load(e.target.files[0])} />
+    </div>
+  );
+  return (
+    <div style={{...base,
+      background:`repeating-linear-gradient(-45deg,transparent,transparent 8px,${str} 8px,${str} 9px),linear-gradient(160deg,rgba(28,16,62,0.97),rgba(14,9,36,0.98))`,
+      display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:8}} {...ev}>
+      <div style={{position:"absolute",inset:0,background:`radial-gradient(ellipse at 50% 45%,oklch(0.65 0.18 ${h} / 0.17) 0%,transparent 62%)`}} />
+      {portrait
+        ? <svg viewBox="0 0 32 40" width="22" height="27" fill="none" style={{opacity:0.5,zIndex:1}}>
+            <rect x="1" y="1" width="30" height="38" rx="3" stroke={ac} strokeWidth="1.2"/>
+            <circle cx="16" cy="15" r="7" stroke={ac} strokeWidth="1" opacity="0.8"/>
+            <path d="M2 37 Q16 26 30 37" stroke={ac} strokeWidth="1" opacity="0.7"/>
+          </svg>
+        : <svg viewBox="0 0 40 30" width="26" height="20" fill="none" style={{opacity:0.5,zIndex:1}}>
+            <rect x="1" y="1" width="38" height="28" rx="2" stroke={ac} strokeWidth="1.2"/>
+            <circle cx="12" cy="11" r="4" stroke={ac} strokeWidth="1" opacity="0.8"/>
+            <path d="M1 22 L10 15 L18 20 L26 13 L39 22" stroke={ac} strokeWidth="1.1" opacity="0.8"/>
+          </svg>}
+      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".22em",zIndex:1,
+        color:`oklch(0.65 0.18 ${h} / 0.58)`,textTransform:"uppercase",textAlign:"center",padding:"0 10px"}}>
+        {(label||"artwork").toLowerCase()}</span>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:6.5,letterSpacing:".1em",zIndex:1,
+        color:`oklch(0.65 0.18 ${h} / ${drag?0.9:0.28})`,transition:"color .2s"}}>
+        {drag?"▼ loslassen":"klicken · ziehen"}</span>
+      <input ref={inp} type="file" accept="image/*" style={{display:"none"}} onChange={e=>load(e.target.files[0])} />
+    </div>
+  );
+}
+
+/* ── Atome ───────────────────────────────── */
+function SecTitle({ label }) {
+  return (
+    <div style={{marginBottom:10}}>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".28em",color:"rgba(124,77,255,0.5)",textTransform:"uppercase"}}>{label}</span>
+      <div style={{width:24,height:1,background:"linear-gradient(90deg,rgba(124,77,255,0.65),transparent)",marginTop:4}} />
+    </div>
+  );
+}
+function Card({children,style}) {
+  return <div style={{background:"var(--card-bg)",border:"1px solid rgba(124,77,255,0.2)",borderRadius:4,padding:"13px 14px",position:"relative",...style}}>{children}</div>;
+}
+function Corners({op=0.4,sz=14}) {
+  const b=`1.5px solid rgba(124,77,255,${op})`;
+  return (<>
+    <div style={{position:"absolute",top:0,left:0,  width:sz,height:sz,borderTop:b,borderLeft:b,  pointerEvents:"none"}}/>
+    <div style={{position:"absolute",top:0,right:0, width:sz,height:sz,borderTop:b,borderRight:b, pointerEvents:"none"}}/>
+    <div style={{position:"absolute",bottom:0,left:0,  width:sz,height:sz,borderBottom:b,borderLeft:b,  pointerEvents:"none"}}/>
+    <div style={{position:"absolute",bottom:0,right:0, width:sz,height:sz,borderBottom:b,borderRight:b, pointerEvents:"none"}}/>
+  </>);
+}
+function IRow({label,value,bright}) {
+  return (
+    <div style={{display:"flex",alignItems:"baseline",gap:6,padding:"3.5px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase",flex:"0 0 80px"}}>{label}</span>
+      <span style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:bright?400:300,color:bright?"var(--white)":"var(--silver)",flex:1}}>{value}</span>
+    </div>
+  );
+}
+
+Object.assign(window, { CHAR, mod, fmtMod, attrKey, skillBonus, ImageSlot, SecTitle, Card, Corners, IRow });
+</script>
+
+
+<!-- ═══════════════════════════════════════════
+     SCRIPT 2 — Sektions-Komponenten (extern)
+     ═══════════════════════════════════════════ -->
+<script src="assets/components/steckbrief-components.jsx" type="text/babel"></script>
+
+
+<!-- ═══════════════════════════════════════════
+     SCRIPT 3 — Nav · Seite · Render
+     ═══════════════════════════════════════════ -->
+<script type="text/babel">
+const { useState:useS3 } = React;
+const { CHAR, ImageSlot, SecTitle, Card, Corners, IRow,
+  DivisionRank, DeityCard, CombatCompact, AttributeGrid,
+  SkillPills, PersonalitySection, QuestCard, CompanionCard, FbCard, KontakteTablet } = window;
+const { useTweaks, TweaksPanel, TweakSection, TweakToggle } = window;
+const { SiteNav } = window;
+
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"showCompanions":true,"showQuests":true,"showKontakte":true,"showWissenswertes":true}/*EDITMODE-END*/;
+
+/* ── Divider ─────────────────────────────── */
+function Divider({ label }) {
+  return (
+    <div style={{display:"flex",alignItems:"center",gap:14,margin:"4px 22px 18px"}}>
+      <div style={{flex:1,height:1,background:"rgba(124,77,255,0.1)"}} />
+      {label && <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".28em",color:"rgba(124,77,255,0.3)",textTransform:"uppercase"}}>{label}</span>}
+      <div style={{flex:1,height:1,background:"rgba(124,77,255,0.1)"}} />
+    </div>
+  );
+}
+
+/* ── Haupt-Seite ─────────────────────────── */
+function SteckbriefPage() {
+  const char = CHAR;
+  const [tweaks,setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+  return (
+    <div style={{minHeight:"100vh",paddingTop:"var(--nav-h)"}}>
+      <SiteNav />
+
+      <TweaksPanel tweaks={tweaks} setTweak={setTweak}>
+        <TweakSection label="Sektionen">
+          <TweakToggle id="showCompanions"  label="Begleiter anzeigen" />
+          <TweakToggle id="showQuests"      label="Quests anzeigen" />
+          <TweakToggle id="showKontakte"     label="Kontakte anzeigen" />
+          <TweakToggle id="showWissenswertes" label="Wissenswertes anzeigen" />
+        </TweakSection>
+      </TweaksPanel>
+
+      {/* ── Seiten-Kopf ────────────────────── */}
+      <div style={{padding:"18px 28px 15px",borderBottom:"1px solid rgba(124,77,255,0.1)"}}>
+        <div style={{fontFamily:"var(--font-mono)",fontSize:9,letterSpacing:".3em",color:"rgba(124,77,255,0.5)",textTransform:"uppercase",marginBottom:6}}>
+          Meruria · Charaktere
+        </div>
+        <div style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between",flexWrap:"wrap",gap:12}}>
+          <div>
+            <h1 style={{fontFamily:"var(--font-display)",fontWeight:400,fontSize:28,letterSpacing:".22em",
+              color:"var(--white)",textTransform:"uppercase",textShadow:"0 0 32px rgba(124,77,255,0.2)"}}>
+              {char.name}
+            </h1>
+            <div style={{display:"flex",gap:6,marginTop:8,flexWrap:"wrap"}}>
+              {[`${char.class} · ${char.subclass}`,`Stufe ${char.level}`,char.race,char.background,`${char.division} · ${char.rank} ${["I","II","III","IV","V"][char.rankLevel-1]}`]
+                .map((t,i)=>(
+                  <span key={i} style={{fontFamily:"var(--font-mono)",fontSize:8.5,padding:"2px 9px",
+                    background:"rgba(124,77,255,0.1)",border:"1px solid rgba(124,77,255,0.28)",borderRadius:2,
+                    color:"rgba(200,190,240,0.82)",letterSpacing:".1em"}}>{t}</span>
+                ))}
+            </div>
+          </div>
+          <div style={{textAlign:"right"}}>
+            <div style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".2em",color:"rgba(124,77,255,0.35)",textTransform:"uppercase",marginBottom:2}}>Erfahrungspunkte</div>
+            <div style={{fontFamily:"var(--font-mono)",fontSize:22,color:"rgba(124,77,255,0.65)"}}>{char.xp.toLocaleString("de-DE")}</div>
+          </div>
+        </div>
+        <div style={{marginTop:10,width:36,height:1,background:"rgba(124,77,255,0.55)"}} />
+      </div>
+
+      {/* ── 3-Spalten-Grid ────────────────── */}
+      <div style={{display:"grid",gridTemplateColumns:"220px 1fr 290px",gap:14,padding:"16px 22px 0",alignItems:"start"}}>
+
+        {/* LINKS — Identität & Infos */}
+        <div style={{display:"flex",flexDirection:"column",gap:11}}>
+
+          <Card>
+            <SecTitle label="Identität" />
+            <IRow label="Volk"        value={char.race}        bright />
+            <IRow label="Klasse"      value={char.class}       bright />
+            <IRow label="Subklasse"   value={char.subclass} />
+            <IRow label="Hintergrund" value={char.background} />
+            <IRow label="Gesinnung"   value={char.alignment}   bright />
+            <IRow label="Geschlecht"  value={char.gender} />
+            <IRow label="Herkunft"    value={char.birthplace} />
+          </Card>
+
+          <Card>
+            <SecTitle label="Persönliche Daten" />
+            <IRow label="Geburtstag"   value={char.birthday} />
+            <IRow label="Sternzeichen" value={char.zodiac}  bright />
+            <IRow label="Alter"        value={`${char.age} Jahre`} />
+            <IRow label="Größe"        value={char.height} />
+            <IRow label="Gewicht"      value={char.weight} />
+            <IRow label="Augen"        value={char.eyes} />
+            <IRow label="Haare"        value={char.hair} />
+            <IRow label="Haut"         value={char.skin} />
+          </Card>
+
+          <DivisionRank char={char} />
+          <DeityCard     char={char} />
+          <CombatCompact char={char} />
+        </div>
+
+        {/* MITTE — Geschichte & Stats */}
+        <div style={{display:"flex",flexDirection:"column",gap:11}}>
+
+          {/* Über mich */}
+          <Card style={{position:"relative"}}>
+            <Corners op={0.28} />
+            <SecTitle label="Über mich" />
+            <p style={{fontFamily:"var(--font-body)",fontSize:13,fontWeight:300,color:"var(--silver)",lineHeight:1.9,textWrap:"pretty"}}>
+              {char.story}
+            </p>
+          </Card>
+
+          {/* Erste Tage */}
+          <div style={{background:"var(--card-bg)",borderLeft:"2px solid rgba(124,77,255,0.5)",
+            border:"1px solid rgba(124,77,255,0.2)",borderLeftWidth:3,
+            borderRadius:"0 4px 4px 0",padding:"13px 14px",position:"relative"}}>
+            <SecTitle label="Meine ersten Tage auf Meruria" />
+            <p style={{fontFamily:"var(--font-body)",fontSize:12.5,fontWeight:300,color:"var(--silver)",lineHeight:1.88,textWrap:"pretty",fontStyle:"italic"}}>
+              „{char.ersteTage}"
+            </p>
+          </div>
+
+          <AttributeGrid char={char} />
+          <SkillPills    char={char} />
+
+          {/* Begleiter */}
+          {tweaks.showCompanions && char.companions.length > 0 && (
+            <div>
+              <div style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".28em",color:"rgba(124,77,255,0.45)",textTransform:"uppercase",marginBottom:8}}>Begleiter</div>
+              <div style={{width:24,height:1,background:"linear-gradient(90deg,rgba(124,77,255,0.65),transparent)",marginBottom:10}} />
+              <div style={{display:"flex",flexDirection:"column",gap:10}}>
+                {char.companions.map(comp=><CompanionCard key={comp.id} comp={comp}/>)}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* RECHTS — Portrait & Persönlichkeit */}
+        <div style={{display:"flex",flexDirection:"column",gap:11}}>
+          <div style={{position:"relative",borderRadius:4,overflow:"hidden",border:"1px solid rgba(124,77,255,0.38)"}}>
+            <Corners op={0.58} sz={18} />
+            <ImageSlot slotId="char-portrait" label="Charakter-Portrait" height={310} hue={270} portrait />
+          </div>
+          <PersonalitySection char={char} />
+        </div>
+      </div>
+
+      {/* ── Quests ──────────────────────────── */}
+      {tweaks.showQuests && (
+        <div style={{padding:"22px 22px 8px"}}>
+          <Divider label="Erledigte Quests" />
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))",gap:12}}>
+            {char.quests.map((q,i)=><QuestCard key={i} quest={q}/>)}
+          </div>
+        </div>
+      )}
+
+      {/* ── Kontakte ────────────────────────── */}
+      {tweaks.showKontakte && char.contacts && char.contacts.length > 0 && (
+        <div style={{padding:"22px 22px 8px"}}>
+          <Divider label="Kontakte" />
+          <KontakteTablet char={char} />
+        </div>
+      )}
+
+      {/* ── Wissenswertes ───────────────────── */}
+      {tweaks.showWissenswertes && (
+        <div style={{padding:"22px 22px 24px"}}>
+          {/* Header */}
+          <div style={{display:"flex",alignItems:"baseline",justifyContent:"space-between",gap:20,marginBottom:20,flexWrap:"wrap"}}>
+            <div>
+              <div style={{fontFamily:"var(--font-mono)",fontSize:9,letterSpacing:".28em",color:"rgba(124,77,255,0.45)",textTransform:"uppercase",marginBottom:4}}>Wissenswertes</div>
+              <div style={{width:28,height:1,background:"linear-gradient(90deg,rgba(124,77,255,0.65),transparent)"}} />
+            </div>
+            <p style={{fontFamily:"var(--font-body)",fontSize:12,fontWeight:300,fontStyle:"italic",
+              color:"rgba(190,182,225,0.45)",flex:1,minWidth:220,textAlign:"right"}}>
+              Was mich ausmacht — in meinen eigenen Worten.
+            </p>
+          </div>
+          {/* Grid */}
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))",gap:12}}>
+            {char.freundebuch.map((item,i)=><FbCard key={i} item={item} index={i}/>)}
+          </div>
+        </div>
+      )}
+
+      {/* ── Footer ──────────────────────────── */}
+      <div style={{borderTop:"1px solid rgba(124,77,255,0.07)",margin:"22px 0 0",padding:"13px 28px",display:"flex",justifyContent:"space-between"}}>
+        <span style={{fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(124,77,255,0.26)",letterSpacing:".1em"}}>Meruria — Steckbrief</span>
+        <span style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(124,77,255,0.2)"}}>D&amp;D 5e · {char.race} {char.class} Stufe {char.level}</span>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<SteckbriefPage/>);
+</script>
+
+
+
+</body></html>

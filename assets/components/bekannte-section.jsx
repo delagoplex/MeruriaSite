@@ -21,16 +21,16 @@ function _BekanntePopup({ bekannte, divisionName, accent, onClose }) {
   return (
     <div style={{ position:'fixed', inset:0, zIndex:500, display:'flex', alignItems:'center', justifyContent:'center', padding:'20px' }}
       onClick={e=>{ if(e.target===e.currentTarget) onClose(); }}>
-      <div style={{ position:'absolute', inset:0, background:'rgba(5,4,15,0.88)', backdropFilter:'blur(6px)' }} onClick={onClose} />
-      <div style={{ position:'relative', zIndex:1, width:'100%', maxWidth:'680px', maxHeight:'80vh', background:'rgba(10,8,28,0.97)', border:`1px solid ${accent}30`, borderRadius:'6px', display:'flex', flexDirection:'column', boxShadow:'0 24px 80px rgba(0,0,0,0.7)' }}>
+      <div style={{ position:'absolute', inset:0, background:'rgba(var(--bg-rgb),0.88)', backdropFilter:'blur(6px)' }} onClick={onClose} />
+      <div style={{ position:'relative', zIndex:1, width:'100%', maxWidth:'680px', maxHeight:'80vh', background:'rgba(var(--panel-rgb),0.97)', border:`1px solid ${accent}30`, borderRadius:'6px', display:'flex', flexDirection:'column', boxShadow:'0 24px 80px rgba(0,0,0,0.7)' }}>
         <div style={{ padding:'18px 24px', borderBottom:`1px solid ${accent}18`, display:'flex', alignItems:'center', justifyContent:'space-between', flexShrink:0 }}>
           <div>
             <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:`${accent}77`, textTransform:'uppercase', marginBottom:'4px' }}>Lore · Meruria</div>
             <div style={{ fontFamily:'var(--font-display)', fontSize:'16px', fontWeight:'300', letterSpacing:'0.16em', color:'var(--white)', textTransform:'uppercase' }}>Bekannte Mitglieder · {divisionName}</div>
           </div>
-          <button onClick={onClose} style={{ background:'none', border:'none', cursor:'pointer', color:'rgba(200,192,232,0.4)', padding:'4px', transition:'color 0.2s', lineHeight:1 }}
+          <button onClick={onClose} style={{ background:'none', border:'none', cursor:'pointer', color:'rgba(var(--text2-rgb),0.4)', padding:'4px', transition:'color 0.2s', lineHeight:1 }}
             onMouseEnter={e=>e.currentTarget.style.color='var(--white)'}
-            onMouseLeave={e=>e.currentTarget.style.color='rgba(200,192,232,0.4)'}>
+            onMouseLeave={e=>e.currentTarget.style.color='rgba(var(--text2-rgb),0.4)'}>
             <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M4 4l8 8M12 4l-8 8"/></svg>
           </button>
         </div>
@@ -75,7 +75,7 @@ function BekannteSection({ division, sidebar = false }) {
         </button>
 
         {/* Featured member */}
-        <div style={{ border:`1px solid ${accent}28`, borderRadius:'6px', background:`linear-gradient(135deg,${accent}09 0%,rgba(10,8,28,0.9) 100%)`, overflow:'hidden', transition:'border-color 0.2s' }}
+        <div style={{ border:`1px solid ${accent}28`, borderRadius:'6px', background:`linear-gradient(135deg,${accent}09 0%,rgba(var(--panel-rgb),0.9) 100%)`, overflow:'hidden', transition:'border-color 0.2s' }}
           onMouseEnter={e=>e.currentTarget.style.borderColor=`${accent}55`}
           onMouseLeave={e=>e.currentTarget.style.borderColor=`${accent}28`}>
           <_BekannteImg label="Porträt" width="100%" height="520px" accent={accent} style={{ borderRadius:'5px 5px 0 0', border:'none', borderBottom:`1px solid ${accent}22` }} />
@@ -90,7 +90,7 @@ function BekannteSection({ division, sidebar = false }) {
         {/* Other members grid */}
         <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(160px,1fr))', gap:'12px' }}>
           {bekannte.slice(1, 7).map((b, i) => (
-            <div key={i} style={{ padding:'16px', border:`1px solid ${accent}18`, borderRadius:'4px', background:'rgba(10,8,28,0.7)', transition:'border-color 0.2s, transform 0.2s' }}
+            <div key={i} style={{ padding:'16px', border:`1px solid ${accent}18`, borderRadius:'4px', background:'rgba(var(--panel-rgb),0.7)', transition:'border-color 0.2s, transform 0.2s' }}
               onMouseEnter={e=>{e.currentTarget.style.borderColor=`${accent}40`;e.currentTarget.style.transform='translateY(-2px)';}}
               onMouseLeave={e=>{e.currentTarget.style.borderColor=`${accent}18`;e.currentTarget.style.transform='translateY(0)';}}>
               <_BekannteImg label={b.name} width="100%" height="100px" accent={accent} style={{ borderRadius:'3px', marginBottom:'12px' }} />
@@ -111,7 +111,7 @@ function BekannteSection({ division, sidebar = false }) {
 
       <div className="reveal" style={{ marginBottom:'36px' }}>
         <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:`${accent}55`, textTransform:'uppercase', marginBottom:'16px' }}>Bekanntestes Mitglied</div>
-        <div style={{ display:'grid', gridTemplateColumns:'160px 1fr', gap:'28px', padding:'28px', border:`1px solid ${accent}28`, borderRadius:'6px', background:`linear-gradient(135deg,${accent}09 0%,rgba(10,8,28,0.9) 100%)`, transition:'border-color 0.2s' }}
+        <div style={{ display:'grid', gridTemplateColumns:'160px 1fr', gap:'28px', padding:'28px', border:`1px solid ${accent}28`, borderRadius:'6px', background:`linear-gradient(135deg,${accent}09 0%,rgba(var(--panel-rgb),0.9) 100%)`, transition:'border-color 0.2s' }}
           onMouseEnter={e=>e.currentTarget.style.borderColor=`${accent}55`}
           onMouseLeave={e=>e.currentTarget.style.borderColor=`${accent}28`}>
           <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'10px' }}>
@@ -138,7 +138,7 @@ function BekannteSection({ division, sidebar = false }) {
 
       <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(260px,1fr))', gap:'14px' }}>
         {bekannte.slice(1,4).map((b,i) => (
-          <div key={i} className="reveal" style={{ padding:'18px', border:`1px solid ${accent}18`, borderRadius:'4px', background:'rgba(10,8,28,0.7)', transition:'border-color 0.2s, transform 0.2s' }}
+          <div key={i} className="reveal" style={{ padding:'18px', border:`1px solid ${accent}18`, borderRadius:'4px', background:'rgba(var(--panel-rgb),0.7)', transition:'border-color 0.2s, transform 0.2s' }}
             onMouseEnter={e=>{e.currentTarget.style.borderColor=`${accent}40`;e.currentTarget.style.transform='translateY(-2px)';}}
             onMouseLeave={e=>{e.currentTarget.style.borderColor=`${accent}18`;e.currentTarget.style.transform='translateY(0)';}}>
             <_BekannteImg label={b.name} width="100%" height="120px" accent={accent} style={{ borderRadius:'3px', marginBottom:'14px' }} />
