@@ -159,7 +159,7 @@ window.GODS_DATA = {
       name: "Selunara", title: "Göttin der Monde, der Gezeiten und der Neuanfänge",
       domain: "Domäne der Arkana · Domäne der Dämmerung · Domäne des Friedens · Domäne des Grabes · Domäne des Lichts · Domäne der Natur · Domäne des Sturms",
       palette: ["#020814","#2040a0","#287AFF","#c0d8f8"],
-      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Selunara.png",
       backgroundSrc: "assets/images/gods/backgrounds/BG_Eiritha.webp",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><path d="M14 50 Q20 30 40 28 Q60 26 66 50" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M14 50 Q20 62 40 64 Q60 66 66 50" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="40" cy="46" r="8" stroke="currentColor" stroke-width="1"/><line x1="40" y1="14" x2="40" y2="28" stroke="currentColor" stroke-width="1" opacity="0.5"/></svg>`,
@@ -171,7 +171,7 @@ window.GODS_DATA = {
       name: "Aetherius", title: "Gott der Illusionen, der Magie und der Wunder",
       domain: "Domäne der Arkana · Domäne der Dämmerung · Domäne des Lichts · Domäne der List",
       palette: ["#0b020d","#7c3197","#e848d2","#edd0f2"],
-      insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
+      insigniaSrc: "assets/images/gods/insignia/Insignie_Aetherius.png",
       backgroundSrc: "assets/images/gods/backgrounds/BG_Eiritha.webp",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><rect x="14" y="14" width="24" height="24" stroke="currentColor" stroke-width="1.5"/><rect x="42" y="14" width="24" height="24" stroke="currentColor" stroke-width="1.5"/><rect x="14" y="42" width="24" height="24" stroke="currentColor" stroke-width="1.5"/><rect x="42" y="42" width="24" height="24" stroke="currentColor" stroke-width="1.5"/><circle cx="40" cy="40" r="3" fill="currentColor" opacity="0.7"/></svg>`,
