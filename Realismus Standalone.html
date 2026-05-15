@@ -384,8 +384,79 @@ function MunitionRoller(){
 
 // ── TAB CONTENT COMPONENTS ────────────────────────────────────────────────────
 
+const STANDARD_SPRACHEN = [
+  {name:'Gemein',      typ:'Menschen, Halblinge, Halborks', schrift:'Gemein',     desc:'Die am weitesten verbreitete Sprache auf dem Kontinent. Sie dient als Handels- und Verkehrssprache, wird von fast allen Kulturvölkern als Zweitsprache gesprochen und ist arm an Nuancen, aber reich an Lehnwörtern aus anderen Sprachen.'},
+  {name:'Zwergisch',   typ:'Zwerge',                        schrift:'Zwergisch',  desc:'Eine der ältesten Sprachen Merúrias — hart, abgehackt, voller Konsonanten. Zwerge nutzen sie für Verträge, Runen und Steingravuren. Ein Zwerg, der Zwergisch spricht, spricht nie schneller als nötig.'},
+  {name:'Elfisch',     typ:'Elfen',                         schrift:'Elfisch',    desc:'Fließend und melodisch mit langen Vokalen. Elfisch besitzt eine reiche literarische Tradition und wird in Poesie, Magie und Gesang eingesetzt. Hochelfisch und Waldelfen-Dialekte unterscheiden sich erheblich in Betonung und Rhythmus.'},
+  {name:'Riesisch',    typ:'Riesen, Oger',                  schrift:'Zwergisch',  desc:'Laut, krachend, für enge Innenräume ungeeignet. Riesen und Oger verwenden einfache, direkte Konstruktionen. Viele Schimpfwörter im Gemeinen haben riesische Wurzeln.'},
+  {name:'Gnomisch',    typ:'Gnome',                         schrift:'Zwergisch',  desc:'Schnell gesprochen, voller technischer Begriffe und Wortneuschöpfungen. Gnome erweitern ihren Wortschatz ständig um neue Begriffe für Erfindungen und Entdeckungen — was Nicht-Gnome oft verwirrt.'},
+  {name:'Goblinisch',  typ:'Goblinoide',                    schrift:'Zwergisch',  desc:'Rau und pragmatisch. Goblinisch besitzt einen umfangreichen Wortschatz für Hinterhalt, Flucht und Verhandlung — kaum aber für abstrakte Konzepte wie Ehre oder Vertrauen.'},
+  {name:'Halblingisch',typ:'Halblinge',                     schrift:'Gemein',     desc:'Warm und fließend, mit vielen Diminutiven und Kosenamen. Halblinge sprechen es vor allem in der Familie; gegenüber Fremden wechseln sie meist ins Gemeine — Halblingisch gilt als Zeichen von Vertrauen.'},
+  {name:'Orkisch',     typ:'Orks',                          schrift:'Zwergisch',  desc:'Guttural und expressiv. Orks drücken Rang, Stärke und Loyalität durch Betonung und Lautstärke aus. Viele Begriffe aus dem Orkischen haben keinen direkten Übersetzungsäquivalent im Gemeinen.'},
+];
+
+const EXOTISCHE_SPRACHEN = [
+  {name:'Abyssisch',    typ:'Dämonen',                      schrift:'Infernalisch', desc:'Die Sprache des Abgrunds klingt wie ein Schrei aus dem tiefsten Loch der Welt. Voller Imperative — Abyssbewohner feilschen selten; sie drohen.'},
+  {name:'Celestisch',   typ:'Himmlische Wesen',             schrift:'Himmlisch',    desc:'Rein, resonant, fast musikalisch — wie Glocken in einer leeren Kathedrale. Es gilt als unmöglich, in Celestisch zu lügen; die Sprache selbst trägt Wahrheit als inhärentes Merkmal.'},
+  {name:'Drakonisch',   typ:'Drachen, Drachengeborene',     schrift:'Drakonisch',   desc:'Eine der ältesten Sprachen der Welt. Langsam, majestätisch, mit rollenden Rs und tiefen Kehlauten. Arkane Formeln sind häufig in Drakonisch verfasst, da die Sprache magische Konzepte präziser ausdrückt als andere.'},
+  {name:'Tiefensprache',typ:'Gedankenschinder, Betrachter', schrift:'—',            desc:'Keine echte Sprache im üblichen Sinne — eine Mischung aus Telepathie, Tentakelbewegungen und subsonischen Frequenzen. Nur Wesen mit aberranter Physiologie können sie vollständig sprechen und hören.'},
+  {name:'Infernalisch', typ:'Teufel',                       schrift:'Infernalisch', desc:'Präzise, kalt und legalistisch. Die Sprache der Teufel ist darauf ausgelegt, keine Schlupflöcher zu lassen — und gleichzeitig neue zu schaffen. Jedes Wort trägt eine zweite Bedeutungsebene.'},
+  {name:'Sylvanisch',   typ:'Feenwesen',                    schrift:'Elfisch',      desc:'Geerdet und zeitlos. Sylvanisch klingt wie raschelnde Blätter und rieselndes Wasser. Feenwesen verwenden es für Rituale, Segen und Flüche — selten für alltägliche Unterhaltung.'},
+  {name:'Gemeinsprache der Unterreiche', typ:'Unterreichbewohner', schrift:'Zwergisch', desc:'Eine Pidginsprache aus dem Unterreich, zusammengesetzt aus Elementen des Zwergischen, Elfischen und der Tiefensprache. Wenig Grammatik, viele Gesten. Notwendig zum Überleben unter der Erde.'},
+  {name:'Urtümlich',    typ:'Elementare',                   schrift:'Drakonisch',   desc:'Urtümlich ist die Sprache der Elementare. Wer Urtümlich spricht, versteht automatisch alle vier Dialekte und wird von deren Sprechern verstanden.', dialekte:[
+    {d:'Auranisch', e:'Luft-Elementare, Sylphen',    b:'Klingt wie Wind durch Baumkronen — melodisch, flüchtig, schwer zu fixieren. Luftgeister nutzen ihn für Gesang und Prophezeiung.'},
+    {d:'Aquanisch', e:'Wasser-Elementare, Nixen',    b:'Fließend und rhythmisch wie Wellen auf Stein. Tiefseebewohner sprechen ihn in langen, gezogenen Silben.'},
+    {d:'Ignisch',   e:'Feuer-Elementare, Efreet',    b:'Abrupt, knisternd, voller Hitze — wie berstende Kohle. Kurze Sätze, hohe Intensität. Efreet verwenden ihn auch als Handelssprache in der Feuerebene.'},
+    {d:'Terranisch',e:'Erd-Elementare, Steinriesen', b:'Schwer, langsam, unerbittlich — klingt wie Stein auf Stein. Erdgiganten bevorzugen ihn für Verträge und Schwüre.'},
+  ]},
+];
+
+function LangRow({lang, openLang, toggle}){
+  const isOpen = openLang === lang.name;
+  return(
+    <>
+      <tr style={{cursor:'pointer',background:isOpen?'rgba(124,77,255,0.08)':'transparent',transition:'background 0.2s'}} onClick={()=>toggle(lang.name)}>
+        <td style={{display:'flex',alignItems:'center',gap:'7px',color:'rgba(220,210,255,0.9)',fontWeight:'400'}}>
+          <span style={{display:'inline-flex',alignItems:'center',justifyContent:'center',width:'14px',height:'14px',borderRadius:'50%',border:'1px solid rgba(124,77,255,0.44)',fontSize:'9px',color:'rgba(160,140,255,0.8)',flexShrink:0,fontFamily:'var(--font-mono)',transition:'transform 0.15s',transform:isOpen?'rotate(45deg)':'none'}}>+</span>
+          {lang.name}
+        </td>
+        <td style={{color:'rgba(200,190,240,0.55)'}}>{lang.typ}</td>
+        <td style={{fontFamily:'var(--font-mono)',fontSize:'10px',color:'rgba(124,77,255,0.7)'}}>{lang.schrift}</td>
+      </tr>
+      {isOpen&&(
+        <tr>
+          <td colSpan={3} style={{padding:'0',background:'rgba(124,77,255,0.04)',borderTop:'1px solid rgba(124,77,255,0.12)',animation:'fadeInUp 0.18s ease both'}}>
+            <div style={{padding:'14px 20px'}}>
+              <div style={{fontFamily:'var(--font-display)',fontSize:'13px',fontWeight:'300',letterSpacing:'0.16em',color:'var(--white)',textTransform:'uppercase',marginBottom:'6px'}}>{lang.name}</div>
+              <p style={{fontFamily:'var(--font-body)',fontWeight:'300',fontSize:'12px',lineHeight:'1.8',color:'rgba(200,190,240,0.55)',marginBottom:lang.dialekte?'14px':'0'}}>{lang.desc}</p>
+              {lang.dialekte&&(
+                <div style={{border:'1px solid rgba(124,77,255,0.2)',borderRadius:'3px',overflow:'hidden',background:'rgba(10,8,28,0.5)'}}>
+                  <table className="eq-table" style={{width:'100%'}}>
+                    <thead><tr><th>Dialekt</th><th>Gesprochen von</th><th>Beschreibung</th></tr></thead>
+                    <tbody>
+                      {lang.dialekte.map(r=>(
+                        <tr key={r.d}>
+                          <td style={{fontFamily:'var(--font-display)',fontSize:'11px',letterSpacing:'0.1em',color:'rgba(200,190,240,0.9)',fontWeight:'400',whiteSpace:'nowrap'}}>{r.d}</td>
+                          <td style={{color:'rgba(200,190,240,0.5)',whiteSpace:'nowrap'}}>{r.e}</td>
+                          <td style={{fontFamily:'var(--font-body)',fontWeight:'300',fontSize:'11px',color:'rgba(200,190,240,0.5)',lineHeight:'1.65'}}>{r.b}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          </td>
+        </tr>
+      )}
+    </>
+  );
+}
+
 function KommunikationContent(){
-  const [primOpen, setPrimOpen] = useState(false);
+  const [openLang, setOpenLang] = useState(null);
+  const toggle = (name) => setOpenLang(o => o === name ? null : name);
+
   return(
   <div>
     <SH mono="Regelwerk" title="Kommunikation"/>
@@ -402,67 +473,13 @@ function KommunikationContent(){
       <div>
         <div style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.22em',color:'rgba(124,77,255,0.55)',textTransform:'uppercase',marginBottom:'8px'}}>Standardsprachen</div>
         <TW><table className="eq-table"><thead><tr><th>Sprache</th><th>Typisch für</th><th>Schrift</th></tr></thead><tbody>
-          {[
-            ['Gemein','Menschen, Halblinge, Halborks','Gemein'],
-            ['Zwergisch','Zwerge','Zwergisch'],
-            ['Elfisch','Elfen','Elfisch'],
-            ['Riesisch','Riesen, Oger','Zwergisch'],
-            ['Gnomisch','Gnome','Zwergisch'],
-            ['Goblinisch','Goblinoide','Zwergisch'],
-            ['Halblingisch','Halblinge','Gemein'],
-            ['Orkisch','Orks','Zwergisch'],
-          ].map(([l,t,s])=><tr key={l}><td>{l}</td><td style={{color:'rgba(200,190,240,0.55)'}}>{t}</td><td style={{fontFamily:'var(--font-mono)',fontSize:'10px',color:'rgba(124,77,255,0.7)'}}>{s}</td></tr>)}
+          {STANDARD_SPRACHEN.map(lang=><LangRow key={lang.name} lang={lang} openLang={openLang} toggle={toggle}/>)}
         </tbody></table></TW>
       </div>
       <div>
         <div style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.22em',color:'rgba(124,77,255,0.55)',textTransform:'uppercase',marginBottom:'8px'}}>Exotische Sprachen</div>
         <TW><table className="eq-table"><thead><tr><th>Sprache</th><th>Typisch für</th><th>Schrift</th></tr></thead><tbody>
-          {[
-            ['Abyssal','Dämonen','Infernalisch'],
-            ['Himmlisch','Himmlische Wesen','Himmlisch'],
-            ['Drakonisch','Drachen, Drachengeborene','Drakonisch'],
-            ['Tiefensprache','Gedankenschinder, Betrachter','—'],
-            ['Infernalisch','Teufel','Infernalisch'],
-            ['Sylvanisch','Feenwesen','Elfisch'],
-            ['Unterreich','Unterreichbewohner','Zwergisch'],
-          ].map(([l,t,s])=><tr key={l}><td>{l}</td><td style={{color:'rgba(200,190,240,0.55)'}}>{t}</td><td style={{fontFamily:'var(--font-mono)',fontSize:'10px',color:'rgba(124,77,255,0.7)'}}>{s}</td></tr>)}
-          <tr style={{cursor:'pointer',background:primOpen?'rgba(124,77,255,0.08)':'transparent',transition:'background 0.2s'}} onClick={()=>setPrimOpen(o=>!o)}>
-            <td style={{display:'flex',alignItems:'center',gap:'7px',color:'rgba(220,210,255,0.9)',fontWeight:'400'}}>
-              <span style={{display:'inline-block',width:'14px',height:'14px',lineHeight:'14px',textAlign:'center',borderRadius:'50%',border:'1px solid rgba(124,77,255,0.44)',fontSize:'9px',color:'rgba(160,140,255,0.8)',flexShrink:0,fontFamily:'var(--font-mono)',transition:'transform 0.15s',transform:primOpen?'rotate(45deg)':'none'}}>+</span>
-              Primordial
-            </td>
-            <td style={{color:'rgba(200,190,240,0.55)'}}>Elementare</td>
-            <td style={{fontFamily:'var(--font-mono)',fontSize:'10px',color:'rgba(124,77,255,0.7)'}}>Drakonisch</td>
-          </tr>
-          {primOpen&&(
-            <tr>
-              <td colSpan={3} style={{padding:'0',background:'rgba(124,77,255,0.04)',borderTop:'1px solid rgba(124,77,255,0.12)',animation:'fadeInUp 0.18s ease both'}}>
-                <div style={{padding:'18px 20px'}}>
-                  <div style={{fontFamily:'var(--font-display)',fontSize:'14px',fontWeight:'300',letterSpacing:'0.16em',color:'var(--white)',textTransform:'uppercase',marginBottom:'8px'}}>Primordial</div>
-                  <p style={{fontFamily:'var(--font-body)',fontWeight:'300',fontSize:'12px',lineHeight:'1.8',color:'rgba(200,190,240,0.55)',marginBottom:'16px'}}>Primordial ist die Sprache der Elementare. Wer Primordial spricht, versteht automatisch alle vier Dialekte und wird von deren Sprechern verstanden.</p>
-                  <div style={{border:'1px solid rgba(124,77,255,0.2)',borderRadius:'3px',overflow:'hidden',background:'rgba(10,8,28,0.5)'}}>
-                    <table className="eq-table" style={{width:'100%'}}>
-                      <thead><tr><th>Dialekt</th><th>Gesprochen von</th><th>Beschreibung</th></tr></thead>
-                      <tbody>
-                        {[
-                          {d:'Auranisch', e:'Luft-Elementare, Sylphen',    b:'Klingt wie Wind durch Baumkronen — melodisch, flüchtig, schwer zu fixieren. Luftgeister nutzen ihn für Gesang und Prophezeiung.'},
-                          {d:'Aquanisch', e:'Wasser-Elementare, Nixen',    b:'Fließend und rhythmisch wie Wellen auf Stein. Tiefseebewohner sprechen ihn in langen, gezogenen Silben.'},
-                          {d:'Ignisch',   e:'Feuer-Elementare, Efreet',    b:'Abrupt, knisternd, voller Hitze — wie berstende Kohle. Kurze Sätze, hohe Intensität. Efreet verwenden ihn auch als Handelssprache in der Feuerebene.'},
-                          {d:'Terranisch',e:'Erd-Elementare, Steinriesen', b:'Schwer, langsam, unerbittlich — klingt wie Stein auf Stein. Erdgiganten bevorzugen ihn für Verträge und Schwüre.'},
-                        ].map(r=>(
-                          <tr key={r.d}>
-                            <td style={{fontFamily:'var(--font-display)',fontSize:'11px',letterSpacing:'0.1em',color:'rgba(200,190,240,0.9)',fontWeight:'400',whiteSpace:'nowrap'}}>{r.d}</td>
-                            <td style={{color:'rgba(200,190,240,0.5)',whiteSpace:'nowrap'}}>{r.e}</td>
-                            <td style={{fontFamily:'var(--font-body)',fontWeight:'300',fontSize:'11px',color:'rgba(200,190,240,0.5)',lineHeight:'1.65'}}>{r.b}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </td>
-            </tr>
-          )}
+          {EXOTISCHE_SPRACHEN.map(lang=><LangRow key={lang.name} lang={lang} openLang={openLang} toggle={toggle}/>)}
         </tbody></table></TW>
       </div>
     </div>
@@ -1208,14 +1225,14 @@ function SichtContent() {
   }, []);
 
   const EYE_TYPES = [
-    { label:'Humanoid',   radius:120, dunkel:false, tiefensicht:true,  color:'rgba(124,77,255,1)',  example:'Menschen, Goliaths …' },
-    { label:'Elfisch',    radius:135, dunkel:true,  tiefensicht:true,  color:'rgba(80,200,160,1)',  example:'Elfen, Halbelfen …' },
-    { label:'Drakonisch', radius:160, dunkel:true,  tiefensicht:true,  color:'rgba(200,80,40,1)',   example:'Drachenblütige' },
-    { label:'Katzenartig',radius:200, dunkel:true,  tiefensicht:true,  color:'rgba(216,152,88,1)',  example:'Tabaxi' },
-    { label:'Reptilisch', radius:240, dunkel:false, tiefensicht:false, color:'rgba(90,184,120,1)',  example:'Echsenmenschen …' },
-    { label:'Vogelartig', radius:300, dunkel:false, tiefensicht:false, color:'rgba(26,184,160,1)',  example:'Aarakocra, Kenku' },
-    { label:'Pferd/Stier',radius:330, dunkel:false, tiefensicht:false, color:'rgba(176,144,64,1)',  example:'Minotauren, Zentauren' },
-    { label:'Hasenartig', radius:340, dunkel:false, tiefensicht:false, color:'rgba(224,144,160,1)', example:'Harengons' },
+    { label:'Humanoid',   radius:120, dunkel:false, color:'rgba(124,77,255,1)',  example:'Menschen, Goliaths …' },
+    { label:'Elfisch',    radius:135, dunkel:true,  color:'rgba(80,200,160,1)',  example:'Elfen, Halbelfen …' },
+    { label:'Drakonisch', radius:160, dunkel:true,  color:'rgba(200,80,40,1)',   example:'Drachenblütige' },
+    { label:'Katzenartig',radius:200, dunkel:true,  color:'rgba(216,152,88,1)',  example:'Tabaxi' },
+    { label:'Reptilisch', radius:240, dunkel:false, color:'rgba(90,184,120,1)',  example:'Echsenmenschen …' },
+    { label:'Vogelartig', radius:300, dunkel:false, color:'rgba(26,184,160,1)',  example:'Aarakocra, Kenku' },
+    { label:'Pferd/Stier',radius:330, dunkel:false, color:'rgba(176,144,64,1)',  example:'Minotauren, Zentauren' },
+    { label:'Hasenartig', radius:340, dunkel:false, color:'rgba(224,144,160,1)', example:'Harengons' },
   ];
 
   const filtered = allRaces.filter(r => {
@@ -1233,7 +1250,7 @@ function SichtContent() {
   return (
     <div>
       <SH mono="Realismus" title="Sicht &amp; Wahrnehmung"/>
-      <Txt c={<>Verschiedene Rassen nehmen die Welt aufgrund ihrer Physiologie grundlegend unterschiedlich wahr. <Acc c="Sichtweite"/> und <Acc c="Sichtfeld"/> hängen von der Augenstellung ab — Beutetiere haben ein fast vollständiges Panorama, während Raubtiere ein schmales, aber tiefenscharfes Blickfeld haben. <Acc c="Dunkelsicht"/> erlaubt es, in Dunkelheit wie in schwachem Licht zu sehen, jedoch ohne Farben. <Acc c="Tiefensicht"/> beschreibt die Fähigkeit, Abstände und Entfernungen präzise einzuschätzen — sie fehlt bei Rassen, deren Augen seitlich stehen.</>}/>
+      <Txt c={<>Verschiedene Rassen nehmen die Welt aufgrund ihrer Physiologie grundlegend unterschiedlich wahr. <Acc c="Sichtweite"/> und <Acc c="Sichtfeld"/> hängen von der Augenstellung ab — Beutetiere haben ein fast vollständiges Panorama, während Raubtiere ein schmales, aber tiefenscharfes Blickfeld haben. <Acc c="Dunkelsicht"/> erlaubt es, in Dunkelheit wie in schwachem Licht zu sehen, jedoch ohne Farben.</>}/>
 
       <SubH id="sec-sicht-augentypen">Augentypen</SubH>
       <Txt c="Der Sichtradius hängt vom Augentyp der Rasse ab. Vogelartige Augen ermöglichen fast rundumsichtiges Panorama auf Kosten der Tiefenwahrnehmung; nach vorne gerichtete Raubtieraugen liefern scharfe Tiefenwahrnehmung bei schmalem Gesichtsfeld."/>
@@ -1244,7 +1261,6 @@ function SichtContent() {
             <div style={{ fontFamily:'var(--font-display)', fontSize:'9px', letterSpacing:'0.13em', color:'rgba(210,200,255,0.88)', textTransform:'uppercase', textAlign:'center', marginTop:'2px' }}>{et.label}</div>
             <div style={{ fontFamily:'var(--font-mono)', fontSize:'10px', color:et.color.replace('1)','0.85)'), textAlign:'center', letterSpacing:'0.05em' }}>{et.radius}°</div>
             <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'2px' }}>
-              {!et.tiefensicht && <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:'rgba(255,165,90,0.65)', textAlign:'center', letterSpacing:'0.08em' }}>Keine Tiefensicht</div>}
               {et.dunkel && <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:'rgba(100,140,255,0.6)', textAlign:'center', letterSpacing:'0.08em' }}>Dunkelsicht</div>}
             </div>
             <div style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'9px', color:'rgba(200,190,240,0.3)', textAlign:'center', lineHeight:'1.4', marginTop:'2px' }}>{et.example}</div>
@@ -1269,7 +1285,6 @@ function SichtContent() {
             <th style={{width:'10%'}}>Weite</th>
             <th style={{width:'10%'}}>Feld</th>
             <th style={{width:'13%'}}>Dunkelsicht</th>
-            <th style={{width:'13%'}}>Tiefensicht</th>
             <th>Besonderheit</th>
           </tr></thead>
           <tbody>
@@ -1284,7 +1299,6 @@ function SichtContent() {
                   <td style={{fontFamily:'var(--font-mono)',fontSize:'10px',color:'rgba(94,232,208,0.75)'}}>{s.weite != null ? `${s.weite} m` : '—'}</td>
                   <td style={{fontFamily:'var(--font-mono)',fontSize:'10px',color:'rgba(160,140,255,0.8)'}}>{s.radius != null ? `${s.radius}°` : '—'}</td>
                   <td style={{fontFamily:'var(--font-mono)',fontSize:'10px',color:s.dunkel>0?'rgba(110,150,255,0.8)':'rgba(200,190,240,0.25)'}}>{s.dunkel>0?`${s.dunkel} m`:'—'}</td>
-                  <td style={{fontFamily:'var(--font-mono)',fontSize:'10px',color:s.tiefensicht?'rgba(100,220,150,0.75)':'rgba(255,145,90,0.7)'}}>{s.tiefensicht!=null?(s.tiefensicht?'Ja':'Nein'):'—'}</td>
                   <td style={{fontFamily:'var(--font-body)',fontWeight:'300',fontSize:'11px',color:'rgba(200,190,240,0.42)',lineHeight:'1.5'}}>{s.notiz||'—'}</td>
                 </tr>
               );
@@ -1305,7 +1319,7 @@ function SichtContent() {
                 {[['Normalform', sN], ['Wandelform', sW]].map(([label, s], i) => (
                   <div key={label} style={{ padding:'14px 16px', borderRight:i===0?'1px solid rgba(124,77,255,0.1)':'none' }}>
                     <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.18em', color:'rgba(124,77,255,0.45)', textTransform:'uppercase', marginBottom:'10px' }}>{label}</div>
-                    {[['Sichtweite', s.weite!=null?`${s.weite} m`:'—'], ['Sichtfeld', s.radius!=null?`${s.radius}°`:'—'], ['Dunkelsicht', s.dunkel>0?`${s.dunkel} m`:'—'], ['Tiefensicht', s.tiefensicht!=null?(s.tiefensicht?'Ja':'Nein'):'—']].map(([k,v])=>(
+                    {[['Sichtweite', s.weite!=null?`${s.weite} m`:'—'], ['Sichtfeld', s.radius!=null?`${s.radius}°`:'—'], ['Dunkelsicht', s.dunkel>0?`${s.dunkel} m`:'—']].map(([k,v])=>(
                       <div key={k} style={{ display:'flex', justifyContent:'space-between', padding:'4px 0', borderBottom:'1px solid rgba(124,77,255,0.06)' }}>
                         <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.12em', color:'rgba(160,140,255,0.45)', textTransform:'uppercase' }}>{k}</span>
                         <span style={{ fontFamily:'var(--font-mono)', fontSize:'10px', color:'rgba(200,190,240,0.75)' }}>{v}</span>

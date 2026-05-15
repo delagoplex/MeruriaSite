@@ -168,9 +168,9 @@ function NavItem({ tab }) {
           {tab.items.map((item, i) =>
             <React.Fragment key={i}>
               {item.highlight ? (
-                <a href={item.href} style={{ display:'block', padding:'10px 18px', fontFamily:'var(--font-body)', fontWeight:'500', fontSize:'12px', letterSpacing:'0.1em', color:'#c9b8ff', textDecoration:'none', transition:'color 0.15s, padding-left 0.15s, background 0.15s', textShadow:'0 0 10px rgba(124,77,255,0.7), 0 0 20px rgba(124,77,255,0.35)', background:'rgba(124,77,255,0.07)' }}
+                <a href={item.href} style={{ display:'block', padding:'10px 18px', fontFamily:'var(--font-body)', fontWeight:'500', fontSize:'12px', letterSpacing:'0.1em', color:'#c9b8ff', textDecoration:'none', transition:'color 0.15s, padding-left 0.15s, background 0.15s', textShadow:'0 0 10px rgba(124,77,255,0.7), 0 0 20px rgba(124,77,255,0.35)', background:'rgba(124,77,255,0.18)' }}
                   onMouseEnter={e => { e.currentTarget.style.color='var(--white)'; e.currentTarget.style.background='rgba(124,77,255,0.18)'; e.currentTarget.style.paddingLeft='24px'; e.currentTarget.style.textShadow='0 0 14px rgba(124,77,255,1), 0 0 28px rgba(124,77,255,0.6)'; }}
-                  onMouseLeave={e => { e.currentTarget.style.color='#c9b8ff'; e.currentTarget.style.background='rgba(124,77,255,0.07)'; e.currentTarget.style.paddingLeft='18px'; e.currentTarget.style.textShadow='0 0 10px rgba(124,77,255,0.7), 0 0 20px rgba(124,77,255,0.35)'; }}>
+                  onMouseLeave={e => { e.currentTarget.style.color='#c9b8ff'; e.currentTarget.style.background='rgba(124,77,255,0.18)'; e.currentTarget.style.paddingLeft='18px'; e.currentTarget.style.textShadow='0 0 10px rgba(124,77,255,0.7), 0 0 20px rgba(124,77,255,0.35)'; }}>
                   {item.label}
                 </a>
               ) : item.dividerAfter && item.glitch !== false ? (
@@ -203,7 +203,7 @@ function NavItem({ tab }) {
                   </span>
                 </a>
               )}
-              {item.dividerAfter && <div style={{ height: '1px', background: 'rgba(var(--accent-rgb),0.2)', margin: '2px 0' }} />}
+              {item.dividerAfter && <div style={{ height: '1px', background: 'rgba(var(--accent-rgb),0.2)', margin: '2px 0 0' }} />}
             </React.Fragment>
           )}
         </div>
