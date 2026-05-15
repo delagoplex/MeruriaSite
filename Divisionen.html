@@ -10,13 +10,15 @@
 <script src="assets/scripts/vendor/react-dom.development.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
 <script src="assets/components/tweaks-panel-13.jsx" type="text/babel"></script>
+<script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.jsx" type="text/babel"></script>
 
 </head>
 <body>
 <div id="root"></div>
 <script type="text/babel">
 const { useState, useEffect, useRef, useCallback } = React;
-const { useTweaks, TweaksPanel, TweakSection, TweakToggle } = window;
+const { useTweaks, TweaksPanel, TweakSection, TweakToggle, SiteNav, SiteGate } = window;
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"showParticles": true}/*EDITMODE-END*/;
 
@@ -31,37 +33,6 @@ function hexPoints(s) {
   return pts.join(' ');
 }
 
-// ── NAV DATA ─────────────────────────────────────────────
-const NAV = [
-  { id: 'spielerhandbuch', label: 'Spielerhandbuch', items: [
-    { label: 'Einleitung', href: '#' },
-    { label: 'Charaktererstellung', href: 'Charaktererstellung.html' },
-    { label: 'Regeln', href: '#' },
-    { label: 'Ausrüstung', href: 'Ausrüstung.html' },
-  ]},
-  { id: 'enzyklopaedie', label: 'Enzyklopädie', items: [
-    { label: 'Gottheiten', href: 'Gottheiten.html' },
-    { label: 'Völker', href: '#' },
-    { label: 'Orte', href: '#' },
-    { label: 'Geschichte', href: '#' },
-  ]},
-  { id: 'divisionen', label: 'Divisionen', items: [
-    { label: 'Übersicht', href: 'Divisionen-Uebersicht.html', dividerAfter: true },
-    { label: 'I — Die Kuratoren',      href: 'Divisionen.html' },
-    { label: 'II — Die Sturmritter',   href: 'Sturmritter.html' },
-    { label: 'III — Die Sentinels',    href: 'Sentinels.html' },
-    { label: 'IV — Die Friedenshüter', href: 'Friedenshueter.html' },
-    { label: 'V — Die Outfitters',     href: 'Outfitters.html' },
-    { label: 'VI — Die Pathfinders',   href: 'Pathfinders.html' },
-    { label: 'VII — Die Quellensucher',href: 'Quellensucher.html' },
-    { label: 'VIII — Die Bergungsgarde', href: 'Bergungsgarde.html' },
-  ]},
-  { id: 'tab5', label: 'Tab', items: [
-    { label: 'Seite 1', href: '#' },
-    { label: 'Seite 2', href: '#' },
-  ]},
-];
-
 // ── DIVISION DATA ─────────────────────────────────────────
 const DIVISIONS = [
   {
@@ -69,56 +40,64 @@ const DIVISIONS = [
     beschreibung: 'Die Archivar*innen des Planeten – kein Tier, keine Pflanze, kein Mineral soll unverzeichnet bleiben. Feldkuratoren treten jetzt täglich vor die Stadttore und befüllen das noch fast leere Gewölbe des Wissens.',
     leiter: { kuerzel: 'EL', name: 'Elara Voss', titel: 'Archivat',
       note: 'Spricht über Meruria wie über einen alten Freund, dem sie noch nicht alle Geheimnisse entlockt hat.' },
-    accent: '#3dbf8c', bgStart: '#020e08', href: 'Divisionen.html',
+    mitglieder: { gesamt: null, nsc: null, sc: null },
+    accent: '#3dbf8c', bgStart: '#020e08', href: 'divisionen/Die Kuratoren.html',
   },
   {
     nummer: 'II', name: 'Die Sturmritter', subtitle: 'Jagd gefährlicher Kreaturen',
     beschreibung: 'Das Schwert der Kolonie: Bedrohungen eliminieren, bevor sie Schaden anrichten. Vom Patrouillendienst bis zur Hochrisikojagd auf Apex-Bestien – sie halten die Grenzen Velundras frei.',
     leiter: { kuerzel: 'CA', name: 'Cassian Vael', titel: 'Kriegsmarschall',
       note: 'Kämpft lieber an der Seite seiner Division als hinter einem Schreibtisch – und erinnert sich an jeden Geburtstag seiner Truppleiter.' },
-    accent: '#f06040', bgStart: '#0f0603', href: 'Sturmritter.html',
+    mitglieder: { gesamt: null, nsc: null, sc: null },
+    accent: '#f06040', bgStart: '#0f0603', href: 'divisionen/Sturmritter.html',
   },
   {
     nummer: 'III', name: 'Die Sentinels', subtitle: 'Schutz, Rettung & Verteidigung',
     beschreibung: 'Die Sentinels stehen zwischen dem Leben der Kolonisten und den Gefahren Merurias. Eskorte, Rettung, Wachposten – sie sichern jede Route und jeden Außenposten, rund um die Uhr.',
     leiter: { kuerzel: 'YO', name: 'Yolanda Kress', titel: 'Aegis',
       note: 'Führt mit Autorität und Wärme – die erste Achtstundenwache nach der Landung hielt sie persönlich ab.' },
-    accent: '#6ec6f0', bgStart: '#030810', href: 'Sentinels.html',
+    mitglieder: { gesamt: null, nsc: null, sc: null },
+    accent: '#6ec6f0', bgStart: '#030810', href: 'divisionen/Sentinels.html',
   },
   {
     nummer: 'IV', name: 'Die Friedenshüter', subtitle: 'Bürgeranliegen & sozialer Zusammenhalt',
     beschreibung: 'Das Herz der Kolonie. Sie sorgen dafür, dass aus einer Ansammlung gestrandeter Überlebender eine funktionierende Gemeinschaft wird – von der Schlichtung bis zum Stadtfest.',
     leiter: { kuerzel: 'SA', name: 'Saoirse Fenn', titel: 'Konsul',
       note: 'Die angenehmste Person, mit der man streiten kann – weil sie zuhört und trotzdem ihren Standpunkt nicht aufgibt.' },
-    accent: '#c47fa8', bgStart: '#0d0509', href: 'Friedenshueter.html',
+    mitglieder: { gesamt: null, nsc: null, sc: null },
+    accent: '#c47fa8', bgStart: '#0d0509', href: 'divisionen/Friedenshueter.html',
   },
   {
     nummer: 'V', name: 'Die Outfitters', subtitle: 'Waffen-, Rüstungs- & Zubehörentwicklung',
     beschreibung: 'Die Schmiede der Kolonie – und deutlich mehr. Waffen, Rüstungen, Tränke und Heilmittel werden hier entwickelt, gefertigt und unter realen Bedingungen getestet.',
     leiter: { kuerzel: 'GR', name: 'Gretha Morun', titel: 'Chefschmied',
       note: 'Kennt jedes Stück, das die Schmiede je verlassen hat – die Narben an ihren Händen trägt sie als Auszeichnung.' },
-    accent: '#d4681a', bgStart: '#0d0602', href: 'Outfitters.html',
+    mitglieder: { gesamt: null, nsc: null, sc: null },
+    accent: '#d4681a', bgStart: '#0d0602', href: 'divisionen/Outfitters.html',
   },
   {
     nummer: 'VI', name: 'Die Pathfinders', subtitle: 'Erkundung des Planeten',
     beschreibung: 'Die Augen der Kolonie. Erstbegehung unbekannter Gebiete, Installation von Datensonden, Erstellung von Lageberichten. Meruria wartet auf ihre Karten.',
     leiter: { kuerzel: 'TO', name: 'Tomas Veyra', titel: 'Kartograph',
       note: 'Redet wenig, aber wenn er spricht, hören alle zu – trägt immer eine physische Karte bei sich.' },
-    accent: '#c8b800', bgStart: '#0a0900', href: 'Pathfinders.html',
+    mitglieder: { gesamt: null, nsc: null, sc: null },
+    accent: '#c8b800', bgStart: '#0a0900', href: 'divisionen/Pathfinders.html',
   },
   {
     nummer: 'VII', name: 'Die Quellensucher', subtitle: 'Ressourcenabbau & Sicherung',
     beschreibung: 'Ohne sie würde die Kolonie innerhalb von Wochen versiegen. Sie spüren Ressourcenvorkommen auf, erschließen sie und sichern die langfristige Versorgung aller Divisionen.',
     leiter: { kuerzel: 'HA', name: 'Hadur Keln', titel: 'Quellenmeister',
       note: 'War einer der Ersten, die nach der Landung nach draußen gingen – nicht aus Abenteuerlust, sondern weil jemand musste.' },
-    accent: '#1aacb8', bgStart: '#020a0b', href: 'Quellensucher.html',
+    mitglieder: { gesamt: null, nsc: null, sc: null },
+    accent: '#1aacb8', bgStart: '#020a0b', href: 'divisionen/Quellensucher.html',
   },
   {
     nummer: 'VIII', name: 'Die Bergungsgarde', subtitle: 'Wrackteile bergen & Träumer retten',
     beschreibung: 'Sie rettet nicht nur Ressourcen, sondern Leben. In den Trümmern des Weißen Wals schlummern noch Träumer – die Bergungsgarde findet und befreit sie. Jeden Tag.',
     leiter: { kuerzel: 'RE', name: 'Reun Malvar', titel: 'Bergungsadmiral',
       note: 'Kennt jeden Geretteten beim Namen – alle, die in den ersten zwei Wochen aus ihren Kapseln befreit wurden.' },
-    accent: '#8b5e3c', bgStart: '#090503', href: 'Bergungsgarde.html',
+    mitglieder: { gesamt: null, nsc: null, sc: null },
+    accent: '#8b5e3c', bgStart: '#090503', href: 'divisionen/Bergungsgarde.html',
   },
 ];
 
@@ -208,78 +187,6 @@ function useScrollReveal() {
   }, []);
 }
 
-// ── NAV ITEM ──────────────────────────────────────────────
-function NavItem({ tab }) {
-  const [open, setOpen] = useState(false);
-  const [glitchKey, setGlitchKey] = useState(0);
-  const [glitchActive, setGlitchActive] = useState(false);
-  const timer = useRef(null);
-  const glitchInterval = useRef(null);
-  const glitchTimeout = useRef(null);
-  const isActive = tab.id === 'divisionen';
-  const dur = '1.4s';
-
-  const fireGlitch = () => {
-    setGlitchActive(false);
-    clearTimeout(glitchTimeout.current);
-    glitchTimeout.current = setTimeout(() => { setGlitchKey(k=>k+1); setGlitchActive(true); }, 20);
-  };
-  const show = () => {
-    clearTimeout(timer.current);
-    if (!open) {
-      setOpen(true);
-      clearInterval(glitchInterval.current); clearTimeout(glitchTimeout.current);
-      glitchTimeout.current = setTimeout(() => { fireGlitch(); glitchInterval.current = setInterval(fireGlitch, 2800); }, 400);
-    }
-  };
-  const hide = () => {
-    timer.current = setTimeout(() => { setOpen(false); setGlitchActive(false); clearInterval(glitchInterval.current); }, 300);
-  };
-  useEffect(() => () => { clearTimeout(timer.current); clearTimeout(glitchTimeout.current); clearInterval(glitchInterval.current); }, []);
-
-  return (
-    <div onMouseEnter={show} onMouseLeave={hide} style={{ position:'relative' }}>
-      <button
-        style={{ fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:'400', letterSpacing:'0.18em', padding:'10px 20px', background: isActive ? 'rgba(124,77,255,0.1)' : 'transparent', border: isActive ? '1px solid rgba(160,140,255,0.45)' : '1px solid rgba(160,140,255,0.15)', color: isActive ? '#c9b8ff' : 'rgba(200,190,240,0.7)', cursor:'pointer', borderRadius:'3px', transition:'all 0.2s', textTransform:'uppercase', whiteSpace:'nowrap' }}
-        onMouseEnter={e=>{e.currentTarget.style.color='#f0eeff';e.currentTarget.style.borderColor='rgba(160,140,255,0.45)';e.currentTarget.style.background='rgba(124,77,255,0.1)';}}
-        onMouseLeave={e=>{e.currentTarget.style.color=isActive?'#c9b8ff':'rgba(200,190,240,0.7)';e.currentTarget.style.borderColor=isActive?'rgba(160,140,255,0.45)':'rgba(160,140,255,0.15)';e.currentTarget.style.background=isActive?'rgba(124,77,255,0.1)':'transparent';}}>
-        {tab.label}
-      </button>
-      {open && (
-        <div onMouseEnter={show} onMouseLeave={hide} style={{ position:'absolute', top:'calc(100% + 6px)', left:0, minWidth:'210px', background:'rgba(8,6,22,0.96)', border:'1px solid rgba(160,140,255,0.2)', borderRadius:'4px', boxShadow:'0 8px 32px rgba(0,0,0,0.6)', animation:'slideDown 0.18s ease forwards', zIndex:200, backdropFilter:'blur(12px)', overflow:'hidden' }}>
-          {tab.items.map((item, i) => (
-            <React.Fragment key={i}>
-              {item.dividerAfter ? (
-                <div style={{ position:'relative', overflow:'hidden' }}>
-                  {glitchActive && <div key={`bga-${glitchKey}`} aria-hidden="true" style={{ position:'absolute', inset:0, pointerEvents:'none', zIndex:0, animation:`neu-bg-glitch ${dur} ease forwards` }} />}
-                  {glitchActive && <div key={`bgb-${glitchKey}`} aria-hidden="true" style={{ position:'absolute', inset:0, pointerEvents:'none', zIndex:0, animation:`neu-bg-glitch2 ${dur} ease forwards` }} />}
-                  {glitchActive && <div key={`sc-${glitchKey}`} aria-hidden="true" style={{ position:'absolute', left:0, right:0, height:'2px', background:'rgba(200,185,255,0.7)', pointerEvents:'none', zIndex:1, animation:`neu-scanline ${dur} ease forwards` }} />}
-                  <div style={{ position:'relative', zIndex:2 }}>
-                    {glitchActive && <div key={`txa-${glitchKey}`} aria-hidden="true" style={{ position:'absolute', inset:0, padding:'10px 18px', fontFamily:'var(--font-body)', fontWeight:'500', fontSize:'12px', letterSpacing:'0.1em', color:'#c9b8ff', pointerEvents:'none', zIndex:1, animation:`neu-txt-a ${dur} ease forwards` }}>{item.label}</div>}
-                    {glitchActive && <div key={`txb-${glitchKey}`} aria-hidden="true" style={{ position:'absolute', inset:0, padding:'10px 18px', fontFamily:'var(--font-body)', fontWeight:'500', fontSize:'12px', letterSpacing:'0.1em', color:'#7c4dff', pointerEvents:'none', zIndex:1, animation:`neu-txt-b ${dur} ease forwards` }}>{item.label}</div>}
-                    <a key={`lnk-${glitchKey}`} href={item.href} style={{ display:'block', padding:'10px 18px', fontFamily:'var(--font-body)', fontWeight:'500', fontSize:'12px', letterSpacing:'0.1em', color:'#c9b8ff', textDecoration:'none', textShadow:'0 0 10px rgba(124,77,255,0.8)', background:'rgba(124,77,255,0.08)', position:'relative', zIndex:2, transition:'all 0.15s', ...(glitchActive?{animation:`neu-txt-main ${dur} ease forwards`}:{}) }}
-                      onMouseEnter={e=>{e.currentTarget.style.color='#f0eeff';e.currentTarget.style.background='rgba(124,77,255,0.18)';e.currentTarget.style.paddingLeft='24px';}}
-                      onMouseLeave={e=>{e.currentTarget.style.color='#c9b8ff';e.currentTarget.style.background='rgba(124,77,255,0.08)';e.currentTarget.style.paddingLeft='18px';}}>
-                      {item.label}
-                    </a>
-                  </div>
-                </div>
-              ) : (
-                <a href={item.href} style={{ display:'block', padding:'10px 18px', fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', letterSpacing:'0.1em', color:'rgba(200,190,240,0.65)', textDecoration:'none', borderBottom: i < tab.items.length-1 ? '1px solid rgba(160,140,255,0.08)' : 'none', transition:'all 0.15s' }}
-                  onMouseEnter={e=>{e.currentTarget.style.color='#f0eeff';e.currentTarget.style.background='rgba(124,77,255,0.12)';e.currentTarget.style.paddingLeft='24px';}}
-                  onMouseLeave={e=>{e.currentTarget.style.color='rgba(200,190,240,0.65)';e.currentTarget.style.background='transparent';e.currentTarget.style.paddingLeft='18px';}}>
-                  {item.label}
-                </a>
-              )}
-              {item.dividerAfter && <div style={{ height:'1px', background:'rgba(160,140,255,0.18)', margin:'2px 0' }} />}
-            </React.Fragment>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
 // ── DIVISION CARD ─────────────────────────────────────────
 function DivisionCard({ div, delay }) {
   const [hov, setHov] = useState(false);
@@ -352,16 +259,16 @@ function DivisionCard({ div, delay }) {
 
           {/* Separator with hex dot */}
           <div style={{ display:'flex', alignItems:'center', gap:'8px', marginBottom:'14px', position:'relative', zIndex:1 }}>
+            <svg width="10" height="10" viewBox="0 0 10 10"><polygon points={hexPoints(10)} fill={`${acc}44`} stroke={acc} strokeWidth="0.8" /></svg>
             <div style={{ flex:1, height:'1px', background:`linear-gradient(90deg, ${acc}44, rgba(124,77,255,0.15), transparent)` }} />
-            <svg width="5" height="5" viewBox="0 0 5 5"><polygon points={hexPoints(5)} fill={`${acc}44`} stroke={acc} strokeWidth="0.6" /></svg>
           </div>
 
           {/* Leader block */}
           <div style={{ display:'flex', alignItems:'flex-start', gap:'11px', position:'relative', zIndex:1 }}>
             <div style={{ flexShrink:0 }}>
-              <svg width="34" height="34" viewBox="0 0 34 34">
-                <polygon points={hexPoints(34)} fill={`${acc}1a`} stroke={acc} strokeWidth="0.7" opacity="0.9" />
-                <text x="17" y="21" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8" fill={acc} opacity="0.95">{div.leiter.kuerzel}</text>
+              <svg width="105" height="105" viewBox="0 0 68 68">
+                <polygon points={hexPoints(68)} fill={`${acc}1a`} stroke={acc} strokeWidth="0.7" opacity="0.9" />
+                <text x="34" y="40" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="14" fill={acc} opacity="0.95">{div.leiter.kuerzel}</text>
               </svg>
             </div>
             <div style={{ flex:1, minWidth:0 }}>
@@ -374,9 +281,9 @@ function DivisionCard({ div, delay }) {
           </div>
 
           {/* Zur Division cue */}
-          <div style={{ display:'flex', justifyContent:'flex-end', marginTop:'16px', position:'relative', zIndex:1 }}>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em',
-              color: hov ? acc : `${acc}44`,
+          <div style={{ display:'flex', justifyContent:'flex-end', marginTop:'0px', position:'relative', zIndex:1 }}>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:'12px', letterSpacing:'0.22em',
+              color: hov ? acc : `${acc}65`,
               textTransform:'uppercase', transition:'color 0.3s' }}>Zur Division →</span>
           </div>
 
@@ -414,60 +321,25 @@ function App() {
         </div>
       </div>
 
-      {/* ── NAV BAR ── */}
-      <div style={{ position:'sticky', top:0, zIndex:100, width:'100%',
-        background:'rgba(5,4,15,0.92)', borderBottom:'1px solid rgba(160,140,255,0.1)', backdropFilter:'blur(16px)' }}>
-        <div style={{ display:'flex', alignItems:'center', padding:'0 32px', height:'52px' }}>
-          <a href="Meruria.html" style={{ textDecoration:'none', marginRight:'32px', flexShrink:0, whiteSpace:'nowrap' }}>
-            <span style={{ fontFamily:'var(--font-display)', fontSize:'20px', fontWeight:'300', letterSpacing:'0.3em', color:'#f0eeff', textShadow:'0 0 28px rgba(124,77,255,0.55)', animation:'flicker-mid 9s infinite' }}>MERURIA</span>
-          </a>
-          <nav style={{ display:'flex', gap:'6px', alignItems:'center', flex:1 }}>
-            {NAV.map(tab => <NavItem key={tab.id} tab={tab} />)}
-          </nav>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', color:'rgba(160,140,255,0.35)', letterSpacing:'0.15em', flexShrink:0 }}>DIVISIONEN-ARCHIV</div>
-        </div>
-      </div>
+      <SiteNav rightLabel="DIVISIONEN-ARCHIV" />
 
       {/* ── MAIN ── */}
       <div style={{ position:'relative', zIndex:5, maxWidth:'1180px', margin:'0 auto', padding:'56px 40px 80px' }}>
 
         {/* Page hero */}
+          {/* Decorative line */}
         <div className="reveal-up" style={{ marginBottom:'52px', textAlign:'center', position:'relative' }}>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.32em', color:'rgba(160,140,255,0.45)', textTransform:'uppercase', marginBottom:'14px' }}>
-            Velundra · Tag 14 nach der Landung
-          </div>
+            <div style={{ display:'flex', alignItems:'center', gap:'12px', justifyContent:'center', marginBottom:'22px' }}>
+                <div style={{ width:'60px', height:'1px', background:'linear-gradient(270deg, rgba(124,77,255,0.6), transparent)' }} />
+                <svg width="8" height="8" viewBox="0 0 8 8"><polygon points={hexPoints(8)} fill="rgba(124,77,255,0.35)" stroke="rgba(160,140,255,0.6)" strokeWidth="0.8" /></svg>
+                <div style={{ width:'60px', height:'1px', background:'linear-gradient(90deg, rgba(124,77,255,0.6), transparent)' }} />
+            </div>
           <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(30px,4vw,52px)', fontWeight:'300', letterSpacing:'0.2em', color:'#f0eeff', textShadow:'0 0 50px rgba(124,77,255,0.4)', marginBottom:'18px', lineHeight:1.15 }}>
             Die Acht Divisionen
           </h1>
-          {/* Decorative line */}
-          <div style={{ display:'flex', alignItems:'center', gap:'12px', justifyContent:'center', marginBottom:'22px' }}>
-            <div style={{ width:'60px', height:'1px', background:'linear-gradient(270deg, rgba(124,77,255,0.6), transparent)' }} />
-            <svg width="8" height="8" viewBox="0 0 8 8"><polygon points={hexPoints(8)} fill="rgba(124,77,255,0.35)" stroke="rgba(160,140,255,0.6)" strokeWidth="0.8" /></svg>
-            <div style={{ width:'8px', height:'1px', background:'rgba(124,77,255,0.4)', animation:'pulse-glow 2s infinite' }} />
-            <svg width="5" height="5" viewBox="0 0 5 5"><polygon points={hexPoints(5)} fill="rgba(160,140,255,0.2)" stroke="rgba(160,140,255,0.4)" strokeWidth="0.6" /></svg>
-            <div style={{ width:'8px', height:'1px', background:'rgba(124,77,255,0.4)', animation:'pulse-glow 2s infinite 0.4s' }} />
-            <svg width="8" height="8" viewBox="0 0 8 8"><polygon points={hexPoints(8)} fill="rgba(124,77,255,0.35)" stroke="rgba(160,140,255,0.6)" strokeWidth="0.8" /></svg>
-            <div style={{ width:'60px', height:'1px', background:'linear-gradient(90deg, rgba(124,77,255,0.6), transparent)' }} />
-          </div>
           <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'13px', lineHeight:1.9, color:'rgba(200,190,240,0.45)', letterSpacing:'0.06em', maxWidth:'520px', margin:'0 auto' }}>
-            An Tag 5 gegründet. Alle acht Divisionen sind operabel und tragen gemeinsam das Überleben der Kolonie.
+            Alle acht Divisionen sind operabel und arbeiten gemeinsam, um das Überleben der Kolonisten auf Meruria zu sichern.
           </p>
-        </div>
-
-        {/* Status strip */}
-        <div className="reveal-up" style={{ transitionDelay:'0.1s', display:'flex', gap:'0', marginBottom:'44px', border:'1px solid rgba(160,140,255,0.12)', borderRadius:'3px', overflow:'hidden' }}>
-          {[
-            { label:'Divisionen', value:'VIII', sub:'Gegründet Tag 5' },
-            { label:'Status', value:'Operabel', sub:'Alle Divisionen aktiv' },
-            { label:'Standort', value:'Velundra', sub:'Hauptstadt der Kolonie' },
-            { label:'Kolonialrat', value:'Tag 11', sub:'Erste formelle Sitzung' },
-          ].map((s, i) => (
-            <div key={i} style={{ flex:1, padding:'14px 20px', borderRight: i < 3 ? '1px solid rgba(160,140,255,0.1)' : 'none', background: i % 2 === 0 ? 'rgba(124,77,255,0.04)' : 'transparent', textAlign:'center' }}>
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.22em', color:'rgba(160,140,255,0.4)', textTransform:'uppercase', marginBottom:'4px' }}>{s.label}</div>
-              <div style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'400', letterSpacing:'0.15em', color:'rgba(240,238,255,0.8)', marginBottom:'2px' }}>{s.value}</div>
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:'6.5px', letterSpacing:'0.15em', color:'rgba(160,140,255,0.3)', textTransform:'uppercase' }}>{s.sub}</div>
-            </div>
-          ))}
         </div>
 
         {/* Cards grid */}
@@ -493,7 +365,7 @@ function App() {
   );
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+ReactDOM.createRoot(document.getElementById('root')).render(<SiteGate><App /></SiteGate>);
 </script>
 
 

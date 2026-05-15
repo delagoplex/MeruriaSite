@@ -12,6 +12,7 @@
 <script src="assets/components/nav.jsx" type="text/babel"></script>
 <script src="assets/components/site-gate.jsx" type="text/babel"></script>
 <script src="assets/components/tweaks-panel-13.jsx" type="text/babel"></script>
+<script src="assets/scripts/data/zauber-data.js"></script>
 
 </head>
 <body>
@@ -140,7 +141,365 @@ const { ImageSlot, SecTitle, Card, Corners, IRow,
 const { useTweaks, TweaksPanel, TweakSection, TweakToggle } = window;
 const { SiteNav, SiteGate } = window;
 
-const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"showCompanions":true,"showQuests":true,"showKontakte":true,"showWissenswertes":true}/*EDITMODE-END*/;
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"showCompanions":true,"showQuests":true,"showKontakte":true,"showWissenswertes":true,"showZauber":true}/*EDITMODE-END*/;
+
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+
+const KLASSEN_SPELL = ['Barbar','Barde','Druide','Hexenmeister','Kämpfer','Kleriker','Magier','Magieschmied','Mönch','Paladin','Schurke','Waldläufer','Zauberer'];
+
+function extractHealingDice(beschreibung) {
+  const text = (beschreibung || []).filter(b => typeof b === 'string').join(' ');
+  const m1 = text.match(/höhe\s+von\s+(\d+[Ww]\d+(?:[+-]\d+)?)/i);
+  if (m1) return m1[1];
+  const m2 = text.match(/(\d+[Ww]\d+(?:[+-]\d+)?)\s+trefferpunkte[n]?\s+wieder\s+her/i);
+  if (m2) return m2[1];
+  return null;
+}
+function isHealingSpell(z) {
+  const text = (z.beschreibung || []).filter(b => typeof b === 'string').join(' ');
+  return /trefferpunkte[n]?\s+zurück\s+in\s+höhe/i.test(text)
+      || /\d+[Ww]\d+\s+trefferpunkte[n]?\s+wieder\s+her/i.test(text)
+      || /stellt\s+\d+\s+trefferpunkt/i.test(text);
+}
+
+const TYPE_COLORS_SPELL = {
+  Feuer:'#f97316', Blitz:'#a78bfa', Kälte:'#38bdf8', Eis:'#7dd3fc',
+  Gift:'#4ade80', Säure:'#84cc16', Nekrotisch:'#818cf8', Psychisch:'#e879f9',
+  Energie:'#fbbf24', Schall:'#fb923c', Strahlung:'#fde68a', Gleißend:'#fef08a',
+  Heilig:'#fcd34d', Wucht:'#94a3b8', Stich:'#94a3b8', Hieb:'#94a3b8',
+  Variabel:'#c084fc', Strahlend:'#fde68a',
+};
+
+/* ── SpellPicker Modal ──────────────────────────────────────────── */
+function SpellPicker({ onAdd, onClose }) {
+  const [q, setQ] = useApp('');
+  const [filterKlasse, setFilterKlasse] = useApp('');
+  const [mode, setMode] = useApp('alle');
+
+  const allZauber = window.ZAUBER_DATA || [];
+
+  const allDmg = React.useMemo(() => allZauber
+    .filter(z => z.schaden && (z.rettungswurfAttribut || z.istAngriff))
+    .sort((a, b) => a.name.localeCompare(b.name, 'de')), []);
+  const allHeal = React.useMemo(() => allZauber
+    .filter(z => isHealingSpell(z))
+    .map(z => ({ ...z, _heilungsDice: extractHealingDice(z.beschreibung) }))
+    .filter(z => z._heilungsDice)
+    .sort((a, b) => a.name.localeCompare(b.name, 'de')), []);
+  const allAll = React.useMemo(() => [...allZauber].sort((a, b) => a.name.localeCompare(b.name, 'de')), []);
+
+  const base = mode === 'schaden' ? allDmg : mode === 'heilung' ? allHeal : allAll;
+
+  const results = React.useMemo(() => {
+    let list = base;
+    if (filterKlasse) list = list.filter(z => z.klassen?.includes(filterKlasse));
+    if (q.trim()) { const low = q.toLowerCase(); list = list.filter(z => z.name.toLowerCase().includes(low)); }
+    return list.slice(0, 150);
+  }, [q, filterKlasse, base, mode]);
+
+  function handleAdd(z) {
+    if (mode === 'heilung') {
+      onAdd({ id: uid(), name: z.name, grad: z.grad, schule: z.schule,
+        istHeilung: true, heilung: z._heilungsDice });
+    } else if (mode === 'schaden') {
+      onAdd({ id: uid(), name: z.name, grad: z.grad, schule: z.schule,
+        istKampfzauber: true, schaden: z.schaden, schadenTyp: z.schadenTyp,
+        istAngriff: z.istAngriff, rettungswurfAttribut: z.rettungswurfAttribut, halbiert: z.halbiert });
+    } else {
+      onAdd({ id: uid(), name: z.name, grad: z.grad, schule: z.schule });
+    }
+    onClose();
+  }
+
+  const overlayStyle = {
+    position:'fixed',inset:0,zIndex:9000,background:'rgba(3,2,10,0.82)',
+    display:'flex',alignItems:'center',justifyContent:'center',padding:16,backdropFilter:'blur(4px)',
+  };
+  const modalStyle = {
+    background:'rgba(8,6,22,0.98)',border:'1px solid rgba(124,77,255,0.28)',borderRadius:6,
+    width:'100%',maxWidth:560,maxHeight:'80vh',display:'flex',flexDirection:'column',boxShadow:'0 8px 40px rgba(0,0,0,0.7)',
+  };
+  const tabBtn = active => ({
+    fontFamily:'var(--font-mono)',fontSize:9,letterSpacing:'.16em',textTransform:'uppercase',
+    padding:'7px 14px',background:active?'rgba(124,77,255,0.18)':'transparent',
+    border:'none',borderBottom:active?'2px solid rgba(124,77,255,0.7)':'2px solid transparent',
+    cursor:'pointer',color:active?'rgba(200,190,240,0.9)':'rgba(160,140,255,0.4)',transition:'all .15s',
+  });
+  const rowStyle = {
+    display:'flex',alignItems:'center',gap:10,padding:'8px 12px',cursor:'pointer',
+    borderBottom:'1px solid rgba(124,77,255,0.06)',transition:'background .12s',
+  };
+
+  return (
+    <div style={overlayStyle} onClick={e => e.target === e.currentTarget && onClose()}>
+      <div style={modalStyle}>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'14px 16px',borderBottom:'1px solid rgba(124,77,255,0.12)'}}>
+          <span style={{fontFamily:'var(--font-display)',fontSize:13,letterSpacing:'.2em',color:'var(--white)',textTransform:'uppercase'}}>Zauber hinzufügen</span>
+          <button onClick={onClose} style={{background:'none',border:'none',cursor:'pointer',color:'rgba(160,140,255,0.5)',fontSize:16}}>✕</button>
+        </div>
+        <div style={{display:'flex',borderBottom:'1px solid rgba(124,77,255,0.1)'}}>
+          {[['alle','Alle'],['schaden','Schaden'],['heilung','Heilung']].map(([m,l]) => (
+            <button key={m} style={tabBtn(mode===m)} onClick={()=>setMode(m)}>{l}</button>
+          ))}
+        </div>
+        <div style={{padding:'10px 12px',display:'flex',gap:8}}>
+          <input value={q} onChange={e=>setQ(e.target.value)} autoFocus
+            placeholder="Zauber suchen…"
+            style={{flex:1,fontFamily:'var(--font-body)',fontSize:12,background:'rgba(124,77,255,0.05)',
+              border:'1px solid rgba(124,77,255,0.2)',borderRadius:3,padding:'6px 10px',
+              color:'var(--white)',outline:'none'}} />
+          <select value={filterKlasse} onChange={e=>setFilterKlasse(e.target.value)}
+            style={{fontFamily:'var(--font-mono)',fontSize:9,background:'rgba(124,77,255,0.07)',
+              border:'1px solid rgba(124,77,255,0.2)',borderRadius:3,padding:'6px 8px',
+              color:'rgba(200,190,240,0.8)',outline:'none',flexShrink:0,width:130}}>
+            <option value="">Alle Klassen</option>
+            {KLASSEN_SPELL.map(k => <option key={k} value={k}>{k}</option>)}
+          </select>
+        </div>
+        <div style={{fontSize:'0.65rem',color:'rgba(160,140,255,0.3)',padding:'0 12px 6px',fontFamily:'var(--font-mono)'}}>
+          {results.length} Zauber
+        </div>
+        <div style={{overflowY:'auto',flex:1}}>
+          {results.map(z => (
+            <div key={z.name+z.grad} style={rowStyle}
+              onMouseEnter={e=>e.currentTarget.style.background='rgba(124,77,255,0.07)'}
+              onMouseLeave={e=>e.currentTarget.style.background='transparent'}
+              onClick={() => handleAdd(z)}>
+              {mode === 'heilung'
+                ? <div style={{width:26,height:26,borderRadius:'50%',background:'rgba(80,200,120,0.08)',border:'1px solid rgba(80,200,120,0.2)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'0.7rem',flexShrink:0}}>💚</div>
+                : <div style={{width:26,height:26,borderRadius:'50%',background:'rgba(160,140,255,0.06)',border:'1px solid rgba(160,140,255,0.12)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'0.58rem',color:TYPE_COLORS_SPELL[z.schadenTyp]||'rgba(160,140,255,0.4)',flexShrink:0,fontWeight:700}}>
+                    {mode==='schaden' ? (z.schadenTyp||'?').substring(0,2) : (z.schule||'?').substring(0,2)}
+                  </div>
+              }
+              <span style={{fontFamily:'var(--font-body)',fontSize:12.5,color:'var(--white)',flex:1}}>{z.name}</span>
+              <span style={{fontFamily:'var(--font-mono)',fontSize:8.5,color:'rgba(160,140,255,0.4)',whiteSpace:'nowrap'}}>
+                {mode==='heilung' ? `Grad ${z.grad} · ${z._heilungsDice} TP`
+                  : mode==='schaden' ? `Grad ${z.grad} · ${z.schaden} · ${z.schadenTyp||'?'}`
+                  : `Grad ${z.grad} · ${z.schule||'?'}`}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Zauber-Vorschau Modal ──────────────────────────────────────── */
+function ZauberPreview({ zauberEntry, onClose }) {
+  const fullSpell = React.useMemo(() => {
+    const all = window.ZAUBER_DATA || [];
+    return all.find(z => z.name === zauberEntry.name) || zauberEntry;
+  }, [zauberEntry.name]);
+
+  const gradLabels = ['Zaubertrick','1. Grad','2. Grad','3. Grad','4. Grad','5. Grad','6. Grad','7. Grad','8. Grad','9. Grad'];
+  const gradLabel = gradLabels[fullSpell.grad] || `${fullSpell.grad}. Grad`;
+  const kompMap = { V: 'Verbal', G: 'Gestisch', M: 'Material' };
+  const komps = (fullSpell.komponenten || []).map(k => kompMap[k] || k).join(', ');
+
+  const isHeil = zauberEntry.istHeilung;
+  const typeColor = TYPE_COLORS_SPELL[fullSpell.schadenTyp] || 'rgba(160,140,255,0.6)';
+
+  const metaItems = [
+    { label: 'Zeitaufwand',   value: fullSpell.zeitaufwand },
+    { label: 'Wirkungsdauer', value: fullSpell.wirkungsdauer },
+    { label: 'Reichweite',    value: fullSpell.reichweite },
+    { label: 'Komponenten',   value: komps || null },
+  ].filter(x => x.value);
+
+  return (
+    <div style={{position:'fixed',inset:0,zIndex:9100,background:'rgba(3,2,10,0.85)',
+      display:'flex',alignItems:'center',justifyContent:'center',padding:16,backdropFilter:'blur(4px)'}}
+      onClick={e => e.target === e.currentTarget && onClose()}>
+      <div style={{background:'rgba(8,6,22,0.98)',border:'1px solid rgba(124,77,255,0.28)',borderRadius:6,
+        width:'100%',maxWidth:520,maxHeight:'85vh',display:'flex',flexDirection:'column',
+        boxShadow:'0 8px 40px rgba(0,0,0,0.7)'}}>
+
+        {/* Kopf */}
+        <div style={{padding:'16px 18px 14px',borderBottom:'1px solid rgba(124,77,255,0.12)',flexShrink:0,
+          display:'flex',alignItems:'flex-start',justifyContent:'space-between',gap:12}}>
+          <div>
+            <div style={{fontFamily:'var(--font-display)',fontSize:16,letterSpacing:'.18em',
+              color:'var(--white)',textTransform:'uppercase',marginBottom:5}}>{fullSpell.name}</div>
+            <div style={{display:'flex',flexWrap:'wrap',gap:5}}>
+              <span style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.12em',
+                padding:'2px 8px',background:'rgba(124,77,255,0.08)',border:'1px solid rgba(124,77,255,0.18)',
+                borderRadius:2,color:'rgba(160,140,255,0.65)'}}>{gradLabel}</span>
+              {fullSpell.schule && (
+                <span style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.12em',
+                  padding:'2px 8px',background:'rgba(124,77,255,0.08)',border:'1px solid rgba(124,77,255,0.18)',
+                  borderRadius:2,color:'rgba(160,140,255,0.65)'}}>{fullSpell.schule}</span>
+              )}
+              {fullSpell.ritual && (
+                <span style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.12em',
+                  padding:'2px 8px',background:'rgba(94,232,208,0.06)',border:'1px solid rgba(94,232,208,0.2)',
+                  borderRadius:2,color:'rgba(94,232,208,0.6)'}}>Ritual</span>
+              )}
+              {fullSpell.konzentration && (
+                <span style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.12em',
+                  padding:'2px 8px',background:'rgba(251,191,36,0.06)',border:'1px solid rgba(251,191,36,0.2)',
+                  borderRadius:2,color:'rgba(251,191,36,0.6)'}}>Konzentration</span>
+              )}
+            </div>
+          </div>
+          <button onClick={onClose} style={{background:'none',border:'none',cursor:'pointer',
+            color:'rgba(160,140,255,0.4)',fontSize:16,flexShrink:0,padding:'2px 4px',lineHeight:1,
+            transition:'color .12s'}}
+            onMouseEnter={e=>e.currentTarget.style.color='rgba(200,190,240,0.8)'}
+            onMouseLeave={e=>e.currentTarget.style.color='rgba(160,140,255,0.4)'}>✕</button>
+        </div>
+
+        {/* Body */}
+        <div style={{overflowY:'auto',flex:1,padding:'14px 18px'}}>
+
+          {/* Meta-Grid */}
+          {metaItems.length > 0 && (
+            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:6,marginBottom:14}}>
+              {metaItems.map(({label, value}) => (
+                <div key={label} style={{background:'rgba(124,77,255,0.04)',border:'1px solid rgba(124,77,255,0.1)',
+                  borderRadius:3,padding:'8px 10px'}}>
+                  <div style={{fontFamily:'var(--font-mono)',fontSize:7.5,letterSpacing:'.2em',
+                    color:'rgba(124,77,255,0.4)',textTransform:'uppercase',marginBottom:3}}>{label}</div>
+                  <div style={{fontFamily:'var(--font-body)',fontSize:11.5,color:'var(--white)',fontWeight:300}}>{value}</div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Material */}
+          {fullSpell.material && (
+            <div style={{fontFamily:'var(--font-mono)',fontSize:8.5,color:'rgba(160,140,255,0.4)',
+              marginBottom:12,fontStyle:'italic'}}>Material: {fullSpell.material}</div>
+          )}
+
+          {/* Kampfinfo-Chips */}
+          {(fullSpell.schaden || fullSpell.rettungswurfAttribut || fullSpell.istAngriff) && (
+            <div style={{display:'flex',gap:6,marginBottom:14,flexWrap:'wrap'}}>
+              {fullSpell.schaden && (
+                <span style={{fontFamily:'var(--font-mono)',fontSize:9,letterSpacing:'.1em',padding:'4px 10px',
+                  background:'rgba(249,115,22,0.07)',border:'1px solid rgba(249,115,22,0.22)',
+                  borderRadius:3,color:typeColor}}>{fullSpell.schaden} {fullSpell.schadenTyp||'Schaden'}</span>
+              )}
+              {fullSpell.rettungswurfAttribut && (
+                <span style={{fontFamily:'var(--font-mono)',fontSize:9,letterSpacing:'.1em',padding:'4px 10px',
+                  background:'rgba(124,77,255,0.07)',border:'1px solid rgba(124,77,255,0.2)',
+                  borderRadius:3,color:'rgba(160,140,255,0.75)'}}>
+                  RW: {fullSpell.rettungswurfAttribut}{fullSpell.halbiert ? ' · ½ bei Erfolg' : ''}
+                </span>
+              )}
+              {fullSpell.istAngriff && (
+                <span style={{fontFamily:'var(--font-mono)',fontSize:9,letterSpacing:'.1em',padding:'4px 10px',
+                  background:'rgba(124,77,255,0.07)',border:'1px solid rgba(124,77,255,0.2)',
+                  borderRadius:3,color:'rgba(160,140,255,0.75)'}}>Zauberangriff</span>
+              )}
+            </div>
+          )}
+
+          {/* Beschreibung */}
+          <div style={{display:'flex',flexDirection:'column',gap:9}}>
+            {(fullSpell.beschreibung || []).map((p, i) => (
+              <p key={i} style={{fontFamily:'var(--font-body)',fontSize:12.5,fontWeight:300,
+                color:'var(--silver)',lineHeight:1.82,margin:0}}>{p}</p>
+            ))}
+          </div>
+
+          {/* Klassen */}
+          {fullSpell.klassen && fullSpell.klassen.length > 0 && (
+            <div style={{marginTop:16,paddingTop:12,borderTop:'1px solid rgba(124,77,255,0.08)'}}>
+              <div style={{fontFamily:'var(--font-mono)',fontSize:7.5,letterSpacing:'.22em',
+                color:'rgba(124,77,255,0.3)',textTransform:'uppercase',marginBottom:7}}>Klassen</div>
+              <div style={{display:'flex',flexWrap:'wrap',gap:4}}>
+                {fullSpell.klassen.map(k => (
+                  <span key={k} style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.1em',
+                    padding:'2px 8px',background:'rgba(124,77,255,0.05)',border:'1px solid rgba(124,77,255,0.13)',
+                    borderRadius:2,color:'rgba(160,140,255,0.45)'}}>{k}</span>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Zauber-Sektion ─────────────────────────────────────────────── */
+function ZauberSection({ zauber, updZauber, editing }) {
+  const [showPicker, setShowPicker] = useApp(false);
+  const [preview, setPreview] = useApp(null);
+
+  function addZauber(z) {
+    updZauber([...zauber, z]);
+  }
+  function removeZauber(id) {
+    updZauber(zauber.filter(z => z.id !== id));
+  }
+
+  const gradBadge = grad => {
+    const labels = ['Zaubertrick','1. Grad','2. Grad','3. Grad','4. Grad','5. Grad','6. Grad','7. Grad','8. Grad','9. Grad'];
+    return labels[grad] || `${grad}. Grad`;
+  };
+
+  return (
+    <>
+      <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:10}}>
+        <div>
+          <div style={{fontFamily:'var(--font-mono)',fontSize:9,letterSpacing:'.28em',color:'rgba(124,77,255,0.45)',textTransform:'uppercase',marginBottom:4}}>Zauber</div>
+          <div style={{width:28,height:1,background:'linear-gradient(90deg,rgba(124,77,255,0.65),transparent)'}} />
+        </div>
+        <button onClick={()=>setShowPicker(true)}
+          style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.16em',textTransform:'uppercase',
+            padding:'5px 12px',background:'transparent',border:'1px solid rgba(124,77,255,0.25)',
+            borderRadius:3,cursor:'pointer',color:'rgba(124,77,255,0.55)',transition:'all .15s'}}
+          onMouseEnter={e=>{e.currentTarget.style.borderColor='rgba(124,77,255,0.6)';e.currentTarget.style.color='rgba(200,190,240,0.9)';}}
+          onMouseLeave={e=>{e.currentTarget.style.borderColor='rgba(124,77,255,0.25)';e.currentTarget.style.color='rgba(124,77,255,0.55)';}}>
+          + Zauber
+        </button>
+      </div>
+      {zauber.length === 0 && (
+        <div style={{fontFamily:'var(--font-mono)',fontSize:9,color:'rgba(160,140,255,0.2)',padding:'8px 0'}}>Keine Zauber eingetragen.</div>
+      )}
+      <div style={{display:'flex',flexDirection:'column',gap:5}}>
+        {zauber.map(z => {
+          const isHeil = z.istHeilung;
+          const isKampf = z.istKampfzauber || z.schaden;
+          const typeColor = TYPE_COLORS_SPELL[z.schadenTyp] || 'rgba(160,140,255,0.5)';
+          return (
+            <div key={z.id}
+              onClick={() => setPreview(z)}
+              style={{display:'flex',alignItems:'center',gap:10,cursor:'pointer',
+                background:'rgba(7,4,18,0.8)',border:'1px solid rgba(124,77,255,0.14)',
+                borderRadius:3,padding:'7px 11px',transition:'border-color .15s'}}
+              onMouseEnter={e=>e.currentTarget.style.borderColor='rgba(124,77,255,0.35)'}
+              onMouseLeave={e=>e.currentTarget.style.borderColor='rgba(124,77,255,0.14)'}>
+              <div style={{width:22,height:22,borderRadius:'50%',flexShrink:0,display:'flex',alignItems:'center',justifyContent:'center',fontSize:'0.55rem',fontWeight:700,
+                background: isHeil ? 'rgba(80,200,120,0.08)' : 'rgba(160,140,255,0.06)',
+                border: isHeil ? '1px solid rgba(80,200,120,0.2)' : '1px solid rgba(160,140,255,0.12)',
+                color: isHeil ? '#4ade80' : (isKampf ? typeColor : 'rgba(160,140,255,0.4)')}}>
+                {isHeil ? '💚' : (z.schule||'?').substring(0,2)}
+              </div>
+              <div style={{flex:1,minWidth:0}}>
+                <div style={{fontFamily:'var(--font-body)',fontSize:12.5,color:'var(--white)',fontWeight:400}}>{z.name}</div>
+                <div style={{fontFamily:'var(--font-mono)',fontSize:8,color:'rgba(160,140,255,0.4)',marginTop:1}}>
+                  {gradBadge(z.grad)}
+                  {z.schule && ` · ${z.schule}`}
+                  {isHeil && z.heilung && ` · 💚 ${z.heilung} TP`}
+                  {isKampf && z.schaden && ` · ${z.schaden} ${z.schadenTyp||''}`}
+                </div>
+              </div>
+              <button onClick={e=>{e.stopPropagation();removeZauber(z.id);}}
+                style={{background:'none',border:'none',cursor:'pointer',color:'rgba(200,80,80,0.35)',fontSize:13,padding:'2px 4px',lineHeight:1,transition:'color .12s',flexShrink:0}}
+                onMouseEnter={e=>e.currentTarget.style.color='rgba(240,110,110,0.85)'}
+                onMouseLeave={e=>e.currentTarget.style.color='rgba(200,80,80,0.35)'}>✕</button>
+            </div>
+          );
+        })}
+      </div>
+      {showPicker && <SpellPicker onAdd={addZauber} onClose={()=>setShowPicker(false)} />}
+      {preview && <ZauberPreview zauberEntry={preview} onClose={()=>setPreview(null)} />}
+    </>
+  );
+}
 
 const STORAGE_KEY = 'meruria_characters';
 
@@ -153,15 +512,32 @@ function loadCharacters() {
 }
 
 function charFromEntry(entry) {
-  return entry._char ? { ...entry._char } : buildChar(entry);
+  const base = entry._char ? { ...entry._char } : buildChar(entry);
+  if (!entry._char && entry._simData) {
+    const s = entry._simData;
+    if (s.maxTp)             base.hp    = s.maxTp;
+    if (s.rk   !== undefined) base.ac   = s.rk;
+    if (s.stufe)             base.level  = s.stufe;
+    if (s.klasse)            base.class  = s.klasse;
+    if (s.attribute) base.stats = {
+      str: s.attribute.STR || 10, dex: s.attribute.DEX || 10, con: s.attribute.CON || 10,
+      int: s.attribute.INT || 10, wis: s.attribute.WIS || 10, cha: s.attribute.CHA || 10,
+    };
+  }
+  return base;
 }
 
 function saveCharToDB(id, char) {
   try {
     const list = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
     const idx = list.findIndex(c => c.id === id);
-    if (idx >= 0) { list[idx] = { ...list[idx], _char: char }; localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); }
-  } catch(e) {}
+    if (idx >= 0) {
+      list[idx] = { ...list[idx], _char: char };
+    } else {
+      list.push({ id: id || uid(), name: char.name || '?', _char: char });
+    }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+  } catch(e) { console.error('saveCharToDB failed:', e); }
 }
 
 function deleteChar(id) {
@@ -440,11 +816,21 @@ function SteckbriefView({ entry, onBack, hasMultiple }) {
   const [char, setChar] = useApp(() => charFromEntry(entry));
   const [editing, setEditing] = useApp(false);
   const [tweaks,setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const [zauber, setZauber] = useApp(() => (entry._char && Array.isArray(entry._char.zauber)) ? entry._char.zauber : []);
+  const charRef = useRef(char);
+  charRef.current = char;
+  const zauberRef = useRef(zauber);
+  zauberRef.current = zauber;
 
   function upd(updates) {
-    const next = { ...char, ...updates };
+    const next = { ...charRef.current, ...updates };
     setChar(next);
-    saveCharToDB(entry.id, next);
+    saveCharToDB(entry.id, { ...next, zauber: zauberRef.current });
+  }
+
+  function updZauber(newZauber) {
+    setZauber(newZauber);
+    saveCharToDB(entry.id, { ...charRef.current, zauber: newZauber });
   }
   function updStat(key, val) {
     const v = Math.max(1, Math.min(30, parseInt(val)||1));
@@ -467,6 +853,7 @@ function SteckbriefView({ entry, onBack, hasMultiple }) {
       <SiteNav />
       <TweaksPanel tweaks={tweaks} setTweak={setTweak}>
         <TweakSection label="Sektionen">
+          <TweakToggle id="showZauber"      label="Zauber anzeigen" />
           <TweakToggle id="showCompanions"  label="Begleiter anzeigen" />
           <TweakToggle id="showQuests"      label="Quests anzeigen" />
           <TweakToggle id="showKontakte"    label="Kontakte anzeigen" />
@@ -622,6 +1009,13 @@ function SteckbriefView({ entry, onBack, hasMultiple }) {
         </div>
       </div>
 
+      {/* ── Zauber ──────────────────────────── */}
+      {tweaks.showZauber && (
+        <div style={{padding:"22px 22px 8px"}}>
+          <ZauberSection zauber={zauber} updZauber={updZauber} editing={E} />
+        </div>
+      )}
+
       {/* ── Quests ──────────────────────────── */}
       {tweaks.showQuests && char.quests && char.quests.length > 0 && (
         <div style={{padding:"22px 22px 8px"}}>
@@ -686,14 +1080,22 @@ function App() {
   const [chars, setChars] = useApp(() => loadCharacters());
   const [entry, setEntry] = useApp(null);
 
+  function handleBack() {
+    setChars(loadCharacters());
+    setEntry(null);
+  }
+
   if (chars.length === 0) return <EmptyState />;
-  if (entry) return <SteckbriefView entry={entry} onBack={()=>setEntry(null)} hasMultiple={chars.length > 1} />;
+  if (entry) return <SteckbriefView entry={entry} onBack={handleBack} hasMultiple={chars.length > 1} />;
 
   return (
     <CharSelection
       chars={chars}
       setChars={setChars}
-      onSelect={e => setEntry(e)}
+      onSelect={e => {
+        const fresh = loadCharacters().find(c => c.id === e.id) || e;
+        setEntry(fresh);
+      }}
       onNew={() => { window.location.href = 'Charaktererstellung.html'; }}
     />
   );

@@ -768,12 +768,86 @@ function getModStr(val) {
   const m = Math.floor(((val || 10) - 10) / 2);
   return (m >= 0 ? '+' : '') + m;
 }
-const LS_PLAYERS = 'sim_saved_players';
-const LS_DRAFT   = 'sim_player_draft';
-function loadPlayers() {
-  try { return JSON.parse(localStorage.getItem(LS_PLAYERS) || '[]'); } catch { return []; }
+const STORAGE_KEY_CHARS = 'meruria_characters';
+const LS_DRAFT = 'sim_player_draft';
+
+function charZauberToSim(charZauber) {
+  return (charZauber || [])
+    .filter(z => z.schaden || z.istHeilung)
+    .map(z => ({
+      id: z.id,
+      name: z.name,
+      istHeilung: !!z.istHeilung,
+      heilung: z.heilung || null,
+      schaden: z.schaden || null,
+      schadenTyp: z.schadenTyp || null,
+      halbiert: !!z.halbiert,
+      istAngriff: !!z.istAngriff,
+      attr: z.istHeilung ? null : (z.rettungswurfAttribut || (z.istAngriff ? null : 'GES')),
+      sg: z.istAngriff ? 5 : 13,
+    }));
 }
-function savePlayers(arr) { localStorage.setItem(LS_PLAYERS, JSON.stringify(arr)); }
+
+function charEntryToSimPlayer(entry) {
+  const sim = entry._simData || {};
+  const ch  = entry._char   || {};
+  const st  = ch.stats      || {};
+  return {
+    _kind: 'player',
+    id:   entry.id,
+    name: sim.name  !== undefined ? sim.name  : (ch.name  || entry.name  || '?'),
+    klasse:         sim.klasse  || ch.class  || entry.class  || '—',
+    stufe:          sim.stufe   !== undefined ? sim.stufe   : (ch.level || 1),
+    rk:             sim.rk      !== undefined ? sim.rk      : (ch.ac    || 10),
+    maxTp:          sim.maxTp   !== undefined ? sim.maxTp   : (ch.hp    || 10),
+    attribute: sim.attribute || {
+      STR: st.str || 10, DEX: st.dex || 10, CON: st.con || 10,
+      INT: st.int || 10, WIS: st.wis || 10, CHA: st.cha || 10,
+    },
+    rettungswuerfe: sim.rettungswuerfe  || {},
+    angriffeProRunde: sim.angriffeProRunde || 1,
+    angriffe: sim.angriffe || [{ id: uid(), name: 'Angriff', bonus: 3, schaden: '1W8+2', schadenstyp: 'Hieb', isFern: false }],
+    zauber:   sim.zauber   || charZauberToSim(ch.zauber),
+  };
+}
+
+function loadPlayers() {
+  try {
+    const entries = JSON.parse(localStorage.getItem(STORAGE_KEY_CHARS) || '[]');
+    return entries.map(charEntryToSimPlayer);
+  } catch { return []; }
+}
+
+function savePlayers(simPlayers) {
+  try {
+    let entries = JSON.parse(localStorage.getItem(STORAGE_KEY_CHARS) || '[]');
+    const simIds = new Set(simPlayers.map(p => p.id));
+    simPlayers.forEach(p => {
+      const simData = {
+        klasse: p.klasse, stufe: p.stufe, rk: p.rk, maxTp: p.maxTp,
+        attribute: p.attribute, rettungswuerfe: p.rettungswuerfe,
+        angriffeProRunde: p.angriffeProRunde, angriffe: p.angriffe, zauber: p.zauber,
+      };
+      const idx = entries.findIndex(e => e.id === p.id);
+      if (idx >= 0) {
+        entries[idx] = { ...entries[idx], name: p.name, _simData: simData };
+      } else {
+        entries.push({ id: p.id, name: p.name, class: p.klasse, _simData: simData });
+      }
+    });
+    entries = entries.map(e => {
+      if (simIds.has(e.id)) return e;
+      if (e._simData) {
+        const { _simData, ...rest } = e;
+        if (!rest._char && !rest.race && !rest.division) return null;
+        return rest;
+      }
+      return e;
+    }).filter(Boolean);
+    localStorage.setItem(STORAGE_KEY_CHARS, JSON.stringify(entries));
+  } catch {}
+}
+
 function loadDraft()  { try { return JSON.parse(localStorage.getItem(LS_DRAFT)); } catch { return null; } }
 function saveDraft(f) { try { localStorage.setItem(LS_DRAFT, JSON.stringify(f)); } catch {} }
 function clearDraft() { localStorage.removeItem(LS_DRAFT); }

@@ -62,29 +62,36 @@ function BekannteSection({ division, sidebar = false }) {
   const popup = showPopup && <_BekanntePopup bekannte={bekannte} divisionName={divisionName} accent={accent} onClose={()=>_bk_setShowPopup(false)} />;
 
   if (sidebar) {
+    const m = division.mitglieder || {};
     return (
       <div style={{ flex:1, minWidth:0, padding:'48px 32px 80px', display:'flex', flexDirection:'column', gap:'20px' }}>
         {popup}
-
-        {/* Alle anzeigen */}
-        <button onClick={()=>_bk_setShowPopup(true)} style={{ display:'inline-flex', alignItems:'center', gap:'7px', fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', letterSpacing:'0.08em', color:`${accent}99`, background:`${accent}0e`, border:`1px solid ${accent}28`, borderRadius:'3px', padding:'8px 16px', cursor:'pointer', transition:'all 0.2s', alignSelf:'flex-start' }}
-          onMouseEnter={e=>{e.currentTarget.style.background=`${accent}20`;e.currentTarget.style.color='var(--white)';}}
-          onMouseLeave={e=>{e.currentTarget.style.background=`${accent}0e`;e.currentTarget.style.color=`${accent}99`;}}>
-          <svg viewBox="0 0 14 14" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.4"><rect x="2" y="2" width="10" height="10" rx="1.5"/><line x1="5" y1="5" x2="9" y2="5"/><line x1="5" y1="7.5" x2="9" y2="7.5"/><line x1="5" y1="10" x2="8" y2="10"/></svg>
-          Alle anzeigen
-        </button>
 
         {/* Featured member */}
         <div style={{ border:`1px solid ${accent}28`, borderRadius:'6px', background:`linear-gradient(135deg,${accent}09 0%,rgba(var(--panel-rgb),0.9) 100%)`, overflow:'hidden', transition:'border-color 0.2s' }}
           onMouseEnter={e=>e.currentTarget.style.borderColor=`${accent}55`}
           onMouseLeave={e=>e.currentTarget.style.borderColor=`${accent}28`}>
           <_BekannteImg label="Porträt" width="100%" height="520px" accent={accent} style={{ borderRadius:'5px 5px 0 0', border:'none', borderBottom:`1px solid ${accent}22` }} />
+
           <div style={{ padding:'20px 22px' }}>
             <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:`${accent}66`, textTransform:'uppercase', marginBottom:'8px' }}>Führendes Mitglied</div>
             <div style={{ fontFamily:'var(--font-display)', fontSize:'20px', fontWeight:'300', letterSpacing:'0.14em', color:'var(--white)', textTransform:'uppercase', marginBottom:'4px' }}>{featured ? featured.name : '— Unbekannt —'}</div>
             <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.14em', color:`${accent}55`, marginBottom:'16px' }}>{featured ? featured.rolle : ''}</div>
             {featured && <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.8', color:'var(--muted)' }}>{featured.beschreibung}</p>}
           </div>
+        </div>
+
+        {/* Member count + Alle anzeigen */}
+        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'12px', padding:'12px 18px', border:`1px solid ${accent}18`, borderRadius:'4px', background:`${accent}07` }}>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.12em', color:`${accent}77`, textTransform:'uppercase', lineHeight:1.6 }}>
+            ca. {m.gesamt ?? '?'} Mitglieder<span style={{ opacity:0.6 }}> · NSC: {m.nsc ?? '?'} · SC: {m.sc ?? '?'}</span>
+          </span>
+          <button onClick={()=>_bk_setShowPopup(true)} style={{ display:'inline-flex', alignItems:'center', gap:'6px', fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'10px', letterSpacing:'0.08em', color:`${accent}99`, background:`${accent}0e`, border:`1px solid ${accent}28`, borderRadius:'3px', padding:'6px 11px', cursor:'pointer', transition:'all 0.2s', flexShrink:0 }}
+            onMouseEnter={e=>{e.currentTarget.style.background=`${accent}20`;e.currentTarget.style.color='var(--white)';}}
+            onMouseLeave={e=>{e.currentTarget.style.background=`${accent}0e`;e.currentTarget.style.color=`${accent}99`;}}>
+            <svg viewBox="0 0 14 14" width="10" height="10" fill="none" stroke="currentColor" strokeWidth="1.4"><rect x="2" y="2" width="10" height="10" rx="1.5"/><line x1="5" y1="5" x2="9" y2="5"/><line x1="5" y1="7.5" x2="9" y2="7.5"/><line x1="5" y1="10" x2="8" y2="10"/></svg>
+            Alle anzeigen
+          </button>
         </div>
 
         {/* Other members grid */}
@@ -104,6 +111,7 @@ function BekannteSection({ division, sidebar = false }) {
     );
   }
 
+  const m = division.mitglieder || {};
   return (
     <section id="bekannte" className="div-section">
       {popup}
@@ -124,16 +132,23 @@ function BekannteSection({ division, sidebar = false }) {
             <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.8', color:'var(--muted)' }}>{featured ? featured.beschreibung : ''}</p>
           </div>
         </div>
+
+        {/* Member count + Alle anzeigen */}
+        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'12px', padding:'12px 18px', border:`1px solid ${accent}18`, borderRadius:'4px', background:`${accent}07`, marginTop:'12px' }}>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.12em', color:`${accent}77`, textTransform:'uppercase', lineHeight:1.6 }}>
+            ca. {m.gesamt ?? '?'} Mitglieder<span style={{ opacity:0.6 }}> · NSC: {m.nsc ?? '?'} · SC: {m.sc ?? '?'}</span>
+          </span>
+          <button onClick={()=>_bk_setShowPopup(true)} style={{ display:'inline-flex', alignItems:'center', gap:'6px', fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'10px', letterSpacing:'0.08em', color:`${accent}99`, background:`${accent}0e`, border:`1px solid ${accent}28`, borderRadius:'3px', padding:'6px 11px', cursor:'pointer', transition:'all 0.2s', flexShrink:0 }}
+            onMouseEnter={e=>{e.currentTarget.style.background=`${accent}20`;e.currentTarget.style.color='var(--white)';}}
+            onMouseLeave={e=>{e.currentTarget.style.background=`${accent}0e`;e.currentTarget.style.color=`${accent}99`;}}>
+            <svg viewBox="0 0 14 14" width="10" height="10" fill="none" stroke="currentColor" strokeWidth="1.4"><rect x="2" y="2" width="10" height="10" rx="1.5"/><line x1="5" y1="5" x2="9" y2="5"/><line x1="5" y1="7.5" x2="9" y2="7.5"/><line x1="5" y1="10" x2="8" y2="10"/></svg>
+            Alle anzeigen
+          </button>
+        </div>
       </div>
 
-      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'14px', flexWrap:'wrap', gap:'10px' }}>
+      <div style={{ marginBottom:'14px' }}>
         <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:`${accent}44`, textTransform:'uppercase' }}>Weitere bekannte Mitglieder</div>
-        <button onClick={()=>_bk_setShowPopup(true)} style={{ display:'inline-flex', alignItems:'center', gap:'7px', fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', letterSpacing:'0.08em', color:`${accent}99`, background:`${accent}0e`, border:`1px solid ${accent}28`, borderRadius:'3px', padding:'6px 12px', cursor:'pointer', transition:'all 0.2s' }}
-          onMouseEnter={e=>{e.currentTarget.style.background=`${accent}20`;e.currentTarget.style.color='var(--white)';}}
-          onMouseLeave={e=>{e.currentTarget.style.background=`${accent}0e`;e.currentTarget.style.color=`${accent}99`;}}>
-          <svg viewBox="0 0 14 14" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.4"><rect x="2" y="2" width="10" height="10" rx="1.5"/><line x1="5" y1="5" x2="9" y2="5"/><line x1="5" y1="7.5" x2="9" y2="7.5"/><line x1="5" y1="10" x2="8" y2="10"/></svg>
-          Alle anzeigen
-        </button>
       </div>
 
       <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(260px,1fr))', gap:'14px' }}>

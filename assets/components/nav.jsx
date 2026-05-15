@@ -95,7 +95,7 @@ const NAV = [
   { id: 'spielerhandbuch', label: 'Spielerhandbuch', items: [{ label: 'Realismus', href: 'Realismus Standalone.html' }, { label: 'Sammeln & Handwerk', href: '#' }, { label: 'Schutzherren', href: '#'}, { label: 'Gesinnungen', href: '#'}, { label: 'Regierungsformen', href: '#'}] },
   { id: 'charaktererstellung', label: 'Charaktererstellung', items: [{ label: 'Neuer Charakter', href: 'Charaktererstellung.html', dividerAfter: true }, { label: 'Rassen', href: 'Rassen.html' }, { label: 'Klassen', href: 'Klassen.html' }, { label: 'Talente', href: 'Talente.html' }, { label: 'Hintergründe', href: 'Hintergruende.html' }, { label: 'Zauber', href: 'Zauber.html' }, { label: 'Ausrüstung', href: 'Ausrüstung.html' }] },
   { id: 'enzyklopaedie', label: 'Enzyklopädie', items: [{ label: 'Völker', href: '#' }, { label: 'Orte', href: '#' }, { label: 'Ressourcen', href: 'Ressourcen.html' }, { label: 'Organisationen', href: '#' }, { label: 'Gottheiten', href: 'Gottheiten.html' }, { label: 'Religionen', href: '#' }, { label: 'Monster', href: 'Monster.html', locked: true }, { label: 'Galerie', href: 'Galerie.html' }] },
-  { id: 'divisionen', label: 'Divisionen', items: [{ label: 'Übersicht', href: 'Divisionen.html', dividerAfter: true }, { label: 'I — Die Kuratoren', href: 'divisionen/Die Kuratoren.html' }, { label: 'II — Die Sturmritter', href: 'divisionen/Sturmritter.html' }, { label: 'III — Die Sentinels', href: 'divisionen/Sentinels.html' }, { label: 'IV — Die Friedenshüter', href: 'divisionen/Friedenshueter.html' }, { label: 'V — Die Outfitters', href: 'divisionen/Outfitters.html' }, { label: 'VI — Die Pathfinders', href: 'divisionen/Pathfinders.html' }, { label: 'VII — Die Quellensucher', href: 'divisionen/Quellensucher.html' }, { label: 'VIII — Die Bergungsgarde', href: 'divisionen/Bergungsgarde.html' }] },
+  { id: 'divisionen', label: 'Divisionen', href: 'Divisionen.html', items: [{ label: 'I — Die Kuratoren', href: 'divisionen/Die Kuratoren.html' }, { label: 'II — Die Sturmritter', href: 'divisionen/Sturmritter.html' }, { label: 'III — Die Sentinels', href: 'divisionen/Sentinels.html' }, { label: 'IV — Die Friedenshüter', href: 'divisionen/Friedenshueter.html' }, { label: 'V — Die Outfitters', href: 'divisionen/Outfitters.html' }, { label: 'VI — Die Pathfinders', href: 'divisionen/Pathfinders.html' }, { label: 'VII — Die Quellensucher', href: 'divisionen/Quellensucher.html' }, { label: 'VIII — Die Bergungsgarde', href: 'divisionen/Bergungsgarde.html' }] },
   { id: 'charaktere', label: 'Charaktere', items: [{ label: 'Mein Charakter', href: 'MeinCharakter.html' }, { label: 'Steckbrief', href: 'Steckbrief.html', dividerAfter: true, glitch: false }, { label: 'Spielercharaktere', href: '#' }, { label: 'NSC', href: '#' }] },
   { id: 'tools', label: 'Tools', items: [{ label: 'Kampfsimulation', href: 'Kampfsimulation.html', locked: true }] }
 ];
@@ -145,11 +145,13 @@ function NavItem({ tab }) {
 
   const dur = '1.4s';
 
-  if (tab.href) {
+  const triggerStyle = { fontFamily: 'var(--font-display)', fontSize: '11px', fontWeight: '400', letterSpacing: '0.18em', padding: '10px 20px', background: 'transparent', border: '1px solid var(--nav-btn-border)', color: 'var(--nav-text)', borderRadius: '3px', transition: 'all 0.2s', textTransform: 'uppercase', whiteSpace: 'nowrap', textDecoration: 'none', display: 'inline-block', cursor: 'pointer' };
+  const triggerHoverOn  = (e) => { e.currentTarget.style.color = 'var(--white)'; e.currentTarget.style.borderColor = 'var(--nav-btn-hover-border)'; e.currentTarget.style.background = 'var(--nav-btn-hover-bg)'; };
+  const triggerHoverOff = (e) => { e.currentTarget.style.color = 'var(--nav-text)'; e.currentTarget.style.borderColor = 'var(--nav-btn-border)'; e.currentTarget.style.background = 'transparent'; };
+
+  if (tab.href && !tab.items) {
     return (
-      <a href={tab.href} style={{ fontFamily: 'var(--font-display)', fontSize: '11px', fontWeight: '400', letterSpacing: '0.18em', padding: '10px 20px', background: 'transparent', border: '1px solid var(--nav-btn-border)', color: 'var(--nav-text)', borderRadius: '3px', transition: 'all 0.2s', textTransform: 'uppercase', whiteSpace: 'nowrap', textDecoration: 'none', display: 'inline-block' }}
-        onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--white)'; e.currentTarget.style.borderColor = 'var(--nav-btn-hover-border)'; e.currentTarget.style.background = 'var(--nav-btn-hover-bg)'; }}
-        onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--nav-text)'; e.currentTarget.style.borderColor = 'var(--nav-btn-border)'; e.currentTarget.style.background = 'transparent'; }}>
+      <a href={tab.href} style={triggerStyle} onMouseEnter={triggerHoverOn} onMouseLeave={triggerHoverOff}>
         {tab.label}
       </a>
     );
@@ -157,11 +159,10 @@ function NavItem({ tab }) {
 
   return (
     <div onMouseEnter={show} onMouseLeave={hide} style={{ position: 'relative' }}>
-      <button style={{ fontFamily: 'var(--font-display)', fontSize: '11px', fontWeight: '400', letterSpacing: '0.18em', padding: '10px 20px', background: 'transparent', border: '1px solid var(--nav-btn-border)', color: 'var(--nav-text)', cursor: 'pointer', borderRadius: '3px', transition: 'all 0.2s', textTransform: 'uppercase', whiteSpace: 'nowrap' }}
-        onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--white)'; e.currentTarget.style.borderColor = 'var(--nav-btn-hover-border)'; e.currentTarget.style.background = 'var(--nav-btn-hover-bg)'; }}
-        onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--nav-text)'; e.currentTarget.style.borderColor = 'var(--nav-btn-border)'; e.currentTarget.style.background = 'transparent'; }}>
-        {tab.label}
-      </button>
+      {tab.href
+        ? <a href={tab.href} style={triggerStyle} onMouseEnter={triggerHoverOn} onMouseLeave={triggerHoverOff}>{tab.label}</a>
+        : <button style={triggerStyle} onMouseEnter={triggerHoverOn} onMouseLeave={triggerHoverOff}>{tab.label}</button>
+      }
       {open &&
         <div onMouseEnter={show} onMouseLeave={hide} style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, minWidth: '180px', background: 'var(--nav-dropdown-bg)', border: '1px solid var(--nav-dropdown-border)', borderRadius: '4px', boxShadow: '0 8px 32px rgba(0,0,0,0.35)', animation: 'slideDown 0.18s ease forwards', zIndex: 200, backdropFilter: 'blur(12px)' }}>
           {tab.items.map((item, i) =>
@@ -231,7 +232,7 @@ function ThemeToggle() {
 function MobileNavSection({ tab, onClose }) {
   const [open, setOpen] = useState(false);
 
-  if (tab.href) {
+  if (tab.href && !tab.items) {
     return (
       <a href={tab.href} onClick={onClose} style={{ display: 'block', padding: '14px 24px', fontFamily: 'var(--font-display)', fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--nav-text)', textDecoration: 'none', borderBottom: '1px solid var(--nav-item-border)', transition: 'color 0.15s' }}>
         {tab.label}
@@ -241,10 +242,15 @@ function MobileNavSection({ tab, onClose }) {
 
   return (
     <div>
-      <button onClick={() => setOpen(o => !o)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', padding: '14px 24px', fontFamily: 'var(--font-display)', fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--nav-text)', background: 'transparent', border: 'none', borderBottom: '1px solid var(--nav-item-border)', cursor: 'pointer', transition: 'color 0.15s' }}>
-        {tab.label}
-        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', opacity: 0.5 }}>{open ? '▲' : '▼'}</span>
-      </button>
+      <div style={{ display: 'flex', alignItems: 'stretch', borderBottom: '1px solid var(--nav-item-border)' }}>
+        {tab.href
+          ? <a href={tab.href} onClick={onClose} style={{ flex: 1, padding: '14px 24px', fontFamily: 'var(--font-display)', fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--nav-text)', textDecoration: 'none', transition: 'color 0.15s' }}>{tab.label}</a>
+          : <span style={{ flex: 1, padding: '14px 24px', fontFamily: 'var(--font-display)', fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--nav-text)' }}>{tab.label}</span>
+        }
+        <button onClick={() => setOpen(o => !o)} style={{ padding: '14px 20px', fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--nav-text)', opacity: 0.5, background: 'transparent', border: 'none', borderLeft: '1px solid var(--nav-item-border)', cursor: 'pointer' }}>
+          {open ? '▲' : '▼'}
+        </button>
+      </div>
       {open && (
         <div style={{ background: 'rgba(0,0,0,0.15)' }}>
           {tab.items.map((item, i) => (

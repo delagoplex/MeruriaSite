@@ -61,6 +61,7 @@ function buildChar(d) {
     quests:     [],
     companions: [],
     contacts:   [],
+    zauber:     [],
 
     // ── Freundebuch: TODO-Felder klar markiert ─────────────────
     freundebuch: [

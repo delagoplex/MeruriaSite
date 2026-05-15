@@ -156,7 +156,7 @@ window.GODS_DATA = {
     },
     {
       id: "selunara", pantheon: "Celestisch · Merurisches Pantheon",
-      name: "Selunara", title: "Göttin des Mondes, der Gezeiten und der Neuanfänge",
+      name: "Selunara", title: "Göttin der Monde, der Gezeiten und der Neuanfänge",
       domain: "Domäne der Arkana · Domäne der Dämmerung · Domäne des Friedens · Domäne des Grabes · Domäne des Lichts · Domäne der Natur · Domäne des Sturms",
       palette: ["#020814","#2040a0","#287AFF","#c0d8f8"],
       insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",

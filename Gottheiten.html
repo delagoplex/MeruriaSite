@@ -47,11 +47,11 @@ function OctSvg({ size = 24, color = 'currentColor', fill = 'none', strokeWidth 
     </svg>
   );
 }
-function parseRich(text) {
+function parseRich(text, accent = 'rgba(160,140,255,0.9)') {
   if (!text || !text.includes('**')) return text;
   return text.split(/(\*\*.*?\*\*)/g).map((part, i) =>
     part.startsWith('**') && part.endsWith('**')
-      ? <strong key={i} style={{color:'rgba(160,140,255,0.9)',fontWeight:'500',fontStyle:'normal'}}>{part.slice(2,-2)}</strong>
+      ? <strong key={i} style={{color: accent, fontWeight:'500',fontStyle:'normal'}}>{part.slice(2,-2)}</strong>
       : part
   );
 }
@@ -357,7 +357,7 @@ function EntityDetail({ entity, onBack, typeLabel, onPrev, onNext }) {
           </div>
           <div style={s(0.16)}>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: pal[2] + '77', marginBottom: '10px', textTransform: 'uppercase' }}>Glaubensgrundsätze</div>
-            <p style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: 1.85, color: 'rgba(var(--text-rgb),0.55)', letterSpacing: '0.015em', fontStyle: 'italic', borderLeft: `1px solid ${pal[2]}33`, paddingLeft: '14px' }}>{parseRich(entity.lore)}</p>
+            <p style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: 1.85, color: 'rgba(var(--text-rgb),0.55)', letterSpacing: '0.015em', fontStyle: 'italic', borderLeft: `1px solid ${pal[2]}33`, paddingLeft: '14px' }}>{parseRich(entity.lore, pal[pal.length - 1])}</p>
           </div>
           <div style={s(0.22)}>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: pal[2] + '77', marginBottom: '9px', textTransform: 'uppercase' }}>Domäne</div>
@@ -369,7 +369,7 @@ function EntityDetail({ entity, onBack, typeLabel, onPrev, onNext }) {
           </div>
           <div style={s(0.28)}>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: pal[2] + '77', marginBottom: '10px', textTransform: 'uppercase' }}>Reich</div>
-            <p style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '13px', lineHeight: 1.85, color: 'rgba(var(--text-rgb),0.78)', letterSpacing: '0.015em' }}>{parseRich(entity.description)}</p>
+            <p style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '13px', lineHeight: 1.85, color: 'rgba(var(--text-rgb),0.78)', letterSpacing: '0.015em' }}>{parseRich(entity.description, pal[pal.length - 1])}</p>
           </div>
           <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', borderTop: `1px solid ${pal[2]}18`, paddingTop: '22px', ...s(0.34) }}>
             {[['Gesinnung', entity.alignment], ['Symbol', entity.symbol]].map(([label, val]) =>
