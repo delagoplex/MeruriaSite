@@ -51,11 +51,15 @@ function Tag({ label, small }) {
 }
 
 /* ── Image placeholder — Aarakocra / race-detail style ── */
-function ImgPlaceholder({ label, height, hue, img }) {
+/* fill=true → position:absolute inset:0, stretches to a parent with defined size */
+function ImgPlaceholder({ label, height, hue, img, fill, fit }) {
   if (img) {
     return (
-      <div style={{ width:'100%', height: height || 300, position:'relative', overflow:'hidden', borderRadius:'3px', flexShrink:0 }}>
-        <img src={img} alt={label || 'artwork'} style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }} />
+      <div style={ fill
+        ? { position:'absolute', inset:0, overflow:'hidden' }
+        : { width:'100%', height: height || 300, position:'relative', overflow:'hidden', borderRadius:'3px', flexShrink:0 }
+      }>
+        <img src={img} alt={label || 'artwork'} style={{ width:'100%', height:'100%', objectFit: fit || 'cover', display:'block' }} />
       </div>
     );
   }
@@ -65,12 +69,15 @@ function ImgPlaceholder({ label, height, hue, img }) {
   const acDash   = `oklch(0.65 0.18 ${h} / 0.52)`;
   return (
     <div style={{
-      width:'100%', height: height || 300,
+      ...(fill
+        ? { position:'absolute', inset:0 }
+        : { position:'relative', width:'100%', height: height || 300, flexShrink:0 }
+      ),
       background:`repeating-linear-gradient(-45deg,transparent,transparent 8px,${acStripe} 8px,${acStripe} 9px),linear-gradient(160deg,rgba(28,16,62,0.97) 0%,rgba(14,9,36,0.98) 100%)`,
       border:`1px dashed ${acDash}`,
       borderRadius:'3px',
       display:'flex', alignItems:'center', justifyContent:'center', flexDirection:'column', gap:10,
-      position:'relative', overflow:'hidden', flexShrink:0,
+      overflow:'hidden',
     }}>
       <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse at 50% 45%,oklch(0.65 0.18 ${h} / 0.22) 0%,transparent 60%)` }} />
       {/* Landscape image icon */}
@@ -93,7 +100,7 @@ function FeaturedDisplay({ image }) {
     <div key={image.id} style={{ display:'flex', flexDirection:'column', animation:'fadeInUp 0.32s ease' }}>
       {/* A — main image */}
       <div style={{ position:'relative', borderRadius:'4px 4px 0 0', overflow:'hidden', border:`1px solid ${accent}0.45)` }}>
-        <ImgPlaceholder label={image.title} height={320} hue={image.hue} img={image.img} />
+        <ImgPlaceholder label={image.title} height={640} hue={image.hue} img={image.img} fit="contain" />
         {/* Corner accents */}
         <div style={{ position:'absolute',top:0,left:0,width:18,height:18,borderTop:`2px solid ${accent}0.62)`,borderLeft:`2px solid ${accent}0.62)`,pointerEvents:'none' }} />
         <div style={{ position:'absolute',top:0,right:0,width:18,height:18,borderTop:`2px solid ${accent}0.62)`,borderRight:`2px solid ${accent}0.62)`,pointerEvents:'none' }} />
@@ -145,7 +152,7 @@ function CollectionCard({ collection, onClick }) {
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       style={{
-        position:'relative', height:128, borderRadius:4,
+        position:'relative', height:240, borderRadius:4,
         cursor:'pointer', overflow:'hidden',
         border: hov ? '1px solid rgba(124,77,255,0.65)' : '1px solid rgba(124,77,255,0.2)',
         boxShadow: hov ? '0 10px 40px rgba(0,0,0,0.65),0 0 22px rgba(124,77,255,0.18)' : '0 2px 14px rgba(0,0,0,0.45)',
@@ -277,7 +284,7 @@ const CL_W=272, CL_H=196; // landscape — same height, wider
 const CGAP=28;
 const BASE_SPD=0.036, CFRIC=0.9984;
 
-function imgDims(img) { return img.landscape ? {w:CL_W,h:CL_H} : {w:CP_W,h:CP_H}; }
+const CS_W=CP_H; // square: 196×196
 
 function Carousel({ images, reverse }) {
   const trackRef = useR2(null);
@@ -285,28 +292,52 @@ function Carousel({ images, reverse }) {
   revRef.current = reverse;
   const phys     = useR2({ offset:0, vel:0, drag:false, lx:0, lt:0 }).current;
   const [hovIdx, setHovIdx] = useS2(null);
+  const aspectsRef = useR2({});
+  const singleWRef = useR2(0);
+  const [, setAspectVer] = useS2(0);
   const n = images.length;
+
+  function imgDims(img) {
+    const fmt = aspectsRef.current[img.id] || (img.landscape ? 'landscape' : 'portrait');
+    if (fmt === 'square')    return {w:CS_W, h:CP_H};
+    if (fmt === 'landscape') return {w:CL_W, h:CL_H};
+    return {w:CP_W, h:CP_H};
+  }
+
+  function handleAspect(id, e) {
+    const el = e.currentTarget;
+    if (!el.naturalWidth) return;
+    const fmt = el.naturalWidth === el.naturalHeight ? 'square'
+              : el.naturalWidth > el.naturalHeight   ? 'landscape' : 'portrait';
+    if (aspectsRef.current[id] !== fmt) {
+      aspectsRef.current[id] = fmt;
+      setAspectVer(v => v + 1);
+    }
+  }
+
   // singleW = sum of (width + gap) for all images in one copy
   const singleW = images.reduce((s, img) => s + imgDims(img).w + CGAP, 0);
+  singleWRef.current = singleW;
   const tripled = [...images, ...images, ...images];
 
   useE2(() => {
-    phys.offset = singleW;
+    phys.offset = singleWRef.current;
     let raf, last = performance.now();
     function tick(now) {
       const dt = Math.min(now - last, 50); last = now;
+      const sw = singleWRef.current;
       if (!phys.drag) {
         if (Math.abs(phys.vel) > 0.002) phys.vel *= Math.pow(CFRIC, dt); else phys.vel = 0;
         phys.offset += ((revRef.current ? -1 : 1) * BASE_SPD + phys.vel) * dt;
-        while (phys.offset >= singleW * 2) phys.offset -= singleW;
-        while (phys.offset < singleW)     phys.offset += singleW;
+        while (phys.offset >= sw * 2) phys.offset -= sw;
+        while (phys.offset < sw)     phys.offset += sw;
         if (trackRef.current) trackRef.current.style.transform = `translateX(${-phys.offset}px)`;
       }
       raf = requestAnimationFrame(tick);
     }
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [singleW]);
+  }, []);
 
   useE2(() => {
     function onMove(e) {
@@ -314,8 +345,9 @@ function Carousel({ images, reverse }) {
       const now = performance.now(), dx = e.clientX - phys.lx, dt = now - phys.lt;
       if (dt > 0) phys.vel = -dx / dt;
       phys.offset -= dx;
-      while (phys.offset >= singleW * 2) phys.offset -= singleW;
-      while (phys.offset < singleW)     phys.offset += singleW;
+      const sw = singleWRef.current;
+      while (phys.offset >= sw * 2) phys.offset -= sw;
+      while (phys.offset < sw)     phys.offset += sw;
       if (trackRef.current) trackRef.current.style.transform = `translateX(${-phys.offset}px)`;
       phys.lx = e.clientX; phys.lt = now;
     }
@@ -323,7 +355,7 @@ function Carousel({ images, reverse }) {
     window.addEventListener('mousemove', onMove);
     window.addEventListener('mouseup',   onUp);
     return () => { window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp); };
-  }, [singleW]);
+  }, []);
 
   function onDown(e) { e.preventDefault(); phys.drag=true; phys.lx=e.clientX; phys.lt=performance.now(); phys.vel=0; }
 
@@ -354,7 +386,7 @@ function Carousel({ images, reverse }) {
           return (
             <div key={gi} style={iStyle(ii)} onMouseEnter={() => setHovIdx(ii)} onMouseLeave={() => setHovIdx(null)}>
               {images[ii%n].img ? (
-                <img src={images[ii%n].img} alt={images[ii%n].title} style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }} />
+                <img src={images[ii%n].img} alt={images[ii%n].title} onLoad={e => handleAspect(images[ii%n].id, e)} style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }} />
               ) : (
               <div style={{ width:'100%', height:'100%', position:'relative', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:6,
                 background:`repeating-linear-gradient(-45deg,transparent,transparent 8px,oklch(0.65 0.18 ${images[ii%n].hue||270} / 0.13) 8px,oklch(0.65 0.18 ${images[ii%n].hue||270} / 0.13) 9px),linear-gradient(160deg,rgba(28,16,62,0.97) 0%,rgba(14,9,36,0.98) 100%)`,
