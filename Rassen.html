@@ -66,6 +66,56 @@ function OctSvg({ size=24, color='currentColor', fill='none', strokeWidth=1, opa
 }
 
 
+// ── RACE DATA LOOKUP ─────────────────────────────────────
+function findRaceData(id) {
+  for (const e of ENTRIES) {
+    if (e.type === 'race' && e.id === id) return e;
+    if (e.type === 'group' && e.subraces) {
+      const sr = e.subraces.find(s => s.id === id);
+      if (sr) return sr;
+    }
+  }
+  return null;
+}
+
+// ── FOV DIAGRAM ──────────────────────────────────────────
+function FovDiagram({ sicht, accent, wandelform=false }) {
+  const s = (wandelform && sicht.wandelform) ? sicht.wandelform : sicht;
+  const { weite=18, radius=120, dunkel=0 } = s;
+  const W=200, H=200, cx=100, cy=100, rN=72, rD=93;
+  const half = radius / 2;
+  const sa = (-90 - half) * Math.PI / 180;
+  const ea = (-90 + half) * Math.PI / 180;
+  const lA = radius > 180 ? 1 : 0;
+  const pt = (a, r) => [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+  const wedge = (r) => {
+    const [sx,sy] = pt(sa, r);
+    const [ex,ey] = pt(ea, r);
+    return `M ${cx},${cy} L ${sx.toFixed(2)},${sy.toFixed(2)} A ${r},${r} 0 ${lA},1 ${ex.toFixed(2)},${ey.toFixed(2)} Z`;
+  };
+  // For 360° arc, SVG M→L→A doesn't draw a circle; use a circle element instead
+  const isFull = radius >= 360;
+  return (
+    <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{display:'block',overflow:'hidden',borderRadius:'3px'}}>
+      <rect width={W} height={H} fill="rgba(0,0,10,0.55)"/>
+      <circle cx={cx} cy={cy} r={rN} fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth={1}/>
+      <circle cx={cx} cy={cy} r={rN*0.5} fill="none" stroke="rgba(255,255,255,0.03)" strokeWidth={1}/>
+      {dunkel>0 && (isFull
+        ? <circle cx={cx} cy={cy} r={rD} fill="rgba(60,80,200,0.1)" stroke="rgba(80,120,255,0.22)" strokeWidth={1}/>
+        : <path d={wedge(rD)} fill="rgba(60,80,200,0.1)" stroke="rgba(80,120,255,0.22)" strokeWidth={1}/>)}
+      {isFull
+        ? <circle cx={cx} cy={cy} r={rN} fill={`${accent}20`} stroke={`${accent}66`} strokeWidth={1.5}/>
+        : <path d={wedge(rN)} fill={`${accent}20`} stroke={`${accent}66`} strokeWidth={1.5}/>}
+      <line x1={cx} y1={cy} x2={cx} y2={cy-rN} stroke={`${accent}40`} strokeWidth={1} strokeDasharray="3,2"/>
+      <circle cx={cx} cy={cy} r={5} fill={accent} opacity={0.85}/>
+      <circle cx={cx} cy={cy} r={5} fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth={0.5}/>
+      <text x={cx} y={14} textAnchor="middle" fontFamily="var(--font-mono)" fontSize="7" fill={`${accent}55`} letterSpacing="2">VORNE</text>
+      {dunkel>0 && <text x={cx+rD+4} y={cy+4} textAnchor="start" fontFamily="var(--font-mono)" fontSize="7" fill="rgba(80,120,255,0.45)">{dunkel}m</text>}
+      <text x={cx+rN+4} y={cy+4} textAnchor="start" fontFamily="var(--font-mono)" fontSize="7" fill={`${accent}66`}>{weite}m</text>
+    </svg>
+  );
+}
+
 // ── SCROLL REVEAL ────────────────────────────────────────
 function useScrollReveal() {
   useEffect(()=>{
@@ -356,6 +406,14 @@ function GroupSection({ entry, accent, cols, navHeight, onSelect }) {
 // ── ENTITY DETAIL PLACEHOLDER ────────────────────────────
 function EntityDetailPlaceholder({ race, onClose }) {
   useEffect(() => { window.scrollTo(0, 0); }, []);
+  const [showWandel, setShowWandel] = useState(false);
+
+  const rd = findRaceData(race.id);
+  const sicht = rd?.sicht || null;
+  const acc = race.accent || '#7c4dff';
+  const hasWandel = !!(sicht?.wandelform);
+  const activeSicht = (showWandel && sicht?.wandelform) ? sicht.wandelform : sicht;
+
   const btnStyle = { display:'inline-flex', alignItems:'center', gap:'8px', fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', letterSpacing:'0.12em', color:'rgba(var(--text2-rgb),0.55)', background:'rgba(124,77,255,0.06)', border:'1px solid rgba(124,77,255,0.18)', padding:'7px 14px', borderRadius:'3px', cursor:'pointer', transition:'all 0.2s' };
   return (
     <div style={{ minHeight:'100vh', background:'var(--bg)' }}>
@@ -368,9 +426,56 @@ function EntityDetailPlaceholder({ race, onClose }) {
         </button>
       </div>
       <div style={{ maxWidth:'720px', margin:'0 auto', padding:'80px 40px 64px' }}>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.35em', color:'rgba(124,77,255,0.5)', textTransform:'uppercase', marginBottom:'12px' }}>Charaktererstellung · Rassen</div>
-        <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(36px,6vw,60px)', fontWeight:'300', letterSpacing:'0.12em', color:'var(--white)', textTransform:'uppercase', marginBottom:'20px', textShadow:'0 0 40px rgba(124,77,255,0.35)' }}>{race.name}</h1>
-        <div style={{ width:'48px', height:'1px', background:'linear-gradient(90deg,rgba(124,77,255,0.8),transparent)', marginBottom:'48px' }} />
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.35em', color:`${acc}66`, textTransform:'uppercase', marginBottom:'12px' }}>Charaktererstellung · Rassen</div>
+        <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(36px,6vw,60px)', fontWeight:'300', letterSpacing:'0.12em', color:'var(--white)', textTransform:'uppercase', marginBottom:'20px', textShadow:`0 0 40px ${acc}44` }}>{race.name}</h1>
+        <div style={{ width:'48px', height:'1px', background:`linear-gradient(90deg,${acc}cc,transparent)`, marginBottom:'36px' }} />
+
+        {sicht && (
+          <div style={{ marginBottom:'32px' }}>
+            <div style={{ fontFamily:'var(--font-display)', fontSize:'10px', fontWeight:'400', letterSpacing:'0.22em', color:`${acc}88`, textTransform:'uppercase', marginBottom:'12px' }}>Sicht &amp; Wahrnehmung</div>
+
+            {hasWandel && (
+              <div style={{ display:'flex', gap:'6px', marginBottom:'14px' }}>
+                {[['Normalform', false],['Wandelform', true]].map(([label, val]) => (
+                  <button key={label} onClick={()=>setShowWandel(val)}
+                    style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'10px', letterSpacing:'0.1em', padding:'5px 12px', borderRadius:'3px', cursor:'pointer', border:`1px solid ${val===showWandel ? acc+'88' : acc+'28'}`, background: val===showWandel ? `${acc}1c` : 'transparent', color: val===showWandel ? acc : `${acc}66`, transition:'all 0.2s' }}>
+                    {label}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            <div style={{ display:'grid', gridTemplateColumns:'200px 1fr', gap:'20px', border:`1px solid ${acc}22`, borderRadius:'4px', padding:'20px', background:`${acc}07` }}>
+              <div>
+                <FovDiagram sicht={sicht} accent={acc} wandelform={showWandel}/>
+                <div style={{ textAlign:'center', fontFamily:'var(--font-mono)', fontSize:'8px', color:`${acc}44`, marginTop:'7px', letterSpacing:'0.1em' }}>
+                  {activeSicht?.radius ?? sicht.radius}° Sichtfeld
+                </div>
+              </div>
+              <div style={{ display:'flex', flexDirection:'column', gap:'0', justifyContent:'center' }}>
+                {[
+                  ['Sichtweite',  `${activeSicht?.weite   ?? sicht.weite} m`],
+                  ['Sichtfeld',   `${activeSicht?.radius  ?? sicht.radius}°`],
+                  ['Dunkelsicht', (activeSicht?.dunkel ?? sicht.dunkel) > 0 ? `${activeSicht?.dunkel ?? sicht.dunkel} m` : '—'],
+                  ['Tiefensicht', (activeSicht?.tiefensicht ?? sicht.tiefensicht) ? 'Ja' : 'Nein'],
+                ].map(([label, value]) => (
+                  <div key={label} style={{ display:'flex', justifyContent:'space-between', alignItems:'center', padding:'8px 0', borderBottom:`1px solid ${acc}10` }}>
+                    <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.16em', color:`${acc}55`, textTransform:'uppercase' }}>{label}</span>
+                    <span style={{ fontFamily:'var(--font-mono)', fontSize:'11px', color:`${acc}cc` }}>{value}</span>
+                  </div>
+                ))}
+                {(activeSicht?.notiz || sicht.notiz) && (
+                  <div style={{ marginTop:'10px', padding:'8px 10px', border:`1px solid ${acc}18`, borderRadius:'3px', background:`${acc}09` }}>
+                    <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'10px', lineHeight:'1.65', color:'rgba(200,190,240,0.5)', margin:0 }}>
+                      {activeSicht?.notiz || sicht.notiz}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
         <div style={{ border:'1px dashed rgba(124,77,255,0.2)', borderRadius:'4px', padding:'48px 40px', textAlign:'center', background:'rgba(124,77,255,0.03)' }}>
           <OctSvg size={32} color="rgba(124,77,255,0.25)" fill="rgba(124,77,255,0.08)" strokeWidth={1} style={{ margin:'0 auto 20px' }} />
           <div style={{ fontFamily:'var(--font-display)', fontSize:'13px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(var(--text2-rgb),0.4)', textTransform:'uppercase', marginBottom:'12px' }}>In Bearbeitung</div>

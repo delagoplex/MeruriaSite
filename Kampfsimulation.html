@@ -1811,6 +1811,11 @@ function SimPasswordGate({ onUnlock }) {
 
   return (
     <div style={{ position:'fixed', inset:0, background:'#05040f', display:'flex', alignItems:'center', justifyContent:'center', zIndex:9999 }}>
+      <a href="index.html" style={{ position:'fixed', top:'18px', left:'22px', fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em', color:'rgba(200,190,240,0.4)', textDecoration:'none', textTransform:'uppercase', transition:'color 0.15s' }}
+        onMouseEnter={e => e.currentTarget.style.color='var(--white)'}
+        onMouseLeave={e => e.currentTarget.style.color='rgba(200,190,240,0.4)'}>
+        ← Zurück
+      </a>
       <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'28px', animation:'fadeInUp 0.4s ease' }}>
         <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'14px' }}>
           <svg width="40" height="40" viewBox="0 0 40 40">
@@ -1836,11 +1841,6 @@ function SimPasswordGate({ onUnlock }) {
             Eintreten
           </button>
         </form>
-        <a href="index.html" style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),0.35)', textDecoration:'none', textTransform:'uppercase', transition:'color 0.15s' }}
-          onMouseEnter={e => { e.currentTarget.style.color='rgba(var(--accent-rgb),0.7)'; }}
-          onMouseLeave={e => { e.currentTarget.style.color='rgba(var(--accent-rgb),0.35)'; }}>
-          ← Zurück
-        </a>
       </div>
     </div>
   );
