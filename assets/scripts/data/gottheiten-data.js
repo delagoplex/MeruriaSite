@@ -244,7 +244,7 @@ window.GODS_DATA = {
       domain: "Domäne der Arkana · Domäne der List · Domäne des Todes · Domäne des Wissens",
       palette: ["#0A000D","#003616","#40CD21","#D4A9FF"],
       insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
-      backgroundSrc: "assets/images/gods/backgrounds/BG_Eiritha.webp",
+      backgroundSrc: "assets/images/gods/backgrounds/BG_Maledor.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="22" stroke="currentColor" stroke-width="1.5"/><line x1="22" y1="58" x2="58" y2="22" stroke="currentColor" stroke-width="1.5"/><circle cx="40" cy="40" r="6" stroke="currentColor" stroke-width="1" opacity="0.6"/><circle cx="40" cy="22" r="3" stroke="currentColor" stroke-width="0.8" opacity="0.4"/><circle cx="40" cy="58" r="3" stroke="currentColor" stroke-width="0.8" opacity="0.4"/></svg>`,
       description: "Maledors göttliche Domäne liegt in den äußeren Ebenen und wird Die Fäulnis genannt.", lore: "\"Fürchte dich nicht davor, hemmungslos Emotionen zu zeigen, da es keinen Grund gibt, diese zu kontrollieren oder zu unterdrücken. Lasse dich nicht einschränken, nicht einmal vom Tod. Experimentiere, um Neues zu entdecken, das du für deine Zwecke nutzen kannst. Wenn dir etwas nicht gefällt, zerstöre oder verändere es, damit es deinen Ansprüchen gerecht wird. Solltest du etwas begehren, lasse nicht zu, dass dich etwas daran hindert, dies auch zu bekommen.\"",
