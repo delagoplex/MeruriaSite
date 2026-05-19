@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meruria — Impressum</title>
+<link rel="stylesheet" href="assets/styles/global/fonts.css">
+<link rel="stylesheet" href="assets/styles/global/base.css">
+<script src="assets/scripts/vendor/react.development.js"></script>
+<script src="assets/scripts/vendor/react-dom.development.js"></script>
+<script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/footer.jsx" type="text/babel"></script>
+<style>
+  :root { --nav-h: 52px; }
+  body { background: var(--bg); color: var(--white); font-family: var(--font-body); }
+  .imp-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 64px 32px 80px;
+  }
+  .imp-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: rgba(var(--accent-rgb), 0.55);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .imp-title {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    color: var(--white);
+    margin-bottom: 48px;
+    text-transform: uppercase;
+  }
+  .imp-section {
+    margin-bottom: 40px;
+  }
+  .imp-section-title {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(var(--accent-rgb), 0.8);
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(var(--accent-rgb), 0.12);
+  }
+  .imp-text {
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--silver);
+  }
+  .imp-text p { margin-bottom: 10px; }
+  .imp-text p:last-child { margin-bottom: 0; }
+  .imp-notice {
+    margin-top: 48px;
+    padding: 20px 24px;
+    border: 1px solid rgba(var(--accent-rgb), 0.15);
+    border-radius: 3px;
+    background: rgba(var(--accent-rgb), 0.04);
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: rgba(var(--text-rgb), 0.6);
+    font-family: var(--font-body);
+    font-style: italic;
+  }
+  .imp-divider {
+    height: 1px;
+    background: rgba(var(--accent-rgb), 0.08);
+    margin: 48px 0;
+  }
+  .imp-contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 4px;
+  }
+  .imp-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .imp-field label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(160,140,255,0.55);
+  }
+  .imp-field input,
+  .imp-field textarea {
+    background: rgba(160,140,255,0.04);
+    border: 1px solid rgba(160,140,255,0.14);
+    border-radius: 3px;
+    padding: 10px 14px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--silver);
+    outline: none;
+    transition: border-color 0.2s;
+    resize: vertical;
+  }
+  .imp-field input:focus,
+  .imp-field textarea:focus {
+    border-color: rgba(160,140,255,0.4);
+  }
+  .imp-field textarea { min-height: 110px; }
+  .imp-send-btn {
+    align-self: flex-start;
+    margin-top: 4px;
+    padding: 9px 24px;
+    background: transparent;
+    border: 1px solid rgba(160,140,255,0.3);
+    border-radius: 3px;
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(160,140,255,0.8);
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+  }
+  .imp-send-btn:hover {
+    background: rgba(160,140,255,0.08);
+    border-color: rgba(160,140,255,0.55);
+    color: rgba(200,190,240,1);
+  }
+  .imp-sent-msg {
+    font-size: 12px;
+    font-weight: 300;
+    color: rgba(160,140,255,0.7);
+    font-family: var(--font-mono);
+    letter-spacing: 0.1em;
+    margin-top: 4px;
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState } = React;
+
+function ContactForm() {
+  const [name, setName] = useState('');
+  const [betreff, setBetreff] = useState('');
+  const [nachricht, setNachricht] = useState('');
+  const [sent, setSent] = useState(false);
+
+  function handleSend() {
+    if (!nachricht.trim()) return;
+    const to = 'dermaximusjaximus@gmail.com';
+    const sub = encodeURIComponent(betreff || 'Kontaktanfrage via meruria.de');
+    const body = encodeURIComponent((name ? `Von: ${name}\n\n` : '') + nachricht);
+    window.location.href = `mailto:${to}?subject=${sub}&body=${body}`;
+    setSent(true);
+  }
+
+  return (
+    <div className="imp-contact-form">
+      <div className="imp-field">
+        <label>Dein Name (optional)</label>
+        <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Wie soll ich dich nennen?" />
+      </div>
+      <div className="imp-field">
+        <label>Betreff</label>
+        <input type="text" value={betreff} onChange={e => setBetreff(e.target.value)} placeholder="Worum geht es?" />
+      </div>
+      <div className="imp-field">
+        <label>Nachricht</label>
+        <textarea value={nachricht} onChange={e => setNachricht(e.target.value)} placeholder="Deine Nachricht…" />
+      </div>
+      <button className="imp-send-btn" onClick={handleSend}>Nachricht senden</button>
+      {sent && <div className="imp-sent-msg">✓ E-Mail-Programm geöffnet</div>}
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <div className="page-root">
+      <SiteNav />
+      <div className="imp-wrap">
+        <div className="imp-eyebrow">Rechtliches</div>
+        <h1 className="imp-title">Impressum</h1>
+
+        <div className="imp-section">
+          <div className="imp-section-title">Angaben gemäß § 5 TMG</div>
+          <div className="imp-text">
+            <p>
+              Sabrina Rettstadt<br />
+              Sandberg 4a<br />
+              21244 Buchholz in der Nordheide
+            </p>
+            <p>E-Mail: <a href="mailto:dermaximusjaximus@gmail.com" style={{color:'rgba(160,140,255,0.75)',textDecoration:'none'}}>dermaximusjaximus@gmail.com</a></p>
+            <p>Diese Website ist ein privates, nicht-kommerzielles Fanprojekt und dient ausschließlich dem privaten Gebrauch einer geschlossenen Spielgruppe.</p>
+          </div>
+        </div>
+
+        <div className="imp-section">
+          <div className="imp-section-title">Kontakt</div>
+          <ContactForm />
+        </div>
+
+        <div className="imp-section">
+          <div className="imp-section-title">Haftungsausschluss</div>
+          <div className="imp-text">
+            <p>Die Inhalte dieser Seite wurden mit größtmöglicher Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte übernehmen wir keine Gewähr.</p>
+            <p>Als privater Dienst ist diese Seite nicht öffentlich zugänglich und richtet sich ausschließlich an einen eingeladenen Personenkreis.</p>
+          </div>
+        </div>
+
+        <div className="imp-divider" />
+
+        <div className="imp-section">
+          <div className="imp-section-title">Fan-Inhalt-Richtlinie / Fan Content Policy</div>
+          <div className="imp-text">
+            <p>
+              Diese Seite ist ein inoffizieller Fan-Inhalt im Rahmen der Richtlinie für Fan-Inhalte. Nicht von Wizards gefördert/gesponsert. Bestandteile des enthaltenen Materials sind Eigentum von Wizards of the Coast. ©Wizards of the Coast LLC.
+            </p>
+          </div>
+          <div className="imp-notice">
+            This website is unofficial Fan Content permitted under the Fan Content Policy. Not approved/endorsed by Wizards. Portions of the materials used are property of Wizards of the Coast. ©Wizards of the Coast LLC.
+          </div>
+        </div>
+
+        <div className="imp-section">
+          <div className="imp-section-title">Kobold Press Community Use Policy</div>
+          <div className="imp-notice">
+            This website uses trademarks and/or copyrights owned by Kobold Press and Open Design, which are used under the Kobold Press Community Use Policy. We are expressly prohibited from charging you to use or access this content. This website is not published, endorsed, or specifically approved by Kobold Press. For more information about this Community Use Policy, please visit koboldpress.com/k/forum in the Kobold Press topic. For more information about Kobold Press products, please visit koboldpress.com.
+          </div>
+        </div>
+
+        <div className="imp-section">
+          <div className="imp-section-title">MCDM Productions Fan Content Policy</div>
+          <div className="imp-notice">
+            This website uses trademarks and/or copyrights owned by MCDM Productions, LLC, which are used under the MCDM Fan Content Policy. We are expressly prohibited from charging you to use or access this content. This website is not published, endorsed, or specifically approved by MCDM Productions. For more information about MCDM Productions and their products, please visit mcdmproductions.com.
+          </div>
+        </div>
+
+        <div className="imp-section">
+          <div className="imp-section-title">Hit Point Press Fan Content Policy</div>
+          <div className="imp-notice">
+            This website uses trademarks and/or copyrights owned by Hit Point Press, which are used under the Hit Point Press Fan Content Policy. We are expressly prohibited from charging you to use or access this content. This website is not published, endorsed, or specifically approved by Hit Point Press. For more information about Hit Point Press and their products, please visit hitpointpress.com.
+          </div>
+        </div>
+      </div>
+      <SiteFooter left="◈ MERURIA — PRIVATES FANPROJEKT" right="NICHT KOMMERZIELL" />
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

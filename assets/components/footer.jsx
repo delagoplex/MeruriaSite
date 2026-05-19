@@ -10,6 +10,11 @@ function SiteFooter({ accent, left, right }) {
       <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:textColor, letterSpacing:'0.2em' }}>
         {left || '◈ ARCHIV-STATUS: UNBEKANNT'}
       </div>
+      <a href="Impressum.html" style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:textColor, letterSpacing:'0.2em', textDecoration:'none', transition:'color 0.15s' }}
+        onMouseEnter={e => e.currentTarget.style.color = accent ? `${accent}66` : 'rgba(var(--accent-rgb),0.55)'}
+        onMouseLeave={e => e.currentTarget.style.color = textColor}>
+        IMPRESSUM
+      </a>
       <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:textColor, letterSpacing:'0.2em' }}>
         {right || 'MERURIA '}
       </div>

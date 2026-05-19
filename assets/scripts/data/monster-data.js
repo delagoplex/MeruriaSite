@@ -11,6 +11,7 @@ window.MONSTER_DATA = [
   ...(window.MONSTER_DATA_FLEE_MORTALS || []),
   ...(window.MONSTER_DATA_AVERNUS || []),
   ...(window.MONSTER_DATA_TOME_OF_BEASTS || []),
+  ...(window.MONSTER_DATA_TOME_OF_BEASTS_2 || []),
   ...(window.MONSTER_DATA_SONSTIGE || []),
 ].sort((a, b) => a.name.localeCompare(b.name, 'de'));
 

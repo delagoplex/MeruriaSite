@@ -1,0 +1,2 @@
+window.MONSTER_DATA_TOME_OF_BEASTS_2 = [
+];
