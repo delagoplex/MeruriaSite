@@ -148,7 +148,7 @@ window.GODS_DATA = {
       domain: "Domäne des Lichts · Domäne der Schmiede · Domäne des Wissens",
       palette: ["#290a00","#731e00","#FF6200","#ff9750"],
       insigniaSrc: "assets/images/gods/insignia/Insignie_Hadir.png",
-      backgroundSrc: "assets/images/gods/backgrounds/BG_Eiritha.webp",
+      backgroundSrc: "assets/images/gods/backgrounds/BG_Hadir.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><polygon points="40,10 68,65 12,65" stroke="currentColor" stroke-width="1.5"/><polygon points="40,22 58,58 22,58" stroke="currentColor" stroke-width="1" opacity="0.6"/><polygon points="40,34 50,52 30,52" stroke="currentColor" stroke-width="1" opacity="0.3"/><circle cx="40" cy="65" r="3" stroke="currentColor" stroke-width="1"/></svg>`,
       description: "Hadirs göttliche Domäne liegt in den äußeren Ebenen und wird Die Urschmiede genannt.", lore: "\"Sei ein Vorbild und gebe dein Wissen geduldig an die Novizen deiner Zunft weiter. Lasse allem und jedem die Chance, sich zu beweisen. Fülle deinen Alltag mit produktivem Schaffen, bilde dich stets fort und verkaufe dich nicht unter deinem Wert. Sei wohltätig und nutze deinen Reichtum, um auch deinen Nächsten Wohlstand zu bringen. Schmiede wertvolle Beziehungen und inspiriere diese mit deiner Kreativität.\"",
@@ -160,7 +160,7 @@ window.GODS_DATA = {
       domain: "Domäne der Arkana · Domäne der Dämmerung · Domäne des Friedens · Domäne des Grabes · Domäne des Lichts · Domäne der Natur · Domäne des Sturms",
       palette: ["#020814","#2040a0","#287AFF","#c0d8f8"],
       insigniaSrc: "assets/images/gods/insignia/Insignie_Selunara.png",
-      backgroundSrc: "assets/images/gods/backgrounds/BG_Eiritha.webp",
+      backgroundSrc: "assets/images/gods/backgrounds/BG_Selunara.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><path d="M14 50 Q20 30 40 28 Q60 26 66 50" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M14 50 Q20 62 40 64 Q60 66 66 50" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="40" cy="46" r="8" stroke="currentColor" stroke-width="1"/><line x1="40" y1="14" x2="40" y2="28" stroke="currentColor" stroke-width="1" opacity="0.5"/></svg>`,
       description: "Selunaras göttliche Domäne liegt in den äußeren Ebenen und wird Das Urmeer genannt.", lore: "\"Schätze sowohl die Dämmerung, als auch das Licht, denn ohne des Lichtes Existenz könnte keine Dämmerung geschehen. Ehre sowohl die Bewohner des Meeres, als auch die des Landes und behandle seine Wesen gleichermaßen mit Respekt. Sei sanftmütig, verständnisvoll und geduldig. Kontrolliere dein Temperament und bewahre Gleichgewicht. Erlaube dir, dich auszuruhen, um neue Kraft zu schöpfen. Fürchte nicht das Ende, denn das Ende ist auch der Anfang von etwas Neuem.\"",
@@ -172,7 +172,7 @@ window.GODS_DATA = {
       domain: "Domäne der Arkana · Domäne der Dämmerung · Domäne des Lichts · Domäne der List",
       palette: ["#0b020d","#7c3197","#e848d2","#edd0f2"],
       insigniaSrc: "assets/images/gods/insignia/Insignie_Aetherius.png",
-      backgroundSrc: "assets/images/gods/backgrounds/BG_Eiritha.webp",
+      backgroundSrc: "assets/images/gods/backgrounds/BG_Aetherius.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><rect x="14" y="14" width="24" height="24" stroke="currentColor" stroke-width="1.5"/><rect x="42" y="14" width="24" height="24" stroke="currentColor" stroke-width="1.5"/><rect x="14" y="42" width="24" height="24" stroke="currentColor" stroke-width="1.5"/><rect x="42" y="42" width="24" height="24" stroke="currentColor" stroke-width="1.5"/><circle cx="40" cy="40" r="3" fill="currentColor" opacity="0.7"/></svg>`,
       description: "Aetherius' göttliche Domäne liegt in den äußeren Ebenen und wird Der Spiegel genannt.", lore: "\"Mache dir die Magie zu Nutze, um Aufgaben des Alltags zu erleichtern und neue Möglichkeiten zu schaffen. Fürchte weder das Licht, noch die Dunkelheit, denn nur durch das perfekte Zusammenspiel beider, kannst du die Welt visuell wahrnehmen. Nutze Illusionen, um die zu täuschen, die dir schaden wollen, oder um die zu erfreuen, die du für würdig genug hältst, um wundervolle Dinge zu erblicken.\"",
@@ -184,7 +184,7 @@ window.GODS_DATA = {
       domain: "Domäne der Dämmerung · Domäne der List · Domäne des Sturms · Domäne der Natur · Domäne des Todes",
       palette: ["#01000d","#42A4AD","#67fff2","#C1FFFA"],
       insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
-      backgroundSrc: "assets/images/gods/backgrounds/BG_Eiritha.webp",
+      backgroundSrc: "assets/images/gods/backgrounds/BG_Serenith.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="24" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="40" x2="64" y2="40" stroke="currentColor" stroke-width="1"/><line x1="40" y1="16" x2="40" y2="64" stroke="currentColor" stroke-width="1"/><line x1="22.9" y1="22.9" x2="57.1" y2="57.1" stroke="currentColor" stroke-width="0.8" opacity="0.6"/><line x1="57.1" y1="22.9" x2="22.9" y2="57.1" stroke="currentColor" stroke-width="0.8" opacity="0.6"/><circle cx="40" cy="40" r="5" stroke="currentColor" stroke-width="1"/></svg>`,
       description: "Sereniths göttliche Domäne liegt in den äußeren Ebenen und wird Der Immerfrost genannt.", lore: "\"Schätze die Einsamkeit, denn sie schützt dich davor, dein Ziel aus den Augen zu verlieren. Lasse niemanden in dein Herz sehen, denn dies macht dich angreifbar. Empfange Schmerz und wachse daran, denn nur dieser zeigt dir, dass du lebendig bist. Nimm das Leid von denen, die du liebst. Bringe Erlösung zu denen, die verdorben sind oder denen, die dich verletzt haben. Vergib all jenen, die es verdienen, aber vergiss niemals, wenn dir Unrecht getan wurde.\"",
@@ -196,7 +196,7 @@ window.GODS_DATA = {
       domain: "Domäne der List · Domäne der Natur · Domäne des Sturms",
       palette: ["#000B1D","#108552","#FFF159","#FDFFD8"],
       insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
-      backgroundSrc: "assets/images/gods/backgrounds/BG_Eiritha.webp",
+      backgroundSrc: "assets/images/gods/backgrounds/BG_Hydea.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="24" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="40" x2="64" y2="40" stroke="currentColor" stroke-width="1.5"/><line x1="40" y1="16" x2="40" y2="64" stroke="currentColor" stroke-width="1.5"/><circle cx="40" cy="40" r="8" stroke="currentColor" stroke-width="1"/><circle cx="40" cy="40" r="3" fill="currentColor" opacity="0.6"/></svg>`,
       description: "Hydeas göttliche Domäne liegt in den äußeren Ebenen und wird Der Taifun genannt.", lore: "\"Fürchte keine Zerstörung, denn diese dient dazu, um Neues aufbauen zu können. Strebe nach Veränderung und gib dich nicht dem Stillstand hin. Locke deine Feinde in den Sturm, um die Überhand über sie zu gewinnen. Sei dankbar für den Regen, der deine Felder bewässert und die Erde reinigt. Sei dankbar für das Feuer, das dich warm hält und dessen Asche fruchtbaren Boden schafft. Sei dankbar für die Erde, die dich nährt und dein Haus stützt. Sei dankbar für den Wind, der in dein Segel jagt.\"",
@@ -208,7 +208,7 @@ window.GODS_DATA = {
       domain: "Domäne der Arkana · Domäne der Dämmerung · Domäne des Grabes · Domäne des Lebens · Domäne des Lichts · Domäne der List · Domäne des Wissens",
       palette: ["#210D38","#833493","#ff80f9","#ffec8f"],
       insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
-      backgroundSrc: "assets/images/gods/backgrounds/BG_Eiritha.webp",
+      backgroundSrc: "assets/images/gods/backgrounds/BG_Melion.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="22" stroke="currentColor" stroke-width="1.5"/><circle cx="40" cy="40" r="10" stroke="currentColor" stroke-width="1"/><line x1="40" y1="18" x2="40" y2="28" stroke="currentColor" stroke-width="2"/><line x1="40" y1="52" x2="40" y2="62" stroke="currentColor" stroke-width="2"/><line x1="18" y1="40" x2="28" y2="40" stroke="currentColor" stroke-width="2"/><line x1="52" y1="40" x2="62" y2="40" stroke="currentColor" stroke-width="2"/><circle cx="40" cy="40" r="3" fill="currentColor" opacity="0.6"/></svg>`,
       description: "Melions göttliche Domäne liegt in den äußeren Ebenen und wird Die Bühne genannt.", lore: "\"Nutze dein Wissen und das des Volkes, um mystische Sagen zu schaffen, von denen in vielen Jahrtausenden noch erzählt wird. Nutze Rythmus oder Melodie, um deine Kameraden zu Tapferkeit und Heldenmut anzutreiben. Lasse dein Lied deine Kämpfer mit Magie ermutigen und bestärken. Webe Magie in deine Musik und Worte, um Verbündete zu inspirieren, Feinde zu entmutigen und Wunden zu heilen.\"",
@@ -220,7 +220,7 @@ window.GODS_DATA = {
       domain: "Domäne des Grabes · Domäne des Lebens · Domäne des Lichts · Domäne der Ordnung · Domäne der Schmiede · Domäne des Wissens",
       palette: ["#100f0e","#876d43","#D8C99D","#fff4d2"],
       insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
-      backgroundSrc: "assets/images/gods/backgrounds/BG_Eiritha.webp",
+      backgroundSrc: "assets/images/gods/backgrounds/BG_Ophelis.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><line x1="10" y1="40" x2="70" y2="40" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="40" r="2" fill="currentColor" opacity="0.5"/><circle cx="70" cy="40" r="2" fill="currentColor" opacity="0.5"/><circle cx="40" cy="40" r="3" stroke="currentColor" stroke-width="1"/><line x1="40" y1="20" x2="40" y2="34" stroke="currentColor" stroke-width="0.8" opacity="0.4"/><line x1="40" y1="46" x2="40" y2="60" stroke="currentColor" stroke-width="0.8" opacity="0.4"/></svg>`,
       description: "Ophelis' göttliche Domäne liegt in den äußeren Ebenen und wird Der Waagsaal genannt.", lore: "\"So wie jedem Lebewesen eine Seele geschenkt wurde, wird sie diesem auch irgendwann genommen. Beschütze die natürliche Ordnung aller Dinge, denn diese beschreibt Perfektion. Veränderung ist Gift für die Reinheit und darf nicht auf die Ordnung einwirken. Schmiede deine Waffen aus reinem Material und sorge mit diesen dafür, dass alle Regeln eingehalten werden, denn nichts darf willkürlich geschehen und alles muss seinem vorherbestimmten Ablauf Folge leisten.\"",
@@ -232,7 +232,7 @@ window.GODS_DATA = {
       domain: "Domäne des Krieges · Domäne der List · Domäne des Todes",
       palette: ["#100000","#901010","#d85050","#f8c0c0"],
       insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
-      backgroundSrc: "assets/images/gods/backgrounds/BG_Eiritha.webp",
+      backgroundSrc: "assets/images/gods/backgrounds/BG_Thraxis.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="26" stroke="currentColor" stroke-width="1"/><circle cx="40" cy="40" r="18" stroke="currentColor" stroke-width="0.8" opacity="0.6"/><circle cx="40" cy="40" r="10" stroke="currentColor" stroke-width="0.6" opacity="0.3"/><circle cx="40" cy="40" r="2" fill="currentColor" opacity="0.2"/></svg>`,
       description: "Thraxis' göttliche Domäne liegt in den äußeren Ebenen und wird Die Hölle genannt.", lore: "\"Du wurdest geschaffen, um deine eigene Reise des Lebens anzutreten, darum lasse nicht zu, dass sich jemand in deinen Weg stellt und es wagt, dich von deinen Zielen abbringen zu wollen. Sollte dich jemand infrage stellen, lasse ihn spüren, wozu du fähig bist und höre nicht auf, bis er dies auch verstanden hat. Trainiere immer härter, um alles und jeden zu übertreffen. Akzeptiere niemals weniger Anerkennung, als dir zusteht. Bändige niemals deine Wut, denn diese ist das aufrichtigste all deiner Gefühle.\"",
@@ -244,7 +244,7 @@ window.GODS_DATA = {
       domain: "Domäne der Arkana · Domäne der List · Domäne des Todes · Domäne des Wissens",
       palette: ["#0A000D","#003616","#40CD21","#D4A9FF"],
       insigniaSrc: "assets/images/gods/insignia/Insignie_Aurelia.png",
-      backgroundSrc: "assets/images/gods/backgrounds/BG_Eiritha.webp",
+      backgroundSrc: "assets/images/gods/backgrounds/BG_Maledor.png",
 
       symbolSvg: `<svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="22" stroke="currentColor" stroke-width="1.5"/><line x1="22" y1="58" x2="58" y2="22" stroke="currentColor" stroke-width="1.5"/><circle cx="40" cy="40" r="6" stroke="currentColor" stroke-width="1" opacity="0.6"/><circle cx="40" cy="22" r="3" stroke="currentColor" stroke-width="0.8" opacity="0.4"/><circle cx="40" cy="58" r="3" stroke="currentColor" stroke-width="0.8" opacity="0.4"/></svg>`,
       description: "Maledors göttliche Domäne liegt in den äußeren Ebenen und wird Die Fäulnis genannt.", lore: "\"Fürchte dich nicht davor, hemmungslos Emotionen zu zeigen, da es keinen Grund gibt, diese zu kontrollieren oder zu unterdrücken. Lasse dich nicht einschränken, nicht einmal vom Tod. Experimentiere, um Neues zu entdecken, das du für deine Zwecke nutzen kannst. Wenn dir etwas nicht gefällt, zerstöre oder verändere es, damit es deinen Ansprüchen gerecht wird. Solltest du etwas begehren, lasse nicht zu, dass dich etwas daran hindert, dies auch zu bekommen.\"",
