@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meruria — Kollektikon</title>
+<link rel="stylesheet" href="assets/styles/global/fonts.css">
+<link rel="stylesheet" href="assets/styles/global/base.css">
+<link rel="stylesheet" href="assets/styles/pages/Kollektikon.css">
+<script src="assets/scripts/vendor/react.development.js"></script>
+<script src="assets/scripts/vendor/react-dom.development.js"></script>
+<script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/components/tweaks-panel-13.jsx" type="text/babel"></script>
+<script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.jsx" type="text/babel"></script>
+<script src="assets/components/footer.jsx" type="text/babel"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+const { useTweaks, TweaksPanel, TweakSection, TweakToggle } = window;
+const { SiteNav, SiteGate, SiteFooter } = window;
+
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"showParticles": true}/*EDITMODE-END*/;
+
+// ── ICONS ─────────────────────────────────────────────────
+const FISH_ICON     = <g><path d="M70 50 C 60 35, 30 35, 20 50 C 30 65, 60 65, 70 50 Z" fill="none" strokeWidth="2"/><path d="M70 50 L 85 38 L 85 62 Z" fill="none" strokeWidth="2"/><circle cx="32" cy="48" r="2.4" fill="currentColor"/></g>;
+const INSECT_ICON   = <g><ellipse cx="50" cy="50" rx="3.5" ry="22" fill="currentColor" stroke="none"/><path d="M50 38 C 36 22 16 24 18 42 C 24 50 38 48 50 50 Z" fill="none" strokeWidth="1.6"/><path d="M50 38 C 64 22 84 24 82 42 C 76 50 62 48 50 50 Z" fill="none" strokeWidth="1.6"/><path d="M50 50 C 38 56 22 60 22 72 C 30 76 44 70 50 64 Z" fill="none" strokeWidth="1.4"/><path d="M50 50 C 62 56 78 60 78 72 C 70 76 56 70 50 64 Z" fill="none" strokeWidth="1.4"/><path d="M48 30 L 42 22 M52 30 L 58 22" strokeWidth="1.4"/></g>;
+const PLANT_ICON    = <g><path d="M50 86 L 50 30" strokeWidth="2"/><path d="M50 50 C 30 46, 18 30, 22 18 C 36 22, 50 36, 50 50 Z" fill="none" strokeWidth="1.8"/><path d="M50 62 C 70 58, 82 42, 78 30 C 64 34, 50 48, 50 62 Z" fill="none" strokeWidth="1.8"/><path d="M50 76 C 42 72, 38 64, 42 58 C 48 60, 52 68, 50 76 Z" fill="none" strokeWidth="1.6"/></g>;
+const MINERAL_ICON  = <g><path d="M50 14 L 78 38 L 64 82 L 36 82 L 22 38 Z" fill="none" strokeWidth="2"/><path d="M50 14 L 50 82 M22 38 L 78 38 M36 82 L 50 38 L 64 82" strokeWidth="1.2" opacity="0.6"/></g>;
+const CREATURE_ICON = <g><path d="M28 32 L 22 18 L 38 26 L 50 14 L 62 26 L 78 18 L 72 32 L 80 50 L 70 70 L 50 84 L 30 70 L 20 50 Z" fill="none" strokeWidth="1.8"/><circle cx="40" cy="44" r="3" fill="currentColor"/><circle cx="60" cy="44" r="3" fill="currentColor"/><path d="M38 62 Q 50 70 62 62" strokeWidth="1.6" fill="none"/></g>;
+const PART_ICON     = <g transform="rotate(-22 50 50) translate(-10.5 25) scale(0.18)" strokeLinejoin="round" strokeLinecap="round"><path d="M 148 110 L 532 110 C 532 88, 550 68, 572 68 C 594 68, 610 84, 610 106 C 610 120, 604 132, 594 140 C 604 148, 610 160, 610 174 C 610 196, 594 212, 572 212 C 550 212, 532 192, 532 170 L 148 170 C 148 192, 130 212, 108 212 C 86 212, 70 196, 70 174 C 70 160, 76 148, 86 140 C 76 132, 70 120, 70 106 C 70 84, 86 68, 108 68 C 130 68, 148 88, 148 110 Z" fill="none" strokeWidth="11"/></g>;
+const WAL_ICON      = <g><path d="M14 52 C 20 36 40 26 60 30 C 72 32 82 40 86 50 L 78 54 L 72 48 L 64 54 L 56 46 L 48 56 L 38 48 Z" fill="none" strokeWidth="2"/><circle cx="68" cy="42" r="1.8" fill="currentColor"/><path d="M28 40 L 34 50 M48 28 L 52 42" strokeWidth="1.2" opacity="0.55"/></g>;
+const LIFE_ICON     = <g><circle cx="50" cy="50" r="26" fill="none" strokeWidth="2"/><path d="M50 24 L 50 76 M24 50 L 76 50 M32 32 L 68 68 M68 32 L 32 68" strokeWidth="1.1" opacity="0.5"/><circle cx="50" cy="50" r="6.5" fill="none" strokeWidth="1.6"/><circle cx="50" cy="50" r="1.6" fill="currentColor"/></g>;
+
+// ── COLLECTION DATA ───────────────────────────────────────
+const KOLLEKTIKON_DATA = [
+  { id:'fische',         label:'Fische',                    found:6, total:80,  komplett:3, hue:200, icon:FISH_ICON },
+  { id:'insekten',       label:'Insekten',                  found:5, total:30,  komplett:2, hue:95,  icon:INSECT_ICON },
+  { id:'pflanzen',       label:'Pflanzen',                  found:8, total:110, komplett:3, hue:140, icon:PLANT_ICON },
+  { id:'mineralien',     label:'Mineralien',                found:4, total:60,  komplett:2, hue:60,  icon:MINERAL_ICON },
+  { id:'kreaturen',      label:'Kreaturen',                 found:2, total:36,  komplett:1, hue:285, icon:CREATURE_ICON },
+  { id:'kreaturenteile', label:'Kreaturenteile',            found:3, total:48,  komplett:2, hue:0,   icon:PART_ICON },
+  { id:'wal',            label:'Trümmer des Weißen Wals',   found:4, total:20,  komplett:1, hue:210, icon:WAL_ICON },
+  { id:'lebensspeicher', label:'Teile des Lebensspeichers', found:2, total:15,  komplett:1, hue:45,  icon:LIFE_ICON },
+];
+
+// ── CATALOG: alle bekannten Einträge ─────────────────────
+const CATALOG_ENTRIES = [
+  { id:'f-06', name:'Aalsturm',           cat:'fische',         hue:240, status:'sighted',  date:'14. Sturmwacht',  icon:FISH_ICON },
+  { id:'f-04', name:'Ködermaul',          cat:'fische',         hue:190, status:'komplett', date:'27. Eiswinter',   icon:FISH_ICON },
+  { id:'f-02', name:'Mondbrasse',         cat:'fische',         hue:215, status:'komplett', date:'04. Aschefall',   icon:FISH_ICON },
+  { id:'f-01', name:'Silbersichelhecht',  cat:'fische',         hue:200, status:'komplett', date:'12. Sterne',      icon:FISH_ICON },
+  { id:'i-05', name:'Aschgraue Hornisse', cat:'insekten',       hue:30,  status:'sighted',  date:'19. Aschefall',   icon:INSECT_ICON },
+  { id:'i-02', name:'Karminspinner',      cat:'insekten',       hue:0,   status:'komplett', date:'02. Aschefall',   icon:INSECT_ICON },
+  { id:'i-01', name:'Sumpflampe',         cat:'insekten',       hue:90,  status:'sighted',  date:'14. Blütenfest',  icon:INSECT_ICON },
+  { id:'p-05', name:'Dornenwürger',       cat:'pflanzen',       hue:25,  status:'komplett', date:'11. Aschefall',   icon:PLANT_ICON },
+  { id:'p-03', name:'Glimmerschilf',      cat:'pflanzen',       hue:150, status:'komplett', date:'25. Eiswinter',   icon:PLANT_ICON },
+  { id:'p-08', name:'Hexenhauch',         cat:'pflanzen',       hue:285, status:'sighted',  date:'01. Aschefall',   icon:PLANT_ICON },
+  { id:'p-02', name:'Wundklee',           cat:'pflanzen',       hue:140, status:'komplett', date:'18. Blütenfest',  icon:PLANT_ICON },
+  { id:'m-01', name:'Mondquarz',          cat:'mineralien',     hue:200, status:'komplett', date:'08. Eiswinter',   icon:MINERAL_ICON },
+  { id:'m-02', name:'Schwarzschiefer',    cat:'mineralien',     hue:30,  status:'komplett', date:'14. Sterne',      icon:MINERAL_ICON },
+  { id:'k-01', name:'Schleifender Vogel', cat:'kreaturen',      hue:280, status:'komplett', date:'19. Blütenfest',  icon:CREATURE_ICON },
+  { id:'k-02', name:'Tiefenwandler',      cat:'kreaturen',      hue:260, status:'sighted',  date:'03. Sturmwacht',  icon:CREATURE_ICON },
+  { id:'t-01', name:'Klauenschuppe',      cat:'kreaturenteile', hue:30,  status:'komplett', date:'21. Blütenfest',  icon:PART_ICON },
+  { id:'t-02', name:'Aalstein',           cat:'kreaturenteile', hue:240, status:'komplett', date:'14. Sturmwacht',  icon:PART_ICON },
+  { id:'w-01', name:'Schädelplatte',      cat:'wal',            hue:210, status:'sighted',  date:'09. Eiswinter',   icon:WAL_ICON },
+  { id:'w-03', name:'Rippensplitter',     cat:'wal',            hue:200, status:'komplett', date:'23. Aschefall',   icon:WAL_ICON },
+  { id:'w-02', name:'Walgesang-Tropfen',  cat:'wal',            hue:215, status:'sighted',  date:'17. Sturmwacht',  icon:WAL_ICON },
+  { id:'l-01', name:'Erinnerungskern',    cat:'lebensspeicher', hue:45,  status:'sighted',  date:'11. Blütenfest',  icon:LIFE_ICON },
+  { id:'l-02', name:'Pulslinse',          cat:'lebensspeicher', hue:35,  status:'komplett', date:'02. Aschefall',   icon:LIFE_ICON },
+];
+
+// ── LETZTE ENTDECKUNGEN ───────────────────────────────────
+const RECENT_SIGHTED = [
+  { id:'i-05', name:'Aschgraue Hornisse', cat:'Insekten',         date:'19. Aschefall',  hue:30,  icon:INSECT_ICON },
+  { id:'w-02', name:'Walgesang-Tropfen',  cat:'Trümmer d. Wals',  date:'17. Sturmwacht', hue:215, icon:WAL_ICON },
+  { id:'f-06', name:'Aalsturm',           cat:'Fische',           date:'14. Sturmwacht', hue:240, icon:FISH_ICON },
+  { id:'w-01', name:'Schädelplatte',      cat:'Trümmer d. Wals',  date:'09. Eiswinter',  hue:210, icon:WAL_ICON },
+  { id:'k-02', name:'Tiefenwandler',      cat:'Kreaturen',        date:'03. Sturmwacht', hue:260, icon:CREATURE_ICON },
+  { id:'l-02', name:'Pulslinse',          cat:'Lebensspeicher',   date:'02. Aschefall',  hue:35,  icon:LIFE_ICON },
+  { id:'p-08', name:'Hexenhauch',         cat:'Pflanzen',         date:'01. Aschefall',  hue:285, icon:PLANT_ICON },
+  { id:'k-01', name:'Schleifender Vogel', cat:'Kreaturen',        date:'19. Blütenfest', hue:280, icon:CREATURE_ICON },
+  { id:'l-01', name:'Erinnerungskern',    cat:'Lebensspeicher',   date:'11. Blütenfest', hue:45,  icon:LIFE_ICON },
+  { id:'i-01', name:'Sumpflampe',         cat:'Insekten',         date:'14. Blütenfest', hue:90,  icon:INSECT_ICON },
+];
+
+const RECENT_KOMPLETT = [
+  { id:'w-03', name:'Rippensplitter',     cat:'Trümmer d. Wals',  date:'23. Aschefall',  hue:200, icon:WAL_ICON },
+  { id:'l-02', name:'Pulslinse',          cat:'Lebensspeicher',   date:'02. Aschefall',  hue:35,  icon:LIFE_ICON },
+  { id:'k-01', name:'Schleifender Vogel', cat:'Kreaturen',        date:'19. Blütenfest', hue:280, icon:CREATURE_ICON },
+  { id:'t-02', name:'Aalstein',           cat:'Kreaturenteile',   date:'14. Sturmwacht', hue:240, icon:PART_ICON },
+  { id:'p-05', name:'Dornenwürger',       cat:'Pflanzen',         date:'11. Aschefall',  hue:25,  icon:PLANT_ICON },
+  { id:'p-02', name:'Wundklee',           cat:'Pflanzen',         date:'18. Blütenfest', hue:140, icon:PLANT_ICON },
+  { id:'p-03', name:'Glimmerschilf',      cat:'Pflanzen',         date:'25. Eiswinter',  hue:150, icon:PLANT_ICON },
+  { id:'m-01', name:'Mondquarz',          cat:'Mineralien',       date:'08. Eiswinter',  hue:200, icon:MINERAL_ICON },
+  { id:'m-02', name:'Schwarzschiefer',    cat:'Mineralien',       date:'14. Sterne',     hue:30,  icon:MINERAL_ICON },
+  { id:'f-01', name:'Silbersichelhecht',  cat:'Fische',           date:'12. Sterne',     hue:200, icon:FISH_ICON },
+  { id:'f-02', name:'Mondbrasse',         cat:'Fische',           date:'04. Aschefall',  hue:215, icon:FISH_ICON },
+  { id:'i-02', name:'Karminspinner',      cat:'Insekten',         date:'02. Aschefall',  hue:0,   icon:INSECT_ICON },
+  { id:'t-01', name:'Klauenschuppe',      cat:'Kreaturenteile',   date:'21. Blütenfest', hue:30,  icon:PART_ICON },
+  { id:'f-04', name:'Ködermaul',          cat:'Fische',           date:'27. Eiswinter',  hue:190, icon:FISH_ICON },
+];
+
+// ── SCROLL REVEAL ─────────────────────────────────────────
+function useScrollReveal() {
+  useEffect(() => {
+    const revealed = new WeakSet();
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting || revealed.has(e.target)) return;
+        revealed.add(e.target);
+        observer.unobserve(e.target);
+        e.target.classList.add('visible');
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+    const t = setTimeout(() => document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el)), 100);
+    return () => { clearTimeout(t); observer.disconnect(); };
+  }, []);
+}
+
+// ── PARTICLES ─────────────────────────────────────────────
+function ParticleField() {
+  const canvasRef = useRef(null);
+  const animRef   = useRef(null);
+  useEffect(() => {
+    const canvas = canvasRef.current; if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const resize = () => { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; };
+    resize(); window.addEventListener('resize', resize);
+    const particles = Array.from({length:40}, () => ({
+      x: Math.random(), y: Math.random(),
+      r: Math.random()*1.4+0.4,
+      vx:(Math.random()-0.5)*0.04, vy:(Math.random()-0.5)*0.04,
+      alpha: Math.random()*0.14+0.03,
+    }));
+    const tick = () => {
+      const w = canvas.width, h = canvas.height;
+      ctx.clearRect(0,0,w,h);
+      particles.forEach(p => {
+        p.x += p.vx/w*60; p.y += p.vy/h*60;
+        if(p.x<0)p.x=1; if(p.x>1)p.x=0; if(p.y<0)p.y=1; if(p.y>1)p.y=0;
+        ctx.beginPath(); ctx.arc(p.x*w, p.y*h, p.r, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(160,140,255,${p.alpha})`; ctx.fill();
+      });
+      animRef.current = requestAnimationFrame(tick);
+    };
+    tick();
+    return () => { cancelAnimationFrame(animRef.current); window.removeEventListener('resize', resize); };
+  }, []);
+  return <canvas ref={canvasRef} style={{ position:'fixed', inset:0, width:'100%', height:'100%', pointerEvents:'none', zIndex:0 }} />;
+}
+
+// ── CATEGORY BAR ─────────────────────────────────────────
+function CategoryBar({ d, i, active, onClick }) {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current; if (!el) return;
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { setVisible(true); io.unobserve(el); } }), { threshold:0.2 });
+    io.observe(el); return () => io.disconnect();
+  }, []);
+  const pctFound = d.found / d.total;
+  const pctKomp  = (d.komplett || 0) / d.total;
+  const c  = `oklch(0.72 0.16 ${d.hue})`;
+  const cA = a => `oklch(0.72 0.16 ${d.hue} / ${a})`;
+
+  return (
+    <div ref={ref} onClick={onClick} style={{
+      background: active ? 'rgba(12,9,32,0.9)' : 'rgba(10,8,28,0.7)',
+      border:`1px solid ${active ? cA(0.5) : cA(0.18)}`,
+      padding:'14px 16px 12px', borderRadius:3, position:'relative', overflow:'hidden',
+      cursor:'pointer', transition:'border-color 0.2s, background 0.2s',
+      boxShadow: active ? `0 0 18px ${cA(0.18)}` : 'none',
+    }}>
+      {active && <div style={{ position:'absolute', inset:0, background:`${cA(0.06)}`, pointerEvents:'none' }} />}
+      <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:8, position:'relative' }}>
+        <svg viewBox="0 0 100 100" width="22" height="22" fill="none" stroke={c} style={{ color:c, opacity:0.9, flexShrink:0 }}>
+          {d.icon}
+        </svg>
+        <span style={{ fontFamily:'var(--font-display)', fontSize:11, letterSpacing:'0.2em', fontWeight:400, color:'rgba(220,210,250,0.85)', textTransform:'uppercase', flex:1, lineHeight:1.2 }}>{d.label}</span>
+        {active && <span style={{ fontFamily:'var(--font-mono)', fontSize:7, letterSpacing:'0.2em', color:cA(0.8), textTransform:'uppercase' }}>◈ aktiv</span>}
+      </div>
+      <div style={{ position:'relative', height:4, marginBottom:6 }}>
+        {pctKomp > 0 && (
+          <div style={{ position:'absolute', left:0, top:0, bottom:0, width: visible ? `${pctKomp*100}%` : '0%',
+            boxShadow:`0 0 7px 1px ${cA(0.42)}, 0 0 14px 3px ${cA(0.18)}`,
+            borderRadius:2, pointerEvents:'none',
+            transition:`width 1.2s cubic-bezier(.2,.85,.2,1) ${0.3+i*0.08}s`,
+          }}/>
+        )}
+        <div style={{ position:'absolute', inset:0, background:'rgba(124,77,255,0.08)', border:`1px solid ${cA(0.13)}`, borderRadius:2, overflow:'hidden' }}>
+          <div style={{ position:'absolute', left:0, top:0, bottom:0,
+            width: visible ? `${pctFound*100}%` : '0%',
+            background:'linear-gradient(90deg, rgba(220,215,250,0.16), rgba(240,238,255,0.26))',
+            transition:`width 1.0s cubic-bezier(.2,.85,.2,1) ${i*0.08}s` }}/>
+          <div style={{ position:'absolute', left:-1, top:-1, bottom:-1,
+            width: visible ? `${pctKomp*100}%` : '0%',
+            background:`linear-gradient(90deg, ${c}, ${cA(0.85)})`,
+            boxShadow:'inset 0 0 4px rgba(255,255,255,0.5)', borderRadius:2,
+            transition:`width 1.2s cubic-bezier(.2,.85,.2,1) ${0.3+i*0.08}s` }}/>
+        </div>
+      </div>
+      <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', gap:6, position:'relative' }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(200,190,240,0.65)', letterSpacing:'0.1em', whiteSpace:'nowrap' }}>
+          <span style={{ color:'#f0eeff' }}>{d.found}</span>
+          <span style={{ opacity:0.5 }}> / {d.total}</span>
+          {d.komplett > 0 && <span style={{ color:c, marginLeft:4 }}>· {d.komplett} <span style={{ fontSize:7, opacity:0.75, letterSpacing:'0.16em' }}>KOMP</span></span>}
+        </span>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:c, letterSpacing:'0.18em' }}>{Math.round(pctFound*100)} %</span>
+      </div>
+    </div>
+  );
+}
+
+// ── RECENT CARD ───────────────────────────────────────────
+function RecentCard({ item, idx, gold }) {
+  const [hov, setHov] = useState(false);
+  const c  = `oklch(0.72 0.16 ${item.hue})`;
+  const cA = a => `oklch(0.72 0.16 ${item.hue} / ${a})`;
+  const gA = a => `oklch(0.82 0.14 80 / ${a})`;
+  return (
+    <div onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+      style={{
+        width:140, height:172, flexShrink:0,
+        marginLeft: idx > 0 ? -38 : 0,
+        borderRadius:4, position:'relative',
+        border: gold ? `1px solid ${hov ? 'oklch(0.82 0.14 80)' : gA(0.55)}` : `1px solid ${hov ? c : cA(0.4)}`,
+        background:'rgba(13,8,38,0.97)',
+        animation: hov ? 'recentCardIdle 2.8s ease-in-out infinite' : 'none',
+        zIndex: hov ? 50 : 1,
+        opacity: hov ? 1 : 0.82,
+        boxShadow: hov
+          ? (gold ? `0 22px 60px rgba(0,0,0,0.75), 0 0 36px ${gA(0.65)}` : `0 22px 60px rgba(0,0,0,0.75), 0 0 32px ${cA(0.6)}`)
+          : '0 4px 14px rgba(0,0,0,0.5)',
+        transition: hov ? 'opacity 0.25s, box-shadow 0.32s, border-color 0.2s' : 'all 0.32s cubic-bezier(.2,.85,.2,1)',
+        overflow:'hidden',
+      }}>
+      <span style={{position:'absolute',top:-1,left:-1,width:9,height:9,borderTop:`1px solid ${gold?gA(0.85):cA(0.7)}`,borderLeft:`1px solid ${gold?gA(0.85):cA(0.7)}`,zIndex:3}}/>
+      <span style={{position:'absolute',top:-1,right:-1,width:9,height:9,borderTop:`1px solid ${gold?gA(0.85):cA(0.7)}`,borderRight:`1px solid ${gold?gA(0.85):cA(0.7)}`,zIndex:3}}/>
+      <span style={{position:'absolute',bottom:-1,left:-1,width:9,height:9,borderBottom:`1px solid ${gold?gA(0.85):cA(0.7)}`,borderLeft:`1px solid ${gold?gA(0.85):cA(0.7)}`,zIndex:3}}/>
+      <span style={{position:'absolute',bottom:-1,right:-1,width:9,height:9,borderBottom:`1px solid ${gold?gA(0.85):cA(0.7)}`,borderRight:`1px solid ${gold?gA(0.85):cA(0.7)}`,zIndex:3}}/>
+      <div style={{ position:'absolute', inset:0, background:`repeating-linear-gradient(-45deg,transparent,transparent 8px,${cA(0.13)} 8px,${cA(0.13)} 9px),linear-gradient(160deg,rgba(28,16,62,0.97),rgba(14,9,36,0.98))` }}/>
+      <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse at 50% 40%, ${cA(hov ? 0.32 : 0.18)} 0%, transparent 65%)`, transition:'background 0.3s' }}/>
+      <div style={{ position:'absolute', top:7, left:8, padding:'2px 6px', background: gold ? gA(0.15) : cA(0.12), border:`1px solid ${gold ? gA(0.55) : cA(0.45)}`, fontFamily:'var(--font-mono)', fontSize:6.5, color: gold ? 'oklch(0.85 0.13 75)' : c, letterSpacing:'0.2em', textTransform:'uppercase', zIndex:2, whiteSpace:'nowrap' }}>
+        {gold ? '✓ Komplett' : '◈ Neu'}
+      </div>
+      <div style={{ position:'relative', zIndex:2, display:'flex', flexDirection:'column', height:'100%', padding:'34px 12px 10px', alignItems:'center', justifyContent:'flex-start', textAlign:'center' }}>
+        <svg viewBox="0 0 100 100" width="50" height="50" stroke={c} fill="none" style={{ color:c, filter:`drop-shadow(0 0 10px ${cA(0.6)})` }}>
+          {item.icon}
+        </svg>
+        <div style={{ marginTop:10, fontFamily:'var(--font-display)', fontSize:10, letterSpacing:'0.1em', color:'#f0eeff', textTransform:'uppercase', lineHeight:1.2, overflowWrap:'anywhere' }}>{item.name}</div>
+        <div style={{ marginTop:5, fontFamily:'var(--font-mono)', fontSize:7, color:cA(0.85), letterSpacing:'0.18em', textTransform:'uppercase' }}>{item.cat}</div>
+        <div style={{ position:'absolute', bottom:8, left:0, right:0, fontFamily:'var(--font-mono)', fontSize:7, color:'rgba(160,140,255,0.55)', letterSpacing:'0.16em', textTransform:'uppercase' }}>{item.date}</div>
+      </div>
+    </div>
+  );
+}
+
+// ── CATALOG ROW ───────────────────────────────────────────
+function CatalogRow({ entry, showCat, catLabel }) {
+  const isKomp = entry.status === 'komplett';
+  const c  = `oklch(0.72 0.16 ${entry.hue})`;
+  const cA = a => `oklch(0.72 0.16 ${entry.hue} / ${a})`;
+  const gA = a => `oklch(0.82 0.14 80 / ${a})`;
+  return (
+    <div style={{ display:'grid', gridTemplateColumns: showCat ? '28px 1fr auto auto auto' : '28px 1fr auto auto', gap:'12px', alignItems:'center', padding:'9px 14px', borderBottom:'1px solid rgba(160,140,255,0.07)', transition:'background 0.15s', cursor:'default' }}
+      onMouseEnter={e => e.currentTarget.style.background = 'rgba(124,77,255,0.06)'}
+      onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
+      <svg viewBox="0 0 100 100" width="18" height="18" fill="none" stroke={isKomp ? 'oklch(0.82 0.14 80)' : c} style={{ color: isKomp ? 'oklch(0.82 0.14 80)' : c, opacity:0.85 }}>
+        {entry.icon}
+      </svg>
+      <span style={{ fontFamily:'var(--font-display)', fontSize:11, letterSpacing:'0.12em', color:'rgba(240,238,255,0.88)' }}>{entry.name}</span>
+      {showCat && <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'rgba(160,140,255,0.45)', letterSpacing:'0.14em', textTransform:'uppercase', whiteSpace:'nowrap' }}>{catLabel}</span>}
+      <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.2em', textTransform:'uppercase', color: isKomp ? 'oklch(0.82 0.14 80)' : cA(0.85), background: isKomp ? gA(0.1) : cA(0.08), border:`1px solid ${isKomp ? gA(0.4) : cA(0.3)}`, padding:'2px 7px', borderRadius:2, whiteSpace:'nowrap' }}>
+        {isKomp ? '✓ Komplett' : '◈ Gesichtet'}
+      </span>
+      <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'rgba(160,140,255,0.4)', letterSpacing:'0.12em', whiteSpace:'nowrap' }}>{entry.date}</span>
+    </div>
+  );
+}
+
+// ── APP ───────────────────────────────────────────────────
+function App() {
+  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const [selectedCat, setSelectedCat] = useState(null);
+  useScrollReveal();
+
+  const totalFound         = KOLLEKTIKON_DATA.reduce((s,d) => s+d.found,         0);
+  const totalAll           = KOLLEKTIKON_DATA.reduce((s,d) => s+d.total,          0);
+  const totalKomplett      = KOLLEKTIKON_DATA.reduce((s,d) => s+(d.komplett||0),  0);
+  const overallPct         = totalFound / totalAll;
+  const overallKomplettPct = totalKomplett / totalAll;
+
+  const activeCatData  = selectedCat ? KOLLEKTIKON_DATA.find(d => d.id === selectedCat) : null;
+  const filteredEntries = selectedCat ? CATALOG_ENTRIES.filter(e => e.cat === selectedCat) : CATALOG_ENTRIES;
+  const catLabelMap     = Object.fromEntries(KOLLEKTIKON_DATA.map(d => [d.id, d.label]));
+
+  const toggleCat = (id) => setSelectedCat(prev => prev === id ? null : id);
+
+  return (
+    <div className="page-root">
+      {tweaks.showParticles && <ParticleField />}
+      <SiteNav rightLabel="KOLLEKTIKON" />
+
+      {/* ── HERO ── */}
+      <div style={{ position:'relative', zIndex:5, width:'100%', padding:'48px 40px 40px', borderBottom:'1px solid rgba(160,140,255,0.12)', background:'linear-gradient(180deg, rgba(18,10,44,0.95) 0%, rgba(8,6,22,0.98) 100%)', overflow:'hidden' }}>
+        <div style={{ position:'absolute', inset:0, background:'radial-gradient(ellipse at 15% 50%, rgba(124,77,255,0.14) 0%, transparent 55%), radial-gradient(ellipse at 85% 50%, rgba(45,100,255,0.1) 0%, transparent 55%)', pointerEvents:'none' }}/>
+        <div style={{ position:'relative', maxWidth:'1100px', margin:'0 auto' }}>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.42em', color:'rgba(124,77,255,0.6)', textTransform:'uppercase', marginBottom:'10px' }}>
+            Ressourcen-Archiv · Erforschungsprotokoll · Meruria
+          </div>
+          <h1 style={{ fontFamily:'var(--font-display)', fontSize:'36px', fontWeight:'300', letterSpacing:'0.3em', color:'#f0eeff', textShadow:'0 0 40px rgba(124,77,255,0.5)', margin:'0 0 22px', lineHeight:1 }}>
+            KOLLEKTIKON
+          </h1>
+          <div style={{ display:'flex', alignItems:'center', gap:'28px', flexWrap:'wrap' }}>
+            {[
+              { label:'Bekannte Einträge', value:`${totalFound} / ${totalAll}`,           c:'rgba(200,190,240,0.9)' },
+              { label:'In Forschung',      value:`${Math.round(overallPct*100)} %`,        c:'rgba(200,190,240,0.6)' },
+              { label:'Vollständig dok.',  value:`${totalKomplett} Einträge`,              c:'oklch(0.82 0.14 80)' },
+              { label:'Kategorien',        value:`${KOLLEKTIKON_DATA.length}`,            c:'rgba(160,140,255,0.75)' },
+            ].map(s => (
+              <div key={s.label} style={{ display:'flex', flexDirection:'column', gap:'3px' }}>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.28em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>{s.label}</span>
+                <span style={{ fontFamily:'var(--font-display)', fontSize:'17px', fontWeight:'400', letterSpacing:'0.18em', color:s.c }}>{s.value}</span>
+              </div>
+            ))}
+            <div style={{ flex:1, minWidth:'140px' }}>
+              <div style={{ position:'relative', height:5 }}>
+                {overallKomplettPct > 0 && <div style={{ position:'absolute', left:0, top:0, bottom:0, width:`${overallKomplettPct*100}%`, boxShadow:'0 0 9px 1px rgba(160,140,255,0.55)', borderRadius:2, pointerEvents:'none' }}/>}
+                <div style={{ position:'absolute', inset:0, background:'rgba(124,77,255,0.08)', borderRadius:2, overflow:'hidden', border:'1px solid rgba(124,77,255,0.2)' }}>
+                  <div style={{ position:'absolute', left:0, top:0, bottom:0, width:`${overallPct*100}%`, background:'linear-gradient(90deg, rgba(220,215,250,0.18), rgba(240,238,255,0.28))' }}/>
+                  <div style={{ position:'absolute', left:-1, top:-1, bottom:-1, width:`${overallKomplettPct*100}%`, background:'linear-gradient(90deg, rgba(140,100,255,1), rgba(200,180,255,1))', borderRadius:2 }}/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── CONTENT ── */}
+      <div style={{ position:'relative', zIndex:5, maxWidth:'1100px', margin:'0 auto', padding:'40px 40px 60px' }}>
+
+        {/* Kategorien */}
+        <div className="reveal-up" style={{ marginBottom:'48px' }}>
+          <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:20 }}>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:'10px', letterSpacing:'0.35em', color:'rgba(124,77,255,0.65)', textTransform:'uppercase' }}>◈ Kategorien</span>
+            <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(124,77,255,0.5), rgba(124,77,255,0.05))' }}/>
+            {selectedCat ? (
+              <button onClick={() => setSelectedCat(null)} style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:'rgba(160,140,255,0.6)', textTransform:'uppercase', background:'rgba(124,77,255,0.08)', border:'1px solid rgba(124,77,255,0.25)', borderRadius:2, padding:'3px 10px', cursor:'pointer' }}>
+                × Filter aufheben
+              </button>
+            ) : (
+              <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:'rgba(160,140,255,0.3)', textTransform:'uppercase' }}>Klicken zum Filtern</span>
+            )}
+          </div>
+          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10 }}>
+            {KOLLEKTIKON_DATA.map((d,i) => (
+              <CategoryBar key={d.id} d={d} i={i} active={selectedCat === d.id} onClick={() => toggleCat(d.id)} />
+            ))}
+          </div>
+        </div>
+
+        {/* Letzte Entdeckungen */}
+        <div className="reveal-up" style={{ marginBottom:'48px', transitionDelay:'0.05s' }}>
+          <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:20 }}>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:'10px', letterSpacing:'0.35em', color:'rgba(124,77,255,0.65)', textTransform:'uppercase' }}>◈ Letzte Entdeckungen</span>
+            <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(124,77,255,0.5), rgba(124,77,255,0.05))' }}/>
+          </div>
+          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:36 }}>
+            <div>
+              <div style={{ display:'flex', alignItems:'baseline', gap:14, marginBottom:10 }}>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.3em', color:'rgba(124,77,255,0.65)', textTransform:'uppercase' }}>◈ Neu gesichtet</span>
+                <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(124,77,255,0.45), rgba(124,77,255,0.04))' }}/>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.25em', color:'rgba(160,140,255,0.4)', textTransform:'uppercase' }}>Letzte {RECENT_SIGHTED.length}</span>
+              </div>
+              <div style={{ display:'flex', alignItems:'flex-start', paddingTop:24, paddingBottom:18, paddingRight:24, overflow:'visible' }}>
+                {RECENT_SIGHTED.map((item,i) => <RecentCard key={item.id} item={item} idx={i} gold={false}/>)}
+              </div>
+            </div>
+            <div>
+              <div style={{ display:'flex', alignItems:'baseline', gap:14, marginBottom:10 }}>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.3em', color:'oklch(0.82 0.14 80)', textTransform:'uppercase' }}>✓ Kürzlich komplettiert</span>
+                <div style={{ flex:1, height:1, background:'linear-gradient(to right, oklch(0.82 0.14 80 / 0.5), rgba(124,77,255,0.04))' }}/>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.25em', color:'rgba(160,140,255,0.4)', textTransform:'uppercase' }}>Letzte {RECENT_KOMPLETT.length}</span>
+              </div>
+              <div style={{ display:'flex', alignItems:'flex-start', paddingTop:24, paddingBottom:18, paddingRight:24, overflow:'visible' }}>
+                {RECENT_KOMPLETT.map((item,i) => <RecentCard key={item.id} item={item} idx={i} gold={true}/>)}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bekannte Einträge */}
+        <div className="reveal-up" style={{ transitionDelay:'0.1s' }}>
+          <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:8 }}>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:'10px', letterSpacing:'0.35em', color:'rgba(124,77,255,0.65)', textTransform:'uppercase' }}>◈ Bekannte Einträge</span>
+            <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(124,77,255,0.5), rgba(124,77,255,0.05))' }}/>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.28em', color:'rgba(160,140,255,0.4)', textTransform:'uppercase' }}>
+              {filteredEntries.length} {filteredEntries.length === 1 ? 'Eintrag' : 'Einträge'}
+              {activeCatData && ` · ${activeCatData.label}`}
+            </span>
+          </div>
+          <div style={{ background:'rgba(10,8,28,0.7)', border:'1px solid rgba(124,77,255,0.18)', borderRadius:3, overflow:'hidden', position:'relative' }}>
+            <span style={{position:'absolute',top:-1,left:-1,width:12,height:12,borderTop:'1px solid rgba(124,77,255,0.55)',borderLeft:'1px solid rgba(124,77,255,0.55)'}}/>
+            <span style={{position:'absolute',top:-1,right:-1,width:12,height:12,borderTop:'1px solid rgba(124,77,255,0.55)',borderRight:'1px solid rgba(124,77,255,0.55)'}}/>
+            <span style={{position:'absolute',bottom:-1,left:-1,width:12,height:12,borderBottom:'1px solid rgba(124,77,255,0.55)',borderLeft:'1px solid rgba(124,77,255,0.55)'}}/>
+            <span style={{position:'absolute',bottom:-1,right:-1,width:12,height:12,borderBottom:'1px solid rgba(124,77,255,0.55)',borderRight:'1px solid rgba(124,77,255,0.55)'}}/>
+            <div style={{ display:'grid', gridTemplateColumns: !selectedCat ? '28px 1fr auto auto auto' : '28px 1fr auto auto', gap:'12px', alignItems:'center', padding:'8px 14px', borderBottom:'1px solid rgba(124,77,255,0.18)', background:'rgba(124,77,255,0.05)' }}>
+              {['', 'Name', !selectedCat ? 'Kategorie' : null, 'Status', 'Datum'].filter(h => h !== null).map((h,i) => (
+                <span key={i} style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>{h}</span>
+              ))}
+            </div>
+            {filteredEntries.length === 0 ? (
+              <div style={{ padding:'28px 14px', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(160,140,255,0.35)', letterSpacing:'0.2em' }}>
+                Keine bekannten Einträge in dieser Kategorie.
+              </div>
+            ) : (
+              filteredEntries.map(entry => (
+                <CatalogRow key={entry.id} entry={entry} showCat={!selectedCat} catLabel={catLabelMap[entry.cat]} />
+              ))
+            )}
+          </div>
+        </div>
+
+      </div>
+
+      <SiteFooter />
+
+      <TweaksPanel>
+        <TweakSection label="Darstellung" />
+        <TweakToggle id="showParticles" label="Partikel" />
+      </TweaksPanel>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<SiteGate><App /></SiteGate>);
+</script>
+</body></html>

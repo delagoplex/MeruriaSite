@@ -726,7 +726,7 @@ function EmptyState() {
         <p style={{fontFamily:"var(--font-body)",fontSize:13,fontWeight:300,color:"var(--silver)",lineHeight:1.8,marginBottom:28}}>
           Du hast noch keinen Charakter erstellt. Starte die Charaktererstellung, um deinen ersten Abenteurer auf Meruria zu erschaffen.
         </p>
-        <a href="Charaktererstellung.html"
+        <a href="Neuer_Charakter.html"
           style={{display:"inline-flex",alignItems:"center",gap:10,padding:"12px 28px",
             background:"rgba(124,77,255,0.18)",border:"1px solid rgba(124,77,255,0.55)",
             borderRadius:3,color:"rgba(200,190,240,0.95)",fontFamily:"var(--font-display)",
@@ -1096,7 +1096,7 @@ function App() {
         const fresh = loadCharacters().find(c => c.id === e.id) || e;
         setEntry(fresh);
       }}
-      onNew={() => { window.location.href = 'Charaktererstellung.html'; }}
+      onNew={() => { window.location.href = 'Neuer_Charakter.html'; }}
     />
   );
 }

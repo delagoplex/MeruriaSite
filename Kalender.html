@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meruria — Kalender</title>
+<link rel="stylesheet" href="assets/styles/global/fonts.css">
+<link rel="stylesheet" href="assets/styles/global/base.css">
+<link rel="stylesheet" href="assets/styles/pages/Kalender.css">
+<script src="assets/scripts/vendor/react.development.js"></script>
+<script src="assets/scripts/vendor/react-dom.development.js"></script>
+<script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.jsx" type="text/babel"></script>
+</head>
+<body>
+
+<div id="nav-root"></div>
+
+<!-- ══ HERO ═══════════════════════════════════════ -->
+<section class="hero">
+  <canvas id="starfield"></canvas>
+  <div class="hero-vignette"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Kolonistenarchiv &nbsp;·&nbsp; Zeitrechnung n.d.L.</div>
+    <h1 class="hero-title">Kalender</h1>
+    <div class="hero-subtitle">Die Zeitrechnung der Velaer</div>
+    <div class="hero-rule"></div>
+    <p class="hero-lead">Auf Meruria zählt man die Tage seit der Landung. Zwei Monde durchqueren den Himmel — der goldene und der aschgraue — und jeder Monat trägt das Zeichen eines anderen Sterns. 224 Tage. 12 Monate. 32 Wochen. Eine neue Zeit, gemessen auf einer neuen Welt.</p>
+    <div class="hero-moons">
+      <div class="hero-moon gold">
+        <div class="hero-moon-disc"></div>
+        <div class="hero-moon-label">Goldmond · 28 Tage</div>
+      </div>
+      <div class="hero-moon ash">
+        <div class="hero-moon-disc"></div>
+        <div class="hero-moon-label">Aschmond · 17 Tage</div>
+      </div>
+    </div>
+    <div class="hero-cta-wrap">
+      <a href="Kalender_interaktiv.html" class="cta-btn">
+        Zum Kalender
+        <span class="cta-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ GRUNDZAHLEN ════════════════════════════════ -->
+<div class="section tight">
+  <div class="section-head rev up" data-rev="">
+    <span class="eyebrow">Kapitel I &nbsp;·&nbsp; Die Grundzahlen</span>
+    <h2 class="sh">Ein Jahr auf Meruria</h2>
+    <div class="rule center"></div>
+  </div>
+  <div class="stat-strip rev up d1" data-rev="">
+    <div class="stat">
+      <div class="stat-num">224</div>
+      <div class="stat-lbl">Tage</div>
+      <div class="stat-sub">Ein vollständiger Umlauf Merurias um seine Sonne</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">12</div>
+      <div class="stat-lbl">Monate</div>
+      <div class="stat-sub">Jeder im Zeichen eines Sterns — 18 oder 19 Tage</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">32</div>
+      <div class="stat-lbl">Wochen</div>
+      <div class="stat-sub">224 ÷ 7 — eine exakt aufgehende Woche</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">2</div>
+      <div class="stat-lbl">Monde</div>
+      <div class="stat-sub">Gold und Asche — nie gleichzeitig still</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ DIE ZWEI MONDE ════════════════════════════ -->
+<div class="section section-alt">
+  <div class="section-head rev up" data-rev="">
+    <span class="eyebrow">Kapitel II &nbsp;·&nbsp; Die Himmelskörper</span>
+    <h2 class="sh">Die zwei Monde</h2>
+    <div class="rule center"></div>
+    <p class="body-text" style="max-width:620px;margin:0 auto;color:var(--dim);">In der ersten Nacht nach der Landung sahen die Velaer zwei Monde am Himmel stehen — der größere golden, der kleinere blassgrau. Sie wussten sofort, dass sie nicht mehr auf der Erde waren.</p>
+  </div>
+
+  <div class="moons-grid">
+    <div class="moon-card gold rev left" data-rev="">
+      <div class="moon-card-glow"></div>
+      <div class="moon-card-disc"></div>
+      <div class="moon-card-title">Der Goldmond</div>
+      <div class="moon-card-meta">Zyklus 28 Tage &nbsp;·&nbsp; Vollmond: Mondsegen</div>
+      <p class="moon-card-desc">Der größere, hellere Mond. Er taucht die Nacht in warmes goldenes Licht und steht ruhig am Himmel — gleichmäßig, verlässlich, wie eine Lampe, die jemand für die Kolonie aufgehängt hat.</p>
+      <p class="moon-card-quote">„In der ersten Nacht nach der Landung sahen ihn die Velaer als Zeichen der Hoffnung."</p>
+    </div>
+    <div class="moon-card ash rev right" data-rev="">
+      <div class="moon-card-glow"></div>
+      <div class="moon-card-disc"></div>
+      <div class="moon-card-title">Der Aschmond</div>
+      <div class="moon-card-meta">Zyklus 17 Tage &nbsp;·&nbsp; Vollmond: Aschenhauch</div>
+      <p class="moon-card-desc">Kleiner, blasser, leicht bläulich-grau. Er läuft dem Goldmond nach wie ein Schatten — schneller, unberechenbarer, unsteter. Manche Velaer sehen in ihm den Begleiter, andere die Warnung.</p>
+      <p class="moon-card-quote">„Er sieht aus wie Asche auf dem Wind."</p>
+    </div>
+  </div>
+
+  <div class="specials">
+    <div class="special rev up d1" data-rev="">
+      <span class="special-tag">Selten · alle 2 Jahre</span>
+      <h4>Doppelte Segensnacht</h4>
+      <p>Goldmond und Aschmond stehen gleichzeitig im Vollmond. Tritt etwa alle 2 Jahre und 28 Tage auf. Gilt als heiliges Ereignis — Tempel öffnen, Bündnisse werden geschlossen.</p>
+    </div>
+    <div class="special rev up d2" data-rev="">
+      <span class="special-tag">Alle 476 Tage</span>
+      <h4>Der Große Gleichlauf</h4>
+      <p>Beide Monde stehen gleichzeitig auf Neumond — absolute Dunkelheit. Das gruseligste Datum im Kolonistenkalender, zugleich kosmischer Neustart für Rituale und Eide.</p>
+    </div>
+    <div class="special rev up d3" data-rev="">
+      <span class="special-tag">Unregelmäßig</span>
+      <h4>Leere Nacht</h4>
+      <p>Keiner der beiden Monde ist sichtbar. Keine echte Seltenheit — aber stets gefürchtet. Viele Velaer bleiben in dieser Nacht zuhause und löschen kein Licht.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MONDPHASEN ════════════════════════════════ -->
+<div class="section">
+  <div class="section-head rev up" data-rev="">
+    <span class="eyebrow">Kapitel III &nbsp;·&nbsp; Die Phasen</span>
+    <h2 class="sh">Mondphasen</h2>
+    <div class="rule center"></div>
+  </div>
+
+  <div class="phase-tables">
+    <div class="phase-table rev left" data-rev="">
+      <div class="phase-head gold">
+        <span>Goldmond</span>
+        <span class="phase-head-meta">28 Tage · 10 Phasen</span>
+      </div>
+      <div class="phase-row"><span class="phase-glyph"><svg viewBox="0 0 22 22" width="20" height="20"><circle cx="11" cy="11" r="9" fill="#0b0820" stroke="#d9b06b" stroke-width="1.2"></circle></svg></span><span><span class="pname">Goldlose Nacht</span><span class="pastro">Neumond</span></span><span class="pdays">Tag 1</span></div>
+      <div class="phase-row"><span class="phase-glyph"><svg viewBox="0 0 22 22" width="20" height="20"><circle cx="11" cy="11" r="9" fill="#0b0820" stroke="#d9b06b" stroke-width="1.2"></circle><path d="M11 2 A9 9 0 0 1 11 20 A5 9 0 0 0 11 2" fill="#d9b06b"></path></svg></span><span><span class="pname">Junge Sichel</span><span class="pastro">Zunehmend</span></span><span class="pdays">2 — 4</span></div>
+      <div class="phase-row"><span class="phase-glyph"><svg viewBox="0 0 22 22" width="20" height="20"><circle cx="11" cy="11" r="9" fill="#0b0820" stroke="#d9b06b" stroke-width="1.2"></circle><path d="M11 2 A9 9 0 0 1 11 20 A3 9 0 0 0 11 2" fill="#d9b06b"></path></svg></span><span><span class="pname">Goldene Sichel</span><span class="pastro">Zunehmend</span></span><span class="pdays">5 — 8</span></div>
+      <div class="phase-row"><span class="phase-glyph"><svg viewBox="0 0 22 22" width="20" height="20"><circle cx="11" cy="11" r="9" fill="#0b0820" stroke="#d9b06b" stroke-width="1.2"></circle><path d="M11 2 A9 9 0 0 1 11 20 L11 2" fill="#d9b06b"></path></svg></span><span><span class="pname">Halber Segen</span><span class="pastro">Halbmond</span></span><span class="pdays">9 — 12</span></div>
+      <div class="phase-row"><span class="phase-glyph"><svg viewBox="0 0 22 22" width="20" height="20"><circle cx="11" cy="11" r="9" fill="#d9b06b" stroke="#d9b06b" stroke-width="1.2"></circle><path d="M11 2 A9 9 0 0 0 11 20 A3 9 0 0 1 11 2" fill="#0b0820"></path></svg></span><span><span class="pname">Schwellender Segen</span><span class="pastro">Dreiviertelmond</span></span><span class="pdays">13 — 15</span></div>
+      <div class="phase-row peak gold"><span class="phase-glyph"><svg viewBox="0 0 22 22" width="20" height="20"><circle cx="11" cy="11" r="9" fill="#d9b06b" stroke="#ecd095" stroke-width="1.2"></circle></svg></span><span><span class="pname">✦ Mondsegen</span><span class="pastro">Vollmond</span></span><span class="pdays">Tag 16</span></div>
+      <div class="phase-row"><span class="phase-glyph"><svg viewBox="0 0 22 22" width="20" height="20"><circle cx="11" cy="11" r="9" fill="#d9b06b" stroke="#d9b06b" stroke-width="1.2"></circle><path d="M11 2 A9 9 0 0 1 11 20 A3 9 0 0 0 11 2" fill="#0b0820"></path></svg></span><span><span class="pname">Verblassender Segen</span><span class="pastro">Abnehmend</span></span><span class="pdays">17 — 19</span></div>
+      <div class="phase-row"><span class="phase-glyph"><svg viewBox="0 0 22 22" width="20" height="20"><circle cx="11" cy="11" r="9" fill="#0b0820" stroke="#d9b06b" stroke-width="1.2"></circle><path d="M11 2 A9 9 0 0 0 11 20 L11 2" fill="#d9b06b"></path></svg></span><span><span class="pname">Alter Halber</span><span class="pastro">Halbmond</span></span><span class="pdays">20 — 23</span></div>
+      <div class="phase-row"><span class="phase-glyph"><svg viewBox="0 0 22 22" width="20" height="20"><circle cx="11" cy="11" r="9" fill="#0b0820" stroke="#d9b06b" stroke-width="1.2"></circle><path d="M11 2 A9 9 0 0 0 11 20 A3 9 0 0 1 11 2" fill="#d9b06b"></path></svg></span><span><span class="pname">Alte Sichel</span><span class="pastro">Abnehmend</span></span><span class="pdays">24 — 26</span></div>
+      <div class="phase-row"><span class="phase-glyph"><svg viewBox="0 0 22 22" width="20" height="20"><circle cx="11" cy="11" r="9" fill="#0b0820" stroke="#d9b06b" stroke-width="1.2"></circle><path d="M11 2 A9 9 0 0 0 11 20 A5 9 0 0 1 11 2" fill="#d9b06b"></path></svg></span><span><span class="pname">Sterbende Sichel</span><span class="pastro">Abnehmend</span></span><span class="pdays">27 — 28</span></div>
+    </div>
+
+    <div class="phase-table rev right" data-rev="">
+      <div class="phase-head ash">
+        <span>Aschmond</span>
+        <span class="phase-head-meta">17 Tage · 9 Phasen</span>
+      </div>
+      <div class="phase-row"><span class="phase-glyph"><svg viewBox="0 0 22 22" width="20" height="20"><circle cx="11" cy="11" r="9" fill="#0b0820" stroke="#a8b6d4" stroke-width="1.2"></circle></svg></span><span><span class="pname">Aschgraue Nacht</span><span class="pastro">Neumond</span></span><span class="pdays">Tag 1</span></div>
+      <div class="phase-row"><span class="phase-glyph"><svg viewBox="0 0 22 22" width="20" height="20"><circle cx="11" cy="11" r="9" fill="#0b0820" stroke="#a8b6d4" stroke-width="1.2"></circle><path d="M11 2 A9 9 0 0 1 11 20 A5 9 0 0 0 11 2" fill="#a8b6d4"></path></svg></span><span><span class="pname">Erster Hauch</span><span class="pastro">Zunehmend</span></span><span class="pdays">2 — 3</span></div>
+      <div class="phase-row"><span class="phase-glyph"><svg viewBox="0 0 22 22" width="20" height="20"><circle cx="11" cy="11" r="9" fill="#0b0820" stroke="#a8b6d4" stroke-width="1.2"></circle><path d="M11 2 A9 9 0 0 1 11 20 A3 9 0 0 0 11 2" fill="#a8b6d4"></path></svg></span><span><span class="pname">Graue Sichel</span><span class="pastro">Zunehmend</span></span><span class="pdays">4 — 6</span></div>
+      <div class="phase-row"><span class="phase-glyph"><svg viewBox="0 0 22 22" width="20" height="20"><circle cx="11" cy="11" r="9" fill="#0b0820" stroke="#a8b6d4" stroke-width="1.2"></circle><path d="M11 2 A9 9 0 0 1 11 20 L11 2" fill="#a8b6d4"></path></svg></span><span><span class="pname">Halbe Asche</span><span class="pastro">Halbmond</span></span><span class="pdays">7 — 9</span></div>
+      <div class="phase-row"><span class="phase-glyph"><svg viewBox="0 0 22 22" width="20" height="20"><circle cx="11" cy="11" r="9" fill="#a8b6d4" stroke="#a8b6d4" stroke-width="1.2"></circle><path d="M11 2 A9 9 0 0 0 11 20 A3 9 0 0 1 11 2" fill="#0b0820"></path></svg></span><span><span class="pname">Schwellende Asche</span><span class="pastro">Dreiviertelmond</span></span><span class="pdays">10 — 11</span></div>
+      <div class="phase-row peak ash"><span class="phase-glyph"><svg viewBox="0 0 22 22" width="20" height="20"><circle cx="11" cy="11" r="9" fill="#a8b6d4" stroke="#cad4e8" stroke-width="1.2"></circle></svg></span><span><span class="pname">✦ Aschenhauch</span><span class="pastro">Vollmond</span></span><span class="pdays">Tag 12</span></div>
+      <div class="phase-row"><span class="phase-glyph"><svg viewBox="0 0 22 22" width="20" height="20"><circle cx="11" cy="11" r="9" fill="#a8b6d4" stroke="#a8b6d4" stroke-width="1.2"></circle><path d="M11 2 A9 9 0 0 1 11 20 A3 9 0 0 0 11 2" fill="#0b0820"></path></svg></span><span><span class="pname">Verglühende Asche</span><span class="pastro">Abnehmend</span></span><span class="pdays">13 — 14</span></div>
+      <div class="phase-row"><span class="phase-glyph"><svg viewBox="0 0 22 22" width="20" height="20"><circle cx="11" cy="11" r="9" fill="#0b0820" stroke="#a8b6d4" stroke-width="1.2"></circle><path d="M11 2 A9 9 0 0 0 11 20 L11 2" fill="#a8b6d4"></path></svg></span><span><span class="pname">Alte Asche</span><span class="pastro">Halbmond</span></span><span class="pdays">15 — 16</span></div>
+      <div class="phase-row"><span class="phase-glyph"><svg viewBox="0 0 22 22" width="20" height="20"><circle cx="11" cy="11" r="9" fill="#0b0820" stroke="#a8b6d4" stroke-width="1.2"></circle><path d="M11 2 A9 9 0 0 0 11 20 A5 9 0 0 1 11 2" fill="#a8b6d4"></path></svg></span><span><span class="pname">Letzter Hauch</span><span class="pastro">Abnehmend</span></span><span class="pdays">Tag 17</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ DIE ZWÖLF MONATE ══════════════════════════ -->
+<div class="section section-alt">
+  <div class="section-head rev up" data-rev="">
+    <span class="eyebrow">Kapitel IV &nbsp;·&nbsp; Der Jahreslauf</span>
+    <h2 class="sh">Die zwölf Monate</h2>
+    <div class="rule center"></div>
+  </div>
+
+  <div class="month-table rev up d1" data-rev="">
+    <div class="month-thead">
+      <span>#</span><span>Name</span><span>Tage</span><span>Sternzeichen</span><span>Stimmung</span>
+    </div>
+    <div class="month-row"><span class="month-num">I</span><span class="month-name">Janvar</span><span class="month-days">19 T.</span><span class="month-sign">Die Arche</span><span class="month-vibe">Aufbruch, Landungsmonat</span></div>
+    <div class="month-row"><span class="month-num">II</span><span class="month-name">Fevorn</span><span class="month-days">18 T.</span><span class="month-sign">Die Böe</span><span class="month-vibe">Erste Arbeit, rauer Beginn</span></div>
+    <div class="month-row"><span class="month-num">III</span><span class="month-name">Mareth</span><span class="month-days">19 T.</span><span class="month-sign">Die Wurzel</span><span class="month-vibe">Erwachen, Erkundung</span></div>
+    <div class="month-row"><span class="month-num">IV</span><span class="month-name">Aprel</span><span class="month-days">19 T.</span><span class="month-sign">Die Linse</span><span class="month-vibe">Goldmondblüte, Helligkeit</span></div>
+    <div class="month-row"><span class="month-num">V</span><span class="month-name">Mairen</span><span class="month-days">18 T.</span><span class="month-sign">Die Stille</span><span class="month-vibe">Planetare Ruhe</span></div>
+    <div class="month-row"><span class="month-num">VI</span><span class="month-name">Junvar</span><span class="month-days">19 T.</span><span class="month-sign">Das Irrlicht</span><span class="month-vibe">Wandersternzeit, Jahresmitte</span></div>
+    <div class="month-row"><span class="month-num">VII</span><span class="month-name">Juval</span><span class="month-days">19 T.</span><span class="month-sign">Die Klinge</span><span class="month-vibe">Hochsommer, Hitze</span></div>
+    <div class="month-row"><span class="month-num">VIII</span><span class="month-name">Auvar</span><span class="month-days">19 T.</span><span class="month-sign">Die Glut</span><span class="month-vibe">Erinnerung, schwere Zeit</span></div>
+    <div class="month-row"><span class="month-num">IX</span><span class="month-name">Septhar</span><span class="month-days">19 T.</span><span class="month-sign">Die Brücke</span><span class="month-vibe">Wandel, Herbststimmung</span></div>
+    <div class="month-row"><span class="month-num">X</span><span class="month-name">Oktar</span><span class="month-days">18 T.</span><span class="month-sign">Der Schleier</span><span class="month-vibe">Dunkelheit, Rückzug</span></div>
+    <div class="month-row"><span class="month-num">XI</span><span class="month-name">Novren</span><span class="month-days">18 T.</span><span class="month-sign">Das Labyrinth</span><span class="month-vibe">Komplexität, Täuschung</span></div>
+    <div class="month-row"><span class="month-num">XII</span><span class="month-name">Derath</span><span class="month-days">19 T.</span><span class="month-sign">Der Spalt</span><span class="month-vibe">Schwelle, Jahresende</span></div>
+  </div>
+</div>
+
+<!-- ══ DIE ZWÖLF STERNZEICHEN ════════════════════ -->
+<div class="section">
+  <div class="section-head rev up" data-rev="">
+    <span class="eyebrow">Kapitel V &nbsp;·&nbsp; Astrologie</span>
+    <h2 class="sh">Die zwölf Sternzeichen</h2>
+    <div class="rule center"></div>
+    <p class="body-text" style="max-width:580px;margin:0 auto;color:var(--dim);">Jeder Monat trägt das Zeichen eines Sterns. Wer in diesem Zeitraum geboren wird, trägt seine Eigenschaften mit sich — sagt zumindest das alte Sternenbuch der Kuratoren.</p>
+  </div>
+
+  <div class="zodiac-grid">
+
+    <!-- I Arche -->
+    <div class="zod rev up" data-rev="">
+      <div class="zod-glyph"><svg viewBox="0 0 200 200">
+        <circle class="dot" cx="30" cy="25" r="1" opacity="0.5"></circle><circle class="dot" cx="170" cy="35" r="1.5" opacity="0.4"></circle><circle class="dot" cx="150" cy="15" r="1" opacity="0.6"></circle>
+        <path class="a" stroke-width="1" opacity="0.3" d="M10 155 Q30 148 50 155 Q70 162 90 155 Q110 148 130 155 Q150 162 170 155 Q185 150 190 155"></path>
+        <path class="a" stroke-width="0.7" opacity="0.2" d="M10 165 Q35 158 60 165 Q85 172 110 165 Q135 158 160 165 Q178 160 190 165"></path>
+        <path class="fill-a" stroke-width="1.5" d="M40 140 Q45 155 100 160 Q155 155 160 140 Z"></path>
+        <path class="a" stroke-width="0.5" opacity="0.4" d="M55 142 Q100 150 145 142"></path>
+        <rect class="fill-a" stroke-width="1.2" x="65" y="110" width="70" height="32" rx="2"></rect>
+        <rect fill="rgba(124,77,255,0.35)" stroke="#7c4dff" stroke-width="0.8" x="72" y="116" width="12" height="10" rx="1"></rect>
+        <rect fill="rgba(124,77,255,0.35)" stroke="#7c4dff" stroke-width="0.8" x="94" y="116" width="12" height="10" rx="1"></rect>
+        <rect fill="rgba(124,77,255,0.35)" stroke="#7c4dff" stroke-width="0.8" x="116" y="116" width="12" height="10" rx="1"></rect>
+        <line class="a" stroke-width="2" x1="100" y1="30" x2="100" y2="112"></line>
+        <rect class="fill-a" stroke-width="1" x="91" y="58" width="18" height="12" rx="1"></rect>
+        <path class="fill-a" stroke-width="1.2" d="M100 30 L140 55 L138 90 L100 85 Z"></path>
+        <line class="a" stroke-width="0.7" opacity="0.5" x1="100" y1="30" x2="40" y2="112"></line>
+        <line class="a" stroke-width="0.7" opacity="0.5" x1="100" y1="30" x2="160" y2="112"></line>
+        <line class="a" stroke-width="1.5" x1="65" y1="112" x2="30" y2="95"></line>
+        <circle class="dot" cx="100" cy="30" r="3"></circle>
+      </svg></div>
+      <div class="zod-body">
+        <div class="zod-num">Sternzeichen I</div>
+        <div class="zod-name">Die Arche</div>
+        <div class="zod-month">Janvar · 19 Tage</div>
+        <div class="zod-traits"><span class="trait">Bewahrung</span><span class="trait">Heimweh</span><span class="trait">Schutz</span></div>
+      </div>
+    </div>
+
+    <!-- II Böe -->
+    <div class="zod rev up d1" data-rev="">
+      <div class="zod-glyph"><svg viewBox="0 0 200 200">
+        <path class="a" stroke-width="2.5" stroke-linecap="round" d="M10 70 Q60 40 110 70 Q150 95 190 60"></path>
+        <path class="a" stroke-width="1.8" stroke-linecap="round" opacity="0.7" d="M10 95 Q50 70 100 95 Q145 120 190 85"></path>
+        <path class="a" stroke-width="1.2" stroke-linecap="round" opacity="0.5" d="M10 118 Q55 98 105 118 Q148 138 190 110"></path>
+        <path class="a" stroke-width="0.8" stroke-linecap="round" opacity="0.3" d="M10 140 Q60 122 115 140 Q152 155 190 133"></path>
+        <path class="a" stroke-width="2" stroke-linecap="round" d="M182 55 L190 60 L182 66"></path>
+        <path class="a" stroke-width="1.5" stroke-linecap="round" opacity="0.7" d="M182 80 L190 85 L182 91"></path>
+        <ellipse fill="rgba(124,77,255,0.4)" stroke="#7c4dff" stroke-width="0.8" cx="75" cy="58" rx="5" ry="3" transform="rotate(-30 75 58)"></ellipse>
+        <ellipse fill="rgba(124,77,255,0.3)" stroke="#7c4dff" stroke-width="0.8" cx="130" cy="108" rx="4" ry="2.5" transform="rotate(20 130 108)"></ellipse>
+        <path class="a" stroke-width="1.2" opacity="0.6" d="M15 80 Q20 70 30 75 Q40 80 35 90 Q28 100 18 95"></path>
+        <circle class="dot" cx="15" cy="80" r="3"></circle>
+        <line class="a" stroke-width="0.6" opacity="0.3" stroke-dasharray="6 4" x1="20" y1="155" x2="80" y2="155"></line>
+      </svg></div>
+      <div class="zod-body">
+        <div class="zod-num">Sternzeichen II</div>
+        <div class="zod-name">Die Böe</div>
+        <div class="zod-month">Fevorn · 18 Tage</div>
+        <div class="zod-traits"><span class="trait">Anpassung</span><span class="trait">Mut</span><span class="trait">Risiko</span></div>
+      </div>
+    </div>
+
+    <!-- III Wurzel -->
+    <div class="zod rev up d2" data-rev="">
+      <div class="zod-glyph"><svg viewBox="0 0 200 200">
+        <line class="a" stroke-width="1.5" opacity="0.4" x1="15" y1="118" x2="185" y2="118"></line>
+        <path class="fill-a" stroke-width="2.5" stroke-linecap="round" d="M100 118 L100 45"></path>
+        <path class="a" stroke-width="2" stroke-linecap="round" d="M100 75 Q75 65 55 50"></path>
+        <path class="a" stroke-width="2" stroke-linecap="round" d="M100 75 Q125 65 145 50"></path>
+        <path class="a" stroke-width="1.3" stroke-linecap="round" d="M100 58 Q82 50 68 38"></path>
+        <path class="a" stroke-width="1.3" stroke-linecap="round" d="M100 58 Q118 50 132 38"></path>
+        <ellipse class="fill-a" stroke-width="0.8" cx="55" cy="48" rx="12" ry="8" transform="rotate(-20 55 48)"></ellipse>
+        <ellipse class="fill-a" stroke-width="0.8" cx="145" cy="48" rx="12" ry="8" transform="rotate(20 145 48)"></ellipse>
+        <ellipse class="fill-a" stroke-width="0.8" cx="68" cy="36" rx="10" ry="7" transform="rotate(-15 68 36)"></ellipse>
+        <ellipse class="fill-a" stroke-width="0.8" cx="132" cy="36" rx="10" ry="7" transform="rotate(15 132 36)"></ellipse>
+        <ellipse class="fill-a" stroke-width="0.8" cx="100" cy="22" rx="11" ry="7"></ellipse>
+        <path class="a" stroke-width="1.8" stroke-linecap="round" d="M100 118 Q85 135 70 155"></path>
+        <path class="a" stroke-width="1.8" stroke-linecap="round" d="M100 118 Q115 135 130 155"></path>
+        <path class="a" stroke-width="1.5" stroke-linecap="round" d="M100 118 Q100 140 100 165"></path>
+        <path class="a" stroke-width="1" stroke-linecap="round" opacity="0.6" d="M85 132 Q72 145 60 162"></path>
+        <path class="a" stroke-width="1" stroke-linecap="round" opacity="0.6" d="M115 132 Q128 145 140 162"></path>
+      </svg></div>
+      <div class="zod-body">
+        <div class="zod-num">Sternzeichen III</div>
+        <div class="zod-name">Die Wurzel</div>
+        <div class="zod-month">Mareth · 19 Tage</div>
+        <div class="zod-traits"><span class="trait">Geduld</span><span class="trait">Stärke</span><span class="trait">Beharrlichkeit</span></div>
+      </div>
+    </div>
+
+    <!-- IV Linse -->
+    <div class="zod rev up" data-rev="">
+      <div class="zod-glyph"><svg viewBox="0 0 200 200">
+        <rect class="fill-a" stroke-width="1.5" x="30" y="88" width="110" height="24" rx="4"></rect>
+        <ellipse class="fill-a" stroke-width="1.5" cx="140" cy="100" rx="18" ry="18"></ellipse>
+        <ellipse class="fill-soft" cx="140" cy="100" rx="12" ry="12"></ellipse>
+        <ellipse fill="rgba(124,77,255,0.32)" stroke="#7c4dff" stroke-width="0.8" cx="140" cy="100" rx="6" ry="6"></ellipse>
+        <rect fill="rgba(124,77,255,0.32)" stroke="#7c4dff" stroke-width="1.5" x="22" y="92" width="16" height="16" rx="2"></rect>
+        <line class="a" stroke-width="1" opacity="0.5" x1="70" y1="88" x2="70" y2="112"></line>
+        <line class="a" stroke-width="1" opacity="0.5" x1="100" y1="88" x2="100" y2="112"></line>
+        <line class="a" stroke-width="1.5" stroke-linecap="round" x1="80" y1="112" x2="55" y2="170"></line>
+        <line class="a" stroke-width="1.5" stroke-linecap="round" x1="80" y1="112" x2="80" y2="175"></line>
+        <line class="a" stroke-width="1.5" stroke-linecap="round" x1="80" y1="112" x2="105" y2="170"></line>
+        <line class="a" stroke-width="1" opacity="0.6" x1="60" y1="148" x2="100" y2="148"></line>
+        <circle class="dot" cx="168" cy="35" r="3"></circle><circle class="dot" cx="180" cy="48" r="2"></circle>
+        <circle class="dot" cx="172" cy="55" r="1.5"></circle><circle class="dot" cx="185" cy="38" r="1.5"></circle>
+        <circle class="dot" cx="162" cy="50" r="1"></circle><circle class="dot" cx="175" cy="28" r="1"></circle>
+        <line class="a" stroke-width="0.6" opacity="0.3" stroke-dasharray="5 4" x1="22" y1="100" x2="168" y2="35"></line>
+      </svg></div>
+      <div class="zod-body">
+        <div class="zod-num">Sternzeichen IV</div>
+        <div class="zod-name">Die Linse</div>
+        <div class="zod-month">Aprel · 19 Tage</div>
+        <div class="zod-traits"><span class="trait">Wachsamkeit</span><span class="trait">Entdeckung</span><span class="trait">Neugier</span></div>
+      </div>
+    </div>
+
+    <!-- V Stille -->
+    <div class="zod rev up d1" data-rev="">
+      <div class="zod-glyph"><svg viewBox="0 0 200 200">
+        <circle class="dot" cx="25" cy="30" r="1" opacity="0.4"></circle><circle class="dot" cx="175" cy="45" r="1.5" opacity="0.3"></circle>
+        <circle class="dot" cx="160" cy="160" r="1" opacity="0.4"></circle><circle class="dot" cx="30" cy="170" r="1" opacity="0.3"></circle>
+        <circle class="dot" cx="100" cy="15" r="1" opacity="0.35"></circle>
+        <circle fill="rgba(124,77,255,0.6)" stroke="#7c4dff" stroke-width="1" cx="100" cy="78" r="10"></circle>
+        <path class="fill-a" stroke-width="1.3" stroke-linecap="round" d="M100 88 L100 140"></path>
+        <path class="a" stroke-width="1.2" stroke-linecap="round" d="M100 100 Q88 112 84 125"></path>
+        <path class="a" stroke-width="1.2" stroke-linecap="round" d="M100 100 Q112 112 116 125"></path>
+        <path class="a" stroke-width="1.3" stroke-linecap="round" d="M100 140 Q94 158 92 170"></path>
+        <path class="a" stroke-width="1.3" stroke-linecap="round" d="M100 140 Q106 158 108 170"></path>
+        <path fill="rgba(124,77,255,0.08)" stroke="none" d="M92 170 Q60 185 20 185 L20 175 Q55 175 92 160 Z"></path>
+        <circle class="a" stroke-width="0.6" cx="100" cy="110" r="35" opacity="0.18"></circle>
+        <circle class="a" stroke-width="0.5" cx="100" cy="110" r="55" opacity="0.12"></circle>
+        <circle class="a" stroke-width="0.4" cx="100" cy="110" r="75" opacity="0.07"></circle>
+        <line class="a" stroke-width="0.8" opacity="0.25" x1="10" y1="175" x2="190" y2="175"></line>
+      </svg></div>
+      <div class="zod-body">
+        <div class="zod-num">Sternzeichen V</div>
+        <div class="zod-name">Die Stille</div>
+        <div class="zod-month">Mairen · 18 Tage</div>
+        <div class="zod-traits"><span class="trait">Isolation</span><span class="trait">Innere Stärke</span><span class="trait">Verlust</span></div>
+      </div>
+    </div>
+
+    <!-- VI Irrlicht -->
+    <div class="zod rev up d2" data-rev="">
+      <div class="zod-glyph"><svg viewBox="0 0 200 200">
+        <path fill="rgba(124,77,255,0.06)" stroke="none" d="M0 160 Q50 150 100 158 Q150 165 200 155 L200 200 L0 200 Z"></path>
+        <path class="a" stroke-width="1" stroke-dasharray="4 5" opacity="0.45" stroke-linecap="round" d="M30 170 Q50 155 45 130 Q40 105 60 88 Q80 72 70 50 Q62 32 80 20"></path>
+        <circle fill="rgba(124,77,255,0.10)" stroke="none" cx="80" cy="20" r="28"></circle>
+        <circle fill="rgba(124,77,255,0.20)" stroke="none" cx="80" cy="20" r="18"></circle>
+        <circle fill="rgba(124,77,255,0.40)" stroke="#7c4dff" stroke-width="1.2" cx="80" cy="20" r="10"></circle>
+        <circle class="dot" cx="80" cy="20" r="4"></circle>
+        <line class="a" stroke-width="0.8" opacity="0.5" x1="80" y1="7" x2="80" y2="2"></line>
+        <line class="a" stroke-width="0.8" opacity="0.5" x1="93" y1="10" x2="97" y2="6"></line>
+        <line class="a" stroke-width="0.8" opacity="0.5" x1="67" y1="10" x2="63" y2="6"></line>
+        <circle fill="rgba(124,77,255,0.18)" stroke="#7c4dff" stroke-width="0.8" cx="62" cy="88" r="6" opacity="0.7"></circle>
+        <circle class="dot" cx="62" cy="88" r="2" opacity="0.7"></circle>
+        <circle fill="rgba(124,77,255,0.12)" stroke="#7c4dff" stroke-width="0.6" cx="48" cy="130" r="4" opacity="0.5"></circle>
+        <circle class="dot" cx="48" cy="130" r="1.5" opacity="0.5"></circle>
+        <circle fill="rgba(124,77,255,0.5)" cx="155" cy="162" r="6"></circle>
+        <line class="a" stroke-width="1" stroke-linecap="round" x1="155" y1="168" x2="155" y2="180"></line>
+        <line class="a" stroke-width="1" stroke-linecap="round" x1="155" y1="172" x2="149" y2="177"></line>
+        <line class="a" stroke-width="1" stroke-linecap="round" x1="155" y1="172" x2="161" y2="177"></line>
+        <line class="a" stroke-width="0.5" opacity="0.22" stroke-dasharray="3 5" x1="155" y1="162" x2="82" y2="24"></line>
+      </svg></div>
+      <div class="zod-body">
+        <div class="zod-num">Sternzeichen VI</div>
+        <div class="zod-name">Das Irrlicht</div>
+        <div class="zod-month">Junvar · 19 Tage</div>
+        <div class="zod-traits"><span class="trait">Reisende</span><span class="trait">Unruhe</span><span class="trait">Bestimmung</span></div>
+      </div>
+    </div>
+
+    <!-- VII Klinge -->
+    <div class="zod rev up" data-rev="">
+      <div class="zod-glyph"><svg viewBox="0 0 200 200">
+        <g transform="rotate(-12 100 100)">
+          <path class="fill-a" stroke-width="1.8" stroke-linejoin="round" d="M100 18 L108 145 L100 158 L92 145 Z"></path>
+          <line class="a" stroke-width="0.8" opacity="0.5" x1="100" y1="28" x2="100" y2="143"></line>
+          <rect class="fill-a" stroke-width="1.8" x="72" y="145" width="56" height="10" rx="3"></rect>
+          <path class="a" stroke-width="1.5" stroke-linecap="round" d="M72 150 Q60 148 55 155"></path>
+          <path class="a" stroke-width="1.5" stroke-linecap="round" d="M128 150 Q140 148 145 155"></path>
+          <rect class="fill-a" stroke-width="1.5" x="93" y="155" width="14" height="30" rx="3"></rect>
+          <line class="a" stroke-width="0.8" opacity="0.5" x1="93" y1="162" x2="107" y2="162"></line>
+          <line class="a" stroke-width="0.8" opacity="0.5" x1="93" y1="169" x2="107" y2="169"></line>
+          <line class="a" stroke-width="0.8" opacity="0.5" x1="93" y1="176" x2="107" y2="176"></line>
+          <circle class="fill-a" stroke-width="1.5" cx="100" cy="188" r="8"></circle>
+          <circle class="dot" cx="100" cy="188" r="3"></circle>
+          <circle class="dot" cx="100" cy="18" r="2"></circle>
+          <line class="a-light" stroke-width="1.5" stroke-linecap="round" opacity="0.75" x1="104" y1="40" x2="106" y2="60"></line>
+        </g>
+      </svg></div>
+      <div class="zod-body">
+        <div class="zod-num">Sternzeichen VII</div>
+        <div class="zod-name">Die Klinge</div>
+        <div class="zod-month">Juval · 19 Tage</div>
+        <div class="zod-traits"><span class="trait">Entschlossenheit</span><span class="trait">Härte</span><span class="trait">Opfer</span></div>
+      </div>
+    </div>
+
+    <!-- VIII Glut -->
+    <div class="zod rev up d1" data-rev="">
+      <div class="zod-glyph"><svg viewBox="0 0 200 200">
+        <ellipse fill="rgba(124,77,255,0.15)" stroke="none" cx="100" cy="155" rx="45" ry="18"></ellipse>
+        <ellipse fill="rgba(124,77,255,0.08)" stroke="none" cx="100" cy="155" rx="65" ry="28"></ellipse>
+        <rect class="fill-a" stroke-width="1" x="65" y="155" width="70" height="12" rx="5"></rect>
+        <rect class="fill-a" stroke-width="0.8" x="75" y="152" width="50" height="8" rx="4" transform="rotate(-8 100 156)"></rect>
+        <path fill="rgba(124,77,255,0.12)" stroke="none" d="M100 155 Q70 130 65 90 Q60 55 80 30 Q85 50 78 70 Q95 45 90 20 Q110 45 105 70 Q120 50 115 30 Q140 60 135 95 Q130 130 100 155 Z"></path>
+        <path class="fill-a" stroke-width="1.2" stroke-linejoin="round" d="M100 155 Q75 132 72 100 Q68 68 85 45 Q88 62 82 78 Q98 55 95 30 Q112 55 108 78 Q115 62 118 45 Q132 70 128 102 Q124 132 100 155 Z"></path>
+        <path fill="rgba(124,77,255,0.4)" stroke="#7c4dff" stroke-width="1" d="M100 155 Q85 135 84 110 Q82 88 95 70 Q98 85 96 100 Q106 82 104 65 Q116 85 114 108 Q112 133 100 155 Z"></path>
+        <circle fill="rgba(124,77,255,0.65)" cx="100" cy="30" r="6"></circle>
+        <circle class="dot" cx="100" cy="30" r="3"></circle>
+        <circle class="dot" cx="72" cy="95" r="1.5" opacity="0.8"></circle>
+        <circle class="dot" cx="82" cy="65" r="1" opacity="0.7"></circle>
+        <circle class="dot" cx="128" cy="88" r="1.5" opacity="0.8"></circle>
+        <circle class="dot" cx="118" cy="55" r="1" opacity="0.6"></circle>
+        <circle class="dot" cx="65" cy="115" r="1" opacity="0.6"></circle>
+        <circle class="dot" cx="135" cy="108" r="1" opacity="0.6"></circle>
+      </svg></div>
+      <div class="zod-body">
+        <div class="zod-num">Sternzeichen VIII</div>
+        <div class="zod-name">Die Glut</div>
+        <div class="zod-month">Auvar · 19 Tage</div>
+        <div class="zod-traits"><span class="trait">Hoffnung</span><span class="trait">Neuanfang</span><span class="trait">Wandel</span></div>
+      </div>
+    </div>
+
+    <!-- IX Brücke -->
+    <div class="zod rev up d2" data-rev="">
+      <div class="zod-glyph"><svg viewBox="0 0 200 200">
+        <path class="fill-a" stroke-width="1.2" d="M10 90 L10 185 L55 185 L55 110 Q45 105 40 90 Z"></path>
+        <path class="fill-a" stroke-width="1.2" d="M190 90 L190 185 L145 185 L145 110 Q155 105 160 90 Z"></path>
+        <line class="a" stroke-width="0.5" opacity="0.35" x1="20" y1="130" x2="45" y2="130"></line>
+        <line class="a" stroke-width="0.5" opacity="0.35" x1="15" y1="155" x2="48" y2="155"></line>
+        <line class="a" stroke-width="0.5" opacity="0.35" x1="155" y1="130" x2="180" y2="130"></line>
+        <line class="a" stroke-width="0.5" opacity="0.35" x1="152" y1="155" x2="185" y2="155"></line>
+        <path class="fill-a" stroke-width="2.5" d="M55 110 Q100 45 145 110"></path>
+        <line class="a" stroke-width="3" stroke-linecap="round" x1="52" y1="110" x2="148" y2="110"></line>
+        <line class="a" stroke-width="1" x1="65" y1="103" x2="65" y2="110"></line>
+        <line class="a" stroke-width="1" x1="78" y1="98" x2="78" y2="110"></line>
+        <line class="a" stroke-width="1" x1="91" y1="95" x2="91" y2="110"></line>
+        <line class="a" stroke-width="1" x1="109" y1="95" x2="109" y2="110"></line>
+        <line class="a" stroke-width="1" x1="122" y1="98" x2="122" y2="110"></line>
+        <line class="a" stroke-width="1" x1="135" y1="103" x2="135" y2="110"></line>
+        <path class="a" stroke-width="0.8" opacity="0.6" d="M65 103 Q100 92 135 103"></path>
+        <circle class="fill-a" stroke-width="1.5" cx="100" cy="52" r="8"></circle>
+        <circle class="dot" cx="100" cy="52" r="3"></circle>
+        <circle class="dot" cx="115" cy="107" r="3.5"></circle>
+        <line class="a" stroke-width="1" stroke-linecap="round" x1="115" y1="110" x2="115" y2="118"></line>
+      </svg></div>
+      <div class="zod-body">
+        <div class="zod-num">Sternzeichen IX</div>
+        <div class="zod-name">Die Brücke</div>
+        <div class="zod-month">Septhar · 19 Tage</div>
+        <div class="zod-traits"><span class="trait">Verbindung</span><span class="trait">Überwindung</span><span class="trait">Wandel</span></div>
+      </div>
+    </div>
+
+    <!-- X Schleier -->
+    <div class="zod rev up" data-rev="">
+      <div class="zod-glyph"><svg viewBox="0 0 200 200">
+        <path class="fill-a" stroke-width="1.2" d="M40 20 Q55 60 45 100 Q35 140 50 180 L60 180 Q45 140 55 100 Q65 60 50 20 Z"></path>
+        <path class="fill-a" stroke-width="1.2" d="M70 20 Q85 65 75 105 Q65 145 80 180 L90 180 Q75 145 85 105 Q95 65 80 20 Z"></path>
+        <path class="fill-a" stroke-width="1.2" d="M100 20 Q115 60 105 100 Q95 140 110 180 L120 180 Q105 140 115 100 Q125 60 110 20 Z"></path>
+        <path class="fill-a" stroke-width="1.2" d="M130 20 Q145 65 135 105 Q125 145 140 180 L150 180 Q135 145 145 105 Q155 65 140 20 Z"></path>
+        <path class="fill-a" stroke-width="1.2" d="M158 20 Q170 60 162 100 Q154 140 165 180 L175 180 Q163 140 171 100 Q179 60 168 20 Z"></path>
+        <line class="a" stroke-width="2.5" stroke-linecap="round" x1="30" y1="20" x2="175" y2="20"></line>
+        <circle class="dot" cx="30" cy="20" r="4"></circle><circle class="dot" cx="175" cy="20" r="4"></circle>
+        <ellipse class="a" stroke-width="0.8" opacity="0.35" cx="100" cy="100" rx="25" ry="12"></ellipse>
+        <circle fill="rgba(124,77,255,0.32)" stroke="#7c4dff" stroke-width="0.8" opacity="0.4" cx="100" cy="100" r="6"></circle>
+        <circle class="dot" cx="100" cy="100" r="2.5" opacity="0.42"></circle>
+        <line class="a-light" stroke-width="0.4" opacity="0.3" x1="47" y1="50" x2="43" y2="70"></line>
+        <line class="a-light" stroke-width="0.4" opacity="0.25" x1="107" y1="40" x2="103" y2="65"></line>
+        <line class="a-light" stroke-width="0.4" opacity="0.3" x1="137" y1="55" x2="133" y2="75"></line>
+      </svg></div>
+      <div class="zod-body">
+        <div class="zod-num">Sternzeichen X</div>
+        <div class="zod-name">Der Schleier</div>
+        <div class="zod-month">Oktar · 18 Tage</div>
+        <div class="zod-traits"><span class="trait">Dunkelheit</span><span class="trait">Rückzug</span><span class="trait">Geheimnisse</span></div>
+      </div>
+    </div>
+
+    <!-- XI Labyrinth -->
+    <div class="zod rev up d1" data-rev="">
+      <div class="zod-glyph"><svg viewBox="0 0 200 200">
+        <rect class="fill-a" stroke-width="1.5" x="15" y="15" width="170" height="170" rx="3"></rect>
+        <rect class="fill-a" stroke-width="1.2" x="35" y="35" width="130" height="130" rx="2"></rect>
+        <rect class="fill-a" stroke-width="1" x="55" y="55" width="90" height="90" rx="2"></rect>
+        <rect class="fill-a" stroke-width="0.8" x="75" y="75" width="50" height="50" rx="1"></rect>
+        <rect fill="#05040f" stroke="none" x="90" y="168" width="20" height="18"></rect>
+        <rect fill="#05040f" stroke="none" x="148" y="80" width="18" height="20"></rect>
+        <rect fill="#05040f" stroke="none" x="75" y="35" width="20" height="18"></rect>
+        <rect fill="#05040f" stroke="none" x="55" y="110" width="18" height="20"></rect>
+        <rect fill="#05040f" stroke="none" x="88" y="118" width="15" height="10"></rect>
+        <rect class="fill-a" stroke-width="1" x="85" y="85" width="30" height="30" rx="2"></rect>
+        <circle class="fill-a" stroke-width="1" cx="100" cy="100" r="8"></circle>
+        <circle class="dot" cx="100" cy="100" r="3.5"></circle>
+        <circle fill="#a087e8" cx="100" cy="148" r="3"></circle>
+        <path class="a" stroke-width="1.2" stroke-linecap="round" d="M100 188 L100 183"></path>
+        <path class="a" stroke-width="1" stroke-linecap="round" d="M96 186 L100 183 L104 186"></path>
+      </svg></div>
+      <div class="zod-body">
+        <div class="zod-num">Sternzeichen XI</div>
+        <div class="zod-name">Das Labyrinth</div>
+        <div class="zod-month">Novren · 18 Tage</div>
+        <div class="zod-traits"><span class="trait">Komplexität</span><span class="trait">Täuschung</span><span class="trait">Erkenntnis</span></div>
+      </div>
+    </div>
+
+    <!-- XII Spalt -->
+    <div class="zod rev up d2" data-rev="">
+      <div class="zod-glyph"><svg viewBox="0 0 200 200">
+        <path class="fill-a" stroke-width="1.5" d="M10 10 L10 200 L80 200 L80 170 Q72 155 76 130 Q80 108 74 85 Q68 62 78 35 Q82 20 80 10 Z"></path>
+        <line class="a" stroke-width="0.5" opacity="0.35" x1="15" y1="60" x2="72" y2="55"></line>
+        <line class="a" stroke-width="0.5" opacity="0.35" x1="12" y1="100" x2="75" y2="95"></line>
+        <line class="a" stroke-width="0.5" opacity="0.35" x1="15" y1="140" x2="78" y2="138"></line>
+        <path class="fill-a" stroke-width="1.5" d="M190 10 L190 200 L120 200 L120 170 Q128 155 124 130 Q120 108 126 85 Q132 62 122 35 Q118 20 120 10 Z"></path>
+        <line class="a" stroke-width="0.5" opacity="0.35" x1="128" y1="55" x2="185" y2="60"></line>
+        <line class="a" stroke-width="0.5" opacity="0.35" x1="125" y1="95" x2="188" y2="100"></line>
+        <line class="a" stroke-width="0.5" opacity="0.35" x1="122" y1="138" x2="185" y2="140"></line>
+        <path fill="rgba(124,77,255,0.18)" stroke="none" d="M88 200 Q92 160 90 120 Q88 90 100 60 Q112 90 110 120 Q108 160 112 200 Z"></path>
+        <path class="a" stroke-width="1.8" stroke-linecap="round" d="M80 10 Q83 40 79 70 Q76 95 82 120 Q87 148 80 175 Q78 188 80 200"></path>
+        <path class="a" stroke-width="1.8" stroke-linecap="round" d="M120 10 Q117 40 121 70 Q124 95 118 120 Q113 148 120 175 Q122 188 120 200"></path>
+        <line class="a-light" stroke-width="0.8" opacity="0.5" x1="82" y1="80" x2="60" y2="75"></line>
+        <line class="a-light" stroke-width="0.8" opacity="0.5" x1="118" y1="80" x2="140" y2="75"></line>
+        <line class="a-light" stroke-width="0.6" opacity="0.35" x1="80" y1="110" x2="50" y2="108"></line>
+        <line class="a-light" stroke-width="0.6" opacity="0.35" x1="120" y1="110" x2="150" y2="108"></line>
+        <circle class="dot" cx="100" cy="55" r="2.5" opacity="0.9"></circle>
+        <circle class="dot" cx="100" cy="100" r="4"></circle>
+        <circle fill="rgba(124,77,255,0.5)" cx="100" cy="100" r="9"></circle>
+        <circle class="dot" cx="100" cy="148" r="2.5" opacity="0.9"></circle>
+        <circle class="dot" cx="100" cy="185" r="2" opacity="0.7"></circle>
+      </svg></div>
+      <div class="zod-body">
+        <div class="zod-num">Sternzeichen XII</div>
+        <div class="zod-name">Der Spalt</div>
+        <div class="zod-month">Derath · 19 Tage</div>
+        <div class="zod-traits"><span class="trait">Übergänge</span><span class="trait">Entscheidungen</span><span class="trait">Neubeginn</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ WOCHENTAGE ════════════════════════════════ -->
+<div class="section section-alt">
+  <div class="section-head rev up" data-rev="">
+    <span class="eyebrow">Kapitel VI &nbsp;·&nbsp; Die Woche</span>
+    <h2 class="sh">Die sieben Wochentage</h2>
+    <div class="rule center"></div>
+  </div>
+
+  <div class="weekdays">
+    <div class="wday rev up" data-rev="">
+      <div class="wday-num">Tag 1</div>
+      <div class="wday-name">Aven</div>
+      <div class="wday-role">Wochenbeginn, Aufbruch</div>
+    </div>
+    <div class="wday rev up d1" data-rev="">
+      <div class="wday-num">Tag 2</div>
+      <div class="wday-name">Eiru</div>
+      <div class="wday-role">Zweiter Tag, ruhig</div>
+    </div>
+    <div class="wday rev up d2" data-rev="">
+      <div class="wday-num">Tag 3</div>
+      <div class="wday-name">Orun</div>
+      <div class="wday-role">Mitte der Woche</div>
+    </div>
+    <div class="wday rev up d3" data-rev="">
+      <div class="wday-num">Tag 4</div>
+      <div class="wday-name">Ulai</div>
+      <div class="wday-role">Wendepunkt</div>
+    </div>
+    <div class="wday rev up d2" data-rev="">
+      <div class="wday-num">Tag 5</div>
+      <div class="wday-name">Ivar</div>
+      <div class="wday-role">Vorletzter Tag, leicht</div>
+    </div>
+    <div class="wday rev up d1" data-rev="">
+      <div class="wday-num">Tag 6</div>
+      <div class="wday-name">Orel</div>
+      <div class="wday-role">Ruhetag oder Markttag</div>
+    </div>
+    <div class="wday rev up" data-rev="">
+      <div class="wday-num">Tag 7</div>
+      <div class="wday-name">Elu</div>
+      <div class="wday-role">Wochenende, Abschluss</div>
+    </div>
+  </div>
+  <div class="weekdays-note rev up" data-rev="">224 Tage ÷ 7 = exakt 32 Wochen pro Jahr · 4 bis 5 Wochen pro Monat</div>
+</div>
+
+<!-- ══ FEIERTAGE ═════════════════════════════════ -->
+<div class="section">
+  <div class="section-head rev up" data-rev="">
+    <span class="eyebrow">Kapitel VII &nbsp;·&nbsp; Das Jahr</span>
+    <h2 class="sh">Feiertage</h2>
+    <div class="rule center"></div>
+    <p class="body-text" style="max-width:600px;margin:0 auto;color:var(--dim);">Drei Arten von Feiertagen prägen das Jahr: weltliche Feste der Gemeinschaft, religiöse Tage zu Ehren der Gottheiten, und stille Tage der Besänftigung, an denen man nicht zu laut leben sollte.</p>
+    <div class="legend">
+      <span class="legend-item"><span class="legend-dot w"></span>Weltlich</span>
+      <span class="legend-item"><span class="legend-dot r"></span>Religiös</span>
+      <span class="legend-item"><span class="legend-dot b"></span>Besänftigung</span>
+    </div>
+  </div>
+
+  <div class="holidays">
+
+    <div class="holiday-month rev up" data-rev="">
+      <div class="holiday-month-head"><span class="holiday-month-name">I · Janvar</span><div class="holiday-month-line"></div></div>
+      <div class="holiday-cards">
+        <div class="hcard"><div class="hcard-bar w"></div><div class="hcard-body"><div class="hcard-top"><span class="hcard-name">Tag der Landung</span><span class="htag w">Weltlich · 3 Tage</span></div><div class="hcard-desc">Das wichtigste Fest des Jahres. Am ersten Tag gedenkt man der Reise und der Verlorenen, am zweiten feiert man die Ankunft mit Feuer und Musik, am dritten schwört man der Kolonie neu die Treue.</div></div><div class="hcard-meta">1. – 3. Janvar</div></div>
+        <div class="hcard"><div class="hcard-bar w"></div><div class="hcard-body"><div class="hcard-top"><span class="hcard-name">Der Erste Schritt</span><span class="htag w">Weltlich · 1 Tag</span></div><div class="hcard-desc">Persönlicher Feiertag am letzten Tag des Monats. Jeder Velaer setzt sich ein kleines Ziel und schreibt es auf. Familien tauschen ihre Wünsche aus.</div></div><div class="hcard-meta">19. Janvar</div></div>
+      </div>
+    </div>
+
+    <div class="holiday-month rev up" data-rev="">
+      <div class="holiday-month-head"><span class="holiday-month-name">II · Fevorn</span><div class="holiday-month-line"></div></div>
+      <div class="holiday-cards">
+        <div class="hcard"><div class="hcard-bar r"></div><div class="hcard-body"><div class="hcard-top"><span class="hcard-name">Aurelias Klinge</span><span class="htag r">Religiös · 1 Tag</span></div><div class="hcard-desc">Turniere, Wettkämpfe und Waffensegnungen zu Ehren Aurelias. Gefallene Krieger werden namentlich genannt. Kein Trauertag — ein Ehrentag.</div></div><div class="hcard-meta">7. Fevorn</div></div>
+        <div class="hcard"><div class="hcard-bar r"></div><div class="hcard-body"><div class="hcard-top"><span class="hcard-name">Selunara-Nacht</span><span class="htag r">Religiös · 1 Tag</span></div><div class="hcard-desc">Die dunkelste Nacht des Fevorn wird Selunara geweiht. Laternen werden auf Gewässer gesetzt, leise Gebete gesprochen — nicht aus Furcht, sondern aus Respekt.</div></div><div class="hcard-meta">18. Fevorn</div></div>
+      </div>
+    </div>
+
+    <div class="holiday-month rev up" data-rev="">
+      <div class="holiday-month-head"><span class="holiday-month-name">III · Mareth</span><div class="holiday-month-line"></div></div>
+      <div class="holiday-cards">
+        <div class="hcard"><div class="hcard-bar w"></div><div class="hcard-body"><div class="hcard-top"><span class="hcard-name">Das Erwachen</span><span class="htag w">Weltlich · 1 Tag</span></div><div class="hcard-desc">Erster Erkundungstag des Jahres — Gruppen ziehen in die Wildnis, kartieren neue Gebiete, pflanzen Markierungen. Abends wird das Entdeckte gemeinsam gefeiert.</div></div><div class="hcard-meta">5. Mareth</div></div>
+        <div class="hcard"><div class="hcard-bar w"></div><div class="hcard-body"><div class="hcard-top"><span class="hcard-name">Wurzelfest</span><span class="htag w">Weltlich · 1 Tag</span></div><div class="hcard-desc">Gemeinschaftliches Pflanzen und Gärtnern. Jede Familie legt ein kleines Beet an oder pflegt ein bestehendes. Abends gibt es ein gemeinsames Essen aus dem Selbstangebauten.</div></div><div class="hcard-meta">15. Mareth</div></div>
+      </div>
+    </div>
+
+    <div class="holiday-month rev up" data-rev="">
+      <div class="holiday-month-head"><span class="holiday-month-name">IV · Aprel</span><div class="holiday-month-line"></div></div>
+      <div class="holiday-cards">
+        <div class="hcard"><div class="hcard-bar r"></div><div class="hcard-body"><div class="hcard-top"><span class="hcard-name">Elysarions Nacht</span><span class="htag r">Religiös · 2 Tage</span></div><div class="hcard-desc">Fest der Liebe und Leidenschaft. Am ersten Tag werden Kunstwerke, Lieder und Liebeserklärungen ausgetauscht. Am zweiten feiert man ausgelassen bis in die Nacht — traditionell bei Goldmondlicht.</div></div><div class="hcard-meta">8. – 9. Aprel</div></div>
+        <div class="hcard"><div class="hcard-bar b"></div><div class="hcard-body"><div class="hcard-top"><span class="hcard-name">Hydeas Segen</span><span class="htag b">Besänftigung · 1 Tag</span></div><div class="hcard-desc">Kleine Opfergaben — Blüten, Früchte — werden in Flüsse oder Seen geworfen. Fischer und Wasserträger beten für eine sichere Saison.</div></div><div class="hcard-meta">17. Aprel</div></div>
+      </div>
+    </div>
+
+    <div class="holiday-month rev up" data-rev="">
+      <div class="holiday-month-head"><span class="holiday-month-name">V · Mairen</span><div class="holiday-month-line"></div></div>
+      <div class="holiday-cards">
+        <div class="hcard"><div class="hcard-bar b"></div><div class="hcard-body"><div class="hcard-top"><span class="hcard-name">Die Stille</span><span class="htag b">Besänftigung · 1 Tag</span></div><div class="hcard-desc">Ein stiller Besänftigungstag für Ophelis, Thraxis und Maledor gemeinsam. Kein Lärm, keine Feste — stille Rituale, Schutzzeichen an Türen und kleine Opfergaben, damit das Böse sich fernhält. Kinder bleiben drinnen.</div></div><div class="hcard-meta">9. Mairen</div></div>
+        <div class="hcard"><div class="hcard-bar w"></div><div class="hcard-body"><div class="hcard-top"><span class="hcard-name">Tag der Erinnerung</span><span class="htag w">Weltlich · 1 Tag</span></div><div class="hcard-desc">Stiller Gedenktag an die verlorene Heimat. Keine Pflicht, kein Ritual — aber viele Velaer kochen alte Rezepte, hören alte Musik oder lesen aus mitgebrachten Büchern.</div></div><div class="hcard-meta">18. Mairen</div></div>
+      </div>
+    </div>
+
+    <div class="holiday-month rev up" data-rev="">
+      <div class="holiday-month-head"><span class="holiday-month-name">VI · Junvar</span><div class="holiday-month-line"></div></div>
+      <div class="holiday-cards">
+        <div class="hcard"><div class="hcard-bar r"></div><div class="hcard-body"><div class="hcard-top"><span class="hcard-name">Siennas Zenit</span><span class="htag r">Religiös · 2 Tage</span></div><div class="hcard-desc">Hochsommerfest zu Ehren Siennas. Märkte, Sonnenfeiern, Wüstengerichte. Am zweiten Tag ein großes gemeinsames Freudenfeuer — Sienna soll sehen, dass man ihr Licht trägt.</div></div><div class="hcard-meta">6. – 7. Junvar</div></div>
+        <div class="hcard"><div class="hcard-bar w"></div><div class="hcard-body"><div class="hcard-top"><span class="hcard-name">Nacht der Irrlichter</span><span class="htag w">Weltlich · 1 Tag</span></div><div class="hcard-desc">In der Jahresmitte werden kleine Lichter und Laternen durch die Siedlung getragen — zu Ehren der Reisenden und Erkundenden. Wer gerade auf Expedition ist, gilt als besonders gesegnet.</div></div><div class="hcard-meta">14. Junvar</div></div>
+      </div>
+    </div>
+
+    <div class="holiday-month rev up" data-rev="">
+      <div class="holiday-month-head"><span class="holiday-month-name">VII · Juval</span><div class="holiday-month-line"></div></div>
+      <div class="holiday-cards">
+        <div class="hcard"><div class="hcard-bar w"></div><div class="hcard-body"><div class="hcard-top"><span class="hcard-name">Der Große Markt</span><span class="htag w">Weltlich · 3 Tage</span></div><div class="hcard-desc">Das größte weltliche Handelsfest. Händler aus allen Teilen der Kolonie kommen zusammen. Wettkämpfe, Auktionen, Vorführungen. Kein religiöser Bezug — reines Gemeinschaftsfest.</div></div><div class="hcard-meta">5. – 7. Juval</div></div>
+        <div class="hcard"><div class="hcard-bar r"></div><div class="hcard-body"><div class="hcard-top"><span class="hcard-name">Eiritha-Morgen</span><span class="htag r">Religiös · 1 Tag</span></div><div class="hcard-desc">Frühmorgendliches Ritual zu Ehren Eirithas. Mit dem ersten Licht betet man für Heilung und Gesundheit. Heiler und Ärzte werden an diesem Tag besonders geehrt und beschenkt.</div></div><div class="hcard-meta">15. Juval</div></div>
+      </div>
+    </div>
+
+    <div class="holiday-month rev up" data-rev="">
+      <div class="holiday-month-head"><span class="holiday-month-name">VIII · Auvar</span><div class="holiday-month-line"></div></div>
+      <div class="holiday-cards">
+        <div class="hcard"><div class="hcard-bar r"></div><div class="hcard-body"><div class="hcard-top"><span class="hcard-name">Avalastes Wende</span><span class="htag r">Religiös · 1 Tag</span></div><div class="hcard-desc">Halbjahrspunkt, Fest der Wiedergeburt. Alte Dinge werden symbolisch verbrannt oder begraben — schlechte Gewohnheiten, vergangene Fehler. Avalaste soll Erneuerung bringen.</div></div><div class="hcard-meta">10. Auvar</div></div>
+        <div class="hcard"><div class="hcard-bar r"></div><div class="hcard-body"><div class="hcard-top"><span class="hcard-name">Ferys-Abend</span><span class="htag r">Religiös · 1 Tag</span></div><div class="hcard-desc">Abendliches Fest zu Ehren von Ferys, Gott der Musik und Freude. Straßenmusiker spielen, spontane Tänze entstehen. Niemand arbeitet nach Sonnenuntergang — Ferys soll hören, dass man lebt.</div></div><div class="hcard-meta">19. Auvar</div></div>
+      </div>
+    </div>
+
+    <div class="holiday-month rev up" data-rev="">
+      <div class="holiday-month-head"><span class="holiday-month-name">IX · Septhar</span><div class="holiday-month-line"></div></div>
+      <div class="holiday-cards">
+        <div class="hcard"><div class="hcard-bar b"></div><div class="hcard-body"><div class="hcard-top"><span class="hcard-name">Das Aschenhauch-Ritual</span><span class="htag b">Besänftigung · 1 Tag</span></div><div class="hcard-desc">Am Tag des Aschmond-Vollmonds. Besänftigung der Naturgeister und des Aschmonds. Graue Bänder werden an Türen gehängt, leise Gebete gesprochen. Gilt als Schutz vor schlechten Träumen und Krankheit.</div></div><div class="hcard-meta">Am Aschenhauch</div></div>
+        <div class="hcard"><div class="hcard-bar w"></div><div class="hcard-body"><div class="hcard-top"><span class="hcard-name">Tag der Brücken</span><span class="htag w">Weltlich · 1 Tag</span></div><div class="hcard-desc">Gemeinschaftsprojekte stehen im Mittelpunkt — Reparaturen, Neubauten, gemeinsame Arbeiten. Wer alleine lebt, wird besucht. Symbolisch werden Brücken zwischen Menschen gebaut.</div></div><div class="hcard-meta">12. Septhar</div></div>
+      </div>
+    </div>
+
+    <div class="holiday-month rev up" data-rev="">
+      <div class="holiday-month-head"><span class="holiday-month-name">X · Oktar</span><div class="holiday-month-line"></div></div>
+      <div class="holiday-cards">
+        <div class="hcard"><div class="hcard-bar r"></div><div class="hcard-body"><div class="hcard-top"><span class="hcard-name">Nacht des Schleiers</span><span class="htag r">Religiös · 2 Tage</span></div><div class="hcard-desc">Fest zu Ehren der Neutralen — Daramur, Hadir, Aetherius. Man ehrt die Toten, besucht Gräber, erzählt Geschichten Verstorbener. Am zweiten Tag wird das Leben gefeiert — bewusster Gegenpol zur Trauer.</div></div><div class="hcard-meta">7. – 8. Oktar</div></div>
+        <div class="hcard"><div class="hcard-bar b"></div><div class="hcard-body"><div class="hcard-top"><span class="hcard-name">Melions Ruf</span><span class="htag b">Besänftigung · 1 Tag</span></div><div class="hcard-desc">Melion, Gott des Schicksals, wird besänftigt. Man zieht zufällig ein kleines Holzstäbchen aus einem Behälter — die Farbe bestimmt den Schicksalshinweis für den kommenden Monat. Volksbrauch, beliebt bei Kindern.</div></div><div class="hcard-meta">15. Oktar</div></div>
+      </div>
+    </div>
+
+    <div class="holiday-month rev up" data-rev="">
+      <div class="holiday-month-head"><span class="holiday-month-name">XI · Novren</span><div class="holiday-month-line"></div></div>
+      <div class="holiday-cards">
+        <div class="hcard"><div class="hcard-bar w"></div><div class="hcard-body"><div class="hcard-top"><span class="hcard-name">Das Labyrinthfest</span><span class="htag w">Weltlich · 1 Tag</span></div><div class="hcard-desc">Ein Rätsel- und Wissensfest — Schreibwettbewerbe, Debatten, Rätselmärkte. Ursprünglich zu Ehren der Wissensdomäne, inzwischen fast rein weltlich. Kinder lösen kleine Labyrinthe aus Holz oder Stoff.</div></div><div class="hcard-meta">8. Novren</div></div>
+        <div class="hcard"><div class="hcard-bar r"></div><div class="hcard-body"><div class="hcard-top"><span class="hcard-name">Vindeahs Gabe</span><span class="htag r">Religiös · 1 Tag</span></div><div class="hcard-desc">Vindeah, Göttin der Natur und Wildnis, wird mit kleinen Opfergaben am Waldrand geehrt. Jäger bitten um Schutz, Kinder binden bunte Bänder an Bäume.</div></div><div class="hcard-meta">16. Novren</div></div>
+      </div>
+    </div>
+
+    <div class="holiday-month rev up" data-rev="">
+      <div class="holiday-month-head"><span class="holiday-month-name">XII · Derath</span><div class="holiday-month-line"></div></div>
+      <div class="holiday-cards">
+        <div class="hcard"><div class="hcard-bar r"></div><div class="hcard-body"><div class="hcard-top"><span class="hcard-name">Nacht der Naturgeister</span><span class="htag r">Religiös · 1 Tag</span></div><div class="hcard-desc">Die fünf Naturgeister werden gemeinsam besänftigt. Feuer, Wasser, Stein, Wind und Holz werden symbolisch an einem Ort vereint — ein kleines Lagerfeuer am Fluss, mit Steinen umkränzt, im Freien.</div></div><div class="hcard-meta">8. Derath</div></div>
+        <div class="hcard"><div class="hcard-bar w"></div><div class="hcard-body"><div class="hcard-top"><span class="hcard-name">Die Schwellennacht</span><span class="htag w">Weltlich · 1 Tag</span></div><div class="hcard-desc">Jahresabschluss. Man blickt zurück, setzt sich Ziele für das neue Jahr. Kleine Opfergaben an alle Gottheiten gemeinsam — ein kurzes Dankgebet. Dann feiert man bis Mitternacht den Jahreswechsel.</div></div><div class="hcard-meta">19. Derath</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ BEISPIELDATEN ════════════════════════════════ -->
+<div class="section section-alt">
+  <div class="section-head rev up" data-rev="">
+    <span class="eyebrow">Anhang &nbsp;·&nbsp; Notation</span>
+    <h2 class="sh">Beispieldaten</h2>
+    <div class="rule center"></div>
+    <p class="body-text" style="max-width:560px;margin:0 auto;color:var(--dim);">Wie man ein Datum auf Meruria schreibt und liest — in Alltagssprache, in formeller Schrift, oder in der Sprache der Sterne.</p>
+  </div>
+
+  <div class="dates">
+    <div class="date-ex rev up" data-rev="">
+      <span class="date-str">Tag 0 n.d.L.</span>
+      <span class="date-desc">Die Landung — Nullpunkt aller Zeitrechnung</span>
+    </div>
+    <div class="date-ex rev up d1" data-rev="">
+      <span class="date-str">Ulai, 14. Janvar, Jahr 1 n.d.L.</span>
+      <span class="date-desc">14 Tage nach der Landung — heute in der Kampagne</span>
+    </div>
+    <div class="date-ex rev up d2" data-rev="">
+      <span class="date-str">Am Mondsegen des Mareth</span>
+      <span class="date-desc">Poetisch für den Goldmond-Vollmond im 3. Monat</span>
+    </div>
+    <div class="date-ex rev up d2" data-rev="">
+      <span class="date-str">Aven, 3. Juval, Jahr 2 n.d.L.</span>
+      <span class="date-desc">Im Zeichen der Klinge, zweites Jahr der Kolonie</span>
+    </div>
+    <div class="date-ex rev up d2" data-rev="">
+      <span class="date-str">14. Mondsegen, Jahr 1882 v.d.L.</span>
+      <span class="date-desc">Historisches Dokument aus der alten Welt — 14 Tage nach dem letzten Goldmond-Vollmond</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FOOTER ════════════════════════════════════ -->
+<!-- Zum Kalender (unten) -->
+<div class="cta-foot rev up" data-rev="">
+  <a href="Kalender_interaktiv.html" class="cta-btn">
+    Zum Kalender
+    <span class="cta-arrow">→</span>
+  </a>
+</div>
+
+<div class="footer">
+  <div class="footer-text">Kolonistenarchiv &nbsp;·&nbsp; 224 Tage &nbsp;·&nbsp; Goldmond 28 &nbsp;·&nbsp; Aschmond 17 &nbsp;·&nbsp; Großer Gleichlauf alle 476 Tage</div>
+</div>
+
+<script>
+/* ── STARFIELD ───────────────────────────────────── */
+(function () {
+  var canvas = document.getElementById('starfield');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W, H, stars = [], t = 0;
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = canvas.parentElement.offsetHeight; }
+  function mkStars() {
+    stars = [];
+    for (var i = 0; i < 280; i++) {
+      stars.push({
+        x: Math.random() * W, y: Math.random() * H,
+        r: Math.random() * 1.1 + 0.18,
+        a: Math.random() * 0.65 + 0.15,
+        sp: Math.random() * 0.08 + 0.04,
+        ph: Math.random() * Math.PI * 2
+      });
+    }
+  }
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+    t += 1;
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      var op = s.a * (0.35 + 0.65 * Math.abs(Math.sin(t * s.sp + s.ph)));
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(210,200,255,' + op + ')';
+      ctx.fill();
+    }
+    var g = ctx.createRadialGradient(W * 0.5, H * 0.42, 0, W * 0.5, H * 0.42, W * 0.5);
+    g.addColorStop(0, 'rgba(124,77,255,0.05)');
+    g.addColorStop(1, 'transparent');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, H);
+    requestAnimationFrame(frame);
+  }
+  resize(); mkStars(); frame();
+  window.addEventListener('resize', function () { resize(); mkStars(); });
+}());
+
+/* ── SCROLL REVEAL ───────────────────────────────── */
+(function () {
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) { entry.target.classList.add('vis'); }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -42px 0px' });
+  document.querySelectorAll('[data-rev]').forEach(function (el) { io.observe(el); });
+}());
+</script>
+
+
+<script type="text/babel">
+const { SiteNav, SiteGate } = window;
+ReactDOM.createRoot(document.getElementById('nav-root')).render(<SiteGate><SiteNav /></SiteGate>);
+</script>
+
+</body></html>

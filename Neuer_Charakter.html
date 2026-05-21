@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meruria — Charaktererstellung</title>
+<link rel="stylesheet" href="assets/styles/global/fonts.css">
+<link rel="stylesheet" href="assets/styles/global/base.css">
+<link rel="stylesheet" href="assets/styles/pages/Neuer_Charakter.css">
+<script src="assets/scripts/vendor/react.development.js"></script>
+<script src="assets/scripts/vendor/react-dom.development.js"></script>
+<script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/scripts/data/charaktererstellung-data.js"></script>
+<script src="assets/scripts/data/charaktererstellung-gottheiten-data.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect, useRef, useMemo } = React;
+
+// ── HELPERS ────────────────────────────────────────────────────────────────
+const cut = (a, b) => a.filter(x => b.includes(x));
+const trail = (list, max = 8) => {
+  if (!list || !list.length) return '—';
+  const s = list.slice(0, max);
+  const more = list.length > max ? ` (+${list.length - max})` : '';
+  return s.map(x => `→ ${x}`).join('  ') + more;
+};
+
+// ── GLITCH BUTTON ──────────────────────────────────────────────────────────
+function GlitchBtn({ label, sub, onClick, primary, style: sx = {} }) {
+  const [g, setG] = useState(false);
+  const t = useRef(null);
+  const fire = () => {
+    setG(false);
+    clearTimeout(t.current);
+    t.current = setTimeout(() => { setG(true); t.current = setTimeout(() => setG(false), 1500); }, 10);
+  };
+  useEffect(() => () => clearTimeout(t.current), []);
+  return (
+    <button onClick={onClick} onMouseEnter={fire} style={{
+      position:'relative', cursor:'pointer', textAlign:'center',
+      background: primary ? 'rgba(124,77,255,.12)' : 'rgba(12,9,28,.6)',
+      border: `1px solid ${primary ? 'rgba(124,77,255,.55)' : 'rgba(160,140,255,.2)'}`,
+      borderRadius:'3px', padding:'22px 44px', transition:'all .2s', minWidth:190, ...sx
+    }}>
+      {g && <>
+        <span style={{position:'absolute',inset:0,display:'flex',alignItems:'center',justifyContent:'center',color:'rgba(80,255,180,.4)',fontFamily:'var(--font-d)',fontSize:'17px',letterSpacing:'.22em',animation:'glitch-clip 1.4s steps(1) infinite',pointerEvents:'none'}}>{label}</span>
+        <span style={{position:'absolute',inset:0,display:'flex',alignItems:'center',justifyContent:'center',color:'rgba(255,60,220,.32)',fontFamily:'var(--font-d)',fontSize:'17px',letterSpacing:'.22em',animation:'glitch-clip2 1.4s steps(1) infinite',pointerEvents:'none'}}>{label}</span>
+      </>}
+      <div style={{fontFamily:'var(--font-d)',fontSize:'17px',fontWeight:300,letterSpacing:'.22em',color:primary?'#f0eeff':'rgba(200,190,240,.5)',textTransform:'uppercase',position:'relative'}}>{label}</div>
+      {sub && <div style={{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.14em',color:primary?'rgba(160,140,255,.55)':'rgba(160,140,255,.28)',marginTop:5,textTransform:'uppercase',position:'relative'}}>{sub}</div>}
+    </button>
+  );
+}
+
+// ── NAV ────────────────────────────────────────────────────────────────────
+function Nav({ onBack, showBack }) {
+  return (
+    <div style={{position:'sticky',top:0,zIndex:100,background:'rgba(5,4,15,.93)',borderBottom:'1px solid rgba(160,140,255,.1)',backdropFilter:'blur(16px)',height:52,display:'flex',alignItems:'center',padding:'0 32px',gap:18}}>
+      <a href="index.html" style={{fontFamily:'var(--font-d)',fontSize:'14px',fontWeight:300,letterSpacing:'.28em',color:'rgba(200,190,240,.45)',textDecoration:'none',transition:'color .2s'}}
+        onMouseEnter={e=>e.currentTarget.style.color='#f0eeff'} onMouseLeave={e=>e.currentTarget.style.color='rgba(200,190,240,.45)'}>MERURIA</a>
+      <span style={{fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(160,140,255,.25)'}}>◂</span>
+      <span style={{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.16em',color:'rgba(160,140,255,.5)',textTransform:'uppercase'}}>Charaktererstellung</span>
+      <div style={{flex:1}}/>
+      {showBack && (
+        <button onClick={onBack} className="no-print" style={{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.14em',color:'rgba(160,140,255,.45)',background:'transparent',border:'1px solid rgba(160,140,255,.15)',borderRadius:'3px',padding:'6px 14px',cursor:'pointer',textTransform:'uppercase',transition:'all .2s'}}
+          onMouseEnter={e=>{e.currentTarget.style.color='#f0eeff';e.currentTarget.style.borderColor='rgba(160,140,255,.4)';}}
+          onMouseLeave={e=>{e.currentTarget.style.color='rgba(160,140,255,.45)';e.currentTarget.style.borderColor='rgba(160,140,255,.15)';}}>← Zurück</button>
+      )}
+    </div>
+  );
+}
+
+// ── TYPE SELECT ────────────────────────────────────────────────────────────
+function TypeSelectPhase({ onSelect }) {
+  return (
+    <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',minHeight:'calc(100vh - 52px)',gap:18,padding:40,animation:'fadeIn .5s ease'}}>
+      <div style={{fontFamily:'var(--font-m)',fontSize:'9px',letterSpacing:'.3em',color:'rgba(124,77,255,.5)',textTransform:'uppercase'}}>Neuer Charakter</div>
+      <h1 style={{fontFamily:'var(--font-d)',fontSize:'clamp(20px,4vw,38px)',fontWeight:300,letterSpacing:'.2em',color:'#f0eeff',textShadow:'0 0 40px rgba(124,77,255,.4)',animation:'flicker-mid 10s infinite',textTransform:'uppercase',textAlign:'center'}}>Wen erschaffst du?</h1>
+      <p style={{fontFamily:'var(--font-b)',fontWeight:300,fontSize:'12px',color:'rgba(200,190,240,.38)',letterSpacing:'.08em',maxWidth:380,textAlign:'center',lineHeight:1.85,marginBottom:12}}>
+        Wähle die Art des Charakters, den du erstellen möchtest.
+      </p>
+      <div style={{display:'flex',gap:20,flexWrap:'wrap',justifyContent:'center'}}>
+        <GlitchBtn label="Neuer SC" sub="Spielercharakter" onClick={() => onSelect('sc')} primary={true}/>
+        <GlitchBtn label="Neuer NSC" sub="Nicht-Spieler-Charakter" onClick={() => onSelect('nsc')} primary={false}/>
+      </div>
+    </div>
+  );
+}
+
+// ── CHIP ───────────────────────────────────────────────────────────────────
+function Chip({ label, st, onClick, isUnk, isGroupLabel }) {
+  const cls = ['chip',isUnk?'unk':'',isGroupLabel?'group-label':'',st==='selected'?'selected':'',st==='grayed'?'grayed':'',st==='multi'?'multi':''].filter(Boolean).join(' ');
+  return <span className={cls} onClick={onClick}>{isUnk ? '? Unbekannt' : label}</span>;
+}
+
+// ── CATEGORY BLOCK ─────────────────────────────────────────────────────────
+function CatBlock({ title, items, selected, onSelect, hideOthers = false, grouped = null, multiSet = null, onMultiToggle = null }) {
+  const isUnk = selected === 'unbekannt';
+  const hasSel = selected && selected !== 'unbekannt';
+
+  const chipSt = (item) => {
+    if (multiSet != null) return multiSet.has(item) ? 'multi' : (isUnk ? 'grayed' : 'default');
+    if (isUnk) return 'grayed';
+    if (hasSel) return item === selected ? 'selected' : (hideOthers ? 'hidden' : 'grayed');
+    return 'default';
+  };
+
+  const handleChip = (item) => {
+    const s = chipSt(item);
+    if (s === 'grayed') return;
+    if (multiSet != null) { onMultiToggle(item); return; }
+    onSelect(selected === item ? null : item);
+  };
+
+  const renderItem = (item) => {
+    const s = chipSt(item);
+    if (s === 'hidden') return null;
+    return <Chip key={item} label={item} st={s} onClick={() => handleChip(item)}/>;
+  };
+
+  return (
+    <div className="cat-block">
+      <div className="cat-head">{title}</div>
+      <div className="chip-wrap">
+        <Chip label="Unbekannt" isUnk={true}
+          st={isUnk ? 'selected' : (hasSel ? 'grayed' : 'default')}
+          onClick={() => { if (!hasSel) onSelect(selected === 'unbekannt' ? null : 'unbekannt'); }}/>
+        {grouped
+          ? grouped.map((grp, gi) => (
+            <React.Fragment key={gi}>
+              {grp.gruppe && !hasSel && <Chip label={grp.gruppe} isGroupLabel={true}/>}
+              {grp.rassen.map(renderItem)}
+            </React.Fragment>))
+          : items.map(renderItem)
+        }
+      </div>
+    </div>
+  );
+}
+
+// ── TAG PHASE ──────────────────────────────────────────────────────────────
+function TagPhase({ tags, setTag, setWerkzeug, onNext }) {
+  const GOETTER = useMemo(() => {
+    if (!window.GODS_DATA) return [];
+    const { gods=[], demons=[], naturgeister=[] } = window.GODS_DATA;
+    return [...gods,...demons,...naturgeister].map(g => g.name);
+  }, []);
+
+  const selCount = Object.entries(tags).filter(([k,v]) => k === 'werkzeuge' ? v instanceof Set && v.size > 0 : v !== null).length;
+
+  return (
+    <div style={{maxWidth:920,margin:'0 auto',padding:'44px 32px 80px',animation:'slideUp .4s ease'}}>
+      <div style={{marginBottom:38}}>
+        <div style={{fontFamily:'var(--font-m)',fontSize:'9px',letterSpacing:'.28em',color:'rgba(124,77,255,.5)',textTransform:'uppercase',marginBottom:9}}>Schritt 1 · Tag-Auswahl</div>
+        <h2 style={{fontFamily:'var(--font-d)',fontSize:'clamp(16px,3vw,26px)',fontWeight:300,letterSpacing:'.18em',color:'#f0eeff',marginBottom:11}}>Was weißt du schon?</h2>
+        <p style={{fontFamily:'var(--font-b)',fontWeight:300,fontSize:'12px',color:'rgba(200,190,240,.4)',lineHeight:1.9,maxWidth:580}}>
+          Markiere alles, was du bereits über deinen Charakter weißt. Felder, die du nicht ausfüllst oder als <em style={{color:'rgba(140,180,255,.7)'}}>Unbekannt</em> markierst, werden im nächsten Schritt durch gezielte Quizfragen eingegrenzt.
+          <br/>Wählst du eine <strong style={{color:'rgba(200,190,240,.6)',fontWeight:400}}>Rasse oder Klasse</strong> aus, verschwinden alle anderen — so bleibt die Übersicht sauber.
+        </p>
+      </div>
+
+      <CatBlock title="Rasse" grouped={window.RASSEN_GRUPPEN} items={window.ALLE_RASSEN} selected={tags.rasse} onSelect={v => setTag('rasse',v)} hideOthers={true}/>
+      <CatBlock title="Klasse" items={window.ALLE_KLASSEN} selected={tags.klasse} onSelect={v => setTag('klasse',v)} hideOthers={true}/>
+      <CatBlock title="Hintergrund" items={window.ALLE_HINTERGRUENDE} selected={tags.hintergrund} onSelect={v => setTag('hintergrund',v)}/>
+      <CatBlock title="Zauberwirker" items={['Ja — Dieser Charakter wirkt Zauber','Nein — Kein Zauberwirker']} selected={tags.zauberwirker} onSelect={v => setTag('zauberwirker',v)}/>
+      <CatBlock title="Same der Furcht" items={window.ALLE_SAMEN} selected={tags.samen} onSelect={v => setTag('samen',v)}/>
+      <CatBlock title="Lebensstil" items={window.ALLE_LEBENSSTILE} selected={tags.lebensstil} onSelect={v => setTag('lebensstil',v)}/>
+      <CatBlock title="Gottheit" items={GOETTER} selected={tags.gottheit} onSelect={v => setTag('gottheit',v)}/>
+      <CatBlock title="Werkzeugübungen (Mehrfachauswahl)" items={window.WERKZEUGE_LIST}
+        selected={tags.werkzeuge === 'unbekannt' ? 'unbekannt' : null}
+        onSelect={v => { if (v==='unbekannt') setTag('werkzeuge','unbekannt'); else setWerkzeug(new Set()); }}
+        multiSet={tags.werkzeuge instanceof Set ? tags.werkzeuge : null}
+        onMultiToggle={item => { const s = new Set(tags.werkzeuge instanceof Set ? tags.werkzeuge : []); s.has(item)?s.delete(item):s.add(item); setWerkzeug(s); }}/>
+      <CatBlock title="Division" items={window.ALLE_DIVISIONEN} selected={tags.division} onSelect={v => setTag('division',v)}/>
+
+      <div style={{marginTop:44,display:'flex',alignItems:'center',justifyContent:'flex-end',gap:14}} className="no-print">
+        <span style={{fontFamily:'var(--font-m)',fontSize:'9px',color:'rgba(160,140,255,.38)',letterSpacing:'.1em'}}>{selCount} Feld{selCount!==1?'er':''} ausgefüllt</span>
+        <GlitchBtn label="Weiter" sub="Zum Quiz" onClick={onNext} primary={true} style={{padding:'14px 36px',minWidth:0}}/>
+      </div>
+    </div>
+  );
+}
+
+// ── QUIZ PHASE ─────────────────────────────────────────────────────────────
+function QuizPhase({ tags, possible, quizAnswers, onAnswer, onFinish }) {
+  const currentQ = useMemo(() => {
+    if (!window.CHAR_QUIZ) return null;
+    return window.CHAR_QUIZ.find(q => {
+      if (quizAnswers.some(a => a.qId === q.id)) return false;
+      const tv = tags[q.kat];
+      if (tv !== null && tv !== 'unbekannt') return false;
+      return (possible[q.kat] || []).length > 1;
+    });
+  }, [quizAnswers, tags, possible]);
+
+  const total = useMemo(() => (window.CHAR_QUIZ||[]).filter(q => {
+    const tv = tags[q.kat];
+    return (tv===null||tv==='unbekannt') && (possible[q.kat]||[]).length > 1;
+  }).length, [tags, possible]);
+
+  const answered = quizAnswers.length;
+
+  useEffect(() => {
+    if (!currentQ) { const t = setTimeout(onFinish, 400); return () => clearTimeout(t); }
+  }, [currentQ]);
+
+  if (!currentQ) return (
+    <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',minHeight:'calc(100vh - 52px)',gap:14,animation:'fadeIn .5s'}}>
+      <div style={{fontFamily:'var(--font-m)',fontSize:'9px',letterSpacing:'.3em',color:'rgba(94,232,208,.7)',textTransform:'uppercase'}}>Analyse abgeschlossen</div>
+      <div style={{fontFamily:'var(--font-d)',fontSize:'22px',fontWeight:300,letterSpacing:'.2em',color:'#f0eeff'}}>Auswertung wird vorbereitet…</div>
+    </div>
+  );
+
+  return (
+    <div style={{maxWidth:700,margin:'0 auto',padding:'44px 32px 80px',animation:'slideUp .35s ease'}}>
+      {/* Progress */}
+      <div style={{marginBottom:30}}>
+        <div style={{display:'flex',justifyContent:'space-between',marginBottom:7}}>
+          <div style={{fontFamily:'var(--font-m)',fontSize:'9px',letterSpacing:'.2em',color:'rgba(124,77,255,.5)',textTransform:'uppercase'}}>Schritt 2 · Charakteranalyse</div>
+          <div style={{fontFamily:'var(--font-m)',fontSize:'9px',color:'rgba(160,140,255,.4)'}}>{answered} / {total}</div>
+        </div>
+        <div style={{height:2,background:'rgba(160,140,255,.1)',borderRadius:1}}>
+          <div style={{height:'100%',background:'rgba(124,77,255,.65)',borderRadius:1,width:`${total>0?(answered/total)*100:0}%`,transition:'width .4s ease'}}/>
+        </div>
+      </div>
+
+      {/* Category label */}
+      <div style={{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.2em',color:'rgba(124,77,255,.55)',textTransform:'uppercase',marginBottom:9}}>
+        Kategorie: {({rasse:'Rasse',klasse:'Klasse',hintergrund:'Hintergrund',division:'Division',lebensstil:'Lebensstil',gottheit:'Gottheit',samen:'Same der Furcht'})[currentQ.kat] || currentQ.kat}
+      </div>
+
+      {/* Question */}
+      <h3 style={{fontFamily:'var(--font-d)',fontSize:'clamp(15px,2.4vw,21px)',fontWeight:300,letterSpacing:'.1em',color:'#f0eeff',marginBottom:26,lineHeight:1.55}}>
+        {currentQ.frage}
+      </h3>
+
+      {/* Options */}
+      <div style={{display:'flex',flexDirection:'column',gap:7}}>
+        {currentQ.optionen.map((opt,i) => (
+          <button key={i} className="quiz-opt" onClick={() => onAnswer(currentQ, opt)}>
+            {opt.text}
+          </button>
+        ))}
+      </div>
+
+    </div>
+  );
+}
+
+// ── OUTPUT PHASE ───────────────────────────────────────────────────────────
+function OutputPhase({ tags, possible, quizAnswers }) {
+  const [charName, setCharName] = useState('');
+  const [dice, setDice] = useState(null);
+  const [chosen, setChosen] = useState(null);
+  const [showNameModal, setShowNameModal] = useState(false);
+  const [modalName, setModalName] = useState('');
+
+  const roll = () => {
+    const r = () => { const d = Array.from({length:4},()=>Math.floor(Math.random()*6)+1).sort((a,b)=>a-b); return {rolls:d, val:d.slice(1).reduce((s,n)=>s+n,0)}; };
+    const set = () => Array.from({length:6},r);
+    const sets = [set(),set()];
+    const sum = s => s.reduce((acc,x)=>acc+x.val,0);
+    setDice(sets);
+    setChosen(sum(sets[1])>sum(sets[0]) ? 1 : 0);
+  };
+
+  const getFinal = (kat) => {
+    const tv = tags[kat];
+    if (tv && tv !== 'unbekannt') return { val: tv, src: 'sel' };
+    const pos = possible[kat] || [];
+    if (pos.length === 1) return { val: pos[0], src: 'quiz' };
+    if (pos.length > 1) {
+      const shown = pos.slice(0,3).join(' / ') + (pos.length>3?` (+${pos.length-3})` : '');
+      return { val: shown, src: 'multi' };
+    }
+    return { val: '—', src: 'none' };
+  };
+
+  const getZauberwirker = () => {
+    const tv = tags.zauberwirker;
+    if (tv === 'Ja — Dieser Charakter wirkt Zauber') return { val:'Ja', src:'sel' };
+    if (tv === 'Nein — Kein Zauberwirker') return { val:'Nein', src:'sel' };
+    const kl = getFinal('klasse');
+    if (kl.src !== 'none' && kl.src !== 'multi' && window.ZAUBERWIRKER_KLASSEN?.has(kl.val)) return { val:'Ja', src:'quiz' };
+    if (kl.src === 'sel' || kl.src === 'quiz') return { val:'Nein', src:'quiz' };
+    return { val:'—', src:'none' };
+  };
+
+  const werkzeuge = tags.werkzeuge instanceof Set && tags.werkzeuge.size > 0
+    ? [...tags.werkzeuge].join(', ')
+    : tags.werkzeuge === 'unbekannt' ? '— (unbekannt)' : '—';
+
+  const rows = [
+    { lbl:'Rasse',           ...getFinal('rasse') },
+    { lbl:'Klasse',          ...getFinal('klasse') },
+    { lbl:'Hintergrund',     ...getFinal('hintergrund') },
+    { lbl:'Division',        ...getFinal('division') },
+    { lbl:'Lebensstil',      ...getFinal('lebensstil') },
+    { lbl:'Same der Furcht', ...getFinal('samen') },
+    { lbl:'Gottheit',        ...getFinal('gottheit') },
+    { lbl:'Zauberwirker',    ...getZauberwirker() },
+    { lbl:'Werkzeugübungen', val: werkzeuge, src: tags.werkzeuge instanceof Set && tags.werkzeuge.size > 0 ? 'sel' : 'none' },
+  ];
+
+  const byKat = {};
+  quizAnswers.forEach(a => { if (!byKat[a.kat]) byKat[a.kat] = []; byKat[a.kat].push(a); });
+
+  function doSave(name) {
+    const g = k => { const r = getFinal(k); if (r.src==='none') return null; if (r.src==='multi') return (possible[k]||[])[0]||null; return r.val; };
+    const draft = {
+      name,
+      race:       g('rasse'),
+      class:      g('klasse'),
+      background: g('hintergrund'),
+      division:   g('division'),
+      deity:      g('gottheit'),
+      samen:      g('samen'),
+      stats: chosen!==null && dice ? {
+        str:dice[chosen][0].val, dex:dice[chosen][1].val, con:dice[chosen][2].val,
+        int:dice[chosen][3].val, wis:dice[chosen][4].val, cha:dice[chosen][5].val,
+      } : null,
+      alignment:     null,
+      zodiac:        null,
+      birthday:      null,
+      lieblingsfarbe:null,
+      tier:          null,
+      motto:         null,
+    };
+    try {
+      const existing = JSON.parse(localStorage.getItem('meruria_characters') || '[]');
+      const entry = { ...draft, id: Date.now().toString(36), createdAt: Date.now() };
+      localStorage.setItem('meruria_characters', JSON.stringify([...existing, entry]));
+    } catch(e) {}
+    window.location.href = 'MeinCharakter.html';
+  }
+
+  return (
+    <div style={{maxWidth:860,margin:'0 auto',padding:'44px 32px 80px',animation:'slideUp .4s ease'}}>
+      {/* Header */}
+      <div style={{marginBottom:36}}>
+        <div style={{fontFamily:'var(--font-m)',fontSize:'9px',letterSpacing:'.28em',color:'rgba(94,232,208,.55)',textTransform:'uppercase',marginBottom:9}}>Charakterbogen</div>
+        <div style={{display:'flex',alignItems:'center',gap:16,flexWrap:'wrap',marginBottom:18}}>
+          <input value={charName} onChange={e=>setCharName(e.target.value)} placeholder="Charaktername (optional)"
+            style={{fontFamily:'var(--font-d)',fontSize:'22px',fontWeight:300,letterSpacing:'.18em',background:'transparent',border:'none',borderBottom:'1px solid rgba(160,140,255,.2)',color:'#f0eeff',outline:'none',padding:'6px 0',minWidth:260}}/>
+          <button className="no-print" onClick={()=>window.print()}
+            style={{marginLeft:'auto',fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.17em',color:'rgba(160,140,255,.55)',background:'transparent',border:'1px solid rgba(160,140,255,.18)',borderRadius:'3px',padding:'8px 18px',cursor:'pointer',textTransform:'uppercase',transition:'all .2s'}}
+            onMouseEnter={e=>{e.currentTarget.style.color='#f0eeff';e.currentTarget.style.borderColor='rgba(160,140,255,.45)';}}
+            onMouseLeave={e=>{e.currentTarget.style.color='rgba(160,140,255,.55)';e.currentTarget.style.borderColor='rgba(160,140,255,.18)';}}>⬡ Drucken / PDF</button>
+        </div>
+        <div style={{height:1,background:'linear-gradient(90deg,rgba(124,77,255,.45) 0%,transparent 100%)'}}/>
+      </div>
+
+      {/* Sheet */}
+      <div style={{marginBottom:44}}>
+        {rows.map(({lbl,val,src}) => (
+          <div key={lbl} className="sh-row">
+            <div className="sh-lbl">{lbl}</div>
+            <div className={`sh-val ${src==='quiz'?'quiz-det':src==='multi'?'multi':''}`}>
+              {val}
+              {src==='quiz' && <span style={{fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(94,232,208,.4)',marginLeft:10,letterSpacing:'.1em'}}>↯ per Quiz</span>}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Attribute würfeln */}
+      <div style={{marginBottom:44}}>
+        <div style={{fontFamily:'var(--font-d)',fontSize:'10px',letterSpacing:'.22em',color:'rgba(160,140,255,.6)',textTransform:'uppercase',marginBottom:16}}>Attribute</div>
+        <div style={{padding:18,border:'1px solid rgba(160,140,255,.1)',borderRadius:4,background:'rgba(124,77,255,.02)'}}>
+          {!dice
+            ? <div style={{display:'flex',alignItems:'center',gap:18,flexWrap:'wrap'}}>
+                <p style={{fontFamily:'var(--font-b)',fontWeight:300,fontSize:'12px',color:'rgba(200,190,240,.45)',lineHeight:1.75,flex:1}}>
+                  Beim ersten Charakter: Attribute <strong style={{fontWeight:400,color:'rgba(200,190,240,.65)'}}>zweimal würfeln</strong> (4W6, niedrigsten Wert fallen lassen) und das bessere Set wählen.
+                </p>
+                <button className="no-print" onClick={roll} style={{fontFamily:'var(--font-m)',fontSize:'9px',letterSpacing:'.15em',color:'rgba(160,140,255,.75)',background:'rgba(124,77,255,.08)',border:'1px solid rgba(124,77,255,.28)',borderRadius:'3px',padding:'10px 20px',cursor:'pointer',textTransform:'uppercase',transition:'all .2s',whiteSpace:'nowrap'}}
+                  onMouseEnter={e=>{e.currentTarget.style.background='rgba(124,77,255,.18)';e.currentTarget.style.color='#f0eeff';}}
+                  onMouseLeave={e=>{e.currentTarget.style.background='rgba(124,77,255,.08)';e.currentTarget.style.color='rgba(160,140,255,.75)';}}>⚄ Zweimal würfeln</button>
+              </div>
+            : <div>
+                <div style={{display:'flex',gap:24,flexWrap:'wrap',marginBottom:14}}>
+                  {dice.map((set,si) => (
+                    <div key={si} onClick={()=>setChosen(si)} style={{flex:1,minWidth:200,border:`1px solid ${chosen===si?'rgba(94,232,208,.45)':'rgba(160,140,255,.12)'}`,borderRadius:4,padding:14,cursor:'pointer',background:chosen===si?'rgba(94,232,208,.04)':'transparent',transition:'all .2s'}}>
+                      <div style={{fontFamily:'var(--font-m)',fontSize:'8px',color:chosen===si?'rgba(94,232,208,.65)':'rgba(160,140,255,.4)',letterSpacing:'.18em',textTransform:'uppercase',marginBottom:10}}>
+                        Set {si+1} {chosen===si?' ✓ Gewählt':''}
+                      </div>
+                      {['STÄ','GES','KON','INT','WEI','CHA'].map((a,ai)=>(
+                        <div key={a} style={{display:'flex',justifyContent:'space-between',padding:'4px 0',borderBottom:'1px solid rgba(160,140,255,.04)'}}>
+                          <span style={{fontFamily:'var(--font-m)',fontSize:'9px',color:'rgba(160,140,255,.45)',letterSpacing:'.1em'}}>{a}</span>
+                          <span style={{fontFamily:'var(--font-d)',fontSize:'14px',color:chosen===si?'rgba(94,232,208,.9)':'#f0eeff'}}>
+                            {set[ai].val}
+                            <span style={{fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(160,140,255,.3)',marginLeft:6}}>({set[ai].rolls.slice(1).join('+')})</span>
+                          </span>
+                        </div>
+                      ))}
+                      <div style={{textAlign:'right',marginTop:7,fontFamily:'var(--font-m)',fontSize:'9px',color:'rgba(160,140,255,.4)'}}>Σ {set.reduce((s,r)=>s+r.val,0)}</div>
+                    </div>
+                  ))}
+                </div>
+                <button className="no-print" onClick={roll} style={{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.13em',color:'rgba(160,140,255,.45)',background:'transparent',border:'1px solid rgba(160,140,255,.14)',borderRadius:'3px',padding:'7px 14px',cursor:'pointer',textTransform:'uppercase',transition:'all .2s'}}>↺ Neu würfeln</button>
+              </div>
+          }
+        </div>
+      </div>
+
+      {/* Steckbrief erstellen */}
+      <div style={{margin:'0 0 44px',padding:'20px 24px',border:'1px solid rgba(124,77,255,.35)',borderRadius:4,background:'rgba(124,77,255,.04)',display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:16}}>
+        <div>
+          <div style={{fontFamily:'var(--font-d)',fontSize:'10px',letterSpacing:'.22em',color:'rgba(160,140,255,.8)',textTransform:'uppercase',marginBottom:6}}>Steckbrief erstellen</div>
+          <div style={{fontFamily:'var(--font-b)',fontWeight:300,fontSize:'11px',color:'rgba(200,190,240,.45)',lineHeight:1.6}}>
+            Alle ermittelten Werte werden übernommen. Felder, die noch nicht bekannt sind, erhalten Platzhalter.
+          </div>
+        </div>
+        <button onClick={()=>{
+          if (!charName.trim()) { setModalName(''); setShowNameModal(true); return; }
+          doSave(charName.trim());
+        }} style={{display:'inline-flex',alignItems:'center',gap:10,padding:'12px 28px',background:'rgba(124,77,255,.18)',border:'1px solid rgba(124,77,255,.55)',borderRadius:3,color:'rgba(200,190,240,.95)',fontFamily:'var(--font-d)',fontSize:'11px',letterSpacing:'.18em',textTransform:'uppercase',cursor:'pointer',transition:'all .2s',whiteSpace:'nowrap'}}
+          onMouseEnter={e=>{e.currentTarget.style.background='rgba(124,77,255,.32)';e.currentTarget.style.borderColor='rgba(160,140,255,.8)';e.currentTarget.style.color='#f0eeff';}}
+          onMouseLeave={e=>{e.currentTarget.style.background='rgba(124,77,255,.18)';e.currentTarget.style.borderColor='rgba(124,77,255,.55)';e.currentTarget.style.color='rgba(200,190,240,.95)';}}>
+          Steckbrief öffnen →
+        </button>
+      </div>
+
+      {/* Entscheidungsprotokoll */}
+      {quizAnswers.length > 0 && (
+        <div>
+          <div style={{fontFamily:'var(--font-d)',fontSize:'10px',letterSpacing:'.22em',color:'rgba(160,140,255,.6)',textTransform:'uppercase',marginBottom:14}}>Entscheidungsprotokoll</div>
+          <p style={{fontFamily:'var(--font-b)',fontWeight:300,fontSize:'11px',color:'rgba(200,190,240,.38)',lineHeight:1.85,marginBottom:22}}>
+            Jede Quiz-Antwort zeigt, auf welche Optionen die Eingrenzung nach dieser Antwort hindeutete.
+            Eine einzelne verbleibende Option (in Grün) ist die ermittelte Wahl.
+          </p>
+          {Object.entries(byKat).map(([kat,answers]) => (
+            <div key={kat} style={{marginBottom:22}}>
+              <div style={{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.2em',color:'rgba(124,77,255,.55)',textTransform:'uppercase',marginBottom:9}}>
+                {({rasse:'Rasse',klasse:'Klasse',hintergrund:'Hintergrund',division:'Division',lebensstil:'Lebensstil',gottheit:'Gottheit',samen:'Same der Furcht'})[kat]||kat}
+              </div>
+              {answers.map((a,i) => (
+                <div key={i} className="ans-q">
+                  <div className="ans-f">{a.frage}</div>
+                  <div className="ans-a">{a.answerText}</div>
+                  <div className={`trail ${a.nextList.length===1?'one':''}`}>{trail(a.nextList,12)}</div>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* ── Name-Modal ─────────────────────────────────────────── */}
+      {showNameModal && (
+        <div style={{position:'fixed',inset:0,background:'rgba(5,4,15,0.82)',backdropFilter:'blur(6px)',
+          display:'flex',alignItems:'center',justifyContent:'center',zIndex:1000}}
+          onClick={e=>{ if(e.target===e.currentTarget) setShowNameModal(false); }}>
+          <div style={{background:'rgba(10,7,28,0.98)',border:'1px solid rgba(124,77,255,0.45)',borderRadius:5,
+            padding:'36px 40px',maxWidth:420,width:'calc(100% - 48px)',position:'relative'}}>
+            {/* Eckmarkierungen */}
+            {[['top:0,left:0','borderTop,borderLeft'],['top:0,right:0','borderTop,borderRight'],
+              ['bottom:0,left:0','borderBottom,borderLeft'],['bottom:0,right:0','borderBottom,borderRight']
+            ].map(([pos,sides],i)=>{
+              const p=Object.fromEntries(pos.split(',').map(s=>s.split(':')));
+              const b=Object.fromEntries(sides.split(',').map(s=>[s,'1.5px solid rgba(124,77,255,0.55)']));
+              return <div key={i} style={{position:'absolute',width:14,height:14,pointerEvents:'none',...p,...b}} />;
+            })}
+            <div style={{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.28em',
+              color:'rgba(124,77,255,0.5)',textTransform:'uppercase',marginBottom:10}}>
+              Charaktername
+            </div>
+            <div style={{fontFamily:'var(--font-d)',fontWeight:300,fontSize:'18px',letterSpacing:'.12em',
+              color:'rgba(200,192,240,0.85)',marginBottom:24,lineHeight:1.5}}>
+              Wie soll dein Charakter heißen?
+            </div>
+            <input
+              autoFocus
+              value={modalName}
+              onChange={e=>setModalName(e.target.value)}
+              onKeyDown={e=>{ if(e.key==='Enter' && modalName.trim()) { setCharName(modalName.trim()); setShowNameModal(false); doSave(modalName.trim()); } }}
+              placeholder="Name eingeben …"
+              style={{fontFamily:'var(--font-d)',fontSize:'20px',fontWeight:300,letterSpacing:'.18em',
+                background:'transparent',border:'none',borderBottom:'1px solid rgba(160,140,255,.35)',
+                color:'#f0eeff',outline:'none',padding:'6px 0',width:'100%',marginBottom:28}}
+            />
+            <div style={{display:'flex',gap:10,justifyContent:'flex-end'}}>
+              <button onClick={()=>setShowNameModal(false)}
+                style={{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.18em',textTransform:'uppercase',
+                  padding:'9px 18px',background:'transparent',border:'1px solid rgba(124,77,255,0.2)',
+                  borderRadius:3,cursor:'pointer',color:'rgba(124,77,255,0.45)',transition:'all .18s'}}
+                onMouseEnter={e=>{e.currentTarget.style.borderColor='rgba(124,77,255,0.45)';e.currentTarget.style.color='rgba(160,140,255,0.7)';}}
+                onMouseLeave={e=>{e.currentTarget.style.borderColor='rgba(124,77,255,0.2)';e.currentTarget.style.color='rgba(124,77,255,0.45)';}}>
+                Abbrechen
+              </button>
+              <button
+                disabled={!modalName.trim()}
+                onClick={()=>{ setCharName(modalName.trim()); setShowNameModal(false); doSave(modalName.trim()); }}
+                style={{fontFamily:'var(--font-d)',fontSize:'11px',letterSpacing:'.18em',textTransform:'uppercase',
+                  padding:'9px 24px',background:modalName.trim()?'rgba(124,77,255,.22)':'rgba(124,77,255,.06)',
+                  border:`1px solid rgba(124,77,255,${modalName.trim()?'.6':'.18'})`,borderRadius:3,
+                  cursor:modalName.trim()?'pointer':'not-allowed',
+                  color:modalName.trim()?'rgba(200,190,240,.95)':'rgba(124,77,255,.3)',transition:'all .2s'}}
+                onMouseEnter={e=>{ if(modalName.trim()){e.currentTarget.style.background='rgba(124,77,255,.35)';e.currentTarget.style.color='#f0eeff';}}}
+                onMouseLeave={e=>{ if(modalName.trim()){e.currentTarget.style.background='rgba(124,77,255,.22)';e.currentTarget.style.color='rgba(200,190,240,.95)';}}} >
+                Zum Steckbrief →
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── APP ────────────────────────────────────────────────────────────────────
+function App() {
+  const [phase, setPhase] = useState('typeSelect');
+  const [tags, setTagsState] = useState({
+    rasse:null, klasse:null, hintergrund:null, zauberwirker:null,
+    samen:null, lebensstil:null, gottheit:null, werkzeuge:new Set(), division:null,
+  });
+  const [possible, setPossible] = useState({
+    rasse: window.ALLE_RASSEN||[], klasse: window.ALLE_KLASSEN||[],
+    hintergrund: window.ALLE_HINTERGRUENDE||[], division: window.ALLE_DIVISIONEN||[],
+    lebensstil: window.ALLE_LEBENSSTILE||[], gottheit: [], samen: window.ALLE_SAMEN||[],
+  });
+  const [quizAnswers, setQuizAnswers] = useState([]);
+
+  useEffect(() => {
+    if (window.GODS_DATA) {
+      const { gods=[], demons=[], naturgeister=[] } = window.GODS_DATA;
+      setPossible(p => ({ ...p, gottheit: [...gods,...demons,...naturgeister].map(g=>g.name) }));
+    }
+  }, []);
+
+  const setTag = (k, v) => setTagsState(p => ({ ...p, [k]: v }));
+  const setWerkzeug = (s) => setTagsState(p => ({ ...p, werkzeuge: s }));
+
+  const handleAnswer = (q, opt) => {
+    const prev = possible[q.kat] || [];
+    const next = cut(prev, opt.behalte);
+    const fin = next.length > 0 ? next : prev;
+    setPossible(p => ({ ...p, [q.kat]: fin }));
+    setQuizAnswers(a => [...a, { qId:q.id, kat:q.kat, frage:q.frage, answerText:opt.text, prevList:prev, nextList:fin }]);
+  };
+
+  const resetPossible = () => setPossible({
+    rasse:window.ALLE_RASSEN||[], klasse:window.ALLE_KLASSEN||[],
+    hintergrund:window.ALLE_HINTERGRUENDE||[], division:window.ALLE_DIVISIONEN||[],
+    lebensstil:window.ALLE_LEBENSSTILE||[], gottheit:possible.gottheit, samen:window.ALLE_SAMEN||[],
+  });
+
+  const goToQuiz = () => {
+    setQuizAnswers([]);
+    resetPossible();
+    setPhase('quiz');
+  };
+
+  const goBack = () => {
+    if (phase === 'output' || phase === 'quiz') { setQuizAnswers([]); resetPossible(); setPhase('tags'); }
+    else if (phase === 'tags') setPhase('typeSelect');
+  };
+
+  return (
+    <div style={{background:'var(--bg)',minHeight:'100vh'}}>
+      <Nav showBack={phase!=='typeSelect'} onBack={goBack}/>
+      {phase === 'typeSelect' && <TypeSelectPhase onSelect={() => setPhase('tags')}/>}
+      {phase === 'tags'       && <TagPhase tags={tags} setTag={setTag} setWerkzeug={setWerkzeug} onNext={goToQuiz}/>}
+      {phase === 'quiz'       && <QuizPhase tags={tags} possible={possible} quizAnswers={quizAnswers} onAnswer={handleAnswer} onFinish={() => setPhase('output')}/>}
+      {phase === 'output'     && <OutputPhase tags={tags} possible={possible} quizAnswers={quizAnswers}/>}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+
+</body></html>

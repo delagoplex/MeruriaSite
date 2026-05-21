@@ -1,0 +1,8 @@
+:root { --nav-h: 52px; }
+
+@keyframes recentCardIdle {
+  0%   { transform: scale(1.22) translateY(0); }
+  50%  { transform: scale(1.22) translateY(-6px); }
+  100% { transform: scale(1.22) translateY(0); }
+}
+@keyframes fadeInUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }

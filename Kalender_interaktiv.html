@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meruria — Kalender (Interaktiv)</title>
+<link rel="stylesheet" href="assets/styles/global/fonts.css">
+<link rel="stylesheet" href="assets/styles/global/base.css">
+<link rel="stylesheet" href="assets/styles/pages/Kalender_interaktiv.css">
+<script src="assets/scripts/vendor/react.development.js"></script>
+<script src="assets/scripts/vendor/react-dom.development.js"></script>
+<script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.jsx" type="text/babel"></script>
+</head>
+<body>
+
+<div id="nav-root"></div>
+
+<!-- ══ PAGE ═══════════════════════════════════════ -->
+<div class="page">
+
+  <div class="page-head">
+    <div class="page-eyebrow">Kolonistenarchiv &nbsp;·&nbsp; Zeittafel</div>
+    <h1 class="page-title">Kalender</h1>
+    <div class="page-sub">Funktionale Tafel · n.d.L.</div>
+  </div>
+
+  <!-- TODAY BANNER -->
+  <div class="today-banner" id="todayBanner">
+    <div class="today-left">
+      <span class="today-label">Heute</span>
+      <span class="today-date" id="todayDate">—</span>
+      <span class="today-meta" id="todayMeta">—</span>
+    </div>
+    <div class="today-set">
+      <label for="todayInput">Tag n.d.L.</label>
+      <input class="today-input" id="todayInput" type="number" min="1" step="1" value="14">
+      <select class="today-era" id="todayEra" aria-label="Zeitraum">
+        <option value="ndl" selected="">n.d.L.</option>
+        <option value="vdl">v.d.L.</option>
+      </select>
+      <button class="today-btn" id="todayBtn">Setzen</button>
+    </div>
+  </div>
+
+  <!-- JUMP ROW -->
+  <div class="jump-row">
+    <span class="jump-label">Springen zu</span>
+    <select class="jump-select" id="jumpDay" aria-label="Tag"></select>
+    <select class="jump-select" id="jumpMonth" aria-label="Monat"></select>
+    <select class="jump-select" id="jumpYear" aria-label="Jahr"></select>
+    <button class="jump-btn" id="jumpBtn">Springen</button>
+  </div>
+
+  <!-- SCHNELLSPRUNG -->
+  <div class="jump-row" style="margin-top:-14px;">
+    <span class="jump-label">Schnellsprung ab Heute</span>
+    <button class="jump-btn" id="nextVollmondBtn">Nächster Vollmond →</button>
+    <button class="jump-btn" id="nextMondsegenBtn">Nächster Mondsegen →</button>
+    <button class="jump-btn" id="nextAschenhauchBtn">Nächster Aschenhauch →</button>
+    <button class="jump-btn" id="nextSegensnachtBtn">Nächste Doppelte Segensnacht →</button>
+    <button class="jump-btn" id="nextHolidayBtn">Nächster Feiertag →</button>
+  </div>
+
+  <!-- CALENDAR GRID -->
+  <div class="cal-grid">
+    <div class="month-block">
+      <div class="month-bar">
+        <div class="nav-arrows">
+          <button class="arrow-btn" id="prevMonth" aria-label="Vorheriger Monat">‹</button>
+          <button class="arrow-btn" id="nextMonth" aria-label="Nächster Monat">›</button>
+        </div>
+        <div class="month-bar-mid">
+          <span class="month-roman" id="monthRoman">—</span>
+          <span class="month-name" id="monthName">—</span>
+          <span class="month-year" id="monthYear">—</span>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <button class="today-jump" id="todayJump">Heute</button>
+        </div>
+      </div>
+
+      <div class="weekday-head">
+        <div class="wd-cell">Aven<span class="wd-num">Tag 1</span></div>
+        <div class="wd-cell">Eiru<span class="wd-num">Tag 2</span></div>
+        <div class="wd-cell">Orun<span class="wd-num">Tag 3</span></div>
+        <div class="wd-cell">Ulai<span class="wd-num">Tag 4</span></div>
+        <div class="wd-cell">Ivar<span class="wd-num">Tag 5</span></div>
+        <div class="wd-cell">Orel<span class="wd-num">Tag 6</span></div>
+        <div class="wd-cell">Elu<span class="wd-num">Tag 7</span></div>
+      </div>
+
+      <div class="day-grid" id="dayGrid"></div>
+
+      <div style="padding:14px 22px; font-family:var(--fm); font-size:9.5px; letter-spacing:.22em; color:var(--dim); text-transform:uppercase; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; border-top:1px solid rgba(124,77,255,0.10);">
+        <span id="monthSign">Im Zeichen ...</span>
+        <span id="monthVibe">...</span>
+      </div>
+    </div>
+
+    <!-- DETAIL PANEL -->
+    <aside class="detail" id="detailPanel">
+      <div class="detail-head">
+        <div class="detail-eyebrow">Ausgewählter Tag</div>
+        <div class="detail-date" id="dDate">—</div>
+        <div class="detail-weekday" id="dWeekday">—</div>
+      </div>
+
+      <div class="detail-section">
+        <div class="detail-label">Sternzeichen</div>
+        <div class="detail-zodiac">
+          <div class="detail-zodiac-info">
+            <div class="detail-zodiac-name" id="dZodiacName">—</div>
+            <div class="detail-zodiac-traits" id="dZodiacTraits">—</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <div class="detail-label">Die Monde</div>
+        <div id="dMoons"></div>
+      </div>
+
+      <div class="detail-section">
+        <div class="detail-label">Feiertage</div>
+        <div id="dHolidays"></div>
+      </div>
+
+      <div class="detail-section">
+        <div class="detail-label">Notation</div>
+        <div style="font-family:var(--fd); font-size:13px; letter-spacing:.06em; color:var(--silver); line-height:1.6;" id="dNotation">—</div>
+        <div style="font-family:var(--fm); font-size:10px; letter-spacing:.2em; color:rgba(124,77,255,0.6); margin-top:6px;" id="dAbsolute">—</div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- LEGEND -->
+  <div class="legend-row">
+    <span class="legend-item"><span class="legend-dot t"></span>Heute</span>
+    <span class="legend-item"><span class="legend-dot w"></span>Weltlich</span>
+    <span class="legend-item"><span class="legend-dot r"></span>Religiös</span>
+    <span class="legend-item"><span class="legend-dot b"></span>Besänftigung</span>
+    <span class="legend-item" style="color:var(--gold-bright);">✦ Mondsegen · Goldmond-Vollmond</span>
+    <span class="legend-item" style="color:var(--ash-bright);">✦ Aschenhauch · Aschmond-Vollmond</span>
+  </div>
+
+  <!-- BACK TO KALENDER -->
+  <div class="back-foot">
+    <a href="Kalender.html" class="back-link"><span class="back-arrow">←</span>Zurück zur Übersicht</a>
+  </div>
+
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════
+   KALENDER-DATEN
+   ══════════════════════════════════════════════════ */
+
+const MONTHS = [
+  { roman:"I",    name:"Janvar",  days:19, sign:"Die Arche",     traits:"Bewahrung, Heimweh, Schutz",      vibe:"Aufbruch · Landungsmonat" },
+  { roman:"II",   name:"Fevorn",  days:18, sign:"Die Böe",       traits:"Anpassung, Mut, Risiko",          vibe:"Erste Arbeit · rauer Beginn" },
+  { roman:"III",  name:"Mareth",  days:19, sign:"Die Wurzel",    traits:"Geduld, Stärke, Beharrlichkeit", vibe:"Erwachen · Erkundung" },
+  { roman:"IV",   name:"Aprel",   days:19, sign:"Die Linse",     traits:"Wachsamkeit, Entdeckung, Neugier",vibe:"Goldmondblüte · Helligkeit" },
+  { roman:"V",    name:"Mairen",  days:18, sign:"Die Stille",    traits:"Isolation, innere Stärke, Verlust",vibe:"Planetare Ruhe" },
+  { roman:"VI",   name:"Junvar",  days:19, sign:"Das Irrlicht",  traits:"Reisende, Unruhe, Bestimmung",    vibe:"Wandersternzeit · Jahresmitte" },
+  { roman:"VII",  name:"Juval",   days:19, sign:"Die Klinge",    traits:"Entschlossenheit, Härte, Opfer",  vibe:"Hochsommer · Hitze" },
+  { roman:"VIII", name:"Auvar",   days:19, sign:"Die Glut",      traits:"Hoffnung, Neuanfang, Wandel",     vibe:"Erinnerung · schwere Zeit" },
+  { roman:"IX",   name:"Septhar", days:19, sign:"Die Brücke",    traits:"Verbindung, Überwindung, Wandel", vibe:"Wandel · Herbststimmung" },
+  { roman:"X",    name:"Oktar",   days:18, sign:"Der Schleier",  traits:"Dunkelheit, Rückzug, Geheimnisse",vibe:"Dunkelheit · Rückzug" },
+  { roman:"XI",   name:"Novren",  days:18, sign:"Das Labyrinth", traits:"Komplexität, Täuschung, Erkenntnis",vibe:"Komplexität · Täuschung" },
+  { roman:"XII",  name:"Derath",  days:19, sign:"Der Spalt",     traits:"Übergänge, Entscheidungen, Neubeginn",vibe:"Schwelle · Jahresende" }
+];
+const YEAR_DAYS = 224;
+const WEEKDAYS = ["Aven","Eiru","Orun","Ulai","Ivar","Orel","Elu"];
+const MIN_YEAR_VDL = 5;
+
+const GOLD_PHASES = [
+  { name:"Goldlose Nacht",        astro:"Neumond",              days:[1] },
+  { name:"Junge Sichel",          astro:"Zunehmende Sichel",    days:[2,3,4] },
+  { name:"Goldene Sichel",        astro:"Zunehmende Sichel",    days:[5,6,7,8] },
+  { name:"Halber Segen",          astro:"Zunehmender Halbmond", days:[9,10,11,12] },
+  { name:"Schwellender Segen",    astro:"Zunehmender ¾",         days:[13,14,15] },
+  { name:"Mondsegen",             astro:"Vollmond",             days:[16], peak:true },
+  { name:"Verblassender Segen",   astro:"Abnehmender ¾",         days:[17,18,19] },
+  { name:"Alter Halber",          astro:"Abnehmender Halbmond", days:[20,21,22,23] },
+  { name:"Alte Sichel",           astro:"Abnehmende Sichel",    days:[24,25,26] },
+  { name:"Sterbende Sichel",      astro:"Abnehmende Sichel",    days:[27,28] }
+];
+const ASH_PHASES = [
+  { name:"Aschgraue Nacht",       astro:"Neumond",              days:[1] },
+  { name:"Erster Hauch",          astro:"Zunehmende Sichel",    days:[2,3] },
+  { name:"Graue Sichel",          astro:"Zunehmende Sichel",    days:[4,5,6] },
+  { name:"Halbe Asche",           astro:"Zunehmender Halbmond", days:[7,8,9] },
+  { name:"Schwellende Asche",     astro:"Zunehmender ¾",         days:[10,11] },
+  { name:"Aschenhauch",           astro:"Vollmond",             days:[12], peak:true },
+  { name:"Verglühende Asche",     astro:"Abnehmender ¾",         days:[13,14] },
+  { name:"Alte Asche",            astro:"Abnehmender Halbmond", days:[15,16] },
+  { name:"Letzter Hauch",         astro:"Abnehmende Sichel",    days:[17] }
+];
+
+/* Feiertage – fixed dates pro Monat (0-indexed monthIdx, 1-indexed day) */
+const FIXED_HOLIDAYS = [
+  // Janvar
+  { month:0, day:1, span:3, kind:"w", name:"Tag der Landung", desc:"Das wichtigste Fest des Jahres. Tag 1: Gedenken an die Reise und die Verlorenen. Tag 2: Ankunft mit Feuer und Musik. Tag 3: Treueschwur an die Kolonie." },
+  { month:0, day:19, span:1, kind:"w", name:"Der Erste Schritt", desc:"Persönlicher Feiertag am letzten Tag des Monats. Jeder Velaer setzt sich ein kleines Ziel und schreibt es auf. Familien tauschen ihre Wünsche aus." },
+  // Fevorn
+  { month:1, day:7, span:1, kind:"r", name:"Aurelias Klinge", desc:"Turniere, Wettkämpfe und Waffensegnungen zu Ehren Aurelias. Gefallene Krieger werden namentlich genannt. Kein Trauertag — ein Ehrentag." },
+  { month:1, day:18, span:1, kind:"r", name:"Selunara-Nacht", desc:"Die dunkelste Nacht des Fevorn wird Selunara geweiht. Laternen werden auf Gewässer gesetzt, leise Gebete gesprochen." },
+  // Mareth
+  { month:2, day:5, span:1, kind:"w", name:"Das Erwachen", desc:"Erster Erkundungstag des Jahres. Gruppen ziehen in die Wildnis, kartieren neue Gebiete. Abends wird das Entdeckte gemeinsam gefeiert." },
+  { month:2, day:15, span:1, kind:"w", name:"Wurzelfest", desc:"Gemeinschaftliches Pflanzen und Gärtnern. Jede Familie legt ein Beet an. Abends gibt es ein gemeinsames Essen aus dem Selbstangebauten." },
+  // Aprel
+  { month:3, day:8, span:2, kind:"r", name:"Elysarions Nacht", desc:"Fest der Liebe und Leidenschaft. Tag 1: Kunstwerke, Lieder und Liebeserklärungen. Tag 2: Ausgelassene Feier bei Goldmondlicht." },
+  { month:3, day:17, span:1, kind:"b", name:"Hydeas Segen", desc:"Kleine Opfergaben — Blüten, Früchte — werden in Flüsse oder Seen geworfen. Fischer und Wasserträger beten für eine sichere Saison." },
+  // Mairen
+  { month:4, day:9, span:1, kind:"b", name:"Die Stille", desc:"Stiller Besänftigungstag für Ophelis, Thraxis und Maledor. Kein Lärm, keine Feste — stille Rituale, Schutzzeichen an Türen. Kinder bleiben drinnen." },
+  { month:4, day:18, span:1, kind:"w", name:"Tag der Erinnerung", desc:"Stiller Gedenktag an die verlorene Heimat. Velaer kochen alte Rezepte, hören alte Musik, lesen aus mitgebrachten Büchern." },
+  // Junvar
+  { month:5, day:6, span:2, kind:"r", name:"Siennas Zenit", desc:"Hochsommerfest zu Ehren Siennas. Märkte, Sonnenfeiern. Am zweiten Tag großes Freudenfeuer — Sienna soll sehen, dass man ihr Licht trägt." },
+  { month:5, day:14, span:1, kind:"w", name:"Nacht der Irrlichter", desc:"In der Jahresmitte werden Lichter und Laternen durch die Siedlung getragen — zu Ehren der Reisenden. Wer auf Expedition ist, gilt als gesegnet." },
+  // Juval
+  { month:6, day:5, span:3, kind:"w", name:"Der Große Markt", desc:"Das größte weltliche Handelsfest. Händler aus allen Teilen der Kolonie kommen zusammen. Wettkämpfe, Auktionen, Vorführungen." },
+  { month:6, day:15, span:1, kind:"r", name:"Eiritha-Morgen", desc:"Frühmorgendliches Ritual zu Ehren Eirithas. Mit dem ersten Licht betet man für Heilung. Heiler und Ärzte werden besonders geehrt." },
+  // Auvar
+  { month:7, day:10, span:1, kind:"r", name:"Avalastes Wende", desc:"Halbjahrspunkt, Fest der Wiedergeburt. Alte Dinge werden symbolisch verbrannt oder begraben — Avalaste soll Erneuerung bringen." },
+  { month:7, day:19, span:1, kind:"r", name:"Ferys-Abend", desc:"Abendliches Fest zu Ehren von Ferys. Straßenmusiker spielen, spontane Tänze entstehen. Niemand arbeitet nach Sonnenuntergang." },
+  // Septhar (Aschenhauch-Ritual is dynamic – computed below)
+  { month:8, day:12, span:1, kind:"w", name:"Tag der Brücken", desc:"Gemeinschaftsprojekte stehen im Mittelpunkt — Reparaturen, Neubauten. Wer alleine lebt, wird besucht. Symbolisch werden Brücken zwischen Menschen gebaut." },
+  // Oktar
+  { month:9, day:7, span:2, kind:"r", name:"Nacht des Schleiers", desc:"Fest zu Ehren der Neutralen — Daramur, Hadir, Aetherius. Tag 1: Tote ehren, Gräber besuchen. Tag 2: Leben feiern — bewusster Gegenpol." },
+  { month:9, day:15, span:1, kind:"b", name:"Melions Ruf", desc:"Melion, Gott des Schicksals, wird besänftigt. Man zieht ein Holzstäbchen aus einem Behälter — die Farbe deutet den Monat. Beliebt bei Kindern." },
+  // Novren
+  { month:10, day:8, span:1, kind:"w", name:"Das Labyrinthfest", desc:"Rätsel- und Wissensfest. Schreibwettbewerbe, Debatten, Rätselmärkte. Kinder lösen kleine Labyrinthe aus Holz oder Stoff." },
+  { month:10, day:16, span:1, kind:"r", name:"Vindeahs Gabe", desc:"Vindeah wird mit Opfergaben am Waldrand geehrt. Jäger bitten um Schutz, Kinder binden bunte Bänder an Bäume." },
+  // Derath
+  { month:11, day:8, span:1, kind:"r", name:"Nacht der Naturgeister", desc:"Die fünf Naturgeister werden gemeinsam besänftigt. Feuer, Wasser, Stein, Wind und Holz an einem Ort vereint — ein kleines Lagerfeuer am Fluss." },
+  { month:11, day:19, span:1, kind:"w", name:"Die Schwellennacht", desc:"Jahresabschluss. Man blickt zurück, setzt sich Ziele. Kleine Opfergaben an alle Gottheiten gemeinsam. Dann feiert man bis Mitternacht den Jahreswechsel." }
+];
+
+/* ══════════════════════════════════════════════════
+   HELPER
+   ══════════════════════════════════════════════════ */
+
+/* monthStart[i] = day-of-year of first day of month i (1-indexed) */
+const MONTH_START = (function () {
+  const out = [];
+  let s = 1;
+  for (const m of MONTHS) { out.push(s); s += m.days; }
+  return out;
+})();
+
+/* Map day-of-year (1..224) → { monthIdx, dayInMonth } */
+function dayOfYearToMonth(doy) {
+  for (let i = MONTHS.length - 1; i >= 0; i--) {
+    if (doy >= MONTH_START[i]) return { monthIdx:i, dayInMonth: doy - MONTH_START[i] + 1 };
+  }
+  return { monthIdx:0, dayInMonth:1 };
+}
+
+/* absolute day → { year, doy }.
+   year > 0  = Jahr N n.d.L.   (abs >= 1)
+   year < 0  = Jahr |N| v.d.L. (abs <= -1)
+   year == 0 = Tag der Landung (abs == 0, kein Monat) */
+function absToYearDoy(abs) {
+  if (abs === 0) return { year:0, doy:0, special:"Tag der Landung" };
+  if (abs >= 1) {
+    const year = Math.floor((abs - 1) / YEAR_DAYS) + 1;
+    const doy  = ((abs - 1) % YEAR_DAYS) + 1;
+    return { year, doy };
+  }
+  const year = Math.floor(abs / YEAR_DAYS);
+  const doy  = abs - year * YEAR_DAYS + 1;
+  return { year, doy };
+}
+
+function yearDoyToAbs(year, doy) {
+  if (year > 0) return (year - 1) * YEAR_DAYS + doy;
+  if (year < 0) return year * YEAR_DAYS + (doy - 1);
+  return 0;
+}
+
+function yearLabel(year) {
+  if (year > 0) return `Jahr ${year} n.d.L.`;
+  if (year < 0) return `Jahr ${-year} v.d.L.`;
+  return "Landung";
+}
+
+function weekdayIdx(abs) { return ((abs - 1) % 7 + 7) % 7; }
+
+/* Mondzyklen sind verankert an: Janvar 1, Jahr 5 v.d.L. = abs -1120
+   An diesem Tag stehen beide Monde im Neumond. */
+const MOON_ANCHOR_ABS = -MIN_YEAR_VDL * YEAR_DAYS;  // -1120
+function goldPhaseDay(abs) { const d = abs - MOON_ANCHOR_ABS; return ((d % 28) + 28) % 28 + 1; }
+function ashPhaseDay(abs)  { const d = abs - MOON_ANCHOR_ABS; return ((d % 17) + 17) % 17 + 1; }
+
+function findPhase(phases, pday) {
+  return phases.find(p => p.days.includes(pday)) || phases[0];
+}
+
+/* SVG for moon phase: returns SVG string.
+   vollmondDay = der Tag im Zyklus, an dem Vollmond herrscht (z.B. 16 für Gold, 12 für Asche) */
+function moonSVG(phaseDay, cycleLength, vollmondDay, color, size) {
+  const D = phaseDay;
+  let ill;
+  if (D <= vollmondDay) {
+    // zunehmend: Tag 1 = 0, vollmondDay = 1
+    ill = (D - 1) / Math.max(1, vollmondDay - 1);
+  } else {
+    // abnehmend: Tag nach Vollmond ill < 1, am letzten Zyklustag knapp über 0
+    ill = 1 - (D - vollmondDay) / (cycleLength - vollmondDay + 1);
+  }
+  ill = Math.max(0, Math.min(1, ill));
+  const waxing = D <= vollmondDay;
+  const r = 9, cx = 11, cy = 11;
+  let fill;
+  if (ill < 0.02) {
+    fill = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#0b0820" stroke="${color}" stroke-width="1.1"/>`;
+  } else if (ill > 0.98) {
+    fill = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${color}" stroke="${color}" stroke-width="1.1"/>`;
+  } else {
+    const rx = r * Math.abs(1 - 2 * ill);
+    const outerSweep = waxing ? 1 : 0;
+    let innerSweep;
+    if (ill < 0.5) innerSweep = waxing ? 0 : 1;
+    else innerSweep = waxing ? 1 : 0;
+    const path = `M${cx},${cy-r} A${r},${r} 0 0,${outerSweep} ${cx},${cy+r} A${rx},${r} 0 0,${innerSweep} ${cx},${cy-r} Z`;
+    fill = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#0b0820" stroke="${color}" stroke-width="1.1"/><path d="${path}" fill="${color}"/>`;
+  }
+  return `<svg viewBox="0 0 22 22" width="${size}" height="${size}" class="mini-moon">${fill}</svg>`;
+}
+
+function goldMoonSVG(phaseDay, size=13) { return moonSVG(phaseDay, 28, 16, "#d9b06b", size); }
+function ashMoonSVG(phaseDay, size=13)  { return moonSVG(phaseDay, 17, 12, "#a8b6d4", size); }
+
+/* Get holidays for a given absolute day */
+function holidaysOnDay(abs) {
+  const { year, doy } = absToYearDoy(abs);
+  if (year < 1) return [];
+  const { monthIdx, dayInMonth } = dayOfYearToMonth(doy);
+  const out = [];
+  for (const h of FIXED_HOLIDAYS) {
+    if (h.month !== monthIdx) continue;
+    if (dayInMonth >= h.day && dayInMonth < h.day + h.span) {
+      const offset = dayInMonth - h.day + 1;
+      out.push({ ...h, dayOfFeast: offset });
+    }
+  }
+  // Aschenhauch-Ritual in Septhar — falls on Aschmond Vollmond day in month 8
+  if (monthIdx === 8) {
+    if (ashPhaseDay(abs) === 12) {
+      out.push({
+        month:8, day:dayInMonth, span:1, kind:"b",
+        name:"Das Aschenhauch-Ritual",
+        desc:"Am Tag des Aschmond-Vollmonds. Besänftigung der Naturgeister und des Aschmonds. Graue Bänder an Türen, leise Gebete. Schutz vor schlechten Träumen und Krankheit.",
+        dayOfFeast:1
+      });
+    }
+  }
+  return out;
+}
+
+/* Format date string */
+function formatDate(abs) {
+  if (abs === 0) return "Tag der Landung";
+  const { year, doy } = absToYearDoy(abs);
+  const { monthIdx, dayInMonth } = dayOfYearToMonth(doy);
+  const wd = WEEKDAYS[weekdayIdx(abs)];
+  return `${wd}, ${dayInMonth}. ${MONTHS[monthIdx].name}, ${yearLabel(year)}`;
+}
+
+/* ══════════════════════════════════════════════════
+   STATE
+   ══════════════════════════════════════════════════ */
+
+const TODAY_KEY = "meruria-today-abs";
+const TODAY_DEFAULT = 14;
+
+function getToday() {
+  const v = localStorage.getItem(TODAY_KEY);
+  const n = v ? parseInt(v, 10) : TODAY_DEFAULT;
+  return (isNaN(n) || n < 1) ? TODAY_DEFAULT : n;
+}
+function setToday(v) {
+  localStorage.setItem(TODAY_KEY, String(v));
+}
+
+let TODAY = getToday();
+let view  = absToYearDoy(TODAY === 0 ? 1 : TODAY);
+let viewMonth = dayOfYearToMonth(view.doy).monthIdx;
+let viewYear = view.year || 1;
+let selectedAbs = TODAY;
+
+function isAtStart() { return viewYear === -MIN_YEAR_VDL && viewMonth === 0; }
+
+/* ══════════════════════════════════════════════════
+   RENDER
+   ══════════════════════════════════════════════════ */
+
+function renderTodayBanner() {
+  document.getElementById("todayDate").textContent = formatDate(TODAY);
+  const gp = findPhase(GOLD_PHASES, goldPhaseDay(TODAY));
+  const ap = findPhase(ASH_PHASES,  ashPhaseDay(TODAY));
+  const tagLbl = TODAY === 0 ? "Tag 0 (Landung)" : TODAY > 0 ? `Tag ${TODAY} n.d.L.` : `Tag ${-TODAY} v.d.L.`;
+  document.getElementById("todayMeta").innerHTML =
+    `${tagLbl} &nbsp;·&nbsp; Goldmond: ${gp.name}${gp.peak?' ✦':''} &nbsp;·&nbsp; Aschmond: ${ap.name}${ap.peak?' ✦':''}`;
+  if (TODAY >= 0) {
+    document.getElementById("todayInput").value = TODAY;
+    document.getElementById("todayEra").value = "ndl";
+  } else {
+    document.getElementById("todayInput").value = -TODAY;
+    document.getElementById("todayEra").value = "vdl";
+  }
+}
+
+function renderMonthBar() {
+  const M = MONTHS[viewMonth];
+  document.getElementById("monthRoman").textContent = M.roman;
+  document.getElementById("monthName").textContent  = M.name;
+  document.getElementById("monthYear").textContent  = yearLabel(viewYear);
+  document.getElementById("monthSign").textContent  = `Im Zeichen: ${M.sign}`;
+  document.getElementById("monthVibe").textContent  = M.vibe;
+  document.getElementById("prevMonth").disabled = isAtStart();
+}
+
+function renderMonthGrid() {
+  const M = MONTHS[viewMonth];
+  const grid = document.getElementById("dayGrid");
+  grid.innerHTML = "";
+  const firstAbs = yearDoyToAbs(viewYear, MONTH_START[viewMonth]);
+  const firstWeekday = weekdayIdx(firstAbs);
+
+  // leading empty cells
+  for (let i = 0; i < firstWeekday; i++) {
+    const e = document.createElement("div");
+    e.className = "day empty";
+    grid.appendChild(e);
+  }
+
+  for (let d = 1; d <= M.days; d++) {
+    const abs = firstAbs + (d - 1);
+    const gpd = goldPhaseDay(abs);
+    const apd = ashPhaseDay(abs);
+    const gp  = findPhase(GOLD_PHASES, gpd);
+    const ap  = findPhase(ASH_PHASES,  apd);
+    const hols = holidaysOnDay(abs);
+
+    const cell = document.createElement("div");
+    cell.className = "day";
+    if (hols.length) cell.classList.add("has-holiday");
+    if (abs === TODAY) cell.classList.add("today");
+    if (abs === selectedAbs) cell.classList.add("selected");
+    cell.dataset.abs = abs;
+
+    let peakBadge = "";
+    if (gp.peak) peakBadge = `<div class="day-peak gold">✦ Segen</div>`;
+    else if (ap.peak) peakBadge = `<div class="day-peak ash">✦ Hauch</div>`;
+
+    const holDots = hols.map(h => `<span class="day-holiday-dot ${h.kind}" title="${h.name}"></span>`).join("");
+
+    cell.innerHTML = `
+      ${peakBadge}
+      <div class="day-top">
+        <span class="day-num">${d}</span>
+        ${abs === TODAY ? '<span class="day-todaytag">Heute</span>' : ''}
+      </div>
+      <div class="day-bot">
+        <div class="day-moons" title="Goldmond ${gp.name} · Aschmond ${ap.name}">
+          ${goldMoonSVG(gpd)}
+          ${ashMoonSVG(apd)}
+        </div>
+        <div>${holDots}</div>
+      </div>
+    `;
+
+    cell.addEventListener("click", () => {
+      selectedAbs = abs;
+      renderMonthGrid();
+      renderDetail();
+    });
+
+    grid.appendChild(cell);
+  }
+}
+
+function renderDetail() {
+  const abs = selectedAbs;
+  const { year, doy } = absToYearDoy(abs);
+  const { monthIdx, dayInMonth } = dayOfYearToMonth(doy);
+  const M = MONTHS[monthIdx];
+  const wd = WEEKDAYS[weekdayIdx(abs)];
+
+  document.getElementById("dDate").innerHTML =
+    `${dayInMonth}. ${M.name}<br/><span style="font-size:13px; color:var(--dim);">${yearLabel(year)}</span>`;
+  const tagAbsLbl = abs === 0 ? "Tag 0 · Landung" : abs > 0 ? `Tag ${abs} n.d.L.` : `Tag ${-abs} v.d.L.`;
+  document.getElementById("dWeekday").textContent = `${wd} · ${M.roman}. Monat · ${tagAbsLbl}`;
+  document.getElementById("dZodiacName").textContent = M.sign;
+  document.getElementById("dZodiacTraits").textContent = M.traits;
+
+  const gpd = goldPhaseDay(abs);
+  const apd = ashPhaseDay(abs);
+  const gp  = findPhase(GOLD_PHASES, gpd);
+  const ap  = findPhase(ASH_PHASES,  apd);
+
+  document.getElementById("dMoons").innerHTML = `
+    <div class="detail-moon">
+      <div class="detail-moon-icon">${goldMoonSVG(gpd, 30)}</div>
+      <div class="detail-moon-info">
+        <span class="detail-moon-name gold">${gp.name}</span>
+        <span class="detail-moon-meta">Goldmond · Tag ${gpd} / 28 · ${gp.astro}</span>
+      </div>
+      ${gp.peak ? '<span class="detail-moon-peak gold">✦ Vollmond</span>' : ''}
+    </div>
+    <div class="detail-moon">
+      <div class="detail-moon-icon">${ashMoonSVG(apd, 30)}</div>
+      <div class="detail-moon-info">
+        <span class="detail-moon-name ash">${ap.name}</span>
+        <span class="detail-moon-meta">Aschmond · Tag ${apd} / 17 · ${ap.astro}</span>
+      </div>
+      ${ap.peak ? '<span class="detail-moon-peak ash">✦ Vollmond</span>' : ''}
+    </div>
+  `;
+
+  const hols = holidaysOnDay(abs);
+  const holEl = document.getElementById("dHolidays");
+  if (!hols.length) {
+    holEl.innerHTML = `<div class="detail-empty">Kein Feiertag.</div>`;
+  } else {
+    const kindLabel = { w:"Weltlich", r:"Religiös", b:"Besänftigung" };
+    holEl.innerHTML = hols.map(h => `
+      <div class="detail-holiday ${h.kind}">
+        <div class="detail-holiday-top">
+          <span class="detail-holiday-name">${h.name}${h.span > 1 ? ` <span style="color:var(--dim);font-size:11px;">(Tag ${h.dayOfFeast}/${h.span})</span>` : ''}</span>
+          <span class="detail-holiday-tag ${h.kind}">${kindLabel[h.kind]}</span>
+        </div>
+        <div class="detail-holiday-desc">${h.desc}</div>
+      </div>
+    `).join("");
+  }
+
+  document.getElementById("dNotation").innerHTML =
+    `${wd}, ${dayInMonth}. ${M.name}, ${yearLabel(year)}`;
+  document.getElementById("dAbsolute").innerHTML =
+    `${tagAbsLbl} &nbsp;·&nbsp; Tag ${doy} von 224 im Jahr`;
+}
+
+function renderAll() {
+  renderTodayBanner();
+  renderMonthBar();
+  renderMonthGrid();
+  renderDetail();
+}
+
+/* ══════════════════════════════════════════════════
+   EVENTS
+   ══════════════════════════════════════════════════ */
+
+document.getElementById("prevMonth").addEventListener("click", () => {
+  if (isAtStart()) return;
+  viewMonth -= 1;
+  if (viewMonth < 0) {
+    viewMonth = 11;
+    viewYear -= 1;
+    if (viewYear === 0) viewYear = -1;
+  }
+  renderMonthBar(); renderMonthGrid();
+});
+document.getElementById("nextMonth").addEventListener("click", () => {
+  viewMonth += 1;
+  if (viewMonth > 11) {
+    viewMonth = 0;
+    viewYear += 1;
+    if (viewYear === 0) viewYear = 1;
+  }
+  renderMonthBar(); renderMonthGrid();
+});
+document.getElementById("todayJump").addEventListener("click", () => {
+  const { year, doy } = absToYearDoy(TODAY);
+  viewYear = year;
+  viewMonth = dayOfYearToMonth(doy).monthIdx;
+  selectedAbs = TODAY;
+  renderAll();
+});
+document.getElementById("todayBtn").addEventListener("click", () => {
+  const raw = parseInt(document.getElementById("todayInput").value, 10);
+  const era = document.getElementById("todayEra").value;
+  if (isNaN(raw) || raw < 1) return;
+  const v = era === "vdl" ? -Math.min(raw, MIN_YEAR_VDL * YEAR_DAYS) : raw;
+  TODAY = v;
+  setToday(TODAY);
+  const { year, doy } = absToYearDoy(TODAY === 0 ? 1 : TODAY);
+  viewYear = year || 1;
+  viewMonth = dayOfYearToMonth(doy).monthIdx;
+  selectedAbs = TODAY;
+  renderAll();
+});
+document.getElementById("todayInput").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") document.getElementById("todayBtn").click();
+});
+
+(function initJump() {
+  const dSel = document.getElementById("jumpDay");
+  const mSel = document.getElementById("jumpMonth");
+  const ySel = document.getElementById("jumpYear");
+
+  MONTHS.forEach((m, i) => {
+    const opt = document.createElement("option");
+    opt.value = i;
+    opt.textContent = `${m.roman}. ${m.name}`;
+    mSel.appendChild(opt);
+  });
+
+  for (let y = MIN_YEAR_VDL; y >= 1; y--) {
+    const opt = document.createElement("option");
+    opt.value = -y;
+    opt.textContent = `Jahr ${y} v.d.L.`;
+    ySel.appendChild(opt);
+  }
+  for (let y = 1; y <= 10; y++) {
+    const opt = document.createElement("option");
+    opt.value = y;
+    opt.textContent = `Jahr ${y} n.d.L.`;
+    ySel.appendChild(opt);
+  }
+
+  function refreshDays(keepValue) {
+    const mIdx = parseInt(mSel.value, 10) || 0;
+    const days = MONTHS[mIdx].days;
+    const prev = parseInt(dSel.value, 10) || 1;
+    dSel.innerHTML = "";
+    for (let d = 1; d <= days; d++) {
+      const opt = document.createElement("option");
+      opt.value = d;
+      opt.textContent = `${d}.`;
+      dSel.appendChild(opt);
+    }
+    dSel.value = Math.min(keepValue != null ? keepValue : prev, days);
+  }
+
+  mSel.addEventListener("change", () => refreshDays());
+
+  const sel = absToYearDoy(selectedAbs);
+  if (sel.year !== 0) {
+    const dim = dayOfYearToMonth(sel.doy);
+    mSel.value = dim.monthIdx;
+    if (sel.year >= -MIN_YEAR_VDL && sel.year <= 10) ySel.value = sel.year;
+    refreshDays(dim.dayInMonth);
+  } else {
+    mSel.value = viewMonth;
+    ySel.value = viewYear >= -MIN_YEAR_VDL && viewYear <= 10 ? viewYear : 1;
+    refreshDays(1);
+  }
+
+  document.getElementById("jumpBtn").addEventListener("click", () => {
+    const d = parseInt(dSel.value, 10);
+    const m = parseInt(mSel.value, 10);
+    const y = parseInt(ySel.value, 10);
+    if (isNaN(d) || isNaN(m) || isNaN(y) || y === 0) return;
+    viewYear  = y;
+    viewMonth = m;
+    const doy = MONTH_START[m] + (d - 1);
+    selectedAbs = yearDoyToAbs(y, doy);
+    renderAll();
+  });
+})();
+
+/* ══════════════════════════════════════════════════
+   SCHNELLSPRUNG: Nächster Vollmond / Doppelte Segensnacht
+   ══════════════════════════════════════════════════ */
+function findNextDay(fromAbs, predicate, maxLook) {
+  for (let i = 1; i <= maxLook; i++) {
+    if (predicate(fromAbs + i)) return fromAbs + i;
+  }
+  return null;
+}
+function jumpToAbs(abs) {
+  const { year, doy } = absToYearDoy(abs);
+  if (year === 0) return;
+  viewYear  = year;
+  viewMonth = dayOfYearToMonth(doy).monthIdx;
+  selectedAbs = abs;
+  renderAll();
+}
+document.getElementById("nextVollmondBtn").addEventListener("click", () => {
+  // Goldmond Vollmond = phase 16, Aschmond Vollmond = phase 12 — max Abstand 28 Tage
+  const target = findNextDay(TODAY, x => goldPhaseDay(x) === 16 || ashPhaseDay(x) === 12, 30);
+  if (target != null) jumpToAbs(target);
+});
+document.getElementById("nextMondsegenBtn").addEventListener("click", () => {
+  // Goldmond-Vollmond — alle 28 Tage
+  const target = findNextDay(TODAY, x => goldPhaseDay(x) === 16, 30);
+  if (target != null) jumpToAbs(target);
+});
+document.getElementById("nextAschenhauchBtn").addEventListener("click", () => {
+  // Aschmond-Vollmond — alle 17 Tage
+  const target = findNextDay(TODAY, x => ashPhaseDay(x) === 12, 20);
+  if (target != null) jumpToAbs(target);
+});
+document.getElementById("nextSegensnachtBtn").addEventListener("click", () => {
+  // Doppelte Segensnacht: beide gleichzeitig Vollmond — alle 476 Tage (LCM 28×17)
+  const target = findNextDay(TODAY, x => goldPhaseDay(x) === 16 && ashPhaseDay(x) === 12, 500);
+  if (target != null) jumpToAbs(target);
+});
+document.getElementById("nextHolidayBtn").addEventListener("click", () => {
+  // Nächster Tag mit Feiertag — vor der Landung gibt es keine, deshalb max. 250 Tage suchen
+  const target = findNextDay(TODAY, x => x >= 1 && holidaysOnDay(x).length > 0, 250);
+  if (target != null) jumpToAbs(target);
+});
+
+renderAll();
+</script>
+
+
+<script type="text/babel">
+const { SiteNav, SiteGate } = window;
+ReactDOM.createRoot(document.getElementById('nav-root')).render(<SiteGate><SiteNav /></SiteGate>);
+</script>
+
+</body></html>

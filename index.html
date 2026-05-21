@@ -1,83 +1,2895 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="de"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Meruria</title>
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
 <link rel="stylesheet" href="assets/styles/pages/index.css">
-<script>
-  // Ensure React loads as browser globals (not CommonJS)
-  if (typeof module !== 'undefined') {
-    window.module = undefined;
-  }
-  if (typeof exports !== 'undefined') {
-    window.exports = undefined;
-  }
-</script>
 <script src="assets/scripts/vendor/react.development.js"></script>
 <script src="assets/scripts/vendor/react-dom.development.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
 <script src="assets/components/site-gate.jsx" type="text/babel"></script>
-<script src="assets/components/page-header.jsx" type="text/babel"></script>
-<script src="assets/components/tweaks-panel-6.jsx" type="text/babel"></script>
-<script src="assets/components/particle-field.jsx" type="text/babel"></script>
+<script src="assets/components/tweaks-panel-13.jsx" type="text/babel"></script>
 <script src="assets/components/footer.jsx" type="text/babel"></script>
+<script src="assets/scripts/vendor/image-slot.js"></script>
 
 </head>
 <body>
 <div id="root"></div>
+
+<!-- ═══════════════════════════════════════════
+     SCRIPT 1 — Data
+     ═══════════════════════════════════════════ -->
 <script type="text/babel">
-const { useState, useEffect, useRef, useCallback } = React;
-const { useTweaks, TweaksPanel, TweakSection, TweakSlider, TweakToggle, ParticleFieldEnhanced } = window;
+const { useState, useEffect, useRef, useCallback, useMemo } = React;
 
-const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "showParticles": true,
-  "headerHeight": 180
-}/*EDITMODE-END*/;
+// ── Nav tabs (mirrors existing site dropdowns) ──
+const NAV_TABS = [
+  { id:'einleitung', label:'Einleitung', items:[
+    { l:'Informationen' }, { l:'Vorgeschichte' }, { l:'Sitzung Null' },
+  ]},
+  { id:'spielerhandbuch', label:'Spielerhandbuch', items:[
+    { l:'Realismus' }, { l:'Sammeln & Handwerk' }, { l:'Schutzherren' },
+    { l:'Gesinnungen' }, { l:'Regierungsformen' },
+  ]},
+  { id:'charaktererstellung', label:'Charaktererstellung', items:[
+    { l:'Neuer Charakter' }, { l:'Rassen' }, { l:'Klassen' },
+    { l:'Talente' }, { l:'Hintergründe' }, { l:'Zauber' }, { l:'Ausrüstung' },
+  ]},
+  { id:'enzyklopaedie', label:'Enzyklopädie', items:[
+    { l:'Völker' }, { l:'Orte' }, { l:'Ressourcen' }, { l:'Organisationen' },
+    { l:'Gottheiten' }, { l:'Religionen' }, { l:'Monster', locked:true }, { l:'Galerie' },
+  ]},
+  { id:'divisionen', label:'Divisionen', items:[
+    { l:'I — Die Kuratoren' }, { l:'II — Die Sturmritter' }, { l:'III — Die Sentinels' },
+    { l:'IV — Die Friedenshüter' }, { l:'V — Die Outfitters' }, { l:'VI — Die Pathfinders' },
+    { l:'VII — Die Quellensucher' }, { l:'VIII — Die Bergungsgarde' },
+  ]},
+  { id:'charaktere', label:'Charaktere', items:[] },
+  { id:'tools',      label:'Tools',      items:[], dm:true },
+];
 
-// ── APP ────────────────────────────────────────────────
-function App() {
-  const [mouse, setMouse] = useState({x:0.5,y:0.5});
-  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+// ── Portal cards (6 player-facing overview pages) ──
+const PORTALS = [
+  { id:'einleitung', n:'I',   label:'Einleitung', hue:265,
+    tag:'Beginn deiner Reise',
+    blurb:'Die ersten Schritte in die gewobenen Reiche — Hintergrund, Vorgeschichte und die Sitzung Null.',
+    peek:['Informationen','Vorgeschichte','Sitzung Null'] },
+  { id:'spielerhandbuch', n:'II', label:'Spielerhandbuch', hue:250,
+    tag:'Regeln & Welt-Verständnis',
+    blurb:'Wie die Welt funktioniert — Realismus, Handwerk, Schutzherren, Gesinnungen und Regierungsformen.',
+    peek:['Realismus','Sammeln & Handwerk','Schutzherren','Gesinnungen','Regierungsformen'] },
+  { id:'charaktererstellung', n:'III', label:'Charaktererstellung', hue:235,
+    tag:'Werde wer du sein willst',
+    blurb:'Rassen, Klassen, Talente, Hintergründe, Zauber und Ausrüstung — alles für deinen neuen Charakter.',
+    peek:['Neuer Charakter','Rassen','Klassen','Talente','Hintergründe','Zauber','Ausrüstung'] },
+  { id:'enzyklopaedie', n:'IV', label:'Enzyklopädie', hue:215,
+    tag:'Die Welt im Detail',
+    blurb:'Völker, Orte, Götter, Religionen, Organisationen — alles, was in Meruria existiert.',
+    peek:['Völker','Orte','Ressourcen','Organisationen','Gottheiten','Religionen','Monster','Galerie'] },
+  { id:'divisionen', n:'V', label:'Divisionen', hue:290,
+    tag:'Acht Wege, das Schicksal zu formen',
+    blurb:'Die acht Divisionen sind das Rückgrat der Welt. Kuratoren, Sturmritter, Sentinels und mehr.',
+    peek:['I — Kuratoren','II — Sturmritter','III — Sentinels','IV — Friedenshüter','V — Outfitters','VI — Pathfinders','VII — Quellensucher','VIII — Bergungsgarde'] },
+  { id:'charaktere', n:'VI', label:'Charaktere', hue:30,
+    tag:'Helden, Schurken, Verbündete',
+    blurb:'Die Steckbriefe aller Charaktere — Spielercharaktere, NSCs und alles dazwischen.',
+    peek:['Spielercharaktere','Verbündete','Antagonisten','Begegnete Seelen'] },
+];
 
-  const handleMouseMove = useCallback(e => {
-    setMouse({x: e.clientX/window.innerWidth, y: e.clientY/window.innerHeight});
+// ── Carousel placeholder images (drop-in art targets) ──
+const CAROUSEL_IMAGES = [
+  { id:'c1', title:'Arkanheim',          hue:220, w:'l' },
+  { id:'c2', title:'Aurelia Sturmklinge',hue:150, w:'p' },
+  { id:'c3', title:'Abyssdrache',        hue:18,  w:'p' },
+  { id:'c4', title:'Flüsternder Wald',   hue:140, w:'l' },
+  { id:'c5', title:'Schleierpforte',     hue:265, w:'p' },
+  { id:'c6', title:'Tiefenbastion',      hue:200, w:'p' },
+  { id:'c7', title:'Krone der Gezeiten', hue:190, w:'l' },
+  { id:'c8', title:'Aschewüste',         hue:40,  w:'l' },
+  { id:'c9', title:'Kira Schattenläuferin',hue:280, w:'p' },
+  { id:'c10',title:'Steinkoloss',        hue:55,  w:'p' },
+  { id:'c11',title:'Splitter des Urlichts',hue:65, w:'p' },
+  { id:'c12',title:'Port Silberwelle',   hue:195, w:'l' },
+  { id:'c13',title:'Borvak Eisenfaust',  hue:45,  w:'p' },
+  { id:'c14',title:'Schwarzes Herz',     hue:290, w:'p' },
+];
+
+Object.assign(window, { NAV_TABS, PORTALS, CAROUSEL_IMAGES });
+</script>
+
+
+<!-- ═══════════════════════════════════════════
+     SCRIPT 2 — Particles
+     ═══════════════════════════════════════════ -->
+<script type="text/babel">
+const { useEffect:uE, useRef:uR } = React;
+
+// ── Particles ──
+function ParticleField({ mouse }) {
+  const bgRef = uR(null);
+  const fgRef = uR(null);
+  const bgP   = uR([]);
+  const fgP   = uR([]);
+  const mRef  = uR({x:0.5,y:0.5});
+  uE(() => { mRef.current = mouse; }, [mouse]);
+
+  uE(() => {
+    const bg = bgRef.current, fg = fgRef.current;
+    const bgCtx = bg.getContext('2d'), fgCtx = fg.getContext('2d');
+    const resize = () => { bg.width = fg.width = bg.offsetWidth; bg.height = fg.height = bg.offsetHeight; };
+    resize(); window.addEventListener('resize', resize);
+    bgP.current = Array.from({length:60}, () => ({
+      x:Math.random(), y:Math.random(),
+      r:Math.random()*1.4+0.5,
+      vx:(Math.random()-0.5)*0.05, vy:(Math.random()-0.5)*0.05,
+      a:Math.random()*0.22+0.04,
+    }));
+    fgP.current = Array.from({length:16}, () => ({
+      x:Math.random(), y:Math.random(),
+      r:Math.random()*3+2,
+      vx:(Math.random()-0.5)*0.09, vy:(Math.random()-0.5)*0.09,
+      a:Math.random()*0.18+0.05,
+    }));
+    let raf;
+    const tick = () => {
+      const w = bg.width, h = bg.height, mx = mRef.current.x, my = mRef.current.y;
+      bgCtx.clearRect(0,0,w,h);
+      const bsx = (mx-0.5)*-14, bsy = (my-0.5)*-14;
+      bgP.current.forEach(p => {
+        p.x += p.vx/w*60; p.y += p.vy/h*60;
+        if(p.x<0)p.x=1; if(p.x>1)p.x=0; if(p.y<0)p.y=1; if(p.y>1)p.y=0;
+        bgCtx.beginPath();
+        bgCtx.arc(p.x*w+bsx, p.y*h+bsy, p.r, 0, Math.PI*2);
+        bgCtx.fillStyle = `rgba(160,140,255,${p.a})`;
+        bgCtx.fill();
+      });
+      fgCtx.clearRect(0,0,w,h);
+      const fsx = (mx-0.5)*26, fsy = (my-0.5)*26;
+      fgP.current.forEach(p => {
+        p.x += p.vx/w*55; p.y += p.vy/h*55;
+        if(p.x<0)p.x=1; if(p.x>1)p.x=0; if(p.y<0)p.y=1; if(p.y>1)p.y=0;
+        const px = p.x*w+fsx, py = p.y*h+fsy;
+        const g = fgCtx.createRadialGradient(px,py,0,px,py,p.r*2.5);
+        g.addColorStop(0,`rgba(190,170,255,${p.a})`);
+        g.addColorStop(1,`rgba(120,100,255,0)`);
+        fgCtx.beginPath(); fgCtx.arc(px,py,p.r*2.5,0,Math.PI*2); fgCtx.fillStyle = g; fgCtx.fill();
+      });
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', resize); };
   }, []);
 
   return (
-    <div onMouseMove={handleMouseMove} className="page-root">
-      {tweaks.showParticles && <ParticleFieldEnhanced mouseX={mouse.x} mouseY={mouse.y}/>}
+    <React.Fragment>
+      <canvas ref={bgRef} style={{position:'fixed',inset:0,width:'100%',height:'100%',pointerEvents:'none',zIndex:0}}/>
+      <canvas ref={fgRef} style={{position:'fixed',inset:0,width:'100%',height:'100%',pointerEvents:'none',zIndex:0,opacity:0.7}}/>
+    </React.Fragment>
+  );
+}
 
-      {/* HEADER */}
-      <PageHeader height={tweaks.headerHeight} />
+Object.assign(window, { ParticleField });
+</script>
 
-      {/* ── NAV BAR ── */}
-      <SiteNav rightLabel="PANTHEON ARCHIVE v2.7"/>
 
-      {/* ── MAIN CONTENT (homepage placeholder) ── */}
-      <div className="home-main">
-        <div className="home-center">
-          <div className="home-eyebrow">Willkommen in</div>
-          <h1 className="home-title">MERURIA</h1>
-          <p className="home-subtitle">
-            Erkunde die Welten, Götter und Geheimnisse des Meruria-Universums.<br/>
-            Navigiere über das Menü oben.
-          </p>
-          <div className="home-links">
-            <a href="Gottheiten.html" className="home-link">Gottheiten</a>
-          </div>
+<!-- ═══════════════════════════════════════════
+     SCRIPT 3 — Portal cards
+     ═══════════════════════════════════════════ -->
+<script type="text/babel">
+const { useState:uS3, useEffect:uE3, useRef:uR3 } = React;
+
+function PortalCard({ p, index }) {
+  const [hover, setHover] = uS3(false);
+  const ref = uR3(null);
+
+  // intersection reveal
+  uE3(() => {
+    const el = ref.current; if (!el) return;
+    const io = new IntersectionObserver(es => {
+      es.forEach(e => { if (e.isIntersecting) { el.classList.add('in'); io.unobserve(el); } });
+    }, { threshold: 0.12 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const ac        = `oklch(0.68 0.18 ${p.hue})`;
+  const acSoft    = `oklch(0.78 0.14 ${p.hue})`;
+  const acStripe  = `oklch(0.68 0.18 ${p.hue} / 0.07)`;
+  const acBorder  = hover ? `oklch(0.68 0.18 ${p.hue} / 0.8)` : `oklch(0.68 0.18 ${p.hue} / 0.22)`;
+  const acGlow    = `oklch(0.68 0.18 ${p.hue} / 0.4)`;
+
+  return (
+    <a
+      ref={ref}
+      href="#"
+      className="reveal"
+      style={{ transitionDelay:`${index*70}ms`, textDecoration:'none', color:'inherit' }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
+      <div style={{
+        position:'relative', overflow:'hidden',
+        padding:'28px 22px 24px',
+        background: `repeating-linear-gradient(-45deg, transparent, transparent 12px, ${acStripe} 12px, ${acStripe} 13px), linear-gradient(160deg, rgba(20,12,46,0.85) 0%, rgba(10,7,28,0.92) 100%)`,
+        border: `1px solid ${acBorder}`,
+        borderRadius:'4px',
+        boxShadow: hover
+          ? `0 0 0 1px ${acGlow}, 0 24px 60px rgba(0,0,0,0.55), 0 0 80px ${acGlow}`
+          : `0 12px 32px rgba(0,0,0,0.4)`,
+        transition: 'border-color 0.3s, box-shadow 0.3s, transform 0.3s',
+        transform: hover ? 'translateY(-3px)' : 'translateY(0)',
+        cursor:'pointer',
+        minHeight: 260,
+        display:'flex', flexDirection:'column', alignItems:'center',
+        textAlign:'center',
+      }}>
+        {/* corner brackets */}
+        <span style={{position:'absolute',top:-1,left:-1,width:14,height:14,borderTop:`1px solid ${ac}`,borderLeft:`1px solid ${ac}`,opacity:0.75}}/>
+        <span style={{position:'absolute',top:-1,right:-1,width:14,height:14,borderTop:`1px solid ${ac}`,borderRight:`1px solid ${ac}`,opacity:0.75}}/>
+        <span style={{position:'absolute',bottom:-1,left:-1,width:14,height:14,borderBottom:`1px solid ${ac}`,borderLeft:`1px solid ${ac}`,opacity:0.75}}/>
+        <span style={{position:'absolute',bottom:-1,right:-1,width:14,height:14,borderBottom:`1px solid ${ac}`,borderRight:`1px solid ${ac}`,opacity:0.75}}/>
+
+        {/* sweep on hover */}
+        {hover && <div style={{
+          position:'absolute', inset:0,
+          background:`linear-gradient(90deg, transparent 0%, ${acGlow} 50%, transparent 100%)`,
+          opacity:0.35, animation:'sweep 0.9s ease-out forwards', pointerEvents:'none',
+        }}/>}
+
+        {/* radial glow on hover */}
+        <div style={{
+          position:'absolute', inset:0,
+          background:`radial-gradient(ellipse at 50% 38%, ${acGlow} 0%, transparent 55%)`,
+          opacity: hover ? 1 : 0.18,
+          transition:'opacity 0.7s ease-out',
+          pointerEvents:'none',
+        }}/>
+
+        {/* ── BIG hex sigil with Roman numeral ── */}
+        <div style={{
+          position:'relative', width:96, height:96,
+          marginBottom:18, marginTop:6,
+          display:'flex', alignItems:'center', justifyContent:'center',
+          zIndex:1,
+        }}>
+          <svg viewBox="0 0 100 100" style={{
+            position:'absolute', inset:0, width:'100%', height:'100%',
+            transition:'transform 0.6s ease',
+            transform: hover ? 'rotate(60deg)' : 'rotate(0deg)',
+          }}>
+            <polygon points="50,3 92,27 92,73 50,97 8,73 8,27" fill="none" stroke={ac} strokeWidth="1.2" opacity="0.85"/>
+            <polygon points="50,14 82,32 82,68 50,86 18,68 18,32" fill="none" stroke={ac} strokeWidth="0.6" opacity="0.5"/>
+          </svg>
+          {/* inner static glyph (counter-rotates so numeral stays upright is overkill — keep it still by being outside the rotating svg) */}
+          <span style={{
+            position:'relative', zIndex:2,
+            fontFamily:'var(--font-display)', fontWeight:400,
+            fontSize:'30px', letterSpacing:'0.04em',
+            color: hover ? '#ffffff' : acSoft,
+            textShadow: hover
+              ? `0 0 24px ${acGlow}, 0 0 48px ${acGlow}`
+              : `0 0 14px ${acGlow}`,
+            transition:'color 0.3s, text-shadow 0.3s',
+          }}>{p.n}</span>
+        </div>
+
+        {/* title */}
+        <h3 style={{
+          fontFamily:'var(--font-display)', fontWeight:400,
+          fontSize:'21px', letterSpacing:'0.18em',
+          color:'#f3eefe', textTransform:'uppercase',
+          textShadow: hover ? `0 0 24px ${acGlow}` : 'none',
+          transition:'text-shadow 0.3s',
+          marginBottom:8, position:'relative', zIndex:1,
+          whiteSpace:'nowrap',
+        }}>{p.label}</h3>
+
+        {/* tagline — one short line */}
+        <div style={{
+          fontFamily:'var(--font-body)', fontWeight:300,
+          fontSize:'12px', letterSpacing:'0.04em',
+          color:'rgba(200,190,240,0.62)',
+          position:'relative', zIndex:1,
+          maxWidth:'85%',
+          marginBottom:'auto',
+        }}>{p.tag}</div>
+
+        {/* Hover-revealed peek bar */}
+        <div style={{
+          position:'relative', zIndex:1,
+          width:'100%', marginTop:18,
+          paddingTop:14,
+          borderTop:`1px solid oklch(0.68 0.18 ${p.hue} / ${hover?0.35:0.12})`,
+          transition:'border-color 0.3s',
+          display:'flex', alignItems:'center', justifyContent:'center', gap:10,
+        }}>
+          <span style={{
+            fontFamily:'var(--font-mono)', fontSize:'8.5px',
+            letterSpacing:'0.28em', color: hover ? acSoft : 'rgba(160,140,255,0.4)',
+            textTransform:'uppercase',
+            transition:'color 0.3s',
+          }}>
+            {p.peek.length} Unterseiten
+          </span>
+          <span style={{
+            fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:300,
+            color: hover ? '#ffffff' : acSoft,
+            opacity: hover ? 1 : 0.55,
+            transition:'all 0.3s',
+            transform: hover ? 'translateX(4px)' : 'translateX(0)',
+            display:'inline-block',
+          }}>→</span>
+        </div>
+      </div>
+    </a>
+  );
+}
+
+Object.assign(window, { PortalCard });
+</script>
+
+
+<!-- ═══════════════════════════════════════════
+     SCRIPT 4 — Carousel
+     ═══════════════════════════════════════════ -->
+<script type="text/babel">
+const { useState:uS4, useEffect:uE4, useRef:uR4 } = React;
+
+const CP_W=152, CP_H=200;
+const CL_W=280, CL_H=200;
+const CGAP=14;
+const BASE_SPD=0.030, CFRIC=0.9984;
+
+function imgDims(img){ return img.w==='l' ? {w:CL_W,h:CL_H} : {w:CP_W,h:CP_H}; }
+
+function Carousel({ images }) {
+  const trackRef = uR4(null);
+  const phys     = uR4({ offset:0, vel:0, drag:false, lx:0, lt:0 }).current;
+  const [hov, setHov] = uS4(null);
+
+  const n = images.length;
+  const singleW = images.reduce((s,im) => s + imgDims(im).w + CGAP, 0);
+  const tripled = [...images, ...images, ...images];
+
+  uE4(() => {
+    phys.offset = singleW;
+    let raf, last = performance.now();
+    const tick = (now) => {
+      const dt = Math.min(now - last, 50); last = now;
+      if (!phys.drag) {
+        if (Math.abs(phys.vel) > 0.002) phys.vel *= Math.pow(CFRIC, dt); else phys.vel = 0;
+        phys.offset += (BASE_SPD + phys.vel) * dt;
+        while (phys.offset >= singleW*2) phys.offset -= singleW;
+        while (phys.offset <  singleW)   phys.offset += singleW;
+        if (trackRef.current) trackRef.current.style.transform = `translateX(${-phys.offset}px)`;
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [singleW]);
+
+  uE4(() => {
+    const onMove = (e) => {
+      if (!phys.drag) return;
+      const now = performance.now(), dx = e.clientX - phys.lx, dt = now - phys.lt;
+      if (dt > 0) phys.vel = -dx / dt;
+      phys.offset -= dx;
+      while (phys.offset >= singleW*2) phys.offset -= singleW;
+      while (phys.offset <  singleW)   phys.offset += singleW;
+      if (trackRef.current) trackRef.current.style.transform = `translateX(${-phys.offset}px)`;
+      phys.lx = e.clientX; phys.lt = now;
+    };
+    const onUp = () => { phys.drag = false; document.body.style.cursor=''; };
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup',   onUp);
+    return () => { window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp); };
+  }, [singleW]);
+
+  function onDown(e){ e.preventDefault(); phys.drag=true; phys.lx=e.clientX; phys.lt=performance.now(); phys.vel=0; document.body.style.cursor='grabbing'; }
+
+  function tileStyle(ii) {
+    const isHov = hov === ii;
+    const {w,h} = imgDims(images[ii]);
+    let tx = 0;
+    if (hov !== null && !isHov) {
+      let d = ii - hov; if (d > n/2) d -= n; if (d < -n/2) d += n;
+      if (Math.abs(d) <= 3) tx = (d > 0 ? 1 : -1) * 28 / Math.abs(d);
+    }
+    return {
+      width:w, height:h, flexShrink:0, position:'relative', overflow:'hidden',
+      borderRadius:3, alignSelf:'flex-end', cursor:'pointer',
+      transform: isHov ? 'scale(1.16) translateY(-10px)' : (tx ? `translateX(${tx}px)` : 'none'),
+      boxShadow: isHov ? '0 0 26px rgba(124,77,255,0.85), 0 0 56px rgba(124,77,255,0.3)' : 'none',
+      border: isHov ? '1.5px solid rgba(124,77,255,0.85)' : '1.5px solid rgba(124,77,255,0.12)',
+      zIndex: isHov ? 20 : 1,
+      transition:'transform 0.22s ease, box-shadow 0.2s ease, border-color 0.2s ease',
+    };
+  }
+
+  return (
+    <div onMouseDown={onDown} style={{ position:'relative', overflow:'visible', height:CP_H+52, userSelect:'none', cursor:'grab' }}>
+      <div ref={trackRef} style={{ position:'absolute', top:26, left:0, display:'flex', gap:CGAP, alignItems:'flex-start', height:CP_H, willChange:'transform' }}>
+        {tripled.map((img, gi) => {
+          const ii = gi % n;
+          const im = images[ii];
+          return (
+            <div key={gi} style={tileStyle(ii)} onMouseEnter={() => setHov(ii)} onMouseLeave={() => setHov(null)}>
+              <div style={{
+                width:'100%', height:'100%', position:'relative',
+                display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:6,
+                background: `repeating-linear-gradient(-45deg, transparent, transparent 8px, oklch(0.65 0.18 ${im.hue} / 0.13) 8px, oklch(0.65 0.18 ${im.hue} / 0.13) 9px), linear-gradient(160deg, rgba(28,16,62,0.97) 0%, rgba(14,9,36,0.98) 100%)`,
+              }}>
+                <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse at 50% 45%, oklch(0.65 0.18 ${im.hue} / 0.22) 0%, transparent 60%)` }}/>
+                <svg viewBox="0 0 40 30" width={im.w==='l'?22:18} height={im.w==='l'?16:13} fill="none" style={{opacity:0.5,zIndex:1}}>
+                  <rect x="1" y="1" width="38" height="28" rx="2" stroke={`oklch(0.65 0.18 ${im.hue})`} strokeWidth="1.3"/>
+                  <circle cx="12" cy="11" r="4" stroke={`oklch(0.65 0.18 ${im.hue})`} strokeWidth="1" opacity="0.8"/>
+                  <path d="M1 22 L10 15 L18 20 L26 13 L39 22" stroke={`oklch(0.65 0.18 ${im.hue})`} strokeWidth="1.1" opacity="0.8"/>
+                </svg>
+                <span style={{fontFamily:'var(--font-mono)',fontSize:7,letterSpacing:'0.18em',color:`oklch(0.65 0.18 ${im.hue} / 0.55)`,textTransform:'uppercase',zIndex:1,textAlign:'center',padding:'0 6px',lineHeight:1.3}}>
+                  artwork
+                </span>
+              </div>
+              <div style={{position:'absolute',bottom:0,left:0,right:0,padding:'5px 8px',background:'rgba(5,4,15,0.85)',borderTop:'1px solid rgba(124,77,255,0.13)'}}>
+                <div style={{fontFamily:'var(--font-mono)',fontSize:9,color:'rgba(240,238,255,0.65)',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{im.title}</div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <div style={{position:'absolute',top:0,left:0,bottom:0,width:120,background:'linear-gradient(to right,#05040f 30%,transparent)',pointerEvents:'none',zIndex:10}}/>
+      <div style={{position:'absolute',top:0,right:0,bottom:0,width:120,background:'linear-gradient(to left,#05040f 30%,transparent)',pointerEvents:'none',zIndex:10}}/>
+    </div>
+  );
+}
+
+Object.assign(window, { Carousel });
+</script>
+
+
+<!-- ═══════════════════════════════════════════
+     SCRIPT 5 — Extras (Heute / Vorgeschichte / Tageskarte)
+     ═══════════════════════════════════════════ -->
+<script type="text/babel">
+const { useState:uSx, useEffect:uEx, useRef:uRx, useMemo:uMx } = React;
+
+/* ── Moon SVG (matches Kalender Interaktiv) ───── */
+function MoonIcon({ phaseDay=14, cycleLen=28, vollmondDay=16, color='#d9b06b', size=26 }) {
+  const D = phaseDay;
+  let ill;
+  if (D <= vollmondDay) ill = (D - 1) / Math.max(1, vollmondDay - 1);
+  else ill = 1 - (D - vollmondDay) / (cycleLen - vollmondDay + 1);
+  ill = Math.max(0, Math.min(1, ill));
+  const waxing = D <= vollmondDay;
+  const r = 9, cx = 11, cy = 11;
+  let body;
+  if (ill < 0.02) body = <circle cx={cx} cy={cy} r={r} fill="#0b0820" stroke={color} strokeWidth="1.1"/>;
+  else if (ill > 0.98) body = <circle cx={cx} cy={cy} r={r} fill={color} stroke={color} strokeWidth="1.1"/>;
+  else {
+    const rx = r * Math.abs(1 - 2*ill);
+    const outer = waxing ? 1 : 0;
+    const inner = (ill < 0.5) ? (waxing ? 0 : 1) : (waxing ? 1 : 0);
+    const path = `M${cx},${cy-r} A${r},${r} 0 0,${outer} ${cx},${cy+r} A${rx},${r} 0 0,${inner} ${cx},${cy-r} Z`;
+    body = <React.Fragment>
+      <circle cx={cx} cy={cy} r={r} fill="#0b0820" stroke={color} strokeWidth="1.1"/>
+      <path d={path} fill={color}/>
+    </React.Fragment>;
+  }
+  return <svg viewBox="0 0 22 22" width={size} height={size} style={{flexShrink:0,filter:`drop-shadow(0 0 6px ${color}66)`}}>{body}</svg>;
+}
+
+/* ── Section eyebrow header ─────────────────────── */
+function SectionEyebrow({ left, right }) {
+  return (
+    <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:24 }}>
+      <span style={{
+        fontFamily:'var(--font-mono)', fontSize:'10px',
+        letterSpacing:'0.35em', color:'rgba(124,77,255,0.65)',
+        textTransform:'uppercase',
+      }}>◈ {left}</span>
+      <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(124,77,255,0.5), rgba(124,77,255,0.05))' }}/>
+      {right && <span style={{
+        fontFamily:'var(--font-mono)', fontSize:'9px',
+        letterSpacing:'0.28em', color:'rgba(160,140,255,0.4)',
+        textTransform:'uppercase',
+      }}>{right}</span>}
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────
+   HEUTE IN MERURIA — horizontal calendar strip
+   ───────────────────────────────────────────────── */
+const HEUTE_MONTHS = [
+  { name:'Janvar',  roman:'I',    days:19, sign:'Die Arche',     vibe:'Aufbruch · Hoffnung' },
+  { name:'Fevorn',  roman:'II',   days:18, sign:'Die Böe',       vibe:'Stürme · Mut' },
+  { name:'Mareth',  roman:'III',  days:19, sign:'Die Wurzel',    vibe:'Erwachen · Wachstum' },
+  { name:'Aprel',   roman:'IV',   days:19, sign:'Die Linse',     vibe:'Goldmondblüte · Helligkeit' },
+  { name:'Mairen',  roman:'V',    days:18, sign:'Die Stille',    vibe:'Besinnung · Innehalten' },
+  { name:'Junvar',  roman:'VI',   days:19, sign:'Das Irrlicht',  vibe:'Wandern · Sucht' },
+  { name:'Juval',   roman:'VII',  days:19, sign:'Die Klinge',    vibe:'Höhepunkt · Sonne' },
+  { name:'Auvar',   roman:'VIII', days:19, sign:'Die Glut',      vibe:'Hitze · Ernte' },
+  { name:'Septhar', roman:'IX',   days:19, sign:'Die Brücke',    vibe:'Übergang · Reise' },
+  { name:'Oktar',   roman:'X',    days:18, sign:'Der Schleier',  vibe:'Verhüllung · Geheimnis' },
+  { name:'Novren',  roman:'XI',   days:18, sign:'Das Labyrinth', vibe:'Suche · Verirren' },
+  { name:'Derath',  roman:'XII',  days:19, sign:'Der Spalt',     vibe:'Schwellen · Übergang' },
+];
+const HEUTE_WEEKDAYS = ['Aven', 'Eiru', 'Orun', 'Ulai', 'Ivar', 'Orel', 'Elu'];
+const HEUTE_YEAR_DAYS = 224;
+
+const HEUTE_HOLIDAYS = [
+  { name:'Tag der Landung',       monthIdx:0,  day:3 },
+  { name:'Der Erste Schritt',     monthIdx:0,  day:14 },
+  { name:'Aurelias Klinge',       monthIdx:1,  day:5 },
+  { name:'Selunara-Nacht',        monthIdx:1,  day:14 },
+  { name:'Das Erwachen',          monthIdx:2,  day:1 },
+  { name:'Wurzelfest',            monthIdx:2,  day:15 },
+  { name:'Elysarions Nacht',      monthIdx:3,  day:7 },
+  { name:'Hydeas Segen',          monthIdx:3,  day:18 },
+  { name:'Die Stille',            monthIdx:4,  day:9 },
+  { name:'Tag der Erinnerung',    monthIdx:4,  day:17 },
+  { name:'Siennas Zenit',         monthIdx:5,  day:11 },
+  { name:'Nacht der Irrlichter',  monthIdx:5,  day:18 },
+  { name:'Der Große Markt',       monthIdx:6,  day:5 },
+  { name:'Eiritha-Morgen',        monthIdx:6,  day:14 },
+  { name:'Avalastes Wende',       monthIdx:7,  day:2 },
+  { name:'Ferys-Abend',           monthIdx:7,  day:16 },
+  { name:'Aschenhauch-Ritual',    monthIdx:8,  day:8 },
+  { name:'Tag der Brücken',       monthIdx:8,  day:17 },
+  { name:'Nacht des Schleiers',   monthIdx:9,  day:6 },
+  { name:'Melions Ruf',           monthIdx:9,  day:15 },
+  { name:'Das Labyrinthfest',     monthIdx:10, day:9 },
+  { name:'Vindeahs Gabe',         monthIdx:10, day:17 },
+  { name:'Nacht der Naturgeister',monthIdx:11, day:5 },
+  { name:'Die Schwellennacht',    monthIdx:11, day:19 },
+];
+function heuteDoyFor(h) {
+  let d = h.day;
+  for (let m=0; m<h.monthIdx; m++) d += HEUTE_MONTHS[m].days;
+  return d;
+}
+const HEUTE_HOLIDAY_DOYS = HEUTE_HOLIDAYS.map(h => ({ ...h, doy: heuteDoyFor(h) })).sort((a,b)=>a.doy-b.doy);
+
+function heuteNextHoliday(doy) {
+  for (const h of HEUTE_HOLIDAY_DOYS) {
+    if (h.doy > doy) return { ...h, daysUntil: h.doy - doy };
+  }
+  const first = HEUTE_HOLIDAY_DOYS[0];
+  return { ...first, daysUntil: HEUTE_YEAR_DAYS - doy + first.doy };
+}
+
+// Baseline: Aprel 14, 237 n.d.L., Eiru, Goldmond Tag 16 (Vollmond), Aschmond Tag 8
+const HEUTE_BASE_DOY  = 19 + 18 + 19 + 14; // 70
+const HEUTE_BASE_YEAR = 237;
+const HEUTE_BASE_GOLD = 16;
+const HEUTE_BASE_ASH  = 8;
+const HEUTE_BASE_WD_IDX = 1; // Eiru
+
+function heuteFromOffset(offset) {
+  const total = HEUTE_BASE_DOY + offset;
+  const yearShift = Math.floor((total - 1) / HEUTE_YEAR_DAYS);
+  const doy = ((total - 1) % HEUTE_YEAR_DAYS + HEUTE_YEAR_DAYS) % HEUTE_YEAR_DAYS + 1;
+  let d = doy, mi = 0;
+  for (; mi < 12; mi++) {
+    if (d <= HEUTE_MONTHS[mi].days) break;
+    d -= HEUTE_MONTHS[mi].days;
+  }
+  const wd = HEUTE_WEEKDAYS[((HEUTE_BASE_WD_IDX + offset) % 7 + 7) % 7];
+  const goldDay = ((HEUTE_BASE_GOLD - 1 + offset) % 28 + 28) % 28 + 1;
+  const ashDay  = ((HEUTE_BASE_ASH  - 1 + offset) % 17 + 17) % 17 + 1;
+  const next = heuteNextHoliday(doy);
+  return {
+    weekday: wd,
+    day: d,
+    monthIdx: mi,
+    month: HEUTE_MONTHS[mi].name,
+    monthRoman: HEUTE_MONTHS[mi].roman,
+    sign: HEUTE_MONTHS[mi].sign,
+    vibe: HEUTE_MONTHS[mi].vibe,
+    year: `${HEUTE_BASE_YEAR + yearShift} n.d.L.`,
+    goldDay, ashDay,
+    nextHoliday: next.name,
+    daysUntil: next.daysUntil,
+  };
+}
+
+function HeuteStrip() {
+  const [offset, setOffset] = uSx(0);
+  const today = heuteFromOffset(offset);
+  const isToday = offset === 0;
+
+  const btnBase = {
+    width:30, height:30, padding:0,
+    display:'inline-flex', alignItems:'center', justifyContent:'center',
+    background:'rgba(124,77,255,0.10)',
+    border:'1px solid rgba(124,77,255,0.35)',
+    borderRadius:2,
+    color:'#e0d4ff', fontFamily:'var(--font-mono)', fontSize:14,
+    cursor:'pointer', transition:'all 0.18s',
+    lineHeight:1,
+  };
+  const onBtnEnter = e => { e.currentTarget.style.background='rgba(124,77,255,0.28)'; e.currentTarget.style.borderColor='#a78bff'; e.currentTarget.style.color='#fff'; e.currentTarget.style.boxShadow='0 0 14px rgba(124,77,255,0.4)'; };
+  const onBtnLeave = e => { e.currentTarget.style.background='rgba(124,77,255,0.10)'; e.currentTarget.style.borderColor='rgba(124,77,255,0.35)'; e.currentTarget.style.color='#e0d4ff'; e.currentTarget.style.boxShadow='none'; };
+
+  return (
+    <div style={{
+      position:'relative', overflow:'hidden',
+      display:'grid',
+      gridTemplateColumns:'auto 1fr auto auto auto',
+      alignItems:'center', gap:32,
+      padding:'22px 28px 22px 36px',
+      background:'linear-gradient(90deg, rgba(20,12,46,0.85) 0%, rgba(10,7,28,0.75) 50%, rgba(20,12,46,0.85) 100%)',
+      border:'1px solid rgba(124,77,255,0.22)',
+      borderRadius:'4px',
+      boxShadow:'0 12px 36px rgba(0,0,0,0.4)',
+      transition:'border-color 0.3s',
+    }}>
+      {/* Date block */}
+      <div style={{ display:'flex', alignItems:'baseline', gap:14, flexShrink:0 }}>
+        <span style={{
+          fontFamily:'var(--font-display)', fontWeight:300,
+          fontSize:'52px', color:'#f3eefe', lineHeight:1,
+          textShadow:'0 0 30px rgba(124,77,255,0.5)',
+          transition:'opacity 0.2s',
+        }}>{today.day}</span>
+        <div>
+          <div style={{
+            fontFamily:'var(--font-display)', fontSize:'16px', fontWeight:400,
+            letterSpacing:'0.18em', color:'#d9b06b', textTransform:'uppercase',
+          }}>{today.month}</div>
+          <div style={{
+            fontFamily:'var(--font-mono)', fontSize:'9px',
+            letterSpacing:'0.25em', color:'rgba(200,190,240,0.55)',
+            textTransform:'uppercase', marginTop:3,
+          }}>{today.weekday} · {today.year}</div>
         </div>
       </div>
 
-      <SiteFooter left="◈ ARCHIVE STATUS: NOMINAL ◈ EPOCH: UNKNOWN" right="MERURIA // THE WOVEN REALMS" />
+      {/* Sign + vibe */}
+      <div style={{ minWidth:0 }}>
+        <div style={{
+          fontFamily:'var(--font-mono)', fontSize:'9px',
+          letterSpacing:'0.3em', color:'rgba(124,77,255,0.6)',
+          textTransform:'uppercase', marginBottom:4,
+        }}>Im Zeichen</div>
+        <div style={{
+          fontFamily:'var(--font-display)', fontWeight:400,
+          fontSize:'17px', letterSpacing:'0.14em',
+          color:'rgba(240,235,255,0.92)', textTransform:'uppercase',
+        }}>{today.sign}</div>
+        <div style={{
+          fontFamily:'var(--font-body)', fontWeight:300,
+          fontSize:'11px', letterSpacing:'0.06em',
+          color:'rgba(200,190,240,0.55)', marginTop:3,
+        }}>{today.vibe}</div>
+      </div>
+
+      {/* Moons */}
+      <div style={{ display:'flex', alignItems:'center', gap:18, flexShrink:0, padding:'0 16px', borderLeft:'1px solid rgba(124,77,255,0.15)', borderRight:'1px solid rgba(124,77,255,0.15)' }}>
+        <div style={{ textAlign:'center' }}>
+          <MoonIcon phaseDay={today.goldDay} cycleLen={28} vollmondDay={16} color="#d9b06b" size={30}/>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.2em', color:'rgba(217,176,107,0.7)', textTransform:'uppercase', marginTop:6 }}>Goldmond</div>
+        </div>
+        <div style={{ textAlign:'center' }}>
+          <MoonIcon phaseDay={today.ashDay} cycleLen={17} vollmondDay={12} color="#a8b6d4" size={26}/>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.2em', color:'rgba(168,182,212,0.7)', textTransform:'uppercase', marginTop:6 }}>Aschmond</div>
+        </div>
+      </div>
+
+      {/* Next holiday */}
+      <div style={{ textAlign:'right', flexShrink:0 }}>
+        <div style={{
+          fontFamily:'var(--font-mono)', fontSize:'9px',
+          letterSpacing:'0.3em', color:'rgba(124,77,255,0.6)',
+          textTransform:'uppercase', marginBottom:4,
+        }}>Nächstes Fest · in {today.daysUntil} {today.daysUntil === 1 ? 'Tag' : 'Tagen'}</div>
+        <div style={{
+          fontFamily:'var(--font-display)', fontSize:'15px', fontWeight:400,
+          letterSpacing:'0.14em', color:'#f3eefe', textTransform:'uppercase',
+        }}>{today.nextHoliday}</div>
+      </div>
+
+      {/* Day controls */}
+      <div style={{
+        display:'flex', flexDirection:'column', alignItems:'center', gap:6,
+        flexShrink:0, paddingLeft:18, borderLeft:'1px solid rgba(124,77,255,0.15)',
+      }}>
+        <div style={{
+          fontFamily:'var(--font-mono)', fontSize:'7.5px',
+          letterSpacing:'0.28em', color:'rgba(160,140,255,0.55)',
+          textTransform:'uppercase',
+        }}>Tag steuern</div>
+        <div style={{ display:'flex', alignItems:'center', gap:6 }}>
+          <button
+            onClick={() => setOffset(o => o - 1)}
+            aria-label="Einen Tag zurück"
+            title="Einen Tag zurück"
+            style={btnBase}
+            onMouseEnter={onBtnEnter}
+            onMouseLeave={onBtnLeave}
+          >◀</button>
+          <button
+            onClick={() => setOffset(0)}
+            disabled={isToday}
+            title="Zurück zu heute"
+            style={{
+              ...btnBase,
+              width:'auto', padding:'0 12px', fontFamily:'var(--font-display)',
+              fontSize:10, letterSpacing:'0.22em', textTransform:'uppercase',
+              opacity: isToday ? 0.45 : 1,
+              cursor: isToday ? 'default' : 'pointer',
+            }}
+            onMouseEnter={e => { if (!isToday) onBtnEnter(e); }}
+            onMouseLeave={e => { if (!isToday) onBtnLeave(e); }}
+          >Heute</button>
+          <button
+            onClick={() => setOffset(o => o + 1)}
+            aria-label="Einen Tag weiter"
+            title="Einen Tag weiter"
+            style={btnBase}
+            onMouseEnter={onBtnEnter}
+            onMouseLeave={onBtnLeave}
+          >▶</button>
+        </div>
+        <div style={{
+          fontFamily:'var(--font-mono)', fontSize:'8px',
+          letterSpacing:'0.2em', color: isToday ? 'rgba(160,140,255,0.4)' : '#d9b06b',
+          textTransform:'uppercase', minHeight:10,
+        }}>{isToday ? '— Heute —' : (offset > 0 ? `+${offset} Tag${offset===1?'':'e'}` : `${offset} Tag${offset===-1?'':'e'}`)}</div>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────
+   MISSIONSTERMINAL section — full functional terminal
+   (mirrors Missionsterminal.html, embedded into Meruria home)
+   ───────────────────────────────────────────────── */
+const MT_KAT = {
+  Suche:     { color: '#a78bff', glyph: '⬡', label: 'SUCHE' },
+  Gespraech: { color: '#7fb8ff', glyph: '◇', label: 'GESPRÄCH' },
+  Jagd:      { color: '#ff8db5', glyph: '✦', label: 'JAGD' },
+};
+
+const MT_QUESTS = [
+  {
+    id: 'q01', name: 'Verlorene Schriftrollen', kategorie: 'Suche', sw: 1, lv: 4,
+    auftraggeber: 'Die Kuratoren', region: 'Nebelwald, Sektor III',
+    desc: 'Im Schatten der alten Tempelruinen wurden Schriftrollen aus der Vor-Wundenzeit gesichtet. Wir vermuten, sie tragen Aufzeichnungen über Aetherius. Bringt sie ungelesen zurück ins Archiv.',
+    anweisungen: [
+      { txt: 'Sammle 4 Vergessene Schriftrollen im Nebelwald.', n:0, max:4 },
+      { txt: 'Übergib die Funde an Archivar Velian.', n:0, max:1 },
+    ],
+    rewards: { xp: 120, schillinge: 240, item: 'Stoffrobe der Akolythen' },
+    status: 'neu',
+  },
+  {
+    id: 'q02', name: 'Stimme aus dem Nebel', kategorie: 'Gespraech', sw: 1, lv: 3,
+    auftraggeber: 'Die Kuratoren', region: 'Sigilstein-Plateau',
+    desc: 'Ein Eremit am alten Sigilstein soll Visionen empfangen. Hört seinen Worten zu und kehrt mit allem zurück, was er offenbart — auch wenn es Unsinn klingt.',
+    anweisungen: [
+      { txt: 'Erreiche den Sigilstein bei Mondaufgang.', n:0, max:1 },
+      { txt: 'Sprich mit dem Eremiten Orenn.', n:0, max:1 },
+    ],
+    rewards: { xp: 80, schillinge: 160, item: null },
+    status: '',
+  },
+  {
+    id: 'q03', name: 'Schattenkatze von Tarnheim', kategorie: 'Jagd', sw: 2, lv: 6,
+    auftraggeber: 'Die Sentinels', region: 'Tarnheim — Westviertel',
+    desc: 'Eine Bestie schleicht durch die Gassen von Tarnheim. Drei Bürger sind bereits verschwunden. Stellt sie, bevor die nächste Mondnacht beginnt.',
+    anweisungen: [
+      { txt: 'Folge der Blutspur ab dem Westtor.', n:0, max:1 },
+      { txt: 'Erlege die Schattenkatze.', n:0, max:1 },
+    ],
+    rewards: { xp: 280, schillinge: 520, item: 'Klaue der Schattenkatze' },
+    status: 'empfohlen',
+  },
+  {
+    id: 'q04', name: 'Quellfeuer-Probe', kategorie: 'Suche', sw: 2, lv: 5,
+    auftraggeber: 'Die Quellensucher', region: 'Quellgrund-Höhlen',
+    desc: 'Wir benötigen drei Phiolen Quellfeuer aus den unteren Höhlen. Vorsicht — die Flamme reagiert auf Eisen.',
+    anweisungen: [
+      { txt: 'Sammle 3 Phiolen Quellfeuer.', n:1, max:3 },
+      { txt: 'Bringe sie zur Sammelstelle.', n:0, max:1 },
+    ],
+    rewards: { xp: 220, schillinge: 380, item: 'Phiole „Restglut"' },
+    status: '',
+  },
+  {
+    id: 'q05', name: 'Mondsteinpilger', kategorie: 'Gespraech', sw: 1, lv: 3,
+    auftraggeber: 'Die Friedenshüter', region: 'Straße nach Selunara',
+    desc: 'Eine Pilgerin trägt einen Mondstein zum Tempel von Selunara. Begleitet sie sicher — Strauchdiebe haben die Straße ins Visier genommen.',
+    anweisungen: [
+      { txt: 'Treffe Pilgerin Halia am Westtor.', n:0, max:1 },
+      { txt: 'Geleite sie zum Tempel.', n:0, max:1 },
+    ],
+    rewards: { xp: 100, schillinge: 200, item: null },
+    status: '',
+  },
+  {
+    id: 'q06', name: 'Sirenenruf am Hadir', kategorie: 'Jagd', sw: 3, lv: 9,
+    auftraggeber: 'Die Sentinels', region: 'Hadir-Fluss, Unterlauf',
+    desc: 'Die Sirenen kehren zurück. Schiffer berichten von singenden Stimmen unter der Strömung. Stellt sie — aber hört nicht hin.',
+    anweisungen: [
+      { txt: 'Erreiche den Unterlauf bei Dämmerung.', n:0, max:1 },
+      { txt: 'Stelle 2 Sirenen.', n:0, max:2 },
+    ],
+    rewards: { xp: 540, schillinge: 980, item: 'Wachs-Ohrstöpsel (versiegelt)' },
+    status: '',
+  },
+  {
+    id: 'q07', name: 'Erkundung Sektor-VII', kategorie: 'Suche', sw: 1, lv: 4,
+    auftraggeber: 'Die Pathfinders', region: 'Verbotenes Gebiet VII',
+    desc: 'Sektor-VII wurde seit drei Zyklen nicht mehr kartiert. Geht hinein, zeichnet die Wege, und bringt eure Karten zurück.',
+    anweisungen: [
+      { txt: 'Erkunde 3 markierte Wegpunkte.', n:0, max:3 },
+      { txt: 'Liefere die Kartenfragmente ab.', n:0, max:1 },
+    ],
+    rewards: { xp: 160, schillinge: 280, item: 'Kartographenwerkzeuge' },
+    status: '',
+  },
+  {
+    id: 'q08', name: 'Sturmwacht', kategorie: 'Jagd', sw: 1, lv: 4,
+    auftraggeber: 'Die Sturmritter', region: 'Außenposten Greifenklau',
+    desc: 'Hetzer aus den Wildlanden bedrängen unsere Außenposten. Verteidigt Greifenklau, bis die Verstärkung eintrifft.',
+    anweisungen: [
+      { txt: 'Erreiche Greifenklau vor Einbruch der Nacht.', n:0, max:1 },
+      { txt: 'Schlage 6 Hetzer zurück.', n:0, max:6 },
+    ],
+    rewards: { xp: 180, schillinge: 320, item: 'Sturmrittabzeichen' },
+    status: '',
+  },
+  {
+    id: 'q09', name: 'Pfad der Verlorenen', kategorie: 'Suche', sw: 1, lv: 3,
+    auftraggeber: 'Die Friedenshüter', region: 'Steinkreis von Othrim',
+    desc: 'Drei Wanderer kehrten nicht heim. Ihre letzte Spur führt zum Steinkreis. Folgt ihr.',
+    anweisungen: [
+      { txt: 'Folge der Spur zum Steinkreis.', n:0, max:1 },
+      { txt: 'Bringe Hinweise zurück.', n:0, max:1 },
+    ],
+    rewards: { xp: 90, schillinge: 180, item: null },
+    status: '',
+  },
+  {
+    id: 'q10', name: 'Letzte Karawane', kategorie: 'Gespraech', sw: 2, lv: 5,
+    auftraggeber: 'Die Outfitters', region: 'Tarnheim — Marktplatz',
+    desc: 'Eine Karawanenführerin verweigert die Abgabe. Verhandelt mit ihr — mit Worten, nicht mit Stahl.',
+    anweisungen: [
+      { txt: 'Triff Karawanenführerin Sevra.', n:0, max:1 },
+      { txt: 'Schließe eine Vereinbarung.', n:0, max:1 },
+    ],
+    rewards: { xp: 200, schillinge: 360, item: 'Handelssiegel' },
+    status: '',
+  },
+  {
+    id: 'q11', name: 'Echo des Abgrunds', kategorie: 'Jagd', sw: 3, lv: 10,
+    auftraggeber: 'Die Quellensucher', region: 'Abgrund-Schacht XII',
+    desc: 'Etwas hallt aus dem zwölften Schacht — kein Tier, kein Mensch. Bringt es zum Schweigen, oder bringt es uns.',
+    anweisungen: [
+      { txt: 'Steige in den Schacht XII hinab.', n:0, max:1 },
+      { txt: 'Stille das Echo.', n:0, max:1 },
+    ],
+    rewards: { xp: 620, schillinge: 1120, item: 'Abgrund-Resonator' },
+    status: '',
+  },
+  {
+    id: 'q12', name: 'Bergungs-Notruf', kategorie: 'Suche', sw: 1, lv: 4,
+    auftraggeber: 'Die Bergungsgarde', region: 'Aetherius-Riff',
+    desc: 'Ein Wrack ist am Aetherius-Riff gestrandet. Sichert die Fracht, bevor die Strömung sie verschluckt.',
+    anweisungen: [
+      { txt: 'Erreiche das Aetherius-Riff.', n:0, max:1 },
+      { txt: 'Sichere 5 Frachtkisten.', n:0, max:5 },
+    ],
+    rewards: { xp: 140, schillinge: 260, item: 'Bergungshaken' },
+    status: 'neu',
+  },
+];
+
+// Helpers
+function MTSchwierigkeit({ level, max = 5 }) {
+  return (
+    <div style={{ display:'flex', alignItems:'center', gap:'3px' }}>
+      {Array.from({ length: max }).map((_, i) => {
+        const filled = i < level;
+        return (
+          <svg key={i} width="9" height="10" viewBox="0 0 9 10" style={{ flexShrink:0 }}>
+            <polygon points="4.5,0.6 8.3,2.8 8.3,7.2 4.5,9.4 0.7,7.2 0.7,2.8"
+              fill={filled ? '#7c4dff' : 'transparent'}
+              stroke={filled ? '#a78bff' : 'rgba(160,140,255,0.22)'}
+              strokeWidth="1"/>
+          </svg>
+        );
+      })}
+    </div>
+  );
+}
+
+function MTKatTag({ k }) {
+  const meta = MT_KAT[k];
+  return (
+    <span style={{
+      fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em',
+      color: meta.color, textTransform:'uppercase',
+      display:'inline-flex', alignItems:'center', gap:'5px'
+    }}>
+      <span style={{ fontSize:'10px', lineHeight:1 }}>{meta.glyph}</span>
+      {meta.label}
+    </span>
+  );
+}
+
+function MTQuestRow({ q, active, onClick }) {
+  return (
+    <div onClick={onClick} style={{
+      position:'relative', display:'grid',
+      gridTemplateColumns: '1fr 120px 96px',
+      alignItems:'center', gap:'12px',
+      padding: '9px 18px',
+      cursor:'pointer',
+      background: active
+        ? 'linear-gradient(90deg, rgba(124,77,255,0.18) 0%, rgba(124,77,255,0.06) 100%)'
+        : 'transparent',
+      borderLeft: `2px solid ${active ? '#a78bff' : 'transparent'}`,
+      borderBottom: '1px solid rgba(160,140,255,0.05)',
+      transition:'all 0.15s'
+    }}
+      onMouseEnter={e => { if (!active) { e.currentTarget.style.background = 'rgba(124,77,255,0.05)'; e.currentTarget.style.borderLeftColor = 'rgba(124,77,255,0.35)'; } }}
+      onMouseLeave={e => { if (!active) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderLeftColor = 'transparent'; } }}
+    >
+      <div style={{ minWidth:0, display:'flex', alignItems:'center', gap:'10px' }}>
+        {q.status === 'neu' && (
+          <span style={{
+            fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.15em',
+            padding:'2px 6px', background:'rgba(127,184,255,0.18)',
+            border:'1px solid rgba(127,184,255,0.45)', borderRadius:'2px',
+            color:'#a3c8ff', textTransform:'uppercase', flexShrink:0
+          }}>NEU</span>
+        )}
+        {q.status === 'empfohlen' && (
+          <span style={{
+            fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.15em',
+            padding:'2px 6px', background:'rgba(255,141,181,0.18)',
+            border:'1px solid rgba(255,141,181,0.45)', borderRadius:'2px',
+            color:'#ffb3ce', textTransform:'uppercase', flexShrink:0
+          }}>EMPF.</span>
+        )}
+        <span style={{
+          fontFamily:'var(--font-body)', fontWeight: active ? 400 : 300,
+          fontSize:'13.5px', color: active ? '#f0eeff' : 'rgba(220,210,250,0.85)',
+          letterSpacing:'0.03em', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis'
+        }}>{q.name}</span>
+      </div>
+      <div><MTKatTag k={q.kategorie}/></div>
+      <MTSchwierigkeit level={q.sw} />
+    </div>
+  );
+}
+
+function MTFilterChip({ label, count, active, onClick, color }) {
+  return (
+    <button onClick={onClick} style={{
+      fontFamily:'var(--font-mono)', fontSize:'9.5px', letterSpacing:'0.18em',
+      padding:'5px 11px', height:'24px',
+      background: active ? 'rgba(124,77,255,0.22)' : 'transparent',
+      border: `1px solid ${active ? 'rgba(160,140,255,0.55)' : 'rgba(160,140,255,0.15)'}`,
+      color: active ? '#f0eeff' : (color || 'rgba(200,190,240,0.55)'),
+      cursor:'pointer', borderRadius:'2px',
+      textTransform:'uppercase', whiteSpace:'nowrap', flexShrink:0,
+      display:'inline-flex', alignItems:'center', gap:'7px', transition:'all 0.15s'
+    }}
+      onMouseEnter={e=>{ if (!active) { e.currentTarget.style.borderColor = 'rgba(160,140,255,0.4)'; e.currentTarget.style.color = '#f0eeff'; } }}
+      onMouseLeave={e=>{ if (!active) { e.currentTarget.style.borderColor = 'rgba(160,140,255,0.15)'; e.currentTarget.style.color = color || 'rgba(200,190,240,0.55)'; } }}
+    >
+      {label}
+      <span style={{ opacity:0.55, fontSize:'9px' }}>{count}</span>
+    </button>
+  );
+}
+
+function MTSigil({ name }) {
+  const initials = name.replace(/^Die\s+/, '').split(/\s+/).map(w=>w[0]).slice(0,2).join('');
+  return (
+    <div style={{
+      position:'relative', width:'46px', height:'52px',
+      display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0
+    }}>
+      <svg width="46" height="52" viewBox="0 0 46 52" style={{ position:'absolute', inset:0 }}>
+        <polygon points="23,2 43,13 43,39 23,50 3,39 3,13"
+          fill="rgba(124,77,255,0.12)" stroke="rgba(167,139,255,0.6)" strokeWidth="1.2"/>
+        <polygon points="23,7 38,15.5 38,36.5 23,45 8,36.5 8,15.5"
+          fill="none" stroke="rgba(167,139,255,0.18)" strokeWidth="0.8"/>
+      </svg>
+      <span style={{
+        position:'relative', zIndex:1,
+        fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:500,
+        letterSpacing:'0.05em', color:'#e8e0ff'
+      }}>{initials}</span>
+    </div>
+  );
+}
+
+function MTCategoryIcon({ k }) {
+  const c = MT_KAT[k].color;
+  return (
+    <div style={{
+      width:'42px', height:'46px', flexShrink:0,
+      display:'flex', alignItems:'center', justifyContent:'center', position:'relative'
+    }}>
+      <svg width="42" height="46" viewBox="0 0 42 46" style={{position:'absolute', inset:0}}>
+        <polygon points="21,2 39,12 39,34 21,44 3,34 3,12"
+          fill="rgba(124,77,255,0.08)" stroke={c} strokeOpacity="0.55" strokeWidth="1.2"/>
+      </svg>
+      <span style={{ position:'relative', fontSize:'17px', color:c, lineHeight:1 }}>{MT_KAT[k].glyph}</span>
+    </div>
+  );
+}
+
+function MTPanelHeader({ children, right }) {
+  return (
+    <div style={{
+      position:'relative',
+      padding:'12px 20px',
+      borderBottom:'1px solid rgba(160,140,255,0.18)',
+      background:'linear-gradient(180deg, rgba(124,77,255,0.10) 0%, rgba(124,77,255,0.02) 100%)',
+      display:'flex', alignItems:'center', justifyContent:'space-between', gap:'12px'
+    }}>
+      <div style={{
+        fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:400,
+        letterSpacing:'0.32em', color:'#f0eeff', textTransform:'uppercase',
+        textShadow:'0 0 14px rgba(124,77,255,0.4)'
+      }}>{children}</div>
+      {right}
+    </div>
+  );
+}
+
+function MTRewardRow({ icon, label, value, accent }) {
+  return (
+    <div style={{
+      display:'flex', alignItems:'center', justifyContent:'space-between',
+      padding:'8px 0', borderBottom:'1px dashed rgba(160,140,255,0.1)',
+    }}>
+      <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
+        <div style={{
+          width:'20px', height:'20px', display:'flex',
+          alignItems:'center', justifyContent:'center',
+          color: accent || '#a78bff', flexShrink:0
+        }}>{icon}</div>
+        <span style={{
+          fontFamily:'var(--font-body)', fontWeight:300,
+          fontSize:'12.5px', color:'rgba(220,210,250,0.78)',
+          letterSpacing:'0.04em'
+        }}>{label}</span>
+      </div>
+      <span style={{
+        fontFamily:'var(--font-mono)', fontSize:'13px',
+        color:'#f0eeff', letterSpacing:'0.08em'
+      }}>{value}</span>
+    </div>
+  );
+}
+
+function MTDetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
+  return (
+    <div style={{ display:'flex', flexDirection:'column', height:'100%', minHeight:0 }}>
+      {/* Quest header strip */}
+      <div style={{
+        display:'flex', alignItems:'center', gap:'14px',
+        padding:'18px 22px',
+        background:`linear-gradient(180deg, ${MT_KAT[q.kategorie].color}22 0%, rgba(10,8,32,0) 100%)`,
+        borderBottom:'1px solid rgba(160,140,255,0.12)'
+      }}>
+        <MTCategoryIcon k={q.kategorie}/>
+        <div style={{ flex:1, minWidth:0 }}>
+          <div style={{
+            fontFamily:'var(--font-mono)', fontSize:'9px',
+            color: MT_KAT[q.kategorie].color, letterSpacing:'0.25em',
+            textTransform:'uppercase', marginBottom:'4px', opacity:0.85
+          }}>{MT_KAT[q.kategorie].label} · STUFE {q.lv}</div>
+          <div style={{
+            fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:400,
+            letterSpacing:'0.06em', color:'#f0eeff',
+            textShadow:'0 0 22px rgba(124,77,255,0.35)',
+            whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis'
+          }}>{q.name}</div>
+        </div>
+        <div style={{ textAlign:'right' }}>
+          <div style={{
+            fontFamily:'var(--font-mono)', fontSize:'8px', color:'rgba(200,190,240,0.35)',
+            letterSpacing:'0.2em', textTransform:'uppercase', marginBottom:'4px'
+          }}>SCHWIERIGKEIT</div>
+          <MTSchwierigkeit level={q.sw}/>
+        </div>
+      </div>
+
+      {/* Body */}
+      <div style={{
+        flex:1, minHeight:0, overflowY:'auto', padding:'20px 22px',
+        animation:'fadeIn 0.25s ease'
+      }}>
+        {view === 'details' && (
+          <div style={{ animation:'fadeInUp 0.25s ease' }}>
+            <div style={{
+              display:'flex', alignItems:'center', gap:'14px', marginBottom:'18px',
+              padding:'12px 14px',
+              background:'rgba(124,77,255,0.06)',
+              border:'1px solid rgba(160,140,255,0.14)',
+              borderRadius:'3px'
+            }}>
+              <MTSigil name={q.auftraggeber}/>
+              <div>
+                <div style={{
+                  fontFamily:'var(--font-mono)', fontSize:'9px', color:'#a78bff',
+                  letterSpacing:'0.22em', textTransform:'uppercase', marginBottom:'3px'
+                }}>Auftraggeber</div>
+                <div style={{
+                  fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:400,
+                  color:'#f0eeff', letterSpacing:'0.08em'
+                }}>{q.auftraggeber}</div>
+                <div style={{
+                  fontFamily:'var(--font-body)', fontWeight:300, fontStyle:'italic',
+                  fontSize:'11px', color:'rgba(200,190,240,0.55)', marginTop:'2px'
+                }}>{q.region}</div>
+              </div>
+            </div>
+
+            <div style={{
+              fontFamily:'var(--font-body)', fontWeight:300,
+              fontSize:'13px', lineHeight:1.75, color:'rgba(220,210,250,0.82)',
+              letterSpacing:'0.02em', marginBottom:'24px',
+              textWrap:'pretty'
+            }}>{q.desc}</div>
+
+            <div style={{
+              fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:500,
+              letterSpacing:'0.28em', color:'#a78bff',
+              textTransform:'uppercase', marginBottom:'8px',
+              paddingBottom:'4px', borderBottom:'1px solid rgba(160,140,255,0.2)'
+            }}>Belohnungen</div>
+            <MTRewardRow
+              icon={<svg width="14" height="14" viewBox="0 0 14 14"><polygon points="7,1 13,5 11,12 3,12 1,5" fill="none" stroke="currentColor" strokeWidth="1.2"/></svg>}
+              label="Erfahrung"
+              value={`+${q.rewards.xp}`}
+            />
+            <MTRewardRow
+              icon={<svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="5.5" fill="none" stroke="currentColor" strokeWidth="1.2"/><circle cx="7" cy="7" r="2.5" fill="currentColor" opacity="0.5"/></svg>}
+              label="Schillinge"
+              value={q.rewards.schillinge.toLocaleString('de-DE')}
+            />
+            {q.rewards.item && (
+              <MTRewardRow
+                icon={<svg width="14" height="14" viewBox="0 0 14 14"><rect x="2.5" y="3" width="9" height="8" fill="none" stroke="currentColor" strokeWidth="1.2"/><line x1="2.5" y1="5.5" x2="11.5" y2="5.5" stroke="currentColor" strokeWidth="1"/></svg>}
+                label={q.rewards.item}
+                value="◈"
+                accent="#ffb89e"
+              />
+            )}
+          </div>
+        )}
+
+        {view === 'anweisungen' && (
+          <div style={{ animation:'fadeInUp 0.25s ease' }}>
+            <div style={{
+              fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:500,
+              letterSpacing:'0.28em', color:'#a78bff',
+              textTransform:'uppercase', marginBottom:'14px',
+              paddingBottom:'4px', borderBottom:'1px solid rgba(160,140,255,0.2)'
+            }}>Anweisungen</div>
+
+            {q.anweisungen.map((step, i) => {
+              const n = progress[i] ?? step.n;
+              const done = n >= step.max;
+              const handleClick = () => onStepClick && onStepClick(i, step.max);
+              return (
+                <div key={i} style={{
+                  display:'flex', alignItems:'flex-start', gap:'14px',
+                  padding:'12px 0', borderBottom:'1px dashed rgba(160,140,255,0.1)'
+                }}>
+                  <button
+                    onClick={handleClick}
+                    aria-label={`Schritt ${i+1} abhaken`}
+                    style={{
+                      position:'relative', width:'26px', height:'28px',
+                      flexShrink:0, marginTop:'-1px',
+                      padding:0, background:'transparent', border:'none',
+                      cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center',
+                      transition:'transform 0.15s'
+                    }}
+                    onMouseEnter={e=>{ e.currentTarget.style.transform='scale(1.12)'; }}
+                    onMouseLeave={e=>{ e.currentTarget.style.transform='scale(1)'; }}
+                  >
+                    <svg width="22" height="24" viewBox="0 0 22 24" style={{ display:'block', overflow:'visible' }}>
+                      <polygon points="11,1.5 19.5,6.5 19.5,17.5 11,22.5 2.5,17.5 2.5,6.5"
+                        fill={done ? 'rgba(124,77,255,0.5)' : (n>0 ? 'rgba(124,77,255,0.18)' : 'rgba(124,77,255,0.06)')}
+                        stroke="#a78bff" strokeWidth="1.1"
+                        style={{ filter: done ? 'drop-shadow(0 0 6px rgba(167,139,255,0.7))' : 'none', transition:'all 0.2s' }}/>
+                      {done && (
+                        <path d="M6.5 12 L9.5 15 L15 9" stroke="#f0eeff" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                      )}
+                      {!done && n > 0 && step.max > 1 && (
+                        <text x="11" y="15" textAnchor="middle"
+                          fontFamily="Share Tech Mono, monospace"
+                          fontSize="9" fill="#f0eeff" style={{letterSpacing:'0.05em'}}>
+                          {n}
+                        </text>
+                      )}
+                    </svg>
+                  </button>
+                  <div style={{ flex:1 }}>
+                    <div style={{
+                      fontFamily:'var(--font-body)', fontWeight:300, fontSize:'13px',
+                      color: done ? 'rgba(200,190,240,0.6)' : 'rgba(220,210,250,0.88)',
+                      lineHeight:1.6, letterSpacing:'0.02em',
+                      textDecoration: done ? 'line-through' : 'none',
+                      textDecorationColor:'rgba(167,139,255,0.45)',
+                      transition:'all 0.2s'
+                    }}>{step.txt}</div>
+                    {step.max > 1 && (
+                      <div style={{ display:'flex', alignItems:'center', gap:'10px', marginTop:'8px' }}>
+                        <div style={{
+                          flex:1, height:'3px', background:'rgba(160,140,255,0.1)',
+                          borderRadius:'1px', overflow:'hidden', maxWidth:'180px'
+                        }}>
+                          <div style={{
+                            height:'100%', width: `${(n/step.max)*100}%`,
+                            background:'linear-gradient(90deg, #7c4dff 0%, #a78bff 100%)',
+                            boxShadow:'0 0 8px rgba(167,139,255,0.6)',
+                            transition:'width 0.25s ease'
+                          }}/>
+                        </div>
+                        <span style={{
+                          fontFamily:'var(--font-mono)', fontSize:'11px',
+                          color: done ? '#a78bff' : '#f0eeff',
+                          letterSpacing:'0.1em'
+                        }}>{n} / {step.max}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      {/* Accept bar */}
+      <div style={{
+        padding:'12px 22px',
+        borderTop:'1px solid rgba(160,140,255,0.18)',
+        background:'rgba(5,4,15,0.6)',
+        display:'flex', alignItems:'center', justifyContent:'space-between', gap:'12px'
+      }}>
+        <div style={{
+          fontFamily:'var(--font-mono)', fontSize:'8.5px',
+          color:'rgba(200,190,240,0.35)', letterSpacing:'0.2em', textTransform:'uppercase'
+        }}>
+          ID · {q.id.toUpperCase()}
+        </div>
+        <button
+          onClick={onAccept}
+          disabled={accepted}
+          style={{
+            fontFamily:'var(--font-display)', fontSize:'11px',
+            letterSpacing:'0.28em', padding:'9px 28px',
+            background: accepted ? 'rgba(124,77,255,0.08)' : 'rgba(124,77,255,0.22)',
+            border:`1px solid ${accepted ? 'rgba(160,140,255,0.3)' : 'rgba(167,139,255,0.7)'}`,
+            color: accepted ? '#a78bff' : '#f0eeff',
+            cursor: accepted ? 'default' : 'pointer', borderRadius:'2px',
+            textTransform:'uppercase', transition:'all 0.2s',
+            display:'inline-flex', alignItems:'center', gap:'10px',
+            boxShadow: accepted ? 'none' : '0 0 20px rgba(124,77,255,0.25)'
+          }}
+          onMouseEnter={e=>{ if (!accepted) { e.currentTarget.style.background='rgba(124,77,255,0.35)'; e.currentTarget.style.borderColor='#a78bff'; } }}
+          onMouseLeave={e=>{ if (!accepted) { e.currentTarget.style.background='rgba(124,77,255,0.22)'; e.currentTarget.style.borderColor='rgba(167,139,255,0.7)'; } }}
+        >
+          <span style={{
+            display:'inline-flex', width:'18px', height:'18px',
+            border:'1px solid currentColor', borderRadius:'50%',
+            alignItems:'center', justifyContent:'center', fontSize:'10px'
+          }}>↵</span>
+          {accepted ? 'Angenommen' : 'Akzeptieren'}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function MTPanel({ children, style }) {
+  const corner = {
+    position:'absolute', width:14, height:14, pointerEvents:'none',
+    border:'1px solid rgba(160,140,255,0.45)'
+  };
+  return (
+    <div style={{
+      position:'relative',
+      background:'linear-gradient(180deg, rgba(15,10,40,0.7) 0%, rgba(8,6,22,0.85) 100%)',
+      border:'1px solid rgba(160,140,255,0.18)',
+      borderRadius:'3px',
+      backdropFilter:'blur(8px)',
+      display:'flex', flexDirection:'column', minHeight:0, overflow:'hidden',
+      boxShadow:'0 8px 40px rgba(0,0,0,0.5), inset 0 0 60px rgba(124,77,255,0.04)',
+      ...style
+    }}>
+      <span style={{ ...corner, top:-1, left:-1, borderRight:0, borderBottom:0 }}/>
+      <span style={{ ...corner, top:-1, right:-1, borderLeft:0, borderBottom:0 }}/>
+      <span style={{ ...corner, bottom:-1, left:-1, borderRight:0, borderTop:0 }}/>
+      <span style={{ ...corner, bottom:-1, right:-1, borderLeft:0, borderTop:0 }}/>
+      {children}
+    </div>
+  );
+}
+
+function MissionsterminalSection() {
+  const [filter, setFilter] = uSx('alle');
+  const [search, setSearch] = uSx('');
+  const [selectedId, setSelectedId] = uSx(() => {
+    const firstNew = MT_QUESTS.find(q => q.status === 'neu');
+    return firstNew ? firstNew.id : MT_QUESTS[0].id;
+  });
+  const [view, setView] = uSx('details');
+  const [acceptedIds, setAcceptedIds] = uSx(() => new Set());
+  const [progress, setProgress] = uSx(() => {
+    const init = {};
+    MT_QUESTS.forEach(q => { init[q.id] = q.anweisungen.map(s => s.n); });
+    return init;
+  });
+
+  const stepClick = (questId, stepIdx, max) => {
+    setProgress(prev => {
+      const cur = prev[questId] ? [...prev[questId]] : [];
+      const n = cur[stepIdx] ?? 0;
+      if (max <= 1) cur[stepIdx] = n >= 1 ? 0 : 1;
+      else cur[stepIdx] = n >= max ? 0 : n + 1;
+      return { ...prev, [questId]: cur };
+    });
+  };
+
+  const counts = uMx(() => ({
+    alle: MT_QUESTS.length,
+    Suche: MT_QUESTS.filter(q=>q.kategorie==='Suche').length,
+    Gespraech: MT_QUESTS.filter(q=>q.kategorie==='Gespraech').length,
+    Jagd: MT_QUESTS.filter(q=>q.kategorie==='Jagd').length,
+  }), []);
+
+  const filtered = uMx(() => {
+    const s = search.trim().toLowerCase();
+    const rank = q => q.status === 'neu' ? 0 : q.status === 'empfohlen' ? 1 : 2;
+    return MT_QUESTS.filter(x => {
+      if (filter !== 'alle' && x.kategorie !== filter) return false;
+      if (s && !(x.name.toLowerCase().includes(s) || x.auftraggeber.toLowerCase().includes(s))) return false;
+      return true;
+    }).sort((a, b) => rank(a) - rank(b));
+  }, [filter, search]);
+
+  uEx(() => {
+    if (filtered.length && !filtered.find(q => q.id === selectedId)) {
+      setSelectedId(filtered[0].id);
+    }
+  }, [filtered, selectedId]);
+
+  const selected = MT_QUESTS.find(q => q.id === selectedId) || MT_QUESTS[0];
+
+  const handleAccept = () => {
+    setAcceptedIds(prev => {
+      const next = new Set(prev);
+      next.add(selected.id);
+      return next;
+    });
+  };
+
+  return (
+    <div>
+      {/* Eyebrow row */}
+      <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:24 }}>
+        <span style={{
+          fontFamily:'var(--font-mono)', fontSize:'10px',
+          letterSpacing:'0.35em', color:'rgba(124,77,255,0.65)',
+          textTransform:'uppercase',
+        }}>◈ Missionsterminal</span>
+        <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(124,77,255,0.5), rgba(124,77,255,0.05))' }}/>
+        <div style={{
+          display:'flex', alignItems:'center', gap:'12px',
+          fontFamily:'var(--font-mono)', fontSize:'9px',
+          color:'rgba(200,190,240,0.55)', letterSpacing:'0.22em',
+          textTransform:'uppercase',
+        }}>
+          <span style={{ display:'inline-flex', alignItems:'center', gap:'7px' }}>
+            <span style={{
+              width:'7px', height:'7px', borderRadius:'50%',
+              background:'#7fb8ff', boxShadow:'0 0 8px #7fb8ff',
+              animation:'pulse-glow 2s ease infinite'
+            }}/>
+            {MT_QUESTS.filter(q=>q.status==='neu').length} neue Aufträge
+          </span>
+          <span style={{ width:'1px', height:'14px', background:'rgba(160,140,255,0.2)' }}/>
+          <span>{filtered.length} / {MT_QUESTS.length} gesamt</span>
+        </div>
+      </div>
+
+      {/* Two-panel grid */}
+      <div style={{
+        display:'grid', gridTemplateColumns:'1fr 1fr', gap:'18px',
+        height:'540px',
+      }}>
+        {/* LEFT — quest list */}
+        <MTPanel>
+          <MTPanelHeader>
+            Nebenjobs
+          </MTPanelHeader>
+
+          {/* Filter bar */}
+          <div style={{
+            padding:'12px 18px', display:'flex', alignItems:'center', gap:'8px',
+            borderBottom:'1px solid rgba(160,140,255,0.1)',
+            background:'rgba(8,6,22,0.4)',
+            flexWrap:'wrap',
+          }}>
+            <MTFilterChip label="Alle" count={counts.alle} active={filter==='alle'} onClick={()=>setFilter('alle')}/>
+            <MTFilterChip label="Suche" count={counts.Suche} color="#a78bff" active={filter==='Suche'} onClick={()=>setFilter('Suche')}/>
+            <MTFilterChip label="Gespräch" count={counts.Gespraech} color="#7fb8ff" active={filter==='Gespraech'} onClick={()=>setFilter('Gespraech')}/>
+            <MTFilterChip label="Jagd" count={counts.Jagd} color="#ff8db5" active={filter==='Jagd'} onClick={()=>setFilter('Jagd')}/>
+            <div style={{ flex:1, minWidth:8 }}/>
+            <div style={{
+              display:'flex', alignItems:'center', gap:'6px',
+              padding:'4px 9px', height:'24px',
+              border:'1px solid rgba(160,140,255,0.18)', borderRadius:'2px',
+              background:'rgba(5,4,15,0.5)'
+            }}>
+              <svg width="11" height="11" viewBox="0 0 12 12" style={{ opacity:0.5 }}>
+                <circle cx="5" cy="5" r="3.5" fill="none" stroke="#a78bff" strokeWidth="1.2"/>
+                <line x1="7.5" y1="7.5" x2="10" y2="10" stroke="#a78bff" strokeWidth="1.2" strokeLinecap="round"/>
+              </svg>
+              <input
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                placeholder="suchen…"
+                style={{
+                  background:'transparent', border:'none', outline:'none',
+                  fontFamily:'var(--font-mono)', fontSize:'10px',
+                  color:'#f0eeff', letterSpacing:'0.08em', width:'100px'
+                }}
+              />
+            </div>
+          </div>
+
+          {/* Column headers */}
+          <div style={{
+            display:'grid', gridTemplateColumns:'1fr 120px 96px',
+            gap:'12px', padding:'9px 18px',
+            borderBottom:'1px solid rgba(160,140,255,0.12)',
+            background:'rgba(124,77,255,0.04)',
+            fontFamily:'var(--font-mono)', fontSize:'8.5px',
+            color:'rgba(200,190,240,0.35)', letterSpacing:'0.22em', textTransform:'uppercase'
+          }}>
+            <div>Auftrag</div>
+            <div>Kategorie</div>
+            <div>Schwierigkeit</div>
+          </div>
+
+          {/* List */}
+          <div style={{ flex:1, minHeight:0, overflowY:'auto' }}>
+            {filtered.length === 0 && (
+              <div style={{
+                padding:'40px 20px', textAlign:'center',
+                fontFamily:'var(--font-body)', fontStyle:'italic',
+                fontSize:'12px', color:'rgba(200,190,240,0.35)'
+              }}>
+                Keine Aufträge im Filter.
+              </div>
+            )}
+            {filtered.map(q => (
+              <MTQuestRow
+                key={q.id}
+                q={q}
+                active={q.id === selectedId}
+                onClick={()=>setSelectedId(q.id)}
+              />
+            ))}
+          </div>
+
+          {/* Foot */}
+          <div style={{
+            padding:'9px 18px',
+            borderTop:'1px solid rgba(160,140,255,0.12)',
+            display:'flex', alignItems:'center', justifyContent:'space-between',
+            fontFamily:'var(--font-mono)', fontSize:'8.5px',
+            color:'rgba(200,190,240,0.35)', letterSpacing:'0.2em', textTransform:'uppercase',
+            background:'rgba(5,4,15,0.5)'
+          }}>
+            <span>◈ Aktualisiert · Heute</span>
+            <span>Angenommen · {acceptedIds.size}</span>
+          </div>
+        </MTPanel>
+
+        {/* RIGHT — detail card */}
+        <MTPanel>
+          <MTPanelHeader
+            right={
+              <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
+                <button onClick={()=>setView('details')} style={{
+                  fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em',
+                  padding:'4px 10px', height:'24px',
+                  background: view==='details' ? 'rgba(124,77,255,0.25)' : 'transparent',
+                  border:`1px solid ${view==='details' ? 'rgba(167,139,255,0.6)' : 'rgba(160,140,255,0.15)'}`,
+                  color: view==='details' ? '#f0eeff' : 'rgba(200,190,240,0.55)',
+                  cursor:'pointer', borderRadius:'2px', textTransform:'uppercase',
+                  transition:'all 0.15s'
+                }}>Details</button>
+                <button onClick={()=>setView('anweisungen')} style={{
+                  fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em',
+                  padding:'4px 10px', height:'24px',
+                  background: view==='anweisungen' ? 'rgba(124,77,255,0.25)' : 'transparent',
+                  border:`1px solid ${view==='anweisungen' ? 'rgba(167,139,255,0.6)' : 'rgba(160,140,255,0.15)'}`,
+                  color: view==='anweisungen' ? '#f0eeff' : 'rgba(200,190,240,0.55)',
+                  cursor:'pointer', borderRadius:'2px', textTransform:'uppercase',
+                  transition:'all 0.15s'
+                }}>Anweisungen</button>
+                <div style={{ display:'flex', alignItems:'center', gap:'4px', marginLeft:'4px' }}>
+                  <span style={{
+                    width:'6px', height:'6px', borderRadius:'50%',
+                    background: view==='details' ? '#a78bff' : 'rgba(160,140,255,0.25)',
+                    boxShadow: view==='details' ? '0 0 6px #a78bff' : 'none'
+                  }}/>
+                  <span style={{
+                    width:'6px', height:'6px', borderRadius:'50%',
+                    background: view==='anweisungen' ? '#a78bff' : 'rgba(160,140,255,0.25)',
+                    boxShadow: view==='anweisungen' ? '0 0 6px #a78bff' : 'none'
+                  }}/>
+                </div>
+              </div>
+            }
+          >
+            Auftrag
+          </MTPanelHeader>
+          <MTDetailCard
+            key={selected.id + view}
+            q={selected}
+            view={view}
+            onAccept={handleAccept}
+            accepted={acceptedIds.has(selected.id)}
+            progress={progress[selected.id] || []}
+            onStepClick={(stepIdx, max) => stepClick(selected.id, stepIdx, max)}
+          />
+        </MTPanel>
+      </div>
+
+      {/* CTA — Terminal betreten */}
+      <div style={{ marginTop:24 }}>
+        <CTAButton href="Missionsterminal.html" label="Terminal betreten"/>
+      </div>
+    </div>
+  );
+}
+
+
+
+/* ─────────────────────────────────────────────────
+   KOLLEKTIKON — discovery progress
+   ───────────────────────────────────────────────── */
+const KOLLEKTIKON_DATA = [
+  { id:'fische',       label:'Fische',       found:6, total:80,  komplett:3, hue:200,
+    icon:<g><path d="M70 50 C 60 35, 30 35, 20 50 C 30 65, 60 65, 70 50 Z" fill="none" strokeWidth="2"/><path d="M70 50 L 85 38 L 85 62 Z" fill="none" strokeWidth="2"/><circle cx="32" cy="48" r="2.4" fill="currentColor"/></g> },
+  { id:'insekten',     label:'Insekten',     found:5,  total:30, komplett:2, hue:95,
+    icon:<g><ellipse cx="50" cy="50" rx="3.5" ry="22" fill="currentColor" stroke="none"/><path d="M50 38 C 36 22 16 24 18 42 C 24 50 38 48 50 50 Z" fill="none" strokeWidth="1.6"/><path d="M50 38 C 64 22 84 24 82 42 C 76 50 62 48 50 50 Z" fill="none" strokeWidth="1.6"/><path d="M50 50 C 38 56 22 60 22 72 C 30 76 44 70 50 64 Z" fill="none" strokeWidth="1.4"/><path d="M50 50 C 62 56 78 60 78 72 C 70 76 56 70 50 64 Z" fill="none" strokeWidth="1.4"/><path d="M48 30 L 42 22 M52 30 L 58 22" strokeWidth="1.4"/></g> },
+  { id:'pflanzen',     label:'Pflanzen',     found:8, total:110, komplett:3, hue:140,
+    icon:<g><path d="M50 86 L 50 30" strokeWidth="2"/><path d="M50 50 C 30 46, 18 30, 22 18 C 36 22, 50 36, 50 50 Z" fill="none" strokeWidth="1.8"/><path d="M50 62 C 70 58, 82 42, 78 30 C 64 34, 50 48, 50 62 Z" fill="none" strokeWidth="1.8"/><path d="M50 76 C 42 72, 38 64, 42 58 C 48 60, 52 68, 50 76 Z" fill="none" strokeWidth="1.6"/></g> },
+  { id:'mineralien',   label:'Mineralien',   found:4, total:60,  komplett:2, hue:60,
+    icon:<g><path d="M50 14 L 78 38 L 64 82 L 36 82 L 22 38 Z" fill="none" strokeWidth="2"/><path d="M50 14 L 50 82 M22 38 L 78 38 M36 82 L 50 38 L 64 82" strokeWidth="1.2" opacity="0.6"/></g> },
+  { id:'kreaturen',   label:'Kreaturen',    found:2,  total:36,  komplett:1, hue:285,
+    icon:<g><path d="M28 32 L 22 18 L 38 26 L 50 14 L 62 26 L 78 18 L 72 32 L 80 50 L 70 70 L 50 84 L 30 70 L 20 50 Z" fill="none" strokeWidth="1.8"/><circle cx="40" cy="44" r="3" fill="currentColor"/><circle cx="60" cy="44" r="3" fill="currentColor"/><path d="M38 62 Q 50 70 62 62" strokeWidth="1.6" fill="none"/></g> },
+  { id:'kreaturenteile', label:'Kreaturenteile', found:3, total:48, komplett:2, hue:0,
+    icon:<g transform="rotate(-22 50 50) translate(-10.5 25) scale(0.18)" strokeLinejoin="round" strokeLinecap="round">
+      <path d="M 148 110 L 532 110 C 532 88, 550 68, 572 68 C 594 68, 610 84, 610 106 C 610 120, 604 132, 594 140 C 604 148, 610 160, 610 174 C 610 196, 594 212, 572 212 C 550 212, 532 192, 532 170 L 148 170 C 148 192, 130 212, 108 212 C 86 212, 70 196, 70 174 C 70 160, 76 148, 86 140 C 76 132, 70 120, 70 106 C 70 84, 86 68, 108 68 C 130 68, 148 88, 148 110 Z" fill="none" strokeWidth="11"/>
+    </g> },
+  { id:'wal',           label:'Trümmer des Weißen Wals',  found:4, total:20, komplett:1, hue:210,
+    icon:<g><path d="M14 52 C 20 36 40 26 60 30 C 72 32 82 40 86 50 L 78 54 L 72 48 L 64 54 L 56 46 L 48 56 L 38 48 Z" fill="none" strokeWidth="2"/><circle cx="68" cy="42" r="1.8" fill="currentColor"/><path d="M28 40 L 34 50 M48 28 L 52 42" strokeWidth="1.2" opacity="0.55"/></g> },
+  { id:'lebensspeicher', label:'Teile des Lebensspeichers', found:2, total:15, komplett:1, hue:45,
+    icon:<g><circle cx="50" cy="50" r="26" fill="none" strokeWidth="2"/><path d="M50 24 L 50 76 M24 50 L 76 50 M32 32 L 68 68 M68 32 L 32 68" strokeWidth="1.1" opacity="0.5"/><circle cx="50" cy="50" r="6.5" fill="none" strokeWidth="1.6"/><circle cx="50" cy="50" r="1.6" fill="currentColor"/></g> },
+];
+
+/* ── Recent discovery feed data ── */
+const FISH_ICON = <g><path d="M70 50 C 60 35, 30 35, 20 50 C 30 65, 60 65, 70 50 Z" fill="none" strokeWidth="2"/><path d="M70 50 L 85 38 L 85 62 Z" fill="none" strokeWidth="2"/><circle cx="32" cy="48" r="2.4" fill="currentColor"/></g>;
+const INSECT_ICON = <g><ellipse cx="50" cy="50" rx="3.5" ry="22" fill="currentColor" stroke="none"/><path d="M50 38 C 36 22 16 24 18 42 C 24 50 38 48 50 50 Z" fill="none" strokeWidth="1.6"/><path d="M50 38 C 64 22 84 24 82 42 C 76 50 62 48 50 50 Z" fill="none" strokeWidth="1.6"/><path d="M50 50 C 38 56 22 60 22 72 C 30 76 44 70 50 64 Z" fill="none" strokeWidth="1.4"/><path d="M50 50 C 62 56 78 60 78 72 C 70 76 56 70 50 64 Z" fill="none" strokeWidth="1.4"/><path d="M48 30 L 42 22 M52 30 L 58 22" strokeWidth="1.4"/></g>;
+const PLANT_ICON = <g><path d="M50 86 L 50 30" strokeWidth="2"/><path d="M50 50 C 30 46, 18 30, 22 18 C 36 22, 50 36, 50 50 Z" fill="none" strokeWidth="1.8"/><path d="M50 62 C 70 58, 82 42, 78 30 C 64 34, 50 48, 50 62 Z" fill="none" strokeWidth="1.8"/><path d="M50 76 C 42 72, 38 64, 42 58 C 48 60, 52 68, 50 76 Z" fill="none" strokeWidth="1.6"/></g>;
+const MINERAL_ICON = <g><path d="M50 14 L 78 38 L 64 82 L 36 82 L 22 38 Z" fill="none" strokeWidth="2"/><path d="M50 14 L 50 82 M22 38 L 78 38 M36 82 L 50 38 L 64 82" strokeWidth="1.2" opacity="0.6"/></g>;
+const CREATURE_ICON = <g><path d="M28 32 L 22 18 L 38 26 L 50 14 L 62 26 L 78 18 L 72 32 L 80 50 L 70 70 L 50 84 L 30 70 L 20 50 Z" fill="none" strokeWidth="1.8"/><circle cx="40" cy="44" r="3" fill="currentColor"/><circle cx="60" cy="44" r="3" fill="currentColor"/><path d="M38 62 Q 50 70 62 62" strokeWidth="1.6" fill="none"/></g>;
+const PART_ICON = <g><path d="M20 50 C 20 34, 36 22, 50 30 C 64 22, 80 34, 80 50 C 80 66, 64 78, 50 70 C 36 78, 20 66, 20 50 Z M50 30 L 50 70 M28 38 L 72 62 M28 62 L 72 38" fill="none" strokeWidth="1.6"/></g>;
+const WAL_ICON = <g><path d="M14 52 C 20 36 40 26 60 30 C 72 32 82 40 86 50 L 78 54 L 72 48 L 64 54 L 56 46 L 48 56 L 38 48 Z" fill="none" strokeWidth="2"/><circle cx="68" cy="42" r="1.8" fill="currentColor"/></g>;
+const LIFE_ICON = <g><circle cx="50" cy="50" r="26" fill="none" strokeWidth="2"/><path d="M50 24 L 50 76 M24 50 L 76 50 M32 32 L 68 68 M68 32 L 32 68" strokeWidth="1.1" opacity="0.5"/><circle cx="50" cy="50" r="6.5" fill="none" strokeWidth="1.6"/></g>;
+
+const RECENT_SIGHTED = [
+  { id:'i-05', name:'Aschgraue Hornisse', cat:'Insekten',       date:'19. Aschefall',  hue:30,  icon:INSECT_ICON },
+  { id:'w-02', name:'Walgesang-Tropfen',  cat:'Trümmer d. Wals',date:'17. Sturmwacht', hue:215, icon:WAL_ICON },
+  { id:'f-06', name:'Aalsturm',           cat:'Fische',         date:'14. Sturmwacht', hue:240, icon:FISH_ICON },
+  { id:'w-01', name:'Schädelplatte',      cat:'Trümmer d. Wals',date:'09. Eiswinter',  hue:210, icon:WAL_ICON },
+  { id:'k-02', name:'Tiefenwandler',      cat:'Kreaturen',      date:'03. Sturmwacht', hue:260, icon:CREATURE_ICON },
+  { id:'l-02', name:'Pulslinse',          cat:'Lebensspeicher', date:'02. Aschefall',  hue:35,  icon:LIFE_ICON },
+  { id:'p-08', name:'Hexenhauch',         cat:'Pflanzen',       date:'01. Aschefall',  hue:285, icon:PLANT_ICON },
+  { id:'k-01', name:'Schleifender Vogel', cat:'Kreaturen',      date:'19. Blütenfest', hue:280, icon:CREATURE_ICON },
+  { id:'l-01', name:'Erinnerungskern',    cat:'Lebensspeicher', date:'11. Blütenfest', hue:45,  icon:LIFE_ICON },
+  { id:'i-01', name:'Sumpflampe',         cat:'Insekten',       date:'14. Blütenfest', hue:90,  icon:INSECT_ICON },
+];
+
+const RECENT_KOMPLETT = [
+  { id:'w-03', name:'Rippensplitter',     cat:'Trümmer d. Wals',date:'23. Aschefall',  hue:200, icon:WAL_ICON },
+  { id:'l-02', name:'Pulslinse',          cat:'Lebensspeicher', date:'02. Aschefall',  hue:35,  icon:LIFE_ICON },
+  { id:'k-01', name:'Schleifender Vogel', cat:'Kreaturen',      date:'19. Blütenfest', hue:280, icon:CREATURE_ICON },
+  { id:'t-02', name:'Aalstein',           cat:'Kreaturenteile', date:'14. Sturmwacht', hue:240, icon:PART_ICON },
+  { id:'p-05', name:'Dornenwürger',       cat:'Pflanzen',       date:'11. Aschefall',  hue:25,  icon:PLANT_ICON },
+  { id:'p-02', name:'Wundklee',           cat:'Pflanzen',       date:'18. Blütenfest', hue:140, icon:PLANT_ICON },
+  { id:'p-03', name:'Glimmerschilf',      cat:'Pflanzen',       date:'25. Eiswinter',  hue:150, icon:PLANT_ICON },
+  { id:'m-01', name:'Mondquarz',          cat:'Mineralien',     date:'08. Eiswinter',  hue:200, icon:MINERAL_ICON },
+  { id:'m-02', name:'Schwarzschiefer',    cat:'Mineralien',     date:'14. Sterne',     hue:30,  icon:MINERAL_ICON },
+  { id:'f-01', name:'Silbersichelhecht',  cat:'Fische',         date:'12. Sterne',     hue:200, icon:FISH_ICON },
+  { id:'f-02', name:'Mondbrasse',         cat:'Fische',         date:'04. Aschefall',  hue:215, icon:FISH_ICON },
+  { id:'i-02', name:'Karminspinner',      cat:'Insekten',       date:'02. Aschefall',  hue:0,   icon:INSECT_ICON },
+  { id:'t-01', name:'Klauenschuppe',      cat:'Kreaturenteile', date:'21. Blütenfest', hue:30,  icon:PART_ICON },
+  { id:'f-04', name:'Ködermaul',          cat:'Fische',         date:'27. Eiswinter',  hue:190, icon:FISH_ICON },
+];
+
+function KollektikonBar({ d, i }) {
+  const ref = uRx(null);
+  const [visible, setVisible] = uSx(false);
+  uEx(() => {
+    const el = ref.current; if (!el) return;
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { setVisible(true); io.unobserve(el); } }), { threshold:0.25 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  const pctFound = d.found / d.total;
+  const pctKomp  = (d.komplett || 0) / d.total;
+  const c = `oklch(0.72 0.16 ${d.hue})`;
+  const cA = a => `oklch(0.72 0.16 ${d.hue} / ${a})`;
+
+  return (
+    <div ref={ref} style={{
+      background:'rgba(10,8,28,0.7)',
+      border:`1px solid ${cA(0.18)}`,
+      padding:'14px 16px 12px', borderRadius:3,
+      position:'relative', overflow:'hidden',
+    }}>
+      <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:8 }}>
+        <svg viewBox="0 0 100 100" width="22" height="22" fill="none" stroke={c} style={{ color:c, opacity:0.9, flexShrink:0 }}>
+          {d.icon}
+        </svg>
+        <span style={{
+          fontFamily:'var(--font-display)', fontSize:11, letterSpacing:'0.2em', fontWeight:400,
+          color:'rgba(220,210,250,0.85)', textTransform:'uppercase',
+          minWidth:0, flex:1, overflowWrap:'anywhere', lineHeight:1.2,
+        }}>{d.label}</span>
+      </div>
+      {/* two-layer progress */}
+      <div style={{ position:'relative', height:4, marginBottom:6 }}>
+        {pctKomp > 0 && (
+          <div style={{ position:'absolute', left:0, top:0, bottom:0,
+            width: visible ? `${pctKomp*100}%` : '0%',
+            boxShadow:`0 0 7px 1px ${cA(0.42)}, 0 0 14px 3px ${cA(0.18)}, 0 0 22px 6px ${cA(0.08)}`,
+            borderRadius:2, pointerEvents:'none',
+            transition:`width 1.2s cubic-bezier(.2,.85,.2,1) ${0.3+i*0.08}s`,
+          }}/>
+        )}
+        <div style={{ position:'absolute', inset:0, background:'rgba(124,77,255,0.08)', border:`1px solid ${cA(0.13)}`, borderRadius:2, overflow:'hidden' }}>
+          {/* white — in Forschung */}
+          <div style={{ position:'absolute', left:0, top:0, bottom:0,
+            width: visible ? `${pctFound*100}%` : '0%',
+            background:'linear-gradient(90deg, rgba(220,215,250,0.16), rgba(240,238,255,0.26))',
+            transition:`width 1.0s cubic-bezier(.2,.85,.2,1) ${i*0.08}s`,
+          }}/>
+          {/* color — komplett */}
+          <div style={{ position:'absolute', left:-1, top:-1, bottom:-1,
+            width: visible ? `${pctKomp*100}%` : '0%',
+            background:`linear-gradient(90deg, ${c}, ${cA(0.85)})`,
+            boxShadow:'inset 0 0 4px rgba(255,255,255,0.5)',
+            borderRadius:2,
+            transition:`width 1.2s cubic-bezier(.2,.85,.2,1) ${0.3+i*0.08}s`,
+          }}/>
+        </div>
+      </div>
+      <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', gap:6 }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(200,190,240,0.65)', letterSpacing:'0.1em', whiteSpace:'nowrap' }}>
+          <span style={{ color:'#f0eeff' }}>{d.found}</span>
+          <span style={{ opacity:0.5 }}> / {d.total}</span>
+          {d.komplett > 0 && (
+            <span style={{ color:c, marginLeft:4 }}>· {d.komplett} <span style={{ fontSize:7, opacity:0.75, letterSpacing:'0.16em' }}>KOMP</span></span>
+          )}
+        </span>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:c, letterSpacing:'0.18em' }}>
+          {Math.round(pctFound*100)} %
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function RecentCard({ item, idx, total, gold }) {
+  const [hov, setHov] = uSx(false);
+  const c = `oklch(0.72 0.16 ${item.hue})`;
+  const cA = a => `oklch(0.72 0.16 ${item.hue} / ${a})`;
+  const goldA = a => `oklch(0.82 0.14 80 / ${a})`;
+  return (
+    <a href="Kollektikon.html"
+      onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+      style={{
+        width:144, height:178, flexShrink:0,
+        marginLeft: idx > 0 ? -42 : 0,
+        borderRadius:4, position:'relative',
+        border: gold
+          ? `1px solid ${hov ? 'oklch(0.82 0.14 80)' : goldA(0.55)}`
+          : `1px solid ${hov ? c : cA(0.4)}`,
+        background:'rgba(13,8,38,0.97)',
+        transformOrigin:'center bottom',
+        transform: hov ? undefined : 'scale(1)',
+        animation: hov ? 'recentCardIdle 2.8s ease-in-out infinite' : 'none',
+        zIndex: hov ? 50 : 1,
+        opacity: hov ? 1 : 0.82,
+        boxShadow: hov
+          ? (gold
+            ? `0 22px 60px rgba(0,0,0,0.75), 0 0 36px ${goldA(0.65)}, 0 0 60px ${goldA(0.3)}`
+            : `0 22px 60px rgba(0,0,0,0.75), 0 0 32px ${cA(0.6)}, 0 0 60px ${cA(0.25)}`)
+          : (gold ? `0 4px 14px rgba(0,0,0,0.5), 0 0 10px ${goldA(0.18)}` : '0 4px 14px rgba(0,0,0,0.5)'),
+        transition: hov
+          ? 'opacity 0.25s ease, box-shadow 0.32s ease, border-color 0.2s ease'
+          : 'all 0.32s cubic-bezier(.2,.85,.2,1)',
+        overflow:'hidden', textDecoration:'none',
+        animationDelay: hov ? '0s' : undefined,
+      }}
+    >
+      {/* corner brackets */}
+      <span style={{position:'absolute',top:-1,left:-1,width:9,height:9,borderTop:`1px solid ${gold ? goldA(0.85) : cA(0.7)}`,borderLeft:`1px solid ${gold ? goldA(0.85) : cA(0.7)}`,zIndex:3}}/>
+      <span style={{position:'absolute',top:-1,right:-1,width:9,height:9,borderTop:`1px solid ${gold ? goldA(0.85) : cA(0.7)}`,borderRight:`1px solid ${gold ? goldA(0.85) : cA(0.7)}`,zIndex:3}}/>
+      <span style={{position:'absolute',bottom:-1,left:-1,width:9,height:9,borderBottom:`1px solid ${gold ? goldA(0.85) : cA(0.7)}`,borderLeft:`1px solid ${gold ? goldA(0.85) : cA(0.7)}`,zIndex:3}}/>
+      <span style={{position:'absolute',bottom:-1,right:-1,width:9,height:9,borderBottom:`1px solid ${gold ? goldA(0.85) : cA(0.7)}`,borderRight:`1px solid ${gold ? goldA(0.85) : cA(0.7)}`,zIndex:3}}/>
+
+      {/* striped bg */}
+      <div style={{ position:'absolute', inset:0,
+        background:`repeating-linear-gradient(-45deg,transparent,transparent 8px,${cA(0.13)} 8px,${cA(0.13)} 9px),linear-gradient(160deg,rgba(28,16,62,0.97) 0%,rgba(14,9,36,0.98) 100%)`,
+      }}/>
+      <div style={{ position:'absolute', inset:0,
+        background:`radial-gradient(ellipse at 50% 40%, ${cA(hov ? 0.32 : 0.18)} 0%, transparent 65%)`,
+        transition:'background 0.3s',
+      }}/>
+
+      {/* status badge */}
+      <div style={{
+        position:'absolute', top:7, left:8,
+        padding:'2px 6px',
+        background: gold ? goldA(0.15) : cA(0.12),
+        border: `1px solid ${gold ? goldA(0.55) : cA(0.45)}`,
+        fontFamily:'var(--font-mono)', fontSize:6.5,
+        color: gold ? 'oklch(0.85 0.13 75)' : c,
+        letterSpacing:'0.2em', textTransform:'uppercase',
+        zIndex:2, whiteSpace:'nowrap',
+      }}>
+        {gold ? '✓ Komplett' : '◈ Neu'}
+      </div>
+
+      <div style={{ position:'relative', zIndex:2, display:'flex', flexDirection:'column', height:'100%', padding:'34px 12px 10px', alignItems:'center', justifyContent:'flex-start', textAlign:'center' }}>
+        <svg viewBox="0 0 100 100" width="52" height="52" stroke={c} fill="none" style={{ color:c, filter:`drop-shadow(0 0 10px ${cA(0.6)})` }}>
+          {item.icon}
+        </svg>
+        <div style={{ marginTop:10, fontFamily:'var(--font-display)', fontSize:10.5, letterSpacing:'0.1em', color:'#f0eeff', textTransform:'uppercase', lineHeight:1.2, overflowWrap:'anywhere' }}>
+          {item.name}
+        </div>
+        <div style={{ marginTop:6, fontFamily:'var(--font-mono)', fontSize:7, color:cA(0.85), letterSpacing:'0.18em', textTransform:'uppercase' }}>
+          {item.cat}
+        </div>
+        <div style={{ position:'absolute', bottom:9, left:0, right:0, fontFamily:'var(--font-mono)', fontSize:7, color:'rgba(160,140,255,0.55)', letterSpacing:'0.16em', textTransform:'uppercase' }}>
+          {item.date}
+        </div>
+      </div>
+    </a>
+  );
+}
+
+function RecentRow({ items, kind, title }) {
+  return (
+    <div>
+      <div style={{ display:'flex', alignItems:'baseline', gap:14, marginBottom:8 }}>
+        <span style={{
+          fontFamily:'var(--font-mono)', fontSize:9,
+          letterSpacing:'0.3em', color: kind === 'komplett' ? 'oklch(0.82 0.14 80)' : 'rgba(124,77,255,0.65)',
+          textTransform:'uppercase',
+        }}>{kind === 'komplett' ? '✓' : '◈'} {title}</span>
+        <div style={{ flex:1, height:1, background:`linear-gradient(to right, ${kind === 'komplett' ? 'oklch(0.82 0.14 80 / 0.5)' : 'rgba(124,77,255,0.45)'}, rgba(124,77,255,0.04))` }}/>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.25em', color:'rgba(160,140,255,0.4)', textTransform:'uppercase' }}>
+          Letzte {items.length}
+        </span>
+      </div>
+      <div style={{
+        display:'flex', alignItems:'flex-start',
+        paddingLeft:0, paddingTop:24, paddingBottom:18, paddingRight:24,
+        overflow:'visible',
+      }}>
+        {items.map((item, i) => (
+          <RecentCard key={item.id} item={item} idx={i} total={items.length} gold={kind==='komplett'}/>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function KollektikonSection() {
+  const totalFound    = KOLLEKTIKON_DATA.reduce((s,d) => s+d.found, 0);
+  const totalAll      = KOLLEKTIKON_DATA.reduce((s,d) => s+d.total, 0);
+  const totalKomplett = KOLLEKTIKON_DATA.reduce((s,d) => s+(d.komplett||0), 0);
+  const overallPct         = totalFound/totalAll;
+  const overallKomplettPct = totalKomplett/totalAll;
+
+  return (
+    <div>
+      <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:24 }}>
+        <span style={{
+          fontFamily:'var(--font-mono)', fontSize:'10px',
+          letterSpacing:'0.35em', color:'rgba(124,77,255,0.65)',
+          textTransform:'uppercase',
+        }}>◈ Kollektikon</span>
+        <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(124,77,255,0.5), rgba(124,77,255,0.05))' }}/>
+        <span style={{
+          fontFamily:'var(--font-mono)', fontSize:'9px',
+          letterSpacing:'0.28em', color:'rgba(160,140,255,0.4)',
+          textTransform:'uppercase',
+        }}>Erforschungsstand · Planet Meruria</span>
+      </div>
+
+      <div style={{
+        position:'relative', overflow:'visible',
+        background:'linear-gradient(135deg, rgba(10,8,28,0.9) 0%, rgba(16,10,38,0.85) 100%)',
+        border:'1px solid rgba(124,77,255,0.22)',
+        borderRadius:'4px',
+        boxShadow:'0 18px 50px rgba(0,0,0,0.5)',
+      }}>
+        {/* corner brackets */}
+        <span style={{position:'absolute',top:-1,left:-1,width:14,height:14,borderTop:'1px solid rgba(124,77,255,0.65)',borderLeft:'1px solid rgba(124,77,255,0.65)'}}/>
+        <span style={{position:'absolute',top:-1,right:-1,width:14,height:14,borderTop:'1px solid rgba(124,77,255,0.65)',borderRight:'1px solid rgba(124,77,255,0.65)'}}/>
+        <span style={{position:'absolute',bottom:-1,left:-1,width:14,height:14,borderBottom:'1px solid rgba(124,77,255,0.65)',borderLeft:'1px solid rgba(124,77,255,0.65)'}}/>
+        <span style={{position:'absolute',bottom:-1,right:-1,width:14,height:14,borderBottom:'1px solid rgba(124,77,255,0.65)',borderRight:'1px solid rgba(124,77,255,0.65)'}}/>
+
+        {/* Header — overall stats */}
+        <div style={{
+          display:'grid', gridTemplateColumns:'auto 1fr auto',
+          gap:24, alignItems:'center',
+          padding:'22px 28px',
+          borderBottom:'1px solid rgba(124,77,255,0.18)',
+          background:'rgba(8,6,22,0.5)',
+        }}>
+          <div>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.32em', color:'rgba(124,77,255,0.65)', textTransform:'uppercase', marginBottom:6 }}>
+              Sammlung der Ressourcen
+            </div>
+            <div style={{ fontFamily:'var(--font-display)', fontSize:'17px', fontWeight:400, letterSpacing:'0.22em', color:'#f3eefe', textTransform:'uppercase' }}>
+              Das Kollektikon
+            </div>
+          </div>
+          <div style={{ position:'relative', height:6 }}>
+            {overallKomplettPct > 0 && (
+              <div style={{ position:'absolute', left:0, top:0, bottom:0, width:`${overallKomplettPct*100}%`,
+                boxShadow:'0 0 9px 1px rgba(160,140,255,0.55), 0 0 20px 5px rgba(160,140,255,0.22), 0 0 32px 10px rgba(160,140,255,0.09)',
+                borderRadius:2, pointerEvents:'none',
+              }}/>
+            )}
+            <div style={{ position:'absolute', inset:0, background:'rgba(124,77,255,0.08)', borderRadius:2, overflow:'hidden', border:'1px solid rgba(124,77,255,0.2)' }}>
+              <div style={{ position:'absolute', left:0, top:0, bottom:0, width:`${overallPct*100}%`,
+                background:'linear-gradient(90deg, rgba(220,215,250,0.18), rgba(240,238,255,0.28))',
+              }}/>
+              <div style={{ position:'absolute', left:-1, top:-1, bottom:-1, width:`${overallKomplettPct*100}%`,
+                background:'linear-gradient(90deg, rgba(140,100,255,1), rgba(200,180,255,1))',
+                boxShadow:'inset 0 0 4px rgba(255,255,255,0.45)', borderRadius:2,
+              }}/>
+            </div>
+          </div>
+          <div style={{ textAlign:'right' }}>
+            <div style={{ fontFamily:'var(--font-display)', fontSize:'30px', fontWeight:300, color:'#f0eeff', lineHeight:1 }}>
+              {totalFound}<span style={{ color:'rgba(160,140,255,0.4)', fontSize:'18px' }}> / {totalAll}</span>
+            </div>
+            <div style={{ marginTop:5, display:'flex', justifyContent:'flex-end', gap:10, fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.18em', textTransform:'uppercase' }}>
+              <span style={{ color:'rgba(240,238,255,0.65)' }}>
+                <span style={{ display:'inline-block', width:7, height:7, background:'rgba(240,238,255,0.85)', marginRight:4, verticalAlign:'middle' }}/>
+                {Math.round(overallPct*100)} % In Forschung
+              </span>
+              <span style={{ color:'rgba(190,170,255,0.95)' }}>
+                <span style={{ display:'inline-block', width:7, height:7, background:'rgba(160,140,255,0.95)', marginRight:4, verticalAlign:'middle' }}/>
+                {Math.round(overallKomplettPct*100)} % Komplett
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* 4×2 grid of categories */}
+        <div style={{ padding:'18px 22px', display:'grid', gridTemplateColumns:'1fr 1fr', gap:10 }}>
+          {KOLLEKTIKON_DATA.map((d,i) => <KollektikonBar key={d.id} d={d} i={i}/>)}
+        </div>
+      </div>
+
+      {/* Recent discoveries — two overlapping-card rows, side by side */}
+      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:36, marginTop:36 }}>
+        <RecentRow items={RECENT_SIGHTED.slice(0,6)}  kind="sighted"  title="Kürzlich Gesichtet"/>
+        <RecentRow items={RECENT_KOMPLETT.slice(0,6)} kind="komplett" title="Kürzlich Komplettiert"/>
+      </div>
+
+      {/* CTA — Zum vollständigen Kollektikon */}
+      <div style={{ marginTop:32 }}>
+        <CTAButton href="Kollektikon.html" label="Zum vollständigen Kollektikon"/>
+      </div>
+    </div>
+  );
+}
+
+
+/* ─────────────────────────────────────────────────
+   VORGESCHICHTE (stub — not rendered)
+   ───────────────────────────────────────────────── */
+function VorgeschichteTeaser() { return null; }
+function _vg_unused() {
+  return (
+    <a href="#" style={{ display:'block', textDecoration:'none', color:'inherit' }}>
+      <div style={{
+        position:'relative',
+        display:'grid', gridTemplateColumns:'1.15fr 1fr',
+        gap:0,
+        background:'rgba(8,6,22,0.55)',
+        border:'1px solid rgba(124,77,255,0.18)',
+        borderRadius:'4px', overflow:'hidden',
+        boxShadow:'0 16px 48px rgba(0,0,0,0.5)',
+        transition:'border-color 0.4s, box-shadow 0.4s',
+      }}
+        onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(124,77,255,0.5)'; e.currentTarget.style.boxShadow='0 18px 60px rgba(0,0,0,0.55), 0 0 80px rgba(124,77,255,0.18)'; }}
+        onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(124,77,255,0.18)'; e.currentTarget.style.boxShadow='0 16px 48px rgba(0,0,0,0.5)'; }}
+      >
+        {/* Image slot (left) */}
+        <div style={{ position:'relative', minHeight:420 }}>
+          <image-slot
+            id="vorgeschichte-wal"
+            shape="rect"
+            fit="cover"
+            placeholder="Der Weiße Wal — Artwork ablegen"
+            style={{ position:'absolute', inset:0, width:'100%', height:'100%' }}
+          ></image-slot>
+          <div style={{
+            position:'absolute', inset:0, pointerEvents:'none',
+            background:'linear-gradient(90deg, rgba(5,4,15,0) 50%, rgba(8,6,22,0.85) 100%)',
+          }}/>
+          {/* corner brackets */}
+          <span style={{position:'absolute',top:10,left:10,width:18,height:18,borderTop:'1px solid rgba(160,140,255,0.6)',borderLeft:'1px solid rgba(160,140,255,0.6)',pointerEvents:'none'}}/>
+          <span style={{position:'absolute',top:10,right:10,width:18,height:18,borderTop:'1px solid rgba(160,140,255,0.6)',borderRight:'1px solid rgba(160,140,255,0.6)',pointerEvents:'none'}}/>
+          <span style={{position:'absolute',bottom:10,left:10,width:18,height:18,borderBottom:'1px solid rgba(160,140,255,0.6)',borderLeft:'1px solid rgba(160,140,255,0.6)',pointerEvents:'none'}}/>
+        </div>
+
+        {/* Text panel (right) */}
+        <div style={{ position:'relative', padding:'48px 44px 44px', display:'flex', flexDirection:'column', justifyContent:'center', background:'linear-gradient(90deg, rgba(8,6,22,0.5) 0%, rgba(14,10,32,0.85) 100%)' }}>
+          {/* Big roman numeral watermark */}
+          <div style={{
+            position:'absolute', top:18, right:24, pointerEvents:'none',
+            fontFamily:'var(--font-display)', fontWeight:300,
+            fontSize:'110px', letterSpacing:'0.05em',
+            color:'rgba(124,77,255,0.07)', lineHeight:1,
+          }}>I</div>
+
+          <span style={{
+            fontFamily:'var(--font-mono)', fontSize:'10px',
+            letterSpacing:'0.4em', color:'rgba(124,77,255,0.7)',
+            textTransform:'uppercase', marginBottom:14,
+            position:'relative', zIndex:1,
+          }}>Kapitel I &nbsp;·&nbsp; Vorgeschichte</span>
+
+          <h2 style={{
+            fontFamily:'var(--font-display)', fontWeight:400,
+            fontSize:'42px', letterSpacing:'0.06em',
+            color:'#f3eefe', textTransform:'uppercase',
+            lineHeight:1.05, marginBottom:14,
+            textShadow:'0 0 36px rgba(124,77,255,0.35)',
+            position:'relative', zIndex:1,
+          }}>Der Weiße&nbsp;Wal</h2>
+
+          <div style={{
+            width:48, height:1, background:'rgba(124,77,255,0.5)',
+            marginBottom:18,
+          }}/>
+
+          <p style={{
+            fontFamily:'var(--font-body)', fontWeight:300,
+            fontSize:'13.5px', lineHeight:1.85,
+            color:'rgba(220,212,250,0.78)', letterSpacing:'0.02em',
+            textWrap:'pretty', marginBottom:24,
+            position:'relative', zIndex:1,
+          }}>
+            Es gab ein Schiff, das eine ganze Stadt trug — ein Stadtschiff, groß
+            genug für Straßen, Häuser, hunderttausend Seelen. Er flog nicht ans Ziel.
+            Irgendwo zwischen dem Verlassen des Sonnensystems und dem Unbekannten
+            versagten die Systeme.
+          </p>
+
+          <div style={{
+            display:'flex', alignItems:'center', gap:10,
+            fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:400,
+            letterSpacing:'0.28em', color:'#c9b8ff',
+            textTransform:'uppercase', position:'relative', zIndex:1,
+          }}>
+            <span>Die ganze Geschichte lesen</span>
+            <span style={{fontSize:14}}>→</span>
+          </div>
+        </div>
+      </div>
+    </a>
+  );
+}
+
+/* ─────────────────────────────────────────────────
+   TAGESKARTE — single tarot card with flip
+   ───────────────────────────────────────────────── */
+function NeuerCharakterButton() {
+  const [hov, setHov]                 = uSx(false);
+  const [glitchKey, setGlitchKey]     = uSx(0);
+  const [glitchActive, setGlitchActive] = uSx(false);
+  const intervalRef = uRx(null);
+  const timeoutRef  = uRx(null);
+  const dur = '1.8s';
+
+  const fireGlitch = () => {
+    setGlitchActive(false);
+    clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => { setGlitchKey(k=>k+1); setGlitchActive(true); }, 20);
+  };
+
+  uEx(() => {
+    if (hov) {
+      clearInterval(intervalRef.current); clearTimeout(timeoutRef.current);
+      timeoutRef.current = setTimeout(() => { fireGlitch(); intervalRef.current = setInterval(fireGlitch, 2400); }, 80);
+    } else {
+      clearInterval(intervalRef.current); clearTimeout(timeoutRef.current);
+      setGlitchActive(false);
+    }
+    return () => { clearInterval(intervalRef.current); clearTimeout(timeoutRef.current); };
+  }, [hov]);
+
+  const hexPts = (size) => {
+    const cx = size/2, cy = size/2, r = size/2;
+    return [0,1,2,3,4,5].map(i => {
+      const a = Math.PI/3 * i - Math.PI/2;
+      return `${cx + r*Math.cos(a)},${cy + r*Math.sin(a)}`;
+    }).join(' ');
+  };
+
+  return (
+    <a href="#"
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{ textDecoration:'none', display:'block', position:'relative', height:'100%' }}>
+      <div style={{
+        position:'relative',
+        background:'linear-gradient(135deg, rgba(40,20,90,0.55) 0%, rgba(15,8,40,0.92) 50%, rgba(5,4,15,0.98) 100%)',
+        border:`1px solid ${hov ? 'rgba(160,140,255,0.65)' : 'rgba(160,140,255,0.3)'}`,
+        borderRadius:'4px', overflow:'hidden',
+        padding:'34px 40px 32px',
+        minHeight:'180px', height:'100%',
+        transition:'border-color 0.3s, box-shadow 0.3s',
+        boxShadow: hov
+          ? '0 0 56px rgba(124,77,255,0.22), inset 0 0 64px rgba(124,77,255,0.08), 0 12px 40px rgba(0,0,0,0.6)'
+          : '0 0 24px rgba(124,77,255,0.08), inset 0 0 40px rgba(124,77,255,0.04), 0 6px 24px rgba(0,0,0,0.45)',
+      }}>
+        <div style={{ position:'absolute', inset:0, pointerEvents:'none',
+          backgroundImage:`repeating-linear-gradient(135deg, transparent, transparent 22px, rgba(160,140,255,0.04) 22px, rgba(160,140,255,0.04) 23px)` }} />
+        {/* Sweep on hover (like portal cards) */}
+        {hov && <div style={{
+          position:'absolute', inset:0, pointerEvents:'none', overflow:'hidden',
+        }}>
+          <div style={{
+            position:'absolute', inset:0,
+            background:'linear-gradient(90deg, transparent 0%, rgba(160,140,255,0.35) 50%, transparent 100%)',
+            opacity:0.5, animation:'sweep 0.9s ease-out forwards',
+          }}/>
+        </div>}
+        {/* Glow on hover, top-left — always rendered so opacity can fade */}
+        <div style={{
+          position:'absolute', top:'-40px', left:'-40px', width:'320px', height:'320px',
+          background:'radial-gradient(circle, rgba(160,140,255,0.32), transparent 70%)',
+          pointerEvents:'none',
+          opacity: hov ? 1 : 0,
+          transition:'opacity 0.7s ease-out',
+        }}/>
+        <div style={{ position:'absolute', right:'18px', top:'18px', pointerEvents:'none' }}>
+          <svg width="110" height="110" viewBox="0 0 160 160" style={{ display:'block', opacity: hov ? 0.18 : 0.08, transition:'opacity 0.35s' }}>
+            <polygon points={hexPts(160)} fill="none" stroke="#7c4dff" strokeWidth="1"/>
+            <polygon points={hexPts(110)} fill="none" stroke="#7c4dff" strokeWidth="0.7" transform="translate(25 25)"/>
+            <polygon points={hexPts(60)}  fill="none" stroke="#7c4dff" strokeWidth="0.5" transform="translate(50 50)"/>
+            <circle cx="80" cy="80" r="3" fill="#7c4dff"/>
+          </svg>
+        </div>
+        <div style={{ position:'relative', zIndex:2, maxWidth:'88%' }}>
+          <div style={{
+            fontFamily:'var(--font-mono)', fontSize:'8.5px',
+            letterSpacing:'0.32em', color:'rgba(160,140,255,0.55)',
+            textTransform:'uppercase', marginBottom:'14px',
+            display:'flex', alignItems:'center', gap:'10px',
+          }}>
+            <span style={{ width:'24px', height:'1px', background:'rgba(160,140,255,0.4)' }}/>
+            Geführter Prozess
+          </div>
+          <div style={{ position:'relative', display:'inline-block', marginBottom:'14px' }}>
+            {glitchActive && <h2 key={`ha-${glitchKey}`} aria-hidden="true" style={{
+              position:'absolute', inset:0, fontFamily:'var(--font-display)', fontSize:'clamp(26px,3vw,36px)', fontWeight:400,
+              letterSpacing:'0.16em', color:'#a78bff', textTransform:'uppercase', lineHeight:1.1,
+              pointerEvents:'none', zIndex:1, animation:`nc-glitch-a ${dur} ease forwards`,
+            }}>Neuer Charakter</h2>}
+            {glitchActive && <h2 key={`hb-${glitchKey}`} aria-hidden="true" style={{
+              position:'absolute', inset:0, fontFamily:'var(--font-display)', fontSize:'clamp(26px,3vw,36px)', fontWeight:400,
+              letterSpacing:'0.16em', color:'#7c4dff', textTransform:'uppercase', lineHeight:1.1,
+              pointerEvents:'none', zIndex:1, animation:`nc-glitch-b ${dur} ease forwards`,
+            }}>Neuer Charakter</h2>}
+            <h2 key={`hmain-${glitchKey}`} style={{
+              fontFamily:'var(--font-display)', fontSize:'clamp(26px,3vw,36px)', fontWeight:400,
+              letterSpacing:'0.16em', color: hov ? '#f0eeff' : '#e8e0ff', textTransform:'uppercase', lineHeight:1.1,
+              textShadow: hov ? '0 0 24px rgba(124,77,255,0.7), 0 0 40px rgba(124,77,255,0.3)' : '0 0 14px rgba(124,77,255,0.3)',
+              transition: glitchActive ? 'none' : 'color 0.3s, text-shadow 0.3s',
+              position:'relative', zIndex:2,
+              ...(glitchActive ? { animation:`nc-glitch-main ${dur} ease forwards` } : {}),
+            }}>Neuer Charakter</h2>
+          </div>
+          <p style={{
+            fontFamily:'var(--font-body)', fontWeight:300,
+            fontSize:'12.5px', lineHeight:1.85,
+            color:'rgba(220,210,255,0.7)', letterSpacing:'0.03em',
+            maxWidth:'500px', marginBottom:'20px', textWrap:'pretty',
+          }}>
+            Tag-Auswahl, Quiz und am Ende ein vollständiger Charakterbogen — alles in einem geführten Prozess.
+          </p>
+          <div style={{ display:'flex', alignItems:'center', gap:'14px', marginBottom:'18px', flexWrap:'wrap' }}>
+            {[{n:'01',l:'Tag-Auswahl'},{n:'02',l:'Quiz'},{n:'03',l:'Charakterbogen'}].map((s,i,arr) => (
+              <React.Fragment key={s.n}>
+                <div style={{ display:'flex', alignItems:'center', gap:'7px' }}>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.15em', color:'rgba(124,77,255,0.85)', padding:'3px 7px', border:'1px solid rgba(124,77,255,0.45)', borderRadius:'2px', background:'rgba(124,77,255,0.08)' }}>{s.n}</span>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'9.5px', letterSpacing:'0.18em', color:'rgba(220,210,255,0.65)', textTransform:'uppercase' }}>{s.l}</span>
+                </div>
+                {i < arr.length-1 && <span style={{ fontFamily:'var(--font-mono)', fontSize:'10px', color:'rgba(124,77,255,0.4)' }}>→</span>}
+              </React.Fragment>
+            ))}
+          </div>
+          <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
+            <span style={{
+              fontFamily:'var(--font-display)', fontSize:'10px',
+              letterSpacing:'0.28em',
+              color: hov ? '#f0eeff' : '#c9b8ff',
+              textTransform:'uppercase',
+              textShadow: hov ? '0 0 12px rgba(124,77,255,0.6)' : 'none',
+              transition:'color 0.25s, text-shadow 0.25s',
+            }}>Erstellung starten</span>
+            <span style={{
+              fontFamily:'var(--font-mono)', fontSize:'14px',
+              color: hov ? '#f0eeff' : '#c9b8ff',
+              transform: hov ? 'translateX(4px)' : 'translateX(0)',
+              transition:'transform 0.25s, color 0.25s',
+            }}>→</span>
+          </div>
+        </div>
+      </div>
+    </a>
+  );
+}
+
+/* ─────────────────────────────────────────────────
+   RECENT CHARACTERS — 4 newest SC / NSC entries
+   ───────────────────────────────────────────────── */
+const RECENT_CHARS = [
+  { kind:'SC',  name:'Kira Astralweise',  rasse:'Eladrin',         klasse:'Magierin',     div:null,                tagline:'Sucht den verlorenen Sigilstein.',  hue:265, days:1 },
+  { kind:'NSC', name:'Archivar Velian',   rasse:'Mensch',          klasse:'Gelehrter',    div:'Die Kuratoren',     tagline:'Schreibt jedes Wort mit.',           hue:235, days:2 },
+  { kind:'SC',  name:'Borg Steinfels',    rasse:'Berg-Zwerg',      klasse:'Paladin',      div:null,                tagline:'Eid auf das Licht von Aurelias.',    hue:60,  days:4 },
+  { kind:'NSC', name:'Sevra Goldhand',    rasse:'Halbling',        klasse:'Karawanenführerin', div:'Die Outfitters', tagline:'Verhandelt mit Worten, nicht Stahl.', hue:30, days:6 },
+];
+
+function RecentCharCard({ c }) {
+  const [hov, setHov] = uSx(false);
+  const accent = `oklch(0.72 0.16 ${c.hue})`;
+  const accentSoft = `oklch(0.72 0.16 ${c.hue} / 0.18)`;
+  const accentEdge = `oklch(0.72 0.16 ${c.hue} / 0.45)`;
+  const isSC = c.kind === 'SC';
+  return (
+    <a href="#"
+      onMouseEnter={()=>setHov(true)}
+      onMouseLeave={()=>setHov(false)}
+      style={{
+        position:'relative', display:'flex', gap:14,
+        padding:'14px 16px',
+        background: hov
+          ? 'linear-gradient(135deg, rgba(40,20,90,0.55) 0%, rgba(15,8,40,0.92) 100%)'
+          : 'linear-gradient(135deg, rgba(28,18,68,0.45) 0%, rgba(12,8,32,0.85) 100%)',
+        border:`1px solid ${hov ? 'rgba(160,140,255,0.5)' : 'rgba(160,140,255,0.18)'}`,
+        borderRadius:3, textDecoration:'none',
+        boxShadow: hov ? '0 10px 28px rgba(0,0,0,0.5), 0 0 24px rgba(124,77,255,0.18)' : '0 4px 14px rgba(0,0,0,0.4)',
+        transition:'all 0.22s',
+        overflow:'hidden',
+      }}
+    >
+      <div style={{
+        position:'relative', width:78, height:86, flexShrink:0,
+        display:'flex', alignItems:'center', justifyContent:'center',
+      }}>
+        <svg width="78" height="86" viewBox="0 0 78 86" style={{ position:'absolute', inset:0 }}>
+          <polygon points="39,2 73,22 73,64 39,84 5,64 5,22"
+            fill={accentSoft} stroke={accentEdge} strokeWidth="1.3"/>
+          <polygon points="39,10 65,25 65,61 39,76 13,61 13,25"
+            fill="none" stroke={accentEdge} strokeOpacity="0.5" strokeWidth="0.8"/>
+        </svg>
+        <span style={{
+          position:'relative', zIndex:1,
+          fontFamily:'var(--font-display)', fontSize:22, fontWeight:500,
+          letterSpacing:'0.04em', color:'#f0eeff',
+          textShadow:`0 0 14px ${accentEdge}`,
+        }}>{c.name.split(' ').map(w=>w[0]).slice(0,2).join('')}</span>
+      </div>
+
+      <div style={{ flex:1, minWidth:0, display:'flex', flexDirection:'column', justifyContent:'center' }}>
+        <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:4 }}>
+          <span style={{
+            fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.22em',
+            padding:'2px 6px', borderRadius:2,
+            background: isSC ? 'rgba(127,184,255,0.16)' : 'rgba(255,141,181,0.16)',
+            border:`1px solid ${isSC ? 'rgba(127,184,255,0.45)' : 'rgba(255,141,181,0.45)'}`,
+            color: isSC ? '#a3c8ff' : '#ffb3ce',
+            textTransform:'uppercase', flexShrink:0,
+          }}>{c.kind}</span>
+          <span style={{
+            fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.22em',
+            color:'rgba(160,140,255,0.45)', textTransform:'uppercase',
+            whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis',
+          }}>vor {c.days} {c.days === 1 ? 'Tag' : 'Tagen'}</span>
+        </div>
+        <div style={{
+          fontFamily:'var(--font-display)', fontSize:14, fontWeight:400,
+          letterSpacing:'0.08em', color: hov ? '#fff' : '#f0eeff',
+          textTransform:'uppercase', lineHeight:1.2,
+          whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis',
+          transition:'color 0.2s',
+        }}>{c.name}</div>
+        <div style={{
+          fontFamily:'var(--font-body)', fontWeight:300, fontSize:11,
+          color: accent, letterSpacing:'0.04em', marginTop:2,
+          whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis',
+        }}>{c.rasse} · {c.klasse}{c.div ? ` · ${c.div.replace(/^Die\s+/, '')}` : ''}</div>
+        <div style={{
+          fontFamily:'var(--font-body)', fontWeight:300, fontStyle:'italic',
+          fontSize:10.5, color:'rgba(200,190,240,0.55)',
+          letterSpacing:'0.02em', marginTop:4, lineHeight:1.4,
+          whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis',
+        }}>„{c.tagline}"</div>
+      </div>
+    </a>
+  );
+}
+
+function RecentCharacters() {
+  return (
+    <div style={{ display:'flex', flexDirection:'column', height:'100%' }}>
+      <div style={{
+        display:'flex', alignItems:'center', gap:12, marginBottom:14,
+      }}>
+        <span style={{
+          fontFamily:'var(--font-mono)', fontSize:9,
+          letterSpacing:'0.3em', color:'rgba(124,77,255,0.7)',
+          textTransform:'uppercase',
+        }}>◇ Zuletzt hinzugefügt</span>
+        <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(124,77,255,0.35), rgba(124,77,255,0.04))' }}/>
+      </div>
+      <div style={{
+        flex:1,
+        display:'grid', gridTemplateColumns:'1fr 1fr', gridTemplateRows:'1fr 1fr',
+        gap:10,
+      }}>
+        {RECENT_CHARS.map(c => <RecentCharCard key={c.name} c={c}/>)}
+      </div>
+    </div>
+  );
+}
+
+const TAGESKARTE_MAJORS = [
+  ['0','Der Narr','Neue Anfänge · Unschuld · Spontaneität'],
+  ['I','Der Magier','Manifestation · Kreativität · Potenzial'],
+  ['II','Die Hohepriesterin','Intuition · Geheimnisse · Weisheit'],
+  ['III','Die Herrscherin','Fülle · Fruchtbarkeit · Schöpfung'],
+  ['IV','Der Herrscher','Autorität · Struktur · Stabilität'],
+  ['V','Der Hierophant','Tradition · Lehre · Glaube'],
+  ['VI','Die Liebenden','Wahl · Vereinigung · Werte'],
+  ['VII','Der Wagen','Willenskraft · Triumph · Kontrolle'],
+  ['VIII','Die Gerechtigkeit','Wahrheit · Gleichgewicht · Ursache'],
+  ['IX','Der Eremit','Rückzug · Innere Suche · Erkenntnis'],
+  ['X','Das Rad','Schicksal · Wandel · Zyklen'],
+  ['XI','Die Kraft','Mut · Geduld · Innere Stärke'],
+  ['XII','Der Gehängte','Hingabe · Perspektive · Pause'],
+  ['XIII','Der Tod','Wandel · Übergang · Ende'],
+  ['XIV','Die Mäßigung','Balance · Harmonie · Geduld'],
+  ['XV','Der Teufel','Versuchung · Bindung · Schatten'],
+  ['XVI','Der Turm','Umbruch · Erschütterung · Befreiung'],
+  ['XVII','Der Stern','Hoffnung · Heilung · Inspiration'],
+  ['XVIII','Der Mond','Träume · Unbewusstes · Illusion'],
+  ['XIX','Die Sonne','Klarheit · Freude · Vitalität'],
+  ['XX','Das Gericht','Erwachen · Berufung · Wiedergeburt'],
+  ['XXI','Die Welt','Vollendung · Ganzheit · Erfüllung'],
+];
+
+/* Major arcana SVG glyphs — matched to Tarot.html */
+const MAJOR_SVGS = [
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 24 52 L 18 22 L 32 38 L 50 14 L 68 38 L 82 22 L 76 52 Z" fill="rgba(124,77,255,0.35)"/><rect x="22" y="52" width="56" height="8" fill="rgba(124,77,255,0.45)"/><circle cx="18" cy="22" r="3.5" fill="rgba(220,210,255,0.9)" stroke-width="1.1"/><circle cx="50" cy="14" r="3.5" fill="rgba(220,210,255,0.9)" stroke-width="1.1"/><circle cx="82" cy="22" r="3.5" fill="rgba(220,210,255,0.9)" stroke-width="1.1"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 50 10 L 78 70 L 22 70 Z" fill="rgba(124,77,255,0.4)"/><ellipse cx="50" cy="72" rx="36" ry="6" fill="rgba(124,77,255,0.5)"/><polygon points="50,34 53,42 62,42 55,48 58,56 50,50 42,56 45,48 38,42 47,42" fill="rgba(220,210,255,0.95)" stroke-width="0.4"/><circle cx="50" cy="10" r="2.5" fill="rgba(220,210,255,0.95)" stroke="none"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><polygon points="50,12 86,80 14,80" fill="rgba(124,77,255,0.22)"/><polygon points="50,28 70,68 30,68" fill="rgba(124,77,255,0.4)"/><circle cx="50" cy="54" r="3" fill="rgba(220,210,255,0.95)" stroke="none"/><g stroke-width="0.9" stroke="rgba(160,140,255,0.7)"><line x1="50" y1="4" x2="50" y2="10"/><line x1="30" y1="8" x2="36" y2="14"/><line x1="70" y1="8" x2="64" y2="14"/></g></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 24 36 L 32 22 L 40 32 L 50 16 L 60 32 L 68 22 L 76 36 L 70 42 L 30 42 Z" fill="rgba(124,77,255,0.35)"/><circle cx="50" cy="16" r="2" fill="rgba(220,210,255,0.9)" stroke="none"/><path d="M 50,86 C 32,72 26,58 38,52 C 44,49 50,54 50,58 C 50,54 56,49 62,52 C 74,58 68,72 50,86 Z" fill="rgba(124,77,255,0.5)"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 22 48 L 26 26 L 36 34 L 50 14 L 64 34 L 74 26 L 78 48 Z" fill="rgba(124,77,255,0.42)"/><line x1="22" y1="48" x2="78" y2="48" stroke-width="1.5"/><circle cx="50" cy="14" r="2" fill="rgba(220,210,255,0.95)" stroke="none"/><path d="M 30 58 L 22 86 L 78 86 L 70 58 Z" fill="rgba(124,77,255,0.22)"/><line x1="50" y1="58" x2="50" y2="86" stroke-width="1.4"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 30 78 L 38 30 L 50 18 L 62 30 L 70 78 Z" fill="rgba(124,77,255,0.32)"/><polygon points="50,8 54,18 64,18 56,24 60,34 50,28 40,34 44,24 36,18 46,18" fill="rgba(124,77,255,0.55)"/><line x1="36" y1="50" x2="64" y2="50" stroke-width="1.1"/><line x1="30" y1="78" x2="70" y2="78" stroke-width="1.4"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 38,80 C 38,68 14,60 14,42 C 14,32 24,26 32,32 C 35,35 38,38 38,42 C 38,38 41,35 44,32 C 52,26 62,32 62,42 C 62,60 38,68 38,80 Z" fill="rgba(124,77,255,0.42)"/><path d="M 62,80 C 62,68 38,60 38,42 C 38,32 48,26 56,32 C 59,35 62,38 62,42 C 62,38 65,35 68,32 C 76,26 86,32 86,42 C 86,60 62,68 62,80 Z" fill="rgba(124,77,255,0.55)"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 18 58 L 78 58 L 84 38 L 22 38 Z" fill="rgba(124,77,255,0.38)"/><polygon points="50,16 54,28 64,28 56,34 60,46 50,38 40,46 44,34 36,28 46,28" fill="rgba(124,77,255,0.5)"/><circle cx="34" cy="68" r="11" fill="rgba(124,77,255,0.2)"/><circle cx="66" cy="68" r="11" fill="rgba(124,77,255,0.2)"/><circle cx="34" cy="68" r="2" fill="rgba(220,210,255,0.85)" stroke="none"/><circle cx="66" cy="68" r="2" fill="rgba(220,210,255,0.85)" stroke="none"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linecap="round"><line x1="50" y1="22" x2="50" y2="82" stroke-width="1.6"/><line x1="42" y1="82" x2="58" y2="82"/><line x1="20" y1="32" x2="80" y2="32" stroke-width="1.4"/><line x1="28" y1="32" x2="28" y2="46"/><line x1="72" y1="32" x2="72" y2="46"/><path d="M 18 46 A 10 6 0 0 0 38 46 Z" fill="rgba(124,77,255,0.35)"/><path d="M 62 46 A 10 6 0 0 0 82 46 Z" fill="rgba(124,77,255,0.35)"/><circle cx="50" cy="32" r="3" fill="rgba(200,190,240,0.95)" stroke="none"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round"><path d="M 42 22 Q 50 12 58 22" stroke-linecap="round"/><polygon points="50,22 68,32 68,56 50,66 32,56 32,32" fill="rgba(124,77,255,0.25)"/><circle cx="50" cy="44" r="6" fill="rgba(220,210,255,0.9)" stroke-width="1.2"/><line x1="18" y1="44" x2="28" y2="44" stroke-width="0.9"/><line x1="72" y1="44" x2="82" y2="44" stroke-width="0.9"/><line x1="50" y1="74" x2="50" y2="84" stroke-width="0.9"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4"><circle cx="50" cy="50" r="28"/><circle cx="50" cy="50" r="20" stroke-dasharray="3 2"/><circle cx="50" cy="50" r="6" fill="rgba(124,77,255,0.5)" stroke-width="1.2"/><line x1="50" y1="22" x2="50" y2="78" stroke-width="1.1"/><line x1="22" y1="50" x2="78" y2="50" stroke-width="1.1"/><line x1="30" y1="30" x2="70" y2="70" stroke-width="1.1"/><line x1="70" y1="30" x2="30" y2="70" stroke-width="1.1"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><circle cx="50" cy="50" r="34" stroke-dasharray="2 4" stroke-width="0.8"/><path d="M 50,76 C 50,66 30,58 30,42 C 30,34 38,30 44,34 C 47,37 50,40 50,42 C 50,40 53,37 56,34 C 62,30 70,34 70,42 C 70,58 50,66 50,76 Z" fill="rgba(124,77,255,0.5)"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><line x1="14" y1="26" x2="86" y2="26" stroke-width="1.6"/><line x1="50" y1="14" x2="50" y2="26"/><circle cx="50" cy="14" r="2.5" fill="rgba(160,140,255,0.85)" stroke="none"/><polygon points="22,30 78,30 50,82" fill="rgba(124,77,255,0.3)"/><circle cx="50" cy="54" r="4" fill="rgba(160,140,255,0.95)" stroke="none"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><line x1="34" y1="20" x2="68" y2="84" stroke-width="1.6"/><path d="M 32 22 Q 64 16 72 38 Q 58 32 36 32 Z" fill="rgba(124,77,255,0.4)"/><line x1="62" y1="70" x2="50" y2="78"/><circle cx="34" cy="20" r="2.5" fill="rgba(160,140,255,0.9)" stroke="none"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M 28 20 Q 18 38 28 46 Q 38 38 28 20 Z" fill="rgba(124,77,255,0.45)"/><path d="M 72 54 Q 62 72 72 80 Q 82 72 72 54 Z" fill="rgba(124,77,255,0.45)"/><path d="M 30 46 Q 50 50 70 54" stroke-dasharray="2 2"/><circle cx="50" cy="50" r="2" fill="rgba(220,210,255,0.9)" stroke="none"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round"><polygon points="50,84 66,40 22,68 78,68 34,40" fill="rgba(124,77,255,0.3)"/><circle cx="50" cy="62" r="2.5" fill="rgba(160,140,255,0.95)" stroke="none"/><path d="M 32 14 L 28 28 L 38 26 Z" fill="rgba(124,77,255,0.45)"/><path d="M 68 14 L 72 28 L 62 26 Z" fill="rgba(124,77,255,0.45)"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 36 86 L 36 38 L 64 38 L 64 86 Z" fill="rgba(124,77,255,0.22)"/><path d="M 30 38 L 30 28 L 70 28 L 70 38 Z" fill="rgba(124,77,255,0.42)"/><rect x="45" y="50" width="10" height="14" fill="rgba(255,200,100,0.55)" stroke-width="1.1"/><path d="M 84 8 L 70 30 L 78 32 L 60 54" stroke="rgba(255,235,180,0.95)" stroke-width="1.8" fill="rgba(255,200,100,0.4)"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"><polygon points="50,8 56,32 80,30 64,46 76,68 56,60 50,82 44,60 24,68 36,46 20,30 44,32" fill="rgba(124,77,255,0.5)"/><circle cx="50" cy="46" r="3" fill="rgba(220,210,255,0.95)" stroke="none"/><path d="M 12 88 Q 22 82 32 88 T 52 88 T 72 88 T 92 88" stroke-width="1.1"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 60 14 Q 26 18 22 50 Q 26 82 60 86 Q 36 78 36 50 Q 36 22 60 14 Z" fill="rgba(124,77,255,0.4)"/><circle cx="34" cy="40" r="2" fill="rgba(160,140,255,0.55)" stroke="none"/><circle cx="28" cy="56" r="2.5" fill="rgba(160,140,255,0.55)" stroke="none"/><polygon points="80,22 82,28 88,28 83,32 85,38 80,34 75,38 77,32 72,28 78,28" fill="rgba(220,210,255,0.85)" stroke-width="0.4"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.2" stroke-linecap="round"><circle cx="50" cy="50" r="14" fill="rgba(124,77,255,0.55)"/><line x1="50" y1="12" x2="50" y2="22"/><line x1="50" y1="78" x2="50" y2="88"/><line x1="12" y1="50" x2="22" y2="50"/><line x1="78" y1="50" x2="88" y2="50"/><line x1="22" y1="22" x2="30" y2="30"/><line x1="78" y1="22" x2="70" y2="30"/><line x1="22" y1="78" x2="30" y2="70"/><line x1="78" y1="78" x2="70" y2="70"/><circle cx="50" cy="50" r="3" fill="rgba(220,210,255,0.95)" stroke="none"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><rect x="22" y="18" width="56" height="22" fill="rgba(124,77,255,0.45)" rx="3"/><rect x="46" y="40" width="8" height="28" fill="rgba(124,77,255,0.4)" rx="2"/><path d="M 14 84 L 22 74 L 78 74 L 86 84 Z" fill="rgba(124,77,255,0.32)"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.3" stroke-linecap="round"><circle cx="50" cy="50" r="30" stroke-dasharray="6 3"/><circle cx="50" cy="50" r="22" fill="rgba(124,77,255,0.3)" stroke-width="1.4"/><line x1="50" y1="34" x2="50" y2="66" stroke-width="1.4"/><line x1="34" y1="50" x2="66" y2="50" stroke-width="1.4"/><circle cx="50" cy="50" r="3.5" fill="rgba(220,210,255,0.95)" stroke="none"/></svg>`,
+];
+
+const TAROT_BACK_SVG = `
+  <svg viewBox="0 0 100 170" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="tb-bg" cx="50%" cy="50%" r="60%">
+        <stop offset="0%" stop-color="#1a0f3e"/>
+        <stop offset="100%" stop-color="#08061a"/>
+      </radialGradient>
+      <pattern id="tb-grid" width="8" height="8" patternUnits="userSpaceOnUse">
+        <path d="M 8 0 L 0 0 0 8" fill="none" stroke="rgba(160,140,255,0.12)" stroke-width="0.4"/>
+      </pattern>
+    </defs>
+    <rect width="100" height="170" fill="url(#tb-bg)"/>
+    <rect width="100" height="170" fill="url(#tb-grid)"/>
+    <rect x="4" y="4" width="92" height="162" fill="none" stroke="rgba(160,140,255,0.65)" stroke-width="0.6"/>
+    <rect x="8" y="8" width="84" height="154" fill="none" stroke="rgba(124,77,255,0.35)" stroke-width="0.3"/>
+    <g fill="none" stroke="rgba(160,140,255,0.7)" stroke-width="0.55">
+      <polygon points="50,55 64,63 64,77 50,85 36,77 36,63"/>
+      <polygon points="50,85 64,93 64,107 50,115 36,107 36,93"/>
+      <polygon points="50,40 60,46 60,58 50,64 40,58 40,46"/>
+      <polygon points="50,106 60,112 60,124 50,130 40,124 40,112"/>
+    </g>
+    <g fill="none" stroke="rgba(124,77,255,0.55)" stroke-width="0.45">
+      <circle cx="50" cy="85" r="28"/>
+      <circle cx="50" cy="85" r="20" stroke-dasharray="2 2"/>
+    </g>
+    <g fill="rgba(160,140,255,0.9)">
+      <circle cx="50" cy="85" r="2"/>
+      <circle cx="14" cy="14" r="1.5"/>
+      <circle cx="86" cy="14" r="1.5"/>
+      <circle cx="14" cy="156" r="1.5"/>
+      <circle cx="86" cy="156" r="1.5"/>
+    </g>
+    <g fill="none" stroke="rgba(160,140,255,0.5)" stroke-width="0.4">
+      <path d="M50,18 L50,32"/>
+      <path d="M50,138 L50,152"/>
+    </g>
+  </svg>`;
+
+const TAROT_CORNER_SVG = `<svg viewBox="0 0 20 20" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.2"><polygon points="10,2 17,6 17,14 10,18 3,14 3,6"/><circle cx="10" cy="10" r="2" fill="rgba(160,140,255,0.7)"/></svg>`;
+
+function Tageskarte() {
+  const [flipped, setFlipped] = uSx(false);
+  const [cardIdx, setCardIdx] = uSx(() => Math.floor(Math.random()*TAGESKARTE_MAJORS.length));
+  const cardRef = uRx(null);
+  const card = TAGESKARTE_MAJORS[cardIdx];
+
+  // ── Star burst (ported from Tarot.html spawnStarBurst) ──
+  const spawnStarBurst = (cx, cy) => {
+    // Central flash
+    const flash = document.createElement('div');
+    flash.className = 'tk-burst-flash';
+    flash.style.left = cx + 'px';
+    flash.style.top  = cy + 'px';
+    flash.style.transform = 'translate(-50%, -50%) scale(0.2)';
+    document.body.appendChild(flash);
+    flash.animate([
+      { transform:'translate(-50%, -50%) scale(0.2)', opacity:0 },
+      { transform:'translate(-50%, -50%) scale(1.0)', opacity:1, offset:0.2 },
+      { transform:'translate(-50%, -50%) scale(2.4)', opacity:0 }
+    ], { duration:750, easing:'cubic-bezier(.2,.7,.3,1)', fill:'forwards' }).onfinish = () => flash.remove();
+
+    // Two expanding rings
+    [0, 220].forEach((delay, k) => {
+      setTimeout(() => {
+        const ring = document.createElement('div');
+        ring.className = 'tk-burst-ring';
+        ring.style.left = cx + 'px';
+        ring.style.top  = cy + 'px';
+        document.body.appendChild(ring);
+        ring.animate([
+          { transform:'translate(-50%, -50%) scale(0.1)', opacity:0.95, borderWidth:'3px' },
+          { transform:`translate(-50%, -50%) scale(${k===0?4:6})`, opacity:0, borderWidth:'1px' }
+        ], { duration:1100, easing:'cubic-bezier(.2,.8,.3,1)', fill:'forwards' }).onfinish = () => ring.remove();
+      }, delay);
+    });
+
+    // Particle storm
+    const N = 64;
+    for (let i = 0; i < N; i++) {
+      const angle = (i/N)*Math.PI*2 + (Math.random()-0.5)*0.45;
+      const dist  = 110 + Math.random()*280;
+      const dx = Math.cos(angle)*dist;
+      const dy = Math.sin(angle)*dist*0.85;
+      const dur = 1000 + Math.random()*1100;
+      const r = Math.random();
+      let cls = 'tk-spark';
+      if (r < 0.14) cls += ' cross';
+      else if (r < 0.32) cls += ' big';
+      if (Math.random() < 0.32) cls += ' alt';
+      const el = document.createElement('div');
+      el.className = cls;
+      el.style.left = cx + 'px';
+      el.style.top  = cy + 'px';
+      document.body.appendChild(el);
+      const swirl = angle + (Math.random()-0.5)*0.7;
+      const mx = Math.cos(swirl)*dist*0.45;
+      const my = Math.sin(swirl)*dist*0.4;
+      const peakScale = cls.includes('big') ? 1.9 : (cls.includes('cross') ? 1.6 : 1.3);
+      el.animate([
+        { transform:'translate(-50%, -50%) scale(0.1) rotate(0deg)', opacity:0 },
+        { transform:`translate(calc(-50% + ${mx}px), calc(-50% + ${my}px)) scale(${peakScale}) rotate(180deg)`, opacity:1, offset:0.28 },
+        { transform:`translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(0) rotate(420deg)`, opacity:0, offset:1 }
+      ], { duration:dur, easing:'cubic-bezier(.15,.85,.3,1)', fill:'forwards' }).onfinish = () => el.remove();
+    }
+  };
+
+  const burstAtCard = () => {
+    const el = cardRef.current; if (!el) return;
+    const r = el.getBoundingClientRect();
+    spawnStarBurst(r.left + r.width/2, r.top + r.height/2);
+  };
+
+  const draw = (e) => {
+    if (e) { e.preventDefault(); e.stopPropagation(); }
+    if (!flipped) {
+      burstAtCard();
+      setFlipped(true);
+      return;
+    }
+    setFlipped(false);
+    setTimeout(() => {
+      setCardIdx((idx) => {
+        let next = Math.floor(Math.random()*TAGESKARTE_MAJORS.length);
+        if (next === idx) next = (next+1) % TAGESKARTE_MAJORS.length;
+        return next;
+      });
+      burstAtCard();
+      setFlipped(true);
+    }, 320);
+  };
+
+  const clear = (e) => {
+    if (e) { e.preventDefault(); e.stopPropagation(); }
+    setFlipped(false);
+  };
+
+  return (
+    <div>
+      <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:24 }}>
+        <span style={{
+          fontFamily:'var(--font-mono)', fontSize:'10px',
+          letterSpacing:'0.35em', color:'rgba(124,77,255,0.65)',
+          textTransform:'uppercase',
+        }}>◈ Tageskarte</span>
+        <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(124,77,255,0.5), rgba(124,77,255,0.05))' }}/>
+        <span style={{
+          fontFamily:'var(--font-mono)', fontSize:'9px',
+          letterSpacing:'0.28em', color:'rgba(160,140,255,0.4)',
+          textTransform:'uppercase',
+        }}>Große Arkana · 22 Karten</span>
+      </div>
+
+      <div style={{
+        display:'grid', gridTemplateColumns:'1fr auto 1fr', gap:56,
+        alignItems:'center', padding:'30px 36px',
+        background:'radial-gradient(ellipse at center, rgba(20,12,46,0.55) 0%, transparent 70%)',
+      }}>
+        {/* Left text */}
+        <div style={{ textAlign:'right' }}>
+          <h3 style={{
+            fontFamily:'var(--font-display)', fontWeight:400,
+            fontSize:'34px', letterSpacing:'0.1em',
+            color:'#f3eefe', textTransform:'uppercase',
+            lineHeight:1.05, marginBottom:14,
+            textShadow:'0 0 28px rgba(124,77,255,0.35)',
+          }}>Was hält<br/>der Tag<br/>bereit?</h3>
+          <div style={{ width:42, height:1, background:'rgba(124,77,255,0.6)', marginLeft:'auto', marginBottom:18 }}/>
+          <p style={{
+            fontFamily:'var(--font-body)', fontWeight:300,
+            fontSize:'12.5px', lineHeight:1.85,
+            color:'rgba(200,190,240,0.65)',
+            maxWidth:'280px', marginLeft:'auto',
+            textWrap:'pretty',
+          }}>
+            Ziehe eine Karte aus der großen Arkana. Lass sie auf dich wirken,
+            bevor du das volle Deck erkundest.
+          </p>
+        </div>
+
+        {/* Card */}
+        <div style={{ perspective:1400 }}>
+          <div ref={cardRef} className={`tarot-card-3d${flipped ? ' flipped' : ''}`} onClick={draw}>
+            {/* Back */}
+            <div className="tarot-card-face tarot-card-back"
+                 dangerouslySetInnerHTML={{ __html: TAROT_BACK_SVG }}/>
+            {/* Front */}
+            <div className="tarot-card-face tarot-card-front">
+              <div className="tarot-cf-frame"/>
+              <div className="tarot-cf-corner tl" dangerouslySetInnerHTML={{ __html: TAROT_CORNER_SVG }}/>
+              <div className="tarot-cf-corner br" dangerouslySetInnerHTML={{ __html: TAROT_CORNER_SVG }}/>
+              <div className="tarot-cf-rank">Arcanum Majus · {card[0]}</div>
+              <div className="tarot-cf-symbol" dangerouslySetInnerHTML={{ __html: MAJOR_SVGS[cardIdx] || '' }}/>
+              <div className="tarot-cf-name">{card[1]}</div>
+              <div className="tarot-cf-divider"/>
+              <div className="tarot-cf-keywords">{card[2]}</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right meta + buttons */}
+        <div style={{ textAlign:'left' }}>
+          <div style={{
+            fontFamily:'var(--font-mono)', fontSize:'9px',
+            letterSpacing:'0.32em', color:'rgba(124,77,255,0.6)',
+            textTransform:'uppercase', marginBottom:14,
+          }}>{flipped ? 'Gezogen · ' + card[0] : 'Verdeckt'}</div>
+          {flipped && (
+            <div style={{
+              fontFamily:'var(--font-display)', fontWeight:400,
+              fontSize:'22px', letterSpacing:'0.1em',
+              color:'#f3eefe', textTransform:'uppercase',
+              lineHeight:1.1, marginBottom:10,
+              textShadow:'0 0 18px rgba(124,77,255,0.35)',
+            }}>{card[1]}</div>
+          )}
+          <button onClick={draw} style={{
+            fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:400,
+            letterSpacing:'0.22em', padding:'12px 22px',
+            background:'rgba(124,77,255,0.1)',
+            border:'1px solid rgba(160,140,255,0.45)',
+            color:'#e0d4ff', textTransform:'uppercase',
+            borderRadius:3, cursor:'pointer',
+            transition:'all 0.2s', marginBottom:10, display:'block',
+          }}
+            onMouseEnter={e => { e.currentTarget.style.background='rgba(124,77,255,0.22)'; e.currentTarget.style.borderColor='rgba(160,140,255,0.8)'; e.currentTarget.style.color='#fff'; }}
+            onMouseLeave={e => { e.currentTarget.style.background='rgba(124,77,255,0.1)'; e.currentTarget.style.borderColor='rgba(160,140,255,0.45)'; e.currentTarget.style.color='#e0d4ff'; }}
+          >
+            {flipped ? 'Neue Karte ziehen' : 'Karte aufdecken'}
+          </button>
+          <button onClick={clear} disabled={!flipped} style={{
+            fontFamily:'var(--font-display)', fontSize:'10px', fontWeight:400,
+            letterSpacing:'0.22em', padding:'10px 20px',
+            background:'transparent',
+            border:'1px solid rgba(160,140,255,0.22)',
+            color: flipped ? 'rgba(200,190,240,0.7)' : 'rgba(160,140,255,0.25)',
+            textTransform:'uppercase',
+            borderRadius:3, cursor: flipped ? 'pointer' : 'not-allowed',
+            transition:'all 0.2s', marginBottom:18, display:'block',
+          }}
+            onMouseEnter={e => { if (flipped) { e.currentTarget.style.color='#f0eeff'; e.currentTarget.style.borderColor='rgba(160,140,255,0.5)'; } }}
+            onMouseLeave={e => { if (flipped) { e.currentTarget.style.color='rgba(200,190,240,0.7)'; e.currentTarget.style.borderColor='rgba(160,140,255,0.22)'; } }}
+          >
+            Clear
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────
+   CTA BUTTON — reusable section nav (Missionsterminal/Kollektikon style)
+   ───────────────────────────────────────────────── */
+function CTAButton({ href, label, glyph='◈' }) {
+  return (
+    <div style={{ display:'flex', justifyContent:'center' }}>
+      <a href={href} style={{
+        display:'inline-flex', alignItems:'center', gap:10,
+        fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:400,
+        letterSpacing:'0.28em', padding:'9px 24px',
+        background:'rgba(124,77,255,0.22)',
+        border:'1px solid rgba(167,139,255,0.7)',
+        color:'#f0eeff', textDecoration:'none',
+        textTransform:'uppercase', borderRadius:'2px',
+        boxShadow:'0 0 20px rgba(124,77,255,0.25)',
+        transition:'all 0.2s',
+      }}
+        onMouseEnter={e=>{ e.currentTarget.style.background='rgba(124,77,255,0.35)'; e.currentTarget.style.borderColor='#a78bff'; e.currentTarget.style.boxShadow='0 0 28px rgba(124,77,255,0.45)'; }}
+        onMouseLeave={e=>{ e.currentTarget.style.background='rgba(124,77,255,0.22)'; e.currentTarget.style.borderColor='rgba(167,139,255,0.7)'; e.currentTarget.style.boxShadow='0 0 20px rgba(124,77,255,0.25)'; }}
+      >
+        <span style={{
+          width:16, height:16, borderRadius:'50%',
+          border:'1px solid currentColor',
+          display:'inline-flex', alignItems:'center', justifyContent:'center',
+          fontSize:9,
+        }}>{glyph}</span>
+        <span>{label}</span>
+        <span style={{ fontSize:13 }}>→</span>
+      </a>
+    </div>
+  );
+}
+
+Object.assign(window, { HeuteStrip, VorgeschichteTeaser, Tageskarte, MissionsterminalSection, KollektikonSection, NeuerCharakterButton, RecentCharacters, CTAButton, SectionEyebrow });
+</script>
+
+
+<!-- ═══════════════════════════════════════════
+     SCRIPT 6 — App
+     ═══════════════════════════════════════════ -->
+<script type="text/babel">
+const { useState:uS5, useEffect:uE5, useCallback:uC5, useRef:uR5 } = React;
+const { ParticleField, PortalCard, Carousel, PORTALS:PRTS, CAROUSEL_IMAGES:IMGS, HeuteStrip, VorgeschichteTeaser, Tageskarte, MissionsterminalSection, KollektikonSection, NeuerCharakterButton, RecentCharacters, CTAButton } = window;
+const { useTweaks, TweaksPanel, TweakSection, TweakToggle, SiteNav, SiteFooter } = window;
+
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "showParticles": true
+}/*EDITMODE-END*/;
+
+function App() {
+  const [mouse, setMouse] = uS5({x:0.5, y:0.5});
+  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const [titleHover, setTitleHover] = uS5(false);
+  const heroRef = uR5(null);
+
+  const onMove = uC5(e => {
+    setMouse({ x: e.clientX/window.innerWidth, y: e.clientY/window.innerHeight });
+  }, []);
+
+  return (
+    <div onMouseMove={onMove} style={{position:'relative', minHeight:'100vh'}}>
+      {tweaks.showParticles && <ParticleField mouse={mouse}/>}
+
+      <SiteNav/>
+
+      {/* ── HERO (full-bleed image background) ── */}
+      <section ref={heroRef} style={{
+        position:'relative', zIndex:5,
+        minHeight:'calc(100vh - var(--nav-h))',
+        padding:'72px 32px 88px',
+        display:'flex', flexDirection:'column',
+        alignItems:'center', justifyContent:'center',
+        textAlign:'center',
+        overflow:'hidden',
+      }}>
+        {/* Background image slot — user drops their artwork here */}
+        <image-slot
+          id="hero-bg"
+          shape="rect"
+          fit="cover"
+          placeholder="Kopfbild — Artwork hier ablegen"
+          style={{
+            position:'absolute', inset:0, width:'100%', height:'100%',
+            zIndex:0, opacity:0.78,
+          }}
+        ></image-slot>
+
+        {/* Vignette + atmospheric overlays on top of image */}
+        <div style={{
+          position:'absolute', inset:0, zIndex:1, pointerEvents:'none',
+          background:`
+            radial-gradient(ellipse at 50% 45%, transparent 0%, rgba(5,4,15,0.55) 70%, rgba(5,4,15,0.92) 100%),
+            linear-gradient(180deg, rgba(5,4,15,0.35) 0%, transparent 18%, transparent 70%, rgba(5,4,15,0.95) 100%)
+          `,
+        }}/>
+        <div style={{
+          position:'absolute', inset:0, zIndex:1, pointerEvents:'none',
+          background:`
+            repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(160,140,255,0.04) 80px, rgba(160,140,255,0.04) 81px),
+            repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(160,140,255,0.03) 60px, rgba(160,140,255,0.03) 61px)
+          `,
+          mixBlendMode:'screen',
+        }}/>
+
+        {/* Hero content (above image+overlay) */}
+        <div style={{ position:'relative', zIndex:3, width:'100%' }}>
+        {/* Floating hex sigils */}
+        <svg viewBox="0 0 100 100" style={{ position:'absolute', top:60, left:'8%', width:80, height:80, opacity:0.28, animation:'sigil-pulse 6s ease-in-out infinite' }}>
+          <polygon points="50,5 90,28 90,72 50,95 10,72 10,28" fill="none" stroke="#7c4dff" strokeWidth="0.8"/>
+          <polygon points="50,18 78,33 78,67 50,82 22,67 22,33" fill="none" stroke="#7c4dff" strokeWidth="0.5"/>
+        </svg>
+        <svg viewBox="0 0 100 100" style={{ position:'absolute', top:120, right:'9%', width:60, height:60, opacity:0.22, animation:'sigil-pulse 8s ease-in-out infinite reverse' }}>
+          <polygon points="50,5 90,28 90,72 50,95 10,72 10,28" fill="none" stroke="#7c4dff" strokeWidth="0.8"/>
+        </svg>
+
+        <h1
+          onMouseEnter={() => setTitleHover(true)}
+          onMouseLeave={() => setTitleHover(false)}
+          style={{
+          position:'relative', display:'inline-block',
+          fontFamily:'var(--font-display)', fontWeight:300,
+          fontSize:'clamp(80px, 12vw, 188px)',
+          letterSpacing:'0.18em', color:'#f3eefe',
+          textShadow:'0 0 80px rgba(124,77,255,0.55), 0 0 160px rgba(124,77,255,0.25)',
+          animation:'flicker-mid 13s infinite',
+          textTransform:'uppercase',
+          marginBottom:'14px',
+          lineHeight:1,
+        }}>
+          MERURIA
+          {/* glitch layers */}
+          <span aria-hidden="true" style={{
+            position:'absolute', inset:0, color:'#ff5577',
+            textShadow:'2px 0 #ff5577',
+            animation:'title-glitch-a 7s infinite steps(1,end)',
+            mixBlendMode:'screen', pointerEvents:'none',
+          }}>MERURIA</span>
+          <span aria-hidden="true" style={{
+            position:'absolute', inset:0, color:'#00e5ff',
+            textShadow:'-2px 0 #00e5ff',
+            animation:'title-glitch-b 7s infinite steps(1,end)',
+            mixBlendMode:'screen', pointerEvents:'none',
+          }}>MERURIA</span>
+        </h1>
+
+        <div style={{
+          display:'flex', alignItems:'center', justifyContent:'center', gap:18,
+        }}>
+          <div style={{ width:60, height:1, background:'linear-gradient(to right, transparent, rgba(124,77,255,0.6))' }}/>
+          <div style={{
+            fontFamily:'var(--font-display)', fontSize:'12px', fontWeight:400,
+            letterSpacing:'0.5em', color:'rgba(200,190,240,0.65)',
+            textTransform:'uppercase',
+          }}>
+            Die gewobenen Reiche
+          </div>
+          <div style={{ width:60, height:1, background:'linear-gradient(to left, transparent, rgba(124,77,255,0.6))' }}/>
+        </div>
+        </div>
+      </section>
+
+      {/* ── PORTAL GRID ── */}
+      <section style={{
+          position:'relative', zIndex:5,
+        padding:'20px 48px 60px',
+        maxWidth:'1440px', margin:'0 auto',
+      }}>
+        {/* Section header */}
+        <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:36 }}>
+          <span style={{
+            fontFamily:'var(--font-mono)', fontSize:'10px',
+            letterSpacing:'0.35em', color:'rgba(124,77,255,0.65)',
+            textTransform:'uppercase',
+          }}>◈ Bereiche</span>
+          <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(124,77,255,0.5), rgba(124,77,255,0.05))', transformOrigin:'left', animation:'line-grow 1.4s ease-out' }}/>
+          <span style={{
+            fontFamily:'var(--font-mono)', fontSize:'9px',
+            letterSpacing:'0.28em', color:'rgba(160,140,255,0.4)',
+            textTransform:'uppercase',
+          }}>06 / Übersichtsseiten</span>
+        </div>
+
+        <div style={{
+          display:'grid', gridTemplateColumns:'repeat(3, 1fr)',
+          gap:20,
+        }}>
+          {PRTS.map((p,i) => <PortalCard key={p.id} p={p} index={i}/>)}
+        </div>
+      </section>
+
+      {/* ── NEUER CHARAKTER + RECENT CHARS (1×2) ── */}
+      <section style={{
+        position:'relative', zIndex:5,
+        padding:'40px 48px 16px',
+        maxWidth:'1440px', margin:'0 auto',
+      }}>
+        <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:18 }}>
+          <span style={{
+            fontFamily:'var(--font-mono)', fontSize:'10px',
+            letterSpacing:'0.35em', color:'rgba(124,77,255,0.65)',
+            textTransform:'uppercase',
+          }}>◈ Charaktere</span>
+          <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(124,77,255,0.5), rgba(124,77,255,0.05))' }}/>
+          <span style={{
+            fontFamily:'var(--font-mono)', fontSize:'9px',
+            letterSpacing:'0.28em', color:'rgba(160,140,255,0.4)',
+            textTransform:'uppercase',
+          }}>Spielercharaktere &amp; NSC</span>
+        </div>
+        <div style={{
+          display:'grid', gridTemplateColumns:'0.85fr 1.15fr', gap:20,
+          alignItems:'stretch',
+        }}>
+          <NeuerCharakterButton/>
+          <RecentCharacters/>
+        </div>
+
+        <div style={{ marginTop:28 }}>
+          <CTAButton href="Charaktere.html" label="Zu den Charakteren"/>
+        </div>
+      </section>
+
+      {/* ── HEUTE IN MERURIA strip ── */}
+      <section style={{
+          position:'relative', zIndex:5,
+        padding:'48px 48px 16px',
+        maxWidth:'1440px', margin:'0 auto',
+      }}>
+        <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:18 }}>
+          <span style={{
+            fontFamily:'var(--font-mono)', fontSize:'10px',
+            letterSpacing:'0.35em', color:'rgba(124,77,255,0.65)',
+            textTransform:'uppercase',
+          }}>◈ Heute in Meruria</span>
+          <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(124,77,255,0.5), rgba(124,77,255,0.05))' }}/>
+          <span style={{
+            fontFamily:'var(--font-mono)', fontSize:'9px',
+            letterSpacing:'0.28em', color:'rgba(160,140,255,0.4)',
+            textTransform:'uppercase',
+          }}>Zum Kalender</span>
+        </div>
+        <HeuteStrip/>
+        <div style={{ marginTop:24 }}>
+          <CTAButton href="Kalender.html" label="Zum Kalender"/>
+        </div>
+      </section>
+
+      {/* ── MISSIONSTERMINAL ── */}
+      <section style={{
+        position:'relative', zIndex:5,
+        padding:'48px 48px 24px',
+        maxWidth:'1440px', margin:'0 auto',
+      }}>
+        <MissionsterminalSection/>
+      </section>
+
+      {/* ── KOLLEKTIKON ── */}
+      <section style={{
+          position:'relative', zIndex:5,
+        padding:'48px 48px 24px',
+        maxWidth:'1440px', margin:'0 auto',
+      }}>
+        <KollektikonSection/>
+      </section>
+
+      {/* ── TAGESKARTE ── */}
+      <section style={{
+        position:'relative', zIndex:5,
+        padding:'56px 48px 40px',
+        maxWidth:'1440px', margin:'0 auto',
+      }}>
+        <Tageskarte/>
+        <div style={{ marginTop:24 }}>
+          <CTAButton href="Tarot.html" label="Komplettes Tarot-Deck"/>
+        </div>
+      </section>
+
+      {/* ── CAROUSEL ── */}
+      <section style={{ position:'relative', zIndex:5, marginTop:24, borderTop:'1px solid rgba(124,77,255,0.12)' }}>
+        <div style={{ display:'flex', alignItems:'center', gap:16, padding:'18px 48px 8px', maxWidth:'1440px', margin:'0 auto' }}>
+          <span style={{
+            fontFamily:'var(--font-mono)', fontSize:'10px',
+            letterSpacing:'0.35em', color:'rgba(124,77,255,0.65)',
+            textTransform:'uppercase',
+          }}>◈ Aus der Galerie</span>
+          <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(124,77,255,0.4), rgba(124,77,255,0.05))' }}/>
+          <span style={{
+            fontFamily:'var(--font-mono)', fontSize:'9px',
+            letterSpacing:'0.22em', color:'rgba(160,140,255,0.4)',
+            textTransform:'uppercase',
+          }}>Klicken &amp; Ziehen zum Drehen</span>
+        </div>
+        <div style={{ padding:'4px 0 32px' }}>
+          <Carousel images={IMGS}/>
+        </div>
+        <div style={{ padding:'0 48px 32px', maxWidth:'1440px', margin:'0 auto' }}>
+          <CTAButton href="Galerie.html" label="Zur Galerie"/>
+        </div>
+      </section>
+
+      {/* ── FOOTER ── */}
+      <SiteFooter />
 
       <TweaksPanel>
-        <TweakSection label="Layout"/>
-        <TweakSlider id="headerHeight" label="Header height" min={80} max={320} step={10}/>
-        <TweakSection label="Atmosphere"/>
-        <TweakToggle id="showParticles" label="Particles"/>
+        <TweakSection label="Atmosphäre"/>
+        <TweakToggle id="showParticles" label="Partikel"/>
       </TweaksPanel>
     </div>
   );

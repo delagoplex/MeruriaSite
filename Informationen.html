@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meruria — Informationen</title>
+<link rel="stylesheet" href="assets/styles/global/fonts.css">
+<link rel="stylesheet" href="assets/styles/global/base.css">
+<link rel="stylesheet" href="assets/styles/pages/Informationen.css">
+<script src="assets/scripts/vendor/react.development.js"></script>
+<script src="assets/scripts/vendor/react-dom.development.js"></script>
+<script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.jsx" type="text/babel"></script>
+<script src="assets/components/footer.jsx" type="text/babel"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+
+const CATEGORIES = [
+  {id:'aufstieg',  label:'Charakteraufstieg'},
+  {id:'schaden',   label:'Schadensarten'},
+  {id:'heiltrank', label:'Heiltränke'},
+  {id:'inspiration', label:'Inspiration'},
+  {id:'richtungen', label:'Zufällige Richtungen'},
+];
+
+// ── DATA ─────────────────────────────────────────────────────────────────────
+// XP table — quoted column is INCREMENTAL (XP needed to reach that level);
+// totalEP is computed cumulatively at render time.
+const AUFSTIEG = [
+  { lvl: 1,  needed: 0,       prof: 2 },
+  { lvl: 2,  needed: 300,     prof: 2 },
+  { lvl: 3,  needed: 900,     prof: 2 },
+  { lvl: 4,  needed: 2700,    prof: 2 },
+  { lvl: 5,  needed: 6500,    prof: 3 },
+  { lvl: 6,  needed: 14000,   prof: 3 },
+  { lvl: 7,  needed: 23000,   prof: 3 },
+  { lvl: 8,  needed: 34000,   prof: 3 },
+  { lvl: 9,  needed: 48000,   prof: 4 },
+  { lvl: 10, needed: 64000,   prof: 4 },
+  { lvl: 11, needed: 85000,   prof: 4 },
+  { lvl: 12, needed: 100000,  prof: 4 },
+  { lvl: 13, needed: 120000,  prof: 5 },
+  { lvl: 14, needed: 140000,  prof: 5 },
+  { lvl: 15, needed: 165000,  prof: 5 },
+  { lvl: 16, needed: 195000,  prof: 5 },
+  { lvl: 17, needed: 225000,  prof: 6 },
+  { lvl: 18, needed: 265000,  prof: 6 },
+  { lvl: 19, needed: 305000,  prof: 6 },
+  { lvl: 20, needed: 355000,  prof: 6 },
+];
+const fmtEP = (n) => n.toLocaleString('de-DE');
+
+// ── SCHADENSARTEN (with custom hex-line icons in Meruria style) ──────────────
+// Icons are simple SVG line glyphs — designed in Meruria's visual vocabulary,
+// not copies of the pixel art shown in references.
+const SCHADEN = [
+  { id:'hieb',       name:'Hieb',        cat:'phys', hue:200, desc:'Schwerter, Äxte und die Krallen von Monstern verursachen Hiebschaden.' },
+  { id:'wucht',      name:'Wucht',       cat:'phys', hue:50,  desc:'Angriffe mit stumpfer Gewalt — Hämmer, Stürze, Einschnürungen und Ähnliches — verursachen Wuchtschaden.' },
+  { id:'stich',      name:'Stich',       cat:'phys', hue:280, desc:'Stich- und Einstichangriffe, einschließlich Speere und Bisse von Monstern, verursachen Stichschaden.' },
+  { id:'feuer',      name:'Feuer',       cat:'mag',  hue:30,  desc:'Uralte rote Drachen spucken Feuer, und viele Zauber beschwören Flammen, um Feuerschaden zu verursachen.' },
+  { id:'kaelte',     name:'Kälte',       cat:'mag',  hue:210, desc:'Die infernale Kälte, die von der Lanze eines Eisteufels ausgeht, und der eisige Atemstoß eines jungen Weißen Drachen verursachen Kälteschaden.' },
+  { id:'blitz',      name:'Blitz',       cat:'mag',  hue:230, desc:'Ein Blitzschlagzauber und der Atemstoß eines Blauen Drachenjungen verursachen Blitzschaden.' },
+  { id:'schall',     name:'Schall',      cat:'mag',  hue:70,  desc:'Eine erschütternde Schallwelle, wie die Wirkung des Donnerwellen-Zaubers, verursacht Schallschaden.' },
+  { id:'saeure',     name:'Säure',       cat:'mag',  hue:140, desc:'Der ätzende Sprühnebel des Atems eines erwachsenen Schwarzen Drachen und die auflösenden Enzyme, die von einem Schwarzen Schleim ausgeschieden werden, verursachen Säureschaden.' },
+  { id:'energie',    name:'Energie',     cat:'mag',  hue:0,   desc:'Energie ist pure magische Energie, die in eine schädliche Form fokussiert wird. Die meisten Effekte, die Energieschaden verursachen, sind Zauber, einschließlich Magisches Geschoss und Geistige Waffe.' },
+  { id:'strahlend',  name:'Strahlend',   cat:'mag',  hue:80,  desc:'Strahlender Schaden, verursacht durch einen Flammenschlag-Zauber eines Klerikers oder die schlagende Waffe eines Engels, versengt das Fleisch wie Feuer und überlastet den Geist mit Kraft.' },
+  { id:'nekrotisch', name:'Nekrotisch',  cat:'mag',  hue:320, desc:'Nekrotischer Schaden, verursacht durch bestimmte Untote und einen Zauber wie Frosthauch, lässt Materie verwelken und sogar die Seele schrumpfen.' },
+  { id:'gift',       name:'Gift',        cat:'mag',  hue:295, desc:'Giftige Stiche und das giftige Gas des Atems eines erwachsenen Grünen Drachen verursachen Giftschaden.' },
+  { id:'psychisch',  name:'Psychisch',   cat:'mag',  hue:340, desc:'Mentale Fähigkeiten wie ein Psi-Blitz verursachen psychischen Schaden.' },
+];
+
+const SCHADEN_CATS = [
+  { id:'phys', label:'Physisch',            sub:'Klingen, Wucht, Spitzen' },
+  { id:'mag',  label:'Elementar & Magisch', sub:'Naturkräfte, Magie und Geist' },
+];
+
+// SVG glyphs — simple line art, ~24x24 viewBox-friendly, all stroke="currentColor"
+const SCHADEN_GLYPHS = {
+  // Crossed swords (slashing)
+  hieb: (
+    <g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.2">
+      <g transform="rotate(45 20 20)">
+        <path d="M18 4 L22 4 L22 25 L18 25 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor"/>
+        <path d="M18 4 L20 1 L22 4 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor"/>
+        <path d="M13 25 L27 25 L27 28 L13 28 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor"/>
+        <path d="M19 28 L21 28 L21 35 L19 35 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor"/>
+        <circle cx="20" cy="37" r="1.8" fill="rgba(15,10,30,0.95)" stroke="currentColor"/>
+        <line x1="20" y1="6" x2="20" y2="23" stroke="currentColor" strokeWidth="0.6" opacity="0.5"/>
+      </g>
+      <g transform="rotate(-45 20 20)">
+        <path d="M18 4 L22 4 L22 25 L18 25 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor"/>
+        <path d="M18 4 L20 1 L22 4 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor"/>
+        <path d="M13 25 L27 25 L27 28 L13 28 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor"/>
+        <path d="M19 28 L21 28 L21 35 L19 35 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor"/>
+        <circle cx="20" cy="37" r="1.8" fill="rgba(15,10,30,0.95)" stroke="currentColor"/>
+        <line x1="20" y1="6" x2="20" y2="23" stroke="currentColor" strokeWidth="0.6" opacity="0.5"/>
+      </g>
+      <circle cx="20" cy="20" r="1.4" fill="currentColor"/>
+    </g>
+  ),
+  // War hammer (bludgeoning) — Mjölnir-style block head
+  wucht: (
+    <g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.3">
+      {/* impact sparks at corners */}
+      <path d="M3 10 L8 11 M4 5 L9 8" stroke="currentColor" strokeWidth="1.1" opacity="0.6"/>
+      <path d="M37 10 L32 11 M36 5 L31 8" stroke="currentColor" strokeWidth="1.1" opacity="0.6"/>
+      {/* hammer head — bold block */}
+      <rect x="8" y="9" width="24" height="13" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.4"/>
+      {/* vertical bands on head */}
+      <line x1="13" y1="9"  x2="13" y2="22" stroke="currentColor" strokeWidth="0.8" opacity="0.55"/>
+      <line x1="27" y1="9"  x2="27" y2="22" stroke="currentColor" strokeWidth="0.8" opacity="0.55"/>
+      {/* center stud */}
+      <circle cx="20" cy="15.5" r="2" fill="currentColor"/>
+      <circle cx="20" cy="15.5" r="0.8" fill="rgba(15,10,30,0.95)"/>
+      {/* handle */}
+      <rect x="18.2" y="22" width="3.6" height="12" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.3"/>
+      {/* grip wrap */}
+      <line x1="18.2" y1="25" x2="21.8" y2="25" stroke="currentColor" strokeWidth="0.6" opacity="0.6"/>
+      <line x1="18.2" y1="28" x2="21.8" y2="28" stroke="currentColor" strokeWidth="0.6" opacity="0.6"/>
+      <line x1="18.2" y1="31" x2="21.8" y2="31" stroke="currentColor" strokeWidth="0.6" opacity="0.6"/>
+      {/* pommel base */}
+      <rect x="15.5" y="34" width="9" height="3" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.3"/>
+    </g>
+  ),
+  // Dagger pointing down (piercing)
+  stich: (
+    <g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.3">
+      {/* drips/sparks at tip */}
+      <circle cx="20" cy="38" r="0.9" fill="currentColor" opacity="0.7"/>
+      <circle cx="15" cy="36" r="0.6" fill="currentColor" opacity="0.5"/>
+      <circle cx="25" cy="36" r="0.6" fill="currentColor" opacity="0.5"/>
+      {/* pommel */}
+      <circle cx="20" cy="6" r="2.6" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.3"/>
+      <circle cx="20" cy="6" r="0.9" fill="currentColor"/>
+      {/* grip with binding */}
+      <path d="M18 8 L22 8 L22 14 L18 14 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.3"/>
+      <line x1="18" y1="10" x2="22" y2="10" stroke="currentColor" strokeWidth="0.6" opacity="0.6"/>
+      <line x1="18" y1="12" x2="22" y2="12" stroke="currentColor" strokeWidth="0.6" opacity="0.6"/>
+      {/* crossguard */}
+      <path d="M11 14 L29 14 L29 17 L11 17 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.3"/>
+      <circle cx="11.5" cy="15.5" r="0.6" fill="currentColor"/>
+      <circle cx="28.5" cy="15.5" r="0.6" fill="currentColor"/>
+      {/* blade — tapered */}
+      <path d="M16 17 L24 17 L20 34 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.3"/>
+      {/* blood groove */}
+      <path d="M20 19 L20 32" stroke="currentColor" strokeWidth="0.6" opacity="0.55"/>
+    </g>
+  ),
+  // Sun disc with rays
+  strahlend: (
+    <g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.3">
+      {/* rays — 8 cardinal + diagonal */}
+      <g stroke="currentColor" strokeWidth="1.5">
+        <path d="M20 1 L20 7"/>
+        <path d="M20 33 L20 39"/>
+        <path d="M1 20 L7 20"/>
+        <path d="M33 20 L39 20"/>
+      </g>
+      <g stroke="currentColor" strokeWidth="1.1" opacity="0.7">
+        <path d="M6 6 L11 11"/>
+        <path d="M29 11 L34 6"/>
+        <path d="M6 34 L11 29"/>
+        <path d="M29 29 L34 34"/>
+      </g>
+      {/* outer disc */}
+      <circle cx="20" cy="20" r="9" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.4"/>
+      {/* inner ring */}
+      <circle cx="20" cy="20" r="5.5" fill="none" stroke="currentColor" strokeWidth="0.9" opacity="0.55"/>
+      {/* center diamond */}
+      <path d="M20 16 L23 20 L20 24 L17 20 Z" fill="currentColor"/>
+    </g>
+  ),
+  // Skull with decay tendrils (necrotic)
+  nekrotisch: (
+    <g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.3">
+      <path d="M10 31 L8 37 M14 32 L13 38 M20 33 L20 38 M26 32 L27 38 M30 31 L32 37" stroke="currentColor" strokeWidth="1.1" opacity="0.55"/>
+      <path d="M11 14 Q11 5 20 5 Q29 5 29 14 L29 21 Q29 25 26 26 L26 31 L23 31 L23 29 L17 29 L17 31 L14 31 L14 26 Q11 25 11 21 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.3"/>
+      <circle cx="16" cy="16" r="2.2" fill="currentColor"/>
+      <circle cx="24" cy="16" r="2.2" fill="currentColor"/>
+      <path d="M20 19 L18 23 L22 23 Z" fill="currentColor" opacity="0.85"/>
+      <path d="M17 26 L17 28 M19 26 L19 28 M21 26 L21 28 M23 26 L23 28" stroke="currentColor" strokeWidth="0.8" opacity="0.75"/>
+      <path d="M18 9 L16 12 L18 14" stroke="currentColor" strokeWidth="0.7" opacity="0.55"/>
+    </g>
+  ),
+  // Crystal core snowflake (cold)
+  kaelte: (
+    <g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.3">
+      {/* 6 bold radial arms with branches */}
+      <g stroke="currentColor" strokeWidth="1.5">
+        <g transform="translate(20 20)">
+          {[0,60,120,180,240,300].map(a => (
+            <g key={a} transform={`rotate(${a})`}>
+              <line x1="0" y1="-5" x2="0" y2="-17"/>
+              <line x1="0" y1="-9" x2="-3" y2="-12" strokeWidth="1.2"/>
+              <line x1="0" y1="-9" x2="3" y2="-12" strokeWidth="1.2"/>
+              <line x1="0" y1="-13" x2="-2" y2="-15" strokeWidth="1.1"/>
+              <line x1="0" y1="-13" x2="2" y2="-15" strokeWidth="1.1"/>
+            </g>
+          ))}
+        </g>
+      </g>
+      {/* tiny crystal tips */}
+      <g fill="currentColor">
+        {[0,60,120,180,240,300].map(a => {
+          const rad = (a - 90) * Math.PI / 180;
+          return <circle key={a} cx={20 + Math.cos(rad)*17} cy={20 + Math.sin(rad)*17} r="1.1"/>;
+        })}
+      </g>
+      {/* central hexagonal crystal */}
+      <polygon points="20,13 26,16.5 26,23.5 20,27 14,23.5 14,16.5" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.4"/>
+      <polygon points="20,16 23.5,18 23.5,22 20,24 16.5,22 16.5,18" fill="currentColor" opacity="0.85"/>
+      <polygon points="20,18 22,19 22,21 20,22 18,21 18,19" fill="rgba(15,10,30,0.95)"/>
+    </g>
+  ),
+  // Elegant layered flame with curling tongues
+  feuer: (
+    <g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.4">
+      {/* floating embers */}
+      <circle cx="8"  cy="13" r="0.7" fill="currentColor" opacity="0.6"/>
+      <circle cx="33" cy="9"  r="0.6" fill="currentColor" opacity="0.6"/>
+      <circle cx="6"  cy="22" r="0.4" fill="currentColor" opacity="0.4"/>
+      <circle cx="34" cy="20" r="0.5" fill="currentColor" opacity="0.45"/>
+      <circle cx="14" cy="5"  r="0.5" fill="currentColor" opacity="0.45"/>
+      {/* tiny spark crowning the flame */}
+      <path d="M22 2 L23 4 L22 5 L21 4 Z" fill="currentColor"/>
+
+      {/* OUTER flame — dark silhouette with flowing curves */}
+      <path d="M20 37
+               C 7 35, 4 24, 12 16
+               C 13 19, 16 18, 14 11
+               C 16 5, 22 4, 22 12
+               C 24 10, 28 11, 26 16
+               C 35 19, 34 32, 24 37
+               Z"
+        fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.5"/>
+
+      {/* MIDDLE flame — accent color tongue */}
+      <path d="M20 33
+               C 11 31, 12 22, 17 18
+               C 17 21, 20 21, 18 14
+               C 20 11, 23 13, 22 18
+               C 28 21, 27 29, 22 33
+               Z"
+        fill="currentColor" opacity="0.88"/>
+
+      {/* INNER core — dark heart of the flame */}
+      <path d="M20 28
+               C 16 27, 17 23, 19 20
+               C 20 22, 22 22, 22 26
+               Z"
+        fill="rgba(15,10,30,0.95)"/>
+
+      {/* tiny upper-tip glint */}
+      <circle cx="22" cy="9" r="0.9" fill="currentColor" opacity="0.95"/>
+    </g>
+  ),
+  // Lightning bolt silhouette
+  blitz: (
+    <g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.3">
+      <circle cx="6" cy="14" r="1.1" fill="currentColor" opacity="0.7"/>
+      <circle cx="34" cy="26" r="1.1" fill="currentColor" opacity="0.7"/>
+      <circle cx="9" cy="32" r="0.7" fill="currentColor" opacity="0.5"/>
+      <circle cx="32" cy="10" r="0.7" fill="currentColor" opacity="0.5"/>
+      <path d="M24 3 L11 21 L19 21 L15 37 L29 17 L21 17 L26 3 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.4"/>
+      <path d="M23 7 L15 19 L20 19 L17 30" stroke="currentColor" strokeWidth="0.6" opacity="0.5"/>
+    </g>
+  ),
+  // Skull with crossed bones
+  gift: (
+    <g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.3">
+      <path d="M8 30 L32 8" strokeWidth="1.5" opacity="0.6"/>
+      <path d="M32 30 L8 8" strokeWidth="1.5" opacity="0.6"/>
+      <circle cx="8" cy="8"  r="2" fill="rgba(255,255,255,0.16)"/>
+      <circle cx="32" cy="8"  r="2" fill="rgba(255,255,255,0.16)"/>
+      <circle cx="8" cy="30" r="2" fill="rgba(255,255,255,0.16)"/>
+      <circle cx="32" cy="30" r="2" fill="rgba(255,255,255,0.16)"/>
+      <path d="M11 19 Q11 11 20 11 Q29 11 29 19 L29 23 Q29 27 26 28 L26 31 L23 31 L23 29 L17 29 L17 31 L14 31 L14 28 Q11 27 11 23 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.3"/>
+      <circle cx="16" cy="20" r="1.7" fill="currentColor"/>
+      <circle cx="24" cy="20" r="1.7" fill="currentColor"/>
+      <path d="M18 25 L18 27 M20 25 L20 27 M22 25 L22 27" opacity="0.7" strokeWidth="0.9"/>
+    </g>
+  ),
+  // Ringing bell (thunder/sound)
+  schall: (
+    <g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.3">
+      {/* vibration lines on sides */}
+      <path d="M3 14 L7 15 M3 21 L7 20" stroke="currentColor" strokeWidth="1.2" opacity="0.7"/>
+      <path d="M37 14 L33 15 M37 21 L33 20" stroke="currentColor" strokeWidth="1.2" opacity="0.7"/>
+      <path d="M2 9 L6 11" stroke="currentColor" strokeWidth="1" opacity="0.45"/>
+      <path d="M38 9 L34 11" stroke="currentColor" strokeWidth="1" opacity="0.45"/>
+      {/* bell crown/loop */}
+      <path d="M18 4 L22 4 L22 8 L18 8 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.3"/>
+      {/* bell body */}
+      <path d="M11 25 Q 11 10, 20 8 Q 29 10, 29 25 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.4"/>
+      {/* bell rim */}
+      <path d="M9 25 L31 25 L31 28 L9 28 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.3"/>
+      {/* bell mouth shading line */}
+      <line x1="13" y1="25" x2="13" y2="28" stroke="currentColor" strokeWidth="0.6" opacity="0.5"/>
+      <line x1="27" y1="25" x2="27" y2="28" stroke="currentColor" strokeWidth="0.6" opacity="0.5"/>
+      {/* clapper */}
+      <line x1="20" y1="28" x2="20" y2="31" stroke="currentColor" strokeWidth="1.4"/>
+      <circle cx="20" cy="33" r="2.2" fill="currentColor"/>
+    </g>
+  ),
+  // Bubbling vial / corrosive flask (acid)
+  saeure: (
+    <g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.3">
+      {/* splatter drops around */}
+      <circle cx="6" cy="32" r="1.4" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1"/>
+      <circle cx="34" cy="30" r="1.6" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1"/>
+      <circle cx="33" cy="36" r="0.8" fill="currentColor" opacity="0.7"/>
+      <circle cx="7" cy="38" r="0.7" fill="currentColor" opacity="0.7"/>
+      {/* steam/fumes */}
+      <path d="M14 6 Q15 4 17 5" stroke="currentColor" strokeWidth="1" opacity="0.55"/>
+      <path d="M23 6 Q25 4 27 5" stroke="currentColor" strokeWidth="1" opacity="0.55"/>
+      <path d="M19 3 Q21 1 23 2" stroke="currentColor" strokeWidth="1" opacity="0.45"/>
+      {/* flask cork */}
+      <path d="M16 8 L24 8 L24 11 L16 11 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.3"/>
+      {/* flask neck */}
+      <path d="M17 11 L23 11 L23 16 L17 16 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.3"/>
+      {/* flask body — round bulb */}
+      <path d="M17 16 Q9 22 11 30 Q14 37 20 37 Q26 37 29 30 Q31 22 23 16 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.4"/>
+      {/* acid fluid line */}
+      <path d="M13 26 Q17 28 20 26 Q23 24 27 26" stroke="currentColor" strokeWidth="1.1" opacity="0.85"/>
+      {/* bubbles inside */}
+      <circle cx="16" cy="30" r="1.2" fill="currentColor" opacity="0.8"/>
+      <circle cx="22" cy="32" r="0.9" fill="currentColor" opacity="0.7"/>
+      <circle cx="25" cy="28" r="0.6" fill="currentColor" opacity="0.6"/>
+    </g>
+  ),
+
+  // Bursting magic star (force)
+  energie: (
+    <g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.3">
+      <path d="M5 5 L7 7 M5 7 L7 5" stroke="currentColor" strokeWidth="1.1" opacity="0.7"/>
+      <path d="M33 33 L35 35 M33 35 L35 33" stroke="currentColor" strokeWidth="1.1" opacity="0.7"/>
+      <path d="M5 35 L7 33 M5 33 L7 35" stroke="currentColor" strokeWidth="1" opacity="0.55"/>
+      <path d="M33 5 L35 7 M33 7 L35 5" stroke="currentColor" strokeWidth="1" opacity="0.55"/>
+      <path d="M20 2 L23.5 16.5 L38 20 L23.5 23.5 L20 38 L16.5 23.5 L2 20 L16.5 16.5 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.4"/>
+      <path d="M20 8 L22 18 L32 20 L22 22 L20 32 L18 22 L8 20 L18 18 Z" fill="currentColor" opacity="0.85"/>
+      <circle cx="20" cy="20" r="2.2" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="0.9"/>
+      <circle cx="20" cy="20" r="0.9" fill="currentColor"/>
+    </g>
+  ),
+
+  // Brain silhouette with psi waves
+  psychisch: (
+    <g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.3">
+      {/* psi waves */}
+      <path d="M3 9 Q6 11 5 15" stroke="currentColor" strokeWidth="1" opacity="0.55"/>
+      <path d="M37 9 Q34 11 35 15" stroke="currentColor" strokeWidth="1" opacity="0.55"/>
+      <path d="M4 32 Q7 30 6 27" stroke="currentColor" strokeWidth="1" opacity="0.45"/>
+      <path d="M36 32 Q33 30 34 27" stroke="currentColor" strokeWidth="1" opacity="0.45"/>
+      {/* left hemisphere */}
+      <path d="M19 7 Q14 5 10 9 Q6 13 9 18 Q5 22 9 27 Q11 32 16 33 L19 33 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.3"/>
+      {/* right hemisphere */}
+      <path d="M21 7 Q26 5 30 9 Q34 13 31 18 Q35 22 31 27 Q29 32 24 33 L21 33 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.3"/>
+      {/* central fissure highlight */}
+      <line x1="20" y1="7" x2="20" y2="33" stroke="currentColor" strokeWidth="0.6" opacity="0.4"/>
+      {/* folds — left */}
+      <path d="M12 13 Q14 14 13 16" stroke="currentColor" strokeWidth="1" opacity="0.7"/>
+      <path d="M11 20 Q13 21 12 23" stroke="currentColor" strokeWidth="1" opacity="0.7"/>
+      <path d="M13 27 Q15 28 14 30" stroke="currentColor" strokeWidth="1" opacity="0.7"/>
+      {/* folds — right */}
+      <path d="M28 13 Q26 14 27 16" stroke="currentColor" strokeWidth="1" opacity="0.7"/>
+      <path d="M29 20 Q27 21 28 23" stroke="currentColor" strokeWidth="1" opacity="0.7"/>
+      <path d="M27 27 Q25 28 26 30" stroke="currentColor" strokeWidth="1" opacity="0.7"/>
+      {/* brain stem */}
+      <path d="M17 33 L17 36 L23 36 L23 33" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.2"/>
+    </g>
+  ),
+};
+
+// ── HEILTRÄNKE ──────────────────────────────────────────────────────────────
+const HEILTRAENKE = [
+  { name:'Heilung',          rar:'Gewöhnlich',  rarKey:'com',  tp:'2W4 + 2',  notes:'Standardausrüstung der meisten Abenteurer.' },
+  { name:'Stärkere Heilung', rar:'Ungewöhnlich', rarKey:'uncm', tp:'4W4 + 4',  notes:'Bei erfahrenen Apothekern und in Tempeln erhältlich.' },
+  { name:'Höhere Heilung',   rar:'Selten',      rarKey:'rare', tp:'8W4 + 8',  notes:'Selten in Märkten — meist nur durch Auftrag.' },
+  { name:'Überlegene Heilung', rar:'Sehr selten', rarKey:'vrare', tp:'10W4 + 20', notes:'Legendäre Brauereien — Preis nach Verhandlung.' },
+];
+
+// ── RICHTUNGEN ──────────────────────────────────────────────────────────────
+const RICHTUNGEN = [
+  { n:1, dir:'Norden',      sub:'oben',         angle:-90 },
+  { n:2, dir:'Nord-Osten',  sub:'oben-rechts',  angle:-45 },
+  { n:3, dir:'Osten',       sub:'rechts',       angle:0 },
+  { n:4, dir:'Süd-Osten',   sub:'unten-rechts', angle:45 },
+  { n:5, dir:'Süden',       sub:'unten',        angle:90 },
+  { n:6, dir:'Süd-Westen',  sub:'unten-links',  angle:135 },
+  { n:7, dir:'Westen',      sub:'links',        angle:180 },
+  { n:8, dir:'Nord-Westen', sub:'oben-links',   angle:-135 },
+];
+
+// ── HELPERS ─────────────────────────────────────────────────────────────────
+function Sidebar({ active, onSelect }) {
+  return (
+    <aside style={{
+      width:'var(--sidebar-w)', flexShrink:0, position:'sticky', top:'var(--nav-h)',
+      height:'calc(100vh - var(--nav-h))', overflowY:'auto',
+      padding:'28px 18px 28px 22px',
+      borderRight:'1px solid rgba(160,140,255,0.08)',
+      background:'linear-gradient(180deg, rgba(8,6,22,0.45) 0%, rgba(5,4,15,0.7) 100%)',
+    }}>
+      <div style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.32em',color:'rgba(124,77,255,0.55)',textTransform:'uppercase',marginBottom:'18px',paddingLeft:'4px'}}>◈ Kapitel</div>
+      <nav style={{display:'flex',flexDirection:'column',gap:'2px'}}>
+        {CATEGORIES.map((cat,i) => {
+          const on = cat.id === active;
+          return (
+            <button key={cat.id} onClick={()=>onSelect(cat.id)} style={{
+              display:'flex', alignItems:'center', gap:'10px',
+              padding:'10px 12px', textAlign:'left',
+              background: on ? 'linear-gradient(90deg, rgba(124,77,255,0.18), rgba(124,77,255,0.04))' : 'transparent',
+              border:'1px solid', borderColor: on ? 'rgba(124,77,255,0.45)' : 'transparent',
+              borderRadius:'2px', cursor:'pointer', transition:'all 0.18s',
+            }}
+              onMouseEnter={e=>{if(!on){e.currentTarget.style.background='rgba(124,77,255,0.06)';e.currentTarget.style.borderColor='rgba(124,77,255,0.15)';}}}
+              onMouseLeave={e=>{if(!on){e.currentTarget.style.background='transparent';e.currentTarget.style.borderColor='transparent';}}}
+            >
+              <span style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.18em',color: on ? '#c9b8ff' : 'rgba(124,77,255,0.45)',minWidth:'18px'}}>{String(i+1).padStart(2,'0')}</span>
+              <span style={{fontFamily:'var(--font-display)',fontSize:'11px',fontWeight: on ? 500 : 400,letterSpacing:'0.12em',color: on ? '#f0eeff' : 'rgba(200,190,240,0.6)',textTransform:'uppercase'}}>{cat.label}</span>
+            </button>
+          );
+        })}
+      </nav>
+
+      <div style={{marginTop:'40px',padding:'14px 12px',background:'rgba(124,77,255,0.05)',border:'1px solid rgba(124,77,255,0.14)',borderRadius:'3px'}}>
+        <div style={{fontFamily:'var(--font-mono)',fontSize:'7.5px',letterSpacing:'0.28em',color:'rgba(124,77,255,0.55)',textTransform:'uppercase',marginBottom:'8px'}}>◈ Hinweis</div>
+        <p style={{fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'10.5px',lineHeight:1.6,color:'rgba(200,190,240,0.55)'}}>
+          Diese Seite sammelt Meta-Informationen, die du außerhalb der Spielwelt brauchst.
+        </p>
+      </div>
+    </aside>
+  );
+}
+
+function SectionHeader({ mono, title, sub }) {
+  return (
+    <div style={{marginBottom:'22px'}}>
+      <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.32em',color:'rgba(124,77,255,0.6)',textTransform:'uppercase',marginBottom:'10px'}}>◈ {mono}</div>
+      <h2 style={{fontFamily:'var(--font-display)',fontSize:'clamp(28px,3.5vw,42px)',fontWeight:'300',letterSpacing:'0.14em',color:'#f0eeff',textShadow:'0 0 28px rgba(124,77,255,0.32)',lineHeight:1.05,textTransform:'uppercase'}}>{title}</h2>
+      {sub && <p style={{marginTop:'12px',fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'13px',color:'rgba(200,190,240,0.5)',letterSpacing:'0.04em',maxWidth:'620px',lineHeight:1.7}}>{sub}</p>}
+      <div style={{marginTop:'18px',width:'72px',height:'1px',background:'linear-gradient(to right, rgba(124,77,255,0.7), rgba(124,77,255,0))'}}/>
+    </div>
+  );
+}
+
+function SubH({ children }) {
+  return <h3 style={{fontFamily:'var(--font-display)',fontSize:'15px',fontWeight:'400',letterSpacing:'0.18em',color:'#e8e0ff',textTransform:'uppercase',margin:'28px 0 12px',display:'flex',alignItems:'center',gap:'10px'}}>
+    <span style={{width:'8px',height:'8px',background:'rgba(124,77,255,0.7)',transform:'rotate(45deg)',display:'inline-block'}}/>
+    {children}
+  </h3>;
+}
+
+function TW({ children }) {
+  return <div style={{borderRadius:'3px',overflow:'hidden',border:'1px solid rgba(124,77,255,0.18)',background:'rgba(10,7,28,0.6)',marginBottom:'18px'}}>{children}</div>;
+}
+
+function useReveal(active) {
+  useEffect(() => {
+    document.querySelectorAll('.reveal-up').forEach(el => el.classList.remove('visible'));
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    setTimeout(() => {
+      document.querySelectorAll('.reveal-up:not(.visible)').forEach(el => io.observe(el));
+    }, 40);
+    return () => io.disconnect();
+  }, [active]);
+}
+</script>
+
+
+<!-- ───── CONTENT COMPONENTS ───── -->
+<script type="text/babel">
+
+// ── 01 — Charakteraufstieg ─────────────────────────────────────────────────
+function AufstiegContent() {
+  let cum = 0;
+  return (
+    <div>
+      <SectionHeader mono="Einleitung · Meta" title="Charakteraufstieg" sub="Eine vollständige Übersicht über alle 20 Stufen, mit den Erfahrungspunkten, die für jeden Aufstieg benötigt werden, und dem zugehörigen Übungsbonus."/>
+
+      <div className="feat reveal-up" style={{marginBottom:'18px'}}>
+        <div className="feat-name">Lesehilfe</div>
+        <div className="feat-text">
+          Du startest mit einem neuen Charakter auf <strong style={{color:'rgba(220,210,255,0.9)'}}>Stufe&nbsp;1</strong> mit <strong style={{color:'rgba(220,210,255,0.9)'}}>0&nbsp;EP</strong>.
+          Die Spalte <em>Benötigt für Aufstieg</em> zeigt, wie viele <em>zusätzliche</em> Erfahrungspunkte du sammeln musst, um die nächste Stufe zu erreichen.
+          Die Spalte <em>Gesamt</em> ist die kumulierte Summe aller bisher gesammelten Erfahrungspunkte ab Stufenstart.
+        </div>
+      </div>
+
+      <TW>
+        <table className="eq-table">
+          <thead>
+            <tr>
+              <th style={{width:'90px'}}>Stufe</th>
+              <th className="mono">Benötigt für Aufstieg</th>
+              <th className="mono">Gesamt EP</th>
+              <th style={{width:'130px'}}>Übungsbonus</th>
+            </tr>
+          </thead>
+          <tbody>
+            {AUFSTIEG.map((row, i) => {
+              cum += row.needed;
+              const tier = row.lvl <= 4 ? 1 : row.lvl <= 10 ? 2 : row.lvl <= 16 ? 3 : 4;
+              const tierBg = ['rgba(94,232,208,0.04)','rgba(124,77,255,0.04)','rgba(255,180,100,0.04)','rgba(255,120,200,0.05)'][tier-1];
+              const tierEdge = ['rgba(94,232,208,0.6)','rgba(160,140,255,0.7)','rgba(255,200,140,0.65)','rgba(255,160,220,0.7)'][tier-1];
+              const isFirst = i === 0 || AUFSTIEG[i-1].lvl > row.lvl || (i > 0 && (
+                (row.lvl === 5) || (row.lvl === 11) || (row.lvl === 17)
+              ));
+              return (
+                <tr key={row.lvl} style={{ background: tierBg }}>
+                  <td style={{display:'flex',alignItems:'center',gap:'10px'}}>
+                    <span style={{
+                      display:'inline-flex',alignItems:'center',justifyContent:'center',
+                      width:'26px',height:'29px',position:'relative',flexShrink:0,
+                    }}>
+                      <svg viewBox="0 0 26 29" width="26" height="29" style={{position:'absolute',inset:0}}>
+                        <polygon points="13,1 25,7.5 25,21.5 13,28 1,21.5 1,7.5"
+                          fill="rgba(124,77,255,0.08)" stroke={tierEdge} strokeWidth="0.9"/>
+                      </svg>
+                      <span style={{position:'relative',fontFamily:'var(--font-display)',fontSize:'12px',fontWeight:500,color:'#f0eeff'}}>{row.lvl}</span>
+                    </span>
+                    {isFirst && (
+                      <span style={{fontFamily:'var(--font-mono)',fontSize:'7.5px',letterSpacing:'0.2em',color:tierEdge,textTransform:'uppercase'}}>
+                        {row.lvl === 1 ? 'Stufe I — IV' : row.lvl === 5 ? 'Stufe V — X' : row.lvl === 11 ? 'Stufe XI — XVI' : 'Stufe XVII — XX'}
+                      </span>
+                    )}
+                  </td>
+                  <td className="mono" style={{color: row.lvl === 1 ? 'rgba(160,140,255,0.4)' : 'rgba(220,210,255,0.85)'}}>
+                    {row.lvl === 1 ? '— (Start)' : `+ ${fmtEP(row.needed)} EP`}
+                  </td>
+                  <td className="mono" style={{color:'rgba(160,140,255,0.95)'}}>
+                    {fmtEP(cum)} EP
+                  </td>
+                  <td>
+                    <span style={{
+                      fontFamily:'var(--font-mono)',fontSize:'12px',
+                      padding:'3px 10px',background:'rgba(124,77,255,0.12)',
+                      border:`1px solid ${tierEdge}`,borderRadius:'2px',
+                      color:'#e8e0ff',letterSpacing:'0.04em',
+                    }}>+{row.prof}</span>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </TW>
+
+      <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(220px,1fr))',gap:'10px',marginTop:'18px'}}>
+        {[
+          {t:'Stufenklasse I',r:'Stufe 1–4',e:'Übungsbonus +2'},
+          {t:'Stufenklasse II',r:'Stufe 5–10',e:'Übungsbonus +3 bis +4'},
+          {t:'Stufenklasse III',r:'Stufe 11–16',e:'Übungsbonus +4 bis +5'},
+          {t:'Stufenklasse IV',r:'Stufe 17–20',e:'Übungsbonus +6'},
+        ].map((c,i) => {
+          const tEdge = ['rgba(94,232,208,0.6)','rgba(160,140,255,0.7)','rgba(255,200,140,0.65)','rgba(255,160,220,0.7)'][i];
+          return (
+            <div key={c.t} className="reveal-up" style={{padding:'14px 14px',background:'rgba(124,77,255,0.05)',border:'1px solid rgba(124,77,255,0.14)',borderTop:`2px solid ${tEdge}`,borderRadius:'0 0 3px 3px'}}>
+              <div style={{fontFamily:'var(--font-mono)',fontSize:'7.5px',letterSpacing:'0.24em',color:tEdge,textTransform:'uppercase',marginBottom:'5px'}}>{c.t}</div>
+              <div style={{fontFamily:'var(--font-display)',fontSize:'14px',fontWeight:400,letterSpacing:'0.1em',color:'#f0eeff',textTransform:'uppercase',marginBottom:'5px'}}>{c.r}</div>
+              <div style={{fontFamily:'var(--font-body)',fontWeight:300,fontSize:'11px',color:'rgba(200,190,240,0.55)',lineHeight:1.55}}>{c.e}</div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ── 02 — Schadensarten ─────────────────────────────────────────────────────
+function SchadenIcon({ id, hue, size = 56 }) {
+  const stroke = `oklch(0.78 0.15 ${hue})`;
+  return (
+    <div style={{position:'relative',width:size,height:size*1.06,flexShrink:0}}>
+      {/* hex frame */}
+      <svg viewBox="0 0 40 44" width={size} height={size*1.06} style={{position:'absolute',inset:0}}>
+        <polygon points="20,1.5 38,11 38,33 20,42.5 2,33 2,11"
+          fill={`oklch(0.78 0.15 ${hue} / 0.05)`}
+          stroke={`oklch(0.78 0.15 ${hue} / 0.45)`} strokeWidth="0.8"/>
+        <polygon points="20,5 34.5,13 34.5,31 20,39 5.5,31 5.5,13"
+          fill="none" stroke={`oklch(0.78 0.15 ${hue} / 0.18)`} strokeWidth="0.5"/>
+      </svg>
+      {/* glyph */}
+      <svg viewBox="0 0 40 40" width={size} height={size*1.06} style={{position:'absolute',inset:0,color:stroke,filter:`drop-shadow(0 0 6px oklch(0.78 0.15 ${hue} / 0.4))`}}>
+        {SCHADEN_GLYPHS[id]}
+      </svg>
+    </div>
+  );
+}
+
+function SchadenContent() {
+  return (
+    <div>
+      <SectionHeader mono="Einleitung · Meta" title="Schadensarten" sub="Dreizehn unterschiedliche Schadensarten gibt es in Meruria. Jede Waffe, jeder Zauber und jede Naturgewalt richtet einen spezifischen Schadenstyp an — was Resistenzen, Verwundbarkeiten und Immunitäten erst möglich macht."/>
+
+      {SCHADEN_CATS.map((cat, ci) => {
+        const items = SCHADEN.filter(s => s.cat === cat.id);
+        return (
+          <div key={cat.id} style={{marginBottom: ci < SCHADEN_CATS.length - 1 ? '32px' : 0}}>
+            {/* category header */}
+            <div style={{display:'flex',alignItems:'baseline',gap:'14px',marginBottom:'14px'}}>
+              <span style={{
+                fontFamily:'var(--font-mono)', fontSize:'9px',
+                letterSpacing:'0.3em', color:'rgba(124,77,255,0.65)',
+                textTransform:'uppercase',
+              }}>◇ {String(ci+1).padStart(2,'0')} · {cat.label}</span>
+              <span style={{
+                fontFamily:'var(--font-body)', fontWeight:300, fontStyle:'italic',
+                fontSize:'11.5px', color:'rgba(200,190,240,0.42)',
+              }}>{cat.sub}</span>
+              <div style={{flex:1,height:1,background:'linear-gradient(to right, rgba(124,77,255,0.32), rgba(124,77,255,0.03))'}}/>
+              <span style={{
+                fontFamily:'var(--font-mono)', fontSize:'8px',
+                letterSpacing:'0.24em', color:'rgba(160,140,255,0.4)',
+              }}>{items.length} TYPEN</span>
+            </div>
+
+            <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(290px,1fr))',gap:'12px'}}>
+              {items.map(s => (
+                <div key={s.id} className="reveal-up" style={{
+                  position:'relative', overflow:'hidden',
+                  display:'flex', gap:'14px', alignItems:'flex-start',
+                  padding:'14px 16px 14px 20px',
+                  background:`linear-gradient(135deg, oklch(0.78 0.15 ${s.hue} / 0.06) 0%, rgba(10,7,28,0.85) 60%)`,
+                  border:'1px solid rgba(124,77,255,0.16)',
+                  borderRadius:'3px',
+                  transition:'border-color 0.22s, box-shadow 0.22s, transform 0.22s',
+                }}
+                  onMouseEnter={e=>{e.currentTarget.style.borderColor=`oklch(0.78 0.15 ${s.hue} / 0.6)`;e.currentTarget.style.boxShadow=`0 0 28px oklch(0.78 0.15 ${s.hue} / 0.2)`;e.currentTarget.style.transform='translateY(-2px)';}}
+                  onMouseLeave={e=>{e.currentTarget.style.borderColor='rgba(124,77,255,0.16)';e.currentTarget.style.boxShadow='none';e.currentTarget.style.transform='translateY(0)';}}
+                >
+                  {/* left accent bar */}
+                  <span style={{position:'absolute',left:0,top:0,bottom:0,width:3,background:`oklch(0.78 0.15 ${s.hue} / 0.65)`,boxShadow:`0 0 8px oklch(0.78 0.15 ${s.hue} / 0.5)`}}/>
+                  {/* corner brackets */}
+                  <span style={{position:'absolute',top:-1,left:-1,width:9,height:9,borderTop:`1px solid oklch(0.78 0.15 ${s.hue} / 0.75)`,borderLeft:`1px solid oklch(0.78 0.15 ${s.hue} / 0.75)`}}/>
+                  <span style={{position:'absolute',bottom:-1,right:-1,width:9,height:9,borderBottom:`1px solid oklch(0.78 0.15 ${s.hue} / 0.75)`,borderRight:`1px solid oklch(0.78 0.15 ${s.hue} / 0.75)`}}/>
+
+                  <SchadenIcon id={s.id} hue={s.hue} size={62}/>
+                  <div style={{flex:1,minWidth:0}}>
+                    <div style={{display:'flex',alignItems:'baseline',gap:'8px',marginBottom:'6px'}}>
+                      <span style={{fontFamily:'var(--font-display)',fontSize:'15px',fontWeight:500,letterSpacing:'0.18em',color:'#f0eeff',textTransform:'uppercase'}}>{s.name}</span>
+                      <span style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.22em',color:`oklch(0.78 0.15 ${s.hue} / 0.7)`,textTransform:'uppercase'}}>schaden</span>
+                    </div>
+                    <p style={{fontFamily:'var(--font-body)',fontWeight:300,fontSize:'11.5px',lineHeight:1.65,color:'rgba(200,190,240,0.7)',letterSpacing:'0.01em'}}>{s.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+// ── 03 — Heiltränke ────────────────────────────────────────────────────────
+function HeiltrankContent() {
+  return (
+    <div>
+      <SectionHeader mono="Einleitung · Meta" title="Trank der Heilung" sub="Ein Trank der Heilung stellt Trefferpunkte wieder her, sobald er getrunken wird. Vier Stufen — von gewöhnlich bis sehr selten — bieten unterschiedlich starke Heilung."/>
+
+      <TW>
+        <table className="eq-table">
+          <thead>
+            <tr>
+              <th>Trank der ...</th>
+              <th>Seltenheit</th>
+              <th className="mono">Wiederhergestellte TP</th>
+              <th>Notizen</th>
+            </tr>
+          </thead>
+          <tbody>
+            {HEILTRAENKE.map(p => (
+              <tr key={p.name}>
+                <td style={{color:'#e8e0ff',fontWeight:400,fontStyle:'italic',fontFamily:'var(--font-display)',fontSize:'13px',letterSpacing:'0.05em'}}>{p.name}</td>
+                <td><span className={`tag-rar tag-${p.rarKey}`}>{p.rar}</span></td>
+                <td className="mono" style={{color:'rgba(220,210,255,0.95)',fontSize:'13px'}}>{p.tp}</td>
+                <td style={{color:'rgba(200,190,240,0.55)',fontStyle:'italic',fontSize:'11.5px'}}>{p.notes}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </TW>
+
+      <div style={{display:'grid',gridTemplateColumns:'repeat(4, 1fr)',gap:'10px',marginTop:'18px'}}>
+        {HEILTRAENKE.map((p, i) => {
+          const colors = ['rgba(150,235,170,0.9)','rgba(120,200,255,0.9)','rgba(210,170,255,0.95)','rgba(255,200,180,0.95)'];
+          const bgs = ['rgba(120,200,140,0.05)','rgba(80,160,240,0.05)','rgba(180,120,255,0.05)','rgba(255,150,120,0.05)'];
+          const edges = ['rgba(120,200,140,0.4)','rgba(80,160,240,0.4)','rgba(180,120,255,0.5)','rgba(255,150,120,0.5)'];
+          // average dice roll: 2W4+2=7, 4W4+4=14, 8W4+8=28, 10W4+20=45
+          const avg = [7, 14, 28, 45][i];
+          const max = [10, 20, 40, 60][i];
+          return (
+            <div key={p.name} className="reveal-up" style={{
+              position:'relative', padding:'16px 14px 14px',
+              background:`linear-gradient(180deg, ${bgs[i]} 0%, transparent 100%)`,
+              border:`1px solid ${edges[i]}`,
+              borderRadius:'3px', textAlign:'center',
+            }}>
+              {/* potion bottle icon */}
+              <svg viewBox="0 0 40 50" width="36" height="45" style={{margin:'4px auto 10px',display:'block'}}>
+                <path d="M16 4 L24 4 L24 14 L28 18 Q30 22 30 26 L30 42 Q30 46 26 46 L14 46 Q10 46 10 42 L10 26 Q10 22 12 18 L16 14 Z"
+                  fill={`${bgs[i].replace('0.05','0.2')}`} stroke={colors[i]} strokeWidth="1.2"/>
+                <rect x="14" y="2" width="12" height="4" fill={colors[i]} opacity="0.7"/>
+                <path d="M11 32 Q15 30 19 33 Q23 30 27 33 Q31 30 29 35 L29 42 Q29 44 26 44 L14 44 Q11 44 11 42 Z"
+                  fill={colors[i]} opacity="0.4"/>
+                <circle cx="18" cy="36" r="1.2" fill="rgba(255,255,255,0.6)"/>
+                <circle cx="23" cy="39" r="0.8" fill="rgba(255,255,255,0.5)"/>
+              </svg>
+              <div style={{fontFamily:'var(--font-display)',fontSize:'12px',fontWeight:400,letterSpacing:'0.14em',color:colors[i],textTransform:'uppercase',marginBottom:'8px',minHeight:'30px',display:'flex',alignItems:'center',justifyContent:'center'}}>{p.name}</div>
+              <div style={{fontFamily:'var(--font-mono)',fontSize:'7.5px',letterSpacing:'0.24em',color:'rgba(160,140,255,0.55)',textTransform:'uppercase',marginBottom:'4px'}}>Durchschnitt</div>
+              <div style={{fontFamily:'var(--font-display)',fontSize:'22px',fontWeight:300,color:'#f0eeff',lineHeight:1}}>{avg} TP</div>
+              <div style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.18em',color:'rgba(160,140,255,0.45)',marginTop:'6px'}}>Max. {max}</div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="feat reveal-up" style={{marginTop:'24px'}}>
+        <div className="feat-name">Konsum als Aktion</div>
+        <div className="feat-text">
+          Ein Trank zu trinken kostet eine <strong style={{color:'rgba(220,210,255,0.9)'}}>Aktion</strong>.
+          Einer anderen, bewusstlosen Kreatur einen Trank einzuflößen kostet ebenfalls eine ganze Aktion. Der Trank kann nicht durch andere Heilmethoden ersetzt werden — er wirkt sofort.
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── 04 — Inspiration ───────────────────────────────────────────────────────
+function InspirationContent() {
+  const rules = [
+    { n:'01', t:'Vergabe durch den DM', x:'Inspiration wird einem Charakter vom DM in den meisten Fällen verliehen, um einen besonderen Moment des Spielers zu belohnen.' },
+    { n:'02', t:'Sammeln bis zu Vier',   x:'Ein Charakter kann bis zu 4 Inspiration sammeln.' },
+    { n:'03', t:'Neu würfeln',           x:'Inspiration kann nach einem fehlgeschlagenen Wurf eingesetzt werden, um erneut zu würfeln. Es wird dann das höhere Ergebnis benutzt.' },
+    { n:'04', t:'Weitergeben',           x:'Ein Charakter kann zu jedem Zeitpunkt im Spiel seine Reaktion benutzen, um eine Inspiration zu verbrauchen — um einen anderen Charakter anzufeuern oder diesem Mut zu machen und ihm die Inspiration somit zu geben.' },
+  ];
+  return (
+    <div>
+      <SectionHeader mono="Einleitung · Meta" title="Inspiration" sub="Inspiration ist die Belohnung des Erzählers für besondere Spielmomente — ein Funke, der einen Wurf retten oder den Mut eines Verbündeten neu entfachen kann."/>
+
+      <div style={{display:'flex',flexDirection:'column',gap:'10px'}}>
+        {rules.map(r => (
+          <div key={r.n} className="reveal-up" style={{
+            position:'relative',
+            display:'grid',gridTemplateColumns:'auto 1fr',gap:'18px',
+            alignItems:'flex-start',
+            padding:'18px 22px',
+            background:'linear-gradient(135deg, rgba(18,12,42,0.65) 0%, rgba(10,7,28,0.85) 100%)',
+            border:'1px solid rgba(124,77,255,0.18)',
+            borderRadius:'3px',
+          }}>
+            {/* sparkle accent */}
+            <div style={{
+              display:'flex',flexDirection:'column',alignItems:'center',gap:'6px',
+              paddingTop:'2px',minWidth:'52px',
+            }}>
+              <svg viewBox="0 0 40 40" width="40" height="40" style={{filter:'drop-shadow(0 0 8px rgba(160,140,255,0.5))'}}>
+                <polygon points="20,4 23,15 34,18 23,21 20,32 17,21 6,18 17,15"
+                  fill="rgba(160,140,255,0.25)" stroke="rgba(200,180,255,0.85)" strokeWidth="1"/>
+                <circle cx="32" cy="32" r="2" fill="rgba(200,180,255,0.7)"/>
+                <circle cx="8" cy="32" r="1.5" fill="rgba(200,180,255,0.5)"/>
+              </svg>
+              <span style={{fontFamily:'var(--font-mono)',fontSize:'8.5px',letterSpacing:'0.28em',color:'rgba(124,77,255,0.7)'}}>{r.n}</span>
+            </div>
+            <div>
+              <div style={{fontFamily:'var(--font-display)',fontSize:'13px',fontWeight:500,letterSpacing:'0.16em',color:'#f0eeff',textTransform:'uppercase',marginBottom:'8px'}}>{r.t}</div>
+              <p style={{fontFamily:'var(--font-body)',fontWeight:300,fontSize:'13px',lineHeight:1.75,color:'rgba(200,190,240,0.72)',letterSpacing:'0.01em'}}>{r.x}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div style={{
+        marginTop:'24px',padding:'16px 22px',
+        background:'linear-gradient(90deg, rgba(124,77,255,0.12), rgba(124,77,255,0.02))',
+        borderLeft:'2px solid rgba(160,140,255,0.7)',
+        borderRadius:'0 3px 3px 0',
+      }}>
+        <div style={{display:'flex',alignItems:'center',gap:'12px'}}>
+          <span style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.28em',color:'rgba(160,140,255,0.85)',textTransform:'uppercase'}}>Maximalwert</span>
+          <div style={{display:'flex',gap:'6px'}}>
+            {[1,2,3,4].map(i => (
+              <svg key={i} viewBox="0 0 40 40" width="22" height="22">
+                <polygon points="20,4 23,15 34,18 23,21 20,32 17,21 6,18 17,15"
+                  fill="rgba(160,140,255,0.3)" stroke="rgba(200,180,255,0.85)" strokeWidth="1.2"/>
+              </svg>
+            ))}
+          </div>
+          <span style={{fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'12px',color:'rgba(200,190,240,0.65)'}}>= vier Inspirationen, die ein Charakter gleichzeitig halten kann.</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── 05 — Zufällige Richtungen ──────────────────────────────────────────────
+function RichtungenContent() {
+  const [rolling, setRolling] = useState(false);
+  const [result, setResult]   = useState(null);
+  const [display, setDisplay] = useState(null);
+  const [needleAngle, setNeedleAngle] = useState(0);
+  const angleRef = useRef(0);
+  const rafRef   = useRef(null);
+
+  useEffect(() => () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); }, []);
+
+  // Map a needle rotation back to the closest of the 8 directions
+  const dirFromAngle = (angle) => {
+    const a = ((angle - 90) % 360 + 360) % 360; // back to compass coords (0 = right/Osten)
+    let best = 0, bestDist = Infinity;
+    for (let i = 0; i < 8; i++) {
+      const target = ((RICHTUNGEN[i].angle % 360) + 360) % 360;
+      const da = Math.abs(((target - a + 540) % 360) - 180);
+      if (da < bestDist) { bestDist = da; best = i; }
+    }
+    return best + 1;
+  };
+
+  const roll = () => {
+    if (rolling) return;
+    setRolling(true); setResult(null);
+
+    const finalIdx   = Math.floor(Math.random() * 8);
+    const targetMod  = ((RICHTUNGEN[finalIdx].angle + 90) % 360 + 360) % 360;
+    const startAngle = angleRef.current;
+    const startMod   = ((startAngle % 360) + 360) % 360;
+    // Always rotate forward — at least 3 full turns plus the delta to land on target
+    const delta      = ((targetMod - startMod) + 360) % 360;
+    const totalSpin  = 360 * 3 + delta;
+    const finalAngle = startAngle + totalSpin;
+    const duration   = 2400;
+    const startTime  = performance.now();
+
+    const tick = (now) => {
+      const t = Math.min((now - startTime) / duration, 1);
+      // ease-out quint — strong initial spin, very gentle landing
+      const eased = 1 - Math.pow(1 - t, 5);
+      const angle = startAngle + totalSpin * eased;
+      angleRef.current = angle;
+      setNeedleAngle(angle);
+      setDisplay(dirFromAngle(angle));
+      if (t < 1) {
+        rafRef.current = requestAnimationFrame(tick);
+      } else {
+        setResult(finalIdx + 1);
+        setDisplay(finalIdx + 1);
+        setRolling(false);
+        rafRef.current = null;
+      }
+    };
+    rafRef.current = requestAnimationFrame(tick);
+  };
+
+  const active = result ? RICHTUNGEN[result-1] : null;
+
+  return (
+    <div>
+      <SectionHeader mono="Einleitung · Meta" title="Zufällige Richtungen" sub="Wenn eine zufällige Richtung bestimmt werden muss — durch Zauber, Effekte oder Ähnliches — wird immer 1W8 für die 8 Himmelsrichtungen gewürfelt."/>
+
+      <div style={{display:'grid',gridTemplateColumns:'320px 1fr',gap:'28px',alignItems:'flex-start',marginBottom:'24px'}}>
+
+        {/* Compass — interactive */}
+        <div style={{
+          position:'relative',
+          padding:'24px',
+          background:'linear-gradient(135deg, rgba(18,12,42,0.7) 0%, rgba(10,7,28,0.92) 100%)',
+          border:'1px solid rgba(124,77,255,0.25)',
+          borderRadius:'4px',
+          textAlign:'center',
+        }}>
+          {/* corner brackets */}
+          <span style={{position:'absolute',top:-1,left:-1,width:12,height:12,borderTop:'1px solid rgba(160,140,255,0.7)',borderLeft:'1px solid rgba(160,140,255,0.7)'}}/>
+          <span style={{position:'absolute',top:-1,right:-1,width:12,height:12,borderTop:'1px solid rgba(160,140,255,0.7)',borderRight:'1px solid rgba(160,140,255,0.7)'}}/>
+          <span style={{position:'absolute',bottom:-1,left:-1,width:12,height:12,borderBottom:'1px solid rgba(160,140,255,0.7)',borderLeft:'1px solid rgba(160,140,255,0.7)'}}/>
+          <span style={{position:'absolute',bottom:-1,right:-1,width:12,height:12,borderBottom:'1px solid rgba(160,140,255,0.7)',borderRight:'1px solid rgba(160,140,255,0.7)'}}/>
+
+          <svg viewBox="0 0 240 240" width="240" height="240" style={{margin:'0 auto',display:'block'}}>
+            {/* outer ring */}
+            <circle cx="120" cy="120" r="110" fill="none" stroke="rgba(124,77,255,0.25)" strokeWidth="1"/>
+            <circle cx="120" cy="120" r="100" fill="none" stroke="rgba(124,77,255,0.15)" strokeWidth="0.6" strokeDasharray="2 3"/>
+            <circle cx="120" cy="120" r="78"  fill="none" stroke="rgba(124,77,255,0.2)" strokeWidth="0.6"/>
+            {/* tick marks for 8 directions */}
+            {RICHTUNGEN.map(r => {
+              const rad = (r.angle * Math.PI) / 180;
+              const x1 = 120 + Math.cos(rad)*100;
+              const y1 = 120 + Math.sin(rad)*100;
+              const x2 = 120 + Math.cos(rad)*86;
+              const y2 = 120 + Math.sin(rad)*86;
+              const lx = 120 + Math.cos(rad)*70;
+              const ly = 120 + Math.sin(rad)*70;
+              const isActive = active && active.n === r.n;
+              return (
+                <g key={r.n}>
+                  <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={isActive ? '#f0eeff' : 'rgba(160,140,255,0.6)'} strokeWidth={isActive ? 2 : 1}/>
+                  <text x={lx} y={ly+3} textAnchor="middle"
+                    fontFamily="Share Tech Mono" fontSize="11"
+                    fill={isActive ? '#f0eeff' : 'rgba(200,190,240,0.7)'}
+                    style={{transition:'fill 0.2s'}}>
+                    {r.n}
+                  </text>
+                </g>
+              );
+            })}
+            {/* needle */}
+            <g style={{
+              transformOrigin:'120px 120px',
+              transform: `rotate(${needleAngle}deg)`,
+              willChange:'transform',
+            }}>
+              <path d="M 120 40 L 124 120 L 116 120 Z" fill="rgba(220,210,255,0.95)" stroke="rgba(160,140,255,0.9)" strokeWidth="0.8"/>
+              <path d="M 116 120 L 124 120 L 120 200 Z" fill="rgba(124,77,255,0.5)" stroke="rgba(160,140,255,0.6)" strokeWidth="0.8"/>
+              <circle cx="120" cy="120" r="6" fill="rgba(18,12,42,1)" stroke="rgba(220,210,255,0.9)" strokeWidth="1.4"/>
+              <circle cx="120" cy="120" r="2" fill="rgba(220,210,255,0.95)"/>
+            </g>
+            {/* N marker outside */}
+            <text x="120" y="20" textAnchor="middle" fontFamily="Cinzel" fontSize="14"
+              fill="rgba(255,220,140,0.9)" letterSpacing="2">N</text>
+          </svg>
+
+          <button onClick={roll} disabled={rolling} style={{
+            display:'inline-flex',alignItems:'center',gap:'12px',
+            marginTop:'18px',padding:'10px 22px',
+            background:'rgba(124,77,255,0.14)',
+            border:'1px solid rgba(124,77,255,0.45)',
+            borderRadius:'3px',
+            color:'rgba(220,210,255,0.95)',
+            fontFamily:'var(--font-display)',fontSize:'11px',letterSpacing:'0.2em',
+            textTransform:'uppercase',
+            cursor: rolling ? 'wait' : 'pointer',
+            transition:'all 0.18s',
+          }}
+            onMouseEnter={e=>{if(!rolling){e.currentTarget.style.background='rgba(124,77,255,0.26)';e.currentTarget.style.color='#fff';}}}
+            onMouseLeave={e=>{e.currentTarget.style.background='rgba(124,77,255,0.14)';e.currentTarget.style.color='rgba(220,210,255,0.95)';}}
+          >
+            {/* d8 icon */}
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" style={{animation:rolling?'diceTumble 0.5s linear infinite':'none',transformOrigin:'center'}}>
+              <path d="M12 2 L21 12 L12 22 L3 12 Z"/>
+              <path d="M12 2 L12 22"/>
+              <path d="M3 12 L21 12"/>
+            </svg>
+            1W8 würfeln
+          </button>
+
+          <div style={{marginTop:'14px',minHeight:'56px'}}>
+            {display !== null && (
+              <div style={{animation: result && !rolling ? 'resultPop 0.32s ease forwards' : 'none'}}>
+                <div style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.28em',color:'rgba(124,77,255,0.55)',marginBottom:'4px',textTransform:'uppercase'}}>{rolling ? 'würfelt...' : 'Ergebnis'}</div>
+                <div style={{fontFamily:'var(--font-display)',fontSize:'28px',fontWeight:300,color:'#f0eeff',textShadow:'0 0 20px rgba(160,140,255,0.55)',lineHeight:1}}>
+                  {display} {active && <span style={{fontSize:'14px',color:'rgba(200,190,240,0.8)',letterSpacing:'0.12em'}}>· {active.dir}</span>}
+                </div>
+                {active && <div style={{marginTop:'4px',fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'11.5px',color:'rgba(200,190,240,0.55)'}}>({active.sub})</div>}
+              </div>
+            )}
+            {display === null && (
+              <div style={{fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'12px',color:'rgba(160,140,255,0.4)'}}>Noch kein Wurf</div>
+            )}
+          </div>
+        </div>
+
+        {/* Table of directions */}
+        <div>
+          <TW>
+            <table className="eq-table">
+              <thead>
+                <tr>
+                  <th className="mono" style={{width:'80px'}}>1W8</th>
+                  <th>Himmelsrichtung</th>
+                  <th>Bildschirmrichtung</th>
+                </tr>
+              </thead>
+              <tbody>
+                {RICHTUNGEN.map(r => {
+                  const isActive = active && active.n === r.n;
+                  return (
+                    <tr key={r.n} style={{
+                      background: isActive ? 'rgba(124,77,255,0.18)' : 'transparent',
+                      transition:'background 0.3s',
+                    }}>
+                      <td className="mono" style={{color: isActive ? '#f0eeff' : 'rgba(180,165,255,0.85)',fontWeight:isActive?500:400}}>
+                        {r.n}
+                      </td>
+                      <td style={{color: isActive ? '#f0eeff' : undefined,fontWeight:isActive?400:300,fontFamily:'var(--font-display)',fontSize:'13px',letterSpacing:'0.06em',textTransform:'uppercase'}}>
+                        {r.dir}
+                      </td>
+                      <td style={{color:'rgba(200,190,240,0.55)',fontStyle:'italic',fontSize:'11.5px'}}>
+                        {r.sub}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </TW>
+
+          <div className="feat reveal-up">
+            <div className="feat-name">Anwendung</div>
+            <div className="feat-text">
+              Zauber wie <em>Verwirrung</em>, Effekte wie zufällige Streuung von Flächenangriffen, oder wenn der Charakter in einem dichten Sturm die Orientierung verliert — überall, wo eine Richtung gewürfelt werden muss, gilt dieses einheitliche Schema.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+Object.assign(window, { AufstiegContent, SchadenContent, HeiltrankContent, InspirationContent, RichtungenContent });
+</script>
+
+
+<!-- ───── APP ───── -->
+<script type="text/babel">
+const { SiteNav, SiteGate, SiteFooter } = window;
+const { AufstiegContent, SchadenContent, HeiltrankContent, InspirationContent, RichtungenContent } = window;
+
+function App() {
+  const [active, setActive] = useState('aufstieg');
+  useReveal(active);
+
+  const handleSelect = (id) => { setActive(id); window.scrollTo({top:0}); };
+
+  const CONTENT = {
+    aufstieg:    <AufstiegContent/>,
+    schaden:     <SchadenContent/>,
+    heiltrank:   <HeiltrankContent/>,
+    inspiration: <InspirationContent/>,
+    richtungen:  <RichtungenContent/>,
+  };
+
+  return (
+    <div style={{position:'relative',minHeight:'100vh'}}>
+
+      {/* NAV */}
+      <SiteNav rightLabel="EINLEITUNG · META"/>
+
+      {/* HERO */}
+      <div style={{position:'relative',overflow:'hidden',borderBottom:'1px solid rgba(160,140,255,0.1)',background:'linear-gradient(135deg,rgba(124,77,255,0.1) 0%,transparent 55%),linear-gradient(225deg,rgba(60,20,180,0.12) 0%,transparent 50%)'}}>
+        <svg style={{position:'absolute',inset:0,width:'100%',height:'100%',opacity:0.04,pointerEvents:'none'}} viewBox="0 0 1200 200" preserveAspectRatio="xMidYMid slice">
+          {Array.from({length:13}).map((_,i)=><line key={i} x1={i*100} y1="0" x2={i*100} y2="200" stroke="rgba(124,77,255,1)" strokeWidth="1"/>)}
+          {Array.from({length:3}).map((_,i)=><line key={i} x1="0" y1={i*100} x2="1200" y2={i*100} stroke="rgba(124,77,255,1)" strokeWidth="1"/>)}
+        </svg>
+        {Array.from({length:36}).map((_,i)=>(
+          <div key={i} style={{position:'absolute',width:i%7===0?2:1,height:i%7===0?2:1,borderRadius:'50%',background:'rgba(200,192,232,0.5)',left:`${(i*41+13)%100}%`,top:`${(i*67+5)%100}%`,opacity:0.08+(i%5)*0.04,pointerEvents:'none'}}/>
+        ))}
+        <div style={{position:'relative',zIndex:2,padding:'42px 40px 36px',display:'flex',alignItems:'flex-end',justifyContent:'space-between',flexWrap:'wrap',gap:'18px'}}>
+          <div style={{maxWidth:'620px'}}>
+            <div style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.36em',color:'rgba(124,77,255,0.6)',textTransform:'uppercase',marginBottom:'10px'}}>Einleitung · Für Spieler</div>
+            <h1 style={{fontFamily:'var(--font-display)',fontSize:'clamp(40px,5.4vw,64px)',fontWeight:'300',letterSpacing:'0.18em',color:'#f0eeff',textShadow:'0 0 40px rgba(124,77,255,0.4)',lineHeight:'1',marginBottom:'12px',textTransform:'uppercase'}}>Informationen</h1>
+            <p style={{fontFamily:'var(--font-body)',fontWeight:'300',fontStyle:'italic',fontSize:'13.5px',color:'rgba(200,190,240,0.5)',letterSpacing:'0.04em',lineHeight:1.7}}>
+              Meta-Informationen, die du als Spieler kennen solltest — die Mechaniken hinter den Würfeln: Stufenaufstieg, Schadensarten, Heiltränke, Inspiration und der Würfel-Kompass.
+            </p>
+          </div>
+          {/* category badges (mirror sidebar) */}
+          <div style={{display:'flex',gap:'6px',flexWrap:'wrap'}}>
+            {CATEGORIES.map(cat=>{
+              const on = cat.id === active;
+              return (
+                <button key={cat.id} onClick={()=>handleSelect(cat.id)} style={{
+                  padding:'5px 13px',fontFamily:'var(--font-body)',fontSize:'11px',
+                  fontWeight: on ? 500 : 300, letterSpacing:'0.06em',
+                  background: on ? 'rgba(124,77,255,0.22)' : 'transparent',
+                  border:`1px solid ${on?'rgba(124,77,255,0.66)':'rgba(124,77,255,0.2)'}`,
+                  color: on ? '#f0eeff' : 'rgba(200,190,240,0.5)',
+                  borderRadius:'2px', cursor:'pointer', transition:'all 0.15s',
+                }}
+                  onMouseEnter={e=>{if(!on){e.currentTarget.style.color='rgba(220,210,255,0.8)';e.currentTarget.style.borderColor='rgba(124,77,255,0.4)';}}}
+                  onMouseLeave={e=>{if(!on){e.currentTarget.style.color='rgba(200,190,240,0.5)';e.currentTarget.style.borderColor='rgba(124,77,255,0.2)';}}}
+                >{cat.label}</button>
+              );
+            })}
+          </div>
+        </div>
+        <div style={{position:'absolute',bottom:0,left:0,right:0,height:'40px',background:'linear-gradient(transparent,rgba(5,4,15,0.6))',pointerEvents:'none'}}/>
+      </div>
+
+      {/* BODY */}
+      <div style={{display:'flex',alignItems:'flex-start',minHeight:'calc(100vh - 52px)'}}>
+        <Sidebar active={active} onSelect={handleSelect}/>
+        <div style={{flex:1,padding:'40px 44px 88px',minWidth:0,maxWidth:'1080px'}}>
+          {CONTENT[active]}
+        </div>
+      </div>
+
+      {/* FOOTER */}
+      <SiteFooter/>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<SiteGate><App/></SiteGate>);
+</script>
+
+
+</body></html>

@@ -86,7 +86,7 @@ function useReveal(dep){
 const SECTION_ANCHORS = {
   zeit:         [],
   kommunikation:[{ id:'sec-kontaktperlen', label:'Kontaktperlen' }, { id:'sec-tld', label:'T.L.D.' }, { id:'sec-sprachen', label:'Sprachen' }],
-  sicht:        [{ id:'sec-sicht-augentypen', label:'Augentypen' }, { id:'sec-sicht-tabelle', label:'Rassenübersicht' }, { id:'sec-sicht-wandler', label:'Formwandler' }],
+  sicht:        [{ id:'sec-sicht-augentypen', label:'Augentypen' }, { id:'sec-sicht-tabelle', label:'Rassenübersicht' }],
   hunger:       [{ id:'sec-hunger-calc', label:'Hunger berechnen' }],
   durst:        [{ id:'sec-hitze', label:'Bei extremer Hitze' }],
   traglast:     [{ id:'sec-traglast-calc', label:'Traglast berechnen' }],
@@ -976,31 +976,47 @@ function FurchtContent(){
     <SubH id="sec-stress">Stress</SubH>
     <Txt c={<>Stress wird als nummerischer <Acc c="Stresswert"/> verfolgt und bei Würfen als <Bad c="Malus"/> abgezogen. Ein ganzer Ruhetag senkt den Stresswert um <Acc c="1"/>. Stress steigt durch:</>}/>
     {['Aufreibende, dramatische Augenblicke (besonders bei Samen der Furcht).','Jede 24 Stunden ohne lange Rast.','Mitansehen des Todes einer geliebten Person.','Wirklichkeit werdende Albträume oder Urängste.','Beeinträchtigung des Realitätsverständnisses.','Mitansehen einer Verwandlung in eine grauenhafte Kreatur.',].map(t=><div key={t} className="feat reveal-up" style={{marginBottom:'6px'}}><div className="feat-text">{t}</div></div>)}
+    <TW>
+      <table className="eq-table" style={{tableLayout:'fixed',width:'100%'}}>
+        <thead>
+          <tr>
+            <th style={{width:'16%'}}>Stresswert</th>
+            <th style={{width:'18%'}}>Zustand</th>
+            <th>Auswirkung</th>
+          </tr>
+        </thead>
+        <tbody>
+          {[
+            {s:'1–3', z:'Angespannt', a:'Nur der Malus. Du spürst den Druck, bleibst aber voll handlungsfähig.'},
+            {s:'4–6', z:'Belastet',   a:'Konzentrationswürfe (KON) werden mit Nachteil abgelegt. Fertigkeitsprüfungen, die anhaltende Konzentration erfordern (Heilkunde, Arkane Kunde, Nachforschen, Auftreten, Werkzeugnutzung), ebenfalls mit Nachteil.'},
+            {s:'7–9', z:'Erschöpft',  a:'Konzentrationszauber brechen bei jedem Schaden automatisch ab — kein Rettungswurf. Gelegenheitsangriffe erfordern einen WEI SG 10 — bei Misserfolg verfehlen sie automatisch.'},
+            {s:'10+', z:'Gebrochen',  a:'Konzentrationszauber können nicht mehr gewirkt werden. Gelegenheitsangriffe und Reaktionen sind nicht mehr möglich. Zu Beginn eines Kampfes: WEI SG 15 oder kurzfristiger Wahnsinn.'},
+          ].map(row=>(
+            <tr key={row.s}>
+              <td style={{fontFamily:'var(--font-mono)',fontSize:'11px',color:'rgba(94,232,208,0.85)',fontWeight:'500'}}>{row.s}</td>
+              <td style={{fontFamily:'var(--font-display)',fontSize:'11px',letterSpacing:'0.06em',color:'rgba(200,190,240,0.9)',fontWeight:'400'}}>{row.z}</td>
+              <td style={{fontFamily:'var(--font-body)',fontWeight:'300',fontSize:'11px',color:'rgba(200,190,240,0.5)',lineHeight:'1.6'}}>{row.a}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </TW>
     <SubH id="sec-stressabbau">Stressabbau</SubH>
-    <Txt c={<>Jeder Charakter baut Stress anders ab — je nach Persönlichkeit, Überzeugung und Lebensstil. Manche Methoden wirken schnell, haben aber Nebenwirkungen; andere brauchen Zeit, hinterlassen dafür keine Spuren. Ein Charakter darf pro <Acc c="langen Rast"/> nur <Acc c="eine Methode"/> anwenden.</>}/>
+    <Txt c={<>Jeder Charakter baut Stress anders ab — je nach Persönlichkeit, Überzeugung und Lebensstil. Manche Methoden wirken schnell, haben aber Nebenwirkungen; andere brauchen Zeit, hinterlassen dafür keine Spuren. Ein Charakter darf pro <Acc c="langer Rast"/> nur <Acc c="eine Methode"/> anwenden.</>}/>
     {(()=>{
-      const TC = {
-        'Schüchtern': {bg:'rgba(200,140,255,0.1)', bd:'rgba(200,140,255,0.3)', tx:'rgba(210,170,255,0.9)'},
-        'Asketisch':  {bg:'rgba(255,155,60,0.1)',  bd:'rgba(255,155,60,0.3)',  tx:'rgba(255,185,110,0.9)'},
-        'Fromm':      {bg:'rgba(70,160,255,0.1)',  bd:'rgba(70,160,255,0.3)',  tx:'rgba(110,190,255,0.9)'},
-        'Gottlos':    {bg:'rgba(140,140,140,0.1)', bd:'rgba(140,140,140,0.28)',tx:'rgba(175,175,175,0.9)'},
-        'Risikoscheu':{bg:'rgba(255,205,50,0.1)',  bd:'rgba(255,205,50,0.3)',  tx:'rgba(255,225,110,0.9)'},
-        'Verschlossen':{bg:'rgba(255,90,90,0.1)', bd:'rgba(255,90,90,0.28)',  tx:'rgba(255,130,130,0.9)'},
-      };
-      const Tag = ({t})=>{const c=TC[t]||TC['Gottlos'];return <span style={{display:'inline-block',fontFamily:'var(--font-mono)',fontSize:'7px',letterSpacing:'0.12em',padding:'1px 6px',borderRadius:'2px',background:c.bg,border:`1px solid ${c.bd}`,color:c.tx,textTransform:'uppercase',whiteSpace:'nowrap',marginRight:'3px',marginBottom:'2px'}}>{t}</span>;};
       const rows = [
-        {a:'Alkohol',              d:'Sofort',    r:'−1W4 (max −2)',  v:'Zugang zu Spirituosen',                 kein:['Asketisch'],                        h:'Vergiftet bis zur nächsten kurzen Rast. Bei täglichem Konsum KON SG 12 oder Suchtrisiko.'},
-        {a:'Kurze Ablenkung',      d:'10 Min.',   r:'−1',             v:'—',                                     kein:[],                                   h:'Witz, Spiel, eine Geschichte — eine kurze Auszeit vom Ernst der Lage.'},
-        {a:'Körperliche Bewegung', d:'1 Std.',    r:'−1',             v:'—',                                     kein:[],                                   h:'Sport, Sparring, langer Marsch. Wirkt nicht bei Erschöpfungsstufe 3+.'},
-        {a:'Kreatives Schaffen',   d:'2–4 Std.',  r:'−1W4',           v:'Instrument, Schreibzeug oder Werkzeug', kein:[],                                   h:'Inspiration möglich (SL-Ermessen). Musik, Malerei, Dichten, Schnitzen.'},
-        {a:'Gebet & Meditation',   d:'1 Std.',    r:'−1W4',           v:'Ruhige Umgebung',                       kein:['Gottlos'],                          h:'Doppelter Effekt in einem Tempel oder an einem Schrein der eigenen Gottheit.'},
-        {a:'Geselliger Abend',     d:'Abend',     r:'−1W4',           v:'Mind. 1 Gefährte',                      kein:['Schüchtern'],                       h:'Gemeinsames Mahl, Lagerfeuer oder Tavernenabend. Funktioniert nicht bei aktiver Feindseligkeit in der Gruppe.'},
-        {a:'Seelsorge',            d:'1–2 Std.',  r:'−1W6',           v:'Vertrauensperson',                      kein:['Verschlossen'],                     h:'Ein persönliches Geheimnis oder eine Angst wird offenbart. Die Vertrauensperson erfährt davon.'},
-        {a:'Tempel besuchen',      d:'Abend',     r:'−1W6',           v:'Tempel der eigenen Gottheit',           kein:['Gottlos'],                          h:'WEI-Prüfung SG 10: bei Erfolg doppelter Effekt. Bei fremder Gottheit nur −1W4.'},
-        {a:'Gelage',               d:'Abend',     r:'−1W6',           v:'Festmahl + Gesellschaft',               kein:['Schüchtern','Asketisch'],            h:'KON SG 12: bei Misserfolg Erschöpfung 1 am nächsten Morgen.'},
-        {a:'Glücksspiel',          d:'Abend',     r:'−1W6 oder +1W4', v:'Einsatz + Stadt',                       kein:['Risikoscheu'],                      h:'Bei Gewinn: −1W6 Stress. Bei Verlust: +1W4 Stress statt Abbau.'},
-        {a:'Wilde Nacht',          d:'Nacht',     r:'−2W4',           v:'Stadt + 20 Hade',                       kein:['Schüchtern','Asketisch','Fromm'],    h:'WEI SG 14: bei Misserfolg eine negative Konsequenz nach SL-Wahl (Schulden, Feindschaft, Ruf).'},
-        {a:'Ausgedehnte Erholung', d:'3+ Tage',   r:'−1W8',           v:'Kein Kampf, keine aktive Quest',        kein:[],                                   h:'Zusätzlich zum täglichen Abbau von −1 pro Ruhetag. Lässt sich nicht mit anderen Methoden kombinieren.'},
+        {a:'Alkohol',              d:'Sofort',    r:'−1W4 (max −2)',  v:'Zugang zu Spirituosen',                 h:'Du greifst zur Flasche und lässt die Sorgen ertränken. Die Welt verschwimmt angenehm — doch bis zur nächsten kurzen Rast bist du vergiftet. Wer täglich trinkt, muss KON SG 12 bestehen oder riskiert Suchtentwicklung.'},
+        {a:'Kurze Ablenkung',      d:'10 Min.',   r:'−1',             v:'—',                                     h:'Du gönnst dir eine kurze Auszeit: ein Witz, eine Partie Karten, eine gute Geschichte. Manchmal reicht es, den Ernst der Lage für einen Moment loszulassen.'},
+        {a:'Körperliche Bewegung', d:'1 Std.',    r:'−1',             v:'—',                                     h:'Du arbeitest dich körperlich aus — Sport, Sparring oder ein langer Marsch. Der Körper trägt aus, was der Geist nicht mehr halten kann. Hat keinen Effekt bei Erschöpfungsstufe 3 oder höher.'},
+        {a:'Kreatives Schaffen',   d:'2–4 Std.',  r:'−1W4',           v:'Instrument, Schreibzeug oder Werkzeug', h:'Du schaffst etwas — Musik, ein Gemälde, ein Gedicht, ein Schnitzwerk. Wer sich vollständig verliert, erhält vielleicht eine Inspiration (SL-Ermessen).'},
+        {a:'Gebet & Meditation',   d:'1 Std.',    r:'−1W4',           v:'Ruhige Umgebung',                       h:'Du nimmst dir Zeit für Gebet und stille Einkehr. Wer an einem Tempel oder Schrein seiner eigenen Gottheit meditiert, spürt den doppelten Nutzen.'},
+        {a:'Geselliger Abend',     d:'Abend',     r:'−1W4',           v:'Mind. 1 Gefährte',                      h:'Du verbringst den Abend mit Gefährten — beim gemeinsamen Mahl, am Lagerfeuer oder in einer Taverne. Offene Feindseligkeit in der Gruppe macht dies wirkungslos.'},
+        {a:'Seelsorge',            d:'1–2 Std.',  r:'−1W6',           v:'Vertrauensperson',                      h:'Du vertraust jemandem etwas Persönliches an — ein Geheimnis oder eine Angst. Was du teilst, liegt danach auch bei ihr.'},
+        {a:'Tempel besuchen',      d:'Abend',     r:'−1W6',           v:'Tempel der eigenen Gottheit',           h:'Du verbringst den Abend in Andacht am Tempel deiner eigenen Gottheit. Lege einen WEI-Wurf gegen SG 10 ab: Gelingt er, verdoppelt sich der Effekt. An fremden Göttern erhältst du nur −1W4.'},
+        {a:'Gelage',               d:'Abend',     r:'−1W6',           v:'Festmahl + Gesellschaft',               h:'Du feierst ausgiebig — gutes Essen, gutes Trinken, gute Gesellschaft. Lege KON SG 12 ab: Misslingt er, beginnst du den nächsten Tag erschöpft (Erschöpfung 1).'},
+        {a:'Glücksspiel',          d:'Abend',     r:'−1W6 oder +1W4', v:'Einsatz + Stadt',                       h:'Du setzt dein Glück ein — und damit auch deinen Stresspegel. Bei Gewinn: −1W6 Stress. Bei Verlust steigt er stattdessen um +1W4.'},
+        {a:'Wilde Nacht',          d:'Nacht',     r:'−2W4',           v:'Stadt + 20 Hade',                       h:'Du gönnst dir eine ungezügelte Nacht in der Stadt, ohne auf Konsequenzen zu achten. Lege WEI SG 14 ab: Misslingt er, wählt der SL eine negative Konsequenz — Schulden, Feindschaft oder Rufschaden.'},
+        {a:'Ausgedehnte Erholung', d:'3+ Tage',   r:'−1W8',           v:'Kein Kampf, keine aktive Quest',        h:'Du nimmst dir mehrere Tage vollständige Ruhe. Der Effekt kommt zum täglichen Abbau von −1 pro Ruhetag hinzu, lässt sich aber nicht mit anderen Methoden kombinieren.'},
       ];
       return (
         <TW>
@@ -1009,10 +1025,9 @@ function FurchtContent(){
               <tr>
                 <th style={{width:'18%'}}>Aktivität</th>
                 <th style={{width:'10%'}}>Dauer</th>
-                <th style={{width:'14%'}}>Stressabbau</th>
-                <th style={{width:'18%'}}>Voraussetzung</th>
-                <th style={{width:'18%'}}>Kein Effekt für</th>
-                <th>Hinweis</th>
+                <th style={{width:'13%'}}>Stressabbau</th>
+                <th style={{width:'17%'}}>Voraussetzung</th>
+                <th>Beschreibung</th>
               </tr>
             </thead>
             <tbody>
@@ -1022,7 +1037,6 @@ function FurchtContent(){
                   <td style={{fontFamily:'var(--font-mono)',fontSize:'10px',color:'rgba(160,140,255,0.7)',whiteSpace:'nowrap'}}>{row.d}</td>
                   <td style={{fontFamily:'var(--font-mono)',fontSize:'10px',color:'rgba(94,232,208,0.85)',whiteSpace:'nowrap',fontWeight:'500'}}>{row.r}</td>
                   <td style={{fontFamily:'var(--font-body)',fontSize:'11px',color:'rgba(180,165,255,0.65)'}}>{row.v}</td>
-                  <td style={{verticalAlign:'middle'}}>{row.kein.length?row.kein.map(t=><Tag key={t} t={t}/>):<span style={{fontFamily:'var(--font-mono)',fontSize:'8px',color:'rgba(124,77,255,0.3)'}}>—</span>}</td>
                   <td style={{fontFamily:'var(--font-body)',fontWeight:'300',fontSize:'11px',color:'rgba(200,190,240,0.5)',lineHeight:'1.6'}}>{row.h}</td>
                 </tr>
               ))}
@@ -1113,13 +1127,14 @@ function AbenteuerContent(){
       <Txt c={<>Zwischen den Abenteuern kann ein Charakter neue <Acc c="Übungen"/> erwerben — in Waffen, Rüstungen, Werkzeugen, Instrumenten, Sprachen oder Fahrzeugen. Drei Dinge sind immer nötig: ein <Acc c="qualifizierter Ausbilder oder eine anerkannte Institution"/>, ausreichend <Acc c="Zeit"/> und das nötige <Acc c="Geld"/>. Während der Trainingszeit gilt jeder Tag als Ruhetag — Abenteuer unterbrechen das Training.</>}/>
       {[
         {name:'Ausbilder finden', text:'In einer größeren Stadt genügt in der Regel ein CHA-Wurf auf Überzeugung (SG 10), um jemanden Geeigneten zu finden. Für seltene oder geheime Übungen (arkane Sprachen, Diebeswerkzeug) braucht man Zugang zur richtigen Institution — die Gilde oder Schule muss einem erst vertrauen. Ohne Ausbilder ist kein Training möglich.'},
-        {name:'Trainingszeit', text:'Die Tabelle zeigt, wie viele Wochen das Training dauert. Wer mehr als drei aufeinanderfolgende Tage aussetzt, verliert eine Woche Fortschritt. Die Zeit kann nicht durch Magie verkürzt werden — Übung braucht Wiederholung.'},
-        {name:'Kosten', text:'Die angegebenen Kosten sind Gesamtkosten (Unterricht, Material, Unterkunft während des Trainings). Die Hälfte wird zu Beginn fällig, der Rest bei Abschluss. Wer das Training abbricht, verliert die bereits gezahlte Hälfte.'},
+        {name:'Trainingszeit', text:'Die Tabelle zeigt die maximale Trainingsdauer. Der Intelligenzmodifikator des Charakters verkürzt sie um diese Anzahl Wochen — ein negativer INT-Modifikator verlängert sie jedoch nicht. Mindestdauer: 1 Woche. Wer mehr als drei aufeinanderfolgende Tage aussetzt, verliert eine Woche Fortschritt. Die Zeit kann nicht durch Magie verkürzt werden — Übung braucht Wiederholung.'},
+        {name:'Kosten', text:'Die angegebenen Kosten sind Tageskosten (Unterricht, Material, Unterkunft). Sie fallen nur an Tagen an, an denen aktiv trainiert wird. Wer das Training abbricht, zahlt nur die bis dahin geleisteten Tage.'},
       ].map(f=><div key={f.name} className="feat reveal-up"><div className="feat-name">{f.name}</div><div className="feat-text">{f.text}</div></div>)}
       {(()=>{
         const IC = {
           'Kriegerschule':   {bg:'rgba(220,70,60,0.1)',  bd:'rgba(220,70,60,0.3)',  tx:'rgba(240,120,110,0.9)'},
-          'Militärakademie': {bg:'rgba(200,50,50,0.1)',  bd:'rgba(200,50,50,0.3)',  tx:'rgba(230,100,90,0.9)'},
+          'Klingenbastion':  {bg:'rgba(200,50,50,0.1)',  bd:'rgba(200,50,50,0.3)',  tx:'rgba(230,100,90,0.9)'},
+          'Wächterhaus':     {bg:'rgba(60,130,200,0.1)', bd:'rgba(60,130,200,0.3)', tx:'rgba(110,175,240,0.9)'},
           'Ritterorden':     {bg:'rgba(210,60,55,0.1)',  bd:'rgba(210,60,55,0.3)',  tx:'rgba(235,110,100,0.9)'},
           'Bardenakademie':  {bg:'rgba(255,190,40,0.1)', bd:'rgba(255,190,40,0.3)', tx:'rgba(255,215,100,0.9)'},
           'Musiklehrer':     {bg:'rgba(240,175,40,0.1)', bd:'rgba(240,175,40,0.3)', tx:'rgba(255,205,90,0.9)'},
@@ -1135,22 +1150,22 @@ function AbenteuerContent(){
         };
         const Inst = ({t})=>{const c=IC[t]||IC['Privat'];return <span style={{display:'inline-block',fontFamily:'var(--font-mono)',fontSize:'7px',letterSpacing:'0.1em',padding:'1px 6px',borderRadius:'2px',background:c.bg,border:`1px solid ${c.bd}`,color:c.tx,textTransform:'uppercase',whiteSpace:'nowrap',marginRight:'3px',marginBottom:'2px'}}>{t}</span>;};
         const rows = [
-          {u:'Einfache Waffen',       inst:['Kriegerschule','Privat'],                d:'4 Wochen',  k:'80 Hade',   h:'Standardwaffen wie Dolche, Keulen oder Speere.'},
-          {u:'Kriegswaffen',          inst:['Militärakademie','Ritterorden'],         d:'8 Wochen',  k:'200 Hade',  h:'Schwert, Streitaxt, Bogen. Voraussetzung: Übung mit einfachen Waffen.'},
-          {u:'Leichte Rüstung',       inst:['Kriegerschule','Zunft'],                 d:'4 Wochen',  k:'80 Hade',   h:'Leder, Verstärktes Leder.'},
-          {u:'Mittelschwere Rüstung', inst:['Militärakademie'],                       d:'8 Wochen',  k:'200 Hade',  h:'Kettennhemd, Schuppenpanzer. Voraussetzung: leichte Rüstung.'},
-          {u:'Schwere Rüstung',       inst:['Militärakademie','Ritterorden'],         d:'16 Wochen', k:'500 Hade',  h:'Plattenpanzer. Voraussetzung: mittelschwere Rüstung. Nur an wenigen Orten lehrbar.'},
-          {u:'Handwerkzeug',          inst:['Zunft','Privat'],                        d:'4 Wochen',  k:'80 Hade',   h:'Schmied-, Tischler-, Kräuterkundewerkzeug u. a. Je nach Zunft.'},
-          {u:'Medizinische Ausrüstung',inst:['Tempel','Zunft'],                      d:'6 Wochen',  k:'150 Hade',  h:'Heilerkit, Chirurgenwerkzeug.'},
-          {u:'Vergiftungsausrüstung', inst:['Diebesgilde','Alchemist'],               d:'6 Wochen',  k:'180 Hade',  h:'Zugang zur Diebesgilde oder einem diskreten Alchemisten nötig.'},
-          {u:'Diebeswerkzeug',        inst:['Diebesgilde'],                           d:'6 Wochen',  k:'200 Hade',  h:'Nur durch die Diebesgilde lehrbar — Zugang muss erst verdient werden.'},
-          {u:'Musikinstrument',       inst:['Bardenakademie','Musiklehrer'],          d:'8 Wochen',  k:'140 Hade',  h:'Ein Instrument nach Wahl. Bardenakademien kennen auch exotische Instrumente.'},
-          {u:'Spielzeug (Würfel, Karten…)',inst:['Privat'],                          d:'2 Wochen',  k:'30 Hade',   h:'In jeder Taverne zu erlernen. Kein formaler Ausbilder nötig — nur jemand der spielt.'},
-          {u:'Landfahrzeug',          inst:['Privat','Zunft'],                        d:'4 Wochen',  k:'60 Hade',   h:'Kutsche, Reittier, Wagen.'},
-          {u:'Wasserfahrzeug',        inst:['Schifferakademie','Kapitän'],            d:'8 Wochen',  k:'150 Hade',  h:'Ruder- und Segelschiffe. Kapitän muss einen an Bord nehmen.'},
-          {u:'Verbreitete Sprache',   inst:['Privat','Gelehrter'],                   d:'8 Wochen',  k:'80 Hade',   h:'Gemeinsprache, Zwergisch, Elfisch u. a. Ein Muttersprachler reicht als Lehrer.'},
-          {u:'Seltene Sprache',       inst:['Magierschule','Tempel','Gelehrter'],    d:'16 Wochen', k:'250 Hade',  h:'Drakonisch, Sylvanisch, Tiefensprache u. a. Institutionszugang empfohlen.'},
-          {u:'Arkane / Planare Sprache',inst:['Magierschule'],                       d:'20 Wochen', k:'400 Hade',  h:'Infernalisch, Abyssal, Primordial. Nur an Magierschulen vollständig lehrbar.'},
+          {u:'Einfache Waffen',       inst:['Kriegerschule','Privat'],                d:'4 Wochen',  k:'30 Hade',   h:'Standardwaffen wie Dolche, Keulen oder Speere.'},
+          {u:'Kriegswaffen',          inst:['Klingenbastion','Ritterorden'],          d:'8 Wochen',  k:'60 Hade',   h:'Schwert, Streitaxt, Bogen. Voraussetzung: Übung mit einfachen Waffen.'},
+          {u:'Leichte Rüstung',       inst:['Kriegerschule','Zunft'],                 d:'4 Wochen',  k:'35 Hade',   h:'Leder, Verstärktes Leder.'},
+          {u:'Mittelschwere Rüstung', inst:['Wächterhaus'],                           d:'8 Wochen',  k:'60 Hade',   h:'Kettenhemd, Schuppenpanzer. Voraussetzung: leichte Rüstung.'},
+          {u:'Schwere Rüstung',       inst:['Klingenbastion','Wächterhaus','Ritterorden'], d:'16 Wochen', k:'100 Hade', h:'Plattenpanzer. Voraussetzung: mittelschwere Rüstung. Nur an wenigen Orten lehrbar.'},
+          {u:'Handwerkzeug',          inst:['Zunft','Privat'],                        d:'4 Wochen',  k:'35 Hade',   h:'Schmied-, Tischler-, Kräuterkundewerkzeug u. a. Je nach Zunft.'},
+          {u:'Medizinische Ausrüstung',inst:['Tempel','Zunft'],                      d:'6 Wochen',  k:'50 Hade',   h:'Heilerkit, Chirurgenwerkzeug.'},
+          {u:'Vergiftungsausrüstung', inst:['Diebesgilde','Alchemist'],               d:'6 Wochen',  k:'70 Hade',   h:'Zugang zur Diebesgilde oder einem diskreten Alchemisten nötig.'},
+          {u:'Diebeswerkzeug',        inst:['Diebesgilde'],                           d:'6 Wochen',  k:'70 Hade',   h:'Nur durch die Diebesgilde lehrbar — Zugang muss erst verdient werden.'},
+          {u:'Musikinstrument',       inst:['Bardenakademie','Musiklehrer'],          d:'8 Wochen',  k:'40 Hade',   h:'Ein Instrument nach Wahl. Bardenakademien kennen auch exotische Instrumente.'},
+          {u:'Spielzeug (Würfel, Karten…)',inst:['Privat'],                          d:'2 Wochen',  k:'15 Hade',   h:'In jeder Taverne zu erlernen. Kein formaler Ausbilder nötig — nur jemand der spielt.'},
+          {u:'Landfahrzeug',          inst:['Privat','Zunft'],                        d:'4 Wochen',  k:'20 Hade',   h:'Kutsche, Reittier, Wagen.'},
+          {u:'Wasserfahrzeug',        inst:['Schifferakademie','Kapitän'],            d:'8 Wochen',  k:'40 Hade',   h:'Ruder- und Segelschiffe. Kapitän muss einen an Bord nehmen.'},
+          {u:'Verbreitete Sprache',   inst:['Privat','Gelehrter'],                   d:'8 Wochen',  k:'30 Hade',   h:'Gemeinsprache, Zwergisch, Elfisch u. a. Ein Muttersprachler reicht als Lehrer.'},
+          {u:'Seltene Sprache',       inst:['Magierschule','Tempel','Gelehrter'],    d:'16 Wochen', k:'60 Hade',   h:'Drakonisch, Sylvanisch, Tiefensprache u. a. Tempel und Gelehrte sind günstiger; Magierschulen verlangen deutlich mehr.'},
+          {u:'Arkane / Planare Sprache',inst:['Magierschule'],                       d:'20 Wochen', k:'200 Hade',  h:'Infernalisch, Abyssal, Primordial. Ausschließlich an Magierschulen lehrbar — der Preis spiegelt das wider.'},
         ];
         return (
           <TW>
@@ -1159,8 +1174,8 @@ function AbenteuerContent(){
                 <tr>
                   <th style={{width:'20%'}}>Übung</th>
                   <th style={{width:'30%'}}>Ausbilder / Institution</th>
-                  <th style={{width:'11%'}}>Dauer</th>
-                  <th style={{width:'11%'}}>Kosten</th>
+                  <th style={{width:'12%'}}>Max. Dauer</th>
+                  <th style={{width:'11%'}}>Kosten/Tag</th>
                   <th>Hinweis</th>
                 </tr>
               </thead>
@@ -1245,7 +1260,6 @@ function SichtContent() {
     return true;
   });
 
-  const shapeshifters = allRaces.filter(r => r.sicht?.wandelform);
 
   return (
     <div>
@@ -1269,7 +1283,7 @@ function SichtContent() {
       </div>
 
       <SubH id="sec-sicht-tabelle">Rassenübersicht</SubH>
-      <Txt c="Alle Werte gelten für die Normalform. Rassen mit Formwandel haben in der Tiergestalt abweichende Werte — siehe Abschnitt Formwandler."/>
+      <Txt c={<>Alle Werte gelten für die Normalform. Rassen mit <Acc c="Formwandel"/> sind mit „Wandel" markiert — sie nehmen beim Verwandeln in ein Tier die Sinne dieses Tieres an, weshalb Sichtweite und Sichtfeld in der Wandelform variieren.</>}/>
       <div style={{ display:'flex', gap:'6px', marginBottom:'12px', flexWrap:'wrap' }}>
         {[['alle','Alle'],['dunkel','Mit Dunkelsicht'],['panorama','Panorama (> 200°)'],['wandel','Formwandler']].map(([id,label]) => (
           <button key={id} onClick={()=>setFilter(id)}
@@ -1296,8 +1310,8 @@ function SichtContent() {
                     {r.name}
                     {s.wandelform && <span style={{marginLeft:'5px',fontFamily:'var(--font-mono)',fontSize:'6.5px',letterSpacing:'0.1em',color:'rgba(180,130,90,0.65)',textTransform:'uppercase',verticalAlign:'middle'}}>Wandel</span>}
                   </td>
-                  <td style={{fontFamily:'var(--font-mono)',fontSize:'10px',color:'rgba(94,232,208,0.75)'}}>{s.weite != null ? `${s.weite} m` : '—'}</td>
-                  <td style={{fontFamily:'var(--font-mono)',fontSize:'10px',color:'rgba(160,140,255,0.8)'}}>{s.radius != null ? `${s.radius}°` : '—'}</td>
+                  <td style={{fontFamily:'var(--font-mono)',fontSize:'10px',color:s.wandelform?'rgba(180,130,90,0.55)':'rgba(94,232,208,0.75)'}}>{s.wandelform ? '?' : (s.weite != null ? `${s.weite} m` : '—')}</td>
+                  <td style={{fontFamily:'var(--font-mono)',fontSize:'10px',color:s.wandelform?'rgba(180,130,90,0.55)':'rgba(160,140,255,0.8)'}}>{s.wandelform ? '?' : (s.radius != null ? `${s.radius}°` : '—')}</td>
                   <td style={{fontFamily:'var(--font-mono)',fontSize:'10px',color:s.dunkel>0?'rgba(110,150,255,0.8)':'rgba(200,190,240,0.25)'}}>{s.dunkel>0?`${s.dunkel} m`:'—'}</td>
                   <td style={{fontFamily:'var(--font-body)',fontWeight:'300',fontSize:'11px',color:'rgba(200,190,240,0.42)',lineHeight:'1.5'}}>{s.notiz||'—'}</td>
                 </tr>
@@ -1307,32 +1321,6 @@ function SichtContent() {
         </table>
       </TW>
 
-      <SubH id="sec-sicht-wandler">Formwandler</SubH>
-      <Txt c={<>Rassen mit <Acc c="Formwandel"/> oder <Acc c="Gestaltenwandel"/> können in ihrer verwandelten Gestalt andere Sichtwerte haben. Wandler nehmen beim Verwandeln in ein Tier die Sinne dieses Tieres an — das umfasst typischerweise ein breiteres Sichtfeld, aber schlechtere Tiefenwahrnehmung.</>}/>
-      <div style={{ display:'flex', flexDirection:'column', gap:'10px' }}>
-        {shapeshifters.map(r => {
-          const sN = r.sicht, sW = r.sicht.wandelform;
-          return (
-            <div key={r.id} className="reveal-up" style={{ border:'1px solid rgba(124,77,255,0.16)', borderRadius:'4px', overflow:'hidden' }}>
-              <div style={{ padding:'9px 16px', background:'rgba(124,77,255,0.08)', borderBottom:'1px solid rgba(124,77,255,0.1)', fontFamily:'var(--font-display)', fontSize:'11px', letterSpacing:'0.14em', color:'rgba(200,190,240,0.88)', textTransform:'uppercase' }}>{r.name}</div>
-              <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr' }}>
-                {[['Normalform', sN], ['Wandelform', sW]].map(([label, s], i) => (
-                  <div key={label} style={{ padding:'14px 16px', borderRight:i===0?'1px solid rgba(124,77,255,0.1)':'none' }}>
-                    <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.18em', color:'rgba(124,77,255,0.45)', textTransform:'uppercase', marginBottom:'10px' }}>{label}</div>
-                    {[['Sichtweite', s.weite!=null?`${s.weite} m`:'—'], ['Sichtfeld', s.radius!=null?`${s.radius}°`:'—'], ['Dunkelsicht', s.dunkel>0?`${s.dunkel} m`:'—']].map(([k,v])=>(
-                      <div key={k} style={{ display:'flex', justifyContent:'space-between', padding:'4px 0', borderBottom:'1px solid rgba(124,77,255,0.06)' }}>
-                        <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.12em', color:'rgba(160,140,255,0.45)', textTransform:'uppercase' }}>{k}</span>
-                        <span style={{ fontFamily:'var(--font-mono)', fontSize:'10px', color:'rgba(200,190,240,0.75)' }}>{v}</span>
-                      </div>
-                    ))}
-                    {s.notiz && <div style={{ marginTop:'8px', fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'10px', color:'rgba(200,190,240,0.38)', lineHeight:'1.55', fontStyle:'italic' }}>{s.notiz}</div>}
-                  </div>
-                ))}
-              </div>
-            </div>
-          );
-        })}
-      </div>
     </div>
   );
 }

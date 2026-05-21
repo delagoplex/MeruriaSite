@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meruria — Spielerhandbuch</title>
+<link rel="stylesheet" href="assets/styles/global/fonts.css">
+<link rel="stylesheet" href="assets/styles/global/base.css">
+<link rel="stylesheet" href="assets/styles/pages/Spielerhandbuch.css">
+<script src="assets/scripts/vendor/react.development.js"></script>
+<script src="assets/scripts/vendor/react-dom.development.js"></script>
+<script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/components/tweaks-panel-13.jsx" type="text/babel"></script>
+<script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.jsx" type="text/babel"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect, useRef, useCallback } = React;
+const { useTweaks, TweaksPanel, TweakSection, TweakToggle } = window;
+const { SiteNav, SiteGate } = window;
+
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"showParticles": true, "showHexes": true}/*EDITMODE-END*/;
+
+// ── HELPERS ──────────────────────────────────────────────
+function hexPoints(s) {
+  const cx = s/2, cy = s/2, r = s/2;
+  const pts = [];
+  for (let i = 0; i < 6; i++) {
+    const a = (Math.PI/180)*(60*i - 30);
+    pts.push(`${cx + r*Math.cos(a)},${cy + r*Math.sin(a)}`);
+  }
+  return pts.join(' ');
+}
+
+
+// ── SECTION DATA ─────────────────────────────────────────
+const SECTIONS = [
+  {
+    id: 'realismus', name: 'Realismus', href: 'Realismus Standalone.html',
+    untertitel: 'Zeit, Erschöpfung, Welt­logik',
+    beschreibung: 'Das Regelwerk, das Meruria zu einer Welt mit Schwerkraft macht. Wie ein Tag vergeht, wie Erschöpfung den Körper zermürbt, wie Sinne die Realität filtern — die Mechaniken, mit denen jeder Schritt Gewicht bekommt.',
+    icon: 'realismus',
+    topics: ['Zeit & Tageslauf', 'Erschöpfung', 'Sinne & Reisen'],
+  },
+  {
+    id: 'sammeln', name: 'Sammeln & Handwerk', href: 'Sammeln und Handwerk.html',
+    untertitel: 'Material & Meisterarbeit',
+    beschreibung: 'Pflanzen am Wegrand, Mineralien im Fels, Trophäen erlegter Kreaturen — und was sich daraus an der Werkbank fertigen lässt. Vom Heiltrank bis zur Klinge.',
+    icon: 'sammeln',
+    topics: ['Rohstoffe', 'Rezepte', 'Werkbank'],
+  },
+  {
+    id: 'schutzherren', name: 'Schutzherren', href: 'Schutzherren.html',
+    untertitel: 'Pakte jenseits der Sterblichen',
+    beschreibung: 'Mächte, die Verbündete wählen — und ihren Preis fordern. Wer sind die Wesen, die Sterblichen Kraft verleihen, und welche Bande knüpft ein Pakt?',
+    icon: 'schutzherren',
+    topics: ['Mächte', 'Pakte', 'Gegenleistung'],
+  },
+  {
+    id: 'gesinnungen', name: 'Gesinnungen', href: 'Gesinnungen.html',
+    untertitel: 'Das moralische Gefüge',
+    beschreibung: 'Recht, Chaos, Gut, Böse — die Achsen, entlang derer ein Charakter denkt und handelt. Kein starres Korsett, sondern ein Kompass für stimmige Entscheidungen.',
+    icon: 'gesinnungen',
+    topics: ['Achsen', 'Haltungen', 'Konflikt'],
+  },
+  {
+    id: 'regierungsformen', name: 'Regierungsformen', href: 'Regierungsformen.html',
+    untertitel: 'Wer herrscht, wer gehorcht',
+    beschreibung: 'Königreiche, Räte, Theokratien, Stammesbünde, freie Städte. Die politischen Strukturen, die Meruria zusammenhalten — oder gegeneinander stellen.',
+    icon: 'regierungsformen',
+    topics: ['Reiche', 'Räte', 'Stammesbünde'],
+  },
+];
+
+// ── FLOATING HEXES ───────────────────────────────────────
+const HEX_DEFS = [
+  { size:120, x:'6%',  y:'14%', anim:'hexFloat0', dur:'7.2s', opacity:0.035 },
+  { size:55,  x:'20%', y:'58%', anim:'hexFloat1', dur:'5.8s', opacity:0.06  },
+  { size:200, x:'70%', y:'6%',  anim:'hexFloat2', dur:'9.1s', opacity:0.025 },
+  { size:40,  x:'84%', y:'40%', anim:'hexFloat3', dur:'4.9s', opacity:0.08  },
+  { size:88,  x:'52%', y:'70%', anim:'hexFloat1', dur:'6.4s', opacity:0.04  },
+  { size:30,  x:'35%', y:'26%', anim:'hexFloat0', dur:'5.2s', opacity:0.10  },
+  { size:160, x:'40%', y:'82%', anim:'hexFloat2', dur:'8.3s', opacity:0.022 },
+  { size:50,  x:'91%', y:'76%', anim:'hexFloat3', dur:'6.0s', opacity:0.07  },
+];
+
+function FloatingHexField({ mouseX, mouseY }) {
+  return (
+    <div style={{ position:'fixed', inset:0, pointerEvents:'none', zIndex:1, overflow:'hidden', clipPath:'inset(212px 0 0 0)' }}>
+      {HEX_DEFS.map((h, i) => {
+        const px = hexPoints(h.size);
+        const parallaxX = (mouseX - 0.5) * (i % 3 === 0 ? -12 : i % 3 === 1 ? -6 : -18);
+        const parallaxY = (mouseY - 0.5) * (i % 3 === 0 ? -8  : i % 3 === 1 ? -4 : -14);
+        return (
+          <div key={i} style={{ position:'absolute', left:h.x, top:h.y, animation:`${h.anim} ${h.dur} ease-in-out infinite`, animationDelay:`${i*0.7}s`, transform:`translate(${parallaxX}px,${parallaxY}px)`, transition:'transform 0.4s ease-out', willChange:'transform' }}>
+            <svg width={h.size} height={h.size} viewBox={`0 0 ${h.size} ${h.size}`} style={{ display:'block', opacity:h.opacity, filter:`drop-shadow(0 0 ${h.size*0.06}px #7c4dff)` }}>
+              <polygon points={px} fill="transparent" stroke="#7c4dff" strokeWidth="1" />
+            </svg>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+// ── PARTICLES ────────────────────────────────────────────
+function ParticleField({ mouseX, mouseY }) {
+  const canvasRef = useRef(null);
+  const animRef = useRef(null);
+  const particles = useRef([]);
+  const mouse = useRef({ x:0.5, y:0.5 });
+  useEffect(() => { mouse.current = { x: mouseX, y: mouseY }; }, [mouseX, mouseY]);
+  useEffect(() => {
+    const canvas = canvasRef.current; if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const resize = () => { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; };
+    resize(); window.addEventListener('resize', resize);
+    particles.current = Array.from({length:55}, () => ({
+      x: Math.random(), y: Math.random(),
+      r: Math.random()*1.6+0.5,
+      vx:(Math.random()-0.5)*0.05, vy:(Math.random()-0.5)*0.05,
+      alpha: Math.random()*0.2+0.05,
+    }));
+    const tick = () => {
+      const w = canvas.width, h = canvas.height;
+      const shiftX = (mouse.current.x - 0.5)*-14, shiftY = (mouse.current.y - 0.5)*-14;
+      ctx.clearRect(0,0,w,h);
+      particles.current.forEach(p => {
+        p.x += p.vx/w*60; p.y += p.vy/h*60;
+        if(p.x<0)p.x=1; if(p.x>1)p.x=0; if(p.y<0)p.y=1; if(p.y>1)p.y=0;
+        ctx.beginPath(); ctx.arc(p.x*w+shiftX, p.y*h+shiftY, p.r, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(160,140,255,${p.alpha})`; ctx.fill();
+      });
+      animRef.current = requestAnimationFrame(tick);
+    };
+    tick();
+    return () => { cancelAnimationFrame(animRef.current); window.removeEventListener('resize', resize); };
+  }, []);
+  return <canvas ref={canvasRef} style={{ position:'fixed', inset:0, width:'100%', height:'100%', pointerEvents:'none', zIndex:0, clipPath:'inset(212px 0 0 0)' }} />;
+}
+
+// ── SCROLL REVEAL ────────────────────────────────────────
+function useScrollReveal() {
+  useEffect(() => {
+    const revealed = new WeakSet();
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting || revealed.has(entry.target)) return;
+        revealed.add(entry.target);
+        observer.unobserve(entry.target);
+        entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+    const t = setTimeout(() => {
+      document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
+    }, 100);
+    return () => { clearTimeout(t); observer.disconnect(); };
+  }, []);
+}
+
+
+// ── SECTION ICON (small hex sigil) ───────────────────────
+function SectionIcon({ kind, size = 64, color = '#7c4dff', hov }) {
+  const c1 = color, c2 = `${color}55`;
+  const opacity = hov ? 1 : 0.75;
+  // Each icon is built from primitives — no decorative SVGs beyond simple shapes.
+  const renderInner = () => {
+    if (kind === 'realismus') return (
+      <g opacity={opacity}>
+        {/* hourglass — frame, sand at top, falling grains, settled sand at bottom */}
+        <line x1="16" y1="14" x2="48" y2="14" stroke={c1} strokeWidth="1.4"/>
+        <line x1="16" y1="50" x2="48" y2="50" stroke={c1} strokeWidth="1.4"/>
+        <polygon points="18,15 46,15 32,32" fill="none" stroke={c1} strokeWidth="1.2"/>
+        <polygon points="18,49 46,49 32,32" fill="none" stroke={c1} strokeWidth="1.2"/>
+        {/* sand still in top */}
+        <polygon points="22,17 42,17 32,27" fill={c1} opacity="0.32"/>
+        {/* falling grains */}
+        <circle cx="32" cy="34" r="1.3" fill={c1}/>
+        <circle cx="32" cy="39" r="0.9" fill={c2}/>
+        <circle cx="32" cy="43" r="0.7" fill={c2}/>
+        {/* settled sand at bottom */}
+        <path d="M 23 48 L 41 48 L 37 45 L 27 45 Z" fill={c1} opacity="0.32"/>
+      </g>
+    );
+    if (kind === 'sammeln') return (
+      <g opacity={opacity}>
+        {/* basket of small circles — a cluster of gathered items */}
+        <circle cx="22" cy="22" r="3" fill="none" stroke={c1} strokeWidth="1"/>
+        <circle cx="32" cy="18" r="3.5" fill="none" stroke={c1} strokeWidth="1"/>
+        <circle cx="42" cy="22" r="3" fill="none" stroke={c1} strokeWidth="1"/>
+        <circle cx="26" cy="30" r="2.5" fill={c1}/>
+        <circle cx="36" cy="30" r="2.5" fill={c1}/>
+        {/* basket */}
+        <path d="M 16 36 L 48 36 L 44 50 L 20 50 Z" fill="none" stroke={c1} strokeWidth="1.2"/>
+        <line x1="24" y1="36" x2="22" y2="50" stroke={c2} strokeWidth="0.8"/>
+        <line x1="32" y1="36" x2="32" y2="50" stroke={c2} strokeWidth="0.8"/>
+        <line x1="40" y1="36" x2="42" y2="50" stroke={c2} strokeWidth="0.8"/>
+      </g>
+    );
+    if (kind === 'schutzherren') return (
+      <g opacity={opacity}>
+        {/* downward triangle with watching dot — a patron's gaze */}
+        <polygon points="14,16 50,16 32,48" fill="none" stroke={c1} strokeWidth="1.2"/>
+        <polygon points="22,20 42,20 32,38" fill="none" stroke={c1} strokeWidth="0.9"/>
+        <circle cx="32" cy="26" r="3" fill="none" stroke={c1} strokeWidth="1"/>
+        <circle cx="32" cy="26" r="1.2" fill={c1}/>
+        {/* tether */}
+        <line x1="32" y1="48" x2="32" y2="54" stroke={c2} strokeWidth="1"/>
+        <circle cx="32" cy="55" r="1.5" fill={c1}/>
+      </g>
+    );
+    if (kind === 'gesinnungen') return (
+      <g opacity={opacity}>
+        {/* two crossed axes with a dot in each quadrant */}
+        <line x1="14" y1="32" x2="50" y2="32" stroke={c1} strokeWidth="1.2"/>
+        <line x1="32" y1="14" x2="32" y2="50" stroke={c1} strokeWidth="1.2"/>
+        <circle cx="22" cy="22" r="2" fill="none" stroke={c1} strokeWidth="1"/>
+        <circle cx="42" cy="22" r="2" fill="none" stroke={c1} strokeWidth="1"/>
+        <circle cx="22" cy="42" r="2" fill="none" stroke={c1} strokeWidth="1"/>
+        <circle cx="42" cy="42" r="2" fill="none" stroke={c1} strokeWidth="1"/>
+        <circle cx="32" cy="32" r="2.5" fill={c1}/>
+      </g>
+    );
+    if (kind === 'regierungsformen') return (
+      <g opacity={opacity}>
+        {/* tiered hierarchy — stacked rectangles narrowing toward a top */}
+        <rect x="26" y="14" width="12" height="8" fill="none" stroke={c1} strokeWidth="1.2"/>
+        <rect x="20" y="26" width="24" height="8" fill="none" stroke={c1} strokeWidth="1"/>
+        <rect x="14" y="38" width="36" height="8" fill="none" stroke={c1} strokeWidth="1"/>
+        <line x1="32" y1="22" x2="32" y2="26" stroke={c2} strokeWidth="0.8"/>
+        <line x1="32" y1="34" x2="32" y2="38" stroke={c2} strokeWidth="0.8"/>
+        <circle cx="32" cy="18" r="1.2" fill={c1}/>
+        <line x1="14" y1="50" x2="50" y2="50" stroke={c2} strokeWidth="0.8"/>
+      </g>
+    );
+    return null;
+  };
+  return (
+    <svg width={size} height={size} viewBox="0 0 64 64" style={{ display:'block', filter: hov ? `drop-shadow(0 0 8px ${color}88)` : 'none', transition:'filter 0.3s' }}>
+      <polygon points={hexPoints(64)} fill={`${color}08`} stroke={`${color}33`} strokeWidth="0.8"/>
+      {renderInner()}
+    </svg>
+  );
+}
+
+// ── RIBBON CARD ──────────────────────────────────────────
+function RibbonCard({ sec, index, isFirst, isLast, delay }) {
+  const [hov, setHov] = React.useState(false);
+  const acc = '#7c4dff';
+  return (
+    <div className="reveal-up" style={{ transitionDelay: `${delay}s`, position:'relative' }}>
+      <a href={sec.href}
+        onMouseEnter={() => setHov(true)}
+        onMouseLeave={() => setHov(false)}
+        style={{ textDecoration:'none', display:'block' }}>
+        <div style={{
+          position:'relative',
+          display:'grid',
+          gridTemplateColumns:'168px 1fr auto',
+          alignItems:'stretch',
+          gap:'0',
+          padding:'24px 28px 24px 18px',
+          background: hov
+            ? 'linear-gradient(90deg, rgba(28,16,58,0.55) 0%, rgba(10,6,28,0.55) 100%)'
+            : 'linear-gradient(90deg, rgba(14,8,32,0.4) 0%, rgba(8,5,22,0.4) 100%)',
+          border: `1px solid ${hov ? acc + '40' : acc + '15'}`,
+          borderRadius:'3px',
+          overflow:'hidden',
+          transition:'background 0.3s, border-color 0.3s, transform 0.35s, box-shadow 0.3s',
+          boxShadow: hov ? `0 0 28px ${acc}12, 0 6px 22px rgba(0,0,0,0.4)` : '0 2px 12px rgba(0,0,0,0.25)',
+          transform: hov ? 'translateX(4px)' : 'translateX(0)',
+        }}>
+
+          {/* Diagonal stripe texture, faint */}
+          <div style={{ position:'absolute', inset:0, pointerEvents:'none',
+            backgroundImage: `repeating-linear-gradient(135deg, transparent, transparent 22px, ${acc}05 22px, ${acc}05 23px)`,
+            opacity: hov ? 1 : 0.5, transition:'opacity 0.3s' }} />
+
+          {/* Hover wash from left */}
+          {hov && <div style={{ position:'absolute', left:0, top:0, bottom:0, width:'180px',
+            background:`linear-gradient(90deg, ${acc}14, transparent)`, pointerEvents:'none' }} />}
+
+          {/* ICON COLUMN */}
+          <div style={{ position:'relative', zIndex:2, display:'flex', alignItems:'center', justifyContent:'center' }}>
+            {/* Spine segments (top + bottom), part of the column so they connect across rows */}
+            {!isFirst && <div style={{ position:'absolute', left:'50%', top:'-24px', bottom:'50%', width:'1px',
+              background:`linear-gradient(180deg, ${acc}28, ${acc}55)`,
+              transform:'translateX(-0.5px)' }} />}
+            {!isLast && <div style={{ position:'absolute', left:'50%', top:'50%', bottom:'-24px', width:'1px',
+              background:`linear-gradient(180deg, ${acc}55, ${acc}28)`,
+              transform:'translateX(-0.5px)' }} />}
+
+            {/* Hex frame + icon */}
+            <div style={{ position:'relative', width:'140px', height:'140px',
+              display:'flex', alignItems:'center', justifyContent:'center',
+              background: hov ? 'rgba(10,6,28,0.95)' : 'rgba(10,6,28,0.85)',
+              clipPath: 'polygon(50% 0%, 93.3% 25%, 93.3% 75%, 50% 100%, 6.7% 75%, 6.7% 25%)',
+              transition:'background 0.3s' }}>
+              {/* Outer hex frame */}
+              <svg width="104" height="104" viewBox="0 0 104 104" style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', display:'block',
+                filter: hov ? `drop-shadow(0 0 14px ${acc}88)` : `drop-shadow(0 0 4px ${acc}44)`,
+                transition:'filter 0.35s' }}>
+                <polygon points={hexPoints(104)} fill={hov ? `${acc}10` : `${acc}06`} stroke={hov ? acc : `${acc}55`} strokeWidth="1" />
+                <polygon points={hexPoints(88)} fill="none" stroke={`${acc}22`} strokeWidth="0.6" transform="translate(8 8)" />
+              </svg>
+              {/* Inner icon */}
+              <div style={{ position:'relative', zIndex:1 }}>
+                <SectionIcon kind={sec.icon} size={56} color={acc} hov={hov} />
+              </div>
+            </div>
+          </div>
+
+          {/* CONTENT COLUMN */}
+          <div style={{ position:'relative', zIndex:2, padding:'4px 32px 4px 28px', display:'flex', flexDirection:'column', justifyContent:'center', minWidth:0 }}>
+            <div style={{ display:'flex', alignItems:'baseline', gap:'14px', marginBottom:'4px', flexWrap:'wrap' }}>
+              <h3 style={{
+                fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:'400',
+                letterSpacing:'0.18em', color: hov ? '#f0eeff' : 'rgba(240,238,255,0.92)',
+                textShadow: hov ? `0 0 22px ${acc}66` : 'none',
+                transition:'color 0.3s, text-shadow 0.3s',
+                lineHeight:1.15, textTransform:'uppercase', margin:0,
+              }}>{sec.name}</h3>
+              <span style={{ fontFamily:'var(--font-mono)', fontSize:'8.5px', letterSpacing:'0.28em',
+                color: hov ? `${acc}cc` : `${acc}77`, textTransform:'uppercase', transition:'color 0.3s' }}>
+                {sec.untertitel}
+              </span>
+            </div>
+
+            {/* Hex divider with sigil */}
+            <div style={{ display:'flex', alignItems:'center', gap:'8px', margin:'8px 0 12px', maxWidth:'480px' }}>
+              <div style={{ height:'1px', width:'18px', background: `${acc}55` }} />
+              <svg width="6" height="6" viewBox="0 0 6 6"><polygon points={hexPoints(6)} fill={`${acc}66`} stroke={`${acc}aa`} strokeWidth="0.6" /></svg>
+              <div style={{ height:'1px', flex:1, background: `linear-gradient(90deg, ${acc}55, transparent)` }} />
+            </div>
+
+            <p style={{
+              fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12.5px',
+              lineHeight:1.85, color: hov ? 'rgba(220,210,255,0.75)' : 'rgba(220,210,255,0.55)',
+              letterSpacing:'0.02em', textWrap:'pretty', margin:'0 0 14px 0', maxWidth:'620px',
+              transition:'color 0.3s',
+            }}>{sec.beschreibung}</p>
+
+            {/* Topic chips */}
+            <div style={{ display:'flex', alignItems:'center', gap:'8px', flexWrap:'wrap' }}>
+              {sec.topics.map((t, i) => (
+                <span key={i} style={{
+                  fontFamily:'var(--font-mono)', fontSize:'8.5px', letterSpacing:'0.18em',
+                  textTransform:'uppercase',
+                  color: hov ? `${acc}dd` : `${acc}88`,
+                  padding:'3px 8px',
+                  border: `1px solid ${hov ? acc + '55' : acc + '28'}`,
+                  borderRadius:'2px',
+                  background: hov ? `${acc}10` : 'transparent',
+                  transition:'all 0.3s',
+                }}>{t}</span>
+              ))}
+            </div>
+          </div>
+
+          {/* CTA COLUMN */}
+          <div style={{ position:'relative', zIndex:2, display:'flex', flexDirection:'column', alignItems:'flex-end', justifyContent:'center', gap:'10px', padding:'0 4px 0 20px', minWidth:'110px' }}>
+            <div style={{ fontFamily:'var(--font-display)', fontSize:'9.5px', letterSpacing:'0.32em', textTransform:'uppercase',
+              color: hov ? '#f0eeff' : 'rgba(200,190,240,0.55)',
+              textShadow: hov ? `0 0 12px ${acc}88` : 'none',
+              transition:'color 0.3s, text-shadow 0.3s' }}>
+              Öffnen
+            </div>
+            <div style={{ display:'flex', alignItems:'center', gap:'6px' }}>
+              <div style={{ height:'1px', width: hov ? '32px' : '18px', background:`linear-gradient(90deg, transparent, ${hov ? acc : acc + '55'})`,
+                transition:'width 0.3s, background 0.3s' }} />
+              <span style={{ fontFamily:'var(--font-mono)', fontSize:'16px',
+                color: hov ? '#f0eeff' : `${acc}aa`,
+                textShadow: hov ? `0 0 10px ${acc}cc` : 'none',
+                transition:'color 0.3s, text-shadow 0.3s' }}>→</span>
+            </div>
+          </div>
+
+        </div>
+      </a>
+    </div>
+  );
+}
+
+// ── APP ──────────────────────────────────────────────────
+function App() {
+  const [mouse, setMouse] = useState({ x:0.5, y:0.5 });
+  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const handleMouseMove = useCallback(e => { setMouse({ x: e.clientX/window.innerWidth, y: e.clientY/window.innerHeight }); }, []);
+  useScrollReveal();
+
+  return (
+    <div onMouseMove={handleMouseMove} style={{ position:'relative', minHeight:'100vh' }}>
+      {tweaks.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} />}
+      {tweaks.showHexes && <FloatingHexField mouseX={mouse.x} mouseY={mouse.y} />}
+
+      {/* ── HEADER IMAGE ── */}
+      <div style={{ position:'relative', zIndex:10, width:'100%', height:'160px',
+        background:'linear-gradient(180deg, rgba(20,10,50,0.95) 0%, rgba(10,8,30,0.98) 100%)',
+        borderBottom:'1px solid rgba(160,140,255,0.15)', overflow:'hidden',
+        display:'flex', alignItems:'center', justifyContent:'center' }}>
+        <div style={{ position:'absolute', inset:0,
+          background:`radial-gradient(ellipse at 20% 50%, rgba(124,77,255,0.18) 0%, transparent 50%), radial-gradient(ellipse at 80% 50%, rgba(45,125,255,0.14) 0%, transparent 50%), repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(160,140,255,0.04) 60px, rgba(160,140,255,0.04) 61px)`,
+          pointerEvents:'none' }} />
+        <div style={{ position:'absolute', inset:0,
+          backgroundImage:`repeating-linear-gradient(135deg, transparent, transparent 18px, rgba(124,77,255,0.03) 18px, rgba(124,77,255,0.03) 19px)`,
+          pointerEvents:'none' }} />
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(160,140,255,0.3)', letterSpacing:'0.3em', textTransform:'uppercase', position:'relative', zIndex:1 }}>
+          Kopfbild — Artwork hier ablegen
+        </div>
+      </div>
+
+      <SiteNav rightLabel="SPIELERHANDBUCH" />
+
+      {/* ── MAIN ── */}
+      <div style={{ position:'relative', zIndex:5, maxWidth:'1180px', margin:'0 auto', padding:'52px 40px 80px' }}>
+
+        {/* Page hero */}
+        <div className="reveal-up" style={{ marginBottom:'48px', textAlign:'center', position:'relative' }}>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.32em', color:'rgba(160,140,255,0.45)', textTransform:'uppercase', marginBottom:'14px' }}>
+            Meruria · Codex
+          </div>
+          <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(30px,4vw,50px)', fontWeight:'300', letterSpacing:'0.22em', color:'#f0eeff', textShadow:'0 0 50px rgba(124,77,255,0.4)', marginBottom:'18px', lineHeight:1.15, textTransform:'uppercase' }}>
+            Spielerhandbuch
+          </h1>
+          <div style={{ display:'flex', alignItems:'center', gap:'12px', justifyContent:'center', marginBottom:'22px' }}>
+            <div style={{ width:'60px', height:'1px', background:'linear-gradient(270deg, rgba(124,77,255,0.6), transparent)' }} />
+            <svg width="8" height="8" viewBox="0 0 8 8"><polygon points={hexPoints(8)} fill="rgba(124,77,255,0.35)" stroke="rgba(160,140,255,0.6)" strokeWidth="0.8" /></svg>
+            <div style={{ width:'8px', height:'1px', background:'rgba(124,77,255,0.4)', animation:'pulse-glow 2s infinite' }} />
+            <svg width="5" height="5" viewBox="0 0 5 5"><polygon points={hexPoints(5)} fill="rgba(160,140,255,0.2)" stroke="rgba(160,140,255,0.4)" strokeWidth="0.6" /></svg>
+            <div style={{ width:'8px', height:'1px', background:'rgba(124,77,255,0.4)', animation:'pulse-glow 2s infinite 0.4s' }} />
+            <svg width="8" height="8" viewBox="0 0 8 8"><polygon points={hexPoints(8)} fill="rgba(124,77,255,0.35)" stroke="rgba(160,140,255,0.6)" strokeWidth="0.8" /></svg>
+            <div style={{ width:'60px', height:'1px', background:'linear-gradient(90deg, rgba(124,77,255,0.6), transparent)' }} />
+          </div>
+          <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'13px', lineHeight:1.9, color:'rgba(220,210,255,0.5)', letterSpacing:'0.05em', maxWidth:'580px', margin:'0 auto', textWrap:'pretty' }}>
+            Die Regeln, die Welt­logik und das gesellschaft­liche Gerüst Merurias — alles, was abseits des eigenen Charakters zu wissen ist, bevor das erste Würfelpaar fällt.
+          </p>
+        </div>
+
+        {/* Codex header strip */}
+        <div className="reveal-up" style={{ transitionDelay:'0.04s', display:'flex', alignItems:'center', gap:'14px', marginBottom:'22px' }}>
+          <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.28em', color:'rgba(160,140,255,0.7)', textTransform:'uppercase' }}>Inhalt</span>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em', color:'rgba(160,140,255,0.4)' }}>·</span>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em', color:'rgba(160,140,255,0.45)' }}>{`${SECTIONS.length.toString().padStart(2,'0')} Sektionen`}</span>
+          </div>
+          <div style={{ flex:1, height:'1px', background:'linear-gradient(90deg, rgba(160,140,255,0.25) 0%, transparent 100%)' }}/>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.3em', color:'rgba(160,140,255,0.35)', textTransform:'uppercase' }}>
+            Spielerhandbuch
+          </div>
+        </div>
+
+        {/* Ribbon stack with vertical spine */}
+        <div style={{ display:'flex', flexDirection:'column', gap:'14px', position:'relative' }}>
+          {SECTIONS.map((sec, i) => (
+            <RibbonCard
+              key={sec.id}
+              sec={sec}
+              index={i}
+              isFirst={i === 0}
+              isLast={i === SECTIONS.length - 1}
+              delay={0.06 + i * 0.06}
+            />
+          ))}
+        </div>
+
+        {/* Closing flourish */}
+        <div className="reveal-up" style={{ transitionDelay:'0.4s', display:'flex', alignItems:'center', gap:'14px', marginTop:'34px', justifyContent:'center' }}>
+          <div style={{ width:'80px', height:'1px', background:'linear-gradient(270deg, rgba(124,77,255,0.5), transparent)' }} />
+          <svg width="6" height="6" viewBox="0 0 6 6"><polygon points={hexPoints(6)} fill="rgba(124,77,255,0.4)" stroke="rgba(160,140,255,0.5)" strokeWidth="0.5" /></svg>
+          <div style={{ width:'80px', height:'1px', background:'linear-gradient(90deg, rgba(124,77,255,0.5), transparent)' }} />
+        </div>
+
+      </div>
+
+      {/* ── FOOTER ── */}
+      <div style={{ position:'relative', zIndex:10, padding:'10px 32px', borderTop:'1px solid rgba(160,140,255,0.07)', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:'rgba(160,140,255,0.22)', letterSpacing:'0.2em' }}>◈ ARCHIV-STATUS: NOMINAL ◈ EPOCHE: UNBEKANNT</div>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:'rgba(160,140,255,0.22)', letterSpacing:'0.2em' }}>MERURIA // CHARAKTER-ARCHIV</div>
+      </div>
+
+      <TweaksPanel>
+        <TweakSection label="Atmosphäre"/>
+        <TweakToggle id="showParticles" label="Partikel"/>
+        <TweakToggle id="showHexes" label="Hexagone"/>
+      </TweaksPanel>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<SiteGate><App/></SiteGate>);
+</script>
+
+
+</body></html>

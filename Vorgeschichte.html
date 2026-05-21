@@ -7,47 +7,16 @@
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
 <link rel="stylesheet" href="assets/styles/pages/Vorgeschichte.css">
+<script src="assets/scripts/vendor/react.development.js"></script>
+<script src="assets/scripts/vendor/react-dom.development.js"></script>
+<script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.jsx" type="text/babel"></script>
 </head>
 <body>
 
 <!-- ══ NAV ══════════════════════════════════════════ -->
-<nav>
-  <a href="Meruria.html" class="nav-logo">Meruria</a>
-  <div class="nav-item">
-    <button class="nav-btn">Spielerhandbuch</button>
-    <div class="nav-dd">
-      <a href="Charaktererstellung.html">Charaktererstellung</a>
-      <a href="Ausrüstung.html">Ausrüstung</a>
-      <a href="Realismus.html">Realismus</a>
-    </div>
-  </div>
-  <div class="nav-item">
-    <button class="nav-btn">Charaktererstellung</button>
-    <div class="nav-dd">
-      <a href="Rassen.html">Rassen</a>
-      <a href="Klassen.html">Klassen</a>
-      <a href="Talente.html">Talente</a>
-      <a href="Hintergruende.html">Hintergründe</a>
-      <a href="Zauber.html">Zauber</a>
-    </div>
-  </div>
-  <div class="nav-item">
-    <button class="nav-btn">Enzyklopädie</button>
-    <div class="nav-dd">
-      <a href="Gottheiten.html">Gottheiten</a>
-      <a href="Galerie.html">Galerie</a>
-    </div>
-  </div>
-  <div class="nav-item">
-    <button class="nav-btn">Divisionen</button>
-    <div class="nav-dd">
-      <a href="Bergungsgarde.html">Die Kuratoren</a>
-      <a href="Sturmritter.html">Die Sturmritter</a>
-      <a href="Sentinels.html">Die Sentinels</a>
-      <a href="Pathfinders.html">Pathfinders</a>
-    </div>
-  </div>
-</nav>
+<div id="nav-root"></div>
 
 <!-- ══ HERO ═════════════════════════════════════════ -->
 <section class="hero">
@@ -525,5 +494,9 @@ document.querySelectorAll('.slot[data-slot]').forEach(function (el) {
 }());
 </script>
 
+<script type="text/babel">
+const { SiteNav, SiteGate } = window;
+ReactDOM.createRoot(document.getElementById('nav-root')).render(<SiteGate><SiteNav/></SiteGate>);
+</script>
 
 </body></html>

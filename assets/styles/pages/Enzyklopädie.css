@@ -1,0 +1,8 @@
+:root { --nav-h: 52px; }
+
+@keyframes pulse-glow { 0%,100%{opacity:0.5} 50%{opacity:1} }
+@keyframes hexFloat0 { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-18px) rotate(4deg)} }
+@keyframes hexFloat1 { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-12px) rotate(-3deg)} }
+@keyframes hexFloat2 { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-22px) rotate(6deg)} }
+@keyframes hexFloat3 { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-8px) rotate(-2deg)} }
+@keyframes lockShake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-2px)} 75%{transform:translateX(2px)} }

@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meruria — Tarot</title>
+<link rel="stylesheet" href="assets/styles/global/fonts.css">
+<link rel="stylesheet" href="assets/styles/global/base.css">
+<link rel="stylesheet" href="assets/styles/pages/Tarot.css">
+<script src="assets/scripts/vendor/react.development.js"></script>
+<script src="assets/scripts/vendor/react-dom.development.js"></script>
+<script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.jsx" type="text/babel"></script>
+</head>
+<body>
+
+<div id="nav-root"></div>
+
+<!-- ─────── MASTHEAD ─────── -->
+<section class="masthead">
+  <div class="eyebrow">Meruria · Oraculum Arcanum</div>
+  <h1 class="title">Tarot</h1>
+  <div class="flourish"><span class="flourish-dot"></span></div>
+  <p class="lede">
+    Mische das Deck im Geiste, formuliere deine Frage und ziehe eine Karte aus dem Schleier.
+    Die gezogenen Karten bleiben am unteren Rand sichtbar — auch wenn du nach unten zu ihren Bedeutungen scrollst.
+    <span style="display:block; margin-top:6px; color: rgba(124,77,255,0.55); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em;">
+      &nbsp;Klicke eine gezogene Karte, um direkt zu ihrer Erklärung zu springen.&nbsp;
+    </span>
+  </p>
+</section>
+
+<!-- ─────── SYMBOL PARADE ─────── -->
+<div class="symbol-parade">
+  <div class="parade-eyebrow">◇ Sigilla Arcana ◇</div>
+  <div class="parade-row suits" id="paradeSuits" aria-hidden="true"></div>
+  <div class="parade-divider"></div>
+  <div class="parade-row majors" id="paradeMajors" aria-hidden="true"></div>
+</div>
+
+<!-- ─────── STACK SCENE ─────── -->
+<div class="wrap">
+  <div class="scene" id="scene">
+    <div class="table-glow"></div>
+    <div class="table-disc"></div>
+    <svg class="compass" viewBox="0 0 200 200" aria-hidden="true">
+      <circle cx="100" cy="100" r="98" fill="none" stroke="rgba(160,140,255,0.4)" stroke-width="0.4"></circle>
+      <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(160,140,255,0.3)" stroke-width="0.3" stroke-dasharray="1 4"></circle>
+      <circle cx="100" cy="100" r="55" fill="none" stroke="rgba(160,140,255,0.35)" stroke-width="0.3"></circle>
+      <polygon points="100,5 132,23 132,57 100,75 68,57 68,23" fill="none" stroke="rgba(124,77,255,0.5)" stroke-width="0.5"></polygon>
+      <polygon points="100,125 132,143 132,177 100,195 68,177 68,143" fill="none" stroke="rgba(124,77,255,0.5)" stroke-width="0.5"></polygon>
+      <g stroke="rgba(124,77,255,0.45)" stroke-width="0.3">
+        <line x1="100" y1="2" x2="100" y2="22"></line>
+        <line x1="100" y1="178" x2="100" y2="198"></line>
+        <line x1="2" y1="100" x2="22" y2="100"></line>
+        <line x1="178" y1="100" x2="198" y2="100"></line>
+      </g>
+    </svg>
+    <div class="stack" id="stack" aria-label="Tarot deck"></div>
+  </div>
+
+  <div class="actions">
+    <button class="btn primary big-action" id="drawBtn">Karte ziehen</button>
+    <div class="action-row">
+      <button class="btn" id="drawMajorBtn">Großes Arkana ziehen</button>
+      <button class="btn" id="drawMinorBtn">Kleines Arkana ziehen</button>
+    </div>
+    <button class="btn ghost" id="clearBtn">Clear</button>
+  </div>
+</div>
+
+<!-- ─────── SPREADS ─────── -->
+<div class="wrap">
+  <section class="block">
+    <div class="section-head">
+      <div class="section-eyebrow">I — Legesysteme</div>
+      <h2 class="section-title">Das Legen der Karten</h2>
+      <div class="section-rule"></div>
+      <p class="section-sub">Drei klassische Wege, das Deck zu befragen — vom einzelnen Bild bis zum fünfteiligen Pfad.</p>
+    </div>
+
+    <div class="spreads">
+      <article class="spread">
+        <div class="num">Spread I · Einzelziehung</div>
+        <h3>Frage &amp; Antwort</h3>
+        <div class="glyph"><span class="slot"></span></div>
+        <p><b>Großes Arkana.</b> Stelle eine Frage zu einem tieferen Thema — Charakterentwicklung, Hauptmotive der Kampagne. Ziehe eine oder mehrere Karten und deute sie im Kontext.</p>
+        <p><b>Kleines Arkana.</b> Stelle eine spezifischere Frage zu Ereignissen oder Begegnungen. Berücksichtige Farbsuite und Hofkarte, um Entwicklungen abzuleiten.</p>
+      </article>
+
+      <article class="spread">
+        <div class="num">Spread II · Drei Karten</div>
+        <h3>Vergangenheit · Gegenwart · Zukunft</h3>
+        <div class="glyph"><span class="slot"></span><span class="slot"></span><span class="slot"></span></div>
+        <p>Mische gründlich. Lege drei Karten nebeneinander — sie zeigen, was war, was ist und was kommen könnte. Nur das Große Arkana für Schicksalslinien oder das gesamte Deck für ein umfassenderes Bild.</p>
+        <ol>
+          <li><b>Vergangenheit</b> — frühere Einflüsse</li>
+          <li><b>Gegenwart</b> — die aktuelle Lage</li>
+          <li><b>Zukunft</b> — mögliche Entwicklungen</li>
+        </ol>
+      </article>
+
+      <article class="spread">
+        <div class="num">Spread III · Fünf Karten</div>
+        <h3>Pfad der Erkenntnis</h3>
+        <div class="glyph"><span class="slot"></span><span class="slot"></span><span class="slot"></span><span class="slot"></span><span class="slot"></span></div>
+        <ol>
+          <li><b>Fundament</b> — der Kern der Situation</li>
+          <li><b>Herausforderung</b> — Hindernisse</li>
+          <li><b>Ratschlag</b> — mögliche Lösungen</li>
+          <li><b>Unterstützung</b> — günstige Einflüsse</li>
+          <li><b>Ausblick</b> — potenzielles Ergebnis</li>
+        </ol>
+      </article>
+    </div>
+  </section>
+</div>
+
+<!-- ─────── MAJOR ARCANA ─────── -->
+<div class="wrap">
+  <section class="block">
+    <div class="section-head">
+      <div class="section-eyebrow">II — Arcana Majora</div>
+      <h2 class="section-title">Das Große Arkana</h2>
+      <div class="section-rule"></div>
+      <p class="section-sub">Zweiundzwanzig Bilder vom Narren bis zur Welt — die großen Wendepunkte einer Reise.</p>
+    </div>
+    <div class="majors" id="majorsList"></div>
+  </section>
+</div>
+
+<!-- ─────── MINOR ARCANA ─────── -->
+<div class="wrap">
+  <section class="block">
+    <div class="section-head">
+      <div class="section-eyebrow">III — Arcana Minora</div>
+      <h2 class="section-title">Das Kleine Arkana</h2>
+      <div class="section-rule"></div>
+      <p class="section-sub">Sechsundfünfzig Karten in vier Farben — die Gewebe des Alltags, geordnet nach Element.</p>
+    </div>
+    <div class="suits" id="suitsList"></div>
+  </section>
+</div>
+
+<footer>
+  <span>◇ ORACULUM // 78 KARTEN ◇ EPOCH: UNKNOWN</span>
+  <span>MERURIA // THE WOVEN REALMS</span>
+</footer>
+
+<!-- ─────── DRAWN-CARDS TRAY ─────── -->
+<div class="tray is-empty" id="tray" aria-live="polite">
+  <div class="tray-bg"></div>
+  <div class="tray-inner">
+    <div class="tray-label">Gezogene Karten</div>
+    <div class="drawn-cards" id="drawnCards">
+      <div class="drawn-empty" id="drawnEmpty">
+        Der Schleier ruht. Klicke auf <b>Karte ziehen</b>, um eine Karte aus dem Deck zu lösen.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ========================= DATA ========================= */
+const MAJOR_ORDER_ROMAN = ["0","I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII","XIV","XV","XVI","XVII","XVIII","XIX","XX","XXI"];
+
+const MAJORS = [
+  ["Der Narr",          "Neue Anfänge, Unschuld, Spontaneität, Abenteuer"],
+  ["Der Magier",        "Kreativität, Manifestation, Potenzial, Handeln"],
+  ["Die Hohepriesterin","Intuition, Mysterium, Weiblichkeit, Geheimnisse"],
+  ["Die Kaiserin",      "Fülle, Fruchtbarkeit, Nähren, Pflege"],
+  ["Der Kaiser",        "Autorität, Struktur, Macht, Kontrolle"],
+  ["Die Liebenden",     "Liebe, Beziehungen, Wahl, Leidenschaft"],
+  ["Der Wagen",         "Durchsetzungskraft, Bewegung, Erfolg, Selbstvertrauen"],
+  ["Die Kraft",         "Stärke, Geduld, innere Macht, Selbstkontrolle"],
+  ["Der Eremit",        "Introspektion, Führung, Einsamkeit, Weisheit"],
+  ["Das Rad des Schicksals","Veränderung, Schicksal, Zyklen, Chancen"],
+  ["Die Gerechtigkeit", "Gleichgewicht, Fairness, Entscheidungen, Recht"],
+  ["Der Gehängte",      "Opfer, Loslassen, Perspektivenwechsel, Geduld"],
+  ["Der Tod",           "Transformation, Ende, Neuanfang, Wandel"],
+  ["Die Mäßigkeit",     "Harmonie, Ausgleich, Geduld, Integration"],
+  ["Der Teufel",        "Versuchung, Illusion, Beschränkungen, Befreiung"],
+  ["Der Turm",          "Chaos, Umbruch, plötzliche Veränderung, Erkenntnis"],
+  ["Der Stern",         "Hoffnung, Inspiration, Spiritualität, Klarheit"],
+  ["Der Mond",          "Intuition, Unbewusstes, Illusionen, Verwirrung"],
+  ["Die Sonne",         "Glück, Erfolg, Freude, Erleuchtung"],
+  ["Das Gericht",       "Urteil, Transformation, Erweckung, Entscheidung"],
+  ["Die Welt",          "Vollendung, Erfüllung, Erfolg, Reise"]
+];
+
+const RANKS = [
+  ["Ass","I"],["2","II"],["3","III"],["4","IV"],["5","V"],["6","VI"],["7","VII"],
+  ["8","VIII"],["9","IX"],["10","X"],
+  ["Page","Pg"],["Ritter","Rt"],["Königin","Q"],["König","K"]
+];
+
+const SUITS = {
+  kelche: {
+    name: "Kelche", element: "Wasser",
+    blurb: "Emotionen, Intuition, Beziehungen und die spirituelle Dimension des Lebens.",
+    themes: ["Emotionen","Liebe & Beziehungen","Intuition","Spirituelle Entwicklung","Kreativität","Träume"],
+    meanings: [
+      "Neue emotionale Anfänge, Liebe, tiefe Gefühle",
+      "Partnerschaft, Bindungen, Harmonie",
+      "Feiern, Freude, Gemeinschaft",
+      "Überlegung, Unzufriedenheit, innere Reflexion",
+      "Verlust, Trauer, Enttäuschung",
+      "Erinnerungen, Nostalgie, Wiedersehen",
+      "Suche nach Sinn, Sehnsucht, Entdeckung",
+      "Zufriedenheit, innere Fülle, emotionale Balance",
+      "Träume, Erfüllung, spirituelle Erfahrungen",
+      "Glück, Harmonie, Vollendung",
+      "Junge Kreativität, Nachrichten, künstlerische Inspiration",
+      "Romantik, Veränderung, emotionale Reife",
+      "Intuition, emotionale Tiefe, Fürsorglichkeit",
+      "Emotionale Kontrolle, innere Stärke, Mitgefühl"
+    ]
+  },
+  schwerter: {
+    name: "Schwerter", element: "Luft",
+    blurb: "Gedanken, Kommunikation, Konflikte und geistige Herausforderungen.",
+    themes: ["Gedanken","Kommunikation","Konflikte","Analyse","Klarheit","Wahrheit"],
+    meanings: [
+      "Neue Ideen, Klarheit, geistige Klarheit",
+      "Entscheidungen, Unsicherheit, Konflikte",
+      "Herzschmerz, Trennung, Schmerz",
+      "Ruhepause, Erholung, innere Einkehr",
+      "Niederlage, Verlust, Konfrontation",
+      "Lösungen, Kompromisse, Entschlossenheit",
+      "Täuschung, Verrat, Intrigen",
+      "Unsicherheit, Selbstzweifel, Angst",
+      "Sorgen, Ängste, übertriebene Gedanken",
+      "Niederlage, Rückschläge, Schmerz",
+      "Neue Ideen, Kommunikation, Neugierde",
+      "Aktive Intelligenz, Entschlossenheit, Konflikt",
+      "Klare Kommunikation, objektives Denken, Wahrheitssuche",
+      "Logik, Autorität, objektive Urteile"
+    ]
+  },
+  staebe: {
+    name: "Stäbe", element: "Feuer",
+    blurb: "Kreativität, Energie, Handlung und Abenteuer.",
+    themes: ["Energie","Kreativität","Abenteuer","Unternehmungen","Wachstum","Leidenschaft"],
+    meanings: [
+      "Neuer Enthusiasmus, kreative Impulse, Potenzial",
+      "Entscheidungen, Planung, Entwicklungen",
+      "Expansion, Wachstum, Erweiterung der Horizonte",
+      "Feiern, Gemeinschaft, Erfolg",
+      "Konkurrenz, Konflikt, Machtspielchen",
+      "Erfolge, Anerkennung, Herausforderungen",
+      "Abwehr, Standhaftigkeit, Verteidigung",
+      "Schnelligkeit, Bewegung, aktive Entscheidungen",
+      "Widerstand, Beharrlichkeit, Ausdauer",
+      "Überlastung, Erschöpfung, stressige Zeiten",
+      "Kreativer Funke, Neugierde, Lernen",
+      "Energie, Bewegung, Abenteuerlust",
+      "Selbstbewusstsein, Begeisterung, Führung",
+      "Macht, Inspiration, unternehmerischer Geist"
+    ]
+  },
+  muenzen: {
+    name: "Münzen", element: "Erde",
+    blurb: "Materielle Angelegenheiten, Ressourcen, Körper und Praxis.",
+    themes: ["Materielles","Ressourcen","Gesundheit","Arbeit","Realität","Stabilität"],
+    meanings: [
+      "Neue finanzielle Möglichkeiten, Manifestation",
+      "Balance, Entscheidungen, Ressourcenmanagement",
+      "Zusammenarbeit, Teamarbeit, Expertise",
+      "Besitzstandswahrung, Sicherheit, Geiz",
+      "Mangel, Unsicherheit, finanzielle Verluste",
+      "Großzügigkeit, Wohlstand, Geben und Nehmen",
+      "Geduld, Investition, langsamer Fortschritt",
+      "Meisterschaft, Fachwissen, Expertise",
+      "Erfolg, Wohlstand, Ernte der Arbeit",
+      "Erfüllung, Wohlstand, materielle Zufriedenheit",
+      "Lernen, neues Wissen, Praktisches",
+      "Stabilität, Engagement, praktische Umsetzung",
+      "Fülle, Sorge um andere, materielle Sicherheit",
+      "Autorität, finanzielle Sicherheit, Erfolg"
+    ]
+  }
+};
+
+const DECK = [];
+MAJORS.forEach((m, i) => {
+  DECK.push({
+    id: "M"+i,
+    kind: "major",
+    suit: null,
+    rankIdx: null,
+    romanIdx: i,
+    roman: MAJOR_ORDER_ROMAN[i],
+    name: m[0],
+    keywords: m[1]
+  });
+});
+Object.entries(SUITS).forEach(([key, s]) => {
+  s.meanings.forEach((mean, i) => {
+    DECK.push({
+      id: key.toUpperCase()+i,
+      kind: "minor",
+      suit: key,
+      suitName: s.name,
+      element: s.element,
+      rankIdx: i,
+      roman: RANKS[i][1],
+      name: RANKS[i][0] + " der " + s.name,
+      keywords: mean
+    });
+  });
+});
+
+/* ========================= SVG glyphs (Meruria-tinted) ========================= */
+function backPattern() {
+  return `
+  <svg viewBox="0 0 100 170" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="bg" cx="50%" cy="50%" r="60%">
+        <stop offset="0%" stop-color="#1a0f3e"/>
+        <stop offset="100%" stop-color="#08061a"/>
+      </radialGradient>
+      <pattern id="grid" width="8" height="8" patternUnits="userSpaceOnUse">
+        <path d="M 8 0 L 0 0 0 8" fill="none" stroke="rgba(160,140,255,0.12)" stroke-width="0.4"/>
+      </pattern>
+    </defs>
+    <rect width="100" height="170" fill="url(#bg)"/>
+    <rect width="100" height="170" fill="url(#grid)"/>
+    <rect x="4" y="4" width="92" height="162" fill="none" stroke="rgba(160,140,255,0.65)" stroke-width="0.6"/>
+    <rect x="8" y="8" width="84" height="154" fill="none" stroke="rgba(124,77,255,0.35)" stroke-width="0.3"/>
+    <!-- Hexagonal motif (Meruria signature) -->
+    <g fill="none" stroke="rgba(160,140,255,0.7)" stroke-width="0.55">
+      <polygon points="50,55 64,63 64,77 50,85 36,77 36,63"/>
+      <polygon points="50,85 64,93 64,107 50,115 36,107 36,93"/>
+      <polygon points="50,40 60,46 60,58 50,64 40,58 40,46"/>
+      <polygon points="50,106 60,112 60,124 50,130 40,124 40,112"/>
+    </g>
+    <g fill="none" stroke="rgba(124,77,255,0.55)" stroke-width="0.45">
+      <circle cx="50" cy="85" r="28"/>
+      <circle cx="50" cy="85" r="20" stroke-dasharray="2 2"/>
+    </g>
+    <g fill="rgba(160,140,255,0.9)">
+      <circle cx="50" cy="85" r="2"/>
+      <circle cx="14" cy="14" r="1.5"/>
+      <circle cx="86" cy="14" r="1.5"/>
+      <circle cx="14" cy="156" r="1.5"/>
+      <circle cx="86" cy="156" r="1.5"/>
+    </g>
+    <g fill="none" stroke="rgba(160,140,255,0.5)" stroke-width="0.4">
+      <path d="M50,18 L50,32"/>
+      <path d="M50,138 L50,152"/>
+    </g>
+  </svg>`;
+}
+
+const GLYPHS = {
+  major: `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.2"><polygon points="50,15 70,27 70,53 50,65 30,53 30,27" /><polygon points="50,35 60,41 60,53 50,59 40,53 40,41" fill="rgba(124,77,255,0.4)"/><line x1="50" y1="15" x2="50" y2="35"/><line x1="50" y1="65" x2="50" y2="85"/><circle cx="50" cy="50" r="3" fill="rgba(160,140,255,0.95)"/></svg>`,  kelche: `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4"><path d="M30,28 L70,28 L65,55 Q50,72 35,55 Z" fill="rgba(124,77,255,0.25)"/><line x1="50" y1="68" x2="50" y2="82"/><line x1="38" y1="86" x2="62" y2="86"/></svg>`,
+  schwerter: `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4"><path d="M50,10 L54,68 L50,72 L46,68 Z" fill="rgba(124,77,255,0.25)"/><line x1="35" y1="68" x2="65" y2="68"/><line x1="50" y1="72" x2="50" y2="90"/><circle cx="50" cy="92" r="2.5"/></svg>`,
+  staebe: `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><line x1="50" y1="38" x2="50" y2="86"/><polygon points="50,12 60,24 50,36 40,24" fill="rgba(124,77,255,0.35)"/><circle cx="50" cy="24" r="2.2" fill="rgba(200,190,240,0.95)" stroke="none"/><g stroke="rgba(160,140,255,0.7)" stroke-width="0.9"><line x1="50" y1="2" x2="50" y2="8"/><line x1="33" y1="6" x2="38" y2="13"/><line x1="67" y1="6" x2="62" y2="13"/><line x1="26" y1="22" x2="34" y2="24"/><line x1="74" y1="22" x2="66" y2="24"/></g><g stroke="rgba(160,140,255,0.85)" stroke-width="1"><line x1="42" y1="66" x2="58" y2="66"/><line x1="42" y1="74" x2="58" y2="74"/></g><circle cx="50" cy="90" r="3" fill="rgba(124,77,255,0.5)" stroke="rgba(160,140,255,0.7)" stroke-width="0.8"/></svg>`,
+  muenzen: `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4"><circle cx="50" cy="50" r="32" fill="rgba(124,77,255,0.18)"/><polygon points="50,28 70,40 70,60 50,72 30,60 30,40" stroke-width="1"/><circle cx="50" cy="50" r="6" fill="rgba(160,140,255,0.6)"/></svg>`
+};
+
+/* Unique major arcana symbols (21 of them, indexed by romanIdx) */
+const MAJOR_SYMBOLS = [
+  /* 0 Narr */          `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 24 52 L 18 22 L 32 38 L 50 14 L 68 38 L 82 22 L 76 52 Z" fill="rgba(124,77,255,0.35)"/><rect x="22" y="52" width="56" height="8" fill="rgba(124,77,255,0.45)"/><circle cx="18" cy="22" r="3.5" fill="rgba(220,210,255,0.9)" stroke="rgba(160,140,255,0.85)" stroke-width="1.1"/><circle cx="50" cy="14" r="3.5" fill="rgba(220,210,255,0.9)" stroke="rgba(160,140,255,0.85)" stroke-width="1.1"/><circle cx="82" cy="22" r="3.5" fill="rgba(220,210,255,0.9)" stroke="rgba(160,140,255,0.85)" stroke-width="1.1"/></svg>`,
+  /* 1 Magier */        `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 50 10 L 78 70 L 22 70 Z" fill="rgba(124,77,255,0.4)"/><ellipse cx="50" cy="72" rx="36" ry="6" fill="rgba(124,77,255,0.5)"/><polygon points="50,34 53,42 62,42 55,48 58,56 50,50 42,56 45,48 38,42 47,42" fill="rgba(220,210,255,0.95)" stroke-width="0.4"/><circle cx="50" cy="10" r="2.5" fill="rgba(220,210,255,0.95)" stroke="none"/><circle cx="18" cy="32" r="1.5" fill="rgba(220,210,255,0.75)" stroke="none"/><circle cx="82" cy="40" r="1.3" fill="rgba(220,210,255,0.7)" stroke="none"/><circle cx="14" cy="58" r="1.2" fill="rgba(220,210,255,0.7)" stroke="none"/><circle cx="86" cy="62" r="1.1" fill="rgba(220,210,255,0.65)" stroke="none"/></svg>`,
+  /* 2 Hohepriesterin */`<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><polygon points="50,12 86,80 14,80" fill="rgba(124,77,255,0.22)"/><polygon points="50,28 70,68 30,68" fill="rgba(124,77,255,0.4)"/><circle cx="50" cy="54" r="3" fill="rgba(220,210,255,0.95)" stroke="none"/><g stroke-width="0.9" stroke="rgba(160,140,255,0.7)"><line x1="50" y1="4" x2="50" y2="10"/><line x1="30" y1="8" x2="36" y2="14"/><line x1="70" y1="8" x2="64" y2="14"/></g></svg>`,
+  /* 3 Kaiserin */      `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 24 36 L 32 22 L 40 32 L 50 16 L 60 32 L 68 22 L 76 36 L 70 42 L 30 42 Z" fill="rgba(124,77,255,0.35)"/><circle cx="50" cy="16" r="2" fill="rgba(220,210,255,0.9)" stroke="none"/><circle cx="32" cy="22" r="1.5" fill="rgba(220,210,255,0.85)" stroke="none"/><circle cx="68" cy="22" r="1.5" fill="rgba(220,210,255,0.85)" stroke="none"/><path d="M 50,86 C 32,72 26,58 38,52 C 44,49 50,54 50,58 C 50,54 56,49 62,52 C 74,58 68,72 50,86 Z" fill="rgba(124,77,255,0.5)"/></svg>`,
+  /* 4 Kaiser */        `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 22 48 L 26 26 L 36 34 L 50 14 L 64 34 L 74 26 L 78 48 Z" fill="rgba(124,77,255,0.42)"/><line x1="22" y1="48" x2="78" y2="48" stroke-width="1.5"/><line x1="22" y1="54" x2="78" y2="54"/><circle cx="50" cy="14" r="2" fill="rgba(220,210,255,0.95)" stroke="none"/><circle cx="36" cy="34" r="1.5" fill="rgba(220,210,255,0.85)" stroke="none"/><circle cx="64" cy="34" r="1.5" fill="rgba(220,210,255,0.85)" stroke="none"/><path d="M 30 58 L 22 86 L 78 86 L 70 58 Z" fill="rgba(124,77,255,0.22)"/><line x1="50" y1="58" x2="50" y2="86" stroke-width="1.4"/></svg>`,
+  /* 5 Liebenden */     `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 38,80 C 38,68 14,60 14,42 C 14,32 24,26 32,32 C 35,35 38,38 38,42 C 38,38 41,35 44,32 C 52,26 62,32 62,42 C 62,60 38,68 38,80 Z" fill="rgba(124,77,255,0.42)"/><path d="M 62,80 C 62,68 38,60 38,42 C 38,32 48,26 56,32 C 59,35 62,38 62,42 C 62,38 65,35 68,32 C 76,26 86,32 86,42 C 86,60 62,68 62,80 Z" fill="rgba(124,77,255,0.55)"/></svg>`,
+  /* 6 Wagen */         `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 18 58 L 78 58 L 84 38 L 22 38 Z" fill="rgba(124,77,255,0.38)"/><polygon points="50,16 54,28 64,28 56,34 60,46 50,38 40,46 44,34 36,28 46,28" fill="rgba(124,77,255,0.5)"/><circle cx="34" cy="68" r="11" fill="rgba(124,77,255,0.2)"/><circle cx="66" cy="68" r="11" fill="rgba(124,77,255,0.2)"/><circle cx="34" cy="68" r="2" fill="rgba(220,210,255,0.85)" stroke="none"/><circle cx="66" cy="68" r="2" fill="rgba(220,210,255,0.85)" stroke="none"/><line x1="34" y1="57" x2="34" y2="79" stroke-width="0.8"/><line x1="23" y1="68" x2="45" y2="68" stroke-width="0.8"/><line x1="66" y1="57" x2="66" y2="79" stroke-width="0.8"/><line x1="55" y1="68" x2="77" y2="68" stroke-width="0.8"/></svg>`,
+  /* 7 Kraft */         `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><circle cx="50" cy="50" r="34" stroke-dasharray="2 4" stroke-width="0.8"/><path d="M 50,76 C 50,66 30,58 30,42 C 30,34 38,30 44,34 C 47,37 50,40 50,42 C 50,40 53,37 56,34 C 62,30 70,34 70,42 C 70,58 50,66 50,76 Z" fill="rgba(124,77,255,0.5)"/><g stroke-width="1.1"><line x1="50" y1="8" x2="50" y2="14"/><line x1="50" y1="86" x2="50" y2="92"/><line x1="8" y1="50" x2="14" y2="50"/><line x1="86" y1="50" x2="92" y2="50"/><line x1="20" y1="20" x2="24" y2="24"/><line x1="80" y1="20" x2="76" y2="24"/><line x1="20" y1="80" x2="24" y2="76"/><line x1="80" y1="80" x2="76" y2="76"/></g></svg>`,
+  /* 8 Eremit */        `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round"><path d="M 42 22 Q 50 12 58 22" stroke-linecap="round"/><polygon points="50,22 68,32 68,56 50,66 32,56 32,32" fill="rgba(124,77,255,0.25)"/><circle cx="50" cy="44" r="6" fill="rgba(220,210,255,0.9)" stroke="rgba(160,140,255,0.95)" stroke-width="1.2"/><line x1="18" y1="44" x2="28" y2="44" stroke-width="0.9"/><line x1="72" y1="44" x2="82" y2="44" stroke-width="0.9"/><line x1="50" y1="74" x2="50" y2="84" stroke-width="0.9"/></svg>`,
+  /* 9 Rad */           `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4"><circle cx="50" cy="50" r="28"/><circle cx="50" cy="50" r="20" stroke-dasharray="3 2"/><circle cx="50" cy="50" r="6" fill="rgba(124,77,255,0.5)" stroke-width="1.2"/><line x1="50" y1="22" x2="50" y2="78" stroke-width="1.1"/><line x1="22" y1="50" x2="78" y2="50" stroke-width="1.1"/><line x1="30" y1="30" x2="70" y2="70" stroke-width="1.1"/><line x1="70" y1="30" x2="30" y2="70" stroke-width="1.1"/></svg>`,
+  /* 10 Gerechtigkeit */`<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linecap="round"><line x1="50" y1="22" x2="50" y2="82" stroke-width="1.6"/><line x1="42" y1="82" x2="58" y2="82"/><line x1="20" y1="32" x2="80" y2="32" stroke-width="1.4"/><line x1="28" y1="32" x2="28" y2="46"/><line x1="72" y1="32" x2="72" y2="46"/><path d="M 18 46 A 10 6 0 0 0 38 46 Z" fill="rgba(124,77,255,0.35)"/><path d="M 62 46 A 10 6 0 0 0 82 46 Z" fill="rgba(124,77,255,0.35)"/><circle cx="50" cy="32" r="3" fill="rgba(200,190,240,0.95)" stroke="none"/></svg>`,
+  /* 11 Gehängte */     `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><line x1="14" y1="26" x2="86" y2="26" stroke-width="1.6"/><line x1="50" y1="14" x2="50" y2="26"/><circle cx="50" cy="14" r="2.5" fill="rgba(160,140,255,0.85)" stroke="none"/><polygon points="22,30 78,30 50,82" fill="rgba(124,77,255,0.3)"/><circle cx="50" cy="54" r="4" fill="rgba(160,140,255,0.95)" stroke="none"/></svg>`,
+  /* 12 Tod */          `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><line x1="34" y1="20" x2="68" y2="84" stroke-width="1.6"/><path d="M 32 22 Q 64 16 72 38 Q 58 32 36 32 Z" fill="rgba(124,77,255,0.4)"/><line x1="62" y1="70" x2="50" y2="78"/><circle cx="34" cy="20" r="2.5" fill="rgba(160,140,255,0.9)" stroke="none"/></svg>`,
+  /* 13 Mäßigkeit */     `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M 28 20 Q 18 38 28 46 Q 38 38 28 20 Z" fill="rgba(124,77,255,0.45)"/><path d="M 72 54 Q 62 72 72 80 Q 82 72 72 54 Z" fill="rgba(124,77,255,0.45)"/><path d="M 30 46 Q 50 50 70 54" stroke-dasharray="2 2"/><circle cx="50" cy="50" r="2" fill="rgba(220,210,255,0.9)" stroke="none"/></svg>`,
+  /* 14 Teufel */       `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round"><polygon points="50,84 66,40 22,68 78,68 34,40" fill="rgba(124,77,255,0.3)"/><circle cx="50" cy="62" r="2.5" fill="rgba(160,140,255,0.95)" stroke="none"/><path d="M 32 14 L 28 28 L 38 26 Z" fill="rgba(124,77,255,0.45)"/><path d="M 68 14 L 72 28 L 62 26 Z" fill="rgba(124,77,255,0.45)"/></svg>`,
+  /* 15 Turm */         `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 36 86 L 36 38 L 64 38 L 64 86 Z" fill="rgba(124,77,255,0.22)"/><path d="M 30 38 L 30 28 L 70 28 L 70 38 Z" fill="rgba(124,77,255,0.42)"/><path d="M 22 22 L 26 14 L 32 20 L 40 10 L 50 16 L 60 10 L 68 20 L 74 14 L 78 22" stroke-width="1.2" fill="none"/><rect x="45" y="50" width="10" height="14" fill="rgba(255,200,100,0.55)" stroke="rgba(160,140,255,0.85)" stroke-width="1.1"/><path d="M 84 8 L 70 30 L 78 32 L 60 54" stroke="rgba(255,235,180,0.95)" stroke-width="1.8" fill="rgba(255,200,100,0.4)"/></svg>`,
+  /* 16 Stern */        `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"><polygon points="50,8 56,32 80,30 64,46 76,68 56,60 50,82 44,60 24,68 36,46 20,30 44,32" fill="rgba(124,77,255,0.5)"/><circle cx="50" cy="46" r="3" fill="rgba(220,210,255,0.95)" stroke="none"/><path d="M 12 88 Q 22 82 32 88 T 52 88 T 72 88 T 92 88" stroke-width="1.1"/><path d="M 16 94 Q 24 90 32 94 T 50 94 T 68 94 T 86 94" stroke-width="0.9" stroke="rgba(160,140,255,0.65)"/><circle cx="20" cy="22" r="1.5" fill="rgba(220,210,255,0.85)" stroke="none"/><circle cx="82" cy="20" r="1.3" fill="rgba(220,210,255,0.75)" stroke="none"/><circle cx="14" cy="50" r="1.2" fill="rgba(220,210,255,0.7)" stroke="none"/></svg>`,
+  /* 17 Mond */         `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 60 14 Q 26 18 22 50 Q 26 82 60 86 Q 36 78 36 50 Q 36 22 60 14 Z" fill="rgba(124,77,255,0.4)"/><circle cx="34" cy="40" r="2" fill="rgba(160,140,255,0.55)" stroke="none"/><circle cx="28" cy="56" r="2.5" fill="rgba(160,140,255,0.55)" stroke="none"/><circle cx="32" cy="70" r="1.5" fill="rgba(160,140,255,0.45)" stroke="none"/><polygon points="80,22 82,28 88,28 83,32 85,38 80,34 75,38 77,32 72,28 78,28" fill="rgba(220,210,255,0.85)" stroke-width="0.4"/><circle cx="84" cy="64" r="1.5" fill="rgba(220,210,255,0.75)" stroke="none"/><circle cx="78" cy="82" r="1.2" fill="rgba(220,210,255,0.7)" stroke="none"/></svg>`,
+  /* 18 Sonne */        `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.2" stroke-linecap="round"><circle cx="50" cy="50" r="14" fill="rgba(124,77,255,0.55)"/><line x1="50" y1="12" x2="50" y2="22"/><line x1="50" y1="78" x2="50" y2="88"/><line x1="12" y1="50" x2="22" y2="50"/><line x1="78" y1="50" x2="88" y2="50"/><line x1="22" y1="22" x2="30" y2="30"/><line x1="78" y1="22" x2="70" y2="30"/><line x1="22" y1="78" x2="30" y2="70"/><line x1="78" y1="78" x2="70" y2="70"/><line x1="36" y1="14" x2="38" y2="22"/><line x1="64" y1="14" x2="62" y2="22"/><line x1="36" y1="86" x2="38" y2="78"/><line x1="64" y1="86" x2="62" y2="78"/><circle cx="50" cy="50" r="3" fill="rgba(220,210,255,0.95)" stroke="none"/></svg>`,
+  /* 19 Gericht */      `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><rect x="22" y="18" width="56" height="22" fill="rgba(124,77,255,0.45)" rx="3"/><line x1="34" y1="18" x2="34" y2="40" stroke-width="1.2"/><line x1="66" y1="18" x2="66" y2="40" stroke-width="1.2"/><rect x="46" y="40" width="8" height="28" fill="rgba(124,77,255,0.4)" rx="2"/><line x1="46" y1="54" x2="54" y2="54" stroke-width="1"/><path d="M 14 84 L 22 74 L 78 74 L 86 84 Z" fill="rgba(124,77,255,0.32)"/><line x1="14" y1="84" x2="86" y2="84" stroke-width="1.6"/><polygon points="32,72 34,74 38,74 35,76 36,79 32,77 28,79 29,76 26,74 30,74" fill="rgba(220,210,255,0.85)" stroke-width="0.3"/><polygon points="68,72 70,74 74,74 71,76 72,79 68,77 64,79 65,76 62,74 66,74" fill="rgba(220,210,255,0.8)" stroke-width="0.3"/></svg>`,
+  /* 20 Welt */         `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.3" stroke-linecap="round"><circle cx="50" cy="50" r="30" stroke-dasharray="6 3"/><circle cx="50" cy="50" r="22" fill="rgba(124,77,255,0.3)" stroke-width="1.4"/><line x1="50" y1="34" x2="50" y2="66" stroke-width="1.4"/><line x1="34" y1="50" x2="66" y2="50" stroke-width="1.4"/><circle cx="50" cy="50" r="3.5" fill="rgba(220,210,255,0.95)" stroke="none"/><circle cx="50" cy="20" r="2" fill="rgba(160,140,255,0.7)" stroke="none"/><circle cx="80" cy="50" r="2" fill="rgba(160,140,255,0.7)" stroke="none"/><circle cx="50" cy="80" r="2" fill="rgba(160,140,255,0.7)" stroke="none"/><circle cx="20" cy="50" r="2" fill="rgba(160,140,255,0.7)" stroke="none"/></svg>`
+];
+
+/* Court insignias (Page=10, Ritter=11, Königin=12, König=13) */
+const COURT_INSIGNIA = {
+  10: `<svg viewBox="0 0 60 22" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round"><polygon points="8,3 52,3 52,12 30,17 8,12" fill="rgba(124,77,255,0.3)"/><line x1="30" y1="17" x2="30" y2="21" stroke-linecap="round"/></svg>`,
+  11: `<svg viewBox="0 0 60 22" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linecap="round"><line x1="6" y1="4" x2="54" y2="18"/><line x1="54" y1="4" x2="6" y2="18"/><circle cx="30" cy="11" r="4" fill="rgba(124,77,255,0.45)"/></svg>`,
+  12: `<svg viewBox="0 0 60 26" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round"><polygon points="8,22 4,8 16,16 30,2 44,16 56,8 52,22" fill="rgba(124,77,255,0.35)"/><line x1="8" y1="22" x2="52" y2="22" stroke-width="1.5"/><circle cx="30" cy="2" r="1.8" fill="rgba(220,210,255,0.95)" stroke="none"/></svg>`,
+  13: `<svg viewBox="0 0 60 26" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round"><polygon points="6,22 2,10 14,14 22,4 30,2 38,4 46,14 58,10 54,22" fill="rgba(124,77,255,0.4)"/><line x1="6" y1="22" x2="54" y2="22" stroke-width="1.5"/><circle cx="30" cy="2" r="2" fill="rgba(220,210,255,0.95)" stroke="none"/><circle cx="14" cy="14" r="1.2" fill="rgba(160,140,255,0.9)" stroke="none"/><circle cx="46" cy="14" r="1.2" fill="rgba(160,140,255,0.9)" stroke="none"/></svg>`
+};
+
+function glyphFor(card) {
+  if (card.kind === "major") return MAJOR_SYMBOLS[card.romanIdx] || GLYPHS.major;
+  return GLYPHS[card.suit];
+}
+
+function buildCenterArt(card) {
+  if (card.kind === "major") {
+    return `<div class="cf-art art-major">${MAJOR_SYMBOLS[card.romanIdx] || GLYPHS.major}</div>`;
+  }
+  const r = card.rankIdx;
+  const sg = GLYPHS[card.suit];
+  if (r === 0) {
+    return `<div class="cf-art art-ace">${sg}</div>`;
+  }
+  if (r <= 9) {
+    const n = r + 1;
+    const pips = Array.from({length: n}).map(() => `<div class="pip">${sg}</div>`).join("");
+    return `<div class="cf-art art-pips pips-${n}">${pips}</div>`;
+  }
+  const ins = COURT_INSIGNIA[r] || "";
+  return `<div class="cf-art art-court"><div class="court-insignia">${ins}</div><div class="court-suit">${sg}</div></div>`;
+}
+
+function buildCardFront(card) {
+  const subLabel = card.kind === "major" ? "Arcanum Majus" : card.suitName;
+  const cornerGlyph = glyphFor(card);
+  return `
+    <div class="card-front">
+      <div class="cf-frame"></div>
+      <div class="cf-corner tl">${cornerGlyph}</div>
+      <div class="cf-corner br">${cornerGlyph}</div>
+      <div class="cf-rank">${subLabel}</div>
+      <div class="cf-symbol">${buildCenterArt(card)}</div>
+      <div class="cf-name">${card.name}</div>
+      <div class="cf-divider"></div>
+      <div class="cf-keywords">${card.keywords.split(",").slice(0,3).join(" · ")}</div>
+    </div>`;
+}
+function buildCardBack() {
+  return `<div class="card-back">${backPattern()}</div>`;
+}
+
+/* ========================= STACK ========================= */
+const stackEl = document.getElementById("stack");
+const STACK_LAYERS = 18;
+function renderStack() {
+  stackEl.innerHTML = "";
+  for (let i = 0; i < STACK_LAYERS; i++) {
+    const c = document.createElement("div");
+    c.className = "stack-card";
+    const z = i * 1.2;
+    const xy = (i % 2 === 0 ? 1 : -1) * (i * 0.15);
+    c.style.transform = `translate3d(${xy}px, ${-i*0.4}px, ${z}px)`;
+    c.style.filter = i < STACK_LAYERS - 1 ? `brightness(${0.5 + (i/STACK_LAYERS)*0.55})` : "";
+    const fromTop = (STACK_LAYERS - 1) - i;
+    if (fromTop <= 4) c.setAttribute("data-fan", String(fromTop));
+    c.innerHTML = buildCardBack();
+    if (i === STACK_LAYERS - 1) c.id = "topCard";
+    else c.style.opacity = "0.95";
+    stackEl.appendChild(c);
+  }
+}
+renderStack();
+
+let wobbleT = 0;
+function wobble() {
+  wobbleT += 0.012;
+  const rot = Math.sin(wobbleT) * 1.2;
+  stackEl.style.transform = `translate(-50%, -50%) rotateZ(${rot}deg)`;
+  requestAnimationFrame(wobble);
+}
+wobble();
+
+/* ========================= STATE ========================= */
+const drawnIds = [];
+const drawnSet = new Set();
+
+const drawBtn = document.getElementById("drawBtn");
+const clearBtn = document.getElementById("clearBtn");
+const drawnCardsEl = document.getElementById("drawnCards");
+const drawnEmptyEl = document.getElementById("drawnEmpty");
+const trayEl = document.getElementById("tray");
+
+function pickRandomCard() {
+  const remaining = DECK.filter(c => !drawnSet.has(c.id));
+  if (!remaining.length) return null;
+  return remaining[Math.floor(Math.random() * remaining.length)];
+}
+
+function updateCounter() {
+  const remainingMajor = DECK.filter(c => c.kind === "major" && !drawnSet.has(c.id)).length;
+  const remainingMinor = DECK.filter(c => c.kind === "minor" && !drawnSet.has(c.id)).length;
+  drawBtn.disabled = drawnIds.length >= 78;
+  const major = document.getElementById("drawMajorBtn");
+  const minor = document.getElementById("drawMinorBtn");
+  if (major) major.disabled = remainingMajor === 0;
+  if (minor) minor.disabled = remainingMinor === 0;
+}
+
+function updateTrayChrome() {
+  const empty = drawnIds.length === 0;
+  trayEl.classList.toggle("is-empty", empty);
+  const pad = empty ? 60 : 180;
+  document.documentElement.style.setProperty("--tray-pad", pad + "px");
+}
+
+function relayoutDrawn() {
+  const n = drawnIds.length;
+  if (n <= 1) { document.documentElement.style.setProperty("--olap", "0px"); return; }
+  const cardW = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--drawn-w"));
+  const innerW = drawnCardsEl.clientWidth - 28;
+  const gap = 10;
+  const naturalW = n * cardW + (n - 1) * gap;
+  if (naturalW <= innerW) {
+    document.documentElement.style.setProperty("--olap", "0px");
+  } else {
+    const stride = (innerW - cardW) / (n - 1);
+    const olap = stride - cardW - gap;
+    document.documentElement.style.setProperty("--olap", olap + "px");
+  }
+}
+window.addEventListener("resize", relayoutDrawn);
+
+function highlightInList(id, on) {
+  document.querySelectorAll(`[data-card-id="${id}"]`).forEach(el => {
+    el.classList.toggle("is-active", on);
+  });
+  const drawnEl = drawnCardsEl.querySelector(`[data-id="${id}"]`);
+  if (drawnEl) drawnEl.classList.toggle("is-active", on);
+}
+
+function markListAsDrawn() {
+  document.querySelectorAll(".arc-item").forEach(el => {
+    const id = el.dataset.cardId;
+    el.classList.toggle("is-drawn", drawnSet.has(id));
+  });
+}
+
+function scrollToCardEntry(id) {
+  const el = document.querySelector(`.arc-item[data-card-id="${id}"]`);
+  if (!el) return;
+  const rect = el.getBoundingClientRect();
+  // Offset = nav (52) + a bit of breathing room
+  const y = rect.top + window.scrollY - 110;
+  window.scrollTo({ top: y, behavior: "smooth" });
+  // Brief flash
+  el.classList.remove("flash"); void el.offsetWidth;
+  el.classList.add("flash");
+  setTimeout(() => el.classList.remove("flash"), 1700);
+}
+
+function renderDrawn(newId) {
+  drawnCardsEl.innerHTML = "";
+  updateTrayChrome();
+  if (!drawnIds.length) {
+    drawnCardsEl.appendChild(drawnEmptyEl);
+    relayoutDrawn();
+    return;
+  }
+  drawnIds.forEach(id => {
+    const card = DECK.find(c => c.id === id);
+    const el = document.createElement("div");
+    el.className = "drawn";
+    el.dataset.id = id;
+    el.title = "Klicke, um zur Erklärung zu springen";
+    el.innerHTML = buildCardFront(card) + `<button class="remove" title="entfernen" aria-label="Karte entfernen">×</button>`;
+    // Move card-front inner children out so the .drawn IS the front
+    const inner = el.querySelector(".card-front");
+    while (inner.firstChild) el.appendChild(inner.firstChild);
+    inner.remove();
+    el.querySelector(".remove").addEventListener("click", (ev) => {
+      ev.stopPropagation();
+      removeCard(id);
+    });
+    el.addEventListener("click", () => scrollToCardEntry(id));
+    el.addEventListener("mouseenter", () => highlightInList(id, true));
+    el.addEventListener("mouseleave", () => highlightInList(id, false));
+    drawnCardsEl.appendChild(el);
+  });
+  relayoutDrawn();
+  if (newId) {
+    const newEl = drawnCardsEl.querySelector(`[data-id="${newId}"]`);
+    if (newEl) {
+      newEl.style.opacity = "0";
+      newEl.style.transform = "translateY(8px)";
+      setTimeout(() => {
+        newEl.style.transition = "opacity 220ms ease, transform 380ms cubic-bezier(.2,.7,.2,1)";
+        newEl.style.opacity = "1";
+        newEl.style.transform = "";
+      }, 30);
+    }
+  }
+}
+
+function removeCard(id) {
+  const idx = drawnIds.indexOf(id);
+  if (idx >= 0) drawnIds.splice(idx, 1);
+  drawnSet.delete(id);
+  renderDrawn();
+  markListAsDrawn();
+  updateCounter();
+}
+
+clearBtn.addEventListener("click", () => {
+  if (!drawnIds.length) return;
+  animateClear();
+});
+
+/* ========================= FLY ANIMATIONS ========================= */
+
+/* Magical burst around the stack — central flash + expanding rings + 60+ particles */
+function spawnStarBurst(cx, cy) {
+  // Central flash
+  const flash = document.createElement("div");
+  flash.className = "burst-flash";
+  flash.style.left = cx + "px";
+  flash.style.top  = cy + "px";
+  flash.style.transform = "translate(-50%, -50%) scale(0.2)";
+  document.body.appendChild(flash);
+  flash.animate([
+    { transform: "translate(-50%, -50%) scale(0.2)", opacity: 0.0 },
+    { transform: "translate(-50%, -50%) scale(1.0)", opacity: 1.0, offset: 0.2 },
+    { transform: "translate(-50%, -50%) scale(2.4)", opacity: 0.0 }
+  ], { duration: 750, easing: "cubic-bezier(.2,.7,.3,1)", fill: "forwards" }).onfinish = () => flash.remove();
+
+  // Two expanding rings, staggered
+  [0, 220].forEach((delay, k) => {
+    setTimeout(() => {
+      const ring = document.createElement("div");
+      ring.className = "burst-ring";
+      ring.style.left = cx + "px";
+      ring.style.top  = cy + "px";
+      document.body.appendChild(ring);
+      ring.animate([
+        { transform: "translate(-50%, -50%) scale(0.1)", opacity: 0.95, borderWidth: "3px" },
+        { transform: `translate(-50%, -50%) scale(${k===0?4:6})`, opacity: 0, borderWidth: "1px" }
+      ], { duration: 1100, easing: "cubic-bezier(.2,.8,.3,1)", fill: "forwards" }).onfinish = () => ring.remove();
+    }, delay);
+  });
+
+  // Particle storm
+  const N = 64;
+  for (let i = 0; i < N; i++) {
+    const angle = (i / N) * Math.PI * 2 + (Math.random() - 0.5) * 0.45;
+    const dist  = 110 + Math.random() * 280;
+    const dx = Math.cos(angle) * dist;
+    const dy = Math.sin(angle) * dist * 0.85;
+    const dur = 1000 + Math.random() * 1100;
+    const r = Math.random();
+    let cls = "spark";
+    if (r < 0.14) cls += " cross";
+    else if (r < 0.32) cls += " big";
+    if (Math.random() < 0.32) cls += " alt";
+    const el = document.createElement("div");
+    el.className = cls;
+    el.style.left = cx + "px";
+    el.style.top  = cy + "px";
+    document.body.appendChild(el);
+    // Curved trajectory: midpoint slightly off-axis
+    const swirl = angle + (Math.random() - 0.5) * 0.7;
+    const mx = Math.cos(swirl) * dist * 0.45;
+    const my = Math.sin(swirl) * dist * 0.4;
+    const peakScale = cls.includes("big") ? 1.9 : (cls.includes("cross") ? 1.6 : 1.3);
+    el.animate([
+      { transform: "translate(-50%, -50%) scale(0.1) rotate(0deg)", opacity: 0 },
+      { transform: `translate(calc(-50% + ${mx}px), calc(-50% + ${my}px)) scale(${peakScale}) rotate(180deg)`, opacity: 1, offset: 0.28 },
+      { transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(0) rotate(420deg)`, opacity: 0, offset: 1 }
+    ], { duration: dur, easing: "cubic-bezier(.15,.85,.3,1)", fill: "forwards" }).onfinish = () => el.remove();
+  }
+}
+
+function animateDraw(card) {
+  const topCard = document.getElementById("topCard");
+  const startRect = topCard.getBoundingClientRect();
+  topCard.style.visibility = "hidden";
+
+  // Magical burst around the stack
+  spawnStarBurst(startRect.left + startRect.width/2, startRect.top + startRect.height/2);
+
+  /* Insert the new card into state and render NOW, then hide it during the
+     fly animation — this gives us the exact final layout rect for the flyer
+     to target. Empty-state collapse / overlap logic also settles correctly. */
+  drawnIds.push(card.id);
+  drawnSet.add(card.id);
+  renderDrawn();
+  markListAsDrawn();
+  updateCounter();
+
+  const newDrawn = drawnCardsEl.querySelector(`[data-id="${card.id}"]`);
+  if (!newDrawn) {
+    topCard.style.visibility = "visible";
+    return;
+  }
+  newDrawn.style.visibility = "hidden";
+
+  void newDrawn.offsetWidth;
+  const targetRect = newDrawn.getBoundingClientRect();
+
+  /* Build the flyer at the TRAY-CARD dimensions. The front face is a literal
+     clone of the drawn card, so layout/typography/proportions are identical
+     throughout the flight — only the transform scale changes. At the apex the
+     flyer is scaled up so it visually fills the stack-card footprint. */
+  const targetW = targetRect.width;
+  const targetH = targetRect.height;
+
+  const flyer = document.createElement("div");
+  flyer.className = "flyer";
+  flyer.style.width  = targetW + "px";
+  flyer.style.height = targetH + "px";
+
+  // Back face
+  const back = document.createElement("div");
+  back.className = "card-back";
+  back.innerHTML = backPattern();
+  flyer.appendChild(back);
+
+  // Front face: a clone of the real drawn card (identical layout)
+  const front = newDrawn.cloneNode(true);
+  const rb = front.querySelector(".remove");
+  if (rb) rb.remove();
+  front.removeAttribute("data-id");
+  front.style.cssText =
+    "position:absolute;inset:0;margin:0;width:auto;height:auto;" +
+    "transform:rotateY(180deg);transform-origin:center;" +
+    "backface-visibility:hidden;-webkit-backface-visibility:hidden;" +
+    "transition:none;cursor:default;pointer-events:none;";
+  flyer.appendChild(front);
+
+  /* Position flyer so its CENTER starts at the stack's CENTER. */
+  const startCx = startRect.left + startRect.width / 2;
+  const startCy = startRect.top  + startRect.height / 2;
+  flyer.style.left = (startCx - targetW / 2) + "px";
+  flyer.style.top  = (startCy - targetH / 2) + "px";
+  document.body.appendChild(flyer);
+
+  const targetCx = targetRect.left + targetRect.width / 2;
+  const targetCy = targetRect.top  + targetRect.height / 2;
+  const dx = targetCx - startCx;
+  const dy = targetCy - startCy;
+
+  /* Start scale = stack-card width / drawn-card width — the flyer visually
+     fills the stack footprint at the start. End scale = 1 (drawn size). */
+  const startScale = startRect.width / targetW;
+  const endScale   = 1;
+
+  const duration = 1300;
+  const keyframes = buildDrawKeyframes(dx, dy, startScale, endScale);
+  const finalTransform = keyframes[keyframes.length - 1].transform;
+  const anim = flyer.animate(keyframes, {
+    duration,
+    easing: "linear",
+    fill: "forwards"
+  });
+
+  anim.addEventListener("finish", () => {
+    /* Seamless handoff: the flyer's front IS a clone of newDrawn at the same
+       size and position, so we can simply swap visibility. No fade required. */
+    flyer.style.transform = finalTransform;
+    newDrawn.style.visibility = "";
+    flyer.remove();
+    topCard.style.visibility = "visible";
+  });
+}
+
+/* ---- Procedural keyframe builder ---- */
+function smoothstep(t) {
+  if (t <= 0) return 0;
+  if (t >= 1) return 1;
+  return t * t * (3 - 2 * t);
+}
+function buildDrawKeyframes(dx, dy, startScale, endScale) {
+  const N = 32;
+  const out = [];
+  /* Bézier control point: high above start, biased toward target. The bigger
+     |cpy|, the higher the arc. */
+  const cpx = dx * 0.32;
+  const cpy = -360;
+  const maxLift = 220;        // peak Z translation toward viewer
+  const presentScale = startScale * 1.12;  // slight bump above start at apex
+  const peakT = 0.34;
+  const rotStart = 0.10;
+  const rotEnd   = 0.45;
+
+  for (let i = 0; i <= N; i++) {
+    const t = i / N;
+    const u = 1 - t;
+
+    // --- Quadratic Bézier in (x, y), but with a *time-warped* parameter so
+    // the card lingers near the apex for a heartbeat (presentation pose). ---
+    const warpedT = t < peakT
+      ? peakT * smoothstep(t / peakT)
+      : peakT + (1 - peakT) * smoothstep((t - peakT) / (1 - peakT));
+    const wu = 1 - warpedT;
+    const x = 2 * wu * warpedT * cpx + warpedT * warpedT * dx;
+    const y = 2 * wu * warpedT * cpy + warpedT * warpedT * dy;
+
+    // --- Z-axis lift: parabola peaking at peakT ---
+    let zPhase;
+    if (t <= peakT) zPhase = t / peakT;
+    else            zPhase = 1 - (t - peakT) / (1 - peakT);
+    const z = maxLift * Math.sin(Math.max(0, zPhase) * Math.PI / 2);
+
+    // --- Rotation: 0 → 180 between rotStart and rotEnd, smoothstep eased ---
+    const rotPhase = (t - rotStart) / (rotEnd - rotStart);
+    const rot = 180 * smoothstep(rotPhase);
+
+    // --- Scale: startScale → presentScale (at apex) → endScale ---
+    let scale;
+    if (t <= peakT) {
+      scale = startScale + (presentScale - startScale) * smoothstep(t / peakT);
+    } else {
+      scale = presentScale + (endScale - presentScale) * smoothstep((t - peakT) / (1 - peakT));
+    }
+
+    // --- Subtle Z-tilt for organic character (peaks mid-flight, returns to 0) ---
+    const tiltZ = -2.5 * Math.sin(t * Math.PI);
+
+    out.push({
+      transform: `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, ${z.toFixed(2)}px) rotateY(${rot.toFixed(2)}deg) rotateZ(${tiltZ.toFixed(2)}deg) scale(${scale.toFixed(4)})`,
+      offset: +t.toFixed(4)
+    });
+  }
+  return out;
+}
+
+function animateClear() {
+  const ids = [...drawnIds];
+  const topCard = document.getElementById("topCard");
+  const stackRect = topCard.getBoundingClientRect();
+  const fullW = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--card-w"));
+  const fullH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--card-h"));
+
+  const items = ids.map(id => {
+    const el = drawnCardsEl.querySelector(`[data-id="${id}"]`);
+    if (!el) return null;
+    const rect = el.getBoundingClientRect();
+    el.style.visibility = "hidden";
+    return { id, rect, card: DECK.find(c => c.id === id) };
+  }).filter(Boolean);
+
+  drawnIds.length = 0;
+  drawnSet.clear();
+  markListAsDrawn();
+  updateCounter();
+
+  const baseDelay = 40;
+  const stagger = 90;
+  const sCx = stackRect.left + stackRect.width / 2;
+  const sCy = stackRect.top  + stackRect.height / 2;
+
+  items.forEach((it, idx) => {
+    const dCx = it.rect.left + it.rect.width / 2;
+    const dCy = it.rect.top  + it.rect.height / 2;
+    const startScale = it.rect.width / fullW;
+
+    const flyer = document.createElement("div");
+    flyer.className = "flyer";
+    flyer.innerHTML = buildCardBack() + buildCardFront(it.card);
+    flyer.style.left = (dCx - fullW / 2) + "px";
+    flyer.style.top  = (dCy - fullH / 2) + "px";
+    flyer.style.transform = `scale(${startScale}) rotateY(180deg)`;
+    flyer.style.transition = "transform 950ms cubic-bezier(.4,.05,.2,1)";
+    document.body.appendChild(flyer);
+
+    setTimeout(() => {
+      const dx = sCx - dCx;
+      const dy = sCy - dCy;
+      flyer.style.transform = `translate(${dx}px, ${dy}px) scale(1) rotateY(0deg)`;
+    }, baseDelay + idx * stagger);
+
+    setTimeout(() => {
+      flyer.remove();
+      if (idx === items.length - 1) renderDrawn();
+    }, baseDelay + idx * stagger + 980);
+  });
+}
+
+drawBtn.addEventListener("click", () => {
+  if (drawBtn.disabled) return;
+  const card = pickRandomCard();
+  if (!card) return;
+  animateDraw(card);
+});
+
+function pickFiltered(predicate) {
+  const remaining = DECK.filter(c => !drawnSet.has(c.id) && predicate(c));
+  if (!remaining.length) return null;
+  return remaining[Math.floor(Math.random() * remaining.length)];
+}
+const drawMajorBtn = document.getElementById("drawMajorBtn");
+const drawMinorBtn = document.getElementById("drawMinorBtn");
+drawMajorBtn.addEventListener("click", () => {
+  if (drawMajorBtn.disabled) return;
+  const c = pickFiltered(c => c.kind === "major");
+  if (c) animateDraw(c);
+});
+drawMinorBtn.addEventListener("click", () => {
+  if (drawMinorBtn.disabled) return;
+  const c = pickFiltered(c => c.kind === "minor");
+  if (c) animateDraw(c);
+});
+
+/* Also: clicking the stack draws a card */
+document.getElementById("stack").addEventListener("click", () => {
+  if (drawBtn.disabled) return;
+  const card = pickRandomCard();
+  if (!card) return;
+  animateDraw(card);
+});
+
+/* ========================= LISTS ========================= */
+const majorsList = document.getElementById("majorsList");
+MAJORS.forEach((m, i) => {
+  const card = DECK.find(c => c.id === "M"+i);
+  const el = document.createElement("div");
+  el.className = "arc-item";
+  el.dataset.cardId = card.id;
+  el.innerHTML = `
+    <div class="arc-roman-col">
+      <div class="roman">${MAJOR_ORDER_ROMAN[i]}</div>
+      <div class="arc-glyph">${MAJOR_SYMBOLS[i]}</div>
+    </div>
+    <div>
+      <div class="name">${m[0]}</div>
+      <div class="keys">${m[1]}.</div>
+    </div>`;
+  el.addEventListener("mouseenter", () => highlightInList(card.id, true));
+  el.addEventListener("mouseleave", () => highlightInList(card.id, false));
+  majorsList.appendChild(el);
+});
+
+const suitsList = document.getElementById("suitsList");
+Object.entries(SUITS).forEach(([key, s]) => {
+  const wrap = document.createElement("div");
+  wrap.className = "suit";
+  const glyphSvg = GLYPHS[key];
+  wrap.innerHTML = `
+    <div class="suit-head">
+      <div class="suit-glyph">${glyphSvg}</div>
+      <div>
+        <h3>${s.name}</h3>
+        <div class="element">Element · ${s.element}</div>
+      </div>
+    </div>
+    <p class="suit-blurb">${s.blurb}</p>
+    <div class="suit-themes">${s.themes.map(t => `<span>${t}</span>`).join("")}</div>
+    <ul class="suit-list"></ul>`;
+  const ul = wrap.querySelector(".suit-list");
+  s.meanings.forEach((mean, i) => {
+    const card = DECK.find(c => c.id === key.toUpperCase()+i);
+    const li = document.createElement("li");
+    li.className = "arc-item";
+    li.dataset.cardId = card.id;
+    li.innerHTML = `
+      <div class="rank">${RANKS[i][0]}</div>
+      <div>
+        <div class="keys">${mean}.</div>
+      </div>`;
+    li.addEventListener("mouseenter", () => highlightInList(card.id, true));
+    li.addEventListener("mouseleave", () => highlightInList(card.id, false));
+    ul.appendChild(li);
+  });
+  suitsList.appendChild(wrap);
+});
+
+updateCounter();
+renderDrawn();
+
+/* ========================= SYMBOL PARADE ========================= */
+function scrollToSuitSection(suitKey) {
+  const suitOrder = Object.keys(SUITS);
+  const idx = suitOrder.indexOf(suitKey);
+  const suitEls = document.querySelectorAll(".suit");
+  const el = suitEls[idx];
+  if (!el) return;
+  const y = el.getBoundingClientRect().top + window.scrollY - 100;
+  window.scrollTo({ top: y, behavior: "smooth" });
+  el.classList.remove("suit-flash"); void el.offsetWidth;
+  el.classList.add("suit-flash");
+  setTimeout(() => el.classList.remove("suit-flash"), 1700);
+}
+function scrollToMajorEntry(idx) {
+  const card = DECK.find(c => c.id === "M" + idx);
+  if (!card) return;
+  const el = document.querySelector(`.arc-item[data-card-id="${card.id}"]`);
+  if (!el) return;
+  const y = el.getBoundingClientRect().top + window.scrollY - 110;
+  window.scrollTo({ top: y, behavior: "smooth" });
+  el.classList.remove("flash"); void el.offsetWidth;
+  el.classList.add("flash");
+  setTimeout(() => el.classList.remove("flash"), 1700);
+}
+
+function renderSymbolParade() {
+  const suitsRow = document.getElementById("paradeSuits");
+  const majorsRow = document.getElementById("paradeMajors");
+  const suitOrder = ["kelche", "schwerter", "staebe", "muenzen"];
+  suitsRow.innerHTML = suitOrder.map((s, i) =>
+    `<div class="parade-icon" style="animation-delay:${(-i * 0.4).toFixed(2)}s" data-suit="${s}" title="${SUITS[s].name}">${GLYPHS[s]}</div>`
+  ).join("");
+  majorsRow.innerHTML = MAJORS.map((m, i) =>
+    `<div class="parade-icon" style="animation-delay:${(-i * 0.22).toFixed(2)}s" data-major-idx="${i}" title="${m[0]}">${MAJOR_SYMBOLS[i]}</div>`
+  ).join("");
+  suitsRow.querySelectorAll(".parade-icon").forEach(el => {
+    el.addEventListener("click", () => scrollToSuitSection(el.dataset.suit));
+  });
+  majorsRow.querySelectorAll(".parade-icon").forEach(el => {
+    el.addEventListener("click", () => scrollToMajorEntry(parseInt(el.dataset.majorIdx, 10)));
+  });
+}
+renderSymbolParade();
+</script>
+
+
+<script type="text/babel">
+const { SiteNav, SiteGate } = window;
+ReactDOM.createRoot(document.getElementById('nav-root')).render(<SiteGate><SiteNav /></SiteGate>);
+</script>
+
+</body></html>
