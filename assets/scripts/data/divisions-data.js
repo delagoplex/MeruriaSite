@@ -1,6 +1,7 @@
 window.DIVISIONS_DATA = [
   {
     id: 'kuratoren',
+    logo: 'assets/images/divisions/Logo_01_Kuratoren.png',
     nummer: 'I',
     name: 'Die Kuratoren',
     subtitle: 'Erkundung und Materialsammlung',
@@ -36,6 +37,7 @@ window.DIVISIONS_DATA = [
   },
   {
     id: 'sturmritter',
+    logo: 'assets/images/divisions/Logo_02_Sturmritter.png',
     nummer: 'II',
     name: 'Die Sturmritter',
     subtitle: 'Jagd gefährlicher Kreaturen',
@@ -70,6 +72,7 @@ window.DIVISIONS_DATA = [
   },
   {
     id: 'sentinels',
+    logo: 'assets/images/divisions/Logo_03_Sentinels.png',
     nummer: 'III',
     name: 'Die Sentinels',
     subtitle: 'Schutz, Rettung und Verteidigung',
@@ -106,6 +109,7 @@ window.DIVISIONS_DATA = [
   },
   {
     id: 'friedenshueter',
+    logo: 'assets/images/divisions/Logo_04_Friendenshüter.png',
     nummer: 'IV',
     name: 'Die Friedenshüter',
     subtitle: 'Lösen von Bürgeranliegen',
@@ -142,6 +146,7 @@ window.DIVISIONS_DATA = [
   },
   {
     id: 'outfitters',
+    logo: 'assets/images/divisions/Logo_05_Outfitters.png',
     nummer: 'V',
     name: 'Die Outfitters',
     subtitle: 'Waffen-, Rüstungs- und Zubehörentwicklung',
@@ -177,6 +182,7 @@ window.DIVISIONS_DATA = [
   },
   {
     id: 'pathfinders',
+    logo: 'assets/images/divisions/Logo_06_Pathfinders.png',
     nummer: 'VI',
     name: 'Die Pathfinders',
     subtitle: 'Erkunden des Planeten',
@@ -212,6 +218,7 @@ window.DIVISIONS_DATA = [
   },
   {
     id: 'quellensucher',
+    logo: 'assets/images/divisions/Logo_07_Quellensucher.png',
     nummer: 'VII',
     name: 'Die Quellensucher',
     subtitle: 'Ressourcenabbau und Sicherung von Vorkommen',
@@ -246,6 +253,7 @@ window.DIVISIONS_DATA = [
   },
   {
     id: 'bergungsgarde',
+    logo: 'assets/images/divisions/Logo_08_Bergungsgarde.png',
     nummer: 'VIII',
     name: 'Die Bergungsgarde',
     subtitle: 'Wrackteile bergen und Träumer retten',

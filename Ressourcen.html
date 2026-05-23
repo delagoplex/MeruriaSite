@@ -13,6 +13,7 @@
 <script src="assets/scripts/data/resources/mineralien/ff14_mineralien-data.js"></script>
 <script src="assets/scripts/data/resources/pflanzen/ff14_pflanzen-data.js"></script>
 <script src="assets/scripts/data/resources/pflanzen/fantasy_plant-data.js"></script>
+<script src="assets/scripts/data/resources/ressourcen-sichtbar.js"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
 <script src="assets/components/site-gate.jsx" type="text/babel"></script>
 <script src="assets/components/particle-field.jsx" type="text/babel"></script>
@@ -165,6 +166,29 @@ const SORT_OPTIONS = [
   { id:'gewicht-desc',    label:'Gewicht ↓'      },
   { id:'gewicht-asc',     label:'Gewicht ↑'      },
 ];
+
+// ── DM Mode ───────────────────────────────────────────────────────────────────
+// SHA-256 of "dm-meruria" — change to sha256(yourPassword) if desired
+const DM_PW_HASH = '5882a49f496cb2a3235c03b6b2c377760888e91281bf3c29cbf33fe1ef32a559';
+const DM_AUTH_KEY = 'dm_auth';
+const DM_AUTH_TTL = 24 * 60 * 60 * 1000;
+const DM_VIS_KEYS = { fische: 'res_vis_fische', pflanzen: 'res_vis_pflanzen', mineralien: 'res_vis_mineralien' };
+
+function isDmAuthed() {
+  const ts = parseInt(localStorage.getItem(DM_AUTH_KEY) || '0');
+  return Date.now() - ts < DM_AUTH_TTL;
+}
+function loadDmVisible(cat) {
+  try { return new Set(JSON.parse(localStorage.getItem(DM_VIS_KEYS[cat]) || '[]')); }
+  catch { return new Set(); }
+}
+function saveDmVisible(cat, set) {
+  localStorage.setItem(DM_VIS_KEYS[cat], JSON.stringify([...set]));
+}
+function buildExportJs(vis) {
+  const fmt = cat => JSON.stringify([...vis[cat]]).replace(/,/g, ', ');
+  return `window.RESSOURCEN_SICHTBAR = {\n  fische:     ${fmt('fische')},\n  pflanzen:   ${fmt('pflanzen')},\n  mineralien: ${fmt('mineralien')},\n};\n`;
+}
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{ "showParticles": true }/*EDITMODE-END*/;
 
@@ -913,27 +937,35 @@ function ResourceSidebar({ filters, setFilters, isOpen, onClose, allFundorte, al
 }
 
 // ── Resource Tab ──────────────────────────────────────────────────────────────
-function ResourceTab({ data, fallbackIcon, searchPlaceholder, onCount }) {
+function ResourceTab({ data, catKey, fallbackIcon, searchPlaceholder, onCount, isDM, dmVis, onToggle }) {
   const [filters, setFilters] = useState({ search:'', fundort:[], kategorie:[], seltenheit:[], sort:'name-az' });
   const [filterOpen, setFilterOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
+  const playerVisSet = useMemo(() => {
+    if (isDM || !catKey) return null;
+    const ids = window.RESSOURCEN_SICHTBAR?.[catKey];
+    return ids !== undefined ? new Set(ids) : null;
+  }, [isDM, catKey]);
+
+  const baseData = useMemo(() => playerVisSet ? data.filter(d => playerVisSet.has(d.id)) : data, [data, playerVisSet]);
+
   const allFundorte = useMemo(() => {
     const s = new Set();
-    data.forEach(d => (d.fundort||[]).forEach(f => s.add(f)));
+    baseData.forEach(d => (d.fundort||[]).forEach(f => s.add(f)));
     return [...s].sort();
-  }, [data]);
+  }, [baseData]);
 
   const allKategorien = useMemo(() => {
     const s = new Set();
-    data.forEach(d => s.add(d.kategorie));
+    baseData.forEach(d => s.add(d.kategorie));
     return [...s].sort();
-  }, [data]);
+  }, [baseData]);
 
   const hasActiveFilters = filters.search || filters.fundort.length || filters.kategorie.length || filters.seltenheit.length || filters.sort !== 'name-az';
 
   const filtered = useMemo(() => {
-    let r = data;
+    let r = baseData;
     if (filters.search) {
       const q = filters.search.toLowerCase();
       r = r.filter(d => d.name_de.toLowerCase().includes(q) || (d.desc_de||'').toLowerCase().includes(q));
@@ -955,9 +987,11 @@ function ResourceTab({ data, fallbackIcon, searchPlaceholder, onCount }) {
       case 'preis-desc':      r.sort((a,b)=>parsePreis(b.verkaufspreis)-parsePreis(a.verkaufspreis)); break;
     }
     return r;
-  }, [data, filters]);
+  }, [baseData, filters]);
 
-  useEffect(() => { onCount({ filtered: filtered.length, total: data.length }); }, [filtered.length, data.length]);
+  useEffect(() => { onCount({ filtered: filtered.length, total: baseData.length }); }, [filtered.length, baseData.length]);
+
+  const emptyMsg = !isDM && playerVisSet && playerVisSet.size === 0 ? 'Noch nichts entdeckt' : 'Keine Treffer';
 
   return (
     <div className="res-layout">
@@ -974,8 +1008,11 @@ function ResourceTab({ data, fallbackIcon, searchPlaceholder, onCount }) {
           Filter
         </button>
         {filtered.length > 0
-          ? <div className="fish-grid">{filtered.map(d => <ResourceCard key={d.id} item={d} onSelect={setSelectedItem} fallbackIcon={fallbackIcon} />)}</div>
-          : <div className="res-empty">Keine Treffer</div>
+          ? <div className="fish-grid">{filtered.map(d => isDM
+              ? <DmToggleWrapper key={d.id} id={d.id} visible={dmVis?.has(d.id)} onToggle={id => onToggle(catKey, id)}><ResourceCard item={d} onSelect={setSelectedItem} fallbackIcon={fallbackIcon} /></DmToggleWrapper>
+              : <ResourceCard key={d.id} item={d} onSelect={setSelectedItem} fallbackIcon={fallbackIcon} />
+            )}</div>
+          : <div className="res-empty">{emptyMsg}</div>
         }
       </main>
       {selectedItem && <ResourceDetailModal item={selectedItem} onClose={() => setSelectedItem(null)} fallbackIcon={fallbackIcon} />}
@@ -983,15 +1020,148 @@ function ResourceTab({ data, fallbackIcon, searchPlaceholder, onCount }) {
   );
 }
 
+// ── DM UI Components ─────────────────────────────────────────────────────────
+function DmToggleWrapper({ id, visible, onToggle, children }) {
+  return (
+    <div style={{ position:'relative' }}>
+      {children}
+      <button
+        onClick={e => { e.stopPropagation(); onToggle(id); }}
+        title={visible ? 'Sichtbar · klicken zum Ausblenden' : 'Verborgen · klicken zum Einblenden'}
+        style={{
+          position:'absolute', top:6, right:6, zIndex:10,
+          width:20, height:20, borderRadius:3, cursor:'pointer', padding:0,
+          display:'flex', alignItems:'center', justifyContent:'center',
+          fontSize:11, fontFamily:'var(--font-mono)',
+          background: visible ? 'rgba(38,198,218,0.85)' : 'rgba(0,0,0,0.65)',
+          border: visible ? '1px solid rgba(38,198,218,1)' : '1px solid rgba(255,255,255,0.2)',
+          color: visible ? '#fff' : 'rgba(255,255,255,0.4)',
+          transition:'all 0.15s',
+        }}
+      >{visible ? '✓' : '○'}</button>
+      {!visible && (
+        <div style={{ position:'absolute', inset:0, background:'rgba(0,0,0,0.48)', borderRadius:4, pointerEvents:'none' }} />
+      )}
+    </div>
+  );
+}
+
+function DmAuthModal({ onAuth, onClose }) {
+  const [pw, setPw] = useState('');
+  const [err, setErr] = useState(false);
+  const encoder = new TextEncoder();
+
+  async function tryAuth() {
+    const buf = await crypto.subtle.digest('SHA-256', encoder.encode(pw));
+    const hex = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+    if (hex === DM_PW_HASH) {
+      localStorage.setItem(DM_AUTH_KEY, Date.now().toString());
+      onAuth();
+    } else {
+      setErr(true);
+      setPw('');
+    }
+  }
+
+  return (
+    <div style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.75)', zIndex:9999, display:'flex', alignItems:'center', justifyContent:'center' }}
+      onClick={e => e.target === e.currentTarget && onClose()}>
+      <div style={{ background:'rgba(8,6,22,0.98)', border:'1px solid rgba(38,198,218,0.3)', borderRadius:4, padding:'32px 28px', width:300, boxShadow:'0 20px 60px rgba(0,0,0,0.7)' }}>
+        <div style={{ fontFamily:'var(--font-display)', fontSize:12, letterSpacing:'0.3em', color:'rgba(38,198,218,0.7)', textTransform:'uppercase', marginBottom:20 }}>DM-Modus</div>
+        <input
+          type="password" value={pw} onChange={e => { setPw(e.target.value); setErr(false); }}
+          onKeyDown={e => e.key === 'Enter' && tryAuth()}
+          placeholder="Passwort…"
+          autoFocus
+          style={{ width:'100%', boxSizing:'border-box', background:'rgba(38,198,218,0.06)', border:`1px solid ${err ? 'rgba(220,60,60,0.6)' : 'rgba(38,198,218,0.25)'}`, borderRadius:3, padding:'9px 12px', color:'var(--white)', fontFamily:'var(--font-body)', fontSize:13, outline:'none', marginBottom: err ? 6 : 16 }}
+        />
+        {err && <div style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(220,80,80,0.8)', letterSpacing:'0.15em', marginBottom:12 }}>Falsches Passwort</div>}
+        <div style={{ display:'flex', gap:8 }}>
+          <button onClick={tryAuth} style={{ flex:1, padding:'9px 0', background:'rgba(38,198,218,0.15)', border:'1px solid rgba(38,198,218,0.4)', borderRadius:3, color:'rgba(38,198,218,0.9)', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.2em', textTransform:'uppercase', cursor:'pointer' }}>Einloggen</button>
+          <button onClick={onClose} style={{ padding:'9px 14px', background:'transparent', border:'1px solid rgba(255,255,255,0.1)', borderRadius:3, color:'rgba(255,255,255,0.4)', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.15em', cursor:'pointer' }}>✕</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function DmBanner({ dmVisible, onExport, onLogout }) {
+  const [copied, setCopied] = useState(false);
+  const counts = {
+    fische:     dmVisible.fische.size,
+    pflanzen:   dmVisible.pflanzen.size,
+    mineralien: dmVisible.mineralien.size,
+  };
+  const total = counts.fische + counts.pflanzen + counts.mineralien;
+
+  async function handleExport() {
+    const js = buildExportJs(dmVisible);
+    await navigator.clipboard.writeText(js).catch(() => {});
+    setCopied(true);
+    onExport(js);
+    setTimeout(() => setCopied(false), 2500);
+  }
+
+  return (
+    <div style={{ background:'rgba(10,38,42,0.97)', borderBottom:'1px solid rgba(38,198,218,0.3)', padding:'7px 20px', display:'flex', alignItems:'center', gap:16, flexShrink:0, flexWrap:'wrap' }}>
+      <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.28em', color:'rgba(38,198,218,0.8)', textTransform:'uppercase', whiteSpace:'nowrap' }}>◈ DM-Modus</span>
+      <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(38,198,218,0.5)', letterSpacing:'0.14em' }}>
+        {counts.fische} Fische · {counts.pflanzen} Pflanzen · {counts.mineralien} Mineralien
+        <span style={{ marginLeft:8, color:'rgba(38,198,218,0.35)' }}>= {total} gesamt sichtbar</span>
+      </span>
+      <div style={{ flex:1 }} />
+      <button onClick={handleExport} style={{ padding:'5px 14px', background:'rgba(38,198,218,0.15)', border:'1px solid rgba(38,198,218,0.45)', borderRadius:3, color:'rgba(38,198,218,0.9)', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.2em', textTransform:'uppercase', cursor:'pointer', whiteSpace:'nowrap', transition:'all 0.15s' }}>
+        {copied ? '✓ Kopiert' : '↓ JS exportieren'}
+      </button>
+      <button onClick={onLogout} style={{ padding:'5px 10px', background:'transparent', border:'1px solid rgba(255,255,255,0.1)', borderRadius:3, color:'rgba(255,255,255,0.35)', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.15em', cursor:'pointer', whiteSpace:'nowrap' }}>
+        Beenden
+      </button>
+    </div>
+  );
+}
+
+function DmExportModal({ content, onClose }) {
+  const [copied, setCopied] = useState(false);
+  async function copy() {
+    await navigator.clipboard.writeText(content).catch(() => {});
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
+  return (
+    <div style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.8)', zIndex:9999, display:'flex', alignItems:'center', justifyContent:'center', padding:24 }}
+      onClick={e => e.target === e.currentTarget && onClose()}>
+      <div style={{ background:'rgba(6,10,24,0.99)', border:'1px solid rgba(38,198,218,0.3)', borderRadius:4, padding:'24px', maxWidth:640, width:'100%', boxShadow:'0 20px 60px rgba(0,0,0,0.8)' }}>
+        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:16 }}>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.28em', color:'rgba(38,198,218,0.7)', textTransform:'uppercase' }}>ressourcen-sichtbar.js</span>
+          <button onClick={onClose} style={{ background:'none', border:'none', color:'rgba(255,255,255,0.4)', cursor:'pointer', fontSize:13, padding:0 }}>✕</button>
+        </div>
+        <pre style={{ background:'rgba(0,0,0,0.5)', border:'1px solid rgba(38,198,218,0.15)', borderRadius:3, padding:'14px 16px', fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(38,198,218,0.75)', overflowX:'auto', margin:'0 0 16px', lineHeight:1.6 }}>{content}</pre>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'rgba(160,140,255,0.5)', letterSpacing:'0.15em', marginBottom:14 }}>
+          Inhalt kopieren → als <code style={{color:'rgba(38,198,218,0.6)'}}>assets/scripts/data/resources/ressourcen-sichtbar.js</code> speichern → git push
+        </div>
+        <button onClick={copy} style={{ width:'100%', padding:'9px 0', background:'rgba(38,198,218,0.15)', border:'1px solid rgba(38,198,218,0.4)', borderRadius:3, color:'rgba(38,198,218,0.9)', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.2em', textTransform:'uppercase', cursor:'pointer' }}>
+          {copied ? '✓ In Zwischenablage' : 'In Zwischenablage kopieren'}
+        </button>
+      </div>
+    </div>
+  );
+}
+
 // ── Fish Tab content ──────────────────────────────────────────────────────────
-function FishTab({ onCount, onSelect }) {
+function FishTab({ onCount, onSelect, isDM, dmVis, onToggle }) {
   const [filters, setFilters] = useState({ search:'', größe:[], klima:[], stärke:[], seltenheit:[], wassersort:'', sort:'name-az' });
   const [filterOpen, setFilterOpen] = useState(false);
   const hasActiveFilters = filters.search || filters.größe.length || filters.klima.length ||
     filters.stärke.length || filters.seltenheit.length || filters.wassersort || filters.sort !== 'name-az';
 
+  const playerVisSet = useMemo(() => {
+    if (isDM) return null;
+    const ids = window.RESSOURCEN_SICHTBAR?.fische;
+    return ids !== undefined ? new Set(ids) : null;
+  }, [isDM]);
+
   const filtered = useMemo(() => {
-    let r = ALL_FISH;
+    let r = playerVisSet ? ALL_FISH.filter(f => playerVisSet.has(f.id)) : ALL_FISH;
     if (filters.search) {
       const q = filters.search.toLowerCase();
       r = r.filter(f => f.name_de.toLowerCase().includes(q) || (f.desc_de||'').toLowerCase().includes(q));
@@ -1024,22 +1194,26 @@ function FishTab({ onCount, onSelect }) {
       case 'gewicht-asc':     r.sort((a,b)=>parseGewicht(a.gewicht)-parseGewicht(b.gewicht)); break;
     }
     return r;
-  }, [filters]);
+  }, [filters, playerVisSet]);
 
-  useEffect(() => { onCount({ filtered: filtered.length, total: ALL_FISH.length }); }, [filtered.length]);
+  const totalForCount = playerVisSet ? playerVisSet.size : ALL_FISH.length;
+  useEffect(() => { onCount({ filtered: filtered.length, total: totalForCount }); }, [filtered.length, totalForCount]);
 
   return (
     <div className="res-layout">
       {filterOpen && <div className="res-filter-overlay" onClick={() => setFilterOpen(false)} />}
-      <FishSidebar filters={filters} setFilters={setFilters} total={ALL_FISH.length} filtered={filtered.length} isOpen={filterOpen} onClose={() => setFilterOpen(false)} />
+      <FishSidebar filters={filters} setFilters={setFilters} total={totalForCount} filtered={filtered.length} isOpen={filterOpen} onClose={() => setFilterOpen(false)} />
       <main className="res-main">
         <button className="res-mobile-filter-btn" onClick={() => setFilterOpen(true)}>
           {hasActiveFilters && <span className="filter-active-dot" />}
           Filter
         </button>
         {filtered.length > 0
-          ? <div className="fish-grid">{filtered.map(f => <FishCard key={f.id} fish={f} onSelect={onSelect} />)}</div>
-          : <div className="res-empty">Keine Treffer</div>
+          ? <div className="fish-grid">{filtered.map(f => isDM
+              ? <DmToggleWrapper key={f.id} id={f.id} visible={dmVis?.has(f.id)} onToggle={id => onToggle('fische', id)}><FishCard fish={f} onSelect={onSelect} /></DmToggleWrapper>
+              : <FishCard key={f.id} fish={f} onSelect={onSelect} />
+            )}</div>
+          : <div className="res-empty">{!isDM && playerVisSet && playerVisSet.size === 0 ? 'Noch keine Fische entdeckt' : 'Keine Treffer'}</div>
         }
       </main>
     </div>
@@ -1054,6 +1228,31 @@ function App() {
   const [tabCount, setTabCount] = useState(null);
   const [selectedFish, setSelectedFish] = useState(null);
 
+  // DM mode
+  const [dmMode, setDmMode]       = useState(() => isDmAuthed());
+  const [dmAuthOpen, setDmAuthOpen] = useState(false);
+  const [dmExport, setDmExport]   = useState(null);
+  const [dmVisible, setDmVisible] = useState(() => ({
+    fische:     loadDmVisible('fische'),
+    pflanzen:   loadDmVisible('pflanzen'),
+    mineralien: loadDmVisible('mineralien'),
+  }));
+
+  function toggleDmVisible(cat, id) {
+    setDmVisible(prev => {
+      const next = new Set(prev[cat]);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      saveDmVisible(cat, next);
+      return { ...prev, [cat]: next };
+    });
+  }
+
+  function handleDmAuth() { setDmMode(true); setDmAuthOpen(false); }
+  function handleDmLogout() {
+    localStorage.removeItem(DM_AUTH_KEY);
+    setDmMode(false);
+  }
+
   const handleMouseMove = useCallback(e => setMouse({ x:e.clientX/window.innerWidth, y:e.clientY/window.innerHeight }), []);
   const handleTabChange = useCallback(id => { setActiveTab(id); if (id !== activeTab) setTabCount(null); }, [activeTab]);
 
@@ -1061,6 +1260,15 @@ function App() {
     <div onMouseMove={handleMouseMove} style={{ display:'flex', flexDirection:'column', height:'100vh', overflow:'hidden', position:'relative' }}>
       {tweaks.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} />}
       <SiteNav rightLabel="RESSOURCEN" />
+
+      {/* DM banner */}
+      {dmMode && (
+        <DmBanner
+          dmVisible={dmVisible}
+          onExport={js => setDmExport(js)}
+          onLogout={handleDmLogout}
+        />
+      )}
 
       {/* Tab bar */}
       <nav className="res-tabbar">
@@ -1075,14 +1283,22 @@ function App() {
             </button>
           ))}
         </div>
+        <button
+          onClick={() => dmMode ? handleDmLogout() : setDmAuthOpen(true)}
+          title={dmMode ? 'DM-Modus beenden' : 'DM-Modus aktivieren'}
+          style={{ marginLeft:'auto', padding:'4px 10px', background: dmMode ? 'rgba(38,198,218,0.15)' : 'transparent', border: dmMode ? '1px solid rgba(38,198,218,0.4)' : '1px solid transparent', borderRadius:3, color: dmMode ? 'rgba(38,198,218,0.8)' : 'rgba(255,255,255,0.2)', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.2em', textTransform:'uppercase', cursor:'pointer', transition:'all 0.2s' }}
+        >DM</button>
       </nav>
 
       {/* Tab content */}
-      {activeTab === 'fische'       && <FishTab onCount={setTabCount} onSelect={setSelectedFish} />}
+      {activeTab === 'fische'       && <FishTab onCount={setTabCount} onSelect={setSelectedFish} isDM={dmMode} dmVis={dmVisible.fische} onToggle={toggleDmVisible} />}
       {selectedFish && <FishDetailModal fish={selectedFish} onClose={() => setSelectedFish(null)} />}
-      {activeTab === 'pflanzen'   && <ResourceTab data={ALL_PFLANZEN}   fallbackIcon="🌿" searchPlaceholder="Pflanze suchen…"  onCount={setTabCount} />}
-      {activeTab === 'mineralien' && <ResourceTab data={ALL_MINERALIEN} fallbackIcon="💎" searchPlaceholder="Mineral suchen…"  onCount={setTabCount} />}
+      {activeTab === 'pflanzen'   && <ResourceTab data={ALL_PFLANZEN}   catKey="pflanzen"   fallbackIcon="🌿" searchPlaceholder="Pflanze suchen…"  onCount={setTabCount} isDM={dmMode} dmVis={dmVisible.pflanzen}   onToggle={toggleDmVisible} />}
+      {activeTab === 'mineralien' && <ResourceTab data={ALL_MINERALIEN} catKey="mineralien" fallbackIcon="💎" searchPlaceholder="Mineral suchen…"  onCount={setTabCount} isDM={dmMode} dmVis={dmVisible.mineralien} onToggle={toggleDmVisible} />}
       {activeTab === 'monsterteile' && <PlaceholderTab id="monsterteile" label="Monsterteile" />}
+
+      {dmAuthOpen && <DmAuthModal onAuth={handleDmAuth} onClose={() => setDmAuthOpen(false)} />}
+      {dmExport   && <DmExportModal content={dmExport} onClose={() => setDmExport(null)} />}
     </div>
   );
 }

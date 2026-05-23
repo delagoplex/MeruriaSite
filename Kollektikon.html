@@ -12,14 +12,16 @@
 <script src="assets/components/tweaks-panel-13.jsx" type="text/babel"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
 <script src="assets/components/site-gate.jsx" type="text/babel"></script>
+<script src="assets/components/filter-utils.jsx" type="text/babel"></script>
 <script src="assets/components/footer.jsx" type="text/babel"></script>
+<script src="assets/scripts/data/kollektikon-data.js"></script>
 </head>
 <body>
 <div id="root"></div>
 <script type="text/babel">
 const { useState, useEffect, useRef } = React;
 const { useTweaks, TweaksPanel, TweakSection, TweakToggle } = window;
-const { SiteNav, SiteGate, SiteFooter } = window;
+const { SiteNav, SiteGate, SiteFooter, FilterGroup, XBtn } = window;
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"showParticles": true}/*EDITMODE-END*/;
 
@@ -33,74 +35,54 @@ const PART_ICON     = <g transform="rotate(-22 50 50) translate(-10.5 25) scale(
 const WAL_ICON      = <g><path d="M14 52 C 20 36 40 26 60 30 C 72 32 82 40 86 50 L 78 54 L 72 48 L 64 54 L 56 46 L 48 56 L 38 48 Z" fill="none" strokeWidth="2"/><circle cx="68" cy="42" r="1.8" fill="currentColor"/><path d="M28 40 L 34 50 M48 28 L 52 42" strokeWidth="1.2" opacity="0.55"/></g>;
 const LIFE_ICON     = <g><circle cx="50" cy="50" r="26" fill="none" strokeWidth="2"/><path d="M50 24 L 50 76 M24 50 L 76 50 M32 32 L 68 68 M68 32 L 32 68" strokeWidth="1.1" opacity="0.5"/><circle cx="50" cy="50" r="6.5" fill="none" strokeWidth="1.6"/><circle cx="50" cy="50" r="1.6" fill="currentColor"/></g>;
 
-// ── COLLECTION DATA ───────────────────────────────────────
-const KOLLEKTIKON_DATA = [
-  { id:'fische',         label:'Fische',                    found:6, total:80,  komplett:3, hue:200, icon:FISH_ICON },
-  { id:'insekten',       label:'Insekten',                  found:5, total:30,  komplett:2, hue:95,  icon:INSECT_ICON },
-  { id:'pflanzen',       label:'Pflanzen',                  found:8, total:110, komplett:3, hue:140, icon:PLANT_ICON },
-  { id:'mineralien',     label:'Mineralien',                found:4, total:60,  komplett:2, hue:60,  icon:MINERAL_ICON },
-  { id:'kreaturen',      label:'Kreaturen',                 found:2, total:36,  komplett:1, hue:285, icon:CREATURE_ICON },
-  { id:'kreaturenteile', label:'Kreaturenteile',            found:3, total:48,  komplett:2, hue:0,   icon:PART_ICON },
-  { id:'wal',            label:'Trümmer des Weißen Wals',   found:4, total:20,  komplett:1, hue:210, icon:WAL_ICON },
-  { id:'lebensspeicher', label:'Teile des Lebensspeichers', found:2, total:15,  komplett:1, hue:45,  icon:LIFE_ICON },
+// ── ERFORSCHUNGSSTUFEN ────────────────────────────────────
+const ERFORSCHUNGS_STUFEN = [
+  { stufe:1, label:'Entdeckt'      },
+  { stufe:2, label:'Notiert'       },
+  { stufe:3, label:'Analysiert'    },
+  { stufe:4, label:'Dokumentiert'  },
+  { stufe:5, label:'Abgeschlossen' },
 ];
+const ERFORSCHUNGS_EFFEKTE = {
+  alle: [
+    { stufe:1, text:'Beim Händler erhältlich.' },
+    { stufe:2, text:'Händlerpreis –10 %.' },
+    { stufe:3, text:'Händlerpreis –20 %.' },
+    { stufe:4, text:'Händlerpreis –30 %.' },
+    { stufe:5, text:'Händlerpreis –40 %.' },
+  ],
+  fische: [
+    { stufe:3, text:'Passende Köder beim Händler.' },
+  ],
+};
 
-// ── CATALOG: alle bekannten Einträge ─────────────────────
-const CATALOG_ENTRIES = [
-  { id:'f-06', name:'Aalsturm',           cat:'fische',         hue:240, status:'sighted',  date:'14. Sturmwacht',  icon:FISH_ICON },
-  { id:'f-04', name:'Ködermaul',          cat:'fische',         hue:190, status:'komplett', date:'27. Eiswinter',   icon:FISH_ICON },
-  { id:'f-02', name:'Mondbrasse',         cat:'fische',         hue:215, status:'komplett', date:'04. Aschefall',   icon:FISH_ICON },
-  { id:'f-01', name:'Silbersichelhecht',  cat:'fische',         hue:200, status:'komplett', date:'12. Sterne',      icon:FISH_ICON },
-  { id:'i-05', name:'Aschgraue Hornisse', cat:'insekten',       hue:30,  status:'sighted',  date:'19. Aschefall',   icon:INSECT_ICON },
-  { id:'i-02', name:'Karminspinner',      cat:'insekten',       hue:0,   status:'komplett', date:'02. Aschefall',   icon:INSECT_ICON },
-  { id:'i-01', name:'Sumpflampe',         cat:'insekten',       hue:90,  status:'sighted',  date:'14. Blütenfest',  icon:INSECT_ICON },
-  { id:'p-05', name:'Dornenwürger',       cat:'pflanzen',       hue:25,  status:'komplett', date:'11. Aschefall',   icon:PLANT_ICON },
-  { id:'p-03', name:'Glimmerschilf',      cat:'pflanzen',       hue:150, status:'komplett', date:'25. Eiswinter',   icon:PLANT_ICON },
-  { id:'p-08', name:'Hexenhauch',         cat:'pflanzen',       hue:285, status:'sighted',  date:'01. Aschefall',   icon:PLANT_ICON },
-  { id:'p-02', name:'Wundklee',           cat:'pflanzen',       hue:140, status:'komplett', date:'18. Blütenfest',  icon:PLANT_ICON },
-  { id:'m-01', name:'Mondquarz',          cat:'mineralien',     hue:200, status:'komplett', date:'08. Eiswinter',   icon:MINERAL_ICON },
-  { id:'m-02', name:'Schwarzschiefer',    cat:'mineralien',     hue:30,  status:'komplett', date:'14. Sterne',      icon:MINERAL_ICON },
-  { id:'k-01', name:'Schleifender Vogel', cat:'kreaturen',      hue:280, status:'komplett', date:'19. Blütenfest',  icon:CREATURE_ICON },
-  { id:'k-02', name:'Tiefenwandler',      cat:'kreaturen',      hue:260, status:'sighted',  date:'03. Sturmwacht',  icon:CREATURE_ICON },
-  { id:'t-01', name:'Klauenschuppe',      cat:'kreaturenteile', hue:30,  status:'komplett', date:'21. Blütenfest',  icon:PART_ICON },
-  { id:'t-02', name:'Aalstein',           cat:'kreaturenteile', hue:240, status:'komplett', date:'14. Sturmwacht',  icon:PART_ICON },
-  { id:'w-01', name:'Schädelplatte',      cat:'wal',            hue:210, status:'sighted',  date:'09. Eiswinter',   icon:WAL_ICON },
-  { id:'w-03', name:'Rippensplitter',     cat:'wal',            hue:200, status:'komplett', date:'23. Aschefall',   icon:WAL_ICON },
-  { id:'w-02', name:'Walgesang-Tropfen',  cat:'wal',            hue:215, status:'sighted',  date:'17. Sturmwacht',  icon:WAL_ICON },
-  { id:'l-01', name:'Erinnerungskern',    cat:'lebensspeicher', hue:45,  status:'sighted',  date:'11. Blütenfest',  icon:LIFE_ICON },
-  { id:'l-02', name:'Pulslinse',          cat:'lebensspeicher', hue:35,  status:'komplett', date:'02. Aschefall',   icon:LIFE_ICON },
-];
+// ── COLLECTION DATA (abgeleitet aus window.KOLLEKTIKON_* ) ──
+const CAT_ICON_MAP = {
+  fische:FISH_ICON, insekten:INSECT_ICON, pflanzen:PLANT_ICON, mineralien:MINERAL_ICON,
+  kreaturen:CREATURE_ICON, kreaturenteile:PART_ICON, wal:WAL_ICON, lebensspeicher:LIFE_ICON,
+};
 
-// ── LETZTE ENTDECKUNGEN ───────────────────────────────────
-const RECENT_SIGHTED = [
-  { id:'i-05', name:'Aschgraue Hornisse', cat:'Insekten',         date:'19. Aschefall',  hue:30,  icon:INSECT_ICON },
-  { id:'w-02', name:'Walgesang-Tropfen',  cat:'Trümmer d. Wals',  date:'17. Sturmwacht', hue:215, icon:WAL_ICON },
-  { id:'f-06', name:'Aalsturm',           cat:'Fische',           date:'14. Sturmwacht', hue:240, icon:FISH_ICON },
-  { id:'w-01', name:'Schädelplatte',      cat:'Trümmer d. Wals',  date:'09. Eiswinter',  hue:210, icon:WAL_ICON },
-  { id:'k-02', name:'Tiefenwandler',      cat:'Kreaturen',        date:'03. Sturmwacht', hue:260, icon:CREATURE_ICON },
-  { id:'l-02', name:'Pulslinse',          cat:'Lebensspeicher',   date:'02. Aschefall',  hue:35,  icon:LIFE_ICON },
-  { id:'p-08', name:'Hexenhauch',         cat:'Pflanzen',         date:'01. Aschefall',  hue:285, icon:PLANT_ICON },
-  { id:'k-01', name:'Schleifender Vogel', cat:'Kreaturen',        date:'19. Blütenfest', hue:280, icon:CREATURE_ICON },
-  { id:'l-01', name:'Erinnerungskern',    cat:'Lebensspeicher',   date:'11. Blütenfest', hue:45,  icon:LIFE_ICON },
-  { id:'i-01', name:'Sumpflampe',         cat:'Insekten',         date:'14. Blütenfest', hue:90,  icon:INSECT_ICON },
-];
+const CATALOG_ENTRIES = (window.KOLLEKTIKON_CATALOG || []).map(e => ({ ...e, icon: CAT_ICON_MAP[e.cat] }));
 
-const RECENT_KOMPLETT = [
-  { id:'w-03', name:'Rippensplitter',     cat:'Trümmer d. Wals',  date:'23. Aschefall',  hue:200, icon:WAL_ICON },
-  { id:'l-02', name:'Pulslinse',          cat:'Lebensspeicher',   date:'02. Aschefall',  hue:35,  icon:LIFE_ICON },
-  { id:'k-01', name:'Schleifender Vogel', cat:'Kreaturen',        date:'19. Blütenfest', hue:280, icon:CREATURE_ICON },
-  { id:'t-02', name:'Aalstein',           cat:'Kreaturenteile',   date:'14. Sturmwacht', hue:240, icon:PART_ICON },
-  { id:'p-05', name:'Dornenwürger',       cat:'Pflanzen',         date:'11. Aschefall',  hue:25,  icon:PLANT_ICON },
-  { id:'p-02', name:'Wundklee',           cat:'Pflanzen',         date:'18. Blütenfest', hue:140, icon:PLANT_ICON },
-  { id:'p-03', name:'Glimmerschilf',      cat:'Pflanzen',         date:'25. Eiswinter',  hue:150, icon:PLANT_ICON },
-  { id:'m-01', name:'Mondquarz',          cat:'Mineralien',       date:'08. Eiswinter',  hue:200, icon:MINERAL_ICON },
-  { id:'m-02', name:'Schwarzschiefer',    cat:'Mineralien',       date:'14. Sterne',     hue:30,  icon:MINERAL_ICON },
-  { id:'f-01', name:'Silbersichelhecht',  cat:'Fische',           date:'12. Sterne',     hue:200, icon:FISH_ICON },
-  { id:'f-02', name:'Mondbrasse',         cat:'Fische',           date:'04. Aschefall',  hue:215, icon:FISH_ICON },
-  { id:'i-02', name:'Karminspinner',      cat:'Insekten',         date:'02. Aschefall',  hue:0,   icon:INSECT_ICON },
-  { id:'t-01', name:'Klauenschuppe',      cat:'Kreaturenteile',   date:'21. Blütenfest', hue:30,  icon:PART_ICON },
-  { id:'f-04', name:'Ködermaul',          cat:'Fische',           date:'27. Eiswinter',  hue:190, icon:FISH_ICON },
-];
+const KOLLEKTIKON_DATA = (window.KOLLEKTIKON_CATEGORIES || []).map(cat => {
+  const entries = CATALOG_ENTRIES.filter(e => e.cat === cat.id);
+  return { ...cat, found: entries.length, komplett: entries.filter(e => e.status === 'komplett').length, icon: CAT_ICON_MAP[cat.id] };
+});
+
+const _catById = Object.fromEntries((window.KOLLEKTIKON_CATEGORIES || []).map(c => [c.id, c]));
+const _entById = Object.fromEntries(CATALOG_ENTRIES.map(e => [e.id, e]));
+
+const RECENT_SIGHTED = (window.KOLLEKTIKON_RECENT_SIGHTED_IDS || []).map(id => {
+  const e = _entById[id]; if (!e) return null;
+  const cat = _catById[e.cat];
+  return { ...e, cat: cat?.labelShort || e.cat, icon: CAT_ICON_MAP[e.cat] };
+}).filter(Boolean);
+
+const RECENT_KOMPLETT = (window.KOLLEKTIKON_RECENT_KOMPLETT_IDS || []).map(id => {
+  const e = _entById[id]; if (!e) return null;
+  const cat = _catById[e.cat];
+  return { ...e, cat: cat?.labelShort || e.cat, icon: CAT_ICON_MAP[e.cat] };
+}).filter(Boolean);
 
 // ── SCROLL REVEAL ─────────────────────────────────────────
 function useScrollReveal() {
@@ -257,26 +239,169 @@ function RecentCard({ item, idx, gold }) {
   );
 }
 
+// ── ERFORSCHUNGS STEPPER ──────────────────────────────────
+function ErforschungsStepper({ stufe, cat }) {
+  const max = ERFORSCHUNGS_STUFEN.length;
+  const allEff = ERFORSCHUNGS_EFFEKTE.alle || [];
+  const catEff = ERFORSCHUNGS_EFFEKTE[cat] || [];
+  const fillPct = (stufe - 1) / (max - 1) * 80;
+  return (
+    <div style={{ padding:'12px 0 6px' }}>
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.3em', color:'rgba(124,77,255,0.45)', textTransform:'uppercase', marginBottom:'16px' }}>
+        Erforschungsstufen
+      </div>
+      <div style={{ position:'relative' }}>
+        <div style={{ position:'absolute', top:5, left:'10%', right:'10%', height:1, background:'rgba(60,50,100,0.35)' }}/>
+        <div style={{ position:'absolute', top:5, left:'10%', width:`${fillPct}%`, height:1, background:'rgba(124,77,255,0.55)', transition:'width 0.4s ease' }}/>
+        <div style={{ display:'flex' }}>
+          {ERFORSCHUNGS_STUFEN.map(s => {
+            const done = stufe >= s.stufe;
+            const isCur = stufe === s.stufe;
+            const effekte = [...allEff.filter(e => e.stufe === s.stufe), ...catEff.filter(e => e.stufe === s.stufe)];
+            return (
+              <div key={s.stufe} style={{ flex:1, display:'flex', flexDirection:'column', alignItems:'center' }}>
+                <div style={{ width: isCur?13:10, height: isCur?13:10, borderRadius:'50%', flexShrink:0, position:'relative', zIndex:1, marginBottom:9,
+                  background: done ? (isCur ? 'rgba(170,140,255,1)' : 'rgba(124,77,255,0.7)') : 'rgba(20,15,50,0.9)',
+                  border:`1.5px solid ${done ? 'rgba(170,140,255,0.8)' : 'rgba(70,60,110,0.45)'}`,
+                  boxShadow: isCur ? '0 0 10px rgba(124,77,255,0.65)' : 'none',
+                  display:'flex', alignItems:'center', justifyContent:'center',
+                }}>
+                  {s.stufe === max && done && <span style={{ fontSize:6, color:'oklch(0.82 0.14 80)', lineHeight:1 }}>✓</span>}
+                </div>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:7, letterSpacing:'0.1em', textTransform:'uppercase', textAlign:'center', marginBottom:7,
+                  color: done ? 'rgba(200,190,240,0.8)' : 'rgba(90,80,130,0.45)', whiteSpace:'nowrap' }}>
+                  {s.label}
+                </div>
+                <div style={{ display:'flex', flexDirection:'column', gap:4, alignItems:'center', padding:'0 4px' }}>
+                  {effekte.map((e, j) => (
+                    <div key={j} style={{ fontFamily:'var(--font-body)', fontSize:9, fontWeight:300, lineHeight:1.45, textAlign:'center', letterSpacing:'0.01em', padding:'3px 6px', borderRadius:2,
+                      color: done ? 'rgba(200,190,240,0.72)' : 'rgba(90,80,130,0.38)',
+                      background: done ? 'rgba(124,77,255,0.07)' : 'transparent',
+                      border: `1px solid ${done ? 'rgba(124,77,255,0.15)' : 'transparent'}`,
+                    }}>
+                      {e.text}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── CATALOG ROW ───────────────────────────────────────────
 function CatalogRow({ entry, showCat, catLabel }) {
+  const [expanded, setExpanded] = useState(false);
   const isKomp = entry.status === 'komplett';
+  const stufe = entry.erforschungsstufe || (isKomp ? 5 : 1);
   const c  = `oklch(0.72 0.16 ${entry.hue})`;
   const cA = a => `oklch(0.72 0.16 ${entry.hue} / ${a})`;
   const gA = a => `oklch(0.82 0.14 80 / ${a})`;
+  const cols = showCat ? '28px 1fr auto auto auto 18px' : '28px 1fr auto auto 18px';
   return (
-    <div style={{ display:'grid', gridTemplateColumns: showCat ? '28px 1fr auto auto auto' : '28px 1fr auto auto', gap:'12px', alignItems:'center', padding:'9px 14px', borderBottom:'1px solid rgba(160,140,255,0.07)', transition:'background 0.15s', cursor:'default' }}
-      onMouseEnter={e => e.currentTarget.style.background = 'rgba(124,77,255,0.06)'}
-      onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
-      <svg viewBox="0 0 100 100" width="18" height="18" fill="none" stroke={isKomp ? 'oklch(0.82 0.14 80)' : c} style={{ color: isKomp ? 'oklch(0.82 0.14 80)' : c, opacity:0.85 }}>
-        {entry.icon}
-      </svg>
-      <span style={{ fontFamily:'var(--font-display)', fontSize:11, letterSpacing:'0.12em', color:'rgba(240,238,255,0.88)' }}>{entry.name}</span>
-      {showCat && <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'rgba(160,140,255,0.45)', letterSpacing:'0.14em', textTransform:'uppercase', whiteSpace:'nowrap' }}>{catLabel}</span>}
-      <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.2em', textTransform:'uppercase', color: isKomp ? 'oklch(0.82 0.14 80)' : cA(0.85), background: isKomp ? gA(0.1) : cA(0.08), border:`1px solid ${isKomp ? gA(0.4) : cA(0.3)}`, padding:'2px 7px', borderRadius:2, whiteSpace:'nowrap' }}>
-        {isKomp ? '✓ Komplett' : '◈ Gesichtet'}
-      </span>
-      <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'rgba(160,140,255,0.4)', letterSpacing:'0.12em', whiteSpace:'nowrap' }}>{entry.date}</span>
+    <div style={{ borderBottom:'1px solid rgba(160,140,255,0.07)' }}>
+      <div style={{ display:'grid', gridTemplateColumns:cols, gap:'12px', alignItems:'center', padding:'9px 14px', transition:'background 0.15s', cursor:'pointer' }}
+        onClick={() => setExpanded(e => !e)}
+        onMouseEnter={e => e.currentTarget.style.background = 'rgba(124,77,255,0.06)'}
+        onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
+        <svg viewBox="0 0 100 100" width="18" height="18" fill="none" stroke={isKomp ? 'oklch(0.82 0.14 80)' : c} style={{ color: isKomp ? 'oklch(0.82 0.14 80)' : c, opacity:0.85 }}>
+          {entry.icon}
+        </svg>
+        <span style={{ fontFamily:'var(--font-display)', fontSize:11, letterSpacing:'0.12em', color:'rgba(240,238,255,0.88)' }}>{entry.name}</span>
+        {showCat && <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'rgba(160,140,255,0.45)', letterSpacing:'0.14em', textTransform:'uppercase', whiteSpace:'nowrap' }}>{catLabel}</span>}
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.2em', textTransform:'uppercase', color: isKomp ? 'oklch(0.82 0.14 80)' : cA(0.85), background: isKomp ? gA(0.1) : cA(0.08), border:`1px solid ${isKomp ? gA(0.4) : cA(0.3)}`, padding:'2px 7px', borderRadius:2, whiteSpace:'nowrap' }}>
+          {isKomp ? '✓ Komplett' : '◈ Gesichtet'}
+        </span>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'rgba(160,140,255,0.4)', letterSpacing:'0.12em', whiteSpace:'nowrap' }}>{entry.date}</span>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(124,77,255,0.45)', textAlign:'center', transition:'transform 0.2s', display:'inline-block', transform: expanded ? 'rotate(90deg)' : 'none' }}>›</span>
+      </div>
+      {expanded && (
+        <div style={{ padding:'4px 14px 16px', background:'rgba(124,77,255,0.025)', borderTop:'1px solid rgba(124,77,255,0.08)' }}>
+          <ErforschungsStepper stufe={stufe} cat={entry.cat} />
+        </div>
+      )}
     </div>
+  );
+}
+
+// ── FILTER SIDEBAR ────────────────────────────────────────
+const KOLL_SORT_OPTS = [
+  { id:'name-az',  label:'Name A – Z'         },
+  { id:'name-za',  label:'Name Z – A'         },
+  { id:'erf-asc',  label:'Erforschungsstufe ↑' },
+  { id:'erf-desc', label:'Erforschungsstufe ↓' },
+];
+const KOLL_STATUS_OPTS = [
+  { key:'komplett', label:'✓ Komplett'  },
+  { key:'sighted',  label:'◈ Gesichtet' },
+];
+
+function KollektikonSidebar({ filters, setFilters, selectedCat, toggleCat }) {
+  const set = (key, val) => setFilters(f => ({...f, [key]:val}));
+  const toggleStatus = val => setFilters(f => {
+    const arr = f.status;
+    return {...f, status: arr.includes(val) ? arr.filter(x=>x!==val) : [...arr,val]};
+  });
+  const resetAll = () => { setFilters({ search:'', status:[], sort:'name-az' }); toggleCat(selectedCat); };
+  const hasAny = filters.search || filters.status.length || filters.sort !== 'name-az' || selectedCat;
+
+  return (
+    <aside className="koll-sidebar">
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'14px' }}>
+        <span style={{ fontFamily:'var(--font-display)', fontSize:'10px', letterSpacing:'0.25em', color:'rgba(124,77,255,0.6)', textTransform:'uppercase' }}>Filter</span>
+        {hasAny && <XBtn onClick={resetAll} />}
+      </div>
+
+      <div style={{ position:'relative', marginBottom:'16px' }}>
+        <input type="text" className="koll-search" placeholder="Eintrag suchen…"
+          value={filters.search} onChange={e => set('search', e.target.value)} />
+        {filters.search
+          ? <button onClick={() => set('search','')} style={{ position:'absolute', right:'8px', top:'50%', transform:'translateY(-50%)', background:'none', border:'none', color:'rgba(var(--text-rgb),0.45)', cursor:'pointer', padding:0, fontSize:'10px', lineHeight:1 }}>✕</button>
+          : <svg style={{ position:'absolute', right:'9px', top:'50%', transform:'translateY(-50%)', opacity:0.28, pointerEvents:'none' }} width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <circle cx="5" cy="5" r="3.5" stroke="rgba(124,77,255,1)" strokeWidth="1.2"/>
+              <line x1="8" y1="8" x2="11" y2="11" stroke="rgba(124,77,255,1)" strokeWidth="1.2"/>
+            </svg>
+        }
+      </div>
+
+      <FilterGroup title="Kategorie" active={!!selectedCat} onReset={() => toggleCat(selectedCat)} collapsible>
+        <div style={{ display:'flex', flexDirection:'column', gap:'2px' }}>
+          {KOLLEKTIKON_DATA.map(d => (
+            <button key={d.id} className={`koll-sort-btn${selectedCat===d.id?' active':''}`} onClick={() => toggleCat(d.id)}>{d.label}</button>
+          ))}
+        </div>
+      </FilterGroup>
+
+      <FilterGroup title="Status" active={filters.status.length>0} onReset={() => set('status',[])} collapsible>
+        <div style={{ display:'flex', flexDirection:'column', gap:'2px' }}>
+          {KOLL_STATUS_OPTS.map(s => (
+            <button key={s.key} className={`koll-sort-btn${filters.status.includes(s.key)?' active':''}`} onClick={() => toggleStatus(s.key)}>{s.label}</button>
+          ))}
+        </div>
+      </FilterGroup>
+
+      <FilterGroup title="Sortierung" active={filters.sort!=='name-az'} onReset={() => set('sort','name-az')} collapsible>
+        <div style={{ display:'flex', flexDirection:'column', gap:'2px' }}>
+          {KOLL_SORT_OPTS.map(o => (
+            <button key={o.id} className={`koll-sort-btn${filters.sort===o.id?' active':''}`} onClick={() => set('sort',o.id)}>{o.label}</button>
+          ))}
+        </div>
+      </FilterGroup>
+
+      {hasAny && (
+        <div style={{ marginTop:'auto', paddingTop:'14px', borderTop:'1px solid rgba(124,77,255,0.1)' }}>
+          <button onClick={resetAll}
+            style={{ width:'100%', padding:'6px', background:'rgba(200,60,60,0.08)', border:'1px solid rgba(200,60,60,0.25)', borderRadius:'2px', color:'rgba(230,90,90,0.65)', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.18em', cursor:'pointer', transition:'all 0.15s', textTransform:'uppercase' }}
+            onMouseEnter={e=>{e.currentTarget.style.background='rgba(200,60,60,0.18)';e.currentTarget.style.borderColor='rgba(230,90,90,0.5)';}}
+            onMouseLeave={e=>{e.currentTarget.style.background='rgba(200,60,60,0.08)';e.currentTarget.style.borderColor='rgba(200,60,60,0.25)';}}>
+            Filter löschen
+          </button>
+        </div>
+      )}
+    </aside>
   );
 }
 
@@ -284,6 +409,7 @@ function CatalogRow({ entry, showCat, catLabel }) {
 function App() {
   const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
   const [selectedCat, setSelectedCat] = useState(null);
+  const [erfFilters, setErfFilters] = useState({ search:'', status:[], sort:'name-az' });
   useScrollReveal();
 
   const totalFound         = KOLLEKTIKON_DATA.reduce((s,d) => s+d.found,         0);
@@ -295,6 +421,16 @@ function App() {
   const activeCatData  = selectedCat ? KOLLEKTIKON_DATA.find(d => d.id === selectedCat) : null;
   const filteredEntries = selectedCat ? CATALOG_ENTRIES.filter(e => e.cat === selectedCat) : CATALOG_ENTRIES;
   const catLabelMap     = Object.fromEntries(KOLLEKTIKON_DATA.map(d => [d.id, d.label]));
+  let displayedEntries = filteredEntries;
+  if (erfFilters.search) { const q = erfFilters.search.toLowerCase(); displayedEntries = displayedEntries.filter(e => e.name.toLowerCase().includes(q)); }
+  if (erfFilters.status.length) displayedEntries = displayedEntries.filter(e => erfFilters.status.includes(e.status));
+  displayedEntries = [...displayedEntries];
+  switch (erfFilters.sort) {
+    case 'name-az':  displayedEntries.sort((a,b) => a.name.localeCompare(b.name,'de')); break;
+    case 'name-za':  displayedEntries.sort((a,b) => b.name.localeCompare(a.name,'de')); break;
+    case 'erf-asc':  displayedEntries.sort((a,b) => (a.status==='komplett'?1:0)-(b.status==='komplett'?1:0)); break;
+    case 'erf-desc': displayedEntries.sort((a,b) => (b.status==='komplett'?1:0)-(a.status==='komplett'?1:0)); break;
+  }
 
   const toggleCat = (id) => setSelectedCat(prev => prev === id ? null : id);
 
@@ -393,33 +529,38 @@ function App() {
 
         {/* Bekannte Einträge */}
         <div className="reveal-up" style={{ transitionDelay:'0.1s' }}>
-          <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:8 }}>
+          <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:16 }}>
             <span style={{ fontFamily:'var(--font-mono)', fontSize:'10px', letterSpacing:'0.35em', color:'rgba(124,77,255,0.65)', textTransform:'uppercase' }}>◈ Bekannte Einträge</span>
             <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(124,77,255,0.5), rgba(124,77,255,0.05))' }}/>
             <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.28em', color:'rgba(160,140,255,0.4)', textTransform:'uppercase' }}>
-              {filteredEntries.length} {filteredEntries.length === 1 ? 'Eintrag' : 'Einträge'}
+              {displayedEntries.length} {displayedEntries.length === 1 ? 'Eintrag' : 'Einträge'}
               {activeCatData && ` · ${activeCatData.label}`}
             </span>
           </div>
-          <div style={{ background:'rgba(10,8,28,0.7)', border:'1px solid rgba(124,77,255,0.18)', borderRadius:3, overflow:'hidden', position:'relative' }}>
-            <span style={{position:'absolute',top:-1,left:-1,width:12,height:12,borderTop:'1px solid rgba(124,77,255,0.55)',borderLeft:'1px solid rgba(124,77,255,0.55)'}}/>
-            <span style={{position:'absolute',top:-1,right:-1,width:12,height:12,borderTop:'1px solid rgba(124,77,255,0.55)',borderRight:'1px solid rgba(124,77,255,0.55)'}}/>
-            <span style={{position:'absolute',bottom:-1,left:-1,width:12,height:12,borderBottom:'1px solid rgba(124,77,255,0.55)',borderLeft:'1px solid rgba(124,77,255,0.55)'}}/>
-            <span style={{position:'absolute',bottom:-1,right:-1,width:12,height:12,borderBottom:'1px solid rgba(124,77,255,0.55)',borderRight:'1px solid rgba(124,77,255,0.55)'}}/>
-            <div style={{ display:'grid', gridTemplateColumns: !selectedCat ? '28px 1fr auto auto auto' : '28px 1fr auto auto', gap:'12px', alignItems:'center', padding:'8px 14px', borderBottom:'1px solid rgba(124,77,255,0.18)', background:'rgba(124,77,255,0.05)' }}>
-              {['', 'Name', !selectedCat ? 'Kategorie' : null, 'Status', 'Datum'].filter(h => h !== null).map((h,i) => (
-                <span key={i} style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>{h}</span>
-              ))}
-            </div>
-            {filteredEntries.length === 0 ? (
-              <div style={{ padding:'28px 14px', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(160,140,255,0.35)', letterSpacing:'0.2em' }}>
-                Keine bekannten Einträge in dieser Kategorie.
+          <div style={{ display:'flex', gap:16, alignItems:'flex-start' }}>
+            <KollektikonSidebar filters={erfFilters} setFilters={setErfFilters} selectedCat={selectedCat} toggleCat={toggleCat} />
+            <div style={{ flex:1, minWidth:0 }}>
+              <div style={{ background:'rgba(10,8,28,0.7)', border:'1px solid rgba(124,77,255,0.18)', borderRadius:3, overflow:'hidden', position:'relative' }}>
+                <span style={{position:'absolute',top:-1,left:-1,width:12,height:12,borderTop:'1px solid rgba(124,77,255,0.55)',borderLeft:'1px solid rgba(124,77,255,0.55)'}}/>
+                <span style={{position:'absolute',top:-1,right:-1,width:12,height:12,borderTop:'1px solid rgba(124,77,255,0.55)',borderRight:'1px solid rgba(124,77,255,0.55)'}}/>
+                <span style={{position:'absolute',bottom:-1,left:-1,width:12,height:12,borderBottom:'1px solid rgba(124,77,255,0.55)',borderLeft:'1px solid rgba(124,77,255,0.55)'}}/>
+                <span style={{position:'absolute',bottom:-1,right:-1,width:12,height:12,borderBottom:'1px solid rgba(124,77,255,0.55)',borderRight:'1px solid rgba(124,77,255,0.55)'}}/>
+                <div style={{ display:'grid', gridTemplateColumns: !selectedCat ? '28px 1fr auto auto auto 18px' : '28px 1fr auto auto 18px', gap:'12px', alignItems:'center', padding:'8px 14px', borderBottom:'1px solid rgba(124,77,255,0.18)', background:'rgba(124,77,255,0.05)' }}>
+                  {['', 'Name', !selectedCat ? 'Kategorie' : null, 'Status', 'Datum', ''].filter(h => h !== null).map((h,i) => (
+                    <span key={i} style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>{h}</span>
+                  ))}
+                </div>
+                {displayedEntries.length === 0 ? (
+                  <div style={{ padding:'28px 14px', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(160,140,255,0.35)', letterSpacing:'0.2em' }}>
+                    Keine bekannten Einträge.
+                  </div>
+                ) : (
+                  displayedEntries.map(entry => (
+                    <CatalogRow key={entry.id} entry={entry} showCat={!selectedCat} catLabel={catLabelMap[entry.cat]} />
+                  ))
+                )}
               </div>
-            ) : (
-              filteredEntries.map(entry => (
-                <CatalogRow key={entry.id} entry={entry} showCat={!selectedCat} catLabel={catLabelMap[entry.cat]} />
-              ))
-            )}
+            </div>
           </div>
         </div>
 

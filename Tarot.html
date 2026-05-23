@@ -65,6 +65,20 @@
       <button class="btn" id="drawMajorBtn">Großes Arkana ziehen</button>
       <button class="btn" id="drawMinorBtn">Kleines Arkana ziehen</button>
     </div>
+    <div class="action-row pick-row">
+      <select id="suitPick" class="pick-select">
+        <option value="">— Typ —</option>
+        <option value="major">Großes Arkana</option>
+        <option value="kelche">Kelche</option>
+        <option value="schwerter">Schwerter</option>
+        <option value="staebe">Stäbe</option>
+        <option value="muenzen">Münzen</option>
+      </select>
+      <select id="cardPick" class="pick-select" disabled>
+        <option value="">— Karte —</option>
+      </select>
+      <button class="btn" id="pickBtn" disabled>In Hand nehmen</button>
+    </div>
     <button class="btn ghost" id="clearBtn">Clear</button>
   </div>
 </div>
@@ -151,7 +165,10 @@
 <div class="tray is-empty" id="tray" aria-live="polite">
   <div class="tray-bg"></div>
   <div class="tray-inner">
-    <div class="tray-label">Gezogene Karten</div>
+    <div class="tray-side">
+      <div class="tray-label">Gezogene Karten</div>
+      <button class="tray-clear-btn" id="trayClearBtn">Clear</button>
+    </div>
     <div class="drawn-cards" id="drawnCards">
       <div class="drawn-empty" id="drawnEmpty">
         Der Schleier ruht. Klicke auf <b>Karte ziehen</b>, um eine Karte aus dem Deck zu lösen.
@@ -598,6 +615,48 @@ function removeCard(id) {
 clearBtn.addEventListener("click", () => {
   if (!drawnIds.length) return;
   animateClear();
+});
+
+document.getElementById("trayClearBtn").addEventListener("click", () => {
+  if (!drawnIds.length) return;
+  animateClear();
+});
+
+/* ========================= PICK UI ========================= */
+const suitPick = document.getElementById("suitPick");
+const cardPick = document.getElementById("cardPick");
+const pickBtn  = document.getElementById("pickBtn");
+
+function populateCardPick() {
+  const suit = suitPick.value;
+  cardPick.innerHTML = '<option value="">— Karte —</option>';
+  pickBtn.disabled = true;
+  if (!suit) { cardPick.disabled = true; return; }
+  const pool = suit === "major"
+    ? DECK.filter(c => c.kind === "major" && !drawnSet.has(c.id))
+    : DECK.filter(c => c.suit === suit   && !drawnSet.has(c.id));
+  pool.forEach(card => {
+    const opt = document.createElement("option");
+    opt.value = card.id;
+    opt.textContent = card.name;
+    cardPick.appendChild(opt);
+  });
+  cardPick.disabled = pool.length === 0;
+}
+
+suitPick.addEventListener("change", populateCardPick);
+cardPick.addEventListener("change", () => { pickBtn.disabled = !cardPick.value; });
+
+pickBtn.addEventListener("click", () => {
+  const id = cardPick.value;
+  if (!id || drawnSet.has(id)) return;
+  const card = DECK.find(c => c.id === id);
+  if (!card) return;
+  suitPick.value = "";
+  cardPick.innerHTML = '<option value="">— Karte —</option>';
+  cardPick.disabled = true;
+  pickBtn.disabled = true;
+  animateDraw(card);
 });
 
 /* ========================= FLY ANIMATIONS ========================= */

@@ -585,6 +585,9 @@
 .sim-monster-row-dimmed { opacity: 0.38; }
 .sim-monster-row-dimmed:hover { background: rgba(160,140,255,0.04); }
 .sim-filter-select { font-size: 0.68rem; padding: 5px 6px; }
+.sim-cr-input { width: 72px; min-width: 0; text-align: center; -moz-appearance: textfield; }
+.sim-cr-input::-webkit-inner-spin-button,
+.sim-cr-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
 
 /* ── Type / Unterart tags ─────────────────────────────────────────────── */
 .sim-tags {

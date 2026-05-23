@@ -177,12 +177,14 @@ function DivisionPage({ division, heroRef }) {
         {/* Scan line */}
         <div style={{ position:'absolute', left:0, right:0, height:'2px', background:`linear-gradient(90deg, transparent 0%, ${accent}77 30%, rgba(180,235,255,0.85) 50%, ${accent}77 70%, transparent 100%)`, zIndex:4, pointerEvents:'none', animation:'heroScan 6s ease-in-out infinite' }} />
 
-        {/* Placeholder art left */}
+        {/* Division logo hex */}
         <div style={{ position:'absolute', left:'4%', top:'50%', transform:'translateY(-50%)', zIndex:4, pointerEvents:'none' }}>
-          <div style={{ width:'240px', height:'200px', border:`1px dashed ${accent}25`, borderRadius:'3px', background:`repeating-linear-gradient(-45deg, transparent, transparent 8px, ${accent}04 8px, ${accent}04 9px)`, display:'flex', alignItems:'center', justifyContent:'center', position:'relative', overflow:'hidden' }}>
-            <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse at 50% 50%, ${accent}07 0%, transparent 70%)` }} />
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', color:`${accent}30`, letterSpacing:'0.1em', textAlign:'center', position:'relative', zIndex:1 }}>divisions-artwork<br />die sentinels</span>
-          </div>
+          <svg width="220" height="220" viewBox="0 0 220 220" style={{ display:'block', filter:`drop-shadow(0 0 24px ${accent}44)` }}>
+            <defs><clipPath id="divLogoClip"><polygon points={hexPoints(220)} /></clipPath></defs>
+            <polygon points={hexPoints(220)} fill={`${accent}10`} stroke="none" />
+            <image href={division.logo} x="0" y="0" width="220" height="220" clipPath="url(#divLogoClip)" preserveAspectRatio="xMidYMid meet" />
+            <polygon points={hexPoints(220)} fill="none" stroke={accent} strokeWidth="1.5" opacity="0.7" />
+          </svg>
         </div>
 
         {/* Roman numeral watermark right */}

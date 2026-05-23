@@ -1,5 +1,54 @@
 :root { --nav-h: 52px; }
 
+/* ── Kollektikon Filter Sidebar ─────────────────────────── */
+.koll-sidebar {
+  width: 210px;
+  flex-shrink: 0;
+  background: rgba(10,8,28,0.7);
+  border: 1px solid rgba(124,77,255,0.16);
+  border-radius: 3px;
+  padding: 14px 14px 16px;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: calc(var(--nav-h) + 16px);
+}
+
+.koll-search {
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(124,77,255,0.22);
+  border-radius: 3px;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 300;
+  padding: 6px 28px 6px 10px;
+  letter-spacing: 0.04em;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.koll-search:focus { border-color: rgba(124,77,255,0.55); }
+.koll-search::placeholder { color: rgba(var(--text-rgb),0.3); }
+
+.koll-sort-btn {
+  width: 100%;
+  text-align: left;
+  padding: 5px 8px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  color: rgba(var(--text-rgb),0.45);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.koll-sort-btn.active { background: rgba(124,77,255,0.12); border-color: rgba(124,77,255,0.38); color: var(--white); }
+.koll-sort-btn:hover:not(.active) { color: rgba(var(--text-rgb),0.72); background: rgba(124,77,255,0.06); }
+
 @keyframes recentCardIdle {
   0%   { transform: scale(1.22) translateY(0); }
   50%  { transform: scale(1.22) translateY(-6px); }

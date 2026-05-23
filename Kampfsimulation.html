@@ -637,6 +637,8 @@ function applyMonsterFilter(pool, monsterFilter) {
   if (monsterFilter?.umgebung) pool = pool.filter(m =>
     Array.isArray(m.umgebung) ? m.umgebung.includes(monsterFilter.umgebung) : m.umgebung === monsterFilter.umgebung
   );
+  if (monsterFilter?.crMin !== '' && monsterFilter?.crMin != null) pool = pool.filter(m => (m.cr ?? 0) >= Number(monsterFilter.crMin));
+  if (monsterFilter?.crMax !== '' && monsterFilter?.crMax != null) pool = pool.filter(m => (m.cr ?? 0) <= Number(monsterFilter.crMax));
   return pool;
 }
 
@@ -877,7 +879,7 @@ const EMPTY_PLAYER = {
 function CombatantCard({ c, members, count, onRemove, onAddOne, onDetail, onEdit, onSessionChange }) {
   const isMonster = c._kind === 'monster';
   const meta = isMonster
-    ? `CR ${formatCR(c.cr)} · ${c.tp} TP · RK ${c.rk}`
+    ? `HG ${formatCR(c.cr)} · ${c.tp} TP · RK ${c.rk}`
     : `${c.klasse} Stufe ${c.stufe} · RK ${c.rk}`;
   const clickHandler = isMonster ? onDetail : onEdit;
   const sess = e => e.stopPropagation();
@@ -978,11 +980,13 @@ function MonsterPicker({ onAdd, onClose, selected, monsterFilter, onMonsterFilte
     if (monsterFilter?.umgebung) list = list.filter(m =>
       Array.isArray(m.umgebung) ? m.umgebung.includes(monsterFilter.umgebung) : m.umgebung === monsterFilter.umgebung
     );
+    if (monsterFilter?.crMin !== '' && monsterFilter?.crMin != null) list = list.filter(m => (m.cr ?? 0) >= Number(monsterFilter.crMin));
+    if (monsterFilter?.crMax !== '' && monsterFilter?.crMax != null) list = list.filter(m => (m.cr ?? 0) <= Number(monsterFilter.crMax));
     if (q.trim()) { const low = q.toLowerCase(); list = list.filter(m => m.name.toLowerCase().includes(low)); }
     return list.slice(0, 100);
   }, [q, all, monsterFilter]);
 
-  const activeFilters = [monsterFilter?.art, monsterFilter?.unterart, monsterFilter?.umgebung].filter(Boolean).length;
+  const activeFilters = [monsterFilter?.art, monsterFilter?.unterart, monsterFilter?.umgebung, monsterFilter?.crMin, monsterFilter?.crMax].filter(v => v !== '' && v != null).length;
 
   return (
     <div className="sim-overlay" onClick={e => e.target === e.currentTarget && onClose()}>
@@ -994,7 +998,7 @@ function MonsterPicker({ onAdd, onClose, selected, monsterFilter, onMonsterFilte
         <div className="sim-modal-body">
           <input className="sim-search" placeholder="Monster suchen…" value={q}
             onChange={e => setQ(e.target.value)} autoFocus style={{ marginBottom: 8 }} />
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 6, marginBottom: 8 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 6, marginBottom: 6 }}>
             <select className="sim-form-select" value={monsterFilter?.art || ''} onChange={e => setF('art', e.target.value)}>
               <option value="">Alle Arten</option>
               {allArts.map(a => <option key={a} value={a}>{a}</option>)}
@@ -1008,9 +1012,15 @@ function MonsterPicker({ onAdd, onClose, selected, monsterFilter, onMonsterFilte
               {allUmgebungen.map(a => <option key={a} value={a}>{a}</option>)}
             </select>
           </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
+            <span style={{ fontSize: '0.72rem', fontFamily: 'var(--font-mono)', color: 'rgba(160,140,255,0.45)', whiteSpace: 'nowrap', minWidth: 22 }}>HG</span>
+            <input type="number" className="sim-form-select sim-cr-input" value={monsterFilter?.crMin ?? ''} onChange={e => setF('crMin', e.target.value)} placeholder="Min" min="0" max="30" step="0.125" />
+            <span style={{ color: 'rgba(160,140,255,0.3)', flexShrink: 0 }}>–</span>
+            <input type="number" className="sim-form-select sim-cr-input" value={monsterFilter?.crMax ?? ''} onChange={e => setF('crMax', e.target.value)} placeholder="Max" min="0" max="30" step="0.125" />
+          </div>
           <div style={{ fontSize: '0.68rem', color: 'rgba(160,140,255,0.35)', marginBottom: 8, fontFamily: 'var(--font-mono)', display: 'flex', justifyContent: 'space-between' }}>
             <span>{results.length} Monster{activeFilters > 0 ? ` · ${activeFilters} Filter aktiv` : ''}</span>
-            {activeFilters > 0 && <button style={{ background:'none', border:'none', color:'rgba(160,140,255,0.5)', cursor:'pointer', fontSize:'0.68rem', padding:0 }} onClick={() => onMonsterFilter({ art:'', unterart:'', umgebung:'' })}>Filter leeren</button>}
+            {activeFilters > 0 && <button style={{ background:'none', border:'none', color:'rgba(160,140,255,0.5)', cursor:'pointer', fontSize:'0.68rem', padding:0 }} onClick={() => onMonsterFilter({ art:'', unterart:'', umgebung:'', crMin:'', crMax:'' })}>Filter leeren</button>}
           </div>
           <div className="sim-monster-list">
             {results.map(m => {
@@ -1031,7 +1041,7 @@ function MonsterPicker({ onAdd, onClose, selected, monsterFilter, onMonsterFilte
                       {m.unterart && m.unterart !== 'NPC' && <span className="sim-tag sim-tag-sub">{m.unterart}</span>}
                     </span>
                   </span>
-                  <span className="sim-monster-row-meta">CR {formatCR(m.cr)} · {m.tp} TP</span>
+                  <span className="sim-monster-row-meta">HG {formatCR(m.cr)} · {m.tp} TP</span>
                   {onDetail && (
                     <button className="sim-monster-row-info" title="Details" onClick={e => { e.stopPropagation(); onDetail(m); }}>i</button>
                   )}
@@ -1480,7 +1490,7 @@ function GroupPanel({ label, group, onAdd, onRemove, onAddClone, onAddOpponent, 
   const allUnterarts = useMemo(() => [...new Set(all.map(m => m.unterart).filter(Boolean))].sort((a,b) => a.localeCompare(b,'de')), [all]);
   const allUmgebungen = useMemo(() => [...new Set(all.flatMap(m => Array.isArray(m.umgebung) ? m.umgebung : m.umgebung ? [m.umgebung] : []))].sort((a,b) => a.localeCompare(b,'de')), [all]);
   const setF = (key, val) => onMonsterFilter(f => ({ ...f, [key]: val }));
-  const activeFilters = [monsterFilter?.art, monsterFilter?.unterart, monsterFilter?.umgebung].filter(Boolean).length;
+  const activeFilters = [monsterFilter?.art, monsterFilter?.unterart, monsterFilter?.umgebung, monsterFilter?.crMin, monsterFilter?.crMax].filter(v => v !== '' && v != null).length;
   const DIFF_OPTS = [
     { val: 'trivial',  label: 'Trivial' },
     { val: 'leicht',   label: 'Leicht' },
@@ -1521,7 +1531,7 @@ function GroupPanel({ label, group, onAdd, onRemove, onAddClone, onAddOpponent, 
         {canRevert && <button className="sim-btn sim-btn-revert" onClick={onRevert} title="Zur vorherigen Aufstellung zurückkehren">↩ Rückgängig</button>}
         {showMatch && (
           <div className="sim-match-bar">
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 4 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 4, marginBottom: 4 }}>
               <select className="sim-form-select sim-filter-select" value={monsterFilter?.art || ''} onChange={e => setF('art', e.target.value)} title="Art filtern">
                 <option value="">Alle Arten</option>
                 {allArts.map(a => <option key={a} value={a}>{a}</option>)}
@@ -1535,10 +1545,16 @@ function GroupPanel({ label, group, onAdd, onRemove, onAddClone, onAddOpponent, 
                 {allUmgebungen.map(a => <option key={a} value={a}>{a}</option>)}
               </select>
             </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+              <span style={{ fontSize: '0.64rem', fontFamily: 'var(--font-mono)', color: 'rgba(160,140,255,0.45)', whiteSpace: 'nowrap', minWidth: 20 }}>HG</span>
+              <input type="number" className="sim-form-select sim-filter-select sim-cr-input" value={monsterFilter?.crMin ?? ''} onChange={e => setF('crMin', e.target.value)} placeholder="Min" min="0" max="30" step="0.125" title="HG Minimum" />
+              <span style={{ color: 'rgba(160,140,255,0.3)', fontSize: '0.7rem', flexShrink: 0 }}>–</span>
+              <input type="number" className="sim-form-select sim-filter-select sim-cr-input" value={monsterFilter?.crMax ?? ''} onChange={e => setF('crMax', e.target.value)} placeholder="Max" min="0" max="30" step="0.125" title="HG Maximum" />
+            </div>
             {activeFilters > 0 && (
               <div style={{ fontSize: '0.64rem', color: 'rgba(160,140,255,0.4)', display: 'flex', justifyContent: 'space-between', padding: '2px 1px' }}>
                 <span>{activeFilters} Filter aktiv</span>
-                <button style={{ background:'none', border:'none', color:'rgba(160,140,255,0.45)', cursor:'pointer', fontSize:'0.64rem', padding:0 }} onClick={() => onMonsterFilter({ art:'', unterart:'', umgebung:'' })}>Filter leeren</button>
+                <button style={{ background:'none', border:'none', color:'rgba(160,140,255,0.45)', cursor:'pointer', fontSize:'0.64rem', padding:0 }} onClick={() => onMonsterFilter({ art:'', unterart:'', umgebung:'', crMin:'', crMax:'' })}>Filter leeren</button>
               </div>
             )}
             <div className="sim-diff-toggle">
@@ -1870,7 +1886,7 @@ function SimApp() {
   const [result, setResult] = useState(null);
   const [runCount, setRunCount] = useState(50);
   const [difficulty, setDifficulty] = useState('normal');
-  const [monsterFilter, setMonsterFilter] = useState({ art: '', unterart: '', umgebung: '' });
+  const [monsterFilter, setMonsterFilter] = useState({ art: '', unterart: '', umgebung: '', crMin: '', crMax: '' });
   const [coherent, setCoherent] = useState(true);
   useEffect(() => { saveGroups(group1, group2); }, [group1, group2]);
   const [detailMonster, setDetailMonster] = useState(null);

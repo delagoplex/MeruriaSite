@@ -413,3 +413,31 @@ Defined in `:root` in `base.css`. Light-mode overrides under `[data-theme="light
 | `--accent` | varies | Division page accent color |
 
 Monster type colors are defined as CSS custom properties in `Monster.css` (e.g. `--type-drache: #f32b00`) and as `oklch()` values in the `TYPE_COLORS` JS object in `Monster.html`.
+
+## Kollektikon data (`assets/scripts/data/kollektikon-data.js`)
+
+Single source of truth for the Kollektikon, shared by `index.html` and `Kollektikon.html`. Neither page contains hardcoded data — both derive their arrays at runtime.
+
+| Variable | Purpose |
+|---|---|
+| `window.KOLLEKTIKON_CATEGORIES` | Category metadata: `id`, `label`, `labelShort`, `total`, `hue` |
+| `window.KOLLEKTIKON_CATALOG` | All known entries: `id`, `name`, `cat`, `hue`, `status`, `date` |
+| `window.KOLLEKTIKON_RECENT_SIGHTED_IDS` | Ordered IDs of recently discovered entries (newest first) |
+| `window.KOLLEKTIKON_RECENT_KOMPLETT_IDS` | Ordered IDs of recently completed entries (newest first) |
+
+`found` and `komplett` counts per category are derived automatically from `KOLLEKTIKON_CATALOG` — never set manually.
+
+### Adding a new entry
+
+1. Add an object to `KOLLEKTIKON_CATALOG` with `status: 'sighted'` or `'komplett'`
+2. Prepend the entry's `id` to `KOLLEKTIKON_RECENT_SIGHTED_IDS` (and/or `KOLLEKTIKON_RECENT_KOMPLETT_IDS` if already complete)
+3. Both pages update automatically — no other files need touching
+
+### Completing an existing entry
+
+1. Change `status` from `'sighted'` to `'komplett'` in `KOLLEKTIKON_CATALOG`
+2. Prepend the `id` to `KOLLEKTIKON_RECENT_KOMPLETT_IDS`
+
+### Icon handling
+
+Icons are JSX and cannot live in a plain `.js` file. Each page defines its own icon constants (`FISH_ICON`, `INSECT_ICON`, …) and a `CAT_ICON_MAP` lookup that maps category IDs to icons. The shared data file only stores plain data.
