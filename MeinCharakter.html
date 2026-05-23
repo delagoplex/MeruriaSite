@@ -10,6 +10,8 @@
 <script src="assets/scripts/vendor/react-dom.development.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/scripts/vendor/supabase.min.js"></script>
+<script src="assets/scripts/supabase-client.js"></script>
 <script src="assets/components/site-gate.jsx" type="text/babel"></script>
 <script src="assets/components/tweaks-panel-13.jsx" type="text/babel"></script>
 <script src="assets/scripts/data/zauber-data.js"></script>
@@ -501,52 +503,43 @@ function ZauberSection({ zauber, updZauber, editing }) {
   );
 }
 
-const STORAGE_KEY = 'meruria_characters';
-
-function loadCharacters() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
-  } catch(e) {}
-  return [];
+async function loadCharacters() {
+  const { data } = await window._sb.from('characters').select('*').order('created_at');
+  return (data || []).map(row => ({
+    id: row.id,
+    name: row.name,
+    race: row.race,
+    class: row.class,
+    division: row.division,
+    _char: row.char_data && Object.keys(row.char_data).length > 0 ? row.char_data : null,
+  }));
 }
 
 function charFromEntry(entry) {
-  const base = entry._char ? { ...entry._char } : buildChar(entry);
-  if (!entry._char && entry._simData) {
-    const s = entry._simData;
-    if (s.maxTp)             base.hp    = s.maxTp;
-    if (s.rk   !== undefined) base.ac   = s.rk;
-    if (s.stufe)             base.level  = s.stufe;
-    if (s.klasse)            base.class  = s.klasse;
-    if (s.attribute) base.stats = {
-      str: s.attribute.STR || 10, dex: s.attribute.DEX || 10, con: s.attribute.CON || 10,
-      int: s.attribute.INT || 10, wis: s.attribute.WIS || 10, cha: s.attribute.CHA || 10,
-    };
-  }
-  return base;
+  const d = entry._char;
+  // If fully built (has 'hp'), use directly; draft or missing → build from fields
+  if (d && d.hp !== undefined) return { ...d };
+  return buildChar(d || entry);
 }
 
+let _saveTimer = null;
 function saveCharToDB(id, char) {
-  try {
-    const list = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    const idx = list.findIndex(c => c.id === id);
-    if (idx >= 0) {
-      list[idx] = { ...list[idx], _char: char };
-    } else {
-      list.push({ id: id || uid(), name: char.name || '?', _char: char });
-    }
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-  } catch(e) { console.error('saveCharToDB failed:', e); }
+  clearTimeout(_saveTimer);
+  _saveTimer = setTimeout(async () => {
+    try {
+      await window._sb.from('characters').update({
+        name: char.name || 'Unbenannt',
+        race: char.race || null,
+        class: char.class || null,
+        division: char.division || null,
+        char_data: char,
+      }).eq('id', id);
+    } catch(e) { console.error('saveCharToDB failed:', e); }
+  }, 500);
 }
 
-function deleteChar(id) {
-  try {
-    const list = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    const updated = list.filter(c => c.id !== id);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-    return updated;
-  } catch(e) { return []; }
+async function deleteChar(id) {
+  await window._sb.from('characters').delete().eq('id', id);
 }
 
 function exportChars(chars, filename) {
@@ -559,36 +552,48 @@ function exportChars(chars, filename) {
   URL.revokeObjectURL(url);
 }
 
-function importCharsFromFile(file, existing, onDone) {
-  const reader = new FileReader();
-  reader.onload = e => {
-    try {
-      const data = JSON.parse(e.target.result);
-      if (!Array.isArray(data)) return;
-      const ids = new Set(existing.map(c => c.id));
-      const merged = [...existing, ...data.filter(c => c.id && !ids.has(c.id))];
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
-      onDone(merged);
-    } catch(err) {}
-  };
-  reader.readAsText(file);
+async function importCharsFromFile(file) {
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onload = async e => {
+      try {
+        const data = JSON.parse(e.target.result);
+        if (!Array.isArray(data)) { resolve(); return; }
+        const inserts = data.map(c => {
+          const char = c._char || c;
+          return {
+            name: char.name || c.name || 'Importiert',
+            race: char.race || c.race || null,
+            class: char.class || c.class || null,
+            division: char.division || c.division || null,
+            char_data: char,
+          };
+        });
+        await window._sb.from('characters').insert(inserts);
+        resolve();
+      } catch(err) { console.error(err); resolve(); }
+    };
+    reader.readAsText(file);
+  });
 }
 
 /* ── Auswahl-Bildschirm ────────────────────── */
-function CharSelection({ chars, setChars, onSelect, onNew }) {
+function CharSelection({ chars, onSelect, onNew, onReload }) {
   const [confirmDelete, setConfirmDelete] = useApp(null);
   const importRef = useRef(null);
 
-  function handleDelete(id) {
-    setChars(deleteChar(id));
+  async function handleDelete(id) {
+    await deleteChar(id);
     setConfirmDelete(null);
+    await onReload();
   }
 
-  function handleImport(e) {
+  async function handleImport(e) {
     const file = e.target.files[0];
     if (!file) return;
-    importCharsFromFile(file, chars, merged => setChars(merged));
+    await importCharsFromFile(file);
     e.target.value = '';
+    await onReload();
   }
 
   const toolBtn = {
@@ -1077,26 +1082,40 @@ function SteckbriefView({ entry, onBack, hasMultiple }) {
 
 /* ── Haupt-App ─────────────────────────────── */
 function App() {
-  const [chars, setChars] = useApp(() => loadCharacters());
+  const [chars, setChars] = useApp([]);
+  const [loading, setLoading] = useApp(true);
   const [entry, setEntry] = useApp(null);
 
-  function handleBack() {
-    setChars(loadCharacters());
-    setEntry(null);
+  async function reload() {
+    setLoading(true);
+    const list = await loadCharacters();
+    setChars(list);
+    setLoading(false);
   }
 
+  React.useEffect(() => { reload(); }, []);
+
+  async function handleBack() {
+    setEntry(null);
+    await reload();
+  }
+
+  if (loading) return (
+    <div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center"}}>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:9,letterSpacing:".3em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase"}}>
+        Lade Charaktere…
+      </span>
+    </div>
+  );
   if (chars.length === 0) return <EmptyState />;
   if (entry) return <SteckbriefView entry={entry} onBack={handleBack} hasMultiple={chars.length > 1} />;
 
   return (
     <CharSelection
       chars={chars}
-      setChars={setChars}
-      onSelect={e => {
-        const fresh = loadCharacters().find(c => c.id === e.id) || e;
-        setEntry(fresh);
-      }}
+      onSelect={e => setEntry(e)}
       onNew={() => { window.location.href = 'Neuer_Charakter.html'; }}
+      onReload={reload}
     />
   );
 }

@@ -1,27 +1,32 @@
-// Site-wide auth gate — separate session from Monster gate.
-// Hash of site password (SHA-256). Session lasts 30 days.
-const SITE_PW_HASH = 'd7868882d5f04253d82a65c3bc9ba3cad66db245c9acd29f42eea4229cf4ef24';
-const SITE_AUTH_KEY = 'site_auth';
-const SITE_AUTH_TTL = 30 * 24 * 60 * 60 * 1000;
+// Supabase auth gate. Session persists via localStorage (Supabase default).
+// Sets window.SITE_USER = { id, email, role } after successful auth.
+// window.SITE_LOGOUT() triggers signOut and re-renders the login form.
 
-function SitePasswordForm({ onUnlock }) {
-  const [value, setValue] = React.useState('');
-  const [error, setError] = React.useState(false);
-  const [shake, setShake] = React.useState(false);
+function LoginForm({ onAuth }) {
+  const [email, setEmail]       = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [error, setError]       = React.useState(null);
+  const [loading, setLoading]   = React.useState(false);
+  const [shake, setShake]       = React.useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value));
-    const hash = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
-    if (hash === SITE_PW_HASH) {
-      localStorage.setItem(SITE_AUTH_KEY, JSON.stringify({ ts: Date.now() }));
-      onUnlock();
-    } else {
-      setError(true);
+    setLoading(true);
+    setError(null);
+    const { data, error: err } = await window._sb.auth.signInWithPassword({ email, password });
+    if (err) {
+      setError('Ungültige Anmeldedaten');
       setShake(true);
-      setValue('');
+      setPassword('');
       setTimeout(() => setShake(false), 400);
+      setLoading(false);
+      return;
     }
+    const { data: profile } = await window._sb
+      .from('profiles').select('role').eq('id', data.user.id).single();
+    window.SITE_USER = { id: data.user.id, email: data.user.email, role: profile?.role || 'player' };
+    setLoading(false);
+    onAuth();
   }
 
   const hexPts = (() => {
@@ -44,13 +49,29 @@ function SitePasswordForm({ onUnlock }) {
         </div>
 
         <form onSubmit={handleSubmit} style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'12px' }}>
-          <div style={{ position:'relative', animation: shake ? 'pulse-glow 0.4s ease' : 'none' }}>
+          <div style={{ animation: shake ? 'pulse-glow 0.4s ease' : 'none', display:'flex', flexDirection:'column', gap:'8px' }}>
+            <input
+              type="email"
+              value={email}
+              onChange={e => { setEmail(e.target.value); setError(null); }}
+              placeholder="E-Mail"
+              autoFocus
+              style={{
+                fontFamily:'var(--font-mono)', fontSize:'13px', letterSpacing:'0.1em',
+                padding:'10px 16px', width:'220px',
+                background:'rgba(80,160,220,0.05)',
+                border:'1px solid rgba(80,160,220,0.25)',
+                borderRadius:'3px', color:'var(--white)', outline:'none',
+                transition:'border-color 0.2s', textAlign:'center'
+              }}
+              onFocus={e => e.target.style.borderColor='rgba(80,160,220,0.55)'}
+              onBlur={e => e.target.style.borderColor='rgba(80,160,220,0.25)'}
+            />
             <input
               type="password"
-              value={value}
-              onChange={e => { setValue(e.target.value); setError(false); }}
+              value={password}
+              onChange={e => { setPassword(e.target.value); setError(null); }}
               placeholder="Passwort"
-              autoFocus
               style={{
                 fontFamily:'var(--font-mono)', fontSize:'13px', letterSpacing:'0.15em',
                 padding:'10px 16px', width:'220px',
@@ -59,25 +80,26 @@ function SitePasswordForm({ onUnlock }) {
                 borderRadius:'3px', color:'var(--white)', outline:'none',
                 transition:'border-color 0.2s', textAlign:'center'
               }}
-              onFocus={e => { if (!error) e.target.style.borderColor = 'rgba(80,160,220,0.55)'; }}
-              onBlur={e => { if (!error) e.target.style.borderColor = 'rgba(80,160,220,0.25)'; }}
+              onFocus={e => { if (!error) e.target.style.borderColor='rgba(80,160,220,0.55)'; }}
+              onBlur={e => { if (!error) e.target.style.borderColor='rgba(80,160,220,0.25)'; }}
             />
           </div>
           {error && (
             <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:'rgba(220,80,80,0.8)', textTransform:'uppercase', animation:'fadeIn 0.15s ease' }}>
-              Falsches Passwort
+              {error}
             </div>
           )}
-          <button type="submit" style={{
+          <button type="submit" disabled={loading} style={{
             fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.28em',
             padding:'8px 24px', background:'rgba(80,160,220,0.1)',
             border:'1px solid rgba(80,160,220,0.3)', borderRadius:'3px',
-            color:'rgba(150,200,240,0.75)', cursor:'pointer', textTransform:'uppercase',
+            color: loading ? 'rgba(150,200,240,0.4)' : 'rgba(150,200,240,0.75)',
+            cursor: loading ? 'default' : 'pointer', textTransform:'uppercase',
             transition:'all 0.15s'
           }}
-            onMouseEnter={e => { e.currentTarget.style.background='rgba(80,160,220,0.2)'; e.currentTarget.style.borderColor='rgba(80,160,220,0.6)'; e.currentTarget.style.color='var(--white)'; }}
+            onMouseEnter={e => { if (!loading) { e.currentTarget.style.background='rgba(80,160,220,0.2)'; e.currentTarget.style.borderColor='rgba(80,160,220,0.6)'; e.currentTarget.style.color='var(--white)'; } }}
             onMouseLeave={e => { e.currentTarget.style.background='rgba(80,160,220,0.1)'; e.currentTarget.style.borderColor='rgba(80,160,220,0.3)'; e.currentTarget.style.color='rgba(150,200,240,0.75)'; }}>
-            Eintreten
+            {loading ? '…' : 'Eintreten'}
           </button>
         </form>
       </div>
@@ -86,16 +108,36 @@ function SitePasswordForm({ onUnlock }) {
 }
 
 function SiteGate({ children }) {
-  const [authed, setAuthed] = React.useState(() => {
-    try {
-      const raw = localStorage.getItem(SITE_AUTH_KEY);
-      if (!raw) return false;
-      const { ts } = JSON.parse(raw);
-      return Date.now() - ts < SITE_AUTH_TTL;
-    } catch { return false; }
-  });
+  const [ready, setReady]   = React.useState(false);
+  const [authed, setAuthed] = React.useState(false);
 
-  if (!authed) return <SitePasswordForm onUnlock={() => setAuthed(true)} />;
+  React.useEffect(() => {
+    async function init() {
+      const { data: { session } } = await window._sb.auth.getSession();
+      if (session) {
+        const { data: profile } = await window._sb
+          .from('profiles').select('role').eq('id', session.user.id).single();
+        window.SITE_USER = { id: session.user.id, email: session.user.email, role: profile?.role || 'player' };
+        setAuthed(true);
+      }
+      setReady(true);
+    }
+    init();
+
+    const { data: { subscription } } = window._sb.auth.onAuthStateChange((event) => {
+      if (event === 'SIGNED_OUT') {
+        window.SITE_USER = null;
+        setAuthed(false);
+        setReady(true);
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, []);
+
+  window.SITE_LOGOUT = () => window._sb.auth.signOut();
+
+  if (!ready) return <div style={{ position:'fixed', inset:0, background:'#05040f' }} />;
+  if (!authed) return <LoginForm onAuth={() => setAuthed(true)} />;
   return children;
 }
 

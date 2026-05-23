@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="de"><head>
+<html lang="de">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Meruria — Kollektikon</title>
@@ -9,573 +10,1703 @@
 <script src="assets/scripts/vendor/react.development.js"></script>
 <script src="assets/scripts/vendor/react-dom.development.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
-<script src="assets/components/tweaks-panel-13.jsx" type="text/babel"></script>
+<script src="assets/scripts/vendor/supabase.min.js"></script>
+<script src="assets/scripts/supabase-client.js"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
 <script src="assets/components/site-gate.jsx" type="text/babel"></script>
-<script src="assets/components/filter-utils.jsx" type="text/babel"></script>
-<script src="assets/components/footer.jsx" type="text/babel"></script>
-<script src="assets/scripts/data/kollektikon-data.js"></script>
+<script src="assets/components/tweaks-panel-13.jsx" type="text/babel"></script>
+<script src="assets/scripts/data/resources/ff14_fish-data.js"></script>
+<script src="assets/scripts/data/resources/mineralien/ff14_mineralien-data.js"></script>
+<script src="assets/scripts/data/resources/pflanzen/ff14_pflanzen-data.js"></script>
+<script src="assets/scripts/data/resources/pflanzen/fantasy_plant-data.js"></script>
+<script src="assets/scripts/data/monster/monsterhandbuch-data.js"></script>
+<script src="assets/scripts/data/monster/foliant-der-feinde-data.js"></script>
+<script src="assets/scripts/data/monster/schatzkammer-der-drachen-data.js"></script>
+<script src="assets/scripts/data/monster/almanach-der-monster-data.js"></script>
+<script src="assets/scripts/data/monster/floral-dragons-data.js"></script>
+<script src="assets/scripts/data/monster/ruhm-der-riesen-data.js"></script>
+<script src="assets/scripts/data/monster/drakkenheim-data.js"></script>
+<script src="assets/scripts/data/monster/flee-mortals-data.js"></script>
+<script src="assets/scripts/data/monster/avernus-data.js"></script>
+<script src="assets/scripts/data/monster/tome-of-beasts-data.js"></script>
+<script src="assets/scripts/data/monster/tome-of-beasts-2-data.js"></script>
+<script src="assets/scripts/data/monster/sonstige-data.js"></script>
+<script src="assets/scripts/data/monster-data.js"></script>
+
 </head>
 <body>
 <div id="root"></div>
+
+<!-- ═══════════════════════════════════════════
+     SCRIPT 1 — Data + icon library
+     ═══════════════════════════════════════════ -->
 <script type="text/babel">
-const { useState, useEffect, useRef } = React;
-const { useTweaks, TweaksPanel, TweakSection, TweakToggle } = window;
-const { SiteNav, SiteGate, SiteFooter, FilterGroup, XBtn } = window;
+const { useState, useEffect, useRef, useMemo } = React;
 
-const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"showParticles": true}/*EDITMODE-END*/;
+/* ── Category icons (also used at large size in overlay) ── */
+const CAT_ICONS = {
+  fische:        <g><path d="M70 50 C 60 35, 30 35, 20 50 C 30 65, 60 65, 70 50 Z" fill="none" strokeWidth="2"/><path d="M70 50 L 85 38 L 85 62 Z" fill="none" strokeWidth="2"/><circle cx="32" cy="48" r="2.4" fill="currentColor"/></g>,
+  insekten:      <g><ellipse cx="50" cy="50" rx="3.5" ry="22" fill="currentColor" stroke="none"/><path d="M50 38 C 36 22 16 24 18 42 C 24 50 38 48 50 50 Z" fill="none" strokeWidth="1.6"/><path d="M50 38 C 64 22 84 24 82 42 C 76 50 62 48 50 50 Z" fill="none" strokeWidth="1.6"/><path d="M50 50 C 38 56 22 60 22 72 C 30 76 44 70 50 64 Z" fill="none" strokeWidth="1.4"/><path d="M50 50 C 62 56 78 60 78 72 C 70 76 56 70 50 64 Z" fill="none" strokeWidth="1.4"/><path d="M48 30 L 42 22 M52 30 L 58 22" strokeWidth="1.4"/></g>,
+  pflanzen:      <g><path d="M50 86 L 50 30" strokeWidth="2"/><path d="M50 50 C 30 46, 18 30, 22 18 C 36 22, 50 36, 50 50 Z" fill="none" strokeWidth="1.8"/><path d="M50 62 C 70 58, 82 42, 78 30 C 64 34, 50 48, 50 62 Z" fill="none" strokeWidth="1.8"/><path d="M50 76 C 42 72, 38 64, 42 58 C 48 60, 52 68, 50 76 Z" fill="none" strokeWidth="1.6"/></g>,
+  mineralien:    <g><path d="M50 14 L 78 38 L 64 82 L 36 82 L 22 38 Z" fill="none" strokeWidth="2"/><path d="M50 14 L 50 82 M22 38 L 78 38 M36 82 L 50 38 L 64 82" strokeWidth="1.2" opacity="0.6"/></g>,
+  kreaturen:     <g><path d="M28 32 L 22 18 L 38 26 L 50 14 L 62 26 L 78 18 L 72 32 L 80 50 L 70 70 L 50 84 L 30 70 L 20 50 Z" fill="none" strokeWidth="1.8"/><circle cx="40" cy="44" r="3" fill="currentColor"/><circle cx="60" cy="44" r="3" fill="currentColor"/><path d="M38 62 Q 50 70 62 62" strokeWidth="1.6" fill="none"/></g>,
+  kreaturenteile:<g><path d="M20 50 C 20 34, 36 22, 50 30 C 64 22, 80 34, 80 50 C 80 66, 64 78, 50 70 C 36 78, 20 66, 20 50 Z M50 30 L 50 70 M28 38 L 72 62 M28 62 L 72 38" fill="none" strokeWidth="1.6"/></g>,
+  wal:           <g><path d="M14 52 C 20 36 40 26 60 30 C 72 32 82 40 86 50 L 78 54 L 72 48 L 64 54 L 56 46 L 48 56 L 38 48 Z" fill="none" strokeWidth="2"/><circle cx="68" cy="42" r="1.8" fill="currentColor"/><path d="M28 40 L 34 50 M48 28 L 52 42" strokeWidth="1.2" opacity="0.55"/></g>,
+  lebensspeicher:<g><circle cx="50" cy="50" r="26" fill="none" strokeWidth="2"/><path d="M50 24 L 50 76 M24 50 L 76 50 M32 32 L 68 68 M68 32 L 32 68" strokeWidth="1.1" opacity="0.55"/><circle cx="50" cy="50" r="6.5" fill="none" strokeWidth="1.6"/><circle cx="50" cy="50" r="1.6" fill="currentColor"/></g>,
+};
 
-// ── ICONS ─────────────────────────────────────────────────
-const FISH_ICON     = <g><path d="M70 50 C 60 35, 30 35, 20 50 C 30 65, 60 65, 70 50 Z" fill="none" strokeWidth="2"/><path d="M70 50 L 85 38 L 85 62 Z" fill="none" strokeWidth="2"/><circle cx="32" cy="48" r="2.4" fill="currentColor"/></g>;
-const INSECT_ICON   = <g><ellipse cx="50" cy="50" rx="3.5" ry="22" fill="currentColor" stroke="none"/><path d="M50 38 C 36 22 16 24 18 42 C 24 50 38 48 50 50 Z" fill="none" strokeWidth="1.6"/><path d="M50 38 C 64 22 84 24 82 42 C 76 50 62 48 50 50 Z" fill="none" strokeWidth="1.6"/><path d="M50 50 C 38 56 22 60 22 72 C 30 76 44 70 50 64 Z" fill="none" strokeWidth="1.4"/><path d="M50 50 C 62 56 78 60 78 72 C 70 76 56 70 50 64 Z" fill="none" strokeWidth="1.4"/><path d="M48 30 L 42 22 M52 30 L 58 22" strokeWidth="1.4"/></g>;
-const PLANT_ICON    = <g><path d="M50 86 L 50 30" strokeWidth="2"/><path d="M50 50 C 30 46, 18 30, 22 18 C 36 22, 50 36, 50 50 Z" fill="none" strokeWidth="1.8"/><path d="M50 62 C 70 58, 82 42, 78 30 C 64 34, 50 48, 50 62 Z" fill="none" strokeWidth="1.8"/><path d="M50 76 C 42 72, 38 64, 42 58 C 48 60, 52 68, 50 76 Z" fill="none" strokeWidth="1.6"/></g>;
-const MINERAL_ICON  = <g><path d="M50 14 L 78 38 L 64 82 L 36 82 L 22 38 Z" fill="none" strokeWidth="2"/><path d="M50 14 L 50 82 M22 38 L 78 38 M36 82 L 50 38 L 64 82" strokeWidth="1.2" opacity="0.6"/></g>;
-const CREATURE_ICON = <g><path d="M28 32 L 22 18 L 38 26 L 50 14 L 62 26 L 78 18 L 72 32 L 80 50 L 70 70 L 50 84 L 30 70 L 20 50 Z" fill="none" strokeWidth="1.8"/><circle cx="40" cy="44" r="3" fill="currentColor"/><circle cx="60" cy="44" r="3" fill="currentColor"/><path d="M38 62 Q 50 70 62 62" strokeWidth="1.6" fill="none"/></g>;
-const PART_ICON     = <g transform="rotate(-22 50 50) translate(-10.5 25) scale(0.18)" strokeLinejoin="round" strokeLinecap="round"><path d="M 148 110 L 532 110 C 532 88, 550 68, 572 68 C 594 68, 610 84, 610 106 C 610 120, 604 132, 594 140 C 604 148, 610 160, 610 174 C 610 196, 594 212, 572 212 C 550 212, 532 192, 532 170 L 148 170 C 148 192, 130 212, 108 212 C 86 212, 70 196, 70 174 C 70 160, 76 148, 86 140 C 76 132, 70 120, 70 106 C 70 84, 86 68, 108 68 C 130 68, 148 88, 148 110 Z" fill="none" strokeWidth="11"/></g>;
-const WAL_ICON      = <g><path d="M14 52 C 20 36 40 26 60 30 C 72 32 82 40 86 50 L 78 54 L 72 48 L 64 54 L 56 46 L 48 56 L 38 48 Z" fill="none" strokeWidth="2"/><circle cx="68" cy="42" r="1.8" fill="currentColor"/><path d="M28 40 L 34 50 M48 28 L 52 42" strokeWidth="1.2" opacity="0.55"/></g>;
-const LIFE_ICON     = <g><circle cx="50" cy="50" r="26" fill="none" strokeWidth="2"/><path d="M50 24 L 50 76 M24 50 L 76 50 M32 32 L 68 68 M68 32 L 32 68" strokeWidth="1.1" opacity="0.5"/><circle cx="50" cy="50" r="6.5" fill="none" strokeWidth="1.6"/><circle cx="50" cy="50" r="1.6" fill="currentColor"/></g>;
-
-// ── ERFORSCHUNGSSTUFEN ────────────────────────────────────
-const ERFORSCHUNGS_STUFEN = [
-  { stufe:1, label:'Entdeckt'      },
-  { stufe:2, label:'Notiert'       },
-  { stufe:3, label:'Analysiert'    },
-  { stufe:4, label:'Dokumentiert'  },
-  { stufe:5, label:'Abgeschlossen' },
+const CATEGORIES = [
+  { id:'fische',         label:'Fische',         hue:200, total:1506, short:'Aquatische Lebensformen' },
+  { id:'insekten',       label:'Insekten',       hue:95,  total:0,    short:'Gliedfüßer & Krabbeltiere' },
+  { id:'pflanzen',       label:'Pflanzen',       hue:140, total:732,  short:'Flora & Botanik' },
+  { id:'mineralien',     label:'Mineralien',     hue:60,  total:99,   short:'Gestein & Kristalle' },
+  { id:'kreaturen',      label:'Kreaturen',      hue:285, total:1520, short:'Wesen Merurias' },
+  { id:'kreaturenteile', label:'Kreaturenteile', hue:0,   total:0,   short:'Trophäen & Material' },
+  { id:'wal',            label:'Trümmer des Weißen Wals',   hue:210, total:0,   short:'Fragmente eines kosmischen Mythos' },
+  { id:'lebensspeicher', label:'Teile des Lebensspeichers', hue:45,  total:0,   short:'Reliquien des Urspeichers' },
 ];
-const ERFORSCHUNGS_EFFEKTE = {
-  alle: [
-    { stufe:1, text:'Beim Händler erhältlich.' },
-    { stufe:2, text:'Händlerpreis –10 %.' },
-    { stufe:3, text:'Händlerpreis –20 %.' },
-    { stufe:4, text:'Händlerpreis –30 %.' },
-    { stufe:5, text:'Händlerpreis –40 %.' },
-  ],
+
+/* ── Per-item icon variants (silhouettes) ── */
+const ICON = {
+  // FISCHE
+  f1: <g><path d="M65 50 C 56 36, 28 36, 18 50 C 28 64, 56 64, 65 50 Z" strokeWidth="2"/><path d="M65 50 L 84 38 L 84 62 Z" strokeWidth="2"/><circle cx="30" cy="48" r="2.4" fill="currentColor"/></g>,
+  f2: <g><path d="M60 50 C 56 30, 30 28, 16 50 C 30 72, 56 70, 60 50 Z" strokeWidth="2"/><path d="M60 50 L 82 32 M60 50 L 82 68" strokeWidth="2"/><circle cx="28" cy="46" r="2" fill="currentColor"/></g>,
+  f3: <g><ellipse cx="40" cy="50" rx="24" ry="16" strokeWidth="2"/><path d="M64 50 L 84 38 L 80 50 L 84 62 Z" strokeWidth="2"/><path d="M40 34 L 40 22 M40 66 L 40 78" strokeWidth="1.6"/><circle cx="28" cy="48" r="2" fill="currentColor"/></g>,
+  f4: <g><path d="M70 50 C 58 34, 26 30, 14 46 C 24 50, 24 50, 14 54 C 26 70, 58 66, 70 50 Z" strokeWidth="2"/><path d="M70 50 L 86 40 L 86 60 Z" strokeWidth="2"/><circle cx="26" cy="46" r="1.8" fill="currentColor"/></g>,
+  f5: <g><path d="M30 50 Q 50 20 70 50 Q 50 80 30 50 Z" strokeWidth="2"/><path d="M30 30 L 30 70 M70 30 L 70 70" strokeWidth="1.6"/><path d="M16 50 L 24 50 M76 50 L 84 50" strokeWidth="2"/></g>,
+  f6: <g><path d="M60 50 C 50 32, 26 34, 18 50 C 26 66, 50 68, 60 50 Z" strokeWidth="2"/><path d="M60 50 L 78 36 M60 50 L 78 64 M60 50 L 84 50" strokeWidth="2"/><circle cx="28" cy="46" r="2" fill="currentColor"/></g>,
+  f7: <g><path d="M55 50 C 48 28, 22 28, 18 50 C 22 72, 48 72, 55 50 Z" strokeWidth="2"/><path d="M55 50 L 82 38 L 76 50 L 82 62 Z" strokeWidth="2"/><path d="M36 34 L 36 24 M36 66 L 36 76" strokeWidth="1.6"/></g>,
+  f8: <g><circle cx="50" cy="50" r="22" strokeWidth="2"/><path d="M28 50 L 14 42 L 14 58 Z M72 50 L 86 42 L 86 58 Z" strokeWidth="2"/><circle cx="58" cy="46" r="2" fill="currentColor"/></g>,
+  // INSEKTEN
+  i1: <g><ellipse cx="50" cy="52" rx="3.5" ry="22" fill="currentColor" stroke="none"/><path d="M50 40 C 36 24 16 26 18 44 C 24 52 38 50 50 52 Z" strokeWidth="1.6"/><path d="M50 40 C 64 24 84 26 82 44 C 76 52 62 50 50 52 Z" strokeWidth="1.6"/><path d="M50 52 C 38 58 22 62 22 74 C 30 78 44 72 50 66 Z" strokeWidth="1.4"/><path d="M50 52 C 62 58 78 62 78 74 C 70 78 56 72 50 66 Z" strokeWidth="1.4"/><path d="M48 32 L 42 22 M52 32 L 58 22" strokeWidth="1.4"/></g>,
+  i2: <g><ellipse cx="50" cy="56" rx="18" ry="24" strokeWidth="2"/><path d="M50 32 L 50 80 M44 42 C 40 36 36 32 32 28 M56 42 C 60 36 64 32 68 28" strokeWidth="1.5"/><path d="M32 52 L 18 46 M32 64 L 16 64 M32 74 L 22 82 M68 52 L 82 46 M68 64 L 84 64 M68 74 L 78 82" strokeWidth="1.4"/></g>,
+  i3: <g><circle cx="50" cy="50" r="12" strokeWidth="2"/><path d="M38 50 L 18 38 M38 50 L 14 50 M38 50 L 18 62 M62 50 L 82 38 M62 50 L 86 50 M62 50 L 82 62 M44 38 L 32 18 M56 38 L 68 18" strokeWidth="1.5"/></g>,
+  i4: <g><ellipse cx="50" cy="54" rx="3" ry="26" fill="currentColor" stroke="none"/><path d="M50 42 C 30 36 14 40 12 50 C 14 56 32 56 50 50 Z" strokeWidth="1.5"/><path d="M50 42 C 70 36 86 40 88 50 C 86 56 68 56 50 50 Z" strokeWidth="1.5"/><path d="M50 56 C 34 56 20 60 20 66 C 30 70 44 64 50 60 Z" strokeWidth="1.4"/><path d="M50 56 C 66 56 80 60 80 66 C 70 70 56 64 50 60 Z" strokeWidth="1.4"/><circle cx="50" cy="32" r="3" fill="currentColor"/></g>,
+  i5: <g><ellipse cx="50" cy="30" rx="7" ry="8" strokeWidth="1.8"/><ellipse cx="50" cy="50" rx="9" ry="11" strokeWidth="1.8"/><ellipse cx="50" cy="72" rx="11" ry="13" strokeWidth="1.8"/><path d="M46 24 L 38 14 M54 24 L 62 14 M40 50 L 22 42 M40 50 L 22 58 M60 50 L 78 42 M60 50 L 78 58" strokeWidth="1.4"/></g>,
+  i6: <g><ellipse cx="50" cy="52" rx="14" ry="20" strokeWidth="2"/><path d="M36 44 L 36 60 M64 44 L 64 60 M36 52 L 64 52" strokeWidth="1.4" opacity="0.5"/><path d="M50 32 L 50 22 M42 26 L 36 18 M58 26 L 64 18" strokeWidth="1.4"/><path d="M36 48 C 24 44 18 52 22 60 M64 48 C 76 44 82 52 78 60" strokeWidth="1.5"/></g>,
+  // PFLANZEN
+  p1: <g><path d="M50 86 L 50 30" strokeWidth="2"/><path d="M50 50 C 30 46, 18 30, 22 18 C 36 22, 50 36, 50 50 Z" strokeWidth="1.8"/><path d="M50 62 C 70 58, 82 42, 78 30 C 64 34, 50 48, 50 62 Z" strokeWidth="1.8"/></g>,
+  p2: <g><path d="M50 86 L 50 36" strokeWidth="2"/><circle cx="50" cy="28" r="10" strokeWidth="2"/><path d="M40 22 L 30 12 M60 22 L 70 12 M50 18 L 50 6 M40 34 L 30 44 M60 34 L 70 44" strokeWidth="1.6"/></g>,
+  p3: <g><path d="M30 86 L 50 30 L 70 86 Z" strokeWidth="2"/><path d="M40 70 L 60 70 M42 56 L 58 56 M44 42 L 56 42" strokeWidth="1.4" opacity="0.7"/></g>,
+  p4: <g><path d="M50 86 L 50 40" strokeWidth="2"/><path d="M50 40 Q 22 38 18 16 Q 40 24 50 40 Z" strokeWidth="1.8"/><path d="M50 40 Q 78 38 82 16 Q 60 24 50 40 Z" strokeWidth="1.8"/><circle cx="50" cy="46" r="4" strokeWidth="1.6"/></g>,
+  p5: <g><path d="M50 88 L 50 20" strokeWidth="2"/><path d="M50 30 C 38 28, 30 18, 28 8 C 40 12, 48 22, 50 30 Z" strokeWidth="1.6"/><path d="M50 30 C 62 28, 70 18, 72 8 C 60 12, 52 22, 50 30 Z" strokeWidth="1.6"/><path d="M50 50 C 32 50, 20 38, 20 28 C 36 30, 48 40, 50 50 Z" strokeWidth="1.6"/><path d="M50 50 C 68 50, 80 38, 80 28 C 64 30, 52 40, 50 50 Z" strokeWidth="1.6"/></g>,
+  p6: <g><circle cx="50" cy="40" r="20" strokeWidth="2"/><path d="M50 60 L 50 86 M44 86 L 56 86" strokeWidth="2"/><path d="M40 32 L 60 48 M60 32 L 40 48" strokeWidth="1.4" opacity="0.7"/></g>,
+  p7: <g><path d="M50 86 L 50 14" strokeWidth="2"/><path d="M50 70 L 30 60 M50 60 L 30 50 M50 50 L 30 40 M50 40 L 30 30 M50 30 L 30 20" strokeWidth="1.6"/><path d="M50 70 L 70 60 M50 60 L 70 50 M50 50 L 70 40 M50 40 L 70 30 M50 30 L 70 20" strokeWidth="1.6"/></g>,
+  p8: <g><path d="M28 84 Q 50 14 72 84" strokeWidth="2"/><path d="M36 70 L 64 70 M40 56 L 60 56 M44 42 L 56 42" strokeWidth="1.4" opacity="0.6"/></g>,
+  // MINERALIEN
+  m1: <g><path d="M50 14 L 78 38 L 64 82 L 36 82 L 22 38 Z" strokeWidth="2"/><path d="M50 14 L 50 82 M22 38 L 78 38 M36 82 L 50 38 L 64 82" strokeWidth="1.2" opacity="0.6"/></g>,
+  m2: <g><path d="M30 20 L 70 20 L 84 50 L 70 80 L 30 80 L 16 50 Z" strokeWidth="2"/><path d="M30 20 L 50 50 L 70 20 M30 80 L 50 50 L 70 80 M16 50 L 50 50 L 84 50" strokeWidth="1.2" opacity="0.6"/></g>,
+  m3: <g><path d="M50 12 L 86 50 L 50 88 L 14 50 Z" strokeWidth="2"/><path d="M50 12 L 50 88 M14 50 L 86 50" strokeWidth="1.2" opacity="0.6"/></g>,
+  m4: <g><path d="M28 30 L 42 14 L 58 14 L 72 30 L 72 70 L 58 86 L 42 86 L 28 70 Z" strokeWidth="2"/><path d="M28 30 L 72 70 M28 70 L 72 30 M50 14 L 50 86" strokeWidth="1" opacity="0.5"/></g>,
+  m5: <g><path d="M22 60 L 36 30 L 58 22 L 76 36 L 80 60 L 64 82 L 38 80 Z" strokeWidth="2"/><path d="M36 30 L 64 82 M58 22 L 38 80 M22 60 L 80 60" strokeWidth="1" opacity="0.5"/></g>,
+  m6: <g><path d="M20 50 L 35 26 L 65 26 L 80 50 L 65 74 L 35 74 Z" strokeWidth="2"/><path d="M20 50 L 80 50 M35 26 L 65 74 M65 26 L 35 74" strokeWidth="1" opacity="0.5"/></g>,
+  // KREATUREN
+  k1: <g><path d="M28 32 L 22 18 L 38 26 L 50 14 L 62 26 L 78 18 L 72 32 L 80 50 L 70 70 L 50 84 L 30 70 L 20 50 Z" strokeWidth="1.8"/><circle cx="40" cy="44" r="3" fill="currentColor"/><circle cx="60" cy="44" r="3" fill="currentColor"/><path d="M38 62 Q 50 70 62 62" strokeWidth="1.6"/></g>,
+  k2: <g><path d="M50 16 L 30 30 L 22 50 L 30 70 L 50 84 L 70 70 L 78 50 L 70 30 Z" strokeWidth="2"/><circle cx="42" cy="44" r="2.5" fill="currentColor"/><circle cx="58" cy="44" r="2.5" fill="currentColor"/><path d="M38 62 L 62 62 L 56 68 L 44 68 Z" strokeWidth="1.4"/></g>,
+  k3: <g><path d="M22 50 Q 50 18 78 50 Q 50 88 22 50 Z" strokeWidth="2"/><path d="M30 36 L 22 22 M70 36 L 78 22 M40 58 L 40 70 M60 58 L 60 70" strokeWidth="1.6"/><circle cx="42" cy="48" r="2" fill="currentColor"/><circle cx="58" cy="48" r="2" fill="currentColor"/></g>,
+  k4: <g><path d="M50 14 C 30 16 18 30 20 50 C 22 70 38 84 50 84 C 62 84 78 70 80 50 C 82 30 70 16 50 14 Z" strokeWidth="2"/><path d="M34 30 L 22 18 M66 30 L 78 18 M50 84 L 50 96" strokeWidth="1.6"/><circle cx="40" cy="44" r="3" fill="currentColor"/><circle cx="60" cy="44" r="3" fill="currentColor"/></g>,
+  // KREATURENTEILE
+  t1: <g><path d="M30 20 C 40 28 50 36 50 50 C 50 64 40 76 30 80 L 30 50 Z M70 20 C 60 28 50 36 50 50 C 50 64 60 76 70 80 L 70 50 Z" strokeWidth="1.8"/></g>,
+  t2: <g><path d="M50 14 L 60 30 L 78 36 L 64 50 L 68 70 L 50 60 L 32 70 L 36 50 L 22 36 L 40 30 Z" strokeWidth="2"/></g>,
+  t3: <g><circle cx="50" cy="50" r="28" strokeWidth="2"/><circle cx="50" cy="50" r="14" strokeWidth="1.6"/><circle cx="50" cy="50" r="4" fill="currentColor"/></g>,
+  t4: <g><path d="M20 60 Q 30 30 50 30 Q 70 30 80 60 L 70 80 L 60 64 L 50 80 L 40 64 L 30 80 Z" strokeWidth="1.8"/></g>,
+  t5: <g><path d="M30 86 L 30 30 L 50 14 L 70 30 L 70 86" strokeWidth="2"/><path d="M40 86 L 40 50 L 60 50 L 60 86" strokeWidth="1.6"/></g>,
+  t6: <g><path d="M50 16 L 70 30 L 78 52 L 70 76 L 50 84 L 30 76 L 22 52 L 30 30 Z M50 30 L 60 50 L 50 70 L 40 50 Z" strokeWidth="1.8"/></g>,
+  // TRÜMMER DES WEISSEN WALS
+  w1: <g><path d="M10 54 C 20 30 50 18 76 28 C 84 32 90 42 90 52 L 80 56 L 72 48 L 64 56 L 56 46 L 48 58 L 40 48 L 32 58 L 20 52 Z" strokeWidth="2"/><circle cx="76" cy="40" r="2" fill="currentColor"/></g>,
+  w2: <g><path d="M14 50 L 28 30 L 50 24 L 72 30 L 86 50 L 72 70 L 50 76 L 28 70 Z M14 50 L 86 50 M 32 32 L 32 68 M50 24 L 50 76 M68 32 L 68 68" strokeWidth="1.8"/></g>,
+  w3: <g><path d="M50 12 C 56 30 64 40 70 50 C 64 60 56 70 50 88 C 44 70 36 60 30 50 C 36 40 44 30 50 12 Z M30 50 L 70 50" strokeWidth="2"/></g>,
+  w4: <g><path d="M24 36 L 76 36 L 70 50 L 76 64 L 24 64 L 30 50 Z M30 50 L 70 50 M24 36 L 76 64 M24 64 L 76 36" strokeWidth="1.8"/></g>,
+  // TEILE DES LEBENSSPEICHERS
+  l1: <g><circle cx="50" cy="50" r="28" strokeWidth="2"/><path d="M50 22 L 50 78 M22 50 L 78 50 M30 30 L 70 70 M70 30 L 30 70" strokeWidth="1.2"/><circle cx="50" cy="50" r="7" strokeWidth="1.6"/><circle cx="50" cy="50" r="2" fill="currentColor"/></g>,
+  l2: <g><path d="M50 14 L 70 32 L 78 56 L 64 80 L 36 80 L 22 56 L 30 32 Z M50 14 L 50 80 M22 56 L 78 56 M30 32 L 70 32" strokeWidth="1.8"/><circle cx="50" cy="50" r="4" fill="currentColor"/></g>,
+  l3: <g><path d="M50 18 C 64 18 76 30 76 44 C 76 60 50 82 50 82 C 50 82 24 60 24 44 C 24 30 36 18 50 18 Z" strokeWidth="2"/><path d="M40 38 L 60 38 M44 48 L 56 48 M42 58 L 58 58" strokeWidth="1.4" opacity="0.7"/></g>,
+};
+
+/* ── Rarity tiers ── */
+const RARITY = {
+  gewoehnlich: { label:'Gewöhnlich',  pips:1, hue:140 },
+  selten:      { label:'Selten',      pips:2, hue:200 },
+  sehrselten:  { label:'Sehr selten', pips:3, hue:285 },
+  einzigartig: { label:'Einzigartig', pips:4, hue:40  },
+};
+
+/* ── Research progress ── */
+const MAX_STAGE = 8;
+const STAGE_LABELS = ['Unbekannt','Sichtung','Bekannt','Beobachtet','Vertraut','Studiert','Erforscht','Meisterhaft','Komplett erforscht'];
+const STAGE_LABELS_SHORT = ['Unbekannt','Sichtung','Bekannt','Beobachtet','Vertraut','Studiert','Erforscht','Meisterhaft','Komplett'];
+// Field unlock thresholds — when info gets revealed inside the detail panel
+const FIELD_UNLOCKS = {
+  habitat:    2,
+  tagsOnCard: 2,
+  size:       3,
+  price:      3,
+  date:       5,
+  by:         5,
+  desc:       8,
+  tags:       8,
+};
+const GOLD      = 'oklch(0.82 0.14 80)';
+const GOLD_SOFT = 'oklch(0.82 0.14 80 / 0.6)';
+const GOLD_GLOW = 'oklch(0.82 0.14 80 / 0.35)';
+
+/* ── Reward unlocks (8 per category) ──
+   Each entry: title (kurz, was geht), desc (Detailtext)
+   Stages 1–8 map 1:1 to indices 0–7.
+*/
+const REWARDS = {
   fische: [
-    { stufe:3, text:'Passende Köder beim Händler.' },
+    { title:'Eintrag im Kollektikon',     desc:'Name, Icon und Seltenheit erscheinen im Kollektikon.' },
+    { title:'Vorkommen kartiert',         desc:'Bevorzugte Gewässer werden auf der Weltkarte hervorgehoben.' },
+    { title:'Beim Fischhändler erhältlich',desc:'Markthändler nehmen den Fang nun an und führen ihn im Sortiment.' },
+    { title:'Marktpreis −10 %',           desc:'Kauf- und Tauschpreis bei Händlern sinkt um 10 %.' },
+    { title:'Passender Köder im Handel',  desc:'Köder müssen nicht mehr selbst hergestellt werden — Händler führen sie.' },
+    { title:'Marktpreis −20 %',           desc:'Kauf- und Tauschpreis sinkt weiter, insgesamt −20 %.' },
+    { title:'Großfang-Bonus',             desc:'Größenklasse bekannt — größere Exemplare bringen +25 % Verkaufswert.' },
+    { title:'Goldener Fang freischaltbar',desc:'Sehr seltene Schimmer-Variante kann nun gezielt geangelt werden.' },
+  ],
+  insekten: [
+    { title:'Eintrag im Kollektikon',     desc:'Name, Icon und Seltenheit erscheinen im Kollektikon.' },
+    { title:'Lebensraum kartiert',        desc:'Schwärm- und Brutgebiete werden auf der Karte markiert.' },
+    { title:'Alchemist nimmt sie an',     desc:'Alchemisten zahlen für ganze Exemplare.' },
+    { title:'Alchemist-Rabatt −10 %',     desc:'Ankaufspreise bei Alchemisten sinken um 10 %.' },
+    { title:'Fanggerät im Handel',        desc:'Netze, Köderlampen und Glasfallen sind im Sortiment.' },
+    { title:'Alchemist-Rabatt −20 %',     desc:'Ankaufspreise sinken weiter auf insgesamt −20 %.' },
+    { title:'Schwarm-Ortung',             desc:'Schwärme können aus größerer Distanz aufgespürt werden.' },
+    { title:'Leuchtende Variante',        desc:'Sehr seltene biolumineszente Form kann nun gefangen werden.' },
+  ],
+  pflanzen: [
+    { title:'Eintrag im Kollektikon',     desc:'Name, Icon und Seltenheit erscheinen im Kollektikon.' },
+    { title:'Wuchsort kartiert',          desc:'Bekannte Vorkommen werden auf der Weltkarte angezeigt.' },
+    { title:'Apotheker führt sie',        desc:'Apotheker und Kräuterhändler nehmen Bestände an.' },
+    { title:'Apotheker-Rabatt −10 %',     desc:'Trank- und Tinktur-Preise sinken um 10 %.' },
+    { title:'Saatgut im Handel',          desc:'Saatgut kaufbar — eigener Anbau möglich.' },
+    { title:'Apotheker-Rabatt −20 %',     desc:'Trank- und Tinktur-Preise sinken auf insgesamt −20 %.' },
+    { title:'Erntebonus +25 %',           desc:'Korrekter Erntezeitpunkt erhöht Ertrag pro Pflanze.' },
+    { title:'Veredelte Form',             desc:'Selten gezüchtete Variante mit verstärkter Wirkung kann angebaut werden.' },
+  ],
+  mineralien: [
+    { title:'Eintrag im Kollektikon',     desc:'Name, Icon und Seltenheit erscheinen im Kollektikon.' },
+    { title:'Vorkommen kartiert',         desc:'Adern und Schichten werden auf der Karte markiert.' },
+    { title:'Schmied kauft an',           desc:'Schmiede nehmen Erze und Bausteine im Tauschhandel an.' },
+    { title:'Schmiede-Rabatt −10 %',      desc:'Schmiedearbeiten mit diesem Material sind 10 % günstiger.' },
+    { title:'Spitzhacke-Set im Handel',   desc:'Werkzeug zum effizienten Abbau ist im Sortiment.' },
+    { title:'Schmiede-Rabatt −20 %',      desc:'Schmiedearbeiten kosten insgesamt 20 % weniger.' },
+    { title:'Ausbeute +25 %',             desc:'Sauberer Abbau liefert mehr Rohmaterial pro Ader.' },
+    { title:'Gereinigte Variante',        desc:'Hochreine Form mit doppelter Effektkraft kann gewonnen werden.' },
+  ],
+  kreaturen: [
+    { title:'Eintrag im Kollektikon',     desc:'Name, Icon und Seltenheit erscheinen im Kollektikon.' },
+    { title:'Habitat kartiert',           desc:'Reviere und Wanderwege werden auf der Weltkarte angezeigt.' },
+    { title:'Schwächen bekannt',          desc:'Verwundbare Stellen werden im Kampf hervorgehoben.' },
+    { title:'Trophäenwert +10 %',         desc:'Beim Verkauf von Trophäen 10 % mehr Erlös.' },
+    { title:'Jagd-Ausrüstung im Handel',  desc:'Spezialfallen und Gegengift sind im Sortiment.' },
+    { title:'Trophäenwert +20 %',         desc:'Trophäen bringen insgesamt 20 % mehr Erlös.' },
+    { title:'Spurensuche-Bonus',          desc:'Spuren bleiben länger sichtbar; Lager werden präziser kartiert.' },
+    { title:'Seltene Variante kartiert',  desc:'Albino-/Schleier-Variante kann gezielt aufgespürt werden.' },
+  ],
+  kreaturenteile: [
+    { title:'Eintrag im Kollektikon',     desc:'Name, Icon und Seltenheit erscheinen im Kollektikon.' },
+    { title:'Herkunft markiert',          desc:'Das Eltern-Lebewesen wird in der Karteikarte verlinkt.' },
+    { title:'Handwerker nimmt an',        desc:'Rüstungs- und Waffenhandwerker kaufen den Bestand an.' },
+    { title:'Handwerker-Rabatt −10 %',    desc:'Arbeit mit diesem Material wird 10 % günstiger.' },
+    { title:'Verarbeitungsanleitung',     desc:'Detaillierte Anleitungen — höhere Erfolgschance beim Crafting.' },
+    { title:'Handwerker-Rabatt −20 %',    desc:'Arbeit mit diesem Material wird insgesamt 20 % günstiger.' },
+    { title:'Ausbeute +25 %',             desc:'Saubere Trennung liefert mehr brauchbare Teile pro Beute.' },
+    { title:'Veredelte Form',             desc:'Sehr seltene veredelte Variante kann gewonnen werden.' },
+  ],
+  wal: [
+    { title:'Eintrag im Kollektikon',     desc:'Name, Icon und Seltenheit erscheinen im Kollektikon.' },
+    { title:'Fundort-Hinweis',            desc:'Die Bergungsgarde markiert verwandte Fundorte auf der Karte.' },
+    { title:'Gelehrte hören zu',          desc:'Akademiker zahlen für jedes verifizierte Stück Lore-Punkte.' },
+    { title:'Symbolik teilweise entschlüsselt', desc:'Ritzungen werden im Codex übersetzt — +10 % Erkenntnis.' },
+    { title:'Spezialtransport verfügbar', desc:'Die Bergungsgarde stellt einen kühlbaren Container.' },
+    { title:'Resonanz dokumentiert',      desc:'Andere Trümmer reagieren in der Nähe sichtbar — +20 % Erkenntnis.' },
+    { title:'Verwandte Fragmente',        desc:'Drei verwandte Trümmer auf der Karte hervorgehoben.' },
+    { title:'Vollständige Mythe',         desc:'Die zugehörige Lore-Passage des Weißen Wals wird freigeschaltet.' },
+  ],
+  lebensspeicher: [
+    { title:'Eintrag im Kollektikon',     desc:'Name, Icon und Seltenheit erscheinen im Kollektikon.' },
+    { title:'Fundort kartiert',           desc:'Ruinenkammer und Zugangsweg werden hinterlegt.' },
+    { title:'Lagerung möglich',           desc:'Die Bergungsgarde übernimmt sichere Aufbewahrung.' },
+    { title:'Schutzcontainer beim Schmied',desc:'Bleigefütterte Hülle bestellbar — verhindert Echo-Lecks.' },
+    { title:'Pulsanalyse Stufe 1',        desc:'Erste Resonanz-Messwerte werden notiert.' },
+    { title:'Pulsanalyse Stufe 2',        desc:'Vergleich mit verwandten Teilen möglich.' },
+    { title:'Echo einer anderen Erinnerung',desc:'Beim Halten erinnert man sich an ein weiteres Bild.' },
+    { title:'Anbindung an den Urspeicher',desc:'Verbindung zu anderen Kernen sichtbar — Quest-Trigger.' },
   ],
 };
 
-// ── COLLECTION DATA (abgeleitet aus window.KOLLEKTIKON_* ) ──
-const CAT_ICON_MAP = {
-  fische:FISH_ICON, insekten:INSECT_ICON, pflanzen:PLANT_ICON, mineralien:MINERAL_ICON,
-  kreaturen:CREATURE_ICON, kreaturenteile:PART_ICON, wal:WAL_ICON, lebensspeicher:LIFE_ICON,
+// Entries are built dynamically in Script 3 from resource data + ressourcen_sichtbar.
+
+Object.assign(window, { CATEGORIES, ICON, CAT_ICONS, RARITY, MAX_STAGE, STAGE_LABELS, STAGE_LABELS_SHORT, FIELD_UNLOCKS, REWARDS, GOLD, GOLD_SOFT, GOLD_GLOW });
+
+/* ── Filter facets (per category) ── */
+const RAR_LABEL = { gewoehnlich:'Gewöhnlich', selten:'Selten', sehrselten:'Sehr selten', einzigartig:'Einzigartig' };
+const FACETS = {
+  fische: [
+    { key:'groesse',    label:'Größe',       options:['Klein','Mittel','Groß','Riesig'] },
+    { key:'wasser',     label:'Wassertyp',   options:['Süßwasser','Brackwasser','Salzwasser','Tiefsee'] },
+    { key:'klima',      label:'Klima',       options:['Kalt','Gemäßigt','Warm'] },
+    { key:'seltenheit', label:'Seltenheit',  options:['Gewöhnlich','Selten','Sehr selten','Einzigartig'] },
+  ],
+  insekten: [
+    { key:'groesse',    label:'Größe',       options:['Winzig','Klein','Mittel','Groß'] },
+    { key:'lebensraum', label:'Lebensraum',  options:['Wald','Sumpf','Ebene','Gebirge','Wüste','Höhle','Gewässer'] },
+    { key:'klima',      label:'Klima',       options:['Kalt','Gemäßigt','Warm','Trocken','Feucht'] },
+    { key:'verhalten',  label:'Verhalten',   options:['Friedlich','Vorsichtig','Aggressiv','Schwarm'] },
+    { key:'seltenheit', label:'Seltenheit',  options:['Gewöhnlich','Selten','Sehr selten','Einzigartig'] },
+  ],
+  pflanzen: [
+    { key:'typ',         label:'Typ',         options:['Nahrung','Heilpflanze','Material','Gift','Verschiedenes'] },
+    { key:'fundort',     label:'Fundort',     options:['Wald','Sumpf','Wüste','Ebene','Gebirge','Küste','Höhle'] },
+    { key:'klima',       label:'Klima',       options:['Kalt','Gemäßigt','Warm','Trocken','Feucht'] },
+    { key:'eigenschaft', label:'Eigenschaft', options:['Roh essbar','Zubereitet essbar','Ungiftig','Giftig','Heilend','Brennbar'] },
+    { key:'seltenheit',  label:'Seltenheit',  options:['Gewöhnlich','Selten','Sehr selten','Einzigartig'] },
+  ],
+  mineralien: [
+    { key:'typ',        label:'Typ',         options:['Baustein','Edelstein','Erz','Kristall'] },
+    { key:'fundort',    label:'Fundort',     options:['Gebirge','Höhle','Vulkan','Sediment','Ebene','Küste'] },
+    { key:'haerte',     label:'Härte',       options:['Weich','Mittel','Hart','Sehr hart'] },
+    { key:'seltenheit', label:'Seltenheit',  options:['Gewöhnlich','Selten','Sehr selten','Einzigartig'] },
+  ],
+  kreaturen: [
+    { key:'groesse',    label:'Größe',          options:['Klein','Mittel','Groß','Riesig'] },
+    { key:'habitat',    label:'Lebensraum',     options:['Land','Wasser','Luft','Höhle','Schleier'] },
+    { key:'gefahr',     label:'Gefährlichkeit', options:['Friedlich','Vorsichtig','Aggressiv','Tödlich'] },
+    { key:'seltenheit', label:'Seltenheit',     options:['Gewöhnlich','Selten','Sehr selten','Einzigartig'] },
+  ],
+  kreaturenteile: [
+    { key:'verwendung',     label:'Verwendung',     options:['Rüstung','Waffen','Alchemie','Schmuck','Werkzeug','Material'] },
+    { key:'beschaffenheit', label:'Beschaffenheit', options:['Knochen','Schuppe','Klaue','Fell','Organ','Zahn','Faser'] },
+    { key:'seltenheit',     label:'Seltenheit',     options:['Gewöhnlich','Selten','Sehr selten','Einzigartig'] },
+  ],
+  wal: [
+    { key:'beschaffenheit', label:'Beschaffenheit', options:['Knochen','Schuppe','Organ','Glas','Sekret'] },
+    { key:'zustand',        label:'Zustand',        options:['Intakt','Beschädigt','Fragment'] },
+    { key:'seltenheit',     label:'Seltenheit',     options:['Selten','Sehr selten','Einzigartig'] },
+  ],
+  lebensspeicher: [
+    { key:'form',       label:'Form',       options:['Linse','Ring','Splitter','Kern','Faden'] },
+    { key:'reaktion',   label:'Reaktion',   options:['Wärme','Puls','Vibration','Klang','Bild'] },
+    { key:'seltenheit', label:'Seltenheit', options:['Sehr selten','Einzigartig'] },
+  ],
 };
 
-const CATALOG_ENTRIES = (window.KOLLEKTIKON_CATALOG || []).map(e => ({ ...e, icon: CAT_ICON_MAP[e.cat] }));
+// Tags are now inline on each entry object (entry.tags), built from resource data in Script 3.
 
-const KOLLEKTIKON_DATA = (window.KOLLEKTIKON_CATEGORIES || []).map(cat => {
-  const entries = CATALOG_ENTRIES.filter(e => e.cat === cat.id);
-  return { ...cat, found: entries.length, komplett: entries.filter(e => e.status === 'komplett').length, icon: CAT_ICON_MAP[cat.id] };
-});
+Object.assign(window, { FACETS, RAR_LABEL });
+</script>
 
-const _catById = Object.fromEntries((window.KOLLEKTIKON_CATEGORIES || []).map(c => [c.id, c]));
-const _entById = Object.fromEntries(CATALOG_ENTRIES.map(e => [e.id, e]));
 
-const RECENT_SIGHTED = (window.KOLLEKTIKON_RECENT_SIGHTED_IDS || []).map(id => {
-  const e = _entById[id]; if (!e) return null;
-  const cat = _catById[e.cat];
-  return { ...e, cat: cat?.labelShort || e.cat, icon: CAT_ICON_MAP[e.cat] };
-}).filter(Boolean);
+<!-- ═══════════════════════════════════════════
+     SCRIPT 2 — Components
+     ═══════════════════════════════════════════ -->
+<script type="text/babel">
+const { useState:uS2, useEffect:uE2, useRef:uR2 } = React;
+const { CATEGORIES:CATS, ICON:IC, CAT_ICONS:CIC, RARITY:RAR,
+        MAX_STAGE:MS, STAGE_LABELS_SHORT:STL, FIELD_UNLOCKS:FU, REWARDS:RW,
+        FACETS:F2,
+        GOLD:GD, GOLD_SOFT:GDS, GOLD_GLOW:GDG } = window;
 
-const RECENT_KOMPLETT = (window.KOLLEKTIKON_RECENT_KOMPLETT_IDS || []).map(id => {
-  const e = _entById[id]; if (!e) return null;
-  const cat = _catById[e.cat];
-  return { ...e, cat: cat?.labelShort || e.cat, icon: CAT_ICON_MAP[e.cat] };
-}).filter(Boolean);
-
-// ── SCROLL REVEAL ─────────────────────────────────────────
-function useScrollReveal() {
-  useEffect(() => {
-    const revealed = new WeakSet();
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (!e.isIntersecting || revealed.has(e.target)) return;
-        revealed.add(e.target);
-        observer.unobserve(e.target);
-        e.target.classList.add('visible');
-      });
-    }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
-    const t = setTimeout(() => document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el)), 100);
-    return () => { clearTimeout(t); observer.disconnect(); };
-  }, []);
+/* ── Tag chip used on cards (small) ── */
+function CardTag({ label, hue }) {
+  const c = `oklch(0.72 0.16 ${hue})`;
+  return (
+    <span style={{
+      fontFamily:'var(--font-mono)', fontSize:7.5,
+      padding:'2px 6px',
+      border:`1px solid oklch(0.72 0.16 ${hue} / 0.45)`,
+      background:`oklch(0.72 0.16 ${hue} / 0.1)`,
+      color:c, letterSpacing:'0.14em',
+      textTransform:'uppercase', borderRadius:2,
+      whiteSpace:'nowrap', lineHeight:1.3,
+    }}>{label}</span>
+  );
 }
 
-// ── PARTICLES ─────────────────────────────────────────────
-function ParticleField() {
-  const canvasRef = useRef(null);
-  const animRef   = useRef(null);
-  useEffect(() => {
-    const canvas = canvasRef.current; if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const resize = () => { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; };
-    resize(); window.addEventListener('resize', resize);
-    const particles = Array.from({length:40}, () => ({
-      x: Math.random(), y: Math.random(),
-      r: Math.random()*1.4+0.4,
-      vx:(Math.random()-0.5)*0.04, vy:(Math.random()-0.5)*0.04,
-      alpha: Math.random()*0.14+0.03,
-    }));
-    const tick = () => {
-      const w = canvas.width, h = canvas.height;
-      ctx.clearRect(0,0,w,h);
-      particles.forEach(p => {
-        p.x += p.vx/w*60; p.y += p.vy/h*60;
-        if(p.x<0)p.x=1; if(p.x>1)p.x=0; if(p.y<0)p.y=1; if(p.y>1)p.y=0;
-        ctx.beginPath(); ctx.arc(p.x*w, p.y*h, p.r, 0, Math.PI*2);
-        ctx.fillStyle = `rgba(160,140,255,${p.alpha})`; ctx.fill();
-      });
-      animRef.current = requestAnimationFrame(tick);
-    };
-    tick();
-    return () => { cancelAnimationFrame(animRef.current); window.removeEventListener('resize', resize); };
-  }, []);
-  return <canvas ref={canvasRef} style={{ position:'fixed', inset:0, width:'100%', height:'100%', pointerEvents:'none', zIndex:0 }} />;
+/* Pick first 2-3 tags for a card display, in facet order */
+function pickCardTags(entry) {
+  const facets = (F2[entry.cat] || []).filter(f => f.key !== 'seltenheit');
+  const entryTags = entry.tags || {};
+  const picked = [];
+  for (const f of facets) {
+    const vals = entryTags[f.key];
+    if (vals && vals.length) {
+      picked.push(vals[0]);
+      if (picked.length >= 3) break;
+    }
+  }
+  return picked;
 }
 
-// ── CATEGORY BAR ─────────────────────────────────────────
-function CategoryBar({ d, i, active, onClick }) {
-  const ref = useRef(null);
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const el = ref.current; if (!el) return;
-    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { setVisible(true); io.unobserve(el); } }), { threshold:0.2 });
-    io.observe(el); return () => io.disconnect();
-  }, []);
-  const pctFound = d.found / d.total;
-  const pctKomp  = (d.komplett || 0) / d.total;
-  const c  = `oklch(0.72 0.16 ${d.hue})`;
-  const cA = a => `oklch(0.72 0.16 ${d.hue} / ${a})`;
+/* ── Reward row inside detail panel ── */
+function RewardRow({ idx, reward, unlocked, isCurrent, cMain, cA }) {
+  const goldA = (a) => `oklch(0.82 0.14 80 / ${a})`;
+  const isMaxStage = idx === MS;
+  const accent  = unlocked ? (isMaxStage ? GD : cMain) : 'rgba(160,140,255,0.3)';
+  const accentA = unlocked ? (isMaxStage ? goldA : cA) : null;
+  return (
+    <div style={{
+      display:'grid', gridTemplateColumns:'34px 1fr auto',
+      gap:12, alignItems:'flex-start',
+      padding:'10px 12px',
+      background: isCurrent ? cA(0.08) : 'transparent',
+      borderLeft: isCurrent ? `2px solid ${cMain}` : '2px solid transparent',
+      borderTop: idx > 1 ? '1px solid rgba(124,77,255,0.08)' : 'none',
+      opacity: unlocked ? 1 : 0.55,
+      transition:'all 0.25s',
+    }}>
+      {/* Stage number bubble */}
+      <div style={{
+        width:28, height:28, borderRadius:3,
+        display:'flex', alignItems:'center', justifyContent:'center',
+        border:`1px solid ${accentA ? accentA(0.55) : 'rgba(160,140,255,0.18)'}`,
+        background: accentA ? accentA(0.12) : 'transparent',
+        boxShadow: unlocked ? `0 0 8px ${accentA(0.3)}` : 'none',
+      }}>
+        <span style={{
+          fontFamily:'var(--font-mono)', fontSize:10,
+          color: accent, letterSpacing:'0.04em', fontWeight:600,
+        }}>
+          {unlocked ? (isMaxStage ? '✓' : idx) : '✕'}
+        </span>
+      </div>
+
+      {/* Title + desc */}
+      <div style={{ minWidth:0 }}>
+        <div style={{
+          fontFamily:'var(--font-display)', fontWeight:400, fontSize:11.5,
+          letterSpacing:'0.12em', textTransform:'uppercase',
+          color: unlocked ? '#f0eeff' : 'rgba(180,170,220,0.45)',
+          marginBottom:3,
+        }}>{reward.title}</div>
+        <div style={{
+          fontFamily:'var(--font-body)', fontWeight:300, fontSize:11.5,
+          color: unlocked ? 'var(--silver)' : 'rgba(160,140,255,0.4)',
+          lineHeight:1.55,
+        }}>{reward.desc}</div>
+      </div>
+
+      {/* Status badge */}
+      <div style={{
+        fontFamily:'var(--font-mono)', fontSize:7.5,
+        padding:'3px 7px', whiteSpace:'nowrap',
+        border: `1px solid ${unlocked ? (isMaxStage ? goldA(0.55) : cA(0.4)) : 'rgba(124,77,255,0.18)'}`,
+        background: unlocked ? (isMaxStage ? goldA(0.1) : cA(0.08)) : 'transparent',
+        color: accent,
+        letterSpacing:'0.2em', textTransform:'uppercase',
+      }}>
+        {unlocked ? (isCurrent ? '◆ Neu' : '✓ Aktiv') : `Stufe ${idx}`}
+      </div>
+    </div>
+  );
+}
+
+function RewardList({ category, stage, cMain, cA, isMax, previousStage }) {
+  const list = RW[category] || [];
+  if (list.length === 0) return null;
+  return (
+    <div style={{
+      marginTop:24,
+      border:`1px solid ${isMax ? 'oklch(0.82 0.14 80 / 0.45)' : cA(0.28)}`,
+      background:'rgba(8,6,22,0.6)',
+      borderRadius:3, overflow:'hidden',
+      boxShadow: isMax ? `0 0 18px ${GDG}` : 'none',
+    }}>
+      <div style={{
+        display:'flex', alignItems:'center', justifyContent:'space-between',
+        padding:'12px 16px',
+        background: isMax ? 'oklch(0.82 0.14 80 / 0.08)' : cA(0.06),
+        borderBottom:`1px solid ${isMax ? 'oklch(0.82 0.14 80 / 0.3)' : cA(0.2)}`,
+      }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.3em', color: isMax ? GD : cMain, textTransform:'uppercase' }}>
+          ◈ Forschungsboni
+        </span>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.22em', color:'rgba(200,190,240,0.6)', textTransform:'uppercase' }}>
+          {Math.min(stage, MS)} / {MS} freigeschaltet
+        </span>
+      </div>
+      <div>
+        {list.map((r, i) => {
+          const stageIdx = i + 1;
+          return (
+            <RewardRow
+              key={stageIdx}
+              idx={stageIdx}
+              reward={r}
+              unlocked={stage >= stageIdx}
+              isCurrent={stageIdx === stage}
+              cMain={cMain}
+              cA={cA}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/* ── Stage progress badge (top-right of card) ── */
+function StageBadge({ stage, cMain, cA, compact }) {
+  if (stage >= MS) {
+    return (
+      <div style={{
+        display:'inline-flex', alignItems:'center', gap:5,
+        padding: compact ? '2px 7px' : '4px 10px',
+        border:`1px solid ${GD}`,
+        background:'oklch(0.82 0.14 80 / 0.16)',
+        fontFamily:'var(--font-mono)', fontSize: compact ? 7 : 9,
+        color:GD, letterSpacing:'0.22em', textTransform:'uppercase',
+        boxShadow:`0 0 14px ${GDG}`, borderRadius:2, whiteSpace:'nowrap',
+      }}>
+        <span style={{ fontWeight:600 }}>✓</span>
+        <span>Komplett</span>
+      </div>
+    );
+  }
+  const seg = compact ? 3 : 5;
+  const gap = compact ? 1.5 : 2;
+  return (
+    <div style={{
+      display:'inline-flex', alignItems:'center', gap:6,
+      padding: compact ? '2px 6px' : '4px 9px',
+      border:`1px solid ${cA(0.45)}`,
+      background:cA(0.1),
+      fontFamily:'var(--font-mono)', fontSize: compact ? 7 : 9,
+      color:cMain, letterSpacing:'0.18em', textTransform:'uppercase',
+      borderRadius:2, whiteSpace:'nowrap',
+    }}>
+      <span style={{ display:'inline-flex', gap }}>
+        {Array.from({length:MS}, (_,i) => i+1).map(i => (
+          <span key={i} style={{
+            width:seg, height:seg,
+            background: i <= stage ? cMain : 'transparent',
+            border:`1px solid ${i <= stage ? cMain : cA(0.45)}`,
+            boxShadow: i <= stage ? `0 0 3px ${cA(0.65)}` : 'none',
+          }}/>
+        ))}
+      </span>
+      <span>{stage}/{MS}</span>
+    </div>
+  );
+}
+
+/* ── Stage progress bar (inside detail panel) ── */
+function StageProgress({ stage, cMain, cA }) {
+  const isMax = stage >= MS;
+  const accentMain = isMax ? GD : cMain;
+  const accentA = isMax ? (a => `oklch(0.82 0.14 80 / ${a})`) : cA;
+  return (
+    <div style={{
+      border:`1px solid ${accentA(0.35)}`,
+      background:accentA(0.06),
+      padding:'14px 16px',
+      borderRadius:3, position:'relative',
+      boxShadow: isMax ? `0 0 22px ${GDG}` : 'none',
+    }}>
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:10, gap:10 }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.3em', color:accentA(0.7), textTransform:'uppercase' }}>
+          {isMax ? '✓ Forschung abgeschlossen' : '◈ Forschungsfortschritt'}
+        </span>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.22em', color:accentMain, textTransform:'uppercase' }}>
+          {stage} / {MS} · {STL[stage] || 'Unbekannt'}
+        </span>
+      </div>
+      <div style={{ display:'flex', gap:4 }}>
+        {Array.from({length:MS}, (_,i) => i+1).map(i => {
+          const filled = i <= stage;
+          return (
+            <div key={i} style={{ flex:1, position:'relative' }}>
+              <div style={{
+                height:5, borderRadius:2,
+                background: filled ? (isMax ? GD : cMain) : 'rgba(124,77,255,0.08)',
+                border:`1px solid ${filled ? accentA(0.9) : accentA(0.2)}`,
+                boxShadow: filled ? `0 0 8px ${accentA(0.5)}, inset 0 0 3px ${accentA(0.3)}` : 'none',
+                transition:'all 0.4s',
+              }}/>
+              <div style={{
+                marginTop:4, textAlign:'center',
+                fontFamily:'var(--font-mono)', fontSize:6.5,
+                color: filled ? accentA(0.85) : 'rgba(160,140,255,0.32)',
+                letterSpacing:'0.12em', textTransform:'uppercase',
+                whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis',
+              }}>{i}</div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+Object.assign(window, { StageBadge, StageProgress, RewardList });
+
+/* Helper — striped bg with hue */
+function mkStripeBg(hue, alpha=0.13) {
+  return `repeating-linear-gradient(-45deg,transparent,transparent 8px,oklch(0.65 0.18 ${hue} / ${alpha}) 8px,oklch(0.65 0.18 ${hue} / ${alpha}) 9px),linear-gradient(160deg,rgba(28,16,62,0.97) 0%,rgba(14,9,36,0.98) 100%)`;
+}
+
+/* ── Rarity pip row ── */
+function RarityPips({ rarity, small }) {
+  const r = RAR[rarity] || RAR.gewoehnlich;
+  const c = `oklch(0.72 0.16 ${r.hue})`;
+  const cA = (a) => `oklch(0.72 0.16 ${r.hue} / ${a})`;
+  return (
+    <div style={{ display:'flex', alignItems:'center', gap: small ? 3 : 4 }}>
+      {[1,2,3,4].map(i => (
+        <span key={i} style={{
+          width: small ? 5 : 6, height: small ? 5 : 6,
+          background: i <= r.pips ? c : 'transparent',
+          border: `1px solid ${c}${i <= r.pips ? '' : '55'}`,
+          transform:'rotate(45deg)',
+        }}/>
+      ))}
+    </div>
+  );
+}
+
+/* ── EntryCard (compact grid item) ── */
+function EntryCard({ entry, idx, onClick, selected }) {
+  const [hov, setHov] = uS2(false);
+  const found = entry.found;
+  const hue = entry.hue;
+  const stage = entry.stage || 0;
+  const cMain = `oklch(0.72 0.16 ${hue})`;
+  const cA = (a) => `oklch(0.72 0.16 ${hue} / ${a})`;
+  const isMax = found && stage >= MS;
+  const goldA = (a) => `oklch(0.82 0.14 80 / ${a})`;
+  const cBorder = isMax
+    ? (hov || selected ? GD : goldA(0.55))
+    : (found ? (hov || selected ? `${cA(0.67)}` : `${cA(0.33)}`) : 'rgba(124,77,255,0.12)');
+  const rarObj = RAR[entry.rarity] || RAR.gewoehnlich;
+  const rarHue = rarObj.hue;
+  const tags = found && stage >= FU.tagsOnCard ? pickCardTags(entry) : [];
+  const showPrice = found && stage >= FU.price && entry.price != null;
 
   return (
-    <div ref={ref} onClick={onClick} style={{
-      background: active ? 'rgba(12,9,32,0.9)' : 'rgba(10,8,28,0.7)',
-      border:`1px solid ${active ? cA(0.5) : cA(0.18)}`,
-      padding:'14px 16px 12px', borderRadius:3, position:'relative', overflow:'hidden',
-      cursor:'pointer', transition:'border-color 0.2s, background 0.2s',
-      boxShadow: active ? `0 0 18px ${cA(0.18)}` : 'none',
-    }}>
-      {active && <div style={{ position:'absolute', inset:0, background:`${cA(0.06)}`, pointerEvents:'none' }} />}
-      <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:8, position:'relative' }}>
-        <svg viewBox="0 0 100 100" width="22" height="22" fill="none" stroke={c} style={{ color:c, opacity:0.9, flexShrink:0 }}>
-          {d.icon}
-        </svg>
-        <span style={{ fontFamily:'var(--font-display)', fontSize:11, letterSpacing:'0.2em', fontWeight:400, color:'rgba(220,210,250,0.85)', textTransform:'uppercase', flex:1, lineHeight:1.2 }}>{d.label}</span>
-        {active && <span style={{ fontFamily:'var(--font-mono)', fontSize:7, letterSpacing:'0.2em', color:cA(0.8), textTransform:'uppercase' }}>◈ aktiv</span>}
-      </div>
-      <div style={{ position:'relative', height:4, marginBottom:6 }}>
-        {pctKomp > 0 && (
-          <div style={{ position:'absolute', left:0, top:0, bottom:0, width: visible ? `${pctKomp*100}%` : '0%',
-            boxShadow:`0 0 7px 1px ${cA(0.42)}, 0 0 14px 3px ${cA(0.18)}`,
-            borderRadius:2, pointerEvents:'none',
-            transition:`width 1.2s cubic-bezier(.2,.85,.2,1) ${0.3+i*0.08}s`,
+    <div
+      onClick={onClick}
+      onMouseEnter={()=>setHov(true)}
+      onMouseLeave={()=>setHov(false)}
+      style={{
+        position:'relative', borderRadius:4, overflow:'hidden',
+        cursor:'pointer',
+        border:`1px solid ${cBorder}`,
+        background: found ? 'rgba(13,8,38,0.96)' : 'rgba(10,7,28,0.92)',
+        boxShadow: isMax
+          ? ((hov||selected) ? `0 10px 36px rgba(0,0,0,0.65), 0 0 26px ${goldA(0.45)}` : `0 4px 18px rgba(0,0,0,0.5), 0 0 16px ${goldA(0.22)}`)
+          : ((hov||selected)
+            ? (found ? `0 10px 36px rgba(0,0,0,0.6), 0 0 22px ${cA(0.2)}` : '0 6px 22px rgba(0,0,0,0.55)')
+            : '0 2px 12px rgba(0,0,0,0.45)'),
+        transform: hov ? 'translateY(-2px)' : 'translateY(0)',
+        transition: hov ? 'all 0.1s linear' : 'all 0.35s cubic-bezier(0.23,1,0.32,1)',
+        animation: `fadeInUp 0.4s ease ${Math.min(idx*0.03, 0.5)}s both`,
+        display:'flex', flexDirection:'column',
+      }}
+    >
+      {/* corner brackets */}
+      <span style={{position:'absolute',top:-1,left:-1,width:9,height:9,borderTop:`1px solid ${isMax ? goldA(0.85) : cA(0.53)}`,borderLeft:`1px solid ${isMax ? goldA(0.85) : cA(0.53)}`, opacity: found ? 1 : 0.35, zIndex:3}}/>
+      <span style={{position:'absolute',top:-1,right:-1,width:9,height:9,borderTop:`1px solid ${isMax ? goldA(0.85) : cA(0.53)}`,borderRight:`1px solid ${isMax ? goldA(0.85) : cA(0.53)}`, opacity: found ? 1 : 0.35, zIndex:3}}/>
+      <span style={{position:'absolute',bottom:-1,left:-1,width:9,height:9,borderBottom:`1px solid ${isMax ? goldA(0.85) : cA(0.53)}`,borderLeft:`1px solid ${isMax ? goldA(0.85) : cA(0.53)}`, opacity: found ? 1 : 0.35, zIndex:3}}/>
+      <span style={{position:'absolute',bottom:-1,right:-1,width:9,height:9,borderBottom:`1px solid ${isMax ? goldA(0.85) : cA(0.53)}`,borderRight:`1px solid ${isMax ? goldA(0.85) : cA(0.53)}`, opacity: found ? 1 : 0.35, zIndex:3}}/>
+
+      {/* Icon area (compact) */}
+      <div style={{
+        position:'relative', height:96, flexShrink:0,
+        background: found ? mkStripeBg(hue, 0.18) : mkStripeBg(280, 0.04),
+        display:'flex', alignItems:'center', justifyContent:'center',
+        borderBottom:`1px solid ${found ? cA(0.2) : 'rgba(124,77,255,0.1)'}`,
+      }}>
+        {found && (
+          <div style={{ position:'absolute', inset:0,
+            background:`radial-gradient(ellipse at 50% 50%, ${cA(0.2)} 0%, transparent 65%)`,
+            opacity: hov ? 1 : 0.7, transition:'opacity 0.3s',
           }}/>
         )}
-        <div style={{ position:'absolute', inset:0, background:'rgba(124,77,255,0.08)', border:`1px solid ${cA(0.13)}`, borderRadius:2, overflow:'hidden' }}>
-          <div style={{ position:'absolute', left:0, top:0, bottom:0,
-            width: visible ? `${pctFound*100}%` : '0%',
-            background:'linear-gradient(90deg, rgba(220,215,250,0.16), rgba(240,238,255,0.26))',
-            transition:`width 1.0s cubic-bezier(.2,.85,.2,1) ${i*0.08}s` }}/>
-          <div style={{ position:'absolute', left:-1, top:-1, bottom:-1,
-            width: visible ? `${pctKomp*100}%` : '0%',
-            background:`linear-gradient(90deg, ${c}, ${cA(0.85)})`,
-            boxShadow:'inset 0 0 4px rgba(255,255,255,0.5)', borderRadius:2,
-            transition:`width 1.2s cubic-bezier(.2,.85,.2,1) ${0.3+i*0.08}s` }}/>
-        </div>
-      </div>
-      <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', gap:6, position:'relative' }}>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(200,190,240,0.65)', letterSpacing:'0.1em', whiteSpace:'nowrap' }}>
-          <span style={{ color:'#f0eeff' }}>{d.found}</span>
-          <span style={{ opacity:0.5 }}> / {d.total}</span>
-          {d.komplett > 0 && <span style={{ color:c, marginLeft:4 }}>· {d.komplett} <span style={{ fontSize:7, opacity:0.75, letterSpacing:'0.16em' }}>KOMP</span></span>}
-        </span>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:c, letterSpacing:'0.18em' }}>{Math.round(pctFound*100)} %</span>
-      </div>
-    </div>
-  );
-}
 
-// ── RECENT CARD ───────────────────────────────────────────
-function RecentCard({ item, idx, gold }) {
-  const [hov, setHov] = useState(false);
-  const c  = `oklch(0.72 0.16 ${item.hue})`;
-  const cA = a => `oklch(0.72 0.16 ${item.hue} / ${a})`;
-  const gA = a => `oklch(0.82 0.14 80 / ${a})`;
-  return (
-    <div onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
-      style={{
-        width:140, height:172, flexShrink:0,
-        marginLeft: idx > 0 ? -38 : 0,
-        borderRadius:4, position:'relative',
-        border: gold ? `1px solid ${hov ? 'oklch(0.82 0.14 80)' : gA(0.55)}` : `1px solid ${hov ? c : cA(0.4)}`,
-        background:'rgba(13,8,38,0.97)',
-        animation: hov ? 'recentCardIdle 2.8s ease-in-out infinite' : 'none',
-        zIndex: hov ? 50 : 1,
-        opacity: hov ? 1 : 0.82,
-        boxShadow: hov
-          ? (gold ? `0 22px 60px rgba(0,0,0,0.75), 0 0 36px ${gA(0.65)}` : `0 22px 60px rgba(0,0,0,0.75), 0 0 32px ${cA(0.6)}`)
-          : '0 4px 14px rgba(0,0,0,0.5)',
-        transition: hov ? 'opacity 0.25s, box-shadow 0.32s, border-color 0.2s' : 'all 0.32s cubic-bezier(.2,.85,.2,1)',
-        overflow:'hidden',
-      }}>
-      <span style={{position:'absolute',top:-1,left:-1,width:9,height:9,borderTop:`1px solid ${gold?gA(0.85):cA(0.7)}`,borderLeft:`1px solid ${gold?gA(0.85):cA(0.7)}`,zIndex:3}}/>
-      <span style={{position:'absolute',top:-1,right:-1,width:9,height:9,borderTop:`1px solid ${gold?gA(0.85):cA(0.7)}`,borderRight:`1px solid ${gold?gA(0.85):cA(0.7)}`,zIndex:3}}/>
-      <span style={{position:'absolute',bottom:-1,left:-1,width:9,height:9,borderBottom:`1px solid ${gold?gA(0.85):cA(0.7)}`,borderLeft:`1px solid ${gold?gA(0.85):cA(0.7)}`,zIndex:3}}/>
-      <span style={{position:'absolute',bottom:-1,right:-1,width:9,height:9,borderBottom:`1px solid ${gold?gA(0.85):cA(0.7)}`,borderRight:`1px solid ${gold?gA(0.85):cA(0.7)}`,zIndex:3}}/>
-      <div style={{ position:'absolute', inset:0, background:`repeating-linear-gradient(-45deg,transparent,transparent 8px,${cA(0.13)} 8px,${cA(0.13)} 9px),linear-gradient(160deg,rgba(28,16,62,0.97),rgba(14,9,36,0.98))` }}/>
-      <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse at 50% 40%, ${cA(hov ? 0.32 : 0.18)} 0%, transparent 65%)`, transition:'background 0.3s' }}/>
-      <div style={{ position:'absolute', top:7, left:8, padding:'2px 6px', background: gold ? gA(0.15) : cA(0.12), border:`1px solid ${gold ? gA(0.55) : cA(0.45)}`, fontFamily:'var(--font-mono)', fontSize:6.5, color: gold ? 'oklch(0.85 0.13 75)' : c, letterSpacing:'0.2em', textTransform:'uppercase', zIndex:2, whiteSpace:'nowrap' }}>
-        {gold ? '✓ Komplett' : '◈ Neu'}
-      </div>
-      <div style={{ position:'relative', zIndex:2, display:'flex', flexDirection:'column', height:'100%', padding:'34px 12px 10px', alignItems:'center', justifyContent:'flex-start', textAlign:'center' }}>
-        <svg viewBox="0 0 100 100" width="50" height="50" stroke={c} fill="none" style={{ color:c, filter:`drop-shadow(0 0 10px ${cA(0.6)})` }}>
-          {item.icon}
-        </svg>
-        <div style={{ marginTop:10, fontFamily:'var(--font-display)', fontSize:10, letterSpacing:'0.1em', color:'#f0eeff', textTransform:'uppercase', lineHeight:1.2, overflowWrap:'anywhere' }}>{item.name}</div>
-        <div style={{ marginTop:5, fontFamily:'var(--font-mono)', fontSize:7, color:cA(0.85), letterSpacing:'0.18em', textTransform:'uppercase' }}>{item.cat}</div>
-        <div style={{ position:'absolute', bottom:8, left:0, right:0, fontFamily:'var(--font-mono)', fontSize:7, color:'rgba(160,140,255,0.55)', letterSpacing:'0.16em', textTransform:'uppercase' }}>{item.date}</div>
-      </div>
-    </div>
-  );
-}
-
-// ── ERFORSCHUNGS STEPPER ──────────────────────────────────
-function ErforschungsStepper({ stufe, cat }) {
-  const max = ERFORSCHUNGS_STUFEN.length;
-  const allEff = ERFORSCHUNGS_EFFEKTE.alle || [];
-  const catEff = ERFORSCHUNGS_EFFEKTE[cat] || [];
-  const fillPct = (stufe - 1) / (max - 1) * 80;
-  return (
-    <div style={{ padding:'12px 0 6px' }}>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.3em', color:'rgba(124,77,255,0.45)', textTransform:'uppercase', marginBottom:'16px' }}>
-        Erforschungsstufen
-      </div>
-      <div style={{ position:'relative' }}>
-        <div style={{ position:'absolute', top:5, left:'10%', right:'10%', height:1, background:'rgba(60,50,100,0.35)' }}/>
-        <div style={{ position:'absolute', top:5, left:'10%', width:`${fillPct}%`, height:1, background:'rgba(124,77,255,0.55)', transition:'width 0.4s ease' }}/>
-        <div style={{ display:'flex' }}>
-          {ERFORSCHUNGS_STUFEN.map(s => {
-            const done = stufe >= s.stufe;
-            const isCur = stufe === s.stufe;
-            const effekte = [...allEff.filter(e => e.stufe === s.stufe), ...catEff.filter(e => e.stufe === s.stufe)];
-            return (
-              <div key={s.stufe} style={{ flex:1, display:'flex', flexDirection:'column', alignItems:'center' }}>
-                <div style={{ width: isCur?13:10, height: isCur?13:10, borderRadius:'50%', flexShrink:0, position:'relative', zIndex:1, marginBottom:9,
-                  background: done ? (isCur ? 'rgba(170,140,255,1)' : 'rgba(124,77,255,0.7)') : 'rgba(20,15,50,0.9)',
-                  border:`1.5px solid ${done ? 'rgba(170,140,255,0.8)' : 'rgba(70,60,110,0.45)'}`,
-                  boxShadow: isCur ? '0 0 10px rgba(124,77,255,0.65)' : 'none',
-                  display:'flex', alignItems:'center', justifyContent:'center',
-                }}>
-                  {s.stufe === max && done && <span style={{ fontSize:6, color:'oklch(0.82 0.14 80)', lineHeight:1 }}>✓</span>}
-                </div>
-                <div style={{ fontFamily:'var(--font-mono)', fontSize:7, letterSpacing:'0.1em', textTransform:'uppercase', textAlign:'center', marginBottom:7,
-                  color: done ? 'rgba(200,190,240,0.8)' : 'rgba(90,80,130,0.45)', whiteSpace:'nowrap' }}>
-                  {s.label}
-                </div>
-                <div style={{ display:'flex', flexDirection:'column', gap:4, alignItems:'center', padding:'0 4px' }}>
-                  {effekte.map((e, j) => (
-                    <div key={j} style={{ fontFamily:'var(--font-body)', fontSize:9, fontWeight:300, lineHeight:1.45, textAlign:'center', letterSpacing:'0.01em', padding:'3px 6px', borderRadius:2,
-                      color: done ? 'rgba(200,190,240,0.72)' : 'rgba(90,80,130,0.38)',
-                      background: done ? 'rgba(124,77,255,0.07)' : 'transparent',
-                      border: `1px solid ${done ? 'rgba(124,77,255,0.15)' : 'transparent'}`,
-                    }}>
-                      {e.text}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ── CATALOG ROW ───────────────────────────────────────────
-function CatalogRow({ entry, showCat, catLabel }) {
-  const [expanded, setExpanded] = useState(false);
-  const isKomp = entry.status === 'komplett';
-  const stufe = entry.erforschungsstufe || (isKomp ? 5 : 1);
-  const c  = `oklch(0.72 0.16 ${entry.hue})`;
-  const cA = a => `oklch(0.72 0.16 ${entry.hue} / ${a})`;
-  const gA = a => `oklch(0.82 0.14 80 / ${a})`;
-  const cols = showCat ? '28px 1fr auto auto auto 18px' : '28px 1fr auto auto 18px';
-  return (
-    <div style={{ borderBottom:'1px solid rgba(160,140,255,0.07)' }}>
-      <div style={{ display:'grid', gridTemplateColumns:cols, gap:'12px', alignItems:'center', padding:'9px 14px', transition:'background 0.15s', cursor:'pointer' }}
-        onClick={() => setExpanded(e => !e)}
-        onMouseEnter={e => e.currentTarget.style.background = 'rgba(124,77,255,0.06)'}
-        onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
-        <svg viewBox="0 0 100 100" width="18" height="18" fill="none" stroke={isKomp ? 'oklch(0.82 0.14 80)' : c} style={{ color: isKomp ? 'oklch(0.82 0.14 80)' : c, opacity:0.85 }}>
-          {entry.icon}
-        </svg>
-        <span style={{ fontFamily:'var(--font-display)', fontSize:11, letterSpacing:'0.12em', color:'rgba(240,238,255,0.88)' }}>{entry.name}</span>
-        {showCat && <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'rgba(160,140,255,0.45)', letterSpacing:'0.14em', textTransform:'uppercase', whiteSpace:'nowrap' }}>{catLabel}</span>}
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.2em', textTransform:'uppercase', color: isKomp ? 'oklch(0.82 0.14 80)' : cA(0.85), background: isKomp ? gA(0.1) : cA(0.08), border:`1px solid ${isKomp ? gA(0.4) : cA(0.3)}`, padding:'2px 7px', borderRadius:2, whiteSpace:'nowrap' }}>
-          {isKomp ? '✓ Komplett' : '◈ Gesichtet'}
-        </span>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'rgba(160,140,255,0.4)', letterSpacing:'0.12em', whiteSpace:'nowrap' }}>{entry.date}</span>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(124,77,255,0.45)', textAlign:'center', transition:'transform 0.2s', display:'inline-block', transform: expanded ? 'rotate(90deg)' : 'none' }}>›</span>
-      </div>
-      {expanded && (
-        <div style={{ padding:'4px 14px 16px', background:'rgba(124,77,255,0.025)', borderTop:'1px solid rgba(124,77,255,0.08)' }}>
-          <ErforschungsStepper stufe={stufe} cat={entry.cat} />
-        </div>
-      )}
-    </div>
-  );
-}
-
-// ── FILTER SIDEBAR ────────────────────────────────────────
-const KOLL_SORT_OPTS = [
-  { id:'name-az',  label:'Name A – Z'         },
-  { id:'name-za',  label:'Name Z – A'         },
-  { id:'erf-asc',  label:'Erforschungsstufe ↑' },
-  { id:'erf-desc', label:'Erforschungsstufe ↓' },
-];
-const KOLL_STATUS_OPTS = [
-  { key:'komplett', label:'✓ Komplett'  },
-  { key:'sighted',  label:'◈ Gesichtet' },
-];
-
-function KollektikonSidebar({ filters, setFilters, selectedCat, toggleCat }) {
-  const set = (key, val) => setFilters(f => ({...f, [key]:val}));
-  const toggleStatus = val => setFilters(f => {
-    const arr = f.status;
-    return {...f, status: arr.includes(val) ? arr.filter(x=>x!==val) : [...arr,val]};
-  });
-  const resetAll = () => { setFilters({ search:'', status:[], sort:'name-az' }); toggleCat(selectedCat); };
-  const hasAny = filters.search || filters.status.length || filters.sort !== 'name-az' || selectedCat;
-
-  return (
-    <aside className="koll-sidebar">
-      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'14px' }}>
-        <span style={{ fontFamily:'var(--font-display)', fontSize:'10px', letterSpacing:'0.25em', color:'rgba(124,77,255,0.6)', textTransform:'uppercase' }}>Filter</span>
-        {hasAny && <XBtn onClick={resetAll} />}
-      </div>
-
-      <div style={{ position:'relative', marginBottom:'16px' }}>
-        <input type="text" className="koll-search" placeholder="Eintrag suchen…"
-          value={filters.search} onChange={e => set('search', e.target.value)} />
-        {filters.search
-          ? <button onClick={() => set('search','')} style={{ position:'absolute', right:'8px', top:'50%', transform:'translateY(-50%)', background:'none', border:'none', color:'rgba(var(--text-rgb),0.45)', cursor:'pointer', padding:0, fontSize:'10px', lineHeight:1 }}>✕</button>
-          : <svg style={{ position:'absolute', right:'9px', top:'50%', transform:'translateY(-50%)', opacity:0.28, pointerEvents:'none' }} width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <circle cx="5" cy="5" r="3.5" stroke="rgba(124,77,255,1)" strokeWidth="1.2"/>
-              <line x1="8" y1="8" x2="11" y2="11" stroke="rgba(124,77,255,1)" strokeWidth="1.2"/>
+        {found ? (
+          <svg viewBox="0 0 100 100" width="56" height="56" fill="none" stroke={cMain} style={{ color:cMain, filter:`drop-shadow(0 0 10px ${cA(0.5)})`, zIndex:1 }}>
+            {IC[entry.icon] || CIC[entry.cat]}
+          </svg>
+        ) : entry.obscuredName ? (
+          // Unfound kreaturen: show icon faint, name will be scrambled below
+          <svg viewBox="0 0 100 100" width="56" height="56" fill="none" stroke={cMain} style={{ color:cMain, opacity:0.22, zIndex:1 }}>
+            {IC[entry.icon] || CIC[entry.cat]}
+          </svg>
+        ) : (
+          <div style={{ position:'relative', width:56, height:56, display:'flex', alignItems:'center', justifyContent:'center', zIndex:1 }}>
+            <svg viewBox="0 0 100 100" width="56" height="56" fill="rgba(124,77,255,0.15)" stroke="rgba(124,77,255,0.28)" style={{ animation:'unknownDrift 4s ease-in-out infinite' }}>
+              {CIC[entry.cat]}
             </svg>
-        }
+            <span style={{
+              position:'absolute', fontFamily:'var(--font-display)', fontSize:28, fontWeight:300,
+              color:'rgba(160,140,255,0.5)', textShadow:'0 0 14px rgba(124,77,255,0.4)',
+              animation:'pulseGlow 2.4s ease-in-out infinite',
+            }}>?</span>
+          </div>
+        )}
+
+        {/* ID badge */}
+        <div style={{
+          position:'absolute', top:6, left:7,
+          fontFamily:'var(--font-mono)', fontSize:6.5,
+          color: found ? cA(0.85) : 'rgba(124,77,255,0.35)',
+          letterSpacing:'0.16em', textTransform:'uppercase',
+        }}>№ {entry.id.toUpperCase()}</div>
+
+        {/* progress / unknown badge top-right */}
+        {found && (
+          <div style={{ position:'absolute', top:5, right:6 }}>
+            <StageBadge stage={stage} cMain={cMain} cA={cA} compact/>
+          </div>
+        )}
+        {!found && !entry.obscuredName && (
+          <div style={{
+            position:'absolute', top:5, right:6,
+            padding:'2px 6px',
+            border:'1px solid rgba(124,77,255,0.18)',
+            fontFamily:'var(--font-mono)', fontSize:6.5,
+            color:'rgba(160,140,255,0.4)', letterSpacing:'0.2em', textTransform:'uppercase',
+          }}>unbekannt</div>
+        )}
+        {!found && entry.obscuredName && (
+          <div style={{
+            position:'absolute', top:5, right:6,
+            padding:'2px 6px',
+            border:`1px solid ${cA(0.25)}`,
+            fontFamily:'var(--font-mono)', fontSize:7,
+            color: cA(0.5), letterSpacing:'0.12em',
+          }}>◈ GESPERRT</div>
+        )}
       </div>
 
-      <FilterGroup title="Kategorie" active={!!selectedCat} onReset={() => toggleCat(selectedCat)} collapsible>
-        <div style={{ display:'flex', flexDirection:'column', gap:'2px' }}>
-          {KOLLEKTIKON_DATA.map(d => (
-            <button key={d.id} className={`koll-sort-btn${selectedCat===d.id?' active':''}`} onClick={() => toggleCat(d.id)}>{d.label}</button>
-          ))}
-        </div>
-      </FilterGroup>
+      {/* Text area */}
+      <div style={{ padding:'9px 11px 10px', display:'flex', flexDirection:'column', gap:5, flex:1 }}>
+        {/* Name */}
+        {found || !entry.obscuredName ? (
+          <div style={{
+            fontFamily:'var(--font-display)', fontWeight:400, fontSize:11,
+            letterSpacing:'0.1em', textTransform:'uppercase',
+            color: found ? '#f0eeff' : 'rgba(180,170,220,0.45)',
+            lineHeight:1.25,
+            fontStyle: found ? 'normal' : 'italic',
+            overflowWrap:'anywhere',
+          }}>
+            {entry.name}
+          </div>
+        ) : (
+          <div style={{
+            fontFamily:'var(--font-mono)', fontSize:10,
+            letterSpacing:'0.14em',
+            color: cA(0.65),
+            textShadow: `0 0 8px ${cA(0.4)}, 0 0 18px ${cA(0.2)}`,
+            lineHeight:1.3,
+            userSelect:'none',
+            overflowWrap:'anywhere',
+          }}>
+            {entry.obscuredName}
+          </div>
+        )}
 
-      <FilterGroup title="Status" active={filters.status.length>0} onReset={() => set('status',[])} collapsible>
-        <div style={{ display:'flex', flexDirection:'column', gap:'2px' }}>
-          {KOLL_STATUS_OPTS.map(s => (
-            <button key={s.key} className={`koll-sort-btn${filters.status.includes(s.key)?' active':''}`} onClick={() => toggleStatus(s.key)}>{s.label}</button>
-          ))}
+        {/* Rarity row (pips + label) — price on right */}
+        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:8, minHeight:14 }}>
+          <div style={{ display:'flex', alignItems:'center', gap:5, minWidth:0 }}>
+            <RarityPips rarity={entry.rarity} small/>
+            <span style={{
+              fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.1em',
+              color: found ? `oklch(0.72 0.16 ${rarHue} / 0.95)` : 'rgba(160,140,255,0.4)',
+              textTransform:'uppercase', whiteSpace:'nowrap',
+            }}>{rarObj.label}</span>
+          </div>
+          {showPrice && (
+            <span style={{
+              fontFamily:'var(--font-mono)', fontSize:9.5, fontWeight:600,
+              color: isMax ? GD : 'oklch(0.82 0.14 80)',
+              letterSpacing:'0.02em',
+              whiteSpace:'nowrap', flexShrink:0,
+            }}>{entry.price}<span style={{ fontSize:7, opacity:0.65, marginLeft:2, letterSpacing:'0.08em' }}>HADE</span></span>
+          )}
         </div>
-      </FilterGroup>
 
-      <FilterGroup title="Sortierung" active={filters.sort!=='name-az'} onReset={() => set('sort','name-az')} collapsible>
-        <div style={{ display:'flex', flexDirection:'column', gap:'2px' }}>
-          {KOLL_SORT_OPTS.map(o => (
-            <button key={o.id} className={`koll-sort-btn${filters.sort===o.id?' active':''}`} onClick={() => set('sort',o.id)}>{o.label}</button>
-          ))}
-        </div>
-      </FilterGroup>
+        {/* Tags row */}
+        {tags.length > 0 && (
+          <div style={{ display:'flex', flexWrap:'wrap', gap:3, marginTop:1 }}>
+            {tags.map(t => <CardTag key={t} label={t} hue={hue}/>)}
+          </div>
+        )}
 
-      {hasAny && (
-        <div style={{ marginTop:'auto', paddingTop:'14px', borderTop:'1px solid rgba(124,77,255,0.1)' }}>
-          <button onClick={resetAll}
-            style={{ width:'100%', padding:'6px', background:'rgba(200,60,60,0.08)', border:'1px solid rgba(200,60,60,0.25)', borderRadius:'2px', color:'rgba(230,90,90,0.65)', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.18em', cursor:'pointer', transition:'all 0.15s', textTransform:'uppercase' }}
-            onMouseEnter={e=>{e.currentTarget.style.background='rgba(200,60,60,0.18)';e.currentTarget.style.borderColor='rgba(230,90,90,0.5)';}}
-            onMouseLeave={e=>{e.currentTarget.style.background='rgba(200,60,60,0.08)';e.currentTarget.style.borderColor='rgba(200,60,60,0.25)';}}>
-            Filter löschen
-          </button>
-        </div>
-      )}
-    </aside>
+        {/* Locked-hint row (only for found entries below tagsOnCard) */}
+        {found && stage < FU.tagsOnCard && (
+          <div style={{
+            fontFamily:'var(--font-mono)', fontSize:6.5,
+            color:'rgba(160,140,255,0.4)', letterSpacing:'0.16em',
+            textTransform:'uppercase', fontStyle:'italic', marginTop:2,
+          }}>◇ Mehr ab Stufe {FU.tagsOnCard}</div>
+        )}
+      </div>
+    </div>
   );
 }
 
-// ── APP ───────────────────────────────────────────────────
-function App() {
-  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
-  const [selectedCat, setSelectedCat] = useState(null);
-  const [erfFilters, setErfFilters] = useState({ search:'', status:[], sort:'name-az' });
-  useScrollReveal();
-
-  const totalFound         = KOLLEKTIKON_DATA.reduce((s,d) => s+d.found,         0);
-  const totalAll           = KOLLEKTIKON_DATA.reduce((s,d) => s+d.total,          0);
-  const totalKomplett      = KOLLEKTIKON_DATA.reduce((s,d) => s+(d.komplett||0),  0);
-  const overallPct         = totalFound / totalAll;
-  const overallKomplettPct = totalKomplett / totalAll;
-
-  const activeCatData  = selectedCat ? KOLLEKTIKON_DATA.find(d => d.id === selectedCat) : null;
-  const filteredEntries = selectedCat ? CATALOG_ENTRIES.filter(e => e.cat === selectedCat) : CATALOG_ENTRIES;
-  const catLabelMap     = Object.fromEntries(KOLLEKTIKON_DATA.map(d => [d.id, d.label]));
-  let displayedEntries = filteredEntries;
-  if (erfFilters.search) { const q = erfFilters.search.toLowerCase(); displayedEntries = displayedEntries.filter(e => e.name.toLowerCase().includes(q)); }
-  if (erfFilters.status.length) displayedEntries = displayedEntries.filter(e => erfFilters.status.includes(e.status));
-  displayedEntries = [...displayedEntries];
-  switch (erfFilters.sort) {
-    case 'name-az':  displayedEntries.sort((a,b) => a.name.localeCompare(b.name,'de')); break;
-    case 'name-za':  displayedEntries.sort((a,b) => b.name.localeCompare(a.name,'de')); break;
-    case 'erf-asc':  displayedEntries.sort((a,b) => (a.status==='komplett'?1:0)-(b.status==='komplett'?1:0)); break;
-    case 'erf-desc': displayedEntries.sort((a,b) => (b.status==='komplett'?1:0)-(a.status==='komplett'?1:0)); break;
-  }
-
-  const toggleCat = (id) => setSelectedCat(prev => prev === id ? null : id);
+/* ── Detail Overlay (right-sliding panel) ── */
+function DetailPanel({ entry, onClose }) {
+  uE2(() => {
+    const onKey = e => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+  if (!entry) return null;
+  const found = entry.found;
+  const cMain = `oklch(0.72 0.16 ${entry.hue})`;
+  const cA = (a) => `oklch(0.72 0.16 ${entry.hue} / ${a})`;
+  const catObj = CATS.find(c => c.id === entry.cat);
 
   return (
-    <div className="page-root">
-      {tweaks.showParticles && <ParticleField />}
-      <SiteNav rightLabel="KOLLEKTIKON" />
-
-      {/* ── HERO ── */}
-      <div style={{ position:'relative', zIndex:5, width:'100%', padding:'48px 40px 40px', borderBottom:'1px solid rgba(160,140,255,0.12)', background:'linear-gradient(180deg, rgba(18,10,44,0.95) 0%, rgba(8,6,22,0.98) 100%)', overflow:'hidden' }}>
-        <div style={{ position:'absolute', inset:0, background:'radial-gradient(ellipse at 15% 50%, rgba(124,77,255,0.14) 0%, transparent 55%), radial-gradient(ellipse at 85% 50%, rgba(45,100,255,0.1) 0%, transparent 55%)', pointerEvents:'none' }}/>
-        <div style={{ position:'relative', maxWidth:'1100px', margin:'0 auto' }}>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.42em', color:'rgba(124,77,255,0.6)', textTransform:'uppercase', marginBottom:'10px' }}>
-            Ressourcen-Archiv · Erforschungsprotokoll · Meruria
+    <div style={{
+      position:'fixed', inset:0, zIndex:600, display:'flex', justifyContent:'flex-end',
+      background:'rgba(4,3,13,0.7)', backdropFilter:'blur(4px)',
+      animation:'fadeIn 0.2s ease',
+    }} onClick={onClose}>
+      <div onClick={e=>e.stopPropagation()} style={{
+        width:'min(560px, 92vw)', height:'100%',
+        background:'rgba(8,6,22,0.99)', borderLeft:`1px solid ${cA(0.33)}`,
+        boxShadow:`-20px 0 60px rgba(0,0,0,0.7), -20px 0 80px ${cA(0.13)}`,
+        animation:'overlayIn 0.32s cubic-bezier(.2,.85,.2,1)',
+        overflowY:'auto',
+      }}>
+        {/* Header — close */}
+        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'14px 22px', borderBottom:`1px solid ${found?cMain+'33':'rgba(124,77,255,0.12)'}`, position:'sticky', top:0, background:'rgba(8,6,22,0.98)', zIndex:5 }}>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.3em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>
+            № {entry.id.toUpperCase()} · {catObj.label}
           </div>
-          <h1 style={{ fontFamily:'var(--font-display)', fontSize:'36px', fontWeight:'300', letterSpacing:'0.3em', color:'#f0eeff', textShadow:'0 0 40px rgba(124,77,255,0.5)', margin:'0 0 22px', lineHeight:1 }}>
-            KOLLEKTIKON
-          </h1>
-          <div style={{ display:'flex', alignItems:'center', gap:'28px', flexWrap:'wrap' }}>
-            {[
-              { label:'Bekannte Einträge', value:`${totalFound} / ${totalAll}`,           c:'rgba(200,190,240,0.9)' },
-              { label:'In Forschung',      value:`${Math.round(overallPct*100)} %`,        c:'rgba(200,190,240,0.6)' },
-              { label:'Vollständig dok.',  value:`${totalKomplett} Einträge`,              c:'oklch(0.82 0.14 80)' },
-              { label:'Kategorien',        value:`${KOLLEKTIKON_DATA.length}`,            c:'rgba(160,140,255,0.75)' },
-            ].map(s => (
-              <div key={s.label} style={{ display:'flex', flexDirection:'column', gap:'3px' }}>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.28em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>{s.label}</span>
-                <span style={{ fontFamily:'var(--font-display)', fontSize:'17px', fontWeight:'400', letterSpacing:'0.18em', color:s.c }}>{s.value}</span>
-              </div>
-            ))}
-            <div style={{ flex:1, minWidth:'140px' }}>
-              <div style={{ position:'relative', height:5 }}>
-                {overallKomplettPct > 0 && <div style={{ position:'absolute', left:0, top:0, bottom:0, width:`${overallKomplettPct*100}%`, boxShadow:'0 0 9px 1px rgba(160,140,255,0.55)', borderRadius:2, pointerEvents:'none' }}/>}
-                <div style={{ position:'absolute', inset:0, background:'rgba(124,77,255,0.08)', borderRadius:2, overflow:'hidden', border:'1px solid rgba(124,77,255,0.2)' }}>
-                  <div style={{ position:'absolute', left:0, top:0, bottom:0, width:`${overallPct*100}%`, background:'linear-gradient(90deg, rgba(220,215,250,0.18), rgba(240,238,255,0.28))' }}/>
-                  <div style={{ position:'absolute', left:-1, top:-1, bottom:-1, width:`${overallKomplettPct*100}%`, background:'linear-gradient(90deg, rgba(140,100,255,1), rgba(200,180,255,1))', borderRadius:2 }}/>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── CONTENT ── */}
-      <div style={{ position:'relative', zIndex:5, maxWidth:'1100px', margin:'0 auto', padding:'40px 40px 60px' }}>
-
-        {/* Kategorien */}
-        <div className="reveal-up" style={{ marginBottom:'48px' }}>
-          <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:20 }}>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:'10px', letterSpacing:'0.35em', color:'rgba(124,77,255,0.65)', textTransform:'uppercase' }}>◈ Kategorien</span>
-            <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(124,77,255,0.5), rgba(124,77,255,0.05))' }}/>
-            {selectedCat ? (
-              <button onClick={() => setSelectedCat(null)} style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:'rgba(160,140,255,0.6)', textTransform:'uppercase', background:'rgba(124,77,255,0.08)', border:'1px solid rgba(124,77,255,0.25)', borderRadius:2, padding:'3px 10px', cursor:'pointer' }}>
-                × Filter aufheben
-              </button>
-            ) : (
-              <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:'rgba(160,140,255,0.3)', textTransform:'uppercase' }}>Klicken zum Filtern</span>
-            )}
-          </div>
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10 }}>
-            {KOLLEKTIKON_DATA.map((d,i) => (
-              <CategoryBar key={d.id} d={d} i={i} active={selectedCat === d.id} onClick={() => toggleCat(d.id)} />
-            ))}
-          </div>
+          <button onClick={onClose} style={{
+            background:'transparent', border:'1px solid rgba(124,77,255,0.3)',
+            color:'rgba(200,190,240,0.7)', cursor:'pointer',
+            padding:'4px 10px', fontFamily:'var(--font-mono)', fontSize:9,
+            letterSpacing:'0.2em', textTransform:'uppercase', borderRadius:2,
+          }}
+            onMouseEnter={e=>{e.currentTarget.style.color='#f0eeff';e.currentTarget.style.borderColor=cMain;e.currentTarget.style.background=cMain+'18';}}
+            onMouseLeave={e=>{e.currentTarget.style.color='rgba(200,190,240,0.7)';e.currentTarget.style.borderColor='rgba(124,77,255,0.3)';e.currentTarget.style.background='transparent';}}
+          >ESC ×</button>
         </div>
 
-        {/* Letzte Entdeckungen */}
-        <div className="reveal-up" style={{ marginBottom:'48px', transitionDelay:'0.05s' }}>
-          <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:20 }}>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:'10px', letterSpacing:'0.35em', color:'rgba(124,77,255,0.65)', textTransform:'uppercase' }}>◈ Letzte Entdeckungen</span>
-            <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(124,77,255,0.5), rgba(124,77,255,0.05))' }}/>
-          </div>
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:36 }}>
-            <div>
-              <div style={{ display:'flex', alignItems:'baseline', gap:14, marginBottom:10 }}>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.3em', color:'rgba(124,77,255,0.65)', textTransform:'uppercase' }}>◈ Neu gesichtet</span>
-                <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(124,77,255,0.45), rgba(124,77,255,0.04))' }}/>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.25em', color:'rgba(160,140,255,0.4)', textTransform:'uppercase' }}>Letzte {RECENT_SIGHTED.length}</span>
-              </div>
-              <div style={{ display:'flex', alignItems:'flex-start', paddingTop:24, paddingBottom:18, paddingRight:24, overflow:'visible' }}>
-                {RECENT_SIGHTED.map((item,i) => <RecentCard key={item.id} item={item} idx={i} gold={false}/>)}
-              </div>
+        {/* Hero icon area */}
+        <div style={{
+          position:'relative', height:240,
+          background: found ? mkStripeBg(entry.hue, 0.16) : mkStripeBg(280, 0.04),
+          display:'flex', alignItems:'center', justifyContent:'center',
+          borderBottom:`1px solid ${found?cMain+'33':'rgba(124,77,255,0.1)'}`,
+        }}>
+          {found && (
+            <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse at 50% 50%, ${cA(0.2)} 0%, transparent 65%)` }}/>
+          )}
+          {found ? (
+            <svg viewBox="0 0 100 100" width="148" height="148" fill="none" stroke={cMain} style={{ color:cMain, filter:`drop-shadow(0 0 22px ${cA(0.67)})`, zIndex:1 }}>
+              {IC[entry.icon] || CIC[entry.cat]}
+            </svg>
+          ) : entry.obscuredName ? (
+            <svg viewBox="0 0 100 100" width="148" height="148" fill="none" stroke={cMain} style={{ color:cMain, opacity:0.18, zIndex:1 }}>
+              {IC[entry.icon] || CIC[entry.cat]}
+            </svg>
+          ) : (
+            <div style={{ position:'relative', width:160, height:160, display:'flex', alignItems:'center', justifyContent:'center' }}>
+              <svg viewBox="0 0 100 100" width="160" height="160" fill="rgba(124,77,255,0.13)" stroke="rgba(124,77,255,0.25)">
+                {CIC[entry.cat]}
+              </svg>
+              <span style={{ position:'absolute', fontFamily:'var(--font-display)', fontSize:84, fontWeight:300, color:'rgba(160,140,255,0.5)', animation:'pulseGlow 2.4s ease-in-out infinite' }}>?</span>
             </div>
-            <div>
-              <div style={{ display:'flex', alignItems:'baseline', gap:14, marginBottom:10 }}>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.3em', color:'oklch(0.82 0.14 80)', textTransform:'uppercase' }}>✓ Kürzlich komplettiert</span>
-                <div style={{ flex:1, height:1, background:'linear-gradient(to right, oklch(0.82 0.14 80 / 0.5), rgba(124,77,255,0.04))' }}/>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.25em', color:'rgba(160,140,255,0.4)', textTransform:'uppercase' }}>Letzte {RECENT_KOMPLETT.length}</span>
-              </div>
-              <div style={{ display:'flex', alignItems:'flex-start', paddingTop:24, paddingBottom:18, paddingRight:24, overflow:'visible' }}>
-                {RECENT_KOMPLETT.map((item,i) => <RecentCard key={item.id} item={item} idx={i} gold={true}/>)}
-              </div>
-            </div>
-          </div>
+          )}
+          {/* corners */}
+          <span style={{position:'absolute',top:0,left:0,width:18,height:18,borderTop:`2px solid ${cA(0.67)}`,borderLeft:`2px solid ${cA(0.67)}`, opacity: found?1:0.4}}/>
+          <span style={{position:'absolute',top:0,right:0,width:18,height:18,borderTop:`2px solid ${cA(0.67)}`,borderRight:`2px solid ${cA(0.67)}`, opacity: found?1:0.4}}/>
+          <span style={{position:'absolute',bottom:0,left:0,width:18,height:18,borderBottom:`2px solid ${cA(0.67)}`,borderLeft:`2px solid ${cA(0.67)}`, opacity: found?1:0.4}}/>
+          <span style={{position:'absolute',bottom:0,right:0,width:18,height:18,borderBottom:`2px solid ${cA(0.67)}`,borderRight:`2px solid ${cA(0.67)}`, opacity: found?1:0.4}}/>
         </div>
 
-        {/* Bekannte Einträge */}
-        <div className="reveal-up" style={{ transitionDelay:'0.1s' }}>
-          <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:16 }}>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:'10px', letterSpacing:'0.35em', color:'rgba(124,77,255,0.65)', textTransform:'uppercase' }}>◈ Bekannte Einträge</span>
-            <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(124,77,255,0.5), rgba(124,77,255,0.05))' }}/>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.28em', color:'rgba(160,140,255,0.4)', textTransform:'uppercase' }}>
-              {displayedEntries.length} {displayedEntries.length === 1 ? 'Eintrag' : 'Einträge'}
-              {activeCatData && ` · ${activeCatData.label}`}
+        {/* Title */}
+        <div style={{ padding:'22px 26px 8px' }}>
+          <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:8 }}>
+            <RarityPips rarity={entry.rarity}/>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.2em', color:`oklch(0.72 0.16 ${RAR[entry.rarity].hue})`, textTransform:'uppercase' }}>
+              {RAR[entry.rarity].label}
             </span>
           </div>
-          <div style={{ display:'flex', gap:16, alignItems:'flex-start' }}>
-            <KollektikonSidebar filters={erfFilters} setFilters={setErfFilters} selectedCat={selectedCat} toggleCat={toggleCat} />
-            <div style={{ flex:1, minWidth:0 }}>
-              <div style={{ background:'rgba(10,8,28,0.7)', border:'1px solid rgba(124,77,255,0.18)', borderRadius:3, overflow:'hidden', position:'relative' }}>
-                <span style={{position:'absolute',top:-1,left:-1,width:12,height:12,borderTop:'1px solid rgba(124,77,255,0.55)',borderLeft:'1px solid rgba(124,77,255,0.55)'}}/>
-                <span style={{position:'absolute',top:-1,right:-1,width:12,height:12,borderTop:'1px solid rgba(124,77,255,0.55)',borderRight:'1px solid rgba(124,77,255,0.55)'}}/>
-                <span style={{position:'absolute',bottom:-1,left:-1,width:12,height:12,borderBottom:'1px solid rgba(124,77,255,0.55)',borderLeft:'1px solid rgba(124,77,255,0.55)'}}/>
-                <span style={{position:'absolute',bottom:-1,right:-1,width:12,height:12,borderBottom:'1px solid rgba(124,77,255,0.55)',borderRight:'1px solid rgba(124,77,255,0.55)'}}/>
-                <div style={{ display:'grid', gridTemplateColumns: !selectedCat ? '28px 1fr auto auto auto 18px' : '28px 1fr auto auto 18px', gap:'12px', alignItems:'center', padding:'8px 14px', borderBottom:'1px solid rgba(124,77,255,0.18)', background:'rgba(124,77,255,0.05)' }}>
-                  {['', 'Name', !selectedCat ? 'Kategorie' : null, 'Status', 'Datum', ''].filter(h => h !== null).map((h,i) => (
-                    <span key={i} style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>{h}</span>
-                  ))}
-                </div>
-                {displayedEntries.length === 0 ? (
-                  <div style={{ padding:'28px 14px', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(160,140,255,0.35)', letterSpacing:'0.2em' }}>
-                    Keine bekannten Einträge.
-                  </div>
-                ) : (
-                  displayedEntries.map(entry => (
-                    <CatalogRow key={entry.id} entry={entry} showCat={!selectedCat} catLabel={catLabelMap[entry.cat]} />
-                  ))
-                )}
-              </div>
-            </div>
-          </div>
+          {(!found && entry.obscuredName) && (
+            <div style={{ marginBottom:8, fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.28em', color:cA(0.5), textTransform:'uppercase' }}>◈ GESPERRT · NICHT IDENTIFIZIERT</div>
+          )}
+          <h2 style={(!found && entry.obscuredName) ? {
+            fontFamily:'var(--font-mono)', fontSize:20, letterSpacing:'0.16em', lineHeight:1.2,
+            color: cA(0.7), textShadow:`0 0 10px ${cA(0.4)}, 0 0 22px ${cA(0.18)}`, userSelect:'none',
+          } : {
+            fontFamily:'var(--font-display)', fontWeight:400, fontSize:24, letterSpacing:'0.16em', color:'#f0eeff', textTransform:'uppercase', lineHeight:1.2, fontStyle: found ? 'normal' : 'italic', opacity: found ? 1 : 0.6,
+          }}>
+            {(!found && entry.obscuredName) ? entry.obscuredName : entry.name}
+          </h2>
         </div>
 
+        {/* Body */}
+        {found ? (
+          <div style={{ padding:'12px 26px 32px' }}>
+            {/* Forschungsfortschritt */}
+            <div style={{ marginBottom:22 }}>
+              <StageProgress stage={entry.stage || 1} cMain={cMain} cA={cA}/>
+            </div>
+
+            {/* Description (locked until stage 4) */}
+            {(entry.stage || 1) >= FU.desc ? (
+              <p style={{ fontFamily:'var(--font-body)', fontWeight:300, fontSize:13.5, color:'var(--silver)', lineHeight:1.75, marginBottom:22 }}>
+                {entry.desc}
+              </p>
+            ) : (
+              <div style={{
+                marginBottom:22, padding:'14px 16px',
+                border:'1px dashed rgba(124,77,255,0.22)',
+                background:'rgba(124,77,255,0.03)',
+                fontFamily:'var(--font-body)', fontStyle:'italic', fontWeight:300, fontSize:12.5,
+                color:'rgba(180,170,220,0.5)', lineHeight:1.7,
+              }}>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', color:cA(0.6), textTransform:'uppercase', marginRight:8 }}>◇ Gesperrt</span>
+                Weitere Beobachtungen erforderlich, um die vollständige Beschreibung zu enthüllen.
+              </div>
+            )}
+
+            {/* Field table */}
+            <div style={{ display:'grid', gridTemplateColumns:'auto 1fr', gap:'10px 18px', padding:'18px 0 4px', borderTop:`1px solid ${cA(0.13)}` }}>
+              <Field label="Vorkommen"        value={entry.habitat}    unlocked={(entry.stage||1) >= FU.habitat}/>
+              <Field label="Größe"            value={entry.size}       unlocked={(entry.stage||1) >= FU.size}/>
+              <Field label="Verkaufspreis"    value={entry.price != null ? `${entry.price} Hade` : '—'} unlocked={(entry.stage||1) >= FU.price}/>
+              <Field label="Erstmals"         value={entry.date}       unlocked={(entry.stage||1) >= FU.date}/>
+              <Field label="Dokumentiert von" value={entry.by}         unlocked={(entry.stage||1) >= FU.by}/>
+              <Field label="Kategorie"        value={catObj.label}     unlocked/>
+            </div>
+
+            {/* Reward list */}
+            <RewardList category={entry.cat} stage={entry.stage || 1} cMain={cMain} cA={cA} isMax={entry.stage >= MS}/>
+
+            {/* Footer stamp */}
+            <div style={{ marginTop:24, padding:'12px 14px',
+              border:`1px dashed ${entry.stage >= MS ? 'oklch(0.82 0.14 80 / 0.55)' : cA(0.33)}`,
+              background: entry.stage >= MS ? 'oklch(0.82 0.14 80 / 0.06)' : `${cA(0.04)}`,
+              fontFamily:'var(--font-mono)', fontSize:9,
+              color: entry.stage >= MS ? GD : cMain,
+              letterSpacing:'0.16em', textTransform:'uppercase',
+              display:'flex', alignItems:'center', justifyContent:'space-between',
+            }}>
+              <span>{entry.stage >= MS ? '✓ Komplett erforscht' : '◈ In Forschung'}</span>
+              <span style={{ opacity:0.6 }}>Kollektikon · Meruria</span>
+            </div>
+          </div>
+        ) : (
+          <div style={{ padding:'14px 26px 32px' }}>
+            <p style={{ fontFamily:'var(--font-body)', fontStyle:'italic', fontWeight:300, fontSize:13, color:'rgba(180,170,220,0.55)', lineHeight:1.75, marginBottom:18 }}>
+              Bisher keine bestätigte Sichtung. Berichte aus zweiter Hand existieren, sind aber unzureichend verifiziert. Belohnung für verlässliche Beobachtung: nach Verhandlung mit der Bergungsgarde.
+            </p>
+            <div style={{ display:'grid', gridTemplateColumns:'auto 1fr', gap:'10px 18px', padding:'18px 0 4px', borderTop:'1px solid rgba(124,77,255,0.18)' }}>
+              <Field label="Status"    value="Unbekannt"/>
+              <Field label="Kategorie" value={catObj.label}/>
+              <Field label="Geschätzte Seltenheit" value={RAR[entry.rarity].label}/>
+              <Field label="Eintragsnummer" value={entry.id.toUpperCase()}/>
+            </div>
+            <div style={{ marginTop:24, padding:'12px 14px', border:'1px dashed rgba(124,77,255,0.25)', background:'rgba(124,77,255,0.04)',
+              fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(160,140,255,0.55)', letterSpacing:'0.16em', textTransform:'uppercase',
+              display:'flex', alignItems:'center', justifyContent:'space-between',
+            }}>
+              <span>◇ Sichtung anonym melden</span>
+              <span style={{ opacity:0.6 }}>Bergungsgarde · Arkanheim</span>
+            </div>
+          </div>
+        )}
       </div>
-
-      <SiteFooter />
-
-      <TweaksPanel>
-        <TweakSection label="Darstellung" />
-        <TweakToggle id="showParticles" label="Partikel" />
-      </TweaksPanel>
     </div>
   );
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<SiteGate><App /></SiteGate>);
+function Field({ label, value, unlocked = true }) {
+  return (
+    <>
+      <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase', whiteSpace:'nowrap', paddingTop:2 }}>
+        {label}
+      </span>
+      {unlocked ? (
+        <span style={{ fontFamily:'var(--font-body)', fontWeight:300, fontSize:13, color:'#f0eeff' }}>
+          {value}
+        </span>
+      ) : (
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'rgba(160,140,255,0.35)', letterSpacing:'0.18em', textTransform:'uppercase', display:'inline-flex', alignItems:'center', gap:6 }}>
+          <span style={{ width:6, height:6, border:'1px solid rgba(160,140,255,0.35)', display:'inline-block' }}/>
+          Noch nicht freigeschaltet
+        </span>
+      )}
+    </>
+  );
+}
+
+/* ── Category tab ── */
+function CatTab({ cat, active, onClick, foundCount, kompletteCount = 0, fullWidth }) {
+  const [hov, setHov] = uS2(false);
+  const cMain = `oklch(0.72 0.16 ${cat.hue})`;
+  const cA = (a) => `oklch(0.72 0.16 ${cat.hue} / ${a})`;
+  const pctFound    = cat.total ? foundCount / cat.total : 0;
+  const pctKomplett = cat.total ? kompletteCount / cat.total : 0;
+  return (
+    <button
+      onClick={onClick}
+      onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
+      style={{
+        ...(fullWidth
+          ? { width:'100%', flex:'1 1 100%' }
+          : { flex:'1 1 100px', minWidth:0, maxWidth:240 }),
+        background: active ? `${cA(0.09)}` : 'rgba(10,8,28,0.7)',
+        border: active ? `1px solid ${cA(0.67)}` : `1px solid ${hov ? cMain+'55' : 'rgba(124,77,255,0.18)'}`,
+        padding:'14px 16px 12px', borderRadius:3, cursor:'pointer',
+        textAlign:'left', position:'relative', overflow:'hidden',
+        transition:'all 0.2s',
+        boxShadow: active ? `0 0 18px ${cA(0.2)}, inset 0 0 14px ${cA(0.07)}` : 'none',
+      }}
+    >
+      <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:8 }}>
+        <svg viewBox="0 0 100 100" width="22" height="22" fill="none" stroke={cMain} style={{ color:cMain, opacity: active ? 1 : 0.85, flexShrink:0 }}>{CIC[cat.id]}</svg>
+        <span style={{
+          fontFamily:'var(--font-display)', fontSize:11, letterSpacing:'0.2em', fontWeight:400,
+          color: active ? '#f0eeff' : 'rgba(220,210,250,0.78)', textTransform:'uppercase',
+          minWidth:0, flex:1, overflowWrap:'anywhere', lineHeight:1.2,
+        }}>{cat.label}</span>
+      </div>
+      {/* two-layer progress: white = sighted (in Forschung), color = komplett erforscht */}
+      <div style={{ position:'relative', height:4, marginBottom:6 }}>
+        {/* outer glow halo for komplett bar (extends beyond track) */}
+        {pctKomplett > 0 && (
+          <div style={{ position:'absolute', left:0, top:0, bottom:0, width:`${pctKomplett*100}%`,
+            boxShadow:`0 0 7px 1px ${cA(0.42)}, 0 0 14px 3px ${cA(0.18)}, 0 0 22px 6px ${cA(0.08)}`,
+            borderRadius:2, pointerEvents:'none',
+          }}/>
+        )}
+        {/* clipping track */}
+        <div style={{ position:'absolute', inset:0, background:'rgba(124,77,255,0.08)', border:`1px solid ${cA(0.13)}`, borderRadius:2, overflow:'hidden' }}>
+          {/* white layer — sighted in Forschung (subtle) */}
+          <div style={{ position:'absolute', left:0, top:0, bottom:0, width:`${pctFound*100}%`,
+            background:'linear-gradient(90deg, rgba(220,215,250,0.16), rgba(240,238,255,0.26))',
+            transition:'width 0.6s cubic-bezier(.2,.85,.2,1)',
+          }}/>
+          {/* color layer on top — komplett erforscht (bold) */}
+          <div style={{ position:'absolute', left:-1, top:-1, bottom:-1, width:`${pctKomplett*100}%`,
+            background:`linear-gradient(90deg, ${cMain}, ${cA(0.85)})`,
+            boxShadow:`inset 0 0 4px rgba(255,255,255,0.5)`,
+            borderRadius:2,
+            transition:'width 0.8s cubic-bezier(.2,.85,.2,1)',
+          }}/>
+        </div>
+      </div>
+      <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', gap:6 }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(200,190,240,0.65)', letterSpacing:'0.1em', whiteSpace:'nowrap' }}>
+          <span style={{ color:'#f0eeff' }}>{foundCount}</span>
+          <span style={{ opacity:0.5 }}> / {cat.total}</span>
+          {kompletteCount > 0 && (
+            <span style={{ color:cMain, marginLeft:4 }}>· {kompletteCount} <span style={{ fontSize:7, opacity:0.75, letterSpacing:'0.16em' }}>KOMP</span></span>
+          )}
+        </span>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:cMain, letterSpacing:'0.18em' }}>
+          {cat.total ? `${Math.round(pctFound*100)} %` : '—'}
+        </span>
+      </div>
+    </button>
+  );
+}
+
+/* ── Filter chip ── */
+function FilterChip({ label, count, active, onClick, hue=265 }) {
+  const c = `oklch(0.72 0.16 ${hue})`;
+  const cA = (a) => `oklch(0.72 0.16 ${hue} / ${a})`;
+  return (
+    <button onClick={onClick} style={{
+      fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em',
+      padding:'7px 14px', textTransform:'uppercase',
+      background: active ? `${cA(0.11)}` : 'rgba(10,8,28,0.5)',
+      border: active ? `1px solid ${cA(0.67)}` : '1px solid rgba(124,77,255,0.18)',
+      color: active ? '#f0eeff' : 'rgba(200,190,240,0.6)',
+      cursor:'pointer', borderRadius:2, transition:'all 0.18s',
+      display:'inline-flex', alignItems:'center', gap:8,
+    }}
+      onMouseEnter={e=>{ if(!active){ e.currentTarget.style.borderColor=c+'66'; e.currentTarget.style.color='#f0eeff'; } }}
+      onMouseLeave={e=>{ if(!active){ e.currentTarget.style.borderColor='rgba(124,77,255,0.18)'; e.currentTarget.style.color='rgba(200,190,240,0.6)'; } }}
+    >
+      <span>{label}</span>
+      <span style={{ opacity:0.7, fontSize:8 }}>{count}</span>
+    </button>
+  );
+}
+
+Object.assign(window, { EntryCard, DetailPanel, CatTab, FilterChip, RarityPips, mkStripeBg });
+
+/* ── Filter button (funnel + active count badge) ── */
+function FilterButton({ active, count, onClick, hue }) {
+  const c = `oklch(0.72 0.16 ${hue})`;
+  const cA = a => `oklch(0.72 0.16 ${hue} / ${a})`;
+  return (
+    <button onClick={onClick} style={{
+      fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em',
+      padding:'7px 12px', textTransform:'uppercase',
+      background: active ? cA(0.18) : 'rgba(10,8,28,0.5)',
+      border: active ? `1px solid ${c}` : `1px solid ${cA(0.3)}`,
+      color: active ? '#f0eeff' : cA(0.85),
+      cursor:'pointer', borderRadius:2, transition:'all 0.18s',
+      display:'inline-flex', alignItems:'center', gap:8, position:'relative',
+      boxShadow: active ? `0 0 14px ${cA(0.25)}` : 'none',
+    }}
+      onMouseEnter={e=>{ if(!active){ e.currentTarget.style.borderColor=c; e.currentTarget.style.color='#f0eeff'; } }}
+      onMouseLeave={e=>{ if(!active){ e.currentTarget.style.borderColor=cA(0.3); e.currentTarget.style.color=cA(0.85); } }}
+    >
+      <svg viewBox="0 0 14 14" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M1 2 L 13 2 L 8.5 7.5 L 8.5 12.5 L 5.5 11 L 5.5 7.5 Z"/>
+      </svg>
+      <span>Filter</span>
+      {count > 0 && (
+        <span style={{
+          minWidth:18, padding:'1px 5px', borderRadius:9,
+          background:c, color:'#08061a',
+          fontFamily:'var(--font-mono)', fontSize:8, lineHeight:1.2,
+          fontWeight:600, letterSpacing:0, textAlign:'center',
+        }}>{count}</span>
+      )}
+      <svg viewBox="0 0 10 10" width="8" height="8" fill="none" stroke="currentColor" strokeWidth="1.6" style={{ opacity:0.6, transform: active ? 'rotate(180deg)' : 'rotate(0)', transition:'transform 0.2s' }}>
+        <path d="M1 3 L 5 7 L 9 3" strokeLinecap="round"/>
+      </svg>
+    </button>
+  );
+}
+
+/* ── Single tag chip in the panel ── */
+function FacetChip({ label, active, onClick, hue }) {
+  const c = `oklch(0.72 0.16 ${hue})`;
+  const cA = a => `oklch(0.72 0.16 ${hue} / ${a})`;
+  return (
+    <button onClick={onClick} style={{
+      fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em',
+      padding:'4px 9px', textTransform:'uppercase',
+      background: active ? cA(0.22) : 'transparent',
+      border: active ? `1px solid ${c}` : `1px solid ${cA(0.25)}`,
+      color: active ? '#f0eeff' : cA(0.7),
+      cursor:'pointer', borderRadius:2, transition:'all 0.13s',
+      whiteSpace:'nowrap',
+    }}
+      onMouseEnter={e=>{ if(!active){ e.currentTarget.style.borderColor=cA(0.6); e.currentTarget.style.color=cA(0.95); } }}
+      onMouseLeave={e=>{ if(!active){ e.currentTarget.style.borderColor=cA(0.25); e.currentTarget.style.color=cA(0.7); } }}
+    >{label}</button>
+  );
+}
+
+/* ── FilterPanel (expanded under filter row) ── */
+function FilterPanel({ category, selected, onToggle, onReset, hue }) {
+  const facets = window.FACETS[category] || [];
+  const c = `oklch(0.72 0.16 ${hue})`;
+  const cA = a => `oklch(0.72 0.16 ${hue} / ${a})`;
+  const totalActive = Object.values(selected || {}).reduce((s, arr) => s + (arr ? arr.length : 0), 0);
+
+  return (
+    <div style={{
+      background: 'rgba(8,6,22,0.85)',
+      border: `1px solid ${cA(0.35)}`,
+      borderRadius:3,
+      padding:'18px 22px 20px',
+      animation:'slideDown 0.22s ease',
+      boxShadow: `0 12px 36px rgba(0,0,0,0.5), 0 0 22px ${cA(0.12)}`,
+      position:'relative',
+    }}>
+      {/* corner brackets */}
+      <span style={{position:'absolute',top:-1,left:-1,width:10,height:10,borderTop:`1px solid ${cA(0.7)}`,borderLeft:`1px solid ${cA(0.7)}`}}/>
+      <span style={{position:'absolute',top:-1,right:-1,width:10,height:10,borderTop:`1px solid ${cA(0.7)}`,borderRight:`1px solid ${cA(0.7)}`}}/>
+      <span style={{position:'absolute',bottom:-1,left:-1,width:10,height:10,borderBottom:`1px solid ${cA(0.7)}`,borderLeft:`1px solid ${cA(0.7)}`}}/>
+      <span style={{position:'absolute',bottom:-1,right:-1,width:10,height:10,borderBottom:`1px solid ${cA(0.7)}`,borderRight:`1px solid ${cA(0.7)}`}}/>
+
+      {/* header */}
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:14, paddingBottom:10, borderBottom:`1px solid ${cA(0.18)}` }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.3em', color:c, textTransform:'uppercase' }}>
+          ◈ Filteroptionen
+        </span>
+        <button onClick={onReset} disabled={totalActive===0} style={{
+          background:'transparent', border:`1px solid ${cA(totalActive ? 0.45 : 0.15)}`,
+          color: totalActive ? cA(0.9) : cA(0.35),
+          cursor: totalActive ? 'pointer' : 'default',
+          padding:'3px 10px', borderRadius:2,
+          fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.2em', textTransform:'uppercase',
+          transition:'all 0.15s',
+        }}>Zurücksetzen {totalActive>0 && `(${totalActive})`}</button>
+      </div>
+
+      {/* facets grid */}
+      <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(260px, 1fr))', gap:'14px 28px' }}>
+        {facets.map(f => (
+          <div key={f.key}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.28em', color:cA(0.55), textTransform:'uppercase', marginBottom:7 }}>
+              {f.label}
+            </div>
+            <div style={{ display:'flex', flexWrap:'wrap', gap:5 }}>
+              {f.options.map(opt => {
+                const sel = (selected[f.key] || []).includes(opt);
+                return <FacetChip key={opt} label={opt} active={sel} hue={hue} onClick={()=>onToggle(f.key, opt)}/>;
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+Object.assign(window, { FilterButton, FilterPanel, FacetChip });
 </script>
+
+
+<!-- ═══════════════════════════════════════════
+     SCRIPT 3 — Nav + Page + Render
+     ═══════════════════════════════════════════ -->
+<script type="text/babel">
+const { useState:uS3, useEffect:uE3, useRef:uR3, useMemo:uM3 } = React;
+const { CATEGORIES:C3, CAT_ICONS:CI3, RARITY:R3, FACETS:F3, RAR_LABEL:RL3,
+        EntryCard:ECard, DetailPanel:DPanel, CatTab:CTab, FilterChip:FChip, FilterButton:FBtn, FilterPanel:FPanel } = window;
+const { useTweaks, TweaksPanel, TweakSection, TweakRadio, TweakToggle } = window;
+
+/* ── Build Kollektikon entries from resource data + ressourcen_sichtbar ── */
+const _FISH_ICONS     = ['f1','f2','f3','f4','f5','f6','f7','f8'];
+const _PLANT_ICONS    = ['p1','p2','p3','p4','p5','p6','p7','p8'];
+const _MIN_ICONS      = ['m1','m2','m3','m4','m5'];
+const _CREATURE_ICONS = ['k1','k2','k3','k4'];
+const _ICON_POOLS = { fische:_FISH_ICONS, pflanzen:_PLANT_ICONS, mineralien:_MIN_ICONS, kreaturen:_CREATURE_ICONS };
+
+// Stable integer ID for a monster name — used as resource_id in ressourcen_sichtbar
+function _monsterKolId(name) {
+  let h = 5381;
+  for (let i = 0; i < name.length; i++) h = (Math.imul(h, 33) ^ name.charCodeAt(i)) >>> 0;
+  return h % 2000000000;
+}
+
+// Sci-fi scramble: same name → same output, preserves spaces/hyphens
+const _GLYPHS = '░▒▓█▪◆◈⬡⬢⬤⬧⬨◉●○◇□■▾▸▿△▷▶▽▼◁◀';
+function _scrambleName(name) {
+  return name.split('').map((c, i) => {
+    if (c === ' ' || c === '-') return c;
+    const seed = (name.charCodeAt(0) * 17 + i * 31 + name.charCodeAt(i) * 7) % _GLYPHS.length;
+    return _GLYPHS[Math.abs(seed)];
+  }).join('');
+}
+
+function _rarFromSg(sg) {
+  return sg <= 1 ? 'gewoehnlich' : sg === 2 ? 'selten' : sg === 3 ? 'sehrselten' : 'einzigartig';
+}
+function _rarFromStaerke(s) {
+  return s <= 2 ? 'gewoehnlich' : s <= 4 ? 'selten' : s === 5 ? 'sehrselten' : 'einzigartig';
+}
+function _rarFromCr(cr) {
+  if (cr <= 1) return 'gewoehnlich';
+  if (cr <= 5) return 'selten';
+  if (cr <= 10) return 'sehrselten';
+  return 'einzigartig';
+}
+function _gefahrFromCr(cr) {
+  if (cr <= 1) return 'Friedlich';
+  if (cr <= 4) return 'Vorsichtig';
+  if (cr <= 11) return 'Aggressiv';
+  return 'Tödlich';
+}
+function _normalizeMonsterGroesse(g) {
+  if (!g) return [];
+  const map = { 'Winzig':'Klein','Klein':'Klein','Mittelgroß':'Mittel','Groß':'Groß','Riesig':'Riesig','Gigantisch':'Riesig' };
+  return [map[g] || g];
+}
+function _umgebungToHabitat(umgebung) {
+  const map = {
+    'Wald':'Land','Grasland':'Land','Wüste':'Land','Gebirge':'Land','Arktis':'Land',
+    'Küste':'Land','Hügel':'Land','Stadt':'Land','Ruinen':'Land','Dschungel':'Land','Feenwildnis':'Land',
+    'Gewässer':'Wasser','Ozean':'Wasser','Sumpf':'Wasser',
+    'Unterirdisch':'Höhle','Höhle':'Höhle',
+    'Andere Ebenen':'Schleier',
+  };
+  const result = new Set();
+  (umgebung || []).forEach(u => { if (map[u]) result.add(map[u]); });
+  return [...result];
+}
+function _parsePrice(str) {
+  if (!str) return 0;
+  const m = String(str).match(/\d+/);
+  return m ? parseInt(m[0]) : 0;
+}
+function _normalizeWasser(w) {
+  if (!w) return [];
+  const map = { süß:'Süßwasser', brack:'Brackwasser', salz:'Salzwasser', tief:'Tiefsee', meer:'Salzwasser' };
+  return [map[(w||'').toLowerCase()] || w];
+}
+function _normalizeGroesse(g) {
+  if (!g) return [];
+  const map = { klein:'Klein', mittel:'Mittel', 'groß':'Groß', riesig:'Riesig' };
+  return [map[(g||'').toLowerCase()] || g];
+}
+
+function buildKollektikonEntries(visibleMap, metaMap) {
+  const ALL_PLANTS = [...(window.PFLANZEN_DB || []), ...(window.FANTASY_PLANT_DB || [])];
+  const DB = { fische: window.FISH_DB || [], pflanzen: ALL_PLANTS, mineralien: window.MINERALIEN_DB || [] };
+  const entries = [];
+  for (const cat of C3) {
+    // Kreaturen: show all monsters, DM-toggled visibility via ressourcen_sichtbar
+    if (cat.id === 'kreaturen') {
+      const monsters = window.MONSTER_DATA || [];
+      const visKreaturen = visibleMap['kreaturen'] || new Set();
+      monsters.forEach((mon, idx) => {
+        const rid = _monsterKolId(mon.name);
+        const isSeen = visKreaturen.has(rid);
+        const meta = metaMap[`kreaturen:${rid}`] || {};
+        const cr = mon.cr || 0;
+        const entry = {
+          id: `kreaturen-${rid}`, _rid: rid, cat: 'kreaturen', name: mon.name, hue: cat.hue,
+          found: isSeen, stage: isSeen ? (meta.stage || 0) : 0, price: 0,
+          icon: _CREATURE_ICONS[idx % _CREATURE_ICONS.length],
+          rarity: _rarFromCr(cr),
+        };
+        if (isSeen) {
+          entry.tags   = { groesse: _normalizeMonsterGroesse(mon.groesse), habitat: _umgebungToHabitat(mon.umgebung), gefahr: [_gefahrFromCr(cr)] };
+          entry.habitat = (mon.umgebung || []).join(', ');
+          entry.size    = mon.groesse || '';
+          entry.desc    = (mon.beschreibung && mon.beschreibung[0]) || '';
+        } else {
+          entry.obscuredName = _scrambleName(mon.name);
+          entry.tags = {}; entry.habitat = ''; entry.size = ''; entry.desc = '';
+        }
+        entries.push(entry);
+      });
+      continue;
+    }
+
+    const db = DB[cat.id];
+    if (!db || db.length === 0) continue;
+    const visIds = visibleMap[cat.id] || new Set();
+    const pool = _ICON_POOLS[cat.id] || [];
+    for (const res of db) {
+      const rid = res.id;
+      const isSeen = visIds.has(rid);
+      const meta = metaMap[`${cat.id}:${rid}`] || {};
+      let rarity, fullTags, habitat, size;
+      if (cat.id === 'fische') {
+        rarity = _rarFromStaerke(res.stärke || 2);
+        fullTags = { groesse: _normalizeGroesse(res.größenkategorie), wasser: _normalizeWasser(res.wassersort), klima: res.klima || [] };
+        habitat = (res.fundort || res.lebensraum || []).join(', ');
+        size = res.größenkategorie || res.groesse || '';
+      } else if (cat.id === 'pflanzen') {
+        rarity = _rarFromSg(res.seltenheitsgrad || 1);
+        fullTags = { typ: res.kategorie ? [res.kategorie] : [], fundort: res.fundort || [], klima: res.klima || [] };
+        habitat = (res.fundort || []).join(', '); size = '';
+      } else {
+        rarity = _rarFromSg(res.seltenheitsgrad || 1);
+        fullTags = { typ: res.kategorie ? [res.kategorie] : [], fundort: res.fundort || [] };
+        habitat = (res.fundort || []).join(', '); size = '';
+      }
+      const entry = {
+        id: `${cat.id}-${rid}`, _rid: rid, cat: cat.id, name: res.name_de, hue: cat.hue,
+        found: isSeen, stage: isSeen ? (meta.stage || 0) : 0,
+        price: isSeen ? _parsePrice(res.verkaufspreis) : 0,
+        icon: pool.length ? pool[rid % pool.length] : null, rarity,
+      };
+      if (isSeen) {
+        entry.tags = fullTags; entry.habitat = habitat; entry.size = size; entry.desc = res.desc_de || '';
+      } else {
+        entry.obscuredName = _scrambleName(res.name_de);
+        entry.tags = {}; entry.habitat = ''; entry.size = ''; entry.desc = '';
+      }
+      entries.push(entry);
+    }
+  }
+  return entries;
+}
+
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"density":"comfortable","showOnlyFound":false}/*EDITMODE-END*/;
+
+const { SiteNav } = window;
+
+/* ── Page ── */
+function KollektikonPage() {
+  const [activeCat, setActiveCat] = uS3('fische');
+  const [filter, setFilter]       = uS3('alle'); // alle | entdeckt | unbekannt
+  const [search, setSearch]       = uS3('');
+  const [filterOpen, setFilterOpen] = uS3(false);
+  const [filterTags, setFilterTags] = uS3({}); // { [catId]: { [facetKey]: [values] } }
+  const [sel, setSel]             = uS3(null);
+  const [tweaks, setTweak]        = useTweaks(TWEAK_DEFAULTS);
+  const searchRef = uR3(null);
+
+  // Visibility from ressourcen_sichtbar + stage meta from kollektikon_meta
+  const [visibleMap, setVisibleMap] = uS3({});
+  const [metaMap, setMetaMap]       = uS3({});
+
+  uE3(() => {
+    async function load() {
+      const [visRes, metaRes] = await Promise.all([
+        window._sb.from('ressourcen_sichtbar').select('cat, resource_id'),
+        window._sb.from('kollektikon_meta').select('cat, resource_id, stage'),
+      ]);
+      if (visRes.data) {
+        const vm = {};
+        visRes.data.forEach(({ cat, resource_id }) => { if (!vm[cat]) vm[cat] = new Set(); vm[cat].add(resource_id); });
+        setVisibleMap(vm);
+      }
+      if (metaRes.data) {
+        const mm = {};
+        metaRes.data.forEach(({ cat, resource_id, stage }) => { mm[`${cat}:${resource_id}`] = { stage }; });
+        setMetaMap(mm);
+      }
+    }
+    load();
+    const ch = window._sb.channel('kol-res-vis')
+      .on('postgres_changes', { event:'*', schema:'public', table:'ressourcen_sichtbar' }, payload => {
+        setVisibleMap(prev => {
+          const vm = Object.fromEntries(Object.entries(prev).map(([k,v]) => [k, new Set(v)]));
+          if (payload.eventType === 'INSERT') { const { cat, resource_id } = payload.new; if (!vm[cat]) vm[cat] = new Set(); vm[cat].add(resource_id); }
+          else if (payload.eventType === 'DELETE') { const { cat, resource_id } = payload.old; if (vm[cat]) vm[cat].delete(resource_id); }
+          return vm;
+        });
+      })
+      .subscribe();
+    return () => window._sb.removeChannel(ch);
+  }, []);
+
+  const E3 = uM3(() => buildKollektikonEntries(visibleMap, metaMap), [visibleMap, metaMap]);
+
+  function toggleTag(facetKey, value) {
+    setFilterTags(prev => {
+      const cur = (prev[activeCat]?.[facetKey] || []);
+      const next = cur.includes(value) ? cur.filter(v => v !== value) : [...cur, value];
+      return { ...prev, [activeCat]: { ...(prev[activeCat]||{}), [facetKey]: next } };
+    });
+  }
+  function resetTagsForCat() {
+    setFilterTags(prev => ({ ...prev, [activeCat]: {} }));
+  }
+  function entryMatchesTags(e) {
+    const sel = filterTags[e.cat] || {};
+    for (const key of Object.keys(sel)) {
+      const vals = sel[key];
+      if (!vals || vals.length === 0) continue;
+      let entryVals;
+      if (key === 'seltenheit') entryVals = [RL3[e.rarity]];
+      else entryVals = (e.tags && e.tags[key]) || [];
+      if (!vals.some(v => entryVals.includes(v))) return false;
+    }
+    return true;
+  }
+
+  // counts
+  const foundByCat = uM3(() => {
+    const m = {};
+    C3.forEach(c => m[c.id] = E3.filter(e => e.cat === c.id && e.found).length);
+    return m;
+  }, [E3]);
+  const kompletteByCat = uM3(() => {
+    const m = {};
+    C3.forEach(c => m[c.id] = E3.filter(e => e.cat === c.id && e.found && (e.stage || 0) >= 8).length);
+    return m;
+  }, [E3]);
+  const totalFound    = uM3(() => Object.values(foundByCat).reduce((s,n) => s+n, 0), [foundByCat]);
+  const totalKomplett = uM3(() => Object.values(kompletteByCat).reduce((s,n) => s+n, 0), [kompletteByCat]);
+  const totalAll      = uM3(() => C3.reduce((s,c) => s + c.total, 0), []);
+
+  const catObj = C3.find(c => c.id === activeCat);
+  const cMain = `oklch(0.72 0.16 ${catObj.hue})`;
+  const cA = (a) => `oklch(0.72 0.16 ${catObj.hue} / ${a})`;
+  const overallPct         = totalAll ? totalFound/totalAll : 0;
+  const overallKomplettPct = totalAll ? totalKomplett/totalAll : 0;
+
+  // entries for current cat + filter + search + tags
+  const visibleEntries = uM3(() => {
+    let arr = E3.filter(e => e.cat === activeCat);
+    if (filter === 'entdeckt')  arr = arr.filter(e => e.found);
+    if (filter === 'unbekannt') arr = arr.filter(e => !e.found);
+    arr = arr.filter(entryMatchesTags);
+    const q = search.trim().toLowerCase();
+    if (q) {
+      arr = arr.filter(e => {
+        const hay = [e.name, e.id, e.habitat, e.desc, e.size].filter(Boolean).join(' • ').toLowerCase();
+        return hay.includes(q);
+      });
+    }
+    return arr;
+  }, [E3, activeCat, filter, search, filterTags]);
+
+  // active filter count for the current category
+  const activeFilterCount = uM3(() => {
+    const sel = filterTags[activeCat] || {};
+    return Object.values(sel).reduce((s, arr) => s + (arr ? arr.length : 0), 0);
+  }, [activeCat, filterTags]);
+
+  // cap large grids unless search or tag filter is active
+  const PAGE_LIMIT = 150;
+  const renderedEntries = uM3(() => {
+    if (visibleEntries.length <= PAGE_LIMIT) return visibleEntries;
+    return (search.trim() || activeFilterCount > 0) ? visibleEntries : visibleEntries.slice(0, PAGE_LIMIT);
+  }, [visibleEntries, search, activeFilterCount]);
+
+  // global search hits (other categories) when querying
+  const otherHits = uM3(() => {
+    const q = search.trim().toLowerCase();
+    if (!q) return [];
+    return E3.filter(e => e.cat !== activeCat).filter(e => {
+      const hay = [e.name, e.id, e.habitat, e.desc, e.size].filter(Boolean).join(' • ').toLowerCase();
+      return hay.includes(q);
+    });
+  }, [E3, activeCat, search]);
+
+  // Cmd/Ctrl-K shortcut
+  uE3(() => {
+    function onKey(e) {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        searchRef.current && searchRef.current.focus();
+      }
+      if (e.key === 'Escape' && document.activeElement === searchRef.current) {
+        setSearch('');
+        searchRef.current.blur();
+      }
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  const catFound   = E3.filter(e => e.cat === activeCat && e.found).length;
+  const catUnknown = E3.filter(e => e.cat === activeCat && !e.found).length;
+
+  const density = tweaks.density;
+  const colMin = density === 'compact' ? 145 : density === 'spacious' ? 200 : 170;
+
+  return (
+    <div style={{ minHeight:'100vh', paddingTop:'var(--nav-h)' }}>
+      <SiteNav/>
+      <DPanel entry={sel} onClose={()=>setSel(null)}/>
+
+      <TweaksPanel tweaks={tweaks} setTweak={setTweak}>
+        <TweakSection label="Darstellung">
+          <TweakRadio id="density" label="Dichte" options={[
+            {label:'Eng',     value:'compact'},
+            {label:'Normal',  value:'comfortable'},
+            {label:'Weit',    value:'spacious'},
+          ]}/>
+        </TweakSection>
+      </TweaksPanel>
+
+      {/* Page title */}
+      <div style={{ padding:'22px 28px 18px', borderBottom:'1px solid rgba(124,77,255,0.1)' }}>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.32em', color:'rgba(124,77,255,0.55)', textTransform:'uppercase', marginBottom:8 }}>
+          ◈ Meruria · Enzyklopädie · Kollektikon
+        </div>
+        <div style={{ display:'flex', alignItems:'baseline', justifyContent:'space-between', gap:24, flexWrap:'wrap' }}>
+          <div>
+            <h1 style={{ fontFamily:'var(--font-display)', fontWeight:300, fontSize:38, letterSpacing:'0.28em', color:'var(--white)', textTransform:'uppercase', lineHeight:1.1, textShadow:'0 0 30px rgba(124,77,255,0.3)' }}>
+              Das Kollektikon
+            </h1>
+            <div style={{ marginTop:14, width:48, height:1, background:'linear-gradient(90deg, rgba(124,77,255,0.85), rgba(124,77,255,0.1))' }}/>
+            <p style={{ marginTop:14, maxWidth:640, fontFamily:'var(--font-body)', fontWeight:300, fontSize:13.5, color:'var(--silver)', lineHeight:1.7 }}>
+              Vollständige Übersicht über alle Ressourcen, Lebensformen und Materialien des Planeten Meruria. Einträge werden hinzugefügt, sobald die <em>Bergungsgarde</em>, die <em>Quellensucher</em> oder verifizierte Beobachtende eine gesicherte Sichtung melden.
+            </p>
+          </div>
+          <div style={{ textAlign:'right', minWidth:200 }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.28em', color:'rgba(124,77,255,0.55)', textTransform:'uppercase', marginBottom:8 }}>
+              Gesamtfortschritt
+            </div>
+            <div style={{ fontFamily:'var(--font-display)', fontWeight:300, fontSize:42, color:'#f0eeff', lineHeight:1 }}>
+              {totalFound}<span style={{ color:'rgba(160,140,255,0.4)', fontSize:24 }}> / {totalAll}</span>
+            </div>
+            <div style={{ marginTop:10, position:'relative', height:6 }}>
+              {/* outer glow halo for komplett bar */}
+              {overallKomplettPct > 0 && (
+                <div style={{ position:'absolute', left:0, top:0, bottom:0, width:`${overallKomplettPct*100}%`,
+                  boxShadow:'0 0 9px 1px rgba(160,140,255,0.55), 0 0 20px 5px rgba(160,140,255,0.22), 0 0 32px 10px rgba(160,140,255,0.09)',
+                  borderRadius:2, pointerEvents:'none',
+                }}/>
+              )}
+              {/* clipping track */}
+              <div style={{ position:'absolute', inset:0, background:'rgba(124,77,255,0.08)', border:'1px solid rgba(124,77,255,0.22)', borderRadius:2, overflow:'hidden' }}>
+                {/* white sighted layer (subtle) */}
+                <div style={{ position:'absolute', left:0, top:0, bottom:0, width:`${overallPct*100}%`,
+                  background:'linear-gradient(90deg, rgba(220,215,250,0.18), rgba(240,238,255,0.28))',
+                  transition:'width 0.8s cubic-bezier(.2,.85,.2,1)',
+                }}/>
+                {/* colored komplett layer (bold) */}
+                <div style={{ position:'absolute', left:-1, top:-1, bottom:-1, width:`${overallKomplettPct*100}%`,
+                  background:'linear-gradient(90deg, rgba(140,100,255,1), rgba(200,180,255,1))',
+                  boxShadow:'inset 0 0 4px rgba(255,255,255,0.45)',
+                  borderRadius:2,
+                  transition:'width 1s cubic-bezier(.2,.85,.2,1)',
+                }}/>
+              </div>
+            </div>
+            <div style={{ marginTop:6, display:'flex', justifyContent:'flex-end', gap:14, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase' }}>
+              <span style={{ color:'rgba(240,238,255,0.7)' }}>
+                <span style={{ display:'inline-block', width:8, height:8, background:'rgba(240,238,255,0.85)', marginRight:5, verticalAlign:'middle' }}/>
+                {Math.round(overallPct*100)} % In Forschung
+              </span>
+              <span style={{ color:'rgba(190,170,255,0.95)' }}>
+                <span style={{ display:'inline-block', width:8, height:8, background:'rgba(160,140,255,0.95)', marginRight:5, verticalAlign:'middle' }}/>
+                {Math.round(overallKomplettPct*100)} % Komplett
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Category tabs (2-column grid, 4 rows) */}
+      <div style={{ padding:'22px 28px 0' }}>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10 }}>
+          {['fische','insekten','pflanzen','mineralien','kreaturen','kreaturenteile','wal','lebensspeicher']
+            .map(id => C3.find(c => c.id === id))
+            .filter(Boolean)
+            .map(c => (
+              <CTab key={c.id} cat={c} active={c.id===activeCat} foundCount={foundByCat[c.id]} kompletteCount={kompletteByCat[c.id]} fullWidth
+                onClick={()=>{ setActiveCat(c.id); setFilter('alle'); }}/>
+            ))}
+        </div>
+      </div>
+
+      {/* Filter row */}
+      <div style={{ display:'flex', alignItems:'center', gap:18, padding:'22px 28px 18px', flexWrap:'wrap' }}>
+        <div style={{ display:'flex', alignItems:'center', gap:14 }}>
+          <svg viewBox="0 0 100 100" width="26" height="26" fill="none" stroke={cMain} style={{ color:cMain, opacity:0.85, filter:`drop-shadow(0 0 8px ${cA(0.53)})` }}>{CI3[activeCat]}</svg>
+          <div>
+            <div style={{ fontFamily:'var(--font-display)', fontSize:14, letterSpacing:'0.24em', color:'#f0eeff', textTransform:'uppercase' }}>{catObj.label}</div>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.22em', color:cMain, textTransform:'uppercase', marginTop:3 }}>
+              {catObj.short} · {catFound} von {catObj.total} dokumentiert
+            </div>
+          </div>
+        </div>
+
+        <div style={{ flex:1, minWidth:20 }}/>
+
+        {/* Search + Chips (right column) */}
+        <div style={{ display:'flex', flexDirection:'column', gap:10, alignItems:'flex-end' }}>
+          {/* Search */}
+          <div style={{ position:'relative', width:'min(380px, 80vw)' }}>
+            <svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke={cMain} strokeWidth="1.6" style={{ position:'absolute', left:10, top:'50%', transform:'translateY(-50%)', opacity:0.85, pointerEvents:'none' }}>
+              <circle cx="7" cy="7" r="5"/><path d="M11 11 L 15 15" strokeLinecap="round"/>
+            </svg>
+            <input
+              ref={searchRef}
+              type="search"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              placeholder="Eintrag suchen …"
+              style={{
+                width:'100%', padding:'8px 36px 8px 30px',
+                background: search ? cA(0.06) : 'rgba(10,8,28,0.55)',
+                border: search ? `1px solid ${cA(0.7)}` : '1px solid rgba(124,77,255,0.22)',
+                color:'#f0eeff', fontFamily:'var(--font-mono)', fontSize:10,
+                letterSpacing:'0.12em', borderRadius:2, outline:'none',
+                transition:'border-color 0.2s, box-shadow 0.2s, background 0.2s',
+                boxShadow: search ? `0 0 14px ${cA(0.2)}, inset 0 0 10px ${cA(0.07)}` : 'none',
+              }}
+              onFocus={e => { if (!search) { e.currentTarget.style.borderColor = cA(0.45); e.currentTarget.style.background = 'rgba(10,8,28,0.85)'; } }}
+              onBlur={e => { if (!search) { e.currentTarget.style.borderColor = 'rgba(124,77,255,0.22)'; e.currentTarget.style.background = 'rgba(10,8,28,0.55)'; } }}
+            />
+            {search ? (
+              <button onClick={()=>{ setSearch(''); searchRef.current && searchRef.current.focus(); }} style={{
+                position:'absolute', right:6, top:'50%', transform:'translateY(-50%)',
+                background:'transparent', border:'none', cursor:'pointer',
+                color:cMain, fontFamily:'var(--font-mono)', fontSize:14, lineHeight:1,
+                padding:'2px 6px',
+              }} title="Suche löschen (Esc)">×</button>
+            ) : (
+              <span style={{
+                position:'absolute', right:8, top:'50%', transform:'translateY(-50%)',
+                fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.12em',
+                color:'rgba(160,140,255,0.4)', textTransform:'uppercase',
+                border:'1px solid rgba(124,77,255,0.22)', padding:'1px 5px', borderRadius:2,
+                pointerEvents:'none',
+              }}>⌘K</span>
+            )}
+          </div>
+
+          {/* Chips */}
+          <div style={{ display:'flex', gap:8 }}>
+            <FBtn active={filterOpen} count={activeFilterCount} onClick={()=>setFilterOpen(o=>!o)} hue={catObj.hue}/>
+            <FChip label="Alle"       count={E3.filter(e => e.cat===activeCat).length} active={filter==='alle'}      onClick={()=>setFilter('alle')}      hue={catObj.hue}/>
+            <FChip label="Entdeckt"   count={catFound}                                  active={filter==='entdeckt'}  onClick={()=>setFilter('entdeckt')}  hue={catObj.hue}/>
+            <FChip label="Unbekannt"  count={catUnknown}                                active={filter==='unbekannt'} onClick={()=>setFilter('unbekannt')} hue={catObj.hue}/>
+          </div>
+        </div>
+      </div>
+
+      {/* Filter panel */}
+      {filterOpen && (
+        <div style={{ padding:'14px 28px 0' }}>
+          <FPanel category={activeCat} selected={filterTags[activeCat]||{}} onToggle={toggleTag} onReset={resetTagsForCat} hue={catObj.hue}/>
+        </div>
+      )}
+
+      {/* Search summary */}
+      {search.trim() && (
+        <div style={{ padding:'4px 28px 0', display:'flex', alignItems:'center', gap:14, flexWrap:'wrap' }}>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', color:cMain, textTransform:'uppercase' }}>
+            ◈ {visibleEntries.length} Treffer für „{search.trim()}"
+          </span>
+          {otherHits.length > 0 && (
+            <span style={{ display:'inline-flex', alignItems:'center', gap:8, flexWrap:'wrap', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', color:'rgba(160,140,255,0.55)', textTransform:'uppercase' }}>
+              <span>+ {otherHits.length} in anderen Kategorien:</span>
+              {Array.from(new Set(otherHits.map(e=>e.cat))).map(cid => {
+                const oc = C3.find(c=>c.id===cid);
+                const oCount = otherHits.filter(e=>e.cat===cid).length;
+                const oc_c = `oklch(0.72 0.16 ${oc.hue})`;
+                return (
+                  <button key={cid} onClick={()=>setActiveCat(cid)} style={{
+                    background:'transparent', border:`1px solid ${oc_c}`,
+                    color:oc_c, cursor:'pointer', padding:'3px 9px', borderRadius:2,
+                    fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.18em', textTransform:'uppercase',
+                  }}>{oc.label} · {oCount}</button>
+                );
+              })}
+            </span>
+          )}
+        </div>
+      )}
+
+      {/* Grid */}
+      <div style={{ padding:'14px 28px 36px' }}>
+        {visibleEntries.length === 0 ? (
+          <div style={{ padding:'60px 20px', textAlign:'center' }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.22em', color:'rgba(160,140,255,0.55)', textTransform:'uppercase', marginBottom:10 }}>
+              {search.trim() ? `Keine Treffer für „${search.trim()}" in dieser Kategorie.` : 'Keine Einträge in dieser Auswahl.'}
+            </div>
+            {search.trim() && otherHits.length > 0 && (
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', color:'rgba(160,140,255,0.45)', textTransform:'uppercase' }}>
+                Aber {otherHits.length} Treffer in anderen Kategorien — oben anklicken.
+              </div>
+            )}
+          </div>
+        ) : (
+          <>
+            <div style={{ display:'grid', gridTemplateColumns:`repeat(auto-fill, minmax(${colMin}px, 1fr))`, gap: density==='compact' ? 12 : density==='spacious' ? 22 : 16 }}>
+              {renderedEntries.map((e, i) => (
+                <ECard key={e.id} entry={e} idx={i} selected={sel && sel.id===e.id} onClick={()=>setSel(e)}/>
+              ))}
+            </div>
+            {renderedEntries.length < visibleEntries.length && (
+              <div style={{ marginTop:20, textAlign:'center', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.2em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>
+                {renderedEntries.length} von {visibleEntries.length} · Suche oder Filter für vollständige Ansicht
+              </div>
+            )}
+          </>
+        )}
+      </div>
+
+      {/* Footer */}
+      <div style={{ borderTop:'1px solid rgba(124,77,255,0.1)', padding:'14px 28px', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(124,77,255,0.32)', letterSpacing:'0.18em', textTransform:'uppercase' }}>
+          Meruria · Kollektikon · Geführt durch die Bergungsgarde
+        </span>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'rgba(124,77,255,0.28)', letterSpacing:'0.15em' }}>
+          {C3.length} Kategorien · {totalAll} Einträge · {totalFound} dokumentiert
+        </span>
+      </div>
+    </div>
+  );
+}
+
+const { SiteGate } = window;
+ReactDOM.createRoot(document.getElementById('root')).render(<SiteGate><KollektikonPage/></SiteGate>);
+</script>
+
+
 </body></html>

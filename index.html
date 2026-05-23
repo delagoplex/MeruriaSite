@@ -10,11 +10,12 @@
 <script src="assets/scripts/vendor/react-dom.development.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/scripts/vendor/supabase.min.js"></script>
+<script src="assets/scripts/supabase-client.js"></script>
 <script src="assets/components/site-gate.jsx" type="text/babel"></script>
 <script src="assets/components/tweaks-panel-13.jsx" type="text/babel"></script>
 <script src="assets/components/footer.jsx" type="text/babel"></script>
 <script src="assets/scripts/vendor/image-slot.js"></script>
-<script src="assets/scripts/data/kollektikon-data.js"></script>
 
 </head>
 <body>
@@ -1584,27 +1585,7 @@ const _kolCatIconMap = {
   fische:FISH_ICON, insekten:INSECT_ICON, pflanzen:PLANT_ICON, mineralien:MINERAL_ICON,
   kreaturen:CREATURE_ICON, kreaturenteile:PART_ICON, wal:WAL_ICON, lebensspeicher:LIFE_ICON,
 };
-const _kolCatalog = window.KOLLEKTIKON_CATALOG || [];
-const _kolCatMeta = window.KOLLEKTIKON_CATEGORIES || [];
-const _kolCatById = Object.fromEntries(_kolCatMeta.map(c => [c.id, c]));
-const _kolEntById = Object.fromEntries(_kolCatalog.map(e => [e.id, e]));
-
-const KOLLEKTIKON_DATA = _kolCatMeta.map(cat => {
-  const entries = _kolCatalog.filter(e => e.cat === cat.id);
-  return { ...cat, found: entries.length, komplett: entries.filter(e => e.status === 'komplett').length, icon: _kolCatIconMap[cat.id] };
-});
-
-const RECENT_SIGHTED = (window.KOLLEKTIKON_RECENT_SIGHTED_IDS || []).map(id => {
-  const e = _kolEntById[id]; if (!e) return null;
-  const cat = _kolCatById[e.cat];
-  return { ...e, cat: cat?.labelShort || e.cat, icon: _kolCatIconMap[e.cat] };
-}).filter(Boolean);
-
-const RECENT_KOMPLETT = (window.KOLLEKTIKON_RECENT_KOMPLETT_IDS || []).map(id => {
-  const e = _kolEntById[id]; if (!e) return null;
-  const cat = _kolCatById[e.cat];
-  return { ...e, cat: cat?.labelShort || e.cat, icon: _kolCatIconMap[e.cat] };
-}).filter(Boolean);
+// Kollektikon data is now fetched from Supabase inside KollektikonSection.
 
 function KollektikonBar({ d, i }) {
   const ref = uRx(null);
@@ -1615,8 +1596,8 @@ function KollektikonBar({ d, i }) {
     io.observe(el);
     return () => io.disconnect();
   }, []);
-  const pctFound = d.found / d.total;
-  const pctKomp  = (d.komplett || 0) / d.total;
+  const pctFound = d.total ? d.found / d.total : 0;
+  const pctKomp  = d.total ? (d.komplett || 0) / d.total : 0;
   const c = `oklch(0.72 0.16 ${d.hue})`;
   const cA = a => `oklch(0.72 0.16 ${d.hue} / ${a})`;
 
@@ -1667,13 +1648,13 @@ function KollektikonBar({ d, i }) {
       <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', gap:6 }}>
         <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(200,190,240,0.65)', letterSpacing:'0.1em', whiteSpace:'nowrap' }}>
           <span style={{ color:'#f0eeff' }}>{d.found}</span>
-          <span style={{ opacity:0.5 }}> / {d.total}</span>
+          <span style={{ opacity:0.5 }}> / {d.total || '—'}</span>
           {d.komplett > 0 && (
             <span style={{ color:c, marginLeft:4 }}>· {d.komplett} <span style={{ fontSize:7, opacity:0.75, letterSpacing:'0.16em' }}>KOMP</span></span>
           )}
         </span>
         <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:c, letterSpacing:'0.18em' }}>
-          {Math.round(pctFound*100)} %
+          {d.total ? `${Math.round(pctFound*100)} %` : '—'}
         </span>
       </div>
     </div>
@@ -1788,11 +1769,40 @@ function RecentRow({ items, kind, title }) {
 }
 
 function KollektikonSection() {
-  const totalFound    = KOLLEKTIKON_DATA.reduce((s,d) => s+d.found, 0);
-  const totalAll      = KOLLEKTIKON_DATA.reduce((s,d) => s+d.total, 0);
-  const totalKomplett = KOLLEKTIKON_DATA.reduce((s,d) => s+(d.komplett||0), 0);
-  const overallPct         = totalFound/totalAll;
-  const overallKomplettPct = totalKomplett/totalAll;
+  const [visCounts, setVisCounts] = uSx(null);
+  uEx(() => {
+    async function load() {
+      const { data } = await window._sb.from('ressourcen_sichtbar').select('cat, resource_id');
+      if (data) {
+        const counts = {};
+        for (const row of data) counts[row.cat] = (counts[row.cat] || 0) + 1;
+        setVisCounts(counts);
+      }
+    }
+    load();
+  }, []);
+
+  const CATS = [
+    { id:'fische',         label:'Fische',        labelShort:'Fisch',    total:1506, hue:200 },
+    { id:'pflanzen',       label:'Pflanzen',       labelShort:'Pflanze',  total:732,  hue:130 },
+    { id:'mineralien',     label:'Mineralien',     labelShort:'Mineral',  total:99,   hue:40  },
+    { id:'kreaturen',      label:'Kreaturen',      labelShort:'Kreatur',  total:1520, hue:0   },
+    { id:'insekten',       label:'Insekten',       labelShort:'Insekt',   total:0,    hue:75  },
+    { id:'kreaturenteile', label:'Kreaturenteile', labelShort:'Teil',     total:0,    hue:15  },
+    { id:'wal',            label:'Walbiologe',     labelShort:'Wal',      total:0,    hue:220 },
+    { id:'lebensspeicher', label:'Lebensspeicher', labelShort:'Speicher', total:0,    hue:300 },
+  ];
+
+  const KOLLEKTIKON_DATA = CATS.map(cat => ({
+    ...cat,
+    found: visCounts ? (visCounts[cat.id] || 0) : 0,
+    komplett: 0,
+    icon: _kolCatIconMap[cat.id],
+  }));
+
+  const totalFound = KOLLEKTIKON_DATA.reduce((s,d) => s + d.found, 0);
+  const totalAll   = KOLLEKTIKON_DATA.reduce((s,d) => s + d.total, 0);
+  const overallPct = totalAll ? totalFound / totalAll : 0;
 
   return (
     <div>
@@ -1840,19 +1850,9 @@ function KollektikonSection() {
             </div>
           </div>
           <div style={{ position:'relative', height:6 }}>
-            {overallKomplettPct > 0 && (
-              <div style={{ position:'absolute', left:0, top:0, bottom:0, width:`${overallKomplettPct*100}%`,
-                boxShadow:'0 0 9px 1px rgba(160,140,255,0.55), 0 0 20px 5px rgba(160,140,255,0.22), 0 0 32px 10px rgba(160,140,255,0.09)',
-                borderRadius:2, pointerEvents:'none',
-              }}/>
-            )}
             <div style={{ position:'absolute', inset:0, background:'rgba(124,77,255,0.08)', borderRadius:2, overflow:'hidden', border:'1px solid rgba(124,77,255,0.2)' }}>
               <div style={{ position:'absolute', left:0, top:0, bottom:0, width:`${overallPct*100}%`,
                 background:'linear-gradient(90deg, rgba(220,215,250,0.18), rgba(240,238,255,0.28))',
-              }}/>
-              <div style={{ position:'absolute', left:-1, top:-1, bottom:-1, width:`${overallKomplettPct*100}%`,
-                background:'linear-gradient(90deg, rgba(140,100,255,1), rgba(200,180,255,1))',
-                boxShadow:'inset 0 0 4px rgba(255,255,255,0.45)', borderRadius:2,
               }}/>
             </div>
           </div>
@@ -1863,11 +1863,7 @@ function KollektikonSection() {
             <div style={{ marginTop:5, display:'flex', justifyContent:'flex-end', gap:10, fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.18em', textTransform:'uppercase' }}>
               <span style={{ color:'rgba(240,238,255,0.65)' }}>
                 <span style={{ display:'inline-block', width:7, height:7, background:'rgba(240,238,255,0.85)', marginRight:4, verticalAlign:'middle' }}/>
-                {Math.round(overallPct*100)} % In Forschung
-              </span>
-              <span style={{ color:'rgba(190,170,255,0.95)' }}>
-                <span style={{ display:'inline-block', width:7, height:7, background:'rgba(160,140,255,0.95)', marginRight:4, verticalAlign:'middle' }}/>
-                {Math.round(overallKomplettPct*100)} % Komplett
+                {Math.round(overallPct*100)} % Gesichtet
               </span>
             </div>
           </div>
@@ -1877,12 +1873,6 @@ function KollektikonSection() {
         <div style={{ padding:'18px 22px', display:'grid', gridTemplateColumns:'1fr 1fr', gap:10 }}>
           {KOLLEKTIKON_DATA.map((d,i) => <KollektikonBar key={d.id} d={d} i={i}/>)}
         </div>
-      </div>
-
-      {/* Recent discoveries — two overlapping-card rows, side by side */}
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:36, marginTop:36 }}>
-        <RecentRow items={RECENT_SIGHTED.slice(0,6)}  kind="sighted"  title="Kürzlich Gesichtet"/>
-        <RecentRow items={RECENT_KOMPLETT.slice(0,6)} kind="komplett" title="Kürzlich Komplettiert"/>
       </div>
 
       {/* CTA — Zum vollständigen Kollektikon */}

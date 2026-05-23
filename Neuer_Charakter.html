@@ -11,6 +11,8 @@
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
 <script src="assets/scripts/data/charaktererstellung-data.js"></script>
 <script src="assets/scripts/data/charaktererstellung-gottheiten-data.js"></script>
+<script src="assets/scripts/vendor/supabase.min.js"></script>
+<script src="assets/scripts/supabase-client.js"></script>
 </head>
 <body>
 <div id="root"></div>
@@ -255,6 +257,7 @@ function OutputPhase({ tags, possible, quizAnswers }) {
   const [chosen, setChosen] = useState(null);
   const [showNameModal, setShowNameModal] = useState(false);
   const [modalName, setModalName] = useState('');
+  const [saving, setSaving] = useState(false);
 
   const roll = () => {
     const r = () => { const d = Array.from({length:4},()=>Math.floor(Math.random()*6)+1).sort((a,b)=>a-b); return {rolls:d, val:d.slice(1).reduce((s,n)=>s+n,0)}; };
@@ -306,7 +309,7 @@ function OutputPhase({ tags, possible, quizAnswers }) {
   const byKat = {};
   quizAnswers.forEach(a => { if (!byKat[a.kat]) byKat[a.kat] = []; byKat[a.kat].push(a); });
 
-  function doSave(name) {
+  async function doSave(name) {
     const g = k => { const r = getFinal(k); if (r.src==='none') return null; if (r.src==='multi') return (possible[k]||[])[0]||null; return r.val; };
     const draft = {
       name,
@@ -327,11 +330,16 @@ function OutputPhase({ tags, possible, quizAnswers }) {
       tier:          null,
       motto:         null,
     };
+    setSaving(true);
     try {
-      const existing = JSON.parse(localStorage.getItem('meruria_characters') || '[]');
-      const entry = { ...draft, id: Date.now().toString(36), createdAt: Date.now() };
-      localStorage.setItem('meruria_characters', JSON.stringify([...existing, entry]));
-    } catch(e) {}
+      await window._sb.from('characters').insert({
+        name: draft.name || 'Unbenannt',
+        race: draft.race || null,
+        class: draft.class || null,
+        division: draft.division || null,
+        char_data: draft,
+      });
+    } catch(e) { console.error(e); }
     window.location.href = 'MeinCharakter.html';
   }
 
@@ -411,13 +419,13 @@ function OutputPhase({ tags, possible, quizAnswers }) {
             Alle ermittelten Werte werden übernommen. Felder, die noch nicht bekannt sind, erhalten Platzhalter.
           </div>
         </div>
-        <button onClick={()=>{
+        <button disabled={saving} onClick={()=>{
           if (!charName.trim()) { setModalName(''); setShowNameModal(true); return; }
           doSave(charName.trim());
-        }} style={{display:'inline-flex',alignItems:'center',gap:10,padding:'12px 28px',background:'rgba(124,77,255,.18)',border:'1px solid rgba(124,77,255,.55)',borderRadius:3,color:'rgba(200,190,240,.95)',fontFamily:'var(--font-d)',fontSize:'11px',letterSpacing:'.18em',textTransform:'uppercase',cursor:'pointer',transition:'all .2s',whiteSpace:'nowrap'}}
-          onMouseEnter={e=>{e.currentTarget.style.background='rgba(124,77,255,.32)';e.currentTarget.style.borderColor='rgba(160,140,255,.8)';e.currentTarget.style.color='#f0eeff';}}
-          onMouseLeave={e=>{e.currentTarget.style.background='rgba(124,77,255,.18)';e.currentTarget.style.borderColor='rgba(124,77,255,.55)';e.currentTarget.style.color='rgba(200,190,240,.95)';}}>
-          Steckbrief öffnen →
+        }} style={{display:'inline-flex',alignItems:'center',gap:10,padding:'12px 28px',background:'rgba(124,77,255,.18)',border:'1px solid rgba(124,77,255,.55)',borderRadius:3,color:'rgba(200,190,240,.95)',fontFamily:'var(--font-d)',fontSize:'11px',letterSpacing:'.18em',textTransform:'uppercase',cursor:saving?'not-allowed':'pointer',opacity:saving?0.55:1,transition:'all .2s',whiteSpace:'nowrap'}}
+          onMouseEnter={e=>{ if(!saving){e.currentTarget.style.background='rgba(124,77,255,.32)';e.currentTarget.style.borderColor='rgba(160,140,255,.8)';e.currentTarget.style.color='#f0eeff';}}}
+          onMouseLeave={e=>{ if(!saving){e.currentTarget.style.background='rgba(124,77,255,.18)';e.currentTarget.style.borderColor='rgba(124,77,255,.55)';e.currentTarget.style.color='rgba(200,190,240,.95)';}}} >
+          {saving ? 'Speichern…' : 'Steckbrief öffnen →'}
         </button>
       </div>
 
@@ -489,7 +497,7 @@ function OutputPhase({ tags, possible, quizAnswers }) {
                 Abbrechen
               </button>
               <button
-                disabled={!modalName.trim()}
+                disabled={!modalName.trim() || saving}
                 onClick={()=>{ setCharName(modalName.trim()); setShowNameModal(false); doSave(modalName.trim()); }}
                 style={{fontFamily:'var(--font-d)',fontSize:'11px',letterSpacing:'.18em',textTransform:'uppercase',
                   padding:'9px 24px',background:modalName.trim()?'rgba(124,77,255,.22)':'rgba(124,77,255,.06)',
