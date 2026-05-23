@@ -28,8 +28,14 @@ CREATE TRIGGER characters_set_owner
   BEFORE INSERT ON public.characters
   FOR EACH ROW EXECUTE FUNCTION public.set_char_owner();
 
+-- Grant table access to authenticated users (required for RLS to evaluate)
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.characters TO authenticated;
+
 -- RLS: each user sees and edits only their own characters; DM can read all
 ALTER TABLE public.characters ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "owner all"    ON public.characters FOR ALL    USING (auth.uid() = owner_id);
-CREATE POLICY "dm reads all" ON public.characters FOR SELECT USING (public.is_dm());
+CREATE POLICY "owner select" ON public.characters FOR SELECT USING      (auth.uid() = owner_id);
+CREATE POLICY "owner insert" ON public.characters FOR INSERT WITH CHECK (auth.uid() = owner_id);
+CREATE POLICY "owner update" ON public.characters FOR UPDATE USING      (auth.uid() = owner_id) WITH CHECK (auth.uid() = owner_id);
+CREATE POLICY "owner delete" ON public.characters FOR DELETE USING      (auth.uid() = owner_id);
+CREATE POLICY "dm reads all" ON public.characters FOR SELECT USING      (public.is_dm());

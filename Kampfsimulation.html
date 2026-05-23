@@ -815,6 +815,29 @@ function charEntryToSimPlayer(entry) {
   };
 }
 
+function dbRowToSimPlayer(row) {
+  const d = row.char_data || {};
+  const st = d.stats || {};
+  const attr = key => st[key] || d[key] || 10;
+  return {
+    _kind: 'player',
+    id: row.id,
+    name: d.name || row.name || '?',
+    klasse: d.class || d.klasse || '—',
+    stufe: d.level || 1,
+    rk: d.ac || d.rk || 10,
+    maxTp: d.hp || d.maxTp || 10,
+    attribute: {
+      STR: attr('str'), DEX: attr('dex'), CON: attr('con'),
+      INT: attr('int'), WIS: attr('wis'), CHA: attr('cha'),
+    },
+    rettungswuerfe: {},
+    angriffeProRunde: 1,
+    angriffe: [{ id: uid(), name: 'Angriff', bonus: Math.floor((attr('str') - 10) / 2) + 2, schaden: '1W8+2', schadenstyp: 'Hieb', isFern: false }],
+    zauber: charZauberToSim(d.zauber),
+  };
+}
+
 function loadPlayers() {
   try {
     const entries = JSON.parse(localStorage.getItem(STORAGE_KEY_CHARS) || '[]');
@@ -1145,8 +1168,9 @@ function SpellPicker({ onAdd, onClose }) {
 }
 
 // ── Player Form ───────────────────────────────────────────────────────────────
-function PlayerModal({ initial, savedPlayers, currentGroup, onSave, onAddExisting, onDelete, onClose }) {
+function PlayerModal({ initial, savedPlayers, currentGroup, onSave, onAddExisting, onDelete, onClose, dbChars }) {
   const [tab, setTab] = useState('new');
+  const [dbSearch, setDbSearch] = useState('');
   const isNew = !initial;
   const initData = initial ? { ...EMPTY_PLAYER, ...initial, zauber: initial.zauber || [] } : { ...EMPTY_PLAYER };
   const [form, setForm] = useState(() => {
@@ -1248,8 +1272,8 @@ function PlayerModal({ initial, savedPlayers, currentGroup, onSave, onAddExistin
         <div className="sim-modal-body">
           <div className="sim-tabs">
             <button className={`sim-tab ${tab === 'new' ? 'active' : ''}`} onClick={() => setTab('new')}>Neuer Charakter</button>
-            <button className={`sim-tab ${tab === 'npc' ? 'active' : ''}`} onClick={() => setTab('npc')}>NPC</button>
-            <button className={`sim-tab ${tab === 'encyclopedia' ? 'active' : ''}`} onClick={() => setTab('encyclopedia')}>Spielercharakter</button>
+            <button className={`sim-tab ${tab === 'encyclopedia' ? 'active' : ''}`} onClick={() => setTab('encyclopedia')}>Spielercharaktere ({(dbChars||[]).filter(r=>r.type==='spieler').length})</button>
+            <button className={`sim-tab ${tab === 'npc' ? 'active' : ''}`} onClick={() => setTab('npc')}>NSC ({(dbChars||[]).filter(r=>r.type==='nsc').length})</button>
             <button className={`sim-tab ${tab === 'load' ? 'active' : ''}`} onClick={() => setTab('load')}>Gespeichert ({savedPlayers.length})</button>
           </div>
 
@@ -1272,17 +1296,45 @@ function PlayerModal({ initial, savedPlayers, currentGroup, onSave, onAddExistin
             </div>
           )}
 
-          {tab === 'npc' && (
-            <div style={{ padding: '32px 20px', textAlign: 'center', color: 'rgba(160,140,255,0.3)', fontSize: '0.8rem' }}>
-              NPC-Erstellung folgt noch.
-            </div>
-          )}
-
-          {tab === 'encyclopedia' && (
-            <div style={{ padding: '32px 20px', textAlign: 'center', color: 'rgba(160,140,255,0.3)', fontSize: '0.8rem' }}>
-              Vorgefertigte Charaktere aus der Enzyklopädie folgen noch.
-            </div>
-          )}
+          {(tab === 'npc' || tab === 'encyclopedia') && (() => {
+            const type = tab === 'npc' ? 'nsc' : 'spieler';
+            const rows = (dbChars || []).filter(r => r.type === type);
+            const q = dbSearch.trim().toLowerCase();
+            const filtered = q ? rows.filter(r => (r.name || '').toLowerCase().includes(q) || ((r.char_data?.class || r.char_data?.klasse) || '').toLowerCase().includes(q)) : rows;
+            return (
+              <div>
+                <input className="sim-search" placeholder="Suchen…" value={dbSearch}
+                  onChange={e => setDbSearch(e.target.value)} autoFocus style={{ marginBottom: 8 }} />
+                {rows.length === 0 && (
+                  <p style={{ color: 'rgba(160,140,255,0.4)', fontSize: '0.8rem' }}>
+                    {type === 'nsc' ? 'Keine NSC in der DB.' : 'Keine Spielercharaktere in der DB.'}
+                  </p>
+                )}
+                <div className="sim-saved-chars">
+                  {filtered.map(row => {
+                    const p = dbRowToSimPlayer(row);
+                    const inGroup = (currentGroup || []).some(c => c.id === p.id);
+                    return (
+                      <div key={row.id} className={`sim-saved-char-row${inGroup ? ' sim-saved-char-row-dimmed' : ''}`}>
+                        <div className="sim-saved-char-name">
+                          {p.name}
+                          {inGroup && <span style={{ fontSize:'0.62rem', color:'rgba(160,140,255,0.4)', marginLeft:6 }}>✓</span>}
+                        </div>
+                        <div className="sim-saved-char-meta">{p.klasse} Stufe {p.stufe} · {p.maxTp} TP · RK {p.rk}</div>
+                        <button className="sim-btn sim-btn-ghost" style={{ padding: '5px 10px', fontSize: '0.68rem' }}
+                          onClick={() => { onAddExisting(p); onClose(); }}>
+                          Hinzufügen
+                        </button>
+                      </div>
+                    );
+                  })}
+                  {q && filtered.length === 0 && rows.length > 0 && (
+                    <p style={{ color: 'rgba(160,140,255,0.3)', fontSize: '0.8rem' }}>Keine Treffer.</p>
+                  )}
+                </div>
+              </div>
+            );
+          })()}
 
           {tab === 'new' && (
             <div className="sim-form">
@@ -1852,6 +1904,13 @@ function SimApp() {
   const [monsterFilter, setMonsterFilter] = useState({ art: '', unterart: '', umgebung: '', crMin: '', crMax: '' });
   const [coherent, setCoherent] = useState(true);
   useEffect(() => { saveGroups(group1, group2); }, [group1, group2]);
+  const [dbChars, setDbChars] = useState([]);
+  useEffect(() => {
+    if (window._sb) {
+      window._sb.from('characters').select('id, name, type, char_data').order('name')
+        .then(({ data }) => setDbChars(data || []));
+    }
+  }, []);
   const [detailMonster, setDetailMonster] = useState(null);
   const selectedForModal = useMemo(() => {
     if (!modal) return new Map();
@@ -2024,6 +2083,7 @@ function SimApp() {
           onAddExisting={p => { addToGroup(modal.target === 1 ? setGroup1 : setGroup2, p); }}
           onDelete={handleDeletePlayer}
           onClose={() => setModal(null)}
+          dbChars={dbChars}
         />
       )}
     </div>

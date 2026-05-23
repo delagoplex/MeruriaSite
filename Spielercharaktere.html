@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meruria — Spielercharaktere</title>
+<link rel="stylesheet" href="assets/styles/global/fonts.css">
+<link rel="stylesheet" href="assets/styles/global/base.css">
+<script src="assets/scripts/vendor/react.development.js"></script>
+<script src="assets/scripts/vendor/react-dom.development.js"></script>
+<script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/scripts/vendor/supabase.min.js"></script>
+<script src="assets/scripts/supabase-client.js"></script>
+<script src="assets/components/site-gate.jsx" type="text/babel"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<!-- ═══════════════════════════════════════════
+     SCRIPT 1 — Steckbrief-Hilfsfunktionen
+     (gleiche Basis wie MeinCharakter.html)
+     ═══════════════════════════════════════════ -->
+<script type="text/babel">
+const { useState, useRef } = React;
+function mod(v)        { return Math.floor((v-10)/2); }
+function fmtMod(n)     { return (n>=0?"+":"")+n; }
+function attrKey(a)    { return {Stä:"str",Ges:"dex",Kon:"con",Int:"int",Wei:"wis",Cha:"cha"}[a]||"str"; }
+function skillBonus(s,stats,pb) { return mod(stats[attrKey(s.attr)])+s.prof*pb; }
+function SecTitle({ label }) {
+  return (
+    <div style={{marginBottom:10}}>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".28em",color:"rgba(124,77,255,0.5)",textTransform:"uppercase"}}>{label}</span>
+      <div style={{width:24,height:1,background:"linear-gradient(90deg,rgba(124,77,255,0.65),transparent)",marginTop:4}} />
+    </div>
+  );
+}
+function Card({children,style}) {
+  return <div style={{background:"rgba(7,4,18,0.92)",border:"1px solid rgba(124,77,255,0.2)",borderRadius:4,padding:"13px 14px",position:"relative",...style}}>{children}</div>;
+}
+function Corners({op=0.4,sz=14}) {
+  const b=`1.5px solid rgba(124,77,255,${op})`;
+  return (<>
+    <div style={{position:"absolute",top:0,left:0,  width:sz,height:sz,borderTop:b,borderLeft:b,  pointerEvents:"none"}}/>
+    <div style={{position:"absolute",top:0,right:0, width:sz,height:sz,borderTop:b,borderRight:b, pointerEvents:"none"}}/>
+    <div style={{position:"absolute",bottom:0,left:0,  width:sz,height:sz,borderBottom:b,borderLeft:b,  pointerEvents:"none"}}/>
+    <div style={{position:"absolute",bottom:0,right:0, width:sz,height:sz,borderBottom:b,borderRight:b, pointerEvents:"none"}}/>
+  </>);
+}
+function IRow({label,value}) {
+  return (
+    <div style={{display:"flex",alignItems:"baseline",gap:6,padding:"3.5px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase",flex:"0 0 80px"}}>{label}</span>
+      <span style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:300,color:"var(--silver)",flex:1}}>{value}</span>
+    </div>
+  );
+}
+function ImageSlot({ height=72, hue=270 }) {
+  return <div style={{width:"100%",height,borderRadius:3,background:`hsla(${hue},40%,18%,0.5)`,border:"1px solid rgba(124,77,255,0.15)"}} />;
+}
+Object.assign(window, { mod, fmtMod, attrKey, skillBonus, SecTitle, Card, Corners, IRow, ImageSlot });
+</script>
+
+<!-- ═══════════════════════════════════════════
+     SCRIPT 2 — Externe Steckbrief-Komponenten
+     ═══════════════════════════════════════════ -->
+<script src="assets/components/steckbrief-components.jsx" type="text/babel"></script>
+
+<!-- ═══════════════════════════════════════════
+     SCRIPT 3 — Haupt-App
+     ═══════════════════════════════════════════ -->
+<script type="text/babel">
+const { useState: uSt, useEffect: uEx, useRef: uRx, useMemo: uM3 } = React;
+const { SiteNav, SiteGate } = window;
+const { buildChar, CombatCompact, AttributeGrid, SkillPills, PersonalitySection,
+        DivisionRank, DeityCard, CompanionCard, KontakteTablet, FbCard } = window;
+const { SecTitle, Card, Corners, IRow } = window;
+
+/* ── Charakter aus DB-Zeile aufbauen ─────────── */
+function charFromRow(row) {
+  const d = row.char_data;
+  if (d && d.hp !== undefined) return { ...d };
+  return buildChar(d || row);
+}
+
+/* ── Stat-Badge ───────────────────────────────── */
+function StatBadge({ label, value }) {
+  return (
+    <div style={{ display:"flex", flexDirection:"column", alignItems:"center",
+      background:"rgba(7,4,18,0.9)", border:"1px solid rgba(124,77,255,0.18)",
+      borderRadius:3, padding:"5px 10px", minWidth:44 }}>
+      <span style={{ fontFamily:"var(--font-mono)", fontSize:15, color:"var(--white)", lineHeight:1 }}>{value}</span>
+      <span style={{ fontFamily:"var(--font-mono)", fontSize:6, letterSpacing:".18em",
+        color:"rgba(124,77,255,0.4)", textTransform:"uppercase", marginTop:3 }}>{label}</span>
+    </div>
+  );
+}
+
+/* ── Charakter-Karte ──────────────────────────── */
+function CharCard({ row, isDM, onToggle, onOpen }) {
+  const [hov, setHov] = uSt(false);
+  const char = charFromRow(row);
+  const hidden = !row.visible;
+  const dimmed = isDM && hidden;
+
+  return (
+    <div style={{ position:"relative", borderRadius:5, overflow:"hidden",
+      border:`1px solid rgba(124,77,255,${hov ? 0.55 : dimmed ? 0.12 : 0.25})`,
+      background: dimmed ? "rgba(5,4,12,0.85)" : "rgba(8,5,22,0.92)",
+      transition:"all .22s", opacity: dimmed ? 0.65 : 1 }}
+      onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}>
+
+      <Corners op={hov ? 0.6 : dimmed ? 0.15 : 0.35} sz={11} />
+
+      {/* Sichtbarkeits-Toggle (nur DM) */}
+      {isDM && (
+        <button onClick={e => { e.stopPropagation(); onToggle(row.id, row.visible); }}
+          title={hidden ? "Für Spieler sichtbar machen" : "Verbergen"}
+          style={{ position:"absolute", top:8, right:8, zIndex:10,
+            background:"transparent", border:`1px solid rgba(124,77,255,${hidden?0.2:0.4})`,
+            borderRadius:3, padding:"3px 7px", cursor:"pointer",
+            fontFamily:"var(--font-mono)", fontSize:10,
+            color: hidden ? "rgba(124,77,255,0.35)" : "rgba(124,77,255,0.75)",
+            transition:"all .18s" }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor="rgba(124,77,255,0.7)"; e.currentTarget.style.color="rgba(160,140,255,0.9)"; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor=hidden?"rgba(124,77,255,0.2)":"rgba(124,77,255,0.4)"; e.currentTarget.style.color=hidden?"rgba(124,77,255,0.35)":"rgba(124,77,255,0.75)"; }}>
+          {hidden ? "◯" : "◉"}
+        </button>
+      )}
+
+      {/* DM-Badge für verborgene Chars */}
+      {dimmed && (
+        <div style={{ position:"absolute", top:8, left:8,
+          fontFamily:"var(--font-mono)", fontSize:6.5, letterSpacing:".2em",
+          color:"rgba(124,77,255,0.4)", textTransform:"uppercase",
+          background:"rgba(124,77,255,0.08)", border:"1px solid rgba(124,77,255,0.18)",
+          padding:"2px 6px", borderRadius:2, zIndex:5 }}>
+          Verborgen
+        </div>
+      )}
+
+      {/* Klickbarer Bereich */}
+      <button onClick={() => onOpen(row)}
+        style={{ display:"block", width:"100%", background:"transparent",
+          border:"none", cursor:"pointer", textAlign:"left", padding:"22px 16px 16px" }}>
+
+        {/* Name + Rang */}
+        <div style={{ marginBottom:10 }}>
+          <div style={{ fontFamily:"var(--font-display)", fontSize:15, letterSpacing:".18em",
+            color: hov ? "#f0eeff" : "rgba(220,210,250,0.9)",
+            textTransform:"uppercase", lineHeight:1.2, marginBottom:5,
+            transition:"color .2s" }}>
+            {char.name || row.name}
+          </div>
+          <div style={{ fontFamily:"var(--font-mono)", fontSize:7.5, letterSpacing:".15em",
+            color:"rgba(124,77,255,0.5)", textTransform:"uppercase" }}>
+            Stufe {char.level || 1} · {char.rank || "Neuankömmling"}
+          </div>
+        </div>
+
+        {/* Tags: Rasse, Klasse, Division */}
+        <div style={{ display:"flex", gap:5, flexWrap:"wrap", marginBottom:14 }}>
+          {[char.race, char.class, char.division].filter(v => v && v !== "—").map((t,i) => (
+            <span key={i} style={{ fontFamily:"var(--font-mono)", fontSize:7.5, padding:"2px 8px",
+              background:"rgba(124,77,255,0.1)", border:"1px solid rgba(124,77,255,0.25)",
+              borderRadius:2, color:"rgba(200,190,240,0.7)", letterSpacing:".06em" }}>{t}</span>
+          ))}
+        </div>
+
+        {/* Mini-Stats */}
+        <div style={{ display:"flex", gap:6 }}>
+          <StatBadge label="TP"   value={char.hp   || "—"} />
+          <StatBadge label="RK"   value={char.ac   || "—"} />
+          <StatBadge label="INIT" value={fmtMod(char.initiative || 0)} />
+        </div>
+      </button>
+    </div>
+  );
+}
+
+/* ── Spieler-Gruppe ───────────────────────────── */
+function PlayerGroup({ displayName, chars, isDM, onToggle, onOpen }) {
+  return (
+    <div style={{ marginBottom:48 }}>
+      <div style={{ display:"flex", alignItems:"center", gap:16, marginBottom:20 }}>
+        <div style={{ fontFamily:"var(--font-mono)", fontSize:8, letterSpacing:".3em",
+          color:"rgba(124,77,255,0.6)", textTransform:"uppercase", whiteSpace:"nowrap" }}>
+          {displayName}
+        </div>
+        <div style={{ flex:1, height:1,
+          background:"linear-gradient(to right, rgba(124,77,255,0.4), rgba(124,77,255,0.05))" }} />
+      </div>
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(240px,1fr))", gap:16 }}>
+        {chars.map(row => (
+          <CharCard key={row.id} row={row} isDM={isDM}
+            onToggle={onToggle} onOpen={onOpen} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ── Read-only Steckbrief-Overlay ─────────────── */
+function SteckbriefOverlay({ row, onClose }) {
+  const char = charFromRow(row);
+  const overlayRef = uRx(null);
+
+  uEx(() => {
+    const onKey = e => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, []);
+
+  return (
+    <div ref={overlayRef}
+      onClick={e => { if (e.target === overlayRef.current) onClose(); }}
+      style={{ position:"fixed", inset:0, zIndex:500,
+        background:"rgba(5,4,15,0.88)", backdropFilter:"blur(8px)",
+        overflowY:"auto", display:"flex", justifyContent:"center", padding:"24px 16px 60px" }}>
+
+      <div style={{ width:"100%", maxWidth:860, position:"relative" }}>
+
+        {/* Schließen-Button */}
+        <button onClick={onClose}
+          style={{ position:"fixed", top:20, right:28, zIndex:600,
+            fontFamily:"var(--font-mono)", fontSize:18, lineHeight:1,
+            background:"rgba(8,5,22,0.95)", border:"1px solid rgba(124,77,255,0.3)",
+            borderRadius:4, padding:"6px 13px", cursor:"pointer",
+            color:"rgba(160,140,255,0.6)", transition:"all .18s" }}
+          onMouseEnter={e => { e.currentTarget.style.color="rgba(200,190,240,0.9)"; e.currentTarget.style.borderColor="rgba(124,77,255,0.6)"; }}
+          onMouseLeave={e => { e.currentTarget.style.color="rgba(160,140,255,0.6)"; e.currentTarget.style.borderColor="rgba(124,77,255,0.3)"; }}>
+          ×
+        </button>
+
+        {/* Header */}
+        <div style={{ marginBottom:28, paddingTop:8 }}>
+          <div style={{ fontFamily:"var(--font-mono)", fontSize:8, letterSpacing:".32em",
+            color:"rgba(124,77,255,0.5)", textTransform:"uppercase", marginBottom:8 }}>
+            Meruria · Charakterbogen
+          </div>
+          <div style={{ fontFamily:"var(--font-display)", fontSize:"clamp(22px,4vw,34px)",
+            fontWeight:300, letterSpacing:".22em", color:"#f0eeff",
+            textTransform:"uppercase", textShadow:"0 0 40px rgba(124,77,255,0.3)",
+            marginBottom:6 }}>
+            {char.name}
+          </div>
+          <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
+            {[char.race, char.class, char.background, char.division].filter(v => v && v !== "—").map((t,i) => (
+              <span key={i} style={{ fontFamily:"var(--font-mono)", fontSize:8, padding:"2px 10px",
+                background:"rgba(124,77,255,0.12)", border:"1px solid rgba(124,77,255,0.3)",
+                borderRadius:2, color:"rgba(200,190,240,0.8)", letterSpacing:".08em" }}>{t}</span>
+            ))}
+          </div>
+        </div>
+
+        {/* Körperdaten */}
+        <Card style={{ marginBottom:16 }}>
+          <SecTitle label="Identität" />
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"0 24px" }}>
+            <IRow label="Rang"         value={`${char.rank || "—"} (${char.rankLevel || 1}/${char.rankMax || 5})`} />
+            <IRow label="Stufe"        value={char.level || 1} />
+            <IRow label="Gesinnung"    value={char.alignment || "—"} />
+            <IRow label="Gottheit"     value={char.deity || "—"} />
+            <IRow label="Geschlecht"   value={char.gender || "—"} />
+            <IRow label="Alter"        value={char.age || "—"} />
+            <IRow label="Geburtsort"   value={char.birthplace || "—"} />
+            <IRow label="Sternzeichen" value={char.zodiac || "—"} />
+          </div>
+        </Card>
+
+        {/* Kampf + Attribute nebeneinander */}
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16, marginBottom:16 }}>
+          <CombatCompact char={char} />
+          <DivisionRank  char={char} />
+        </div>
+
+        <AttributeGrid char={char} />
+        <SkillPills    char={char} />
+
+        {/* Geschichte */}
+        {char.story && (
+          <Card style={{ marginBottom:16 }}>
+            <SecTitle label="Geschichte" />
+            <p style={{ fontFamily:"var(--font-body)", fontSize:12, fontWeight:300,
+              color:"var(--silver)", lineHeight:1.82, margin:0 }}>{char.story}</p>
+          </Card>
+        )}
+
+        <PersonalitySection char={char} />
+        <DeityCard char={char} />
+
+        {/* Begleiter */}
+        {char.companions && char.companions.length > 0 && (
+          <Card style={{ marginBottom:16 }}>
+            <SecTitle label="Begleiter" />
+            <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(200px,1fr))", gap:10 }}>
+              {char.companions.map((c,i) => <CompanionCard key={i} comp={c} />)}
+            </div>
+          </Card>
+        )}
+
+        {/* Kontakte */}
+        {char.contacts && char.contacts.length > 0 && (
+          <Card style={{ marginBottom:16 }}>
+            <KontakteTablet char={char} />
+          </Card>
+        )}
+
+        {/* Freundebuch */}
+        {char.freundebuch && char.freundebuch.length > 0 && (
+          <Card style={{ marginBottom:16 }}>
+            <SecTitle label="Freundebuch" />
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
+              {char.freundebuch.map((fb,i) => <FbCard key={i} item={fb} index={i} />)}
+            </div>
+          </Card>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ── App ──────────────────────────────────────── */
+function App() {
+  const isDM = window.SITE_USER?.role === "dm";
+  const [chars, setChars] = uSt([]);
+  const [profiles, setProfiles] = uSt({});
+  const [loading, setLoading] = uSt(true);
+  const [openRow, setOpenRow] = uSt(null);
+
+  uEx(() => { load(); }, []);
+
+  async function load() {
+    setLoading(true);
+    const { data: rows } = await window._sb
+      .from("characters")
+      .select("*")
+      .eq("type", "spieler")
+      .order("created_at");
+
+    const ownerIds = [...new Set((rows || []).map(r => r.owner_id))];
+
+    let profileMap = {};
+    if (ownerIds.length > 0) {
+      const { data: profs } = await window._sb
+        .from("profiles")
+        .select("id, display_name")
+        .in("id", ownerIds);
+      profileMap = Object.fromEntries((profs || []).map(p => [p.id, p.display_name]));
+    }
+
+    setChars(rows || []);
+    setProfiles(profileMap);
+    setLoading(false);
+  }
+
+  async function toggleVisible(charId, currentVisible) {
+    await window._sb.from("characters")
+      .update({ visible: !currentVisible })
+      .eq("id", charId);
+    setChars(prev => prev.map(c => c.id === charId ? { ...c, visible: !currentVisible } : c));
+  }
+
+  // Gruppierung nach Besitzer, Reihenfolge = erste Erscheinung
+  const groups = uM3(() => {
+    const map = new Map();
+    for (const row of chars) {
+      if (!map.has(row.owner_id)) map.set(row.owner_id, []);
+      map.get(row.owner_id).push(row);
+    }
+    return [...map.entries()].map(([ownerId, rows]) => ({
+      ownerId,
+      displayName: profiles[ownerId] || "Spieler",
+      chars: rows,
+    }));
+  }, [chars, profiles]);
+
+  if (openRow) {
+    return <SteckbriefOverlay row={openRow} onClose={() => setOpenRow(null)} />;
+  }
+
+  return (
+    <div style={{ minHeight:"100vh", paddingTop:"var(--nav-h)" }}>
+      <SiteNav />
+      <div style={{ maxWidth:1100, margin:"0 auto", padding:"48px 28px 80px" }}>
+
+        {/* Seitenüberschrift */}
+        <div style={{ marginBottom:48 }}>
+          <div style={{ fontFamily:"var(--font-mono)", fontSize:9, letterSpacing:".35em",
+            color:"rgba(124,77,255,0.5)", textTransform:"uppercase", marginBottom:10 }}>
+            Meruria · Kampagne
+          </div>
+          <h1 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(20px,3.5vw,32px)",
+            fontWeight:300, letterSpacing:".22em", color:"#f0eeff",
+            textTransform:"uppercase", margin:0,
+            textShadow:"0 0 48px rgba(124,77,255,0.25)" }}>
+            Spielercharaktere
+          </h1>
+          <div style={{ width:48, height:1, background:"rgba(124,77,255,0.55)", marginTop:14 }} />
+        </div>
+
+        {/* Ladeindikator */}
+        {loading && (
+          <div style={{ fontFamily:"var(--font-mono)", fontSize:9, letterSpacing:".3em",
+            color:"rgba(124,77,255,0.35)", textTransform:"uppercase" }}>
+            Lade Charaktere…
+          </div>
+        )}
+
+        {/* Leer-Zustand */}
+        {!loading && groups.length === 0 && (
+          <div style={{ fontFamily:"var(--font-body)", fontSize:13, fontWeight:300,
+            color:"rgba(200,190,240,0.35)", lineHeight:1.8 }}>
+            {isDM
+              ? "Noch keine Spielercharaktere erstellt."
+              : "Noch keine Charaktere sichtbar. Der Spielleiter schaltet sie frei."}
+          </div>
+        )}
+
+        {/* Gruppen */}
+        {!loading && groups.map(g => (
+          <PlayerGroup
+            key={g.ownerId}
+            displayName={g.displayName}
+            chars={g.chars}
+            isDM={isDM}
+            onToggle={toggleVisible}
+            onOpen={row => setOpenRow(row)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <SiteGate><App /></SiteGate>
+);
+</script>
+</body></html>

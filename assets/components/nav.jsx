@@ -95,9 +95,9 @@ const NAV = [
   { id: 'charaktererstellung', label: 'Charaktererstellung', href: 'Charaktererstellung.html', items: [{ label: 'Neuer Charakter', href: 'Neuer_Charakter.html', dividerAfter: true }, { label: 'Rassen', href: 'Rassen.html' }, { label: 'Klassen', href: 'Klassen.html' }, { label: 'Talente', href: 'Talente.html' }, { label: 'Hintergründe', href: 'Hintergruende.html' }, { label: 'Zauber', href: 'Zauber.html' }, { label: 'Ausrüstung', href: 'Ausrüstung.html' }] },
   { id: 'enzyklopaedie', label: 'Enzyklopädie', href: 'Enzyklopädie.html', items: [{ label: 'Völker', href: '#' }, { label: 'Orte', href: '#' }, { label: 'Rezepte', href: '#' }, { label: 'Organisationen', href: '#' }, { label: 'Gottheiten', href: 'Gottheiten.html' }, { label: 'Religionen', href: '#' }, { label: 'Galerie', href: 'Galerie.html', highlight: true }] },
   { id: 'divisionen', label: 'Divisionen', href: 'Divisionen.html', items: [{ label: 'I — Die Kuratoren', href: 'divisionen/Die Kuratoren.html' }, { label: 'II — Die Sturmritter', href: 'divisionen/Sturmritter.html' }, { label: 'III — Die Sentinels', href: 'divisionen/Sentinels.html' }, { label: 'IV — Die Friedenshüter', href: 'divisionen/Friedenshueter.html' }, { label: 'V — Die Outfitters', href: 'divisionen/Outfitters.html' }, { label: 'VI — Die Pathfinders', href: 'divisionen/Pathfinders.html' }, { label: 'VII — Die Quellensucher', href: 'divisionen/Quellensucher.html' }, { label: 'VIII — Die Bergungsgarde', href: 'divisionen/Bergungsgarde.html' }] },
-  { id: 'charaktere', label: 'Charaktere', href: 'Charaktere.html', items: [{ label: 'Meine Charaktere', href: 'MeinCharakter.html' }, { label: 'Spielercharaktere', href: '#' }, { label: 'NSC', href: '#' }] },
+  { id: 'charaktere', label: 'Charaktere', href: 'Charaktere.html', items: [{ label: 'Meine Charaktere', href: 'MeinCharakter.html' }, { label: 'Spielercharaktere', href: 'Spielercharaktere.html' }, { label: 'NSC', href: 'NSC.html' }] },
   { id: 'tools', label: 'Tools', items: [{ label: 'Kollektikon', href: 'Kollektikon.html' }, { label: 'Kalender', href: 'Kalender.html' }, { label: 'Steckbrief', href: 'Steckbrief.html', glitch: false }, { label: 'Missionsterminal', href: 'Missionsterminal.html' }] },
-  { id: 'dm-bereich', label: 'DM-Bereich', items: [{ label: 'Monster', href: 'Monster.html', locked: true }, { label: 'Ressourcen', href: 'Ressourcen.html', locked: true }, { label: 'Tarot', href: 'Tarot.html', locked: true }, { label: 'Kampfsimulation', href: 'Kampfsimulation.html', locked: true }] }
+  { id: 'dm-bereich', label: 'DM-Bereich', items: [{ label: 'Monster', href: 'Monster.html', locked: true }, { label: 'Ressourcen', href: 'Ressourcen.html', locked: true }, { label: 'Tarot', href: 'Tarot.html', locked: true }, { label: 'Kampfsimulation', href: 'Kampfsimulation.html', locked: true }, { label: 'Missionen', href: 'DM_Missionen.html', locked: true }] }
 ];
 
 function NavItem({ tab }) {
@@ -212,6 +212,241 @@ function NavItem({ tab }) {
   );
 }
 
+/* ── Account-Modal ──────────────────────────────────────────── */
+function AccountModal({ onClose }) {
+  const user = window.SITE_USER;
+  const [displayName, setDisplayName] = useState('');
+  const [draft, setDraft]             = useState('');
+  const [saving, setSaving]           = useState(false);
+  const [saved,  setSaved]            = useState(false);
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    async function load() {
+      const { data } = await window._sb.from('profiles').select('display_name').eq('id', user.id).single();
+      const name = data?.display_name || '';
+      setDisplayName(name);
+      setDraft(name);
+    }
+    if (window._sb && user) load();
+    inputRef.current?.focus();
+  }, []);
+
+  useEffect(() => {
+    const onKey = e => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, []);
+
+  async function handleSave() {
+    if (!draft.trim() || saving) return;
+    setSaving(true);
+    await window._sb.from('profiles').update({ display_name: draft.trim() }).eq('id', user.id);
+    setDisplayName(draft.trim());
+    window.SITE_USER = { ...window.SITE_USER, display_name: draft.trim() };
+    setSaving(false);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  }
+
+  const inputStyle = {
+    fontFamily: 'var(--font-body)', fontSize: 14, fontWeight: 300,
+    color: 'var(--white)', background: 'transparent',
+    border: 'none', borderBottom: '1px solid rgba(124,77,255,0.35)',
+    outline: 'none', padding: '4px 0', width: '100%',
+  };
+  const labelStyle = {
+    fontFamily: 'var(--font-mono)', fontSize: 8, letterSpacing: '.22em',
+    color: 'rgba(124,77,255,0.5)', textTransform: 'uppercase', display: 'block', marginBottom: 6,
+  };
+
+  return (
+    <div onClick={e => { if (e.target === e.currentTarget) onClose(); }}
+      style={{ position: 'fixed', inset: 0, zIndex: 9999,
+        background: 'rgba(5,4,15,0.82)', backdropFilter: 'blur(8px)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ width: '100%', maxWidth: 400, margin: '0 16px',
+        background: 'rgba(10,7,28,0.98)', border: '1px solid rgba(124,77,255,0.4)',
+        borderRadius: 6, padding: '32px 32px 28px', position: 'relative' }}>
+
+        {/* corner brackets */}
+        {[['top:0,left:0','borderTop,borderLeft'],['top:0,right:0','borderTop,borderRight'],
+          ['bottom:0,left:0','borderBottom,borderLeft'],['bottom:0,right:0','borderBottom,borderRight']
+        ].map(([pos, sides], i) => {
+          const p = Object.fromEntries(pos.split(',').map(s => s.split(':')));
+          const b = Object.fromEntries(sides.split(',').map(s => [s, '1.5px solid rgba(124,77,255,0.55)']));
+          return <div key={i} style={{ position:'absolute', width:14, height:14, pointerEvents:'none', ...p, ...b }} />;
+        })}
+
+        {/* Close */}
+        <button onClick={onClose}
+          style={{ position:'absolute', top:12, right:14, background:'transparent', border:'none',
+            cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:18, lineHeight:1,
+            color:'rgba(124,77,255,0.4)', padding:'2px 6px', transition:'color .15s' }}
+          onMouseEnter={e => e.currentTarget.style.color='rgba(200,190,240,0.8)'}
+          onMouseLeave={e => e.currentTarget.style.color='rgba(124,77,255,0.4)'}>×</button>
+
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'.32em',
+          color:'rgba(124,77,255,0.5)', textTransform:'uppercase', marginBottom:6 }}>
+          Konto · Meruria
+        </div>
+        <h2 style={{ fontFamily:'var(--font-display)', fontSize:18, fontWeight:300,
+          letterSpacing:'.2em', color:'#f0eeff', textTransform:'uppercase',
+          margin:'0 0 24px' }}>Einstellungen</h2>
+
+        {/* Email (read-only) */}
+        <div style={{ marginBottom:20 }}>
+          <label style={labelStyle}>E-Mail-Adresse</label>
+          <div style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:300,
+            color:'rgba(200,190,240,0.45)' }}>{user?.email || '—'}</div>
+        </div>
+
+        {/* Display name */}
+        <div style={{ marginBottom:28 }}>
+          <label style={labelStyle}>Anzeigename</label>
+          <input
+            ref={inputRef}
+            value={draft}
+            onChange={e => setDraft(e.target.value)}
+            onKeyDown={e => { if (e.key === 'Enter') handleSave(); }}
+            placeholder="Name eingeben …"
+            style={inputStyle}
+          />
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'rgba(124,77,255,0.3)',
+            letterSpacing:'.1em', marginTop:6 }}>
+            Wird auf der Spielercharaktere-Seite als Gruppenüberschrift angezeigt.
+          </div>
+        </div>
+
+        <div style={{ display:'flex', gap:10 }}>
+          <button onClick={handleSave} disabled={saving || !draft.trim()}
+            style={{ flex:1, fontFamily:'var(--font-display)', fontSize:11, letterSpacing:'.18em',
+              textTransform:'uppercase', padding:'10px 20px', cursor: saving ? 'not-allowed' : 'pointer',
+              background: saved ? 'rgba(80,200,140,0.18)' : 'rgba(124,77,255,0.18)',
+              border: `1px solid ${saved ? 'rgba(80,200,140,0.55)' : 'rgba(124,77,255,0.55)'}`,
+              borderRadius:3, color: saved ? 'rgba(80,200,140,0.9)' : 'rgba(200,190,240,0.9)',
+              transition:'all .2s', opacity: (!draft.trim() || saving) ? 0.5 : 1 }}>
+            {saved ? '✓ Gespeichert' : saving ? 'Speichern…' : 'Speichern'}
+          </button>
+          <button onClick={onClose}
+            style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'.18em',
+              textTransform:'uppercase', padding:'10px 18px', cursor:'pointer',
+              background:'transparent', border:'1px solid rgba(124,77,255,0.2)',
+              borderRadius:3, color:'rgba(124,77,255,0.5)', transition:'all .2s' }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(124,77,255,0.45)'; e.currentTarget.style.color='rgba(160,140,255,0.75)'; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(124,77,255,0.2)'; e.currentTarget.style.color='rgba(124,77,255,0.5)'; }}>
+            Abbrechen
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── User-Menü (Dropdown) ───────────────────────────────────── */
+function UserMenu() {
+  const user = window.SITE_USER;
+  const [open, setOpen]             = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [displayName, setDisplayName]   = useState('');
+  const ref = useRef(null);
+
+  useEffect(() => {
+    async function load() {
+      const { data } = await window._sb.from('profiles').select('display_name').eq('id', user.id).single();
+      if (data?.display_name) setDisplayName(data.display_name);
+    }
+    if (window._sb && user) load();
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const close = e => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+    document.addEventListener('mousedown', close);
+    return () => document.removeEventListener('mousedown', close);
+  }, [open]);
+
+  if (!window._sb || !user) return null;
+
+  async function handleLogout() {
+    await window._sb.auth.signOut();
+    window.location.reload();
+  }
+
+  const label = displayName || user.email?.split('@')[0] || 'Konto';
+  const truncated = label.length > 16 ? label.slice(0, 14) + '…' : label;
+
+  const dropItemStyle = {
+    display:'block', width:'100%', padding:'9px 16px',
+    fontFamily:'var(--font-body)', fontSize:12, fontWeight:300,
+    letterSpacing:'.06em', color:'var(--nav-item-text)', textAlign:'left',
+    background:'transparent', border:'none', cursor:'pointer', transition:'all .15s',
+  };
+
+  return (
+    <div ref={ref} style={{ position:'relative', alignSelf:'stretch', display:'flex', alignItems:'center' }}>
+      <button
+        onClick={() => setOpen(o => !o)}
+        style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'.18em',
+          textTransform:'uppercase', padding:'5px 11px',
+          background: open ? 'var(--nav-btn-hover-bg)' : 'transparent',
+          border:'1px solid var(--nav-btn-border)', borderRadius:3,
+          color: open ? 'var(--white)' : 'var(--nav-text)',
+          cursor:'pointer', transition:'all .15s', whiteSpace:'nowrap' }}
+        onMouseEnter={e => { e.currentTarget.style.background='var(--nav-btn-hover-bg)'; e.currentTarget.style.color='var(--white)'; e.currentTarget.style.borderColor='var(--nav-btn-hover-border)'; }}
+        onMouseLeave={e => { if (!open) { e.currentTarget.style.background='transparent'; e.currentTarget.style.color='var(--nav-text)'; e.currentTarget.style.borderColor='var(--nav-btn-border)'; } }}>
+        ⬡ {truncated}
+      </button>
+
+      {open && (
+        <div style={{ position:'absolute', top:'calc(100% + 6px)', right:0, minWidth:200,
+          background:'var(--nav-dropdown-bg)', border:'1px solid var(--nav-dropdown-border)',
+          borderRadius:4, boxShadow:'0 8px 32px rgba(0,0,0,0.4)',
+          animation:'slideDown 0.18s ease forwards', zIndex:200,
+          backdropFilter:'blur(12px)', overflow:'hidden' }}>
+
+          {/* User info header */}
+          <div style={{ padding:'12px 16px 10px', borderBottom:'1px solid rgba(124,77,255,0.12)' }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'.22em',
+              color:'rgba(124,77,255,0.5)', textTransform:'uppercase', marginBottom:3 }}>
+              {user.role === 'dm' ? 'Spielleitung' : 'Spieler'}
+            </div>
+            <div style={{ fontFamily:'var(--font-body)', fontSize:11.5, fontWeight:300,
+              color:'rgba(200,190,240,0.7)', overflow:'hidden', textOverflow:'ellipsis',
+              whiteSpace:'nowrap', maxWidth:168 }}>
+              {user.email}
+            </div>
+          </div>
+
+          {/* Settings */}
+          <button style={dropItemStyle}
+            onClick={() => { setOpen(false); setShowSettings(true); }}
+            onMouseEnter={e => { e.currentTarget.style.color='var(--white)'; e.currentTarget.style.background='var(--nav-item-hover-bg)'; e.currentTarget.style.paddingLeft='22px'; }}
+            onMouseLeave={e => { e.currentTarget.style.color='var(--nav-item-text)'; e.currentTarget.style.background='transparent'; e.currentTarget.style.paddingLeft='16px'; }}>
+            Einstellungen
+          </button>
+
+          {/* Divider */}
+          <div style={{ height:1, background:'rgba(124,77,255,0.12)' }} />
+
+          {/* Logout */}
+          <button style={{ ...dropItemStyle, color:'rgba(220,100,100,0.65)' }}
+            onClick={handleLogout}
+            onMouseEnter={e => { e.currentTarget.style.color='rgba(240,130,130,0.9)'; e.currentTarget.style.background='rgba(200,60,60,0.1)'; e.currentTarget.style.paddingLeft='22px'; }}
+            onMouseLeave={e => { e.currentTarget.style.color='rgba(220,100,100,0.65)'; e.currentTarget.style.background='transparent'; e.currentTarget.style.paddingLeft='16px'; }}>
+            Abmelden
+          </button>
+        </div>
+      )}
+
+      {showSettings && ReactDOM.createPortal(
+        <AccountModal onClose={() => setShowSettings(false)} />,
+        document.body
+      )}
+    </div>
+  );
+}
+
 function ThemeToggle() {
   const [dark, setDark] = useState(() => localStorage.getItem('theme') !== 'light');
 
@@ -299,6 +534,7 @@ function SiteNav({ rightLabel }) {
           {rightLabel && (
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', color: 'rgba(var(--accent-rgb),0.35)', letterSpacing: '0.15em' }}>{rightLabel}</div>
           )}
+          <UserMenu />
           <ThemeToggle />
           <button
             className="meruria-hamburger"

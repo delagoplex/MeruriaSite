@@ -511,6 +511,7 @@ async function loadCharacters() {
     race: row.race,
     class: row.class,
     division: row.division,
+    type: row.type || 'spieler',
     _char: row.char_data && Object.keys(row.char_data).length > 0 ? row.char_data : null,
   }));
 }
@@ -615,80 +616,96 @@ function CharSelection({ chars, onSelect, onNew, onReload }) {
         </h1>
         <div style={{width:36,height:1,background:"rgba(124,77,255,0.55)",margin:"0 auto 32px"}} />
 
-        <div style={{display:"flex",flexDirection:"column",gap:10,marginBottom:24}}>
-          {chars.map(ch => {
-            const delConfirm = confirmDelete === ch.id;
-            return (
-              <div key={ch.id} style={{display:"flex",alignItems:"center",
-                background:"rgba(7,4,18,0.9)",border:`1px solid rgba(124,77,255,${delConfirm?0.55:0.25})`,
-                borderRadius:4,transition:"all .18s",overflow:"hidden"}}>
-                {delConfirm ? (
-                  <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",
-                    padding:"14px 18px",width:"100%",gap:16}}>
-                    <span style={{fontFamily:"var(--font-mono)",fontSize:8.5,letterSpacing:".12em",
-                      color:"rgba(230,110,110,0.9)",textTransform:"uppercase",flex:1}}>
-                      „{ch.name}" wirklich löschen?
-                    </span>
-                    <div style={{display:"flex",gap:8,flexShrink:0}}>
-                      <button onClick={()=>handleDelete(ch.id)}
-                        style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".14em",textTransform:"uppercase",
-                          padding:"5px 14px",background:"rgba(200,50,50,0.18)",border:"1px solid rgba(200,60,60,0.5)",
-                          borderRadius:3,cursor:"pointer",color:"rgba(240,140,140,0.9)",transition:"all .18s"}}>
-                        Löschen
-                      </button>
-                      <button onClick={()=>setConfirmDelete(null)}
-                        style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".14em",textTransform:"uppercase",
-                          padding:"5px 14px",background:"transparent",border:"1px solid rgba(124,77,255,0.3)",
-                          borderRadius:3,cursor:"pointer",color:"rgba(124,77,255,0.6)",transition:"all .18s"}}>
-                        Abbrechen
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <>
-                    <button onClick={()=>onSelect(ch)}
-                      style={{display:"flex",alignItems:"center",gap:16,padding:"14px 18px",
-                        background:"transparent",border:"none",cursor:"pointer",textAlign:"left",flex:1,minWidth:0,
-                        transition:"background .18s"}}
-                      onMouseEnter={e=>e.currentTarget.style.background="rgba(124,77,255,0.07)"}
-                      onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
-                      <div style={{flex:1,minWidth:0}}>
-                        <div style={{fontFamily:"var(--font-display)",fontSize:14,letterSpacing:".18em",color:"var(--white)",textTransform:"uppercase",marginBottom:4}}>{ch.name}</div>
-                        <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
-                          {[ch.race, ch.class, ch.division].filter(Boolean).map((t,i)=>(
-                            <span key={i} style={{fontFamily:"var(--font-mono)",fontSize:8,padding:"1px 7px",
-                              background:"rgba(124,77,255,0.1)",border:"1px solid rgba(124,77,255,0.25)",borderRadius:2,
-                              color:"rgba(200,190,240,0.7)",letterSpacing:".08em"}}>{t}</span>
-                          ))}
-                        </div>
-                      </div>
-                      <span style={{fontFamily:"var(--font-mono)",fontSize:10,color:"rgba(124,77,255,0.35)",flexShrink:0}}>→</span>
-                    </button>
-                    <div style={{display:"flex",gap:6,padding:"0 14px",flexShrink:0,
-                      borderLeft:"1px solid rgba(124,77,255,0.1)"}}>
-                      <button onClick={()=>exportChars([ch], `${ch.name||'charakter'}.json`)} title="Exportieren"
-                        style={{fontFamily:"var(--font-mono)",fontSize:11,padding:"5px 9px",lineHeight:1,
-                          background:"transparent",border:"1px solid rgba(124,77,255,0.15)",borderRadius:3,
-                          cursor:"pointer",color:"rgba(124,77,255,0.35)",transition:"all .15s"}}
-                        onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.5)";e.currentTarget.style.color="rgba(160,140,255,0.75)";}}
-                        onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.15)";e.currentTarget.style.color="rgba(124,77,255,0.35)";}}>
-                        ↓
-                      </button>
-                      <button onClick={()=>setConfirmDelete(ch.id)} title="Löschen"
-                        style={{fontFamily:"var(--font-mono)",fontSize:14,padding:"2px 8px",lineHeight:1,
-                          background:"transparent",border:"1px solid rgba(200,60,60,0.15)",borderRadius:3,
-                          cursor:"pointer",color:"rgba(200,80,80,0.35)",transition:"all .15s"}}
-                        onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(200,60,60,0.5)";e.currentTarget.style.color="rgba(240,110,110,0.75)";}}
-                        onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(200,60,60,0.15)";e.currentTarget.style.color="rgba(200,80,80,0.35)";}}>
-                        ×
-                      </button>
-                    </div>
-                  </>
-                )}
+        {[
+          { key:'spieler', label:'Spielercharaktere' },
+          { key:'nsc',     label:'Nicht-Spieler-Charaktere' },
+        ].map(({ key, label }) => {
+          const group = chars.filter(ch => ch.type === key);
+          if (group.length === 0) return null;
+          return (
+            <div key={key} style={{marginBottom:24}}>
+              <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:10}}>
+                <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".28em",
+                  color:"rgba(124,77,255,0.4)",textTransform:"uppercase",whiteSpace:"nowrap"}}>{label}</span>
+                <div style={{flex:1,height:1,background:"rgba(124,77,255,0.12)"}}/>
               </div>
-            );
-          })}
-        </div>
+              <div style={{display:"flex",flexDirection:"column",gap:10}}>
+                {group.map(ch => {
+                  const delConfirm = confirmDelete === ch.id;
+                  return (
+                    <div key={ch.id} style={{display:"flex",alignItems:"center",
+                      background:"rgba(7,4,18,0.9)",border:`1px solid rgba(124,77,255,${delConfirm?0.55:0.25})`,
+                      borderRadius:4,transition:"all .18s",overflow:"hidden"}}>
+                      {delConfirm ? (
+                        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",
+                          padding:"14px 18px",width:"100%",gap:16}}>
+                          <span style={{fontFamily:"var(--font-mono)",fontSize:8.5,letterSpacing:".12em",
+                            color:"rgba(230,110,110,0.9)",textTransform:"uppercase",flex:1}}>
+                            „{ch.name}" wirklich löschen?
+                          </span>
+                          <div style={{display:"flex",gap:8,flexShrink:0}}>
+                            <button onClick={()=>handleDelete(ch.id)}
+                              style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".14em",textTransform:"uppercase",
+                                padding:"5px 14px",background:"rgba(200,50,50,0.18)",border:"1px solid rgba(200,60,60,0.5)",
+                                borderRadius:3,cursor:"pointer",color:"rgba(240,140,140,0.9)",transition:"all .18s"}}>
+                              Löschen
+                            </button>
+                            <button onClick={()=>setConfirmDelete(null)}
+                              style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".14em",textTransform:"uppercase",
+                                padding:"5px 14px",background:"transparent",border:"1px solid rgba(124,77,255,0.3)",
+                                borderRadius:3,cursor:"pointer",color:"rgba(124,77,255,0.6)",transition:"all .18s"}}>
+                              Abbrechen
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <>
+                          <button onClick={()=>onSelect(ch)}
+                            style={{display:"flex",alignItems:"center",gap:16,padding:"14px 18px",
+                              background:"transparent",border:"none",cursor:"pointer",textAlign:"left",flex:1,minWidth:0,
+                              transition:"background .18s"}}
+                            onMouseEnter={e=>e.currentTarget.style.background="rgba(124,77,255,0.07)"}
+                            onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
+                            <div style={{flex:1,minWidth:0}}>
+                              <div style={{fontFamily:"var(--font-display)",fontSize:14,letterSpacing:".18em",color:"var(--white)",textTransform:"uppercase",marginBottom:4}}>{ch.name}</div>
+                              <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
+                                {[ch.race, ch.class, ch.division].filter(Boolean).map((t,i)=>(
+                                  <span key={i} style={{fontFamily:"var(--font-mono)",fontSize:8,padding:"1px 7px",
+                                    background:"rgba(124,77,255,0.1)",border:"1px solid rgba(124,77,255,0.25)",borderRadius:2,
+                                    color:"rgba(200,190,240,0.7)",letterSpacing:".08em"}}>{t}</span>
+                                ))}
+                              </div>
+                            </div>
+                            <span style={{fontFamily:"var(--font-mono)",fontSize:10,color:"rgba(124,77,255,0.35)",flexShrink:0}}>→</span>
+                          </button>
+                          <div style={{display:"flex",gap:6,padding:"0 14px",flexShrink:0,
+                            borderLeft:"1px solid rgba(124,77,255,0.1)"}}>
+                            <button onClick={()=>exportChars([ch], `${ch.name||'charakter'}.json`)} title="Exportieren"
+                              style={{fontFamily:"var(--font-mono)",fontSize:11,padding:"5px 9px",lineHeight:1,
+                                background:"transparent",border:"1px solid rgba(124,77,255,0.15)",borderRadius:3,
+                                cursor:"pointer",color:"rgba(124,77,255,0.35)",transition:"all .15s"}}
+                              onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.5)";e.currentTarget.style.color="rgba(160,140,255,0.75)";}}
+                              onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.15)";e.currentTarget.style.color="rgba(124,77,255,0.35)";}}>
+                              ↓
+                            </button>
+                            <button onClick={()=>setConfirmDelete(ch.id)} title="Löschen"
+                              style={{fontFamily:"var(--font-mono)",fontSize:14,padding:"2px 8px",lineHeight:1,
+                                background:"transparent",border:"1px solid rgba(200,60,60,0.15)",borderRadius:3,
+                                cursor:"pointer",color:"rgba(200,80,80,0.35)",transition:"all .15s"}}
+                              onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(200,60,60,0.5)";e.currentTarget.style.color="rgba(240,110,110,0.75)";}}
+                              onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(200,60,60,0.15)";e.currentTarget.style.color="rgba(200,80,80,0.35)";}}>
+                              ×
+                            </button>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
 
         <div style={{display:"flex",gap:8,marginBottom:12}}>
           <button onClick={()=>exportChars(chars)} style={toolBtn}

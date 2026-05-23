@@ -37,141 +37,7 @@ const KAT = {
   Jagd:      { color: 'var(--jagd)',      glyph: '✦', label: 'JAGD' },
 };
 
-// ─── QUEST DATA ───────────────────────────────────────────────────────────────
-const QUESTS = [
-  {
-    id: 'q01', name: 'Verlorene Schriftrollen', kategorie: 'Suche', sw: 1, lv: 4,
-    auftraggeber: 'Die Kuratoren', region: 'Nebelwald, Sektor III',
-    desc: 'Im Schatten der alten Tempelruinen wurden Schriftrollen aus der Vor-Wundenzeit gesichtet. Wir vermuten, sie tragen Aufzeichnungen über Aetherius. Bringt sie ungelesen zurück ins Archiv.',
-    anweisungen: [
-      { txt: 'Sammle 4 Vergessene Schriftrollen im Nebelwald.', n:0, max:4 },
-      { txt: 'Übergib die Funde an Archivar Velian.', n:0, max:1 },
-    ],
-    rewards: { xp: 120, schillinge: 240, item: 'Stoffrobe der Akolythen' },
-    status: 'neu',
-  },
-  {
-    id: 'q02', name: 'Stimme aus dem Nebel', kategorie: 'Gespraech', sw: 1, lv: 3,
-    auftraggeber: 'Die Kuratoren', region: 'Sigilstein-Plateau',
-    desc: 'Ein Eremit am alten Sigilstein soll Visionen empfangen. Hört seinen Worten zu und kehrt mit allem zurück, was er offenbart — auch wenn es Unsinn klingt.',
-    anweisungen: [
-      { txt: 'Erreiche den Sigilstein bei Mondaufgang.', n:0, max:1 },
-      { txt: 'Sprich mit dem Eremiten Orenn.', n:0, max:1 },
-    ],
-    rewards: { xp: 80, schillinge: 160, item: null },
-    status: '',
-  },
-  {
-    id: 'q03', name: 'Schattenkatze von Tarnheim', kategorie: 'Jagd', sw: 2, lv: 6,
-    auftraggeber: 'Die Sentinels', region: 'Tarnheim — Westviertel',
-    desc: 'Eine Bestie schleicht durch die Gassen von Tarnheim. Drei Bürger sind bereits verschwunden. Stellt sie, bevor die nächste Mondnacht beginnt.',
-    anweisungen: [
-      { txt: 'Folge der Blutspur ab dem Westtor.', n:0, max:1 },
-      { txt: 'Erlege die Schattenkatze.', n:0, max:1 },
-    ],
-    rewards: { xp: 280, schillinge: 520, item: 'Klaue der Schattenkatze' },
-    status: 'empfohlen',
-  },
-  {
-    id: 'q04', name: 'Quellfeuer-Probe', kategorie: 'Suche', sw: 2, lv: 5,
-    auftraggeber: 'Die Quellensucher', region: 'Quellgrund-Höhlen',
-    desc: 'Wir benötigen drei Phiolen Quellfeuer aus den unteren Höhlen. Vorsicht — die Flamme reagiert auf Eisen.',
-    anweisungen: [
-      { txt: 'Sammle 3 Phiolen Quellfeuer.', n:1, max:3 },
-      { txt: 'Bringe sie zur Sammelstelle.', n:0, max:1 },
-    ],
-    rewards: { xp: 220, schillinge: 380, item: 'Phiole „Restglut"' },
-    status: '',
-  },
-  {
-    id: 'q05', name: 'Mondsteinpilger', kategorie: 'Gespraech', sw: 1, lv: 3,
-    auftraggeber: 'Die Friedenshüter', region: 'Straße nach Selunara',
-    desc: 'Eine Pilgerin trägt einen Mondstein zum Tempel von Selunara. Begleitet sie sicher — Strauchdiebe haben die Straße ins Visier genommen.',
-    anweisungen: [
-      { txt: 'Treffe Pilgerin Halia am Westtor.', n:0, max:1 },
-      { txt: 'Geleite sie zum Tempel.', n:0, max:1 },
-    ],
-    rewards: { xp: 100, schillinge: 200, item: null },
-    status: '',
-  },
-  {
-    id: 'q06', name: 'Sirenenruf am Hadir', kategorie: 'Jagd', sw: 3, lv: 9,
-    auftraggeber: 'Die Sentinels', region: 'Hadir-Fluss, Unterlauf',
-    desc: 'Die Sirenen kehren zurück. Schiffer berichten von singenden Stimmen unter der Strömung. Stellt sie — aber hört nicht hin.',
-    anweisungen: [
-      { txt: 'Erreiche den Unterlauf bei Dämmerung.', n:0, max:1 },
-      { txt: 'Stelle 2 Sirenen.', n:0, max:2 },
-    ],
-    rewards: { xp: 540, schillinge: 980, item: 'Wachs-Ohrstöpsel (versiegelt)' },
-    status: '',
-  },
-  {
-    id: 'q07', name: 'Erkundung Sektor-VII', kategorie: 'Suche', sw: 1, lv: 4,
-    auftraggeber: 'Die Pathfinders', region: 'Verbotenes Gebiet VII',
-    desc: 'Sektor-VII wurde seit drei Zyklen nicht mehr kartiert. Geht hinein, zeichnet die Wege, und bringt eure Karten zurück.',
-    anweisungen: [
-      { txt: 'Erkunde 3 markierte Wegpunkte.', n:0, max:3 },
-      { txt: 'Liefere die Kartenfragmente ab.', n:0, max:1 },
-    ],
-    rewards: { xp: 160, schillinge: 280, item: 'Kartographenwerkzeuge' },
-    status: '',
-  },
-  {
-    id: 'q08', name: 'Sturmwacht', kategorie: 'Jagd', sw: 1, lv: 4,
-    auftraggeber: 'Die Sturmritter', region: 'Außenposten Greifenklau',
-    desc: 'Hetzer aus den Wildlanden bedrängen unsere Außenposten. Verteidigt Greifenklau, bis die Verstärkung eintrifft.',
-    anweisungen: [
-      { txt: 'Erreiche Greifenklau vor Einbruch der Nacht.', n:0, max:1 },
-      { txt: 'Schlage 6 Hetzer zurück.', n:0, max:6 },
-    ],
-    rewards: { xp: 180, schillinge: 320, item: 'Sturmrittabzeichen' },
-    status: '',
-  },
-  {
-    id: 'q09', name: 'Pfad der Verlorenen', kategorie: 'Suche', sw: 1, lv: 3,
-    auftraggeber: 'Die Friedenshüter', region: 'Steinkreis von Othrim',
-    desc: 'Drei Wanderer kehrten nicht heim. Ihre letzte Spur führt zum Steinkreis. Folgt ihr.',
-    anweisungen: [
-      { txt: 'Folge der Spur zum Steinkreis.', n:0, max:1 },
-      { txt: 'Bringe Hinweise zurück.', n:0, max:1 },
-    ],
-    rewards: { xp: 90, schillinge: 180, item: null },
-    status: '',
-  },
-  {
-    id: 'q10', name: 'Letzte Karawane', kategorie: 'Gespraech', sw: 2, lv: 5,
-    auftraggeber: 'Die Outfitters', region: 'Tarnheim — Marktplatz',
-    desc: 'Eine Karawanenführerin verweigert die Abgabe. Verhandelt mit ihr — mit Worten, nicht mit Stahl.',
-    anweisungen: [
-      { txt: 'Triff Karawanenführerin Sevra.', n:0, max:1 },
-      { txt: 'Schließe eine Vereinbarung.', n:0, max:1 },
-    ],
-    rewards: { xp: 200, schillinge: 360, item: 'Handelssiegel' },
-    status: '',
-  },
-  {
-    id: 'q11', name: 'Echo des Abgrunds', kategorie: 'Jagd', sw: 3, lv: 10,
-    auftraggeber: 'Die Quellensucher', region: 'Abgrund-Schacht XII',
-    desc: 'Etwas hallt aus dem zwölften Schacht — kein Tier, kein Mensch. Bringt es zum Schweigen, oder bringt es uns.',
-    anweisungen: [
-      { txt: 'Steige in den Schacht XII hinab.', n:0, max:1 },
-      { txt: 'Stille das Echo.', n:0, max:1 },
-    ],
-    rewards: { xp: 620, schillinge: 1120, item: 'Abgrund-Resonator' },
-    status: '',
-  },
-  {
-    id: 'q12', name: 'Bergungs-Notruf', kategorie: 'Suche', sw: 1, lv: 4,
-    auftraggeber: 'Die Bergungsgarde', region: 'Aetherius-Riff',
-    desc: 'Ein Wrack ist am Aetherius-Riff gestrandet. Sichert die Fracht, bevor die Strömung sie verschluckt.',
-    anweisungen: [
-      { txt: 'Erreiche das Aetherius-Riff.', n:0, max:1 },
-      { txt: 'Sichere 5 Frachtkisten.', n:0, max:5 },
-    ],
-    rewards: { xp: 140, schillinge: 260, item: 'Bergungshaken' },
-    status: 'neu',
-  },
-];
+// Mission data is loaded from Supabase at runtime.
 
 // ─── PARTICLES ────────────────────────────────────────────────────────────────
 function ParticleField() {
@@ -404,7 +270,11 @@ function RewardRow({ icon, label, value, accent }) {
 }
 
 // ─── DETAIL CARD (Front / Back) ──────────────────────────────────────────────
-function DetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
+function DetailCard({ q, view, onAccept, onWithdraw, myApp, progress, onStepClick }) {
+  const accepted = !!myApp;
+  const appStatus = myApp?.app_status || null;
+  const APP_COLORS = { pending:'#7fb8ff', accepted:'rgba(100,220,140,0.9)', rejected:'rgba(255,120,120,0.8)' };
+  const APP_LABELS = { pending:'Beworben · Ausstehend', accepted:'Angenommen', rejected:'Abgelehnt' };
   return (
     <div style={{ display:'flex', flexDirection:'column', height:'100%', minHeight:0 }}>
       {/* Quest header strip */}
@@ -613,38 +483,59 @@ function DetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
         padding:'12px 22px',
         borderTop:'1px solid rgba(160,140,255,0.18)',
         background:'rgba(5,4,15,0.6)',
-        display:'flex', alignItems:'center', justifyContent:'space-between', gap:'12px'
+        display:'flex', alignItems:'center', justifyContent:'space-between', gap:'12px',
+        flexShrink: 0
       }}>
         <div style={{
           fontFamily:'var(--font-mono)', fontSize:'8.5px',
           color:'var(--muted-dim)', letterSpacing:'0.2em', textTransform:'uppercase'
         }}>
-          ID · {q.id.toUpperCase()}
+          {accepted ? (
+            <span style={{ color: APP_COLORS[appStatus] || 'var(--purple-bright)' }}>
+              ◉ {APP_LABELS[appStatus] || 'Beworben'}
+            </span>
+          ) : (
+            'ID · ' + q.id.toString().slice(0,8).toUpperCase()
+          )}
         </div>
-        <button
-          onClick={onAccept}
-          disabled={accepted}
-          style={{
-            fontFamily:'var(--font-display)', fontSize:'11px',
-            letterSpacing:'0.28em', padding:'9px 28px',
-            background: accepted ? 'rgba(124,77,255,0.08)' : 'rgba(124,77,255,0.22)',
-            border:`1px solid ${accepted ? 'rgba(160,140,255,0.3)' : 'rgba(167,139,255,0.7)'}`,
-            color: accepted ? 'var(--purple-bright)' : '#f0eeff',
-            cursor: accepted ? 'default' : 'pointer', borderRadius:'2px',
-            textTransform:'uppercase', transition:'all 0.2s',
-            display:'inline-flex', alignItems:'center', gap:'10px',
-            boxShadow: accepted ? 'none' : '0 0 20px rgba(124,77,255,0.25)'
-          }}
-          onMouseEnter={e=>{ if (!accepted) { e.currentTarget.style.background='rgba(124,77,255,0.35)'; e.currentTarget.style.borderColor='#a78bff'; } }}
-          onMouseLeave={e=>{ if (!accepted) { e.currentTarget.style.background='rgba(124,77,255,0.22)'; e.currentTarget.style.borderColor='rgba(167,139,255,0.7)'; } }}
-        >
-          <span style={{
-            display:'inline-flex', width:'18px', height:'18px',
-            border:'1px solid currentColor', borderRadius:'50%',
-            alignItems:'center', justifyContent:'center', fontSize:'10px'
-          }}>↵</span>
-          {accepted ? 'Angenommen' : 'Akzeptieren'}
-        </button>
+        <div style={{ display:'flex', gap:'8px', alignItems:'center' }}>
+          {accepted && appStatus === 'pending' && (
+            <button onClick={onWithdraw} style={{
+              fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'.15em',
+              padding:'5px 12px', background:'transparent',
+              border:'1px solid rgba(200,60,60,0.35)', borderRadius:'2px',
+              color:'rgba(255,120,120,0.6)', cursor:'pointer', textTransform:'uppercase',
+              transition:'all .15s'
+            }}
+              onMouseEnter={e=>{ e.currentTarget.style.borderColor='rgba(200,60,60,0.6)'; e.currentTarget.style.color='rgba(255,120,120,0.9)'; }}
+              onMouseLeave={e=>{ e.currentTarget.style.borderColor='rgba(200,60,60,0.35)'; e.currentTarget.style.color='rgba(255,120,120,0.6)'; }}
+            >Zurückziehen</button>
+          )}
+          <button
+            onClick={!accepted ? onAccept : undefined}
+            disabled={accepted}
+            style={{
+              fontFamily:'var(--font-display)', fontSize:'11px',
+              letterSpacing:'0.28em', padding:'9px 28px',
+              background: accepted ? 'rgba(124,77,255,0.08)' : 'rgba(124,77,255,0.22)',
+              border:`1px solid ${accepted ? 'rgba(160,140,255,0.3)' : 'rgba(167,139,255,0.7)'}`,
+              color: accepted ? 'var(--purple-bright)' : '#f0eeff',
+              cursor: accepted ? 'default' : 'pointer', borderRadius:'2px',
+              textTransform:'uppercase', transition:'all 0.2s',
+              display:'inline-flex', alignItems:'center', gap:'10px',
+              boxShadow: accepted ? 'none' : '0 0 20px rgba(124,77,255,0.25)'
+            }}
+            onMouseEnter={e=>{ if (!accepted) { e.currentTarget.style.background='rgba(124,77,255,0.35)'; e.currentTarget.style.borderColor='#a78bff'; } }}
+            onMouseLeave={e=>{ if (!accepted) { e.currentTarget.style.background='rgba(124,77,255,0.22)'; e.currentTarget.style.borderColor='rgba(167,139,255,0.7)'; } }}
+          >
+            <span style={{
+              display:'inline-flex', width:'18px', height:'18px',
+              border:'1px solid currentColor', borderRadius:'50%',
+              alignItems:'center', justifyContent:'center', fontSize:'10px'
+            }}>↵</span>
+            {accepted ? 'Beworben' : 'Akzeptieren'}
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -672,26 +563,162 @@ function Panel({ children, style }) {
   );
 }
 
+// ─── CHAR PICKER MODAL ───────────────────────────────────────────────────────
+function CharPickerModal({ mission, myChars, onConfirm, onClose, busy }) {
+  const [pickedId, setPickedId] = useState(myChars.length === 1 ? myChars[0].id : null);
+
+  useEffect(() => {
+    const onKey = e => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, []);
+
+  return ReactDOM.createPortal(
+    <div onClick={e=>{ if(e.target===e.currentTarget) onClose(); }} style={{
+      position:'fixed', inset:0, zIndex:9999,
+      background:'rgba(5,4,15,0.85)', backdropFilter:'blur(8px)',
+      display:'flex', alignItems:'center', justifyContent:'center'
+    }}>
+      <div style={{ width:'100%', maxWidth:420, margin:'0 16px',
+        background:'rgba(10,7,28,0.98)', border:'1px solid rgba(124,77,255,0.4)',
+        borderRadius:6, overflow:'hidden' }}>
+
+        {/* Header */}
+        <div style={{ padding:'20px 22px 16px',
+          borderBottom:'1px solid rgba(124,77,255,0.15)',
+          background:'linear-gradient(180deg,rgba(124,77,255,0.1)0%,transparent 100%)' }}>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'.28em',
+            color:'rgba(124,77,255,0.5)', textTransform:'uppercase', marginBottom:'4px' }}>
+            Bewerbung · {mission.name}
+          </div>
+          <div style={{ fontFamily:'var(--font-display)', fontSize:'16px', letterSpacing:'.15em',
+            color:'#f0eeff', textTransform:'uppercase' }}>
+            Charakter wählen
+          </div>
+        </div>
+
+        {/* Char list */}
+        <div style={{ padding:'12px 22px', maxHeight:'280px', overflowY:'auto' }}>
+          {myChars.length === 0 && (
+            <div style={{ padding:'20px 0', textAlign:'center',
+              fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:300,
+              color:'rgba(160,140,255,0.5)', fontStyle:'italic' }}>
+              Keine Spielercharaktere vorhanden.{' '}
+              <a href="Neuer_Charakter.html" style={{ color:'rgba(124,77,255,0.7)' }}>
+                Charakter erstellen →
+              </a>
+            </div>
+          )}
+          {myChars.map(ch => (
+            <div key={ch.id} onClick={()=>setPickedId(ch.id)} style={{
+              display:'flex', alignItems:'center', gap:'12px',
+              padding:'10px 12px', marginBottom:'6px', cursor:'pointer',
+              background: pickedId===ch.id ? 'rgba(124,77,255,0.2)' : 'rgba(124,77,255,0.05)',
+              border: `1px solid ${pickedId===ch.id ? 'rgba(167,139,255,0.6)' : 'rgba(124,77,255,0.15)'}`,
+              borderRadius:'3px', transition:'all .15s'
+            }}>
+              <div style={{ width:34, height:34, borderRadius:'50%', flexShrink:0,
+                background:'rgba(124,77,255,0.15)', border:'1px solid rgba(124,77,255,0.3)',
+                display:'flex', alignItems:'center', justifyContent:'center',
+                fontFamily:'var(--font-display)', fontSize:'14px', color:'rgba(167,139,255,0.8)' }}>
+                {(ch.name||'?')[0]}
+              </div>
+              <div style={{ flex:1, minWidth:0 }}>
+                <div style={{ fontFamily:'var(--font-body)', fontSize:'13px', fontWeight:400,
+                  color:'#f0eeff', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>
+                  {ch.name}
+                </div>
+                <div style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:300,
+                  color:'rgba(160,140,255,0.55)', marginTop:'1px' }}>
+                  {[ch.race, ch.class, ch.division].filter(Boolean).join(' · ') || '—'}
+                </div>
+              </div>
+              {pickedId===ch.id && (
+                <span style={{ color:'rgba(167,139,255,0.8)', fontSize:'16px', flexShrink:0 }}>✓</span>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Footer */}
+        <div style={{ padding:'14px 22px', borderTop:'1px solid rgba(124,77,255,0.12)',
+          display:'flex', gap:'10px' }}>
+          <button
+            onClick={()=>{ if(pickedId) onConfirm(pickedId); }}
+            disabled={!pickedId || busy}
+            style={{
+              flex:1, fontFamily:'var(--font-display)', fontSize:'11px',
+              letterSpacing:'.18em', textTransform:'uppercase', padding:'10px',
+              background: (!pickedId||busy) ? 'rgba(124,77,255,0.08)' : 'rgba(124,77,255,0.22)',
+              border:`1px solid ${(!pickedId||busy) ? 'rgba(124,77,255,0.2)' : 'rgba(167,139,255,0.6)'}`,
+              color: (!pickedId||busy) ? 'rgba(160,140,255,0.4)' : '#f0eeff',
+              cursor: (!pickedId||busy) ? 'not-allowed' : 'pointer',
+              borderRadius:'3px', transition:'all .15s'
+            }}>
+            {busy ? 'Bewerben…' : 'Bewerben'}
+          </button>
+          <button onClick={onClose} style={{
+            fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'.18em',
+            textTransform:'uppercase', padding:'10px 16px',
+            background:'transparent', border:'1px solid rgba(124,77,255,0.2)',
+            borderRadius:'3px', color:'rgba(124,77,255,0.5)', cursor:'pointer'
+          }}>Abbrechen</button>
+        </div>
+      </div>
+    </div>,
+    document.body
+  );
+}
+
 // ─── APP ──────────────────────────────────────────────────────────────────────
 function App() {
   const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const [quests, setQuests] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [myApplications, setMyApplications] = useState({}); // mission_id → app row
+  const [myChars, setMyChars] = useState([]);
+
   const [filter, setFilter] = useState('alle');
   const [search, setSearch] = useState('');
-  const [selectedId, setSelectedId] = useState(QUESTS[0].id);
+  const [selectedId, setSelectedId] = useState(null);
   const [view, setView] = useState('details');
-  const [acceptedIds, setAcceptedIds] = useState(() => new Set());
-  // progress: { [questId]: [n_step0, n_step1, ...] } — overrides defaults from data
-  const [progress, setProgress] = useState(() => {
-    const init = {};
-    QUESTS.forEach(q => { init[q.id] = q.anweisungen.map(s => s.n); });
-    return init;
-  });
+  const [progress, setProgress] = useState({});
+  const [pickerMission, setPickerMission] = useState(null);
+  const [applyBusy, setApplyBusy] = useState(false);
+
+  useEffect(() => {
+    async function load() {
+      const uid = window.SITE_USER?.id;
+
+      const [{ data: mdata }, { data: adata }, { data: cdata }] = await Promise.all([
+        window._sb.from('missions').select('*').neq('status','archiviert').order('created_at', { ascending: false }),
+        uid ? window._sb.from('mission_applications').select('*').eq('player_id', uid) : { data: [] },
+        uid ? window._sb.from('characters').select('id,name,race,class,division').eq('owner_id', uid).eq('type','spieler') : { data: [] },
+      ]);
+
+      const mapped = (mdata || []).map(m => ({ ...m, desc: m.beschreibung }));
+      setQuests(mapped);
+      if (mapped.length) setSelectedId(mapped[0].id);
+
+      const appMap = {};
+      (adata || []).forEach(a => { appMap[a.mission_id] = a; });
+      setMyApplications(appMap);
+
+      setMyChars(cdata || []);
+
+      const initProgress = {};
+      mapped.forEach(q => { initProgress[q.id] = (q.anweisungen || []).map(s => s.n || 0); });
+      setProgress(initProgress);
+
+      setLoading(false);
+    }
+    load();
+  }, []);
 
   const stepClick = (questId, stepIdx, max) => {
     setProgress(prev => {
       const cur = prev[questId] ? [...prev[questId]] : [];
       const n = cur[stepIdx] ?? 0;
-      // toggle for max=1; increment with wrap-to-0 once past max
       if (max <= 1) cur[stepIdx] = n >= 1 ? 0 : 1;
       else cur[stepIdx] = n >= max ? 0 : n + 1;
       return { ...prev, [questId]: cur };
@@ -699,37 +726,53 @@ function App() {
   };
 
   const counts = useMemo(() => ({
-    alle: QUESTS.length,
-    Suche: QUESTS.filter(q=>q.kategorie==='Suche').length,
-    Gespraech: QUESTS.filter(q=>q.kategorie==='Gespraech').length,
-    Jagd: QUESTS.filter(q=>q.kategorie==='Jagd').length,
-  }), []);
+    alle: quests.length,
+    Suche: quests.filter(q=>q.kategorie==='Suche').length,
+    Gespraech: quests.filter(q=>q.kategorie==='Gespraech').length,
+    Jagd: quests.filter(q=>q.kategorie==='Jagd').length,
+  }), [quests]);
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
-    return QUESTS.filter(x => {
+    return quests.filter(x => {
       if (filter !== 'alle' && x.kategorie !== filter) return false;
       if (q && !(x.name.toLowerCase().includes(q) || x.auftraggeber.toLowerCase().includes(q))) return false;
       return true;
     });
-  }, [filter, search]);
+  }, [quests, filter, search]);
 
-  // Auto-pick first visible if current selection is filtered out
   useEffect(() => {
     if (filtered.length && !filtered.find(q => q.id === selectedId)) {
       setSelectedId(filtered[0].id);
     }
   }, [filtered, selectedId]);
 
-  const selected = QUESTS.find(q => q.id === selectedId) || QUESTS[0];
+  const selected = quests.find(q => q.id === selectedId) || quests[0];
+  const myApp = selected ? myApplications[selected.id] : null;
 
-  const handleAccept = () => {
-    setAcceptedIds(prev => {
-      const next = new Set(prev);
-      next.add(selected.id);
-      return next;
-    });
-  };
+  async function handleConfirmApply(charId) {
+    if (!selected || !charId) return;
+    setApplyBusy(true);
+    const uid = window.SITE_USER?.id;
+    const { data, error } = await window._sb.from('mission_applications').insert({
+      mission_id: selected.id,
+      player_id: uid,
+      character_id: charId,
+    }).select().single();
+    setApplyBusy(false);
+    if (!error && data) {
+      setMyApplications(prev => ({ ...prev, [selected.id]: data }));
+    }
+    setPickerMission(null);
+  }
+
+  async function handleWithdraw() {
+    if (!myApp) return;
+    await window._sb.from('mission_applications').delete().eq('id', myApp.id);
+    setMyApplications(prev => { const n = { ...prev }; delete n[selected.id]; return n; });
+  }
+
+  const appliedCount = Object.keys(myApplications).length;
 
   return (
     <>
@@ -773,13 +816,14 @@ function App() {
           <div style={{ display:'flex', alignItems:'center', gap:'7px' }}>
             <span style={{
               width:'7px', height:'7px', borderRadius:'50%',
-              background:'#7fb8ff', boxShadow:'0 0 8px #7fb8ff',
-              animation:'pulse-glow 2s ease infinite'
+              background: loading ? 'rgba(160,140,255,0.4)' : '#7fb8ff',
+              boxShadow: loading ? 'none' : '0 0 8px #7fb8ff',
+              animation: loading ? 'none' : 'pulse-glow 2s ease infinite'
             }}/>
-            VERBINDUNG · STABIL
+            {loading ? 'VERBINDE…' : 'VERBINDUNG · STABIL'}
           </div>
           <div style={{ width:'1px', height:'16px', background:'var(--border)' }}/>
-          <div>{filtered.length} / {QUESTS.length} AUFTRÄGE</div>
+          <div>{filtered.length} / {quests.length} AUFTRÄGE</div>
         </div>
       </div>
 
@@ -791,9 +835,7 @@ function App() {
       }}>
         {/* ═══ LEFT: QUEST LIST ═══════════════════════════════════════ */}
         <Panel>
-          <PanelHeader>
-            Nebenjobs
-          </PanelHeader>
+          <PanelHeader>Nebenjobs</PanelHeader>
 
           {/* Filter bar */}
           <div style={{
@@ -845,13 +887,18 @@ function App() {
 
           {/* List */}
           <div style={{ flex:1, minHeight:0, overflowY:'auto' }}>
-            {filtered.length === 0 && (
+            {loading && (
+              <div style={{ padding:'40px 20px', textAlign:'center',
+                fontFamily:'var(--font-mono)', fontSize:'9px',
+                color:'rgba(160,140,255,0.4)', letterSpacing:'.2em' }}>LADE…</div>
+            )}
+            {!loading && filtered.length === 0 && (
               <div style={{
                 padding:'40px 20px', textAlign:'center',
                 fontFamily:'var(--font-body)', fontStyle:'italic',
                 fontSize:'12px', color:'var(--muted-dim)'
               }}>
-                Keine Aufträge im Filter.
+                {quests.length === 0 ? 'Keine Aufträge verfügbar.' : 'Keine Aufträge im Filter.'}
               </div>
             )}
             {filtered.map(q => (
@@ -874,61 +921,71 @@ function App() {
             color:'var(--muted-dim)', letterSpacing:'0.2em', textTransform:'uppercase',
             background:'rgba(5,4,15,0.5)'
           }}>
-            <span>◈ Aktualisiert · Heute</span>
-            <span>Angenommen · {acceptedIds.size}</span>
+            <span>◈ Live · Supabase</span>
+            <span>Beworben · {appliedCount}</span>
           </div>
         </Panel>
 
         {/* ═══ RIGHT: DETAIL CARD ═════════════════════════════════════ */}
         <Panel>
-          <PanelHeader
-            right={
-              <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
-                <button onClick={()=>setView('details')} style={{
-                  fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em',
-                  padding:'4px 10px', height:'22px',
-                  background: view==='details' ? 'rgba(124,77,255,0.25)' : 'transparent',
-                  border:`1px solid ${view==='details' ? 'rgba(167,139,255,0.6)' : 'rgba(160,140,255,0.15)'}`,
-                  color: view==='details' ? '#f0eeff' : 'var(--muted)',
-                  cursor:'pointer', borderRadius:'2px', textTransform:'uppercase',
-                  transition:'all 0.15s'
-                }}>Details</button>
-                <button onClick={()=>setView('anweisungen')} style={{
-                  fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em',
-                  padding:'4px 10px', height:'22px',
-                  background: view==='anweisungen' ? 'rgba(124,77,255,0.25)' : 'transparent',
-                  border:`1px solid ${view==='anweisungen' ? 'rgba(167,139,255,0.6)' : 'rgba(160,140,255,0.15)'}`,
-                  color: view==='anweisungen' ? '#f0eeff' : 'var(--muted)',
-                  cursor:'pointer', borderRadius:'2px', textTransform:'uppercase',
-                  transition:'all 0.15s'
-                }}>Anweisungen</button>
-                {/* indicator dots */}
-                <div style={{ display:'flex', alignItems:'center', gap:'4px', marginLeft:'4px' }}>
-                  <span style={{
-                    width:'6px', height:'6px', borderRadius:'50%',
-                    background: view==='details' ? 'var(--purple-bright)' : 'rgba(160,140,255,0.25)',
-                    boxShadow: view==='details' ? '0 0 6px var(--purple-bright)' : 'none'
-                  }}/>
-                  <span style={{
-                    width:'6px', height:'6px', borderRadius:'50%',
-                    background: view==='anweisungen' ? 'var(--purple-bright)' : 'rgba(160,140,255,0.25)',
-                    boxShadow: view==='anweisungen' ? '0 0 6px var(--purple-bright)' : 'none'
-                  }}/>
-                </div>
-              </div>
-            }
-          >
-            Auftrag
-          </PanelHeader>
-          <DetailCard
-            key={selected.id + view}
-            q={selected}
-            view={view}
-            onAccept={handleAccept}
-            accepted={acceptedIds.has(selected.id)}
-            progress={progress[selected.id] || []}
-            onStepClick={(stepIdx, max) => stepClick(selected.id, stepIdx, max)}
-          />
+          {!selected && !loading ? (
+            <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center',
+              fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'.2em',
+              color:'rgba(160,140,255,0.3)', textTransform:'uppercase' }}>
+              Keine Mission ausgewählt
+            </div>
+          ) : selected && (
+            <>
+              <PanelHeader
+                right={
+                  <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
+                    <button onClick={()=>setView('details')} style={{
+                      fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em',
+                      padding:'4px 10px', height:'22px',
+                      background: view==='details' ? 'rgba(124,77,255,0.25)' : 'transparent',
+                      border:`1px solid ${view==='details' ? 'rgba(167,139,255,0.6)' : 'rgba(160,140,255,0.15)'}`,
+                      color: view==='details' ? '#f0eeff' : 'var(--muted)',
+                      cursor:'pointer', borderRadius:'2px', textTransform:'uppercase',
+                      transition:'all 0.15s'
+                    }}>Details</button>
+                    <button onClick={()=>setView('anweisungen')} style={{
+                      fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em',
+                      padding:'4px 10px', height:'22px',
+                      background: view==='anweisungen' ? 'rgba(124,77,255,0.25)' : 'transparent',
+                      border:`1px solid ${view==='anweisungen' ? 'rgba(167,139,255,0.6)' : 'rgba(160,140,255,0.15)'}`,
+                      color: view==='anweisungen' ? '#f0eeff' : 'var(--muted)',
+                      cursor:'pointer', borderRadius:'2px', textTransform:'uppercase',
+                      transition:'all 0.15s'
+                    }}>Anweisungen</button>
+                    <div style={{ display:'flex', alignItems:'center', gap:'4px', marginLeft:'4px' }}>
+                      <span style={{
+                        width:'6px', height:'6px', borderRadius:'50%',
+                        background: view==='details' ? 'var(--purple-bright)' : 'rgba(160,140,255,0.25)',
+                        boxShadow: view==='details' ? '0 0 6px var(--purple-bright)' : 'none'
+                      }}/>
+                      <span style={{
+                        width:'6px', height:'6px', borderRadius:'50%',
+                        background: view==='anweisungen' ? 'var(--purple-bright)' : 'rgba(160,140,255,0.25)',
+                        boxShadow: view==='anweisungen' ? '0 0 6px var(--purple-bright)' : 'none'
+                      }}/>
+                    </div>
+                  </div>
+                }
+              >
+                Auftrag
+              </PanelHeader>
+              <DetailCard
+                key={selected.id + view}
+                q={selected}
+                view={view}
+                myApp={myApp}
+                onAccept={()=>setPickerMission(selected)}
+                onWithdraw={handleWithdraw}
+                progress={progress[selected.id] || []}
+                onStepClick={(stepIdx, max) => stepClick(selected.id, stepIdx, max)}
+              />
+            </>
+          )}
         </Panel>
       </div>
 
@@ -950,7 +1007,7 @@ function App() {
           fontFamily:'var(--font-mono)', fontSize:'8px',
           color:'rgba(160,140,255,0.35)', letterSpacing:'0.22em'
         }}>
-          MERURIA // MISSIONSTERMINAL v3.1
+          MERURIA // MISSIONSTERMINAL v4.0
         </div>
       </div>
 
@@ -961,6 +1018,16 @@ function App() {
         <TweakSection label="Listendichte"/>
         <TweakRadio id="density" label="Zeilenhöhe" options={['comfortable','compact']}/>
       </TweaksPanel>
+
+      {pickerMission && (
+        <CharPickerModal
+          mission={pickerMission}
+          myChars={myChars}
+          onConfirm={handleConfirmApply}
+          onClose={()=>setPickerMission(null)}
+          busy={applyBusy}
+        />
+      )}
     </>
   );
 }

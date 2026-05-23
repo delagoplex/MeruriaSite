@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meruria — DM · Missionen</title>
+<link rel="stylesheet" href="assets/styles/global/fonts.css">
+<link rel="stylesheet" href="assets/styles/global/base.css">
+<script src="assets/scripts/vendor/react.development.js"></script>
+<script src="assets/scripts/vendor/react-dom.development.js"></script>
+<script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/scripts/vendor/supabase.min.js"></script>
+<script src="assets/scripts/supabase-client.js"></script>
+<script src="assets/components/site-gate.jsx" type="text/babel"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { min-height: 100vh; display: flex; flex-direction: column; background: var(--bg); color: var(--white); }
+#root { display: flex; flex-direction: column; min-height: 100vh; }
+input, textarea, select {
+  font-family: var(--font-body); font-size: 13px; font-weight: 300;
+  color: var(--white); background: rgba(5,4,15,0.6);
+  border: 1px solid rgba(124,77,255,0.25); border-radius: 3px;
+  padding: 7px 10px; outline: none; width: 100%;
+  transition: border-color .15s;
+}
+input:focus, textarea:focus, select:focus { border-color: rgba(124,77,255,0.6); }
+select option { background: #0a0718; }
+textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+label { display: block; font-family: var(--font-mono); font-size: 8px;
+  letter-spacing: .22em; color: rgba(124,77,255,0.55); text-transform: uppercase;
+  margin-bottom: 5px; }
+.field { margin-bottom: 14px; }
+::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(124,77,255,0.3); border-radius: 2px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect, useRef, useCallback } = React;
+const { SiteNav, SiteGate } = window;
+
+const KAT = {
+  Suche:     { color: '#7fb8ff', glyph: '⬡', label: 'SUCHE' },
+  Gespraech: { color: '#b8ffb8', glyph: '◇', label: 'GESPRÄCH' },
+  Jagd:      { color: '#ffb8b8', glyph: '✦', label: 'JAGD' },
+};
+const STATUS_OPTS = [
+  { value: '',          label: 'Standard' },
+  { value: 'neu',       label: 'Neu' },
+  { value: 'empfohlen', label: 'Empfohlen' },
+  { value: 'archiviert',label: 'Archiviert' },
+];
+const APP_STATUS = {
+  pending:  { label: 'Ausstehend', color: 'rgba(127,184,255,0.8)' },
+  accepted: { label: 'Angenommen', color: 'rgba(100,220,140,0.8)' },
+  rejected: { label: 'Abgelehnt',  color: 'rgba(255,120,120,0.8)' },
+};
+
+// ─── SMALL UTILS ─────────────────────────────────────────────────────────────
+function Btn({ onClick, disabled, children, danger, small, secondary }) {
+  const base = {
+    fontFamily: 'var(--font-display)', fontSize: small ? '9px' : '11px',
+    letterSpacing: '.18em', textTransform: 'uppercase',
+    padding: small ? '5px 12px' : '9px 20px',
+    border: '1px solid',
+    borderRadius: '3px', cursor: disabled ? 'not-allowed' : 'pointer',
+    opacity: disabled ? 0.45 : 1, transition: 'all .15s',
+    background: danger ? 'rgba(200,60,60,0.15)' : secondary ? 'transparent' : 'rgba(124,77,255,0.18)',
+    borderColor: danger ? 'rgba(200,60,60,0.5)' : secondary ? 'rgba(124,77,255,0.2)' : 'rgba(124,77,255,0.55)',
+    color: danger ? 'rgba(255,120,120,0.9)' : secondary ? 'rgba(124,77,255,0.55)' : 'rgba(200,190,240,0.9)',
+  };
+  return (
+    <button onClick={disabled ? undefined : onClick} style={base}
+      onMouseEnter={e=>{ if (!disabled) { e.currentTarget.style.opacity='0.85'; } }}
+      onMouseLeave={e=>{ e.currentTarget.style.opacity=disabled?'0.45':'1'; }}>
+      {children}
+    </button>
+  );
+}
+
+function mono(txt, size='8px', color='rgba(124,77,255,0.5)') {
+  return <span style={{ fontFamily:'var(--font-mono)', fontSize:size, letterSpacing:'.2em', color, textTransform:'uppercase' }}>{txt}</span>;
+}
+
+// ─── PANEL ────────────────────────────────────────────────────────────────────
+function Panel({ children, style }) {
+  return (
+    <div style={{
+      background: 'linear-gradient(180deg, rgba(15,10,40,0.7) 0%, rgba(8,6,22,0.85) 100%)',
+      border: '1px solid rgba(160,140,255,0.18)', borderRadius: '3px',
+      backdropFilter: 'blur(8px)', display: 'flex', flexDirection: 'column',
+      minHeight: 0, overflow: 'hidden',
+      boxShadow: '0 8px 40px rgba(0,0,0,0.5)',
+      ...style
+    }}>{children}</div>
+  );
+}
+
+function PanelHead({ children, right }) {
+  return (
+    <div style={{
+      padding: '10px 18px', borderBottom: '1px solid rgba(160,140,255,0.18)',
+      background: 'linear-gradient(180deg,rgba(124,77,255,0.10)0%,rgba(124,77,255,0.02)100%)',
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px',
+      flexShrink: 0
+    }}>
+      <span style={{ fontFamily:'var(--font-display)', fontSize:'13px', fontWeight:400,
+        letterSpacing:'.32em', color:'#f0eeff', textTransform:'uppercase',
+        textShadow:'0 0 14px rgba(124,77,255,0.4)' }}>{children}</span>
+      {right}
+    </div>
+  );
+}
+
+// ─── MISSION ROW ─────────────────────────────────────────────────────────────
+function MissionRow({ m, active, onClick, appCount }) {
+  const kat = KAT[m.kategorie] || KAT.Suche;
+  return (
+    <div onClick={onClick} style={{
+      padding: '10px 16px', cursor: 'pointer', display: 'flex',
+      alignItems: 'center', gap: '10px',
+      background: active ? 'linear-gradient(90deg,rgba(124,77,255,0.18)0%,rgba(124,77,255,0.06)100%)' : 'transparent',
+      borderLeft: `2px solid ${active ? 'rgba(167,139,255,0.8)' : 'transparent'}`,
+      borderBottom: '1px solid rgba(160,140,255,0.06)',
+      transition: 'all .15s'
+    }}
+      onMouseEnter={e=>{ if (!active) e.currentTarget.style.background='rgba(124,77,255,0.05)'; }}
+      onMouseLeave={e=>{ if (!active) e.currentTarget.style.background='transparent'; }}
+    >
+      <span style={{ color: kat.color, fontSize: '13px', flexShrink: 0 }}>{kat.glyph}</span>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ fontFamily:'var(--font-body)', fontSize:'13px', fontWeight: active?400:300,
+          color: active?'#f0eeff':'rgba(220,210,250,0.85)',
+          whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{m.name}</div>
+        <div style={{ display:'flex', alignItems:'center', gap:'8px', marginTop:'2px' }}>
+          {mono(m.auftraggeber || '—', '8px', 'rgba(160,140,255,0.45)')}
+          {m.status === 'neu' && <span style={{ fontSize:'7px', padding:'1px 5px',
+            background:'rgba(127,184,255,0.15)', border:'1px solid rgba(127,184,255,0.4)',
+            borderRadius:'2px', color:'#a3c8ff', fontFamily:'var(--font-mono)',
+            letterSpacing:'.12em', textTransform:'uppercase' }}>NEU</span>}
+          {m.status === 'archiviert' && <span style={{ fontSize:'7px', padding:'1px 5px',
+            background:'rgba(160,140,255,0.08)', border:'1px solid rgba(160,140,255,0.2)',
+            borderRadius:'2px', color:'rgba(160,140,255,0.4)', fontFamily:'var(--font-mono)',
+            letterSpacing:'.12em', textTransform:'uppercase' }}>ARCHIV</span>}
+        </div>
+      </div>
+      {appCount > 0 && (
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px',
+          background:'rgba(124,77,255,0.25)', border:'1px solid rgba(167,139,255,0.5)',
+          borderRadius:'10px', padding:'1px 7px', color:'#c9b8ff', flexShrink:0 }}>
+          {appCount}
+        </span>
+      )}
+    </div>
+  );
+}
+
+// ─── CREATE FORM ─────────────────────────────────────────────────────────────
+function CreateForm({ onCreated, onCancel }) {
+  const [form, setForm] = useState({
+    name: '', kategorie: 'Suche', sw: 1, lv: 3,
+    auftraggeber: '', region: '', beschreibung: '',
+    status: '', rewards_xp: 100, rewards_schillinge: 200, rewards_item: ''
+  });
+  const [steps, setSteps] = useState([{ txt: '', max: 1 }]);
+  const [saving, setSaving] = useState(false);
+
+  const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
+
+  const addStep = () => setSteps(s => [...s, { txt: '', max: 1 }]);
+  const removeStep = i => setSteps(s => s.filter((_, j) => j !== i));
+  const setStep = (i, k, v) => setSteps(s => s.map((s2, j) => j === i ? { ...s2, [k]: v } : s2));
+
+  async function handleSave() {
+    if (!form.name.trim()) return;
+    setSaving(true);
+    const anweisungen = steps.filter(s => s.txt.trim()).map(s => ({
+      txt: s.txt.trim(), n: 0, max: Number(s.max) || 1
+    }));
+    const rewards = {
+      xp: Number(form.rewards_xp) || 0,
+      schillinge: Number(form.rewards_schillinge) || 0,
+      item: form.rewards_item.trim() || null
+    };
+    const { data, error } = await window._sb.from('missions').insert({
+      name: form.name.trim(),
+      kategorie: form.kategorie,
+      sw: Number(form.sw),
+      lv: Number(form.lv),
+      auftraggeber: form.auftraggeber.trim(),
+      region: form.region.trim(),
+      beschreibung: form.beschreibung.trim(),
+      anweisungen,
+      rewards,
+      status: form.status
+    }).select().single();
+    setSaving(false);
+    if (!error && data) onCreated(data);
+  }
+
+  const row2 = { display:'grid', gridTemplateColumns:'1fr 1fr', gap:'12px' };
+
+  return (
+    <div style={{ flex:1, overflowY:'auto', padding:'22px' }}>
+      <div style={{ fontFamily:'var(--font-display)', fontSize:'15px', letterSpacing:'.2em',
+        color:'#f0eeff', textTransform:'uppercase', marginBottom:'20px' }}>
+        Neue Mission
+      </div>
+
+      <div className="field">
+        <label>Name</label>
+        <input value={form.name} onChange={e=>set('name',e.target.value)} placeholder="Missionsname…"/>
+      </div>
+
+      <div className="field" style={row2}>
+        <div>
+          <label>Kategorie</label>
+          <select value={form.kategorie} onChange={e=>set('kategorie',e.target.value)}>
+            <option value="Suche">Suche</option>
+            <option value="Gespraech">Gespräch</option>
+            <option value="Jagd">Jagd</option>
+          </select>
+        </div>
+        <div>
+          <label>Status</label>
+          <select value={form.status} onChange={e=>set('status',e.target.value)}>
+            {STATUS_OPTS.filter(o=>o.value!=='archiviert').map(o=>
+              <option key={o.value} value={o.value}>{o.label}</option>
+            )}
+          </select>
+        </div>
+      </div>
+
+      <div className="field" style={row2}>
+        <div>
+          <label>Schwierigkeit (1–5)</label>
+          <input type="number" min="1" max="5" value={form.sw} onChange={e=>set('sw',e.target.value)}/>
+        </div>
+        <div>
+          <label>Mindest-Stufe</label>
+          <input type="number" min="1" value={form.lv} onChange={e=>set('lv',e.target.value)}/>
+        </div>
+      </div>
+
+      <div className="field" style={row2}>
+        <div>
+          <label>Auftraggeber</label>
+          <input value={form.auftraggeber} onChange={e=>set('auftraggeber',e.target.value)} placeholder="Division…"/>
+        </div>
+        <div>
+          <label>Region</label>
+          <input value={form.region} onChange={e=>set('region',e.target.value)} placeholder="Ort…"/>
+        </div>
+      </div>
+
+      <div className="field">
+        <label>Beschreibung</label>
+        <textarea value={form.beschreibung} onChange={e=>set('beschreibung',e.target.value)} placeholder="Auftragstext…"/>
+      </div>
+
+      {/* Steps */}
+      <div style={{ marginBottom:'14px' }}>
+        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'8px' }}>
+          <label style={{ margin:0 }}>Anweisungen</label>
+          <button onClick={addStep} style={{
+            fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'.15em',
+            padding:'3px 9px', background:'rgba(124,77,255,0.12)',
+            border:'1px solid rgba(124,77,255,0.3)', borderRadius:'2px',
+            color:'rgba(167,139,255,0.8)', cursor:'pointer' }}>+ Schritt</button>
+        </div>
+        {steps.map((step, i) => (
+          <div key={i} style={{ display:'grid', gridTemplateColumns:'1fr 70px 28px',
+            gap:'8px', marginBottom:'8px', alignItems:'center' }}>
+            <input value={step.txt} onChange={e=>setStep(i,'txt',e.target.value)}
+              placeholder={`Schritt ${i+1}…`}/>
+            <input type="number" min="1" value={step.max} onChange={e=>setStep(i,'max',e.target.value)}
+              title="Anzahl" style={{ textAlign:'center' }}/>
+            <button onClick={()=>removeStep(i)} style={{
+              background:'transparent', border:'1px solid rgba(200,60,60,0.3)',
+              borderRadius:'2px', color:'rgba(255,120,120,0.6)',
+              cursor:'pointer', fontSize:'13px', lineHeight:1, padding:'3px' }}>×</button>
+          </div>
+        ))}
+      </div>
+
+      {/* Rewards */}
+      <div style={{ padding:'14px', background:'rgba(124,77,255,0.05)',
+        border:'1px solid rgba(124,77,255,0.15)', borderRadius:'3px', marginBottom:'20px' }}>
+        <label style={{ marginBottom:'10px' }}>Belohnungen</label>
+        <div style={row2}>
+          <div className="field">
+            <label>XP</label>
+            <input type="number" min="0" value={form.rewards_xp} onChange={e=>set('rewards_xp',e.target.value)}/>
+          </div>
+          <div className="field">
+            <label>Schillinge</label>
+            <input type="number" min="0" value={form.rewards_schillinge} onChange={e=>set('rewards_schillinge',e.target.value)}/>
+          </div>
+        </div>
+        <div className="field" style={{ marginBottom:0 }}>
+          <label>Gegenstand (optional)</label>
+          <input value={form.rewards_item} onChange={e=>set('rewards_item',e.target.value)} placeholder="Itemname…"/>
+        </div>
+      </div>
+
+      <div style={{ display:'flex', gap:'10px' }}>
+        <Btn onClick={handleSave} disabled={saving || !form.name.trim()}>
+          {saving ? 'Speichern…' : 'Mission erstellen'}
+        </Btn>
+        <Btn onClick={onCancel} secondary>Abbrechen</Btn>
+      </div>
+    </div>
+  );
+}
+
+// ─── APPLICATION ROW ─────────────────────────────────────────────────────────
+function AppRow({ app, profiles, characters, onUpdate }) {
+  const profile = profiles[app.player_id];
+  const char = characters[app.character_id];
+  const st = APP_STATUS[app.app_status] || APP_STATUS.pending;
+  const [busy, setBusy] = useState(false);
+
+  async function setStatus(s) {
+    setBusy(true);
+    await window._sb.from('mission_applications').update({ app_status: s }).eq('id', app.id);
+    setBusy(false);
+    onUpdate(app.id, s);
+  }
+
+  return (
+    <div style={{
+      padding: '12px 18px',
+      borderBottom: '1px solid rgba(160,140,255,0.08)',
+      display: 'flex', alignItems: 'center', gap: '14px'
+    }}>
+      {/* Player info */}
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ fontFamily:'var(--font-body)', fontSize:'13px', fontWeight:400,
+          color:'#f0eeff', marginBottom:'3px' }}>
+          {profile?.display_name || profile?.email?.split('@')[0] || '—'}
+        </div>
+        {char && (
+          <div style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:300,
+            color:'rgba(160,140,255,0.7)' }}>
+            {char.name}
+            {(char.race || char.class) && (
+              <span style={{ color:'rgba(160,140,255,0.4)', marginLeft:'6px' }}>
+                {[char.race, char.class].filter(Boolean).join(' · ')}
+              </span>
+            )}
+          </div>
+        )}
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'.15em',
+          color: st.color, marginTop:'4px', textTransform:'uppercase' }}>
+          {st.label}
+        </div>
+      </div>
+
+      {/* Actions */}
+      {app.app_status === 'pending' && (
+        <div style={{ display:'flex', gap:'6px', flexShrink:0 }}>
+          <Btn small onClick={()=>setStatus('accepted')} disabled={busy}>Annehmen</Btn>
+          <Btn small danger onClick={()=>setStatus('rejected')} disabled={busy}>Ablehnen</Btn>
+        </div>
+      )}
+      {app.app_status === 'accepted' && (
+        <Btn small danger onClick={()=>setStatus('rejected')} disabled={busy}>Zurücksetzen</Btn>
+      )}
+      {app.app_status === 'rejected' && (
+        <Btn small secondary onClick={()=>setStatus('pending')} disabled={busy}>Ausstehend</Btn>
+      )}
+    </div>
+  );
+}
+
+// ─── MISSION DETAIL (DM view) ─────────────────────────────────────────────────
+function MissionDetail({ mission, onDelete, onArchive }) {
+  const [apps, setApps] = useState([]);
+  const [profiles, setProfiles] = useState({});
+  const [characters, setCharacters] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [delConfirm, setDelConfirm] = useState(false);
+
+  useEffect(() => {
+    async function load() {
+      setLoading(true);
+      const { data } = await window._sb
+        .from('mission_applications')
+        .select('*')
+        .eq('mission_id', mission.id)
+        .order('created_at');
+      const apps2 = data || [];
+      setApps(apps2);
+
+      // Load profiles
+      const pids = [...new Set(apps2.map(a => a.player_id))];
+      if (pids.length) {
+        const { data: pd } = await window._sb.from('profiles').select('id,display_name').in('id', pids);
+        const pm = {};
+        (pd || []).forEach(p => { pm[p.id] = p; });
+        setProfiles(pm);
+      }
+
+      // Load characters
+      const cids = [...new Set(apps2.map(a => a.character_id))];
+      if (cids.length) {
+        const { data: cd } = await window._sb.from('characters').select('id,name,race,class,division').in('id', cids);
+        const cm = {};
+        (cd || []).forEach(c => { cm[c.id] = c; });
+        setCharacters(cm);
+      }
+
+      setLoading(false);
+    }
+    load();
+  }, [mission.id]);
+
+  function handleUpdate(appId, newStatus) {
+    setApps(prev => prev.map(a => a.id === appId ? { ...a, app_status: newStatus } : a));
+  }
+
+  const kat = KAT[mission.kategorie] || KAT.Suche;
+  const pending  = apps.filter(a => a.app_status === 'pending').length;
+  const accepted = apps.filter(a => a.app_status === 'accepted').length;
+
+  return (
+    <div style={{ display:'flex', flexDirection:'column', height:'100%' }}>
+      {/* Header */}
+      <div style={{ padding:'18px 22px', borderBottom:'1px solid rgba(160,140,255,0.12)',
+        background:`linear-gradient(180deg,${kat.color}18 0%,rgba(10,8,32,0)100%)`,
+        flexShrink: 0 }}>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:kat.color,
+          letterSpacing:'.25em', textTransform:'uppercase', marginBottom:'4px', opacity:.85 }}>
+          {kat.label} · SW {mission.sw} · Stufe {mission.lv}
+        </div>
+        <div style={{ fontFamily:'var(--font-display)', fontSize:'20px', letterSpacing:'.08em',
+          color:'#f0eeff', marginBottom:'6px' }}>{mission.name}</div>
+        <div style={{ fontFamily:'var(--font-body)', fontWeight:300, fontSize:'11px',
+          color:'rgba(160,140,255,0.55)' }}>
+          {mission.auftraggeber}{mission.region ? ` · ${mission.region}` : ''}
+        </div>
+
+        <div style={{ display:'flex', gap:'8px', marginTop:'14px' }}>
+          {mission.status !== 'archiviert' ? (
+            <Btn small secondary onClick={onArchive}>Archivieren</Btn>
+          ) : (
+            <Btn small secondary onClick={onArchive}>Reaktivieren</Btn>
+          )}
+          {delConfirm ? (
+            <>
+              <Btn small danger onClick={onDelete}>Wirklich löschen?</Btn>
+              <Btn small secondary onClick={()=>setDelConfirm(false)}>Abbrechen</Btn>
+            </>
+          ) : (
+            <Btn small danger onClick={()=>setDelConfirm(true)}>Löschen</Btn>
+          )}
+        </div>
+      </div>
+
+      {/* Stats */}
+      <div style={{ padding:'10px 22px', borderBottom:'1px solid rgba(160,140,255,0.08)',
+        display:'flex', gap:'20px', flexShrink:0 }}>
+        <div>
+          {mono('Bewerbungen', '7.5px')}
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:'16px', color:'#f0eeff', marginTop:'2px' }}>
+            {apps.length}
+          </div>
+        </div>
+        <div>
+          {mono('Ausstehend', '7.5px', 'rgba(127,184,255,0.6)')}
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:'16px', color:'#7fb8ff', marginTop:'2px' }}>
+            {pending}
+          </div>
+        </div>
+        <div>
+          {mono('Angenommen', '7.5px', 'rgba(100,220,140,0.6)')}
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:'16px', color:'rgba(100,220,140,0.9)', marginTop:'2px' }}>
+            {accepted}
+          </div>
+        </div>
+      </div>
+
+      {/* Applications list */}
+      <div style={{ flex:1, overflowY:'auto' }}>
+        {loading && (
+          <div style={{ padding:'30px', textAlign:'center',
+            fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(160,140,255,0.4)',
+            letterSpacing:'.2em' }}>LADE…</div>
+        )}
+        {!loading && apps.length === 0 && (
+          <div style={{ padding:'40px 22px', textAlign:'center' }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'.22em',
+              color:'rgba(160,140,255,0.3)', textTransform:'uppercase', marginBottom:'8px' }}>
+              Keine Bewerbungen
+            </div>
+            <div style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:300,
+              color:'rgba(160,140,255,0.35)', fontStyle:'italic' }}>
+              Noch hat sich niemand für diese Mission beworben.
+            </div>
+          </div>
+        )}
+        {!loading && apps.map(app => (
+          <AppRow key={app.id} app={app} profiles={profiles}
+            characters={characters} onUpdate={handleUpdate}/>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── TOKEN TAB ───────────────────────────────────────────────────────────────
+function TokensTab() {
+  const [tokens, setTokens] = useState([]);
+  const [profiles, setProfiles] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [generating, setGenerating] = useState(false);
+  const [noteInput, setNoteInput] = useState('');
+
+  function genCode() {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    return Array.from({length:8}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
+  }
+  function fmt(code) { return code.slice(0,4) + '-' + code.slice(4); }
+
+  async function load() {
+    setLoading(true);
+    const { data } = await window._sb.from('roll_tokens').select('*').order('created_at', { ascending: false });
+    const ts = data || [];
+    setTokens(ts);
+
+    const uids = [...new Set(ts.filter(t => t.used_by).map(t => t.used_by))];
+    if (uids.length) {
+      const { data: pd } = await window._sb.from('profiles').select('id,display_name').in('id', uids);
+      const pm = {};
+      (pd || []).forEach(p => { pm[p.id] = p; });
+      setProfiles(pm);
+    }
+    setLoading(false);
+  }
+
+  useEffect(() => { load(); }, []);
+
+  async function handleGenerate() {
+    setGenerating(true);
+    const code = genCode();
+    const { data: { user } } = await window._sb.auth.getUser();
+    const { data, error } = await window._sb.from('roll_tokens').insert({
+      code,
+      created_by: user.id,
+      note: noteInput.trim() || null
+    }).select().single();
+    if (!error && data) {
+      setTokens(prev => [data, ...prev]);
+      setNoteInput('');
+    }
+    setGenerating(false);
+  }
+
+  async function handleDelete(code) {
+    await window._sb.from('roll_tokens').delete().eq('code', code);
+    setTokens(prev => prev.filter(t => t.code !== code));
+  }
+
+  const unused  = tokens.filter(t => !t.used_by);
+  const used    = tokens.filter(t =>  t.used_by);
+
+  const tokenRowStyle = (used) => ({
+    padding: '10px 18px',
+    borderBottom: '1px solid rgba(160,140,255,0.07)',
+    display: 'flex', alignItems: 'center', gap: '14px',
+    background: used ? 'transparent' : 'rgba(124,77,255,0.03)',
+  });
+
+  function TokenRow({ t }) {
+    const [copied, setCopied] = useState(false);
+    function copy() {
+      navigator.clipboard?.writeText(fmt(t.code));
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    }
+    const profile = profiles[t.used_by];
+    const usedName = profile?.display_name || '—';
+    return (
+      <div style={tokenRowStyle(!!t.used_by)}>
+        {/* Code */}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ display:'flex', alignItems:'center', gap:10 }}>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:'15px', letterSpacing:'.18em',
+              color: t.used_by ? 'rgba(160,140,255,0.35)' : '#f0eeff',
+              textDecoration: t.used_by ? 'line-through' : 'none' }}>
+              {fmt(t.code)}
+            </span>
+            {!t.used_by && (
+              <button onClick={copy} style={{
+                fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'.12em',
+                padding:'2px 8px', background: copied?'rgba(100,220,140,0.12)':'rgba(124,77,255,0.1)',
+                border:`1px solid ${copied?'rgba(100,220,140,0.4)':'rgba(124,77,255,0.25)'}`,
+                borderRadius:'2px', color: copied?'rgba(100,220,140,0.8)':'rgba(160,140,255,0.6)',
+                cursor:'pointer', textTransform:'uppercase', transition:'all .15s' }}>
+                {copied ? '✓' : 'Kopieren'}
+              </button>
+            )}
+          </div>
+          <div style={{ display:'flex', gap:'12px', marginTop:'3px', flexWrap:'wrap' }}>
+            {t.note && (
+              <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:300,
+                color:'rgba(160,140,255,0.5)', fontStyle:'italic' }}>{t.note}</span>
+            )}
+            {t.used_by ? (
+              <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'.12em',
+                color:'rgba(160,140,255,0.35)', textTransform:'uppercase' }}>
+                eingelöst von {usedName}
+              </span>
+            ) : (
+              <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'.12em',
+                color:'rgba(100,220,140,0.6)', textTransform:'uppercase' }}>● verfügbar</span>
+            )}
+          </div>
+        </div>
+        {/* Delete */}
+        {!t.used_by && (
+          <button onClick={()=>handleDelete(t.code)} style={{
+            background:'transparent', border:'1px solid rgba(200,60,60,0.25)',
+            borderRadius:'2px', color:'rgba(255,120,120,0.5)', cursor:'pointer',
+            fontFamily:'var(--font-mono)', fontSize:'9px', padding:'4px 9px',
+            letterSpacing:'.1em', textTransform:'uppercase', transition:'all .15s', flexShrink:0 }}
+            onMouseEnter={e=>{ e.currentTarget.style.borderColor='rgba(200,60,60,0.5)'; e.currentTarget.style.color='rgba(255,120,120,0.85)'; }}
+            onMouseLeave={e=>{ e.currentTarget.style.borderColor='rgba(200,60,60,0.25)'; e.currentTarget.style.color='rgba(255,120,120,0.5)'; }}>
+            Löschen
+          </button>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ display:'grid', gridTemplateColumns:'320px 1fr', gap:'20px', padding:'20px 32px', flex:1, minHeight:0 }}>
+      {/* Left: generate */}
+      <Panel>
+        <PanelHead>Neuer Token</PanelHead>
+        <div style={{ padding:'20px' }}>
+          <div style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:300,
+            color:'rgba(160,140,255,0.5)', lineHeight:1.7, marginBottom:'18px' }}>
+            Generiere einen Einmalcode und gib ihn einem Spieler. Er kann damit einmal neu würfeln.
+          </div>
+          <div className="field">
+            <label>Notiz (optional)</label>
+            <input value={noteInput} onChange={e=>setNoteInput(e.target.value)}
+              placeholder="z.B. Spielername…"
+              onKeyDown={e=>{ if (e.key==='Enter') handleGenerate(); }}/>
+          </div>
+          <Btn onClick={handleGenerate} disabled={generating}>
+            {generating ? 'Generieren…' : '⚄ Code generieren'}
+          </Btn>
+
+          <div style={{ marginTop:'24px', padding:'14px',
+            background:'rgba(124,77,255,0.05)', border:'1px solid rgba(124,77,255,0.12)',
+            borderRadius:'3px' }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'.2em',
+              color:'rgba(124,77,255,0.45)', textTransform:'uppercase', marginBottom:'6px' }}>
+              Statistik
+            </div>
+            <div style={{ display:'flex', gap:'20px' }}>
+              <div>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:'18px', color:'rgba(100,220,140,0.8)' }}>
+                  {unused.length}
+                </div>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'.15em',
+                  color:'rgba(100,220,140,0.5)', textTransform:'uppercase' }}>Verfügbar</div>
+              </div>
+              <div>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:'18px', color:'rgba(160,140,255,0.4)' }}>
+                  {used.length}
+                </div>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'.15em',
+                  color:'rgba(160,140,255,0.35)', textTransform:'uppercase' }}>Eingelöst</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Panel>
+
+      {/* Right: token list */}
+      <Panel>
+        <PanelHead>{tokens.length} Würfeltoken</PanelHead>
+        <div style={{ flex:1, overflowY:'auto' }}>
+          {loading && (
+            <div style={{ padding:'30px', textAlign:'center',
+              fontFamily:'var(--font-mono)', fontSize:'9px',
+              color:'rgba(160,140,255,0.4)', letterSpacing:'.2em' }}>LADE…</div>
+          )}
+          {!loading && tokens.length === 0 && (
+            <div style={{ padding:'40px', textAlign:'center',
+              fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:300,
+              color:'rgba(160,140,255,0.35)', fontStyle:'italic' }}>
+              Noch keine Token generiert.
+            </div>
+          )}
+          {/* Unused first */}
+          {unused.map(t => <TokenRow key={t.code} t={t}/>)}
+          {/* Divider */}
+          {unused.length > 0 && used.length > 0 && (
+            <div style={{ padding:'6px 18px',
+              borderBottom:'1px solid rgba(160,140,255,0.08)',
+              fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'.2em',
+              color:'rgba(160,140,255,0.25)', textTransform:'uppercase',
+              background:'rgba(5,4,15,0.3)' }}>
+              Bereits eingelöst
+            </div>
+          )}
+          {used.map(t => <TokenRow key={t.code} t={t}/>)}
+        </div>
+      </Panel>
+    </div>
+  );
+}
+
+// ─── APP ─────────────────────────────────────────────────────────────────────
+function App() {
+  const user = window.SITE_USER;
+  const [activeTab, setActiveTab] = useState('missions');
+  const [missions, setMissions] = useState([]);
+  const [selectedId, setSelectedId] = useState(null);
+  const [creating, setCreating] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [appCounts, setAppCounts] = useState({});
+
+  // DM guard
+  if (user && user.role !== 'dm') {
+    return (
+      <>
+        <SiteNav rightLabel="DM · MISSIONEN" />
+        <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center',
+          flexDirection:'column', gap:'12px' }}>
+          <div style={{ fontFamily:'var(--font-display)', fontSize:'18px', letterSpacing:'.2em',
+            color:'rgba(160,140,255,0.6)', textTransform:'uppercase' }}>Kein Zugriff</div>
+          <a href="Missionsterminal.html" style={{ fontFamily:'var(--font-mono)', fontSize:'9px',
+            color:'rgba(124,77,255,0.5)', letterSpacing:'.2em', textDecoration:'none' }}>
+            ← Zum Missionsterminal
+          </a>
+        </div>
+      </>
+    );
+  }
+
+  async function loadMissions() {
+    setLoading(true);
+    const { data } = await window._sb.from('missions').select('*').order('created_at', { ascending: false });
+    setMissions(data || []);
+
+    // Count applications per mission
+    if (data && data.length) {
+      const { data: counts } = await window._sb
+        .from('mission_applications')
+        .select('mission_id')
+        .in('mission_id', data.map(m => m.id));
+      const cm = {};
+      (counts || []).forEach(c => { cm[c.mission_id] = (cm[c.mission_id] || 0) + 1; });
+      setAppCounts(cm);
+    }
+    setLoading(false);
+  }
+
+  useEffect(() => { loadMissions(); }, []);
+
+  function handleCreated(m) {
+    setMissions(prev => [m, ...prev]);
+    setSelectedId(m.id);
+    setCreating(false);
+  }
+
+  async function handleDelete() {
+    if (!selectedId) return;
+    await window._sb.from('missions').delete().eq('id', selectedId);
+    setMissions(prev => prev.filter(m => m.id !== selectedId));
+    setSelectedId(null);
+  }
+
+  async function handleArchive() {
+    if (!selectedId) return;
+    const m = missions.find(x => x.id === selectedId);
+    if (!m) return;
+    const newStatus = m.status === 'archiviert' ? '' : 'archiviert';
+    await window._sb.from('missions').update({ status: newStatus }).eq('id', selectedId);
+    setMissions(prev => prev.map(x => x.id === selectedId ? { ...x, status: newStatus } : x));
+  }
+
+  const selected = missions.find(m => m.id === selectedId);
+
+  return (
+    <div style={{ display:'flex', flexDirection:'column', minHeight:'100vh' }}>
+      <SiteNav rightLabel="DM · MISSIONEN" />
+
+      {/* Page header */}
+      <div style={{ padding:'18px 32px 0', borderBottom:'1px solid rgba(160,140,255,0.08)', flexShrink:0 }}>
+        <div style={{ display:'flex', alignItems:'flex-end', justifyContent:'space-between', marginBottom:'14px' }}>
+          <div>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(167,139,255,0.5)',
+              letterSpacing:'.3em', textTransform:'uppercase', marginBottom:'6px' }}>
+              ◈ DM-Bereich
+            </div>
+            <h1 style={{ fontFamily:'var(--font-display)', fontSize:'24px', fontWeight:400,
+              letterSpacing:'.28em', color:'#f0eeff', textTransform:'uppercase' }}>
+              {activeTab === 'missions' ? 'Missionsverwaltung' : 'Würfeltoken'}
+            </h1>
+          </div>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(160,140,255,0.4)',
+            letterSpacing:'.18em' }}>
+            {activeTab === 'missions' ? `${missions.length} Missionen gesamt` : 'Einmalcodes für Neuauswürfeln'}
+          </div>
+        </div>
+        {/* Tabs */}
+        <div style={{ display:'flex', gap:'2px' }}>
+          {[['missions','Missionen'],['tokens','Würfeltoken']].map(([id, label]) => (
+            <button key={id} onClick={()=>setActiveTab(id)} style={{
+              fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'.18em',
+              textTransform:'uppercase', padding:'8px 18px',
+              background: activeTab===id ? 'rgba(124,77,255,0.15)' : 'transparent',
+              border:'none', borderBottom: activeTab===id ? '2px solid rgba(167,139,255,0.7)' : '2px solid transparent',
+              color: activeTab===id ? '#f0eeff' : 'rgba(160,140,255,0.4)',
+              cursor:'pointer', transition:'all .15s'
+            }}>{label}</button>
+          ))}
+        </div>
+      </div>
+
+      {activeTab === 'tokens' && <TokensTab />}
+
+      {/* Main grid — missions tab */}
+      {activeTab === 'missions' && <div style={{ flex:1, minHeight:0, display:'grid',
+        gridTemplateColumns:'320px 1fr', gap:'20px', padding:'20px 32px' }}>
+
+        {/* Left: mission list */}
+        <Panel>
+          <PanelHead right={
+            <button onClick={()=>{ setCreating(true); setSelectedId(null); }} style={{
+              fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'.15em',
+              padding:'4px 10px', background:'rgba(124,77,255,0.2)',
+              border:'1px solid rgba(124,77,255,0.5)', borderRadius:'2px',
+              color:'rgba(200,190,240,0.9)', cursor:'pointer', textTransform:'uppercase'
+            }}>+ Neu</button>
+          }>Missionen</PanelHead>
+          <div style={{ flex:1, overflowY:'auto' }}>
+            {loading && (
+              <div style={{ padding:'30px', textAlign:'center',
+                fontFamily:'var(--font-mono)', fontSize:'9px',
+                color:'rgba(160,140,255,0.4)', letterSpacing:'.2em' }}>LADE…</div>
+            )}
+            {!loading && missions.length === 0 && (
+              <div style={{ padding:'30px', textAlign:'center',
+                fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:300,
+                color:'rgba(160,140,255,0.4)', fontStyle:'italic' }}>
+                Noch keine Missionen. Erstelle die erste.
+              </div>
+            )}
+            {missions.map(m => (
+              <MissionRow key={m.id} m={m}
+                active={!creating && m.id === selectedId}
+                appCount={appCounts[m.id] || 0}
+                onClick={()=>{ setSelectedId(m.id); setCreating(false); }}/>
+            ))}
+          </div>
+        </Panel>
+
+        {/* Right: create or detail */}
+        <Panel>
+          {!creating && !selected && (
+            <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center',
+              flexDirection:'column', gap:'10px' }}>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'.22em',
+                color:'rgba(160,140,255,0.3)', textTransform:'uppercase' }}>
+                Mission auswählen oder neue erstellen
+              </div>
+            </div>
+          )}
+          {creating && (
+            <CreateForm
+              onCreated={handleCreated}
+              onCancel={()=>setCreating(false)}
+            />
+          )}
+          {!creating && selected && (
+            <MissionDetail
+              key={selected.id}
+              mission={selected}
+              onDelete={handleDelete}
+              onArchive={handleArchive}
+            />
+          )}
+        </Panel>
+      </div>}
+
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<SiteGate><App/></SiteGate>);
+</script>
+</body></html>

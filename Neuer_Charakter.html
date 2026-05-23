@@ -251,21 +251,54 @@ function QuizPhase({ tags, possible, quizAnswers, onAnswer, onFinish }) {
 }
 
 // ── OUTPUT PHASE ───────────────────────────────────────────────────────────
-function OutputPhase({ tags, possible, quizAnswers }) {
+function OutputPhase({ tags, possible, quizAnswers, charType }) {
   const [charName, setCharName] = useState('');
-  const [dice, setDice] = useState(null);
-  const [chosen, setChosen] = useState(null);
+  const [dice, setDice] = useState(null); // array of 6 {rolls, val}
   const [showNameModal, setShowNameModal] = useState(false);
   const [modalName, setModalName] = useState('');
   const [saving, setSaving] = useState(false);
+  const [rolled, setRolled] = useState(false);
+  const [tokenInput, setTokenInput] = useState('');
+  const [tokenState, setTokenState] = useState('idle'); // 'idle'|'checking'|'valid'|'error'
+  const [tokenError, setTokenError] = useState('');
+  const [validatedToken, setValidatedToken] = useState(null);
 
-  const roll = () => {
+  const roll = async () => {
     const r = () => { const d = Array.from({length:4},()=>Math.floor(Math.random()*6)+1).sort((a,b)=>a-b); return {rolls:d, val:d.slice(1).reduce((s,n)=>s+n,0)}; };
-    const set = () => Array.from({length:6},r);
-    const sets = [set(),set()];
-    const sum = s => s.reduce((acc,x)=>acc+x.val,0);
-    setDice(sets);
-    setChosen(sum(sets[1])>sum(sets[0]) ? 1 : 0);
+    setDice(Array.from({length:6}, r));
+    if (validatedToken && window._sb) {
+      const { data: { user } } = await window._sb.auth.getUser();
+      if (user) {
+        await window._sb.from('roll_tokens')
+          .update({ used_by: user.id, used_at: new Date().toISOString() })
+          .eq('code', validatedToken)
+          .is('used_by', null);
+      }
+      setValidatedToken(null);
+      setTokenState('idle');
+      setTokenInput('');
+    }
+    setRolled(true);
+  };
+
+  const handleRedeemToken = async () => {
+    const code = tokenInput.replace(/-/g, '').trim().toUpperCase();
+    if (!code) return;
+    setTokenState('checking');
+    setTokenError('');
+    try {
+      const { data, error } = await window._sb.from('roll_tokens')
+        .select('code, used_by')
+        .eq('code', code)
+        .maybeSingle();
+      if (error || !data) { setTokenState('error'); setTokenError('Code nicht gefunden.'); return; }
+      if (data.used_by !== null) { setTokenState('error'); setTokenError('Dieser Code wurde bereits verwendet.'); return; }
+      setValidatedToken(code);
+      setTokenState('valid');
+    } catch(e) {
+      setTokenState('error');
+      setTokenError('Verbindungsfehler.');
+    }
   };
 
   const getFinal = (kat) => {
@@ -319,9 +352,9 @@ function OutputPhase({ tags, possible, quizAnswers }) {
       division:   g('division'),
       deity:      g('gottheit'),
       samen:      g('samen'),
-      stats: chosen!==null && dice ? {
-        str:dice[chosen][0].val, dex:dice[chosen][1].val, con:dice[chosen][2].val,
-        int:dice[chosen][3].val, wis:dice[chosen][4].val, cha:dice[chosen][5].val,
+      stats: dice ? {
+        str:dice[0].val, dex:dice[1].val, con:dice[2].val,
+        int:dice[3].val, wis:dice[4].val, cha:dice[5].val,
       } : null,
       alignment:     null,
       zodiac:        null,
@@ -338,6 +371,7 @@ function OutputPhase({ tags, possible, quizAnswers }) {
         class: draft.class || null,
         division: draft.division || null,
         char_data: draft,
+        type: charType || 'spieler',
       });
     } catch(e) { console.error(e); }
     window.location.href = 'MeinCharakter.html';
@@ -376,36 +410,82 @@ function OutputPhase({ tags, possible, quizAnswers }) {
       <div style={{marginBottom:44}}>
         <div style={{fontFamily:'var(--font-d)',fontSize:'10px',letterSpacing:'.22em',color:'rgba(160,140,255,.6)',textTransform:'uppercase',marginBottom:16}}>Attribute</div>
         <div style={{padding:18,border:'1px solid rgba(160,140,255,.1)',borderRadius:4,background:'rgba(124,77,255,.02)'}}>
-          {!dice
+          {!rolled
             ? <div style={{display:'flex',alignItems:'center',gap:18,flexWrap:'wrap'}}>
                 <p style={{fontFamily:'var(--font-b)',fontWeight:300,fontSize:'12px',color:'rgba(200,190,240,.45)',lineHeight:1.75,flex:1}}>
-                  Beim ersten Charakter: Attribute <strong style={{fontWeight:400,color:'rgba(200,190,240,.65)'}}>zweimal würfeln</strong> (4W6, niedrigsten Wert fallen lassen) und das bessere Set wählen.
+                  Attribute einmal würfeln (4W6, niedrigsten Wert fallen lassen). Für ein zweites Wurf ist ein DM-Code erforderlich.
                 </p>
                 <button className="no-print" onClick={roll} style={{fontFamily:'var(--font-m)',fontSize:'9px',letterSpacing:'.15em',color:'rgba(160,140,255,.75)',background:'rgba(124,77,255,.08)',border:'1px solid rgba(124,77,255,.28)',borderRadius:'3px',padding:'10px 20px',cursor:'pointer',textTransform:'uppercase',transition:'all .2s',whiteSpace:'nowrap'}}
                   onMouseEnter={e=>{e.currentTarget.style.background='rgba(124,77,255,.18)';e.currentTarget.style.color='#f0eeff';}}
-                  onMouseLeave={e=>{e.currentTarget.style.background='rgba(124,77,255,.08)';e.currentTarget.style.color='rgba(160,140,255,.75)';}}>⚄ Zweimal würfeln</button>
+                  onMouseLeave={e=>{e.currentTarget.style.background='rgba(124,77,255,.08)';e.currentTarget.style.color='rgba(160,140,255,.75)';}}>⚄ Würfeln</button>
               </div>
             : <div>
-                <div style={{display:'flex',gap:24,flexWrap:'wrap',marginBottom:14}}>
-                  {dice.map((set,si) => (
-                    <div key={si} onClick={()=>setChosen(si)} style={{flex:1,minWidth:200,border:`1px solid ${chosen===si?'rgba(94,232,208,.45)':'rgba(160,140,255,.12)'}`,borderRadius:4,padding:14,cursor:'pointer',background:chosen===si?'rgba(94,232,208,.04)':'transparent',transition:'all .2s'}}>
-                      <div style={{fontFamily:'var(--font-m)',fontSize:'8px',color:chosen===si?'rgba(94,232,208,.65)':'rgba(160,140,255,.4)',letterSpacing:'.18em',textTransform:'uppercase',marginBottom:10}}>
-                        Set {si+1} {chosen===si?' ✓ Gewählt':''}
-                      </div>
-                      {['STÄ','GES','KON','INT','WEI','CHA'].map((a,ai)=>(
-                        <div key={a} style={{display:'flex',justifyContent:'space-between',padding:'4px 0',borderBottom:'1px solid rgba(160,140,255,.04)'}}>
-                          <span style={{fontFamily:'var(--font-m)',fontSize:'9px',color:'rgba(160,140,255,.45)',letterSpacing:'.1em'}}>{a}</span>
-                          <span style={{fontFamily:'var(--font-d)',fontSize:'14px',color:chosen===si?'rgba(94,232,208,.9)':'#f0eeff'}}>
-                            {set[ai].val}
-                            <span style={{fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(160,140,255,.3)',marginLeft:6}}>({set[ai].rolls.slice(1).join('+')})</span>
-                          </span>
-                        </div>
-                      ))}
-                      <div style={{textAlign:'right',marginTop:7,fontFamily:'var(--font-m)',fontSize:'9px',color:'rgba(160,140,255,.4)'}}>Σ {set.reduce((s,r)=>s+r.val,0)}</div>
+                {/* Single dice set */}
+                <div style={{marginBottom:14,border:'1px solid rgba(94,232,208,.25)',borderRadius:4,padding:14,background:'rgba(94,232,208,.03)'}}>
+                  <div style={{fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(94,232,208,.55)',letterSpacing:'.18em',textTransform:'uppercase',marginBottom:10}}>
+                    Gewürfelt
+                  </div>
+                  {['STÄ','GES','KON','INT','WEI','CHA'].map((a,ai)=>(
+                    <div key={a} style={{display:'flex',justifyContent:'space-between',padding:'4px 0',borderBottom:'1px solid rgba(160,140,255,.04)'}}>
+                      <span style={{fontFamily:'var(--font-m)',fontSize:'9px',color:'rgba(160,140,255,.45)',letterSpacing:'.1em'}}>{a}</span>
+                      <span style={{fontFamily:'var(--font-d)',fontSize:'14px',color:'rgba(94,232,208,.9)'}}>
+                        {dice[ai].val}
+                        <span style={{fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(160,140,255,.3)',marginLeft:6}}>({dice[ai].rolls.slice(1).join('+')})</span>
+                      </span>
                     </div>
                   ))}
+                  <div style={{textAlign:'right',marginTop:7,fontFamily:'var(--font-m)',fontSize:'9px',color:'rgba(160,140,255,.4)'}}>Σ {dice.reduce((s,r)=>s+r.val,0)}</div>
                 </div>
-                <button className="no-print" onClick={roll} style={{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.13em',color:'rgba(160,140,255,.45)',background:'transparent',border:'1px solid rgba(160,140,255,.14)',borderRadius:'3px',padding:'7px 14px',cursor:'pointer',textTransform:'uppercase',transition:'all .2s'}}>↺ Neu würfeln</button>
+
+                {/* Reroll — requires DM token */}
+                <div style={{display:'flex',flexDirection:'column',gap:8}}>
+                  <div style={{display:'flex',alignItems:'center',gap:10,flexWrap:'wrap'}}>
+                    <button className="no-print" onClick={roll}
+                      disabled={tokenState !== 'valid'}
+                      style={{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.13em',
+                        color: tokenState==='valid' ? 'rgba(94,232,208,.85)' : 'rgba(160,140,255,.22)',
+                        background:'transparent',
+                        border:`1px solid ${tokenState==='valid' ? 'rgba(94,232,208,.35)' : 'rgba(160,140,255,.1)'}`,
+                        borderRadius:'3px',padding:'7px 14px',
+                        cursor: tokenState==='valid' ? 'pointer' : 'not-allowed',
+                        textTransform:'uppercase',transition:'all .2s'}}>↺ Neu würfeln</button>
+                    {tokenState !== 'valid'
+                      ? <span style={{fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(160,140,255,.3)',letterSpacing:'.1em'}}>DM-Code erforderlich</span>
+                      : <span style={{fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(94,232,208,.6)',letterSpacing:'.1em'}}>✓ Code eingelöst — einmal neu würfeln</span>
+                    }
+                  </div>
+                  {tokenState !== 'valid' && (
+                    <div style={{display:'flex',alignItems:'center',gap:7,flexWrap:'wrap'}}>
+                      <input
+                        value={tokenInput}
+                        onChange={e=>{
+                          setTokenInput(e.target.value.toUpperCase().replace(/[^A-Z0-9\-]/g,'').slice(0,9));
+                          if (tokenState==='error') setTokenState('idle');
+                        }}
+                        onKeyDown={e=>{ if(e.key==='Enter') handleRedeemToken(); }}
+                        placeholder="XXXX-XXXX"
+                        style={{fontFamily:'var(--font-m)',fontSize:'11px',letterSpacing:'.12em',
+                          background:'rgba(5,4,15,.5)',border:'1px solid rgba(160,140,255,.18)',
+                          borderRadius:'3px',padding:'6px 10px',color:'#f0eeff',outline:'none',
+                          width:120,textTransform:'uppercase'}}
+                      />
+                      <button onClick={handleRedeemToken}
+                        disabled={tokenState==='checking'||!tokenInput.trim()}
+                        style={{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.12em',
+                          color:'rgba(160,140,255,.75)',background:'rgba(124,77,255,.08)',
+                          border:'1px solid rgba(124,77,255,.25)',borderRadius:'3px',
+                          padding:'6px 12px',cursor:tokenState==='checking'?'not-allowed':'pointer',
+                          textTransform:'uppercase',transition:'all .2s'}}>
+                        {tokenState==='checking'?'…':'Einlösen'}
+                      </button>
+                      {tokenState==='error'&&(
+                        <span style={{fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(255,100,100,.75)',letterSpacing:'.08em'}}>
+                          {tokenError}
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
           }
         </div>
@@ -519,6 +599,7 @@ function OutputPhase({ tags, possible, quizAnswers }) {
 // ── APP ────────────────────────────────────────────────────────────────────
 function App() {
   const [phase, setPhase] = useState('typeSelect');
+  const [charType, setCharType] = useState('spieler');
   const [tags, setTagsState] = useState({
     rasse:null, klasse:null, hintergrund:null, zauberwirker:null,
     samen:null, lebensstil:null, gottheit:null, werkzeuge:new Set(), division:null,
@@ -568,10 +649,10 @@ function App() {
   return (
     <div style={{background:'var(--bg)',minHeight:'100vh'}}>
       <Nav showBack={phase!=='typeSelect'} onBack={goBack}/>
-      {phase === 'typeSelect' && <TypeSelectPhase onSelect={() => setPhase('tags')}/>}
+      {phase === 'typeSelect' && <TypeSelectPhase onSelect={t => { setCharType(t === 'nsc' ? 'nsc' : 'spieler'); setPhase('tags'); }}/>}
       {phase === 'tags'       && <TagPhase tags={tags} setTag={setTag} setWerkzeug={setWerkzeug} onNext={goToQuiz}/>}
       {phase === 'quiz'       && <QuizPhase tags={tags} possible={possible} quizAnswers={quizAnswers} onAnswer={handleAnswer} onFinish={() => setPhase('output')}/>}
-      {phase === 'output'     && <OutputPhase tags={tags} possible={possible} quizAnswers={quizAnswers}/>}
+      {phase === 'output'     && <OutputPhase tags={tags} possible={possible} quizAnswers={quizAnswers} charType={charType}/>}
     </div>
   );
 }
