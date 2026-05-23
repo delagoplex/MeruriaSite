@@ -13,6 +13,7 @@
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/filter-utils.jsx" type="text/babel"></script>
 <script src="assets/components/site-gate.jsx" type="text/babel"></script>
 <script src="assets/components/tweaks-panel-13.jsx" type="text/babel"></script>
 <script src="assets/scripts/data/resources/ff14_fish-data.js"></script>
@@ -245,9 +246,9 @@ Object.assign(window, { CATEGORIES, ICON, CAT_ICONS, RARITY, MAX_STAGE, STAGE_LA
 const RAR_LABEL = { gewoehnlich:'Gewöhnlich', selten:'Selten', sehrselten:'Sehr selten', einzigartig:'Einzigartig' };
 const FACETS = {
   fische: [
-    { key:'groesse',    label:'Größe',       options:['Klein','Mittel','Groß','Riesig'] },
-    { key:'wasser',     label:'Wassertyp',   options:['Süßwasser','Brackwasser','Salzwasser','Tiefsee'] },
-    { key:'klima',      label:'Klima',       options:['Kalt','Gemäßigt','Warm'] },
+    { key:'groesse',    label:'Größe',       options:[] },
+    { key:'wasser',     label:'Wassertyp',   options:[] },
+    { key:'klima',      label:'Klima',       options:[] },
     { key:'seltenheit', label:'Seltenheit',  options:['Gewöhnlich','Selten','Sehr selten','Einzigartig'] },
   ],
   insekten: [
@@ -258,23 +259,23 @@ const FACETS = {
     { key:'seltenheit', label:'Seltenheit',  options:['Gewöhnlich','Selten','Sehr selten','Einzigartig'] },
   ],
   pflanzen: [
-    { key:'typ',         label:'Typ',         options:['Nahrung','Heilpflanze','Material','Gift','Verschiedenes'] },
-    { key:'fundort',     label:'Fundort',     options:['Wald','Sumpf','Wüste','Ebene','Gebirge','Küste','Höhle'] },
-    { key:'klima',       label:'Klima',       options:['Kalt','Gemäßigt','Warm','Trocken','Feucht'] },
-    { key:'eigenschaft', label:'Eigenschaft', options:['Roh essbar','Zubereitet essbar','Ungiftig','Giftig','Heilend','Brennbar'] },
+    { key:'typ',         label:'Kategorie',   options:[] },
+    { key:'fundort',     label:'Fundort',     options:[] },
+    { key:'klima',       label:'Klima',       options:[] },
+    { key:'eigenschaft', label:'Eigenschaft', options:[] },
     { key:'seltenheit',  label:'Seltenheit',  options:['Gewöhnlich','Selten','Sehr selten','Einzigartig'] },
   ],
   mineralien: [
-    { key:'typ',        label:'Typ',         options:['Baustein','Edelstein','Erz','Kristall'] },
-    { key:'fundort',    label:'Fundort',     options:['Gebirge','Höhle','Vulkan','Sediment','Ebene','Küste'] },
-    { key:'haerte',     label:'Härte',       options:['Weich','Mittel','Hart','Sehr hart'] },
+    { key:'typ',        label:'Kategorie',   options:[] },
+    { key:'fundort',    label:'Fundort',     options:[] },
     { key:'seltenheit', label:'Seltenheit',  options:['Gewöhnlich','Selten','Sehr selten','Einzigartig'] },
   ],
   kreaturen: [
-    { key:'groesse',    label:'Größe',          options:['Klein','Mittel','Groß','Riesig'] },
-    { key:'habitat',    label:'Lebensraum',     options:['Land','Wasser','Luft','Höhle','Schleier'] },
-    { key:'gefahr',     label:'Gefährlichkeit', options:['Friedlich','Vorsichtig','Aggressiv','Tödlich'] },
-    { key:'seltenheit', label:'Seltenheit',     options:['Gewöhnlich','Selten','Sehr selten','Einzigartig'] },
+    { key:'cr',         label:'Herausforderungsgrad', options:[] },  // populated at runtime from MONSTER_DATA
+    { key:'art',        label:'Monsterart',            options:[] },  // populated at runtime from MONSTER_DATA
+    { key:'groesse',    label:'Größe',                 options:['Klein','Mittel','Groß','Riesig'] },
+    { key:'habitat',    label:'Lebensraum',            options:['Land','Wasser','Luft','Höhle','Schleier'] },
+    { key:'seltenheit', label:'Seltenheit',            options:['Gewöhnlich','Selten','Sehr selten','Einzigartig'] },
   ],
   kreaturenteile: [
     { key:'verwendung',     label:'Verwendung',     options:['Rüstung','Waffen','Alchemie','Schmuck','Werkzeug','Material'] },
@@ -1015,24 +1016,11 @@ function CatTab({ cat, active, onClick, foundCount, kompletteCount = 0, fullWidt
 }
 
 /* ── Filter chip ── */
-function FilterChip({ label, count, active, onClick, hue=265 }) {
-  const c = `oklch(0.72 0.16 ${hue})`;
-  const cA = (a) => `oklch(0.72 0.16 ${hue} / ${a})`;
+function FilterChip({ label, count, active, onClick }) {
   return (
-    <button onClick={onClick} style={{
-      fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em',
-      padding:'7px 14px', textTransform:'uppercase',
-      background: active ? `${cA(0.11)}` : 'rgba(10,8,28,0.5)',
-      border: active ? `1px solid ${cA(0.67)}` : '1px solid rgba(124,77,255,0.18)',
-      color: active ? '#f0eeff' : 'rgba(200,190,240,0.6)',
-      cursor:'pointer', borderRadius:2, transition:'all 0.18s',
-      display:'inline-flex', alignItems:'center', gap:8,
-    }}
-      onMouseEnter={e=>{ if(!active){ e.currentTarget.style.borderColor=c+'66'; e.currentTarget.style.color='#f0eeff'; } }}
-      onMouseLeave={e=>{ if(!active){ e.currentTarget.style.borderColor='rgba(124,77,255,0.18)'; e.currentTarget.style.color='rgba(200,190,240,0.6)'; } }}
-    >
-      <span>{label}</span>
-      <span style={{ opacity:0.7, fontSize:8 }}>{count}</span>
+    <button className={`filter-chip${active ? ' active' : ''}`} onClick={onClick}>
+      {label}
+      {count !== undefined && <span style={{ marginLeft:5, opacity:0.55 }}>{count}</span>}
     </button>
   );
 }
@@ -1076,85 +1064,57 @@ function FilterButton({ active, count, onClick, hue }) {
   );
 }
 
-/* ── Single tag chip in the panel ── */
-function FacetChip({ label, active, onClick, hue }) {
-  const c = `oklch(0.72 0.16 ${hue})`;
-  const cA = a => `oklch(0.72 0.16 ${hue} / ${a})`;
-  return (
-    <button onClick={onClick} style={{
-      fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em',
-      padding:'4px 9px', textTransform:'uppercase',
-      background: active ? cA(0.22) : 'transparent',
-      border: active ? `1px solid ${c}` : `1px solid ${cA(0.25)}`,
-      color: active ? '#f0eeff' : cA(0.7),
-      cursor:'pointer', borderRadius:2, transition:'all 0.13s',
-      whiteSpace:'nowrap',
-    }}
-      onMouseEnter={e=>{ if(!active){ e.currentTarget.style.borderColor=cA(0.6); e.currentTarget.style.color=cA(0.95); } }}
-      onMouseLeave={e=>{ if(!active){ e.currentTarget.style.borderColor=cA(0.25); e.currentTarget.style.color=cA(0.7); } }}
-    >{label}</button>
-  );
-}
-
 /* ── FilterPanel (expanded under filter row) ── */
-function FilterPanel({ category, selected, onToggle, onReset, hue }) {
+function FilterPanel({ category, selected, onToggle, onReset, onResetFacet }) {
   const facets = window.FACETS[category] || [];
-  const c = `oklch(0.72 0.16 ${hue})`;
-  const cA = a => `oklch(0.72 0.16 ${hue} / ${a})`;
+  const FG = window.FilterGroup;
   const totalActive = Object.values(selected || {}).reduce((s, arr) => s + (arr ? arr.length : 0), 0);
+  if (!facets.length) return null;
 
   return (
     <div style={{
       background: 'rgba(8,6,22,0.85)',
-      border: `1px solid ${cA(0.35)}`,
-      borderRadius:3,
-      padding:'18px 22px 20px',
-      animation:'slideDown 0.22s ease',
-      boxShadow: `0 12px 36px rgba(0,0,0,0.5), 0 0 22px ${cA(0.12)}`,
-      position:'relative',
+      border: '1px solid rgba(124,77,255,0.3)',
+      borderRadius: 3,
+      padding: '12px 18px 16px',
+      animation: 'slideDown 0.22s ease',
+      boxShadow: '0 12px 36px rgba(0,0,0,0.5)',
     }}>
-      {/* corner brackets */}
-      <span style={{position:'absolute',top:-1,left:-1,width:10,height:10,borderTop:`1px solid ${cA(0.7)}`,borderLeft:`1px solid ${cA(0.7)}`}}/>
-      <span style={{position:'absolute',top:-1,right:-1,width:10,height:10,borderTop:`1px solid ${cA(0.7)}`,borderRight:`1px solid ${cA(0.7)}`}}/>
-      <span style={{position:'absolute',bottom:-1,left:-1,width:10,height:10,borderBottom:`1px solid ${cA(0.7)}`,borderLeft:`1px solid ${cA(0.7)}`}}/>
-      <span style={{position:'absolute',bottom:-1,right:-1,width:10,height:10,borderBottom:`1px solid ${cA(0.7)}`,borderRight:`1px solid ${cA(0.7)}`}}/>
-
-      {/* header */}
-      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:14, paddingBottom:10, borderBottom:`1px solid ${cA(0.18)}` }}>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.3em', color:c, textTransform:'uppercase' }}>
-          ◈ Filteroptionen
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:10, paddingBottom:8, borderBottom:'1px solid rgba(124,77,255,0.12)' }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.3em', color:'rgba(124,77,255,0.6)', textTransform:'uppercase' }}>
+          Filteroptionen
         </span>
         <button onClick={onReset} disabled={totalActive===0} style={{
-          background:'transparent', border:`1px solid ${cA(totalActive ? 0.45 : 0.15)}`,
-          color: totalActive ? cA(0.9) : cA(0.35),
+          background:'transparent', border:`1px solid rgba(124,77,255,${totalActive?0.4:0.15})`,
+          color: totalActive ? 'rgba(160,140,255,0.85)' : 'rgba(124,77,255,0.3)',
           cursor: totalActive ? 'pointer' : 'default',
-          padding:'3px 10px', borderRadius:2,
+          padding:'2px 9px', borderRadius:2,
           fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.2em', textTransform:'uppercase',
           transition:'all 0.15s',
         }}>Zurücksetzen {totalActive>0 && `(${totalActive})`}</button>
       </div>
 
-      {/* facets grid */}
-      <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(260px, 1fr))', gap:'14px 28px' }}>
-        {facets.map(f => (
-          <div key={f.key}>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.28em', color:cA(0.55), textTransform:'uppercase', marginBottom:7 }}>
-              {f.label}
-            </div>
-            <div style={{ display:'flex', flexWrap:'wrap', gap:5 }}>
-              {f.options.map(opt => {
-                const sel = (selected[f.key] || []).includes(opt);
-                return <FacetChip key={opt} label={opt} active={sel} hue={hue} onClick={()=>onToggle(f.key, opt)}/>;
-              })}
-            </div>
-          </div>
-        ))}
+      <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(220px, 1fr))', gap:'2px 24px' }}>
+        {facets.map(f => {
+          const facetActive = (selected[f.key] || []).length > 0;
+          return (
+            <FG key={f.key} title={f.label} active={facetActive}
+              onReset={() => onResetFacet && onResetFacet(f.key)} collapsible>
+              <div style={{ display:'flex', flexWrap:'wrap', gap:4, marginBottom:4 }}>
+                {f.options.map(opt => {
+                  const sel = (selected[f.key] || []).includes(opt);
+                  return <button key={opt} className={`filter-chip${sel?' active':''}`} onClick={()=>onToggle(f.key, opt)}>{opt}</button>;
+                })}
+              </div>
+            </FG>
+          );
+        })}
       </div>
     </div>
   );
 }
 
-Object.assign(window, { FilterButton, FilterPanel, FacetChip });
+Object.assign(window, { FilterButton, FilterPanel });
 </script>
 
 
@@ -1196,6 +1156,13 @@ function _rarFromSg(sg) {
 }
 function _rarFromStaerke(s) {
   return s <= 2 ? 'gewoehnlich' : s <= 4 ? 'selten' : s === 5 ? 'sehrselten' : 'einzigartig';
+}
+function _crLabel(cr) {
+  if (cr === 0)     return 'HG 0';
+  if (cr === 0.125) return 'HG 1/8';
+  if (cr === 0.25)  return 'HG 1/4';
+  if (cr === 0.5)   return 'HG 1/2';
+  return `HG ${cr}`;
 }
 function _rarFromCr(cr) {
   if (cr <= 1) return 'gewoehnlich';
@@ -1262,14 +1229,14 @@ function buildKollektikonEntries(visibleMap, metaMap) {
           icon: _CREATURE_ICONS[idx % _CREATURE_ICONS.length],
           rarity: _rarFromCr(cr),
         };
+        entry.tags   = { cr: [_crLabel(cr)], art: [mon.art || ''], groesse: _normalizeMonsterGroesse(mon.groesse), habitat: _umgebungToHabitat(mon.umgebung) };
         if (isSeen) {
-          entry.tags   = { groesse: _normalizeMonsterGroesse(mon.groesse), habitat: _umgebungToHabitat(mon.umgebung), gefahr: [_gefahrFromCr(cr)] };
           entry.habitat = (mon.umgebung || []).join(', ');
           entry.size    = mon.groesse || '';
           entry.desc    = (mon.beschreibung && mon.beschreibung[0]) || '';
         } else {
           entry.obscuredName = _scrambleName(mon.name);
-          entry.tags = {}; entry.habitat = ''; entry.size = ''; entry.desc = '';
+          entry.habitat = ''; entry.size = ''; entry.desc = '';
         }
         entries.push(entry);
       });
@@ -1292,7 +1259,12 @@ function buildKollektikonEntries(visibleMap, metaMap) {
         size = res.größenkategorie || res.groesse || '';
       } else if (cat.id === 'pflanzen') {
         rarity = _rarFromSg(res.seltenheitsgrad || 1);
-        fullTags = { typ: res.kategorie ? [res.kategorie] : [], fundort: res.fundort || [], klima: res.klima || [] };
+        const eg = res.eigenschaften || {};
+        const eigenschaft = [];
+        if (eg.essbar) eigenschaft.push('Roh essbar');
+        if (eg.essbar_nach_zubereitung) eigenschaft.push('Zubereitet essbar');
+        if (eg.giftig) eigenschaft.push('Giftig');
+        fullTags = { typ: res.kategorie ? [res.kategorie] : [], fundort: res.fundort || [], klima: res.klima || [], eigenschaft };
         habitat = (res.fundort || []).join(', '); size = '';
       } else {
         rarity = _rarFromSg(res.seltenheitsgrad || 1);
@@ -1305,17 +1277,61 @@ function buildKollektikonEntries(visibleMap, metaMap) {
         price: isSeen ? _parsePrice(res.verkaufspreis) : 0,
         icon: pool.length ? pool[rid % pool.length] : null, rarity,
       };
+      entry.tags = fullTags;
       if (isSeen) {
-        entry.tags = fullTags; entry.habitat = habitat; entry.size = size; entry.desc = res.desc_de || '';
+        entry.habitat = habitat; entry.size = size; entry.desc = res.desc_de || '';
       } else {
         entry.obscuredName = _scrambleName(res.name_de);
-        entry.tags = {}; entry.habitat = ''; entry.size = ''; entry.desc = '';
+        entry.habitat = ''; entry.size = ''; entry.desc = '';
       }
       entries.push(entry);
     }
   }
   return entries;
 }
+
+// Populate facet options dynamically from the actual resource DBs
+(function() {
+  const F = window.FACETS;
+  if (!F) return;
+
+  function setOpts(cat, key, opts) {
+    const f = F[cat] && F[cat].find(x => x.key === key);
+    if (f) f.options = opts;
+  }
+  function unique(arr) { return [...new Set(arr.filter(Boolean))].sort(); }
+  function flatUnique(arr, key) { return unique(arr.flatMap(x => x[key] || [])); }
+
+  // kreaturen — CR and Monsterart
+  const monsters = window.MONSTER_DATA || [];
+  setOpts('kreaturen', 'cr',  [...new Set(monsters.map(m => m.cr || 0))].sort((a,b)=>a-b).map(_crLabel));
+  setOpts('kreaturen', 'art', unique(monsters.map(m => m.art)));
+
+  // fische
+  const fish = window.FISH_DB || [];
+  setOpts('fische', 'groesse', unique(fish.map(f => _normalizeGroesse(f.größenkategorie)[0])));
+  setOpts('fische', 'wasser',  unique(fish.map(f => _normalizeWasser(f.wassersort)[0])));
+  setOpts('fische', 'klima',   flatUnique(fish, 'klima'));
+
+  // pflanzen
+  const plants = [...(window.PFLANZEN_DB || []), ...(window.FANTASY_PLANT_DB || [])];
+  setOpts('pflanzen', 'typ',     unique(plants.map(p => p.kategorie)));
+  setOpts('pflanzen', 'fundort', flatUnique(plants, 'fundort'));
+  setOpts('pflanzen', 'klima',   flatUnique(plants, 'klima'));
+  const eigenOpts = new Set();
+  plants.forEach(p => {
+    if (!p.eigenschaften) return;
+    if (p.eigenschaften.essbar) eigenOpts.add('Roh essbar');
+    if (p.eigenschaften.essbar_nach_zubereitung) eigenOpts.add('Zubereitet essbar');
+    if (p.eigenschaften.giftig) eigenOpts.add('Giftig');
+  });
+  setOpts('pflanzen', 'eigenschaft', [...eigenOpts].sort());
+
+  // mineralien
+  const minerals = window.MINERALIEN_DB || [];
+  setOpts('mineralien', 'typ',     unique(minerals.map(m => m.kategorie)));
+  setOpts('mineralien', 'fundort', flatUnique(minerals, 'fundort'));
+})();
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"density":"comfortable","showOnlyFound":false}/*EDITMODE-END*/;
 
@@ -1378,6 +1394,13 @@ function KollektikonPage() {
   }
   function resetTagsForCat() {
     setFilterTags(prev => ({ ...prev, [activeCat]: {} }));
+  }
+  function resetFacet(key) {
+    setFilterTags(prev => {
+      const c = { ...(prev[activeCat] || {}) };
+      delete c[key];
+      return { ...prev, [activeCat]: c };
+    });
   }
   function entryMatchesTags(e) {
     const sel = filterTags[e.cat] || {};
@@ -1632,7 +1655,7 @@ function KollektikonPage() {
       {/* Filter panel */}
       {filterOpen && (
         <div style={{ padding:'14px 28px 0' }}>
-          <FPanel category={activeCat} selected={filterTags[activeCat]||{}} onToggle={toggleTag} onReset={resetTagsForCat} hue={catObj.hue}/>
+          <FPanel category={activeCat} selected={filterTags[activeCat]||{}} onToggle={toggleTag} onReset={resetTagsForCat} onResetFacet={resetFacet}/>
         </div>
       )}
 

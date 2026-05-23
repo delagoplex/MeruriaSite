@@ -221,6 +221,14 @@ function AccountModal({ onClose }) {
   const [saved,  setSaved]            = useState(false);
   const inputRef = useRef(null);
 
+  const [pwOpen,    setPwOpen]    = useState(false);
+  const [pwCurrent, setPwCurrent] = useState('');
+  const [pwNew,     setPwNew]     = useState('');
+  const [pwConfirm, setPwConfirm] = useState('');
+  const [pwSaving,  setPwSaving]  = useState(false);
+  const [pwError,   setPwError]   = useState('');
+  const [pwSaved,   setPwSaved]   = useState(false);
+
   useEffect(() => {
     async function load() {
       const { data } = await window._sb.from('profiles').select('display_name').eq('id', user.id).single();
@@ -247,6 +255,22 @@ function AccountModal({ onClose }) {
     setSaving(false);
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
+  }
+
+  async function handlePasswordChange() {
+    setPwError('');
+    if (!pwCurrent) { setPwError('Bitte aktuelles Passwort eingeben.'); return; }
+    if (pwNew.length < 6) { setPwError('Neues Passwort muss mindestens 6 Zeichen haben.'); return; }
+    if (pwNew !== pwConfirm) { setPwError('Passwörter stimmen nicht überein.'); return; }
+    setPwSaving(true);
+    const { error: signInErr } = await window._sb.auth.signInWithPassword({ email: user.email, password: pwCurrent });
+    if (signInErr) { setPwError('Aktuelles Passwort ist falsch.'); setPwSaving(false); return; }
+    const { error: updateErr } = await window._sb.auth.updateUser({ password: pwNew });
+    if (updateErr) { setPwError('Fehler: ' + updateErr.message); setPwSaving(false); return; }
+    setPwSaving(false);
+    setPwSaved(true);
+    setPwCurrent(''); setPwNew(''); setPwConfirm('');
+    setTimeout(() => { setPwSaved(false); setPwOpen(false); }, 2500);
   }
 
   const inputStyle = {
@@ -302,7 +326,7 @@ function AccountModal({ onClose }) {
         </div>
 
         {/* Display name */}
-        <div style={{ marginBottom:28 }}>
+        <div style={{ marginBottom:24 }}>
           <label style={labelStyle}>Anzeigename</label>
           <input
             ref={inputRef}
@@ -316,6 +340,55 @@ function AccountModal({ onClose }) {
             letterSpacing:'.1em', marginTop:6 }}>
             Wird auf der Spielercharaktere-Seite als Gruppenüberschrift angezeigt.
           </div>
+        </div>
+
+        {/* Password change section */}
+        <div style={{ marginBottom:28, borderTop:'1px solid rgba(124,77,255,0.15)', paddingTop:20 }}>
+          <button onClick={() => { setPwOpen(o => !o); setPwError(''); }}
+            style={{ display:'flex', alignItems:'center', gap:8, background:'transparent', border:'none',
+              cursor:'pointer', padding:0, width:'100%', textAlign:'left' }}>
+            <span style={{ ...labelStyle, marginBottom:0, flex:1 }}>Passwort ändern</span>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'rgba(124,77,255,0.4)',
+              transition:'transform .2s', display:'inline-block',
+              transform: pwOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}>▾</span>
+          </button>
+
+          {pwOpen && (
+            <div style={{ marginTop:16, display:'flex', flexDirection:'column', gap:14 }}>
+              {['Aktuelles Passwort', 'Neues Passwort', 'Neues Passwort bestätigen'].map((lbl, i) => {
+                const val  = [pwCurrent, pwNew, pwConfirm][i];
+                const setter = [setPwCurrent, setPwNew, setPwConfirm][i];
+                return (
+                  <div key={i}>
+                    <label style={labelStyle}>{lbl}</label>
+                    <input
+                      type="password"
+                      value={val}
+                      onChange={e => { setter(e.target.value); setPwError(''); }}
+                      onKeyDown={e => { if (e.key === 'Enter') handlePasswordChange(); }}
+                      style={inputStyle}
+                      autoComplete={i === 0 ? 'current-password' : 'new-password'}
+                    />
+                  </div>
+                );
+              })}
+
+              {pwError && (
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'.1em',
+                  color:'rgba(240,100,100,0.85)', marginTop:-4 }}>{pwError}</div>
+              )}
+
+              <button onClick={handlePasswordChange} disabled={pwSaving}
+                style={{ fontFamily:'var(--font-display)', fontSize:11, letterSpacing:'.18em',
+                  textTransform:'uppercase', padding:'9px 16px', cursor: pwSaving ? 'not-allowed' : 'pointer',
+                  background: pwSaved ? 'rgba(80,200,140,0.18)' : 'rgba(124,77,255,0.12)',
+                  border: `1px solid ${pwSaved ? 'rgba(80,200,140,0.55)' : 'rgba(124,77,255,0.4)'}`,
+                  borderRadius:3, color: pwSaved ? 'rgba(80,200,140,0.9)' : 'rgba(200,190,240,0.75)',
+                  transition:'all .2s', opacity: pwSaving ? 0.6 : 1 }}>
+                {pwSaved ? '✓ Passwort geändert' : pwSaving ? 'Speichern…' : 'Passwort ändern'}
+              </button>
+            </div>
+          )}
         </div>
 
         <div style={{ display:'flex', gap:10 }}>

@@ -684,7 +684,7 @@ function TokensTab() {
 
       {/* Right: token list */}
       <Panel>
-        <PanelHead>{tokens.length} Würfeltoken</PanelHead>
+        <PanelHead>{tokens.length} Würfelerlaubnis</PanelHead>
         <div style={{ flex:1, overflowY:'auto' }}>
           {loading && (
             <div style={{ padding:'30px', textAlign:'center',
@@ -803,17 +803,17 @@ function App() {
             </div>
             <h1 style={{ fontFamily:'var(--font-display)', fontSize:'24px', fontWeight:400,
               letterSpacing:'.28em', color:'#f0eeff', textTransform:'uppercase' }}>
-              {activeTab === 'missions' ? 'Missionsverwaltung' : 'Würfeltoken'}
+              {activeTab === 'missions' ? 'Missionsverwaltung' : 'Würfelerlaubnis'}
             </h1>
           </div>
           <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(160,140,255,0.4)',
             letterSpacing:'.18em' }}>
-            {activeTab === 'missions' ? `${missions.length} Missionen gesamt` : 'Einmalcodes für Neuauswürfeln'}
+            {activeTab === 'missions' ? `${missions.length} Missionen gesamt` : 'Einmalcodes für Attributwürfeln'}
           </div>
         </div>
         {/* Tabs */}
         <div style={{ display:'flex', gap:'2px' }}>
-          {[['missions','Missionen'],['tokens','Würfeltoken']].map(([id, label]) => (
+          {[['missions','Missionen'],['tokens','Würfelerlaubnis']].map(([id, label]) => (
             <button key={id} onClick={()=>setActiveTab(id)} style={{
               fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'.18em',
               textTransform:'uppercase', padding:'8px 18px',
