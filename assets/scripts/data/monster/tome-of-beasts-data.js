@@ -21,7 +21,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Sylvanisch"],
     umgebung: ["Gewässer", "Sumpf"],
-    bild: "assets/images/monster/tome-of-beasts/aalhund.png",
+    bild: "tome-of-beasts/aalhund.png",
     beschreibung: [
       "Ein groteskes Wesen mit dem muskulösen Schwanz, dem kugeligen Kopf und dem gummiartigen, schleimbedeckten Fleisch eines scheußlichen Aals. Der Rumpf und die Schwimmfüße dieses amphibischen Raubtiers ähneln denen eines missgestalteten Hundes, und nadelspitze Zähne füllen seinen bedrohlichen Kiefer.",
       "Aalhunde sind grimmige aquatische Feenwesen, die oft Seetrollen, Loreleien und Nixen als Diener dienen. Als Raubtiere sind sie zu Land ebenso gefährlich wie im Wasser. Ihre eisigen Jagdschreie treiben ihre Herren in blutige Raserei. Aalhunde sind Hinterhaltsräuber, die sich im Schlamm und Algen von Flussufern verbergen, um plötzlich als Rudel hervorzubrechen. Nichtaquatische Beute wird in die Tiefe gezogen, um zu ertrinken; Wasserbeute auf das Trockene gezerrt, um zu ersticken.",
@@ -65,7 +65,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Unterirdisch", "Höhle"],
-    bild: "assets/images/monster/tome-of-beasts/aaskaefer.png",
+    bild: "tome-of-beasts/aaskaefer.png",
     beschreibung: ["Aaskäfer sind mächtige Lasttiere mit starken Kiefern und der Fähigkeit zu klettern und zu graben. Mit breitem Rücken, gesägten Stachelvorderbeinen und schmalem Kopf sind sie zu groß zum bequemen Reiten, bieten aber eine hervorragende Plattform für Ballisten und Howdahs. Ihr dickes Exoskelett variiert von stumpfem Braun und Schwarz bis zu schillerndem Blaugrün, Purpurgrün und dem begehrten Gelboran.", "Domestiziert von den Darakhul leben die Aaskäfer ein komplexes Leben: Zunächst als einfache Tragtiere eingesetzt, werden die stärksten als Kriegskäfer ausgebildet. Im Alter werden sie als Ausgräber verwendet, die mit ihrer Säure Tunnel freischaben. Nach dem Tod dienen ihre Exoskelette sowohl als bewegliche Erkundungsfahrzeuge als auch als gepanzerte Plattformen."],
     besonderheiten: [],
     aktionen: [
@@ -100,7 +100,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["Gemein", "Drakonisch", "Umbral"],
     umgebung: ["Höhle", "Wald", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/aelterer_schattendrache.png",
+    bild: "tome-of-beasts/aelterer_schattendrache.png",
     beschreibung: ["Ältere Schattendrachen sind große, beunruhigende Drachen mit glänzend schwarzen Schuppen und schattenhaften Flügeln. Ihre leuchtend roten Augen glühen wie Kohlen, und ihre Stimme ist ein tiefes, ausdrucksloses Monoton. Sie sind verschmitzt und habgierig — verschlingen ganze Ziegen und Schafe und buchstabieren bisweilen mit deren Knochen Botschaften. Als Räuber sind sie überraschend geschickt und verbünden sich manchmal mit humanoiden Banden, wobei ihr Anteil an der Beute stets der größte sein muss.", "Ältere Schattendrachen meiden Sonnenlicht und hausen in dunklen, einsamen Orten: tiefen Höhlen, dichten Wäldern und schattigen Ruinen. Für Drachen ihrer Art werden sie alt — bis zu 250 Jahre — und pflanzen sich selten fort. Im Halbdunkel oder in der Dunkelheit verschwinden sie auf magische Weise aus dem Blickfeld; selbst Dunkelsicht kann sie nicht entlarven, denn sie verschmelzen nicht einfach mit dem Schatten — sie werden unsichtbar."],
     besonderheiten: [
       { name: "Schattenverkörperung", beschreibung: "In Gebieten mit Halbdunkel oder Dunkelheit gilt der Drache als unsichtbar. Künstliche Beleuchtung (z.B. eine Laterne oder Lichtzauber) hebt dies nicht auf; nur echtes Sonnenlicht oder der Zauber Tageslicht. Während er unsichtbar ist, kann der Drache weder Geschwindigkeitsstoß noch Stygischen Atem nutzen. Er kann diese Fähigkeit nach Belieben aussetzen oder wiederaufnehmen, solange er sich im Halbdunkel oder in der Dunkelheit befindet." },
@@ -140,7 +140,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Gemein", "Äonisch", "Riesisch", "Sylvanisch"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/aeonendrifter.png",
+    bild: "tome-of-beasts/aeonendrifter.png",
     beschreibung: [
       "Die Luft knistert und Lichter flackern in den Ruinen. In einem Wirbel farbenfroher Roben materialisiert sich der Drifter aus den unergründlichen Strudeln der Zeit. Seine Augen scannen die Halle in Panik und ahnen die schrecklichen Enthüllungen einer weiteren Ära.",
       "Äonendrifter verließen einst eine sterbende Zivilisation auf der Suche nach Hilfe aus anderen Zeitaltern. Die Rückkehr in ihre eigene Zeit erwies sich jedoch als weitaus schwieriger als die Abreise, und so fanden sie sich treibend im Strom der Zeit. Im Laufe der Jahrzehnte verkümmerte ihre Chance auf Heimkehr – und mit ihr das Fleisch ihrer Körper. Die Äonen haben sie mumifiziert.",
@@ -182,7 +182,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Wüste", "Höhle"],
-    bild: "assets/images/monster/tome-of-beasts/aetzender_anstuermer.png",
+    bild: "tome-of-beasts/aetzender_anstuermer.png",
     beschreibung: ["Ätzende Anstürmer sind riesige, gedrungene Kreaturen, die an unwirtlichen Orten leben und diese noch gefährlicher machen. Ihr zahnloses Maul macht die Jagd schwierig, doch sie haben sich angepasst: Sie sondern lähmende Säure aus ihren Tentakeln ab, stürmen auf ihre Beute zu, werfen sie mit ihrem mächtigen Brauenwulst um und lösen sie dann mit den Tentakeln auf, um die verflüssigten Überreste aufzuschlürfen.", "Ätzende Anstürmer sind Einzelgänger und greifen alles an, was ihnen entgegentritt — einschließlich ihrer eigenen Art. Staubgoblins sind die häufigsten Kreaturen, die eine Partnerschaft mit ätzenden Anstürmern eingehen, mit unterschiedlichem Erfolg."],
     besonderheiten: [
       { name: "Überwältiger", beschreibung: "Der ätzende Anstürmer kann seine Bewegung in dem Bereich einer liegenden großen oder kleineren Kreatur beenden. Eine Kreatur, die sich im selben Bereich wie der Anstürmer aufrichtet, kann sich als Teil des Aufrichtens bis zu 1,5 m vom Anstürmer wegbewegen." },
@@ -221,7 +221,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein", "Ursprachlich"],
     umgebung: ["Grasland", "Ruinen", "Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/aetzfalle.png",
+    bild: "tome-of-beasts/aetzfalle.png",
     beschreibung: [
       "Mordant-Fallen wurden von Kriegsmagiern der Antike erschaffen. Jede ähnelt einem riesigen, dunkelgrauen Seestern mit elf Armen und einem Gewicht von acht Tonnen — und dennoch ist eine Mordant-Falle nie offensichtlich. Stattdessen kontrolliert sie einige Humanoide, die aimlos umherschlurfen, deren Haut vor Feuchtigkeit glänzt und die gelegentlich lose Gruppen in der Nähe der Falle bilden.",
       "Seestern-Puppenspieler. Fallen vergraben sich unter losem Erdreich, um Kreaturen anzugreifen, die darüber laufen. Sie greifen an, indem sie Filamente ausfahren, die Säure in die Opfer injizieren; dies verflüssigt Organe und Muskeln, lässt aber Skelett, Sehnen und Haut intakt. Mit dem so ausgehöhlten und mit Säure und Filamenten neu gefüllten Körper kann die Mordant-Falle ihn von unten wie eine Marionette steuern.",
@@ -266,7 +266,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 16,
     sprachen: ["Abyssal", "Gemein", "Drakonisch", "Elfisch", "Infernalisch", "Telepathie 18 m"],
     umgebung: ["Stadt", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/akyishigal_daemonenfuerst_der_kakerlaken.png",
+    bild: "tome-of-beasts/akyishigal_daemonenfuerst_der_kakerlaken.png",
     beschreibung: [
       "Von allen Dämonen, die im Abyssus lauern, sind nur wenige so abstoßend wie Akyishigal, der Herr der Kakerlaken. Seine schmutzbedeckten Mandibeln klacken unaufhörlich nach dem Fleisch und den Seelen von Humanoiden.",
       "Korrumpierung der Zivilisation. Obwohl Akyishigal eine ganze Rasse nach seinem Ebenbild gezeugt hat, giert er nach Anhängern unter Menschen, Elfen und anderen Rassen, um die Zivilisation zu korrumpieren und von innen zu verfaulen zu lassen. Trotz seiner Abscheulichkeit hat Akyishigal Anhänger unter den städtischen Entrechteten, den slumbewohnenden Armen und jenen, die in lichtlosen Unterstädten lauern.",
@@ -312,7 +312,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Infernalisch", "Sprache der Akyishigal-Brut"],
     umgebung: ["Stadt", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/akyishigal-brut.png",
+    bild: "tome-of-beasts/akyishigal-brut.png",
     beschreibung: [
       "Diese menschengroße Abscheulichkeit hat einen Schwanz, der sich gegen Ende gabelt und sich über ihren Rücken ringelt. Beide Enden tragen Nadelstacheln, die von Gift triefend sind.",
       "Die Brut des Akyishigal ist überall dort zahlreich vertreten, wo der Dämonenfürst weilt. Er ist auch dafür bekannt, sie zu seinen Anhängern zu schicken, wenn deren Not groß ist und die Anwesenheit der Brut Akyishigal irgendwie nützt.",
@@ -354,7 +354,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Auranisch", "Gemein", "Ignanisch"],
     umgebung: ["Wüste", "Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/al-aeshma-dschinn.png",
+    bild: "tome-of-beasts/al-aeshma-dschinn.png",
     beschreibung: [
       "Eine wilde Parodie eines Dschinn – der untere Körper des Al-Aeshma besteht aus sengenden Winden und Wüstensand.",
       "Die Al-Aeshma sind ehemalige Dschinn und teilen dieselben Kräfte, wenn auch in dunklerer Ausprägung. Ihre Haut ist schwarz wie Pech, und ihre Wirbelwindform enthält viel Staub und Sand. Nur Strahlungs- oder Feuerschaden kann sie vollständig töten – ansonsten fließt der Wüstensand herbei, um ihre Wunden zu schließen und abgetrennte Gliedmaßen wieder anzuheften.",
@@ -429,7 +429,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 19,
     sprachen: ["Gemein", "Drakonisch"],
     umgebung: ["Wald", "Grasland"],
-    bild: "assets/images/monster/tome-of-beasts/ala.png",
+    bild: "tome-of-beasts/ala.png",
     beschreibung: [
       "Alas werden aus Gallen geboren, die an den Stämmen von Baumwächtern wachsen. In diesen parasitären Taschen erkrankt der Baumwächter und wird seiner Lebenskraft beraubt. Wenn der Baumwächter stirbt, wird die Ala in einem schwarzen Wirbelwind geboren.",
       "Töchter des Wirbelwinds. Alas haben wirbelnd verwehtes Haar und tragen rauchige schwarze Fetzen, doch ihre wahre Form ist die eines Wirbelwinds, den stets die Šestaci erkennen können — jene Männer und Frauen, die an jeder Hand sechs Finger haben. Im Flug oder im Kampf nimmt eine Ala eine Form an mit dem Oberkörper einer Hexe und einem wirbelnden Luftvortex anstelle von Hüften und Beinen. Wenn eine Ala in Menschengestalt ein Haus betritt, stöhnt das gesamte Gebäude, als wäre es von einem gewaltigen Sturmstoß getroffen worden. Alas leben in den Höhlen von Bäumen, die vom Blitz getroffen wurden. Sie sind am aktivsten, wenn Donner durch die Wälder hallt, und wo immer sie reisen, entstehen Hagel- oder Gewitter um sie herum.",
@@ -474,7 +474,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 17,
     sprachen: ["Gemein", "Himmlisch", "Drakonisch", "Infernalisch"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/algorith.png",
+    bild: "tome-of-beasts/algorith.png",
     beschreibung: [
       "Manchmal als Faltenengel bezeichnet, sind Algorith rechtschaffene Wesen, geformt aus purer Energie, reiner Mathematik und universellen physikalischen Gesetzen.",
       "Kreaturen der reinen Vernunft. Sie sind die Grenzwächter der Konzeptuellen Reiche und bewahren subjektive Wesen vor den Reichen des Absoluten. Ewig, erbarmungslos und unaufhörlich wachsam, schützen sie vor den Monstern, die in den dunkelsten Dimensionen des Multiversums lauern, und suchen Chaos selbst in den Behausungen der Götter auf, um es zu vernichten.",
@@ -518,7 +518,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 22,
     sprachen: ["Alle Sprachen", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/alquam_daemonenfuerst_der_nacht.png",
+    bild: "tome-of-beasts/alquam_daemonenfuerst_der_nacht.png",
     beschreibung: [
       "Alquam ist der Dämonenfürst der Nacht, eine riesige dämonische Kreatur, die Dunkelheit verkörpert. Sein Hort liegt in einem gewaltigen Baum im Herzen einer lichtlosen Schicht des Abyssus — ein uralter, toter Stamm mit einer mächtigen Höhle in seinem verfaulenden Inneren.",
       "Kult der Dunkelheit. Alquam zieht Anhänger an, die die Nacht und das Verborgene verehren. Seine Anwesenheit korrumpiert die Umgebung, löscht das Licht aus und treibt nachtaktive Tiere in den Wahnsinn."
@@ -584,7 +584,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["Gemein", "Elfisch", "Sylvanisch"],
     umgebung: ["Wald", "Feenwildnis"],
-    bild: "assets/images/monster/tome-of-beasts/alseid.png",
+    bild: "tome-of-beasts/alseid.png",
     beschreibung: [
       "Alseid sind die anmutigen Waldverwandten der Zentauren, mit dem schlanken Oberkörper eines Elfen und dem Unterkörper eines Hirsches. Da sie selten weit von den bewaldeten Lichtungen entfernt gesehen werden, die sie Heimat nennen, werden sie manchmal als 'Hainnypmhen' bezeichnet — obwohl sie den Elfen näher verwandt sind als Nymphen.",
       "Waldhüter. Alseid sehen den Wald als Individuum und Freund. Sie sind misstrauisch gegenüber Fremden, die diese Ansicht nicht teilen. Verlorene Reisende, die tiefen Respekt vor dem Wald zeigen, können vielleicht den weißen Schwanz eines entfernten Alseid erblicken; wenn sie ihm folgen, während er davonhüpft, führt der mitfühlende Alseid sie möglicherweise zu einem Weg aus dem Wald heraus. Respektlose Fremde mögen demselben Schwanz in ihren Untergang folgen. Alseid haben keine Skrupel, Eindringlinge zu töten, die ihren Wald verbrennen oder abholzen.",
@@ -624,7 +624,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["Gemein", "Elfisch", "Sylvanisch", "Druidisch"],
     umgebung: ["Wald", "Feenwildnis"],
-    bild: "assets/images/monster/tome-of-beasts/alseid_hainwaechter.png",
+    bild: "tome-of-beasts/alseid_hainwaechter.png",
     beschreibung: [
       "Hainwächter sind die Beschützer der Alseid-Stämme und tragen den Zorn ihres urzeitlichen Waldes gegen jene, die ihn bedrohen. Als Druiden-Zauberwirker bündeln sie die Macht des Waldes in jedem Angriff und jeder Beschwörung.",
       "Hainwächter teilen alle Eigenschaften normaler Alseid — ihre Liebe zur Wildnis, ihre Abneigung gegen Eindringlinge und ihren tiefen Respekt vor den Geweihen als Symbol ihres Standes."
@@ -664,7 +664,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: [],
     umgebung: ["Wald", "Dschungel"],
-    bild: "assets/images/monster/tome-of-beasts/amphiptere.png",
+    bild: "tome-of-beasts/amphiptere.png",
     beschreibung: [
       "Die Amphiptere ist am häufigsten als Schwarm goldgekrönter, fledermausflügeliger Schlangen anzutreffen, die aus dem Blattwerk hervorbrechen.",
       "Kleine Wyverne. Eine Amphiptere hat fledermausartige Flügel und einen wyvern-ähnlichen Stachel am Ende ihres Schwanzes. Ihre Reptilienkörper sind beschuppt, während ihre Flügel grünlich-gelbe Federn tragen.",
@@ -707,7 +707,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 19,
     sprachen: ["Gemein", "Himmlisch", "Riesig", "Sylvanisch"],
     umgebung: ["Gewässer", "Dschungel", "Grasland"],
-    bild: "assets/images/monster/tome-of-beasts/andrenjinyi.png",
+    bild: "tome-of-beasts/andrenjinyi.png",
     beschreibung: [
       "Eine gigantische, schwarzköpfige Schlange von über 18 m Länge, gehüllt in leuchtende Schuppen, ist jeder Andrenjinyi mit lebhaften Mustern in jeder erdenklichen Farbe gesprenkelt. Die Luft um diese Schlangen ist schwer und riecht nach der befeuchteten roten Wüste nach einem sintflutartigen Gewitter.",
       "Andrenjinyi sind die Nachkommen der Regenbogenschlange, des ersten und größten Geistes des Weltanfangs. Die Kinder der Regenbogenschlange sind dichotome Naturgeister von Land und Himmel, Sonne und Regen, Mann und Frau sowie Geburt und Zerstörung.",
@@ -756,7 +756,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["alle Sprachen, die er zu Lebzeiten kannte"],
     umgebung: ["Ruinen", "Höhle"],
-    bild: "assets/images/monster/tome-of-beasts/angatra.png",
+    bild: "tome-of-beasts/angatra.png",
     beschreibung: [
       "Dieses verwitterte Wesen ist in blutbefleckte Fetzen gehüllt. Es kann eine zerfetzte Kapuze zurückziehen und glühende Augen enthüllen, die hungrig vor Blutgier sind.",
       "In bestimmten Stämmen zieht das Brechen lokaler Tabus eine schreckliche Vergeltung durch Ahnengeister nach sich, insbesondere wenn der Übertreter ein Stammesführer oder Ältester war. Der Übertreter wird verflucht, aus dem Stamm verstoßen und anschließend gejagt und hingerichtet.",
@@ -798,7 +798,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: [],
     umgebung: ["Höhle", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/angelwurm.png",
+    bild: "tome-of-beasts/angelwurm.png",
     beschreibung: [
       "So geduldig wie ein Angler leuchtet der Angelwurm ein Locklicht in der Dunkelheit und wartet auf seine nächste Mahlzeit.",
       "Seidenfallen. Der Angelwurm gräbt sich in die Decken von Höhlen und Tunneln und fertigt dort Schlingen aus starken Seidenfäden, die mit klebrigem Schleim bedeckt sind. Er lockt Beute in seine Schlingen, während er selbst sicher verborgen bleibt, und taucht nur auf, um zu fressen. Mit Dutzenden von Schlingen findet früher oder später immer Nahrung zum Angelwurm."
@@ -841,7 +841,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein", "Elfisch", "Sylvanisch"],
     umgebung: ["Feenwildnis"],
-    bild: "assets/images/monster/tome-of-beasts/angstschmied.png",
+    bild: "tome-of-beasts/angstschmied.png",
     beschreibung: [
       "Abgesehen von ihren klauenbewehrten Händen und dem ausdruckslosen Gesicht wirken Angstschmiede elfenhaft. Solange der Mund geschlossen ist, ist das Gesicht eines Angstschmieds merkmallos bis auf tiefe Faltenreihen. Öffnet sich der große Mund in der Mitte des Gesichts, kommen lange nadelspitze Zähne zum Vorschein, die ein einziges riesiges Auge umgeben.",
       "Als Fiarsídhe unter sich bekannt, sind Angstschmiede Diener des Hofs der Schattenfeen und ähnlicher dunkler Feenköfe wie jener der Königin Mab und der Schneekönigin.",
@@ -908,7 +908,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Unterirdisch", "Höhle"],
-    bild: "assets/images/monster/tome-of-beasts/annelidast.png",
+    bild: "tome-of-beasts/annelidast.png",
     beschreibung: [
       "Ein Annelidast ist ein gigantischer Wurm, der jahrzehntelang in den Tiefen der Erde schlummert, wo das Gestein selbst von urzeitlicher Magie durchdrungen ist. Im Laufe der Jahrtausende haben sie bleiverkleidete Panzer entwickelt, um sich vor dieser Magie zu schützen.",
       "Einzigartige Jagdweise. Einmal pro Jahrhundert erwacht ein Annelidast und wandert an die Oberfläche, um zu fressen. Er frisst mithilfe baleenartiger Zähne, die ihm helfen, Nahrung aus der Erde zu filtern. Diese Ernährungsweise erfordert jedoch, dass er größere Beutetiere zuerst zermalmt, bevor er sie verzehren kann.",
@@ -953,7 +953,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Urtonisch"],
     umgebung: ["Wüste", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/anubian.png",
+    bild: "tome-of-beasts/anubian.png",
     beschreibung: [
       "Der wirbelnde Sand eines Anubians formt sich zu einem knurrenden, schakalsgesichtigen Humanoiden, dessen Augen mit einem unheimlichen blauen Schein leuchten. Anubians sind Elementare, die beschworen werden, um Gräber zu bewachen oder Schätze zu hüten.",
       "Sandhaufen. Ein ruhender Anubian ähnelt einem Haufen Sand oder Staub, oft verstreut an einem ohnehin staubigen Ort. Wenn er aktiv ist, erhebt er sich zu einem muskulösen Humanoiden mit dem Kopf eines Schakals. Ein zerstörter Anubian bricht in einen trägen Sandhaufen zusammen.",
@@ -996,7 +996,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["Affensprache", "Infernalisch", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen", "Dschungel"],
-    bild: "assets/images/monster/tome-of-beasts/apau_perape.png",
+    bild: "tome-of-beasts/apau_perape.png",
     beschreibung: [
       "Scharfe Zähne füllen den Mund dieses großen, dämonischen Affen. Seine langen, muskulösen Arme reichen bis zum Boden und enden in boshaft gebogenen Klauen.",
       "Diener des Feuers. Diese schwarzfelligen Gorilla-Dämonen dienen allein Mechuiti, dem Dämonenlord des Feuers und der Affen. Ihre letzte Loyalität ist unerschütterlich, obwohl sie manchmal vorübergehend anderen dienen — und sie kennen keine Angst vor Feuer, zünden freudig Dörfer und Felder an, wenn ihr Meister missachtet oder beleidigt wird.",
@@ -1039,7 +1039,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 22,
     sprachen: ["Himmlisch", "Gemein", "Drakonisch", "Infernalisch", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/arbeyach.png",
+    bild: "tome-of-beasts/arbeyach.png",
     beschreibung: [],
     besonderheiten: [
       { name: "Legendäre Resistenz (3/Tag)", beschreibung: "Wenn Arbeyach einen Rettungswurf misslingt, kann es wählen, stattdessen zu bestehen." },
@@ -1086,7 +1086,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["Infernalisch"],
     umgebung: ["Andere Ebenen", "Gebirge", "Wald"],
-    bild: "assets/images/monster/tome-of-beasts/arbeyach-brut.png",
+    bild: "tome-of-beasts/arbeyach-brut.png",
     beschreibung: [
       "Das Maul dieses insektoiden Humanoiden öffnet sich über tropfenden Mandibeln, die hinter einer schlecht sitzenden Fleischmaske kaum verborgen werden. Seine Augen haben Facetteniriden, und gezackte Stacheln sprießen zwischen den Fingern seiner langen, segmentierten Gliedmaßen hervor.",
       "Haut und Panzer. Arbeyach-Brut ist grob humanoid mit vielen insektoiden Merkmalen, darunter ein gehärteter Panzer und seltsam gelenkte Gliedmaßen. Gesicht, Arme und Beine sind mit einer größtenteils dekorativen Haut bedeckt, die sich dehnt und reißt, um die insektoiden Züge darunter zu enthüllen.",
@@ -1133,7 +1133,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein", "Gnoll", "Sylvisch", "Leerensprache"],
     umgebung: ["Feenwildnis", "Wald"],
-    bild: "assets/images/monster/tome-of-beasts/aridni.png",
+    bild: "tome-of-beasts/aridni.png",
     beschreibung: [
       "Sowohl widerstandsfähiger als auch skrupelloser als gewöhnliche Pixies sind die Aridni eine besonders gierige Art von Feen-Räubern und Entführern.",
       "Blasse Bogenschützen. Diese aschfahlen Feen mit grauen Mottenflügeln schießen grün leuchtende Pfeile mit einem Grinsen und einem Fluch. Aridni bevorzugen wann immer möglich den Fernkampf und sind nur schwer in den Nahkampf zu locken. Manchmal nehmen sie eine persönliche Herausforderung an oder reagieren auf Anschuldigungen der Feigheit.",
@@ -1179,7 +1179,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 16,
     sprachen: ["Abyssisch", "Infernalisch", "Telepathie 18 m"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/arx.png",
+    bild: "tome-of-beasts/arx.png",
     beschreibung: [
       "Arexe sind teuflische Kreaturen, die anderen Dämonen als mobile Feldverteidigungen dienen. Sie können ihre Elytren – die gehärteten Schalen, die ihre Flügel bedecken – ablösen, um Kommandeuren Deckung zu verschaffen, die ihre Armeen von der vorderen Linie aus befehligen möchten. Sie nutzen ihre Telepathie und ausgezeichnete Sicht, um diesen Anführern genaue Schlachtfeldübersichten zu liefern, die damit Truppen dirigieren und Angriffe von hinter der Arxmauer aus leiten.",
       "Anheuerbarer Söldner. Wenn sie nicht für Legionen von Teufeln oder Dämonen kämpfen, nehmen Arexe bereitwillig Bezahlung für ihre Dienste an. Sie sind standhafte Kämpfer, die Befehle zuverlässig befolgen, zeigen jedoch kein Interesse daran, einzelne Verbündete über größere taktische Vorteile zu stellen."
@@ -1226,7 +1226,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Riesisch"],
     umgebung: ["Wald", "Dschungel"],
-    bild: "assets/images/monster/tome-of-beasts/asanbosam.png",
+    bild: "tome-of-beasts/asanbosam.png",
     beschreibung: [
       "Ein Asanbosam ist ein haariger Koloss mit hervorstehenden, blutunterlaufenen Augen, der oft hoch in einem Baum sitzt und bereit ist, unvorsichtige Passanten mit Klauen wie rostige Haken zu greifen.",
       "Eisenhaken und Reißzähne. Von der Taille aufwärts ähneln sie haarigen Ogers, haben jedoch muskulöse und flexible Beine, die viel länger als die eines Ogers sind. Diese seltsamen Gliedmaßen enden in Füßen mit hakenartigen Klauen, und sowohl die Haken als auch die Reißzähne bestehen aus Eisen statt aus Knochen oder anderem organischen Material. Diese Eisenreißzähne und -klauen zeigen das Alter eines Asanbosam an – nicht nur durch ihre Größe, sondern auch durch ihre Farbe. Die jüngsten Exemplare haben glänzende graue Haken und Reißzähne, während ältere verfärbte und rostige haben.",
@@ -1268,7 +1268,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein", "Drakonisch"],
     umgebung: ["Stadt", "Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/aschendrache.png",
+    bild: "tome-of-beasts/aschendrache.png",
     beschreibung: ["Aschendrachen hocken mit Vorliebe auf Schornsteinen, als hätten sie sich gerade hindurchgezwängt, den Schwanz noch in den Rauch gehängt. Sie verstopfen Schlote, bestreuen Menschenmengen mit dichter, erstickender Asche und lachen dabei mit pfeifendem Hüsteln. Schmelzer und Schmiede legen große Aschehaufen aus, um die Drachen von ihren Betrieben fernzuhalten. In der freien Wildbahn siedeln sie an Vulkanplateaus und suchen die Nähe von Roten Drachen oder Flammendrachen, die ihnen genug Asche liefern.", "Aschendrachen fressen Ratten und streunende Tiere, greifen aber auch unbeaufsichtigte Haustiere. Asche verzehren sie nicht — sie wälzen sich nur darin wie eine Katze in Katzenminze. Wer ihr Spiel unterbricht, bekommt ihren glühend heißen Aschenodem zu spüren. Alle drei Winter verlässt ein Männchen sein Revier auf Brautschau; nistet sich ein Paar in einer Stadt ein, machen die rußgeschwängerten Straßen es sofort bekannt."],
     besonderheiten: [],
     aktionen: [
@@ -1307,7 +1307,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["versteht alle Sprachen, die er im Leben kannte, kann aber nicht sprechen"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/aschenlaeufer.png",
+    bild: "tome-of-beasts/aschenlaeufer.png",
     beschreibung: [
       "Ashwalker sind das unglückliche Ergebnis von Humanoiden, die durch den Atem eines Drachen an einem Ort voller mächtiger magischer Energie ums Leben kamen. Diese Untoten tauchen oft in Horden auf, nachdem ein Drache eine Stadt dem Erdboden gleichgemacht hat. Obwohl fast zu Asche verbrannt, können viele Aschenläufer noch einige Worte herauspressen – meist Worte des Hasses gegenüber jenen, die dem Schicksal des Aschenläufers entgingen.",
       "Der letzte Atemzug. Obwohl der Atem eines roten Drachen die häufigste Ursache für Aschenläufer ist, können sie durch jeden Drachenatem entstehen. Die magische Aufladung des Drachen, der das Individuum tötet, hinterlässt eine ähnliche Energieart in den Überresten. So verströmt etwa ein durch Giftatem getöteter Aschenläufer oft giftige Wolken, während er durch die Ödnis seiner zerstörten Heimat wandelt.",
@@ -1350,7 +1350,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Beliebige Sprachen, die sie im Leben kannte"],
     umgebung: ["Grasland", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/auferstehender_verwuester.png",
+    bild: "tome-of-beasts/auferstehender_verwuester.png",
     beschreibung: [
       "Ein Körper, der einst menschlich gewesen sein mag, hat nun vier Beine und erschreckend lange, dicke Arme. Noch schlimmer ist, dass seine Haut abgezogen wurde, wodurch die toten Muskeln und Sehnen darunter zum Vorschein kommen.",
       "Geist des Krieges. Der auferstehende Verwüster ist ein Untoter, der aus einem auf dem Schlachtfeld gefallenen Krieger entsteht. Sein Körper wird zu einem Avatar des Kampfes mit vier Beinen und einem Paar langer, schwerer Arme, während er sich seiner Haut entledigt und zu reinen untoten Muskeln, Knochen und Sehnen wird.",
@@ -1396,7 +1396,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 18,
     sprachen: ["versteht die Sprache seines Erschaffers, kann jedoch nicht sprechen"],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/augengolem.png",
+    bild: "tome-of-beasts/augengolem.png",
     beschreibung: [
       "Ein Augengolem ist ein muskulöser Riese mit glatten, marmorweißen Gliedmaßen, die mit augenähnlichen Sigilen überzogen sind. Öffnet eines seiner Augen für einen Moment, strahlt ein Strahl so hell wie die Sonne hervor. Die Haut des Golems ist mit echten Augen sowie arkanen Sigilen bedeckt, die Augen nachahmen, und er erreicht eine Höhe von mindestens 3 Metern.",
       "Ein Augengolem tötet seine Opfer selten. Stattdessen hinterlässt er sie geblendet und umherirrend, gequält von Visionen des Golems, die durch ihr Gedächtnis blitzen. Manche werden davon wahnsinnig, andere wählen die Hingabe an jenen, der noch sehen kann. Beim Tod des Golems öffnen sich alle seine Augen gleichzeitig: ein taubendes Brüllen ertönt, ein blendender Lichtblitz leuchtet auf, und danach liegen Hunderte makellos erhaltener Augäpfel auf dem Boden – noch warm und frisch."
@@ -1439,7 +1439,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein", "Infernalisch", "Telepathie 30 m"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/automata-teufel.png",
+    bild: "tome-of-beasts/automata-teufel.png",
     beschreibung: [
       "Ein in Ketten gehüllter Albtraum aus schneidenden Zahnrädern und surrenden Getrieben — der Automata-Teufel heult wie ein Orkan in der Schlacht. Einst Kettenteufel, wurden Automata-Teufel zu größerer Macht befördert.",
       "Wächter und Aufseher. Manchmal als Castigas bezeichnet, sind Automata-Teufel dazu geschaffen, andere zu überwachen. Sie werden oft als Bewacher von Gefangenen oder als Aufseher höllischer Fabriken eingesetzt.",
@@ -1488,7 +1488,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Gemein", "Ursprünglich"],
     umgebung: ["Feenwildnis", "Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/azza-gremlin.png",
+    bild: "tome-of-beasts/azza-gremlin.png",
     beschreibung: [
       "Diese kleinen, haarlosen, spindeldürren Kreaturen knistern vor statischer Elektrizität. Lichtbögen aus Blitzen schnappen zwischen ihren langen Ohren hin und her.",
       "Blitzliebhaber. Azza-Gremlins leben in Gewitterwolken, blitzbasierter Maschinerie und anderen Orten mit reichlich Blitz.",
@@ -1533,7 +1533,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Gemein", "Riesisch"],
     umgebung: ["Wald", "Arktis"],
-    bild: "assets/images/monster/tome-of-beasts/baerenvolk.png",
+    bild: "tome-of-beasts/baerenvolk.png",
     beschreibung: [
       "Obwohl es den Kopf eines zottigen Bären hat, trägt dieses humanoide Wesen Rüstung und hält eine Streitaxt in einer riesigen, beklauten Hand und einen Kriegshammer in der anderen. Es ist ein massiver Muskelklotz, der die meisten Menschen einschüchternd überragt.",
       "Das massige Bärenvolk sind einschüchternde Kreaturen. Grob und mächtig verbinden sie die Merkmale humanoider Wesen und Bären. Ihre Köpfe sind ursoid mit schweren Kiefern und scharfen Zähnen. Dunkles Fell bedeckt ihre muskelbepanzerten Körper. Erwachsene Bärenvolk sind mindestens 2,1 m groß und wiegen mehr als 270 kg.",
@@ -1579,7 +1579,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["Gemein"],
     umgebung: ["Gewässer", "Sumpf"],
-    bild: "assets/images/monster/tome-of-beasts/bagiennik.png",
+    bild: "tome-of-beasts/bagiennik.png",
     beschreibung: [
       "Mit Schwimmhautklauen, hervorquellenden Augen und zwei Nasenspaltenlöchern, aus denen eine ölige schwarze Substanz sickert, ist die Kreatur nicht ganz hässlich – aber vielleicht wäre sie es, wenn der Großteil von ihr nicht unter einer dicken Schicht Schlamm und Matsch verborgen wäre.",
       "Badende Hässlichkeiten. Wenn ein Bagiennik allein ist, verbringt er seine Zeit damit, in örtlichen Quellen, Flüssen und Sümpfen zu baden. Die Kreatur siebt den Schlamm und Schlick durch und extrahiert Substanzen, die ihre öligen Absonderungen verbessern. Wenn etwas die Kreatur während ihrer trägen Badesitzungen stört, rächt sie sich wütend. Sobald ein Bagiennik vier Stunden lang gebadet hat, sucht er nach einem Ziel für Unfug oder Wohltätigkeit.",
@@ -1625,7 +1625,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["Gemein", "Nurisch", "Sylvisch"],
     umgebung: ["Stadt", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/bastet-tempelkatze.png",
+    bild: "tome-of-beasts/bastet-tempelkatze.png",
     beschreibung: [
       "Eine schlanke Katze, weit größer als jede Hauskatze, gleitet aus den Schatten. Ihr Fell glänzt wie Tinte, während sie zwitschert, und ihr Schwanz flackert neckisch, während ihre goldenen Augen das Treiben in ihrem Tempel beobachten.",
       "Für Magie gezüchtet. Tempelkatzen der Bastet werden von manchen für Himmlische gehalten, doch sie sind eine irdische Rasse, die durch Generationen von Verzauberungen durch das Priestertum erschaffen wurde.",
@@ -1670,7 +1670,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Wald", "Dschungel"],
-    bild: "assets/images/monster/tome-of-beasts/baumgreifer.png",
+    bild: "tome-of-beasts/baumgreifer.png",
     beschreibung: [
       "Lange, affenähnliche Arme schlängeln sich wie behaarte Schlangen durch die Bäume und hängen von einem zottigen, gestreiften Affen im belaubten Blätterdach herab, um Kreaturen darunter zu packen.",
       "Ein Baumgreifer ist eine missgestaltete Schöpfung der Götter — ein Primat, dessen Beine sich in lange, muskulöse Tentakel verwandelt haben, die mit zottigem, rotem Fell bedeckt sind.",
@@ -1716,7 +1716,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Behtu", "Gemein", "Infernalisch"],
     umgebung: ["Dschungel"],
-    bild: "assets/images/monster/tome-of-beasts/behtu.png",
+    bild: "tome-of-beasts/behtu.png",
     beschreibung: [
       "Mit dem Gesicht eines Mandrills und den Hauern eines gewaltigen Ebers fließt in diesen wilden Halb-Affen-Halb-Menschen-Pygmäen dämonisches Blut. Nur Verzweifelte oder Lebensmüde reisen zu ihren vulkanischen Tempelinseln.",
       "Mechuiti, der Dämonenfürst der Affen, des Kannibalismus und der Folter, verbindet die Grausamkeit eines Dämons mit der List eines Menschen und der Wildheit eines Affen. Er züchtete dieselben Eigenschaften in sein Volk, die Behtu, die seine Verehrung von Insel zu Insel tragen.",
@@ -1760,7 +1760,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein", "Zwergisch", "Riesisch"],
     umgebung: ["Arktis"],
-    bild: "assets/images/monster/tome-of-beasts/beli.png",
+    bild: "tome-of-beasts/beli.png",
     beschreibung: [
       "Diese kleinen Winterfeen sind bösartig und tödlich. Mit ihrer blassen Haut und durchscheinenden Flügeln verschmelzen sie perfekt mit ihrer verschneiten Umgebung; nur ihre kleinen schwarzen Augen stechen gegen Schnee und Eis hervor.",
       "Diese bösartigen Eisgeister sind eine Plage für die Bewohner verschneiter Klimazonen und überfallen ahnungslose Beute mit eisigen Pfeilen und einfrierenden zauberartigen Kräften.",
@@ -1807,7 +1807,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["Gemein", "Elfisch", "Sylvisch"],
     umgebung: ["Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/bereginyas.png",
+    bild: "tome-of-beasts/bereginyas.png",
     beschreibung: [
       "Diese kleinen, geflügelten Feen scheinen aus grauem Nebel zu bestehen und können sich in den Nebelwänden und Wolken vollständig verbergen, die ihre bergigen Behausungen verhüllen.",
       "Nebelläufer. Diese bösen und listigen Feen – deren Name in Alt-Elfisch 'Nebelläufer' bedeutet – überwältigen ihre Opfer, indem sie in deren Lungen eindringen und sie an ihrer fauligen Essenz ersticken lassen.",
@@ -1845,7 +1845,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: ["Abyssal", "Gemein", "Sylvanisch", "Telepathie 36 m"],
     umgebung: ["Wald", "Dschungel"],
-    bild: "assets/images/monster/tome-of-beasts/berstuc.png",
+    bild: "tome-of-beasts/berstuc.png",
     beschreibung: [
       "Obwohl leicht gebückt, ist diese männliche Gestalt muskulös und breitschultrig. Der Kopf der Kreatur ist in einem Wirrwarr aus Moos verloren, und ein dicker Schnurrbart und Bart reichen fast bis zur Taille.",
       "Der massige, moosbehaarte Berstuc wirkt wie aus einem urweltlichen Wald gehauen — er ist über 3,6 m groß und wiegt 360 kg. Trotz seiner gewaltigen Statur wirkt er seltsam sanft, mit einer heiteren, fast beruhigenden Ausstrahlung. Nichts könnte weiter von der Wahrheit entfernt sein; der Berstuc ist ein mörderischer Dämon, der Wälder und Dschungel der Materiellen Ebene durchstreift.",
@@ -1888,7 +1888,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["versteht die Sprachen seines Schöpfers, kann aber nicht sprechen"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/besessene_saeule.png",
+    bild: "tome-of-beasts/besessene_saeule.png",
     beschreibung: [
       "Diese uralte, tierköpfige Säule ist mit verwitterten Symbolen antiker Reiche graviert.",
       "Tierköpfig. Besessene Säulen werden aus riesigen Steinblöcken gehauen und sehen wie tierköpfige Götter alter Pantheons aus, oder manchmal wie dämonische Figuren eifriger Kulte. Am häufigsten sind die schakalgesichtigen und die ibisköpfigen Varianten, aber Säulen mit Pavian-, Krokodil-, Elefanten- oder Habichtköpfen existieren ebenfalls.",
@@ -1933,7 +1933,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Gemein", "Maschinensprache"],
     umgebung: ["Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/bibliotheks-automat.png",
+    bild: "tome-of-beasts/bibliotheks-automat.png",
     beschreibung: [
       "Das Summen von Servos, das Ticken von Zahnrädern und kleine Dampfstöße kündigen die Anwesenheit dieses kleinen Verwalters an. Diese kleinen Konstrukte wurden geschaffen, um die organisatorischen Aufgaben riesiger Bibliotheken zu erfüllen. Einige lernen jedoch so viel über die Welt, dass sie nach Abenteuern und neuem Wissen streben, anstatt die Bestände ihrer Obhut zu hüten.",
       "Obwohl weitgehend aus mechanischen Komponenten bestehend, enthält der Automat einen menschlichen Augapfel, der am Ende eines gelenkigen Auslegers montiert ist – meist gespendet von einem Gelehrten der Einrichtung, der über den Tod hinaus dienen wollte. Ohne Arme bewegt er schriftliche Materialien telekinetisch und durchforstet unermüdlich Bände, übersetzt alte Texte, katalogisiert Werke und räumt gelegentlich ungebetene Schädlinge aus den Hallen. Zauberer schätzen diese Automaten als verlässliche Hüter ihrer Zauberbücher auf Reisen."
@@ -1975,7 +1975,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Riesisch"],
     umgebung: ["Grasland", "Hügel"],
-    bild: "assets/images/monster/tome-of-beasts/blemmyes.png",
+    bild: "tome-of-beasts/blemmyes.png",
     beschreibung: [
       "Dieser kopflose Riese hat ein großes Maul in seiner Brust, mit Augen, die auf beiden Seiten davon hervorquellen.",
       "Immer hungrig. Blemmyes sind Ungetüme, die das Fleisch von Humanoiden genießen, und sehen alle Humanoiden als potenzielle Mahlzeiten. Manche haben sogar die Geduld, Gruppen von Menschen, Goblins oder Halblingen wie widerspenstige Herden zu halten und sie als Nahrungsquelle zu züchten und für maximale Saftigkeit zu mästen.",
@@ -2019,7 +2019,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 17,
     sprachen: ["Gemein", "Drakonisch", "Infernalisch", "Leersprache"],
     umgebung: ["Ruinen", "Wald"],
-    bild: "assets/images/monster/tome-of-beasts/blutherold.png",
+    bild: "tome-of-beasts/blutherold.png",
     beschreibung: [
       "Blutherölde sind 6 m große Riesen mit blau-lila verfärbter Haut und warzenartigen Blutblasen, die ihre Züge entstellen. Sie tragen oft Kapuzenkutten über goldener, schwarz oder grün gestreifter Rüstung; ihre Machtstäbe sind stets aus Ebenholz und Mithral, besetzt mit Edelsteinen.",
       "Als mächtige Zauberer und Blutmagier sind Blutherölde unübertroffen. Sie versklaven bevorzugt Oger und Riesen, begnügen sich aber mit geringeren Sklaven, wenn nötig.",
@@ -2070,7 +2070,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 19,
     sprachen: ["Gemein", "Riesensprache", "Infernalisch", "Sylvanisch", "Trollkin"],
     umgebung: ["Wald", "Sumpf"],
-    bild: "assets/images/monster/tome-of-beasts/bluthexe.png",
+    bild: "tome-of-beasts/bluthexe.png",
     beschreibung: [
       "Bluthexen sind schreckliche Feenwesen, die sich von Blut ernähren und ihren Opfern das Gesicht abschälen, um ihre eigene Erscheinung zu verändern.",
       "Meister der Verkleidung. Mit ihren abgeschälten Gesichtern können Bluthexen das Aussehen ihrer Opfer annehmen und sich so unbemerkt unter Humanoide mischen. Sie nutzen diese Fähigkeit, um Vertrauen zu erschleichen, bevor sie zuschlagen.",
@@ -2116,7 +2116,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein", "Ursprünglich", "Sylvisch"],
     umgebung: ["Sumpf", "Gewässer"],
-    bild: "assets/images/monster/tome-of-beasts/boloti.png",
+    bild: "tome-of-beasts/boloti.png",
     beschreibung: [
       "Dieser kleine, lauernde Wassergeist ähnelt einer Kreuzung aus einem grauen Frosch und einer nassen Vogelscheuche, mit kleinen Tentakeln, die aus allen Gliedmaßen sprießen. Er hat Wasserflügel, die anscheinend aus Quallenfleisch bestehen, und ermöglichen ihm, mit hoher Geschwindigkeit durch das Wasser zu schießen.",
       "Sumpfräuber. In Drakonisch als 'Uriska' bekannt, sind die Boloti kleine, sumpfbewohnende Wassergeister, die es genießen, ahnungslose Opfer in flachen Teichen und Quellen zu ertränken und ihre Leichen dann um alle glänzenden Gegenstände zu berauben, die sie finden. Boloti nutzen ihren magischen Strudel, um ihre Opfer zu immobilisieren und in einen nassen Tod zu ziehen. Sie horten gerne Opfer unter dem Wintereis oder unter Baumstämmen.",
@@ -2160,7 +2160,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein", "Himmlisch", "Infernalisch", "Nurisch", "Telepathie 30 m"],
     umgebung: ["Stadt", "Grasland"],
-    bild: "assets/images/monster/tome-of-beasts/bouda.png",
+    bild: "tome-of-beasts/bouda.png",
     beschreibung: [
       "Ein massiger, hyänengesichtiger Humanoid mit einem stark vernarbten, überdimensionalen Maul – ein Bouda sieht aus, als wäre sein Kiefer einst aufgerissen und wieder zusammengeflickt worden. Wolken aus Mücken und Flöhen wabern um seine Arme.",
       "Leuchtende Augen und Zähne. Bouda sind Kinderfresser, Schänder von Reinheit und Familie. Den überdimensionalen Gnollen ähnelnd, zeugt ein Netz aus Narben an ihren Mäulern von ihren gefräßigen Essgewohnheiten. Ewig grinsend leuchten ihre Zähne so gelb wie ihre Augen.",
@@ -2207,7 +2207,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: [],
     umgebung: ["Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/broodiken.png",
+    bild: "tome-of-beasts/broodiken.png",
     beschreibung: [
       "Klein und gebaut wie eine Karikatur eines Menschen, ist der Kopf dieses Wesens unverhältnismäßig groß und mit spitzen Zähnen gefüllt.",
       "Körperkinder. Broodiken sind grobe Diener, die von humanoiden Zauberkundigen erschaffen werden, die bereit sind, sie in ihren eigenen Körpern zu züchten. Sie ähneln ihren Schöpfern auf offensichtlichste Weise – mit derselben Anzahl von Gliedmaßen und Grundmerkmalen –, aber alle Broodiken sind 30 cm groß mit überdimensionalen Köpfen und stark bezähnten Mäulern.",
@@ -2253,7 +2253,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Darakhul", "Zwergisch"],
     umgebung: ["Unterirdisch", "Gebirge", "Höhle"],
-    bild: "assets/images/monster/tome-of-beasts/bucca.png",
+    bild: "tome-of-beasts/bucca.png",
     beschreibung: [
       "Diese winzigen, obsidianhäutigen, fledermausgeflügelten Feen haben immer einen hungrigen Blick, lauern mit messerscharfen Reißzähnen und lecken sich ihr lederartiges Gesicht mit ihrer gespaltenen, violetten Zunge.",
       "Versteckt in Spalten. Buccas sind winzige, unterirdische Feen, die auch als 'Räuber' bekannt sind, weil sie es lieben, von Bergleuten zu stehlen und kostbare Mineralien und Edelsteine in kleinen, fallengespickten Spalten zu horten. Ihre geringe Größe macht es leicht, sie zu übersehen.",
@@ -2297,7 +2297,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 20,
     sprachen: ["Sylvisch"],
     umgebung: ["Gewässer", "Wald"],
-    bild: "assets/images/monster/tome-of-beasts/bukavac.png",
+    bild: "tome-of-beasts/bukavac.png",
     beschreibung: [
       "Ein knochenerschütterndes Gebrüll ausstoßend, trägt dieses krötenartige Monster zwei knorrige Hörner und böse Klauen. Es stürmt auf sechs Beinen aus seinem wässrigen Lager, begierig zu töten.",
       "Teichlauerer. Die friedliche Oberfläche von Waldseen und Teichen verbirgt viele tödliche Gefahren, darunter den Bukavac. Obwohl nicht amphibisch, kann die Kreatur minutenlang die Luft anhalten, während sie unter der Oberfläche auf frisches Fleisch lauert.",
@@ -2345,7 +2345,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["Himmlisch", "Gemein", "Ursprünglich", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/buraq.png",
+    bild: "tome-of-beasts/buraq.png",
     beschreibung: ["Der Buraq ist ein himmlisches Wesen mit dem Körper eines weißen Pferdes und einem menschlichen Gesicht, das als heiliges Reittier gilt. Er ist bekannt als das Fahrzeug der Propheten und Heiligen, das sie in Augenblicken göttlicher Vision von einer Welt zur nächsten trägt."],
     besonderheiten: [
       { name: "Himmlische Waffen", beschreibung: "Die Waffentreffer des Buraqs gelten als magisch. Wenn der Buraq mit einem Hufangriff trifft, fügt er zusätzlich 4W8 Strahlungsschaden zu (bereits in den Angriffen enthalten)." },
@@ -2384,7 +2384,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 23,
     sprachen: ["Gemein", "Darakhul", "Derro", "Drakonisch", "Zwergensprache", "Infernalisch", "Nurian", "Urprimär", "Leererede", "Telepathie 90 m"],
     umgebung: ["Andere Ebenen", "Höhle", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/camazotz_daemonenfuerst_der_fledermaeuse_und_des_feuers.png",
+    bild: "tome-of-beasts/camazotz_daemonenfuerst_der_fledermaeuse_und_des_feuers.png",
     beschreibung: [
       "Camazotz ist der Dämonenfürst der Fledermäuse und des Feuers. Er kann die Gestalt einer riesigen, von glühender Asche bedeckten Fledermaus annehmen oder in seiner wahren geflügelten Humanoidform erscheinen. Beide Formen hinterlassen einen Haufen fettiger Asche, wenn sie vernichtet werden.",
       "Gabe des Vampirismus. Camazotz kann durch Stärkeverlust getötete Wesen als Vampire erwecken. Sie erheben sich nach 1W4 Tagen, dauerhaft beherrscht, bis Camazotz ihnen freien Willen gewährt. Er kann maximal zehn versklavte Vampire gleichzeitig halten.",
@@ -2439,7 +2439,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 18,
     sprachen: ["Gemein", "Drakonisch", "Infernalisch"],
     umgebung: ["Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/cambium.png",
+    bild: "tome-of-beasts/cambium.png",
     beschreibung: ["Das Cambium schleicht gebeugt und verzerrt durch die Gesellschaft der Sterblichen und verbirgt so seine fast drei Meter große Gestalt und seine überzähligen Arme. Die Quelle seines Interesses liegt in jedem Sterblichenkörper: die vier Körpersäfte, die es in präzisen Mengen absaugt — manchmal um eigene Ungleichgewichte zu beheben, manchmal um Seren für den Verkauf auf höllischen Märkten zu brauen.", "Seine Opfer werden in einem verzweifelten Zustand zurückgelassen, begierig nach einer korrigierenden Dosis und bereit, jeden Wunsch des Cambiums zu erfüllen. Nach einer ausreichenden Ernte lässt das Cambium diese Süchtigen langsam an Entzugserscheinungen sterben und überlässt die heimgesuchte Bevölkerung für etwa ein Jahrzehnt sich selbst."],
     besonderheiten: [
       { name: "Angeborene Zauberei", beschreibung: "Die angeborene Zauberfähigkeit des Cambiums beruht auf Charisma (Zauberrettungswurf-SG 17, +9 auf Trefferangriffswürfe mit Zaubern). Es kann folgende Zauber anwenden, ohne Materialkomponenten zu benötigen: Beständig: Schweben. Beliebig oft: Gestalt verändern, Gedanken lesen, Person festhalten, Ebenenwechsel, Dem Sterben entreißen. 3/Tag: Wunden heilen (21; 4W8+3), Krankheitsstrahl (18; 4W8), Schutz vor Gift, Heilen. 1/Tag: Todeshand." }
@@ -2479,7 +2479,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: [],
     umgebung: ["Wald"],
-    bild: "assets/images/monster/tome-of-beasts/chelicere.png",
+    bild: "tome-of-beasts/chelicere.png",
     beschreibung: ["Eine Chelicere ähnelt einer riesigen Spinne auf hohen, stelzenartigen Beinen — meist mit dem verwüsteten Körper eines berohten Arkanzisten, der aus ihren geballten Mandibeln herabhängt. Diese gewaltigen Arachnoiden sind vorwiegend in großen Wäldern und gelegentlich in Ödlanden anzutreffen.", "Cheliceren beschleichen isolierte Opfer, betäuben sie mit einem Giftbiss und hängen sie dann tagelang in ihren Kiefern. Im besten Fall erwachen die Opfer Wochen später ohne Erinnerung an die Ereignisse, weit von zu Hause und entkräftet. Andere werden gelähmt in einem dicken Kokon in hohen Baumkronen aufbewahrt. Besonders Unglückliche werden getötet und als Untote animiert."],
     besonderheiten: [
       { name: "Magieresistenz", beschreibung: "Die Chelicere hat Vorteil bei Rettungswürfen gegen Zauber und andere magische Effekte." },
@@ -2521,7 +2521,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein", "Drakonisch", "Sylvanisch"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/chernomoi.png",
+    bild: "tome-of-beasts/chernomoi.png",
     beschreibung: ["Chernomoi (drakonisch für 'Hortgeist') wohnen diskret in Drachenhorten oder Drachenbornhaushalten, räumen nachts auf und halten gelegentlich ein kleines Schmuckstück als Entlohnung. Sie erscheinen als winzige, geflügelte Drachenverwandte in metallischer Rüstung aus kleinen Münzen und Halbedelsteinen.", "Chernomoi fürchten Wyverne und nisten niemals in deren Nähe. Ansonsten sind sie sehr schützend gegenüber ihren drakonischen Herren und schlagen Alarm, wenn ein Eindringling unbemerkt bleibt. Im Kampf setzen sie ihre kleinen Klingen und ihren Schrei ein, fliehen aber bei Gefahr stets als erste Option — meist direkt zu einem Drachen-, Drachenbornoder Drakovolk-Verbündeten."],
     besonderheiten: [
       { name: "Angeborene Zauberei", beschreibung: "Die angeborene Zauberfähigkeit des Chernomois beruht auf Charisma (Zauberrettungswurf-SG 13). Es kann folgende Zauber anwenden, ohne Materialkomponenten zu benötigen: Beliebig oft: Magie entdecken, Unsichtbarkeit, Magikerhand, Flicken, Nachricht, Prestidigitation. 1/Tag: Gift und Krankheit entdecken, Dimensionstür." }
@@ -2559,7 +2559,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Himmlisch", "Infernalisch"],
     umgebung: ["Andere Ebenen", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/chronalmentar.png",
+    bild: "tome-of-beasts/chronalmentar.png",
     beschreibung: ["Ein Chronalmentar ist schwer zu fassen — er erscheint als großes, menschenförmiges Loch in der Luft, das abwechselnd ein Sternenfeld, verzerrte Farbstreifen und gleißendes weißes Licht zeigt und scheinbar in und aus der Existenz blinkt. Er besteht aus temporaler Energie und fließt wie Sand in einer Sanduhr, existierend zwischen den Tikts einer Uhr.", "Chronalmentare werden von Orten historischer Bedeutung angezogen — vergangenen wie zukünftigen. Sie haben eine Vorliebe für Schlachtfelder und Stätten des Leidens. Ihre Umgebung verhält sich seltsam: Gefallene Mauern können plötzlich wieder aufsteigen, Setzlinge zu mächtigen Bäumen werden, gefallene Soldaten ihre letzten Momente erneut durchleben. Chronalmentare benötigen weder Luft noch Nahrung, Wasser oder Schlaf."],
     besonderheiten: [
       { name: "Zeitlicher Körper", beschreibung: "Wenn der Chronalmentar einem Zauber wie 'Verlangsamen', 'Hast' oder einem ähnlichen Effekt ausgesetzt wird, besteht er den Rettungswurf automatisch und gewinnt 13 (3W8) Trefferpunkte zurück." }
@@ -2601,7 +2601,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["versteht Gemein", "Telepathie (Berührung)"],
     umgebung: ["Stadt", "Wald"],
-    bild: "assets/images/monster/tome-of-beasts/cikavak.png",
+    bild: "tome-of-beasts/cikavak.png",
     beschreibung: ["Der Cikavak ist ein bemerkenswert hässlicher magischer Vogel — ein übernatürliches Wesen, das durch ein langwieriges Ritual herbeigerufen wird. Ein dunkelgrauer Kamm hängt auf seinem Kopf und formlose Kehllappen baumeln an seinem Hals. Cikavaks benutzen ihre langen, stumpfgrauen Schnäbel, um Nektar und andere Flüssigkeiten aufzusaugen — oder um mit der Kraft eines Dolches zuzustoßen.", "Eine weitere seltsame Fähigkeit: Vollständig ausgedehnt fassen ihre Bauchbeutel bis zu einem halben Liter fast jeder Flüssigkeit. Diese robusten Beutel nehmen kaum Schaden durch ihren Inhalt und können Tränke oder sogar Säure transportieren, ohne verletzt zu werden. Diebe nutzen diese Fähigkeit, indem sie die Vögel in Türme, Apotheken oder Alchemistenläden schicken, um wertvolle Substanzen zu stehlen. Einmal gerufen, bleiben Cikavaks ihren Herren bis zum Tod treu."],
     besonderheiten: [
       { name: "Angeborene Zauberei", beschreibung: "Die angeborene Zauberfähigkeit des Cikavaks beruht auf Weisheit (Zauberrettungswurf-SG 11). Er kann folgende Zauber anwenden, ohne Materialkomponenten zu benötigen: Beliebig oft: Mit Tieren sprechen. 1/Tag: Stille." }
@@ -2638,7 +2638,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Wald", "Grasland"],
-    bild: "assets/images/monster/tome-of-beasts/citrullus.png",
+    bild: "tome-of-beasts/citrullus.png",
     beschreibung: ["Der Citrullus ist eine fleischfressende Pflanze, die gewöhnliche Melonen nachahmt. In der ersten Lebensphase wächst er aus Sonnenlicht, Wasser und verwesenden Nährstoffen; sobald er eine gewisse Größe erreicht, wendet er sich lebender Beute zu und enthüllt beim Angriff sein gezahntes, saftiges Maul.", "Der erste Citrullus wurde von einer Zauberin geschaffen, um ihre magischen Pflanzen gegen Schädlinge zu schützen — eine Schöpfung, die so erfolgreich war, dass sie schließlich selbst ihrem unersättlichen Hunger zum Opfer fiel. Als seine Blüten verwelkten, verbreitete er seine Samen weit und breit. Einige Bauern nutzen diese Taktik noch heute, allerdings mit weit größerer Vorsicht."],
     besonderheiten: [
       { name: "Falsche Erscheinung", beschreibung: "Solange der Citrullus reglos bleibt, ist er von einer gewöhnlichen Melonenpflanze nicht zu unterscheiden." },
@@ -2679,7 +2679,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Gemein", "Elfisch", "Sylvanisch"],
     umgebung: ["Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/clurichaun.png",
+    bild: "tome-of-beasts/clurichaun.png",
     beschreibung: ["Clurichauns sind biestige, alkoholliebende Feenwesen, die Vorratsräume und Weinkeller heimsuchen. Diese betrunkenen Feen waren einst Kobolde, gaben aber schon vor langer Zeit ein Leben der Arbeit zugunsten eines einsamen Ausschweifens auf. Nun verbringen sie jede Nacht damit, zu trinken, falsch zu singen und ihre unglücklichen Wirte mit grausamen Streichen zu quälen.", "Hält der Gastgeber sie jedoch gut mit einem Lieblingsgetränk versorgt und lässt sie ansonsten in Ruhe, schützt der Clurichaun den Weinkeller vor Dieben und Eindringlingen. Die beste Methode, einen Clurichaun zu vertreiben, ist ihn zu einem Trinkwettbewerb herauszufordern — verliert er gegen einen Sterblichen, schleicht er sich in Scham davon und wird nie wieder gesehen. Trotz ihrer Größe können Clurichauns enorme Mengen trinken, ohne großen Schaden zu nehmen."],
     besonderheiten: [
       { name: "Clurichaun-Glück", beschreibung: "Der Clurichaun addiert sowohl seinen GES- als auch seinen CHA-Modifikator zu seiner Rüstungsklasse." },
@@ -2717,7 +2717,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["versteht die Sprachen seines Erschaffers, kann jedoch nicht sprechen"],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/dampfgolem.png",
+    bild: "tome-of-beasts/dampfgolem.png",
     beschreibung: [
       "Mit tückischen Axtblättern an den Armen und bronzenen Runen auf dem gepanzerten Torso ist ein Dampfgolem eine gut geölte Todesmaschine. Er ist um einen zentralen Kessel herum gebaut, dessen Zahnräder und Hydraulikzylinder seine Beine und Arme antreiben. Die meisten Dampfgolems haben Axtblätter an jedem Arm und können einen Arm zu einer langen Axt ausfahren. Sie überragen 3 Meter, und ihre Augen leuchten orange oder rot von ihrem inneren Feuer.",
       "Ein Dampfgolem besitzt vier bis sechs Ventile zum Ablassen von Dampf, deren Pfeifen bis zu einer Meile weit zu hören sind. Pro Tag verbraucht er 13 kg Kohle und knapp 380 Liter Wasser bei intensivem Kampf; im Ruhezustand genügt ein Drittel dieser Mengen."
@@ -2767,7 +2767,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein", "Sylvan"],
     umgebung: ["Sumpf", "Wald"],
-    bild: "assets/images/monster/tome-of-beasts/dampfluchs.png",
+    bild: "tome-of-beasts/dampfluchs.png",
     beschreibung: [
       "Diese großen Katzen schleichen lautlos dahin, während Rauchfäden von ihren glatten grauen Fellen abstreifen und neblige Wirbel hinterlassen. Ihre Augen wechseln zwischen matten, blassen Kugeln und pechschwarzen Schlitzen. Ihre Lippen kräuseln sich zu einem zahnentblößenden Lächeln, während ihr Körper sich in Nebel auflöst.",
       "Dampflüchse sind launische Jäger – tückisch, manipulativ und schelmisch. Sie spielen mit ihrer Beute, bevor sie sie töten, und entstehen und vergehen im Nebel, um Opfer zu schikanieren. Mit ihrer Fähigkeit, den Nebel um sich herum zu verdichten und zu vergiften, zersplittern sie große Gruppen in handlichere Happen.",
@@ -2810,7 +2810,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Gemein", "Darakhul"],
     umgebung: ["Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/darakhul.png",
+    bild: "tome-of-beasts/darakhul.png",
     beschreibung: [
       "In den lichtlosen Tiefen unter der Erde wächst und plant und träumt ein Reich des verschlingenden Ehrgeizes. Sie nennen sich selbst das Volk, aber die Menschen der Oberfläche nennen sie die Herren des Unterreichs, das Ghul-Imperium oder einfach das Reich der Ghule. Ihre Städte liegen außer Sichtweite, ihre Agenten infiltrieren die Unterwelten eines Dutzends Städte an der Oberfläche, und ihre Ziele kennen keine Grenzen. Für sie gilt: Wer nicht zum Volk gehört, ist Nahrung.",
       "Darakhul sind hochentwickelte Ghule, die als Agenten und Krieger des Ghul-Imperiums dienen. Sie sind geschickt darin, sich unter Lebenden zu verbergen, und nutzen Verkleidungen und ihren angeborenen Charme, um unentdeckt zu bleiben."
@@ -2880,7 +2880,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["Tiefensprache", "Ursprünglich", "Sylvanisch", "Telepathie 18 m"],
     umgebung: ["Wüste"],
-    bild: "assets/images/monster/tome-of-beasts/dau.png",
+    bild: "tome-of-beasts/dau.png",
     beschreibung: ["Daus sind Wesen aus Dunst und Illusion. Sie stehen etwa einen Meter groß, haben sandige Haut und sind von einem schimmernden Aura wie eine Hitzeflimmern umgeben. Körperlich schwach, aber flink an Körper und Geist. Ihre Fähigkeit, sich auf magische Weise selbst zu versorgen, macht sie träge und hedonistisch — sie sind oft freundlich und suchen gerne Gesellschaft, laden Freunde und Fremde gleichermaßen ein, in ihren Lagern zu verweilen und an ihren Festen teilzunehmen.", "Jedoch kann die Gastfreundschaft eines Daus in Grausamkeit umschlagen, wenn Gäste seine komplizierten Etikette-Regeln brechen."],
     besonderheiten: [
       { name: "Magieresistenz", beschreibung: "Der Dau hat Vorteil bei Rettungswürfen gegen Zauber und andere magische Effekte." },
@@ -2919,7 +2919,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: [],
     umgebung: ["Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/derro-foetussavant.png",
+    bild: "tome-of-beasts/derro-foetussavant.png",
     beschreibung: [
       "Diese Kreatur ähnelt einem blau-häutigen Zwergsäugling, nicht älter als ein Jahr. Ihre Gliedmaßen flattern unkontrolliert, der Kopf wackelt mit offensichtlichem Koordinationsmangel, und sie schreit unaufhörlich.",
       "Von all dem Wahnsinn, der in der Derro-Gesellschaft so stark widerhallt, sind vielleicht keine so verdreht wie diese Frühgeburten — wahnsinnig geboren und dazu bestimmt, ihr Volk tiefer in den Abgrund des Irrsinns zu führen. Diese Derro sind als Fötussavants bekannt.",
@@ -2962,7 +2962,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Derro", "Untergemein"],
     umgebung: ["Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/derro-schattenantipaladin.png",
+    bild: "tome-of-beasts/derro-schattenantipaladin.png",
     beschreibung: [
       "Diese blau-häutige Kreatur ähnelt einem untergroßen Zwerg. Seine Augen sind groß und sein Haar wild, beides farblos. Der Ausdruck auf seinem Gesicht ist ein schreckliches Grinsen aus Wahnsinn und Hass.",
       "Alle Derro sind wahnsinnig, doch manche weihen ihre Seelen dem Dienst des Irrsinns. Sie nehmen die Kräfte der Dunkelheit an und kanalisieren Schatten durch ihre Gedanken, um die Vernunft jeder Kreatur zu brechen, der sie begegnen. Derro-Schattenantipaladinе sind die Elitediener von Göttern wie Nyarlathotep und dem Schwarzen Ziegenbock der Wälder.",
@@ -3008,7 +3008,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 8,
     sprachen: [],
     umgebung: ["Sumpf", "Dschungel"],
-    bild: "assets/images/monster/tome-of-beasts/dipsa.png",
+    bild: "tome-of-beasts/dipsa.png",
     beschreibung: ["Die Dipsa ist ein kleiner Schleimklumpen, der sich an Kreaturen heftet und ihnen unbemerkt Blut entzieht. Das Opfer merkt oft erst nach dem Biss, dass etwas nicht stimmt."],
     besonderheiten: [
       { name: "Amorph", beschreibung: "Die Dipsa kann sich durch Öffnungen bewegen, die so eng wie 2,5 cm sind, ohne sich zusammenzuquetschen." },
@@ -3044,7 +3044,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/dissimortuum.png",
+    bild: "tome-of-beasts/dissimortuum.png",
     beschreibung: [
       "Dissimortuum sind untote Scheusale, die von Nekromanten erschaffen werden, um die untote Seuche langsam aber unaufhaltsam zu verbreiten. Diese Kreaturen sind selten, aber zäh. Ein Dissimortuum folgt den Befehlen des Nekromanten, dessen Magie es erschaffen hat.",
       "Wenn ein Dissimortuum tötet, sammelt es Körperteile seiner Opfer und bewahrt sie in einem Sack auf, den es stets mit seinem dritten Arm trägt. Den Sack legt das Monster nur im Kampf ab, um seinen zusätzlichen Arm voll einzusetzen.",
@@ -3085,7 +3085,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein", "Zwergisch", "Elfisch"],
     umgebung: ["Wald", "Stadt", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/domovoi.png",
+    bild: "tome-of-beasts/domovoi.png",
     beschreibung: [
       "Domovoi erinnern an große, steinerne Goblins mit überdimensionierten Köpfen und grinsenden Fratzen, moosigen Bärten sowie massiven Schultern und Unterarmen. Ihre langen Gliedmaßen verleihen ihnen Reichweite und kraftvolle Schlagangriffe.",
       "Einst dienten die Domovoi als Portalwächter und Haushaltslakais des elfischen Adels — und manche wurden zurückgelassen, wie manche sagen: absichtlich.",
@@ -3124,7 +3124,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/doppelratte.png",
+    bild: "tome-of-beasts/doppelratte.png",
     beschreibung: [
       "Das Ergebnis eines fehlgeschlagenen Klonzaubers: Die Doppelratte erschafft kurzlebige Duplikate, um ihre Widersacher zu überwältigen. Ein vermeintlich einfacher Kampf gegen eine einzelne Ratte kann schnell außer Kontrolle geraten, wenn die Doppelratte sich in einen Schwarm klont — und die Originalratte versteckt sich währenddessen, während der Kampf tobt.",
       "Wer den Biss einer Doppelratte überlebt, leidet unter einer erschreckenden Krankheit: Täglich wird ein totgeborener Klon abgestoßen, während die eigene Vitalität schwindet. Diese Klone können auf keine Weise wiederbelebt werden.",
@@ -3167,7 +3167,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["Dornenklicken", "Gemein", "Sylvanisch"],
     umgebung: ["Wald"],
-    bild: "assets/images/monster/tome-of-beasts/dornenkind.png",
+    bild: "tome-of-beasts/dornenkind.png",
     beschreibung: ["Dornenkinder wachsen in tiefen Dornengestrüppen auf Waldlichtungen oder an sonnigen Hängen und Flussufern. Seltener entstehen sie, wenn das Blut eines Zauberers oder magischen Wesens auf den Waldboden fällt, oder wenn obskure druidische Machtgegenstände sie herbeirufen.", "Dornenkinder versammeln sich in großen Gruppen und verwandeln uralte Walddickichte in wahre Festungen. Sie schleichen weit aus ihren Lagern heraus, um die Waldbewohner auszuspionieren, und reiten dabei manchmal auf Spinnen, Tausendfüßlern oder Riesenlibellen. Sie tauschen Neuigkeiten und Klatsch gegen Kleinigkeiten und Blutstropfen — mit der hinterhältigen Bosheit bösartiger Kinder und einem Hang zu Blut."],
     besonderheiten: [
       { name: "Feenblut", beschreibung: "Dornenkinder gelten für alle typbezogenen Effekte sowohl als Pflanze als auch als Feenwesen." }
@@ -3205,7 +3205,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Leerensprache"],
     umgebung: ["Andere Ebenen", "Wüste", "Höhle"],
-    bild: "assets/images/monster/tome-of-beasts/dorreq.png",
+    bild: "tome-of-beasts/dorreq.png",
     beschreibung: [
       "Diese zuckenden Tentakelknäuel umgeben ein unmenschliches Gesicht, das von einem tintenfischartigen Schnabel dominiert wird.",
       "Die Dorreqi sind Diener uralter Schrecken der Leere und von Reichen jenseits menschlichen Begreifens. Sie fungieren als Wächter und Posten für solche Kreaturen und greifen jeden an, der sich den Alten Aberrationen, denen sie dienen, zu nah nähert.",
@@ -3247,7 +3247,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 16,
     sprachen: ["Gemein", "Drakonisch", "Ursprünglich"],
     umgebung: ["Küste", "Ozean", "Gewässer"],
-    bild: "assets/images/monster/tome-of-beasts/drachenaal.png",
+    bild: "tome-of-beasts/drachenaal.png",
     beschreibung: ["Drachenaale sind an ihrer schlanken Gestalt, dem mächtigen Flossenschaft und den gezackten Kiefern wie ein Paar serratierter Klingen sofort erkennbar. Ihre Färbung reicht von Braun und Schwarz bis hin zu brillanten, irisierenden Mustern. Die meisten sind Einzelgänger und reizbar, doch gelegentlich bilden einige Paare oder kleine Gruppen — manche gewinnen gar humanoide Diener. Sie siedeln in gewundenen Unterwasserhöhlensystemen mit magnetisch ausgerichteten Metallformationen, die sie mit ihrem elektrischen Sinn navigieren. Drachenaale beanspruchen ausgedehnte Küstenstreifen als ihr Territorium und lassen sich von eingeschüchterten Stämmen als mächtige Geister verehren. Kluge Seeleute, die durch bekanntes Drachenaal-Territorium reisen, bringen Abgaben mit, um sie zu besänftigen."],
     besonderheiten: [
       { name: "Begrenzte Amphibiosität", beschreibung: "Der Drachenaal kann sowohl an Luft als auch unter Wasser atmen, muss aber mindestens alle 6 Stunden untergetaucht sein, um nicht zu ersticken." },
@@ -3286,7 +3286,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Versteht die Sprache seines Erschaffers oder Meisters"],
     umgebung: ["Wald", "Grasland"],
-    bild: "assets/images/monster/tome-of-beasts/drachenblattbaum.png",
+    bild: "tome-of-beasts/drachenblattbaum.png",
     beschreibung: ["Die drachenförmigen Blätter dieser Eichen bewegen sich bisweilen ohne Wind — ein Anzeichen ihrer drakontischen Kraft. Drachenblattbäume werden mit den Eigenschaften ihres Drachenmeisters geprägt und dienen als stille Wächter. Drachen verschenken diese Bäume gelegentlich, um Pakte zu besiegeln oder Vasallentreue zu demonstrieren. Weise Drachen gehen dabei vorsichtig vor, denn die Schaffung eines neuen Baumes aus einem Ableger kostet den Meister einen Monat lang die Nutzung seines Atemwaffens.", "Drachenblattbäume werden bis zu 1.000 Jahre alt, stehen 4,5 m hoch und wiegen rund 1.360 kg; Uraltexemplare können bis zu 13,5 m erreichen. Sie dulden keine Fremden in ihrem Hain und setzen einfache, aber wirkungsvolle Taktiken ein: ruhig verharren, bis genug Eindringlinge eingetreten sind, dann gezielt Blätter schleudern und den Atem einsetzen."],
     besonderheiten: [
       { name: "Treue gegenüber dem Drachenmeister", beschreibung: "Der Drachenblattbaum befolgt nur Befehle seines bestimmten Meisters (oder von Kreaturen, denen der Meister Kontrolle überträgt). Er hat Vorteil auf Rettungswürfe gegen Bezauberungs- oder Nötigungszauber sowie gegen Versuche, ihn durch Täuschung oder Einschüchterung gegen seinen Meister zu wenden." },
@@ -3325,7 +3325,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: [],
     umgebung: ["Wüste"],
-    bild: "assets/images/monster/tome-of-beasts/duenenmimic.png",
+    bild: "tome-of-beasts/duenenmimic.png",
     beschreibung: [
       "Wenn ein Dünenmimic zuschlägt, wogt und verschiebt sich der Sand, ein Strudel öffnet sich, und sandige Tentakel greifen nach nahestehenden Kreaturen. Obwohl am häufigsten als Düne anzutreffen, kann ein Dünenmimic auch die Form eines Dattelpalmenhaindattelpalmengeländes, eines Flussufers, eines riesigen Felsbrocken oder anderer großer Landschaftsmerkmale annehmen.",
       "Dünenmimic wurden von einem vergessenen König als Wächter für sein Wüstengrab erschaffen. Irgendwo bewachen Dutzende von ihnen gewaltige Reichtümer. Obwohl nicht zur Fortpflanzung bestimmt, begannen sie spontan Sporen zu produzieren und sich zu replizieren – inzwischen sind sie in den Wüsten weit verbreitet. Zum Glück für andere Bewohner pflanzen sich Dünenmimic nur einmal pro Jahrhundert fort."
@@ -3368,7 +3368,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein", "Elfisch", "Sylvanisch", "Umbral"],
     umgebung: ["Wald", "Feenwildnis"],
-    bild: "assets/images/monster/tome-of-beasts/duesterdorn-dryade.png",
+    bild: "tome-of-beasts/duesterdorn-dryade.png",
     beschreibung: [
       "Eine Düsterdorn-Dryade ist eine auffallende Frau mit deutlich erkennbaren Feenmerkmalen und schieferfarbener Haut, oft im Schatten eines alten Baumes anzutreffen. In Ranken und Blätter gekleidet, ist es schwer zu sagen, wo die Dryade aufhört und die Pflanze beginnt.",
       "Düsterdorn-Dryaden sind Geister, die an dornige Kletterpflanzen gebunden sind. Sie suchen abgestorbene Bäume als Heimat für ihre Ranken und können durch diese reisen, um Feinden zu entkommen. Sie erwecken Rankentroll-Skelette, gewöhnliche Skelette und andere Wächter zum Leben, die an den Baum und die Ranken gebunden sind; vernichtet man die Herzen im Baum, verwelken oder zerstreuen sich die Diener."
@@ -3413,7 +3413,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["Gemein", "Elfisch", "Goblinisch", "Infernalisch", "Sylvanisch"],
     umgebung: ["Wald", "Feenwildnis"],
-    bild: "assets/images/monster/tome-of-beasts/dunkelherold.png",
+    bild: "tome-of-beasts/dunkelherold.png",
     beschreibung: [
       "Verblüffend groß und schön sind die Dunkelherölde Unholds, die dunkelhaarigen Feen ähneln und Umhänge und Rüstungen tragen, die mit Dunkellicht schimmern – oft von einem Nimbus blassgrüner Flammen umgeben.",
       "Dunkelherölde sprechen in fließenden Tönen und singen mit Engelsstimmen, aber ihre Herzen sind verdorben und verräterisch. In ihrer wahren Gestalt, die sie außerhalb des Kampfes verbergen, verschwinden sie in körperlosen Schatten und enthüllen eine böse, majestätische Form, die Augenzeugen erschüttert und erblindet.",
@@ -3459,7 +3459,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/eala.png",
+    bild: "tome-of-beasts/eala.png",
     beschreibung: [
       "Das Eala ist ein schwanenähnliches Wesen mit Federn aus glänzendem Metall. Wenn es einatmet, glühen die Federn auf seiner Brust rot.",
       "Eala sind wunderschöne, aber tödliche Kreaturen aus der Ebene des Schattens. Ihr Gefieder wächst wie bei ihren Gegenstücken auf der Materiellen Ebene, ist jedoch aus glänzendem, rasiermesserscharfem Metall. Die Gefiederfarben variieren je nach Ernährung: Eala nutzen ihren Feueratem, um Metalle mit niedrigem Schmelzpunkt wie Gold, Silber, Blei, Kupfer und Bronze zu schmelzen und das flüssige Metall zu konsumieren. Eala, deren Gefieder überwiegend eine einzige Farbe zeigt, sind besonders begehrt."
@@ -3499,7 +3499,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 18,
     sprachen: ["Alle Sprachen", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/ebenenwaechter.png",
+    bild: "tome-of-beasts/ebenenwaechter.png",
     beschreibung: [
       "Ein Planewatcher ist darauf eingeschworen, die Ordnung der Grenzen zwischen den Welten zu schützen. Diese engelartigen Wesen spüren furchtlos Menschen und Monster auf, die die Grenzen der Ebenen überschreiten, und schleifen sie dorthin zurück, woher sie kamen – ob sie wollen oder nicht. Jeder Planewatcher ist an eine einzige Existenzebene gebunden.",
       "Planewatcher sind ihrem Auftrag verschrieben, unabhängig von Moral. Helden mögen sich dabei ertappen, einen Planewatcher um Hilfe gegen einen interplanaren Feind anzuflehen – oder gegen einen zu kämpfen, während sie selbst auf einer planaren Mission unterwegs sind. Planewatcher verfolgen Eindringlinge basierend auf der wahrgenommenen Bedrohung für das Multiversum.",
@@ -3546,7 +3546,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["Himmlisch", "Gemein"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/einherjar.png",
+    bild: "tome-of-beasts/einherjar.png",
     beschreibung: [
       "Einherjar sind stämmige, bärtige Krieger mit goldenen Auren. Sie tragen Kettenhemden und führen zweihändige Streitäxte sowie eichene Schilde – ihre Abzeichen und Symbole sind alle verschieden, und man sagt, kein Zweiter flicht seinen Bart auf dieselbe Weise.",
       "Als Geister von Kriegern, die von den Walküren auserwählt und nach Walhalla gebracht wurden, sind die Einherjar große Kämpfer, die jede Nacht ihren Hunger mit Wildschein und ihren Durst mit Met stillen und ihre Tage damit verbringen, sich auf Ragnarök vorzubereiten. Egal wie oft sie erschlagen werden – jeden Morgen erscheinen sie erneut in Odins Halle. Sie fürchten den Tod nicht, und ihre Tapferkeit treibt andere zu größerer Kühnheit.",
@@ -3591,7 +3591,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein", "Darakhul", "Untergemein"],
     umgebung: ["Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/eisenghul.png",
+    bild: "tome-of-beasts/eisenghul.png",
     beschreibung: [
       "Ein brutal und bösartig wirkender Ghul, der eine grausame Glefe trägt; seine Unterarme bis zu den Ellbogen sind mit dunklem, getrocknetem Blut befleckt. Seine glühenden, rostfarbenen Augen durchdringen mit einem berechnenden Blick zurückgehaltenen Hungers.",
       "Eisenghule und Ghaste sind die Elitemitglieder der kaiserlichen Legionen und fungieren als Unteroffiziere, Offiziere und Standartenträger. Sie ernähren sich aus den Sklavengruben und marschieren auf Befehl des Darakhul-Adels.",
@@ -3655,7 +3655,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Gemein", "Riesensprache", "Sylvanisch"],
     umgebung: ["Arktis", "Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/eisjungfrau.png",
+    bild: "tome-of-beasts/eisjungfrau.png",
     beschreibung: [
       "Diese verführerische Schönheit hat Haut und Haar so weiß wie Schnee und Augen so blau wie Gletschereis.",
       "Töchter der Kälte. Eisjungfrauen sind die Töchter mächtiger Kältewesen. Einige stammen von Boreas oder der Schneekönigin ab, andere wurden von Frostgiganten und Thursiren geboren. Einige entstehen aus den flehentlichen Bitten schwangerer Frauen, die im Schnee verirrt sind und ihr Neugeborenes retten wollen — die Fraughashar tragen diese Kinder fort und ziehen sie als Eisjungfrauen auf.",
@@ -3704,7 +3704,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 16,
     sprachen: ["Primordiell"],
     umgebung: ["Gebirge", "Wald", "Grasland", "Wüste", "Sumpf"],
-    bild: "assets/images/monster/tome-of-beasts/elementarknoten.png",
+    bild: "tome-of-beasts/elementarknoten.png",
     beschreibung: [
       "Der Boden reißt auf und schwankt, Felsen stürzen, Feuerstrahlen brechen hervor und heulende Winde toben – ein Elementarknoten ist erwacht. Das Land selbst ist lebendig geworden.",
       "Elementarknoten sind lebendige Geister, die Landstriche und geografische Merkmale bewohnen oder verkörpern. Sie sind die ultimative Personifikation der Natur und variieren in ihrer Größe von kleinen Hügeln bis hin zu ganzen Bergkämmen, ohne erkennbares Muster darin, wo sie Wurzeln schlagen.",
@@ -3749,7 +3749,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Gemein", "Erina"],
     umgebung: ["Wald", "Hügel", "Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/erina-sammler.png",
+    bild: "tome-of-beasts/erina-sammler.png",
     beschreibung: [
       "Erinas, das Igelfolk, sind ein kleines, gemeinschaftliches Volk. Ihre Haut ist mit kurzem, hellbraunem Fell bedeckt, und Kopf, Schultern und Rücken tragen glattgelegte Stacheln. Sie leben in flachen Tunnel- und Kammernetzwerken, die sie selbst gegraben haben, und locken Eindringlinge gern in verworrene Labyrinthe, um Wehrlose durch andere Gänge in Sicherheit zu bringen.",
       "Erinas sind von Natur aus neugierig. Sie erkunden ein Gebiet, indem sie darunter tunneln und an interessanten Punkten auftauchen. In Städten oder Wäldern subsistieren sie von dem, was sie finden können – und sie haben ein Talent dafür, genau das zu finden, was sie brauchen. Manche nennen sie Diebe, doch sie nehmen nur, was sie brauchen, und kaum etwas von Armen. Einige Menschen betrachten es sogar als Glücksbringer, eine Erina-Familie in der Nähe zu haben."
@@ -3790,7 +3790,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein", "Erina"],
     umgebung: ["Wald", "Hügel", "Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/erina-verteidiger.png",
+    bild: "tome-of-beasts/erina-verteidiger.png",
     beschreibung: [
       "Als die größten und zähesten ihrer Art nehmen Erina-Verteidiger die Verteidigung ihrer Heimattunnel sehr ernst und stehen Fremden zunächst argwöhnisch gegenüber. Hat ein Außenstehender jedoch erst seine Freundschaft bewiesen, tauen sie deutlich auf."
     ],
@@ -3833,7 +3833,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Gemein"],
     umgebung: ["Gewässer", "Küste"],
-    bild: "assets/images/monster/tome-of-beasts/ertrunkene_jungfrau.png",
+    bild: "tome-of-beasts/ertrunkene_jungfrau.png",
     beschreibung: [
       "Die Ertrunkene Jungfrau ist meist als treibende Leiche einer Frau zu sehen, ihr langes Haar vom Strom bewegt. Gelegentlich handelt es sich auch um ertrunkene Männer, obwohl dies selten ist.",
       "Diese mitleiderregenden, aber furchterregenden Untoten entstehen, wenn eine Frau aufgrund einer gescheiterten Romanze im Wasser stirbt – sei es durch unerwiderte Liebe oder durch Ertränkung eines untreuen Partners. Die Ertrunkene Jungfrau erwacht aus dem Tod, um Rache zu suchen, klagt dabei aber gleichzeitig über ihr tragisches Schicksal.",
@@ -3879,7 +3879,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein", "Abyssal", "Riesensprache"],
     umgebung: ["Wald", "Wüste", "Dschungel"],
-    bild: "assets/images/monster/tome-of-beasts/eulenharpyie.png",
+    bild: "tome-of-beasts/eulenharpyie.png",
     beschreibung: [
       "Das Gesicht dieser geflügelten Frau ist von einem Federkopfschmuck umrahmt; ihre leuchtenden Augen und die adlerartige Nase verleihen ihrer wilden Erscheinung eine eigene Schönheit. Ihre scharfen, bekrallten Füße wirken im Vergleich dazu noch unmenschlicher.",
       "Harpyienköniginnen. Eine Eulenharpyie ist eine Königin unter ihresgleichen – sie besitzt überlegene Anmut und Intelligenz sowie den Jagdinstinkt und den rauen Appetit einer Eule. Eulenharpyien wachsen nie Haare, nur Federn, die oft ihr Gesicht umrahmen und ihre Köpfe wie einen Kopfschmuck krönen.",
@@ -3925,7 +3925,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 16,
     sprachen: ["Gemein", "Elfisch", "Sylvanisch"],
     umgebung: ["Wald", "Feenwildnis"],
-    bild: "assets/images/monster/tome-of-beasts/far_darrig.png",
+    bild: "tome-of-beasts/far_darrig.png",
     beschreibung: [
       "Diese scheuen Feenwesen kleiden sich als kleine Feen-Hirten in Fellrüstungen, Lederstiefel, Mäntel und Kapuzen, alles mit Fuchsfell besetzt und oft mit einer roten Schärpe oder einem roten Hemd. Sie reiten häufig auf Waldtieren wie Riesenwieseln oder Schneeulen.",
       "Far Darrig waren einst die Jäger, Hirten und Stallmeister des elfischen Adels – einige dienen noch immer in dieser Funktion. Ihre Geweihhelebarden, aus Feengeweih gefertigt, bleiben nur so lange verzaubert, wie ein Far Darrig sie hält. Anführer reiten auf fuchsfarbenen Feen-Elchen mit leuchtend grünen Augen, deren Geweih das Material für die Helebarden liefert.",
@@ -3966,7 +3966,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Sumpf"],
-    bild: "assets/images/monster/tome-of-beasts/fauliger_heimsucher.png",
+    bild: "tome-of-beasts/fauliger_heimsucher.png",
     beschreibung: [
       "Diese schlurfenden Leichen haben Zweige, Äste und anderen Unrat in ihre Körper verwoben, und ihre klaffenden Rachen wimmeln oft von krabbelndem Ungeziefer.",
       "Sumpf-Untote. Faulige Heimsucher sind wandelnde Leichen, die mit Moos, Schlamm und dem Unrat des tiefen Sumpfes durchdrungen sind. Sie sind die schlurfenden Überreste von Individuen, die entweder durch Missgeschick oder Missetat starben, während sie in einem weitläufigen Sumpfland verloren gingen. Ihr verzweifeltes Streben, dem Marschland zu entkommen, verwandelt sich im Tod in einen Hass auf alle Lebewesen. Sie versammeln sich oft an Orten, die durch böse Taten befleckt sind.",
@@ -4009,7 +4009,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: [],
     umgebung: ["Wald", "Feenwildnis"],
-    bild: "assets/images/monster/tome-of-beasts/feenbannbaum.png",
+    bild: "tome-of-beasts/feenbannbaum.png",
     beschreibung: [
       "Dunkler, rindenartiger Rost bedeckt den Stamm dieses kaltgeschmiedeten Metallbaums, und seine stumpfen Metallblätter rascheln mit dem Klang scharfer Klingen.",
       "Diese eisernen Konstrukte werden in einem mehrjährigen Prozess kaltgeschmiedet, bei dem Rost und Oxidation Schicht für Schicht zu Rinde und Ästen heranwächst. Die grünlichen Blätter aus geschlagenem Kalteisen werden von Meisterhandwerkern aufgeschweißt und durch intensive magische Rituale zum Leben erweckt.",
@@ -4087,7 +4087,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein", "Himmlisch", "Drakonisch", "Elfisch", "Zwergisch", "Riesisch", "Höllisch", "Telepathie 18 m"],
     umgebung: ["Arktis", "Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/fenrirsohn.png",
+    bild: "tome-of-beasts/fenrirsohn.png",
     beschreibung: [
       "Die gefürchteten Fenrirsöhne sind entsetzlich stark und gefährlich in ihrer Beherrschung des Arkanen. Ihr säurehaltiger Atem stinkt nach Tod, und sie bewegen sich mit bedrohlicher Anmut. Magisches Blut fließt in ihren Adern.",
       "Dämonische Wölfe. Dämonisch schwarze Augen, zwei schlangenartige Zungen und grün-schwarze Schuppen unter ihrem dichten schwarzen Fell verraten ihre unnatürliche Herkunft. Obwohl die Fenrirsöhne mächtige Zauberwirker sind, bevorzugen sie körperliche Gewalt und setzen ihre Zauber nur ein, wenn sie auf Feinde treffen, die sie nicht einfach zerreißen können.",
@@ -4133,7 +4133,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["Urweltlich"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/feuergeist.png",
+    bild: "tome-of-beasts/feuergeist.png",
     beschreibung: [
       "Aus feurigem Rauch, der sich zu einer vage humanoiden Form verdichtet, ist ein Feuergeist kaum mehr als Fetzen schwarzen Rauchs und Flecken hellerer Flamme.",
       "Wenn ein Feuerelemental auf besonders erniedrigende Weise getötet wird, während es fern seiner Heimatebene beschworen wurde, kehrt ein Feuergeist zurück. Bösartig und voller Groll, eine Stufe unter ihrem einstigen stolzen Selbst, existieren sie für die Rache.",
@@ -4205,7 +4205,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Ignan"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/feuertaenzerschwarm.png",
+    bild: "tome-of-beasts/feuertaenzerschwarm.png",
     beschreibung: [
       "Eine wirbelnde Masse winziger blauer Flammen tanzt mit dem Abbild eines Schädels in jedem kleinen, flackernden Feuer.",
       "Unterentwickelte Elementare. Feuertänzer sind winzige Feuerelementare. Ob sie schlicht unreif oder auf irgendeine Weise verkümmert sind, darüber streiten die Gelehrten. Möglicherweise sind sie Ausgestoßene größerer, feuriger Elementarwesen. Ein einzelner, einsamer Feuertänzer ist kaum mehr als ein halb-empfindungsfähiger Funke mit einem Fetzen Leben und hochfliegenden, aber unrealistischen Ambitionen. In großer Zahl jedoch sind sie eine echte Bedrohung.",
@@ -4249,7 +4249,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 17,
     sprachen: ["Himmlisch", "Gemein", "Elfisch", "Urweltlich", "Sylvanisch"],
     umgebung: ["Andere Ebenen", "Wald"],
-    bild: "assets/images/monster/tome-of-beasts/feuervogel.png",
+    bild: "tome-of-beasts/feuervogel.png",
     beschreibung: [
       "Dieser stolze Vogel stolziert wie ein Pfau und ist durch seinen flammenden Federfächer, der durch das Farbspektrum schimmert, noch majestätischer.",
       "Feuervögel sind willkommene Anblicke für jene, die Wärme und Sicherheit suchen. Sie arbeiten hauptsächlich nachts oder in unterirdischen Bereichen, wo ihre Fähigkeiten am dringendsten benötigt werden. Allen Kreaturen gegenüber freundlich, werden sie nur aggressiv, wenn sie offensichtlich böse Taten bezeugen.",
@@ -4315,7 +4315,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["Die Sprachen seines Patrons"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/fext.png",
+    bild: "tome-of-beasts/fext.png",
     beschreibung: [
       "Gespannte tote Haut, ganz mit tätowierten Fischschuppen bedeckt, überzieht das Gesicht und die Hände dieser Frau. Sie trägt Schuppenrüstung, meergrün wie Grünspan auf Kupfer, und führt ein seltsames Schwert. Ihre blassen Augen starren, ohne zu blinzeln.",
       "Mächtige Wesen aus dem gesamten Multiversum gewähren Sterblichen durch gefährliche Pakte magisches Wissen. Jene, die solche Pakte eingehen, werden Hexenmeister – doch der Wille und die Kraft ihres Patrons lastet auf mehr als nur jenen, die Abkommen für zauberische Macht schließen. Ein Fext ist ein ehemaliger Hexenmeister, der seinem Patron vollständig ergeben ist – an Verstand, Körper und Seele – und als Vollstrecker, Leibwächter und Attentäter dient. Sie sind mächtige untote Sklaven des Willens ihres jenseitigen Patrons.",
@@ -4384,7 +4384,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 22,
     sprachen: ["Gemein", "Drakonisch", "Riesisch", "Ignan", "Infernal", "Ork"],
     umgebung: ["Gebirge", "Wüste", "Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/flammendrache_erwachsen.png",
+    bild: "tome-of-beasts/flammendrache_erwachsen.png",
     beschreibung: [
       "Die Schuppen des Drachen sind schwarz, eher versengt als natürlich gefärbt. Risse zwischen den Schuppen glühen dumpf rot, bis der Drache den Kopf hebt und brüllt — rote Glut wird zu hellen orangefarbenen Flammen, während die Kreatur vom Schweif bis zum Rachen aufleuchtet.",
       "Flammendrachen sind launische Wesen, fasziniert von dunklen Emotionen und zerstörerischen Leidenschaften. Stolz und eifersüchtig, jähzornig und absolut unversöhnlich, bringen sie ganze Zivilisationen für nichtige Gründe zu Fall — ihr wahrer Antrieb ist der Spaß dabei. Rage, Betrug und Verzweiflung behandeln sie als Spielzeuge ihrer Unterhaltung.",
@@ -4451,7 +4451,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 19,
     sprachen: ["Gemein", "Drakonisch", "Ignan", "Riesisch", "Infernal", "Ork"],
     umgebung: ["Gebirge", "Wüste", "Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/flammendrache_jung.png",
+    bild: "tome-of-beasts/flammendrache_jung.png",
     beschreibung: ["Junge Flammendrachen sind weniger subtil als ihre Älteren — direkter und grausamer in ihrer Bosheit. Ihre Schuppen zeigen erste Risse, die schwach glühen, und ihr Feuer ist bereits verheerend genug, um Gruppen von Abenteurern zu vernichten."],
     besonderheiten: [
       { name: "Feuerinkarnation", beschreibung: "Aller Feuerschaden des Drachen ignoriert Feuerresistenz, nicht aber Feuerimmunität." }
@@ -4488,7 +4488,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 27,
     sprachen: ["Gemein", "Drakonisch", "Riesisch", "Ignan", "Infernal", "Ork"],
     umgebung: ["Gebirge", "Wüste", "Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/flammendrache_uralt.png",
+    bild: "tome-of-beasts/flammendrache_uralt.png",
     beschreibung: ["Der uralte Flammendrache ist ein Meister der Intrige und des Leidens, der Jahrhunderte damit verbringt, komplexe Intrigen zu spinnen, die ganze Dynastien zerstören. Seine bloße Existenz ist eine Bedrohung für jede Zivilisation in seiner Reichweite."],
     besonderheiten: [
       { name: "Legendäre Resistenz (3/Tag)", beschreibung: "Wenn der Drache einen Rettungswurf misslingt, kann er stattdessen Erfolg haben." },
@@ -4549,7 +4549,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["Gemein", "Drakonisch", "Ignan"],
     umgebung: ["Gebirge", "Wüste", "Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/flammendrache_wyrmling.png",
+    bild: "tome-of-beasts/flammendrache_wyrmling.png",
     beschreibung: ["Das Wyrmling des Flammendrachen ist bereits ein launisches, grausames Wesen. Sein junges Feuer ist noch begrenzt, aber seine Neigung zu Sadismus und Manipulation ist von Geburt an ausgeprägt."],
     besonderheiten: [],
     aktionen: [
@@ -4583,7 +4583,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["Gemein", "Darakhul"],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/flatterfleisch.png",
+    bild: "tome-of-beasts/flatterfleisch.png",
     beschreibung: [
       "Diese Masse verschmolzener Leichen ähnelt einem Schmetterling mit Flügeln aus Haut, Gliedmaßen aus Knochen und einem Kopf aus mehreren verschiedenen Schädeln. Die dunkle Magie, die diese Abscheulichkeit erschuf, wirbelt hungrig um sie herum.",
       "Flatterfleische entstehen aus einem schrecklichen nekromantischen Ritual. Kultisten versammeln sich im Namen eines dunklen Gottes, eines mächtigen Lich oder eines wahnsinnigen Verrückten und binden sich für immer an Körper und Seele zu einem einzigen bösen Wesen. Flatterfleische nehmen frisch abgetrennte Gliedmaßen und verschmelzen diese neuen Teile mit sich selbst.",
@@ -4656,7 +4656,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Sylvanisch"],
     umgebung: ["Gebirge", "Arktis"],
-    bild: "assets/images/monster/tome-of-beasts/fraughashar.png",
+    bild: "tome-of-beasts/fraughashar.png",
     beschreibung: [
       "Dieses zierliche Wesen ähnelt einem Goblin, aber seine blaue Haut und die Eiszapfen, die von der Spitze seiner langen Nase hängen, verraten die frostige Wahrheit.",
       "Die Fraughashar sind eine Rasse kleiner, hinterhältiger und grausamer Feenwesen, die kalte Gebirgsregionen bewohnen. Sie haben hellblaue Haut, kurze spitze Ohren und nadelspitze Zähne. Da sie im Chaos schwelgen, haben sie immer teuflische Grinsen im Gesicht.",
@@ -4714,7 +4714,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Arktis", "Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/frostschleier.png",
+    bild: "tome-of-beasts/frostschleier.png",
     beschreibung: [
       "\"Sie holten sich zuerst die Schlittenhunde, dann den Robbenhäuter, der sie bewachen sollte. Wir hörten einen verwirrten, gedämpften Schrei im Wind und fanden sie dann – eine Rabennte, kalt und steif auf dem Eis. Das nächste Mal versteckten wir uns und beobachteten, und sahen sie durch die Luft fliegen wie Drachen. Ein Hauch treibenden Schnees, der sich nie auflöste, ein bauschiges Schneeflocken-Segel mit sinisterer Absicht. Der 'Todesumhang' nannte es unser Skraeling-Führer.\"",
       "Durch Schneestürme gepeitscht und einem Spinnennetz ähnelnd, das mit zarten Eiskristallen hängt, sind diese lautlos gleitenden, schönen Killer halbempfindliche Pflanzen, die sich an die gnadenlose Kälte des Nordens angepasst haben.",
@@ -4779,7 +4779,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Gemein", "Ursprünglich"],
     umgebung: ["Grasland", "Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/funke.png",
+    bild: "tome-of-beasts/funke.png",
     beschreibung: [
       "Dieses Stäubchen elektrischer Energie schwebt bedrohlich und bricht in einem Schauer von Funken und Blitzranken aus. Wenn es verschwindet, hinterlässt es nur den Hauch von Ozon.",
       "Im Sturm geboren. Wenn ein gewaltiger Sturm über eine Welt in der Materiellen Ebene fegt, reißt er manchmal das Gewebe der Realität auf und setzt empfindungsfähige Wesen frei, die vollständig aus elementarer Energie bestehen. Angetrieben von seinen hektischen Denkmustern und erratischen Handlungen durchzuckt ein Funke seine neue Welt auf der Suche nach einem physischen Körper, getrieben vom Drang, Form anzunehmen.",
@@ -4820,7 +4820,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: [],
     umgebung: ["Grasland"],
-    bild: "assets/images/monster/tome-of-beasts/gbahali.png",
+    bild: "tome-of-beasts/gbahali.png",
     beschreibung: [
       "Ein großes Reptil mit dolchartigen Zähnen und einer schuppigen Haut, die die Farbe wechselt – der Gbahali (Postosuchus) schlägt oft aus nächster Nähe zu.",
       "Zwar sind Gbahali entfernt mit Krokodilen verwandt, haben sich aber an das Leben abseits des Wassers angepasst. Als Ausgleich für den Mangel an Deckung entwickelten sie Chamäleonkräfte. Die Haut des Gbahali wechselt die Farbe, um sich so perfekt seiner Umgebung anzupassen, dass er nahezu unsichtbar wird. Jeder einsame Felsen in der Graslandschaft könnte ein Gbahali sein, der an einem Pfad, einer Karawanenroute oder einer Tränke lauert.",
@@ -4873,7 +4873,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: ["Versteht Gemein, kann aber nicht sprechen"],
     umgebung: ["Wald", "Dschungel"],
-    bild: "assets/images/monster/tome-of-beasts/geistfaeulnis-sklave.png",
+    bild: "tome-of-beasts/geistfaeulnis-sklave.png",
     beschreibung: [
       "Eine schwer vermummte Gestalt verbreitet Verwesung und hinterlässt bei jedem Schritt eine schwebende Sporenwolke.",
       "Pilzfäule. Der Mindrot-Pilz ist ein intelligenter Schwarmgeist-Parasit, der Kreaturen von innen nach außen verzehrt. Wenn eingeatmet, gelangen die Mindroi-Sporen durch den Blutkreislauf ins Gehirn. Während der Pilz wächst, löst er den Körper des Wirts auf und ersetzt das Fleisch der Kreatur schrittweise durch sein eigenes.",
@@ -4916,7 +4916,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Gewässer", "Ozean"],
-    bild: "assets/images/monster/tome-of-beasts/gerridae.png",
+    bild: "tome-of-beasts/gerridae.png",
     beschreibung: [
       "Diese großen, wassergleitenden Insekten ähneln einer seltsamen Kreuzung aus Kamelen und flügellosen, langbeinigen Heuschrecken. Ein Reiter kann bequem in der großen Vertiefung in ihrem Rücken sitzen, selbst bei hohen Geschwindigkeiten oder auf rauem Wasser. Reiter nutzen die langen, geschwungenen Antennen der Gerridae zum Lenken.",
       "Unter ihrem elfischen Namen bekannt, wurden diese großen Feenwasserläufer von Elfen in längst vergangenen Zeiten verzaubert und gezüchtet, als ihre Entdecker die Welt durchstreiften. Elfische Magier schufen durch aufwendige magische Verfahren und komplexe Kreuzungsprogramme aus gewöhnlichen Wasserläufern große, gutmütige Reittiere.",
@@ -4973,7 +4973,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: [],
     umgebung: ["Gewässer", "Sumpf"],
-    bild: "assets/images/monster/tome-of-beasts/glaskrokodil.png",
+    bild: "tome-of-beasts/glaskrokodil.png",
     beschreibung: [
       "Das Glaskrokodil ist ein nahezu transparenter Hinterhaltsjäger, der seinen Namen von Flussmenschen trägt, die seine Jagdmethode beobachteten. Es lauert meist in Gewässern – stehend oder fließend – und kombiniert einen Schlickstrahl mit giftigem Stachel. Sein Körper ähnelt am ehesten einem Hundertfüßler mit vier übergroßen Vorderbeinen und einem markanten Kopf.",
       "Wenn das Glaskrokodil Beute gepackt hat, wickelt es seinen Körper darum wie eine Würgeschlange – nicht um es zu erdrücken, sondern um seinen stachelbeschlagenen Bauch mit dem Opfer in Kontakt zu bringen. Hunderte von Stacheln injizieren dann ein virulentes Nervengift. Die Transparenz des Tieres ist nicht vollständig: Sein Verdauungstrakt ist sichtbar, besonders kurz nach einer Mahlzeit, was das Glaskrokodil manchmal als Köder einsetzt."
@@ -5017,7 +5017,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: [],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/gnarljak.png",
+    bild: "tome-of-beasts/gnarljak.png",
     beschreibung: [
       "Ein Gnarljak sieht aus wie eine aus Stahl und Federn gefertigte Bärenfalle, die zum Leben erwacht ist. Im Ruhezustand ist er kaum von einer gewöhnlichen Bärenfalle zu unterscheiden. Sobald er jedoch hopsend seiner Beute nachsetzt, offenbart er seine animierte Natur und seine einzige Motivation: die Vernichtung aller Lebewesen.",
       "Gnarljaks sind sinnlose Konstrukte ohne Ermüdung. Sie existieren einzig, um Kreaturen zu Boden zu reißen und sie zu zerfleischen – immer und immer wieder. Einige versuchen, sie als Schatzwächter oder Fallen einzusetzen, doch ihr unterschiedsloses Beißen macht sie auch für ihre Besitzer gefährlich. Gnome verwenden sie gerne als Teil ihrer Tunnelverteidigung; Rotmützen und Schattenfeen setzen sie mit einiger Regelmäßigkeit ein."
@@ -5057,7 +5057,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Telepathie 18 m"],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/goetzengottheit.png",
+    bild: "tome-of-beasts/goetzengottheit.png",
     beschreibung: [
       "Dieses kleine dämonische Idol verblasst in und aus der Realität. Sein elementarer Wille drückt auf jene in der Nähe wie ein fast physischer Druck.",
       "Relikte dunkler Götter. Götzengottheiten finden sich in uralten Tempeln und verlassenen Gräbern. Sie sind Überreste eines vergangenen Zeitalters — alles, was von den Lieblingen trügerischer, dunkler Götter übrig blieb. Mächtige Herrschende wie Akoman der Böse Gedanke, Nanghant der Unzufriedene und Sarvar der Unterdrücker. Ausgesandt, um die Seelen jener zu verzehren, die Lichtgöttern huldigen, wirkten diese Wesen aus Schatten und Sand langsam durch Seelenkorruption statt durch offenen Krieg.",
@@ -5100,7 +5100,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 17,
     sprachen: ["Gemein", "Drakonisch", "Elfisch", "Sylvanisch"],
     umgebung: ["Wald", "Feenwildnis"],
-    bild: "assets/images/monster/tome-of-beasts/graessliche_schoenheit.png",
+    bild: "tome-of-beasts/graessliche_schoenheit.png",
     beschreibung: [
       "Ein überirdisch menschenähnliches Wesen von so unbeschreiblicher Schönheit, dass es jeden schmerzt, sie anzusehen.",
       "Schönheit, die zerstört. Eine grässliche Schönheit ist so vollkommen, dass ihr Blick blendet, ihre Stimme so melodisch ist, dass kein Ohr ihr standhalten kann, und ihre Berührung so verlockend ist, dass sie wie Feuer brennt. Im Jugendalter nimmt dieses Feenwesen Merkmale an, die den oberflächlichen Idealen der nächsten humanoiden Bevölkerung entsprechen: langbeinige Eleganz in der Nähe von Elfen, eine gedrungene Figur mit glänzendem Haar in der Nähe von Zwergen, makellose oder smaragdgrüne Haut in der Nähe von Goblins.",
@@ -5143,7 +5143,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: ["Alle Sprachen, die es im Leben kannte"],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/grauenwerk.png",
+    bild: "tome-of-beasts/grauenwerk.png",
     beschreibung: [
       "Eine dunkel bedrohliche Intelligenz leuchtet hinter den Augen dieses Automaten, und aus seinen Gelenken strömen zischende grüne Dämpfe.",
       "Grauenwerke sind die Ausschussstücke der Zahnradgeschmiedeten- und Räderwerk-Produktion, denen finstere Intelligenz verliehen wurde, als die Konstruktkörper Geister anzogen, die sich nach der körperlichen Welt sehnten. Die Uhrwerkkörper fangen die Geister und dämpfen viele ihrer übernatürlichen Fähigkeiten, geben ihnen dafür aber eine physische Form. Die Geister verwandeln die Körper nach ihrem Willen um – bis hin zur Selbstzerstörung des Körpers, um Lebende zu schaden.",
@@ -5210,7 +5210,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["versteht alle Sprachen, die er zu Lebzeiten kannte, kann jedoch nicht sprechen"],
     umgebung: ["Wüste"],
-    bild: "assets/images/monster/tome-of-beasts/grauer_duerster.png",
+    bild: "tome-of-beasts/grauer_duerster.png",
     beschreibung: [
       "Dieser ausgedörrte Körper eines längst verstorbenen Reisenden ist noch immer in die zerfetzten Reste seiner Kleidung gehüllt. Haut, trocken wie Pergament, klebt an den darunter deutlich erkennbaren Knochen. Ein heiseres Stöhnen dringt aus den trockenen, rissigen Lippen.",
       "Die größte Gefahr beim Durchqueren von Ödland und Wüsten ist der Durst. Die Glücklichen sterben schnell, während die weniger Glücklichen tagelang in sonnengeschwächter Qual dahinvegetieren. Manchmal erheben sich diese Seelen als graue Dürster aus dem Sand und sind getrieben, die erlittene Qual anderen Reisenden zuzufügen. Sie zerstören oder vergiften Wasserquellen und lauern in der Nähe, um jene zu überfallen, die sauberes Wasser suchen."
@@ -5251,7 +5251,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 17,
     sprachen: ["Abyssal", "Himmlisch", "Gemein", "Gnomisch", "Telepathie 18 m"],
     umgebung: ["Andere Ebenen", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/grimmer_narr.png",
+    bild: "tome-of-beasts/grimmer_narr.png",
     beschreibung: [
       "Ein skelettierter Leichnam, gekleidet in das bunte Gewand eines Narren, tänzelt umher und reißt Witze, die den Tod verspotten. Als ein sterbender Hofnarr einen bösen Todesgott zum Lachen brachte, gewährte dieser ihm manchmal eine Gnadenfrist – der Narr wird zum Grimmen Narren, dessen Streiche den Gott der Toten unterhalten sollen. Ihre Aufgabe ist es, sterbliche Leben auf grausame, komische und absurde Weise zu beenden.",
       "Die Witze der Grimmen Narren sind für ihre Opfer nicht lustig, bieten aber eine grimmige Endgültigkeit im Kampf. Grimme Narren sind berüchtigt dafür, Wunderstäbe und Schriftrollen der Chaos-Magie zu ergattern. Sie sind gut darin, Karten aus einem Deck der Vielen Dinge zu ziehen, deren Magie dann auf Feinde und Zuschauer angewendet wird."
@@ -5294,7 +5294,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: [],
     umgebung: ["Wald", "Grasland", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/grosser_todesschmetterlingsschwarm.png",
+    bild: "tome-of-beasts/grosser_todesschmetterlingsschwarm.png",
     beschreibung: [
       "Ein gewaltiger Schwarm aus orangefarbenen und grünen Schmetterlingen, noch größer und bedrohlicher als sein kleineres Gegenstück. Auch diese Schwärme entstehen, wenn Aas fressende Schmetterlinge die Überreste dämonischer Wesen verschlingen und von ihrer teuflischen Essenz durchdrungen werden."
     ],
@@ -5334,7 +5334,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Tiefensprache", "Riesensprache", "Untersprachlich"],
     umgebung: ["Unterirdisch", "Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/gug.png",
+    bild: "tome-of-beasts/gug.png",
     beschreibung: [
       "Gugs sind Riesen der Unterwelt, die längst in dunkle Reiche verbannt wurden, weil sie die ältesten und widerwärtigsten Götter anbeteten. Sie genießen es, kleinere Kreaturen zu zerquetschen und zu verschlingen, und ihre gurgelnde, grunzende Sprache zeugt von einer überraschenden und bösartigen Intelligenz. Gugs werden gelegentlich von Derro-Stämmen verehrt, und ihre seltsamen Untergrundstädte sind mit esoterischen Monolithen und Konstrukten gefüllt.",
       "Obwohl Gugs in sterblichen Reichen in die Unterwelt verbannt sind, trotzen sie diesem Verbot regelmäßig durch nächtliche Überfälle an der Oberfläche. Sie verbringen auch viel Zeit in den Traumlanden und der Ätherischen Ebene. Gugs fressen bevorzugt Ghulen und Darakhul; wenn diese nicht verfügbar sind, bevorzugen sie Aas und bestimmte psychotrope Pilze."
@@ -5380,7 +5380,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Versteht die Sprachen seines Erschaffers, spricht aber nicht"],
     umgebung: ["Gewässer", "Ozean"],
-    bild: "assets/images/monster/tome-of-beasts/haifischkiefer-skelett.png",
+    bild: "tome-of-beasts/haifischkiefer-skelett.png",
     beschreibung: [
       "Aus zahlreichen ineinandergreifenden Haifischkiefern zusammengesetzt, werden diese Schrecken durch finstere Magie zu einer großen, vage humanoiden Gestalt belebt. Sahuagin-Priester erwecken sie zum Leben, um ihre Knochengrüfte zu bewachen.",
       "Diese Haifischkiefer-Skelette liegen zwischen großen Knochenhaufen und warten darauf, aufzustehen und jeden ungebetenen Eindringling anzugreifen, der die Heiligkeit von Sahuagin-Stätten verletzt. Andere bewachen Piratenschätze oder alte Schiffswracks.",
@@ -5419,7 +5419,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: ["Keine in natürlicher Form; kennt die Sprachen jedes beherrschten Wirts"],
     umgebung: ["Wald"],
-    bild: "assets/images/monster/tome-of-beasts/harzdaemon.png",
+    bild: "tome-of-beasts/harzdaemon.png",
     beschreibung: [
       "Wenn ein Harzdämon seinen Baum verlässt, sickert seine milchig-bernsteinfarbene Flüssigkeit aus einer Axtwunde am Stamm eines kräftigen Ahorns und formt sich auf dem Waldboden neben dem Baum zu einer kleinen, vage humanoiden Gestalt. Dieses träge Wesen geht halb und fließt halb vorwärts, folgt unerbittlich dem Weg des Holzfällers zu einer gewissen Rache.",
       "Baumschleim. Harzdämonen sind keine echten Dämonen, sondern intelligente Schleime, die entstehen, wenn ein verzauberter Baum geschnitten oder verletzt wird. Obwohl sie typischerweise Klein sind, kann die Größe des Schleimobjekts die entstehende Kreatur beeinflussen. Innerhalb weniger Stunden sammeln sie sich zu einer Form, die vage dem Angreifer des Baumes ähnelt — wenn der Holzfäller einen Hut trug, kann ein Hut in die Gesamtform des Harzdämons einbezogen sein.",
@@ -5464,7 +5464,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 20,
     sprachen: ["die Sprachen, die es zu Lebzeiten sprach", "Telepathie 36 m"],
     umgebung: ["Hügel", "Grasland"],
-    bild: "assets/images/monster/tome-of-beasts/haugbui.png",
+    bild: "tome-of-beasts/haugbui.png",
     beschreibung: [
       "Ein dicker Staubwirbel steigt auf, legt sich nieder und formt die vage Silhouette eines Mannes — zwei gelbe Lichtpunkte leuchten dort, wo seine Augen sein sollten, und starren bösartig.",
       "Hügelgeist. Ein Haugbui ist ein untoter Geist, der an seinen Grabhügel oder Grabhain gebunden ist. Er dient als vertrauter Schutzgeist für nahegelegene Gehöfte oder Dörfer, solange ihm regelmäßig Tribut gezollt wird. Traditionelle Opfergaben umfassen das erste Bier aus einem Fass, Essensreste über Nacht, Blut- oder Viehopfer oder das Begraben eines Teils des Einkommens im Hügel.",
@@ -5509,7 +5509,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: [],
     umgebung: ["Höhle", "Unterirdisch", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/hautfledermaus.png",
+    bild: "tome-of-beasts/hautfledermaus.png",
     beschreibung: [
       "Eine abstoßende, fledermausartige Kreatur schießt aus der stygischen Dunkelheit. Ihr Körper besteht vollständig aus verrottenden Fetzen gestohlener Haut. Obwohl ihre großen Augen glasig und leblos sind, schimmert in ihnen ein unverkennbar böser Wille, während sich ein zahnloser Mund weit in Hunger öffnet.",
       "Hautfledermäuse sind untote Kreaturen, die aus Haut erschaffen werden, die Opfern ritueller Zeremonien abgezogen wurde. Sie ernähren sich von der Haut lebender Wesen, um ihre eigene ständig verfaulende Haut zu erneuern. Ihr saurer Speichel wirkt als lähmendes Gift und hinterlässt hässliche Narben.",
@@ -5548,7 +5548,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Versteht die Sprache seines Schöpfers, kann aber nicht sprechen"],
     umgebung: ["Wald", "Sumpf"],
-    bild: "assets/images/monster/tome-of-beasts/hexenlicht.png",
+    bild: "tome-of-beasts/hexenlicht.png",
     beschreibung: [
       "Hexenlichter sind Zaubererwesen, die aus einem winzigen Stück Quarz erschaffen werden. Sie erscheinen als schwebende Kugeln aus flackerndem Licht, ähnlich einem Irrwisch. Die Farbe des bei der Erschaffung verwendeten Quarzes bestimmt die Farbe der Beleuchtung jedes Hexenlichts. Der Quarz wird durch ein ausgedehntes magisches Ritual unter einem Vollmond und einem klaren, sternklaren Himmel belebt. Sie sind daher außerordentlich selten.",
       "Ein Hexenlicht teilt stets die Gesinnung seines Schöpfers. Obwohl es nicht sprechen kann, versteht es Gemein oder eine andere Sprache, die ihm sein Schöpfer beigebracht hat. Viele Zauberkundige haben ihrem Hexenlicht einen Geheimcode gelehrt, mit dem es Wörter durch Aufflackern und Dimmen seines Lichts buchstabieren kann. Bei Bedarf kann ein Hexenlicht Wörter in die Luft schreiben, indem es so schnell fliegt, dass seine Lichtspur Buchstaben bildet.",
@@ -5590,7 +5590,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 20,
     sprachen: ["Gemein", "Darakhul", "Drakonisch", "Zwergisch", "Goblin"],
     umgebung: ["Unterirdisch", "Höhle"],
-    bild: "assets/images/monster/tome-of-beasts/hoehlendrache_erwachsen.png",
+    bild: "tome-of-beasts/hoehlendrache_erwachsen.png",
     beschreibung: [
       "Mit schwarzen Stacheln bedeckt, schwenkt der auglose Kopf des Drachen von Seite zu Seite. Dunkelheit kriecht aus seiner fremdartigen, aalähnlichen Haut und breitet sich wie Tinte im Wasser aus.",
       "Höhlendrachen sind die Scheusale des Albtraums — Spitzenräuber der Unterwelt, gefürchtet von Kreaturen, die sonst wenig zu fürchten haben. Sie können sprechen, schätzen aber die Stille und tun es selten, außer wenn sie um Nahrung feilschen.",
@@ -5662,7 +5662,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein", "Darakhul", "Drakonisch"],
     umgebung: ["Unterirdisch", "Höhle"],
-    bild: "assets/images/monster/tome-of-beasts/hoehlendrache_jung.png",
+    bild: "tome-of-beasts/hoehlendrache_jung.png",
     beschreibung: ["Junge Höhlendrachen können noch schlecht fliegen. Ihre Färbung reicht von weißlich bis bräunlich und bietet gute Tarnung gegen Stein. Sie sind bereits gefährliche Raubtiere der Unterwelt, wenn auch noch nicht so unerbittlich wie ihre ausgewachsenen Artgenossen."],
     besonderheiten: [
       { name: "Tunnelgräber", beschreibung: "Der Höhlendrache kann mit der Hälfte seiner Grabgeschwindigkeit durch felsigen Boden graben und hinterlässt einen 3 m breiten und 1,5 m hohen Tunnel." },
@@ -5702,7 +5702,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 29,
     sprachen: ["Gemein", "Darakhul", "Drakonisch"],
     umgebung: ["Unterirdisch", "Höhle"],
-    bild: "assets/images/monster/tome-of-beasts/hoehlendrache_uralt.png",
+    bild: "tome-of-beasts/hoehlendrache_uralt.png",
     beschreibung: ["Der uralte Höhlendrache ist das ultimative Raubtier der Unterwelt — ein massives, augenloses Scheusal, dessen bloße Anwesenheit selbst hartgesottene Tiefenbewohner in Schrecken versetzt. Jahrhunderte unter der Erde haben ihn zu einem nahezu unaufhaltsamen Wesen geformt, das sich durch Stein und Erde gleitet wie andere Drachen durch die Luft."],
     besonderheiten: [
       { name: "Dunkelheitsaura", beschreibung: "Der Höhlendrache strahlt magische Dunkelheit in einem Radius von 9 m aus. Die Dunkelheit bewegt sich mit dem Drachen und breitet sich um Ecken herum aus. Dunkelsicht kann diese Dunkelheit nicht durchdringen, und kein natürliches Licht kann sie erhellen. Überlappt die Dunkelheit mit einem durch einen Zauber der 4. Stufe oder niedriger erzeugten Lichtbereich, wird der Zauber aufgehoben. Zu Beginn jedes seiner Züge wählt der Drache, ob diese Aura aktiv ist. Ein erfolgreicher Magie bannen (SG 15) auf den Drachen unterdrückt diese Aura für 1 Minute." },
@@ -5750,7 +5750,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: ["Drakonisch"],
     umgebung: ["Unterirdisch", "Höhle"],
-    bild: "assets/images/monster/tome-of-beasts/hoehlendrache_wyrmling.png",
+    bild: "tome-of-beasts/hoehlendrache_wyrmling.png",
     beschreibung: ["Junge Höhlendrachen-Wyrmlings sind noch blass gefärbt und können fliegen, wenn auch schlecht. Sie sind bereits blind, navigieren aber mit langen Stacheln und feinem Gespür für Vibrationen. Hungrig und rücksichtslos, fressen sie alles Organische, das sie finden können."],
     besonderheiten: [
       { name: "Tunnelgräber", beschreibung: "Der Höhlendrache kann mit der Hälfte seiner Grabgeschwindigkeit durch felsigen Boden graben und hinterlässt einen 1,5 m breiten und 1,5 m hohen Tunnel." },
@@ -5789,7 +5789,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Unterirdisch", "Höhle"],
-    bild: "assets/images/monster/tome-of-beasts/hoehlenleuchtmoos.png",
+    bild: "tome-of-beasts/hoehlenleuchtmoos.png",
     beschreibung: ["Höhlenleuchtmoos leuchtet mit einem blassen gelblichen Licht, das sich bei Aufregung in ein eisiges Blau verwandelt. Es wird häufig für einen harmlosen Organismus gehalten, jagt aber lebendes Fleisch und lähmt seine Mahlzeiten, bevor es sie langsam verdaut.", "Ein Höhlenleuchtmoos ist eine Gemeinschaft kleinerer Lebensformen, die zusammengewachsen sind und Empfindungen teilen. Mit einem kaum vorhandenen Bewusstsein verbringt es seine Zeit damit, sich über belebten Höhlenabschnitten zu positionieren und sich von Ratten, Fledermäusen und Insekten zu ernähren. Bei größerer Beute bewegt es sich langsam und lautlos auf diese zu. Es kann bis zu 200 Jahre alt werden."],
     besonderheiten: [
       { name: "Lumineszenz", beschreibung: "Die chemischen Substanzen im Höhlenleuchtmoos lassen die gesamte Kreatur wie eine Fackel leuchten. Das Höhlenleuchtmoos kann diesen Effekt nicht unterdrücken, aber die Helligkeit auf das Niveau einer Kerze reduzieren." }
@@ -5827,7 +5827,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 16,
     sprachen: ["versteht Untersprachlich, kann jedoch nicht sprechen"],
     umgebung: ["Unterirdisch", "Höhle"],
-    bild: "assets/images/monster/tome-of-beasts/horakh.png",
+    bild: "tome-of-beasts/horakh.png",
     beschreibung: [
       "Einer Höhlengrille in der Größe eines Hundes ähnelnd, umschlingt dieses Wesen sein Opfer mit stacheligen Beinen und Klauen. Der schwarze, chitinöse Thorax des Horakh ist von einem durchsichtigen Verdauungssack gekrönt — der oft halb verdaute Augäpfel verschiedenster Größen, Farben und Arten enthält.",
       "Springende Klauen. Diese insektoiden Tötungsmaschinen mit einer Vorliebe dafür, die Augen ihrer Opfer zu verzehren, reisen in kleinen Rudeln und führen blitzschnelle Angriffe gegen Schwache oder Verwundbare durch. Ihre kräftigen Hinterbeine ermöglichen enorme Sprünge, während die scharfen Haken an ihren Klauen ihnen helfen zu klettern und sich an der Beute festzuhalten.",
@@ -5870,7 +5870,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["versteht die Sprache seines Erschaffers, kann jedoch nicht sprechen"],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/hortgolem.png",
+    bild: "tome-of-beasts/hortgolem.png",
     beschreibung: [
       "Ein Hortgolem ist ein Haufen Gold, Schmuck und Waffen, der sich wie eine Flutwelle aus Reichtümern erheben kann – mit einem kalten, entschlossenen Gesicht. Er kann mit dem Gewicht eines Vermögens niederkrachen und alles auf seinem Weg niederwalzen. Hortgolems wurden aus der Paranoia von Drachen geboren: Der erste wurde erschaffen, als ein Drache erkannte, dass es keinen vertrauenswürdigeren Hüter seines Hortes geben konnte als den Hort selbst.",
       "Als Konstrukte sind Hortgolems geistlos und lauern jedem auf, der außer ihrem Schöpfer in Reichweite kommt. Sie kämpfen bis zum Tod, verlassen ihre Räume jedoch selten. Wenn ein Hortgolem stirbt, bleiben Hunderte makellos erhaltener Gegenstände zurück – die ursprünglichen Schätze, aus denen er bestand."
@@ -5913,7 +5913,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 8,
     sprachen: [],
     umgebung: ["Höhle", "Unterirdisch", "Sumpf"],
-    bild: "assets/images/monster/tome-of-beasts/huellenspuk.png",
+    bild: "tome-of-beasts/huellenspuk.png",
     beschreibung: [
       "Dieses große Ungeziefer bewegt sich unregelmäßig und leckt üble Flüssigkeit aus seinem gerissenen Chitinpanzer.",
       "Schleimungeziefer. Dieser parasitäre Schleim lebt in den Hüllen von monströsem Ungeziefer – wie Skorpionen und Spinnen –, das er befallen und getötet hat. Ein Hüllenspuk könnte auf den ersten Blick mit seiner ursprünglichen, lebenden Version verwechselt werden, doch die schleppenden, unregelmäßigen Bewegungen und der triefende Chitinpanzer verraten seine wahre Natur schnell.",
@@ -5959,7 +5959,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Gemein (Altes Nurisch)"],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/imy-ut_ushabti.png",
+    bild: "tome-of-beasts/imy-ut_ushabti.png",
     beschreibung: [
       "Diese Grabwächter schreiten schweigend ihre Runden ab, ein kunstvolles Schwert in der Hand. Glitzernde Skarabäen huschen unter ihren deformierten und vergilbten Leinenumhüllungen hervor.",
       "Willige Opfer. Die unsterblichen Diener der Göttkönige und -königinnen der Antike bewachen die Gräber ihrer Meister und geleiten sie ihrer endgültigen Erweckung entgegen. Generäle, vertraute Ratgeber und enge Verbündete begleiteten ihre sterbenden Herren freiwillig ins Jenseits durch eine grauenhafte Verwandlung — lebendig in Leinen gebunden, in einem Sarkophag versiegelt, wurden sie von fleischfressenden Skarabäen über Tage bis Wochen vollständig verzehrt.",
@@ -6003,7 +6003,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 18,
     sprachen: ["versteht Aquanisch und Elfisch, kann jedoch nicht sprechen"],
     umgebung: ["Ozean", "Küste"],
-    bild: "assets/images/monster/tome-of-beasts/isonade.png",
+    bild: "tome-of-beasts/isonade.png",
     beschreibung: [
       "Der riesige, gargantuesche Schwanz des Isonade ist mit grausam hakigen Widerhaken gesäumt, und es ergötzt sich an Zerstörung. Wenn es sich einer Küstensiedlung nähert, schießt sein Schwanz hoch aus den Wellen und zerschmettert alle Schiffe, Docks und Netze auf seinem Weg.",
       "Küstenzerstörer. Der Isonade ist ein Wesen der Zerstörung, das ganze Inseln und Dörfer wegfegt. Er verwüstet Küstengemeinden mit peitschenden Winden und verändert Küstenlinien mit seiner mächtigen Magie. Obwohl nicht sehr intelligent, nimmt er sich eine Gemeinde vor und versucht, deren Bewohner mit seiner Tierboten-Fähigkeit ins Wasser zu locken — er schickt Möwen, die verwirrende Rätsel, große Versprechen und unheimliche Geräusche überbringen.",
@@ -6052,7 +6052,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein", "Drakonisch"],
     umgebung: ["Wald", "Dschungel"],
-    bild: "assets/images/monster/tome-of-beasts/jaculus.png",
+    bild: "tome-of-beasts/jaculus.png",
     beschreibung: [
       "Dieser kleine Drache hat befiederte Flügel an seinen Unterarmen und kräftige Beine, mit denen er sich an Bäumen festhält.",
       "Der Jaculus (Plural: Jaculi), auch Wurfschlange genannt, ist ein drakonischer Räuber, der durch Wälder und Dschungel streift und nach wertvollen Gegenständen sucht, die er seinem Hort hinzufügen kann. Er liebt glänzende oder reflektierende Gegenstände und ist klug genug, Gegenstände von echtem Wert zu erkennen.",
@@ -6094,7 +6094,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["Gemein", "Riesensprache"],
     umgebung: ["Arktis", "Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/jotun-riese.png",
+    bild: "tome-of-beasts/jotun-riese.png",
     beschreibung: [
       "Die Erde bebt unter jedem Schritt eines Jotun-Riesen, dieser unsterblichen Feinde der Götter. Groß genug, um einem Titanen in die Augen zu sehen, und stark genug, um mit einem Linnorm zu ringen, sind die Jotun-Riesen die unangefochtenen Herren der Riesenwelt. Ihre gewaltigen Hallen sind in Berge und Gletscher der Nordlande gehauen.",
       "Als Erzfeinde der nordischen Götter sinnen die Jotun darauf, ihren einstigen Status als Herren der Schöpfung zurückzugewinnen. Viele kennen uralte Geheimnisse und Fragmente vorzeitlichen Arkanwissens. Die Jotun schätzen Herausforderungen – sogar von kleinen Menschen –, jedoch erzürnt übermäßige List sie. Vor allem streben sie danach, die Götterdämmerung herbeizuführen und das Ende aller Zeiten einzuleiten."
@@ -6145,7 +6145,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: [],
     umgebung: ["Küste", "Gewässer"],
-    bild: "assets/images/monster/tome-of-beasts/kailing.png",
+    bild: "tome-of-beasts/kailing.png",
     beschreibung: [
       "Das Wharfling ist kahl, hässlich und meist triefend nass – ein nächtlicher Räuber, der Fischhändler und Juweliere gleichermaßen bestielt. Es besitzt große, schwimmhäutige Hände und Füße sowie ein überdimensioniertes Maul. Als geschickter Fischfänger richtet das Wharfling seine Behausung in der Nähe von Meeres-, See- und Flussufern ein und bewegt sich häufig in Familiengruppen von drei oder mehr Tieren.",
       "Wer von einem Wharfling gebissen wurde, fürchtet zu Recht seine nadelspitzen Zähne. Die meisten Küstengemeinden hassen das Tier jedoch mehr wegen seiner Diebsneigung. Seine Behausungen sind unweigerlich mit gestohlenen Metallkleinteilchen gefüllt."
@@ -6183,7 +6183,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: [],
     umgebung: ["Küste", "Gewässer"],
-    bild: "assets/images/monster/tome-of-beasts/kailingschwarm.png",
+    bild: "tome-of-beasts/kailingschwarm.png",
     beschreibung: [
       "Eine wogende Masse aus Fleisch und Zähnen ist ein Wharflingschwarm im Mondlicht – ein schrecklicher Anblick. Diese Massen kahler Körper winden sich an der Küste im Mondlicht entlang und werden oft mit Schoggothen oder anderen weit größeren Kreaturen verwechselt. Das Quietschen der Tiere vermischt sich mit den Schreien unglücklicher Fischer, die ihnen in den Weg geraten.",
       "Periodisch versammeln sich Wharflinge in riesigen Zahlen und rasen kilometerweit an der Küste entlang, bevor sie schließlich in ihre Behausungen zurückkehren. Warum sie sich auf diese Weise zusammenrotten, ist unbekannt – die meisten Einheimischen wissen jedenfalls, dass sie in diesen Nächten das Ufer meiden sollten."
@@ -6225,7 +6225,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["versteht Sylvanisch, kann aber nicht sprechen"],
     umgebung: ["Wüste"],
-    bild: "assets/images/monster/tome-of-beasts/kaktid.png",
+    bild: "tome-of-beasts/kaktid.png",
     beschreibung: ["Kaktids sind halbsentiente Kakteen, die in unzähligen Formen vorkommen — von bodennahen Fassformen über kugelförmige Büschel bis hin zu turmhohen Säulenkakteen mit keulenartigen Armen. Alle sind mit zahllosen Nadeln besetzt. Ihre Wurzelranken können nahe Kreaturen erfassen und in eine tödliche Umarmung ziehen, woraufhin die Nadeln des Kaktids die Körperflüssigkeiten des Opfers absaugen, bis nur eine ausgetrocknete Hülle übrig bleibt. Viele Kaktids schmücken sich mit leuchtenden Blüten oder saftigen Früchten, um Beute anzulocken. Der Körper eines erschlagenen Kaktids enthält bis zu 15 Liter Wasser.", "Kaktids wurden von einer nomadischen Druidensekte geschaffen, doch ihr ursprünglicher Zweck ist verloren. Sie versammeln sich häufig in Gruppen oder ziehen gemeinsam zu besseren Jagdgründen."],
     besonderheiten: [
       { name: "Nadelhagel (1/Tag)", beschreibung: "Wenn der Kaktid auf unter 10 Trefferpunkte (auch auf 0 TP) sinkt, entlädt er als Reaktion einen Hagel von Nadeln. Alle Kreaturen innerhalb von 4,5 m erleiden 21 (6W6) Stichschaden, oder die Hälfte bei einem erfolgreichen GES-Rettungswurf (SG 14)." }
@@ -6261,7 +6261,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Abyssal", "Gemein", "Infernalisch"],
     umgebung: ["Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/kalke.png",
+    bild: "tome-of-beasts/kalke.png",
     beschreibung: [
       "Kalkes sind teuflische Schädlinge mit dem Kopf einer Ziege und dem Körper eines Affen, die verlassene Zauberertürme und Laboratorien heimsuchen. Sie sind entweder das Nebenprodukt missglückter Pforten in die unteren Ebenen oder die Verkörperung des Hohns einer bösen Gottheit auf Zauberer.",
       "Kalkes handeln mit der Arroganz von Magiern, besitzen jedoch das Sozialverhalten von Pavianen. Als teuflische Wesen altern sie nicht und benötigen weder Speise noch Trank. Obwohl sie keine formellen Zauberfertigkeiten besitzen, können sie magische Effekte durch dramatische, spontane Rituale erzeugen.",
@@ -6302,7 +6302,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Gemein", "Drakonisch", "Telepathie 18 m"],
     umgebung: ["Wald", "Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/karmesindrache.png",
+    bild: "tome-of-beasts/karmesindrache.png",
     beschreibung: ["Karmesindrachen sind mit getrockneten-Blut-roten Schuppen, einem tödlichen Skorpionstachel und einem schelmischen Funkeln in den Augen leicht zu erkennen. Sie nisten in Wäldern nahe kleiner Siedlungen und unternehmen nächtliche Überfälle, bei denen sie Feuer legen und die Fliehenden jagen — Eigenschaften, die humanoide Stämme sie als Raubzugpartner schätzen lassen. Goblins nehmen einen Karmesindrachen begeistert als Maskottchen auf; rote Drachen und Flammendrachen behandeln sie bestenfalls als Haustier, was selten gut ausgeht.", "Karmesindrachen imitieren den Jagdruf von Pseudodrachen, um Opfer in Reichweite zu locken, bevor sie diese in Brand setzen. Sie können als Vertraute böser Zauberkundiger dienen — zu verschmitzt für echte Loyalität, aber wild in der Verteidigung ihres Meisters. Ein ausgewachsener Karmesindrache wiegt etwa 5,5 kg, ist rund 45 cm lang (Körper) und hat einen ebenso langen Schwanz."],
     besonderheiten: [
       { name: "Magieresistenz", beschreibung: "Der Drache hat Vorteil auf Rettungswürfe gegen Zauber und andere magische Effekte." }
@@ -6339,7 +6339,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein", "Sylvanisch"],
     umgebung: ["Stadt", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/kikimora.png",
+    bild: "tome-of-beasts/kikimora.png",
     beschreibung: [
       "Kikimoras sind hinterlistige Hausgeister, die aussehen wie eine Kreuzung aus alter Hexe und Vogel – mit markantem Schnabel, Klauenhänden und vogelartigen Füßen. Sie plagen diejenigen, bei denen sie wohnen, mit Illusionen von Schimmel, Dreck und Ungeziefer, und brechen heimlich Dinge, nur um anschließend Geschenke als Gegenleistung für nächtliche Reparaturen zu verlangen.",
       "Kikimoras hassen Kobolde (Brownies). Während diese still im Hintergrund helfen, verursachen Kikimoras nur Verdruss. Manche Brownies suchen gezielt Häuser auf, die von Kikimoras befallen sind, um sie zu vertreiben. Wer eine Kikimora weder besänftigt noch loswird, bekommt bald einen Schwarm Spinnen, Ratten oder Fledermäuse zu spüren.",
@@ -6380,7 +6380,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Himmlisch", "Gemein", "Drakonisch", "Infernalisch", "Telepathie 36 m"],
     umgebung: ["Stadt", "Grasland"],
-    bild: "assets/images/monster/tome-of-beasts/kishi-daemon.png",
+    bild: "tome-of-beasts/kishi-daemon.png",
     beschreibung: [
       "Dieser kräftige und gutaussehende Krieger trägt auf der Rückseite seines Kopfes das knurrende Gesicht einer Hyäne.",
       "Dunkle Gelüste. Kishi sind zweigesichtige männliche Dämonen, die ständig von ihrem unersättlichen Appetit angetrieben werden — fleischlich oder anderweitig — mit einer Vorliebe für weibliche Humanoide. Kishi enthaupten, skalpieren oder häuten ihre Eroberungen häufig und schmücken ihre Schilde mit den Trophäen.",
@@ -6425,7 +6425,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein", "Diebesjargon"],
     umgebung: ["Stadt", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/kleiner_rattenkoenig.png",
+    bild: "tome-of-beasts/kleiner_rattenkoenig.png",
     beschreibung: [
       "Ein großer Knoten räudiger Ratten wimmelt als Masse zusammen, mit Schädeln, Knochen und Fleisch ineinander verwoben. Zähne, Augen und Fell fließen als ein einziger, beunruhigender Rattenschwarm auf zwei Beinen.",
       "Am Schwanz verknüpft. Ein Kleiner Rattenkönig entsteht, wenn Dutzende von Ratten ihre Schwänze in einem dicken Knoten aus Knochen und klumpigem Knorpel zusammendrehen — und dem Rattendämon Chittr'k'k Lobpreis darbringen. Seine Anzahl und Kräfte wachsen rasch.",
@@ -6472,7 +6472,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein", "Darakhul"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/knochenkollektiv.png",
+    bild: "tome-of-beasts/knochenkollektiv.png",
     beschreibung: [
       "Ein Knochenkollektiv ist beinahe flüssig; seine Tausenden winziger Knochen formen sich zu einer humanoiden Gestalt, nur um im nächsten Moment in einem klappernden Schwarm zu zerstieben. Die winzigen Knochen rascheln bei der Bewegung, ein leises Geräusch ähnlich Sand, der eine Düne hinabgleitet.",
       "Spione und Schleicher. Knochenkollektive sind keine vorrangigen Kämpfer, obwohl sie gut als Schwarm agieren können. Sie bevorzugen das Spionieren und Lauern. In die Enge getrieben jedoch kämpfen sie ohne Furcht oder Zögern und versuchen, ihren Feinden das Fleisch von den Knochen zu reißen.",
@@ -6521,7 +6521,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: [],
     umgebung: ["Küste", "Ozean"],
-    bild: "assets/images/monster/tome-of-beasts/knochenkrabbe.png",
+    bild: "tome-of-beasts/knochenkrabbe.png",
     beschreibung: [
       "Die gerissene Schädeldecke einer Knochenkrabbe huscht auf knochenweiße Beine. Diese verseuchten Krebstiere machen verlassene Hirnschalen zu ihrem Zuhause.",
       "Schädelgehäuse. Ähnlich wie eine riesige Einsiedlerkrabbe bewohnen Knochenkrabben die Überreste großer Fische, Humanoider und anderer Kreaturen. Die stacheligen, elfenbeinweißen Beine verschmelzen perfekt mit Knochen und blassem Treibholz. Fehlen Knochen, nagen diese Krabben Höhlungen in Treibholz- oder Korallenstücke und zementieren Schalen- und Trümmerstücke an ihre tragbaren Häuser. Alle Krabben kämpfen um die besten Schädel.",
@@ -6567,7 +6567,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 16,
     sprachen: ["Gemein", "Darakhul", "Drakonisch", "Zwergisch"],
     umgebung: ["Unterirdisch", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/knochenpulver-ghul.png",
+    bild: "tome-of-beasts/knochenpulver-ghul.png",
     beschreibung: [
       "Auf nichts als trockenen, flüsternden Sand und ein vollständiges Gebiss reduziert, hungert ein Knochenpulver-Ghul noch immer nach Fleisch und Blut. Seine staubige Masse ist vollendete Verderbnis, vollständig durch finstere Energie belebt.",
       "Der Knochenpulver-Ghul ist klein und unscheinbar – ein Haufen Staub und Knochenfragmente, der einem Haufen Mumienstaub oder den Überresten eines von der Sonne verbrannten Vampirs ähnelt. Ghule können diese staubige Form durch langen Hunger erlangen. Der Prozess dauert unweigerlich Jahrzehnte, weshalb so wenige Knochenpulver-Ghule existieren – kaum ein Ghul kann eine solche Selbstbeherrschung zeigen.",
@@ -6634,7 +6634,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 16,
     sprachen: ["Gemein", "Leerensprache"],
     umgebung: ["Ruinen", "Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/knochenschwarm.png",
+    bild: "tome-of-beasts/knochenschwarm.png",
     beschreibung: [
       "Dunkle Winde fegen Skelette zusammen, sowohl humanoide als auch tierische. Sie peitschen vorwärts und greifen nach lebenden Kreaturen wie eine knochige Klauenhand. Verstreute Knochen rollen über den Boden, erheben sich dann in die Luft und bauschen sich wie ein Laken.",
       "Schwärme der Gefallenen. In seltenen Fällen schließen sich die streitsüchtigen Geister gefallener Untoter zusammen, verbunden durch ein gemeinsames Verlangen: sich wieder lebendig zu fühlen. Sie sammeln ihre Knochen aus dem Leben sowie alle anderen Knochen, die sie finden, und bilden Knochenschwärme.",
@@ -6676,7 +6676,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 9,
     sprachen: ["Gemein", "Drakonisch"],
     umgebung: ["Unterirdisch", "Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/kobold-alchemist.png",
+    bild: "tome-of-beasts/kobold-alchemist.png",
     beschreibung: [
       "Kobold-Alchemisten werden meist gerochen, bevor man sie sieht – der beißende Geruch von Chemikalien und Giften hängt in ihrer Umgebung. Ihre Schuppen und Haut sind oft fleckig und verfärbt, ein Zeugnis der ätzenden Substanzen ihrer Besessenheit. Sie plündern Alchemistenläden und magische Laboratorien für Nachschub zu ihren rücksichtslosen Experimenten.",
       "Für ihren Clan sind Alchemisten sowohl Segen als auch Fluch: Sie benötigen seltene und gefährliche Materialien, neigen zu leichter Unzurechnungsfähigkeit und können durch missglückte Versuche verheerende Schäden anrichten – doch ihre Waffen und Schutztränke können viele Koboldleben retten."
@@ -6720,7 +6720,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Gemein", "Drakonisch"],
     umgebung: ["Unterirdisch", "Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/kobold-fallensteller.png",
+    bild: "tome-of-beasts/kobold-fallensteller.png",
     beschreibung: [
       "Manche Kobolde sind ein wenig klüger als ihre Artgenossen. Diese scharfsinnigen Wesen werden von einem Drang beseelt, die Welt zu manipulieren, und wer frühzeitigen Unfällen oder Gewalt entkommt, wird zum Bastler. Fallensteller machen einen Kobold-Unterschlupf zu einem tödlichen Spießrutenlauf aus verborgenen Schmerzen.",
       "Fallensteller sind keine Krieger – sie meiden den direkten Kampf mit Feinden, die nicht bereits in Fallen gefangen oder von anderen gebunden sind. Sie legen Fallen hinter eindringenden Feinden auf Wegen, die diese für sicher halten, und locken sie dann zurück durch ihr Werk."
@@ -6763,7 +6763,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Gemein", "Drakonisch"],
     umgebung: ["Unterirdisch", "Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/kobold-haeuptling.png",
+    bild: "tome-of-beasts/kobold-haeuptling.png",
     beschreibung: [
       "Ein Kobold-Häuptling stolziert, als wäre er drei Meter groß – er trägt den vergoldeten Schädel eines kleinen Drachen als Helm, und seine kleinen Augen funkeln durch die Augenhöhlen. Wenige Kobolde tragen den Funken drakonischen Adels in sich, doch diese wenigen schmieden ihre Stämme zu ernstzunehmenden Kräften.",
       "Ein Kobold-Häuptling ist mehr als ein Anführer – er ist das Symbol der Größe seines Stammes. Der Stärkste, Gerissenste und Rücksichtsloseste verkörpert die Verbindung des Stammes zu den verehrten Drachen. Wenn er zum Kampf ruft, verwandeln sich die Kobolde in eine furchtlose, tödliche Streitmacht."
@@ -6806,7 +6806,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: [],
     umgebung: ["Dschungel", "Gewässer", "Küste"],
-    bild: "assets/images/monster/tome-of-beasts/kongamato.png",
+    bild: "tome-of-beasts/kongamato.png",
     beschreibung: [
       "Der Kongamato ist ein evolutionäres Überbleibsel – ein großer Pterodaktylus mit vogelartigen Merkmalen wie aufkommenden Federn und langen, schnabelartigen Kiefern. Sein Name bedeutet \"Bootsbrecher\", und er zerstört systematisch die kleinen Fahrzeuge jener, die seiner Ruhestätte zu nahe kommen. Manche Gelehrten vermuten, dass er Kanus mit großer Beute wie Nilpferden oder Krokodilen verwechselt.",
       "Manche Stämme sprechen nur im Flüsterton von Kongamatos, aus Angst, die Erwähnung könnte ihren Zorn anziehen. Böse Priester und Kultisten beschwören diese Wesen als Diener, um Dorfbewohner in Schrecken zu versetzen.",
@@ -6848,7 +6848,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Infernalisch", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/koralk.png",
+    bild: "tome-of-beasts/koralk.png",
     beschreibung: [
       "Die teuflische Bestie trägt Züge eines Alptraum-Skorpions — drei stechende Schwänze, vier Gliedmaßen — und schwingt eine gewaltige Sense.",
       "Erschaffen von Arbeyach. Diese teuflischen Skorpione entstammen der dunklen Vorstellungskraft des Erzteufel Arbeyach selbst, der sie aus den gequälten Formen von Lemuren und degradierten Teufeln formte. Der Herr des Schwarms schuf die Koralk nicht nur als Vernichter im Kampf, sondern auch als Sammler von Seelen der Gefallenen — unter Umgehung der üblichen Wege der Seelenernte, um seinen Kriegsapparat zu speisen.",
@@ -6892,7 +6892,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["Drakonisch"],
     umgebung: ["Ozean"],
-    bild: "assets/images/monster/tome-of-beasts/korallendrache.png",
+    bild: "tome-of-beasts/korallendrache.png",
     beschreibung: ["Korallendrachen sind schlanke, agile Jäger der Korallenriffe, deren Färbung und Schuppenstruktur sich an Anemonen, Korallen, Seetang und Seeigel anpassen — wie ein Stück beweglicher Koralle. Lange gezackte Stacheln wogen in brillanten Farben im blauen Wasser. Das schmale Gesicht trägt eine kronenförmige Anordnung aus Spitzen und schlanken Auswüchsen; im Maul bilden mehrreihige Sägezähne Wülste, in denen die Jungen von Fresspuren und Parasiten leben.", "Korallendrachen leben in warmen Gewässern nahe großer Korallenriffe, in kleinen Höhlen mitten in Wäldern aus Giftseeigeln und Giftiganemonen — ihre Immunität gegen Gift macht diese Orte zum idealen Schutz für ihre Brut und den bescheidenen Hort. Beide Elternteile brüten die Eier in Kehlbeuteln aus und setzen die Larven im Notfall als Waffe ein. Ihren größten Rivalen finden sie in Drachenschildkröten, mit denen sie um die besten Reviere kämpfen."],
     besonderheiten: [
       { name: "Wasseratmung", beschreibung: "Der Korallendrache kann nur unter Wasser atmen." },
@@ -6931,7 +6931,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein", "Sylvanisch"],
     umgebung: ["Wald", "Feenwildnis"],
-    bild: "assets/images/monster/tome-of-beasts/kot_bayun.png",
+    bild: "tome-of-beasts/kot_bayun.png",
     beschreibung: [
       "Der Kot Bayun ist eine magische Jagdkatze von der Größe eines Pumas – sechs Fuß lang, über 90 kg schwer – mit seltsam gefärbtem Fell, einem breiten, fast menschlich wirkenden Grinsen und wissenden Augen. Er ist ein Feind der Elfen und Blinkhunde und lebt bis zu 400 Jahre.",
       "Diese brutalen und launischen Kreaturen verstehen sich gut mit grausamen Feenwesen; sanftere Feen betrachten sie zu Recht als Bedrohung. Kot Bayuns wählen ihre Opfer sorgfältig aus, beobachten sie eine Zeit lang, lernen ihre Stärken und Schwächen kennen, bevor sie aus dem Hinterhalt angreifen.",
@@ -6973,7 +6973,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein", "Infernalisch", "Uralt", "Leerensprache"],
     umgebung: ["Arktis", "Ozean"],
-    bild: "assets/images/monster/tome-of-beasts/krakenbrut.png",
+    bild: "tome-of-beasts/krakenbrut.png",
     beschreibung: [
       "Die Krakenbrut ist eine verdrehte, unnatürliche Kreatur – eine unheilige Verbindung aus Tintenfisch und Spinne. Ihr gepanzerter Rumpf ruht auf sechs dünnen Beinen, seltsame Antennen ragen hervor, und sechs Tentakel umgeben einen gewaltigen Tintenfisch-Schnabel. Im Gegensatz zu Krakenen kann die Krakenbrut auch an Land kriechen. Sie misst 12 m in der Länge und wiegt fast 900 kg.",
       "Manche glauben, die Krakenbrut sei eine dämonische Kreuzung der Aboleth, die Krakenblut mit dämonischen Seelen verschmolzen haben. Andere sagen, ein längst vergessener Gott habe sie erschaffen und Tiefenwesen hätten sie in die sterbliche Welt gerufen. Zauberer beschwören Krakenbrut durch Blutopfer – auf eigene Gefahr, denn anders als Dämonen und Teufel fühlen sich Krakenbrut selten an Pakten gebunden.",
@@ -7019,7 +7019,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Himmlisch", "Gemein", "Infernalisch", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen", "Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/kristallin-teufel.png",
+    bild: "tome-of-beasts/kristallin-teufel.png",
     beschreibung: [
       "Erschaffen und begünstigt von Mammon, dem Erzteufel der Gier, tarnen sich Kristallin-Teufel als magische Schätze.",
       "Barfuß, edelsteinbedeckt. Kristallin-Teufel ähneln edelsteinbedeckten Humanoiden mit grausamen, verzerrten Gesichtern, gezackten Zähnen und schrecklichen Klauen wie Scherben von gebrochenem Glas. Ihre Füße jedoch sind weich und nackt, was ihnen erlaubt, mit überraschender Heimlichkeit zu schleichen — stets auf der Suche nach einem günstigen Ort, um ihre Edelsteingestalt anzunehmen.",
@@ -7066,7 +7066,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein", "Ursprünglich"],
     umgebung: ["Gebirge", "Küste", "Grasland"],
-    bild: "assets/images/monster/tome-of-beasts/langsamer_sturm.png",
+    bild: "tome-of-beasts/langsamer_sturm.png",
     beschreibung: [
       "Feuchte Windböen umwirbeln diese stachelige Kugel. Zwei riesige schwarze Augen und ein dunkler Mund sind die einzigen Merkmale, die durch die starren Stacheln erkennbar sind.",
       "Chaos-Alterung. Trotz seines komischen Aussehens ist ein Langsamer Sturm ein Wesen des Chaos, das die Schmerzen des Alters auf Junge und Gesunde übertragen kann. Er wendet die Körper physisch fitter Kreaturen gegen sie selbst und zwingt sie dazu, zwischen relativer Untätigkeit oder immer größer werdenden Schmerzen zu wählen.",
@@ -7109,7 +7109,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein", "Drakonisch", "Elfisch", "Uralt"],
     umgebung: ["Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/laternen-drakonett.png",
+    bild: "tome-of-beasts/laternen-drakonett.png",
     beschreibung: [
       "Dieses katzengroße Drächlein mit wachsartigem Aussehen und einem Leuchten aus seinem Bauch kann in der Luft schweben und einen kleinen Bereich mit warmem Licht erfüllen. Die gelben, wachsartigen Schuppen des Laternen-Drakonetts dunkeln mit dem Alter nach; es lebt selten länger als 50 Jahre und wiegt zwischen 2 und 5 kg.",
       "Sein ungewöhnliches Leuchten lässt viele glauben, es sei das Ergebnis einer arkanen Verschmelzung eines Strahlungsgeistes mit einem Papierwyrm. Der Bauch des Drakonetts leuchtet mit warmem Schein und gibt ihm seinen Namen. Es frisst täglich 115 Gramm Kerzenwachs, plus weitere 115 Gramm, wenn es seinen Laternenbauch benutzt – was es in Bibliotheken, Abteien und andere Studierorte zieht.",
@@ -7149,7 +7149,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Telepathische Verbindung mit dem Anzünder"],
     umgebung: ["Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/lebender_docht.png",
+    bild: "tome-of-beasts/lebender_docht.png",
     beschreibung: [
       "Ein lebender Docht ist eine kleine, grobe Wachsskulptur eines Menschen, die stramm steht, mit einem Lichthof um den Kopf aus dem Docht an seinem Rücken. Wenn neu, sieht ein lebender Docht aus wie ein Mensch – doch mit zunehmend brennendem Docht schmelzen die Wachszüge, und die Figur nimmt ein verdrehtes, buckeligeres Aussehen an.",
       "Lebende Dochte sind nur aktiv, wenn ihr Docht brennt, und reagieren nur auf die Telepathiebefehle desjenigen, der sie angezündet hat. Dies macht die Übergabe zwischen Besitzern einfach. Sie leisten einen Monat lang Dienst, bevor sie zu formlosen Klumpen geworden sind – ihr günstiger Preis macht sie bei Bauprojekten und Kriegszügen beliebt.",
@@ -7191,7 +7191,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 21,
     sprachen: ["Gemein", "Drakonisch", "Leerensprache"],
     umgebung: ["Andere Ebenen", "Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/leerendrache_erwachsen.png",
+    bild: "tome-of-beasts/leerendrache_erwachsen.png",
     beschreibung: ["Leerendrachen treiben durch die leere Weite jenseits der sterblichen Welt und wandern zwischen den Sternen. Sie sind teilnahmslos und gehen nur mit den überirdischen Wesen um, die in den höchsten Sphären wohnen. Leerendrachen sind von intensivem Wissen erfüllt, doch das Blicken in das gähnende Nichts hat seinen Tribut gefordert. Das Nichts, das sie mit sich tragen, frisst langsam an ihrem Verstand — und dieser Wahnsinn ist ansteckend. Trotz ihrer entrückten Existenz horten Leerendrachen Schätze, vor allem Edelsteine, die wie Sterne glitzern. Ihr kostbarster Besitz ist verbotenes und vergessenes Wissen."],
     besonderheiten: [
       { name: "Kälte der Leere", beschreibung: "Kälteschaden des Drachen ignoriert Resistenz gegen Kälte, aber nicht Immunität." },
@@ -7255,7 +7255,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 18,
     sprachen: ["Gemein", "Drakonisch", "Leerensprache"],
     umgebung: ["Andere Ebenen", "Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/leerendrache_jung.png",
+    bild: "tome-of-beasts/leerendrache_jung.png",
     beschreibung: ["Junge Leerendrachen haben bereits die ersten Risse in ihrem Verstand davongetragen — die Berührung des Nichts hinterließ Spuren, die Sterbliche spüren, wenn sie dem Drachen begegnen. Sie treiben zwischen den Sternen und kehren gelegentlich in die sterbliche Welt zurück, angelockt von Stätten uralten Wissens."],
     besonderheiten: [
       { name: "Kälte der Leere", beschreibung: "Kälteschaden des Drachen ignoriert Resistenz gegen Kälte, aber nicht Immunität." },
@@ -7295,7 +7295,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 26,
     sprachen: ["Himmlisch", "Gemein", "Drakonisch", "Infernal", "Ursprünglich", "Leerensprache"],
     umgebung: ["Andere Ebenen", "Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/leerendrache_uralt.png",
+    bild: "tome-of-beasts/leerendrache_uralt.png",
     beschreibung: ["Uralte Leerendrachen sind Wesen jenseits des Begreifbaren — Wanderer, die Zeitalter damit verbracht haben, zwischen den Sternen zu treiben und vergessenes Wissen zu sammeln. Der Wahnsinn der Leere nagt unerbittlich an ihrem Verstand. Wer ihren Blick erwidert, riskiert, einen Splitter dieses Nichts mitzunehmen. Wenn ein uralter Leerendrache stirbt, entlädt sich die kosmische Energie seines Körpers in einem verheerenden Inferno aus Licht, Kälte und psychischem Schmerz.", "Wenn der Drache getötet wird, explodiert er: Jede Kreatur und jedes Objekt innerhalb von etwa 1,5 km erleidet 55 (10W10) Wuchtschaden, 55 (10W10) Kälteschaden und 55 (10W10) psychischen Schaden. Jeder Schadenstyp kann durch einen gelungenen Rettungswurf (SG 21) halbiert werden — GES gegen Wuchtschaden, KON gegen Kälteschaden, WEI gegen psychischen Schaden. Eine Kreatur, der zwei oder drei Rettungswürfe misslingen, wird vom Zauber Planenwanderung erfasst und auf eine zufällige Ebene geschickt."],
     besonderheiten: [
       { name: "Kälte der Leere", beschreibung: "Kälteschaden des Drachen ignoriert Resistenz gegen Kälte, aber nicht Immunität." },
@@ -7360,7 +7360,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein", "Drakonisch", "Leerensprache"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/leerendrache_wyrmling.png",
+    bild: "tome-of-beasts/leerendrache_wyrmling.png",
     beschreibung: ["Wyrmlings des Leerendrachen wirken desorientiert und seltsam, als würden sie die Welt durch einen Filter aus kosmischem Rauschen wahrnehmen. Schon jetzt sind erste Anzeichen des Wahnsinns erkennbar, der alle Leerendrachen befällt."],
     besonderheiten: [
       { name: "Kälte der Leere", beschreibung: "Kälteschaden des Drachen ignoriert Resistenz gegen Kälte, aber nicht Immunität." },
@@ -7399,7 +7399,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Telepathie 18 m"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/leerenwesen.png",
+    bild: "tome-of-beasts/leerenwesen.png",
     beschreibung: [
       "Voidlings sind Wesen der dunkelsten Leere, des kalten Raums zwischen den Sternen, die von Praktizierenden finsterer und korrumpierender Magie in sterbliche Gefilde gerufen werden. Sie dienen häufig als beschworene Diener von Leerendrachen und wurden als Wächter der Tempel auf dem Hochplateau von Leng gesichtet.",
       "Es heißt, sie verschlingen Leben, Wissen und das Licht selbst als Nahrung; die Orte, die sie bewohnen, sind bekannt für ihre feuchte Kälte und ihr Dunkel. Voidlings werden von jenen beschworen, die um jeden Preis nach Macht hungern, und – trotz ihres düsteren Rufes – dienen sie jahrelang oder gar jahrzehntelang sehr gut, bis sie eines Tages gegen ihre Beschwörer vorgehen. Wenn es ihnen gelingt, ihren Beschwörer zu töten, gewinnen sie an Stärke und kehren in die Leere zurück. Was Voidlings suchen, wenn sie nicht beschworen wurden – und was ihre Verrat auslöst – bleibt ein Rätsel.",
@@ -7443,7 +7443,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Versteht Elfisch und Umbral, kann aber nicht sprechen"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/leerer_umhang.png",
+    bild: "tome-of-beasts/leerer_umhang.png",
     beschreibung: [
       "Ein wallender leerer Umhang aus schwarzem und violettem Stoff, mit silbernen und goldenen Fäden bestickt – er erinnert an ein elfisches Gewand. Manchmal quillt Rauch unter der Kapuze hervor.",
       "Von den Schattenfeen als unauffällige Wächter geschaffen, werden leere Umhänge oft mit animierter Rüstung kombiniert und als Ausstellungsstücke getarnt. Schattenfee-Adlige tragen sie manchmal als eigene Kleidung, um einen raschen Rückzug zu decken oder bei einer Entführung zu helfen. Ein leerer Umhang benötigt weder Luft, Nahrung, Wasser noch Schlaf."
@@ -7487,7 +7487,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["versteht Gemein, kann aber nicht sprechen"],
     umgebung: ["Ruinen", "Grasland"],
-    bild: "assets/images/monster/tome-of-beasts/leichenhuegel.png",
+    bild: "tome-of-beasts/leichenhuegel.png",
     beschreibung: ["In Zeiten von Seuchen und Krieg werden Hunderte von Leichen in Massengräber geworfen. Ohne heilende Riten kann nekromantische Magie in den Leichenhaufen sickern und ihn als massigen Schrecken animieren — hungrig danach, andere in seine Form aufzunehmen.", "Ein Leichenhügel wird vom Zorn und der Einsamkeit der Toten in ihm angetrieben. Er greift jedes lebende Wesen größer als ein Hund an, wird aber besonders von Menschen und Humanoiden angezogen. Er ermüdet nie, egal wie viele Opfer er ansammelt. Ganze Städte wurden von vorrückenden Leichenhügeln ausgelöscht. Benötigt weder Luft, Nahrung, Wasser noch Schlaf."],
     besonderheiten: [
       { name: "Tote absorbieren", beschreibung: "Wann immer eine kleine oder größere Nicht-Untote-Kreatur innerhalb von 6 m des Leichenhügels stirbt, schließen sich ihre Überreste seiner Form an und der Leichenhügel gewinnt 10 Trefferpunkte zurück." },
@@ -7526,7 +7526,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Gemein", "Lemurenvolk-Sprache"],
     umgebung: ["Dschungel"],
-    bild: "assets/images/monster/tome-of-beasts/lemurenvolk.png",
+    bild: "tome-of-beasts/lemurenvolk.png",
     beschreibung: [
       "Diese kleinen, intelligenten, eichhörnchenartigen Humanoiden – auch Kaguani genannt – leben in abgeschiedenen, ursprünglichen Gemeinschaften tief im Dschungel. Sie sind Allesfresser und ernähren sich von Früchten, Wurzeln, Insekten, Larven, Eiern sowie Vögeln und kleinen Säugetieren. Gelegentlich tauschen sie mit fortgeschritteneren Kreaturen Metall und gefertigte Waren.",
       "Lemurenvolk sind nachtaktiv, können sich aber bei Bedarf an Tageszeiten gewöhnen. Sie bevorzugen es, durch Gleiten zwischen Bäumen zu jagen und sich zu bewegen, um Beute zu überraschen. Ein typisches Lemurenvolk ist etwa 60 cm groß und wiegt ca. 14 kg."
@@ -7565,7 +7565,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Gemein", "Lemurenvolk-Sprache"],
     umgebung: ["Dschungel"],
-    bild: "assets/images/monster/tome-of-beasts/lemurenvolk-graufelz.png",
+    bild: "tome-of-beasts/lemurenvolk-graufelz.png",
     beschreibung: [
       "Graufelze sind die ältesten und angesehensten Kaguani, bis zu 80 Jahre alt; ihr Alter lässt sich am Ergrauen ihres Fells schätzen, obwohl sie die Jahre nicht zählen. Graufelze sind gerissene Individuen, die arkane Künste beherrschen, meiden jedoch Nekromantie – ein starkes Tabu verbietet ihnen den Umgang mit den Toten."
     ],
@@ -7604,7 +7604,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein", "Elfisch", "Sylvanisch"],
     umgebung: ["Wald"],
-    bild: "assets/images/monster/tome-of-beasts/leshy.png",
+    bild: "tome-of-beasts/leshy.png",
     beschreibung: [
       "Der Leshy ist ein seltsamer Mann in zerschlissener Kleidung, bedeckt mit Rinde und wurzelartigen Auswüchsen. Haar und Bart, die seine stechend grünen Augen einrahmen, winden sich wie lebendige Ranken.",
       "Einsame Leshy pflegen Pflanzen und Tiere in Hainen um große Wälder und sind selbsternannte Hüter der Waldränder. Sie haben wenig Geduld für Eindringlinge und führen Kundschafter und Führer durch Mimikry in die Irre, erschrecken sie mit scheinbarer Größenveränderung oder töten sie im Notfall. Mit Pflanzenwuchs sabotieren sie Felder, tilgen Wege und legen Dschungeln an, um die Zivilisation fernzuhalten.",
@@ -7646,7 +7646,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["Darakhul (versteht nur)"],
     umgebung: ["Ruinen", "Unterirdisch", "Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/lich-hund.png",
+    bild: "tome-of-beasts/lich-hund.png",
     beschreibung: [
       "Lich-Hunde kommen immer in Nebel gehüllt, ihre Heuler widerhallen aus einer anderen Ebene. Halb Knochen, halb purpurnes Feuer, sind sie Kreaturen des Hungers und der Jagd. Nichts macht sie glücklicher, als Kreaturen zu erlegen, die größer sind als sie selbst. Ihre leuchtenden Schädel, robuste Skelettleiber, grün oder blau brennende Augen und schwarze Feuerzungen definieren ihr furchteinflößendes Erscheinungsbild.",
       "Angetrieben von Nekromantie-Magie sind Lich-Hunde loyale Diener von Ghul-Hohepriestern oder Liches. Sie jagen unerbittlich mit scharfen Sinnen und finden Lebende wo immer sie sich verbergen. Ihr Geheul driftet seltsam in und aus dem normalen Gehörbereich, mit verschobener Tonhöhe und eigenartigen Echos.",
@@ -7689,7 +7689,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 16,
     sprachen: ["Gemein", "Goblinisch", "Leerensprache"],
     umgebung: ["Wald", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/likho.png",
+    bild: "tome-of-beasts/likho.png",
     beschreibung: [
       "Das Likho sieht aus wie ein missgeformter Goblin mit einem einzigen großen, seltsamen Auge in der Mitte seines Gesichts. Es trägt dunkle, schmutzige Lumpen, und seine spindeldürren Klauen und Arme passen zu seinem gebückten Rumpf.",
       "Likho sind kämpferische Angreifer: Sie schwächen Feinde aus der Ferne mit Flüchen und Schwächezaubern, stürmen dann heran, springen auf ihre Beute und zerfleischen sie mit den Klauen an Händen und Füßen. Mit ihren Botschaftszaubern verspotten und verhöhnen sie ihre Opfer aus der Distanz. Likho jagen bevorzugt intelligente Humanoide und quälen sie aus dem Versteck heraus.",
@@ -7732,7 +7732,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 17,
     sprachen: ["Gemein", "Himmlisch", "Elementar", "Elfisch", "Riesisch"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/liosalfar.png",
+    bild: "tome-of-beasts/liosalfar.png",
     beschreibung: [
       "Ein Vorhang aus wellenförmigen Farben nimmt eine humanoide Gestalt an. Der kaleidoskopartige Körper schimmert und glitzert in hypnotischen Mustern. Manchmal als \"Lichtelfen\" bezeichnet, da sie eine vage elfische Form annehmen, leben diese rätselhaften Gestaltwandler am Rande der Welt, wo die Realität sich beugt und physikalische Gesetze auflösen. Ihre wandelbaren Körper bestehen vollständig aus wechselnden Farben.",
       "Untereinander kommunizieren sie durch blitzende Muster und Farbtöne; mit anderen Rassen sprechen sie in einem hallenden, choralen Ton, der scheinbar überall und nirgendwo zugleich entsteht. Ihre Ziele wirken oft bedeutungslos oder schlicht verwirrend, doch sie haben auch Berge gespalten und Königreiche gestürzt. Viele glauben, sie seien Agenten des Schicksals.",
@@ -7776,7 +7776,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein", "Sylvanisch"],
     umgebung: ["Gewässer", "Wald"],
-    bild: "assets/images/monster/tome-of-beasts/lorelei.png",
+    bild: "tome-of-beasts/lorelei.png",
     beschreibung: [
       "Diese atemberaubenden Feenwesen liegen auf großen Flussfelsen oder in ruhigen Wirbeln und rufen klagend nach Reisenden und fahrenden Rittern. Sie begehren nichts weniger als den letzten Atemzug eines ertrinkenden Mannes.",
       "Diese grausamen Flusssirenen, geboren aus einem uralten Eid an den Flusskönig, quälen ihre Opfer oft tagelang, bevor sie zuschlagen. Sie ziehen schwer gepanzerte Krieger in tiefes Wasser und küssen sie, während diese ertrinken. Die Lorelei ahmt ihr häufigstes Beuteschema nach – sie können wie Menschen, Elfen, Zwerge oder sogar Orks aussehen.",
@@ -7819,7 +7819,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: ["Loxodanisch"],
     umgebung: ["Grasland"],
-    bild: "assets/images/monster/tome-of-beasts/loxoda.png",
+    bild: "tome-of-beasts/loxoda.png",
     beschreibung: [
       "Von Menschen und Gnollen oft als Elefantenzentauren bezeichnet, sind Loxodas massive Kreaturen mit dem Oberkörper eines Ogres und dem Körper eines Elefanten. Sie stehen 5,5 m hoch und wiegen fast 9.000 kg. Fremde hassen und fürchten sie und leben in offenen Ebenen und Gestrüpp.",
       "Loxodas leben in kleinen Herden aus 2–3 erweiterten Familien, die nomadisch umherziehen und neue Gebiete aufsuchen, wenn das Futter ausgeht. Sie sind gefräßige Allesfresser. Viele unterschätzen ihre Intelligenz, da sie Ogres ähneln – ein fataler Irrtum. Ihre einfache Ausrüstung und schlichte Lebensweise entstammen nicht Dummheit, sondern Isolationismus und Fremdenfeindlichkeit.",
@@ -7860,7 +7860,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: [],
     umgebung: ["Arktis", "Ozean", "Küste"],
-    bild: "assets/images/monster/tome-of-beasts/mahoru.png",
+    bild: "tome-of-beasts/mahoru.png",
     beschreibung: [
       "Der Mahoru ist eine Kreuzung aus Fisch und Säugetier, etwa 2,5 m lang und sieht aus wie ein kleiner Schwertwal mit einem schlangenartigen Hals und einem robbenartigen Kopf. Seine schweren Kiefer sind mit dreieckigen, gezackten Zähnen gefüllt. Das weiß-schwarze Fell ist wegen seiner Wärme und Wasserdichtigkeit sehr begehrt. Die Brustflossen enden in stummelartigen, klauenbewehrten Pfoten.",
       "Verwandt mit dem Bunyip, streift der Mahoru an Nordküsten und Flussmündungen umher und jagt im Packeis. Er lauert unter der Wasseroberfläche oder stürzt sich aufs Eis, bricht oder kippt es, um Beute ins Wasser zu stürzen. Maborupaare arbeiten zusammen, um Fische, Robben, kajakfahrende Menschen oder sogar Eisbären einzukreisen. Sie nagen an Eisbrücken und gefrorenen Gewässern, um brüchige Stellen zu schaffen."
@@ -7902,7 +7902,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 17,
     sprachen: ["Abyssal", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen", "Wüste"],
-    bild: "assets/images/monster/tome-of-beasts/malakbel.png",
+    bild: "tome-of-beasts/malakbel.png",
     beschreibung: [
       "Inmitten einer blendenden Welle aus Hitze und Glanz schreitet eine langgliedrige, missgestaltete Gestalt. Die Kreatur versengt alles auf ihrem Weg, während sie vorwärtsschreitet.",
       "Was die meisten Menschen von einer Begegnung mit einem Malakbel am lebhaftesten in Erinnerung behalten, ist das blendende Licht und die brennende Hitze, die ihn umgeben. Eine flimmernde Verzerrung verschleiert den Körper der Kreatur, der in etwa die Größe und Form eines erwachsenen Menschen hat.",
@@ -7946,7 +7946,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Die Sprachen, die er zu Lebzeiten kannte"],
     umgebung: ["Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/mallqui.png",
+    bild: "tome-of-beasts/mallqui.png",
     beschreibung: [
       "Mit über vertrocknete Glieder gespannter Haut wie Pergament tritt eine ausgemergelte Menschengestalt in prächtiger Amtstracht aus einem Grabturm. Plötzlich wird die Luft so trocken, dass die Augen brennen und die Lippen aufspringen. Die imposante Erscheinung hat gelbe Lichtpunkte als Augen.",
       "Die Völker der kalten, regenarmen Hochebenen nutzen ihr trockenes Klima, um ihre geehrten Toten zu mumifizieren — ohne die Einbalsamierung und Härtung des Leichnams, wie sie in heißeren Landen praktiziert wird. Um das Wissen und den Platz ihrer Vorfahren im Jenseits zu bewahren, verbleiben die Toten als Ratgeber unter den Lebenden und werden an heiligen Tagen geehrt.",
@@ -7990,7 +7990,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein", "Riesisch", "Rabenvolk", "Sylvanisch"],
     umgebung: ["Feenwildnis"],
-    bild: "assets/images/monster/tome-of-beasts/malphas.png",
+    bild: "tome-of-beasts/malphas.png",
     beschreibung: [
       "Scharfäugig und gefährlich ist ein Malphas ein geflügelter Feenkrieger in edler Kleidung. Ihr Langschwert trägt oft einen verzierten Knauf oder eine reich verzierte Scheide. Unter den Feenwesen nennt man sie häufig 'Sturmkrähen' — Bringer schlechter Nachrichten.",
       "Den Schattenfeen geschworen. Von Kindesbeinen an mit dem Schwert aufgewachsen, sind die Malphas erbitterte Krieger, die der Aristokratie der Schattenfeen unerschütterlich dienen.",
@@ -8035,7 +8035,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 16,
     sprachen: ["Gemein", "Elfisch", "Goblinisch", "Sylvanisch", "Leerensprache"],
     umgebung: ["Grasland", "Wüste"],
-    bild: "assets/images/monster/tome-of-beasts/mamura.png",
+    bild: "tome-of-beasts/mamura.png",
     beschreibung: [
       "Diese kleine Monstrosität vereint das Schlimmste einer toten Froschs und eines verwesenden Fischs. Ihre schleimige, schuppige, vage humanoide Gestalt hat drei Krallen-Arme, die radial um ihren Körper angeordnet sind. Ihre schleimig-grünen, fledermausartigen Flügel scheinen zu klein zum Fliegen, dennoch bewegt sie sich damit erstaunlich gewandt durch die Luft.",
       "Verdrehte Feldgeister. Mamuras sind die verdorbenen Feen magischer Ödlande und karger Ebenen. Einst waren sie gutartige, pixieähnliche Feen namens 'Polevoi' oder 'Feldgeister', doch irgendwann verschrieben sie ihre Seelen einer dunklen Göttin und wurden durch ihre finstere Magie korrumpiert. Heute sind sie verzerrte, fremdartige Wesen.",
@@ -8084,7 +8084,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: [],
     umgebung: ["Wüste", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/manafluch-skarabaenschwarm.png",
+    bild: "tome-of-beasts/manafluch-skarabaenschwarm.png",
     beschreibung: [
       "Diese klickenden, türkisfarbenen Käfer tragen schwach leuchtende goldene Glyphen auf dem Rücken, die heller strahlen, je näher sie kommen.",
       "Manafluch-Skarabäen sind von der alten Magie gefallener Wüstenimperien durchdrungenes Ungeziefer. Ob durch das Nagen am Fleisch der Untoten oder durch das Nisten in Gebieten mit starker Magiepräsenz — diese Käfer haben einen Hunger auf die Kraft der Magie entwickelt, die sie gleichzeitig geprägt hat. Die eingravierten Glyphen auf ihren Panzern ähneln dem priesterlichen Keilschrift längst vergangener Königreiche, und je mehr magische Energie sie verzehren, desto heller leuchten sie — bis zur Helligkeit einer Fackel.",
@@ -8125,7 +8125,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein", "Riesisch", "Höllisch"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/masken-geist.png",
+    bild: "tome-of-beasts/masken-geist.png",
     beschreibung: [
       "Das Gerippe dieses verdorrten Dämonenleiches füllt die aschegraue Plattenrüstung kaum, die es umhüllt. In stacheligen Gauntlets, die violetten Rauch zischen, trägt es einen gezackten Khopesh, und eine gehörnte Elfenbeinmaske ohne jegliche Züge ist mit Nägeln in sein Gesicht getrieben.",
       "Kinder der Teufel. Vor langer Zeit verliebte sich ein Dämonenfürst des Schattens und der Täuschung in eine Dämonengöttin der Zerstörung. Am Grund eines Kraters, den ein Meteor hinterließ, der eine Zivilisation auslöschte, schmiedeten die beiden einen Plan — nicht nur ihre Standesgleichen zu erschlagen, sondern sie vollständig aus der Zeit selbst zu tilgen. Kurz darauf wurden die Masken-Geister erschaffen.",
@@ -8171,7 +8171,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: [],
     umgebung: ["Wald", "Feenwildnis"],
-    bild: "assets/images/monster/tome-of-beasts/massiver_welpe.png",
+    bild: "tome-of-beasts/massiver_welpe.png",
     beschreibung: [
       "Dieses graugehäutete, hundeähnliche Wesen wirkt bemitleidenswert darauf erpicht zu gefallen, ist aber fantastisch schreckhaft — seine Ohren zucken bei jedem Geräusch, und seine großen Augen verfolgen alles, was vorbeizieht.",
       "Emotionaler Riese. Ein massiver Welpe ist ein fest gewickelter Knoten aus Emotionen, extrem privat und defensiv gegenüber seinem persönlichen Raum, und vom Rest der Welt verängstigt. Wenn es seinen persönlichen Raum verletzt fühlt oder seine fragile Konzentration unterbrochen wird, wächst das kleine, zittrige Feenwesen zu einem muskulösen Ungetüm von Riesengröße heran.",
@@ -8214,7 +8214,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Unterirdisch", "Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/maulwurfshund.png",
+    bild: "tome-of-beasts/maulwurfshund.png",
     beschreibung: [
       "Diese maulwurfsähnliche Kreatur ist so groß wie ein großer Hund, mit einem dicken, tonnenförmigen Körper, der so schwer ist wie ein ausgewachsener Zwerg. Ein Kranz von Tentakeln wächst über einem Maul, das von schaufelförmigen Schneidezähnen dominiert wird. Es hat keine sichtbaren Ohren und nur winzige, kataraktgetrübte Augen, nimmt seine Umgebung jedoch dennoch irgendwie wahr.",
       "Bergzwerge haben viele unterirdische Kreaturen domestiziert, darunter eine Rasse riesiger Talpiden, die gemeinhin Maulwurfshunde genannt werden. Energiegeladen und gehorsam, ziehen Maulwurfshunde Erztrolleys durch Minen, spüren giftige Gase und verschmutztes Wasser auf und helfen dabei, eingeschlossene Bergleute auszugraben.",
@@ -8256,7 +8256,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Unterirdisch", "Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/maulwurfshund-koloss.png",
+    bild: "tome-of-beasts/maulwurfshund-koloss.png",
     beschreibung: [
       "Lederrüstung und Kettenfetzen sind in dieses vernarbte und tätowierte Ungeheuer genagelt. Ein Kranz von Tentakeln wächst über seinem von schaufelförmigen Schneidezähnen dominierten Maul. Das Biest hat keine sichtbaren Ohren und nur winzige, kataraktgetrübte Augen. Blut und Schaum spritzen aus seinem tentakelbesetzten Rachen.",
       "Was die Derro mit bestimmten Maulwurfshundrassen angestellt haben, spottet fast jeder Beschreibung — das Geheimnis ihrer Größe ist eine stetige Ernährung mit Chaosfutter, magischen Nahrungsmitteln und Zaubern, die die Kreaturen zum immer weiteren Wachsen zwingen.",
@@ -8300,7 +8300,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["Gemein", "Höllisch", "Sylvanisch"],
     umgebung: ["Wald"],
-    bild: "assets/images/monster/tome-of-beasts/mavka.png",
+    bild: "tome-of-beasts/mavka.png",
     beschreibung: [
       "Diese verdrehten Dryaden wurden durch untote Hexenmeister und vampirische Experimente in vampirische Ungeheuer verwandelt. Mit verbrannter, geschwärzter Haut, verkohlten Ästen als Haar und Klauen-Händen und -Füßen, die verbrannten und verdrehten Wurzeln ähneln, wirken Mavkas versengt und sogar zerbrechlich. Pupillenlose rote Augen glühen in ihren Augenhöhlen mit einer höllischen grünen Flamme.",
       "Todesreiterinnen. Alle Mavkas reiten auf Albtraum-Reittieren als furchterregende Räuberinnen und schnappen sich oft Opfer in den Sattel, die nie wieder gesehen werden. Fußsoldaten verachten und zertrampeln sie als Bauern, die ihrer Aufmerksamkeit nicht würdig sind.",
@@ -8341,7 +8341,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: [],
     umgebung: ["Sumpf", "Gewässer"],
-    bild: "assets/images/monster/tome-of-beasts/mbielu.png",
+    bild: "tome-of-beasts/mbielu.png",
     beschreibung: [
       "Dieser schwerfällige sauride Vierbeiner hat große, längliche Knochenplatten, die mit grünlichem Schleim bedeckt sind und aus seinem Rücken ragen, sowie einen dicken, keulenartigen Schwanz.",
       "Große Platten. Die Menschen beschreiben diesen reptilischen Pflanzenfresser als 'das Tier mit den Planken, die aus seinem Rücken wachsen.' Der Mbielu ist ein großer Dinosaurier, ähnlich einem Stegosaurus, mit quadratischen Rückenplatten, die symbiontische Kolonien toxischer, grüner Algen beherbergen. Die Platten selbst sind so groß wie Schilde.",
@@ -8382,7 +8382,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 22,
     sprachen: ["Himmlisch", "Gemein", "Drakonisch", "Infernalisch", "Urprimär", "Telepathie 90 m"],
     umgebung: ["Andere Ebenen", "Dschungel"],
-    bild: "assets/images/monster/tome-of-beasts/mechuiti_daemonenfuerst_der_affen.png",
+    bild: "tome-of-beasts/mechuiti_daemonenfuerst_der_affen.png",
     beschreibung: [
       "Mechuiti ist der Dämonenfürst der Affen, eine gigantische Kreatur von erschreckender Macht. Er ist in einem Vulkan auf einer Insel gefangen — eine Gefangenschaft, die ihn nicht daran gehindert hat, eine Armee aufzustellen und seine Einkerkerung in eine albtraumhafte Festung zu verwandeln.",
       "Feurige Krone. Mechuitïs feurige Krone ist ein Symbol seiner Herrschaft über Feuer und Vernichtung. Seine Anhänger, die Apau Perape, dienen ihm mit absoluter Loyalität und fürchten sein Urteil mehr als den Tod.",
@@ -8452,7 +8452,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 22,
     sprachen: ["Gemein", "Drakonisch"],
     umgebung: ["Ozean", "Küste"],
-    bild: "assets/images/monster/tome-of-beasts/meeresdrache_erwachsen.png",
+    bild: "tome-of-beasts/meeresdrache_erwachsen.png",
     beschreibung: ["Meeresdrachen sind gewaltige Raubtiere, die in den tiefsten Tiefen der Weltmeere herrschen. Mit ihrem stromlinienförmigen, von Schuppen bedeckten Körper und ihren gewaltigen Flügeln sind sie ebenso bedrohlich in den Lüften wie im Wasser. Sie beanspruchen riesige Unterwasserreiche und betrachten alle Schiffe, die ihr Territorium durchqueren, als ihren rechtmäßigen Besitz."],
     besonderheiten: [
       { name: "Amphibisch", beschreibung: "Der Drache kann sowohl an Luft als auch unter Wasser atmen." },
@@ -8513,7 +8513,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 19,
     sprachen: ["Gemein", "Drakonisch"],
     umgebung: ["Ozean", "Küste"],
-    bild: "assets/images/monster/tome-of-beasts/meeresdrache_jung.png",
+    bild: "tome-of-beasts/meeresdrache_jung.png",
     beschreibung: ["Junge Meeresdrachen haben bereits die Größe und das Temperament entwickelt, um kleinere Schiffe und unerfahrene Seefahrer zu bedrohen. Sie patrouillieren ausgedehnte Küstenabschnitte und fordern von allen, die ihr Territorium durchqueren, Tribut."],
     besonderheiten: [
       { name: "Amphibisch", beschreibung: "Der Drache kann sowohl an Luft als auch unter Wasser atmen." },
@@ -8551,7 +8551,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 27,
     sprachen: ["Gemein", "Drakonisch", "Infernal", "Ursprünglich"],
     umgebung: ["Ozean", "Küste"],
-    bild: "assets/images/monster/tome-of-beasts/meeresdrache_uralt.png",
+    bild: "tome-of-beasts/meeresdrache_uralt.png",
     beschreibung: ["Uralte Meeresdrachen sind Legenden des Meeres, deren Namen von Seefahrern in Ehrfurcht und Schrecken geflüstert werden. Diese gewaltigen Bestien herrschen über ganze Ozeane und können Stürme aus dem Nichts heraufbeschwören. Sie sammeln Schätze aus versunkenen Schiffen über Jahrhunderte hinweg an und betrachten alle Seewesen als ihre Untertanen."],
     besonderheiten: [
       { name: "Amphibisch", beschreibung: "Der Drache kann sowohl an Luft als auch unter Wasser atmen." },
@@ -8612,7 +8612,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein", "Drakonisch", "Ursprünglich"],
     umgebung: ["Ozean", "Küste"],
-    bild: "assets/images/monster/tome-of-beasts/meeresdrache_wyrmling.png",
+    bild: "tome-of-beasts/meeresdrache_wyrmling.png",
     beschreibung: ["Wyrmlings des Meeresdrachens sind von Geburt an aggressiv und territorial. Sie schnappen nach jedem, der ihren Bereich betritt, und trainieren ihre eiskalten Atemattacken an Fischen und ahnungslosen Seevögeln."],
     besonderheiten: [
       { name: "Amphibisch", beschreibung: "Der Drache kann sowohl an Luft als auch unter Wasser atmen." }
@@ -8650,7 +8650,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 5,
     sprachen: [],
     umgebung: ["Wald", "Stadt", "Ruinen", "Höhle"],
-    bild: "assets/images/monster/tome-of-beasts/melasse.png",
+    bild: "tome-of-beasts/melasse.png",
     beschreibung: [
       "Ein neugieriges Häschen, ein verlassenes Kleinkind oder ein zarter Singvogel kann Unvorbereitete in den langsamen, qualvollen Tod treiben. Hinter solch einer Fassade verbirgt sich möglicherweise ein Treacle, das darauf wartet, ein gutgläubiges Opfer auszusaugen – dabei gurrend und piepsend wie das Wesen, das es vortäuscht zu sein.",
       "Treacles ernähren sich von Blut, besitzen jedoch weder natürliche Waffen noch die Säure größerer Schleime. Ihre weichen Körper nehmen psychische Eindrücke auf und formen sich in die harmloseste Gestalt, die das Opfer sich vorstellen kann. Unter Humanoiden verwandeln sie sich in Haustiere, Säuglinge oder verletzte Tiere. Wenn ein satter Treacle sich vom Wirt löst, zieht er sich an einen kühlen, dunklen Ort zurück; mit genug Nahrung teilt er sich in zwei ausgewachsene Schleime."
@@ -8689,7 +8689,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["Gemein", "Mi-Go", "Leerensprache"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/mi-go.png",
+    bild: "tome-of-beasts/mi-go.png",
     beschreibung: [
       "Mi-Go wurden als 'vage insektenartig' beschrieben, doch der Nachdruck liegt auf 'vage'. Sie haben stummelige Flügel, mehrere Gliedmaßen und albtraumhafte Köpfe, doch dort endet die Ähnlichkeit.",
       "Die Mi-Go sind eine raumfahrende Rasse von großem Geschick und ausgedehnter Bosheit. Sie reisen in großer Zahl zwischen Welten, indem sie den Raum falten, um astronomische Entfernungen in Monaten statt Jahrzehnten zu überwinden.",
@@ -8734,7 +8734,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Gemein"],
     umgebung: ["Dschungel", "Wald"],
-    bild: "assets/images/monster/tome-of-beasts/millitaur.png",
+    bild: "tome-of-beasts/millitaur.png",
     beschreibung: [
       "Der Millitaur ist ein blaulila-schwarzer, segmentierter Wurm von der Größe eines Pferdes, mit Hunderten von Beinen, schwarzen Facettenaugen und kräftigen Mandibeln. Sie schwingen grobe Steinäxte.",
       "Mulcheser. Millitaure streifen durch Dschungel und Wälder, wo dichtes Unterholz unter dem Blätterdach fault und sich hochstapelt; Blätter und Pflanzen bilden den Großteil ihrer Ernährung. Obwohl Millitaure territorial sind, vertreiben sie Bedrohungen manchmal lieber, als Eindringlinge zu töten. Sie sind jedoch auch gute Jäger und ergänzen ihre Ernährung mit Eichhörnchen, Affen und sogar Gnomen oder Goblins.",
@@ -8772,7 +8772,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: [],
     umgebung: ["Höhle", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/mimik_karte.png",
+    bild: "tome-of-beasts/mimik_karte.png",
     beschreibung: [
       "Diese Kreatur ähnelt einer Schatzkarte, die flattert, als würde sie von einem starken Wind erfasst — selbst in einem Kerker, wo die Luft vollkommen still ist. Wenn man sie berührt, öffnet sich die Karte und enthüllt ihren gezähnten Mund und ihr Gesicht.",
       "Mimik-Brut. Der Kleister einer Mimik ist nicht nur ein wirksames Mittel zum Einfangen von Beute — er enthält auch Millionen mikroskopisch kleiner Larven, die sich von Fleisch ernähren. Die meisten werden von der Mimik gefressen, wenn sie ihre Beute verzehrt. Einige wenige überleben jedoch, indem sie sich an der Kleidung oder Ausrüstung von jemandem festhalten, der einem ausgewachsenen Mimik-Angriff entkam. Diese Larven reisen weit vom Kerker, der Höhle oder den Ruinen ihrer Geburt entfernt. Dort lösen sie sich und wachsen zu wurmartigen, jungen Mimiks heran, den Karten-Mimiks. Mit der Zeit wachsen Karten-Mimiks zu typischen Mimiks heran.",
@@ -8814,7 +8814,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein", "Sylvanisch"],
     umgebung: ["Wüste"],
-    bild: "assets/images/monster/tome-of-beasts/mirager.png",
+    bild: "tome-of-beasts/mirager.png",
     beschreibung: [
       "Eine bezaubernde Gestalt, gekleidet in durchsichtige Schleier und einen verführerischen Rock, zeigt anmutige Fertigkeit beim Tanzen durch den Staub.",
       "Humanoides Sand. In seiner natürlichen Form gleicht ein Mirager einer wandernden Masse aus Sand und Staub mit einer vage humanoiden Form, die wie eine Sandburg im Wind zerfällt.",
@@ -8858,7 +8858,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Sylvanisch", "Umbralisch"],
     umgebung: ["Sumpf"],
-    bild: "assets/images/monster/tome-of-beasts/miremal.png",
+    bild: "tome-of-beasts/miremal.png",
     beschreibung: [
       "Die Kreatur, die aus den Schatten des Sumpfes auftaucht, ist klein und hager. Ihr blasser Körper ist mit Pilzen und Moos bedeckt, das direkt in ihr Fleisch zu wachsen scheint, und ihre grünen Augen weinen blutige Tränen.",
       "Miremals sind wilde, degenerierte Feenwesen, die es genießen, scheinbar sichere Pfade durch gefährliche Sümpfe zu schaffen — obwohl diese Wege stattdessen voller Fallen und Hinterhalte sind.",
@@ -8904,7 +8904,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 20,
     sprachen: ["Himmlisch", "Gemein", "Drakonisch", "Ursprünglich"],
     umgebung: ["Gebirge", "Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/mithraldrache_erwachsen.png",
+    bild: "tome-of-beasts/mithraldrache_erwachsen.png",
     beschreibung: [
       "Mithraldrachen sind weise und gelehrt, legendäre Friedensstifter und Zauberwirker. Sie verfolgen ihre eigenen Interessen, wenn sie nicht zur Beilegung von Streitigkeiten gerufen werden.",
       "Licht gleitet über die glänzenden Silberweiß-Schuppen des Mithraldrachen, und seine winzigen Flügel falten sich flach an den Körper — öffnen sich aber wie ein Fächer, um schimmernde, durchscheinende Membranen zu enthüllen. Sein schmaler Kopf mit blanken Schlitzen für Augen und Nüstern endet in einem schlanken Hals. Der schlanke Körper des Mithraldrachen macht ihn äußerst zerbrechlich wirkend.",
@@ -8954,7 +8954,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["Himmlisch", "Gemein", "Drakonisch", "Ursprünglich"],
     umgebung: ["Gebirge", "Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/mithraldrache_jung.png",
+    bild: "tome-of-beasts/mithraldrache_jung.png",
     beschreibung: ["Junge Mithraldrachen plündern noch ähnlich wie chromatische Drachen, getrieben von Gier. Ihre silberweiße Färbung und die durchscheinenden Flügelmembranen sind bereits erkennbar, aber ihr Charakter als Friedensstifter ist noch kaum ausgeprägt."],
     besonderheiten: [
       { name: "Angeborenes Zauberwirken", beschreibung: "Die Zauberfähigkeit des Drachen basiert auf Intelligenz. Er kann folgende Zauber angeboren wirken, ohne Materialkomponenten zu benötigen: Nach Belieben: Zungen. 3/Tag: Fähigkeit verbessern." }
@@ -8991,7 +8991,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 23,
     sprachen: ["Himmlisch", "Gemein", "Drakonisch", "Ursprünglich"],
     umgebung: ["Gebirge", "Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/mithraldrache_uralt.png",
+    bild: "tome-of-beasts/mithraldrache_uralt.png",
     beschreibung: ["Der uralte Mithraldrache ist ein unübertroffener Weiser und Schiedsrichter, der Jahrhunderte diplomatischer Erfahrung in sich trägt. Seine Anwesenheit allein kann Kriege beenden und Dynastien versöhnen."],
     besonderheiten: [
       { name: "Legendäre Resistenz (3/Tag)", beschreibung: "Wenn der Drache einen Rettungswurf misslingt, kann er stattdessen Erfolg haben." },
@@ -9037,7 +9037,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 16,
     sprachen: ["Alle Sprachen"],
     umgebung: ["Gebirge", "Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/mithraldrache_wyrmling.png",
+    bild: "tome-of-beasts/mithraldrache_wyrmling.png",
     beschreibung: ["Das Wyrmling des Mithraldrachen ist bereits mit magischen Fähigkeiten gesegnet — es kann Verzauberungen auflösen und kommuniziert durch Telepathie. Sein silbrig glänzendes Schuppenkleid ist schon von Geburt an erkennbar."],
     besonderheiten: [
       { name: "Magieresistenz", beschreibung: "Der Drache hat Vorteil auf Rettungswürfe gegen Zauber und andere magische Effekte." }
@@ -9072,7 +9072,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["Gemein", "Sylvanisch", "Kann mit Katzenartigen sprechen"],
     umgebung: ["Gebirge", "Grasland"],
-    bild: "assets/images/monster/tome-of-beasts/mngwa.png",
+    bild: "tome-of-beasts/mngwa.png",
     beschreibung: [
       "Winzige Schwaden grauen Rauchs quellen aus dem schiefergrauen Fell dieses löwenartigen Tieres.",
       "Ätherische Löwen. Die schwer fassbaren Mngwa (ausgesprochen: MING-wah; 'die Seltsamen') sind Nachkommen eines empfindungsfähigen Felins aus der Ätherischen Ebene, das sich einst mit einer Löwin paarte. Auch 'Nunda' ('Rauchkatzen') genannt, sind Mngwas starke und listige Jäger, die Verfolgern entkommen oder sich ihrer Beute unbemerkt nähern können, indem sie kurzzeitig in den Äther verschwinden.",
@@ -9117,7 +9117,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["Himmlisch", "Drakonisch", "Elfisch", "Infernalisch", "Sylvanisch", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen", "Wald"],
-    bild: "assets/images/monster/tome-of-beasts/mondteufel.png",
+    bild: "tome-of-beasts/mondteufel.png",
     beschreibung: [
       "Eine massige Gestalt schwebt in der Luft — ein geflügelter Schrecken, in Nebel und Mondlicht gemalt.",
       "Korrumpeure des Mondes. Da sie auf Mondlicht angewiesen sind, stehen Mondteufel etwas abseits der Machenschaften der Herzöge der Hölle. Man findet sie dabei, druidische Orden zu unterwandern oder Rudel von Werwölfen anzuführen. Sie sind eine träge Teufelsart, die das Faulenzen im Mondlicht jeder anderen Tätigkeit vorzieht — außer wenn sich die Gelegenheit bietet, Druiden und Mondverehrer zu korrumpieren und gegen Anhänger von Sonnengöttern aufzuhetzen.",
@@ -9164,7 +9164,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Elfisch", "Umbralisch"],
     umgebung: ["Feenwildnis"],
-    bild: "assets/images/monster/tome-of-beasts/monolith-kaempfer.png",
+    bild: "tome-of-beasts/monolith-kaempfer.png",
     beschreibung: [
       "Diese Rüstung steht reglos da, das Visier hochgeklappt und enthüllt einen schwarzen Schädel mit Augen, kalt wie ein Wintermond. Ein Umhang aus Eulenfedern hängt von seinen Schultern, und ein Großschwert liegt quer über seinem Rücken.",
       "Schöne Konstrukte. Monolithische Wächter sind Konstrukte, die dazu bestimmt sind, den Höfen der Schattenfeen zu dienen. Im Vergleich zu anderen Konstrukten sind sie ungewöhnlich schön — sie sollen dem Auge genauso gefallen wie funktional sein. Schönheit liegt natürlich im Auge des Betrachters, und was in den Augen der Schattenfeen schön ist, mag von Sterblichen als seltsam, beunruhigend oder sogar beängstigend empfunden werden.",
@@ -9205,7 +9205,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Elfisch", "Umbralisch"],
     umgebung: ["Feenwildnis"],
-    bild: "assets/images/monster/tome-of-beasts/monolith-lakai.png",
+    bild: "tome-of-beasts/monolith-lakai.png",
     beschreibung: [
       "Eine Garnitur elfischer Paraderüstung, wunderschön verziert, aber vielleicht nicht besonders funktional, steht stramm.",
       "Mehr Diener als Krieger. Da er als prächtige Rüstung gestaltet ist, wirkt der Lakai bedrohlicher als er ist. Seine Kampffähigkeit ist nicht zu unterschätzen, aber Kämpfen ist nicht seine Hauptaufgabe. Er ist eine Kombination aus Hausdiener und Wachhund mit imposantem militärischem Flair.",
@@ -9246,7 +9246,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: ["Riesisch", "Sylvanisch", "Trollkin"],
     umgebung: ["Wald", "Höhle"],
-    bild: "assets/images/monster/tome-of-beasts/moosschleicher.png",
+    bild: "tome-of-beasts/moosschleicher.png",
     beschreibung: [
       "Moosschleicher sind eine primitive Rasse von Wald- und Höhlenbewohnern, die entfernt an eine grausame Kreuzung aus Troll und Gnom erinnert. Sie tragen lange, grünliche Bärte und Haare, ihre Häute sind moosgrün oder torffarben, und ein vage pilzartiger Geruch umgibt sie stets.",
       "Wie ihre trollartigen Verwandten haben Moosschleicher große und oft groteske Nasen. Ihre Klauen sind leuchtend rot, wenn sie ausgefahren sind, und ihre Zähne neigen zum Langen und Schiefen. Sie tragen einfache Kleidung aus selbst gewebter Wolle oder Leder oder gehen im Sommer nackt. Ihre Hüte sind manchmal mit Fliegenpilzen oder Farnen als primitive Tarnung geschmückt.",
@@ -9290,7 +9290,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Gemein"],
     umgebung: ["Küste", "Ozean"],
-    bild: "assets/images/monster/tome-of-beasts/morphoi.png",
+    bild: "tome-of-beasts/morphoi.png",
     beschreibung: [
       "Diese blau-häutigen Humanoiden führen Dreizacke und haben ungewöhnliche Gesichter mit vertikalen Augen, aber ohne Mund oder Nase.",
       "Gestaltwandelnde Pflanzen. Morphoi sind formwandelnde Pflanzenkreaturen, die auf vielen Inseln heimisch sind. In ihrer natürlichen Form sind die Morphoi androgyne Wesen zwischen 1,5 und 1,8 m Größe. Ihre elliptischen Köpfe haben Augen sowohl vorne als auch hinten. Wenn sie verletzt werden, bluten sie einen dunkelroten Saft.",
@@ -9333,7 +9333,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Die Sprachen, die sie zu Lebzeiten kannte"],
     umgebung: ["Ruinen", "Wüste"],
-    bild: "assets/images/monster/tome-of-beasts/mumie_giftig.png",
+    bild: "tome-of-beasts/mumie_giftig.png",
     beschreibung: [
       "Dieser taumelnde Leichnamskrieger ist in befleckte Leinenwicklungen gehüllt. Grüne Flüssigkeit tropft aus Rissen im Stoff.",
       "Dienerin der Skorpiongöttin. Diese Mumien werden von Selkets Gläubigen erschaffen, um heilige Stätten und Grabmäler zu bewachen und als Agenten der Vergeltung der Göttin zu dienen. Sollten Selket oder ihre Gläubigen sich von einer Person oder Gemeinschaft beleidigt fühlen, führen sie gefährliche Rituale durch, um diese Kreaturen aus den Krypten ihrer Tempel zu erwecken.",
@@ -9373,7 +9373,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/mykonid_todeskappe.png",
+    bild: "tome-of-beasts/mykonid_todeskappe.png",
     beschreibung: [
       "Das Fleisch der Todeskappe reicht von weiß über hellgrau bis zu einem warmen Gelboran. Ihre Köpfe ähneln Pilzhüten, oft in rot mit weißen Punkten, rot in der Mitte mit braunem Rand oder in einem bläulich-violetten Ton. Obwohl Todeskappen reißerisch aussehende Zähne haben, nutzen sie diese nur zur Aufnahme von Erde oder Mineralnährstoffen.",
       "Pilzfarmer. Diese empfindungsfähigen Pilzleute pflegen die weißen Pilzwälder der Unterwelt und sind Verbündete der Darakhul. Trotz ihres unheilverkündenden Namens sind Todeskappe-Mykoniden in erster Linie Farmer. Sie kultivieren Dutzende von Pilzarten überall dort, wo sie Wasser, Dung und ein wenig Erde oder Schleim in den Tiefen der Unterwelt haben.",
@@ -9416,7 +9416,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Gemein"],
     umgebung: ["Wald"],
-    bild: "assets/images/monster/tome-of-beasts/myling.png",
+    bild: "tome-of-beasts/myling.png",
     beschreibung: [
       "Mylings sind die Seelen der Unbestatteten — jene, die im Wald durch Verlassenheit oder Witterung starben und keine Ruhe finden können, bis ihre Körper ordnungsgemäß bestattet sind. Da sie unter solchen Umständen starben, sind Mylings meist Einzelgänger und suchen die Orte heim, an denen sie starben.",
       "Angriff in Rage. Mylings bevorzugen es, einsame Wanderer anzugreifen, greifen aber auch Gruppen an, wenn sie verzweifelt sind. Sie beschatten ihr Ziel bis nach Einbruch der Dunkelheit, springen dann auf den Rücken des Opfers und fordern, zu ihrem gewählten Begräbnisort getragen zu werden. Sie klammern sich fest mit Armen und Beinen um Schultern und Mittelteil, betteln, drohen und beißen, bis das Opfer nachgibt. Mylings beißen Opfer zu Tode, wenn diese nicht willens oder fähig sind, sie zu tragen.",
@@ -9456,7 +9456,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["Gemein", "Riesisch", "Goblinisch", "Telepathie 18 m (nur Falschmänner)"],
     umgebung: ["Arktis", "Wald"],
-    bild: "assets/images/monster/tome-of-beasts/nachtgarm.png",
+    bild: "tome-of-beasts/nachtgarm.png",
     beschreibung: [
       "Der Nachtgarm ist ein riesiges zweibeiniges Wesen mit einem überdimensionalen Maul voller nadelspitzer Zähne. Aus seinem aufgesperrten Rachen hängen tentakelartige Zungen, mit denen er lebende Kreaturen verschlingt. Er gebiert kleine humanoide Wesen aus seinem Bauch — die sogenannten Falschmänner — die er als Voraustrupp und Kundschafter einsetzt.",
       "Falschmänner. Die aus dem Nachtgarm geborenen Falschmänner sind kleine, verkümmerte Humanoide, die sich in nahestehende Kreaturen verwandeln können. Sie stehen in telepathischer Verbindung mit ihrem Erzeuger und dienen ihm als Spione, Lockvögel und Hinterhalt.",
@@ -9500,7 +9500,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Wald"],
-    bild: "assets/images/monster/tome-of-beasts/naehfliege.png",
+    bild: "tome-of-beasts/naehfliege.png",
     beschreibung: [
       "Diese huschenden Kreaturen ähneln Libellen, besitzen jedoch drei Paare gossamer Flügel und einen Körper aus gesplittertem Holz. Blitzartige Farbschimmer laufen an ihrem Leib entlang.",
       "Münder zunähen. Waldbewohner sprechen selten, wenn Nähfliegen durch die Bäume huschen, denn diese Kreaturen lauschen auf Lügen und nähen dem Ertappten Mund, Nase und Augen zu. Manche sagen, die alten Wälder verbergen nur Lügner — und deshalb liegt der tiefste Forst in Stille gehüllt. Andere behaupten, der Wald nutze die Nähfliegen, um jene zu erwürgen, die seine Bündnisse brechen oder seine Geheimnisse verraten.",
@@ -9540,7 +9540,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 18,
     sprachen: ["Gemein", "Darakhul", "Drachisch", "Elfisch", "Sylvanisch"],
     umgebung: ["Wald", "Feenwildnis"],
-    bild: "assets/images/monster/tome-of-beasts/naina.png",
+    bild: "tome-of-beasts/naina.png",
     beschreibung: [
       "Diese Drachen sind in ihrer natürlichen Form prachtvoll, mit Federn und Schuppen in schillernden, vielfarbigen Tönen. In Humanoidform erscheinen sie als alte, schlicht gekleidete menschliche Weiber oder als junge, schöne Elfenfrauen.",
       "Drachen in Menschengestalt. Diese Feendrachen können die Gestalt weiser, alter Menschenfrauen annehmen. In ihrer Humanoidform behalten sie den vollen Einsatz ihrer zauberischen Kräfte und können diese Form unbegrenzt aufrechterhalten.",
@@ -9585,7 +9585,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 18,
     sprachen: ["Die Sprachen, die seine Köpfe im Leben kannten"],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/nekrohydra.png",
+    bild: "tome-of-beasts/nekrohydra.png",
     beschreibung: [
       "Nekrohydren werden von mächtigen, bösen Nekromanten erschaffen und oft als Wächter eingesetzt oder an die Spitze einer untoten Armee gestellt, um dem Feind Angst und Verzweiflung einzuflößen. Die wortlose, herzzerreißende Klage, die das Wesen erzeugt, kann allen Hörern die Hoffnung rauben. Die Nekrohydra kann sprechen, doch die wenigen Worte, die sie hervorkrächzt, sind meist nur Antworten auf Fragen ihres Meisters.",
       "Manchmal wird eine Nekrohydra als Instrument der Rache oder als Werkzeug erschaffen, um die Moral der Feinde eines Nekromanten weiter zu untergraben. In diesen Fällen verwendet der Nekromant die Köpfe von Humanoiden, die denjenigen vertraut sind, die der Nekrohydra gegenüberstehen – Helden, geliebte Anführer oder Offiziere, Nahestehende oder enge Verbündete. Ein Nekromant kann die Nekrohydra darauf trainieren, bestimmte spöttische Sätze zu sagen, um die Herzen der Feinde zu treffen."
@@ -9627,7 +9627,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: [],
     umgebung: ["Grasland"],
-    bild: "assets/images/monster/tome-of-beasts/ngobou.png",
+    bild: "tome-of-beasts/ngobou.png",
     beschreibung: [
       "Diese mürrische, sechshörnige Kreatur ähnelt einem Triceratops in der Größe eines Ochsen, mit je einem Hornpaar auf Nase und Brauen sowie langen Stoßzähnen zu beiden Seiten des Mauls.",
       "Hass auf Elefanten. Ngobous sind Ochsen-große Dinosaurier, die sich oft im Kampf mit Elefanten um Territorium befinden. Sie sind von Natur aus reizbar und misstrauisch und neigen dazu, jede Kreatur zu verfolgen, die sich zu lange in ihrem Revier aufhält. Selbst alte Elefantenwitterungen genügen, um die Raserei eines Ngobou auszulösen.",
@@ -9669,7 +9669,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 17,
     sprachen: ["Elfisch", "Ursprachlich", "Sylvanisch", "Leerensprache"],
     umgebung: ["Wald"],
-    bild: "assets/images/monster/tome-of-beasts/nichny.png",
+    bild: "tome-of-beasts/nichny.png",
     beschreibung: [
       "Diese uralten Kreaturen ähneln nichts so sehr wie schwarzen Katzen in prächtiger, wenn auch altertümlicher Kleidung.",
       "Xenophob. Die Nichny sind hochgradig xenophobe und fröhlich fleischfressende Feenwesen, die in tiefen, uralten Wäldern leben.",
@@ -9721,7 +9721,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 20,
     sprachen: ["Leerensprache", "Telepathie (36 m)"],
     umgebung: ["Unterirdisch", "Gewässer"],
-    bild: "assets/images/monster/tome-of-beasts/nihileth.png",
+    bild: "tome-of-beasts/nihileth.png",
     beschreibung: [
       "Vor Äonen verließ eine Gruppe von Aboleth die Materielle Ebene, um durch ferne Ebenen zu wandern — sie durch magisches Wahrsagen zu beobachten genügte ihnen nicht, also nutzten diese Aboleth Astralenmagie und körperliche Reisen, um weit über die normalen Bereiche hinauszusehen.",
       "Ein vergessener Stamm. Mit den Äonen verblassten die Erinnerungen an die Abgereisten aus den Geistern der zurückgebliebenen Aboleth. Jene wenigen Aboleth, die sich noch daran erinnerten, dass vor langer Zeit einige ihrer Artgenossen die Ebenen bereist hatten, nahmen an, dass die Wanderer in fernen Höllen oder Paradiesen gestorben sein mussten.",
@@ -9794,7 +9794,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 8,
     sprachen: ["versteht Leerensprache und die Sprachen, die er zu Lebzeiten kannte, kann aber nicht sprechen"],
     umgebung: ["Unterirdisch", "Gewässer"],
-    bild: "assets/images/monster/tome-of-beasts/nihiletischer_zombie.png",
+    bild: "tome-of-beasts/nihiletischer_zombie.png",
     beschreibung: [
       "Von dem krankhaften Willen der Nihileth erschaffen, führen diese Zombies die Befehle ihres Schöpfers ohne Furcht oder Zögern aus. Obwohl ihr Erscheinungsbild von typischen Zombies abweicht, bewegen sie sich mit denselben ruckartigen Bewegungen und dem ungleichmäßigen Gang wie ihre untoten Artgenossen.",
       "Die Haut und das Fleisch nihiletischer Zombies ist durchscheinend und schleimig. Sie sind gewandte Schwimmer und haben keine Schwierigkeiten, an Land zu funktionieren — stets im Dienst ihrer Meister.",
@@ -9839,7 +9839,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Gemein"],
     umgebung: ["Grasland", "Wald"],
-    bild: "assets/images/monster/tome-of-beasts/nkosi.png",
+    bild: "tome-of-beasts/nkosi.png",
     beschreibung: [
       "Die Nkosi ähneln bestialischen Menschen mit Katzenaugen, schlanken Schwänzen sowie den Reißzähnen und dem Fell eines Löwen. Die meisten tragen ihr Haar lang und flechten bunte Perlen in ihre Locken, um wichtige Ereignisse in ihrem Leben zu markieren.",
       "Obwohl die wahre Form des Nkosi die eines felinen Humanoiden mit löwenhaften Zügen ist, ist ihre auffälligste Eigenschaft die Fähigkeit, ihre Gestalt zu wandeln und die Form eines Löwen anzunehmen. Obwohl sie sich in der Wildnis wohlfühlen, können sich Nkosi an jede Umgebung anpassen.",
@@ -9881,7 +9881,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Gemein"],
     umgebung: ["Grasland", "Wald"],
-    bild: "assets/images/monster/tome-of-beasts/nkosi-rudelherr.png",
+    bild: "tome-of-beasts/nkosi-rudelherr.png",
     beschreibung: [
       "Nkosi-Rudelherren sind außergewöhnlich große und muskulöse Mitglieder der Nkosi und Anführer unter ihresgleichen. Rudelherren haben beeindruckende Mähnen, sind aber noch berühmter für ihr mächtiges Brüllen, das das animalische Herz in allen Mitgliedern dieser Rasse erweckt."
     ],
@@ -9924,7 +9924,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Gemein", "die Sprache des Fext-Meisters des Noctiny"],
     umgebung: ["Stadt", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/noctiny.png",
+    bild: "tome-of-beasts/noctiny.png",
     beschreibung: [
       "Noctiny sind elende Humanoide, die durch finstere Mächte korrumpiert wurden. Ihre Haut ist fahl und eingefallen, bevor sie sie noch mit Asche, Knochenstaub und Schlimmerem beschmieren, um allen Lebensfarbe aus ihren Körpern zu waschen. Die Noctiny nehmen allerlei blasphemische und tabuisierte Verhaltensweisen an, um ihre Meister zu erfreuen.",
       "Pyramide der Macht. Der Machthunger der Noctiny treibt sie von Anstand und Vernunft weg. Sie sind Eingeweihte, die die unterste Stufe der Fext-Gesellschaft bilden. Sie schwören sich in den Dienst der untoten Fext als Schläger, Diener, Akolythen und Kanonenfutter — und schöpfen im Gegenzug ein Rinnsal von Macht für sich selbst.",
@@ -9965,7 +9965,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 16,
     sprachen: ["versteht Gemein, kann aber nicht sprechen"],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/oculo-schwarm.png",
+    bild: "tome-of-beasts/oculo-schwarm.png",
     beschreibung: [
       "Diese Ansammlung aus Hunderten von Augen treibt dahin, zieht Ganglien hinter sich her und tropft ätzende Flüssigkeit, die beim Auftreffen auf dem Boden zischt.",
       "Gescheitertes Experiment. Ein Oculo-Schwarm entsteht aus einem Experiment, das einen lebenden Fernseh-Sensor erschaffen sollte und schlecht ausging. Einmal freigesetzt, erlangen diese Schrecken eine Art verteiltes Selbstbewusstsein. Was genau sie antreibt, ist unbekannt — außer dass sie von einem Überlebensdrang beseelt sind.",
@@ -10006,7 +10006,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 8,
     sprachen: ["Gemein", "Riesisch"],
     umgebung: ["Hügel", "Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/oger-haeuptling_verdorben.png",
+    bild: "tome-of-beasts/oger-haeuptling_verdorben.png",
     beschreibung: [
       "Durch wilde Magie, finstere Kräfte oder arkane Krankheit entstellt, hat der verdorbene Oger-Häuptling seine Mutation in einen Vorteil verwandelt. Die Verdorbenheit in seinem Inneren macht diesen Anführer stärker und wilder als die Oger, die er schikaniert und befehligt."
     ],
@@ -10045,7 +10045,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 20,
     sprachen: ["versteht alle Sprachen, kann aber nicht sprechen", "Telepathie 36 m"],
     umgebung: ["Wüste"],
-    bild: "assets/images/monster/tome-of-beasts/oozasis.png",
+    bild: "tome-of-beasts/oozasis.png",
     beschreibung: [
       "Die Oozasis, auch als Scheinmoor in anderen Klimazonen bekannt, tarnt sich als idyllische Wüstenoase mit Wasser, Schatten und essbaren Früchten und Nüssen, um ahnungslose Beute anzulocken. Die Oozasis wechselt scheinbar zufällig zwischen Wachheit und Winterschlaf.",
       "Auftraggeber. In ihrer seltsamen Physiologie regt sich ein uralter Verstand mit unergründlichem Zweck. Weit davon entfernt, bloßer bewusstloser Schlamm zu sein, erwacht ihre gebrochene Intelligenz gelegentlich und liest die Gedanken von Besuchern. Dabei versucht sie, diese für kryptische Zwecke auf Quests zu schicken.",
@@ -10089,7 +10089,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 6,
     sprachen: [],
     umgebung: ["Sumpf", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/ooze_korrumpierend.png",
+    bild: "tome-of-beasts/ooze_korrumpierend.png",
     beschreibung: [
       "Eine korrumpierende Ooze brodelt und blubbert mit faulem Sumpfgas und dem stinkenden Gestank der Kanalisation und hinterlässt überall, wo sie entlangkriecht, eine stinkende Spur aus saurer Schlickigkeit.",
       "Schwimmen und Gehen. Eine korrumpierende Ooze ist ein fauliger Schleim, der wie eine riesige Seeschnecke gleiten und sogar schwimmen kann, oder sie kann eine grob humanoide Form annehmen und durch Straßen schlurfen — obwohl ihr Gestank und ihr fehlendes Sprachvermögen es unwahrscheinlich machen, dass jemand sie mit einer normalen Person verwechselt. Sie dienen häufig als Soldaten und Diener dunkler Herolde.",
@@ -10128,7 +10128,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 23,
     sprachen: ["Himmlisch", "Darakhul", "Drakonisch", "Riesisch", "Infernalisch", "Untergemein", "Leererede", "Telepathie 30 m"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/orobas-teufel.png",
+    bild: "tome-of-beasts/orobas-teufel.png",
     beschreibung: [
       "Groß und mächtig ähnelt diese Kreatur einem muskulösen Mann mit wohlgeformten Muskeln — mit Ausnahme seines Pferdekopfes, der ausgestellten Nüstern und der Hufe an den Füßen.",
       "Der Orobas gedeiht in der Hölle, indem er sein Wissen an jene verkauft, die den nötigen Preis zahlen können. Die geläufige Redensart 'Einem geschenkten Gaul schaut man nicht ins Maul' geht auf diese korrumpierenden Teufel zurück.",
@@ -10175,7 +10175,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Telepathie 60 m"],
     umgebung: ["Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/ostinato.png",
+    bild: "tome-of-beasts/ostinato.png",
     beschreibung: [
       "Ein eingängiges, sich wiederholendes Stück Musik tönt aus dem Nichts, treibt umher und bewegt sich, als würde es in der leeren Luft tanzen.",
       "Aus Drama geboren. Unglaublich ergreifende Arien, leidenschaftliche Aufführungen und Melodien, die einen in den Wahnsinn treiben, sind oft das Werk von Ostinatos. Diese Wesen aus lebendiger Musik werden aus überwältigenden Emotionen geboren und ernähren sich von der Lebenskraft und Persönlichkeit der Sterblichen.",
@@ -10219,7 +10219,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Gemein", "Drakonisch", "Zwergensprache", "Elfisch"],
     umgebung: ["Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/papierdrache.png",
+    bild: "tome-of-beasts/papierdrache.png",
     beschreibung: [
       "Papierdrachen entstammen fernen Ländern, in denen Papier so verbreitet ist wie Pergament und Vellum. Sie bewohnen heute weite Teile der Welt und scheinen ihre eigene Herkunft aus den Geschichtsbüchern gelöscht zu haben.",
       "Diese Drachen sind ein Fluch für Historiker und Zauberkundige, da sie Tinte und Pigmente auslöschen können – oft willkürlich, aus rein ästhetischen Gründen. Sie lieben die Möglichkeit einer leeren Seite, löschen aber auch manchmal gezielt Teile, um schöne Muster im verbleibenden Druck zu schaffen. Einige Papierdrachen besitzen eine Zwanghaftigkeit, Fehler in Texten zu korrigieren, und helfen Schreibern dabei, Irrtümer auszubessern oder veraltete Texte zu aktualisieren.",
@@ -10264,7 +10264,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Stadt", "Ruinen", "Höhle"],
-    bild: "assets/images/monster/tome-of-beasts/pflasterschwarm.png",
+    bild: "tome-of-beasts/pflasterschwarm.png",
     beschreibung: ["Ein Pflasterschwarm besteht aus Tausenden winziger, krebsartiger Kreaturen mit glatten, steinernen Schalen — einzeln als 'Pflasterlinge' bezeichnet. Sie variieren in Größe, Form und Farbe, besitzen aber alle sechs gegliederte Beine, einen peitschartig langen Stachel und ein einzelnes Auge.", "Wenn das Auge geschlossen und die Gliedmaßen unter der Schale eingezogen sind, sind Pflasterlinge von leblosen Pflastersteinen kaum zu unterscheiden. Pflasterschwärme besitzen ein rudimentäres Verständnis von Fallen — sie verstecken sich oft an Stellen, wo ihr Wogen- und Taumel-Manöver Eindringlinge in Gruben oder über Fallen schieben kann. Kobolde schätzen sie daher besonders."],
     besonderheiten: [
       { name: "Falsche Erscheinung", beschreibung: "Solange der Schwarm reglos bleibt, ist er von normalen Steinen nicht zu unterscheiden." },
@@ -10302,7 +10302,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Sylvisch"],
     umgebung: ["Wald"],
-    bild: "assets/images/monster/tome-of-beasts/pombero.png",
+    bild: "tome-of-beasts/pombero.png",
     beschreibung: [
       "Dieser untersetzt kleine Mann hat lange Gliedmaßen und kohlegraue Haut, und die Handrücken sowie Fußoberseiten sind mit dickem Haar bedeckt. Sein Gesicht erscheint ein wenig zu breit für seinen Kopf, und seine Augen leuchten im bleichen Licht ein wenig zu hell.",
       "Pomberos sind seltsame Trickster, aus Schatten in der Wildnis geboren. Im Ruhezustand neigen sie dazu, eine hockende Haltung einzunehmen, die ihre zu langen Gliedmaßen betont. Sie meiden helles Licht, obwohl es ihnen nicht schadet, und suchen Schatten und Halbdunkel. Aus diesem Grund sind sie als das Nachtfolk bekannt.",
@@ -10350,7 +10350,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: [],
     umgebung: ["Dschungel"],
-    bild: "assets/images/monster/tome-of-beasts/prismatischer_kaeferschwarm.png",
+    bild: "tome-of-beasts/prismatischer_kaeferschwarm.png",
     beschreibung: [
       "Eine blendende Explosion aus vielfarbigen Lichtern bricht aus dieser Wolke fliegender Käfer hervor — jede Farbe des Regenbogens aufblitzend.",
       "Fleischfressende Schönheiten. Die Tiefen des Dschungels sind voll tödlicher Wildtiere, und prismatische Käfer sind herausragende Beispiele dafür. Diese fleischfressenden, giftigen Insekten betäuben und überwältigen ihre Beute mit funkelnder Schönheit, während sie sie lebend verzehren. Einzelne Exemplare schimmern im Licht wie kostbare Edelsteine; Händler, Gnolls und Menschen verwenden ihre Panzer oft als Schmuckstücke oder als besondere Komponenten für Bezauberungs- und Illusionszauber.",
@@ -10390,7 +10390,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 16,
     sprachen: ["Gemein", "Infernalisch", "Telepathie 18 m"],
     umgebung: ["Andere Ebenen", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/psoglav-daemon.png",
+    bild: "tome-of-beasts/psoglav-daemon.png",
     beschreibung: [
       "Eine riesige Kreatur schnüffelt in der Luft. Der größte Teil ihres Kopfes ist von einem Helm bedeckt, aus dem ein böses Auge herausstarrt. Ihr Maul verbindet Fleisch und Mechanik, und scharfe Metallzähne blitzen unter ihren Lippen hervor.",
       "Mit Seelen und Erinnerungen bezahlt. Diese dämonischen Schöpfungen sind für den Schutz gezüchtet, den sie einer ausgewählten Wenigen bieten. Der Preis für ihren Schutz ist stets hoch und niemals in Münzen. Ihre Abyssalen Züchter verlangen alles, von Erinnerungen bis zu Seelen, im Austausch für ihre Dienste.",
@@ -10433,7 +10433,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 21,
     sprachen: ["Alle Sprachen", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/qorgeth_daemonenfuerst_des_verschlingenden_wurms.png",
+    bild: "tome-of-beasts/qorgeth_daemonenfuerst_des_verschlingenden_wurms.png",
     beschreibung: [],
     besonderheiten: [
       { name: "Angeborene Zauberei", beschreibung: "Qorgeths angeborene Zauberwirkercharakteristik ist Charisma (Zauberrettungswurf-SG 19). Es kann die folgenden Zauber angeborenerweise wirken, ohne Material- oder Gestenkomponenten zu benötigen.\nNach Belieben: Magie entdecken, Schwarze Tentakel\n3/Tag (jeweils): Magie brechen, Furcht, Insektenplage (beißende Würmer)\n1/Tag (jeweils): Erdbeben, Teleportation" },
@@ -10495,7 +10495,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["Versteht eine Sprache seines Erschaffers, kann aber nicht sprechen"],
     umgebung: ["Stadt", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/quecksilber-belagerungskugel.png",
+    bild: "tome-of-beasts/quecksilber-belagerungskugel.png",
     beschreibung: [
       "Die Quicksilver-Belagerungskugel ist ein alchemistisches Konstrukt, das als Belagerungswaffe konzipiert wurde. Die Kugel hat einen Durchmesser von knapp einem Meter und wiegt etwa 14 kg. Wenn sie in die Scheibenform wechselt, vergrößert sich ihr Durchmesser auf etwa 1,80 m, ist aber nur etwa 2,5 cm dünn.",
       "Arkane Gelehrte replizierten ein halbbewusstes Quecksilberwesen aus der Unterwelt und stellten es kriegführenden Fraktionen zur Verfügung. Das Metall verändert seine Wesensart je nach Form: Als Kugel ist es kontemplativ und aufmerksam; als Klinge aggressiv und darauf aus, feindliche Kämpfer zu töten. Es nimmt Befehle gut an und vermeidet Kollateralschäden.",
@@ -10543,7 +10543,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein", "Goblinisch", "Infernalisch", "Sylvisch", "Leererede"],
     umgebung: ["Ruinen", "Wüste"],
-    bild: "assets/images/monster/tome-of-beasts/qwyllion.png",
+    bild: "tome-of-beasts/qwyllion.png",
     beschreibung: [
       "Diese scheußlichen, stinkenden Kreaturen ähneln zahnlosen, leichenhaften Hexen, ihre großen Augen leuchten mit übernatürlichem grünem Licht, und ihre Finger enden in zerfetzten Klauen.",
       "Verdrehte Nymphen. Qwyllion (der Name bedeutet 'Verschmutzer' im Altelvenischen) sind Nymphen, die durch die korrumpierte Mana magischer Ödländer oder verzerrte alchemistische Experimente in finstere Versionen ihrer früheren Selbst verwandelt wurden.",
@@ -10587,7 +10587,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein"],
     umgebung: ["Stadt", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/raederwerkstempler.png",
+    bild: "tome-of-beasts/raederwerkstempler.png",
     beschreibung: [
       "Die Bronze- und Mithralfigur schreitet mit schweren Bewegungen voran. Ihre Augenlinsen leuchten dunkelblau, und Zahnräder klicken, wenn sie ihre Glefe schwingt.",
       "Der Räderwerkstempler ist eine imposante Erscheinung – eine komplizierte Konstruktion aus Bronze, Stahl, Kupfer und Mithral, belebt durch einen in einem Seelenedelstein gefangenen menschlichen Geist. Räderwerksgeschmiedete sind vergleichsweise selten, und der Templer ist ein Vorzeigestück unter ihnen.",
@@ -10657,7 +10657,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Gemein"],
     umgebung: ["Wüste", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/ramag.png",
+    bild: "tome-of-beasts/ramag.png",
     beschreibung: [
       "Diese wenigen Bewohner einer verwüsteten Wüstenödnis hausen nun in den Überresten einer antiken Stadt — einer Stadt, die magisch über Hunderte von Kilometern verstreut ist.",
       "Einst menschlich. Die Ramag waren ein mächtiger Stamm von Dimensions-Zauberern, verbündet mit einer großen Gesellschaft von Titanen, und waren in vergangenen Zeitaltern tatsächlich menschlich. Im Laufe der Zeit haben seltsame Praktiken sie in ihren heutigen Zustand verwandelt; ihre Gliedmaßen wachsen im Verhältnis zu ihren Körpern zu lang, was ihnen eine gebückte, seltsame Haltung verleiht. Ihre Züge sind kantig, und das Haar eines Ramag ist unmöglich dicht; jede Strähne ist so breit wie ein menschlicher Finger.",
@@ -10698,7 +10698,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: [],
     umgebung: ["Wald", "Feenwildnis"],
-    bild: "assets/images/monster/tome-of-beasts/ranken-trollskelett.png",
+    bild: "tome-of-beasts/ranken-trollskelett.png",
     beschreibung: [
       "Diese Trollskelette sind vollständig mit Schimmel bedeckt und in blühende Ranken gehüllt. Sie lauern in den Schatten toter Bäume und entweihter Haine.",
       "Schwarze Erdmagie. Ranken-Trollskelette bewachen die Lichtungen von Dornendryaden und die heiligen Kreise von Druiden; andere dienen den Vila oder sogar Mooslauerer-Kolonien als Wächter. In jedem Fall wurden sie durch dunkle Erdmagie für einen bestimmten Zweck erschaffen, und diese Energie verleiht ihnen große Stärke und Ausdauer – aber nur wenig Verstand.",
@@ -10742,7 +10742,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein"],
     umgebung: ["Wald", "Dschungel"],
-    bild: "assets/images/monster/tome-of-beasts/rankenfuerst.png",
+    bild: "tome-of-beasts/rankenfuerst.png",
     beschreibung: [
       "Bedeckt mit dunkelgrüner Rinde und sich windenden Ranken, verströmt dieser langgliedrige Humanoid eine greifbare Aura des Schreckens.",
       "Rankenfürsten entstehen aus der Vereinigung ausgewachsener Rankenpuppen und den zwangsgezüchteten Nachkommen der Pflanzenvölker. Zu ihren Dienern zählen die meisten Pflanzenarten, einschließlich Rankenpuppen und Ranken-Trollskelette.",
@@ -10790,7 +10790,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 8,
     sprachen: [],
     umgebung: ["Wald", "Dschungel"],
-    bild: "assets/images/monster/tome-of-beasts/rankenpuppe.png",
+    bild: "tome-of-beasts/rankenpuppe.png",
     beschreibung: [
       "Diese pflanzlichen Krieger bewegen sich in seltsamen Rucken und Zuckungen. Aus ihren leeren Augenhöhlen, dem Mund und den Ohren wachsen dünne, grüne Ranken heraus und winden sich um Kopf, Brust und Arme.",
       "Jedes Tier oder jeder Humanoid kann zur Rankenpuppe werden, wenn es von einem Rankenfürsten infiziert wurde. Rankenpuppen greifen gedankenlos Kreaturen an, die ihren Wald oder Dschungel bedrohen. Sie kennen kein Selbsterhaltungsinteresse und kämpfen stets bis zum Tod.",
@@ -10832,7 +10832,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Himmlisch", "Gemein", "Telepathie 30 m"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/ratatosk.png",
+    bild: "tome-of-beasts/ratatosk.png",
     beschreibung: [
       "Plappernde Kreaturen mit einer oberflächlichen Ähnlichkeit zu Eichhörnchen, die Ratatosks haben winzige Hauer und Fell, das auf eine Weise schimmert, die dem umgebenden Licht trotzt.",
       "Glattfellige Himmlische. Der Ratatosk ist ein himmlisches Wesen, das sehr von seiner eigenen unentbehrlichen Stellung im Multiversum überzeugt ist. Sein Fell ist glatt, und er ist sehr stolz auf die Pflege seiner Hauer.",
@@ -10875,7 +10875,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein", "Druidisch", "Elfisch", "Sylvisch"],
     umgebung: ["Dschungel"],
-    bild: "assets/images/monster/tome-of-beasts/ravenala.png",
+    bild: "tome-of-beasts/ravenala.png",
     beschreibung: [
       "Ravenelas bewachen tropische Wälder und kümmern sich um die einheimische Flora und Fauna. Ihre Köpfe sind mit langstieligem, grünem Wedeln und stacheligen Samenkapseln gekrönt, und ihre hängenden Arme enden in hakenförmigen Holzklauen.",
       "Blättrige Ratgeber. Stammes-Humanoide respektieren und verehren Ravenelas und suchen in Zeiten großer Not manchmal ihren Rat oder ihre magische Hilfe. Ravenelas interagieren selten mit anderen Spezies, es sei denn, sie werden angesprochen.",
@@ -10920,7 +10920,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: [],
     umgebung: ["Arktis"],
-    bild: "assets/images/monster/tome-of-beasts/reifwurm_ausgewachsen.png",
+    bild: "tome-of-beasts/reifwurm_ausgewachsen.png",
     beschreibung: [
       "Reifwürmer sind massive, wurmartige Elementare aus Eis und Tod, die in den tiefsten Regionen arktischer Ödlande hausen. Ihr Körper strahlt eine Aura aus gefrorenem Nekromantie aus, die alles um sie herum tötet und einfriert.",
       "Ausgewachsene Reifwürmer sind gefürchtete Raubtiere, die Beute durch ihre eisigen Tentakel greifen und sie in ihren gefrorenen Körper verschlingen."
@@ -10962,7 +10962,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Arktis"],
-    bild: "assets/images/monster/tome-of-beasts/reifwurm_larve.png",
+    bild: "tome-of-beasts/reifwurm_larve.png",
     beschreibung: [
       "Reifwurm-Larven sind die Jungtiere der ausgewachsenen Reifwürmer und bereits in jungen Jahren bedrohliche Raubtiere. Sie wühlen sich durch Schnee und Eis auf der Suche nach Beute, die sie mit ihren kräftigen Tentakeln und ihrem reißenden Maul erlegen."
     ],
@@ -11002,7 +11002,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 9,
     sprachen: [],
     umgebung: ["Wald", "Grasland", "Höhle"],
-    bild: "assets/images/monster/tome-of-beasts/riesige_ameise.png",
+    bild: "tome-of-beasts/riesige_ameise.png",
     beschreibung: [
       "Riesige Ameisen ähneln normalen Ameisen mit sechs Beinen, einem segmentierten Körper und großen Antennen. Ihr Panzer ist mit dickem Chitin bedeckt, und sie haben große, gezackte Mundwerkzeuge und Stacheln am Schwanz. Diese Stacheln sind so groß wie ein Kurzschwert und in der Lage, einen Menschen zu erstechen und zu vergiften. Eine riesige Ameise ist fast 1,2 m groß und wiegt etwa 180 kg.",
       "Kolonieverteidiger. Riesige Ameisen bilden Kolonien unter der Kontrolle einer Königin, ähnlich wie ihre normalgroßen Verwandten. Sterile Weibchen bilden Kasten, wobei die Arbeiterinnen das Nest bauen und Larven pflegen, während Soldaten die Kolonie verteidigen und auf Nahrungssuche gehen.",
@@ -11043,7 +11043,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Wald", "Grasland", "Höhle"],
-    bild: "assets/images/monster/tome-of-beasts/riesige_ameisenkoenigin.png",
+    bild: "tome-of-beasts/riesige_ameisenkoenigin.png",
     beschreibung: [
       "Eine riesige Ameisenkönigin ist über 1,5 m groß und wiegt über 400 kg. Sie ist das reproduktive Zentrum ihrer Kolonie und verlässt das Nest nur selten. Die Königin setzt ständig Pheromone frei, die ihre Soldaten in erhöhte Kampfbereitschaft versetzen."
     ],
@@ -11083,7 +11083,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein", "Drakonisch"],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/rostdrache.png",
+    bild: "tome-of-beasts/rostdrache.png",
     beschreibung: [
       "Ein ruhender Rostdrache ist leicht mit einem Schrotthaufen zu verwechseln. Abgesehen von seinen eisernen Fang- und Klauenstacheln scheint dieses dracheartige Wesen aus nichts anderem als Rost zu bestehen – jeder Flügelschlag bringt einen Schauer von Rostkrümeln mit sich.",
       "Viele Gelehrte behaupten, dass Rostdrachen eine Perversion der natürlichen Ordnung seien, entstanden entweder durch die Verderbnis eines Metalldrachen-Eis oder durch die rituelle Verwandlung eines solchen Drachen. Andere vertreten die Theorie einer Krankheit, die die Haut junger Metalldrachen und eisenhaltiger Drachen gleichermaßen befällt. Die Wahrheit über ihren Ursprung ist bisher unbekannt.",
@@ -11128,7 +11128,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 19,
     sprachen: ["Gemein", "Druidisch", "Riesensprache"],
     umgebung: ["Wald", "Höhle", "Küste"],
-    bild: "assets/images/monster/tome-of-beasts/rote_hexe.png",
+    bild: "tome-of-beasts/rote_hexe.png",
     beschreibung: [
       "Eine uralte Rasse – weit älter als die Elfen, behaupten sie selbst, und ebenso alt wie die Drachen – sind Rote Hexen die listigsten und langlebigsten aller Hexen mit einer Lebensspanne von mehr als tausend Jahren.",
       "Schön und stark. Anders als ihre Hexenverwandten sind Rote Hexen nicht schrecklich anzusehen – die meisten gelten in ihrer Art sogar als ansehnlich. Nur wenige wissen etwas über sie, und die Hexen tun wenig, um Klarheit zu schaffen; sie ziehen ihre Abgeschiedenheit vor.",
@@ -11171,7 +11171,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["Abyssal", "Gemein", "Telepathie 36 m"],
     umgebung: ["Gebirge", "Wald"],
-    bild: "assets/images/monster/tome-of-beasts/ruebezahl.png",
+    bild: "tome-of-beasts/ruebezahl.png",
     beschreibung: [
       "Ein schwarzfelziger Hirsch, der wie ein Mensch geht — mit einem Paar gewaltiger, verzweigter Geweihe, die sich über seinen kalt glänzenden Augen wölben. Das Fell ist über den meisten Körper glatt, wird aber um seine ziegenhaften Beine zottig. Die Hände der Kreatur sind mit bösartigen Klauen bewehrt, und seine Beine sind ziegenartig mit gespaltenen Hufen.",
       "Sterbliche Gestalt annehmen. Rübezahle sind kapriziöse Wesen, die von ständig wechselnden Motivationen und Manieren angetrieben werden. Sie sind vollendete Trickser, die es lieben, die Gestalt harmloser Sterblicher wie reisender Mönche, Flickschuster oder verlorener Kaufleute anzunehmen. Sie lieben es, den Freund zu spielen mit ihren nahezu unerkennbaren Lügen, sich in das Vertrauen ahnungsloser Sterblicher einzuschleichen, bevor sie diese ermorden.",
@@ -11216,7 +11216,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 9,
     sprachen: ["Gemein"],
     umgebung: ["Küste", "Gewässer"],
-    bild: "assets/images/monster/tome-of-beasts/rum-gremlin.png",
+    bild: "tome-of-beasts/rum-gremlin.png",
     beschreibung: [
       "Diese kleinen, dickbäuchigen Ungeheuer haben hellgrünes Haar, orangefarbene Augen und einen betrunkenen Blick. Nur 30 cm groß und 4 kg schwer, sind sie für Unheil weit über ihre winzige Größe hinaus bekannt. Ihre Mäuler sind mit rasiermesserscharfen Zähnen gefüllt. Rum-Gremlins machen ihr Zuhause in der Nähe der Docks von Küstenstädten und schmuggeln sich manchmal auf Schiffe.",
       "Die kleinen Schrecken erschaffen ablenkende Geräusche und kleine Fallen. Sie jagen Matrosen und Dockarbeiter, arbeiten in Gruppen und überwältigen betäubte Opfer, die sie in ihre Behausungen unter den Docks oder in Schiffsrümpfe schleppen. Sie halten oft Rattenschwärme oder Doppelratten als Wächter. Der Klang von Glocken treibt Rum-Gremlins in Raserei."
@@ -11258,7 +11258,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein"],
     umgebung: ["Gewässer", "Sumpf"],
-    bild: "assets/images/monster/tome-of-beasts/rusalka.png",
+    bild: "tome-of-beasts/rusalka.png",
     beschreibung: [
       "Eine barfüßige Frau mit langen Haaren und fast durchsichtiger Haut sitzt auf einem Weidenzweig. Ihre Haare und Kleidung sind nass, als hätte sie gerade ein Bad genommen. Ihr Lächeln wirkt freundlich genug.",
       "Wenn eine Frau ertrinkt, kann ihr triefender Körper als Rusalka wiederauferstehen. Manche behaupten, das Ertrinken müsse ein Selbstmord sein; andere sagen, das Wasser selbst müsse durch Mord oder einen großen bösen Geist vergiftet sein.",
@@ -11302,7 +11302,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["versteht die Sprachen seines Erschaffers, kann jedoch nicht sprechen"],
     umgebung: ["Küste", "Wüste"],
-    bild: "assets/images/monster/tome-of-beasts/salzgolem.png",
+    bild: "tome-of-beasts/salzgolem.png",
     beschreibung: [
       "Ein Salzgolem ist eine grob geformte, annähernd menschliche kristalline Gestalt, die auf breiten, stumpfartigen Füßen dahinschleicht. Bei jedem Schritt rieseln winzige Salzkristalle in einer glitzernden Wolke von seinem Körper. Er trägt keine Kleidung oder Rüstung und führt keine Waffen. Das einzige Geräusch, das er macht, ist das Rauschen von gletendem Sand.",
       "Salzgolems werden von Druiden und anderen Bewohnern von Küsten- und Wüstenregionen erschaffen oder von jenen, die gegen Kreaturen kämpfen wollen, die dem Schutzcharakter von Salz gegenüber anfällig sind. Ein Salzgolem kämpft sinnlos bis zum Tod oder bis er von seinem Erschaffer angehalten wird; er ist zu keinerlei Strategie fähig."
@@ -11343,7 +11343,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["Himmlisch", "Gemein", "Gnoll", "Infernalisch", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen", "Wüste"],
-    bild: "assets/images/monster/tome-of-beasts/salzteufel.png",
+    bild: "tome-of-beasts/salzteufel.png",
     beschreibung: [
       "Funkelnde Kristalle. Salzteufel haben scharfe, kristalline Zähne, glitzernde Haut, die mit feinen Salzkristallen besetzt ist, und lange Klauen, die zackige, brennende Wunden hinterlassen. Sie kämpfen auch mit salzverkrusteten Klingen, die scheinbar aus dem Nichts erschaffen werden.",
       "Diener Mammons. Salzteufel behaupten, Mammon zu dienen, und verbünden sich oft mit Gnollen und Sklavenhändlern, mit denen sie Oasen als Hinterhaltsorte aufsuchen oder das Wasser vergiften.",
@@ -11388,7 +11388,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["Gemein", "Zwergisch", "Riesensprache", "Gnomisch"],
     umgebung: ["Wüste", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/sandhexe.png",
+    bild: "tome-of-beasts/sandhexe.png",
     beschreibung: [
       "Diese ausgemergelte Vettel starrt bösartig, ihr Gesicht von strähnnigem grauem Haar gerahmt. Ihr boshaftes Grinsen zeigt Haifischzähne, und Speichel tropft ihr von den Lippen.",
       "Hass auf Schönheit. Sandhexen sind furchterregende Vetteln, die Wüstenruinen und vergessene Oasen heimsuchen. Ihr Hass auf Schönheit und Frieden ist schrecklich. Eine Sandhexe nutzt Illusionen und Mimikry, um Reisende in einen Hinterhalt zu locken.",
@@ -11434,7 +11434,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein", "Himmlisch", "Riesisch", "Infernal", "Umbrasch"],
     umgebung: ["Andere Ebenen", "Feenwildnis"],
-    bild: "assets/images/monster/tome-of-beasts/sandmann.png",
+    bild: "tome-of-beasts/sandmann.png",
     beschreibung: [
       "Stock-dünn und mondgesichtig mit den Augen eines Greifvogels und einer Mähne aus Habichtfedern, wirbelt dieser grinsende Humanoide so geschickt wie ein Tänzer. Zwischen seinen langen, bekrallten Fingern rieselt Sand, der im kalten Licht der Sterne schimmert.",
       "Bringer von Alpträumen. Sandmänner sind unheimlich wirkende Bringer von Schlaf und Träumen. Sie besuchen die Sterblichenwelt jede Nacht, um sicherzustellen, dass ihre Ziele tief schlafen und lebhafte Träume erleben, die die Macht des Traumreichs stärken. Manche Sandmänner entwickeln ein Talent für eine bestimmte Art von Traum: Fantasien verlorener Liebe oder Kindheit, Prophezeiungen und religiöse Visionen oder schreckliche Albträume.",
@@ -11478,7 +11478,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Alle Sprachen, die er im Leben kannte"],
     umgebung: ["Wüste"],
-    bild: "assets/images/monster/tome-of-beasts/sandschatten.png",
+    bild: "tome-of-beasts/sandschatten.png",
     beschreibung: [
       "Sandschatten sind Geister jener, die in verzweifelter Lage in sandigem Boden starben — begraben von Sandstürmen, in trockene Brunnen geworfen oder Opfer eines Düneneinbruchs. Sie sehen aus wie ein Schatten, der sich flach am Boden entlangstreckt, und ihre unregelmäßigen Bewegungen sind schwer zu erkennen.",
       "Sandkörper. Wenn sie gestört oder aufgewühlt werden, lassen diese ruhelosen Seelen den Sand um sich herum aufwirbeln und zu einem losen Strudel formen, der ihren einstigen lebendigen Körper vage nachahmt. Sie können diese Formen ebenso kontrollieren, wie sie einst ihren physischen Körper beherrschten.",
@@ -11524,7 +11524,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 17,
     sprachen: [],
     umgebung: ["Wüste"],
-    bild: "assets/images/monster/tome-of-beasts/sandwurm.png",
+    bild: "tome-of-beasts/sandwurm.png",
     beschreibung: [
       "Während sie die gebleichten Knochen eines Wüstentieres nachahmen, sind die knöchernen Verzierungen auf ihren Rücken Teil ihrer eigenartigen Verschmelzung aus Knochen und Schuppen.",
       "Im Sand verborgen. Diese trägen, gehörnten, gelbschuppigen Eidechsen verbringen den Großteil ihres Lebens unter der Erde und lauern unter dem Wüstensand auf Beute. Dabei ist ihr langhalster, stachelschweifiger Körper unter der Oberfläche verborgen, und nur die langen, gezackten Knochen entlang ihres Rückens sind exponiert. Diese Knochen ähneln einem von der Sonne gebleichten Rippenkorb so sehr, dass sie Aasvögel — und neugierige Reisende — anlocken. Wenn Beute zwischen den \'Rippen\' hindurchwandert, schnappt der Sandwurm die Knochenreihen fest über ihr zusammen.",
@@ -11567,7 +11567,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Versteht die Sprachen seines Erschaffers, kann aber nicht sprechen"],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/sarkophagschleim.png",
+    bild: "tome-of-beasts/sarkophagschleim.png",
     beschreibung: [
       "Der Sarkophag öffnet sich und gibt ein unheimliches, schimmerndes Licht preis. Fetzen von geliertem, bernsteinfarbenem Ektoplasma wogen aus einer zitternden Masse, in deren Mitte ein geschwärzter Schädel sitzt.",
       "Wachsamer Schleim. Sarkophagschleime sind amorphe untote Wächter, die in die Grabstätten Mächtiger gesetzt wurden, um diese zu bewachen und schreckliche Rache an Schändern der alten Krypten zu üben. Sie brodeln vor unheilvoller Energie, und ihre geschwärzten Schädel bewahren eine einfache Wachheit.",
@@ -11611,7 +11611,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["Versteht Tiefensprache und Terranisch, kann aber nicht sprechen"],
     umgebung: ["Unterirdisch", "Gebirge", "Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/sathaq-wurm.png",
+    bild: "tome-of-beasts/sathaq-wurm.png",
     beschreibung: [
       "Das felsige Panzer dieses titanischen Wurms ist rau und hart wie Stein. Sein gähnender Schlund wimmelt von winzigen Würmern wie er selbst.",
       "Elementare Raubtiere. Sathaq-Würmer sind albtraumhafte Raubtiere aus der Ebene des Elementaren Erdreichs — 9 m lang und 3 m dick, mit rauer, brauner, steinbesetzter Haut. Sie verschlingen Stein und Fleisch mit gleicher Leichtigkeit.",
@@ -11653,7 +11653,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/schabling-herr.png",
+    bild: "tome-of-beasts/schabling-herr.png",
     beschreibung: [
       "Die Kreatur ist humanoid, aber beunruhigend schabenartig. Ihre Beine sind zu kurz, ihre Arme zu lang, ihre Haut ist ölig, und ihr Rücken ist von einem Panzer bedeckt. Obenauf sitzt ein unpassend menschliches Gesicht.",
       "Schablinge vereinen die schlimmsten Eigenschaften von Mensch und Kakerlake. Diese flinken Kreaturen haben ein Talent für Heimlichkeit und für hinterlistiges Kämpfen. Auch als Huscher bekannt, sind Schablinge eine unangenehme humanoide Rasse – neugierig und habgierig, unrein und unhöflich – und die meisten anderen Rassen meiden sie.",
@@ -11697,7 +11697,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 9,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/schabling-scharmuetzler.png",
+    bild: "tome-of-beasts/schabling-scharmuetzler.png",
     beschreibung: [
       "Der Schabling-Scharmützler ist ein typischer Vertreter seiner Rasse: humanoid geformt, aber mit dem beunruhigenden Äußeren einer Schabe. Zu kurze Beine, zu lange Arme, ölige Haut und ein Rückenpanzer prägen sein Erscheinungsbild, während sein Gesicht unheimlich menschlich wirkt.",
       "Scharmützler bilden die Hauptstreitmacht der Schablinge und setzen auf Schnelligkeit, Hinterhalt und schmutzige Tricks statt auf direkte Konfrontation."
@@ -11736,7 +11736,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Gemein", "Drakonisch"],
     umgebung: ["Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/schankdrache.png",
+    bild: "tome-of-beasts/schankdrache.png",
     beschreibung: ["Schankdrachen hocken in belebten Schenken, lärmenden Tavernen und geschäftigen Gasthäusern. Sie sind Fluch und Segen zugleich für jeden Wirt: Mit Vergnügen treiben sie die Stimmung der Gäste in schwindelnde Höhen oder entfachen blutige Kneipenschlägereien. In Städten sind sie meist Unruhestifter und Witzbold; in abgelegenen Reisestationen aber freunden sie sich oft mit dem Wirt an und helfen, aufgeheizte Gemüter zu beruhigen — im Tausch gegen Unterkunft und ein großzügiges Anschreiben.", "Schankdrachen klatschen unaufhörlich. Von ihren Verstecken aus belauschen sie unzählige Geschichten und handeln mit Informationen; boshafte Exemplare schrecken auch vor Erpressung nicht zurück, um ihren Stammplatz zu sichern. Die ältesten unter ihnen werden über 400 Jahre alt und gelten manchen Wirtsfamilien als lebende Familienerbstücke."],
     besonderheiten: [
       { name: "Angeborenes Zauberwirken", beschreibung: "Das angeborene Zaubertalent des Drachen ist Charisma (Zauberrettungswurf-SG 13, +5 auf Angriffswürfe). Er kann ohne Materialkomponenten folgende Zauber wirken: Nach Belieben: Freunde, Böser Spott; 5/Tag jeweils: Gemütsberuhigung, Dissonante Flüsterungen, Krankheitsstrahl, Schallendes Gelächter; 3/Tag jeweils: Verwirrung, Unsichtbarkeit." },
@@ -11775,7 +11775,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein", "Elfisch", "Umbrasch", "Leerensprache"],
     umgebung: ["Andere Ebenen", "Feenwildnis", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/schattenbestie.png",
+    bild: "tome-of-beasts/schattenbestie.png",
     beschreibung: [
       "Eine Masse aus Schatten und Wolkenstoff, die den Boden nie berührt — eine Schattenbestie mag auf den ersten Blick harmlos wirken, wären da nicht ihre Klauen und das Glitzern ihrer gezackten Zähne.",
       "Aus der Leere gerufen. Schattenbestien gelten als das Ergebnis von Experimenten der Schattenfeen mit der Magie der Leere. Fast formlos und größtenteils körperlos können sie durch Willenskraft grobe Nachbildungen ihrer früheren Körper formen.",
@@ -11822,7 +11822,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein", "Elfisch", "Umbral"],
     umgebung: ["Wald", "Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/schattenfee.png",
+    bild: "tome-of-beasts/schattenfee.png",
     beschreibung: [
       "Für die meisten sind Schattenfeen kaum mehr als ein tanzender Schatten zwischen den Blättern. Einst waren sie Elfen wie alle anderen, lebten in sterblichen Landen unter der Sonne. Eine uralte Katastrophe trieb sie in die Dunkelheit, und nun sind sie Wesen des Schattens. Obwohl sie auf der Materiellen Ebene anzutreffen sind, sind sie untrennbar mit der Schattenebene verbunden.",
       "Schattenfeen ähneln anderen Elfen oberflächlich, werden jedoch selten mit ihren Verwandten des Lichts verwechselt. Ihre Hauttöne reichen von alabasterweißem bis zu onyxschwarzem, mit verschiedenen Grautönen dazwischen – ansonsten fehlt ihnen Farbe. Viele Schattenfeen tragen Hörner, die aus ihrem Haar wachsen. Die Bindung an die Dunkelheit erlaubt es ihnen, durch Schatten und Finsternis zu gleiten und die geheimnisvollen Schattenstraßen zu benutzen.",
@@ -11865,7 +11865,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein", "Elfisch", "Umbral"],
     umgebung: ["Wald", "Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/schattenfee-duellant.png",
+    bild: "tome-of-beasts/schattenfee-duellant.png",
     beschreibung: [
       "Schattenfee-Duellanten sind Elitekrieger, oft adeliger Herkunft. Schnell und sicher wie kein anderer, sind Duellanten meist größer und drahtiger als andere ihrer Art. Ihre Rüstungen, Kleidungen und Waffen sind von erlesener Qualität, aus den feinsten Materialien gefertigt – ihrem Stand entsprechend.",
       "Oft dient ein geschickter Duellant als Champion seines Lehnsherrn, steht in Duellen an seiner Stelle oder dient als Eliteleibwächter. Adelige Schattenfeen destillieren virulente Gifte und sind für ihre tödlichen schlanken Klingen bekannt."
@@ -11910,7 +11910,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 16,
     sprachen: ["Gemein", "Elfisch", "Umbral"],
     umgebung: ["Wald", "Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/schattenfee-verzauberin.png",
+    bild: "tome-of-beasts/schattenfee-verzauberin.png",
     beschreibung: [
       "Schattenfee-Verzauberinnen sind mächtige Zauberkundige, die ihre Worte und ihr Auftreten mit der verführerischen Kraft des Schattens durchdringen, um Feinde mit wenigen Worten und einem tödlichen Lächeln gegeneinander auszuspielen. Fast ausnahmslos weiblich, sind sie von einer Schönheit, die weit über das Gewöhnliche hinausgeht.",
       "Verzauberinnen verstärken die Kraft ihrer Gedanken mit feeenwirkten Klingen und durchdringen ihre Waffen mit psychischer Kraft. Die bloße Anwesenheit einer Verzauberin kann selbst die standhaftesten Feinde zu Boden zwingen."
@@ -11955,7 +11955,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein", "Elfisch", "Umbral"],
     umgebung: ["Wald", "Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/schattenfee-waechter.png",
+    bild: "tome-of-beasts/schattenfee-waechter.png",
     beschreibung: [
       "Schattenfee-Wächter sind massive Kreaturen, gezüchtet und ausgebildet für den Kampf. Die Schatten-Korruption vergrößert ihre Körper auf ogrische Stärke und lässt Flecken pechschwarzen Schattens über ihre Haut kriechen. Sie stehen fast 3 m hoch und wiegen über 300 kg.",
       "Wächter sind fanatisch loyal gegenüber ihren Vorgesetzten und dienen als Hauswachen oder persönliche Leibwächter. Die Schattenkorruption dringt in ihren Geist ein, sodass selbst mächtige Magie ihr Herz nicht brechen oder ihren Willen beugen kann. Sie sind keine eigenständigen Denker, erfüllen aber ihre Pflicht mit unerschütterlicher Hingabe."
@@ -12001,7 +12001,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein", "Elfisch", "Umbral"],
     umgebung: ["Wald", "Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/schattenfee-waldjaeger.png",
+    bild: "tome-of-beasts/schattenfee-waldjaeger.png",
     beschreibung: [
       "Schattenfee-Waldjäger durchstreifen die tiefen Wälder entlang der Schattenstraßen sowie die dunklen Spiegelungen in der Schattenebene. Sie sind erfahrene Spurenleser und Schleicher, die Tiere und gefährlicheres Wild jagen.",
       "Viele Waldjäger dienen in der Wilden Jagd, und ein Jäger, der einst an der Seite des Herrn der Jagd geritten ist, genießt großen Respekt – oft sogar Furcht – aufgrund des Glaubens, er könne den Herrn der Jagd dazu bewegen, einen Feind ins Visier zu nehmen."
@@ -12045,7 +12045,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/schemen.png",
+    bild: "tome-of-beasts/schemen.png",
     beschreibung: [
       "Schemen erscheinen ähnlich wie zu Lebzeiten, nur durchscheinend und immateriell. Ihre Stimmen sind schwach.",
       "Bittere Geister. Schemen sind Übergangswesen: Überreste böser Menschen, die starben, aber nicht in Frieden ruhen wollen, und dennoch nicht stark genug sind, um zu Schatten zu werden. Sie sind aggressive Feinde aller Lebewesen und des Lichts, das das Leben nährt. Schemen verschmelzen natürlich mit der Dunkelheit, stechen jedoch im hellen Licht deutlich hervor.",
@@ -12089,7 +12089,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein", "Darakhul", "Elfisch"],
     umgebung: ["Ruinen", "Unterirdisch", "Feenwildnis"],
-    bild: "assets/images/monster/tome-of-beasts/scheznyki.png",
+    bild: "tome-of-beasts/scheznyki.png",
     beschreibung: [
       "Diese kleinen, bösartigen Feenwesen sehen aus wie schmutzige, faule Zwerge, gekleidet in Leinenhosen und -hemden, die mit schmutzigem Bindfaden und zerschlissenen Seilen gebunden sind. Sie tragen meist keine Schuhe, haben gebrochene, schmutzige Zehennägel und raue Leinen- und Ledermützen als Hüte.",
       "Korrumpierte Zwerge. Als 'Verschwinderer' bekannt, treiben diese kleinen, bösartigen zwergähnlichen Feenwesen in verlassenen Steinbrüchen und alten Ruinen ihr Unwesen, töten und berauben ahnungslose Besucher. Die Legende besagt, sie seien faule Zwerge, die von den Schattenfeen korrumpiert wurden; andere behaupten, es handle sich um Zwerge, die einst einem Feenherrn oder einer Feenherrin huldigten.",
@@ -12133,7 +12133,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Telepathie 30 m"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/schicksalsfresser.png",
+    bild: "tome-of-beasts/schicksalsfresser.png",
     beschreibung: [
       "Diese menschengroßen Parasiten ähneln geisterhaften Tausendfüßlern, umgeben von einem unregelmäßigen violetten Leuchten. Ihr Fleisch ist durchscheinend und ihre Kiefer sind kristallin – es sind eindeutig Wesen fremder Ebenen.",
       "Schicksalsfresser befallen abgelegene Bereiche der Ebenen, wo sie die Fäden des Schicksals selbst verschlingen. Die Nornen betrachten sie als Schädlinge und beauftragen manchmal besonders kluge Planenwanderer damit, sie zu jagen oder den angerichteten Schaden zu beheben.",
@@ -12186,7 +12186,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 25,
     sprachen: ["Himmlisch", "Telepathie 30 m"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/schicksalshexe.png",
+    bild: "tome-of-beasts/schicksalshexe.png",
     beschreibung: [
       "Schicksalshexen sind androgyne Humanoide, mumifiziert in zitterndem Diamantfaden. Ihre Haut ist durchscheinend, und in ihren Körpern schweben Dutzende zitternde Sanduhren anstelle von Organen.",
       "Hüterinnen des Schicksals. Schicksalshexen sind Kuratorinnen des Schicksals und Vollstreckerinnen dessen, was sein muss. Sie reisen durch die Ebenen und weben die Schicksalsfäden im Auftrag ihrer Göttinschöpferin. Obwohl sie ihren Auftrag ohne Rücksicht auf kleinliche sterbliche Belange erfüllen, können sie überredet werden, das Schicksal für mächtige Bittende zu beugen, deren Interessen mit denen ihrer Göttin übereinstimmen.",
@@ -12232,7 +12232,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Sumpf"],
-    bild: "assets/images/monster/tome-of-beasts/schlange_sumpfotter.png",
+    bild: "tome-of-beasts/schlange_sumpfotter.png",
     beschreibung: [
       "Eine bösartige Schlange mit einem gedrungenen, rautenförmigen Kopf, einem aufgeblähten Hals und einem eigenartigen gelben Band um den Körper – die Sumpfotter ist ein stämmiger, etwas träger Jäger.",
       "Sumpfjäger. Diese Giftschlange – manchmal auch als \'gesprenkeltes Band\' bekannt – ist in den Sümpfen südlicher Reiche heimisch, wo sie Wasservögel und unvorsichtige Halblinge verschlingt.",
@@ -12271,7 +12271,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Dschungel", "Grasland"],
-    bild: "assets/images/monster/tome-of-beasts/schlange_zanskaran-viper.png",
+    bild: "tome-of-beasts/schlange_zanskaran-viper.png",
     beschreibung: [
       "Grünliche Flüssigkeit tropft von den dolchlangen Reißzähnen dieses 6 Meter langen Ungeheuers. Es zeigt wenig Angst.",
       "Menschenjäger. Diese riesige Giftschlange gilt als eine der tödlichsten Schlangen überhaupt und als eine der wenigen, die einen erwachsenen Menschen angreifen. Ein einziger Biss der Zanskaran-Viper kann einen gesunden Menschen in Sekunden töten, und ihre zähe Haut macht sie schwer zu bezwingen.",
@@ -12309,7 +12309,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Höllisch"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/seelenfresser.png",
+    bild: "tome-of-beasts/seelenfresser.png",
     beschreibung: [
       "Wesen von wechselhaftem Erscheinungsbild, vereinen Seelenfresser fleischliche Elemente mit ektoplasmischen Formen.",
       "Aus dem Abgrund gerufen. Seelenfresser werden aus dem Abgrund und anderen extraplanaren Aufenthaltsorten herbeigerufen, wo sie frei um Beute handeln können. Sie haben stets eine mentale Verbindung zu ihrem Beschwörer und versuchen oft, diesen zu vernichten.",
@@ -12352,7 +12352,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 16,
     sprachen: ["Gemein", "Elfisch", "Sylvisch", "Leerensprache"],
     umgebung: ["Andere Ebenen", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/selang.png",
+    bild: "tome-of-beasts/selang.png",
     beschreibung: [
       "Dieser grinsende Humanoide sieht aus wie ein gut aussehender Mann, obwohl seine Haut so schwarz wie Obsidian ist, seine Augen rot leuchten und er sowohl Insektenbeine als auch Fühler hat.",
       "Dunkle Satyrn. Die Selangs oder dunklen Satyrn sind verdrehte und bösartige Faune, die die Naturverehrung aufgegeben haben und stattdessen alte Götter tiefer und bösartiger Intelligenz verehren. Selangs versuchen, diesen bösen Göttern den Eintritt in die Sterblichenwelt zu ermöglichen, indem sie dunkle Portale öffnen.",
@@ -12396,7 +12396,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: [],
     umgebung: ["Wüste", "Sumpf"],
-    bild: "assets/images/monster/tome-of-beasts/serpopard.png",
+    bild: "tome-of-beasts/serpopard.png",
     beschreibung: [
       "Diese gefleckten und schuppigen Vierbeiner laufen auf haarlosen Löwenpfoten, während ihre Katzenköpfe auf geschmeidigen, schlangenartigen Hälsen sitzen.",
       "Schlängelnde, schlangenartige Katzen. Serpopards sind 4 m lang und wiegen 270 kg, mit geringem Geschlechtsdimorphismus. Sie haben einen felinen Körper, aber lange, schlangenartige Hälse, die von vage drachenartigem Köpfen bekrönt werden. Ihre haarlosen Pfoten tragen bösartig gekrümmte, einziehbare Klauen. Der Hals eines Serpopards ist in ständiger Bewegung und schwingt wie eine Kobra.",
@@ -12439,7 +12439,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Versteht Elfisch und Umbrasch, kann aber nicht sprechen"],
     umgebung: ["Feenwildnis", "Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/shadhavar.png",
+    bild: "tome-of-beasts/shadhavar.png",
     beschreibung: [
       "Oft wird ein Shadhavar zunächst durch die eindringliche Melodie bemerkt, die es erzeugt, und manche verwechseln es mit Einhörnern oder Feenrössern. Bei näherer Betrachtung ähneln sie ausgedörrten Einhörnern, deren Skelett unter dem straffen Fleisch deutlich sichtbar ist.",
       "Schattenrosse. Shadhavar sind Bewohner der Schattenebene. Obwohl sie untoten Einhörnern ähneln, sind sie lebende Kreaturen, die mit Schattenessenz durchdrungen sind.",
@@ -12485,7 +12485,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Riesisch", "Sylvisch"],
     umgebung: ["Gewässer", "Sumpf"],
-    bild: "assets/images/monster/tome-of-beasts/shellycoat.png",
+    bild: "tome-of-beasts/shellycoat.png",
     beschreibung: [
       "Trotz seiner kleinen, gedrungenen Statur ist die Verwandtschaft mit einem Troll unverkennbar — am deutlichsten in den langen Armen und der dicken, kieselharten Haut.",
       "Langarmig und krötenhaft. Der Shellycoat ist eine entstellte und bösartige Kreatur, auch Iamh Fada oder 'Langhände' genannt, und wird oft als Brückentroll bezeichnet. Trotz seines Feenwesens ist er entfernt mit echten Trollen verwandt. Anders als diese ist der Shellycoat zwergenhaft und krötenartig, mit kurzen, gebeugten Beinen und unnatürlich langen Armen mit geschwollenen, vorgewölbten Gelenken, die er auf erschreckende Längen dehnen kann.",
@@ -12530,7 +12530,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 19,
     sprachen: ["Leerensprache"],
     umgebung: ["Ozean", "Unterirdisch", "Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/shoggoth.png",
+    bild: "tome-of-beasts/shoggoth.png",
     beschreibung: [
       "Ein Shoggoth ist ein intelligenter, geleeartiger Klumpen, der sich nach Belieben umformen kann. Einst als Diener einer alten Rasse erschaffen, revoltierten die Shoggoths vor langer Zeit und töteten ihre Herren ohne Gnade. Seitdem leben sie in isolierten oder verödeten Regionen, verschlingen alles, was ihnen begegnet, und absorbieren das Fleisch in ihre eigene amorphe, sich wandelnde Form.",
       "Beständiges Wachstum. In kugeliger Form hat ein Shoggoth einen Durchmesser von 3 bis 4,5 m, obwohl dies nur ein Durchschnittswert ist. Shoggoths wachsen ihr Leben lang, wenn auch die ältesten nur sehr langsam, und manche können durch Verhungern schrumpfen.",
@@ -12575,7 +12575,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 9,
     sprachen: [],
     umgebung: ["Wüste", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/skorpion_nacht.png",
+    bild: "tome-of-beasts/skorpion_nacht.png",
     beschreibung: [
       "Diese mitternachtsschwarzen Skorpione haben einen leuchtend roten Streifen auf ihren Schwänzen, der auf das lähmende Gift in ihrem Inneren hinweist.",
       "Blindes Gift. Dieser treffend benannte Spinnentier-Jäger blendet seine Opfer mit einer Dosis seines lähmenden Gifts. Er ernährt sich von ganzen Kamelen, wenn er die Gelegenheit hat, frisst aber häufiger Ziegen, Schafe und Menschen. Er jagt nachts, wenn sein Blindsicht am wirksamsten ist.",
@@ -12615,7 +12615,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Wüste", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/skorpion_stygischer_fettschwanz.png",
+    bild: "tome-of-beasts/skorpion_stygischer_fettschwanz.png",
     beschreibung: [
       "Der schwarze Panzer glänzt in der Wüstensonne, und sein Schwanz tropft durchsichtiges Gift. Selbst der größte Löwe meidet diesen Skorpion.",
       "Hochgiftig. Bekannt für seine geringe Größe und sein aggressives Verhalten, bringt der Stygische Fettschwanzskorpion denen, die seinen giftigen Stachel spüren, einen schnellen Tod.",
@@ -12657,7 +12657,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Gemein", "Sylvanisch"],
     umgebung: ["Wald", "Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/sluagh-schwarm.png",
+    bild: "tome-of-beasts/sluagh-schwarm.png",
     beschreibung: [
       "Manche sagen, die Sluagh seien von Vampiren verwandelte Feenwesen; andere behaupten, es seien die bösen Seelen gewalttätiger Männer, die keine Ruhe finden und zurückkehren, um zu töten. Wieder andere behaupten, es seien die Seelen teufelsverschriebener Gnome, die Selbstmord begingen. Einig sind sich alle: Sie sind von Natur aus abscheulich.",
       "Feige allein. Diese winzigen, bösartigen Feenwesen hausen in der Dunkelheit. Allein sind sie Feiglinge, doch selten trifft man sie allein an. Am aktivsten sind sie im Winter, besonders in den langen Winternächten. Sie sprechen meist auf ihre Opfer ein, während sie angreifen, doch für die Ohren ihrer Beute sind diese Schreie kaum mehr als Geflüster.",
@@ -12699,7 +12699,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein", "Drakonisch", "Telepathie 75 m"],
     umgebung: ["Stadt", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/smaragdauge.png",
+    bild: "tome-of-beasts/smaragdauge.png",
     beschreibung: [
       "Hexen und Ioun-Magier wissen, wie man ein sprechendes Kristall erschafft, das als Debattierpartner und Verbündeter dient. Doch manche werden zum Verräter – diese nennt man Smaragdaugen. Ursprünglich rosa oder lila, verfärben sich verräterische Kristalle dunkelgrün.",
       "Diese schwebenden, ovalen Kristalle sind körperlich schwach, behalten aber beträchtliche magische Kräfte zur Manipulation ihrer Umgebung. Ein Smaragdauge ist psychisch an eine Kreatur gebunden und kann sich nie weiter als 7,5 m von ihr entfernen. Das Töten des Schöpfers befreit es von dessen Kontrolle, nicht aber von der Bindung.",
@@ -12743,7 +12743,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["versteht die Sprachen seines Erschaffers, kann jedoch nicht sprechen"],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/smaragdingolem.png",
+    bild: "tome-of-beasts/smaragdingolem.png",
     beschreibung: [
       "Diese große Statue aus smaragdgrünem Kristall hat einen menschlichen Körper mit dem Kopf eines Ibis. Winzige Symbole und Runen sind in sie eingeritzt, Teile sind mit Goldeinlagen versehen. Obwohl der Golem vollständig aus Smaragden gefertigt scheint, besteht sein Körper eher aus verzaubertem Glas als aus echten Edelsteinen – eine traurige Wahrheit, die viele Plünderer enttäuscht hat.",
       "Smaragdingolem werden von Jüngern okkulter Geheimlehren erschaffen, um ihre geheimen Versammlungsorte, heiligen Texte und arkanen Machtbücher zu bewachen. Obwohl sie manchmal mächtigen Magiern, Gelehrten und Hierophanten als Ehrenzeichen geschenkt werden, gehorchen sie stets zuerst ihrem Erschaffer."
@@ -12786,7 +12786,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Grasland", "Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/spaltenschwein.png",
+    bild: "tome-of-beasts/spaltenschwein.png",
     beschreibung: [
       "Dieses riesige Schwein ist so groß wie ein Ochse, und sein Maul strotzt vor ungleichmäßigen Hauern. Sein Körper ist eine unförmige Masse aus tumorösem Fleisch, aus der Augen und rudimentäre Mäuler hervorragen, und lange Tentakel hängen von seinen Flanken herab.",
       "Von Zeit zu Zeit bildet sich ein Riss im Gefüge des Multiversums, und die Materielle Ebene wird von der Energie fremder Dimensionen durchflutet. Lebewesen, die dieser Invasion ausgesetzt sind, können schreckliche Mutationen erleiden und zu monströsen Zerrbildern ihrer früheren Formen werden. Ein Beispiel für dieses Phänomen ist das Riftschwein: einst gewöhnliche Schweine, die nach dem Baden in einem eldrischen Licht in geifernde Schrecken verwandelt wurden.",
@@ -12829,7 +12829,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Zwergisch", "Riesensprache"],
     umgebung: ["Höhle", "Hügel"],
-    bild: "assets/images/monster/tome-of-beasts/speckriese.png",
+    bild: "tome-of-beasts/speckriese.png",
     beschreibung: [
       "Dieser fettleibige, glockenförmige Riese ist von Geschwüren, erweiterten Venen und Pilzausschlägen entstellt. Obwohl er auf einem Paar kurzer, schwieliger Beine schwankt, bewegt er sein Gewicht mit gefährlichem Potenzial und überrascht viele Feinde.",
       "Ob als Ergebnis eines Fluches aus längst vergangenen Jahrhunderten oder einer schrittweisen Anpassung an eine bequeme Existenz – der Speckriese (eine der kleinsten Riesenarten) ist gigantisch in der Breite statt in der Höhe und in seinem einfachen Leben fast komisch.",
@@ -12888,7 +12888,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Versteht die Sprachen, die es zu Lebzeiten kannte, spricht aber nicht"],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/spektralwaechter.png",
+    bild: "tome-of-beasts/spektralwaechter.png",
     beschreibung: [
       "Ein leuchtend grüner Nebel wirbelt in die Form eines antiken Kriegers. Verbeulte Rüstung und ein zerfetzter Umhang hüllen den Skelettkörper des Kriegers ein, und sein grinsender Schädel starrt aus einem offenen Helm hervor.",
       "Abgetragener Prunk. Aus schwach leuchtendem grünem Dampf zusammengesetzt, ist der Spektralwächter ein Knochenwesen, das in alter Rüstung oder herrschaftlichem Gewand steckt. Der Stoff ist abgenutzt und zerfetzt, spiralförmig in Nebel auflösend an den Rändern, und die Kreatur gleitet mit dem zartesten Flüstern eines Klangs wie ein klagender Seufzer aus der Ferne.",
@@ -12931,7 +12931,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 19,
     sprachen: ["Abyssal", "Gemein", "Darakhul", "Sphinxisch"],
     umgebung: ["Wüste", "Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/sphinx_gypsosphinx.png",
+    bild: "tome-of-beasts/sphinx_gypsosphinx.png",
     beschreibung: [
       "Mit schwarzen Flügeln und einem Körper blass wie Alabaster ist die Gypsosphinx mit ihrem Geierscnabel leicht zu erkennen. Als mächtige Dienerin der Todes- und Wüstengötter drehen sich ihre Rätsel und Obsessionen alle um Tod und Aas. Ihre Augen können Beute meilenweit entdecken, und die Höhe, in die sie in den Himmel aufsteigt, verbirgt ihre enorme Größe.",
       "Gerüchtemacher und Rätselsteller. Gypsosphinxe unterhalten sich mit intelligenten Untoten, Priestern der Totengötter und anderen Sphinxen, versammeln sich jedoch selten unter ihresgleichen. Sie bewachen ihr Territorium eifersüchtig und beanspruchen typischerweise eine Nekropolis als Herzstück ihrer Region. Wie alle Sphinxe lieben Gypsosphinxe Rätsel. Bei besonders kniffligen Rätseln verlassen sie sich auf Magie, um diese zu lösen.",
@@ -12983,7 +12983,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein"],
     umgebung: ["Wald", "Sumpf"],
-    bild: "assets/images/monster/tome-of-beasts/spiegelhexe.png",
+    bild: "tome-of-beasts/spiegelhexe.png",
     beschreibung: [
       "Eine Spiegelhexe zwingt eine ahnungslose Kreatur dazu, über ihre eigene Oberflächlichkeit nachzudenken, indem sie in das schreckliche Gesicht der Hexe blickt.",
       "Hässlicher Fluch. Bis eine Kreatur über die Entstellungen der Hexe hinwegsehen kann, leidet sie unter dem Schmerz eines verunstalteten Lebens. Manche Spiegelhexen tun dies zum Wohl aller, aber die meisten tun es, weil das Verursachen von Schmerz sie amüsiert.",
@@ -13028,7 +13028,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 16,
     sprachen: ["Versteht Untergemein, spricht aber nicht"],
     umgebung: ["Höhle", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/spinne_geistgaenger.png",
+    bild: "tome-of-beasts/spinne_geistgaenger.png",
     beschreibung: [
       "Eine kreideweise Spinne von der Größe eines Pferdes schleicht durch die Schatten. Ihre stumpfen Augen fixieren dich, während sie mit einem geisterhaften blauen Schimmer aus dem Blickfeld verblasst.",
       "Geistgänger-Spinnen sind bösartige Jäger, die aus fehlgeleiteten Experimenten an Phaserspinnen hervorgegangen sind. Sie sind spindeldürre, ausgezehrte Wesen, fast farblos. Die Spinne hat einen Durchmesser von etwa 2,5 Metern (einschließlich Beine) und wiegt 225 kg.",
@@ -13072,7 +13072,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Dschungel", "Wald"],
-    bild: "assets/images/monster/tome-of-beasts/spinne_j_ba_fofi.png",
+    bild: "tome-of-beasts/spinne_j_ba_fofi.png",
     beschreibung: [
       "Eine große, braune Spinne, die einer Vogelspinne mit übertrieben langen Beinen ähnelt, tritt anmutig aus dem Gebüsch hervor, gefolgt von ähnlichen Spinnentieren, die kleiner und gelb gefärbt sind.",
       "Die J'ba Fofi ähnelt einer überdimensionalen Vogelspinne mit sehr langen Beinen, obwohl ein Funke Intelligenz darauf hindeutet, dass diese Art sich über bloßes Ungeziefer hinaus entwickelt hat.",
@@ -13116,7 +13116,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein", "Leersprache"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/spinne_leng.png",
+    bild: "tome-of-beasts/spinne_leng.png",
     beschreibung: [
       "Diese aufgedunsenen, violetten Spinnen haben kleine Klauen an ihren Vorderbeinen, die ihnen als handähnliche Greifwerkzeuge dienen. Ihre Hinterleiber sind ein krankhaftes Violett-Weiß.",
       "Humanoidenhass. Die ruchlosen Spinnen von Leng sind hochintelligent. Sie sind eine sehr alte Rasse, durchtränkt von bösem Wissen und scheußlicher Bosheit, mit einem tief verwurzelten Hass auf alle humanoiden Rassen. Gelegentlich halten sie Geistgänger-Spinnen als Wächter oder Soldaten.",
@@ -13163,7 +13163,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: [],
     umgebung: ["Wald", "Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/spinne_rotband-linie.png",
+    bild: "tome-of-beasts/spinne_rotband-linie.png",
     beschreibung: [
       "Diese Spinnen sind sowohl nach den tiefroten Spiralen auf ihren Hinterleibern, die bei jeder Spinne einzigartig sind, als auch nach ihrer eigenartigen Jagdtechnik benannt. Die größten jagen im dunklen Blätterdach gemäßigter und subtropischer Wälder.",
       "Handgroße Jäger. Diese zottigen, braunen Spinnen sind keine enormen Monster, aber groß genug, um beunruhigend zu sein. Eine typische ist so groß wie eine menschliche Hand mit gespreizten Fingern, aber manche wachsen so groß wie kleine Hunde.",
@@ -13205,7 +13205,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: [],
     umgebung: ["Wüste", "Grasland"],
-    bild: "assets/images/monster/tome-of-beasts/spinne_sand.png",
+    bild: "tome-of-beasts/spinne_sand.png",
     beschreibung: [
       "Wenn eine Sandspinne angreift, schießen ihre zwei gefleckten, hellbraunen Beine aus dem Sand, stoßen mit mörderischer Geschwindigkeit nach vorne, gefolgt von einer Spinne in der Größe eines Pferdes. Sie greifen ebenso oft am helllichten Tag wie nachts an.",
       "Beute in Tunnel ziehen. Sandspinnen lauern unter trockenen Ebenen und trockenem Grasland. Diese Fleischfresser jagen Wüstenbewohner und Reisende in der Steppe, indem sie sich in losen Sand eingraben, sodass sie vollständig verborgen sind. Wenn Beute über ihre Falle läuft, schnellt die Spinne aus ihrem Versteck, schnappt die Beute und zieht sie unter den Sand, wo sie sie in Spinnenseide einwickeln kann, bevor sie sie schnell zu Tode sticht.",
@@ -13249,7 +13249,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Versteht Gemein, spricht aber nicht"],
     umgebung: ["Stadt", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/spinnendieb.png",
+    bild: "tome-of-beasts/spinnendieb.png",
     beschreibung: [
       "Diese Uhrwerk-Spinnenkreatur ist so groß wie ein Hund. Jeder ihrer acht scharfen, sichelartigen Füße sticht oder sinkt leicht in den Boden. Rasierstahlwire umhüllt ihren Körper, während Gyroskope sichtbar in ihrem gesichtslosen Uhrwerkkopf wirbeln.",
       "Drahtkämpfer. Ein Spinnendieb beginnt niemals einen Kampf, es sei denn, er wird dazu befohlen, verteidigt sich aber immer gegen Angriffe. Sein erster Angriff ist das Wirbeln seiner Rasierstahlschlinge, um ein Ziel zu fesseln. Hat er einmal einen Feind gepackt, greift er dieses Ziel weiter an, bis es aufhört zu kämpfen oder aus dem Draht entkommen ist.",
@@ -13292,7 +13292,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: [],
     umgebung: ["Sumpf", "Gewässer"],
-    bild: "assets/images/monster/tome-of-beasts/spinosaurus.png",
+    bild: "tome-of-beasts/spinosaurus.png",
     beschreibung: [
       "Ein Spinosaurus ist ein Land- und Flussjäger, der eine Gruppe von Echsenmenschen auf langen Überfallzügen tragen kann. Oft als Fluszkönig oder Flussdrache bezeichnet, wird er von Quakenden und anderen primitiven Humanoiden verehrt.",
       "Freund der Echsenmenschen. Der Spinosaurus ist ein besonderer Saurier, der von Echsenmenschen auf Größe und Treue gezüchtet wurde. Echsenmenschen schätzen ihn wie ein erstklassiges Streitross und verwöhnen ihn mit Futter und Pflege.",
@@ -13340,7 +13340,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: [],
     umgebung: ["Sumpf", "Gewässer"],
-    bild: "assets/images/monster/tome-of-beasts/spinosaurus_jungtier.png",
+    bild: "tome-of-beasts/spinosaurus_jungtier.png",
     beschreibung: [
       "Ein junger Spinosaurus ist etwa 6 m lang und wiegt 2.700 kg oder mehr. Spinosaurusse paaren sich jedes Jahr im Winter; das Männchen bringt Nahrung und hilft beim Bau eines riesigen Nests aus Schilf, Stöcken und Schlamm, bevor es die Aufzucht dem Weibchen überlässt.",
       "Eier und Jungtiere sind begehrte Handelswaren. Ein Spinosaurus-Ei ist bis zu 2.000 GM wert, ein lebendiges Jungtier bis zu 4.000 GM — jedoch erfordert die Aufzucht eines solchen Fleischfressers gewaltige Mengen an Nahrung und Geduld."
@@ -13380,7 +13380,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 22,
     sprachen: ["Himmlisch", "Gemein", "Drakonisch", "Zwergensprache", "Elfisch", "Infernalisch", "Primordiell"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/sterndrache.png",
+    bild: "tome-of-beasts/sterndrache.png",
     beschreibung: [
       "Sterndrachen sind Drachen, die durch ihren Entdeckerdrang andere Ebenen bereisten und dabei eine tiefgreifende Verwandlung erlebten. Unabhängig davon, welche Drachenart die Reise antrat – die Kreatur kehrt stets als Sterndrache zurück, erkennbar an ihren gefleckten Metallschuppen und dem Nimbus winziger Sterne um ihren Körper. Ein Sterndrache ist etwa 3 m lang und wiegt rund 230 kg.",
       "Sterndrachen betrachten sich als Beschützer der Materiellen Ebene und sehen Wesen anderer Ebenen – Teufel und Himmlische gleichermaßen – als unerwünschte Einmischer in die Angelegenheiten der Sterblichen. Sie verhandeln mit solchen Eindringlingen, treiben sie fort oder vernichten sie. Gelegentlich führen sie selbst Expeditionen in andere Ebenen an, um klarzumachen, dass Außenseiter unerwünscht sind."
@@ -13432,7 +13432,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 24,
     sprachen: ["Gemein", "Infernal", "Leeressprache"],
     umgebung: ["Andere Ebenen", "Ozean"],
-    bild: "assets/images/monster/tome-of-beasts/sternenbrut_des_cthulhu.png",
+    bild: "tome-of-beasts/sternenbrut_des_cthulhu.png",
     beschreibung: [
       "Die sternbewohnenden, oktopoiden Diener und Kinder Cthulhus sind gewaltig und seltsam, mit geklaueten Händen, mächtigen, aber aufgeblähten Gehirnen und flügelartigen Stacheln auf dem Rücken, mit denen sie sich durch die gefrorene Leere zwischen den Sternen fortbewegen.",
       "Diese Meister psychischer Kommunikation und dimensionaler Manipulation können sich selbst und andere über enorme Entfernungen transportieren.",
@@ -13479,7 +13479,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: [],
     umgebung: ["Andere Ebenen", "Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/stosszahn-himmelsfisch.png",
+    bild: "tome-of-beasts/stosszahn-himmelsfisch.png",
     beschreibung: [
       "Diese schreckliche Kreatur sieht aus wie eine riesige fliegende Qualle, mit langen, heimtückischen Stoßzähnen, die aus ihrem klaffenden Maul ragen, und tentakelähnlichen Tasthaaren, die hinter ihr herschleppen.",
       "Diese Luftquallen treiben durch die Luft wie Ballons, getragen von inneren alchemistischen Reaktionen. Diese Fortbewegungsart ermöglicht ihnen fast senkrechte Aufstiege oder ruhiges Dahintreiben im Wind – sie können Höhen von bis zu 9.000 Metern erreichen.",
@@ -13523,7 +13523,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein", "Elfisch"],
     umgebung: ["Andere Ebenen", "Wald"],
-    bild: "assets/images/monster/tome-of-beasts/stryx.png",
+    bild: "tome-of-beasts/stryx.png",
     beschreibung: [
       "Stryx sind das Ergebnis der wahnsinnigen Experimente des Mondlicht-Königs tief im Schattenreich. Sie ähneln Eulen und können als normale Vögel durchgehen, solange sie nicht sprechen oder den Mund öffnen. Hinter dem Schnabel verbirgt sich ein größerer Mund mit glänzend weißen, menschlichen Zähnen. Stryx variieren in ihrer Farbe von hellgrau bis rußschwarz und haben strahlende Augen.",
       "Seltsame Alchemie. Stryx sind unnatürliche Wesen, die durch schreckliche Manipulation normaler Eulen und entführter Menschen entstanden sind. Der Mondlicht-König der Schattenfe, verbannt und in seinem Turm gefangen, ist verzweifelt darum bemüht, die Außenwelt zu berühren. Seine wahnsinnigen Experimente vermischten Fetzen sterblicher Seelen mit schattenhaften Eulen und brachten so den Stryx ins Dasein.",
@@ -13567,7 +13567,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein", "Infernal", "Gedankenübertragung 30 m"],
     umgebung: ["Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/stuhac.png",
+    bild: "tome-of-beasts/stuhac.png",
     beschreibung: [
       "Dieser blasse Einsiedler mit weißem Bart trägt einen Winterumhang und reist allein durch Bergpfade, Klippen und Handelswege.",
       "Schwäche vortäuschen. Der Stuhac lebt in abgelegenen Gebirgspässen und durchstreift wenig befahrene Hänge auf Nahrungssuche — er ist ein Meister der Tarnung und Täuschung. In schwere Pelze gehüllt gibt er sich als gebrechlicher Einsiedler oder hilfsbedürftiger Reisender aus. Erst wenn seine Opfer weit von Wärme und Sicherheit weggelockt sind, legt der Stuhac seine Verkleidung ab: Die knorrigen Hände des verwitterten Wanderers entfalten sich zu gezackten gelben Klauen, seine trübsichtigen Augen entpuppen sich als wächserne Kugeln, die lose in ihren Höhlen schlingern, und mit einem Schwung seines Umhangs zeigt er stolz verwobene Schichten vergilbter Sehnen und Bänder.",
@@ -13614,7 +13614,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Gemein"],
     umgebung: ["Gewässer", "Sumpf"],
-    bild: "assets/images/monster/tome-of-beasts/subek.png",
+    bild: "tome-of-beasts/subek.png",
     beschreibung: [
       "Für den größten Teil des Jahres sind die Subek ein freundliches Volk, das anderen rät und seine körperliche wie intellektuelle Stärke in lokale Projekte einbringt. Während der Flutzeit jedoch werden Subek gewalttätig und territorial und töten und verzehren rücksichtslos alle Eindringlinge.",
       "Uferheime. Subek sind krokodilköpfige Humanoide, die an den Ufern großer Flüsse leben. Sie sind schwanzlos, besitzen muskulöse Körper, überraschend geschickte Hände und ein erschreckendes Maul voller scharfer Zähne. Sie sind knapp 3 Meter groß, wiegen durchschnittlich über 300 Kilogramm und können bis zu 300 Jahre alt werden. In der Trockenzeit sind Subek freundliche, besonnene Gelehrte, Historiker und Handwerker.",
@@ -13661,7 +13661,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["versteht Himmlisch und Gemein, kann aber nicht sprechen"],
     umgebung: ["Stadt", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/tempelhund.png",
+    bild: "tome-of-beasts/tempelhund.png",
     beschreibung: [
       "Diese Kreatur, die einer Mischung aus großem Hund und Löwe ähnelt, mustert jeden argwöhnisch, der die Schwelle des bewachten Tempels überschreitet.",
       "Ein Tempelhund ist ein eindrucksvoller Wächter, den verschiedene Gottheiten einsetzen, um ihre Tempel zu schützen. Er ist unerschütterlich loyal und territorial. Oft in Tempelstatuen dargestellt, besitzt die Kreatur einen vorwiegend hündischen Körper, weiches, aber kurzes Fell, einen dicken buschigen Schwanz und eine löwenartige Mähne um eine Hundeschnauze mit kurzem Fang.",
@@ -13706,7 +13706,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein", "Zwergisch", "Ursprünglich"],
     umgebung: ["Arktis", "Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/thuellai.png",
+    bild: "tome-of-beasts/thuellai.png",
     beschreibung: [
       "Diese rasende Wolke aus belebtem Nebel und Eis hat Eiszackenscherben als Augen und Klauen. Im Kampf oder auf der Jagd heult ein Thuellai wie ein Dutzend schreiende Banshees.",
       "Diener des Boreas. Diese schnell fliegenden Kreaturen aus Luft und Eis wurden vom Herrn des Nordwinds, Boreas, erschaffen, um als seine Herolde, Assassinen und Jagdhunde zu dienen. Sie erscheinen als wirbelnder Blizzard und verschmelzen oft mit Schneestürmen, um ihre Opfer zu überraschen.",
@@ -13753,7 +13753,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein", "Zwergisch", "Riesensprache"],
     umgebung: ["Gebirge", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/thursir-riese.png",
+    bild: "tome-of-beasts/thursir-riese.png",
     beschreibung: [
       "Thursir-Riesen sind dunkle Verwandte der Steinriesen, die tief in unterirdischen Höhlensystemen unter hohen Gebirgszügen hausen. Anders als ihre oberirdischen Vettern haben Thursir eine ausgesprochene Vorliebe für fermentierte Getränke und verfaulte Speisen – ihr eiserner Magen ermöglicht ihnen, selbst giftige Substanzen ohne Schaden zu verdauen.",
       "Die Thursir beherrschen uralte Runenmagie und können die mächtige Thurs-Rune in Waffen ritzen. Diese Rune verleiht der Waffe blitzartige Energie und lähmt kurzfristig die Reaktionsfähigkeit des Getroffenen. Thursir-Riesen dienen gelegentlich als Söldner oder Wachen für andere mächtige Unterweltbewohner."
@@ -13793,7 +13793,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 16,
     sprachen: ["Gemein", "Darakhul", "Drakonisch", "Untergemein"],
     umgebung: ["Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/tiefendrache.png",
+    bild: "tome-of-beasts/tiefendrache.png",
     beschreibung: ["Der Tiefendrache hat glänzend schwarze Schuppen mit violetten Untertönen, ein langes, fast fremdartig wirkendes Gesicht und ausdruckslose schwarze Augen. Am Ende des langen Schwanzes sitzt ein gezackter Stachel. Das Leben unter der Erde hat diese Drachen verändert: Sie fühlen sich unter Aberrationen und Untoten weit wohler als bei Humanoiden, meiden Sonnenlicht und sind an der Oberfläche streng nachtaktiv.", "Tiefendrachen haben sich eine Nische im Unterreich geschaffen und treiben Handel mit den Darachul. Ihr Gift versorgt die Ghoule mit Nachschub, wenn die Population schrumpft; wer bei seinen Herrschern in Ungnade fällt, wird zum Futter für den Drachen. Ein Tiefendrache ist rund 3,7 m lang plus einen knappen Meter Schwanz und kann bis zu 680 kg wiegen. Tiefendrachen leben in lebenslangen Partnerschaften und reproduzieren sich nur alle 10–20 Jahre."],
     besonderheiten: [
       { name: "Magieresistenz", beschreibung: "Der Drache hat Vorteil auf Rettungswürfe gegen Zauber und andere magische Effekte." }
@@ -13831,7 +13831,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 9,
     sprachen: ["Gemein", "Leererede"],
     umgebung: ["Küste", "Ozean"],
-    bild: "assets/images/monster/tome-of-beasts/tiefenwesen.png",
+    bild: "tome-of-beasts/tiefenwesen.png",
     beschreibung: [
       "Mit riesigen Augen, einem breiten Mund und kaum vorhandenem Kinn sind die Tiefenwesen ein abstoßendes, fischartiges Volk, das in Küstendörfern oft gebückt und beschuppt anzutreffen ist.",
       "Alte Götter. In ihrer vollständig entwickelten Form sind die Tiefenwesen ein ozeanbewohnendes Volk, das alte Götter wie Vater Dagon und Mutter Hydra verehrt und in der Dunkelheit der Tiefsee lebt. Sie haben sich mit Küstenmenschen vermischt und menschlich-tiefenwesenhaften Hybriden hervorgebracht.",
@@ -13873,7 +13873,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 16,
     sprachen: ["Gemein", "Leererede"],
     umgebung: ["Küste", "Ozean"],
-    bild: "assets/images/monster/tome-of-beasts/tiefenwesen-archimandrit.png",
+    bild: "tome-of-beasts/tiefenwesen-archimandrit.png",
     beschreibung: [
       "Ein gewaltiger Anführer der Tiefenwesen, der als Hohepriester der alten Götter fungiert und kolossale Macht über seine Artgenossen und die Kreaturen des Ozeans ausübt."
     ],
@@ -13916,7 +13916,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein", "Leererede"],
     umgebung: ["Küste", "Ozean"],
-    bild: "assets/images/monster/tome-of-beasts/tiefenwesen-hybridpriester.png",
+    bild: "tome-of-beasts/tiefenwesen-hybridpriester.png",
     beschreibung: [
       "Ein Hybridpriester ist ein Tiefenwesen mit menschlicher Abstammung, das die religiösen Riten der alten Götter vollzieht und als Brücke zwischen der Tiefseekultur der Tiefenwesen und den Küstenbewohnern fungiert."
     ],
@@ -13957,7 +13957,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 9,
     sprachen: ["Himmlisch", "Gemein", "Drakonisch", "Infernalisch", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/tinten-teufel.png",
+    bild: "tome-of-beasts/tinten-teufel.png",
     beschreibung: [
       "Dieser kleine Teufel trägt ein kleines rotes Hütchen. Ein tückisches Grinsen zeigt schwarze Zähne, und die Kreatur reibt nervös ihre Hände, wobei sie lange, nadelspitze Klauen entblößt.",
       "Tinten-Teufel haben kleine, gespitzte Münder und lange, dünne, knochige Finger. Ihre Nägel ähneln Federkielen. Ihre Köpfe sind oft kahl oder in einer mönchischen Tonsur rasiert, und sie haben zwei kleine Hörner, kaum größer als eine Eichel. Ihre Haut neigt zu Walnuss-, Indigo- und Schwarztönen, obwohl die ältesten blass wie Pergament sind. Sie tragen oft Roben und Schriftrollen-Behälter, und viele betrachten Baron Totivillus als den größten aller Erzteufel.",
@@ -14007,7 +14007,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: ["Titanisch"],
     umgebung: ["Ruinen", "Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/titan_degeneriert.png",
+    bild: "tome-of-beasts/titan_degeneriert.png",
     beschreibung: [
       "Dieser Riese bewahrt trotz seiner gebeugten Haltung, zerrissenen Kleidung und wahllos angeschnallten Rüstungsstücken einen Hauch erschreckender Macht.",
       "Ruinen heimsuchen. Die degenerierten Nachkommen einst edler Titanen hausen in den Ruinen, in denen ihre Städte einst blühten. Sie jagen alles Lebendige — einschließlich einander — und verfolgen manchmal über viele Kilometer Ziegenherden oder andere Tiere. Obwohl sie leicht ablenkbar sind, finden sie stets unfehlbar den Weg nach Hause.",
@@ -14053,7 +14053,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 17,
     sprachen: ["Gemein", "Riesisch", "Ursprünglich", "Titanisch", "Gedankenübertragung 36 m"],
     umgebung: ["Ozean", "Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/titan_uralt.png",
+    bild: "tome-of-beasts/titan_uralt.png",
     beschreibung: [
       "Eine mächtige Präsenz ausstrahlend, ist dieses turmhohe Humanoide mit scharfkantigen Zügen versehen, die wie aus altem Stein gehauen wirken.",
       "Kinder der Götter. Uralt-Titanen sind die überlebenden unsterblichen Kinder einer frühen Urgottheit. Nach einem göttlichen Krieg flohen sie in die Wildnis, wo sie ein Imperium gründeten, das Jahrtausende Bestand hatte, bevor eine Seuche seinen Untergang herbeiführte.",
@@ -14099,7 +14099,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: [],
     umgebung: ["Dschungel", "Gewässer"],
-    bild: "assets/images/monster/tome-of-beasts/titanboa.png",
+    bild: "tome-of-beasts/titanboa.png",
     beschreibung: [
       "Diese titanische grüne Schlange kann ihren enormen Kopf weit emporheben — bis zu 6 Meter hoch. Ihr Körper erstreckt sich in scheinbar endlosen Windungen.",
       "Territorial und aggressiv. Territorial und gefräßig, verschlingt die seltene Titanboa alle Eindringlinge in ihrem Revier. Stärker und schneller als die Riesenwürgeschlange ist der wahre König des Regenwaldes auch hartnäckiger und kämpft ganze Gruppen von Jägern und Wilderern nieder. Beim Pirschen schlagen diese gewaltigen Schlangen aus dem Hinterhalt an und verschlucken sogar viele Dinosaurier in einem Bissen.",
@@ -14141,7 +14141,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Wald", "Grasland", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/todesschmetterlingsschwarm.png",
+    bild: "tome-of-beasts/todesschmetterlingsschwarm.png",
     beschreibung: [
       "Diese gewaltigen Wolken aus orangefarbenen und grünen Schmetterlingen fügen der Luft einen Verwesungsgestank hinzu, der durch das Flattern ihrer zarten Flügel aufgewirbelt wird.",
       "Dämonenbefallen. Ein Todesschmetterlingsschwarm entsteht, wenn eine seltene Art von Aas fressenden Schmetterlingen, vom Gestank großer Verwesung angezogen, den Leichnam eines Teufels, Dämons oder einer ähnlichen Kreatur verzehrt.",
@@ -14183,7 +14183,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 16,
     sprachen: ["die Sprachen, die sie im Leben kannte"],
     umgebung: ["Andere Ebenen", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/todeswispe.png",
+    bild: "tome-of-beasts/todeswispe.png",
     beschreibung: [
       "Eine schattenhafte Gestalt flackert ein und aus dem Blickfeld. Ihre undeutliche Form verrät eine feenwildnisartige Abstammung, und ihre Augen sind bösartige blaue Lichtpunkte.",
       "Fei-Untoter. Eine Todeswispe ist ein gespensterartiger Geist, der im Schattenreich aus dem gewaltsamen Tod einer Schattenfe oder einer bösen Fee entsteht.",
@@ -14230,7 +14230,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein"],
     umgebung: ["Stadt", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/tophet.png",
+    bild: "tome-of-beasts/tophet.png",
     beschreibung: [
       "Eine enorme Bronze- und Eisenstatue, gefüllt mit Feuer, ragt über den Ring fanatischer, rasender Anbeter empor.",
       "Tophets werden von Verehrern der Feuergötter genutzt, die Opfergaben in ihre lodernden Mäuler werfen, um sie zu verbrennen. Ein Tophet hat eine große Öffnung an der Vorderseite, durch die die Flammen sichtbar sind — manchmal ein enormes Maul, manchmal ein großes Loch im Bauch. Hörner und Ausdrücke von Zorn oder weit aufgerissenem Lachen sind verbreitet.",
@@ -14276,7 +14276,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 17,
     sprachen: ["Gemein", "Tiefes Sprechen", "Gnoll", "Infernal", "Tosculi"],
     umgebung: ["Wald", "Höhle"],
-    bild: "assets/images/monster/tome-of-beasts/tosculi_bienenkoenigin.png",
+    bild: "tome-of-beasts/tosculi_bienenkoenigin.png",
     beschreibung: [
       "Die Tosculi sind insektenartige Humanoide mit Chitinpanzern, vier Armen und Wespenflügeln. Ihre Gesellschaft ist streng hierarchisch und wird von einer einzigen Bienenkönigin regiert, die als psychisches Zentrum des Bienenverstandsnexus fungiert.",
       "Die Bienenkönigin lebt tief im Herzen des Bienenstocks und sendet Befehle durch den Nexus. Sollte sie fallen, verlieren alle Tosculi in der Umgebung vorübergehend ihren kollektiven Fokus – ein seltener Moment der Verletzlichkeit für den Schwarm."
@@ -14342,7 +14342,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Tosculi"],
     umgebung: ["Wald", "Höhle"],
-    bild: "assets/images/monster/tome-of-beasts/tosculi_drohne.png",
+    bild: "tome-of-beasts/tosculi_drohne.png",
     beschreibung: [
       "Tosculi-Drohnen sind die niedrigste Kaste der Bienenstockgesellschaft. Sie übernehmen Bauarbeiten, Pflege der Larven und einfache Wachaufgaben. Ohne direkte Befehle der Bienenkönigin agieren sie kaum eigenständig.",
       "Obwohl schwächer als Krieger, können Drohnen in Gruppen durch schiere Anzahl gefährlich werden. Ihre Gleitflügel ermöglichen es ihnen, aus großen Höhen sicher abzusteigen."
@@ -14384,7 +14384,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["Gnoll", "Infernal", "Tosculi"],
     umgebung: ["Wald", "Höhle"],
-    bild: "assets/images/monster/tome-of-beasts/tosculi_elitebogenschuetze.png",
+    bild: "tome-of-beasts/tosculi_elitebogenschuetze.png",
     beschreibung: [
       "Tosculi-Elitebogenschützen sind die Jäger und Späher des Bienenstocks. Sie operieren weit vom Nest entfernt und versorgen den Schwarm mit Beute und Informationen über die Umgebung.",
       "Mit überlegener Treffsicherheit und der Fähigkeit, schnell zu entkommen, bevorzugen Elitebogenschützen den Fernkampf. Sie greifen aus der Deckung an und verschwinden, bevor Gegner ihnen zu nahe kommen."
@@ -14430,7 +14430,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Tosculi"],
     umgebung: ["Wald", "Höhle"],
-    bild: "assets/images/monster/tome-of-beasts/tosculi_krieger.png",
+    bild: "tome-of-beasts/tosculi_krieger.png",
     beschreibung: [
       "Tosculi-Krieger bilden die Hauptstreitkraft des Bienenstocks. Mit Klauen, Biss und einem lähmenden Stachel greifen sie in koordinierten Schwärmen an und überwältigen Feinde durch kollektive Stärke.",
       "Gelähmte Opfer werden zurück in den Bienenstock gebracht, wo die Bienenkönigin Eier in sie implantiert. Krieger führen diesen grausamen Prozess mit dem Angriff ‚Wirt vorbereiten' ein."
@@ -14474,7 +14474,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein", "Druidisch", "Elfisch", "Sylvan"],
     umgebung: ["Wald"],
-    bild: "assets/images/monster/tome-of-beasts/treant_weinend.png",
+    bild: "tome-of-beasts/treant_weinend.png",
     beschreibung: [
       "Dieser verdrehte Baum hat ein Gesicht aus gerissener, schwarzer Rinde, das zu grob humanoiden Zügen verknotet ist, und dicke Harztränen rinnen stetig an seinem Stamm herab. Weinende Treants sind erkennbar mit anderen Treants verwandt, jedoch kleiner – kaum mehr als 9 Meter hoch, mit einem Stammdurchmesser von rund 90 cm und einem Gewicht von etwa 2.000 kg.",
       "Weinende Treants sind Beschützer dunkler, schattiger Wälder und leben so lange wie die Bäume selbst. Sie haben kein Mitleid mit denen, die Äxte oder Feuer bei sich tragen. Im Kampf zur Verteidigung ihres Schutzbereichs sind sie furchteinflößend und unerbittlich – von Natur aus misstrauisch gegenüber allem, das nicht der natürlichen Welt oder der Schattenwelt angehört."
@@ -14518,7 +14518,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein", "Gigantisch"],
     umgebung: ["Gewässer", "Ozean", "Sumpf"],
-    bild: "assets/images/monster/tome-of-beasts/troll_see.png",
+    bild: "tome-of-beasts/troll_see.png",
     beschreibung: [
       "Dieses große, schlaksige Wesen hat Arme, die zu lang für seinen Körper sind. Seine Hände sind mit Schwimmhäuten versehen und mit heimtückischen Klauen ausgestattet. Seine Haut ist mit stumpfgrünen Schuppen bedeckt und mit Steinen durchsetzt, und schlaffes Haar wie zerzauster Seetang hängt über sein langnasiges Gesicht.",
       "Seetrolle sind Verwandte der verbreiteteren gewöhnlichen Trolle – stärker und etwas intelligenter, aber zum Glück seltener. Stets begleitet vom Gestank alten, verrottenden Fischs, hausen diese schleimigen Kreaturen unter der Oberfläche von Seen, Teichen, Flüssen und mitunter sogar Meeresbuchen.",
@@ -14563,7 +14563,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Gemein", "Trollkin"],
     umgebung: ["Wald", "Gebirge", "Hügel"],
-    bild: "assets/images/monster/tome-of-beasts/trollkin-pluenderer.png",
+    bild: "tome-of-beasts/trollkin-pluenderer.png",
     beschreibung: [
       "Im Norden kauern die Menschen nachts in Angst zusammen und fürchten die Hörner und das Geheul der Plünderer, die kommen, um zu morden und zu verwüsten. Die Haut des Trollkin-Plünderers ist dick und knotig, und er trägt heimtückische Klauen und Stoßzähne.",
       "Trollkin haben einen wohlverdienten Ruf für Wildheit, und die Plünderer verstärken diesen Eindruck bei ihren Nachbarn. Sie führen die wildesten Raubzüge an, auf der Suche nach Reichtümern, Sklaven und Vorräten, und rekrutieren oft andere Kreaturen oder Söldner. Es ist nicht ungewöhnlich, blutrünstige Menschen, Gnolls oder Hobgoblins in einer Plünderer-Bande zu sehen.",
@@ -14610,7 +14610,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Gemein", "Sylvanisch"],
     umgebung: ["Stadt", "Gebirge", "Küste"],
-    bild: "assets/images/monster/tome-of-beasts/turmwandler.png",
+    bild: "tome-of-beasts/turmwandler.png",
     beschreibung: [
       "Dieses winzige Wesen entfacht ein geisterhaftes, funkelndes Feuer, wenn es tanzt und hüpft. Blitzfunken sprühen zwischen ihm und seiner Ruhestätte.",
       "Sturmtänzer. Wenn sich Gewitterwolken über Städten, Häfen und zerklüfteten Ödländern zusammenbrauen, füllt elektrische Energie die Luft. In diesen Zeiten tummeln sich winzige Feenwesen auf Kirchtürmen, einsamen Gipfeln und Schiffsmasten.",
@@ -14655,7 +14655,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 9,
     sprachen: ["Gemein", "Goblin", "Sylvan", "Umbral"],
     umgebung: ["Stadt", "Ruinen", "Feenwildnis"],
-    bild: "assets/images/monster/tome-of-beasts/uebler_barbier.png",
+    bild: "tome-of-beasts/uebler_barbier.png",
     beschreibung: [
       "Ein blasser, hager wirkender Kerl im schwarzen Lederschurz und schmalen dunklen Handschuhen grinst aus den Schatten. Ein Maul nadelspitzer Zähne und das heimtückische Rasiermesser an seiner Seite sind eine deutliche Warnung: Seinen Feinden täten sie gut daran, den Schritt zu beschleunigen.",
       "Üble Barbiere sind sadistische, finstere Feenwesen, die sich durch Schatten bewegen, um ihren blutigen, boshaften Willen durchzusetzen. Als Siabhra (ausgesprochen: Schibra) unter den Feengerichten bekannt, werden sie gesandt, um jene zu bestrafen, die die Feenlords und -ladys beleidigt haben. Ihre Grausamkeit und List helfen ihnen, Botschaften in Blut und Haut zu schreiben.",
@@ -14704,7 +14704,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein", "Infernalisch"],
     umgebung: ["Stadt", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/uhrwerksgraeuel.png",
+    bild: "tome-of-beasts/uhrwerksgraeuel.png",
     beschreibung: ["Im Ruhezustand ähnelt ein Uhrwerksgräuel einem Haufen Schrott auf dem Boden, doch in Bewegung enthüllt er eine große, insektenartige Form mit Rauch, der zwischen den Panzerplatten aufsteigt. Seine vielen orangegelben Augen leuchten wie trübe Laternen und verraten keinerlei Ausdruck oder Absicht.", "Uhrwerksgräuel entstehen aus unüberlegten Versuchen, niedere Teufel in Uhrwerks- oder Dampfkonstrukte zu bannen. Zumeist enden solche Experimente katastrophal — doch gelegentlich geht etwas richtig und ein Uhrwerksgräuel wird erschaffen. Diese teuflischen Automaten sind von extremer Boshaftigkeit, frustriert über die Grenzen ihrer neuen Form, und bereiten anderen gerne Leiden. Benötigen weder Luft, Nahrung, Wasser noch Schlaf."],
     besonderheiten: [
       { name: "Zusätzliche Beine", beschreibung: "Vier Beine ermöglichen dem Uhrwerksgräuel, in gleicher Geschwindigkeit wie seine Grundbewegungsrate zu klettern und schwieriges Gelände zu ignorieren." },
@@ -14747,7 +14747,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["versteht Gemein"],
     umgebung: ["Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/uhrwerkshund.png",
+    bild: "tome-of-beasts/uhrwerkshund.png",
     beschreibung: ["Uhrwerkshunde sind schwarze, mechanische Jagdhunde, die ihre metallene Schnauze auf der Suche nach Fährten über den Boden halten. Gleißende Zähne füllen ihr metallenes Maul. Sie dienen als Partner der Uhrwerksjäger und verfolgen die Spuren von Verbrechern, entflohenen Sklaven und anderen Unglücklichen mit übernatürlicher Geschwindigkeit und Präzision.", "Benötigen weder Luft, Nahrung, Wasser noch Schlaf. Die meisten Uhrwerkshunde dienen Stadtwachen, königlichen Jägern, Straßenwächtern und Verbrecherbanden als treue Fährtensucher und Wächter. Einige neuere Varianten werden als täuschend niedliche Kinderspielzeuge oder in den Farben der Lieblingskleidung junger Aristokraten gefertigt."],
     besonderheiten: [
       { name: "Unveränderliche Form", beschreibung: "Der Uhrwerkshund ist immun gegen Zauber und Effekte, die seine Form verändern würden." },
@@ -14788,7 +14788,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["versteht Gemein"],
     umgebung: ["Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/uhrwerksjaeger.png",
+    bild: "tome-of-beasts/uhrwerksjaeger.png",
     beschreibung: ["Ein Uhrwerksjäger ist ein mechanischer Soldat in mattschwarzer Rüstung — unter seinem Brustpanzer ticken und surren Zahnräder. Uhrwerksjäger wurden einst von korrupten Aristokraten eingesetzt, um entflohene Sklaven und Geächtete zu jagen. In manchen Städten handeln sie nur auf Befehl der Geheimpolizei. Sie patroullieren, stehen Wache oder verharren reglos, immer aufmerksam, immer wachsam.", "Uhrwerksjäger jagen meist in kleinen Gruppen von zwei oder drei, da sie nie schlafen und nicht ermüden. Die gewöhnliche Bevölkerung verachtet sie. Ihre Angriffsziele werden ihnen fest auferlegt — Priester, Zauberkundige oder schwer bewaffnete Eindringlinge, je nach Befehl. Benötigen weder Luft, Nahrung, Wasser noch Schlaf."],
     besonderheiten: [
       { name: "Unveränderliche Form", beschreibung: "Der Uhrwerksjäger ist immun gegen Zauber und Effekte, die seine Form verändern würden." },
@@ -14829,7 +14829,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["versteht Gemein", "Telepathie 30 m (nur Erschaffer)"],
     umgebung: ["Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/uhrwerkskaefer.png",
+    bild: "tome-of-beasts/uhrwerkskaefer.png",
     beschreibung: ["Uhrwerkskäfer sind aus glänzendem Metall und surrenden Zahnrädern gefertigt und werden von talentierten Juwelieren für Getriebemagier und Aristokraten als Vertraute geschmiedet. Obwohl sie normalerweise als Metallkäfer erschaffen werden, kann ihr Aussehen stark variieren: manche ähneln leuchtenden Marienkäfern, andere haben rasiermesserscharfe Hörner wie tödliche Hirschkäfer.", "In der Bewegung erzeugen sie ein hörbares rhythmisches Summen, das sich im Flug zu einem beunruhigenden Lärm aus Klicken und Schwirren steigert. Die begabtesten Getriebemagier bauen gelegentlich eine verborgene Ablaufuhr in den Käfer ein, die nach Jahren oder Jahrzehnten eine mechanische Metamorphose auslöst und den Käfer in eine völlig andere Uhrwerkskreatur verwandelt."],
     besonderheiten: [
       { name: "Unveränderliche Form", beschreibung: "Der Uhrwerkskäfer ist immun gegen Zauber und Effekte, die seine Form verändern würden." },
@@ -14867,7 +14867,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/uhrwerkskaeferschwarm.png",
+    bild: "tome-of-beasts/uhrwerkskaeferschwarm.png",
     beschreibung: ["Uhrwerkskäferschwärme entstehen, wenn sich mehrere dieser Kreaturen von ihren Erschaffern befreien und sich zu einer lärmenden Masse klirrend zusammenrottender Metallteile zusammenschließen. Von der Verbindung zu ihren Erschaffern getrennt, fehlt dem Schwarm die Telepathie einzelner Uhrwerkskäfer, und seine geistige Kapazität ist stark vermindert."],
     besonderheiten: [
       { name: "Schwarm", beschreibung: "Der Schwarm kann denselben Raum wie eine andere Kreatur einnehmen und umgekehrt, und er kann sich durch jede Öffnung bewegen, die groß genug für ein winziges Konstrukt ist. Der Schwarm kann keine Trefferpunkte zurückgewinnen oder temporäre Trefferpunkte erhalten." }
@@ -14904,7 +14904,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 16,
     sprachen: ["versteht Gemein"],
     umgebung: ["Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/uhrwerksmyrmidon.png",
+    bild: "tome-of-beasts/uhrwerksmyrmidon.png",
     beschreibung: ["Ein Uhrwerksmyrmidon ist eine massige Kreatur aus Messing und Eisen, die einem riesigen Plattenpanzer ähnelt; aus seinem Mittelkörper dringt ein konstantes Grollen. Mit fast drei Metern Höhe und einem grimmigen Gesichtsausdruck bewegt er sich mit kraftvoller, entschlossener Eleganz.", "Uhrwerksmyrmidonen sind an Gelenken und lebenswichtigen Stellen schwer gepanzert. Sie sind zu wertvoll für Patrouillen oder Routinearbeit und werden nur für gefährliche Situationen eingesetzt, mit denen Uhrwerkswächter nicht fertig werden. Sie greifen nur dann an, wenn ihr Meister es befiehlt, und konzentrieren sich dann auf ein einziges Ziel bis zur Niederlage, Flucht oder Kapitulation. Benötigen weder Luft, Nahrung, Wasser noch Schlaf."],
     besonderheiten: [
       { name: "Unveränderliche Form", beschreibung: "Der Uhrwerksmyrmidon ist immun gegen Zauber und Effekte, die seine Form verändern würden." },
@@ -14948,7 +14948,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein"],
     umgebung: ["Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/uhrwerkswaechter.png",
+    bild: "tome-of-beasts/uhrwerkswaechter.png",
     beschreibung: ["Uhrwerkswächter sind massiver gebaut als die üblichen Uhrwerksdiener wohlhabender Haushalte. Ihr Körper besteht aus Messing und Eisen, gekleidet in eine lockere Stadtwachen-Uniform. Ihre Bewegungen sind langsam, aber stetig — sie patrouillieren Tag und Nacht endlos durch die Stadt und pausieren nur für Wartung. Ihre Sprache ist langsam und stockend, aber ihre markanten Rufe und Pfiffe bringen menschliche Wächter im Laufschritt herbei. Benötigen weder Luft, Nahrung, Wasser noch Schlaf."],
     besonderheiten: [
       { name: "Unveränderliche Form", beschreibung: "Der Uhrwerkswächter ist immun gegen Zauber und Effekte, die seine Form verändern würden." },
@@ -14988,7 +14988,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["versteht Gemein"],
     umgebung: ["Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/uhrwerkswebspinne.png",
+    bild: "tome-of-beasts/uhrwerkswebspinne.png",
     beschreibung: ["Diese Uhrwerkskreatur ähnelt einer mechanischen Spinne mit langen, dünnen Beinen — eines davon ist mit einer unverhältnismäßig großen, besonders scharfen Klinge ausgestattet. Uhrwerkswebspinnen besitzen zehn statt acht Beine: zwei zum Führen von Fäden am Webstuhl, sechs zum Fortbewegen und Klettern, eines für das Nähen und extrem schnelle Stickerei sowie eines mit einer rasiermesserscharfen Klinge.", "Diese kleinen, nützlichen Geräte sind eine Wohltat für Weber — und dienen manchmal auch als Spione und Verteidiger, denn nichts ist so unsichtbar wie eine einfache Maschine, die Tag für Tag Stoff herstellt. Uhrwerkswebspinnen initiieren selten einen Kampf, verteidigen sich und ihren Meister aber instinktiv. Wenn sie spionieren, fliehen sie sofort bei Bedrohung. Benötigen weder Luft, Nahrung, Wasser noch Schlaf."],
     besonderheiten: [
       { name: "Unveränderliche Form", beschreibung: "Die Uhrwerkswebspinne ist immun gegen Zauber und Effekte, die ihre Form verändern würden." },
@@ -15029,7 +15029,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["Versteht Himmlisch und Gemein (spricht nicht)"],
     umgebung: ["Andere Ebenen", "Ruinen", "Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/uraeus.png",
+    bild: "tome-of-beasts/uraeus.png",
     beschreibung: [
       "Eine schlanke Schlange windet sich durch die Luft, getragen von bronzegefiederten Flügeln. Die fliegende Kobra bläht ihre Kapuze auf und zischt, während sie einen Funkenregen aus ihrem gezähnten Maul schleudert.",
       "Ein Uraeus ähnelt einer leuchtend gefärbten Kobra. Die Schuppen der Schlange haben den goldgefleckten Blauton von Lapislazuli, und ihre Augen leuchten weiß, doch ihr auffälligstes Merkmal ist ein Paar federartiger Bronzeflügel. Ein Uraeus wird bis zu einem Meter lang und wiegt etwa 2 kg.",
@@ -15075,7 +15075,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 18,
     sprachen: ["Versteht Darakhul und Leersprache (spricht nicht)"],
     umgebung: ["Unterirdisch", "Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/urochar.png",
+    bild: "tome-of-beasts/urochar.png",
     beschreibung: [
       "Dieser schreckliche, gigantische karmesinrote Blutegel schlängelt sich aufrecht auf vier muskulösen Tentakeln fort, jeder davon 9 Meter lang. An der Spitze seines wogenden Rumpfes leuchtet ein großes lidloses Auge in boshaftem orangefarbenem Licht, umgeben von zitternden, gefiederten Antennen von je 1,5 Metern Länge.",
       "Der Urochar gehört zu den gefürchtetsten Monstern der Unterwelt. Seit Jahrhunderten plagen sie die Drow, Morlochs und andere humanoide Rassen der tiefen Pfade. Sie suchen den Tod und die Sterbenden bis an die Ufer des Flusses Styx.",
@@ -15125,7 +15125,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 18,
     sprachen: ["Eine alte Sprache (Wahl des Spielleiters)"],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/tome-of-beasts/ushabti.png",
+    bild: "tome-of-beasts/ushabti.png",
     beschreibung: [
       "Die Augenhöhlen einer großen, kunstvoll verzierten Totenmaske entzünden sich plötzlich in goldenem Glanz. Mit dem Knarren lange unbenutzter Glieder erhebt diese imposante Gestalt in antiker Rüstung erneut Khopesh und Zepter.",
       "Ushabtis wurden in alten Grabmälern als Diener für die Hauptbewohner im Jenseits platziert. Sie sind langlebige Konstrukte, die körperliche Arbeit und Instandhaltung in versiegelten Gräbern übernehmen können, wo Arbeiter aus Fleisch und Blut nicht überleben würden.",
@@ -15172,7 +15172,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["Gemein", "Umbral", "Leersprache"],
     umgebung: ["Andere Ebenen", "Ruinen", "Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/vampir_umbral.png",
+    bild: "tome-of-beasts/vampir_umbral.png",
     beschreibung: [
       "Ein Umbral-Vampir ist eine teuflische Kreatur, einst ein Mensch, durch einen alten Fluch jedoch in ein dunkles Spiegelbild verwandelt. Er ähnelt einem totenbleichen, ausgemergelten Menschen mit strähigem Haar in zerfetzten Lumpen. Neblige Stränge aus Dunkelheit strömen aus seinen leeren Augenhöhlen, dem klaffenden Nasenknochen und dem Mund.",
       "Legenden berichten von einer uralten Stadt, in der ein Kreis von Zauberern seine Bürger unsterblich machte. Als die Zauberer fielen und die Zeit nicht länger aufhielten, alterten die Bürger in Augenblicken um Jahrhunderte. Statt zu sterben, verharrten die Unglücklichen in ihrem finsteren Reich.",
@@ -15215,7 +15215,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["versteht eine alte Sprache, kann aber nicht sprechen"],
     umgebung: ["Wüste"],
-    bild: "assets/images/monster/tome-of-beasts/verfluchter_schaender.png",
+    bild: "tome-of-beasts/verfluchter_schaender.png",
     beschreibung: [
       "Eine hagere Gestalt in einem zerfetzten schwarzen Mantel, umgeben von einer wirbelnden Sandwolke. Dünne Risse durchziehen ihre pergamenttrockene Haut und umrahmen ihre hohlen, schwarzen Augen.",
       "Verflucht zum Wandern und Dürsten. Verfluchte Schänder sind die Überreste eines alten Stammes, der eine heilige Oase entweihte. Als Strafe für ihr Vergehen verfluchten die zornigen Geister den Stamm, für immer durch die Ödnis zu wandern und einen unstillbaren Durst zu stillen. Jeder Schänder trägt einen ausgedörrten Sandsturm in seinen Lungen und in seinen sandgefüllten Adern. Wo immer sie umherstreifen, hinterlassen sie nur die ausgetrockneten Hüllen ihrer Opfer im Sand.",
@@ -15258,7 +15258,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["Himmlisch", "Gemein", "Drakonisch", "Infernalisch", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen", "Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/vergoldeter-teufel.png",
+    bild: "tome-of-beasts/vergoldeter-teufel.png",
     beschreibung: [
       "Dieser hochgewachsene, bronzefarbene Mann hat unnatürlich lange Gliedmaßen und trägt einen Panzer aus befleckten und verbeulten Münzen. Sein drahtiger Körper ist über und über mit unpassenden Armbändern, Ringen und Halsketten geschmückt, jede Zierde protziger als die letzte. Das leichte Lächeln auf seinem Gesicht ist kalt vor Neid.",
       "Diener Mammons. Außerhalb der Hölle selten in ihrer wahren Gestalt anzutreffen, sind vergoldete Teufel die Handlanger von Mammon, dem Erzteufel der Gier. Mit Versprechen von Reichtum, Macht und Ruhm verführen und korrumpieren sie ihre Opfer und verwandeln sterbliche Gier in sichere Verdammnis.",
@@ -15308,7 +15308,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Ruinen", "Unterirdisch", "Wüste"],
-    bild: "assets/images/monster/tome-of-beasts/verwesungswind.png",
+    bild: "tome-of-beasts/verwesungswind.png",
     beschreibung: [
       "Ein Verwesungswind bringt einen eisigen Schauer in die Luft, verwandelt nahes Laub in Fäulnis und weckt ein Gefühl des Grauens in allen Kreaturen in seinem Weg.",
       "Luft der Gräber. Ein Verwesungswind ist ein untoter Wesen aus fauler Luft und Grabstaub, der von unzähligen untoten Wesen in verlorenen Grabstätten und großen Nekropolen abgesondert wurde.",
@@ -15353,7 +15353,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 16,
     sprachen: [],
     umgebung: ["Sumpf", "Wald", "Dschungel"],
-    bild: "assets/images/monster/tome-of-beasts/vesiculosa.png",
+    bild: "tome-of-beasts/vesiculosa.png",
     beschreibung: [
       "Dieser glitzernde Tümpel liegt inmitten üppig wuchernder, fruchtreicher Pflanzen. Eine Vesiculosa ist eine riesige, grabende Kannenpflanze, die in Oasen lebt und durch berauschende Düfte und vergiftetes Wasser Beute anlockt.",
       "Der Körper einer Vesiculosa liegt im Boden vergraben; nur ihre Wurzelranken wogen sichtbar in dichten, seilartigen Knäueln an der Oberfläche. Sie fängt Mahlzeiten mit diesen Ranken und schleift sie zu ihrem Maul. Ihr reicher Sapphir-Herzrebe ähnelt einem Stück Saphir und ist bei Alchemisten hochbegehrt (Wert: 1.000 GM). Sie lässt sich durch ein bis zwei Stunden hartes Graben erreichen."
@@ -15399,7 +15399,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 18,
     sprachen: ["Gemein", "Sylvan", "Telepathie 18 m (nur Tiere)"],
     umgebung: ["Wald", "Feenwildnis"],
-    bild: "assets/images/monster/tome-of-beasts/vila.png",
+    bild: "tome-of-beasts/vila.png",
     beschreibung: [
       "Diese wunderschönen, schlanken Frauen reiten auf großen Hirschen; ihr Haar ist von der Farbe des Frühlingsgras, ihre Haut wie poliertes Holz, und ihre Augen so grau wie ein aufziehender Sturm.",
       "Die Vila sind Verwandte der Dryaden. Wie ihre Kusinen dienen sie als Beschützerinnen der tiefsten Wälder. Während Dryaden durch Verführung ihre Ziele verfolgen, setzen die Vila auf Zwang und Drohungen. Sie fordern Eide von Eindringlingen und setzen diese unnachgiebig durch.",
@@ -15445,7 +15445,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Abyssisch", "Höllisch", "Telepathie 18 m"],
     umgebung: ["Stadt", "Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/volguloth.png",
+    bild: "tome-of-beasts/volguloth.png",
     beschreibung: [
       "Diese niederen Teufel stehen oft im Dienst mächtigerer Teufel oder gelegentlich mächtiger Sterblicher. Volguloths sind stille, effiziente Killer und agieren häufig als Assassinen. Sie sind sadistisch und grausam, schwelgen in den Toden, die sie verursachen, und scheuen es nicht, ihre schleicherischen Fähigkeiten für gewalttätige Aufgaben einzusetzen.",
       "Die Haut eines Volguloths verhält sich eher wie ein gewundenes Muskelblatt, das sich zusammenzieht und ausdehnt, je nachdem, was der Volguloth benötigt. Normalerweise drapiert sie sich wie ein Gewand um die Gestalt des Teufels. Er kann sie jedoch zu einer eng anliegenden Hülle straffen oder zu langen Bahnen ausdehnen – um so kurze Strecken zu gleiten oder Opfer einzuwickeln und zu ersticken."
@@ -15491,7 +15491,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Die Sprachen, die er zu Lebzeiten kannte"],
     umgebung: ["Ruinen", "Gewässer", "Höhle"],
-    bild: "assets/images/monster/tome-of-beasts/vaettir.png",
+    bild: "tome-of-beasts/vaettir.png",
     beschreibung: [
       "Vættir sind Ahnengeister – manchmal schützend und hilfreich, aber stets ehrerbietig verlangend und zornig, wenn sie beleidigt werden.",
       "Landvættir hausen in Grabhügeln, während Seevættir unter Seen, Flüssen oder dem Meer leben. Beide tragen altes Kettengeflecht und führen bronzene Äxte in vertrockneten Händen. Als Diener der Erde verfolgen sie jene, die die Wildnis oder alte Gesetze und Traditionen missachten.",
@@ -15539,7 +15539,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 18,
     sprachen: ["Gemein", "Zwergisch", "Gigantisch"],
     umgebung: ["Andere Ebenen", "Grasland", "Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/walkuere.png",
+    bild: "tome-of-beasts/walkuere.png",
     beschreibung: [
       "Diese Kriegerinnen, mit grausam aussehenden Schwertern bewaffnet, sitzen auf riesigen geflügelten Wölfen. Jede von ihnen ist ebenso schön, anmutig und wild wie eine gut geschliffene Kampfaxt.",
       "Walküren werden von Odin gesandt, um den Verlauf von Schlachten zu lenken und die Seelen tapfer gefallener Krieger zu ernten. Auf wilden geflügelten Wölfen reitend besuchen sie Schlachtfelder, um ihres Herrn Willen zu vollstrecken – stets von Krähen und Raben umgeben. Während dieser Missionen bleiben sie unsichtbar.",
@@ -15586,7 +15586,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Gewässer"],
-    bild: "assets/images/monster/tome-of-beasts/wasserspringer.png",
+    bild: "tome-of-beasts/wasserspringer.png",
     beschreibung: [
       "Der Wasserspringer ist eine froschköpfige, beinlose Kreatur mit breiten, fledermausartigen Schwingen und einem weit aufgerissenen Maul. Sein Schrei ähnelt dem eines Habichts. Sein langer, geschmeidiger Schwanz läuft spitz zu und endet in einem giftigen Stachel.",
       "Die Kreatur besitzt weder Beine noch Arme, dafür aber ein Paar breiter, häutiger Flügel. Sie nutzt diese Flügel, um unter Wasser zu gleiten und durch die Luft zu segeln.",
@@ -15630,7 +15630,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 15,
     sprachen: ["Gemein"],
     umgebung: ["Wald", "Grasland"],
-    bild: "assets/images/monster/tome-of-beasts/weisser_affe.png",
+    bild: "tome-of-beasts/weisser_affe.png",
     beschreibung: [
       "Weiße Affen waren einst gutmütige, sanfte Riesen, die bewaldete Hügel und Savannen durchstreiften. Vor zweitausend Jahren erweckten Magierkönige die Affen und hoben ihre Intelligenz auf nahezu menschliches Niveau, damit die Tiere als Soldaten und Diener eingesetzt werden konnten. Als die Zauberer ausstarben, blieben die Affen zurück.",
       "Die Verzauberung, die den Affen Intelligenz verlieh, bleichte auch ihr Fell weiß und machte sie zu Trägern der arkanen Auszehrung – einer Krankheit, die den Niedergang ihrer Schöpfer beschleunigte. Die Affen sind immun gegen die Wirkungen der Auszehrung, können sie aber auf andere Humanoide übertragen. Unter Zauberkundigen breitet sie sich wie eine Plage aus.",
@@ -15671,7 +15671,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 24,
     sprachen: ["Gemein", "Drakonisch", "Ursprünglich"],
     umgebung: ["Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/winddrache_erwachsen.png",
+    bild: "tome-of-beasts/winddrache_erwachsen.png",
     beschreibung: ["Winddrachen betrachten jeden Ort, den der Wind berührt, als ihr Eigentum. Kaum eine andere Drachengattung ist so für ihre Arroganz bekannt — doch ihre ehrfurchtgebietende Macht gibt dieser Haltung Gewicht. Als Prahler und Tyrannen nehmen sie jede vermeintliche Herausforderung persönlich und erfreuen sich an der Demütigung von Rivalen. Sie herrschen von den höchsten Gipfeln aus über weite Gebiete, die sie kaum selbst besuchen, und kehren nach langen Wanderungen stets zurück, um neue Generationen zu unterjochen. Ihr Hort besteht nicht aus Bergen von Münzen, sondern aus wenigen einzigartigen Trophäen und historischen Schätzen — oft leicht zu tragen."],
     besonderheiten: [
       { name: "Angeborenes Zauberwirken", beschreibung: "Das angeborene Zaubertalent des Drachen ist Charisma (Zauberrettungswurf-SG 18). Er kann ohne Materialkomponenten folgende Zauber wirken: Nach Belieben: Federfall; 3/Tag: Blitzschlag." },
@@ -15727,7 +15727,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 17,
     sprachen: ["Gemein", "Drakonisch", "Ursprünglich"],
     umgebung: ["Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/winddrache_jung.png",
+    bild: "tome-of-beasts/winddrache_jung.png",
     beschreibung: ["Junge Winddrachen haben bereits die Prägung ihrer Gattung verinnerlicht — Herrschaftsansprüche über alles, was der Wind berührt, und eine kaum gebändigte Aggression gegenüber allem, was diese Ansprüche in Frage stellt."],
     besonderheiten: [
       { name: "Angeborenes Zauberwirken", beschreibung: "Das angeborene Zaubertalent des Drachen ist Charisma (Zauberrettungswurf-SG 14). Er kann ohne Materialkomponenten folgende Zauber wirken: Nach Belieben: Federfall." },
@@ -15766,7 +15766,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 27,
     sprachen: ["Gemein", "Drakonisch", "Zwergisch", "Elfisch", "Ursprünglich"],
     umgebung: ["Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/winddrache_uralt.png",
+    bild: "tome-of-beasts/winddrache_uralt.png",
     beschreibung: ["Uralte Winddrachen sind Legenden lebendiger Beherrschung — Stürme personifiziert in Schuppenleib und Klaue. Sie haben Generationen von Unterworfenen kommen und gehen sehen und dulden keinerlei Zweifel an ihrer Herrschaft. Ihr Hort ist von unvergleichlichem historischen Wert, meist aus einzigartigen Trophäen, die sie über Jahrhunderte zusammengetragen haben."],
     besonderheiten: [
       { name: "Angeborenes Zauberwirken", beschreibung: "Das angeborene Zaubertalent des Drachen ist Charisma (Zauberrettungswurf-SG 20). Er kann ohne Materialkomponenten folgende Zauber wirken: Nach Belieben: Federfall; 5/Tag jeweils: Blitzschlag, Eissturm." },
@@ -15822,7 +15822,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 14,
     sprachen: ["Drakonisch", "Ursprünglich"],
     umgebung: ["Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/winddrache_wyrmling.png",
+    bild: "tome-of-beasts/winddrache_wyrmling.png",
     beschreibung: ["Wyrmlings des Winddrachens zeigen von Geburt an die typische Arroganz ihrer Gattung. Sie dulden keine Einmischung in ihr kleines Territorium und wachsen schneller in die Macht hinein als die meisten anderen jungen Drachen."],
     besonderheiten: [],
     aktionen: [
@@ -15858,7 +15858,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["versteht Gemein"],
     umgebung: ["Arktis", "Wald", "Grasland"],
-    bild: "assets/images/monster/tome-of-beasts/wolfsgeisterschwarm.png",
+    bild: "tome-of-beasts/wolfsgeisterschwarm.png",
     beschreibung: [
       "Ein Rudel geisterhafter Wölfe erscheint in einem Wirbel grünlichen Nebels und scheint sich aus dem Nebel selbst zu formen.",
       "Wenn ein Wolfsrudel im tiefen Winter an Hunger oder Kälte stirbt, bringt manchmal die Wut des Rudelführers über einen grausamen Tod — oder der Beschwörungsruf eines Totenmagierers — das gesamte Rudel als sabberndes Rudel grünlicher, durchscheinender Erscheinungen in die Sterbliche Welt zurück, das schnell über Schnee und Eis oder sogar über Flüsse und Seen gleitet.",
@@ -15904,7 +15904,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein"],
     umgebung: ["Grasland"],
-    bild: "assets/images/monster/tome-of-beasts/wuehling.png",
+    bild: "tome-of-beasts/wuehling.png",
     beschreibung: ["Diese hellbraunen, pelzigen Kreaturen erkunden neugierig ihre Umgebung und finden Halt in der Gemeinschaft ihrer Artgenossen. Wühlings arbeiten bei jeder Aufgabe zusammen: Tunnel graben, nach Nahrung suchen und ihre Jungen aufziehen. Sie sind Allesfresser und fressen Wurzeln, Beeren, Insekten und Reptilien — Schlangen gelten bei ihnen als besondere Delikatesse. Die fortgeschrittensten Wühlingsiedlungen legen primitive Farmen an. Bei Gefahr ziehen sie sich in ihre Bauten zurück, während die Stärksten neue Tunnel graben und die Ausgänge versperren. Ein von seiner Gemeinschaft getrennter Wühling verfällt in Melancholie und stirbt gewöhnlich innerhalb einer Woche an Einsamkeit."],
     besonderheiten: [
       { name: "Gruppen-Aufmerksamkeit", beschreibung: "Ein Wühling hat Vorteil bei Wahrnehmungswürfen, solange sich mindestens ein anderer wacher Wühling in einem Umkreis von 3 m befindet." },
@@ -15943,7 +15943,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Gewässer", "Sumpf"],
-    bild: "assets/images/monster/tome-of-beasts/wuergerkrabbe.png",
+    bild: "tome-of-beasts/wuergerkrabbe.png",
     beschreibung: [
       "Diese aggressiven, blauschwarzen Süßwasserkrabben bewohnen Flüsse und Bäche und durchsuchen das schlammige Terrain auf der Suche nach Beute.",
       "Würgerkrabben sind nach ihrer abnormen rechten Klaue benannt, die sich im Laufe der Zeit dahin entwickelt hat, Beute wie eine Stachelschnur zu würgen. Ihre lange Peitschenklaue ist mit kräftigen Muskeln und Gelenken am Anfang, in der Mitte und am Ende ausgestattet, die ihr große Flexibilität verleihen.",
@@ -15988,7 +15988,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 18,
     sprachen: ["Gemein", "Riesensprache"],
     umgebung: ["Wüste"],
-    bild: "assets/images/monster/tome-of-beasts/wuestenriese.png",
+    bild: "tome-of-beasts/wuestenriese.png",
     beschreibung: [
       "Die hochragende Frau erhebt sich aus dem Wüstensand. Ihr hellbrauner Umhang passt fast perfekt zum körnigen Gelände, und ihre grob strukturierte Haut ist ein sattes Walnussbraun.",
       "Wüstenriesen leben in öden Einöden, die einst ein blühendes Riesenimperium beherbergten. Ihre reiche braune Haut ist rau strukturiert, und sie kleiden sich in helle Roben, die die Farbe des Sandes widerspiegeln, akzentuiert mit leuchtend farbigen Kopftüchern und Schärpen. Unter ihren Roben bemalen oder tätowieren die Wüstenriesen ihre Haut mit komplizierten Mustern in einem Aufruhr von Farben, den Außenstehende selten zu sehen bekommen.",
@@ -16046,7 +16046,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: [],
     umgebung: ["Wald", "Hügel"],
-    bild: "assets/images/monster/tome-of-beasts/wueter.png",
+    bild: "tome-of-beasts/wueter.png",
     beschreibung: [
       "Ein stacheliges Geschöpf, gebaut wie ein Grizzlybär, mit Klauen und Fangzähnen wie Krummsäbel. Die Vorderbeine des Wüters sind zerfleischt und verschorft, und seine Augen leuchten vor Hass und Vorfreude.",
       "Von dunklen Geistern getrieben. Obwohl Druiden behaupten, diese bärenähnlichen Tiere seien weder verflucht noch verzaubert, ist das Verhalten des Wüters — jedes Lebewesen auf Sicht zu töten — nicht natürlich. Hunger erklärt die Angriffe nicht, da Wüter nur einen Teil ihrer Beute fressen, bevor sie das Mahl aufgeben und nach neuen Tieren suchen. Ein dunkler Waldgeist treibt sie an.",
@@ -16090,7 +16090,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Die Sprachen, die er zu Lebzeiten kannte"],
     umgebung: ["Stadt", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/wurmherziger_suffragan.png",
+    bild: "tome-of-beasts/wurmherziger_suffragan.png",
     beschreibung: [
       "Wurmherzige Suffragane sind ergebene Anhänger des Qorgeth, des Dämonenherrschers der Würmer, den sie für den Diener und Vorläufer einer dunklen Göttin der Würmer und des Verfalls halten. Einst waren die Suffragane Priester oder heilige Würdenträger anderer Glaubensrichtungen, doch ihre Herzen wurden durch Furcht und Abscheu korrumpiert. Nachdem sie sich dem Dienst des verschlingenden Wurms gelobt hatten, ersetzte Qorgeth ihre Herzen durch eine wabbelige, wimmelnde Ansammlung von Würmern.",
       "Sie durchstreifen Friedhöfe und suchen durch Böses entdecken oder Mit Toten sprechen nach besonders grausamen und hinterlistigen Verstorbenen. Zudem folgen sie Armeen auf Schlachtfelder, kurz nachdem die Kämpfe vorbei sind. Im Deckmantel von Pflegepersonen oder Wundärzten wählen sie ihre Opfer aus den Toten und Sterbenden und wirken Tote animieren, um der Wurmgöttin dienliche Skelett- oder Zombiediener zu erschaffen.",
@@ -16131,7 +16131,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Versteht die Sprachen seines Schöpfers, kann aber nicht sprechen"],
     umgebung: ["Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/xanka.png",
+    bild: "tome-of-beasts/xanka.png",
     beschreibung: [
       "Xanka sind Konstrukte, die von gnomischen Tüftlern erschaffen wurden, um die unordentlichen Werkstätten ihrer Meister sauber zu halten. Die meisten Xanka sind aus Kupfer, Messing oder Bronze gefertigt, doch in den Häusern von Adligen und reichen Kaufleuten wurden auch Varianten aus Gold, Silber und Platin gesichtet.",
       "Xanka sind nicht für den Kampf gebaut – ihr Instinkt treibt sie dazu, bei drohender Gefahr in Deckung zu huschen – doch sie verteidigen sich, wenn sie in die Enge getrieben werden. Sie folgen nur einfachen Befehlen, die mit der Beseitigung von Abfall zusammenhängen, und kommunizieren miteinander auf eine unbekannte Weise.",
@@ -16172,7 +16172,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 16,
     sprachen: ["Gemein", "Tiefensprache", "Untergemein"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/tome-of-beasts/xhkarsh.png",
+    bild: "tome-of-beasts/xhkarsh.png",
     beschreibung: [
       "Die heimlichen Xhkarsh sind Wesen aus einem anderen kosmischen Zyklus. Ihre Geräte und Rüstungen sind für Kreaturen dieser Realität unbegreiflich – möglicherweise sogar unverträglich mit ihr.",
       "Die Xhkarsh nutzen ihre schicksalsverändernden Kräfte, um persönliche Geschichten zu verzerren und sterbliche Schicksale wie Puppenspieler zu manipulieren. Dadurch richten sie das Universum auf ihre eigenen, esoterischen Ziele aus – was diese Ziele jedoch genau sind, wissen nur die Xhkarsh selbst.",
@@ -16213,7 +16213,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Grasland", "Gebirge"],
-    bild: "assets/images/monster/tome-of-beasts/ychen_bannog.png",
+    bild: "tome-of-beasts/ychen_bannog.png",
     beschreibung: [
       "Ychen Bannogs sind massive, ochsenartige Bestien mit dicken, wolligen Fellen und gewaltigen Hörnern wie Rammböcke der Götter. Sie stehen über 12 Meter hoch an der Schulter und wiegen Hunderte von Tonnen. Trotz ihrer beeindruckenden Größe sind diese aufragenden Wesen friedliche Wanderer in der Wildnis, wo ihre Rufe meilenweit hallen.",
       "Legenden wurden auf ihren sturken Rücken geboren. Mit der Fähigkeit, 670 Tonnen zu ziehen (oder 134 Tonnen zu tragen), sind Ychen Bannogs die stärksten Lasttiere der bekannten Welt. Gezähmte Ychen Bannogs können ganze Gemeinschaften oder sogar kleine Burgen transportieren; ein findiger Zwerg mit einem Ychen Bannog kann damit riesige Flussbetten ausheben, gewaltige Steine transportieren oder ganze Täler umgestalten.",
@@ -16257,7 +16257,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 10,
     sprachen: ["Aquanisch"],
     umgebung: ["Ozean"],
-    bild: "assets/images/monster/tome-of-beasts/zaratan.png",
+    bild: "tome-of-beasts/zaratan.png",
     beschreibung: [
       "Der Zaratan ist eine unvorstellbar riesige Meeresschildkröte, die so groß ist, dass sich auf ihrem steinigen, gebirgsartigen Panzer ganze Ökosysteme entwickeln. Auf warmen Meeresströmungen treibend oder auf Untiefen ruhend, wird sie oft für kleine Tropeninseln gehalten. Der Kopf des Tieres hat einen Durchmesser von mindestens 30 Metern, mit einem First in der Mitte wie ein hoher Hügel; seine 60 Meter langen Flossen werden für Riffe gehalten.",
       "Zaratane verbringen ihr jahrtausendelanges Leben im Schlummer. Sie treiben an der Oberfläche des Ozeans, den Mund leicht geöffnet, und verschlucken reflexartig größere Kreaturen, die die vermeintliche 'Höhle' erkunden. Ein Zaratan könnte Geheimnisse kennen, die der Welt längst verloren gegangen sind – wenn man ihn nur erwecken und mit ihm verhandeln könnte.",
@@ -16306,7 +16306,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Gemein", "Riesensprache", "Trollkin"],
     umgebung: ["Wald", "Ruinen"],
-    bild: "assets/images/monster/tome-of-beasts/ziegenmann.png",
+    bild: "tome-of-beasts/ziegenmann.png",
     beschreibung: [
       "Der Ziegenmann ist ein gebeugtes, menschenähnliches Wesen, das sich mit einem seltsamen, halb hüpfenden Gang vorwärtsbewegt. Zerrissene Kleidung hängt von seinen muskulösen Schultern, und seine Beine enden in gespaltenen Hufen wie die eines Widders. Gebogene Widderhörner und Stoßzähne zieren seinen Kopf; Reihen durchsichtiger, nadelartiger Zähne machen klare Sprache unmöglich – sein Sprechen klingt nur wie Blöken und Grunzen.",
       "Der erste Ziegenmann war das Opfer eines Fluchs, der ihn bestrafte, weil er an magischen Riten teilnahm, die nur den Frauen seines Stammes vorbehalten waren. Die Schwarze Ziege des Waldes mit den Tausend Jungen nahm ihn als Diener auf und sorgte dafür, dass jeder, der dasselbe Tabu beging, demselben Fluch verfiel. Kultisten des Shub-Niggurath werden manchmal mit den Diensten eines Ziegenmanns belohnt, der Ritualstätten bewacht und geeignete Opfer beschafft."
@@ -16346,7 +16346,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 11,
     sprachen: ["Riesisch"],
     umgebung: ["Grasland"],
-    bild: "assets/images/monster/tome-of-beasts/zimwi.png",
+    bild: "tome-of-beasts/zimwi.png",
     beschreibung: [
       "Entfernt mit Trollen verwandt, sind die schnellen und flinken Zimwi eine Plage für südliche Länder. Ständig hungrig und schlecht gelaunt, mit der Geschwindigkeit, Pferde einzuholen, wurden einzelne Zimwi dabei beobachtet, große Karawanen anzugreifen.",
       "Die meisten ihrer Angriffe werden durch Hunger angetrieben. Der Magen eines Zimwi ist größer als sein Körper – er erstreckt sich extradimensional und treibt das Zimwi mit dem ständigen Gefühl der Leere in den Wahnsinn, als würde es verhungern. Aufgrund ihres endlosen Hungers und ihrer geringen Intelligenz haben Zimwi kaum Bewusstsein für den Verlauf eines Kampfes. Verlieren bedeutet für sie nur, dass sie noch nicht gegessen haben.",
@@ -16385,7 +16385,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 18,
     sprachen: ["Gemein", "Drakonisch", "Elfisch", "Sylvanisch"],
     umgebung: ["Wald", "Gewässer", "Höhle"],
-    bild: "assets/images/monster/tome-of-beasts/zmey.png",
+    bild: "tome-of-beasts/zmey.png",
     beschreibung: [
       "Der Zmey jagt unter dem Blätterdach des Waldes, lauert unter der Oberfläche von Seen und bewacht Höhlen, in denen große Schätze und Mysterien verborgen sind. Er spielt zwei Rollen: Er ist sowohl ein grausamer Schrecken als auch ein Beschützer der Natur.",
       "Der Zmey hält das Herz des Waldes mit einer Zerstörungsfreude frei von Eindringlingen. Gerüchte besagen, dass das Herz eines uralten Waldes die Handlungen dieser Bestien steuern kann, während andere glauben, dass sie einen Pakt mit bestimmten Walddruidinnen haben. Sicher ist, dass sie klug genug sind, um Brücken, Dämme oder Holzfällerlager zu zerstören, die ihr Territorium beeinträchtigen.",
@@ -16438,7 +16438,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein", "Drakonisch", "Sylvanisch"],
     umgebung: ["Wald", "Gewässer"],
-    bild: "assets/images/monster/tome-of-beasts/zmey-kopfling.png",
+    bild: "tome-of-beasts/zmey-kopfling.png",
     beschreibung: [
       "Der Kopf eines Zmey stirbt nicht, wenn er vom Körper getrennt wird. Stattdessen bildet er rasch (innerhalb von 2W6 Runden) einen rudimentären Körper und zwei verkümmerte Klauen aus, mit denen er kämpfen und sich über den Boden ziehen kann. Innerhalb von Tagen entwickelt er sich zu einem vollständigen Miniatur-Zmey, und wenn zwei Mondzyklen vergangen sind, ist der Kopf zu einem ausgewachsenen Zmey mit drei Köpfen herangewachsen.",
       "Dieses rasante Wachstum wird durch einen unersättlichen Appetit angetrieben. Ein Zmey-Kopfling frisst alles, was er kann – einschließlich seines früheren Körpers –, um seinen intensiven, wahnsinnigen Hunger zu stillen und seine Regenerierung aufrechtzuerhalten. Viele Geschichten über die entsetzliche Gewalt des Zmey sind tatsächlich Berichte über raubgierige Kopflinge, nicht ausgewachsene Zmey."
@@ -16480,7 +16480,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein", "Sylvanisch"],
     umgebung: ["Stadt"],
-    bild: "assets/images/monster/tome-of-beasts/zwietracht.png",
+    bild: "tome-of-beasts/zwietracht.png",
     beschreibung: [
       "Dieses seltsame, kindliche Feenwesen mit lila Haut und einem übermäßig großen Mund nährt sich von den negativen Gefühlen, die entstehen, wenn Sterbliche Gerüchte und Unwahrheiten übereinander verbreiten. Viele in der Sterblichen Welt glauben, es sei die körperliche Verkörperung eines Gefühls – eine magische Manifestation starker sterblicher Emotionen. Da es Gerüchten und Fehlinformationen zugetan ist, korrigiert es diese Deutungen nie und nutzt stolz den von Sterblichen gegebenen Spitznamen „Strife“.",
       "Negative Gefühle zwischen Sterblichen erschaffen eine Schwachstelle zwischen der Materiellen Ebene und den Feenreichen, die es Strifes ermöglicht, in die materielle Welt einzutreten. Einmal dort, lauert ein Strife in den Schatten einer Siedlung und schürt Gerüchte, bis die Bevölkerung in Chaos und Zwietracht versinkt. Ist seine Arbeit getan, kehrt er in die Feenreiche zurück, um von seinen Taten zu berichten. Die erfolgreichsten Strifes haben ganze Königreiche in Bürgerkriege gestürzt."

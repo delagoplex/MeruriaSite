@@ -3,7 +3,7 @@
 //
 // Neue Einträge:
 //   - source: "Sonstige"
-//   - bild:   "assets/images/monster/sonstige/<dateiname>.png"
+//   - bild:   "sonstige/<dateiname>.png"
 //   - Schema identisch zu den anderen Monster-Datenquellen
 //
 // Alphabetisch nach name einsortieren (Deutsch-Sortierung).
@@ -58,7 +58,7 @@ window.MONSTER_DATA_SONSTIGE = [
       "Gebirge",
       "Wald"
     ],
-    "bild": "assets/images/monster/sonstige/abgrundschlund.png",
+    "bild": "sonstige/abgrundschlund.png",
     "beschreibung": [
       "Klasse 2 – Titan-Sippe | Region: Südliche Basaltgrate, Hohes Blätterdach",
       "Der Abgrundschlund ist ein geologischer Albtraum, der sich entwickelt hat, um die vertikalen Basaltklippen der Welt zu dominieren. Ohne Augen nimmt er die Welt durch einen hypersensitiven Knochenkamm wahr, der die kleinsten Erschütterungen im Gestein wahrnimmt. Seine Haut ist aus ledrigen Muskeln aufgebaut und mit rohen Basaltablagerungen bedeckt – ein natürlicher Stoff, der Standardklingen bei Aufprall zersplittern lässt und Titangeborene-Waffen zum Kratzen der Oberfläche benötigt.",
@@ -159,7 +159,7 @@ window.MONSTER_DATA_SONSTIGE = [
     "umgebung": [
       "Sumpf"
     ],
-    "bild": "assets/images/monster/sonstige/borgoyle.png",
+    "bild": "sonstige/borgoyle.png",
     "beschreibung": [
       "Verflucht und entstellt, bewahren Borgoyles nur eine schwache Ähnlichkeit mit ihrem früheren menschlichen Selbst. Verändert durch Nissharas Experimente mit den Sumpfgewässern, entwickeln sie innerhalb weniger Tage nach dem Kontakt mit den verseuchten Wassern froschähnliche Haut, eine gezackte Rückenflosse, scharfe Klauen und haifischartige Zähne.",
       "Ihren ursprünglichen Instinkten überlassen, lauern Borgoyles im Sumpf auf ihre Opfer, überwältigen sie und ziehen sie in eben jene verfluchten Gewässer, die sie selbst erschaffen haben."
@@ -259,7 +259,7 @@ window.MONSTER_DATA_SONSTIGE = [
       "Unterirdisch",
       "Höhle"
     ],
-    "bild": "assets/images/monster/sonstige/duestermaulwurf-koloss.png",
+    "bild": "sonstige/duestermaulwurf-koloss.png",
     "beschreibung": [],
     "besonderheiten": [
       {
@@ -352,7 +352,7 @@ window.MONSTER_DATA_SONSTIGE = [
     "umgebung": [
       "Arktis"
     ],
-    "bild": "assets/images/monster/sonstige/frostfeder-schnellreiter.png",
+    "bild": "sonstige/frostfeder-schnellreiter.png",
     "beschreibung": [],
     "besonderheiten": [
       {
@@ -445,7 +445,7 @@ window.MONSTER_DATA_SONSTIGE = [
       "Andere Ebenen",
       "Stadt"
     ],
-    "bild": "assets/images/monster/sonstige/grosser_phantasmalteufel.png",
+    "bild": "sonstige/grosser_phantasmalteufel.png",
     "beschreibung": [
       "Phantasmalteufel sind schwer fassbare Unholde, die die Angst vor dem Unbekannten verkörpern und von der Manipulation der Realität und Wahrnehmung leben. Anders als andere Teufel, die auf rohe Kraft oder List setzen, um ihre Feinde zu unterwerfen, spezialisieren sich diese höllischen Wesen darauf, den Verstand ihrer Opfer zu verzerren und sie daran zweifeln zu lassen, was wirklich ist. Phantasmalteufel werden häufig als Spione, Infiltratoren und Peiniger eingesetzt und agieren als Werkzeuge der psychologischen Kriegsführung. Ihre natürliche Fähigkeit, Illusion mit Realität zu verweben, macht sie ungemein gefährlich, selbst wenn sie körperlich nicht einschüchternd wirken. Diese Teufel treiben häufig in den dunklen Höfen der Höllen ihr Unwesen, dienen Erzteufeln oder mächtigen Adeligen und untergraben die Gemüter von Feinden durch Angst und Verwirrung.",
       "Phantasmalteufel sind schmächtige, fast substanzlose Wesen. Ihre geschmeidigen Körper flackern und verschwimmen wie Hitzeflimmern und wirken niemals vollständig fest. Ihre Gesichter sind merkmallos, abgesehen von schwach glühenden Schlitzen, wo ihre Augen sein sollten, und ihre dunklen, schattenhaften Körper scheinen zu verschwimmen und zu verblassen, als existierten sie nur teilweise in der materiellen Welt. Diese flüchtige Natur macht es Angreifern schwer, einen soliden Treffer zu landen, da die Gestalt des Teufels ständig zwischen Schärfe und Unschärfe wechselt. Legenden berichten von Schlachten, in denen ganze Bataillone in die Knie gezwungen wurden – nicht durch Waffengewalt, sondern durch den schieren, desorientierenden Schrecken, den eine kleine Gruppe von Phantasmalteufeln verbreitete.",
@@ -559,7 +559,7 @@ window.MONSTER_DATA_SONSTIGE = [
       "Höhle",
       "Unterirdisch"
     ],
-    "bild": "assets/images/monster/sonstige/kristallwurm.png",
+    "bild": "sonstige/kristallwurm.png",
     "beschreibung": [
       "Kristallwürmer graben sich tief unter die Erde und legen komplexe Höhlennetzwerke an, die ihnen als Heimstatt dienen. Sämtliche Oberflächen in ihrem Hort sind über Jahre der Besiedlung mit Kristallschichten überzogen. Zum Schutz während ausgedehnter Winterruhen umgeben Kristallwürmer ihre Horte mit gefährlich energiegeladenen Kristallbündeln, rasiermesserscharfen Kristallsplittern und dünnen Kristallfäden, die den Wurm alarmieren, wenn sie von ahnungslosen Eindringlingen zerrissen werden.",
       "Ein Kristallwurm kann für die umliegenden Regionen sehr förderlich sein. Natürliche Kristalle wachsen in der Nähe seiner Heimathöhlen in rasendem Tempo und schaffen großen Reichtum. Kristallwürmer kümmern sich gewöhnlich nicht um humanoide Siedlungen, greifen aber alles an, was sie als Bedrohung empfinden. Sie sind hochintelligent, haben jedoch wenig Interesse an der Herrschaft über andere und sind grundsätzlich damit zufrieden, ihre Horte zu schützen. Andere große Monstren wie Drachen dulden sie nicht – diese jagen und töten sie aktiv.",
@@ -685,7 +685,7 @@ window.MONSTER_DATA_SONSTIGE = [
       "Stadt",
       "Ruinen"
     ],
-    "bild": "assets/images/monster/sonstige/kugellager-golem.png",
+    "bild": "sonstige/kugellager-golem.png",
     "beschreibung": [
       "Kugellager-Golems sind täuschend harmlos wirkende Konstrukte, die aus Tausenden winziger Metallkugeln bestehen und gemeinsam eine vage menschliche Gestalt bilden. Diese Golems können Kugellager als Wurfgeschoss einsetzen oder sich vollständig in einen verstreuten Haufen auflösen, um als gewöhnlicher Abfall zu erscheinen. Wenn sie ausgelöst werden, formen sich die Kugellager rasch wieder zusammen und lassen den Golem neu entstehen, um Eindringlinge zu überwältigen.",
       "Bei Diebesgilden, Spionen und geheimnisvollen Magiern beliebt, werden Kugellager-Golems oft eingesetzt, um Wertgegenstände unauffällig zu bewachen oder als Falle zu dienen, die im unerwarteten Moment zuschlägt. Ihre kompakte Natur und die Fähigkeit, als alltägliche Falle zu erscheinen, machen sie ideal für beengte städtische Räume und Tresore."
@@ -788,7 +788,7 @@ window.MONSTER_DATA_SONSTIGE = [
     "umgebung": [
       "Sumpf"
     ],
-    "bild": "assets/images/monster/sonstige/moorwinder-schrecken.png",
+    "bild": "sonstige/moorwinder-schrecken.png",
     "beschreibung": [
       "Tief im fauligen Herzen des Schwarzmoors, wo das Wasser zäh wie Teer fließt und die Bäume aufrecht verfaulen, sprechen Legenden vom Moorwinder-Schrecken: einer urtümlichen Abscheulichkeit, geboren, als eine alte Yuan-Ti-Abscheulichkeit aufzusteigen versuchte, indem sie ihre Essenz mit dem Sumpf selbst verschmolz.",
       "Das Ritual schlug spektakulär fehl und verschmolz den Schlangenpriester mit unzähligen ertrunkenen Bestien, Tausendfüßler-Schwärmen und den verrottenden Kadavern längst toter Drachen. Was daraus hervortrat, war keine einzelne Kreatur mehr, sondern eine lebende Lawine segmentierten Grauens – sechs massive, gepanzerte Bein-Auswüchse trugen einen bauchigen, von Ranken erstickten Körper, groß wie ein kleiner Hügel, gekrönt von einem Bündel zuschnappender, giftträufelnder Mäuler.",
@@ -909,7 +909,7 @@ window.MONSTER_DATA_SONSTIGE = [
       "Sumpf",
       "Ruinen"
     ],
-    "bild": "assets/images/monster/sonstige/niedertraechtiger_aasfresser.png",
+    "bild": "sonstige/niedertraechtiger_aasfresser.png",
     "beschreibung": [
       "Der Niederträchtige Aasfresser ähnelt einem grotesken Insekt, angeschwollen durch Verfall – ein Aaskäfer, verformt durch die Berührung der Korruption. Sein chitinöses Panzer ist gerissen und verklebt, trieft von schleimigem, dunklem Eiter, der auf den Boden darunter tropft. Unter seinem schweren Panzer pulsieren durchscheinende Segmente schwach und geben Einblicke in die darin gärende Fäulnis. Seine Mundwerkzeuge sind gezackt und zucken ununterbrochen, mahlen selbst dann, wenn keine Beute in Sicht ist."
     ],
@@ -979,7 +979,7 @@ window.MONSTER_DATA_SONSTIGE = [
     "umgebung": [
       "Ebene"
     ],
-    "bild": "assets/images/monster/sonstige/rasierhornhirschkuh_erwachsen.png",
+    "bild": "sonstige/rasierhornhirschkuh_erwachsen.png",
     "beschreibung": [
       "Bemerkenswerter Loot: Rasierhornvitae, Blattschuppe, Rubinwildbret, Bernsteinelfenbein, Veldt-Stampferhufe."
     ],
@@ -1076,7 +1076,7 @@ window.MONSTER_DATA_SONSTIGE = [
     "umgebung": [
       "Ruinen"
     ],
-    "bild": "assets/images/monster/sonstige/schwarzherz-golem.png",
+    "bild": "sonstige/schwarzherz-golem.png",
     "beschreibung": [
       "Schwarzherz-Golems sind humanoide Konstrukte von etwa 1,80 m Größe, gefertigt aus glattem, glänzendem schwarzem Stein. Ihre Körper sind gesichtslos – ohne Merkmale, Markierungen oder sichtbare Gelenke. Licht scheint auf ihrer Oberfläche zu erlöschen und zu verblassen, was ihnen selbst unter hellen Bedingungen ein schattenhaftes Aussehen verleiht. Wenn sie sich bewegen, tun sie dies mit langsamer, bedächtiger Präzision – ihre Schritte trotz ihres beträchtlichen Gewichts lautlos.",
       "Diese Konstrukte wurden von einer längst untergegangenen Zivilisation erschaffen, die sie als Arbeiter, Wächter und Kriegswaffen einsetzte. Diese Zivilisation war einst durch uralte Pakte an eine Erzfee gebunden und diente ihr, strebte jedoch schließlich danach, sich von ihrem Einfluss zu befreien. Die Golems wurden eigens erschaffen, um den Feenwesen entgegenzuwirken.",
@@ -1162,7 +1162,7 @@ window.MONSTER_DATA_SONSTIGE = [
     "umgebung": [
       "Sumpf"
     ],
-    "bild": "assets/images/monster/sonstige/sumpf-golem.png",
+    "bild": "sonstige/sumpf-golem.png",
     "beschreibung": [
       "Anders als die meisten Golems sind Sumpf-Golems oft ebenso sehr das Ergebnis natürlicher Kräfte wie bewusster Erschaffung. Geformt aus dem verworrenen Morast aus verwesendem Pflanzenmaterial, Knochen, Schlamm und Ranken, werden diese Golems von Sumpfgeistern oder elementaren Kräften belebt, die an die Feuchtgebiete gebunden sind. Druiden, Hexenzirkel und ursprüngliche Schamanen können solche Wächter erschaffen, um heilige Lichtungen zu schützen oder Eindringlinge von verbotenen Moorruinen fernzuhalten.",
       "Manche Sumpf-Golems entstehen ohne jede Absicht – die verbleibenden Energien des Sumpfes verdichten sich zu massigen Gestalten, die danach trachten, die Wildnis zu bewahren und Eindringlinge zu vernichten. Sie schlurfen durch die Moore, hinterlassen eine Spur aus Fäulnis, Ranken und triefendem Schmutz, schlagen mit wuchtigen Gliedmaßen zu und ziehen Feinde in den Schlamm."
@@ -1257,7 +1257,7 @@ window.MONSTER_DATA_SONSTIGE = [
       "Gebirge",
       "Andere Ebenen"
     ],
-    "bild": "assets/images/monster/sonstige/terroregel.png",
+    "bild": "sonstige/terroregel.png",
     "beschreibung": [
       "Fliegende Aberrationen, die ganze Regionen terrorisieren. Lebensraum: Gebirge, Planar (Ferner Bereich). Schatz: Relikt.",
       "Der Terroregel ist eine gewaltige Kreatur mit zwei Paaren knorriger Flügel, einem langen, sich windenden Körper wie ein Blutegel mit einem blutegelähnlichen Kopf ohne Augen und einer Masse scharfer Zähne. Sein Schwanz ist flach, mit Stacheln bedeckt und mit grausamen Stachelklauen ausgestattet. Die Körper sind schwarz, mit Abschnitten aus blassem, vernarbtem und verbranntem Fleisch. Sie wirken wie ungeschickte Flieger – besitzen aber eine trügerische Schnelligkeit.",
@@ -1374,7 +1374,7 @@ window.MONSTER_DATA_SONSTIGE = [
       "Tiefe See",
       "Küste"
     ],
-    "bild": "assets/images/monster/sonstige/ulmorrak_der_gekroente_leviathan.png",
+    "bild": "sonstige/ulmorrak_der_gekroente_leviathan.png",
     "beschreibung": [
       "Wenn Fischer nur noch tote Fische einholen und die See sich trügerisch ruhig zeigt, erwartet jene, die sich aufs offene Wasser hinauswagen, nichts Gutes.",
       "Denn bald darauf werden die Unterwasserströmungen stärker, und aggressive Strudel, die selbst die größten Schiffe in die Tiefe reißen können, beginnen sich zu bilden. Ein gewaltiger Regensturm zieht über die Küste, türmt Wellen so hoch, dass sie den Horizont verschleiern, und macht jedes Hinausfahren oder Heimkehren beinahe unmöglich.",
@@ -1512,7 +1512,7 @@ window.MONSTER_DATA_SONSTIGE = [
     "umgebung": [
       "Wald"
     ],
-    "bild": "assets/images/monster/sonstige/wurzelvater-koloss.png",
+    "bild": "sonstige/wurzelvater-koloss.png",
     "beschreibung": [],
     "besonderheiten": [
       {
@@ -1616,7 +1616,7 @@ window.MONSTER_DATA_SONSTIGE = [
     "umgebung": [
       "Andere Ebenen"
     ],
-    "bild": "assets/images/monster/sonstige/zaruun_zwillingsschatten_geistform.png",
+    "bild": "sonstige/zaruun_zwillingsschatten_geistform.png",
     "beschreibung": [
       "Zaruun existiert gleichzeitig auf der Materiellen und der Ätherischen Ebene und manifestiert sich in zwei miteinander verbundenen Formen: seiner Materiellen Form und seiner Geistform. Beide Formen handeln unabhängig voneinander und teilen sich keine Initiative. Die Geistform kann nicht direkt mit der Materiellen Form oder deren Ebene interagieren und umgekehrt.",
       "Diese Statblock-Beschreibung repräsentiert ausschließlich die Geistform Zaruuns. Die Materielle Form ist eine eigenständige Kreatur mit eigenem Eintrag."
@@ -1753,7 +1753,7 @@ window.MONSTER_DATA_SONSTIGE = [
     "umgebung": [
       "Andere Ebenen"
     ],
-    "bild": "assets/images/monster/sonstige/zaruun_zwillingsschatten_materiell.png",
+    "bild": "sonstige/zaruun_zwillingsschatten_materiell.png",
     "beschreibung": [
       "Zaruun existiert gleichzeitig auf der Materiellen und der Ätherischen Ebene und manifestiert sich in zwei miteinander verbundenen Formen: seiner Materiellen Form und seiner Geistform. Beide Formen handeln unabhängig voneinander und teilen sich keine Initiative. Die Materielle Form kann nicht direkt mit der Ätherischen Form oder deren Ebene interagieren und umgekehrt.",
       "Diese Statblock-Beschreibung repräsentiert ausschließlich die Materielle Form Zaruuns. Die Geistform ist eine eigenständige Kreatur mit eigenem Eintrag."

@@ -23,7 +23,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 16,
     sprachen: [],
     umgebung: ["Sumpf"],
-    bild: "assets/images/monster/floral-dragons/aconit-drache.png",
+    bild: "floral-dragons/aconit-drache.png",
     beschreibung: [
       "Überlieferungen zufolge schuf die junge Sumpfhexe Lilura den ersten Aconit-Drachen durch einen Fehler. Sie wollte ihren geliebten Krötengefährten mit einem Trank aus Eisenhut-Extrakt, einem Dickungsmittel, fauligem Sumpfwasser und verbotener Magie in ein mächtigeres Wesen verwandeln. Als die Kröte an dem Gift zu sterben begann, warf Lilura hastig einen Verwandlungszauber und dachte dabei als Erstes an einen Drachen. Der Zauber wirkte, doch das Ergebnis war kein gewöhnlicher Drache: ein massiges Ungetüm mit den Blütenblättern der Eisenhut-Pflanze, enormen scharfen Zähnen aus einem Maul voller zäher Spucke und biolumineszenten Leuchtködern über Kopf und Rücken.",
       "Aconit-Drachen sind massige Geschöpfe mit breiten Mäulern und kräftigen, muskulösen Gliedmaßen. Ihre Füße sind mit Schwimmhäuten versehen, und Saugnäpfe an den Zehen erlauben es ihnen, an Bäumen haftend auf Beute zu lauern. Die Blüten des Drachen erblühen in Violetttönen. Eine dünne Schleimschicht, abgesondert aus hellgrün gefleckten Drüsen an seinem Rücken, überzieht die Haut und verhindert, dass sie austrocknet. Das zweite Herz des Aconit-Drachen sitzt in seinem wuchtigen Kopf und zirkuliert eine teerartige Substanz namens Ikvor durch seinen Körper – ein lähmender und giftiger Stoff, der über winzige Kanäle in den Zähnen ins Maul gelangt und als schwarzer Speichel unaufhörlich tropft.",
@@ -90,7 +90,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 13,
     sprachen: ["Versteht eine beliebige Sprache, kann aber nicht sprechen"],
     umgebung: ["Dschungel", "Wald"],
-    bild: "assets/images/monster/floral-dragons/amaranth-drache.png",
+    bild: "floral-dragons/amaranth-drache.png",
     beschreibung: [
       "Überlieferungen zufolge waren die Amaranth-Drachen einst unsterblich – ihre Blüten verblassten nie, und ihre Blätter verwelkten nie. Als frühe Humanoide begannen, diese Drachen zu jagen, um ihre Unsterblichkeit auf die Probe zu stellen, änderte ein von Reue erfüllter Jäger namens Juan alles: Er pflegte einen schwer verwundeten Drachen gesund und gewann dessen Vertrauen. Die beiden wurden enge Gefährten, bis Juan im Alter zu gebrechlich für das Abenteurerleben war. In seiner Trauer versammelte der Drache seinesgleichen zu einem großen Rat und bat die Götter um ein Ende ihrer Unsterblichkeit und eine dauerhafte Freundschaft zwischen Amaranth-Drachen und Humanoiden. Der Gott des Mitgefühls erhörte das Gebet.",
       "Amaranth-Drachen können bis zu 1,8 m Länge erreichen, ohne den Schwanz, der ebenso lang sein kann wie der Körper. Ihre Blüten erblühen am häufigsten in Rot, aber hellere Rosa- und rötliche Lilatöne sind ebenfalls möglich. Trotz ihrer leuchtenden Farben sind Amaranth-Drachen hervorragend getarnt und halten sich vollkommen still, sodass Wanderer ihre blütenreichen Schwänze oft für wild wachsende Amarant-Pflanzen halten. Ihre kräftigen, wurzelartigen Klauen erlauben es ihnen, sich an Bäumen festzuhalten, und sie besitzen ausgezeichnetes Sehvermögen, auch bei Nacht.",
@@ -133,7 +133,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 27,
     sprachen: ["Gemein", "Drakonisch", "bis zu vier weitere Sprachen nach Wahl"],
     umgebung: ["Hügel", "Stadt"],
-    bild: "assets/images/monster/floral-dragons/apfelbaum-drache.png",
+    bild: "floral-dragons/apfelbaum-drache.png",
     beschreibung: [
       "Als die Welt jung war, legte eine große Hügeldrachen zwei Eier auf einem Berggipfel ab. Eines rollte in die Wildnis und wurde zum Manchinil-Drachen. Das andere rollte in ein fruchtbares Tal zu einem Nomadenlager. Die Menschen erkannten es als Göttergabe und pflegten es hingebungsvoll. Das Nestling, das schlüpfte, war ein Apfelbaum-Drache. Die Menschen lehrten ihn die Welt, ihre Sprache und ihre Werte, legten das Wanderleben nieder und bauten dauerhaft Häuser unter seinem wachsenden Blätterdach. Als der Drache alt genug war, Früchte zu tragen, teilte er seine Ernte mit jenen, die ihn großgezogen hatten.",
       "Apfelbaum-Drachen wachsen auf über das Doppelte der Größe echter Apfelbäume und erreichen etwa 12 m Höhe. Ihre natürliche Lebensspanne ist unklar, da keine Berichte über Apfelbaum-Drachen existieren, die an Altersschwäche starben. Sie haben geweihartige Kronen aus dicken Ästen, eine laubartige Kammlinie entlang ihres Rückens und einen blattbedeckten Schwanz, den sie als Peitsche zur Verteidigung einsetzen. Ihre Vorderbeine haben wurzelartige Auswüchse, die sie im Boden vergraben, um Wasser und Nährstoffe aufzunehmen. Bei ausreichend Sonnenlicht leuchten helle Lichtlinien auf ihrem Bauch.",
@@ -204,7 +204,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 15,
     sprachen: ["Drakonisch"],
     umgebung: ["Grasland", "Wald"],
-    bild: "assets/images/monster/floral-dragons/azalea-drache.png",
+    bild: "floral-dragons/azalea-drache.png",
     beschreibung: [
       "Legenden berichten von einer uralten Floraldrachen namens Haskra, dem Wolfsbaum. Jahrhundertelang schützte sie das Land und die Geschöpfe ihres Reiches mit gewaltiger Macht und wurde von den Waldbewohnern wie eine Gottheit verehrt. Als humanoidische Königreiche ihr Land begehrten, verbündeten sich ein menschlicher und ein elfischer Monarch und führten einen Feldzug gegen sie. Nach einem Jahr und einem Tag wurde Haskra schließlich bezwungen. Mit ihrem sterbenden Heulen erblühte sie in leuchtenden rötlich-rosa Blüten, die das Blut der Gefallenen aufsogen. Aus diesen Blüten erwuchsen die ersten Azalea-Drachen – Vollstrecker der Rache ihrer Mutter gegen jene Humanoiden, die sich als Herren der Wildnis betrachten.",
       "Azalea-Drachen sind intelligente Jäger mit einer Form, die gleichermaßen wolf- und drachenhaft ist. Sie tragen rosa, lila, rote oder kastanienbraune Blüten am Hals, am Schwanzansatz, an den Ohren und Knöcheln. Ausgewachsen erreichen sie die Größe eines großen Wolfes – etwa 1,5 m von Schnauze bis Schwanz und rund 0,9 m Schulterhöhe. Neben ihren Reihen scharfer Zähne sind sie mit außergewöhnlichem Geruchs- und Gehörsinn sowie wärmeempfindlichen Organen hinter den Nüstern ausgestattet, die ihnen erlauben, die Körperwärme ihrer Beute aufzuspüren.",
@@ -246,7 +246,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 13,
     sprachen: [],
     umgebung: ["Sumpf", "Gewässer", "Stadt"],
-    bild: "assets/images/monster/floral-dragons/clematis-drache.png",
+    bild: "floral-dragons/clematis-drache.png",
     beschreibung: [
       "Der Clematis-Drache ist einer der jüngsten Floraldrachen und entstand erst vor weniger als einem Jahrhundert. Der junge Hofzauberer Jeor Fandor erschuf die erste Clematis-Drache mithilfe von Transmutationsmagie, indem er Drachenblut mit Blumenextrakt verband – als fehlendes Ingredient entpuppte sich ein Froschextrakt. Sein Ziel war es, ein einzigartiges und ästhetisch ansprechendes Wesen für den Garten des Prinzen zu schaffen. Der Legende nach hatte er dabei auch das Herz des Prinzen Lucian im Sinn; dass die beiden im folgenden Herbst heirateten, legt nahe, dass Jeors Bemühungen von Erfolg gekrönt waren.",
       "Clematis-Drachen sind klein und froschähnlich mit einem gedrungenen, runden, violetten Körper. Ausgewachsen erreichen sie etwa 30 cm Länge und stehen nur 10 cm an der Schulter. Sie sind kurzlebig mit einer Höchstlebensdauer von fünf Jahren, reifen aber schnell und vermehren sich rasch. Erwachsene speichern Giftstoffe in einer Drüse in ihrem Hals, die bei Verletzung platzen und Raubtiere vergiften kann. Sie lecken sich außerdem am gesamten Körper, um ihre rasiermesserscharfen Blütenblätter mit einem starken Abwehrgift zu beschichten.",
@@ -289,7 +289,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Arktis", "Dschungel", "Gebirge", "Gewässer", "Grasland", "Höhle", "Sumpf", "Wald", "Wüste"],
-    bild: "assets/images/monster/floral-dragons/florivore.png",
+    bild: "floral-dragons/florivore.png",
     beschreibung: [
       "Die erste schriftliche Erwähnung der Florivore stammt aus einem alten Text über Floraldrachen-Pflege: »Zeigt sich ein Drache krank, welk, fressunlustig oder verliert er seine Blüten außerhalb der Saison, so prüfe man zunächst das Wasser und den Boden. Findet man beides einwandfrei, so untersuche der Pfleger den Drachen sorgfältig nach dem grässlichen Schädling. Zeichen des Florivores sind Löcher in Haut, Rinde oder Schuppen, ein stechender Essiggeruch sowie Eiersäcke, mit Seide an der Drachenhaut befestigt. Der Schädling selbst ist feuerrot, besitzt viele Beine und trägt eine Schale wie die Weinbergschnecke.«",
       "Florivore sind winzige Geschöpfe mit Merkmalen von Insekten, Krebstieren und Schnecken. Ihre dicken, leuchtend roten Spiralschalen sind mit Stacheln besetzt. Auf einem langen Hals sitzen insektenartige Köpfe mit kräftigen Mundwerkzeugen, die selbst die dickste Borke durchkauen. Sie navigieren mit zwei großen Augen und bestachelten Antennen. Ihr Schwanz trägt segmentierte Chitinplatten und zwei Reihen kleiner Schwimmfüße, die ihnen im Wasser dienen und mit denen sie sich an Floraldrachen festkrallen. Solange sie fressen können, wachsen Florivore weiter: Sie beginnen fingernagel-groß, können aber die Größe einer Katze erreichen.",
@@ -334,7 +334,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 24,
     sprachen: ["Drakonisch", "Sylvanisch", "sowie zwei weitere Sprachen nach Wahl"],
     umgebung: ["Dschungel", "Feenwildnis", "Wald"],
-    bild: "assets/images/monster/floral-dragons/glyzinien-drache.png",
+    bild: "floral-dragons/glyzinien-drache.png",
     beschreibung: [
       "Als sich vor langer Zeit Drachen im Feenreich eines uralten Zauberwalds niederließen, wehrte sich der Wald: Mächtige Ranken, bedeckt mit wunderschönen violetten Blüten, erwürgten ihre Jungtiere. Statt Früchten trugen diese Blüten die Eier der ersten Glyzinien-Drachen. Seither tragen die Glyzinien-Drachen die Feenmagie jenes alten Waldes in sich – und dessen Böswilligkeit. Trotz ihrer Schönheit zählen sie zu den gefürchtetsten aller Floraldrachen, denn sie gedeihen, indem sie anderen das Leben herauswürgen.",
       "Als einer der imposantesten Floraldrachen können Glyzinien-Drachen etwa 4,5 Meter hoch und bis zu 18 Meter lang werden, mit einer Flügelspannweite von fast 12 Metern und einem Gewicht von bis zu 8.600 Kilogramm. Harte, holzartige Schuppen und irisierend schimmernde Platten schützen ihren pferdeähnlichen Körper. Reihen zarter weißer, violetter oder blauer Blüten bilden eine kaskadenartige Mähne und einen Schwanz und sind die Quelle ihrer Magie. Glyzinien-Drachen können bis zu 800 Jahre alt werden; nach der Blüte regenerieren sie sich von nahezu jeder Verletzung und können sogar verlorene Gliedmaßen und Flügel in wenigen Wochen nachwachsen lassen. Nur Frost hemmt ihr Wachstum und treibt sie in unterirdische Winterschlafkammern.",
@@ -386,7 +386,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 16,
     sprachen: [],
     umgebung: ["Sumpf"],
-    bild: "assets/images/monster/floral-dragons/grosser_aconit-drache.png",
+    bild: "floral-dragons/grosser_aconit-drache.png",
     beschreibung: [
       "Weibliche Aconit-Drachen können bis zu drei Köpfe entwickeln, indem sie mehrere andere Aconit-Drachen fressen. Diese dreiköpfigen Exemplare sind als Große Aconit-Drachen bekannt – seltene und noch furchteinflößendere Vertreter ihrer Art.",
       "Große Aconit-Drachen tragen in allen drei Köpfen ein Ikvor-Herz, das die tödliche schwarze Substanz durch den gesamten Körper pumpt. Mit drei Mäulern voller vergifteter Zähne und drei biolumineszenten Leuchtködern sind sie unter den Raubtieren des Sumpfes nahezu unübertroffen. Die drei Köpfe sind dabei keineswegs immer einer Meinung."
@@ -453,7 +453,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 14,
     sprachen: ["Drakonisch"],
     umgebung: ["Dschungel", "Wald"],
-    bild: "assets/images/monster/floral-dragons/heliconia-drache.png",
+    bild: "floral-dragons/heliconia-drache.png",
     beschreibung: [
       "Der Legende nach war Kaisoferth ein flugunfähiger Drache, der leidenschaftlich gerne sang. Als ihre Kolibri-Freunde zur Migration aufbrachen und Kaisoferth nicht mitfliegen konnte, verstummte ihre Stimme vor Trauer. Die magischen Heliconia-Blumen und die Kolibris beschlossen gemeinsam zu helfen und verwandelten sie in der Nacht in einen Heliconia-Drachen mit den ersehnten Flügeln. Seither tragen ihre Nachkommen die Gaben ihrer Freunde: Flügel und langen Schnabel von den Kolibris, prachtvollees Blättergefieder von den Heliconia-Blumen.",
       "Heliconia-Drachen sind vogelartige Drachen mit Klauen zum Festhalten an Ästen und einem scharfen, holzigen Schnabel. Sie werden 30 bis 60 cm lang und erreichen in der Wildnis ein Alter von etwa 50 Jahren. Ihr leuchtendes Gefieder aus breiten grünen Blättern wächst aus den Flügeln und am Schwanzansatz. Sie sind in roten, orangefarbenen und gelben Varianten zu finden; in der Paarungszeit färbt sich der Kopfkamm tief rosa oder lila. Dank eines spezialisierten Organs namens Syrinx können sie mit zwei Stimmen gleichzeitig singen – ihre Gesänge gelten als herzzerreißend schön.",
@@ -497,7 +497,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 16,
     sprachen: ["Drakonisch"],
     umgebung: ["Wald", "Gewässer"],
-    bild: "assets/images/monster/floral-dragons/hortensien-drache.png",
+    bild: "floral-dragons/hortensien-drache.png",
     beschreibung: [
       "Die Geschichte zweier rivalisierender Gärtner am Kaiserhof zeigt, wie sorgsam Hortensien-Drachen behandelt werden müssen. Als ein Hortensien-Drache am Palastkomplex erschien, versuchten beide Gärtner ihn auf ihre Seite zu locken. Doch als einer dem anderen heimlich Salz in den Boden grub, erkrankte der Drache und floh. Der Kaiser verbannte beide Gärtner – ihr Streit hatte das unschuldige Wesen geschädigt, und das Verschwinden eines Hortensien-Drachen gilt als schweres Omen.",
       "Hortensien-Drachen sind kräftig gebaute Reptilien, die etwa 6 m von der Schnauzenspitze bis zum Schwanzende messen. Sie tragen Blüten und Blätter auf Rücken, Brust und Oberschenkeln sowie zwei Blütentrauben auf den Wangen. Die Blütenfarbe – Rosa oder Blau – wird durch den Säuregehalt des Bodens bestimmt; nur die Wangenblüten können sie willentlich umfärben, als visuelle Kommunikationsform. Hortensien-Drachen gewinnen Energie durch Photosynthese und ergänzen ihre Ernährung mit Eiern anderer Drachen oder Aas.",
@@ -542,7 +542,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 12,
     sprachen: [],
     umgebung: ["Höhle", "Dschungel", "Wald"],
-    bild: "assets/images/monster/floral-dragons/jaderanken-drache.png",
+    bild: "floral-dragons/jaderanken-drache.png",
     beschreibung: [
       "Der Jaderanken-Drache ist eine bedrohte Art. Humanoidische Aktivitäten wie Holzeinschlag, Bergbau und Landerschließung haben unzähligen Drachen das Leben gekostet. Während Druiden-Zirkel ihre natürlichen Lebensräume verteidigen, entstanden Gefangenschaftsprogramme zur Arterhaltung – die jedoch schnell von Reichen missbraucht wurden, die Jaderanken-Drachen als modisches Statussymbol halten. Heute gedeiht ein florierender Schwarzmarkt, und der Lebensraum der Drachen schwindet stetig.",
       "Jaderanken-Drachen sind 5 bis 25 cm lang und werden etwa 40 Jahre alt. Ihre Ohren enthalten komplexe Innenstrukturen für Echoortung, und ihre gespaltenen Zungen helfen beim Navigieren. Trotz ihrer Winzigkeit legen sie mit ihren fledermausartigen Flügeln weite Strecken zurück. Leuchtend türkisfarbene, gezackte Blüten wachsen entlang des Rückens und am kugelförmigen Schwanz. Wenn der Drache zwitschert oder schläft, leuchten seine Blütenblätter sanft; bei Gefahr kann er dieses sanfte Glühen zu einem blendenden Licht verstärken.",
@@ -587,7 +587,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 18,
     sprachen: ["Gemein", "Drakonisch", "zwei weitere Sprachen nach Wahl", "Telepathie auf 36 m"],
     umgebung: ["Gebirge"],
-    bild: "assets/images/monster/floral-dragons/kirschblueten-drache.png",
+    bild: "floral-dragons/kirschblueten-drache.png",
     beschreibung: [
       "Es war einmal ein einsames Mädchen namens Aoi, das gerne log und Geschichten ausschmückte. Ihre Unwahrheiten brachten die anderen Dorfkinder in Schwierigkeiten, und so vertraute ihr niemand mehr. Ohne Freunde fand Aoi Trost bei den Kirschbäumen im Dorfpark. Eines Nachts träumte sie von einem Drachen aus Kirschblüten, der hoch oben in einer Berghöhle lebte und durch die Wolken flog. Als sie erwachte, eilte sie ins Dorf, um von dem Drachen zu erzählen – doch niemand glaubte ihr.",
       "Jede Nacht wurden die Träume lebhafter, bis Aoi den Drachen schließlich nach sich rufen hörte. Sie brach am nächsten Morgen auf, erklomm den Berg und fand in der Höhle aus ihren Visionen den Kirschblüten-Drachen in tiefem Schlaf. Da sie ihn nicht wecken konnte, setzte sie sich neben ihn und flüsterte ihm Geschichten zu – diesmal ohne jede Übertreibung, ehrlich über ihr einfaches Leben. Die aufrichtigen Worte weckten den Drachen. Er dankte Aoi und bat sie, ihn ins Dorf zu bringen. Als die beiden ankamen, feierte das Dorf die Ankunft des Drachen mit einem Fest, und Aoi und der Drache blieben ein Leben lang Freunde.",
@@ -635,7 +635,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 15,
     sprachen: [],
     umgebung: ["Wald"],
-    bild: "assets/images/monster/floral-dragons/korrumpierter_azalea-drache.png",
+    bild: "floral-dragons/korrumpierter_azalea-drache.png",
     beschreibung: [],
     besonderheiten: [
       { name: "Myzellgesteuert", beschreibung: "Der korrumpierte Drache ist Teil des Pleurossa-Pilznetzwerks. Er nimmt alles wahr, was andere korrumpierte Floraldrachen und der Pilz-Drache jederzeit wahrnehmen, und führt die Wünsche des Pleurossa aus." },
@@ -675,7 +675,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 17,
     sprachen: [],
     umgebung: ["Wald"],
-    bild: "assets/images/monster/floral-dragons/korrumpierter_glyzinien-drache.png",
+    bild: "floral-dragons/korrumpierter_glyzinien-drache.png",
     beschreibung: [
       "Selbst der mächtige, feenhafte Glyzinien-Drache ist der Infektion schutzlos ausgeliefert. Im korrumpierten Zustand welken seine üppige Mähne und sein Schwanz dahin und geben das darunter liegende Skelett frei, während seine schillernden Flügel schlaff und zerschlissen werden."
     ],
@@ -722,7 +722,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 13,
     sprachen: [],
     umgebung: ["Wald"],
-    bild: "assets/images/monster/floral-dragons/korrumpierter_loewenzahn-drache.png",
+    bild: "floral-dragons/korrumpierter_loewenzahn-drache.png",
     beschreibung: [],
     besonderheiten: [
       { name: "Myzellgesteuert", beschreibung: "Der korrumpierte Drache ist Teil des Pleurossa-Pilznetzwerks. Er nimmt alles wahr, was andere korrumpierte Floraldrachen und der Pilz-Drache jederzeit wahrnehmen, und führt die Wünsche des Pleurossa aus." },
@@ -762,7 +762,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 14,
     sprachen: [],
     umgebung: ["Wald"],
-    bild: "assets/images/monster/floral-dragons/korrumpierter_rittersporn-drache.png",
+    bild: "floral-dragons/korrumpierter_rittersporn-drache.png",
     beschreibung: [],
     besonderheiten: [
       { name: "Schnellfüßig", beschreibung: "Der korrumpierte Drache kann in jedem seiner Züge eine Bonusaktion verwenden, um die Lauf-Aktion durchzuführen." },
@@ -804,7 +804,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 26,
     sprachen: ["Drakonisch und drei weitere Sprachen nach Wahl"],
     umgebung: ["Gewässer", "Stadt"],
-    bild: "assets/images/monster/floral-dragons/lamium-drache.png",
+    bild: "floral-dragons/lamium-drache.png",
     beschreibung: [
       "Legenden berichten von einem gütigen König, dessen heraldisches Emblem die Taubnessel war. Er zog zwei Nestlinge eines befreundeten Flussdrachens auf, der bei der Eiablage starb. Als Eindringlinge die Nestlinge ermordeten, opferte der König Arm, Bein und ein Auge, um sie durch mächtigen Zauber ins Leben zurückzurufen. Die Drachen wurden zu seinen loyalen Wächtern. Nach seinem Tod ließen sie seinen Körper auf den Seegrund sinken und schenkten ihm durch ihre Magie neues Leben – aus seinem Körper entstanden Dutzende kleiner Nestlinge mit Taubnesselblüten: die ersten Lamium-Drachen.",
       "Lamium-Drachen ähneln riesigen, blumenbedeckten Aalen. Ihre blinden Köpfe tragen zwei aufwärts gerichtete Nüstern und Reihen nadelspitzer Zähne. Spezialisierte, gabelförmige Organe am Kopf detektieren Schall und Druck – empfindlich genug, um Herzschläge zu erspüren – und verleihen dem Drachen psychische Fähigkeiten: Er kann die Emotionen nahestehender Kreaturen wahrnehmen und starke psychische Impulse aussenden. Ausgewachsene Exemplare erreichen bis zu 24 m Länge und können über 1.000 Jahre alt werden.",
@@ -851,7 +851,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 12,
     sprachen: ["Versteht Gemein und Drakonisch, kann aber nicht sprechen"],
     umgebung: ["Grasland", "Wald", "Stadt"],
-    bild: "assets/images/monster/floral-dragons/loewenzahn-drache.png",
+    bild: "floral-dragons/loewenzahn-drache.png",
     beschreibung: [
       "Einst waren Löwenzahn-Drachen Zeitmesser. Die unstete Zeitpassage der Feenwildnis verwirrte die junge Magierin Bremenia so sehr, dass sie ihre Frist zur Heimkehr verpasste. Auf der Suche nach einem Rückweg freundete sie sich mit einem winzigen Löwenzahn-Drachen an, dessen gelbe Blüte am Kopf zu fluffigen Samen heranreifte und nachgenauso wie ein Uhrwerk – sie nutzte ihn als verlässlichen Zeitmesser. Der Drache führte sie zu einem Tor und half ihr, im richtigen Moment hindurchzutreten. Bei ihrer Heimkehr begleitete er Bremenia und kehrte bald mit Dutzenden Artgenossen zurück.",
       "Löwenzahn-Drachen haben lange Hinterbeine, kurze Vorderbeine und Klauen an allen vier Gliedmaßen, mit denen sie senkrecht sitzen und kleine Gegenstände festhalten können. Die Antennen auf ihrem Kopf dienen zum Riechen und Schmecken; Fühler an ihrem Rücken helfen einzuschätzen, ob eine Oberfläche stabil genug zum Landen ist. Die meisten werden 10 bis 13 Jahre alt. Eine einzelne leuchtend gelbe Blüte auf dem Hinterkopf produziert fluffige weiße Samen, die sie auf den Wind entlassen.",
@@ -895,7 +895,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 15,
     sprachen: ["Versteht Gemein und Drakonisch, kann aber nicht sprechen"],
     umgebung: ["Sumpf", "Wald"],
-    bild: "assets/images/monster/floral-dragons/magnolien-drache.png",
+    bild: "floral-dragons/magnolien-drache.png",
     beschreibung: [
       "Vor langer Zeit lebte der Ältere Drache Kuldrynnyth friedlich in einem abgelegenen Wald mit seiner Familie. Als ein neuer Clan von Drachen in ihren Wald kam, hieß Kuldrynnyth ihn willkommen und bot ihm Unterkunft und eine Mahlzeit an. Doch während des Mahls griff der Clan an, um den Wald für sich zu beanspruchen. Kuldrynnyth breitete tapfer seine Flügel wie einen gewaltigen Schild aus, damit die Familie fliehen konnte, und fiel dabei im Kampf. Im folgenden Frühling entstiegen die ersten Magnolien-Drachen der Erde, wo Kuldrynnyths Körper inmitten der zertretenen Magnolienblüten verwest war. Diese Drachen hatten dicke Blütenblätter und robuste, holzartige Körper und zeigten von Beginn an schützende Instinkte, weshalb Humanoide glaubten, dass Kuldrynnyths sanftmütiger Geist in ihnen fortlebt.",
       "Der Magnolien-Drache ist einer der langlebigsten und widerstandsfähigsten Floraldrachen. Er reift um sein 150. Lebensjahr heran und kann über 1.000 Jahre alt werden. Ausgewachsen werden Magnolien-Drachen bis zu 4 Meter lang und 2,5 Meter groß und wiegen etwa 180 Kilogramm. Ihre robusten Blütenblätter wachsen in Weiß-, Creme- und Rosatönen und bieten hervorragenden Schutz vor Feinden. Der keulenförmige Schwanz trägt Früchte, die abfallen und von anderen Pflanzenfressern gefressen werden. Obwohl die größten Blütenblätter am Rücken Flügel bilden, die kurze Flüge ermöglichen, bleiben Magnolien-Drachen lieber am Boden und setzen ihre Größe und ihr Gewicht notfalls ein, um Feinde aus der Luft zu rammen.",
@@ -941,7 +941,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 27,
     sprachen: ["Gemein", "Drakonisch"],
     umgebung: ["Wald", "Unterirdisch"],
-    bild: "assets/images/monster/floral-dragons/manchinil-drache.png",
+    bild: "floral-dragons/manchinil-drache.png",
     beschreibung: [
       "Als die Welt jung war, rollte eines der beiden Eier einer Hügeldrachen in eine verlassene Senke, wo niemand es fand. Vergraben unter der Erde, schlüpfte das Nestling allein und kämpfte sich an die Oberfläche. Es war vollkommen auf sich gestellt und wurde zum ersten Manchinil-Drachen – einem Wesen, das nie Liebe kannte. Aus der Bitterkeit seines einsamen Herzens entwickelte es giftigen Saft und lachte, als seine einstigen Peiniger an seiner Säure zugrunde gingen. Als es seinen Geschwister-Drachen, den Apfelbaum-Drachen, mit seiner Gemeinschaft sah, verwandelte sich sein Schmerz in rasende Wut.",
       "Manchinil-Drachen sind eine seltene Art, über die wenig gesicherte Informationen vorliegen. Die wenigen dokumentierten Sichtungen beschreiben sie als 9 bis 12 m groß, mit erdfarb igem Körper, zotteligen Wurzeln auf der Brust und weißen, verdrehten Astgebilden aus dem Kopf. Die Früchte des Manchinil-Drachen ähneln gefährlich denen des Apfelbaum-Drachen – daher ihr Beiname 'Apfel des Todes'. Der milchig-weiße, ölige Saft des Drachen verursacht selbst in kleinsten Mengen schreckliche Säureverbrennungen und verseucht ganze Wälder.",
@@ -1009,7 +1009,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Grasland"],
-    bild: "assets/images/monster/floral-dragons/ornithogalum-drache.png",
+    bild: "floral-dragons/ornithogalum-drache.png",
     beschreibung: [
       "Als die Welt noch jung war, lebte ein Schwarm magischer Vögel, die ein Lied von solch herzzerreißender Schönheit sangen, dass nur Kinder es hören konnten, ohne zu weinen. Tagsüber nahmen sie die Form weißer Vögel an, und jede Nacht flogen sie in den Himmel und wurden zu Sternen. Als ein Mädchen, das die Sternvögel abgöttisch liebte, jede Nacht weinte, wenn die Vögel in den Himmel zurückkehrten, stellten ihre Eltern eine Falle. Viele Sternvögel wurden in einem klebrigen Netz über den Feldern gefangen und starben. Im folgenden Frühling entstiegen die ersten Ornithogalum-Drachen der Wiese, auf der die Sternvögel begraben worden waren, und brachten der Familie Verderben – sie fraßen ihre Ernte und machten ihr Vieh krank – bevor sie davonflogen. Die überlebenden Sternvögel kehrten nie zurück.",
       "Ornithogalum-Drachen stehen als Nestlinge bereits etwa 3,5 Meter groß und erreichen ihre Erwachsenengröße von 6 bis 9 Metern und einem Gewicht von etwa 6.800 Kilogramm innerhalb eines Jahres nach dem Schlüpfen. Das Alter lässt sich an der Zahl der weißen Blüten um Hals und Beine schätzen – nach einigen hundert Jahren trägt ein Ornithogalum-Drache einen prächtigen Blütenstrauß. Ihr Körper ist kräftig und muskulös, die schlanken Schwänze enden in einem schweren, keulenartigen Blütencluster. Das Maul wirkt furchterregend, doch die äußeren Blütenblätter sind weich; im Inneren haben sie flache Zähne nur zum Kauen von Pflanzenkost. Ihre Flügel sind die stärksten aller Floraldrachen – sie können tagelang fliegen, bevor sie rasten müssen, was Experten auf magische Unterstützung schließen lässt.",
@@ -1056,7 +1056,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 17,
     sprachen: ["Versteht Drakonisch, kann aber nicht sprechen"],
     umgebung: ["Grasland", "Wald"],
-    bild: "assets/images/monster/floral-dragons/pfingstrosen-drache.png",
+    bild: "floral-dragons/pfingstrosen-drache.png",
     beschreibung: [
       "Einst war die Pfingstrose die Lieblingsblume einer kaiserlichen Dynastie. Die Herrscherfamilie glaubte, dass das Reich so lange in Schönheit und göttlicher Gnade erblühe, wie die Pfingstrose in ihrem Königreich blühe, und feierte jährlich eine Blütenschau. Diese Tradition endete, als eine ehrgeizige junge Kaiserin den Thron bestieg: Sie beorderte in der Kälte des Winteranfangs hundert Blumenarten, vor ihr aufzublühen. Alle Blumen gehorchten zitternd – nur die Pfingstrose weigerte sich. Als die Kaiserin befahl, die widerspenstigen Blüten zu verbrennen, segneten die Götter die Pfingstrosenblüten und verwandelten sie in mächtige Pfingstrosen-Drachen: mit scharfen Zähnen, kräftigen stielartigen Stacheln und beeindruckender Größe. Seither streifen diese Drachen das Land und tragen den unabhängigen Geist ihrer Blumenvorfahren in sich.",
       "Pfingstrosen-Drachen sind gedrungene Geschöpfe, die bis zu 4,5 Meter lang werden und bis zu 200 Kilogramm wiegen. Runde, flauschige Blütenblätter schützen ihren Kopf und erstrahlen in lebhaften Tönen von Rosa, Rot, Orange und Gelb; im Schlaf schließen die Drachen die Blütenblätter über dem Gesicht. Im Laufe ihres hundertjährigen Lebens häuten sie sich durchschnittlich viermal – in dieser Zeit sind sie für ein bis zwei Wochen schutzlos. Junge Pfingstrosen-Drachen schlüpfen mit weißen Blütenblättern, die sich mit etwa 15 Jahren in ihre endgültige Farbe wandeln. Als Raubtiere nutzen sie ihren massigen Schwanz, um Beute mühelos zu Boden zu schlagen. Sie leben in Gruppen namens Blütegruppen in selbst gegrabenen Erdkratern, umgeben von hohen Pfingstrosenblüten, die ihnen Tarnung beim Anschleichen bieten.",
@@ -1121,7 +1121,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 18,
     sprachen: [],
     umgebung: ["Wald"],
-    bild: "assets/images/monster/floral-dragons/pilz-drache.png",
+    bild: "floral-dragons/pilz-drache.png",
     beschreibung: [
       "Als Izora und ihre Gruppe nach Peskarii zurückkehrten, wurde ihre Freude, ihre Erkenntnisse zu teilen, durch den Anblick vor ihnen zunichte gemacht. Die Knochen ihrer Freunde und Familie lagen in Glyzinienblüten verwoben in den Ruinen ihres Dorfes. Voller Trauer und einem vergifteten Hass auf den Drachen, der ihr Heim zerstört hatte, schwor Izora Rache. Ihre Freunde warnten sie, dass der Drache zu gefährlich sei, und flehten sie an, bei ihnen zu bleiben – doch Izora weigerte sich zu hören. Sie verließ die Gruppe und machte sich allein auf den Weg, einen Weg zu finden, den Glyzinien-Drachen zu töten.",
       "Izoras lange Einsamkeit und viele feindliche Begegnungen mit anderen Floraldrachen wandelten ihre Wut in schwelende Bitterkeit um, während sie nach deren Schwachstellen suchte. Sie kam zu dem Glauben, dass alle Floraldrachen vernichtet werden müssten – nicht nur der Glyzinien-Drache.",
@@ -1252,7 +1252,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 14,
     sprachen: ["Drakonisch und eine weitere Sprache nach Wahl"],
     umgebung: ["Stadt", "Wald"],
-    bild: "assets/images/monster/floral-dragons/rhododendron-drache.png",
+    bild: "floral-dragons/rhododendron-drache.png",
     beschreibung: [
       "Rhododendron-Drachen entstanden aus einem Rudel Azalea-Drachen, das sich mit einem elfischen Königreich verbündete. Als die Azalea-Drächin Cayn von einem Schneesturm von ihrem Rudel getrennt wurde und im eisigen Winter dem Tod nahe war, rettete sie die elfische Prinzessin Helia und pflegte sie gesund. Zum Dank schwor Cayn einen Eid der Allianz und Freundschaft – und brach damit das Tabu der Azalea-Drachen gegen das Anfreunden mit Humanoiden. Diese Bindung veränderte ihre Form für immer und verwandelte sie in Rhododendron-Drachen.",
       "Rhododendron-Drachen ähneln Azalea-Drachen, haben aber massigere Körper mit kräftigen Gliedmaßen und von großen Schuppen bedeckten Schwänzen. Blüten in Rot-, Rosa-, Lila-, Gelb- oder Orangetönen umrahmen Hals und Kopf wie eine Mähne. Die dicken, lederartigen Blütenblätter verleihen dem Drachen zusätzlichen Schutz. Ausgewachsen stehen sie etwa 1,2 m an der Schulter und erreichen 1,5 m Länge. Sie reifen langsamer als ihre Azalea-Vettern und brauchen nach dem Schlüpfen fünf Jahre bis zur Reife.",
@@ -1296,7 +1296,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 13,
     sprachen: ["Drakonisch, versteht Gemein aber kann es nicht sprechen"],
     umgebung: ["Grasland", "Wald"],
-    bild: "assets/images/monster/floral-dragons/rittersporn-drache.png",
+    bild: "floral-dragons/rittersporn-drache.png",
     beschreibung: [
       "Der Rittersporn-Drache war nicht immer ein Floraldrache. Überlieferungen zufolge war er einst ein Aal, der von Magiern begehrt wurde, die seine Flossen als Zauberkomponente benötigten. Diese mächtigen Zauberwirker jagten die Aale an den Rand der Ausrottung, woraufhin ein Gott des Meeres ein Abkommen mit einem Gott des Waldes schloss, um die Aale zu ihrem Schutz in Landlebewesen zu verwandeln. Der Waldgott verlieh dem Aal lange, schnelle Beine zur Flucht vor Raubtieren, einen scharfen Schnabel zur Abwehr von Feinden und wunderschöne, aber giftige Blüten, um jeden zu töten, der es wagen würde, ihn erneut zu jagen. Die Verwandlung ersetzte jedoch das ängstliche Temperament des Rittersporns durch die Hochnäsigkeit und Aggressivität eines Drachen. Manche glauben, dass diese Nachkommen der Aale Erinnerungen an grausame Behandlung durch Humanoide in sich tragen, und ihre Bitterkeit äußert sich in der unangenehmen Natur des Rittersporn-Drachen.",
       "Trotz ihrer trügerisch zarten Erscheinung verfügen Rittersporn-Drachen über starke natürliche Abwehrmechanismen. Sie reifen mit 50 Jahren heran und können etwa 400 Jahre alt werden. Ausgewachsen werden sie bis zu 6 Meter lang und 3 Meter groß. Ihre Blütenblätter sind dünn und kommen in tiefen Indigo-, Violett- und Rosatönen. Sie sind zweibeinig, mit großen Klauen für sicheren Halt und geschmeidigen, wendigen Körpern, die für Distanzläufe bei hoher Geschwindigkeit gebaut sind. Dank ihrer langen Hälse und scharfen Schnäbel können sie Feinde angreifen, die sich ihrerseits nicht wehren können. Anstatt zu fliegen spreizen sie ihre flügelartigen Blütenblätter häufig aus, um größer und einschüchternder zu wirken. Alle Rittersporn-Drachen sind giftig, und ihre Blütenblätter sind beim Berühren toxisch. Die darin eingebetteten Samen weisen die höchste Giftkonzentration aller Körperteile auf – Geschöpfe, die sie verzehren, sterben innerhalb weniger Stunden.",
@@ -1340,7 +1340,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 13,
     sprachen: ["Versteht Drakonisch und eine weitere Sprache, kann aber nicht sprechen"],
     umgebung: ["Gewässer"],
-    bild: "assets/images/monster/floral-dragons/seerosen-drache.png",
+    bild: "floral-dragons/seerosen-drache.png",
     beschreibung: [
       "Überlieferungen erzählen von zwei Frauen, Callista und Rosetta, die auf entgegengesetzten Seiten eines riesigen Sees lebten – Liebende aus verfeindeten Nationen, die sich im Krieg um den See befanden. Da es gefährlich war, den See zu umrunden, warfen sie heimlich Liebesbriefe in versiegelten Glasflaschen ins Wasser. Der See brachte die Botschaften stets ans andere Ufer – ein Wunder, das sie einem großen Seerosen-Drachen zu verdanken hatten, der die Flaschen unbemerkt hin und her beförderte. Als Callista verzweifelt den See zu durchschwimmen versuchte und ihre Kräfte sie verließen, hob der Drache sie sanft auf seinen Rücken und brachte sie zu Rosetta. Gemeinsam ritten die beiden Frauen auf seinem Rücken fort, um abseits des Krieges ihr Leben zu verbringen. Wegen dieser Empathie gelten Seerosen-Drachen als die mitfühlendsten und sanftmütigsten aller Floraldrachen.",
       "Seerosen-Drachen werden bis zu 200 Jahre alt und etwa 4,5 Meter lang. Ihre weichen grünen Schuppen – je älter der Drache, desto dunkler das Grün – sind mit einem wachsartigen Glanz überzogen, der an die Blätter ihrer Namenspflanze erinnert. Ihre Blüten sind meist rosa, können aber auch gelb, rot, orange oder weiß sein. Sie benötigen große Gewässer zum Gedeihen und leben überwiegend in Süßwasserseen und breiten Flüssen. Seerosen-Drachen spielen eine wichtige ökologische Rolle: Sie fressen invasive Algen, verteilen Nährstoffe und verhindern mit den Wellen ihres Schwimmens die Ansammlung von Algenblüten. Fische sammeln sich häufig im Schatten des Drachen. Sie bauen keine Nester, sondern ruhen mit dem Kopf auf flachen Steinen, die Nüstern über dem Wasser.",
@@ -1384,7 +1384,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 21,
     sprachen: ["Drakonisch, sowie eine weitere Sprache nach Wahl"],
     umgebung: ["Wüste"],
-    bild: "assets/images/monster/floral-dragons/sukkulenten-drache.png",
+    bild: "floral-dragons/sukkulenten-drache.png",
     beschreibung: [
       "Der älteste überlieferte Ursprungsmythos des Sukkulenten-Drachen besagt, dass diese Drachen einst gewöhnliche Pflanzen waren, denen die uralte Drachin Echinox Bewusstsein und Drachengestalt verlieh. Als Echinox trächtig und von dem Untoten-Drachen Mordruth verfolgt wurde, legte sie ihre Eier in einem Hain nadelstacheliger Sukkulenten ab und bat die Pflanzen, ihre Brut zu bewachen, während sie Mordruth weglockte und besiegte. Als sie zurückkehrte, fand sie die Pflanzen zu einem lebenden Zaun herangewachsen, auf dem die Körper von Raubtieren und Humanoiden aufgespießt waren – dahinter schliefen ihre frisch geschlüpften Nestlinge sicher. Um ihr Versprechen zu halten, verwandelte Echinox die treuen Pflanzen in die ersten Sukkulenten-Drachen.",
       "Sukkulenten-Drachen können bis zu 750 Jahre alt werden und etwa 4 Meter lang und 180 Kilogramm schwer werden. Am Ende ihres massigen Schwanzes trägt jeder Drache eine einzige rote, kelchartige Blüte von bis zu 60 Zentimeter Durchmesser, die Wüstenbestäuber anzieht. Robuste Flügel ermöglichen es ihnen, stundenlang über endlose Wüsten zu gleiten, ohne einen einzigen Flügelschlag – Experten vermuten magische Unterstützung. Als einer der best gepanzerten Floraldrachen sind sie mit einer dicken Schicht aus Schuppen und Nadeln bedeckt. Ihr Körper hält eine erhöhte Temperatur aufrecht und kann überschüssige Hitze als heißen Atemkegel abgeben. Trotzdem speichern Sukkulenten-Drachen enorme Wassermengen in ihrer tonnenförmigen Brust und können bis zu zwei Jahre ohne Trinken auskommen.",
@@ -1453,7 +1453,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 19,
     sprachen: ["Gemein", "Drakonisch", "sowie zwei weitere Sprachen nach Wahl"],
     umgebung: ["Grasland", "Sumpf", "Stadt"],
-    bild: "assets/images/monster/floral-dragons/vampirlilien-drache.png",
+    bild: "floral-dragons/vampirlilien-drache.png",
     beschreibung: [
       "Die Vampirlilien-Drachen gelten als Schöpfung der legendären Drachennekromantin Arumathara. Nach dem Tod ihres geliebten Gefährten, des Vampirs Dracuncul, der von einem als Lilienritter bekannten Paladin erschlagen worden war, rächte sich Arumathara am Mörder – doch der Triumph linderte ihren Kummer kaum. Um Dracuncul zu ehren, mischte sie sein lang aufbewahrtes Blut mit ihrem eigenen und ließ das Gemisch auf eine weiße Lilie tropfen, während sie die Magie von Leben und Tod kanalisierte. Da die Lilien das heilige Symbol des Paladins waren, wollte Arumathara sie entstellen. Als jedes Blütenblatt das Blut aufsog, verwandelte es sich in die ersten Vampirlilien-Drachen. Noch in ihren ersten Atemzügen schnappten die Nestlinge nach ihrer Schöpferin – ein Zeichen der Blutrünstigkeit, das Arumathara als würdigen Tribut an ihren Vampirfreund erachtete.",
       "Vampirlilien-Drachen sind große Vierbeiner mit gedrungenen Körpern, die in nur zehn Jahren ihre volle Größe von etwa 3 Metern Länge erreichen. Ausgewachsene Exemplare sind kaum zu bedrohen und können bis zu 850 Jahre alt werden. Ihr glattes Fleisch schimmert in Lila- und Hellgrüntönen; ein Kamm aus dunkelvioletten Blütenblättern und schwarzen Stacheln ziert ihren Rücken. Der Schwanz, etwa die Hälfte ihrer Gesamtlänge, endet in einer tiefvioletten Blüte mit zwei schwarzen Spadices. Vampirlilien-Drachen schlafen nicht wie andere Drachen: Im Ruhezustand bleibt ihr Geist vollständig wachsam. Ein unübersehbares Merkmal ist ihr intensiver Gestank nach verwesendem Fleisch; sie können einen so starken Dunst ausatmen, dass Geschöpfe davon bewusstlos werden. Fliegenschwärme werden von dem Geruch angezogen – ihr Summen ist ein untrügliches Zeichen, dass ein Vampirlilien-Drache in der Nähe lauert.",
@@ -1500,7 +1500,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 13,
     sprachen: [],
     umgebung: ["Dschungel", "Grasland", "Wald"],
-    bild: "assets/images/monster/floral-dragons/vespon-koenigin.png",
+    bild: "floral-dragons/vespon-koenigin.png",
     beschreibung: [
       "Einige Forscher glauben, dass Vespons für die Entstehung aller Floraldrachen verantwortlich sind, da sie sogar den ältesten Floraldrachen zeitlich vorausgehen. Die am weitesten verbreitete Erklärung für ihre Existenz ist, dass gewöhnliche Bienen in der Nähe von Drachenhorten über Jahrhunderte durch die drakonische Magie im Boden und in den Blüten verändert wurden, bis sich das erste Vespon-Volk bildete.",
       "Vespons sind stämmige, insektenartige Geschöpfe mit sechs kurzen Gliedmaßen am Thorax, einem harten Chitin-Exoskelett und einem robusten Unterleib. Beim schnellen Flügelschlagen erzeugen sie ein anhaltendes Summen, das sie etwa eine Stunde aufrechterhalten können. Ihre feinfühligen Antennen erlauben es ihnen, Blüten und Nektar über große Entfernungen zu riechen. Ihr Körper ist mit feinen gelben Haaren bedeckt, die Pollen sammeln und so die lebenswichtige Rolle der Bestäubung für Floraldrachen und Pflanzen erfüllen. Keine Stacheln besitzen Vespons – sie beißen nur, wenn ihre Königin bedroht wird.",
@@ -1543,7 +1543,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     passiveWahrnehmung: 13,
     sprachen: [],
     umgebung: ["Dschungel", "Grasland", "Wald"],
-    bild: "assets/images/monster/floral-dragons/vespon-schwarm.png",
+    bild: "floral-dragons/vespon-schwarm.png",
     beschreibung: [
       "Ein Vespon-Schwarm besteht aus Arbeiterinnen, die gemeinsam auf Bedrohungen ihres Volkes reagieren. Werden die Königin oder die Brut angegriffen, mobilisieren die Arbeiterinnen sofort und koordinieren sich, um Angreifer einzuschränken und zu überwältigen. Im Alltag sammeln sie Nektar, pflegen Larven und halten den Bienenstock sauber.",
       "Vespons sind keine Floraldrachen, aber eng mit ihnen verbunden: Sie bestäuben ihre Blüten, pflegen ihre Blütenblätter und genießen dafür reichlichen Nektar. Für Pfingstrosen-Drachen reinigen Vespons die Blütenblätter, während Vampirlilien- und Apfelbaum-Drachen auf Vespons zur Fortpflanzung angewiesen sind. Wird ein Vesponvolk bedroht, verteidigt der Schwarm seine Königin mit koordinierten, betäubenden Bissen."

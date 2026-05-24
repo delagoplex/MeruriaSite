@@ -2,7 +2,7 @@
 //
 // Neue Einträge:
 //   - source: "Flee Mortals"
-//   - bild:   "assets/images/monster/flee-mortals/<dateiname>.png"
+//   - bild:   "flee-mortals/<dateiname>.png"
 //   - Schema identisch zu den anderen Monster-Datenquellen
 //
 // Alphabetisch nach name einsortieren (Deutsch-Sortierung).
@@ -32,7 +32,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 11,
     sprachen: ["versteht Abyssal, kann es jedoch nicht sprechen"],
     umgebung: ["Wüste", "Grasland", "Andere Ebenen"],
-    bild: "assets/images/monster/flee-mortals/abgrund-hyaene.png",
+    bild: "flee-mortals/abgrund-hyaene.png",
     beschreibung: [
       "Stärker und schlauer als ihre tierischen Pendants kriechen Abgrund-Hyänen aus der Abyssalen Ödnis, um sich an den Kadavern zu laben, die Gnolle in ihrem Gefolge hinterlassen. Werden Verstärkungen benötigt, können Gnoll-Zauberwirker mit Magie Abgrund-Hyänen in Gnolle verwandeln."
     ],
@@ -72,7 +72,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 12,
     sprachen: ["Angulotl", "Gemein"],
     umgebung: ["Sumpf", "Dschungel", "Küste"],
-    bild: "assets/images/monster/flee-mortals/angulotl-ganove.png",
+    bild: "flee-mortals/angulotl-ganove.png",
     beschreibung: [
       "Retainer (Gefolgsmann) – ein Begleiter-NSC, dessen Werte mit dem Übungsbonus (PB) des Mentors skalieren. Alle Rettungswürfe erhalten +PB; Fertigkeitsboni erhalten +PB zum Grundwert. Der Signaturangriff schlägt mit +3+PB und richtet 1W4+PB Stichschaden plus 2W6 Giftschaden an. Ab Stufe 7 darf der Yegg den Signaturangriff bei einer Angriffsaktion zweimal statt einmal ausführen."
     ],
@@ -114,7 +114,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 9,
     sprachen: [],
     umgebung: ["Sumpf", "Dschungel", "Küste"],
-    bild: "assets/images/monster/flee-mortals/angulotl-kaulquappe.png",
+    bild: "flee-mortals/angulotl-kaulquappe.png",
     beschreibung: [
       "Minion-Variante: Erleidet die Kaulquappe Schaden durch einen Angriff oder einen misslungenen RW, sinken ihre TP sofort auf 0. Erleidet sie Schaden aus einer anderen Quelle, stirbt sie nur, wenn der Schaden ihr TP-Maximum erreicht oder übersteigt; andernfalls bleibt sie unverletzt."
     ],
@@ -156,7 +156,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 14,
     sprachen: ["Angulotl"],
     umgebung: ["Sumpf", "Dschungel", "Küste"],
-    bild: "assets/images/monster/flee-mortals/angulotl-klinge.png",
+    bild: "flee-mortals/angulotl-klinge.png",
     beschreibung: [
       "Angulotls (ang gwa LAH tulls) sind winzige, leuchtend gefärbte amphibische Humanoide aus Süßwassersümpfen, Flüssen und Regenwäldern. Diese giftigen Froschwesen meiden Konfrontation und siedeln in unterirdischen Höhlen oder Verstecken, die für andere Humanoide nahezu unzugänglich sind. Bedroht werden sie jedoch tödlich. Ihr Hautsekret ist ein Kontaktgift, das sie zudem in stärkere Formen destillieren, um Klingen zu vergiften oder Wurfpfeile zu präparieren."
     ],
@@ -200,7 +200,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 15,
     sprachen: ["Angulotl"],
     umgebung: ["Sumpf", "Dschungel", "Küste"],
-    bild: "assets/images/monster/flee-mortals/angulotl-nadelschuetze.png",
+    bild: "flee-mortals/angulotl-nadelschuetze.png",
     beschreibung: [],
     besonderheiten: [
       { name: "Amphibisch", beschreibung: "Der Nadelschütze kann Luft und Wasser atmen." },
@@ -242,7 +242,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 14,
     sprachen: ["Angulotl"],
     umgebung: ["Sumpf", "Dschungel", "Küste"],
-    bild: "assets/images/monster/flee-mortals/angulotl-schleicher.png",
+    bild: "flee-mortals/angulotl-schleicher.png",
     beschreibung: [
       "Schleicher sind diebische Spezialisten der Angulotls: Mit ihren langen Zungen schnappen sie Magie-Gegenstände aus den Händen unaufmerksamer Abenteurer und ziehen sich in das Sumpfwasser zurück, um eine Konfrontation in eine Verfolgungsjagd zu verwandeln."
     ],
@@ -287,7 +287,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 20,
     sprachen: ["Angulotl"],
     umgebung: ["Sumpf", "Dschungel", "Küste"],
-    bild: "assets/images/monster/flee-mortals/angulotl-seher.png",
+    bild: "flee-mortals/angulotl-seher.png",
     beschreibung: [],
     besonderheiten: [
       { name: "Amphibisch", beschreibung: "Der Seher kann Luft und Wasser atmen." },
@@ -331,7 +331,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Unterirdisch", "Stadt"],
-    bild: "assets/images/monster/flee-mortals/arkanes_amalgam.png",
+    bild: "flee-mortals/arkanes_amalgam.png",
     beschreibung: [
       "Ein arkanes Amalgam entsteht, wenn die verschmutzten Abfälle magischer Experimente in Abwasserkanälen zusammenfließen. Diese Fragmente unberechenbarer Öle und verseuchter arkaner Energien bilden einen triefenden Schwarm daumengroßer Kügelchen.",
       "Arkane Amalgame versammeln sich in psychedelischen Klumpen, die reglos bleiben, wenn keine Magie in der Nähe ist, und reagieren gewaltsam, wenn neugierige Nagetiere oder Kanalarbeiter sie aufstören. Diese durchscheinenden Tropfen werden leicht übersehen, während sie in kleinen Pfützen gleiten oder in stehendem Wasser ruhen.",
@@ -381,7 +381,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 10,
     sprachen: ["versteht die Sprachen seines Erschaffers, kann aber nicht sprechen"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/flee-mortals/aschenhorter.png",
+    bild: "flee-mortals/aschenhorter.png",
     beschreibung: [
       "Grabraub ist gefährliches Geschäft, aber Nekromanten brauchen Körper für ihre Experimente. Um Vorräte zu beschaffen und sich aus der Gefahr herauszuhalten, bauen diese Magier Aschenhorter – wuchtige Konstrukte aus magisch verstärkten humanoiden Knochen.",
       "Der Aschenhorter bewegt sich auf vier langen Beinen aus kompakten Knochensäulen, die es ihm ermöglichen, sich schnell zu bewegen und Kreaturen auszuweichen, die versuchen könnten, seine grimmige Arbeit zu behindern. Gelenkige Arme mit angebrachten Werkzeugen und Waffen helfen beim Ausgraben von Leichen und beim Bekämpfen von Feinden.",
@@ -426,7 +426,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 23,
     sprachen: ["Alle Sprachen"],
     umgebung: ["Gebirge", "Andere Ebenen"],
-    bild: "assets/images/monster/flee-mortals/ataeshia.png",
+    bild: "flee-mortals/ataeshia.png",
     beschreibung: [
       "Atæshia (ah-TAY-shee-ah) gehörte zu den ersten Elementaren, welche die Profanwelt bewohnten, und war die Erste, die gegen die Sterblichen zurückschlug, die versuchten, die wilde Welt zu zähmen. Ihre Armee kämpfte jahrzehntelang gegen Humanoide, doch die Zahl ihrer Feinde war zu groß und ihre Verbündeten zu wenige. Als sich das Blatt des Krieges gegen die Elementare wendete, erkannte Atæshia, dass es besser wäre, wenn die Elementare überlebten, ihre Kräfte wieder aufbauten und auf einen anderen Tag warteten, um zurückzuholen, was einst ihres war.",
       "Atæshia betrachtet alle Elementare als Teil ihres Ishkrar, und viele würden im Gegenzug unter ihrem Banner kämpfen. Sie hat ihren großen Krieg nicht vergessen und sieht in den Sterblichen und den Göttern, die sie erschufen, die größte Bedrohung für die Zeitlandschaft.",
@@ -481,7 +481,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 20,
     sprachen: ["Alle Sprachen", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/flee-mortals/aurumvas.png",
+    bild: "flee-mortals/aurumvas.png",
     beschreibung: [
       "Seelenanzahl: 5 (2W4). Aurumvas beginnt den Kampf mit einer hohen Seelenreserve, die er für mächtige Fähigkeiten ausgibt. Sinkt seine Seelenanzahl auf 0, fällt er in den Lethe-Zustand und greift mit unbeherrschter Wut die nächstgelegene Kreatur an, bis er wieder eine Seele aufnimmt.",
       "Schurken-Aktionen: Aurumvas verfügt über drei Schurken-Aktionen (MCDM-Konzept). Jede kann einmal pro Begegnung nach dem Zug eines Feindes eingesetzt werden – in beliebiger Reihenfolge, aber maximal eine pro Runde."
@@ -532,7 +532,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein", "Zwergisch", "Elfisch", "Riesisch", "Urzeitlich"],
     umgebung: ["Andere Ebenen", "Stadt"],
-    bild: "assets/images/monster/flee-mortals/blutkraft.png",
+    bild: "flee-mortals/blutkraft.png",
     beschreibung: [
       "Blutkräfte, auch Blutfürsten genannt, sind Kriegsherren und Diplomaten, die gleichermaßen die Geburt sterblichen Lebens und den Moment seines Endes verkörpern. Man könnte sie für massive Humanoide halten, die ganz in schwarz-rot gezackte Rüstung gehüllt sind, doch in Wahrheit ist ihre Rüstung geschwärztes, knorriges Fleisch, durchzogen von Adern aus kochendem Rot.",
       "Sterbliche Monarchen täten gut daran, achtsam zu sein, wenn sich der Scharlachlanze einer Blutkraft nähert. Diese Elementare verstehen Sterbliche tiefgreifend und treten ihnen niemals zu müßigem Zweck entgegen."
@@ -574,7 +574,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 10,
     sprachen: ["spricht alle Sprachen, versteht jedoch keine"],
     umgebung: ["Unterirdisch", "Höhle", "Sumpf", "Ruinen", "Andere Ebenen"],
-    bild: "assets/images/monster/flee-mortals/brabbler.png",
+    bild: "flee-mortals/brabbler.png",
     beschreibung: [
       "Brabbler sind das fleischgewordene Chaos. Wenn diese Bewohner der sich ewig wandelnden Ebene Primordius reisen, nehmen sie ein Stück Heimat mit. Die Realität beugt sich ihrem Willen: Der Boden brodelt unter ihnen, die Schwerkraft ordnet sich um sie herum neu, und Abenteurer fliehen entweder vor ihnen oder werden ins Chaos gesogen.",
       "Zermürbende Taxonomie: Brabbler wuseln als ein Wirrwarr ständig wechselnder Körperteile. Ihr Name geht auf einen Entdecker zurück, der berichtete, einen Haufen brabbelnder Mäuler in bekannten und unbekannten Sprachen sprechen zu sehen — und davor zu fliehen. Andere Abenteurer beschrieben ähnliche Verschmelzungen aus Knochen, Muskeln und Gliedmaßen, eine schauerlicher als die andere. Erst kürzlich entdeckten Gelehrte, dass diese Geschöpfe eine gemeinsame chaotische Abstammung teilen, obwohl ihr Aussehen so wandelbar ist, dass sie nie zweimal gleich wahrgenommen werden.",
@@ -621,7 +621,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein", "Riesisch (kann in wahrer Form nicht sprechen)"],
     umgebung: ["Grasland", "Wald"],
-    bild: "assets/images/monster/flee-mortals/bredbeddle.png",
+    bild: "flee-mortals/bredbeddle.png",
     beschreibung: [
       "In ihrer wahren Form sind Bredbeddles kopflose Riesen von etwa 4,5 m Größe. Auf der ewigen Suche nach ihren fehlenden Köpfen werden sie von belebten Ländern angezogen, wo sie Passanten enthaupten und magisch deren Gestalt annehmen.",
       "Obwohl Bredbeddles keine traditionellen Sinnesorgane besitzen, sind sie sich ihrer Umgebung sehr bewusst. Manche lauern auf dunklen Landstraßen in ihrer monströsen wahren Form. Andere wandeln verkleidet unter Menschenmassen und legen ihre Tarnung nur kurz ab, um einen Fremden zu überwältigen und zu enthaupten.",
@@ -668,7 +668,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 13,
     sprachen: ["Sylvanisch"],
     umgebung: ["Wald", "Feenwildnis", "Grasland"],
-    bild: "assets/images/monster/flee-mortals/dornenblut.png",
+    bild: "flee-mortals/dornenblut.png",
     beschreibung: [
       "Ein Dornenblut wächst aus fluchgestärkten Samen, die in einem Leichnam eingebettet sind. Diese enorme Masse lebendiger, dorniger Ranken ist eine Manifestation des Hasses der Natur und ein Gegenmittel gegen den Eingriff der Zivilisation.",
       "Wenn ein Steingebäude und seine Bewohner das Gebiet der Natur besetzen, kann ein sterbender Druide, eine Dryas oder eine Hexe einen tabuisierten Fluch aussprechen und Samen in das eigene Fleisch pflanzen. Im Tod verwandelt sich ein Fluchträger in einen Dornenblut, anstatt der Zivilisation einen Fuß in Feld oder Wald zu lassen.",
@@ -718,7 +718,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 13,
     sprachen: ["Drakonisch"],
     umgebung: ["Wald", "Gebirge"],
-    bild: "assets/images/monster/flee-mortals/drachling.png",
+    bild: "flee-mortals/drachling.png",
     beschreibung: [
       "Die winzigen Vettern majestätischer Echtdrachen, Drachlinge sind weit weniger mächtig – und stolz – als ihre größeren Verwandten. Während Echtdrachen im Wesentlichen unsterblich sind, sind Drachlinge Omnivoren, die nur etwa ein Jahrhundert leben und Nahrung zum Überleben benötigen.",
       "Jeder Drachling trägt einen traditionellen drakonischen Namen, wählt jedoch zusätzlich einen Spitznamen, der Geschwistern aus demselben Gelege, engen Freunden und seinem Partner oder seinen Partnern vorbehalten ist (viele Drachlinge gehen mit einem oder mehreren Partnern lebenslange Verbindungen ein). Ein Abenteurer, der sich mit einem Drachling anfreundet, erhält möglicherweise einen eigenen Spitznamen.",
@@ -762,7 +762,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 18,
     sprachen: ["Gemein", "Drakonisch"],
     umgebung: ["Arktis", "Gebirge", "Ruinen"],
-    bild: "assets/images/monster/flee-mortals/durixaviinox.png",
+    bild: "flee-mortals/durixaviinox.png",
     beschreibung: [
       "In einer kalten Weite am Rand der Welt haust Durixaviinox (dur-ih-ZAH-vin-nox) unter den Ruinen der drakonischen Stadt Vexinoth. Obwohl viele ihn heute die Ruinierte Vorsehung nennen, herrschte dieser frostatmende Ruinendrache einst als wohlwollender und allmächtiger Imperator, der so viel Verehrung sammelte, dass er es mit den Göttern aufnehmen konnte.",
       "Doch Durixaviinox wurde von seiner Schwester Yserthrax verraten, die mit Qazyldrath konspirierte, um die Stadt zu zerstören. Der Konflikt tötete unzählige Drachen auf beiden Seiten, und Durixaviinox wurde für tot zurückgelassen, sein Körper unter den Trümmern einer einst mächtigen Zivilisation begraben.",
@@ -817,7 +817,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 12,
     sprachen: ["Drakisch", "Gemein"],
     umgebung: ["Sumpf", "Dschungel", "Gewässer"],
-    bild: "assets/images/monster/flee-mortals/echsenmensch-jaeger.png",
+    bild: "flee-mortals/echsenmensch-jaeger.png",
     beschreibung: ["Der Echsenmensch-Jäger ist ein Gefolgsmann (Retainer), der einem erfahrenen Helden dient. Er kämpft mit einem Großschwert und nutzt seine amphibischen Fähigkeiten, um in Sümpfen, Dschungeln und Küstengebieten zu navigieren. Mit wachsender Erfahrung seines Mentors entwickelt er sich zu einem vielseitigen Nahkämpfer."],
     besonderheiten: [
       { name: "Gefolgsmann", beschreibung: "Der Echsenmensch-Jäger ist ein Gefolgsmann. Seine Trefferpunkte betragen 8 × die Stufe seines Mentors. Er fügt allen Rettungswürfen seinen Übungsbonus (ÜB) hinzu, der dem seines Mentors entspricht. Alle mit ÜB angegebenen Angriffs- und Schadenswerte skalieren entsprechend." },
@@ -858,7 +858,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 10,
     sprachen: ["Drakisch", "Gemein"],
     umgebung: ["Sumpf", "Dschungel", "Küste"],
-    bild: "assets/images/monster/flee-mortals/echsenmensch-schuppenzahn.png",
+    bild: "flee-mortals/echsenmensch-schuppenzahn.png",
     beschreibung: ["Schuppenzähne sind die muskelbepackten Nahkämpfer der Echsenmensch-Kriegerbanden. Mit ihrem peitschenden Schwanz fixieren sie Feinde und zermahlen sie anschließend mit ihrem kräftigen Biss."],
     besonderheiten: [
       { name: "Amphibisch", beschreibung: "Der Schuppenzahn kann Luft und Wasser atmen." }
@@ -899,7 +899,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 13,
     sprachen: ["Drakisch", "Gemein"],
     umgebung: ["Sumpf", "Dschungel", "Küste", "Wald"],
-    bild: "assets/images/monster/flee-mortals/echsenmensch-terrorsaurier.png",
+    bild: "flee-mortals/echsenmensch-terrorsaurier.png",
     beschreibung: ["Terrorsaurier sind die furchterregenden fliegenden Jäger der Echsenmensch-Stämme. Sie überwältigen Feinde mit Geschwindigkeit und Überraschung — mal stoßen sie aus der Luft herab, mal tauchen sie aus dem Wasser auf. Ihre schuppige Haut wird beim Fliegen noch widerstandsfähiger, und ihr Blasrohr liefert lähmende Gifte aus sicherer Entfernung."],
     besonderheiten: [
       { name: "Luftbeweglichkeit", beschreibung: "Solange der Terrorsaurier fliegt, beträgt seine Rüstungsklasse 16." },
@@ -942,7 +942,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 12,
     sprachen: [],
     umgebung: ["Höhle", "Unterirdisch"],
-    bild: "assets/images/monster/flee-mortals/edelsteingallert.png",
+    bild: "flee-mortals/edelsteingallert.png",
     beschreibung: [
       "Häufig in Höhlen anzutreffen, in denen natürliche Kristalle wachsen, scheiden Edelsteingallerts eine Verdauungssäure ab, die Gestein abbaut und es ihnen ermöglicht, sich von den resultierenden Mineralien zu ernähren. Ihre Ernährung verleiht ihnen einen schimmernden Schein, und ihre Körper reflektieren oft die Farben der Kristalle, von denen sie sich ernähren.",
       "Obwohl sich diese Schleime nicht von anderen Kreaturen ernähren, sind Edelsteingallerts äußerst territorial und greifen Eindringlinge in ihre Reviere ohne Zögern an.",
@@ -989,7 +989,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 15,
     sprachen: ["Gemein", "Ignisch", "Terranisch"],
     umgebung: ["Gebirge", "Höhle", "Andere Ebenen"],
-    bild: "assets/images/monster/flee-mortals/eisenkraft.png",
+    bild: "flee-mortals/eisenkraft.png",
     beschreibung: [
       "Eine Eisenkraft, auch Eisenkämpe genannt, erscheint als vierarmiger Zentaur aus formbarem Metall mit einem Kopf, der einem leeren Ritterhelm gleicht. Die meisten sind standhaft, loyal und kompromisslos.",
       "Manche Eisenkräfte erlangen sogar Ruhm, indem sie Bosheit dort entgegentreten, wo sie ihr begegnen — doch andere werden selbst zur Bosheit und nutzen ihre Stärke, um alles zu vernichten, was ihnen auch nur leicht missfällt."
@@ -1033,7 +1033,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 20,
     sprachen: ["alle Sprachen", "Telepathie 36 m"],
     umgebung: ["Wald", "Feenwildnis"],
-    bild: "assets/images/monster/flee-mortals/empräischer_hirsch.png",
+    bild: "flee-mortals/empräischer_hirsch.png",
     beschreibung: ["Als himmlische Hüter des Waldes erscheinen Empyräische Hirsche nur, um Waldbewohner vor großen Bedrohungen zu schützen oder Sterbliche vor bevorstehenden Katastrophen zu warnen. Ihr weißes Fell ist blau getupft, und ihre Augen leuchten mit der Dunkelheit der Nacht.", "Diejenigen, die einen Empyräischen Hirsch beeindrucken — typischerweise durch den Schutz des Waldes — dürfen ihm eine Frage stellen, die er nach bestem Wissen wahrheitsgemäß beantwortet. Zwischen seinen Geweihen kann er schimmernde Visionen der Gegenwart oder Ausblicke in die Zukunft zeigen. Seine Hörner leuchten golden, wenn er einem Verbündeten hilft, und weiß, wenn er Informationen empfängt."],
     besonderheiten: [
       { name: "Übernatürliche Resistenz", beschreibung: "Der Hirsch hat Vorteil auf Rettungswürfe gegen Kräfte, Zauber und andere übernatürliche Effekte." }
@@ -1075,7 +1075,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein", "Terranisch"],
     umgebung: ["Gebirge", "Höhle", "Unterirdisch", "Andere Ebenen"],
-    bild: "assets/images/monster/flee-mortals/erdkraft.png",
+    bild: "flee-mortals/erdkraft.png",
     beschreibung: [
       "Eine beschützende Erdelementar-Wesenheit, die Erdkraft, gleicht einem 2,70 m großen Menschenaffen aus rohem Stein. Sie agieren als Wächter und Chronisten ihrer Ishkrar und arbeiten unermüdlich daran, der Gruppe Unheil fernzuhalten. Diese Elementare werden manchmal Erdbollwerke genannt."
     ],
@@ -1116,7 +1116,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 16,
     sprachen: ["versteht Himmlisch, kann es aber nicht sprechen", "Telepathie (36 m)"],
     umgebung: ["Sumpf", "Ruinen", "Andere Ebenen"],
-    bild: "assets/images/monster/flee-mortals/faeulnisengel.png",
+    bild: "flee-mortals/faeulnisengel.png",
     beschreibung: [
       "Fünf bis sechs Fuß groß, bewegen sich schwimmende schwarz-braune Pilze wie Quallen durch den Sumpf, ihre dreizehn beweglichen Augenstiele baumeln unter ihrem Hut. Diese Fäulnisengel sind tatsächlich Himmlische, die typischerweise Todesgöttern bei der Suche nach kürzlich Verstorbenen dienen. Die Berührung ihrer stielförmigen Rüsselfortsätze verursacht rasche Verwesung in organischem Material.",
       "Todes Reinigungskommando. Todesgötter entsenden Fäulnisengel, um alle Spuren einer Leiche aus der Welt zu entfernen, nachdem die Seele dieser Person aufgenommen wurde. Eine Leiche, die durch die Berührung eines Fäulnisengels verwest ist, kann nicht zum Leben erweckt, zu Untoten gemacht oder anderweitig übernatürlich beeinflusst werden. Die Götter erklären selten, warum eine bestimmte Leiche einen Fäulnisengel erfordert, und diese Engel fragen nicht.",
@@ -1161,7 +1161,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Wald", "Feenwildnis"],
-    bild: "assets/images/monster/flee-mortals/faulbiest.png",
+    bild: "flee-mortals/faulbiest.png",
     beschreibung: ["Das Faulbiest ist eine gesichtslose, pilzbedeckte Kreatur mit verschlungenen Hirschgeweihen und dem Körper eines Stiers. Im Wandern durch den Wald verdirbt es die Vegetation auf seinem Weg und schafft ein Netzwerk aus Pilzen und Verfall.", "Faulbieste leben in Herden und bevorzugen einen Teil des Waldes, solange sie ausreichend Platz haben. Pilzbasierte Pflanzenwesen koexistieren oft friedlich mit ihnen, da sie auf verfaulenden Böden gedeihen — manchmal treiben Pilze Faulbieste sogar in neue Gebiete."],
     besonderheiten: [
       { name: "Waldverfall", beschreibung: "Wenn das Faulbiest stirbt, setzt es einen Ausbruch infektiöser Luft frei. Jede Nicht-Pilz-Kreatur innerhalb von 1,5 m muss einen KON-Rettungswurf SG 13 ablegen oder erhält eine Erschöpfungsstufe und erkrankt an der Waldverfall-Krankheit. Eine infizierte Kreatur erhält bei Ausgabe von Trefferwürfeln oder nach einer langen Rast nur halb so viele TP zurück und kann ihre Erschöpfungsstufe nicht durch eine lange Rast senken. Nach jeder langen Rast muss sie einen KON-Rettungswurf SG 13 ablegen. Misslungen: weitere Erschöpfungsstufe. Erfolg: eine Erschöpfungsstufe verloren. Sinkt die Erschöpfungsstufe durch einen Erfolg unter 1, erholt sich die Kreatur von der Krankheit." },
@@ -1201,7 +1201,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein", "Ignisch"],
     umgebung: ["Gebirge", "Höhle", "Andere Ebenen"],
-    bild: "assets/images/monster/flee-mortals/feuerkern.png",
+    bild: "flee-mortals/feuerkern.png",
     beschreibung: [
       "Der Feuerkern, oft Brandbeschwörer genannt, nimmt die Gestalt einer feurigen Echse an. Sie leben oft in heißen Zonen planarer Konvergenz oder in Gebieten vulkanischer Aktivität. Diese territorialen Elementare befragen Eindringlinge meist aus der Ferne — und gefallen ihnen die Antworten nicht, lassen sie Feuer regnen, bevor ihre Feinde näher herankommen können.",
       "Während viele Elementare ihre angeborenen Gaben in mündliches Geschichtenerzählen einweben, sind Feuerkerne besonders geschickt darin, ihre Geschichten in Silhouetten aus Flammen lebendig werden zu lassen."
@@ -1246,7 +1246,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 9,
     sprachen: [],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/flee-mortals/feuersteinmottenschwarm.png",
+    bild: "flee-mortals/feuersteinmottenschwarm.png",
     beschreibung: [
       "Erkundet ein Abenteurer einen scheinbar verlassenen Turm und hört er ein endloses, leises Klappern wie tausende herabrieselnder Kieselsteine, könnte die Ruine von einem Feuersteinmottenschwarm bewohnt sein. Diese elementaren Insekten fressen im Laufe von Jahrhunderten Steinruinen. Ihre Flügel sind scharf und hart wie Feuerstein, und ihr Lebenszyklus wird in Jahrzehnten gemessen.",
       "Feuersteinmotten bleiben gerne monatelang nahezu reglos und ernähren sich Bissen für Bissen am Mauerwerk. Sie bewegen sich selten, wenn sie nicht gestört werden. Wenn sie jedoch auffliegen, müssen sie Stein weitaus schneller fressen, um ihre Energie zu erhalten.",
@@ -1294,7 +1294,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 14,
     sprachen: ["versteht die Sprachen seines Schöpfers, kann aber nicht sprechen"],
     umgebung: ["Wald", "Ruinen", "Sumpf"],
-    bild: "assets/images/monster/flee-mortals/fleisch_trauerling.png",
+    bild: "flee-mortals/fleisch_trauerling.png",
     beschreibung: [
       "Angetrieben von Trauer und Wut sind Trauerlings animierte Konglomerate aus Schmutz oder Fleisch, die die Heime ihrer Schöpfer verteidigen und Eindringlinge brutal angreifen, während sie unkontrolliert schluchzen. Sie drücken weitaus mehr Emotionen aus als viele andere untote Wächter, da ihre Erschaffer ihnen Traurigkeit und Verlust einhauchten.",
       "Vor Urzeiten schlossen sich Druiden zusammen, um der endlosen Ausbeutung der Natur durch humanoidische Expansion entgegenzuwirken. In ihrer Verzweiflung beschworen sie verbotene Riten, formten Körper aus den Überresten humanoidischer Katastrophen und hauchten ihnen nekrotische Energie ein. Fleisch, Erde und die Seelen in der Zerstörung verlorener Kreaturen verschmolzen mit der Trauer der Druiden zu den ersten Trauerlings.",
@@ -1336,7 +1336,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 20,
     sprachen: ["Gemein", "Drakonisch"],
     umgebung: ["Gebirge", "Höhle", "Andere Ebenen"],
-    bild: "assets/images/monster/flee-mortals/forzaantirilys.png",
+    bild: "flee-mortals/forzaantirilys.png",
     beschreibung: [
       "Der als Aschenlied bekannte Blutdrache ist ein Geschöpf aus Asche und Glut, ihr Körper umhüllt von Flammen, die mit unirdischer Hitze brennen. Forzaantirilys (for-zan-TILL-ih-riss) haust im Herzen des größten Vulkans der Welt, und wenn die Gerüchte wahr sind, kann sie überall durch Magma- und Lavaströme sehen und hören.",
       "Forzaantirilys ist ein Inferno aus Zorn, und diese brennende Wut macht sie immun gegen alle Feuer, einschließlich des grellen Lichts der Sonne. Sie hasst Humanoide für ihren Glauben, ein Anrecht auf die Profanwelt zu haben, und sie verabscheut die Götter, die sie erschufen.",
@@ -1390,7 +1390,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 11,
     sprachen: ["Urtümlich"],
     umgebung: ["Höhle", "Unterirdisch"],
-    bild: "assets/images/monster/flee-mortals/fossiler_kryptiker.png",
+    bild: "flee-mortals/fossiler_kryptiker.png",
     beschreibung: ["Diese lebenden Fossil-Amalgame werden von Elementargeistern bewohnt und sind in Orten von überirdischer Schönheit mit einer Verbindung zur Elementarebene der Quintessenz zu finden — oft in Höhlen, die seit Äonen unberührt blieben oder deren Gänge von kostbaren Metalladern in exquisiten fraktalen Mustern durchzogen sind. Die Geister bewohnen die Fossilien von Kreaturen, die einst diese Stätten schützten, und setzen ihr Erbe fort.", "Fossil-Kryptiker variieren stark in ihrer gewählten Gestalt, enthalten jedoch alle ein zentrales Fossilbündel auf einer wirbelnden Stein- und Metallsäule. Mit formbaren Gliedern aus ihrem erdigen Kern bewegen sie sich mit unheimlicher Schnelligkeit. Archäologen, Bergleute und andere, die das Territorium eines Kryptikers stören, werden zu Staub gemahlen und in seine Form selbst eingearbeitet."],
     besonderheiten: [
       { name: "Drehender Rumpf", beschreibung: "Liegende Kreaturen können keine Gelegenheitsangriffe gegen den Kryptiker ausführen, und er kann sich durch Räume liegender Kreaturen bewegen. Das erste Mal pro Zug, wenn der Kryptiker den Raum eines liegenden Feindes durchquert, erleidet dieser 7 (1W6+4) Wuchtschaden." }
@@ -1430,7 +1430,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 16,
     sprachen: ["Aquanisch", "Gemein", "sowie die Sprachen einer durch Vereiste Spiegelung gespiegelten Kreatur"],
     umgebung: ["Arktis", "Gebirge", "Andere Ebenen"],
-    bild: "assets/images/monster/flee-mortals/frostkern.png",
+    bild: "flee-mortals/frostkern.png",
     beschreibung: [
       "Eine Wesenheit aus gespiegeltem Eis, der Frostkern ist fast immer von einer vereisten Fassade bedeckt. Sie werden gemeinhin Eisige Schimmermasken genannt, weil sie Kreaturen unvollkommen imitieren und so übernatürlichen Schrecken über jene bringen können, die sie spiegeln. Diese Furcht macht die gespiegelte Kreatur anfälliger für Schaden, ihre Gestalt und ihr Geist verkümmern unter dem prüfenden Blick des Frostkerns zu einer brüchigen Konsistenz."
     ],
@@ -1474,7 +1474,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 12,
     sprachen: ["Tiefensprache", "Tiefengemein", "Telepathie 36 m"],
     umgebung: ["Unterirdisch", "Stadt"],
-    bild: "assets/images/monster/flee-mortals/gedankentoeter.png",
+    bild: "flee-mortals/gedankentoeter.png",
     beschreibung: ["Schwebende Klauenhirne mit einer nachgezogenen Wirbelsäule und freiliegenden Nerven, Gedankentöter dienen den Lautlosen Sprechern als Haustiere und Schergen. Diese formlosen Parasiten zwingen sich in den Körper eines Humanoiden und ersetzen sein Nervensystem durch eigenes Gewebe. Am Ende kennt der Gedankentöter alles, was das Opfer wusste, und kann den Körper steuern — ein perfekter Spion."],
     besonderheiten: [
       { name: "Formlos", beschreibung: "Der Gedankentöter kann sich durch einen Spalt von 2,5 cm Breite bewegen, ohne sich zu quetschen." },
@@ -1514,7 +1514,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 11,
     sprachen: ["Tiefensprache", "Tiefengemein", "Telepathie 36 m"],
     umgebung: ["Unterirdisch"],
-    bild: "assets/images/monster/flee-mortals/gedankentoeter_welpe.png",
+    bild: "flee-mortals/gedankentoeter_welpe.png",
     beschreibung: ["Minderkräftige Varianten des Gedankentöters, die von Lautlosen Sprechern in großer Zahl gezüchtet werden. Obwohl sie selbst keinen Körper bewohnen können, untergraben mehrere Welpen gemeinsam die psionische Widerstandskraft ihrer Feinde und machen sie für die Kräfte der Synlirii anfälliger."],
     besonderheiten: [
       { name: "Formlos", beschreibung: "Der Welpe kann sich durch einen Spalt von 2,5 cm Breite bewegen, ohne sich zu quetschen." },
@@ -1552,7 +1552,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 15,
     sprachen: ["Abyssal", "Gnoll"],
     umgebung: ["Wüste", "Grasland", "Ruinen", "Andere Ebenen"],
-    bild: "assets/images/monster/flee-mortals/gnoll_abgrundbeschwoerer.png",
+    bild: "flee-mortals/gnoll_abgrundbeschwoerer.png",
     beschreibung: [
       "Der Gnoll-Abgrundbeschwörer ist ein dämonisch begabter Anführer einer Gnoll-Kriegsbande, der Hyänen aus der Abyssalen Ödnis herbeiruft und mit dunkler Magie in Gnoll-Marodeure verwandeln kann."
     ],
@@ -1596,7 +1596,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 11,
     sprachen: ["Abyssal", "Gnoll"],
     umgebung: ["Wüste", "Grasland", "Ruinen", "Andere Ebenen"],
-    bild: "assets/images/monster/flee-mortals/gnoll_knochenspalter.png",
+    bild: "flee-mortals/gnoll_knochenspalter.png",
     beschreibung: [
       "Der Gnoll-Knochenspalter ist ein massiger Brawler einer Gnoll-Kriegsbande, ausgerüstet mit Stachelflegel und scharfen Reißzähnen. Sein blutiges Brüllen treibt Verbündete zu Mordlust an."
     ],
@@ -1638,7 +1638,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 11,
     sprachen: ["Abyssal", "Gnoll"],
     umgebung: ["Wüste", "Grasland", "Ruinen", "Andere Ebenen"],
-    bild: "assets/images/monster/flee-mortals/gnoll_marauder.png",
+    bild: "flee-mortals/gnoll_marauder.png",
     beschreibung: [
       "Der Gnoll-Marodeur ist der Fußsoldat einer Gnoll-Kriegsbande, schnell und bissig, der sich im Sturmangriff auf seine Beute stürzt."
     ],
@@ -1680,7 +1680,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 10,
     sprachen: ["Gemein", "Goblinisch"],
     umgebung: ["Höhle", "Wald", "Ruinen", "Hügel"],
-    bild: "assets/images/monster/flee-mortals/goblin_assasssine.png",
+    bild: "flee-mortals/goblin_assasssine.png",
     beschreibung: [
       "Goblin-Assassinen operieren als Schattenjäger, die durch Dunkelheit und Verwirrung ideale Bedingungen für tödliche Meuchelangriffe schaffen. Mit ihrer Fähigkeit, magische Dunkelheit heraufzubeschwören, aus der selbst Dunkelsicht keinen Ausweg bietet, treffen sie aus dem Verborgenen – und hinterlassen Wunden, die weiterbluten, bis jemand eingreift."
     ],
@@ -1724,7 +1724,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 10,
     sprachen: ["Gemein", "Goblinisch"],
     umgebung: ["Höhle", "Wald", "Ruinen", "Hügel"],
-    bild: "assets/images/monster/flee-mortals/goblin_fluchspucker.png",
+    bild: "flee-mortals/goblin_fluchspucker.png",
     beschreibung: [
       "Goblin-Fluchspucker sind mystisch begabte Strategen, die Feinde mit Flüchen und Bann lähmen, während sie eigene Verbündete gezielt herbeiteleportieren. Feige, aber gerissen, lenken sie im Notfall Schläge auf ihre eigenen Gefolgsleute um – Hauptsache, sie selbst bleiben unversehrt."
     ],
@@ -1768,7 +1768,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 10,
     sprachen: ["Gemein", "Goblinisch"],
     umgebung: ["Höhle", "Wald", "Ruinen", "Hügel"],
-    bild: "assets/images/monster/flee-mortals/goblin_rueckenspalter.png",
+    bild: "flee-mortals/goblin_rueckenspalter.png",
     beschreibung: [
       "Goblin-Rückenspalter sind für ihre Verhältnisse ungewöhnlich groß und muskulös. Mit roher Kraft schwingen sie Großäxte, als wären es Spielzeuge, und gleichen ihre geringe Statur durch schiere Brutalität aus. Wenn ein Feind einen ihrer Hiebe verfehlt, ist das für sie kein Zeichen der Niederlage – sondern eine Einladung zur Vergeltung."
     ],
@@ -1811,7 +1811,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein", "Goblinisch"],
     umgebung: ["Höhle", "Wald", "Ruinen", "Hügel"],
-    bild: "assets/images/monster/flee-mortals/goblin_scharfschuetze.png",
+    bild: "flee-mortals/goblin_scharfschuetze.png",
     beschreibung: [
       "Goblin-Scharfschützen verschmelzen mit ihrer Umgebung, bevor sie aus dem Verborgenen präzise Pfeile abfeuern. Anders als gewöhnliche Bogenschützen verraten sie ihre Position selbst bei einem Fehlschuss nicht – und wenn sie aus dem Hinterhalt treffen, ist der Schaden verheerend."
     ],
@@ -1854,7 +1854,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 27,
     sprachen: ["versteht alle Sprachen, kann aber nicht sprechen", "Telepathie 45 m"],
     umgebung: ["Gebirge", "Unterirdisch"],
-    bild: "assets/images/monster/flee-mortals/goxxomoc.png",
+    bild: "flee-mortals/goxxomoc.png",
     beschreibung: [
       "Goxomoc, der Schreckensfürst, schlummert unter dem gewaltigen Vulkan Ynixquichcauitl — zu Deutsch: das Ende aller Dinge. Das Oaxuatl-Volk von Ix glaubt, dass die unvermeidliche Eruption dieses Vulkans das Ende der Welt ankündigen wird, und beobachtet ihn, um die Stimmung des schlummernden Titanen zu deuten. Die Oaxuatl verehren ihren Beschützer in seinen Aspekten als Wesen der Erde und der Stürme, doch sie beten nicht zu ihm. Sie glauben nicht einmal, dass er sich ihrer bewusst ist — und doch sind sie unerschütterlich überzeugt: Sollte ihr Land bedroht werden, wird der Schreckensfürst erwachen und es verteidigen.",
       "Die Oaxuatl glauben, dass Goxomoc die Tetzahuitl erschaffen hat — die großen Schreckensechsen, die ihre Inselkette beherrschen. Sie betrachten diese Kinder Goxomocs als heilige Avatare des Titanen. Verliert Goxomoc im Kampf seine körperliche Form, wandelt sich seine Essenz zu Xogomoc: einem riesenhaften Schreckenssaurier aus lebendigem Blitz."
@@ -1913,7 +1913,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 13,
     sprachen: ["Goblinisch", "Infernal"],
     umgebung: ["Andere Ebenen", "Ruinen", "Stadt"],
-    bild: "assets/images/monster/flee-mortals/grilp.png",
+    bild: "flee-mortals/grilp.png",
     beschreibung: [
       "Der Grilp – ein grünhäutiger Teufel von der Größe einer Hauskatze – kann Farbe und Textur seiner Haut verändern, um sich seiner Umgebung anzupassen. Hochrangige Hobgoblins setzen ihn häufig als Kundschafter, Spion, Boten und Laufburschen ein. Doch mehr als für diese verdeckten Fähigkeiten schätzen Hobgoblins den Grilp für seinen magiedurchwirkten Speichel, der andere Kreaturen anfällig für Feuer- und Nekrotischen Schaden macht."
     ],
@@ -1953,7 +1953,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 17,
     sprachen: ["Telepathie 18 m"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/flee-mortals/heimsucher.png",
+    bild: "flee-mortals/heimsucher.png",
     beschreibung: [
       "Wenn eine Masse von Seelen einen dunklen und blutigen Tod erleidet, verschmelzen die unglücklichen Seelen gelegentlich zu einem wütenden Kollektiv, das als Heimsucher bezeichnet wird. Solche gequälten Amalgame von Geistern sind dazu verdammt, die Stätte ihres Todes zu durchstreifen, bis sie zur Ruhe gebracht werden.",
       "Diese untoten Wolken psychischer Energie sind gewöhnlich unsichtbar. Wenn man sie mit dem Zauber Unsichtbares Sehen oder ähnlicher Magie betrachtet, erscheinen sie als wirbelnder silbergrüner Nebel aus verschlungenen Gliedmaßen und schreienden Gesichtern.",
@@ -2001,7 +2001,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein", "Goblinisch", "Infernal"],
     umgebung: ["Andere Ebenen", "Ruinen", "Stadt"],
-    bild: "assets/images/monster/flee-mortals/hobgoblin_kriegsmagier.png",
+    bild: "flee-mortals/hobgoblin_kriegsmagier.png",
     beschreibung: [
       "Hobgoblin-Kriegsmagier sind die geheimnisumwitterten Zauberer infernaler Legionen, die das teuflische Erbe ihrer Rasse in verheerende arkane Waffen umdeuten. Mit Feuerregen und entweihtem Boden formen sie das Schlachtfeld zu Gunsten ihrer Truppen – und wer es wagt, in ihrer Gegenwart einen Zauber zu wirken, riskiert, dessen Energie zurückgeschleudert zu bekommen."
     ],
@@ -2044,7 +2044,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 11,
     sprachen: ["Gemein", "Goblinisch", "Infernal"],
     umgebung: ["Andere Ebenen", "Ruinen", "Stadt"],
-    bild: "assets/images/monster/flee-mortals/hobgoblin_rauchbinder.png",
+    bild: "flee-mortals/hobgoblin_rauchbinder.png",
     beschreibung: [
       "Hobgoblin-Rauchbinder sind mysteriöse Zauberer, die das infernale Feuer in ihren Adern zu giftigem Rauch verwandeln können. In ihrer Rauchform gleiten sie ungreifbar durch Schlachtfelder, ersticken Feinde mit giftigen Feuerstößen und verschwinden, sobald die Lage brenzlig wird. Erst im Tod verraten sie ihre wahre Natur – mit einem letzten Strahl brennenden orangefarbenen Blutes."
     ],
@@ -2088,7 +2088,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein", "Goblinisch", "Infernal"],
     umgebung: ["Andere Ebenen", "Ruinen", "Stadt"],
-    bild: "assets/images/monster/flee-mortals/hobgoblin_soldat.png",
+    bild: "flee-mortals/hobgoblin_soldat.png",
     beschreibung: [
       "Hobgoblin-Soldaten sind das Rückgrat infernaler Legionen: diszipliniert, rücksichtslos und mit brennenden Waffen ausgerüstet. Einzeln sind sie eine handhabbare Bedrohung, doch in Formation werden ihre Fluchtaktiken zur strategischen Waffe – jeder Feind, der einen Soldaten ignoriert und stattdessen andere angreift, zahlt mit Feuer."
     ],
@@ -2130,7 +2130,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein", "Goblinisch", "Infernal"],
     umgebung: ["Andere Ebenen", "Ruinen", "Stadt"],
-    bild: "assets/images/monster/flee-mortals/hobgoblin_todeshauptmann.png",
+    bild: "flee-mortals/hobgoblin_todeshauptmann.png",
     beschreibung: [
       "Hobgoblin-Todeshauptmänner sind die gefürchteten Kriegsherren infernaler Hobgoblin-Heere. Auf dem Schlachtfeld koordinieren sie ihre Truppen mit eiserner Disziplin, befehligen Angriffe mit einem einzigen Wort und schützen Verbündete mit magischer Unsichtbarkeit. Niemand in ihrer Nähe kann überrascht werden – und wer einen Todeshauptmann fällt, wird mit einem Schwall brennenden orangefarbenen Blutes belohnt."
     ],
@@ -2177,7 +2177,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 13,
     sprachen: ["versteht Gemein und Infernal, kann sie jedoch nicht sprechen"],
     umgebung: ["Andere Ebenen", "Ruinen", "Stadt"],
-    bild: "assets/images/monster/flee-mortals/hoellenhund.png",
+    bild: "flee-mortals/hoellenhund.png",
     beschreibung: [
       "Höllenhunde sind infernale Jäger aus den tiefsten Schichten der Neun Höllen. Ihr Fell verdunkelt und verhärtet sich, sobald Feuer sie berührt, was sie mit der Zeit nahezu unverwundbar macht. Mit übernatürlichem Gespür für Beute und der Fähigkeit, Höllenfeuer zu speien, sind sie ideale Wächter und Jagdgefährten für teuflische Wesen."
     ],
@@ -2220,7 +2220,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 9,
     sprachen: ["versteht Gemein und Infernal, kann sie jedoch nicht sprechen"],
     umgebung: ["Andere Ebenen", "Ruinen", "Stadt"],
-    bild: "assets/images/monster/flee-mortals/hoellenhund_koeter.png",
+    bild: "flee-mortals/hoellenhund_koeter.png",
     beschreibung: [
       "Höllenhund-Köter sind die kleineren, schwächeren Verwandten ausgewachsener Höllenhunde. Einzeln sind sie kaum eine Bedrohung, doch in Rudeln werden sie gefährlich: Ihr Kreuzfeuer kann jeden Feind in ihrer Mitte einäschern, und ihr koordinierter Biss setzt selbst hartgesottene Abenteurer in Brand."
     ],
@@ -2260,7 +2260,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Höhle", "Wald", "Ruinen"],
-    bild: "assets/images/monster/flee-mortals/huschling.png",
+    bild: "flee-mortals/huschling.png",
     beschreibung: [
       "Huschling sind kleine, fledermausartige Wesen, die häufig mit Goblin-Stämmen zusammenleben und als Wachposten oder Kundschafter dienen. Mit blitzschnellen Krallenhieben können sie Sand oder Schmutz in die Augen ihrer Opfer schleudern und so kurzfristige Blindheit verursachen, bevor sie in der Dunkelheit verschwinden."
     ],
@@ -2299,7 +2299,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 15,
     sprachen: ["Gemein", "Sylvanisch"],
     umgebung: ["Wald", "Feenwildnis"],
-    bild: "assets/images/monster/flee-mortals/knochenstalker.png",
+    bild: "flee-mortals/knochenstalker.png",
     beschreibung: [
       "Knochenpirscher sind unheimliche Feenwesen, die die Schädel besiegter Kreaturen sammeln und als Quelle ihrer Macht nutzen. Sie streifen durch dunkle Wälder und finstere Feenwildnisse und beleben die Überreste ihrer Opfer, um sie in ihren Angriffen einzusetzen.",
       "Jeder Schädel, den ein Knochenpirscher bei sich trägt, verleiht ihm Fähigkeiten, die dem Typ der Kreatur entsprechen, von der er stammt. Die Schädel zerfallen nach dem Einsatz, doch der Pirscher findet stets neue Beute."
@@ -2346,7 +2346,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein", "Drakonisch"],
     umgebung: ["Höhle", "Unterirdisch", "Hügel", "Ruinen"],
-    bild: "assets/images/monster/flee-mortals/kobold_venator.png",
+    bild: "flee-mortals/kobold_venator.png",
     beschreibung: [
       "Kobold-Venatoren sind hinterlistige Kämpfer, die ihre wahre Kampfstärke hinter der Fassade eines unerfahrenen Kriegers verbergen. Koordiniert mit ihren Schildkameraden bilden sie eine kompakte Schutzmauer, während Netze und brennendes Feuer Feinde bewegungsunfähig machen."
     ],
@@ -2390,7 +2390,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Höhle", "Unterirdisch", "Hügel", "Grasland"],
-    bild: "assets/images/monster/flee-mortals/koenigsspaltenwurm.png",
+    bild: "flee-mortals/koenigsspaltenwurm.png",
     beschreibung: [
       "Namensgebend für ihre berüchtigte Jagdtechnik formen Königsspaltenwürmer die Erde um, während sie sich durch sie hindurch bewegen – sie graben Tunnel und Spalten, um ihrer enormen Gestalt Platz zu schaffen. Dann lauern sie tief unter der Erde. Wenn sie die Vibrationen ihrer Beute über sich spüren, schießen sie ihre schlangenartigen Zungen durch die Spalten und reißen die Beute von der Oberfläche in ihr gewaltiges Maul. Erfahrene Abenteurer wissen: Selbst der kleinste Riss in der Erde gebietet Vorsicht.",
       "Darmbestand: Der Wurm frisst wahllos und schluckt Kreaturen, Bauwerke und kostbare Edelsteine gleichermaßen. Der Reichtum in einem Königsspaltenwurm würde jeden Drachenhort beschämen – doch der Wurm kümmert sich nicht um Schätze und ahnt nichts von den Beständen in seinem labyrinthartigen Gedärm. Nur wenige haben das Innere eines Königsspaltenwurms gesehen und überlebt, doch wer es tat, geht in der Regel mit einem wertvollen Andenken davon.",
@@ -2447,7 +2447,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 14,
     sprachen: ["versteht die Sprachen, die er zu Lebzeiten kannte, kann aber nicht sprechen"],
     umgebung: ["Unterirdisch", "Höhle"],
-    bild: "assets/images/monster/flee-mortals/koptourok.png",
+    bild: "flee-mortals/koptourok.png",
     beschreibung: ["Der Koptourok — aus einem archaischen Zwergendialekt, übersetzt etwa als 'toter Tourist' — ist ein Untoter, der einst in einer Welt mit Himmel lebte und seine letzten Momente an einem dunklen, atemlosen Ort verbrachte. Er erwacht als raspelnde Papierhuthülle, wie eine Kreuzung aus einer ausgewickelten Mumie und einem Akkordeonbalg, der sich unaufhörlich ausdehnt und zusammenzieht.", "Die Luft wird in Anwesenheit eines Koptourok spürbar dünner, und das Wenige, das übrig bleibt, bewegt sich auf ihn zu. Fleischfressende Untote jagen oft gemeinsam mit einem Koptourok, denn der Atemsauger nimmt das Seine und überlässt den Leichnam den Aasfressern."],
     besonderheiten: [
       { name: "Atemlose Aura", beschreibung: "Feinde innerhalb von 9 m können nicht sprechen. Müssen sie atmen, haben sie zudem Nachteil auf KON-Rettungswürfe." },
@@ -2489,7 +2489,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 12,
     sprachen: [],
     umgebung: ["Sumpf", "Dschungel", "Küste"],
-    bild: "assets/images/monster/flee-mortals/krallenfisch.png",
+    bild: "flee-mortals/krallenfisch.png",
     beschreibung: [
       "Den Angulotls als q'ukutxal (koo OOK oot shaal) bekannt, ähnelt der Krallenfisch einer Muräne mit acht reptilienartigen Beinen. Diese kleinen Bestien gleiten durch Flussströmungen ebenso geschickt wie sie durch Gras schlängeln oder Bäume erklimmen. Angulotls trainieren sie, Flöße zu ziehen und durch Würgen oder Stromschläge zu kämpfen."
     ],
@@ -2529,7 +2529,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Sumpf", "Dschungel", "Küste"],
-    bild: "assets/images/monster/flee-mortals/krallenfisch-begleiter.png",
+    bild: "flee-mortals/krallenfisch-begleiter.png",
     beschreibung: [
       "Begleiter-Tier (Companion) – Werte skalieren mit dem Übungsbonus (PB) und der Stufe des Pflegers. RK 13+PB, TP 7 + 7×Pfleger-Stufe; Rettungswürfe und Fertigkeiten erhalten zusätzlich +PB. Bestimmte Aktionen kosten 'Wildheits-Punkte' (Ferocity) – ein RPG-spezifisches Companion-Ressourcensystem."
     ],
@@ -2573,7 +2573,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Wald", "Unterirdisch", "Hügel"],
-    bild: "assets/images/monster/flee-mortals/kriegsspinne.png",
+    bild: "flee-mortals/kriegsspinne.png",
     beschreibung: [
       "Kriegsspinnen sind gigantische Arachniden, die von erfahrenen Goblin-Stämmen als Reittiere und lebende Kriegsmaschinen eingesetzt werden. Ihr breiter Rücken bietet Platz für Scharen kleiner Reiter, ihr Spinnennetz hält Feinde fest, und im Tod werden sie selbst zur Bedrohung: Aus dem berstenden Körper bricht ein hungriger Spinnenschwarm hervor."
     ],
@@ -2619,7 +2619,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 13,
     sprachen: ["Abyssal", "Gemein", "Infernal"],
     umgebung: ["Ruinen"],
-    bild: "assets/images/monster/flee-mortals/lakuna.png",
+    bild: "flee-mortals/lakuna.png",
     beschreibung: [
       "Die Lakuna ernährt sich vom Kummer verlassener Orte. Zunächst speist dieses böse Teufelswesen von den Emotionen einsamer Bewohner oder Trauernder, die kommen, um ihren Verstorbenen Respekt zu erweisen. Der Tod dieser Opfer beginnt einen Trauerzyklus, der die Lakuna auf unbestimmte Zeit mit weiterer Beute versorgt.",
       "Eine Lakuna nimmt die Form einer rissigen und bröckelnden Statue an, deren Gesicht eine Maske unerträglichen Kummers trägt. Wann immer Abenteurer das Jagdgebiet einer Lakuna betreten, folgt das Teufelswesen ihnen eine Weile und weidet sich an jeder Gewalt, die die Eindringlinge begehen. Entdecken die Abenteurer jedoch Freude – vielleicht beim Auffinden von Schätzen oder nach dem Überleben eines schwierigen Kampfes – schlägt die Lakuna zu.",
@@ -2669,7 +2669,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 17,
     sprachen: [],
     umgebung: ["Höhle", "Unterirdisch"],
-    bild: "assets/images/monster/flee-mortals/lamasombra.png",
+    bild: "flee-mortals/lamasombra.png",
     beschreibung: ["Die Lamasombra — ein achtbeiniges, graugeschupptes Reptil von der Größe eines Erwachsenen — ist aller Wahrscheinlichkeit nach das Werk eines fleischbiegenden Magiers oder Kults. Dieser Echsen-Arachniden-Hybrid spezialisiert sich auf das Jagen von Höhlenbewohnern.", "Die unnatürlichen Schuppen der Lamasombra beugen die Dunkelheit so, dass sie für Kreaturen mit Dunkelsicht im Dunkeln oder in dämmrigem Licht unsichtbar wird. Hat sie ihr Opfer mit ihrer krankmachenden Krankheit infiziert, verfolgt sie geduldig die Blutspur und wartet ab, bis Fieber und Schwäche ihre Beute erlegen haben."],
     besonderheiten: [
       { name: "Höhlenspitze", beschreibung: "Die Lamasombra kann nicht mit Zittersinn wahrgenommen werden. Befindet sie sich im Dunkeln oder in dämmrigem Licht, ist sie für Kreaturen mit Dunkelsicht unsichtbar, für Kreaturen ohne Dunkelsicht jedoch in dämmrigem Licht sichtbar." },
@@ -2711,7 +2711,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 15,
     sprachen: ["Tiefensprache", "Tiefengemein", "Telepathie 36 m"],
     umgebung: ["Unterirdisch", "Andere Ebenen"],
-    bild: "assets/images/monster/flee-mortals/lautloser_sprecher.png",
+    bild: "flee-mortals/lautloser_sprecher.png",
     beschreibung: ["Die Synlirii — bekannt als die Lautlosen Sprecher — gelten als die mächtigsten Psioniker des Zeitraums. Nachfahren stimmloser aquatischer Kopffüßer, sind sie Humanoiden in Denkweise und Motiven fremd. Sie bezeichnen Kreaturen, die durch Fleischlippen Luft pressen, als die Bellenden — eine Schande, die korrigiert werden muss.", "Obwohl Synlirii und Überbewusstseine Erbfeinde sind, verbindet sie eine gemeinsame Obsession mit den Bellenden zu unruhigen Allianzen. Die Lautlosen Sprecher betrachten Information als ihre größte Waffe und nutzen psionische Fähigkeiten, um Erinnerungen zu manipulieren und unentdeckt in andere Kulturen einzudringen."],
     besonderheiten: [],
     aktionen: [
@@ -2751,7 +2751,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Unterirdisch", "Höhle"],
-    bild: "assets/images/monster/flee-mortals/leyegel.png",
+    bild: "flee-mortals/leyegel.png",
     beschreibung: [
       "Leyegel hausen in Höhlen nahe unterirdischer Leylinien. Diese schneckenartigen Kreaturen ernähren sich von Magie; wenn sie deren Anwesenheit spüren, greifen sie mit ihren zahnbesetzten Mäulern aus, um die Energie abzuzapfen und sich mit ihrer Kraft vollzusaugen. Wenn ein Leyegel satt ist, sprühen die Stacheln an seinem Körper magische Energie.",
       "Rasende Fresslust. Wenn Leyegel sich von natürlicher Leylinienergie ernähren, bleiben sie zahm und selbstzufrieden. Jedoch versetzen die Zauber lebender Kreaturen Leyegel in einen Rausch und veranlassen zu hungrigen Angriffen mit wenig Rücksicht auf die eigene Sicherheit.",
@@ -2794,7 +2794,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 14,
     sprachen: [],
     umgebung: ["Wüste", "Grasland", "Wald"],
-    bild: "assets/images/monster/flee-mortals/lichtbieger.png",
+    bild: "flee-mortals/lichtbieger.png",
     beschreibung: [
       "Lichtbieger streifen durch Wüsten, Ebenen und Wälder – jede sonnenüberflutete Wildnis. Ihr Fell beugt und bricht das Umgebungslicht und erzeugt Fata Morganas, die ihre Beute ablenken und verwirren – daher ihr Name.",
       "Verborgene Jäger: In der Ferne ähnelt ein Lichtbieger einem gewöhnlichen Löwen, doch aus der Nähe offenbaren sich leuchtende Augen, eine schillernde Mähne und ein Paar peitschender Schweife, gespickt mit lichtbrechenden Kristallen. Das Fell verzerrt Licht auf magische Weise, um Bewegungen zu verschleiern, und ermöglicht dem Lichtbieger zu teleportieren, während er ein visuelles Nachbild hinterlässt. Ahnungslose Beute merkt selten, dass sie auf ein Abbild starrt, bis die Kreatur heranspringt.",
@@ -2843,7 +2843,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 15,
     sprachen: ["versteht Abyssal, Gemein und Infernal, kann aber nicht sprechen"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/flee-mortals/lichtdieb.png",
+    bild: "flee-mortals/lichtdieb.png",
     beschreibung: [
       "Ein Lichtdieb ist ein Teufelswesen, das in die Mundane Welt kommt, um sich von Seelenenergie zu ernähren. Sie streifen durch Friedhöfe und Grüfte, wo sie wissen, dass verletzliche Trauernde in der Dunkelheit kommen, um ihren Verstorbenen Respekt zu erweisen. Diese Fledermausflügelwesen ähneln abgehäuteten humanoiden Händen mit einem blutunterlaufenen Auge, das von der Handfläche starrt – obwohl ihre Opfer kaum die Chance haben, sie zu bemerken, bevor die Dunkelheit hereinbricht.",
       "Lichtdiebe verfolgen Opfer oft in Gruppen und nutzen ihre übernatürlichen Kräfte, um Lichtquellen in der Nähe ihrer Beute zu betreten und zu löschen. Die Lichtdiebe verzehren die Energie jedes Lichts und nutzen diese Energie dann kurz vor dem Angriff, um einen Fluch anzutreiben, der Kreaturen vorübergehend ihrer Dunkelsicht beraubt.",
@@ -2883,7 +2883,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 26,
     sprachen: ["Tiefensprache"],
     umgebung: ["Unterirdisch", "Höhle"],
-    bild: "assets/images/monster/flee-mortals/marvorok.png",
+    bild: "flee-mortals/marvorok.png",
     beschreibung: [
       "Marvoroks (marr-VORR-ock) sind heimtückische Raubtiere, die in den tiefsten Schichten der Unterwelt hausen und ständig nach Beute suchen, um ihren scheinbar endlosen Hunger zu stillen. Diese monströsen zweibeinigen Wesen haben sechs Arme, von denen vier in scharfen, schwertartigen Klauen enden. Ihr Sehvermögen ist schlecht, aber sie kompensieren dies mit ihrem unglaublichen Geruchssinn, der es ihnen ermöglicht, allein durch Witterung zu jagen. Marvoroks nutzen ihre Klauen, um sich in felsige Oberflächen zu krallen und sich hochzuziehen — sie klettern so mühelos wie sie laufen.",
       "Stiller Tod. Bemerkenswert lautlos für ihre massive Größe, lauern Marvoroks ihrer Beute auf, bevor sie zum Töten vorgehen. Sie warten geduldig auf den perfekten Hinterhalt, springen aus dem Versteck hervor und zerfetzen ihre Opfer in einem ungeschützten Moment.",
@@ -2930,7 +2930,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 8,
     sprachen: ["Tiefensprache", "Tiefengemein", "Telepathie 36 m"],
     umgebung: ["Unterirdisch"],
-    bild: "assets/images/monster/flee-mortals/massiges_gehirn.png",
+    bild: "flee-mortals/massiges_gehirn.png",
     beschreibung: ["Die Thylinqa — von allen anderen als Massige Gehirne bezeichnet — sind von den Lautlosen Sprechern gezüchtete Aberrationen: humanoide Gestalten mit perlmuttfarbener Haut, vier massiven Armen und einem pulsierenden Gehirn anstelle eines Kopfes. Sie dienen als Leibwächter und psionische Batterien für ihre Synlirii-Schöpfer."],
     besonderheiten: [
       { name: "Psionische Immunität", beschreibung: "Das Gehirn wird von psionischen Kräften Lautloser Sprecher nicht beeinflusst, es sei denn, es wünscht dies." },
@@ -2972,7 +2972,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein"],
     umgebung: ["Stadt", "Ruinen", "Hügel"],
-    bild: "assets/images/monster/flee-mortals/menschlicher_halunke.png",
+    bild: "flee-mortals/menschlicher_halunke.png",
     beschreibung: [
       "Halunken sind kampferprobte Schläger und Söldner, die rohe Stärke mit grobschlächtigem Taktikkalkül verbinden. Einen Feind erst zu Boden zu schmettern und dann nachzutreten ist für sie kein unfairer Trick – es ist Kriegsführung."
     ],
@@ -3016,7 +3016,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 10,
     sprachen: ["Gemein", "plus zwei weitere Sprachen"],
     umgebung: ["Stadt", "Ruinen"],
-    bild: "assets/images/monster/flee-mortals/menschlicher_lehrmagier.png",
+    bild: "flee-mortals/menschlicher_lehrmagier.png",
     beschreibung: [
       "Menschliche Lehrmagier stehen noch am Anfang ihrer arkanen Ausbildung, doch im Verbund werden sie zur ernstzunehmenden Bedrohung. Ihre wahre Stärke liegt nicht im Einzelangriff, sondern in der koordinierten Macht gebündelter Blitz- und Donnerzauber – und in dem Schutz, den sie ihrem gewählten Schutzherrn gewähren."
     ],
@@ -3058,7 +3058,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 11,
     sprachen: ["Gemein"],
     umgebung: ["Wald", "Hügel", "Küste", "Grasland"],
-    bild: "assets/images/monster/flee-mortals/menschlicher_raeuber.png",
+    bild: "flee-mortals/menschlicher_raeuber.png",
     beschreibung: [
       "Räuber sind opportunistische Kämpfer, die mit einem wilden Ansturm in den Kampf stürmen und jeden Vorteil nutzen, den sie bekommen können. Ihr Schild ist ebenso Waffe wie Schutz – und wer glaubt, an ihnen vorbeizukommen, findet sich schnell um 1,5 m weiter weg oder flach auf dem Boden wieder."
     ],
@@ -3101,7 +3101,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein", "plus zwei weitere Sprachen"],
     umgebung: ["Stadt", "Ruinen", "Gebirge"],
-    bild: "assets/images/monster/flee-mortals/menschlicher_sturmmagier.png",
+    bild: "flee-mortals/menschlicher_sturmmagier.png",
     beschreibung: [
       "Menschliche Sturmmagier sind mächtige Arkanisten, die die rohe Kraft von Blitz und Donner in verheerende Angriffe kanalisieren. Mit ihrem arkanen Stab entladen sie vernichtende Blitzschläge, halten Feinde mit Windböen auf Distanz und stoßen jeden Angreifer, der ihnen zu nahe kommt, mit donnernder Kraft zurück."
     ],
@@ -3145,7 +3145,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein", "plus eine weitere Sprache"],
     umgebung: ["Stadt", "Ruinen", "Andere Ebenen"],
-    bild: "assets/images/monster/flee-mortals/menschlicher_todeskultist.png",
+    bild: "flee-mortals/menschlicher_todeskultist.png",
     beschreibung: [
       "Menschliche Todeskultisten weihen ihr Leben dem Dienst an dunklen Mächten, die über den Tod gebieten. Auf dem Schlachtfeld kanalisieren sie nekrotische Energie in verheerender Weise: Sie heilen sich an den Wunden, die sie schlagen, schwingen ihre Sense mit tödlicher Präzision und rufen Gefallene zurück ins Gefecht."
     ],
@@ -3190,7 +3190,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 11,
     sprachen: ["Zwergisch"],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/flee-mortals/multivok_anfuehrer.png",
+    bild: "flee-mortals/multivok_anfuehrer.png",
     beschreibung: ["Die Valok sind uralte Konstrukte einer längst vergessenen zwergischen Zivilisation — in Ruinen und verlassenen Festungen schlummernd, bis jemand ihren Aktivierungscode kennt. Sie kennen weder Ermüdung noch Furcht und folgen Befehlen mit maschineller Präzision.", "Als Kommandoeinheit der Valok koordiniert der Multivok-Anführer seine Untergebenen durch druckluftbetriebene Kommandosignale. Sein Zielstrahl markiert Feinde für Verbündete, und seine Druckluftfaust schleudert Gegner über das Schlachtfeld."],
     besonderheiten: [
       { name: "Unveränderliche Form", beschreibung: "Der Anführer ist immun gegen Zauber oder Effekte, die seine Form verändern würden." },
@@ -3232,7 +3232,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 17,
     sprachen: ["Zwergisch"],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/flee-mortals/multivok_leibwaechter.png",
+    bild: "flee-mortals/multivok_leibwaechter.png",
     beschreibung: ["Die Valok sind uralte Konstrukte einer längst vergessenen zwergischen Zivilisation — in Ruinen und verlassenen Festungen schlummernd, bis jemand ihren Aktivierungscode kennt. Sie kennen weder Ermüdung noch Furcht und folgen Befehlen mit maschineller Präzision.", "Der Multivok-Leibwächter ist die mächtigste Nahkampfvariante der Multivok-Klasse. Er ist darauf ausgelegt, wichtige Ziele zu schützen: Sein Valiar-Umhang lenkt Angriffe auf sich um, und sein magnetischer Zugmechanismus zieht metallgerüstete Feinde in Reichweite seiner Axtarme."],
     besonderheiten: [
       { name: "Unveränderliche Form", beschreibung: "Der Leibwächter ist immun gegen Zauber oder Effekte, die seine Form verändern würden." },
@@ -3276,7 +3276,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 20,
     sprachen: ["Gemein", "Tiefensprache", "Untergemein", "Telepathie 36 m"],
     umgebung: ["Ozean", "Unterirdisch", "Ruinen", "Gewässer"],
-    bild: "assets/images/monster/flee-mortals/olothek.png",
+    bild: "flee-mortals/olothek.png",
     beschreibung: [
       "Protean in ihrer Form und Wesen nahezu reiner Intellekt, denken die Alten in einer fremdartig-geometrischen Logik. Ihr Name für sich selbst ist nicht überliefert, doch Gelehrte glauben, sie seien die ältesten Wesen im Zeitgefüge, und nennen sie schlicht die Alten. Synlirii bezeichnen sie als Olothec — uralte Feinde. Doch manche menschliche Gelehrte haben bemerkt, dass dieser Begriff einer anderen archaischen Synlirii-Vokabel verdächtig ähnelt, die uralte Vorfahren bedeutet.",
       "Über unzählige Kulturen und Völker hinweg erscheinen Olothec in Albträumen und auf Tempelreliefs gleichermaßen. Ihr Hass auf die Gewöhnliche Welt und jedes lebende Wesen in ihr ist gut belegt. Olothec kanalisieren psionische Energie jenseits jeglicher sterblicher Macht. Für sie ist ein Lebewesen, das seine eigene Gestalt nicht umformen kann, abstoßend — ein widernatürliches Unding, das ausgerottet oder verwandelt werden muss.",
@@ -3331,7 +3331,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 16,
     sprachen: ["Gemein", "Tiefensprache", "Untergemein"],
     umgebung: ["Unterirdisch", "Ruinen"],
-    bild: "assets/images/monster/flee-mortals/ueberbewusstsein.png",
+    bild: "flee-mortals/ueberbewusstsein.png",
     beschreibung: [
       "Formal als Vaurath (Plural: Vaurathi) bekannt, planen und intrigieren Überbewusstseine gegen ihre Erzrivalen — die Synlirii und die Olothec — um die Herrschaft über die Unterwelt. Ein Überbewusstsein ist ein riesiges, schwebendes Gehirn mit einem großen zentralen Auge, umgeben von vielen kleineren eingebetteten Augen. Noch fremdartiger sind mehrere psionische Augen, die in unmittelbarer Nähe seines Kopfes schweben, jedes mit einem kleinen Gehirn verbunden, das einen einzigartigen psionischen Effekt manifestieren kann.",
       "Wie ihre Rivalen sind Überbewusstseine Meister des Wissens und von überlegenem Intellekt. Sie sind zwar keine Zauberer im klassischen Sinne, doch betrachten sie alle das Sammeln von Wissen und die arkanen Wissenschaften als wichtigstes Werkzeug für die endgültige Herrschaft. Überbewusstseine sind grausam und launisch, genießen aber Kraftproben des Intellekts. Ihre einzige Eitelkeit ist ihr unerschütterlicher Glaube an die eigene intellektuelle Überlegenheit über alle anderen.",
@@ -3383,7 +3383,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 20,
     sprachen: ["Gemein", "Drakonisch"],
     umgebung: ["Höhle", "Ozean", "Andere Ebenen"],
-    bild: "assets/images/monster/flee-mortals/qazyldrath.png",
+    bild: "flee-mortals/qazyldrath.png",
     beschreibung: [
       "Qazyldrath (KAZZ-ill-drath) ist eine uralte Kreatur aus Albträumen, ein Manipulator von Säure und Schatten, ein Monster, das die Köpfe der Sterblichen heimsucht, seit die Schwingen des Drachen erstmals das Licht der Sonne verschlangen. Das ehrwürdige Alter dieses Düsterdrachen wird nur von der Furcht übertroffen, die er gebietet.",
       "Auch bekannt als Sonnenfresser und Stiller Verfall, nimmt Qazyldrath eine zentrale Rolle in der mündlichen Überlieferung drakonischer Ahnenreihen ein; er soll einer der Urväter der niederen Drachen sein und für die Boshaftigkeit der Drachenart verantwortlich gemacht werden.",
@@ -3438,7 +3438,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 17,
     sprachen: ["Abyssal", "Gemein", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/flee-mortals/ruinant.png",
+    bild: "flee-mortals/ruinant.png",
     beschreibung: [
       "Seelenanzahl: 2 (1W4). Der Ruinant beginnt den Kampf mit einer Reserve von Seelen, die er für bestimmte Fähigkeiten ausgeben kann. Sinkt seine Seelenanzahl auf 0, fällt er in den Lethe-Zustand und greift mit unbeherrschter Wut die nächstgelegene Kreatur an, bis er wieder eine Seele aufnimmt."
     ],
@@ -3482,7 +3482,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 12,
     sprachen: [],
     umgebung: ["Höhle", "Unterirdisch", "Hügel"],
-    bild: "assets/images/monster/flee-mortals/schildschuppen-drangolin.png",
+    bild: "flee-mortals/schildschuppen-drangolin.png",
     beschreibung: [
       "Kobolds trainieren Drangolines – drakonische Schuppentiere – um Wohntunnel zu graben und feindliche Befestigungen zu unterhöhlen. Zwar können Drangolines sich zu Kugeln rollen und Hindernisse einrammen, doch Kobold-Taktiker bevorzugen den Weg unter Mauern hindurch. Nach dem Graben bricht der Drangolin in die Mitte eines feindlichen Lagers ein, woraufhin Kobold-Legionäre durch den Tunnel strömen.",
       "Aus Schilden gemacht: Kobold-Legionen verzieren die Schuppen ihrer Drangolines mit den Designs ihrer eigenen Schilde, und Krieger halten es für ein gutes Omen, wenn die Schuppe, die sie bemalt haben, einen Schlag abwehrt. Verliert ein Drangolin im Kampf eine Schuppe, wird sie einem Krieger geschenkt, um als Schild zu dienen."
@@ -3526,7 +3526,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 17,
     sprachen: ["Abyssal", "Goblinisch", "Infernal"],
     umgebung: ["Andere Ebenen", "Stadt", "Ruinen"],
-    bild: "assets/images/monster/flee-mortals/schlachtdaemon.png",
+    bild: "flee-mortals/schlachtdaemon.png",
     beschreibung: [
       "Wenn böse Hobgoblins, die ihr teuflisches Erbe annehmen, einen Feind von der Karte tilgen müssen, beschwören ihre Kriegsmagier rituell die Hilfe eines Erzteufels, der ihnen einen Grack'tanar – im Gemeinen als Schlachtdämon bekannt – überlässt. Einmal beschworen, windet sich dieser turmhohe, schlangenleibige Dämon mit sechs Klauen Seite an Seite mit den Hobgoblins in den Krieg.",
       "Teufel fingen die Grack'tanars vor Äonen. Gebrochen warten diese Dämonen in den Sieben Städten der Hölle auf den Ruf zum Kampf – hungrig und schäumend. Ihre Erzteufelherren belohnen treue Hobgoblins, indem sie den Sterblichen gestatten, für eine Zeit die Zügel eines Grack'tanar zu halten. Diese Schlachtdämonen brennen darauf zu töten und ihre Herren zu erfreuen, damit man sie erneut aussendet – und wenden sich selten gegen ihre Auftraggeber, es sei denn, sie verfallen der Lethe."
@@ -3573,7 +3573,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Grasland", "Wüste", "Gebirge"],
-    bild: "assets/images/monster/flee-mortals/scyza.png",
+    bild: "flee-mortals/scyza.png",
     beschreibung: ["Scyzas sind gigantische echsenartige Kreaturen, die von Echsenmensch-Stämmen als Kampfreittiere gezähmt werden. Furchtlos angesichts von Gefahr, sind sie wie geschaffen für die vorderste Schlachtreihe. Ihre rüsselartig wuchtigen Beine und Klauen pflügen den Boden auf und wirbeln gewaltige Staubstürme auf. Noch bedrohlicher ist ihr massiver Kopfkamm, der beim Aufprall ein tiefes, knochenerschütterndes Dröhnen aussendet, das Feinde benommen zurücklässt."],
     besonderheiten: [
       { name: "Belagerungsmonster", beschreibung: "Die Scyza verursacht doppelten Schaden an Objekten und Bauwerken." },
@@ -3615,7 +3615,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 9,
     sprachen: ["versteht Zwergisch, kann nicht sprechen"],
     umgebung: ["Ruinen", "Unterirdisch", "Stadt"],
-    bild: "assets/images/monster/flee-mortals/servok_erbauer.png",
+    bild: "flee-mortals/servok_erbauer.png",
     beschreibung: ["Die Valok sind uralte Konstrukte einer längst vergessenen zwergischen Zivilisation — in Ruinen und verlassenen Festungen schlummernd, bis jemand ihren Aktivierungscode kennt. Sie kennen weder Ermüdung noch Furcht und folgen Befehlen mit maschineller Präzision.", "Als Baukonstrukt konzipiert, ist der Servok-Erbauer in der Lage, Festungen und Tunnel in kürzester Zeit zu errichten. Im Kampf werden seine Bauwerkzeuge zu tödlichen Waffen: Sein Abrissball zertrümmert Rüstungen, und sein flüssiger Betonlegersystem versiegelt Feinde auf dem Schlachtfeld."],
     besonderheiten: [
       { name: "Unveränderliche Form", beschreibung: "Der Erbauer ist immun gegen Zauber oder Effekte, die seine Form verändern würden." },
@@ -3657,7 +3657,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 9,
     sprachen: ["versteht Zwergisch, kann nicht sprechen"],
     umgebung: ["Ruinen", "Unterirdisch", "Stadt"],
-    bild: "assets/images/monster/flee-mortals/servok_kriegsmaschine.png",
+    bild: "flee-mortals/servok_kriegsmaschine.png",
     beschreibung: ["Die Valok sind uralte Konstrukte einer längst vergessenen zwergischen Zivilisation — in Ruinen und verlassenen Festungen schlummernd, bis jemand ihren Aktivierungscode kennt. Sie kennen weder Ermüdung noch Furcht und folgen Befehlen mit maschineller Präzision.", "Die mächtigste aller Servok-Varianten. Einst als ultimative Belagerungswaffe erschaffen, verfügt die Servok-Kriegsmaschine über eine integrierte Kraftkanone, Klingenrechen und ein Brennöl-Abwurfsystem. Ihr zerstörerischer Vormarsch pflügt durch Mauern und Feindformationen gleichermaßen."],
     besonderheiten: [
       { name: "Unveränderliche Form", beschreibung: "Die Kriegsmaschine ist immun gegen Zauber oder Effekte, die ihre Form verändern würden." },
@@ -3701,7 +3701,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 9,
     sprachen: ["versteht Zwergisch, kann nicht sprechen"],
     umgebung: ["Unterirdisch", "Gebirge", "Ruinen"],
-    bild: "assets/images/monster/flee-mortals/servok_schuerfer.png",
+    bild: "flee-mortals/servok_schuerfer.png",
     beschreibung: ["Die Valok sind uralte Konstrukte einer längst vergessenen zwergischen Zivilisation — in Ruinen und verlassenen Festungen schlummernd, bis jemand ihren Aktivierungscode kennt. Sie kennen weder Ermüdung noch Furcht und folgen Befehlen mit maschineller Präzision.", "Entwickelt für die tiefsten Bergwerksschächte, bohrt sich der Servok-Schürfer mit hydraulischen Bohrpressen und Druckluftspitzhacken durch massiven Fels. Im Kampf klemmt er Feinde ein und zerstört ihre Rüstungen Schicht für Schicht."],
     besonderheiten: [
       { name: "Unveränderliche Form", beschreibung: "Der Schürfer ist immun gegen Zauber oder Effekte, die seine Form verändern würden." },
@@ -3745,7 +3745,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Unterirdisch", "Gewässer", "Stadt"],
-    bild: "assets/images/monster/flee-mortals/steinruecken_isopode.png",
+    bild: "flee-mortals/steinruecken_isopode.png",
     beschreibung: [
       "Steinrücken-Isopoden suchen normalerweise Waldböden ab, aber in den Tiefen städtischer Abwasserkanäle werden sie weitaus bedrohlicher als ihre ländlichen Gegenstücke. Diese mastiff-großen Käfer suchen dunkle, feuchte Orte auf, um sich von verrottenden Pflanzen, zersetzender Materie oder allem zu ernähren, was langsam genug ist, um gefangen zu werden. Sie lauern in fließendem Wasser, tarnen sich mit den Steinen des Kanals – und wenn eine verlockende Mahlzeit vorbeizieht, schnappt die Isopode mit mächtigen Mundwerkzeugen zu.",
       "Wenn bedroht, schützt sich die Steinrücken-Isopode, indem sie die Falten ihres felsigen Panzers zu einer robusten Defensivkugel zusammenrollt und so bedeutenden Schutz gegen Angreifer erlangt.",
@@ -3788,7 +3788,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 10,
     sprachen: ["versteht Abyssal, kann es jedoch nicht sprechen"],
     umgebung: ["Wüste", "Grasland", "Andere Ebenen"],
-    bild: "assets/images/monster/flee-mortals/stosszahn_daemon.png",
+    bild: "flee-mortals/stosszahn_daemon.png",
     beschreibung: [
       "Hoch aufragend über einer Gnoll-Kriegsbande dient der elefantenartige Stoßzahn-Dämon als Lasttier und Kriegsmaschine. Stoßzahn-Dämonen haben keine Gesichtsmerkmale außer einer verdrehten Krone aus Stoßzähnen, die ihr gefräßiges Maul umringt. Obwohl Stoßzähne meist Gnoll-Befehlen folgen, stürmen sie bei besonders großem Seelenhunger ohne Rücksicht auf die Verbündeten vor, die sie womöglich zertrampeln.",
       "Seelenanzahl: 2 (1W4). Der Stoßzahn-Dämon beginnt den Kampf mit einer Reserve von Seelen, die er für bestimmte Fähigkeiten ausgeben kann. Sinkt seine Seelenanzahl auf 0, fällt er in den Lethe-Zustand und greift mit unbeherrschter Wut die nächstgelegene Kreatur an, bis er wieder eine Seele aufnimmt."
@@ -3832,7 +3832,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 16,
     sprachen: ["Aurisch", "Gemein"],
     umgebung: ["Gebirge", "Küste", "Andere Ebenen"],
-    bild: "assets/images/monster/flee-mortals/sturmessenz.png",
+    bild: "flee-mortals/sturmessenz.png",
     beschreibung: [
       "Aus der Ferne würden die meisten eine Sturmessenz, auch Böenweber genannt, für einen großen Raubvogel halten. Diese majestätische Kreatur besteht aus Schlieren farbigen Wolkenstoffs, gewoben zur Silhouette eines großen Adlers oder Falken.",
       "Böenweber agieren als Späher für ihre Ishkrars und sind meist die Ersten, die Ärger erkennen. Zudem sind die Essenzen unstillbar neugierig und stürzen sich oft herab, um mit Reisenden zu sprechen, sobald sie diese erblicken."
@@ -3873,7 +3873,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 15,
     sprachen: ["Sylvanisch", "alle Sprachen, die die Dryade vor ihrer Bindung kannte"],
     umgebung: ["Sumpf", "Wald"],
-    bild: "assets/images/monster/flee-mortals/sumpfdryade.png",
+    bild: "flee-mortals/sumpfdryade.png",
     beschreibung: [
       "Sumpfdryaden spiegeln die Bäume wider, an die sie gebunden sind. Einige sind unheimlich groß mit verdrehten, gestreckten Torsi, die leicht mit Baumstämmen verwechselt werden. Andere dehnen sich lateral aus und haben bis zu sechs lange Arme, die mit Moos triefen.",
       "Aus freier Wahl gebunden. Anders als ihre verbreiteteren Verwandten beginnen Sumpfdryaden ihr Leben als Sterbliche, meist als Kräuterkundige und andere Sumpfbewohner, die ihr Leben damit verbracht haben, eins mit ihrer Heimat zu werden. Wer klug, mächtig oder glücklich genug ist, kann auf eine bestehende Sumpfdryade treffen, die ihnen das Geheimnis der Bindung lehrt. Obwohl dieser Prozess beschwerlich und tödlich sein kann, verwandelt eine erfolgreiche Bindung den Sterblichen in ein Feenwesen und verbindet ihn mit seinem gewählten Baum.",
@@ -3922,7 +3922,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 13,
     sprachen: ["versteht Druidisch und Sylvanisch, kann aber nicht sprechen"],
     umgebung: ["Wald", "Feenwildnis"],
-    bild: "assets/images/monster/flee-mortals/tanzende_dame.png",
+    bild: "flee-mortals/tanzende_dame.png",
     beschreibung: [
       "Die Tanzende Dame ist eine uralte, riesige Pflanze, die in tiefen Wäldern und Feenwildnissen lebt. Ihr schlanker Stamm und ihre langen, peitschenden Ranken bewegen sich in einem unheimlichen, fast tänzerischen Rhythmus. Die leuchtend gefärbten Blüten, die sie schmücken, verströmen einen betäubenden Duft, der Lebewesen in ihren Bann zieht.",
       "Die Tanzende Dame ist keine bösartige Kreatur im herkömmlichen Sinne – sie reagiert schlicht auf Eindringlinge in ihrem Revier. Druiden, die ihre Sprache verstehen, berichten von einem uralten, traurigen Bewusstsein, das in ihr lebt."
@@ -3968,7 +3968,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 16,
     sprachen: ["Gemein", "Infernal"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/flee-mortals/teufelsjurist.png",
+    bild: "flee-mortals/teufelsjurist.png",
     beschreibung: [
       "Artillerie-Rolle: Der Teufelsjurist greift mit Feuerformeln aus der Entfernung an und versetzt seine Ziele mit eiternden Wunden in qualvolle Dauerleiden."
     ],
@@ -4014,7 +4014,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein", "Infernal"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/flee-mortals/teufelslegat.png",
+    bild: "flee-mortals/teufelslegat.png",
     beschreibung: [
       "Soldat-Rolle: Der Teufelslegat ist der Frontkämpfer der höllischen Hierarchie – ein bewaffneter Vollstrecker mit Höllischer Pike, der mehrere taktische Treffer-Effekte aus dem Stand austeilt."
     ],
@@ -4057,7 +4057,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein", "Infernal"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/flee-mortals/teufelsmagistrat.png",
+    bild: "flee-mortals/teufelsmagistrat.png",
     beschreibung: [
       "Plänkler-Rolle: Der Teufelsmagistrat ist ein blitzschneller Attentäter mit Doppelmessern und der Fähigkeit, Opfer gegen ihre eigenen Verbündeten in Furcht zu versetzen."
     ],
@@ -4100,7 +4100,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein", "Infernal"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/flee-mortals/teufelsnotar.png",
+    bild: "flee-mortals/teufelsnotar.png",
     beschreibung: [
       "Minion-Variante: Der Notar ist ein niederrangiger Verwaltungs-Teufel, der höhere Teufel buffet. Er fällt bei Schaden durch einen Angriff oder misslungenen RW sofort auf 0 TP."
     ],
@@ -4141,7 +4141,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 17,
     sprachen: ["Gemein", "Infernal"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/flee-mortals/teufelsrichter.png",
+    bild: "flee-mortals/teufelsrichter.png",
     beschreibung: [
       "Controller-Rolle: Der Teufelsrichter zwingt seinen Feinden infernale Pakte und Verfügungen auf, schwächt sie systematisch und lenkt Angriffe um."
     ],
@@ -4183,7 +4183,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 11,
     sprachen: ["Tiefensprache", "Dünkelzunge", "Telepathie (36 m)"],
     umgebung: ["Unterirdisch", "Höhle"],
-    bild: "assets/images/monster/flee-mortals/tieftraeumer.png",
+    bild: "flee-mortals/tieftraeumer.png",
     beschreibung: [
       "Ein feines Netzwerk aus stacheligen schwarzen Fäden trägt den Pilzkörper des Tiefträumers, wodurch er einem massiven, unheimlichen Löwenzahn ähnelt. Diese Pflanzen driften durch die Luft auf sanften psionischen Strömungen, angetrieben von den Sporen, die sie ständig freisetzen. Während andere Kreaturen träumen, nutzt der Tiefträumer seine Fäden, um sich von der psychischen Energie dieser Kreaturen zu ernähren. Der Einfluss eines Tiefträumers kann Kreaturen dazu bringen, in ihren Träumen verloren zu gehen und niemals aufzuwachen.",
       "Wandernde Träume. Tiefträumer scheinen perpetuell in ihrer eigenen Träumerei verloren, und Kollisionen mit festen Objekten bleiben oft unbemerkt. Werden sie sich anderer Kreaturen bewusst, nutzen sie ihre Sporen, um ihre seltsamen Träume zu teilen — in der Hoffnung, die Vorstellungskraft anzufachen und angenehme Träume zu erschaffen, von denen sie sich ernähren können.",
@@ -4228,7 +4228,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 15,
     sprachen: ["Abyssal", "Gemein", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/flee-mortals/tormenauk.png",
+    bild: "flee-mortals/tormenauk.png",
     beschreibung: [
       "Seelenanzahl: 2 (1W4). Der Tormenauk beginnt den Kampf mit einer Reserve von Seelen, die er für bestimmte Fähigkeiten ausgeben kann. Sinkt seine Seelenanzahl auf 0, fällt er in den Lethe-Zustand und greift mit unbeherrschter Wut die nächstgelegene Kreatur an, bis er wieder eine Seele aufnimmt."
     ],
@@ -4273,7 +4273,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 14,
     sprachen: [],
     umgebung: ["Unterirdisch", "Stadt"],
-    bild: "assets/images/monster/flee-mortals/valochera.png",
+    bild: "flee-mortals/valochera.png",
     beschreibung: [
       "Die Valochera wächst im Schmutz und Dreck städtischer Abwassersysteme. Einmal ausgewachsen, kann dieser enorme gelbe Pilz auf seinen wurzelähnlichen Myzelsträngen durch die Kanäle stapfen. Er versprüht ständig eine gefährliche Sporenwolke aus einem gelatinösen Hut, der sich öffnet und einen hungrigen Schlund freigibt, der verflüssigte Beute verschlingt.",
       "Obwohl Valocheras aus jedem organischen Material Nährstoffe gewinnen können, bevorzugen sie Fleisch – nährstoffreich hält es sie tagelang satt. In Abwasserkanälen ernähren sie sich am häufigsten von Ratten und Käfern.",
@@ -4316,7 +4316,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein", "Urzeitlich"],
     umgebung: ["Wald", "Dschungel", "Feenwildnis", "Sumpf"],
-    bild: "assets/images/monster/flee-mortals/wachstumsprinzip.png",
+    bild: "flee-mortals/wachstumsprinzip.png",
     beschreibung: [
       "Das Wachstumsprinzip nimmt die Gestalt eines massiven Tausendfüßlers aus Pflanzenwerk an. Oft als Grüne Urwesen bezeichnet, kämpfen diese Hüter des natürlichen Lebens- (und Todes-) Kreislaufs gegen jene, die diesen Zyklus stören.",
       "Wachstumsprinzipien streben nicht nur danach, Untote und ihre Erschaffer zu vernichten, sondern auch göttliche Diener zu sabotieren, die leichtfertig mit Wiederbelebungsmagie hantieren."
@@ -4361,7 +4361,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein", "Elfisch", "Sylvanisch"],
     umgebung: ["Wald", "Feenwildnis", "Gewässer"],
-    bild: "assets/images/monster/flee-mortals/weinende_weide.png",
+    bild: "flee-mortals/weinende_weide.png",
     beschreibung: [
       "Wenn eine Dryas sich mit einem Baum verbindet, verleiht die Verbindung dem Baum Unsterblichkeit und ein Maß an Feenmagie. Die Übergriffe der Zivilisation bedrohen jedoch dieses sylvanische Idyll. Viele Dryaden fallen der Axt eines Holzfällers zum Opfer, während andere sich in einen Sterblichen verlieben und freiwillig ihren Baum – und ihre Unsterblichkeit – hinter sich lassen. Ein Baum, der um seine verlorene Dryas trauert, wird zur Weinenden Weide.",
       "Eine Weinende Weide trägt hängende Äste, die den Boden mit den Tränen des Baumes benetzen. Steht sie lange genug an einem Fleck, bildet sich schließlich ein Teich aus Salzwasser – und manchmal spiegeln diese Wasser das Bild einer toten Dryas wider. Kreaturen, die Schutz in dem Bereich einer Weinenden Weide suchen, werden von einer trägen Melancholie überwältigt, und viele Wanderer verhungern lieber, als diese Rast zu unterbrechen.",
@@ -4408,7 +4408,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 18,
     sprachen: ["Abyssal", "Gemein", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/flee-mortals/wobalas.png",
+    bild: "flee-mortals/wobalas.png",
     beschreibung: [
       "Seelenanzahl: 2 (1W4). Der Wobalas beginnt den Kampf mit einer Reserve von Seelen, die er für bestimmte Fähigkeiten ausgeben kann. Sinkt seine Seelenanzahl auf 0, fällt er in den Lethe-Zustand und greift mit unbeherrschter Wut die nächstgelegene Kreatur an, bis er wieder eine Seele aufnimmt."
     ],
@@ -4450,7 +4450,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 20,
     sprachen: ["Alle Sprachen"],
     umgebung: ["Wüste", "Unterirdisch", "Andere Ebenen"],
-    bild: "assets/images/monster/flee-mortals/xaantikorijek.png",
+    bild: "flee-mortals/xaantikorijek.png",
     beschreibung: [
       "Tief unter den kargen Einöden der Welt ruht eine ihrer ältesten Kreaturen — so alt, dass er seinen eigenen Namen vergessen hat. Dieser Sturmdrache ist schlicht als die Stimme der Zeitalter bekannt — oder Xaantikorijek (zan-tih-KOR-eh-jehk) auf Drakonisch.",
       "Xaantikorijek ist ein Meister von Donner und Blitz, und als Teil der ersten Brut, die auf der Profanwelt schlüpfte, ist er älter als die meisten seiner überlebenden Artgenossen. Eine Legende besagt, dass die Stimme der Zeitalter einst ein Geheimnis kannte, das die Profanwelt in jede beliebige Form neu erschaffen konnte — doch der alternde Wyrm erinnert sich nur an sehr wenig seiner eigenen Vergangenheit. Ob dies der Preis dafür war, das Unheil zu überleben, das die Drachen von einst ereilte, eine selbst auferlegte Bedingung oder eine andere magische Beschwerde — selbst Xaantikorijek weiß es nicht.",
@@ -4504,7 +4504,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 27,
     sprachen: ["versteht alle Sprachen, kann aber nicht sprechen", "Telepathie 45 m"],
     umgebung: ["Gebirge", "Andere Ebenen"],
-    bild: "assets/images/monster/flee-mortals/xogomoc.png",
+    bild: "flee-mortals/xogomoc.png",
     beschreibung: ["Xogomoc ist die entfesselte Essenz Goxomocs — ein gigantischer, schwebender Schreckenssaurier aus lebendigem Blitz, der entsteht, wenn Goxomocs körperliche Form zerstört wird. In dieser Form verliert der Titan seine Erdgebundenheit und entfaltet seine volle Sturmkraft: schier unaufhaltsam, durchdringt er Rüstungen und Körper wie ein Blitzschlag, schleudert Feinde mit rohem Sturmzorn umher und verschluckt sie in seinem elektrischen Leib. Fällt auch Xogomoc, teleportiert er sich an seinen Schlafplatz zurück und wandelt sich in Goxomocs ursprüngliche Form zurück — bereit, in Äonen wieder zu erwachen."],
     besonderheiten: [
       { name: "Formlos", beschreibung: "Xogomoc kann sich durch einen Raum von nur 2,5 cm Breite bewegen, ohne sich zu zwängen." },
@@ -4557,7 +4557,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 27,
     sprachen: ["Gemein", "Tiefensprache", "Drakonisch"],
     umgebung: ["Andere Ebenen", "Ozean", "Höhle"],
-    bild: "assets/images/monster/flee-mortals/yserthrax.png",
+    bild: "flee-mortals/yserthrax.png",
     beschreibung: [
       "In den tiefsten und dunkelsten Bereichen der Zeitlandschaft existieren Wesen, die nicht sein sollten, berührt von einer Verderbnis jenseits aller Welten. Eines dieser Geschöpfe ist Yserthrax (EE-sur-thracks), eine drakonische Abscheulichkeit, deren Schwingen von Hunderten smaragdgrüner Augen gesäumt sind.",
       "Yserthrax wurde einst als Giftdrache geboren und für ihre Meisterschaft in Zauberkunst und okkultem Wissen verehrt. Nun jedoch wurde sie durch die Machenschaften älterer Übel verwandelt: Ihr Körper ist aufgedunsen und mit seltsamen Auswüchsen bedeckt.",
@@ -4612,7 +4612,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 8,
     sprachen: [],
     umgebung: ["Unterirdisch", "Höhle"],
-    bild: "assets/images/monster/flee-mortals/yumgrub.png",
+    bild: "flee-mortals/yumgrub.png",
     beschreibung: ["Der Yumgrub sieht aus wie ein klebendes, apfelgroßes Knödel mit hundert winzigen Beinen. Wie ein Knödel birgt er ein köstliches Geheimnis: Sein süßes Fleisch steigert vorübergehend Geschwindigkeit und Stärke des Verzehrenden — doch zu einem Preis: einem tief verstörenden Schrei beim Verschlucken und lähmender Erschöpfung, wenn die Wirkung nachlässt.", "Der Yumgrub ist das Larvenstadium des unscheinbaren Tunnelmotts. Von Unterwohnenden entdeckt und unter Zwergen, Elfen und Goblins gehandelt, wird er wegen seiner bemerkenswerten Wirkung manchmal als Truppenstärker in Schlachten eingesetzt."],
     besonderheiten: [
       { name: "Todesschrei", beschreibung: "Wenn der Yumgrub stirbt, lässt er einen erschütternden Schrei los. Jede Kreatur innerhalb von 4,5 m, die ihn hören kann, erleidet 1 Psychischen Schaden. Yumgrubs und Kreaturen, die in der letzten Minute einen Yumgrub gegessen haben, sind dagegen immun." },
@@ -4652,7 +4652,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     passiveWahrnehmung: 19,
     sprachen: ["Gemein", "Kuran'zoi", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen", "Ruinen", "Stadt"],
-    bild: "assets/images/monster/flee-mortals/zeitraeuber_vertex.png",
+    bild: "flee-mortals/zeitraeuber_vertex.png",
     beschreibung: ["Der Zeiträuber-Vertex ist die mächtigste Kampfeinheit der Zeiträuber — ein schwebender Anführer in psionischer Kraftrüstung, der Raum und Zeit nach Belieben öffnet. Mit seinem kinetischen Verteidigungsfeld schützt er Verbündete in weitem Umkreis vor Schaden, und mit einem einzigen Impuls belebender psionischer Energie ermöglicht er seiner Einheit koordinierte Blitzbewegungen. Die Fähigkeit, Portale zu jedem Ort im Multiversum zu öffnen, macht den Vertex zu einem Kommandeur, der Schlachtpläne einleiten kann, die andere für unmöglich halten."],
     besonderheiten: [
       { name: "Psionische Narbe", beschreibung: "Der Vertex ist immun gegen jeden Effekt, der seine Emotionen erspürt, seine Gedanken liest, aufdeckt, dass er lügt, oder seine Gesinnung oder seinen Standort enthüllt." }

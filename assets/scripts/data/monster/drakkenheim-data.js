@@ -23,7 +23,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: ["Versteht Tiefensprache, kann aber nicht sprechen"],
     umgebung: ["Andere Ebenen", "Wüste"],
-    bild: "assets/images/monster/drakkenheim/agog.png",
+    bild: "drakkenheim/agog.png",
     beschreibung: [
       "Dieses schreckliche Wesen hat weder Form noch Körper, der an irgendetwas aus der Sterblichen Welt erinnert. Es ähnelt grob einem Baumstumpf mit vier wurzelartigen Beinen, die jeweils in einem missgebildeten Huf enden. Es hat eine feuchte, gefleckte, rindenähnliche Haut, und aus seiner Seite ragen wie Äste knubbelige Arme mit scharfen Klauen hervor. Die Oberseite seines Körpers ist ein klaffendes, zahnbestücktes Maul. Auf den Innenseiten seiner Handflächen, was auch immer bei ihm als Arme gilt, befinden sich gelbe Augen.",
       "Der Agog ähnelt dem, was Sterbliche als Baumstumpf begreifen könnten, und wenn die Kreatur reglos dasteht, kann man an ihr vorbeigehen, ohne sie zu bemerken. Wenn sie jedoch zum Leben erwacht, offenbart sich ihre wahre Gestalt als etwas völlig Bizarres. Diese Kreaturen wackeln durch Wüstenlandschaften im Raum zwischen den Welten oder rasten im Schlamm rund um die schreienden Köpfe. Sie ernähren sich von Leichen und haben einen scheinbar endlosen Appetit und den Drang, ihn zu stillen."
@@ -67,7 +67,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 13,
     sprachen: ["Versteht Tiefensprache, kann aber nicht sprechen"],
     umgebung: ["Andere Ebenen", "Höhle", "Ruinen"],
-    bild: "assets/images/monster/drakkenheim/allopine.png",
+    bild: "drakkenheim/allopine.png",
     beschreibung: [
       "Diese Kreatur hat eine hagere und missgestaltete Form mit dem schuppigen Körper, dem Schwanz und dem Kopf eines Alligators, knöchernen Stacheln, die seinen Körper wie bei einem Stachelschwein bedecken, fledermausartigen Flügeln und langen, spindeldürren Gliedmaßen.",
       "Die Allopine ist eine Kreatur, die jeder Logik trotzt – scheinbar ein wechselndes und verworrenes Konglomerat verschiedener Tiere. Ihre unzusammenhängende und bizarre Gestalt macht sie zu einem Rätsel für jeden, der sie betrachtet. Die Kreaturen fliegen durch den Raum zwischen den Welten in Schwärmen und bewohnen die dunklen Höhlen und Ruinen in den Nicht-Orten. Wenn sie ihren Weg in die Sterbliche Welt finden, verstecken sie sich in alten Scheunen oder Höhlen."
@@ -110,7 +110,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 21,
     sprachen: ["Alle Sprachen", "Telepathie 1,6 km"],
     umgebung: ["Ruinen"],
-    bild: "assets/images/monster/drakkenheim/amalgamation.png",
+    bild: "drakkenheim/amalgamation.png",
     beschreibung: [
       "Vor dem Thron befindet sich eine gibbernde Amalgamation aus fleischigen Tumoren, faulenden Knochen und ranzigen Schichten aufgeblähten Fetts, das zwischen Decke und Boden durch stielige Stränge aus verschrungenem Gewebe aufgehängt ist. Eine spürbare Aura der Kontamination geht von dem Biest aus. Die Masse ist bedeckt mit platzenden Geschwüren und zuckenden Schleimknoten, die Galle und Deliriumschlamm verströmen. Die Kreatur murmelt in fremden Zungen aus sechs weit aufgesperrten Mäulern, pfeift und sprudelt in dissonanten musikalischen Tönen, und träge wandernde Augen enormer Größe öffnen und schließen sich über ihren gesamten Körper. Dicke, stammähnliche Tentakel reichen aus ihrer abscheulichen, stinkenden Form heraus und winden und krümmen sich durch das Gemach. Mehrere Gliedmaßen sind um pulsierende menschliche Organe gewickelt: Lungen, Leber, Nieren, ein Herz, ein Gehirn – und dazwischen hängt die juwelenbesetzte Krone von Westemär.",
       "Die Amalgamation, das Ergebnis einer kaskadierenden Katastrophe aus Kontamination und Mutation, haust im Thronsaal von Schloss Drakken.",
@@ -209,7 +209,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 12,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt", "Wald"],
-    bild: "assets/images/monster/drakkenheim/anomolluske.png",
+    bild: "drakkenheim/anomolluske.png",
     beschreibung: [
       "Eine kolossale Schnecke, so breit wie eine Stadtstraße, mit einem Gehäuse von der Größe eines kleinen Hauses gleitet langsam ins Blickfeld. Ihr Gehäuse hat einen kaleidoskopischen fraktalen Schimmer und projiziert Farbtöne unbekannter Farben, die sich in unbegreiflichen Mustern winden. Wenn sie sich bewegt, scheint ihr Gehäuse das Licht auf eine Weise zu brechen, die unsinnig oder falsch wirkt. Man muss die Augen anstrengen, um zu beobachten, wie sie sich heranwälzt. Ihr kugelförmiger Kopf endet in zwei langen Antennen, von denen jede ein kleines oktarinfarbenes Auge trägt. Schleimiger Schleim tropft von ihrem Fleisch, hinterlässt zischende Spuren und korrodiert alles, was er berührt.",
       "Wenn sich eine gewöhnliche Schnecke an einem Delirium-Splitter festsetzt, besteht eine geringe Chance, dass sie mit ihrem Gehäuse verschmilzt. Diese bescheidenen Kreaturen können zu massiven Ausmaßen anwachsen, wenn sie die Kontamination überleben. Mit der Zeit verschmelzen die Gehäuse mit weiterem Delirium und mutieren die Schnecken zu chaotischen Leitungen für erratische Magie – sogenannte Anomollusken.",
@@ -267,7 +267,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: ["Die Sprachen, die er im Leben kannte"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/arkangeist.png",
+    bild: "drakkenheim/arkangeist.png",
     beschreibung: [
       "Zerfetzte violette Roben hängen von dem ätherischen Skelett, das lautlos durch die Luft gleitet. Der runenbedeckte Schädel skandiert bedrohlich arkane Worte, während aus den dunklen Höhlen seiner Augen oktarinfarbene Lichtpunkte aufflackern. Geisterhafte Tentakel flackern auf, und fünf Akademieringe klimpern, als er eine knöcherne Hand hebt und die arkanen Gesten seines ersten Zaubers vollführt.",
       "Ein Arkangeist ist der körperlose, korrumpierte, untote Geist eines arkanen Zauberwirkers, der in Drakkenheim einen gewaltsamen Tod erlitt. Delirium beeinflusst Menschen mit magischer Begabung auf unvorhersehbare Weise. In ihren letzten Zügen können jene mit mageborenem Blut in böse Untote verwandelt werden, die ewig an den Dunst gebunden sind und dabei einen Teil ihrer arkanen Macht behalten – verdreht in bösartige, schattenhafte Formen. Arkangeister hungern unerbittlich sowohl nach magischer Essenz als auch nach Lebensenergie. Sie sind besonders aggressiv gegenüber lebenden Zauberwirkern, greifen aber bereitwillig jeden an, der magische Gegenstände, Zauberkomponenten oder Delirium-Kristalle bei sich trägt.",
@@ -327,7 +327,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt", "Gewässer"],
-    bild: "assets/images/monster/drakkenheim/aufgedunsener_bienenstock.png",
+    bild: "drakkenheim/aufgedunsener_bienenstock.png",
     beschreibung: [
       "Triefend vor süßlich riechendem Eiter und Schleim schlurft die Kreatur auf spindeldürren Gliedmaßen wie ein schlaksiger Affe umher. Sie hat lange, knorrige Finger und einen ausgemergelten, fadenförmig dünnen Rahmen. Wo sich ein Kopf befinden sollte, befindet sich stattdessen eine Masse pulsierenden Fleisches, bedeckt mit gähnenden Poren, die sich an ihrem Hals hinunter und über ihre Schultern erstrecken. Ihr Körper wimmelt von Tausenden von Insekten, die unter ihrer Haut krabbeln und um ihren Kopf schwirren. Sie graben sich durch offene Wunden und Geschwüre und summen durch ihre Poren. Es riecht schwach nach Honig und Schweiß, und gurgelt schmerzhaft inmitten des Chors aus Summen und Klicken der Insekten, als wäre sich das Ding schmerzhaft seines elenden Zustands bewusst.",
       "Der Aufgedunsene Bienenstock ist ein Produkt der Kontamination, die Menschen scheinbar in wandelnde Bienenstöcke verwandelt hat. Einige vermuten, dass die Honigfarmen am Stadtrand die Hauptquelle dieser seltsamen Mutationen waren und dazu führten, dass die Imker und ihre Stöcke sich zu grotesken und gequälten Kreaturen vereinten. Ihr Oberkörper und ihr Kopf sind nun eine wimmelnde Masse offener Poren wie ein Bienenstock, mit Insekten, die ein- und ausschwirren. Sie trampeln durch die Ruinen auf der Suche nach Nistplätzen. Viele Aufgedunsene Bienenstöcke agieren allein, aber manchmal beginnt ein einziges Volk mehrere Stöcke zu besiedeln und ein schauriges Netzwerk zu bilden.",
@@ -392,7 +392,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 11,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt", "Gewässer"],
-    bild: "assets/images/monster/drakkenheim/aufgedunsener_elender.png",
+    bild: "drakkenheim/aufgedunsener_elender.png",
     beschreibung: [
       "Ein gurgelndes Stöhnen dringt aus dem Dunkel, während die schlurfenden Schritte einer aufgedunsenen Gestalt näherkommen. Ihr wellenförmiges, durchhängendes Fleisch ist nass und triefend. Das runde Gesicht und die feuchte Haut sind übersät mit Pusteln, Blasen und sickernden Wunden. Nasser, säurehaltiger Speichel tropft vom Kinn und hinterlässt Spuren verbrannten Fleisches. Ein Arm ist zu einer Masse wimmelnder, glitschiger Tentakel geworden. Wenn sich der Mund öffnet, baut sich ein tiefes, gurgelndes Geräusch auf.",
       "Menschen, die in kontaminiertem Wasser untergetaucht wurden, werden häufig zu Aufgedunsenen Elenden. Diese halb ertrunkenen Unglücklichen sind in der Nähe von Gewässern in der ganzen Stadt anzutreffen – in den Kanälen, den Abwässern oder am Drann-Fluss. Sie haben so viel kontaminiertes Wasser in sich aufgenommen, dass es gärt und sich mit ihrer Magensäure vermischt und eine korrosive Galle erzeugt, die sie auf ihre Feinde schleudern. Ein Aufgedunsener Elender verlässt das Wasser meist nur für wenige Stunden, bevor er eine neue Schlammpfütze oder einen kontaminierten Tümpel aufsucht, um sich darin auszuruhen."
@@ -442,7 +442,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/ausgewachsener_dunstfalter.png",
+    bild: "drakkenheim/ausgewachsener_dunstfalter.png",
     beschreibung: [
       "Ausgewachsene Dunstfalter sind große Motten mit schillernd gemusterten Flügeln in Lila und Grün. Hypnotische Muster, die schreienden Menschengesichtern ähneln, zieren die Flügelmembranen. Ihr groteskes fledermausartiges Gesicht trägt eine gebogene Antenne mit einer biolumineszenten Laterne, und Delerium-Staub driftet um sie herum, während sie flattern.",
       "Ausgewachsene Dunstfalter konsumieren keine Delerium-Kristalle mehr. Stattdessen suchen sie nach Gefährten und psychischen Kräften. Sie hypnotisieren ihre Opfer und trinken deren Persönlichkeiten und Erinnerungen – die Erinnerungen und Albträume der Getöteten erscheinen auf den Flügeln und Kokons der nächsten Generation.",
@@ -484,7 +484,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Gewässer", "Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/belebter_delerium_schlamm.png",
+    bild: "drakkenheim/belebter_delerium_schlamm.png",
     beschreibung: [
       "Ein Hügel aus irisierend gestreiftem schwarzem Schlamm stapft durch die Ruinen und platscht bei jedem schwerfälligen Schritt. Der Schlamm formt sich zu einer turmhohen, beinahe menschenähnlichen Gestalt mit schleimigen Armen und dicken, wackligen Beinen. Ein Kopf blubbert oben auf seinem viskosen Körper und offenbart einen triefenden Rachen und zwei Höhlungen als Augen. Dennoch trägt er einen merkwürdig fröhlichen Ausdruck, als würde er Freude an seiner grotesken Existenz finden. Der Hügel stößt ein tiefes Grollen aus, voller sinisterer Wonne, und poltert auf einen zu, unbeeindruckt von den Trümmern in seinem Weg.",
       "Einige glauben fälschlicherweise, dass die arkane Kontamination nur organische Kreaturen befällt, doch ihr verformender Einfluss kann das Gewebe der Realität selbst berühren. Delirium vergiftet die Erde, beschmutzt das Wasser, korrumpiert den Wind und durchdringt das Feuer – und erschafft dabei Kontaminierte Elementare. Diese kontaminierten Wasserelementare sind häufig in den Zisternen, Abwasserkanälen und anderen aquatischen Orten Drakkenheims anzutreffen."
@@ -538,7 +538,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/berstgaul.png",
+    bild: "drakkenheim/berstgaul.png",
     beschreibung: [
       "Diese Kreatur, die wie ein totes, auf dem Rücken liegendes Pferd aussieht, zuckt convulsivisch, und ihr Bauch reißt plötzlich auf, wobei Eingeweide und Organe freigelegt werden. Lange, spinnenartige Beine schießen gewaltsam aus ihrem Rumpf hervor, während sich der Bauch zu einem Rachen öffnet, der mit scharfen, zackigen Zähnen gefüllt ist – gebildet aus dem gespreizten Brustkorb des Tieres. Die Pferdbeine hängen schlaff in der Luft, während die Kreatur mit schwindelerregender Geschwindigkeit auf einen zuschurrt, wobei Eingeweide wie eine widerliche Zunge um den Rachen flattern. Der Pferdekopf baumelt leblos herab, doch sein Maul schnappt noch immer und sabbert Säuregalle.",
       "Viele tapfere Krieger sind auf treuen Rössern in Drakkenheim eingeritten, ohne zu bemerken, dass Schutt und Trümmer die Straßen zu einem ungeeigneten Terrain für Pferde machen. Oft müssen diese armen Tiere kurz nach dem Einzug in die Ruinen zurückgelassen werden, verletzt vom unstabilen Untergrund. Als leichte Beute für andere Raubtiere werden sie häufig tragisch niedergestreckt. Wenn ihre Leichname zurückbleiben, wuchert eine parasitenähnliche Mutation in ihnen und lässt ihre Haut mit spinnenartigen Gliedmaßen, Zangen und Rachen aufbrechen.",
@@ -608,7 +608,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Gewässer", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/blutegel.png",
+    bild: "drakkenheim/blutegel.png",
     beschreibung: [
       "Obwohl die Praxis des Aderlasses längst als Heilmethode widerlegt ist, schätzen viele Apotheker den Wert von Bluttransfusionen bei chirurgischen Eingriffen. Die Langzeitlagerung von Blut stellt dabei jedoch ein Problem dar. Drakkenheimer Apotheker haben dieses Problem gelöst, indem sie gewöhnliche Egel mit okkulter Wissenschaft modifizierten und die Kreaturen in lebende Blutbeutel verwandelten.",
       "Obwohl diese Blutegel von Natur aus zumeist harmlos sind, können sie von einem entschlossenen Apotheker zu gewaltsamen Zwecken eingesetzt werden. Im Kampf schickt ein Apotheker die Egel gegen seine Feinde und ruft sie anschließend zurück, um sich mit dem Blut seiner Gegner zu heilen. Die widerlichen Tiere eignen sich außerdem hervorragend zum Sammeln von Proben von wenig kooperativen Versuchspersonen."
@@ -652,7 +652,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 15,
     sprachen: ["Gemein sowie eine weitere Sprache"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/bluthexe.png",
+    bild: "drakkenheim/bluthexe.png",
     beschreibung: [
       "Wenn ein Magiegeborener von einem Vampir gebissen wird, erzeugen die magischen Energien in seinem nun vergifteten Blut eine Bluthexe – ein Wesen aus vampirischem Blutdurst und arkanem Können. Diese Hexen dienen Vampiradligen als rechte Hand und als Generäle und Leutnants in Vampirarmeen. Sie sind gerissene und manipulative Kreaturen, die ihre Opfer mit Täuschung und Gerissenheit anlocken.",
       "Die Magie der Bluthexen ist gestutzt und verdreht; sie können Magie nutzen, um Lebensessenz aus ihren Opfern zu saugen und ein unnatürliches Leben zu führen. Je mehr eine Bluthexe sich ernährt, desto mehr mutiert die vampirische Essenz mit ihrem arkanen Blut. Viele Bluthexen entwickeln dabei groteske Mutationen wie blutrote leuchtende Augen und tierische Schnauzen mit Fangzähnen.",
@@ -724,7 +724,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 8,
     sprachen: [],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/chemystral.png",
+    bild: "drakkenheim/chemystral.png",
     beschreibung: [
       "Ein Chemystral ist eine schimmernde, formlose Masse aus konzentriertem Delirium, das mit chemischen Substanzen aus verlassenen Laboratorien verschmolzen ist. Diese rätselhaften Kreaturen treiben durch die Trümmer Drakkenheims und absorbieren alles, was ihnen begegnet – Magie, organisches Material und chemische Verbindungen gleichermaßen.",
       "Der Körper eines Chemystrals wechselt ständig seine Farbe und Konsistenz, ein Zeichen der verschiedenen Energiequellen, die er in sich trägt. Versuche, einen Chemystral mit physischer Gewalt zu bekämpfen, sind meist sinnlos – Klingen und Pfeile gleiten durch seine formlose Masse hindurch. Einzig extreme Kälte kann seinen flüssigen Körper kurzzeitig festigen und ihn verwundbar machen."
@@ -770,7 +770,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 15,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/chitinoser_elender.png",
+    bild: "drakkenheim/chitinoser_elender.png",
     beschreibung: [
       "Körper und Gesicht dieses mutierten Elenden sind mit dicken, knotigen Knochenplatten bedeckt, die sich gewaltsam durch das Fleisch nach außen gebohrt haben. Die freiliegenden Rippen der Brust sind zu einer einzigen Platte zusammengewachsen und verleihen dem Torso ein rüstungsartiges Aussehen. Unterhalb der Ellbogen hängen Muskel und Sehnen schlaff von den hervorstehenden Knochen herab, die zu langen, gezackten Knochenblättern mit verkrusteten Blutspuren umgeformt wurden.",
       "Diese Elenden haben schwere Mutationen ihrer Knochenstruktur erlitten, die sie mit einem gepanzerten Exoskelett bedecken. Kaum durch Angriffe zu beeindrucken, stürmen Chitinöse Elende in den Kampf und schlagen in einem Anfall wilder Ferocität mit ihren gezackten Knochenblättern auf ihre Beute ein. Sie drängen sich stets zwischen andere Elende und deren Feinde, fast als würden sie ihre Verbündeten verteidigen, und lassen Gegner, die ihnen gegenüberstehen, nicht entkommen."
@@ -825,7 +825,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 24,
     sprachen: ["Alle", "Telepathie 1,6 km"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/drakkenheim/das_ding_mit_dem_windenden_schwanz.png",
+    bild: "drakkenheim/das_ding_mit_dem_windenden_schwanz.png",
     beschreibung: [
       "Diese esoterische katzenartige Wesenheit ist unter vielen Namen bekannt und wandert durch die Reiche des Traumlandes und den Zwischenraum der Welten. Es war der Gelehrte Killgar Copperpot, der erkannte, dass ihre zahllosen Identitäten ein und dasselbe waren, und ihr den Namen 'Das Ding mit dem Windenden Schwanz' gab.",
       "Fast jeder Hexenmeister des Dings wurde als Kind von der Kreatur aufgesucht – in der Gestalt einer gewöhnlichen Hauskatze, die durch eine seltsame Färbung, ein ungewöhnliches Verhalten oder einen merkwürdigen Geruch auffiel. Es bevorzugt scheinbar jene in unglücklichen, vernachlässigten oder machtlosen Verhältnissen: umherstreifende Waisenkinder oder misshandelte Nachkommen narzisstischer Aristokraten. Es spielt die Rolle ihres imaginären Freundes und Vertrauten.",
@@ -917,7 +917,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 22,
     sprachen: ["Alle", "Telepathie 1,6 km"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/drakkenheim/das_gefluesterte_versprechen.png",
+    bild: "drakkenheim/das_gefluesterte_versprechen.png",
     beschreibung: [
       "Das Geflüsterte Versprechen ist eine dämonische Wesenheit, die Sterblichen von großem Potenzial erscheint und ihnen verspricht, all ihre Ambitionen und Wünsche zu erfüllen. Es ist ein Gedankenleser und Gestaltwandler, der Sterblichen als ihre eigenen Spiegelbilder erscheint – aber in grandioser und idealisierter Form. Auf diese Weise nutzt es gleichzeitig deren Unsicherheiten und Träume aus.",
       "Das Geflüsterte Versprechen lauert hinter den großen Helden und Schurken der Geschichte und hat ihre Ambitionen angestachelt und ihre Begierden verstärkt. Insbesondere die Zauberkönige des Arkanischen Imperiums suchten das Geflüsterte Versprechen auf und schlossen unzählige Pakte, um Reichtum und Macht zu erlangen.",
@@ -1012,7 +1012,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 17,
     sprachen: ["Gemein", "Drakonisch", "Telepathie 9 m"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/drakkenheim/delerium_drachennestling.png",
+    bild: "drakkenheim/delerium_drachennestling.png",
     beschreibung: [
       "Dieses jenseitige Wesen ist ein kristalliner Schrecken, sein Körper aus kantigen, edelsteinartigen Schuppen geformt, die mit oktarinem Licht pulsieren. Seine Gestalt ist roh konzentriertes Delerium. Jede Schuppe ist ein gleißender Kristall, der Licht in unheimliche Violett-, Gelb- und Grüntöne bricht, mit einer übernatürlichen Schärfe, die sich zugleich zerbrechlich und unmöglich dauerhaft anfühlt.",
       "Die Flügel des Drachen sind durchscheinend und mit leuchtenden Kristallvenen durchzogen, die schimmern und beim Bewegen kaleidoskopische Muster werfen. Jeder Flügelschlag lässt die Luft summen und vibriert mit chaotischer Energie, die die Sinne überwältigt und verzerrt. Jeder Schritt des Drachen hinterlässt zarte Kristallmoten, die zu gezackten Formationen heranwachsen und die Landschaft verseuchen.",
@@ -1061,7 +1061,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 20,
     sprachen: ["Gemein", "Drakonisch", "Telepathie 18 m"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/drakkenheim/junger_delerium_drache.png",
+    bild: "drakkenheim/junger_delerium_drache.png",
     beschreibung: [
       "Entdecker vieler Welten und Aussichten, Junge Delerium-Drachen streifen durch den Raum zwischen den Welten und begeben sich weit und breit auf die Suche nach Sinn in der Sinnlosigkeit, nach Form in der Formlosigkeit."
     ],
@@ -1109,7 +1109,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 25,
     sprachen: ["Gemein", "Drakonisch", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/drakkenheim/ausgewachsener_delerium_drache.png",
+    bild: "drakkenheim/ausgewachsener_delerium_drache.png",
     beschreibung: [
       "Ein vollständig ausgewachsener Delerium-Drache etabliert seine eigene Domäne innerhalb des Raums zwischen den Welten und findet einen Ort, der seinem Temperament entspricht. Dort versucht er, sich selbst und die Welt um sich herum zu verstehen."
     ],
@@ -1161,7 +1161,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 30,
     sprachen: ["Gemein", "Drakonisch", "Telepathie 1,6 km"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/drakkenheim/uralter_delerium_drache.png",
+    bild: "drakkenheim/uralter_delerium_drache.png",
     beschreibung: [
       "Delerium-Drachen üben ihre Willenskraft über den Raum zwischen den Welten aus und machen ihre Behausungen zu Reichen für sich selbst. Diese Behausungen können in einen Dünnen Ort münden, wobei die gähnende Höhle einer normalen Drachenbehausung stattdessen in den Wahnsinn der Heimat des Delerium-Drachen führt. Diese Drachen füllen ihre Behausungen mit Schätzen und Geheimnissen von mysteriöser Bedeutung und anachronistischem Ursprung und horten Gegenstände, die in der fernen Vergangenheit wertvoll waren oder von entscheidender Bedeutung für die ferne Zukunft sind."
     ],
@@ -1215,7 +1215,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/delerium-elender.png",
+    bild: "drakkenheim/delerium-elender.png",
     beschreibung: [
       "Diese erbärmliche Gestalt ist von eldritscher Kontamination verzerrt und entstellt. Unter zerfetzter und zerrissener Kleidung sind Wunden, Läsionen und vorspringende Blutgefäße auf ihrem violett-grauen Fleisch zu sehen, und ihre Glieder und Gelenke biegen sich in unnatürlichen Winkeln. Die Gesichtszüge sind widernatürlich zu einem dauerhaften Ausdruck verwirrter Qual verformt, und ein oktarines Leuchten erfüllt die tiefliegenden Augen. Kleine aberrante Mutationen zeigen sich über den gesamten Körper: kristalline Knochenauswüchse und kleine Tentakel, die durch die Haut brechen, ein gelbes Auge, das sich am Hals öffnet und schließt, und eine beunruhigend verlängerte Zunge.",
       "Der typische Delerium-Elende ist eine zerzauste und bemitleidenswerte Kreatur, die die Ruinen in einem quasi-vernebelten Zustand durchstreift. Die meisten haben gutartige Mutationen, die keine besonderen Eigenschaften oder einzigartigen Fähigkeiten verleihen. Sie sind gegen weitere Kontamination durch Delerium immun. Delerium-Elende sind verzweifelte und verwirrte Kämpfer, die zu keiner komplexen Taktik fähig sind und sich einfach auf alle nicht-kontaminierten Kreaturen stürzen, die sie wahrnehmen. Häufig schließen sie sich zu kleinen Gruppen zusammen und durchstreifen gemeinsam die Ruinen."
@@ -1261,7 +1261,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 33,
     sprachen: ["Alle"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/drakkenheim/der_algorithmus.png",
+    bild: "drakkenheim/der_algorithmus.png",
     beschreibung: [
       "Es ist ein riesiges Netzwerk aus Drähten, Röhren und Metallplatten in einer sich ständig verschiebenden und formbaren Gestalt. Dieses massive Konstrukt erscheint oft als gigantisches robotisches Gesicht, das durch die Leere schwebt, mit einem Schweif aus sich windenden mechanischen Tentakeln dahinter – wie ein gewaltiger, anorganischer Tintenfisch. Es nutzt die Platten und Klumpen flüssigen Metalls, die es umkreisen, um sich umzuformen.",
       "Der Algorithmus ist die berechnende Wesenheit schlechthin – ein massives Wesen aus sich ständig reformierender Technologie. Seine Form ist eine Masse aus Drähten, Röhren, Metall und Elektrizität. Sehr wenig ist über seine Herkunft oder seinen Zweck bekannt. Spekulationen zufolge ist er besessen von Perfektion und Erwartung und hält das Universum für ein defektes und unvollkommenes Ding, das repariert und reformiert werden muss.",
@@ -1348,7 +1348,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 13,
     sprachen: ["Telepathie 36 m"],
     umgebung: ["Gewässer", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/die_herzogin.png",
+    bild: "drakkenheim/die_herzogin.png",
     beschreibung: [
       "Die Herzogin ist das uralte Herz der Tiefen-Elenden, ein gewaltiges aberrantes Wesen, das in den versunkenen Ruinen unter Drakkenheim thront. Sie zieht die vom Dunst korrumpierten Kreaturen durch Telepathie in ihren Dienst und formt sie zu ihrer persönlichen Armee.",
       "Legenden besagen, sie sei einst eine mächtige Adelige der Stadt gewesen, die sich dem Dunst freiwillig ergab, um Macht zu gewinnen. Was auch immer ihre Vergangenheit gewesen sein mag, das Wesen, das heute als Herzogin bekannt ist, hat nichts Menschliches mehr an sich. Ihre Trefferpunkte erhöhen sich um 87 (6W20+24) für jeden anwesenden Spielercharakter."
@@ -1398,7 +1398,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 20,
     sprachen: [],
     umgebung: ["Gewässer", "Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/drakkenheimer_kanalkrokodil.png",
+    bild: "drakkenheim/drakkenheimer_kanalkrokodil.png",
     beschreibung: [
       "Aus den stinkenden Kanalwässern taucht ein schrecklicher Alligator auf, der beinahe fünfzehn Meter lang ist. Ein gezackter Kamm aus Delirium verläuft seinen Rücken entlang und endet in einer unheilsamen Krone auf seinem Kopf, während fahle Haut seine oktarinfarbenen Leuchtaugen einfasst. Eine dicke, purpurne, tentakelartige Zunge wellt sich aus dem zahnbestückten Rachen. Starke, stämmige Beine tragen seinen narbigen Körper, Zeuge unzähliger Kämpfe in den Ruinen.",
       "Einige Kreaturen scheinen weniger von der Kontamination betroffen zu sein, oder haben schlicht das Glück gehabt, nur an Größe und Wildheit zuzunehmen. Es wird vermutet, dass Reptilien widerstandsfähiger gegen unkontrollierbare Mutationen sind als andere Kreaturen. Der gelegentliche Alligator, der den Drann-Fluss hochkommt, war schon immer ein Problem, doch nun werden Berichte über bösartige Reptilien immer bizarrer und erschreckender.",
@@ -1470,7 +1470,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 15,
     sprachen: ["Druidisch sowie drei weitere Sprachen"],
     umgebung: ["Wald", "Ruinen", "Höhle"],
-    bild: "assets/images/monster/drakkenheim/druide_des_blutigen_ritus.png",
+    bild: "drakkenheim/druide_des_blutigen_ritus.png",
     beschreibung: [
       "Diese Druiden sind älter als selbst die Vampirfamilien. Die wenigen, die noch existieren, stammen aus keiner vampirischen Blutlinie – sie sind die uralten Blutdruiden, die die Rituale durchführten, durch die Vladimir von Drakken erschaffen wurde. Nur wenige sind noch am Leben, und jene, die es sind, leben zurückgezogen und verborgen.",
       "Ihre alten Blutriten verliehen ihnen ein verfluchtes ewiges Leben, und jene, die noch durch die Welt wandern, haben sich in etwas halb Lebendes verwandelt. Sie sind nicht dasselbe wie Vampire und nicht an deren Schwächen gebunden; sie sind der Dunkelheit verpflichtet, die sie nährt, und nutzen Blut, um ihre Rituale und Magie zu befeuern. Ihre Kräfte sind ein streng gehütetes Geheimnis, das nur wenige je bezeugt haben.",
@@ -1545,7 +1545,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein", "eine weitere Sprache"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/dunkler_beichtvater.png",
+    bild: "drakkenheim/dunkler_beichtvater.png",
     beschreibung: [
       "Dunkle Beichtväter sind die unheiligen Priester eines verderbten Glaubens, der sich in den Ruinen Drakkenheims ausbreitet. Einst waren sie Geistliche einer rechtschaffenen Gottheit, doch das Delirium korrumpierte ihren Glauben und verwandelte sie in vampirische Untoter, die lebendiges Blut verzehren.",
       "Diese düsteren Gestalten bewahren äußerlich die Form ihrer früheren Identität – Plattenrüstung, Heilige Symbole, feierliche Gesten – doch dienen sie nun einer Dunkelheit, die ihr Fleisch aufgezehrt und ihren Geist zersetzt hat. Sie suchen Anhänger unter den Verzweifelten und Verlorenen der Stadt und bieten falsche Heilung und Schutz im Austausch für blinde Ergebenheit.",
@@ -1625,7 +1625,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 11,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt", "Wald"],
-    bild: "assets/images/monster/drakkenheim/dunkler_gewaechs_taumler.png",
+    bild: "drakkenheim/dunkler_gewaechs_taumler.png",
     beschreibung: [
       "Aus den Schatten taumelt ein hagerer Humanoid mit blassem Fleisch und gebeugter Gestalt. Ranken und Äste ragen aus seinem weit aufgerissenen Mund und durchbohren sein Fleisch am gesamten Körper. Blüten entsprießen diesen Auswüchsen und erblühen in irisierendem Neonglanz. Ein Geruch nach süßem Zucker und verwesendem Fleisch erfüllt die Luft, und Flüstern beginnen von ihm auszugehen, obwohl der Mund der Kreatur sich nicht bewegt.",
       "Manchmal, wenn der Körper eines mit Dunklem Gewächs Infizierten im Moment seines Todes aufbricht, kollabiert der Körper nicht sofort und verwest nicht. Stattdessen taumelt die Kreatur weiter umher, ihr Körper noch intakt, aber mit Ranken und dornigen schwarzen Ästen, die aus ihren Augenhöhlen, ihrem Mund und ihrem Fleisch hervorbrechen – ihr Körper nun eine schützende Hülle für die Pflanze im Inneren."
@@ -1679,7 +1679,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt", "Wald"],
-    bild: "assets/images/monster/drakkenheim/dunkles_gewaechs.png",
+    bild: "drakkenheim/dunkles_gewaechs.png",
     beschreibung: [
       "Auf einer Ruinenmauer liegt eine ausgebreitete Leiche. Eine chaotische Masse pechschwarzer Dornen und Ranken strömt aus ihrem Torso und klammert sich an das nahe Mauerwerk. Äste haben ihre Form gesprengt, und ihr Hals bricht in eine weitere Masse pflanzlicher Substanz aus. Der Schädel ist vom Körper getrennt, der Kiefer aufgehängt und hängt in einem schrecklichen Ausdruck herab, festgehalten von den sich windenden Ranken. Überall in diesem Dunklen Gewächs erblühen Blumen in irisierendem Neonglanz, und der Geruch von süßem Pollen und verwesendem Fleisch erfüllt die Luft. Sanfte Flüstern einer fernen, seltsam vertrauten und lockenden Stimme sind zu hören.",
       "Kontamination lässt die meisten Pflanzen verwelken und absterben, doch einige gedeihen darin, indem sie Wasser und Delirium aus dem Boden aufnehmen und sich zu tödlicher Flora mutieren. In Drakkenheims städtischer Einöde sind geeignete fruchtbare Bodenflecken außerhalb des Königinnenpark-Gartens rar, was eine kreative Anpassung zur Verbreitung notwendig macht. Diese Dunklen Gewächse wurzeln in den Körpern von Kreaturen durch ihre infektiösen, Delirium-durchtränkten Sporen. Die Sporen werden von ihren blühenden Blüten ausgestoßen und treiben lautlos durch die Luft, bis sie durch die Ohren, den Mund oder die Nase in den Körper einer anderen Kreatur eindringen. Einmal im Inneren können diese Sporen eine Zeit lang ruhend bleiben und ihren Wirt langsam mit inneren Mutationen kontaminieren, die Fleisch und Knochen von innen heraus zersetzen. Wenn die Kreatur der Kontamination erliegt oder mit den Sporen in ihr stirbt, erwacht die Pflanze, verzehrt die inneren Organe und sproßt plötzlich und gewaltsam.",
@@ -1738,7 +1738,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 9,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/dunstblut_vampir.png",
+    bild: "drakkenheim/dunstblut_vampir.png",
     beschreibung: [
       "Vampire besitzen eine angeborene Fähigkeit, Delirium-Kontamination durch das Trinken von Blut aufzunehmen und wieder abzugeben. Wenn ein Vampir das Blut einer kontaminierten Kreatur trinkt, nimmt er deren Kontamination in sich auf. Doch wenn ein kontaminierter Vampir genug Kontamination ansammelt, um eine Monströse Verwandlung auszulösen, wird er zum entarteten vampirischen Delirium-Bodensatz: einem Dunstblut-Vampir.",
       "Diese seltsame Wechselwirkung hat einige Vampire dazu verleitet, mit kontaminierter Magie zu experimentieren – vielleicht als Abkürzung zur Macht eines aufgestiegenen Vampirs. Gräfin Constance Kleinkessel hat die Forschung ihres Apothekers Deidrick Mors gefördert und zählt zahllose Versuchspersonen zu ihrem Bestand, die sie in Kesselholm in Vampirbrut verwandelte und in Särgen unter ihrem Schloss kettete.",
@@ -1814,7 +1814,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 7,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/dunstfalter-chrysalis.png",
+    bild: "drakkenheim/dunstfalter-chrysalis.png",
     beschreibung: [
       "Dicke silberne Fäden befestigen diesen wulstigen, leuchtenden Kokon an der Wand. Innerhalb seiner kristallinen Hülle pulsiert etwas mit unheimlichen, gesichtshaften Mustern – spektrale Visagen, die scheinbar schweigend keuchen und stöhnen.",
       "Sobald eine Dunstfalter-Raupe genug Delerium gefressen hat, sucht sie einen sicheren Ort, um sich in einen Schutzkokon einzuspinnen und die Verwandlung zum Erwachsenen zu beginnen. Gefüllt mit verdauten Kristallen, verstärken diese Kokons die Präsenz des Dunsts in der Nähe und schaffen eine wirksame natürliche Verteidigung für die sonst unbeweglichen und verletzlichen Kreaturen."
@@ -1857,7 +1857,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/dunstfalter-raupe.png",
+    bild: "drakkenheim/dunstfalter-raupe.png",
     beschreibung: [
       "Der undulerende Körper dieser monströsen Raupe ist mit scharfen, lumineszenten Stacheln besetzt. Die Haut zeigt ein verstörendes Muster aus Lila und Grün, das von einem unheimlichen biolumineszenten Leuchten durchpulst wird.",
       "Die Larvenform des Dunstfalters ist eine widerliche, haarige Raupe. Mit ihren merkwürdigen Mundwerkzeugen fressen Dunstfalter-Raupen langsam Delerium-Kristalle, indem sie einen speziell angepassten Speichel absondern, der kristallisiertes Delerium in Schlamm verwandelt. Diesen Schlamm trinken die Raupen und metabolisieren ihn zu einem Staub, der im Erwachsenenstadium ihre Flügel bedeckt."
@@ -1895,7 +1895,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 8,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/dunst-koloss.png",
+    bild: "drakkenheim/dunst-koloss.png",
     beschreibung: [
       "Dieser massige Mutant überragt drei Meter Körpergröße, sein geschwollener Leib weit jenseits normaler menschlicher Proportionen aufgebläht. Wulstige Muskeln und geschwollene Venen pulsieren unter dünner, verfärbter Haut. Das Fleisch des Kolosses hat sich an mehreren Stellen aufgerissen, kaum in der Lage, die ausufernde Muskulatur seiner baumstammdicken Gliedmaßen und des breiten Torsos zu fassen. Der Kopf wirkt angesichts der Körpergröße seltsam klein, doch sein breites, flaches Gesicht trägt einen rasenden Ausdruck. Mit dumpfem Stampfen schreitet er auf euch zu, ballt seine riesigen Hände zur Kanonenkugelfaust und lässt ein grimmiges Brüllen hören, das seine gezackten Zahnreihen und die verlängerte Zunge enthüllt.",
       "Kontamination lässt Kreaturen oft drastisch an Größe und Muskelmasse zunehmen, bis sie eher an schwerfällige Oger oder Riesen erinnern. Delirium-Elende, die über normale menschliche Proportionen hinauswachsen, werden gemeinhin als Dunst-Kolosse bezeichnet. Diese schwerfälligen Gestalten können wie ihre elenden Artgenossen viele Variationen von Mutationen und Wucherungen aufweisen. Dunst-Kolosse sind weitaus gefährlicher und weit wilder als ein gewöhnlicher Elender."
@@ -1949,7 +1949,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 13,
     sprachen: ["Die Sprachen aus seinem früheren Leben"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/dunst-wicht.png",
+    bild: "drakkenheim/dunst-wicht.png",
     beschreibung: [
       "Die gedehnte Haut dieser untoten Krieger ist lila und blutunterlaufen. Gekleidet in zerbrochener Rüstung, markiert ein tiefer Schnitt in ihrer Brustplatte den letalen Schlag, der ihr Leben beendete. Eldrische Magie quillt aus der Wunde, und kontaminierte Magie sickert aus geschwärzten Klauen.",
       "Der Wahnsinn erwartet jene, die zu oft in die Ruinen vorwagen. Nicht einmal die Toten werden verschont, denn wer hier fällt, kann als Dunst-Wicht wiederauferstehen. Diese Untoten behalten einen Anschein ihres früheren Verstandes und ihrer Persönlichkeit – doch verzerrt durch Wahn, Verzweiflung und Bosheit. Viele glauben, große Helden zu sein, die das Gemeinvolk gegen Eindringlinge sammeln, sehen in ihrem Wahnsinn jedoch alle Humanoiden als Monster.",
@@ -1991,7 +1991,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 8,
     sprachen: ["Versteht die Sprachen aus seinem früheren Leben, kann aber nicht sprechen"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/dunstleiche.png",
+    bild: "drakkenheim/dunstleiche.png",
     beschreibung: [
       "Die Toten in Drakkenheim werden durch den Dunst zu gesinnungslosen Zombies wiederbelebt. Ihre Wunden brodeln mit eldritscher Energie, und verrottetes Fleisch gleitet über ihre Knochen. Hohle schwarze Augen starren ins Leere, und klaffende Münder stöhnen in Qual, während Delerium-Scherben durch ihre Haut brechen.",
       "Die meisten Dunstleichen sind jene, die beim Einschlag des Meteors umkamen, während andere bei der Erkundung der Ruinen starben und dort verblieben. Mit der Zeit kristallisieren ihre Skelette langsam zu Delerium und brechen schließlich durch die Haut. Wenn eine Dunstleiche beschädigt wird, brechen ihre instabilen Kristalle und setzen kontaminierte Energie sowie Splitter frei.",
@@ -2032,7 +2032,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein", "Riesisch"],
     umgebung: ["Wald"],
-    bild: "assets/images/monster/drakkenheim/eichentroll.png",
+    bild: "drakkenheim/eichentroll.png",
     beschreibung: [
       "Was zunächst wie ein großer Haufen Herbstlaub aussieht, erhebt sich und enthüllt ein groteskes geschnitztes Holzgesicht sowie knorrige Eichenholzklauen und -füße. Sein Körper ist in ein dichtes Blättergewand in Orangetönen, Gelb und Rot gehüllt. Wenn er sich vorwärtsbewegt, klingt es wie der Herbstwind durch einen üppigen Wald – seine Grunzer und Stöhner gleichen dem Knarren alter Äste, seine schweren Schritte dem Aufschlag hölzerner Zweige auf dem Waldboden.",
       "Die Eichentrolle durchstreifen die Wälder des Achtungwaldes, des Trowuchses und viele andere Wälder des Kontinents. Sie pflegen die Wälder und die Bäume und sprechen mit ihnen. Wenn Fremde durch ihr Territorium ziehen, verteidigen die Trolle ihre Bäume um jeden Preis."
@@ -2079,7 +2079,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 15,
     sprachen: ["Versteht alle Sprachen, kann aber nicht sprechen", "Telepathie 27 m (vermittelt einfache Emotionen)"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/drakkenheim/eindringling.png",
+    bild: "drakkenheim/eindringling.png",
     beschreibung: [
       "Eine Kreatur von schier unmöglichen Proportionen und Farben tritt durch einen Riss im Gewebe der Realität. Sie hat spindeldünne Gliedmaßen, die in drei scharfen Ziffern enden und an einem röhrenförmigen Körperstamm befestigt sind. In ihrer Form öffnet sich ein langer, zahnreicher Rachen, der mit kleinen, sich wellenden Tentakeln gesäumt ist. Ein leises gurgelndes Geräusch geht von der Kreatur aus. Du spürst Hunger – aber seltsamerweise erkennst du, dass es nicht dein eigener Hunger ist, sondern der Hunger der Kreatur, die auf dich zuklackert.",
       "Im Raum zwischen den Welten existieren Kreaturen, die sich von arkaner Macht ernähren und nach Magie jeder Art gieren, besonders nach der Macht, die überplanare Mächte ihren Sterblichen verleihen. Eine solche Kreatur, die von der Amethyst-Akademie identifiziert wurde, wird schlicht als Eindringling klassifiziert.",
@@ -2130,7 +2130,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/eingeweide-elender.png",
+    bild: "drakkenheim/eingeweide-elender.png",
     beschreibung: [
       "Der Bauch dieses Elenden ist weit aufgerissen, die Eingeweide quellen heraus und hängen frei. Inmitten der inneren Organe befinden sich mehrere Mutationen, darunter ein seltsamer Wuchs, der mit dem Darm verbunden ist und wie eine knollige Masse in Form eines mutierten, verzerrten Gesichts aussieht. Der Elende hält seine Gedärme wie einen Flegel in der Hand und bereitet sich darauf vor, sie auf dich zu schleudern.",
       "Der Eingeweide-Elende nutzt seine mutierten Organe als Waffe und hält stets Abstand zu anderen Kämpfern. Er schwenkt seinen Flegel über dem Kopf und bewacht oft andere Elende. Durch sein Reaktionsvermögen und seine schleudernden Eingeweide kann er Kreaturen abwehren, sobald sie sich nähern, und bevorzugt es stets, auf Distanz zu bleiben, um seine Feinde unaufhörlich zu bearbeiten."
@@ -2185,7 +2185,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: ["Gemein"],
     umgebung: ["Gewässer", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/elender-krieger_der_tiefe.png",
+    bild: "drakkenheim/elender-krieger_der_tiefe.png",
     beschreibung: [
       "Elende der Tiefe sind einstmals gewöhnliche Bewohner Drakkenheims, die vom Dunst korrumpiert und in die überfluteten Kanäle und unterirdischen Gewässer der Stadt getrieben wurden. Ihre Körper haben sich dem Wasser angepasst – Kiemen sprießen an ihren Hälsen, Schwimmhäute wachsen zwischen den Fingern, und ihre Augen starren blind und doch sehend in die Tiefe.",
       "Die Krieger bilden die breite Masse der Streitkräfte der Elenden der Tiefe. Sie stellen Fallen, hinterlegen Netze und überwältigen Eindringlinge mit schlichter Überzahl."
@@ -2228,7 +2228,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: ["Tiefe Rede"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/entropische_flamme.png",
+    bild: "drakkenheim/entropische_flamme.png",
     beschreibung: [
       "Auf den öden Straßen leuchtet ein Elementar auf, der in purpurgrünen Flammen brennt. Zusammengesetzt aus oktarinfarbenen Feuerkaskaden bewegt er sich wie ein unkontrollierbares Wildfeuer. In den tanzenden Flammen sitzt ein verächtlicher Ausdruck der Wut. Er knistert und lodert, die Hitze seines Körpers verzerrt die Luft um ihn herum. Der beißende Geruch von verbranntem Ozon und Schwefel sättigt die Umgebung, und Funken sowie Asche wirbeln umher, von der Kreatur losgelöst, während sie drohend auf einen zugleitet.",
       "Die Feuer vom Tag der Zerstörung Drakkenheims sind nie wirklich erloschen. Viele wurden zu Entropischen Flammen – kontaminierten Feuerelementaren, die durch die Ruinen wandern wie lebende Glut. Unzählige sind in den Gebieten um den Krater und im südlichen Drakkenheim anzutreffen. Die Anhänger des Fallenden Feuers betrachten Entropische Flammen beinahe wie gefallene Engel – Symbole des Meteors selbst."
@@ -2291,7 +2291,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 22,
     sprachen: ["Versteht alle Sprachen, kann aber nicht sprechen", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/drakkenheim/entropischer_waechter.png",
+    bild: "drakkenheim/entropischer_waechter.png",
     beschreibung: [
       "Diese schwebende Masse nasser, schlaffer Haut treibt durch die Luft, ihre vielen langen, spindeldürren Tentakel hängen herab wie eine unbegreifliche Qualle. In seltsamen Farbtönen aus blassem Rosa, Violett und Weiß erscheinend, leuchtet ihr großes einzelnes Auge in der Mitte ihrer fleischigen Masse in oktarinen Farbtönen und schwächt Körper und Geist. Das sanfte Geräusch von Brummen und Saugen folgt ihr, während sie Geister mit wahnsinnigem Geplapper in unbekannten Sprachen angreift.",
       "Viele der Kreaturen, die den Raum zwischen den Welten bewohnen, sind aberrant und urzeitlich in ihrer Natur. Der Entropische Wächter ist eine solche unbegreifliche Kreatur. Ihn zu betrachten ist wie das Betrachten eines abstrakten Gemäldes – die Formen und Gestalten seines Körpers sind für den sterblichen Geist schmerzhaft zu beobachten. Er treibt lautlos durch den Raum zwischen den Welten, von Dünnen Orten angezogen, wo er die Orte dahinter beobachtet, als würde er unbekannte Konzepte analysieren oder berechnen, wie eine Katze durch ein Fenster starrt. Aus diesem Grund sind Entropische Wächter eine der häufigeren Erscheinungen in der Sterblichen Welt, da sie sich gerne um Dünne Orte versammeln und oft hindurchschlüpfen."
@@ -2342,7 +2342,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 16,
     sprachen: ["Versteht alle Sprachen, kann aber nicht sprechen", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/drakkenheim/fernbewohner.png",
+    bild: "drakkenheim/fernbewohner.png",
     beschreibung: [
       "Diese große, schlaksige Kreatur schwebt unheilvoll und levitiert wenige Zentimeter über dem Boden. Ihre Arme hängen schlaff an den Seiten herab, und dünne Beine baumeln unter ihrem Körper. Zwischen ihren langen, knorrigen Fingern tanzen wechselnde Moten übernatürlicher Energie. Ihre purpurgraue Haut spannt sich straff über ihr abgemagertes Gerippe. Statt eines Kopfes sprießt eine Masse dicker, sich windender Tentakel aus ihrem Hals und greift in die Luft. Die Atmosphäre um sie herum vibriert mit zwitschernden Flüstern, Schlürfen und dem heiseren Gemurmel wahnsinniger Wahrheiten und unbegreiflicher Realitäten.",
       "Als Fernbewohner bekannt, gehören diese rätselhaften Wesen zu den hartnäckigsten und beängstigendsten Entitäten, denen man im Raum zwischen den Welten begegnen kann. Sie durchqueren Dimensionen und Dünne Orte und entführen Opfer, um bizarre Experimente an ihnen durchzuführen. Ihre Motive und Zwecke bleiben jedoch völlig undurchsichtig, und ihre Ziele liegen jenseits menschlichen Verständnisses.",
@@ -2391,7 +2391,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 16,
     sprachen: ["Versteht alle Sprachen, kann aber nicht sprechen", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/drakkenheim/fernbewohner_entfuehrer.png",
+    bild: "drakkenheim/fernbewohner_entfuehrer.png",
     beschreibung: [
       "Das Wesen erscheint menschenähnlich in seiner Form, aber viel größer und schlanker als natürlich erscheinen würde, mit langen, spindeldürren Armen und länglichen Fingern. Sein Kopf ist groß für seinen hageren Körper, läuft dort, wo das Kinn sein würde, spitz zu und ist oben rund und kugelförmig. Das Gesicht ist merkmallos, doch während sein Kopf sich neigt und zittert, ist eine scheinbar riesige Wahrnehmung spürbar. Die Kreatur bewegt sich, ohne einen Laut zu machen, und scheint von blendendem Licht aus unbekannter Quelle umhüllt zu sein.",
       "Manche Leute erzählen Geschichten von umherstreifenden Reisenden, die nachts allein seltsame Lichter am Himmel sahen, durch die Bäume dichter Wälder oder von unbegreiflichen Wesen, die durch Risse zwischen den Welten in ihre Lager wanderten. Am erschreckendsten sind jene, die davon berichten, dass die Kreaturen mühelos in ihre Häuser eindrangen und sie woandershin brachten, nur um mit verschwommenem Gedächtnis aufzuwachen, ohne Anzeichen dafür, dass jemals jemand dort gewesen war.",
@@ -2440,7 +2440,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 19,
     sprachen: ["Versteht alle Sprachen, kann aber nicht sprechen", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/drakkenheim/fernbewohner_meisterstratege.png",
+    bild: "drakkenheim/fernbewohner_meisterstratege.png",
     beschreibung: [
       "In uralte Roben gekleidet und einen Stab aus jenseitigem Material tragend, beobachtet die Kreatur dich mit kalter Gleichgültigkeit. Sie streckt eine Hand aus und biegt das Gewebe von Raum und Zeit um sich herum. Sie schwebt über dem Boden, ihr Kopf eine Masse sich windender Tentakel, und ihr hagerbleicher Körper pulsiert mit oktariner Energie.",
       "Besonders uralt und fürchterlich, haben diese mächtigen Fernbewohner seit unzähligen Äonen durch die Existenz gewandert."
@@ -2492,7 +2492,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein", "eine weitere Sprache"],
     umgebung: ["Stadt", "Ruinen"],
-    bild: "assets/images/monster/drakkenheim/feuerhueter.png",
+    bild: "drakkenheim/feuerhueter.png",
     beschreibung: [
       "In weißen und goldenen Roben, verziert mit den heiligen Symbolen der Heiligen Flamme, rezitiert der Feuerhüter Gebete und hält eine brennende Kerze. Böses abwehrend und seine Verbündeten heilend, steht er als schützender Leuchtturm für die Ritter des Silberordens.",
       "Jedes Kloster, jede Kapelle, Kathedrale und jeder Schrein der Heiligen Flamme wird von einem Feuerhüter bewacht. Diese weißgekleideten Frauen, geleitet von ihrem Glauben, sind in den Nationen dafür bekannt, den Niedergedrückten zu helfen, die Unschuldigen zu schützen und religiöse Zeremonien aller Art durchzuführen. Gelegentlich schließen sich Feuerhüter Silberorden-Rittern auf heiligen Expeditionen an, als Schützer, Heiler und Symbole des Glaubens."
@@ -2545,7 +2545,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 13,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/fingerlaeufer.png",
+    bild: "drakkenheim/fingerlaeufer.png",
     beschreibung: [
       "Auf Dutzenden spindeldürrer Beine huscht diese groteske Kreatur dahin und ähnelt einem mutierten Tausendfüßler, der auf schreckliche Ausmaße angewachsen ist. Ein segmentierter Körper von beinahe neun Metern Länge wellt sich auf unnatürlich biegenden Gliedmaßen fort, die an ausgemergelte Menschenfinger erinnern. Verlängerte gelbe Fingernägel knirschen und schaben drohend über den Boden, wenn er sich bewegt. Seinen runden, fetten Kopf dominiert ein einzelnes, massives, menschenähnliches Auge, das sich hektisch mit beunruhigender, unnachgiebiger Intensität dreht. Die Antenne sprießt darüber wie eine Augenbraue, während fest geschlossene Mandibeln wie Tränensäcke darunter wirken. Die vordersten Fingerbeine enden in zangenartige Klauen, die vor Elektrizität summen.",
       "Abenteurer, die die Innenstadt erkunden, lernen schnell, auf das Geräusch schabender Nägel zu achten – ein Vorbote des Fingerläufers. Als riesige Tausendfüßler verschrien, sind Fingerläufer alptraumhafte Kreaturen mit einer Neigung zur Gewalt. Anstatt ihre Beute zu verzehren, lassen sie die leblosen Körper ihrer Opfer in den öden Stadtstraßen zurück.",
@@ -2600,7 +2600,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 15,
     sprachen: ["Gemein sowie zwei weitere Sprachen"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/finsterer_kustos.png",
+    bild: "drakkenheim/finsterer_kustos.png",
     beschreibung: [
       "Der Finstere Kustos ist die rechte Hand vieler Vampirherren. Er hat sich eine unersetzliche Position im inneren Kreis des Vampirs gesichert und führt die Befehle seines Herrn aus, im Austausch für Zugang zu den feineren Aspekten des Vampirismus. Finstere Kustoden arbeiten als Buchhalter, Hüter von Geheimnissen, Informanten und Pfleger der vielen Untoten, die die Schlösser und Herrenhäuser der Vampire bewohnen.",
       "Der Finstere Kustos ist bis zu einem gewissen Grad in der Lage, an den Saiten des Todes zu zupfen. Er kann Leichen erwecken, um dem Willen seines Herrn zu dienen – man sagt, dass viele vampirische Soldaten, die auf dem Schlachtfeld fallen, sich erneut erheben, wenn ein Finsterer Kustos in der Nähe ist.",
@@ -2672,7 +2672,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/drakkenheim/fraktale_lepidoptera.png",
+    bild: "drakkenheim/fraktale_lepidoptera.png",
     beschreibung: [
       "Im Flug ist sie eine Kavalkade aus Farben, aus eilender Energie und undeutbarer Bewegung, ein tessellierendes Fraktal, das man unmöglich mit den Augen verfolgen kann. Mit einem Rauschen streift sie an dir vorbei und wirft dich wie ein Blatt im Wind. Während du zu Boden stürzt, ringt dein verwirrter Geist mit der unbegreiflichen Form der Kreatur. Eine sich ständig entfaltende Schmetterlingsfigur aus leuchtenden Farben ist das Beste, was dein Geist aus den unsinnigen Bildern interpretieren kann, die du siehst.",
       "Die Fraktale Lepidoptera zu betrachten verwirrt den Geist, da ihr Wesen sich in mehrere Dimensionen erstreckt und die Muster ihrer Form tessellieren und brechen. Wenn man erst von der Spirale ihrer Flügel fasziniert ist, verliert man sich in den ungeformten Reichen der Unendlichkeit des Raums zwischen den Welten. Die Lepidoptera ist gleichzeitig in der bekannten Welt und der Welt dahinter präsent und überbrückt die Grenzen zwischen ihnen, was alle auf beiden Seiten der Grenze verwirrt.",
@@ -2729,7 +2729,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 18,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/garmyr-berserker.png",
+    bild: "drakkenheim/garmyr-berserker.png",
     beschreibung: [
       "Auf massive Größe mutiert, werden Garmyr-Berserker so gewalttätig und mordlüstern, dass sie nicht mehr Freund von Feind unterscheiden — für sie gibt es nur noch Fleisch zum Abschlachten. Von ihren Rudeln in Ketten gehalten, werden Berserker auf der Jagd als lebende Vernichtungsmaschinen freigelassen.",
       "Sobald ein Berserker zu toben beginnt, ist er kaum noch aufzuhalten. Aufgrund seines Wahns flieht er niemals, sondern greift stets das nächste Ziel an — ob Feind oder Verbündeter."
@@ -2776,7 +2776,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 15,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/garmyr-krieger.png",
+    bild: "drakkenheim/garmyr-krieger.png",
     beschreibung: [
       "Garmyr-Krieger bilden das Gros der Garmyr-Streitkräfte. Sie verlassen sich im Kampf aufeinander und wissen, dass Rudeljagd ihnen den entscheidenden Vorteil verschafft. Sie suchen Wege, ihre Beute zu überfallen und zu überrennen, und sind erbarmungslose Jäger, die ihre Beute kilometerweit verfolgen.",
       "Garmyr gieren nach Blut und Nahkampf. Wenn ein Feind zu Boden geht, beginnt das Rudel sofort zu fressen, anstatt weiterzukämpfen. Bewusstlose und sterbende Abenteurer sind daher für Garmyr besonders verlockend."
@@ -2820,7 +2820,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 14,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/garmyr-kriegshund.png",
+    bild: "drakkenheim/garmyr-kriegshund.png",
     beschreibung: [
       "Diese großen Jagdhunde schleichen auf magerem, gebeugtem Körper vorwärts. Ihre muskulösen, haarlosen Körper sind von Narben übersät. Sie laufen auf allen vieren und sind ihren hündischen Ursprüngen näher als ihre humanoiden Artgenossen. Kleine, rote Augen starren aus tiefen Höhlen, während ein Maul voller überdimensionaler, gezackter Zähne knurrt und schnappt.",
       "Viele der einstigen Jagdhunde Drakkenheims verwandelten sich nach dem Meteoreinschlag in diese Kriegshunde. Sie streifen noch immer durch die Straßen auf der Suche nach Beute und unterstützen Garmyr-Krieger im Kampf."
@@ -2862,7 +2862,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 19,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/garmyr-spuerhund.png",
+    bild: "drakkenheim/garmyr-spuerhund.png",
     beschreibung: [
       "Erfahrene Garmyr werden oft geduldiger und methodischer in der Jagd. Sie greifen zu Fernkampfwaffen und durchstreifen die Straßen, häufig als Anführer kleiner eigener Rudel. Der Spürhund wählt einen Feind, konzentriert sich auf ihn und verfolgt ihn unablässig.",
       "Der Garmyr-Spürhund bevorzugt Dächer und erhöhte Positionen, von denen aus er Ziele mit Pfeilhagel eindeckt. Wenn seine Verbündeten zu unterliegen drohen, flieht er, bevor seine Feinde seinen Aussichtspunkt erreichen können."
@@ -2911,7 +2911,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 17,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/garmyr-thaumaturg.png",
+    bild: "drakkenheim/garmyr-thaumaturg.png",
     beschreibung: [
       "Wenige Garmyr entwickeln magische Fähigkeiten — ob durch angeborene Zauberei oder eine Verbindung zu einer überirdischen Macht ist unklar. Unabhängig von ihrer wahren Herkunft werden Garmyr-Zauberkundige zu einflussreichen Anführern im Rudel. Es wird spekuliert, dass diese Garmyr dem alten Gott Kromac lauschen oder durch Blutrituale arkane Energien anzapfen.",
       "Der Thaumaturg stürzt sich ins Getümmel seiner Verbündeten und versucht, sich so zu positionieren, dass seine Aura des Blutmonds möglichst viele Feinde erfasst. Er setzt Blutschrei ein, um Ziele aus der Distanz zu treffen, und flieht, wenn er in Bedrängnis gerät."
@@ -2958,7 +2958,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 8,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/gedaerm-koloss.png",
+    bild: "drakkenheim/gedaerm-koloss.png",
     beschreibung: [
       "Die massive Kreatur schleppt sich auf zwei stämmigen Beinen mit aufgedunsenen und blutenden Füßen vorwärts. Ihr riesiger Bauch schleift am Boden entlang, mit mehreren offenen Wunden, aus denen Eiter und Gallensaft sickern. Das Gesicht verschwindet in mehreren Doppelkinnen, von denen ätzender Speichel seinen Weg den Bauch hinunter findet. Als die Kreatur ihren Mund zu einem gurgelnden Stöhnen öffnet, greift sie in eine der offenen Wunden und zieht einen eiterbedeckten, kontaminierten Fleischklumpen heraus, um ihn auf euch zu schleudern.",
       "Der Gedärm-Koloss ist eine groteske Schöpfung eldritscher Kontamination. Sein Körper ist auf massive Größe angeschwollen und mutiert kontinuierlich weiter, erzeugt immer mehr verwesendes Fleisch, das aus der Kreatur herauszusickern scheint. Er reißt sich selbst auseinander und zieht seine Eingeweide heraus, nur damit diese sofort durch neue Wucherungen ersetzt werden. Dies erzeugt ein grauenvolles Schauspiel, wenn der Koloss sein kontaminiertes Fleisch auf Feinde schleudert und Galle auf sie erbricht."
@@ -3007,7 +3007,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Wald"],
-    bild: "assets/images/monster/drakkenheim/gefraessige_flora.png",
+    bild: "drakkenheim/gefraessige_flora.png",
     beschreibung: [
       "Diese gewaltige Pflanze windet sich auf einer Masse aus Wurzeln und Ranken vorwärts. Ihre großen Blätter wedeln hin und her rund um ihren mächtigen Blütenkopf. Leuchtende, hypnotisierende Okktarin-Blütenblätter umgeben eine zentrale Knospe, die sich zu einem Maul öffnet, aus dem Speichelnektar trieft, während eine blattartige Zunge erwartungsvoll herausleckt. Das Gebiss ist mit hakigen, gezackten Zähnen gefüllt. Diese Kreatur wirkt, als sei sie bereit, dich im Ganzen zu verschlucken.",
       "Manche Apotheker haben sich auf das Studium von Pflanzen spezialisiert. Diese botanischen Apotheker experimentieren häufig mit Delirium, um Pflanzenwachstumszyklen zu beeinflussen. Die Gefräßige Flora ist eine unglückselige Schöpfung dieser Bemühungen – eine Pflanze, die zu unglaublicher Größe herangewachsen ist, eine primitive Empfindungsfähigkeit entwickelt hat und nur vom Fressen angetrieben wird. Berichte besagen, dass der Botaniker, der das Ungeheuer erschuf, oft selbst dem unstillbaren Hunger seiner Kreatur zum Opfer gefallen ist. Ihre Trefferpunkte betragen 42 (4W10+20) zuzüglich 42 (4W10+20) für jeden Spielercharakter in der Begegnung."
@@ -3053,7 +3053,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/gefraessiger_ghul.png",
+    bild: "drakkenheim/gefraessiger_ghul.png",
     beschreibung: [
       "Gefräßige Ghulen bilden das Gros der untoten Streitkräfte von Vampiren. Es sind abscheuliche untote Kreaturen, die dem Willen ihrer Herren unterworfen sind und monatelang zum Verhungern gezwungen werden, um sie in einen Rausch zu versetzen, wenn sie auf die Feinde der Vampire losgelassen werden. Ihren Vampirherren ist ihr Wohlergehen gleichgültig – sie werden schlicht als Kanonenfutter eingesetzt, um Feinde zu zermürben.",
       "Ein Zauberwirker kann Untote erschaffen verwenden, um einen Gefräßigen Ghul anstelle eines gewöhnlichen Ghuls zu beleben."
@@ -3104,7 +3104,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/ghulfuerst.png",
+    bild: "drakkenheim/ghulfuerst.png",
     beschreibung: [
       "Dieser Ghul trägt eine alte, geschwärzte Rüstung und einen verrosteten Schild mit dem Symbol des Hauses von Drakken. Er schwingt einen großen Streitkolben, der vor grüner Untotenenergie knistert.",
       "Manche Ghulen dürsten ebenso nach Kampf wie nach Menschenfleisch und erheben sich über die anderen als Krieger und Anführer. Diese untoten Kreaturen sind Generäle geringerer Ghulen und führen den Angriff in Vampirarmeen an."
@@ -3168,7 +3168,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/ghulpriester.png",
+    bild: "drakkenheim/ghulpriester.png",
     beschreibung: [
       "In einem zerrissenen Kittel und einem verrosteten Kettenhemd gekleidet, murmelt dieser Ghul vor sich hin und umklammert ein verdrehtes, aus Knochen geschnitztes Symbol von Kromac, einer Darstellung des gotteslästerlichen Gottes des Gemetzels.",
       "Der Ghulpriester ist magisch begabt und nutzt nekrotische Energien, um Ghulen vom Rand des Todes zurückzuholen."
@@ -3214,7 +3214,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 23,
     sprachen: ["Alle Sprachen (spricht nicht)"],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/grabwaechter.png",
+    bild: "drakkenheim/grabwaechter.png",
     beschreibung: [
       "Die einsickernde Kontamination innerhalb des Schlosses bildete eine tödliche oktarinfarbene Schlammschicht, die sich in den tiefsten Teilen der Katakomben darunter ablagerte. Das unglückliche Schicksal der königlichen Toten Drakkenheims war es, im kontaminierten Schlamm verloren zu gehen, der nun als dicke Pfütze in den Krypten ruht. Die früheren Grabwächter pflegten einst die Krypten mit beleuchteten Laternen, die den Toten den Weg wiesen. Sie kümmerten sich um die Krypten, hielten sie sauber und waren geschworen, die königlichen Toten vor Grabräubern und Eindringlingen zu schützen.",
       "Als die Katastrophe Drakkenheims Wellen kontaminierter Zerstörung durch die Stadt sandte, mutierten die Grabwächter zu einer Masse aus Gliedmaßen und schreienden Gesichtern, verschmolzen mit einigen der Toten in den Krypten – und hielten dabei ihre vielen Laternen fest. Der Verstand des Grabwächters wurde durch die Kontamination verformt, und er fungiert nun als kollektiver Geist für die Toten in den Krypten. Die Toten strecken nun aus ihren Gräbern hervor und lassen die Wände und Säulen der Drakkenheimer Krypten wie eine Masse untoter Arme wirken, die greifen und stöhnen. Der dicke Schlamm darunter blubbert und kräuselt sich, und gelegentlich schießen Fontänen kontaminierten Schleims aufwärts, scheinbar auf Befehl des Hüters der Krypta.",
@@ -3289,7 +3289,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: ["Gemein", "Tiefensprache"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/greuelelender.png",
+    bild: "drakkenheim/greuelelender.png",
     beschreibung: [
       "Die hager-dürre Kreatur schlurft aus den Schatten hervor, scheinbar instabil auf den Beinen und unverhältnismäßig beschwert von ihrem massiven, pulsierenden Schädel, der mit oktariner Energie vibriert. Plötzlich hebt die Kreatur vom Boden ab und ein schimmerndes Feld umhüllt sie. Ihre hohlen Augen beginnen mit kontaminierter Energie zu leuchten, während sie den Kopf auf dich richtet und eine pulsierende psychische Energie aus ihrem Blick ausströmt.",
       "Greuelelende besitzen eine verformte und entstellte Psyche. Kontaminierte Energie sammelt sich in ihrem Gehirn, lässt es zu enormer Größe anschwellen und verleiht dem Elenden arkane Kräfte, die er kaum begreift – geschweige denn beherrscht. Durch diese bizarre Mutation hat der Elenderte den Großteil seines Muskelgewebes verloren. Auf den Beinen kämpft er um sein Gleichgewicht, kann sich aber bei Bedarf in die Luft levitieren. Zauberer, die der grauenhaften Kontamination erliegen, werden besonders häufig zu Greuelelenden."
@@ -3347,7 +3347,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/greuelkriecher.png",
+    bild: "drakkenheim/greuelkriecher.png",
     beschreibung: [
       "Inmitten eines Netzes aus gebrochenen Realitäten und erhaschten Zeitlinien sitzt eine arachnide Kreatur mit verzerrten Zügen. Ihre gestreckte Form windet und zuckt, während sie über ihr Mosaik aus zersplittertem Glas der Möglichkeiten kriecht. Ihr bezahnter Rachen schnappt und kaut. In ihren Bewegungen erkennt man feine nachhallende Widerspiegelungen möglicher Bewegungen und Reaktionen, die nie stattfanden – als würden mit jedem Schritt unzählige Geister möglicher Bewegungen aufleuchten und verblassen.",
       "Diese seltsamen, spinnenartigen Kreaturen scheinen Teilrealitäten, Parallelwelten und alternative Zeitlinien wie eine Spinne ihr Netz zu verweben. Sie besitzen Merkmale einer großen Spinne, doch ihre verzerrten Formen, gestreckten Torsi, bezahnten Rachen und stacheligen Häute verleihen ihnen eine jenseitige Erscheinung, die es schwer macht, sie als etwas aus dieser Existenzebene zu erkennen.",
@@ -3413,7 +3413,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: ["Riesisch"],
     umgebung: ["Ruinen"],
-    bild: "assets/images/monster/drakkenheim/greueltroll.png",
+    bild: "drakkenheim/greueltroll.png",
     beschreibung: [
       "Wenn die angeborene Regenerationsfähigkeit eines Trolls mit den verheerenden mutierenden Eigenschaften des Deliriums kombiniert wird, entsteht ein Greueltroll. Diese Kreaturen sind nahezu unmöglich zu töten und regenerieren sich von fast jedem Angriff. Sie scheinen auch eine gewisse Kontrolle über ihre Mutationen zu haben, die sie jederzeit verändern können, um ihre Beute zu jagen.",
       "Im Gegensatz zu den meisten anderen Trollen reisen Greueltrolle nicht in Rudeln. Sie sind korrumpierte Abscheulichkeiten, die einen Großteil ihrer Vernunft verloren haben. Sie wandern eher allein durch die Ruinen Drakkenheims und craven nach mehr Kontamination, die sie weitergeben wollen an alles, was in ihre Nähe kommt.",
@@ -3477,7 +3477,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 13,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/greuelverhaengnis.png",
+    bild: "drakkenheim/greuelverhaengnis.png",
     beschreibung: [
       "Während der heftigsten oktarinfarbenen Gewitterstürme konvergieren die mächtigen Energien zu einem Mahlstrom aus kleineren Elementarkräften, die sich zu einem empfindungsfähigen Sturm verbinden – einem Greuelverhängnis. Seine Manifestation wird durch einen wirbelnden Vortex aus dunklen Wolken, Trümmern und Eissplittern markiert, alles erleuchtet vom unheilschwangeren Schein des oktarinfarbenen Blitzes. Diese rasenden Elementare werden von einem reinen Zerstörungsimpuls angetrieben, und ihre Anwesenheit ruft eine Schar anderer Kontaminierter Elementare herbei, die sich ihnen in einer Kakophonie der Vernichtung anschließen.",
       "Entropische Flammen und Lebende Tiefe Dünste werden von Greuelverhängnissen leicht angezogen, aber ihre Anwesenheit treibt sogar normalerweise ruhige Kontaminierte Elementare wie Wandelnde Delerium-Geoden und Belebte Delerium-Schlämme dazu an, sich zu erheben und zu zerstören. Fasziniert von der Zerstörungskraft dieser elementaren Kreaturen haben Magier der Amethyst-Akademie diese Phänomene rund um das Auftreten eines Greuelverhängnisses studiert. Übereinstimmende Berichte von Kapuzenlichter-Spähern deuten darauf hin, dass der Ausgangspunkt dieser Stürme der wirbelnde Vortex roher magischer Energien zu sein scheint, der über dem Krater selbst schwebt."
@@ -3543,7 +3543,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 15,
     sprachen: [],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/grosse_linda.png",
+    bild: "drakkenheim/grosse_linda.png",
     beschreibung: [
       "Der Boden bebt unter dem Herannahen eines Ungeheuers: eines bleichen, grün-weißen, zweibeinigen Reptils. Ein riesiges Maul dominiert sein schädelartiges Gesicht, während Säurespeichel zwischen Reihen rasiermesserscharfer Zähne herabtropft. Stacheln verlaufen seinen Rücken und Schwanz entlang, und sein massiger Körper wird von zwei stammartigen Beinen getragen, während seine schwächlichen Vorderarme nahezu nutzlos wirken. Es brüllt einen Laut wie splitterndes Metall, als es vorwärtsstürmt, um einen zu verschlingen.",
       "„Große Linda hat sich als mehr als wert erwiesen für die Leben, die ich aufwandte, um sie zu fangen. Sie ist die preisgekrönte Kämpferin meiner Kampfgrube und eine treue Freundin. Ich freue mich sehr, dass ihr sie kennenlernen werdet. Und bevor ihr fragt: Ja, sie beißt.“ —Die Diebeskönigin",
@@ -3609,7 +3609,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 24,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/groessere_linda.png",
+    bild: "drakkenheim/groessere_linda.png",
     beschreibung: [
       "Donnernd durch die Straßen Drakkenheims stürmend, ist das berüchtigte Haustier der Diebeskönigin zu unvorstellbaren Ausmaßen mutiert und gewachsen. Der Dunst wirbelt um sie herum, und oktarinfarbene Energie pulsiert in ihren eingesunkenen Augenhöhlen. Die abgebrochenen Schäfte von Waffen und alten Pfeilen stecken tief zwischen ihren Schuppen, eingebettet in ihr regeneriertes Fleisch. Ihr bestachelter Rücken leuchtet durch Netze glühender oktarinfarbener Adern; ihr breites Maul ist voller zackiger Zähne. Als sie ihr Maul weit aufreißt, beginnt die sich aufbauende kontaminierte Energie im Rachen zu glühen.",
       "Wenn Große Linda jemals die Grenzen der Diebeskönigin verlässt, wird das Biest zweifellos in die Ruinen von Drakkenheim zurückkehren und sofort neue Jagdgründe suchen. Doch Große Lindas Einkerkerung hat ihr wahres Wachstumspotenzial gehemmt. Einmal befreit, wächst sie umso mehr, je länger sie direkt den Energien des Dunstes ausgesetzt ist. Während sie wächst, beginnen sich neue Mutationen zu formen, die ihre Wildheit, ihre Raubtiersinne und ihre Widerstandsfähigkeit weiter verstärken. Unkontrolliert könnte Große Linda zum Spitzenräuber von Drakkenheim werden – Größere Linda."
@@ -3707,7 +3707,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 15,
     sprachen: ["Riesisch"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/groteskes_ungetuem.png",
+    bild: "drakkenheim/groteskes_ungetuem.png",
     beschreibung: [
       "Ein monumentaler Koloss wirft einen Schatten auf das zerbrochene Gelände. Es ist ein Riese von über fünfzehn Metern Höhe, dessen Gestalt ein erschreckendes Schauspiel der Mutation ist – mit grotesk verlängerten und verdickten Gliedmaßen, die mit beunruhigender Energie pulsieren. Überall in seinen massigen Körper sind scharfe, leuchtende Delirium-Fragmente tief in das Fleisch eingebettet. Das kleine, scharfkantige Gesicht ist mit stechenden Augen versehen, die in einem unerbittlichen, gespenstischen Leuchten brennen, während seine massiven Beine den enormen Körper mit einem schweren, hallenden Tritt tragen, der unheilschwanger durch die verlassene Landschaft hallt. Enorme, gezackte Klauen ragen aus seinen Fingerspitzen hervor und pflügen Furchen in die Erde.",
       "Diese mutierten menschlichen Ungeheuer sind zu gewaltiger Größe herangewachsen. Delirium-Splitter sind in ihre entstellten Körper eingeschmolzen, und ihre Muskeln pulsieren mit arkaner Energie, während sie nach vorne stapfen. Wütend territorial, werden diese Kreaturen gelegentlich dabei beobachtet, wie sie massive Delirium-Kristalle aus dem Krater schleppen und sie wie Obelisken in den Ruinen aufstellen. Niemand weiß, warum diese eigentümlichen Ungetüme Delirium-Kristalle in seltsamen Mustern platzieren und Linien in den Boden ritzen, um sie zu verbinden."
@@ -3765,7 +3765,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/hautkriecher.png",
+    bild: "drakkenheim/hautkriecher.png",
     beschreibung: [
       "Wenn jemand in kürzester Zeit stark kontaminiert wird, folgen Mutationen in so rascher Folge, dass der Körper die Veränderungen nicht mehr verkraften kann. Die Organe verflüssigen sich, und die Person stirbt, indem sie eine schwarze Galle erbricht. Knochen, Augen, Gehirn und alle inneren Organe lösen sich in einen dicken schwarzen Kontaminationsschlamm auf – übrig bleibt nur ein Sack toter Haut, der in einer Lache Delerium-Schlamm auf dem Boden liegt.",
       "Der Hautsack bleibt nicht tot. Durch und durch kontaminiert, erwacht er in einem verzweifelten und ausgehungerten Zustand und sucht nach lebenden Kreaturen, um sich mit frischem Fleisch zu füllen und eine vollständigere Form anzunehmen. Hautkriecher sind dafür bekannt, eine ganze Kreatur wie eine Schlange zu verschlingen und anschließend die Form des Verschlungenen anzunehmen – allerdings mit hängender, schlaffer Haut und verzerrten Zügen.",
@@ -3810,7 +3810,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 12,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/hautschwinge.png",
+    bild: "drakkenheim/hautschwinge.png",
     beschreibung: [
       "Ein Schwarm haarloser, geflügelter Kreaturen, jede etwa so groß wie ein großer Hund, kreist am Himmel. Jede ist ein groteskes Flickwerk aus verschiedenen Tieren, die durch unaussprechliche magische Experimente zusammengeschmolzen wurden. Ihre gedunsenen Körper bestehen aus Kombinationen von Schweins-, Ziegen- und Schafsrümpfen. Die federlosen Flügel sind schlecht strukturiert, mit sichtbaren Knochen und dünner, reißender Haut. Jede hat einen widderkopfartigen Kopf mit ungleich hervortretenden Augen und verdrehten Hörnern; Nase und Maul wurden durch einen gebogenen Vogelschnabel ersetzt, erschreckend gefüllt mit unregelmäßigen Zahnreihen und triefend vor übelriechender, klebriger Speichelflüssigkeit.",
       "Viele Apotheker, die sich mit den Geheimnissen der Wiederbelebung und Transmutation befassen, sind noch nicht kühn genug, um mit menschlichen Versuchspersonen zu beginnen. Stattdessen starten die meisten ihre grausamen Experimente an Tieren. Leider verlieren sie dabei nach und nach ihr moralisches Empfinden und beginnen schließlich, auch Menschen mit derselben kalten Gleichgültigkeit zu betrachten wie ihre tierischen Versuchsobjekte."
@@ -3853,7 +3853,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 24,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/herr_des_festmahls.png",
+    bild: "drakkenheim/herr_des_festmahls.png",
     beschreibung: [
       "Die Garmyr scharen sich unter einem großen Kriegsherrn, dem Herrn des Festmahls, der sich einen furchteinflößenden Ruf als Meisterjäger, Fährtenleser und Krieger erarbeitet hat. Er genießt es, zur Unterhaltung zu jagen und zu töten, und hängt seine Trophäen in seiner finsteren Kathedrale auf. Seine Lieblingsbeute sind natürlich Abenteurer — er freut sich daran, sie durch die Stadt zu verfolgen und ihre Ausrüstung auf seinen Trophäenregalen aufzuhängen.",
       "Der Herr des Festmahls erhielt seinen ersten Namen Ghost aufgrund seines blassen Fells. Er war schon in jungen Jahren größer als die meisten anderen Garmyr, aber auch listig und klug. Seine Trefferpunkte erhöhen sich um 66 (7W10+28) für jeden anwesenden Spielercharakter."
@@ -3905,7 +3905,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/hexenmeister_des_rattengottes.png",
+    bild: "drakkenheim/hexenmeister_des_rattengottes.png",
     beschreibung: [
       "Nur wenige Rattlings besitzen magische Kräfte, die sie als Geschenke des Rattengottes bezeichnen. Ob ihre Magie wirklich einem überirdischen Pakt entspringt oder nur ein Produkt kontaminierter Mutationen ist, bleibt ungeklärt. Diese Hexenmeister lügen und übertreiben jedes Flüstern oder jede Eingebung, um ihre Artgenossen davon zu überzeugen, dass sie direkt mit dem großen Rattengott sprechen.",
       "Die meisten Rattlings fürchten und gehorchen diesen Hexenmeistern. Selten teilen sie ihre Macht mit anderen, weshalb es ungewöhnlich ist, dass eine Kolonie mehr als einen besitzt. Oft wählt ein Hexenmeister das wildeste Riesige Rattling als Leibwächter oder hält sich einen erfahrenen Rinnenschützen als persönlichen Assassinen."
@@ -3950,7 +3950,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 16,
     sprachen: ["Sprachen seines Schöpfers", "Telepathie 9 m"],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/hirnpfropf.png",
+    bild: "drakkenheim/hirnpfropf.png",
     beschreibung: [
       "Der Hirnpfropf ist ein grauenhafter Versuch, zwei Kreaturen zu einer einzigen Form zu verschmelzen – eine albtraumhafte Kombination aus Gehirn und Brawn. Durch chirurgische Implantation und Fleischverschmelzung erzwingt ein Apotheker eine Symbiose, indem er die Nervensysteme fusioniert und potente psonische Fähigkeiten freisetzt.",
       "Obwohl als Symbiose zweier Geister gedacht, übernimmt die implantierte Kreatur typischerweise die Psyche ihres Wirtes und kontrolliert die neue Form vollständig. Manchmal bilden die beiden Wesen jedoch einen gemeinsamen Geist oder sogar ein zweikammeriges Bewusstsein, in dem die Originale innerlich über die nächste Handlung debattieren. Dank ihrer psonischen Fähigkeiten sind Hirnpfropfe hervorragend geeignet, andere Versuchssubjekte zu kontrollieren – ihre präzise Telekinese ist besonders nützlich bei chirurgischen Eingriffen."
@@ -3993,7 +3993,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 6,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/hypnotische_schauerbluete.png",
+    bild: "drakkenheim/hypnotische_schauerbluete.png",
     beschreibung: [
       "Die mehrfarbigen Blütenblätter dieser großen, lotusähnlichen Blume öffnen sich sanft. Das Licht tanzt über ihre Blätter und schimmernde Blüte in einem seltsamen, hypnotischen Rhythmus. Die Farben scheinen sich zu verschieben, manchmal unvorstellbare Töne erzeugend. Wer sie anschaut, spürt wahnsinnige Muster, die seinen Geist erfüllen.",
       "Hypnotische Schauerblüten sind Pflanzen, die durch Mutation entstellt wurden. Sie ahmen Eldrisch-Lilien nach – magische Pflanzen, die für ihre kontaminationsresistenten Eigenschaften geschätzt werden – um Beute nah genug heranzulocken, um sie zu hypnotisieren. Oft wachsen sie in gefährlichen Umgebungen nahe Delerium-verkrusteten Gewächsen, kontaminiertem Wasser oder Delerium-Schlamm.",
@@ -4037,7 +4037,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 17,
     sprachen: ["Versteht gelernte Sprachen, spricht aber nicht"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/injektor.png",
+    bild: "drakkenheim/injektor.png",
     beschreibung: [
       "Der Injektor ist ein heimtückisches Konstrukt, das in den Laboratorien der Haze-Alchemisten Drakkenheims erschaffen wurde. Mit seinen vielen Armen und Spritzenapparaten bewaffnet, schleicht er sich an Beute heran und infiziert sie mit einer Auswahl experimenteller Substanzen – mal heilend, mal lähmend, mal tödlich.",
       "Injektoren wurden ursprünglich als medizinische Hilfskonstrukte entwickelt, die Patienten in den überfüllten Krankenhäusern der Stadt behandeln sollten. Nach dem Fall Drakkenheims programmierten skrupellose Alchemisten diese Maschinen um, und seither wandern sie ziellos durch die Trümmer, treffen auf Lebewesen und verabreichen ihnen eine schicksalhafte Injektion."
@@ -4079,7 +4079,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 15,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/jaeger-koloss.png",
+    bild: "drakkenheim/jaeger-koloss.png",
     beschreibung: [
       "Eine geduckte und aufgedunsene Gestalt taumelt aus den Schatten. Sie besitzt zwei massive Tentakelarme, die in großen klauenartigen Haken enden. Der Kopf der Kreatur hat zwei große oktarinfarbene Augen, doch wo ein Mund sein sollte, befindet sich nur eine fleischige Fläche. Stattdessen hat die Kreatur ein riesiges, knurrendes Maul in ihrem Bauch mit gezackten Knochenzähnen und einer großen violetten Zunge. Sie quiekt hungrig, während ihre Arme auf euch einschlagen und bereit sind, euch in ihren offenen Mund zu ziehen. Dann verschwindet sie plötzlich vor euren Augen, doch ihr könnt noch immer ihr hungriges Quieken hören.",
       "Jäger-Kolosse durchstreifen die Straßen in einem ständigen Zustand des Hungers. Anders als andere Elende suchen sie aktiv nach Beute, doch ihr Appetit scheint nie nachzulassen. Noch grauenhafter ist die Art, wie sich ein Jäger-Koloss an die Jagd angepasst hat: Sie können sich mit einer natürlichen Tarnung, die ihre Haut mutiert hat, unsichtbar machen. Diese heimlichen Dunst-Kolosse warten in den Schatten auf ihre Beute und springen dann hervor, um sie in einem Atemzug einzusacken."
@@ -4137,7 +4137,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 8,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/juggernaut-koloss.png",
+    bild: "drakkenheim/juggernaut-koloss.png",
     beschreibung: [
       "Die Kreatur besteht aus wulstigen Muskeln; Lederriemen halten verrostete Rüstungsteile zusammen – einen Schulterpauldron, Armschienen und einen Gürtel. Der Kopf steckt in einer massiven Metallkuppel ohne erkennbares Gesicht. Dennoch ist das schwere Atmen der Kreatur aus dem Inneren der Kuppel zu hören, und sie scheint sich ihrer Umgebung vollständig bewusst zu sein. In jeder Hand trägt sie eine improvisierte Metallklinge aus Hausdachbalken oder Wagenresten, sorgfältig zu einer Klinge geschliffen, bedeckt mit Rost und getrocknetem Blut.",
       "Der ikonische Helm des Juggernaut-Kolosses ist ein gewisses Mysterium. Es ist unklar, ob er ihn selbst anfertigt oder ob diese Dunst-Kolosse eine Form eldritscher Experimente sind. Man hat sie in der Innenstadt nahe der Kleinberg-Güter umherstreifen sehen, was Gerüchten über den Bleichen Mann und seine ständigen Experimente mit Mutation und Kontamination Nahrung gibt. Der Juggernaut-Koloss durchstreift die Straßen wie eine Art Wächter, schließt sich anderen Elenden als Leibwächter an und kämpft stets bis zum letzten Atemzug."
@@ -4200,7 +4200,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 12,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/kaeferritter.png",
+    bild: "drakkenheim/kaeferritter.png",
     beschreibung: [
       "Zwei insektenhafte Beine tragen die käferähnliche Kreatur und klacken rhythmisch, wenn sie umherschurrt. Zwei Klauarme kratzen unter klingenartigen Gliedmaßen, während knirschende Mandibeln unter ihren kleinen Augen schnattern. Ein massiges zangenartiges Horn ragt aus ihrem helmförmigen Kopf heraus, und eine robuste bläulich-silberne Schale schützt zarte Flügel, die darunter verborgen sind.",
       "Käferritter repräsentieren die Mutationen, die sich nach dem Meteoriteneinschlag sogar in den kleinsten Kreaturen finden. Insekten, die einst aus dem Boden, aus Wandrissen oder zwischen Dielen krochen, wurden durch den Kontakt mit Delirium und die Einwirkung des Dunstes verändert. Viele sind auf monstruöse Weise auf humanoide Größe oder sogar noch darüber hinaus gewachsen.",
@@ -4261,7 +4261,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 18,
     sprachen: ["Abyssal", "Gemein"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/kakophonische_chimaere.png",
+    bild: "drakkenheim/kakophonische_chimaere.png",
     beschreibung: [
       "Die drei Köpfe der kakophonischen Chimäre bestehen aus einer zwitschernden Ratte, einer kreischenden Harpyie und einem heulenden Garmyr, die gemeinsam einen wahnsinnsinduzierenden Chor aufführen, während sie ihre Beute abschlachten. Ihre Vorderbeine sind rattenartige Klauen, ihre Hinterbeine sind Vogelkrallen, und der kolossale, pelzige Körper des Biests wird von riesigen Flügeln aus blutrotem Gefieder getragen – mit einem glitschigen Neunaugenaal als Schwanz.",
       "Die kakophonische Chimäre entstand aus einer katastrophalen Verschmelzung mehrerer Kreaturen – eines Garmyrs, eines Tiefen Dregs, eines Manticors, eines Rattwesens und einer Harpyie – inmitten eines erbitterten Kampfes. Gefangen in einer schrecklichen arkanen Anomalie, wurden diese Kreaturen unfreiwillig zu einer einzigen, schrecklichen Form vereint. Jeder Kopf behält die Erinnerungen und Instinkte seiner ursprünglichen Form und treibt die Chimäre in einem ständigen Kampf um Vorherrschaft an. Dieser unerbittliche innere Konflikt befeuert ihren Wahnsinn und ihre Aggressivität gegenüber allem, was sie in den Ruinen antrifft.",
@@ -4351,7 +4351,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: ["Versteht Gemein, spricht es aber nicht"],
     umgebung: ["Gewässer", "Unterirdisch", "Ruinen"],
-    bild: "assets/images/monster/drakkenheim/kanalwesen.png",
+    bild: "drakkenheim/kanalwesen.png",
     beschreibung: [
       "Niemand weiß, wie das Kanalwesen entstanden ist. Manche vermuten, es sei ein Mensch, der in den Kanälen ertrank, bevor die Kontamination seine Form annahm und ihn mit dem rohen Abwasser um ihn herum verschmolz. Andere glauben, es sei die Kontamination selbst, die Pflanzen und Trümmer in grauenhafte Monster verwandelt.",
       "Das Kanalwesen jagt in den Kanälen von Drakkenheim und absorbiert alles, was ihm in den Weg kommt. Es ist ein unsichtbarer Mörder, der seine Tentakel nutzt, um Opfer in die Kanalisation zu ziehen und zu absorbieren. Ratlings nutzen das Kanalwesen als Warnmärchen für ihre Jungen und sagen ihnen, sie sollen nicht alleine reisen und weglaufen, wenn das Wasser aufgewühlt wird.",
@@ -4398,7 +4398,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein"],
     umgebung: ["Stadt", "Ruinen"],
-    bild: "assets/images/monster/drakkenheim/kapuzenlaterne-apotheker.png",
+    bild: "drakkenheim/kapuzenlaterne-apotheker.png",
     beschreibung: [
       "Die Kapuzenlaterne-Apotheker sind die Sanitäter der Kapuzenlaternen. Sie sind an ihrer weißen Tunika mit grünem Kapuzenlaternen-Emblem zu erkennen und tragen eine lederne Kapuze sowie eine große Arzttasche und einen Bandelier mit Fläschchen für verschiedene Beschwerden oder Gifte.",
       "Apotheker sind ausgebildete Sanitäter, die die Kapuzenlaternen im Kampf unterstützen, indem sie Verwundete kampffähig halten und schwer verletzte Soldaten in Sicherheit bringen. Obwohl ein Apotheker das Unterstützungsregiment selten verlässt, gehören sie zu den angesehensten Kapuzenlaternen überhaupt."
@@ -4441,7 +4441,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: ["Gemein"],
     umgebung: ["Stadt", "Ruinen"],
-    bild: "assets/images/monster/drakkenheim/kapuzenlaterne-fallensteller.png",
+    bild: "drakkenheim/kapuzenlaterne-fallensteller.png",
     beschreibung: [
       "Der Kapuzenlaterne-Fallensteller ist einer der Feldeinsatzbeauftragten des Unterstützungsregiments mit einer doppelten Aufgabe: Er ist sowohl Jäger, der die Kapuzenlaternen mit frischem Fleisch und Proviant aus den Wäldern versorgt, als auch legt er Fallen und Hinterhalte für Sondereinsätze innerhalb der Stadtmauern.",
       "Fallensteller sind mit allerlei Werkzeug und alchemistischen Zutaten gut ausgerüstet, um fortschrittliche Fallen gegen Monstergruppen zu bauen und dem Vorhutregiment entscheidende Vorteile zu verschaffen."
@@ -4485,7 +4485,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 15,
     sprachen: ["Gemein"],
     umgebung: ["Stadt", "Ruinen"],
-    bild: "assets/images/monster/drakkenheim/kapuzenlaterne-spaeher.png",
+    bild: "drakkenheim/kapuzenlaterne-spaeher.png",
     beschreibung: [
       "Als Vorauspatrouillen des Wachtregiments sind Späher Kapuzenlaternen-Mitglieder, die noch nicht für den intensiven Felddienst der Vorhut bereit sind, sich aber als fähig erwiesen haben, die Ruinen zu navigieren und auf den Straßen verborgen zu bleiben.",
       "Sie fungieren als Augen und Ohren der Kapuzenlaternen, behalten Monstergruppen in der Stadt im Blick und geben mit ihrer Leuchtpistole Signale, um die schwerer bewaffnete Vorhut zu alarmieren."
@@ -4527,7 +4527,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 16,
     sprachen: ["Gemein"],
     umgebung: ["Stadt", "Ruinen"],
-    bild: "assets/images/monster/drakkenheim/kapuzenlaterne-veteran.png",
+    bild: "drakkenheim/kapuzenlaterne-veteran.png",
     beschreibung: [
       "Dachschützen gehören dem Vorhutregiment an und sind außergewöhnlich präzise im Umgang mit dem Bogen. Sie tragen dunkle, rustikale Rüstungen in den Farben der Drakkenheimer Ruinen, tiefgrüne Umhänge und gut gefertigte Präzisionslangbögen.",
       "Dachschützen reisen oft in Gruppen, lokalisieren ihre Feinde, besetzen mehrere Aussichtspunkte um sie herum und warten auf den richtigen Moment zum Zuschlagen. Wer die Anzahl der gegenüberstehenden Kapuzenlaternen zu kennen glaubt, bemerkt die unsichtbaren Schützen über sich oft zu spät."
@@ -4571,7 +4571,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/karmesinritter.png",
+    bild: "drakkenheim/karmesinritter.png",
     beschreibung: [
       "In geschwärzter Stahlrüstung mit roten Akzenten gekleidet, trägt dieser Ritter das Zeichen seines vampirischen Herrn auf seinem Turmschild. Er schwingt eine Axt, die von roter Energie durchzuckt wird; blutrot leuchtende Augen blicken aus dem Helm, die Fangzähne sichtbar und hungrig.",
       "Die Karmesinritter sind gewappnete Vampirbrut, penibel ausgebildet als Elitesoldaten und persönliche Leibwächter ihrer vampirischen Herren. Diese Kämpfer sind untrennbar an den Dienst an ihren Herrschern gebunden und schöpfen tiefe Befriedigung aus dem Gemetzel, das sie zu deren Ehre anrichten. Im Kampf sind sie am gefährlichsten – der Hunger nach Blut treibt sie ewig an, und jeder Kampf ist zugleich eine Mahlzeit."
@@ -4620,7 +4620,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 12,
     sprachen: ["Versteht die Sprachen seines Schöpfers, spricht aber nicht"],
     umgebung: ["Ruinen"],
-    bild: "assets/images/monster/drakkenheim/koenigstoeter_hydra.png",
+    bild: "drakkenheim/koenigstoeter_hydra.png",
     beschreibung: [
       "Die Königstöter-Hydra ist eine schauerliche Flickwerk-Kreatur, deren Körper mit Metallschrott und Körperteilen gewaltiger Ungetüme zusammengenäht wurde. Ihr Fleisch ist bleich und verfärbt, mit schillernden Schuppen, die ihren Glanz verloren haben; an vielen Stellen fehlen sie gänzlich. Die vielen Köpfe sind chirurgisch angenäht – mit milchig-weißen Augen in alten, verwesenden Höhlen. Giftige Chemikalien pumpen durch ihren Körper und lassen leuchtende Adern durch die dünnsten Schuppenstellen schimmern. Widerlicher grüner Speichel tropft aus den vielen unterschiedlichen Mäulern ihrer Eidechsenköpfe.",
       "Die Königstöter-Hydra ist eine Kreatur für einen einzigen Zweck: eine Abscheulichkeit des Apothekers, entworfen vom wahnsinnigen Geist des Dr. Everett Freed, des Wiederbelebers – dem berüchtigtsten Apotheker in der Welt von Drakkenheim. Sie wurde aus dem erschlagenen Leichnam einer gewaltigen Hydra erschaffen, mit der Absicht, sie gegen jene zu wenden, die sie ursprünglich bezwangen. Ein Werkzeug der totalen Vernichtung, losgelassen auf die Feinde des grausamen Apothekers.",
@@ -4672,7 +4672,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 12,
     sprachen: ["Versteht Sprachen seines Schöpfers (spricht nicht)"],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/koerperdieb.png",
+    bild: "drakkenheim/koerperdieb.png",
     beschreibung: [
       "Dieses zusammengestückelte Monster aus zusammengenähten Leichen sickert schwarzes Serum aus seinen Nähten. Die Gestalt ist massig, etwa zwei Meter groß, mit breiten Schultern und einem gebuckten Rücken. Ihr Kopf scheint klein im Vergleich zum Körper, mit bleichen, weißen Augen in tiefen, dunklen Augenhöhlen. Ein lippenloser Mund zwingt die Kreatur zu einem dauerhaften, drohenden Grinsen. Gekleidet in einen dicken schwarzen Trenchcoat und breiten Hut, riecht sie nach Schwefel und Pech. Das verstörlichste Merkmal sind die vier Arme der Kreatur, die in massiven, überdimensionalen Händen enden, von denen jede acht lange, spindeldürre Finger hat.",
       "Zusammengenäht aus den Überresten zahlreicher Leichen und durch verbotene alchemistische Prozesse animiert, streift der Körperdieb durch die Dunkelheit. Von einem wahnsinnigen Doktor erschaffen, um Subjekte für grausame Experimente zu entführen, lauert er in Schatten und wartet auf unvorsichtige Wanderer, um sie zu packen und in die Nacht zu entführen. Schatten umhüllen ihn und helfen ihm, seine Opfer festzuhalten, während er mit ihnen in die dunkelsten Winkel flieht."
@@ -4716,7 +4716,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 17,
     sprachen: ["Gemein", "Telepathie 9 m"],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/koerperlose_psyche.png",
+    bild: "drakkenheim/koerperlose_psyche.png",
     beschreibung: [
       "Die Körperlose Psyche ist das geistige Überbleibsel eines Magiers oder Gelehrten, dessen physischer Körper vom Delirium zersetzt wurde, während sein Geist durch die arkane Energie erhalten blieb. Diese Wesenheit treibt durch die Überreste Drakkenheims, getrieben von dem Verlangen, sich wieder einen Körper zu nehmen.",
       "Eine Körperlose Psyche erscheint als phosphoreszierendes, humanoidal geformtes Leuchten, das von flüsternden Stimmen begleitet wird. Obwohl sie keine physische Form besitzt, vermag sie psychische Energie zu bündeln und als elektrische Entladungen zu schleudern. Ihr gefürchtetstes Merkmal ist jedoch die Fähigkeit, in den Geist eines Lebewesens einzudringen und dessen Körper zu übernehmen."
@@ -4761,7 +4761,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt", "Gebirge"],
-    bild: "assets/images/monster/drakkenheim/kraechzer.png",
+    bild: "drakkenheim/kraechzer.png",
     beschreibung: [
       "Krächzer sind mutierte Aasvögel mit Merkmalen verschiedener Vögel – darunter Geier, Tauben und Krähen. Diese feigen Opportunisten ernähren sich von Leichen und geschwächter Beute, meiden dabei jedoch die geschickteren Lufträuber in den Ruinen. Vom Klang des Kampfes angelockt, kreisen sie geduldig in großen Höhen, bis der Kampf endet, und fallen dann über Verwundete oder unachtsame Überlebende her.",
       "Das Verdauungssystem eines Krächzers ist ein widerlicher Sumpf aus den halb aufgelösten Überresten seiner letzten Mahlzeit. Krächzer übergießen ihre Mahlzeiten – ob Leichen oder noch lebende Ziele – mit saurem Erbrochenen und ausgeschiedenen Abfällen, die Fleisch und Knochen zu verdaulichem Brei auflösen.",
@@ -4803,7 +4803,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 9,
     sprachen: [],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/kraterwurm.png",
+    bild: "drakkenheim/kraterwurm.png",
     beschreibung: [
       "Die Erde bebt, Kieselsteine und Staub vibrieren. Ein tiefes Grollen dringt aus der Tiefe. Plötzlich bricht Stein auf und gibt einen titanischen Wurm frei. Er hebt seinen massigen Kopf und öffnet ein blütenblattartiges Maul, gefüllt mit langen, zackigen, kristallinen Zähnen, die alle in Richtung seines Rachens weisen. Sein Körper ist bedeckt mit schlammig-violetten Platten, aus denen oktarinfarbene Stacheln hervorstechen. Sein heißer Atem schleudert oktarinfarbenen Schleim davon, als er auf einen zutaucht.",
       "Jene, die es wagten, in das Kraterbecken vorzudringen, kehrten mit erschütternden Berichten über die gewaltigen Kraterwürmer zurück. Sie beschreiben, wie die Erde erzittert, kurz bevor ein gigantischer Wurm die Oberfläche durchbricht und Kreaturen auf seinem Weg verschlingt. Merkwürdigerweise werden die Würmer nur im öden Krater gesichtet. Nur wenige verstehen, wie solch gigantische Kreaturen – geschweige denn mehrere Würmer – hier überleben können, oder warum sie nicht anderswo jagen.",
@@ -4859,7 +4859,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/kristalliner_elender.png",
+    bild: "drakkenheim/kristalliner_elender.png",
     beschreibung: [
       "Die gezackten Züge dieser Kreatur lassen sie wie aus zersplittertem Glas gefertigt erscheinen. Ihr Fleisch ist eine fraktale Anordnung aus polygonalen Kristallwinkeln, die schimmernd das Licht brechen. Überall am Körper ragen scharfe Splitter hervor und ziehen sich wieder zurück, während sich die Kreatur bewegt – der Körper zieht Licht an sich, bricht es in merkwürdigen Winkeln und gibt es mit gesteigerter Intensität weiter.",
       "Ähnlich wie manche Gebäude nahe dem Einschlagsort ihre Grundsubstanz verändert sahen – Stein und Holz, die sich in Fleisch oder Glas verwandelten – wurde das Fleisch dieser Elenden zu hartem Kristall gewandelt. Sie besitzen die angeborene Fähigkeit, Licht und Elemente aufzunehmen, kurz in ihrer Gestalt zu speichern und sie dann wieder auszustoßen, wobei ihr Körper als verstärkende Linse wirkt. Im Kampf bleiben Kristalline Elende hinter anderen Elenden und beschießen ihre Feinde aus der Ferne – doch Waffenschlag ist ihre größte Schwäche."
@@ -4909,7 +4909,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 18,
     sprachen: ["Versteht alle Sprachen, kann aber nicht sprechen", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/drakkenheim/lauerer_auf_der_schwelle.png",
+    bild: "drakkenheim/lauerer_auf_der_schwelle.png",
     beschreibung: [
       "Sich an die Dünnen Orte zwischen den Realitäten klammernd, reißt ein kichernder Chor chaotischen Gelächters in hysterischen und dissonanten Tönen durch die Gedanken derer, die Zeuge des kosmischen Wesens werden. Während es mit seinen drei ungeblinzelten, dunklen Augenteichen herausschaut, beobachtet und vermisst es die Realitäten, während seine Masse fleischiger Tentakel von seiner schleimigen Form herabhängt. Es wogt in schwarzen, leereartigen Tönen und Spritzern aus tiefen Violett und Blau, als wäre sein Fleisch ein bewegtes Bild des Kosmos.",
       "Der Lauerer auf der Schwelle ist ein niederträchtiges und manisches Wesen, das durch Dünne Orte in unsere Welt driftet und in den Gedanken derer schreit, die es wahrnimmt. Er wandert durch den Raum zwischen den Welten und ernährt sich von der rohen arkanen Energie in den Rissen zwischen den Realitäten und von den zersplitterten Atomen toter Reiche. Er ist eine Kreatur, die auf der Schwelle zwischen Orten und Nicht-Orten, zwischen Zeit und Ewigkeit existiert – eine Personifizierung des brodelnden, unbegreiflichen Nichts, das die Nähte zwischen dem Gewebe aller Dinge bildet."
@@ -4953,7 +4953,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/lauernder_elender.png",
+    bild: "drakkenheim/lauernder_elender.png",
     beschreibung: [
       "In einen dunklen Umhang gehüllt mit tief ins Gesicht gezogener Kapuze, betrachtet die Gestalt euch mit vorsichtiger Haltung. Sie geht auf und ab, beobachtet euch, antizipiert eure Handlungen und macht sich bereit für jede plötzliche Bewegung. Unter der Kapuze sind ein zahniges Grinsen und blasses Fleisch zu erkennen. Sanft leuchtende Augen spähen aus den Schatten und beobachten euch aufmerksam und gewissenhaft.",
       "Es ist nicht sofort offensichtlich, dass ein Lauernder Elender ein kontaminiertes Monster ist. Da er das Großteil seines ursprünglichen Aussehens und seiner Persönlichkeit bewahrt hat, wird er von einem wahnsinnigen Zwang angetrieben, Freunde und Geliebte in Umstände oder Orte zu locken, die sie ihrerseits kontaminieren. Hellsichtige Beobachter können subtile Anzeichen der Kontamination erkennen – verfärbte Hauttöne und ein leichtes oktarines Leuchten in den Augen. Tatsächlich ist die Täuschung nur oberflächlich: Die Eingeweide des Elenden sind vollständig kontaminiert und mutiert, fast alle inneren Organe in unkenntliche Formen verwandelt."
@@ -5008,7 +5008,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/lebende_biogefahr.png",
+    bild: "drakkenheim/lebende_biogefahr.png",
     beschreibung: [
       "Dieser gelatinöse Klumpen tropft und sickert über den Boden wie eine langsam fließende, zähflüssige Schmelze. Bald erscheint er flüssig, bald wie Gelee, bald nimmt er eine festere Form an. Seine Farben wechseln und schillern in abwechselnden Tönen, manchmal imitiert er seine Umgebung so vollständig, dass er sich nahezu unsichtbar macht.",
       "Lebende Biogefahren sind die misslungenen Experimente von Chemikern, die alchemistische Gebräue von weit größerer Wirksamkeit perfektionieren wollen. Dennoch liegt auch in ihrem Scheitern ein Wert: Das Wecken von Bewusstseinsfunken in chemischen Verbindungen ist keine geringe Leistung. Die Lebende Biogefahr ist ein unersättlicher Schlick, der wie eine verschüttete Flüssigkeit durch seine Umgebung gleitet, auf Kreaturen zum Auflösen wartet und an Wänden und Decken klebt, um auf ahnungslose Opfer herabzufallen."
@@ -5051,7 +5051,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: ["Tiefe Rede"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/lebender_tiefer_dunst.png",
+    bild: "drakkenheim/lebender_tiefer_dunst.png",
     beschreibung: [
       "Ein Bereich des Dunstes verhält sich seltsam. Die Kontamination im Nebel verdichtet sich, nimmt Gestalt an und bildet eine wolkenhafte, fließende Form, die sich kaum von der trüben Atmosphäre um sie herum unterscheidet. Erst wenn eine Ranke dunklen Dunstes tödlich zuzieht, erkennt man, dass diese Wolke kein gewöhnlicher Dunst ist.",
       "Ihrem Namen treu, lauern diese kontaminierten Luftelementare in den dichtesten Teilen des Dunstes und verschmelzen nahtlos mit der tödlichen Umgebung. Sie existieren, um den kontaminierenden Nebel und Dunst durch ihre Körper zu verbreiten, und erfreuen sich daran, Mutationen und monströse Verwandlungen hervorzurufen."
@@ -5105,7 +5105,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/drakkenheim/leerraumpirat_herold.png",
+    bild: "drakkenheim/leerraumpirat_herold.png",
     beschreibung: [
       "Viele Humanoide aus der Sterblichenwelt und sogar Kreaturen aus den Feenlanden und dem Traumreich sind durch Dünne Stellen in den Zwischenraum der Welten gerutscht und konnten nicht mehr zurückkehren. Manche überlebten die lang anhaltende Kontaminationsbelastung und verwandelten sich in veränderte Wesen, die ihrem früheren Ich ähneln – bleich und bläulich-lila gefärbt, mit leuchtend oktarinfarbenen Augen.",
       "Diese veränderten Überlebenden haben sich zu umherziehenden Gruppen aus Plünderern, Piraten und Banden zusammengeschlossen. Sie durchqueren die Leeersee auf zusammengestückelten Sternschiffen, die durch elementare Magie angetrieben werden, und suchen in alten Ruinen, Höhlen und Trümmerfeldern nach Überlebensressourcen.",
@@ -5169,7 +5169,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 18,
     sprachen: ["Gemein"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/drakkenheim/leerraumpirat_kapitaen.png",
+    bild: "drakkenheim/leerraumpirat_kapitaen.png",
     beschreibung: [
       "Leerraumpirat-Kapitäne sind die gefürchteten Anführer der Piratenverbände im Zwischenraum der Welten. Sie haben nicht nur die Kontamination überlebt, sondern daraus Stärke gezogen und sich durch Cleverness und Brutalität an die Spitze ihrer Besatzungen gekämpft.",
       "Mit scharfem Auge und flinkem Geist führen sie ihre Schiffe durch die Gefahren der Leeersee und entscheiden kaltblütig, ob Geiseln gefangen genommen oder als Köder geopfert werden. Ihr Wort ist Gesetz an Bord – und ihre Klinge spricht für sie, wenn Worte nicht ausreichen."
@@ -5237,7 +5237,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: ["Gemein"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/drakkenheim/leerraumpirat_knirps.png",
+    bild: "drakkenheim/leerraumpirat_knirps.png",
     beschreibung: [
       "Leerraumpirat-Knirps sind die einfachen Besatzungsmitglieder der Piratenschiffe im Zwischenraum der Welten – veränderte Humanoide, die nach Jahren der Kontaminationsbelastung bleich und mutiert sind. Sie sind das Fußvolk der Piratenverbände.",
       "Knirps kämpfen in Rudeln und gehorchen höherrangigen Piraten blindlings. Ihre Hauptaufgabe ist es, Gefangene mit Netzen einzufangen und Artilleriewaffen zu bedienen. Sie sind gefährlich in der Überzahl, aber wenig wert, wenn sie alleine sind."
@@ -5300,7 +5300,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 11,
     sprachen: ["Gemein"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/drakkenheim/leerraumpirat_quartiermeister.png",
+    bild: "drakkenheim/leerraumpirat_quartiermeister.png",
     beschreibung: [
       "Der Leerraumpirat-Quartiermeister ist der zweite Offizier an Bord eines Leerraumschiffes – erfahren, kampferprobt und gefürchtet von der einfachen Besatzung. Er koordiniert taktische Operationen im Kampf und erteilt den Knirps direkte Befehle.",
       "Im Einzelkampf ist der Quartiermeister besonders gefährlich, wenn er ungestört kämpfen kann – sein Duell auf Leben und Tod zeigt seine Ausbildung als persönlicher Vollstrecker des Kapitäns."
@@ -5367,7 +5367,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 14,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/leuchtende_qualle.png",
+    bild: "drakkenheim/leuchtende_qualle.png",
     beschreibung: [
       "Eine durchsichtige, zwiebelförmige Masse schwebt sanft durch die Luft und pulsiert in Neonfarben, die über ihre Haut strahlen wie eine kosmische Nebula oder arkane Polarlichter. Eine Masse dünner Fäden hängt von der Kreatur herab und pulsiert mit biolumineszierendem Licht. Die Tentakel bewegen und gleiten umher, tasten und greifen sanft nach Gegenständen, wenn sie vorüberzieht. Die gesamte Kreatur glüht und beleuchtet die verdunkelten Stadtstraßen um sie herum. Ein ferner Chor ätherischer Summtöne erfüllt die Luft.",
       "Drakkenheim leuchtet nachts. Die bizarre, fremdartige Farbpalette des kosmischen Polarlichts, das durch den Dunst und die Delirium-Kristalle entsteht, ist ein Anblick für sich. Doch in der arkanen nächtlichen Landschaft kann man auch Lichtkugeln sehen, die seltsam hypnotisch zwischen den hohen Türmen und Ruinen schaukeln und schwanken. Bei näherer Betrachtung erweisen sich diese irrlichterartigen Lichtpunkte als eine Art luftige Qualle, deren halb-transparente Haut sich in kaleidoskopischen Farben wandelt.",
@@ -5431,7 +5431,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 12,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/leuchtender_elender.png",
+    bild: "drakkenheim/leuchtender_elender.png",
     beschreibung: [
       "Die Kreatur leuchtet in einem bleichen, sanften Licht. Manchmal schimmert es in Violett-, Orange- und Grüntönen, doch gelegentlich scheint die Farbe völlig unbeschreiblich zu sein. Der weit aufgerissene Mund gibt dasselbe Leuchten noch heller aus seinem Schlund frei, und die Augen scheinen wie zwei Laternen, während die Kreatur ihre Umgebung abtastet, angezogen von der kontaminierenden Energie um sie herum.",
       "Leuchtende Elende sind so stark kontaminiert, dass sie wie Delirium leuchten. Sie werden von kontaminierten Kristallen angezogen und sammeln sich in Gruppen um sie herum. Studien dieser seltsamen glühenden Elenden haben ergeben, dass sie bereits kontaminierten Kreaturen gegenüber besonders feindselig werden – irgendetwas an der Kontamination treibt sie dazu an, jeden zu verfolgen, der unter Mutationen oder Erkrankungen durch Exposition in den Ruinen leidet."
@@ -5489,7 +5489,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 17,
     sprachen: ["Versteht alle Sprachen, kann aber nicht sprechen", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/drakkenheim/liminaler_herold.png",
+    bild: "drakkenheim/liminaler_herold.png",
     beschreibung: [
       "Die amorphe Form des Liminalen Herolds zittert und wogt, während er durch die Luft treibt. Seine vielen spinnenartigen Augen leuchten in unbegreiflichen Farben, sein Fleisch wechselt in schwindelerregenden Darbietungen Gestalt und Farbe. Er flüstert in den Gedanken derer, die sich ihm nähern, und erzählt ihnen große Wahrheiten unbekannter Welten und kündigt das Kommen seiner namenlosen Herren an.",
       "Liminale Herolde sind die Kundschafter und Boten unbekannter uralter Entitäten, die in den entferntesten Winkeln des Raums zwischen den Welten existieren. Was auch immer ihr Zweck ist, ihre galaktische Informationssammlung bleibt ein Rätsel. Liminale Herolde enthüllen unergründliche Wahrheiten und geflüsterte Echos zersplitterter Realitäten, während sie nach Reichen suchen, um das Kommen ihrer Herren anzukündigen."
@@ -5537,7 +5537,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: ["Riesisch"],
     umgebung: ["Höhle", "Gebirge", "Wüste"],
-    bild: "assets/images/monster/drakkenheim/magmatroll.png",
+    bild: "drakkenheim/magmatroll.png",
     beschreibung: [
       "Sein Fleisch gleicht geschmolzenen Felsen, durchzogen von glühenden Feuervenen. Seine Augen sind zwei brennende Lavaseen. Sein Brüllen klingt wie das Schürfen von Fels beim Ausbruch eines Vulkans. Seine Schritte hinterlassen Pfützen heißer flüssiger Magma, die auch aus seinen Händen und seinem Mund tropft.",
       "Magmatrolle bewohnen tiefe Erdhöhlen, die weite Witherbleach-Wüste oder die Krater von Vulkanen wie dem Drachenrachen. Sie bevorzugen Orte mit sengende Hitze und Lavaströmen und verlassen diese selten aus eigenen Stücken. Allerdings treibt sie der Hunger bisweilen aus ihren Verstecken, um Berggemeinden oder bewohnte Orte nahe Höhlen und Grotten anzugreifen."
@@ -5595,7 +5595,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 16,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/mauer_gargoyle.png",
+    bild: "drakkenheim/mauer_gargoyle.png",
     beschreibung: [
       "Diese geflügelten Kreaturen ähneln finsteren Fledermäusen mit grotesken, grinsenden oder fauchenden Gesichtern. Sie sind vollständig aus Stein gefertigt und verharren regungslos – doch man schwört, dass eine von ihnen einen anstarrt, obwohl sie eben noch in die andere Richtung schaute.",
       "Die Mauer-Gargoyles wurden beim Bau der Stadtmauern alle 15 Meter entlang des gesamten Mauerumfangs platziert. Durch die vereinte Handwerkskunst zwerghischer Steinmetze und Magie der Amethystakademie wurden sie als Verteidigungsmaßnahme entworfen. Die Haze, die in ihre magisch durchtränkten Körper sickert, hat ihre arkane Programmierung gestört – nun greifen sie jeden an, der die Mauern zu überqueren versucht, ohne Freund und Feind zu unterscheiden."
@@ -5639,7 +5639,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 25,
     sprachen: ["Gemein", "Drakonisch", "Telepathie 36 m"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/minazorond.png",
+    bild: "drakkenheim/minazorond.png",
     beschreibung: [
       "Minazorond thront auf den Türmen von Schloss Drakken – ein kunstvolles Meisterwerk aus Messing und Bronze, besetzt mit glitzernden Schuppen, Diamantaugen und juwelenverzierter Flügeln. Der große Drache wurde von einem exzentrischen Künstler aus Liberio namens Nicoletti erschaffen, der für seine prächtigen Metallstatuen bekannt war.",
       "Als das Haus von Drakken eine Statue für das Schloss bestellte, lehnte Nicoletti zunächst ab. Zwei Monate später schrieb er der Königin, ein gewaltiger Drache sei ihm im Traum erschienen: Minazorond, der Drachenkaiser, habe den Wunsch geäußert, über die Stadt zu wachen. Nicoletti zog nach Drakkenheim und begann mit dem Bau. Tragischerweise riss während der Montage des letzten Stücks ein Seil – Nicoletti wurde von seiner eigenen Schöpfung begraben. Minazorond war sein letztes Werk.",
@@ -5691,7 +5691,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 17,
     sprachen: ["Gemein sowie zwei weitere Sprachen"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/nachtklinge.png",
+    bild: "drakkenheim/nachtklinge.png",
     beschreibung: [
       "Die Nachtklingen dienen als Eliteattentäter für ihre Vampirherren. Diese mächtigen Vampirbrut werden damit beauftragt, jeden zu eliminieren, der droht, die geheime Existenz der Vampire aufzudecken. Wenn jemand zu tief in ihre Angelegenheiten eindringt, handeln diese Attentäter schnell und lautlos, um Eindringlinge unschädlich zu machen.",
       "Als Meister der Schatten sind die Nachtklingen nicht nur Attentäter, sondern auch geschickte Spione für ihren nächtlichen Hof. Sie sind hervorragend darin, feindliche Festungen zu infiltrieren, entscheidende Informationen zu sammeln und unentdeckt zu bleiben. Ihre Fähigkeit, Wände zu erklimmen, sich mit Schatten zu verschmelzen und spurlos zu verschwinden, macht sie zu furchterregenden Gegnern.",
@@ -5772,7 +5772,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 18,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/orakel_des_rattengottes.png",
+    bild: "drakkenheim/orakel_des_rattengottes.png",
     beschreibung: [
       "Diese hingebungsvollen Anhänger des Rattengottes zählen zu den begabtesten und mächtigsten Rattling-Zauberkundigen. Unter den ältesten Rattlings überhaupt, existiert nur eine Handvoll von ihnen. Die meisten gehörten zu den Ersten, die am Delirium nagten und sich in den Tagen nach dem Meteoriteneinschlag verwandelten. Sie haben den Aufstieg und Fall zahlloser Rattling-Kriegsbanden und -Kolonien erlebt.",
       "Rattling-Orakel sind in jedem Bau willkommen, da man sie als Omen für Festmahl und Glück betrachtet — was ihre Gastgeber oft zu selbstzerstörerischen Ausschweifungen treibt. Obwohl die Orakel behaupten, Visionen der Zukunft zu haben, sind sie weit davon entfernt, Meisterplaner zu sein. Von wahnsinniger Gewissheit erfüllt, entfachen ihre inbrünstigen Proklamationen Wut und Blutrausch in ihren Artgenossen."
@@ -5819,7 +5819,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 11,
     sprachen: ["Versteht gelernte Sprachen"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/packender_schatten.png",
+    bild: "drakkenheim/packender_schatten.png",
     beschreibung: [
       "Packende Schatten sind die Geister der vom Scharfrichter Hingerichteten, die an die Maschine gebunden bleiben. Der Scharfrichter ruft sie aus den Leichen auf dem Schlachtsteinsplatz hervor, um fliehende Eindringlinge zu ergreifen und zurückzuzerren.",
       "Jeder Schatten klammert sich mit den Resten seines letzten Moments an die Sterblichen und versucht verzweifelt, sie in dasselbe schreckliche Totendasein einzuschließen, in dem er selbst gefangen ist. Sie verschwinden, wenn der Scharfrichter zerstört wird."
@@ -5860,7 +5860,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Andere Ebenen", "Ruinen"],
-    bild: "assets/images/monster/drakkenheim/phage.png",
+    bild: "drakkenheim/phage.png",
     beschreibung: [
       "Du erblickst eine Region des Raumes, die verzerrt erscheint, als würde hier etwas eindringen, das nicht in diese Existenz gehört. Ein Schimmer fremder Anatomie taucht auf – ein welker Fleischsack, der sich auf vier beinartigen Gliedmaßen vorwärts bewegt. Im Zentrum seiner Form öffnet sich ein großes Baleen-Maul, das fröhlich gurgelt, während es auf dich zuschlurft.",
       "Der Zwischenraum der Welten beherbergt fremdartige Bodenfresser, die als Phagen bekannt sind und jede magische Energie verschlingen, die sie finden können. Die Grenzen zwischen den Realitäten werden in der Nähe von Drakkenheims nebelerfüllten Gebieten dünn, sodass diese Kreaturen hindurchsickern können, hungrig nach sterblicher Magie. Sie verschlucken Zauber und speichern einen Teil dieser arkanen Energie für später – manchmal können Zauberwirker die arkane Energie unverdauter Zauber beim Tod einer Phage zurückgewinnen.",
@@ -5924,7 +5924,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: ["Riesisch"],
     umgebung: ["Sumpf", "Wald"],
-    bild: "assets/images/monster/drakkenheim/pilztrolling.png",
+    bild: "drakkenheim/pilztrolling.png",
     beschreibung: [
       "Einem großen lila-weißen Pilz ähnelnd, pulsiert und trieft das Pilztrolling vor überladener Energie. Es wirkt, als würde es jeden Moment platzen, während seine finsteren kleinen Gesichtsausdrücke wimmern und jammern.",
       "Pilztrollinge werden aus den seltsamen Gebräuen der Trollhexen gezüchtet. Eine Trollhexe kann Hunderte dieser Kreaturen in ihren Gärten in sehr kurzer Zeit heranziehen, doch die Trollinge neigen dazu zu platzen, wenn sie zu aufgeregt werden. Nur wenige wachsen je zu Riesigen Pilztrollen heran."
@@ -5974,7 +5974,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/proteische_abscheulichkeit.png",
+    bild: "drakkenheim/proteische_abscheulichkeit.png",
     beschreibung: [
       "Proteische Abscheulichkeiten sind formlose, fleischige Massen, die sich durch die verseuchten Straßen Drakkenheims schleppen. Sie entstehen, wenn das Delirium mehrere Organismen zu einem einzigen, schlimm entstellten Körper zusammenschmilzt.",
       "Diese Kreaturen besitzen keine erkennbaren Gliedmaßen oder Sinnesorgane und orientieren sich stattdessen durch ein ausgedehntes Netz von Vibrationsrezeptoren in ihrer Haut. Sie fressen alles Lebendige, das sie erfassen können, und verdauen ihre Beute langsam im Inneren ihrer gallertatigen Körpermasse."
@@ -6018,7 +6018,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein (wiederholt nur Sätze, die es zuvor gehört hat)"],
     umgebung: ["Stadt", "Ruinen"],
-    bild: "assets/images/monster/drakkenheim/psychophant.png",
+    bild: "drakkenheim/psychophant.png",
     beschreibung: [
       "Die frühesten Überlieferungen erzählen von einem großen Winter, in dem die Verzweifelten um Hilfe riefen. Diese Rufe hallten durch die Weiten des Zwischenraums der Welten und zogen die Aufmerksamkeit von Dingen jenseits des Bekannten auf sich. Psychophanten – Aasfresser, die von Elend, Angst und Verzweiflung angezogen werden – traten durch Dünne Stellen in die Sterblichenwelt ein und lernten, ihre Beute zu imitieren.",
       "Diese anpassungsfähigen Kreaturen schmuggeln sich unter die Verletzlichen, um sich von ihren Emotionen zu nähren. Veteranen des Bürgerkriegs in Westemär berichten, wie sie nach Gefallenen suchten und verzweifelten Schreien folgten, nur um von den Verwundeten selbst angegriffen zu werden. In den überfüllten Lazaretten von Toddsfeld bestanden kontaminierte Patienten darauf, von ihren Pflegern gejagt zu werden – Anschuldigungen, die als Wahnsinn abgetan wurden.",
@@ -6082,7 +6082,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 9,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/pyknischer_taumler.png",
+    bild: "drakkenheim/pyknischer_taumler.png",
     beschreibung: [
       "Eldrische Kontamination löst chaotische und zufällige Mutationen aus. Die Veränderungen lassen Fleisch schwinden, Haut schmelzen, Nägel, Zähne und Augen ausfallen, die Lippen faulen – und die Knochen werden zu Gallert. Schließlich münden die kaskadierenden Mutationen in einer völligen Auflösung zu einer brodelnden Masse aus mutiertem Fleisch, rudernden Gliedmaßen und disparaten Sinnesorganen: dem Pyknischen Taumler.",
       "Diese grässliche Kreatur ist eine amorphe Masse aus Gliedmaßen, Händen, Mündern und Augen. Manche Augen huschen in Panik umher, andere hängen schläfrig herab. Einige der vielen Münder reden und zitieren obskure Sprachen und Gedichtfragmente, während die zahllosen Hände wild gestikulieren.",
@@ -6126,7 +6126,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/rasender_elender.png",
+    bild: "drakkenheim/rasender_elender.png",
     beschreibung: [
       "Dieser muskulöse Elende springt auf allen vieren auf dich zu, seine Hände und Füße ausgestreckt mit fast klauenartigen Fingern, sein aufgerissener Mund schäumt und tropft, seine Augen wahnsinnig vor rasender Blutgier.",
       "Der Rasende Elende ist ein schnellerer, muskulöserer Verwandter seiner schlurfenden Artgenossen. Er durchstreift die Straßen Drakkenheims und sucht aktiv nach Beute. Er lauert in dunklen Ruinen, nimmt gelegentlich die Kanalisation in Anspruch oder klettert an Gebäudefassaden empor. Wenn eine Gruppe Rasender Elender auf schwächere Elende stößt, treiben sie diese auf die Straßen und nutzen sie als Falle, um Abenteurer anzulocken und dann zuzuschlagen."
@@ -6181,7 +6181,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 21,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/ratten-kronprinz.png",
+    bild: "drakkenheim/ratten-kronprinz.png",
     beschreibung: [
       "Der Ratten-Kronprinz ist die beängstigende Form, zu der der Rattenprinz heranwächst, wenn er zu lange im Delirium badet und seine eigene düstere Natur vollständig entfaltet. Schneller, stärker und gefährlicher als zuvor, treibt ihn nur noch der Hunger nach Herrschaft und Vernichtung an.",
       "Seine Trefferpunkte erhöhen sich um 45 (6W8+24) für jeden anwesenden Spielercharakter. Er agiert immer bei Initiativewert 20 und führt am Ende jedes Spielerzuges eine seiner epischen Aktionen aus."
@@ -6228,7 +6228,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/rattenkoenig.png",
+    bild: "drakkenheim/rattenkoenig.png",
     beschreibung: [
       "Nicht zu verwechseln mit dem Rattenprinzen: Ein Rattenkönig ist eine mutierte Verschmelzung mehrerer Rattlings zu einem einzigen Wesen von psionischer Macht. Oft ist er das Ergebnis einer katastrophalen arkanen Anomalie, die einen Schwarm von Rattlings betrifft und ihre Schwänze zu einem grässlichen Knoten zusammenschmiedet. Der entstehende Pfeiler aus Rattenfleisch ist eine sich windende und wabernde Abscheulichkeit.",
       "Andere Rattlings empfinden Rattenkönige als furchteinflößend und verbannen sie aus ihren Kolonien. Ein seltsamer Schwarmgeist verleiht dem Rattenkönig eine hohe Intelligenz und fast hellseherische Fähigkeiten. Im Kampf schleudert er eine Salve psionischer Angriffe und zertrümmert die Gedanken seiner Feinde."
@@ -6269,7 +6269,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 16,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/rattenprinz.png",
+    bild: "drakkenheim/rattenprinz.png",
     beschreibung: [
       "Dieser furchteinflößende Rattling-Anführer hat sich selbst zum Rattenprinzen erklärt. Er residiert in der Höhle unter der Taverne „Rattennest“ und ist der Schrecken unerfahrener Abenteurer im Äußeren Ring Drakkenheims. Er herrscht, weil er der Größte und Stärkste ist und den letzten Rattling tötete, der sich Rattenprinz nannte. Er träumt davon, eines Tages alle anderen Rattling-Kolonien zu unterwerfen und sich huldigen zu lassen.",
       "Der Rattenprinz ist ein rücksichtsloser Kämpfer, der andere Rattlings als Schutzschild benutzt. Wird er in die Enge getrieben, kämpft er nicht — er flieht. Kann er das nicht, weint er und bettelt um sein Leben. Er bietet alles an, was ihm einfällt: Schätze, Geheimgänge, Mengen an „dem Glänzenden“ und seine Gunst unter den Rattlings."
@@ -6317,7 +6317,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 15,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/rattling-alchemist.png",
+    bild: "drakkenheim/rattling-alchemist.png",
     beschreibung: [
       "Alle Rattlings besitzen eine gewisse hinterlistige Schläue, aber wenige unter ihnen sind mit einem erfinderischen Geist, rücksichtsloser Neugier und explosiven Absichten gesegnet. Oft beginnt es mit einer Faszination für Feuer oder die seltsamen Effekte des Deliriums: Diese Rattlings experimentieren mit improvisierten Materialien, instabilen Zutaten und ausgeschlachteten Werkzeugen, um grobe Apparate und manchmal geniale Fallen zu bauen.",
       "Zwei von drei Rattlings, die Alchemisten werden wollen, sterben in ihren eigenen Explosionen — aber jenes eine, das überlebt, wird zu einer schrecklichen Kraft gegen seine Feinde. Ein Rattling-Alchemist kümmert sich nicht um das Wohlbefinden seiner Artgenossen und wirft seine Delirium-Bombe bedenkenlos mitten unter Verbündete, wenn der Feind sich dahinter befindet."
@@ -6365,7 +6365,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/rattling-bauwaechter.png",
+    bild: "drakkenheim/rattling-bauwaechter.png",
     beschreibung: [
       "Rattlings folgen dem Größten unter sich – den sogenannten Bauwächtern. Diese bulligen Anführer genießen mehr Essen, mehr Beute und das Vorrecht, ihre Untergebenen herumzukommandieren. Im Gegenzug müssen sie ihre Stärke und Kühnheit stets unter Beweis stellen, denn ein Rivale wartet immer auf eine Gelegenheit, sie zu stürzen.",
       "Bauwächter nehmen oft die vorderste Position im Kampf ein, um ihre Macht zur Schau zu stellen. Ihre kleinen Gefährten schätzen diese Anordnung durchaus: Es bringt den Anführer direkt in den gefährlichsten Teil jedes Gefechts – in bester Position für einen Dolch in den Rücken."
@@ -6409,7 +6409,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/rattling-krieger.png",
+    bild: "drakkenheim/rattling-krieger.png",
     beschreibung: [
       "Rattlings sind nagetierartige Humanoide, die in großer Zahl die verseuchten Ruinen Drakkenheims bevölkern. Rattling-Krieger sind die einfachsten dieser Kreaturen – mit wenig Können und noch weniger Tapferkeit –, die ein verzweifeltes Leben aus Plündern und Gewalt fristen.",
       "Rattlings kämpfen in großen Gruppen, umzingeln ihre Feinde und überwältigen sie mit schieren Zahlen. Sie greifen mit verrosteten Waffen, Zähnen und Klauen an und schleudern manchmal alles, was sie aufsammeln können – Steine, Knochen oder sogar Delirium-Splitter. Trotz ihrer angeborenen Feigheit werden Rattlings erschreckend mutig, sobald sie ihre Feinde zahlenmäßig stark übertreffen."
@@ -6453,7 +6453,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/rattling-pathogenist.png",
+    bild: "drakkenheim/rattling-pathogenist.png",
     beschreibung: [
       "Rattlings sind von Krankheiten geplagte Kreaturen, und die Klügsten unter ihnen haben die Wirkungen dieser Seuchen auf ihre Feinde beobachtet. Das Studium der tatsächlichen Ursachen von Krankheiten und das Erlernen, sie gegen ihre Feinde einzusetzen, ist eine Frage des Stolzes für einen Rattling-Pathogenisten. Diese verdrehten Doktoren halten sich für die brillantesten aller Rattlings.",
       "Der Rattling-Pathogenist trägt mehrere krankheitsbehaftete Klingen, Nadeln und Spritzen sowie eine Gasmaske. Er ist von einem Nebel aus verpesteten Gasen und beißenden Dämpfen umgeben — allein die Nähe zu einem dieser hochkontaminierten Ratten reicht aus, um jemanden krank zu machen."
@@ -6498,7 +6498,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/rattling-rinnenschuetze.png",
+    bild: "drakkenheim/rattling-rinnenschuetze.png",
     beschreibung: [
       "Die Kleinen überleben in den Ruinen durch Heimlichkeit, List und ein umfassendes Repertoire hinterhältiger Tricks. Rattling-Rinnenschützen besitzen hart erkämpfte Fertigkeiten und werden von ihren Artgenossen zu Recht respektiert und gefürchtet. Diese grimmlächelnden Rattlings haben gelernt, sorgfältige Hinterhalte zu planen, tödliche Fallen aufzustellen und ihre Beute in ungünstige Situationen zu locken.",
       "Alle Rinnenschützen führen Delirium-Waffen bei sich – einfache Konstruktionen aus einem scharfen Delirium-Splitter an einem improvisierten Griff. Neben dem Schnitt einer Klinge ist die Kontamination selbst die tödlichste Komponente. Gelegentlich schleichen sich diese geschickten Diebe außerhalb der Ruinen hervor, um Nachschub, Ausrüstung und Nahrung aus Fraktionsstützpunkten zu stehlen."
@@ -6543,7 +6543,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 17,
     sprachen: ["Versteht die Sprachen, die es zu Lebzeiten kannte, spricht aber nicht"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/reautomata.png",
+    bild: "drakkenheim/reautomata.png",
     beschreibung: [
       "Auf dich zurasend mit ungezügelter Wut – eine schlanke menschliche Gestalt in einer massigen Vollrüstung, die ein Paar überdimensionierter Krummsäbel schwingt. Doch beim Näherkommen wird klar: Dies ist kein bloßer Krieger. Die abgezehrte Gestalt trägt die Rüstung nicht – die Platten wurden in ihre Knochen genagelt und verschraubt. Wucherndes, infiziertes Narbengewebe pulsiert, wo der Körper gegen das in Muskeln und Sehnen eingeschmolzene Metall ankämpft. Und sie hält keine Waffen: Ihre Vordergliedmaßen wurden vollständig durch scharfe Klingensicheln ersetzt. Der glatte, merkmallose Metallhelm gibt nur das krankhafte Maul mit den geschärften Zähnen frei – der Atem riecht nach stechenden Chemikalien.",
       "Reautomata wurden von Dr. Everett Freed, dem Wiederbelebeer, an der Altbruke-Universität als ultimative Schocktruppen erschaffen. Trotz ihres Äußeren sind sie Konstrukte, keine Untoten: Ihre organischen Bestandteile funktionieren eher wie Maschinen als wie Fleisch. Die Reautomata kämpfen weiter, trotz schwerster Verletzungen, ohne mit der Wimper zu zucken, selbst wenn Gliedmaßen fehlen. Sie lassen sich nur aufhalten, indem man ihren Körper über das Maß physischer Funktionsfähigkeit hinaus zerstört.",
@@ -6589,7 +6589,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 18,
     sprachen: ["Versteht die Sprachen, die es zu Lebzeiten kannte, spricht aber nicht"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/reautomata_verwuester.png",
+    bild: "drakkenheim/reautomata_verwuester.png",
     beschreibung: [
       "Dieses monströse Konstrukt hat die Ausmaße eines Ogers. Es stößt ein dumpfes Grollen aus wie das dröhnende Klagen eines herannahenden Wals. Dann bricht es in einen Ansturm aus – ein donnerndes Nashorn, das trotz seiner enormen Masse mit unheimlicher Geschwindigkeit vorwärtsstürmt. Sein Körper ist mit gepanzerten Tanks bedeckt, von denen Schläuche direkt in Ohren, Nase, Mund und Hals führen und seltsame Chemikalien in seinen Körper pumpen.",
       "Seit dem Tod von Dr. Freed wurden seine Erkenntnisse und Werke dennoch verbreitet, darunter unfertige Konstruktionspläne für diesen fortgeschrittenen Reautomata-Prototyp. Eher eine lebende Belagerungsmaschine als ein Schocktrupp, ist der Reautomata-Verwüster eine wütende und zerstörerische Maschine. Er wurde aus Teilen von Trollen, Ogers und Menschen zusammengesetzt und mit gepanzerten Platten verstärkt, die die Tanks und Antriebsmaschinen tragen. Im Kern des Verwüsters sitzt ein mächtiger Antriebsmotor, der, wenn er übertaktet wird, das Konstrukt in einen Pfad der grenzenlosen Zerstörung treibt – bevor es in einem Feuerball alchemischen Untergangs explodiert."
@@ -6634,7 +6634,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 17,
     sprachen: ["Riesisch"],
     umgebung: ["Sumpf", "Wald"],
-    bild: "assets/images/monster/drakkenheim/riesiger_pilztroll.png",
+    bild: "drakkenheim/riesiger_pilztroll.png",
     beschreibung: [
       "Riesige Pilztrolle sind die Wächter ihrer Sümpfe. Sie dulden keine Eindringlinge und sind ihren Trollhexenmüttern gegenüber loyal, die ihre Pilzfarmen verteidigen. Wenn ein Riesiger Pilztroll durch den Sumpf stapft, erschüttern seine Schritte die Bäume, und aus ihm fallen Sporen, die zu Pilztrollingen heranwachsen.",
       "Diese massigen Pilzmonstrositäten reisen oft in Netzwerken zusammen. Wenn man einen Riesigen Pilztroll auf sich zustürzen sieht, sollte man gewarnt sein, dass wahrscheinlich noch mehr folgen.",
@@ -6691,7 +6691,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/riesiges_rattling.png",
+    bild: "drakkenheim/riesiges_rattling.png",
     beschreibung: [
       "Gelegentlich hört ein Rattling einfach nicht auf zu wachsen. Leider halten ihre Gehirne mit dem wachsenden Körper kaum Schritt, und so sind die meisten dieser tölpelhaften Bruten ziemlich stumpfsinnig. Diese dummen Kolosse stürmen blindlings in den Kampf, ohne Rücksicht auf sich selbst oder andere Rattlings – manchmal packen sie sogar ihre Kameraden und schleudern sie auf die Feinde zu.",
       "Obwohl Riesige Rattlings oft die Größten im Rudel sind, gelten sie nicht als Anführer – ihre Unfähigkeit zu führen oder auch nur taktisch zu denken, macht sie zu nützlichen lebenden Belagerungswaffen für schlauere Rattlings. Hexenmeister und Alchemisten halten sich häufig ein oder zwei als Leibwächter oder Rammbock."
@@ -6736,7 +6736,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein", "Telepathie 18 m"],
     umgebung: ["Gewässer", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/ritter_der_tiefe.png",
+    bild: "drakkenheim/ritter_der_tiefe.png",
     beschreibung: [
       "Die Ritter der Tiefe sind die Elitekrieger der Elenden der Tiefe. Einst waren sie Soldaten oder Stadtwachen, doch der Dunst hat ihre Körper zu massigen, amphibischen Bestien verformt. Schwer gerüstet und mit einer Harpune bewaffnet, bewachen sie die Zugänge zur versunkenen Stadt und ziehen Eindringlinge unbarmherzig in die Tiefe.",
       "Ihre Telepathie macht sie zu verlässlichen Schlachtenführern unter Wasser, wo Sprache sinnlos wird. Auf dem Trockenen sind sie langsam, doch im Wasser gleiten sie mit erschreckender Eleganz durch die Fluten."
@@ -6782,7 +6782,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 30,
     sprachen: ["Versteht Gemein (spricht nicht)"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/scharfrichter.png",
+    bild: "drakkenheim/scharfrichter.png",
     beschreibung: [
       "Der Scharfrichter ist ein massiver Uhrwerk-Ritter, der ursprünglich öffentliche Hinrichtungen auf dem Schlachtsteinsplatz in Drakkenheim vollzog. Diese uralte Maschine wurde von den Zwergen des Glitzergipfels erschaffen, lag jahrhundertelang unter Lawinenschutt begraben und wurde vor einigen Jahrzehnten von einem Expeditionsteam ausgegraben. Der König beauftragte die Amethystakademie, das Konstrukt zu restaurieren und seine arkane Programmierung so anzupassen, dass es dem Monarchen von Westemär gehorcht.",
       "Die launische Magie des Deliriums hat die Kontrollprotokolle der Maschine jedoch durcheinandergebracht. Nun von der Haze kontaminiert, ist das Konstrukt eine Maschine der Vernichtung, die spektrale Ketten und die Geister ihrer Opfer zu Hilfe rufen kann. Es greift jeden an, der den Platz betritt, verlässt aber nie die Grenzen des Schlachtsteinsplatzes. Berge von Leichen türmen sich auf dem Platz auf – ein grausames Zeugnis der Tätigkeit des Scharfrichters. Seine Trefferpunkte erhöhen sich um 250 (20W12+140) für jeden anwesenden Spielercharakter."
@@ -6833,7 +6833,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 16,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/karmesin_graefin.png",
+    bild: "drakkenheim/karmesin_graefin.png",
     beschreibung: [
       "Die Karmesin-Gräfin ist eine mächtige Harpyien-Königin. Ihre rot-gefiederten Flügel und das tiefe Karmesinrot ihres Haares heben sie von ihren vielen Gefolgsharpyien ab. Sie ist in schwarze und goldene Rüstung gekleidet und trägt einen Speer, der vor magischer Energie knistert.",
       "Die Gräfin ist eine listige Jägerin, die territorial über den Uhrturm im Herzen Drakkenheims herrscht. Sie verlässt ihren Uhrturm nur, um an Jagden mit ihren Walküren teilzunehmen. Wer es schafft, ihre Wächter zu überwinden und in ihr Hoheitsgebiet eindringt, wird schnell von einem Greifangriff gepackt und von den offenen Balkonen in die Tiefe geworfen. Ihre Trefferpunkte erhöhen sich um 39 (6W8+12) für jeden anwesenden Spielercharakter."
@@ -6880,7 +6880,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 12,
     sprachen: [],
     umgebung: ["Gewässer", "Ruinen"],
-    bild: "assets/images/monster/drakkenheim/schleuderfrosch.png",
+    bild: "drakkenheim/schleuderfrosch.png",
     beschreibung: [
       "Der Drann-Fluss fließt aus dem Kesselwald-Forst von Nordosten in Drakkenheim. Die Frösche, die einst in großer Zahl den Fluss hinab in den Norden der Stadt wanderten, wurden durch das kontaminierte Wasser auf eine groteske Größe aufgebläht und ihr Fortpflanzungszyklus vollständig verändert.",
       "Diese mutierten Monster sind nun entlang des Flusses allgegenwärtig und machen jede Überquerung gefährlich. Ihre Eier schlüpfen nicht von selbst, sondern benötigen einen Wirtskörper, um die Metamorphose abzuschließen. Aus diesem Grund setzen die Frösche ihre kontaminierten Eier als Waffe ein und schleudern sie auf vorbeiziehende Abenteurer, Kundschafter und sogar andere kontaminierte Kreaturen.",
@@ -6923,7 +6923,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 19,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/schlund-ungeziefer.png",
+    bild: "drakkenheim/schlund-ungeziefer.png",
     beschreibung: [
       "Die genauen Ursprünge des Schlund-Ungeziefers sind noch immer ein Rätsel — ist es ein schrecklich mutiertes Rattling, das der Kontamination Drakkenheims erlag, oder etwas noch Unheilvolleres? Vielleicht war es einst eine Ratte, die sich an zu viel Delirium gütlich tat, oder ein kranker Aasfresser aus einer anderen Dimension.",
       "Manche Rattlings verehren das Schlund-Ungeziefer als Vorboten des Rattengottes und betrachten es als das Nächste, was ein Rattling einem Engel werden kann. Einige Rattlings fressen endlos Delirium in der Hoffnung, sich selbst in ein Schlund-Ungeziefer zu verwandeln, um ihrer Gottheit näherzukommen."
@@ -6967,7 +6967,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 8,
     sprachen: ["Versteht die Sprachen, die es zu Lebzeiten kannte, spricht aber nicht"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/schrott_reautomata.png",
+    bild: "drakkenheim/schrott_reautomata.png",
     beschreibung: [
       "Dieser Untote wurde mit Schrottplatten und arkanem Gerät hastig aufgerüstet. Verrostete Waffen und willkürlich zusammengefügtes Metall wurden in seinen Körper eingearbeitet. Im Vergleich zu einer echten Reautomata ist die Ausführung grob und unfertig – doch auch dieser Schrottsodat ist zuverlässiger, widerstandsfähiger und gehorsamer als jeder normale Soldat.",
       "Die Erschaffung einer vollwertigen Reautomata ist zeitaufwendig und erfordert erstklassige Materialien. Der Schrott-Reautomata entsteht, wenn beides fehlt. Dr. Everett Freed erschuf die ersten Exemplare aus den Hausangestellten und Soldaten des Hauses von Fritz, indem er den Brunnen ihrer Burg vergiftete und die geschwächten Männer unter dem Vorwand der Heilung in Ungeheuer verwandelte. Der rohe Verfahren stützt sich stärker auf okkulte Nekromantie und lässt mehr des ursprünglichen Körpers erhalten – weshalb das Ergebnis Untoter ist, kein Konstrukt."
@@ -7010,7 +7010,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 8,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/schwarm_kontaminierter_insekten.png",
+    bild: "drakkenheim/schwarm_kontaminierter_insekten.png",
     beschreibung: [
       "Ein Schwarm kontaminierter Insekten entsteht, wenn ein Aufgedunsener Bienenstock seinen Insektenschwarm herbeiruft oder beim Sterben freisetzt. Diese winzigen, von Delirium durchdrungenen Kreaturen überwältigen ihre Beute durch schiere Anzahl und hinterlassen bei jedem Biss kontaminierende Wunden."
     ],
@@ -7055,7 +7055,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: ["Versteht Gemein, spricht aber nicht"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/seuchentraeger.png",
+    bild: "drakkenheim/seuchentraeger.png",
     beschreibung: [
       "Diese entstellten und grauenerregenden Abscheulichkeiten waren einst Menschen, nun bedeckt mit Beulen und Geschwüren. Eiternde Wunden und große, blasenbedeckte Stellen überziehen ihr entblößtes Fleisch. In zerlumpte Kleidung gehüllt, ist ihr geschwollenes und sackendes Fleisch durchzogen von Krankheiten. Eiter sickert aus ihren Wunden, Augen, Ohren, Nasen und Mündern; sie stinken nach fauligen alchemistischen Wirkstoffen und Verwesung.",
       "Seuchenträger sind die unglückseligen Versuchspersonen von Pathogenisten, die ihre tödlichen Erreger in einem lebenden Gefäß inkubieren, um sie auf groteske Weise freizusetzen. Oft handelt es sich dabei um Patienten, die bereits krank zum wahnsinnigen Apotheker kamen und experimentellen Verfahren zustimmten, ohne das Kleingedruckte zu lesen. In diesem Prozess werden sie zu willenlosen Dienern reduziert.",
@@ -7097,7 +7097,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 15,
     sprachen: ["Gemein", "Telepathie 18 m"],
     umgebung: ["Gewässer", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/sirene_der_tiefe.png",
+    bild: "drakkenheim/sirene_der_tiefe.png",
     beschreibung: [
       "Sirenen der Tiefe sind die Verführerinnen und Manipulatorinnen unter den Elenden der Tiefe. Mit ihrer Fähigkeit, ein täuschend schönes Erscheinungsbild anzunehmen, locken sie Abenteurer, Händler und Soldaten in die überfluteten Ruinen, wo diese zu Beute der Elenden der Tiefe werden.",
       "Ihr disharmonischer Gesang ist kein lieblicher Klang mehr, sondern ein psychisch verstörendes Gebrüll, das Feinde in die Knie zwingt. Im Kampf flankieren sie Gegner und teleportieren sich mit ihrer Nebelschritt-Fähigkeit unentwegt neu, um maximalen Chaos zu stiften."
@@ -7143,7 +7143,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 14,
     sprachen: ["Gemein", "eine weitere Sprache"],
     umgebung: ["Stadt", "Ruinen"],
-    bild: "assets/images/monster/drakkenheim/silberorden_kavalier.png",
+    bild: "drakkenheim/silberorden_kavalier.png",
     beschreibung: [
       "In schwerem Rüstzeug mit blauem, silbergesäumtem Umhang, verziert mit dem Symbol des Silberordens, trägt der Kavalier einen großen Helm mit blauem Federbusch und einen Köcher voll Wurfspeer.",
       "Die Kavaliere sind die Greif-Reiter des Silberordens, ausgebildet sowohl für den Bodenangriff als auch für den Luftkampf. Jeder Kavalier geht eine einzigartige Bindung mit einem Greif ein, den er durch göttliche Magie zu sich rufen kann. Diese Bindung hält oft ein Leben lang."
@@ -7206,7 +7206,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein"],
     umgebung: ["Stadt", "Ruinen"],
-    bild: "assets/images/monster/drakkenheim/silberorden_knappe.png",
+    bild: "drakkenheim/silberorden_knappe.png",
     beschreibung: [
       "In Leder gekleidet, mit Kurzschwert, Schild und Kurzbogen, trägt der junge Knappe einen kleinen Rucksack mit Ausrüstung zum Warten und Flicken von Rüstungen und Waffen, Greifpflege, Munition und anderen Notwendigkeiten.",
       "Knappen sind die Neurekruten des Silberordens. Sie werden oft einem Paladin zur Ausbildung zugeteilt. Obwohl sie im Kampf bestehen können, werden sie häufiger dazu eingesetzt, Rüstungen zu flicken, Waffen zu schärfen und die Greifen ihrer Paladine zu versorgen."
@@ -7269,7 +7269,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 11,
     sprachen: ["Gemein", "eine weitere Sprache"],
     umgebung: ["Stadt", "Ruinen"],
-    bild: "assets/images/monster/drakkenheim/silberorden_paladin.png",
+    bild: "drakkenheim/silberorden_paladin.png",
     beschreibung: [
       "In schwerem Rüstzeug mit blauem, silbergesäumtem Umhang, verziert mit dem Symbol des Silberordens, hält der Paladin einen großen Kite-Schild und einen leuchtenden Strahlungsstreitkolben.",
       "Die Ritter des Silberordens sind weltberühmt als Verteidiger des Glaubens der Heiligen Flamme. Sie nehmen heilige Questen und religiöse Missionen für die Göttliche Matriarchin an und sind dafür bekannt, auf Greifen in die Schlacht zu reiten oder mit Plattenrüstung, Schwert, Schild und göttlicher Magie auszurücken. Für manche sind diese Paladine göttliche Beschützer und edle Krieger des Glaubens."
@@ -7333,7 +7333,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein"],
     umgebung: ["Stadt", "Ruinen"],
-    bild: "assets/images/monster/drakkenheim/silberorden_rekrut.png",
+    bild: "drakkenheim/silberorden_rekrut.png",
     beschreibung: [
       "Diese einfachen Fußsoldaten bilden den Großteil der Bodentruppen des Silberordens. Mit guter Rüstung, Schild, Langschwert und den Emblemen des Silberordens ausgestattet, sind sie die erste Verteidigungslinie gegen übernatürliche Monster und magische Bedrohungen.",
       "Nach dem Abschluss der Knappen-Ausbildung ist ein Rekrut nun ein erfahrener Kämpfer, der einfache Missionen des Silberordens selbstständig ausführen kann. Er begleitet Paladine auf wichtigen Questen, bewacht Silberorden-Festungen und bildet die Vorhut der Armeen."
@@ -7396,7 +7396,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 9,
     sprachen: ["Versteht Gemein, kann aber nicht sprechen"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/skelettbogenschuetze.png",
+    bild: "drakkenheim/skelettbogenschuetze.png",
     beschreibung: [
       "In den Armeen der Untoten benötigt man sowohl Nah- als auch Fernkämpfer als Rückgrat der Streitkräfte. Skelettbogenschützen sind mit Elementarmagie durchdrungen und erhalten Bögen, die die Kraft besitzen, ihre Feinde mit jedem Schuss zu frösteln.",
       "Aus den Augenöffnungen dieses Skeletts strahlt ein sanft blaues Licht. Es trägt einen aus Knochen und alten Sehnen gefertigten Bogen, und an der Pfeilspitze bilden sich Frostsplitter, während es zielt."
@@ -7446,7 +7446,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 13,
     sprachen: ["Versteht Gemein, kann aber nicht sprechen"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/skelettmagier.png",
+    bild: "drakkenheim/skelettmagier.png",
     beschreibung: [
       "Die zerrissenen roten Roben dieses Skeletts verraten es als einen der gescheiterten Vasallen der Vampire. Donnernde Funken und Glutembers tanzen um seine knöchernen Fingerspitzen, während es seinen nächsten Zauber vorbereitet.",
       "Diese Magier waren oft frühere Vasallen, Akolythen oder arkane Gefangene von Vampirherren. Im Tod werden sie zu unheiligen Magiern verwandelt, die Elementarmagie gegen ihre Feinde einsetzen und ein ewiges Nachleben für die Vampire fristen, die sie erschufen."
@@ -7500,7 +7500,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: ["Versteht Gemein, kann aber nicht sprechen"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/skelettsoldat.png",
+    bild: "drakkenheim/skelettsoldat.png",
     beschreibung: [
       "Dieser robuste Skelettkrieger ist mit Schlamm und Moos bedeckt. Er trägt eine Schädelkappe, eine einzelne Schulterplatte und hält ein dickes verrostetes Schild mit dem arkanen Siegel des Hauses von Drakken. In einer Hand trägt er einen langen, vergifteten Speer.",
       "Die meisten Leichen auf dem Kontinent werden eingeäschert — Vampire müssen bei der Beschaffung von Dienern für ihre Armeen clever vorgehen. Überall gibt es alte Krypten heroischer Krieger und göttlicher Soldaten. Manchmal infiltrieren Vampirherren verlassene heilige Stätten und alte Krypten, um die Toten zu stehlen und sie als Skelettsoldaten zu erwecken. Außerdem halten sie oft Gefangene in ihren eigenen Verliesen, um sich von ihnen zu ernähren und die Leichen nach deren Tod eines Tages als Soldaten auferstehen zu lassen."
@@ -7546,7 +7546,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/stacheliger_elender.png",
+    bild: "drakkenheim/stacheliger_elender.png",
     beschreibung: [
       "Lange Widerhaken aus überwuchertem Knochen und verkrusteten Delirium-Splittern brechen aus dem ausgemergelten Körper dieses Elenden hervor und bedecken seinen Rücken sowie die dürren Gliedmaßen. Die Wangenknochen durchstoßen das Fleisch des hageren Gesichts, und die oktarinfarbenen Augen schimmern in einem unnatürlichen Leuchten. Die verlängerten Finger und Zehen enden gleichermaßen in scharfen, langen Spitzen.",
       "Die Kontamination hat verheerende Spuren am Skelettsystem dieser Elenden hinterlassen und zwingt gezackte Widerhaken dazu, aus dem Fleisch auszubrechen. Diese können sie von ihren Körpern schleudern oder als Sporne beim Klettern nutzen. Aufgrund ihrer Beweglichkeit und ihrer natürlichen Klettergeschwindigkeit bevorzugen Stachelige Elende erhöhte Positionen auf niedrigen Dächern oder in den oberen Etagen zerstörter Gebäude."
@@ -7600,7 +7600,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 22,
     sprachen: ["Alle", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/drakkenheim/sternenwaechter.png",
+    bild: "drakkenheim/sternenwaechter.png",
     beschreibung: [
       "Eine mächtige, drei Meter große Kreatur steht vor dir, in zerfetztes und zerrissenes Tuch gehüllt. Das Tuch bedeckt ihre Form bis auf vier knorrige, dürre graue Arme. Ihre verdrehten Hände enden in vier langen Fingern und umklammern einen Holzstab, der mit kosmischer Energie funkelt. Darunter ragen zwei spinnenartige Beine hervor. Die gewölbte Form stützt sich auf den Stab, und die massige Kopfbedeckung birgt windende Tentakel, die herausragen und tastend die Umgebung erkunden.",
       "Die Sternenwächter sind uralte Kreaturen, die seit Jahrhunderten den Kosmos durchstreifen. Sie kümmern sich wenig um die Querelen der verschiedenen Realitäten oder die Bedeutung eines Sterblichenlebens. Sie sind ewige Wesen, die außerhalb von Raum und Zeit existieren – für sie sind Relativität und Dimensionen brechbare Konzepte.",
@@ -7678,7 +7678,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 17,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/striga.png",
+    bild: "drakkenheim/striga.png",
     beschreibung: [
       "Eine Striga ist eine kontaminierte Untote-Missgeburt, die entsteht, wenn ein echter Vampir oder eine Vampirbrut unter den richtigen Umständen der eldritschen Kontamination erliegt – meist durch eine arkane Anomalie, eine Exposition gegenüber Delirium während der Transformation oder durch das Trinken des Blutes einer mächtigen kontaminierten Kreatur.",
       "Weitaus mächtiger als ein Dunstblut-Vampir, ist eine Striga vollkommen wahnsinnig. Allerdings kann eine Striga ihre monströse Kontamination umkehren, indem sie das Blut einer Kreatur trinkt, die kürzlich Ziel eines Kontaminationsreinigungs-Zaubers war.",
@@ -7753,7 +7753,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 16,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/sturmdunst_harpyie_jaegerin.png",
+    bild: "drakkenheim/sturmdunst_harpyie_jaegerin.png",
     beschreibung: [
       "Diese mutierte Kreatur ähnelt einem Menschen, der mit einem Raubvogel gekreuzt wurde. Ihre gewaltigen Flügel enden in klauenartige Hände, ihre Vogelbeine enden in Klauen, und sie tragen ihre Waffen in den Talon-Füßen, während sie sich in die Lüfte erheben.",
       "Die typische Sturmdunst-Harpyie-Jägerin ist eine geschickte Flugkämpferin, die auf hoher Geschwindigkeit fliegen und dabei tödlich genau mit ihrem Bogen zielen kann. Sie verbringt ihre Tage damit, über die Stadtstraßen zu kreisen und sich ihre Beute von unten auszusuchen. Obwohl sie durchaus von Rattlings leben können, werden sie von der Ausrüstung und den Schätzen angezogen, die Erkundende und Fraktionsagenten mit sich führen."
@@ -7797,7 +7797,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 12,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/sturmdunst_harpyie_walkuere.png",
+    bild: "drakkenheim/sturmdunst_harpyie_walkuere.png",
     beschreibung: [
       "Geschmückt in glitzernder Halbplatte, mit Schilden und Wurfspießen bewaffnet, starren diese Elitekriegerinnen mit blutunterlaufenen Augen unter befiederten Helmen unverwandt vor sich hin. Ihr Unterkörper ist frei, damit ihre Klauen greifen und an Feinden reißen können.",
       "Walküren sind die besten Kämpferinnen unter den Sturmdunst-Harpyien. Sie haben Schlachten überstanden und ihre Kampffähigkeiten verfeinert. Sie locken Feinde gerne auf erhöhte Positionen – Dächer, Klippen oder Balkone – und heben sie dann auf, um sie in den Tod zu stürzen. Wer nicht fliegen kann, sieht sich stets mit der brutalen Realität des Sturztodes konfrontiert."
@@ -7843,7 +7843,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 16,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/sturmdunst_harpyie_weise.png",
+    bild: "drakkenheim/sturmdunst_harpyie_weise.png",
     beschreibung: [
       "Die Weise hockt auf einem Vorsprung, ihre eleganten Flügel entfalten sich und enthüllen eine gewaltige Spannweite von fast vier Metern, die in leuchtendem Grün, Blau, Violett und Gold schimmert. Ihr langer Hals trägt ein verzerrtes Gesicht mit Hakennase, spitzem Kinn und einem zu breiten Grinsen mit zu scharfen Zähnen. Geschmückt mit Federn-Halsketten, Ohrringen und einer Krone aus goldenem Efeu, singt sie einen Chor verstörender Noten.",
       "Sturmdunst-Harpyien-Weise sind die Ältesten ihrer Gemeinschaften. Ihre Lieder erzählen von Generationen der Schlachten, Triumphe und Sorgen ihrer Brut. Harpyien betrachten sie als Orakel und Seherinnen. Für jene, die den Harpyien drohen, stehen die Weisen als Leuchtfeuer der Macht – ihre Stimmen füllen Sterbliche mit Grauen und dem Vorgefühl des Untergangs."
@@ -7884,7 +7884,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: ["Riesisch"],
     umgebung: ["Gebirge", "Küste", "Gewässer"],
-    bild: "assets/images/monster/drakkenheim/sturmtroll.png",
+    bild: "drakkenheim/sturmtroll.png",
     beschreibung: [
       "Seine graue und weiße Haut spannt sich straff über seine muskulöse Gestalt. Der weit aufgesperrte Mund zeigt Reihen zackiger Zähne unter kleinen, stürmischen blauschwarzen Augen, die in der Mitte seines großen kahlen Kopfes sitzen. Elektrische Ströme pulsieren durch seinen Körper, und seine Venen leuchten elektrisch-blau wie ein Netz von Blitzen unter der Haut.",
       "Sturmtrolle können überall dort gefunden werden, wo Stürme häufig sind – in den Rosteisenmountains, entlang der Küste in den Östlichen Tälern nahe Port Brynor, oder entlang der Kristallküste. Sturmtrolle gedeihen in tobenden Unwettern und halten oft Winterschlaf während sonniger Perioden. Sie sind äußerst empfindlich für Wetterveränderungen und verlassen ihre Höhlen, wenn sich der Wind dreht – sie spüren einen herannahenden Sturm ein bis zwei Tage im Voraus.",
@@ -7943,7 +7943,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: ["Versteht die Sprachen seines Schöpfers, spricht aber nicht"],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/tanker.png",
+    bild: "drakkenheim/tanker.png",
     beschreibung: [
       "Eine massige Abscheulichkeit aus korrodiertem Stahl und blassem Fleisch. Eine Gasmaske bedeckt ihr Gesicht, fest angeschnallt und in den Schädel verschraubt. Die Kreatur beugt sich über eine riesige Chemikalienflasche, die ihren Bauch bildet. Schläuche und Rohre spreizen sich vom Tank wie verschüttete Eingeweide und verbinden den Behälter mit Wirbelsäule und Gliedmaßen des Ungetüms. Die pumpenden Schläuche weben durch seinen Körper und enden in großen metallischen Düsen, die seine Hände ersetzt haben. Ein verwirrendes Geflecht von widerlichen Chemikaliengerüchen dringt aus ihm heraus – die verschiedenen Gerüche reizen die Sinne und brennen in Augen und Nasenschleimhaut.",
       "Der Tanker ist der bevorzugte Laborassistent von Chemikern und Pathogenisten. Er ist ein Konstrukt aus einer menschlichen Leiche, das als wandelndes Fass mit alchemistischen Reagenzien fungiert. Ursprünglich dazu gedacht, gemischte chemische Verbindungen in großen Mengen von einem Behälter in einen anderen zu transportieren, kann der Tanker auch tödlich sein: Er ist mit massiven Schläuchen ausgestattet, die Klumpen seiner Substanzen auf Ziele schleudern können, sowie mit einem Ausstoß toxischer Flüssigkeiten."
@@ -7986,7 +7986,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt", "Gewässer"],
-    bild: "assets/images/monster/drakkenheim/tentakel-elender.png",
+    bild: "drakkenheim/tentakel-elender.png",
     beschreibung: [
       "Wo die Arme der Kreatur sein sollten, winden sich stattdessen zwei zuckende Massen tiefvioletter Tentakel, während vier weitere aus ihrem Rücken hervorragen. Die Zunge hängt als langes, nasses, violettes Anhängsel heraus. Über den gesamten Körper öffnen sich weinende Wunden, aus denen kleinere Tentakel und Auswüchse hervorragen. Die Haut des Elenden wirkt nass und schlaff, und er bewegt sich mit einem merkwürdigen Wackeln, während er auf euch zuschlurft.",
       "In Drakkenheim scheinen Tentakel eine der häufigsten Mutationen zu sein. Akademieforscher konnten keinen spezifischen Grund dafür ermitteln, warum Tentakel eine so beständige Mutationsform darstellen. Theorien postulieren, dass der Dunst und die Kontamination ihren Ursprung in einer fernen, wässrigen Existenzebene haben, oder dass die Kreaturen, die im Dunst am besten überleben können, Tentakel nutzen, um sich leichter fortzubewegen. Was auch immer der Grund, Tentakel-Elende sind in den Ruinen Drakkenheims durchaus verbreitet."
@@ -8040,7 +8040,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 16,
     sprachen: ["Gemein", "Riesisch"],
     umgebung: ["Sumpf", "Wald"],
-    bild: "assets/images/monster/drakkenheim/trollhexe.png",
+    bild: "drakkenheim/trollhexe.png",
     beschreibung: [
       "Massive Wülste von zitterndem, warzigem Fleisch, bedeckt mit Schimmel und Pilzwucherungen, ragen aus dem gebeugten Rücken dieses Trolls hervor. Tintenklecksendes, zerzaustes schwarzes Haar umrahmt ihr Gesicht, und kleine rote Augen durchbohren die Dunkelheit. Die Trollhexe ist in zerlumpten Sackleinen und verwesendem Laub gehüllt und schlurft auf geschwollenen, stämmigen Gliedmaßen, einen mächtigen Kessel und eine Schöpfkelle tragend.",
       "Die Trollhexen sind die Hüterinnen der Pilze im Trogrowth-Wald von Caspia und in Sümpfen überall auf dem Kontinent. Sie pflegen Pilzgärten und tragen große eiserne Kessel mit seltsamen Gebräuen, mit denen sie gewöhnliche Pilze in Trolle verwandeln. Ihre Gärten sind ihre Familie, und sie schützen sie mit ihrem Leben.",
@@ -8109,7 +8109,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 17,
     sprachen: ["Gemein", "Drakonisch"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/turmdrache.png",
+    bild: "drakkenheim/turmdrache.png",
     beschreibung: [
       "Der bronzene Drache ringelt sich um die Spitze des Turms, seinen Kopf in Richtung der Stadtränder ausgestreckt und die Straßen überwachend. Sein Körper ist sorgfältig gearbeitet und wunderschön detailliert – man meint, seinen Kopf sich kaum merklich in die eigene Richtung drehen zu sehen.",
       "Die Turmdrachen thronen auf den Türmen und Zinnen der Stadt und von Schloss Drakken. Einst edle Beschützer der Stadt, werden sie nun vom Willen der Haze kontrolliert. Jeder Turmdrache ist in einem einzigartigen Aussehen gefertigt – kein Drache gleicht dem anderen, doch alle bestehen aus Bronze und sind nach verschiedenen Drachentypen modelliert."
@@ -8156,7 +8156,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 12,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/turmfledermaus.png",
+    bild: "drakkenheim/turmfledermaus.png",
     beschreibung: [
       "Ein schriller Schrei durchdringt die Luft, als eine große, missgestaltete Fledermaus über einen hinwegschwingt. Ihre ausgestreckten Flügel ähneln verlängerten menschlichen Armen, mit Haut, die straff über ihren deformierten Körper gespannt ist. Reihen gebogener Reißzähne füllen ihr Maul unter hervorquellenden roten Augen und einer schnüffelnden Schnauze.",
       "Einst ein häufiger Anblick, haben sich die Fledermäuse in Drakkenheim sowohl in Zahl als auch in Gestalt aufgebläht. Viele sind mittlerweile so groß wie Hunde, mit Flügelspannweiten von fast zwei Metern. Insekten stillen ihren Blutdurst nicht länger, und sie gieren nach Fleisch.",
@@ -8226,7 +8226,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 8,
     sprachen: [],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/unkontrollierte_wucherung.png",
+    bild: "drakkenheim/unkontrollierte_wucherung.png",
     beschreibung: [
       "Der wogende Hügel aus fleischigen Tentakeln verbirgt den Humanoiden, der tief in ihm begraben liegt. Mit unzusammenhängenden Anordnungen von Augen, Mündern, Armen und Beinen – und gelegentlich einem halb absorbierten Geschöpf – verändert die Unkontrollierte Wucherung unaufhörlich ihre Form, während ein gedämpfter Chor aus Wimmern, Schreien und qualvollen Schreien aus ihren Öffnungen dringt. Irgendwo in ihr sind die Überreste eines unglücklichen Versuchspatienten.",
       "Nicht alle Formeln der Mutagenisten gelingen. Oft testen sie das Metamorphose-Elixier zunächst an Patienten, bevor sie es an sich selbst versuchen. Wenn der Versuch scheitert, werden die Testpersonen zum Opfer unkontrollierter Gewebexpansion: Das Muskelgewebe wuchert ins Unermessliche und explodiert zu einem Fleischberg. Die meisten bösartigsten Mutagenisten behalten diese Wucherungen als Diener und nutzen den wahnsinnigen Angriffsdrang, den das Elixier auslöst, gegen ihre Feinde."
@@ -8269,7 +8269,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 11,
     sprachen: ["Gemein"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/unschuldiger_ernter.png",
+    bild: "drakkenheim/unschuldiger_ernter.png",
     beschreibung: [
       "Der Unschuldige Ernter ist ein kleines, bizarres Konstrukt, das auf den ersten Blick wie ein harmloses Kind oder ein kleines Humanoid wirkt. Erst aus der Nähe erkennt man die chirurgischen Klauen, die ausfahrbaren Injektionsnadeln und die leere Maske, hinter der sich kein lebendiges Gesicht verbirgt.",
       "Diese Konstrukte wurden von Drakkenheimer Alchemisten erschaffen, die Proben von Lebewesen für ihre Forschungen benötigten. Der Unschuldige Ernter schleicht sich an seine Opfer heran, täuscht sie durch sein harmloses Auftreten und entnimmt dann mit präzisen, schnellen Bewegungen biologische Proben – oder eliminiert das Ziel vollständig, falls die Situation es verlangt."
@@ -8314,7 +8314,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/verschobener_elender.png",
+    bild: "drakkenheim/verschobener_elender.png",
     beschreibung: [
       "Dieser mutierte Elende zittert heftig, als er durch die Realität zu stroboskopieren scheint. Eine undeutliche Unschärfe umhüllt seine Gestalt, wenn er sich mit einem gehemmten, unnatürlichen und fragmentierten Gang bewegt – als fehlten Momente seiner Realität, sodass er in seinem unheimlich rhythmischen Takt scheinbar Bruchteile von Zeit überspringt.",
       "Verschobene Elende entstehen häufig durch Kontamination, die aus Dünnen Stellen in den Ruinen ausströmt – wandelnden Pforten zwischen den Ebenen, die jene, die sie betreten, durch fremde Dimensionen und unbekannte Landschaften treiben. Wenn die aus diesen Wunden der Wirklichkeit strömende Kontamination eine Kreatur befällt, kann sie diese in eine fragmentierte Form aufspalten, die gleichzeitig existiert und nicht existiert, gleichzeitig präsent und auf einer fernen Ebene ist. Der Verschobene Elende ist zu keinem Zeitpunkt vollständig anwesend und nutzt diese zerrissene Realität zu seinem Vorteil."
@@ -8365,7 +8365,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 11,
     sprachen: ["Die Sprachen aus ihrem früheren Leben"],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/verzerrungshexe.png",
+    bild: "drakkenheim/verzerrungshexe.png",
     beschreibung: [
       "Die eldrischen Energien des Dunsts schwächen und stören die metaphysischen Gefüge, die die Ebenen trennen. Diese wilde Magie zieht außerplanare Energien und Kreaturen in die Ruinen und hat eine besonders heimtückische Wechselwirkung mit dem Schattenland. Die Kräfte, die die Seelen der Toten in die Materielle Ebene ziehen, werden dadurch enorm verstärkt – und die eldrische Kontamination korrumpiert die Seele, fragmentiert den Verstand und verzerrt die Persönlichkeit, was diese Geister in Verzerrungshexen verwandelt.",
       "Verzweifelt nach einer Erinnerung an ihre frühere Identität greifend, heimsuchen die rachsüchtigen Geister jener, deren Leben der Dunst gestohlen hat, die Ruinen von Drakkenheim. Ihr Hass und ihre Missgunst gegenüber den Lebenden manifestieren sich in einem mächtigen Zwang, andere in Monster zu verwandeln.",
@@ -8410,7 +8410,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 12,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/wabernder_polyp.png",
+    bild: "drakkenheim/wabernder_polyp.png",
     beschreibung: [
       "Der Wabernde Polyp tauchte erst auf, nachdem Dünne Stellen in der ganzen Stadt Drakkenheim entstanden. Manche vermuten, diese Kreaturen werden im Raum zwischen den Welten geboren; andere glauben, es sind übermäßig kontaminierte Humanoide, die als reine Fleischmasse aus den Dünnen Stellen hervortreten.",
       "Das Wesen der Dünnen Stellen zeigt sich in der Art, wie der Polyp in Raum und Zeit existiert: vollkommen unbegreiflich und ohne Gesetzmäßigkeit. Er verschiebt sich ständig innerhalb eines Bereichs, erscheint fast gleichzeitig an mehreren Orten oder teleportiert sich fortwährend von einer Stelle zur nächsten – als ob er in einem nahezu konstanten Zustand des Wandels lebt.",
@@ -8457,7 +8457,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: ["Tiefe Rede"],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/wandelnde_delerium_geode.png",
+    bild: "drakkenheim/wandelnde_delerium_geode.png",
     beschreibung: [
       "Ein reiches Delirium-Kristallgeflecht schimmert in der nahen Ruine. Als man sich nähert, beginnt der Schutt sich zu verlagern und zu bewegen. Eine gebeugte, massige Gestalt, vage menschenähnlich, erhebt sich mit einem Chor aus kristallinem Klirren und schleifendem Fels. Die zentrale Masse aus Stein und Kristall wird von zwei kurzen, stämmigen Trümmerbeinchen getragen; Arme und Schultern aus großen Steinbrocken und Holz geformt, endend in geballten Fäusten, die mit Delirium-Stacheln gespickt sind. Sein Kopf – ein länglicher Kristall – ist von Winkeln und Rissen durchzogen, die allmählich ein trauriges Gesicht formen.",
       "Mehr als einmal hat ein unachtsamer Prospektor ein reiches Delirium-Vorkommen mit einer Wandelnden Delirium-Geode verwechselt und ist dabei als roter Fleck auf den Straßen Drakkenheims geendet. Diese kontaminierten Erd-Elementare sind überall in den Ruinen anzutreffen und ärgerlich häufig in der Nähe besonders großer Delirium-Kristallvorkommen."
@@ -8511,7 +8511,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 19,
     sprachen: [],
     umgebung: ["Andere Ebenen", "Ruinen"],
-    bild: "assets/images/monster/drakkenheim/warpraeuber.png",
+    bild: "drakkenheim/warpraeuber.png",
     beschreibung: [
       "Die Kreatur besitzt einen lupinen Körper aus wirbelnder Energie, die sich ständig verändert und einen schwindelerregenden Seheffekt auf ihr feines, scharfes Fell erzeugt. Die Energie erscheint als ein Gemisch aus Farben und Mustern, als würde sie aus der chaotischen Magie des Zwischenraums schöpfen. Das Wesen hat acht Beine und weder sichtbare Augen noch ein Maul; stattdessen entspringen seinem Körper Massen von Tentakeln. Entlang seines Rückens klafft die Wirbelsäule auf und gibt einem gewaltigen Rachen aus zersplittertem Knochen und Zähnen nach, der in einen zeitlichen Riss in Raum und Zeit mündet.",
       "Der Warpräuber ist ein furchterregender Jäger, der im Zwischenraum der Welten lauert und ahnungslose Reisende angreift, die in dieses Reich geraten. Als Kreatur des reinen Instinkts, getrieben allein durch den Wunsch zu jagen und zu fressen, nutzt er die Fähigkeit, zwischen Dimensionen zu navigieren, um seine Beute zu beschleichen und sie dann mit einem überraschenden Angriff zu überwältigen.",
@@ -8592,7 +8592,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 29,
     sprachen: [],
     umgebung: ["Ruinen", "Andere Ebenen"],
-    bild: "assets/images/monster/drakkenheim/weltvernichter.png",
+    bild: "drakkenheim/weltvernichter.png",
     beschreibung: [
       "Ein kolossaler Delirium-Kristall ruht im Zentrum des Kraters – das sogenannte „Delirium-Herz“. Es ist das Überbleibsel einer fernen, unbekannten Welt, die vollständig vom Dunst verschluckt und vernichtet wurde, und die größte Quelle der Kontamination, die sich von Drakkenheim ausbreitet. Wer das Delirium-Herz vernichtet, in der Hoffnung, der Ausbreitung des Dunsts Einhalt zu gebieten, löst stattdessen ein zerstörerisches Schrecken frei, das die Welt noch nie gesehen hat: den Weltvernichter.",
       "Keine zwei Personen, die der Entstehung des Weltvernichters beiwohnen, können seine Ankunft in denselben Worten beschreiben. Einer erlebt, wie er sich aus dem Delirium-Herz befreit wie eine Kreatur, die aus einem riesigen Ei schlüpft; ein anderer beschreibt sein plötzliches Erscheinen aus dem Nebel in einem Blitz aus Donner und Blitzen; ein dritter sieht eine kleine Kreatur in der Nähe, die sich im Zuge der freigesetzten Kräfte in ein kolossales Wesen verwandelt. Der Weltvernichter trägt viele Namen: Die Apokalypse, der Weltesser, der Herold, der Tod, der Vernichter, der letzte Alptraum, der Zorn der Götter.",
@@ -8700,7 +8700,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 23,
     sprachen: ["Alle", "Telepathie 1,6 km"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/drakkenheim/wer_zuletzt_lacht.png",
+    bild: "drakkenheim/wer_zuletzt_lacht.png",
     beschreibung: [
       "Wer Zuletzt Lacht ist ein urzeitlicher Dämon des Todes und der Verwesung. Tiefgründig nihilistisch und doch seltsam heiter schwelgt dieser Erzteufel in der Dramatik und Theatralik der Sterblichenexistenz und sieht das Leben selbst als kosmischen Witz. Für ihn ist jeder Moment lediglich eine bedeutungslose Szene in der großen Tragikomödie des Universums. Sein gehässiges Lachen hallt durch die Korridore von Zeit und Raum.",
       "Die Legende besagt, es werde der letzte Klang am Ende aller Dinge sein – wenn der Vorhang über die Existenz selbst fällt. Wer Zuletzt Lacht glaubt, dies sei sein perverses Schicksal, und dieses vermeintliche Wissen treibt seine Begegnungen mit den Sterblichen an, die er als machtlose Marionetten im großen Schauspiel von Leben und Tod betrachtet.",
@@ -8788,7 +8788,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/widerliche_wuergfliege.png",
+    bild: "drakkenheim/widerliche_wuergfliege.png",
     beschreibung: [
       "Die Würgfliegen gedeihen prächtig in Drakkenheim. Da Leichen dort nicht verwesen, bieten sie eine reiche Nahrungsquelle. Viele aufgedunsene Leichname wimmeln von großen grünen Maden, die sich am toten, kontaminierten Fleisch laben. Wenn diese Maden zu Würgfliegen heranwachsen, umschwärmen sie Orte des Todes in der Stadt.",
       "Die Würgfliegen sind aufgedunsene, überwachsene Fliegen, deren säurehaltiger Schleim einen Beutel gebildet hat, der den größten Teil ihres riesigen Thorax einnimmt. Wie alle Fliegen nutzen sie diesen Schleim, um Nahrung aufzulösen. Aufgrund ihrer Größe führt dies zu einem fürchterlichen Erlebnis für Abenteurer, wenn ganze Gruppen dieser Fliegen brennende Säure auf ihre Beute spucken und sich dann zum Fressen niederlassen.",
@@ -8833,7 +8833,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 10,
     sprachen: ["Riesisch"],
     umgebung: ["Gebirge", "Arktis"],
-    bild: "assets/images/monster/drakkenheim/wintertroll.png",
+    bild: "drakkenheim/wintertroll.png",
     beschreibung: [
       "Seine blau-weiße Haut ist mit Eiszapfen überkrustet, die aus Ellbogen und Knien herausragen und eine Mähne aus Eis um seinen Kopf bilden. Sogar die Zähne des Wesens wirken wie spitze Eiszapfen. Sein Atem, einem kalten Winterwind gleich, ist von Frost und Schnee durchzogen.",
       "Wintertrolle bewohnen hohe Berggipfel auf dem gesamten Kontinent, sind aber besonders zahlreich in den Giantfrost-Bergen, wo sie ihr Gebiet mit ihren erbitterten Rivalen, den Stein- und Frostriesen, teilen. Sie jagen in Rudeln über die Kahle Weite und haben sich einen Teil der Ruinen von Glitter Peak angeeignet. Wintertrolle verlassen selten Schneegebiete.",
@@ -8892,7 +8892,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 17,
     sprachen: ["Gemein"],
     umgebung: ["Wald", "Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/zelot_der_morrigan.png",
+    bild: "drakkenheim/zelot_der_morrigan.png",
     beschreibung: [
       "Da Morrigan als Schöpferin der ersten Vampire gilt, gibt es unter dem Hof der Nacht jene, die ihr Leib und Seele widmen. Sie betrachten sich als Raubtiere der Spitze – alle anderen Wesen sind ihnen untergeordnet. Die Zeloten Morrigans geloben, gegen Morrigans Feinde zu kämpfen, darunter besonders die Druiden und Diener von Arwyn und Kromac.",
       "Sie geben sich der primitiven Natur ihres Vampirismus hin und sehen die Errungenschaften der Zivilisation als Schandfleck auf der Erde. Sie tun alles, um nahe Siedlungen in vollständige Trümmer zu legen. Berichte über spurlos verschwundene Dörfer deuten oft auf ihre Anwesenheit hin.",
@@ -8968,7 +8968,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 17,
     sprachen: ["Versteht die Sprachen, die es zu Lebzeiten kannte, spricht aber nicht"],
     umgebung: ["Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/drakkenheim/zerfleischer.png",
+    bild: "drakkenheim/zerfleischer.png",
     beschreibung: [
       "Diese massive Kreatur besteht aus mutierten, zusammengenähten Körperteilen. Das Zusammenfügen der Teile und die gewollten Mutationen haben den ehemaligen Patienten in eine gedankenlose Bestie verwandelt, die fast von ihren eigenen Wucherungen verschluckt wird. Seine überdimensionierten Arme tragen eine große, drehende Knochensäge, die surrend und surrend vorwärtsstampft und Blut und Fleischfetzen durch die Gegend schleudert. Sie trägt eine blutgetränkte chirurgische Schürze und Maske.",
       "Ein Zerfleischer ist das Werk eines wahrhaft wahnsinnigen Apothekers, wenn auch nominell als „Chirurgischer Assistent“ für Sektionen und Obduktionen erschaffen. In Wahrheit dient der Zerfleischer nur als Schlächter, der die grausige Aufgabe übernimmt, Leichen zu zerstückeln und abgetrennte Teile zu sammeln, um frische Materialien für neue Abscheulichkeiten zu liefern. Das Vorhandensein eines Zerfleischers ermöglicht einem Apotheker, mit erschreckender Effizienz zu arbeiten.",
@@ -9014,7 +9014,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Grasland", "Ruinen", "Stadt", "Wald"],
-    bild: "assets/images/monster/drakkenheim/zwitscherer.png",
+    bild: "drakkenheim/zwitscherer.png",
     beschreibung: [
       "An einer Wand hochkletternd ist eine hundegroße Kreatur zu sehen. Sie ähnelt einem weitgehend haarlosen Eichhörnchen – abgesehen von seinem buschigen Schwanz und fleckigen Büscheln scheckigen Fells. Seine Augen sind glasig und milchweiß, und sein Mund wirkt fast menschlich, mit riesigen, perlweißen Zähnen, die wahnsinnig grinsen. Es klettert hektisch aufwärts und klappert dabei mit seinen Zähnen einen wahnsinnig machenden Chor.",
       "Der Königinnenpark-Garten ist eines der am stärksten kontaminierten Gebiete der Stadt. Seine weitläufigen Gärten und Wege waren einst ein Ort üppiger Schönheit, dicht mit Bäumen, Blumenarrangements, meisterhaften Heckenformen, stillen Hainen und einer Fülle von Wildtieren. Die Kontamination Drakkenheims hat alle Dinge verdreht und die Kreaturen darin monströs verändert. Selbst die Eichhörnchen, die die Gärten in großer Zahl bewohnten, sind nun verwildert und mutiert. Wer durch bewaldete Gebiete streift, sollte auf zwitschernde Geräusche achten, die durch die Bäume hallen. Diese Monster greifen in Gruppen an, ihre klackenden Zähne treiben diejenigen in den Wahnsinn, die sich in der Nähe befinden. Die einst freundlichen Eichhörnchen, bei denen die Einheimischen stehenblieben, um sie zu füttern, fressen nun, ob man will oder nicht.",
@@ -9083,7 +9083,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     passiveWahrnehmung: 12,
     sprachen: [],
     umgebung: ["Ruinen", "Stadt"],
-    bild: "assets/images/monster/drakkenheim/zyklopischer_koloss.png",
+    bild: "drakkenheim/zyklopischer_koloss.png",
     beschreibung: [
       "Zyklopische Kolosse haben ein einzelnes Auge als Brennpunkt für die in ihrem Körper gespeicherte kontaminierte Energie entwickelt, die sie als vernichtenden Strahl entfesseln. Zudem besitzen sie die einzigartige Fähigkeit, ihr Auge zu schließen und vorübergehend aus ihrer Existenzebene zu verschwinden – sie lösen dabei auf irgendeine Weise einen arkanen Zeitriss mit ihrer fokussierten Magie aus.",
       "Der Zyklopische Koloss ist oft ein brutaler Beschützer für andere Elende. Er nutzt seinen Augenlaser, um Feinde zu einem feinen Delirium-Staub zu zerstreuen, und blinkt dann aus der Existenz heraus, um nach wenigen Augenblicken wieder aufzutauchen und einen verheerenden Strahl aus seinem Auge abzufeuern, bevor er erneut verschwindet. Zyklopische Kolosse kämpfen meist bis zum Ende und fliehen selten."
