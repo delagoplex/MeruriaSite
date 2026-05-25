@@ -20,6 +20,7 @@
 <script src="assets/scripts/data/resources/mineralien/ff14_mineralien-data.js"></script>
 <script src="assets/scripts/data/resources/pflanzen/ff14_pflanzen-data.js"></script>
 <script src="assets/scripts/data/resources/pflanzen/fantasy_plant-data.js"></script>
+<script src="assets/scripts/data/resources/insekten/insekten-data.js"></script>
 <script src="assets/scripts/data/monster/monsterhandbuch-data.js"></script>
 <script src="assets/scripts/data/monster/foliant-der-feinde-data.js"></script>
 <script src="assets/scripts/data/monster/schatzkammer-der-drachen-data.js"></script>
@@ -58,7 +59,7 @@ const CAT_ICONS = {
 
 const CATEGORIES = [
   { id:'fische',         label:'Fische',         hue:200, total:1506, short:'Aquatische Lebensformen' },
-  { id:'insekten',       label:'Insekten',       hue:95,  total:0,    short:'Gliedfüßer & Krabbeltiere' },
+  { id:'insekten',       label:'Insekten',       hue:95,  total:1346, short:'Gliedfüßer & Krabbeltiere' },
   { id:'pflanzen',       label:'Pflanzen',       hue:140, total:732,  short:'Flora & Botanik' },
   { id:'mineralien',     label:'Mineralien',     hue:60,  total:99,   short:'Gestein & Kristalle' },
   { id:'kreaturen',      label:'Kreaturen',      hue:285, total:1520, short:'Wesen Merurias' },
@@ -1129,10 +1130,11 @@ const { useTweaks, TweaksPanel, TweakSection, TweakRadio, TweakToggle } = window
 
 /* ── Build Kollektikon entries from resource data + ressourcen_sichtbar ── */
 const _FISH_ICONS     = ['f1','f2','f3','f4','f5','f6','f7','f8'];
+const _INSEKT_ICONS   = ['i1','i2','i3','i4','i5','i6'];
 const _PLANT_ICONS    = ['p1','p2','p3','p4','p5','p6','p7','p8'];
 const _MIN_ICONS      = ['m1','m2','m3','m4','m5'];
 const _CREATURE_ICONS = ['k1','k2','k3','k4'];
-const _ICON_POOLS = { fische:_FISH_ICONS, pflanzen:_PLANT_ICONS, mineralien:_MIN_ICONS, kreaturen:_CREATURE_ICONS };
+const _ICON_POOLS = { fische:_FISH_ICONS, insekten:_INSEKT_ICONS, pflanzen:_PLANT_ICONS, mineralien:_MIN_ICONS, kreaturen:_CREATURE_ICONS };
 
 // Stable integer ID for a monster name — used as resource_id in ressourcen_sichtbar
 function _monsterKolId(name) {
@@ -1211,7 +1213,7 @@ function _normalizeGroesse(g) {
 
 function buildKollektikonEntries(visibleMap, metaMap) {
   const ALL_PLANTS = [...(window.PFLANZEN_DB || []), ...(window.FANTASY_PLANT_DB || [])];
-  const DB = { fische: window.FISH_DB || [], pflanzen: ALL_PLANTS, mineralien: window.MINERALIEN_DB || [] };
+  const DB = { fische: window.FISH_DB || [], insekten: window.INSEKTEN_DB || [], pflanzen: ALL_PLANTS, mineralien: window.MINERALIEN_DB || [] };
   const entries = [];
   for (const cat of C3) {
     // Kreaturen: show all monsters, DM-toggled visibility via ressourcen_sichtbar
@@ -1266,6 +1268,11 @@ function buildKollektikonEntries(visibleMap, metaMap) {
         if (eg.giftig) eigenschaft.push('Giftig');
         fullTags = { typ: res.kategorie ? [res.kategorie] : [], fundort: res.fundort || [], klima: res.klima || [], eigenschaft };
         habitat = (res.fundort || []).join(', '); size = '';
+      } else if (cat.id === 'insekten') {
+        rarity = _rarFromSg(res.seltenheitsgrad || 1);
+        fullTags = { groesse: res.größenkategorie ? [res.größenkategorie] : [], lebensraum: res.lebensraum || [], klima: res.klima || [] };
+        habitat = (res.lebensraum || []).join(', ');
+        size = res.größenkategorie || '';
       } else {
         rarity = _rarFromSg(res.seltenheitsgrad || 1);
         fullTags = { typ: res.kategorie ? [res.kategorie] : [], fundort: res.fundort || [] };
@@ -1331,6 +1338,12 @@ function buildKollektikonEntries(visibleMap, metaMap) {
   const minerals = window.MINERALIEN_DB || [];
   setOpts('mineralien', 'typ',     unique(minerals.map(m => m.kategorie)));
   setOpts('mineralien', 'fundort', flatUnique(minerals, 'fundort'));
+
+  // insekten
+  const insects = window.INSEKTEN_DB || [];
+  setOpts('insekten', 'groesse',    unique(insects.map(i => i.größenkategorie)));
+  setOpts('insekten', 'lebensraum', flatUnique(insects, 'lebensraum'));
+  setOpts('insekten', 'klima',      flatUnique(insects, 'klima'));
 })();
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"density":"comfortable","showOnlyFound":false}/*EDITMODE-END*/;

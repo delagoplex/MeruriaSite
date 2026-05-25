@@ -13,6 +13,7 @@
 <script src="assets/scripts/data/resources/mineralien/ff14_mineralien-data.js"></script>
 <script src="assets/scripts/data/resources/pflanzen/ff14_pflanzen-data.js"></script>
 <script src="assets/scripts/data/resources/pflanzen/fantasy_plant-data.js"></script>
+<script src="assets/scripts/data/resources/insekten/insekten-data.js"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
@@ -35,21 +36,31 @@ const ALL_PFLANZEN   = [
   ...(window.PFLANZEN_DB        || []),
   ...(window.FANTASY_PLANT_DB   || []),
 ].sort((a, b) => a.name_de.localeCompare(b.name_de, 'de', { sensitivity: 'base' }));
+const ALL_INSEKTEN = (window.INSEKTEN_DB || []).map(i => ({
+  ...i,
+  fundort:   i.lebensraum,
+  kategorie: i.insektenart,
+  groesse:   i.größenkategorie,
+}));
 
 // ── Fundort colours ────────────────────────────────────────────────────────────
 const FUNDORT_COLOR = {
   'Gebirge':       '#a0b8d0',
   'Höhle':         '#9070b8',
   'Unterreich':    '#5840a0',
+  'Unterirdisch':  '#5840a0',
   'Vulkan':        '#e85020',
+  'Gewässer':      '#3888c8',
   'Wald':          '#4ca060',
   'Sumpf':         '#50b068',
   'Wüste':         '#c8a840',
   'Küste':         '#26c6da',
   'Tiefe See':     '#3060b0',
   'Ebene':         '#80a870',
+  'Grasland':      '#70b050',
   'Arktis':        '#90d0f0',
   'Dschungel':     '#2a9040',
+  'Feenwildnis':   '#80d0a8',
   'Arkane Stätte': '#c060e8',
   'Andere Ebenen': '#4848d8',
   'Himmelsfall':   '#ffd040',
@@ -91,6 +102,7 @@ const KLIMA_COLOR = {
   'Magisch':     '#c060e8',
   'Vulkanisch':  '#e85020',
   'Schattenhaft':'#9050c8',
+  'Schattig':    '#9050c8',
   'Kosmisch':    '#5050e0',
   'Dunkel':      '#5848a0',
   'Hell':        '#ffd870',
@@ -180,6 +192,7 @@ const TABS = [
   { id:'fische',      label:'Fische'      },
   { id:'pflanzen',    label:'Pflanzen'    },
   { id:'mineralien',  label:'Mineralien'  },
+  { id:'insekten',    label:'Insekten'    },
   { id:'monsterteile',label:'Monsterteile'},
 ];
 
@@ -583,6 +596,26 @@ function PlaceholderIcon({ kind = 'plant' }) {
       </svg>
     );
   }
+  if (kind === 'insekt') {
+    return (
+      <svg {...common}>
+        <defs>
+          <radialGradient id="ph-insekt-g" cx="50%" cy="50%" r="55%">
+            <stop offset="0%" stopColor="rgba(38,198,218,0.20)" />
+            <stop offset="100%" stopColor="rgba(38,198,218,0)" />
+          </radialGradient>
+        </defs>
+        <circle cx="32" cy="32" r="26" fill="url(#ph-insekt-g)" />
+        <ellipse cx="32" cy="32" rx="2" ry="10" fill={c} />
+        <path d="M32 28 C 22 18, 12 20, 14 29 C 16 35, 26 33, 32 31 Z" fill={fill} stroke={c} strokeWidth="1.1" strokeLinejoin="round" />
+        <path d="M32 28 C 42 18, 52 20, 50 29 C 48 35, 38 33, 32 31 Z" fill={fill} stroke={c} strokeWidth="1.1" strokeLinejoin="round" />
+        <path d="M32 35 C 22 33, 14 37, 16 43 C 18 47, 27 43, 32 39 Z" fill={fill} stroke={c} strokeWidth="0.9" strokeLinejoin="round" />
+        <path d="M32 35 C 42 33, 50 37, 48 43 C 46 47, 37 43, 32 39 Z" fill={fill} stroke={c} strokeWidth="0.9" strokeLinejoin="round" />
+        <line x1="30" y1="22" x2="26" y2="16" stroke={c} strokeWidth="0.9" />
+        <line x1="34" y1="22" x2="38" y2="16" stroke={c} strokeWidth="0.9" />
+      </svg>
+    );
+  }
   // default: plant
   return (
     <svg {...common}>
@@ -602,7 +635,7 @@ function PlaceholderIcon({ kind = 'plant' }) {
     </svg>
   );
 }
-const PLACEHOLDER_KIND = { '🌿':'plant', '💎':'mineral', '🐟':'fish' };
+const PLACEHOLDER_KIND = { '🌿':'plant', '💎':'mineral', '🐟':'fish', '🪲':'insekt' };
 function renderFallbackIcon(fallback) {
   // fallback may be an emoji string (legacy) — map to a kind
   const kind = PLACEHOLDER_KIND[fallback] || 'plant';
@@ -1006,7 +1039,7 @@ function DmToggleWrapper({ id, visible, onToggle, children }) {
         onClick={e => { e.stopPropagation(); onToggle(id); }}
         title={visible ? 'Sichtbar · klicken zum Ausblenden' : 'Verborgen · klicken zum Einblenden'}
         style={{
-          position:'absolute', top:6, right:6, zIndex:10,
+          position:'absolute', top:38, right:6, zIndex:10,
           width:20, height:20, borderRadius:3, cursor:'pointer', padding:0,
           display:'flex', alignItems:'center', justifyContent:'center',
           fontSize:11, fontFamily:'var(--font-mono)',
@@ -1016,20 +1049,17 @@ function DmToggleWrapper({ id, visible, onToggle, children }) {
           transition:'all 0.15s',
         }}
       >{visible ? '✓' : '○'}</button>
-      {!visible && (
-        <div style={{ position:'absolute', inset:0, background:'rgba(0,0,0,0.48)', borderRadius:4, pointerEvents:'none' }} />
-      )}
     </div>
   );
 }
 
 function DmBanner({ vis }) {
-  const total = vis.fische.size + vis.pflanzen.size + vis.mineralien.size;
+  const total = vis.fische.size + vis.pflanzen.size + vis.mineralien.size + vis.insekten.size;
   return (
     <div style={{ background:'rgba(10,38,42,0.97)', borderBottom:'1px solid rgba(38,198,218,0.3)', padding:'7px 20px', display:'flex', alignItems:'center', gap:16, flexShrink:0, flexWrap:'wrap' }}>
       <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.28em', color:'rgba(38,198,218,0.8)', textTransform:'uppercase', whiteSpace:'nowrap' }}>◈ DM-Modus</span>
       <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(38,198,218,0.5)', letterSpacing:'0.14em' }}>
-        {vis.fische.size} Fische · {vis.pflanzen.size} Pflanzen · {vis.mineralien.size} Mineralien
+        {vis.fische.size} Fische · {vis.pflanzen.size} Pflanzen · {vis.mineralien.size} Mineralien · {vis.insekten.size} Insekten
         <span style={{ marginLeft:8, color:'rgba(38,198,218,0.35)' }}>= {total} gesamt sichtbar</span>
       </span>
       <div style={{ flex:1 }} />
@@ -1128,13 +1158,13 @@ function App() {
   const [selectedFish, setSelectedFish] = useState(null);
 
   const isDM = window.SITE_USER?.role === 'dm';
-  const [vis, setVis] = useState({ fische: new Set(), pflanzen: new Set(), mineralien: new Set() });
+  const [vis, setVis] = useState({ fische: new Set(), pflanzen: new Set(), mineralien: new Set(), insekten: new Set() });
 
   useEffect(() => {
     async function loadVis() {
       const { data } = await window._sb.from('ressourcen_sichtbar').select('cat, resource_id');
       if (data) {
-        const v = { fische: new Set(), pflanzen: new Set(), mineralien: new Set() };
+        const v = { fische: new Set(), pflanzen: new Set(), mineralien: new Set(), insekten: new Set() };
         data.forEach(row => { if (v[row.cat] !== undefined) v[row.cat].add(row.resource_id); });
         setVis(v);
       }
@@ -1144,7 +1174,7 @@ function App() {
     const channel = window._sb.channel('res-sichtbar-live')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'ressourcen_sichtbar' }, payload => {
         setVis(prev => {
-          const v = { fische: new Set(prev.fische), pflanzen: new Set(prev.pflanzen), mineralien: new Set(prev.mineralien) };
+          const v = { fische: new Set(prev.fische), pflanzen: new Set(prev.pflanzen), mineralien: new Set(prev.mineralien), insekten: new Set(prev.insekten) };
           if (payload.eventType === 'INSERT') {
             const { cat, resource_id } = payload.new;
             if (v[cat] !== undefined) v[cat].add(resource_id);
@@ -1212,6 +1242,7 @@ function App() {
       {selectedFish && <FishDetailModal fish={selectedFish} onClose={() => setSelectedFish(null)} />}
       {activeTab === 'pflanzen'   && <ResourceTab data={ALL_PFLANZEN}   catKey="pflanzen"   fallbackIcon="🌿" searchPlaceholder="Pflanze suchen…"  onCount={setTabCount} isDM={isDM} vis={vis.pflanzen}   onToggle={toggleVisible} />}
       {activeTab === 'mineralien' && <ResourceTab data={ALL_MINERALIEN} catKey="mineralien" fallbackIcon="💎" searchPlaceholder="Mineral suchen…"  onCount={setTabCount} isDM={isDM} vis={vis.mineralien} onToggle={toggleVisible} />}
+      {activeTab === 'insekten'   && <ResourceTab data={ALL_INSEKTEN}   catKey="insekten"   fallbackIcon="🪲" searchPlaceholder="Insekt suchen…"   onCount={setTabCount} isDM={isDM} vis={vis.insekten}   onToggle={toggleVisible} />}
       {activeTab === 'monsterteile' && <PlaceholderTab id="monsterteile" label="Monsterteile" />}
     </div>
   );
