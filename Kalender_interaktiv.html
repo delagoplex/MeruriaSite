@@ -6,13 +6,13 @@
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
 <link rel="stylesheet" href="assets/styles/pages/Kalender_interaktiv.css">
-<script src="assets/scripts/vendor/react.development.js"></script>
-<script src="assets/scripts/vendor/react-dom.development.js"></script>
-<script src="assets/scripts/vendor/babel-standalone.js"></script>
-<script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/scripts/vendor/react.production.min.js"></script>
+<script src="assets/scripts/vendor/react-dom.production.min.js"></script>
+
+<script src="assets/components/nav.js"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
-<script src="assets/components/site-gate.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.js"></script>
 </head>
 <body>
 
@@ -712,9 +712,14 @@ renderAll();
 </script>
 
 
-<script type="text/babel">
-const { SiteNav, SiteGate } = window;
-ReactDOM.createRoot(document.getElementById('nav-root')).render(<SiteGate><SiteNav /></SiteGate>);
+<script>
+(function () {
+const {
+  SiteNav,
+  SiteGate
+} = window;
+ReactDOM.createRoot(document.getElementById('nav-root')).render(/*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement(SiteNav, null)));
+})();
 </script>
 
 </body></html>

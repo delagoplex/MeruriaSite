@@ -6,30 +6,46 @@
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
 <link rel="stylesheet" href="assets/styles/pages/Rassen.css">
-<script src="assets/scripts/vendor/react.development.js"></script>
-<script src="assets/scripts/vendor/react-dom.development.js"></script>
-<script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/scripts/vendor/react.production.min.js"></script>
+<script src="assets/scripts/vendor/react-dom.production.min.js"></script>
+
 <script src="assets/scripts/data/rassen-data.js"></script>
-<script src="assets/components/tweaks-panel-3.jsx" type="text/babel"></script>
-<script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/tweaks-panel-3.js"></script>
+<script src="assets/components/nav.js"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
-<script src="assets/components/site-gate.jsx" type="text/babel"></script>
-<script src="assets/components/page-header.jsx" type="text/babel"></script>
-<script src="assets/components/particle-field.jsx" type="text/babel"></script>
-<script src="assets/components/floating-hex-field.jsx" type="text/babel"></script>
-<script src="assets/components/footer.jsx" type="text/babel"></script>
-<script src="assets/components/float-nav.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.js"></script>
+<script src="assets/components/page-header.js"></script>
+<script src="assets/components/particle-field.js"></script>
+<script src="assets/components/floating-hex-field.js"></script>
+<script src="assets/components/footer.js"></script>
+<script src="assets/components/float-nav.js"></script>
 
 
 
 </head>
 <body>
 <div id="root"></div>
-<script type="text/babel">
-
-const { useState, useEffect, useRef, useCallback } = React;
-const { useTweaks, TweaksPanel, TweakSection, TweakSlider, TweakToggle, TweakRadio, SiteNav, ParticleField, FloatingHexField, FloatNav } = window;
+<script>
+(function () {
+const {
+  useState,
+  useEffect,
+  useRef,
+  useCallback
+} = React;
+const {
+  useTweaks,
+  TweaksPanel,
+  TweakSection,
+  TweakSlider,
+  TweakToggle,
+  TweakRadio,
+  SiteNav,
+  ParticleField,
+  FloatingHexField,
+  FloatNav
+} = window;
 
 // ── TWEAK DEFAULTS ──────────────────────────────────────
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
@@ -37,36 +53,52 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "columns": 3,
   "headerHeight": 180,
   "cardAccent": "#7c4dff"
-}/*EDITMODE-END*/;
-
-
+} /*EDITMODE-END*/;
 
 // ── ORDERED RACE/SECTION LIST ────────────────────────────
 // Each entry is either:
 //   { type: 'race',    id, name }                    — simple race card
 //   { type: 'group',  id, name, subraces: [{id,name}] } — section header + subrace cards
 const ENTRIES = window.RASSEN_DATA;
-
 const RACE_PAGES = window.RACE_PAGES;
 
 // ── HEX POINTS ──────────────────────────────────────────
 function hexPoints(s) {
-  const cx = s/2, cy = s/2, r = s/2;
+  const cx = s / 2,
+    cy = s / 2,
+    r = s / 2;
   const pts = [];
   for (let i = 0; i < 6; i++) {
-    const a = (Math.PI / 180) * (60*i - 30);
-    pts.push(`${cx + r*Math.cos(a)},${cy + r*Math.sin(a)}`);
+    const a = Math.PI / 180 * (60 * i - 30);
+    pts.push(`${cx + r * Math.cos(a)},${cy + r * Math.sin(a)}`);
   }
   return pts.join(' ');
 }
-function OctSvg({ size=24, color='currentColor', fill='none', strokeWidth=1, opacity=1, style={} }) {
-  return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ display:'block', flexShrink:0, ...style }}>
-      <polygon points={hexPoints(size)} fill={fill} stroke={color} strokeWidth={strokeWidth} opacity={opacity} />
-    </svg>
-  );
+function OctSvg({
+  size = 24,
+  color = 'currentColor',
+  fill = 'none',
+  strokeWidth = 1,
+  opacity = 1,
+  style = {}
+}) {
+  return /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: `0 0 ${size} ${size}`,
+    style: {
+      display: 'block',
+      flexShrink: 0,
+      ...style
+    }
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(size),
+    fill: fill,
+    stroke: color,
+    strokeWidth: strokeWidth,
+    opacity: opacity
+  }));
 }
-
 
 // ── RACE DATA LOOKUP ─────────────────────────────────────
 function findRaceData(id) {
@@ -81,422 +113,954 @@ function findRaceData(id) {
 }
 
 // ── FOV DIAGRAM ──────────────────────────────────────────
-function FovDiagram({ sicht, accent, wandelform=false }) {
-  const s = (wandelform && sicht.wandelform) ? sicht.wandelform : sicht;
-  const { weite=18, radius=120, dunkel=0 } = s;
-  const W=200, H=200, cx=100, cy=100, rN=72, rD=93;
+function FovDiagram({
+  sicht,
+  accent,
+  wandelform = false
+}) {
+  const s = wandelform && sicht.wandelform ? sicht.wandelform : sicht;
+  const {
+    weite = 18,
+    radius = 120,
+    dunkel = 0
+  } = s;
+  const W = 200,
+    H = 200,
+    cx = 100,
+    cy = 100,
+    rN = 72,
+    rD = 93;
   const half = radius / 2;
   const sa = (-90 - half) * Math.PI / 180;
   const ea = (-90 + half) * Math.PI / 180;
   const lA = radius > 180 ? 1 : 0;
   const pt = (a, r) => [cx + r * Math.cos(a), cy + r * Math.sin(a)];
-  const wedge = (r) => {
-    const [sx,sy] = pt(sa, r);
-    const [ex,ey] = pt(ea, r);
+  const wedge = r => {
+    const [sx, sy] = pt(sa, r);
+    const [ex, ey] = pt(ea, r);
     return `M ${cx},${cy} L ${sx.toFixed(2)},${sy.toFixed(2)} A ${r},${r} 0 ${lA},1 ${ex.toFixed(2)},${ey.toFixed(2)} Z`;
   };
   // For 360° arc, SVG M→L→A doesn't draw a circle; use a circle element instead
   const isFull = radius >= 360;
-  return (
-    <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{display:'block',overflow:'hidden',borderRadius:'3px'}}>
-      <rect width={W} height={H} fill="rgba(0,0,10,0.55)"/>
-      <circle cx={cx} cy={cy} r={rN} fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth={1}/>
-      <circle cx={cx} cy={cy} r={rN*0.5} fill="none" stroke="rgba(255,255,255,0.03)" strokeWidth={1}/>
-      {dunkel>0 && (isFull
-        ? <circle cx={cx} cy={cy} r={rD} fill="rgba(60,80,200,0.1)" stroke="rgba(80,120,255,0.22)" strokeWidth={1}/>
-        : <path d={wedge(rD)} fill="rgba(60,80,200,0.1)" stroke="rgba(80,120,255,0.22)" strokeWidth={1}/>)}
-      {isFull
-        ? <circle cx={cx} cy={cy} r={rN} fill={`${accent}20`} stroke={`${accent}66`} strokeWidth={1.5}/>
-        : <path d={wedge(rN)} fill={`${accent}20`} stroke={`${accent}66`} strokeWidth={1.5}/>}
-      <line x1={cx} y1={cy} x2={cx} y2={cy-rN} stroke={`${accent}40`} strokeWidth={1} strokeDasharray="3,2"/>
-      <circle cx={cx} cy={cy} r={5} fill={accent} opacity={0.85}/>
-      <circle cx={cx} cy={cy} r={5} fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth={0.5}/>
-      <text x={cx} y={14} textAnchor="middle" fontFamily="var(--font-mono)" fontSize="7" fill={`${accent}55`} letterSpacing="2">VORNE</text>
-      {dunkel>0 && <text x={cx+rD+4} y={cy+4} textAnchor="start" fontFamily="var(--font-mono)" fontSize="7" fill="rgba(80,120,255,0.45)">{dunkel}m</text>}
-      <text x={cx+rN+4} y={cy+4} textAnchor="start" fontFamily="var(--font-mono)" fontSize="7" fill={`${accent}66`}>{weite}m</text>
-    </svg>
-  );
+  return /*#__PURE__*/React.createElement("svg", {
+    width: W,
+    height: H,
+    viewBox: `0 0 ${W} ${H}`,
+    style: {
+      display: 'block',
+      overflow: 'hidden',
+      borderRadius: '3px'
+    }
+  }, /*#__PURE__*/React.createElement("rect", {
+    width: W,
+    height: H,
+    fill: "rgba(0,0,10,0.55)"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: cx,
+    cy: cy,
+    r: rN,
+    fill: "none",
+    stroke: "rgba(255,255,255,0.04)",
+    strokeWidth: 1
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: cx,
+    cy: cy,
+    r: rN * 0.5,
+    fill: "none",
+    stroke: "rgba(255,255,255,0.03)",
+    strokeWidth: 1
+  }), dunkel > 0 && (isFull ? /*#__PURE__*/React.createElement("circle", {
+    cx: cx,
+    cy: cy,
+    r: rD,
+    fill: "rgba(60,80,200,0.1)",
+    stroke: "rgba(80,120,255,0.22)",
+    strokeWidth: 1
+  }) : /*#__PURE__*/React.createElement("path", {
+    d: wedge(rD),
+    fill: "rgba(60,80,200,0.1)",
+    stroke: "rgba(80,120,255,0.22)",
+    strokeWidth: 1
+  })), isFull ? /*#__PURE__*/React.createElement("circle", {
+    cx: cx,
+    cy: cy,
+    r: rN,
+    fill: `${accent}20`,
+    stroke: `${accent}66`,
+    strokeWidth: 1.5
+  }) : /*#__PURE__*/React.createElement("path", {
+    d: wedge(rN),
+    fill: `${accent}20`,
+    stroke: `${accent}66`,
+    strokeWidth: 1.5
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: cx,
+    y1: cy,
+    x2: cx,
+    y2: cy - rN,
+    stroke: `${accent}40`,
+    strokeWidth: 1,
+    strokeDasharray: "3,2"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: cx,
+    cy: cy,
+    r: 5,
+    fill: accent,
+    opacity: 0.85
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: cx,
+    cy: cy,
+    r: 5,
+    fill: "none",
+    stroke: "rgba(255,255,255,0.25)",
+    strokeWidth: 0.5
+  }), /*#__PURE__*/React.createElement("text", {
+    x: cx,
+    y: 14,
+    textAnchor: "middle",
+    fontFamily: "var(--font-mono)",
+    fontSize: "7",
+    fill: `${accent}55`,
+    letterSpacing: "2"
+  }, "VORNE"), dunkel > 0 && /*#__PURE__*/React.createElement("text", {
+    x: cx + rD + 4,
+    y: cy + 4,
+    textAnchor: "start",
+    fontFamily: "var(--font-mono)",
+    fontSize: "7",
+    fill: "rgba(80,120,255,0.45)"
+  }, dunkel, "m"), /*#__PURE__*/React.createElement("text", {
+    x: cx + rN + 4,
+    y: cy + 4,
+    textAnchor: "start",
+    fontFamily: "var(--font-mono)",
+    fontSize: "7",
+    fill: `${accent}66`
+  }, weite, "m"));
 }
 
 // ── SCROLL REVEAL ────────────────────────────────────────
 function useScrollReveal() {
-  useEffect(()=>{
-    document.querySelectorAll('.reveal-up.visible,.reveal-left.visible').forEach(el=>el.classList.remove('visible'));
+  useEffect(() => {
+    document.querySelectorAll('.reveal-up.visible,.reveal-left.visible').forEach(el => el.classList.remove('visible'));
     let observer;
-    const revealed=new WeakSet();
-    const revealEl=(el,delay)=>{ if(revealed.has(el))return; revealed.add(el); setTimeout(()=>el.classList.add('visible'),delay); };
-    const init=()=>{
-      observer=new IntersectionObserver(entries=>{
-        entries.forEach(entry=>{
-          if(!entry.isIntersecting)return;
-          const el=entry.target; observer.unobserve(el);
-          if(el.classList.contains('reveal-left')){ revealEl(el,0); return; }
-          const parent=el.parentElement;
-          if(!parent){ revealEl(el,0); return; }
-          const siblings=Array.from(parent.querySelectorAll('.reveal-up'));
-          const rowMap=new Map();
-          siblings.forEach(sib=>{ const top=Math.round(sib.getBoundingClientRect().top); if(!rowMap.has(top))rowMap.set(top,[]); rowMap.get(top).push(sib); });
-          const sortedTops=Array.from(rowMap.keys()).sort((a,b)=>a-b);
-          const elTop=Math.round(el.getBoundingClientRect().top);
-          const rowIndex=sortedTops.indexOf(elTop);
-          const rowDelay=Math.max(0,rowIndex)*80;
-          const rowEls=rowMap.get(elTop)||[el];
-          rowEls.forEach(rowEl=>{ observer.unobserve(rowEl); revealEl(rowEl,rowDelay); });
-        });
-      },{ threshold:0.06, rootMargin:'0px 0px -24px 0px' });
-      document.querySelectorAll('.reveal-up,.reveal-left').forEach(el=>{ el.classList.remove('visible'); observer.observe(el); });
+    const revealed = new WeakSet();
+    const revealEl = (el, delay) => {
+      if (revealed.has(el)) return;
+      revealed.add(el);
+      setTimeout(() => el.classList.add('visible'), delay);
     };
-    const t=setTimeout(init,120);
-    return()=>{ clearTimeout(t); observer&&observer.disconnect(); };
-  },[]);
+    const init = () => {
+      observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target;
+          observer.unobserve(el);
+          if (el.classList.contains('reveal-left')) {
+            revealEl(el, 0);
+            return;
+          }
+          const parent = el.parentElement;
+          if (!parent) {
+            revealEl(el, 0);
+            return;
+          }
+          const siblings = Array.from(parent.querySelectorAll('.reveal-up'));
+          const rowMap = new Map();
+          siblings.forEach(sib => {
+            const top = Math.round(sib.getBoundingClientRect().top);
+            if (!rowMap.has(top)) rowMap.set(top, []);
+            rowMap.get(top).push(sib);
+          });
+          const sortedTops = Array.from(rowMap.keys()).sort((a, b) => a - b);
+          const elTop = Math.round(el.getBoundingClientRect().top);
+          const rowIndex = sortedTops.indexOf(elTop);
+          const rowDelay = Math.max(0, rowIndex) * 80;
+          const rowEls = rowMap.get(elTop) || [el];
+          rowEls.forEach(rowEl => {
+            observer.unobserve(rowEl);
+            revealEl(rowEl, rowDelay);
+          });
+        });
+      }, {
+        threshold: 0.06,
+        rootMargin: '0px 0px -24px 0px'
+      });
+      document.querySelectorAll('.reveal-up,.reveal-left').forEach(el => {
+        el.classList.remove('visible');
+        observer.observe(el);
+      });
+    };
+    const t = setTimeout(init, 120);
+    return () => {
+      clearTimeout(t);
+      observer && observer.disconnect();
+    };
+  }, []);
 }
 
 // ── IMAGE PLACEHOLDER ────────────────────────────────────
-function RaceImagePlaceholder({ name, accent, height=200 }) {
-  return (
-    <div style={{
-      width: '100%', height: `${height}px`,
+function RaceImagePlaceholder({
+  name,
+  accent,
+  height = 200
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '100%',
+      height: `${height}px`,
       background: `repeating-linear-gradient(-45deg, transparent, transparent 8px, ${accent}09 8px, ${accent}09 9px), linear-gradient(160deg, rgba(20,12,50,0.9) 0%, rgba(8,5,22,0.95) 100%)`,
       border: `1px dashed ${accent}33`,
       borderRadius: '3px',
-      display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '8px',
-      position: 'relative', overflow: 'hidden'
-    }}>
-      <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse at 50% 50%, ${accent}14 0%, transparent 70%)` }} />
-      <div style={{ width:'36px', height:'36px', borderRadius:'50%', border:`1px dashed ${accent}44`, display:'flex', alignItems:'center', justifyContent:'center' }}>
-        <OctSvg size={18} color={`${accent}55`} strokeWidth={1} />
-      </div>
-      <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:`${accent}44`, textTransform:'uppercase', zIndex:1 }}>artwork — {name.toLowerCase()}</span>
-    </div>
-  );
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexDirection: 'column',
+      gap: '8px',
+      position: 'relative',
+      overflow: 'hidden'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      background: `radial-gradient(ellipse at 50% 50%, ${accent}14 0%, transparent 70%)`
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '36px',
+      height: '36px',
+      borderRadius: '50%',
+      border: `1px dashed ${accent}44`,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 18,
+    color: `${accent}55`,
+    strokeWidth: 1
+  })), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.22em',
+      color: `${accent}44`,
+      textTransform: 'uppercase',
+      zIndex: 1
+    }
+  }, "artwork \u2014 ", name.toLowerCase()));
 }
 
 // ── CARD INNER (shared between RaceCard and SubraceCard) ──
-function CardInner({ name, subtitle, tags, accent, hov, tilt, cardRef, onMouseMove, onMouseEnter, onMouseLeave, href, onClick, insigniaSrc }) {
-  return (
-    <a href={href} onClick={onClick} style={{ textDecoration:'none', display:'block' }}>
-      {/* Outer wrapper: overflow visible so sigil bleeds out; handles perspective + tilt */}
-      <div className="reveal-up"
-        ref={cardRef}
-        onMouseMove={onMouseMove}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
-        style={{
-          position:'relative',
-          perspective:'900px',
-          transform: hov
-            ? `translateY(-3px) scale(1.01)`
-            : `translateY(0px) scale(1)`,
-          transition: hov
-            ? 'transform 0.08s linear'
-            : 'transform 0.45s cubic-bezier(0.23,1,0.32,1)',
-          willChange:'transform', zIndex: hov ? 10 : 1,
-          cursor:'pointer'
-        }}>
-
-        {/* Card frame — overflow visible so sigil bleeds out */}
-        <div style={{
-          position:'relative', borderRadius:'4px', height:'260px',
-          border:`1px solid ${hov ? accent+'88' : accent+'22'}`,
-          boxShadow: hov ? `0 12px 48px rgba(0,0,0,0.7), 0 0 28px ${accent}33, inset 0 1px 0 ${accent}18` : `0 2px 16px rgba(0,0,0,0.55)`,
-          transition:'border-color 0.2s, box-shadow 0.25s',
-          overflow:'visible',
-          transformStyle:'preserve-3d',
-          transform: hov
-            ? `rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)`
-            : `rotateX(0deg) rotateY(0deg)`,
-          transition: hov
-            ? 'border-color 0.2s, box-shadow 0.25s, transform 0.08s linear'
-            : 'border-color 0.35s, box-shadow 0.35s, transform 0.45s cubic-bezier(0.23,1,0.32,1)'
-        }}>
-
-          {/* Clipping mask for bg layers only */}
-          <div style={{ position:'absolute', inset:0, borderRadius:'4px', overflow:'hidden', zIndex:1, transform:'translateZ(0)' }}>
-            {/* Background image */}
-            <div style={{
-              position:'absolute', inset:0,
-              backgroundImage:'url(assets/images/races/placeholder-race.png)',
-              backgroundSize:'cover', backgroundPosition:'center',
-              transition:'filter 0.5s ease'
-            }} />
-            {/* Accent colour tint — glows in on hover */}
-            <div style={{
-              position:'absolute', inset:0,
-              background:`linear-gradient(135deg, ${accent}55 0%, ${accent}22 50%, transparent 100%)`,
-              mixBlendMode:'screen',
-              opacity: hov ? 1 : 0,
-              transition:'opacity 0.5s ease'
-            }} />
-            {/* Dark gradient overlay — fades in on hover */}
-            <div style={{
-              position:'absolute', inset:0,
-              background:'linear-gradient(to top, rgba(4,2,14,0.98) 0%, rgba(4,2,14,0.88) 50%, rgba(4,2,14,0.65) 100%)',
-              opacity: hov ? 1 : 0,
-              transition:'opacity 0.45s ease'
-            }} />
-            {/* Accent shimmer */}
-            <div style={{
-              position:'absolute', inset:0, pointerEvents:'none',
-              background: hov ? `radial-gradient(ellipse at ${50+tilt.ry*1.5}% ${50-tilt.rx*1.5}%, ${accent}22 0%, transparent 65%)` : 'none'
-            }} />
-          </div>
-
-          {/* Sigil — translateZ makes it genuinely float in front in 3D */}
-          <div style={{
-            position:'absolute',
-            right:'0%', bottom: hov ? '-5%' : '-18%',
-            width:'65%', maxWidth:'min(280px, 30vw)', aspectRatio:'3/4',
-            opacity: hov ? 0.85 : 0,
-            transform:`translateZ(${hov ? 16 : 0}px)`,
-            transition: hov
-              ? 'opacity 0.5s ease, bottom 0.6s cubic-bezier(0.23,1,0.32,1), transform 0.08s linear'
-              : 'opacity 0.3s ease, bottom 0.4s ease, transform 0.45s cubic-bezier(0.23,1,0.32,1)',
-            zIndex:32, pointerEvents:'none',
-            display:'flex', alignItems:'center', justifyContent:'center',
-          }}>
-            <img src={insigniaSrc} alt=""
-              style={{ width:'100%', height:'100%', objectFit:'contain',
-                filter:`drop-shadow(0 0 4px ${accent}) drop-shadow(0 0 16px ${accent}bb) drop-shadow(0 0 40px ${accent}66) drop-shadow(0 0 70px ${accent}33)` }} />
-          </div>
-
-          {/* Text content — fades out on hover */}
-          <div style={{
-            position:'absolute', inset:0, zIndex:30,
-            transform:'translateZ(1px)',
-            display:'flex', flexDirection:'column', justifyContent:'flex-end',
-            padding:'20px 18px 10px 21px',
-            opacity: hov ? 0 : 1,
-            transition:'opacity 0.35s ease'
-          }}>
-            <h3 style={{ fontFamily:'var(--font-display)', fontSize:'15px', fontWeight:'400', letterSpacing:'0.16em',
-              color:'var(--white)', textShadow:`0 2px 12px rgba(0,0,0,0.8)`, textTransform:'uppercase', marginBottom:'3px' }}>{name}</h3>
-            <div style={{ width:'50px', height:'1px', background:`linear-gradient(90deg,${accent}cc,transparent)`, animation:'pulse-glow 3s infinite', marginBottom:'3px' }} />
-            {subtitle && <div style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontStyle:'normal',fontSize:'10px',
-              color:'rgba(var(--text-rgb),0.48)', letterSpacing:'0.05em', lineHeight:1.55, marginBottom: tags && tags.length ? '6px' : 0 }}>{subtitle}</div>}
-            {tags && tags.length > 0 && (
-              <div style={{ display:'flex', gap:'4px', flexWrap:'wrap', alignContent:'flex-start' }}>
-                {tags.map(tag => (
-                  <span key={tag} style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.12em',
-                    color:'rgba(var(--accent-rgb),0.55)', background:'rgba(124,77,255,0.07)', border:'1px solid rgba(124,77,255,0.16)',
-                    padding:'3px 8px', borderRadius:'2px', textTransform:'uppercase' }}>{tag}</span>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Resting text gradient — fades out on hover */}
-          <div style={{
-            position:'absolute', bottom:0, left:0, right:0, height:'108px', zIndex:9,
-            background:'linear-gradient(to top, rgba(2,1,10,0.92) 0%, rgba(2,1,10,0.88) 97%, transparent 99%)',
-            opacity: hov ? 0 : 1, transition:'opacity 0.35s ease', pointerEvents:'none'
-          }} />
-
-          {/* Hover vignette wedge — below sigil */}
-          <div style={{
-            position:'absolute', bottom:0, left:0, right:0, height:'80px', zIndex:10,
-            transform:'translateZ(2px)',
-            background:'linear-gradient(to top, rgba(2,1,10,0.88) 0%, transparent 100%)',
-            clipPath:'polygon(0% 40%, 100% 0%, 100% 100%, 0% 100%)',
-            opacity: hov ? 1 : 0,
-            transition:'opacity 0.35s ease',
-            pointerEvents:'none'
-          }} />
-
-          {/* Hover badge — tags stacked vertically above name */}
-          <div style={{
-            position:'absolute', bottom:'14px', left:'14px', right:'14px', zIndex:33,
-            transform:'translateZ(3px)',
-            opacity: hov ? 1 : 0, transition:'opacity 0.35s ease'
-          }}>
-            {tags && tags.length > 0 && (
-              <div style={{ display:'flex', flexDirection:'column', alignItems:'flex-start', gap:'6px', marginBottom:'12px' }}>
-                {tags.map((tag, i) => (
-                  <span key={tag} style={{
-                    fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.18em',
-                    padding:'4px 10px', borderRadius:'2px',
-                    border:`1px solid ${accent}55`, color:accent,
-                    background:`${accent}12`, textTransform:'uppercase',
-                    transition:`opacity 0.3s ease ${i * 0.04}s`,
-                    opacity: hov ? 1 : 0,
-                  }}>{tag}</span>
-                ))}
-              </div>
-            )}
-            <h3 style={{ fontFamily:'var(--font-display)', fontSize:'17px', fontWeight:'400', letterSpacing:'0.16em',
-              color:'var(--white)', textShadow:`0 0 24px ${accent}cc, 0 2px 8px rgba(0,0,0,0.9)`, textTransform:'uppercase' }}>{name}</h3>
-          </div>
-
-        </div>{/* end card frame */}
-      </div>
-    </a>
-  );
+function CardInner({
+  name,
+  subtitle,
+  tags,
+  accent,
+  hov,
+  tilt,
+  cardRef,
+  onMouseMove,
+  onMouseEnter,
+  onMouseLeave,
+  href,
+  onClick,
+  insigniaSrc
+}) {
+  return /*#__PURE__*/React.createElement("a", {
+    href: href,
+    onClick: onClick,
+    style: {
+      textDecoration: 'none',
+      display: 'block'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    ref: cardRef,
+    onMouseMove: onMouseMove,
+    onMouseEnter: onMouseEnter,
+    onMouseLeave: onMouseLeave,
+    style: {
+      position: 'relative',
+      perspective: '900px',
+      transform: hov ? `translateY(-3px) scale(1.01)` : `translateY(0px) scale(1)`,
+      transition: hov ? 'transform 0.08s linear' : 'transform 0.45s cubic-bezier(0.23,1,0.32,1)',
+      willChange: 'transform',
+      zIndex: hov ? 10 : 1,
+      cursor: 'pointer'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      borderRadius: '4px',
+      height: '260px',
+      border: `1px solid ${hov ? accent + '88' : accent + '22'}`,
+      boxShadow: hov ? `0 12px 48px rgba(0,0,0,0.7), 0 0 28px ${accent}33, inset 0 1px 0 ${accent}18` : `0 2px 16px rgba(0,0,0,0.55)`,
+      transition: 'border-color 0.2s, box-shadow 0.25s',
+      overflow: 'visible',
+      transformStyle: 'preserve-3d',
+      transform: hov ? `rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)` : `rotateX(0deg) rotateY(0deg)`,
+      transition: hov ? 'border-color 0.2s, box-shadow 0.25s, transform 0.08s linear' : 'border-color 0.35s, box-shadow 0.35s, transform 0.45s cubic-bezier(0.23,1,0.32,1)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      borderRadius: '4px',
+      overflow: 'hidden',
+      zIndex: 1,
+      transform: 'translateZ(0)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      backgroundImage: 'url(assets/images/races/placeholder-race.png)',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      transition: 'filter 0.5s ease'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      background: `linear-gradient(135deg, ${accent}55 0%, ${accent}22 50%, transparent 100%)`,
+      mixBlendMode: 'screen',
+      opacity: hov ? 1 : 0,
+      transition: 'opacity 0.5s ease'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      background: 'linear-gradient(to top, rgba(4,2,14,0.98) 0%, rgba(4,2,14,0.88) 50%, rgba(4,2,14,0.65) 100%)',
+      opacity: hov ? 1 : 0,
+      transition: 'opacity 0.45s ease'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      pointerEvents: 'none',
+      background: hov ? `radial-gradient(ellipse at ${50 + tilt.ry * 1.5}% ${50 - tilt.rx * 1.5}%, ${accent}22 0%, transparent 65%)` : 'none'
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      right: '0%',
+      bottom: hov ? '-5%' : '-18%',
+      width: '65%',
+      maxWidth: 'min(280px, 30vw)',
+      aspectRatio: '3/4',
+      opacity: hov ? 0.85 : 0,
+      transform: `translateZ(${hov ? 16 : 0}px)`,
+      transition: hov ? 'opacity 0.5s ease, bottom 0.6s cubic-bezier(0.23,1,0.32,1), transform 0.08s linear' : 'opacity 0.3s ease, bottom 0.4s ease, transform 0.45s cubic-bezier(0.23,1,0.32,1)',
+      zIndex: 32,
+      pointerEvents: 'none',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("img", {
+    src: insigniaSrc,
+    alt: "",
+    style: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'contain',
+      filter: `drop-shadow(0 0 4px ${accent}) drop-shadow(0 0 16px ${accent}bb) drop-shadow(0 0 40px ${accent}66) drop-shadow(0 0 70px ${accent}33)`
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      zIndex: 30,
+      transform: 'translateZ(1px)',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'flex-end',
+      padding: '20px 18px 10px 21px',
+      opacity: hov ? 0 : 1,
+      transition: 'opacity 0.35s ease'
+    }
+  }, /*#__PURE__*/React.createElement("h3", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '15px',
+      fontWeight: '400',
+      letterSpacing: '0.16em',
+      color: 'var(--white)',
+      textShadow: `0 2px 12px rgba(0,0,0,0.8)`,
+      textTransform: 'uppercase',
+      marginBottom: '3px'
+    }
+  }, name), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '50px',
+      height: '1px',
+      background: `linear-gradient(90deg,${accent}cc,transparent)`,
+      animation: 'pulse-glow 3s infinite',
+      marginBottom: '3px'
+    }
+  }), subtitle && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontStyle: 'normal',
+      fontSize: '10px',
+      color: 'rgba(var(--text-rgb),0.48)',
+      letterSpacing: '0.05em',
+      lineHeight: 1.55,
+      marginBottom: tags && tags.length ? '6px' : 0
+    }
+  }, subtitle), tags && tags.length > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '4px',
+      flexWrap: 'wrap',
+      alignContent: 'flex-start'
+    }
+  }, tags.map(tag => /*#__PURE__*/React.createElement("span", {
+    key: tag,
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.12em',
+      color: 'rgba(var(--accent-rgb),0.55)',
+      background: 'rgba(124,77,255,0.07)',
+      border: '1px solid rgba(124,77,255,0.16)',
+      padding: '3px 8px',
+      borderRadius: '2px',
+      textTransform: 'uppercase'
+    }
+  }, tag)))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      height: '108px',
+      zIndex: 9,
+      background: 'linear-gradient(to top, rgba(2,1,10,0.92) 0%, rgba(2,1,10,0.88) 97%, transparent 99%)',
+      opacity: hov ? 0 : 1,
+      transition: 'opacity 0.35s ease',
+      pointerEvents: 'none'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      height: '80px',
+      zIndex: 10,
+      transform: 'translateZ(2px)',
+      background: 'linear-gradient(to top, rgba(2,1,10,0.88) 0%, transparent 100%)',
+      clipPath: 'polygon(0% 40%, 100% 0%, 100% 100%, 0% 100%)',
+      opacity: hov ? 1 : 0,
+      transition: 'opacity 0.35s ease',
+      pointerEvents: 'none'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      bottom: '14px',
+      left: '14px',
+      right: '14px',
+      zIndex: 33,
+      transform: 'translateZ(3px)',
+      opacity: hov ? 1 : 0,
+      transition: 'opacity 0.35s ease'
+    }
+  }, tags && tags.length > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+      gap: '6px',
+      marginBottom: '12px'
+    }
+  }, tags.map((tag, i) => /*#__PURE__*/React.createElement("span", {
+    key: tag,
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.18em',
+      padding: '4px 10px',
+      borderRadius: '2px',
+      border: `1px solid ${accent}55`,
+      color: accent,
+      background: `${accent}12`,
+      textTransform: 'uppercase',
+      transition: `opacity 0.3s ease ${i * 0.04}s`,
+      opacity: hov ? 1 : 0
+    }
+  }, tag))), /*#__PURE__*/React.createElement("h3", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '17px',
+      fontWeight: '400',
+      letterSpacing: '0.16em',
+      color: 'var(--white)',
+      textShadow: `0 0 24px ${accent}cc, 0 2px 8px rgba(0,0,0,0.9)`,
+      textTransform: 'uppercase'
+    }
+  }, name)))));
 }
 
 // ── RACE CARD ─────────────────────────────────────────────
-function RaceCard({ name, id, subtitle, tags, accent, onSelect, insigniaSrc }) {
+function RaceCard({
+  name,
+  id,
+  subtitle,
+  tags,
+  accent,
+  onSelect,
+  insigniaSrc
+}) {
   const cardRef = useRef(null);
-  const [tilt, setTilt] = useState({ rx:0, ry:0 });
+  const [tilt, setTilt] = useState({
+    rx: 0,
+    ry: 0
+  });
   const [hov, setHov] = useState(false);
   const frameRef = useRef(null);
-
-  const handleMouseMove = useCallback((e) => {
+  const handleMouseMove = useCallback(e => {
     const el = cardRef.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;
     cancelAnimationFrame(frameRef.current);
-    frameRef.current = requestAnimationFrame(() => setTilt({ rx:(y-0.5)*-16, ry:(x-0.5)*16 }));
+    frameRef.current = requestAnimationFrame(() => setTilt({
+      rx: (y - 0.5) * -16,
+      ry: (x - 0.5) * 16
+    }));
   }, []);
-
-  const handleMouseLeave = () => { setHov(false); cancelAnimationFrame(frameRef.current); setTilt({ rx:0, ry:0 }); };
-
-  return <CardInner name={name} subtitle={subtitle} tags={tags} accent={accent} hov={hov} tilt={tilt} cardRef={cardRef}
-    onMouseMove={handleMouseMove} onMouseEnter={()=>setHov(true)} onMouseLeave={handleMouseLeave}
-    href={`${id}.html`} onClick={(e)=>{ e.preventDefault(); onSelect({ id, name, accent }); }}
-    insigniaSrc={insigniaSrc} />;
+  const handleMouseLeave = () => {
+    setHov(false);
+    cancelAnimationFrame(frameRef.current);
+    setTilt({
+      rx: 0,
+      ry: 0
+    });
+  };
+  return /*#__PURE__*/React.createElement(CardInner, {
+    name: name,
+    subtitle: subtitle,
+    tags: tags,
+    accent: accent,
+    hov: hov,
+    tilt: tilt,
+    cardRef: cardRef,
+    onMouseMove: handleMouseMove,
+    onMouseEnter: () => setHov(true),
+    onMouseLeave: handleMouseLeave,
+    href: `${id}.html`,
+    onClick: e => {
+      e.preventDefault();
+      onSelect({
+        id,
+        name,
+        accent
+      });
+    },
+    insigniaSrc: insigniaSrc
+  });
 }
 
 // ── SUBRACE CARD ─────────────────────────────────────────
-function SubraceCard({ subrace, accent, parentId, onSelect }) {
+function SubraceCard({
+  subrace,
+  accent,
+  parentId,
+  onSelect
+}) {
   const cardRef = useRef(null);
-  const [tilt, setTilt] = useState({ rx:0, ry:0 });
+  const [tilt, setTilt] = useState({
+    rx: 0,
+    ry: 0
+  });
   const [hov, setHov] = useState(false);
   const frameRef = useRef(null);
-
-  const handleMouseMove = useCallback((e) => {
+  const handleMouseMove = useCallback(e => {
     const el = cardRef.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;
     cancelAnimationFrame(frameRef.current);
-    frameRef.current = requestAnimationFrame(() => setTilt({ rx:(y-0.5)*-16, ry:(x-0.5)*16 }));
+    frameRef.current = requestAnimationFrame(() => setTilt({
+      rx: (y - 0.5) * -16,
+      ry: (x - 0.5) * 16
+    }));
   }, []);
-
-  const handleMouseLeave = () => { setHov(false); cancelAnimationFrame(frameRef.current); setTilt({ rx:0, ry:0 }); };
-
-  return <CardInner name={subrace.name} subtitle={subrace.subtitle} tags={subrace.tags} accent={accent} hov={hov} tilt={tilt} cardRef={cardRef}
-    onMouseMove={handleMouseMove} onMouseEnter={()=>setHov(true)} onMouseLeave={handleMouseLeave}
-    href={`${parentId}-${subrace.id}.html`} onClick={(e)=>{ e.preventDefault(); onSelect({ id:subrace.id, name:subrace.name, accent }); }}
-    insigniaSrc={subrace.insigniaSrc} />;
+  const handleMouseLeave = () => {
+    setHov(false);
+    cancelAnimationFrame(frameRef.current);
+    setTilt({
+      rx: 0,
+      ry: 0
+    });
+  };
+  return /*#__PURE__*/React.createElement(CardInner, {
+    name: subrace.name,
+    subtitle: subrace.subtitle,
+    tags: subrace.tags,
+    accent: accent,
+    hov: hov,
+    tilt: tilt,
+    cardRef: cardRef,
+    onMouseMove: handleMouseMove,
+    onMouseEnter: () => setHov(true),
+    onMouseLeave: handleMouseLeave,
+    href: `${parentId}-${subrace.id}.html`,
+    onClick: e => {
+      e.preventDefault();
+      onSelect({
+        id: subrace.id,
+        name: subrace.name,
+        accent
+      });
+    },
+    insigniaSrc: subrace.insigniaSrc
+  });
 }
 
 // ── GROUP SECTION (race with subraces) ───────────────────
-function GroupSection({ entry, accent, cols, navHeight, onSelect }) {
-  return (
-    <div id={entry.id} style={{ marginBottom:'48px', scrollMarginTop:`${navHeight+8}px` }}>
-      {/* Group header */}
-      <div className="reveal-left" style={{ marginBottom:'16px', paddingBottom:'12px', borderBottom:`1px solid ${accent}22` }}>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.3em', color:`${accent}66`, textTransform:'uppercase', marginBottom:'5px' }}>Unterrassen</div>
-        <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
-          <OctSvg size={8} color={`${accent}66`} fill={`${accent}22`} strokeWidth={1} />
-          <h2 style={{ fontFamily:'var(--font-display)', fontSize:'20px', fontWeight:'300', letterSpacing:'0.2em', color:'rgba(var(--text-rgb),0.85)', textShadow:`0 0 20px ${accent}33`, textTransform:'uppercase' }}>{entry.name}</h2>
-        </div>
-        <div style={{ width:'40px', height:'1px', background:`linear-gradient(90deg,${accent}77,transparent)`, marginTop:'10px', animation:'pulse-glow 3s infinite' }} />
-      </div>
-      {/* Subrace cards grid */}
-      <div style={{ display:'grid', gridTemplateColumns:`repeat(${cols}, 1fr)`, gap:'16px', overflow:'visible' }}>
-        {entry.subraces.map(sr => (
-          <SubraceCard key={sr.id} subrace={sr} accent={sr.accent || accent} parentId={entry.id} onSelect={onSelect} />
-        ))}
-      </div>
-    </div>
-  );
+function GroupSection({
+  entry,
+  accent,
+  cols,
+  navHeight,
+  onSelect
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    id: entry.id,
+    style: {
+      marginBottom: '48px',
+      scrollMarginTop: `${navHeight + 8}px`
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "reveal-left",
+    style: {
+      marginBottom: '16px',
+      paddingBottom: '12px',
+      borderBottom: `1px solid ${accent}22`
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.3em',
+      color: `${accent}66`,
+      textTransform: 'uppercase',
+      marginBottom: '5px'
+    }
+  }, "Unterrassen"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px'
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 8,
+    color: `${accent}66`,
+    fill: `${accent}22`,
+    strokeWidth: 1
+  }), /*#__PURE__*/React.createElement("h2", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '20px',
+      fontWeight: '300',
+      letterSpacing: '0.2em',
+      color: 'rgba(var(--text-rgb),0.85)',
+      textShadow: `0 0 20px ${accent}33`,
+      textTransform: 'uppercase'
+    }
+  }, entry.name)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '40px',
+      height: '1px',
+      background: `linear-gradient(90deg,${accent}77,transparent)`,
+      marginTop: '10px',
+      animation: 'pulse-glow 3s infinite'
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: `repeat(${cols}, 1fr)`,
+      gap: '16px',
+      overflow: 'visible'
+    }
+  }, entry.subraces.map(sr => /*#__PURE__*/React.createElement(SubraceCard, {
+    key: sr.id,
+    subrace: sr,
+    accent: sr.accent || accent,
+    parentId: entry.id,
+    onSelect: onSelect
+  }))));
 }
 
 // ── ENTITY DETAIL PLACEHOLDER ────────────────────────────
-function EntityDetailPlaceholder({ race, onClose }) {
-  useEffect(() => { window.scrollTo(0, 0); }, []);
+function EntityDetailPlaceholder({
+  race,
+  onClose
+}) {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const [showWandel, setShowWandel] = useState(false);
-
   const rd = findRaceData(race.id);
   const sicht = rd?.sicht || null;
   const acc = race.accent || '#7c4dff';
-  const hasWandel = !!(sicht?.wandelform);
-  const activeSicht = (showWandel && sicht?.wandelform) ? sicht.wandelform : sicht;
-
-  const btnStyle = { display:'inline-flex', alignItems:'center', gap:'8px', fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', letterSpacing:'0.12em', color:'rgba(var(--text2-rgb),0.55)', background:'rgba(124,77,255,0.06)', border:'1px solid rgba(124,77,255,0.18)', padding:'7px 14px', borderRadius:'3px', cursor:'pointer', transition:'all 0.2s' };
-  return (
-    <div style={{ minHeight:'100vh', background:'var(--bg)' }}>
-      <div style={{ position:'fixed', top:'16px', left:'16px', zIndex:10 }}>
-        <button style={btnStyle} onClick={onClose}
-          onMouseEnter={e=>{ e.currentTarget.style.color='var(--white)'; e.currentTarget.style.background='rgba(124,77,255,0.14)'; e.currentTarget.style.borderColor='rgba(124,77,255,0.45)'; }}
-          onMouseLeave={e=>{ e.currentTarget.style.color='rgba(var(--text2-rgb),0.55)'; e.currentTarget.style.background='rgba(124,77,255,0.06)'; e.currentTarget.style.borderColor='rgba(124,77,255,0.18)'; }}>
-          <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M10 4L6 8l4 4"/></svg>
-          Alle Rassen
-        </button>
-      </div>
-      <div style={{ maxWidth:'720px', margin:'0 auto', padding:'80px 40px 64px' }}>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.35em', color:`${acc}66`, textTransform:'uppercase', marginBottom:'12px' }}>Charaktererstellung · Rassen</div>
-        <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(36px,6vw,60px)', fontWeight:'300', letterSpacing:'0.12em', color:'var(--white)', textTransform:'uppercase', marginBottom:'20px', textShadow:`0 0 40px ${acc}44` }}>{race.name}</h1>
-        <div style={{ width:'48px', height:'1px', background:`linear-gradient(90deg,${acc}cc,transparent)`, marginBottom:'36px' }} />
-
-        {sicht && (
-          <div style={{ marginBottom:'32px' }}>
-            <div style={{ fontFamily:'var(--font-display)', fontSize:'10px', fontWeight:'400', letterSpacing:'0.22em', color:`${acc}88`, textTransform:'uppercase', marginBottom:'12px' }}>Sicht &amp; Wahrnehmung</div>
-
-            {hasWandel && (
-              <div style={{ display:'flex', gap:'6px', marginBottom:'14px' }}>
-                {[['Normalform', false],['Wandelform', true]].map(([label, val]) => (
-                  <button key={label} onClick={()=>setShowWandel(val)}
-                    style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'10px', letterSpacing:'0.1em', padding:'5px 12px', borderRadius:'3px', cursor:'pointer', border:`1px solid ${val===showWandel ? acc+'88' : acc+'28'}`, background: val===showWandel ? `${acc}1c` : 'transparent', color: val===showWandel ? acc : `${acc}66`, transition:'all 0.2s' }}>
-                    {label}
-                  </button>
-                ))}
-              </div>
-            )}
-
-            <div style={{ display:'grid', gridTemplateColumns:'200px 1fr', gap:'20px', border:`1px solid ${acc}22`, borderRadius:'4px', padding:'20px', background:`${acc}07` }}>
-              <div>
-                <FovDiagram sicht={sicht} accent={acc} wandelform={showWandel}/>
-                <div style={{ textAlign:'center', fontFamily:'var(--font-mono)', fontSize:'8px', color:`${acc}44`, marginTop:'7px', letterSpacing:'0.1em' }}>
-                  {activeSicht?.radius ?? sicht.radius}° Sichtfeld
-                </div>
-              </div>
-              <div style={{ display:'flex', flexDirection:'column', gap:'0', justifyContent:'center' }}>
-                {[
-                  ['Sichtweite',  `${activeSicht?.weite   ?? sicht.weite} m`],
-                  ['Sichtfeld',   `${activeSicht?.radius  ?? sicht.radius}°`],
-                  ['Dunkelsicht', (activeSicht?.dunkel ?? sicht.dunkel) > 0 ? `${activeSicht?.dunkel ?? sicht.dunkel} m` : '—'],
-                  ['Tiefensicht', (activeSicht?.tiefensicht ?? sicht.tiefensicht) ? 'Ja' : 'Nein'],
-                ].map(([label, value]) => (
-                  <div key={label} style={{ display:'flex', justifyContent:'space-between', alignItems:'center', padding:'8px 0', borderBottom:`1px solid ${acc}10` }}>
-                    <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.16em', color:`${acc}55`, textTransform:'uppercase' }}>{label}</span>
-                    <span style={{ fontFamily:'var(--font-mono)', fontSize:'11px', color:`${acc}cc` }}>{value}</span>
-                  </div>
-                ))}
-                {(activeSicht?.notiz || sicht.notiz) && (
-                  <div style={{ marginTop:'10px', padding:'8px 10px', border:`1px solid ${acc}18`, borderRadius:'3px', background:`${acc}09` }}>
-                    <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'10px', lineHeight:'1.65', color:'rgba(200,190,240,0.5)', margin:0 }}>
-                      {activeSicht?.notiz || sicht.notiz}
-                    </p>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
-
-        <div style={{ border:'1px dashed rgba(124,77,255,0.2)', borderRadius:'4px', padding:'48px 40px', textAlign:'center', background:'rgba(124,77,255,0.03)' }}>
-          <OctSvg size={32} color="rgba(124,77,255,0.25)" fill="rgba(124,77,255,0.08)" strokeWidth={1} style={{ margin:'0 auto 20px' }} />
-          <div style={{ fontFamily:'var(--font-display)', fontSize:'13px', fontWeight:'300', letterSpacing:'0.18em', color:'rgba(var(--text2-rgb),0.4)', textTransform:'uppercase', marginBottom:'12px' }}>In Bearbeitung</div>
-          <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.9', color:'rgba(var(--text2-rgb),0.3)', maxWidth:'400px', margin:'0 auto' }}>
-            Der Eintrag für <span style={{ color:'rgba(var(--text2-rgb),0.5)' }}>{race.name}</span> wird noch ausgearbeitet. Komm später wieder.
-          </p>
-        </div>
-      </div>
-    </div>
-  );
+  const hasWandel = !!sicht?.wandelform;
+  const activeSicht = showWandel && sicht?.wandelform ? sicht.wandelform : sicht;
+  const btnStyle = {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '8px',
+    fontFamily: 'var(--font-body)',
+    fontWeight: '300',
+    fontSize: '11px',
+    letterSpacing: '0.12em',
+    color: 'rgba(var(--text2-rgb),0.55)',
+    background: 'rgba(124,77,255,0.06)',
+    border: '1px solid rgba(124,77,255,0.18)',
+    padding: '7px 14px',
+    borderRadius: '3px',
+    cursor: 'pointer',
+    transition: 'all 0.2s'
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      minHeight: '100vh',
+      background: 'var(--bg)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'fixed',
+      top: '16px',
+      left: '16px',
+      zIndex: 10
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    style: btnStyle,
+    onClick: onClose,
+    onMouseEnter: e => {
+      e.currentTarget.style.color = 'var(--white)';
+      e.currentTarget.style.background = 'rgba(124,77,255,0.14)';
+      e.currentTarget.style.borderColor = 'rgba(124,77,255,0.45)';
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.color = 'rgba(var(--text2-rgb),0.55)';
+      e.currentTarget.style.background = 'rgba(124,77,255,0.06)';
+      e.currentTarget.style.borderColor = 'rgba(124,77,255,0.18)';
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 16 16",
+    width: "11",
+    height: "11",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "1.5"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M10 4L6 8l4 4"
+  })), "Alle Rassen")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      maxWidth: '720px',
+      margin: '0 auto',
+      padding: '80px 40px 64px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.35em',
+      color: `${acc}66`,
+      textTransform: 'uppercase',
+      marginBottom: '12px'
+    }
+  }, "Charaktererstellung \xB7 Rassen"), /*#__PURE__*/React.createElement("h1", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: 'clamp(36px,6vw,60px)',
+      fontWeight: '300',
+      letterSpacing: '0.12em',
+      color: 'var(--white)',
+      textTransform: 'uppercase',
+      marginBottom: '20px',
+      textShadow: `0 0 40px ${acc}44`
+    }
+  }, race.name), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '48px',
+      height: '1px',
+      background: `linear-gradient(90deg,${acc}cc,transparent)`,
+      marginBottom: '36px'
+    }
+  }), sicht && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: '32px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '10px',
+      fontWeight: '400',
+      letterSpacing: '0.22em',
+      color: `${acc}88`,
+      textTransform: 'uppercase',
+      marginBottom: '12px'
+    }
+  }, "Sicht & Wahrnehmung"), hasWandel && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '6px',
+      marginBottom: '14px'
+    }
+  }, [['Normalform', false], ['Wandelform', true]].map(([label, val]) => /*#__PURE__*/React.createElement("button", {
+    key: label,
+    onClick: () => setShowWandel(val),
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '10px',
+      letterSpacing: '0.1em',
+      padding: '5px 12px',
+      borderRadius: '3px',
+      cursor: 'pointer',
+      border: `1px solid ${val === showWandel ? acc + '88' : acc + '28'}`,
+      background: val === showWandel ? `${acc}1c` : 'transparent',
+      color: val === showWandel ? acc : `${acc}66`,
+      transition: 'all 0.2s'
+    }
+  }, label))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: '200px 1fr',
+      gap: '20px',
+      border: `1px solid ${acc}22`,
+      borderRadius: '4px',
+      padding: '20px',
+      background: `${acc}07`
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(FovDiagram, {
+    sicht: sicht,
+    accent: acc,
+    wandelform: showWandel
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: 'center',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      color: `${acc}44`,
+      marginTop: '7px',
+      letterSpacing: '0.1em'
+    }
+  }, activeSicht?.radius ?? sicht.radius, "\xB0 Sichtfeld")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '0',
+      justifyContent: 'center'
+    }
+  }, [['Sichtweite', `${activeSicht?.weite ?? sicht.weite} m`], ['Sichtfeld', `${activeSicht?.radius ?? sicht.radius}°`], ['Dunkelsicht', (activeSicht?.dunkel ?? sicht.dunkel) > 0 ? `${activeSicht?.dunkel ?? sicht.dunkel} m` : '—'], ['Tiefensicht', activeSicht?.tiefensicht ?? sicht.tiefensicht ? 'Ja' : 'Nein']].map(([label, value]) => /*#__PURE__*/React.createElement("div", {
+    key: label,
+    style: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      padding: '8px 0',
+      borderBottom: `1px solid ${acc}10`
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.16em',
+      color: `${acc}55`,
+      textTransform: 'uppercase'
+    }
+  }, label), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '11px',
+      color: `${acc}cc`
+    }
+  }, value))), (activeSicht?.notiz || sicht.notiz) && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: '10px',
+      padding: '8px 10px',
+      border: `1px solid ${acc}18`,
+      borderRadius: '3px',
+      background: `${acc}09`
+    }
+  }, /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '10px',
+      lineHeight: '1.65',
+      color: 'rgba(200,190,240,0.5)',
+      margin: 0
+    }
+  }, activeSicht?.notiz || sicht.notiz))))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      border: '1px dashed rgba(124,77,255,0.2)',
+      borderRadius: '4px',
+      padding: '48px 40px',
+      textAlign: 'center',
+      background: 'rgba(124,77,255,0.03)'
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 32,
+    color: "rgba(124,77,255,0.25)",
+    fill: "rgba(124,77,255,0.08)",
+    strokeWidth: 1,
+    style: {
+      margin: '0 auto 20px'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '13px',
+      fontWeight: '300',
+      letterSpacing: '0.18em',
+      color: 'rgba(var(--text2-rgb),0.4)',
+      textTransform: 'uppercase',
+      marginBottom: '12px'
+    }
+  }, "In Bearbeitung"), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.9',
+      color: 'rgba(var(--text2-rgb),0.3)',
+      maxWidth: '400px',
+      margin: '0 auto'
+    }
+  }, "Der Eintrag f\xFCr ", /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: 'rgba(var(--text2-rgb),0.5)'
+    }
+  }, race.name), " wird noch ausgearbeitet. Komm sp\xE4ter wieder."))));
 }
 
 // ── DETAIL OVERLAY ───────────────────────────────────────
-function DetailOverlay({ race, onClose }) {
+function DetailOverlay({
+  race,
+  onClose
+}) {
   const page = RACE_PAGES[race.id];
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
-    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    const onKey = e => {
+      if (e.key === 'Escape') onClose();
+    };
     window.addEventListener('keydown', onKey);
     return () => {
       document.body.style.overflow = '';
@@ -504,26 +1068,71 @@ function DetailOverlay({ race, onClose }) {
       window.removeEventListener('keydown', onKey);
     };
   }, [onClose]);
-  const closeBtnStyle = { display:'inline-flex', alignItems:'center', gap:'8px', fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', letterSpacing:'0.12em', color:'rgba(var(--text2-rgb),0.55)', background:'rgba(var(--bg-rgb),0.85)', border:'1px solid rgba(124,77,255,0.25)', padding:'7px 14px', borderRadius:'3px', cursor:'pointer', transition:'all 0.2s', backdropFilter:'blur(8px)' };
-  return (
-    <div style={{ position:'fixed', inset:0, zIndex:200, background:'var(--bg)', display:'flex', flexDirection:'column' }}>
-      {page ? (
-        <>
-          <div style={{ position:'absolute', top:'16px', left:'16px', zIndex:201 }}>
-            <button style={closeBtnStyle} onClick={onClose}
-              onMouseEnter={e=>{ e.currentTarget.style.color='var(--white)'; e.currentTarget.style.borderColor='rgba(124,77,255,0.55)'; }}
-              onMouseLeave={e=>{ e.currentTarget.style.color='rgba(var(--text2-rgb),0.55)'; e.currentTarget.style.borderColor='rgba(124,77,255,0.25)'; }}>
-              <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M10 4L6 8l4 4"/></svg>
-              Alle Rassen
-            </button>
-          </div>
-          <iframe src={page} title={race.name} style={{ flex:1, border:'none', width:'100%' }} />
-        </>
-      ) : (
-        <EntityDetailPlaceholder race={race} onClose={onClose} />
-      )}
-    </div>
-  );
+  const closeBtnStyle = {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '8px',
+    fontFamily: 'var(--font-body)',
+    fontWeight: '300',
+    fontSize: '11px',
+    letterSpacing: '0.12em',
+    color: 'rgba(var(--text2-rgb),0.55)',
+    background: 'rgba(var(--bg-rgb),0.85)',
+    border: '1px solid rgba(124,77,255,0.25)',
+    padding: '7px 14px',
+    borderRadius: '3px',
+    cursor: 'pointer',
+    transition: 'all 0.2s',
+    backdropFilter: 'blur(8px)'
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'fixed',
+      inset: 0,
+      zIndex: 200,
+      background: 'var(--bg)',
+      display: 'flex',
+      flexDirection: 'column'
+    }
+  }, page ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      top: '16px',
+      left: '16px',
+      zIndex: 201
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    style: closeBtnStyle,
+    onClick: onClose,
+    onMouseEnter: e => {
+      e.currentTarget.style.color = 'var(--white)';
+      e.currentTarget.style.borderColor = 'rgba(124,77,255,0.55)';
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.color = 'rgba(var(--text2-rgb),0.55)';
+      e.currentTarget.style.borderColor = 'rgba(124,77,255,0.25)';
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 16 16",
+    width: "11",
+    height: "11",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "1.5"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M10 4L6 8l4 4"
+  })), "Alle Rassen")), /*#__PURE__*/React.createElement("iframe", {
+    src: page,
+    title: race.name,
+    style: {
+      flex: 1,
+      border: 'none',
+      width: '100%'
+    }
+  })) : /*#__PURE__*/React.createElement(EntityDetailPlaceholder, {
+    race: race,
+    onClose: onClose
+  }));
 }
 
 // ── BUILD TOC ENTRIES ─────────────────────────────────────
@@ -534,25 +1143,31 @@ function buildTocEntries(cols) {
   const entries = [];
   let batch = [];
   let batchIdx = 0;
-
   const flushBatch = () => {
     if (batch.length === 0) return;
     // Split the batch into rows of `cols` each
     for (let i = 0; i < batch.length; i += cols) {
       const row = batch.slice(i, i + cols);
       const id = `race-batch-${batchIdx}-row-${Math.floor(i / cols)}`;
-      entries.push({ id, label: row.map(r => r.name).join(' ● '), isGroup: false });
+      entries.push({
+        id,
+        label: row.map(r => r.name).join(' ● '),
+        isGroup: false
+      });
     }
     batchIdx++;
     batch = [];
   };
-
   ENTRIES.forEach(entry => {
     if (entry.type === 'race') {
       batch.push(entry);
     } else {
       flushBatch();
-      entries.push({ id: entry.id, label: entry.name, isGroup: true });
+      entries.push({
+        id: entry.id,
+        label: entry.name,
+        isGroup: true
+      });
     }
   });
   flushBatch();
@@ -560,57 +1175,142 @@ function buildTocEntries(cols) {
 }
 
 // ── TOC SIDEBAR ──────────────────────────────────────────
-function TOCSidebar({ headerBottom, navHeight, cols }) {
+function TOCSidebar({
+  headerBottom,
+  navHeight,
+  cols
+}) {
   const asideRef = React.useRef(null);
-
   useEffect(() => {
     const update = () => {
       const ideal = (headerBottom || 0) - window.scrollY;
       const val = Math.max(navHeight, ideal);
-      if (asideRef.current) { asideRef.current.style.top = val + 'px'; asideRef.current.style.height = `calc(100vh - ${val}px)`; }
+      if (asideRef.current) {
+        asideRef.current.style.top = val + 'px';
+        asideRef.current.style.height = `calc(100vh - ${val}px)`;
+      }
     };
     update();
-    window.addEventListener('scroll', update, { passive:true });
-    window.addEventListener('resize', update, { passive:true });
-    return () => { window.removeEventListener('scroll', update); window.removeEventListener('resize', update); };
+    window.addEventListener('scroll', update, {
+      passive: true
+    });
+    window.addEventListener('resize', update, {
+      passive: true
+    });
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
   }, [headerBottom, navHeight]);
-
-  const scrollTo = (id) => {
+  const scrollTo = id => {
     const el = document.getElementById(id);
-    if (el) { const y = el.getBoundingClientRect().top + window.scrollY - navHeight - 8; window.scrollTo({ top:y, behavior:'smooth' }); }
+    if (el) {
+      const y = el.getBoundingClientRect().top + window.scrollY - navHeight - 8;
+      window.scrollTo({
+        top: y,
+        behavior: 'smooth'
+      });
+    }
   };
-
   const tocEntries = buildTocEntries(cols);
-
-  return (
-    <aside ref={asideRef} style={{ width:'var(--sidebar-w)', flexShrink:0, position:'fixed', top:`${navHeight}px`, left:0, height:`calc(100vh - ${navHeight}px)`, borderRight:'1px solid rgba(var(--accent-rgb),0.1)', padding:'28px 0', background:'rgba(var(--bg-rgb),0.85)', backdropFilter:'blur(12px)', zIndex:50, overflowY:'auto' }}>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:'rgba(var(--accent-rgb),0.4)', textTransform:'uppercase', padding:'0 20px', marginBottom:'4px' }}>Rassen</div>
-      {tocEntries.map(entry => (
-        <button key={entry.id} onClick={()=>scrollTo(entry.id)}
-          style={{ display:'flex', alignItems:'flex-start', gap:'8px', width:'100%', textAlign:'left', padding:'7px 20px', background:'transparent', border:'none', cursor:'pointer', fontFamily:'var(--font-body)', fontWeight:'400', fontSize:'11px', letterSpacing:'0.1em', fontVariant:'small-caps', color:'rgba(var(--text-rgb),0.6)', borderLeft:'2px solid transparent', transition:'all 0.15s', lineHeight:1.55 }}
-          onMouseEnter={e=>{e.currentTarget.style.color='var(--white)';e.currentTarget.style.borderLeftColor='rgba(124,77,255,0.6)';e.currentTarget.style.background='rgba(124,77,255,0.06)';}}
-          onMouseLeave={e=>{e.currentTarget.style.color='rgba(var(--text-rgb),0.6)';e.currentTarget.style.borderLeftColor='transparent';e.currentTarget.style.background='transparent';}}>
-          <OctSvg size={6} color="rgba(124,77,255,0.5)" fill="rgba(124,77,255,0.25)" strokeWidth={1} style={{ flexShrink:0, marginTop:'3px' }} />
-          <span style={{ display:'block', minWidth:0, textIndent:0, paddingLeft:0, wordBreak:'normal', overflowWrap:'anywhere' }}>{entry.label}</span>
-        </button>
-      ))}
-    </aside>
-  );
+  return /*#__PURE__*/React.createElement("aside", {
+    ref: asideRef,
+    style: {
+      width: 'var(--sidebar-w)',
+      flexShrink: 0,
+      position: 'fixed',
+      top: `${navHeight}px`,
+      left: 0,
+      height: `calc(100vh - ${navHeight}px)`,
+      borderRight: '1px solid rgba(var(--accent-rgb),0.1)',
+      padding: '28px 0',
+      background: 'rgba(var(--bg-rgb),0.85)',
+      backdropFilter: 'blur(12px)',
+      zIndex: 50,
+      overflowY: 'auto'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.25em',
+      color: 'rgba(var(--accent-rgb),0.4)',
+      textTransform: 'uppercase',
+      padding: '0 20px',
+      marginBottom: '4px'
+    }
+  }, "Rassen"), tocEntries.map(entry => /*#__PURE__*/React.createElement("button", {
+    key: entry.id,
+    onClick: () => scrollTo(entry.id),
+    style: {
+      display: 'flex',
+      alignItems: 'flex-start',
+      gap: '8px',
+      width: '100%',
+      textAlign: 'left',
+      padding: '7px 20px',
+      background: 'transparent',
+      border: 'none',
+      cursor: 'pointer',
+      fontFamily: 'var(--font-body)',
+      fontWeight: '400',
+      fontSize: '11px',
+      letterSpacing: '0.1em',
+      fontVariant: 'small-caps',
+      color: 'rgba(var(--text-rgb),0.6)',
+      borderLeft: '2px solid transparent',
+      transition: 'all 0.15s',
+      lineHeight: 1.55
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.color = 'var(--white)';
+      e.currentTarget.style.borderLeftColor = 'rgba(124,77,255,0.6)';
+      e.currentTarget.style.background = 'rgba(124,77,255,0.06)';
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.color = 'rgba(var(--text-rgb),0.6)';
+      e.currentTarget.style.borderLeftColor = 'transparent';
+      e.currentTarget.style.background = 'transparent';
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 6,
+    color: "rgba(124,77,255,0.5)",
+    fill: "rgba(124,77,255,0.25)",
+    strokeWidth: 1,
+    style: {
+      flexShrink: 0,
+      marginTop: '3px'
+    }
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      display: 'block',
+      minWidth: 0,
+      textIndent: 0,
+      paddingLeft: 0,
+      wordBreak: 'normal',
+      overflowWrap: 'anywhere'
+    }
+  }, entry.label))));
 }
 
 // ── APP ──────────────────────────────────────────────────
 function App() {
-  const [mouse, setMouse] = useState({ x:0.5, y:0.5 });
+  const [mouse, setMouse] = useState({
+    x: 0.5,
+    y: 0.5
+  });
   const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
   const [headerBottom, setHeaderBottom] = useState(0);
   const [selectedRace, setSelectedRace] = useState(null);
   const NAV_H = 52;
-
-  const handleSelect = useCallback((race) => setSelectedRace(race), []);
-
+  const handleSelect = useCallback(race => setSelectedRace(race), []);
   const pageTitleRef = useRef(null);
-
-  const handleMouseMove = useCallback(e=>{ setMouse({ x:e.clientX/window.innerWidth, y:e.clientY/window.innerHeight }); },[]);
+  const handleMouseMove = useCallback(e => {
+    setMouse({
+      x: e.clientX / window.innerWidth,
+      y: e.clientY / window.innerHeight
+    });
+  }, []);
   useScrollReveal();
 
   // Measure absolute document bottom of the page-title block
@@ -622,101 +1322,170 @@ function App() {
       }
     };
     measure();
-    window.addEventListener('resize', measure, { passive:true });
+    window.addEventListener('resize', measure, {
+      passive: true
+    });
     return () => window.removeEventListener('resize', measure);
   }, [tweaks.headerHeight]);
-
   const accent = tweaks.cardAccent || '#7c4dff';
-
-  return (
-    <div onMouseMove={handleMouseMove} className="page-root">
-      {tweaks.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} />}
-      <FloatingHexField mouseX={mouse.x} mouseY={mouse.y} />
-
-      {/* HEADER */}
-      <PageHeader height={tweaks.headerHeight} />
-
-      {/* NAV */}
-      <SiteNav rightLabel="RASSEN-ARCHIV v1.0" />
-
-      {/* BODY */}
-      <div className="page-body">
-        <TOCSidebar headerBottom={headerBottom} navHeight={NAV_H} cols={tweaks.columns || 3} />
-
-        <div style={{ flex:1, padding:'32px 28px 64px', minWidth:0 }}>
-
-          {/* Page title */}
-          <div style={{ marginBottom:'32px' }}>
-            <div ref={pageTitleRef} style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:'rgba(var(--accent-rgb),0.4)', textTransform:'uppercase', marginBottom:'6px' }}>Charaktererstellung</div>
-            <h1 className="reveal-left" style={{ fontFamily:'var(--font-display)', fontSize:'42px', fontWeight:'300', letterSpacing:'0.18em', color:'var(--white)', textShadow:'0 0 30px rgba(124,77,255,0.35)' }}>Rassen</h1>
-            <div style={{ display:'flex', alignItems:'center', gap:'8px', marginTop:'12px' }}>
-              <div style={{ width:'50px', height:'1px', background:'linear-gradient(90deg,rgba(124,77,255,0.8),transparent)', animation:'pulse-glow 3s infinite' }} />
-              <OctSvg size={8} color="rgba(124,77,255,0.5)" fill="rgba(124,77,255,0.2)" strokeWidth={1} />
-            </div>
-          </div>
-
-          {/* Flat ordered list — races and groups in original order */}
-          {(() => {
-            const cols = tweaks.columns || 3;
-            const output = [];
-            let batch = [];
-            let batchIdx = 0;
-
-            const flushBatch = () => {
-              if (batch.length === 0) return;
-              const b = batch.slice();
-              batch = [];
-              // Split into rows of `cols`, each row gets its own anchor id
-              for (let i = 0; i < b.length; i += cols) {
-                const row = b.slice(i, i + cols);
-                const rowId = `race-batch-${batchIdx}-row-${Math.floor(i / cols)}`;
-                output.push(
-                  <div key={rowId} id={rowId} style={{ display:'grid', gridTemplateColumns:`repeat(${cols}, 1fr)`, gap:'16px', marginBottom:'16px', scrollMarginTop:`${NAV_H + 8}px`, overflow:'visible' }}>
-                    {row.map(r => <RaceCard key={r.id} id={r.id} name={r.name} subtitle={r.subtitle} tags={r.tags} accent={r.accent || accent} onSelect={handleSelect} insigniaSrc={r.insigniaSrc} />)}
-                  </div>
-                );
-              }
-              // Add bottom margin after the whole batch block
-              output.push(<div key={`batch-spacer-${batchIdx}`} style={{ marginBottom:'16px' }} />);
-              batchIdx++;
-            };
-
-            ENTRIES.forEach((entry) => {
-              if (entry.type === 'race') {
-                batch.push(entry);
-              } else {
-                flushBatch();
-                output.push(
-                  <GroupSection key={entry.id} entry={entry} accent={entry.accent || accent} cols={cols} navHeight={NAV_H} onSelect={handleSelect} />
-                );
-              }
-            });
-            flushBatch();
-            return output;
-          })()}
-
-        </div>
-      </div>
-
-      <SiteFooter />
-
-      {selectedRace && <DetailOverlay race={selectedRace} onClose={() => setSelectedRace(null)} />}
-
-      {/* TWEAKS */}
-      {!selectedRace && <FloatNav />}
-      <TweaksPanel>
-        <TweakSection label="Layout" />
-        <TweakSlider id="columns" label="Spalten" min={2} max={4} step={1} />
-        <TweakSlider id="headerHeight" label="Kopfzeile Höhe" min={80} max={320} step={10} />
-        <TweakSection label="Darstellung" />
-        <TweakColor id="cardAccent" label="Akzentfarbe" />
-        <TweakToggle id="showParticles" label="Partikel" />
-      </TweaksPanel>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    onMouseMove: handleMouseMove,
+    className: "page-root"
+  }, tweaks.showParticles && /*#__PURE__*/React.createElement(ParticleField, {
+    mouseX: mouse.x,
+    mouseY: mouse.y
+  }), /*#__PURE__*/React.createElement(FloatingHexField, {
+    mouseX: mouse.x,
+    mouseY: mouse.y
+  }), /*#__PURE__*/React.createElement(PageHeader, {
+    height: tweaks.headerHeight
+  }), /*#__PURE__*/React.createElement(SiteNav, {
+    rightLabel: "RASSEN-ARCHIV v1.0"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "page-body"
+  }, /*#__PURE__*/React.createElement(TOCSidebar, {
+    headerBottom: headerBottom,
+    navHeight: NAV_H,
+    cols: tweaks.columns || 3
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      padding: '32px 28px 64px',
+      minWidth: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: '32px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    ref: pageTitleRef,
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.25em',
+      color: 'rgba(var(--accent-rgb),0.4)',
+      textTransform: 'uppercase',
+      marginBottom: '6px'
+    }
+  }, "Charaktererstellung"), /*#__PURE__*/React.createElement("h1", {
+    className: "reveal-left",
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '42px',
+      fontWeight: '300',
+      letterSpacing: '0.18em',
+      color: 'var(--white)',
+      textShadow: '0 0 30px rgba(124,77,255,0.35)'
+    }
+  }, "Rassen"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      marginTop: '12px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '50px',
+      height: '1px',
+      background: 'linear-gradient(90deg,rgba(124,77,255,0.8),transparent)',
+      animation: 'pulse-glow 3s infinite'
+    }
+  }), /*#__PURE__*/React.createElement(OctSvg, {
+    size: 8,
+    color: "rgba(124,77,255,0.5)",
+    fill: "rgba(124,77,255,0.2)",
+    strokeWidth: 1
+  }))), (() => {
+    const cols = tweaks.columns || 3;
+    const output = [];
+    let batch = [];
+    let batchIdx = 0;
+    const flushBatch = () => {
+      if (batch.length === 0) return;
+      const b = batch.slice();
+      batch = [];
+      // Split into rows of `cols`, each row gets its own anchor id
+      for (let i = 0; i < b.length; i += cols) {
+        const row = b.slice(i, i + cols);
+        const rowId = `race-batch-${batchIdx}-row-${Math.floor(i / cols)}`;
+        output.push(/*#__PURE__*/React.createElement("div", {
+          key: rowId,
+          id: rowId,
+          style: {
+            display: 'grid',
+            gridTemplateColumns: `repeat(${cols}, 1fr)`,
+            gap: '16px',
+            marginBottom: '16px',
+            scrollMarginTop: `${NAV_H + 8}px`,
+            overflow: 'visible'
+          }
+        }, row.map(r => /*#__PURE__*/React.createElement(RaceCard, {
+          key: r.id,
+          id: r.id,
+          name: r.name,
+          subtitle: r.subtitle,
+          tags: r.tags,
+          accent: r.accent || accent,
+          onSelect: handleSelect,
+          insigniaSrc: r.insigniaSrc
+        }))));
+      }
+      // Add bottom margin after the whole batch block
+      output.push(/*#__PURE__*/React.createElement("div", {
+        key: `batch-spacer-${batchIdx}`,
+        style: {
+          marginBottom: '16px'
+        }
+      }));
+      batchIdx++;
+    };
+    ENTRIES.forEach(entry => {
+      if (entry.type === 'race') {
+        batch.push(entry);
+      } else {
+        flushBatch();
+        output.push(/*#__PURE__*/React.createElement(GroupSection, {
+          key: entry.id,
+          entry: entry,
+          accent: entry.accent || accent,
+          cols: cols,
+          navHeight: NAV_H,
+          onSelect: handleSelect
+        }));
+      }
+    });
+    flushBatch();
+    return output;
+  })())), /*#__PURE__*/React.createElement(SiteFooter, null), selectedRace && /*#__PURE__*/React.createElement(DetailOverlay, {
+    race: selectedRace,
+    onClose: () => setSelectedRace(null)
+  }), !selectedRace && /*#__PURE__*/React.createElement(FloatNav, null), /*#__PURE__*/React.createElement(TweaksPanel, null, /*#__PURE__*/React.createElement(TweakSection, {
+    label: "Layout"
+  }), /*#__PURE__*/React.createElement(TweakSlider, {
+    id: "columns",
+    label: "Spalten",
+    min: 2,
+    max: 4,
+    step: 1
+  }), /*#__PURE__*/React.createElement(TweakSlider, {
+    id: "headerHeight",
+    label: "Kopfzeile H\xF6he",
+    min: 80,
+    max: 320,
+    step: 10
+  }), /*#__PURE__*/React.createElement(TweakSection, {
+    label: "Darstellung"
+  }), /*#__PURE__*/React.createElement(TweakColor, {
+    id: "cardAccent",
+    label: "Akzentfarbe"
+  }), /*#__PURE__*/React.createElement(TweakToggle, {
+    id: "showParticles",
+    label: "Partikel"
+  })));
 }
-
-ReactDOM.createRoot(document.getElementById('root')).render(<SiteGate><App /></SiteGate>);
+ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement(App, null)));
+})();
 </script>
 
 

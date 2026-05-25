@@ -6,9 +6,9 @@
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
 <link rel="stylesheet" href="assets/styles/pages/Monster.css">
-<script src="assets/scripts/vendor/react.development.js"></script>
-<script src="assets/scripts/vendor/react-dom.development.js"></script>
-<script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/scripts/vendor/react.production.min.js"></script>
+<script src="assets/scripts/vendor/react-dom.production.min.js"></script>
+
 <script src="assets/scripts/data/monster/monsterhandbuch-data.js"></script>
 <script src="assets/scripts/data/monster/foliant-der-feinde-data.js"></script>
 <script src="assets/scripts/data/monster/schatzkammer-der-drachen-data.js"></script>
@@ -22,25 +22,42 @@
 <script src="assets/scripts/data/monster/tome-of-beasts-2-data.js"></script>
 <script src="assets/scripts/data/monster/sonstige-data.js"></script>
 <script src="assets/scripts/data/monster-data.js"></script>
-<script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/nav.js"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
-<script src="assets/components/site-gate.jsx" type="text/babel"></script>
-<script src="assets/components/particle-field.jsx" type="text/babel"></script>
-<script src="assets/components/tweaks-panel-8.jsx" type="text/babel"></script>
-<script src="assets/components/filter-utils.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.js"></script>
+<script src="assets/components/particle-field.js"></script>
+<script src="assets/components/tweaks-panel-8.js"></script>
+<script src="assets/components/filter-utils.js"></script>
 
 </head>
 <body>
 <div id="root"></div>
-<script type="text/babel">
-const { useState, useEffect, useLayoutEffect, useRef, useCallback, useMemo } = React;
-const { useTweaks, TweaksPanel, TweakSection, TweakToggle, SiteNav, ParticleField, useDragScroll, XBtn, FilterGroup } = window;
-
+<script>
+(function () {
+const {
+  useState,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useCallback,
+  useMemo
+} = React;
+const {
+  useTweaks,
+  TweaksPanel,
+  TweakSection,
+  TweakToggle,
+  SiteNav,
+  ParticleField,
+  useDragScroll,
+  XBtn,
+  FilterGroup
+} = window;
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "showParticles": true,
   "compactList": false
-}/*EDITMODE-END*/;
+} /*EDITMODE-END*/;
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
 function formatCR(cr) {
@@ -66,43 +83,59 @@ function moralAxis(gesinnung) {
 function rollDice(expr) {
   const m = expr.match(/^(\d+)W(\d+)([+-]\d+)?$/i);
   if (!m) return null;
-  const count = parseInt(m[1]), sides = parseInt(m[2]), bonus = m[3] ? parseInt(m[3]) : 0;
+  const count = parseInt(m[1]),
+    sides = parseInt(m[2]),
+    bonus = m[3] ? parseInt(m[3]) : 0;
   let total = bonus;
   for (let i = 0; i < count; i++) total += Math.floor(Math.random() * sides) + 1;
   return Math.max(0, total);
 }
-
-const CR_ORDER = [0, 0.125, 0.25, 0.5, 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
-const SIZE_ORDER = ['Winzig','Klein','Mittelgroß','Groß','Riesig','Gigantisch'];
+const CR_ORDER = [0, 0.125, 0.25, 0.5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
+const SIZE_ORDER = ['Winzig', 'Klein', 'Mittelgroß', 'Groß', 'Riesig', 'Gigantisch'];
 
 // ─── TYPE COLORS ──────────────────────────────────────────────────────────────
 const TYPE_COLORS = {
-  'Unhold':       'oklch(0.48 0.28   8)',  // Dunkelkrimson    – Dämonen & Teufel
-  'Drache':       'oklch(0.62 0.28  32)',  // Feuerrot-Orange  – Drachenmacht
-  'Tier':         'oklch(0.64 0.19  57)',  // Bernstein        – wilde Tiere
-  'Riese':        'oklch(0.61 0.11  78)',  // Erdgold          – Stein & Erde
-  'Himmlisch':    'oklch(0.82 0.16  95)',  // Strahlendes Gold – göttliches Licht
-  'Elementar':    'oklch(0.68 0.26 120)',  // Energiegrün      – Elementarenergie
-  'Schlick':      'oklch(0.58 0.28 140)',  // Säuregrün        – Schleim & Ätzend
-  'Pflanze':      'oklch(0.62 0.24 158)',  // Waldgrün         – Natur & Wachstum
-  'Monstrosität': 'oklch(0.48 0.20 178)',  // Fauliges Teal    – Chimären & Hybriden
-  'Konstrukt':    'oklch(0.58 0.16 208)',  // Stahlblau        – Mechanismus & Magie
-  'Humanoid':     'oklch(0.62 0.16 245)',  // Indigoblau       – Humanoides Volk
-  'Untoter':      'oklch(0.50 0.20 278)',  // Leichenlila      – Tod & Geister
-  'Aberration':   'oklch(0.52 0.28 305)',  // Eldritch-Violett – kosmischer Horror
-  'Feenwesen':    'oklch(0.66 0.27 345)',  // Feenrosa         – Feenwelt & Glamour
+  'Unhold': 'oklch(0.48 0.28   8)',
+  // Dunkelkrimson    – Dämonen & Teufel
+  'Drache': 'oklch(0.62 0.28  32)',
+  // Feuerrot-Orange  – Drachenmacht
+  'Tier': 'oklch(0.64 0.19  57)',
+  // Bernstein        – wilde Tiere
+  'Riese': 'oklch(0.61 0.11  78)',
+  // Erdgold          – Stein & Erde
+  'Himmlisch': 'oklch(0.82 0.16  95)',
+  // Strahlendes Gold – göttliches Licht
+  'Elementar': 'oklch(0.68 0.26 120)',
+  // Energiegrün      – Elementarenergie
+  'Schlick': 'oklch(0.58 0.28 140)',
+  // Säuregrün        – Schleim & Ätzend
+  'Pflanze': 'oklch(0.62 0.24 158)',
+  // Waldgrün         – Natur & Wachstum
+  'Monstrosität': 'oklch(0.48 0.20 178)',
+  // Fauliges Teal    – Chimären & Hybriden
+  'Konstrukt': 'oklch(0.58 0.16 208)',
+  // Stahlblau        – Mechanismus & Magie
+  'Humanoid': 'oklch(0.62 0.16 245)',
+  // Indigoblau       – Humanoides Volk
+  'Untoter': 'oklch(0.50 0.20 278)',
+  // Leichenlila      – Tod & Geister
+  'Aberration': 'oklch(0.52 0.28 305)',
+  // Eldritch-Violett – kosmischer Horror
+  'Feenwesen': 'oklch(0.66 0.27 345)' // Feenrosa         – Feenwelt & Glamour
 };
 const typeColor = t => TYPE_COLORS[t] || 'oklch(0.60 0.10 200)';
 const alpha = (c, a) => c.replace(')', ` / ${a})`);
-
-const ART_GENDER = { feminine: ['Aberration','Monstrosität','Pflanze','Fee','Ooze'], neuter: ['Konstrukt','Tier'] };
+const ART_GENDER = {
+  feminine: ['Aberration', 'Monstrosität', 'Pflanze', 'Fee', 'Ooze'],
+  neuter: ['Konstrukt', 'Tier']
+};
 const SIZE_DECL = {
-  'Winzig':     ['Winziger',     'Winzige',     'Winziges'],
-  'Klein':      ['Kleiner',      'Kleine',       'Kleines'],
-  'Mittelgroß': ['Mittelgroßer', 'Mittelgroße',  'Mittelgroßes'],
-  'Groß':       ['Großer',       'Große',        'Großes'],
-  'Riesig':     ['Riesiger',     'Riesige',      'Riesiges'],
-  'Gigantisch': ['Gigantischer', 'Gigantische',  'Gigantisches'],
+  'Winzig': ['Winziger', 'Winzige', 'Winziges'],
+  'Klein': ['Kleiner', 'Kleine', 'Kleines'],
+  'Mittelgroß': ['Mittelgroßer', 'Mittelgroße', 'Mittelgroßes'],
+  'Groß': ['Großer', 'Große', 'Großes'],
+  'Riesig': ['Riesiger', 'Riesige', 'Riesiges'],
+  'Gigantisch': ['Gigantischer', 'Gigantische', 'Gigantisches']
 };
 function declineSize(groesse, art) {
   const decl = SIZE_DECL[groesse];
@@ -112,382 +145,1038 @@ function declineSize(groesse, art) {
 }
 
 // ─── CHIP ─────────────────────────────────────────────────────────────────────
-function Chip({ label, active, onClick, color }) {
+function Chip({
+  label,
+  active,
+  onClick,
+  color
+}) {
   const c = color || 'rgba(var(--accent-rgb),0.9)';
-  return (
-    <button onClick={onClick} style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.15em', padding:'0 10px', height:'16px', border:`1px solid ${active ? c : 'rgba(var(--accent-rgb),0.2)'}`, background: active ? 'rgba(var(--accent-rgb),0.18)' : 'transparent', color: active ? 'var(--white)' : 'var(--muted)', cursor:'pointer', borderRadius:'2px', transition:'all 0.15s', textTransform:'uppercase', whiteSpace:'nowrap', flexShrink:0, display:'flex', alignItems:'center' }}>
-      {label}
-    </button>
-  );
+  return /*#__PURE__*/React.createElement("button", {
+    onClick: onClick,
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.15em',
+      padding: '0 10px',
+      height: '16px',
+      border: `1px solid ${active ? c : 'rgba(var(--accent-rgb),0.2)'}`,
+      background: active ? 'rgba(var(--accent-rgb),0.18)' : 'transparent',
+      color: active ? 'var(--white)' : 'var(--muted)',
+      cursor: 'pointer',
+      borderRadius: '2px',
+      transition: 'all 0.15s',
+      textTransform: 'uppercase',
+      whiteSpace: 'nowrap',
+      flexShrink: 0,
+      display: 'flex',
+      alignItems: 'center'
+    }
+  }, label);
 }
 
 // ─── FILTER SIDEBAR ───────────────────────────────────────────────────────────
-function FilterSidebar({ filters, setFilters, allData, search, setSearch, dragRef }) {
-  const allTypes      = useMemo(() => [...new Set(allData.map(m => m.art))].sort(), [allData]);
-  const allCRs        = useMemo(() => [...new Set(allData.map(m => m.cr))].sort((a,b)=>a-b), [allData]);
-  const allSizes      = useMemo(() => [...new Set(allData.map(m => m.groesse))].sort((a,b) => SIZE_ORDER.indexOf(a) - SIZE_ORDER.indexOf(b)), [allData]);
-  const allEnvs       = useMemo(() => [...new Set(allData.flatMap(m => m.umgebung || []))].sort(), [allData]);
-  const allSources    = useMemo(() => [...new Set(allData.map(m => m.source).filter(Boolean))].sort(), [allData]);
+function FilterSidebar({
+  filters,
+  setFilters,
+  allData,
+  search,
+  setSearch,
+  dragRef
+}) {
+  const allTypes = useMemo(() => [...new Set(allData.map(m => m.art))].sort(), [allData]);
+  const allCRs = useMemo(() => [...new Set(allData.map(m => m.cr))].sort((a, b) => a - b), [allData]);
+  const allSizes = useMemo(() => [...new Set(allData.map(m => m.groesse))].sort((a, b) => SIZE_ORDER.indexOf(a) - SIZE_ORDER.indexOf(b)), [allData]);
+  const allEnvs = useMemo(() => [...new Set(allData.flatMap(m => m.umgebung || []))].sort(), [allData]);
+  const allSources = useMemo(() => [...new Set(allData.map(m => m.source).filter(Boolean))].sort(), [allData]);
   const allUnterarten = useMemo(() => [...new Set(allData.flatMap(m => m.unterart ? m.unterart.split(', ') : []))].sort(), [allData]);
-  const morals    = ['Gut','Neutral','Böse','Gesinnungslos'];
-
+  const morals = ['Gut', 'Neutral', 'Böse', 'Gesinnungslos'];
   const toggle = (key, val) => setFilters(f => {
     const arr = f[key] || [];
-    return { ...f, [key]: arr.includes(val) ? arr.filter(x => x !== val) : [...arr, val] };
+    return {
+      ...f,
+      [key]: arr.includes(val) ? arr.filter(x => x !== val) : [...arr, val]
+    };
   });
-  const reset = () => setFilters({ art:[], unterart:[], cr:[], groesse:[], moral:[], umgebung:[], source:[], legendaer: null, hortaktionen: null, sort:'cr-asc' });
+  const reset = () => setFilters({
+    art: [],
+    unterart: [],
+    cr: [],
+    groesse: [],
+    moral: [],
+    umgebung: [],
+    source: [],
+    legendaer: null,
+    hortaktionen: null,
+    sort: 'cr-asc'
+  });
   const hasAny = filters.art.length || filters.unterart.length || filters.cr.length || filters.groesse.length || filters.moral.length || filters.umgebung.length || filters.source.length || filters.legendaer !== null || filters.hortaktionen !== null || filters.sort !== 'cr-asc';
-
-  return (
-    <div ref={dragRef.ref} onMouseDown={dragRef.onMouseDown} onClickCapture={dragRef.onClickCapture}
-      style={{ width:'var(--filter-w)', flexShrink:0, background:'rgba(var(--bg2-rgb),0.6)', borderRight:'1px solid var(--border)', padding:'16px 14px 14px 24px', overflowY:'auto', display:'flex', flexDirection:'column', position:'relative', zIndex:10, cursor:'grab', ...dragRef.fadeStyle }}>
-      {/* Search */}
-      <div style={{ position:'relative', marginBottom:'14px' }}>
-        <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Monster suchen…"
-          style={{ fontFamily:'var(--font-body)', fontSize:'11.5px', fontWeight:'300', padding:'6px 10px 6px 28px', background:'rgba(var(--accent-rgb),0.06)', border:'1px solid rgba(var(--accent-rgb),0.18)', borderRadius:'3px', color:'var(--white)', outline:'none', width:'100%', letterSpacing:'0.03em', transition:'border-color 0.2s' }}
-          onFocus={e => e.target.style.borderColor='rgba(var(--accent-rgb),0.5)'}
-          onBlur={e => e.target.style.borderColor='rgba(var(--accent-rgb),0.18)'} />
-        <svg style={{ position:'absolute', left:'8px', top:'50%', transform:'translateY(-50%)', opacity:0.35, pointerEvents:'none' }} width="12" height="12" viewBox="0 0 12 12" fill="none">
-          <circle cx="5" cy="5" r="3.5" stroke="rgba(var(--accent-rgb),1)" strokeWidth="1.2"/>
-          <line x1="8" y1="8" x2="11" y2="11" stroke="rgba(var(--accent-rgb),1)" strokeWidth="1.2"/>
-        </svg>
-      </div>
-      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'18px' }}>
-        <div style={{ fontFamily:'var(--font-display)', fontSize:'10px', letterSpacing:'0.25em', color:'rgba(var(--text-rgb),0.7)', textTransform:'uppercase' }}>Filter</div>
-        {hasAny && <XBtn onClick={reset} />}
-      </div>
-
-      {/* HG / CR */}
-      <FilterGroup title="Herausforderungsgrad" active={filters.cr.length > 0} onReset={() => setFilters(f => ({ ...f, cr:[] }))} collapsible>
-        <div style={{ display:'flex', flexWrap:'wrap', gap:'4px' }}>
-          {allCRs.map(cr => (
-            <button key={cr} onClick={() => toggle('cr', cr)}
-              style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.12em', padding:'0 8px', height:'16px', border:`1px solid ${filters.cr.includes(cr) ? 'rgba(var(--accent-rgb),0.6)' : 'rgba(var(--accent-rgb),0.18)'}`, background: filters.cr.includes(cr) ? 'rgba(var(--accent-rgb),0.18)' : 'transparent', color: filters.cr.includes(cr) ? 'var(--white)' : 'var(--muted)', cursor:'pointer', borderRadius:'2px', transition:'all 0.15s' }}>
-              {formatCR(cr)}
-            </button>
-          ))}
-        </div>
-      </FilterGroup>
-
-      {/* Monsterart */}
-      <FilterGroup title="Monsterart" active={filters.art.length > 0} onReset={() => setFilters(f => ({ ...f, art:[] }))} collapsible>
-        <div style={{ display:'flex', flexDirection:'column', gap:'3px' }}>
-          {allTypes.map(t => {
-            const tc = typeColor(t);
-            return (
-              <button key={t} onClick={() => toggle('art', t)}
-                style={{ display:'flex', alignItems:'center', gap:'7px', padding:'5px 7px', background: filters.art.includes(t) ? 'rgba(var(--accent-rgb),0.08)' : 'transparent', border:`1px solid ${filters.art.includes(t) ? tc+'55' : 'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', textAlign:'left' }}>
-                <div style={{ width:'7px', height:'7px', borderRadius:'50%', background: filters.art.includes(t) ? tc : 'transparent', border:`1px solid ${tc}`, flexShrink:0, opacity: filters.art.includes(t) ? 1 : 0.5, transition:'all 0.15s' }} />
-                <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color: filters.art.includes(t) ? 'var(--white)' : 'var(--silver)', letterSpacing:'0.03em' }}>{t}</span>
-              </button>
-            );
-          })}
-        </div>
-      </FilterGroup>
-
-      {/* Unterart */}
-      <FilterGroup title="Unterart" active={(filters.unterart||[]).length > 0} onReset={() => setFilters(f => ({ ...f, unterart:[] }))} collapsible>
-        <div style={{ display:'flex', flexDirection:'column', gap:'3px' }}>
-          {allUnterarten.map(u => (
-            <button key={u} onClick={() => toggle('unterart', u)}
-              style={{ display:'flex', alignItems:'center', gap:'7px', padding:'5px 7px', background: (filters.unterart||[]).includes(u) ? 'rgba(var(--accent-rgb),0.08)' : 'transparent', border:`1px solid ${(filters.unterart||[]).includes(u) ? 'rgba(var(--accent-rgb),0.4)' : 'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', textAlign:'left' }}>
-              <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color: (filters.unterart||[]).includes(u) ? 'var(--white)' : 'var(--silver)', letterSpacing:'0.03em' }}>{u}</span>
-            </button>
-          ))}
-        </div>
-      </FilterGroup>
-
-      {/* Größe */}
-      <FilterGroup title="Größe" active={filters.groesse.length > 0} onReset={() => setFilters(f => ({ ...f, groesse:[] }))} collapsible>
-        <div style={{ display:'flex', flexWrap:'wrap', gap:'4px' }}>
-          {allSizes.map(s => (
-            <button key={s} onClick={() => toggle('groesse', s)}
-              style={{ fontFamily:'var(--font-body)', fontSize:'10px', fontWeight:'300', letterSpacing:'0.05em', padding:'0 8px', height:'16px', border:`1px solid ${filters.groesse.includes(s) ? 'rgba(var(--accent-rgb),0.6)' : 'rgba(var(--accent-rgb),0.18)'}`, background: filters.groesse.includes(s) ? 'rgba(var(--accent-rgb),0.14)' : 'transparent', color: filters.groesse.includes(s) ? 'var(--white)' : 'var(--muted)', cursor:'pointer', borderRadius:'2px', transition:'all 0.15s' }}>
-              {s}
-            </button>
-          ))}
-        </div>
-      </FilterGroup>
-
-      {/* Gesinnung */}
-      <FilterGroup title="Gesinnung" active={filters.moral.length > 0} onReset={() => setFilters(f => ({ ...f, moral:[] }))} collapsible>
-        <div style={{ display:'flex', flexWrap:'wrap', gap:'4px' }}>
-          {morals.map(m => (
-            <button key={m} onClick={() => toggle('moral', m)}
-              style={{ fontFamily:'var(--font-body)', fontSize:'10px', fontWeight:'300', letterSpacing:'0.05em', padding:'0 8px', height:'16px', border:`1px solid ${filters.moral.includes(m) ? 'rgba(var(--accent-rgb),0.6)' : 'rgba(var(--accent-rgb),0.18)'}`, background: filters.moral.includes(m) ? 'rgba(var(--accent-rgb),0.14)' : 'transparent', color: filters.moral.includes(m) ? 'var(--white)' : 'var(--muted)', cursor:'pointer', borderRadius:'2px', transition:'all 0.15s' }}>
-              {m}
-            </button>
-          ))}
-        </div>
-      </FilterGroup>
-
-      {/* Umgebung */}
-      <FilterGroup title="Umgebung" active={filters.umgebung.length > 0} onReset={() => setFilters(f => ({ ...f, umgebung:[] }))} collapsible>
-        <div style={{ display:'flex', flexDirection:'column', gap:'3px' }}>
-          {allEnvs.map(e => (
-            <button key={e} onClick={() => toggle('umgebung', e)}
-              style={{ display:'flex', alignItems:'center', gap:'7px', padding:'5px 7px', background: filters.umgebung.includes(e) ? 'rgba(var(--accent-rgb),0.08)' : 'transparent', border:`1px solid ${filters.umgebung.includes(e) ? 'rgba(var(--accent-rgb),0.4)' : 'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', textAlign:'left' }}>
-              <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color: filters.umgebung.includes(e) ? 'var(--white)' : 'var(--silver)', letterSpacing:'0.03em' }}>{e}</span>
-            </button>
-          ))}
-        </div>
-      </FilterGroup>
-
-      {/* Quelle */}
-      {allSources.length > 1 && (
-        <FilterGroup title="Quelle" active={filters.source.length > 0} onReset={() => setFilters(f => ({ ...f, source:[] }))} collapsible>
-          <div style={{ display:'flex', flexDirection:'column', gap:'3px' }}>
-            {allSources.map(s => (
-              <button key={s} onClick={() => toggle('source', s)}
-                style={{ display:'flex', alignItems:'center', gap:'7px', padding:'5px 7px', background: filters.source.includes(s) ? 'rgba(var(--accent-rgb),0.08)' : 'transparent', border:`1px solid ${filters.source.includes(s) ? 'rgba(var(--accent-rgb),0.4)' : 'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', textAlign:'left' }}>
-                <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color: filters.source.includes(s) ? 'var(--white)' : 'var(--silver)', letterSpacing:'0.03em' }}>{s}</span>
-              </button>
-            ))}
-          </div>
-        </FilterGroup>
-      )}
-
-      {/* Legendär */}
-      <FilterGroup title="Eigenschaften" active={filters.legendaer !== null || filters.hortaktionen !== null} onReset={() => setFilters(f => ({ ...f, legendaer: null, hortaktionen: null }))} collapsible>
-        <div style={{ display:'flex', flexDirection:'column', gap:'4px' }}>
-          {[['legendaer', 'Legendäre Aktionen'], ['hortaktionen', 'Hortaktionen']].map(([key, label]) => {
-            const val = filters[key];
-            const next = val === null ? true : val === true ? false : null;
-            const isTrue = val === true; const isFalse = val === false;
-            const boxBorder = isTrue ? 'rgba(60,200,90,0.5)' : isFalse ? 'rgba(220,80,80,0.5)' : 'rgba(var(--accent-rgb),0.2)';
-            const icon = isTrue ? '✓' : isFalse ? '✕' : '';
-            const iconColor = isTrue ? 'rgba(80,220,110,0.9)' : isFalse ? 'rgba(230,90,90,0.9)' : 'transparent';
-            return (
-              <button key={key} onClick={() => setFilters(f => ({ ...f, [key]: next }))}
-                style={{ display:'flex', alignItems:'center', gap:'8px', padding:'5px 7px', background: val !== null ? (isTrue ? 'rgba(60,180,90,0.07)' : 'rgba(200,60,60,0.07)') : 'transparent', border:`1px solid ${val !== null ? boxBorder : 'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.18s', textAlign:'left', width:'100%' }}>
-                <div style={{ width:'14px', height:'14px', border:`1px solid ${boxBorder}`, borderRadius:'2px', background: isTrue ? 'rgba(60,180,90,0.15)' : isFalse ? 'rgba(200,60,60,0.12)' : 'transparent', flexShrink:0, display:'flex', alignItems:'center', justifyContent:'center', transition:'all 0.18s', fontSize:'9px', color: iconColor, fontFamily:'var(--font-mono)' }}>{icon}</div>
-                <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color: val !== null ? 'var(--white)' : 'var(--silver)', letterSpacing:'0.03em', flex:1 }}>{label}</span>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.1em', color: isTrue ? 'rgba(80,220,110,0.6)' : isFalse ? 'rgba(230,90,90,0.6)' : 'rgba(var(--accent-rgb),0.25)', transition:'color 0.18s' }}>{isTrue ? 'JA' : isFalse ? 'NEIN' : '—'}</span>
-              </button>
-            );
-          })}
-        </div>
-      </FilterGroup>
-
-      <FilterGroup title="Sortierung" active={filters.sort !== 'cr-asc'} onReset={() => setFilters(f => ({...f, sort:'cr-asc'}))} collapsible>
-        <div style={{ display:'flex', flexDirection:'column', gap:'2px' }}>
-          {[
-            ['cr-asc',   'HG ↑'],
-            ['cr-desc',  'HG ↓'],
-            ['name-az',  'Name A – Z'],
-            ['name-za',  'Name Z – A'],
-            ['tp-desc',  'TP ↓'],
-            ['tp-asc',   'TP ↑'],
-            ['rk-desc',  'RK ↓'],
-            ['rk-asc',   'RK ↑'],
-            ['str-desc', 'STR ↓'],
-            ['str-asc',  'STR ↑'],
-            ['dex-desc', 'GES ↓'],
-            ['dex-asc',  'GES ↑'],
-            ['con-desc', 'KON ↓'],
-            ['con-asc',  'KON ↑'],
-            ['int-desc', 'INT ↓'],
-            ['int-asc',  'INT ↑'],
-            ['wis-desc', 'WEI ↓'],
-            ['wis-asc',  'WEI ↑'],
-            ['cha-desc', 'CHA ↓'],
-            ['cha-asc',  'CHA ↑'],
-          ].map(([id, label]) => (
-            <button key={id} className={`sort-btn${filters.sort===id?' active':''}`} onClick={() => setFilters(f => ({...f, sort:id}))}>{label}</button>
-          ))}
-        </div>
-      </FilterGroup>
-
-      {hasAny && (
-        <div style={{ marginTop:'auto', paddingTop:'14px', borderTop:'1px solid rgba(var(--accent-rgb),0.08)' }}>
-          <button onClick={reset}
-            style={{ width:'100%', padding:'6px', background:'rgba(200,60,60,0.08)', border:'1px solid rgba(200,60,60,0.25)', borderRadius:'2px', color:'rgba(230,90,90,0.65)', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.18em', cursor:'pointer', transition:'all 0.15s', textTransform:'uppercase' }}
-            onMouseEnter={e=>{e.currentTarget.style.background='rgba(200,60,60,0.18)';e.currentTarget.style.borderColor='rgba(230,90,90,0.5)';}}
-            onMouseLeave={e=>{e.currentTarget.style.background='rgba(200,60,60,0.08)';e.currentTarget.style.borderColor='rgba(200,60,60,0.25)';}}>
-            Filter löschen
-          </button>
-        </div>
-      )}
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    ref: dragRef.ref,
+    onMouseDown: dragRef.onMouseDown,
+    onClickCapture: dragRef.onClickCapture,
+    style: {
+      width: 'var(--filter-w)',
+      flexShrink: 0,
+      background: 'rgba(var(--bg2-rgb),0.6)',
+      borderRight: '1px solid var(--border)',
+      padding: '16px 14px 14px 24px',
+      overflowY: 'auto',
+      display: 'flex',
+      flexDirection: 'column',
+      position: 'relative',
+      zIndex: 10,
+      cursor: 'grab',
+      ...dragRef.fadeStyle
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      marginBottom: '14px'
+    }
+  }, /*#__PURE__*/React.createElement("input", {
+    value: search,
+    onChange: e => setSearch(e.target.value),
+    placeholder: "Monster suchen\u2026",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11.5px',
+      fontWeight: '300',
+      padding: '6px 10px 6px 28px',
+      background: 'rgba(var(--accent-rgb),0.06)',
+      border: '1px solid rgba(var(--accent-rgb),0.18)',
+      borderRadius: '3px',
+      color: 'var(--white)',
+      outline: 'none',
+      width: '100%',
+      letterSpacing: '0.03em',
+      transition: 'border-color 0.2s'
+    },
+    onFocus: e => e.target.style.borderColor = 'rgba(var(--accent-rgb),0.5)',
+    onBlur: e => e.target.style.borderColor = 'rgba(var(--accent-rgb),0.18)'
+  }), /*#__PURE__*/React.createElement("svg", {
+    style: {
+      position: 'absolute',
+      left: '8px',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      opacity: 0.35,
+      pointerEvents: 'none'
+    },
+    width: "12",
+    height: "12",
+    viewBox: "0 0 12 12",
+    fill: "none"
+  }, /*#__PURE__*/React.createElement("circle", {
+    cx: "5",
+    cy: "5",
+    r: "3.5",
+    stroke: "rgba(var(--accent-rgb),1)",
+    strokeWidth: "1.2"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "8",
+    y1: "8",
+    x2: "11",
+    y2: "11",
+    stroke: "rgba(var(--accent-rgb),1)",
+    strokeWidth: "1.2"
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: '18px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '10px',
+      letterSpacing: '0.25em',
+      color: 'rgba(var(--text-rgb),0.7)',
+      textTransform: 'uppercase'
+    }
+  }, "Filter"), hasAny && /*#__PURE__*/React.createElement(XBtn, {
+    onClick: reset
+  })), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Herausforderungsgrad",
+    active: filters.cr.length > 0,
+    onReset: () => setFilters(f => ({
+      ...f,
+      cr: []
+    })),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '4px'
+    }
+  }, allCRs.map(cr => /*#__PURE__*/React.createElement("button", {
+    key: cr,
+    onClick: () => toggle('cr', cr),
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.12em',
+      padding: '0 8px',
+      height: '16px',
+      border: `1px solid ${filters.cr.includes(cr) ? 'rgba(var(--accent-rgb),0.6)' : 'rgba(var(--accent-rgb),0.18)'}`,
+      background: filters.cr.includes(cr) ? 'rgba(var(--accent-rgb),0.18)' : 'transparent',
+      color: filters.cr.includes(cr) ? 'var(--white)' : 'var(--muted)',
+      cursor: 'pointer',
+      borderRadius: '2px',
+      transition: 'all 0.15s'
+    }
+  }, formatCR(cr))))), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Monsterart",
+    active: filters.art.length > 0,
+    onReset: () => setFilters(f => ({
+      ...f,
+      art: []
+    })),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '3px'
+    }
+  }, allTypes.map(t => {
+    const tc = typeColor(t);
+    return /*#__PURE__*/React.createElement("button", {
+      key: t,
+      onClick: () => toggle('art', t),
+      style: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '7px',
+        padding: '5px 7px',
+        background: filters.art.includes(t) ? 'rgba(var(--accent-rgb),0.08)' : 'transparent',
+        border: `1px solid ${filters.art.includes(t) ? tc + '55' : 'transparent'}`,
+        borderRadius: '2px',
+        cursor: 'pointer',
+        transition: 'all 0.15s',
+        textAlign: 'left'
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        width: '7px',
+        height: '7px',
+        borderRadius: '50%',
+        background: filters.art.includes(t) ? tc : 'transparent',
+        border: `1px solid ${tc}`,
+        flexShrink: 0,
+        opacity: filters.art.includes(t) ? 1 : 0.5,
+        transition: 'all 0.15s'
+      }
+    }), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: 'var(--font-body)',
+        fontSize: '11px',
+        fontWeight: '300',
+        color: filters.art.includes(t) ? 'var(--white)' : 'var(--silver)',
+        letterSpacing: '0.03em'
+      }
+    }, t));
+  }))), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Unterart",
+    active: (filters.unterart || []).length > 0,
+    onReset: () => setFilters(f => ({
+      ...f,
+      unterart: []
+    })),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '3px'
+    }
+  }, allUnterarten.map(u => /*#__PURE__*/React.createElement("button", {
+    key: u,
+    onClick: () => toggle('unterart', u),
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '7px',
+      padding: '5px 7px',
+      background: (filters.unterart || []).includes(u) ? 'rgba(var(--accent-rgb),0.08)' : 'transparent',
+      border: `1px solid ${(filters.unterart || []).includes(u) ? 'rgba(var(--accent-rgb),0.4)' : 'transparent'}`,
+      borderRadius: '2px',
+      cursor: 'pointer',
+      transition: 'all 0.15s',
+      textAlign: 'left'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px',
+      fontWeight: '300',
+      color: (filters.unterart || []).includes(u) ? 'var(--white)' : 'var(--silver)',
+      letterSpacing: '0.03em'
+    }
+  }, u))))), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Gr\xF6\xDFe",
+    active: filters.groesse.length > 0,
+    onReset: () => setFilters(f => ({
+      ...f,
+      groesse: []
+    })),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '4px'
+    }
+  }, allSizes.map(s => /*#__PURE__*/React.createElement("button", {
+    key: s,
+    onClick: () => toggle('groesse', s),
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '10px',
+      fontWeight: '300',
+      letterSpacing: '0.05em',
+      padding: '0 8px',
+      height: '16px',
+      border: `1px solid ${filters.groesse.includes(s) ? 'rgba(var(--accent-rgb),0.6)' : 'rgba(var(--accent-rgb),0.18)'}`,
+      background: filters.groesse.includes(s) ? 'rgba(var(--accent-rgb),0.14)' : 'transparent',
+      color: filters.groesse.includes(s) ? 'var(--white)' : 'var(--muted)',
+      cursor: 'pointer',
+      borderRadius: '2px',
+      transition: 'all 0.15s'
+    }
+  }, s)))), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Gesinnung",
+    active: filters.moral.length > 0,
+    onReset: () => setFilters(f => ({
+      ...f,
+      moral: []
+    })),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '4px'
+    }
+  }, morals.map(m => /*#__PURE__*/React.createElement("button", {
+    key: m,
+    onClick: () => toggle('moral', m),
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '10px',
+      fontWeight: '300',
+      letterSpacing: '0.05em',
+      padding: '0 8px',
+      height: '16px',
+      border: `1px solid ${filters.moral.includes(m) ? 'rgba(var(--accent-rgb),0.6)' : 'rgba(var(--accent-rgb),0.18)'}`,
+      background: filters.moral.includes(m) ? 'rgba(var(--accent-rgb),0.14)' : 'transparent',
+      color: filters.moral.includes(m) ? 'var(--white)' : 'var(--muted)',
+      cursor: 'pointer',
+      borderRadius: '2px',
+      transition: 'all 0.15s'
+    }
+  }, m)))), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Umgebung",
+    active: filters.umgebung.length > 0,
+    onReset: () => setFilters(f => ({
+      ...f,
+      umgebung: []
+    })),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '3px'
+    }
+  }, allEnvs.map(e => /*#__PURE__*/React.createElement("button", {
+    key: e,
+    onClick: () => toggle('umgebung', e),
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '7px',
+      padding: '5px 7px',
+      background: filters.umgebung.includes(e) ? 'rgba(var(--accent-rgb),0.08)' : 'transparent',
+      border: `1px solid ${filters.umgebung.includes(e) ? 'rgba(var(--accent-rgb),0.4)' : 'transparent'}`,
+      borderRadius: '2px',
+      cursor: 'pointer',
+      transition: 'all 0.15s',
+      textAlign: 'left'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px',
+      fontWeight: '300',
+      color: filters.umgebung.includes(e) ? 'var(--white)' : 'var(--silver)',
+      letterSpacing: '0.03em'
+    }
+  }, e))))), allSources.length > 1 && /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Quelle",
+    active: filters.source.length > 0,
+    onReset: () => setFilters(f => ({
+      ...f,
+      source: []
+    })),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '3px'
+    }
+  }, allSources.map(s => /*#__PURE__*/React.createElement("button", {
+    key: s,
+    onClick: () => toggle('source', s),
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '7px',
+      padding: '5px 7px',
+      background: filters.source.includes(s) ? 'rgba(var(--accent-rgb),0.08)' : 'transparent',
+      border: `1px solid ${filters.source.includes(s) ? 'rgba(var(--accent-rgb),0.4)' : 'transparent'}`,
+      borderRadius: '2px',
+      cursor: 'pointer',
+      transition: 'all 0.15s',
+      textAlign: 'left'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px',
+      fontWeight: '300',
+      color: filters.source.includes(s) ? 'var(--white)' : 'var(--silver)',
+      letterSpacing: '0.03em'
+    }
+  }, s))))), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Eigenschaften",
+    active: filters.legendaer !== null || filters.hortaktionen !== null,
+    onReset: () => setFilters(f => ({
+      ...f,
+      legendaer: null,
+      hortaktionen: null
+    })),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '4px'
+    }
+  }, [['legendaer', 'Legendäre Aktionen'], ['hortaktionen', 'Hortaktionen']].map(([key, label]) => {
+    const val = filters[key];
+    const next = val === null ? true : val === true ? false : null;
+    const isTrue = val === true;
+    const isFalse = val === false;
+    const boxBorder = isTrue ? 'rgba(60,200,90,0.5)' : isFalse ? 'rgba(220,80,80,0.5)' : 'rgba(var(--accent-rgb),0.2)';
+    const icon = isTrue ? '✓' : isFalse ? '✕' : '';
+    const iconColor = isTrue ? 'rgba(80,220,110,0.9)' : isFalse ? 'rgba(230,90,90,0.9)' : 'transparent';
+    return /*#__PURE__*/React.createElement("button", {
+      key: key,
+      onClick: () => setFilters(f => ({
+        ...f,
+        [key]: next
+      })),
+      style: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+        padding: '5px 7px',
+        background: val !== null ? isTrue ? 'rgba(60,180,90,0.07)' : 'rgba(200,60,60,0.07)' : 'transparent',
+        border: `1px solid ${val !== null ? boxBorder : 'transparent'}`,
+        borderRadius: '2px',
+        cursor: 'pointer',
+        transition: 'all 0.18s',
+        textAlign: 'left',
+        width: '100%'
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        width: '14px',
+        height: '14px',
+        border: `1px solid ${boxBorder}`,
+        borderRadius: '2px',
+        background: isTrue ? 'rgba(60,180,90,0.15)' : isFalse ? 'rgba(200,60,60,0.12)' : 'transparent',
+        flexShrink: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        transition: 'all 0.18s',
+        fontSize: '9px',
+        color: iconColor,
+        fontFamily: 'var(--font-mono)'
+      }
+    }, icon), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: 'var(--font-body)',
+        fontSize: '11px',
+        fontWeight: '300',
+        color: val !== null ? 'var(--white)' : 'var(--silver)',
+        letterSpacing: '0.03em',
+        flex: 1
+      }
+    }, label), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: 'var(--font-mono)',
+        fontSize: '7.5px',
+        letterSpacing: '0.1em',
+        color: isTrue ? 'rgba(80,220,110,0.6)' : isFalse ? 'rgba(230,90,90,0.6)' : 'rgba(var(--accent-rgb),0.25)',
+        transition: 'color 0.18s'
+      }
+    }, isTrue ? 'JA' : isFalse ? 'NEIN' : '—'));
+  }))), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Sortierung",
+    active: filters.sort !== 'cr-asc',
+    onReset: () => setFilters(f => ({
+      ...f,
+      sort: 'cr-asc'
+    })),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '2px'
+    }
+  }, [['cr-asc', 'HG ↑'], ['cr-desc', 'HG ↓'], ['name-az', 'Name A – Z'], ['name-za', 'Name Z – A'], ['tp-desc', 'TP ↓'], ['tp-asc', 'TP ↑'], ['rk-desc', 'RK ↓'], ['rk-asc', 'RK ↑'], ['str-desc', 'STR ↓'], ['str-asc', 'STR ↑'], ['dex-desc', 'GES ↓'], ['dex-asc', 'GES ↑'], ['con-desc', 'KON ↓'], ['con-asc', 'KON ↑'], ['int-desc', 'INT ↓'], ['int-asc', 'INT ↑'], ['wis-desc', 'WEI ↓'], ['wis-asc', 'WEI ↑'], ['cha-desc', 'CHA ↓'], ['cha-asc', 'CHA ↑']].map(([id, label]) => /*#__PURE__*/React.createElement("button", {
+    key: id,
+    className: `sort-btn${filters.sort === id ? ' active' : ''}`,
+    onClick: () => setFilters(f => ({
+      ...f,
+      sort: id
+    }))
+  }, label)))), hasAny && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: 'auto',
+      paddingTop: '14px',
+      borderTop: '1px solid rgba(var(--accent-rgb),0.08)'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: reset,
+    style: {
+      width: '100%',
+      padding: '6px',
+      background: 'rgba(200,60,60,0.08)',
+      border: '1px solid rgba(200,60,60,0.25)',
+      borderRadius: '2px',
+      color: 'rgba(230,90,90,0.65)',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.18em',
+      cursor: 'pointer',
+      transition: 'all 0.15s',
+      textTransform: 'uppercase'
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.background = 'rgba(200,60,60,0.18)';
+      e.currentTarget.style.borderColor = 'rgba(230,90,90,0.5)';
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.background = 'rgba(200,60,60,0.08)';
+      e.currentTarget.style.borderColor = 'rgba(200,60,60,0.25)';
+    }
+  }, "Filter l\xF6schen")));
 }
 
 // ─── MONSTER ROW ──────────────────────────────────────────────────────────────
-function MonsterRow({ monster, active, onClick, compact, kolVisible, onKolToggle }) {
+function MonsterRow({
+  monster,
+  active,
+  onClick,
+  compact,
+  kolVisible,
+  onKolToggle
+}) {
   const tc = typeColor(monster.art);
   const kolC = kolVisible ? 'oklch(0.72 0.18 160)' : 'rgba(160,140,255,0.28)';
-  return (
-    <div style={{ display:'flex', alignItems:'center', gap:'10px', padding: compact ? '7px 12px' : '10px 12px', cursor:'pointer', borderBottom:'1px solid rgba(var(--accent-rgb),0.06)', background: active ? 'rgba(var(--accent-rgb),0.1)' : 'transparent', borderLeft: active ? `2px solid ${tc}` : '2px solid transparent', transition:'all 0.15s' }}
-      onMouseEnter={e => { if (!active) { e.currentTarget.style.background='rgba(var(--accent-rgb),0.05)'; e.currentTarget.style.borderLeftColor=tc+'55'; } }}
-      onMouseLeave={e => { if (!active) { e.currentTarget.style.background='transparent'; e.currentTarget.style.borderLeftColor='transparent'; } }}>
-      {/* CR badge */}
-      <div onClick={() => onClick(monster)} style={{ width:'28px', height:'22px', borderRadius:'2px', background: active ? 'rgba(var(--accent-rgb),0.18)' : 'rgba(var(--accent-rgb),0.08)', border:`1px solid ${active ? 'rgba(var(--accent-rgb),0.5)' : 'rgba(var(--accent-rgb),0.25)'}`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, transition:'all 0.15s' }}>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', color: active ? 'var(--white)' : 'var(--silver)', fontWeight:'400', letterSpacing:'0.05em' }}>HG{formatCR(monster.cr)}</span>
-      </div>
-      {/* Name + type */}
-      <div onClick={() => onClick(monster)} style={{ flex:1, minWidth:0 }}>
-        <div style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight: active ? '400' : '300', color: active ? 'var(--white)' : 'rgba(var(--text-rgb),0.85)', letterSpacing:'0.03em', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{monster.name}</div>
-        {!compact && <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', color: tc, letterSpacing:'0.15em', marginTop:'1px', opacity:0.8 }}>{monster.art}</div>}
-      </div>
-      {/* Legendary indicator */}
-      {monster.legendaere_aktionen && (
-        <div onClick={() => onClick(monster)} style={{ fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.1em', padding:'2px 5px', background:'rgba(var(--accent-rgb),0.1)', border:'1px solid rgba(var(--accent-rgb),0.25)', borderRadius:'2px', color:'rgba(var(--accent-rgb),0.7)', flexShrink:0 }}>L</div>
-      )}
-      {/* Kollektikon visibility toggle */}
-      <button
-        onClick={e => { e.stopPropagation(); onKolToggle(monster); }}
-        title={kolVisible ? 'Im Kollektikon sichtbar — klicken zum Ausblenden' : 'Im Kollektikon ausgeblendet — klicken zum Freigeben'}
-        style={{
-          flexShrink:0, width:18, height:18, padding:0, border:`1px solid ${kolC}`,
-          background: kolVisible ? 'oklch(0.72 0.18 160 / 0.12)' : 'transparent',
-          borderRadius:2, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center',
-          color: kolC, fontSize:9, transition:'all 0.15s', lineHeight:1,
-        }}
-        onMouseEnter={e => { e.currentTarget.style.background = kolVisible ? 'oklch(0.72 0.18 160 / 0.22)' : 'rgba(160,140,255,0.08)'; }}
-        onMouseLeave={e => { e.currentTarget.style.background = kolVisible ? 'oklch(0.72 0.18 160 / 0.12)' : 'transparent'; }}
-      >
-        {kolVisible ? '◈' : '◇'}
-      </button>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px',
+      padding: compact ? '7px 12px' : '10px 12px',
+      cursor: 'pointer',
+      borderBottom: '1px solid rgba(var(--accent-rgb),0.06)',
+      background: active ? 'rgba(var(--accent-rgb),0.1)' : 'transparent',
+      borderLeft: active ? `2px solid ${tc}` : '2px solid transparent',
+      transition: 'all 0.15s'
+    },
+    onMouseEnter: e => {
+      if (!active) {
+        e.currentTarget.style.background = 'rgba(var(--accent-rgb),0.05)';
+        e.currentTarget.style.borderLeftColor = tc + '55';
+      }
+    },
+    onMouseLeave: e => {
+      if (!active) {
+        e.currentTarget.style.background = 'transparent';
+        e.currentTarget.style.borderLeftColor = 'transparent';
+      }
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    onClick: () => onClick(monster),
+    style: {
+      width: '28px',
+      height: '22px',
+      borderRadius: '2px',
+      background: active ? 'rgba(var(--accent-rgb),0.18)' : 'rgba(var(--accent-rgb),0.08)',
+      border: `1px solid ${active ? 'rgba(var(--accent-rgb),0.5)' : 'rgba(var(--accent-rgb),0.25)'}`,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexShrink: 0,
+      transition: 'all 0.15s'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      color: active ? 'var(--white)' : 'var(--silver)',
+      fontWeight: '400',
+      letterSpacing: '0.05em'
+    }
+  }, "HG", formatCR(monster.cr))), /*#__PURE__*/React.createElement("div", {
+    onClick: () => onClick(monster),
+    style: {
+      flex: 1,
+      minWidth: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      fontWeight: active ? '400' : '300',
+      color: active ? 'var(--white)' : 'rgba(var(--text-rgb),0.85)',
+      letterSpacing: '0.03em',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis'
+    }
+  }, monster.name), !compact && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      color: tc,
+      letterSpacing: '0.15em',
+      marginTop: '1px',
+      opacity: 0.8
+    }
+  }, monster.art)), monster.legendaere_aktionen && /*#__PURE__*/React.createElement("div", {
+    onClick: () => onClick(monster),
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      letterSpacing: '0.1em',
+      padding: '2px 5px',
+      background: 'rgba(var(--accent-rgb),0.1)',
+      border: '1px solid rgba(var(--accent-rgb),0.25)',
+      borderRadius: '2px',
+      color: 'rgba(var(--accent-rgb),0.7)',
+      flexShrink: 0
+    }
+  }, "L"), /*#__PURE__*/React.createElement("button", {
+    onClick: e => {
+      e.stopPropagation();
+      onKolToggle(monster);
+    },
+    title: kolVisible ? 'Im Kollektikon sichtbar — klicken zum Ausblenden' : 'Im Kollektikon ausgeblendet — klicken zum Freigeben',
+    style: {
+      flexShrink: 0,
+      width: 18,
+      height: 18,
+      padding: 0,
+      border: `1px solid ${kolC}`,
+      background: kolVisible ? 'oklch(0.72 0.18 160 / 0.12)' : 'transparent',
+      borderRadius: 2,
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: kolC,
+      fontSize: 9,
+      transition: 'all 0.15s',
+      lineHeight: 1
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.background = kolVisible ? 'oklch(0.72 0.18 160 / 0.22)' : 'rgba(160,140,255,0.08)';
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.background = kolVisible ? 'oklch(0.72 0.18 160 / 0.12)' : 'transparent';
+    }
+  }, kolVisible ? '◈' : '◇'));
 }
 
 // ─── STAT BLOCK DETAIL ────────────────────────────────────────────────────────
-function MetaRow({ label, value, accent, color }) {
+function MetaRow({
+  label,
+  value,
+  accent,
+  color
+}) {
   if (!value) return null;
   const lc = color ? alpha(color, 0.5) : 'rgba(var(--accent-rgb),0.5)';
-  return (
-    <div style={{ display:'flex', flexDirection:'column', gap:'2px' }}>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.26em', color: lc, textTransform:'uppercase' }}>{label}</div>
-      <div style={{ fontFamily:'var(--font-body)', fontSize:'11.5px', fontWeight:'300', color: accent || 'rgba(var(--text-rgb),0.8)', letterSpacing:'0.02em', lineHeight:1.5, maxWidth:'80px' }}>{value}</div>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '2px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '0.26em',
+      color: lc,
+      textTransform: 'uppercase'
+    }
+  }, label), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11.5px',
+      fontWeight: '300',
+      color: accent || 'rgba(var(--text-rgb),0.8)',
+      letterSpacing: '0.02em',
+      lineHeight: 1.5,
+      maxWidth: '80px'
+    }
+  }, value));
 }
-
-function HPRow({ monster, onRoll, color }) {
-  const lc  = color ? alpha(color, 0.5)  : 'rgba(var(--accent-rgb),0.5)';
-  const dc  = color ? alpha(color, 0.4)  : 'rgba(var(--accent-rgb),0.4)';
-  const bc  = color ? alpha(color, 0.75) : 'rgba(180,160,255,0.75)';
-  const bb  = color ? alpha(color, 0.08) : 'rgba(var(--accent-rgb),0.08)';
-  const bbd = color ? alpha(color, 0.3)  : 'rgba(var(--accent-rgb),0.3)';
-  const bbh = color ? alpha(color, 0.2)  : 'rgba(var(--accent-rgb),0.2)';
-  const bdh = color ? alpha(color, 0.6)  : 'rgba(var(--accent-rgb),0.6)';
-  return (
-    <div style={{ display:'flex', flexDirection:'column', gap:'2px' }}>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.26em', color: lc, textTransform:'uppercase' }}>Trefferpunkte</div>
-      <div style={{ display:'flex', alignItems:'center', gap:'8px' }}>
-        <div style={{ fontFamily:'var(--font-body)', fontSize:'11.5px', fontWeight:'300', letterSpacing:'0.02em', lineHeight:1.5, color:'rgba(var(--text-rgb),0.8)' }}>
-          {monster.tp}
-          <span style={{ color: dc, marginLeft:'5px' }}>({monster.tp_wuerfel})</span>
-        </div>
-        <button onClick={onRoll} title="Trefferpunkte würfeln"
-          style={{ display:'flex', alignItems:'center', gap:'4px', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.1em', padding:'0 7px', height:'18px', border:`1px solid ${bbd}`, background: bb, color: bc, cursor:'pointer', borderRadius:'2px', transition:'all 0.15s', flexShrink:0 }}
-          onMouseEnter={e => { e.currentTarget.style.background=bbh; e.currentTarget.style.borderColor=bdh; e.currentTarget.style.color='var(--white)'; }}
-          onMouseLeave={e => { e.currentTarget.style.background=bb; e.currentTarget.style.borderColor=bbd; e.currentTarget.style.color=bc; }}>
-          <svg width="9" height="9" viewBox="0 0 10 10" fill="none" style={{ flexShrink:0 }}>
-            <rect x="0.8" y="0.8" width="8.4" height="8.4" rx="1.5" stroke="currentColor" strokeWidth="1.1"/>
-            <circle cx="3.3" cy="3.3" r="0.9" fill="currentColor"/>
-            <circle cx="6.7" cy="6.7" r="0.9" fill="currentColor"/>
-          </svg>
-          Roll
-        </button>
-      </div>
-    </div>
-  );
+function HPRow({
+  monster,
+  onRoll,
+  color
+}) {
+  const lc = color ? alpha(color, 0.5) : 'rgba(var(--accent-rgb),0.5)';
+  const dc = color ? alpha(color, 0.4) : 'rgba(var(--accent-rgb),0.4)';
+  const bc = color ? alpha(color, 0.75) : 'rgba(180,160,255,0.75)';
+  const bb = color ? alpha(color, 0.08) : 'rgba(var(--accent-rgb),0.08)';
+  const bbd = color ? alpha(color, 0.3) : 'rgba(var(--accent-rgb),0.3)';
+  const bbh = color ? alpha(color, 0.2) : 'rgba(var(--accent-rgb),0.2)';
+  const bdh = color ? alpha(color, 0.6) : 'rgba(var(--accent-rgb),0.6)';
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '2px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '0.26em',
+      color: lc,
+      textTransform: 'uppercase'
+    }
+  }, "Trefferpunkte"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11.5px',
+      fontWeight: '300',
+      letterSpacing: '0.02em',
+      lineHeight: 1.5,
+      color: 'rgba(var(--text-rgb),0.8)'
+    }
+  }, monster.tp, /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: dc,
+      marginLeft: '5px'
+    }
+  }, "(", monster.tp_wuerfel, ")")), /*#__PURE__*/React.createElement("button", {
+    onClick: onRoll,
+    title: "Trefferpunkte w\xFCrfeln",
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '4px',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.1em',
+      padding: '0 7px',
+      height: '18px',
+      border: `1px solid ${bbd}`,
+      background: bb,
+      color: bc,
+      cursor: 'pointer',
+      borderRadius: '2px',
+      transition: 'all 0.15s',
+      flexShrink: 0
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.background = bbh;
+      e.currentTarget.style.borderColor = bdh;
+      e.currentTarget.style.color = 'var(--white)';
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.background = bb;
+      e.currentTarget.style.borderColor = bbd;
+      e.currentTarget.style.color = bc;
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "9",
+    height: "9",
+    viewBox: "0 0 10 10",
+    fill: "none",
+    style: {
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement("rect", {
+    x: "0.8",
+    y: "0.8",
+    width: "8.4",
+    height: "8.4",
+    rx: "1.5",
+    stroke: "currentColor",
+    strokeWidth: "1.1"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "3.3",
+    cy: "3.3",
+    r: "0.9",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "6.7",
+    cy: "6.7",
+    r: "0.9",
+    fill: "currentColor"
+  })), "Roll")));
 }
-
-function AbilityScore({ label, score, color }) {
+function AbilityScore({
+  label,
+  score,
+  color
+}) {
   const lc = color ? alpha(color, 0.55) : 'rgba(var(--accent-rgb),0.55)';
-  return (
-    <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'2px', flex:1 }}>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.18em', color: lc, textTransform:'uppercase' }}>{label}</div>
-      <div style={{ fontFamily:'var(--font-body)', fontSize:'14px', fontWeight:'400', color:'var(--white)' }}>{score}</div>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(var(--text-rgb),0.7)' }}>{mod(score)}</div>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: '2px',
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.18em',
+      color: lc,
+      textTransform: 'uppercase'
+    }
+  }, label), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '14px',
+      fontWeight: '400',
+      color: 'var(--white)'
+    }
+  }, score), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: 'rgba(var(--text-rgb),0.7)'
+    }
+  }, mod(score)));
 }
-
-function OctSvg({ size = 10, color = 'currentColor', fill = 'none', strokeWidth = 1 }) {
-  const cx = size / 2, cy = size / 2, r = size / 2;
-  const pts = Array.from({ length: 6 }, (_, i) => {
-    const a = (Math.PI / 180) * (60 * i - 30);
+function OctSvg({
+  size = 10,
+  color = 'currentColor',
+  fill = 'none',
+  strokeWidth = 1
+}) {
+  const cx = size / 2,
+    cy = size / 2,
+    r = size / 2;
+  const pts = Array.from({
+    length: 6
+  }, (_, i) => {
+    const a = Math.PI / 180 * (60 * i - 30);
     return `${cx + r * Math.cos(a)},${cy + r * Math.sin(a)}`;
   }).join(' ');
-  return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ display:'block', flexShrink:0 }}>
-      <polygon points={pts} fill={fill} stroke={color} strokeWidth={strokeWidth} />
-    </svg>
-  );
+  return /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: `0 0 ${size} ${size}`,
+    style: {
+      display: 'block',
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: pts,
+    fill: fill,
+    stroke: color,
+    strokeWidth: strokeWidth
+  }));
 }
-
-function SectionLabel({ title, color }) {
+function SectionLabel({
+  title,
+  color
+}) {
   const c = color || 'rgba(var(--accent-rgb),0.9)';
-  return (
-    <div style={{ display:'flex', alignItems:'center', gap:'7px', marginBottom:'8px' }}>
-      <OctSvg size={8} color={alpha(c, 0.6)} fill={alpha(c, 0.12)} strokeWidth={1} />
-      <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:alpha(c, 0.6), textTransform:'uppercase', flexShrink:0 }}>{title}</span>
-      <div style={{ flex:1, height:'1px', background:`linear-gradient(90deg,${alpha(c, 0.35)},transparent)` }} />
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '7px',
+      marginBottom: '8px'
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 8,
+    color: alpha(c, 0.6),
+    fill: alpha(c, 0.12),
+    strokeWidth: 1
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.28em',
+      color: alpha(c, 0.6),
+      textTransform: 'uppercase',
+      flexShrink: 0
+    }
+  }, title), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      height: '1px',
+      background: `linear-gradient(90deg,${alpha(c, 0.35)},transparent)`
+    }
+  }));
 }
-
-function SizeGrid({ groesse, color }) {
-  const steps = { 'Winzig':1, 'Klein':1, 'Mittel':1, 'Mittelgroß':1, 'Groß':2, 'Riesig':3, 'Gigantisch':4 };
+function SizeGrid({
+  groesse,
+  color
+}) {
+  const steps = {
+    'Winzig': 1,
+    'Klein': 1,
+    'Mittel': 1,
+    'Mittelgroß': 1,
+    'Groß': 2,
+    'Riesig': 3,
+    'Gigantisch': 4
+  };
   const n = steps[groesse] || 1;
-  const GRID = 4, CELL = 17, GAP = 3;
-  return (
-    <div style={{ display:'flex', flexDirection:'column', gap:`${GAP}px` }}>
-      {Array.from({ length: GRID }, (_, row) => (
-        <div key={row} style={{ display:'flex', gap:`${GAP}px` }}>
-          {Array.from({ length: GRID }, (_, col) => {
-            const lit = row >= GRID - n && col < n;
-            return (
-              <div key={col} style={{ width:`${CELL}px`, height:`${CELL}px`, background: lit ? alpha(color, 0.45) : 'rgba(255,255,255,0.05)', border:`0.5px solid ${lit ? alpha(color, 0.6) : 'rgba(255,255,255,0.12)'}` }} />
-            );
-          })}
-        </div>
-      ))}
-    </div>
-  );
+  const GRID = 4,
+    CELL = 17,
+    GAP = 3;
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: `${GAP}px`
+    }
+  }, Array.from({
+    length: GRID
+  }, (_, row) => /*#__PURE__*/React.createElement("div", {
+    key: row,
+    style: {
+      display: 'flex',
+      gap: `${GAP}px`
+    }
+  }, Array.from({
+    length: GRID
+  }, (_, col) => {
+    const lit = row >= GRID - n && col < n;
+    return /*#__PURE__*/React.createElement("div", {
+      key: col,
+      style: {
+        width: `${CELL}px`,
+        height: `${CELL}px`,
+        background: lit ? alpha(color, 0.45) : 'rgba(255,255,255,0.05)',
+        border: `0.5px solid ${lit ? alpha(color, 0.6) : 'rgba(255,255,255,0.12)'}`
+      }
+    });
+  }))));
 }
-
-function EffectBlock({ title, intro, items, color }) {
+function EffectBlock({
+  title,
+  intro,
+  items,
+  color
+}) {
   if (!items || items.length === 0) return null;
   const c = color || 'oklch(0.60 0.10 200)';
-  return (
-    <div style={{ marginBottom:'18px' }}>
-      <SectionLabel title={title} color={c} />
-      {intro && (
-        <p style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.75, color:'rgba(var(--text-rgb),0.65)', letterSpacing:'0.015em', margin:'0 0 10px' }}>{intro}</p>
-      )}
-      <div style={{ display:'flex', flexDirection:'column', gap:'8px' }}>
-        {items.map((item, i) => (
-          <div key={i} style={{ display:'flex', gap:'9px', alignItems:'flex-start' }}>
-            <span style={{ color:alpha(c, 0.45), flexShrink:0, fontFamily:'var(--font-mono)', fontSize:'8px', marginTop:'4px', lineHeight:1 }}>◆</span>
-            <span style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', color:'rgba(var(--text-rgb),0.78)', letterSpacing:'0.015em', lineHeight:1.75 }}>{item}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: '18px'
+    }
+  }, /*#__PURE__*/React.createElement(SectionLabel, {
+    title: title,
+    color: c
+  }), intro && /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      fontWeight: '300',
+      lineHeight: 1.75,
+      color: 'rgba(var(--text-rgb),0.65)',
+      letterSpacing: '0.015em',
+      margin: '0 0 10px'
+    }
+  }, intro), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '8px'
+    }
+  }, items.map((item, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    style: {
+      display: 'flex',
+      gap: '9px',
+      alignItems: 'flex-start'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: alpha(c, 0.45),
+      flexShrink: 0,
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      marginTop: '4px',
+      lineHeight: 1
+    }
+  }, "\u25C6"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      fontWeight: '300',
+      color: 'rgba(var(--text-rgb),0.78)',
+      letterSpacing: '0.015em',
+      lineHeight: 1.75
+    }
+  }, item)))));
 }
-
-function MonsterRollTable({ tabelle, accentColor }) {
+function MonsterRollTable({
+  tabelle,
+  accentColor
+}) {
   const [rolling, setRolling] = React.useState(false);
   const [highlight, setHighlight] = React.useState(null);
   const rows = tabelle.rows;
   const ac = accentColor || 'rgba(var(--accent-rgb),0.9)';
-  const a = (opacity) => {
+  const a = opacity => {
     const m = ac.match(/oklch\(([^)]+)\)/);
     if (m) return `oklch(${m[1].replace(/\s+\d*\.?\d+\s*$/, '')} / ${opacity})`;
     const hex = ac.match(/^#([0-9a-f]{6})$/i);
-    if (hex) { const r=parseInt(hex[1].slice(0,2),16),g=parseInt(hex[1].slice(2,4),16),b=parseInt(hex[1].slice(4,6),16); return `rgba(${r},${g},${b},${opacity})`; }
+    if (hex) {
+      const r = parseInt(hex[1].slice(0, 2), 16),
+        g = parseInt(hex[1].slice(2, 4), 16),
+        b = parseInt(hex[1].slice(4, 6), 16);
+      return `rgba(${r},${g},${b},${opacity})`;
+    }
     return ac.replace(/[\d.]+\)$/, `${opacity})`);
   };
-
   const roll = () => {
     if (rolling) return;
-    setRolling(true); setHighlight(null);
+    setRolling(true);
+    setHighlight(null);
     let count = 0;
     const iv = setInterval(() => {
       setHighlight(Math.floor(Math.random() * rows.length));
@@ -495,133 +1184,254 @@ function MonsterRollTable({ tabelle, accentColor }) {
       if (count > 14) {
         clearInterval(iv);
         const idx = Math.floor(Math.random() * rows.length);
-        setHighlight(idx); setRolling(false);
+        setHighlight(idx);
+        setRolling(false);
       }
     }, 60);
   };
-
-  return (
-    <div style={{ marginTop:'10px' }}>
-      <button onClick={roll} style={{
-        display:'inline-flex', alignItems:'center', gap:'8px',
-        padding:'5px 14px', background:a(0.1), border:`1px solid ${a(0.3)}`, borderRadius:'4px',
-        color:ac, fontFamily:'var(--font-display)', fontSize:'10px',
-        letterSpacing:'0.14em', textTransform:'uppercase', cursor:'pointer',
-        marginBottom:'10px', transition:'all 0.2s'
-      }}>
-        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="1.5"
-          style={{ animation:rolling?'dice-spin 0.4s linear infinite':'none', transformOrigin:'center' }}>
-          <rect x="3" y="3" width="18" height="18" rx="3"/>
-          <circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/>
-          <circle cx="15.5" cy="8.5" r="1.2" fill="currentColor"/>
-          <circle cx="8.5" cy="15.5" r="1.2" fill="currentColor"/>
-          <circle cx="15.5" cy="15.5" r="1.2" fill="currentColor"/>
-          <circle cx="12" cy="12" r="1.2" fill="currentColor"/>
-        </svg>
-        Würfeln
-      </button>
-      <div style={{ border:`1px solid ${a(0.15)}`, borderRadius:'4px', overflow:'hidden', background:'rgba(var(--bg2-rgb),0.5)' }}>
-        <table style={{ width:'100%', borderCollapse:'collapse', fontFamily:'var(--font-body)', fontSize:'11px' }}>
-          <thead>
-            <tr>
-              {tabelle.header.map((h, j) => (
-                <th key={j} style={{
-                  textAlign:'left', padding:'6px 10px',
-                  background:a(0.12), color:ac,
-                  fontFamily:'var(--font-display)', fontWeight:'400',
-                  fontSize:'10px', letterSpacing:'0.14em', textTransform:'uppercase',
-                  borderBottom:`1px solid ${a(0.3)}`
-                }}>{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((row, k) => (
-              <tr key={k} onClick={() => setHighlight(k)} style={{
-                cursor:'pointer',
-                background: highlight === k ? a(0.1) : 'transparent',
-                transition:'background 0.15s'
-              }}>
-                {row.map((cell, j) => (
-                  <td key={j} style={{
-                    padding:'5px 10px',
-                    color: highlight === k ? 'rgba(var(--text-rgb),0.95)' : (j === 0 ? a(0.75) : 'rgba(var(--text-rgb),0.75)'),
-                    fontFamily: j === 0 ? 'var(--font-mono)' : 'var(--font-body)',
-                    fontSize: j === 0 ? '10px' : '11px',
-                    letterSpacing: j === 0 ? '0.08em' : '0',
-                    borderBottom:'1px solid rgba(255,255,255,0.04)',
-                    verticalAlign:'top',
-                    whiteSpace: j === 0 ? 'nowrap' : 'normal',
-                    transition:'color 0.15s'
-                  }}>{cell}</td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      {highlight !== null && (
-        <div style={{
-          animation:'result-pop 0.35s cubic-bezier(0.23,1,0.32,1) forwards',
-          marginTop:'10px', padding:'10px 14px',
-          background:a(0.08), border:`1px solid ${a(0.25)}`, borderRadius:'4px'
-        }}>
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:'10px', color:a(0.8), letterSpacing:'0.1em', marginRight:'10px' }}>{rows[highlight][0]}</span>
-          <span style={{ fontFamily:'var(--font-body)', fontSize:'12px', color:'var(--white)', fontWeight:'300', lineHeight:'1.6' }}>{rows[highlight][1]}</span>
-        </div>
-      )}
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: '10px'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: roll,
+    style: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '8px',
+      padding: '5px 14px',
+      background: a(0.1),
+      border: `1px solid ${a(0.3)}`,
+      borderRadius: '4px',
+      color: ac,
+      fontFamily: 'var(--font-display)',
+      fontSize: '10px',
+      letterSpacing: '0.14em',
+      textTransform: 'uppercase',
+      cursor: 'pointer',
+      marginBottom: '10px',
+      transition: 'all 0.2s'
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 24 24",
+    width: "13",
+    height: "13",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "1.5",
+    style: {
+      animation: rolling ? 'dice-spin 0.4s linear infinite' : 'none',
+      transformOrigin: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("rect", {
+    x: "3",
+    y: "3",
+    width: "18",
+    height: "18",
+    rx: "3"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "8.5",
+    cy: "8.5",
+    r: "1.2",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "15.5",
+    cy: "8.5",
+    r: "1.2",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "8.5",
+    cy: "15.5",
+    r: "1.2",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "15.5",
+    cy: "15.5",
+    r: "1.2",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "12",
+    cy: "12",
+    r: "1.2",
+    fill: "currentColor"
+  })), "W\xFCrfeln"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      border: `1px solid ${a(0.15)}`,
+      borderRadius: '4px',
+      overflow: 'hidden',
+      background: 'rgba(var(--bg2-rgb),0.5)'
+    }
+  }, /*#__PURE__*/React.createElement("table", {
+    style: {
+      width: '100%',
+      borderCollapse: 'collapse',
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px'
+    }
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, tabelle.header.map((h, j) => /*#__PURE__*/React.createElement("th", {
+    key: j,
+    style: {
+      textAlign: 'left',
+      padding: '6px 10px',
+      background: a(0.12),
+      color: ac,
+      fontFamily: 'var(--font-display)',
+      fontWeight: '400',
+      fontSize: '10px',
+      letterSpacing: '0.14em',
+      textTransform: 'uppercase',
+      borderBottom: `1px solid ${a(0.3)}`
+    }
+  }, h)))), /*#__PURE__*/React.createElement("tbody", null, rows.map((row, k) => /*#__PURE__*/React.createElement("tr", {
+    key: k,
+    onClick: () => setHighlight(k),
+    style: {
+      cursor: 'pointer',
+      background: highlight === k ? a(0.1) : 'transparent',
+      transition: 'background 0.15s'
+    }
+  }, row.map((cell, j) => /*#__PURE__*/React.createElement("td", {
+    key: j,
+    style: {
+      padding: '5px 10px',
+      color: highlight === k ? 'rgba(var(--text-rgb),0.95)' : j === 0 ? a(0.75) : 'rgba(var(--text-rgb),0.75)',
+      fontFamily: j === 0 ? 'var(--font-mono)' : 'var(--font-body)',
+      fontSize: j === 0 ? '10px' : '11px',
+      letterSpacing: j === 0 ? '0.08em' : '0',
+      borderBottom: '1px solid rgba(255,255,255,0.04)',
+      verticalAlign: 'top',
+      whiteSpace: j === 0 ? 'nowrap' : 'normal',
+      transition: 'color 0.15s'
+    }
+  }, cell))))))), highlight !== null && /*#__PURE__*/React.createElement("div", {
+    style: {
+      animation: 'result-pop 0.35s cubic-bezier(0.23,1,0.32,1) forwards',
+      marginTop: '10px',
+      padding: '10px 14px',
+      background: a(0.08),
+      border: `1px solid ${a(0.25)}`,
+      borderRadius: '4px'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '10px',
+      color: a(0.8),
+      letterSpacing: '0.1em',
+      marginRight: '10px'
+    }
+  }, rows[highlight][0]), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      color: 'var(--white)',
+      fontWeight: '300',
+      lineHeight: '1.6'
+    }
+  }, rows[highlight][1])));
 }
-
-function ActionBlock({ title, items, accentColor, color }) {
+function ActionBlock({
+  title,
+  items,
+  accentColor,
+  color
+}) {
   if (!items || items.length === 0) return null;
-  return (
-    <div style={{ marginBottom:'18px' }}>
-      <SectionLabel title={title} color={color} />
-      <div style={{ display:'flex', flexDirection:'column', gap:'10px' }}>
-        {items.map((a, i) => (
-          <div key={i}>
-            <span style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'500', color: accentColor || 'rgba(180,160,255,0.9)', letterSpacing:'0.04em' }}>{a.name}. </span>
-            <span style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', color:'rgba(var(--text-rgb),0.78)', letterSpacing:'0.015em', lineHeight:1.75 }}>{a.beschreibung}</span>
-            {a.tabelle && <MonsterRollTable tabelle={a.tabelle} accentColor={accentColor} />}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: '18px'
+    }
+  }, /*#__PURE__*/React.createElement(SectionLabel, {
+    title: title,
+    color: color
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '10px'
+    }
+  }, items.map((a, i) => /*#__PURE__*/React.createElement("div", {
+    key: i
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      fontWeight: '500',
+      color: accentColor || 'rgba(180,160,255,0.9)',
+      letterSpacing: '0.04em'
+    }
+  }, a.name, ". "), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      fontWeight: '300',
+      color: 'rgba(var(--text-rgb),0.78)',
+      letterSpacing: '0.015em',
+      lineHeight: 1.75
+    }
+  }, a.beschreibung), a.tabelle && /*#__PURE__*/React.createElement(MonsterRollTable, {
+    tabelle: a.tabelle,
+    accentColor: accentColor
+  })))));
 }
-
-function TagList({ items, color }) {
+function TagList({
+  items,
+  color
+}) {
   if (!items || items.length === 0) return null;
-  const bg  = color ? alpha(color, 0.08) : 'rgba(var(--accent-rgb),0.08)';
-  const bdr = color ? alpha(color, 0.2)  : 'rgba(var(--accent-rgb),0.2)';
-  return (
-    <div style={{ display:'flex', flexWrap:'wrap', gap:'4px' }}>
-      {items.map((item, i) => (
-        <span key={i} style={{ fontFamily:'var(--font-body)', fontSize:'10.5px', fontWeight:'300', padding:'2px 8px', background: bg, border:`1px solid ${bdr}`, borderRadius:'2px', color:'rgba(210,200,255,0.8)', letterSpacing:'0.03em' }}>{item}</span>
-      ))}
-    </div>
-  );
+  const bg = color ? alpha(color, 0.08) : 'rgba(var(--accent-rgb),0.08)';
+  const bdr = color ? alpha(color, 0.2) : 'rgba(var(--accent-rgb),0.2)';
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '4px'
+    }
+  }, items.map((item, i) => /*#__PURE__*/React.createElement("span", {
+    key: i,
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '10.5px',
+      fontWeight: '300',
+      padding: '2px 8px',
+      background: bg,
+      border: `1px solid ${bdr}`,
+      borderRadius: '2px',
+      color: 'rgba(210,200,255,0.8)',
+      letterSpacing: '0.03em'
+    }
+  }, item)));
 }
-
-function MonsterDetail({ monster }) {
+function MonsterDetail({
+  monster
+}) {
   const [rolledHP, setRolledHP] = useState(null);
   const [hpKey, setHpKey] = useState(0);
   const [statH, setStatH] = useState(null);
   const [imgOpen, setImgOpen] = useState(false);
   const [imgSrc, setImgSrc] = useState(null);
   const leftColRef = useRef(null);
-  useEffect(() => { setRolledHP(null); setHpKey(0); }, [monster.name]);
   useEffect(() => {
-    if (!monster.bild) { setImgSrc(null); return; }
-    if (monster.bild.startsWith('assets/')) { setImgSrc(monster.bild); return; }
+    setRolledHP(null);
+    setHpKey(0);
+  }, [monster.name]);
+  useEffect(() => {
+    if (!monster.bild) {
+      setImgSrc(null);
+      return;
+    }
+    if (monster.bild.startsWith('assets/')) {
+      setImgSrc(monster.bild);
+      return;
+    }
     setImgSrc(null);
-    window._sb.storage.from('images').createSignedUrl(monster.bild, 3600)
-      .then(({ data, error }) => {
-        if (error) console.error('Storage error for', monster.bild, error);
-        if (data) setImgSrc(data.signedUrl);
-      });
+    window._sb.storage.from('images').createSignedUrl(monster.bild, 3600).then(({
+      data,
+      error
+    }) => {
+      if (error) console.error('Storage error for', monster.bild, error);
+      if (data) setImgSrc(data.signedUrl);
+    });
   }, [monster.bild]);
   useLayoutEffect(() => {
     const el = leftColRef.current;
@@ -633,406 +1443,1101 @@ function MonsterDetail({ monster }) {
   }, [monster.name]);
   function handleHPRoll() {
     const r = rollDice(monster.tp_wuerfel);
-    if (r !== null) { setRolledHP(r); setHpKey(k => k + 1); }
+    if (r !== null) {
+      setRolledHP(r);
+      setHpKey(k => k + 1);
+    }
   }
   const HEX = 38;
   const hexPts = (() => {
-    const cx = HEX/2, cy = HEX/2, r = HEX/2 - 1.5;
-    return Array.from({ length: 6 }, (_, i) => {
-      const a = (Math.PI/3)*i - Math.PI/6;
-      return `${cx + r*Math.cos(a)},${cy + r*Math.sin(a)}`;
+    const cx = HEX / 2,
+      cy = HEX / 2,
+      r = HEX / 2 - 1.5;
+    return Array.from({
+      length: 6
+    }, (_, i) => {
+      const a = Math.PI / 3 * i - Math.PI / 6;
+      return `${cx + r * Math.cos(a)},${cy + r * Math.sin(a)}`;
     }).join(' ');
   })();
-
   const tc = typeColor(monster.art);
-  const a = (op) => alpha(tc, op);
-  const attrs = ['STR','DEX','CON','INT','WIS','CHA'];
-  const bewegungStr = Object.entries(monster.bewegung).map(([k,v]) => `${k} ${v}`).join(', ');
+  const a = op => alpha(tc, op);
+  const attrs = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
+  const bewegungStr = Object.entries(monster.bewegung).map(([k, v]) => `${k} ${v}`).join(', ');
   const saves = Object.entries(monster.rettungswuerfe || {});
   const skills = Object.entries(monster.fertigkeiten || {});
   const typeLineUnterart = monster.unterart ? ` (${monster.unterart})` : '';
-
-  return (
-    <div key={monster.name} style={{ flex:1, overflowY:'auto', animation:'fadeIn 0.22s ease' }}>
-      <div style={{ display:'flex', position:'relative', alignItems:'flex-start' }}>
-
-        {/* ── Left: all content ──────────────────────────── */}
-        <div ref={leftColRef} style={{ flex:1, padding:'24px 28px', minWidth:0 }}>
-
-        {/* Header */}
-        <div style={{ marginBottom:'16px', paddingBottom:'14px', borderBottom:`1px solid ${a(0.2)}` }}>
-          <div style={{ display:'flex', alignItems:'flex-start', gap:'14px' }}>
-            {/* HG badge – bigger, where image was */}
-            <div style={{ display:'flex', flexDirection:'column', alignItems:'center', background:a(0.12), border:`1px solid ${a(0.35)}`, borderRadius:'3px', padding:'10px 18px', flexShrink:0, minWidth:'64px' }}>
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:a(0.6), textTransform:'uppercase', marginBottom:'2px' }}>HG</div>
-              <div style={{ fontFamily:'var(--font-display)', fontSize:'30px', fontWeight:'400', color: tc, lineHeight:1 }}>{formatCR(monster.cr)}</div>
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', color:a(0.5), letterSpacing:'0.05em', marginTop:'3px' }}>{monster.xp.toLocaleString('de-DE')} XP</div>
-            </div>
-            {/* Name + type */}
-            <div style={{ flex:1 }}>
-              <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(16px,2vw,24px)', fontWeight:'400', letterSpacing:'0.14em', color:'var(--white)', lineHeight:1.2, textTransform:'uppercase', marginBottom:'4px' }}>{monster.name}</h1>
-              <div style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', color:'rgba(200,185,255,0.55)', letterSpacing:'0.04em', fontStyle:'italic' }}>
-                {declineSize(monster.groesse, monster.art)} {monster.art}{typeLineUnterart}, {monster.gesinnung}
-              </div>
-              <div style={{ display:'flex', alignItems:'center', gap:'7px', marginTop:'6px' }}>
-                <div style={{ width:'8px', height:'8px', borderRadius:'50%', background: tc, flexShrink:0 }} />
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.2em', color: tc, textTransform:'uppercase', opacity:0.85 }}>{monster.art}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      {/* Core stats */}
-      <div style={{ display:'grid', gridTemplateColumns:'auto auto auto auto', justifyContent:'space-between', gap:'10px 0', marginBottom:'16px', padding:'12px 14px', background:a(0.04), border:`1px solid ${a(0.1)}`, borderRadius:'3px', alignItems:'start' }}>
-        <MetaRow label="Rüstungsklasse" value={monster.ruestungstyp ? `${monster.rk} (${monster.ruestungstyp})` : String(monster.rk)} color={tc} />
-        <HPRow monster={monster} onRoll={handleHPRoll} color={tc} />
-        <div style={{ position:'relative', display:'flex', alignItems:'center', justifyContent:'center', width:`${HEX}px`, height:`${HEX}px`, flexShrink:0 }}>
-          <svg width={HEX} height={HEX} viewBox={`0 0 ${HEX} ${HEX}`} style={{ position:'absolute', top:0, left:0 }}>
-            <polygon points={hexPts} fill={rolledHP !== null ? 'rgba(255,210,100,0.07)' : 'rgba(255,210,100,0.03)'} stroke={rolledHP !== null ? 'rgba(255,210,100,0.5)' : 'rgba(255,210,100,0.2)'} strokeWidth="1.2"/>
-          </svg>
-          <span key={hpKey} style={{ fontFamily:'var(--font-mono)', fontSize:'13px', fontWeight:'400', color: rolledHP !== null ? 'rgba(255,210,100,0.95)' : 'rgba(255,210,100,0.35)', position:'relative', zIndex:1, lineHeight:1, animation: rolledHP !== null ? 'fadeIn 0.2s ease' : 'none' }}>
-            {rolledHP !== null ? rolledHP : monster.tp}
-          </span>
-        </div>
-        <MetaRow label="Bewegungsrate" value={bewegungStr} color={tc} />
-      </div>
-
-      {/* Ability scores */}
-      <div style={{ display:'flex', gap:'6px', marginBottom:'14px', padding:'12px 10px', background:a(0.03), border:`1px solid ${a(0.08)}`, borderRadius:'3px' }}>
-        {attrs.map(a => <AbilityScore key={a} label={a} score={monster.attribute[a]} color={tc} />)}
-      </div>
-
-      {/* Secondary stats */}
-      <div style={{ display:'flex', flexDirection:'column', gap:'7px', marginBottom:'14px', padding:'12px 14px', background:a(0.03), border:`1px solid ${a(0.08)}`, borderRadius:'3px' }}>
-        {saves.length > 0 && (
-          <div style={{ display:'flex', gap:'4px', flexWrap:'wrap', alignItems:'center' }}>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:a(0.5), textTransform:'uppercase', marginRight:'4px' }}>Rettungswürfe</span>
-            {saves.map(([attr, bonus]) => (
-              <span key={attr} style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(var(--text-rgb),0.8)', letterSpacing:'0.02em' }}>
-                {attr} {bonus >= 0 ? `+${bonus}` : bonus}
-              </span>
-            )).reduce((acc, el, i) => i === 0 ? [el] : [...acc, <span key={`sep${i}`} style={{ color:a(0.3) }}>,</span>, el], [])}
-          </div>
-        )}
-        {skills.length > 0 && (
-          <div style={{ display:'flex', gap:'4px', flexWrap:'wrap', alignItems:'center' }}>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:a(0.5), textTransform:'uppercase', marginRight:'4px' }}>Fertigkeiten</span>
-            {skills.map(([sk, bonus]) => (
-              <span key={sk} style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(var(--text-rgb),0.8)', letterSpacing:'0.02em' }}>
-                {sk} {bonus >= 0 ? `+${bonus}` : bonus}
-              </span>
-            )).reduce((acc, el, i) => i === 0 ? [el] : [...acc, <span key={`sep${i}`} style={{ color:a(0.3) }}>,</span>, el], [])}
-          </div>
-        )}
-        {(monster.verwundbarkeiten || []).length > 0 && (
-          <div style={{ display:'flex', gap:'6px', flexWrap:'wrap', alignItems:'center' }}>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:a(0.5), textTransform:'uppercase' }}>Verwundbarkeiten</span>
-            <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(200,180,255,0.8)' }}>{monster.verwundbarkeiten.join(', ')}</span>
-          </div>
-        )}
-        {(monster.schadensresistenzen || []).length > 0 && (
-          <div style={{ display:'flex', gap:'6px', flexWrap:'wrap', alignItems:'center' }}>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:a(0.5), textTransform:'uppercase' }}>Resistenzen</span>
-            <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(var(--text-rgb),0.75)' }}>{monster.schadensresistenzen.join('; ')}</span>
-          </div>
-        )}
-        {(monster.schadensimmunitaeten || []).length > 0 && (
-          <div style={{ display:'flex', gap:'6px', flexWrap:'wrap', alignItems:'center' }}>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:a(0.5), textTransform:'uppercase' }}>Immunitäten</span>
-            <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(var(--text-rgb),0.75)' }}>{monster.schadensimmunitaeten.join('; ')}</span>
-          </div>
-        )}
-        {(monster.zustandsimmunitaeten || []).length > 0 && (
-          <div style={{ display:'flex', gap:'6px', flexWrap:'wrap', alignItems:'center' }}>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:a(0.5), textTransform:'uppercase' }}>Zustandsimmunitäten</span>
-            <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(var(--text-rgb),0.75)' }}>{monster.zustandsimmunitaeten.join(', ')}</span>
-          </div>
-        )}
-        <div style={{ display:'flex', gap:'6px', flexWrap:'wrap', alignItems:'center' }}>
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:a(0.5), textTransform:'uppercase' }}>Sinne</span>
-          <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(var(--text-rgb),0.75)' }}>{[...monster.sinne, `passive Wahrnehmung ${monster.passiveWahrnehmung}`].join(', ')}</span>
-        </div>
-        {(monster.sprachen || []).length > 0 && (
-          <div style={{ display:'flex', gap:'6px', flexWrap:'wrap', alignItems:'center' }}>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:a(0.5), textTransform:'uppercase' }}>Sprachen</span>
-            <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(var(--text-rgb),0.75)' }}>{monster.sprachen.join(', ')}</span>
-          </div>
-        )}
-        {(monster.umgebung || []).length > 0 && (
-          <div style={{ display:'flex', gap:'6px', flexWrap:'wrap', alignItems:'baseline' }}>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:a(0.5), textTransform:'uppercase', flexShrink:0 }}>Umgebung</span>
-            <TagList items={monster.umgebung} color={tc} />
-          </div>
-        )}
-      </div>
-
-        </div>{/* end left column */}
-
-        {/* ── Right: sticky image ────────────────────────── */}
-        {imgSrc && (
-          <div style={{ width:'450px', flexShrink:0, overflow:'hidden', borderLeft:`1px solid ${a(0.15)}`, padding:'16px', display:'flex', flexDirection:'column' }}>
-            <img src={imgSrc} alt={monster.name} onClick={() => setImgOpen(true)} style={{ width:'100%', height:'auto', maxHeight: statH ? `${Math.round(statH * 1.1)}px` : 'none', display:'block', objectFit:'contain', objectPosition:'top center', cursor:'zoom-in' }} />
-            <div style={{ marginTop:'12px', display:'flex', flexDirection:'column', alignItems:'flex-start', gap:'5px' }}>
-              <SizeGrid groesse={monster.groesse} color={tc} />
-              <span style={{ fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.18em', color:alpha(tc, 0.55), textTransform:'uppercase' }}>{monster.groesse}</span>
-            </div>
-          </div>
-        )}
-
-      </div>{/* end flex row */}
-
-      {/* ── Full-width: actions & lore ─────────────────── */}
-      <div style={{ padding:'4px 28px 24px' }}>
-
-      {/* Besonderheiten + Aktionen + Bonusaktionen + Reaktionen + Legendäre in a box */}
-      <div style={{ display:'flex', flexDirection:'column', gap:'0', marginBottom:'16px', padding:'14px 14px 0', background:a(0.03), border:`1px solid ${a(0.08)}`, borderRadius:'3px' }}>
-        {(monster.besonderheiten || []).length > 0 && (
-          <ActionBlock title="Besonderheiten" items={monster.besonderheiten} accentColor={tc} color={tc} />
-        )}
-        <ActionBlock title="Aktionen" items={monster.aktionen} accentColor={tc} color={tc} />
-        <ActionBlock title="Bonusaktionen" items={monster.bonusaktionen} accentColor={tc} color={tc} />
-        <ActionBlock title="Reaktionen" items={monster.reaktionen} accentColor={tc} color={tc} />
-        {monster.legendaere_aktionen && (
-          <ActionBlock title="Legendäre Aktionen" items={monster.legendaere_aktionen} accentColor={tc} color={tc} />
-        )}
-        {monster.hortaktionen && (
-          <EffectBlock title="Hortaktionen" intro={monster.hortaktionen.beschreibung} items={monster.hortaktionen.aktionen} color={tc} />
-        )}
-        {monster.regionale_effekte && (
-          <EffectBlock title="Regionale Effekte" intro={monster.regionale_effekte.beschreibung} items={monster.regionale_effekte.effekte} color={tc} />
-        )}
-        {monster.pleurossa_netzwerk && (
-          <div style={{ marginBottom:'18px' }}>
-            <SectionLabel title="Pleurossa-Netzwerk" color={tc} />
-            {monster.pleurossa_netzwerk.beschreibung && (
-              <p style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.75, color:'rgba(var(--text-rgb),0.65)', letterSpacing:'0.015em', margin:'0 0 10px' }}>{monster.pleurossa_netzwerk.beschreibung}</p>
-            )}
-            <div style={{ display:'flex', flexDirection:'column', gap:'10px' }}>
-              {monster.pleurossa_netzwerk.regeln.map((r, i) => (
-                <div key={i} style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', color:'rgba(var(--text-rgb),0.78)', letterSpacing:'0.015em', lineHeight:1.75 }}>
-                  <span style={{ fontWeight:'600', color:'rgba(var(--text-rgb),0.9)' }}>{r.name}. </span>{r.beschreibung}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-        {monster.korruption && (
-          <div style={{ marginBottom:'18px' }}>
-            <SectionLabel title="Korruption" color={tc} />
-            {monster.korruption.beschreibung && (
-              <p style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.75, color:'rgba(var(--text-rgb),0.65)', letterSpacing:'0.015em', margin:'0 0 8px' }}>{monster.korruption.beschreibung}</p>
-            )}
-            {monster.korruption.progression && (
-              <p style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.75, color:'rgba(var(--text-rgb),0.65)', letterSpacing:'0.015em', margin:'0 0 6px' }}>
-                <span style={{ fontWeight:'600', color:'rgba(var(--text-rgb),0.9)' }}>Progression. </span>{monster.korruption.progression}
-              </p>
-            )}
-            {monster.korruption.tod_effekt && (
-              <p style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.75, color:'rgba(var(--text-rgb),0.65)', letterSpacing:'0.015em', margin:'0 0 6px' }}>
-                <span style={{ fontWeight:'600', color:'rgba(var(--text-rgb),0.9)' }}>Tod. </span>{monster.korruption.tod_effekt}
-              </p>
-            )}
-            {monster.korruption.heilung && (
-              <p style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.75, color:'rgba(var(--text-rgb),0.65)', letterSpacing:'0.015em', margin:'0 0 12px' }}>
-                <span style={{ fontWeight:'600', color:'rgba(var(--text-rgb),0.9)' }}>Heilung. </span>{monster.korruption.heilung}
-              </p>
-            )}
-            <div style={{ border:`1px solid ${a(0.15)}`, borderRadius:'4px', overflow:'hidden', background:'rgba(var(--bg2-rgb),0.5)' }}>
-              <table style={{ width:'100%', borderCollapse:'collapse', fontFamily:'var(--font-body)', fontSize:'11px' }}>
-                <thead>
-                  <tr>
-                    {['Stufe', 'Name', 'Effekt'].map((h, j) => (
-                      <th key={j} style={{ textAlign:'left', padding:'6px 10px', background:a(0.12), color:tc, fontFamily:'var(--font-display)', fontWeight:'400', fontSize:'10px', letterSpacing:'0.14em', textTransform:'uppercase', borderBottom:`1px solid ${a(0.3)}` }}>{h}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {monster.korruption.stufen.map((s, i) => (
-                    <tr key={i}>
-                      <td style={{ padding:'5px 10px', color:a(0.75), fontFamily:'var(--font-mono)', fontSize:'10px', letterSpacing:'0.08em', borderBottom:'1px solid rgba(255,255,255,0.04)', verticalAlign:'top', whiteSpace:'nowrap' }}>{s.stufe}</td>
-                      <td style={{ padding:'5px 10px', color:a(0.85), fontFamily:'var(--font-body)', fontSize:'11px', borderBottom:'1px solid rgba(255,255,255,0.04)', verticalAlign:'top', whiteSpace:'nowrap' }}>{s.name}</td>
-                      <td style={{ padding:'5px 10px', color:'rgba(var(--text-rgb),0.75)', fontFamily:'var(--font-body)', fontSize:'11px', borderBottom:'1px solid rgba(255,255,255,0.04)', verticalAlign:'top', lineHeight:1.65 }}>{s.beschreibung}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            {monster.korruption.pilz_praesenz_tabelle && (
-              <div style={{ marginTop:'14px' }}>
-                <div style={{ fontFamily:'var(--font-display)', fontSize:'9px', letterSpacing:'0.2em', color:a(0.6), textTransform:'uppercase', marginBottom:'8px' }}>Pilzpräsenz-Stärke</div>
-                <div style={{ border:`1px solid ${a(0.15)}`, borderRadius:'4px', overflow:'hidden', background:'rgba(var(--bg2-rgb),0.5)' }}>
-                  <table style={{ width:'100%', borderCollapse:'collapse', fontFamily:'var(--font-body)', fontSize:'11px' }}>
-                    <thead>
-                      <tr>
-                        {monster.korruption.pilz_praesenz_tabelle.header.map((h, j) => (
-                          <th key={j} style={{ textAlign:'left', padding:'6px 10px', background:a(0.12), color:tc, fontFamily:'var(--font-display)', fontWeight:'400', fontSize:'10px', letterSpacing:'0.14em', textTransform:'uppercase', borderBottom:`1px solid ${a(0.3)}` }}>{h}</th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {monster.korruption.pilz_praesenz_tabelle.rows.map((row, k) => (
-                        <tr key={k}>
-                          {row.map((cell, j) => (
-                            <td key={j} style={{ padding:'5px 10px', color: j === 0 ? a(0.75) : 'rgba(var(--text-rgb),0.75)', fontFamily: j === 0 ? 'var(--font-mono)' : 'var(--font-body)', fontSize: j === 0 ? '10px' : '11px', letterSpacing: j === 0 ? '0.08em' : '0', borderBottom:'1px solid rgba(255,255,255,0.04)', verticalAlign:'top', whiteSpace: j < 2 ? 'nowrap' : 'normal' }}>{cell}</td>
-                          ))}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-        {monster.korrupte_floraldrachen_vorlage && (
-          <div style={{ marginBottom:'18px' }}>
-            <SectionLabel title="Korrumpierte Floraldrachen" color={tc} />
-            {monster.korrupte_floraldrachen_vorlage.beschreibung && (
-              <p style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.75, color:'rgba(var(--text-rgb),0.65)', letterSpacing:'0.015em', margin:'0 0 10px' }}>{monster.korrupte_floraldrachen_vorlage.beschreibung}</p>
-            )}
-            <div style={{ display:'flex', flexDirection:'column', gap:'8px' }}>
-              {monster.korrupte_floraldrachen_vorlage.aenderungen.map((aend, i) => (
-                <div key={i} style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', color:'rgba(var(--text-rgb),0.78)', letterSpacing:'0.015em', lineHeight:1.75 }}>
-                  <span style={{ fontWeight:'600', color:'rgba(var(--text-rgb),0.9)' }}>{aend.name}. </span>{aend.beschreibung}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Lore */}
-      {monster.beschreibung && monster.beschreibung.length > 0 && (
-        <div style={{ marginTop:'8px' }}>
-          <SectionLabel title="Lore" color={tc} />
-          <div style={{ display:'flex', flexDirection:'column', gap:'10px' }}>
-            {monster.beschreibung.map((p, i) => (
-              <p key={i} style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.85, color:'rgba(var(--text-rgb),0.65)', letterSpacing:'0.015em', margin:0 }}>{p}</p>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Art lore (general type knowledge, e.g. "Drache") */}
-      {window.UNTERART_LORE && window.UNTERART_LORE[monster.art] && (() => {
-        const lore = window.UNTERART_LORE[monster.art];
-        return (
-          <div style={{ marginTop:'16px', paddingTop:'16px', borderTop:`1px solid ${a(0.1)}` }}>
-            <SectionLabel title={monster.art} color={tc} />
-            {lore.einleitung && (
-              <p style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.85, color:'rgba(var(--text-rgb),0.65)', letterSpacing:'0.015em', margin:'0 0 14px' }}>{lore.einleitung}</p>
-            )}
-            <div style={{ display:'flex', flexDirection:'column', gap:'14px' }}>
-              {lore.abschnitte.map((s, i) => (
-                <div key={i}>
-                  <div style={{ fontFamily:'var(--font-display)', fontSize:'10px', letterSpacing:'0.22em', color: tc, textTransform:'uppercase', opacity:0.75, marginBottom:'6px' }}>{s.titel}</div>
-                  {s.tabelle && (
-                    <table style={{ width:'100%', borderCollapse:'collapse', marginBottom:'8px', fontFamily:'var(--font-body)', fontSize:'11px' }}>
-                      <thead>
-                        <tr>
-                          {s.tabelle.kopf.map((h, hi) => (
-                            <th key={hi} style={{ textAlign:'left', padding:'4px 10px', fontWeight:'400', letterSpacing:'0.1em', color: tc, opacity:0.7, borderBottom:`1px solid ${a(0.2)}`, fontFamily:'var(--font-mono)', fontSize:'8px', textTransform:'uppercase' }}>{h}</th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {s.tabelle.zeilen.map((row, ri) => (
-                          <tr key={ri} style={{ background: ri % 2 === 0 ? a(0.03) : 'transparent' }}>
-                            {row.map((cell, ci) => (
-                              <td key={ci} style={{ padding:'4px 10px', color:'rgba(var(--text-rgb),0.7)', fontWeight:'300', lineHeight:1.6 }}>{cell}</td>
-                            ))}
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  )}
-                  <p style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.85, color:'rgba(var(--text-rgb),0.55)', letterSpacing:'0.015em', margin:0 }}>{s.inhalt}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        );
-      })()}
-
-      {/* Unterart lore (specific subtype knowledge, e.g. "Schattendrache", "Dämon") */}
-      {monster.unterart && monster.unterart !== monster.art && window.UNTERART_LORE && window.UNTERART_LORE[monster.unterart] && (() => {
-        const lore = window.UNTERART_LORE[monster.unterart];
-        return (
-          <div style={{ marginTop:'16px', paddingTop:'16px', borderTop:`1px solid ${a(0.1)}` }}>
-            <SectionLabel title={monster.unterart} color={tc} />
-            {lore.einleitung && (
-              <p style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.85, color:'rgba(var(--text-rgb),0.65)', letterSpacing:'0.015em', margin:'0 0 14px' }}>{lore.einleitung}</p>
-            )}
-            <div style={{ display:'flex', flexDirection:'column', gap:'14px' }}>
-              {lore.abschnitte.map((s, i) => (
-                <div key={i}>
-                  <div style={{ fontFamily:'var(--font-display)', fontSize:'10px', letterSpacing:'0.22em', color: tc, textTransform:'uppercase', opacity:0.75, marginBottom:'6px' }}>{s.titel}</div>
-                  {s.tabelle && (
-                    <table style={{ width:'100%', borderCollapse:'collapse', marginBottom:'8px', fontFamily:'var(--font-body)', fontSize:'11px' }}>
-                      <thead>
-                        <tr>
-                          {s.tabelle.kopf.map((h, hi) => (
-                            <th key={hi} style={{ textAlign:'left', padding:'4px 10px', fontWeight:'400', letterSpacing:'0.1em', color: tc, opacity:0.7, borderBottom:`1px solid ${a(0.2)}`, fontFamily:'var(--font-mono)', fontSize:'8px', textTransform:'uppercase' }}>{h}</th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {s.tabelle.zeilen.map((row, ri) => (
-                          <tr key={ri} style={{ background: ri % 2 === 0 ? a(0.03) : 'transparent' }}>
-                            {row.map((cell, ci) => (
-                              <td key={ci} style={{ padding:'4px 10px', color:'rgba(var(--text-rgb),0.7)', fontWeight:'300', lineHeight:1.6 }}>{cell}</td>
-                            ))}
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  )}
-                  <p style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.85, color:'rgba(var(--text-rgb),0.55)', letterSpacing:'0.015em', margin:0 }}>{s.inhalt}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        );
-      })()}
-
-      </div>{/* end full-width section */}
-
-      {/* Image overlay — portal so no parent stacking context can clip it */}
-      {imgOpen && ReactDOM.createPortal(
-        <div onClick={() => setImgOpen(false)} style={{ position:'fixed', inset:0, zIndex:9999, background:'rgba(0,0,0,0.85)', display:'flex', alignItems:'center', justifyContent:'center', cursor:'zoom-out', backdropFilter:'blur(6px)', animation:'fadeIn 0.18s ease' }}>
-          <img src={imgSrc} alt={monster.name} onClick={e => e.stopPropagation()} style={{ maxWidth:'90vw', maxHeight:'90vh', objectFit:'contain', borderRadius:'3px', boxShadow:'0 0 60px rgba(0,0,0,0.8)' }} />
-        </div>,
-        document.body
-      )}
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    key: monster.name,
+    style: {
+      flex: 1,
+      overflowY: 'auto',
+      animation: 'fadeIn 0.22s ease'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      position: 'relative',
+      alignItems: 'flex-start'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    ref: leftColRef,
+    style: {
+      flex: 1,
+      padding: '24px 28px',
+      minWidth: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: '16px',
+      paddingBottom: '14px',
+      borderBottom: `1px solid ${a(0.2)}`
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'flex-start',
+      gap: '14px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      background: a(0.12),
+      border: `1px solid ${a(0.35)}`,
+      borderRadius: '3px',
+      padding: '10px 18px',
+      flexShrink: 0,
+      minWidth: '64px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.22em',
+      color: a(0.6),
+      textTransform: 'uppercase',
+      marginBottom: '2px'
+    }
+  }, "HG"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '30px',
+      fontWeight: '400',
+      color: tc,
+      lineHeight: 1
+    }
+  }, formatCR(monster.cr)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      color: a(0.5),
+      letterSpacing: '0.05em',
+      marginTop: '3px'
+    }
+  }, monster.xp.toLocaleString('de-DE'), " XP")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("h1", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: 'clamp(16px,2vw,24px)',
+      fontWeight: '400',
+      letterSpacing: '0.14em',
+      color: 'var(--white)',
+      lineHeight: 1.2,
+      textTransform: 'uppercase',
+      marginBottom: '4px'
+    }
+  }, monster.name), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      fontWeight: '300',
+      color: 'rgba(200,185,255,0.55)',
+      letterSpacing: '0.04em',
+      fontStyle: 'italic'
+    }
+  }, declineSize(monster.groesse, monster.art), " ", monster.art, typeLineUnterart, ", ", monster.gesinnung), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '7px',
+      marginTop: '6px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '8px',
+      height: '8px',
+      borderRadius: '50%',
+      background: tc,
+      flexShrink: 0
+    }
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.2em',
+      color: tc,
+      textTransform: 'uppercase',
+      opacity: 0.85
+    }
+  }, monster.art))))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: 'auto auto auto auto',
+      justifyContent: 'space-between',
+      gap: '10px 0',
+      marginBottom: '16px',
+      padding: '12px 14px',
+      background: a(0.04),
+      border: `1px solid ${a(0.1)}`,
+      borderRadius: '3px',
+      alignItems: 'start'
+    }
+  }, /*#__PURE__*/React.createElement(MetaRow, {
+    label: "R\xFCstungsklasse",
+    value: monster.ruestungstyp ? `${monster.rk} (${monster.ruestungstyp})` : String(monster.rk),
+    color: tc
+  }), /*#__PURE__*/React.createElement(HPRow, {
+    monster: monster,
+    onRoll: handleHPRoll,
+    color: tc
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: `${HEX}px`,
+      height: `${HEX}px`,
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: HEX,
+    height: HEX,
+    viewBox: `0 0 ${HEX} ${HEX}`,
+    style: {
+      position: 'absolute',
+      top: 0,
+      left: 0
+    }
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPts,
+    fill: rolledHP !== null ? 'rgba(255,210,100,0.07)' : 'rgba(255,210,100,0.03)',
+    stroke: rolledHP !== null ? 'rgba(255,210,100,0.5)' : 'rgba(255,210,100,0.2)',
+    strokeWidth: "1.2"
+  })), /*#__PURE__*/React.createElement("span", {
+    key: hpKey,
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '13px',
+      fontWeight: '400',
+      color: rolledHP !== null ? 'rgba(255,210,100,0.95)' : 'rgba(255,210,100,0.35)',
+      position: 'relative',
+      zIndex: 1,
+      lineHeight: 1,
+      animation: rolledHP !== null ? 'fadeIn 0.2s ease' : 'none'
+    }
+  }, rolledHP !== null ? rolledHP : monster.tp)), /*#__PURE__*/React.createElement(MetaRow, {
+    label: "Bewegungsrate",
+    value: bewegungStr,
+    color: tc
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '6px',
+      marginBottom: '14px',
+      padding: '12px 10px',
+      background: a(0.03),
+      border: `1px solid ${a(0.08)}`,
+      borderRadius: '3px'
+    }
+  }, attrs.map(a => /*#__PURE__*/React.createElement(AbilityScore, {
+    key: a,
+    label: a,
+    score: monster.attribute[a],
+    color: tc
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '7px',
+      marginBottom: '14px',
+      padding: '12px 14px',
+      background: a(0.03),
+      border: `1px solid ${a(0.08)}`,
+      borderRadius: '3px'
+    }
+  }, saves.length > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '4px',
+      flexWrap: 'wrap',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '0.22em',
+      color: a(0.5),
+      textTransform: 'uppercase',
+      marginRight: '4px'
+    }
+  }, "Rettungsw\xFCrfe"), saves.map(([attr, bonus]) => /*#__PURE__*/React.createElement("span", {
+    key: attr,
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px',
+      fontWeight: '300',
+      color: 'rgba(var(--text-rgb),0.8)',
+      letterSpacing: '0.02em'
+    }
+  }, attr, " ", bonus >= 0 ? `+${bonus}` : bonus)).reduce((acc, el, i) => i === 0 ? [el] : [...acc, /*#__PURE__*/React.createElement("span", {
+    key: `sep${i}`,
+    style: {
+      color: a(0.3)
+    }
+  }, ","), el], [])), skills.length > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '4px',
+      flexWrap: 'wrap',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '0.22em',
+      color: a(0.5),
+      textTransform: 'uppercase',
+      marginRight: '4px'
+    }
+  }, "Fertigkeiten"), skills.map(([sk, bonus]) => /*#__PURE__*/React.createElement("span", {
+    key: sk,
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px',
+      fontWeight: '300',
+      color: 'rgba(var(--text-rgb),0.8)',
+      letterSpacing: '0.02em'
+    }
+  }, sk, " ", bonus >= 0 ? `+${bonus}` : bonus)).reduce((acc, el, i) => i === 0 ? [el] : [...acc, /*#__PURE__*/React.createElement("span", {
+    key: `sep${i}`,
+    style: {
+      color: a(0.3)
+    }
+  }, ","), el], [])), (monster.verwundbarkeiten || []).length > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '6px',
+      flexWrap: 'wrap',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '0.22em',
+      color: a(0.5),
+      textTransform: 'uppercase'
+    }
+  }, "Verwundbarkeiten"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px',
+      fontWeight: '300',
+      color: 'rgba(200,180,255,0.8)'
+    }
+  }, monster.verwundbarkeiten.join(', '))), (monster.schadensresistenzen || []).length > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '6px',
+      flexWrap: 'wrap',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '0.22em',
+      color: a(0.5),
+      textTransform: 'uppercase'
+    }
+  }, "Resistenzen"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px',
+      fontWeight: '300',
+      color: 'rgba(var(--text-rgb),0.75)'
+    }
+  }, monster.schadensresistenzen.join('; '))), (monster.schadensimmunitaeten || []).length > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '6px',
+      flexWrap: 'wrap',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '0.22em',
+      color: a(0.5),
+      textTransform: 'uppercase'
+    }
+  }, "Immunit\xE4ten"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px',
+      fontWeight: '300',
+      color: 'rgba(var(--text-rgb),0.75)'
+    }
+  }, monster.schadensimmunitaeten.join('; '))), (monster.zustandsimmunitaeten || []).length > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '6px',
+      flexWrap: 'wrap',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '0.22em',
+      color: a(0.5),
+      textTransform: 'uppercase'
+    }
+  }, "Zustandsimmunit\xE4ten"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px',
+      fontWeight: '300',
+      color: 'rgba(var(--text-rgb),0.75)'
+    }
+  }, monster.zustandsimmunitaeten.join(', '))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '6px',
+      flexWrap: 'wrap',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '0.22em',
+      color: a(0.5),
+      textTransform: 'uppercase'
+    }
+  }, "Sinne"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px',
+      fontWeight: '300',
+      color: 'rgba(var(--text-rgb),0.75)'
+    }
+  }, [...monster.sinne, `passive Wahrnehmung ${monster.passiveWahrnehmung}`].join(', '))), (monster.sprachen || []).length > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '6px',
+      flexWrap: 'wrap',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '0.22em',
+      color: a(0.5),
+      textTransform: 'uppercase'
+    }
+  }, "Sprachen"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px',
+      fontWeight: '300',
+      color: 'rgba(var(--text-rgb),0.75)'
+    }
+  }, monster.sprachen.join(', '))), (monster.umgebung || []).length > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '6px',
+      flexWrap: 'wrap',
+      alignItems: 'baseline'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '0.22em',
+      color: a(0.5),
+      textTransform: 'uppercase',
+      flexShrink: 0
+    }
+  }, "Umgebung"), /*#__PURE__*/React.createElement(TagList, {
+    items: monster.umgebung,
+    color: tc
+  })))), imgSrc && /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '450px',
+      flexShrink: 0,
+      overflow: 'hidden',
+      borderLeft: `1px solid ${a(0.15)}`,
+      padding: '16px',
+      display: 'flex',
+      flexDirection: 'column'
+    }
+  }, /*#__PURE__*/React.createElement("img", {
+    src: imgSrc,
+    alt: monster.name,
+    onClick: () => setImgOpen(true),
+    style: {
+      width: '100%',
+      height: 'auto',
+      maxHeight: statH ? `${Math.round(statH * 1.1)}px` : 'none',
+      display: 'block',
+      objectFit: 'contain',
+      objectPosition: 'top center',
+      cursor: 'zoom-in'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: '12px',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+      gap: '5px'
+    }
+  }, /*#__PURE__*/React.createElement(SizeGrid, {
+    groesse: monster.groesse,
+    color: tc
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      letterSpacing: '0.18em',
+      color: alpha(tc, 0.55),
+      textTransform: 'uppercase'
+    }
+  }, monster.groesse)))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '4px 28px 24px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '0',
+      marginBottom: '16px',
+      padding: '14px 14px 0',
+      background: a(0.03),
+      border: `1px solid ${a(0.08)}`,
+      borderRadius: '3px'
+    }
+  }, (monster.besonderheiten || []).length > 0 && /*#__PURE__*/React.createElement(ActionBlock, {
+    title: "Besonderheiten",
+    items: monster.besonderheiten,
+    accentColor: tc,
+    color: tc
+  }), /*#__PURE__*/React.createElement(ActionBlock, {
+    title: "Aktionen",
+    items: monster.aktionen,
+    accentColor: tc,
+    color: tc
+  }), /*#__PURE__*/React.createElement(ActionBlock, {
+    title: "Bonusaktionen",
+    items: monster.bonusaktionen,
+    accentColor: tc,
+    color: tc
+  }), /*#__PURE__*/React.createElement(ActionBlock, {
+    title: "Reaktionen",
+    items: monster.reaktionen,
+    accentColor: tc,
+    color: tc
+  }), monster.legendaere_aktionen && /*#__PURE__*/React.createElement(ActionBlock, {
+    title: "Legend\xE4re Aktionen",
+    items: monster.legendaere_aktionen,
+    accentColor: tc,
+    color: tc
+  }), monster.hortaktionen && /*#__PURE__*/React.createElement(EffectBlock, {
+    title: "Hortaktionen",
+    intro: monster.hortaktionen.beschreibung,
+    items: monster.hortaktionen.aktionen,
+    color: tc
+  }), monster.regionale_effekte && /*#__PURE__*/React.createElement(EffectBlock, {
+    title: "Regionale Effekte",
+    intro: monster.regionale_effekte.beschreibung,
+    items: monster.regionale_effekte.effekte,
+    color: tc
+  }), monster.pleurossa_netzwerk && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: '18px'
+    }
+  }, /*#__PURE__*/React.createElement(SectionLabel, {
+    title: "Pleurossa-Netzwerk",
+    color: tc
+  }), monster.pleurossa_netzwerk.beschreibung && /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      fontWeight: '300',
+      lineHeight: 1.75,
+      color: 'rgba(var(--text-rgb),0.65)',
+      letterSpacing: '0.015em',
+      margin: '0 0 10px'
+    }
+  }, monster.pleurossa_netzwerk.beschreibung), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '10px'
+    }
+  }, monster.pleurossa_netzwerk.regeln.map((r, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      fontWeight: '300',
+      color: 'rgba(var(--text-rgb),0.78)',
+      letterSpacing: '0.015em',
+      lineHeight: 1.75
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontWeight: '600',
+      color: 'rgba(var(--text-rgb),0.9)'
+    }
+  }, r.name, ". "), r.beschreibung)))), monster.korruption && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: '18px'
+    }
+  }, /*#__PURE__*/React.createElement(SectionLabel, {
+    title: "Korruption",
+    color: tc
+  }), monster.korruption.beschreibung && /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      fontWeight: '300',
+      lineHeight: 1.75,
+      color: 'rgba(var(--text-rgb),0.65)',
+      letterSpacing: '0.015em',
+      margin: '0 0 8px'
+    }
+  }, monster.korruption.beschreibung), monster.korruption.progression && /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      fontWeight: '300',
+      lineHeight: 1.75,
+      color: 'rgba(var(--text-rgb),0.65)',
+      letterSpacing: '0.015em',
+      margin: '0 0 6px'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontWeight: '600',
+      color: 'rgba(var(--text-rgb),0.9)'
+    }
+  }, "Progression. "), monster.korruption.progression), monster.korruption.tod_effekt && /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      fontWeight: '300',
+      lineHeight: 1.75,
+      color: 'rgba(var(--text-rgb),0.65)',
+      letterSpacing: '0.015em',
+      margin: '0 0 6px'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontWeight: '600',
+      color: 'rgba(var(--text-rgb),0.9)'
+    }
+  }, "Tod. "), monster.korruption.tod_effekt), monster.korruption.heilung && /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      fontWeight: '300',
+      lineHeight: 1.75,
+      color: 'rgba(var(--text-rgb),0.65)',
+      letterSpacing: '0.015em',
+      margin: '0 0 12px'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontWeight: '600',
+      color: 'rgba(var(--text-rgb),0.9)'
+    }
+  }, "Heilung. "), monster.korruption.heilung), /*#__PURE__*/React.createElement("div", {
+    style: {
+      border: `1px solid ${a(0.15)}`,
+      borderRadius: '4px',
+      overflow: 'hidden',
+      background: 'rgba(var(--bg2-rgb),0.5)'
+    }
+  }, /*#__PURE__*/React.createElement("table", {
+    style: {
+      width: '100%',
+      borderCollapse: 'collapse',
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px'
+    }
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, ['Stufe', 'Name', 'Effekt'].map((h, j) => /*#__PURE__*/React.createElement("th", {
+    key: j,
+    style: {
+      textAlign: 'left',
+      padding: '6px 10px',
+      background: a(0.12),
+      color: tc,
+      fontFamily: 'var(--font-display)',
+      fontWeight: '400',
+      fontSize: '10px',
+      letterSpacing: '0.14em',
+      textTransform: 'uppercase',
+      borderBottom: `1px solid ${a(0.3)}`
+    }
+  }, h)))), /*#__PURE__*/React.createElement("tbody", null, monster.korruption.stufen.map((s, i) => /*#__PURE__*/React.createElement("tr", {
+    key: i
+  }, /*#__PURE__*/React.createElement("td", {
+    style: {
+      padding: '5px 10px',
+      color: a(0.75),
+      fontFamily: 'var(--font-mono)',
+      fontSize: '10px',
+      letterSpacing: '0.08em',
+      borderBottom: '1px solid rgba(255,255,255,0.04)',
+      verticalAlign: 'top',
+      whiteSpace: 'nowrap'
+    }
+  }, s.stufe), /*#__PURE__*/React.createElement("td", {
+    style: {
+      padding: '5px 10px',
+      color: a(0.85),
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px',
+      borderBottom: '1px solid rgba(255,255,255,0.04)',
+      verticalAlign: 'top',
+      whiteSpace: 'nowrap'
+    }
+  }, s.name), /*#__PURE__*/React.createElement("td", {
+    style: {
+      padding: '5px 10px',
+      color: 'rgba(var(--text-rgb),0.75)',
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px',
+      borderBottom: '1px solid rgba(255,255,255,0.04)',
+      verticalAlign: 'top',
+      lineHeight: 1.65
+    }
+  }, s.beschreibung)))))), monster.korruption.pilz_praesenz_tabelle && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: '14px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '9px',
+      letterSpacing: '0.2em',
+      color: a(0.6),
+      textTransform: 'uppercase',
+      marginBottom: '8px'
+    }
+  }, "Pilzpr\xE4senz-St\xE4rke"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      border: `1px solid ${a(0.15)}`,
+      borderRadius: '4px',
+      overflow: 'hidden',
+      background: 'rgba(var(--bg2-rgb),0.5)'
+    }
+  }, /*#__PURE__*/React.createElement("table", {
+    style: {
+      width: '100%',
+      borderCollapse: 'collapse',
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px'
+    }
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, monster.korruption.pilz_praesenz_tabelle.header.map((h, j) => /*#__PURE__*/React.createElement("th", {
+    key: j,
+    style: {
+      textAlign: 'left',
+      padding: '6px 10px',
+      background: a(0.12),
+      color: tc,
+      fontFamily: 'var(--font-display)',
+      fontWeight: '400',
+      fontSize: '10px',
+      letterSpacing: '0.14em',
+      textTransform: 'uppercase',
+      borderBottom: `1px solid ${a(0.3)}`
+    }
+  }, h)))), /*#__PURE__*/React.createElement("tbody", null, monster.korruption.pilz_praesenz_tabelle.rows.map((row, k) => /*#__PURE__*/React.createElement("tr", {
+    key: k
+  }, row.map((cell, j) => /*#__PURE__*/React.createElement("td", {
+    key: j,
+    style: {
+      padding: '5px 10px',
+      color: j === 0 ? a(0.75) : 'rgba(var(--text-rgb),0.75)',
+      fontFamily: j === 0 ? 'var(--font-mono)' : 'var(--font-body)',
+      fontSize: j === 0 ? '10px' : '11px',
+      letterSpacing: j === 0 ? '0.08em' : '0',
+      borderBottom: '1px solid rgba(255,255,255,0.04)',
+      verticalAlign: 'top',
+      whiteSpace: j < 2 ? 'nowrap' : 'normal'
+    }
+  }, cell))))))))), monster.korrupte_floraldrachen_vorlage && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: '18px'
+    }
+  }, /*#__PURE__*/React.createElement(SectionLabel, {
+    title: "Korrumpierte Floraldrachen",
+    color: tc
+  }), monster.korrupte_floraldrachen_vorlage.beschreibung && /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      fontWeight: '300',
+      lineHeight: 1.75,
+      color: 'rgba(var(--text-rgb),0.65)',
+      letterSpacing: '0.015em',
+      margin: '0 0 10px'
+    }
+  }, monster.korrupte_floraldrachen_vorlage.beschreibung), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '8px'
+    }
+  }, monster.korrupte_floraldrachen_vorlage.aenderungen.map((aend, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      fontWeight: '300',
+      color: 'rgba(var(--text-rgb),0.78)',
+      letterSpacing: '0.015em',
+      lineHeight: 1.75
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontWeight: '600',
+      color: 'rgba(var(--text-rgb),0.9)'
+    }
+  }, aend.name, ". "), aend.beschreibung))))), monster.beschreibung && monster.beschreibung.length > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: '8px'
+    }
+  }, /*#__PURE__*/React.createElement(SectionLabel, {
+    title: "Lore",
+    color: tc
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '10px'
+    }
+  }, monster.beschreibung.map((p, i) => /*#__PURE__*/React.createElement("p", {
+    key: i,
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      fontWeight: '300',
+      lineHeight: 1.85,
+      color: 'rgba(var(--text-rgb),0.65)',
+      letterSpacing: '0.015em',
+      margin: 0
+    }
+  }, p)))), window.UNTERART_LORE && window.UNTERART_LORE[monster.art] && (() => {
+    const lore = window.UNTERART_LORE[monster.art];
+    return /*#__PURE__*/React.createElement("div", {
+      style: {
+        marginTop: '16px',
+        paddingTop: '16px',
+        borderTop: `1px solid ${a(0.1)}`
+      }
+    }, /*#__PURE__*/React.createElement(SectionLabel, {
+      title: monster.art,
+      color: tc
+    }), lore.einleitung && /*#__PURE__*/React.createElement("p", {
+      style: {
+        fontFamily: 'var(--font-body)',
+        fontSize: '12px',
+        fontWeight: '300',
+        lineHeight: 1.85,
+        color: 'rgba(var(--text-rgb),0.65)',
+        letterSpacing: '0.015em',
+        margin: '0 0 14px'
+      }
+    }, lore.einleitung), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '14px'
+      }
+    }, lore.abschnitte.map((s, i) => /*#__PURE__*/React.createElement("div", {
+      key: i
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontFamily: 'var(--font-display)',
+        fontSize: '10px',
+        letterSpacing: '0.22em',
+        color: tc,
+        textTransform: 'uppercase',
+        opacity: 0.75,
+        marginBottom: '6px'
+      }
+    }, s.titel), s.tabelle && /*#__PURE__*/React.createElement("table", {
+      style: {
+        width: '100%',
+        borderCollapse: 'collapse',
+        marginBottom: '8px',
+        fontFamily: 'var(--font-body)',
+        fontSize: '11px'
+      }
+    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, s.tabelle.kopf.map((h, hi) => /*#__PURE__*/React.createElement("th", {
+      key: hi,
+      style: {
+        textAlign: 'left',
+        padding: '4px 10px',
+        fontWeight: '400',
+        letterSpacing: '0.1em',
+        color: tc,
+        opacity: 0.7,
+        borderBottom: `1px solid ${a(0.2)}`,
+        fontFamily: 'var(--font-mono)',
+        fontSize: '8px',
+        textTransform: 'uppercase'
+      }
+    }, h)))), /*#__PURE__*/React.createElement("tbody", null, s.tabelle.zeilen.map((row, ri) => /*#__PURE__*/React.createElement("tr", {
+      key: ri,
+      style: {
+        background: ri % 2 === 0 ? a(0.03) : 'transparent'
+      }
+    }, row.map((cell, ci) => /*#__PURE__*/React.createElement("td", {
+      key: ci,
+      style: {
+        padding: '4px 10px',
+        color: 'rgba(var(--text-rgb),0.7)',
+        fontWeight: '300',
+        lineHeight: 1.6
+      }
+    }, cell)))))), /*#__PURE__*/React.createElement("p", {
+      style: {
+        fontFamily: 'var(--font-body)',
+        fontSize: '12px',
+        fontWeight: '300',
+        lineHeight: 1.85,
+        color: 'rgba(var(--text-rgb),0.55)',
+        letterSpacing: '0.015em',
+        margin: 0
+      }
+    }, s.inhalt)))));
+  })(), monster.unterart && monster.unterart !== monster.art && window.UNTERART_LORE && window.UNTERART_LORE[monster.unterart] && (() => {
+    const lore = window.UNTERART_LORE[monster.unterart];
+    return /*#__PURE__*/React.createElement("div", {
+      style: {
+        marginTop: '16px',
+        paddingTop: '16px',
+        borderTop: `1px solid ${a(0.1)}`
+      }
+    }, /*#__PURE__*/React.createElement(SectionLabel, {
+      title: monster.unterart,
+      color: tc
+    }), lore.einleitung && /*#__PURE__*/React.createElement("p", {
+      style: {
+        fontFamily: 'var(--font-body)',
+        fontSize: '12px',
+        fontWeight: '300',
+        lineHeight: 1.85,
+        color: 'rgba(var(--text-rgb),0.65)',
+        letterSpacing: '0.015em',
+        margin: '0 0 14px'
+      }
+    }, lore.einleitung), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '14px'
+      }
+    }, lore.abschnitte.map((s, i) => /*#__PURE__*/React.createElement("div", {
+      key: i
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontFamily: 'var(--font-display)',
+        fontSize: '10px',
+        letterSpacing: '0.22em',
+        color: tc,
+        textTransform: 'uppercase',
+        opacity: 0.75,
+        marginBottom: '6px'
+      }
+    }, s.titel), s.tabelle && /*#__PURE__*/React.createElement("table", {
+      style: {
+        width: '100%',
+        borderCollapse: 'collapse',
+        marginBottom: '8px',
+        fontFamily: 'var(--font-body)',
+        fontSize: '11px'
+      }
+    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, s.tabelle.kopf.map((h, hi) => /*#__PURE__*/React.createElement("th", {
+      key: hi,
+      style: {
+        textAlign: 'left',
+        padding: '4px 10px',
+        fontWeight: '400',
+        letterSpacing: '0.1em',
+        color: tc,
+        opacity: 0.7,
+        borderBottom: `1px solid ${a(0.2)}`,
+        fontFamily: 'var(--font-mono)',
+        fontSize: '8px',
+        textTransform: 'uppercase'
+      }
+    }, h)))), /*#__PURE__*/React.createElement("tbody", null, s.tabelle.zeilen.map((row, ri) => /*#__PURE__*/React.createElement("tr", {
+      key: ri,
+      style: {
+        background: ri % 2 === 0 ? a(0.03) : 'transparent'
+      }
+    }, row.map((cell, ci) => /*#__PURE__*/React.createElement("td", {
+      key: ci,
+      style: {
+        padding: '4px 10px',
+        color: 'rgba(var(--text-rgb),0.7)',
+        fontWeight: '300',
+        lineHeight: 1.6
+      }
+    }, cell)))))), /*#__PURE__*/React.createElement("p", {
+      style: {
+        fontFamily: 'var(--font-body)',
+        fontSize: '12px',
+        fontWeight: '300',
+        lineHeight: 1.85,
+        color: 'rgba(var(--text-rgb),0.55)',
+        letterSpacing: '0.015em',
+        margin: 0
+      }
+    }, s.inhalt)))));
+  })()), imgOpen && ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
+    onClick: () => setImgOpen(false),
+    style: {
+      position: 'fixed',
+      inset: 0,
+      zIndex: 9999,
+      background: 'rgba(0,0,0,0.85)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      cursor: 'zoom-out',
+      backdropFilter: 'blur(6px)',
+      animation: 'fadeIn 0.18s ease'
+    }
+  }, /*#__PURE__*/React.createElement("img", {
+    src: imgSrc,
+    alt: monster.name,
+    onClick: e => e.stopPropagation(),
+    style: {
+      maxWidth: '90vw',
+      maxHeight: '90vh',
+      objectFit: 'contain',
+      borderRadius: '3px',
+      boxShadow: '0 0 60px rgba(0,0,0,0.8)'
+    }
+  })), document.body));
 }
 
 // ─── EMPTY STATE ──────────────────────────────────────────────────────────────
-function EmptyState({ msg }) {
-  return (
-    <div style={{ flex:1, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'12px', opacity:0.35, padding:'40px' }}>
-      <svg width="36" height="36" viewBox="0 0 36 36"><polygon points="18,2 33,11 33,25 18,34 3,25 3,11" fill="none" stroke="rgba(var(--accent-rgb),0.6)" strokeWidth="1.5"/></svg>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.2em', color:'rgba(var(--accent-rgb),0.6)', textTransform:'uppercase', textAlign:'center' }}>{msg}</div>
-    </div>
-  );
+function EmptyState({
+  msg
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '12px',
+      opacity: 0.35,
+      padding: '40px'
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "36",
+    height: "36",
+    viewBox: "0 0 36 36"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: "18,2 33,11 33,25 18,34 3,25 3,11",
+    fill: "none",
+    stroke: "rgba(var(--accent-rgb),0.6)",
+    strokeWidth: "1.5"
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.2em',
+      color: 'rgba(var(--accent-rgb),0.6)',
+      textTransform: 'uppercase',
+      textAlign: 'center'
+    }
+  }, msg));
 }
 
 // ─── ACCESS DENIED ────────────────────────────────────────────────────────────
 function AccessDenied() {
-  return (
-    <div style={{ position:'fixed', inset:0, background:'#05040f', display:'flex', alignItems:'center', justifyContent:'center', zIndex:9999 }}>
-      <a href="index.html" style={{ position:'fixed', top:'18px', left:'22px', fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em', color:'rgba(200,190,240,0.4)', textDecoration:'none', textTransform:'uppercase', transition:'color 0.15s' }}
-        onMouseEnter={e => e.currentTarget.style.color='var(--white)'}
-        onMouseLeave={e => e.currentTarget.style.color='rgba(200,190,240,0.4)'}>
-        ← Zurück
-      </a>
-      <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'16px' }}>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.42em', color:'rgba(var(--accent-rgb),0.4)', textTransform:'uppercase' }}>Kein Zugriff</div>
-        <div style={{ fontFamily:'var(--font-display)', fontSize:'14px', letterSpacing:'0.3em', color:'rgba(var(--text-rgb),0.25)', textTransform:'uppercase' }}>Meruria — Monster</div>
-      </div>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'fixed',
+      inset: 0,
+      background: '#05040f',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 9999
+    }
+  }, /*#__PURE__*/React.createElement("a", {
+    href: "index.html",
+    style: {
+      position: 'fixed',
+      top: '18px',
+      left: '22px',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.18em',
+      color: 'rgba(200,190,240,0.4)',
+      textDecoration: 'none',
+      textTransform: 'uppercase',
+      transition: 'color 0.15s'
+    },
+    onMouseEnter: e => e.currentTarget.style.color = 'var(--white)',
+    onMouseLeave: e => e.currentTarget.style.color = 'rgba(200,190,240,0.4)'
+  }, "\u2190 Zur\xFCck"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: '16px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.42em',
+      color: 'rgba(var(--accent-rgb),0.4)',
+      textTransform: 'uppercase'
+    }
+  }, "Kein Zugriff"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '14px',
+      letterSpacing: '0.3em',
+      color: 'rgba(var(--text-rgb),0.25)',
+      textTransform: 'uppercase'
+    }
+  }, "Meruria \u2014 Monster")));
 }
 
 // Stable hash matching Kollektikon's _monsterKolId
@@ -1046,81 +2551,149 @@ function _monsterKolId(name) {
 function App() {
   const [t] = useTweaks(TWEAK_DEFAULTS);
   const allMonster = window.MONSTER_DATA || [];
-
-  const [mouse, setMouse] = useState({ x: 0.5, y: 0.5 });
-  const handleMouseMove = useCallback((e) => setMouse({ x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight }), []);
-
+  const [mouse, setMouse] = useState({
+    x: 0.5,
+    y: 0.5
+  });
+  const handleMouseMove = useCallback(e => setMouse({
+    x: e.clientX / window.innerWidth,
+    y: e.clientY / window.innerHeight
+  }), []);
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState(allMonster.find(m => m.cr === 0) || allMonster[0] || null);
-  const [filters, setFilters] = useState({ art:[], unterart:[], cr:[], groesse:[], moral:[], umgebung:[], source:[], legendaer: null, hortaktionen: null, sort:'cr-asc' });
+  const [filters, setFilters] = useState({
+    art: [],
+    unterart: [],
+    cr: [],
+    groesse: [],
+    moral: [],
+    umgebung: [],
+    source: [],
+    legendaer: null,
+    hortaktionen: null,
+    sort: 'cr-asc'
+  });
   const [typeFilter, setTypeFilter] = useState(null);
 
   // Kollektikon visibility toggle (DM)
   const [kolSet, setKolSet] = useState(new Set());
   useEffect(() => {
-    window._sb.from('ressourcen_sichtbar').select('resource_id').eq('cat','kreaturen')
-      .then(({ data }) => { if (data) setKolSet(new Set(data.map(r => r.resource_id))); });
+    window._sb.from('ressourcen_sichtbar').select('resource_id').eq('cat', 'kreaturen').then(({
+      data
+    }) => {
+      if (data) setKolSet(new Set(data.map(r => r.resource_id)));
+    });
   }, []);
-  const toggleKol = useCallback(async (monster) => {
+  const toggleKol = useCallback(async monster => {
     const rid = _monsterKolId(monster.name);
     if (kolSet.has(rid)) {
-      await window._sb.from('ressourcen_sichtbar').delete().eq('cat','kreaturen').eq('resource_id', rid);
-      setKolSet(prev => { const s = new Set(prev); s.delete(rid); return s; });
+      await window._sb.from('ressourcen_sichtbar').delete().eq('cat', 'kreaturen').eq('resource_id', rid);
+      setKolSet(prev => {
+        const s = new Set(prev);
+        s.delete(rid);
+        return s;
+      });
     } else {
-      await window._sb.from('ressourcen_sichtbar').insert({ cat:'kreaturen', resource_id: rid });
+      await window._sb.from('ressourcen_sichtbar').insert({
+        cat: 'kreaturen',
+        resource_id: rid
+      });
       setKolSet(prev => new Set([...prev, rid]));
     }
   }, [kolSet]);
-
   const allTypes = useMemo(() => [...new Set(allMonster.map(m => m.art))].sort(), [allMonster]);
-
-  const chipsDrag  = useDragScroll({ horizontal: true });
-  const listDrag   = useDragScroll({ vertical: true });
-  const sidebarDrag = useDragScroll({ vertical: true });
-
+  const chipsDrag = useDragScroll({
+    horizontal: true
+  });
+  const listDrag = useDragScroll({
+    vertical: true
+  });
+  const sidebarDrag = useDragScroll({
+    vertical: true
+  });
   const filtered = useMemo(() => {
     const r = allMonster.filter(m => {
       if (search && !m.name.toLowerCase().includes(search.toLowerCase())) return false;
       if (filters.art.length && !filters.art.includes(m.art)) return false;
-      if ((filters.unterart||[]).length && !filters.unterart.some(u => (m.unterart ? m.unterart.split(', ') : []).includes(u))) return false;
+      if ((filters.unterart || []).length && !filters.unterart.some(u => (m.unterart ? m.unterart.split(', ') : []).includes(u))) return false;
       if (filters.cr.length && !filters.cr.includes(m.cr)) return false;
       if (filters.groesse.length && !filters.groesse.includes(m.groesse)) return false;
       if (filters.moral.length && !filters.moral.includes(moralAxis(m.gesinnung))) return false;
       if (filters.umgebung.length && !filters.umgebung.some(u => (m.umgebung || []).includes(u))) return false;
       if (filters.source.length && !filters.source.includes(m.source)) return false;
-      if (filters.legendaer !== null && (!!m.legendaere_aktionen) !== filters.legendaer) return false;
-      if (filters.hortaktionen !== null && (!!m.hortaktionen) !== filters.hortaktionen) return false;
+      if (filters.legendaer !== null && !!m.legendaere_aktionen !== filters.legendaer) return false;
+      if (filters.hortaktionen !== null && !!m.hortaktionen !== filters.hortaktionen) return false;
       if (typeFilter && m.art !== typeFilter) return false;
       return true;
     });
     const attr = k => m => (m.attribute || {})[k] ?? 0;
     switch (filters.sort) {
-      case 'cr-desc':  r.sort((a,b) => b.cr - a.cr); break;
-      case 'name-az':  r.sort((a,b) => a.name.localeCompare(b.name, 'de')); break;
-      case 'name-za':  r.sort((a,b) => b.name.localeCompare(a.name, 'de')); break;
-      case 'tp-desc':  r.sort((a,b) => (b.tp||0) - (a.tp||0)); break;
-      case 'tp-asc':   r.sort((a,b) => (a.tp||0) - (b.tp||0)); break;
-      case 'rk-desc':  r.sort((a,b) => (b.rk||0) - (a.rk||0)); break;
-      case 'rk-asc':   r.sort((a,b) => (a.rk||0) - (b.rk||0)); break;
-      case 'str-desc': r.sort((a,b) => attr('STR')(b) - attr('STR')(a)); break;
-      case 'str-asc':  r.sort((a,b) => attr('STR')(a) - attr('STR')(b)); break;
-      case 'dex-desc': r.sort((a,b) => attr('DEX')(b) - attr('DEX')(a)); break;
-      case 'dex-asc':  r.sort((a,b) => attr('DEX')(a) - attr('DEX')(b)); break;
-      case 'con-desc': r.sort((a,b) => attr('CON')(b) - attr('CON')(a)); break;
-      case 'con-asc':  r.sort((a,b) => attr('CON')(a) - attr('CON')(b)); break;
-      case 'int-desc': r.sort((a,b) => attr('INT')(b) - attr('INT')(a)); break;
-      case 'int-asc':  r.sort((a,b) => attr('INT')(a) - attr('INT')(b)); break;
-      case 'wis-desc': r.sort((a,b) => attr('WIS')(b) - attr('WIS')(a)); break;
-      case 'wis-asc':  r.sort((a,b) => attr('WIS')(a) - attr('WIS')(b)); break;
-      case 'cha-desc': r.sort((a,b) => attr('CHA')(b) - attr('CHA')(a)); break;
-      case 'cha-asc':  r.sort((a,b) => attr('CHA')(a) - attr('CHA')(b)); break;
-      default:         r.sort((a,b) => a.cr - b.cr); break; // cr-asc
+      case 'cr-desc':
+        r.sort((a, b) => b.cr - a.cr);
+        break;
+      case 'name-az':
+        r.sort((a, b) => a.name.localeCompare(b.name, 'de'));
+        break;
+      case 'name-za':
+        r.sort((a, b) => b.name.localeCompare(a.name, 'de'));
+        break;
+      case 'tp-desc':
+        r.sort((a, b) => (b.tp || 0) - (a.tp || 0));
+        break;
+      case 'tp-asc':
+        r.sort((a, b) => (a.tp || 0) - (b.tp || 0));
+        break;
+      case 'rk-desc':
+        r.sort((a, b) => (b.rk || 0) - (a.rk || 0));
+        break;
+      case 'rk-asc':
+        r.sort((a, b) => (a.rk || 0) - (b.rk || 0));
+        break;
+      case 'str-desc':
+        r.sort((a, b) => attr('STR')(b) - attr('STR')(a));
+        break;
+      case 'str-asc':
+        r.sort((a, b) => attr('STR')(a) - attr('STR')(b));
+        break;
+      case 'dex-desc':
+        r.sort((a, b) => attr('DEX')(b) - attr('DEX')(a));
+        break;
+      case 'dex-asc':
+        r.sort((a, b) => attr('DEX')(a) - attr('DEX')(b));
+        break;
+      case 'con-desc':
+        r.sort((a, b) => attr('CON')(b) - attr('CON')(a));
+        break;
+      case 'con-asc':
+        r.sort((a, b) => attr('CON')(a) - attr('CON')(b));
+        break;
+      case 'int-desc':
+        r.sort((a, b) => attr('INT')(b) - attr('INT')(a));
+        break;
+      case 'int-asc':
+        r.sort((a, b) => attr('INT')(a) - attr('INT')(b));
+        break;
+      case 'wis-desc':
+        r.sort((a, b) => attr('WIS')(b) - attr('WIS')(a));
+        break;
+      case 'wis-asc':
+        r.sort((a, b) => attr('WIS')(a) - attr('WIS')(b));
+        break;
+      case 'cha-desc':
+        r.sort((a, b) => attr('CHA')(b) - attr('CHA')(a));
+        break;
+      case 'cha-asc':
+        r.sort((a, b) => attr('CHA')(a) - attr('CHA')(b));
+        break;
+      default:
+        r.sort((a, b) => a.cr - b.cr);
+        break;
+      // cr-asc
     }
     return r;
   }, [allMonster, search, filters, typeFilter]);
-
   useEffect(() => {
-    setSelected(prev => (prev && !filtered.includes(prev)) ? filtered[0] || null : prev);
+    setSelected(prev => prev && !filtered.includes(prev) ? filtered[0] || null : prev);
   }, [filtered]);
 
   // Group by CR only when sort is cr-based; otherwise flat list as single group
@@ -1133,80 +2706,173 @@ function App() {
         map.get(m.cr).push(m);
       });
       const entries = [...map.entries()];
-      return filters.sort === 'cr-desc' ? entries.sort((a,b) => b[0]-a[0]) : entries.sort((a,b) => a[0]-b[0]);
+      return filters.sort === 'cr-desc' ? entries.sort((a, b) => b[0] - a[0]) : entries.sort((a, b) => a[0] - b[0]);
     }
     return [[null, filtered]];
   }, [filtered, filters.sort]);
-
-  if (window.SITE_USER?.role !== 'dm') return <AccessDenied />;
-
-  return (
-    <div onMouseMove={handleMouseMove} style={{ display:'flex', flexDirection:'column', height:'100vh', position:'relative', zIndex:1 }}>
-      {t.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} />}
-      <SiteNav />
-
-      {/* Page header */}
-      <div style={{ position:'relative', zIndex:10, borderBottom:'1px solid var(--border)', background:'rgba(var(--bg-rgb),0.7)', flexShrink:0, backdropFilter:'blur(6px)', display:'flex', alignItems:'stretch' }}>
-        <div style={{ width:'var(--filter-w)', flexShrink:0, padding:'10px 14px 10px 24px', borderRight:'1px solid var(--border)', display:'flex', flexDirection:'column', justifyContent:'center', gap:'2px' }}>
-          <h1 style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'400', letterSpacing:'0.3em', color:'rgba(var(--text-rgb),0.65)', textTransform:'uppercase' }}>Monster</h1>
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(var(--accent-rgb),0.4)', letterSpacing:'0.15em' }}>{filtered.length} / {allMonster.length}</span>
-        </div>
-        {/* Type quick-filter chips */}
-        <div ref={chipsDrag.ref} onMouseDown={chipsDrag.onMouseDown} onClickCapture={chipsDrag.onClickCapture} className="no-scrollbar"
-          style={{ flex:1, padding:'10px 14px', display:'flex', alignItems:'center', gap:'5px', overflowX:'auto', flexWrap:'nowrap', cursor:'grab', ...chipsDrag.fadeStyle }}>
-          <Chip label="Alle" active={!typeFilter} onClick={() => setTypeFilter(null)} />
-          {allTypes.map(type => (
-            <Chip key={type} label={type} active={typeFilter === type}
-              onClick={() => setTypeFilter(typeFilter === type ? null : type)}
-              color={typeColor(type)} />
-          ))}
-          {typeFilter && <XBtn onClick={() => setTypeFilter(null)} />}
-        </div>
-      </div>
-
-      {/* Main body */}
-      <div style={{ flex:1, display:'flex', overflow:'hidden', position:'relative', zIndex:5 }}>
-        <FilterSidebar filters={filters} setFilters={setFilters} allData={allMonster} search={search} setSearch={setSearch} dragRef={sidebarDrag} />
-
-        {/* Monster list */}
-        <div ref={listDrag.ref} onMouseDown={listDrag.onMouseDown} onClickCapture={listDrag.onClickCapture}
-          style={{ width:'280px', flexShrink:0, borderRight:'1px solid var(--border)', overflowY:'auto', background:'rgba(6,5,18,0.5)', cursor:'grab', ...listDrag.fadeStyle }}>
-          {filtered.length === 0 ? (
-            <EmptyState msg="Keine Monster gefunden" />
-          ) : (
-            grouped.map(([cr, monster]) => (
-              <div key={cr ?? '__flat__'}>
-                {cr !== null && (
-                  <div style={{ padding:'8px 12px 4px', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:'rgba(var(--accent-rgb),0.45)', textTransform:'uppercase', background:'rgba(var(--accent-rgb),0.04)', borderBottom:'1px solid rgba(var(--accent-rgb),0.06)', position:'sticky', top:0, backdropFilter:'blur(4px)', zIndex:2 }}>
-                    HG {formatCR(cr)}
-                    <span style={{ marginLeft:'6px', opacity:0.6 }}>({monster.length})</span>
-                  </div>
-                )}
-                {monster.map(m => (
-                  <MonsterRow key={m.name} monster={m} active={selected && selected.name === m.name} onClick={setSelected} compact={t.compactList} kolVisible={kolSet.has(_monsterKolId(m.name))} onKolToggle={toggleKol} />
-                ))}
-              </div>
-            ))
-          )}
-        </div>
-
-        {/* Detail pane */}
-        <div style={{ flex:1, display:'flex', flexDirection:'column', overflow:'hidden', background:'rgba(var(--bg2-rgb),0.4)' }}>
-          {selected ? <MonsterDetail monster={selected} /> : <EmptyState msg="Monster auswählen" />}
-        </div>
-      </div>
-
-      <TweaksPanel>
-        <TweakSection title="Darstellung">
-          <TweakToggle label="Partikel" tKey="showParticles" />
-          <TweakToggle label="Kompakte Liste" tKey="compactList" />
-        </TweakSection>
-      </TweaksPanel>
-    </div>
-  );
+  if (window.SITE_USER?.role !== 'dm') return /*#__PURE__*/React.createElement(AccessDenied, null);
+  return /*#__PURE__*/React.createElement("div", {
+    onMouseMove: handleMouseMove,
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100vh',
+      position: 'relative',
+      zIndex: 1
+    }
+  }, t.showParticles && /*#__PURE__*/React.createElement(ParticleField, {
+    mouseX: mouse.x,
+    mouseY: mouse.y
+  }), /*#__PURE__*/React.createElement(SiteNav, null), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 10,
+      borderBottom: '1px solid var(--border)',
+      background: 'rgba(var(--bg-rgb),0.7)',
+      flexShrink: 0,
+      backdropFilter: 'blur(6px)',
+      display: 'flex',
+      alignItems: 'stretch'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 'var(--filter-w)',
+      flexShrink: 0,
+      padding: '10px 14px 10px 24px',
+      borderRight: '1px solid var(--border)',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      gap: '2px'
+    }
+  }, /*#__PURE__*/React.createElement("h1", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '14px',
+      fontWeight: '400',
+      letterSpacing: '0.3em',
+      color: 'rgba(var(--text-rgb),0.65)',
+      textTransform: 'uppercase'
+    }
+  }, "Monster"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: 'rgba(var(--accent-rgb),0.4)',
+      letterSpacing: '0.15em'
+    }
+  }, filtered.length, " / ", allMonster.length)), /*#__PURE__*/React.createElement("div", {
+    ref: chipsDrag.ref,
+    onMouseDown: chipsDrag.onMouseDown,
+    onClickCapture: chipsDrag.onClickCapture,
+    className: "no-scrollbar",
+    style: {
+      flex: 1,
+      padding: '10px 14px',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '5px',
+      overflowX: 'auto',
+      flexWrap: 'nowrap',
+      cursor: 'grab',
+      ...chipsDrag.fadeStyle
+    }
+  }, /*#__PURE__*/React.createElement(Chip, {
+    label: "Alle",
+    active: !typeFilter,
+    onClick: () => setTypeFilter(null)
+  }), allTypes.map(type => /*#__PURE__*/React.createElement(Chip, {
+    key: type,
+    label: type,
+    active: typeFilter === type,
+    onClick: () => setTypeFilter(typeFilter === type ? null : type),
+    color: typeColor(type)
+  })), typeFilter && /*#__PURE__*/React.createElement(XBtn, {
+    onClick: () => setTypeFilter(null)
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      display: 'flex',
+      overflow: 'hidden',
+      position: 'relative',
+      zIndex: 5
+    }
+  }, /*#__PURE__*/React.createElement(FilterSidebar, {
+    filters: filters,
+    setFilters: setFilters,
+    allData: allMonster,
+    search: search,
+    setSearch: setSearch,
+    dragRef: sidebarDrag
+  }), /*#__PURE__*/React.createElement("div", {
+    ref: listDrag.ref,
+    onMouseDown: listDrag.onMouseDown,
+    onClickCapture: listDrag.onClickCapture,
+    style: {
+      width: '280px',
+      flexShrink: 0,
+      borderRight: '1px solid var(--border)',
+      overflowY: 'auto',
+      background: 'rgba(6,5,18,0.5)',
+      cursor: 'grab',
+      ...listDrag.fadeStyle
+    }
+  }, filtered.length === 0 ? /*#__PURE__*/React.createElement(EmptyState, {
+    msg: "Keine Monster gefunden"
+  }) : grouped.map(([cr, monster]) => /*#__PURE__*/React.createElement("div", {
+    key: cr ?? '__flat__'
+  }, cr !== null && /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '8px 12px 4px',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.25em',
+      color: 'rgba(var(--accent-rgb),0.45)',
+      textTransform: 'uppercase',
+      background: 'rgba(var(--accent-rgb),0.04)',
+      borderBottom: '1px solid rgba(var(--accent-rgb),0.06)',
+      position: 'sticky',
+      top: 0,
+      backdropFilter: 'blur(4px)',
+      zIndex: 2
+    }
+  }, "HG ", formatCR(cr), /*#__PURE__*/React.createElement("span", {
+    style: {
+      marginLeft: '6px',
+      opacity: 0.6
+    }
+  }, "(", monster.length, ")")), monster.map(m => /*#__PURE__*/React.createElement(MonsterRow, {
+    key: m.name,
+    monster: m,
+    active: selected && selected.name === m.name,
+    onClick: setSelected,
+    compact: t.compactList,
+    kolVisible: kolSet.has(_monsterKolId(m.name)),
+    onKolToggle: toggleKol
+  }))))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      display: 'flex',
+      flexDirection: 'column',
+      overflow: 'hidden',
+      background: 'rgba(var(--bg2-rgb),0.4)'
+    }
+  }, selected ? /*#__PURE__*/React.createElement(MonsterDetail, {
+    monster: selected
+  }) : /*#__PURE__*/React.createElement(EmptyState, {
+    msg: "Monster ausw\xE4hlen"
+  }))), /*#__PURE__*/React.createElement(TweaksPanel, null, /*#__PURE__*/React.createElement(TweakSection, {
+    title: "Darstellung"
+  }, /*#__PURE__*/React.createElement(TweakToggle, {
+    label: "Partikel",
+    tKey: "showParticles"
+  }), /*#__PURE__*/React.createElement(TweakToggle, {
+    label: "Kompakte Liste",
+    tKey: "compactList"
+  }))));
 }
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<SiteGate><App /></SiteGate>);
+root.render(/*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement(App, null)));
+})();
 </script>
 </body></html>

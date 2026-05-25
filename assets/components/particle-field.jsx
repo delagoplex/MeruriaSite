@@ -15,14 +15,20 @@ function ParticleField({ mouseX, mouseY, accent='#a08cff', clipTop=0 }) {
   const animRef = useRef(null);
   const particles = useRef([]);
   const mouse = useRef({ x:0.5, y:0.5 });
+  const lastTime = useRef(0);
   useEffect(() => { mouse.current = { x:mouseX, y:mouseY }; }, [mouseX, mouseY]);
   useEffect(() => {
     const canvas = canvasRef.current; if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    const resize = () => { canvas.width=canvas.offsetWidth; canvas.height=canvas.offsetHeight; };
-    resize(); window.addEventListener('resize', resize);
+    let resizeTimer;
+    const resize = () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => { canvas.width=canvas.offsetWidth; canvas.height=canvas.offsetHeight; }, 150); };
+    canvas.width=canvas.offsetWidth; canvas.height=canvas.offsetHeight;
+    window.addEventListener('resize', resize);
     particles.current = Array.from({length:50}, ()=>({ x:Math.random(), y:Math.random(), r:Math.random()*2.2+1.0, vx:(Math.random()-0.5)*0.03, vy:(Math.random()-0.5)*0.03, alpha:Math.random()*0.15+0.03 }));
-    const tick = () => {
+    const tick = (now) => {
+      animRef.current = requestAnimationFrame(tick);
+      if (now - lastTime.current < 33) return;
+      lastTime.current = now;
       const w=canvas.width, h=canvas.height;
       const shiftX=(mouse.current.x-0.5)*-14, shiftY=(mouse.current.y-0.5)*-14;
       ctx.clearRect(0,0,w,h);
@@ -32,10 +38,9 @@ function ParticleField({ mouseX, mouseY, accent='#a08cff', clipTop=0 }) {
         ctx.beginPath(); ctx.arc(p.x*w+shiftX, p.y*h+shiftY, p.r, 0, Math.PI*2);
         ctx.fillStyle=`rgba(${accentR},${accentG},${accentB},${p.alpha})`; ctx.fill();
       });
-      animRef.current = requestAnimationFrame(tick);
     };
-    tick();
-    return () => { cancelAnimationFrame(animRef.current); window.removeEventListener('resize', resize); };
+    animRef.current = requestAnimationFrame(tick);
+    return () => { cancelAnimationFrame(animRef.current); clearTimeout(resizeTimer); window.removeEventListener('resize', resize); };
   }, []);
   const style = { position:'fixed', inset:0, width:'100%', height:'100%', pointerEvents:'none', zIndex:0 };
   if (clipTop) style.clipPath = `inset(${clipTop}px 0 0 0)`;
@@ -50,16 +55,22 @@ function ParticleFieldEnhanced({ mouseX, mouseY }) {
   const bgP = useRef([]);
   const fgP = useRef([]);
   const mouse = useRef({ x:0.5, y:0.5 });
+  const lastTime = useRef(0);
   useEffect(() => { mouse.current = { x: mouseX, y: mouseY }; }, [mouseX, mouseY]);
   useEffect(() => {
     const bg = bgRef.current, fg = fgRef.current;
     if (!bg || !fg) return;
     const bgCtx = bg.getContext('2d'), fgCtx = fg.getContext('2d');
-    const resize = () => { bg.width = fg.width = bg.offsetWidth; bg.height = fg.height = bg.offsetHeight; };
-    resize(); window.addEventListener('resize', resize);
+    let resizeTimer;
+    const resize = () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => { bg.width = fg.width = bg.offsetWidth; bg.height = fg.height = bg.offsetHeight; }, 150); };
+    bg.width = fg.width = bg.offsetWidth; bg.height = fg.height = bg.offsetHeight;
+    window.addEventListener('resize', resize);
     bgP.current = Array.from({length:55}, () => ({ x:Math.random(), y:Math.random(), r:Math.random()*1.4+0.6, vx:(Math.random()-0.5)*0.06, vy:(Math.random()-0.5)*0.06, alpha:Math.random()*0.25+0.06 }));
     fgP.current = Array.from({length:18}, () => ({ x:Math.random(), y:Math.random(), r:Math.random()*3+2, vx:(Math.random()-0.5)*0.1, vy:(Math.random()-0.5)*0.1, alpha:Math.random()*0.18+0.05 }));
-    const tick = () => {
+    const tick = (now) => {
+      animRef.current = requestAnimationFrame(tick);
+      if (now - lastTime.current < 33) return;
+      lastTime.current = now;
       const w = bg.width, h = bg.height;
       const mx = mouse.current.x, my = mouse.current.y;
       bgCtx.clearRect(0,0,w,h);
@@ -83,10 +94,9 @@ function ParticleFieldEnhanced({ mouseX, mouseY }) {
         fgCtx.beginPath(); fgCtx.arc(px,py,p.r,0,Math.PI*2);
         fgCtx.fillStyle=`rgba(var(--text-rgb),${p.alpha*1.3})`; fgCtx.fill();
       });
-      animRef.current = requestAnimationFrame(tick);
     };
-    tick();
-    return () => { cancelAnimationFrame(animRef.current); window.removeEventListener('resize', resize); };
+    animRef.current = requestAnimationFrame(tick);
+    return () => { cancelAnimationFrame(animRef.current); clearTimeout(resizeTimer); window.removeEventListener('resize', resize); };
   }, []);
   return (
     <>

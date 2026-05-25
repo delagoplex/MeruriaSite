@@ -6,368 +6,850 @@
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
 <link rel="stylesheet" href="assets/styles/pages/Divisionen.css">
-<script src="assets/scripts/vendor/react.development.js"></script>
-<script src="assets/scripts/vendor/react-dom.development.js"></script>
-<script src="assets/scripts/vendor/babel-standalone.js"></script>
-<script src="assets/components/tweaks-panel-13.jsx" type="text/babel"></script>
-<script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/scripts/vendor/react.production.min.js"></script>
+<script src="assets/scripts/vendor/react-dom.production.min.js"></script>
+
+<script src="assets/components/tweaks-panel-13.js"></script>
+<script src="assets/components/nav.js"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
-<script src="assets/components/site-gate.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.js"></script>
 
 </head>
 <body>
 <div id="root"></div>
-<script type="text/babel">
-const { useState, useEffect, useRef, useCallback } = React;
-const { useTweaks, TweaksPanel, TweakSection, TweakToggle, SiteNav, SiteGate } = window;
-
-const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"showParticles": true}/*EDITMODE-END*/;
+<script>
+(function () {
+const {
+  useState,
+  useEffect,
+  useRef,
+  useCallback
+} = React;
+const {
+  useTweaks,
+  TweaksPanel,
+  TweakSection,
+  TweakToggle,
+  SiteNav,
+  SiteGate
+} = window;
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "showParticles": true
+} /*EDITMODE-END*/;
 
 // ── HELPERS ──────────────────────────────────────────────
 function hexPoints(s) {
-  const cx = s/2, cy = s/2, r = s/2;
+  const cx = s / 2,
+    cy = s / 2,
+    r = s / 2;
   const pts = [];
   for (let i = 0; i < 6; i++) {
-    const a = (Math.PI/180)*(60*i - 30);
-    pts.push(`${cx + r*Math.cos(a)},${cy + r*Math.sin(a)}`);
+    const a = Math.PI / 180 * (60 * i - 30);
+    pts.push(`${cx + r * Math.cos(a)},${cy + r * Math.sin(a)}`);
   }
   return pts.join(' ');
 }
 
 // ── DIVISION DATA ─────────────────────────────────────────
-const DIVISIONS = [
-  {
-    nummer: 'I', name: 'Die Kuratoren', subtitle: 'Erkundung & Materialsammlung',
-    beschreibung: 'Die Archivar*innen des Planeten – kein Tier, keine Pflanze, kein Mineral soll unverzeichnet bleiben. Feldkuratoren treten jetzt täglich vor die Stadttore und befüllen das noch fast leere Gewölbe des Wissens.',
-    leiter: { kuerzel: 'EL', name: 'Elara Voss', titel: 'Archivat',
-      note: 'Spricht über Meruria wie über einen alten Freund, dem sie noch nicht alle Geheimnisse entlockt hat.' },
-    mitglieder: { gesamt: null, nsc: null, sc: null },
-    accent: '#3dbf8c', bgStart: '#020e08', href: 'divisionen/Die Kuratoren.html',
+const DIVISIONS = [{
+  nummer: 'I',
+  name: 'Die Kuratoren',
+  subtitle: 'Erkundung & Materialsammlung',
+  beschreibung: 'Die Archivar*innen des Planeten – kein Tier, keine Pflanze, kein Mineral soll unverzeichnet bleiben. Feldkuratoren treten jetzt täglich vor die Stadttore und befüllen das noch fast leere Gewölbe des Wissens.',
+  leiter: {
+    kuerzel: 'EL',
+    name: 'Elara Voss',
+    titel: 'Archivat',
+    note: 'Spricht über Meruria wie über einen alten Freund, dem sie noch nicht alle Geheimnisse entlockt hat.'
   },
-  {
-    nummer: 'II', name: 'Die Sturmritter', subtitle: 'Jagd gefährlicher Kreaturen',
-    beschreibung: 'Das Schwert der Kolonie: Bedrohungen eliminieren, bevor sie Schaden anrichten. Vom Patrouillendienst bis zur Hochrisikojagd auf Apex-Bestien – sie halten die Grenzen Velundras frei.',
-    leiter: { kuerzel: 'CA', name: 'Cassian Vael', titel: 'Kriegsmarschall',
-      note: 'Kämpft lieber an der Seite seiner Division als hinter einem Schreibtisch – und erinnert sich an jeden Geburtstag seiner Truppleiter.' },
-    mitglieder: { gesamt: null, nsc: null, sc: null },
-    accent: '#f06040', bgStart: '#0f0603', href: 'divisionen/Sturmritter.html',
+  mitglieder: {
+    gesamt: null,
+    nsc: null,
+    sc: null
   },
-  {
-    nummer: 'III', name: 'Die Sentinels', subtitle: 'Schutz, Rettung & Verteidigung',
-    beschreibung: 'Die Sentinels stehen zwischen dem Leben der Kolonisten und den Gefahren Merurias. Eskorte, Rettung, Wachposten – sie sichern jede Route und jeden Außenposten, rund um die Uhr.',
-    leiter: { kuerzel: 'YO', name: 'Yolanda Kress', titel: 'Aegis',
-      note: 'Führt mit Autorität und Wärme – die erste Achtstundenwache nach der Landung hielt sie persönlich ab.' },
-    mitglieder: { gesamt: null, nsc: null, sc: null },
-    accent: '#6ec6f0', bgStart: '#030810', href: 'divisionen/Sentinels.html',
+  accent: '#3dbf8c',
+  bgStart: '#020e08',
+  href: 'divisionen/Die Kuratoren.html'
+}, {
+  nummer: 'II',
+  name: 'Die Sturmritter',
+  subtitle: 'Jagd gefährlicher Kreaturen',
+  beschreibung: 'Das Schwert der Kolonie: Bedrohungen eliminieren, bevor sie Schaden anrichten. Vom Patrouillendienst bis zur Hochrisikojagd auf Apex-Bestien – sie halten die Grenzen Velundras frei.',
+  leiter: {
+    kuerzel: 'CA',
+    name: 'Cassian Vael',
+    titel: 'Kriegsmarschall',
+    note: 'Kämpft lieber an der Seite seiner Division als hinter einem Schreibtisch – und erinnert sich an jeden Geburtstag seiner Truppleiter.'
   },
-  {
-    nummer: 'IV', name: 'Die Friedenshüter', subtitle: 'Bürgeranliegen & sozialer Zusammenhalt',
-    beschreibung: 'Das Herz der Kolonie. Sie sorgen dafür, dass aus einer Ansammlung gestrandeter Überlebender eine funktionierende Gemeinschaft wird – von der Schlichtung bis zum Stadtfest.',
-    leiter: { kuerzel: 'SA', name: 'Saoirse Fenn', titel: 'Konsul',
-      note: 'Die angenehmste Person, mit der man streiten kann – weil sie zuhört und trotzdem ihren Standpunkt nicht aufgibt.' },
-    mitglieder: { gesamt: null, nsc: null, sc: null },
-    accent: '#c47fa8', bgStart: '#0d0509', href: 'divisionen/Friedenshueter.html',
+  mitglieder: {
+    gesamt: null,
+    nsc: null,
+    sc: null
   },
-  {
-    nummer: 'V', name: 'Die Outfitters', subtitle: 'Waffen-, Rüstungs- & Zubehörentwicklung',
-    beschreibung: 'Die Schmiede der Kolonie – und deutlich mehr. Waffen, Rüstungen, Tränke und Heilmittel werden hier entwickelt, gefertigt und unter realen Bedingungen getestet.',
-    leiter: { kuerzel: 'GR', name: 'Gretha Morun', titel: 'Chefschmied',
-      note: 'Kennt jedes Stück, das die Schmiede je verlassen hat – die Narben an ihren Händen trägt sie als Auszeichnung.' },
-    mitglieder: { gesamt: null, nsc: null, sc: null },
-    accent: '#d4681a', bgStart: '#0d0602', href: 'divisionen/Outfitters.html',
+  accent: '#f06040',
+  bgStart: '#0f0603',
+  href: 'divisionen/Sturmritter.html'
+}, {
+  nummer: 'III',
+  name: 'Die Sentinels',
+  subtitle: 'Schutz, Rettung & Verteidigung',
+  beschreibung: 'Die Sentinels stehen zwischen dem Leben der Kolonisten und den Gefahren Merurias. Eskorte, Rettung, Wachposten – sie sichern jede Route und jeden Außenposten, rund um die Uhr.',
+  leiter: {
+    kuerzel: 'YO',
+    name: 'Yolanda Kress',
+    titel: 'Aegis',
+    note: 'Führt mit Autorität und Wärme – die erste Achtstundenwache nach der Landung hielt sie persönlich ab.'
   },
-  {
-    nummer: 'VI', name: 'Die Pathfinders', subtitle: 'Erkundung des Planeten',
-    beschreibung: 'Die Augen der Kolonie. Erstbegehung unbekannter Gebiete, Installation von Datensonden, Erstellung von Lageberichten. Meruria wartet auf ihre Karten.',
-    leiter: { kuerzel: 'TO', name: 'Tomas Veyra', titel: 'Kartograph',
-      note: 'Redet wenig, aber wenn er spricht, hören alle zu – trägt immer eine physische Karte bei sich.' },
-    mitglieder: { gesamt: null, nsc: null, sc: null },
-    accent: '#c8b800', bgStart: '#0a0900', href: 'divisionen/Pathfinders.html',
+  mitglieder: {
+    gesamt: null,
+    nsc: null,
+    sc: null
   },
-  {
-    nummer: 'VII', name: 'Die Quellensucher', subtitle: 'Ressourcenabbau & Sicherung',
-    beschreibung: 'Ohne sie würde die Kolonie innerhalb von Wochen versiegen. Sie spüren Ressourcenvorkommen auf, erschließen sie und sichern die langfristige Versorgung aller Divisionen.',
-    leiter: { kuerzel: 'HA', name: 'Hadur Keln', titel: 'Quellenmeister',
-      note: 'War einer der Ersten, die nach der Landung nach draußen gingen – nicht aus Abenteuerlust, sondern weil jemand musste.' },
-    mitglieder: { gesamt: null, nsc: null, sc: null },
-    accent: '#1aacb8', bgStart: '#020a0b', href: 'divisionen/Quellensucher.html',
+  accent: '#6ec6f0',
+  bgStart: '#030810',
+  href: 'divisionen/Sentinels.html'
+}, {
+  nummer: 'IV',
+  name: 'Die Friedenshüter',
+  subtitle: 'Bürgeranliegen & sozialer Zusammenhalt',
+  beschreibung: 'Das Herz der Kolonie. Sie sorgen dafür, dass aus einer Ansammlung gestrandeter Überlebender eine funktionierende Gemeinschaft wird – von der Schlichtung bis zum Stadtfest.',
+  leiter: {
+    kuerzel: 'SA',
+    name: 'Saoirse Fenn',
+    titel: 'Konsul',
+    note: 'Die angenehmste Person, mit der man streiten kann – weil sie zuhört und trotzdem ihren Standpunkt nicht aufgibt.'
   },
-  {
-    nummer: 'VIII', name: 'Die Bergungsgarde', subtitle: 'Wrackteile bergen & Träumer retten',
-    beschreibung: 'Sie rettet nicht nur Ressourcen, sondern Leben. In den Trümmern des Weißen Wals schlummern noch Träumer – die Bergungsgarde findet und befreit sie. Jeden Tag.',
-    leiter: { kuerzel: 'RE', name: 'Reun Malvar', titel: 'Bergungsadmiral',
-      note: 'Kennt jeden Geretteten beim Namen – alle, die in den ersten zwei Wochen aus ihren Kapseln befreit wurden.' },
-    mitglieder: { gesamt: null, nsc: null, sc: null },
-    accent: '#8b5e3c', bgStart: '#090503', href: 'divisionen/Bergungsgarde.html',
+  mitglieder: {
+    gesamt: null,
+    nsc: null,
+    sc: null
   },
-];
+  accent: '#c47fa8',
+  bgStart: '#0d0509',
+  href: 'divisionen/Friedenshueter.html'
+}, {
+  nummer: 'V',
+  name: 'Die Outfitters',
+  subtitle: 'Waffen-, Rüstungs- & Zubehörentwicklung',
+  beschreibung: 'Die Schmiede der Kolonie – und deutlich mehr. Waffen, Rüstungen, Tränke und Heilmittel werden hier entwickelt, gefertigt und unter realen Bedingungen getestet.',
+  leiter: {
+    kuerzel: 'GR',
+    name: 'Gretha Morun',
+    titel: 'Chefschmied',
+    note: 'Kennt jedes Stück, das die Schmiede je verlassen hat – die Narben an ihren Händen trägt sie als Auszeichnung.'
+  },
+  mitglieder: {
+    gesamt: null,
+    nsc: null,
+    sc: null
+  },
+  accent: '#d4681a',
+  bgStart: '#0d0602',
+  href: 'divisionen/Outfitters.html'
+}, {
+  nummer: 'VI',
+  name: 'Die Pathfinders',
+  subtitle: 'Erkundung des Planeten',
+  beschreibung: 'Die Augen der Kolonie. Erstbegehung unbekannter Gebiete, Installation von Datensonden, Erstellung von Lageberichten. Meruria wartet auf ihre Karten.',
+  leiter: {
+    kuerzel: 'TO',
+    name: 'Tomas Veyra',
+    titel: 'Kartograph',
+    note: 'Redet wenig, aber wenn er spricht, hören alle zu – trägt immer eine physische Karte bei sich.'
+  },
+  mitglieder: {
+    gesamt: null,
+    nsc: null,
+    sc: null
+  },
+  accent: '#c8b800',
+  bgStart: '#0a0900',
+  href: 'divisionen/Pathfinders.html'
+}, {
+  nummer: 'VII',
+  name: 'Die Quellensucher',
+  subtitle: 'Ressourcenabbau & Sicherung',
+  beschreibung: 'Ohne sie würde die Kolonie innerhalb von Wochen versiegen. Sie spüren Ressourcenvorkommen auf, erschließen sie und sichern die langfristige Versorgung aller Divisionen.',
+  leiter: {
+    kuerzel: 'HA',
+    name: 'Hadur Keln',
+    titel: 'Quellenmeister',
+    note: 'War einer der Ersten, die nach der Landung nach draußen gingen – nicht aus Abenteuerlust, sondern weil jemand musste.'
+  },
+  mitglieder: {
+    gesamt: null,
+    nsc: null,
+    sc: null
+  },
+  accent: '#1aacb8',
+  bgStart: '#020a0b',
+  href: 'divisionen/Quellensucher.html'
+}, {
+  nummer: 'VIII',
+  name: 'Die Bergungsgarde',
+  subtitle: 'Wrackteile bergen & Träumer retten',
+  beschreibung: 'Sie rettet nicht nur Ressourcen, sondern Leben. In den Trümmern des Weißen Wals schlummern noch Träumer – die Bergungsgarde findet und befreit sie. Jeden Tag.',
+  leiter: {
+    kuerzel: 'RE',
+    name: 'Reun Malvar',
+    titel: 'Bergungsadmiral',
+    note: 'Kennt jeden Geretteten beim Namen – alle, die in den ersten zwei Wochen aus ihren Kapseln befreit wurden.'
+  },
+  mitglieder: {
+    gesamt: null,
+    nsc: null,
+    sc: null
+  },
+  accent: '#8b5e3c',
+  bgStart: '#090503',
+  href: 'divisionen/Bergungsgarde.html'
+}];
 
 // ── FLOATING HEX FIELD ────────────────────────────────────
-const HEX_DEFS = [
-  { size:120, x:'6%',  y:'14%', anim:'hexFloat0', dur:'7.2s', opacity:0.035, stroke:'#7c4dff' },
-  { size:55,  x:'20%', y:'58%', anim:'hexFloat1', dur:'5.8s', opacity:0.06,  stroke:'#7c4dff' },
-  { size:200, x:'70%', y:'6%',  anim:'hexFloat2', dur:'9.1s', opacity:0.025, stroke:'#7c4dff' },
-  { size:40,  x:'84%', y:'40%', anim:'hexFloat3', dur:'4.9s', opacity:0.08,  stroke:'#7c4dff' },
-  { size:88,  x:'52%', y:'70%', anim:'hexFloat1', dur:'6.4s', opacity:0.04,  stroke:'#7c4dff' },
-  { size:30,  x:'35%', y:'26%', anim:'hexFloat0', dur:'5.2s', opacity:0.10,  stroke:'#7c4dff' },
-  { size:160, x:'40%', y:'82%', anim:'hexFloat2', dur:'8.3s', opacity:0.022, stroke:'#7c4dff' },
-  { size:50,  x:'91%', y:'76%', anim:'hexFloat3', dur:'6.0s', opacity:0.07,  stroke:'#7c4dff' },
-];
-
-function FloatingHexField({ mouseX, mouseY }) {
-  return (
-    <div style={{ position:'fixed', inset:0, pointerEvents:'none', zIndex:1, overflow:'hidden', clipPath:'inset(232px 0 0 0)' }}>
-      {HEX_DEFS.map((h, i) => {
-        const px = hexPoints(h.size);
-        const parallaxX = (mouseX - 0.5) * (i % 3 === 0 ? -12 : i % 3 === 1 ? -6 : -18);
-        const parallaxY = (mouseY - 0.5) * (i % 3 === 0 ? -8  : i % 3 === 1 ? -4 : -14);
-        return (
-          <div key={i} style={{ position:'absolute', left:h.x, top:h.y, animation:`${h.anim} ${h.dur} ease-in-out infinite`, animationDelay:`${i*0.7}s`, transform:`translate(${parallaxX}px,${parallaxY}px)`, transition:'transform 0.4s ease-out', willChange:'transform' }}>
-            <svg width={h.size} height={h.size} viewBox={`0 0 ${h.size} ${h.size}`} style={{ display:'block', opacity:h.opacity, filter:`drop-shadow(0 0 ${h.size*0.06}px ${h.stroke})` }}>
-              <polygon points={px} fill="transparent" stroke={h.stroke} strokeWidth="1" />
-            </svg>
-          </div>
-        );
-      })}
-    </div>
-  );
+const HEX_DEFS = [{
+  size: 120,
+  x: '6%',
+  y: '14%',
+  anim: 'hexFloat0',
+  dur: '7.2s',
+  opacity: 0.035,
+  stroke: '#7c4dff'
+}, {
+  size: 55,
+  x: '20%',
+  y: '58%',
+  anim: 'hexFloat1',
+  dur: '5.8s',
+  opacity: 0.06,
+  stroke: '#7c4dff'
+}, {
+  size: 200,
+  x: '70%',
+  y: '6%',
+  anim: 'hexFloat2',
+  dur: '9.1s',
+  opacity: 0.025,
+  stroke: '#7c4dff'
+}, {
+  size: 40,
+  x: '84%',
+  y: '40%',
+  anim: 'hexFloat3',
+  dur: '4.9s',
+  opacity: 0.08,
+  stroke: '#7c4dff'
+}, {
+  size: 88,
+  x: '52%',
+  y: '70%',
+  anim: 'hexFloat1',
+  dur: '6.4s',
+  opacity: 0.04,
+  stroke: '#7c4dff'
+}, {
+  size: 30,
+  x: '35%',
+  y: '26%',
+  anim: 'hexFloat0',
+  dur: '5.2s',
+  opacity: 0.10,
+  stroke: '#7c4dff'
+}, {
+  size: 160,
+  x: '40%',
+  y: '82%',
+  anim: 'hexFloat2',
+  dur: '8.3s',
+  opacity: 0.022,
+  stroke: '#7c4dff'
+}, {
+  size: 50,
+  x: '91%',
+  y: '76%',
+  anim: 'hexFloat3',
+  dur: '6.0s',
+  opacity: 0.07,
+  stroke: '#7c4dff'
+}];
+function FloatingHexField({
+  mouseX,
+  mouseY
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'fixed',
+      inset: 0,
+      pointerEvents: 'none',
+      zIndex: 1,
+      overflow: 'hidden',
+      clipPath: 'inset(232px 0 0 0)'
+    }
+  }, HEX_DEFS.map((h, i) => {
+    const px = hexPoints(h.size);
+    const parallaxX = (mouseX - 0.5) * (i % 3 === 0 ? -12 : i % 3 === 1 ? -6 : -18);
+    const parallaxY = (mouseY - 0.5) * (i % 3 === 0 ? -8 : i % 3 === 1 ? -4 : -14);
+    return /*#__PURE__*/React.createElement("div", {
+      key: i,
+      style: {
+        position: 'absolute',
+        left: h.x,
+        top: h.y,
+        animation: `${h.anim} ${h.dur} ease-in-out infinite`,
+        animationDelay: `${i * 0.7}s`,
+        transform: `translate(${parallaxX}px,${parallaxY}px)`,
+        transition: 'transform 0.4s ease-out',
+        willChange: 'transform'
+      }
+    }, /*#__PURE__*/React.createElement("svg", {
+      width: h.size,
+      height: h.size,
+      viewBox: `0 0 ${h.size} ${h.size}`,
+      style: {
+        display: 'block',
+        opacity: h.opacity,
+        filter: `drop-shadow(0 0 ${h.size * 0.06}px ${h.stroke})`
+      }
+    }, /*#__PURE__*/React.createElement("polygon", {
+      points: px,
+      fill: "transparent",
+      stroke: h.stroke,
+      strokeWidth: "1"
+    })));
+  }));
 }
 
 // ── PARTICLES ─────────────────────────────────────────────
-function ParticleField({ mouseX, mouseY }) {
+function ParticleField({
+  mouseX,
+  mouseY
+}) {
   const canvasRef = useRef(null);
   const animRef = useRef(null);
   const particles = useRef([]);
-  const mouse = useRef({ x:0.5, y:0.5 });
-  useEffect(() => { mouse.current = { x: mouseX, y: mouseY }; }, [mouseX, mouseY]);
+  const mouse = useRef({
+    x: 0.5,
+    y: 0.5
+  });
   useEffect(() => {
-    const canvas = canvasRef.current; if (!canvas) return;
+    mouse.current = {
+      x: mouseX,
+      y: mouseY
+    };
+  }, [mouseX, mouseY]);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    const resize = () => { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; };
-    resize(); window.addEventListener('resize', resize);
-    particles.current = Array.from({length:55}, () => ({
-      x: Math.random(), y: Math.random(),
-      r: Math.random()*1.6+0.5,
-      vx:(Math.random()-0.5)*0.05, vy:(Math.random()-0.5)*0.05,
-      alpha: Math.random()*0.2+0.05,
+    const resize = () => {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    };
+    resize();
+    window.addEventListener('resize', resize);
+    particles.current = Array.from({
+      length: 55
+    }, () => ({
+      x: Math.random(),
+      y: Math.random(),
+      r: Math.random() * 1.6 + 0.5,
+      vx: (Math.random() - 0.5) * 0.05,
+      vy: (Math.random() - 0.5) * 0.05,
+      alpha: Math.random() * 0.2 + 0.05
     }));
     const tick = () => {
-      const w = canvas.width, h = canvas.height;
-      const shiftX = (mouse.current.x - 0.5)*-14, shiftY = (mouse.current.y - 0.5)*-14;
-      ctx.clearRect(0,0,w,h);
+      const w = canvas.width,
+        h = canvas.height;
+      const shiftX = (mouse.current.x - 0.5) * -14,
+        shiftY = (mouse.current.y - 0.5) * -14;
+      ctx.clearRect(0, 0, w, h);
       particles.current.forEach(p => {
-        p.x += p.vx/w*60; p.y += p.vy/h*60;
-        if(p.x<0)p.x=1; if(p.x>1)p.x=0; if(p.y<0)p.y=1; if(p.y>1)p.y=0;
-        ctx.beginPath(); ctx.arc(p.x*w+shiftX, p.y*h+shiftY, p.r, 0, Math.PI*2);
-        ctx.fillStyle = `rgba(160,140,255,${p.alpha})`; ctx.fill();
+        p.x += p.vx / w * 60;
+        p.y += p.vy / h * 60;
+        if (p.x < 0) p.x = 1;
+        if (p.x > 1) p.x = 0;
+        if (p.y < 0) p.y = 1;
+        if (p.y > 1) p.y = 0;
+        ctx.beginPath();
+        ctx.arc(p.x * w + shiftX, p.y * h + shiftY, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(160,140,255,${p.alpha})`;
+        ctx.fill();
       });
       animRef.current = requestAnimationFrame(tick);
     };
     tick();
-    return () => { cancelAnimationFrame(animRef.current); window.removeEventListener('resize', resize); };
+    return () => {
+      cancelAnimationFrame(animRef.current);
+      window.removeEventListener('resize', resize);
+    };
   }, []);
-  return <canvas ref={canvasRef} style={{ position:'fixed', inset:0, width:'100%', height:'100%', pointerEvents:'none', zIndex:0, clipPath:'inset(232px 0 0 0)' }} />;
+  return /*#__PURE__*/React.createElement("canvas", {
+    ref: canvasRef,
+    style: {
+      position: 'fixed',
+      inset: 0,
+      width: '100%',
+      height: '100%',
+      pointerEvents: 'none',
+      zIndex: 0,
+      clipPath: 'inset(232px 0 0 0)'
+    }
+  });
 }
 
 // ── SCROLL REVEAL ─────────────────────────────────────────
 function useScrollReveal() {
   useEffect(() => {
     const revealed = new WeakSet();
-    const observer = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (!entry.isIntersecting || revealed.has(entry.target)) return;
         revealed.add(entry.target);
         observer.unobserve(entry.target);
         entry.target.classList.add('visible');
       });
-    }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+    }, {
+      threshold: 0.05,
+      rootMargin: '0px 0px -20px 0px'
+    });
     const t = setTimeout(() => {
       document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
     }, 100);
-    return () => { clearTimeout(t); observer.disconnect(); };
+    return () => {
+      clearTimeout(t);
+      observer.disconnect();
+    };
   }, []);
 }
 
 // ── DIVISION CARD ─────────────────────────────────────────
-function DivisionCard({ div, delay }) {
+function DivisionCard({
+  div,
+  delay
+}) {
   const [hov, setHov] = useState(false);
   const acc = div.accent;
-
-  return (
-    <div className="reveal-up" style={{ transitionDelay: `${delay}s` }}>
-      <a href={div.href} style={{ textDecoration:'none', display:'block', height:'100%' }}
-        onMouseEnter={() => setHov(true)}
-        onMouseLeave={() => setHov(false)}>
-        <div style={{
-          position:'relative',
-          background: `linear-gradient(140deg, ${div.bgStart} 0%, rgba(5,4,15,0.98) 100%)`,
-          border: `1px solid ${hov ? acc + '55' : acc + '18'}`,
-          borderLeft: `3px solid ${hov ? acc : acc + '88'}`,
-          borderRadius:'4px',
-          overflow:'hidden',
-          padding:'26px 26px 22px',
-          height:'100%',
-          transition:'border-color 0.3s, box-shadow 0.3s',
-          boxShadow: hov
-            ? `0 0 36px ${acc}12, inset 0 0 40px ${acc}06, 0 6px 28px rgba(0,0,0,0.5)`
-            : '0 4px 18px rgba(0,0,0,0.35)',
-        }}>
-
-          {/* Diagonal stripe texture */}
-          <div style={{ position:'absolute', inset:0, pointerEvents:'none',
-            backgroundImage: `repeating-linear-gradient(135deg, transparent, transparent 18px, ${acc}05 18px, ${acc}05 19px)` }} />
-
-          {/* Large faded roman numeral watermark */}
-          <div style={{ position:'absolute', right:'6px', bottom:'-10px',
-            fontFamily:'var(--font-display)', fontSize:'130px', fontWeight:'300',
-            color: hov ? `${acc}0d` : `${acc}08`,
-            lineHeight:1, userSelect:'none', pointerEvents:'none',
-            letterSpacing:'-0.04em', transition:'color 0.4s' }}>{div.nummer}</div>
-
-          {/* Top-right corner glow on hover */}
-          {hov && <div style={{ position:'absolute', top:0, right:0, width:'120px', height:'120px',
-            background:`radial-gradient(circle at top right, ${acc}14, transparent 70%)`,
-            pointerEvents:'none' }} />}
-
-          {/* Header row */}
-          <div style={{ display:'flex', alignItems:'flex-start', gap:'14px', marginBottom:'14px', position:'relative', zIndex:1 }}>
-            {/* Hex number badge */}
-            <div style={{ flexShrink:0, filter: hov ? `drop-shadow(0 0 7px ${acc}aa)` : 'none', transition:'filter 0.3s' }}>
-              <svg width="46" height="46" viewBox="0 0 46 46">
-                <polygon points={hexPoints(46)} fill={`${acc}1c`} stroke={acc} strokeWidth="1" opacity={hov ? 1 : 0.75} />
-                <text x="23" y="28" textAnchor="middle" fontFamily="var(--font-display)" fontSize="11" fill={acc} opacity="0.95">{div.nummer}</text>
-              </svg>
-            </div>
-            <div style={{ flex:1, minWidth:0, paddingTop:'4px' }}>
-              <h2 style={{
-                fontFamily:'var(--font-display)', fontSize:'16px', fontWeight:'400',
-                letterSpacing:'0.13em', color: hov ? '#f0eeff' : 'rgba(240,238,255,0.88)',
-                textShadow: hov ? `0 0 20px ${acc}55` : 'none',
-                transition:'color 0.3s, text-shadow 0.3s',
-                marginBottom:'5px', lineHeight:1.25,
-              }}>{div.name}</h2>
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:`${acc}88`, textTransform:'uppercase' }}>{div.subtitle}</div>
-            </div>
-          </div>
-
-          {/* Description */}
-          <p style={{
-            fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12.5px',
-            lineHeight:1.85, color:'rgba(240,238,255,0.6)', letterSpacing:'0.02em',
-            textWrap:'pretty', marginBottom:'18px', position:'relative', zIndex:1,
-            borderLeft:`1px solid ${acc}22`, paddingLeft:'13px',
-          }}>{div.beschreibung}</p>
-
-          {/* Separator with hex dot */}
-          <div style={{ display:'flex', alignItems:'center', gap:'8px', marginBottom:'14px', position:'relative', zIndex:1 }}>
-            <svg width="10" height="10" viewBox="0 0 10 10"><polygon points={hexPoints(10)} fill={`${acc}44`} stroke={acc} strokeWidth="0.8" /></svg>
-            <div style={{ flex:1, height:'1px', background:`linear-gradient(90deg, ${acc}44, rgba(124,77,255,0.15), transparent)` }} />
-          </div>
-
-          {/* Leader block */}
-          <div style={{ display:'flex', alignItems:'flex-start', gap:'11px', position:'relative', zIndex:1 }}>
-            <div style={{ flexShrink:0 }}>
-              <svg width="105" height="105" viewBox="0 0 68 68">
-                <polygon points={hexPoints(68)} fill={`${acc}1a`} stroke={acc} strokeWidth="0.7" opacity="0.9" />
-                <text x="34" y="40" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="14" fill={acc} opacity="0.95">{div.leiter.kuerzel}</text>
-              </svg>
-            </div>
-            <div style={{ flex:1, minWidth:0 }}>
-              <div style={{ display:'flex', alignItems:'baseline', gap:'8px', marginBottom:'3px', flexWrap:'wrap' }}>
-                <span style={{ fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:'400', letterSpacing:'0.13em', color:`${acc}ee` }}>{div.leiter.name}</span>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:'6.5px', letterSpacing:'0.2em', color:`${acc}55`, textTransform:'uppercase' }}>{div.leiter.titel}</span>
-              </div>
-              <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11.5px', lineHeight:1.65, color:'rgba(200,190,240,0.45)', letterSpacing:'0.01em', fontStyle:'italic', textWrap:'pretty' }}>{div.leiter.note}</p>
-            </div>
-          </div>
-
-          {/* Zur Division cue */}
-          <div style={{ display:'flex', justifyContent:'flex-end', marginTop:'0px', position:'relative', zIndex:1 }}>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:'12px', letterSpacing:'0.22em',
-              color: hov ? acc : `${acc}65`,
-              textTransform:'uppercase', transition:'color 0.3s' }}>Zur Division →</span>
-          </div>
-
-        </div>
-      </a>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      transitionDelay: `${delay}s`
+    }
+  }, /*#__PURE__*/React.createElement("a", {
+    href: div.href,
+    style: {
+      textDecoration: 'none',
+      display: 'block',
+      height: '100%'
+    },
+    onMouseEnter: () => setHov(true),
+    onMouseLeave: () => setHov(false)
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      background: `linear-gradient(140deg, ${div.bgStart} 0%, rgba(5,4,15,0.98) 100%)`,
+      border: `1px solid ${hov ? acc + '55' : acc + '18'}`,
+      borderLeft: `3px solid ${hov ? acc : acc + '88'}`,
+      borderRadius: '4px',
+      overflow: 'hidden',
+      padding: '26px 26px 22px',
+      height: '100%',
+      transition: 'border-color 0.3s, box-shadow 0.3s',
+      boxShadow: hov ? `0 0 36px ${acc}12, inset 0 0 40px ${acc}06, 0 6px 28px rgba(0,0,0,0.5)` : '0 4px 18px rgba(0,0,0,0.35)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      pointerEvents: 'none',
+      backgroundImage: `repeating-linear-gradient(135deg, transparent, transparent 18px, ${acc}05 18px, ${acc}05 19px)`
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      right: '6px',
+      bottom: '-10px',
+      fontFamily: 'var(--font-display)',
+      fontSize: '130px',
+      fontWeight: '300',
+      color: hov ? `${acc}0d` : `${acc}08`,
+      lineHeight: 1,
+      userSelect: 'none',
+      pointerEvents: 'none',
+      letterSpacing: '-0.04em',
+      transition: 'color 0.4s'
+    }
+  }, div.nummer), hov && /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      top: 0,
+      right: 0,
+      width: '120px',
+      height: '120px',
+      background: `radial-gradient(circle at top right, ${acc}14, transparent 70%)`,
+      pointerEvents: 'none'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'flex-start',
+      gap: '14px',
+      marginBottom: '14px',
+      position: 'relative',
+      zIndex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      flexShrink: 0,
+      filter: hov ? `drop-shadow(0 0 7px ${acc}aa)` : 'none',
+      transition: 'filter 0.3s'
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "46",
+    height: "46",
+    viewBox: "0 0 46 46"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(46),
+    fill: `${acc}1c`,
+    stroke: acc,
+    strokeWidth: "1",
+    opacity: hov ? 1 : 0.75
+  }), /*#__PURE__*/React.createElement("text", {
+    x: "23",
+    y: "28",
+    textAnchor: "middle",
+    fontFamily: "var(--font-display)",
+    fontSize: "11",
+    fill: acc,
+    opacity: "0.95"
+  }, div.nummer))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      minWidth: 0,
+      paddingTop: '4px'
+    }
+  }, /*#__PURE__*/React.createElement("h2", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '16px',
+      fontWeight: '400',
+      letterSpacing: '0.13em',
+      color: hov ? '#f0eeff' : 'rgba(240,238,255,0.88)',
+      textShadow: hov ? `0 0 20px ${acc}55` : 'none',
+      transition: 'color 0.3s, text-shadow 0.3s',
+      marginBottom: '5px',
+      lineHeight: 1.25
+    }
+  }, div.name), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '0.22em',
+      color: `${acc}88`,
+      textTransform: 'uppercase'
+    }
+  }, div.subtitle))), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12.5px',
+      lineHeight: 1.85,
+      color: 'rgba(240,238,255,0.6)',
+      letterSpacing: '0.02em',
+      textWrap: 'pretty',
+      marginBottom: '18px',
+      position: 'relative',
+      zIndex: 1,
+      borderLeft: `1px solid ${acc}22`,
+      paddingLeft: '13px'
+    }
+  }, div.beschreibung), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      marginBottom: '14px',
+      position: 'relative',
+      zIndex: 1
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "10",
+    height: "10",
+    viewBox: "0 0 10 10"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(10),
+    fill: `${acc}44`,
+    stroke: acc,
+    strokeWidth: "0.8"
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      height: '1px',
+      background: `linear-gradient(90deg, ${acc}44, rgba(124,77,255,0.15), transparent)`
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'flex-start',
+      gap: '11px',
+      position: 'relative',
+      zIndex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "105",
+    height: "105",
+    viewBox: "0 0 68 68"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(68),
+    fill: `${acc}1a`,
+    stroke: acc,
+    strokeWidth: "0.7",
+    opacity: "0.9"
+  }), /*#__PURE__*/React.createElement("text", {
+    x: "34",
+    y: "40",
+    textAnchor: "middle",
+    fontFamily: "var(--font-mono)",
+    fontSize: "14",
+    fill: acc,
+    opacity: "0.95"
+  }, div.leiter.kuerzel))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      minWidth: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'baseline',
+      gap: '8px',
+      marginBottom: '3px',
+      flexWrap: 'wrap'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '11px',
+      fontWeight: '400',
+      letterSpacing: '0.13em',
+      color: `${acc}ee`
+    }
+  }, div.leiter.name), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '6.5px',
+      letterSpacing: '0.2em',
+      color: `${acc}55`,
+      textTransform: 'uppercase'
+    }
+  }, div.leiter.titel)), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '11.5px',
+      lineHeight: 1.65,
+      color: 'rgba(200,190,240,0.45)',
+      letterSpacing: '0.01em',
+      fontStyle: 'italic',
+      textWrap: 'pretty'
+    }
+  }, div.leiter.note))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      justifyContent: 'flex-end',
+      marginTop: '0px',
+      position: 'relative',
+      zIndex: 1
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '12px',
+      letterSpacing: '0.22em',
+      color: hov ? acc : `${acc}65`,
+      textTransform: 'uppercase',
+      transition: 'color 0.3s'
+    }
+  }, "Zur Division \u2192")))));
 }
 
 // ── APP ────────────────────────────────────────────────────
 function App() {
-  const [mouse, setMouse] = useState({ x:0.5, y:0.5 });
+  const [mouse, setMouse] = useState({
+    x: 0.5,
+    y: 0.5
+  });
   const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
-  const handleMouseMove = useCallback(e => { setMouse({ x: e.clientX/window.innerWidth, y: e.clientY/window.innerHeight }); }, []);
+  const handleMouseMove = useCallback(e => {
+    setMouse({
+      x: e.clientX / window.innerWidth,
+      y: e.clientY / window.innerHeight
+    });
+  }, []);
   useScrollReveal();
-
-  return (
-    <div onMouseMove={handleMouseMove} style={{ position:'relative', minHeight:'100vh' }}>
-      {tweaks.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} />}
-      <FloatingHexField mouseX={mouse.x} mouseY={mouse.y} />
-
-      {/* ── HEADER IMAGE ── */}
-      <div style={{ position:'relative', zIndex:10, width:'100%', height:'180px',
-        background:'linear-gradient(180deg, rgba(20,10,50,0.95) 0%, rgba(10,8,30,0.98) 100%)',
-        borderBottom:'1px solid rgba(160,140,255,0.15)', overflow:'hidden',
-        display:'flex', alignItems:'center', justifyContent:'center' }}>
-        <div style={{ position:'absolute', inset:0,
-          background:`radial-gradient(ellipse at 20% 50%, rgba(124,77,255,0.18) 0%, transparent 50%), radial-gradient(ellipse at 80% 50%, rgba(45,125,255,0.14) 0%, transparent 50%), repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(160,140,255,0.04) 60px, rgba(160,140,255,0.04) 61px)`,
-          pointerEvents:'none' }} />
-        <div style={{ position:'absolute', inset:0,
-          backgroundImage:`repeating-linear-gradient(135deg, transparent, transparent 18px, rgba(124,77,255,0.03) 18px, rgba(124,77,255,0.03) 19px)`,
-          pointerEvents:'none' }} />
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(160,140,255,0.3)', letterSpacing:'0.3em', textTransform:'uppercase', position:'relative', zIndex:1 }}>
-          Kopfbild — Artwork hier ablegen
-        </div>
-      </div>
-
-      <SiteNav rightLabel="DIVISIONEN-ARCHIV" />
-
-      {/* ── MAIN ── */}
-      <div style={{ position:'relative', zIndex:5, maxWidth:'1180px', margin:'0 auto', padding:'56px 40px 80px' }}>
-
-        {/* Page hero */}
-          {/* Decorative line */}
-        <div className="reveal-up" style={{ marginBottom:'52px', textAlign:'center', position:'relative' }}>
-            <div style={{ display:'flex', alignItems:'center', gap:'12px', justifyContent:'center', marginBottom:'22px' }}>
-                <div style={{ width:'60px', height:'1px', background:'linear-gradient(270deg, rgba(124,77,255,0.6), transparent)' }} />
-                <svg width="8" height="8" viewBox="0 0 8 8"><polygon points={hexPoints(8)} fill="rgba(124,77,255,0.35)" stroke="rgba(160,140,255,0.6)" strokeWidth="0.8" /></svg>
-                <div style={{ width:'60px', height:'1px', background:'linear-gradient(90deg, rgba(124,77,255,0.6), transparent)' }} />
-            </div>
-          <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(30px,4vw,52px)', fontWeight:'300', letterSpacing:'0.2em', color:'#f0eeff', textShadow:'0 0 50px rgba(124,77,255,0.4)', marginBottom:'18px', lineHeight:1.15 }}>
-            Die Acht Divisionen
-          </h1>
-          <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'13px', lineHeight:1.9, color:'rgba(200,190,240,0.45)', letterSpacing:'0.06em', maxWidth:'520px', margin:'0 auto' }}>
-            Alle acht Divisionen sind operabel und arbeiten gemeinsam, um das Überleben der Kolonisten auf Meruria zu sichern.
-          </p>
-        </div>
-
-        {/* Cards grid */}
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(2, 1fr)', gap:'18px' }}>
-          {DIVISIONS.map((div, i) => (
-            <DivisionCard key={div.nummer} div={div} delay={0.05 + i * 0.07} />
-          ))}
-        </div>
-
-      </div>
-
-      {/* ── FOOTER ── */}
-      <div style={{ position:'relative', zIndex:10, padding:'10px 32px', borderTop:'1px solid rgba(160,140,255,0.07)', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:'rgba(160,140,255,0.22)', letterSpacing:'0.2em' }}>◈ ARCHIV-STATUS: NOMINAL ◈ EPOCHE: UNBEKANNT</div>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:'rgba(160,140,255,0.22)', letterSpacing:'0.2em' }}>MERURIA // DIE VERWOBENEN REICHE</div>
-      </div>
-
-      <TweaksPanel>
-        <TweakSection label="Darstellung" />
-        <TweakToggle id="showParticles" label="Partikel" />
-      </TweaksPanel>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    onMouseMove: handleMouseMove,
+    style: {
+      position: 'relative',
+      minHeight: '100vh'
+    }
+  }, tweaks.showParticles && /*#__PURE__*/React.createElement(ParticleField, {
+    mouseX: mouse.x,
+    mouseY: mouse.y
+  }), /*#__PURE__*/React.createElement(FloatingHexField, {
+    mouseX: mouse.x,
+    mouseY: mouse.y
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 10,
+      width: '100%',
+      height: '180px',
+      background: 'linear-gradient(180deg, rgba(20,10,50,0.95) 0%, rgba(10,8,30,0.98) 100%)',
+      borderBottom: '1px solid rgba(160,140,255,0.15)',
+      overflow: 'hidden',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      background: `radial-gradient(ellipse at 20% 50%, rgba(124,77,255,0.18) 0%, transparent 50%), radial-gradient(ellipse at 80% 50%, rgba(45,125,255,0.14) 0%, transparent 50%), repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(160,140,255,0.04) 60px, rgba(160,140,255,0.04) 61px)`,
+      pointerEvents: 'none'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      backgroundImage: `repeating-linear-gradient(135deg, transparent, transparent 18px, rgba(124,77,255,0.03) 18px, rgba(124,77,255,0.03) 19px)`,
+      pointerEvents: 'none'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: 'rgba(160,140,255,0.3)',
+      letterSpacing: '0.3em',
+      textTransform: 'uppercase',
+      position: 'relative',
+      zIndex: 1
+    }
+  }, "Kopfbild \u2014 Artwork hier ablegen")), /*#__PURE__*/React.createElement(SiteNav, {
+    rightLabel: "DIVISIONEN-ARCHIV"
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 5,
+      maxWidth: '1180px',
+      margin: '0 auto',
+      padding: '56px 40px 80px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      marginBottom: '52px',
+      textAlign: 'center',
+      position: 'relative'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px',
+      justifyContent: 'center',
+      marginBottom: '22px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '60px',
+      height: '1px',
+      background: 'linear-gradient(270deg, rgba(124,77,255,0.6), transparent)'
+    }
+  }), /*#__PURE__*/React.createElement("svg", {
+    width: "8",
+    height: "8",
+    viewBox: "0 0 8 8"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(8),
+    fill: "rgba(124,77,255,0.35)",
+    stroke: "rgba(160,140,255,0.6)",
+    strokeWidth: "0.8"
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '60px',
+      height: '1px',
+      background: 'linear-gradient(90deg, rgba(124,77,255,0.6), transparent)'
+    }
+  })), /*#__PURE__*/React.createElement("h1", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: 'clamp(30px,4vw,52px)',
+      fontWeight: '300',
+      letterSpacing: '0.2em',
+      color: '#f0eeff',
+      textShadow: '0 0 50px rgba(124,77,255,0.4)',
+      marginBottom: '18px',
+      lineHeight: 1.15
+    }
+  }, "Die Acht Divisionen"), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '13px',
+      lineHeight: 1.9,
+      color: 'rgba(200,190,240,0.45)',
+      letterSpacing: '0.06em',
+      maxWidth: '520px',
+      margin: '0 auto'
+    }
+  }, "Alle acht Divisionen sind operabel und arbeiten gemeinsam, um das \xDCberleben der Kolonisten auf Meruria zu sichern.")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(2, 1fr)',
+      gap: '18px'
+    }
+  }, DIVISIONS.map((div, i) => /*#__PURE__*/React.createElement(DivisionCard, {
+    key: div.nummer,
+    div: div,
+    delay: 0.05 + i * 0.07
+  })))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 10,
+      padding: '10px 32px',
+      borderTop: '1px solid rgba(160,140,255,0.07)',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      color: 'rgba(160,140,255,0.22)',
+      letterSpacing: '0.2em'
+    }
+  }, "\u25C8 ARCHIV-STATUS: NOMINAL \u25C8 EPOCHE: UNBEKANNT"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      color: 'rgba(160,140,255,0.22)',
+      letterSpacing: '0.2em'
+    }
+  }, "MERURIA // DIE VERWOBENEN REICHE")), /*#__PURE__*/React.createElement(TweaksPanel, null, /*#__PURE__*/React.createElement(TweakSection, {
+    label: "Darstellung"
+  }), /*#__PURE__*/React.createElement(TweakToggle, {
+    id: "showParticles",
+    label: "Partikel"
+  })));
 }
-
-ReactDOM.createRoot(document.getElementById('root')).render(<SiteGate><App /></SiteGate>);
+ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement(App, null)));
+})();
 </script>
 
 

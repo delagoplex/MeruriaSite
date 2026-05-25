@@ -6,35 +6,60 @@
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
 <link rel="stylesheet" href="assets/styles/pages/Missionsterminal.css">
-<script src="assets/scripts/vendor/react.development.js"></script>
-<script src="assets/scripts/vendor/react-dom.development.js"></script>
-<script src="assets/scripts/vendor/babel-standalone.js"></script>
-<script src="assets/components/tweaks-panel-13.jsx" type="text/babel"></script>
-<script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/scripts/vendor/react.production.min.js"></script>
+<script src="assets/scripts/vendor/react-dom.production.min.js"></script>
+
+<script src="assets/components/tweaks-panel-13.js"></script>
+<script src="assets/components/nav.js"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
-<script src="assets/components/site-gate.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.js"></script>
 </head>
 <body>
 <div id="root"></div>
 
-<script type="text/babel">
-const { useState, useEffect, useRef, useMemo } = React;
-const { SiteNav, SiteGate } = window;
-const { useTweaks, TweaksPanel, TweakSection, TweakToggle, TweakRadio } = window;
-
+<script>
+(function () {
+const {
+  useState,
+  useEffect,
+  useRef,
+  useMemo
+} = React;
+const {
+  SiteNav,
+  SiteGate
+} = window;
+const {
+  useTweaks,
+  TweaksPanel,
+  TweakSection,
+  TweakToggle,
+  TweakRadio
+} = window;
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "showParticles": true,
   "showScanline": true,
   "density": "comfortable"
-}/*EDITMODE-END*/;
-
+} /*EDITMODE-END*/;
 
 // ─── KATEGORIEN ───────────────────────────────────────────────────────────────
 const KAT = {
-  Suche:     { color: 'var(--suche)',     glyph: '⬡', label: 'SUCHE' },
-  Gespraech: { color: 'var(--gespraech)', glyph: '◇', label: 'GESPRÄCH' },
-  Jagd:      { color: 'var(--jagd)',      glyph: '✦', label: 'JAGD' },
+  Suche: {
+    color: 'var(--suche)',
+    glyph: '⬡',
+    label: 'SUCHE'
+  },
+  Gespraech: {
+    color: 'var(--gespraech)',
+    glyph: '◇',
+    label: 'GESPRÄCH'
+  },
+  Jagd: {
+    color: 'var(--jagd)',
+    glyph: '✦',
+    label: 'JAGD'
+  }
 };
 
 // Mission data is loaded from Supabase at runtime.
@@ -44,630 +69,1109 @@ function ParticleField() {
   const canvasRef = useRef(null);
   const animRef = useRef(null);
   useEffect(() => {
-    const c = canvasRef.current; if (!c) return;
+    const c = canvasRef.current;
+    if (!c) return;
     const ctx = c.getContext('2d');
-    const resize = () => { c.width = c.offsetWidth; c.height = c.offsetHeight; };
-    resize(); window.addEventListener('resize', resize);
-    const pts = Array.from({length: 32}, () => ({
-      x: Math.random(), y: Math.random(),
-      r: Math.random()*1.3 + 0.5,
-      vx: (Math.random()-0.5)*0.018, vy: (Math.random()-0.5)*0.018,
-      a: Math.random()*0.18 + 0.04
+    const resize = () => {
+      c.width = c.offsetWidth;
+      c.height = c.offsetHeight;
+    };
+    resize();
+    window.addEventListener('resize', resize);
+    const pts = Array.from({
+      length: 32
+    }, () => ({
+      x: Math.random(),
+      y: Math.random(),
+      r: Math.random() * 1.3 + 0.5,
+      vx: (Math.random() - 0.5) * 0.018,
+      vy: (Math.random() - 0.5) * 0.018,
+      a: Math.random() * 0.18 + 0.04
     }));
     const tick = () => {
-      const w = c.width, h = c.height;
-      ctx.clearRect(0,0,w,h);
+      const w = c.width,
+        h = c.height;
+      ctx.clearRect(0, 0, w, h);
       pts.forEach(p => {
-        p.x += p.vx/w*60; p.y += p.vy/h*60;
-        if (p.x<0) p.x=1; if (p.x>1) p.x=0;
-        if (p.y<0) p.y=1; if (p.y>1) p.y=0;
-        ctx.beginPath(); ctx.arc(p.x*w, p.y*h, p.r, 0, Math.PI*2);
+        p.x += p.vx / w * 60;
+        p.y += p.vy / h * 60;
+        if (p.x < 0) p.x = 1;
+        if (p.x > 1) p.x = 0;
+        if (p.y < 0) p.y = 1;
+        if (p.y > 1) p.y = 0;
+        ctx.beginPath();
+        ctx.arc(p.x * w, p.y * h, p.r, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(160,140,255,${p.a})`;
         ctx.fill();
       });
       animRef.current = requestAnimationFrame(tick);
     };
     tick();
-    return () => { cancelAnimationFrame(animRef.current); window.removeEventListener('resize', resize); };
+    return () => {
+      cancelAnimationFrame(animRef.current);
+      window.removeEventListener('resize', resize);
+    };
   }, []);
-  return <canvas ref={canvasRef} style={{ position:'fixed', inset:0, width:'100%', height:'100%', pointerEvents:'none', zIndex:0 }} />;
+  return /*#__PURE__*/React.createElement("canvas", {
+    ref: canvasRef,
+    style: {
+      position: 'fixed',
+      inset: 0,
+      width: '100%',
+      height: '100%',
+      pointerEvents: 'none',
+      zIndex: 0
+    }
+  });
 }
 
-
-
 // ─── SCHWIERIGKEIT (Hex pips) ────────────────────────────────────────────────
-function SchwierigkeitsAnzeige({ level, max = 5 }) {
-  return (
-    <div style={{ display:'flex', alignItems:'center', gap:'3px' }}>
-      {Array.from({ length: max }).map((_, i) => {
-        const filled = i < level;
-        return (
-          <svg key={i} width="9" height="10" viewBox="0 0 9 10" style={{ flexShrink:0 }}>
-            <polygon points="4.5,0.6 8.3,2.8 8.3,7.2 4.5,9.4 0.7,7.2 0.7,2.8"
-              fill={filled ? 'var(--purple)' : 'transparent'}
-              stroke={filled ? 'var(--purple-bright)' : 'rgba(160,140,255,0.22)'}
-              strokeWidth="1"/>
-          </svg>
-        );
-      })}
-    </div>
-  );
+function SchwierigkeitsAnzeige({
+  level,
+  max = 5
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '3px'
+    }
+  }, Array.from({
+    length: max
+  }).map((_, i) => {
+    const filled = i < level;
+    return /*#__PURE__*/React.createElement("svg", {
+      key: i,
+      width: "9",
+      height: "10",
+      viewBox: "0 0 9 10",
+      style: {
+        flexShrink: 0
+      }
+    }, /*#__PURE__*/React.createElement("polygon", {
+      points: "4.5,0.6 8.3,2.8 8.3,7.2 4.5,9.4 0.7,7.2 0.7,2.8",
+      fill: filled ? 'var(--purple)' : 'transparent',
+      stroke: filled ? 'var(--purple-bright)' : 'rgba(160,140,255,0.22)',
+      strokeWidth: "1"
+    }));
+  }));
 }
 
 // ─── KATEGORIE TAG ───────────────────────────────────────────────────────────
-function KategorieTag({ k }) {
+function KategorieTag({
+  k
+}) {
   const meta = KAT[k];
-  return (
-    <span style={{
-      fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em',
-      color: meta.color, textTransform:'uppercase',
-      display:'inline-flex', alignItems:'center', gap:'5px'
-    }}>
-      <span style={{ fontSize:'10px', lineHeight:1 }}>{meta.glyph}</span>
-      {meta.label}
-    </span>
-  );
+  return /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.18em',
+      color: meta.color,
+      textTransform: 'uppercase',
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '5px'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: '10px',
+      lineHeight: 1
+    }
+  }, meta.glyph), meta.label);
 }
 
 // ─── QUEST ROW ────────────────────────────────────────────────────────────────
-function QuestRow({ q, active, onClick, dense }) {
-  return (
-    <div onClick={onClick} style={{
-      position:'relative', display:'grid',
+function QuestRow({
+  q,
+  active,
+  onClick,
+  dense
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    onClick: onClick,
+    style: {
+      position: 'relative',
+      display: 'grid',
       gridTemplateColumns: '1fr 110px 90px',
-      alignItems:'center', gap:'12px',
+      alignItems: 'center',
+      gap: '12px',
       padding: dense ? '8px 16px' : '11px 16px',
-      cursor:'pointer',
-      background: active
-        ? 'linear-gradient(90deg, rgba(124,77,255,0.18) 0%, rgba(124,77,255,0.06) 100%)'
-        : 'transparent',
+      cursor: 'pointer',
+      background: active ? 'linear-gradient(90deg, rgba(124,77,255,0.18) 0%, rgba(124,77,255,0.06) 100%)' : 'transparent',
       borderLeft: `2px solid ${active ? 'var(--purple-bright)' : 'transparent'}`,
       borderBottom: '1px solid rgba(160,140,255,0.05)',
-      transition:'all 0.15s'
-    }}
-      onMouseEnter={e => { if (!active) { e.currentTarget.style.background = 'rgba(124,77,255,0.05)'; e.currentTarget.style.borderLeftColor = 'rgba(124,77,255,0.35)'; } }}
-      onMouseLeave={e => { if (!active) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderLeftColor = 'transparent'; } }}
-    >
-      <div style={{ minWidth:0, display:'flex', alignItems:'center', gap:'10px' }}>
-        {q.status === 'neu' && (
-          <span style={{
-            fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.15em',
-            padding:'2px 6px', background:'rgba(127,184,255,0.18)',
-            border:'1px solid rgba(127,184,255,0.45)', borderRadius:'2px',
-            color:'#a3c8ff', textTransform:'uppercase', flexShrink:0
-          }}>NEU</span>
-        )}
-        {q.status === 'empfohlen' && (
-          <span style={{
-            fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.15em',
-            padding:'2px 6px', background:'rgba(255,141,181,0.18)',
-            border:'1px solid rgba(255,141,181,0.45)', borderRadius:'2px',
-            color:'#ffb3ce', textTransform:'uppercase', flexShrink:0
-          }}>EMPF.</span>
-        )}
-        <span style={{
-          fontFamily:'var(--font-body)', fontWeight: active ? 400 : 300,
-          fontSize:'13.5px', color: active ? '#f0eeff' : 'rgba(220,210,250,0.85)',
-          letterSpacing:'0.03em', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis'
-        }}>{q.name}</span>
-      </div>
-      <div><KategorieTag k={q.kategorie}/></div>
-      <SchwierigkeitsAnzeige level={q.sw} />
-    </div>
-  );
+      transition: 'all 0.15s'
+    },
+    onMouseEnter: e => {
+      if (!active) {
+        e.currentTarget.style.background = 'rgba(124,77,255,0.05)';
+        e.currentTarget.style.borderLeftColor = 'rgba(124,77,255,0.35)';
+      }
+    },
+    onMouseLeave: e => {
+      if (!active) {
+        e.currentTarget.style.background = 'transparent';
+        e.currentTarget.style.borderLeftColor = 'transparent';
+      }
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      minWidth: 0,
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px'
+    }
+  }, q.status === 'neu' && /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '0.15em',
+      padding: '2px 6px',
+      background: 'rgba(127,184,255,0.18)',
+      border: '1px solid rgba(127,184,255,0.45)',
+      borderRadius: '2px',
+      color: '#a3c8ff',
+      textTransform: 'uppercase',
+      flexShrink: 0
+    }
+  }, "NEU"), q.status === 'empfohlen' && /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '0.15em',
+      padding: '2px 6px',
+      background: 'rgba(255,141,181,0.18)',
+      border: '1px solid rgba(255,141,181,0.45)',
+      borderRadius: '2px',
+      color: '#ffb3ce',
+      textTransform: 'uppercase',
+      flexShrink: 0
+    }
+  }, "EMPF."), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: active ? 400 : 300,
+      fontSize: '13.5px',
+      color: active ? '#f0eeff' : 'rgba(220,210,250,0.85)',
+      letterSpacing: '0.03em',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis'
+    }
+  }, q.name)), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(KategorieTag, {
+    k: q.kategorie
+  })), /*#__PURE__*/React.createElement(SchwierigkeitsAnzeige, {
+    level: q.sw
+  }));
 }
 
 // ─── FILTER CHIPS ─────────────────────────────────────────────────────────────
-function FilterChip({ label, count, active, onClick, color }) {
-  return (
-    <button onClick={onClick} style={{
-      fontFamily:'var(--font-mono)', fontSize:'9.5px', letterSpacing:'0.18em',
-      padding:'5px 11px', height:'22px',
+function FilterChip({
+  label,
+  count,
+  active,
+  onClick,
+  color
+}) {
+  return /*#__PURE__*/React.createElement("button", {
+    onClick: onClick,
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9.5px',
+      letterSpacing: '0.18em',
+      padding: '5px 11px',
+      height: '22px',
       background: active ? 'rgba(124,77,255,0.22)' : 'transparent',
       border: `1px solid ${active ? 'rgba(160,140,255,0.55)' : 'rgba(160,140,255,0.15)'}`,
-      color: active ? '#f0eeff' : (color || 'var(--muted)'),
-      cursor:'pointer', borderRadius:'2px',
-      textTransform:'uppercase', whiteSpace:'nowrap', flexShrink:0,
-      display:'inline-flex', alignItems:'center', gap:'7px', transition:'all 0.15s'
-    }}
-      onMouseEnter={e=>{ if (!active) { e.currentTarget.style.borderColor = 'rgba(160,140,255,0.4)'; e.currentTarget.style.color = '#f0eeff'; } }}
-      onMouseLeave={e=>{ if (!active) { e.currentTarget.style.borderColor = 'rgba(160,140,255,0.15)'; e.currentTarget.style.color = color || 'var(--muted)'; } }}
-    >
-      {label}
-      <span style={{ opacity:0.55, fontSize:'9px' }}>{count}</span>
-    </button>
-  );
+      color: active ? '#f0eeff' : color || 'var(--muted)',
+      cursor: 'pointer',
+      borderRadius: '2px',
+      textTransform: 'uppercase',
+      whiteSpace: 'nowrap',
+      flexShrink: 0,
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '7px',
+      transition: 'all 0.15s'
+    },
+    onMouseEnter: e => {
+      if (!active) {
+        e.currentTarget.style.borderColor = 'rgba(160,140,255,0.4)';
+        e.currentTarget.style.color = '#f0eeff';
+      }
+    },
+    onMouseLeave: e => {
+      if (!active) {
+        e.currentTarget.style.borderColor = 'rgba(160,140,255,0.15)';
+        e.currentTarget.style.color = color || 'var(--muted)';
+      }
+    }
+  }, label, /*#__PURE__*/React.createElement("span", {
+    style: {
+      opacity: 0.55,
+      fontSize: '9px'
+    }
+  }, count));
 }
 
 // ─── AUFTRAGGEBER SIGIL ──────────────────────────────────────────────────────
-function AuftraggeberSigil({ name }) {
+function AuftraggeberSigil({
+  name
+}) {
   // hash name to a hue offset for variety
-  const hash = name.split('').reduce((a,c)=>a + c.charCodeAt(0), 0);
-  const initials = name.replace(/^Die\s+/, '').split(/\s+/).map(w=>w[0]).slice(0,2).join('');
-  return (
-    <div style={{
-      position:'relative', width:'46px', height:'52px',
-      display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0
-    }}>
-      <svg width="46" height="52" viewBox="0 0 46 52" style={{ position:'absolute', inset:0 }}>
-        <polygon points="23,2 43,13 43,39 23,50 3,39 3,13"
-          fill="rgba(124,77,255,0.12)" stroke="rgba(167,139,255,0.6)" strokeWidth="1.2"/>
-        <polygon points="23,7 38,15.5 38,36.5 23,45 8,36.5 8,15.5"
-          fill="none" stroke="rgba(167,139,255,0.18)" strokeWidth="0.8"/>
-      </svg>
-      <span style={{
-        position:'relative', zIndex:1,
-        fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:500,
-        letterSpacing:'0.05em', color:'#e8e0ff'
-      }}>{initials}</span>
-    </div>
-  );
+  const hash = name.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
+  const initials = name.replace(/^Die\s+/, '').split(/\s+/).map(w => w[0]).slice(0, 2).join('');
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      width: '46px',
+      height: '52px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "46",
+    height: "52",
+    viewBox: "0 0 46 52",
+    style: {
+      position: 'absolute',
+      inset: 0
+    }
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: "23,2 43,13 43,39 23,50 3,39 3,13",
+    fill: "rgba(124,77,255,0.12)",
+    stroke: "rgba(167,139,255,0.6)",
+    strokeWidth: "1.2"
+  }), /*#__PURE__*/React.createElement("polygon", {
+    points: "23,7 38,15.5 38,36.5 23,45 8,36.5 8,15.5",
+    fill: "none",
+    stroke: "rgba(167,139,255,0.18)",
+    strokeWidth: "0.8"
+  })), /*#__PURE__*/React.createElement("span", {
+    style: {
+      position: 'relative',
+      zIndex: 1,
+      fontFamily: 'var(--font-display)',
+      fontSize: '14px',
+      fontWeight: 500,
+      letterSpacing: '0.05em',
+      color: '#e8e0ff'
+    }
+  }, initials));
 }
 
 // ─── ROUTING ICON for category ───────────────────────────────────────────────
-function CategoryIcon({ k }) {
+function CategoryIcon({
+  k
+}) {
   const c = KAT[k].color;
-  return (
-    <div style={{
-      width:'42px', height:'46px', flexShrink:0,
-      display:'flex', alignItems:'center', justifyContent:'center',
-      position:'relative'
-    }}>
-      <svg width="42" height="46" viewBox="0 0 42 46" style={{position:'absolute', inset:0}}>
-        <polygon points="21,2 39,12 39,34 21,44 3,34 3,12"
-          fill="rgba(124,77,255,0.08)" stroke={c} strokeOpacity="0.55" strokeWidth="1.2"/>
-      </svg>
-      <span style={{ position:'relative', fontSize:'17px', color:c, lineHeight:1 }}>{KAT[k].glyph}</span>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '42px',
+      height: '46px',
+      flexShrink: 0,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      position: 'relative'
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "42",
+    height: "46",
+    viewBox: "0 0 42 46",
+    style: {
+      position: 'absolute',
+      inset: 0
+    }
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: "21,2 39,12 39,34 21,44 3,34 3,12",
+    fill: "rgba(124,77,255,0.08)",
+    stroke: c,
+    strokeOpacity: "0.55",
+    strokeWidth: "1.2"
+  })), /*#__PURE__*/React.createElement("span", {
+    style: {
+      position: 'relative',
+      fontSize: '17px',
+      color: c,
+      lineHeight: 1
+    }
+  }, KAT[k].glyph));
 }
 
 // ─── PANEL HEADER ────────────────────────────────────────────────────────────
-function PanelHeader({ children, right }) {
-  return (
-    <div style={{
-      position:'relative',
-      padding:'10px 18px 10px 18px',
-      borderBottom:'1px solid rgba(160,140,255,0.18)',
-      background:'linear-gradient(180deg, rgba(124,77,255,0.10) 0%, rgba(124,77,255,0.02) 100%)',
-      display:'flex', alignItems:'center', justifyContent:'space-between', gap:'12px'
-    }}>
-      <div style={{
-        fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:400,
-        letterSpacing:'0.32em', color:'#f0eeff', textTransform:'uppercase',
-        textShadow:'0 0 14px rgba(124,77,255,0.4)'
-      }}>{children}</div>
-      {right}
-    </div>
-  );
+function PanelHeader({
+  children,
+  right
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      padding: '10px 18px 10px 18px',
+      borderBottom: '1px solid rgba(160,140,255,0.18)',
+      background: 'linear-gradient(180deg, rgba(124,77,255,0.10) 0%, rgba(124,77,255,0.02) 100%)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: '12px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '14px',
+      fontWeight: 400,
+      letterSpacing: '0.32em',
+      color: '#f0eeff',
+      textTransform: 'uppercase',
+      textShadow: '0 0 14px rgba(124,77,255,0.4)'
+    }
+  }, children), right);
 }
 
 // ─── REWARD ROW ──────────────────────────────────────────────────────────────
-function RewardRow({ icon, label, value, accent }) {
-  return (
-    <div style={{
-      display:'flex', alignItems:'center', justifyContent:'space-between',
-      padding:'8px 0', borderBottom:'1px dashed rgba(160,140,255,0.1)',
-    }}>
-      <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
-        <div style={{
-          width:'20px', height:'20px', display:'flex',
-          alignItems:'center', justifyContent:'center',
-          color: accent || 'var(--purple-bright)', flexShrink:0
-        }}>{icon}</div>
-        <span style={{
-          fontFamily:'var(--font-body)', fontWeight:300,
-          fontSize:'12.5px', color:'rgba(220,210,250,0.78)',
-          letterSpacing:'0.04em'
-        }}>{label}</span>
-      </div>
-      <span style={{
-        fontFamily:'var(--font-mono)', fontSize:'13px',
-        color:'#f0eeff', letterSpacing:'0.08em'
-      }}>{value}</span>
-    </div>
-  );
+function RewardRow({
+  icon,
+  label,
+  value,
+  accent
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: '8px 0',
+      borderBottom: '1px dashed rgba(160,140,255,0.1)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '20px',
+      height: '20px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: accent || 'var(--purple-bright)',
+      flexShrink: 0
+    }
+  }, icon), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: 300,
+      fontSize: '12.5px',
+      color: 'rgba(220,210,250,0.78)',
+      letterSpacing: '0.04em'
+    }
+  }, label)), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '13px',
+      color: '#f0eeff',
+      letterSpacing: '0.08em'
+    }
+  }, value));
 }
 
 // ─── DETAIL CARD (Front / Back) ──────────────────────────────────────────────
-function DetailCard({ q, view, onAccept, onWithdraw, myApp, progress, onStepClick }) {
+function DetailCard({
+  q,
+  view,
+  onAccept,
+  onWithdraw,
+  myApp,
+  progress,
+  onStepClick
+}) {
   const accepted = !!myApp;
   const appStatus = myApp?.app_status || null;
-  const APP_COLORS = { pending:'#7fb8ff', accepted:'rgba(100,220,140,0.9)', rejected:'rgba(255,120,120,0.8)' };
-  const APP_LABELS = { pending:'Beworben · Ausstehend', accepted:'Angenommen', rejected:'Abgelehnt' };
-  return (
-    <div style={{ display:'flex', flexDirection:'column', height:'100%', minHeight:0 }}>
-      {/* Quest header strip */}
-      <div style={{
-        display:'flex', alignItems:'center', gap:'14px',
-        padding:'18px 22px',
-        background:`linear-gradient(180deg, ${KAT[q.kategorie].color}22 0%, rgba(10,8,32,0) 100%)`,
-        borderBottom:'1px solid rgba(160,140,255,0.12)'
-      }}>
-        <CategoryIcon k={q.kategorie}/>
-        <div style={{ flex:1, minWidth:0 }}>
-          <div style={{
-            fontFamily:'var(--font-mono)', fontSize:'9px',
-            color: KAT[q.kategorie].color, letterSpacing:'0.25em',
-            textTransform:'uppercase', marginBottom:'4px', opacity:0.85
-          }}>{KAT[q.kategorie].label} · STUFE {q.lv}</div>
-          <div style={{
-            fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:400,
-            letterSpacing:'0.06em', color:'#f0eeff',
-            textShadow:'0 0 22px rgba(124,77,255,0.35)',
-            whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis'
-          }}>{q.name}</div>
-        </div>
-        <div style={{ textAlign:'right' }}>
-          <div style={{
-            fontFamily:'var(--font-mono)', fontSize:'8px', color:'var(--muted-dim)',
-            letterSpacing:'0.2em', textTransform:'uppercase', marginBottom:'4px'
-          }}>SCHWIERIGKEIT</div>
-          <SchwierigkeitsAnzeige level={q.sw}/>
-        </div>
-      </div>
-
-      {/* Body */}
-      <div style={{
-        flex:1, minHeight:0, overflowY:'auto', padding:'20px 22px',
-        animation:'fadeIn 0.25s ease', key: view
-      }}>
-        {view === 'details' && (
-          <div style={{ animation:'fadeInUp 0.25s ease' }}>
-            {/* Auftraggeber */}
-            <div style={{
-              display:'flex', alignItems:'center', gap:'14px', marginBottom:'18px',
-              padding:'12px 14px',
-              background:'rgba(124,77,255,0.06)',
-              border:'1px solid rgba(160,140,255,0.14)',
-              borderRadius:'3px'
-            }}>
-              <AuftraggeberSigil name={q.auftraggeber}/>
-              <div>
-                <div style={{
-                  fontFamily:'var(--font-mono)', fontSize:'9px', color:'var(--purple-bright)',
-                  letterSpacing:'0.22em', textTransform:'uppercase', marginBottom:'3px'
-                }}>Auftraggeber</div>
-                <div style={{
-                  fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:400,
-                  color:'#f0eeff', letterSpacing:'0.08em'
-                }}>{q.auftraggeber}</div>
-                <div style={{
-                  fontFamily:'var(--font-body)', fontWeight:300, fontStyle:'italic',
-                  fontSize:'11px', color:'var(--muted)', marginTop:'2px'
-                }}>{q.region}</div>
-              </div>
-            </div>
-
-            {/* Description */}
-            <div style={{
-              fontFamily:'var(--font-body)', fontWeight:300,
-              fontSize:'13px', lineHeight:1.75, color:'rgba(220,210,250,0.82)',
-              letterSpacing:'0.02em', marginBottom:'24px',
-              textWrap:'pretty'
-            }}>{q.desc}</div>
-
-            {/* Rewards heading */}
-            <div style={{
-              fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:500,
-              letterSpacing:'0.28em', color:'var(--purple-bright)',
-              textTransform:'uppercase', marginBottom:'8px',
-              paddingBottom:'4px', borderBottom:'1px solid rgba(160,140,255,0.2)'
-            }}>Belohnungen</div>
-            <RewardRow
-              icon={<svg width="14" height="14" viewBox="0 0 14 14"><polygon points="7,1 13,5 11,12 3,12 1,5" fill="none" stroke="currentColor" strokeWidth="1.2"/></svg>}
-              label="Erfahrung"
-              value={`+${q.rewards.xp}`}
-            />
-            <RewardRow
-              icon={<svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="5.5" fill="none" stroke="currentColor" strokeWidth="1.2"/><circle cx="7" cy="7" r="2.5" fill="currentColor" opacity="0.5"/></svg>}
-              label="Schillinge"
-              value={q.rewards.schillinge.toLocaleString('de-DE')}
-            />
-            {q.rewards.item && (
-              <RewardRow
-                icon={<svg width="14" height="14" viewBox="0 0 14 14"><rect x="2.5" y="3" width="9" height="8" fill="none" stroke="currentColor" strokeWidth="1.2"/><line x1="2.5" y1="5.5" x2="11.5" y2="5.5" stroke="currentColor" strokeWidth="1"/></svg>}
-                label={q.rewards.item}
-                value="◈"
-                accent="#ffb89e"
-              />
-            )}
-          </div>
-        )}
-
-        {view === 'anweisungen' && (
-          <div style={{ animation:'fadeInUp 0.25s ease' }}>
-            <div style={{
-              fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:500,
-              letterSpacing:'0.28em', color:'var(--purple-bright)',
-              textTransform:'uppercase', marginBottom:'14px',
-              paddingBottom:'4px', borderBottom:'1px solid rgba(160,140,255,0.2)'
-            }}>Anweisungen</div>
-
-            {q.anweisungen.map((step, i) => {
-              const n = progress[i] ?? step.n;
-              const done = n >= step.max;
-              const handleClick = () => onStepClick && onStepClick(i, step.max);
-              return (
-                <div key={i} style={{
-                  display:'flex', alignItems:'flex-start', gap:'14px',
-                  padding:'12px 0', borderBottom:'1px dashed rgba(160,140,255,0.1)'
-                }}>
-                  <button
-                    onClick={handleClick}
-                    aria-label={`Schritt ${i+1} abhaken`}
-                    style={{
-                      position:'relative', width:'26px', height:'28px',
-                      flexShrink:0, marginTop:'-1px',
-                      padding:0, background:'transparent', border:'none',
-                      cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center',
-                      transition:'transform 0.15s'
-                    }}
-                    onMouseEnter={e=>{ e.currentTarget.style.transform='scale(1.12)'; const p = e.currentTarget.querySelector('polygon'); if (p) p.setAttribute('stroke-width','1.6'); }}
-                    onMouseLeave={e=>{ e.currentTarget.style.transform='scale(1)'; const p = e.currentTarget.querySelector('polygon'); if (p) p.setAttribute('stroke-width','1.1'); }}
-                  >
-                    <svg width="22" height="24" viewBox="0 0 22 24" style={{ display:'block', overflow:'visible' }}>
-                      <polygon points="11,1.5 19.5,6.5 19.5,17.5 11,22.5 2.5,17.5 2.5,6.5"
-                        fill={done ? 'rgba(124,77,255,0.5)' : (n>0 ? 'rgba(124,77,255,0.18)' : 'rgba(124,77,255,0.06)')}
-                        stroke="var(--purple-bright)" strokeWidth="1.1"
-                        style={{ filter: done ? 'drop-shadow(0 0 6px rgba(167,139,255,0.7))' : 'none', transition:'all 0.2s' }}/>
-                      {done && (
-                        <path d="M6.5 12 L9.5 15 L15 9" stroke="#f0eeff" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-                      )}
-                      {!done && n > 0 && step.max > 1 && (
-                        <text x="11" y="15" textAnchor="middle"
-                          fontFamily="Share Tech Mono, monospace"
-                          fontSize="9" fill="#f0eeff" style={{letterSpacing:'0.05em'}}>
-                          {n}
-                        </text>
-                      )}
-                    </svg>
-                  </button>
-                  <div style={{ flex:1 }}>
-                    <div style={{
-                      fontFamily:'var(--font-body)', fontWeight:300, fontSize:'13px',
-                      color: done ? 'rgba(200,190,240,0.6)' : 'rgba(220,210,250,0.88)',
-                      lineHeight:1.6, letterSpacing:'0.02em',
-                      textDecoration: done ? 'line-through' : 'none',
-                      textDecorationColor:'rgba(167,139,255,0.45)',
-                      transition:'all 0.2s'
-                    }}>{step.txt}</div>
-                    {step.max > 1 && (
-                      <div style={{ display:'flex', alignItems:'center', gap:'10px', marginTop:'8px' }}>
-                        <div style={{
-                          flex:1, height:'3px', background:'rgba(160,140,255,0.1)',
-                          borderRadius:'1px', overflow:'hidden', maxWidth:'180px'
-                        }}>
-                          <div style={{
-                            height:'100%', width: `${(n/step.max)*100}%`,
-                            background:'linear-gradient(90deg, var(--purple) 0%, var(--purple-bright) 100%)',
-                            boxShadow:'0 0 8px rgba(167,139,255,0.6)',
-                            transition:'width 0.25s ease'
-                          }}/>
-                        </div>
-                        <span style={{
-                          fontFamily:'var(--font-mono)', fontSize:'11px',
-                          color: done ? 'var(--purple-bright)' : '#f0eeff',
-                          letterSpacing:'0.1em'
-                        }}>{n} / {step.max}</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-
-            <div style={{
-              marginTop:'24px', padding:'12px 14px',
-              background:'rgba(45,125,255,0.05)',
-              border:'1px dashed rgba(127,184,255,0.25)',
-              borderRadius:'3px'
-            }}>
-              <div style={{
-                fontFamily:'var(--font-mono)', fontSize:'8.5px', letterSpacing:'0.22em',
-                color:'rgba(127,184,255,0.7)', textTransform:'uppercase', marginBottom:'5px'
-              }}>◈ Hinweis</div>
-              <div style={{
-                fontFamily:'var(--font-body)', fontWeight:300, fontStyle:'italic',
-                fontSize:'11.5px', color:'rgba(200,210,240,0.7)', lineHeight:1.6
-              }}>
-                Tippe auf die Sechsecke, um Schritte abzuhaken — bei Sammelaufträgen erhöht jeder Klick den Zähler. Sprich mit deinem Auftraggeber, sobald alle Anweisungen erfüllt sind.
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Accept bar */}
-      <div style={{
-        padding:'12px 22px',
-        borderTop:'1px solid rgba(160,140,255,0.18)',
-        background:'rgba(5,4,15,0.6)',
-        display:'flex', alignItems:'center', justifyContent:'space-between', gap:'12px',
-        flexShrink: 0
-      }}>
-        <div style={{
-          fontFamily:'var(--font-mono)', fontSize:'8.5px',
-          color:'var(--muted-dim)', letterSpacing:'0.2em', textTransform:'uppercase'
-        }}>
-          {accepted ? (
-            <span style={{ color: APP_COLORS[appStatus] || 'var(--purple-bright)' }}>
-              ◉ {APP_LABELS[appStatus] || 'Beworben'}
-            </span>
-          ) : (
-            'ID · ' + q.id.toString().slice(0,8).toUpperCase()
-          )}
-        </div>
-        <div style={{ display:'flex', gap:'8px', alignItems:'center' }}>
-          {accepted && appStatus === 'pending' && (
-            <button onClick={onWithdraw} style={{
-              fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'.15em',
-              padding:'5px 12px', background:'transparent',
-              border:'1px solid rgba(200,60,60,0.35)', borderRadius:'2px',
-              color:'rgba(255,120,120,0.6)', cursor:'pointer', textTransform:'uppercase',
-              transition:'all .15s'
-            }}
-              onMouseEnter={e=>{ e.currentTarget.style.borderColor='rgba(200,60,60,0.6)'; e.currentTarget.style.color='rgba(255,120,120,0.9)'; }}
-              onMouseLeave={e=>{ e.currentTarget.style.borderColor='rgba(200,60,60,0.35)'; e.currentTarget.style.color='rgba(255,120,120,0.6)'; }}
-            >Zurückziehen</button>
-          )}
-          <button
-            onClick={!accepted ? onAccept : undefined}
-            disabled={accepted}
-            style={{
-              fontFamily:'var(--font-display)', fontSize:'11px',
-              letterSpacing:'0.28em', padding:'9px 28px',
-              background: accepted ? 'rgba(124,77,255,0.08)' : 'rgba(124,77,255,0.22)',
-              border:`1px solid ${accepted ? 'rgba(160,140,255,0.3)' : 'rgba(167,139,255,0.7)'}`,
-              color: accepted ? 'var(--purple-bright)' : '#f0eeff',
-              cursor: accepted ? 'default' : 'pointer', borderRadius:'2px',
-              textTransform:'uppercase', transition:'all 0.2s',
-              display:'inline-flex', alignItems:'center', gap:'10px',
-              boxShadow: accepted ? 'none' : '0 0 20px rgba(124,77,255,0.25)'
-            }}
-            onMouseEnter={e=>{ if (!accepted) { e.currentTarget.style.background='rgba(124,77,255,0.35)'; e.currentTarget.style.borderColor='#a78bff'; } }}
-            onMouseLeave={e=>{ if (!accepted) { e.currentTarget.style.background='rgba(124,77,255,0.22)'; e.currentTarget.style.borderColor='rgba(167,139,255,0.7)'; } }}
-          >
-            <span style={{
-              display:'inline-flex', width:'18px', height:'18px',
-              border:'1px solid currentColor', borderRadius:'50%',
-              alignItems:'center', justifyContent:'center', fontSize:'10px'
-            }}>↵</span>
-            {accepted ? 'Beworben' : 'Akzeptieren'}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
+  const APP_COLORS = {
+    pending: '#7fb8ff',
+    accepted: 'rgba(100,220,140,0.9)',
+    rejected: 'rgba(255,120,120,0.8)'
+  };
+  const APP_LABELS = {
+    pending: 'Beworben · Ausstehend',
+    accepted: 'Angenommen',
+    rejected: 'Abgelehnt'
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%',
+      minHeight: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '14px',
+      padding: '18px 22px',
+      background: `linear-gradient(180deg, ${KAT[q.kategorie].color}22 0%, rgba(10,8,32,0) 100%)`,
+      borderBottom: '1px solid rgba(160,140,255,0.12)'
+    }
+  }, /*#__PURE__*/React.createElement(CategoryIcon, {
+    k: q.kategorie
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      minWidth: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: KAT[q.kategorie].color,
+      letterSpacing: '0.25em',
+      textTransform: 'uppercase',
+      marginBottom: '4px',
+      opacity: 0.85
+    }
+  }, KAT[q.kategorie].label, " \xB7 STUFE ", q.lv), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '22px',
+      fontWeight: 400,
+      letterSpacing: '0.06em',
+      color: '#f0eeff',
+      textShadow: '0 0 22px rgba(124,77,255,0.35)',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis'
+    }
+  }, q.name)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: 'right'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      color: 'var(--muted-dim)',
+      letterSpacing: '0.2em',
+      textTransform: 'uppercase',
+      marginBottom: '4px'
+    }
+  }, "SCHWIERIGKEIT"), /*#__PURE__*/React.createElement(SchwierigkeitsAnzeige, {
+    level: q.sw
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      minHeight: 0,
+      overflowY: 'auto',
+      padding: '20px 22px',
+      animation: 'fadeIn 0.25s ease',
+      key: view
+    }
+  }, view === 'details' && /*#__PURE__*/React.createElement("div", {
+    style: {
+      animation: 'fadeInUp 0.25s ease'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '14px',
+      marginBottom: '18px',
+      padding: '12px 14px',
+      background: 'rgba(124,77,255,0.06)',
+      border: '1px solid rgba(160,140,255,0.14)',
+      borderRadius: '3px'
+    }
+  }, /*#__PURE__*/React.createElement(AuftraggeberSigil, {
+    name: q.auftraggeber
+  }), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: 'var(--purple-bright)',
+      letterSpacing: '0.22em',
+      textTransform: 'uppercase',
+      marginBottom: '3px'
+    }
+  }, "Auftraggeber"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '14px',
+      fontWeight: 400,
+      color: '#f0eeff',
+      letterSpacing: '0.08em'
+    }
+  }, q.auftraggeber), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: 300,
+      fontStyle: 'italic',
+      fontSize: '11px',
+      color: 'var(--muted)',
+      marginTop: '2px'
+    }
+  }, q.region))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: 300,
+      fontSize: '13px',
+      lineHeight: 1.75,
+      color: 'rgba(220,210,250,0.82)',
+      letterSpacing: '0.02em',
+      marginBottom: '24px',
+      textWrap: 'pretty'
+    }
+  }, q.desc), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '11px',
+      fontWeight: 500,
+      letterSpacing: '0.28em',
+      color: 'var(--purple-bright)',
+      textTransform: 'uppercase',
+      marginBottom: '8px',
+      paddingBottom: '4px',
+      borderBottom: '1px solid rgba(160,140,255,0.2)'
+    }
+  }, "Belohnungen"), /*#__PURE__*/React.createElement(RewardRow, {
+    icon: /*#__PURE__*/React.createElement("svg", {
+      width: "14",
+      height: "14",
+      viewBox: "0 0 14 14"
+    }, /*#__PURE__*/React.createElement("polygon", {
+      points: "7,1 13,5 11,12 3,12 1,5",
+      fill: "none",
+      stroke: "currentColor",
+      strokeWidth: "1.2"
+    })),
+    label: "Erfahrung",
+    value: `+${q.rewards.xp}`
+  }), /*#__PURE__*/React.createElement(RewardRow, {
+    icon: /*#__PURE__*/React.createElement("svg", {
+      width: "14",
+      height: "14",
+      viewBox: "0 0 14 14"
+    }, /*#__PURE__*/React.createElement("circle", {
+      cx: "7",
+      cy: "7",
+      r: "5.5",
+      fill: "none",
+      stroke: "currentColor",
+      strokeWidth: "1.2"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "7",
+      cy: "7",
+      r: "2.5",
+      fill: "currentColor",
+      opacity: "0.5"
+    })),
+    label: "Schillinge",
+    value: q.rewards.schillinge.toLocaleString('de-DE')
+  }), q.rewards.item && /*#__PURE__*/React.createElement(RewardRow, {
+    icon: /*#__PURE__*/React.createElement("svg", {
+      width: "14",
+      height: "14",
+      viewBox: "0 0 14 14"
+    }, /*#__PURE__*/React.createElement("rect", {
+      x: "2.5",
+      y: "3",
+      width: "9",
+      height: "8",
+      fill: "none",
+      stroke: "currentColor",
+      strokeWidth: "1.2"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "2.5",
+      y1: "5.5",
+      x2: "11.5",
+      y2: "5.5",
+      stroke: "currentColor",
+      strokeWidth: "1"
+    })),
+    label: q.rewards.item,
+    value: "\u25C8",
+    accent: "#ffb89e"
+  })), view === 'anweisungen' && /*#__PURE__*/React.createElement("div", {
+    style: {
+      animation: 'fadeInUp 0.25s ease'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '11px',
+      fontWeight: 500,
+      letterSpacing: '0.28em',
+      color: 'var(--purple-bright)',
+      textTransform: 'uppercase',
+      marginBottom: '14px',
+      paddingBottom: '4px',
+      borderBottom: '1px solid rgba(160,140,255,0.2)'
+    }
+  }, "Anweisungen"), q.anweisungen.map((step, i) => {
+    const n = progress[i] ?? step.n;
+    const done = n >= step.max;
+    const handleClick = () => onStepClick && onStepClick(i, step.max);
+    return /*#__PURE__*/React.createElement("div", {
+      key: i,
+      style: {
+        display: 'flex',
+        alignItems: 'flex-start',
+        gap: '14px',
+        padding: '12px 0',
+        borderBottom: '1px dashed rgba(160,140,255,0.1)'
+      }
+    }, /*#__PURE__*/React.createElement("button", {
+      onClick: handleClick,
+      "aria-label": `Schritt ${i + 1} abhaken`,
+      style: {
+        position: 'relative',
+        width: '26px',
+        height: '28px',
+        flexShrink: 0,
+        marginTop: '-1px',
+        padding: 0,
+        background: 'transparent',
+        border: 'none',
+        cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        transition: 'transform 0.15s'
+      },
+      onMouseEnter: e => {
+        e.currentTarget.style.transform = 'scale(1.12)';
+        const p = e.currentTarget.querySelector('polygon');
+        if (p) p.setAttribute('stroke-width', '1.6');
+      },
+      onMouseLeave: e => {
+        e.currentTarget.style.transform = 'scale(1)';
+        const p = e.currentTarget.querySelector('polygon');
+        if (p) p.setAttribute('stroke-width', '1.1');
+      }
+    }, /*#__PURE__*/React.createElement("svg", {
+      width: "22",
+      height: "24",
+      viewBox: "0 0 22 24",
+      style: {
+        display: 'block',
+        overflow: 'visible'
+      }
+    }, /*#__PURE__*/React.createElement("polygon", {
+      points: "11,1.5 19.5,6.5 19.5,17.5 11,22.5 2.5,17.5 2.5,6.5",
+      fill: done ? 'rgba(124,77,255,0.5)' : n > 0 ? 'rgba(124,77,255,0.18)' : 'rgba(124,77,255,0.06)',
+      stroke: "var(--purple-bright)",
+      strokeWidth: "1.1",
+      style: {
+        filter: done ? 'drop-shadow(0 0 6px rgba(167,139,255,0.7))' : 'none',
+        transition: 'all 0.2s'
+      }
+    }), done && /*#__PURE__*/React.createElement("path", {
+      d: "M6.5 12 L9.5 15 L15 9",
+      stroke: "#f0eeff",
+      strokeWidth: "1.8",
+      fill: "none",
+      strokeLinecap: "round",
+      strokeLinejoin: "round"
+    }), !done && n > 0 && step.max > 1 && /*#__PURE__*/React.createElement("text", {
+      x: "11",
+      y: "15",
+      textAnchor: "middle",
+      fontFamily: "Share Tech Mono, monospace",
+      fontSize: "9",
+      fill: "#f0eeff",
+      style: {
+        letterSpacing: '0.05em'
+      }
+    }, n))), /*#__PURE__*/React.createElement("div", {
+      style: {
+        flex: 1
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontFamily: 'var(--font-body)',
+        fontWeight: 300,
+        fontSize: '13px',
+        color: done ? 'rgba(200,190,240,0.6)' : 'rgba(220,210,250,0.88)',
+        lineHeight: 1.6,
+        letterSpacing: '0.02em',
+        textDecoration: done ? 'line-through' : 'none',
+        textDecorationColor: 'rgba(167,139,255,0.45)',
+        transition: 'all 0.2s'
+      }
+    }, step.txt), step.max > 1 && /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '10px',
+        marginTop: '8px'
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        flex: 1,
+        height: '3px',
+        background: 'rgba(160,140,255,0.1)',
+        borderRadius: '1px',
+        overflow: 'hidden',
+        maxWidth: '180px'
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        height: '100%',
+        width: `${n / step.max * 100}%`,
+        background: 'linear-gradient(90deg, var(--purple) 0%, var(--purple-bright) 100%)',
+        boxShadow: '0 0 8px rgba(167,139,255,0.6)',
+        transition: 'width 0.25s ease'
+      }
+    })), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: 'var(--font-mono)',
+        fontSize: '11px',
+        color: done ? 'var(--purple-bright)' : '#f0eeff',
+        letterSpacing: '0.1em'
+      }
+    }, n, " / ", step.max))));
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: '24px',
+      padding: '12px 14px',
+      background: 'rgba(45,125,255,0.05)',
+      border: '1px dashed rgba(127,184,255,0.25)',
+      borderRadius: '3px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8.5px',
+      letterSpacing: '0.22em',
+      color: 'rgba(127,184,255,0.7)',
+      textTransform: 'uppercase',
+      marginBottom: '5px'
+    }
+  }, "\u25C8 Hinweis"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: 300,
+      fontStyle: 'italic',
+      fontSize: '11.5px',
+      color: 'rgba(200,210,240,0.7)',
+      lineHeight: 1.6
+    }
+  }, "Tippe auf die Sechsecke, um Schritte abzuhaken \u2014 bei Sammelauftr\xE4gen erh\xF6ht jeder Klick den Z\xE4hler. Sprich mit deinem Auftraggeber, sobald alle Anweisungen erf\xFCllt sind.")))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '12px 22px',
+      borderTop: '1px solid rgba(160,140,255,0.18)',
+      background: 'rgba(5,4,15,0.6)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: '12px',
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8.5px',
+      color: 'var(--muted-dim)',
+      letterSpacing: '0.2em',
+      textTransform: 'uppercase'
+    }
+  }, accepted ? /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: APP_COLORS[appStatus] || 'var(--purple-bright)'
+    }
+  }, "\u25C9 ", APP_LABELS[appStatus] || 'Beworben') : 'ID · ' + q.id.toString().slice(0, 8).toUpperCase()), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '8px',
+      alignItems: 'center'
+    }
+  }, accepted && appStatus === 'pending' && /*#__PURE__*/React.createElement("button", {
+    onClick: onWithdraw,
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '.15em',
+      padding: '5px 12px',
+      background: 'transparent',
+      border: '1px solid rgba(200,60,60,0.35)',
+      borderRadius: '2px',
+      color: 'rgba(255,120,120,0.6)',
+      cursor: 'pointer',
+      textTransform: 'uppercase',
+      transition: 'all .15s'
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.borderColor = 'rgba(200,60,60,0.6)';
+      e.currentTarget.style.color = 'rgba(255,120,120,0.9)';
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.borderColor = 'rgba(200,60,60,0.35)';
+      e.currentTarget.style.color = 'rgba(255,120,120,0.6)';
+    }
+  }, "Zur\xFCckziehen"), /*#__PURE__*/React.createElement("button", {
+    onClick: !accepted ? onAccept : undefined,
+    disabled: accepted,
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '11px',
+      letterSpacing: '0.28em',
+      padding: '9px 28px',
+      background: accepted ? 'rgba(124,77,255,0.08)' : 'rgba(124,77,255,0.22)',
+      border: `1px solid ${accepted ? 'rgba(160,140,255,0.3)' : 'rgba(167,139,255,0.7)'}`,
+      color: accepted ? 'var(--purple-bright)' : '#f0eeff',
+      cursor: accepted ? 'default' : 'pointer',
+      borderRadius: '2px',
+      textTransform: 'uppercase',
+      transition: 'all 0.2s',
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '10px',
+      boxShadow: accepted ? 'none' : '0 0 20px rgba(124,77,255,0.25)'
+    },
+    onMouseEnter: e => {
+      if (!accepted) {
+        e.currentTarget.style.background = 'rgba(124,77,255,0.35)';
+        e.currentTarget.style.borderColor = '#a78bff';
+      }
+    },
+    onMouseLeave: e => {
+      if (!accepted) {
+        e.currentTarget.style.background = 'rgba(124,77,255,0.22)';
+        e.currentTarget.style.borderColor = 'rgba(167,139,255,0.7)';
+      }
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      display: 'inline-flex',
+      width: '18px',
+      height: '18px',
+      border: '1px solid currentColor',
+      borderRadius: '50%',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontSize: '10px'
+    }
+  }, "\u21B5"), accepted ? 'Beworben' : 'Akzeptieren'))));
 }
 
 // ─── PANEL WRAPPER ───────────────────────────────────────────────────────────
-function Panel({ children, style }) {
-  return (
-    <div style={{
-      position:'relative',
-      background:'linear-gradient(180deg, rgba(15,10,40,0.7) 0%, rgba(8,6,22,0.85) 100%)',
-      border:'1px solid rgba(160,140,255,0.18)',
-      borderRadius:'3px',
-      backdropFilter:'blur(8px)',
-      display:'flex', flexDirection:'column', minHeight:0, overflow:'hidden',
-      boxShadow:'0 8px 40px rgba(0,0,0,0.5), inset 0 0 60px rgba(124,77,255,0.04)',
+function Panel({
+  children,
+  style
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      background: 'linear-gradient(180deg, rgba(15,10,40,0.7) 0%, rgba(8,6,22,0.85) 100%)',
+      border: '1px solid rgba(160,140,255,0.18)',
+      borderRadius: '3px',
+      backdropFilter: 'blur(8px)',
+      display: 'flex',
+      flexDirection: 'column',
+      minHeight: 0,
+      overflow: 'hidden',
+      boxShadow: '0 8px 40px rgba(0,0,0,0.5), inset 0 0 60px rgba(124,77,255,0.04)',
       ...style
-    }}>
-      <div className="panel-corner tl"/>
-      <div className="panel-corner tr"/>
-      <div className="panel-corner bl"/>
-      <div className="panel-corner br"/>
-      {children}
-    </div>
-  );
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "panel-corner tl"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "panel-corner tr"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "panel-corner bl"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "panel-corner br"
+  }), children);
 }
 
 // ─── CHAR PICKER MODAL ───────────────────────────────────────────────────────
-function CharPickerModal({ mission, myChars, onConfirm, onClose, busy }) {
+function CharPickerModal({
+  mission,
+  myChars,
+  onConfirm,
+  onClose,
+  busy
+}) {
   const [pickedId, setPickedId] = useState(myChars.length === 1 ? myChars[0].id : null);
-
   useEffect(() => {
-    const onKey = e => { if (e.key === 'Escape') onClose(); };
+    const onKey = e => {
+      if (e.key === 'Escape') onClose();
+    };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
   }, []);
-
-  return ReactDOM.createPortal(
-    <div onClick={e=>{ if(e.target===e.currentTarget) onClose(); }} style={{
-      position:'fixed', inset:0, zIndex:9999,
-      background:'rgba(5,4,15,0.85)', backdropFilter:'blur(8px)',
-      display:'flex', alignItems:'center', justifyContent:'center'
-    }}>
-      <div style={{ width:'100%', maxWidth:420, margin:'0 16px',
-        background:'rgba(10,7,28,0.98)', border:'1px solid rgba(124,77,255,0.4)',
-        borderRadius:6, overflow:'hidden' }}>
-
-        {/* Header */}
-        <div style={{ padding:'20px 22px 16px',
-          borderBottom:'1px solid rgba(124,77,255,0.15)',
-          background:'linear-gradient(180deg,rgba(124,77,255,0.1)0%,transparent 100%)' }}>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'.28em',
-            color:'rgba(124,77,255,0.5)', textTransform:'uppercase', marginBottom:'4px' }}>
-            Bewerbung · {mission.name}
-          </div>
-          <div style={{ fontFamily:'var(--font-display)', fontSize:'16px', letterSpacing:'.15em',
-            color:'#f0eeff', textTransform:'uppercase' }}>
-            Charakter wählen
-          </div>
-        </div>
-
-        {/* Char list */}
-        <div style={{ padding:'12px 22px', maxHeight:'280px', overflowY:'auto' }}>
-          {myChars.length === 0 && (
-            <div style={{ padding:'20px 0', textAlign:'center',
-              fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:300,
-              color:'rgba(160,140,255,0.5)', fontStyle:'italic' }}>
-              Keine Spielercharaktere vorhanden.{' '}
-              <a href="Neuer_Charakter.html" style={{ color:'rgba(124,77,255,0.7)' }}>
-                Charakter erstellen →
-              </a>
-            </div>
-          )}
-          {myChars.map(ch => (
-            <div key={ch.id} onClick={()=>setPickedId(ch.id)} style={{
-              display:'flex', alignItems:'center', gap:'12px',
-              padding:'10px 12px', marginBottom:'6px', cursor:'pointer',
-              background: pickedId===ch.id ? 'rgba(124,77,255,0.2)' : 'rgba(124,77,255,0.05)',
-              border: `1px solid ${pickedId===ch.id ? 'rgba(167,139,255,0.6)' : 'rgba(124,77,255,0.15)'}`,
-              borderRadius:'3px', transition:'all .15s'
-            }}>
-              <div style={{ width:34, height:34, borderRadius:'50%', flexShrink:0,
-                background:'rgba(124,77,255,0.15)', border:'1px solid rgba(124,77,255,0.3)',
-                display:'flex', alignItems:'center', justifyContent:'center',
-                fontFamily:'var(--font-display)', fontSize:'14px', color:'rgba(167,139,255,0.8)' }}>
-                {(ch.name||'?')[0]}
-              </div>
-              <div style={{ flex:1, minWidth:0 }}>
-                <div style={{ fontFamily:'var(--font-body)', fontSize:'13px', fontWeight:400,
-                  color:'#f0eeff', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>
-                  {ch.name}
-                </div>
-                <div style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:300,
-                  color:'rgba(160,140,255,0.55)', marginTop:'1px' }}>
-                  {[ch.race, ch.class, ch.division].filter(Boolean).join(' · ') || '—'}
-                </div>
-              </div>
-              {pickedId===ch.id && (
-                <span style={{ color:'rgba(167,139,255,0.8)', fontSize:'16px', flexShrink:0 }}>✓</span>
-              )}
-            </div>
-          ))}
-        </div>
-
-        {/* Footer */}
-        <div style={{ padding:'14px 22px', borderTop:'1px solid rgba(124,77,255,0.12)',
-          display:'flex', gap:'10px' }}>
-          <button
-            onClick={()=>{ if(pickedId) onConfirm(pickedId); }}
-            disabled={!pickedId || busy}
-            style={{
-              flex:1, fontFamily:'var(--font-display)', fontSize:'11px',
-              letterSpacing:'.18em', textTransform:'uppercase', padding:'10px',
-              background: (!pickedId||busy) ? 'rgba(124,77,255,0.08)' : 'rgba(124,77,255,0.22)',
-              border:`1px solid ${(!pickedId||busy) ? 'rgba(124,77,255,0.2)' : 'rgba(167,139,255,0.6)'}`,
-              color: (!pickedId||busy) ? 'rgba(160,140,255,0.4)' : '#f0eeff',
-              cursor: (!pickedId||busy) ? 'not-allowed' : 'pointer',
-              borderRadius:'3px', transition:'all .15s'
-            }}>
-            {busy ? 'Bewerben…' : 'Bewerben'}
-          </button>
-          <button onClick={onClose} style={{
-            fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'.18em',
-            textTransform:'uppercase', padding:'10px 16px',
-            background:'transparent', border:'1px solid rgba(124,77,255,0.2)',
-            borderRadius:'3px', color:'rgba(124,77,255,0.5)', cursor:'pointer'
-          }}>Abbrechen</button>
-        </div>
-      </div>
-    </div>,
-    document.body
-  );
+  return ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
+    onClick: e => {
+      if (e.target === e.currentTarget) onClose();
+    },
+    style: {
+      position: 'fixed',
+      inset: 0,
+      zIndex: 9999,
+      background: 'rgba(5,4,15,0.85)',
+      backdropFilter: 'blur(8px)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '100%',
+      maxWidth: 420,
+      margin: '0 16px',
+      background: 'rgba(10,7,28,0.98)',
+      border: '1px solid rgba(124,77,255,0.4)',
+      borderRadius: 6,
+      overflow: 'hidden'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '20px 22px 16px',
+      borderBottom: '1px solid rgba(124,77,255,0.15)',
+      background: 'linear-gradient(180deg,rgba(124,77,255,0.1)0%,transparent 100%)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '.28em',
+      color: 'rgba(124,77,255,0.5)',
+      textTransform: 'uppercase',
+      marginBottom: '4px'
+    }
+  }, "Bewerbung \xB7 ", mission.name), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '16px',
+      letterSpacing: '.15em',
+      color: '#f0eeff',
+      textTransform: 'uppercase'
+    }
+  }, "Charakter w\xE4hlen")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '12px 22px',
+      maxHeight: '280px',
+      overflowY: 'auto'
+    }
+  }, myChars.length === 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '20px 0',
+      textAlign: 'center',
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      fontWeight: 300,
+      color: 'rgba(160,140,255,0.5)',
+      fontStyle: 'italic'
+    }
+  }, "Keine Spielercharaktere vorhanden.", ' ', /*#__PURE__*/React.createElement("a", {
+    href: "Neuer_Charakter.html",
+    style: {
+      color: 'rgba(124,77,255,0.7)'
+    }
+  }, "Charakter erstellen \u2192")), myChars.map(ch => /*#__PURE__*/React.createElement("div", {
+    key: ch.id,
+    onClick: () => setPickedId(ch.id),
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px',
+      padding: '10px 12px',
+      marginBottom: '6px',
+      cursor: 'pointer',
+      background: pickedId === ch.id ? 'rgba(124,77,255,0.2)' : 'rgba(124,77,255,0.05)',
+      border: `1px solid ${pickedId === ch.id ? 'rgba(167,139,255,0.6)' : 'rgba(124,77,255,0.15)'}`,
+      borderRadius: '3px',
+      transition: 'all .15s'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 34,
+      height: 34,
+      borderRadius: '50%',
+      flexShrink: 0,
+      background: 'rgba(124,77,255,0.15)',
+      border: '1px solid rgba(124,77,255,0.3)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontFamily: 'var(--font-display)',
+      fontSize: '14px',
+      color: 'rgba(167,139,255,0.8)'
+    }
+  }, (ch.name || '?')[0]), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      minWidth: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '13px',
+      fontWeight: 400,
+      color: '#f0eeff',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis'
+    }
+  }, ch.name), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px',
+      fontWeight: 300,
+      color: 'rgba(160,140,255,0.55)',
+      marginTop: '1px'
+    }
+  }, [ch.race, ch.class, ch.division, `Stufe ${ch.char_data?.level ?? 1}`].filter(Boolean).join(' · ') || '—')), pickedId === ch.id && /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: 'rgba(167,139,255,0.8)',
+      fontSize: '16px',
+      flexShrink: 0
+    }
+  }, "\u2713")))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '14px 22px',
+      borderTop: '1px solid rgba(124,77,255,0.12)',
+      display: 'flex',
+      gap: '10px'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => {
+      if (pickedId) onConfirm(pickedId);
+    },
+    disabled: !pickedId || busy,
+    style: {
+      flex: 1,
+      fontFamily: 'var(--font-display)',
+      fontSize: '11px',
+      letterSpacing: '.18em',
+      textTransform: 'uppercase',
+      padding: '10px',
+      background: !pickedId || busy ? 'rgba(124,77,255,0.08)' : 'rgba(124,77,255,0.22)',
+      border: `1px solid ${!pickedId || busy ? 'rgba(124,77,255,0.2)' : 'rgba(167,139,255,0.6)'}`,
+      color: !pickedId || busy ? 'rgba(160,140,255,0.4)' : '#f0eeff',
+      cursor: !pickedId || busy ? 'not-allowed' : 'pointer',
+      borderRadius: '3px',
+      transition: 'all .15s'
+    }
+  }, busy ? 'Bewerben…' : 'Bewerben'), /*#__PURE__*/React.createElement("button", {
+    onClick: onClose,
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '.18em',
+      textTransform: 'uppercase',
+      padding: '10px 16px',
+      background: 'transparent',
+      border: '1px solid rgba(124,77,255,0.2)',
+      borderRadius: '3px',
+      color: 'rgba(124,77,255,0.5)',
+      cursor: 'pointer'
+    }
+  }, "Abbrechen")))), document.body);
 }
 
 // ─── APP ──────────────────────────────────────────────────────────────────────
@@ -677,7 +1181,6 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [myApplications, setMyApplications] = useState({}); // mission_id → app row
   const [myChars, setMyChars] = useState([]);
-
   const [filter, setFilter] = useState('alle');
   const [search, setSearch] = useState('');
   const [selectedId, setSelectedId] = useState(null);
@@ -685,53 +1188,60 @@ function App() {
   const [progress, setProgress] = useState({});
   const [pickerMission, setPickerMission] = useState(null);
   const [applyBusy, setApplyBusy] = useState(false);
-
   useEffect(() => {
     async function load() {
       const uid = window.SITE_USER?.id;
-
-      const [{ data: mdata }, { data: adata }, { data: cdata }] = await Promise.all([
-        window._sb.from('missions').select('*').neq('status','archiviert').order('created_at', { ascending: false }),
-        uid ? window._sb.from('mission_applications').select('*').eq('player_id', uid) : { data: [] },
-        uid ? window._sb.from('characters').select('id,name,race,class,division').eq('owner_id', uid).eq('type','spieler') : { data: [] },
-      ]);
-
-      const mapped = (mdata || []).map(m => ({ ...m, desc: m.beschreibung }));
+      const [{
+        data: mdata
+      }, {
+        data: adata
+      }, {
+        data: cdata
+      }] = await Promise.all([window._sb.from('missions').select('*').neq('status', 'archiviert').order('created_at', {
+        ascending: false
+      }), uid ? window._sb.from('mission_applications').select('*').eq('player_id', uid) : {
+        data: []
+      }, uid ? window._sb.from('characters').select('id,name,race,class,division,char_data').eq('type', 'spieler') : {
+        data: []
+      }]);
+      const mapped = (mdata || []).map(m => ({
+        ...m,
+        desc: m.beschreibung
+      }));
       setQuests(mapped);
       if (mapped.length) setSelectedId(mapped[0].id);
-
       const appMap = {};
-      (adata || []).forEach(a => { appMap[a.mission_id] = a; });
+      (adata || []).forEach(a => {
+        appMap[a.mission_id] = a;
+      });
       setMyApplications(appMap);
-
       setMyChars(cdata || []);
-
       const initProgress = {};
-      mapped.forEach(q => { initProgress[q.id] = (q.anweisungen || []).map(s => s.n || 0); });
+      mapped.forEach(q => {
+        initProgress[q.id] = (q.anweisungen || []).map(s => s.n || 0);
+      });
       setProgress(initProgress);
-
       setLoading(false);
     }
     load();
   }, []);
-
   const stepClick = (questId, stepIdx, max) => {
     setProgress(prev => {
       const cur = prev[questId] ? [...prev[questId]] : [];
       const n = cur[stepIdx] ?? 0;
-      if (max <= 1) cur[stepIdx] = n >= 1 ? 0 : 1;
-      else cur[stepIdx] = n >= max ? 0 : n + 1;
-      return { ...prev, [questId]: cur };
+      if (max <= 1) cur[stepIdx] = n >= 1 ? 0 : 1;else cur[stepIdx] = n >= max ? 0 : n + 1;
+      return {
+        ...prev,
+        [questId]: cur
+      };
     });
   };
-
   const counts = useMemo(() => ({
     alle: quests.length,
-    Suche: quests.filter(q=>q.kategorie==='Suche').length,
-    Gespraech: quests.filter(q=>q.kategorie==='Gespraech').length,
-    Jagd: quests.filter(q=>q.kategorie==='Jagd').length,
+    Suche: quests.filter(q => q.kategorie === 'Suche').length,
+    Gespraech: quests.filter(q => q.kategorie === 'Gespraech').length,
+    Jagd: quests.filter(q => q.kategorie === 'Jagd').length
   }), [quests]);
-
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
     return quests.filter(x => {
@@ -740,299 +1250,408 @@ function App() {
       return true;
     });
   }, [quests, filter, search]);
-
   useEffect(() => {
     if (filtered.length && !filtered.find(q => q.id === selectedId)) {
       setSelectedId(filtered[0].id);
     }
   }, [filtered, selectedId]);
-
   const selected = quests.find(q => q.id === selectedId) || quests[0];
   const myApp = selected ? myApplications[selected.id] : null;
-
   async function handleConfirmApply(charId) {
     if (!selected || !charId) return;
     setApplyBusy(true);
     const uid = window.SITE_USER?.id;
-    const { data, error } = await window._sb.from('mission_applications').insert({
+    const {
+      data,
+      error
+    } = await window._sb.from('mission_applications').insert({
       mission_id: selected.id,
       player_id: uid,
-      character_id: charId,
+      character_id: charId
     }).select().single();
     setApplyBusy(false);
     if (!error && data) {
-      setMyApplications(prev => ({ ...prev, [selected.id]: data }));
+      setMyApplications(prev => ({
+        ...prev,
+        [selected.id]: data
+      }));
     }
     setPickerMission(null);
   }
-
   async function handleWithdraw() {
     if (!myApp) return;
     await window._sb.from('mission_applications').delete().eq('id', myApp.id);
-    setMyApplications(prev => { const n = { ...prev }; delete n[selected.id]; return n; });
+    setMyApplications(prev => {
+      const n = {
+        ...prev
+      };
+      delete n[selected.id];
+      return n;
+    });
   }
-
   const appliedCount = Object.keys(myApplications).length;
-
-  return (
-    <>
-      {tweaks.showParticles && <ParticleField/>}
-      {tweaks.showScanline && (
-        <div style={{
-          position:'fixed', left:0, right:0, top:0, height:'2px',
-          background:'linear-gradient(180deg, rgba(167,139,255,0.45) 0%, transparent 100%)',
-          animation:'scanline-x 14s linear infinite', pointerEvents:'none', zIndex:9998
-        }}/>
-      )}
-
-      <SiteNav rightLabel="MISSIONSTERMINAL" />
-
-      {/* ── PAGE HEADER ── */}
-      <div style={{
-        position:'relative', zIndex:5,
-        padding:'22px 32px 14px 32px',
-        display:'flex', alignItems:'flex-end', justifyContent:'space-between', gap:'24px',
-        borderBottom:'1px solid rgba(160,140,255,0.08)',
-        flexShrink:0
-      }}>
-        <div>
-          <div style={{
-            fontFamily:'var(--font-mono)', fontSize:'9px',
-            color:'rgba(167,139,255,0.6)', letterSpacing:'0.3em',
-            textTransform:'uppercase', marginBottom:'8px'
-          }}>◈ Divisionsterminal · Auftrags-Knoten 03</div>
-          <h1 style={{
-            fontFamily:'var(--font-display)', fontSize:'28px', fontWeight:400,
-            letterSpacing:'0.28em', color:'#f0eeff',
-            textShadow:'0 0 28px rgba(124,77,255,0.45)',
-            animation:'flicker-mid 11s infinite', textTransform:'uppercase'
-          }}>Missionsterminal</h1>
-        </div>
-        <div style={{
-          display:'flex', alignItems:'center', gap:'14px',
-          fontFamily:'var(--font-mono)', fontSize:'10px',
-          color:'var(--muted)', letterSpacing:'0.15em'
-        }}>
-          <div style={{ display:'flex', alignItems:'center', gap:'7px' }}>
-            <span style={{
-              width:'7px', height:'7px', borderRadius:'50%',
-              background: loading ? 'rgba(160,140,255,0.4)' : '#7fb8ff',
-              boxShadow: loading ? 'none' : '0 0 8px #7fb8ff',
-              animation: loading ? 'none' : 'pulse-glow 2s ease infinite'
-            }}/>
-            {loading ? 'VERBINDE…' : 'VERBINDUNG · STABIL'}
-          </div>
-          <div style={{ width:'1px', height:'16px', background:'var(--border)' }}/>
-          <div>{filtered.length} / {quests.length} AUFTRÄGE</div>
-        </div>
-      </div>
-
-      {/* ── MAIN GRID ── */}
-      <div style={{
-        position:'relative', zIndex:5, flex:1, minHeight:0,
-        display:'grid', gridTemplateColumns: '1fr 1fr',
-        gap:'20px', padding:'20px 32px 16px 32px'
-      }}>
-        {/* ═══ LEFT: QUEST LIST ═══════════════════════════════════════ */}
-        <Panel>
-          <PanelHeader>Nebenjobs</PanelHeader>
-
-          {/* Filter bar */}
-          <div style={{
-            padding:'12px 18px', display:'flex', alignItems:'center', gap:'8px',
-            borderBottom:'1px solid rgba(160,140,255,0.1)',
-            background:'rgba(8,6,22,0.4)'
-          }}>
-            <FilterChip label="Alle" count={counts.alle} active={filter==='alle'} onClick={()=>setFilter('alle')}/>
-            <FilterChip label="Suche" count={counts.Suche} color="var(--suche)" active={filter==='Suche'} onClick={()=>setFilter('Suche')}/>
-            <FilterChip label="Gespräch" count={counts.Gespraech} color="var(--gespraech)" active={filter==='Gespraech'} onClick={()=>setFilter('Gespraech')}/>
-            <FilterChip label="Jagd" count={counts.Jagd} color="var(--jagd)" active={filter==='Jagd'} onClick={()=>setFilter('Jagd')}/>
-            <div style={{ flex:1 }}/>
-            <div style={{
-              display:'flex', alignItems:'center', gap:'6px',
-              padding:'4px 9px', height:'22px',
-              border:'1px solid rgba(160,140,255,0.18)', borderRadius:'2px',
-              background:'rgba(5,4,15,0.5)'
-            }}>
-              <svg width="11" height="11" viewBox="0 0 12 12" style={{ opacity:0.5 }}>
-                <circle cx="5" cy="5" r="3.5" fill="none" stroke="#a78bff" strokeWidth="1.2"/>
-                <line x1="7.5" y1="7.5" x2="10" y2="10" stroke="#a78bff" strokeWidth="1.2" strokeLinecap="round"/>
-              </svg>
-              <input
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                placeholder="suchen…"
-                style={{
-                  background:'transparent', border:'none', outline:'none',
-                  fontFamily:'var(--font-mono)', fontSize:'10px',
-                  color:'#f0eeff', letterSpacing:'0.08em', width:'90px'
-                }}
-              />
-            </div>
-          </div>
-
-          {/* Column headers */}
-          <div style={{
-            display:'grid', gridTemplateColumns:'1fr 110px 90px',
-            gap:'12px', padding:'9px 16px',
-            borderBottom:'1px solid rgba(160,140,255,0.12)',
-            background:'rgba(124,77,255,0.04)',
-            fontFamily:'var(--font-mono)', fontSize:'8.5px',
-            color:'var(--muted-dim)', letterSpacing:'0.22em', textTransform:'uppercase'
-          }}>
-            <div>Auftrag</div>
-            <div>Kategorie</div>
-            <div>Schwierigkeit</div>
-          </div>
-
-          {/* List */}
-          <div style={{ flex:1, minHeight:0, overflowY:'auto' }}>
-            {loading && (
-              <div style={{ padding:'40px 20px', textAlign:'center',
-                fontFamily:'var(--font-mono)', fontSize:'9px',
-                color:'rgba(160,140,255,0.4)', letterSpacing:'.2em' }}>LADE…</div>
-            )}
-            {!loading && filtered.length === 0 && (
-              <div style={{
-                padding:'40px 20px', textAlign:'center',
-                fontFamily:'var(--font-body)', fontStyle:'italic',
-                fontSize:'12px', color:'var(--muted-dim)'
-              }}>
-                {quests.length === 0 ? 'Keine Aufträge verfügbar.' : 'Keine Aufträge im Filter.'}
-              </div>
-            )}
-            {filtered.map(q => (
-              <QuestRow
-                key={q.id}
-                q={q}
-                active={q.id === selectedId}
-                onClick={()=>setSelectedId(q.id)}
-                dense={tweaks.density === 'compact'}
-              />
-            ))}
-          </div>
-
-          {/* Foot */}
-          <div style={{
-            padding:'8px 18px',
-            borderTop:'1px solid rgba(160,140,255,0.12)',
-            display:'flex', alignItems:'center', justifyContent:'space-between',
-            fontFamily:'var(--font-mono)', fontSize:'8.5px',
-            color:'var(--muted-dim)', letterSpacing:'0.2em', textTransform:'uppercase',
-            background:'rgba(5,4,15,0.5)'
-          }}>
-            <span>◈ Live · Supabase</span>
-            <span>Beworben · {appliedCount}</span>
-          </div>
-        </Panel>
-
-        {/* ═══ RIGHT: DETAIL CARD ═════════════════════════════════════ */}
-        <Panel>
-          {!selected && !loading ? (
-            <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center',
-              fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'.2em',
-              color:'rgba(160,140,255,0.3)', textTransform:'uppercase' }}>
-              Keine Mission ausgewählt
-            </div>
-          ) : selected && (
-            <>
-              <PanelHeader
-                right={
-                  <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
-                    <button onClick={()=>setView('details')} style={{
-                      fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em',
-                      padding:'4px 10px', height:'22px',
-                      background: view==='details' ? 'rgba(124,77,255,0.25)' : 'transparent',
-                      border:`1px solid ${view==='details' ? 'rgba(167,139,255,0.6)' : 'rgba(160,140,255,0.15)'}`,
-                      color: view==='details' ? '#f0eeff' : 'var(--muted)',
-                      cursor:'pointer', borderRadius:'2px', textTransform:'uppercase',
-                      transition:'all 0.15s'
-                    }}>Details</button>
-                    <button onClick={()=>setView('anweisungen')} style={{
-                      fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em',
-                      padding:'4px 10px', height:'22px',
-                      background: view==='anweisungen' ? 'rgba(124,77,255,0.25)' : 'transparent',
-                      border:`1px solid ${view==='anweisungen' ? 'rgba(167,139,255,0.6)' : 'rgba(160,140,255,0.15)'}`,
-                      color: view==='anweisungen' ? '#f0eeff' : 'var(--muted)',
-                      cursor:'pointer', borderRadius:'2px', textTransform:'uppercase',
-                      transition:'all 0.15s'
-                    }}>Anweisungen</button>
-                    <div style={{ display:'flex', alignItems:'center', gap:'4px', marginLeft:'4px' }}>
-                      <span style={{
-                        width:'6px', height:'6px', borderRadius:'50%',
-                        background: view==='details' ? 'var(--purple-bright)' : 'rgba(160,140,255,0.25)',
-                        boxShadow: view==='details' ? '0 0 6px var(--purple-bright)' : 'none'
-                      }}/>
-                      <span style={{
-                        width:'6px', height:'6px', borderRadius:'50%',
-                        background: view==='anweisungen' ? 'var(--purple-bright)' : 'rgba(160,140,255,0.25)',
-                        boxShadow: view==='anweisungen' ? '0 0 6px var(--purple-bright)' : 'none'
-                      }}/>
-                    </div>
-                  </div>
-                }
-              >
-                Auftrag
-              </PanelHeader>
-              <DetailCard
-                key={selected.id + view}
-                q={selected}
-                view={view}
-                myApp={myApp}
-                onAccept={()=>setPickerMission(selected)}
-                onWithdraw={handleWithdraw}
-                progress={progress[selected.id] || []}
-                onStepClick={(stepIdx, max) => stepClick(selected.id, stepIdx, max)}
-              />
-            </>
-          )}
-        </Panel>
-      </div>
-
-      {/* ── FOOTER ── */}
-      <div style={{
-        position:'relative', zIndex:5,
-        padding:'8px 32px',
-        borderTop:'1px solid rgba(160,140,255,0.08)',
-        display:'flex', justifyContent:'space-between', alignItems:'center',
-        flexShrink:0
-      }}>
-        <div style={{
-          fontFamily:'var(--font-mono)', fontSize:'8px',
-          color:'rgba(160,140,255,0.35)', letterSpacing:'0.22em'
-        }}>
-          ◈ KONTEXT-TIPPS · [TAB] WECHSELT ANSICHT · [↵] AKZEPTIEREN
-        </div>
-        <div style={{
-          fontFamily:'var(--font-mono)', fontSize:'8px',
-          color:'rgba(160,140,255,0.35)', letterSpacing:'0.22em'
-        }}>
-          MERURIA // MISSIONSTERMINAL v4.0
-        </div>
-      </div>
-
-      <TweaksPanel>
-        <TweakSection label="Atmosphäre"/>
-        <TweakToggle id="showParticles" label="Partikel"/>
-        <TweakToggle id="showScanline" label="Scanline"/>
-        <TweakSection label="Listendichte"/>
-        <TweakRadio id="density" label="Zeilenhöhe" options={['comfortable','compact']}/>
-      </TweaksPanel>
-
-      {pickerMission && (
-        <CharPickerModal
-          mission={pickerMission}
-          myChars={myChars}
-          onConfirm={handleConfirmApply}
-          onClose={()=>setPickerMission(null)}
-          busy={applyBusy}
-        />
-      )}
-    </>
-  );
+  return /*#__PURE__*/React.createElement(React.Fragment, null, tweaks.showParticles && /*#__PURE__*/React.createElement(ParticleField, null), tweaks.showScanline && /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'fixed',
+      left: 0,
+      right: 0,
+      top: 0,
+      height: '2px',
+      background: 'linear-gradient(180deg, rgba(167,139,255,0.45) 0%, transparent 100%)',
+      animation: 'scanline-x 14s linear infinite',
+      pointerEvents: 'none',
+      zIndex: 9998
+    }
+  }), /*#__PURE__*/React.createElement(SiteNav, {
+    rightLabel: "MISSIONSTERMINAL"
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 5,
+      padding: '22px 32px 14px 32px',
+      display: 'flex',
+      alignItems: 'flex-end',
+      justifyContent: 'space-between',
+      gap: '24px',
+      borderBottom: '1px solid rgba(160,140,255,0.08)',
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: 'rgba(167,139,255,0.6)',
+      letterSpacing: '0.3em',
+      textTransform: 'uppercase',
+      marginBottom: '8px'
+    }
+  }, "\u25C8 Divisionsterminal \xB7 Auftrags-Knoten 03"), /*#__PURE__*/React.createElement("h1", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '28px',
+      fontWeight: 400,
+      letterSpacing: '0.28em',
+      color: '#f0eeff',
+      textShadow: '0 0 28px rgba(124,77,255,0.45)',
+      animation: 'flicker-mid 11s infinite',
+      textTransform: 'uppercase'
+    }
+  }, "Missionsterminal")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '14px',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '10px',
+      color: 'var(--muted)',
+      letterSpacing: '0.15em'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '7px'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      width: '7px',
+      height: '7px',
+      borderRadius: '50%',
+      background: loading ? 'rgba(160,140,255,0.4)' : '#7fb8ff',
+      boxShadow: loading ? 'none' : '0 0 8px #7fb8ff',
+      animation: loading ? 'none' : 'pulse-glow 2s ease infinite'
+    }
+  }), loading ? 'VERBINDE…' : 'VERBINDUNG · STABIL'), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '1px',
+      height: '16px',
+      background: 'var(--border)'
+    }
+  }), /*#__PURE__*/React.createElement("div", null, filtered.length, " / ", quests.length, " AUFTR\xC4GE"))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 5,
+      flex: 1,
+      minHeight: 0,
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      gap: '20px',
+      padding: '20px 32px 16px 32px'
+    }
+  }, /*#__PURE__*/React.createElement(Panel, null, /*#__PURE__*/React.createElement(PanelHeader, null, "Nebenjobs"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '12px 18px',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      borderBottom: '1px solid rgba(160,140,255,0.1)',
+      background: 'rgba(8,6,22,0.4)'
+    }
+  }, /*#__PURE__*/React.createElement(FilterChip, {
+    label: "Alle",
+    count: counts.alle,
+    active: filter === 'alle',
+    onClick: () => setFilter('alle')
+  }), /*#__PURE__*/React.createElement(FilterChip, {
+    label: "Suche",
+    count: counts.Suche,
+    color: "var(--suche)",
+    active: filter === 'Suche',
+    onClick: () => setFilter('Suche')
+  }), /*#__PURE__*/React.createElement(FilterChip, {
+    label: "Gespr\xE4ch",
+    count: counts.Gespraech,
+    color: "var(--gespraech)",
+    active: filter === 'Gespraech',
+    onClick: () => setFilter('Gespraech')
+  }), /*#__PURE__*/React.createElement(FilterChip, {
+    label: "Jagd",
+    count: counts.Jagd,
+    color: "var(--jagd)",
+    active: filter === 'Jagd',
+    onClick: () => setFilter('Jagd')
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '6px',
+      padding: '4px 9px',
+      height: '22px',
+      border: '1px solid rgba(160,140,255,0.18)',
+      borderRadius: '2px',
+      background: 'rgba(5,4,15,0.5)'
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "11",
+    height: "11",
+    viewBox: "0 0 12 12",
+    style: {
+      opacity: 0.5
+    }
+  }, /*#__PURE__*/React.createElement("circle", {
+    cx: "5",
+    cy: "5",
+    r: "3.5",
+    fill: "none",
+    stroke: "#a78bff",
+    strokeWidth: "1.2"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "7.5",
+    y1: "7.5",
+    x2: "10",
+    y2: "10",
+    stroke: "#a78bff",
+    strokeWidth: "1.2",
+    strokeLinecap: "round"
+  })), /*#__PURE__*/React.createElement("input", {
+    value: search,
+    onChange: e => setSearch(e.target.value),
+    placeholder: "suchen\u2026",
+    style: {
+      background: 'transparent',
+      border: 'none',
+      outline: 'none',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '10px',
+      color: '#f0eeff',
+      letterSpacing: '0.08em',
+      width: '90px'
+    }
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: '1fr 110px 90px',
+      gap: '12px',
+      padding: '9px 16px',
+      borderBottom: '1px solid rgba(160,140,255,0.12)',
+      background: 'rgba(124,77,255,0.04)',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8.5px',
+      color: 'var(--muted-dim)',
+      letterSpacing: '0.22em',
+      textTransform: 'uppercase'
+    }
+  }, /*#__PURE__*/React.createElement("div", null, "Auftrag"), /*#__PURE__*/React.createElement("div", null, "Kategorie"), /*#__PURE__*/React.createElement("div", null, "Schwierigkeit")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      minHeight: 0,
+      overflowY: 'auto'
+    }
+  }, loading && /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '40px 20px',
+      textAlign: 'center',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: 'rgba(160,140,255,0.4)',
+      letterSpacing: '.2em'
+    }
+  }, "LADE\u2026"), !loading && filtered.length === 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '40px 20px',
+      textAlign: 'center',
+      fontFamily: 'var(--font-body)',
+      fontStyle: 'italic',
+      fontSize: '12px',
+      color: 'var(--muted-dim)'
+    }
+  }, quests.length === 0 ? 'Keine Aufträge verfügbar.' : 'Keine Aufträge im Filter.'), filtered.map(q => /*#__PURE__*/React.createElement(QuestRow, {
+    key: q.id,
+    q: q,
+    active: q.id === selectedId,
+    onClick: () => setSelectedId(q.id),
+    dense: tweaks.density === 'compact'
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '8px 18px',
+      borderTop: '1px solid rgba(160,140,255,0.12)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8.5px',
+      color: 'var(--muted-dim)',
+      letterSpacing: '0.2em',
+      textTransform: 'uppercase',
+      background: 'rgba(5,4,15,0.5)'
+    }
+  }, /*#__PURE__*/React.createElement("span", null, "\u25C8 Live \xB7 Supabase"), /*#__PURE__*/React.createElement("span", null, "Beworben \xB7 ", appliedCount))), /*#__PURE__*/React.createElement(Panel, null, !selected && !loading ? /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '.2em',
+      color: 'rgba(160,140,255,0.3)',
+      textTransform: 'uppercase'
+    }
+  }, "Keine Mission ausgew\xE4hlt") : selected && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(PanelHeader, {
+    right: /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '10px'
+      }
+    }, /*#__PURE__*/React.createElement("button", {
+      onClick: () => setView('details'),
+      style: {
+        fontFamily: 'var(--font-mono)',
+        fontSize: '9px',
+        letterSpacing: '0.18em',
+        padding: '4px 10px',
+        height: '22px',
+        background: view === 'details' ? 'rgba(124,77,255,0.25)' : 'transparent',
+        border: `1px solid ${view === 'details' ? 'rgba(167,139,255,0.6)' : 'rgba(160,140,255,0.15)'}`,
+        color: view === 'details' ? '#f0eeff' : 'var(--muted)',
+        cursor: 'pointer',
+        borderRadius: '2px',
+        textTransform: 'uppercase',
+        transition: 'all 0.15s'
+      }
+    }, "Details"), /*#__PURE__*/React.createElement("button", {
+      onClick: () => setView('anweisungen'),
+      style: {
+        fontFamily: 'var(--font-mono)',
+        fontSize: '9px',
+        letterSpacing: '0.18em',
+        padding: '4px 10px',
+        height: '22px',
+        background: view === 'anweisungen' ? 'rgba(124,77,255,0.25)' : 'transparent',
+        border: `1px solid ${view === 'anweisungen' ? 'rgba(167,139,255,0.6)' : 'rgba(160,140,255,0.15)'}`,
+        color: view === 'anweisungen' ? '#f0eeff' : 'var(--muted)',
+        cursor: 'pointer',
+        borderRadius: '2px',
+        textTransform: 'uppercase',
+        transition: 'all 0.15s'
+      }
+    }, "Anweisungen"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '4px',
+        marginLeft: '4px'
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: {
+        width: '6px',
+        height: '6px',
+        borderRadius: '50%',
+        background: view === 'details' ? 'var(--purple-bright)' : 'rgba(160,140,255,0.25)',
+        boxShadow: view === 'details' ? '0 0 6px var(--purple-bright)' : 'none'
+      }
+    }), /*#__PURE__*/React.createElement("span", {
+      style: {
+        width: '6px',
+        height: '6px',
+        borderRadius: '50%',
+        background: view === 'anweisungen' ? 'var(--purple-bright)' : 'rgba(160,140,255,0.25)',
+        boxShadow: view === 'anweisungen' ? '0 0 6px var(--purple-bright)' : 'none'
+      }
+    })))
+  }, "Auftrag"), /*#__PURE__*/React.createElement(DetailCard, {
+    key: selected.id + view,
+    q: selected,
+    view: view,
+    myApp: myApp,
+    onAccept: () => setPickerMission(selected),
+    onWithdraw: handleWithdraw,
+    progress: progress[selected.id] || [],
+    onStepClick: (stepIdx, max) => stepClick(selected.id, stepIdx, max)
+  })))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 5,
+      padding: '8px 32px',
+      borderTop: '1px solid rgba(160,140,255,0.08)',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      color: 'rgba(160,140,255,0.35)',
+      letterSpacing: '0.22em'
+    }
+  }, "\u25C8 KONTEXT-TIPPS \xB7 [TAB] WECHSELT ANSICHT \xB7 [\u21B5] AKZEPTIEREN"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      color: 'rgba(160,140,255,0.35)',
+      letterSpacing: '0.22em'
+    }
+  }, "MERURIA // MISSIONSTERMINAL v4.0")), /*#__PURE__*/React.createElement(TweaksPanel, null, /*#__PURE__*/React.createElement(TweakSection, {
+    label: "Atmosph\xE4re"
+  }), /*#__PURE__*/React.createElement(TweakToggle, {
+    id: "showParticles",
+    label: "Partikel"
+  }), /*#__PURE__*/React.createElement(TweakToggle, {
+    id: "showScanline",
+    label: "Scanline"
+  }), /*#__PURE__*/React.createElement(TweakSection, {
+    label: "Listendichte"
+  }), /*#__PURE__*/React.createElement(TweakRadio, {
+    id: "density",
+    label: "Zeilenh\xF6he",
+    options: ['comfortable', 'compact']
+  })), pickerMission && /*#__PURE__*/React.createElement(CharPickerModal, {
+    mission: pickerMission,
+    myChars: myChars,
+    onConfirm: handleConfirmApply,
+    onClose: () => setPickerMission(null),
+    busy: applyBusy
+  }));
 }
-
-ReactDOM.createRoot(document.getElementById('root')).render(<SiteGate><App/></SiteGate>);
+ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement(App, null)));
+})();
 </script>
 
 

@@ -6,41 +6,80 @@
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
 <link rel="stylesheet" href="assets/styles/pages/Hintergruende.css">
-<script src="assets/scripts/vendor/react.development.js"></script>
-<script src="assets/scripts/vendor/react-dom.development.js"></script>
-<script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/scripts/vendor/react.production.min.js"></script>
+<script src="assets/scripts/vendor/react-dom.production.min.js"></script>
+
 <script src="assets/scripts/data/hintergruende-data.js"></script>
-<script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/nav.js"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
-<script src="assets/components/site-gate.jsx" type="text/babel"></script>
-<script src="assets/components/particle-field.jsx" type="text/babel"></script>
-<script src="assets/components/tweaks-panel-8.jsx" type="text/babel"></script>
-<script src="assets/components/filter-utils.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.js"></script>
+<script src="assets/components/particle-field.js"></script>
+<script src="assets/components/tweaks-panel-8.js"></script>
+<script src="assets/components/filter-utils.js"></script>
 
 </head>
 <body>
 <div id="root"></div>
-<script type="text/babel">
-const { useState, useEffect, useRef, useMemo, useCallback } = React;
-const { useTweaks, TweaksPanel, TweakSection, TweakToggle, SiteNav, ParticleField, useDragScroll, XBtn, FilterGroup } = window;
-
+<script>
+(function () {
+const {
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+  useCallback
+} = React;
+const {
+  useTweaks,
+  TweaksPanel,
+  TweakSection,
+  TweakToggle,
+  SiteNav,
+  ParticleField,
+  useDragScroll,
+  XBtn,
+  FilterGroup
+} = window;
 function hexPoints(s) {
-  const cx = s/2, cy = s/2, r = s/2, pts = [];
-  for (let i = 0; i < 8; i++) { const a = (Math.PI/4)*i - Math.PI/8; pts.push(`${cx+r*Math.cos(a)},${cy+r*Math.sin(a)}`); }
+  const cx = s / 2,
+    cy = s / 2,
+    r = s / 2,
+    pts = [];
+  for (let i = 0; i < 8; i++) {
+    const a = Math.PI / 4 * i - Math.PI / 8;
+    pts.push(`${cx + r * Math.cos(a)},${cy + r * Math.sin(a)}`);
+  }
   return pts.join(' ');
 }
-function OctSvg({ size=8, color='currentColor', fill='none', strokeWidth=1, opacity=1 }) {
-  return <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ display:'block', flexShrink:0 }}><polygon points={hexPoints(size)} fill={fill} stroke={color} strokeWidth={strokeWidth} opacity={opacity} /></svg>;
+function OctSvg({
+  size = 8,
+  color = 'currentColor',
+  fill = 'none',
+  strokeWidth = 1,
+  opacity = 1
+}) {
+  return /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: `0 0 ${size} ${size}`,
+    style: {
+      display: 'block',
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(size),
+    fill: fill,
+    stroke: color,
+    strokeWidth: strokeWidth,
+    opacity: opacity
+  }));
 }
-
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "showParticles": true,
   "compactList": false,
   "showTables": true
-}/*EDITMODE-END*/;
-
-
+} /*EDITMODE-END*/;
 const werkzeugKeys = w => {
   if (!w) return [];
   return w.split(/ oder |, /).map(s => {
@@ -55,30 +94,35 @@ const werkzeugKeys = w => {
 };
 
 // ─── DUAL RANGE SLIDER ───────────────────────────────────────────────────────
-function DualRangeSlider({ steps, valLo, valHi, onChange }) {
+function DualRangeSlider({
+  steps,
+  valLo,
+  valHi,
+  onChange
+}) {
   const trackRef = useRef(null);
   const dragging = useRef(null);
-
   if (!steps || steps.length < 2) return null;
 
   // Find closest index, fallback to 0 / last
-  const clampIdx = (val) => {
+  const clampIdx = val => {
     let best = 0;
     let bestDist = Math.abs(steps[0] - val);
     for (let i = 1; i < steps.length; i++) {
       const d = Math.abs(steps[i] - val);
-      if (d < bestDist) { bestDist = d; best = i; }
+      if (d < bestDist) {
+        bestDist = d;
+        best = i;
+      }
     }
     return best;
   };
-
   const idxLo = clampIdx(valLo);
   const idxHi = clampIdx(valHi);
-  const pct = idx => (idx / (steps.length - 1)) * 100;
+  const pct = idx => idx / (steps.length - 1) * 100;
   const loFill = pct(idxLo);
   const hiFill = pct(idxHi);
-
-  const idxFromEvent = (e) => {
+  const idxFromEvent = e => {
     const track = trackRef.current;
     if (!track) return 0;
     const rect = track.getBoundingClientRect();
@@ -86,13 +130,11 @@ function DualRangeSlider({ steps, valLo, valHi, onChange }) {
     const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
     return Math.round(ratio * (steps.length - 1));
   };
-
-  const startDrag = (handle) => (e) => {
+  const startDrag = handle => e => {
     e.preventDefault();
     e.stopPropagation();
     dragging.current = handle;
-
-    const move = (ev) => {
+    const move = ev => {
       if (!dragging.current) return;
       const idx = idxFromEvent(ev);
       if (dragging.current === 'lo') {
@@ -112,218 +154,638 @@ function DualRangeSlider({ steps, valLo, valHi, onChange }) {
     };
     window.addEventListener('mousemove', move);
     window.addEventListener('mouseup', up);
-    window.addEventListener('touchmove', move, { passive: false });
+    window.addEventListener('touchmove', move, {
+      passive: false
+    });
     window.addEventListener('touchend', up);
   };
-
-  return (
-    <div style={{ display:'flex', flexDirection:'column', gap:'6px', padding:'4px 0 2px' }}>
-      {/* Value display */}
-      <div style={{ display:'flex', justifyContent:'space-between' }}>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(var(--accent-rgb),0.9)', letterSpacing:'0.08em' }}>{valLo.toLocaleString('de-DE')}</span>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:'rgba(var(--accent-rgb),0.35)', letterSpacing:'0.1em' }}>HADE</span>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(var(--accent-rgb),0.9)', letterSpacing:'0.08em' }}>{valHi.toLocaleString('de-DE')}</span>
-      </div>
-      {/* Track */}
-      <div ref={trackRef} style={{ position:'relative', height:'28px', display:'flex', alignItems:'center', userSelect:'none' }}>
-        {/* Background track */}
-        <div style={{ position:'absolute', left:'7px', right:'7px', height:'2px', background:'rgba(var(--accent-rgb),0.15)', borderRadius:'2px' }} />
-        {/* Active fill */}
-        <div style={{ position:'absolute', left:`calc(7px + ${loFill / 100} * (100% - 14px))`, width:`calc(${(hiFill - loFill) / 100} * (100% - 14px))`, height:'2px', background:'var(--purple)', borderRadius:'2px', opacity:0.85, pointerEvents:'none' }} />
-        {/* Step dots */}
-        {steps.map((s, i) => {
-          const p = pct(i);
-          const inRange = i >= idxLo && i <= idxHi;
-          return (
-            <div key={s} style={{ position:'absolute', left:`calc(7px + ${p / 100} * (100% - 14px))`, transform:'translateX(-50%)', width:'5px', height:'5px', borderRadius:'50%', background: inRange ? 'rgba(124,77,255,0.7)' : 'rgba(var(--accent-rgb),0.2)', border: inRange ? '1px solid rgba(var(--text-rgb),0.4)' : '1px solid rgba(var(--accent-rgb),0.12)', transition:'background 0.15s', zIndex:1, pointerEvents:'none' }} />
-          );
-        })}
-        {/* Lo handle */}
-        <div
-          onMouseDown={startDrag('lo')}
-          onTouchStart={startDrag('lo')}
-          style={{ position:'absolute', left:`calc(7px + ${loFill / 100} * (100% - 14px))`, transform:'translateX(-50%)', width:'14px', height:'14px', borderRadius:'50%', background:'var(--purple)', border:'2px solid rgba(var(--text-rgb),0.85)', cursor:'grab', zIndex: idxLo === idxHi ? 4 : 3, boxShadow:'0 0 6px rgba(124,77,255,0.6)' }}
-          onMouseEnter={e=>e.currentTarget.style.boxShadow='0 0 10px rgba(124,77,255,0.9)'}
-          onMouseLeave={e=>e.currentTarget.style.boxShadow='0 0 6px rgba(124,77,255,0.6)'}
-        />
-        {/* Hi handle */}
-        <div
-          onMouseDown={startDrag('hi')}
-          onTouchStart={startDrag('hi')}
-          style={{ position:'absolute', left:`calc(7px + ${hiFill / 100} * (100% - 14px))`, transform:'translateX(-50%)', width:'14px', height:'14px', borderRadius:'50%', background:'var(--purple)', border:'2px solid rgba(var(--text-rgb),0.85)', cursor:'grab', zIndex:3, boxShadow:'0 0 6px rgba(124,77,255,0.6)' }}
-          onMouseEnter={e=>e.currentTarget.style.boxShadow='0 0 10px rgba(124,77,255,0.9)'}
-          onMouseLeave={e=>e.currentTarget.style.boxShadow='0 0 6px rgba(124,77,255,0.6)'}
-        />
-      </div>
-      {/* Min/Max labels */}
-      <div style={{ display:'flex', justifyContent:'space-between' }}>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', color:'rgba(var(--accent-rgb),0.3)', letterSpacing:'0.1em' }}>{steps[0].toLocaleString('de-DE')}</span>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', color:'rgba(var(--accent-rgb),0.3)', letterSpacing:'0.1em' }}>{steps[steps.length-1].toLocaleString('de-DE')}</span>
-      </div>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '6px',
+      padding: '4px 0 2px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      justifyContent: 'space-between'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: 'rgba(var(--accent-rgb),0.9)',
+      letterSpacing: '0.08em'
+    }
+  }, valLo.toLocaleString('de-DE')), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      color: 'rgba(var(--accent-rgb),0.35)',
+      letterSpacing: '0.1em'
+    }
+  }, "HADE"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: 'rgba(var(--accent-rgb),0.9)',
+      letterSpacing: '0.08em'
+    }
+  }, valHi.toLocaleString('de-DE'))), /*#__PURE__*/React.createElement("div", {
+    ref: trackRef,
+    style: {
+      position: 'relative',
+      height: '28px',
+      display: 'flex',
+      alignItems: 'center',
+      userSelect: 'none'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      left: '7px',
+      right: '7px',
+      height: '2px',
+      background: 'rgba(var(--accent-rgb),0.15)',
+      borderRadius: '2px'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      left: `calc(7px + ${loFill / 100} * (100% - 14px))`,
+      width: `calc(${(hiFill - loFill) / 100} * (100% - 14px))`,
+      height: '2px',
+      background: 'var(--purple)',
+      borderRadius: '2px',
+      opacity: 0.85,
+      pointerEvents: 'none'
+    }
+  }), steps.map((s, i) => {
+    const p = pct(i);
+    const inRange = i >= idxLo && i <= idxHi;
+    return /*#__PURE__*/React.createElement("div", {
+      key: s,
+      style: {
+        position: 'absolute',
+        left: `calc(7px + ${p / 100} * (100% - 14px))`,
+        transform: 'translateX(-50%)',
+        width: '5px',
+        height: '5px',
+        borderRadius: '50%',
+        background: inRange ? 'rgba(124,77,255,0.7)' : 'rgba(var(--accent-rgb),0.2)',
+        border: inRange ? '1px solid rgba(var(--text-rgb),0.4)' : '1px solid rgba(var(--accent-rgb),0.12)',
+        transition: 'background 0.15s',
+        zIndex: 1,
+        pointerEvents: 'none'
+      }
+    });
+  }), /*#__PURE__*/React.createElement("div", {
+    onMouseDown: startDrag('lo'),
+    onTouchStart: startDrag('lo'),
+    style: {
+      position: 'absolute',
+      left: `calc(7px + ${loFill / 100} * (100% - 14px))`,
+      transform: 'translateX(-50%)',
+      width: '14px',
+      height: '14px',
+      borderRadius: '50%',
+      background: 'var(--purple)',
+      border: '2px solid rgba(var(--text-rgb),0.85)',
+      cursor: 'grab',
+      zIndex: idxLo === idxHi ? 4 : 3,
+      boxShadow: '0 0 6px rgba(124,77,255,0.6)'
+    },
+    onMouseEnter: e => e.currentTarget.style.boxShadow = '0 0 10px rgba(124,77,255,0.9)',
+    onMouseLeave: e => e.currentTarget.style.boxShadow = '0 0 6px rgba(124,77,255,0.6)'
+  }), /*#__PURE__*/React.createElement("div", {
+    onMouseDown: startDrag('hi'),
+    onTouchStart: startDrag('hi'),
+    style: {
+      position: 'absolute',
+      left: `calc(7px + ${hiFill / 100} * (100% - 14px))`,
+      transform: 'translateX(-50%)',
+      width: '14px',
+      height: '14px',
+      borderRadius: '50%',
+      background: 'var(--purple)',
+      border: '2px solid rgba(var(--text-rgb),0.85)',
+      cursor: 'grab',
+      zIndex: 3,
+      boxShadow: '0 0 6px rgba(124,77,255,0.6)'
+    },
+    onMouseEnter: e => e.currentTarget.style.boxShadow = '0 0 10px rgba(124,77,255,0.9)',
+    onMouseLeave: e => e.currentTarget.style.boxShadow = '0 0 6px rgba(124,77,255,0.6)'
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      justifyContent: 'space-between'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      color: 'rgba(var(--accent-rgb),0.3)',
+      letterSpacing: '0.1em'
+    }
+  }, steps[0].toLocaleString('de-DE')), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      color: 'rgba(var(--accent-rgb),0.3)',
+      letterSpacing: '0.1em'
+    }
+  }, steps[steps.length - 1].toLocaleString('de-DE'))));
 }
 
 // ─── FILTER SIDEBAR ───────────────────────────────────────────────────────────
-function FilterSidebar({ search, setSearch, filters, setFilters, allData, dragRef }) {
+function FilterSidebar({
+  search,
+  setSearch,
+  filters,
+  setFilters,
+  allData,
+  dragRef
+}) {
   const allFaehigkeiten = useMemo(() => {
     const set = new Set();
     allData.forEach(h => (h.faehigkeiten || []).forEach(f => set.add(f)));
     return [...set].sort();
   }, [allData]);
-
   const allHadeVals = useMemo(() => {
     return allData.map(h => {
       const m = (h.ausruestung || '').match(/([\d.]+)\s*Hade/);
       return m ? parseInt(m[1].replace(/\./g, '')) : 0;
     }).filter(v => v > 0);
   }, [allData]);
-  const hadeSteps = useMemo(() => [...new Set(allHadeVals)].sort((a,b) => a-b), [allHadeVals]);
-
+  const hadeSteps = useMemo(() => [...new Set(allHadeVals)].sort((a, b) => a - b), [allHadeVals]);
   const toggle = (key, val) => setFilters(f => {
     const arr = f[key] || [];
-    return { ...f, [key]: arr.includes(val) ? arr.filter(x => x !== val) : [...arr, val] };
+    return {
+      ...f,
+      [key]: arr.includes(val) ? arr.filter(x => x !== val) : [...arr, val]
+    };
   });
   const allWerkzeuge = useMemo(() => {
     const set = new Set();
     allData.forEach(h => werkzeugKeys(h.werkzeuge).forEach(k => set.add(k)));
     return [...set].sort();
   }, [allData]);
-
-  const reset = () => setFilters({ faehigkeiten: [], hadeMin: null, hadeMax: null, werkzeuge: [], sprachen: null, sort:'name-az' });
-  const hasAny = (filters.faehigkeiten || []).length > 0 || filters.hadeMin !== null || filters.hadeMax !== null || (filters.werkzeuge||[]).length > 0 || filters.sprachen !== null || filters.sort !== 'name-az';
-
+  const reset = () => setFilters({
+    faehigkeiten: [],
+    hadeMin: null,
+    hadeMax: null,
+    werkzeuge: [],
+    sprachen: null,
+    sort: 'name-az'
+  });
+  const hasAny = (filters.faehigkeiten || []).length > 0 || filters.hadeMin !== null || filters.hadeMax !== null || (filters.werkzeuge || []).length > 0 || filters.sprachen !== null || filters.sort !== 'name-az';
   const hadeLoVal = filters.hadeMin ?? (hadeSteps[0] || 0);
-  const hadeHiVal = filters.hadeMax ?? (hadeSteps[hadeSteps.length-1] || 0);
-
-  return (
-    <div ref={dragRef.ref} onMouseDown={dragRef.onMouseDown} onClickCapture={dragRef.onClickCapture} style={{ width:'var(--filter-w)', flexShrink:0, background:'rgba(var(--bg2-rgb),0.6)', borderRight:'1px solid var(--border)', padding:'16px 14px 14px 24px', overflowY:'auto', display:'flex', flexDirection:'column', position:'relative', zIndex:10, cursor:'grab', ...dragRef.fadeStyle }}>
-      <div style={{ position:'relative', marginBottom:'14px' }}>
-        <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Hintergrund suchen…" style={{ fontFamily:'var(--font-body)', fontSize:'11.5px', fontWeight:'300', padding:'6px 10px 6px 28px', background:'rgba(124,77,255,0.06)', border:'1px solid rgba(var(--accent-rgb),0.18)', borderRadius:'3px', color:'var(--white)', outline:'none', width:'100%', letterSpacing:'0.03em', transition:'border-color 0.2s' }}
-          onFocus={e=>e.target.style.borderColor='rgba(124,77,255,0.5)'}
-          onBlur={e=>e.target.style.borderColor='rgba(var(--accent-rgb),0.18)'} />
-        <svg style={{ position:'absolute', left:'8px', top:'50%', transform:'translateY(-50%)', opacity:0.35, pointerEvents:'none' }} width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="5" cy="5" r="3.5" stroke="rgba(var(--accent-rgb),1)" strokeWidth="1.2"/><line x1="8" y1="8" x2="11" y2="11" stroke="rgba(var(--accent-rgb),1)" strokeWidth="1.2"/></svg>
-      </div>
-      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'18px' }}>
-        <div style={{ fontFamily:'var(--font-display)', fontSize:'10px', letterSpacing:'0.25em', color:'rgba(var(--text-rgb),0.7)', textTransform:'uppercase' }}>Filter</div>
-        {hasAny && <XBtn onClick={reset} />}
-      </div>
-
-      <FilterGroup title="Fähigkeiten" active={(filters.faehigkeiten||[]).length > 0} onReset={()=>setFilters(f=>({...f,faehigkeiten:[]}))} collapsible>
-        <div style={{ display:'flex', flexDirection:'column', gap:'3px' }}>
-          {allFaehigkeiten.map(f => (
-            <button key={f} onClick={()=>toggle('faehigkeiten',f)} style={{ display:'flex', alignItems:'center', gap:'7px', padding:'5px 7px', background:(filters.faehigkeiten||[]).includes(f)?'rgba(124,77,255,0.12)':'transparent', border:`1px solid ${(filters.faehigkeiten||[]).includes(f)?'rgba(124,77,255,0.4)':'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', textAlign:'left' }}>
-              <OctSvg size={8} color="var(--purple)" fill={(filters.faehigkeiten||[]).includes(f)?'var(--purple)':'none'} strokeWidth={1.2} opacity={(filters.faehigkeiten||[]).includes(f)?1:0.35} />
-              <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:(filters.faehigkeiten||[]).includes(f)?'var(--white)':'var(--silver)', letterSpacing:'0.03em' }}>{f}</span>
-            </button>
-          ))}
-        </div>
-      </FilterGroup>
-
-      <FilterGroup title="Werkzeuge" active={(filters.werkzeuge||[]).length > 0} onReset={()=>setFilters(f=>({...f,werkzeuge:[]}))} collapsible>
-        <div style={{ display:'flex', flexDirection:'column', gap:'3px' }}>
-          {allWerkzeuge.map(w => (
-            <button key={w} onClick={()=>toggle('werkzeuge',w)} style={{ display:'flex', alignItems:'center', gap:'7px', padding:'5px 7px', background:(filters.werkzeuge||[]).includes(w)?'rgba(124,77,255,0.12)':'transparent', border:`1px solid ${(filters.werkzeuge||[]).includes(w)?'rgba(124,77,255,0.4)':'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', textAlign:'left' }}>
-              <OctSvg size={8} color="var(--purple)" fill={(filters.werkzeuge||[]).includes(w)?'var(--purple)':'none'} strokeWidth={1.2} opacity={(filters.werkzeuge||[]).includes(w)?1:0.35} />
-              <span style={{ fontFamily:'var(--font-body)', fontSize:'10.5px', fontWeight:'300', color:(filters.werkzeuge||[]).includes(w)?'var(--white)':'var(--silver)', letterSpacing:'0.02em', lineHeight:1.35 }}>{w}</span>
-            </button>
-          ))}
-        </div>
-      </FilterGroup>
-
-      <FilterGroup title="Sprachen" active={filters.sprachen !== null} onReset={()=>setFilters(f=>({...f,sprachen:null}))}>
-        <div style={{ display:'flex', flexDirection:'column', gap:'4px' }}>
-          {(() => {
-            const val = filters.sprachen;
-            const next = val === null ? true : val === true ? false : null;
-            const isTrue = val === true;
-            const isFalse = val === false;
-            const boxBg = isTrue ? 'rgba(60,180,90,0.15)' : isFalse ? 'rgba(200,60,60,0.12)' : 'transparent';
-            const boxBorder = isTrue ? 'rgba(60,200,90,0.5)' : isFalse ? 'rgba(220,80,80,0.5)' : 'rgba(var(--accent-rgb),0.2)';
-            const icon = isTrue ? '✓' : isFalse ? '✕' : '';
-            const iconColor = isTrue ? 'rgba(80,220,110,0.9)' : isFalse ? 'rgba(230,90,90,0.9)' : 'transparent';
-            return (
-              <button onClick={()=>setFilters(f=>({...f, sprachen: next}))} style={{ display:'flex', alignItems:'center', gap:'8px', padding:'5px 7px', background: val !== null ? (isTrue ? 'rgba(60,180,90,0.07)' : 'rgba(200,60,60,0.07)') : 'transparent', border:`1px solid ${val !== null ? boxBorder : 'transparent'}`, borderRadius:'2px', cursor:'pointer', transition:'all 0.18s', textAlign:'left', width:'100%' }}>
-                <div style={{ width:'14px', height:'14px', border:`1px solid ${boxBorder}`, borderRadius:'2px', background: boxBg, flexShrink:0, display:'flex', alignItems:'center', justifyContent:'center', transition:'all 0.18s', fontSize:'9px', color: iconColor, fontFamily:'var(--font-mono)' }}>{icon}</div>
-                <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color: val !== null ? 'var(--white)' : 'var(--silver)', letterSpacing:'0.03em', flex:1 }}>Sprachen</span>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.1em', color: isTrue ? 'rgba(80,220,110,0.6)' : isFalse ? 'rgba(230,90,90,0.6)' : 'rgba(var(--accent-rgb),0.25)', transition:'color 0.18s' }}>{isTrue ? 'JA' : isFalse ? 'NEIN' : '—'}</span>
-              </button>
-            );
-          })()}
-        </div>
-      </FilterGroup>
-
-      <FilterGroup title="Hade" active={filters.hadeMin !== null || filters.hadeMax !== null} onReset={()=>setFilters(f=>({...f,hadeMin:null,hadeMax:null}))}>
-        <DualRangeSlider
-          steps={hadeSteps}
-          valLo={hadeLoVal}
-          valHi={hadeHiVal}
-          onChange={(lo, hi) => setFilters(f => ({
-            ...f,
-            hadeMin: lo === hadeSteps[0] ? null : lo,
-            hadeMax: hi === hadeSteps[hadeSteps.length-1] ? null : hi
-          }))}
-        />
-      </FilterGroup>
-
-      <FilterGroup title="Sortierung" active={filters.sort !== 'name-az'} onReset={() => setFilters(f => ({...f, sort:'name-az'}))} collapsible>
-        <div style={{ display:'flex', flexDirection:'column', gap:'2px' }}>
-          {[['name-az','Name A – Z'],['name-za','Name Z – A']].map(([id,label]) => (
-            <button key={id} className={`sort-btn${filters.sort===id?' active':''}`} onClick={() => setFilters(f => ({...f, sort:id}))}>{label}</button>
-          ))}
-        </div>
-      </FilterGroup>
-
-      {hasAny && (
-        <div style={{ marginTop:'auto', paddingTop:'14px', borderTop:'1px solid rgba(var(--accent-rgb),0.08)' }}>
-          <button onClick={reset}
-            style={{ width:'100%', padding:'6px', background:'rgba(200,60,60,0.08)', border:'1px solid rgba(200,60,60,0.25)', borderRadius:'2px', color:'rgba(230,90,90,0.65)', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.18em', cursor:'pointer', transition:'all 0.15s', textTransform:'uppercase' }}
-            onMouseEnter={e=>{e.currentTarget.style.background='rgba(200,60,60,0.18)';e.currentTarget.style.borderColor='rgba(230,90,90,0.5)';}}
-            onMouseLeave={e=>{e.currentTarget.style.background='rgba(200,60,60,0.08)';e.currentTarget.style.borderColor='rgba(200,60,60,0.25)';}}>
-            Filter löschen
-          </button>
-        </div>
-      )}
-    </div>
-  );
+  const hadeHiVal = filters.hadeMax ?? (hadeSteps[hadeSteps.length - 1] || 0);
+  return /*#__PURE__*/React.createElement("div", {
+    ref: dragRef.ref,
+    onMouseDown: dragRef.onMouseDown,
+    onClickCapture: dragRef.onClickCapture,
+    style: {
+      width: 'var(--filter-w)',
+      flexShrink: 0,
+      background: 'rgba(var(--bg2-rgb),0.6)',
+      borderRight: '1px solid var(--border)',
+      padding: '16px 14px 14px 24px',
+      overflowY: 'auto',
+      display: 'flex',
+      flexDirection: 'column',
+      position: 'relative',
+      zIndex: 10,
+      cursor: 'grab',
+      ...dragRef.fadeStyle
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      marginBottom: '14px'
+    }
+  }, /*#__PURE__*/React.createElement("input", {
+    value: search,
+    onChange: e => setSearch(e.target.value),
+    placeholder: "Hintergrund suchen\u2026",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11.5px',
+      fontWeight: '300',
+      padding: '6px 10px 6px 28px',
+      background: 'rgba(124,77,255,0.06)',
+      border: '1px solid rgba(var(--accent-rgb),0.18)',
+      borderRadius: '3px',
+      color: 'var(--white)',
+      outline: 'none',
+      width: '100%',
+      letterSpacing: '0.03em',
+      transition: 'border-color 0.2s'
+    },
+    onFocus: e => e.target.style.borderColor = 'rgba(124,77,255,0.5)',
+    onBlur: e => e.target.style.borderColor = 'rgba(var(--accent-rgb),0.18)'
+  }), /*#__PURE__*/React.createElement("svg", {
+    style: {
+      position: 'absolute',
+      left: '8px',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      opacity: 0.35,
+      pointerEvents: 'none'
+    },
+    width: "12",
+    height: "12",
+    viewBox: "0 0 12 12",
+    fill: "none"
+  }, /*#__PURE__*/React.createElement("circle", {
+    cx: "5",
+    cy: "5",
+    r: "3.5",
+    stroke: "rgba(var(--accent-rgb),1)",
+    strokeWidth: "1.2"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "8",
+    y1: "8",
+    x2: "11",
+    y2: "11",
+    stroke: "rgba(var(--accent-rgb),1)",
+    strokeWidth: "1.2"
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: '18px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '10px',
+      letterSpacing: '0.25em',
+      color: 'rgba(var(--text-rgb),0.7)',
+      textTransform: 'uppercase'
+    }
+  }, "Filter"), hasAny && /*#__PURE__*/React.createElement(XBtn, {
+    onClick: reset
+  })), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "F\xE4higkeiten",
+    active: (filters.faehigkeiten || []).length > 0,
+    onReset: () => setFilters(f => ({
+      ...f,
+      faehigkeiten: []
+    })),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '3px'
+    }
+  }, allFaehigkeiten.map(f => /*#__PURE__*/React.createElement("button", {
+    key: f,
+    onClick: () => toggle('faehigkeiten', f),
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '7px',
+      padding: '5px 7px',
+      background: (filters.faehigkeiten || []).includes(f) ? 'rgba(124,77,255,0.12)' : 'transparent',
+      border: `1px solid ${(filters.faehigkeiten || []).includes(f) ? 'rgba(124,77,255,0.4)' : 'transparent'}`,
+      borderRadius: '2px',
+      cursor: 'pointer',
+      transition: 'all 0.15s',
+      textAlign: 'left'
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 8,
+    color: "var(--purple)",
+    fill: (filters.faehigkeiten || []).includes(f) ? 'var(--purple)' : 'none',
+    strokeWidth: 1.2,
+    opacity: (filters.faehigkeiten || []).includes(f) ? 1 : 0.35
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px',
+      fontWeight: '300',
+      color: (filters.faehigkeiten || []).includes(f) ? 'var(--white)' : 'var(--silver)',
+      letterSpacing: '0.03em'
+    }
+  }, f))))), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Werkzeuge",
+    active: (filters.werkzeuge || []).length > 0,
+    onReset: () => setFilters(f => ({
+      ...f,
+      werkzeuge: []
+    })),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '3px'
+    }
+  }, allWerkzeuge.map(w => /*#__PURE__*/React.createElement("button", {
+    key: w,
+    onClick: () => toggle('werkzeuge', w),
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '7px',
+      padding: '5px 7px',
+      background: (filters.werkzeuge || []).includes(w) ? 'rgba(124,77,255,0.12)' : 'transparent',
+      border: `1px solid ${(filters.werkzeuge || []).includes(w) ? 'rgba(124,77,255,0.4)' : 'transparent'}`,
+      borderRadius: '2px',
+      cursor: 'pointer',
+      transition: 'all 0.15s',
+      textAlign: 'left'
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 8,
+    color: "var(--purple)",
+    fill: (filters.werkzeuge || []).includes(w) ? 'var(--purple)' : 'none',
+    strokeWidth: 1.2,
+    opacity: (filters.werkzeuge || []).includes(w) ? 1 : 0.35
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '10.5px',
+      fontWeight: '300',
+      color: (filters.werkzeuge || []).includes(w) ? 'var(--white)' : 'var(--silver)',
+      letterSpacing: '0.02em',
+      lineHeight: 1.35
+    }
+  }, w))))), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Sprachen",
+    active: filters.sprachen !== null,
+    onReset: () => setFilters(f => ({
+      ...f,
+      sprachen: null
+    }))
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '4px'
+    }
+  }, (() => {
+    const val = filters.sprachen;
+    const next = val === null ? true : val === true ? false : null;
+    const isTrue = val === true;
+    const isFalse = val === false;
+    const boxBg = isTrue ? 'rgba(60,180,90,0.15)' : isFalse ? 'rgba(200,60,60,0.12)' : 'transparent';
+    const boxBorder = isTrue ? 'rgba(60,200,90,0.5)' : isFalse ? 'rgba(220,80,80,0.5)' : 'rgba(var(--accent-rgb),0.2)';
+    const icon = isTrue ? '✓' : isFalse ? '✕' : '';
+    const iconColor = isTrue ? 'rgba(80,220,110,0.9)' : isFalse ? 'rgba(230,90,90,0.9)' : 'transparent';
+    return /*#__PURE__*/React.createElement("button", {
+      onClick: () => setFilters(f => ({
+        ...f,
+        sprachen: next
+      })),
+      style: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+        padding: '5px 7px',
+        background: val !== null ? isTrue ? 'rgba(60,180,90,0.07)' : 'rgba(200,60,60,0.07)' : 'transparent',
+        border: `1px solid ${val !== null ? boxBorder : 'transparent'}`,
+        borderRadius: '2px',
+        cursor: 'pointer',
+        transition: 'all 0.18s',
+        textAlign: 'left',
+        width: '100%'
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        width: '14px',
+        height: '14px',
+        border: `1px solid ${boxBorder}`,
+        borderRadius: '2px',
+        background: boxBg,
+        flexShrink: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        transition: 'all 0.18s',
+        fontSize: '9px',
+        color: iconColor,
+        fontFamily: 'var(--font-mono)'
+      }
+    }, icon), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: 'var(--font-body)',
+        fontSize: '11px',
+        fontWeight: '300',
+        color: val !== null ? 'var(--white)' : 'var(--silver)',
+        letterSpacing: '0.03em',
+        flex: 1
+      }
+    }, "Sprachen"), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: 'var(--font-mono)',
+        fontSize: '7.5px',
+        letterSpacing: '0.1em',
+        color: isTrue ? 'rgba(80,220,110,0.6)' : isFalse ? 'rgba(230,90,90,0.6)' : 'rgba(var(--accent-rgb),0.25)',
+        transition: 'color 0.18s'
+      }
+    }, isTrue ? 'JA' : isFalse ? 'NEIN' : '—'));
+  })())), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Hade",
+    active: filters.hadeMin !== null || filters.hadeMax !== null,
+    onReset: () => setFilters(f => ({
+      ...f,
+      hadeMin: null,
+      hadeMax: null
+    }))
+  }, /*#__PURE__*/React.createElement(DualRangeSlider, {
+    steps: hadeSteps,
+    valLo: hadeLoVal,
+    valHi: hadeHiVal,
+    onChange: (lo, hi) => setFilters(f => ({
+      ...f,
+      hadeMin: lo === hadeSteps[0] ? null : lo,
+      hadeMax: hi === hadeSteps[hadeSteps.length - 1] ? null : hi
+    }))
+  })), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Sortierung",
+    active: filters.sort !== 'name-az',
+    onReset: () => setFilters(f => ({
+      ...f,
+      sort: 'name-az'
+    })),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '2px'
+    }
+  }, [['name-az', 'Name A – Z'], ['name-za', 'Name Z – A']].map(([id, label]) => /*#__PURE__*/React.createElement("button", {
+    key: id,
+    className: `sort-btn${filters.sort === id ? ' active' : ''}`,
+    onClick: () => setFilters(f => ({
+      ...f,
+      sort: id
+    }))
+  }, label)))), hasAny && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: 'auto',
+      paddingTop: '14px',
+      borderTop: '1px solid rgba(var(--accent-rgb),0.08)'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: reset,
+    style: {
+      width: '100%',
+      padding: '6px',
+      background: 'rgba(200,60,60,0.08)',
+      border: '1px solid rgba(200,60,60,0.25)',
+      borderRadius: '2px',
+      color: 'rgba(230,90,90,0.65)',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.18em',
+      cursor: 'pointer',
+      transition: 'all 0.15s',
+      textTransform: 'uppercase'
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.background = 'rgba(200,60,60,0.18)';
+      e.currentTarget.style.borderColor = 'rgba(230,90,90,0.5)';
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.background = 'rgba(200,60,60,0.08)';
+      e.currentTarget.style.borderColor = 'rgba(200,60,60,0.25)';
+    }
+  }, "Filter l\xF6schen")));
 }
 
 // ─── LIST ROW ─────────────────────────────────────────────────────────────────
-function BackgroundRow({ h, active, onClick, compact }) {
-  return (
-    <div onClick={()=>onClick(h)} style={{ display:'flex', alignItems:'flex-start', gap:'10px', padding: compact ? '7px 12px' : '10px 12px', cursor:'pointer', borderBottom:'1px solid rgba(var(--accent-rgb),0.06)', background: active ? 'rgba(124,77,255,0.12)' : 'transparent', borderLeft: active ? '2px solid var(--gold)' : '2px solid transparent', transition:'all 0.15s' }}
-      onMouseEnter={e=>{ if(!active){e.currentTarget.style.background='rgba(124,77,255,0.06)';e.currentTarget.style.borderLeftColor='rgba(124,77,255,0.4)';} }}
-      onMouseLeave={e=>{ if(!active){e.currentTarget.style.background='transparent';e.currentTarget.style.borderLeftColor='transparent';} }}>
-      <div style={{ flex:1, minWidth:0 }}>
-        <div style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight: active ? '400' : '300', color: active ? 'var(--white)' : 'rgba(var(--text-rgb),0.85)', letterSpacing:'0.04em', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{h.name}</div>
-        {!compact && <div style={{ fontFamily:'var(--font-body)', fontSize:'10px', fontWeight:'300', color:'rgba(var(--text-rgb),0.4)', letterSpacing:'0.02em', marginTop:'2px', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{h.kurzbeschreibung}</div>}
-      </div>
-    </div>
-  );
+function BackgroundRow({
+  h,
+  active,
+  onClick,
+  compact
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    onClick: () => onClick(h),
+    style: {
+      display: 'flex',
+      alignItems: 'flex-start',
+      gap: '10px',
+      padding: compact ? '7px 12px' : '10px 12px',
+      cursor: 'pointer',
+      borderBottom: '1px solid rgba(var(--accent-rgb),0.06)',
+      background: active ? 'rgba(124,77,255,0.12)' : 'transparent',
+      borderLeft: active ? '2px solid var(--gold)' : '2px solid transparent',
+      transition: 'all 0.15s'
+    },
+    onMouseEnter: e => {
+      if (!active) {
+        e.currentTarget.style.background = 'rgba(124,77,255,0.06)';
+        e.currentTarget.style.borderLeftColor = 'rgba(124,77,255,0.4)';
+      }
+    },
+    onMouseLeave: e => {
+      if (!active) {
+        e.currentTarget.style.background = 'transparent';
+        e.currentTarget.style.borderLeftColor = 'transparent';
+      }
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      minWidth: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      fontWeight: active ? '400' : '300',
+      color: active ? 'var(--white)' : 'rgba(var(--text-rgb),0.85)',
+      letterSpacing: '0.04em',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis'
+    }
+  }, h.name), !compact && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '10px',
+      fontWeight: '300',
+      color: 'rgba(var(--text-rgb),0.4)',
+      letterSpacing: '0.02em',
+      marginTop: '2px',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis'
+    }
+  }, h.kurzbeschreibung)));
 }
 
 // ─── GESINNUNG BADGE ──────────────────────────────────────────────────────────
 const GESINNUNG_COLOR = {
-  'gut':           { bg:'rgba(60,180,90,0.12)',  border:'rgba(60,200,90,0.35)',  color:'rgba(100,220,130,0.9)' },
-  'böse':          { bg:'rgba(200,60,60,0.12)',  border:'rgba(220,80,80,0.35)',  color:'rgba(230,100,100,0.9)' },
-  'rechtschaffen': { bg:'rgba(80,130,220,0.12)', border:'rgba(100,150,230,0.35)',color:'rgba(130,170,240,0.9)' },
-  'chaotisch':     { bg:'rgba(200,120,40,0.12)', border:'rgba(220,140,60,0.35)', color:'rgba(230,160,80,0.9)'  },
-  'jede':          { bg:'rgba(var(--accent-rgb),0.08)',border:'rgba(var(--accent-rgb),0.2)', color:'rgba(180,160,255,0.7)' },
-  'neutral':       { bg:'rgba(var(--accent-rgb),0.08)',border:'rgba(var(--accent-rgb),0.2)', color:'rgba(180,160,255,0.7)' },
+  'gut': {
+    bg: 'rgba(60,180,90,0.12)',
+    border: 'rgba(60,200,90,0.35)',
+    color: 'rgba(100,220,130,0.9)'
+  },
+  'böse': {
+    bg: 'rgba(200,60,60,0.12)',
+    border: 'rgba(220,80,80,0.35)',
+    color: 'rgba(230,100,100,0.9)'
+  },
+  'rechtschaffen': {
+    bg: 'rgba(80,130,220,0.12)',
+    border: 'rgba(100,150,230,0.35)',
+    color: 'rgba(130,170,240,0.9)'
+  },
+  'chaotisch': {
+    bg: 'rgba(200,120,40,0.12)',
+    border: 'rgba(220,140,60,0.35)',
+    color: 'rgba(230,160,80,0.9)'
+  },
+  'jede': {
+    bg: 'rgba(var(--accent-rgb),0.08)',
+    border: 'rgba(var(--accent-rgb),0.2)',
+    color: 'rgba(180,160,255,0.7)'
+  },
+  'neutral': {
+    bg: 'rgba(var(--accent-rgb),0.08)',
+    border: 'rgba(var(--accent-rgb),0.2)',
+    color: 'rgba(180,160,255,0.7)'
+  }
 };
-function GesinnungBadge({ g }) {
+function GesinnungBadge({
+  g
+}) {
   const s = GESINNUNG_COLOR[g] || GESINNUNG_COLOR['jede'];
-  return (
-    <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.12em', padding:'2px 8px', background:s.bg, border:`1px solid ${s.border}`, borderRadius:'2px', color:s.color, textTransform:'uppercase', flexShrink:0 }}>{g}</span>
-  );
+  return /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '0.12em',
+      padding: '2px 8px',
+      background: s.bg,
+      border: `1px solid ${s.border}`,
+      borderRadius: '2px',
+      color: s.color,
+      textTransform: 'uppercase',
+      flexShrink: 0
+    }
+  }, g);
 }
 
 // ─── W6 TABLE ─────────────────────────────────────────────────────────────────
-function W6Table({ title, entries, renderEntry, showTables }) {
+function W6Table({
+  title,
+  entries,
+  renderEntry,
+  showTables
+}) {
   const [highlighted, setHighlighted] = useState(null);
   const [rolling, setRolling] = useState(false);
   const rowRefs = useRef([]);
-
   const handleRoll = () => {
     if (rolling) return;
     setRolling(true);
@@ -339,256 +801,688 @@ function W6Table({ title, entries, renderEntry, showTables }) {
         setRolling(false);
         setTimeout(() => {
           const el = rowRefs.current[final];
-          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          if (el) el.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest'
+          });
         }, 80);
       }
     }, 55);
   };
-
   if (!entries || entries.length === 0) return null;
-  return (
-    <div style={{ marginBottom:'20px' }}>
-      <div style={{ display:'flex', alignItems:'center', gap:'10px', marginBottom:'8px' }}>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.26em', color:'rgba(var(--accent-rgb),0.5)', textTransform:'uppercase' }}>{title}</div>
-        {showTables && <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.12em', padding:'1px 6px', background:'rgba(124,77,255,0.08)', border:'1px solid rgba(124,77,255,0.2)', borderRadius:'2px', color:'rgba(var(--accent-rgb),0.6)' }}>1W{entries.length}</div>}
-        <button
-          onClick={handleRoll}
-          disabled={rolling}
-          style={{
-            display:'flex', alignItems:'center', gap:'4px',
-            padding:'2px 8px',
-            background: rolling ? 'rgba(124,77,255,0.06)' : 'rgba(124,77,255,0.1)',
-            border:'1px solid rgba(124,77,255,0.3)', borderRadius:'2px',
-            color: rolling ? 'rgba(124,77,255,0.4)' : 'rgba(var(--accent-rgb),0.65)',
-            fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.18em',
-            cursor: rolling ? 'not-allowed' : 'pointer', transition:'all 0.15s',
-            textTransform:'uppercase', flexShrink:0,
-          }}
-          onMouseEnter={e => { if (!rolling) { e.currentTarget.style.background='rgba(124,77,255,0.2)'; e.currentTarget.style.color='var(--white)'; }}}
-          onMouseLeave={e => { if (!rolling) { e.currentTarget.style.background='rgba(124,77,255,0.1)'; e.currentTarget.style.color='rgba(var(--accent-rgb),0.65)'; }}}
-        >
-          <svg width="9" height="9" viewBox="0 0 11 11" fill="none" style={{ flexShrink:0, opacity: rolling ? 0.4 : 1 }}>
-            <rect x="1" y="1" width="9" height="9" rx="1.5" stroke="currentColor" strokeWidth="1"/>
-            <circle cx="3.5" cy="3.5" r="0.9" fill="currentColor"/>
-            <circle cx="7.5" cy="7.5" r="0.9" fill="currentColor"/>
-            <circle cx="7.5" cy="3.5" r="0.9" fill="currentColor"/>
-            <circle cx="3.5" cy="7.5" r="0.9" fill="currentColor"/>
-          </svg>
-          Roll
-        </button>
-      </div>
-      {showTables ? (
-        <table style={{ width:'100%', borderCollapse:'collapse' }}>
-          <thead>
-            <tr>
-              <th style={{ width:'32px', padding:'5px 8px', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.18em', color:'rgba(var(--accent-rgb),0.45)', fontWeight:'400', textAlign:'center', borderBottom:'1px solid rgba(var(--accent-rgb),0.12)' }}>#</th>
-              <th style={{ padding:'5px 8px', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.18em', color:'rgba(var(--accent-rgb),0.45)', fontWeight:'400', textAlign:'left', borderBottom:'1px solid rgba(var(--accent-rgb),0.12)' }}>{title}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {entries.map((entry, i) => {
-              const isHit = highlighted === i;
-              return (
-                <tr key={i} ref={el => rowRefs.current[i] = el} style={{ background: isHit ? 'rgba(124,77,255,0.14)' : i%2===0 ? 'rgba(124,77,255,0.03)' : 'transparent', transition:'background 0.08s', outline: isHit ? '1px solid rgba(124,77,255,0.28)' : 'none' }}>
-                  <td style={{ padding:'7px 8px', fontFamily:'var(--font-mono)', fontSize:'9px', color: isHit ? 'rgba(200,180,255,0.9)' : 'rgba(var(--accent-rgb),0.7)', textAlign:'center', borderBottom:'1px solid rgba(var(--accent-rgb),0.06)', fontWeight:'400', transition:'color 0.08s' }}>{i+1}</td>
-                  <td style={{ padding:'7px 8px', borderBottom:'1px solid rgba(var(--accent-rgb),0.06)' }}>{renderEntry(entry, i)}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      ) : (
-        <div style={{ display:'flex', flexDirection:'column', gap:'6px' }}>
-          {entries.map((entry, i) => {
-            const isHit = highlighted === i;
-            return (
-              <div key={i} ref={el => rowRefs.current[i] = el} style={{ display:'flex', gap:'10px', alignItems:'flex-start', padding:'4px 6px', borderRadius:'2px', background: isHit ? 'rgba(124,77,255,0.12)' : 'transparent', outline: isHit ? '1px solid rgba(124,77,255,0.25)' : 'none', transition:'background 0.08s' }}>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color: isHit ? 'rgba(200,180,255,0.9)' : 'rgba(var(--accent-rgb),0.5)', flexShrink:0, minWidth:'16px', paddingTop:'1px', transition:'color 0.08s' }}>{i+1}</span>
-                <div style={{ flex:1 }}>{renderEntry(entry, i)}</div>
-              </div>
-            );
-          })}
-        </div>
-      )}
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: '20px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px',
+      marginBottom: '8px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.26em',
+      color: 'rgba(var(--accent-rgb),0.5)',
+      textTransform: 'uppercase'
+    }
+  }, title), showTables && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      letterSpacing: '0.12em',
+      padding: '1px 6px',
+      background: 'rgba(124,77,255,0.08)',
+      border: '1px solid rgba(124,77,255,0.2)',
+      borderRadius: '2px',
+      color: 'rgba(var(--accent-rgb),0.6)'
+    }
+  }, "1W", entries.length), /*#__PURE__*/React.createElement("button", {
+    onClick: handleRoll,
+    disabled: rolling,
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '4px',
+      padding: '2px 8px',
+      background: rolling ? 'rgba(124,77,255,0.06)' : 'rgba(124,77,255,0.1)',
+      border: '1px solid rgba(124,77,255,0.3)',
+      borderRadius: '2px',
+      color: rolling ? 'rgba(124,77,255,0.4)' : 'rgba(var(--accent-rgb),0.65)',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.18em',
+      cursor: rolling ? 'not-allowed' : 'pointer',
+      transition: 'all 0.15s',
+      textTransform: 'uppercase',
+      flexShrink: 0
+    },
+    onMouseEnter: e => {
+      if (!rolling) {
+        e.currentTarget.style.background = 'rgba(124,77,255,0.2)';
+        e.currentTarget.style.color = 'var(--white)';
+      }
+    },
+    onMouseLeave: e => {
+      if (!rolling) {
+        e.currentTarget.style.background = 'rgba(124,77,255,0.1)';
+        e.currentTarget.style.color = 'rgba(var(--accent-rgb),0.65)';
+      }
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "9",
+    height: "9",
+    viewBox: "0 0 11 11",
+    fill: "none",
+    style: {
+      flexShrink: 0,
+      opacity: rolling ? 0.4 : 1
+    }
+  }, /*#__PURE__*/React.createElement("rect", {
+    x: "1",
+    y: "1",
+    width: "9",
+    height: "9",
+    rx: "1.5",
+    stroke: "currentColor",
+    strokeWidth: "1"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "3.5",
+    cy: "3.5",
+    r: "0.9",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "7.5",
+    cy: "7.5",
+    r: "0.9",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "7.5",
+    cy: "3.5",
+    r: "0.9",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "3.5",
+    cy: "7.5",
+    r: "0.9",
+    fill: "currentColor"
+  })), "Roll")), showTables ? /*#__PURE__*/React.createElement("table", {
+    style: {
+      width: '100%',
+      borderCollapse: 'collapse'
+    }
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+    style: {
+      width: '32px',
+      padding: '5px 8px',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.18em',
+      color: 'rgba(var(--accent-rgb),0.45)',
+      fontWeight: '400',
+      textAlign: 'center',
+      borderBottom: '1px solid rgba(var(--accent-rgb),0.12)'
+    }
+  }, "#"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      padding: '5px 8px',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.18em',
+      color: 'rgba(var(--accent-rgb),0.45)',
+      fontWeight: '400',
+      textAlign: 'left',
+      borderBottom: '1px solid rgba(var(--accent-rgb),0.12)'
+    }
+  }, title))), /*#__PURE__*/React.createElement("tbody", null, entries.map((entry, i) => {
+    const isHit = highlighted === i;
+    return /*#__PURE__*/React.createElement("tr", {
+      key: i,
+      ref: el => rowRefs.current[i] = el,
+      style: {
+        background: isHit ? 'rgba(124,77,255,0.14)' : i % 2 === 0 ? 'rgba(124,77,255,0.03)' : 'transparent',
+        transition: 'background 0.08s',
+        outline: isHit ? '1px solid rgba(124,77,255,0.28)' : 'none'
+      }
+    }, /*#__PURE__*/React.createElement("td", {
+      style: {
+        padding: '7px 8px',
+        fontFamily: 'var(--font-mono)',
+        fontSize: '9px',
+        color: isHit ? 'rgba(200,180,255,0.9)' : 'rgba(var(--accent-rgb),0.7)',
+        textAlign: 'center',
+        borderBottom: '1px solid rgba(var(--accent-rgb),0.06)',
+        fontWeight: '400',
+        transition: 'color 0.08s'
+      }
+    }, i + 1), /*#__PURE__*/React.createElement("td", {
+      style: {
+        padding: '7px 8px',
+        borderBottom: '1px solid rgba(var(--accent-rgb),0.06)'
+      }
+    }, renderEntry(entry, i)));
+  }))) : /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '6px'
+    }
+  }, entries.map((entry, i) => {
+    const isHit = highlighted === i;
+    return /*#__PURE__*/React.createElement("div", {
+      key: i,
+      ref: el => rowRefs.current[i] = el,
+      style: {
+        display: 'flex',
+        gap: '10px',
+        alignItems: 'flex-start',
+        padding: '4px 6px',
+        borderRadius: '2px',
+        background: isHit ? 'rgba(124,77,255,0.12)' : 'transparent',
+        outline: isHit ? '1px solid rgba(124,77,255,0.25)' : 'none',
+        transition: 'background 0.08s'
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: 'var(--font-mono)',
+        fontSize: '9px',
+        color: isHit ? 'rgba(200,180,255,0.9)' : 'rgba(var(--accent-rgb),0.5)',
+        flexShrink: 0,
+        minWidth: '16px',
+        paddingTop: '1px',
+        transition: 'color 0.08s'
+      }
+    }, i + 1), /*#__PURE__*/React.createElement("div", {
+      style: {
+        flex: 1
+      }
+    }, renderEntry(entry, i)));
+  })));
 }
 
 // ─── META ITEM ────────────────────────────────────────────────────────────────
-function MetaItem({ label, value }) {
+function MetaItem({
+  label,
+  value
+}) {
   if (!value) return null;
-  return (
-    <div style={{ display:'flex', flexDirection:'column', gap:'3px' }}>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.26em', color:'rgba(var(--accent-rgb),0.45)', textTransform:'uppercase' }}>{label}</div>
-      <div style={{ fontFamily:'var(--font-body)', fontSize:'11.5px', fontWeight:'300', color:'rgba(var(--text-rgb),0.8)', letterSpacing:'0.015em', lineHeight:1.5 }}>{value}</div>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '3px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '0.26em',
+      color: 'rgba(var(--accent-rgb),0.45)',
+      textTransform: 'uppercase'
+    }
+  }, label), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11.5px',
+      fontWeight: '300',
+      color: 'rgba(var(--text-rgb),0.8)',
+      letterSpacing: '0.015em',
+      lineHeight: 1.5
+    }
+  }, value));
 }
 
 // ─── SECTION HEADER ───────────────────────────────────────────────────────────
-function SectionHeader({ title }) {
-  return (
-    <div style={{ display:'flex', alignItems:'center', gap:'12px', marginBottom:'12px', marginTop:'22px' }}>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),0.55)', textTransform:'uppercase', flexShrink:0 }}>{title}</div>
-      <div style={{ flex:1, height:'1px', background:'rgba(var(--accent-rgb),0.12)' }} />
-    </div>
-  );
+function SectionHeader({
+  title
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px',
+      marginBottom: '12px',
+      marginTop: '22px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.28em',
+      color: 'rgba(var(--accent-rgb),0.55)',
+      textTransform: 'uppercase',
+      flexShrink: 0
+    }
+  }, title), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      height: '1px',
+      background: 'rgba(var(--accent-rgb),0.12)'
+    }
+  }));
 }
 
 // ─── DETAIL PANE ──────────────────────────────────────────────────────────────
-function BackgroundDetail({ h, showTables }) {
-  return (
-    <div key={h.id} style={{ flex:1, overflowY:'auto', padding:'24px 28px', animation:'fadeIn 0.22s ease' }}>
-      {/* Header */}
-      <div style={{ marginBottom:'18px', paddingBottom:'16px', borderBottom:'1px solid rgba(var(--accent-rgb),0.1)' }}>
-        <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', gap:'12px', marginBottom:'6px' }}>
-          <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(18px,2.2vw,26px)', fontWeight:'400', letterSpacing:'0.14em', color:'var(--white)', lineHeight:1.2, textTransform:'uppercase' }}>{h.name}</h1>
-          {h.hintergrundVariante && (
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.12em', padding:'3px 8px', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.3)', borderRadius:'2px', color:'rgba(180,160,255,0.8)', textTransform:'uppercase', flexShrink:0, marginTop:'4px' }}>Variante: {h.hintergrundVariante.name}</span>
-          )}
-        </div>
-        {h.kurzbeschreibung && (
-          <p style={{ fontFamily:'var(--font-body)', fontSize:'12.5px', fontWeight:'300', color:'rgba(var(--text-rgb),0.55)', letterSpacing:'0.02em', lineHeight:1.6 }}>{h.kurzbeschreibung}</p>
-        )}
-      </div>
-
-      {/* Description */}
-      {h.beschreibung && h.beschreibung.length > 0 && (
-        <div style={{ marginBottom:'20px' }}>
-          {h.beschreibung.map((p, i) => (
-            <p key={i} style={{ fontFamily:'var(--font-body)', fontSize:'12.5px', fontWeight:'300', lineHeight:1.82, color:'rgba(var(--text-rgb),0.8)', letterSpacing:'0.015em', marginBottom:'10px', textWrap:'pretty' }}>{p}</p>
-          ))}
-        </div>
-      )}
-
-      {/* Variant description */}
-      {h.hintergrundVariante && (
-        <div style={{ padding:'12px 16px', background:'rgba(124,77,255,0.04)', border:'1px solid rgba(124,77,255,0.12)', borderRadius:'3px', marginBottom:'20px' }}>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),0.5)', textTransform:'uppercase', marginBottom:'6px' }}>Variante des {h.name}: {h.hintergrundVariante.name}</div>
-          <p style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.75, color:'rgba(var(--text-rgb),0.75)', letterSpacing:'0.015em', textWrap:'pretty' }}>{h.hintergrundVariante.beschreibung}</p>
-        </div>
-      )}
-
-      {/* Stats grid */}
-      <SectionHeader title="Profizienzen & Ausrüstung" />
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'12px 18px', marginBottom:'20px', padding:'14px', background:'rgba(124,77,255,0.03)', border:'1px solid rgba(var(--accent-rgb),0.08)', borderRadius:'3px' }}>
-        {h.faehigkeiten && h.faehigkeiten.length > 0 && (
-          <div style={{ gridColumn:'1/-1' }}>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.26em', color:'rgba(var(--accent-rgb),0.45)', textTransform:'uppercase', marginBottom:'5px' }}>Fähigkeiten</div>
-            <div style={{ display:'flex', flexWrap:'wrap', gap:'4px' }}>
-              {h.faehigkeiten.map(f => (
-                <span key={f} style={{ fontFamily:'var(--font-body)', fontSize:'10.5px', fontWeight:'300', padding:'2px 8px', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.25)', borderRadius:'2px', color:'rgba(var(--text-rgb),0.85)', letterSpacing:'0.04em' }}>{f}</span>
-              ))}
-            </div>
-          </div>
-        )}
-        <MetaItem label="Werkzeuge" value={h.werkzeuge} />
-        <MetaItem label="Sprachen" value={h.sprachen} />
-        {h.ausruestung && (
-          <div style={{ gridColumn:'1/-1' }}>
-            <MetaItem label="Ausrüstung" value={h.ausruestung} />
-          </div>
-        )}
-      </div>
-
-      {/* Background-specific table (e.g. Leben in Abgeschiedenheit) */}
-      {h.hintergrundTabelle && (
-        <>
-          <SectionHeader title={h.hintergrundTabelle.titel} />
-          <W6Table title={h.hintergrundTabelle.titel} entries={h.hintergrundTabelle.eintraege} showTables={showTables} renderEntry={(e) => (
-            <span style={{ fontFamily:'var(--font-body)', fontSize:'11.5px', fontWeight:'300', color:'rgba(var(--text-rgb),0.78)', lineHeight:1.65, letterSpacing:'0.015em' }}>{e}</span>
-          )} />
-        </>
-      )}
-
-      {/* Merkmal */}
-      {h.merkmal && (
-        <>
-          <SectionHeader title="Merkmal" />
-          <div style={{ padding:'14px 16px', background:'rgba(124,77,255,0.04)', border:'1px solid rgba(var(--accent-rgb),0.1)', borderRadius:'3px', marginBottom:'16px' }}>
-            <div style={{ fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:'400', letterSpacing:'0.18em', color:'rgba(var(--text-rgb),0.8)', textTransform:'uppercase', marginBottom:'8px' }}>{h.merkmal.name}</div>
-            <p style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.78, color:'rgba(var(--text-rgb),0.78)', letterSpacing:'0.015em', textWrap:'pretty' }}>{h.merkmal.beschreibung}</p>
-          </div>
-        </>
-      )}
-
-      {/* Merkmal Variante */}
-      {h.merkmalVariante && (
-        <div style={{ padding:'12px 16px', background:'rgba(124,77,255,0.03)', border:'1px solid rgba(var(--accent-rgb),0.08)', borderLeft:'2px solid rgba(124,77,255,0.3)', borderRadius:'3px', marginBottom:'20px' }}>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.2em', color:'rgba(var(--accent-rgb),0.4)', textTransform:'uppercase', marginBottom:'4px' }}>Merkmalvariante</div>
-          <div style={{ fontFamily:'var(--font-display)', fontSize:'10.5px', fontWeight:'400', letterSpacing:'0.16em', color:'rgba(180,170,240,0.7)', textTransform:'uppercase', marginBottom:'6px' }}>{h.merkmalVariante.name}</div>
-          {h.merkmalVariante.bedingung && <p style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', lineHeight:1.7, color:'rgba(180,170,220,0.6)', marginBottom:'6px', fontStyle:'italic' }}>{h.merkmalVariante.bedingung}</p>}
-          <p style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.78, color:'rgba(200,195,240,0.75)', letterSpacing:'0.015em', textWrap:'pretty' }}>{h.merkmalVariante.beschreibung}</p>
-        </div>
-      )}
-
-      {/* Personality tables */}
-      {(h.persoenlichkeit?.length > 0 || h.ideale?.length > 0 || h.bindungen?.length > 0 || h.makel?.length > 0) && (
-        <>
-          <SectionHeader title="Charaktereigenschaften" />
-
-          <W6Table title="Persönlichkeitsmerkmal" entries={h.persoenlichkeit} showTables={showTables} renderEntry={(e) => (
-            <span style={{ fontFamily:'var(--font-body)', fontSize:'11.5px', fontWeight:'300', color:'rgba(var(--text-rgb),0.78)', lineHeight:1.65, letterSpacing:'0.015em' }}>{e}</span>
-          )} />
-
-          <W6Table title="Ideal" entries={h.ideale} showTables={showTables} renderEntry={(e) => (
-            <span style={{ fontFamily:'var(--font-body)', fontSize:'11.5px', fontWeight:'300', color:'rgba(var(--text-rgb),0.78)', lineHeight:1.65, letterSpacing:'0.015em', display:'flex', alignItems:'baseline', gap:'8px', flexWrap:'wrap' }}>
-              <span>{e.text}</span>
-              <GesinnungBadge g={e.gesinnung} />
-            </span>
-          )} />
-
-          <W6Table title="Bindung" entries={h.bindungen} showTables={showTables} renderEntry={(e) => (
-            <span style={{ fontFamily:'var(--font-body)', fontSize:'11.5px', fontWeight:'300', color:'rgba(var(--text-rgb),0.78)', lineHeight:1.65, letterSpacing:'0.015em' }}>{e}</span>
-          )} />
-
-          <W6Table title="Makel" entries={h.makel} showTables={showTables} renderEntry={(e) => (
-            <span style={{ fontFamily:'var(--font-body)', fontSize:'11.5px', fontWeight:'300', color:'rgba(var(--text-rgb),0.78)', lineHeight:1.65, letterSpacing:'0.015em' }}>{e}</span>
-          )} />
-        </>
-      )}
-
-      {/* Sonstige Hinweise (e.g. Andere Arten des Einsiedlers) */}
-      {h.sonstigeHinweise && (
-        <div style={{ padding:'12px 16px', background:'rgba(124,77,255,0.03)', border:'1px solid rgba(var(--accent-rgb),0.08)', borderRadius:'3px', marginTop:'8px' }}>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),0.45)', textTransform:'uppercase', marginBottom:'6px' }}>{h.sonstigeHinweise.titel}</div>
-          <p style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.75, color:'rgba(var(--text-rgb),0.65)', letterSpacing:'0.015em', textWrap:'pretty' }}>{h.sonstigeHinweise.text}</p>
-        </div>
-      )}
-    </div>
-  );
+function BackgroundDetail({
+  h,
+  showTables
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    key: h.id,
+    style: {
+      flex: 1,
+      overflowY: 'auto',
+      padding: '24px 28px',
+      animation: 'fadeIn 0.22s ease'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: '18px',
+      paddingBottom: '16px',
+      borderBottom: '1px solid rgba(var(--accent-rgb),0.1)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'flex-start',
+      justifyContent: 'space-between',
+      gap: '12px',
+      marginBottom: '6px'
+    }
+  }, /*#__PURE__*/React.createElement("h1", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: 'clamp(18px,2.2vw,26px)',
+      fontWeight: '400',
+      letterSpacing: '0.14em',
+      color: 'var(--white)',
+      lineHeight: 1.2,
+      textTransform: 'uppercase'
+    }
+  }, h.name), h.hintergrundVariante && /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '0.12em',
+      padding: '3px 8px',
+      background: 'rgba(124,77,255,0.1)',
+      border: '1px solid rgba(124,77,255,0.3)',
+      borderRadius: '2px',
+      color: 'rgba(180,160,255,0.8)',
+      textTransform: 'uppercase',
+      flexShrink: 0,
+      marginTop: '4px'
+    }
+  }, "Variante: ", h.hintergrundVariante.name)), h.kurzbeschreibung && /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '12.5px',
+      fontWeight: '300',
+      color: 'rgba(var(--text-rgb),0.55)',
+      letterSpacing: '0.02em',
+      lineHeight: 1.6
+    }
+  }, h.kurzbeschreibung)), h.beschreibung && h.beschreibung.length > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: '20px'
+    }
+  }, h.beschreibung.map((p, i) => /*#__PURE__*/React.createElement("p", {
+    key: i,
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '12.5px',
+      fontWeight: '300',
+      lineHeight: 1.82,
+      color: 'rgba(var(--text-rgb),0.8)',
+      letterSpacing: '0.015em',
+      marginBottom: '10px',
+      textWrap: 'pretty'
+    }
+  }, p))), h.hintergrundVariante && /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '12px 16px',
+      background: 'rgba(124,77,255,0.04)',
+      border: '1px solid rgba(124,77,255,0.12)',
+      borderRadius: '3px',
+      marginBottom: '20px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '0.22em',
+      color: 'rgba(var(--accent-rgb),0.5)',
+      textTransform: 'uppercase',
+      marginBottom: '6px'
+    }
+  }, "Variante des ", h.name, ": ", h.hintergrundVariante.name), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      fontWeight: '300',
+      lineHeight: 1.75,
+      color: 'rgba(var(--text-rgb),0.75)',
+      letterSpacing: '0.015em',
+      textWrap: 'pretty'
+    }
+  }, h.hintergrundVariante.beschreibung)), /*#__PURE__*/React.createElement(SectionHeader, {
+    title: "Profizienzen & Ausr\xFCstung"
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      gap: '12px 18px',
+      marginBottom: '20px',
+      padding: '14px',
+      background: 'rgba(124,77,255,0.03)',
+      border: '1px solid rgba(var(--accent-rgb),0.08)',
+      borderRadius: '3px'
+    }
+  }, h.faehigkeiten && h.faehigkeiten.length > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      gridColumn: '1/-1'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '0.26em',
+      color: 'rgba(var(--accent-rgb),0.45)',
+      textTransform: 'uppercase',
+      marginBottom: '5px'
+    }
+  }, "F\xE4higkeiten"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '4px'
+    }
+  }, h.faehigkeiten.map(f => /*#__PURE__*/React.createElement("span", {
+    key: f,
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '10.5px',
+      fontWeight: '300',
+      padding: '2px 8px',
+      background: 'rgba(124,77,255,0.1)',
+      border: '1px solid rgba(124,77,255,0.25)',
+      borderRadius: '2px',
+      color: 'rgba(var(--text-rgb),0.85)',
+      letterSpacing: '0.04em'
+    }
+  }, f)))), /*#__PURE__*/React.createElement(MetaItem, {
+    label: "Werkzeuge",
+    value: h.werkzeuge
+  }), /*#__PURE__*/React.createElement(MetaItem, {
+    label: "Sprachen",
+    value: h.sprachen
+  }), h.ausruestung && /*#__PURE__*/React.createElement("div", {
+    style: {
+      gridColumn: '1/-1'
+    }
+  }, /*#__PURE__*/React.createElement(MetaItem, {
+    label: "Ausr\xFCstung",
+    value: h.ausruestung
+  }))), h.hintergrundTabelle && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(SectionHeader, {
+    title: h.hintergrundTabelle.titel
+  }), /*#__PURE__*/React.createElement(W6Table, {
+    title: h.hintergrundTabelle.titel,
+    entries: h.hintergrundTabelle.eintraege,
+    showTables: showTables,
+    renderEntry: e => /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: 'var(--font-body)',
+        fontSize: '11.5px',
+        fontWeight: '300',
+        color: 'rgba(var(--text-rgb),0.78)',
+        lineHeight: 1.65,
+        letterSpacing: '0.015em'
+      }
+    }, e)
+  })), h.merkmal && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(SectionHeader, {
+    title: "Merkmal"
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '14px 16px',
+      background: 'rgba(124,77,255,0.04)',
+      border: '1px solid rgba(var(--accent-rgb),0.1)',
+      borderRadius: '3px',
+      marginBottom: '16px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '11px',
+      fontWeight: '400',
+      letterSpacing: '0.18em',
+      color: 'rgba(var(--text-rgb),0.8)',
+      textTransform: 'uppercase',
+      marginBottom: '8px'
+    }
+  }, h.merkmal.name), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      fontWeight: '300',
+      lineHeight: 1.78,
+      color: 'rgba(var(--text-rgb),0.78)',
+      letterSpacing: '0.015em',
+      textWrap: 'pretty'
+    }
+  }, h.merkmal.beschreibung))), h.merkmalVariante && /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '12px 16px',
+      background: 'rgba(124,77,255,0.03)',
+      border: '1px solid rgba(var(--accent-rgb),0.08)',
+      borderLeft: '2px solid rgba(124,77,255,0.3)',
+      borderRadius: '3px',
+      marginBottom: '20px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      letterSpacing: '0.2em',
+      color: 'rgba(var(--accent-rgb),0.4)',
+      textTransform: 'uppercase',
+      marginBottom: '4px'
+    }
+  }, "Merkmalvariante"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '10.5px',
+      fontWeight: '400',
+      letterSpacing: '0.16em',
+      color: 'rgba(180,170,240,0.7)',
+      textTransform: 'uppercase',
+      marginBottom: '6px'
+    }
+  }, h.merkmalVariante.name), h.merkmalVariante.bedingung && /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px',
+      fontWeight: '300',
+      lineHeight: 1.7,
+      color: 'rgba(180,170,220,0.6)',
+      marginBottom: '6px',
+      fontStyle: 'italic'
+    }
+  }, h.merkmalVariante.bedingung), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      fontWeight: '300',
+      lineHeight: 1.78,
+      color: 'rgba(200,195,240,0.75)',
+      letterSpacing: '0.015em',
+      textWrap: 'pretty'
+    }
+  }, h.merkmalVariante.beschreibung)), (h.persoenlichkeit?.length > 0 || h.ideale?.length > 0 || h.bindungen?.length > 0 || h.makel?.length > 0) && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(SectionHeader, {
+    title: "Charaktereigenschaften"
+  }), /*#__PURE__*/React.createElement(W6Table, {
+    title: "Pers\xF6nlichkeitsmerkmal",
+    entries: h.persoenlichkeit,
+    showTables: showTables,
+    renderEntry: e => /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: 'var(--font-body)',
+        fontSize: '11.5px',
+        fontWeight: '300',
+        color: 'rgba(var(--text-rgb),0.78)',
+        lineHeight: 1.65,
+        letterSpacing: '0.015em'
+      }
+    }, e)
+  }), /*#__PURE__*/React.createElement(W6Table, {
+    title: "Ideal",
+    entries: h.ideale,
+    showTables: showTables,
+    renderEntry: e => /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: 'var(--font-body)',
+        fontSize: '11.5px',
+        fontWeight: '300',
+        color: 'rgba(var(--text-rgb),0.78)',
+        lineHeight: 1.65,
+        letterSpacing: '0.015em',
+        display: 'flex',
+        alignItems: 'baseline',
+        gap: '8px',
+        flexWrap: 'wrap'
+      }
+    }, /*#__PURE__*/React.createElement("span", null, e.text), /*#__PURE__*/React.createElement(GesinnungBadge, {
+      g: e.gesinnung
+    }))
+  }), /*#__PURE__*/React.createElement(W6Table, {
+    title: "Bindung",
+    entries: h.bindungen,
+    showTables: showTables,
+    renderEntry: e => /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: 'var(--font-body)',
+        fontSize: '11.5px',
+        fontWeight: '300',
+        color: 'rgba(var(--text-rgb),0.78)',
+        lineHeight: 1.65,
+        letterSpacing: '0.015em'
+      }
+    }, e)
+  }), /*#__PURE__*/React.createElement(W6Table, {
+    title: "Makel",
+    entries: h.makel,
+    showTables: showTables,
+    renderEntry: e => /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: 'var(--font-body)',
+        fontSize: '11.5px',
+        fontWeight: '300',
+        color: 'rgba(var(--text-rgb),0.78)',
+        lineHeight: 1.65,
+        letterSpacing: '0.015em'
+      }
+    }, e)
+  })), h.sonstigeHinweise && /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '12px 16px',
+      background: 'rgba(124,77,255,0.03)',
+      border: '1px solid rgba(var(--accent-rgb),0.08)',
+      borderRadius: '3px',
+      marginTop: '8px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '0.22em',
+      color: 'rgba(var(--accent-rgb),0.45)',
+      textTransform: 'uppercase',
+      marginBottom: '6px'
+    }
+  }, h.sonstigeHinweise.titel), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      fontWeight: '300',
+      lineHeight: 1.75,
+      color: 'rgba(var(--text-rgb),0.65)',
+      letterSpacing: '0.015em',
+      textWrap: 'pretty'
+    }
+  }, h.sonstigeHinweise.text)));
 }
 
 // ─── EMPTY STATE ──────────────────────────────────────────────────────────────
-function EmptyState({ msg }) {
-  return (
-    <div style={{ flex:1, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'12px', opacity:0.35, padding:'40px' }}>
-      <svg width="36" height="36" viewBox="0 0 36 36"><polygon points="18,4 32,12 32,24 18,32 4,24 4,12" fill="none" stroke="rgba(var(--accent-rgb),0.6)" strokeWidth="1.5"/></svg>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.2em', color:'rgba(var(--accent-rgb),0.6)', textTransform:'uppercase', textAlign:'center' }}>{msg}</div>
-    </div>
-  );
+function EmptyState({
+  msg
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '12px',
+      opacity: 0.35,
+      padding: '40px'
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "36",
+    height: "36",
+    viewBox: "0 0 36 36"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: "18,4 32,12 32,24 18,32 4,24 4,12",
+    fill: "none",
+    stroke: "rgba(var(--accent-rgb),0.6)",
+    strokeWidth: "1.5"
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.2em',
+      color: 'rgba(var(--accent-rgb),0.6)',
+      textTransform: 'uppercase',
+      textAlign: 'center'
+    }
+  }, msg));
 }
 
 // ─── APP ──────────────────────────────────────────────────────────────────────
 function App() {
   const [tw, setTweak] = useTweaks(TWEAK_DEFAULTS);
   const allData = window.HINTERGRUENDE_DATA || [];
-
-  const [mouse, setMouse] = useState({ x: 0.5, y: 0.5 });
-  const handleMouseMove = useCallback((e) => setMouse({ x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight }), []);
-
+  const [mouse, setMouse] = useState({
+    x: 0.5,
+    y: 0.5
+  });
+  const handleMouseMove = useCallback(e => setMouse({
+    x: e.clientX / window.innerWidth,
+    y: e.clientY / window.innerHeight
+  }), []);
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState(allData[0] || null);
-  const [filters, setFilters] = useState({ faehigkeiten: [], hadeMin: null, hadeMax: null, werkzeuge: [], sprachen: null, sort:'name-az' });
-
-  const sidebarDrag = useDragScroll({ vertical: true });
-  const listDrag = useDragScroll({ vertical: true });
-
+  const [filters, setFilters] = useState({
+    faehigkeiten: [],
+    hadeMin: null,
+    hadeMax: null,
+    werkzeuge: [],
+    sprachen: null,
+    sort: 'name-az'
+  });
+  const sidebarDrag = useDragScroll({
+    vertical: true
+  });
+  const listDrag = useDragScroll({
+    vertical: true
+  });
   const filtered = useMemo(() => {
     const r = allData.filter(h => {
       if (search && !h.name.toLowerCase().includes(search.toLowerCase())) return false;
-      if ((filters.faehigkeiten||[]).length && !filters.faehigkeiten.some(f => (h.faehigkeiten||[]).some(hf => hf.toLowerCase().includes(f.toLowerCase())))) return false;
-      if ((filters.werkzeuge||[]).length && !werkzeugKeys(h.werkzeuge).some(k => filters.werkzeuge.includes(k))) return false;
+      if ((filters.faehigkeiten || []).length && !filters.faehigkeiten.some(f => (h.faehigkeiten || []).some(hf => hf.toLowerCase().includes(f.toLowerCase())))) return false;
+      if ((filters.werkzeuge || []).length && !werkzeugKeys(h.werkzeuge).some(k => filters.werkzeuge.includes(k))) return false;
       if (filters.sprachen === true && !h.sprachen) return false;
       if (filters.sprachen === false && h.sprachen) return false;
       if (filters.hadeMin !== null || filters.hadeMax !== null) {
@@ -599,71 +1493,144 @@ function App() {
       }
       return true;
     });
-    if (filters.sort === 'name-za') r.sort((a,b) => b.name.localeCompare(a.name, 'de'));
-    else r.sort((a,b) => a.name.localeCompare(b.name, 'de'));
+    if (filters.sort === 'name-za') r.sort((a, b) => b.name.localeCompare(a.name, 'de'));else r.sort((a, b) => a.name.localeCompare(b.name, 'de'));
     return r;
   }, [allData, search, filters]);
-
   useEffect(() => {
     if (selected && !filtered.find(h => h.id === selected.id)) {
       setSelected(filtered[0] || null);
     }
   }, [filtered]);
-
-  return (
-    <div onMouseMove={handleMouseMove} style={{ display:'flex', flexDirection:'column', height:'100vh', position:'relative', zIndex:1 }}>
-      {tw.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} />}
-      <SiteNav />
-
-      {/* Page header */}
-      <div style={{ position:'relative', zIndex:10, borderBottom:'1px solid var(--border)', background:'rgba(var(--bg-rgb),0.7)', flexShrink:0, backdropFilter:'blur(6px)', display:'flex', alignItems:'stretch' }}>
-        <div style={{ width:'var(--filter-w)', flexShrink:0, padding:'10px 14px 10px 24px', borderRight:'1px solid var(--border)', display:'flex', flexDirection:'column', justifyContent:'center', gap:'2px' }}>
-          <h1 style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'400', letterSpacing:'0.3em', color:'rgba(var(--text-rgb),0.6)', textTransform:'uppercase' }}>Hintergründe</h1>
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(var(--accent-rgb),0.35)', letterSpacing:'0.15em' }}>{filtered.length} / {allData.length}</span>
-        </div>
-        <div style={{ flex:1, padding:'10px 20px', display:'flex', alignItems:'center' }}>
-          <p style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(var(--text-rgb),0.35)', letterSpacing:'0.04em' }}>
-            Jeder Charakter hat einen Hintergrund — wähle einen, der seine Herkunft und Lebensgeschichte beschreibt.
-          </p>
-        </div>
-      </div>
-
-      {/* Main body */}
-      <div style={{ flex:1, display:'flex', overflow:'hidden', position:'relative', zIndex:5 }}>
-        <FilterSidebar search={search} setSearch={setSearch} filters={filters} setFilters={setFilters} allData={allData} dragRef={sidebarDrag} />
-
-        {/* List */}
-        <div ref={listDrag.ref} onMouseDown={listDrag.onMouseDown} onClickCapture={listDrag.onClickCapture} style={{ width:'260px', flexShrink:0, borderRight:'1px solid var(--border)', overflowY:'auto', background:'rgba(6,5,18,0.5)', cursor:'grab', ...listDrag.fadeStyle }}>
-          {filtered.length === 0
-            ? <EmptyState msg="Keine Hintergründe gefunden" />
-            : filtered.map(h => (
-                <BackgroundRow key={h.id} h={h} active={selected && selected.id === h.id} onClick={setSelected} compact={tw.compactList} />
-              ))
-          }
-        </div>
-
-        {/* Detail */}
-        <div style={{ flex:1, display:'flex', flexDirection:'column', overflow:'hidden', background:'rgba(var(--bg2-rgb),0.4)' }}>
-          {selected
-            ? <BackgroundDetail h={selected} showTables={tw.showTables} />
-            : <EmptyState msg="Hintergrund auswählen" />
-          }
-        </div>
-      </div>
-
-      <TweaksPanel>
-        <TweakSection title="Darstellung">
-          <TweakToggle label="Partikel" tKey="showParticles" />
-          <TweakToggle label="Kompakte Liste" tKey="compactList" />
-          <TweakToggle label="Tabellen-Ansicht" tKey="showTables" />
-        </TweakSection>
-      </TweaksPanel>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    onMouseMove: handleMouseMove,
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100vh',
+      position: 'relative',
+      zIndex: 1
+    }
+  }, tw.showParticles && /*#__PURE__*/React.createElement(ParticleField, {
+    mouseX: mouse.x,
+    mouseY: mouse.y
+  }), /*#__PURE__*/React.createElement(SiteNav, null), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 10,
+      borderBottom: '1px solid var(--border)',
+      background: 'rgba(var(--bg-rgb),0.7)',
+      flexShrink: 0,
+      backdropFilter: 'blur(6px)',
+      display: 'flex',
+      alignItems: 'stretch'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 'var(--filter-w)',
+      flexShrink: 0,
+      padding: '10px 14px 10px 24px',
+      borderRight: '1px solid var(--border)',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      gap: '2px'
+    }
+  }, /*#__PURE__*/React.createElement("h1", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '14px',
+      fontWeight: '400',
+      letterSpacing: '0.3em',
+      color: 'rgba(var(--text-rgb),0.6)',
+      textTransform: 'uppercase'
+    }
+  }, "Hintergr\xFCnde"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: 'rgba(var(--accent-rgb),0.35)',
+      letterSpacing: '0.15em'
+    }
+  }, filtered.length, " / ", allData.length)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      padding: '10px 20px',
+      display: 'flex',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px',
+      fontWeight: '300',
+      color: 'rgba(var(--text-rgb),0.35)',
+      letterSpacing: '0.04em'
+    }
+  }, "Jeder Charakter hat einen Hintergrund \u2014 w\xE4hle einen, der seine Herkunft und Lebensgeschichte beschreibt."))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      display: 'flex',
+      overflow: 'hidden',
+      position: 'relative',
+      zIndex: 5
+    }
+  }, /*#__PURE__*/React.createElement(FilterSidebar, {
+    search: search,
+    setSearch: setSearch,
+    filters: filters,
+    setFilters: setFilters,
+    allData: allData,
+    dragRef: sidebarDrag
+  }), /*#__PURE__*/React.createElement("div", {
+    ref: listDrag.ref,
+    onMouseDown: listDrag.onMouseDown,
+    onClickCapture: listDrag.onClickCapture,
+    style: {
+      width: '260px',
+      flexShrink: 0,
+      borderRight: '1px solid var(--border)',
+      overflowY: 'auto',
+      background: 'rgba(6,5,18,0.5)',
+      cursor: 'grab',
+      ...listDrag.fadeStyle
+    }
+  }, filtered.length === 0 ? /*#__PURE__*/React.createElement(EmptyState, {
+    msg: "Keine Hintergr\xFCnde gefunden"
+  }) : filtered.map(h => /*#__PURE__*/React.createElement(BackgroundRow, {
+    key: h.id,
+    h: h,
+    active: selected && selected.id === h.id,
+    onClick: setSelected,
+    compact: tw.compactList
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      display: 'flex',
+      flexDirection: 'column',
+      overflow: 'hidden',
+      background: 'rgba(var(--bg2-rgb),0.4)'
+    }
+  }, selected ? /*#__PURE__*/React.createElement(BackgroundDetail, {
+    h: selected,
+    showTables: tw.showTables
+  }) : /*#__PURE__*/React.createElement(EmptyState, {
+    msg: "Hintergrund ausw\xE4hlen"
+  }))), /*#__PURE__*/React.createElement(TweaksPanel, null, /*#__PURE__*/React.createElement(TweakSection, {
+    title: "Darstellung"
+  }, /*#__PURE__*/React.createElement(TweakToggle, {
+    label: "Partikel",
+    tKey: "showParticles"
+  }), /*#__PURE__*/React.createElement(TweakToggle, {
+    label: "Kompakte Liste",
+    tKey: "compactList"
+  }), /*#__PURE__*/React.createElement(TweakToggle, {
+    label: "Tabellen-Ansicht",
+    tKey: "showTables"
+  }))));
 }
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<SiteGate><App /></SiteGate>);
+root.render(/*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement(App, null)));
+})();
 </script>
 
 

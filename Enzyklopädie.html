@@ -6,33 +6,51 @@
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
 <link rel="stylesheet" href="assets/styles/pages/Enzyklopädie.css">
-<script src="assets/scripts/vendor/react.development.js"></script>
-<script src="assets/scripts/vendor/react-dom.development.js"></script>
-<script src="assets/scripts/vendor/babel-standalone.js"></script>
-<script src="assets/components/tweaks-panel-13.jsx" type="text/babel"></script>
-<script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/scripts/vendor/react.production.min.js"></script>
+<script src="assets/scripts/vendor/react-dom.production.min.js"></script>
+
+<script src="assets/components/tweaks-panel-13.js"></script>
+<script src="assets/components/nav.js"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
-<script src="assets/components/site-gate.jsx" type="text/babel"></script>
-<script src="assets/components/footer.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.js"></script>
+<script src="assets/components/footer.js"></script>
 
 </head>
 <body>
 <div id="root"></div>
-<script type="text/babel">
-const { useState, useEffect, useRef, useCallback } = React;
-const { useTweaks, TweaksPanel, TweakSection, TweakToggle } = window;
-const { SiteNav, SiteGate, SiteFooter } = window;
-
-const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"showParticles": true}/*EDITMODE-END*/;
+<script>
+(function () {
+const {
+  useState,
+  useEffect,
+  useRef,
+  useCallback
+} = React;
+const {
+  useTweaks,
+  TweaksPanel,
+  TweakSection,
+  TweakToggle
+} = window;
+const {
+  SiteNav,
+  SiteGate,
+  SiteFooter
+} = window;
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "showParticles": true
+} /*EDITMODE-END*/;
 
 // ── HELPERS ──────────────────────────────────────────────
 function hexPoints(s) {
-  const cx = s/2, cy = s/2, r = s/2;
+  const cx = s / 2,
+    cy = s / 2,
+    r = s / 2;
   const pts = [];
   for (let i = 0; i < 6; i++) {
-    const a = (Math.PI/180)*(60*i - 30);
-    pts.push(`${cx + r*Math.cos(a)},${cy + r*Math.sin(a)}`);
+    const a = Math.PI / 180 * (60 * i - 30);
+    pts.push(`${cx + r * Math.cos(a)},${cy + r * Math.sin(a)}`);
   }
   return pts.join(' ');
 }
@@ -41,140 +59,349 @@ function hexPoints(s) {
 // Reihenfolge im Astrolabium (1→8 von oben zickzack nach unten):
 // 1 Völker (oben) · 2 Orte (NW) · 3 Ressourcen (NE) · 4 Organisationen (W) ·
 // 5 Gottheiten (E) · 6 Religionen (SW) · 7 Monster (SE) · 8 Galerie (unten)
-const ENTRIES = [
-  {
-    glyph: '☥', kuerzel: 'VLK', name: 'Völker', subtitle: 'Spielbare Spezies & Kulturen',
-    beschreibung: 'Verzeichnis aller intelligenten Völker Merurias — von den Träumern aus dem Weißen Wal bis zu den Ureinwohnern Velundras. Anatomie, Sprache, Bräuche und Spielwerte.',
-    meta: { kuerzel: 'XX', label: 'Einträge', wert: '— offen', note: 'Aarakocra, Aasimar, Dhampir und weitere Völker werden derzeit katalogisiert.' },
-    accent: '#5ec488', bgStart: '#021410', href: '#', locked: false,
+const ENTRIES = [{
+  glyph: '☥',
+  kuerzel: 'VLK',
+  name: 'Völker',
+  subtitle: 'Spielbare Spezies & Kulturen',
+  beschreibung: 'Verzeichnis aller intelligenten Völker Merurias — von den Träumern aus dem Weißen Wal bis zu den Ureinwohnern Velundras. Anatomie, Sprache, Bräuche und Spielwerte.',
+  meta: {
+    kuerzel: 'XX',
+    label: 'Einträge',
+    wert: '— offen',
+    note: 'Aarakocra, Aasimar, Dhampir und weitere Völker werden derzeit katalogisiert.'
   },
-  {
-    glyph: '⌖', kuerzel: 'ORT', name: 'Orte', subtitle: 'Regionen, Städte & Wunder',
-    beschreibung: 'Geografisches Register Merurias. Velundra als Hauptstadt, Außenposten, Ruinenfelder, Wasserstraßen und alle bekannten Wunder des Kontinents — laufend kartiert von den Pathfindern.',
-    meta: { kuerzel: 'XX', label: 'Einträge', wert: '— offen', note: 'Ortsbeschreibungen, Karten und Reisehinweise folgen mit jedem Kartograph-Bericht.' },
-    accent: '#d4b15a', bgStart: '#101205', href: '#', locked: false,
+  accent: '#5ec488',
+  bgStart: '#021410',
+  href: '#',
+  locked: false
+}, {
+  glyph: '⌖',
+  kuerzel: 'ORT',
+  name: 'Orte',
+  subtitle: 'Regionen, Städte & Wunder',
+  beschreibung: 'Geografisches Register Merurias. Velundra als Hauptstadt, Außenposten, Ruinenfelder, Wasserstraßen und alle bekannten Wunder des Kontinents — laufend kartiert von den Pathfindern.',
+  meta: {
+    kuerzel: 'XX',
+    label: 'Einträge',
+    wert: '— offen',
+    note: 'Ortsbeschreibungen, Karten und Reisehinweise folgen mit jedem Kartograph-Bericht.'
   },
-  {
-    glyph: '◈', kuerzel: 'RES', name: 'Ressourcen', subtitle: 'Rohstoffe, Materialien & Handelsgüter',
-    beschreibung: 'Was Meruria hergibt: Erze, Hölzer, Kräuter, Reagenzien, fremdartige Substanzen aus der Wrack-Bergung. Erscheinungsort, Eigenschaften, Verarbeitungswege und Marktwert.',
-    meta: { kuerzel: 'XX', label: 'Einträge', wert: '— offen', note: 'Quellensucher und Outfitters speisen das Register mit Funden und Materialproben.' },
-    accent: '#d4801a', bgStart: '#110a02', href: 'Ressourcen.html', locked: false,
+  accent: '#d4b15a',
+  bgStart: '#101205',
+  href: '#',
+  locked: false
+}, {
+  glyph: '◈',
+  kuerzel: 'RES',
+  name: 'Ressourcen',
+  subtitle: 'Rohstoffe, Materialien & Handelsgüter',
+  beschreibung: 'Was Meruria hergibt: Erze, Hölzer, Kräuter, Reagenzien, fremdartige Substanzen aus der Wrack-Bergung. Erscheinungsort, Eigenschaften, Verarbeitungswege und Marktwert.',
+  meta: {
+    kuerzel: 'XX',
+    label: 'Einträge',
+    wert: '— offen',
+    note: 'Quellensucher und Outfitters speisen das Register mit Funden und Materialproben.'
   },
-  {
-    glyph: '⊛', kuerzel: 'ORG', name: 'Organisationen', subtitle: 'Bündnisse, Gilden & Fraktionen',
-    beschreibung: 'Wer welche Interessen vertritt — vom Kolonialrat über Handelsgilden bis zu den noch im Schatten operierenden Fraktionen. Hierarchien, Allianzen und bekannte Mitglieder.',
-    meta: { kuerzel: 'XX', label: 'Einträge', wert: '— offen', note: 'Erste Strukturen formen sich, doch viele Organisationen sind erst Wochen alt.' },
-    accent: '#9070e0', bgStart: '#0e0a18', href: '#', locked: false,
+  accent: '#d4801a',
+  bgStart: '#110a02',
+  href: 'Ressourcen.html',
+  locked: false
+}, {
+  glyph: '⊛',
+  kuerzel: 'ORG',
+  name: 'Organisationen',
+  subtitle: 'Bündnisse, Gilden & Fraktionen',
+  beschreibung: 'Wer welche Interessen vertritt — vom Kolonialrat über Handelsgilden bis zu den noch im Schatten operierenden Fraktionen. Hierarchien, Allianzen und bekannte Mitglieder.',
+  meta: {
+    kuerzel: 'XX',
+    label: 'Einträge',
+    wert: '— offen',
+    note: 'Erste Strukturen formen sich, doch viele Organisationen sind erst Wochen alt.'
   },
-  {
-    glyph: '✦', kuerzel: 'GOT', name: 'Gottheiten', subtitle: 'Pantheon & göttliche Mächte',
-    beschreibung: 'Die Gottheiten, die unter merurischem Himmel verehrt werden. Domänen, Symbole, Gebote und das, was Sterbliche von ihren Berührungen berichten — Träume, Visionen, plötzliche Stille.',
-    meta: { kuerzel: 'XX', label: 'Einträge', wert: 'verfügbar', note: 'Vollständiges Pantheon im Archiv hinterlegt. Weitere Einträge in Vorbereitung.' },
-    accent: '#e4c468', bgStart: '#141008', href: 'Gottheiten.html', locked: false,
+  accent: '#9070e0',
+  bgStart: '#0e0a18',
+  href: '#',
+  locked: false
+}, {
+  glyph: '✦',
+  kuerzel: 'GOT',
+  name: 'Gottheiten',
+  subtitle: 'Pantheon & göttliche Mächte',
+  beschreibung: 'Die Gottheiten, die unter merurischem Himmel verehrt werden. Domänen, Symbole, Gebote und das, was Sterbliche von ihren Berührungen berichten — Träume, Visionen, plötzliche Stille.',
+  meta: {
+    kuerzel: 'XX',
+    label: 'Einträge',
+    wert: 'verfügbar',
+    note: 'Vollständiges Pantheon im Archiv hinterlegt. Weitere Einträge in Vorbereitung.'
   },
-  {
-    glyph: '☉', kuerzel: 'REL', name: 'Religionen', subtitle: 'Kulte, Riten & Glaubenslehren',
-    beschreibung: 'Wie die Völker Merurias zu ihren Göttern beten. Tempelorden und Heimkulte, Trauer- und Erntebräuche, Mysterienkreise — und die Stille, die manchen heiliger ist als jedes Wort.',
-    meta: { kuerzel: 'XX', label: 'Einträge', wert: '— offen', note: 'Feldnotizen der Friedenshüter und Kuratoren fließen laufend in das Register ein.' },
-    accent: '#c47fa8', bgStart: '#100509', href: '#', locked: false,
+  accent: '#e4c468',
+  bgStart: '#141008',
+  href: 'Gottheiten.html',
+  locked: false
+}, {
+  glyph: '☉',
+  kuerzel: 'REL',
+  name: 'Religionen',
+  subtitle: 'Kulte, Riten & Glaubenslehren',
+  beschreibung: 'Wie die Völker Merurias zu ihren Göttern beten. Tempelorden und Heimkulte, Trauer- und Erntebräuche, Mysterienkreise — und die Stille, die manchen heiliger ist als jedes Wort.',
+  meta: {
+    kuerzel: 'XX',
+    label: 'Einträge',
+    wert: '— offen',
+    note: 'Feldnotizen der Friedenshüter und Kuratoren fließen laufend in das Register ein.'
   },
-  {
-    glyph: '⌬', kuerzel: 'MON', name: 'Monster', subtitle: 'Bestiarium der Wildnis',
-    beschreibung: 'Was jenseits der Stadtmauern lauert. Anatomie, Verhalten, Reviergrenzen, Schwächen — und Berichte derer, die einer Begegnung entkommen sind. Zugang nur für autorisierte Spielleiter.',
-    meta: { kuerzel: '🔒', label: 'Zugriff', wert: 'gesperrt', note: 'Inhalte enthalten Spielleiter-Material. Schalte das Bestiarium über deinen Kampagnenleiter frei.' },
-    accent: '#c44a4a', bgStart: '#100303', href: 'Monster.html', locked: true,
+  accent: '#c47fa8',
+  bgStart: '#100509',
+  href: '#',
+  locked: false
+}, {
+  glyph: '⌬',
+  kuerzel: 'MON',
+  name: 'Monster',
+  subtitle: 'Bestiarium der Wildnis',
+  beschreibung: 'Was jenseits der Stadtmauern lauert. Anatomie, Verhalten, Reviergrenzen, Schwächen — und Berichte derer, die einer Begegnung entkommen sind. Zugang nur für autorisierte Spielleiter.',
+  meta: {
+    kuerzel: '🔒',
+    label: 'Zugriff',
+    wert: 'gesperrt',
+    note: 'Inhalte enthalten Spielleiter-Material. Schalte das Bestiarium über deinen Kampagnenleiter frei.'
   },
-  {
-    glyph: '▣', kuerzel: 'GAL', name: 'Galerie', subtitle: 'Bilder, Karten & Skizzen',
-    beschreibung: 'Visuelles Archiv Merurias. Konzeptbilder, kartografische Auszüge, Porträts bekannter Figuren, Skizzen aus den Berichten der Pathfinder und Kuratoren. Vergrößerbar und durchsuchbar.',
-    meta: { kuerzel: 'XX', label: 'Einträge', wert: 'verfügbar', note: 'Galerie ist live. Neue Bilder werden mit jedem Kapitel ergänzt.' },
-    accent: '#5fb5c4', bgStart: '#020e12', href: 'Galerie.html', locked: false,
+  accent: '#c44a4a',
+  bgStart: '#100303',
+  href: 'Monster.html',
+  locked: true
+}, {
+  glyph: '▣',
+  kuerzel: 'GAL',
+  name: 'Galerie',
+  subtitle: 'Bilder, Karten & Skizzen',
+  beschreibung: 'Visuelles Archiv Merurias. Konzeptbilder, kartografische Auszüge, Porträts bekannter Figuren, Skizzen aus den Berichten der Pathfinder und Kuratoren. Vergrößerbar und durchsuchbar.',
+  meta: {
+    kuerzel: 'XX',
+    label: 'Einträge',
+    wert: 'verfügbar',
+    note: 'Galerie ist live. Neue Bilder werden mit jedem Kapitel ergänzt.'
   },
-];
+  accent: '#5fb5c4',
+  bgStart: '#020e12',
+  href: 'Galerie.html',
+  locked: false
+}];
 
 // ── FLOATING HEX FIELD ────────────────────────────────────
-const HEX_DEFS = [
-  { size:120, x:'6%',  y:'14%', anim:'hexFloat0', dur:'7.2s', opacity:0.035, stroke:'#7c4dff' },
-  { size:55,  x:'20%', y:'58%', anim:'hexFloat1', dur:'5.8s', opacity:0.06,  stroke:'#7c4dff' },
-  { size:200, x:'70%', y:'6%',  anim:'hexFloat2', dur:'9.1s', opacity:0.025, stroke:'#7c4dff' },
-  { size:40,  x:'84%', y:'40%', anim:'hexFloat3', dur:'4.9s', opacity:0.08,  stroke:'#7c4dff' },
-  { size:88,  x:'52%', y:'70%', anim:'hexFloat1', dur:'6.4s', opacity:0.04,  stroke:'#7c4dff' },
-  { size:30,  x:'35%', y:'26%', anim:'hexFloat0', dur:'5.2s', opacity:0.10,  stroke:'#7c4dff' },
-  { size:160, x:'40%', y:'82%', anim:'hexFloat2', dur:'8.3s', opacity:0.022, stroke:'#7c4dff' },
-  { size:50,  x:'91%', y:'76%', anim:'hexFloat3', dur:'6.0s', opacity:0.07,  stroke:'#7c4dff' },
-];
-
-function FloatingHexField({ mouseX, mouseY }) {
-  return (
-    <div style={{ position:'fixed', inset:0, pointerEvents:'none', zIndex:1, overflow:'hidden', clipPath:'inset(232px 0 0 0)' }}>
-      {HEX_DEFS.map((h, i) => {
-        const px = hexPoints(h.size);
-        const parallaxX = (mouseX - 0.5) * (i % 3 === 0 ? -12 : i % 3 === 1 ? -6 : -18);
-        const parallaxY = (mouseY - 0.5) * (i % 3 === 0 ? -8  : i % 3 === 1 ? -4 : -14);
-        return (
-          <div key={i} style={{ position:'absolute', left:h.x, top:h.y, animation:`${h.anim} ${h.dur} ease-in-out infinite`, animationDelay:`${i*0.7}s`, transform:`translate(${parallaxX}px,${parallaxY}px)`, transition:'transform 0.4s ease-out', willChange:'transform' }}>
-            <svg width={h.size} height={h.size} viewBox={`0 0 ${h.size} ${h.size}`} style={{ display:'block', opacity:h.opacity, filter:`drop-shadow(0 0 ${h.size*0.06}px ${h.stroke})` }}>
-              <polygon points={px} fill="transparent" stroke={h.stroke} strokeWidth="1" />
-            </svg>
-          </div>
-        );
-      })}
-    </div>
-  );
+const HEX_DEFS = [{
+  size: 120,
+  x: '6%',
+  y: '14%',
+  anim: 'hexFloat0',
+  dur: '7.2s',
+  opacity: 0.035,
+  stroke: '#7c4dff'
+}, {
+  size: 55,
+  x: '20%',
+  y: '58%',
+  anim: 'hexFloat1',
+  dur: '5.8s',
+  opacity: 0.06,
+  stroke: '#7c4dff'
+}, {
+  size: 200,
+  x: '70%',
+  y: '6%',
+  anim: 'hexFloat2',
+  dur: '9.1s',
+  opacity: 0.025,
+  stroke: '#7c4dff'
+}, {
+  size: 40,
+  x: '84%',
+  y: '40%',
+  anim: 'hexFloat3',
+  dur: '4.9s',
+  opacity: 0.08,
+  stroke: '#7c4dff'
+}, {
+  size: 88,
+  x: '52%',
+  y: '70%',
+  anim: 'hexFloat1',
+  dur: '6.4s',
+  opacity: 0.04,
+  stroke: '#7c4dff'
+}, {
+  size: 30,
+  x: '35%',
+  y: '26%',
+  anim: 'hexFloat0',
+  dur: '5.2s',
+  opacity: 0.10,
+  stroke: '#7c4dff'
+}, {
+  size: 160,
+  x: '40%',
+  y: '82%',
+  anim: 'hexFloat2',
+  dur: '8.3s',
+  opacity: 0.022,
+  stroke: '#7c4dff'
+}, {
+  size: 50,
+  x: '91%',
+  y: '76%',
+  anim: 'hexFloat3',
+  dur: '6.0s',
+  opacity: 0.07,
+  stroke: '#7c4dff'
+}];
+function FloatingHexField({
+  mouseX,
+  mouseY
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'fixed',
+      inset: 0,
+      pointerEvents: 'none',
+      zIndex: 1,
+      overflow: 'hidden',
+      clipPath: 'inset(232px 0 0 0)'
+    }
+  }, HEX_DEFS.map((h, i) => {
+    const px = hexPoints(h.size);
+    const parallaxX = (mouseX - 0.5) * (i % 3 === 0 ? -12 : i % 3 === 1 ? -6 : -18);
+    const parallaxY = (mouseY - 0.5) * (i % 3 === 0 ? -8 : i % 3 === 1 ? -4 : -14);
+    return /*#__PURE__*/React.createElement("div", {
+      key: i,
+      style: {
+        position: 'absolute',
+        left: h.x,
+        top: h.y,
+        animation: `${h.anim} ${h.dur} ease-in-out infinite`,
+        animationDelay: `${i * 0.7}s`,
+        transform: `translate(${parallaxX}px,${parallaxY}px)`,
+        transition: 'transform 0.4s ease-out',
+        willChange: 'transform'
+      }
+    }, /*#__PURE__*/React.createElement("svg", {
+      width: h.size,
+      height: h.size,
+      viewBox: `0 0 ${h.size} ${h.size}`,
+      style: {
+        display: 'block',
+        opacity: h.opacity,
+        filter: `drop-shadow(0 0 ${h.size * 0.06}px ${h.stroke})`
+      }
+    }, /*#__PURE__*/React.createElement("polygon", {
+      points: px,
+      fill: "transparent",
+      stroke: h.stroke,
+      strokeWidth: "1"
+    })));
+  }));
 }
 
 // ── PARTICLES ─────────────────────────────────────────────
-function ParticleField({ mouseX, mouseY }) {
+function ParticleField({
+  mouseX,
+  mouseY
+}) {
   const canvasRef = useRef(null);
   const animRef = useRef(null);
   const particles = useRef([]);
-  const mouse = useRef({ x:0.5, y:0.5 });
-  useEffect(() => { mouse.current = { x: mouseX, y: mouseY }; }, [mouseX, mouseY]);
+  const mouse = useRef({
+    x: 0.5,
+    y: 0.5
+  });
   useEffect(() => {
-    const canvas = canvasRef.current; if (!canvas) return;
+    mouse.current = {
+      x: mouseX,
+      y: mouseY
+    };
+  }, [mouseX, mouseY]);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    const resize = () => { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; };
-    resize(); window.addEventListener('resize', resize);
-    particles.current = Array.from({length:55}, () => ({
-      x: Math.random(), y: Math.random(),
-      r: Math.random()*1.6+0.5,
-      vx:(Math.random()-0.5)*0.05, vy:(Math.random()-0.5)*0.05,
-      alpha: Math.random()*0.2+0.05,
+    const resize = () => {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    };
+    resize();
+    window.addEventListener('resize', resize);
+    particles.current = Array.from({
+      length: 55
+    }, () => ({
+      x: Math.random(),
+      y: Math.random(),
+      r: Math.random() * 1.6 + 0.5,
+      vx: (Math.random() - 0.5) * 0.05,
+      vy: (Math.random() - 0.5) * 0.05,
+      alpha: Math.random() * 0.2 + 0.05
     }));
     const tick = () => {
-      const w = canvas.width, h = canvas.height;
-      const shiftX = (mouse.current.x - 0.5)*-14, shiftY = (mouse.current.y - 0.5)*-14;
-      ctx.clearRect(0,0,w,h);
+      const w = canvas.width,
+        h = canvas.height;
+      const shiftX = (mouse.current.x - 0.5) * -14,
+        shiftY = (mouse.current.y - 0.5) * -14;
+      ctx.clearRect(0, 0, w, h);
       particles.current.forEach(p => {
-        p.x += p.vx/w*60; p.y += p.vy/h*60;
-        if(p.x<0)p.x=1; if(p.x>1)p.x=0; if(p.y<0)p.y=1; if(p.y>1)p.y=0;
-        ctx.beginPath(); ctx.arc(p.x*w+shiftX, p.y*h+shiftY, p.r, 0, Math.PI*2);
-        ctx.fillStyle = `rgba(160,140,255,${p.alpha})`; ctx.fill();
+        p.x += p.vx / w * 60;
+        p.y += p.vy / h * 60;
+        if (p.x < 0) p.x = 1;
+        if (p.x > 1) p.x = 0;
+        if (p.y < 0) p.y = 1;
+        if (p.y > 1) p.y = 0;
+        ctx.beginPath();
+        ctx.arc(p.x * w + shiftX, p.y * h + shiftY, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(160,140,255,${p.alpha})`;
+        ctx.fill();
       });
       animRef.current = requestAnimationFrame(tick);
     };
     tick();
-    return () => { cancelAnimationFrame(animRef.current); window.removeEventListener('resize', resize); };
+    return () => {
+      cancelAnimationFrame(animRef.current);
+      window.removeEventListener('resize', resize);
+    };
   }, []);
-  return <canvas ref={canvasRef} style={{ position:'fixed', inset:0, width:'100%', height:'100%', pointerEvents:'none', zIndex:0, clipPath:'inset(232px 0 0 0)' }} />;
+  return /*#__PURE__*/React.createElement("canvas", {
+    ref: canvasRef,
+    style: {
+      position: 'fixed',
+      inset: 0,
+      width: '100%',
+      height: '100%',
+      pointerEvents: 'none',
+      zIndex: 0,
+      clipPath: 'inset(232px 0 0 0)'
+    }
+  });
 }
 
 // ── SCROLL REVEAL ─────────────────────────────────────────
 function useScrollReveal() {
   useEffect(() => {
     const revealed = new WeakSet();
-    const observer = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (!entry.isIntersecting || revealed.has(entry.target)) return;
         revealed.add(entry.target);
         observer.unobserve(entry.target);
         entry.target.classList.add('visible');
       });
-    }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+    }, {
+      threshold: 0.05,
+      rootMargin: '0px 0px -20px 0px'
+    });
     const t = setTimeout(() => {
       document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
     }, 100);
-    return () => { clearTimeout(t); observer.disconnect(); };
+    return () => {
+      clearTimeout(t);
+      observer.disconnect();
+    };
   }, []);
 }
 
@@ -184,21 +411,20 @@ const ASTRO = {
   center: 360,
   radius: 280,
   hex: 120,
-  plate: 320,
+  plate: 320
 };
 
 // Reading-order angle mapping for indexes 0..7 (matches the screenshot order):
 //  0 oben · 1 NW · 2 NE · 3 W · 4 E · 5 SW · 6 SE · 7 unten
 const ENTRY_ANGLES = [-90, -135, -45, 180, 0, 135, 45, 90];
-
 function entryPosition(i) {
   const angle = ENTRY_ANGLES[i] ?? -90;
-  const rad = (angle * Math.PI) / 180;
+  const rad = angle * Math.PI / 180;
   return {
     angle,
     rad,
     x: ASTRO.center + ASTRO.radius * Math.cos(rad),
-    y: ASTRO.center + ASTRO.radius * Math.sin(rad),
+    y: ASTRO.center + ASTRO.radius * Math.sin(rad)
   };
 }
 
@@ -212,349 +438,694 @@ function hexAt(size, cx, cy) {
 }
 
 // ── ASTROLABE BACKDROP ─────────────────────────────────
-function AstrolabeBackdrop({ activeAccent }) {
+function AstrolabeBackdrop({
+  activeAccent
+}) {
   const c = ASTRO.center;
   const baseStroke = activeAccent || 'rgba(160,140,255,0.35)';
-  return (
-    <svg width="100%" viewBox={`0 0 ${ASTRO.size} ${ASTRO.size}`}
-         style={{ position:'absolute', inset:0, pointerEvents:'none' }}>
-      <defs>
-        <radialGradient id="astroVignette" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="rgba(124,77,255,0.10)"/>
-          <stop offset="50%" stopColor="rgba(124,77,255,0.04)"/>
-          <stop offset="100%" stopColor="rgba(124,77,255,0)"/>
-        </radialGradient>
-      </defs>
-
-      {/* Faint vignette */}
-      <circle cx={c} cy={c} r={ASTRO.radius + 60} fill="url(#astroVignette)" />
-
-      {/* Concentric astrolabe rings */}
-      {[ASTRO.radius - 80, ASTRO.radius - 30, ASTRO.radius + 20, ASTRO.radius + 60].map((r, i) => (
-        <circle key={i} cx={c} cy={c} r={r} fill="none"
-          stroke="rgba(160,140,255,0.10)" strokeWidth="0.7"
-          strokeDasharray={i === 1 ? '2 6' : i === 3 ? '1 4' : 'none'} />
-      ))}
-
-      {/* 8 radial tick spokes (very faint) — evenly spaced around the circle */}
-      {Array.from({ length: 8 }).map((_, i) => {
-        const ang = -90 + i * 45;
-        const rad = (ang * Math.PI) / 180;
-        const x1 = c + (ASTRO.radius - 100) * Math.cos(rad);
-        const y1 = c + (ASTRO.radius - 100) * Math.sin(rad);
-        const x2 = c + (ASTRO.radius + 60) * Math.cos(rad);
-        const y2 = c + (ASTRO.radius + 60) * Math.sin(rad);
-        return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2}
-          stroke="rgba(160,140,255,0.12)" strokeWidth="0.6" strokeDasharray="2 5" />;
-      })}
-
-      {/* 24 small minor tick marks on outermost ring */}
-      {Array.from({ length: 48 }).map((_, i) => {
-        const a = (i / 48) * Math.PI * 2;
-        const r1 = ASTRO.radius + 56, r2 = ASTRO.radius + 64;
-        const x1 = c + r1 * Math.cos(a), y1 = c + r1 * Math.sin(a);
-        const x2 = c + r2 * Math.cos(a), y2 = c + r2 * Math.sin(a);
-        return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2}
-          stroke="rgba(160,140,255,0.18)" strokeWidth={i % 6 === 0 ? 0.9 : 0.5} />;
-      })}
-
-      {/* Outermost decorative hex outline */}
-      <polygon points={hexAt(ASTRO.radius * 2 + 130, c, c)}
-        fill="none" stroke="rgba(160,140,255,0.08)" strokeWidth="0.8" />
-    </svg>
-  );
+  return /*#__PURE__*/React.createElement("svg", {
+    width: "100%",
+    viewBox: `0 0 ${ASTRO.size} ${ASTRO.size}`,
+    style: {
+      position: 'absolute',
+      inset: 0,
+      pointerEvents: 'none'
+    }
+  }, /*#__PURE__*/React.createElement("defs", null, /*#__PURE__*/React.createElement("radialGradient", {
+    id: "astroVignette",
+    cx: "50%",
+    cy: "50%",
+    r: "50%"
+  }, /*#__PURE__*/React.createElement("stop", {
+    offset: "0%",
+    stopColor: "rgba(124,77,255,0.10)"
+  }), /*#__PURE__*/React.createElement("stop", {
+    offset: "50%",
+    stopColor: "rgba(124,77,255,0.04)"
+  }), /*#__PURE__*/React.createElement("stop", {
+    offset: "100%",
+    stopColor: "rgba(124,77,255,0)"
+  }))), /*#__PURE__*/React.createElement("circle", {
+    cx: c,
+    cy: c,
+    r: ASTRO.radius + 60,
+    fill: "url(#astroVignette)"
+  }), [ASTRO.radius - 80, ASTRO.radius - 30, ASTRO.radius + 20, ASTRO.radius + 60].map((r, i) => /*#__PURE__*/React.createElement("circle", {
+    key: i,
+    cx: c,
+    cy: c,
+    r: r,
+    fill: "none",
+    stroke: "rgba(160,140,255,0.10)",
+    strokeWidth: "0.7",
+    strokeDasharray: i === 1 ? '2 6' : i === 3 ? '1 4' : 'none'
+  })), Array.from({
+    length: 8
+  }).map((_, i) => {
+    const ang = -90 + i * 45;
+    const rad = ang * Math.PI / 180;
+    const x1 = c + (ASTRO.radius - 100) * Math.cos(rad);
+    const y1 = c + (ASTRO.radius - 100) * Math.sin(rad);
+    const x2 = c + (ASTRO.radius + 60) * Math.cos(rad);
+    const y2 = c + (ASTRO.radius + 60) * Math.sin(rad);
+    return /*#__PURE__*/React.createElement("line", {
+      key: i,
+      x1: x1,
+      y1: y1,
+      x2: x2,
+      y2: y2,
+      stroke: "rgba(160,140,255,0.12)",
+      strokeWidth: "0.6",
+      strokeDasharray: "2 5"
+    });
+  }), Array.from({
+    length: 48
+  }).map((_, i) => {
+    const a = i / 48 * Math.PI * 2;
+    const r1 = ASTRO.radius + 56,
+      r2 = ASTRO.radius + 64;
+    const x1 = c + r1 * Math.cos(a),
+      y1 = c + r1 * Math.sin(a);
+    const x2 = c + r2 * Math.cos(a),
+      y2 = c + r2 * Math.sin(a);
+    return /*#__PURE__*/React.createElement("line", {
+      key: i,
+      x1: x1,
+      y1: y1,
+      x2: x2,
+      y2: y2,
+      stroke: "rgba(160,140,255,0.18)",
+      strokeWidth: i % 6 === 0 ? 0.9 : 0.5
+    });
+  }), /*#__PURE__*/React.createElement("polygon", {
+    points: hexAt(ASTRO.radius * 2 + 130, c, c),
+    fill: "none",
+    stroke: "rgba(160,140,255,0.08)",
+    strokeWidth: "0.8"
+  }));
 }
 
 // ── CENTER PLATE ───────────────────────────────────────
-function CenterPlate({ selected }) {
+function CenterPlate({
+  selected
+}) {
   const acc = selected ? selected.accent : '#9b86ff';
   const size = ASTRO.plate;
   const c = ASTRO.center;
-
-  return (
-    <>
-      {/* Hex border / fill (SVG, absolutely positioned) */}
-      <svg width="100%" viewBox={`0 0 ${ASTRO.size} ${ASTRO.size}`}
-           style={{ position:'absolute', inset:0, pointerEvents:'none' }}>
-        <defs>
-          <radialGradient id="plateFill" cx="50%" cy="50%" r="60%">
-            <stop offset="0%" stopColor="rgba(28,18,58,0.92)"/>
-            <stop offset="100%" stopColor="rgba(6,4,18,0.97)"/>
-          </radialGradient>
-        </defs>
-        {/* outer hex glow ring */}
-        <polygon points={hexAt(size + 26, c, c)}
-          fill="none" stroke={`${acc}33`} strokeWidth="0.8"
-          style={{ transition:'stroke 0.4s' }} />
-        {/* inner hex plate */}
-        <polygon points={hexAt(size, c, c)}
-          fill="url(#plateFill)"
-          stroke={selected ? `${acc}aa` : 'rgba(160,140,255,0.45)'} strokeWidth="1.5"
-          style={{ transition:'stroke 0.4s', filter: selected ? `drop-shadow(0 0 16px ${acc}55)` : 'none' }} />
-        {/* inner trim hex */}
-        <polygon points={hexAt(size - 22, c, c)}
-          fill="none" stroke={`${acc}22`} strokeWidth="0.6" />
-      </svg>
-
-      {/* Content overlay */}
-      <div style={{
-        position:'absolute', left: c - size/2 + 40, top: c - size/2 + 50,
-        width: size - 80, height: size - 100,
-        display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
-        textAlign:'center', pointerEvents:'none', zIndex:5,
-      }}>
-        {!selected ? (
-          <>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.32em', color:'rgba(160,140,255,0.55)', textTransform:'uppercase', marginBottom:'10px' }}>
-              Wissens-Gewölbe
-            </div>
-            <h1 style={{
-              fontFamily:'var(--font-display)', fontSize:'26px', fontWeight:'300',
-              letterSpacing:'0.18em', color:'#f0eeff',
-              textShadow:'0 0 30px rgba(124,77,255,0.55)',
-              marginBottom:'14px', lineHeight:1.2 }}>
-              ENZYKLO&shy;PÄDIE
-            </h1>
-            <div style={{ display:'flex', alignItems:'center', gap:'8px', marginBottom:'14px' }}>
-              <div style={{ width:'24px', height:'1px', background:'rgba(124,77,255,0.5)' }} />
-              <svg width="6" height="6" viewBox="0 0 6 6"><polygon points={hexPoints(6)} fill="rgba(160,140,255,0.5)" /></svg>
-              <div style={{ width:'24px', height:'1px', background:'rgba(124,77,255,0.5)' }} />
-            </div>
-            <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11.5px', lineHeight:1.75, color:'rgba(200,190,240,0.55)', letterSpacing:'0.04em', textWrap:'pretty', maxWidth:'220px' }}>
-              Acht Register über alles, was Meruria ausmacht. Berühre eine Kammer, um ihren Inhalt zu lesen.
-            </p>
-            <div style={{ marginTop:'18px', fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.28em', color:'rgba(160,140,255,0.4)', textTransform:'uppercase' }}>
-              ◈ Velundra · Archiv ◈
-            </div>
-          </>
-        ) : (
-          <>
-            <div style={{ marginBottom:'8px' }}>
-              <svg width="46" height="46" viewBox="0 0 46 46">
-                <polygon points={hexPoints(46)} fill={`${acc}22`} stroke={acc} strokeWidth="1" />
-              </svg>
-              <div style={{ marginTop:-44, fontFamily:'var(--font-display)', fontSize:'22px', color:acc, lineHeight:'46px' }}>{selected.glyph}</div>
-            </div>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.3em', color:`${acc}aa`, textTransform:'uppercase', marginBottom:'6px' }}>
-              {selected.kuerzel} · Register
-            </div>
-            <h2 style={{
-              fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:'400',
-              letterSpacing:'0.18em', color:'#f0eeff',
-              textShadow:`0 0 20px ${acc}77`,
-              marginBottom:'6px', lineHeight:1.2,
-              display:'flex', alignItems:'center', gap:'8px', flexWrap:'wrap', justifyContent:'center' }}>
-              {selected.name.toUpperCase()}
-              {selected.locked && <span style={{ fontSize:'12px' }}>🔒</span>}
-            </h2>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.22em', color:`${acc}99`, textTransform:'uppercase', marginBottom:'12px' }}>
-              {selected.subtitle}
-            </div>
-            <div style={{ width:'120px', height:'1px', background:`linear-gradient(90deg, transparent, ${acc}66, transparent)`, marginBottom:'12px' }} />
-            <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11.5px', lineHeight:1.7, color:'rgba(240,238,255,0.7)', letterSpacing:'0.02em', textWrap:'pretty', marginBottom:'12px', maxWidth:'240px' }}>
-              {selected.beschreibung}
-            </p>
-            <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'10.5px', lineHeight:1.55, color:'rgba(200,190,240,0.48)', letterSpacing:'0.01em', fontStyle:'italic', textWrap:'pretty', marginBottom:'14px', maxWidth:'240px' }}>
-              {selected.meta.note}
-            </p>
-            <div style={{ pointerEvents:'auto' }}>
-              {selected.locked ? (
-                <span style={{ display:'inline-block', padding:'8px 18px', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:`${acc}aa`, textTransform:'uppercase', border:`1px solid ${acc}44`, borderRadius:'2px', background:`${acc}10` }}>
-                  🔒 Zugriff verweigert
-                </span>
-              ) : selected.href && selected.href !== '#' ? (
-                <a href={selected.href} style={{
-                  display:'inline-block', padding:'9px 22px',
-                  fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.32em',
-                  color:'#f0eeff', textTransform:'uppercase', textDecoration:'none',
-                  border:`1px solid ${acc}`, borderRadius:'2px',
-                  background:`${acc}18`, boxShadow:`0 0 18px ${acc}33`,
-                  transition:'all 0.2s' }}
-                  onMouseEnter={e=>{e.currentTarget.style.background=`${acc}30`;e.currentTarget.style.boxShadow=`0 0 26px ${acc}55`;}}
-                  onMouseLeave={e=>{e.currentTarget.style.background=`${acc}18`;e.currentTarget.style.boxShadow=`0 0 18px ${acc}33`;}}>
-                  Register öffnen →
-                </a>
-              ) : (
-                <span style={{ display:'inline-block', padding:'8px 18px', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:`${acc}aa`, textTransform:'uppercase', border:`1px dashed ${acc}44`, borderRadius:'2px' }}>
-                  In Vorbereitung
-                </span>
-              )}
-            </div>
-          </>
-        )}
-      </div>
-    </>
-  );
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("svg", {
+    width: "100%",
+    viewBox: `0 0 ${ASTRO.size} ${ASTRO.size}`,
+    style: {
+      position: 'absolute',
+      inset: 0,
+      pointerEvents: 'none'
+    }
+  }, /*#__PURE__*/React.createElement("defs", null, /*#__PURE__*/React.createElement("radialGradient", {
+    id: "plateFill",
+    cx: "50%",
+    cy: "50%",
+    r: "60%"
+  }, /*#__PURE__*/React.createElement("stop", {
+    offset: "0%",
+    stopColor: "rgba(28,18,58,0.92)"
+  }), /*#__PURE__*/React.createElement("stop", {
+    offset: "100%",
+    stopColor: "rgba(6,4,18,0.97)"
+  }))), /*#__PURE__*/React.createElement("polygon", {
+    points: hexAt(size + 26, c, c),
+    fill: "none",
+    stroke: `${acc}33`,
+    strokeWidth: "0.8",
+    style: {
+      transition: 'stroke 0.4s'
+    }
+  }), /*#__PURE__*/React.createElement("polygon", {
+    points: hexAt(size, c, c),
+    fill: "url(#plateFill)",
+    stroke: selected ? `${acc}aa` : 'rgba(160,140,255,0.45)',
+    strokeWidth: "1.5",
+    style: {
+      transition: 'stroke 0.4s',
+      filter: selected ? `drop-shadow(0 0 16px ${acc}55)` : 'none'
+    }
+  }), /*#__PURE__*/React.createElement("polygon", {
+    points: hexAt(size - 22, c, c),
+    fill: "none",
+    stroke: `${acc}22`,
+    strokeWidth: "0.6"
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      left: c - size / 2 + 40,
+      top: c - size / 2 + 50,
+      width: size - 80,
+      height: size - 100,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      textAlign: 'center',
+      pointerEvents: 'none',
+      zIndex: 5
+    }
+  }, !selected ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.32em',
+      color: 'rgba(160,140,255,0.55)',
+      textTransform: 'uppercase',
+      marginBottom: '10px'
+    }
+  }, "Wissens-Gew\xF6lbe"), /*#__PURE__*/React.createElement("h1", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '26px',
+      fontWeight: '300',
+      letterSpacing: '0.18em',
+      color: '#f0eeff',
+      textShadow: '0 0 30px rgba(124,77,255,0.55)',
+      marginBottom: '14px',
+      lineHeight: 1.2
+    }
+  }, "ENZYKLO\xADP\xC4DIE"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      marginBottom: '14px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '24px',
+      height: '1px',
+      background: 'rgba(124,77,255,0.5)'
+    }
+  }), /*#__PURE__*/React.createElement("svg", {
+    width: "6",
+    height: "6",
+    viewBox: "0 0 6 6"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(6),
+    fill: "rgba(160,140,255,0.5)"
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '24px',
+      height: '1px',
+      background: 'rgba(124,77,255,0.5)'
+    }
+  })), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '11.5px',
+      lineHeight: 1.75,
+      color: 'rgba(200,190,240,0.55)',
+      letterSpacing: '0.04em',
+      textWrap: 'pretty',
+      maxWidth: '220px'
+    }
+  }, "Acht Register \xFCber alles, was Meruria ausmacht. Ber\xFChre eine Kammer, um ihren Inhalt zu lesen."), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: '18px',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      letterSpacing: '0.28em',
+      color: 'rgba(160,140,255,0.4)',
+      textTransform: 'uppercase'
+    }
+  }, "\u25C8 Velundra \xB7 Archiv \u25C8")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: '8px'
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "46",
+    height: "46",
+    viewBox: "0 0 46 46"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(46),
+    fill: `${acc}22`,
+    stroke: acc,
+    strokeWidth: "1"
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: -44,
+      fontFamily: 'var(--font-display)',
+      fontSize: '22px',
+      color: acc,
+      lineHeight: '46px'
+    }
+  }, selected.glyph)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      letterSpacing: '0.3em',
+      color: `${acc}aa`,
+      textTransform: 'uppercase',
+      marginBottom: '6px'
+    }
+  }, selected.kuerzel, " \xB7 Register"), /*#__PURE__*/React.createElement("h2", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '22px',
+      fontWeight: '400',
+      letterSpacing: '0.18em',
+      color: '#f0eeff',
+      textShadow: `0 0 20px ${acc}77`,
+      marginBottom: '6px',
+      lineHeight: 1.2,
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      flexWrap: 'wrap',
+      justifyContent: 'center'
+    }
+  }, selected.name.toUpperCase(), selected.locked && /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: '12px'
+    }
+  }, "\uD83D\uDD12")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      letterSpacing: '0.22em',
+      color: `${acc}99`,
+      textTransform: 'uppercase',
+      marginBottom: '12px'
+    }
+  }, selected.subtitle), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '120px',
+      height: '1px',
+      background: `linear-gradient(90deg, transparent, ${acc}66, transparent)`,
+      marginBottom: '12px'
+    }
+  }), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '11.5px',
+      lineHeight: 1.7,
+      color: 'rgba(240,238,255,0.7)',
+      letterSpacing: '0.02em',
+      textWrap: 'pretty',
+      marginBottom: '12px',
+      maxWidth: '240px'
+    }
+  }, selected.beschreibung), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '10.5px',
+      lineHeight: 1.55,
+      color: 'rgba(200,190,240,0.48)',
+      letterSpacing: '0.01em',
+      fontStyle: 'italic',
+      textWrap: 'pretty',
+      marginBottom: '14px',
+      maxWidth: '240px'
+    }
+  }, selected.meta.note), /*#__PURE__*/React.createElement("div", {
+    style: {
+      pointerEvents: 'auto'
+    }
+  }, selected.locked ? /*#__PURE__*/React.createElement("span", {
+    style: {
+      display: 'inline-block',
+      padding: '8px 18px',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.28em',
+      color: `${acc}aa`,
+      textTransform: 'uppercase',
+      border: `1px solid ${acc}44`,
+      borderRadius: '2px',
+      background: `${acc}10`
+    }
+  }, "\uD83D\uDD12 Zugriff verweigert") : selected.href && selected.href !== '#' ? /*#__PURE__*/React.createElement("a", {
+    href: selected.href,
+    style: {
+      display: 'inline-block',
+      padding: '9px 22px',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.32em',
+      color: '#f0eeff',
+      textTransform: 'uppercase',
+      textDecoration: 'none',
+      border: `1px solid ${acc}`,
+      borderRadius: '2px',
+      background: `${acc}18`,
+      boxShadow: `0 0 18px ${acc}33`,
+      transition: 'all 0.2s'
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.background = `${acc}30`;
+      e.currentTarget.style.boxShadow = `0 0 26px ${acc}55`;
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.background = `${acc}18`;
+      e.currentTarget.style.boxShadow = `0 0 18px ${acc}33`;
+    }
+  }, "Register \xF6ffnen \u2192") : /*#__PURE__*/React.createElement("span", {
+    style: {
+      display: 'inline-block',
+      padding: '8px 18px',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.28em',
+      color: `${acc}aa`,
+      textTransform: 'uppercase',
+      border: `1px dashed ${acc}44`,
+      borderRadius: '2px'
+    }
+  }, "In Vorbereitung")))));
 }
 
 // ── ACTIVE SPOKE (beam from center to selected hex) ───
-function ActiveSpoke({ index, accent }) {
+function ActiveSpoke({
+  index,
+  accent
+}) {
   if (index === null || index === undefined) return null;
-  const { rad } = entryPosition(index);
+  const {
+    rad
+  } = entryPosition(index);
   const c = ASTRO.center;
   const x1 = c + (ASTRO.plate / 2 + 12) * Math.cos(rad);
   const y1 = c + (ASTRO.plate / 2 + 12) * Math.sin(rad);
   const x2 = c + (ASTRO.radius - ASTRO.hex / 2 - 4) * Math.cos(rad);
   const y2 = c + (ASTRO.radius - ASTRO.hex / 2 - 4) * Math.sin(rad);
-  return (
-    <svg width="100%" viewBox={`0 0 ${ASTRO.size} ${ASTRO.size}`}
-         style={{ position:'absolute', inset:0, pointerEvents:'none', zIndex:3 }}>
-      <line x1={x1} y1={y1} x2={x2} y2={y2}
-        stroke={accent} strokeWidth="1.2" strokeDasharray="3 5"
-        opacity="0.85" style={{ filter:`drop-shadow(0 0 6px ${accent}aa)` }} />
-      <circle cx={x1} cy={y1} r="3" fill={accent} opacity="0.9" />
-      <circle cx={x2} cy={y2} r="3" fill={accent} opacity="0.9" />
-    </svg>
-  );
+  return /*#__PURE__*/React.createElement("svg", {
+    width: "100%",
+    viewBox: `0 0 ${ASTRO.size} ${ASTRO.size}`,
+    style: {
+      position: 'absolute',
+      inset: 0,
+      pointerEvents: 'none',
+      zIndex: 3
+    }
+  }, /*#__PURE__*/React.createElement("line", {
+    x1: x1,
+    y1: y1,
+    x2: x2,
+    y2: y2,
+    stroke: accent,
+    strokeWidth: "1.2",
+    strokeDasharray: "3 5",
+    opacity: "0.85",
+    style: {
+      filter: `drop-shadow(0 0 6px ${accent}aa)`
+    }
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: x1,
+    cy: y1,
+    r: "3",
+    fill: accent,
+    opacity: "0.9"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: x2,
+    cy: y2,
+    r: "3",
+    fill: accent,
+    opacity: "0.9"
+  }));
 }
 
 // ── ENTRY HEX (one chamber positioned around the plate) ─
-function EntryHex({ entry, index, active, onEnter, onLeave }) {
-  const { x, y } = entryPosition(index);
+function EntryHex({
+  entry,
+  index,
+  active,
+  onEnter,
+  onLeave
+}) {
+  const {
+    x,
+    y
+  } = entryPosition(index);
   const acc = entry.accent;
   const locked = entry.locked;
   const interactive = !locked && entry.href && entry.href !== '#';
   const size = ASTRO.hex;
-
-  const handleClick = (e) => {
-    if (!interactive) { e.preventDefault(); return; }
+  const handleClick = e => {
+    if (!interactive) {
+      e.preventDefault();
+      return;
+    }
   };
-
-  return (
-    <a href={interactive ? entry.href : '#'} onClick={handleClick}
-       onMouseEnter={onEnter} onMouseLeave={onLeave}
-       style={{
-         position:'absolute', left: x - size/2, top: y - size/2,
-         width: size, height: size,
-         display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
-         textDecoration:'none',
-         cursor: interactive ? 'pointer' : (locked ? 'not-allowed' : 'default'),
-         transform: active ? 'scale(1.08)' : 'scale(1)',
-         transition:'transform 0.3s ease',
-         zIndex: active ? 4 : 2,
-       }}>
-      {/* Hex SVG */}
-      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}
-           style={{ position:'absolute', inset:0,
-                    filter: active ? `drop-shadow(0 0 14px ${acc}cc)` : `drop-shadow(0 0 6px ${acc}33)`,
-                    transition:'filter 0.3s' }}>
-        {/* outer faint ring */}
-        <polygon points={hexAt(size, size/2, size/2)}
-          fill="rgba(8,6,22,0.85)"
-          stroke={active ? acc : `${acc}55`} strokeWidth={active ? 1.5 : 1}
-          style={{ transition:'all 0.3s' }} />
-        {/* inner trim */}
-        <polygon points={hexAt(size - 14, size/2, size/2)}
-          fill={active ? `${acc}18` : `${acc}08`}
-          stroke={`${acc}33`} strokeWidth="0.5"
-          style={{ transition:'fill 0.3s' }} />
-        {/* locked stripe overlay */}
-        {locked && (
-          <pattern id={`lp-${index}`} patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
-            <rect width="3" height="8" fill={`${acc}25`} />
-          </pattern>
-        )}
-        {locked && <polygon points={hexAt(size - 14, size/2, size/2)} fill={`url(#lp-${index})`} />}
-      </svg>
-
-      {/* Glyph */}
-      <div style={{ position:'relative', zIndex:1, fontFamily:'var(--font-display)', fontSize:'30px', color: active ? '#f0eeff' : acc, lineHeight:1, marginBottom:'4px', textShadow: active ? `0 0 14px ${acc}` : 'none', transition:'color 0.3s, text-shadow 0.3s', opacity: locked ? 0.7 : 1 }}>
-        {entry.glyph}
-      </div>
-      {/* Name */}
-      <div style={{ position:'relative', zIndex:1, fontFamily:'var(--font-display)', fontSize:'10px', fontWeight:'400', letterSpacing:'0.16em', color: active ? '#f0eeff' : 'rgba(240,238,255,0.78)', textTransform:'uppercase', textShadow: active ? `0 0 10px ${acc}aa` : 'none', transition:'color 0.3s', textAlign:'center', padding:'0 6px', display:'flex', alignItems:'center', gap:'4px' }}>
-        {entry.name}
-        {locked && <span style={{ fontSize:'8px', opacity:0.7 }}>🔒</span>}
-      </div>
-      {/* Kuerzel mono badge */}
-      <div style={{ position:'relative', zIndex:1, fontFamily:'var(--font-mono)', fontSize:'6.5px', letterSpacing:'0.24em', color: `${acc}99`, textTransform:'uppercase', marginTop:'3px' }}>
-        {entry.kuerzel}
-      </div>
-    </a>
-  );
+  return /*#__PURE__*/React.createElement("a", {
+    href: interactive ? entry.href : '#',
+    onClick: handleClick,
+    onMouseEnter: onEnter,
+    onMouseLeave: onLeave,
+    style: {
+      position: 'absolute',
+      left: x - size / 2,
+      top: y - size / 2,
+      width: size,
+      height: size,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      textDecoration: 'none',
+      cursor: interactive ? 'pointer' : locked ? 'not-allowed' : 'default',
+      transform: active ? 'scale(1.08)' : 'scale(1)',
+      transition: 'transform 0.3s ease',
+      zIndex: active ? 4 : 2
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: `0 0 ${size} ${size}`,
+    style: {
+      position: 'absolute',
+      inset: 0,
+      filter: active ? `drop-shadow(0 0 14px ${acc}cc)` : `drop-shadow(0 0 6px ${acc}33)`,
+      transition: 'filter 0.3s'
+    }
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexAt(size, size / 2, size / 2),
+    fill: "rgba(8,6,22,0.85)",
+    stroke: active ? acc : `${acc}55`,
+    strokeWidth: active ? 1.5 : 1,
+    style: {
+      transition: 'all 0.3s'
+    }
+  }), /*#__PURE__*/React.createElement("polygon", {
+    points: hexAt(size - 14, size / 2, size / 2),
+    fill: active ? `${acc}18` : `${acc}08`,
+    stroke: `${acc}33`,
+    strokeWidth: "0.5",
+    style: {
+      transition: 'fill 0.3s'
+    }
+  }), locked && /*#__PURE__*/React.createElement("pattern", {
+    id: `lp-${index}`,
+    patternUnits: "userSpaceOnUse",
+    width: "8",
+    height: "8",
+    patternTransform: "rotate(45)"
+  }, /*#__PURE__*/React.createElement("rect", {
+    width: "3",
+    height: "8",
+    fill: `${acc}25`
+  })), locked && /*#__PURE__*/React.createElement("polygon", {
+    points: hexAt(size - 14, size / 2, size / 2),
+    fill: `url(#lp-${index})`
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 1,
+      fontFamily: 'var(--font-display)',
+      fontSize: '30px',
+      color: active ? '#f0eeff' : acc,
+      lineHeight: 1,
+      marginBottom: '4px',
+      textShadow: active ? `0 0 14px ${acc}` : 'none',
+      transition: 'color 0.3s, text-shadow 0.3s',
+      opacity: locked ? 0.7 : 1
+    }
+  }, entry.glyph), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 1,
+      fontFamily: 'var(--font-display)',
+      fontSize: '10px',
+      fontWeight: '400',
+      letterSpacing: '0.16em',
+      color: active ? '#f0eeff' : 'rgba(240,238,255,0.78)',
+      textTransform: 'uppercase',
+      textShadow: active ? `0 0 10px ${acc}aa` : 'none',
+      transition: 'color 0.3s',
+      textAlign: 'center',
+      padding: '0 6px',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '4px'
+    }
+  }, entry.name, locked && /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: '8px',
+      opacity: 0.7
+    }
+  }, "\uD83D\uDD12")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 1,
+      fontFamily: 'var(--font-mono)',
+      fontSize: '6.5px',
+      letterSpacing: '0.24em',
+      color: `${acc}99`,
+      textTransform: 'uppercase',
+      marginTop: '3px'
+    }
+  }, entry.kuerzel));
 }
 
 // ── APP ────────────────────────────────────────────────────
 function App() {
-  const [mouse, setMouse] = useState({ x:0.5, y:0.5 });
+  const [mouse, setMouse] = useState({
+    x: 0.5,
+    y: 0.5
+  });
   const [selectedIdx, setSelectedIdx] = useState(null);
   const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
-  const handleMouseMove = useCallback(e => { setMouse({ x: e.clientX/window.innerWidth, y: e.clientY/window.innerHeight }); }, []);
+  const handleMouseMove = useCallback(e => {
+    setMouse({
+      x: e.clientX / window.innerWidth,
+      y: e.clientY / window.innerHeight
+    });
+  }, []);
   useScrollReveal();
-
   const selected = selectedIdx !== null ? ENTRIES[selectedIdx] : null;
   const activeAccent = selected?.accent;
-
   const total = ENTRIES.length;
   const verfuegbar = ENTRIES.filter(e => e.href && e.href !== '#' && !e.locked).length;
   const offen = ENTRIES.filter(e => (!e.href || e.href === '#') && !e.locked).length;
   const gesperrt = ENTRIES.filter(e => e.locked).length;
-
-  return (
-    <div onMouseMove={handleMouseMove} style={{ position:'relative', minHeight:'100vh' }}>
-      {tweaks.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} />}
-      <FloatingHexField mouseX={mouse.x} mouseY={mouse.y} />
-
-      {/* ── HEADER IMAGE ── */}
-      <div style={{ position:'relative', zIndex:10, width:'100%', height:'180px',
-        background:'linear-gradient(180deg, rgba(20,10,50,0.95) 0%, rgba(10,8,30,0.98) 100%)',
-        borderBottom:'1px solid rgba(160,140,255,0.15)', overflow:'hidden',
-        display:'flex', alignItems:'center', justifyContent:'center' }}>
-        <div style={{ position:'absolute', inset:0,
-          background:`radial-gradient(ellipse at 20% 50%, rgba(124,77,255,0.18) 0%, transparent 50%), radial-gradient(ellipse at 80% 50%, rgba(45,125,255,0.14) 0%, transparent 50%), repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(160,140,255,0.04) 60px, rgba(160,140,255,0.04) 61px)`,
-          pointerEvents:'none' }} />
-        <div style={{ position:'absolute', inset:0,
-          backgroundImage:`repeating-linear-gradient(135deg, transparent, transparent 18px, rgba(124,77,255,0.03) 18px, rgba(124,77,255,0.03) 19px)`,
-          pointerEvents:'none' }} />
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(160,140,255,0.3)', letterSpacing:'0.3em', textTransform:'uppercase', position:'relative', zIndex:1 }}>
-          Kopfbild — Artwork hier ablegen
-        </div>
-      </div>
-
-      <SiteNav rightLabel="ENZYKLOPÄDIE-ARCHIV" />
-
-      {/* ── MAIN ── */}
-      <div style={{ position:'relative', zIndex:5, maxWidth:'1180px', margin:'0 auto', padding:'40px 40px 60px' }}>
-
-        {/* Top label strip */}
-        <div className="reveal-up" style={{ display:'flex', alignItems:'center', gap:'14px', marginBottom:'12px' }}>
-          <div style={{ flex:1, height:'1px', background:'linear-gradient(90deg, transparent, rgba(160,140,255,0.25), transparent)' }} />
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.4em', color:'rgba(160,140,255,0.55)', textTransform:'uppercase' }}>
-            ◈ Astrolabium des Wissens ◈
-          </div>
-          <div style={{ flex:1, height:'1px', background:'linear-gradient(90deg, transparent, rgba(160,140,255,0.25), transparent)' }} />
-        </div>
-
-        {/* Astrolabe */}
-        <div className="reveal-up"
-          style={{ transitionDelay:'0.05s',
-            position:'relative', width:'100%', maxWidth: `${ASTRO.size}px`,
-            aspectRatio: '1 / 1', margin:'0 auto 30px' }}
-          onMouseLeave={() => setSelectedIdx(null)}>
-          <AstrolabeBackdrop activeAccent={activeAccent} />
-          <ActiveSpoke index={selectedIdx} accent={activeAccent || '#9b86ff'} />
-          <CenterPlate selected={selected} />
-          {ENTRIES.map((entry, i) => (
-            <EntryHex key={entry.kuerzel} entry={entry} index={i}
-              active={selectedIdx === i}
-              onEnter={() => setSelectedIdx(i)}
-              onLeave={() => {}} />
-          ))}
-        </div>
-
-      </div>
-
-      <SiteFooter />
-
-      <TweaksPanel>
-        <TweakSection label="Darstellung" />
-        <TweakToggle id="showParticles" label="Partikel" />
-      </TweaksPanel>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    onMouseMove: handleMouseMove,
+    style: {
+      position: 'relative',
+      minHeight: '100vh'
+    }
+  }, tweaks.showParticles && /*#__PURE__*/React.createElement(ParticleField, {
+    mouseX: mouse.x,
+    mouseY: mouse.y
+  }), /*#__PURE__*/React.createElement(FloatingHexField, {
+    mouseX: mouse.x,
+    mouseY: mouse.y
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 10,
+      width: '100%',
+      height: '180px',
+      background: 'linear-gradient(180deg, rgba(20,10,50,0.95) 0%, rgba(10,8,30,0.98) 100%)',
+      borderBottom: '1px solid rgba(160,140,255,0.15)',
+      overflow: 'hidden',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      background: `radial-gradient(ellipse at 20% 50%, rgba(124,77,255,0.18) 0%, transparent 50%), radial-gradient(ellipse at 80% 50%, rgba(45,125,255,0.14) 0%, transparent 50%), repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(160,140,255,0.04) 60px, rgba(160,140,255,0.04) 61px)`,
+      pointerEvents: 'none'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      backgroundImage: `repeating-linear-gradient(135deg, transparent, transparent 18px, rgba(124,77,255,0.03) 18px, rgba(124,77,255,0.03) 19px)`,
+      pointerEvents: 'none'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: 'rgba(160,140,255,0.3)',
+      letterSpacing: '0.3em',
+      textTransform: 'uppercase',
+      position: 'relative',
+      zIndex: 1
+    }
+  }, "Kopfbild \u2014 Artwork hier ablegen")), /*#__PURE__*/React.createElement(SiteNav, {
+    rightLabel: "ENZYKLOP\xC4DIE-ARCHIV"
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 5,
+      maxWidth: '1180px',
+      margin: '0 auto',
+      padding: '40px 40px 60px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '14px',
+      marginBottom: '12px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      height: '1px',
+      background: 'linear-gradient(90deg, transparent, rgba(160,140,255,0.25), transparent)'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.4em',
+      color: 'rgba(160,140,255,0.55)',
+      textTransform: 'uppercase'
+    }
+  }, "\u25C8 Astrolabium des Wissens \u25C8"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      height: '1px',
+      background: 'linear-gradient(90deg, transparent, rgba(160,140,255,0.25), transparent)'
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      transitionDelay: '0.05s',
+      position: 'relative',
+      width: '100%',
+      maxWidth: `${ASTRO.size}px`,
+      aspectRatio: '1 / 1',
+      margin: '0 auto 30px'
+    },
+    onMouseLeave: () => setSelectedIdx(null)
+  }, /*#__PURE__*/React.createElement(AstrolabeBackdrop, {
+    activeAccent: activeAccent
+  }), /*#__PURE__*/React.createElement(ActiveSpoke, {
+    index: selectedIdx,
+    accent: activeAccent || '#9b86ff'
+  }), /*#__PURE__*/React.createElement(CenterPlate, {
+    selected: selected
+  }), ENTRIES.map((entry, i) => /*#__PURE__*/React.createElement(EntryHex, {
+    key: entry.kuerzel,
+    entry: entry,
+    index: i,
+    active: selectedIdx === i,
+    onEnter: () => setSelectedIdx(i),
+    onLeave: () => {}
+  })))), /*#__PURE__*/React.createElement(SiteFooter, null), /*#__PURE__*/React.createElement(TweaksPanel, null, /*#__PURE__*/React.createElement(TweakSection, {
+    label: "Darstellung"
+  }), /*#__PURE__*/React.createElement(TweakToggle, {
+    id: "showParticles",
+    label: "Partikel"
+  })));
 }
-
-ReactDOM.createRoot(document.getElementById('root')).render(<SiteGate><App /></SiteGate>);
+ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement(App, null)));
+})();
 </script>
 
 

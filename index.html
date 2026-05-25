@@ -6,8 +6,8 @@
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
 <link rel="stylesheet" href="assets/styles/pages/index.css">
-<script src="assets/scripts/vendor/react.development.js"></script>
-<script src="assets/scripts/vendor/react-dom.development.js"></script>
+<script src="assets/scripts/vendor/react.production.min.js"></script>
+<script src="assets/scripts/vendor/react-dom.production.min.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
@@ -29,9 +29,6 @@ const { useState, useEffect, useRef, useCallback, useMemo } = React;
 
 // ── Nav tabs (mirrors existing site dropdowns) ──
 const NAV_TABS = [
-  { id:'einleitung', label:'Einleitung', items:[
-    { l:'Informationen' }, { l:'Vorgeschichte' }, { l:'Sitzung Null' },
-  ]},
   { id:'spielerhandbuch', label:'Spielerhandbuch', items:[
     { l:'Realismus' }, { l:'Sammeln & Handwerk' }, { l:'Schutzherren' },
     { l:'Gesinnungen' }, { l:'Regierungsformen' },
@@ -55,27 +52,23 @@ const NAV_TABS = [
 
 // ── Portal cards (6 player-facing overview pages) ──
 const PORTALS = [
-  { id:'einleitung', n:'I',   label:'Einleitung', hue:265,
-    tag:'Beginn deiner Reise',
-    blurb:'Die ersten Schritte in die gewobenen Reiche — Hintergrund, Vorgeschichte und die Sitzung Null.',
-    peek:['Informationen','Vorgeschichte','Sitzung Null'] },
-  { id:'spielerhandbuch', n:'II', label:'Spielerhandbuch', hue:250,
+  { id:'spielerhandbuch', n:'I', label:'Spielerhandbuch', hue:250,
     tag:'Regeln & Welt-Verständnis',
     blurb:'Wie die Welt funktioniert — Realismus, Handwerk, Schutzherren, Gesinnungen und Regierungsformen.',
     peek:['Realismus','Sammeln & Handwerk','Schutzherren','Gesinnungen','Regierungsformen'] },
-  { id:'charaktererstellung', n:'III', label:'Charaktererstellung', hue:235,
+  { id:'charaktererstellung', n:'II', label:'Charaktererstellung', hue:235,
     tag:'Werde wer du sein willst',
     blurb:'Rassen, Klassen, Talente, Hintergründe, Zauber und Ausrüstung — alles für deinen neuen Charakter.',
     peek:['Neuer Charakter','Rassen','Klassen','Talente','Hintergründe','Zauber','Ausrüstung'] },
-  { id:'enzyklopaedie', n:'IV', label:'Enzyklopädie', hue:215,
+  { id:'enzyklopaedie', n:'III', label:'Enzyklopädie', hue:215,
     tag:'Die Welt im Detail',
     blurb:'Völker, Orte, Götter, Religionen, Organisationen — alles, was in Meruria existiert.',
     peek:['Völker','Orte','Ressourcen','Organisationen','Gottheiten','Religionen','Monster','Galerie'] },
-  { id:'divisionen', n:'V', label:'Divisionen', hue:290,
+  { id:'divisionen', n:'IV', label:'Divisionen', hue:290,
     tag:'Acht Wege, das Schicksal zu formen',
     blurb:'Die acht Divisionen sind das Rückgrat der Welt. Kuratoren, Sturmritter, Sentinels und mehr.',
     peek:['I — Kuratoren','II — Sturmritter','III — Sentinels','IV — Friedenshüter','V — Outfitters','VI — Pathfinders','VII — Quellensucher','VIII — Bergungsgarde'] },
-  { id:'charaktere', n:'VI', label:'Charaktere', hue:30,
+  { id:'charaktere', n:'V', label:'Charaktere', hue:30,
     tag:'Helden, Schurken, Verbündete',
     blurb:'Die Steckbriefe aller Charaktere — Spielercharaktere, NSCs und alles dazwischen.',
     peek:['Spielercharaktere','Verbündete','Antagonisten','Begegnete Seelen'] },

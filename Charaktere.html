@@ -6,575 +6,1419 @@
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
 <link rel="stylesheet" href="assets/styles/pages/Charaktere.css">
-<script src="assets/scripts/vendor/react.development.js"></script>
-<script src="assets/scripts/vendor/react-dom.development.js"></script>
-<script src="assets/scripts/vendor/babel-standalone.js"></script>
-<script src="assets/components/tweaks-panel-13.jsx" type="text/babel"></script>
-<script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/scripts/vendor/react.production.min.js"></script>
+<script src="assets/scripts/vendor/react-dom.production.min.js"></script>
+
+<script src="assets/components/tweaks-panel-13.js"></script>
+<script src="assets/components/nav.js"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
-<script src="assets/components/site-gate.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.js"></script>
 </head>
 <body>
 <div id="root"></div>
-<script type="text/babel">
-const { useState, useEffect, useRef, useCallback } = React;
-const { useTweaks, TweaksPanel, TweakSection, TweakToggle } = window;
-const { SiteNav, SiteGate } = window;
-
-const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"showParticles": true, "showHexes": true}/*EDITMODE-END*/;
+<script>
+(function () {
+const {
+  useState,
+  useEffect,
+  useRef,
+  useCallback
+} = React;
+const {
+  useTweaks,
+  TweaksPanel,
+  TweakSection,
+  TweakToggle
+} = window;
+const {
+  SiteNav,
+  SiteGate
+} = window;
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "showParticles": true,
+  "showHexes": true
+} /*EDITMODE-END*/;
 
 // ── HELPERS ──────────────────────────────────────────────
 function hexPoints(s) {
-  const cx = s/2, cy = s/2, r = s/2;
+  const cx = s / 2,
+    cy = s / 2,
+    r = s / 2;
   const pts = [];
   for (let i = 0; i < 6; i++) {
-    const a = (Math.PI/180)*(60*i - 30);
-    pts.push(`${cx + r*Math.cos(a)},${cy + r*Math.sin(a)}`);
+    const a = Math.PI / 180 * (60 * i - 30);
+    pts.push(`${cx + r * Math.cos(a)},${cy + r * Math.sin(a)}`);
   }
   return pts.join(' ');
 }
 
-
 // ── SECTION DATA ─────────────────────────────────────────
-const SECTIONS = [
-  {
-    id: 'meine', name: 'Meine Charaktere', href: 'MeinCharakter.html',
-    untertitel: 'Persönliches Archiv',
-    beschreibung: 'Deine eigenen Helden — alle Charakterbögen, die du selbst angelegt hast. Aktive, ruhende und gefallene Figuren mit ihren Steckbriefen, Werten und Geschichten an einem Ort.',
-    icon: 'meine',
-    topics: ['Aktiv', 'Archiv', 'Steckbrief'],
-    dividerAfter: true,
-    featured: true,
-  },
-  {
-    id: 'spieler', name: 'Spielercharaktere', href: 'Spielercharaktere.html',
-    untertitel: 'Die Held*innen der Runde',
-    beschreibung: 'Alle Charaktere, die in der laufenden Kampagne von Spieler*innen geführt werden. Wer steht neben dir am Lagerfeuer, wer kämpft an deiner Seite — und was solltest du über sie wissen?',
-    icon: 'spieler',
-    topics: ['Gefährten', 'Allianzen', 'Bande'],
-  },
-  {
-    id: 'nsc', name: 'NSC', href: 'NSC.html',
-    untertitel: 'Nichtspielercharaktere',
-    beschreibung: 'Kontakte, Auftraggeber, Widersacher, Händler, Wirtsleute — alle Figuren, die der Spielleiter führt. Bekannte Gesichter aus Velundra und den fernen Außenposten, geordnet nach Begegnung.',
-    icon: 'nsc',
-    topics: ['Verbündete', 'Widersacher', 'Begegnungen'],
-  },
-];
+const SECTIONS = [{
+  id: 'meine',
+  name: 'Meine Charaktere',
+  href: 'MeinCharakter.html',
+  untertitel: 'Persönliches Archiv',
+  beschreibung: 'Deine eigenen Helden — alle Charakterbögen, die du selbst angelegt hast. Aktive, ruhende und gefallene Figuren mit ihren Steckbriefen, Werten und Geschichten an einem Ort.',
+  icon: 'meine',
+  topics: ['Aktiv', 'Archiv', 'Steckbrief'],
+  dividerAfter: true,
+  featured: true
+}, {
+  id: 'spieler',
+  name: 'Spielercharaktere',
+  href: 'Spielercharaktere.html',
+  untertitel: 'Die Held*innen der Runde',
+  beschreibung: 'Alle Charaktere, die in der laufenden Kampagne von Spieler*innen geführt werden. Wer steht neben dir am Lagerfeuer, wer kämpft an deiner Seite — und was solltest du über sie wissen?',
+  icon: 'spieler',
+  topics: ['Gefährten', 'Allianzen', 'Bande']
+}, {
+  id: 'nsc',
+  name: 'NSC',
+  href: 'NSC.html',
+  untertitel: 'Nichtspielercharaktere',
+  beschreibung: 'Kontakte, Auftraggeber, Widersacher, Händler, Wirtsleute — alle Figuren, die der Spielleiter führt. Bekannte Gesichter aus Velundra und den fernen Außenposten, geordnet nach Begegnung.',
+  icon: 'nsc',
+  topics: ['Verbündete', 'Widersacher', 'Begegnungen']
+}];
 
 // ── FLOATING HEXES ───────────────────────────────────────
-const HEX_DEFS = [
-  { size:120, x:'6%',  y:'14%', anim:'hexFloat0', dur:'7.2s', opacity:0.035 },
-  { size:55,  x:'20%', y:'58%', anim:'hexFloat1', dur:'5.8s', opacity:0.06  },
-  { size:200, x:'70%', y:'6%',  anim:'hexFloat2', dur:'9.1s', opacity:0.025 },
-  { size:40,  x:'84%', y:'40%', anim:'hexFloat3', dur:'4.9s', opacity:0.08  },
-  { size:88,  x:'52%', y:'70%', anim:'hexFloat1', dur:'6.4s', opacity:0.04  },
-  { size:30,  x:'35%', y:'26%', anim:'hexFloat0', dur:'5.2s', opacity:0.10  },
-  { size:160, x:'40%', y:'82%', anim:'hexFloat2', dur:'8.3s', opacity:0.022 },
-  { size:50,  x:'91%', y:'76%', anim:'hexFloat3', dur:'6.0s', opacity:0.07  },
-];
-
-function FloatingHexField({ mouseX, mouseY }) {
-  return (
-    <div style={{ position:'fixed', inset:0, pointerEvents:'none', zIndex:1, overflow:'hidden', clipPath:'inset(212px 0 0 0)' }}>
-      {HEX_DEFS.map((h, i) => {
-        const px = hexPoints(h.size);
-        const parallaxX = (mouseX - 0.5) * (i % 3 === 0 ? -12 : i % 3 === 1 ? -6 : -18);
-        const parallaxY = (mouseY - 0.5) * (i % 3 === 0 ? -8  : i % 3 === 1 ? -4 : -14);
-        return (
-          <div key={i} style={{ position:'absolute', left:h.x, top:h.y, animation:`${h.anim} ${h.dur} ease-in-out infinite`, animationDelay:`${i*0.7}s`, transform:`translate(${parallaxX}px,${parallaxY}px)`, transition:'transform 0.4s ease-out', willChange:'transform' }}>
-            <svg width={h.size} height={h.size} viewBox={`0 0 ${h.size} ${h.size}`} style={{ display:'block', opacity:h.opacity, filter:`drop-shadow(0 0 ${h.size*0.06}px #7c4dff)` }}>
-              <polygon points={px} fill="transparent" stroke="#7c4dff" strokeWidth="1" />
-            </svg>
-          </div>
-        );
-      })}
-    </div>
-  );
+const HEX_DEFS = [{
+  size: 120,
+  x: '6%',
+  y: '14%',
+  anim: 'hexFloat0',
+  dur: '7.2s',
+  opacity: 0.035
+}, {
+  size: 55,
+  x: '20%',
+  y: '58%',
+  anim: 'hexFloat1',
+  dur: '5.8s',
+  opacity: 0.06
+}, {
+  size: 200,
+  x: '70%',
+  y: '6%',
+  anim: 'hexFloat2',
+  dur: '9.1s',
+  opacity: 0.025
+}, {
+  size: 40,
+  x: '84%',
+  y: '40%',
+  anim: 'hexFloat3',
+  dur: '4.9s',
+  opacity: 0.08
+}, {
+  size: 88,
+  x: '52%',
+  y: '70%',
+  anim: 'hexFloat1',
+  dur: '6.4s',
+  opacity: 0.04
+}, {
+  size: 30,
+  x: '35%',
+  y: '26%',
+  anim: 'hexFloat0',
+  dur: '5.2s',
+  opacity: 0.10
+}, {
+  size: 160,
+  x: '40%',
+  y: '82%',
+  anim: 'hexFloat2',
+  dur: '8.3s',
+  opacity: 0.022
+}, {
+  size: 50,
+  x: '91%',
+  y: '76%',
+  anim: 'hexFloat3',
+  dur: '6.0s',
+  opacity: 0.07
+}];
+function FloatingHexField({
+  mouseX,
+  mouseY
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'fixed',
+      inset: 0,
+      pointerEvents: 'none',
+      zIndex: 1,
+      overflow: 'hidden',
+      clipPath: 'inset(212px 0 0 0)'
+    }
+  }, HEX_DEFS.map((h, i) => {
+    const px = hexPoints(h.size);
+    const parallaxX = (mouseX - 0.5) * (i % 3 === 0 ? -12 : i % 3 === 1 ? -6 : -18);
+    const parallaxY = (mouseY - 0.5) * (i % 3 === 0 ? -8 : i % 3 === 1 ? -4 : -14);
+    return /*#__PURE__*/React.createElement("div", {
+      key: i,
+      style: {
+        position: 'absolute',
+        left: h.x,
+        top: h.y,
+        animation: `${h.anim} ${h.dur} ease-in-out infinite`,
+        animationDelay: `${i * 0.7}s`,
+        transform: `translate(${parallaxX}px,${parallaxY}px)`,
+        transition: 'transform 0.4s ease-out',
+        willChange: 'transform'
+      }
+    }, /*#__PURE__*/React.createElement("svg", {
+      width: h.size,
+      height: h.size,
+      viewBox: `0 0 ${h.size} ${h.size}`,
+      style: {
+        display: 'block',
+        opacity: h.opacity,
+        filter: `drop-shadow(0 0 ${h.size * 0.06}px #7c4dff)`
+      }
+    }, /*#__PURE__*/React.createElement("polygon", {
+      points: px,
+      fill: "transparent",
+      stroke: "#7c4dff",
+      strokeWidth: "1"
+    })));
+  }));
 }
 
 // ── PARTICLES ────────────────────────────────────────────
-function ParticleField({ mouseX, mouseY }) {
+function ParticleField({
+  mouseX,
+  mouseY
+}) {
   const canvasRef = useRef(null);
   const animRef = useRef(null);
   const particles = useRef([]);
-  const mouse = useRef({ x:0.5, y:0.5 });
-  useEffect(() => { mouse.current = { x: mouseX, y: mouseY }; }, [mouseX, mouseY]);
+  const mouse = useRef({
+    x: 0.5,
+    y: 0.5
+  });
   useEffect(() => {
-    const canvas = canvasRef.current; if (!canvas) return;
+    mouse.current = {
+      x: mouseX,
+      y: mouseY
+    };
+  }, [mouseX, mouseY]);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    const resize = () => { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; };
-    resize(); window.addEventListener('resize', resize);
-    particles.current = Array.from({length:55}, () => ({
-      x: Math.random(), y: Math.random(),
-      r: Math.random()*1.6+0.5,
-      vx:(Math.random()-0.5)*0.05, vy:(Math.random()-0.5)*0.05,
-      alpha: Math.random()*0.2+0.05,
+    const resize = () => {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    };
+    resize();
+    window.addEventListener('resize', resize);
+    particles.current = Array.from({
+      length: 55
+    }, () => ({
+      x: Math.random(),
+      y: Math.random(),
+      r: Math.random() * 1.6 + 0.5,
+      vx: (Math.random() - 0.5) * 0.05,
+      vy: (Math.random() - 0.5) * 0.05,
+      alpha: Math.random() * 0.2 + 0.05
     }));
     const tick = () => {
-      const w = canvas.width, h = canvas.height;
-      const shiftX = (mouse.current.x - 0.5)*-14, shiftY = (mouse.current.y - 0.5)*-14;
-      ctx.clearRect(0,0,w,h);
+      const w = canvas.width,
+        h = canvas.height;
+      const shiftX = (mouse.current.x - 0.5) * -14,
+        shiftY = (mouse.current.y - 0.5) * -14;
+      ctx.clearRect(0, 0, w, h);
       particles.current.forEach(p => {
-        p.x += p.vx/w*60; p.y += p.vy/h*60;
-        if(p.x<0)p.x=1; if(p.x>1)p.x=0; if(p.y<0)p.y=1; if(p.y>1)p.y=0;
-        ctx.beginPath(); ctx.arc(p.x*w+shiftX, p.y*h+shiftY, p.r, 0, Math.PI*2);
-        ctx.fillStyle = `rgba(160,140,255,${p.alpha})`; ctx.fill();
+        p.x += p.vx / w * 60;
+        p.y += p.vy / h * 60;
+        if (p.x < 0) p.x = 1;
+        if (p.x > 1) p.x = 0;
+        if (p.y < 0) p.y = 1;
+        if (p.y > 1) p.y = 0;
+        ctx.beginPath();
+        ctx.arc(p.x * w + shiftX, p.y * h + shiftY, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(160,140,255,${p.alpha})`;
+        ctx.fill();
       });
       animRef.current = requestAnimationFrame(tick);
     };
     tick();
-    return () => { cancelAnimationFrame(animRef.current); window.removeEventListener('resize', resize); };
+    return () => {
+      cancelAnimationFrame(animRef.current);
+      window.removeEventListener('resize', resize);
+    };
   }, []);
-  return <canvas ref={canvasRef} style={{ position:'fixed', inset:0, width:'100%', height:'100%', pointerEvents:'none', zIndex:0, clipPath:'inset(212px 0 0 0)' }} />;
+  return /*#__PURE__*/React.createElement("canvas", {
+    ref: canvasRef,
+    style: {
+      position: 'fixed',
+      inset: 0,
+      width: '100%',
+      height: '100%',
+      pointerEvents: 'none',
+      zIndex: 0,
+      clipPath: 'inset(212px 0 0 0)'
+    }
+  });
 }
 
 // ── SCROLL REVEAL ────────────────────────────────────────
 function useScrollReveal() {
   useEffect(() => {
     const revealed = new WeakSet();
-    const observer = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (!entry.isIntersecting || revealed.has(entry.target)) return;
         revealed.add(entry.target);
         observer.unobserve(entry.target);
         entry.target.classList.add('visible');
       });
-    }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+    }, {
+      threshold: 0.05,
+      rootMargin: '0px 0px -20px 0px'
+    });
     const t = setTimeout(() => {
       document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
     }, 100);
-    return () => { clearTimeout(t); observer.disconnect(); };
+    return () => {
+      clearTimeout(t);
+      observer.disconnect();
+    };
   }, []);
 }
 
-
 // ── SECTION ICON (small hex sigil) ───────────────────────
-function SectionIcon({ kind, size = 64, color = '#7c4dff', hov }) {
-  const c1 = color, c2 = `${color}55`;
+function SectionIcon({
+  kind,
+  size = 64,
+  color = '#7c4dff',
+  hov
+}) {
+  const c1 = color,
+    c2 = `${color}55`;
   const opacity = hov ? 1 : 0.78;
   const renderInner = () => {
     if (kind === 'meine') return (
+      /*#__PURE__*/
       // Single bust silhouette inside a hex frame, with a small "personal" mark
-      <g opacity={opacity}>
-        {/* Inner frame band */}
-        <polygon points={hexPoints(46)} transform="translate(9 9)" fill="none" stroke={c2} strokeWidth="0.7"/>
-        {/* Head */}
-        <circle cx="32" cy="24" r="6.5" fill="none" stroke={c1} strokeWidth="1.2"/>
-        <circle cx="32" cy="24" r="2.4" fill={c1}/>
-        {/* Shoulders */}
-        <path d="M 18 48 C 18 38, 46 38, 46 48 L 46 50 L 18 50 Z" fill="none" stroke={c1} strokeWidth="1.2"/>
-        <path d="M 22 48 C 22 41, 42 41, 42 48" fill="none" stroke={c2} strokeWidth="0.7"/>
-        {/* Anchor pin — "this one is mine" */}
-        <line x1="32" y1="34" x2="32" y2="38" stroke={c2} strokeWidth="0.7"/>
-        <polygon points="32,52 35,55 32,58 29,55" fill={c1}/>
-      </g>
+      React.createElement("g", {
+        opacity: opacity
+      }, /*#__PURE__*/React.createElement("polygon", {
+        points: hexPoints(46),
+        transform: "translate(9 9)",
+        fill: "none",
+        stroke: c2,
+        strokeWidth: "0.7"
+      }), /*#__PURE__*/React.createElement("circle", {
+        cx: "32",
+        cy: "24",
+        r: "6.5",
+        fill: "none",
+        stroke: c1,
+        strokeWidth: "1.2"
+      }), /*#__PURE__*/React.createElement("circle", {
+        cx: "32",
+        cy: "24",
+        r: "2.4",
+        fill: c1
+      }), /*#__PURE__*/React.createElement("path", {
+        d: "M 18 48 C 18 38, 46 38, 46 48 L 46 50 L 18 50 Z",
+        fill: "none",
+        stroke: c1,
+        strokeWidth: "1.2"
+      }), /*#__PURE__*/React.createElement("path", {
+        d: "M 22 48 C 22 41, 42 41, 42 48",
+        fill: "none",
+        stroke: c2,
+        strokeWidth: "0.7"
+      }), /*#__PURE__*/React.createElement("line", {
+        x1: "32",
+        y1: "34",
+        x2: "32",
+        y2: "38",
+        stroke: c2,
+        strokeWidth: "0.7"
+      }), /*#__PURE__*/React.createElement("polygon", {
+        points: "32,52 35,55 32,58 29,55",
+        fill: c1
+      }))
     );
     if (kind === 'spieler') return (
+      /*#__PURE__*/
       // Dossier stack — parallel to the NSC registry, but the front card shows the fellowship of three.
-      <g opacity={opacity} transform="translate(5 -3)">
-        {/* Back card */}
-        <rect x="18" y="14" width="30" height="36" fill="rgba(5,4,15,1)" stroke={c2} strokeWidth="0.8"/>
-        {/* Middle card (offset) */}
-        <rect x="15" y="17" width="30" height="36" fill="rgba(5,4,15,1)" stroke={c2} strokeWidth="0.9"/>
-        {/* Front card */}
-        <rect x="12" y="20" width="30" height="36" fill="rgba(5,4,15,1)" stroke={c1} strokeWidth="1.1"/>
-        {/* Bookmark ribbon sticking out of the front card top — fellowship marker */}
-        <polygon points="36,18 42,18 42,30 39,27 36,30" fill={`${c1}55`} stroke={c1} strokeWidth="0.9"/>
-        {/* Fellowship triangle on the front card — three bond-linked portrait nodes */}
-        <line x1="27" y1="30" x2="20" y2="42" stroke={c2} strokeWidth="0.7"/>
-        <line x1="27" y1="30" x2="34" y2="42" stroke={c2} strokeWidth="0.7"/>
-        <line x1="20" y1="42" x2="34" y2="42" stroke={c2} strokeWidth="0.7"/>
-        <circle cx="27" cy="30" r="2.8" fill="rgba(5,4,15,1)" stroke={c1} strokeWidth="1"/>
-        <circle cx="27" cy="30" r="1.1" fill={c1}/>
-        <circle cx="20" cy="42" r="2.8" fill="rgba(5,4,15,1)" stroke={c1} strokeWidth="1"/>
-        <circle cx="20" cy="42" r="1.1" fill={c1}/>
-        <circle cx="34" cy="42" r="2.8" fill="rgba(5,4,15,1)" stroke={c1} strokeWidth="1"/>
-        <circle cx="34" cy="42" r="1.1" fill={c1}/>
-        {/* Footer rule + status dot — same vocabulary as the NSC card */}
-        <line x1="16" y1="51" x2="38" y2="51" stroke={c2} strokeWidth="0.6"/>
-        <circle cx="40" cy="51" r="1.2" fill={c1}/>
-      </g>
+      React.createElement("g", {
+        opacity: opacity,
+        transform: "translate(5 -3)"
+      }, /*#__PURE__*/React.createElement("rect", {
+        x: "18",
+        y: "14",
+        width: "30",
+        height: "36",
+        fill: "rgba(5,4,15,1)",
+        stroke: c2,
+        strokeWidth: "0.8"
+      }), /*#__PURE__*/React.createElement("rect", {
+        x: "15",
+        y: "17",
+        width: "30",
+        height: "36",
+        fill: "rgba(5,4,15,1)",
+        stroke: c2,
+        strokeWidth: "0.9"
+      }), /*#__PURE__*/React.createElement("rect", {
+        x: "12",
+        y: "20",
+        width: "30",
+        height: "36",
+        fill: "rgba(5,4,15,1)",
+        stroke: c1,
+        strokeWidth: "1.1"
+      }), /*#__PURE__*/React.createElement("polygon", {
+        points: "36,18 42,18 42,30 39,27 36,30",
+        fill: `${c1}55`,
+        stroke: c1,
+        strokeWidth: "0.9"
+      }), /*#__PURE__*/React.createElement("line", {
+        x1: "27",
+        y1: "30",
+        x2: "20",
+        y2: "42",
+        stroke: c2,
+        strokeWidth: "0.7"
+      }), /*#__PURE__*/React.createElement("line", {
+        x1: "27",
+        y1: "30",
+        x2: "34",
+        y2: "42",
+        stroke: c2,
+        strokeWidth: "0.7"
+      }), /*#__PURE__*/React.createElement("line", {
+        x1: "20",
+        y1: "42",
+        x2: "34",
+        y2: "42",
+        stroke: c2,
+        strokeWidth: "0.7"
+      }), /*#__PURE__*/React.createElement("circle", {
+        cx: "27",
+        cy: "30",
+        r: "2.8",
+        fill: "rgba(5,4,15,1)",
+        stroke: c1,
+        strokeWidth: "1"
+      }), /*#__PURE__*/React.createElement("circle", {
+        cx: "27",
+        cy: "30",
+        r: "1.1",
+        fill: c1
+      }), /*#__PURE__*/React.createElement("circle", {
+        cx: "20",
+        cy: "42",
+        r: "2.8",
+        fill: "rgba(5,4,15,1)",
+        stroke: c1,
+        strokeWidth: "1"
+      }), /*#__PURE__*/React.createElement("circle", {
+        cx: "20",
+        cy: "42",
+        r: "1.1",
+        fill: c1
+      }), /*#__PURE__*/React.createElement("circle", {
+        cx: "34",
+        cy: "42",
+        r: "2.8",
+        fill: "rgba(5,4,15,1)",
+        stroke: c1,
+        strokeWidth: "1"
+      }), /*#__PURE__*/React.createElement("circle", {
+        cx: "34",
+        cy: "42",
+        r: "1.1",
+        fill: c1
+      }), /*#__PURE__*/React.createElement("line", {
+        x1: "16",
+        y1: "51",
+        x2: "38",
+        y2: "51",
+        stroke: c2,
+        strokeWidth: "0.6"
+      }), /*#__PURE__*/React.createElement("circle", {
+        cx: "40",
+        cy: "51",
+        r: "1.2",
+        fill: c1
+      }))
     );
     if (kind === 'nsc') return (
+      /*#__PURE__*/
       // Stack of dossier folios with an index-tab — the registry / catalogue metaphor.
-      <g opacity={opacity} transform="translate(1 -3)">
-        {/* Back card */}
-        <rect x="18" y="14" width="30" height="36" fill="rgba(5,4,15,1)" stroke={c2} strokeWidth="0.8"/>
-        {/* Middle card (offset) */}
-        <rect x="15" y="17" width="30" height="36" fill="rgba(5,4,15,1)" stroke={c2} strokeWidth="0.9"/>
-        {/* Front card */}
-        <rect x="12" y="20" width="30" height="36" fill="rgba(5,4,15,1)" stroke={c1} strokeWidth="1.1"/>
-        {/* Index tab sticking out of the front card on the right */}
-        <rect x="42" y="24" width="10" height="7" fill={`${c1}33`} stroke={c1} strokeWidth="0.9"/>
-        <line x1="44" y1="27.5" x2="50" y2="27.5" stroke={c1} strokeWidth="0.6"/>
-        {/* Portrait disc on the front card — featureless NPC token */}
-        <circle cx="20" cy="30" r="3.4" fill="none" stroke={c1} strokeWidth="0.9"/>
-        <circle cx="20" cy="30" r="1.2" fill={c1}/>
-        {/* Catalogue lines (dossier entries) */}
-        <line x1="26" y1="28" x2="38" y2="28" stroke={c1} strokeWidth="0.7"/>
-        <line x1="26" y1="32" x2="36" y2="32" stroke={c2} strokeWidth="0.6"/>
-        <line x1="16" y1="40" x2="38" y2="40" stroke={c2} strokeWidth="0.6"/>
-        <line x1="16" y1="44" x2="34" y2="44" stroke={c2} strokeWidth="0.6"/>
-        <line x1="16" y1="48" x2="36" y2="48" stroke={c2} strokeWidth="0.6"/>
-        {/* Status dot */}
-        <circle cx="40" cy="48" r="1.2" fill={c1}/>
-      </g>
+      React.createElement("g", {
+        opacity: opacity,
+        transform: "translate(1 -3)"
+      }, /*#__PURE__*/React.createElement("rect", {
+        x: "18",
+        y: "14",
+        width: "30",
+        height: "36",
+        fill: "rgba(5,4,15,1)",
+        stroke: c2,
+        strokeWidth: "0.8"
+      }), /*#__PURE__*/React.createElement("rect", {
+        x: "15",
+        y: "17",
+        width: "30",
+        height: "36",
+        fill: "rgba(5,4,15,1)",
+        stroke: c2,
+        strokeWidth: "0.9"
+      }), /*#__PURE__*/React.createElement("rect", {
+        x: "12",
+        y: "20",
+        width: "30",
+        height: "36",
+        fill: "rgba(5,4,15,1)",
+        stroke: c1,
+        strokeWidth: "1.1"
+      }), /*#__PURE__*/React.createElement("rect", {
+        x: "42",
+        y: "24",
+        width: "10",
+        height: "7",
+        fill: `${c1}33`,
+        stroke: c1,
+        strokeWidth: "0.9"
+      }), /*#__PURE__*/React.createElement("line", {
+        x1: "44",
+        y1: "27.5",
+        x2: "50",
+        y2: "27.5",
+        stroke: c1,
+        strokeWidth: "0.6"
+      }), /*#__PURE__*/React.createElement("circle", {
+        cx: "20",
+        cy: "30",
+        r: "3.4",
+        fill: "none",
+        stroke: c1,
+        strokeWidth: "0.9"
+      }), /*#__PURE__*/React.createElement("circle", {
+        cx: "20",
+        cy: "30",
+        r: "1.2",
+        fill: c1
+      }), /*#__PURE__*/React.createElement("line", {
+        x1: "26",
+        y1: "28",
+        x2: "38",
+        y2: "28",
+        stroke: c1,
+        strokeWidth: "0.7"
+      }), /*#__PURE__*/React.createElement("line", {
+        x1: "26",
+        y1: "32",
+        x2: "36",
+        y2: "32",
+        stroke: c2,
+        strokeWidth: "0.6"
+      }), /*#__PURE__*/React.createElement("line", {
+        x1: "16",
+        y1: "40",
+        x2: "38",
+        y2: "40",
+        stroke: c2,
+        strokeWidth: "0.6"
+      }), /*#__PURE__*/React.createElement("line", {
+        x1: "16",
+        y1: "44",
+        x2: "34",
+        y2: "44",
+        stroke: c2,
+        strokeWidth: "0.6"
+      }), /*#__PURE__*/React.createElement("line", {
+        x1: "16",
+        y1: "48",
+        x2: "36",
+        y2: "48",
+        stroke: c2,
+        strokeWidth: "0.6"
+      }), /*#__PURE__*/React.createElement("circle", {
+        cx: "40",
+        cy: "48",
+        r: "1.2",
+        fill: c1
+      }))
     );
     return null;
   };
-  return (
-    <svg width={size} height={size} viewBox="0 0 64 64" style={{ display:'block', filter: hov ? `drop-shadow(0 0 8px ${color}88)` : 'none', transition:'filter 0.3s' }}>
-      <polygon points={hexPoints(64)} fill={`${color}08`} stroke={`${color}33`} strokeWidth="0.8"/>
-      {renderInner()}
-    </svg>
-  );
+  return /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 64 64",
+    style: {
+      display: 'block',
+      filter: hov ? `drop-shadow(0 0 8px ${color}88)` : 'none',
+      transition: 'filter 0.3s'
+    }
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(64),
+    fill: `${color}08`,
+    stroke: `${color}33`,
+    strokeWidth: "0.8"
+  }), renderInner());
 }
 
 // ── RIBBON CARD ──────────────────────────────────────────
-function RibbonCard({ sec, index, isFirst, isLast, delay }) {
+function RibbonCard({
+  sec,
+  index,
+  isFirst,
+  isLast,
+  delay
+}) {
   const [hov, setHov] = React.useState(false);
   const acc = '#7c4dff';
   const accBright = '#b59dff';
   const featured = !!sec.featured;
-  return (
-    <div className="reveal-up" style={{ transitionDelay: `${delay}s`, position:'relative' }}>
-      <a href={sec.href}
-        onMouseEnter={() => setHov(true)}
-        onMouseLeave={() => setHov(false)}
-        style={{ textDecoration:'none', display:'block' }}>
-        <div style={{
-          position:'relative',
-          display:'grid',
-          gridTemplateColumns:'168px 1fr auto',
-          alignItems:'stretch',
-          gap:'0',
-          padding: featured ? '30px 28px 30px 22px' : '24px 28px 24px 18px',
-          background: featured
-            ? (hov
-                ? 'linear-gradient(95deg, rgba(58,32,108,0.72) 0%, rgba(28,14,68,0.6) 45%, rgba(10,6,28,0.55) 100%)'
-                : 'linear-gradient(95deg, rgba(46,24,88,0.62) 0%, rgba(22,12,54,0.5) 45%, rgba(10,6,28,0.48) 100%)')
-            : (hov
-                ? 'linear-gradient(90deg, rgba(28,16,58,0.55) 0%, rgba(10,6,28,0.55) 100%)'
-                : 'linear-gradient(90deg, rgba(14,8,32,0.4) 0%, rgba(8,5,22,0.4) 100%)'),
-          border: featured
-            ? `1px solid ${hov ? '#c5b3ff' : 'rgba(180,150,255,0.55)'}`
-            : `1px solid ${hov ? acc + '40' : acc + '15'}`,
-          borderRadius:'3px',
-          overflow:'hidden',
-          transition:'background 0.3s, border-color 0.3s, transform 0.35s, box-shadow 0.3s',
-          boxShadow: featured
-            ? (hov
-                ? `0 0 44px ${acc}30, 0 0 0 1px ${acc}55 inset, 0 8px 28px rgba(0,0,0,0.5)`
-                : `0 0 32px ${acc}22, 0 0 0 1px ${acc}38 inset, 0 6px 22px rgba(0,0,0,0.45)`)
-            : (hov ? `0 0 28px ${acc}12, 0 6px 22px rgba(0,0,0,0.4)` : '0 2px 12px rgba(0,0,0,0.25)'),
-          transform: hov ? 'translateX(4px)' : 'translateX(0)',
-        }}>
-
-          {/* ── FEATURED DECORATIONS ── */}
-          {featured && (
-            <React.Fragment>
-              {/* Pulsing halo behind the card content */}
-              <div aria-hidden="true" style={{ position:'absolute', inset:'-1px', pointerEvents:'none',
-                background:`radial-gradient(ellipse at 12% 50%, ${acc}26 0%, transparent 55%)`,
-                animation:'feature-halo 4.4s ease-in-out infinite' }} />
-              {/* Bright accent vertical stripe on the left */}
-              <div aria-hidden="true" style={{ position:'absolute', left:0, top:0, bottom:0, width:'3px',
-                background:`linear-gradient(180deg, transparent 0%, ${accBright} 25%, ${acc} 75%, transparent 100%)`,
-                boxShadow:`0 0 14px ${acc}aa`,
-                animation:'feature-bar 3.4s ease-in-out infinite', pointerEvents:'none' }} />
-              {/* Slow diagonal shimmer sweep */}
-              <div aria-hidden="true" style={{ position:'absolute', top:0, bottom:0, width:'80px', left:'-80px',
-                background:`linear-gradient(90deg, transparent 0%, ${accBright}22 45%, ${accBright}55 50%, ${accBright}22 55%, transparent 100%)`,
-                animation:'feature-shimmer 7.5s ease-in-out infinite', pointerEvents:'none', mixBlendMode:'screen' }} />
-              {/* Corner bracket marks (TL + BR) */}
-              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" style={{ position:'absolute', top:'6px', left:'6px', pointerEvents:'none' }}>
-                <path d="M 1 8 L 1 1 L 8 1" fill="none" stroke={accBright} strokeWidth="1"/>
-              </svg>
-              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" style={{ position:'absolute', bottom:'6px', right:'6px', pointerEvents:'none' }}>
-                <path d="M 15 8 L 15 15 L 8 15" fill="none" stroke={accBright} strokeWidth="1"/>
-              </svg>
-              {/* Top corner pin / badge */}
-              <div aria-hidden="true" style={{ position:'absolute', top:'10px', left:'28px', display:'flex', alignItems:'center', gap:'6px', pointerEvents:'none', zIndex:3 }}>
-                <span style={{ width:'6px', height:'6px', borderRadius:'50%', background:accBright, animation:'feature-pin 1.8s ease-in-out infinite' }} />
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.32em', color:accBright, textTransform:'uppercase', textShadow:`0 0 8px ${acc}99` }}>
-                  ◈ Dein Register
-                </span>
-              </div>
-              {/* Top-right meta tick */}
-              <div aria-hidden="true" style={{ position:'absolute', top:'10px', right:'28px', display:'flex', alignItems:'center', gap:'6px', pointerEvents:'none', zIndex:3 }}>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:`${accBright}cc`, textTransform:'uppercase', animation:'feature-tick 2.6s ease-in-out infinite' }}>
-                  Primär
-                </span>
-                <span style={{ width:'4px', height:'4px', background:accBright, transform:'rotate(45deg)' }} />
-              </div>
-            </React.Fragment>
-          )}
-
-          {/* Diagonal stripe texture, faint */}
-          <div style={{ position:'absolute', inset:0, pointerEvents:'none',
-            backgroundImage: `repeating-linear-gradient(135deg, transparent, transparent 22px, ${acc}05 22px, ${acc}05 23px)`,
-            opacity: hov ? 1 : 0.5, transition:'opacity 0.3s' }} />
-
-          {/* Hover wash from left */}
-          {hov && <div style={{ position:'absolute', left:0, top:0, bottom:0, width:'180px',
-            background:`linear-gradient(90deg, ${acc}14, transparent)`, pointerEvents:'none' }} />}
-
-          {/* ICON COLUMN */}
-          <div style={{ position:'relative', zIndex:2, display:'flex', alignItems:'center', justifyContent:'center' }}>
-            {/* Spine segments (top + bottom). Spine breaks at the section divider — pass spineTop=false for the card *after* a divider, spineBottom=false for the card *before* a divider. */}
-            {!isFirst && !sec.spineBreakAbove && <div style={{ position:'absolute', left:'50%', top:'-24px', bottom:'50%', width:'1px',
-              background:`linear-gradient(180deg, ${acc}28, ${acc}55)`,
-              transform:'translateX(-0.5px)' }} />}
-            {!isLast && !sec.dividerAfter && <div style={{ position:'absolute', left:'50%', top:'50%', bottom:'-24px', width:'1px',
-              background:`linear-gradient(180deg, ${acc}55, ${acc}28)`,
-              transform:'translateX(-0.5px)' }} />}
-
-            {/* Hex frame + icon */}
-            <div style={{ position:'relative', width:'140px', height:'140px',
-              display:'flex', alignItems:'center', justifyContent:'center',
-              background: hov ? 'rgba(10,6,28,0.95)' : 'rgba(10,6,28,0.85)',
-              clipPath: 'polygon(50% 0%, 93.3% 25%, 93.3% 75%, 50% 100%, 6.7% 75%, 6.7% 25%)',
-              transition:'background 0.3s' }}>
-              {/* Outer hex frame */}
-              <svg width="104" height="104" viewBox="0 0 104 104" style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', display:'block',
-                filter: featured
-                  ? (hov ? `drop-shadow(0 0 22px ${acc}cc)` : `drop-shadow(0 0 16px ${acc}99)`)
-                  : (hov ? `drop-shadow(0 0 14px ${acc}88)` : `drop-shadow(0 0 4px ${acc}44)`),
-                animation: featured ? 'feature-hex-pulse 4.2s ease-in-out infinite' : undefined,
-                transition:'filter 0.35s' }}>
-                <polygon points={hexPoints(104)} fill={featured ? (hov ? `${acc}20` : `${acc}14`) : (hov ? `${acc}10` : `${acc}06`)} stroke={featured ? (hov ? accBright : acc) : (hov ? acc : `${acc}55`)} strokeWidth={featured ? '1.3' : '1'} />
-                <polygon points={hexPoints(88)} fill="none" stroke={featured ? `${acc}55` : `${acc}22`} strokeWidth="0.6" transform="translate(8 8)" />
-              </svg>
-              {/* Inner icon */}
-              <div style={{ position:'relative', zIndex:1 }}>
-                <SectionIcon kind={sec.icon} size={56} color={acc} hov={hov} />
-              </div>
-            </div>
-          </div>
-
-          {/* CONTENT COLUMN */}
-          <div style={{ position:'relative', zIndex:2, padding:'4px 32px 4px 28px', display:'flex', flexDirection:'column', justifyContent:'center', minWidth:0 }}>
-            <div style={{ display:'flex', alignItems:'baseline', gap:'14px', marginBottom:'4px', flexWrap:'wrap' }}>
-              <h3 style={{
-                fontFamily:'var(--font-display)', fontSize: featured ? '24px' : '22px', fontWeight:'400',
-                letterSpacing:'0.18em', color: featured ? '#f5f1ff' : (hov ? '#f0eeff' : 'rgba(240,238,255,0.92)'),
-                textShadow: featured ? `0 0 24px ${acc}99` : (hov ? `0 0 22px ${acc}66` : 'none'),
-                transition:'color 0.3s, text-shadow 0.3s',
-                lineHeight:1.15, textTransform:'uppercase', margin:0,
-              }}>{sec.name}</h3>
-              <span style={{ fontFamily:'var(--font-mono)', fontSize:'8.5px', letterSpacing:'0.28em',
-                color: hov ? `${acc}cc` : `${acc}77`, textTransform:'uppercase', transition:'color 0.3s' }}>
-                {sec.untertitel}
-              </span>
-            </div>
-
-            {/* Hex divider with sigil */}
-            <div style={{ display:'flex', alignItems:'center', gap:'8px', margin:'8px 0 12px', maxWidth:'480px' }}>
-              <div style={{ height:'1px', width:'18px', background: `${acc}55` }} />
-              <svg width="6" height="6" viewBox="0 0 6 6"><polygon points={hexPoints(6)} fill={`${acc}66`} stroke={`${acc}aa`} strokeWidth="0.6" /></svg>
-              <div style={{ height:'1px', flex:1, background: `linear-gradient(90deg, ${acc}55, transparent)` }} />
-            </div>
-
-            <p style={{
-              fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12.5px',
-              lineHeight:1.85, color: hov ? 'rgba(220,210,255,0.75)' : 'rgba(220,210,255,0.55)',
-              letterSpacing:'0.02em', textWrap:'pretty', margin:'0 0 14px 0', maxWidth:'620px',
-              transition:'color 0.3s',
-            }}>{sec.beschreibung}</p>
-
-            {/* Topic chips */}
-            <div style={{ display:'flex', alignItems:'center', gap:'8px', flexWrap:'wrap' }}>
-              {sec.topics.map((t, i) => (
-                <span key={i} style={{
-                  fontFamily:'var(--font-mono)', fontSize:'8.5px', letterSpacing:'0.18em',
-                  textTransform:'uppercase',
-                  color: hov ? `${acc}dd` : `${acc}88`,
-                  padding:'3px 8px',
-                  border: `1px solid ${hov ? acc + '55' : acc + '28'}`,
-                  borderRadius:'2px',
-                  background: hov ? `${acc}10` : 'transparent',
-                  transition:'all 0.3s',
-                }}>{t}</span>
-              ))}
-            </div>
-          </div>
-
-          {/* CTA COLUMN */}
-          <div style={{ position:'relative', zIndex:2, display:'flex', flexDirection:'column', alignItems:'flex-end', justifyContent:'center', gap:'10px', padding:'0 4px 0 20px', minWidth:'110px' }}>
-            <div style={{ fontFamily:'var(--font-display)', fontSize:'9.5px', letterSpacing:'0.32em', textTransform:'uppercase',
-              color: hov ? '#f0eeff' : 'rgba(200,190,240,0.55)',
-              textShadow: hov ? `0 0 12px ${acc}88` : 'none',
-              transition:'color 0.3s, text-shadow 0.3s' }}>
-              Öffnen
-            </div>
-            <div style={{ display:'flex', alignItems:'center', gap:'6px' }}>
-              <div style={{ height:'1px', width: hov ? '32px' : '18px', background:`linear-gradient(90deg, transparent, ${hov ? acc : acc + '55'})`,
-                transition:'width 0.3s, background 0.3s' }} />
-              <span style={{ fontFamily:'var(--font-mono)', fontSize:'16px',
-                color: hov ? '#f0eeff' : `${acc}aa`,
-                textShadow: hov ? `0 0 10px ${acc}cc` : 'none',
-                transition:'color 0.3s, text-shadow 0.3s' }}>→</span>
-            </div>
-          </div>
-
-        </div>
-      </a>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      transitionDelay: `${delay}s`,
+      position: 'relative'
+    }
+  }, /*#__PURE__*/React.createElement("a", {
+    href: sec.href,
+    onMouseEnter: () => setHov(true),
+    onMouseLeave: () => setHov(false),
+    style: {
+      textDecoration: 'none',
+      display: 'block'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      display: 'grid',
+      gridTemplateColumns: '168px 1fr auto',
+      alignItems: 'stretch',
+      gap: '0',
+      padding: featured ? '30px 28px 30px 22px' : '24px 28px 24px 18px',
+      background: featured ? hov ? 'linear-gradient(95deg, rgba(58,32,108,0.72) 0%, rgba(28,14,68,0.6) 45%, rgba(10,6,28,0.55) 100%)' : 'linear-gradient(95deg, rgba(46,24,88,0.62) 0%, rgba(22,12,54,0.5) 45%, rgba(10,6,28,0.48) 100%)' : hov ? 'linear-gradient(90deg, rgba(28,16,58,0.55) 0%, rgba(10,6,28,0.55) 100%)' : 'linear-gradient(90deg, rgba(14,8,32,0.4) 0%, rgba(8,5,22,0.4) 100%)',
+      border: featured ? `1px solid ${hov ? '#c5b3ff' : 'rgba(180,150,255,0.55)'}` : `1px solid ${hov ? acc + '40' : acc + '15'}`,
+      borderRadius: '3px',
+      overflow: 'hidden',
+      transition: 'background 0.3s, border-color 0.3s, transform 0.35s, box-shadow 0.3s',
+      boxShadow: featured ? hov ? `0 0 44px ${acc}30, 0 0 0 1px ${acc}55 inset, 0 8px 28px rgba(0,0,0,0.5)` : `0 0 32px ${acc}22, 0 0 0 1px ${acc}38 inset, 0 6px 22px rgba(0,0,0,0.45)` : hov ? `0 0 28px ${acc}12, 0 6px 22px rgba(0,0,0,0.4)` : '0 2px 12px rgba(0,0,0,0.25)',
+      transform: hov ? 'translateX(4px)' : 'translateX(0)'
+    }
+  }, featured && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    "aria-hidden": "true",
+    style: {
+      position: 'absolute',
+      inset: '-1px',
+      pointerEvents: 'none',
+      background: `radial-gradient(ellipse at 12% 50%, ${acc}26 0%, transparent 55%)`,
+      animation: 'feature-halo 4.4s ease-in-out infinite'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    "aria-hidden": "true",
+    style: {
+      position: 'absolute',
+      left: 0,
+      top: 0,
+      bottom: 0,
+      width: '3px',
+      background: `linear-gradient(180deg, transparent 0%, ${accBright} 25%, ${acc} 75%, transparent 100%)`,
+      boxShadow: `0 0 14px ${acc}aa`,
+      animation: 'feature-bar 3.4s ease-in-out infinite',
+      pointerEvents: 'none'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    "aria-hidden": "true",
+    style: {
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+      width: '80px',
+      left: '-80px',
+      background: `linear-gradient(90deg, transparent 0%, ${accBright}22 45%, ${accBright}55 50%, ${accBright}22 55%, transparent 100%)`,
+      animation: 'feature-shimmer 7.5s ease-in-out infinite',
+      pointerEvents: 'none',
+      mixBlendMode: 'screen'
+    }
+  }), /*#__PURE__*/React.createElement("svg", {
+    "aria-hidden": "true",
+    width: "16",
+    height: "16",
+    viewBox: "0 0 16 16",
+    style: {
+      position: 'absolute',
+      top: '6px',
+      left: '6px',
+      pointerEvents: 'none'
+    }
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M 1 8 L 1 1 L 8 1",
+    fill: "none",
+    stroke: accBright,
+    strokeWidth: "1"
+  })), /*#__PURE__*/React.createElement("svg", {
+    "aria-hidden": "true",
+    width: "16",
+    height: "16",
+    viewBox: "0 0 16 16",
+    style: {
+      position: 'absolute',
+      bottom: '6px',
+      right: '6px',
+      pointerEvents: 'none'
+    }
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M 15 8 L 15 15 L 8 15",
+    fill: "none",
+    stroke: accBright,
+    strokeWidth: "1"
+  })), /*#__PURE__*/React.createElement("div", {
+    "aria-hidden": "true",
+    style: {
+      position: 'absolute',
+      top: '10px',
+      left: '28px',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '6px',
+      pointerEvents: 'none',
+      zIndex: 3
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      width: '6px',
+      height: '6px',
+      borderRadius: '50%',
+      background: accBright,
+      animation: 'feature-pin 1.8s ease-in-out infinite'
+    }
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.32em',
+      color: accBright,
+      textTransform: 'uppercase',
+      textShadow: `0 0 8px ${acc}99`
+    }
+  }, "\u25C8 Dein Register")), /*#__PURE__*/React.createElement("div", {
+    "aria-hidden": "true",
+    style: {
+      position: 'absolute',
+      top: '10px',
+      right: '28px',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '6px',
+      pointerEvents: 'none',
+      zIndex: 3
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.28em',
+      color: `${accBright}cc`,
+      textTransform: 'uppercase',
+      animation: 'feature-tick 2.6s ease-in-out infinite'
+    }
+  }, "Prim\xE4r"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      width: '4px',
+      height: '4px',
+      background: accBright,
+      transform: 'rotate(45deg)'
+    }
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      pointerEvents: 'none',
+      backgroundImage: `repeating-linear-gradient(135deg, transparent, transparent 22px, ${acc}05 22px, ${acc}05 23px)`,
+      opacity: hov ? 1 : 0.5,
+      transition: 'opacity 0.3s'
+    }
+  }), hov && /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      left: 0,
+      top: 0,
+      bottom: 0,
+      width: '180px',
+      background: `linear-gradient(90deg, ${acc}14, transparent)`,
+      pointerEvents: 'none'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 2,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, !isFirst && !sec.spineBreakAbove && /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      left: '50%',
+      top: '-24px',
+      bottom: '50%',
+      width: '1px',
+      background: `linear-gradient(180deg, ${acc}28, ${acc}55)`,
+      transform: 'translateX(-0.5px)'
+    }
+  }), !isLast && !sec.dividerAfter && /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      left: '50%',
+      top: '50%',
+      bottom: '-24px',
+      width: '1px',
+      background: `linear-gradient(180deg, ${acc}55, ${acc}28)`,
+      transform: 'translateX(-0.5px)'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      width: '140px',
+      height: '140px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      background: hov ? 'rgba(10,6,28,0.95)' : 'rgba(10,6,28,0.85)',
+      clipPath: 'polygon(50% 0%, 93.3% 25%, 93.3% 75%, 50% 100%, 6.7% 75%, 6.7% 25%)',
+      transition: 'background 0.3s'
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "104",
+    height: "104",
+    viewBox: "0 0 104 104",
+    style: {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%,-50%)',
+      display: 'block',
+      filter: featured ? hov ? `drop-shadow(0 0 22px ${acc}cc)` : `drop-shadow(0 0 16px ${acc}99)` : hov ? `drop-shadow(0 0 14px ${acc}88)` : `drop-shadow(0 0 4px ${acc}44)`,
+      animation: featured ? 'feature-hex-pulse 4.2s ease-in-out infinite' : undefined,
+      transition: 'filter 0.35s'
+    }
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(104),
+    fill: featured ? hov ? `${acc}20` : `${acc}14` : hov ? `${acc}10` : `${acc}06`,
+    stroke: featured ? hov ? accBright : acc : hov ? acc : `${acc}55`,
+    strokeWidth: featured ? '1.3' : '1'
+  }), /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(88),
+    fill: "none",
+    stroke: featured ? `${acc}55` : `${acc}22`,
+    strokeWidth: "0.6",
+    transform: "translate(8 8)"
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 1
+    }
+  }, /*#__PURE__*/React.createElement(SectionIcon, {
+    kind: sec.icon,
+    size: 56,
+    color: acc,
+    hov: hov
+  })))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 2,
+      padding: '4px 32px 4px 28px',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      minWidth: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'baseline',
+      gap: '14px',
+      marginBottom: '4px',
+      flexWrap: 'wrap'
+    }
+  }, /*#__PURE__*/React.createElement("h3", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: featured ? '24px' : '22px',
+      fontWeight: '400',
+      letterSpacing: '0.18em',
+      color: featured ? '#f5f1ff' : hov ? '#f0eeff' : 'rgba(240,238,255,0.92)',
+      textShadow: featured ? `0 0 24px ${acc}99` : hov ? `0 0 22px ${acc}66` : 'none',
+      transition: 'color 0.3s, text-shadow 0.3s',
+      lineHeight: 1.15,
+      textTransform: 'uppercase',
+      margin: 0
+    }
+  }, sec.name), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8.5px',
+      letterSpacing: '0.28em',
+      color: hov ? `${acc}cc` : `${acc}77`,
+      textTransform: 'uppercase',
+      transition: 'color 0.3s'
+    }
+  }, sec.untertitel)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      margin: '8px 0 12px',
+      maxWidth: '480px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      height: '1px',
+      width: '18px',
+      background: `${acc}55`
+    }
+  }), /*#__PURE__*/React.createElement("svg", {
+    width: "6",
+    height: "6",
+    viewBox: "0 0 6 6"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(6),
+    fill: `${acc}66`,
+    stroke: `${acc}aa`,
+    strokeWidth: "0.6"
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      height: '1px',
+      flex: 1,
+      background: `linear-gradient(90deg, ${acc}55, transparent)`
+    }
+  })), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12.5px',
+      lineHeight: 1.85,
+      color: hov ? 'rgba(220,210,255,0.75)' : 'rgba(220,210,255,0.55)',
+      letterSpacing: '0.02em',
+      textWrap: 'pretty',
+      margin: '0 0 14px 0',
+      maxWidth: '620px',
+      transition: 'color 0.3s'
+    }
+  }, sec.beschreibung), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      flexWrap: 'wrap'
+    }
+  }, sec.topics.map((t, i) => /*#__PURE__*/React.createElement("span", {
+    key: i,
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8.5px',
+      letterSpacing: '0.18em',
+      textTransform: 'uppercase',
+      color: hov ? `${acc}dd` : `${acc}88`,
+      padding: '3px 8px',
+      border: `1px solid ${hov ? acc + '55' : acc + '28'}`,
+      borderRadius: '2px',
+      background: hov ? `${acc}10` : 'transparent',
+      transition: 'all 0.3s'
+    }
+  }, t)))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 2,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'flex-end',
+      justifyContent: 'center',
+      gap: '10px',
+      padding: '0 4px 0 20px',
+      minWidth: '110px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '9.5px',
+      letterSpacing: '0.32em',
+      textTransform: 'uppercase',
+      color: hov ? '#f0eeff' : 'rgba(200,190,240,0.55)',
+      textShadow: hov ? `0 0 12px ${acc}88` : 'none',
+      transition: 'color 0.3s, text-shadow 0.3s'
+    }
+  }, "\xD6ffnen"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '6px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      height: '1px',
+      width: hov ? '32px' : '18px',
+      background: `linear-gradient(90deg, transparent, ${hov ? acc : acc + '55'})`,
+      transition: 'width 0.3s, background 0.3s'
+    }
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '16px',
+      color: hov ? '#f0eeff' : `${acc}aa`,
+      textShadow: hov ? `0 0 10px ${acc}cc` : 'none',
+      transition: 'color 0.3s, text-shadow 0.3s'
+    }
+  }, "\u2192"))))));
 }
 
 // ── SECTION DIVIDER (between Meine Charaktere and the rest) ───
-function SectionDivider({ label, delay }) {
+function SectionDivider({
+  label,
+  delay
+}) {
   const acc = '#7c4dff';
-  return (
-    <div className="reveal-up" style={{ transitionDelay:`${delay}s`, position:'relative', padding:'10px 0 8px', margin:'2px 0' }}>
-      {/* Gap-spanning faint hex column marker on the left, aligned with the ribbon-card icon spine (168px / 2 = 84px) */}
-      <div style={{ position:'absolute', left:'84px', top:'0', bottom:'0', display:'flex', alignItems:'center', justifyContent:'center', pointerEvents:'none' }}>
-        <svg width="14" height="14" viewBox="0 0 14 14" style={{ display:'block', filter:`drop-shadow(0 0 6px ${acc}99)` }}>
-          <polygon points={hexPoints(14)} fill="rgba(5,4,15,1)" stroke={acc} strokeWidth="0.9"/>
-          <polygon points={hexPoints(8)} transform="translate(3 3)" fill={`${acc}88`} stroke="none"/>
-        </svg>
-      </div>
-
-      <div style={{ display:'flex', alignItems:'center', gap:'14px', paddingLeft:'180px', paddingRight:'8px' }}>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:'8.5px', letterSpacing:'0.32em', color:`${acc}aa`, textTransform:'uppercase', whiteSpace:'nowrap' }}>
-          ◇ {label}
-        </span>
-        <div style={{ flex:1, position:'relative', height:'1px' }}>
-          {/* Layered divider: solid base + dashed accent + mid-glow */}
-          <div style={{ position:'absolute', inset:0, background:`linear-gradient(90deg, ${acc}55 0%, ${acc}33 50%, transparent 100%)` }} />
-          <div style={{ position:'absolute', inset:0, borderTop:`1px dashed ${acc}40` }} />
-          <div style={{ position:'absolute', left:'30%', top:'-2px', width:'120px', height:'4px', background:`radial-gradient(ellipse, ${acc}55, transparent 70%)`, filter:'blur(2px)' }} />
-        </div>
-        <div style={{ display:'flex', alignItems:'center', gap:'6px' }}>
-          <svg width="6" height="6" viewBox="0 0 6 6"><polygon points={hexPoints(6)} fill={`${acc}77`} stroke={`${acc}aa`} strokeWidth="0.5"/></svg>
-          <svg width="9" height="9" viewBox="0 0 9 9"><polygon points={hexPoints(9)} fill="none" stroke={`${acc}aa`} strokeWidth="0.7"/></svg>
-          <svg width="6" height="6" viewBox="0 0 6 6"><polygon points={hexPoints(6)} fill={`${acc}77`} stroke={`${acc}aa`} strokeWidth="0.5"/></svg>
-        </div>
-      </div>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      transitionDelay: `${delay}s`,
+      position: 'relative',
+      padding: '10px 0 8px',
+      margin: '2px 0'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      left: '84px',
+      top: '0',
+      bottom: '0',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      pointerEvents: 'none'
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "14",
+    height: "14",
+    viewBox: "0 0 14 14",
+    style: {
+      display: 'block',
+      filter: `drop-shadow(0 0 6px ${acc}99)`
+    }
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(14),
+    fill: "rgba(5,4,15,1)",
+    stroke: acc,
+    strokeWidth: "0.9"
+  }), /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(8),
+    transform: "translate(3 3)",
+    fill: `${acc}88`,
+    stroke: "none"
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '14px',
+      paddingLeft: '180px',
+      paddingRight: '8px'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8.5px',
+      letterSpacing: '0.32em',
+      color: `${acc}aa`,
+      textTransform: 'uppercase',
+      whiteSpace: 'nowrap'
+    }
+  }, "\u25C7 ", label), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      position: 'relative',
+      height: '1px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      background: `linear-gradient(90deg, ${acc}55 0%, ${acc}33 50%, transparent 100%)`
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      borderTop: `1px dashed ${acc}40`
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      left: '30%',
+      top: '-2px',
+      width: '120px',
+      height: '4px',
+      background: `radial-gradient(ellipse, ${acc}55, transparent 70%)`,
+      filter: 'blur(2px)'
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '6px'
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "6",
+    height: "6",
+    viewBox: "0 0 6 6"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(6),
+    fill: `${acc}77`,
+    stroke: `${acc}aa`,
+    strokeWidth: "0.5"
+  })), /*#__PURE__*/React.createElement("svg", {
+    width: "9",
+    height: "9",
+    viewBox: "0 0 9 9"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(9),
+    fill: "none",
+    stroke: `${acc}aa`,
+    strokeWidth: "0.7"
+  })), /*#__PURE__*/React.createElement("svg", {
+    width: "6",
+    height: "6",
+    viewBox: "0 0 6 6"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(6),
+    fill: `${acc}77`,
+    stroke: `${acc}aa`,
+    strokeWidth: "0.5"
+  })))));
 }
 
 // ── APP ──────────────────────────────────────────────────
 function App() {
-  const [mouse, setMouse] = useState({ x:0.5, y:0.5 });
+  const [mouse, setMouse] = useState({
+    x: 0.5,
+    y: 0.5
+  });
   const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
-  const handleMouseMove = useCallback(e => { setMouse({ x: e.clientX/window.innerWidth, y: e.clientY/window.innerHeight }); }, []);
+  const handleMouseMove = useCallback(e => {
+    setMouse({
+      x: e.clientX / window.innerWidth,
+      y: e.clientY / window.innerHeight
+    });
+  }, []);
   useScrollReveal();
 
   // Annotate spine-break flags: the card after a divider should not draw a top spine.
   const sectionsAnnotated = SECTIONS.map((s, i) => ({
     ...s,
-    spineBreakAbove: i > 0 && SECTIONS[i-1].dividerAfter === true,
+    spineBreakAbove: i > 0 && SECTIONS[i - 1].dividerAfter === true
   }));
-
-  return (
-    <div onMouseMove={handleMouseMove} style={{ position:'relative', minHeight:'100vh' }}>
-      {tweaks.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} />}
-      {tweaks.showHexes && <FloatingHexField mouseX={mouse.x} mouseY={mouse.y} />}
-
-      {/* ── HEADER IMAGE ── */}
-      <div style={{ position:'relative', zIndex:10, width:'100%', height:'160px',
-        background:'linear-gradient(180deg, rgba(20,10,50,0.95) 0%, rgba(10,8,30,0.98) 100%)',
-        borderBottom:'1px solid rgba(160,140,255,0.15)', overflow:'hidden',
-        display:'flex', alignItems:'center', justifyContent:'center' }}>
-        <div style={{ position:'absolute', inset:0,
-          background:`radial-gradient(ellipse at 20% 50%, rgba(124,77,255,0.18) 0%, transparent 50%), radial-gradient(ellipse at 80% 50%, rgba(45,125,255,0.14) 0%, transparent 50%), repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(160,140,255,0.04) 60px, rgba(160,140,255,0.04) 61px)`,
-          pointerEvents:'none' }} />
-        <div style={{ position:'absolute', inset:0,
-          backgroundImage:`repeating-linear-gradient(135deg, transparent, transparent 18px, rgba(124,77,255,0.03) 18px, rgba(124,77,255,0.03) 19px)`,
-          pointerEvents:'none' }} />
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(160,140,255,0.3)', letterSpacing:'0.3em', textTransform:'uppercase', position:'relative', zIndex:1 }}>
-          Kopfbild — Artwork hier ablegen
-        </div>
-      </div>
-
-      <SiteNav rightLabel="CHARAKTER-REGISTER" />
-
-      {/* ── MAIN ── */}
-      <div style={{ position:'relative', zIndex:5, maxWidth:'1180px', margin:'0 auto', padding:'52px 40px 80px' }}>
-
-        {/* Page hero */}
-        <div className="reveal-up" style={{ marginBottom:'48px', textAlign:'center', position:'relative' }}>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.32em', color:'rgba(160,140,255,0.45)', textTransform:'uppercase', marginBottom:'14px' }}>
-            Meruria · Register
-          </div>
-          <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(30px,4vw,50px)', fontWeight:'300', letterSpacing:'0.22em', color:'#f0eeff', textShadow:'0 0 50px rgba(124,77,255,0.4)', marginBottom:'18px', lineHeight:1.15, textTransform:'uppercase' }}>
-            Charaktere
-          </h1>
-          <div style={{ display:'flex', alignItems:'center', gap:'12px', justifyContent:'center', marginBottom:'22px' }}>
-            <div style={{ width:'60px', height:'1px', background:'linear-gradient(270deg, rgba(124,77,255,0.6), transparent)' }} />
-            <svg width="8" height="8" viewBox="0 0 8 8"><polygon points={hexPoints(8)} fill="rgba(124,77,255,0.35)" stroke="rgba(160,140,255,0.6)" strokeWidth="0.8" /></svg>
-            <div style={{ width:'8px', height:'1px', background:'rgba(124,77,255,0.4)', animation:'pulse-glow 2s infinite' }} />
-            <svg width="5" height="5" viewBox="0 0 5 5"><polygon points={hexPoints(5)} fill="rgba(160,140,255,0.2)" stroke="rgba(160,140,255,0.4)" strokeWidth="0.6" /></svg>
-            <div style={{ width:'8px', height:'1px', background:'rgba(124,77,255,0.4)', animation:'pulse-glow 2s infinite 0.4s' }} />
-            <svg width="8" height="8" viewBox="0 0 8 8"><polygon points={hexPoints(8)} fill="rgba(124,77,255,0.35)" stroke="rgba(160,140,255,0.6)" strokeWidth="0.8" /></svg>
-            <div style={{ width:'60px', height:'1px', background:'linear-gradient(90deg, rgba(124,77,255,0.6), transparent)' }} />
-          </div>
-          <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'13px', lineHeight:1.9, color:'rgba(220,210,255,0.5)', letterSpacing:'0.05em', maxWidth:'580px', margin:'0 auto', textWrap:'pretty' }}>
-            Jede Figur, die einen Platz in Meruria gefunden hat — eigene Helden, die Charaktere der Mitspielenden und alle Gesichter, die der Spielleiter führt.
-          </p>
-        </div>
-
-        {/* Codex header strip */}
-        <div className="reveal-up" style={{ transitionDelay:'0.04s', display:'flex', alignItems:'center', gap:'14px', marginBottom:'22px' }}>
-          <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.28em', color:'rgba(160,140,255,0.7)', textTransform:'uppercase' }}>Bereiche</span>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em', color:'rgba(160,140,255,0.4)' }}>·</span>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em', color:'rgba(160,140,255,0.45)' }}>{`${SECTIONS.length.toString().padStart(2,'0')} Register`}</span>
-          </div>
-          <div style={{ flex:1, height:'1px', background:'linear-gradient(90deg, rgba(160,140,255,0.25) 0%, transparent 100%)' }}/>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.3em', color:'rgba(160,140,255,0.35)', textTransform:'uppercase' }}>
-            Charaktere
-          </div>
-        </div>
-
-        {/* Ribbon stack with vertical spine + section divider after the first card */}
-        <div style={{ display:'flex', flexDirection:'column', gap:'14px', position:'relative' }}>
-          {sectionsAnnotated.map((sec, i) => (
-            <React.Fragment key={sec.id}>
-              <RibbonCard
-                sec={sec}
-                index={i}
-                isFirst={i === 0}
-                isLast={i === sectionsAnnotated.length - 1}
-                delay={0.06 + i * 0.08}
-              />
-              {sec.dividerAfter && (
-                <SectionDivider label="Mitspielende & Spielleitung" delay={0.06 + i * 0.08 + 0.04} />
-              )}
-            </React.Fragment>
-          ))}
-        </div>
-
-        {/* Closing flourish */}
-        <div className="reveal-up" style={{ transitionDelay:'0.4s', display:'flex', alignItems:'center', gap:'14px', marginTop:'34px', justifyContent:'center' }}>
-          <div style={{ width:'80px', height:'1px', background:'linear-gradient(270deg, rgba(124,77,255,0.5), transparent)' }} />
-          <svg width="6" height="6" viewBox="0 0 6 6"><polygon points={hexPoints(6)} fill="rgba(124,77,255,0.4)" stroke="rgba(160,140,255,0.5)" strokeWidth="0.5" /></svg>
-          <div style={{ width:'80px', height:'1px', background:'linear-gradient(90deg, rgba(124,77,255,0.5), transparent)' }} />
-        </div>
-
-      </div>
-
-      {/* ── FOOTER ── */}
-      <div style={{ position:'relative', zIndex:10, padding:'10px 32px', borderTop:'1px solid rgba(160,140,255,0.07)', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:'rgba(160,140,255,0.22)', letterSpacing:'0.2em' }}>◈ REGISTER-STATUS: NOMINAL ◈ EPOCHE: UNBEKANNT</div>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:'rgba(160,140,255,0.22)', letterSpacing:'0.2em' }}>MERURIA // CHARAKTER-REGISTER</div>
-      </div>
-
-      <TweaksPanel>
-        <TweakSection label="Atmosphäre"/>
-        <TweakToggle id="showParticles" label="Partikel"/>
-        <TweakToggle id="showHexes" label="Hexagone"/>
-      </TweaksPanel>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    onMouseMove: handleMouseMove,
+    style: {
+      position: 'relative',
+      minHeight: '100vh'
+    }
+  }, tweaks.showParticles && /*#__PURE__*/React.createElement(ParticleField, {
+    mouseX: mouse.x,
+    mouseY: mouse.y
+  }), tweaks.showHexes && /*#__PURE__*/React.createElement(FloatingHexField, {
+    mouseX: mouse.x,
+    mouseY: mouse.y
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 10,
+      width: '100%',
+      height: '160px',
+      background: 'linear-gradient(180deg, rgba(20,10,50,0.95) 0%, rgba(10,8,30,0.98) 100%)',
+      borderBottom: '1px solid rgba(160,140,255,0.15)',
+      overflow: 'hidden',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      background: `radial-gradient(ellipse at 20% 50%, rgba(124,77,255,0.18) 0%, transparent 50%), radial-gradient(ellipse at 80% 50%, rgba(45,125,255,0.14) 0%, transparent 50%), repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(160,140,255,0.04) 60px, rgba(160,140,255,0.04) 61px)`,
+      pointerEvents: 'none'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      backgroundImage: `repeating-linear-gradient(135deg, transparent, transparent 18px, rgba(124,77,255,0.03) 18px, rgba(124,77,255,0.03) 19px)`,
+      pointerEvents: 'none'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: 'rgba(160,140,255,0.3)',
+      letterSpacing: '0.3em',
+      textTransform: 'uppercase',
+      position: 'relative',
+      zIndex: 1
+    }
+  }, "Kopfbild \u2014 Artwork hier ablegen")), /*#__PURE__*/React.createElement(SiteNav, {
+    rightLabel: "CHARAKTER-REGISTER"
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 5,
+      maxWidth: '1180px',
+      margin: '0 auto',
+      padding: '52px 40px 80px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      marginBottom: '48px',
+      textAlign: 'center',
+      position: 'relative'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.32em',
+      color: 'rgba(160,140,255,0.45)',
+      textTransform: 'uppercase',
+      marginBottom: '14px'
+    }
+  }, "Meruria \xB7 Register"), /*#__PURE__*/React.createElement("h1", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: 'clamp(30px,4vw,50px)',
+      fontWeight: '300',
+      letterSpacing: '0.22em',
+      color: '#f0eeff',
+      textShadow: '0 0 50px rgba(124,77,255,0.4)',
+      marginBottom: '18px',
+      lineHeight: 1.15,
+      textTransform: 'uppercase'
+    }
+  }, "Charaktere"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px',
+      justifyContent: 'center',
+      marginBottom: '22px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '60px',
+      height: '1px',
+      background: 'linear-gradient(270deg, rgba(124,77,255,0.6), transparent)'
+    }
+  }), /*#__PURE__*/React.createElement("svg", {
+    width: "8",
+    height: "8",
+    viewBox: "0 0 8 8"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(8),
+    fill: "rgba(124,77,255,0.35)",
+    stroke: "rgba(160,140,255,0.6)",
+    strokeWidth: "0.8"
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '8px',
+      height: '1px',
+      background: 'rgba(124,77,255,0.4)',
+      animation: 'pulse-glow 2s infinite'
+    }
+  }), /*#__PURE__*/React.createElement("svg", {
+    width: "5",
+    height: "5",
+    viewBox: "0 0 5 5"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(5),
+    fill: "rgba(160,140,255,0.2)",
+    stroke: "rgba(160,140,255,0.4)",
+    strokeWidth: "0.6"
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '8px',
+      height: '1px',
+      background: 'rgba(124,77,255,0.4)',
+      animation: 'pulse-glow 2s infinite 0.4s'
+    }
+  }), /*#__PURE__*/React.createElement("svg", {
+    width: "8",
+    height: "8",
+    viewBox: "0 0 8 8"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(8),
+    fill: "rgba(124,77,255,0.35)",
+    stroke: "rgba(160,140,255,0.6)",
+    strokeWidth: "0.8"
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '60px',
+      height: '1px',
+      background: 'linear-gradient(90deg, rgba(124,77,255,0.6), transparent)'
+    }
+  })), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '13px',
+      lineHeight: 1.9,
+      color: 'rgba(220,210,255,0.5)',
+      letterSpacing: '0.05em',
+      maxWidth: '580px',
+      margin: '0 auto',
+      textWrap: 'pretty'
+    }
+  }, "Jede Figur, die einen Platz in Meruria gefunden hat \u2014 eigene Helden, die Charaktere der Mitspielenden und alle Gesichter, die der Spielleiter f\xFChrt.")), /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      transitionDelay: '0.04s',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '14px',
+      marginBottom: '22px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.28em',
+      color: 'rgba(160,140,255,0.7)',
+      textTransform: 'uppercase'
+    }
+  }, "Bereiche"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.18em',
+      color: 'rgba(160,140,255,0.4)'
+    }
+  }, "\xB7"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.18em',
+      color: 'rgba(160,140,255,0.45)'
+    }
+  }, `${SECTIONS.length.toString().padStart(2, '0')} Register`)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      height: '1px',
+      background: 'linear-gradient(90deg, rgba(160,140,255,0.25) 0%, transparent 100%)'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.3em',
+      color: 'rgba(160,140,255,0.35)',
+      textTransform: 'uppercase'
+    }
+  }, "Charaktere")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '14px',
+      position: 'relative'
+    }
+  }, sectionsAnnotated.map((sec, i) => /*#__PURE__*/React.createElement(React.Fragment, {
+    key: sec.id
+  }, /*#__PURE__*/React.createElement(RibbonCard, {
+    sec: sec,
+    index: i,
+    isFirst: i === 0,
+    isLast: i === sectionsAnnotated.length - 1,
+    delay: 0.06 + i * 0.08
+  }), sec.dividerAfter && /*#__PURE__*/React.createElement(SectionDivider, {
+    label: "Mitspielende & Spielleitung",
+    delay: 0.06 + i * 0.08 + 0.04
+  })))), /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      transitionDelay: '0.4s',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '14px',
+      marginTop: '34px',
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '80px',
+      height: '1px',
+      background: 'linear-gradient(270deg, rgba(124,77,255,0.5), transparent)'
+    }
+  }), /*#__PURE__*/React.createElement("svg", {
+    width: "6",
+    height: "6",
+    viewBox: "0 0 6 6"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(6),
+    fill: "rgba(124,77,255,0.4)",
+    stroke: "rgba(160,140,255,0.5)",
+    strokeWidth: "0.5"
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '80px',
+      height: '1px',
+      background: 'linear-gradient(90deg, rgba(124,77,255,0.5), transparent)'
+    }
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 10,
+      padding: '10px 32px',
+      borderTop: '1px solid rgba(160,140,255,0.07)',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      color: 'rgba(160,140,255,0.22)',
+      letterSpacing: '0.2em'
+    }
+  }, "\u25C8 REGISTER-STATUS: NOMINAL \u25C8 EPOCHE: UNBEKANNT"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      color: 'rgba(160,140,255,0.22)',
+      letterSpacing: '0.2em'
+    }
+  }, "MERURIA // CHARAKTER-REGISTER")), /*#__PURE__*/React.createElement(TweaksPanel, null, /*#__PURE__*/React.createElement(TweakSection, {
+    label: "Atmosph\xE4re"
+  }), /*#__PURE__*/React.createElement(TweakToggle, {
+    id: "showParticles",
+    label: "Partikel"
+  }), /*#__PURE__*/React.createElement(TweakToggle, {
+    id: "showHexes",
+    label: "Hexagone"
+  })));
 }
-
-ReactDOM.createRoot(document.getElementById('root')).render(<SiteGate><App/></SiteGate>);
+ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement(App, null)));
+})();
 </script>
 
 

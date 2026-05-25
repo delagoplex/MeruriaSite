@@ -6,56 +6,90 @@
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
 <link rel="stylesheet" href="assets/styles/pages/Klassen.css">
-<script src="assets/scripts/vendor/react.development.js"></script>
-<script src="assets/scripts/vendor/react-dom.development.js"></script>
-<script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/scripts/vendor/react.production.min.js"></script>
+<script src="assets/scripts/vendor/react-dom.production.min.js"></script>
+
 <script src="assets/scripts/data/klassen-data.js"></script>
-<script src="assets/components/tweaks-panel-4.jsx" type="text/babel"></script>
-<script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/tweaks-panel-4.js"></script>
+<script src="assets/components/nav.js"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
-<script src="assets/components/site-gate.jsx" type="text/babel"></script>
-<script src="assets/components/page-header.jsx" type="text/babel"></script>
-<script src="assets/components/particle-field.jsx" type="text/babel"></script>
-<script src="assets/components/floating-hex-field.jsx" type="text/babel"></script>
-<script src="assets/components/footer.jsx" type="text/babel"></script>
-<script src="assets/components/float-nav.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.js"></script>
+<script src="assets/components/page-header.js"></script>
+<script src="assets/components/particle-field.js"></script>
+<script src="assets/components/floating-hex-field.js"></script>
+<script src="assets/components/footer.js"></script>
+<script src="assets/components/float-nav.js"></script>
 
 </head>
 <body>
 <div id="root"></div>
-<script type="text/babel">
-
-const { useState, useEffect, useRef, useCallback } = React;
-const { useTweaks, TweaksPanel, TweakSection, TweakSlider, TweakToggle, SiteNav, ParticleField, FloatingHexField, FloatNav } = window;
-const { klassen } = window.KLASSEN_DATA;
-
+<script>
+(function () {
+const {
+  useState,
+  useEffect,
+  useRef,
+  useCallback
+} = React;
+const {
+  useTweaks,
+  TweaksPanel,
+  TweakSection,
+  TweakSlider,
+  TweakToggle,
+  SiteNav,
+  ParticleField,
+  FloatingHexField,
+  FloatNav
+} = window;
+const {
+  klassen
+} = window.KLASSEN_DATA;
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "showParticles": true,
   "columns": 3,
   "headerHeight": 180
-}/*EDITMODE-END*/;
-
+} /*EDITMODE-END*/;
 const NAV_H = 52;
-
 
 // ── HEXAGON helper ─────────────────────────────────────
 function hexPoints(s) {
-  const cx = s/2, cy = s/2, r = s/2;
+  const cx = s / 2,
+    cy = s / 2,
+    r = s / 2;
   const pts = [];
   for (let i = 0; i < 6; i++) {
-    const a = (Math.PI/180)*(60*i-30);
-    pts.push(`${cx+r*Math.cos(a)},${cy+r*Math.sin(a)}`);
+    const a = Math.PI / 180 * (60 * i - 30);
+    pts.push(`${cx + r * Math.cos(a)},${cy + r * Math.sin(a)}`);
   }
   return pts.join(' ');
 }
-function OctSvg({ size=24, color='currentColor', fill='none', strokeWidth=1, opacity=1, style={} }) {
+function OctSvg({
+  size = 24,
+  color = 'currentColor',
+  fill = 'none',
+  strokeWidth = 1,
+  opacity = 1,
+  style = {}
+}) {
   const pts = hexPoints(size);
-  return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ display:'block', flexShrink:0, ...style }}>
-      <polygon points={pts} fill={fill} stroke={color} strokeWidth={strokeWidth} opacity={opacity} />
-    </svg>
-  );
+  return /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: `0 0 ${size} ${size}`,
+    style: {
+      display: 'block',
+      flexShrink: 0,
+      ...style
+    }
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: pts,
+    fill: fill,
+    stroke: color,
+    strokeWidth: strokeWidth,
+    opacity: opacity
+  }));
 }
 
 // ── SCROLL REVEAL ──────────────────────────────────────
@@ -70,14 +104,20 @@ function useScrollReveal(dep) {
       setTimeout(() => el.classList.add('visible'), delay);
     };
     const init = () => {
-      observer = new IntersectionObserver((entries) => {
+      observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
           if (!entry.isIntersecting) return;
           const el = entry.target;
           observer.unobserve(el);
-          if (el.classList.contains('reveal-left')) { revealEl(el, 0); return; }
+          if (el.classList.contains('reveal-left')) {
+            revealEl(el, 0);
+            return;
+          }
           const parent = el.parentElement;
-          if (!parent) { revealEl(el, 0); return; }
+          if (!parent) {
+            revealEl(el, 0);
+            return;
+          }
           const siblings = Array.from(parent.querySelectorAll('.reveal-up'));
           const rowMap = new Map();
           siblings.forEach(sib => {
@@ -85,280 +125,898 @@ function useScrollReveal(dep) {
             if (!rowMap.has(top)) rowMap.set(top, []);
             rowMap.get(top).push(sib);
           });
-          const sortedTops = Array.from(rowMap.keys()).sort((a,b)=>a-b);
+          const sortedTops = Array.from(rowMap.keys()).sort((a, b) => a - b);
           const elTop = Math.round(el.getBoundingClientRect().top);
           const rowIndex = sortedTops.indexOf(elTop);
-          const rowDelay = Math.max(0, rowIndex)*80;
-          const rowEls = rowMap.get(elTop)||[el];
-          rowEls.forEach(rowEl => { observer.unobserve(rowEl); revealEl(rowEl, rowDelay); });
+          const rowDelay = Math.max(0, rowIndex) * 80;
+          const rowEls = rowMap.get(elTop) || [el];
+          rowEls.forEach(rowEl => {
+            observer.unobserve(rowEl);
+            revealEl(rowEl, rowDelay);
+          });
         });
-      }, { threshold: 0.06, rootMargin: '0px 0px -24px 0px' });
-      document.querySelectorAll('.reveal-up,.reveal-left').forEach(el => { el.classList.remove('visible'); observer.observe(el); });
+      }, {
+        threshold: 0.06,
+        rootMargin: '0px 0px -24px 0px'
+      });
+      document.querySelectorAll('.reveal-up,.reveal-left').forEach(el => {
+        el.classList.remove('visible');
+        observer.observe(el);
+      });
     };
     const t = setTimeout(init, 120);
-    return () => { clearTimeout(t); observer && observer.disconnect(); };
+    return () => {
+      clearTimeout(t);
+      observer && observer.disconnect();
+    };
   }, [dep]);
 }
 
 // ── CLASS CARD ─────────────────────────────────────────
-function KlasseCard({ klasse, onClick }) {
+function KlasseCard({
+  klasse,
+  onClick
+}) {
   const cardRef = useRef(null);
-  const [tilt, setTilt] = useState({ rx:0, ry:0 });
+  const [tilt, setTilt] = useState({
+    rx: 0,
+    ry: 0
+  });
   const [hov, setHov] = useState(false);
   const frameRef = useRef(null);
   const pal = klasse.palette;
   const accent = pal[2];
-
-  const handleMouseMove = useCallback((e) => {
-    const el = cardRef.current; if (!el) return;
+  const handleMouseMove = useCallback(e => {
+    const el = cardRef.current;
+    if (!el) return;
     const rect = el.getBoundingClientRect();
-    const x = (e.clientX-rect.left)/rect.width;
-    const y = (e.clientY-rect.top)/rect.height;
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
     cancelAnimationFrame(frameRef.current);
-    frameRef.current = requestAnimationFrame(() => setTilt({ rx:(y-0.5)*-16, ry:(x-0.5)*16 }));
+    frameRef.current = requestAnimationFrame(() => setTilt({
+      rx: (y - 0.5) * -16,
+      ry: (x - 0.5) * 16
+    }));
   }, []);
-
-  const handleMouseLeave = () => { setHov(false); cancelAnimationFrame(frameRef.current); setTilt({ rx:0, ry:0 }); };
-
-  return (
-    <a onClick={e=>{ e.preventDefault(); onClick && onClick(klasse); }} href="#" style={{ textDecoration:'none', display:'block' }}>
-      <div className="reveal-up" ref={cardRef}
-        onMouseMove={handleMouseMove}
-        onMouseEnter={()=>setHov(true)}
-        onMouseLeave={handleMouseLeave}
-        style={{ position:'relative', perspective:'900px', transform:hov?'translateY(-3px) scale(1.01)':'translateY(0) scale(1)', transition:hov?'transform 0.08s linear':'transform 0.45s cubic-bezier(0.23,1,0.32,1)', willChange:'transform', zIndex:hov?10:1, cursor:'pointer' }}>
-
-        <div style={{ position:'relative', borderRadius:'4px', height:'260px', border:`1px solid ${hov?accent+'88':accent+'22'}`, boxShadow:hov?`0 12px 48px rgba(0,0,0,0.7), 0 0 28px ${accent}33, inset 0 1px 0 ${accent}18`:'0 2px 16px rgba(0,0,0,0.55)', overflow:'visible', transformStyle:'preserve-3d', transform:hov?`rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)`:'rotateX(0deg) rotateY(0deg)', transition:hov?'border-color 0.2s, box-shadow 0.25s, transform 0.08s linear':'border-color 0.35s, box-shadow 0.35s, transform 0.45s cubic-bezier(0.23,1,0.32,1)' }}>
-
-          {/* Clipping container for background layers */}
-          <div style={{ position:'absolute', inset:0, borderRadius:'4px', overflow:'hidden', zIndex:1 }}>
-            {/* Deep bg */}
-            <div style={{ position:'absolute', inset:0, background:`linear-gradient(160deg, ${pal[0]} 0%, ${pal[1]}cc 100%)` }} />
-            {/* Accent tint */}
-            <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse at 30% 20%, ${accent}22 0%, transparent 60%)` }} />
-            {/* Dark vignette — fades in on hover */}
-            <div style={{ position:'absolute', inset:0, background:'linear-gradient(to top, rgba(4,2,14,0.92) 0%, rgba(4,2,14,0.45) 50%, rgba(4,2,14,0.12) 100%)', opacity:hov?1:0, transition:'opacity 0.45s ease' }} />
-            {/* Shimmer on hover */}
-            <div style={{ position:'absolute', inset:0, pointerEvents:'none', background:hov?`radial-gradient(ellipse at ${50+tilt.ry*1.5}% ${50-tilt.rx*1.5}%, ${accent}22 0%, transparent 65%)`:'none' }} />
-            {/* Diagonal line texture */}
-            <div style={{ position:'absolute', inset:0, backgroundImage:`repeating-linear-gradient(135deg, transparent, transparent 18px, ${accent}08 18px, ${accent}08 19px)`, opacity: hov?0.6:0.3, transition:'opacity 0.4s' }} />
-          </div>
-
-          {/* Form — erscheint hinter den Sternen beim Hover */}
-          <div style={{ position:'absolute', right:'5%', bottom:'5%', width:'55%', aspectRatio:'1', opacity:hov?0.65:0, transform:`translateZ(${hov?16:0}px)`, transition:hov?'opacity 0.5s ease, transform 0.08s linear':'opacity 0.35s ease, transform 0.45s cubic-bezier(0.23,1,0.32,1)', zIndex:20, pointerEvents:'none' }}>
-            <img src={`assets/images/classes/${klasse.name}_Form.png`} style={{ width:'100%', height:'100%', objectFit:'contain', filter:`drop-shadow(0 0 18px ${accent}99)` }} />
-          </div>
-
-          {/* Sterne — im Ruhezustand und Hover sichtbar */}
-          <div style={{ position:'absolute', right:'5%', bottom:'5%', width:'55%', aspectRatio:'1', opacity:hov?0.88:0.45, transform:`translateZ(${hov?32:2}px)`, transition:hov?'opacity 0.4s ease, transform 0.08s linear':'opacity 0.45s ease, transform 0.45s cubic-bezier(0.23,1,0.32,1)', zIndex:32, pointerEvents:'none' }}>
-            <img src={`assets/images/classes/${klasse.name}_Sterne.png`} style={{ width:'100%', height:'100%', objectFit:'contain', filter:`drop-shadow(0 0 14px ${accent})` }} />
-          </div>
-
-          {/* Resting state text */}
-          <div style={{ position:'absolute', inset:0, zIndex:35, transform:'translateZ(4px)', display:'flex', flexDirection:'column', justifyContent:'flex-end', padding:'20px 18px', opacity:hov?0:1, transition:'opacity 0.35s ease' }}>
-            <h3 style={{ fontFamily:'var(--font-display)', fontSize:'15px', fontWeight:'400', letterSpacing:'0.16em', color:'var(--white)', textShadow:hov?`0 0 18px ${accent}, 0 0 36px ${accent}88, 0 2px 16px rgba(0,0,0,1)`:'0 2px 16px rgba(0,0,0,1), 0 0 32px rgba(0,0,0,0.9)', textTransform:'uppercase', marginBottom:'3px', transition:'text-shadow 0.35s ease' }}>{klasse.name}</h3>
-            <div style={{ width:'50px', height:'1px', background:`linear-gradient(90deg,${accent}cc,transparent)`, animation:'pulse-glow 3s infinite', marginBottom:'6px' }} />
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:accent+'bb', textTransform:'uppercase', marginBottom:'6px', textShadow:'0 1px 8px rgba(0,0,0,1), 0 0 16px rgba(0,0,0,0.9)' }}>{klasse.rolle}</div>
-            <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'10px', lineHeight:1.75, color:'rgba(var(--text-rgb),0.78)', letterSpacing:'0.03em', display:'-webkit-box', WebkitLineClamp:2, WebkitBoxOrient:'vertical', overflow:'hidden', textShadow:'0 1px 8px rgba(0,0,0,1), 0 0 16px rgba(0,0,0,0.9)' }}>{klasse.subtitle}</p>
-          </div>
-
-          {/* Resting text gradient — fades out on hover */}
-          <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'100px', zIndex:9, background:'linear-gradient(to top, rgba(2,1,10,0.92) 0%, rgba(2,1,10,0.88) 97%, transparent 99%)', opacity:hov?0:1, transition:'opacity 0.35s ease', pointerEvents:'none' }} />
-
-          {/* Hover vignette wedge */}
-          <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'80px', zIndex:10, transform:'translateZ(2px)', background:'linear-gradient(to top, rgba(2,1,10,0.88) 0%, transparent 100%)', clipPath:'polygon(0% 40%, 100% 0%, 100% 100%, 0% 100%)', opacity:hov?1:0, transition:'opacity 0.35s ease', pointerEvents:'none' }} />
-
-          {/* Hover name badge */}
-          <div style={{ position:'absolute', bottom:'22px', left:'22px', zIndex:33, transform:'translateZ(10px)', opacity:hov?1:0, transition:'opacity 0.35s ease' }}>
-            <h3 style={{ fontFamily:'var(--font-display)', fontSize:'15px', fontWeight:'400', letterSpacing:'0.16em', color:'var(--white)', textShadow:`0 0 24px ${accent}cc, 0 2px 8px rgba(0,0,0,0.9)`, textTransform:'uppercase' }}>{klasse.name}</h3>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em', color:accent+'bb', marginTop:'3px', display:'flex', flexDirection:'column', gap:'2px' }}>{klasse.fähigkeit.split(' · ').map((f,i)=><span key={i}>{f}</span>)}</div>
-          </div>
-
-        </div>
-      </div>
-    </a>
-  );
+  const handleMouseLeave = () => {
+    setHov(false);
+    cancelAnimationFrame(frameRef.current);
+    setTilt({
+      rx: 0,
+      ry: 0
+    });
+  };
+  return /*#__PURE__*/React.createElement("a", {
+    onClick: e => {
+      e.preventDefault();
+      onClick && onClick(klasse);
+    },
+    href: "#",
+    style: {
+      textDecoration: 'none',
+      display: 'block'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    ref: cardRef,
+    onMouseMove: handleMouseMove,
+    onMouseEnter: () => setHov(true),
+    onMouseLeave: handleMouseLeave,
+    style: {
+      position: 'relative',
+      perspective: '900px',
+      transform: hov ? 'translateY(-3px) scale(1.01)' : 'translateY(0) scale(1)',
+      transition: hov ? 'transform 0.08s linear' : 'transform 0.45s cubic-bezier(0.23,1,0.32,1)',
+      willChange: 'transform',
+      zIndex: hov ? 10 : 1,
+      cursor: 'pointer'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      borderRadius: '4px',
+      height: '260px',
+      border: `1px solid ${hov ? accent + '88' : accent + '22'}`,
+      boxShadow: hov ? `0 12px 48px rgba(0,0,0,0.7), 0 0 28px ${accent}33, inset 0 1px 0 ${accent}18` : '0 2px 16px rgba(0,0,0,0.55)',
+      overflow: 'visible',
+      transformStyle: 'preserve-3d',
+      transform: hov ? `rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)` : 'rotateX(0deg) rotateY(0deg)',
+      transition: hov ? 'border-color 0.2s, box-shadow 0.25s, transform 0.08s linear' : 'border-color 0.35s, box-shadow 0.35s, transform 0.45s cubic-bezier(0.23,1,0.32,1)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      borderRadius: '4px',
+      overflow: 'hidden',
+      zIndex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      background: `linear-gradient(160deg, ${pal[0]} 0%, ${pal[1]}cc 100%)`
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      background: `radial-gradient(ellipse at 30% 20%, ${accent}22 0%, transparent 60%)`
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      background: 'linear-gradient(to top, rgba(4,2,14,0.92) 0%, rgba(4,2,14,0.45) 50%, rgba(4,2,14,0.12) 100%)',
+      opacity: hov ? 1 : 0,
+      transition: 'opacity 0.45s ease'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      pointerEvents: 'none',
+      background: hov ? `radial-gradient(ellipse at ${50 + tilt.ry * 1.5}% ${50 - tilt.rx * 1.5}%, ${accent}22 0%, transparent 65%)` : 'none'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      backgroundImage: `repeating-linear-gradient(135deg, transparent, transparent 18px, ${accent}08 18px, ${accent}08 19px)`,
+      opacity: hov ? 0.6 : 0.3,
+      transition: 'opacity 0.4s'
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      right: '5%',
+      bottom: '5%',
+      width: '55%',
+      aspectRatio: '1',
+      opacity: hov ? 0.65 : 0,
+      transform: `translateZ(${hov ? 16 : 0}px)`,
+      transition: hov ? 'opacity 0.5s ease, transform 0.08s linear' : 'opacity 0.35s ease, transform 0.45s cubic-bezier(0.23,1,0.32,1)',
+      zIndex: 20,
+      pointerEvents: 'none'
+    }
+  }, /*#__PURE__*/React.createElement("img", {
+    src: `assets/images/classes/${klasse.name}_Form.png`,
+    style: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'contain',
+      filter: `drop-shadow(0 0 18px ${accent}99)`
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      right: '5%',
+      bottom: '5%',
+      width: '55%',
+      aspectRatio: '1',
+      opacity: hov ? 0.88 : 0.45,
+      transform: `translateZ(${hov ? 32 : 2}px)`,
+      transition: hov ? 'opacity 0.4s ease, transform 0.08s linear' : 'opacity 0.45s ease, transform 0.45s cubic-bezier(0.23,1,0.32,1)',
+      zIndex: 32,
+      pointerEvents: 'none'
+    }
+  }, /*#__PURE__*/React.createElement("img", {
+    src: `assets/images/classes/${klasse.name}_Sterne.png`,
+    style: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'contain',
+      filter: `drop-shadow(0 0 14px ${accent})`
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      zIndex: 35,
+      transform: 'translateZ(4px)',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'flex-end',
+      padding: '20px 18px',
+      opacity: hov ? 0 : 1,
+      transition: 'opacity 0.35s ease'
+    }
+  }, /*#__PURE__*/React.createElement("h3", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '15px',
+      fontWeight: '400',
+      letterSpacing: '0.16em',
+      color: 'var(--white)',
+      textShadow: hov ? `0 0 18px ${accent}, 0 0 36px ${accent}88, 0 2px 16px rgba(0,0,0,1)` : '0 2px 16px rgba(0,0,0,1), 0 0 32px rgba(0,0,0,0.9)',
+      textTransform: 'uppercase',
+      marginBottom: '3px',
+      transition: 'text-shadow 0.35s ease'
+    }
+  }, klasse.name), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '50px',
+      height: '1px',
+      background: `linear-gradient(90deg,${accent}cc,transparent)`,
+      animation: 'pulse-glow 3s infinite',
+      marginBottom: '6px'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.22em',
+      color: accent + 'bb',
+      textTransform: 'uppercase',
+      marginBottom: '6px',
+      textShadow: '0 1px 8px rgba(0,0,0,1), 0 0 16px rgba(0,0,0,0.9)'
+    }
+  }, klasse.rolle), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '10px',
+      lineHeight: 1.75,
+      color: 'rgba(var(--text-rgb),0.78)',
+      letterSpacing: '0.03em',
+      display: '-webkit-box',
+      WebkitLineClamp: 2,
+      WebkitBoxOrient: 'vertical',
+      overflow: 'hidden',
+      textShadow: '0 1px 8px rgba(0,0,0,1), 0 0 16px rgba(0,0,0,0.9)'
+    }
+  }, klasse.subtitle)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      height: '100px',
+      zIndex: 9,
+      background: 'linear-gradient(to top, rgba(2,1,10,0.92) 0%, rgba(2,1,10,0.88) 97%, transparent 99%)',
+      opacity: hov ? 0 : 1,
+      transition: 'opacity 0.35s ease',
+      pointerEvents: 'none'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      height: '80px',
+      zIndex: 10,
+      transform: 'translateZ(2px)',
+      background: 'linear-gradient(to top, rgba(2,1,10,0.88) 0%, transparent 100%)',
+      clipPath: 'polygon(0% 40%, 100% 0%, 100% 100%, 0% 100%)',
+      opacity: hov ? 1 : 0,
+      transition: 'opacity 0.35s ease',
+      pointerEvents: 'none'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      bottom: '22px',
+      left: '22px',
+      zIndex: 33,
+      transform: 'translateZ(10px)',
+      opacity: hov ? 1 : 0,
+      transition: 'opacity 0.35s ease'
+    }
+  }, /*#__PURE__*/React.createElement("h3", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '15px',
+      fontWeight: '400',
+      letterSpacing: '0.16em',
+      color: 'var(--white)',
+      textShadow: `0 0 24px ${accent}cc, 0 2px 8px rgba(0,0,0,0.9)`,
+      textTransform: 'uppercase'
+    }
+  }, klasse.name), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.18em',
+      color: accent + 'bb',
+      marginTop: '3px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '2px'
+    }
+  }, klasse.fähigkeit.split(' · ').map((f, i) => /*#__PURE__*/React.createElement("span", {
+    key: i
+  }, f)))))));
 }
 
 // ── CLASS DETAIL OVERLAY ───────────────────────────────
-function KlasseDetail({ klasse, onBack }) {
+function KlasseDetail({
+  klasse,
+  onBack
+}) {
   const [visible, setVisible] = useState(false);
   const [leaving, setLeaving] = useState(false);
   const pal = klasse.palette;
   const accent = pal[2];
-  useEffect(() => { const t = setTimeout(()=>setVisible(true), 30); return ()=>clearTimeout(t); }, []);
-  const handleBack = () => { setLeaving(true); setTimeout(onBack, 340); };
-  const s = (delay=0) => ({ animation:visible?`fadeInUp 0.55s ${delay}s both`:'none', opacity:visible?undefined:0 });
-
-  const statRow = (label, val) => (
-    <div style={{ display:'flex', flexDirection:'column', gap:'4px' }}>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:accent+'66', letterSpacing:'0.25em', textTransform:'uppercase' }}>{label}</div>
-      <div style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', color:'rgba(var(--text-rgb),0.75)', letterSpacing:'0.03em', lineHeight:1.5 }}>{val}</div>
-    </div>
-  );
-
-  return (
-    <div style={{ position:'fixed', inset:0, zIndex:500, background:`radial-gradient(ellipse at 30% 40%,${pal[1]}55 0%,transparent 50%),radial-gradient(ellipse at 80% 70%,${accent}20 0%,transparent 40%),var(--bg)`, display:'flex', flexDirection:'column', animation:leaving?'dissolveOut 0.34s forwards':'dissolveIn 0.55s forwards', overflow:'hidden' }}>
-      <div style={{ position:'absolute', inset:0, pointerEvents:'none', backgroundImage:`repeating-linear-gradient(0deg,transparent,transparent 40px,${accent}07 40px,${accent}07 41px),repeating-linear-gradient(90deg,transparent,transparent 40px,${accent}07 40px,${accent}07 41px)` }} />
-
-      {/* Header bar */}
-      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'16px 40px', borderBottom:`1px solid ${accent}2a`, position:'relative', zIndex:2, ...s(0) }}>
-        <button onClick={handleBack} style={{ background:'none', border:`1px solid ${accent}44`, color:pal[3], fontFamily:'var(--font-mono)', fontSize:'10px', letterSpacing:'0.2em', padding:'7px 16px', cursor:'pointer', borderRadius:'2px', transition:'all 0.2s' }}
-          onMouseEnter={e=>{e.currentTarget.style.background=accent+'1a';e.currentTarget.style.borderColor=accent;}}
-          onMouseLeave={e=>{e.currentTarget.style.background='none';e.currentTarget.style.borderColor=accent+'44';}}>
-          ← ZURÜCK
-        </button>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:accent+'77', letterSpacing:'0.25em' }}>MERURIA / KLASSE / {klasse.id.toUpperCase()}</div>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:accent+'44', letterSpacing:'0.2em' }}>{klasse.trefferpunkte}</div>
-      </div>
-
-      {/* Body */}
-      <div style={{ flex:1, display:'flex', overflow:'hidden' }}>
-        {/* Left panel — symbol */}
-        <div style={{ width:'38%', position:'relative', borderRight:`1px solid ${accent}1a`, overflow:'hidden', ...s(0.04) }}>
-          <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse at 50% 45%,${accent}44 0%,${pal[1]}66 30%,${pal[0]} 70%),repeating-linear-gradient(45deg,transparent,transparent 24px,${accent}06 24px,${accent}06 25px)` }} />
-          {/* Large bg symbol */}
-          <div style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-55%)', width:'200px', height:'200px', color:pal[3], opacity:0.1, filter:`drop-shadow(0 0 40px ${accent})`, animation:'floatSymbol 4s ease-in-out infinite', zIndex:3 }} dangerouslySetInnerHTML={{ __html: klasse.symbolSvg }} />
-          {/* Placeholder art */}
-          <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', zIndex:2 }}>
-            <div style={{ position:'absolute', inset:'0px', border:`1px dashed ${accent}2a`, borderRadius:'3px', display:'flex', alignItems:'center', justifyContent:'center', background:`repeating-linear-gradient(-45deg,transparent,transparent 8px,${accent}07 8px,${accent}07 9px)`, overflow:'hidden' }}>
-              <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', color:accent+'44', letterSpacing:'0.1em', textAlign:'center' }}>porträt<br />{klasse.name.toLowerCase()}</span>
-            </div>
-          </div>
-          {/* Small floating symbol */}
-          <div style={{ position:'absolute', bottom:'22px', right:'22px', width:'72px', height:'72px', color:accent, opacity:0.6, filter:`drop-shadow(0 0 10px ${accent})`, animation:'floatSymbol 3.2s ease-in-out infinite', zIndex:4 }} dangerouslySetInnerHTML={{ __html: klasse.symbolSvg }} />
-        </div>
-
-        {/* Right panel — info */}
-        <div style={{ flex:1, padding:'44px 48px', overflowY:'auto', display:'flex', flexDirection:'column', gap:'28px' }}>
-          <div style={s(0.1)}>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.3em', color:accent+'88', textTransform:'uppercase', marginBottom:'8px' }}>Klasse</div>
-            <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(34px,4.5vw,60px)', fontWeight:'300', letterSpacing:'0.12em', color:'var(--white)', lineHeight:1.1, textShadow:`0 0 36px ${accent}77` }}>{klasse.name}</h1>
-            <div style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'13px', letterSpacing:'0.25em', color:pal[3]+'bb', marginTop:'7px', textTransform:'uppercase' }}>{klasse.subtitle}</div>
-          </div>
-
-          <div style={s(0.16)}>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:accent+'77', marginBottom:'9px', textTransform:'uppercase' }}>Rolle</div>
-            <div style={{ display:'flex', gap:'7px', flexWrap:'wrap' }}>
-              {klasse.rolle.split(' · ').map((r,i) =>
-                <span key={i} style={{ fontFamily:'var(--font-mono)', fontSize:'10px', padding:'4px 12px', border:`1px solid ${accent}44`, color:pal[3], letterSpacing:'0.15em', borderRadius:'2px', background:accent+'0e' }}>{r}</span>
-              )}
-            </div>
-          </div>
-
-          <div style={s(0.22)}>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:accent+'77', marginBottom:'10px', textTransform:'uppercase' }}>Beschreibung</div>
-            <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'13px', lineHeight:1.85, color:'rgba(var(--text-rgb),0.78)', letterSpacing:'0.015em' }}>{klasse.beschreibung}</p>
-          </div>
-
-          <div style={s(0.28)}>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:accent+'77', marginBottom:'10px', textTransform:'uppercase' }}>Hintergrund</div>
-            <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:1.85, color:'rgba(var(--text-rgb),0.55)', letterSpacing:'0.015em', fontStyle:'italic', borderLeft:`1px solid ${accent}33`, paddingLeft:'14px' }}>{klasse.lore}</p>
-          </div>
-
-          {/* Stats grid */}
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'16px 24px', borderTop:`1px solid ${accent}18`, paddingTop:'22px', ...s(0.34) }}>
-            {statRow('Trefferpunkte', klasse.trefferpunkte)}
-            {statRow('Rettungswürfe', klasse.rettungswürfe)}
-            {statRow('Rüstung', klasse.rüstung)}
-            {statRow('Waffen', klasse.waffen)}
-          </div>
-
-          <div style={{ borderTop:`1px solid ${accent}18`, paddingTop:'16px', ...s(0.38) }}>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:accent+'66', letterSpacing:'0.25em', textTransform:'uppercase', marginBottom:'8px' }}>Klassenmerkmal</div>
-            <div style={{ display:'flex', gap:'7px', flexWrap:'wrap' }}>
-              {klasse.fähigkeit.split(' · ').map((f,i) =>
-                <span key={i} style={{ fontFamily:'var(--font-body)', fontWeight:'400', fontSize:'11px', padding:'4px 12px', border:`1px solid ${accent}55`, color:pal[3]+'cc', letterSpacing:'0.08em', borderRadius:'2px', background:accent+'15', textShadow:`0 0 8px ${accent}44` }}>{f}</span>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  useEffect(() => {
+    const t = setTimeout(() => setVisible(true), 30);
+    return () => clearTimeout(t);
+  }, []);
+  const handleBack = () => {
+    setLeaving(true);
+    setTimeout(onBack, 340);
+  };
+  const s = (delay = 0) => ({
+    animation: visible ? `fadeInUp 0.55s ${delay}s both` : 'none',
+    opacity: visible ? undefined : 0
+  });
+  const statRow = (label, val) => /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '4px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      color: accent + '66',
+      letterSpacing: '0.25em',
+      textTransform: 'uppercase'
+    }
+  }, label), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '11px',
+      color: 'rgba(var(--text-rgb),0.75)',
+      letterSpacing: '0.03em',
+      lineHeight: 1.5
+    }
+  }, val));
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'fixed',
+      inset: 0,
+      zIndex: 500,
+      background: `radial-gradient(ellipse at 30% 40%,${pal[1]}55 0%,transparent 50%),radial-gradient(ellipse at 80% 70%,${accent}20 0%,transparent 40%),var(--bg)`,
+      display: 'flex',
+      flexDirection: 'column',
+      animation: leaving ? 'dissolveOut 0.34s forwards' : 'dissolveIn 0.55s forwards',
+      overflow: 'hidden'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      pointerEvents: 'none',
+      backgroundImage: `repeating-linear-gradient(0deg,transparent,transparent 40px,${accent}07 40px,${accent}07 41px),repeating-linear-gradient(90deg,transparent,transparent 40px,${accent}07 40px,${accent}07 41px)`
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: '16px 40px',
+      borderBottom: `1px solid ${accent}2a`,
+      position: 'relative',
+      zIndex: 2,
+      ...s(0)
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: handleBack,
+    style: {
+      background: 'none',
+      border: `1px solid ${accent}44`,
+      color: pal[3],
+      fontFamily: 'var(--font-mono)',
+      fontSize: '10px',
+      letterSpacing: '0.2em',
+      padding: '7px 16px',
+      cursor: 'pointer',
+      borderRadius: '2px',
+      transition: 'all 0.2s'
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.background = accent + '1a';
+      e.currentTarget.style.borderColor = accent;
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.background = 'none';
+      e.currentTarget.style.borderColor = accent + '44';
+    }
+  }, "\u2190 ZUR\xDCCK"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: accent + '77',
+      letterSpacing: '0.25em'
+    }
+  }, "MERURIA / KLASSE / ", klasse.id.toUpperCase()), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: accent + '44',
+      letterSpacing: '0.2em'
+    }
+  }, klasse.trefferpunkte)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      display: 'flex',
+      overflow: 'hidden'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '38%',
+      position: 'relative',
+      borderRight: `1px solid ${accent}1a`,
+      overflow: 'hidden',
+      ...s(0.04)
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      background: `radial-gradient(ellipse at 50% 45%,${accent}44 0%,${pal[1]}66 30%,${pal[0]} 70%),repeating-linear-gradient(45deg,transparent,transparent 24px,${accent}06 24px,${accent}06 25px)`
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%,-55%)',
+      width: '200px',
+      height: '200px',
+      color: pal[3],
+      opacity: 0.1,
+      filter: `drop-shadow(0 0 40px ${accent})`,
+      animation: 'floatSymbol 4s ease-in-out infinite',
+      zIndex: 3
+    },
+    dangerouslySetInnerHTML: {
+      __html: klasse.symbolSvg
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 2
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: '0px',
+      border: `1px dashed ${accent}2a`,
+      borderRadius: '3px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      background: `repeating-linear-gradient(-45deg,transparent,transparent 8px,${accent}07 8px,${accent}07 9px)`,
+      overflow: 'hidden'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      color: accent + '44',
+      letterSpacing: '0.1em',
+      textAlign: 'center'
+    }
+  }, "portr\xE4t", /*#__PURE__*/React.createElement("br", null), klasse.name.toLowerCase()))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      bottom: '22px',
+      right: '22px',
+      width: '72px',
+      height: '72px',
+      color: accent,
+      opacity: 0.6,
+      filter: `drop-shadow(0 0 10px ${accent})`,
+      animation: 'floatSymbol 3.2s ease-in-out infinite',
+      zIndex: 4
+    },
+    dangerouslySetInnerHTML: {
+      __html: klasse.symbolSvg
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      padding: '44px 48px',
+      overflowY: 'auto',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '28px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: s(0.1)
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.3em',
+      color: accent + '88',
+      textTransform: 'uppercase',
+      marginBottom: '8px'
+    }
+  }, "Klasse"), /*#__PURE__*/React.createElement("h1", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: 'clamp(34px,4.5vw,60px)',
+      fontWeight: '300',
+      letterSpacing: '0.12em',
+      color: 'var(--white)',
+      lineHeight: 1.1,
+      textShadow: `0 0 36px ${accent}77`
+    }
+  }, klasse.name), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '13px',
+      letterSpacing: '0.25em',
+      color: pal[3] + 'bb',
+      marginTop: '7px',
+      textTransform: 'uppercase'
+    }
+  }, klasse.subtitle)), /*#__PURE__*/React.createElement("div", {
+    style: s(0.16)
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.25em',
+      color: accent + '77',
+      marginBottom: '9px',
+      textTransform: 'uppercase'
+    }
+  }, "Rolle"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '7px',
+      flexWrap: 'wrap'
+    }
+  }, klasse.rolle.split(' · ').map((r, i) => /*#__PURE__*/React.createElement("span", {
+    key: i,
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '10px',
+      padding: '4px 12px',
+      border: `1px solid ${accent}44`,
+      color: pal[3],
+      letterSpacing: '0.15em',
+      borderRadius: '2px',
+      background: accent + '0e'
+    }
+  }, r)))), /*#__PURE__*/React.createElement("div", {
+    style: s(0.22)
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.25em',
+      color: accent + '77',
+      marginBottom: '10px',
+      textTransform: 'uppercase'
+    }
+  }, "Beschreibung"), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '13px',
+      lineHeight: 1.85,
+      color: 'rgba(var(--text-rgb),0.78)',
+      letterSpacing: '0.015em'
+    }
+  }, klasse.beschreibung)), /*#__PURE__*/React.createElement("div", {
+    style: s(0.28)
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.25em',
+      color: accent + '77',
+      marginBottom: '10px',
+      textTransform: 'uppercase'
+    }
+  }, "Hintergrund"), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: 1.85,
+      color: 'rgba(var(--text-rgb),0.55)',
+      letterSpacing: '0.015em',
+      fontStyle: 'italic',
+      borderLeft: `1px solid ${accent}33`,
+      paddingLeft: '14px'
+    }
+  }, klasse.lore)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      gap: '16px 24px',
+      borderTop: `1px solid ${accent}18`,
+      paddingTop: '22px',
+      ...s(0.34)
+    }
+  }, statRow('Trefferpunkte', klasse.trefferpunkte), statRow('Rettungswürfe', klasse.rettungswürfe), statRow('Rüstung', klasse.rüstung), statRow('Waffen', klasse.waffen)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      borderTop: `1px solid ${accent}18`,
+      paddingTop: '16px',
+      ...s(0.38)
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      color: accent + '66',
+      letterSpacing: '0.25em',
+      textTransform: 'uppercase',
+      marginBottom: '8px'
+    }
+  }, "Klassenmerkmal"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '7px',
+      flexWrap: 'wrap'
+    }
+  }, klasse.fähigkeit.split(' · ').map((f, i) => /*#__PURE__*/React.createElement("span", {
+    key: i,
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '400',
+      fontSize: '11px',
+      padding: '4px 12px',
+      border: `1px solid ${accent}55`,
+      color: pal[3] + 'cc',
+      letterSpacing: '0.08em',
+      borderRadius: '2px',
+      background: accent + '15',
+      textShadow: `0 0 8px ${accent}44`
+    }
+  }, f)))))));
 }
 
 // ── SECTION BANNER ─────────────────────────────────────
-function SectionBanner({ accentColor }) {
-  const col = accentColor||'#7c4dff';
-  return (
-    <div style={{ width:'100%', height:'160px', marginBottom:'20px', borderRadius:'4px', border:`1px dashed ${col}44`, background:`repeating-linear-gradient(-45deg,transparent,transparent 8px,${col}07 8px,${col}07 9px),linear-gradient(135deg,${col}0a 0%,transparent 100%)`, display:'flex', alignItems:'center', justifyContent:'center', overflow:'hidden', position:'relative' }}>
-      <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse at 50% 50%,${col}12 0%,transparent 70%)`, pointerEvents:'none' }} />
-      <div style={{ display:'flex', alignItems:'center', gap:'10px', position:'relative', zIndex:1 }}>
-        <OctSvg size={28} color={col+'33'} strokeWidth={1} />
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:col+'44', textTransform:'uppercase' }}>Kopfbild hier ablegen</span>
-        <OctSvg size={28} color={col+'33'} strokeWidth={1} />
-      </div>
-    </div>
-  );
+function SectionBanner({
+  accentColor
+}) {
+  const col = accentColor || '#7c4dff';
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '100%',
+      height: '160px',
+      marginBottom: '20px',
+      borderRadius: '4px',
+      border: `1px dashed ${col}44`,
+      background: `repeating-linear-gradient(-45deg,transparent,transparent 8px,${col}07 8px,${col}07 9px),linear-gradient(135deg,${col}0a 0%,transparent 100%)`,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      overflow: 'hidden',
+      position: 'relative'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      background: `radial-gradient(ellipse at 50% 50%,${col}12 0%,transparent 70%)`,
+      pointerEvents: 'none'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px',
+      position: 'relative',
+      zIndex: 1
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 28,
+    color: col + '33',
+    strokeWidth: 1
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.25em',
+      color: col + '44',
+      textTransform: 'uppercase'
+    }
+  }, "Kopfbild hier ablegen"), /*#__PURE__*/React.createElement(OctSvg, {
+    size: 28,
+    color: col + '33',
+    strokeWidth: 1
+  })));
 }
 
 // ── SECTION HEADING ────────────────────────────────────
-function SectionHeading({ title, subtitle, accentColor }) {
-  const col = accentColor||'#7c4dff';
-  return (
-    <div className="reveal-left" style={{ marginBottom:'8px' }}>
-      {subtitle && <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:col+'77', textTransform:'uppercase', marginBottom:'6px' }}>{subtitle}</div>}
-      <h2 style={{ fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:'300', letterSpacing:'0.18em', color:'var(--white)', textShadow:`0 0 24px ${col}44` }}>{title}</h2>
-      <div style={{ width:'50px', height:'1px', background:`linear-gradient(90deg,${col}99,transparent)`, marginTop:'10px', animation:'pulse-glow 3s infinite' }} />
-    </div>
-  );
+function SectionHeading({
+  title,
+  subtitle,
+  accentColor
+}) {
+  const col = accentColor || '#7c4dff';
+  return /*#__PURE__*/React.createElement("div", {
+    className: "reveal-left",
+    style: {
+      marginBottom: '8px'
+    }
+  }, subtitle && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.25em',
+      color: col + '77',
+      textTransform: 'uppercase',
+      marginBottom: '6px'
+    }
+  }, subtitle), /*#__PURE__*/React.createElement("h2", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '22px',
+      fontWeight: '300',
+      letterSpacing: '0.18em',
+      color: 'var(--white)',
+      textShadow: `0 0 24px ${col}44`
+    }
+  }, title), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '50px',
+      height: '1px',
+      background: `linear-gradient(90deg,${col}99,transparent)`,
+      marginTop: '10px',
+      animation: 'pulse-glow 3s infinite'
+    }
+  }));
 }
 
 // ── TOC SIDEBAR ────────────────────────────────────────
-function TOCSidebar({ navHeight, headerBottom, cols }) {
+function TOCSidebar({
+  navHeight,
+  headerBottom,
+  cols
+}) {
   const asideRef = React.useRef(null);
-
   useEffect(() => {
     const update = () => {
       const ideal = (headerBottom || 0) - window.scrollY;
       const val = Math.max(navHeight, ideal);
-      if (asideRef.current) { asideRef.current.style.top = val + 'px'; asideRef.current.style.height = `calc(100vh - ${val}px)`; }
+      if (asideRef.current) {
+        asideRef.current.style.top = val + 'px';
+        asideRef.current.style.height = `calc(100vh - ${val}px)`;
+      }
     };
     update();
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update, { passive: true });
-    return () => { window.removeEventListener('scroll', update); window.removeEventListener('resize', update); };
+    window.addEventListener('scroll', update, {
+      passive: true
+    });
+    window.addEventListener('resize', update, {
+      passive: true
+    });
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
   }, [headerBottom, navHeight]);
-
-  const scrollTo = (id) => {
+  const scrollTo = id => {
     const el = document.getElementById(id);
-    if (el) { const y = el.getBoundingClientRect().top+window.scrollY-navHeight-8; window.scrollTo({ top:y, behavior:'smooth' }); }
+    if (el) {
+      const y = el.getBoundingClientRect().top + window.scrollY - navHeight - 8;
+      window.scrollTo({
+        top: y,
+        behavior: 'smooth'
+      });
+    }
   };
-
   const entries = [];
-  for (let i=0; i<klassen.length; i+=cols) {
-    const row = klassen.slice(i, i+cols);
-    const rowId = `klassen-row-${Math.floor(i/cols)}`;
-    entries.push({ id:rowId, label:row.map(k=>k.name).join(' ● '), isSection:true });
+  for (let i = 0; i < klassen.length; i += cols) {
+    const row = klassen.slice(i, i + cols);
+    const rowId = `klassen-row-${Math.floor(i / cols)}`;
+    entries.push({
+      id: rowId,
+      label: row.map(k => k.name).join(' ● '),
+      isSection: true
+    });
   }
-
-  return (
-    <aside ref={asideRef} style={{ width:'var(--sidebar-w)', flexShrink:0, position:'fixed', top:`275px`, left:0, height:`calc(100vh - ${navHeight}px)`, borderRight:'1px solid rgba(var(--accent-rgb),0.1)', padding:'28px 0', background:'rgba(var(--bg-rgb),0.85)', backdropFilter:'blur(12px)', zIndex:50, overflowY:'auto' }}>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:'rgba(var(--accent-rgb),0.4)', textTransform:'uppercase', padding:'0 20px', marginBottom:'4px' }}>Klassen</div>
-      {entries.map(entry => (
-        <button key={entry.id} onClick={()=>scrollTo(entry.id)}
-          style={{ display:'flex', alignItems:'flex-start', gap:'8px', width:'100%', textAlign:'left', padding:'7px 20px', background:'transparent', border:'none', cursor:'pointer', fontFamily:'var(--font-body)', fontWeight:'400', fontSize:'11px', letterSpacing:'0.1em', fontVariant:'small-caps', color:entry.isSection?'rgba(var(--text-rgb),0.75)':'rgba(var(--text-rgb),0.6)', borderLeft:'2px solid transparent', transition:'all 0.15s', lineHeight:1.55 }}
-          onMouseEnter={e=>{ e.currentTarget.style.color='var(--white)'; e.currentTarget.style.borderLeftColor='rgba(124,77,255,0.6)'; e.currentTarget.style.background='rgba(124,77,255,0.06)'; }}
-          onMouseLeave={e=>{ e.currentTarget.style.color=entry.isSection?'rgba(var(--text-rgb),0.75)':'rgba(var(--text-rgb),0.6)'; e.currentTarget.style.borderLeftColor='transparent'; e.currentTarget.style.background='transparent'; }}>
-          <OctSvg size={entry.isSection?6:4} color={entry.isSection?'rgba(124,77,255,0.6)':'rgba(124,77,255,0.3)'} fill={entry.isSection?'rgba(124,77,255,0.3)':'transparent'} strokeWidth={1} style={{ flexShrink:0, marginTop:'3px' }} />
-          <span style={{ display:'block', minWidth:0, wordBreak:'normal', overflowWrap:'anywhere', fontWeight:entry.isSection?'500':'400' }}>{entry.label}</span>
-        </button>
-      ))}
-    </aside>
-  );
+  return /*#__PURE__*/React.createElement("aside", {
+    ref: asideRef,
+    style: {
+      width: 'var(--sidebar-w)',
+      flexShrink: 0,
+      position: 'fixed',
+      top: `275px`,
+      left: 0,
+      height: `calc(100vh - ${navHeight}px)`,
+      borderRight: '1px solid rgba(var(--accent-rgb),0.1)',
+      padding: '28px 0',
+      background: 'rgba(var(--bg-rgb),0.85)',
+      backdropFilter: 'blur(12px)',
+      zIndex: 50,
+      overflowY: 'auto'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.25em',
+      color: 'rgba(var(--accent-rgb),0.4)',
+      textTransform: 'uppercase',
+      padding: '0 20px',
+      marginBottom: '4px'
+    }
+  }, "Klassen"), entries.map(entry => /*#__PURE__*/React.createElement("button", {
+    key: entry.id,
+    onClick: () => scrollTo(entry.id),
+    style: {
+      display: 'flex',
+      alignItems: 'flex-start',
+      gap: '8px',
+      width: '100%',
+      textAlign: 'left',
+      padding: '7px 20px',
+      background: 'transparent',
+      border: 'none',
+      cursor: 'pointer',
+      fontFamily: 'var(--font-body)',
+      fontWeight: '400',
+      fontSize: '11px',
+      letterSpacing: '0.1em',
+      fontVariant: 'small-caps',
+      color: entry.isSection ? 'rgba(var(--text-rgb),0.75)' : 'rgba(var(--text-rgb),0.6)',
+      borderLeft: '2px solid transparent',
+      transition: 'all 0.15s',
+      lineHeight: 1.55
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.color = 'var(--white)';
+      e.currentTarget.style.borderLeftColor = 'rgba(124,77,255,0.6)';
+      e.currentTarget.style.background = 'rgba(124,77,255,0.06)';
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.color = entry.isSection ? 'rgba(var(--text-rgb),0.75)' : 'rgba(var(--text-rgb),0.6)';
+      e.currentTarget.style.borderLeftColor = 'transparent';
+      e.currentTarget.style.background = 'transparent';
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: entry.isSection ? 6 : 4,
+    color: entry.isSection ? 'rgba(124,77,255,0.6)' : 'rgba(124,77,255,0.3)',
+    fill: entry.isSection ? 'rgba(124,77,255,0.3)' : 'transparent',
+    strokeWidth: 1,
+    style: {
+      flexShrink: 0,
+      marginTop: '3px'
+    }
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      display: 'block',
+      minWidth: 0,
+      wordBreak: 'normal',
+      overflowWrap: 'anywhere',
+      fontWeight: entry.isSection ? '500' : '400'
+    }
+  }, entry.label))));
 }
 
 // ── APP ────────────────────────────────────────────────
 function App() {
   const [selectedKlasse, setSelectedKlasse] = useState(null);
-  const [mouse, setMouse] = useState({ x:0.5, y:0.5 });
+  const [mouse, setMouse] = useState({
+    x: 0.5,
+    y: 0.5
+  });
   const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
   const [headerBottom, setHeaderBottom] = useState(0);
   const sideNavRef = useRef(null);
-
-  const handleMouseMove = useCallback(e => { setMouse({ x:e.clientX/window.innerWidth, y:e.clientY/window.innerHeight }); }, []);
-
+  const handleMouseMove = useCallback(e => {
+    setMouse({
+      x: e.clientX / window.innerWidth,
+      y: e.clientY / window.innerHeight
+    });
+  }, []);
   useEffect(() => {
     const measure = () => {
       if (sideNavRef.current) {
@@ -367,86 +1025,143 @@ function App() {
       }
     };
     measure();
-    window.addEventListener('resize', measure, { passive: true });
+    window.addEventListener('resize', measure, {
+      passive: true
+    });
     return () => window.removeEventListener('resize', measure);
   }, [tweaks.headerHeight]);
-
   useScrollReveal(tweaks.columns);
-
   const cols = tweaks.columns || 3;
-
   const renderGrid = () => {
     const rows = [];
-    for (let i=0; i<klassen.length; i+=cols) {
-      const rowItems = klassen.slice(i, i+cols);
-      const rowId = `klassen-row-${Math.floor(i/cols)}`;
-      rows.push(
-        <div key={rowId} id={rowId} style={{ display:'grid', gridTemplateColumns:`repeat(${cols},1fr)`, gap:'16px', marginBottom:'16px', scrollMarginTop:`${NAV_H+8}px`, overflow:'visible' }}>
-          {rowItems.map(k => <KlasseCard key={k.id} klasse={k} onClick={setSelectedKlasse} />)}
-        </div>
-      );
+    for (let i = 0; i < klassen.length; i += cols) {
+      const rowItems = klassen.slice(i, i + cols);
+      const rowId = `klassen-row-${Math.floor(i / cols)}`;
+      rows.push(/*#__PURE__*/React.createElement("div", {
+        key: rowId,
+        id: rowId,
+        style: {
+          display: 'grid',
+          gridTemplateColumns: `repeat(${cols},1fr)`,
+          gap: '16px',
+          marginBottom: '16px',
+          scrollMarginTop: `${NAV_H + 8}px`,
+          overflow: 'visible'
+        }
+      }, rowItems.map(k => /*#__PURE__*/React.createElement(KlasseCard, {
+        key: k.id,
+        klasse: k,
+        onClick: setSelectedKlasse
+      }))));
     }
     return rows;
   };
-
-  return (
-    <div onMouseMove={handleMouseMove} className="page-root">
-      {tweaks.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} />}
-      <FloatingHexField mouseX={mouse.x} mouseY={mouse.y} />
-
-      {/* HEADER */}
-      <PageHeader height={tweaks.headerHeight} />
-
-      {/* NAV */}
-      <div ref={sideNavRef}>
-        <SiteNav rightLabel="KLASSEN-ARCHIV v1.0" />
-      </div>
-
-      {/* BODY */}
-      <div className="page-body">
-        <TOCSidebar navHeight={NAV_H} headerBottom={headerBottom} cols={cols} />
-
-        <div style={{ flex:1, padding:'32px 28px 64px', minWidth:0 }}>
-
-          {/* Page title */}
-          <div style={{ marginBottom:'32px' }}>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:'rgba(var(--accent-rgb),0.4)', textTransform:'uppercase', marginBottom:'6px' }}>Charaktererstellung</div>
-            <h1 className="reveal-left" style={{ fontFamily:'var(--font-display)', fontSize:'42px', fontWeight:'300', letterSpacing:'0.18em', color:'var(--white)', textShadow:'0 0 30px rgba(124,77,255,0.35)' }}>Klassen</h1>
-            <div style={{ display:'flex', alignItems:'center', gap:'8px', marginTop:'12px' }}>
-              <div style={{ width:'50px', height:'1px', background:'linear-gradient(90deg,rgba(124,77,255,0.8),transparent)', animation:'pulse-glow 3s infinite' }} />
-              <OctSvg size={8} color="rgba(124,77,255,0.5)" fill="rgba(124,77,255,0.2)" strokeWidth={1} />
-            </div>
-          </div>
-
-          {/* Klassen section */}
-          <div id="klassen-section" style={{ marginBottom:'48px', scrollMarginTop:`${NAV_H+8}px` }}>
-            <div style={{ marginTop:'20px', overflow:'visible' }}>
-              {renderGrid()}
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      {/* FOOTER */}
-      <SiteFooter />
-
-      {/* DETAIL OVERLAY */}
-      {selectedKlasse && <KlasseDetail klasse={selectedKlasse} onBack={()=>setSelectedKlasse(null)} />}
-
-      <FloatNav />
-      <TweaksPanel>
-        <TweakSection label="Layout" />
-        <TweakSlider id="columns" label="Spalten" min={2} max={4} step={1} />
-        <TweakSlider id="headerHeight" label="Kopfzeile Höhe" min={80} max={320} step={10} />
-        <TweakSection label="Darstellung" />
-        <TweakToggle id="showParticles" label="Partikel" />
-      </TweaksPanel>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    onMouseMove: handleMouseMove,
+    className: "page-root"
+  }, tweaks.showParticles && /*#__PURE__*/React.createElement(ParticleField, {
+    mouseX: mouse.x,
+    mouseY: mouse.y
+  }), /*#__PURE__*/React.createElement(FloatingHexField, {
+    mouseX: mouse.x,
+    mouseY: mouse.y
+  }), /*#__PURE__*/React.createElement(PageHeader, {
+    height: tweaks.headerHeight
+  }), /*#__PURE__*/React.createElement("div", {
+    ref: sideNavRef
+  }, /*#__PURE__*/React.createElement(SiteNav, {
+    rightLabel: "KLASSEN-ARCHIV v1.0"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "page-body"
+  }, /*#__PURE__*/React.createElement(TOCSidebar, {
+    navHeight: NAV_H,
+    headerBottom: headerBottom,
+    cols: cols
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      padding: '32px 28px 64px',
+      minWidth: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: '32px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.25em',
+      color: 'rgba(var(--accent-rgb),0.4)',
+      textTransform: 'uppercase',
+      marginBottom: '6px'
+    }
+  }, "Charaktererstellung"), /*#__PURE__*/React.createElement("h1", {
+    className: "reveal-left",
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '42px',
+      fontWeight: '300',
+      letterSpacing: '0.18em',
+      color: 'var(--white)',
+      textShadow: '0 0 30px rgba(124,77,255,0.35)'
+    }
+  }, "Klassen"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      marginTop: '12px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '50px',
+      height: '1px',
+      background: 'linear-gradient(90deg,rgba(124,77,255,0.8),transparent)',
+      animation: 'pulse-glow 3s infinite'
+    }
+  }), /*#__PURE__*/React.createElement(OctSvg, {
+    size: 8,
+    color: "rgba(124,77,255,0.5)",
+    fill: "rgba(124,77,255,0.2)",
+    strokeWidth: 1
+  }))), /*#__PURE__*/React.createElement("div", {
+    id: "klassen-section",
+    style: {
+      marginBottom: '48px',
+      scrollMarginTop: `${NAV_H + 8}px`
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: '20px',
+      overflow: 'visible'
+    }
+  }, renderGrid())))), /*#__PURE__*/React.createElement(SiteFooter, null), selectedKlasse && /*#__PURE__*/React.createElement(KlasseDetail, {
+    klasse: selectedKlasse,
+    onBack: () => setSelectedKlasse(null)
+  }), /*#__PURE__*/React.createElement(FloatNav, null), /*#__PURE__*/React.createElement(TweaksPanel, null, /*#__PURE__*/React.createElement(TweakSection, {
+    label: "Layout"
+  }), /*#__PURE__*/React.createElement(TweakSlider, {
+    id: "columns",
+    label: "Spalten",
+    min: 2,
+    max: 4,
+    step: 1
+  }), /*#__PURE__*/React.createElement(TweakSlider, {
+    id: "headerHeight",
+    label: "Kopfzeile H\xF6he",
+    min: 80,
+    max: 320,
+    step: 10
+  }), /*#__PURE__*/React.createElement(TweakSection, {
+    label: "Darstellung"
+  }), /*#__PURE__*/React.createElement(TweakToggle, {
+    id: "showParticles",
+    label: "Partikel"
+  })));
 }
-
-ReactDOM.createRoot(document.getElementById('root')).render(<SiteGate><App /></SiteGate>);
+ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement(App, null)));
+})();
 </script>
 
 

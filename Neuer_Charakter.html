@@ -6,9 +6,9 @@
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
 <link rel="stylesheet" href="assets/styles/pages/Neuer_Charakter.css">
-<script src="assets/scripts/vendor/react.development.js"></script>
-<script src="assets/scripts/vendor/react-dom.development.js"></script>
-<script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/scripts/vendor/react.production.min.js"></script>
+<script src="assets/scripts/vendor/react-dom.production.min.js"></script>
+
 <script src="assets/scripts/data/charaktererstellung-data.js"></script>
 <script src="assets/scripts/data/charaktererstellung-gottheiten-data.js"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
@@ -16,8 +16,14 @@
 </head>
 <body>
 <div id="root"></div>
-<script type="text/babel">
-const { useState, useEffect, useRef, useMemo } = React;
+<script>
+(function () {
+const {
+  useState,
+  useEffect,
+  useRef,
+  useMemo
+} = React;
 
 // ── HELPERS ────────────────────────────────────────────────────────────────
 const cut = (a, b) => a.filter(x => b.includes(x));
@@ -29,163 +35,464 @@ const trail = (list, max = 8) => {
 };
 
 // ── GLITCH BUTTON ──────────────────────────────────────────────────────────
-function GlitchBtn({ label, sub, onClick, primary, style: sx = {} }) {
+function GlitchBtn({
+  label,
+  sub,
+  onClick,
+  primary,
+  style: sx = {}
+}) {
   const [g, setG] = useState(false);
   const t = useRef(null);
   const fire = () => {
     setG(false);
     clearTimeout(t.current);
-    t.current = setTimeout(() => { setG(true); t.current = setTimeout(() => setG(false), 1500); }, 10);
+    t.current = setTimeout(() => {
+      setG(true);
+      t.current = setTimeout(() => setG(false), 1500);
+    }, 10);
   };
   useEffect(() => () => clearTimeout(t.current), []);
-  return (
-    <button onClick={onClick} onMouseEnter={fire} style={{
-      position:'relative', cursor:'pointer', textAlign:'center',
+  return /*#__PURE__*/React.createElement("button", {
+    onClick: onClick,
+    onMouseEnter: fire,
+    style: {
+      position: 'relative',
+      cursor: 'pointer',
+      textAlign: 'center',
       background: primary ? 'rgba(124,77,255,.12)' : 'rgba(12,9,28,.6)',
       border: `1px solid ${primary ? 'rgba(124,77,255,.55)' : 'rgba(160,140,255,.2)'}`,
-      borderRadius:'3px', padding:'22px 44px', transition:'all .2s', minWidth:190, ...sx
-    }}>
-      {g && <>
-        <span style={{position:'absolute',inset:0,display:'flex',alignItems:'center',justifyContent:'center',color:'rgba(80,255,180,.4)',fontFamily:'var(--font-d)',fontSize:'17px',letterSpacing:'.22em',animation:'glitch-clip 1.4s steps(1) infinite',pointerEvents:'none'}}>{label}</span>
-        <span style={{position:'absolute',inset:0,display:'flex',alignItems:'center',justifyContent:'center',color:'rgba(255,60,220,.32)',fontFamily:'var(--font-d)',fontSize:'17px',letterSpacing:'.22em',animation:'glitch-clip2 1.4s steps(1) infinite',pointerEvents:'none'}}>{label}</span>
-      </>}
-      <div style={{fontFamily:'var(--font-d)',fontSize:'17px',fontWeight:300,letterSpacing:'.22em',color:primary?'#f0eeff':'rgba(200,190,240,.5)',textTransform:'uppercase',position:'relative'}}>{label}</div>
-      {sub && <div style={{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.14em',color:primary?'rgba(160,140,255,.55)':'rgba(160,140,255,.28)',marginTop:5,textTransform:'uppercase',position:'relative'}}>{sub}</div>}
-    </button>
-  );
+      borderRadius: '3px',
+      padding: '22px 44px',
+      transition: 'all .2s',
+      minWidth: 190,
+      ...sx
+    }
+  }, g && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: 'rgba(80,255,180,.4)',
+      fontFamily: 'var(--font-d)',
+      fontSize: '17px',
+      letterSpacing: '.22em',
+      animation: 'glitch-clip 1.4s steps(1) infinite',
+      pointerEvents: 'none'
+    }
+  }, label), /*#__PURE__*/React.createElement("span", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: 'rgba(255,60,220,.32)',
+      fontFamily: 'var(--font-d)',
+      fontSize: '17px',
+      letterSpacing: '.22em',
+      animation: 'glitch-clip2 1.4s steps(1) infinite',
+      pointerEvents: 'none'
+    }
+  }, label)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-d)',
+      fontSize: '17px',
+      fontWeight: 300,
+      letterSpacing: '.22em',
+      color: primary ? '#f0eeff' : 'rgba(200,190,240,.5)',
+      textTransform: 'uppercase',
+      position: 'relative'
+    }
+  }, label), sub && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '8px',
+      letterSpacing: '.14em',
+      color: primary ? 'rgba(160,140,255,.55)' : 'rgba(160,140,255,.28)',
+      marginTop: 5,
+      textTransform: 'uppercase',
+      position: 'relative'
+    }
+  }, sub));
 }
 
 // ── NAV ────────────────────────────────────────────────────────────────────
-function Nav({ onBack, showBack }) {
-  return (
-    <div style={{position:'sticky',top:0,zIndex:100,background:'rgba(5,4,15,.93)',borderBottom:'1px solid rgba(160,140,255,.1)',backdropFilter:'blur(16px)',height:52,display:'flex',alignItems:'center',padding:'0 32px',gap:18}}>
-      <a href="index.html" style={{fontFamily:'var(--font-d)',fontSize:'14px',fontWeight:300,letterSpacing:'.28em',color:'rgba(200,190,240,.45)',textDecoration:'none',transition:'color .2s'}}
-        onMouseEnter={e=>e.currentTarget.style.color='#f0eeff'} onMouseLeave={e=>e.currentTarget.style.color='rgba(200,190,240,.45)'}>MERURIA</a>
-      <span style={{fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(160,140,255,.25)'}}>◂</span>
-      <span style={{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.16em',color:'rgba(160,140,255,.5)',textTransform:'uppercase'}}>Charaktererstellung</span>
-      <div style={{flex:1}}/>
-      {showBack && (
-        <button onClick={onBack} className="no-print" style={{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.14em',color:'rgba(160,140,255,.45)',background:'transparent',border:'1px solid rgba(160,140,255,.15)',borderRadius:'3px',padding:'6px 14px',cursor:'pointer',textTransform:'uppercase',transition:'all .2s'}}
-          onMouseEnter={e=>{e.currentTarget.style.color='#f0eeff';e.currentTarget.style.borderColor='rgba(160,140,255,.4)';}}
-          onMouseLeave={e=>{e.currentTarget.style.color='rgba(160,140,255,.45)';e.currentTarget.style.borderColor='rgba(160,140,255,.15)';}}>← Zurück</button>
-      )}
-    </div>
-  );
+function Nav({
+  onBack,
+  showBack
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'sticky',
+      top: 0,
+      zIndex: 100,
+      background: 'rgba(5,4,15,.93)',
+      borderBottom: '1px solid rgba(160,140,255,.1)',
+      backdropFilter: 'blur(16px)',
+      height: 52,
+      display: 'flex',
+      alignItems: 'center',
+      padding: '0 32px',
+      gap: 18
+    }
+  }, /*#__PURE__*/React.createElement("a", {
+    href: "index.html",
+    style: {
+      fontFamily: 'var(--font-d)',
+      fontSize: '14px',
+      fontWeight: 300,
+      letterSpacing: '.28em',
+      color: 'rgba(200,190,240,.45)',
+      textDecoration: 'none',
+      transition: 'color .2s'
+    },
+    onMouseEnter: e => e.currentTarget.style.color = '#f0eeff',
+    onMouseLeave: e => e.currentTarget.style.color = 'rgba(200,190,240,.45)'
+  }, "MERURIA"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '8px',
+      color: 'rgba(160,140,255,.25)'
+    }
+  }, "\u25C2"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '8px',
+      letterSpacing: '.16em',
+      color: 'rgba(160,140,255,.5)',
+      textTransform: 'uppercase'
+    }
+  }, "Charaktererstellung"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1
+    }
+  }), showBack && /*#__PURE__*/React.createElement("button", {
+    onClick: onBack,
+    className: "no-print",
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '8px',
+      letterSpacing: '.14em',
+      color: 'rgba(160,140,255,.45)',
+      background: 'transparent',
+      border: '1px solid rgba(160,140,255,.15)',
+      borderRadius: '3px',
+      padding: '6px 14px',
+      cursor: 'pointer',
+      textTransform: 'uppercase',
+      transition: 'all .2s'
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.color = '#f0eeff';
+      e.currentTarget.style.borderColor = 'rgba(160,140,255,.4)';
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.color = 'rgba(160,140,255,.45)';
+      e.currentTarget.style.borderColor = 'rgba(160,140,255,.15)';
+    }
+  }, "\u2190 Zur\xFCck"));
 }
 
 // ── TYPE SELECT ────────────────────────────────────────────────────────────
-function TypeSelectPhase({ onSelect }) {
-  return (
-    <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',minHeight:'calc(100vh - 52px)',gap:18,padding:40,animation:'fadeIn .5s ease'}}>
-      <div style={{fontFamily:'var(--font-m)',fontSize:'9px',letterSpacing:'.3em',color:'rgba(124,77,255,.5)',textTransform:'uppercase'}}>Neuer Charakter</div>
-      <h1 style={{fontFamily:'var(--font-d)',fontSize:'clamp(20px,4vw,38px)',fontWeight:300,letterSpacing:'.2em',color:'#f0eeff',textShadow:'0 0 40px rgba(124,77,255,.4)',animation:'flicker-mid 10s infinite',textTransform:'uppercase',textAlign:'center'}}>Wen erschaffst du?</h1>
-      <p style={{fontFamily:'var(--font-b)',fontWeight:300,fontSize:'12px',color:'rgba(200,190,240,.38)',letterSpacing:'.08em',maxWidth:380,textAlign:'center',lineHeight:1.85,marginBottom:12}}>
-        Wähle die Art des Charakters, den du erstellen möchtest.
-      </p>
-      <div style={{display:'flex',gap:20,flexWrap:'wrap',justifyContent:'center'}}>
-        <GlitchBtn label="Neuer SC" sub="Spielercharakter" onClick={() => onSelect('sc')} primary={true}/>
-        <GlitchBtn label="Neuer NSC" sub="Nicht-Spieler-Charakter" onClick={() => onSelect('nsc')} primary={false}/>
-      </div>
-    </div>
-  );
+function TypeSelectPhase({
+  onSelect
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      minHeight: 'calc(100vh - 52px)',
+      gap: 18,
+      padding: 40,
+      animation: 'fadeIn .5s ease'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '9px',
+      letterSpacing: '.3em',
+      color: 'rgba(124,77,255,.5)',
+      textTransform: 'uppercase'
+    }
+  }, "Neuer Charakter"), /*#__PURE__*/React.createElement("h1", {
+    style: {
+      fontFamily: 'var(--font-d)',
+      fontSize: 'clamp(20px,4vw,38px)',
+      fontWeight: 300,
+      letterSpacing: '.2em',
+      color: '#f0eeff',
+      textShadow: '0 0 40px rgba(124,77,255,.4)',
+      animation: 'flicker-mid 10s infinite',
+      textTransform: 'uppercase',
+      textAlign: 'center'
+    }
+  }, "Wen erschaffst du?"), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-b)',
+      fontWeight: 300,
+      fontSize: '12px',
+      color: 'rgba(200,190,240,.38)',
+      letterSpacing: '.08em',
+      maxWidth: 380,
+      textAlign: 'center',
+      lineHeight: 1.85,
+      marginBottom: 12
+    }
+  }, "W\xE4hle die Art des Charakters, den du erstellen m\xF6chtest."), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: 20,
+      flexWrap: 'wrap',
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/React.createElement(GlitchBtn, {
+    label: "Neuer SC",
+    sub: "Spielercharakter",
+    onClick: () => onSelect('sc'),
+    primary: true
+  }), /*#__PURE__*/React.createElement(GlitchBtn, {
+    label: "Neuer NSC",
+    sub: "Nicht-Spieler-Charakter",
+    onClick: () => onSelect('nsc'),
+    primary: false
+  })));
 }
 
 // ── CHIP ───────────────────────────────────────────────────────────────────
-function Chip({ label, st, onClick, isUnk, isGroupLabel }) {
-  const cls = ['chip',isUnk?'unk':'',isGroupLabel?'group-label':'',st==='selected'?'selected':'',st==='grayed'?'grayed':'',st==='multi'?'multi':''].filter(Boolean).join(' ');
-  return <span className={cls} onClick={onClick}>{isUnk ? '? Unbekannt' : label}</span>;
+function Chip({
+  label,
+  st,
+  onClick,
+  isUnk,
+  isGroupLabel
+}) {
+  const cls = ['chip', isUnk ? 'unk' : '', isGroupLabel ? 'group-label' : '', st === 'selected' ? 'selected' : '', st === 'grayed' ? 'grayed' : '', st === 'multi' ? 'multi' : ''].filter(Boolean).join(' ');
+  return /*#__PURE__*/React.createElement("span", {
+    className: cls,
+    onClick: onClick
+  }, isUnk ? '? Unbekannt' : label);
 }
 
 // ── CATEGORY BLOCK ─────────────────────────────────────────────────────────
-function CatBlock({ title, items, selected, onSelect, hideOthers = false, grouped = null, multiSet = null, onMultiToggle = null }) {
+function CatBlock({
+  title,
+  items,
+  selected,
+  onSelect,
+  hideOthers = false,
+  grouped = null,
+  multiSet = null,
+  onMultiToggle = null
+}) {
   const isUnk = selected === 'unbekannt';
   const hasSel = selected && selected !== 'unbekannt';
-
-  const chipSt = (item) => {
-    if (multiSet != null) return multiSet.has(item) ? 'multi' : (isUnk ? 'grayed' : 'default');
+  const chipSt = item => {
+    if (multiSet != null) return multiSet.has(item) ? 'multi' : isUnk ? 'grayed' : 'default';
     if (isUnk) return 'grayed';
-    if (hasSel) return item === selected ? 'selected' : (hideOthers ? 'hidden' : 'grayed');
+    if (hasSel) return item === selected ? 'selected' : hideOthers ? 'hidden' : 'grayed';
     return 'default';
   };
-
-  const handleChip = (item) => {
+  const handleChip = item => {
     const s = chipSt(item);
     if (s === 'grayed') return;
-    if (multiSet != null) { onMultiToggle(item); return; }
+    if (multiSet != null) {
+      onMultiToggle(item);
+      return;
+    }
     onSelect(selected === item ? null : item);
   };
-
-  const renderItem = (item) => {
+  const renderItem = item => {
     const s = chipSt(item);
     if (s === 'hidden') return null;
-    return <Chip key={item} label={item} st={s} onClick={() => handleChip(item)}/>;
+    return /*#__PURE__*/React.createElement(Chip, {
+      key: item,
+      label: item,
+      st: s,
+      onClick: () => handleChip(item)
+    });
   };
-
-  return (
-    <div className="cat-block">
-      <div className="cat-head">{title}</div>
-      <div className="chip-wrap">
-        <Chip label="Unbekannt" isUnk={true}
-          st={isUnk ? 'selected' : (hasSel ? 'grayed' : 'default')}
-          onClick={() => { if (!hasSel) onSelect(selected === 'unbekannt' ? null : 'unbekannt'); }}/>
-        {grouped
-          ? grouped.map((grp, gi) => (
-            <React.Fragment key={gi}>
-              {grp.gruppe && !hasSel && <Chip label={grp.gruppe} isGroupLabel={true}/>}
-              {grp.rassen.map(renderItem)}
-            </React.Fragment>))
-          : items.map(renderItem)
-        }
-      </div>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    className: "cat-block"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "cat-head"
+  }, title), /*#__PURE__*/React.createElement("div", {
+    className: "chip-wrap"
+  }, /*#__PURE__*/React.createElement(Chip, {
+    label: "Unbekannt",
+    isUnk: true,
+    st: isUnk ? 'selected' : hasSel ? 'grayed' : 'default',
+    onClick: () => {
+      if (!hasSel) onSelect(selected === 'unbekannt' ? null : 'unbekannt');
+    }
+  }), grouped ? grouped.map((grp, gi) => /*#__PURE__*/React.createElement(React.Fragment, {
+    key: gi
+  }, grp.gruppe && !hasSel && /*#__PURE__*/React.createElement(Chip, {
+    label: grp.gruppe,
+    isGroupLabel: true
+  }), grp.rassen.map(renderItem))) : items.map(renderItem)));
 }
 
 // ── TAG PHASE ──────────────────────────────────────────────────────────────
-function TagPhase({ tags, setTag, setWerkzeug, onNext }) {
+function TagPhase({
+  tags,
+  setTag,
+  setWerkzeug,
+  onNext
+}) {
   const GOETTER = useMemo(() => {
     if (!window.GODS_DATA) return [];
-    const { gods=[], demons=[], naturgeister=[] } = window.GODS_DATA;
-    return [...gods,...demons,...naturgeister].map(g => g.name);
+    const {
+      gods = [],
+      demons = [],
+      naturgeister = []
+    } = window.GODS_DATA;
+    return [...gods, ...demons, ...naturgeister].map(g => g.name);
   }, []);
-
-  const selCount = Object.entries(tags).filter(([k,v]) => k === 'werkzeuge' ? v instanceof Set && v.size > 0 : v !== null).length;
-
-  return (
-    <div style={{maxWidth:920,margin:'0 auto',padding:'44px 32px 80px',animation:'slideUp .4s ease'}}>
-      <div style={{marginBottom:38}}>
-        <div style={{fontFamily:'var(--font-m)',fontSize:'9px',letterSpacing:'.28em',color:'rgba(124,77,255,.5)',textTransform:'uppercase',marginBottom:9}}>Schritt 1 · Tag-Auswahl</div>
-        <h2 style={{fontFamily:'var(--font-d)',fontSize:'clamp(16px,3vw,26px)',fontWeight:300,letterSpacing:'.18em',color:'#f0eeff',marginBottom:11}}>Was weißt du schon?</h2>
-        <p style={{fontFamily:'var(--font-b)',fontWeight:300,fontSize:'12px',color:'rgba(200,190,240,.4)',lineHeight:1.9,maxWidth:580}}>
-          Markiere alles, was du bereits über deinen Charakter weißt. Felder, die du nicht ausfüllst oder als <em style={{color:'rgba(140,180,255,.7)'}}>Unbekannt</em> markierst, werden im nächsten Schritt durch gezielte Quizfragen eingegrenzt.
-          <br/>Wählst du eine <strong style={{color:'rgba(200,190,240,.6)',fontWeight:400}}>Rasse oder Klasse</strong> aus, verschwinden alle anderen — so bleibt die Übersicht sauber.
-        </p>
-      </div>
-
-      <CatBlock title="Rasse" grouped={window.RASSEN_GRUPPEN} items={window.ALLE_RASSEN} selected={tags.rasse} onSelect={v => setTag('rasse',v)} hideOthers={true}/>
-      <CatBlock title="Klasse" items={window.ALLE_KLASSEN} selected={tags.klasse} onSelect={v => setTag('klasse',v)} hideOthers={true}/>
-      <CatBlock title="Hintergrund" items={window.ALLE_HINTERGRUENDE} selected={tags.hintergrund} onSelect={v => setTag('hintergrund',v)}/>
-      <CatBlock title="Zauberwirker" items={['Ja — Dieser Charakter wirkt Zauber','Nein — Kein Zauberwirker']} selected={tags.zauberwirker} onSelect={v => setTag('zauberwirker',v)}/>
-      <CatBlock title="Same der Furcht" items={window.ALLE_SAMEN} selected={tags.samen} onSelect={v => setTag('samen',v)}/>
-      <CatBlock title="Lebensstil" items={window.ALLE_LEBENSSTILE} selected={tags.lebensstil} onSelect={v => setTag('lebensstil',v)}/>
-      <CatBlock title="Gottheit" items={GOETTER} selected={tags.gottheit} onSelect={v => setTag('gottheit',v)}/>
-      <CatBlock title="Werkzeugübungen (Mehrfachauswahl)" items={window.WERKZEUGE_LIST}
-        selected={tags.werkzeuge === 'unbekannt' ? 'unbekannt' : null}
-        onSelect={v => { if (v==='unbekannt') setTag('werkzeuge','unbekannt'); else setWerkzeug(new Set()); }}
-        multiSet={tags.werkzeuge instanceof Set ? tags.werkzeuge : null}
-        onMultiToggle={item => { const s = new Set(tags.werkzeuge instanceof Set ? tags.werkzeuge : []); s.has(item)?s.delete(item):s.add(item); setWerkzeug(s); }}/>
-      <CatBlock title="Division" items={window.ALLE_DIVISIONEN} selected={tags.division} onSelect={v => setTag('division',v)}/>
-
-      <div style={{marginTop:44,display:'flex',alignItems:'center',justifyContent:'flex-end',gap:14}} className="no-print">
-        <span style={{fontFamily:'var(--font-m)',fontSize:'9px',color:'rgba(160,140,255,.38)',letterSpacing:'.1em'}}>{selCount} Feld{selCount!==1?'er':''} ausgefüllt</span>
-        <GlitchBtn label="Weiter" sub="Zum Quiz" onClick={onNext} primary={true} style={{padding:'14px 36px',minWidth:0}}/>
-      </div>
-    </div>
-  );
+  const selCount = Object.entries(tags).filter(([k, v]) => k === 'werkzeuge' ? v instanceof Set && v.size > 0 : v !== null).length;
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      maxWidth: 920,
+      margin: '0 auto',
+      padding: '44px 32px 80px',
+      animation: 'slideUp .4s ease'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: 38
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '9px',
+      letterSpacing: '.28em',
+      color: 'rgba(124,77,255,.5)',
+      textTransform: 'uppercase',
+      marginBottom: 9
+    }
+  }, "Schritt 1 \xB7 Tag-Auswahl"), /*#__PURE__*/React.createElement("h2", {
+    style: {
+      fontFamily: 'var(--font-d)',
+      fontSize: 'clamp(16px,3vw,26px)',
+      fontWeight: 300,
+      letterSpacing: '.18em',
+      color: '#f0eeff',
+      marginBottom: 11
+    }
+  }, "Was wei\xDFt du schon?"), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-b)',
+      fontWeight: 300,
+      fontSize: '12px',
+      color: 'rgba(200,190,240,.4)',
+      lineHeight: 1.9,
+      maxWidth: 580
+    }
+  }, "Markiere alles, was du bereits \xFCber deinen Charakter wei\xDFt. Felder, die du nicht ausf\xFCllst oder als ", /*#__PURE__*/React.createElement("em", {
+    style: {
+      color: 'rgba(140,180,255,.7)'
+    }
+  }, "Unbekannt"), " markierst, werden im n\xE4chsten Schritt durch gezielte Quizfragen eingegrenzt.", /*#__PURE__*/React.createElement("br", null), "W\xE4hlst du eine ", /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: 'rgba(200,190,240,.6)',
+      fontWeight: 400
+    }
+  }, "Rasse oder Klasse"), " aus, verschwinden alle anderen \u2014 so bleibt die \xDCbersicht sauber.")), /*#__PURE__*/React.createElement(CatBlock, {
+    title: "Rasse",
+    grouped: window.RASSEN_GRUPPEN,
+    items: window.ALLE_RASSEN,
+    selected: tags.rasse,
+    onSelect: v => setTag('rasse', v),
+    hideOthers: true
+  }), /*#__PURE__*/React.createElement(CatBlock, {
+    title: "Klasse",
+    items: window.ALLE_KLASSEN,
+    selected: tags.klasse,
+    onSelect: v => setTag('klasse', v),
+    hideOthers: true
+  }), /*#__PURE__*/React.createElement(CatBlock, {
+    title: "Hintergrund",
+    items: window.ALLE_HINTERGRUENDE,
+    selected: tags.hintergrund,
+    onSelect: v => setTag('hintergrund', v)
+  }), /*#__PURE__*/React.createElement(CatBlock, {
+    title: "Zauberwirker",
+    items: ['Ja — Dieser Charakter wirkt Zauber', 'Nein — Kein Zauberwirker'],
+    selected: tags.zauberwirker,
+    onSelect: v => setTag('zauberwirker', v)
+  }), /*#__PURE__*/React.createElement(CatBlock, {
+    title: "Same der Furcht",
+    items: window.ALLE_SAMEN,
+    selected: tags.samen,
+    onSelect: v => setTag('samen', v)
+  }), /*#__PURE__*/React.createElement(CatBlock, {
+    title: "Lebensstil",
+    items: window.ALLE_LEBENSSTILE,
+    selected: tags.lebensstil,
+    onSelect: v => setTag('lebensstil', v)
+  }), /*#__PURE__*/React.createElement(CatBlock, {
+    title: "Gottheit",
+    items: GOETTER,
+    selected: tags.gottheit,
+    onSelect: v => setTag('gottheit', v)
+  }), /*#__PURE__*/React.createElement(CatBlock, {
+    title: "Werkzeug\xFCbungen (Mehrfachauswahl)",
+    items: window.WERKZEUGE_LIST,
+    selected: tags.werkzeuge === 'unbekannt' ? 'unbekannt' : null,
+    onSelect: v => {
+      if (v === 'unbekannt') setTag('werkzeuge', 'unbekannt');else setWerkzeug(new Set());
+    },
+    multiSet: tags.werkzeuge instanceof Set ? tags.werkzeuge : null,
+    onMultiToggle: item => {
+      const s = new Set(tags.werkzeuge instanceof Set ? tags.werkzeuge : []);
+      s.has(item) ? s.delete(item) : s.add(item);
+      setWerkzeug(s);
+    }
+  }), /*#__PURE__*/React.createElement(CatBlock, {
+    title: "Division",
+    items: window.ALLE_DIVISIONEN,
+    selected: tags.division,
+    onSelect: v => setTag('division', v)
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: 44,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'flex-end',
+      gap: 14
+    },
+    className: "no-print"
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '9px',
+      color: 'rgba(160,140,255,.38)',
+      letterSpacing: '.1em'
+    }
+  }, selCount, " Feld", selCount !== 1 ? 'er' : '', " ausgef\xFCllt"), /*#__PURE__*/React.createElement(GlitchBtn, {
+    label: "Weiter",
+    sub: "Zum Quiz",
+    onClick: onNext,
+    primary: true,
+    style: {
+      padding: '14px 36px',
+      minWidth: 0
+    }
+  })));
 }
 
 // ── QUIZ PHASE ─────────────────────────────────────────────────────────────
-function QuizPhase({ tags, possible, quizAnswers, onAnswer, onFinish }) {
+function QuizPhase({
+  tags,
+  possible,
+  quizAnswers,
+  onAnswer,
+  onFinish
+}) {
   const currentQ = useMemo(() => {
     if (!window.CHAR_QUIZ) return null;
     return window.CHAR_QUIZ.find(q => {
@@ -195,63 +502,136 @@ function QuizPhase({ tags, possible, quizAnswers, onAnswer, onFinish }) {
       return (possible[q.kat] || []).length > 1;
     });
   }, [quizAnswers, tags, possible]);
-
-  const total = useMemo(() => (window.CHAR_QUIZ||[]).filter(q => {
+  const total = useMemo(() => (window.CHAR_QUIZ || []).filter(q => {
     const tv = tags[q.kat];
-    return (tv===null||tv==='unbekannt') && (possible[q.kat]||[]).length > 1;
+    return (tv === null || tv === 'unbekannt') && (possible[q.kat] || []).length > 1;
   }).length, [tags, possible]);
-
   const answered = quizAnswers.length;
-
   useEffect(() => {
-    if (!currentQ) { const t = setTimeout(onFinish, 400); return () => clearTimeout(t); }
+    if (!currentQ) {
+      const t = setTimeout(onFinish, 400);
+      return () => clearTimeout(t);
+    }
   }, [currentQ]);
-
-  if (!currentQ) return (
-    <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',minHeight:'calc(100vh - 52px)',gap:14,animation:'fadeIn .5s'}}>
-      <div style={{fontFamily:'var(--font-m)',fontSize:'9px',letterSpacing:'.3em',color:'rgba(94,232,208,.7)',textTransform:'uppercase'}}>Analyse abgeschlossen</div>
-      <div style={{fontFamily:'var(--font-d)',fontSize:'22px',fontWeight:300,letterSpacing:'.2em',color:'#f0eeff'}}>Auswertung wird vorbereitet…</div>
-    </div>
-  );
-
-  return (
-    <div style={{maxWidth:700,margin:'0 auto',padding:'44px 32px 80px',animation:'slideUp .35s ease'}}>
-      {/* Progress */}
-      <div style={{marginBottom:30}}>
-        <div style={{display:'flex',justifyContent:'space-between',marginBottom:7}}>
-          <div style={{fontFamily:'var(--font-m)',fontSize:'9px',letterSpacing:'.2em',color:'rgba(124,77,255,.5)',textTransform:'uppercase'}}>Schritt 2 · Charakteranalyse</div>
-          <div style={{fontFamily:'var(--font-m)',fontSize:'9px',color:'rgba(160,140,255,.4)'}}>{answered} / {total}</div>
-        </div>
-        <div style={{height:2,background:'rgba(160,140,255,.1)',borderRadius:1}}>
-          <div style={{height:'100%',background:'rgba(124,77,255,.65)',borderRadius:1,width:`${total>0?(answered/total)*100:0}%`,transition:'width .4s ease'}}/>
-        </div>
-      </div>
-
-      {/* Category label */}
-      <div style={{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.2em',color:'rgba(124,77,255,.55)',textTransform:'uppercase',marginBottom:9}}>
-        Kategorie: {({rasse:'Rasse',klasse:'Klasse',hintergrund:'Hintergrund',division:'Division',lebensstil:'Lebensstil',gottheit:'Gottheit',samen:'Same der Furcht'})[currentQ.kat] || currentQ.kat}
-      </div>
-
-      {/* Question */}
-      <h3 style={{fontFamily:'var(--font-d)',fontSize:'clamp(15px,2.4vw,21px)',fontWeight:300,letterSpacing:'.1em',color:'#f0eeff',marginBottom:26,lineHeight:1.55}}>
-        {currentQ.frage}
-      </h3>
-
-      {/* Options */}
-      <div style={{display:'flex',flexDirection:'column',gap:7}}>
-        {currentQ.optionen.map((opt,i) => (
-          <button key={i} className="quiz-opt" onClick={() => onAnswer(currentQ, opt)}>
-            {opt.text}
-          </button>
-        ))}
-      </div>
-
-    </div>
-  );
+  if (!currentQ) return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      minHeight: 'calc(100vh - 52px)',
+      gap: 14,
+      animation: 'fadeIn .5s'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '9px',
+      letterSpacing: '.3em',
+      color: 'rgba(94,232,208,.7)',
+      textTransform: 'uppercase'
+    }
+  }, "Analyse abgeschlossen"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-d)',
+      fontSize: '22px',
+      fontWeight: 300,
+      letterSpacing: '.2em',
+      color: '#f0eeff'
+    }
+  }, "Auswertung wird vorbereitet\u2026"));
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      maxWidth: 700,
+      margin: '0 auto',
+      padding: '44px 32px 80px',
+      animation: 'slideUp .35s ease'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: 30
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      marginBottom: 7
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '9px',
+      letterSpacing: '.2em',
+      color: 'rgba(124,77,255,.5)',
+      textTransform: 'uppercase'
+    }
+  }, "Schritt 2 \xB7 Charakteranalyse"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '9px',
+      color: 'rgba(160,140,255,.4)'
+    }
+  }, answered, " / ", total)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      height: 2,
+      background: 'rgba(160,140,255,.1)',
+      borderRadius: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      height: '100%',
+      background: 'rgba(124,77,255,.65)',
+      borderRadius: 1,
+      width: `${total > 0 ? answered / total * 100 : 0}%`,
+      transition: 'width .4s ease'
+    }
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '8px',
+      letterSpacing: '.2em',
+      color: 'rgba(124,77,255,.55)',
+      textTransform: 'uppercase',
+      marginBottom: 9
+    }
+  }, "Kategorie: ", {
+    rasse: 'Rasse',
+    klasse: 'Klasse',
+    hintergrund: 'Hintergrund',
+    division: 'Division',
+    lebensstil: 'Lebensstil',
+    gottheit: 'Gottheit',
+    samen: 'Same der Furcht'
+  }[currentQ.kat] || currentQ.kat), /*#__PURE__*/React.createElement("h3", {
+    style: {
+      fontFamily: 'var(--font-d)',
+      fontSize: 'clamp(15px,2.4vw,21px)',
+      fontWeight: 300,
+      letterSpacing: '.1em',
+      color: '#f0eeff',
+      marginBottom: 26,
+      lineHeight: 1.55
+    }
+  }, currentQ.frage), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 7
+    }
+  }, currentQ.optionen.map((opt, i) => /*#__PURE__*/React.createElement("button", {
+    key: i,
+    className: "quiz-opt",
+    onClick: () => onAnswer(currentQ, opt)
+  }, opt.text))));
 }
 
 // ── OUTPUT PHASE ───────────────────────────────────────────────────────────
-function OutputPhase({ tags, possible, quizAnswers, charType }) {
+function OutputPhase({
+  tags,
+  possible,
+  quizAnswers,
+  charType
+}) {
   const [charName, setCharName] = useState('');
   const [showNameModal, setShowNameModal] = useState(false);
   const [modalName, setModalName] = useState('');
@@ -265,19 +645,37 @@ function OutputPhase({ tags, possible, quizAnswers, charType }) {
 
   // Stats mode — only unlocked after token validation
   const [statsMode, setStatsMode] = useState(null); // null | 'roll' | 'manual'
-  const [rollA, setRollA] = useState(null);   // first roll set
-  const [rollB, setRollB] = useState(null);   // second roll set
+  const [rollA, setRollA] = useState(null); // first roll set
+  const [rollB, setRollB] = useState(null); // second roll set
   const [chosen, setChosen] = useState(null); // 'a' | 'b'
-  const ATTRS = ['STÄ','GES','KON','INT','WEI','CHA'];
-  const KEYS  = ['str','dex','con','int','wis','cha'];
-  const [manual, setManual] = useState({ str:'', dex:'', con:'', int:'', wis:'', cha:'' });
-
+  const ATTRS = ['STÄ', 'GES', 'KON', 'INT', 'WEI', 'CHA'];
+  const KEYS = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+  const [manual, setManual] = useState({
+    str: '',
+    dex: '',
+    con: '',
+    int: '',
+    wis: '',
+    cha: ''
+  });
   const rollSet = () => {
-    const r = () => { const d = Array.from({length:4},()=>Math.floor(Math.random()*6)+1).sort((a,b)=>a-b); return {rolls:d, val:d.slice(1).reduce((s,n)=>s+n,0)}; };
-    return Array.from({length:6}, r);
+    const r = () => {
+      const d = Array.from({
+        length: 4
+      }, () => Math.floor(Math.random() * 6) + 1).sort((a, b) => a - b);
+      return {
+        rolls: d,
+        val: d.slice(1).reduce((s, n) => s + n, 0)
+      };
+    };
+    return Array.from({
+      length: 6
+    }, r);
   };
-
-  const doFirstRoll  = () => { setRollA(rollSet()); setChosen('a'); };
+  const doFirstRoll = () => {
+    setRollA(rollSet());
+    setChosen('a');
+  };
   const doSecondRoll = async () => {
     const set = rollSet();
     setRollB(set);
@@ -285,377 +683,939 @@ function OutputPhase({ tags, possible, quizAnswers, charType }) {
     // consume token on second roll
     if (validatedToken && window._sb) {
       try {
-        const { data: { user } } = await window._sb.auth.getUser();
-        if (user) await window._sb.from('roll_tokens').update({ used_by: user.id, used_at: new Date().toISOString() }).eq('code', validatedToken).is('used_by', null);
-      } catch(e) { /* ignore */ }
+        const {
+          data: {
+            user
+          }
+        } = await window._sb.auth.getUser();
+        if (user) await window._sb.from('roll_tokens').update({
+          used_by: user.id,
+          used_at: new Date().toISOString()
+        }).eq('code', validatedToken).is('used_by', null);
+      } catch (e) {/* ignore */}
       setValidatedToken(null);
     }
   };
-
   const handleRedeemToken = async () => {
     const code = tokenInput.replace(/-/g, '').trim().toUpperCase();
     if (!code) return;
     setTokenState('checking');
     setTokenError('');
     try {
-      const { data, error } = await window._sb.from('roll_tokens')
-        .select('code, used_by')
-        .eq('code', code)
-        .maybeSingle();
-      if (error || !data) { setTokenState('error'); setTokenError('Code nicht gefunden.'); return; }
-      if (data.used_by !== null) { setTokenState('error'); setTokenError('Dieser Code wurde bereits verwendet.'); return; }
+      const {
+        data,
+        error
+      } = await window._sb.from('roll_tokens').select('code, used_by').eq('code', code).maybeSingle();
+      if (error || !data) {
+        setTokenState('error');
+        setTokenError('Code nicht gefunden.');
+        return;
+      }
+      if (data.used_by !== null) {
+        setTokenState('error');
+        setTokenError('Dieser Code wurde bereits verwendet.');
+        return;
+      }
       setValidatedToken(code);
       setTokenState('valid');
-    } catch(e) {
+    } catch (e) {
       setTokenState('error');
       setTokenError('Verbindungsfehler.');
     }
   };
-
   const getFinalStats = () => {
     if (statsMode === 'roll') {
       const set = chosen === 'b' && rollB ? rollB : rollA;
       if (!set) return null;
-      const [str,dex,con,int_,wis,cha] = set.map(d => d.val);
-      return { str, dex, con, int: int_, wis, cha };
+      const [str, dex, con, int_, wis, cha] = set.map(d => d.val);
+      return {
+        str,
+        dex,
+        con,
+        int: int_,
+        wis,
+        cha
+      };
     }
     if (statsMode === 'manual') {
       const vals = KEYS.map(k => parseInt(manual[k], 10));
       if (vals.some(v => isNaN(v) || v < 1 || v > 30)) return null;
-      const [str,dex,con,int_,wis,cha] = vals;
-      return { str, dex, con, int: int_, wis, cha };
+      const [str, dex, con, int_, wis, cha] = vals;
+      return {
+        str,
+        dex,
+        con,
+        int: int_,
+        wis,
+        cha
+      };
     }
     return null;
   };
-
-  const getFinal = (kat) => {
+  const getFinal = kat => {
     const tv = tags[kat];
-    if (tv && tv !== 'unbekannt') return { val: tv, src: 'sel' };
+    if (tv && tv !== 'unbekannt') return {
+      val: tv,
+      src: 'sel'
+    };
     const pos = possible[kat] || [];
-    if (pos.length === 1) return { val: pos[0], src: 'quiz' };
+    if (pos.length === 1) return {
+      val: pos[0],
+      src: 'quiz'
+    };
     if (pos.length > 1) {
-      const shown = pos.slice(0,3).join(' / ') + (pos.length>3?` (+${pos.length-3})` : '');
-      return { val: shown, src: 'multi' };
+      const shown = pos.slice(0, 3).join(' / ') + (pos.length > 3 ? ` (+${pos.length - 3})` : '');
+      return {
+        val: shown,
+        src: 'multi'
+      };
     }
-    return { val: '—', src: 'none' };
+    return {
+      val: '—',
+      src: 'none'
+    };
   };
-
   const getZauberwirker = () => {
     const tv = tags.zauberwirker;
-    if (tv === 'Ja — Dieser Charakter wirkt Zauber') return { val:'Ja', src:'sel' };
-    if (tv === 'Nein — Kein Zauberwirker') return { val:'Nein', src:'sel' };
+    if (tv === 'Ja — Dieser Charakter wirkt Zauber') return {
+      val: 'Ja',
+      src: 'sel'
+    };
+    if (tv === 'Nein — Kein Zauberwirker') return {
+      val: 'Nein',
+      src: 'sel'
+    };
     const kl = getFinal('klasse');
-    if (kl.src !== 'none' && kl.src !== 'multi' && window.ZAUBERWIRKER_KLASSEN?.has(kl.val)) return { val:'Ja', src:'quiz' };
-    if (kl.src === 'sel' || kl.src === 'quiz') return { val:'Nein', src:'quiz' };
-    return { val:'—', src:'none' };
+    if (kl.src !== 'none' && kl.src !== 'multi' && window.ZAUBERWIRKER_KLASSEN?.has(kl.val)) return {
+      val: 'Ja',
+      src: 'quiz'
+    };
+    if (kl.src === 'sel' || kl.src === 'quiz') return {
+      val: 'Nein',
+      src: 'quiz'
+    };
+    return {
+      val: '—',
+      src: 'none'
+    };
   };
-
-  const werkzeuge = tags.werkzeuge instanceof Set && tags.werkzeuge.size > 0
-    ? [...tags.werkzeuge].join(', ')
-    : tags.werkzeuge === 'unbekannt' ? '— (unbekannt)' : '—';
-
-  const rows = [
-    { lbl:'Rasse',           ...getFinal('rasse') },
-    { lbl:'Klasse',          ...getFinal('klasse') },
-    { lbl:'Hintergrund',     ...getFinal('hintergrund') },
-    { lbl:'Division',        ...getFinal('division') },
-    { lbl:'Lebensstil',      ...getFinal('lebensstil') },
-    { lbl:'Same der Furcht', ...getFinal('samen') },
-    { lbl:'Gottheit',        ...getFinal('gottheit') },
-    { lbl:'Zauberwirker',    ...getZauberwirker() },
-    { lbl:'Werkzeugübungen', val: werkzeuge, src: tags.werkzeuge instanceof Set && tags.werkzeuge.size > 0 ? 'sel' : 'none' },
-  ];
-
+  const werkzeuge = tags.werkzeuge instanceof Set && tags.werkzeuge.size > 0 ? [...tags.werkzeuge].join(', ') : tags.werkzeuge === 'unbekannt' ? '— (unbekannt)' : '—';
+  const rows = [{
+    lbl: 'Rasse',
+    ...getFinal('rasse')
+  }, {
+    lbl: 'Klasse',
+    ...getFinal('klasse')
+  }, {
+    lbl: 'Hintergrund',
+    ...getFinal('hintergrund')
+  }, {
+    lbl: 'Division',
+    ...getFinal('division')
+  }, {
+    lbl: 'Lebensstil',
+    ...getFinal('lebensstil')
+  }, {
+    lbl: 'Same der Furcht',
+    ...getFinal('samen')
+  }, {
+    lbl: 'Gottheit',
+    ...getFinal('gottheit')
+  }, {
+    lbl: 'Zauberwirker',
+    ...getZauberwirker()
+  }, {
+    lbl: 'Werkzeugübungen',
+    val: werkzeuge,
+    src: tags.werkzeuge instanceof Set && tags.werkzeuge.size > 0 ? 'sel' : 'none'
+  }];
   const byKat = {};
-  quizAnswers.forEach(a => { if (!byKat[a.kat]) byKat[a.kat] = []; byKat[a.kat].push(a); });
-
+  quizAnswers.forEach(a => {
+    if (!byKat[a.kat]) byKat[a.kat] = [];
+    byKat[a.kat].push(a);
+  });
   async function doSave(name) {
-    const g = k => { const r = getFinal(k); if (r.src==='none') return null; if (r.src==='multi') return (possible[k]||[])[0]||null; return r.val; };
+    const g = k => {
+      const r = getFinal(k);
+      if (r.src === 'none') return null;
+      if (r.src === 'multi') return (possible[k] || [])[0] || null;
+      return r.val;
+    };
     const draft = {
       name,
-      race:       g('rasse'),
-      class:      g('klasse'),
+      race: g('rasse'),
+      class: g('klasse'),
       background: g('hintergrund'),
-      division:   g('division'),
-      deity:      g('gottheit'),
-      samen:      g('samen'),
+      division: g('division'),
+      deity: g('gottheit'),
+      samen: g('samen'),
       stats: getFinalStats(),
-      alignment:     null,
-      zodiac:        null,
-      birthday:      null,
-      lieblingsfarbe:null,
-      tier:          null,
-      motto:         null,
+      alignment: null,
+      zodiac: null,
+      birthday: null,
+      lieblingsfarbe: null,
+      tier: null,
+      motto: null
     };
     setSaving(true);
     try {
       await window._sb.from('characters').insert({
+        owner_id: window.SITE_USER?.id || null,
         name: draft.name || 'Unbenannt',
         race: draft.race || null,
         class: draft.class || null,
         division: draft.division || null,
         char_data: draft,
-        type: charType || 'spieler',
+        type: charType || 'spieler'
       });
-    } catch(e) { console.error(e); }
+    } catch (e) {
+      console.error(e);
+    }
     window.location.href = 'MeinCharakter.html';
   }
-
-  return (
-    <div style={{maxWidth:860,margin:'0 auto',padding:'44px 32px 80px',animation:'slideUp .4s ease'}}>
-      {/* Header */}
-      <div style={{marginBottom:36}}>
-        <div style={{fontFamily:'var(--font-m)',fontSize:'9px',letterSpacing:'.28em',color:'rgba(94,232,208,.55)',textTransform:'uppercase',marginBottom:9}}>Charakterbogen</div>
-        <div style={{display:'flex',alignItems:'center',gap:16,flexWrap:'wrap',marginBottom:18}}>
-          <input value={charName} onChange={e=>setCharName(e.target.value)} placeholder="Charaktername (optional)"
-            style={{fontFamily:'var(--font-d)',fontSize:'22px',fontWeight:300,letterSpacing:'.18em',background:'transparent',border:'none',borderBottom:'1px solid rgba(160,140,255,.2)',color:'#f0eeff',outline:'none',padding:'6px 0',minWidth:260}}/>
-          <button className="no-print" onClick={()=>window.print()}
-            style={{marginLeft:'auto',fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.17em',color:'rgba(160,140,255,.55)',background:'transparent',border:'1px solid rgba(160,140,255,.18)',borderRadius:'3px',padding:'8px 18px',cursor:'pointer',textTransform:'uppercase',transition:'all .2s'}}
-            onMouseEnter={e=>{e.currentTarget.style.color='#f0eeff';e.currentTarget.style.borderColor='rgba(160,140,255,.45)';}}
-            onMouseLeave={e=>{e.currentTarget.style.color='rgba(160,140,255,.55)';e.currentTarget.style.borderColor='rgba(160,140,255,.18)';}}>⬡ Drucken / PDF</button>
-        </div>
-        <div style={{height:1,background:'linear-gradient(90deg,rgba(124,77,255,.45) 0%,transparent 100%)'}}/>
-      </div>
-
-      {/* Sheet */}
-      <div style={{marginBottom:44}}>
-        {rows.map(({lbl,val,src}) => (
-          <div key={lbl} className="sh-row">
-            <div className="sh-lbl">{lbl}</div>
-            <div className={`sh-val ${src==='quiz'?'quiz-det':src==='multi'?'multi':''}`}>
-              {val}
-              {src==='quiz' && <span style={{fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(94,232,208,.4)',marginLeft:10,letterSpacing:'.1em'}}>↯ per Quiz</span>}
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Attribute */}
-      <div style={{marginBottom:44}}>
-        <div style={{fontFamily:'var(--font-d)',fontSize:'10px',letterSpacing:'.22em',color:'rgba(160,140,255,.6)',textTransform:'uppercase',marginBottom:16}}>Attribute</div>
-        <div style={{padding:18,border:'1px solid rgba(160,140,255,.1)',borderRadius:4,background:'rgba(124,77,255,.02)'}}>
-
-          {/* ── Token not yet validated ── */}
-          {tokenState !== 'valid' && (
-            <div style={{display:'flex',flexDirection:'column',gap:12}}>
-              <p style={{fontFamily:'var(--font-b)',fontWeight:300,fontSize:'12px',color:'rgba(200,190,240,.45)',lineHeight:1.75,margin:0}}>
-                Für Attributwerte ist eine <strong style={{color:'rgba(160,140,255,.7)',fontWeight:400}}>Würfelerlaubnis</strong> des Spielleiters erforderlich. Ohne sie kann der Charakter trotzdem erstellt werden — die Attribute lassen sich später nachtragen.
-              </p>
-              <div style={{display:'flex',alignItems:'center',gap:8,flexWrap:'wrap'}}>
-                <input
-                  value={tokenInput}
-                  onChange={e=>{ setTokenInput(e.target.value.toUpperCase().replace(/[^A-Z0-9\-]/g,'').slice(0,9)); if(tokenState==='error') setTokenState('idle'); }}
-                  onKeyDown={e=>{ if(e.key==='Enter') handleRedeemToken(); }}
-                  placeholder="XXXX-XXXX"
-                  style={{fontFamily:'var(--font-m)',fontSize:'11px',letterSpacing:'.12em',background:'rgba(5,4,15,.5)',border:'1px solid rgba(160,140,255,.18)',borderRadius:'3px',padding:'6px 10px',color:'#f0eeff',outline:'none',width:120,textTransform:'uppercase'}}
-                />
-                <button onClick={handleRedeemToken} disabled={tokenState==='checking'||!tokenInput.trim()}
-                  style={{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.12em',color:'rgba(160,140,255,.75)',background:'rgba(124,77,255,.08)',border:'1px solid rgba(124,77,255,.25)',borderRadius:'3px',padding:'6px 12px',cursor:tokenState==='checking'?'not-allowed':'pointer',textTransform:'uppercase',transition:'all .2s'}}>
-                  {tokenState==='checking'?'…':'Würfelerlaubnis einlösen'}
-                </button>
-                {tokenState==='error' && <span style={{fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(255,100,100,.75)',letterSpacing:'.08em'}}>{tokenError}</span>}
-              </div>
-            </div>
-          )}
-
-          {/* ── Token valid — choose mode ── */}
-          {tokenState === 'valid' && statsMode === null && (
-            <div style={{display:'flex',flexDirection:'column',gap:14}}>
-              <div style={{fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(94,232,208,.6)',letterSpacing:'.18em',textTransform:'uppercase'}}>✓ Würfelerlaubnis aktiv</div>
-              <div style={{display:'flex',gap:10,flexWrap:'wrap'}}>
-                <button onClick={()=>{ setStatsMode('roll'); doFirstRoll(); }}
-                  style={{fontFamily:'var(--font-m)',fontSize:'9px',letterSpacing:'.15em',color:'rgba(160,140,255,.85)',background:'rgba(124,77,255,.08)',border:'1px solid rgba(124,77,255,.35)',borderRadius:'3px',padding:'10px 20px',cursor:'pointer',textTransform:'uppercase',transition:'all .2s'}}
-                  onMouseEnter={e=>{e.currentTarget.style.background='rgba(124,77,255,.18)';e.currentTarget.style.color='#f0eeff';}}
-                  onMouseLeave={e=>{e.currentTarget.style.background='rgba(124,77,255,.08)';e.currentTarget.style.color='rgba(160,140,255,.85)';}}>⚄ Würfeln</button>
-                <button onClick={()=>setStatsMode('manual')}
-                  style={{fontFamily:'var(--font-m)',fontSize:'9px',letterSpacing:'.15em',color:'rgba(160,140,255,.55)',background:'transparent',border:'1px solid rgba(160,140,255,.2)',borderRadius:'3px',padding:'10px 20px',cursor:'pointer',textTransform:'uppercase',transition:'all .2s'}}
-                  onMouseEnter={e=>{e.currentTarget.style.color='#f0eeff';e.currentTarget.style.borderColor='rgba(160,140,255,.45)';}}
-                  onMouseLeave={e=>{e.currentTarget.style.color='rgba(160,140,255,.55)';e.currentTarget.style.borderColor='rgba(160,140,255,.2)';}}>✎ Manuell eingeben</button>
-              </div>
-            </div>
-          )}
-
-          {/* ── Roll mode ── */}
-          {statsMode === 'roll' && (
-            <div style={{display:'flex',flexDirection:'column',gap:12}}>
-              <div style={{display:'flex',gap:12,flexWrap:'wrap',alignItems:'flex-start'}}>
-                {/* Set A */}
-                {rollA && (
-                  <div onClick={()=>setChosen('a')} style={{flex:1,minWidth:160,border:`1px solid ${chosen==='a'?'rgba(94,232,208,.5)':'rgba(160,140,255,.15)'}`,borderRadius:4,padding:12,background:chosen==='a'?'rgba(94,232,208,.04)':'rgba(124,77,255,.02)',cursor:'pointer',transition:'all .2s'}}>
-                    <div style={{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.18em',textTransform:'uppercase',color:chosen==='a'?'rgba(94,232,208,.7)':'rgba(160,140,255,.4)',marginBottom:8}}>
-                      {chosen==='a'?'✓ ':''}Wurf 1
-                    </div>
-                    {ATTRS.map((a,i)=>(
-                      <div key={a} style={{display:'flex',justifyContent:'space-between',padding:'3px 0',borderBottom:'1px solid rgba(160,140,255,.04)'}}>
-                        <span style={{fontFamily:'var(--font-m)',fontSize:'9px',color:'rgba(160,140,255,.45)',letterSpacing:'.1em'}}>{a}</span>
-                        <span style={{fontFamily:'var(--font-d)',fontSize:'14px',color:chosen==='a'?'rgba(94,232,208,.9)':'rgba(200,190,240,.7)'}}>
-                          {rollA[i].val}
-                          <span style={{fontFamily:'var(--font-m)',fontSize:'7px',color:'rgba(160,140,255,.25)',marginLeft:5}}>({rollA[i].rolls.slice(1).join('+')})</span>
-                        </span>
-                      </div>
-                    ))}
-                    <div style={{textAlign:'right',marginTop:6,fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(160,140,255,.35)'}}>Σ {rollA.reduce((s,r)=>s+r.val,0)}</div>
-                  </div>
-                )}
-                {/* Set B */}
-                {rollB && (
-                  <div onClick={()=>setChosen('b')} style={{flex:1,minWidth:160,border:`1px solid ${chosen==='b'?'rgba(94,232,208,.5)':'rgba(160,140,255,.15)'}`,borderRadius:4,padding:12,background:chosen==='b'?'rgba(94,232,208,.04)':'rgba(124,77,255,.02)',cursor:'pointer',transition:'all .2s'}}>
-                    <div style={{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.18em',textTransform:'uppercase',color:chosen==='b'?'rgba(94,232,208,.7)':'rgba(160,140,255,.4)',marginBottom:8}}>
-                      {chosen==='b'?'✓ ':''}Wurf 2
-                    </div>
-                    {ATTRS.map((a,i)=>(
-                      <div key={a} style={{display:'flex',justifyContent:'space-between',padding:'3px 0',borderBottom:'1px solid rgba(160,140,255,.04)'}}>
-                        <span style={{fontFamily:'var(--font-m)',fontSize:'9px',color:'rgba(160,140,255,.45)',letterSpacing:'.1em'}}>{a}</span>
-                        <span style={{fontFamily:'var(--font-d)',fontSize:'14px',color:chosen==='b'?'rgba(94,232,208,.9)':'rgba(200,190,240,.7)'}}>
-                          {rollB[i].val}
-                          <span style={{fontFamily:'var(--font-m)',fontSize:'7px',color:'rgba(160,140,255,.25)',marginLeft:5}}>({rollB[i].rolls.slice(1).join('+')})</span>
-                        </span>
-                      </div>
-                    ))}
-                    <div style={{textAlign:'right',marginTop:6,fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(160,140,255,.35)'}}>Σ {rollB.reduce((s,r)=>s+r.val,0)}</div>
-                  </div>
-                )}
-              </div>
-              {/* Second roll button */}
-              {!rollB && tokenState === 'valid' && (
-                <button onClick={doSecondRoll}
-                  style={{alignSelf:'flex-start',fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.13em',color:'rgba(94,232,208,.75)',background:'transparent',border:'1px solid rgba(94,232,208,.3)',borderRadius:'3px',padding:'7px 14px',cursor:'pointer',textTransform:'uppercase',transition:'all .2s'}}
-                  onMouseEnter={e=>{e.currentTarget.style.color='#f0eeff';e.currentTarget.style.borderColor='rgba(94,232,208,.6)';}}
-                  onMouseLeave={e=>{e.currentTarget.style.color='rgba(94,232,208,.75)';e.currentTarget.style.borderColor='rgba(94,232,208,.3)';}}>↺ Zweiter Wurf</button>
-              )}
-              {rollB && <p style={{fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(160,140,255,.4)',letterSpacing:'.1em',margin:0}}>Klicke auf einen Wurf um ihn auszuwählen.</p>}
-            </div>
-          )}
-
-          {/* ── Manual mode ── */}
-          {statsMode === 'manual' && (
-            <div style={{display:'flex',flexDirection:'column',gap:10}}>
-              <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:8,maxWidth:360}}>
-                {ATTRS.map((a,i)=>(
-                  <div key={a} style={{display:'flex',flexDirection:'column',gap:4}}>
-                    <label style={{fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(160,140,255,.5)',letterSpacing:'.14em',textTransform:'uppercase'}}>{a}</label>
-                    <input type="number" min="1" max="30"
-                      value={manual[KEYS[i]]}
-                      onChange={e=>setManual(p=>({...p,[KEYS[i]]:e.target.value}))}
-                      style={{fontFamily:'var(--font-d)',fontSize:'16px',textAlign:'center',background:'rgba(5,4,15,.5)',border:'1px solid rgba(160,140,255,.2)',borderRadius:3,color:'#f0eeff',outline:'none',padding:'6px 4px',width:'100%'}}
-                      onFocus={e=>e.currentTarget.style.borderColor='rgba(124,77,255,.55)'}
-                      onBlur={e=>e.currentTarget.style.borderColor='rgba(160,140,255,.2)'}
-                    />
-                  </div>
-                ))}
-              </div>
-              {getFinalStats() === null && KEYS.some(k=>manual[k]!=='') &&
-                <span style={{fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(255,140,100,.7)',letterSpacing:'.1em'}}>Alle Werte müssen zwischen 1 und 30 liegen.</span>
-              }
-            </div>
-          )}
-
-        </div>
-      </div>
-
-      {/* Steckbrief erstellen */}
-      <div style={{margin:'0 0 44px',padding:'20px 24px',border:'1px solid rgba(124,77,255,.35)',borderRadius:4,background:'rgba(124,77,255,.04)',display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:16}}>
-        <div>
-          <div style={{fontFamily:'var(--font-d)',fontSize:'10px',letterSpacing:'.22em',color:'rgba(160,140,255,.8)',textTransform:'uppercase',marginBottom:6}}>Steckbrief erstellen</div>
-          <div style={{fontFamily:'var(--font-b)',fontWeight:300,fontSize:'11px',color:'rgba(200,190,240,.45)',lineHeight:1.6}}>
-            Alle ermittelten Werte werden übernommen. Felder, die noch nicht bekannt sind, erhalten Platzhalter.
-          </div>
-        </div>
-        <button disabled={saving} onClick={()=>{
-          if (!charName.trim()) { setModalName(''); setShowNameModal(true); return; }
-          doSave(charName.trim());
-        }} style={{display:'inline-flex',alignItems:'center',gap:10,padding:'12px 28px',background:'rgba(124,77,255,.18)',border:'1px solid rgba(124,77,255,.55)',borderRadius:3,color:'rgba(200,190,240,.95)',fontFamily:'var(--font-d)',fontSize:'11px',letterSpacing:'.18em',textTransform:'uppercase',cursor:saving?'not-allowed':'pointer',opacity:saving?0.55:1,transition:'all .2s',whiteSpace:'nowrap'}}
-          onMouseEnter={e=>{ if(!saving){e.currentTarget.style.background='rgba(124,77,255,.32)';e.currentTarget.style.borderColor='rgba(160,140,255,.8)';e.currentTarget.style.color='#f0eeff';}}}
-          onMouseLeave={e=>{ if(!saving){e.currentTarget.style.background='rgba(124,77,255,.18)';e.currentTarget.style.borderColor='rgba(124,77,255,.55)';e.currentTarget.style.color='rgba(200,190,240,.95)';}}} >
-          {saving ? 'Speichern…' : 'Steckbrief öffnen →'}
-        </button>
-      </div>
-
-      {/* Entscheidungsprotokoll */}
-      {quizAnswers.length > 0 && (
-        <div>
-          <div style={{fontFamily:'var(--font-d)',fontSize:'10px',letterSpacing:'.22em',color:'rgba(160,140,255,.6)',textTransform:'uppercase',marginBottom:14}}>Entscheidungsprotokoll</div>
-          <p style={{fontFamily:'var(--font-b)',fontWeight:300,fontSize:'11px',color:'rgba(200,190,240,.38)',lineHeight:1.85,marginBottom:22}}>
-            Jede Quiz-Antwort zeigt, auf welche Optionen die Eingrenzung nach dieser Antwort hindeutete.
-            Eine einzelne verbleibende Option (in Grün) ist die ermittelte Wahl.
-          </p>
-          {Object.entries(byKat).map(([kat,answers]) => (
-            <div key={kat} style={{marginBottom:22}}>
-              <div style={{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.2em',color:'rgba(124,77,255,.55)',textTransform:'uppercase',marginBottom:9}}>
-                {({rasse:'Rasse',klasse:'Klasse',hintergrund:'Hintergrund',division:'Division',lebensstil:'Lebensstil',gottheit:'Gottheit',samen:'Same der Furcht'})[kat]||kat}
-              </div>
-              {answers.map((a,i) => (
-                <div key={i} className="ans-q">
-                  <div className="ans-f">{a.frage}</div>
-                  <div className="ans-a">{a.answerText}</div>
-                  <div className={`trail ${a.nextList.length===1?'one':''}`}>{trail(a.nextList,12)}</div>
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* ── Name-Modal ─────────────────────────────────────────── */}
-      {showNameModal && (
-        <div style={{position:'fixed',inset:0,background:'rgba(5,4,15,0.82)',backdropFilter:'blur(6px)',
-          display:'flex',alignItems:'center',justifyContent:'center',zIndex:1000}}
-          onClick={e=>{ if(e.target===e.currentTarget) setShowNameModal(false); }}>
-          <div style={{background:'rgba(10,7,28,0.98)',border:'1px solid rgba(124,77,255,0.45)',borderRadius:5,
-            padding:'36px 40px',maxWidth:420,width:'calc(100% - 48px)',position:'relative'}}>
-            {/* Eckmarkierungen */}
-            {[['top:0,left:0','borderTop,borderLeft'],['top:0,right:0','borderTop,borderRight'],
-              ['bottom:0,left:0','borderBottom,borderLeft'],['bottom:0,right:0','borderBottom,borderRight']
-            ].map(([pos,sides],i)=>{
-              const p=Object.fromEntries(pos.split(',').map(s=>s.split(':')));
-              const b=Object.fromEntries(sides.split(',').map(s=>[s,'1.5px solid rgba(124,77,255,0.55)']));
-              return <div key={i} style={{position:'absolute',width:14,height:14,pointerEvents:'none',...p,...b}} />;
-            })}
-            <div style={{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.28em',
-              color:'rgba(124,77,255,0.5)',textTransform:'uppercase',marginBottom:10}}>
-              Charaktername
-            </div>
-            <div style={{fontFamily:'var(--font-d)',fontWeight:300,fontSize:'18px',letterSpacing:'.12em',
-              color:'rgba(200,192,240,0.85)',marginBottom:24,lineHeight:1.5}}>
-              Wie soll dein Charakter heißen?
-            </div>
-            <input
-              autoFocus
-              value={modalName}
-              onChange={e=>setModalName(e.target.value)}
-              onKeyDown={e=>{ if(e.key==='Enter' && modalName.trim()) { setCharName(modalName.trim()); setShowNameModal(false); doSave(modalName.trim()); } }}
-              placeholder="Name eingeben …"
-              style={{fontFamily:'var(--font-d)',fontSize:'20px',fontWeight:300,letterSpacing:'.18em',
-                background:'transparent',border:'none',borderBottom:'1px solid rgba(160,140,255,.35)',
-                color:'#f0eeff',outline:'none',padding:'6px 0',width:'100%',marginBottom:28}}
-            />
-            <div style={{display:'flex',gap:10,justifyContent:'flex-end'}}>
-              <button onClick={()=>setShowNameModal(false)}
-                style={{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.18em',textTransform:'uppercase',
-                  padding:'9px 18px',background:'transparent',border:'1px solid rgba(124,77,255,0.2)',
-                  borderRadius:3,cursor:'pointer',color:'rgba(124,77,255,0.45)',transition:'all .18s'}}
-                onMouseEnter={e=>{e.currentTarget.style.borderColor='rgba(124,77,255,0.45)';e.currentTarget.style.color='rgba(160,140,255,0.7)';}}
-                onMouseLeave={e=>{e.currentTarget.style.borderColor='rgba(124,77,255,0.2)';e.currentTarget.style.color='rgba(124,77,255,0.45)';}}>
-                Abbrechen
-              </button>
-              <button
-                disabled={!modalName.trim() || saving}
-                onClick={()=>{ setCharName(modalName.trim()); setShowNameModal(false); doSave(modalName.trim()); }}
-                style={{fontFamily:'var(--font-d)',fontSize:'11px',letterSpacing:'.18em',textTransform:'uppercase',
-                  padding:'9px 24px',background:modalName.trim()?'rgba(124,77,255,.22)':'rgba(124,77,255,.06)',
-                  border:`1px solid rgba(124,77,255,${modalName.trim()?'.6':'.18'})`,borderRadius:3,
-                  cursor:modalName.trim()?'pointer':'not-allowed',
-                  color:modalName.trim()?'rgba(200,190,240,.95)':'rgba(124,77,255,.3)',transition:'all .2s'}}
-                onMouseEnter={e=>{ if(modalName.trim()){e.currentTarget.style.background='rgba(124,77,255,.35)';e.currentTarget.style.color='#f0eeff';}}}
-                onMouseLeave={e=>{ if(modalName.trim()){e.currentTarget.style.background='rgba(124,77,255,.22)';e.currentTarget.style.color='rgba(200,190,240,.95)';}}} >
-                Zum Steckbrief →
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      maxWidth: 860,
+      margin: '0 auto',
+      padding: '44px 32px 80px',
+      animation: 'slideUp .4s ease'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: 36
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '9px',
+      letterSpacing: '.28em',
+      color: 'rgba(94,232,208,.55)',
+      textTransform: 'uppercase',
+      marginBottom: 9
+    }
+  }, "Charakterbogen"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 16,
+      flexWrap: 'wrap',
+      marginBottom: 18
+    }
+  }, /*#__PURE__*/React.createElement("input", {
+    value: charName,
+    onChange: e => setCharName(e.target.value),
+    placeholder: "Charaktername (optional)",
+    style: {
+      fontFamily: 'var(--font-d)',
+      fontSize: '22px',
+      fontWeight: 300,
+      letterSpacing: '.18em',
+      background: 'transparent',
+      border: 'none',
+      borderBottom: '1px solid rgba(160,140,255,.2)',
+      color: '#f0eeff',
+      outline: 'none',
+      padding: '6px 0',
+      minWidth: 260
+    }
+  }), /*#__PURE__*/React.createElement("button", {
+    className: "no-print",
+    onClick: () => window.print(),
+    style: {
+      marginLeft: 'auto',
+      fontFamily: 'var(--font-m)',
+      fontSize: '8px',
+      letterSpacing: '.17em',
+      color: 'rgba(160,140,255,.55)',
+      background: 'transparent',
+      border: '1px solid rgba(160,140,255,.18)',
+      borderRadius: '3px',
+      padding: '8px 18px',
+      cursor: 'pointer',
+      textTransform: 'uppercase',
+      transition: 'all .2s'
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.color = '#f0eeff';
+      e.currentTarget.style.borderColor = 'rgba(160,140,255,.45)';
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.color = 'rgba(160,140,255,.55)';
+      e.currentTarget.style.borderColor = 'rgba(160,140,255,.18)';
+    }
+  }, "\u2B21 Drucken / PDF")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      height: 1,
+      background: 'linear-gradient(90deg,rgba(124,77,255,.45) 0%,transparent 100%)'
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: 44
+    }
+  }, rows.map(({
+    lbl,
+    val,
+    src
+  }) => /*#__PURE__*/React.createElement("div", {
+    key: lbl,
+    className: "sh-row"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "sh-lbl"
+  }, lbl), /*#__PURE__*/React.createElement("div", {
+    className: `sh-val ${src === 'quiz' ? 'quiz-det' : src === 'multi' ? 'multi' : ''}`
+  }, val, src === 'quiz' && /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '8px',
+      color: 'rgba(94,232,208,.4)',
+      marginLeft: 10,
+      letterSpacing: '.1em'
+    }
+  }, "\u21AF per Quiz"))))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: 44
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-d)',
+      fontSize: '10px',
+      letterSpacing: '.22em',
+      color: 'rgba(160,140,255,.6)',
+      textTransform: 'uppercase',
+      marginBottom: 16
+    }
+  }, "Attribute"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: 18,
+      border: '1px solid rgba(160,140,255,.1)',
+      borderRadius: 4,
+      background: 'rgba(124,77,255,.02)'
+    }
+  }, tokenState !== 'valid' && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 12
+    }
+  }, /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-b)',
+      fontWeight: 300,
+      fontSize: '12px',
+      color: 'rgba(200,190,240,.45)',
+      lineHeight: 1.75,
+      margin: 0
+    }
+  }, "F\xFCr Attributwerte ist eine ", /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: 'rgba(160,140,255,.7)',
+      fontWeight: 400
+    }
+  }, "W\xFCrfelerlaubnis"), " des Spielleiters erforderlich. Ohne sie kann der Charakter trotzdem erstellt werden \u2014 die Attribute lassen sich sp\xE4ter nachtragen."), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 8,
+      flexWrap: 'wrap'
+    }
+  }, /*#__PURE__*/React.createElement("input", {
+    value: tokenInput,
+    onChange: e => {
+      setTokenInput(e.target.value.toUpperCase().replace(/[^A-Z0-9\-]/g, '').slice(0, 9));
+      if (tokenState === 'error') setTokenState('idle');
+    },
+    onKeyDown: e => {
+      if (e.key === 'Enter') handleRedeemToken();
+    },
+    placeholder: "XXXX-XXXX",
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '11px',
+      letterSpacing: '.12em',
+      background: 'rgba(5,4,15,.5)',
+      border: '1px solid rgba(160,140,255,.18)',
+      borderRadius: '3px',
+      padding: '6px 10px',
+      color: '#f0eeff',
+      outline: 'none',
+      width: 120,
+      textTransform: 'uppercase'
+    }
+  }), /*#__PURE__*/React.createElement("button", {
+    onClick: handleRedeemToken,
+    disabled: tokenState === 'checking' || !tokenInput.trim(),
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '8px',
+      letterSpacing: '.12em',
+      color: 'rgba(160,140,255,.75)',
+      background: 'rgba(124,77,255,.08)',
+      border: '1px solid rgba(124,77,255,.25)',
+      borderRadius: '3px',
+      padding: '6px 12px',
+      cursor: tokenState === 'checking' ? 'not-allowed' : 'pointer',
+      textTransform: 'uppercase',
+      transition: 'all .2s'
+    }
+  }, tokenState === 'checking' ? '…' : 'Würfelerlaubnis einlösen'), tokenState === 'error' && /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '8px',
+      color: 'rgba(255,100,100,.75)',
+      letterSpacing: '.08em'
+    }
+  }, tokenError))), tokenState === 'valid' && statsMode === null && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 14
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '8px',
+      color: 'rgba(94,232,208,.6)',
+      letterSpacing: '.18em',
+      textTransform: 'uppercase'
+    }
+  }, "\u2713 W\xFCrfelerlaubnis aktiv"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: 10,
+      flexWrap: 'wrap'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => {
+      setStatsMode('roll');
+      doFirstRoll();
+    },
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '9px',
+      letterSpacing: '.15em',
+      color: 'rgba(160,140,255,.85)',
+      background: 'rgba(124,77,255,.08)',
+      border: '1px solid rgba(124,77,255,.35)',
+      borderRadius: '3px',
+      padding: '10px 20px',
+      cursor: 'pointer',
+      textTransform: 'uppercase',
+      transition: 'all .2s'
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.background = 'rgba(124,77,255,.18)';
+      e.currentTarget.style.color = '#f0eeff';
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.background = 'rgba(124,77,255,.08)';
+      e.currentTarget.style.color = 'rgba(160,140,255,.85)';
+    }
+  }, "\u2684 W\xFCrfeln"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => setStatsMode('manual'),
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '9px',
+      letterSpacing: '.15em',
+      color: 'rgba(160,140,255,.55)',
+      background: 'transparent',
+      border: '1px solid rgba(160,140,255,.2)',
+      borderRadius: '3px',
+      padding: '10px 20px',
+      cursor: 'pointer',
+      textTransform: 'uppercase',
+      transition: 'all .2s'
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.color = '#f0eeff';
+      e.currentTarget.style.borderColor = 'rgba(160,140,255,.45)';
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.color = 'rgba(160,140,255,.55)';
+      e.currentTarget.style.borderColor = 'rgba(160,140,255,.2)';
+    }
+  }, "\u270E Manuell eingeben"))), statsMode === 'roll' && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 12
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: 12,
+      flexWrap: 'wrap',
+      alignItems: 'flex-start'
+    }
+  }, rollA && /*#__PURE__*/React.createElement("div", {
+    onClick: () => setChosen('a'),
+    style: {
+      flex: 1,
+      minWidth: 160,
+      border: `1px solid ${chosen === 'a' ? 'rgba(94,232,208,.5)' : 'rgba(160,140,255,.15)'}`,
+      borderRadius: 4,
+      padding: 12,
+      background: chosen === 'a' ? 'rgba(94,232,208,.04)' : 'rgba(124,77,255,.02)',
+      cursor: 'pointer',
+      transition: 'all .2s'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '8px',
+      letterSpacing: '.18em',
+      textTransform: 'uppercase',
+      color: chosen === 'a' ? 'rgba(94,232,208,.7)' : 'rgba(160,140,255,.4)',
+      marginBottom: 8
+    }
+  }, chosen === 'a' ? '✓ ' : '', "Wurf 1"), ATTRS.map((a, i) => /*#__PURE__*/React.createElement("div", {
+    key: a,
+    style: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      padding: '3px 0',
+      borderBottom: '1px solid rgba(160,140,255,.04)'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '9px',
+      color: 'rgba(160,140,255,.45)',
+      letterSpacing: '.1em'
+    }
+  }, a), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-d)',
+      fontSize: '14px',
+      color: chosen === 'a' ? 'rgba(94,232,208,.9)' : 'rgba(200,190,240,.7)'
+    }
+  }, rollA[i].val, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '7px',
+      color: 'rgba(160,140,255,.25)',
+      marginLeft: 5
+    }
+  }, "(", rollA[i].rolls.slice(1).join('+'), ")")))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: 'right',
+      marginTop: 6,
+      fontFamily: 'var(--font-m)',
+      fontSize: '8px',
+      color: 'rgba(160,140,255,.35)'
+    }
+  }, "\u03A3 ", rollA.reduce((s, r) => s + r.val, 0))), rollB && /*#__PURE__*/React.createElement("div", {
+    onClick: () => setChosen('b'),
+    style: {
+      flex: 1,
+      minWidth: 160,
+      border: `1px solid ${chosen === 'b' ? 'rgba(94,232,208,.5)' : 'rgba(160,140,255,.15)'}`,
+      borderRadius: 4,
+      padding: 12,
+      background: chosen === 'b' ? 'rgba(94,232,208,.04)' : 'rgba(124,77,255,.02)',
+      cursor: 'pointer',
+      transition: 'all .2s'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '8px',
+      letterSpacing: '.18em',
+      textTransform: 'uppercase',
+      color: chosen === 'b' ? 'rgba(94,232,208,.7)' : 'rgba(160,140,255,.4)',
+      marginBottom: 8
+    }
+  }, chosen === 'b' ? '✓ ' : '', "Wurf 2"), ATTRS.map((a, i) => /*#__PURE__*/React.createElement("div", {
+    key: a,
+    style: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      padding: '3px 0',
+      borderBottom: '1px solid rgba(160,140,255,.04)'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '9px',
+      color: 'rgba(160,140,255,.45)',
+      letterSpacing: '.1em'
+    }
+  }, a), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-d)',
+      fontSize: '14px',
+      color: chosen === 'b' ? 'rgba(94,232,208,.9)' : 'rgba(200,190,240,.7)'
+    }
+  }, rollB[i].val, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '7px',
+      color: 'rgba(160,140,255,.25)',
+      marginLeft: 5
+    }
+  }, "(", rollB[i].rolls.slice(1).join('+'), ")")))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: 'right',
+      marginTop: 6,
+      fontFamily: 'var(--font-m)',
+      fontSize: '8px',
+      color: 'rgba(160,140,255,.35)'
+    }
+  }, "\u03A3 ", rollB.reduce((s, r) => s + r.val, 0)))), !rollB && tokenState === 'valid' && /*#__PURE__*/React.createElement("button", {
+    onClick: doSecondRoll,
+    style: {
+      alignSelf: 'flex-start',
+      fontFamily: 'var(--font-m)',
+      fontSize: '8px',
+      letterSpacing: '.13em',
+      color: 'rgba(94,232,208,.75)',
+      background: 'transparent',
+      border: '1px solid rgba(94,232,208,.3)',
+      borderRadius: '3px',
+      padding: '7px 14px',
+      cursor: 'pointer',
+      textTransform: 'uppercase',
+      transition: 'all .2s'
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.color = '#f0eeff';
+      e.currentTarget.style.borderColor = 'rgba(94,232,208,.6)';
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.color = 'rgba(94,232,208,.75)';
+      e.currentTarget.style.borderColor = 'rgba(94,232,208,.3)';
+    }
+  }, "\u21BA Zweiter Wurf"), rollB && /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '8px',
+      color: 'rgba(160,140,255,.4)',
+      letterSpacing: '.1em',
+      margin: 0
+    }
+  }, "Klicke auf einen Wurf um ihn auszuw\xE4hlen.")), statsMode === 'manual' && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 10
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(3,1fr)',
+      gap: 8,
+      maxWidth: 360
+    }
+  }, ATTRS.map((a, i) => /*#__PURE__*/React.createElement("div", {
+    key: a,
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 4
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '8px',
+      color: 'rgba(160,140,255,.5)',
+      letterSpacing: '.14em',
+      textTransform: 'uppercase'
+    }
+  }, a), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "1",
+    max: "30",
+    value: manual[KEYS[i]],
+    onChange: e => setManual(p => ({
+      ...p,
+      [KEYS[i]]: e.target.value
+    })),
+    style: {
+      fontFamily: 'var(--font-d)',
+      fontSize: '16px',
+      textAlign: 'center',
+      background: 'rgba(5,4,15,.5)',
+      border: '1px solid rgba(160,140,255,.2)',
+      borderRadius: 3,
+      color: '#f0eeff',
+      outline: 'none',
+      padding: '6px 4px',
+      width: '100%'
+    },
+    onFocus: e => e.currentTarget.style.borderColor = 'rgba(124,77,255,.55)',
+    onBlur: e => e.currentTarget.style.borderColor = 'rgba(160,140,255,.2)'
+  })))), getFinalStats() === null && KEYS.some(k => manual[k] !== '') && /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '8px',
+      color: 'rgba(255,140,100,.7)',
+      letterSpacing: '.1em'
+    }
+  }, "Alle Werte m\xFCssen zwischen 1 und 30 liegen.")))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      margin: '0 0 44px',
+      padding: '20px 24px',
+      border: '1px solid rgba(124,77,255,.35)',
+      borderRadius: 4,
+      background: 'rgba(124,77,255,.04)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      flexWrap: 'wrap',
+      gap: 16
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-d)',
+      fontSize: '10px',
+      letterSpacing: '.22em',
+      color: 'rgba(160,140,255,.8)',
+      textTransform: 'uppercase',
+      marginBottom: 6
+    }
+  }, "Steckbrief erstellen"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-b)',
+      fontWeight: 300,
+      fontSize: '11px',
+      color: 'rgba(200,190,240,.45)',
+      lineHeight: 1.6
+    }
+  }, "Alle ermittelten Werte werden \xFCbernommen. Felder, die noch nicht bekannt sind, erhalten Platzhalter.")), /*#__PURE__*/React.createElement("button", {
+    disabled: saving,
+    onClick: () => {
+      if (!charName.trim()) {
+        setModalName('');
+        setShowNameModal(true);
+        return;
+      }
+      doSave(charName.trim());
+    },
+    style: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: 10,
+      padding: '12px 28px',
+      background: 'rgba(124,77,255,.18)',
+      border: '1px solid rgba(124,77,255,.55)',
+      borderRadius: 3,
+      color: 'rgba(200,190,240,.95)',
+      fontFamily: 'var(--font-d)',
+      fontSize: '11px',
+      letterSpacing: '.18em',
+      textTransform: 'uppercase',
+      cursor: saving ? 'not-allowed' : 'pointer',
+      opacity: saving ? 0.55 : 1,
+      transition: 'all .2s',
+      whiteSpace: 'nowrap'
+    },
+    onMouseEnter: e => {
+      if (!saving) {
+        e.currentTarget.style.background = 'rgba(124,77,255,.32)';
+        e.currentTarget.style.borderColor = 'rgba(160,140,255,.8)';
+        e.currentTarget.style.color = '#f0eeff';
+      }
+    },
+    onMouseLeave: e => {
+      if (!saving) {
+        e.currentTarget.style.background = 'rgba(124,77,255,.18)';
+        e.currentTarget.style.borderColor = 'rgba(124,77,255,.55)';
+        e.currentTarget.style.color = 'rgba(200,190,240,.95)';
+      }
+    }
+  }, saving ? 'Speichern…' : 'Steckbrief öffnen →')), quizAnswers.length > 0 && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-d)',
+      fontSize: '10px',
+      letterSpacing: '.22em',
+      color: 'rgba(160,140,255,.6)',
+      textTransform: 'uppercase',
+      marginBottom: 14
+    }
+  }, "Entscheidungsprotokoll"), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-b)',
+      fontWeight: 300,
+      fontSize: '11px',
+      color: 'rgba(200,190,240,.38)',
+      lineHeight: 1.85,
+      marginBottom: 22
+    }
+  }, "Jede Quiz-Antwort zeigt, auf welche Optionen die Eingrenzung nach dieser Antwort hindeutete. Eine einzelne verbleibende Option (in Gr\xFCn) ist die ermittelte Wahl."), Object.entries(byKat).map(([kat, answers]) => /*#__PURE__*/React.createElement("div", {
+    key: kat,
+    style: {
+      marginBottom: 22
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '8px',
+      letterSpacing: '.2em',
+      color: 'rgba(124,77,255,.55)',
+      textTransform: 'uppercase',
+      marginBottom: 9
+    }
+  }, {
+    rasse: 'Rasse',
+    klasse: 'Klasse',
+    hintergrund: 'Hintergrund',
+    division: 'Division',
+    lebensstil: 'Lebensstil',
+    gottheit: 'Gottheit',
+    samen: 'Same der Furcht'
+  }[kat] || kat), answers.map((a, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "ans-q"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ans-f"
+  }, a.frage), /*#__PURE__*/React.createElement("div", {
+    className: "ans-a"
+  }, a.answerText), /*#__PURE__*/React.createElement("div", {
+    className: `trail ${a.nextList.length === 1 ? 'one' : ''}`
+  }, trail(a.nextList, 12))))))), showNameModal && /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'fixed',
+      inset: 0,
+      background: 'rgba(5,4,15,0.82)',
+      backdropFilter: 'blur(6px)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 1000
+    },
+    onClick: e => {
+      if (e.target === e.currentTarget) setShowNameModal(false);
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: 'rgba(10,7,28,0.98)',
+      border: '1px solid rgba(124,77,255,0.45)',
+      borderRadius: 5,
+      padding: '36px 40px',
+      maxWidth: 420,
+      width: 'calc(100% - 48px)',
+      position: 'relative'
+    }
+  }, [['top:0,left:0', 'borderTop,borderLeft'], ['top:0,right:0', 'borderTop,borderRight'], ['bottom:0,left:0', 'borderBottom,borderLeft'], ['bottom:0,right:0', 'borderBottom,borderRight']].map(([pos, sides], i) => {
+    const p = Object.fromEntries(pos.split(',').map(s => s.split(':')));
+    const b = Object.fromEntries(sides.split(',').map(s => [s, '1.5px solid rgba(124,77,255,0.55)']));
+    return /*#__PURE__*/React.createElement("div", {
+      key: i,
+      style: {
+        position: 'absolute',
+        width: 14,
+        height: 14,
+        pointerEvents: 'none',
+        ...p,
+        ...b
+      }
+    });
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '8px',
+      letterSpacing: '.28em',
+      color: 'rgba(124,77,255,0.5)',
+      textTransform: 'uppercase',
+      marginBottom: 10
+    }
+  }, "Charaktername"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-d)',
+      fontWeight: 300,
+      fontSize: '18px',
+      letterSpacing: '.12em',
+      color: 'rgba(200,192,240,0.85)',
+      marginBottom: 24,
+      lineHeight: 1.5
+    }
+  }, "Wie soll dein Charakter hei\xDFen?"), /*#__PURE__*/React.createElement("input", {
+    autoFocus: true,
+    value: modalName,
+    onChange: e => setModalName(e.target.value),
+    onKeyDown: e => {
+      if (e.key === 'Enter' && modalName.trim()) {
+        setCharName(modalName.trim());
+        setShowNameModal(false);
+        doSave(modalName.trim());
+      }
+    },
+    placeholder: "Name eingeben \u2026",
+    style: {
+      fontFamily: 'var(--font-d)',
+      fontSize: '20px',
+      fontWeight: 300,
+      letterSpacing: '.18em',
+      background: 'transparent',
+      border: 'none',
+      borderBottom: '1px solid rgba(160,140,255,.35)',
+      color: '#f0eeff',
+      outline: 'none',
+      padding: '6px 0',
+      width: '100%',
+      marginBottom: 28
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: 10,
+      justifyContent: 'flex-end'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => setShowNameModal(false),
+    style: {
+      fontFamily: 'var(--font-m)',
+      fontSize: '8px',
+      letterSpacing: '.18em',
+      textTransform: 'uppercase',
+      padding: '9px 18px',
+      background: 'transparent',
+      border: '1px solid rgba(124,77,255,0.2)',
+      borderRadius: 3,
+      cursor: 'pointer',
+      color: 'rgba(124,77,255,0.45)',
+      transition: 'all .18s'
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.borderColor = 'rgba(124,77,255,0.45)';
+      e.currentTarget.style.color = 'rgba(160,140,255,0.7)';
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.borderColor = 'rgba(124,77,255,0.2)';
+      e.currentTarget.style.color = 'rgba(124,77,255,0.45)';
+    }
+  }, "Abbrechen"), /*#__PURE__*/React.createElement("button", {
+    disabled: !modalName.trim() || saving,
+    onClick: () => {
+      setCharName(modalName.trim());
+      setShowNameModal(false);
+      doSave(modalName.trim());
+    },
+    style: {
+      fontFamily: 'var(--font-d)',
+      fontSize: '11px',
+      letterSpacing: '.18em',
+      textTransform: 'uppercase',
+      padding: '9px 24px',
+      background: modalName.trim() ? 'rgba(124,77,255,.22)' : 'rgba(124,77,255,.06)',
+      border: `1px solid rgba(124,77,255,${modalName.trim() ? '.6' : '.18'})`,
+      borderRadius: 3,
+      cursor: modalName.trim() ? 'pointer' : 'not-allowed',
+      color: modalName.trim() ? 'rgba(200,190,240,.95)' : 'rgba(124,77,255,.3)',
+      transition: 'all .2s'
+    },
+    onMouseEnter: e => {
+      if (modalName.trim()) {
+        e.currentTarget.style.background = 'rgba(124,77,255,.35)';
+        e.currentTarget.style.color = '#f0eeff';
+      }
+    },
+    onMouseLeave: e => {
+      if (modalName.trim()) {
+        e.currentTarget.style.background = 'rgba(124,77,255,.22)';
+        e.currentTarget.style.color = 'rgba(200,190,240,.95)';
+      }
+    }
+  }, "Zum Steckbrief \u2192")))));
 }
 
 // ── APP ────────────────────────────────────────────────────────────────────
@@ -663,63 +1623,118 @@ function App() {
   const [phase, setPhase] = useState('typeSelect');
   const [charType, setCharType] = useState('spieler');
   const [tags, setTagsState] = useState({
-    rasse:null, klasse:null, hintergrund:null, zauberwirker:null,
-    samen:null, lebensstil:null, gottheit:null, werkzeuge:new Set(), division:null,
+    rasse: null,
+    klasse: null,
+    hintergrund: null,
+    zauberwirker: null,
+    samen: null,
+    lebensstil: null,
+    gottheit: null,
+    werkzeuge: new Set(),
+    division: null
   });
   const [possible, setPossible] = useState({
-    rasse: window.ALLE_RASSEN||[], klasse: window.ALLE_KLASSEN||[],
-    hintergrund: window.ALLE_HINTERGRUENDE||[], division: window.ALLE_DIVISIONEN||[],
-    lebensstil: window.ALLE_LEBENSSTILE||[], gottheit: [], samen: window.ALLE_SAMEN||[],
+    rasse: window.ALLE_RASSEN || [],
+    klasse: window.ALLE_KLASSEN || [],
+    hintergrund: window.ALLE_HINTERGRUENDE || [],
+    division: window.ALLE_DIVISIONEN || [],
+    lebensstil: window.ALLE_LEBENSSTILE || [],
+    gottheit: [],
+    samen: window.ALLE_SAMEN || []
   });
   const [quizAnswers, setQuizAnswers] = useState([]);
-
   useEffect(() => {
     if (window.GODS_DATA) {
-      const { gods=[], demons=[], naturgeister=[] } = window.GODS_DATA;
-      setPossible(p => ({ ...p, gottheit: [...gods,...demons,...naturgeister].map(g=>g.name) }));
+      const {
+        gods = [],
+        demons = [],
+        naturgeister = []
+      } = window.GODS_DATA;
+      setPossible(p => ({
+        ...p,
+        gottheit: [...gods, ...demons, ...naturgeister].map(g => g.name)
+      }));
     }
   }, []);
-
-  const setTag = (k, v) => setTagsState(p => ({ ...p, [k]: v }));
-  const setWerkzeug = (s) => setTagsState(p => ({ ...p, werkzeuge: s }));
-
+  const setTag = (k, v) => setTagsState(p => ({
+    ...p,
+    [k]: v
+  }));
+  const setWerkzeug = s => setTagsState(p => ({
+    ...p,
+    werkzeuge: s
+  }));
   const handleAnswer = (q, opt) => {
     const prev = possible[q.kat] || [];
     const next = cut(prev, opt.behalte);
     const fin = next.length > 0 ? next : prev;
-    setPossible(p => ({ ...p, [q.kat]: fin }));
-    setQuizAnswers(a => [...a, { qId:q.id, kat:q.kat, frage:q.frage, answerText:opt.text, prevList:prev, nextList:fin }]);
+    setPossible(p => ({
+      ...p,
+      [q.kat]: fin
+    }));
+    setQuizAnswers(a => [...a, {
+      qId: q.id,
+      kat: q.kat,
+      frage: q.frage,
+      answerText: opt.text,
+      prevList: prev,
+      nextList: fin
+    }]);
   };
-
   const resetPossible = () => setPossible({
-    rasse:window.ALLE_RASSEN||[], klasse:window.ALLE_KLASSEN||[],
-    hintergrund:window.ALLE_HINTERGRUENDE||[], division:window.ALLE_DIVISIONEN||[],
-    lebensstil:window.ALLE_LEBENSSTILE||[], gottheit:possible.gottheit, samen:window.ALLE_SAMEN||[],
+    rasse: window.ALLE_RASSEN || [],
+    klasse: window.ALLE_KLASSEN || [],
+    hintergrund: window.ALLE_HINTERGRUENDE || [],
+    division: window.ALLE_DIVISIONEN || [],
+    lebensstil: window.ALLE_LEBENSSTILE || [],
+    gottheit: possible.gottheit,
+    samen: window.ALLE_SAMEN || []
   });
-
   const goToQuiz = () => {
     setQuizAnswers([]);
     resetPossible();
     setPhase('quiz');
   };
-
   const goBack = () => {
-    if (phase === 'output' || phase === 'quiz') { setQuizAnswers([]); resetPossible(); setPhase('tags'); }
-    else if (phase === 'tags') setPhase('typeSelect');
+    if (phase === 'output' || phase === 'quiz') {
+      setQuizAnswers([]);
+      resetPossible();
+      setPhase('tags');
+    } else if (phase === 'tags') setPhase('typeSelect');
   };
-
-  return (
-    <div style={{background:'var(--bg)',minHeight:'100vh'}}>
-      <Nav showBack={phase!=='typeSelect'} onBack={goBack}/>
-      {phase === 'typeSelect' && <TypeSelectPhase onSelect={t => { setCharType(t === 'nsc' ? 'nsc' : 'spieler'); setPhase('tags'); }}/>}
-      {phase === 'tags'       && <TagPhase tags={tags} setTag={setTag} setWerkzeug={setWerkzeug} onNext={goToQuiz}/>}
-      {phase === 'quiz'       && <QuizPhase tags={tags} possible={possible} quizAnswers={quizAnswers} onAnswer={handleAnswer} onFinish={() => setPhase('output')}/>}
-      {phase === 'output'     && <OutputPhase tags={tags} possible={possible} quizAnswers={quizAnswers} charType={charType}/>}
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: 'var(--bg)',
+      minHeight: '100vh'
+    }
+  }, /*#__PURE__*/React.createElement(Nav, {
+    showBack: phase !== 'typeSelect',
+    onBack: goBack
+  }), phase === 'typeSelect' && /*#__PURE__*/React.createElement(TypeSelectPhase, {
+    onSelect: t => {
+      setCharType(t === 'nsc' ? 'nsc' : 'spieler');
+      setPhase('tags');
+    }
+  }), phase === 'tags' && /*#__PURE__*/React.createElement(TagPhase, {
+    tags: tags,
+    setTag: setTag,
+    setWerkzeug: setWerkzeug,
+    onNext: goToQuiz
+  }), phase === 'quiz' && /*#__PURE__*/React.createElement(QuizPhase, {
+    tags: tags,
+    possible: possible,
+    quizAnswers: quizAnswers,
+    onAnswer: handleAnswer,
+    onFinish: () => setPhase('output')
+  }), phase === 'output' && /*#__PURE__*/React.createElement(OutputPhase, {
+    tags: tags,
+    possible: possible,
+    quizAnswers: quizAnswers,
+    charType: charType
+  }));
 }
-
-ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(App, null));
+})();
 </script>
 
 </body></html>

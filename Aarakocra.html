@@ -6,81 +6,177 @@
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
 <link rel="stylesheet" href="assets/styles/pages/Aarakocra.css">
-<script src="assets/scripts/vendor/react.development.js"></script>
-<script src="assets/scripts/vendor/react-dom.development.js"></script>
-<script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/scripts/vendor/react.production.min.js"></script>
+<script src="assets/scripts/vendor/react-dom.production.min.js"></script>
+
 <script src="assets/scripts/vendor/image-slot.js"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
-<script src="assets/components/site-gate.jsx" type="text/babel"></script>
-<script src="assets/components/float-nav.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.js"></script>
+<script src="assets/components/float-nav.js"></script>
 </head>
 <body>
 <div id="root"></div>
-<script type="text/babel">
-const { useState, useEffect, useRef } = React;
+<script>
+(function () {
+const {
+  useState,
+  useEffect,
+  useRef
+} = React;
 
 // ── DATA ──────────────────────────────────────────────────
-const NAMES = ["Yaec","Grick","Rirr","Sur","Ged","Kherirrk","Yakkeahk","Krellieg","Hiccik","Cra","Kil","Qess","Cuass","Reed","Khikkic","Iriss","Ukkehk","Kikkel","Eccirrk","Rhe","Ooss","Rhehk","Crarr","Oug","Calli","Kluakkeer","Daekess","Zakias","Gruss","Yerr","Gu","Eck","Cla","Ciccess","Rhirac","Krelir","Cluierre","Zaec","Khal","Qhug","Suiehk","Krirre","Eccack","Keqak","Diccark","Icce","Claf","Zuie","Qlarr","Ig","Dirc","Yooras","Zooqes","Krece","Qhaeqa","Riliac","Dae","Qhuieg","Gaf","Qir","Irc","Eellas","Qiqi","Sekke","Crilirrk","Qellerc","As","Urr","Duierc","Qle","Ook","Gacarc","Uielli","Accil","Deqiark","Ikiaf","Suk","Err","Kherc","Kral","Da","Curark","Krelas","Qlalil","Qrurek","Iss","Qhoos","Kle","Yuf","Krurr","Allieck","Gaecceck","Ulak","Crallearc","Eg","Crug","Garrk","Iqeck","Heqi","Kha"];
-
-const BEKANNTE = [
-  { name: 'Aerie Sturmfeder', rolle: 'Späher der Pathfinder-Division', beschreibung: 'Eine der ersten Aarakocra, die sich einer der großen Divisionen von Meruria anschloss. Bekannt für ihre Fähigkeit, Strömungen zu lesen, die andere nicht einmal ahnen.' },
-  { name: 'Kress von den Hohen Winden', rolle: 'Windrufer und Wanderprediger', beschreibung: 'Reist seit Jahrzehnten durch die Reiche und predigt die Botschaft der Windherzöge. Seine Federn tragen Tintenmarkierungen von jedem Ort, den er besucht hat.' },
-  { name: 'Yael Eisflügel', rolle: 'Händlerin und Botschafterin', beschreibung: 'Betreibt ein kleines Botennetzwerk zwischen den Bergstädten. Sie ist dafür bekannt, Nachrichten schneller zu überbringen als jede andere Botin — selbst bei Gegenwinden.' },
-  { name: '— Unbekannt —', rolle: 'Name noch nicht festgelegt', beschreibung: 'Dieser Eintrag ist für einen weiteren bekannten Aarakocra reserviert.' },
-  { name: '— Unbekannt —', rolle: 'Name noch nicht festgelegt', beschreibung: 'Dieser Eintrag ist für einen weiteren bekannten Aarakocra reserviert.' },
-];
+const NAMES = ["Yaec", "Grick", "Rirr", "Sur", "Ged", "Kherirrk", "Yakkeahk", "Krellieg", "Hiccik", "Cra", "Kil", "Qess", "Cuass", "Reed", "Khikkic", "Iriss", "Ukkehk", "Kikkel", "Eccirrk", "Rhe", "Ooss", "Rhehk", "Crarr", "Oug", "Calli", "Kluakkeer", "Daekess", "Zakias", "Gruss", "Yerr", "Gu", "Eck", "Cla", "Ciccess", "Rhirac", "Krelir", "Cluierre", "Zaec", "Khal", "Qhug", "Suiehk", "Krirre", "Eccack", "Keqak", "Diccark", "Icce", "Claf", "Zuie", "Qlarr", "Ig", "Dirc", "Yooras", "Zooqes", "Krece", "Qhaeqa", "Riliac", "Dae", "Qhuieg", "Gaf", "Qir", "Irc", "Eellas", "Qiqi", "Sekke", "Crilirrk", "Qellerc", "As", "Urr", "Duierc", "Qle", "Ook", "Gacarc", "Uielli", "Accil", "Deqiark", "Ikiaf", "Suk", "Err", "Kherc", "Kral", "Da", "Curark", "Krelas", "Qlalil", "Qrurek", "Iss", "Qhoos", "Kle", "Yuf", "Krurr", "Allieck", "Gaecceck", "Ulak", "Crallearc", "Eg", "Crug", "Garrk", "Iqeck", "Heqi", "Kha"];
+const BEKANNTE = [{
+  name: 'Aerie Sturmfeder',
+  rolle: 'Späher der Pathfinder-Division',
+  beschreibung: 'Eine der ersten Aarakocra, die sich einer der großen Divisionen von Meruria anschloss. Bekannt für ihre Fähigkeit, Strömungen zu lesen, die andere nicht einmal ahnen.'
+}, {
+  name: 'Kress von den Hohen Winden',
+  rolle: 'Windrufer und Wanderprediger',
+  beschreibung: 'Reist seit Jahrzehnten durch die Reiche und predigt die Botschaft der Windherzöge. Seine Federn tragen Tintenmarkierungen von jedem Ort, den er besucht hat.'
+}, {
+  name: 'Yael Eisflügel',
+  rolle: 'Händlerin und Botschafterin',
+  beschreibung: 'Betreibt ein kleines Botennetzwerk zwischen den Bergstädten. Sie ist dafür bekannt, Nachrichten schneller zu überbringen als jede andere Botin — selbst bei Gegenwinden.'
+}, {
+  name: '— Unbekannt —',
+  rolle: 'Name noch nicht festgelegt',
+  beschreibung: 'Dieser Eintrag ist für einen weiteren bekannten Aarakocra reserviert.'
+}, {
+  name: '— Unbekannt —',
+  rolle: 'Name noch nicht festgelegt',
+  beschreibung: 'Dieser Eintrag ist für einen weiteren bekannten Aarakocra reserviert.'
+}];
 
 // ── HOOKS ─────────────────────────────────────────────────
 function useScrollReveal() {
   useEffect(() => {
     const els = document.querySelectorAll('.reveal,.reveal-left,.reveal-right');
     const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-    }, { threshold: 0.06, rootMargin: '0px 0px -20px 0px' });
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, {
+      threshold: 0.06,
+      rootMargin: '0px 0px -20px 0px'
+    });
     els.forEach(el => observer.observe(el));
     return () => observer.disconnect();
   }, []);
 }
-
 function useParallax() {
   useEffect(() => {
     const hero = document.getElementById('hero-bg');
     if (!hero) return;
-    const onScroll = () => { hero.style.transform = `translateY(${window.scrollY * 0.35}px)`; };
-    window.addEventListener('scroll', onScroll, { passive: true });
+    const onScroll = () => {
+      hero.style.transform = `translateY(${window.scrollY * 0.35}px)`;
+    };
+    window.addEventListener('scroll', onScroll, {
+      passive: true
+    });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 }
 
 // ── IMAGE PLACEHOLDER ─────────────────────────────────────
-function ImgPlaceholder({ label, width, height, style={} }) {
-  return (
-    <div style={{ width, height, background:'repeating-linear-gradient(-45deg,transparent,transparent 8px,rgba(26,184,160,0.05) 8px,rgba(26,184,160,0.05) 9px),linear-gradient(160deg,rgba(16,10,40,0.95) 0%,rgba(6,4,18,0.98) 100%)', border:'1px dashed rgba(26,184,160,0.22)', borderRadius:'4px', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'10px', position:'relative', overflow:'hidden', flexShrink:0, ...style }}>
-      <div style={{ position:'absolute', inset:0, background:'radial-gradient(ellipse at 50% 50%,rgba(26,184,160,0.07) 0%,transparent 70%)' }} />
-      <svg viewBox="0 0 40 40" width="32" height="32" fill="none" style={{ opacity:0.28 }}>
-        <circle cx="20" cy="15" r="7" stroke="#5ee8d0" strokeWidth="1.2"/>
-        <path d="M8 36 Q12 28 20 26 Q28 28 32 36" stroke="#5ee8d0" strokeWidth="1.2"/>
-        <path d="M13 9 Q9 3 15 5" stroke="#5ee8d0" strokeWidth="1" opacity="0.6"/>
-        <path d="M27 9 Q31 3 25 5" stroke="#5ee8d0" strokeWidth="1" opacity="0.6"/>
-      </svg>
-      <span style={{ fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.2em', color:'rgba(26,184,160,0.38)', textTransform:'uppercase', zIndex:1, textAlign:'center', padding:'0 12px' }}>{label}</span>
-    </div>
-  );
+function ImgPlaceholder({
+  label,
+  width,
+  height,
+  style = {}
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      width,
+      height,
+      background: 'repeating-linear-gradient(-45deg,transparent,transparent 8px,rgba(26,184,160,0.05) 8px,rgba(26,184,160,0.05) 9px),linear-gradient(160deg,rgba(16,10,40,0.95) 0%,rgba(6,4,18,0.98) 100%)',
+      border: '1px dashed rgba(26,184,160,0.22)',
+      borderRadius: '4px',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '10px',
+      position: 'relative',
+      overflow: 'hidden',
+      flexShrink: 0,
+      ...style
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      background: 'radial-gradient(ellipse at 50% 50%,rgba(26,184,160,0.07) 0%,transparent 70%)'
+    }
+  }), /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 40 40",
+    width: "32",
+    height: "32",
+    fill: "none",
+    style: {
+      opacity: 0.28
+    }
+  }, /*#__PURE__*/React.createElement("circle", {
+    cx: "20",
+    cy: "15",
+    r: "7",
+    stroke: "#5ee8d0",
+    strokeWidth: "1.2"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M8 36 Q12 28 20 26 Q28 28 32 36",
+    stroke: "#5ee8d0",
+    strokeWidth: "1.2"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M13 9 Q9 3 15 5",
+    stroke: "#5ee8d0",
+    strokeWidth: "1",
+    opacity: "0.6"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M27 9 Q31 3 25 5",
+    stroke: "#5ee8d0",
+    strokeWidth: "1",
+    opacity: "0.6"
+  })), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      letterSpacing: '0.2em',
+      color: 'rgba(26,184,160,0.38)',
+      textTransform: 'uppercase',
+      zIndex: 1,
+      textAlign: 'center',
+      padding: '0 12px'
+    }
+  }, label));
 }
 
 // ── SECTION ───────────────────────────────────────────────
-function Section({ id, label, title, children, style={} }) {
-  return (
-    <section id={id} style={{ marginBottom:'72px', ...style }}>
-      <div className="reveal">
-        <div className="section-label">{label}</div>
-        <h2 className="section-title">{title}</h2>
-        <div className="section-divider" />
-      </div>
-      {children}
-    </section>
-  );
+function Section({
+  id,
+  label,
+  title,
+  children,
+  style = {}
+}) {
+  return /*#__PURE__*/React.createElement("section", {
+    id: id,
+    style: {
+      marginBottom: '72px',
+      ...style
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "reveal"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "section-label"
+  }, label), /*#__PURE__*/React.createElement("h2", {
+    className: "section-title"
+  }, title), /*#__PURE__*/React.createElement("div", {
+    className: "section-divider"
+  })), children);
 }
 
 // ── DICE ROLLER ───────────────────────────────────────────
@@ -89,688 +185,1815 @@ function DiceRoller() {
   const [rolling, setRolling] = useState(false);
   const [roll, setRoll] = useState(null);
   const [showList, setShowList] = useState(false);
-
   const rollDice = () => {
     if (rolling) return;
-    setRolling(true); setResult(null);
+    setRolling(true);
+    setResult(null);
     let count = 0;
     const iv = setInterval(() => {
-      setResult(NAMES[Math.floor(Math.random()*100)]);
+      setResult(NAMES[Math.floor(Math.random() * 100)]);
       count++;
       if (count > 14) {
         clearInterval(iv);
-        const idx = Math.floor(Math.random()*100);
-        setRoll(idx+1); setResult(NAMES[idx]); setRolling(false);
+        const idx = Math.floor(Math.random() * 100);
+        setRoll(idx + 1);
+        setResult(NAMES[idx]);
+        setRolling(false);
       }
     }, 55);
   };
-
-  return (
-    <div className="reveal">
-      <p className="body-text" style={{ marginBottom:'24px' }}>
-        Würfle dir hier einen Namen für deinen Aarakocra-Charakter aus — oder sieh dir alle 100 Namen an und wähle deinen Favoriten.
-      </p>
-
-      {/* Würfeln Button */}
-      <button className="dice-btn" onClick={rollDice} style={{ marginBottom:'24px' }}>
-        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ animation:rolling?'dice-spin 0.4s linear infinite':'none', transformOrigin:'center' }}>
-          <rect x="3" y="3" width="18" height="18" rx="3"/>
-          <circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/>
-          <circle cx="15.5" cy="8.5" r="1.2" fill="currentColor"/>
-          <circle cx="8.5" cy="15.5" r="1.2" fill="currentColor"/>
-          <circle cx="15.5" cy="15.5" r="1.2" fill="currentColor"/>
-          <circle cx="12" cy="12" r="1.2" fill="currentColor"/>
-        </svg>
-        Würfeln
-      </button>
-
-      {/* Ergebnis unter Button, groß */}
-      <div style={{ minHeight:'90px', marginBottom:'20px', textAlign:'center' }}>
-        {result ? (
-          <div style={{ animation:rolling?'none':'result-pop 0.4s cubic-bezier(0.23,1,0.32,1) forwards' }}>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:'rgba(26,184,160,0.45)', textTransform:'uppercase', marginBottom:'6px' }}>
-              {roll && !rolling ? `Ergebnis: ${roll}` : '— — —'}
-            </div>
-            <div style={{ fontFamily:'var(--font-display)', fontSize:'42px', fontWeight:'300', letterSpacing:'0.12em', color:'var(--white)', textShadow:'0 0 40px rgba(26,184,160,0.5)', marginBottom:'4px' }}>{result}</div>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.2em', color:'rgba(26,184,160,0.35)', textTransform:'uppercase' }}>aarakocra · name</div>
-          </div>
-        ) : (
-          <div style={{ paddingTop:'24px', fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.3em', color:'rgba(26,184,160,0.2)', textTransform:'uppercase' }}>— Noch kein Wurf —</div>
-        )}
-      </div>
-
-      {/* Aufklappbare Liste */}
-      <button onClick={() => setShowList(s=>!s)} style={{ display:'inline-flex', alignItems:'center', gap:'8px', background:'none', border:'none', cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:'rgba(26,184,160,0.5)', textTransform:'uppercase', padding:'0', marginBottom: showList ? '14px' : '0', transition:'color 0.2s' }}
-        onMouseEnter={e=>e.currentTarget.style.color='rgba(168,124,255,0.85)'}
-        onMouseLeave={e=>e.currentTarget.style.color='rgba(26,184,160,0.5)'}>
-        <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ transform:showList?'rotate(180deg)':'rotate(0deg)', transition:'transform 0.2s' }}>
-          <path d="M2 4l4 4 4-4"/>
-        </svg>
-        {showList ? 'Liste ausblenden' : 'Alle 100 Namen anzeigen'}
-      </button>
-
-      {showList && (
-        <div style={{ animation:'slideDown 0.2s ease forwards', border:'1px solid rgba(26,184,160,0.14)', borderRadius:'4px', overflow:'hidden', background:'rgba(var(--bg2-rgb),0.7)' }}>
-          <div className="name-grid">
-            {NAMES.map((n, i) => (
-              <div key={i} className="name-cell" onClick={() => { setResult(n); setRoll(i+1); setShowList(false); }}>
-                <span className="num">{i+1}</span>
-                <span>{n}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    className: "reveal"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "body-text",
+    style: {
+      marginBottom: '24px'
+    }
+  }, "W\xFCrfle dir hier einen Namen f\xFCr deinen Aarakocra-Charakter aus \u2014 oder sieh dir alle 100 Namen an und w\xE4hle deinen Favoriten."), /*#__PURE__*/React.createElement("button", {
+    className: "dice-btn",
+    onClick: rollDice,
+    style: {
+      marginBottom: '24px'
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 24 24",
+    width: "15",
+    height: "15",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "1.5",
+    style: {
+      animation: rolling ? 'dice-spin 0.4s linear infinite' : 'none',
+      transformOrigin: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("rect", {
+    x: "3",
+    y: "3",
+    width: "18",
+    height: "18",
+    rx: "3"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "8.5",
+    cy: "8.5",
+    r: "1.2",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "15.5",
+    cy: "8.5",
+    r: "1.2",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "8.5",
+    cy: "15.5",
+    r: "1.2",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "15.5",
+    cy: "15.5",
+    r: "1.2",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "12",
+    cy: "12",
+    r: "1.2",
+    fill: "currentColor"
+  })), "W\xFCrfeln"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      minHeight: '90px',
+      marginBottom: '20px',
+      textAlign: 'center'
+    }
+  }, result ? /*#__PURE__*/React.createElement("div", {
+    style: {
+      animation: rolling ? 'none' : 'result-pop 0.4s cubic-bezier(0.23,1,0.32,1) forwards'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.25em',
+      color: 'rgba(26,184,160,0.45)',
+      textTransform: 'uppercase',
+      marginBottom: '6px'
+    }
+  }, roll && !rolling ? `Ergebnis: ${roll}` : '— — —'), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '42px',
+      fontWeight: '300',
+      letterSpacing: '0.12em',
+      color: 'var(--white)',
+      textShadow: '0 0 40px rgba(26,184,160,0.5)',
+      marginBottom: '4px'
+    }
+  }, result), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.2em',
+      color: 'rgba(26,184,160,0.35)',
+      textTransform: 'uppercase'
+    }
+  }, "aarakocra \xB7 name")) : /*#__PURE__*/React.createElement("div", {
+    style: {
+      paddingTop: '24px',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.3em',
+      color: 'rgba(26,184,160,0.2)',
+      textTransform: 'uppercase'
+    }
+  }, "\u2014 Noch kein Wurf \u2014")), /*#__PURE__*/React.createElement("button", {
+    onClick: () => setShowList(s => !s),
+    style: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '8px',
+      background: 'none',
+      border: 'none',
+      cursor: 'pointer',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.22em',
+      color: 'rgba(26,184,160,0.5)',
+      textTransform: 'uppercase',
+      padding: '0',
+      marginBottom: showList ? '14px' : '0',
+      transition: 'color 0.2s'
+    },
+    onMouseEnter: e => e.currentTarget.style.color = 'rgba(168,124,255,0.85)',
+    onMouseLeave: e => e.currentTarget.style.color = 'rgba(26,184,160,0.5)'
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 12 12",
+    width: "10",
+    height: "10",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "1.5",
+    style: {
+      transform: showList ? 'rotate(180deg)' : 'rotate(0deg)',
+      transition: 'transform 0.2s'
+    }
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M2 4l4 4 4-4"
+  })), showList ? 'Liste ausblenden' : 'Alle 100 Namen anzeigen'), showList && /*#__PURE__*/React.createElement("div", {
+    style: {
+      animation: 'slideDown 0.2s ease forwards',
+      border: '1px solid rgba(26,184,160,0.14)',
+      borderRadius: '4px',
+      overflow: 'hidden',
+      background: 'rgba(var(--bg2-rgb),0.7)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "name-grid"
+  }, NAMES.map((n, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "name-cell",
+    onClick: () => {
+      setResult(n);
+      setRoll(i + 1);
+      setShowList(false);
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "num"
+  }, i + 1), /*#__PURE__*/React.createElement("span", null, n))))));
 }
 
 // ── CHARACTER GENERATOR ───────────────────────────────────
 function CharacterGenerator() {
   const [chars, setChars] = useState(null);
   const [rolling, setRolling] = useState(false);
-  const rollD = (n) => Math.floor(Math.random()*n)+1;
-
+  const rollD = n => Math.floor(Math.random() * n) + 1;
   const generate = () => {
     if (rolling) return;
     setRolling(true);
     setTimeout(() => {
-      const hoehe = Math.round(137 + rollD(6)*2.5);
-      const gewicht = Math.round(45 + rollD(6)*rollD(6));
-      const augen = ['blau','rot','braun','grau'][Math.floor(Math.random()*4)];
-      const gefieder = ['rot','orange','gelb','braun','grau'][Math.floor(Math.random()*5)];
-      const sekundaer = ['weiß','schwarz','gold','dunkelbraun','cremeweiß'][Math.floor(Math.random()*5)];
-      const alter = Math.floor(Math.random()*60)+3;
+      const hoehe = Math.round(137 + rollD(6) * 2.5);
+      const gewicht = Math.round(45 + rollD(6) * rollD(6));
+      const augen = ['blau', 'rot', 'braun', 'grau'][Math.floor(Math.random() * 4)];
+      const gefieder = ['rot', 'orange', 'gelb', 'braun', 'grau'][Math.floor(Math.random() * 5)];
+      const sekundaer = ['weiß', 'schwarz', 'gold', 'dunkelbraun', 'cremeweiß'][Math.floor(Math.random() * 5)];
+      const alter = Math.floor(Math.random() * 60) + 3;
       const geschlecht = Math.random() < 0.5 ? 'männlich' : 'weiblich';
-      setChars({ hoehe, gewicht, augen, gefieder, sekundaer, alter, geschlecht });
+      setChars({
+        hoehe,
+        gewicht,
+        augen,
+        gefieder,
+        sekundaer,
+        alter,
+        geschlecht
+      });
       setRolling(false);
     }, 350);
   };
-
-  const fields = chars ? [
-    ['Geschlecht', chars.geschlecht],
-    ['Alter', `${chars.alter} Jahre`],
-    ['Größe', `${chars.hoehe} cm`],
-    ['Gewicht', `${chars.gewicht} Pfund`],
-    ['Augenfarbe', chars.augen],
-    ['Hauptgefieder', chars.gefieder],
-    ['Akzentgefieder', chars.sekundaer],
-  ] : [];
-
-  return (
-    <div className="reveal">
-      <p className="body-text" style={{ marginBottom:'20px' }}>
-        Lass dir die körperlichen Merkmale deines Charakters auswürfeln — Größe, Gewicht, Augen- und Gefiederfarbe sowie Alter.
-      </p>
-      <button className="dice-btn" onClick={generate} style={{ marginBottom:'20px' }}>
-        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ animation:rolling?'dice-spin 0.5s linear infinite':'none', transformOrigin:'center' }}>
-          <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
-        </svg>
-        Charakter würfeln
-      </button>
-      {chars && (
-        <div style={{ animation:'result-pop 0.35s cubic-bezier(0.23,1,0.32,1) forwards', display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(140px,1fr))', gap:'10px' }}>
-          {fields.map(([k,v]) => (
-            <div key={k} style={{ padding:'12px 14px', background:'rgba(26,184,160,0.07)', border:'1px solid rgba(26,184,160,0.14)', borderRadius:'4px' }}>
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.2em', color:'rgba(26,184,160,0.5)', textTransform:'uppercase', marginBottom:'5px' }}>{k}</div>
-              <div style={{ fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:'300', letterSpacing:'0.06em', color:'var(--white)' }}>{v}</div>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
+  const fields = chars ? [['Geschlecht', chars.geschlecht], ['Alter', `${chars.alter} Jahre`], ['Größe', `${chars.hoehe} cm`], ['Gewicht', `${chars.gewicht} Pfund`], ['Augenfarbe', chars.augen], ['Hauptgefieder', chars.gefieder], ['Akzentgefieder', chars.sekundaer]] : [];
+  return /*#__PURE__*/React.createElement("div", {
+    className: "reveal"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "body-text",
+    style: {
+      marginBottom: '20px'
+    }
+  }, "Lass dir die k\xF6rperlichen Merkmale deines Charakters ausw\xFCrfeln \u2014 Gr\xF6\xDFe, Gewicht, Augen- und Gefiederfarbe sowie Alter."), /*#__PURE__*/React.createElement("button", {
+    className: "dice-btn",
+    onClick: generate,
+    style: {
+      marginBottom: '20px'
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 24 24",
+    width: "15",
+    height: "15",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "1.5",
+    style: {
+      animation: rolling ? 'dice-spin 0.5s linear infinite' : 'none',
+      transformOrigin: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M12 2L2 7l10 5 10-5-10-5z"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M2 17l10 5 10-5"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M2 12l10 5 10-5"
+  })), "Charakter w\xFCrfeln"), chars && /*#__PURE__*/React.createElement("div", {
+    style: {
+      animation: 'result-pop 0.35s cubic-bezier(0.23,1,0.32,1) forwards',
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fill,minmax(140px,1fr))',
+      gap: '10px'
+    }
+  }, fields.map(([k, v]) => /*#__PURE__*/React.createElement("div", {
+    key: k,
+    style: {
+      padding: '12px 14px',
+      background: 'rgba(26,184,160,0.07)',
+      border: '1px solid rgba(26,184,160,0.14)',
+      borderRadius: '4px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      letterSpacing: '0.2em',
+      color: 'rgba(26,184,160,0.5)',
+      textTransform: 'uppercase',
+      marginBottom: '5px'
+    }
+  }, k), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '14px',
+      fontWeight: '300',
+      letterSpacing: '0.06em',
+      color: 'var(--white)'
+    }
+  }, v)))));
 }
 
 // ── STATBLOCK ─────────────────────────────────────────────
 function StatBlock() {
-  const features = [
-    { name:'Kreaturtyp', text:'Humanoider.' },
-    { name:'Größe', text:'Aarakocra sind im Durchschnitt 150 cm groß und zwischen 80 und 100 kg. Deine Größenkategorie ist mittelgroß.' },
-    { name:'Flug', text:'Du hast Flügel, daher entspricht deine Flugbewegungsrate deiner Schrittbewegungsrate. Du kannst die Flugbewegungsrate nicht benutzen, wenn du mittelschwere oder schwere Rüstung trägst.' },
-    { name:'Krallen', text:'Du hast Krallen, mit denen du waffenlose Angriffe ausführen kannst. Wenn du mit ihnen triffst, bewirkt der Treffer 1W6 + deine Stärkemodifikator an Hiebschaden statt des üblichen Wuchtschadens.' },
-    { name:'Windrufer', text:'Ab der 3. Stufe kannst du mit diesem Merkmal den Zauber Windstoß wirken, ohne Materialkomponenten zu benötigen. Wenn du den Zauber mit diesem Merkmal wirkst, kannst du ihn erst nach einer langen Rast erneut wirken. Du kannst den Zauber auch mit einem beliebigen verfügbaren Zauberplatz 2. oder höheren Grades wirken. Dein Attribut zum Wirken von Windstoß ist Intelligenz, Weisheit oder Charisma — wähle das Attribut aus, wenn du dieses Volk auswählst.' },
-    { name:'Angeborenes Talent', text:null, talente:['Wächter der Winde','Aarakocra-Elementarmagie','Kormorani'] },
-  ];
-  return (
-    <div style={{ border:'1px solid rgba(26,184,160,0.2)', borderRadius:'4px', overflow:'hidden', background:'rgba(var(--bg2-rgb),0.8)' }}>
-      <div style={{ padding:'16px 20px', background:'rgba(26,184,160,0.12)', borderBottom:'1px solid rgba(26,184,160,0.2)' }}>
-        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:'8px' }}>
-          <h3 style={{ fontFamily:'var(--font-display)', fontSize:'16px', fontWeight:'400', letterSpacing:'0.16em', color:'var(--white)', textTransform:'uppercase' }}>Aarakocra</h3>
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.2em', color:'rgba(26,184,160,0.6)', background:'rgba(26,184,160,0.1)', border:'1px solid rgba(26,184,160,0.2)', padding:'3px 8px', borderRadius:'2px' }}>D&amp;D Player's Handbook (PHB)</span>
-        </div>
-        <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontStyle:'italic', fontSize:'12px', lineHeight:'1.6', color:'rgba(var(--text2-rgb),0.6)', marginTop:'10px' }}>
-          Frühere Aarakocra dienten einst mächtigen Luftwesen. Als Nachkommen weist du noch einen Schatten dieser Macht auf.
-        </p>
-      </div>
-      <div style={{ borderBottom:'1px solid rgba(26,184,160,0.12)' }}>
-        <table className="stat-table"><tbody>
-          <tr><td>Attributswerterhöhung</td><td>Dein Geschicklichkeitswert wird um 2 Punkte erhöht. Dein Weisheitswert wird um 1 Punkt erhöht.</td></tr>
-          <tr><td>Lebenserwartung</td><td>Sie werden im Durchschnitt 65 Jahre alt.</td></tr>
-          <tr><td>Gesinnung</td><td>meistens gut</td></tr>
-          <tr><td>Größe</td><td>mittelgroß</td></tr>
-          <tr><td>Geschwindigkeit</td><td>Deine Grundbewegungsrate beträgt 9 m.</td></tr>
-          <tr><td>Sprachen</td><td>Du kannst die Gemeinsprache lesen, schreiben und sprechen, sowie eine zusätzliche Sprache.</td></tr>
-        </tbody></table>
-      </div>
-      <div style={{ padding:'20px' }}>
-        <div style={{ fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:'400', letterSpacing:'0.2em', color:'var(--accent2)', textTransform:'uppercase', marginBottom:'16px' }}>Race Features</div>
-        {features.map((f,i) => (
-          <div key={i} className="feature-block">
-            <div className="feature-name">{f.name}</div>
-            {f.text && <div className="feature-text">{f.text}</div>}
-            {f.talente && (
-              <div>
-                <div className="feature-text" style={{ marginBottom:'10px' }}>Jede Rasse erhält eines von mehreren möglichen angeborenen Talenten (deine Wahl). Folgende stehen dir zur Auswahl:</div>
-                <div style={{ display:'flex', gap:'8px', flexWrap:'wrap', marginTop:'8px' }}>
-                  {f.talente.map(t => (
-                    <button key={t} style={{ fontFamily:'var(--font-body)', fontWeight:'400', fontSize:'11px', letterSpacing:'0.06em', color:'var(--accent2)', background:'rgba(26,184,160,0.1)', border:'1px solid rgba(26,184,160,0.3)', borderRadius:'3px', padding:'6px 12px', cursor:'pointer', transition:'all 0.2s' }}
-                      onMouseEnter={e=>{e.currentTarget.style.background='rgba(26,184,160,0.22)';e.currentTarget.style.color='var(--white)';}}
-                      onMouseLeave={e=>{e.currentTarget.style.background='rgba(26,184,160,0.1)';e.currentTarget.style.color='var(--accent2)';}}>
-                      {t}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+  const features = [{
+    name: 'Kreaturtyp',
+    text: 'Humanoider.'
+  }, {
+    name: 'Größe',
+    text: 'Aarakocra sind im Durchschnitt 150 cm groß und zwischen 80 und 100 kg. Deine Größenkategorie ist mittelgroß.'
+  }, {
+    name: 'Flug',
+    text: 'Du hast Flügel, daher entspricht deine Flugbewegungsrate deiner Schrittbewegungsrate. Du kannst die Flugbewegungsrate nicht benutzen, wenn du mittelschwere oder schwere Rüstung trägst.'
+  }, {
+    name: 'Krallen',
+    text: 'Du hast Krallen, mit denen du waffenlose Angriffe ausführen kannst. Wenn du mit ihnen triffst, bewirkt der Treffer 1W6 + deine Stärkemodifikator an Hiebschaden statt des üblichen Wuchtschadens.'
+  }, {
+    name: 'Windrufer',
+    text: 'Ab der 3. Stufe kannst du mit diesem Merkmal den Zauber Windstoß wirken, ohne Materialkomponenten zu benötigen. Wenn du den Zauber mit diesem Merkmal wirkst, kannst du ihn erst nach einer langen Rast erneut wirken. Du kannst den Zauber auch mit einem beliebigen verfügbaren Zauberplatz 2. oder höheren Grades wirken. Dein Attribut zum Wirken von Windstoß ist Intelligenz, Weisheit oder Charisma — wähle das Attribut aus, wenn du dieses Volk auswählst.'
+  }, {
+    name: 'Angeborenes Talent',
+    text: null,
+    talente: ['Wächter der Winde', 'Aarakocra-Elementarmagie', 'Kormorani']
+  }];
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      border: '1px solid rgba(26,184,160,0.2)',
+      borderRadius: '4px',
+      overflow: 'hidden',
+      background: 'rgba(var(--bg2-rgb),0.8)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '16px 20px',
+      background: 'rgba(26,184,160,0.12)',
+      borderBottom: '1px solid rgba(26,184,160,0.2)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      flexWrap: 'wrap',
+      gap: '8px'
+    }
+  }, /*#__PURE__*/React.createElement("h3", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '16px',
+      fontWeight: '400',
+      letterSpacing: '0.16em',
+      color: 'var(--white)',
+      textTransform: 'uppercase'
+    }
+  }, "Aarakocra"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.2em',
+      color: 'rgba(26,184,160,0.6)',
+      background: 'rgba(26,184,160,0.1)',
+      border: '1px solid rgba(26,184,160,0.2)',
+      padding: '3px 8px',
+      borderRadius: '2px'
+    }
+  }, "D&D Player's Handbook (PHB)")), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontStyle: 'italic',
+      fontSize: '12px',
+      lineHeight: '1.6',
+      color: 'rgba(var(--text2-rgb),0.6)',
+      marginTop: '10px'
+    }
+  }, "Fr\xFChere Aarakocra dienten einst m\xE4chtigen Luftwesen. Als Nachkommen weist du noch einen Schatten dieser Macht auf.")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      borderBottom: '1px solid rgba(26,184,160,0.12)'
+    }
+  }, /*#__PURE__*/React.createElement("table", {
+    className: "stat-table"
+  }, /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, "Attributswerterh\xF6hung"), /*#__PURE__*/React.createElement("td", null, "Dein Geschicklichkeitswert wird um 2 Punkte erh\xF6ht. Dein Weisheitswert wird um 1 Punkt erh\xF6ht.")), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, "Lebenserwartung"), /*#__PURE__*/React.createElement("td", null, "Sie werden im Durchschnitt 65 Jahre alt.")), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, "Gesinnung"), /*#__PURE__*/React.createElement("td", null, "meistens gut")), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, "Gr\xF6\xDFe"), /*#__PURE__*/React.createElement("td", null, "mittelgro\xDF")), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, "Geschwindigkeit"), /*#__PURE__*/React.createElement("td", null, "Deine Grundbewegungsrate betr\xE4gt 9 m.")), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, "Sprachen"), /*#__PURE__*/React.createElement("td", null, "Du kannst die Gemeinsprache lesen, schreiben und sprechen, sowie eine zus\xE4tzliche Sprache."))))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '20px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '11px',
+      fontWeight: '400',
+      letterSpacing: '0.2em',
+      color: 'var(--accent2)',
+      textTransform: 'uppercase',
+      marginBottom: '16px'
+    }
+  }, "Race Features"), features.map((f, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "feature-block"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "feature-name"
+  }, f.name), f.text && /*#__PURE__*/React.createElement("div", {
+    className: "feature-text"
+  }, f.text), f.talente && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "feature-text",
+    style: {
+      marginBottom: '10px'
+    }
+  }, "Jede Rasse erh\xE4lt eines von mehreren m\xF6glichen angeborenen Talenten (deine Wahl). Folgende stehen dir zur Auswahl:"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '8px',
+      flexWrap: 'wrap',
+      marginTop: '8px'
+    }
+  }, f.talente.map(t => /*#__PURE__*/React.createElement("button", {
+    key: t,
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '400',
+      fontSize: '11px',
+      letterSpacing: '0.06em',
+      color: 'var(--accent2)',
+      background: 'rgba(26,184,160,0.1)',
+      border: '1px solid rgba(26,184,160,0.3)',
+      borderRadius: '3px',
+      padding: '6px 12px',
+      cursor: 'pointer',
+      transition: 'all 0.2s'
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.background = 'rgba(26,184,160,0.22)';
+      e.currentTarget.style.color = 'var(--white)';
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.background = 'rgba(26,184,160,0.1)';
+      e.currentTarget.style.color = 'var(--accent2)';
+    }
+  }, t))))))));
 }
 
 // ── ALLE BEKANNTEN POPUP ──────────────────────────────────
-function AlleBekanntPopup({ onClose }) {
-  return (
-    <div style={{ position:'fixed', inset:0, zIndex:500, display:'flex', alignItems:'center', justifyContent:'center', padding:'20px' }}
-      onClick={e=>{ if(e.target===e.currentTarget) onClose(); }}>
-      <div style={{ position:'absolute', inset:0, background:'rgba(var(--bg-rgb),0.88)', backdropFilter:'blur(6px)' }} onClick={onClose} />
-      <div style={{ position:'relative', zIndex:1, width:'100%', maxWidth:'680px', maxHeight:'80vh', background:'rgba(var(--panel-rgb),0.97)', border:'1px solid rgba(26,184,160,0.25)', borderRadius:'6px', display:'flex', flexDirection:'column', boxShadow:'0 24px 80px rgba(0,0,0,0.7)' }}>
-        {/* Header */}
-        <div style={{ padding:'18px 24px', borderBottom:'1px solid rgba(26,184,160,0.14)', display:'flex', alignItems:'center', justifyContent:'space-between', flexShrink:0 }}>
-          <div>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:'rgba(26,184,160,0.5)', textTransform:'uppercase', marginBottom:'4px' }}>Lore · Meruria</div>
-            <div style={{ fontFamily:'var(--font-display)', fontSize:'16px', fontWeight:'300', letterSpacing:'0.16em', color:'var(--white)', textTransform:'uppercase' }}>Alle bekannten Aarakocra</div>
-          </div>
-          <button onClick={onClose} style={{ background:'none', border:'none', cursor:'pointer', color:'rgba(var(--text2-rgb),0.4)', padding:'4px', transition:'color 0.2s', lineHeight:1 }}
-            onMouseEnter={e=>e.currentTarget.style.color='var(--white)'}
-            onMouseLeave={e=>e.currentTarget.style.color='rgba(var(--text2-rgb),0.4)'}>
-            <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M4 4l8 8M12 4l-8 8"/></svg>
-          </button>
-        </div>
-        {/* Scrollable list */}
-        <div style={{ overflowY:'auto', padding:'16px 24px 24px', flex:1 }}>
-          <div style={{ display:'flex', flexDirection:'column', gap:'12px' }}>
-            {BEKANNTE.map((b,i) => (
-              <div key={i} style={{ display:'flex', gap:'16px', padding:'14px 16px', border:'1px solid rgba(26,184,160,0.1)', borderRadius:'4px', background:'rgba(26,184,160,0.04)', alignItems:'flex-start', transition:'border-color 0.2s' }}
-                onMouseEnter={e=>e.currentTarget.style.borderColor='rgba(26,184,160,0.28)'}
-                onMouseLeave={e=>e.currentTarget.style.borderColor='rgba(26,184,160,0.1)'}>
-                <ImgPlaceholder label={b.name} width="56px" height="56px" style={{ borderRadius:'50%', flexShrink:0 }} />
-                <div>
-                  <div style={{ fontFamily:'var(--font-display)', fontSize:'12px', fontWeight:'400', letterSpacing:'0.14em', color:'var(--white)', textTransform:'uppercase', marginBottom:'2px' }}>{b.name}</div>
-                  <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.14em', color:'rgba(26,184,160,0.55)', marginBottom:'6px' }}>{b.rolle}</div>
-                  <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', lineHeight:'1.65', color:'var(--muted)' }}>{b.beschreibung}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+function AlleBekanntPopup({
+  onClose
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'fixed',
+      inset: 0,
+      zIndex: 500,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '20px'
+    },
+    onClick: e => {
+      if (e.target === e.currentTarget) onClose();
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      background: 'rgba(var(--bg-rgb),0.88)',
+      backdropFilter: 'blur(6px)'
+    },
+    onClick: onClose
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 1,
+      width: '100%',
+      maxWidth: '680px',
+      maxHeight: '80vh',
+      background: 'rgba(var(--panel-rgb),0.97)',
+      border: '1px solid rgba(26,184,160,0.25)',
+      borderRadius: '6px',
+      display: 'flex',
+      flexDirection: 'column',
+      boxShadow: '0 24px 80px rgba(0,0,0,0.7)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '18px 24px',
+      borderBottom: '1px solid rgba(26,184,160,0.14)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.28em',
+      color: 'rgba(26,184,160,0.5)',
+      textTransform: 'uppercase',
+      marginBottom: '4px'
+    }
+  }, "Lore \xB7 Meruria"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '16px',
+      fontWeight: '300',
+      letterSpacing: '0.16em',
+      color: 'var(--white)',
+      textTransform: 'uppercase'
+    }
+  }, "Alle bekannten Aarakocra")), /*#__PURE__*/React.createElement("button", {
+    onClick: onClose,
+    style: {
+      background: 'none',
+      border: 'none',
+      cursor: 'pointer',
+      color: 'rgba(var(--text2-rgb),0.4)',
+      padding: '4px',
+      transition: 'color 0.2s',
+      lineHeight: 1
+    },
+    onMouseEnter: e => e.currentTarget.style.color = 'var(--white)',
+    onMouseLeave: e => e.currentTarget.style.color = 'rgba(var(--text2-rgb),0.4)'
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 16 16",
+    width: "16",
+    height: "16",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "1.5"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M4 4l8 8M12 4l-8 8"
+  })))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      overflowY: 'auto',
+      padding: '16px 24px 24px',
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '12px'
+    }
+  }, BEKANNTE.map((b, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    style: {
+      display: 'flex',
+      gap: '16px',
+      padding: '14px 16px',
+      border: '1px solid rgba(26,184,160,0.1)',
+      borderRadius: '4px',
+      background: 'rgba(26,184,160,0.04)',
+      alignItems: 'flex-start',
+      transition: 'border-color 0.2s'
+    },
+    onMouseEnter: e => e.currentTarget.style.borderColor = 'rgba(26,184,160,0.28)',
+    onMouseLeave: e => e.currentTarget.style.borderColor = 'rgba(26,184,160,0.1)'
+  }, /*#__PURE__*/React.createElement(ImgPlaceholder, {
+    label: b.name,
+    width: "56px",
+    height: "56px",
+    style: {
+      borderRadius: '50%',
+      flexShrink: 0
+    }
+  }), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '12px',
+      fontWeight: '400',
+      letterSpacing: '0.14em',
+      color: 'var(--white)',
+      textTransform: 'uppercase',
+      marginBottom: '2px'
+    }
+  }, b.name), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.14em',
+      color: 'rgba(26,184,160,0.55)',
+      marginBottom: '6px'
+    }
+  }, b.rolle), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '11px',
+      lineHeight: '1.65',
+      color: 'var(--muted)'
+    }
+  }, b.beschreibung))))))));
 }
 
 // ── BEKANNTE PERSONEN SECTION ─────────────────────────────
 function BekannteSection() {
   const [showPopup, setShowPopup] = useState(false);
-
-  return (
-    <>
-    {showPopup && <AlleBekanntPopup onClose={()=>setShowPopup(false)} />}
-    <Section id="bekannte" label="Lore · Meruria" title="Bekannte Aarakocra">
-
-      {/* Bekanntestes Individuum — groß, prominent */}
-      <div className="reveal" style={{ marginBottom:'36px' }}>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:'rgba(26,184,160,0.4)', textTransform:'uppercase', marginBottom:'16px' }}>Bekanntestes Individuum</div>
-        <div style={{ display:'grid', gridTemplateColumns:'160px 1fr', gap:'28px', padding:'28px', border:'1px solid rgba(26,184,160,0.22)', borderRadius:'6px', background:'linear-gradient(135deg,rgba(26,184,160,0.07) 0%,rgba(var(--panel-rgb),0.9) 100%)', transition:'border-color 0.2s' }}
-          onMouseEnter={e=>e.currentTarget.style.borderColor='rgba(26,184,160,0.45)'}
-          onMouseLeave={e=>e.currentTarget.style.borderColor='rgba(26,184,160,0.22)'}>
-          {/* Bild — quadratisch mit Rundung */}
-          <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'10px' }}>
-            <ImgPlaceholder label="Porträt" width="140px" height="160px" style={{ borderRadius:'4px', border:'1px solid rgba(26,184,160,0.25)' }} />
-          </div>
-          {/* Text */}
-          <div style={{ display:'flex', flexDirection:'column', justifyContent:'center' }}>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:'rgba(26,184,160,0.45)', textTransform:'uppercase', marginBottom:'8px' }}>Oberhaupt · Anführer</div>
-            <div style={{ fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:'300', letterSpacing:'0.14em', color:'var(--white)', textTransform:'uppercase', marginBottom:'4px' }}>— Unbekannt —</div>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.14em', color:'rgba(26,184,160,0.4)', marginBottom:'16px' }}>Name noch nicht festgelegt</div>
-            <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.8', color:'var(--muted)' }}>
-              Hier kannst du das bekannteste oder mächtigste Individuum der Aarakocra in Meruria vorstellen — ihren Anführer, ihr Oberhaupt oder die Person, die das Ansehen der gesamten Rasse prägt.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Weitere bekannte — kompakte Karten, max 3 */}
-      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'14px', flexWrap:'wrap', gap:'10px' }}>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:'rgba(26,184,160,0.35)', textTransform:'uppercase' }}>Weitere bekannte Individuen</div>
-        <button onClick={()=>setShowPopup(true)} style={{ display:'inline-flex', alignItems:'center', gap:'7px', fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', letterSpacing:'0.08em', color:'rgba(26,184,160,0.65)', background:'rgba(26,184,160,0.07)', border:'1px solid rgba(26,184,160,0.2)', borderRadius:'3px', padding:'6px 12px', cursor:'pointer', transition:'all 0.2s' }}
-          onMouseEnter={e=>{e.currentTarget.style.background='rgba(26,184,160,0.16)';e.currentTarget.style.color='var(--white)';}}
-          onMouseLeave={e=>{e.currentTarget.style.background='rgba(26,184,160,0.07)';e.currentTarget.style.color='rgba(26,184,160,0.65)';}}>
-          <svg viewBox="0 0 14 14" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.4"><rect x="2" y="2" width="10" height="10" rx="1.5"/><line x1="5" y1="5" x2="9" y2="5"/><line x1="5" y1="7.5" x2="9" y2="7.5"/><line x1="5" y1="10" x2="8" y2="10"/></svg>
-          Alle anzeigen
-        </button>
-      </div>
-
-      <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(260px,1fr))', gap:'14px' }}>
-        {BEKANNTE.slice(0,3).map((b,i) => (
-          <div key={i} className="reveal" style={{ padding:'18px', border:'1px solid rgba(26,184,160,0.12)', borderRadius:'4px', background:'rgba(var(--panel-rgb),0.7)', transition:'border-color 0.2s, transform 0.2s' }}
-            onMouseEnter={e=>{e.currentTarget.style.borderColor='rgba(26,184,160,0.32)';e.currentTarget.style.transform='translateY(-2px)';}}
-            onMouseLeave={e=>{e.currentTarget.style.borderColor='rgba(26,184,160,0.12)';e.currentTarget.style.transform='translateY(0)';}}>
-            <ImgPlaceholder label={b.name} width="100%" height="120px" style={{ borderRadius:'3px', marginBottom:'14px' }} />
-            <div style={{ fontFamily:'var(--font-display)', fontSize:'12px', fontWeight:'400', letterSpacing:'0.14em', color:'var(--white)', textTransform:'uppercase', marginBottom:'3px' }}>{b.name}</div>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.14em', color:'rgba(26,184,160,0.55)', marginBottom:'10px' }}>{b.rolle}</div>
-            <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', lineHeight:'1.65', color:'var(--muted)' }}>{b.beschreibung}</p>
-          </div>
-        ))}
-      </div>
-    </Section>
-    </>
-  );
+  return /*#__PURE__*/React.createElement(React.Fragment, null, showPopup && /*#__PURE__*/React.createElement(AlleBekanntPopup, {
+    onClose: () => setShowPopup(false)
+  }), /*#__PURE__*/React.createElement(Section, {
+    id: "bekannte",
+    label: "Lore \xB7 Meruria",
+    title: "Bekannte Aarakocra"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "reveal",
+    style: {
+      marginBottom: '36px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.28em',
+      color: 'rgba(26,184,160,0.4)',
+      textTransform: 'uppercase',
+      marginBottom: '16px'
+    }
+  }, "Bekanntestes Individuum"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: '160px 1fr',
+      gap: '28px',
+      padding: '28px',
+      border: '1px solid rgba(26,184,160,0.22)',
+      borderRadius: '6px',
+      background: 'linear-gradient(135deg,rgba(26,184,160,0.07) 0%,rgba(var(--panel-rgb),0.9) 100%)',
+      transition: 'border-color 0.2s'
+    },
+    onMouseEnter: e => e.currentTarget.style.borderColor = 'rgba(26,184,160,0.45)',
+    onMouseLeave: e => e.currentTarget.style.borderColor = 'rgba(26,184,160,0.22)'
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: '10px'
+    }
+  }, /*#__PURE__*/React.createElement(ImgPlaceholder, {
+    label: "Portr\xE4t",
+    width: "140px",
+    height: "160px",
+    style: {
+      borderRadius: '4px',
+      border: '1px solid rgba(26,184,160,0.25)'
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.22em',
+      color: 'rgba(26,184,160,0.45)',
+      textTransform: 'uppercase',
+      marginBottom: '8px'
+    }
+  }, "Oberhaupt \xB7 Anf\xFChrer"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '22px',
+      fontWeight: '300',
+      letterSpacing: '0.14em',
+      color: 'var(--white)',
+      textTransform: 'uppercase',
+      marginBottom: '4px'
+    }
+  }, "\u2014 Unbekannt \u2014"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.14em',
+      color: 'rgba(26,184,160,0.4)',
+      marginBottom: '16px'
+    }
+  }, "Name noch nicht festgelegt"), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.8',
+      color: 'var(--muted)'
+    }
+  }, "Hier kannst du das bekannteste oder m\xE4chtigste Individuum der Aarakocra in Meruria vorstellen \u2014 ihren Anf\xFChrer, ihr Oberhaupt oder die Person, die das Ansehen der gesamten Rasse pr\xE4gt.")))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: '14px',
+      flexWrap: 'wrap',
+      gap: '10px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.25em',
+      color: 'rgba(26,184,160,0.35)',
+      textTransform: 'uppercase'
+    }
+  }, "Weitere bekannte Individuen"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => setShowPopup(true),
+    style: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '7px',
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '11px',
+      letterSpacing: '0.08em',
+      color: 'rgba(26,184,160,0.65)',
+      background: 'rgba(26,184,160,0.07)',
+      border: '1px solid rgba(26,184,160,0.2)',
+      borderRadius: '3px',
+      padding: '6px 12px',
+      cursor: 'pointer',
+      transition: 'all 0.2s'
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.background = 'rgba(26,184,160,0.16)';
+      e.currentTarget.style.color = 'var(--white)';
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.background = 'rgba(26,184,160,0.07)';
+      e.currentTarget.style.color = 'rgba(26,184,160,0.65)';
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 14 14",
+    width: "11",
+    height: "11",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "1.4"
+  }, /*#__PURE__*/React.createElement("rect", {
+    x: "2",
+    y: "2",
+    width: "10",
+    height: "10",
+    rx: "1.5"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "5",
+    y1: "5",
+    x2: "9",
+    y2: "5"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "5",
+    y1: "7.5",
+    x2: "9",
+    y2: "7.5"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "5",
+    y1: "10",
+    x2: "8",
+    y2: "10"
+  })), "Alle anzeigen")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fill,minmax(260px,1fr))',
+      gap: '14px'
+    }
+  }, BEKANNTE.slice(0, 3).map((b, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "reveal",
+    style: {
+      padding: '18px',
+      border: '1px solid rgba(26,184,160,0.12)',
+      borderRadius: '4px',
+      background: 'rgba(var(--panel-rgb),0.7)',
+      transition: 'border-color 0.2s, transform 0.2s'
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.borderColor = 'rgba(26,184,160,0.32)';
+      e.currentTarget.style.transform = 'translateY(-2px)';
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.borderColor = 'rgba(26,184,160,0.12)';
+      e.currentTarget.style.transform = 'translateY(0)';
+    }
+  }, /*#__PURE__*/React.createElement(ImgPlaceholder, {
+    label: b.name,
+    width: "100%",
+    height: "120px",
+    style: {
+      borderRadius: '3px',
+      marginBottom: '14px'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '12px',
+      fontWeight: '400',
+      letterSpacing: '0.14em',
+      color: 'var(--white)',
+      textTransform: 'uppercase',
+      marginBottom: '3px'
+    }
+  }, b.name), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.14em',
+      color: 'rgba(26,184,160,0.55)',
+      marginBottom: '10px'
+    }
+  }, b.rolle), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '11px',
+      lineHeight: '1.65',
+      color: 'var(--muted)'
+    }
+  }, b.beschreibung))))));
 }
 
 // ── RASSEN RADAR ──────────────────────────────────────────
 function RassenRadar() {
-  const traits = [
-    { label: 'Mobilität',   val: 95 },
-    { label: 'Kampf',       val: 62 },
-    { label: 'Magie',       val: 55 },
-    { label: 'Soziales',    val: 48 },
-    { label: 'Überleben',   val: 70 },
-    { label: 'Weisheit',    val: 72 },
-  ];
-  const cx = 155, cy = 155, r = 100;
+  const traits = [{
+    label: 'Mobilität',
+    val: 95
+  }, {
+    label: 'Kampf',
+    val: 62
+  }, {
+    label: 'Magie',
+    val: 55
+  }, {
+    label: 'Soziales',
+    val: 48
+  }, {
+    label: 'Überleben',
+    val: 70
+  }, {
+    label: 'Weisheit',
+    val: 72
+  }];
+  const cx = 155,
+    cy = 155,
+    r = 100;
   const n = traits.length;
-  const angle = (i) => (Math.PI * 2 * i) / n - Math.PI / 2;
-  const pt = (i, radius) => ({ x: cx + radius * Math.cos(angle(i)), y: cy + radius * Math.sin(angle(i)) });
+  const angle = i => Math.PI * 2 * i / n - Math.PI / 2;
+  const pt = (i, radius) => ({
+    x: cx + radius * Math.cos(angle(i)),
+    y: cy + radius * Math.sin(angle(i))
+  });
   const rings = [0.25, 0.5, 0.75, 1.0];
-  const ringPts = (s) => traits.map((_, i) => pt(i, r * s)).map(p => `${p.x},${p.y}`).join(' ');
+  const ringPts = s => traits.map((_, i) => pt(i, r * s)).map(p => `${p.x},${p.y}`).join(' ');
   const valuePts = traits.map((t, i) => pt(i, r * (t.val / 100))).map(p => `${p.x},${p.y}`).join(' ');
-  const labelPt = (i) => {
+  const labelPt = i => {
     const p = pt(i, r + 26);
     // Überleben (index 4) und Weisheit (index 5) sind links — etwas mehr Abstand
     if (i === 4 || i === 5) return pt(i, r + 32);
     return p;
   };
-
-  return (
-    <Section label="Charaktererstellung" title="Merkmals-Profil">
-      <div className="reveal" style={{ display:'grid', gridTemplateColumns:'310px 1fr', gap:'40px', alignItems:'center' }}>
-        <div style={{ display:'flex', justifyContent:'center' }}>
-          <svg viewBox="-10 0 330 320" width="320" height="310">
-            {rings.map((s, ri) => <polygon key={ri} points={ringPts(s)} fill="none" stroke={`rgba(26,184,160,${0.07 + ri * 0.06})`} strokeWidth="1"/>)}
-            {traits.map((_, i) => { const p = pt(i, r); return <line key={i} x1={cx} y1={cy} x2={p.x} y2={p.y} stroke="rgba(26,184,160,0.14)" strokeWidth="1"/>; })}
-            <polygon points={valuePts} fill="rgba(26,184,160,0.14)" stroke="rgba(168,124,255,0.65)" strokeWidth="1.5"/>
-            {traits.map((t, i) => { const p = pt(i, r * (t.val / 100)); return <circle key={i} cx={p.x} cy={p.y} r="3.5" fill="#5ee8d0" stroke="rgba(var(--bg-rgb),0.8)" strokeWidth="1.5"/>; })}
-            {traits.map((t, i) => { const p = labelPt(i); const anchor = p.x < cx - 5 ? 'end' : p.x > cx + 5 ? 'start' : 'middle'; return <text key={i} x={p.x} y={p.y + 4} textAnchor={anchor} fontSize="9" fill="rgba(var(--text2-rgb),0.6)" fontFamily="'Share Tech Mono', monospace" letterSpacing="0.1em">{t.label.toUpperCase()}</text>; })}
-            <circle cx={cx} cy={cy} r="3" fill="rgba(26,184,160,0.5)"/>
-          </svg>
-        </div>
-        <div style={{ display:'flex', flexDirection:'column', gap:'14px' }}>
-          <p className="body-text" style={{ marginBottom:'8px' }}>
-            Das Merkmals-Profil zeigt die natürlichen Stärken der Aarakocra im Vergleich zu anderen Rassen — basierend auf ihren Rassenmerkmalen und ihrer Kultur.
-          </p>
-          {traits.map((t) => (
-            <div key={t.label}>
-              <div style={{ display:'flex', justifyContent:'space-between', marginBottom:'5px' }}>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.18em', color:'rgba(var(--text2-rgb),0.5)', textTransform:'uppercase' }}>{t.label}</span>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', color:'rgba(26,184,160,0.7)' }}>{t.val}</span>
-              </div>
-              <div style={{ height:'3px', background:'rgba(26,184,160,0.1)', borderRadius:'2px', overflow:'hidden' }}>
-                <div style={{ height:'100%', width:`${t.val}%`, background:'linear-gradient(90deg,rgba(26,184,160,0.5),rgba(168,124,255,0.85))', borderRadius:'2px' }}/>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </Section>
-  );
+  return /*#__PURE__*/React.createElement(Section, {
+    label: "Charaktererstellung",
+    title: "Merkmals-Profil"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "reveal",
+    style: {
+      display: 'grid',
+      gridTemplateColumns: '310px 1fr',
+      gap: '40px',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "-10 0 330 320",
+    width: "320",
+    height: "310"
+  }, rings.map((s, ri) => /*#__PURE__*/React.createElement("polygon", {
+    key: ri,
+    points: ringPts(s),
+    fill: "none",
+    stroke: `rgba(26,184,160,${0.07 + ri * 0.06})`,
+    strokeWidth: "1"
+  })), traits.map((_, i) => {
+    const p = pt(i, r);
+    return /*#__PURE__*/React.createElement("line", {
+      key: i,
+      x1: cx,
+      y1: cy,
+      x2: p.x,
+      y2: p.y,
+      stroke: "rgba(26,184,160,0.14)",
+      strokeWidth: "1"
+    });
+  }), /*#__PURE__*/React.createElement("polygon", {
+    points: valuePts,
+    fill: "rgba(26,184,160,0.14)",
+    stroke: "rgba(168,124,255,0.65)",
+    strokeWidth: "1.5"
+  }), traits.map((t, i) => {
+    const p = pt(i, r * (t.val / 100));
+    return /*#__PURE__*/React.createElement("circle", {
+      key: i,
+      cx: p.x,
+      cy: p.y,
+      r: "3.5",
+      fill: "#5ee8d0",
+      stroke: "rgba(var(--bg-rgb),0.8)",
+      strokeWidth: "1.5"
+    });
+  }), traits.map((t, i) => {
+    const p = labelPt(i);
+    const anchor = p.x < cx - 5 ? 'end' : p.x > cx + 5 ? 'start' : 'middle';
+    return /*#__PURE__*/React.createElement("text", {
+      key: i,
+      x: p.x,
+      y: p.y + 4,
+      textAnchor: anchor,
+      fontSize: "9",
+      fill: "rgba(var(--text2-rgb),0.6)",
+      fontFamily: "'Share Tech Mono', monospace",
+      letterSpacing: "0.1em"
+    }, t.label.toUpperCase());
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: cx,
+    cy: cy,
+    r: "3",
+    fill: "rgba(26,184,160,0.5)"
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '14px'
+    }
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "body-text",
+    style: {
+      marginBottom: '8px'
+    }
+  }, "Das Merkmals-Profil zeigt die nat\xFCrlichen St\xE4rken der Aarakocra im Vergleich zu anderen Rassen \u2014 basierend auf ihren Rassenmerkmalen und ihrer Kultur."), traits.map(t => /*#__PURE__*/React.createElement("div", {
+    key: t.label
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      marginBottom: '5px'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.18em',
+      color: 'rgba(var(--text2-rgb),0.5)',
+      textTransform: 'uppercase'
+    }
+  }, t.label), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      color: 'rgba(26,184,160,0.7)'
+    }
+  }, t.val)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      height: '3px',
+      background: 'rgba(26,184,160,0.1)',
+      borderRadius: '2px',
+      overflow: 'hidden'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      height: '100%',
+      width: `${t.val}%`,
+      background: 'linear-gradient(90deg,rgba(26,184,160,0.5),rgba(168,124,255,0.85))',
+      borderRadius: '2px'
+    }
+  })))))));
 }
 
 // ── CHARAKTER QUIZ ─────────────────────────────────────────
-const QUIZ_STEPS = [
-  { frage: 'Wie geht dein Charakter mit Konflikten um?', optionen: [
-    { text: 'Direkt und offen — ich stelle mich dem Problem', tags: ['Krieger','Paladin'] },
-    { text: 'Mit Klugheit und Planung', tags: ['Magier','Waldläufer'] },
-    { text: 'Durch Vermittlung und Diplomatie', tags: ['Barde','Kleriker'] },
-    { text: 'Ich beobachte lieber erst, bevor ich handle', tags: ['Schurke','Waldläufer'] },
-  ]},
-  { frage: 'Was treibt deinen Charakter an?', optionen: [
-    { text: 'Freiheit und Abenteuer', tags: ['Barbar','Waldläufer'] },
-    { text: 'Wissen und Verständnis', tags: ['Magier','Druide'] },
-    { text: 'Schutz der Schwachen', tags: ['Paladin','Kleriker'] },
-    { text: 'Ruhm und Anerkennung', tags: ['Barde','Kämpfer'] },
-  ]},
-  { frage: 'Wie nutzt dein Charakter seinen Flug?', optionen: [
-    { text: 'Als Waffe — ich greife von oben an', tags: ['Kämpfer','Barbar'] },
-    { text: 'Als Flucht und Überraschung', tags: ['Schurke','Waldläufer'] },
-    { text: 'Um Verbündete zu unterstützen', tags: ['Kleriker','Barde'] },
-    { text: 'Um alles zu überblicken und zu planen', tags: ['Magier','Waldläufer'] },
-  ]},
-  { frage: 'Welche Verbindung hat dein Charakter zu den Windherzögen?', optionen: [
-    { text: 'Tiefe spirituelle Verbindung', tags: ['Kleriker','Druide'] },
-    { text: 'Neugierig, aber skeptisch', tags: ['Magier','Schurke'] },
-    { text: 'Sie sind Legende — ich will sie kennenlernen', tags: ['Barde','Waldläufer'] },
-    { text: 'Ihre Macht interessiert mich mehr als ihre Geschichte', tags: ['Hexenmeister','Zauberer'] },
-  ]},
-];
+const QUIZ_STEPS = [{
+  frage: 'Wie geht dein Charakter mit Konflikten um?',
+  optionen: [{
+    text: 'Direkt und offen — ich stelle mich dem Problem',
+    tags: ['Krieger', 'Paladin']
+  }, {
+    text: 'Mit Klugheit und Planung',
+    tags: ['Magier', 'Waldläufer']
+  }, {
+    text: 'Durch Vermittlung und Diplomatie',
+    tags: ['Barde', 'Kleriker']
+  }, {
+    text: 'Ich beobachte lieber erst, bevor ich handle',
+    tags: ['Schurke', 'Waldläufer']
+  }]
+}, {
+  frage: 'Was treibt deinen Charakter an?',
+  optionen: [{
+    text: 'Freiheit und Abenteuer',
+    tags: ['Barbar', 'Waldläufer']
+  }, {
+    text: 'Wissen und Verständnis',
+    tags: ['Magier', 'Druide']
+  }, {
+    text: 'Schutz der Schwachen',
+    tags: ['Paladin', 'Kleriker']
+  }, {
+    text: 'Ruhm und Anerkennung',
+    tags: ['Barde', 'Kämpfer']
+  }]
+}, {
+  frage: 'Wie nutzt dein Charakter seinen Flug?',
+  optionen: [{
+    text: 'Als Waffe — ich greife von oben an',
+    tags: ['Kämpfer', 'Barbar']
+  }, {
+    text: 'Als Flucht und Überraschung',
+    tags: ['Schurke', 'Waldläufer']
+  }, {
+    text: 'Um Verbündete zu unterstützen',
+    tags: ['Kleriker', 'Barde']
+  }, {
+    text: 'Um alles zu überblicken und zu planen',
+    tags: ['Magier', 'Waldläufer']
+  }]
+}, {
+  frage: 'Welche Verbindung hat dein Charakter zu den Windherzögen?',
+  optionen: [{
+    text: 'Tiefe spirituelle Verbindung',
+    tags: ['Kleriker', 'Druide']
+  }, {
+    text: 'Neugierig, aber skeptisch',
+    tags: ['Magier', 'Schurke']
+  }, {
+    text: 'Sie sind Legende — ich will sie kennenlernen',
+    tags: ['Barde', 'Waldläufer']
+  }, {
+    text: 'Ihre Macht interessiert mich mehr als ihre Geschichte',
+    tags: ['Hexenmeister', 'Zauberer']
+  }]
+}];
 const KLASSEN_DESC = {
-  'Krieger':    'Du kämpfst mit Präzision und Ausdauer. Deine Krallen sind deine verlässlichste Waffe.',
-  'Paladin':    'Dein Schwur trägt dich höher als jeder Wind. Du bist Schutzschild und Schwert zugleich.',
-  'Magier':     'Der Himmel ist nicht Grenze, sondern Perspektive. Du siehst Muster, wo andere nur Chaos sehen.',
+  'Krieger': 'Du kämpfst mit Präzision und Ausdauer. Deine Krallen sind deine verlässlichste Waffe.',
+  'Paladin': 'Dein Schwur trägt dich höher als jeder Wind. Du bist Schutzschild und Schwert zugleich.',
+  'Magier': 'Der Himmel ist nicht Grenze, sondern Perspektive. Du siehst Muster, wo andere nur Chaos sehen.',
   'Waldläufer': 'Du kennst jeden Luftstrom, jede Thermik. Die Wildnis ist dein Zuhause — von oben und unten.',
-  'Barde':      'Deine Stimme trägt weiter als der Wind. Du sammelst Geschichten so wie andere Federn.',
-  'Kleriker':   'Die Windherzöge haben dich nicht vergessen. Ihre Stimme spricht durch dich.',
-  'Schurke':    'Du bist da, bevor dein Feind dich sieht. Und weg, bevor er begreift, was passiert ist.',
-  'Barbar':     'Die Raserei trägt dich höher als Flügel. Im Kampf bist du der Sturm selbst.',
-  'Druide':     'Die Elementarebene der Luft ist nicht fern — sie lebt in dir.',
-  'Hexenmeister':'Dein Pakt verleiht dir Macht, die über Wind und Schwinge hinausgeht.',
-  'Zauberer':   'Magie fließt durch dein Blut. Jede Feder leuchtet, wenn du sie entfesselst.',
-  'Kämpfer':    'Technik und Disziplin. Du hast gelernt, deinen Flug als taktischen Vorteil zu nutzen.',
+  'Barde': 'Deine Stimme trägt weiter als der Wind. Du sammelst Geschichten so wie andere Federn.',
+  'Kleriker': 'Die Windherzöge haben dich nicht vergessen. Ihre Stimme spricht durch dich.',
+  'Schurke': 'Du bist da, bevor dein Feind dich sieht. Und weg, bevor er begreift, was passiert ist.',
+  'Barbar': 'Die Raserei trägt dich höher als Flügel. Im Kampf bist du der Sturm selbst.',
+  'Druide': 'Die Elementarebene der Luft ist nicht fern — sie lebt in dir.',
+  'Hexenmeister': 'Dein Pakt verleiht dir Macht, die über Wind und Schwinge hinausgeht.',
+  'Zauberer': 'Magie fließt durch dein Blut. Jede Feder leuchtet, wenn du sie entfesselst.',
+  'Kämpfer': 'Technik und Disziplin. Du hast gelernt, deinen Flug als taktischen Vorteil zu nutzen.'
 };
-
 function CharakterQuiz() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [result, setResult] = useState(null);
   const [selected, setSelected] = useState(null);
-
-  const choose = (opt) => {
+  const choose = opt => {
     setSelected(opt);
     setTimeout(() => {
       const newAnswers = [...answers, ...opt.tags];
       if (step < QUIZ_STEPS.length - 1) {
-        setAnswers(newAnswers); setStep(s => s + 1); setSelected(null);
+        setAnswers(newAnswers);
+        setStep(s => s + 1);
+        setSelected(null);
       } else {
         const count = {};
-        newAnswers.forEach(t => { count[t] = (count[t] || 0) + 1; });
-        const sorted = Object.entries(count).sort((a,b) => b[1]-a[1]);
+        newAnswers.forEach(t => {
+          count[t] = (count[t] || 0) + 1;
+        });
+        const sorted = Object.entries(count).sort((a, b) => b[1] - a[1]);
         setResult(sorted[0][0]);
       }
     }, 280);
   };
-  const reset = () => { setStep(0); setAnswers([]); setResult(null); setSelected(null); };
-
-  return (
-    <Section label="Charaktererstellung" title="Kenne deinen Charakter">
-      <p className="body-text reveal" style={{ marginBottom:'28px' }}>
-        Vier kurze Fragen — und du bekommst eine Klassenempfehlung, die zu deinem Aarakocra passt.
-      </p>
-      <div className="reveal" style={{ maxWidth:'560px' }}>
-        {!result ? (
-          <div>
-            <div style={{ display:'flex', gap:'6px', marginBottom:'24px' }}>
-              {QUIZ_STEPS.map((_, i) => <div key={i} style={{ flex:1, height:'2px', borderRadius:'1px', background: i <= step ? 'rgba(26,184,160,0.7)' : 'rgba(26,184,160,0.14)', transition:'background 0.3s' }}/>)}
-            </div>
-            <div style={{ fontFamily:'var(--font-display)', fontSize:'15px', fontWeight:'300', letterSpacing:'0.1em', color:'var(--white)', marginBottom:'20px', lineHeight:'1.5' }}>
-              {QUIZ_STEPS[step].frage}
-            </div>
-            <div style={{ display:'flex', flexDirection:'column', gap:'10px' }}>
-              {QUIZ_STEPS[step].optionen.map((opt, i) => (
-                <button key={i} onClick={() => choose(opt)}
-                  style={{ textAlign:'left', padding:'14px 18px', background: selected===opt ? 'rgba(26,184,160,0.2)' : 'rgba(26,184,160,0.06)', border:`1px solid ${selected===opt ? 'rgba(26,184,160,0.6)' : 'rgba(26,184,160,0.18)'}`, borderRadius:'4px', color: selected===opt ? 'var(--white)' : 'rgba(var(--text2-rgb),0.7)', fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.5', letterSpacing:'0.04em', cursor:'pointer', transition:'all 0.15s' }}
-                  onMouseEnter={e=>{ if(selected!==opt){ e.currentTarget.style.background='rgba(26,184,160,0.1)'; e.currentTarget.style.borderColor='rgba(26,184,160,0.35)'; e.currentTarget.style.color='var(--white)'; }}}
-                  onMouseLeave={e=>{ if(selected!==opt){ e.currentTarget.style.background='rgba(26,184,160,0.06)'; e.currentTarget.style.borderColor='rgba(26,184,160,0.18)'; e.currentTarget.style.color='rgba(var(--text2-rgb),0.7)'; }}}>
-                  {opt.text}
-                </button>
-              ))}
-            </div>
-            <div style={{ marginTop:'14px', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.2em', color:'rgba(26,184,160,0.28)', textTransform:'uppercase' }}>Frage {step+1} / {QUIZ_STEPS.length}</div>
-          </div>
-        ) : (
-          <div style={{ animation:'result-pop 0.4s cubic-bezier(0.23,1,0.32,1) forwards' }}>
-            <div style={{ padding:'28px', border:'1px solid rgba(26,184,160,0.28)', borderRadius:'6px', background:'linear-gradient(135deg,rgba(26,184,160,0.09) 0%,rgba(var(--panel-rgb),0.92) 100%)' }}>
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:'rgba(26,184,160,0.5)', textTransform:'uppercase', marginBottom:'10px' }}>Empfohlene Klasse</div>
-              <div style={{ fontFamily:'var(--font-display)', fontSize:'30px', fontWeight:'300', letterSpacing:'0.14em', color:'var(--white)', textTransform:'uppercase', marginBottom:'12px', textShadow:'0 0 28px rgba(26,184,160,0.4)' }}>{result}</div>
-              <div style={{ width:'36px', height:'1px', background:'linear-gradient(90deg,rgba(26,184,160,0.8),transparent)', marginBottom:'16px' }}/>
-              <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'13px', lineHeight:'1.8', color:'rgba(var(--text2-rgb),0.65)' }}>
-                {KLASSEN_DESC[result] || 'Eine starke Wahl für einen Aarakocra-Charakter.'}
-              </p>
-            </div>
-            <button onClick={reset} style={{ marginTop:'16px', display:'inline-flex', alignItems:'center', gap:'8px', background:'none', border:'none', cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:'rgba(26,184,160,0.5)', textTransform:'uppercase', padding:'0', transition:'color 0.2s' }}
-              onMouseEnter={e=>e.currentTarget.style.color='rgba(168,124,255,0.85)'}
-              onMouseLeave={e=>e.currentTarget.style.color='rgba(26,184,160,0.5)'}>
-              <svg viewBox="0 0 14 14" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M2 7 A5 5 0 1 1 5 11.2" strokeLinecap="round"/><path d="M2 4v3h3" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              Nochmal spielen
-            </button>
-          </div>
-        )}
-      </div>
-    </Section>
-  );
+  const reset = () => {
+    setStep(0);
+    setAnswers([]);
+    setResult(null);
+    setSelected(null);
+  };
+  return /*#__PURE__*/React.createElement(Section, {
+    label: "Charaktererstellung",
+    title: "Kenne deinen Charakter"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "body-text reveal",
+    style: {
+      marginBottom: '28px'
+    }
+  }, "Vier kurze Fragen \u2014 und du bekommst eine Klassenempfehlung, die zu deinem Aarakocra passt."), /*#__PURE__*/React.createElement("div", {
+    className: "reveal",
+    style: {
+      maxWidth: '560px'
+    }
+  }, !result ? /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '6px',
+      marginBottom: '24px'
+    }
+  }, QUIZ_STEPS.map((_, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    style: {
+      flex: 1,
+      height: '2px',
+      borderRadius: '1px',
+      background: i <= step ? 'rgba(26,184,160,0.7)' : 'rgba(26,184,160,0.14)',
+      transition: 'background 0.3s'
+    }
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '15px',
+      fontWeight: '300',
+      letterSpacing: '0.1em',
+      color: 'var(--white)',
+      marginBottom: '20px',
+      lineHeight: '1.5'
+    }
+  }, QUIZ_STEPS[step].frage), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '10px'
+    }
+  }, QUIZ_STEPS[step].optionen.map((opt, i) => /*#__PURE__*/React.createElement("button", {
+    key: i,
+    onClick: () => choose(opt),
+    style: {
+      textAlign: 'left',
+      padding: '14px 18px',
+      background: selected === opt ? 'rgba(26,184,160,0.2)' : 'rgba(26,184,160,0.06)',
+      border: `1px solid ${selected === opt ? 'rgba(26,184,160,0.6)' : 'rgba(26,184,160,0.18)'}`,
+      borderRadius: '4px',
+      color: selected === opt ? 'var(--white)' : 'rgba(var(--text2-rgb),0.7)',
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.5',
+      letterSpacing: '0.04em',
+      cursor: 'pointer',
+      transition: 'all 0.15s'
+    },
+    onMouseEnter: e => {
+      if (selected !== opt) {
+        e.currentTarget.style.background = 'rgba(26,184,160,0.1)';
+        e.currentTarget.style.borderColor = 'rgba(26,184,160,0.35)';
+        e.currentTarget.style.color = 'var(--white)';
+      }
+    },
+    onMouseLeave: e => {
+      if (selected !== opt) {
+        e.currentTarget.style.background = 'rgba(26,184,160,0.06)';
+        e.currentTarget.style.borderColor = 'rgba(26,184,160,0.18)';
+        e.currentTarget.style.color = 'rgba(var(--text2-rgb),0.7)';
+      }
+    }
+  }, opt.text))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: '14px',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.2em',
+      color: 'rgba(26,184,160,0.28)',
+      textTransform: 'uppercase'
+    }
+  }, "Frage ", step + 1, " / ", QUIZ_STEPS.length)) : /*#__PURE__*/React.createElement("div", {
+    style: {
+      animation: 'result-pop 0.4s cubic-bezier(0.23,1,0.32,1) forwards'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '28px',
+      border: '1px solid rgba(26,184,160,0.28)',
+      borderRadius: '6px',
+      background: 'linear-gradient(135deg,rgba(26,184,160,0.09) 0%,rgba(var(--panel-rgb),0.92) 100%)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.28em',
+      color: 'rgba(26,184,160,0.5)',
+      textTransform: 'uppercase',
+      marginBottom: '10px'
+    }
+  }, "Empfohlene Klasse"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '30px',
+      fontWeight: '300',
+      letterSpacing: '0.14em',
+      color: 'var(--white)',
+      textTransform: 'uppercase',
+      marginBottom: '12px',
+      textShadow: '0 0 28px rgba(26,184,160,0.4)'
+    }
+  }, result), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '36px',
+      height: '1px',
+      background: 'linear-gradient(90deg,rgba(26,184,160,0.8),transparent)',
+      marginBottom: '16px'
+    }
+  }), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '13px',
+      lineHeight: '1.8',
+      color: 'rgba(var(--text2-rgb),0.65)'
+    }
+  }, KLASSEN_DESC[result] || 'Eine starke Wahl für einen Aarakocra-Charakter.')), /*#__PURE__*/React.createElement("button", {
+    onClick: reset,
+    style: {
+      marginTop: '16px',
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '8px',
+      background: 'none',
+      border: 'none',
+      cursor: 'pointer',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.22em',
+      color: 'rgba(26,184,160,0.5)',
+      textTransform: 'uppercase',
+      padding: '0',
+      transition: 'color 0.2s'
+    },
+    onMouseEnter: e => e.currentTarget.style.color = 'rgba(168,124,255,0.85)',
+    onMouseLeave: e => e.currentTarget.style.color = 'rgba(26,184,160,0.5)'
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 14 14",
+    width: "11",
+    height: "11",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "1.4"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M2 7 A5 5 0 1 1 5 11.2",
+    strokeLinecap: "round"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M2 4v3h3",
+    strokeLinecap: "round",
+    strokeLinejoin: "round"
+  })), "Nochmal spielen"))));
 }
-
-const { FloatNav } = window;
+const {
+  FloatNav
+} = window;
 
 // ── APP ───────────────────────────────────────────────────
 function App() {
   useScrollReveal();
   useParallax();
-
-  return (
-    <div style={{ minHeight:'100vh', background:'var(--bg)' }}>
-
-      {/* ── BACK BUTTON ── */}
-      <div style={{ position:'fixed', top:'16px', left:'16px', zIndex:100 }}>
-        <a href="Rassen.html" className="back-btn">
-          <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <path d="M10 4L6 8l4 4"/>
-          </svg>
-          Rassen
-        </a>
-      </div>
-
-      <FloatNav />
-
-      {/* ── HERO ── */}
-      <div style={{ position:'relative', height:'500px', overflow:'hidden' }}>
-        <div id="hero-bg" style={{ position:'absolute', inset:'-60px', zIndex:0 }}>
-          <div style={{ position:'absolute', inset:0, background:'radial-gradient(ellipse at 30% 60%,rgba(124,77,255,0.18) 0%,transparent 60%),radial-gradient(ellipse at 70% 30%,rgba(80,30,180,0.25) 0%,transparent 55%),linear-gradient(180deg,#03020f 0%,#05040f 100%)' }} />
-          <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', opacity:0.055 }} viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
-            <path d="M200 500 Q300 200 500 100 Q400 300 350 500" fill="rgba(124,77,255,1)"/>
-            <path d="M900 520 Q1000 180 1100 80 Q1050 280 980 520" fill="rgba(124,77,255,0.8)"/>
-            <path d="M600 480 Q680 200 780 120 Q740 300 700 480" fill="rgba(124,77,255,0.6)"/>
-          </svg>
-          {Array.from({length:55}).map((_,i) => (
-            <div key={i} style={{ position:'absolute', width:i%7===0?2:1, height:i%7===0?2:1, borderRadius:'50%', background:'rgba(168,124,255,0.55)', left:`${(i*37+11)%100}%`, top:`${(i*53+7)%70}%`, opacity:0.15+i%5*0.06 }} />
-          ))}
-        </div>
-        <div style={{ position:'absolute', right:'8%', top:'12%', zIndex:2, animation:'feather-float 6s ease-in-out infinite', opacity:0.15 }}>
-          <svg viewBox="0 0 80 200" width="56" height="140" fill="none">
-            <path d="M40 190 Q20 120 30 60 Q40 10 50 60 Q60 120 40 190" stroke="rgba(124,77,255,1)" strokeWidth="1.5"/>
-            <path d="M40 150 Q25 110 30 80" stroke="rgba(168,124,255,0.6)" strokeWidth="1"/>
-            <path d="M40 150 Q55 110 50 80" stroke="rgba(168,124,255,0.6)" strokeWidth="1"/>
-          </svg>
-        </div>
-        <div style={{ position:'relative', zIndex:5, height:'100%', display:'flex', flexDirection:'column', justifyContent:'flex-end', padding:'0 60px 56px' }}>
-          <div style={{ animation:'fadeInLeft 0.8s ease forwards' }}>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.35em', color:'rgba(124,77,255,0.6)', textTransform:'uppercase', marginBottom:'12px' }}>Rassen</div>
-            <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(48px,7vw,78px)', fontWeight:'300', letterSpacing:'0.1em', color:'var(--white)', textTransform:'uppercase', lineHeight:'1', marginBottom:'10px', textShadow:'0 0 60px rgba(124,77,255,0.4)' }}>Aarakocra</h1>
-            <div style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontStyle:'italic', fontSize:'15px', color:'rgba(var(--text2-rgb),0.48)', letterSpacing:'0.06em', marginBottom:'18px' }}>Kinder des Himmels · Diener der Winde</div>
-            <div style={{ display:'flex', gap:'10px', flexWrap:'wrap' }}>
-              {['Humanoid','Mittelgroß','9 m Bewegung','Flug','Meistens Gut'].map(tag => (
-                <span key={tag} style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.16em', color:'rgba(124,77,255,0.7)', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.25)', padding:'5px 10px', borderRadius:'2px', textTransform:'uppercase' }}>{tag}</span>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'120px', background:'linear-gradient(transparent,var(--bg))', zIndex:4 }} />
-      </div>
-
-      {/* ── MAIN ── */}
-      <div style={{ maxWidth:'900px', margin:'0 auto', padding:'48px 40px 80px' }}>
-
-        {/* Beschreibung */}
-        <Section label="Charaktererstellung · Rassen" title="Die Vogelleute">
-          <div className="clearfix">
-            <div className="float-right reveal-right" style={{ width:'270px' }}>
-              <ImgPlaceholder label="Aarakocra · Illustration" width="270px" height="330px" />
-              <div style={{ marginTop:'6px', fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.18em', color:'rgba(26,184,160,0.3)', textTransform:'uppercase', textAlign:'center' }}>Charakter-Illustration</div>
-            </div>
-            <p className="body-text reveal">
-              Diese geflügelten Wesen stammen ursprünglich von der Elementarebene der Luft und bewegen sich stets fliegend fort. Die ersten Aarakocra dienten den Windherzögen — mächtige Luftwesen — und verfügten über eine Spur der Macht ihrer Meister über die Winde. Auch ihre Nachkommen weisen noch einen Schatten dieser Macht auf.
-            </p>
-            <p className="body-text reveal">
-              Aarakocra sehen von unten wie große Vögel aus, weswegen sie manchmal auch als Vogelleute bezeichnet werden. Erst, wenn sie auf Ästen hocken oder auf dem Boden gehen, wird ihre humanoide Natur deutlich. Aarakocra sind etwa 1,5 Meter groß und haben lange schmale Beine, die in scharfen Klauen münden. Ihr Körper ist gefiedert — normalerweise rot, orange, gelb, braun oder grau. Auch haben sie Vogelköpfe, oft denen von Papageien oder Adlern ähnlich.
-            </p>
-          </div>
-        </Section>
-
-        {/* Gesellschaft & Kultur */}
-        <Section label="Lore · Meruria" title="Gesellschaft &amp; Kultur">
-          <div className="clearfix">
-            <div className="float-left reveal-left" style={{ width:'240px' }}>
-              <ImgPlaceholder label="Stammesleben · Illustration" width="240px" height="300px" />
-              <div style={{ marginTop:'6px', fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.18em', color:'rgba(26,184,160,0.3)', textTransform:'uppercase', textAlign:'center' }}>Stammesleben in den Wolken</div>
-            </div>
-            <p className="body-text reveal">
-              Aarakocra leben in kleinen, eng verbundenen Stämmen hoch in den Bergen oder auf den Klippen der Elementarebene der Luft. Ihr Leben ist geprägt von der ständigen Bewegung — sie bauen keine Städte, sondern tragen ihre Heimat in sich. Ihre Gemeinschaften sind flach strukturiert: Wer am weitesten geflogen ist, gilt als der Weiseste.
-            </p>
-            <p className="body-text reveal">
-              Die Bindung an die Windherzöge ist nicht vergessen, auch wenn sie schwächer geworden ist. Viele Aarakocra praktizieren noch immer Rituale zu Ehren der alten Luftgeister, singen bei Sonnenaufgang und veranstalten kunstvolle Flugzeremonieen bei bedeutenden Ereignissen — Geburten, Todesfällen, dem Beginn einer langen Reise.
-            </p>
-            <p className="body-text reveal">
-              Namen bei den Aarakocra sind Klänge — kurze, scharfe Silben oder lang gezogene Rufe, die in der Luft tragen. Ein Name ist kein Etikett; er ist eine Melodie, die andere erkennen sollen, noch bevor sie die Figur sehen.
-            </p>
-          </div>
-        </Section>
-
-        {/* Körperliche Merkmale */}
-        <Section label="Charaktererstellung" title="Körperliche Merkmale">
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'32px', alignItems:'start' }}>
-            {/* Links: feste Werte */}
-            <div className="reveal">
-              <table style={{ width:'100%', borderCollapse:'collapse', marginBottom:'18px' }}>
-                <tbody>
-                  {[['Bewegungsrate','9 m'],['Volljährigkeit','3 Jahre'],['Lebenserwartung','65 Jahre'],['Größe','mittelgroß\n142 cm – 167 cm']].map(([k,v]) => (
-                    <tr key={k} style={{ borderBottom:'1px solid rgba(26,184,160,0.08)' }}>
-                      <td style={{ padding:'10px 14px', fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.1em', color:'rgba(26,184,160,0.5)', textTransform:'uppercase', width:'44%' }}>{k}</td>
-                      <td style={{ padding:'10px 14px', fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', color:'rgba(var(--text-rgb),0.85)', whiteSpace:'pre-line' }}>{v}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              {[
-                { label:'Größe (zufällig)', text:<>137 cm + <span style={{ background:'rgba(200,60,60,0.22)', border:'1px solid rgba(200,60,60,0.35)', borderRadius:'3px', padding:'1px 6px', fontFamily:'var(--font-mono)', fontSize:'10px', color:'#ff8888' }}>2d6</span> · 2,5 cm</> },
-                { label:'Gewicht (zufällig)', text:<>45 Pfund + <span style={{ background:'rgba(200,60,60,0.22)', border:'1px solid rgba(200,60,60,0.35)', borderRadius:'3px', padding:'1px 6px', fontFamily:'var(--font-mono)', fontSize:'10px', color:'#ff8888' }}>1d6</span> · Wurf von Größe</> },
-              ].map(({label,text}) => (
-                <div key={label} style={{ padding:'12px 14px', background:'rgba(26,184,160,0.06)', border:'1px solid rgba(26,184,160,0.13)', borderRadius:'4px', marginBottom:'10px' }}>
-                  <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.2em', color:'rgba(26,184,160,0.45)', textTransform:'uppercase', marginBottom:'6px' }}>{label}</div>
-                  <div style={{ fontFamily:'var(--font-body)', fontSize:'13px', color:'rgba(var(--text-rgb),0.8)' }}>{text}</div>
-                </div>
-              ))}
-              <div style={{ marginTop:'12px' }}>
-                {[['Augenfarbe','meistens blau, rot, braun oder grau'],['Gefiederfarbe','meistens rot, orange, gelb, braun oder grau']].map(([k,v]) => (
-                  <div key={k} style={{ display:'flex', justifyContent:'space-between', gap:'16px', padding:'9px 14px', borderBottom:'1px solid rgba(26,184,160,0.07)' }}>
-                    <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.1em', color:'rgba(26,184,160,0.45)', textTransform:'uppercase', flexShrink:0 }}>{k}</span>
-                    <span style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', color:'rgba(var(--text-rgb),0.75)', textAlign:'right' }}>{v}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            {/* Rechts: Charakter-Generator */}
-            <CharacterGenerator />
-          </div>
-        </Section>
-
-        {/* Lebensraum Map */}
-        <Section label="Lore · Meruria" title="Lebensraum">
-          <p className="body-text reveal" style={{ marginBottom:'24px' }}>
-            Die Aarakocra siedeln vorwiegend in hochgelegenen, windreichen Regionen — Bergkämme, Klippen und die Ausläufer der Elementarebene der Luft. Ziehe ein Kartenbild in den Bereich unten, um den Lebensraum der Aarakocra in Meruria zu markieren.
-          </p>
-          <div className="reveal" style={{ position:'relative', width:'100%', aspectRatio:'16/9', border:'1px dashed rgba(26,184,160,0.25)', borderRadius:'4px', overflow:'hidden', background:'repeating-linear-gradient(-45deg,transparent,transparent 10px,rgba(26,184,160,0.04) 10px,rgba(26,184,160,0.04) 11px), linear-gradient(160deg,rgba(12,8,32,0.97) 0%,rgba(var(--bg-rgb),0.99) 100%)' }}>
-            <image-slot slot-id="aarakocra-map" placeholder="Karte des Lebensraums hier ablegen" shape="rect" style={{ display:'block', width:'100%', height:'100%' }} />
-            {/* Overlay Label wenn leer */}
-            <div style={{ position:'absolute', inset:0, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'14px', pointerEvents:'none', zIndex:0 }}>
-              <svg viewBox="0 0 48 48" width="40" height="40" fill="none" style={{ opacity:0.2 }}>
-                <path d="M6 38L18 14l8 16 6-8 10 16" stroke="#5ee8d0" strokeWidth="1.4" strokeLinejoin="round"/>
-                <circle cx="36" cy="12" r="4" stroke="#5ee8d0" strokeWidth="1.2"/>
-                <rect x="3" y="3" width="42" height="42" rx="3" stroke="#5ee8d0" strokeWidth="1"/>
-              </svg>
-              <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:'rgba(26,184,160,0.3)', textTransform:'uppercase', textAlign:'center' }}>Karte des Lebensraums</span>
-              <span style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', color:'rgba(26,184,160,0.2)', letterSpacing:'0.06em' }}>Bild hierher ziehen</span>
-            </div>
-          </div>
-        </Section>
-
-        {/* Beziehungen */}
-        <Section label="Lore · Meruria" title="Beziehungen zu anderen Gesellschaften">
-          <p className="body-text reveal" style={{ marginBottom:'24px' }}>
-            Aarakocra sind in Meruria selten und werden oft mit Staunen betrachtet. Ihre Andersartigkeit — sowohl körperlich als auch in ihrer Weltanschauung — schafft Distanz, aber auch Faszination.
-          </p>
-          <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(260px,1fr))', gap:'14px' }}>
-            {[
-              { volk:'Menschen', relation:'Neugier', text:'Menschen fasziniert alles Fremde — und Aarakocra sind das Fremdeste, was viele je gesehen haben. Die Beziehung ist herzlich, aber von gegenseitigem Unverständnis geprägt.' },
-              { volk:'Elfen', relation:'Respekt', text:'Elfen sehen in den Aarakocra alte Seelen, die den Wind ebenso gut kennen wie sie die Bäume. Es gibt eine stille gegenseitige Anerkennung.' },
-              { volk:'Zwerge', relation:'Skepsis', text:'Für Zwerge, die tief in der Erde leben, sind die Vogelleute unbegreiflich. Zu leicht, zu frei, zu unbeständig. Sie respektieren ihre Klauenkämpfe, aber verstehen sie nicht.' },
-              { volk:'Gnome', relation:'Begeisterung', text:'Gnome sind begeistert von der Mechanik des Flugs. Aarakocra finden diese Neugier amüsant, manchmal lästig.' },
-              { volk:'Tieflinge', relation:'Solidarität', text:'Auch Tieflinge kennen das Gefühl, aufgrund ihres Äußeren bewertet zu werden. Es gibt eine unausgesprochene Solidarität zwischen diesen beiden Außenseitern.' },
-              { volk:'Halblinge', relation:'Wärme', text:'Halblinge sehen in Aarakocra abenteuerlustige Seelen, die Geschichten mitbringen. Diese Begegnungen enden oft mit stundenlangen Erzählungen.' },
-            ].map((r,i) => (
-              <div key={i} className="reveal insp-card">
-                <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'10px' }}>
-                  <div style={{ fontFamily:'var(--font-display)', fontSize:'12px', fontWeight:'400', letterSpacing:'0.14em', color:'var(--white)', textTransform:'uppercase' }}>{r.volk}</div>
-                  <span className="relation-pill">{r.relation}</span>
-                </div>
-                <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.7', color:'var(--muted)' }}>{r.text}</p>
-              </div>
-            ))}
-          </div>
-        </Section>
-
-        {/* Bekannte Aarakocra + Herrscher */}
-        <BekannteSection />
-
-        {/* Namen */}
-        <Section label="Charaktererstellung" title="Namen der Aarakocra">
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'40px', alignItems:'start' }}>
-            <DiceRoller />
-            <div className="reveal" style={{ padding:'20px', border:'1px solid rgba(26,184,160,0.14)', borderRadius:'4px', background:'rgba(var(--panel-rgb),0.6)' }}>
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:'rgba(26,184,160,0.5)', textTransform:'uppercase', marginBottom:'14px' }}>Über Aarakocra-Namen</div>
-              <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.8', color:'var(--muted)' }}>
-                Namen der Aarakocra sind phonetisch geprägt von scharfen Konsonanten und kurzen Vokalen — Klänge, die sich in der Luft tragen. Sie bestehen oft nur aus einer oder zwei Silben und werden in unterschiedlichen Tonhöhen ausgesprochen, was ihre Bedeutung verändern kann.
-              </p>
-              <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.8', color:'var(--muted)', marginTop:'12px' }}>
-                Es gibt kein Geschlecht in Aarakocra-Namen — alle Namen gelten für alle. Ein Charakter kann sich auch einen längeren Rufnamen geben, der von anderen Völkern leichter ausgesprochen werden kann.
-              </p>
-            </div>
-          </div>
-        </Section>
-
-        {/* Merkmals-Vergleich */}
-        <RassenRadar />
-
-        {/* Charakter-Quiz */}
-        <CharakterQuiz />
-
-        {/* Statblock */}
-        <Section id="statblock" label="Regelwerk · PHB" title="Statblock">
-          <div className="reveal"><StatBlock /></div>
-        </Section>
-
-        {/* Footer */}
-        <div style={{ borderTop:'1px solid rgba(26,184,160,0.1)', paddingTop:'28px', display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:'14px' }}>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.2em', color:'rgba(26,184,160,0.25)', textTransform:'uppercase' }}>Meruria · Charaktererstellung · Rassen · Aarakocra</div>
-
-        </div>
-
-      </div>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      minHeight: '100vh',
+      background: 'var(--bg)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'fixed',
+      top: '16px',
+      left: '16px',
+      zIndex: 100
+    }
+  }, /*#__PURE__*/React.createElement("a", {
+    href: "Rassen.html",
+    className: "back-btn"
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 16 16",
+    width: "11",
+    height: "11",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "1.5"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M10 4L6 8l4 4"
+  })), "Rassen")), /*#__PURE__*/React.createElement(FloatNav, null), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      height: '500px',
+      overflow: 'hidden'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    id: "hero-bg",
+    style: {
+      position: 'absolute',
+      inset: '-60px',
+      zIndex: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      background: 'radial-gradient(ellipse at 30% 60%,rgba(124,77,255,0.18) 0%,transparent 60%),radial-gradient(ellipse at 70% 30%,rgba(80,30,180,0.25) 0%,transparent 55%),linear-gradient(180deg,#03020f 0%,#05040f 100%)'
+    }
+  }), /*#__PURE__*/React.createElement("svg", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      width: '100%',
+      height: '100%',
+      opacity: 0.055
+    },
+    viewBox: "0 0 1200 600",
+    preserveAspectRatio: "xMidYMid slice"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M200 500 Q300 200 500 100 Q400 300 350 500",
+    fill: "rgba(124,77,255,1)"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M900 520 Q1000 180 1100 80 Q1050 280 980 520",
+    fill: "rgba(124,77,255,0.8)"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M600 480 Q680 200 780 120 Q740 300 700 480",
+    fill: "rgba(124,77,255,0.6)"
+  })), Array.from({
+    length: 55
+  }).map((_, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    style: {
+      position: 'absolute',
+      width: i % 7 === 0 ? 2 : 1,
+      height: i % 7 === 0 ? 2 : 1,
+      borderRadius: '50%',
+      background: 'rgba(168,124,255,0.55)',
+      left: `${(i * 37 + 11) % 100}%`,
+      top: `${(i * 53 + 7) % 70}%`,
+      opacity: 0.15 + i % 5 * 0.06
+    }
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      right: '8%',
+      top: '12%',
+      zIndex: 2,
+      animation: 'feather-float 6s ease-in-out infinite',
+      opacity: 0.15
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 80 200",
+    width: "56",
+    height: "140",
+    fill: "none"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M40 190 Q20 120 30 60 Q40 10 50 60 Q60 120 40 190",
+    stroke: "rgba(124,77,255,1)",
+    strokeWidth: "1.5"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M40 150 Q25 110 30 80",
+    stroke: "rgba(168,124,255,0.6)",
+    strokeWidth: "1"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M40 150 Q55 110 50 80",
+    stroke: "rgba(168,124,255,0.6)",
+    strokeWidth: "1"
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 5,
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'flex-end',
+      padding: '0 60px 56px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      animation: 'fadeInLeft 0.8s ease forwards'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.35em',
+      color: 'rgba(124,77,255,0.6)',
+      textTransform: 'uppercase',
+      marginBottom: '12px'
+    }
+  }, "Rassen"), /*#__PURE__*/React.createElement("h1", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: 'clamp(48px,7vw,78px)',
+      fontWeight: '300',
+      letterSpacing: '0.1em',
+      color: 'var(--white)',
+      textTransform: 'uppercase',
+      lineHeight: '1',
+      marginBottom: '10px',
+      textShadow: '0 0 60px rgba(124,77,255,0.4)'
+    }
+  }, "Aarakocra"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontStyle: 'italic',
+      fontSize: '15px',
+      color: 'rgba(var(--text2-rgb),0.48)',
+      letterSpacing: '0.06em',
+      marginBottom: '18px'
+    }
+  }, "Kinder des Himmels \xB7 Diener der Winde"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '10px',
+      flexWrap: 'wrap'
+    }
+  }, ['Humanoid', 'Mittelgroß', '9 m Bewegung', 'Flug', 'Meistens Gut'].map(tag => /*#__PURE__*/React.createElement("span", {
+    key: tag,
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.16em',
+      color: 'rgba(124,77,255,0.7)',
+      background: 'rgba(124,77,255,0.1)',
+      border: '1px solid rgba(124,77,255,0.25)',
+      padding: '5px 10px',
+      borderRadius: '2px',
+      textTransform: 'uppercase'
+    }
+  }, tag))))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      height: '120px',
+      background: 'linear-gradient(transparent,var(--bg))',
+      zIndex: 4
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      maxWidth: '900px',
+      margin: '0 auto',
+      padding: '48px 40px 80px'
+    }
+  }, /*#__PURE__*/React.createElement(Section, {
+    label: "Charaktererstellung \xB7 Rassen",
+    title: "Die Vogelleute"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "clearfix"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "float-right reveal-right",
+    style: {
+      width: '270px'
+    }
+  }, /*#__PURE__*/React.createElement(ImgPlaceholder, {
+    label: "Aarakocra \xB7 Illustration",
+    width: "270px",
+    height: "330px"
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: '6px',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      letterSpacing: '0.18em',
+      color: 'rgba(26,184,160,0.3)',
+      textTransform: 'uppercase',
+      textAlign: 'center'
+    }
+  }, "Charakter-Illustration")), /*#__PURE__*/React.createElement("p", {
+    className: "body-text reveal"
+  }, "Diese gefl\xFCgelten Wesen stammen urspr\xFCnglich von der Elementarebene der Luft und bewegen sich stets fliegend fort. Die ersten Aarakocra dienten den Windherz\xF6gen \u2014 m\xE4chtige Luftwesen \u2014 und verf\xFCgten \xFCber eine Spur der Macht ihrer Meister \xFCber die Winde. Auch ihre Nachkommen weisen noch einen Schatten dieser Macht auf."), /*#__PURE__*/React.createElement("p", {
+    className: "body-text reveal"
+  }, "Aarakocra sehen von unten wie gro\xDFe V\xF6gel aus, weswegen sie manchmal auch als Vogelleute bezeichnet werden. Erst, wenn sie auf \xC4sten hocken oder auf dem Boden gehen, wird ihre humanoide Natur deutlich. Aarakocra sind etwa 1,5 Meter gro\xDF und haben lange schmale Beine, die in scharfen Klauen m\xFCnden. Ihr K\xF6rper ist gefiedert \u2014 normalerweise rot, orange, gelb, braun oder grau. Auch haben sie Vogelk\xF6pfe, oft denen von Papageien oder Adlern \xE4hnlich."))), /*#__PURE__*/React.createElement(Section, {
+    label: "Lore \xB7 Meruria",
+    title: "Gesellschaft & Kultur"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "clearfix"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "float-left reveal-left",
+    style: {
+      width: '240px'
+    }
+  }, /*#__PURE__*/React.createElement(ImgPlaceholder, {
+    label: "Stammesleben \xB7 Illustration",
+    width: "240px",
+    height: "300px"
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: '6px',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      letterSpacing: '0.18em',
+      color: 'rgba(26,184,160,0.3)',
+      textTransform: 'uppercase',
+      textAlign: 'center'
+    }
+  }, "Stammesleben in den Wolken")), /*#__PURE__*/React.createElement("p", {
+    className: "body-text reveal"
+  }, "Aarakocra leben in kleinen, eng verbundenen St\xE4mmen hoch in den Bergen oder auf den Klippen der Elementarebene der Luft. Ihr Leben ist gepr\xE4gt von der st\xE4ndigen Bewegung \u2014 sie bauen keine St\xE4dte, sondern tragen ihre Heimat in sich. Ihre Gemeinschaften sind flach strukturiert: Wer am weitesten geflogen ist, gilt als der Weiseste."), /*#__PURE__*/React.createElement("p", {
+    className: "body-text reveal"
+  }, "Die Bindung an die Windherz\xF6ge ist nicht vergessen, auch wenn sie schw\xE4cher geworden ist. Viele Aarakocra praktizieren noch immer Rituale zu Ehren der alten Luftgeister, singen bei Sonnenaufgang und veranstalten kunstvolle Flugzeremonieen bei bedeutenden Ereignissen \u2014 Geburten, Todesf\xE4llen, dem Beginn einer langen Reise."), /*#__PURE__*/React.createElement("p", {
+    className: "body-text reveal"
+  }, "Namen bei den Aarakocra sind Kl\xE4nge \u2014 kurze, scharfe Silben oder lang gezogene Rufe, die in der Luft tragen. Ein Name ist kein Etikett; er ist eine Melodie, die andere erkennen sollen, noch bevor sie die Figur sehen."))), /*#__PURE__*/React.createElement(Section, {
+    label: "Charaktererstellung",
+    title: "K\xF6rperliche Merkmale"
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      gap: '32px',
+      alignItems: 'start'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "reveal"
+  }, /*#__PURE__*/React.createElement("table", {
+    style: {
+      width: '100%',
+      borderCollapse: 'collapse',
+      marginBottom: '18px'
+    }
+  }, /*#__PURE__*/React.createElement("tbody", null, [['Bewegungsrate', '9 m'], ['Volljährigkeit', '3 Jahre'], ['Lebenserwartung', '65 Jahre'], ['Größe', 'mittelgroß\n142 cm – 167 cm']].map(([k, v]) => /*#__PURE__*/React.createElement("tr", {
+    key: k,
+    style: {
+      borderBottom: '1px solid rgba(26,184,160,0.08)'
+    }
+  }, /*#__PURE__*/React.createElement("td", {
+    style: {
+      padding: '10px 14px',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.1em',
+      color: 'rgba(26,184,160,0.5)',
+      textTransform: 'uppercase',
+      width: '44%'
+    }
+  }, k), /*#__PURE__*/React.createElement("td", {
+    style: {
+      padding: '10px 14px',
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      color: 'rgba(var(--text-rgb),0.85)',
+      whiteSpace: 'pre-line'
+    }
+  }, v))))), [{
+    label: 'Größe (zufällig)',
+    text: /*#__PURE__*/React.createElement(React.Fragment, null, "137 cm + ", /*#__PURE__*/React.createElement("span", {
+      style: {
+        background: 'rgba(200,60,60,0.22)',
+        border: '1px solid rgba(200,60,60,0.35)',
+        borderRadius: '3px',
+        padding: '1px 6px',
+        fontFamily: 'var(--font-mono)',
+        fontSize: '10px',
+        color: '#ff8888'
+      }
+    }, "2d6"), " \xB7 2,5 cm")
+  }, {
+    label: 'Gewicht (zufällig)',
+    text: /*#__PURE__*/React.createElement(React.Fragment, null, "45 Pfund + ", /*#__PURE__*/React.createElement("span", {
+      style: {
+        background: 'rgba(200,60,60,0.22)',
+        border: '1px solid rgba(200,60,60,0.35)',
+        borderRadius: '3px',
+        padding: '1px 6px',
+        fontFamily: 'var(--font-mono)',
+        fontSize: '10px',
+        color: '#ff8888'
+      }
+    }, "1d6"), " \xB7 Wurf von Gr\xF6\xDFe")
+  }].map(({
+    label,
+    text
+  }) => /*#__PURE__*/React.createElement("div", {
+    key: label,
+    style: {
+      padding: '12px 14px',
+      background: 'rgba(26,184,160,0.06)',
+      border: '1px solid rgba(26,184,160,0.13)',
+      borderRadius: '4px',
+      marginBottom: '10px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      letterSpacing: '0.2em',
+      color: 'rgba(26,184,160,0.45)',
+      textTransform: 'uppercase',
+      marginBottom: '6px'
+    }
+  }, label), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '13px',
+      color: 'rgba(var(--text-rgb),0.8)'
+    }
+  }, text))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: '12px'
+    }
+  }, [['Augenfarbe', 'meistens blau, rot, braun oder grau'], ['Gefiederfarbe', 'meistens rot, orange, gelb, braun oder grau']].map(([k, v]) => /*#__PURE__*/React.createElement("div", {
+    key: k,
+    style: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      gap: '16px',
+      padding: '9px 14px',
+      borderBottom: '1px solid rgba(26,184,160,0.07)'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.1em',
+      color: 'rgba(26,184,160,0.45)',
+      textTransform: 'uppercase',
+      flexShrink: 0
+    }
+  }, k), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '11px',
+      color: 'rgba(var(--text-rgb),0.75)',
+      textAlign: 'right'
+    }
+  }, v))))), /*#__PURE__*/React.createElement(CharacterGenerator, null))), /*#__PURE__*/React.createElement(Section, {
+    label: "Lore \xB7 Meruria",
+    title: "Lebensraum"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "body-text reveal",
+    style: {
+      marginBottom: '24px'
+    }
+  }, "Die Aarakocra siedeln vorwiegend in hochgelegenen, windreichen Regionen \u2014 Bergk\xE4mme, Klippen und die Ausl\xE4ufer der Elementarebene der Luft. Ziehe ein Kartenbild in den Bereich unten, um den Lebensraum der Aarakocra in Meruria zu markieren."), /*#__PURE__*/React.createElement("div", {
+    className: "reveal",
+    style: {
+      position: 'relative',
+      width: '100%',
+      aspectRatio: '16/9',
+      border: '1px dashed rgba(26,184,160,0.25)',
+      borderRadius: '4px',
+      overflow: 'hidden',
+      background: 'repeating-linear-gradient(-45deg,transparent,transparent 10px,rgba(26,184,160,0.04) 10px,rgba(26,184,160,0.04) 11px), linear-gradient(160deg,rgba(12,8,32,0.97) 0%,rgba(var(--bg-rgb),0.99) 100%)'
+    }
+  }, /*#__PURE__*/React.createElement("image-slot", {
+    "slot-id": "aarakocra-map",
+    placeholder: "Karte des Lebensraums hier ablegen",
+    shape: "rect",
+    style: {
+      display: 'block',
+      width: '100%',
+      height: '100%'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '14px',
+      pointerEvents: 'none',
+      zIndex: 0
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 48 48",
+    width: "40",
+    height: "40",
+    fill: "none",
+    style: {
+      opacity: 0.2
+    }
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M6 38L18 14l8 16 6-8 10 16",
+    stroke: "#5ee8d0",
+    strokeWidth: "1.4",
+    strokeLinejoin: "round"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "36",
+    cy: "12",
+    r: "4",
+    stroke: "#5ee8d0",
+    strokeWidth: "1.2"
+  }), /*#__PURE__*/React.createElement("rect", {
+    x: "3",
+    y: "3",
+    width: "42",
+    height: "42",
+    rx: "3",
+    stroke: "#5ee8d0",
+    strokeWidth: "1"
+  })), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.28em',
+      color: 'rgba(26,184,160,0.3)',
+      textTransform: 'uppercase',
+      textAlign: 'center'
+    }
+  }, "Karte des Lebensraums"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '11px',
+      color: 'rgba(26,184,160,0.2)',
+      letterSpacing: '0.06em'
+    }
+  }, "Bild hierher ziehen")))), /*#__PURE__*/React.createElement(Section, {
+    label: "Lore \xB7 Meruria",
+    title: "Beziehungen zu anderen Gesellschaften"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "body-text reveal",
+    style: {
+      marginBottom: '24px'
+    }
+  }, "Aarakocra sind in Meruria selten und werden oft mit Staunen betrachtet. Ihre Andersartigkeit \u2014 sowohl k\xF6rperlich als auch in ihrer Weltanschauung \u2014 schafft Distanz, aber auch Faszination."), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fill,minmax(260px,1fr))',
+      gap: '14px'
+    }
+  }, [{
+    volk: 'Menschen',
+    relation: 'Neugier',
+    text: 'Menschen fasziniert alles Fremde — und Aarakocra sind das Fremdeste, was viele je gesehen haben. Die Beziehung ist herzlich, aber von gegenseitigem Unverständnis geprägt.'
+  }, {
+    volk: 'Elfen',
+    relation: 'Respekt',
+    text: 'Elfen sehen in den Aarakocra alte Seelen, die den Wind ebenso gut kennen wie sie die Bäume. Es gibt eine stille gegenseitige Anerkennung.'
+  }, {
+    volk: 'Zwerge',
+    relation: 'Skepsis',
+    text: 'Für Zwerge, die tief in der Erde leben, sind die Vogelleute unbegreiflich. Zu leicht, zu frei, zu unbeständig. Sie respektieren ihre Klauenkämpfe, aber verstehen sie nicht.'
+  }, {
+    volk: 'Gnome',
+    relation: 'Begeisterung',
+    text: 'Gnome sind begeistert von der Mechanik des Flugs. Aarakocra finden diese Neugier amüsant, manchmal lästig.'
+  }, {
+    volk: 'Tieflinge',
+    relation: 'Solidarität',
+    text: 'Auch Tieflinge kennen das Gefühl, aufgrund ihres Äußeren bewertet zu werden. Es gibt eine unausgesprochene Solidarität zwischen diesen beiden Außenseitern.'
+  }, {
+    volk: 'Halblinge',
+    relation: 'Wärme',
+    text: 'Halblinge sehen in Aarakocra abenteuerlustige Seelen, die Geschichten mitbringen. Diese Begegnungen enden oft mit stundenlangen Erzählungen.'
+  }].map((r, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "reveal insp-card"
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: '10px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '12px',
+      fontWeight: '400',
+      letterSpacing: '0.14em',
+      color: 'var(--white)',
+      textTransform: 'uppercase'
+    }
+  }, r.volk), /*#__PURE__*/React.createElement("span", {
+    className: "relation-pill"
+  }, r.relation)), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.7',
+      color: 'var(--muted)'
+    }
+  }, r.text))))), /*#__PURE__*/React.createElement(BekannteSection, null), /*#__PURE__*/React.createElement(Section, {
+    label: "Charaktererstellung",
+    title: "Namen der Aarakocra"
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      gap: '40px',
+      alignItems: 'start'
+    }
+  }, /*#__PURE__*/React.createElement(DiceRoller, null), /*#__PURE__*/React.createElement("div", {
+    className: "reveal",
+    style: {
+      padding: '20px',
+      border: '1px solid rgba(26,184,160,0.14)',
+      borderRadius: '4px',
+      background: 'rgba(var(--panel-rgb),0.6)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.25em',
+      color: 'rgba(26,184,160,0.5)',
+      textTransform: 'uppercase',
+      marginBottom: '14px'
+    }
+  }, "\xDCber Aarakocra-Namen"), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.8',
+      color: 'var(--muted)'
+    }
+  }, "Namen der Aarakocra sind phonetisch gepr\xE4gt von scharfen Konsonanten und kurzen Vokalen \u2014 Kl\xE4nge, die sich in der Luft tragen. Sie bestehen oft nur aus einer oder zwei Silben und werden in unterschiedlichen Tonh\xF6hen ausgesprochen, was ihre Bedeutung ver\xE4ndern kann."), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.8',
+      color: 'var(--muted)',
+      marginTop: '12px'
+    }
+  }, "Es gibt kein Geschlecht in Aarakocra-Namen \u2014 alle Namen gelten f\xFCr alle. Ein Charakter kann sich auch einen l\xE4ngeren Rufnamen geben, der von anderen V\xF6lkern leichter ausgesprochen werden kann.")))), /*#__PURE__*/React.createElement(RassenRadar, null), /*#__PURE__*/React.createElement(CharakterQuiz, null), /*#__PURE__*/React.createElement(Section, {
+    id: "statblock",
+    label: "Regelwerk \xB7 PHB",
+    title: "Statblock"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "reveal"
+  }, /*#__PURE__*/React.createElement(StatBlock, null))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      borderTop: '1px solid rgba(26,184,160,0.1)',
+      paddingTop: '28px',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      flexWrap: 'wrap',
+      gap: '14px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.2em',
+      color: 'rgba(26,184,160,0.25)',
+      textTransform: 'uppercase'
+    }
+  }, "Meruria \xB7 Charaktererstellung \xB7 Rassen \xB7 Aarakocra"))));
 }
-
-ReactDOM.createRoot(document.getElementById('root')).render(<SiteGate><App /></SiteGate>);
+ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement(App, null)));
+})();
 </script>
 
 

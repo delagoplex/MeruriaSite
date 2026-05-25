@@ -6,195 +6,272 @@
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
 <link rel="stylesheet" href="assets/styles/pages/Ressourcen.css">
-<script src="assets/scripts/vendor/react.development.js"></script>
-<script src="assets/scripts/vendor/react-dom.development.js"></script>
-<script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/scripts/vendor/react.production.min.js"></script>
+<script src="assets/scripts/vendor/react-dom.production.min.js"></script>
+
 <script src="assets/scripts/data/resources/ff14_fish-data.js"></script>
 <script src="assets/scripts/data/resources/mineralien/ff14_mineralien-data.js"></script>
 <script src="assets/scripts/data/resources/pflanzen/ff14_pflanzen-data.js"></script>
 <script src="assets/scripts/data/resources/pflanzen/fantasy_plant-data.js"></script>
 <script src="assets/scripts/data/resources/insekten/insekten-data.js"></script>
-<script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/nav.js"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
-<script src="assets/components/site-gate.jsx" type="text/babel"></script>
-<script src="assets/components/particle-field.jsx" type="text/babel"></script>
-<script src="assets/components/tweaks-panel-8.jsx" type="text/babel"></script>
-<script src="assets/components/filter-utils.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.js"></script>
+<script src="assets/components/particle-field.js"></script>
+<script src="assets/components/tweaks-panel-8.js"></script>
+<script src="assets/components/filter-utils.js"></script>
 </head>
 <body>
 <div id="root"></div>
-<script type="text/babel">
-
-const { useState, useCallback, useMemo, useEffect } = React;
-const { useTweaks, TweaksPanel, TweakSection, TweakToggle, SiteNav, ParticleField } = window;
-const { FilterGroup, XBtn } = window;
-
-const ALL_FISH       = window.FISH_DB;
+<script>
+(function () {
+const {
+  useState,
+  useCallback,
+  useMemo,
+  useEffect
+} = React;
+const {
+  useTweaks,
+  TweaksPanel,
+  TweakSection,
+  TweakToggle,
+  SiteNav,
+  ParticleField
+} = window;
+const {
+  FilterGroup,
+  XBtn
+} = window;
+const ALL_FISH = window.FISH_DB;
 const ALL_MINERALIEN = window.MINERALIEN_DB || [];
-const ALL_PFLANZEN   = [
-  ...(window.PFLANZEN_DB        || []),
-  ...(window.FANTASY_PLANT_DB   || []),
-].sort((a, b) => a.name_de.localeCompare(b.name_de, 'de', { sensitivity: 'base' }));
+const ALL_PFLANZEN = [...(window.PFLANZEN_DB || []), ...(window.FANTASY_PLANT_DB || [])].sort((a, b) => a.name_de.localeCompare(b.name_de, 'de', {
+  sensitivity: 'base'
+}));
 const ALL_INSEKTEN = (window.INSEKTEN_DB || []).map(i => ({
   ...i,
-  fundort:   i.lebensraum,
+  fundort: i.lebensraum,
   kategorie: i.insektenart,
-  groesse:   i.größenkategorie,
+  groesse: i.größenkategorie
 }));
 
 // ── Fundort colours ────────────────────────────────────────────────────────────
 const FUNDORT_COLOR = {
-  'Gebirge':       '#a0b8d0',
-  'Höhle':         '#9070b8',
-  'Unterreich':    '#5840a0',
-  'Unterirdisch':  '#5840a0',
-  'Vulkan':        '#e85020',
-  'Gewässer':      '#3888c8',
-  'Wald':          '#4ca060',
-  'Sumpf':         '#50b068',
-  'Wüste':         '#c8a840',
-  'Küste':         '#26c6da',
-  'Tiefe See':     '#3060b0',
-  'Ebene':         '#80a870',
-  'Grasland':      '#70b050',
-  'Arktis':        '#90d0f0',
-  'Dschungel':     '#2a9040',
-  'Feenwildnis':   '#80d0a8',
+  'Gebirge': '#a0b8d0',
+  'Höhle': '#9070b8',
+  'Unterreich': '#5840a0',
+  'Unterirdisch': '#5840a0',
+  'Vulkan': '#e85020',
+  'Gewässer': '#3888c8',
+  'Wald': '#4ca060',
+  'Sumpf': '#50b068',
+  'Wüste': '#c8a840',
+  'Küste': '#26c6da',
+  'Tiefe See': '#3060b0',
+  'Ebene': '#80a870',
+  'Grasland': '#70b050',
+  'Arktis': '#90d0f0',
+  'Dschungel': '#2a9040',
+  'Feenwildnis': '#80d0a8',
   'Arkane Stätte': '#c060e8',
   'Andere Ebenen': '#4848d8',
-  'Himmelsfall':   '#ffd040',
-  'Schmiede':      '#c09050',
-  'Ruinen':        '#908060',
-  'Stadt':         '#b07840',
+  'Himmelsfall': '#ffd040',
+  'Schmiede': '#c09050',
+  'Ruinen': '#908060',
+  'Stadt': '#b07840'
 };
-
-const RES_RARITY_TIERS = [
-  { label:'Gewöhnlich',   color:'#8888aa', val:1 },
-  { label:'Ungewöhnlich', color:'#4caf50', val:2 },
-  { label:'Selten',       color:'#4488ee', val:3 },
-  { label:'Sehr selten',  color:'#c060e8', val:4 },
-  { label:'Legendär',     color:'#ffaa44', val:5 },
-];
+const RES_RARITY_TIERS = [{
+  label: 'Gewöhnlich',
+  color: '#8888aa',
+  val: 1
+}, {
+  label: 'Ungewöhnlich',
+  color: '#4caf50',
+  val: 2
+}, {
+  label: 'Selten',
+  color: '#4488ee',
+  val: 3
+}, {
+  label: 'Sehr selten',
+  color: '#c060e8',
+  val: 4
+}, {
+  label: 'Legendär',
+  color: '#ffaa44',
+  val: 5
+}];
 function resRarity(item) {
   return RES_RARITY_TIERS.find(r => r.val === item.seltenheitsgrad) || RES_RARITY_TIERS[0];
 }
-const RES_SORT_OPTIONS = [
-  { id:'name-az',         label:'Name A – Z'   },
-  { id:'name-za',         label:'Name Z – A'   },
-  { id:'seltenheit-asc',  label:'Seltenheit ↑' },
-  { id:'seltenheit-desc', label:'Seltenheit ↓' },
-  { id:'preis-asc',       label:'Preis ↑'      },
-  { id:'preis-desc',      label:'Preis ↓'      },
-];
+const RES_SORT_OPTIONS = [{
+  id: 'name-az',
+  label: 'Name A – Z'
+}, {
+  id: 'name-za',
+  label: 'Name Z – A'
+}, {
+  id: 'seltenheit-asc',
+  label: 'Seltenheit ↑'
+}, {
+  id: 'seltenheit-desc',
+  label: 'Seltenheit ↓'
+}, {
+  id: 'preis-asc',
+  label: 'Preis ↑'
+}, {
+  id: 'preis-desc',
+  label: 'Preis ↓'
+}];
 
 // ── Klima colours ─────────────────────────────────────────────────────────────
 const KLIMA_COLOR = {
-  'Gemäßigt':    '#4db6e8',
-  'Kalt':        '#90d8f8',
-  'Warm':        '#ffaa44',
-  'Trocken':     '#d4b260',
-  'Feucht':      '#3aa0d8',
-  'Tiefsee':     '#3a6abf',
-  'Stürmisch':   '#9898c0',
-  'Sumpfig':     '#58b870',
-  'Toxisch':     '#70e028',
-  'Magisch':     '#c060e8',
-  'Vulkanisch':  '#e85020',
-  'Schattenhaft':'#9050c8',
-  'Schattig':    '#9050c8',
-  'Kosmisch':    '#5050e0',
-  'Dunkel':      '#5848a0',
-  'Hell':        '#ffd870',
-  'Tag':         '#ffc850',
-  'Nacht':       '#3848a0',
-  'Windig':      '#a0c0e0',
+  'Gemäßigt': '#4db6e8',
+  'Kalt': '#90d8f8',
+  'Warm': '#ffaa44',
+  'Trocken': '#d4b260',
+  'Feucht': '#3aa0d8',
+  'Tiefsee': '#3a6abf',
+  'Stürmisch': '#9898c0',
+  'Sumpfig': '#58b870',
+  'Toxisch': '#70e028',
+  'Magisch': '#c060e8',
+  'Vulkanisch': '#e85020',
+  'Schattenhaft': '#9050c8',
+  'Schattig': '#9050c8',
+  'Kosmisch': '#5050e0',
+  'Dunkel': '#5848a0',
+  'Hell': '#ffd870',
+  'Tag': '#ffc850',
+  'Nacht': '#3848a0',
+  'Windig': '#a0c0e0'
 };
-
-const GRÖSSE_ORDER = ['Winzig','Klein','Mittelgroß','Groß','Riesig'];
+const GRÖSSE_ORDER = ['Winzig', 'Klein', 'Mittelgroß', 'Groß', 'Riesig'];
 
 // Stärke is a D&D ability score; modifier = floor((score - 10) / 2)
 // Ranges map to modifier bands: 1–5 → −5 to −3, 6–9 → −2/−1, 10–11 → ±0, 12+ → +1 or more
-const STÄRKE_GROUPS = [
-  { label:'−5 bis −3', min:1,  max:5  },
-  { label:'−2 bis −1', min:6,  max:9  },
-  { label:'±0',        min:10, max:11 },
-  { label:'+1 oder mehr', min:12, max:99 },
-];
-
+const STÄRKE_GROUPS = [{
+  label: '−5 bis −3',
+  min: 1,
+  max: 5
+}, {
+  label: '−2 bis −1',
+  min: 6,
+  max: 9
+}, {
+  label: '±0',
+  min: 10,
+  max: 11
+}, {
+  label: '+1 oder mehr',
+  min: 12,
+  max: 99
+}];
 const RARITY_KLIMA_BONUS = {
-  'Vulkanisch':3,'Magisch':3,'Kosmisch':3,'Schattenhaft':2,'Toxisch':2,'Tiefsee':2,
+  'Vulkanisch': 3,
+  'Magisch': 3,
+  'Kosmisch': 3,
+  'Schattenhaft': 2,
+  'Toxisch': 2,
+  'Tiefsee': 2
 };
-
-const RARITY_TIERS = [
-  { label:'Gewöhnlich',   color:'#8888aa' },
-  { label:'Ungewöhnlich', color:'#4caf50' },
-  { label:'Selten',       color:'#4488ee' },
-  { label:'Sehr selten',  color:'#c060e8' },
-  { label:'Legendär',     color:'#ffaa44' },
-];
-
-const LEGENDARY_NAMES = new Set([
-  'Taniwha','Kleiner Leviathan','Syldra','Riesenkrake','Titansägerochen',
-  'Dunkleosteus','Tiefsee-Dunkleosteus','Hyphalosaurus','Elasmosaurus',
-  'Gharlichthys','Calibanschuppe','Lapisdrache','Gigahai','Schiffshenker',
-  'Tiefenwächter','Tausend-Jahre-Wels','Coccosteus','Fallskipper',
-  'Oktoboss','Thavnairsaurus','Priosaurus','Radzsaurus','Spektralsaurier',
-  'Anomalocaris Saron','Aithons Colt','Tintenkrake','Mondschnapper',
-  'Erstgenuss','Mogul-Mogpom','La Reale','Mogryseele','Bergkrake',
-  'Mehr-Falten-Matamata','Saphirwächter',
-]);
-
+const RARITY_TIERS = [{
+  label: 'Gewöhnlich',
+  color: '#8888aa'
+}, {
+  label: 'Ungewöhnlich',
+  color: '#4caf50'
+}, {
+  label: 'Selten',
+  color: '#4488ee'
+}, {
+  label: 'Sehr selten',
+  color: '#c060e8'
+}, {
+  label: 'Legendär',
+  color: '#ffaa44'
+}];
+const LEGENDARY_NAMES = new Set(['Taniwha', 'Kleiner Leviathan', 'Syldra', 'Riesenkrake', 'Titansägerochen', 'Dunkleosteus', 'Tiefsee-Dunkleosteus', 'Hyphalosaurus', 'Elasmosaurus', 'Gharlichthys', 'Calibanschuppe', 'Lapisdrache', 'Gigahai', 'Schiffshenker', 'Tiefenwächter', 'Tausend-Jahre-Wels', 'Coccosteus', 'Fallskipper', 'Oktoboss', 'Thavnairsaurus', 'Priosaurus', 'Radzsaurus', 'Spektralsaurier', 'Anomalocaris Saron', 'Aithons Colt', 'Tintenkrake', 'Mondschnapper', 'Erstgenuss', 'Mogul-Mogpom', 'La Reale', 'Mogryseele', 'Bergkrake', 'Mehr-Falten-Matamata', 'Saphirwächter']);
 function fishRarityScore(fish) {
   const base = Math.pow(((fish.sg ?? 10) - 10) / 25, 2) * 10;
   const bonus = (fish.klima || []).reduce((s, k) => s + (RARITY_KLIMA_BONUS[k] || 0) * 0.6, 0);
   return base + bonus;
 }
-
 function fishRarityIdx(fish) {
   if (LEGENDARY_NAMES.has(fish.name_de)) return 4;
   const s = fishRarityScore(fish);
-  if (s < 3)   return 0;
+  if (s < 3) return 0;
   if (s < 5.5) return 1;
-  if (s < 8)   return 2;
+  if (s < 8) return 2;
   return 3;
 }
-
 function fishRarity(fish) {
   return RARITY_TIERS[fishRarityIdx(fish)];
 }
 
 // Price comes from the data file (computed by update-fish-rarity.mjs)
-function fishPrice(fish) { return fish.verkaufspreis || '–'; }
-
-const SORT_OPTIONS = [
-  { id:'name-az',          label:'Name A – Z'     },
-  { id:'name-za',          label:'Name Z – A'     },
-  { id:'seltenheit-asc',   label:'Seltenheit ↑'   },
-  { id:'seltenheit-desc',  label:'Seltenheit ↓'   },
-  { id:'preis-asc',        label:'Preis ↑'        },
-  { id:'preis-desc',       label:'Preis ↓'        },
-  { id:'staerke-desc',     label:'Stärke ↓'       },
-  { id:'staerke-asc',     label:'Stärke ↑'       },
-  { id:'gewicht-desc',    label:'Gewicht ↓'      },
-  { id:'gewicht-asc',     label:'Gewicht ↑'      },
-];
+function fishPrice(fish) {
+  return fish.verkaufspreis || '–';
+}
+const SORT_OPTIONS = [{
+  id: 'name-az',
+  label: 'Name A – Z'
+}, {
+  id: 'name-za',
+  label: 'Name Z – A'
+}, {
+  id: 'seltenheit-asc',
+  label: 'Seltenheit ↑'
+}, {
+  id: 'seltenheit-desc',
+  label: 'Seltenheit ↓'
+}, {
+  id: 'preis-asc',
+  label: 'Preis ↑'
+}, {
+  id: 'preis-desc',
+  label: 'Preis ↓'
+}, {
+  id: 'staerke-desc',
+  label: 'Stärke ↓'
+}, {
+  id: 'staerke-asc',
+  label: 'Stärke ↑'
+}, {
+  id: 'gewicht-desc',
+  label: 'Gewicht ↓'
+}, {
+  id: 'gewicht-asc',
+  label: 'Gewicht ↑'
+}];
 
 // ── DM Mode ───────────────────────────────────────────────────────────────────
 // DM mode is auto-detected from window.SITE_USER.role === 'dm' (set by site-gate.jsx).
 // Visibility data lives in Supabase table ressourcen_sichtbar; real-time subscription
 // keeps player tabs in sync without a page refresh.
 
-const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{ "showParticles": true }/*EDITMODE-END*/;
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "showParticles": true
+} /*EDITMODE-END*/;
 
 // ── Tabs ──────────────────────────────────────────────────────────────────────
-const TABS = [
-  { id:'fische',      label:'Fische'      },
-  { id:'pflanzen',    label:'Pflanzen'    },
-  { id:'mineralien',  label:'Mineralien'  },
-  { id:'insekten',    label:'Insekten'    },
-  { id:'monsterteile',label:'Monsterteile'},
-];
+const TABS = [{
+  id: 'fische',
+  label: 'Fische'
+}, {
+  id: 'pflanzen',
+  label: 'Pflanzen'
+}, {
+  id: 'mineralien',
+  label: 'Mineralien'
+}, {
+  id: 'insekten',
+  label: 'Insekten'
+}, {
+  id: 'monsterteile',
+  label: 'Monsterteile'
+}];
 
 // ── Parse helpers ─────────────────────────────────────────────────────────────
 function parseGewicht(s) {
@@ -210,348 +287,684 @@ function parsePreis(s) {
 }
 
 // ── Stärke / modifier helpers ─────────────────────────────────────────────────
-function dndMod(score) { return Math.floor((score - 10) / 2); }
-function modStr(m) { return (m >= 0 ? '+' : '') + m; }
+function dndMod(score) {
+  return Math.floor((score - 10) / 2);
+}
+function modStr(m) {
+  return (m >= 0 ? '+' : '') + m;
+}
 
 // 11-bar bipolar display: indices 0–4 = mods −5 to −1, index 5 = ±0, indices 6–10 = +1 to +5
 // Bars fill from center outward (adjacent to center = smallest magnitude)
 function modBarColor(mod, barIdx) {
   const barMod = barIdx - 5; // −5 to +5
-  if (barIdx === 5) return 'rgba(255,255,255,0.22)';          // center reference
-  if (mod < 0 && barMod < 0 && barMod >= mod) return 'rgba(200,70,70,0.72)';  // negative filled
-  if (mod > 0 && barMod > 0 && barMod <= mod) return '#26c6da';               // positive filled
-  return 'rgba(255,255,255,0.06)';                            // empty
+  if (barIdx === 5) return 'rgba(255,255,255,0.22)'; // center reference
+  if (mod < 0 && barMod < 0 && barMod >= mod) return 'rgba(200,70,70,0.72)'; // negative filled
+  if (mod > 0 && barMod > 0 && barMod <= mod) return '#26c6da'; // positive filled
+  return 'rgba(255,255,255,0.06)'; // empty
 }
 
 // ── Fish Detail Modal ─────────────────────────────────────────────────────────
-function FishDetailModal({ fish, onClose }) {
+function FishDetailModal({
+  fish,
+  onClose
+}) {
   const [imgOk, setImgOk] = useState(true);
   const s = fish.stärke ?? 0;
   const mod = dndMod(s);
   const rarity = fishRarity(fish);
-
   useEffect(() => {
-    const handle = e => { if (e.key === 'Escape') onClose(); };
+    const handle = e => {
+      if (e.key === 'Escape') onClose();
+    };
     document.addEventListener('keydown', handle);
     return () => document.removeEventListener('keydown', handle);
   }, [onClose]);
-
-  const CRAFTING_PLACEHOLDERS = [
-    { icon:'🍳', label:'Gericht', name:'Unbekanntes Rezept' },
-    { icon:'⚗️', label:'Alchemie', name:'Unbekannte Zutat' },
-    { icon:'🧵', label:'Handwerk', name:'Unbekannte Verarbeitung' },
-  ];
-
-  return (
-    <div className="fish-modal-overlay" onClick={onClose}>
-      <div className="fish-modal" onClick={e => e.stopPropagation()}>
-        <button className="fish-modal-close" onClick={onClose}>✕</button>
-
-        {/* ── Left: Fish Info ── */}
-        <div className="fish-modal-left">
-          <div className="fish-modal-header">
-            <div className="fish-modal-icon">
-              {imgOk
-                ? <img src={fish.icon} alt="" onError={() => setImgOk(false)} />
-                : <div className="fish-icon-missing"><PlaceholderIcon kind="fish" /></div>
-              }
-            </div>
-            <div style={{ minWidth:0 }}>
-              <div className="fish-modal-name">{fish.name_de}</div>
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:'10px', letterSpacing:'0.18em', color: rarity.color, marginTop:'5px' }}>
-                {rarity.label}
-              </div>
-            </div>
-          </div>
-
-          <div className="fish-modal-divider" />
-
-          {/* Badges */}
-          <div className="fish-modal-section">
-            <div style={{ display:'flex', gap:'6px', flexWrap:'wrap' }}>
-              <span className="fish-size-badge">{fish.größenkategorie}</span>
-              {fish.wassersort && (
-                <span className="fish-size-badge" style={{ borderColor: fish.wassersort==='salz' ? 'rgba(38,198,218,0.4)' : 'rgba(100,180,255,0.4)', color: fish.wassersort==='salz' ? '#26c6da' : '#88bbff' }}>
-                  {fish.wassersort === 'salz' ? 'Salzwasser' : 'Süßwasser'}
-                </span>
-              )}
-            </div>
-          </div>
-
-          {/* Stärke */}
-          <div className="fish-modal-section">
-            <div className="fish-modal-label">Stärke</div>
-            <div style={{ display:'flex', alignItems:'center', gap:'5px' }}>
-              <div className="staerke-bars">
-                {Array.from({length:5},(_,i) => (
-                  <div key={i} className="staerke-bar" style={{ background:modBarColor(mod,i), width:'5px', height:'13px' }} />
-                ))}
-              </div>
-              <div className="staerke-bar" style={{ background:'rgba(255,255,255,0.22)', height:'16px', width:'2px' }} />
-              <div className="staerke-bars">
-                {Array.from({length:5},(_,i) => (
-                  <div key={i} className="staerke-bar" style={{ background:modBarColor(mod,i+6), width:'5px', height:'13px' }} />
-                ))}
-              </div>
-              <span style={{ fontFamily:'var(--font-mono)', fontSize:'14px', letterSpacing:'0.04em', marginLeft:'6px',
-                color: mod > 0 ? '#26c6da' : mod < 0 ? 'rgba(200,100,100,0.85)' : 'rgba(var(--text-rgb),0.5)' }}>
-                {modStr(mod)}
-              </span>
-              <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(var(--text-rgb),0.28)', marginLeft:'3px' }}>
-                STR {s}
-              </span>
-            </div>
-          </div>
-
-          {/* Weight + Price */}
-          <div className="fish-modal-section" style={{ display:'flex', gap:'32px' }}>
-            <div>
-              <div className="fish-modal-label">Gewicht</div>
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:'13px', color:'rgba(var(--text-rgb),0.75)', letterSpacing:'0.06em' }}>{fish.gewicht || '–'}</div>
-            </div>
-            <div>
-              <div className="fish-modal-label">Verkaufspreis</div>
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:'13px', color:'rgba(255,214,0,0.88)', letterSpacing:'0.06em' }}>{fish.verkaufspreis || '–'}</div>
-            </div>
-          </div>
-
-          {/* Lebensraum */}
-          <div className="fish-modal-section">
-            <div className="fish-modal-label">Lebensraum</div>
-            {(fish.lebensraum||[]).length > 0
-              ? <div style={{ display:'flex', gap:'5px', flexWrap:'wrap' }}>
-                  {fish.lebensraum.map(l => (
-                    <span key={l} style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.12em', padding:'2px 8px', border:'1px solid rgba(var(--accent-rgb),0.25)', borderRadius:'2px', color:'rgba(var(--text-rgb),0.6)', textTransform:'uppercase' }}>{l}</span>
-                  ))}
-                </div>
-              : <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(var(--text-rgb),0.2)', letterSpacing:'0.14em', fontStyle:'italic' }}>Wird noch ergänzt</div>
-            }
-          </div>
-
-          {/* Klima */}
-          {(fish.klima||[]).length > 0 && (
-            <div className="fish-modal-section">
-              <div className="fish-modal-label">Klima</div>
-              <div className="fish-klima" style={{ margin:0 }}>
-                {fish.klima.map(k => {
-                  const col = KLIMA_COLOR[k] || '#8888cc';
-                  return (
-                    <span key={k} className="fish-klima-chip" style={{ background:col+'1e', border:`1px solid ${col}44`, color:col, fontSize:'8px', padding:'2px 8px' }}>
-                      {k}
-                    </span>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {/* Description */}
-          {fish.desc_de && (
-            <div className="fish-modal-section">
-              <div className="fish-modal-label">Beschreibung</div>
-              <p style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:300, lineHeight:1.75, color:'rgba(var(--text-rgb),0.52)', letterSpacing:'0.015em', margin:0 }}>
-                {fish.desc_de}
-              </p>
-            </div>
-          )}
-        </div>
-
-        {/* ── Right: Crafting ── */}
-        <div className="fish-modal-right">
-          <div className="fish-modal-label" style={{ marginBottom:'14px' }}>Verarbeitung</div>
-          {CRAFTING_PLACEHOLDERS.map((slot, i) => (
-            <div key={i} className="fish-recipe-slot">
-              <div className="fish-recipe-icon">{slot.icon}</div>
-              <div style={{ minWidth:0 }}>
-                <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(38,198,218,0.3)', marginBottom:'3px' }}>{slot.label}</div>
-                <div style={{ fontFamily:'var(--font-body)', fontSize:'10px', color:'rgba(var(--text-rgb),0.2)', letterSpacing:'0.03em' }}>{slot.name}</div>
-              </div>
-            </div>
-          ))}
-          <div style={{ marginTop:'auto', paddingTop:'16px', borderTop:'1px solid rgba(38,198,218,0.06)', fontFamily:'var(--font-mono)', fontSize:'7.5px', color:'rgba(38,198,218,0.18)', letterSpacing:'0.18em', textTransform:'uppercase', textAlign:'center', lineHeight:1.8 }}>
-            Rezepte werden<br />noch ergänzt
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  const CRAFTING_PLACEHOLDERS = [{
+    icon: '🍳',
+    label: 'Gericht',
+    name: 'Unbekanntes Rezept'
+  }, {
+    icon: '⚗️',
+    label: 'Alchemie',
+    name: 'Unbekannte Zutat'
+  }, {
+    icon: '🧵',
+    label: 'Handwerk',
+    name: 'Unbekannte Verarbeitung'
+  }];
+  return /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-overlay",
+    onClick: onClose
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal",
+    onClick: e => e.stopPropagation()
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "fish-modal-close",
+    onClick: onClose
+  }, "\u2715"), /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-left"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-header"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-icon"
+  }, imgOk ? /*#__PURE__*/React.createElement("img", {
+    src: fish.icon,
+    alt: "",
+    onError: () => setImgOk(false)
+  }) : /*#__PURE__*/React.createElement("div", {
+    className: "fish-icon-missing"
+  }, /*#__PURE__*/React.createElement(PlaceholderIcon, {
+    kind: "fish"
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      minWidth: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-name"
+  }, fish.name_de), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '10px',
+      letterSpacing: '0.18em',
+      color: rarity.color,
+      marginTop: '5px'
+    }
+  }, rarity.label))), /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-divider"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-section"
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '6px',
+      flexWrap: 'wrap'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "fish-size-badge"
+  }, fish.größenkategorie), fish.wassersort && /*#__PURE__*/React.createElement("span", {
+    className: "fish-size-badge",
+    style: {
+      borderColor: fish.wassersort === 'salz' ? 'rgba(38,198,218,0.4)' : 'rgba(100,180,255,0.4)',
+      color: fish.wassersort === 'salz' ? '#26c6da' : '#88bbff'
+    }
+  }, fish.wassersort === 'salz' ? 'Salzwasser' : 'Süßwasser'))), /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-section"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-label"
+  }, "St\xE4rke"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '5px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "staerke-bars"
+  }, Array.from({
+    length: 5
+  }, (_, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "staerke-bar",
+    style: {
+      background: modBarColor(mod, i),
+      width: '5px',
+      height: '13px'
+    }
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "staerke-bar",
+    style: {
+      background: 'rgba(255,255,255,0.22)',
+      height: '16px',
+      width: '2px'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "staerke-bars"
+  }, Array.from({
+    length: 5
+  }, (_, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "staerke-bar",
+    style: {
+      background: modBarColor(mod, i + 6),
+      width: '5px',
+      height: '13px'
+    }
+  }))), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '14px',
+      letterSpacing: '0.04em',
+      marginLeft: '6px',
+      color: mod > 0 ? '#26c6da' : mod < 0 ? 'rgba(200,100,100,0.85)' : 'rgba(var(--text-rgb),0.5)'
+    }
+  }, modStr(mod)), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: 'rgba(var(--text-rgb),0.28)',
+      marginLeft: '3px'
+    }
+  }, "STR ", s))), /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-section",
+    style: {
+      display: 'flex',
+      gap: '32px'
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-label"
+  }, "Gewicht"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '13px',
+      color: 'rgba(var(--text-rgb),0.75)',
+      letterSpacing: '0.06em'
+    }
+  }, fish.gewicht || '–')), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-label"
+  }, "Verkaufspreis"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '13px',
+      color: 'rgba(255,214,0,0.88)',
+      letterSpacing: '0.06em'
+    }
+  }, fish.verkaufspreis || '–'))), /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-section"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-label"
+  }, "Lebensraum"), (fish.lebensraum || []).length > 0 ? /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '5px',
+      flexWrap: 'wrap'
+    }
+  }, fish.lebensraum.map(l => /*#__PURE__*/React.createElement("span", {
+    key: l,
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.12em',
+      padding: '2px 8px',
+      border: '1px solid rgba(var(--accent-rgb),0.25)',
+      borderRadius: '2px',
+      color: 'rgba(var(--text-rgb),0.6)',
+      textTransform: 'uppercase'
+    }
+  }, l))) : /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: 'rgba(var(--text-rgb),0.2)',
+      letterSpacing: '0.14em',
+      fontStyle: 'italic'
+    }
+  }, "Wird noch erg\xE4nzt")), (fish.klima || []).length > 0 && /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-section"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-label"
+  }, "Klima"), /*#__PURE__*/React.createElement("div", {
+    className: "fish-klima",
+    style: {
+      margin: 0
+    }
+  }, fish.klima.map(k => {
+    const col = KLIMA_COLOR[k] || '#8888cc';
+    return /*#__PURE__*/React.createElement("span", {
+      key: k,
+      className: "fish-klima-chip",
+      style: {
+        background: col + '1e',
+        border: `1px solid ${col}44`,
+        color: col,
+        fontSize: '8px',
+        padding: '2px 8px'
+      }
+    }, k);
+  }))), fish.desc_de && /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-section"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-label"
+  }, "Beschreibung"), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px',
+      fontWeight: 300,
+      lineHeight: 1.75,
+      color: 'rgba(var(--text-rgb),0.52)',
+      letterSpacing: '0.015em',
+      margin: 0
+    }
+  }, fish.desc_de))), /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-right"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-label",
+    style: {
+      marginBottom: '14px'
+    }
+  }, "Verarbeitung"), CRAFTING_PLACEHOLDERS.map((slot, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "fish-recipe-slot"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fish-recipe-icon"
+  }, slot.icon), /*#__PURE__*/React.createElement("div", {
+    style: {
+      minWidth: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '0.18em',
+      textTransform: 'uppercase',
+      color: 'rgba(38,198,218,0.3)',
+      marginBottom: '3px'
+    }
+  }, slot.label), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '10px',
+      color: 'rgba(var(--text-rgb),0.2)',
+      letterSpacing: '0.03em'
+    }
+  }, slot.name)))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: 'auto',
+      paddingTop: '16px',
+      borderTop: '1px solid rgba(38,198,218,0.06)',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      color: 'rgba(38,198,218,0.18)',
+      letterSpacing: '0.18em',
+      textTransform: 'uppercase',
+      textAlign: 'center',
+      lineHeight: 1.8
+    }
+  }, "Rezepte werden", /*#__PURE__*/React.createElement("br", null), "noch erg\xE4nzt"))));
 }
 
 // ── Fish Card ─────────────────────────────────────────────────────────────────
-function FishCard({ fish, onSelect }) {
+function FishCard({
+  fish,
+  onSelect
+}) {
   const [imgOk, setImgOk] = useState(true);
   const s = fish.stärke ?? 0;
   const mod = dndMod(s);
   const rarity = fishRarity(fish);
-  return (
-    <div className="fish-card" onClick={() => onSelect(fish)} style={{ cursor:'pointer' }}>
-      <div style={{ display:'flex', alignItems:'flex-start', gap:'9px', marginBottom:'2px' }}>
-        <div className="fish-icon">
-          {imgOk
-            ? <img src={fish.icon} alt="" loading="lazy" onError={() => setImgOk(false)} />
-            : <div className="fish-icon-missing"><PlaceholderIcon kind="fish" /></div>
-          }
-        </div>
-        <div style={{ minWidth:0, flex:1 }}>
-          <div className="fish-name">{fish.name_de}</div>
-          <div className="fish-level" style={{ color: rarity.color }}>{rarity.label}</div>
-        </div>
-      </div>
-
-      <div className="fish-divider" />
-
-      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'4px', marginBottom:'6px' }}>
-        <span className="fish-size-badge">{fish.größenkategorie}</span>
-        <div style={{ display:'flex', alignItems:'center', gap:'4px' }} title={`STR ${s} (${modStr(mod)})`}>
-          {/* negative zone: mods −5 to −1 */}
-          <div className="staerke-bars">
-            {Array.from({length:5},(_,i) => (
-              <div key={i} className="staerke-bar" style={{ background: modBarColor(mod, i) }} />
-            ))}
-          </div>
-          {/* center bar: modifier ±0 reference */}
-          <div className="staerke-bar" style={{ background:'rgba(255,255,255,0.22)', height:'12px' }} />
-          {/* positive zone: mods +1 to +5 */}
-          <div className="staerke-bars">
-            {Array.from({length:5},(_,i) => (
-              <div key={i} className="staerke-bar" style={{ background: modBarColor(mod, i + 6) }} />
-            ))}
-          </div>
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.08em', whiteSpace:'nowrap',
-            color: mod > 0 ? '#26c6da' : mod < 0 ? 'rgba(200,100,100,0.75)' : 'rgba(var(--text-rgb),0.5)' }}>
-            {modStr(mod)}
-          </span>
-        </div>
-      </div>
-
-      <div className="fish-klima">
-        {(fish.klima||[]).map(k => {
-          const col = KLIMA_COLOR[k] || '#8888cc';
-          return (
-            <span key={k} className="fish-klima-chip" style={{ background:col+'1e', border:`1px solid ${col}44`, color:col }}>
-              {k}
-            </span>
-          );
-        })}
-      </div>
-
-      <div className="fish-stats">
-        <span className="fish-weight">{fish.gewicht}</span>
-        <span className="fish-price">{fishPrice(fish)}</span>
-      </div>
-
-      {fish.desc_de && <p className="fish-desc">{fish.desc_de}</p>}
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    className: "fish-card",
+    onClick: () => onSelect(fish),
+    style: {
+      cursor: 'pointer'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'flex-start',
+      gap: '9px',
+      marginBottom: '2px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fish-icon"
+  }, imgOk ? /*#__PURE__*/React.createElement("img", {
+    src: fish.icon,
+    alt: "",
+    loading: "lazy",
+    onError: () => setImgOk(false)
+  }) : /*#__PURE__*/React.createElement("div", {
+    className: "fish-icon-missing"
+  }, /*#__PURE__*/React.createElement(PlaceholderIcon, {
+    kind: "fish"
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      minWidth: 0,
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fish-name"
+  }, fish.name_de), /*#__PURE__*/React.createElement("div", {
+    className: "fish-level",
+    style: {
+      color: rarity.color
+    }
+  }, rarity.label))), /*#__PURE__*/React.createElement("div", {
+    className: "fish-divider"
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: '4px',
+      marginBottom: '6px'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "fish-size-badge"
+  }, fish.größenkategorie), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '4px'
+    },
+    title: `STR ${s} (${modStr(mod)})`
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "staerke-bars"
+  }, Array.from({
+    length: 5
+  }, (_, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "staerke-bar",
+    style: {
+      background: modBarColor(mod, i)
+    }
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "staerke-bar",
+    style: {
+      background: 'rgba(255,255,255,0.22)',
+      height: '12px'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "staerke-bars"
+  }, Array.from({
+    length: 5
+  }, (_, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "staerke-bar",
+    style: {
+      background: modBarColor(mod, i + 6)
+    }
+  }))), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.08em',
+      whiteSpace: 'nowrap',
+      color: mod > 0 ? '#26c6da' : mod < 0 ? 'rgba(200,100,100,0.75)' : 'rgba(var(--text-rgb),0.5)'
+    }
+  }, modStr(mod)))), /*#__PURE__*/React.createElement("div", {
+    className: "fish-klima"
+  }, (fish.klima || []).map(k => {
+    const col = KLIMA_COLOR[k] || '#8888cc';
+    return /*#__PURE__*/React.createElement("span", {
+      key: k,
+      className: "fish-klima-chip",
+      style: {
+        background: col + '1e',
+        border: `1px solid ${col}44`,
+        color: col
+      }
+    }, k);
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "fish-stats"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "fish-weight"
+  }, fish.gewicht), /*#__PURE__*/React.createElement("span", {
+    className: "fish-price"
+  }, fishPrice(fish))), fish.desc_de && /*#__PURE__*/React.createElement("p", {
+    className: "fish-desc"
+  }, fish.desc_de));
 }
 
 // ── Filter Chip ───────────────────────────────────────────────────────────────
-function Chip({ label, active, onClick, accentColor }) {
-  const style = accentColor && active
-    ? { borderColor:accentColor+'77', background:accentColor+'1a', color:'var(--white)' }
-    : accentColor
-    ? { borderColor:accentColor+'33', color:accentColor+'bb' }
-    : {};
-  return (
-    <button className={`filter-chip${active?' active':''}`} style={style} onClick={onClick}>{label}</button>
-  );
+function Chip({
+  label,
+  active,
+  onClick,
+  accentColor
+}) {
+  const style = accentColor && active ? {
+    borderColor: accentColor + '77',
+    background: accentColor + '1a',
+    color: 'var(--white)'
+  } : accentColor ? {
+    borderColor: accentColor + '33',
+    color: accentColor + 'bb'
+  } : {};
+  return /*#__PURE__*/React.createElement("button", {
+    className: `filter-chip${active ? ' active' : ''}`,
+    style: style,
+    onClick: onClick
+  }, label);
 }
 
 // ── Fish Filter Sidebar ───────────────────────────────────────────────────────
-function FishSidebar({ filters, setFilters, total, filtered, isOpen, onClose }) {
+function FishSidebar({
+  filters,
+  setFilters,
+  total,
+  filtered,
+  isOpen,
+  onClose
+}) {
   const allKlimas = useMemo(() => {
     const s = new Set();
-    ALL_FISH.forEach(f => (f.klima||[]).forEach(k => s.add(k)));
+    ALL_FISH.forEach(f => (f.klima || []).forEach(k => s.add(k)));
     return [...s].sort();
   }, []);
-
-  const set = (key, val) => setFilters(f => ({...f, [key]:val}));
+  const set = (key, val) => setFilters(f => ({
+    ...f,
+    [key]: val
+  }));
   const toggle = (key, val) => setFilters(f => {
-    const arr = f[key]||[];
-    return {...f, [key]: arr.includes(val) ? arr.filter(x=>x!==val) : [...arr,val]};
+    const arr = f[key] || [];
+    return {
+      ...f,
+      [key]: arr.includes(val) ? arr.filter(x => x !== val) : [...arr, val]
+    };
   });
-  const resetAll = () => setFilters({ search:'', größe:[], klima:[], stärke:[], seltenheit:[], wassersort:'', sort:'name-az' });
-  const hasAny = filters.search || filters.größe.length || filters.klima.length ||
-                 filters.stärke.length || filters.seltenheit.length || filters.wassersort || filters.sort!=='name-az';
-
-  return (
-    <aside className={`res-sidebar${isOpen ? ' res-sidebar--open' : ''}`}>
-      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'14px' }}>
-        <span style={{ fontFamily:'var(--font-display)', fontSize:'10px', letterSpacing:'0.25em', color:'rgba(38,198,218,0.6)', textTransform:'uppercase' }}>Filter</span>
-        <div style={{ display:'flex', gap:'6px', alignItems:'center' }}>
-          {hasAny && <XBtn onClick={resetAll} />}
-          <button className="res-sidebar-close" onClick={onClose} title="Schließen">✕</button>
-        </div>
-      </div>
-
-      {/* Search */}
-      <div style={{ position:'relative', marginBottom:'16px' }}>
-        <input type="text" placeholder="Fisch suchen…"
-          value={filters.search} onChange={e => set('search', e.target.value)} />
-        {filters.search
-          ? <button onClick={()=>set('search','')} style={{ position:'absolute', right:'8px', top:'50%', transform:'translateY(-50%)', background:'none', border:'none', color:'rgba(var(--text-rgb),0.45)', cursor:'pointer', padding:0, fontSize:'10px', lineHeight:1 }}>✕</button>
-          : <svg style={{ position:'absolute', right:'9px', top:'50%', transform:'translateY(-50%)', opacity:0.28, pointerEvents:'none' }} width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <circle cx="5" cy="5" r="3.5" stroke="rgba(38,198,218,1)" strokeWidth="1.2"/>
-              <line x1="8" y1="8" x2="11" y2="11" stroke="rgba(38,198,218,1)" strokeWidth="1.2"/>
-            </svg>
-        }
-      </div>
-
-      <FilterGroup title="Größe" active={filters.größe.length>0} onReset={()=>set('größe',[])} collapsible>
-        <div style={{ display:'flex', flexWrap:'wrap', gap:'4px' }}>
-          {GRÖSSE_ORDER.map(g => <Chip key={g} label={g} active={filters.größe.includes(g)} onClick={()=>toggle('größe',g)} />)}
-        </div>
-      </FilterGroup>
-
-      <FilterGroup title="Klima" active={filters.klima.length>0} onReset={()=>set('klima',[])} collapsible>
-        <div style={{ display:'flex', flexWrap:'wrap', gap:'4px' }}>
-          {allKlimas.map(k => <Chip key={k} label={k} active={filters.klima.includes(k)} accentColor={KLIMA_COLOR[k]} onClick={()=>toggle('klima',k)} />)}
-        </div>
-      </FilterGroup>
-
-<FilterGroup title="Wasserart" active={!!filters.wassersort} onReset={()=>set('wassersort','')} collapsible>
-        <div style={{ display:'flex', gap:'4px' }}>
-          <Chip label="Salzwasser" active={filters.wassersort==='salz'} onClick={()=>set('wassersort', filters.wassersort==='salz' ? '' : 'salz')} accentColor="#26c6da" />
-          <Chip label="Süßwasser"  active={filters.wassersort==='süß'}  onClick={()=>set('wassersort', filters.wassersort==='süß'  ? '' : 'süß')}  accentColor="#88bbff" />
-        </div>
-      </FilterGroup>
-
-      <FilterGroup title="Seltenheitsgrad" active={filters.seltenheit.length>0} onReset={()=>set('seltenheit',[])} collapsible>
-        <div style={{ display:'flex', flexDirection:'column', gap:'3px' }}>
-          {RARITY_TIERS.map(t => (
-            <button key={t.label} className={`sort-btn${filters.seltenheit.includes(t.label)?' active':''}`}
-              onClick={()=>toggle('seltenheit', t.label)}
-              style={filters.seltenheit.includes(t.label) ? { color:t.color, borderColor:t.color+'55' } : {}}>
-              {t.label}
-            </button>
-          ))}
-        </div>
-      </FilterGroup>
-
-      <FilterGroup title="Sortierung" active={filters.sort!=='name-az'} onReset={()=>set('sort','name-az')} collapsible>
-        <div style={{ display:'flex', flexDirection:'column', gap:'2px' }}>
-          {SORT_OPTIONS.map(o => (
-            <button key={o.id} className={`sort-btn${filters.sort===o.id?' active':''}`} onClick={()=>set('sort',o.id)}>{o.label}</button>
-          ))}
-        </div>
-      </FilterGroup>
-
-      {hasAny && (
-        <div style={{ marginTop:'auto', paddingTop:'14px', borderTop:'1px solid rgba(38,198,218,0.08)' }}>
-          <button onClick={resetAll}
-            style={{ width:'100%', padding:'6px', background:'rgba(200,60,60,0.08)', border:'1px solid rgba(200,60,60,0.25)', borderRadius:'2px', color:'rgba(230,90,90,0.65)', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.18em', cursor:'pointer', transition:'all 0.15s', textTransform:'uppercase' }}
-            onMouseEnter={e=>{e.currentTarget.style.background='rgba(200,60,60,0.18)';e.currentTarget.style.borderColor='rgba(230,90,90,0.5)';}}
-            onMouseLeave={e=>{e.currentTarget.style.background='rgba(200,60,60,0.08)';e.currentTarget.style.borderColor='rgba(200,60,60,0.25)';}}>
-            Filter löschen
-          </button>
-        </div>
-      )}
-    </aside>
-  );
+  const resetAll = () => setFilters({
+    search: '',
+    größe: [],
+    klima: [],
+    stärke: [],
+    seltenheit: [],
+    wassersort: '',
+    sort: 'name-az'
+  });
+  const hasAny = filters.search || filters.größe.length || filters.klima.length || filters.stärke.length || filters.seltenheit.length || filters.wassersort || filters.sort !== 'name-az';
+  return /*#__PURE__*/React.createElement("aside", {
+    className: `res-sidebar${isOpen ? ' res-sidebar--open' : ''}`
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: '14px'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '10px',
+      letterSpacing: '0.25em',
+      color: 'rgba(38,198,218,0.6)',
+      textTransform: 'uppercase'
+    }
+  }, "Filter"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '6px',
+      alignItems: 'center'
+    }
+  }, hasAny && /*#__PURE__*/React.createElement(XBtn, {
+    onClick: resetAll
+  }), /*#__PURE__*/React.createElement("button", {
+    className: "res-sidebar-close",
+    onClick: onClose,
+    title: "Schlie\xDFen"
+  }, "\u2715"))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      marginBottom: '16px'
+    }
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    placeholder: "Fisch suchen\u2026",
+    value: filters.search,
+    onChange: e => set('search', e.target.value)
+  }), filters.search ? /*#__PURE__*/React.createElement("button", {
+    onClick: () => set('search', ''),
+    style: {
+      position: 'absolute',
+      right: '8px',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      background: 'none',
+      border: 'none',
+      color: 'rgba(var(--text-rgb),0.45)',
+      cursor: 'pointer',
+      padding: 0,
+      fontSize: '10px',
+      lineHeight: 1
+    }
+  }, "\u2715") : /*#__PURE__*/React.createElement("svg", {
+    style: {
+      position: 'absolute',
+      right: '9px',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      opacity: 0.28,
+      pointerEvents: 'none'
+    },
+    width: "12",
+    height: "12",
+    viewBox: "0 0 12 12",
+    fill: "none"
+  }, /*#__PURE__*/React.createElement("circle", {
+    cx: "5",
+    cy: "5",
+    r: "3.5",
+    stroke: "rgba(38,198,218,1)",
+    strokeWidth: "1.2"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "8",
+    y1: "8",
+    x2: "11",
+    y2: "11",
+    stroke: "rgba(38,198,218,1)",
+    strokeWidth: "1.2"
+  }))), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Gr\xF6\xDFe",
+    active: filters.größe.length > 0,
+    onReset: () => set('größe', []),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '4px'
+    }
+  }, GRÖSSE_ORDER.map(g => /*#__PURE__*/React.createElement(Chip, {
+    key: g,
+    label: g,
+    active: filters.größe.includes(g),
+    onClick: () => toggle('größe', g)
+  })))), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Klima",
+    active: filters.klima.length > 0,
+    onReset: () => set('klima', []),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '4px'
+    }
+  }, allKlimas.map(k => /*#__PURE__*/React.createElement(Chip, {
+    key: k,
+    label: k,
+    active: filters.klima.includes(k),
+    accentColor: KLIMA_COLOR[k],
+    onClick: () => toggle('klima', k)
+  })))), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Wasserart",
+    active: !!filters.wassersort,
+    onReset: () => set('wassersort', ''),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '4px'
+    }
+  }, /*#__PURE__*/React.createElement(Chip, {
+    label: "Salzwasser",
+    active: filters.wassersort === 'salz',
+    onClick: () => set('wassersort', filters.wassersort === 'salz' ? '' : 'salz'),
+    accentColor: "#26c6da"
+  }), /*#__PURE__*/React.createElement(Chip, {
+    label: "S\xFC\xDFwasser",
+    active: filters.wassersort === 'süß',
+    onClick: () => set('wassersort', filters.wassersort === 'süß' ? '' : 'süß'),
+    accentColor: "#88bbff"
+  }))), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Seltenheitsgrad",
+    active: filters.seltenheit.length > 0,
+    onReset: () => set('seltenheit', []),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '3px'
+    }
+  }, RARITY_TIERS.map(t => /*#__PURE__*/React.createElement("button", {
+    key: t.label,
+    className: `sort-btn${filters.seltenheit.includes(t.label) ? ' active' : ''}`,
+    onClick: () => toggle('seltenheit', t.label),
+    style: filters.seltenheit.includes(t.label) ? {
+      color: t.color,
+      borderColor: t.color + '55'
+    } : {}
+  }, t.label)))), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Sortierung",
+    active: filters.sort !== 'name-az',
+    onReset: () => set('sort', 'name-az'),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '2px'
+    }
+  }, SORT_OPTIONS.map(o => /*#__PURE__*/React.createElement("button", {
+    key: o.id,
+    className: `sort-btn${filters.sort === o.id ? ' active' : ''}`,
+    onClick: () => set('sort', o.id)
+  }, o.label)))), hasAny && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: 'auto',
+      paddingTop: '14px',
+      borderTop: '1px solid rgba(38,198,218,0.08)'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: resetAll,
+    style: {
+      width: '100%',
+      padding: '6px',
+      background: 'rgba(200,60,60,0.08)',
+      border: '1px solid rgba(200,60,60,0.25)',
+      borderRadius: '2px',
+      color: 'rgba(230,90,90,0.65)',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.18em',
+      cursor: 'pointer',
+      transition: 'all 0.15s',
+      textTransform: 'uppercase'
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.background = 'rgba(200,60,60,0.18)';
+      e.currentTarget.style.borderColor = 'rgba(230,90,90,0.5)';
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.background = 'rgba(200,60,60,0.08)';
+      e.currentTarget.style.borderColor = 'rgba(200,60,60,0.25)';
+    }
+  }, "Filter l\xF6schen")));
 }
 
 // ── Missing-Icon Placeholders (inline SVG, theme-matched) ─────────────────────
-function PlaceholderIcon({ kind = 'plant' }) {
+function PlaceholderIcon({
+  kind = 'plant'
+}) {
   const c = 'rgba(38,198,218,0.55)';
   const fill = 'rgba(38,198,218,0.10)';
   const dim = 'rgba(38,198,218,0.22)';
@@ -559,695 +972,1426 @@ function PlaceholderIcon({ kind = 'plant' }) {
     viewBox: '0 0 64 64',
     width: '100%',
     height: '100%',
-    style: { display:'block', filter:'drop-shadow(0 0 6px rgba(38,198,218,0.18))' },
-    'aria-hidden': true,
+    style: {
+      display: 'block',
+      filter: 'drop-shadow(0 0 6px rgba(38,198,218,0.18))'
+    },
+    'aria-hidden': true
   };
   if (kind === 'mineral') {
-    return (
-      <svg {...common}>
-        <defs>
-          <radialGradient id="ph-min-g" cx="50%" cy="50%" r="55%">
-            <stop offset="0%" stopColor="rgba(38,198,218,0.22)" />
-            <stop offset="100%" stopColor="rgba(38,198,218,0)" />
-          </radialGradient>
-        </defs>
-        <circle cx="32" cy="32" r="26" fill="url(#ph-min-g)" />
-        <polygon points="32,12 48,24 42,50 22,50 16,24" fill={fill} stroke={c} strokeWidth="1.2" strokeLinejoin="round" />
-        <polyline points="32,12 32,50" stroke={c} strokeWidth="0.9" opacity="0.7" fill="none" />
-        <polyline points="16,24 32,30 48,24" stroke={c} strokeWidth="0.9" opacity="0.7" fill="none" />
-        <polyline points="22,50 32,30 42,50" stroke={c} strokeWidth="0.9" opacity="0.5" fill="none" />
-      </svg>
-    );
+    return /*#__PURE__*/React.createElement("svg", common, /*#__PURE__*/React.createElement("defs", null, /*#__PURE__*/React.createElement("radialGradient", {
+      id: "ph-min-g",
+      cx: "50%",
+      cy: "50%",
+      r: "55%"
+    }, /*#__PURE__*/React.createElement("stop", {
+      offset: "0%",
+      stopColor: "rgba(38,198,218,0.22)"
+    }), /*#__PURE__*/React.createElement("stop", {
+      offset: "100%",
+      stopColor: "rgba(38,198,218,0)"
+    }))), /*#__PURE__*/React.createElement("circle", {
+      cx: "32",
+      cy: "32",
+      r: "26",
+      fill: "url(#ph-min-g)"
+    }), /*#__PURE__*/React.createElement("polygon", {
+      points: "32,12 48,24 42,50 22,50 16,24",
+      fill: fill,
+      stroke: c,
+      strokeWidth: "1.2",
+      strokeLinejoin: "round"
+    }), /*#__PURE__*/React.createElement("polyline", {
+      points: "32,12 32,50",
+      stroke: c,
+      strokeWidth: "0.9",
+      opacity: "0.7",
+      fill: "none"
+    }), /*#__PURE__*/React.createElement("polyline", {
+      points: "16,24 32,30 48,24",
+      stroke: c,
+      strokeWidth: "0.9",
+      opacity: "0.7",
+      fill: "none"
+    }), /*#__PURE__*/React.createElement("polyline", {
+      points: "22,50 32,30 42,50",
+      stroke: c,
+      strokeWidth: "0.9",
+      opacity: "0.5",
+      fill: "none"
+    }));
   }
   if (kind === 'fish') {
-    return (
-      <svg {...common}>
-        <defs>
-          <radialGradient id="ph-fish-g" cx="50%" cy="50%" r="55%">
-            <stop offset="0%" stopColor="rgba(38,198,218,0.20)" />
-            <stop offset="100%" stopColor="rgba(38,198,218,0)" />
-          </radialGradient>
-        </defs>
-        <circle cx="32" cy="32" r="26" fill="url(#ph-fish-g)" />
-        <path d="M14 32 C 20 22, 36 22, 44 32 C 36 42, 20 42, 14 32 Z" fill={fill} stroke={c} strokeWidth="1.2" strokeLinejoin="round" />
-        <path d="M44 32 L 54 24 L 52 32 L 54 40 Z" fill={fill} stroke={c} strokeWidth="1.2" strokeLinejoin="round" />
-        <circle cx="22" cy="30" r="1.5" fill={c} />
-        <path d="M30 28 Q 32 32 30 36" stroke={c} strokeWidth="0.7" fill="none" opacity="0.6" />
-      </svg>
-    );
+    return /*#__PURE__*/React.createElement("svg", common, /*#__PURE__*/React.createElement("defs", null, /*#__PURE__*/React.createElement("radialGradient", {
+      id: "ph-fish-g",
+      cx: "50%",
+      cy: "50%",
+      r: "55%"
+    }, /*#__PURE__*/React.createElement("stop", {
+      offset: "0%",
+      stopColor: "rgba(38,198,218,0.20)"
+    }), /*#__PURE__*/React.createElement("stop", {
+      offset: "100%",
+      stopColor: "rgba(38,198,218,0)"
+    }))), /*#__PURE__*/React.createElement("circle", {
+      cx: "32",
+      cy: "32",
+      r: "26",
+      fill: "url(#ph-fish-g)"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M14 32 C 20 22, 36 22, 44 32 C 36 42, 20 42, 14 32 Z",
+      fill: fill,
+      stroke: c,
+      strokeWidth: "1.2",
+      strokeLinejoin: "round"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M44 32 L 54 24 L 52 32 L 54 40 Z",
+      fill: fill,
+      stroke: c,
+      strokeWidth: "1.2",
+      strokeLinejoin: "round"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "22",
+      cy: "30",
+      r: "1.5",
+      fill: c
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M30 28 Q 32 32 30 36",
+      stroke: c,
+      strokeWidth: "0.7",
+      fill: "none",
+      opacity: "0.6"
+    }));
   }
   if (kind === 'insekt') {
-    return (
-      <svg {...common}>
-        <defs>
-          <radialGradient id="ph-insekt-g" cx="50%" cy="50%" r="55%">
-            <stop offset="0%" stopColor="rgba(38,198,218,0.20)" />
-            <stop offset="100%" stopColor="rgba(38,198,218,0)" />
-          </radialGradient>
-        </defs>
-        <circle cx="32" cy="32" r="26" fill="url(#ph-insekt-g)" />
-        <ellipse cx="32" cy="32" rx="2" ry="10" fill={c} />
-        <path d="M32 28 C 22 18, 12 20, 14 29 C 16 35, 26 33, 32 31 Z" fill={fill} stroke={c} strokeWidth="1.1" strokeLinejoin="round" />
-        <path d="M32 28 C 42 18, 52 20, 50 29 C 48 35, 38 33, 32 31 Z" fill={fill} stroke={c} strokeWidth="1.1" strokeLinejoin="round" />
-        <path d="M32 35 C 22 33, 14 37, 16 43 C 18 47, 27 43, 32 39 Z" fill={fill} stroke={c} strokeWidth="0.9" strokeLinejoin="round" />
-        <path d="M32 35 C 42 33, 50 37, 48 43 C 46 47, 37 43, 32 39 Z" fill={fill} stroke={c} strokeWidth="0.9" strokeLinejoin="round" />
-        <line x1="30" y1="22" x2="26" y2="16" stroke={c} strokeWidth="0.9" />
-        <line x1="34" y1="22" x2="38" y2="16" stroke={c} strokeWidth="0.9" />
-      </svg>
-    );
+    return /*#__PURE__*/React.createElement("svg", common, /*#__PURE__*/React.createElement("defs", null, /*#__PURE__*/React.createElement("radialGradient", {
+      id: "ph-insekt-g",
+      cx: "50%",
+      cy: "50%",
+      r: "55%"
+    }, /*#__PURE__*/React.createElement("stop", {
+      offset: "0%",
+      stopColor: "rgba(38,198,218,0.20)"
+    }), /*#__PURE__*/React.createElement("stop", {
+      offset: "100%",
+      stopColor: "rgba(38,198,218,0)"
+    }))), /*#__PURE__*/React.createElement("circle", {
+      cx: "32",
+      cy: "32",
+      r: "26",
+      fill: "url(#ph-insekt-g)"
+    }), /*#__PURE__*/React.createElement("ellipse", {
+      cx: "32",
+      cy: "32",
+      rx: "2",
+      ry: "10",
+      fill: c
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M32 28 C 22 18, 12 20, 14 29 C 16 35, 26 33, 32 31 Z",
+      fill: fill,
+      stroke: c,
+      strokeWidth: "1.1",
+      strokeLinejoin: "round"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M32 28 C 42 18, 52 20, 50 29 C 48 35, 38 33, 32 31 Z",
+      fill: fill,
+      stroke: c,
+      strokeWidth: "1.1",
+      strokeLinejoin: "round"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M32 35 C 22 33, 14 37, 16 43 C 18 47, 27 43, 32 39 Z",
+      fill: fill,
+      stroke: c,
+      strokeWidth: "0.9",
+      strokeLinejoin: "round"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M32 35 C 42 33, 50 37, 48 43 C 46 47, 37 43, 32 39 Z",
+      fill: fill,
+      stroke: c,
+      strokeWidth: "0.9",
+      strokeLinejoin: "round"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "30",
+      y1: "22",
+      x2: "26",
+      y2: "16",
+      stroke: c,
+      strokeWidth: "0.9"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "34",
+      y1: "22",
+      x2: "38",
+      y2: "16",
+      stroke: c,
+      strokeWidth: "0.9"
+    }));
   }
   // default: plant
-  return (
-    <svg {...common}>
-      <defs>
-        <radialGradient id="ph-plant-g" cx="50%" cy="60%" r="55%">
-          <stop offset="0%" stopColor="rgba(38,198,218,0.22)" />
-          <stop offset="100%" stopColor="rgba(38,198,218,0)" />
-        </radialGradient>
-      </defs>
-      <circle cx="32" cy="36" r="26" fill="url(#ph-plant-g)" />
-      <path d="M32 58 V 30" stroke={c} strokeWidth="1.5" strokeLinecap="round" fill="none" />
-      <path d="M32 38 C 22 36, 16 26, 20 16 C 26 20, 32 28, 32 38 Z" fill={fill} stroke={c} strokeWidth="1.2" strokeLinejoin="round" />
-      <path d="M32 34 C 42 32, 48 22, 44 12 C 38 16, 32 24, 32 34 Z" fill={fill} stroke={c} strokeWidth="1.2" strokeLinejoin="round" />
-      <path d="M22 18 Q 28 24, 32 32" stroke={dim} strokeWidth="0.7" fill="none" />
-      <path d="M42 14 Q 36 22, 32 30" stroke={dim} strokeWidth="0.7" fill="none" />
-      <circle cx="32" cy="29" r="1.6" fill={c} />
-    </svg>
-  );
+  return /*#__PURE__*/React.createElement("svg", common, /*#__PURE__*/React.createElement("defs", null, /*#__PURE__*/React.createElement("radialGradient", {
+    id: "ph-plant-g",
+    cx: "50%",
+    cy: "60%",
+    r: "55%"
+  }, /*#__PURE__*/React.createElement("stop", {
+    offset: "0%",
+    stopColor: "rgba(38,198,218,0.22)"
+  }), /*#__PURE__*/React.createElement("stop", {
+    offset: "100%",
+    stopColor: "rgba(38,198,218,0)"
+  }))), /*#__PURE__*/React.createElement("circle", {
+    cx: "32",
+    cy: "36",
+    r: "26",
+    fill: "url(#ph-plant-g)"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M32 58 V 30",
+    stroke: c,
+    strokeWidth: "1.5",
+    strokeLinecap: "round",
+    fill: "none"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M32 38 C 22 36, 16 26, 20 16 C 26 20, 32 28, 32 38 Z",
+    fill: fill,
+    stroke: c,
+    strokeWidth: "1.2",
+    strokeLinejoin: "round"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M32 34 C 42 32, 48 22, 44 12 C 38 16, 32 24, 32 34 Z",
+    fill: fill,
+    stroke: c,
+    strokeWidth: "1.2",
+    strokeLinejoin: "round"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M22 18 Q 28 24, 32 32",
+    stroke: dim,
+    strokeWidth: "0.7",
+    fill: "none"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M42 14 Q 36 22, 32 30",
+    stroke: dim,
+    strokeWidth: "0.7",
+    fill: "none"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "32",
+    cy: "29",
+    r: "1.6",
+    fill: c
+  }));
 }
-const PLACEHOLDER_KIND = { '🌿':'plant', '💎':'mineral', '🐟':'fish', '🪲':'insekt' };
+const PLACEHOLDER_KIND = {
+  '🌿': 'plant',
+  '💎': 'mineral',
+  '🐟': 'fish',
+  '🪲': 'insekt'
+};
 function renderFallbackIcon(fallback) {
   // fallback may be an emoji string (legacy) — map to a kind
   const kind = PLACEHOLDER_KIND[fallback] || 'plant';
-  return <PlaceholderIcon kind={kind} />;
+  return /*#__PURE__*/React.createElement(PlaceholderIcon, {
+    kind: kind
+  });
 }
 
 // ── Placeholder Tab ───────────────────────────────────────────────────────────
-const PLACEHOLDER_ICONS = { pflanzen:'🌿', mineralien:'💎', monsterteile:'🦴' };
-function PlaceholderTab({ id, label }) {
+const PLACEHOLDER_ICONS = {
+  pflanzen: '🌿',
+  mineralien: '💎',
+  monsterteile: '🦴'
+};
+function PlaceholderTab({
+  id,
+  label
+}) {
   const icon = PLACEHOLDER_ICONS[id] || '📦';
-  return (
-    <div style={{ flex:1, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'16px', color:'rgba(38,198,218,0.18)', userSelect:'none' }}>
-      <div style={{ fontSize:'48px', opacity:0.35 }}>{icon}</div>
-      <div style={{ fontFamily:'var(--font-display)', fontSize:'18px', letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(38,198,218,0.25)' }}>{label}</div>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),0.2)', textTransform:'uppercase' }}>Daten folgen</div>
-      <div style={{ width:'48px', height:'1px', background:'linear-gradient(90deg,transparent,rgba(38,198,218,0.2),transparent)' }} />
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '16px',
+      color: 'rgba(38,198,218,0.18)',
+      userSelect: 'none'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: '48px',
+      opacity: 0.35
+    }
+  }, icon), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '18px',
+      letterSpacing: '0.22em',
+      textTransform: 'uppercase',
+      color: 'rgba(38,198,218,0.25)'
+    }
+  }, label), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.28em',
+      color: 'rgba(var(--accent-rgb),0.2)',
+      textTransform: 'uppercase'
+    }
+  }, "Daten folgen"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '48px',
+      height: '1px',
+      background: 'linear-gradient(90deg,transparent,rgba(38,198,218,0.2),transparent)'
+    }
+  }));
 }
 
 // ── Resource Detail Modal ─────────────────────────────────────────────────────
-function ResourceDetailModal({ item, onClose, fallbackIcon }) {
+function ResourceDetailModal({
+  item,
+  onClose,
+  fallbackIcon
+}) {
   const [imgOk, setImgOk] = useState(true);
   const rarity = resRarity(item);
-
   useEffect(() => {
-    const handle = e => { if (e.key === 'Escape') onClose(); };
+    const handle = e => {
+      if (e.key === 'Escape') onClose();
+    };
     document.addEventListener('keydown', handle);
     return () => document.removeEventListener('keydown', handle);
   }, [onClose]);
-
-  return (
-    <div className="fish-modal-overlay" onClick={onClose}>
-      <div className="fish-modal" onClick={e => e.stopPropagation()}>
-        <button className="fish-modal-close" onClick={onClose}>✕</button>
-
-        <div className="fish-modal-left">
-          <div className="fish-modal-header">
-            <div className="fish-modal-icon">
-              {imgOk && item.icon
-                ? <img src={item.icon} alt="" onError={() => setImgOk(false)} />
-                : <div className="fish-icon-missing">{renderFallbackIcon(fallbackIcon)}</div>
-              }
-            </div>
-            <div style={{ minWidth:0 }}>
-              <div className="fish-modal-name">{item.name_de}</div>
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:'10px', letterSpacing:'0.18em', color:rarity.color, marginTop:'5px' }}>
-                {rarity.label}
-              </div>
-            </div>
-          </div>
-
-          <div className="fish-modal-divider" />
-
-          <div className="fish-modal-section">
-            <div style={{ display:'flex', gap:'6px', flexWrap:'wrap' }}>
-              <span className="fish-size-badge">{item.kategorie}</span>
-            </div>
-          </div>
-
-          <div className="fish-modal-section" style={{ display:'flex', gap:'32px', flexWrap:'wrap' }}>
-            <div>
-              <div className="fish-modal-label">Gewicht</div>
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:'13px', color:'rgba(var(--text-rgb),0.75)', letterSpacing:'0.06em' }}>{item.gewicht || '–'}</div>
-            </div>
-            <div>
-              <div className="fish-modal-label">Verkaufspreis</div>
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:'13px', color:'rgba(255,214,0,0.88)', letterSpacing:'0.06em' }}>{item.verkaufspreis || '–'}</div>
-            </div>
-            {item.groesse && (
-              <div>
-                <div className="fish-modal-label">Größe</div>
-                <div style={{ fontFamily:'var(--font-mono)', fontSize:'13px', color:'rgba(var(--text-rgb),0.75)', letterSpacing:'0.06em' }}>{item.groesse}</div>
-              </div>
-            )}
-            {item.wachstumsdauer && (
-              <div>
-                <div className="fish-modal-label">Wachstumsdauer</div>
-                <div style={{ fontFamily:'var(--font-mono)', fontSize:'13px', color:'rgba(var(--text-rgb),0.75)', letterSpacing:'0.06em' }}>{item.wachstumsdauer}</div>
-              </div>
-            )}
-          </div>
-
-          {(item.fundort||[]).length > 0 && (
-            <div className="fish-modal-section">
-              <div className="fish-modal-label">Fundort</div>
-              <div className="fish-klima" style={{ margin:0 }}>
-                {item.fundort.map(f => {
-                  const col = FUNDORT_COLOR[f] || '#8888cc';
-                  return (
-                    <span key={f} className="fish-klima-chip" style={{ background:col+'1e', border:`1px solid ${col}44`, color:col, fontSize:'8px', padding:'2px 8px' }}>
-                      {f}
-                    </span>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {(item.klima||[]).length > 0 && (
-            <div className="fish-modal-section">
-              <div className="fish-modal-label">Klima</div>
-              <div className="fish-klima" style={{ margin:0 }}>
-                {item.klima.map(k => {
-                  const col = KLIMA_COLOR[k] || '#8888cc';
-                  return (
-                    <span key={k} className="fish-klima-chip" style={{ background:col+'1e', border:`1px solid ${col}44`, color:col, fontSize:'8px', padding:'2px 8px' }}>
-                      {k}
-                    </span>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {item.eigenschaften && (() => {
-            const eg = item.eigenschaften;
-            const mute = '#5e6873';
-            const flags = [
-              { label: eg.essbar ? 'Roh essbar' : 'Nicht roh essbar', active: !!eg.essbar, on:'#4caf50', off:mute },
-              { label: eg.essbar_nach_zubereitung ? 'Zubereitet essbar' : 'Nicht zubereitbar', active: !!eg.essbar_nach_zubereitung, on:'#88c050', off:mute },
-              { label: eg.giftig ? 'Giftig' : 'Ungiftig', active: !!eg.giftig, on:'#e04040', off:'#4caf50' },
-            ];
-            return (
-              <div className="fish-modal-section">
-                <div className="fish-modal-label">Eigenschaften</div>
-                <div className="fish-klima" style={{ margin:'0 0 8px 0' }}>
-                  {flags.map(f => {
-                    const col = f.active ? f.on : f.off;
-                    const bg = f.active ? col+'1e' : 'rgba(120,128,140,0.08)';
-                    const opacity = f.active ? 1 : 0.55;
-                    return (
-                      <span key={f.label} className="fish-klima-chip" style={{ background:bg, border:`1px solid ${col}55`, color:col, fontSize:'8px', padding:'2px 8px', opacity }}>
-                        {f.label}
-                      </span>
-                    );
-                  })}
-                </div>
-                {(eg.farbe || eg.beschaffenheit) && (
-                  <div style={{ display:'flex', flexDirection:'column', gap:'4px', fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:300, lineHeight:1.5, color:'rgba(var(--text-rgb),0.6)', letterSpacing:'0.015em' }}>
-                    {eg.farbe && <div><span style={{ color:'rgba(38,198,218,0.55)', fontFamily:'var(--font-mono)', fontSize:'8.5px', letterSpacing:'0.18em', textTransform:'uppercase', marginRight:'8px' }}>Farbe</span>{eg.farbe}</div>}
-                    {eg.beschaffenheit && <div><span style={{ color:'rgba(38,198,218,0.55)', fontFamily:'var(--font-mono)', fontSize:'8.5px', letterSpacing:'0.18em', textTransform:'uppercase', marginRight:'8px' }}>Beschaffenheit</span>{eg.beschaffenheit}</div>}
-                  </div>
-                )}
-              </div>
-            );
-          })()}
-
-          {item.desc_de && (
-            <div className="fish-modal-section">
-              <div className="fish-modal-label">Beschreibung</div>
-              <p style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:300, lineHeight:1.75, color:'rgba(var(--text-rgb),0.52)', letterSpacing:'0.015em', margin:0 }}>
-                {item.desc_de}
-              </p>
-            </div>
-          )}
-
-          {item.nutzen && (
-            <div className="fish-modal-section">
-              <div className="fish-modal-label">Nutzen</div>
-              <p style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:300, lineHeight:1.75, color:'rgba(var(--text-rgb),0.52)', letterSpacing:'0.015em', margin:0 }}>
-                {item.nutzen}
-              </p>
-            </div>
-          )}
-        </div>
-
-        <div className="fish-modal-right">
-          <div className="fish-modal-label" style={{ marginBottom:'14px' }}>Verarbeitung</div>
-          {[
-            { icon:'🍳', label:'Kochen',    name:'Unbekanntes Rezept' },
-            { icon:'⚗️', label:'Alchemie',  name:'Unbekannte Zutat' },
-            { icon:'🔨', label:'Schmieden', name:'Unbekanntes Rezept' },
-            { icon:'🧵', label:'Handwerk',  name:'Unbekannte Verarbeitung' },
-          ].map((slot, i) => (
-            <div key={i} className="fish-recipe-slot">
-              <div className="fish-recipe-icon">{slot.icon}</div>
-              <div style={{ minWidth:0 }}>
-                <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(38,198,218,0.3)', marginBottom:'3px' }}>{slot.label}</div>
-                <div style={{ fontFamily:'var(--font-body)', fontSize:'10px', color:'rgba(var(--text-rgb),0.2)', letterSpacing:'0.03em' }}>{slot.name}</div>
-              </div>
-            </div>
-          ))}
-          <div style={{ marginTop:'auto', paddingTop:'16px', borderTop:'1px solid rgba(38,198,218,0.06)', fontFamily:'var(--font-mono)', fontSize:'7.5px', color:'rgba(38,198,218,0.18)', letterSpacing:'0.18em', textTransform:'uppercase', textAlign:'center', lineHeight:1.8 }}>
-            Rezepte werden<br />noch ergänzt
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-overlay",
+    onClick: onClose
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal",
+    onClick: e => e.stopPropagation()
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "fish-modal-close",
+    onClick: onClose
+  }, "\u2715"), /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-left"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-header"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-icon"
+  }, imgOk && item.icon ? /*#__PURE__*/React.createElement("img", {
+    src: item.icon,
+    alt: "",
+    onError: () => setImgOk(false)
+  }) : /*#__PURE__*/React.createElement("div", {
+    className: "fish-icon-missing"
+  }, renderFallbackIcon(fallbackIcon))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      minWidth: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-name"
+  }, item.name_de), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '10px',
+      letterSpacing: '0.18em',
+      color: rarity.color,
+      marginTop: '5px'
+    }
+  }, rarity.label))), /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-divider"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-section"
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '6px',
+      flexWrap: 'wrap'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "fish-size-badge"
+  }, item.kategorie))), /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-section",
+    style: {
+      display: 'flex',
+      gap: '32px',
+      flexWrap: 'wrap'
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-label"
+  }, "Gewicht"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '13px',
+      color: 'rgba(var(--text-rgb),0.75)',
+      letterSpacing: '0.06em'
+    }
+  }, item.gewicht || '–')), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-label"
+  }, "Verkaufspreis"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '13px',
+      color: 'rgba(255,214,0,0.88)',
+      letterSpacing: '0.06em'
+    }
+  }, item.verkaufspreis || '–')), item.groesse && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-label"
+  }, "Gr\xF6\xDFe"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '13px',
+      color: 'rgba(var(--text-rgb),0.75)',
+      letterSpacing: '0.06em'
+    }
+  }, item.groesse)), item.wachstumsdauer && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-label"
+  }, "Wachstumsdauer"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '13px',
+      color: 'rgba(var(--text-rgb),0.75)',
+      letterSpacing: '0.06em'
+    }
+  }, item.wachstumsdauer))), (item.fundort || []).length > 0 && /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-section"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-label"
+  }, "Fundort"), /*#__PURE__*/React.createElement("div", {
+    className: "fish-klima",
+    style: {
+      margin: 0
+    }
+  }, item.fundort.map(f => {
+    const col = FUNDORT_COLOR[f] || '#8888cc';
+    return /*#__PURE__*/React.createElement("span", {
+      key: f,
+      className: "fish-klima-chip",
+      style: {
+        background: col + '1e',
+        border: `1px solid ${col}44`,
+        color: col,
+        fontSize: '8px',
+        padding: '2px 8px'
+      }
+    }, f);
+  }))), (item.klima || []).length > 0 && /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-section"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-label"
+  }, "Klima"), /*#__PURE__*/React.createElement("div", {
+    className: "fish-klima",
+    style: {
+      margin: 0
+    }
+  }, item.klima.map(k => {
+    const col = KLIMA_COLOR[k] || '#8888cc';
+    return /*#__PURE__*/React.createElement("span", {
+      key: k,
+      className: "fish-klima-chip",
+      style: {
+        background: col + '1e',
+        border: `1px solid ${col}44`,
+        color: col,
+        fontSize: '8px',
+        padding: '2px 8px'
+      }
+    }, k);
+  }))), item.eigenschaften && (() => {
+    const eg = item.eigenschaften;
+    const mute = '#5e6873';
+    const flags = [{
+      label: eg.essbar ? 'Roh essbar' : 'Nicht roh essbar',
+      active: !!eg.essbar,
+      on: '#4caf50',
+      off: mute
+    }, {
+      label: eg.essbar_nach_zubereitung ? 'Zubereitet essbar' : 'Nicht zubereitbar',
+      active: !!eg.essbar_nach_zubereitung,
+      on: '#88c050',
+      off: mute
+    }, {
+      label: eg.giftig ? 'Giftig' : 'Ungiftig',
+      active: !!eg.giftig,
+      on: '#e04040',
+      off: '#4caf50'
+    }];
+    return /*#__PURE__*/React.createElement("div", {
+      className: "fish-modal-section"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "fish-modal-label"
+    }, "Eigenschaften"), /*#__PURE__*/React.createElement("div", {
+      className: "fish-klima",
+      style: {
+        margin: '0 0 8px 0'
+      }
+    }, flags.map(f => {
+      const col = f.active ? f.on : f.off;
+      const bg = f.active ? col + '1e' : 'rgba(120,128,140,0.08)';
+      const opacity = f.active ? 1 : 0.55;
+      return /*#__PURE__*/React.createElement("span", {
+        key: f.label,
+        className: "fish-klima-chip",
+        style: {
+          background: bg,
+          border: `1px solid ${col}55`,
+          color: col,
+          fontSize: '8px',
+          padding: '2px 8px',
+          opacity
+        }
+      }, f.label);
+    })), (eg.farbe || eg.beschaffenheit) && /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '4px',
+        fontFamily: 'var(--font-body)',
+        fontSize: '11px',
+        fontWeight: 300,
+        lineHeight: 1.5,
+        color: 'rgba(var(--text-rgb),0.6)',
+        letterSpacing: '0.015em'
+      }
+    }, eg.farbe && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", {
+      style: {
+        color: 'rgba(38,198,218,0.55)',
+        fontFamily: 'var(--font-mono)',
+        fontSize: '8.5px',
+        letterSpacing: '0.18em',
+        textTransform: 'uppercase',
+        marginRight: '8px'
+      }
+    }, "Farbe"), eg.farbe), eg.beschaffenheit && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", {
+      style: {
+        color: 'rgba(38,198,218,0.55)',
+        fontFamily: 'var(--font-mono)',
+        fontSize: '8.5px',
+        letterSpacing: '0.18em',
+        textTransform: 'uppercase',
+        marginRight: '8px'
+      }
+    }, "Beschaffenheit"), eg.beschaffenheit)));
+  })(), item.desc_de && /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-section"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-label"
+  }, "Beschreibung"), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px',
+      fontWeight: 300,
+      lineHeight: 1.75,
+      color: 'rgba(var(--text-rgb),0.52)',
+      letterSpacing: '0.015em',
+      margin: 0
+    }
+  }, item.desc_de)), item.nutzen && /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-section"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-label"
+  }, "Nutzen"), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px',
+      fontWeight: 300,
+      lineHeight: 1.75,
+      color: 'rgba(var(--text-rgb),0.52)',
+      letterSpacing: '0.015em',
+      margin: 0
+    }
+  }, item.nutzen))), /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-right"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fish-modal-label",
+    style: {
+      marginBottom: '14px'
+    }
+  }, "Verarbeitung"), [{
+    icon: '🍳',
+    label: 'Kochen',
+    name: 'Unbekanntes Rezept'
+  }, {
+    icon: '⚗️',
+    label: 'Alchemie',
+    name: 'Unbekannte Zutat'
+  }, {
+    icon: '🔨',
+    label: 'Schmieden',
+    name: 'Unbekanntes Rezept'
+  }, {
+    icon: '🧵',
+    label: 'Handwerk',
+    name: 'Unbekannte Verarbeitung'
+  }].map((slot, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "fish-recipe-slot"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fish-recipe-icon"
+  }, slot.icon), /*#__PURE__*/React.createElement("div", {
+    style: {
+      minWidth: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '0.18em',
+      textTransform: 'uppercase',
+      color: 'rgba(38,198,218,0.3)',
+      marginBottom: '3px'
+    }
+  }, slot.label), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '10px',
+      color: 'rgba(var(--text-rgb),0.2)',
+      letterSpacing: '0.03em'
+    }
+  }, slot.name)))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: 'auto',
+      paddingTop: '16px',
+      borderTop: '1px solid rgba(38,198,218,0.06)',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      color: 'rgba(38,198,218,0.18)',
+      letterSpacing: '0.18em',
+      textTransform: 'uppercase',
+      textAlign: 'center',
+      lineHeight: 1.8
+    }
+  }, "Rezepte werden", /*#__PURE__*/React.createElement("br", null), "noch erg\xE4nzt"))));
 }
 
 // ── Resource Card ─────────────────────────────────────────────────────────────
-function ResourceCard({ item, onSelect, fallbackIcon }) {
+function ResourceCard({
+  item,
+  onSelect,
+  fallbackIcon
+}) {
   const [imgOk, setImgOk] = useState(true);
   const rarity = resRarity(item);
-  return (
-    <div className="fish-card" onClick={() => onSelect(item)} style={{ cursor:'pointer' }}>
-      <div style={{ display:'flex', alignItems:'flex-start', gap:'9px', marginBottom:'2px' }}>
-        <div className="fish-icon">
-          {imgOk && item.icon
-            ? <img src={item.icon} alt="" loading="lazy" onError={() => setImgOk(false)} />
-            : <div className="fish-icon-missing">{renderFallbackIcon(fallbackIcon)}</div>
-          }
-        </div>
-        <div style={{ minWidth:0, flex:1 }}>
-          <div className="fish-name">{item.name_de}</div>
-          <div className="fish-level" style={{ color:rarity.color }}>{rarity.label}</div>
-        </div>
-      </div>
-
-      <div className="fish-divider" />
-
-      <div style={{ marginBottom:'6px' }}>
-        <span className="fish-size-badge">{item.kategorie}</span>
-      </div>
-
-      <div className="fish-klima">
-        {(item.fundort||[]).map(f => {
-          const col = FUNDORT_COLOR[f] || '#8888cc';
-          return (
-            <span key={f} className="fish-klima-chip" style={{ background:col+'1e', border:`1px solid ${col}44`, color:col }}>
-              {f}
-            </span>
-          );
-        })}
-      </div>
-
-      <div className="fish-stats">
-        <span className="fish-weight">{item.gewicht || '–'}</span>
-        <span className="fish-price">{item.verkaufspreis || '–'}</span>
-      </div>
-
-      {item.desc_de && <p className="fish-desc">{item.desc_de}</p>}
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    className: "fish-card",
+    onClick: () => onSelect(item),
+    style: {
+      cursor: 'pointer'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'flex-start',
+      gap: '9px',
+      marginBottom: '2px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fish-icon"
+  }, imgOk && item.icon ? /*#__PURE__*/React.createElement("img", {
+    src: item.icon,
+    alt: "",
+    loading: "lazy",
+    onError: () => setImgOk(false)
+  }) : /*#__PURE__*/React.createElement("div", {
+    className: "fish-icon-missing"
+  }, renderFallbackIcon(fallbackIcon))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      minWidth: 0,
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fish-name"
+  }, item.name_de), /*#__PURE__*/React.createElement("div", {
+    className: "fish-level",
+    style: {
+      color: rarity.color
+    }
+  }, rarity.label))), /*#__PURE__*/React.createElement("div", {
+    className: "fish-divider"
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: '6px'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "fish-size-badge"
+  }, item.kategorie)), /*#__PURE__*/React.createElement("div", {
+    className: "fish-klima"
+  }, (item.fundort || []).map(f => {
+    const col = FUNDORT_COLOR[f] || '#8888cc';
+    return /*#__PURE__*/React.createElement("span", {
+      key: f,
+      className: "fish-klima-chip",
+      style: {
+        background: col + '1e',
+        border: `1px solid ${col}44`,
+        color: col
+      }
+    }, f);
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "fish-stats"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "fish-weight"
+  }, item.gewicht || '–'), /*#__PURE__*/React.createElement("span", {
+    className: "fish-price"
+  }, item.verkaufspreis || '–')), item.desc_de && /*#__PURE__*/React.createElement("p", {
+    className: "fish-desc"
+  }, item.desc_de));
 }
 
 // ── Resource Sidebar ──────────────────────────────────────────────────────────
-function ResourceSidebar({ filters, setFilters, isOpen, onClose, allFundorte, allKategorien, searchPlaceholder }) {
-  const set = (key, val) => setFilters(f => ({...f, [key]:val}));
+function ResourceSidebar({
+  filters,
+  setFilters,
+  isOpen,
+  onClose,
+  allFundorte,
+  allKategorien,
+  searchPlaceholder
+}) {
+  const set = (key, val) => setFilters(f => ({
+    ...f,
+    [key]: val
+  }));
   const toggle = (key, val) => setFilters(f => {
-    const arr = f[key]||[];
-    return {...f, [key]: arr.includes(val) ? arr.filter(x=>x!==val) : [...arr,val]};
+    const arr = f[key] || [];
+    return {
+      ...f,
+      [key]: arr.includes(val) ? arr.filter(x => x !== val) : [...arr, val]
+    };
   });
-  const resetAll = () => setFilters({ search:'', fundort:[], kategorie:[], seltenheit:[], sort:'name-az' });
+  const resetAll = () => setFilters({
+    search: '',
+    fundort: [],
+    kategorie: [],
+    seltenheit: [],
+    sort: 'name-az'
+  });
   const hasAny = filters.search || filters.fundort.length || filters.kategorie.length || filters.seltenheit.length || filters.sort !== 'name-az';
-
-  return (
-    <aside className={`res-sidebar${isOpen ? ' res-sidebar--open' : ''}`}>
-      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'14px' }}>
-        <span style={{ fontFamily:'var(--font-display)', fontSize:'10px', letterSpacing:'0.25em', color:'rgba(38,198,218,0.6)', textTransform:'uppercase' }}>Filter</span>
-        <div style={{ display:'flex', gap:'6px', alignItems:'center' }}>
-          {hasAny && <XBtn onClick={resetAll} />}
-          <button className="res-sidebar-close" onClick={onClose} title="Schließen">✕</button>
-        </div>
-      </div>
-
-      <div style={{ position:'relative', marginBottom:'16px' }}>
-        <input type="text" placeholder={searchPlaceholder}
-          value={filters.search} onChange={e => set('search', e.target.value)} />
-        {filters.search
-          ? <button onClick={()=>set('search','')} style={{ position:'absolute', right:'8px', top:'50%', transform:'translateY(-50%)', background:'none', border:'none', color:'rgba(var(--text-rgb),0.45)', cursor:'pointer', padding:0, fontSize:'10px', lineHeight:1 }}>✕</button>
-          : <svg style={{ position:'absolute', right:'9px', top:'50%', transform:'translateY(-50%)', opacity:0.28, pointerEvents:'none' }} width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <circle cx="5" cy="5" r="3.5" stroke="rgba(38,198,218,1)" strokeWidth="1.2"/>
-              <line x1="8" y1="8" x2="11" y2="11" stroke="rgba(38,198,218,1)" strokeWidth="1.2"/>
-            </svg>
-        }
-      </div>
-
-      <FilterGroup title="Fundort" active={filters.fundort.length>0} onReset={()=>set('fundort',[])} collapsible>
-        <div style={{ display:'flex', flexWrap:'wrap', gap:'4px' }}>
-          {allFundorte.map(f => <Chip key={f} label={f} active={filters.fundort.includes(f)} accentColor={FUNDORT_COLOR[f]} onClick={()=>toggle('fundort',f)} />)}
-        </div>
-      </FilterGroup>
-
-      <FilterGroup title="Kategorie" active={filters.kategorie.length>0} onReset={()=>set('kategorie',[])} collapsible>
-        <div style={{ display:'flex', flexWrap:'wrap', gap:'4px' }}>
-          {allKategorien.map(k => <Chip key={k} label={k} active={filters.kategorie.includes(k)} onClick={()=>toggle('kategorie',k)} />)}
-        </div>
-      </FilterGroup>
-
-      <FilterGroup title="Seltenheitsgrad" active={filters.seltenheit.length>0} onReset={()=>set('seltenheit',[])} collapsible>
-        <div style={{ display:'flex', flexDirection:'column', gap:'3px' }}>
-          {RES_RARITY_TIERS.map(t => (
-            <button key={t.label} className={`sort-btn${filters.seltenheit.includes(t.label)?' active':''}`}
-              onClick={()=>toggle('seltenheit', t.label)}
-              style={filters.seltenheit.includes(t.label) ? { color:t.color, borderColor:t.color+'55' } : {}}>
-              {t.label}
-            </button>
-          ))}
-        </div>
-      </FilterGroup>
-
-      <FilterGroup title="Sortierung" active={filters.sort!=='name-az'} onReset={()=>set('sort','name-az')} collapsible>
-        <div style={{ display:'flex', flexDirection:'column', gap:'2px' }}>
-          {RES_SORT_OPTIONS.map(o => (
-            <button key={o.id} className={`sort-btn${filters.sort===o.id?' active':''}`} onClick={()=>set('sort',o.id)}>{o.label}</button>
-          ))}
-        </div>
-      </FilterGroup>
-
-      {hasAny && (
-        <div style={{ marginTop:'auto', paddingTop:'14px', borderTop:'1px solid rgba(38,198,218,0.08)' }}>
-          <button onClick={resetAll}
-            style={{ width:'100%', padding:'6px', background:'rgba(200,60,60,0.08)', border:'1px solid rgba(200,60,60,0.25)', borderRadius:'2px', color:'rgba(230,90,90,0.65)', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.18em', cursor:'pointer', transition:'all 0.15s', textTransform:'uppercase' }}
-            onMouseEnter={e=>{e.currentTarget.style.background='rgba(200,60,60,0.18)';e.currentTarget.style.borderColor='rgba(230,90,90,0.5)';}}
-            onMouseLeave={e=>{e.currentTarget.style.background='rgba(200,60,60,0.08)';e.currentTarget.style.borderColor='rgba(200,60,60,0.25)';}}>
-            Filter löschen
-          </button>
-        </div>
-      )}
-    </aside>
-  );
+  return /*#__PURE__*/React.createElement("aside", {
+    className: `res-sidebar${isOpen ? ' res-sidebar--open' : ''}`
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: '14px'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '10px',
+      letterSpacing: '0.25em',
+      color: 'rgba(38,198,218,0.6)',
+      textTransform: 'uppercase'
+    }
+  }, "Filter"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '6px',
+      alignItems: 'center'
+    }
+  }, hasAny && /*#__PURE__*/React.createElement(XBtn, {
+    onClick: resetAll
+  }), /*#__PURE__*/React.createElement("button", {
+    className: "res-sidebar-close",
+    onClick: onClose,
+    title: "Schlie\xDFen"
+  }, "\u2715"))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      marginBottom: '16px'
+    }
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    placeholder: searchPlaceholder,
+    value: filters.search,
+    onChange: e => set('search', e.target.value)
+  }), filters.search ? /*#__PURE__*/React.createElement("button", {
+    onClick: () => set('search', ''),
+    style: {
+      position: 'absolute',
+      right: '8px',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      background: 'none',
+      border: 'none',
+      color: 'rgba(var(--text-rgb),0.45)',
+      cursor: 'pointer',
+      padding: 0,
+      fontSize: '10px',
+      lineHeight: 1
+    }
+  }, "\u2715") : /*#__PURE__*/React.createElement("svg", {
+    style: {
+      position: 'absolute',
+      right: '9px',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      opacity: 0.28,
+      pointerEvents: 'none'
+    },
+    width: "12",
+    height: "12",
+    viewBox: "0 0 12 12",
+    fill: "none"
+  }, /*#__PURE__*/React.createElement("circle", {
+    cx: "5",
+    cy: "5",
+    r: "3.5",
+    stroke: "rgba(38,198,218,1)",
+    strokeWidth: "1.2"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "8",
+    y1: "8",
+    x2: "11",
+    y2: "11",
+    stroke: "rgba(38,198,218,1)",
+    strokeWidth: "1.2"
+  }))), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Fundort",
+    active: filters.fundort.length > 0,
+    onReset: () => set('fundort', []),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '4px'
+    }
+  }, allFundorte.map(f => /*#__PURE__*/React.createElement(Chip, {
+    key: f,
+    label: f,
+    active: filters.fundort.includes(f),
+    accentColor: FUNDORT_COLOR[f],
+    onClick: () => toggle('fundort', f)
+  })))), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Kategorie",
+    active: filters.kategorie.length > 0,
+    onReset: () => set('kategorie', []),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '4px'
+    }
+  }, allKategorien.map(k => /*#__PURE__*/React.createElement(Chip, {
+    key: k,
+    label: k,
+    active: filters.kategorie.includes(k),
+    onClick: () => toggle('kategorie', k)
+  })))), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Seltenheitsgrad",
+    active: filters.seltenheit.length > 0,
+    onReset: () => set('seltenheit', []),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '3px'
+    }
+  }, RES_RARITY_TIERS.map(t => /*#__PURE__*/React.createElement("button", {
+    key: t.label,
+    className: `sort-btn${filters.seltenheit.includes(t.label) ? ' active' : ''}`,
+    onClick: () => toggle('seltenheit', t.label),
+    style: filters.seltenheit.includes(t.label) ? {
+      color: t.color,
+      borderColor: t.color + '55'
+    } : {}
+  }, t.label)))), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Sortierung",
+    active: filters.sort !== 'name-az',
+    onReset: () => set('sort', 'name-az'),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '2px'
+    }
+  }, RES_SORT_OPTIONS.map(o => /*#__PURE__*/React.createElement("button", {
+    key: o.id,
+    className: `sort-btn${filters.sort === o.id ? ' active' : ''}`,
+    onClick: () => set('sort', o.id)
+  }, o.label)))), hasAny && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: 'auto',
+      paddingTop: '14px',
+      borderTop: '1px solid rgba(38,198,218,0.08)'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: resetAll,
+    style: {
+      width: '100%',
+      padding: '6px',
+      background: 'rgba(200,60,60,0.08)',
+      border: '1px solid rgba(200,60,60,0.25)',
+      borderRadius: '2px',
+      color: 'rgba(230,90,90,0.65)',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.18em',
+      cursor: 'pointer',
+      transition: 'all 0.15s',
+      textTransform: 'uppercase'
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.background = 'rgba(200,60,60,0.18)';
+      e.currentTarget.style.borderColor = 'rgba(230,90,90,0.5)';
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.background = 'rgba(200,60,60,0.08)';
+      e.currentTarget.style.borderColor = 'rgba(200,60,60,0.25)';
+    }
+  }, "Filter l\xF6schen")));
 }
 
 // ── Resource Tab ──────────────────────────────────────────────────────────────
-function ResourceTab({ data, catKey, fallbackIcon, searchPlaceholder, onCount, isDM, vis, onToggle }) {
-  const [filters, setFilters] = useState({ search:'', fundort:[], kategorie:[], seltenheit:[], sort:'name-az' });
+function ResourceTab({
+  data,
+  catKey,
+  fallbackIcon,
+  searchPlaceholder,
+  onCount,
+  isDM,
+  vis,
+  onToggle
+}) {
+  const [filters, setFilters] = useState({
+    search: '',
+    fundort: [],
+    kategorie: [],
+    seltenheit: [],
+    sort: 'name-az'
+  });
   const [filterOpen, setFilterOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-
   const baseData = useMemo(() => isDM ? data : data.filter(d => vis.has(d.id)), [data, isDM, vis]);
-
   const allFundorte = useMemo(() => {
     const s = new Set();
-    baseData.forEach(d => (d.fundort||[]).forEach(f => s.add(f)));
+    baseData.forEach(d => (d.fundort || []).forEach(f => s.add(f)));
     return [...s].sort();
   }, [baseData]);
-
   const allKategorien = useMemo(() => {
     const s = new Set();
     baseData.forEach(d => s.add(d.kategorie));
     return [...s].sort();
   }, [baseData]);
-
   const hasActiveFilters = filters.search || filters.fundort.length || filters.kategorie.length || filters.seltenheit.length || filters.sort !== 'name-az';
-
   const filtered = useMemo(() => {
     let r = baseData;
     if (filters.search) {
       const q = filters.search.toLowerCase();
-      r = r.filter(d => d.name_de.toLowerCase().includes(q) || (d.desc_de||'').toLowerCase().includes(q));
+      r = r.filter(d => d.name_de.toLowerCase().includes(q) || (d.desc_de || '').toLowerCase().includes(q));
     }
-    if (filters.fundort.length)
-      r = r.filter(d => (d.fundort||[]).some(f => filters.fundort.includes(f)));
-    if (filters.kategorie.length)
-      r = r.filter(d => filters.kategorie.includes(d.kategorie));
-    if (filters.seltenheit.length)
-      r = r.filter(d => filters.seltenheit.includes(resRarity(d).label));
-
+    if (filters.fundort.length) r = r.filter(d => (d.fundort || []).some(f => filters.fundort.includes(f)));
+    if (filters.kategorie.length) r = r.filter(d => filters.kategorie.includes(d.kategorie));
+    if (filters.seltenheit.length) r = r.filter(d => filters.seltenheit.includes(resRarity(d).label));
     r = [...r];
     switch (filters.sort) {
-      case 'name-az':         r.sort((a,b)=>a.name_de.localeCompare(b.name_de,'de')); break;
-      case 'name-za':         r.sort((a,b)=>b.name_de.localeCompare(a.name_de,'de')); break;
-      case 'seltenheit-asc':  r.sort((a,b)=>a.seltenheitsgrad-b.seltenheitsgrad); break;
-      case 'seltenheit-desc': r.sort((a,b)=>b.seltenheitsgrad-a.seltenheitsgrad); break;
-      case 'preis-asc':       r.sort((a,b)=>parsePreis(a.verkaufspreis)-parsePreis(b.verkaufspreis)); break;
-      case 'preis-desc':      r.sort((a,b)=>parsePreis(b.verkaufspreis)-parsePreis(a.verkaufspreis)); break;
+      case 'name-az':
+        r.sort((a, b) => a.name_de.localeCompare(b.name_de, 'de'));
+        break;
+      case 'name-za':
+        r.sort((a, b) => b.name_de.localeCompare(a.name_de, 'de'));
+        break;
+      case 'seltenheit-asc':
+        r.sort((a, b) => a.seltenheitsgrad - b.seltenheitsgrad);
+        break;
+      case 'seltenheit-desc':
+        r.sort((a, b) => b.seltenheitsgrad - a.seltenheitsgrad);
+        break;
+      case 'preis-asc':
+        r.sort((a, b) => parsePreis(a.verkaufspreis) - parsePreis(b.verkaufspreis));
+        break;
+      case 'preis-desc':
+        r.sort((a, b) => parsePreis(b.verkaufspreis) - parsePreis(a.verkaufspreis));
+        break;
     }
     return r;
   }, [baseData, filters]);
-
-  useEffect(() => { onCount({ filtered: filtered.length, total: baseData.length }); }, [filtered.length, baseData.length]);
-
+  useEffect(() => {
+    onCount({
+      filtered: filtered.length,
+      total: baseData.length
+    });
+  }, [filtered.length, baseData.length]);
   const emptyMsg = !isDM && vis.size === 0 ? 'Noch nichts entdeckt' : 'Keine Treffer';
-
-  return (
-    <div className="res-layout">
-      {filterOpen && <div className="res-filter-overlay" onClick={() => setFilterOpen(false)} />}
-      <ResourceSidebar
-        filters={filters} setFilters={setFilters}
-        isOpen={filterOpen} onClose={() => setFilterOpen(false)}
-        allFundorte={allFundorte} allKategorien={allKategorien}
-        searchPlaceholder={searchPlaceholder}
-      />
-      <main className="res-main">
-        <button className="res-mobile-filter-btn" onClick={() => setFilterOpen(true)}>
-          {hasActiveFilters && <span className="filter-active-dot" />}
-          Filter
-        </button>
-        {filtered.length > 0
-          ? <div className="fish-grid">{filtered.map(d => isDM
-              ? <DmToggleWrapper key={d.id} id={d.id} visible={vis.has(d.id)} onToggle={id => onToggle(catKey, id)}><ResourceCard item={d} onSelect={setSelectedItem} fallbackIcon={fallbackIcon} /></DmToggleWrapper>
-              : <ResourceCard key={d.id} item={d} onSelect={setSelectedItem} fallbackIcon={fallbackIcon} />
-            )}</div>
-          : <div className="res-empty">{emptyMsg}</div>
-        }
-      </main>
-      {selectedItem && <ResourceDetailModal item={selectedItem} onClose={() => setSelectedItem(null)} fallbackIcon={fallbackIcon} />}
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    className: "res-layout"
+  }, filterOpen && /*#__PURE__*/React.createElement("div", {
+    className: "res-filter-overlay",
+    onClick: () => setFilterOpen(false)
+  }), /*#__PURE__*/React.createElement(ResourceSidebar, {
+    filters: filters,
+    setFilters: setFilters,
+    isOpen: filterOpen,
+    onClose: () => setFilterOpen(false),
+    allFundorte: allFundorte,
+    allKategorien: allKategorien,
+    searchPlaceholder: searchPlaceholder
+  }), /*#__PURE__*/React.createElement("main", {
+    className: "res-main"
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "res-mobile-filter-btn",
+    onClick: () => setFilterOpen(true)
+  }, hasActiveFilters && /*#__PURE__*/React.createElement("span", {
+    className: "filter-active-dot"
+  }), "Filter"), filtered.length > 0 ? /*#__PURE__*/React.createElement("div", {
+    className: "fish-grid"
+  }, filtered.map(d => isDM ? /*#__PURE__*/React.createElement(DmToggleWrapper, {
+    key: d.id,
+    id: d.id,
+    visible: vis.has(d.id),
+    onToggle: id => onToggle(catKey, id)
+  }, /*#__PURE__*/React.createElement(ResourceCard, {
+    item: d,
+    onSelect: setSelectedItem,
+    fallbackIcon: fallbackIcon
+  })) : /*#__PURE__*/React.createElement(ResourceCard, {
+    key: d.id,
+    item: d,
+    onSelect: setSelectedItem,
+    fallbackIcon: fallbackIcon
+  }))) : /*#__PURE__*/React.createElement("div", {
+    className: "res-empty"
+  }, emptyMsg)), selectedItem && /*#__PURE__*/React.createElement(ResourceDetailModal, {
+    item: selectedItem,
+    onClose: () => setSelectedItem(null),
+    fallbackIcon: fallbackIcon
+  }));
 }
 
 // ── DM UI Components ─────────────────────────────────────────────────────────
-function DmToggleWrapper({ id, visible, onToggle, children }) {
-  return (
-    <div style={{ position:'relative' }}>
-      {children}
-      <button
-        onClick={e => { e.stopPropagation(); onToggle(id); }}
-        title={visible ? 'Sichtbar · klicken zum Ausblenden' : 'Verborgen · klicken zum Einblenden'}
-        style={{
-          position:'absolute', top:38, right:6, zIndex:10,
-          width:20, height:20, borderRadius:3, cursor:'pointer', padding:0,
-          display:'flex', alignItems:'center', justifyContent:'center',
-          fontSize:11, fontFamily:'var(--font-mono)',
-          background: visible ? 'rgba(38,198,218,0.85)' : 'rgba(0,0,0,0.65)',
-          border: visible ? '1px solid rgba(38,198,218,1)' : '1px solid rgba(255,255,255,0.2)',
-          color: visible ? '#fff' : 'rgba(255,255,255,0.4)',
-          transition:'all 0.15s',
-        }}
-      >{visible ? '✓' : '○'}</button>
-    </div>
-  );
+function DmToggleWrapper({
+  id,
+  visible,
+  onToggle,
+  children
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative'
+    }
+  }, children, /*#__PURE__*/React.createElement("button", {
+    onClick: e => {
+      e.stopPropagation();
+      onToggle(id);
+    },
+    title: visible ? 'Sichtbar · klicken zum Ausblenden' : 'Verborgen · klicken zum Einblenden',
+    style: {
+      position: 'absolute',
+      top: 38,
+      right: 6,
+      zIndex: 10,
+      width: 20,
+      height: 20,
+      borderRadius: 3,
+      cursor: 'pointer',
+      padding: 0,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontSize: 11,
+      fontFamily: 'var(--font-mono)',
+      background: visible ? 'rgba(38,198,218,0.85)' : 'rgba(0,0,0,0.65)',
+      border: visible ? '1px solid rgba(38,198,218,1)' : '1px solid rgba(255,255,255,0.2)',
+      color: visible ? '#fff' : 'rgba(255,255,255,0.4)',
+      transition: 'all 0.15s'
+    }
+  }, visible ? '✓' : '○'));
 }
-
-function DmBanner({ vis }) {
+function DmBanner({
+  vis
+}) {
   const total = vis.fische.size + vis.pflanzen.size + vis.mineralien.size + vis.insekten.size;
-  return (
-    <div style={{ background:'rgba(10,38,42,0.97)', borderBottom:'1px solid rgba(38,198,218,0.3)', padding:'7px 20px', display:'flex', alignItems:'center', gap:16, flexShrink:0, flexWrap:'wrap' }}>
-      <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.28em', color:'rgba(38,198,218,0.8)', textTransform:'uppercase', whiteSpace:'nowrap' }}>◈ DM-Modus</span>
-      <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(38,198,218,0.5)', letterSpacing:'0.14em' }}>
-        {vis.fische.size} Fische · {vis.pflanzen.size} Pflanzen · {vis.mineralien.size} Mineralien · {vis.insekten.size} Insekten
-        <span style={{ marginLeft:8, color:'rgba(38,198,218,0.35)' }}>= {total} gesamt sichtbar</span>
-      </span>
-      <div style={{ flex:1 }} />
-      <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'rgba(38,198,218,0.35)', letterSpacing:'0.15em' }}>● Live übertragen</span>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: 'rgba(10,38,42,0.97)',
+      borderBottom: '1px solid rgba(38,198,218,0.3)',
+      padding: '7px 20px',
+      display: 'flex',
+      alignItems: 'center',
+      gap: 16,
+      flexShrink: 0,
+      flexWrap: 'wrap'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: 9,
+      letterSpacing: '0.28em',
+      color: 'rgba(38,198,218,0.8)',
+      textTransform: 'uppercase',
+      whiteSpace: 'nowrap'
+    }
+  }, "\u25C8 DM-Modus"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: 9,
+      color: 'rgba(38,198,218,0.5)',
+      letterSpacing: '0.14em'
+    }
+  }, vis.fische.size, " Fische \xB7 ", vis.pflanzen.size, " Pflanzen \xB7 ", vis.mineralien.size, " Mineralien \xB7 ", vis.insekten.size, " Insekten", /*#__PURE__*/React.createElement("span", {
+    style: {
+      marginLeft: 8,
+      color: 'rgba(38,198,218,0.35)'
+    }
+  }, "= ", total, " gesamt sichtbar")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1
+    }
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: 8,
+      color: 'rgba(38,198,218,0.35)',
+      letterSpacing: '0.15em'
+    }
+  }, "\u25CF Live \xFCbertragen"));
 }
 
 // ── Fish Tab content ──────────────────────────────────────────────────────────
-function FishTab({ onCount, onSelect, isDM, vis, onToggle }) {
-  const [filters, setFilters] = useState({ search:'', größe:[], klima:[], stärke:[], seltenheit:[], wassersort:'', sort:'name-az' });
+function FishTab({
+  onCount,
+  onSelect,
+  isDM,
+  vis,
+  onToggle
+}) {
+  const [filters, setFilters] = useState({
+    search: '',
+    größe: [],
+    klima: [],
+    stärke: [],
+    seltenheit: [],
+    wassersort: '',
+    sort: 'name-az'
+  });
   const [filterOpen, setFilterOpen] = useState(false);
-  const hasActiveFilters = filters.search || filters.größe.length || filters.klima.length ||
-    filters.stärke.length || filters.seltenheit.length || filters.wassersort || filters.sort !== 'name-az';
-
+  const hasActiveFilters = filters.search || filters.größe.length || filters.klima.length || filters.stärke.length || filters.seltenheit.length || filters.wassersort || filters.sort !== 'name-az';
   const filtered = useMemo(() => {
     let r = isDM ? ALL_FISH : ALL_FISH.filter(f => vis.has(f.id));
     if (filters.search) {
       const q = filters.search.toLowerCase();
-      r = r.filter(f => f.name_de.toLowerCase().includes(q) || (f.desc_de||'').toLowerCase().includes(q));
+      r = r.filter(f => f.name_de.toLowerCase().includes(q) || (f.desc_de || '').toLowerCase().includes(q));
     }
-    if (filters.größe.length)
-      r = r.filter(f => filters.größe.includes(f.größenkategorie));
-    if (filters.klima.length)
-      r = r.filter(f => (f.klima||[]).some(k => filters.klima.includes(k)));
-    if (filters.stärke.length)
-      r = r.filter(f => filters.stärke.some(g => {
-        const grp = STÄRKE_GROUPS.find(x=>x.label===g);
-        return grp && f.stärke>=grp.min && f.stärke<=grp.max;
-      }));
-    if (filters.seltenheit.length)
-      r = r.filter(f => filters.seltenheit.includes(fishRarity(f).label));
-    if (filters.wassersort)
-      r = r.filter(f => f.wassersort === filters.wassersort);
-
+    if (filters.größe.length) r = r.filter(f => filters.größe.includes(f.größenkategorie));
+    if (filters.klima.length) r = r.filter(f => (f.klima || []).some(k => filters.klima.includes(k)));
+    if (filters.stärke.length) r = r.filter(f => filters.stärke.some(g => {
+      const grp = STÄRKE_GROUPS.find(x => x.label === g);
+      return grp && f.stärke >= grp.min && f.stärke <= grp.max;
+    }));
+    if (filters.seltenheit.length) r = r.filter(f => filters.seltenheit.includes(fishRarity(f).label));
+    if (filters.wassersort) r = r.filter(f => f.wassersort === filters.wassersort);
     r = [...r];
     switch (filters.sort) {
-      case 'name-az':         r.sort((a,b)=>a.name_de.localeCompare(b.name_de,'de')); break;
-      case 'name-za':         r.sort((a,b)=>b.name_de.localeCompare(a.name_de,'de')); break;
-      case 'seltenheit-asc':  r.sort((a,b)=>{ const ta=fishRarityIdx(a),tb=fishRarityIdx(b); return ta!==tb ? ta-tb : fishRarityScore(a)-fishRarityScore(b); }); break;
-      case 'seltenheit-desc': r.sort((a,b)=>{ const ta=fishRarityIdx(a),tb=fishRarityIdx(b); return ta!==tb ? tb-ta : fishRarityScore(b)-fishRarityScore(a); }); break;
-      case 'preis-asc':       r.sort((a,b)=>parsePreis(a.verkaufspreis)-parsePreis(b.verkaufspreis)); break;
-      case 'preis-desc':      r.sort((a,b)=>parsePreis(b.verkaufspreis)-parsePreis(a.verkaufspreis)); break;
-      case 'staerke-desc':    r.sort((a,b)=>(b.stärke||0)-(a.stärke||0)); break;
-      case 'staerke-asc':     r.sort((a,b)=>(a.stärke||0)-(b.stärke||0)); break;
-      case 'gewicht-desc':    r.sort((a,b)=>parseGewicht(b.gewicht)-parseGewicht(a.gewicht)); break;
-      case 'gewicht-asc':     r.sort((a,b)=>parseGewicht(a.gewicht)-parseGewicht(b.gewicht)); break;
+      case 'name-az':
+        r.sort((a, b) => a.name_de.localeCompare(b.name_de, 'de'));
+        break;
+      case 'name-za':
+        r.sort((a, b) => b.name_de.localeCompare(a.name_de, 'de'));
+        break;
+      case 'seltenheit-asc':
+        r.sort((a, b) => {
+          const ta = fishRarityIdx(a),
+            tb = fishRarityIdx(b);
+          return ta !== tb ? ta - tb : fishRarityScore(a) - fishRarityScore(b);
+        });
+        break;
+      case 'seltenheit-desc':
+        r.sort((a, b) => {
+          const ta = fishRarityIdx(a),
+            tb = fishRarityIdx(b);
+          return ta !== tb ? tb - ta : fishRarityScore(b) - fishRarityScore(a);
+        });
+        break;
+      case 'preis-asc':
+        r.sort((a, b) => parsePreis(a.verkaufspreis) - parsePreis(b.verkaufspreis));
+        break;
+      case 'preis-desc':
+        r.sort((a, b) => parsePreis(b.verkaufspreis) - parsePreis(a.verkaufspreis));
+        break;
+      case 'staerke-desc':
+        r.sort((a, b) => (b.stärke || 0) - (a.stärke || 0));
+        break;
+      case 'staerke-asc':
+        r.sort((a, b) => (a.stärke || 0) - (b.stärke || 0));
+        break;
+      case 'gewicht-desc':
+        r.sort((a, b) => parseGewicht(b.gewicht) - parseGewicht(a.gewicht));
+        break;
+      case 'gewicht-asc':
+        r.sort((a, b) => parseGewicht(a.gewicht) - parseGewicht(b.gewicht));
+        break;
     }
     return r;
   }, [filters, isDM, vis]);
-
   const totalForCount = isDM ? ALL_FISH.length : vis.size;
-  useEffect(() => { onCount({ filtered: filtered.length, total: totalForCount }); }, [filtered.length, totalForCount]);
-
-  return (
-    <div className="res-layout">
-      {filterOpen && <div className="res-filter-overlay" onClick={() => setFilterOpen(false)} />}
-      <FishSidebar filters={filters} setFilters={setFilters} total={totalForCount} filtered={filtered.length} isOpen={filterOpen} onClose={() => setFilterOpen(false)} />
-      <main className="res-main">
-        <button className="res-mobile-filter-btn" onClick={() => setFilterOpen(true)}>
-          {hasActiveFilters && <span className="filter-active-dot" />}
-          Filter
-        </button>
-        {filtered.length > 0
-          ? <div className="fish-grid">{filtered.map(f => isDM
-              ? <DmToggleWrapper key={f.id} id={f.id} visible={vis.has(f.id)} onToggle={id => onToggle('fische', id)}><FishCard fish={f} onSelect={onSelect} /></DmToggleWrapper>
-              : <FishCard key={f.id} fish={f} onSelect={onSelect} />
-            )}</div>
-          : <div className="res-empty">{!isDM && vis.size === 0 ? 'Noch keine Fische entdeckt' : 'Keine Treffer'}</div>
-        }
-      </main>
-    </div>
-  );
+  useEffect(() => {
+    onCount({
+      filtered: filtered.length,
+      total: totalForCount
+    });
+  }, [filtered.length, totalForCount]);
+  return /*#__PURE__*/React.createElement("div", {
+    className: "res-layout"
+  }, filterOpen && /*#__PURE__*/React.createElement("div", {
+    className: "res-filter-overlay",
+    onClick: () => setFilterOpen(false)
+  }), /*#__PURE__*/React.createElement(FishSidebar, {
+    filters: filters,
+    setFilters: setFilters,
+    total: totalForCount,
+    filtered: filtered.length,
+    isOpen: filterOpen,
+    onClose: () => setFilterOpen(false)
+  }), /*#__PURE__*/React.createElement("main", {
+    className: "res-main"
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "res-mobile-filter-btn",
+    onClick: () => setFilterOpen(true)
+  }, hasActiveFilters && /*#__PURE__*/React.createElement("span", {
+    className: "filter-active-dot"
+  }), "Filter"), filtered.length > 0 ? /*#__PURE__*/React.createElement("div", {
+    className: "fish-grid"
+  }, filtered.map(f => isDM ? /*#__PURE__*/React.createElement(DmToggleWrapper, {
+    key: f.id,
+    id: f.id,
+    visible: vis.has(f.id),
+    onToggle: id => onToggle('fische', id)
+  }, /*#__PURE__*/React.createElement(FishCard, {
+    fish: f,
+    onSelect: onSelect
+  })) : /*#__PURE__*/React.createElement(FishCard, {
+    key: f.id,
+    fish: f,
+    onSelect: onSelect
+  }))) : /*#__PURE__*/React.createElement("div", {
+    className: "res-empty"
+  }, !isDM && vis.size === 0 ? 'Noch keine Fische entdeckt' : 'Keine Treffer')));
 }
 
 // ── App ───────────────────────────────────────────────────────────────────────
 function AccessDenied() {
-  return (
-    <div style={{ position:'fixed', inset:0, background:'var(--bg)', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:16, zIndex:999 }}>
-      <a href="index.html" style={{ position:'absolute', top:24, left:24, fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.22em', color:'rgba(200,190,240,0.4)', textDecoration:'none', textTransform:'uppercase' }}
-        onMouseEnter={e=>e.currentTarget.style.color='var(--white)'}
-        onMouseLeave={e=>e.currentTarget.style.color='rgba(200,190,240,0.4)'}>← Zurück</a>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.42em', color:'rgba(var(--accent-rgb),0.4)', textTransform:'uppercase' }}>Kein Zugriff</div>
-      <div style={{ fontFamily:'var(--font-display)', fontSize:14, letterSpacing:'0.3em', color:'rgba(var(--text-rgb),0.25)', textTransform:'uppercase' }}>Meruria — Ressourcen</div>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'fixed',
+      inset: 0,
+      background: 'var(--bg)',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 16,
+      zIndex: 999
+    }
+  }, /*#__PURE__*/React.createElement("a", {
+    href: "index.html",
+    style: {
+      position: 'absolute',
+      top: 24,
+      left: 24,
+      fontFamily: 'var(--font-mono)',
+      fontSize: 10,
+      letterSpacing: '0.22em',
+      color: 'rgba(200,190,240,0.4)',
+      textDecoration: 'none',
+      textTransform: 'uppercase'
+    },
+    onMouseEnter: e => e.currentTarget.style.color = 'var(--white)',
+    onMouseLeave: e => e.currentTarget.style.color = 'rgba(200,190,240,0.4)'
+  }, "\u2190 Zur\xFCck"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: 9,
+      letterSpacing: '0.42em',
+      color: 'rgba(var(--accent-rgb),0.4)',
+      textTransform: 'uppercase'
+    }
+  }, "Kein Zugriff"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: 14,
+      letterSpacing: '0.3em',
+      color: 'rgba(var(--text-rgb),0.25)',
+      textTransform: 'uppercase'
+    }
+  }, "Meruria \u2014 Ressourcen"));
 }
-
 function App() {
-  if (window.SITE_USER?.role !== 'dm') return <AccessDenied />;
-
-  const [mouse, setMouse] = useState({ x:0.5, y:0.5 });
+  if (window.SITE_USER?.role !== 'dm') return /*#__PURE__*/React.createElement(AccessDenied, null);
+  const [mouse, setMouse] = useState({
+    x: 0.5,
+    y: 0.5
+  });
   const [tweaks] = useTweaks(TWEAK_DEFAULTS);
   const [activeTab, setActiveTab] = useState('fische');
   const [tabCount, setTabCount] = useState(null);
   const [selectedFish, setSelectedFish] = useState(null);
-
   const isDM = window.SITE_USER?.role === 'dm';
-  const [vis, setVis] = useState({ fische: new Set(), pflanzen: new Set(), mineralien: new Set(), insekten: new Set() });
-
+  const [vis, setVis] = useState({
+    fische: new Set(),
+    pflanzen: new Set(),
+    mineralien: new Set(),
+    insekten: new Set()
+  });
   useEffect(() => {
     async function loadVis() {
-      const { data } = await window._sb.from('ressourcen_sichtbar').select('cat, resource_id');
+      const {
+        data
+      } = await window._sb.from('ressourcen_sichtbar').select('cat, resource_id');
       if (data) {
-        const v = { fische: new Set(), pflanzen: new Set(), mineralien: new Set(), insekten: new Set() };
-        data.forEach(row => { if (v[row.cat] !== undefined) v[row.cat].add(row.resource_id); });
+        const v = {
+          fische: new Set(),
+          pflanzen: new Set(),
+          mineralien: new Set(),
+          insekten: new Set()
+        };
+        data.forEach(row => {
+          if (v[row.cat] !== undefined) v[row.cat].add(row.resource_id);
+        });
         setVis(v);
       }
     }
     loadVis();
-
-    const channel = window._sb.channel('res-sichtbar-live')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'ressourcen_sichtbar' }, payload => {
-        setVis(prev => {
-          const v = { fische: new Set(prev.fische), pflanzen: new Set(prev.pflanzen), mineralien: new Set(prev.mineralien), insekten: new Set(prev.insekten) };
-          if (payload.eventType === 'INSERT') {
-            const { cat, resource_id } = payload.new;
-            if (v[cat] !== undefined) v[cat].add(resource_id);
-          } else if (payload.eventType === 'DELETE') {
-            const { cat, resource_id } = payload.old;
-            if (v[cat] !== undefined) v[cat].delete(resource_id);
-          }
-          return v;
-        });
-      })
-      .subscribe();
-
+    const channel = window._sb.channel('res-sichtbar-live').on('postgres_changes', {
+      event: '*',
+      schema: 'public',
+      table: 'ressourcen_sichtbar'
+    }, payload => {
+      setVis(prev => {
+        const v = {
+          fische: new Set(prev.fische),
+          pflanzen: new Set(prev.pflanzen),
+          mineralien: new Set(prev.mineralien),
+          insekten: new Set(prev.insekten)
+        };
+        if (payload.eventType === 'INSERT') {
+          const {
+            cat,
+            resource_id
+          } = payload.new;
+          if (v[cat] !== undefined) v[cat].add(resource_id);
+        } else if (payload.eventType === 'DELETE') {
+          const {
+            cat,
+            resource_id
+          } = payload.old;
+          if (v[cat] !== undefined) v[cat].delete(resource_id);
+        }
+        return v;
+      });
+    }).subscribe();
     return () => window._sb.removeChannel(channel);
   }, []);
-
   async function toggleVisible(cat, id) {
     const isVis = vis[cat].has(id);
     setVis(prev => {
       const s = new Set(prev[cat]);
-      if (isVis) s.delete(id); else s.add(id);
-      return { ...prev, [cat]: s };
+      if (isVis) s.delete(id);else s.add(id);
+      return {
+        ...prev,
+        [cat]: s
+      };
     });
     try {
       if (isVis) {
         await window._sb.from('ressourcen_sichtbar').delete().eq('cat', cat).eq('resource_id', id);
       } else {
-        await window._sb.from('ressourcen_sichtbar').insert({ cat, resource_id: id });
+        await window._sb.from('ressourcen_sichtbar').insert({
+          cat,
+          resource_id: id
+        });
       }
     } catch {
       setVis(prev => {
         const s = new Set(prev[cat]);
-        if (isVis) s.add(id); else s.delete(id);
-        return { ...prev, [cat]: s };
+        if (isVis) s.add(id);else s.delete(id);
+        return {
+          ...prev,
+          [cat]: s
+        };
       });
     }
   }
-
-  const handleMouseMove = useCallback(e => setMouse({ x:e.clientX/window.innerWidth, y:e.clientY/window.innerHeight }), []);
-  const handleTabChange = useCallback(id => { setActiveTab(id); if (id !== activeTab) setTabCount(null); }, [activeTab]);
-
-  return (
-    <div onMouseMove={handleMouseMove} style={{ display:'flex', flexDirection:'column', height:'100vh', overflow:'hidden', position:'relative' }}>
-      {tweaks.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} />}
-      <SiteNav rightLabel="RESSOURCEN" />
-
-      {isDM && <DmBanner vis={vis} />}
-
-      {/* Tab bar */}
-      <nav className="res-tabbar">
-        <div className="res-tabbar-left">
-          {tabCount && <span className="res-tabbar-count">Anzahl: {tabCount.filtered} / {tabCount.total}</span>}
-        </div>
-        <div className="res-tabbar-tabs">
-          {TABS.map(tab => (
-            <button key={tab.id} className={`res-tab${activeTab===tab.id?' active':''}`} onClick={()=>handleTabChange(tab.id)}>
-              <span className="res-tab-dot" />
-              {tab.label}
-            </button>
-          ))}
-        </div>
-      </nav>
-
-      {/* Tab content */}
-      {activeTab === 'fische'       && <FishTab onCount={setTabCount} onSelect={setSelectedFish} isDM={isDM} vis={vis.fische} onToggle={toggleVisible} />}
-      {selectedFish && <FishDetailModal fish={selectedFish} onClose={() => setSelectedFish(null)} />}
-      {activeTab === 'pflanzen'   && <ResourceTab data={ALL_PFLANZEN}   catKey="pflanzen"   fallbackIcon="🌿" searchPlaceholder="Pflanze suchen…"  onCount={setTabCount} isDM={isDM} vis={vis.pflanzen}   onToggle={toggleVisible} />}
-      {activeTab === 'mineralien' && <ResourceTab data={ALL_MINERALIEN} catKey="mineralien" fallbackIcon="💎" searchPlaceholder="Mineral suchen…"  onCount={setTabCount} isDM={isDM} vis={vis.mineralien} onToggle={toggleVisible} />}
-      {activeTab === 'insekten'   && <ResourceTab data={ALL_INSEKTEN}   catKey="insekten"   fallbackIcon="🪲" searchPlaceholder="Insekt suchen…"   onCount={setTabCount} isDM={isDM} vis={vis.insekten}   onToggle={toggleVisible} />}
-      {activeTab === 'monsterteile' && <PlaceholderTab id="monsterteile" label="Monsterteile" />}
-    </div>
-  );
+  const handleMouseMove = useCallback(e => setMouse({
+    x: e.clientX / window.innerWidth,
+    y: e.clientY / window.innerHeight
+  }), []);
+  const handleTabChange = useCallback(id => {
+    setActiveTab(id);
+    if (id !== activeTab) setTabCount(null);
+  }, [activeTab]);
+  return /*#__PURE__*/React.createElement("div", {
+    onMouseMove: handleMouseMove,
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100vh',
+      overflow: 'hidden',
+      position: 'relative'
+    }
+  }, tweaks.showParticles && /*#__PURE__*/React.createElement(ParticleField, {
+    mouseX: mouse.x,
+    mouseY: mouse.y
+  }), /*#__PURE__*/React.createElement(SiteNav, {
+    rightLabel: "RESSOURCEN"
+  }), isDM && /*#__PURE__*/React.createElement(DmBanner, {
+    vis: vis
+  }), /*#__PURE__*/React.createElement("nav", {
+    className: "res-tabbar"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "res-tabbar-left"
+  }, tabCount && /*#__PURE__*/React.createElement("span", {
+    className: "res-tabbar-count"
+  }, "Anzahl: ", tabCount.filtered, " / ", tabCount.total)), /*#__PURE__*/React.createElement("div", {
+    className: "res-tabbar-tabs"
+  }, TABS.map(tab => /*#__PURE__*/React.createElement("button", {
+    key: tab.id,
+    className: `res-tab${activeTab === tab.id ? ' active' : ''}`,
+    onClick: () => handleTabChange(tab.id)
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "res-tab-dot"
+  }), tab.label)))), activeTab === 'fische' && /*#__PURE__*/React.createElement(FishTab, {
+    onCount: setTabCount,
+    onSelect: setSelectedFish,
+    isDM: isDM,
+    vis: vis.fische,
+    onToggle: toggleVisible
+  }), selectedFish && /*#__PURE__*/React.createElement(FishDetailModal, {
+    fish: selectedFish,
+    onClose: () => setSelectedFish(null)
+  }), activeTab === 'pflanzen' && /*#__PURE__*/React.createElement(ResourceTab, {
+    data: ALL_PFLANZEN,
+    catKey: "pflanzen",
+    fallbackIcon: "\uD83C\uDF3F",
+    searchPlaceholder: "Pflanze suchen\u2026",
+    onCount: setTabCount,
+    isDM: isDM,
+    vis: vis.pflanzen,
+    onToggle: toggleVisible
+  }), activeTab === 'mineralien' && /*#__PURE__*/React.createElement(ResourceTab, {
+    data: ALL_MINERALIEN,
+    catKey: "mineralien",
+    fallbackIcon: "\uD83D\uDC8E",
+    searchPlaceholder: "Mineral suchen\u2026",
+    onCount: setTabCount,
+    isDM: isDM,
+    vis: vis.mineralien,
+    onToggle: toggleVisible
+  }), activeTab === 'insekten' && /*#__PURE__*/React.createElement(ResourceTab, {
+    data: ALL_INSEKTEN,
+    catKey: "insekten",
+    fallbackIcon: "\uD83E\uDEB2",
+    searchPlaceholder: "Insekt suchen\u2026",
+    onCount: setTabCount,
+    isDM: isDM,
+    vis: vis.insekten,
+    onToggle: toggleVisible
+  }), activeTab === 'monsterteile' && /*#__PURE__*/React.createElement(PlaceholderTab, {
+    id: "monsterteile",
+    label: "Monsterteile"
+  }));
 }
-
-ReactDOM.createRoot(document.getElementById('root')).render(<SiteGate><App /></SiteGate>);
+ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement(App, null)));
+})();
 </script>
 </body></html>

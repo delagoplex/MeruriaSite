@@ -6,238 +6,558 @@
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
 <link rel="stylesheet" href="assets/styles/pages/Charaktererstellung.css">
-<script src="assets/scripts/vendor/react.development.js"></script>
-<script src="assets/scripts/vendor/react-dom.development.js"></script>
-<script src="assets/scripts/vendor/babel-standalone.js"></script>
-<script src="assets/components/tweaks-panel-13.jsx" type="text/babel"></script>
-<script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/scripts/vendor/react.production.min.js"></script>
+<script src="assets/scripts/vendor/react-dom.production.min.js"></script>
+
+<script src="assets/components/tweaks-panel-13.js"></script>
+<script src="assets/components/nav.js"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
-<script src="assets/components/site-gate.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.js"></script>
 </head>
 <body>
 <div id="root"></div>
-<script type="text/babel">
-const { useState, useEffect, useRef, useCallback } = React;
-const { useTweaks, TweaksPanel, TweakSection, TweakToggle } = window;
-const { SiteNav, SiteGate } = window;
-
-const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"showParticles": true, "showHexes": true}/*EDITMODE-END*/;
+<script>
+(function () {
+const {
+  useState,
+  useEffect,
+  useRef,
+  useCallback
+} = React;
+const {
+  useTweaks,
+  TweaksPanel,
+  TweakSection,
+  TweakToggle
+} = window;
+const {
+  SiteNav,
+  SiteGate
+} = window;
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "showParticles": true,
+  "showHexes": true
+} /*EDITMODE-END*/;
 
 // ── HELPERS ──────────────────────────────────────────────
 function hexPoints(s) {
-  const cx = s/2, cy = s/2, r = s/2;
+  const cx = s / 2,
+    cy = s / 2,
+    r = s / 2;
   const pts = [];
   for (let i = 0; i < 6; i++) {
-    const a = (Math.PI/180)*(60*i - 30);
-    pts.push(`${cx + r*Math.cos(a)},${cy + r*Math.sin(a)}`);
+    const a = Math.PI / 180 * (60 * i - 30);
+    pts.push(`${cx + r * Math.cos(a)},${cy + r * Math.sin(a)}`);
   }
   return pts.join(' ');
 }
 
-
 // ── SECTION DATA ─────────────────────────────────────────
-const SECTIONS = [
-  {
-    id: 'rassen', nummer: 'I', name: 'Rassen', href: 'Rassen.html',
-    untertitel: 'Die Völker Merurias',
-    beschreibung: 'Vom himmelsgeborenen Aarakocra bis zum erdverbundenen Zwerg — entdecke die Linien, aus denen dein Charakter entsteht. Jede Rasse trägt ihre eigene Geschichte, Anatomie und Welt­anschauung.',
-    icon: 'rassen', count: '19 Völker',
-  },
-  {
-    id: 'klassen', nummer: 'II', name: 'Klassen', href: 'Klassen.html',
-    untertitel: 'Wege der Macht',
-    beschreibung: 'Krieger, Magier, Schurke, Heiler. Wähle den Pfad, der zum Wesen deiner Figur passt — vom blanken Stahl bis zum gewirkten Zauber.',
-    icon: 'klassen', count: '13 Klassen',
-  },
-  {
-    id: 'talente', nummer: 'III', name: 'Talente', href: 'Talente.html',
-    untertitel: 'Feinschliff & Fertigkeit',
-    beschreibung: 'Spezielle Fähigkeiten, die deinen Charakter über das Klassengerüst hinaus prägen. Eine Hand voll Talente kann den Unterschied zwischen Überleben und Heldentum ausmachen.',
-    icon: 'talente', count: 'Erweiterte Optionen',
-  },
-  {
-    id: 'hintergruende', nummer: 'IV', name: 'Hintergründe', href: 'Hintergruende.html',
-    untertitel: 'Wer warst du vorher?',
-    beschreibung: 'Soldat, Gelehrte, Ausgestoßener, Pilgerin. Der Hintergrund verwurzelt deinen Charakter in der Welt — er bringt Fertigkeiten, Ausrüstung und Erinnerungen mit.',
-    icon: 'hintergruende', count: 'Lebenswege',
-  },
-  {
-    id: 'zauber', nummer: 'V', name: 'Zauber', href: 'Zauber.html',
-    untertitel: 'Das arkane Arsenal',
-    beschreibung: 'Vom Funken bis zur Sphäre der Annihilation. Durchsuche das gesamte Verzeichnis bekannter Zauber — gefiltert nach Klasse, Grad und Schule.',
-    icon: 'zauber', count: 'Alle Grade',
-  },
-  {
-    id: 'ausruestung', nummer: 'VI', name: 'Ausrüstung', href: 'Ausrüstung.html',
-    untertitel: 'Waffen, Rüstung, Werkzeug',
-    beschreibung: 'Vom Dolch bis zur Plattenrüstung, vom Diebes­werkzeug bis zum Schmiede­ofen. Alles, was ein Abenteurer auf Meruria am Leib oder im Rucksack tragen kann.',
-    icon: 'ausruestung', count: 'Vollkatalog',
-  },
-];
+const SECTIONS = [{
+  id: 'rassen',
+  nummer: 'I',
+  name: 'Rassen',
+  href: 'Rassen.html',
+  untertitel: 'Die Völker Merurias',
+  beschreibung: 'Vom himmelsgeborenen Aarakocra bis zum erdverbundenen Zwerg — entdecke die Linien, aus denen dein Charakter entsteht. Jede Rasse trägt ihre eigene Geschichte, Anatomie und Welt­anschauung.',
+  icon: 'rassen',
+  count: '19 Völker'
+}, {
+  id: 'klassen',
+  nummer: 'II',
+  name: 'Klassen',
+  href: 'Klassen.html',
+  untertitel: 'Wege der Macht',
+  beschreibung: 'Krieger, Magier, Schurke, Heiler. Wähle den Pfad, der zum Wesen deiner Figur passt — vom blanken Stahl bis zum gewirkten Zauber.',
+  icon: 'klassen',
+  count: '13 Klassen'
+}, {
+  id: 'talente',
+  nummer: 'III',
+  name: 'Talente',
+  href: 'Talente.html',
+  untertitel: 'Feinschliff & Fertigkeit',
+  beschreibung: 'Spezielle Fähigkeiten, die deinen Charakter über das Klassengerüst hinaus prägen. Eine Hand voll Talente kann den Unterschied zwischen Überleben und Heldentum ausmachen.',
+  icon: 'talente',
+  count: 'Erweiterte Optionen'
+}, {
+  id: 'hintergruende',
+  nummer: 'IV',
+  name: 'Hintergründe',
+  href: 'Hintergruende.html',
+  untertitel: 'Wer warst du vorher?',
+  beschreibung: 'Soldat, Gelehrte, Ausgestoßener, Pilgerin. Der Hintergrund verwurzelt deinen Charakter in der Welt — er bringt Fertigkeiten, Ausrüstung und Erinnerungen mit.',
+  icon: 'hintergruende',
+  count: 'Lebenswege'
+}, {
+  id: 'zauber',
+  nummer: 'V',
+  name: 'Zauber',
+  href: 'Zauber.html',
+  untertitel: 'Das arkane Arsenal',
+  beschreibung: 'Vom Funken bis zur Sphäre der Annihilation. Durchsuche das gesamte Verzeichnis bekannter Zauber — gefiltert nach Klasse, Grad und Schule.',
+  icon: 'zauber',
+  count: 'Alle Grade'
+}, {
+  id: 'ausruestung',
+  nummer: 'VI',
+  name: 'Ausrüstung',
+  href: 'Ausrüstung.html',
+  untertitel: 'Waffen, Rüstung, Werkzeug',
+  beschreibung: 'Vom Dolch bis zur Plattenrüstung, vom Diebes­werkzeug bis zum Schmiede­ofen. Alles, was ein Abenteurer auf Meruria am Leib oder im Rucksack tragen kann.',
+  icon: 'ausruestung',
+  count: 'Vollkatalog'
+}];
 
 // ── FLOATING HEXES ───────────────────────────────────────
-const HEX_DEFS = [
-  { size:120, x:'6%',  y:'14%', anim:'hexFloat0', dur:'7.2s', opacity:0.035 },
-  { size:55,  x:'20%', y:'58%', anim:'hexFloat1', dur:'5.8s', opacity:0.06  },
-  { size:200, x:'70%', y:'6%',  anim:'hexFloat2', dur:'9.1s', opacity:0.025 },
-  { size:40,  x:'84%', y:'40%', anim:'hexFloat3', dur:'4.9s', opacity:0.08  },
-  { size:88,  x:'52%', y:'70%', anim:'hexFloat1', dur:'6.4s', opacity:0.04  },
-  { size:30,  x:'35%', y:'26%', anim:'hexFloat0', dur:'5.2s', opacity:0.10  },
-  { size:160, x:'40%', y:'82%', anim:'hexFloat2', dur:'8.3s', opacity:0.022 },
-  { size:50,  x:'91%', y:'76%', anim:'hexFloat3', dur:'6.0s', opacity:0.07  },
-];
-
-function FloatingHexField({ mouseX, mouseY }) {
-  return (
-    <div style={{ position:'fixed', inset:0, pointerEvents:'none', zIndex:1, overflow:'hidden', clipPath:'inset(212px 0 0 0)' }}>
-      {HEX_DEFS.map((h, i) => {
-        const px = hexPoints(h.size);
-        const parallaxX = (mouseX - 0.5) * (i % 3 === 0 ? -12 : i % 3 === 1 ? -6 : -18);
-        const parallaxY = (mouseY - 0.5) * (i % 3 === 0 ? -8  : i % 3 === 1 ? -4 : -14);
-        return (
-          <div key={i} style={{ position:'absolute', left:h.x, top:h.y, animation:`${h.anim} ${h.dur} ease-in-out infinite`, animationDelay:`${i*0.7}s`, transform:`translate(${parallaxX}px,${parallaxY}px)`, transition:'transform 0.4s ease-out', willChange:'transform' }}>
-            <svg width={h.size} height={h.size} viewBox={`0 0 ${h.size} ${h.size}`} style={{ display:'block', opacity:h.opacity, filter:`drop-shadow(0 0 ${h.size*0.06}px #7c4dff)` }}>
-              <polygon points={px} fill="transparent" stroke="#7c4dff" strokeWidth="1" />
-            </svg>
-          </div>
-        );
-      })}
-    </div>
-  );
+const HEX_DEFS = [{
+  size: 120,
+  x: '6%',
+  y: '14%',
+  anim: 'hexFloat0',
+  dur: '7.2s',
+  opacity: 0.035
+}, {
+  size: 55,
+  x: '20%',
+  y: '58%',
+  anim: 'hexFloat1',
+  dur: '5.8s',
+  opacity: 0.06
+}, {
+  size: 200,
+  x: '70%',
+  y: '6%',
+  anim: 'hexFloat2',
+  dur: '9.1s',
+  opacity: 0.025
+}, {
+  size: 40,
+  x: '84%',
+  y: '40%',
+  anim: 'hexFloat3',
+  dur: '4.9s',
+  opacity: 0.08
+}, {
+  size: 88,
+  x: '52%',
+  y: '70%',
+  anim: 'hexFloat1',
+  dur: '6.4s',
+  opacity: 0.04
+}, {
+  size: 30,
+  x: '35%',
+  y: '26%',
+  anim: 'hexFloat0',
+  dur: '5.2s',
+  opacity: 0.10
+}, {
+  size: 160,
+  x: '40%',
+  y: '82%',
+  anim: 'hexFloat2',
+  dur: '8.3s',
+  opacity: 0.022
+}, {
+  size: 50,
+  x: '91%',
+  y: '76%',
+  anim: 'hexFloat3',
+  dur: '6.0s',
+  opacity: 0.07
+}];
+function FloatingHexField({
+  mouseX,
+  mouseY
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'fixed',
+      inset: 0,
+      pointerEvents: 'none',
+      zIndex: 1,
+      overflow: 'hidden',
+      clipPath: 'inset(212px 0 0 0)'
+    }
+  }, HEX_DEFS.map((h, i) => {
+    const px = hexPoints(h.size);
+    const parallaxX = (mouseX - 0.5) * (i % 3 === 0 ? -12 : i % 3 === 1 ? -6 : -18);
+    const parallaxY = (mouseY - 0.5) * (i % 3 === 0 ? -8 : i % 3 === 1 ? -4 : -14);
+    return /*#__PURE__*/React.createElement("div", {
+      key: i,
+      style: {
+        position: 'absolute',
+        left: h.x,
+        top: h.y,
+        animation: `${h.anim} ${h.dur} ease-in-out infinite`,
+        animationDelay: `${i * 0.7}s`,
+        transform: `translate(${parallaxX}px,${parallaxY}px)`,
+        transition: 'transform 0.4s ease-out',
+        willChange: 'transform'
+      }
+    }, /*#__PURE__*/React.createElement("svg", {
+      width: h.size,
+      height: h.size,
+      viewBox: `0 0 ${h.size} ${h.size}`,
+      style: {
+        display: 'block',
+        opacity: h.opacity,
+        filter: `drop-shadow(0 0 ${h.size * 0.06}px #7c4dff)`
+      }
+    }, /*#__PURE__*/React.createElement("polygon", {
+      points: px,
+      fill: "transparent",
+      stroke: "#7c4dff",
+      strokeWidth: "1"
+    })));
+  }));
 }
 
 // ── PARTICLES ────────────────────────────────────────────
-function ParticleField({ mouseX, mouseY }) {
+function ParticleField({
+  mouseX,
+  mouseY
+}) {
   const canvasRef = useRef(null);
   const animRef = useRef(null);
   const particles = useRef([]);
-  const mouse = useRef({ x:0.5, y:0.5 });
-  useEffect(() => { mouse.current = { x: mouseX, y: mouseY }; }, [mouseX, mouseY]);
+  const mouse = useRef({
+    x: 0.5,
+    y: 0.5
+  });
   useEffect(() => {
-    const canvas = canvasRef.current; if (!canvas) return;
+    mouse.current = {
+      x: mouseX,
+      y: mouseY
+    };
+  }, [mouseX, mouseY]);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    const resize = () => { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; };
-    resize(); window.addEventListener('resize', resize);
-    particles.current = Array.from({length:55}, () => ({
-      x: Math.random(), y: Math.random(),
-      r: Math.random()*1.6+0.5,
-      vx:(Math.random()-0.5)*0.05, vy:(Math.random()-0.5)*0.05,
-      alpha: Math.random()*0.2+0.05,
+    const resize = () => {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    };
+    resize();
+    window.addEventListener('resize', resize);
+    particles.current = Array.from({
+      length: 55
+    }, () => ({
+      x: Math.random(),
+      y: Math.random(),
+      r: Math.random() * 1.6 + 0.5,
+      vx: (Math.random() - 0.5) * 0.05,
+      vy: (Math.random() - 0.5) * 0.05,
+      alpha: Math.random() * 0.2 + 0.05
     }));
     const tick = () => {
-      const w = canvas.width, h = canvas.height;
-      const shiftX = (mouse.current.x - 0.5)*-14, shiftY = (mouse.current.y - 0.5)*-14;
-      ctx.clearRect(0,0,w,h);
+      const w = canvas.width,
+        h = canvas.height;
+      const shiftX = (mouse.current.x - 0.5) * -14,
+        shiftY = (mouse.current.y - 0.5) * -14;
+      ctx.clearRect(0, 0, w, h);
       particles.current.forEach(p => {
-        p.x += p.vx/w*60; p.y += p.vy/h*60;
-        if(p.x<0)p.x=1; if(p.x>1)p.x=0; if(p.y<0)p.y=1; if(p.y>1)p.y=0;
-        ctx.beginPath(); ctx.arc(p.x*w+shiftX, p.y*h+shiftY, p.r, 0, Math.PI*2);
-        ctx.fillStyle = `rgba(160,140,255,${p.alpha})`; ctx.fill();
+        p.x += p.vx / w * 60;
+        p.y += p.vy / h * 60;
+        if (p.x < 0) p.x = 1;
+        if (p.x > 1) p.x = 0;
+        if (p.y < 0) p.y = 1;
+        if (p.y > 1) p.y = 0;
+        ctx.beginPath();
+        ctx.arc(p.x * w + shiftX, p.y * h + shiftY, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(160,140,255,${p.alpha})`;
+        ctx.fill();
       });
       animRef.current = requestAnimationFrame(tick);
     };
     tick();
-    return () => { cancelAnimationFrame(animRef.current); window.removeEventListener('resize', resize); };
+    return () => {
+      cancelAnimationFrame(animRef.current);
+      window.removeEventListener('resize', resize);
+    };
   }, []);
-  return <canvas ref={canvasRef} style={{ position:'fixed', inset:0, width:'100%', height:'100%', pointerEvents:'none', zIndex:0, clipPath:'inset(212px 0 0 0)' }} />;
+  return /*#__PURE__*/React.createElement("canvas", {
+    ref: canvasRef,
+    style: {
+      position: 'fixed',
+      inset: 0,
+      width: '100%',
+      height: '100%',
+      pointerEvents: 'none',
+      zIndex: 0,
+      clipPath: 'inset(212px 0 0 0)'
+    }
+  });
 }
 
 // ── SCROLL REVEAL ────────────────────────────────────────
 function useScrollReveal() {
   useEffect(() => {
     const revealed = new WeakSet();
-    const observer = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (!entry.isIntersecting || revealed.has(entry.target)) return;
         revealed.add(entry.target);
         observer.unobserve(entry.target);
         entry.target.classList.add('visible');
       });
-    }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+    }, {
+      threshold: 0.05,
+      rootMargin: '0px 0px -20px 0px'
+    });
     const t = setTimeout(() => {
       document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
     }, 100);
-    return () => { clearTimeout(t); observer.disconnect(); };
+    return () => {
+      clearTimeout(t);
+      observer.disconnect();
+    };
   }, []);
 }
 
-
 // ── SECTION ICON (small hex sigil) ───────────────────────
-function SectionIcon({ kind, size = 64, color = '#7c4dff', hov }) {
-  const c1 = color, c2 = `${color}55`;
+function SectionIcon({
+  kind,
+  size = 64,
+  color = '#7c4dff',
+  hov
+}) {
+  const c1 = color,
+    c2 = `${color}55`;
   const opacity = hov ? 1 : 0.75;
   // Each icon is built from primitives — no decorative SVGs beyond simple shapes.
   const renderInner = () => {
-    if (kind === 'rassen') return (
-      <g opacity={opacity}>
-        {/* three circles in triangular formation */}
-        <circle cx="32" cy="22" r="6" fill="none" stroke={c1} strokeWidth="1.2"/>
-        <circle cx="20" cy="40" r="6" fill="none" stroke={c1} strokeWidth="1.2"/>
-        <circle cx="44" cy="40" r="6" fill="none" stroke={c1} strokeWidth="1.2"/>
-        <line x1="32" y1="28" x2="20" y2="34" stroke={c2} strokeWidth="0.8"/>
-        <line x1="32" y1="28" x2="44" y2="34" stroke={c2} strokeWidth="0.8"/>
-        <line x1="26" y1="40" x2="38" y2="40" stroke={c2} strokeWidth="0.8"/>
-      </g>
-    );
-    if (kind === 'klassen') return (
-      <g opacity={opacity}>
-        {/* crossed bars representing pathways */}
-        <line x1="14" y1="14" x2="50" y2="50" stroke={c1} strokeWidth="1.4"/>
-        <line x1="50" y1="14" x2="14" y2="50" stroke={c1} strokeWidth="1.4"/>
-        <circle cx="32" cy="32" r="8" fill="none" stroke={c1} strokeWidth="1"/>
-        <circle cx="32" cy="32" r="2" fill={c1}/>
-      </g>
-    );
-    if (kind === 'talente') return (
-      <g opacity={opacity}>
-        {/* small radiating dots from a center */}
-        <circle cx="32" cy="32" r="3.5" fill={c1}/>
-        {[0,1,2,3,4,5].map(i => {
-          const a = (Math.PI/180)*(60*i);
-          const x = 32 + 16*Math.cos(a), y = 32 + 16*Math.sin(a);
-          return <circle key={i} cx={x} cy={y} r="2" fill="none" stroke={c1} strokeWidth="1"/>;
-        })}
-      </g>
-    );
-    if (kind === 'hintergruende') return (
-      <g opacity={opacity}>
-        {/* timeline / pages */}
-        <rect x="14" y="20" width="22" height="28" rx="1" fill="none" stroke={c1} strokeWidth="1"/>
-        <rect x="20" y="14" width="22" height="28" rx="1" fill="none" stroke={c1} strokeWidth="1"/>
-        <rect x="26" y="22" width="22" height="28" rx="1" fill={`${color}10`} stroke={c1} strokeWidth="1"/>
-        <line x1="30" y1="30" x2="44" y2="30" stroke={c2} strokeWidth="0.8"/>
-        <line x1="30" y1="36" x2="44" y2="36" stroke={c2} strokeWidth="0.8"/>
-        <line x1="30" y1="42" x2="40" y2="42" stroke={c2} strokeWidth="0.8"/>
-      </g>
-    );
-    if (kind === 'zauber') return (
-      <g opacity={opacity}>
-        {/* hex inside hex */}
-        <polygon points={hexPoints(40)} fill="none" stroke={c1} strokeWidth="1" transform="translate(12 12)"/>
-        <polygon points={hexPoints(22)} fill="none" stroke={c1} strokeWidth="1" transform="translate(21 21)"/>
-        <circle cx="32" cy="32" r="2.5" fill={c1}/>
-      </g>
-    );
-    if (kind === 'ausruestung') return (
-      <g opacity={opacity}>
-        {/* three stacked rectangles like equipment slots */}
-        <rect x="14" y="14" width="36" height="10" rx="1" fill="none" stroke={c1} strokeWidth="1"/>
-        <rect x="14" y="27" width="36" height="10" rx="1" fill="none" stroke={c1} strokeWidth="1"/>
-        <rect x="14" y="40" width="36" height="10" rx="1" fill="none" stroke={c1} strokeWidth="1"/>
-        <circle cx="22" cy="19" r="1.5" fill={c1}/>
-        <circle cx="22" cy="32" r="1.5" fill={c1}/>
-        <circle cx="22" cy="45" r="1.5" fill={c1}/>
-      </g>
-    );
+    if (kind === 'rassen') return /*#__PURE__*/React.createElement("g", {
+      opacity: opacity
+    }, /*#__PURE__*/React.createElement("circle", {
+      cx: "32",
+      cy: "22",
+      r: "6",
+      fill: "none",
+      stroke: c1,
+      strokeWidth: "1.2"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "20",
+      cy: "40",
+      r: "6",
+      fill: "none",
+      stroke: c1,
+      strokeWidth: "1.2"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "44",
+      cy: "40",
+      r: "6",
+      fill: "none",
+      stroke: c1,
+      strokeWidth: "1.2"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "32",
+      y1: "28",
+      x2: "20",
+      y2: "34",
+      stroke: c2,
+      strokeWidth: "0.8"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "32",
+      y1: "28",
+      x2: "44",
+      y2: "34",
+      stroke: c2,
+      strokeWidth: "0.8"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "26",
+      y1: "40",
+      x2: "38",
+      y2: "40",
+      stroke: c2,
+      strokeWidth: "0.8"
+    }));
+    if (kind === 'klassen') return /*#__PURE__*/React.createElement("g", {
+      opacity: opacity
+    }, /*#__PURE__*/React.createElement("line", {
+      x1: "14",
+      y1: "14",
+      x2: "50",
+      y2: "50",
+      stroke: c1,
+      strokeWidth: "1.4"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "50",
+      y1: "14",
+      x2: "14",
+      y2: "50",
+      stroke: c1,
+      strokeWidth: "1.4"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "32",
+      cy: "32",
+      r: "8",
+      fill: "none",
+      stroke: c1,
+      strokeWidth: "1"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "32",
+      cy: "32",
+      r: "2",
+      fill: c1
+    }));
+    if (kind === 'talente') return /*#__PURE__*/React.createElement("g", {
+      opacity: opacity
+    }, /*#__PURE__*/React.createElement("circle", {
+      cx: "32",
+      cy: "32",
+      r: "3.5",
+      fill: c1
+    }), [0, 1, 2, 3, 4, 5].map(i => {
+      const a = Math.PI / 180 * (60 * i);
+      const x = 32 + 16 * Math.cos(a),
+        y = 32 + 16 * Math.sin(a);
+      return /*#__PURE__*/React.createElement("circle", {
+        key: i,
+        cx: x,
+        cy: y,
+        r: "2",
+        fill: "none",
+        stroke: c1,
+        strokeWidth: "1"
+      });
+    }));
+    if (kind === 'hintergruende') return /*#__PURE__*/React.createElement("g", {
+      opacity: opacity
+    }, /*#__PURE__*/React.createElement("rect", {
+      x: "14",
+      y: "20",
+      width: "22",
+      height: "28",
+      rx: "1",
+      fill: "none",
+      stroke: c1,
+      strokeWidth: "1"
+    }), /*#__PURE__*/React.createElement("rect", {
+      x: "20",
+      y: "14",
+      width: "22",
+      height: "28",
+      rx: "1",
+      fill: "none",
+      stroke: c1,
+      strokeWidth: "1"
+    }), /*#__PURE__*/React.createElement("rect", {
+      x: "26",
+      y: "22",
+      width: "22",
+      height: "28",
+      rx: "1",
+      fill: `${color}10`,
+      stroke: c1,
+      strokeWidth: "1"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "30",
+      y1: "30",
+      x2: "44",
+      y2: "30",
+      stroke: c2,
+      strokeWidth: "0.8"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "30",
+      y1: "36",
+      x2: "44",
+      y2: "36",
+      stroke: c2,
+      strokeWidth: "0.8"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "30",
+      y1: "42",
+      x2: "40",
+      y2: "42",
+      stroke: c2,
+      strokeWidth: "0.8"
+    }));
+    if (kind === 'zauber') return /*#__PURE__*/React.createElement("g", {
+      opacity: opacity
+    }, /*#__PURE__*/React.createElement("polygon", {
+      points: hexPoints(40),
+      fill: "none",
+      stroke: c1,
+      strokeWidth: "1",
+      transform: "translate(12 12)"
+    }), /*#__PURE__*/React.createElement("polygon", {
+      points: hexPoints(22),
+      fill: "none",
+      stroke: c1,
+      strokeWidth: "1",
+      transform: "translate(21 21)"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "32",
+      cy: "32",
+      r: "2.5",
+      fill: c1
+    }));
+    if (kind === 'ausruestung') return /*#__PURE__*/React.createElement("g", {
+      opacity: opacity
+    }, /*#__PURE__*/React.createElement("rect", {
+      x: "14",
+      y: "14",
+      width: "36",
+      height: "10",
+      rx: "1",
+      fill: "none",
+      stroke: c1,
+      strokeWidth: "1"
+    }), /*#__PURE__*/React.createElement("rect", {
+      x: "14",
+      y: "27",
+      width: "36",
+      height: "10",
+      rx: "1",
+      fill: "none",
+      stroke: c1,
+      strokeWidth: "1"
+    }), /*#__PURE__*/React.createElement("rect", {
+      x: "14",
+      y: "40",
+      width: "36",
+      height: "10",
+      rx: "1",
+      fill: "none",
+      stroke: c1,
+      strokeWidth: "1"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "22",
+      cy: "19",
+      r: "1.5",
+      fill: c1
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "22",
+      cy: "32",
+      r: "1.5",
+      fill: c1
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "22",
+      cy: "45",
+      r: "1.5",
+      fill: c1
+    }));
     return null;
   };
-  return (
-    <svg width={size} height={size} viewBox="0 0 64 64" style={{ display:'block', filter: hov ? `drop-shadow(0 0 8px ${color}88)` : 'none', transition:'filter 0.3s' }}>
-      <polygon points={hexPoints(64)} fill={`${color}08`} stroke={`${color}33`} strokeWidth="0.8"/>
-      {renderInner()}
-    </svg>
-  );
+  return /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 64 64",
+    style: {
+      display: 'block',
+      filter: hov ? `drop-shadow(0 0 8px ${color}88)` : 'none',
+      transition: 'filter 0.3s'
+    }
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(64),
+    fill: `${color}08`,
+    stroke: `${color}33`,
+    strokeWidth: "0.8"
+  }), renderInner());
 }
 
 // ── HERO "NEUER CHARAKTER" CARD ──────────────────────────
@@ -248,304 +568,709 @@ function NeuerCharakterCard() {
   const intervalRef = useRef(null);
   const timeoutRef = useRef(null);
   const dur = '1.8s';
-
   const fireGlitch = () => {
     setGlitchActive(false);
     clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(() => { setGlitchKey(k=>k+1); setGlitchActive(true); }, 20);
+    timeoutRef.current = setTimeout(() => {
+      setGlitchKey(k => k + 1);
+      setGlitchActive(true);
+    }, 20);
   };
-
   useEffect(() => {
     if (hov) {
-      clearInterval(intervalRef.current); clearTimeout(timeoutRef.current);
-      timeoutRef.current = setTimeout(() => { fireGlitch(); intervalRef.current = setInterval(fireGlitch, 2400); }, 80);
+      clearInterval(intervalRef.current);
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = setTimeout(() => {
+        fireGlitch();
+        intervalRef.current = setInterval(fireGlitch, 2400);
+      }, 80);
     } else {
-      clearInterval(intervalRef.current); clearTimeout(timeoutRef.current);
+      clearInterval(intervalRef.current);
+      clearTimeout(timeoutRef.current);
       setGlitchActive(false);
     }
-    return () => { clearInterval(intervalRef.current); clearTimeout(timeoutRef.current); };
+    return () => {
+      clearInterval(intervalRef.current);
+      clearTimeout(timeoutRef.current);
+    };
   }, [hov]);
-
-  return (
-    <div className="reveal-up" style={{ transitionDelay:'0s' }}>
-      <a href="Neuer_Charakter.html"
-        onMouseEnter={() => setHov(true)}
-        onMouseLeave={() => setHov(false)}
-        style={{ textDecoration:'none', display:'block', position:'relative' }}>
-        <div style={{
-          position:'relative',
-          background: 'linear-gradient(135deg, rgba(40,20,90,0.55) 0%, rgba(15,8,40,0.92) 50%, rgba(5,4,15,0.98) 100%)',
-          border: `1px solid ${hov ? 'rgba(160,140,255,0.65)' : 'rgba(160,140,255,0.3)'}`,
-          borderRadius:'4px',
-          overflow:'hidden',
-          padding:'38px 44px 36px',
-          minHeight:'200px',
-          transition:'border-color 0.3s, box-shadow 0.3s',
-          boxShadow: hov
-            ? '0 0 56px rgba(124,77,255,0.22), inset 0 0 64px rgba(124,77,255,0.08), 0 12px 40px rgba(0,0,0,0.6)'
-            : '0 0 24px rgba(124,77,255,0.08), inset 0 0 40px rgba(124,77,255,0.04), 0 6px 24px rgba(0,0,0,0.45)',
-        }}>
-
-          {/* Diagonal stripe texture */}
-          <div style={{ position:'absolute', inset:0, pointerEvents:'none',
-            backgroundImage: `repeating-linear-gradient(135deg, transparent, transparent 22px, rgba(160,140,255,0.04) 22px, rgba(160,140,255,0.04) 23px)` }} />
-
-          {/* Scanline on hover */}
-          {glitchActive && <div key={`hs-${glitchKey}`} aria-hidden="true" style={{ position:'absolute', left:0, right:0, height:'2px', background:'rgba(200,185,255,0.7)', boxShadow:'0 0 12px rgba(200,185,255,0.8)', pointerEvents:'none', zIndex:3, animation:`hero-scan ${dur} ease forwards` }} />}
-
-          {/* Glow on hover, top-left */}
-          {hov && <div style={{ position:'absolute', top:'-40px', left:'-40px', width:'280px', height:'280px',
-            background:'radial-gradient(circle, rgba(124,77,255,0.22), transparent 70%)',
-            pointerEvents:'none' }} />}
-
-          {/* Floating hex watermark */}
-          <div style={{ position:'absolute', right:'34px', top:'50%', transform:'translateY(-50%)', pointerEvents:'none' }}>
-            <svg width="170" height="170" viewBox="0 0 170 170" style={{ display:'block', opacity: hov ? 0.18 : 0.09, transition:'opacity 0.35s' }}>
-              <polygon points={hexPoints(170)} fill="none" stroke="#7c4dff" strokeWidth="1"/>
-              <polygon points={hexPoints(120)} fill="none" stroke="#7c4dff" strokeWidth="0.7" transform="translate(25 25)"/>
-              <polygon points={hexPoints(70)} fill="none" stroke="#7c4dff" strokeWidth="0.5" transform="translate(50 50)"/>
-              <circle cx="85" cy="85" r="3" fill="#7c4dff"/>
-            </svg>
-          </div>
-
-          {/* Content */}
-          <div style={{ position:'relative', zIndex:2, maxWidth:'72%' }}>
-            {/* Kicker */}
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'8.5px', letterSpacing:'0.32em', color:'rgba(160,140,255,0.55)', textTransform:'uppercase', marginBottom:'14px', display:'flex', alignItems:'center', gap:'10px' }}>
-              <span style={{ width:'24px', height:'1px', background:'rgba(160,140,255,0.4)' }}/>
-              Geführter Prozess
-              <span style={{ width:'1px', height:'1px' }}/>
-            </div>
-
-            {/* Glitch title */}
-            <div style={{ position:'relative', display:'inline-block', marginBottom:'18px' }}>
-              {glitchActive && <h2 key={`ha-${glitchKey}`} aria-hidden="true" style={{
-                position:'absolute', inset:0, fontFamily:'var(--font-display)', fontSize:'clamp(28px,3.4vw,40px)', fontWeight:'400',
-                letterSpacing:'0.16em', color:'#a78bff', textTransform:'uppercase', lineHeight:1.1,
-                pointerEvents:'none', zIndex:1, animation:`hero-glitch-a ${dur} ease forwards`,
-              }}>Neuer Charakter</h2>}
-              {glitchActive && <h2 key={`hb-${glitchKey}`} aria-hidden="true" style={{
-                position:'absolute', inset:0, fontFamily:'var(--font-display)', fontSize:'clamp(28px,3.4vw,40px)', fontWeight:'400',
-                letterSpacing:'0.16em', color:'#7c4dff', textTransform:'uppercase', lineHeight:1.1,
-                pointerEvents:'none', zIndex:1, animation:`hero-glitch-b ${dur} ease forwards`,
-              }}>Neuer Charakter</h2>}
-              <h2 key={`hmain-${glitchKey}`} style={{
-                fontFamily:'var(--font-display)', fontSize:'clamp(28px,3.4vw,40px)', fontWeight:'400',
-                letterSpacing:'0.16em', color: hov ? '#f0eeff' : '#e8e0ff', textTransform:'uppercase', lineHeight:1.1,
-                textShadow: hov ? '0 0 24px rgba(124,77,255,0.7), 0 0 40px rgba(124,77,255,0.3)' : '0 0 14px rgba(124,77,255,0.3)',
-                transition: glitchActive ? 'none' : 'color 0.3s, text-shadow 0.3s',
-                position:'relative', zIndex:2,
-                ...(glitchActive ? { animation:`hero-glitch-main ${dur} ease forwards` } : {}),
-              }}>Neuer Charakter</h2>
-            </div>
-
-            <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'13px', lineHeight:1.85,
-              color:'rgba(220,210,255,0.7)', letterSpacing:'0.03em', maxWidth:'520px', marginBottom:'22px', textWrap:'pretty' }}>
-              Markiere, was du schon weißt — der geführte Prozess grenzt den Rest über zielgerichtete Quizfragen ein und liefert am Ende einen vollständigen Charakterbogen, druckbereit.
-            </p>
-
-            {/* Steps row */}
-            <div style={{ display:'flex', alignItems:'center', gap:'14px', marginBottom:'10px', flexWrap:'wrap' }}>
-              {[
-                { n:'01', l:'Tag-Auswahl' },
-                { n:'02', l:'Quiz' },
-                { n:'03', l:'Charakterbogen' },
-              ].map((s, i, arr) => (
-                <React.Fragment key={s.n}>
-                  <div style={{ display:'flex', alignItems:'center', gap:'7px' }}>
-                    <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.15em', color:'rgba(124,77,255,0.85)', padding:'3px 7px', border:'1px solid rgba(124,77,255,0.45)', borderRadius:'2px', background:'rgba(124,77,255,0.08)' }}>{s.n}</span>
-                    <span style={{ fontFamily:'var(--font-mono)', fontSize:'9.5px', letterSpacing:'0.18em', color:'rgba(220,210,255,0.65)', textTransform:'uppercase' }}>{s.l}</span>
-                  </div>
-                  {i < arr.length-1 && <span style={{ fontFamily:'var(--font-mono)', fontSize:'10px', color:'rgba(124,77,255,0.4)' }}>→</span>}
-                </React.Fragment>
-              ))}
-            </div>
-
-            <div style={{ display:'flex', alignItems:'center', gap:'10px', marginTop:'22px' }}>
-              <span style={{ fontFamily:'var(--font-display)', fontSize:'10px', letterSpacing:'0.28em', color: hov ? '#f0eeff' : '#c9b8ff', textTransform:'uppercase', textShadow: hov ? '0 0 12px rgba(124,77,255,0.6)' : 'none', transition:'color 0.25s, text-shadow 0.25s' }}>Erstellung starten</span>
-              <span style={{ fontFamily:'var(--font-mono)', fontSize:'14px', color: hov ? '#f0eeff' : '#c9b8ff', transform: hov ? 'translateX(4px)' : 'translateX(0)', transition:'transform 0.25s, color 0.25s' }}>→</span>
-            </div>
-          </div>
-        </div>
-      </a>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      transitionDelay: '0s'
+    }
+  }, /*#__PURE__*/React.createElement("a", {
+    href: "Neuer_Charakter.html",
+    onMouseEnter: () => setHov(true),
+    onMouseLeave: () => setHov(false),
+    style: {
+      textDecoration: 'none',
+      display: 'block',
+      position: 'relative'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      background: 'linear-gradient(135deg, rgba(40,20,90,0.55) 0%, rgba(15,8,40,0.92) 50%, rgba(5,4,15,0.98) 100%)',
+      border: `1px solid ${hov ? 'rgba(160,140,255,0.65)' : 'rgba(160,140,255,0.3)'}`,
+      borderRadius: '4px',
+      overflow: 'hidden',
+      padding: '38px 44px 36px',
+      minHeight: '200px',
+      transition: 'border-color 0.3s, box-shadow 0.3s',
+      boxShadow: hov ? '0 0 56px rgba(124,77,255,0.22), inset 0 0 64px rgba(124,77,255,0.08), 0 12px 40px rgba(0,0,0,0.6)' : '0 0 24px rgba(124,77,255,0.08), inset 0 0 40px rgba(124,77,255,0.04), 0 6px 24px rgba(0,0,0,0.45)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      pointerEvents: 'none',
+      backgroundImage: `repeating-linear-gradient(135deg, transparent, transparent 22px, rgba(160,140,255,0.04) 22px, rgba(160,140,255,0.04) 23px)`
+    }
+  }), glitchActive && /*#__PURE__*/React.createElement("div", {
+    key: `hs-${glitchKey}`,
+    "aria-hidden": "true",
+    style: {
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      height: '2px',
+      background: 'rgba(200,185,255,0.7)',
+      boxShadow: '0 0 12px rgba(200,185,255,0.8)',
+      pointerEvents: 'none',
+      zIndex: 3,
+      animation: `hero-scan ${dur} ease forwards`
+    }
+  }), hov && /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      top: '-40px',
+      left: '-40px',
+      width: '280px',
+      height: '280px',
+      background: 'radial-gradient(circle, rgba(124,77,255,0.22), transparent 70%)',
+      pointerEvents: 'none'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      right: '34px',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      pointerEvents: 'none'
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "170",
+    height: "170",
+    viewBox: "0 0 170 170",
+    style: {
+      display: 'block',
+      opacity: hov ? 0.18 : 0.09,
+      transition: 'opacity 0.35s'
+    }
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(170),
+    fill: "none",
+    stroke: "#7c4dff",
+    strokeWidth: "1"
+  }), /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(120),
+    fill: "none",
+    stroke: "#7c4dff",
+    strokeWidth: "0.7",
+    transform: "translate(25 25)"
+  }), /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(70),
+    fill: "none",
+    stroke: "#7c4dff",
+    strokeWidth: "0.5",
+    transform: "translate(50 50)"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "85",
+    cy: "85",
+    r: "3",
+    fill: "#7c4dff"
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 2,
+      maxWidth: '72%'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8.5px',
+      letterSpacing: '0.32em',
+      color: 'rgba(160,140,255,0.55)',
+      textTransform: 'uppercase',
+      marginBottom: '14px',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      width: '24px',
+      height: '1px',
+      background: 'rgba(160,140,255,0.4)'
+    }
+  }), "Gef\xFChrter Prozess", /*#__PURE__*/React.createElement("span", {
+    style: {
+      width: '1px',
+      height: '1px'
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      display: 'inline-block',
+      marginBottom: '18px'
+    }
+  }, glitchActive && /*#__PURE__*/React.createElement("h2", {
+    key: `ha-${glitchKey}`,
+    "aria-hidden": "true",
+    style: {
+      position: 'absolute',
+      inset: 0,
+      fontFamily: 'var(--font-display)',
+      fontSize: 'clamp(28px,3.4vw,40px)',
+      fontWeight: '400',
+      letterSpacing: '0.16em',
+      color: '#a78bff',
+      textTransform: 'uppercase',
+      lineHeight: 1.1,
+      pointerEvents: 'none',
+      zIndex: 1,
+      animation: `hero-glitch-a ${dur} ease forwards`
+    }
+  }, "Neuer Charakter"), glitchActive && /*#__PURE__*/React.createElement("h2", {
+    key: `hb-${glitchKey}`,
+    "aria-hidden": "true",
+    style: {
+      position: 'absolute',
+      inset: 0,
+      fontFamily: 'var(--font-display)',
+      fontSize: 'clamp(28px,3.4vw,40px)',
+      fontWeight: '400',
+      letterSpacing: '0.16em',
+      color: '#7c4dff',
+      textTransform: 'uppercase',
+      lineHeight: 1.1,
+      pointerEvents: 'none',
+      zIndex: 1,
+      animation: `hero-glitch-b ${dur} ease forwards`
+    }
+  }, "Neuer Charakter"), /*#__PURE__*/React.createElement("h2", {
+    key: `hmain-${glitchKey}`,
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: 'clamp(28px,3.4vw,40px)',
+      fontWeight: '400',
+      letterSpacing: '0.16em',
+      color: hov ? '#f0eeff' : '#e8e0ff',
+      textTransform: 'uppercase',
+      lineHeight: 1.1,
+      textShadow: hov ? '0 0 24px rgba(124,77,255,0.7), 0 0 40px rgba(124,77,255,0.3)' : '0 0 14px rgba(124,77,255,0.3)',
+      transition: glitchActive ? 'none' : 'color 0.3s, text-shadow 0.3s',
+      position: 'relative',
+      zIndex: 2,
+      ...(glitchActive ? {
+        animation: `hero-glitch-main ${dur} ease forwards`
+      } : {})
+    }
+  }, "Neuer Charakter")), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '13px',
+      lineHeight: 1.85,
+      color: 'rgba(220,210,255,0.7)',
+      letterSpacing: '0.03em',
+      maxWidth: '520px',
+      marginBottom: '22px',
+      textWrap: 'pretty'
+    }
+  }, "Markiere, was du schon wei\xDFt \u2014 der gef\xFChrte Prozess grenzt den Rest \xFCber zielgerichtete Quizfragen ein und liefert am Ende einen vollst\xE4ndigen Charakterbogen, druckbereit."), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '14px',
+      marginBottom: '10px',
+      flexWrap: 'wrap'
+    }
+  }, [{
+    n: '01',
+    l: 'Tag-Auswahl'
+  }, {
+    n: '02',
+    l: 'Quiz'
+  }, {
+    n: '03',
+    l: 'Charakterbogen'
+  }].map((s, i, arr) => /*#__PURE__*/React.createElement(React.Fragment, {
+    key: s.n
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '7px'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.15em',
+      color: 'rgba(124,77,255,0.85)',
+      padding: '3px 7px',
+      border: '1px solid rgba(124,77,255,0.45)',
+      borderRadius: '2px',
+      background: 'rgba(124,77,255,0.08)'
+    }
+  }, s.n), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9.5px',
+      letterSpacing: '0.18em',
+      color: 'rgba(220,210,255,0.65)',
+      textTransform: 'uppercase'
+    }
+  }, s.l)), i < arr.length - 1 && /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '10px',
+      color: 'rgba(124,77,255,0.4)'
+    }
+  }, "\u2192")))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px',
+      marginTop: '22px'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '10px',
+      letterSpacing: '0.28em',
+      color: hov ? '#f0eeff' : '#c9b8ff',
+      textTransform: 'uppercase',
+      textShadow: hov ? '0 0 12px rgba(124,77,255,0.6)' : 'none',
+      transition: 'color 0.25s, text-shadow 0.25s'
+    }
+  }, "Erstellung starten"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '14px',
+      color: hov ? '#f0eeff' : '#c9b8ff',
+      transform: hov ? 'translateX(4px)' : 'translateX(0)',
+      transition: 'transform 0.25s, color 0.25s'
+    }
+  }, "\u2192"))))));
 }
 
 // ── SECTION CARD ─────────────────────────────────────────
-function SectionCard({ sec, delay }) {
+function SectionCard({
+  sec,
+  delay
+}) {
   const [hov, setHov] = useState(false);
   const acc = '#7c4dff';
-  return (
-    <div className="reveal-up" style={{ transitionDelay: `${delay}s` }}>
-      <a href={sec.href}
-        onMouseEnter={() => setHov(true)}
-        onMouseLeave={() => setHov(false)}
-        style={{ textDecoration:'none', display:'block', height:'100%' }}>
-        <div style={{
-          position:'relative',
-          background:'linear-gradient(160deg, rgba(20,12,42,0.7) 0%, rgba(8,5,22,0.95) 100%)',
-          border:`1px solid ${hov ? acc + '55' : acc + '20'}`,
-          borderLeft:`3px solid ${hov ? acc : acc + '80'}`,
-          borderRadius:'4px',
-          overflow:'hidden',
-          padding:'24px 24px 22px',
-          height:'100%',
-          minHeight:'220px',
-          transition:'border-color 0.3s, box-shadow 0.3s, transform 0.35s',
-          boxShadow: hov
-            ? `0 0 32px ${acc}14, inset 0 0 40px ${acc}06, 0 8px 28px rgba(0,0,0,0.5)`
-            : '0 4px 18px rgba(0,0,0,0.35)',
-          transform: hov ? 'translateY(-2px)' : 'translateY(0)',
-        }}>
-
-          {/* Diagonal stripe texture */}
-          <div style={{ position:'absolute', inset:0, pointerEvents:'none',
-            backgroundImage: `repeating-linear-gradient(135deg, transparent, transparent 18px, ${acc}05 18px, ${acc}05 19px)` }} />
-
-          {/* Faded numeral */}
-          <div style={{ position:'absolute', right:'14px', bottom:'-16px',
-            fontFamily:'var(--font-display)', fontSize:'90px', fontWeight:'300',
-            color: hov ? `${acc}10` : `${acc}07`,
-            lineHeight:1, userSelect:'none', pointerEvents:'none', letterSpacing:'-0.04em', transition:'color 0.4s' }}>{sec.nummer}</div>
-
-          {/* Top-right corner glow on hover */}
-          {hov && <div style={{ position:'absolute', top:0, right:0, width:'140px', height:'140px',
-            background:`radial-gradient(circle at top right, ${acc}18, transparent 70%)`, pointerEvents:'none' }} />}
-
-          {/* Header row */}
-          <div style={{ display:'flex', alignItems:'flex-start', gap:'14px', marginBottom:'14px', position:'relative', zIndex:1 }}>
-            <div style={{ flexShrink:0 }}>
-              <SectionIcon kind={sec.icon} size={52} color={acc} hov={hov}/>
-            </div>
-            <div style={{ flex:1, minWidth:0, paddingTop:'2px' }}>
-              <h3 style={{
-                fontFamily:'var(--font-display)', fontSize:'17px', fontWeight:'400',
-                letterSpacing:'0.16em', color: hov ? '#f0eeff' : 'rgba(240,238,255,0.88)',
-                textShadow: hov ? `0 0 18px ${acc}55` : 'none',
-                transition:'color 0.3s, text-shadow 0.3s',
-                marginBottom:'4px', lineHeight:1.25, textTransform:'uppercase',
-              }}>{sec.name}</h3>
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:`${acc}88`, textTransform:'uppercase' }}>{sec.untertitel}</div>
-            </div>
-          </div>
-
-          {/* Description */}
-          <p style={{
-            fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12.5px',
-            lineHeight:1.8, color:'rgba(220,210,255,0.55)', letterSpacing:'0.02em',
-            textWrap:'pretty', position:'relative', zIndex:1,
-            borderLeft:`1px solid ${acc}22`, paddingLeft:'13px', marginBottom:'18px',
-          }}>{sec.beschreibung}</p>
-
-          {/* Footer row */}
-          <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', position:'relative', zIndex:1, marginTop:'auto' }}>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.2em', color:`${acc}66`, textTransform:'uppercase' }}>
-              ⬡ {sec.count}
-            </span>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color: hov ? acc : `${acc}55`, textTransform:'uppercase', transition:'color 0.3s' }}>
-              Öffnen →
-            </span>
-          </div>
-        </div>
-      </a>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      transitionDelay: `${delay}s`
+    }
+  }, /*#__PURE__*/React.createElement("a", {
+    href: sec.href,
+    onMouseEnter: () => setHov(true),
+    onMouseLeave: () => setHov(false),
+    style: {
+      textDecoration: 'none',
+      display: 'block',
+      height: '100%'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      background: 'linear-gradient(160deg, rgba(20,12,42,0.7) 0%, rgba(8,5,22,0.95) 100%)',
+      border: `1px solid ${hov ? acc + '55' : acc + '20'}`,
+      borderLeft: `3px solid ${hov ? acc : acc + '80'}`,
+      borderRadius: '4px',
+      overflow: 'hidden',
+      padding: '24px 24px 22px',
+      height: '100%',
+      minHeight: '220px',
+      transition: 'border-color 0.3s, box-shadow 0.3s, transform 0.35s',
+      boxShadow: hov ? `0 0 32px ${acc}14, inset 0 0 40px ${acc}06, 0 8px 28px rgba(0,0,0,0.5)` : '0 4px 18px rgba(0,0,0,0.35)',
+      transform: hov ? 'translateY(-2px)' : 'translateY(0)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      pointerEvents: 'none',
+      backgroundImage: `repeating-linear-gradient(135deg, transparent, transparent 18px, ${acc}05 18px, ${acc}05 19px)`
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      right: '14px',
+      bottom: '-16px',
+      fontFamily: 'var(--font-display)',
+      fontSize: '90px',
+      fontWeight: '300',
+      color: hov ? `${acc}10` : `${acc}07`,
+      lineHeight: 1,
+      userSelect: 'none',
+      pointerEvents: 'none',
+      letterSpacing: '-0.04em',
+      transition: 'color 0.4s'
+    }
+  }, sec.nummer), hov && /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      top: 0,
+      right: 0,
+      width: '140px',
+      height: '140px',
+      background: `radial-gradient(circle at top right, ${acc}18, transparent 70%)`,
+      pointerEvents: 'none'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'flex-start',
+      gap: '14px',
+      marginBottom: '14px',
+      position: 'relative',
+      zIndex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement(SectionIcon, {
+    kind: sec.icon,
+    size: 52,
+    color: acc,
+    hov: hov
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      minWidth: 0,
+      paddingTop: '2px'
+    }
+  }, /*#__PURE__*/React.createElement("h3", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '17px',
+      fontWeight: '400',
+      letterSpacing: '0.16em',
+      color: hov ? '#f0eeff' : 'rgba(240,238,255,0.88)',
+      textShadow: hov ? `0 0 18px ${acc}55` : 'none',
+      transition: 'color 0.3s, text-shadow 0.3s',
+      marginBottom: '4px',
+      lineHeight: 1.25,
+      textTransform: 'uppercase'
+    }
+  }, sec.name), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '0.22em',
+      color: `${acc}88`,
+      textTransform: 'uppercase'
+    }
+  }, sec.untertitel))), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12.5px',
+      lineHeight: 1.8,
+      color: 'rgba(220,210,255,0.55)',
+      letterSpacing: '0.02em',
+      textWrap: 'pretty',
+      position: 'relative',
+      zIndex: 1,
+      borderLeft: `1px solid ${acc}22`,
+      paddingLeft: '13px',
+      marginBottom: '18px'
+    }
+  }, sec.beschreibung), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      position: 'relative',
+      zIndex: 1,
+      marginTop: 'auto'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.2em',
+      color: `${acc}66`,
+      textTransform: 'uppercase'
+    }
+  }, "\u2B21 ", sec.count), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.22em',
+      color: hov ? acc : `${acc}55`,
+      textTransform: 'uppercase',
+      transition: 'color 0.3s'
+    }
+  }, "\xD6ffnen \u2192")))));
 }
 
 // ── APP ──────────────────────────────────────────────────
 function App() {
-  const [mouse, setMouse] = useState({ x:0.5, y:0.5 });
+  const [mouse, setMouse] = useState({
+    x: 0.5,
+    y: 0.5
+  });
   const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
-  const handleMouseMove = useCallback(e => { setMouse({ x: e.clientX/window.innerWidth, y: e.clientY/window.innerHeight }); }, []);
+  const handleMouseMove = useCallback(e => {
+    setMouse({
+      x: e.clientX / window.innerWidth,
+      y: e.clientY / window.innerHeight
+    });
+  }, []);
   useScrollReveal();
-
-  return (
-    <div onMouseMove={handleMouseMove} style={{ position:'relative', minHeight:'100vh' }}>
-      {tweaks.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} />}
-      {tweaks.showHexes && <FloatingHexField mouseX={mouse.x} mouseY={mouse.y} />}
-
-      {/* ── HEADER IMAGE ── */}
-      <div style={{ position:'relative', zIndex:10, width:'100%', height:'160px',
-        background:'linear-gradient(180deg, rgba(20,10,50,0.95) 0%, rgba(10,8,30,0.98) 100%)',
-        borderBottom:'1px solid rgba(160,140,255,0.15)', overflow:'hidden',
-        display:'flex', alignItems:'center', justifyContent:'center' }}>
-        <div style={{ position:'absolute', inset:0,
-          background:`radial-gradient(ellipse at 20% 50%, rgba(124,77,255,0.18) 0%, transparent 50%), radial-gradient(ellipse at 80% 50%, rgba(45,125,255,0.14) 0%, transparent 50%), repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(160,140,255,0.04) 60px, rgba(160,140,255,0.04) 61px)`,
-          pointerEvents:'none' }} />
-        <div style={{ position:'absolute', inset:0,
-          backgroundImage:`repeating-linear-gradient(135deg, transparent, transparent 18px, rgba(124,77,255,0.03) 18px, rgba(124,77,255,0.03) 19px)`,
-          pointerEvents:'none' }} />
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(160,140,255,0.3)', letterSpacing:'0.3em', textTransform:'uppercase', position:'relative', zIndex:1 }}>
-          Kopfbild — Artwork hier ablegen
-        </div>
-      </div>
-
-      <SiteNav rightLabel="CHARAKTERERSTELLUNG" />
-
-      {/* ── MAIN ── */}
-      <div style={{ position:'relative', zIndex:5, maxWidth:'1180px', margin:'0 auto', padding:'52px 40px 80px' }}>
-
-        {/* Page hero */}
-        <div className="reveal-up" style={{ marginBottom:'44px', textAlign:'center', position:'relative' }}>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.32em', color:'rgba(160,140,255,0.45)', textTransform:'uppercase', marginBottom:'14px' }}>
-            Spielerhandbuch · Sektion II
-          </div>
-          <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(30px,4vw,50px)', fontWeight:'300', letterSpacing:'0.22em', color:'#f0eeff', textShadow:'0 0 50px rgba(124,77,255,0.4)', marginBottom:'18px', lineHeight:1.15, textTransform:'uppercase' }}>
-            Charaktererstellung
-          </h1>
-          <div style={{ display:'flex', alignItems:'center', gap:'12px', justifyContent:'center', marginBottom:'22px' }}>
-            <div style={{ width:'60px', height:'1px', background:'linear-gradient(270deg, rgba(124,77,255,0.6), transparent)' }} />
-            <svg width="8" height="8" viewBox="0 0 8 8"><polygon points={hexPoints(8)} fill="rgba(124,77,255,0.35)" stroke="rgba(160,140,255,0.6)" strokeWidth="0.8" /></svg>
-            <div style={{ width:'8px', height:'1px', background:'rgba(124,77,255,0.4)', animation:'pulse-glow 2s infinite' }} />
-            <svg width="5" height="5" viewBox="0 0 5 5"><polygon points={hexPoints(5)} fill="rgba(160,140,255,0.2)" stroke="rgba(160,140,255,0.4)" strokeWidth="0.6" /></svg>
-            <div style={{ width:'8px', height:'1px', background:'rgba(124,77,255,0.4)', animation:'pulse-glow 2s infinite 0.4s' }} />
-            <svg width="8" height="8" viewBox="0 0 8 8"><polygon points={hexPoints(8)} fill="rgba(124,77,255,0.35)" stroke="rgba(160,140,255,0.6)" strokeWidth="0.8" /></svg>
-            <div style={{ width:'60px', height:'1px', background:'linear-gradient(90deg, rgba(124,77,255,0.6), transparent)' }} />
-          </div>
-          <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'13px', lineHeight:1.9, color:'rgba(220,210,255,0.5)', letterSpacing:'0.05em', maxWidth:'580px', margin:'0 auto', textWrap:'pretty' }}>
-            Von Rasse und Klasse über Hintergrund und Zauber bis zur fertigen Ausrüstung — hier entsteht ein Charakter für Meruria, Schritt für Schritt.
-          </p>
-        </div>
-
-        {/* Hero "Neuer Charakter" card */}
-        <div style={{ marginBottom:'36px' }}>
-          <NeuerCharakterCard/>
-        </div>
-
-        {/* Section label */}
-        <div className="reveal-up" style={{ transitionDelay:'0.05s', display:'flex', alignItems:'center', gap:'14px', marginBottom:'20px' }}>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.28em', color:'rgba(160,140,255,0.55)', textTransform:'uppercase' }}>
-            Oder einzelne Bereiche durchstöbern
-          </div>
-          <div style={{ flex:1, height:'1px', background:'linear-gradient(90deg, rgba(160,140,255,0.2) 0%, transparent 100%)' }}/>
-        </div>
-
-        {/* 3×2 cards grid */}
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(3, 1fr)', gap:'18px' }}>
-          {SECTIONS.map((sec, i) => (
-            <SectionCard key={sec.id} sec={sec} delay={0.08 + i * 0.05}/>
-          ))}
-        </div>
-
-      </div>
-
-      {/* ── FOOTER ── */}
-      <div style={{ position:'relative', zIndex:10, padding:'10px 32px', borderTop:'1px solid rgba(160,140,255,0.07)', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:'rgba(160,140,255,0.22)', letterSpacing:'0.2em' }}>◈ ARCHIV-STATUS: NOMINAL ◈ EPOCHE: UNBEKANNT</div>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:'rgba(160,140,255,0.22)', letterSpacing:'0.2em' }}>MERURIA // CHARAKTER-ARCHIV</div>
-      </div>
-
-      <TweaksPanel>
-        <TweakSection label="Atmosphäre"/>
-        <TweakToggle id="showParticles" label="Partikel"/>
-        <TweakToggle id="showHexes" label="Hexagone"/>
-      </TweaksPanel>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    onMouseMove: handleMouseMove,
+    style: {
+      position: 'relative',
+      minHeight: '100vh'
+    }
+  }, tweaks.showParticles && /*#__PURE__*/React.createElement(ParticleField, {
+    mouseX: mouse.x,
+    mouseY: mouse.y
+  }), tweaks.showHexes && /*#__PURE__*/React.createElement(FloatingHexField, {
+    mouseX: mouse.x,
+    mouseY: mouse.y
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 10,
+      width: '100%',
+      height: '160px',
+      background: 'linear-gradient(180deg, rgba(20,10,50,0.95) 0%, rgba(10,8,30,0.98) 100%)',
+      borderBottom: '1px solid rgba(160,140,255,0.15)',
+      overflow: 'hidden',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      background: `radial-gradient(ellipse at 20% 50%, rgba(124,77,255,0.18) 0%, transparent 50%), radial-gradient(ellipse at 80% 50%, rgba(45,125,255,0.14) 0%, transparent 50%), repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(160,140,255,0.04) 60px, rgba(160,140,255,0.04) 61px)`,
+      pointerEvents: 'none'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      backgroundImage: `repeating-linear-gradient(135deg, transparent, transparent 18px, rgba(124,77,255,0.03) 18px, rgba(124,77,255,0.03) 19px)`,
+      pointerEvents: 'none'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: 'rgba(160,140,255,0.3)',
+      letterSpacing: '0.3em',
+      textTransform: 'uppercase',
+      position: 'relative',
+      zIndex: 1
+    }
+  }, "Kopfbild \u2014 Artwork hier ablegen")), /*#__PURE__*/React.createElement(SiteNav, {
+    rightLabel: "CHARAKTERERSTELLUNG"
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 5,
+      maxWidth: '1180px',
+      margin: '0 auto',
+      padding: '52px 40px 80px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      marginBottom: '44px',
+      textAlign: 'center',
+      position: 'relative'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.32em',
+      color: 'rgba(160,140,255,0.45)',
+      textTransform: 'uppercase',
+      marginBottom: '14px'
+    }
+  }, "Spielerhandbuch \xB7 Sektion II"), /*#__PURE__*/React.createElement("h1", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: 'clamp(30px,4vw,50px)',
+      fontWeight: '300',
+      letterSpacing: '0.22em',
+      color: '#f0eeff',
+      textShadow: '0 0 50px rgba(124,77,255,0.4)',
+      marginBottom: '18px',
+      lineHeight: 1.15,
+      textTransform: 'uppercase'
+    }
+  }, "Charaktererstellung"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px',
+      justifyContent: 'center',
+      marginBottom: '22px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '60px',
+      height: '1px',
+      background: 'linear-gradient(270deg, rgba(124,77,255,0.6), transparent)'
+    }
+  }), /*#__PURE__*/React.createElement("svg", {
+    width: "8",
+    height: "8",
+    viewBox: "0 0 8 8"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(8),
+    fill: "rgba(124,77,255,0.35)",
+    stroke: "rgba(160,140,255,0.6)",
+    strokeWidth: "0.8"
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '8px',
+      height: '1px',
+      background: 'rgba(124,77,255,0.4)',
+      animation: 'pulse-glow 2s infinite'
+    }
+  }), /*#__PURE__*/React.createElement("svg", {
+    width: "5",
+    height: "5",
+    viewBox: "0 0 5 5"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(5),
+    fill: "rgba(160,140,255,0.2)",
+    stroke: "rgba(160,140,255,0.4)",
+    strokeWidth: "0.6"
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '8px',
+      height: '1px',
+      background: 'rgba(124,77,255,0.4)',
+      animation: 'pulse-glow 2s infinite 0.4s'
+    }
+  }), /*#__PURE__*/React.createElement("svg", {
+    width: "8",
+    height: "8",
+    viewBox: "0 0 8 8"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(8),
+    fill: "rgba(124,77,255,0.35)",
+    stroke: "rgba(160,140,255,0.6)",
+    strokeWidth: "0.8"
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '60px',
+      height: '1px',
+      background: 'linear-gradient(90deg, rgba(124,77,255,0.6), transparent)'
+    }
+  })), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '13px',
+      lineHeight: 1.9,
+      color: 'rgba(220,210,255,0.5)',
+      letterSpacing: '0.05em',
+      maxWidth: '580px',
+      margin: '0 auto',
+      textWrap: 'pretty'
+    }
+  }, "Von Rasse und Klasse \xFCber Hintergrund und Zauber bis zur fertigen Ausr\xFCstung \u2014 hier entsteht ein Charakter f\xFCr Meruria, Schritt f\xFCr Schritt.")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: '36px'
+    }
+  }, /*#__PURE__*/React.createElement(NeuerCharakterCard, null)), /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      transitionDelay: '0.05s',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '14px',
+      marginBottom: '20px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.28em',
+      color: 'rgba(160,140,255,0.55)',
+      textTransform: 'uppercase'
+    }
+  }, "Oder einzelne Bereiche durchst\xF6bern"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      height: '1px',
+      background: 'linear-gradient(90deg, rgba(160,140,255,0.2) 0%, transparent 100%)'
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(3, 1fr)',
+      gap: '18px'
+    }
+  }, SECTIONS.map((sec, i) => /*#__PURE__*/React.createElement(SectionCard, {
+    key: sec.id,
+    sec: sec,
+    delay: 0.08 + i * 0.05
+  })))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 10,
+      padding: '10px 32px',
+      borderTop: '1px solid rgba(160,140,255,0.07)',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      color: 'rgba(160,140,255,0.22)',
+      letterSpacing: '0.2em'
+    }
+  }, "\u25C8 ARCHIV-STATUS: NOMINAL \u25C8 EPOCHE: UNBEKANNT"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      color: 'rgba(160,140,255,0.22)',
+      letterSpacing: '0.2em'
+    }
+  }, "MERURIA // CHARAKTER-ARCHIV")), /*#__PURE__*/React.createElement(TweaksPanel, null, /*#__PURE__*/React.createElement(TweakSection, {
+    label: "Atmosph\xE4re"
+  }), /*#__PURE__*/React.createElement(TweakToggle, {
+    id: "showParticles",
+    label: "Partikel"
+  }), /*#__PURE__*/React.createElement(TweakToggle, {
+    id: "showHexes",
+    label: "Hexagone"
+  })));
 }
-
-ReactDOM.createRoot(document.getElementById('root')).render(<SiteGate><App/></SiteGate>);
+ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement(App, null)));
+})();
 </script>
 
 

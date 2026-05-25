@@ -8,67 +8,109 @@
 <link rel="stylesheet" href="assets/styles/pages/Gottheiten.css">
 <script src="assets/scripts/vendor/react.development-40ac70a7.js"></script>
 <script src="assets/scripts/vendor/react-dom.development-b3fd6567.js"></script>
-<script src="assets/scripts/vendor/babel-standalone-5a4a750f.js"></script>
+
 <script src="assets/scripts/data/gottheiten-data.js"></script>
-<script src="assets/components/tweaks-panel-9.jsx" type="text/babel"></script>
-<script src="assets/components/nav.jsx" type="text/babel"></script>
+<script src="assets/components/tweaks-panel-9.js"></script>
+<script src="assets/components/nav.js"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
-<script src="assets/components/site-gate.jsx" type="text/babel"></script>
-<script src="assets/components/page-header.jsx" type="text/babel"></script>
-<script src="assets/components/particle-field.jsx" type="text/babel"></script>
-<script src="assets/components/floating-hex-field.jsx" type="text/babel"></script>
-<script src="assets/components/footer.jsx" type="text/babel"></script>
-<script src="assets/components/float-nav.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.js"></script>
+<script src="assets/components/page-header.js"></script>
+<script src="assets/components/particle-field.js"></script>
+<script src="assets/components/floating-hex-field.js"></script>
+<script src="assets/components/footer.js"></script>
+<script src="assets/components/float-nav.js"></script>
 
 
 </head>
 <body>
 <div id="root"></div>
-<script type="text/babel">
-
-
-const { useState, useEffect, useRef, useCallback, useMemo } = React;
+<script>
+(function () {
+const {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useMemo
+} = React;
 
 // ── HEXAGON SVG helper ─────────────────────────────────
 // pts = polygon points for a flat-top regular hexagon inscribed in a square of `size`
 function hexPoints(s) {
-  const cx = s / 2, cy = s / 2, r = s / 2;
+  const cx = s / 2,
+    cy = s / 2,
+    r = s / 2;
   const pts = [];
   for (let i = 0; i < 6; i++) {
-    const angle = (Math.PI / 180) * (60 * i - 30); // pointy-top
+    const angle = Math.PI / 180 * (60 * i - 30); // pointy-top
     pts.push(`${cx + r * Math.cos(angle)},${cy + r * Math.sin(angle)}`);
   }
   return pts.join(' ');
 }
-function OctSvg({ size = 24, color = 'currentColor', fill = 'none', strokeWidth = 1, opacity = 1, style = {} }) {
+function OctSvg({
+  size = 24,
+  color = 'currentColor',
+  fill = 'none',
+  strokeWidth = 1,
+  opacity = 1,
+  style = {}
+}) {
   const pts = hexPoints(size);
-  return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ display:'block', flexShrink:0, ...style }}>
-      <polygon points={pts} fill={fill} stroke={color} strokeWidth={strokeWidth} opacity={opacity} />
-    </svg>
-  );
+  return /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: `0 0 ${size} ${size}`,
+    style: {
+      display: 'block',
+      flexShrink: 0,
+      ...style
+    }
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: pts,
+    fill: fill,
+    stroke: color,
+    strokeWidth: strokeWidth,
+    opacity: opacity
+  }));
 }
 function parseRich(text, accent = 'rgba(160,140,255,0.9)') {
   if (!text || !text.includes('**')) return text;
-  return text.split(/(\*\*.*?\*\*)/g).map((part, i) =>
-    part.startsWith('**') && part.endsWith('**')
-      ? <strong key={i} style={{color: accent, fontWeight:'500',fontStyle:'normal'}}>{part.slice(2,-2)}</strong>
-      : part
-  );
+  return text.split(/(\*\*.*?\*\*)/g).map((part, i) => part.startsWith('**') && part.endsWith('**') ? /*#__PURE__*/React.createElement("strong", {
+    key: i,
+    style: {
+      color: accent,
+      fontWeight: '500',
+      fontStyle: 'normal'
+    }
+  }, part.slice(2, -2)) : part);
 }
-
-const { gods, demons, naturgeister, domainMap } = window.GODS_DATA;
-const { useTweaks, TweaksPanel, TweakSection, TweakSlider, TweakToggle, SiteNav, ParticleField, FloatingHexField, FloatNav } = window;
-
+const {
+  gods,
+  demons,
+  naturgeister,
+  domainMap
+} = window.GODS_DATA;
+const {
+  useTweaks,
+  TweaksPanel,
+  TweakSection,
+  TweakSlider,
+  TweakToggle,
+  SiteNav,
+  ParticleField,
+  FloatingHexField,
+  FloatNav
+} = window;
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "showParticles": true,
   "columns": 3,
   "headerHeight": 180,
   "cardAccent": "#7c4dff"
 } /*EDITMODE-END*/;
-
-function getPalette(entity) {return entity?.palette ?? ["#0f0a1e", "#3b1f8c", "#7c4dff", "#c9b8ff"];}
+function getPalette(entity) {
+  return entity?.palette ?? ["#0f0a1e", "#3b1f8c", "#7c4dff", "#c9b8ff"];
+}
 
 // ── SCROLL REVEAL ──────────────────────────────────────
 // Cards in the same grid row (same top offset) fade in together.
@@ -76,26 +118,22 @@ function getPalette(entity) {return entity?.palette ?? ["#0f0a1e", "#3b1f8c", "#
 function useScrollReveal() {
   useEffect(() => {
     // Remove any .visible classes left from a previous render cycle
-    document.querySelectorAll('.reveal-up.visible, .reveal-left.visible').forEach((el) => {
+    document.querySelectorAll('.reveal-up.visible, .reveal-left.visible').forEach(el => {
       el.classList.remove('visible');
     });
-
     let observer;
     const revealedEls = new WeakSet();
-
     const revealEl = (el, delay) => {
       if (revealedEls.has(el)) return;
       revealedEls.add(el);
       setTimeout(() => el.classList.add('visible'), delay);
     };
-
     const init = () => {
-      observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
+      observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
           if (!entry.isIntersecting) return;
           const el = entry.target;
           observer.unobserve(el);
-
           if (el.classList.contains('reveal-left')) {
             revealEl(el, 0);
             return;
@@ -103,206 +141,343 @@ function useScrollReveal() {
 
           // Group grid siblings by row (same rounded top)
           const parent = el.parentElement;
-          if (!parent) { revealEl(el, 0); return; }
-
+          if (!parent) {
+            revealEl(el, 0);
+            return;
+          }
           const siblings = Array.from(parent.querySelectorAll('.reveal-up'));
           const rowMap = new Map();
-          siblings.forEach((sib) => {
+          siblings.forEach(sib => {
             const top = Math.round(sib.getBoundingClientRect().top);
             if (!rowMap.has(top)) rowMap.set(top, []);
             rowMap.get(top).push(sib);
           });
           const sortedTops = Array.from(rowMap.keys()).sort((a, b) => a - b);
-
           const elTop = Math.round(el.getBoundingClientRect().top);
           const rowIndex = sortedTops.indexOf(elTop);
           const rowDelay = Math.max(0, rowIndex) * 80;
-
           const rowEls = rowMap.get(elTop) || [el];
-          rowEls.forEach((rowEl) => {
+          rowEls.forEach(rowEl => {
             observer.unobserve(rowEl);
             revealEl(rowEl, rowDelay);
           });
         });
-      }, { threshold: 0.06, rootMargin: '0px 0px -24px 0px' });
-
-      document.querySelectorAll('.reveal-up, .reveal-left').forEach((el) => {
+      }, {
+        threshold: 0.06,
+        rootMargin: '0px 0px -24px 0px'
+      });
+      document.querySelectorAll('.reveal-up, .reveal-left').forEach(el => {
         // Ensure starting state is invisible
         el.classList.remove('visible');
         observer.observe(el);
       });
     };
-
     const t = setTimeout(init, 120);
-    return () => { clearTimeout(t); observer && observer.disconnect(); };
+    return () => {
+      clearTimeout(t);
+      observer && observer.disconnect();
+    };
   }, []); // run once on mount only
 }
 
 // ── ENTITY CARD ────────────────────────────────────────
-function EntityCard({ entity, onClick, accentLabel }) {
+function EntityCard({
+  entity,
+  onClick,
+  accentLabel
+}) {
   const cardRef = useRef(null);
-  const [tilt, setTilt] = useState({ rx:0, ry:0 });
+  const [tilt, setTilt] = useState({
+    rx: 0,
+    ry: 0
+  });
   const [hov, setHov] = useState(false);
   const frameRef = useRef(null);
   const pal = getPalette(entity);
   const accent = pal[2];
-
-  const handleMouseMove = useCallback((e) => {
+  const handleMouseMove = useCallback(e => {
     const el = cardRef.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;
     cancelAnimationFrame(frameRef.current);
-    frameRef.current = requestAnimationFrame(() => setTilt({ rx:(y-0.5)*-16, ry:(x-0.5)*16 }));
+    frameRef.current = requestAnimationFrame(() => setTilt({
+      rx: (y - 0.5) * -16,
+      ry: (x - 0.5) * 16
+    }));
   }, []);
-
-  const handleMouseLeave = () => { setHov(false); cancelAnimationFrame(frameRef.current); setTilt({ rx:0, ry:0 }); };
-
-  return (
-    <a onClick={(e)=>{ e.preventDefault(); onClick && onClick(entity); }} href="#" style={{ textDecoration:'none', display:'block' }}>
-      <div className="reveal-up"
-        ref={cardRef}
-        onMouseMove={handleMouseMove}
-        onMouseEnter={()=>setHov(true)}
-        onMouseLeave={handleMouseLeave}
-        style={{
-          position:'relative',
-          perspective:'900px',
-          transform: hov ? `translateY(-3px) scale(1.01)` : `translateY(0px) scale(1)`,
-          transition: hov ? 'transform 0.08s linear' : 'transform 0.45s cubic-bezier(0.23,1,0.32,1)',
-          willChange:'transform', zIndex: hov ? 10 : 1, cursor:'pointer'
-        }}>
-
-        {/* Card frame */}
-        <div style={{
-          position:'relative', borderRadius:'4px', height:'260px',
-          border:`1px solid ${hov ? accent+'88' : accent+'22'}`,
-          boxShadow: hov ? `0 12px 48px rgba(0,0,0,0.7), 0 0 28px ${accent}33, inset 0 1px 0 ${accent}18` : `0 2px 16px rgba(0,0,0,0.55)`,
-          overflow:'visible',
-          transformStyle:'preserve-3d',
-          transform: hov ? `rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)` : `rotateX(0deg) rotateY(0deg)`,
-          transition: hov
-            ? 'border-color 0.2s, box-shadow 0.25s, transform 0.08s linear'
-            : 'border-color 0.35s, box-shadow 0.35s, transform 0.45s cubic-bezier(0.23,1,0.32,1)'
-        }}>
-
-          {/* Clipping mask for bg layers */}
-          <div style={{ position:'absolute', inset:0, borderRadius:'4px', overflow:'hidden', zIndex:1, transform:'translateZ(0)' }}>
-            {/* Background image placeholder */}
-            <div style={{
-              position:'absolute',
-              inset:0,
-              backgroundImage:`url(${entity.backgroundSrc || 'assets/images/races/placeholder-race.png'})`,
-              backgroundSize:'cover',
-              backgroundPosition:'center',
-              transition:'filter 0.5s ease'
-            }} />
-            {/* Entity palette tint overlay */}
-            <div style={{
-              position:'absolute', inset:0,
-              background:`linear-gradient(135deg, ${pal[0]}cc 0%, ${pal[1]}66 50%, transparent 100%)`,
-              mixBlendMode:'multiply'
-            }} />
-            {/* Dark gradient overlay — fades on hover */}
-            <div style={{
-              position:'absolute', inset:0,
-              background:'linear-gradient(to top, rgba(4,2,14,0.98) 0%, rgba(4,2,14,0.88) 50%, rgba(4,2,14,0.65) 100%)',
-              opacity: hov ? 1 : 0, transition:'opacity 0.45s ease'
-            }} />
-            {/* Accent shimmer */}
-            <div style={{
-              position:'absolute', inset:0, pointerEvents:'none',
-              background: hov ? `radial-gradient(ellipse at ${50+tilt.ry*1.5}% ${50-tilt.rx*1.5}%, ${accent}22 0%, transparent 65%)` : 'none'
-            }} />
-          </div>
-
-          {/* Sigil — bleeds out, above bg, below vignette */}
-          <div style={{
-            position:'absolute',
-            right:'0%', bottom: hov ? '-5%' : '-18%',
-            width:'65%',
-            maxWidth:'min(280px, 30vw)',
-            aspectRatio:'3/4',
-            opacity: hov ? 0.85 : 0,
-            transform:`translateZ(${hov ? 16 : 0}px)`,
-            transition: hov
-              ? 'opacity 0.5s ease, bottom 0.6s cubic-bezier(0.23,1,0.32,1), transform 0.08s linear'
-              : 'opacity 0.3s ease, bottom 0.4s ease, transform 0.45s cubic-bezier(0.23,1,0.32,1)',
-            zIndex:32, pointerEvents:'none',
-            display:'flex', alignItems:'center', justifyContent:'center',
-          }}>
-            {entity.insigniaSrc
-              ? <img src={entity.insigniaSrc} alt={entity.name} style={{ width:'100%', height:'100%', objectFit:'contain', filter:`drop-shadow(0 0 4px ${accent}) drop-shadow(0 0 16px ${accent}bb) drop-shadow(0 0 40px ${accent}66) drop-shadow(0 0 70px ${accent}33)` }} />
-              : <div style={{ width:'60%', height:'60%', color:accent, filter:`drop-shadow(0 0 4px ${accent}) drop-shadow(0 0 16px ${accent}bb) drop-shadow(0 0 40px ${accent}66)` }} dangerouslySetInnerHTML={{ __html: entity.symbolSvg }} />
-            }
-          </div>
-
-          {/* Resting text — fades out on hover */}
-          <div style={{
-            position:'absolute', inset:0, zIndex:30, transform:'translateZ(1px)',
-            display:'flex', flexDirection:'column', justifyContent:'flex-end',
-            padding:'20px 18px 18px 21px',
-            opacity: hov ? 0 : 1, transition:'opacity 0.35s ease'
-          }}>
-            <h3 style={{ fontFamily:'var(--font-display)', fontSize:'15px', fontWeight:'400', letterSpacing:'0.16em', color:'var(--white)', textShadow:'0 2px 12px rgba(0,0,0,0.8)', textTransform:'uppercase', marginBottom:'3px' }}>{entity.name}</h3>
-            <div style={{ width: '50px', height: '1px', background: `linear-gradient(90deg,${accent}cc,transparent)`, animation: 'pulse-glow 3s infinite', marginBottom: '6px' }} />
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:accent+'99', textTransform:'uppercase', marginBottom:'6px' }}>{accentLabel || entity.pantheon || 'Gottheit'}</div>
-            <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'10px', lineHeight:1.75, color:'rgba(var(--text-rgb),0.65)', letterSpacing:'0.03em', display:'-webkit-box', WebkitLineClamp:3, WebkitBoxOrient:'vertical', overflow:'hidden' }}>{entity.title}</p>
-              {/*<div style={{ height:'1px', background:`linear-gradient(90deg, ${accent}55, transparent)`, marginTop:'10px', opacity:0.5 }} />*/}
-          </div>
-
-          {/* Resting text gradient — fades out on hover */}
-          <div style={{
-            position:'absolute', bottom:0, left:0, right:0, height:'100px', zIndex:9,
-            background:'linear-gradient(to top, rgba(2,1,10,0.92) 0%, rgba(2,1,10,0.88) 97%, transparent 99%)',
-            opacity: hov ? 0 : 1, transition:'opacity 0.35s ease', pointerEvents:'none'
-          }} />
-
-          {/* Hover vignette wedge — below sigil */}
-          <div style={{
-            position:'absolute', bottom:0, left:0, right:0, height:'80px', zIndex:10,
-            transform:'translateZ(2px)',
-            background:'linear-gradient(to top, rgba(2,1,10,0.88) 0%, transparent 100%)',
-            clipPath:'polygon(0% 40%, 100% 0%, 100% 100%, 0% 100%)',
-            opacity: hov ? 1 : 0, transition:'opacity 0.35s ease', pointerEvents:'none'
-          }} />
-
-          {/* Name badge on hover — above everything */}
-          <div style={{
-            position:'absolute', bottom:'14px', left:'14px', right:'14px', zIndex:33,
-            transform:'translateZ(3px)',
-            opacity: hov ? 1 : 0, transition:'opacity 0.35s ease'
-          }}>
-            <div style={{ display:'flex', flexDirection:'column', alignItems:'flex-start', gap:'6px', marginBottom:'12px' }}>
-              {entity.domain.split(' · ').map((d, i) => (
-                <span key={i} style={{
-                  fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.18em',
-                  padding:'4px 10px', borderRadius:'2px',
-                  border:`1px solid ${accent}55`, color:accent,
-                  background:`${accent}12`, textTransform:'uppercase',
-                  transition:`opacity 0.3s ease ${i * 0.04}s`,
-                  opacity: hov ? 1 : 0,
-                }}>{domainMap[d] ?? d}</span>
-              ))}
-            </div>
-            <h3 style={{ fontFamily:'var(--font-display)', fontSize:'15px', fontWeight:'400', letterSpacing:'0.16em', color:'var(--white)', textShadow:`0 0 24px ${accent}cc, 0 2px 8px rgba(0,0,0,0.9)`, textTransform:'uppercase' }}>{entity.name}</h3>
-          </div>
-
-        </div>
-      </div>
-    </a>
-  );
+  const handleMouseLeave = () => {
+    setHov(false);
+    cancelAnimationFrame(frameRef.current);
+    setTilt({
+      rx: 0,
+      ry: 0
+    });
+  };
+  return /*#__PURE__*/React.createElement("a", {
+    onClick: e => {
+      e.preventDefault();
+      onClick && onClick(entity);
+    },
+    href: "#",
+    style: {
+      textDecoration: 'none',
+      display: 'block'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    ref: cardRef,
+    onMouseMove: handleMouseMove,
+    onMouseEnter: () => setHov(true),
+    onMouseLeave: handleMouseLeave,
+    style: {
+      position: 'relative',
+      perspective: '900px',
+      transform: hov ? `translateY(-3px) scale(1.01)` : `translateY(0px) scale(1)`,
+      transition: hov ? 'transform 0.08s linear' : 'transform 0.45s cubic-bezier(0.23,1,0.32,1)',
+      willChange: 'transform',
+      zIndex: hov ? 10 : 1,
+      cursor: 'pointer'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      borderRadius: '4px',
+      height: '260px',
+      border: `1px solid ${hov ? accent + '88' : accent + '22'}`,
+      boxShadow: hov ? `0 12px 48px rgba(0,0,0,0.7), 0 0 28px ${accent}33, inset 0 1px 0 ${accent}18` : `0 2px 16px rgba(0,0,0,0.55)`,
+      overflow: 'visible',
+      transformStyle: 'preserve-3d',
+      transform: hov ? `rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)` : `rotateX(0deg) rotateY(0deg)`,
+      transition: hov ? 'border-color 0.2s, box-shadow 0.25s, transform 0.08s linear' : 'border-color 0.35s, box-shadow 0.35s, transform 0.45s cubic-bezier(0.23,1,0.32,1)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      borderRadius: '4px',
+      overflow: 'hidden',
+      zIndex: 1,
+      transform: 'translateZ(0)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      backgroundImage: `url(${entity.backgroundSrc || 'assets/images/races/placeholder-race.png'})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      transition: 'filter 0.5s ease'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      background: `linear-gradient(135deg, ${pal[0]}cc 0%, ${pal[1]}66 50%, transparent 100%)`,
+      mixBlendMode: 'multiply'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      background: 'linear-gradient(to top, rgba(4,2,14,0.98) 0%, rgba(4,2,14,0.88) 50%, rgba(4,2,14,0.65) 100%)',
+      opacity: hov ? 1 : 0,
+      transition: 'opacity 0.45s ease'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      pointerEvents: 'none',
+      background: hov ? `radial-gradient(ellipse at ${50 + tilt.ry * 1.5}% ${50 - tilt.rx * 1.5}%, ${accent}22 0%, transparent 65%)` : 'none'
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      right: '0%',
+      bottom: hov ? '-5%' : '-18%',
+      width: '65%',
+      maxWidth: 'min(280px, 30vw)',
+      aspectRatio: '3/4',
+      opacity: hov ? 0.85 : 0,
+      transform: `translateZ(${hov ? 16 : 0}px)`,
+      transition: hov ? 'opacity 0.5s ease, bottom 0.6s cubic-bezier(0.23,1,0.32,1), transform 0.08s linear' : 'opacity 0.3s ease, bottom 0.4s ease, transform 0.45s cubic-bezier(0.23,1,0.32,1)',
+      zIndex: 32,
+      pointerEvents: 'none',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, entity.insigniaSrc ? /*#__PURE__*/React.createElement("img", {
+    src: entity.insigniaSrc,
+    alt: entity.name,
+    style: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'contain',
+      filter: `drop-shadow(0 0 4px ${accent}) drop-shadow(0 0 16px ${accent}bb) drop-shadow(0 0 40px ${accent}66) drop-shadow(0 0 70px ${accent}33)`
+    }
+  }) : /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '60%',
+      height: '60%',
+      color: accent,
+      filter: `drop-shadow(0 0 4px ${accent}) drop-shadow(0 0 16px ${accent}bb) drop-shadow(0 0 40px ${accent}66)`
+    },
+    dangerouslySetInnerHTML: {
+      __html: entity.symbolSvg
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      zIndex: 30,
+      transform: 'translateZ(1px)',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'flex-end',
+      padding: '20px 18px 18px 21px',
+      opacity: hov ? 0 : 1,
+      transition: 'opacity 0.35s ease'
+    }
+  }, /*#__PURE__*/React.createElement("h3", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '15px',
+      fontWeight: '400',
+      letterSpacing: '0.16em',
+      color: 'var(--white)',
+      textShadow: '0 2px 12px rgba(0,0,0,0.8)',
+      textTransform: 'uppercase',
+      marginBottom: '3px'
+    }
+  }, entity.name), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '50px',
+      height: '1px',
+      background: `linear-gradient(90deg,${accent}cc,transparent)`,
+      animation: 'pulse-glow 3s infinite',
+      marginBottom: '6px'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.22em',
+      color: accent + '99',
+      textTransform: 'uppercase',
+      marginBottom: '6px'
+    }
+  }, accentLabel || entity.pantheon || 'Gottheit'), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '10px',
+      lineHeight: 1.75,
+      color: 'rgba(var(--text-rgb),0.65)',
+      letterSpacing: '0.03em',
+      display: '-webkit-box',
+      WebkitLineClamp: 3,
+      WebkitBoxOrient: 'vertical',
+      overflow: 'hidden'
+    }
+  }, entity.title)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      height: '100px',
+      zIndex: 9,
+      background: 'linear-gradient(to top, rgba(2,1,10,0.92) 0%, rgba(2,1,10,0.88) 97%, transparent 99%)',
+      opacity: hov ? 0 : 1,
+      transition: 'opacity 0.35s ease',
+      pointerEvents: 'none'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      height: '80px',
+      zIndex: 10,
+      transform: 'translateZ(2px)',
+      background: 'linear-gradient(to top, rgba(2,1,10,0.88) 0%, transparent 100%)',
+      clipPath: 'polygon(0% 40%, 100% 0%, 100% 100%, 0% 100%)',
+      opacity: hov ? 1 : 0,
+      transition: 'opacity 0.35s ease',
+      pointerEvents: 'none'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      bottom: '14px',
+      left: '14px',
+      right: '14px',
+      zIndex: 33,
+      transform: 'translateZ(3px)',
+      opacity: hov ? 1 : 0,
+      transition: 'opacity 0.35s ease'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+      gap: '6px',
+      marginBottom: '12px'
+    }
+  }, entity.domain.split(' · ').map((d, i) => /*#__PURE__*/React.createElement("span", {
+    key: i,
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.18em',
+      padding: '4px 10px',
+      borderRadius: '2px',
+      border: `1px solid ${accent}55`,
+      color: accent,
+      background: `${accent}12`,
+      textTransform: 'uppercase',
+      transition: `opacity 0.3s ease ${i * 0.04}s`,
+      opacity: hov ? 1 : 0
+    }
+  }, domainMap[d] ?? d))), /*#__PURE__*/React.createElement("h3", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '15px',
+      fontWeight: '400',
+      letterSpacing: '0.16em',
+      color: 'var(--white)',
+      textShadow: `0 0 24px ${accent}cc, 0 2px 8px rgba(0,0,0,0.9)`,
+      textTransform: 'uppercase'
+    }
+  }, entity.name)))));
 }
 
 // ── ENTITY DETAIL OVERLAY ─────────────────────────────
-function EntityDetail({ entity, onBack, typeLabel, onPrev, onNext }) {
+function EntityDetail({
+  entity,
+  onBack,
+  typeLabel,
+  onPrev,
+  onNext
+}) {
   const [visible, setVisible] = useState(false);
   const [leaving, setLeaving] = useState(false);
   const [copiedIndex, setCopiedIndex] = useState(null);
   const pal = getPalette(entity);
-  const copyHex = (hex, i) => { navigator.clipboard.writeText(hex); setCopiedIndex(i); setTimeout(() => setCopiedIndex(null), 1500); };
-  useEffect(() => {const t = setTimeout(() => setVisible(true), 30);return () => clearTimeout(t);}, []);
+  const copyHex = (hex, i) => {
+    navigator.clipboard.writeText(hex);
+    setCopiedIndex(i);
+    setTimeout(() => setCopiedIndex(null), 1500);
+  };
+  useEffect(() => {
+    const t = setTimeout(() => setVisible(true), 30);
+    return () => clearTimeout(t);
+  }, []);
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
@@ -313,36 +488,173 @@ function EntityDetail({ entity, onBack, typeLabel, onPrev, onNext }) {
       document.documentElement.classList.remove('detail-open');
     };
   }, []);
-  const handleBack = () => {setLeaving(true);setTimeout(onBack, 340);};
-  const s = (delay = 0) => ({ animation: visible ? `fadeInUp 0.55s ${delay}s both` : 'none', opacity: visible ? undefined : 0 });
-
-  return (
-    <div style={{ position: 'fixed', inset: 0, zIndex: 500, background: `radial-gradient(ellipse at 30% 40%,${pal[1]}55 0%,transparent 50%),radial-gradient(ellipse at 80% 70%,${pal[2]}20 0%,transparent 40%),var(--bg)`, display: 'flex', flexDirection: 'column', animation: leaving ? 'dissolveOut 0.34s forwards' : 'dissolveIn 0.55s forwards', overflow: 'hidden' }}>
-      <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', backgroundImage: `repeating-linear-gradient(0deg,transparent,transparent 40px,${pal[2]}07 40px,${pal[2]}07 41px),repeating-linear-gradient(90deg,transparent,transparent 40px,${pal[2]}07 40px,${pal[2]}07 41px)` }} />
-      <div style={{ position: 'absolute', top: '65px', right: '5px', width: '190px', height: '190px', color: pal[3], opacity: 0.07, filter: `drop-shadow(0 0 40px ${pal[2]})`, animation: 'floatSymbol 4s ease-in-out infinite', zIndex: 1, pointerEvents: 'none' }} dangerouslySetInnerHTML={{ __html: entity.symbolSvg }} />
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 40px', borderBottom: `1px solid ${pal[2]}2a`, position: 'relative', zIndex: 2, ...s(0) }}>
-        <button onClick={handleBack} style={{ background: 'none', border: `1px solid ${pal[2]}44`, color: pal[3], fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '0.2em', padding: '7px 16px', cursor: 'pointer', borderRadius: '2px', transition: 'all 0.2s' }}
-        onMouseEnter={(e) => {e.currentTarget.style.background = pal[2] + '1a';e.currentTarget.style.borderColor = pal[2];}}
-        onMouseLeave={(e) => {e.currentTarget.style.background = 'none';e.currentTarget.style.borderColor = pal[2] + '44';}}>
-          ← ZURÜCK</button>
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: pal[2] + '77', letterSpacing: '0.25em' }}>MERURIA / {(typeLabel || 'GOTTHEIT').toUpperCase()} / {entity.id.toUpperCase()}</div>
-
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: pal[2] + '44', letterSpacing: '0.2em' }}>{entity.alignment?.toUpperCase()}</div>
-      </div>
-      <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
-        <div style={{ width: '40%', position: 'relative', borderRight: `1px solid ${pal[2]}1a`, overflow: 'hidden', ...s(0.04) }}>
-          <div style={{ position: 'absolute', inset: 0, background: `radial-gradient(ellipse at 50% 45%,${pal[2]}44 0%,${pal[1]}66 30%,${pal[0]} 70%),repeating-linear-gradient(45deg,transparent,transparent 24px,${pal[2]}06 24px,${pal[2]}06 25px)` }} />
-          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2 }}>
-            <div style={{ position: 'absolute', inset: '0px', border: `1px dashed ${pal[2]}2a`, borderRadius: '3px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: `repeating-linear-gradient(-45deg,transparent,transparent 8px,${pal[2]}07 8px,${pal[2]}07 9px)`, overflow: 'hidden' }}>
-              {entity.insigniaSrc ?
-              <img src={entity.insigniaSrc} alt={entity.name} style={{ maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto', objectFit: 'contain', filter: `drop-shadow(0 0 16px ${pal[2]}99)` }} /> :
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', color: pal[2] + '44', letterSpacing: '0.1em', textAlign: 'center' }}>porträt<br />{entity.name.toLowerCase()}</span>
-              }
-            </div>
-          </div>
-          <div style={{ position: 'absolute', bottom: '22px', right: '22px', width: '72px', height: '72px', color: pal[2], opacity: 0.65, filter: `drop-shadow(0 0 10px ${pal[2]})`, animation: 'floatSymbol 3.2s ease-in-out infinite', zIndex: 4 }} dangerouslySetInnerHTML={{ __html: entity.symbolSvg }} />
-        </div>
-        <style>{`
+  const handleBack = () => {
+    setLeaving(true);
+    setTimeout(onBack, 340);
+  };
+  const s = (delay = 0) => ({
+    animation: visible ? `fadeInUp 0.55s ${delay}s both` : 'none',
+    opacity: visible ? undefined : 0
+  });
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'fixed',
+      inset: 0,
+      zIndex: 500,
+      background: `radial-gradient(ellipse at 30% 40%,${pal[1]}55 0%,transparent 50%),radial-gradient(ellipse at 80% 70%,${pal[2]}20 0%,transparent 40%),var(--bg)`,
+      display: 'flex',
+      flexDirection: 'column',
+      animation: leaving ? 'dissolveOut 0.34s forwards' : 'dissolveIn 0.55s forwards',
+      overflow: 'hidden'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      pointerEvents: 'none',
+      backgroundImage: `repeating-linear-gradient(0deg,transparent,transparent 40px,${pal[2]}07 40px,${pal[2]}07 41px),repeating-linear-gradient(90deg,transparent,transparent 40px,${pal[2]}07 40px,${pal[2]}07 41px)`
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      top: '65px',
+      right: '5px',
+      width: '190px',
+      height: '190px',
+      color: pal[3],
+      opacity: 0.07,
+      filter: `drop-shadow(0 0 40px ${pal[2]})`,
+      animation: 'floatSymbol 4s ease-in-out infinite',
+      zIndex: 1,
+      pointerEvents: 'none'
+    },
+    dangerouslySetInnerHTML: {
+      __html: entity.symbolSvg
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: '16px 40px',
+      borderBottom: `1px solid ${pal[2]}2a`,
+      position: 'relative',
+      zIndex: 2,
+      ...s(0)
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: handleBack,
+    style: {
+      background: 'none',
+      border: `1px solid ${pal[2]}44`,
+      color: pal[3],
+      fontFamily: 'var(--font-mono)',
+      fontSize: '10px',
+      letterSpacing: '0.2em',
+      padding: '7px 16px',
+      cursor: 'pointer',
+      borderRadius: '2px',
+      transition: 'all 0.2s'
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.background = pal[2] + '1a';
+      e.currentTarget.style.borderColor = pal[2];
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.background = 'none';
+      e.currentTarget.style.borderColor = pal[2] + '44';
+    }
+  }, "\u2190 ZUR\xDCCK"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: pal[2] + '77',
+      letterSpacing: '0.25em'
+    }
+  }, "MERURIA / ", (typeLabel || 'GOTTHEIT').toUpperCase(), " / ", entity.id.toUpperCase()), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: pal[2] + '44',
+      letterSpacing: '0.2em'
+    }
+  }, entity.alignment?.toUpperCase())), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      display: 'flex',
+      overflow: 'hidden'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '40%',
+      position: 'relative',
+      borderRight: `1px solid ${pal[2]}1a`,
+      overflow: 'hidden',
+      ...s(0.04)
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      background: `radial-gradient(ellipse at 50% 45%,${pal[2]}44 0%,${pal[1]}66 30%,${pal[0]} 70%),repeating-linear-gradient(45deg,transparent,transparent 24px,${pal[2]}06 24px,${pal[2]}06 25px)`
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 2
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: '0px',
+      border: `1px dashed ${pal[2]}2a`,
+      borderRadius: '3px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      background: `repeating-linear-gradient(-45deg,transparent,transparent 8px,${pal[2]}07 8px,${pal[2]}07 9px)`,
+      overflow: 'hidden'
+    }
+  }, entity.insigniaSrc ? /*#__PURE__*/React.createElement("img", {
+    src: entity.insigniaSrc,
+    alt: entity.name,
+    style: {
+      maxWidth: '100%',
+      maxHeight: '100%',
+      width: 'auto',
+      height: 'auto',
+      objectFit: 'contain',
+      filter: `drop-shadow(0 0 16px ${pal[2]}99)`
+    }
+  }) : /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      color: pal[2] + '44',
+      letterSpacing: '0.1em',
+      textAlign: 'center'
+    }
+  }, "portr\xE4t", /*#__PURE__*/React.createElement("br", null), entity.name.toLowerCase()))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      bottom: '22px',
+      right: '22px',
+      width: '72px',
+      height: '72px',
+      color: pal[2],
+      opacity: 0.65,
+      filter: `drop-shadow(0 0 10px ${pal[2]})`,
+      animation: 'floatSymbol 3.2s ease-in-out infinite',
+      zIndex: 4
+    },
+    dangerouslySetInnerHTML: {
+      __html: entity.symbolSvg
+    }
+  })), /*#__PURE__*/React.createElement("style", null, `
           .detail-scroll-${entity.id}::-webkit-scrollbar { width: 4px; }
           .detail-scroll-${entity.id}::-webkit-scrollbar-track { background: transparent; }
           .detail-scroll-${entity.id}::-webkit-scrollbar-thumb { background: ${pal[2]}66; border-radius: 2px; }
@@ -350,74 +662,280 @@ function EntityDetail({ entity, onBack, typeLabel, onPrev, onNext }) {
           @keyframes arrowBreathe { 0%,100%{transform:scale(0.90)} 50%{transform:scale(1.0)} }
           .entity-nav-arrow { opacity:0.42; animation:arrowBreathe 2.6s ease-in-out infinite; transition:opacity 0.2s, background 0.2s, border-color 0.2s; }
           .entity-nav-arrow:hover { opacity:0.88; }
-        `}</style>
-        <div className={`detail-scroll-${entity.id}`} style={{ flex: 1, padding: '44px 72px 44px 48px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '28px' }}>
-          <div style={s(0.1)}>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.3em', color: pal[2] + '88', textTransform: 'uppercase', marginBottom: '8px' }}>{typeLabel || entity.pantheon}</div>
-            <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(34px,4.5vw,60px)', fontWeight: '300', letterSpacing: '0.12em', color: 'var(--white)', lineHeight: 1.1, textShadow: `0 0 36px ${pal[2]}77` }}>{entity.name}</h1>
-            <div style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '13px', letterSpacing: '0.25em', color: pal[3] + 'bb', marginTop: '7px', textTransform: 'uppercase' }}>{entity.title}</div>
-          </div>
-          <div style={s(0.16)}>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: pal[2] + '77', marginBottom: '10px', textTransform: 'uppercase' }}>Glaubensgrundsätze</div>
-            <p style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: 1.85, color: 'rgba(var(--text-rgb),0.55)', letterSpacing: '0.015em', fontStyle: 'italic', borderLeft: `1px solid ${pal[2]}33`, paddingLeft: '14px' }}>{parseRich(entity.lore, pal[pal.length - 1])}</p>
-          </div>
-          <div style={s(0.22)}>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: pal[2] + '77', marginBottom: '9px', textTransform: 'uppercase' }}>Domäne</div>
-            <div style={{ display: 'flex', gap: '7px', flexWrap: 'wrap' }}>
-              {entity.domain.split(' · ').map((d, i) =>
-              <span key={i} style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', padding: '4px 12px', border: `1px solid ${pal[2]}44`, color: pal[3], letterSpacing: '0.15em', borderRadius: '2px', background: pal[2] + '0e' }}>{d}</span>
-              )}
-            </div>
-          </div>
-          <div style={s(0.28)}>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: pal[2] + '77', marginBottom: '10px', textTransform: 'uppercase' }}>Reich</div>
-            <p style={{ fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '13px', lineHeight: 1.85, color: 'rgba(var(--text-rgb),0.78)', letterSpacing: '0.015em' }}>{parseRich(entity.description, pal[pal.length - 1])}</p>
-          </div>
-          <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', borderTop: `1px solid ${pal[2]}18`, paddingTop: '22px', ...s(0.34) }}>
-            {[['Gesinnung', entity.alignment], ['Symbol', entity.symbol]].map(([label, val]) =>
-            <div key={label} style={{ flex: 1, minWidth: '140px' }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '7px', color: pal[2] + '66', letterSpacing: '0.25em', textTransform: 'uppercase', marginBottom: '5px' }}>{label}</div>
-              <div style={{ fontFamily: 'var(--font-body)', fontWeight: '400', fontSize: '11px', color: pal[3] + 'bb', letterSpacing: '0.04em' }}>{val}</div>
-            </div>
-            )}
-            <div style={{ flex: 1, minWidth: '140px' }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '7px', color: pal[2] + '66', letterSpacing: '0.25em', textTransform: 'uppercase', marginBottom: '8px' }}>Farbschema</div>
-              <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-                {pal.map((hex, i) => (
-                  <div key={i} onClick={() => copyHex(hex, i)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
-                    <div style={{ width: '18px', height: '18px', borderRadius: '2px', background: hex, boxShadow: copiedIndex === i ? `0 0 12px ${hex}` : `0 0 6px ${hex}88`, transition: 'box-shadow 0.2s' }} />
-                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '6px', color: copiedIndex === i ? hex : pal[2] + '88', letterSpacing: '0.05em', transition: 'color 0.2s', width: '34px', minHeight: '9px', textAlign: 'center', display: 'block' }}>{copiedIndex === i ? '✓' : hex}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {onPrev && (
-        <div style={{ position:'absolute', left:'14px', top:'50%', transform:'translateY(-50%)', zIndex:10 }}>
-          <button className="entity-nav-arrow" onClick={onPrev} style={{ width:'40px', height:'80px', background:`${pal[2]}10`, border:`1px solid ${pal[2]}28`, borderRadius:'4px', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', color:pal[3] }}>
-            <svg width="14" height="22" viewBox="0 0 14 22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="10,2 3,11 10,20"/></svg>
-          </button>
-        </div>
-      )}
-      {onNext && (
-        <div style={{ position:'absolute', right:'14px', top:'50%', transform:'translateY(-50%)', zIndex:10 }}>
-          <button className="entity-nav-arrow" onClick={onNext} style={{ width:'40px', height:'80px', background:`${pal[2]}10`, border:`1px solid ${pal[2]}28`, borderRadius:'4px', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', color:pal[3] }}>
-            <svg width="14" height="22" viewBox="0 0 14 22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="4,2 11,11 4,20"/></svg>
-          </button>
-        </div>
-      )}
-    </div>);
-
+        `), /*#__PURE__*/React.createElement("div", {
+    className: `detail-scroll-${entity.id}`,
+    style: {
+      flex: 1,
+      padding: '44px 72px 44px 48px',
+      overflowY: 'auto',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '28px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: s(0.1)
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.3em',
+      color: pal[2] + '88',
+      textTransform: 'uppercase',
+      marginBottom: '8px'
+    }
+  }, typeLabel || entity.pantheon), /*#__PURE__*/React.createElement("h1", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: 'clamp(34px,4.5vw,60px)',
+      fontWeight: '300',
+      letterSpacing: '0.12em',
+      color: 'var(--white)',
+      lineHeight: 1.1,
+      textShadow: `0 0 36px ${pal[2]}77`
+    }
+  }, entity.name), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '13px',
+      letterSpacing: '0.25em',
+      color: pal[3] + 'bb',
+      marginTop: '7px',
+      textTransform: 'uppercase'
+    }
+  }, entity.title)), /*#__PURE__*/React.createElement("div", {
+    style: s(0.16)
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.25em',
+      color: pal[2] + '77',
+      marginBottom: '10px',
+      textTransform: 'uppercase'
+    }
+  }, "Glaubensgrunds\xE4tze"), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: 1.85,
+      color: 'rgba(var(--text-rgb),0.55)',
+      letterSpacing: '0.015em',
+      fontStyle: 'italic',
+      borderLeft: `1px solid ${pal[2]}33`,
+      paddingLeft: '14px'
+    }
+  }, parseRich(entity.lore, pal[pal.length - 1]))), /*#__PURE__*/React.createElement("div", {
+    style: s(0.22)
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.25em',
+      color: pal[2] + '77',
+      marginBottom: '9px',
+      textTransform: 'uppercase'
+    }
+  }, "Dom\xE4ne"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '7px',
+      flexWrap: 'wrap'
+    }
+  }, entity.domain.split(' · ').map((d, i) => /*#__PURE__*/React.createElement("span", {
+    key: i,
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '10px',
+      padding: '4px 12px',
+      border: `1px solid ${pal[2]}44`,
+      color: pal[3],
+      letterSpacing: '0.15em',
+      borderRadius: '2px',
+      background: pal[2] + '0e'
+    }
+  }, d)))), /*#__PURE__*/React.createElement("div", {
+    style: s(0.28)
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.25em',
+      color: pal[2] + '77',
+      marginBottom: '10px',
+      textTransform: 'uppercase'
+    }
+  }, "Reich"), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '13px',
+      lineHeight: 1.85,
+      color: 'rgba(var(--text-rgb),0.78)',
+      letterSpacing: '0.015em'
+    }
+  }, parseRich(entity.description, pal[pal.length - 1]))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '20px',
+      flexWrap: 'wrap',
+      borderTop: `1px solid ${pal[2]}18`,
+      paddingTop: '22px',
+      ...s(0.34)
+    }
+  }, [['Gesinnung', entity.alignment], ['Symbol', entity.symbol]].map(([label, val]) => /*#__PURE__*/React.createElement("div", {
+    key: label,
+    style: {
+      flex: 1,
+      minWidth: '140px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      color: pal[2] + '66',
+      letterSpacing: '0.25em',
+      textTransform: 'uppercase',
+      marginBottom: '5px'
+    }
+  }, label), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '400',
+      fontSize: '11px',
+      color: pal[3] + 'bb',
+      letterSpacing: '0.04em'
+    }
+  }, val))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      minWidth: '140px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      color: pal[2] + '66',
+      letterSpacing: '0.25em',
+      textTransform: 'uppercase',
+      marginBottom: '8px'
+    }
+  }, "Farbschema"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '6px',
+      alignItems: 'center'
+    }
+  }, pal.map((hex, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    onClick: () => copyHex(hex, i),
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: '4px',
+      cursor: 'pointer'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '18px',
+      height: '18px',
+      borderRadius: '2px',
+      background: hex,
+      boxShadow: copiedIndex === i ? `0 0 12px ${hex}` : `0 0 6px ${hex}88`,
+      transition: 'box-shadow 0.2s'
+    }
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '6px',
+      color: copiedIndex === i ? hex : pal[2] + '88',
+      letterSpacing: '0.05em',
+      transition: 'color 0.2s',
+      width: '34px',
+      minHeight: '9px',
+      textAlign: 'center',
+      display: 'block'
+    }
+  }, copiedIndex === i ? '✓' : hex)))))))), onPrev && /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      left: '14px',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      zIndex: 10
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "entity-nav-arrow",
+    onClick: onPrev,
+    style: {
+      width: '40px',
+      height: '80px',
+      background: `${pal[2]}10`,
+      border: `1px solid ${pal[2]}28`,
+      borderRadius: '4px',
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: pal[3]
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "14",
+    height: "22",
+    viewBox: "0 0 14 22",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "1.8",
+    strokeLinecap: "round",
+    strokeLinejoin: "round"
+  }, /*#__PURE__*/React.createElement("polyline", {
+    points: "10,2 3,11 10,20"
+  })))), onNext && /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      right: '14px',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      zIndex: 10
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "entity-nav-arrow",
+    onClick: onNext,
+    style: {
+      width: '40px',
+      height: '80px',
+      background: `${pal[2]}10`,
+      border: `1px solid ${pal[2]}28`,
+      borderRadius: '4px',
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: pal[3]
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "14",
+    height: "22",
+    viewBox: "0 0 14 22",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "1.8",
+    strokeLinecap: "round",
+    strokeLinejoin: "round"
+  }, /*#__PURE__*/React.createElement("polyline", {
+    points: "4,2 11,11 4,20"
+  })))));
 }
 
 // ── SECTION BANNER ─────────────────────────────────────
-function SectionBanner({ accentColor }) {
+function SectionBanner({
+  accentColor
+}) {
   const col = accentColor || '#7c4dff';
-  return (
-    <div style={{
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
       width: '100%',
       height: '160px',
       marginBottom: '20px',
@@ -428,77 +946,170 @@ function SectionBanner({ accentColor }) {
       alignItems: 'center',
       justifyContent: 'center',
       overflow: 'hidden',
+      position: 'relative'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      background: `radial-gradient(ellipse at 50% 50%, ${col}12 0%, transparent 70%)`,
+      pointerEvents: 'none'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px',
       position: 'relative',
-    }}>
-      <div style={{ position: 'absolute', inset: 0, background: `radial-gradient(ellipse at 50% 50%, ${col}12 0%, transparent 70%)`, pointerEvents: 'none' }} />
-      <div style={{ display:'flex', alignItems:'center', gap:'10px', position:'relative', zIndex:1 }}>
-        <OctSvg size={28} color={col + '33'} strokeWidth={1} />
-        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: col + '44', textTransform: 'uppercase' }}>Kopfbild hier ablegen</span>
-        <OctSvg size={28} color={col + '33'} strokeWidth={1} />
-      </div>
-    </div>
-  );
+      zIndex: 1
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 28,
+    color: col + '33',
+    strokeWidth: 1
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.25em',
+      color: col + '44',
+      textTransform: 'uppercase'
+    }
+  }, "Kopfbild hier ablegen"), /*#__PURE__*/React.createElement(OctSvg, {
+    size: 28,
+    color: col + '33',
+    strokeWidth: 1
+  })));
 }
 
 // ── SECTION HEADING ────────────────────────────────────
-function SectionHeading({ title, subtitle, accentColor }) {
+function SectionHeading({
+  title,
+  subtitle,
+  accentColor
+}) {
   const col = accentColor || '#7c4dff';
-  return (
-    <div className="reveal-left" style={{ marginBottom: '8px' }}>
-      {subtitle &&
-      <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: col + '77', textTransform: 'uppercase', marginBottom: '6px' }}>{subtitle}</div>
-      }
-      <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
-        <OctSvg size={8} color={col+'66'} fill={col+'22'} strokeWidth={1} />
-        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '22px', fontWeight: '300', letterSpacing: '0.18em', color: 'var(--white)', textShadow: `0 0 24px ${col}44` }}>{title}</h2>
-      </div>
-      <div style={{ width: '50px', height: '1px', background: `linear-gradient(90deg,${col}99,transparent)`, marginTop: '10px', animation: 'pulse-glow 3s infinite' }} />
-    </div>);
-
+  return /*#__PURE__*/React.createElement("div", {
+    className: "reveal-left",
+    style: {
+      marginBottom: '8px'
+    }
+  }, subtitle && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.25em',
+      color: col + '77',
+      textTransform: 'uppercase',
+      marginBottom: '6px'
+    }
+  }, subtitle), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px'
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 8,
+    color: col + '66',
+    fill: col + '22',
+    strokeWidth: 1
+  }), /*#__PURE__*/React.createElement("h2", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '22px',
+      fontWeight: '300',
+      letterSpacing: '0.18em',
+      color: 'var(--white)',
+      textShadow: `0 0 24px ${col}44`
+    }
+  }, title)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '50px',
+      height: '1px',
+      background: `linear-gradient(90deg,${col}99,transparent)`,
+      marginTop: '10px',
+      animation: 'pulse-glow 3s infinite'
+    }
+  }));
 }
 
 // ── TOC SIDEBAR ────────────────────────────────────────
-function TOCSidebar({ headerBottom, navHeight, cols }) {
+function TOCSidebar({
+  headerBottom,
+  navHeight,
+  cols
+}) {
   const asideRef = React.useRef(null);
   const [collapsed, setCollapsed] = useState({});
-
   useEffect(() => {
     const update = () => {
       const ideal = (headerBottom || 0) - window.scrollY;
       const val = Math.max(navHeight, ideal);
-      if (asideRef.current) { asideRef.current.style.top = val + 'px'; asideRef.current.style.height = `calc(100vh - ${val}px)`; }
+      if (asideRef.current) {
+        asideRef.current.style.top = val + 'px';
+        asideRef.current.style.height = `calc(100vh - ${val}px)`;
+      }
     };
     update();
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update, { passive: true });
-    return () => { window.removeEventListener('scroll', update); window.removeEventListener('resize', update); };
+    window.addEventListener('scroll', update, {
+      passive: true
+    });
+    window.addEventListener('resize', update, {
+      passive: true
+    });
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
   }, [headerBottom, navHeight]);
-
-  const scrollTo = (id) => {
+  const scrollTo = id => {
     const el = document.getElementById(id);
     if (el) {
       const y = el.getBoundingClientRect().top + window.scrollY - navHeight - 8;
-      window.scrollTo({ top: y, behavior: 'smooth' });
+      window.scrollTo({
+        top: y,
+        behavior: 'smooth'
+      });
     }
   };
-
-  const toggleSection = (id) => setCollapsed(c => ({ ...c, [id]: !c[id] }));
+  const toggleSection = id => setCollapsed(c => ({
+    ...c,
+    [id]: !c[id]
+  }));
 
   // Build TOC: section headers + entity name rows (grouped by cols)
   const buildEntries = () => {
     const entries = [];
-    const sections = [
-      { id: 'merurisches-pantheon', label: 'Merurisches Pantheon', subsections: [
-        { entities: gods.filter(g => ['aurelia','elysarion','sienna','avalaste','cecillia','lorelei','vindeah','ferys'].includes(g.id)) },
-        { entities: gods.filter(g => ['daramur','eiritha','hadir','selunara','aetherius','serenith','hydea','melion'].includes(g.id)) },
-        { entities: gods.filter(g => ['ophelis','thraxis','maledor'].includes(g.id)) },
-      ]},
-      { id: 'daemonen', label: 'Dämonen', subsections: [{ entities: demons }] },
-      { id: 'naturgeister', label: 'Naturgeister', subsections: [{ entities: naturgeister }] },
-    ];
-
+    const sections = [{
+      id: 'merurisches-pantheon',
+      label: 'Merurisches Pantheon',
+      subsections: [{
+        entities: gods.filter(g => ['aurelia', 'elysarion', 'sienna', 'avalaste', 'cecillia', 'lorelei', 'vindeah', 'ferys'].includes(g.id))
+      }, {
+        entities: gods.filter(g => ['daramur', 'eiritha', 'hadir', 'selunara', 'aetherius', 'serenith', 'hydea', 'melion'].includes(g.id))
+      }, {
+        entities: gods.filter(g => ['ophelis', 'thraxis', 'maledor'].includes(g.id))
+      }]
+    }, {
+      id: 'daemonen',
+      label: 'Dämonen',
+      subsections: [{
+        entities: demons
+      }]
+    }, {
+      id: 'naturgeister',
+      label: 'Naturgeister',
+      subsections: [{
+        entities: naturgeister
+      }]
+    }];
     sections.forEach(sec => {
-      entries.push({ id: sec.id, label: sec.label, isSection: true });
+      entries.push({
+        id: sec.id,
+        label: sec.label,
+        isSection: true
+      });
       if (!collapsed[sec.id]) {
         let globalRowIdx = 0;
         (sec.subsections || []).forEach(sub => {
@@ -506,7 +1117,11 @@ function TOCSidebar({ headerBottom, navHeight, cols }) {
           for (let i = 0; i < ents.length; i += cols) {
             const row = ents.slice(i, i + cols);
             const rowId = `${sec.id}-row-${globalRowIdx}`;
-            entries.push({ id: rowId, label: row.map(e => e.name).join(' ● '), isSection: false });
+            entries.push({
+              id: rowId,
+              label: row.map(e => e.name).join(' ● '),
+              isSection: false
+            });
             globalRowIdx++;
           }
         });
@@ -514,65 +1129,160 @@ function TOCSidebar({ headerBottom, navHeight, cols }) {
     });
     return entries;
   };
-
   const tocEntries = buildEntries();
-
-  return (
-    <aside ref={asideRef} style={{ width:'var(--sidebar-w)', flexShrink:0, position:'fixed', top:`${navHeight}px`, left:0, height:`calc(100vh - ${navHeight}px)`, borderRight:'1px solid rgba(var(--accent-rgb),0.1)', padding:'28px 0', background:'rgba(var(--bg-rgb),0.85)', backdropFilter:'blur(12px)', zIndex:50, overflowY:'auto' }}>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:'rgba(var(--accent-rgb),0.4)', textTransform:'uppercase', padding:'0 20px', marginBottom:'4px' }}>Gottheiten</div>
-      {tocEntries.map(entry => (
-        <button key={entry.id}
-          onClick={() => entry.isSection ? toggleSection(entry.id) : scrollTo(entry.id)}
-          style={{ display:'flex', alignItems:'flex-start', gap:'8px', width:'100%', textAlign:'left', padding:'7px 20px', background:'transparent', border:'none', cursor:'pointer', fontFamily:'var(--font-body)', fontWeight:'400', fontSize:'11px', letterSpacing:'0.1em', fontVariant:'small-caps', color: entry.isSection ? 'rgba(var(--text-rgb),0.75)' : 'rgba(var(--text-rgb),0.6)', borderLeft:'2px solid transparent', transition:'all 0.15s', lineHeight:1.55 }}
-          onMouseEnter={e=>{ e.currentTarget.style.color='var(--white)'; e.currentTarget.style.borderLeftColor='rgba(124,77,255,0.6)'; e.currentTarget.style.background='rgba(124,77,255,0.06)'; }}
-          onMouseLeave={e=>{ e.currentTarget.style.color=entry.isSection?'rgba(var(--text-rgb),0.75)':'rgba(var(--text-rgb),0.6)'; e.currentTarget.style.borderLeftColor='transparent'; e.currentTarget.style.background='transparent'; }}>
-          {entry.isSection ? (
-            <svg width="8" height="8" viewBox="0 0 8 8" style={{ flexShrink:0, marginTop:'3px', transition:'transform 0.18s', transform: collapsed[entry.id] ? 'rotate(0deg)' : 'rotate(90deg)', opacity:0.5 }}>
-              <polygon points="1,1 7,4 1,7" fill="rgba(var(--accent-rgb),1)" />
-            </svg>
-          ) : (
-            <OctSvg size={4} color="rgba(124,77,255,0.3)" fill="transparent" strokeWidth={1} style={{ flexShrink:0, marginTop:'3px' }} />
-          )}
-          <span style={{ display:'block', minWidth:0, wordBreak:'normal', overflowWrap:'anywhere', fontWeight: entry.isSection ? '500' : '400' }}>{entry.label}</span>
-        </button>
-      ))}
-    </aside>
-  );
+  return /*#__PURE__*/React.createElement("aside", {
+    ref: asideRef,
+    style: {
+      width: 'var(--sidebar-w)',
+      flexShrink: 0,
+      position: 'fixed',
+      top: `${navHeight}px`,
+      left: 0,
+      height: `calc(100vh - ${navHeight}px)`,
+      borderRight: '1px solid rgba(var(--accent-rgb),0.1)',
+      padding: '28px 0',
+      background: 'rgba(var(--bg-rgb),0.85)',
+      backdropFilter: 'blur(12px)',
+      zIndex: 50,
+      overflowY: 'auto'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.25em',
+      color: 'rgba(var(--accent-rgb),0.4)',
+      textTransform: 'uppercase',
+      padding: '0 20px',
+      marginBottom: '4px'
+    }
+  }, "Gottheiten"), tocEntries.map(entry => /*#__PURE__*/React.createElement("button", {
+    key: entry.id,
+    onClick: () => entry.isSection ? toggleSection(entry.id) : scrollTo(entry.id),
+    style: {
+      display: 'flex',
+      alignItems: 'flex-start',
+      gap: '8px',
+      width: '100%',
+      textAlign: 'left',
+      padding: '7px 20px',
+      background: 'transparent',
+      border: 'none',
+      cursor: 'pointer',
+      fontFamily: 'var(--font-body)',
+      fontWeight: '400',
+      fontSize: '11px',
+      letterSpacing: '0.1em',
+      fontVariant: 'small-caps',
+      color: entry.isSection ? 'rgba(var(--text-rgb),0.75)' : 'rgba(var(--text-rgb),0.6)',
+      borderLeft: '2px solid transparent',
+      transition: 'all 0.15s',
+      lineHeight: 1.55
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.color = 'var(--white)';
+      e.currentTarget.style.borderLeftColor = 'rgba(124,77,255,0.6)';
+      e.currentTarget.style.background = 'rgba(124,77,255,0.06)';
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.color = entry.isSection ? 'rgba(var(--text-rgb),0.75)' : 'rgba(var(--text-rgb),0.6)';
+      e.currentTarget.style.borderLeftColor = 'transparent';
+      e.currentTarget.style.background = 'transparent';
+    }
+  }, entry.isSection ? /*#__PURE__*/React.createElement("svg", {
+    width: "8",
+    height: "8",
+    viewBox: "0 0 8 8",
+    style: {
+      flexShrink: 0,
+      marginTop: '3px',
+      transition: 'transform 0.18s',
+      transform: collapsed[entry.id] ? 'rotate(0deg)' : 'rotate(90deg)',
+      opacity: 0.5
+    }
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: "1,1 7,4 1,7",
+    fill: "rgba(var(--accent-rgb),1)"
+  })) : /*#__PURE__*/React.createElement(OctSvg, {
+    size: 4,
+    color: "rgba(124,77,255,0.3)",
+    fill: "transparent",
+    strokeWidth: 1,
+    style: {
+      flexShrink: 0,
+      marginTop: '3px'
+    }
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      display: 'block',
+      minWidth: 0,
+      wordBreak: 'normal',
+      overflowWrap: 'anywhere',
+      fontWeight: entry.isSection ? '500' : '400'
+    }
+  }, entry.label))));
 }
 
 // ── APP ────────────────────────────────────────────────
 function App() {
   const [selectedEntity, setSelectedEntity] = useState(null);
   const [selectedType, setSelectedType] = useState(null);
-  const [mouse, setMouse] = useState({ x: 0.5, y: 0.5 });
+  const [mouse, setMouse] = useState({
+    x: 0.5,
+    y: 0.5
+  });
   const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
   const [headerBottom, setHeaderBottom] = useState(0);
   const NAV_H = 52;
-
   const headerRef = useRef(null);
   const pageTitleRef = useRef(null);
-
-  const handleMouseMove = useCallback((e) => {setMouse({ x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight });}, []);
-
-  const handleEntityClick = (entity, type) => {setSelectedEntity(entity);setSelectedType(type || null);};
-  const handleBack = () => {setSelectedEntity(null);setSelectedType(null);};
-
+  const handleMouseMove = useCallback(e => {
+    setMouse({
+      x: e.clientX / window.innerWidth,
+      y: e.clientY / window.innerHeight
+    });
+  }, []);
+  const handleEntityClick = (entity, type) => {
+    setSelectedEntity(entity);
+    setSelectedType(type || null);
+  };
+  const handleBack = () => {
+    setSelectedEntity(null);
+    setSelectedType(null);
+  };
   const allEntities = useMemo(() => {
-    const gutIds = ['aurelia','elysarion','sienna','avalaste','cecillia','lorelei','vindeah','ferys'];
-    const neutralIds = ['daramur','eiritha','hadir','selunara','aetherius','serenith','hydea','melion'];
-    const boeseIds = ['ophelis','thraxis','maledor'];
+    const gutIds = ['aurelia', 'elysarion', 'sienna', 'avalaste', 'cecillia', 'lorelei', 'vindeah', 'ferys'];
+    const neutralIds = ['daramur', 'eiritha', 'hadir', 'selunara', 'aetherius', 'serenith', 'hydea', 'melion'];
+    const boeseIds = ['ophelis', 'thraxis', 'maledor'];
     const byId = Object.fromEntries(gods.map(g => [g.id, g]));
-    return [
-      ...gutIds.map(id => byId[id]).filter(Boolean).map(e => ({ entity: e, type: null })),
-      ...neutralIds.map(id => byId[id]).filter(Boolean).map(e => ({ entity: e, type: null })),
-      ...boeseIds.map(id => byId[id]).filter(Boolean).map(e => ({ entity: e, type: null })),
-      ...demons.map(e => ({ entity: e, type: 'Dämon' })),
-      ...naturgeister.map(e => ({ entity: e, type: 'Naturgeist' })),
-    ];
+    return [...gutIds.map(id => byId[id]).filter(Boolean).map(e => ({
+      entity: e,
+      type: null
+    })), ...neutralIds.map(id => byId[id]).filter(Boolean).map(e => ({
+      entity: e,
+      type: null
+    })), ...boeseIds.map(id => byId[id]).filter(Boolean).map(e => ({
+      entity: e,
+      type: null
+    })), ...demons.map(e => ({
+      entity: e,
+      type: 'Dämon'
+    })), ...naturgeister.map(e => ({
+      entity: e,
+      type: 'Naturgeist'
+    }))];
   }, []);
   const selIdx = allEntities.findIndex(item => item.entity.id === selectedEntity?.id);
-  const onEntityPrev = selIdx > 0 ? () => { const p = allEntities[selIdx - 1]; setSelectedEntity(p.entity); setSelectedType(p.type); } : null;
-  const onEntityNext = selIdx < allEntities.length - 1 ? () => { const n = allEntities[selIdx + 1]; setSelectedEntity(n.entity); setSelectedType(n.type); } : null;
+  const onEntityPrev = selIdx > 0 ? () => {
+    const p = allEntities[selIdx - 1];
+    setSelectedEntity(p.entity);
+    setSelectedType(p.type);
+  } : null;
+  const onEntityNext = selIdx < allEntities.length - 1 ? () => {
+    const n = allEntities[selIdx + 1];
+    setSelectedEntity(n.entity);
+    setSelectedType(n.type);
+  } : null;
 
   // Measure the absolute document bottom of the page-title block
   useEffect(() => {
@@ -583,146 +1293,256 @@ function App() {
       }
     };
     measure();
-    window.addEventListener('resize', measure, { passive: true });
+    window.addEventListener('resize', measure, {
+      passive: true
+    });
     return () => window.removeEventListener('resize', measure);
   }, [tweaks.headerHeight]);
-
   useScrollReveal();
-
-
-
-  return (
-    <div onMouseMove={handleMouseMove} className="page-root">
-      {tweaks.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} />}
-      <FloatingHexField mouseX={mouse.x} mouseY={mouse.y} />
-
-      {/* HEADER */}
-      <PageHeader height={tweaks.headerHeight} />
-
-      {/* NAV */}
-      <SiteNav rightLabel="PANTHEON-ARCHIV v2.7" />
-
-      {/* BODY: sidebar + content */}
-      <div className="page-body">
-        <TOCSidebar headerBottom={headerBottom} navHeight={NAV_H} cols={tweaks.columns || 3} />
-
-        {/* MAIN CONTENT */}
-        <div style={{ flex: 1, padding: '32px 28px 64px', minWidth: 0 }}>
-
-          {/* Page title — aligned with card grid */}
-          <div style={{ marginBottom: '32px' }}>
-            <div ref={pageTitleRef} style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: 'rgba(var(--accent-rgb),0.4)', textTransform: 'uppercase', marginBottom: '6px' }}>Welt Enzyklopädie</div>
-            <h1 className="reveal-left" style={{ fontFamily: 'var(--font-display)', fontSize: '42px', fontWeight: '300', letterSpacing: '0.18em', color: 'var(--white)', textShadow: '0 0 30px rgba(124,77,255,0.35)' }}>Gottheiten</h1>
-            <div style={{ display:'flex', alignItems:'center', gap:'8px', marginTop:'12px' }}>
-              <div style={{ width: '50px', height: '1px', background: 'linear-gradient(90deg,rgba(124,77,255,0.8),transparent)', animation: 'pulse-glow 3s infinite' }} />
-              <OctSvg size={8} color="rgba(124,77,255,0.5)" fill="rgba(124,77,255,0.2)" strokeWidth={1} />
-            </div>
-          </div>
-
-          {/* ── MERURISCHES PANTHEON ── */}
-          {(() => {
-            const cols = tweaks.columns || 3;
-            const gutIds = ['aurelia','elysarion','sienna','avalaste','cecillia','lorelei','vindeah','ferys'];
-            const neutralIds = ['daramur','eiritha','hadir','selunara','aetherius','serenith','hydea','melion'];
-            const boeseIds = ['ophelis','thraxis','maledor'];
-            const byId = Object.fromEntries(gods.map(g => [g.id, g]));
-            const gut = gutIds.map(id => byId[id]).filter(Boolean);
-            const neutral = neutralIds.map(id => byId[id]).filter(Boolean);
-            const boese = boeseIds.map(id => byId[id]).filter(Boolean);
-
-            const groupLabel = (label, color) =>
-              <div style={{ display:'flex', alignItems:'center', gap:'10px', marginBottom:'10px', marginTop:'24px' }}>
-                <OctSvg size={9} color={color} fill={color+'44'} strokeWidth={1} />
-                <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:color+'bb', textTransform:'uppercase' }}>{label}</div>
-                <div style={{ flex:1, height:'1px', background:`linear-gradient(90deg,${color}44,transparent)` }} />
-              </div>;
-
-            const renderGrid = (entities, secId, offset=0) => {
-              const rows = [];
-              for (let i = 0; i < entities.length; i += cols) {
-                const row = entities.slice(i, i + cols);
-                const rowId = `${secId}-row-${offset + Math.floor(i / cols)}`;
-                rows.push(
-                  <div key={rowId} id={rowId} style={{ display:'grid', gridTemplateColumns:`repeat(${cols},1fr)`, gap:'16px', marginBottom:'16px', scrollMarginTop:`${NAV_H+8}px`, overflow:'visible' }}>
-                    {row.map(god => <EntityCard key={god.id} entity={god} onClick={e => handleEntityClick(e)} accentLabel={god.alignment} />)}
-                  </div>
-                );
-              }
-              return rows;
-            };
-
-            return (
-              <div id="merurisches-pantheon" style={{ marginBottom:'48px', scrollMarginTop:`${NAV_H+8}px` }}>
-                <SectionBanner accentColor="#7c4dff" />
-                <SectionHeading title="Merurisches Pantheon" subtitle="Gottheiten" accentColor="#7c4dff" />
-                {groupLabel('Gut', '#60d080')}
-                {renderGrid(gut, 'merurisches-pantheon', 0)}
-                {groupLabel('Neutral', '#a0a0d0')}
-                {renderGrid(neutral, 'merurisches-pantheon', Math.ceil(gut.length/cols))}
-                {groupLabel('Böse', '#d05050')}
-                {renderGrid(boese, 'merurisches-pantheon', Math.ceil(gut.length/cols)+Math.ceil(neutral.length/cols))}
-              </div>
-            );
-          })()}
-
-          {/* ── DÄMONEN ── */}
-          {(() => {
-            const cols = tweaks.columns || 3;
-            return (
-              <div id="daemonen" style={{ marginBottom:'48px', scrollMarginTop:`${NAV_H+8}px` }}>
-                <SectionBanner accentColor="#c03000" />
-                <SectionHeading title="Dämonen" subtitle="Infernalische Wesenheiten" accentColor="#c03000" />
-                <div style={{ marginTop:'20px', overflow:'visible' }}>
-                  {demons.map((d, i) => i % cols === 0 ? (
-                    <div key={`daemonen-row-${Math.floor(i/cols)}`} id={`daemonen-row-${Math.floor(i/cols)}`} style={{ display:'grid', gridTemplateColumns:`repeat(${cols},1fr)`, gap:'16px', marginBottom:'16px', scrollMarginTop:`${NAV_H+8}px`, overflow:'visible' }}>
-                      {demons.slice(i, i+cols).map(d2 => <EntityCard key={d2.id} entity={d2} onClick={e => handleEntityClick(e,'Dämon')} accentLabel="Dämon" />)}
-                    </div>
-                  ) : null)}
-                </div>
-              </div>
-            );
-          })()}
-
-          {/* ── NATURGEISTER ── */}
-          {(() => {
-            const cols = tweaks.columns || 3;
-            return (
-              <div id="naturgeister" style={{ marginBottom:'48px', scrollMarginTop:`${NAV_H+8}px` }}>
-                <SectionBanner accentColor="#40a040" />
-                <SectionHeading title="Naturgeister" subtitle="Geister der Urkräfte" accentColor="#40a040" />
-                <div style={{ marginTop:'20px', overflow:'visible' }}>
-                  {naturgeister.map((n, i) => i % cols === 0 ? (
-                    <div key={`naturgeister-row-${Math.floor(i/cols)}`} id={`naturgeister-row-${Math.floor(i/cols)}`} style={{ display:'grid', gridTemplateColumns:`repeat(${cols},1fr)`, gap:'16px', marginBottom:'16px', scrollMarginTop:`${NAV_H+8}px`, overflow:'visible' }}>
-                      {naturgeister.slice(i, i+cols).map(n2 => <EntityCard key={n2.id} entity={n2} onClick={e => handleEntityClick(e,'Naturgeist')} accentLabel="Naturgeist" />)}
-                    </div>
-                  ) : null)}
-                </div>
-              </div>
-            );
-          })()}
-
-        </div>
-      </div>
-
-      {/* FOOTER */}
-      <SiteFooter />
-
-      {/* DETAIL OVERLAY */}
-      {selectedEntity && <EntityDetail entity={selectedEntity} onBack={handleBack} typeLabel={selectedType} onPrev={onEntityPrev} onNext={onEntityNext} />}
-
-      <FloatNav />
-      <TweaksPanel>
-        <TweakSection label="Layout" />
-        <TweakSlider id="columns" label="Spalten" min={2} max={4} step={1} />
-        <TweakSlider id="headerHeight" label="Kopfzeile Höhe" min={80} max={320} step={10} />
-        <TweakSection label="Darstellung" />
-        <TweakToggle id="showParticles" label="Partikel" />
-      </TweaksPanel>
-    </div>);
-
+  return /*#__PURE__*/React.createElement("div", {
+    onMouseMove: handleMouseMove,
+    className: "page-root"
+  }, tweaks.showParticles && /*#__PURE__*/React.createElement(ParticleField, {
+    mouseX: mouse.x,
+    mouseY: mouse.y
+  }), /*#__PURE__*/React.createElement(FloatingHexField, {
+    mouseX: mouse.x,
+    mouseY: mouse.y
+  }), /*#__PURE__*/React.createElement(PageHeader, {
+    height: tweaks.headerHeight
+  }), /*#__PURE__*/React.createElement(SiteNav, {
+    rightLabel: "PANTHEON-ARCHIV v2.7"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "page-body"
+  }, /*#__PURE__*/React.createElement(TOCSidebar, {
+    headerBottom: headerBottom,
+    navHeight: NAV_H,
+    cols: tweaks.columns || 3
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      padding: '32px 28px 64px',
+      minWidth: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: '32px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    ref: pageTitleRef,
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.25em',
+      color: 'rgba(var(--accent-rgb),0.4)',
+      textTransform: 'uppercase',
+      marginBottom: '6px'
+    }
+  }, "Welt Enzyklop\xE4die"), /*#__PURE__*/React.createElement("h1", {
+    className: "reveal-left",
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '42px',
+      fontWeight: '300',
+      letterSpacing: '0.18em',
+      color: 'var(--white)',
+      textShadow: '0 0 30px rgba(124,77,255,0.35)'
+    }
+  }, "Gottheiten"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      marginTop: '12px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '50px',
+      height: '1px',
+      background: 'linear-gradient(90deg,rgba(124,77,255,0.8),transparent)',
+      animation: 'pulse-glow 3s infinite'
+    }
+  }), /*#__PURE__*/React.createElement(OctSvg, {
+    size: 8,
+    color: "rgba(124,77,255,0.5)",
+    fill: "rgba(124,77,255,0.2)",
+    strokeWidth: 1
+  }))), (() => {
+    const cols = tweaks.columns || 3;
+    const gutIds = ['aurelia', 'elysarion', 'sienna', 'avalaste', 'cecillia', 'lorelei', 'vindeah', 'ferys'];
+    const neutralIds = ['daramur', 'eiritha', 'hadir', 'selunara', 'aetherius', 'serenith', 'hydea', 'melion'];
+    const boeseIds = ['ophelis', 'thraxis', 'maledor'];
+    const byId = Object.fromEntries(gods.map(g => [g.id, g]));
+    const gut = gutIds.map(id => byId[id]).filter(Boolean);
+    const neutral = neutralIds.map(id => byId[id]).filter(Boolean);
+    const boese = boeseIds.map(id => byId[id]).filter(Boolean);
+    const groupLabel = (label, color) => /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '10px',
+        marginBottom: '10px',
+        marginTop: '24px'
+      }
+    }, /*#__PURE__*/React.createElement(OctSvg, {
+      size: 9,
+      color: color,
+      fill: color + '44',
+      strokeWidth: 1
+    }), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontFamily: 'var(--font-mono)',
+        fontSize: '8px',
+        letterSpacing: '0.28em',
+        color: color + 'bb',
+        textTransform: 'uppercase'
+      }
+    }, label), /*#__PURE__*/React.createElement("div", {
+      style: {
+        flex: 1,
+        height: '1px',
+        background: `linear-gradient(90deg,${color}44,transparent)`
+      }
+    }));
+    const renderGrid = (entities, secId, offset = 0) => {
+      const rows = [];
+      for (let i = 0; i < entities.length; i += cols) {
+        const row = entities.slice(i, i + cols);
+        const rowId = `${secId}-row-${offset + Math.floor(i / cols)}`;
+        rows.push(/*#__PURE__*/React.createElement("div", {
+          key: rowId,
+          id: rowId,
+          style: {
+            display: 'grid',
+            gridTemplateColumns: `repeat(${cols},1fr)`,
+            gap: '16px',
+            marginBottom: '16px',
+            scrollMarginTop: `${NAV_H + 8}px`,
+            overflow: 'visible'
+          }
+        }, row.map(god => /*#__PURE__*/React.createElement(EntityCard, {
+          key: god.id,
+          entity: god,
+          onClick: e => handleEntityClick(e),
+          accentLabel: god.alignment
+        }))));
+      }
+      return rows;
+    };
+    return /*#__PURE__*/React.createElement("div", {
+      id: "merurisches-pantheon",
+      style: {
+        marginBottom: '48px',
+        scrollMarginTop: `${NAV_H + 8}px`
+      }
+    }, /*#__PURE__*/React.createElement(SectionBanner, {
+      accentColor: "#7c4dff"
+    }), /*#__PURE__*/React.createElement(SectionHeading, {
+      title: "Merurisches Pantheon",
+      subtitle: "Gottheiten",
+      accentColor: "#7c4dff"
+    }), groupLabel('Gut', '#60d080'), renderGrid(gut, 'merurisches-pantheon', 0), groupLabel('Neutral', '#a0a0d0'), renderGrid(neutral, 'merurisches-pantheon', Math.ceil(gut.length / cols)), groupLabel('Böse', '#d05050'), renderGrid(boese, 'merurisches-pantheon', Math.ceil(gut.length / cols) + Math.ceil(neutral.length / cols)));
+  })(), (() => {
+    const cols = tweaks.columns || 3;
+    return /*#__PURE__*/React.createElement("div", {
+      id: "daemonen",
+      style: {
+        marginBottom: '48px',
+        scrollMarginTop: `${NAV_H + 8}px`
+      }
+    }, /*#__PURE__*/React.createElement(SectionBanner, {
+      accentColor: "#c03000"
+    }), /*#__PURE__*/React.createElement(SectionHeading, {
+      title: "D\xE4monen",
+      subtitle: "Infernalische Wesenheiten",
+      accentColor: "#c03000"
+    }), /*#__PURE__*/React.createElement("div", {
+      style: {
+        marginTop: '20px',
+        overflow: 'visible'
+      }
+    }, demons.map((d, i) => i % cols === 0 ? /*#__PURE__*/React.createElement("div", {
+      key: `daemonen-row-${Math.floor(i / cols)}`,
+      id: `daemonen-row-${Math.floor(i / cols)}`,
+      style: {
+        display: 'grid',
+        gridTemplateColumns: `repeat(${cols},1fr)`,
+        gap: '16px',
+        marginBottom: '16px',
+        scrollMarginTop: `${NAV_H + 8}px`,
+        overflow: 'visible'
+      }
+    }, demons.slice(i, i + cols).map(d2 => /*#__PURE__*/React.createElement(EntityCard, {
+      key: d2.id,
+      entity: d2,
+      onClick: e => handleEntityClick(e, 'Dämon'),
+      accentLabel: "D\xE4mon"
+    }))) : null)));
+  })(), (() => {
+    const cols = tweaks.columns || 3;
+    return /*#__PURE__*/React.createElement("div", {
+      id: "naturgeister",
+      style: {
+        marginBottom: '48px',
+        scrollMarginTop: `${NAV_H + 8}px`
+      }
+    }, /*#__PURE__*/React.createElement(SectionBanner, {
+      accentColor: "#40a040"
+    }), /*#__PURE__*/React.createElement(SectionHeading, {
+      title: "Naturgeister",
+      subtitle: "Geister der Urkr\xE4fte",
+      accentColor: "#40a040"
+    }), /*#__PURE__*/React.createElement("div", {
+      style: {
+        marginTop: '20px',
+        overflow: 'visible'
+      }
+    }, naturgeister.map((n, i) => i % cols === 0 ? /*#__PURE__*/React.createElement("div", {
+      key: `naturgeister-row-${Math.floor(i / cols)}`,
+      id: `naturgeister-row-${Math.floor(i / cols)}`,
+      style: {
+        display: 'grid',
+        gridTemplateColumns: `repeat(${cols},1fr)`,
+        gap: '16px',
+        marginBottom: '16px',
+        scrollMarginTop: `${NAV_H + 8}px`,
+        overflow: 'visible'
+      }
+    }, naturgeister.slice(i, i + cols).map(n2 => /*#__PURE__*/React.createElement(EntityCard, {
+      key: n2.id,
+      entity: n2,
+      onClick: e => handleEntityClick(e, 'Naturgeist'),
+      accentLabel: "Naturgeist"
+    }))) : null)));
+  })())), /*#__PURE__*/React.createElement(SiteFooter, null), selectedEntity && /*#__PURE__*/React.createElement(EntityDetail, {
+    entity: selectedEntity,
+    onBack: handleBack,
+    typeLabel: selectedType,
+    onPrev: onEntityPrev,
+    onNext: onEntityNext
+  }), /*#__PURE__*/React.createElement(FloatNav, null), /*#__PURE__*/React.createElement(TweaksPanel, null, /*#__PURE__*/React.createElement(TweakSection, {
+    label: "Layout"
+  }), /*#__PURE__*/React.createElement(TweakSlider, {
+    id: "columns",
+    label: "Spalten",
+    min: 2,
+    max: 4,
+    step: 1
+  }), /*#__PURE__*/React.createElement(TweakSlider, {
+    id: "headerHeight",
+    label: "Kopfzeile H\xF6he",
+    min: 80,
+    max: 320,
+    step: 10
+  }), /*#__PURE__*/React.createElement(TweakSection, {
+    label: "Darstellung"
+  }), /*#__PURE__*/React.createElement(TweakToggle, {
+    id: "showParticles",
+    label: "Partikel"
+  })));
 }
-
-ReactDOM.createRoot(document.getElementById('root')).render(<SiteGate><App /></SiteGate>);
+ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement(App, null)));
+})();
 </script>
 
 

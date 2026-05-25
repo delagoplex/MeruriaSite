@@ -6,741 +6,1873 @@
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
 <link rel="stylesheet" href="assets/styles/pages/Dhampir.css">
-<script src="assets/scripts/vendor/react.development.js"></script>
-<script src="assets/scripts/vendor/react-dom.development.js"></script>
-<script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/scripts/vendor/react.production.min.js"></script>
+<script src="assets/scripts/vendor/react-dom.production.min.js"></script>
+
 <script src="assets/scripts/vendor/image-slot.js"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
-<script src="assets/components/site-gate.jsx" type="text/babel"></script>
-<script src="assets/components/float-nav.jsx" type="text/babel"></script>
+<script src="assets/components/site-gate.js"></script>
+<script src="assets/components/float-nav.js"></script>
 </head>
 <body>
 <div id="root"></div>
-<script type="text/babel">
-const { useState, useEffect, useRef } = React;
+<script>
+(function () {
+const {
+  useState,
+  useEffect,
+  useRef
+} = React;
 
 // ── DATA ──────────────────────────────────────────────────
-const GELÜSTE = [
-  'Blut',
-  'Rohes Fleisch',
-  'Rückenmark',
-  'Hirnflüssigkeit',
-  'Psychische Energie',
-  'Träume',
-  'Lebensenergie',
-];
-
-const URSPRÜNGE = [
-  'Du bist die Reinkarnation eines Ahnen, der ein vampirischer Tyrann war.',
-  'Dein Pakt mit einer räuberischen Gottheit, einem Unhold, Feenwesen oder Geist bewirkt, dass du deren Hunger teilst.',
-  'Du hast den Angriff eines Vampirs überlebt, wurdest aber für immer verwandelt.',
-  'Ein Parasit lebt in dir. Du genießt seinen Hunger.',
-  'Deine Transformation in ein unsterbliches Wesen wurde von einer Tragödie unterbrochen.',
-  'Du bist die verkleinerte Form eines außerweltlichen Wesens. Wenn du deinen Hunger stillst, beschleunigt das deine Erneuerung.',
-  'Einer deiner Eltern war ein Vampir.',
-  'Ein radikales Experiment hat deinen Körper verändert. Seitdem brauchst du die Lebenssäfte anderer.',
-];
-
-const BEKANNTE = [
-  { name: '— Unbekannt —', rolle: 'Name noch nicht festgelegt', beschreibung: 'Dieser Eintrag ist für einen bekannten Dhampir in Meruria reserviert.' },
-  { name: '— Unbekannt —', rolle: 'Name noch nicht festgelegt', beschreibung: 'Dieser Eintrag ist für einen bekannten Dhampir in Meruria reserviert.' },
-  { name: '— Unbekannt —', rolle: 'Name noch nicht festgelegt', beschreibung: 'Dieser Eintrag ist für einen bekannten Dhampir in Meruria reserviert.' },
-];
+const GELÜSTE = ['Blut', 'Rohes Fleisch', 'Rückenmark', 'Hirnflüssigkeit', 'Psychische Energie', 'Träume', 'Lebensenergie'];
+const URSPRÜNGE = ['Du bist die Reinkarnation eines Ahnen, der ein vampirischer Tyrann war.', 'Dein Pakt mit einer räuberischen Gottheit, einem Unhold, Feenwesen oder Geist bewirkt, dass du deren Hunger teilst.', 'Du hast den Angriff eines Vampirs überlebt, wurdest aber für immer verwandelt.', 'Ein Parasit lebt in dir. Du genießt seinen Hunger.', 'Deine Transformation in ein unsterbliches Wesen wurde von einer Tragödie unterbrochen.', 'Du bist die verkleinerte Form eines außerweltlichen Wesens. Wenn du deinen Hunger stillst, beschleunigt das deine Erneuerung.', 'Einer deiner Eltern war ein Vampir.', 'Ein radikales Experiment hat deinen Körper verändert. Seitdem brauchst du die Lebenssäfte anderer.'];
+const BEKANNTE = [{
+  name: '— Unbekannt —',
+  rolle: 'Name noch nicht festgelegt',
+  beschreibung: 'Dieser Eintrag ist für einen bekannten Dhampir in Meruria reserviert.'
+}, {
+  name: '— Unbekannt —',
+  rolle: 'Name noch nicht festgelegt',
+  beschreibung: 'Dieser Eintrag ist für einen bekannten Dhampir in Meruria reserviert.'
+}, {
+  name: '— Unbekannt —',
+  rolle: 'Name noch nicht festgelegt',
+  beschreibung: 'Dieser Eintrag ist für einen bekannten Dhampir in Meruria reserviert.'
+}];
 
 // ── HOOKS ─────────────────────────────────────────────────
 function useScrollReveal() {
   useEffect(() => {
     const els = document.querySelectorAll('.reveal,.reveal-left,.reveal-right');
     const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-    }, { threshold: 0.06, rootMargin: '0px 0px -20px 0px' });
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, {
+      threshold: 0.06,
+      rootMargin: '0px 0px -20px 0px'
+    });
     els.forEach(el => observer.observe(el));
     return () => observer.disconnect();
   }, []);
 }
-
 function useParallax() {
   useEffect(() => {
     const hero = document.getElementById('hero-bg');
     if (!hero) return;
-    const onScroll = () => { hero.style.transform = `translateY(${window.scrollY * 0.35}px)`; };
-    window.addEventListener('scroll', onScroll, { passive: true });
+    const onScroll = () => {
+      hero.style.transform = `translateY(${window.scrollY * 0.35}px)`;
+    };
+    window.addEventListener('scroll', onScroll, {
+      passive: true
+    });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 }
 
 // ── IMAGE PLACEHOLDER ─────────────────────────────────────
-function ImgPlaceholder({ label, width, height, style={} }) {
-  return (
-    <div style={{ width, height, background:'repeating-linear-gradient(-45deg,transparent,transparent 8px,rgba(124,77,255,0.05) 8px,rgba(124,77,255,0.05) 9px),linear-gradient(160deg,rgba(16,10,40,0.95) 0%,rgba(6,4,18,0.98) 100%)', border:'1px dashed rgba(124,77,255,0.22)', borderRadius:'4px', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'10px', position:'relative', overflow:'hidden', flexShrink:0, ...style }}>
-      <div style={{ position:'absolute', inset:0, background:'radial-gradient(ellipse at 50% 50%,rgba(124,77,255,0.07) 0%,transparent 70%)' }} />
-      <svg viewBox="0 0 40 40" width="32" height="32" fill="none" style={{ opacity:0.28 }}>
-        <circle cx="20" cy="15" r="7" stroke="#a87cff" strokeWidth="1.2"/>
-        <path d="M8 36 Q12 28 20 26 Q28 28 32 36" stroke="#a87cff" strokeWidth="1.2"/>
-        <path d="M14 12 Q10 6 8 10 Q12 8 14 12" stroke="#a87cff" strokeWidth="1" opacity="0.6"/>
-        <path d="M26 12 Q30 6 32 10 Q28 8 26 12" stroke="#a87cff" strokeWidth="1" opacity="0.6"/>
-      </svg>
-      <span style={{ fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.2em', color:'rgba(124,77,255,0.38)', textTransform:'uppercase', zIndex:1, textAlign:'center', padding:'0 12px' }}>{label}</span>
-    </div>
-  );
+function ImgPlaceholder({
+  label,
+  width,
+  height,
+  style = {}
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      width,
+      height,
+      background: 'repeating-linear-gradient(-45deg,transparent,transparent 8px,rgba(124,77,255,0.05) 8px,rgba(124,77,255,0.05) 9px),linear-gradient(160deg,rgba(16,10,40,0.95) 0%,rgba(6,4,18,0.98) 100%)',
+      border: '1px dashed rgba(124,77,255,0.22)',
+      borderRadius: '4px',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '10px',
+      position: 'relative',
+      overflow: 'hidden',
+      flexShrink: 0,
+      ...style
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      background: 'radial-gradient(ellipse at 50% 50%,rgba(124,77,255,0.07) 0%,transparent 70%)'
+    }
+  }), /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 40 40",
+    width: "32",
+    height: "32",
+    fill: "none",
+    style: {
+      opacity: 0.28
+    }
+  }, /*#__PURE__*/React.createElement("circle", {
+    cx: "20",
+    cy: "15",
+    r: "7",
+    stroke: "#a87cff",
+    strokeWidth: "1.2"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M8 36 Q12 28 20 26 Q28 28 32 36",
+    stroke: "#a87cff",
+    strokeWidth: "1.2"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M14 12 Q10 6 8 10 Q12 8 14 12",
+    stroke: "#a87cff",
+    strokeWidth: "1",
+    opacity: "0.6"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M26 12 Q30 6 32 10 Q28 8 26 12",
+    stroke: "#a87cff",
+    strokeWidth: "1",
+    opacity: "0.6"
+  })), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      letterSpacing: '0.2em',
+      color: 'rgba(124,77,255,0.38)',
+      textTransform: 'uppercase',
+      zIndex: 1,
+      textAlign: 'center',
+      padding: '0 12px'
+    }
+  }, label));
 }
 
 // ── SECTION ───────────────────────────────────────────────
-function Section({ id, label, title, children, style={} }) {
-  return (
-    <section id={id} style={{ marginBottom:'72px', ...style }}>
-      <div className="reveal">
-        <div className="section-label">{label}</div>
-        <h2 className="section-title">{title}</h2>
-        <div className="section-divider" />
-      </div>
-      {children}
-    </section>
-  );
+function Section({
+  id,
+  label,
+  title,
+  children,
+  style = {}
+}) {
+  return /*#__PURE__*/React.createElement("section", {
+    id: id,
+    style: {
+      marginBottom: '72px',
+      ...style
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "reveal"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "section-label"
+  }, label), /*#__PURE__*/React.createElement("h2", {
+    className: "section-title"
+  }, title), /*#__PURE__*/React.createElement("div", {
+    className: "section-divider"
+  })), children);
 }
 
 // ── ROLL TABLE ────────────────────────────────────────────
-function RollTable({ data, diceLabel, colLabel, result, setResult, setRoll }) {
+function RollTable({
+  data,
+  diceLabel,
+  colLabel,
+  result,
+  setResult,
+  setRoll
+}) {
   const [rolling, setRolling] = useState(false);
   const n = data.length;
-
   const roll = () => {
     if (rolling) return;
-    setRolling(true); setResult(null);
+    setRolling(true);
+    setResult(null);
     let count = 0;
     const iv = setInterval(() => {
-      setResult(data[Math.floor(Math.random()*n)]);
+      setResult(data[Math.floor(Math.random() * n)]);
       count++;
       if (count > 14) {
         clearInterval(iv);
-        const idx = Math.floor(Math.random()*n);
-        setRoll(idx+1); setResult(data[idx]); setRolling(false);
+        const idx = Math.floor(Math.random() * n);
+        setRoll(idx + 1);
+        setResult(data[idx]);
+        setRolling(false);
       }
     }, 60);
   };
-
-  return (
-    <div>
-      <button className="dice-btn" onClick={roll} style={{ marginBottom:'20px' }}>
-        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ animation:rolling?'dice-spin 0.4s linear infinite':'none', transformOrigin:'center' }}>
-          <rect x="3" y="3" width="18" height="18" rx="3"/>
-          <circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/>
-          <circle cx="15.5" cy="8.5" r="1.2" fill="currentColor"/>
-          <circle cx="8.5" cy="15.5" r="1.2" fill="currentColor"/>
-          <circle cx="15.5" cy="15.5" r="1.2" fill="currentColor"/>
-          <circle cx="12" cy="12" r="1.2" fill="currentColor"/>
-        </svg>
-        Würfeln
-      </button>
-      <div style={{ border:'1px solid rgba(124,77,255,0.15)', borderRadius:'4px', overflow:'hidden', background:'rgba(var(--bg2-rgb),0.7)', marginBottom: result ? '16px' : '0' }}>
-        <table className="roll-table">
-          <thead>
-            <tr>
-              <th>{diceLabel}</th>
-              <th>{colLabel}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((item, i) => (
-              <tr key={i} className={result === item ? 'highlight' : ''} style={{ cursor:'pointer', transition:'background 0.15s' }}
-                onClick={() => { setResult(item); setRoll(i+1); }}>
-                <td>{i+1}</td>
-                <td>{item}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      {result && (
-        <div style={{ animation:'result-pop 0.35s cubic-bezier(0.23,1,0.32,1) forwards', padding:'16px 20px', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.3)', borderRadius:'4px' }}>
-          <div style={{ fontFamily:'var(--font-body)', fontWeight:'400', fontSize:'13px', color:'var(--white)', lineHeight:'1.6' }}>{result}</div>
-        </div>
-      )}
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("button", {
+    className: "dice-btn",
+    onClick: roll,
+    style: {
+      marginBottom: '20px'
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 24 24",
+    width: "15",
+    height: "15",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "1.5",
+    style: {
+      animation: rolling ? 'dice-spin 0.4s linear infinite' : 'none',
+      transformOrigin: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("rect", {
+    x: "3",
+    y: "3",
+    width: "18",
+    height: "18",
+    rx: "3"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "8.5",
+    cy: "8.5",
+    r: "1.2",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "15.5",
+    cy: "8.5",
+    r: "1.2",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "8.5",
+    cy: "15.5",
+    r: "1.2",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "15.5",
+    cy: "15.5",
+    r: "1.2",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "12",
+    cy: "12",
+    r: "1.2",
+    fill: "currentColor"
+  })), "W\xFCrfeln"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      border: '1px solid rgba(124,77,255,0.15)',
+      borderRadius: '4px',
+      overflow: 'hidden',
+      background: 'rgba(var(--bg2-rgb),0.7)',
+      marginBottom: result ? '16px' : '0'
+    }
+  }, /*#__PURE__*/React.createElement("table", {
+    className: "roll-table"
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, diceLabel), /*#__PURE__*/React.createElement("th", null, colLabel))), /*#__PURE__*/React.createElement("tbody", null, data.map((item, i) => /*#__PURE__*/React.createElement("tr", {
+    key: i,
+    className: result === item ? 'highlight' : '',
+    style: {
+      cursor: 'pointer',
+      transition: 'background 0.15s'
+    },
+    onClick: () => {
+      setResult(item);
+      setRoll(i + 1);
+    }
+  }, /*#__PURE__*/React.createElement("td", null, i + 1), /*#__PURE__*/React.createElement("td", null, item)))))), result && /*#__PURE__*/React.createElement("div", {
+    style: {
+      animation: 'result-pop 0.35s cubic-bezier(0.23,1,0.32,1) forwards',
+      padding: '16px 20px',
+      background: 'rgba(124,77,255,0.1)',
+      border: '1px solid rgba(124,77,255,0.3)',
+      borderRadius: '4px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '400',
+      fontSize: '13px',
+      color: 'var(--white)',
+      lineHeight: '1.6'
+    }
+  }, result)));
 }
 
 // ── CHARACTER GENERATOR ───────────────────────────────────
 function CharacterGenerator() {
   const [chars, setChars] = useState(null);
   const [rolling, setRolling] = useState(false);
-  const rollD = (n) => Math.floor(Math.random()*n)+1;
-
+  const rollD = n => Math.floor(Math.random() * n) + 1;
   const generate = () => {
     if (rolling) return;
     setRolling(true);
     setTimeout(() => {
       const geschlecht = Math.random() < 0.5 ? 'männlich' : 'weiblich';
-      const augen = ['blutrot','tiefschwarz','orange glühend','silbern','violett'][Math.floor(Math.random()*5)];
-      const haut = ['aschfahl','totenblass','alabasterweiß','blassgrau','porzellanweiß'][Math.floor(Math.random()*5)];
-      const geluest = GELÜSTE[Math.floor(Math.random()*7)];
-      const ursprung = URSPRÜNGE[Math.floor(Math.random()*8)];
-      const talent = ['Fledermausflug','Traumfresser','Vampirisches Charisma'][Math.floor(Math.random()*3)];
+      const augen = ['blutrot', 'tiefschwarz', 'orange glühend', 'silbern', 'violett'][Math.floor(Math.random() * 5)];
+      const haut = ['aschfahl', 'totenblass', 'alabasterweiß', 'blassgrau', 'porzellanweiß'][Math.floor(Math.random() * 5)];
+      const geluest = GELÜSTE[Math.floor(Math.random() * 7)];
+      const ursprung = URSPRÜNGE[Math.floor(Math.random() * 8)];
+      const talent = ['Fledermausflug', 'Traumfresser', 'Vampirisches Charisma'][Math.floor(Math.random() * 3)];
       const groesse = Math.random() < 0.5 ? 'mittelgroß' : 'klein';
-      setChars({ geschlecht, augen, haut, geluest, ursprung, talent, groesse });
+      setChars({
+        geschlecht,
+        augen,
+        haut,
+        geluest,
+        ursprung,
+        talent,
+        groesse
+      });
       setRolling(false);
     }, 350);
   };
-
-  return (
-    <div className="reveal">
-      <p className="body-text" style={{ marginBottom:'20px' }}>Lass dir die Merkmale deines Dhampir-Charakters auswürfeln.</p>
-      <button className="dice-btn" onClick={generate} style={{ marginBottom:'20px' }}>
-        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ animation:rolling?'dice-spin 0.5s linear infinite':'none', transformOrigin:'center' }}>
-          <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
-        </svg>
-        Charakter würfeln
-      </button>
-      {chars && (
-        <div style={{ animation:'result-pop 0.35s cubic-bezier(0.23,1,0.32,1) forwards', display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(160px,1fr))', gap:'10px' }}>
-          {[
-            ['Geschlecht', chars.geschlecht],
-            ['Größe', chars.groesse],
-            ['Augenfarbe', chars.augen],
-            ['Hautfarbe', chars.haut],
-            ['Gelüst', chars.geluest],
-            ['Angeborenes Talent', chars.talent],
-          ].map(([k,v]) => (
-            <div key={k} style={{ padding:'12px 14px', background:'rgba(124,77,255,0.07)', border:'1px solid rgba(124,77,255,0.14)', borderRadius:'4px' }}>
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.2em', color:'rgba(124,77,255,0.5)', textTransform:'uppercase', marginBottom:'5px' }}>{k}</div>
-              <div style={{ fontFamily:'var(--font-display)', fontSize:'13px', fontWeight:'300', letterSpacing:'0.05em', color:'var(--white)', lineHeight:'1.4' }}>{v}</div>
-            </div>
-          ))}
-          <div style={{ padding:'12px 14px', background:'rgba(124,77,255,0.07)', border:'1px solid rgba(124,77,255,0.14)', borderRadius:'4px', gridColumn:'1 / -1' }}>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.2em', color:'rgba(124,77,255,0.5)', textTransform:'uppercase', marginBottom:'5px' }}>Ursprung</div>
-            <div style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', color:'var(--white)', lineHeight:'1.6' }}>{chars.ursprung}</div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    className: "reveal"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "body-text",
+    style: {
+      marginBottom: '20px'
+    }
+  }, "Lass dir die Merkmale deines Dhampir-Charakters ausw\xFCrfeln."), /*#__PURE__*/React.createElement("button", {
+    className: "dice-btn",
+    onClick: generate,
+    style: {
+      marginBottom: '20px'
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 24 24",
+    width: "15",
+    height: "15",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "1.5",
+    style: {
+      animation: rolling ? 'dice-spin 0.5s linear infinite' : 'none',
+      transformOrigin: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M12 2L2 7l10 5 10-5-10-5z"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M2 17l10 5 10-5"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M2 12l10 5 10-5"
+  })), "Charakter w\xFCrfeln"), chars && /*#__PURE__*/React.createElement("div", {
+    style: {
+      animation: 'result-pop 0.35s cubic-bezier(0.23,1,0.32,1) forwards',
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fill,minmax(160px,1fr))',
+      gap: '10px'
+    }
+  }, [['Geschlecht', chars.geschlecht], ['Größe', chars.groesse], ['Augenfarbe', chars.augen], ['Hautfarbe', chars.haut], ['Gelüst', chars.geluest], ['Angeborenes Talent', chars.talent]].map(([k, v]) => /*#__PURE__*/React.createElement("div", {
+    key: k,
+    style: {
+      padding: '12px 14px',
+      background: 'rgba(124,77,255,0.07)',
+      border: '1px solid rgba(124,77,255,0.14)',
+      borderRadius: '4px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      letterSpacing: '0.2em',
+      color: 'rgba(124,77,255,0.5)',
+      textTransform: 'uppercase',
+      marginBottom: '5px'
+    }
+  }, k), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '13px',
+      fontWeight: '300',
+      letterSpacing: '0.05em',
+      color: 'var(--white)',
+      lineHeight: '1.4'
+    }
+  }, v))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '12px 14px',
+      background: 'rgba(124,77,255,0.07)',
+      border: '1px solid rgba(124,77,255,0.14)',
+      borderRadius: '4px',
+      gridColumn: '1 / -1'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      letterSpacing: '0.2em',
+      color: 'rgba(124,77,255,0.5)',
+      textTransform: 'uppercase',
+      marginBottom: '5px'
+    }
+  }, "Ursprung"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      fontWeight: '300',
+      color: 'var(--white)',
+      lineHeight: '1.6'
+    }
+  }, chars.ursprung))));
 }
 
 // ── STATBLOCK ─────────────────────────────────────────────
 function StatBlock() {
-  const features = [
-    { name:'Kreaturentyp', text:'Humanoider.' },
-    { name:'Größe', text:'Deine Größenkategorie ist mittelgroß oder klein. Du wählst die Größe aus, wenn du dieses Volk wählst.' },
-    { name:'Dunkelsicht', text:'Im Radius von 18 Metern kannst du in dämmrigem Licht wie in hellem Licht sehen, bei Dunkelheit wie in dämmrigem Licht. Farben nimmst du bei Dunkelheit nur als Graustufen wahr.' },
-    { name:'Erbe', text:'Du behältst alle Fertigkeiten, in denen deine vorherige Rasse geübt ist, und die Bewegungsrate beim Klettern, Fliegen oder Schwimmen.' },
-    { name:'Untote Natur', text:'Du brauchst nicht zu atmen.' },
-    { name:'Spinnenklettern', text:'Deine Kletterbewegungsrate ist gleich deiner Schrittbewegungsrate. Außerdem kannst du dich ab der 3. Stufe an vertikalen Oberflächen aufwärts, abwärts und seitwärts, sowie kopfüber an Decken bewegen, wobei du die Hände frei hast.' },
-    { name:'Vampirbiss', text:'Deine Fangzähne sind eine natürliche Waffe, die als einfache Nahkampfwaffe zählt, in deren Umgang du geübt bist. Du verwendest deinen Konstitutionsmodifikator statt Stärke. Bei einem Treffer bewirkt er 1W4 Stichschaden. Wenn du nur noch die Hälfte deiner Trefferpunkte oder weniger hast, bist du bei Angriffswürfen im Vorteil. Wenn du eine nicht-konstrukt/untote Kreatur triffst, kannst du dich stärken: Trefferpunkte in Höhe des Stichschadens zurückgewinnen, oder einen Bonus auf deinen nächsten Attributs- oder Schadenswurf erhalten. Die Häufigkeit entspricht deinem Übungsbonus (Auffrischung nach langer Rast).' },
-    { name:'Angeborenes Talent', text:null, talente:['Fledermausflug','Traumfresser','Vampirisches Charisma'] },
-  ];
-
-  return (
-    <div style={{ border:'1px solid rgba(124,77,255,0.2)', borderRadius:'4px', overflow:'hidden', background:'rgba(var(--bg2-rgb),0.8)' }}>
-      <div style={{ padding:'16px 20px', background:'rgba(124,77,255,0.12)', borderBottom:'1px solid rgba(124,77,255,0.2)' }}>
-        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:'8px' }}>
-          <h3 style={{ fontFamily:'var(--font-display)', fontSize:'16px', fontWeight:'400', letterSpacing:'0.16em', color:'var(--white)', textTransform:'uppercase' }}>Dhampir</h3>
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.2em', color:'rgba(124,77,255,0.6)', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.2)', padding:'3px 8px', borderRadius:'2px' }}>D&amp;D Player's Handbook (PHB)</span>
-        </div>
-        <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontStyle:'italic', fontSize:'12px', lineHeight:'1.6', color:'rgba(var(--text2-rgb),0.6)', marginTop:'10px' }}>
-          Ihre Bande mit Untoten gewähren ihnen einen Hauch der Fähigkeiten von Vampiren.
-        </p>
-      </div>
-      <div style={{ borderBottom:'1px solid rgba(124,77,255,0.12)' }}>
-        <table className="stat-table"><tbody>
-          <tr><td>Attributswerterhöhung</td><td>Du übernimmst die Attributserhöhungen deiner vorherigen Rasse.</td></tr>
-          <tr><td>Lebenserwartung</td><td>Sie altern bis zum Erwachsenenalter, wie ihre vorherige Rasse. Danach altern sie nicht mehr.</td></tr>
-          <tr><td>Gesinnung</td><td>meistens chaotisch-neutral</td></tr>
-          <tr><td>Größe</td><td>mittelgroß oder klein (Wahl)</td></tr>
-          <tr><td>Geschwindigkeit</td><td>Deine Grundbewegungsrate beträgt 12 m.</td></tr>
-          <tr><td>Sprachen</td><td>Du kannst die Gemeinsprache lesen, schreiben und sprechen und die Sprache deiner vorherigen Rasse.</td></tr>
-        </tbody></table>
-      </div>
-      <div style={{ padding:'20px' }}>
-        <div style={{ fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:'400', letterSpacing:'0.2em', color:'var(--accent2)', textTransform:'uppercase', marginBottom:'16px' }}>Rassenmerkmale</div>
-        {features.map((f,i) => (
-          <div key={i} className="feature-block">
-            <div className="feature-name">{f.name}</div>
-            {f.text && <div className="feature-text">{f.text}</div>}
-            {f.talente && (
-              <div>
-                <div className="feature-text" style={{ marginBottom:'10px' }}>Jede Rasse erhält eines von mehreren möglichen angeborenen Talenten (deine Wahl). Folgende stehen dir zur Auswahl:</div>
-                <div style={{ display:'flex', gap:'8px', flexWrap:'wrap', marginTop:'8px' }}>
-                  {f.talente.map(t => (
-                    <button key={t} style={{ fontFamily:'var(--font-body)', fontWeight:'400', fontSize:'11px', letterSpacing:'0.06em', color:'var(--accent2)', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.3)', borderRadius:'3px', padding:'6px 12px', cursor:'pointer', transition:'all 0.2s' }}
-                      onMouseEnter={e=>{e.currentTarget.style.background='rgba(124,77,255,0.22)';e.currentTarget.style.color='var(--white)';}}
-                      onMouseLeave={e=>{e.currentTarget.style.background='rgba(124,77,255,0.1)';e.currentTarget.style.color='var(--accent2)';}}>
-                      {t}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+  const features = [{
+    name: 'Kreaturentyp',
+    text: 'Humanoider.'
+  }, {
+    name: 'Größe',
+    text: 'Deine Größenkategorie ist mittelgroß oder klein. Du wählst die Größe aus, wenn du dieses Volk wählst.'
+  }, {
+    name: 'Dunkelsicht',
+    text: 'Im Radius von 18 Metern kannst du in dämmrigem Licht wie in hellem Licht sehen, bei Dunkelheit wie in dämmrigem Licht. Farben nimmst du bei Dunkelheit nur als Graustufen wahr.'
+  }, {
+    name: 'Erbe',
+    text: 'Du behältst alle Fertigkeiten, in denen deine vorherige Rasse geübt ist, und die Bewegungsrate beim Klettern, Fliegen oder Schwimmen.'
+  }, {
+    name: 'Untote Natur',
+    text: 'Du brauchst nicht zu atmen.'
+  }, {
+    name: 'Spinnenklettern',
+    text: 'Deine Kletterbewegungsrate ist gleich deiner Schrittbewegungsrate. Außerdem kannst du dich ab der 3. Stufe an vertikalen Oberflächen aufwärts, abwärts und seitwärts, sowie kopfüber an Decken bewegen, wobei du die Hände frei hast.'
+  }, {
+    name: 'Vampirbiss',
+    text: 'Deine Fangzähne sind eine natürliche Waffe, die als einfache Nahkampfwaffe zählt, in deren Umgang du geübt bist. Du verwendest deinen Konstitutionsmodifikator statt Stärke. Bei einem Treffer bewirkt er 1W4 Stichschaden. Wenn du nur noch die Hälfte deiner Trefferpunkte oder weniger hast, bist du bei Angriffswürfen im Vorteil. Wenn du eine nicht-konstrukt/untote Kreatur triffst, kannst du dich stärken: Trefferpunkte in Höhe des Stichschadens zurückgewinnen, oder einen Bonus auf deinen nächsten Attributs- oder Schadenswurf erhalten. Die Häufigkeit entspricht deinem Übungsbonus (Auffrischung nach langer Rast).'
+  }, {
+    name: 'Angeborenes Talent',
+    text: null,
+    talente: ['Fledermausflug', 'Traumfresser', 'Vampirisches Charisma']
+  }];
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      border: '1px solid rgba(124,77,255,0.2)',
+      borderRadius: '4px',
+      overflow: 'hidden',
+      background: 'rgba(var(--bg2-rgb),0.8)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '16px 20px',
+      background: 'rgba(124,77,255,0.12)',
+      borderBottom: '1px solid rgba(124,77,255,0.2)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      flexWrap: 'wrap',
+      gap: '8px'
+    }
+  }, /*#__PURE__*/React.createElement("h3", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '16px',
+      fontWeight: '400',
+      letterSpacing: '0.16em',
+      color: 'var(--white)',
+      textTransform: 'uppercase'
+    }
+  }, "Dhampir"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.2em',
+      color: 'rgba(124,77,255,0.6)',
+      background: 'rgba(124,77,255,0.1)',
+      border: '1px solid rgba(124,77,255,0.2)',
+      padding: '3px 8px',
+      borderRadius: '2px'
+    }
+  }, "D&D Player's Handbook (PHB)")), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontStyle: 'italic',
+      fontSize: '12px',
+      lineHeight: '1.6',
+      color: 'rgba(var(--text2-rgb),0.6)',
+      marginTop: '10px'
+    }
+  }, "Ihre Bande mit Untoten gew\xE4hren ihnen einen Hauch der F\xE4higkeiten von Vampiren.")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      borderBottom: '1px solid rgba(124,77,255,0.12)'
+    }
+  }, /*#__PURE__*/React.createElement("table", {
+    className: "stat-table"
+  }, /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, "Attributswerterh\xF6hung"), /*#__PURE__*/React.createElement("td", null, "Du \xFCbernimmst die Attributserh\xF6hungen deiner vorherigen Rasse.")), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, "Lebenserwartung"), /*#__PURE__*/React.createElement("td", null, "Sie altern bis zum Erwachsenenalter, wie ihre vorherige Rasse. Danach altern sie nicht mehr.")), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, "Gesinnung"), /*#__PURE__*/React.createElement("td", null, "meistens chaotisch-neutral")), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, "Gr\xF6\xDFe"), /*#__PURE__*/React.createElement("td", null, "mittelgro\xDF oder klein (Wahl)")), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, "Geschwindigkeit"), /*#__PURE__*/React.createElement("td", null, "Deine Grundbewegungsrate betr\xE4gt 12 m.")), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, "Sprachen"), /*#__PURE__*/React.createElement("td", null, "Du kannst die Gemeinsprache lesen, schreiben und sprechen und die Sprache deiner vorherigen Rasse."))))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '20px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '11px',
+      fontWeight: '400',
+      letterSpacing: '0.2em',
+      color: 'var(--accent2)',
+      textTransform: 'uppercase',
+      marginBottom: '16px'
+    }
+  }, "Rassenmerkmale"), features.map((f, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "feature-block"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "feature-name"
+  }, f.name), f.text && /*#__PURE__*/React.createElement("div", {
+    className: "feature-text"
+  }, f.text), f.talente && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "feature-text",
+    style: {
+      marginBottom: '10px'
+    }
+  }, "Jede Rasse erh\xE4lt eines von mehreren m\xF6glichen angeborenen Talenten (deine Wahl). Folgende stehen dir zur Auswahl:"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '8px',
+      flexWrap: 'wrap',
+      marginTop: '8px'
+    }
+  }, f.talente.map(t => /*#__PURE__*/React.createElement("button", {
+    key: t,
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '400',
+      fontSize: '11px',
+      letterSpacing: '0.06em',
+      color: 'var(--accent2)',
+      background: 'rgba(124,77,255,0.1)',
+      border: '1px solid rgba(124,77,255,0.3)',
+      borderRadius: '3px',
+      padding: '6px 12px',
+      cursor: 'pointer',
+      transition: 'all 0.2s'
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.background = 'rgba(124,77,255,0.22)';
+      e.currentTarget.style.color = 'var(--white)';
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.background = 'rgba(124,77,255,0.1)';
+      e.currentTarget.style.color = 'var(--accent2)';
+    }
+  }, t))))))));
 }
 
 // ── BEKANNTE POPUP ────────────────────────────────────────
-function AlleBekanntPopup({ onClose }) {
-  return (
-    <div style={{ position:'fixed', inset:0, zIndex:500, display:'flex', alignItems:'center', justifyContent:'center', padding:'20px' }}
-      onClick={e=>{ if(e.target===e.currentTarget) onClose(); }}>
-      <div style={{ position:'absolute', inset:0, background:'rgba(var(--bg-rgb),0.88)', backdropFilter:'blur(6px)' }} onClick={onClose} />
-      <div style={{ position:'relative', zIndex:1, width:'100%', maxWidth:'680px', maxHeight:'80vh', background:'rgba(var(--panel-rgb),0.97)', border:'1px solid rgba(124,77,255,0.25)', borderRadius:'6px', display:'flex', flexDirection:'column', boxShadow:'0 24px 80px rgba(0,0,0,0.7)' }}>
-        <div style={{ padding:'18px 24px', borderBottom:'1px solid rgba(124,77,255,0.14)', display:'flex', alignItems:'center', justifyContent:'space-between', flexShrink:0 }}>
-          <div>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:'rgba(124,77,255,0.5)', textTransform:'uppercase', marginBottom:'4px' }}>Lore · Meruria</div>
-            <div style={{ fontFamily:'var(--font-display)', fontSize:'16px', fontWeight:'300', letterSpacing:'0.16em', color:'var(--white)', textTransform:'uppercase' }}>Alle bekannten Dhampire</div>
-          </div>
-          <button onClick={onClose} style={{ background:'none', border:'none', cursor:'pointer', color:'rgba(var(--text2-rgb),0.4)', padding:'4px', transition:'color 0.2s', lineHeight:1 }}
-            onMouseEnter={e=>e.currentTarget.style.color='var(--white)'}
-            onMouseLeave={e=>e.currentTarget.style.color='rgba(var(--text2-rgb),0.4)'}>
-            <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M4 4l8 8M12 4l-8 8"/></svg>
-          </button>
-        </div>
-        <div style={{ overflowY:'auto', padding:'16px 24px 24px', flex:1 }}>
-          <div style={{ display:'flex', flexDirection:'column', gap:'12px' }}>
-            {BEKANNTE.map((b,i) => (
-              <div key={i} style={{ display:'flex', gap:'16px', padding:'14px 16px', border:'1px solid rgba(124,77,255,0.1)', borderRadius:'4px', background:'rgba(124,77,255,0.04)', alignItems:'flex-start', transition:'border-color 0.2s' }}
-                onMouseEnter={e=>e.currentTarget.style.borderColor='rgba(124,77,255,0.28)'}
-                onMouseLeave={e=>e.currentTarget.style.borderColor='rgba(124,77,255,0.1)'}>
-                <ImgPlaceholder label={b.name} width="56px" height="56px" style={{ borderRadius:'50%', flexShrink:0 }} />
-                <div>
-                  <div style={{ fontFamily:'var(--font-display)', fontSize:'12px', fontWeight:'400', letterSpacing:'0.14em', color:'var(--white)', textTransform:'uppercase', marginBottom:'2px' }}>{b.name}</div>
-                  <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.14em', color:'rgba(124,77,255,0.55)', marginBottom:'6px' }}>{b.rolle}</div>
-                  <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', lineHeight:'1.65', color:'var(--muted)' }}>{b.beschreibung}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+function AlleBekanntPopup({
+  onClose
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'fixed',
+      inset: 0,
+      zIndex: 500,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '20px'
+    },
+    onClick: e => {
+      if (e.target === e.currentTarget) onClose();
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      background: 'rgba(var(--bg-rgb),0.88)',
+      backdropFilter: 'blur(6px)'
+    },
+    onClick: onClose
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 1,
+      width: '100%',
+      maxWidth: '680px',
+      maxHeight: '80vh',
+      background: 'rgba(var(--panel-rgb),0.97)',
+      border: '1px solid rgba(124,77,255,0.25)',
+      borderRadius: '6px',
+      display: 'flex',
+      flexDirection: 'column',
+      boxShadow: '0 24px 80px rgba(0,0,0,0.7)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '18px 24px',
+      borderBottom: '1px solid rgba(124,77,255,0.14)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.28em',
+      color: 'rgba(124,77,255,0.5)',
+      textTransform: 'uppercase',
+      marginBottom: '4px'
+    }
+  }, "Lore \xB7 Meruria"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '16px',
+      fontWeight: '300',
+      letterSpacing: '0.16em',
+      color: 'var(--white)',
+      textTransform: 'uppercase'
+    }
+  }, "Alle bekannten Dhampire")), /*#__PURE__*/React.createElement("button", {
+    onClick: onClose,
+    style: {
+      background: 'none',
+      border: 'none',
+      cursor: 'pointer',
+      color: 'rgba(var(--text2-rgb),0.4)',
+      padding: '4px',
+      transition: 'color 0.2s',
+      lineHeight: 1
+    },
+    onMouseEnter: e => e.currentTarget.style.color = 'var(--white)',
+    onMouseLeave: e => e.currentTarget.style.color = 'rgba(var(--text2-rgb),0.4)'
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 16 16",
+    width: "16",
+    height: "16",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "1.5"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M4 4l8 8M12 4l-8 8"
+  })))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      overflowY: 'auto',
+      padding: '16px 24px 24px',
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '12px'
+    }
+  }, BEKANNTE.map((b, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    style: {
+      display: 'flex',
+      gap: '16px',
+      padding: '14px 16px',
+      border: '1px solid rgba(124,77,255,0.1)',
+      borderRadius: '4px',
+      background: 'rgba(124,77,255,0.04)',
+      alignItems: 'flex-start',
+      transition: 'border-color 0.2s'
+    },
+    onMouseEnter: e => e.currentTarget.style.borderColor = 'rgba(124,77,255,0.28)',
+    onMouseLeave: e => e.currentTarget.style.borderColor = 'rgba(124,77,255,0.1)'
+  }, /*#__PURE__*/React.createElement(ImgPlaceholder, {
+    label: b.name,
+    width: "56px",
+    height: "56px",
+    style: {
+      borderRadius: '50%',
+      flexShrink: 0
+    }
+  }), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '12px',
+      fontWeight: '400',
+      letterSpacing: '0.14em',
+      color: 'var(--white)',
+      textTransform: 'uppercase',
+      marginBottom: '2px'
+    }
+  }, b.name), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.14em',
+      color: 'rgba(124,77,255,0.55)',
+      marginBottom: '6px'
+    }
+  }, b.rolle), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '11px',
+      lineHeight: '1.65',
+      color: 'var(--muted)'
+    }
+  }, b.beschreibung))))))));
 }
 
 // ── BEKANNTE SECTION ──────────────────────────────────────
 function BekannteSection() {
   const [showPopup, setShowPopup] = useState(false);
-  return (
-    <>
-    {showPopup && <AlleBekanntPopup onClose={()=>setShowPopup(false)} />}
-    <Section id="bekannte" label="Lore · Meruria" title="Bekannte Dhampire">
-      <div className="reveal" style={{ marginBottom:'36px' }}>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:'rgba(124,77,255,0.4)', textTransform:'uppercase', marginBottom:'16px' }}>Bekanntestes Individuum</div>
-        <div style={{ display:'grid', gridTemplateColumns:'160px 1fr', gap:'28px', padding:'28px', border:'1px solid rgba(124,77,255,0.22)', borderRadius:'6px', background:'linear-gradient(135deg,rgba(124,77,255,0.07) 0%,rgba(var(--panel-rgb),0.9) 100%)', transition:'border-color 0.2s' }}
-          onMouseEnter={e=>e.currentTarget.style.borderColor='rgba(124,77,255,0.45)'}
-          onMouseLeave={e=>e.currentTarget.style.borderColor='rgba(124,77,255,0.22)'}>
-          <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'10px' }}>
-            <ImgPlaceholder label="Porträt" width="140px" height="160px" style={{ borderRadius:'4px', border:'1px solid rgba(124,77,255,0.25)' }} />
-          </div>
-          <div style={{ display:'flex', flexDirection:'column', justifyContent:'center' }}>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:'rgba(124,77,255,0.45)', textTransform:'uppercase', marginBottom:'8px' }}>Oberhaupt · Anführer</div>
-            <div style={{ fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:'300', letterSpacing:'0.14em', color:'var(--white)', textTransform:'uppercase', marginBottom:'4px' }}>— Unbekannt —</div>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.14em', color:'rgba(124,77,255,0.4)', marginBottom:'16px' }}>Name noch nicht festgelegt</div>
-            <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.8', color:'var(--muted)' }}>
-              Hier kannst du den bekanntesten oder gefürchtetsten Dhampir in Meruria vorstellen.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'14px', flexWrap:'wrap', gap:'10px' }}>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.25em', color:'rgba(124,77,255,0.35)', textTransform:'uppercase' }}>Weitere bekannte Individuen</div>
-        <button onClick={()=>setShowPopup(true)} style={{ display:'inline-flex', alignItems:'center', gap:'7px', fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', letterSpacing:'0.08em', color:'rgba(124,77,255,0.65)', background:'rgba(124,77,255,0.07)', border:'1px solid rgba(124,77,255,0.2)', borderRadius:'3px', padding:'6px 12px', cursor:'pointer', transition:'all 0.2s' }}
-          onMouseEnter={e=>{e.currentTarget.style.background='rgba(124,77,255,0.16)';e.currentTarget.style.color='var(--white)';}}
-          onMouseLeave={e=>{e.currentTarget.style.background='rgba(124,77,255,0.07)';e.currentTarget.style.color='rgba(124,77,255,0.65)';}}>
-          <svg viewBox="0 0 14 14" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.4"><rect x="2" y="2" width="10" height="10" rx="1.5"/><line x1="5" y1="5" x2="9" y2="5"/><line x1="5" y1="7.5" x2="9" y2="7.5"/><line x1="5" y1="10" x2="8" y2="10"/></svg>
-          Alle anzeigen
-        </button>
-      </div>
-      <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(260px,1fr))', gap:'14px' }}>
-        {BEKANNTE.slice(0,3).map((b,i) => (
-          <div key={i} className="reveal" style={{ padding:'18px', border:'1px solid rgba(124,77,255,0.12)', borderRadius:'4px', background:'rgba(var(--panel-rgb),0.7)', transition:'border-color 0.2s, transform 0.2s' }}
-            onMouseEnter={e=>{e.currentTarget.style.borderColor='rgba(124,77,255,0.32)';e.currentTarget.style.transform='translateY(-2px)';}}
-            onMouseLeave={e=>{e.currentTarget.style.borderColor='rgba(124,77,255,0.12)';e.currentTarget.style.transform='translateY(0)';}}>
-            <ImgPlaceholder label={b.name} width="100%" height="120px" style={{ borderRadius:'3px', marginBottom:'14px' }} />
-            <div style={{ fontFamily:'var(--font-display)', fontSize:'12px', fontWeight:'400', letterSpacing:'0.14em', color:'var(--white)', textTransform:'uppercase', marginBottom:'3px' }}>{b.name}</div>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.14em', color:'rgba(124,77,255,0.55)', marginBottom:'10px' }}>{b.rolle}</div>
-            <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', lineHeight:'1.65', color:'var(--muted)' }}>{b.beschreibung}</p>
-          </div>
-        ))}
-      </div>
-    </Section>
-    </>
-  );
+  return /*#__PURE__*/React.createElement(React.Fragment, null, showPopup && /*#__PURE__*/React.createElement(AlleBekanntPopup, {
+    onClose: () => setShowPopup(false)
+  }), /*#__PURE__*/React.createElement(Section, {
+    id: "bekannte",
+    label: "Lore \xB7 Meruria",
+    title: "Bekannte Dhampire"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "reveal",
+    style: {
+      marginBottom: '36px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.28em',
+      color: 'rgba(124,77,255,0.4)',
+      textTransform: 'uppercase',
+      marginBottom: '16px'
+    }
+  }, "Bekanntestes Individuum"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: '160px 1fr',
+      gap: '28px',
+      padding: '28px',
+      border: '1px solid rgba(124,77,255,0.22)',
+      borderRadius: '6px',
+      background: 'linear-gradient(135deg,rgba(124,77,255,0.07) 0%,rgba(var(--panel-rgb),0.9) 100%)',
+      transition: 'border-color 0.2s'
+    },
+    onMouseEnter: e => e.currentTarget.style.borderColor = 'rgba(124,77,255,0.45)',
+    onMouseLeave: e => e.currentTarget.style.borderColor = 'rgba(124,77,255,0.22)'
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: '10px'
+    }
+  }, /*#__PURE__*/React.createElement(ImgPlaceholder, {
+    label: "Portr\xE4t",
+    width: "140px",
+    height: "160px",
+    style: {
+      borderRadius: '4px',
+      border: '1px solid rgba(124,77,255,0.25)'
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.22em',
+      color: 'rgba(124,77,255,0.45)',
+      textTransform: 'uppercase',
+      marginBottom: '8px'
+    }
+  }, "Oberhaupt \xB7 Anf\xFChrer"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '22px',
+      fontWeight: '300',
+      letterSpacing: '0.14em',
+      color: 'var(--white)',
+      textTransform: 'uppercase',
+      marginBottom: '4px'
+    }
+  }, "\u2014 Unbekannt \u2014"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.14em',
+      color: 'rgba(124,77,255,0.4)',
+      marginBottom: '16px'
+    }
+  }, "Name noch nicht festgelegt"), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.8',
+      color: 'var(--muted)'
+    }
+  }, "Hier kannst du den bekanntesten oder gef\xFCrchtetsten Dhampir in Meruria vorstellen.")))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: '14px',
+      flexWrap: 'wrap',
+      gap: '10px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.25em',
+      color: 'rgba(124,77,255,0.35)',
+      textTransform: 'uppercase'
+    }
+  }, "Weitere bekannte Individuen"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => setShowPopup(true),
+    style: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '7px',
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '11px',
+      letterSpacing: '0.08em',
+      color: 'rgba(124,77,255,0.65)',
+      background: 'rgba(124,77,255,0.07)',
+      border: '1px solid rgba(124,77,255,0.2)',
+      borderRadius: '3px',
+      padding: '6px 12px',
+      cursor: 'pointer',
+      transition: 'all 0.2s'
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.background = 'rgba(124,77,255,0.16)';
+      e.currentTarget.style.color = 'var(--white)';
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.background = 'rgba(124,77,255,0.07)';
+      e.currentTarget.style.color = 'rgba(124,77,255,0.65)';
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 14 14",
+    width: "11",
+    height: "11",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "1.4"
+  }, /*#__PURE__*/React.createElement("rect", {
+    x: "2",
+    y: "2",
+    width: "10",
+    height: "10",
+    rx: "1.5"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "5",
+    y1: "5",
+    x2: "9",
+    y2: "5"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "5",
+    y1: "7.5",
+    x2: "9",
+    y2: "7.5"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "5",
+    y1: "10",
+    x2: "8",
+    y2: "10"
+  })), "Alle anzeigen")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fill,minmax(260px,1fr))',
+      gap: '14px'
+    }
+  }, BEKANNTE.slice(0, 3).map((b, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "reveal",
+    style: {
+      padding: '18px',
+      border: '1px solid rgba(124,77,255,0.12)',
+      borderRadius: '4px',
+      background: 'rgba(var(--panel-rgb),0.7)',
+      transition: 'border-color 0.2s, transform 0.2s'
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.borderColor = 'rgba(124,77,255,0.32)';
+      e.currentTarget.style.transform = 'translateY(-2px)';
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.borderColor = 'rgba(124,77,255,0.12)';
+      e.currentTarget.style.transform = 'translateY(0)';
+    }
+  }, /*#__PURE__*/React.createElement(ImgPlaceholder, {
+    label: b.name,
+    width: "100%",
+    height: "120px",
+    style: {
+      borderRadius: '3px',
+      marginBottom: '14px'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '12px',
+      fontWeight: '400',
+      letterSpacing: '0.14em',
+      color: 'var(--white)',
+      textTransform: 'uppercase',
+      marginBottom: '3px'
+    }
+  }, b.name), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.14em',
+      color: 'rgba(124,77,255,0.55)',
+      marginBottom: '10px'
+    }
+  }, b.rolle), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '11px',
+      lineHeight: '1.65',
+      color: 'var(--muted)'
+    }
+  }, b.beschreibung))))));
 }
 
 // ── RASSEN RADAR ──────────────────────────────────────────
 function RassenRadar() {
-  const traits = [
-    { label: 'Mobilität',   val: 88 },
-    { label: 'Kampf',       val: 78 },
-    { label: 'Magie',       val: 45 },
-    { label: 'Soziales',    val: 55 },
-    { label: 'Überleben',   val: 92 },
-    { label: 'Weisheit',    val: 50 },
-  ];
-  const cx = 155, cy = 155, r = 100;
+  const traits = [{
+    label: 'Mobilität',
+    val: 88
+  }, {
+    label: 'Kampf',
+    val: 78
+  }, {
+    label: 'Magie',
+    val: 45
+  }, {
+    label: 'Soziales',
+    val: 55
+  }, {
+    label: 'Überleben',
+    val: 92
+  }, {
+    label: 'Weisheit',
+    val: 50
+  }];
+  const cx = 155,
+    cy = 155,
+    r = 100;
   const n = traits.length;
-  const angle = (i) => (Math.PI * 2 * i) / n - Math.PI / 2;
-  const pt = (i, radius) => ({ x: cx + radius * Math.cos(angle(i)), y: cy + radius * Math.sin(angle(i)) });
+  const angle = i => Math.PI * 2 * i / n - Math.PI / 2;
+  const pt = (i, radius) => ({
+    x: cx + radius * Math.cos(angle(i)),
+    y: cy + radius * Math.sin(angle(i))
+  });
   const rings = [0.25, 0.5, 0.75, 1.0];
-  const ringPts = (s) => traits.map((_, i) => pt(i, r * s)).map(p => `${p.x},${p.y}`).join(' ');
+  const ringPts = s => traits.map((_, i) => pt(i, r * s)).map(p => `${p.x},${p.y}`).join(' ');
   const valuePts = traits.map((t, i) => pt(i, r * (t.val / 100))).map(p => `${p.x},${p.y}`).join(' ');
-  const labelPt = (i) => {
+  const labelPt = i => {
     if (i === 4 || i === 5) return pt(i, r + 32);
     return pt(i, r + 26);
   };
-
-  return (
-    <Section label="Charaktererstellung" title="Merkmals-Profil">
-      <div className="reveal" style={{ display:'grid', gridTemplateColumns:'310px 1fr', gap:'40px', alignItems:'center' }}>
-        <div style={{ display:'flex', justifyContent:'center' }}>
-          <svg viewBox="-10 0 330 320" width="320" height="310">
-            {rings.map((s, ri) => <polygon key={ri} points={ringPts(s)} fill="none" stroke={`rgba(124,77,255,${0.07 + ri * 0.06})`} strokeWidth="1"/>)}
-            {traits.map((_, i) => { const p = pt(i, r); return <line key={i} x1={cx} y1={cy} x2={p.x} y2={p.y} stroke="rgba(124,77,255,0.14)" strokeWidth="1"/>; })}
-            <polygon points={valuePts} fill="rgba(124,77,255,0.14)" stroke="rgba(168,124,255,0.65)" strokeWidth="1.5"/>
-            {traits.map((t, i) => { const p = pt(i, r * (t.val / 100)); return <circle key={i} cx={p.x} cy={p.y} r="3.5" fill="#a87cff" stroke="rgba(var(--bg-rgb),0.8)" strokeWidth="1.5"/>; })}
-            {traits.map((t, i) => { const p = labelPt(i); const anchor = p.x < cx - 5 ? 'end' : p.x > cx + 5 ? 'start' : 'middle'; return <text key={i} x={p.x} y={p.y + 4} textAnchor={anchor} fontSize="9" fill="rgba(var(--text2-rgb),0.6)" fontFamily="'Share Tech Mono', monospace" letterSpacing="0.1em">{t.label.toUpperCase()}</text>; })}
-            <circle cx={cx} cy={cy} r="3" fill="rgba(124,77,255,0.5)"/>
-          </svg>
-        </div>
-        <div style={{ display:'flex', flexDirection:'column', gap:'14px' }}>
-          <p className="body-text" style={{ marginBottom:'8px' }}>
-            Dhampire sind außergewöhnlich beweglich und zäh — ihre vampirische Natur macht sie zu natürlichen Überlebenden und Kämpfern aus dem Hinterhalt.
-          </p>
-          {traits.map((t) => (
-            <div key={t.label}>
-              <div style={{ display:'flex', justifyContent:'space-between', marginBottom:'5px' }}>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.18em', color:'rgba(var(--text2-rgb),0.5)', textTransform:'uppercase' }}>{t.label}</span>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', color:'rgba(124,77,255,0.7)' }}>{t.val}</span>
-              </div>
-              <div style={{ height:'3px', background:'rgba(124,77,255,0.1)', borderRadius:'2px', overflow:'hidden' }}>
-                <div style={{ height:'100%', width:`${t.val}%`, background:'linear-gradient(90deg,rgba(124,77,255,0.5),rgba(168,124,255,0.85))', borderRadius:'2px' }}/>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </Section>
-  );
+  return /*#__PURE__*/React.createElement(Section, {
+    label: "Charaktererstellung",
+    title: "Merkmals-Profil"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "reveal",
+    style: {
+      display: 'grid',
+      gridTemplateColumns: '310px 1fr',
+      gap: '40px',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "-10 0 330 320",
+    width: "320",
+    height: "310"
+  }, rings.map((s, ri) => /*#__PURE__*/React.createElement("polygon", {
+    key: ri,
+    points: ringPts(s),
+    fill: "none",
+    stroke: `rgba(124,77,255,${0.07 + ri * 0.06})`,
+    strokeWidth: "1"
+  })), traits.map((_, i) => {
+    const p = pt(i, r);
+    return /*#__PURE__*/React.createElement("line", {
+      key: i,
+      x1: cx,
+      y1: cy,
+      x2: p.x,
+      y2: p.y,
+      stroke: "rgba(124,77,255,0.14)",
+      strokeWidth: "1"
+    });
+  }), /*#__PURE__*/React.createElement("polygon", {
+    points: valuePts,
+    fill: "rgba(124,77,255,0.14)",
+    stroke: "rgba(168,124,255,0.65)",
+    strokeWidth: "1.5"
+  }), traits.map((t, i) => {
+    const p = pt(i, r * (t.val / 100));
+    return /*#__PURE__*/React.createElement("circle", {
+      key: i,
+      cx: p.x,
+      cy: p.y,
+      r: "3.5",
+      fill: "#a87cff",
+      stroke: "rgba(var(--bg-rgb),0.8)",
+      strokeWidth: "1.5"
+    });
+  }), traits.map((t, i) => {
+    const p = labelPt(i);
+    const anchor = p.x < cx - 5 ? 'end' : p.x > cx + 5 ? 'start' : 'middle';
+    return /*#__PURE__*/React.createElement("text", {
+      key: i,
+      x: p.x,
+      y: p.y + 4,
+      textAnchor: anchor,
+      fontSize: "9",
+      fill: "rgba(var(--text2-rgb),0.6)",
+      fontFamily: "'Share Tech Mono', monospace",
+      letterSpacing: "0.1em"
+    }, t.label.toUpperCase());
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: cx,
+    cy: cy,
+    r: "3",
+    fill: "rgba(124,77,255,0.5)"
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '14px'
+    }
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "body-text",
+    style: {
+      marginBottom: '8px'
+    }
+  }, "Dhampire sind au\xDFergew\xF6hnlich beweglich und z\xE4h \u2014 ihre vampirische Natur macht sie zu nat\xFCrlichen \xDCberlebenden und K\xE4mpfern aus dem Hinterhalt."), traits.map(t => /*#__PURE__*/React.createElement("div", {
+    key: t.label
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      marginBottom: '5px'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.18em',
+      color: 'rgba(var(--text2-rgb),0.5)',
+      textTransform: 'uppercase'
+    }
+  }, t.label), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      color: 'rgba(124,77,255,0.7)'
+    }
+  }, t.val)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      height: '3px',
+      background: 'rgba(124,77,255,0.1)',
+      borderRadius: '2px',
+      overflow: 'hidden'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      height: '100%',
+      width: `${t.val}%`,
+      background: 'linear-gradient(90deg,rgba(124,77,255,0.5),rgba(168,124,255,0.85))',
+      borderRadius: '2px'
+    }
+  })))))));
 }
 
 // ── DHAMPIR QUIZ ──────────────────────────────────────────
-const DHAMPIR_QUIZ = [
-  { frage: 'Wie geht dein Charakter mit seinem Hunger um?', optionen: [
-    { text: 'Ich kontrolliere ihn eisern — er beherrscht mich nicht', tags: ['Paladin','Kämpfer'] },
-    { text: 'Ich nutze ihn als Waffe — Hunger macht mich schärfer', tags: ['Schurke','Barbar'] },
-    { text: 'Ich suche Wege, ihn zu verstehen und zu zähmen', tags: ['Magier','Druide'] },
-    { text: 'Er ist eine Last, die ich schweigend trage', tags: ['Kleriker','Waldläufer'] },
-  ]},
-  { frage: 'Was war der Auslöser für deine Transformation?', optionen: [
-    { text: 'Ein Angriff oder eine Begegnung mit Untoten', tags: ['Krieger','Schurke'] },
-    { text: 'Ein Pakt oder ein Experiment', tags: ['Hexenmeister','Magier'] },
-    { text: 'Geburt oder Abstammung', tags: ['Zauberer','Barde'] },
-    { text: 'Eine Tragödie, die alles verändert hat', tags: ['Paladin','Kleriker'] },
-  ]},
-  { frage: 'Wie bewegt sich dein Charakter durch die Welt?', optionen: [
-    { text: 'Im Verborgenen — Schatten sind mein Zuhause', tags: ['Schurke','Hexenmeister'] },
-    { text: 'Offen und direkt — ich habe nichts zu verbergen', tags: ['Paladin','Kämpfer'] },
-    { text: 'Als Beobachter — ich lerne zuerst, dann handle ich', tags: ['Waldläufer','Magier'] },
-    { text: 'Wo die Musik spielt — ich lebe in jedem Moment', tags: ['Barde','Zauberer'] },
-  ]},
-  { frage: 'Was ist dein größtes Ziel?', optionen: [
-    { text: 'Meinen Fluch zu brechen oder zu beherrschen', tags: ['Paladin','Magier'] },
-    { text: 'Rache an denen, die mich zu dem gemacht haben, was ich bin', tags: ['Krieger','Schurke'] },
-    { text: 'Meinen Hunger stillen und in Ruhe leben', tags: ['Druide','Waldläufer'] },
-    { text: 'Die Grenzen zwischen Leben und Tod verstehen', tags: ['Hexenmeister','Zauberer'] },
-  ]},
-];
-
+const DHAMPIR_QUIZ = [{
+  frage: 'Wie geht dein Charakter mit seinem Hunger um?',
+  optionen: [{
+    text: 'Ich kontrolliere ihn eisern — er beherrscht mich nicht',
+    tags: ['Paladin', 'Kämpfer']
+  }, {
+    text: 'Ich nutze ihn als Waffe — Hunger macht mich schärfer',
+    tags: ['Schurke', 'Barbar']
+  }, {
+    text: 'Ich suche Wege, ihn zu verstehen und zu zähmen',
+    tags: ['Magier', 'Druide']
+  }, {
+    text: 'Er ist eine Last, die ich schweigend trage',
+    tags: ['Kleriker', 'Waldläufer']
+  }]
+}, {
+  frage: 'Was war der Auslöser für deine Transformation?',
+  optionen: [{
+    text: 'Ein Angriff oder eine Begegnung mit Untoten',
+    tags: ['Krieger', 'Schurke']
+  }, {
+    text: 'Ein Pakt oder ein Experiment',
+    tags: ['Hexenmeister', 'Magier']
+  }, {
+    text: 'Geburt oder Abstammung',
+    tags: ['Zauberer', 'Barde']
+  }, {
+    text: 'Eine Tragödie, die alles verändert hat',
+    tags: ['Paladin', 'Kleriker']
+  }]
+}, {
+  frage: 'Wie bewegt sich dein Charakter durch die Welt?',
+  optionen: [{
+    text: 'Im Verborgenen — Schatten sind mein Zuhause',
+    tags: ['Schurke', 'Hexenmeister']
+  }, {
+    text: 'Offen und direkt — ich habe nichts zu verbergen',
+    tags: ['Paladin', 'Kämpfer']
+  }, {
+    text: 'Als Beobachter — ich lerne zuerst, dann handle ich',
+    tags: ['Waldläufer', 'Magier']
+  }, {
+    text: 'Wo die Musik spielt — ich lebe in jedem Moment',
+    tags: ['Barde', 'Zauberer']
+  }]
+}, {
+  frage: 'Was ist dein größtes Ziel?',
+  optionen: [{
+    text: 'Meinen Fluch zu brechen oder zu beherrschen',
+    tags: ['Paladin', 'Magier']
+  }, {
+    text: 'Rache an denen, die mich zu dem gemacht haben, was ich bin',
+    tags: ['Krieger', 'Schurke']
+  }, {
+    text: 'Meinen Hunger stillen und in Ruhe leben',
+    tags: ['Druide', 'Waldläufer']
+  }, {
+    text: 'Die Grenzen zwischen Leben und Tod verstehen',
+    tags: ['Hexenmeister', 'Zauberer']
+  }]
+}];
 const DHAMPIR_KLASSEN_DESC = {
-  'Paladin':     'Dein Schwur ist das Einzige, das dich von deiner dunklen Natur trennt. Oder vielleicht hast du sie akzeptiert — als Werkzeug des Lichts.',
-  'Kämpfer':     'Du kämpfst mit vampirischer Effizienz. Dein Körper ist eine Waffe, dein Hunger ein Treibstoff.',
-  'Schurke':     'Schatten, Stille, Fangzähne. Du warst schon immer jemand, der von hinten zuschlägt — jetzt hast du die Ausrüstung dazu.',
-  'Barbar':      'Im Kampf entfesselst du die untote Kraft in dir. Der Hunger wird zur Raserei — und die Raserei zur Stärke.',
-  'Magier':      'Du studierst deine eigene Natur wie ein Experiment. Was bist du wirklich? Die Antwort liegt irgendwo zwischen Leben und Tod.',
-  'Druide':      'Selbst die Natur hat ihre dunkle Seite. Du bist der Beweis.',
-  'Krieger':     'Disziplin, Stärke, Kontrolle. Du hast gelernt, deinen Hunger in Kampfkraft zu verwandeln.',
-  'Kleriker':    'Du dienst einem Gott — aber welchem? Und wie erklärt man ihm den Hunger?',
-  'Hexenmeister':'Dein Pakt und deine vampirische Natur ergänzen sich auf beunruhigende Weise.',
-  'Waldläufer':  'Du jagst, weil du weißt, wie es ist, gejagt zu werden.',
-  'Barde':       'Du hast Jahrhunderte, um Lieder zu lernen. Und Hunger macht kreativ.',
-  'Zauberer':    'Die Magie in deinem Blut und die Dunkelheit in deiner Seele sind zwei Seiten derselben Münze.',
+  'Paladin': 'Dein Schwur ist das Einzige, das dich von deiner dunklen Natur trennt. Oder vielleicht hast du sie akzeptiert — als Werkzeug des Lichts.',
+  'Kämpfer': 'Du kämpfst mit vampirischer Effizienz. Dein Körper ist eine Waffe, dein Hunger ein Treibstoff.',
+  'Schurke': 'Schatten, Stille, Fangzähne. Du warst schon immer jemand, der von hinten zuschlägt — jetzt hast du die Ausrüstung dazu.',
+  'Barbar': 'Im Kampf entfesselst du die untote Kraft in dir. Der Hunger wird zur Raserei — und die Raserei zur Stärke.',
+  'Magier': 'Du studierst deine eigene Natur wie ein Experiment. Was bist du wirklich? Die Antwort liegt irgendwo zwischen Leben und Tod.',
+  'Druide': 'Selbst die Natur hat ihre dunkle Seite. Du bist der Beweis.',
+  'Krieger': 'Disziplin, Stärke, Kontrolle. Du hast gelernt, deinen Hunger in Kampfkraft zu verwandeln.',
+  'Kleriker': 'Du dienst einem Gott — aber welchem? Und wie erklärt man ihm den Hunger?',
+  'Hexenmeister': 'Dein Pakt und deine vampirische Natur ergänzen sich auf beunruhigende Weise.',
+  'Waldläufer': 'Du jagst, weil du weißt, wie es ist, gejagt zu werden.',
+  'Barde': 'Du hast Jahrhunderte, um Lieder zu lernen. Und Hunger macht kreativ.',
+  'Zauberer': 'Die Magie in deinem Blut und die Dunkelheit in deiner Seele sind zwei Seiten derselben Münze.'
 };
-
 function DhampirQuiz() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [result, setResult] = useState(null);
   const [selected, setSelected] = useState(null);
-
-  const choose = (opt) => {
+  const choose = opt => {
     setSelected(opt);
     setTimeout(() => {
       const newAnswers = [...answers, ...opt.tags];
       if (step < DHAMPIR_QUIZ.length - 1) {
-        setAnswers(newAnswers); setStep(s => s + 1); setSelected(null);
+        setAnswers(newAnswers);
+        setStep(s => s + 1);
+        setSelected(null);
       } else {
         const count = {};
-        newAnswers.forEach(t => { count[t] = (count[t] || 0) + 1; });
-        const sorted = Object.entries(count).sort((a,b) => b[1]-a[1]);
+        newAnswers.forEach(t => {
+          count[t] = (count[t] || 0) + 1;
+        });
+        const sorted = Object.entries(count).sort((a, b) => b[1] - a[1]);
         setResult(sorted[0][0]);
       }
     }, 280);
   };
-  const reset = () => { setStep(0); setAnswers([]); setResult(null); setSelected(null); };
-
-  return (
-    <Section label="Charaktererstellung" title="Kenne deinen Charakter">
-      <p className="body-text reveal" style={{ marginBottom:'28px' }}>
-        Vier kurze Fragen — und du bekommst eine Klassenempfehlung, die zu deinem Dhampir passt.
-      </p>
-      <div className="reveal" style={{ maxWidth:'560px' }}>
-        {!result ? (
-          <div>
-            <div style={{ display:'flex', gap:'6px', marginBottom:'24px' }}>
-              {DHAMPIR_QUIZ.map((_, i) => <div key={i} style={{ flex:1, height:'2px', borderRadius:'1px', background: i <= step ? 'rgba(124,77,255,0.7)' : 'rgba(124,77,255,0.14)', transition:'background 0.3s' }}/>)}
-            </div>
-            <div style={{ fontFamily:'var(--font-display)', fontSize:'15px', fontWeight:'300', letterSpacing:'0.1em', color:'var(--white)', marginBottom:'20px', lineHeight:'1.5' }}>
-              {DHAMPIR_QUIZ[step].frage}
-            </div>
-            <div style={{ display:'flex', flexDirection:'column', gap:'10px' }}>
-              {DHAMPIR_QUIZ[step].optionen.map((opt, i) => (
-                <button key={i} onClick={() => choose(opt)}
-                  style={{ textAlign:'left', padding:'14px 18px', background: selected===opt ? 'rgba(124,77,255,0.2)' : 'rgba(124,77,255,0.06)', border:`1px solid ${selected===opt ? 'rgba(124,77,255,0.6)' : 'rgba(124,77,255,0.18)'}`, borderRadius:'4px', color: selected===opt ? 'var(--white)' : 'rgba(var(--text2-rgb),0.7)', fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.5', letterSpacing:'0.04em', cursor:'pointer', transition:'all 0.15s' }}
-                  onMouseEnter={e=>{ if(selected!==opt){ e.currentTarget.style.background='rgba(124,77,255,0.1)'; e.currentTarget.style.borderColor='rgba(124,77,255,0.35)'; e.currentTarget.style.color='var(--white)'; }}}
-                  onMouseLeave={e=>{ if(selected!==opt){ e.currentTarget.style.background='rgba(124,77,255,0.06)'; e.currentTarget.style.borderColor='rgba(124,77,255,0.18)'; e.currentTarget.style.color='rgba(var(--text2-rgb),0.7)'; }}}>
-                  {opt.text}
-                </button>
-              ))}
-            </div>
-            <div style={{ marginTop:'14px', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.2em', color:'rgba(124,77,255,0.28)', textTransform:'uppercase' }}>Frage {step+1} / {DHAMPIR_QUIZ.length}</div>
-          </div>
-        ) : (
-          <div style={{ animation:'result-pop 0.4s cubic-bezier(0.23,1,0.32,1) forwards' }}>
-            <div style={{ padding:'28px', border:'1px solid rgba(124,77,255,0.28)', borderRadius:'6px', background:'linear-gradient(135deg,rgba(124,77,255,0.09) 0%,rgba(var(--panel-rgb),0.92) 100%)' }}>
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:'rgba(124,77,255,0.5)', textTransform:'uppercase', marginBottom:'10px' }}>Empfohlene Klasse</div>
-              <div style={{ fontFamily:'var(--font-display)', fontSize:'30px', fontWeight:'300', letterSpacing:'0.14em', color:'var(--white)', textTransform:'uppercase', marginBottom:'12px', textShadow:'0 0 28px rgba(124,77,255,0.4)' }}>{result}</div>
-              <div style={{ width:'36px', height:'1px', background:'linear-gradient(90deg,rgba(124,77,255,0.8),transparent)', marginBottom:'16px' }}/>
-              <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'13px', lineHeight:'1.8', color:'rgba(var(--text2-rgb),0.65)' }}>
-                {DHAMPIR_KLASSEN_DESC[result] || 'Eine starke Wahl für einen Dhampir-Charakter.'}
-              </p>
-            </div>
-            <button onClick={reset} style={{ marginTop:'16px', display:'inline-flex', alignItems:'center', gap:'8px', background:'none', border:'none', cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:'rgba(124,77,255,0.5)', textTransform:'uppercase', padding:'0', transition:'color 0.2s' }}
-              onMouseEnter={e=>e.currentTarget.style.color='rgba(168,124,255,0.85)'}
-              onMouseLeave={e=>e.currentTarget.style.color='rgba(124,77,255,0.5)'}>
-              <svg viewBox="0 0 14 14" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M2 7 A5 5 0 1 1 5 11.2" strokeLinecap="round"/><path d="M2 4v3h3" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              Nochmal spielen
-            </button>
-          </div>
-        )}
-      </div>
-    </Section>
-  );
+  const reset = () => {
+    setStep(0);
+    setAnswers([]);
+    setResult(null);
+    setSelected(null);
+  };
+  return /*#__PURE__*/React.createElement(Section, {
+    label: "Charaktererstellung",
+    title: "Kenne deinen Charakter"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "body-text reveal",
+    style: {
+      marginBottom: '28px'
+    }
+  }, "Vier kurze Fragen \u2014 und du bekommst eine Klassenempfehlung, die zu deinem Dhampir passt."), /*#__PURE__*/React.createElement("div", {
+    className: "reveal",
+    style: {
+      maxWidth: '560px'
+    }
+  }, !result ? /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '6px',
+      marginBottom: '24px'
+    }
+  }, DHAMPIR_QUIZ.map((_, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    style: {
+      flex: 1,
+      height: '2px',
+      borderRadius: '1px',
+      background: i <= step ? 'rgba(124,77,255,0.7)' : 'rgba(124,77,255,0.14)',
+      transition: 'background 0.3s'
+    }
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '15px',
+      fontWeight: '300',
+      letterSpacing: '0.1em',
+      color: 'var(--white)',
+      marginBottom: '20px',
+      lineHeight: '1.5'
+    }
+  }, DHAMPIR_QUIZ[step].frage), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '10px'
+    }
+  }, DHAMPIR_QUIZ[step].optionen.map((opt, i) => /*#__PURE__*/React.createElement("button", {
+    key: i,
+    onClick: () => choose(opt),
+    style: {
+      textAlign: 'left',
+      padding: '14px 18px',
+      background: selected === opt ? 'rgba(124,77,255,0.2)' : 'rgba(124,77,255,0.06)',
+      border: `1px solid ${selected === opt ? 'rgba(124,77,255,0.6)' : 'rgba(124,77,255,0.18)'}`,
+      borderRadius: '4px',
+      color: selected === opt ? 'var(--white)' : 'rgba(var(--text2-rgb),0.7)',
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.5',
+      letterSpacing: '0.04em',
+      cursor: 'pointer',
+      transition: 'all 0.15s'
+    },
+    onMouseEnter: e => {
+      if (selected !== opt) {
+        e.currentTarget.style.background = 'rgba(124,77,255,0.1)';
+        e.currentTarget.style.borderColor = 'rgba(124,77,255,0.35)';
+        e.currentTarget.style.color = 'var(--white)';
+      }
+    },
+    onMouseLeave: e => {
+      if (selected !== opt) {
+        e.currentTarget.style.background = 'rgba(124,77,255,0.06)';
+        e.currentTarget.style.borderColor = 'rgba(124,77,255,0.18)';
+        e.currentTarget.style.color = 'rgba(var(--text2-rgb),0.7)';
+      }
+    }
+  }, opt.text))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: '14px',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.2em',
+      color: 'rgba(124,77,255,0.28)',
+      textTransform: 'uppercase'
+    }
+  }, "Frage ", step + 1, " / ", DHAMPIR_QUIZ.length)) : /*#__PURE__*/React.createElement("div", {
+    style: {
+      animation: 'result-pop 0.4s cubic-bezier(0.23,1,0.32,1) forwards'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '28px',
+      border: '1px solid rgba(124,77,255,0.28)',
+      borderRadius: '6px',
+      background: 'linear-gradient(135deg,rgba(124,77,255,0.09) 0%,rgba(var(--panel-rgb),0.92) 100%)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.28em',
+      color: 'rgba(124,77,255,0.5)',
+      textTransform: 'uppercase',
+      marginBottom: '10px'
+    }
+  }, "Empfohlene Klasse"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '30px',
+      fontWeight: '300',
+      letterSpacing: '0.14em',
+      color: 'var(--white)',
+      textTransform: 'uppercase',
+      marginBottom: '12px',
+      textShadow: '0 0 28px rgba(124,77,255,0.4)'
+    }
+  }, result), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '36px',
+      height: '1px',
+      background: 'linear-gradient(90deg,rgba(124,77,255,0.8),transparent)',
+      marginBottom: '16px'
+    }
+  }), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '13px',
+      lineHeight: '1.8',
+      color: 'rgba(var(--text2-rgb),0.65)'
+    }
+  }, DHAMPIR_KLASSEN_DESC[result] || 'Eine starke Wahl für einen Dhampir-Charakter.')), /*#__PURE__*/React.createElement("button", {
+    onClick: reset,
+    style: {
+      marginTop: '16px',
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '8px',
+      background: 'none',
+      border: 'none',
+      cursor: 'pointer',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.22em',
+      color: 'rgba(124,77,255,0.5)',
+      textTransform: 'uppercase',
+      padding: '0',
+      transition: 'color 0.2s'
+    },
+    onMouseEnter: e => e.currentTarget.style.color = 'rgba(168,124,255,0.85)',
+    onMouseLeave: e => e.currentTarget.style.color = 'rgba(124,77,255,0.5)'
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 14 14",
+    width: "11",
+    height: "11",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "1.4"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M2 7 A5 5 0 1 1 5 11.2",
+    strokeLinecap: "round"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M2 4v3h3",
+    strokeLinecap: "round",
+    strokeLinejoin: "round"
+  })), "Nochmal spielen"))));
 }
-
-const { FloatNav } = window;
+const {
+  FloatNav
+} = window;
 
 // ── APP ───────────────────────────────────────────────────
 function App() {
   useScrollReveal();
   useParallax();
-
   const [geluestResult, setGeluestResult] = useState(null);
   const [geluestRoll, setGeluestRoll] = useState(null);
   const [ursprungResult, setUrsprungResult] = useState(null);
   const [ursprungRoll, setUrsprungRoll] = useState(null);
-
-  return (
-    <div style={{ minHeight:'100vh', background:'var(--bg)' }}>
-
-      <div style={{ position:'fixed', top:'16px', left:'16px', zIndex:100 }}>
-        <a href="Rassen.html" className="back-btn">
-          <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M10 4L6 8l4 4"/></svg>
-          Rassen
-        </a>
-      </div>
-
-      <FloatNav />
-
-      {/* Hero */}
-      <div style={{ position:'relative', height:'500px', overflow:'hidden' }}>
-        <div id="hero-bg" style={{ position:'absolute', inset:'-60px', zIndex:0 }}>
-          <div style={{ position:'absolute', inset:0, background:'radial-gradient(ellipse at 30% 50%,rgba(139,26,42,0.18) 0%,transparent 55%),radial-gradient(ellipse at 70% 25%,rgba(124,77,255,0.15) 0%,transparent 50%),linear-gradient(180deg,#030212 0%,#05040f 100%)' }} />
-          {/* Bat silhouettes */}
-          <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', opacity:0.05 }} viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
-            <path d="M200 150 Q180 130 160 140 Q180 145 190 160 Q195 145 210 140 Q230 130 210 150Z" fill="rgba(200,57,79,1)"/>
-            <path d="M900 200 Q875 175 850 188 Q878 195 890 215 Q897 195 915 188 Q940 175 915 200Z" fill="rgba(200,57,79,0.8)"/>
-            <path d="M600 100 Q582 82 565 92 Q582 97 592 110 Q597 97 610 92 Q628 82 610 100Z" fill="rgba(200,57,79,0.6)"/>
-          </svg>
-          {Array.from({length:50}).map((_,i) => (
-            <div key={i} style={{ position:'absolute', width:i%7===0?2:1, height:i%7===0?2:1, borderRadius:'50%', background: i%4===0 ? 'rgba(200,57,79,0.7)' : 'rgba(var(--text-rgb),0.4)', left:`${(i*41+13)%100}%`, top:`${(i*57+9)%75}%`, opacity:0.1+i%5*0.05 }} />
-          ))}
-        </div>
-        {/* Bat decoration */}
-        <div style={{ position:'absolute', right:'10%', top:'12%', zIndex:2, animation:'bat-drift 7s ease-in-out infinite', opacity:0.14 }}>
-          <svg viewBox="0 0 100 50" width="100" height="50" fill="none">
-            <path d="M50 30 Q30 10 10 20 Q30 25 40 40 Q45 25 55 40 Q70 25 90 20 Q70 10 50 30Z" stroke="rgba(200,57,79,1)" strokeWidth="1.2" fill="rgba(200,57,79,0.2)"/>
-            <circle cx="50" cy="28" r="4" stroke="rgba(200,57,79,1)" strokeWidth="1"/>
-          </svg>
-        </div>
-        <div style={{ position:'relative', zIndex:5, height:'100%', display:'flex', flexDirection:'column', justifyContent:'flex-end', padding:'0 60px 56px' }}>
-          <div style={{ animation:'fadeInLeft 0.8s ease forwards' }}>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.35em', color:'rgba(124,77,255,0.6)', textTransform:'uppercase', marginBottom:'12px' }}>Rassen</div>
-            <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(48px,7vw,78px)', fontWeight:'300', letterSpacing:'0.1em', color:'var(--white)', textTransform:'uppercase', lineHeight:'1', marginBottom:'10px', textShadow:'0 0 60px rgba(139,26,42,0.4), 0 0 30px rgba(124,77,255,0.25)' }}>Dhampire</h1>
-            <div style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontStyle:'italic', fontSize:'15px', color:'rgba(var(--text2-rgb),0.48)', letterSpacing:'0.06em', marginBottom:'18px' }}>Kinder der Dunkelheit · Zwischen Leben und Tod</div>
-            <div style={{ display:'flex', gap:'10px', flexWrap:'wrap' }}>
-              {['Humanoid','Mittel oder Klein','12 m Bewegung','Dunkelsicht','Chaotisch-Neutral'].map(tag => (
-                <span key={tag} style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.16em', color:'rgba(124,77,255,0.7)', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.25)', padding:'5px 10px', borderRadius:'2px', textTransform:'uppercase' }}>{tag}</span>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'120px', background:'linear-gradient(transparent,var(--bg))', zIndex:4 }} />
-      </div>
-
-      {/* Main */}
-      <div style={{ maxWidth:'900px', margin:'0 auto', padding:'48px 40px 80px' }}>
-
-        {/* Beschreibung */}
-        <Section label="Charaktererstellung · Rassen" title="Zwischen den Welten">
-          <div className="clearfix">
-            <div className="float-right reveal-right" style={{ width:'270px' }}>
-              <ImgPlaceholder label="Dhampir · Illustration" width="270px" height="330px" />
-              <div style={{ marginTop:'6px', fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.18em', color:'rgba(124,77,255,0.3)', textTransform:'uppercase', textAlign:'center' }}>Charakter-Illustration</div>
-            </div>
-            <p className="body-text reveal">
-              Dhampire sind zwischen der Welt der Lebenden und der Welt der Toten gefangen. Sie halten zwar an ihrem Leben fest, werden aber doch endlos von üblen Gelüsten geplagt. Ihre Bande mit Untoten gewähren ihnen einen Hauch der Fähigkeiten von Vampiren, etwa erhöhte Bewegungsrate, Dunkelsicht und einen Biss, der Leben absaugt.
-            </p>
-            <p className="body-text reveal">
-              Mit den besonderen Einsichten, die Untote in die Natur haben, werden viele Dhampire Abenteurer und Monsterjäger. Ihre Gründe sind dabei oft sehr persönlich. Manche suchen die Gefahr und stellen sich die Monster als Personifizierung ihrer eigenen Gelüste vor. Andere trachten nach Rache an denen, die sie zum Dhampir gemacht haben. Und wieder andere genießen die Einsamkeit bei der Jagd und halten sich von denen fern, die ihren Hunger herausfordern.
-            </p>
-          </div>
-        </Section>
-
-        {/* Gesellschaft & Kultur */}
-        <Section label="Lore · Meruria" title="Gesellschaft &amp; Kultur">
-          <div className="clearfix">
-            <div className="float-left reveal-left" style={{ width:'240px' }}>
-              <ImgPlaceholder label="Dhampir · Leben in der Nacht" width="240px" height="300px" />
-              <div style={{ marginTop:'6px', fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.18em', color:'rgba(124,77,255,0.3)', textTransform:'uppercase', textAlign:'center' }}>Leben zwischen den Welten</div>
-            </div>
-            <p className="body-text reveal">
-              Dhampire haben keine eigene Kultur — sie entstammen allen Völkern und Regionen. Was sie verbindet, ist nicht Herkunft oder Tradition, sondern die gemeinsame Last des Hungers und die Frage, wie weit man ihm nachgeben darf.
-            </p>
-            <p className="body-text reveal">
-              Die meisten Dhampire lernen früh, ihren wahren Charakter zu verbergen. Nicht weil sie sich schämen — sondern weil die Welt der Lebenden selten bereit ist, etwas zu akzeptieren, das gleichzeitig zu ihr gehört und außerhalb von ihr steht. Manche finden Gemeinschaft in den Schattenrändern der Gesellschaft: unter Dieben, Söldnern, Nekromanten.
-            </p>
-            <p className="body-text reveal">
-              In Meruria sind Dhampire furchterregend und faszinierend zugleich. Gerüchte, Legenden und Halbwahrheiten umgeben sie. Mancher Dhampir nutzt diese Mystik bewusst — andere bekämpfen sie ihr ganzes Leben lang.
-            </p>
-          </div>
-        </Section>
-
-        {/* Gelüste & Ursprünge */}
-        <Section label="Charaktererstellung" title="Dhampir-Gelüste &amp; Ursprünge">
-          <p className="body-text reveal" style={{ marginBottom:'28px' }}>
-            Jeder Dhampir kennt einen Durst, den nur die Lebenden stillen können. Und jeder Dhampir kam auf seine eigene Weise zu dieser Natur. Würfle oder wähle aus den Tabellen unten.
-          </p>
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'40px', alignItems:'start' }}>
-            <div className="reveal">
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:'rgba(124,77,255,0.5)', textTransform:'uppercase', marginBottom:'14px' }}>Dhampir-Gelüste</div>
-              <RollTable data={GELÜSTE} diceLabel="1W7" colLabel="Hunger" result={geluestResult} setResult={setGeluestResult} setRoll={setGeluestRoll} />
-            </div>
-            <div className="reveal">
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:'rgba(124,77,255,0.5)', textTransform:'uppercase', marginBottom:'14px' }}>Dhampir-Ursprünge</div>
-              <RollTable data={URSPRÜNGE} diceLabel="1W8" colLabel="Ursprung" result={ursprungResult} setResult={setUrsprungResult} setRoll={setUrsprungRoll} />
-            </div>
-          </div>
-        </Section>
-
-        {/* Körperliche Merkmale */}
-        <Section label="Charaktererstellung" title="Körperliche Merkmale">
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'32px', alignItems:'start' }}>
-            <div className="reveal">
-              <table style={{ width:'100%', borderCollapse:'collapse', marginBottom:'18px' }}>
-                <tbody>
-                  {[['Bewegungsrate','12 m'],['Volljährigkeit','wie vorherige Rasse'],['Lebenserwartung','unendlich (kein Altern)'],['Größe','mittelgroß oder klein (Wahl)'],['Augenfarbe','blutrot, schwarz, orange'],['Hautfarbe','blass']].map(([k,v]) => (
-                    <tr key={k} style={{ borderBottom:'1px solid rgba(124,77,255,0.08)' }}>
-                      <td style={{ padding:'10px 14px', fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.1em', color:'rgba(124,77,255,0.5)', textTransform:'uppercase', width:'44%' }}>{k}</td>
-                      <td style={{ padding:'10px 14px', fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', color:'rgba(var(--text-rgb),0.85)', whiteSpace:'pre-line' }}>{v}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <CharacterGenerator />
-          </div>
-        </Section>
-
-        {/* Lebensraum */}
-        <Section label="Lore · Meruria" title="Verbreitung in Meruria">
-          <p className="body-text reveal" style={{ marginBottom:'24px' }}>
-            Dhampire tauchen überall in Meruria auf — meist in Städten, Hafenvierteln und den Rändern der Zivilisation. Ziehe eine Karte in den Bereich unten.
-          </p>
-          <div className="reveal" style={{ position:'relative', width:'100%', aspectRatio:'16/9', border:'1px dashed rgba(124,77,255,0.25)', borderRadius:'4px', overflow:'hidden', background:'repeating-linear-gradient(-45deg,transparent,transparent 10px,rgba(124,77,255,0.04) 10px,rgba(124,77,255,0.04) 11px), linear-gradient(160deg,rgba(12,8,32,0.97) 0%,rgba(var(--bg-rgb),0.99) 100%)' }}>
-            <image-slot slot-id="dhampir-map" placeholder="Verbreitungskarte hier ablegen" shape="rect" style={{ display:'block', width:'100%', height:'100%' }} />
-            <div style={{ position:'absolute', inset:0, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'14px', pointerEvents:'none', zIndex:0 }}>
-              <svg viewBox="0 0 48 48" width="40" height="40" fill="none" style={{ opacity:0.2 }}>
-                <path d="M6 38L18 14l8 16 6-8 10 16" stroke="#a87cff" strokeWidth="1.4" strokeLinejoin="round"/>
-                <circle cx="36" cy="12" r="4" stroke="#a87cff" strokeWidth="1.2"/>
-                <rect x="3" y="3" width="42" height="42" rx="3" stroke="#a87cff" strokeWidth="1"/>
-              </svg>
-              <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:'rgba(124,77,255,0.3)', textTransform:'uppercase' }}>Verbreitungskarte</span>
-              <span style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'11px', color:'rgba(124,77,255,0.2)', letterSpacing:'0.06em' }}>Bild hierher ziehen</span>
-            </div>
-          </div>
-        </Section>
-
-        {/* Beziehungen */}
-        <Section label="Lore · Meruria" title="Beziehungen zu anderen Gesellschaften">
-          <p className="body-text reveal" style={{ marginBottom:'24px' }}>
-            Dhampire polarisieren — sie werden gefürchtet, bewundert und missverstanden, oft gleichzeitig.
-          </p>
-          <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(260px,1fr))', gap:'14px' }}>
-            {[
-              { volk:'Menschen', relation:'Furcht', text:'Menschen wissen genug über Vampire, um zu wissen, dass ein Dhampir gefährlich sein könnte. Und nicht genug, um zu verstehen, dass er es vielleicht nicht ist.' },
-              { volk:'Elfen', relation:'Distanz', text:'Elfen, die Jahrhunderte leben, haben Dhampire kommen und gehen sehen. Ihre Unsterblichkeit macht ihnen keine Angst — ihre Unberechenbarkeit schon.' },
-              { volk:'Zwerge', relation:'Pragmatismus', text:'Ein Dhampir, der kämpft und seinen Teil beiträgt, ist ein nützlicher Verbündeter. Zwerge urteilen nach Taten, nicht nach Natur.' },
-              { volk:'Tieflinge', relation:'Empathie', text:'Tieflinge kennen das Stigma. Sie urteilen nicht über die dunkle Natur eines anderen — zu gut kennen sie das Gefühl selbst.' },
-              { volk:'Kleriker', relation:'Ambivalenz', text:'Ist ein Dhampir gesegnet oder verflucht? Diese Frage beschäftigt Kleriker mehr als den Dhampir selbst.' },
-              { volk:'Nekromanten', relation:'Interesse', text:'Nekromanten sehen in Dhampiren lebende Beweise ihrer Theorien. Das Interesse ist gegenseitig — und nicht immer angenehm.' },
-            ].map((r,i) => (
-              <div key={i} className="reveal insp-card">
-                <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'10px' }}>
-                  <div style={{ fontFamily:'var(--font-display)', fontSize:'12px', fontWeight:'400', letterSpacing:'0.14em', color:'var(--white)', textTransform:'uppercase' }}>{r.volk}</div>
-                  <span className="relation-pill">{r.relation}</span>
-                </div>
-                <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', lineHeight:'1.7', color:'var(--muted)' }}>{r.text}</p>
-              </div>
-            ))}
-          </div>
-        </Section>
-
-        {/* Bekannte */}
-        <BekannteSection />
-
-        {/* Merkmals-Profil */}
-        <RassenRadar />
-
-        {/* Quiz */}
-        <DhampirQuiz />
-
-        {/* Statblock */}
-        <Section id="statblock" label="Regelwerk · PHB" title="Statblock">
-          <div className="reveal"><StatBlock /></div>
-        </Section>
-
-        {/* Footer */}
-        <div style={{ borderTop:'1px solid rgba(124,77,255,0.1)', paddingTop:'28px' }}>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.2em', color:'rgba(124,77,255,0.25)', textTransform:'uppercase' }}>Meruria · Charaktererstellung · Rassen · Dhampire</div>
-        </div>
-
-      </div>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      minHeight: '100vh',
+      background: 'var(--bg)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'fixed',
+      top: '16px',
+      left: '16px',
+      zIndex: 100
+    }
+  }, /*#__PURE__*/React.createElement("a", {
+    href: "Rassen.html",
+    className: "back-btn"
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 16 16",
+    width: "11",
+    height: "11",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "1.5"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M10 4L6 8l4 4"
+  })), "Rassen")), /*#__PURE__*/React.createElement(FloatNav, null), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      height: '500px',
+      overflow: 'hidden'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    id: "hero-bg",
+    style: {
+      position: 'absolute',
+      inset: '-60px',
+      zIndex: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      background: 'radial-gradient(ellipse at 30% 50%,rgba(139,26,42,0.18) 0%,transparent 55%),radial-gradient(ellipse at 70% 25%,rgba(124,77,255,0.15) 0%,transparent 50%),linear-gradient(180deg,#030212 0%,#05040f 100%)'
+    }
+  }), /*#__PURE__*/React.createElement("svg", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      width: '100%',
+      height: '100%',
+      opacity: 0.05
+    },
+    viewBox: "0 0 1200 600",
+    preserveAspectRatio: "xMidYMid slice"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M200 150 Q180 130 160 140 Q180 145 190 160 Q195 145 210 140 Q230 130 210 150Z",
+    fill: "rgba(200,57,79,1)"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M900 200 Q875 175 850 188 Q878 195 890 215 Q897 195 915 188 Q940 175 915 200Z",
+    fill: "rgba(200,57,79,0.8)"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M600 100 Q582 82 565 92 Q582 97 592 110 Q597 97 610 92 Q628 82 610 100Z",
+    fill: "rgba(200,57,79,0.6)"
+  })), Array.from({
+    length: 50
+  }).map((_, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    style: {
+      position: 'absolute',
+      width: i % 7 === 0 ? 2 : 1,
+      height: i % 7 === 0 ? 2 : 1,
+      borderRadius: '50%',
+      background: i % 4 === 0 ? 'rgba(200,57,79,0.7)' : 'rgba(var(--text-rgb),0.4)',
+      left: `${(i * 41 + 13) % 100}%`,
+      top: `${(i * 57 + 9) % 75}%`,
+      opacity: 0.1 + i % 5 * 0.05
+    }
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      right: '10%',
+      top: '12%',
+      zIndex: 2,
+      animation: 'bat-drift 7s ease-in-out infinite',
+      opacity: 0.14
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 100 50",
+    width: "100",
+    height: "50",
+    fill: "none"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M50 30 Q30 10 10 20 Q30 25 40 40 Q45 25 55 40 Q70 25 90 20 Q70 10 50 30Z",
+    stroke: "rgba(200,57,79,1)",
+    strokeWidth: "1.2",
+    fill: "rgba(200,57,79,0.2)"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "50",
+    cy: "28",
+    r: "4",
+    stroke: "rgba(200,57,79,1)",
+    strokeWidth: "1"
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 5,
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'flex-end',
+      padding: '0 60px 56px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      animation: 'fadeInLeft 0.8s ease forwards'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.35em',
+      color: 'rgba(124,77,255,0.6)',
+      textTransform: 'uppercase',
+      marginBottom: '12px'
+    }
+  }, "Rassen"), /*#__PURE__*/React.createElement("h1", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: 'clamp(48px,7vw,78px)',
+      fontWeight: '300',
+      letterSpacing: '0.1em',
+      color: 'var(--white)',
+      textTransform: 'uppercase',
+      lineHeight: '1',
+      marginBottom: '10px',
+      textShadow: '0 0 60px rgba(139,26,42,0.4), 0 0 30px rgba(124,77,255,0.25)'
+    }
+  }, "Dhampire"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontStyle: 'italic',
+      fontSize: '15px',
+      color: 'rgba(var(--text2-rgb),0.48)',
+      letterSpacing: '0.06em',
+      marginBottom: '18px'
+    }
+  }, "Kinder der Dunkelheit \xB7 Zwischen Leben und Tod"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '10px',
+      flexWrap: 'wrap'
+    }
+  }, ['Humanoid', 'Mittel oder Klein', '12 m Bewegung', 'Dunkelsicht', 'Chaotisch-Neutral'].map(tag => /*#__PURE__*/React.createElement("span", {
+    key: tag,
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.16em',
+      color: 'rgba(124,77,255,0.7)',
+      background: 'rgba(124,77,255,0.1)',
+      border: '1px solid rgba(124,77,255,0.25)',
+      padding: '5px 10px',
+      borderRadius: '2px',
+      textTransform: 'uppercase'
+    }
+  }, tag))))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      height: '120px',
+      background: 'linear-gradient(transparent,var(--bg))',
+      zIndex: 4
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      maxWidth: '900px',
+      margin: '0 auto',
+      padding: '48px 40px 80px'
+    }
+  }, /*#__PURE__*/React.createElement(Section, {
+    label: "Charaktererstellung \xB7 Rassen",
+    title: "Zwischen den Welten"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "clearfix"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "float-right reveal-right",
+    style: {
+      width: '270px'
+    }
+  }, /*#__PURE__*/React.createElement(ImgPlaceholder, {
+    label: "Dhampir \xB7 Illustration",
+    width: "270px",
+    height: "330px"
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: '6px',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      letterSpacing: '0.18em',
+      color: 'rgba(124,77,255,0.3)',
+      textTransform: 'uppercase',
+      textAlign: 'center'
+    }
+  }, "Charakter-Illustration")), /*#__PURE__*/React.createElement("p", {
+    className: "body-text reveal"
+  }, "Dhampire sind zwischen der Welt der Lebenden und der Welt der Toten gefangen. Sie halten zwar an ihrem Leben fest, werden aber doch endlos von \xFCblen Gel\xFCsten geplagt. Ihre Bande mit Untoten gew\xE4hren ihnen einen Hauch der F\xE4higkeiten von Vampiren, etwa erh\xF6hte Bewegungsrate, Dunkelsicht und einen Biss, der Leben absaugt."), /*#__PURE__*/React.createElement("p", {
+    className: "body-text reveal"
+  }, "Mit den besonderen Einsichten, die Untote in die Natur haben, werden viele Dhampire Abenteurer und Monsterj\xE4ger. Ihre Gr\xFCnde sind dabei oft sehr pers\xF6nlich. Manche suchen die Gefahr und stellen sich die Monster als Personifizierung ihrer eigenen Gel\xFCste vor. Andere trachten nach Rache an denen, die sie zum Dhampir gemacht haben. Und wieder andere genie\xDFen die Einsamkeit bei der Jagd und halten sich von denen fern, die ihren Hunger herausfordern."))), /*#__PURE__*/React.createElement(Section, {
+    label: "Lore \xB7 Meruria",
+    title: "Gesellschaft & Kultur"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "clearfix"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "float-left reveal-left",
+    style: {
+      width: '240px'
+    }
+  }, /*#__PURE__*/React.createElement(ImgPlaceholder, {
+    label: "Dhampir \xB7 Leben in der Nacht",
+    width: "240px",
+    height: "300px"
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: '6px',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      letterSpacing: '0.18em',
+      color: 'rgba(124,77,255,0.3)',
+      textTransform: 'uppercase',
+      textAlign: 'center'
+    }
+  }, "Leben zwischen den Welten")), /*#__PURE__*/React.createElement("p", {
+    className: "body-text reveal"
+  }, "Dhampire haben keine eigene Kultur \u2014 sie entstammen allen V\xF6lkern und Regionen. Was sie verbindet, ist nicht Herkunft oder Tradition, sondern die gemeinsame Last des Hungers und die Frage, wie weit man ihm nachgeben darf."), /*#__PURE__*/React.createElement("p", {
+    className: "body-text reveal"
+  }, "Die meisten Dhampire lernen fr\xFCh, ihren wahren Charakter zu verbergen. Nicht weil sie sich sch\xE4men \u2014 sondern weil die Welt der Lebenden selten bereit ist, etwas zu akzeptieren, das gleichzeitig zu ihr geh\xF6rt und au\xDFerhalb von ihr steht. Manche finden Gemeinschaft in den Schattenr\xE4ndern der Gesellschaft: unter Dieben, S\xF6ldnern, Nekromanten."), /*#__PURE__*/React.createElement("p", {
+    className: "body-text reveal"
+  }, "In Meruria sind Dhampire furchterregend und faszinierend zugleich. Ger\xFCchte, Legenden und Halbwahrheiten umgeben sie. Mancher Dhampir nutzt diese Mystik bewusst \u2014 andere bek\xE4mpfen sie ihr ganzes Leben lang."))), /*#__PURE__*/React.createElement(Section, {
+    label: "Charaktererstellung",
+    title: "Dhampir-Gel\xFCste & Urspr\xFCnge"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "body-text reveal",
+    style: {
+      marginBottom: '28px'
+    }
+  }, "Jeder Dhampir kennt einen Durst, den nur die Lebenden stillen k\xF6nnen. Und jeder Dhampir kam auf seine eigene Weise zu dieser Natur. W\xFCrfle oder w\xE4hle aus den Tabellen unten."), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      gap: '40px',
+      alignItems: 'start'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "reveal"
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.22em',
+      color: 'rgba(124,77,255,0.5)',
+      textTransform: 'uppercase',
+      marginBottom: '14px'
+    }
+  }, "Dhampir-Gel\xFCste"), /*#__PURE__*/React.createElement(RollTable, {
+    data: GELÜSTE,
+    diceLabel: "1W7",
+    colLabel: "Hunger",
+    result: geluestResult,
+    setResult: setGeluestResult,
+    setRoll: setGeluestRoll
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "reveal"
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.22em',
+      color: 'rgba(124,77,255,0.5)',
+      textTransform: 'uppercase',
+      marginBottom: '14px'
+    }
+  }, "Dhampir-Urspr\xFCnge"), /*#__PURE__*/React.createElement(RollTable, {
+    data: URSPRÜNGE,
+    diceLabel: "1W8",
+    colLabel: "Ursprung",
+    result: ursprungResult,
+    setResult: setUrsprungResult,
+    setRoll: setUrsprungRoll
+  })))), /*#__PURE__*/React.createElement(Section, {
+    label: "Charaktererstellung",
+    title: "K\xF6rperliche Merkmale"
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      gap: '32px',
+      alignItems: 'start'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "reveal"
+  }, /*#__PURE__*/React.createElement("table", {
+    style: {
+      width: '100%',
+      borderCollapse: 'collapse',
+      marginBottom: '18px'
+    }
+  }, /*#__PURE__*/React.createElement("tbody", null, [['Bewegungsrate', '12 m'], ['Volljährigkeit', 'wie vorherige Rasse'], ['Lebenserwartung', 'unendlich (kein Altern)'], ['Größe', 'mittelgroß oder klein (Wahl)'], ['Augenfarbe', 'blutrot, schwarz, orange'], ['Hautfarbe', 'blass']].map(([k, v]) => /*#__PURE__*/React.createElement("tr", {
+    key: k,
+    style: {
+      borderBottom: '1px solid rgba(124,77,255,0.08)'
+    }
+  }, /*#__PURE__*/React.createElement("td", {
+    style: {
+      padding: '10px 14px',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.1em',
+      color: 'rgba(124,77,255,0.5)',
+      textTransform: 'uppercase',
+      width: '44%'
+    }
+  }, k), /*#__PURE__*/React.createElement("td", {
+    style: {
+      padding: '10px 14px',
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      color: 'rgba(var(--text-rgb),0.85)',
+      whiteSpace: 'pre-line'
+    }
+  }, v)))))), /*#__PURE__*/React.createElement(CharacterGenerator, null))), /*#__PURE__*/React.createElement(Section, {
+    label: "Lore \xB7 Meruria",
+    title: "Verbreitung in Meruria"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "body-text reveal",
+    style: {
+      marginBottom: '24px'
+    }
+  }, "Dhampire tauchen \xFCberall in Meruria auf \u2014 meist in St\xE4dten, Hafenvierteln und den R\xE4ndern der Zivilisation. Ziehe eine Karte in den Bereich unten."), /*#__PURE__*/React.createElement("div", {
+    className: "reveal",
+    style: {
+      position: 'relative',
+      width: '100%',
+      aspectRatio: '16/9',
+      border: '1px dashed rgba(124,77,255,0.25)',
+      borderRadius: '4px',
+      overflow: 'hidden',
+      background: 'repeating-linear-gradient(-45deg,transparent,transparent 10px,rgba(124,77,255,0.04) 10px,rgba(124,77,255,0.04) 11px), linear-gradient(160deg,rgba(12,8,32,0.97) 0%,rgba(var(--bg-rgb),0.99) 100%)'
+    }
+  }, /*#__PURE__*/React.createElement("image-slot", {
+    "slot-id": "dhampir-map",
+    placeholder: "Verbreitungskarte hier ablegen",
+    shape: "rect",
+    style: {
+      display: 'block',
+      width: '100%',
+      height: '100%'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '14px',
+      pointerEvents: 'none',
+      zIndex: 0
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 48 48",
+    width: "40",
+    height: "40",
+    fill: "none",
+    style: {
+      opacity: 0.2
+    }
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M6 38L18 14l8 16 6-8 10 16",
+    stroke: "#a87cff",
+    strokeWidth: "1.4",
+    strokeLinejoin: "round"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "36",
+    cy: "12",
+    r: "4",
+    stroke: "#a87cff",
+    strokeWidth: "1.2"
+  }), /*#__PURE__*/React.createElement("rect", {
+    x: "3",
+    y: "3",
+    width: "42",
+    height: "42",
+    rx: "3",
+    stroke: "#a87cff",
+    strokeWidth: "1"
+  })), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.28em',
+      color: 'rgba(124,77,255,0.3)',
+      textTransform: 'uppercase'
+    }
+  }, "Verbreitungskarte"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '11px',
+      color: 'rgba(124,77,255,0.2)',
+      letterSpacing: '0.06em'
+    }
+  }, "Bild hierher ziehen")))), /*#__PURE__*/React.createElement(Section, {
+    label: "Lore \xB7 Meruria",
+    title: "Beziehungen zu anderen Gesellschaften"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "body-text reveal",
+    style: {
+      marginBottom: '24px'
+    }
+  }, "Dhampire polarisieren \u2014 sie werden gef\xFCrchtet, bewundert und missverstanden, oft gleichzeitig."), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fill,minmax(260px,1fr))',
+      gap: '14px'
+    }
+  }, [{
+    volk: 'Menschen',
+    relation: 'Furcht',
+    text: 'Menschen wissen genug über Vampire, um zu wissen, dass ein Dhampir gefährlich sein könnte. Und nicht genug, um zu verstehen, dass er es vielleicht nicht ist.'
+  }, {
+    volk: 'Elfen',
+    relation: 'Distanz',
+    text: 'Elfen, die Jahrhunderte leben, haben Dhampire kommen und gehen sehen. Ihre Unsterblichkeit macht ihnen keine Angst — ihre Unberechenbarkeit schon.'
+  }, {
+    volk: 'Zwerge',
+    relation: 'Pragmatismus',
+    text: 'Ein Dhampir, der kämpft und seinen Teil beiträgt, ist ein nützlicher Verbündeter. Zwerge urteilen nach Taten, nicht nach Natur.'
+  }, {
+    volk: 'Tieflinge',
+    relation: 'Empathie',
+    text: 'Tieflinge kennen das Stigma. Sie urteilen nicht über die dunkle Natur eines anderen — zu gut kennen sie das Gefühl selbst.'
+  }, {
+    volk: 'Kleriker',
+    relation: 'Ambivalenz',
+    text: 'Ist ein Dhampir gesegnet oder verflucht? Diese Frage beschäftigt Kleriker mehr als den Dhampir selbst.'
+  }, {
+    volk: 'Nekromanten',
+    relation: 'Interesse',
+    text: 'Nekromanten sehen in Dhampiren lebende Beweise ihrer Theorien. Das Interesse ist gegenseitig — und nicht immer angenehm.'
+  }].map((r, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "reveal insp-card"
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: '10px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '12px',
+      fontWeight: '400',
+      letterSpacing: '0.14em',
+      color: 'var(--white)',
+      textTransform: 'uppercase'
+    }
+  }, r.volk), /*#__PURE__*/React.createElement("span", {
+    className: "relation-pill"
+  }, r.relation)), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.7',
+      color: 'var(--muted)'
+    }
+  }, r.text))))), /*#__PURE__*/React.createElement(BekannteSection, null), /*#__PURE__*/React.createElement(RassenRadar, null), /*#__PURE__*/React.createElement(DhampirQuiz, null), /*#__PURE__*/React.createElement(Section, {
+    id: "statblock",
+    label: "Regelwerk \xB7 PHB",
+    title: "Statblock"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "reveal"
+  }, /*#__PURE__*/React.createElement(StatBlock, null))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      borderTop: '1px solid rgba(124,77,255,0.1)',
+      paddingTop: '28px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.2em',
+      color: 'rgba(124,77,255,0.25)',
+      textTransform: 'uppercase'
+    }
+  }, "Meruria \xB7 Charaktererstellung \xB7 Rassen \xB7 Dhampire"))));
 }
-
-ReactDOM.createRoot(document.getElementById('root')).render(<SiteGate><App /></SiteGate>);
+ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement(App, null)));
+})();
 </script>
 
 
