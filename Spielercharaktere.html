@@ -8,431 +8,839 @@
 <script src="assets/scripts/vendor/react.production.min.js"></script>
 <script src="assets/scripts/vendor/react-dom.production.min.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/components/tweaks-panel-13.jsx" type="text/babel"></script>
 <script src="assets/components/nav.jsx" type="text/babel"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
 <script src="assets/components/site-gate.jsx" type="text/babel"></script>
+<style>
+  #root { width: 100%; min-height: 100vh; }
+
+  @keyframes flicker-mid { 0%,80%,100%{opacity:1} 82%{opacity:0.55} 84%{opacity:1} 87%{opacity:0.7} 89%{opacity:1} 91%{opacity:0.4} 93%{opacity:1} }
+  @keyframes slideDown { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes pulse-dot { 0%,100%{opacity:0.55; transform:scale(1)} 50%{opacity:1; transform:scale(1.15)} }
+  @keyframes hexFloat0 { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-18px) rotate(4deg)} }
+  @keyframes hexFloat1 { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-12px) rotate(-3deg)} }
+  @keyframes hexFloat2 { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-22px) rotate(6deg)} }
+  @keyframes hexFloat3 { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-8px) rotate(-2deg)} }
+</style>
+
 </head>
 <body>
 <div id="root"></div>
 
-<!-- ═══════════════════════════════════════════
-     SCRIPT 1 — Steckbrief-Hilfsfunktionen
-     (gleiche Basis wie MeinCharakter.html)
-     ═══════════════════════════════════════════ -->
 <script type="text/babel">
-const { useState, useRef } = React;
-function mod(v)        { return Math.floor((v-10)/2); }
-function fmtMod(n)     { return (n>=0?"+":"")+n; }
-function attrKey(a)    { return {Stä:"str",Ges:"dex",Kon:"con",Int:"int",Wei:"wis",Cha:"cha"}[a]||"str"; }
-function skillBonus(s,stats,pb) { return mod(stats[attrKey(s.attr)])+s.prof*pb; }
-function SecTitle({ label }) {
-  return (
-    <div style={{marginBottom:10}}>
-      <span style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".28em",color:"rgba(124,77,255,0.5)",textTransform:"uppercase"}}>{label}</span>
-      <div style={{width:24,height:1,background:"linear-gradient(90deg,rgba(124,77,255,0.65),transparent)",marginTop:4}} />
-    </div>
-  );
-}
-function Card({children,style}) {
-  return <div style={{background:"rgba(7,4,18,0.92)",border:"1px solid rgba(124,77,255,0.2)",borderRadius:4,padding:"13px 14px",position:"relative",...style}}>{children}</div>;
-}
-function Corners({op=0.4,sz=14}) {
-  const b=`1.5px solid rgba(124,77,255,${op})`;
-  return (<>
-    <div style={{position:"absolute",top:0,left:0,  width:sz,height:sz,borderTop:b,borderLeft:b,  pointerEvents:"none"}}/>
-    <div style={{position:"absolute",top:0,right:0, width:sz,height:sz,borderTop:b,borderRight:b, pointerEvents:"none"}}/>
-    <div style={{position:"absolute",bottom:0,left:0,  width:sz,height:sz,borderBottom:b,borderLeft:b,  pointerEvents:"none"}}/>
-    <div style={{position:"absolute",bottom:0,right:0, width:sz,height:sz,borderBottom:b,borderRight:b, pointerEvents:"none"}}/>
-  </>);
-}
-function IRow({label,value}) {
-  return (
-    <div style={{display:"flex",alignItems:"baseline",gap:6,padding:"3.5px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
-      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase",flex:"0 0 80px"}}>{label}</span>
-      <span style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:300,color:"var(--silver)",flex:1}}>{value}</span>
-    </div>
-  );
-}
-function ImageSlot({ height=72, hue=270 }) {
-  return <div style={{width:"100%",height,borderRadius:3,background:`hsla(${hue},40%,18%,0.5)`,border:"1px solid rgba(124,77,255,0.15)"}} />;
-}
-Object.assign(window, { mod, fmtMod, attrKey, skillBonus, SecTitle, Card, Corners, IRow, ImageSlot });
-</script>
-
-<!-- ═══════════════════════════════════════════
-     SCRIPT 2 — Externe Steckbrief-Komponenten
-     ═══════════════════════════════════════════ -->
-<script src="assets/components/steckbrief-components.jsx" type="text/babel"></script>
-
-<!-- ═══════════════════════════════════════════
-     SCRIPT 3 — Haupt-App
-     ═══════════════════════════════════════════ -->
-<script type="text/babel">
-const { useState: uSt, useEffect: uEx, useRef: uRx, useMemo: uM3 } = React;
+const { useState, useEffect, useRef, useMemo, useCallback } = React;
+const { useTweaks, TweaksPanel, TweakSection, TweakToggle } = window;
 const { SiteNav, SiteGate } = window;
-const { buildChar, CombatCompact, AttributeGrid, SkillPills, PersonalitySection,
-        DivisionRank, DeityCard, CompanionCard, KontakteTablet, FbCard } = window;
-const { SecTitle, Card, Corners, IRow } = window;
 
-/* ── Charakter aus DB-Zeile aufbauen ─────────── */
-function charFromRow(row) {
-  const d = row.char_data;
-  if (d && d.hp !== undefined) return { ...d };
-  return buildChar(d || row);
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"showParticles": true, "showHexes": true, "compactCards": false}/*EDITMODE-END*/;
+
+// ── HELPERS ──────────────────────────────────────────────
+function hexPoints(s) {
+  const cx = s/2, cy = s/2, r = s/2;
+  const pts = [];
+  for (let i = 0; i < 6; i++) {
+    const a = (Math.PI/180)*(60*i - 30);
+    pts.push(`${cx + r*Math.cos(a)},${cy + r*Math.sin(a)}`);
+  }
+  return pts.join(' ');
+}
+function hexPointsInset(size, inset) {
+  const cx = size/2, cy = size/2, r = size/2 - inset;
+  const pts = [];
+  for (let i = 0; i < 6; i++) {
+    const a = (Math.PI/180)*(60*i - 30);
+    pts.push(`${(cx + r*Math.cos(a)).toFixed(3)},${(cy + r*Math.sin(a)).toFixed(3)}`);
+  }
+  return pts.join(' ');
+}
+function hexClipInset(insetPct) {
+  const cx = 50, cy = 50, r = 50 - insetPct;
+  const pts = [];
+  for (let i = 0; i < 6; i++) {
+    const a = (Math.PI/180)*(60*i - 30);
+    pts.push(`${(cx + r*Math.cos(a)).toFixed(3)}% ${(cy + r*Math.sin(a)).toFixed(3)}%`);
+  }
+  return `polygon(${pts.join(', ')})`;
 }
 
-/* ── Stat-Badge ───────────────────────────────── */
-function StatBadge({ label, value }) {
+// Hex (#rgb / #rrggbb) → rgba string
+function hexA(hex, a) {
+  const h = hex.replace('#','');
+  const s = h.length === 3 ? h.split('').map(c => c+c).join('') : h;
+  const r = parseInt(s.slice(0,2),16), g = parseInt(s.slice(2,4),16), b = parseInt(s.slice(4,6),16);
+  return `rgba(${r},${g},${b},${a})`;
+}
+function accentOf(char) { return (DIVISION_THEME[char.division] || { accent:'#7c4dff' }).accent; }
+
+// ── CONSTANTS ────────────────────────────────────────────
+const STATUS_DEF = {
+  'Aktiv':         { color:'#5fe39a', label:'Aktiv',         glyph:'●' },
+  'Wartend':       { color:'#d6b25c', label:'Wartend',       glyph:'◐' },
+  'Im Ruhestand':  { color:'#8aa3c4', label:'Im Ruhestand',  glyph:'▬' },
+  'Gefallen':      { color:'#e36760', label:'Gefallen',      glyph:'✕' },
+};
+const STATUS_ORDER = ['Aktiv','Wartend','Im Ruhestand','Gefallen'];
+
+const DIVISION_THEME = {
+  'Die Kuratoren':     { accent:'#3dbf8c', roman:'I' },
+  'Die Sturmritter':   { accent:'#f06040', roman:'II' },
+  'Die Sentinels':     { accent:'#6ec6f0', roman:'III' },
+  'Die Friedenshüter': { accent:'#c47fa8', roman:'IV' },
+  'Die Outfitters':    { accent:'#d4681a', roman:'V' },
+  'Die Pathfinders':   { accent:'#c8b800', roman:'VI' },
+  'Die Quellensucher': { accent:'#1aacb8', roman:'VII' },
+  'Die Bergungsgarde': { accent:'#8b5e3c', roman:'VIII' },
+};
+const DIVISION_ORDER = Object.keys(DIVISION_THEME);
+
+const STAT_ORDER = ['str','dex','con','int','wis','cha'];
+const STAT_LABEL = { str:'Stä', dex:'Ges', con:'Kon', int:'Int', wis:'Wei', cha:'Cha' };
+
+const LEBENSSTIL_ORDER = ['Jämmerlich','Ärmlich','Schlecht','Einfach','Komfortabel','Wohlhabend','Edel'];
+const LEBENSSTIL_RANK  = Object.fromEntries(LEBENSSTIL_ORDER.map((s,i) => [s,i]));
+const fmtHade = (n) => (typeof n === 'number' ? n.toLocaleString('de-DE') : '0');
+
+// ── SUPABASE → CARD FORMAT ───────────────────────────────
+function buildSkills(d) {
+  if (!d.skills || !Array.isArray(d.skills)) return [];
+  const pb = d.profBonus || 2;
+  const stats = d.stats || { str:10, dex:10, con:10, int:10, wis:10, cha:10 };
+  const attrToStat = { Stä:'str', Ges:'dex', Kon:'con', Int:'int', Wei:'wis', Cha:'cha' };
+  return d.skills
+    .filter(s => s.prof > 0)
+    .map(s => {
+      const key = attrToStat[s.attr] || 'str';
+      const val = stats[key] || 10;
+      const m = Math.floor((val - 10) / 2) + s.prof * pb;
+      return { name: s.name, mod: m };
+    });
+}
+
+function rowToCard(row, profileMap) {
+  const d = row.char_data || {};
+  return {
+    id: String(row.id),
+    name: d.name || row.name || '—',
+    spieler: profileMap[row.owner_id] || 'Spieler',
+    rasse: d.race || '—',
+    klasse: d.class || '—',
+    stufe: d.level || 1,
+    hintergrund: d.background || '—',
+    division: d.division || '—',
+    gesinnung: d.alignment || '—',
+    status: d.status || 'Aktiv',
+    alter: d.age || '—',
+    geschlecht: d.gender || '—',
+    stats: d.stats || { str:10, dex:10, con:10, int:10, wis:10, cha:10 },
+    skills: buildSkills(d),
+    ac: d.ac || 10,
+    hp: d.hp || 10,
+    init: d.initiative || 0,
+    lebensstil: d.lebensstil || '—',
+    vermoegen: d.vermoegen || 0,
+    bild: d.bild || null,
+    visible: row.visible,
+    owner_id: row.owner_id,
+  };
+}
+
+// ── PARTICLES / HEXES ────────────────────────────────────
+const HEX_DEFS = [
+  { size:120, x:'6%',  y:'18%', anim:'hexFloat0', dur:'7.2s', opacity:0.035 },
+  { size:55,  x:'82%', y:'28%', anim:'hexFloat1', dur:'5.8s', opacity:0.06  },
+  { size:200, x:'70%', y:'8%',  anim:'hexFloat2', dur:'9.1s', opacity:0.025 },
+  { size:40,  x:'18%', y:'52%', anim:'hexFloat3', dur:'4.9s', opacity:0.07  },
+  { size:88,  x:'52%', y:'78%', anim:'hexFloat1', dur:'6.4s', opacity:0.03  },
+  { size:30,  x:'35%', y:'30%', anim:'hexFloat0', dur:'5.2s', opacity:0.09  },
+];
+function FloatingHexField({ mouseX, mouseY }) {
   return (
-    <div style={{ display:"flex", flexDirection:"column", alignItems:"center",
-      background:"rgba(7,4,18,0.9)", border:"1px solid rgba(124,77,255,0.18)",
-      borderRadius:3, padding:"5px 10px", minWidth:44 }}>
-      <span style={{ fontFamily:"var(--font-mono)", fontSize:15, color:"var(--white)", lineHeight:1 }}>{value}</span>
-      <span style={{ fontFamily:"var(--font-mono)", fontSize:6, letterSpacing:".18em",
-        color:"rgba(124,77,255,0.4)", textTransform:"uppercase", marginTop:3 }}>{label}</span>
+    <div style={{ position:'fixed', inset:0, pointerEvents:'none', zIndex:1, overflow:'hidden', clipPath:'inset(52px 0 0 0)' }}>
+      {HEX_DEFS.map((h, i) => {
+        const px = hexPoints(h.size);
+        const parallaxX = (mouseX - 0.5) * (i % 3 === 0 ? -12 : i % 3 === 1 ? -6 : -18);
+        const parallaxY = (mouseY - 0.5) * (i % 3 === 0 ? -8  : i % 3 === 1 ? -4 : -14);
+        return (
+          <div key={i} style={{ position:'absolute', left:h.x, top:h.y, animation:`${h.anim} ${h.dur} ease-in-out infinite`, animationDelay:`${i*0.7}s`, transform:`translate(${parallaxX}px,${parallaxY}px)`, transition:'transform 0.4s ease-out', willChange:'transform' }}>
+            <svg width={h.size} height={h.size} viewBox={`0 0 ${h.size} ${h.size}`} style={{ display:'block', opacity:h.opacity, filter:`drop-shadow(0 0 ${h.size*0.06}px #7c4dff)` }}>
+              <polygon points={px} fill="transparent" stroke="#7c4dff" strokeWidth="1" />
+            </svg>
+          </div>
+        );
+      })}
     </div>
   );
 }
-
-/* ── Charakter-Karte ──────────────────────────── */
-function CharCard({ row, isDM, onToggle, onOpen }) {
-  const [hov, setHov] = uSt(false);
-  const char = charFromRow(row);
-  const hidden = !row.visible;
-  const dimmed = isDM && hidden;
-
-  return (
-    <div style={{ position:"relative", borderRadius:5, overflow:"hidden",
-      border:`1px solid rgba(124,77,255,${hov ? 0.55 : dimmed ? 0.12 : 0.25})`,
-      background: dimmed ? "rgba(5,4,12,0.85)" : "rgba(8,5,22,0.92)",
-      transition:"all .22s", opacity: dimmed ? 0.65 : 1 }}
-      onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}>
-
-      <Corners op={hov ? 0.6 : dimmed ? 0.15 : 0.35} sz={11} />
-
-      {/* Sichtbarkeits-Toggle (nur DM) */}
-      {isDM && (
-        <button onClick={e => { e.stopPropagation(); onToggle(row.id, row.visible); }}
-          title={hidden ? "Für Spieler sichtbar machen" : "Verbergen"}
-          style={{ position:"absolute", top:8, right:8, zIndex:10,
-            background:"transparent", border:`1px solid rgba(124,77,255,${hidden?0.2:0.4})`,
-            borderRadius:3, padding:"3px 7px", cursor:"pointer",
-            fontFamily:"var(--font-mono)", fontSize:10,
-            color: hidden ? "rgba(124,77,255,0.35)" : "rgba(124,77,255,0.75)",
-            transition:"all .18s" }}
-          onMouseEnter={e => { e.currentTarget.style.borderColor="rgba(124,77,255,0.7)"; e.currentTarget.style.color="rgba(160,140,255,0.9)"; }}
-          onMouseLeave={e => { e.currentTarget.style.borderColor=hidden?"rgba(124,77,255,0.2)":"rgba(124,77,255,0.4)"; e.currentTarget.style.color=hidden?"rgba(124,77,255,0.35)":"rgba(124,77,255,0.75)"; }}>
-          {hidden ? "◯" : "◉"}
-        </button>
-      )}
-
-      {/* DM-Badge für verborgene Chars */}
-      {dimmed && (
-        <div style={{ position:"absolute", top:8, left:8,
-          fontFamily:"var(--font-mono)", fontSize:6.5, letterSpacing:".2em",
-          color:"rgba(124,77,255,0.4)", textTransform:"uppercase",
-          background:"rgba(124,77,255,0.08)", border:"1px solid rgba(124,77,255,0.18)",
-          padding:"2px 6px", borderRadius:2, zIndex:5 }}>
-          Verborgen
-        </div>
-      )}
-
-      {/* Klickbarer Bereich */}
-      <button onClick={() => onOpen(row)}
-        style={{ display:"block", width:"100%", background:"transparent",
-          border:"none", cursor:"pointer", textAlign:"left", padding:"22px 16px 16px" }}>
-
-        {/* Name + Rang */}
-        <div style={{ marginBottom:10 }}>
-          <div style={{ fontFamily:"var(--font-display)", fontSize:15, letterSpacing:".18em",
-            color: hov ? "#f0eeff" : "rgba(220,210,250,0.9)",
-            textTransform:"uppercase", lineHeight:1.2, marginBottom:5,
-            transition:"color .2s" }}>
-            {char.name || row.name}
-          </div>
-          <div style={{ fontFamily:"var(--font-mono)", fontSize:7.5, letterSpacing:".15em",
-            color:"rgba(124,77,255,0.5)", textTransform:"uppercase" }}>
-            Stufe {char.level || 1} · {char.rank || "Neuankömmling"}
-          </div>
-        </div>
-
-        {/* Tags: Rasse, Klasse, Division */}
-        <div style={{ display:"flex", gap:5, flexWrap:"wrap", marginBottom:14 }}>
-          {[char.race, char.class, char.division].filter(v => v && v !== "—").map((t,i) => (
-            <span key={i} style={{ fontFamily:"var(--font-mono)", fontSize:7.5, padding:"2px 8px",
-              background:"rgba(124,77,255,0.1)", border:"1px solid rgba(124,77,255,0.25)",
-              borderRadius:2, color:"rgba(200,190,240,0.7)", letterSpacing:".06em" }}>{t}</span>
-          ))}
-        </div>
-
-        {/* Mini-Stats */}
-        <div style={{ display:"flex", gap:6 }}>
-          <StatBadge label="TP"   value={char.hp   || "—"} />
-          <StatBadge label="RK"   value={char.ac   || "—"} />
-          <StatBadge label="INIT" value={fmtMod(char.initiative || 0)} />
-        </div>
-      </button>
-    </div>
-  );
+function ParticleField({ mouseX, mouseY }) {
+  const canvasRef = useRef(null);
+  const animRef = useRef(null);
+  const particles = useRef([]);
+  const mouse = useRef({ x:0.5, y:0.5 });
+  useEffect(() => { mouse.current = { x: mouseX, y: mouseY }; }, [mouseX, mouseY]);
+  useEffect(() => {
+    const canvas = canvasRef.current; if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const resize = () => { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; };
+    resize(); window.addEventListener('resize', resize);
+    particles.current = Array.from({length:50}, () => ({
+      x: Math.random(), y: Math.random(),
+      r: Math.random()*1.6+0.5,
+      vx:(Math.random()-0.5)*0.05, vy:(Math.random()-0.5)*0.05,
+      alpha: Math.random()*0.2+0.05,
+    }));
+    const tick = () => {
+      const w = canvas.width, h = canvas.height;
+      const shiftX = (mouse.current.x - 0.5)*-14, shiftY = (mouse.current.y - 0.5)*-14;
+      ctx.clearRect(0,0,w,h);
+      particles.current.forEach(p => {
+        p.x += p.vx/w*60; p.y += p.vy/h*60;
+        if(p.x<0)p.x=1; if(p.x>1)p.x=0; if(p.y<0)p.y=1; if(p.y>1)p.y=0;
+        ctx.beginPath(); ctx.arc(p.x*w+shiftX, p.y*h+shiftY, p.r, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(160,140,255,${p.alpha})`; ctx.fill();
+      });
+      animRef.current = requestAnimationFrame(tick);
+    };
+    tick();
+    return () => { cancelAnimationFrame(animRef.current); window.removeEventListener('resize', resize); };
+  }, []);
+  return <canvas ref={canvasRef} style={{ position:'fixed', inset:0, width:'100%', height:'100%', pointerEvents:'none', zIndex:0, clipPath:'inset(52px 0 0 0)' }} />;
 }
 
-/* ── Spieler-Gruppe ───────────────────────────── */
-function PlayerGroup({ displayName, chars, isDM, onToggle, onOpen }) {
+// ── SCROLL REVEAL ────────────────────────────────────────
+function useScrollReveal(deps) {
+  useEffect(() => {
+    const revealed = new WeakSet();
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting || revealed.has(entry.target)) return;
+        revealed.add(entry.target);
+        observer.unobserve(entry.target);
+        entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px -10px 0px' });
+    const t = setTimeout(() => {
+      document.querySelectorAll('.reveal-up:not(.visible)').forEach(el => observer.observe(el));
+    }, 60);
+    return () => { clearTimeout(t); observer.disconnect(); };
+  }, deps);
+}
+
+// ── CHARACTER PORTRAIT ───────────────────────────────────
+function Portrait({ char, size=120 }) {
+  const acc = accentOf(char);
+  const initials = char.name.split(/[\s']/).filter(Boolean).slice(0,2).map(w => w[0]).join('').toUpperCase();
+  const hasImage = !!char.bild;
+  const PAD = 3;
+  const RING_GAP = Math.max(4, size * 0.06);
+  const clipPath = hexClipInset((PAD / size) * 100);
   return (
-    <div style={{ marginBottom:48 }}>
-      <div style={{ display:"flex", alignItems:"center", gap:16, marginBottom:20 }}>
-        <div style={{ fontFamily:"var(--font-mono)", fontSize:8, letterSpacing:".3em",
-          color:"rgba(124,77,255,0.6)", textTransform:"uppercase", whiteSpace:"nowrap" }}>
-          {displayName}
-        </div>
-        <div style={{ flex:1, height:1,
-          background:"linear-gradient(to right, rgba(124,77,255,0.4), rgba(124,77,255,0.05))" }} />
+    <div style={{ position:'relative', width:size, height:size, flexShrink:0 }}>
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ position:'absolute', inset:0, pointerEvents:'none', overflow:'visible', filter:`drop-shadow(0 0 12px ${hexA(acc,0.45)})`, zIndex:3 }}>
+        <polygon points={hexPointsInset(size, PAD)} fill="none" stroke={acc} strokeWidth="1.6" strokeLinejoin="miter"/>
+        <polygon points={hexPointsInset(size, PAD + RING_GAP)} fill="none" stroke={acc} strokeWidth="0.6" strokeOpacity="0.45" strokeLinejoin="miter"/>
+      </svg>
+      <div style={{ position:'absolute', inset:0, clipPath: clipPath, background: hasImage ? '#000' : hexA(acc, 0.12), overflow:'hidden', zIndex:1 }}>
+        {hasImage ? (
+          <React.Fragment>
+            <img src={char.bild} alt={char.name} style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }} />
+            <div style={{ position:'absolute', inset:0, pointerEvents:'none', background:`radial-gradient(ellipse at 50% 50%, transparent 55%, ${hexA(acc,0.35)} 100%)` }} />
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            <div style={{ position:'absolute', inset:0, backgroundImage:`repeating-linear-gradient(45deg, ${hexA(acc,0.10)} 0 6px, transparent 6px 12px)`, backgroundColor: hexA(acc, 0.06) }} />
+            <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-display)', fontSize: size*0.30, fontWeight:300, letterSpacing:'0.05em', color:'#f0eeff', textShadow:`0 0 14px ${acc}, 0 0 6px ${hexA(acc,0.8)}` }}>{initials}</div>
+          </React.Fragment>
+        )}
       </div>
-      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(240px,1fr))", gap:16 }}>
-        {chars.map(row => (
-          <CharCard key={row.id} row={row} isDM={isDM}
-            onToggle={onToggle} onOpen={onOpen} />
+    </div>
+  );
+}
+
+// ── LEVEL BADGE ──────────────────────────────────────────
+function LevelBadge({ stufe, acc, size=40 }) {
+  const offset = Math.round(size * 0.28);
+  return (
+    <div style={{ position:'absolute', bottom: -offset + 'px', right: -offset + 'px', width: size, height: size, zIndex:5, pointerEvents:'none' }}>
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ position:'absolute', inset:0, overflow:'visible', filter:`drop-shadow(0 0 8px ${hexA(acc,0.6)})` }}>
+        <polygon points={hexPointsInset(size, 1.6)} fill="rgba(5,4,15,0.97)" stroke={acc} strokeWidth="1.4"/>
+        <polygon points={hexPointsInset(size, 4)} fill="none" stroke={acc} strokeWidth="0.5" strokeOpacity="0.4"/>
+      </svg>
+      <div style={{ position:'absolute', inset:0, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', lineHeight:1 }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize: size*0.16 + 'px', letterSpacing:'0.18em', color: acc, opacity:0.85, marginBottom:'1px', textTransform:'uppercase' }}>St.</span>
+        <span style={{ fontFamily:'var(--font-display)', fontSize: size*0.42 + 'px', fontWeight:500, color:'#f0eeff', textShadow:`0 0 8px ${hexA(acc,0.7)}` }}>{stufe}</span>
+      </div>
+    </div>
+  );
+}
+
+// ── ATTRIBUTES GRID ───────────────────────────────────────
+function abilityMod(score) {
+  const m = Math.floor((score - 10) / 2);
+  return (m >= 0 ? '+' : '') + m;
+}
+function AttributesGrid({ stats, acc, dense }) {
+  const max = Math.max(...STAT_ORDER.map(k => stats[k]));
+  return (
+    <div style={{ position:'relative', zIndex:1, marginBottom: dense ? '0' : '12px' }}>
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.32em', color:`${hexA(acc,0.8)}`, textTransform:'uppercase', marginBottom:'6px' }}>
+        ◇ Attribute
+      </div>
+      <div style={{ display:'grid', gridTemplateColumns:'repeat(6, 1fr)', gap:'4px' }}>
+        {STAT_ORDER.map(k => {
+          const v = stats[k];
+          const isMax = v === max;
+          return (
+            <div key={k} style={{ padding: dense ? '4px 2px' : '6px 2px', textAlign:'center', background: isMax ? hexA(acc, 0.16) : 'rgba(5,4,15,0.55)', border: `1px solid ${isMax ? acc : hexA(acc,0.18)}`, borderRadius:'2px', boxShadow: isMax ? `0 0 10px ${hexA(acc,0.35)} inset, 0 0 6px ${hexA(acc,0.25)}` : 'none', position:'relative', overflow:'hidden' }}>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.18em', color: isMax ? acc : 'rgba(160,140,255,0.55)', textTransform:'uppercase', marginBottom:'1px' }}>{STAT_LABEL[k]}</div>
+              <div style={{ fontFamily:'var(--font-display)', fontSize: dense ? '14px' : '16px', fontWeight:400, color: isMax ? '#f0eeff' : 'rgba(240,238,255,0.88)', textShadow: isMax ? `0 0 10px ${hexA(acc,0.6)}` : 'none', lineHeight:1, fontVariantNumeric:'tabular-nums' }}>{v}</div>
+              {!dense && (
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', color: isMax ? hexA(acc,0.95) : 'rgba(200,190,240,0.5)', marginTop:'2px', fontVariantNumeric:'tabular-nums' }}>{abilityMod(v)}</div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ── COMBAT/STATUS STRIP ──────────────────────────────────
+function CombatStats({ char, acc, dense }) {
+  const items = [
+    { label:'RK',         value: char.ac },
+    { label:'TP',         value: char.hp },
+    { label:'Init',       value:(char.init>=0?'+':'')+char.init },
+    { label:'Lebensstil', value: char.lebensstil },
+    { label:'Hade',       value: fmtHade(char.vermoegen) },
+  ];
+  return (
+    <div style={{ position:'relative', zIndex:1, marginTop: dense ? '6px' : '4px', marginBottom: dense ? '0' : '14px', paddingTop:'10px', borderTop:`1px dashed ${hexA(acc, 0.18)}`, display:'flex', alignItems:'baseline', flexWrap:'wrap', columnGap:'10px', rowGap:'6px', fontFamily:'var(--font-mono)', fontSize:'9.5px', letterSpacing:'0.10em' }}>
+      {items.map((t, i) => (
+        <span key={t.label} style={{ display:'inline-flex', alignItems:'baseline', gap:'5px' }}>
+          <span style={{ color:'rgba(160,140,255,0.45)', textTransform:'uppercase', fontSize:'8px', letterSpacing:'0.22em' }}>{t.label}</span>
+          <span style={{ color:'rgba(230,225,255,0.88)', fontVariantNumeric:'tabular-nums' }}>{t.value}</span>
+          {i < items.length-1 && <span style={{ color:'rgba(160,140,255,0.20)' }}>·</span>}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+// ── SKILLS LIST ───────────────────────────────────────────
+function SkillsList({ skills, acc }) {
+  if (!skills || !skills.length) return null;
+  return (
+    <div style={{ position:'relative', zIndex:1, marginBottom:'14px' }}>
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.32em', color:`${hexA(acc,0.8)}`, textTransform:'uppercase', marginBottom:'6px' }}>
+        ◇ Geübte Fähigkeiten
+      </div>
+      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'2px 12px' }}>
+        {skills.map((s, i) => (
+          <div key={i} style={{ display:'flex', alignItems:'baseline', gap:'7px', padding:'3px 8px 3px 6px', borderLeft:`2px solid ${hexA(acc, 0.45)}`, background: hexA(acc, 0.04), fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:400, color:'rgba(230,225,255,0.85)' }}>
+            <svg width="4" height="4" viewBox="0 0 4 4" style={{ flexShrink:0, transform:'translateY(-1px)' }}>
+              <polygon points={hexPoints(4)} fill={acc} />
+            </svg>
+            <span style={{ flex:1, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{s.name}</span>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:'10.5px', color: acc, fontVariantNumeric:'tabular-nums', textShadow:`0 0 8px ${hexA(acc,0.4)}` }}>
+              {(s.mod >= 0 ? '+' : '') + s.mod}
+            </span>
+          </div>
         ))}
       </div>
     </div>
   );
 }
 
-/* ── Read-only Steckbrief-Overlay ─────────────── */
-function SteckbriefOverlay({ row, onClose }) {
-  const char = charFromRow(row);
-  const overlayRef = uRx(null);
+// ── FILTER CHIP ──────────────────────────────────────────
+function FilterChip({ active, label, count, onClick, accent }) {
+  const ac = accent || 'rgba(124,77,255,1)';
+  return (
+    <button onClick={onClick} style={{ display:'inline-flex', alignItems:'center', gap:'8px', padding:'5px 10px', fontFamily:'var(--font-mono)', fontSize:'9.5px', letterSpacing:'0.14em', textTransform:'uppercase', background: active ? `${ac.replace('1)','0.18)')}` : 'rgba(10,6,28,0.6)', border: `1px solid ${active ? ac.replace('1)','0.7)') : 'rgba(160,140,255,0.18)'}`, color: active ? '#f0eeff' : 'rgba(200,190,240,0.65)', borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', whiteSpace:'nowrap' }}
+    onMouseEnter={e => { if (!active) { e.currentTarget.style.borderColor = ac.replace('1)','0.45)'); e.currentTarget.style.color = '#f0eeff'; } }}
+    onMouseLeave={e => { if (!active) { e.currentTarget.style.borderColor = 'rgba(160,140,255,0.18)'; e.currentTarget.style.color = 'rgba(200,190,240,0.65)'; } }}>
+      <span>{label}</span>
+      {typeof count === 'number' && <span style={{ fontSize:'8px', color: active ? `${ac.replace('1)','0.95)')}` : 'rgba(160,140,255,0.45)', fontVariantNumeric:'tabular-nums' }}>{count}</span>}
+    </button>
+  );
+}
 
-  uEx(() => {
-    const onKey = e => { if (e.key === "Escape") onClose(); };
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, []);
+// ── FILTER GROUP ─────────────────────────────────────────
+function FilterGroup({ title, values, selected, onToggle, getCount, labelFor }) {
+  const [expanded, setExpanded] = useState(true);
+  const acc = '#7c4dff';
+  if (!values || values.length === 0) return null;
+  return (
+    <div style={{ marginBottom:'18px' }}>
+      <button onClick={() => setExpanded(!expanded)} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', width:'100%', padding:'6px 0', marginBottom:'8px', background:'transparent', border:'none', cursor:'pointer', borderBottom:'1px solid rgba(160,140,255,0.1)' }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.32em', color:`${acc}cc`, textTransform:'uppercase' }}>◇ {title}</span>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:'10px', color:'rgba(160,140,255,0.4)' }}>{expanded ? '−' : '+'}</span>
+      </button>
+      {expanded && (
+        <div style={{ display:'flex', flexWrap:'wrap', gap:'6px' }}>
+          {values.map(v => (
+            <FilterChip key={v} label={labelFor ? labelFor(v) : v} count={getCount ? getCount(v) : undefined} active={selected.includes(v)} onClick={() => onToggle(v)} accent={acc} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── META LINE ─────────────────────────────────────────────
+function MetaLine({ label, value, acc, highlight, divisionAccent }) {
+  return (
+    <div style={{ display:'flex', flexDirection:'column', gap:'1px', minWidth:0 }}>
+      <span style={{ color: 'rgba(160,140,255,0.4)', fontSize:'7.5px' }}>{label}</span>
+      <span style={{ color: divisionAccent ? acc : (highlight ? '#f0eeff' : 'rgba(220,210,255,0.78)'), textShadow: (highlight || divisionAccent) ? `0 0 10px ${hexA(acc, 0.4)}` : 'none', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{value}</span>
+    </div>
+  );
+}
+
+// ── CHARACTER CARD ──────────────────────────────────────
+function CharCard({ char, compact, delay }) {
+  const [hov, setHov] = useState(false);
+  const acc    = accentOf(char);
+  const accDim = hexA(acc, 0.4);
+  const accBg  = hexA(acc, 0.10);
+  const statusDef = STATUS_DEF[char.status] || STATUS_DEF['Aktiv'];
+  const isGefallen = char.status === 'Gefallen';
 
   return (
-    <div ref={overlayRef}
-      onClick={e => { if (e.target === overlayRef.current) onClose(); }}
-      style={{ position:"fixed", inset:0, zIndex:500,
-        background:"rgba(5,4,15,0.88)", backdropFilter:"blur(8px)",
-        overflowY:"auto", display:"flex", justifyContent:"center", padding:"24px 16px 60px" }}>
+    <div className="reveal-up" style={{ transitionDelay:`${delay}s` }}>
+      <div style={{ position:'relative' }}>
+        <a href={`Steckbrief.html?id=${char.id}`}
+          onMouseEnter={() => setHov(true)}
+          onMouseLeave={() => setHov(false)}
+          style={{ textDecoration:'none', display:'block', color:'inherit' }}>
+          <article style={{ position:'relative', background: hov ? `linear-gradient(160deg, ${accBg}, rgba(10,6,28,0.92))` : 'linear-gradient(160deg, rgba(14,8,32,0.78), rgba(8,5,22,0.85))', border: `1px solid ${hov ? acc : 'rgba(160,140,255,0.18)'}`, borderRadius:'3px', padding: compact ? '14px 16px' : '20px 22px 18px', transition:'background 0.3s, border-color 0.3s, transform 0.25s, box-shadow 0.3s', transform: hov ? 'translateY(-3px)' : 'translateY(0)', boxShadow: hov ? `0 10px 30px rgba(0,0,0,0.5), 0 0 24px ${hexA(acc,0.22)}` : '0 2px 10px rgba(0,0,0,0.3)', overflow:'hidden', opacity: isGefallen ? 0.7 : 1 }}>
 
-      <div style={{ width:"100%", maxWidth:860, position:"relative" }}>
+            {/* Top-left accent bar */}
+            <div style={{ position:'absolute', left:0, top:0, bottom:0, width:'3px', background: `linear-gradient(180deg, ${acc} 0%, ${accDim} 100%)`, boxShadow: hov ? `0 0 10px ${hexA(acc,0.85)}` : 'none', transition:'box-shadow 0.3s' }} />
 
-        {/* Schließen-Button */}
-        <button onClick={onClose}
-          style={{ position:"fixed", top:20, right:28, zIndex:600,
-            fontFamily:"var(--font-mono)", fontSize:18, lineHeight:1,
-            background:"rgba(8,5,22,0.95)", border:"1px solid rgba(124,77,255,0.3)",
-            borderRadius:4, padding:"6px 13px", cursor:"pointer",
-            color:"rgba(160,140,255,0.6)", transition:"all .18s" }}
-          onMouseEnter={e => { e.currentTarget.style.color="rgba(200,190,240,0.9)"; e.currentTarget.style.borderColor="rgba(124,77,255,0.6)"; }}
-          onMouseLeave={e => { e.currentTarget.style.color="rgba(160,140,255,0.6)"; e.currentTarget.style.borderColor="rgba(124,77,255,0.3)"; }}>
-          ×
-        </button>
+            {/* Diagonal stripe texture */}
+            <div style={{ position:'absolute', inset:0, pointerEvents:'none', backgroundImage: `repeating-linear-gradient(135deg, transparent, transparent 22px, ${hexA(acc,0.05)} 22px, ${hexA(acc,0.05)} 23px)`, opacity: hov ? 1 : 0.55, transition:'opacity 0.3s' }} />
 
-        {/* Header */}
-        <div style={{ marginBottom:28, paddingTop:8 }}>
-          <div style={{ fontFamily:"var(--font-mono)", fontSize:8, letterSpacing:".32em",
-            color:"rgba(124,77,255,0.5)", textTransform:"uppercase", marginBottom:8 }}>
-            Meruria · Charakterbogen
-          </div>
-          <div style={{ fontFamily:"var(--font-display)", fontSize:"clamp(22px,4vw,34px)",
-            fontWeight:300, letterSpacing:".22em", color:"#f0eeff",
-            textTransform:"uppercase", textShadow:"0 0 40px rgba(124,77,255,0.3)",
-            marginBottom:6 }}>
-            {char.name}
-          </div>
-          <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
-            {[char.race, char.class, char.background, char.division].filter(v => v && v !== "—").map((t,i) => (
-              <span key={i} style={{ fontFamily:"var(--font-mono)", fontSize:8, padding:"2px 10px",
-                background:"rgba(124,77,255,0.12)", border:"1px solid rgba(124,77,255,0.3)",
-                borderRadius:2, color:"rgba(200,190,240,0.8)", letterSpacing:".08em" }}>{t}</span>
-            ))}
-          </div>
-        </div>
-
-        {/* Körperdaten */}
-        <Card style={{ marginBottom:16 }}>
-          <SecTitle label="Identität" />
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"0 24px" }}>
-            <IRow label="Rang"         value={`${char.rank || "—"} (${char.rankLevel || 1}/${char.rankMax || 5})`} />
-            <IRow label="Stufe"        value={char.level || 1} />
-            <IRow label="Gesinnung"    value={char.alignment || "—"} />
-            <IRow label="Gottheit"     value={char.deity || "—"} />
-            <IRow label="Geschlecht"   value={char.gender || "—"} />
-            <IRow label="Alter"        value={char.age || "—"} />
-            <IRow label="Geburtsort"   value={char.birthplace || "—"} />
-            <IRow label="Sternzeichen" value={char.zodiac || "—"} />
-          </div>
-        </Card>
-
-        {/* Kampf + Attribute nebeneinander */}
-        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16, marginBottom:16 }}>
-          <CombatCompact char={char} />
-          <DivisionRank  char={char} />
-        </div>
-
-        <AttributeGrid char={char} />
-        <SkillPills    char={char} />
-
-        {/* Geschichte */}
-        {char.story && (
-          <Card style={{ marginBottom:16 }}>
-            <SecTitle label="Geschichte" />
-            <p style={{ fontFamily:"var(--font-body)", fontSize:12, fontWeight:300,
-              color:"var(--silver)", lineHeight:1.82, margin:0 }}>{char.story}</p>
-          </Card>
-        )}
-
-        <PersonalitySection char={char} />
-        <DeityCard char={char} />
-
-        {/* Begleiter */}
-        {char.companions && char.companions.length > 0 && (
-          <Card style={{ marginBottom:16 }}>
-            <SecTitle label="Begleiter" />
-            <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(200px,1fr))", gap:10 }}>
-              {char.companions.map((c,i) => <CompanionCard key={i} comp={c} />)}
+            {/* Spieler-Chip oben rechts */}
+            <div style={{ position:'absolute', top:'10px', right:'12px', zIndex:4, display:'flex', alignItems:'center', gap:'6px', padding:'5px 10px 5px 8px', background: hov ? hexA(acc, 0.28) : hexA(acc, 0.18), border:`1px solid ${hov ? acc : hexA(acc, 0.5)}`, borderRadius:'2px', boxShadow: hov ? `0 0 14px ${hexA(acc,0.45)}` : 'none', transition:'all 0.25s' }}>
+              <svg width="7" height="7" viewBox="0 0 7 7" style={{ flexShrink:0 }}>
+                <polygon points={hexPoints(7)} fill={acc} />
+              </svg>
+              <span style={{ fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.28em', color:hexA(acc,0.85), textTransform:'uppercase' }}>Spieler</span>
+              <span style={{ fontFamily:'var(--font-display)', fontSize:'12px', letterSpacing:'0.12em', color:'#f0eeff', textShadow:`0 0 8px ${hexA(acc,0.45)}` }}>{char.spieler}</span>
             </div>
-          </Card>
-        )}
 
-        {/* Kontakte */}
-        {char.contacts && char.contacts.length > 0 && (
-          <Card style={{ marginBottom:16 }}>
-            <KontakteTablet char={char} />
-          </Card>
-        )}
-
-        {/* Freundebuch */}
-        {char.freundebuch && char.freundebuch.length > 0 && (
-          <Card style={{ marginBottom:16 }}>
-            <SecTitle label="Freundebuch" />
-            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
-              {char.freundebuch.map((fb,i) => <FbCard key={i} item={fb} index={i} />)}
+            {/* Header row: portrait + name + status */}
+            <div style={{ display:'flex', gap:'18px', alignItems:'flex-start', position:'relative', zIndex:1 }}>
+              <div style={{ position:'relative', flexShrink:0 }}>
+                <Portrait char={char} size={compact ? 86 : 124} />
+                <LevelBadge stufe={char.stufe} acc={acc} size={compact ? 32 : 40} />
+              </div>
+              <div style={{ flex:1, minWidth:0, paddingTop:'4px', paddingRight:'120px' }}>
+                <div style={{ marginBottom:'3px' }}>
+                  <h3 style={{ fontFamily:'var(--font-display)', fontSize: compact ? '15px' : '17px', fontWeight:400, letterSpacing:'0.06em', color:'#f0eeff', textShadow: hov ? `0 0 14px ${hexA(acc,0.55)}` : 'none', lineHeight:1.15, textWrap:'balance' }}>{char.name}</h3>
+                </div>
+                <div style={{ display:'flex', alignItems:'center', gap:'8px', flexWrap:'wrap', marginBottom:'8px' }}>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em', color: acc, textTransform:'uppercase', textShadow:`0 0 10px ${hexA(acc,0.35)}` }}>{char.rasse}</span>
+                  <span style={{ color:'rgba(160,140,255,0.3)', fontSize:'9px' }}>·</span>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em', color: acc, textTransform:'uppercase', textShadow:`0 0 10px ${hexA(acc,0.35)}` }}>{char.klasse}</span>
+                </div>
+                {/* Status pill */}
+                <div style={{ display:'inline-flex', alignItems:'center', gap:'6px', padding:'3px 8px', background:`${statusDef.color}15`, border:`1px solid ${statusDef.color}55`, borderRadius:'2px', fontFamily:'var(--font-mono)', fontSize:'8.5px', letterSpacing:'0.22em', textTransform:'uppercase', color: statusDef.color }}>
+                  <span style={{ width:'5px', height:'5px', borderRadius:'50%', background: statusDef.color, animation: char.status === 'Aktiv' ? 'pulse-dot 2.2s ease-in-out infinite' : 'none' }} />
+                  {statusDef.label}
+                </div>
+              </div>
             </div>
-          </Card>
-        )}
+
+            {!compact ? (
+              <React.Fragment>
+                <div style={{ display:'flex', alignItems:'center', gap:'8px', margin:'14px 0 10px', position:'relative', zIndex:1 }}>
+                  <div style={{ height:'1px', width:'18px', background: hexA(acc,0.55) }} />
+                  <svg width="5" height="5" viewBox="0 0 5 5"><polygon points={hexPoints(5)} fill={hexA(acc,0.75)} /></svg>
+                  <div style={{ height:'1px', flex:1, background:`linear-gradient(90deg, ${hexA(acc,0.55)}, transparent)` }} />
+                </div>
+                <AttributesGrid stats={char.stats} acc={acc} />
+                <SkillsList skills={char.skills} acc={acc} />
+                <CombatStats char={char} acc={acc} />
+              </React.Fragment>
+            ) : (
+              <div style={{ position:'relative', zIndex:1, margin:'12px 0 14px', display:'flex', flexDirection:'column', gap:'8px' }}>
+                <AttributesGrid stats={char.stats} acc={acc} dense />
+                <CombatStats char={char} acc={acc} dense />
+              </div>
+            )}
+
+            {/* Footer meta strip */}
+            <div style={{ position:'relative', zIndex:1, display:'grid', gridTemplateColumns:'1fr 1fr', gap:'4px 12px', paddingTop:'10px', borderTop:`1px solid ${hexA(acc, 0.22)}`, fontFamily:'var(--font-mono)', fontSize:'8.5px', letterSpacing:'0.16em', textTransform:'uppercase' }}>
+              <MetaLine label="Division" value={char.division.replace(/^Die /,'')} acc={acc} divisionAccent />
+              <MetaLine label="Gesinnung" value={char.gesinnung} acc={acc} />
+              <MetaLine label="Hintergrund" value={char.hintergrund} acc={acc} />
+              <MetaLine label="Geschlecht" value={char.geschlecht} acc={acc} />
+            </div>
+          </article>
+        </a>
       </div>
     </div>
   );
 }
 
-/* ── App ──────────────────────────────────────── */
-function App() {
-  const isDM = window.SITE_USER?.role === "dm";
-  const [chars, setChars] = uSt([]);
-  const [profiles, setProfiles] = uSt({});
-  const [loading, setLoading] = uSt(true);
-  const [openRow, setOpenRow] = uSt(null);
+// ── STAT TILE ─────────────────────────────────────────────
+function StatTile({ label, value, color, active, onClick }) {
+  const [hov, setHov] = useState(false);
+  const c = color || '#c9b8ff';
+  const clickable = !!onClick;
+  const borderCol = active ? c : (color ? `${color}44` : 'rgba(160,140,255,0.2)');
+  const bgCol = active ? (color ? `${color}22` : 'rgba(124,77,255,0.18)') : 'rgba(10,6,28,0.6)';
+  return (
+    <button type="button" onClick={onClick} disabled={!clickable}
+      onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+      style={{ padding:'10px 16px', minWidth:'78px', background: clickable && hov && !active ? (color ? `${color}11` : 'rgba(124,77,255,0.08)') : bgCol, border:`1px solid ${clickable && hov && !active ? (color ? `${color}88` : 'rgba(160,140,255,0.4)') : borderCol}`, borderRadius:'3px', textAlign:'center', position:'relative', cursor: clickable ? 'pointer' : 'default', boxShadow: active && color ? `0 0 14px ${color}33, 0 0 0 1px ${color}55 inset` : 'none', transition:'all 0.18s', fontFamily:'inherit', color:'inherit' }}>
+      <div style={{ fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:300, color:c, lineHeight:1, marginBottom:'4px', textShadow: color ? `0 0 14px ${color}55` : 'none' }}>
+        {String(value).padStart(2,'0')}
+      </div>
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:'rgba(160,140,255,0.6)', textTransform:'uppercase' }}>{label}</div>
+      {active && (
+        <div style={{ position:'absolute', top:'4px', right:'6px', fontFamily:'var(--font-mono)', fontSize:'9px', color: c, lineHeight:1 }}>✓</div>
+      )}
+    </button>
+  );
+}
 
-  uEx(() => { load(); }, []);
+// ── ACTIVE FILTER PILL ────────────────────────────────────
+function ActivePill({ label, onRemove }) {
+  return (
+    <button onClick={onRemove} style={{ display:'inline-flex', alignItems:'center', gap:'6px', padding:'4px 8px', background:'rgba(124,77,255,0.22)', border:'1px solid rgba(160,140,255,0.55)', borderRadius:'2px', color:'#f0eeff', fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.14em', cursor:'pointer', textTransform:'uppercase', transition:'all 0.15s' }}
+    onMouseEnter={e => { e.currentTarget.style.background='rgba(227,103,96,0.25)'; e.currentTarget.style.borderColor='rgba(227,103,96,0.7)'; }}
+    onMouseLeave={e => { e.currentTarget.style.background='rgba(124,77,255,0.22)'; e.currentTarget.style.borderColor='rgba(160,140,255,0.55)'; }}>
+      <span>{label}</span>
+      <span style={{ fontSize:'10px', lineHeight:1 }}>×</span>
+    </button>
+  );
+}
+
+// ── APP ──────────────────────────────────────────────────
+function App() {
+  const [mouse, setMouse] = useState({ x:0.5, y:0.5 });
+  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const handleMouseMove = useCallback(e => { setMouse({ x: e.clientX/window.innerWidth, y: e.clientY/window.innerHeight }); }, []);
+
+  const [characters, setCharacters] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const [search, setSearch] = useState('');
+  const [filters, setFilters] = useState({ spieler:[], rasse:[], klasse:[], division:[], hintergrund:[], fertigkeit:[], lebensstil:[], status:[] });
+  const [sort, setSort] = useState('name');
+
+  useEffect(() => { load(); }, []);
 
   async function load() {
     setLoading(true);
-    const { data: rows } = await window._sb
-      .from("characters")
-      .select("*")
-      .eq("type", "spieler")
-      .order("created_at");
+    const { data: rows } = await window._sb.from('characters').select('*').eq('type', 'spieler').order('created_at');
 
     const ownerIds = [...new Set((rows || []).map(r => r.owner_id))];
-
     let profileMap = {};
     if (ownerIds.length > 0) {
-      const { data: profs } = await window._sb
-        .from("profiles")
-        .select("id, display_name")
-        .in("id", ownerIds);
+      const { data: profs } = await window._sb.from('profiles').select('id,display_name').in('id', ownerIds);
       profileMap = Object.fromEntries((profs || []).map(p => [p.id, p.display_name]));
     }
 
-    setChars(rows || []);
-    setProfiles(profileMap);
+    setCharacters((rows || []).map(row => rowToCard(row, profileMap)));
     setLoading(false);
   }
 
-  async function toggleVisible(charId, currentVisible) {
-    await window._sb.from("characters")
-      .update({ visible: !currentVisible })
-      .eq("id", charId);
-    setChars(prev => prev.map(c => c.id === charId ? { ...c, visible: !currentVisible } : c));
-  }
+  const toggleFilter = (group, value) => {
+    setFilters(f => ({ ...f, [group]: f[group].includes(value) ? f[group].filter(v => v !== value) : [...f[group], value] }));
+  };
+  const clearAll = () => { setFilters({ spieler:[], rasse:[], klasse:[], division:[], hintergrund:[], fertigkeit:[], lebensstil:[], status:[] }); setSearch(''); };
 
-  // Gruppierung nach Besitzer, Reihenfolge = erste Erscheinung
-  const groups = uM3(() => {
-    const map = new Map();
-    for (const row of chars) {
-      if (!map.has(row.owner_id)) map.set(row.owner_id, []);
-      map.get(row.owner_id).push(row);
+  // Dynamic filter values from loaded data
+  const filterValues = useMemo(() => {
+    const uniq = arr => [...new Set(arr.filter(v => v && v !== '—'))].sort((a,b) => a.localeCompare(b,'de'));
+    return {
+      spieler:     [...new Set(characters.map(c => c.spieler))].sort(),
+      rasse:       uniq(characters.map(c => c.rasse)),
+      klasse:      uniq(characters.map(c => c.klasse)),
+      division:    DIVISION_ORDER.filter(d => characters.some(c => c.division === d)),
+      hintergrund: uniq(characters.map(c => c.hintergrund)),
+      fertigkeit:  uniq(characters.flatMap(c => c.skills.map(s => s.name))),
+      lebensstil:  LEBENSSTIL_ORDER.filter(l => characters.some(c => c.lebensstil === l)),
+      status:      STATUS_ORDER.filter(s => characters.some(c => c.status === s)),
+    };
+  }, [characters]);
+
+  const filtered = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    let list = characters.filter(c => {
+      if (filters.spieler.length     && !filters.spieler.includes(c.spieler))     return false;
+      if (filters.rasse.length       && !filters.rasse.includes(c.rasse))         return false;
+      if (filters.klasse.length      && !filters.klasse.includes(c.klasse))       return false;
+      if (filters.division.length    && !filters.division.includes(c.division))   return false;
+      if (filters.hintergrund.length && !filters.hintergrund.includes(c.hintergrund)) return false;
+      if (filters.lebensstil.length  && !filters.lebensstil.includes(c.lebensstil)) return false;
+      if (filters.status.length      && !filters.status.includes(c.status))       return false;
+      if (filters.fertigkeit.length) {
+        const charSkills = new Set(c.skills.map(s => s.name));
+        if (!filters.fertigkeit.some(s => charSkills.has(s))) return false;
+      }
+      if (q) {
+        const hay = `${c.name} ${c.rasse} ${c.klasse} ${c.spieler} ${c.division} ${c.hintergrund} ${c.gesinnung}`.toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    });
+    list = [...list];
+    if (sort === 'name')             list.sort((a,b) => a.name.localeCompare(b.name,'de'));
+    else if (sort === 'stufe-desc')  list.sort((a,b) => b.stufe - a.stufe || a.name.localeCompare(b.name,'de'));
+    else if (sort === 'stufe-asc')   list.sort((a,b) => a.stufe - b.stufe || a.name.localeCompare(b.name,'de'));
+    else if (sort === 'spieler')     list.sort((a,b) => a.spieler.localeCompare(b.spieler,'de') || a.name.localeCompare(b.name,'de'));
+    else if (sort === 'status') {
+      const order = Object.fromEntries(STATUS_ORDER.map((s,i) => [s,i]));
+      list.sort((a,b) => order[a.status] - order[b.status] || a.name.localeCompare(b.name,'de'));
     }
-    return [...map.entries()].map(([ownerId, rows]) => ({
-      ownerId,
-      displayName: profiles[ownerId] || "Spieler",
-      chars: rows,
-    }));
-  }, [chars, profiles]);
+    else if (sort.startsWith('stat-')) {
+      const k = sort.slice(5);
+      list.sort((a,b) => (b.stats[k] - a.stats[k]) || a.name.localeCompare(b.name,'de'));
+    }
+    else if (sort === 'ac-desc')          list.sort((a,b) => b.ac - a.ac || a.name.localeCompare(b.name,'de'));
+    else if (sort === 'hp-desc')          list.sort((a,b) => b.hp - a.hp || a.name.localeCompare(b.name,'de'));
+    else if (sort === 'init-desc')        list.sort((a,b) => b.init - a.init || a.name.localeCompare(b.name,'de'));
+    else if (sort === 'vermoegen-desc')   list.sort((a,b) => b.vermoegen - a.vermoegen || a.name.localeCompare(b.name,'de'));
+    else if (sort === 'lebensstil-desc')  list.sort((a,b) => (LEBENSSTIL_RANK[b.lebensstil]||0) - (LEBENSSTIL_RANK[a.lebensstil]||0) || a.name.localeCompare(b.name,'de'));
+    return list;
+  }, [characters, filters, search, sort]);
 
-  if (openRow) {
-    return <SteckbriefOverlay row={openRow} onClose={() => setOpenRow(null)} />;
-  }
+  const countForValue = (group, value) => {
+    const q = search.trim().toLowerCase();
+    return characters.filter(c => {
+      for (const g of Object.keys(filters)) {
+        if (g === group) continue;
+        if (g === 'fertigkeit') {
+          if (filters[g].length) {
+            const charSkills = new Set(c.skills.map(s => s.name));
+            if (!filters[g].some(s => charSkills.has(s))) return false;
+          }
+          continue;
+        }
+        if (filters[g].length && !filters[g].includes(c[g])) return false;
+      }
+      if (group === 'fertigkeit') {
+        if (!c.skills.some(s => s.name === value)) return false;
+      } else {
+        if (c[group] !== value) return false;
+      }
+      if (q) {
+        const hay = `${c.name} ${c.rasse} ${c.klasse} ${c.spieler} ${c.division} ${c.hintergrund} ${c.gesinnung}`.toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    }).length;
+  };
+
+  const activeFilterCount = Object.values(filters).reduce((n,a) => n + a.length, 0) + (search ? 1 : 0);
+
+  const stats = useMemo(() => ({
+    total:     characters.length,
+    aktiv:     characters.filter(c => c.status === 'Aktiv').length,
+    wartend:   characters.filter(c => c.status === 'Wartend').length,
+    ruhestand: characters.filter(c => c.status === 'Im Ruhestand').length,
+    gefallen:  characters.filter(c => c.status === 'Gefallen').length,
+  }), [characters]);
+
+  useScrollReveal([filtered.length, tweaks.compactCards, loading]);
 
   return (
-    <div style={{ minHeight:"100vh", paddingTop:"var(--nav-h)" }}>
+    <div onMouseMove={handleMouseMove} style={{ position:'relative', minHeight:'100vh', paddingTop:'var(--nav-h)' }}>
       <SiteNav />
-      <div style={{ maxWidth:1100, margin:"0 auto", padding:"48px 28px 80px" }}>
+      {tweaks.showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} />}
+      {tweaks.showHexes && <FloatingHexField mouseX={mouse.x} mouseY={mouse.y} />}
 
-        {/* Seitenüberschrift */}
-        <div style={{ marginBottom:48 }}>
-          <div style={{ fontFamily:"var(--font-mono)", fontSize:9, letterSpacing:".35em",
-            color:"rgba(124,77,255,0.5)", textTransform:"uppercase", marginBottom:10 }}>
-            Meruria · Kampagne
-          </div>
-          <h1 style={{ fontFamily:"var(--font-display)", fontSize:"clamp(20px,3.5vw,32px)",
-            fontWeight:300, letterSpacing:".22em", color:"#f0eeff",
-            textTransform:"uppercase", margin:0,
-            textShadow:"0 0 48px rgba(124,77,255,0.25)" }}>
-            Spielercharaktere
-          </h1>
-          <div style={{ width:48, height:1, background:"rgba(124,77,255,0.55)", marginTop:14 }} />
+      {/* ── MAIN ── */}
+      <div style={{ position:'relative', zIndex:5, maxWidth:'1380px', margin:'0 auto', padding:'46px 36px 80px' }}>
+
+        {/* Breadcrumb */}
+        <div className="reveal-up" style={{ marginBottom:'14px', display:'flex', alignItems:'center', gap:'10px', fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(160,140,255,0.55)' }}>
+          <a href="index.html" style={{ color:'rgba(160,140,255,0.55)', textDecoration:'none' }}>Meruria</a>
+          <span style={{ opacity:0.4 }}>›</span>
+          <a href="Charaktere.html" style={{ color:'rgba(160,140,255,0.55)', textDecoration:'none' }}>Charaktere</a>
+          <span style={{ opacity:0.4 }}>›</span>
+          <span style={{ color:'#c9b8ff' }}>Spielercharaktere</span>
         </div>
 
-        {/* Ladeindikator */}
+        <div className="reveal-up" style={{ display:'flex', alignItems:'flex-end', justifyContent:'space-between', gap:'24px', marginBottom:'32px', flexWrap:'wrap' }}>
+          <div style={{ maxWidth:'620px' }}>
+            <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(30px,3.6vw,46px)', fontWeight:300, letterSpacing:'0.20em', color:'#f0eeff', textShadow:'0 0 40px rgba(124,77,255,0.4)', lineHeight:1.1, textTransform:'uppercase', margin:'0 0 14px 0' }}>
+              Spielercharaktere
+            </h1>
+            <p style={{ fontFamily:'var(--font-body)', fontWeight:300, fontSize:'13px', lineHeight:1.85, color:'rgba(220,210,255,0.55)', letterSpacing:'0.04em', textWrap:'pretty', margin:0 }}>
+              Alle Held*innen, die in der laufenden Kampagne von Spieler*innen geführt werden — aktive Figuren am Lagerfeuer, ruhende Charaktere zwischen Akten und die Namen jener, die zurückblieben.
+            </p>
+          </div>
+          {/* Stat tiles */}
+          <div style={{ display:'flex', gap:'10px', flexWrap:'wrap' }}>
+            <StatTile label="Gesamt"    value={stats.total} />
+            <StatTile label="Aktiv"     value={stats.aktiv}     color={STATUS_DEF['Aktiv'].color}         active={filters.status.includes('Aktiv')}         onClick={() => toggleFilter('status','Aktiv')} />
+            <StatTile label="Wartend"   value={stats.wartend}   color={STATUS_DEF['Wartend'].color}       active={filters.status.includes('Wartend')}       onClick={() => toggleFilter('status','Wartend')} />
+            <StatTile label="Ruhestand" value={stats.ruhestand} color={STATUS_DEF['Im Ruhestand'].color} active={filters.status.includes('Im Ruhestand')} onClick={() => toggleFilter('status','Im Ruhestand')} />
+            <StatTile label="Gefallen"  value={stats.gefallen}  color={STATUS_DEF['Gefallen'].color}     active={filters.status.includes('Gefallen')}     onClick={() => toggleFilter('status','Gefallen')} />
+          </div>
+        </div>
+
+        {/* Loading indicator */}
         {loading && (
-          <div style={{ fontFamily:"var(--font-mono)", fontSize:9, letterSpacing:".3em",
-            color:"rgba(124,77,255,0.35)", textTransform:"uppercase" }}>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'.3em', color:'rgba(124,77,255,0.35)', textTransform:'uppercase', padding:'60px 0' }}>
             Lade Charaktere…
           </div>
         )}
 
-        {/* Leer-Zustand */}
-        {!loading && groups.length === 0 && (
-          <div style={{ fontFamily:"var(--font-body)", fontSize:13, fontWeight:300,
-            color:"rgba(200,190,240,0.35)", lineHeight:1.8 }}>
-            {isDM
-              ? "Noch keine Spielercharaktere erstellt."
-              : "Noch keine Charaktere sichtbar. Der Spielleiter schaltet sie frei."}
+        {!loading && (
+          <div style={{ display:'grid', gridTemplateColumns:'280px 1fr', gap:'28px', alignItems:'flex-start' }}>
+
+            {/* SIDEBAR — FILTERS */}
+            <aside style={{ position:'sticky', top:'calc(var(--nav-h) + 20px)', background:'linear-gradient(160deg, rgba(14,8,32,0.78), rgba(8,5,22,0.85))', border:'1px solid rgba(160,140,255,0.18)', borderRadius:'3px', padding:'18px 20px', maxHeight:'calc(100vh - 96px)', overflow:'auto' }}>
+              <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'14px' }}>
+                <div style={{ display:'flex', alignItems:'center', gap:'8px' }}>
+                  <svg width="10" height="10" viewBox="0 0 10 10"><polygon points={hexPoints(10)} fill="#7c4dff" stroke="rgba(160,140,255,0.8)" strokeWidth="0.5"/></svg>
+                  <span style={{ fontFamily:'var(--font-display)', fontSize:'13px', letterSpacing:'0.22em', color:'#f0eeff', textTransform:'uppercase' }}>Filter</span>
+                  {activeFilterCount > 0 && (
+                    <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.1em', padding:'2px 6px', background:'rgba(124,77,255,0.25)', border:'1px solid rgba(160,140,255,0.5)', color:'#f0eeff', borderRadius:'2px' }}>{activeFilterCount}</span>
+                  )}
+                </div>
+                {activeFilterCount > 0 && (
+                  <button onClick={clearAll} style={{ background:'transparent', border:'none', cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.2em', color:'rgba(160,140,255,0.55)', textTransform:'uppercase', padding:'4px 0', textDecoration:'underline', textUnderlineOffset:'3px' }}
+                  onMouseEnter={e => e.currentTarget.style.color = '#f0eeff'}
+                  onMouseLeave={e => e.currentTarget.style.color = 'rgba(160,140,255,0.55)'}>
+                    Zurücksetzen
+                  </button>
+                )}
+              </div>
+
+              {/* Search */}
+              <div style={{ position:'relative', marginBottom:'18px' }}>
+                <input value={search} onChange={e => setSearch(e.target.value)}
+                  placeholder="Name, Klasse, Rasse..."
+                  style={{ width:'100%', padding:'9px 30px 9px 12px', background:'rgba(5,4,15,0.7)', border:'1px solid rgba(160,140,255,0.22)', borderRadius:'2px', color:'#f0eeff', fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.06em', outline:'none', transition:'border-color 0.2s, box-shadow 0.2s' }}
+                  onFocus={e => { e.target.style.borderColor='rgba(124,77,255,0.7)'; e.target.style.boxShadow='0 0 12px rgba(124,77,255,0.18)'; }}
+                  onBlur={e => { e.target.style.borderColor='rgba(160,140,255,0.22)'; e.target.style.boxShadow='none'; }} />
+                <svg width="12" height="12" viewBox="0 0 12 12" style={{ position:'absolute', right:'10px', top:'50%', transform:'translateY(-50%)', opacity:0.5 }}>
+                  <circle cx="5" cy="5" r="3.5" fill="none" stroke="#7c4dff" strokeWidth="1"/>
+                  <line x1="7.5" y1="7.5" x2="10.5" y2="10.5" stroke="#7c4dff" strokeWidth="1"/>
+                </svg>
+              </div>
+
+              <FilterGroup title="Spieler"      values={filterValues.spieler}     selected={filters.spieler}     onToggle={v => toggleFilter('spieler', v)}     getCount={v => countForValue('spieler', v)} />
+              <FilterGroup title="Status"       values={filterValues.status}      selected={filters.status}      onToggle={v => toggleFilter('status', v)}      getCount={v => countForValue('status', v)} />
+              <FilterGroup title="Klasse"       values={filterValues.klasse}      selected={filters.klasse}      onToggle={v => toggleFilter('klasse', v)}      getCount={v => countForValue('klasse', v)} />
+              <FilterGroup title="Rasse"        values={filterValues.rasse}       selected={filters.rasse}       onToggle={v => toggleFilter('rasse', v)}       getCount={v => countForValue('rasse', v)} />
+              <FilterGroup title="Division"     values={filterValues.division}    selected={filters.division}    onToggle={v => toggleFilter('division', v)}    getCount={v => countForValue('division', v)} labelFor={v => v.replace(/^Die /,'')} />
+              <FilterGroup title="Hintergrund"  values={filterValues.hintergrund} selected={filters.hintergrund} onToggle={v => toggleFilter('hintergrund', v)} getCount={v => countForValue('hintergrund', v)} />
+              <FilterGroup title="Lebensstil"   values={filterValues.lebensstil}  selected={filters.lebensstil}  onToggle={v => toggleFilter('lebensstil', v)}  getCount={v => countForValue('lebensstil', v)} />
+              <FilterGroup title="Fertigkeiten" values={filterValues.fertigkeit}  selected={filters.fertigkeit}  onToggle={v => toggleFilter('fertigkeit', v)}  getCount={v => countForValue('fertigkeit', v)} />
+            </aside>
+
+            {/* RESULTS */}
+            <section>
+              {/* Toolbar */}
+              <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'14px', marginBottom:'18px', flexWrap:'wrap' }}>
+                <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.28em', color:'rgba(160,140,255,0.7)', textTransform:'uppercase' }}>Register</span>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em', color:'rgba(160,140,255,0.45)' }}>
+                    {String(filtered.length).padStart(2,'0')} / {String(characters.length).padStart(2,'0')} Charaktere
+                  </span>
+                </div>
+                <div style={{ display:'flex', alignItems:'center', gap:'8px' }}>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>Sortieren</span>
+                  <select value={sort} onChange={e => setSort(e.target.value)} style={{ padding:'5px 10px', background:'rgba(5,4,15,0.7)', border:'1px solid rgba(160,140,255,0.22)', borderRadius:'2px', color:'#f0eeff', fontFamily:'var(--font-mono)', fontSize:'10px', letterSpacing:'0.1em', cursor:'pointer', outline:'none' }}>
+                    <option value="name">Name (A–Z)</option>
+                    <option value="stufe-desc">Stufe ↓</option>
+                    <option value="stufe-asc">Stufe ↑</option>
+                    <option value="spieler">Spieler</option>
+                    <option value="status">Status</option>
+                    <optgroup label="Attribut (hoch → niedrig)">
+                      <option value="stat-str">Stärke</option>
+                      <option value="stat-dex">Geschick</option>
+                      <option value="stat-con">Konstitution</option>
+                      <option value="stat-int">Intelligenz</option>
+                      <option value="stat-wis">Weisheit</option>
+                      <option value="stat-cha">Charisma</option>
+                    </optgroup>
+                    <optgroup label="Kampfwerte (hoch → niedrig)">
+                      <option value="ac-desc">Rüstungsklasse</option>
+                      <option value="hp-desc">Trefferpunkte</option>
+                      <option value="init-desc">Initiative</option>
+                    </optgroup>
+                    <optgroup label="Status">
+                      <option value="vermoegen-desc">Vermögen (Hade)</option>
+                      <option value="lebensstil-desc">Lebensstil</option>
+                    </optgroup>
+                  </select>
+                </div>
+              </div>
+
+              {/* Active filter pills */}
+              {activeFilterCount > 0 && (
+                <div style={{ display:'flex', flexWrap:'wrap', gap:'6px', marginBottom:'18px', padding:'10px 12px', background:'rgba(124,77,255,0.06)', border:'1px dashed rgba(160,140,255,0.25)', borderRadius:'2px' }}>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.24em', color:'rgba(160,140,255,0.65)', textTransform:'uppercase', padding:'4px 4px 4px 0' }}>Aktiv:</span>
+                  {search && <ActivePill label={`„${search}"`} onRemove={() => setSearch('')} />}
+                  {Object.entries(filters).map(([group, vals]) =>
+                    vals.map(v => (
+                      <ActivePill key={`${group}-${v}`} label={group === 'division' ? v.replace(/^Die /,'') : v} onRemove={() => toggleFilter(group, v)} />
+                    ))
+                  )}
+                </div>
+              )}
+
+              {/* Result grid */}
+              {filtered.length === 0 ? (
+                <div style={{ padding:'60px 30px', textAlign:'center', border:'1px dashed rgba(160,140,255,0.25)', borderRadius:'3px', background:'rgba(10,6,28,0.4)' }}>
+                  <svg width="48" height="48" viewBox="0 0 48 48" style={{ margin:'0 auto 16px', opacity:0.5 }}>
+                    <polygon points={hexPoints(48)} fill="none" stroke="#7c4dff" strokeWidth="1" strokeDasharray="3 3"/>
+                    <text x="24" y="30" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="14" fill="#7c4dff" opacity="0.7">∅</text>
+                  </svg>
+                  <div style={{ fontFamily:'var(--font-display)', fontSize:'14px', letterSpacing:'0.22em', color:'#c9b8ff', textTransform:'uppercase', marginBottom:'8px' }}>Keine Charaktere im Register</div>
+                  <div style={{ fontFamily:'var(--font-body)', fontSize:'12px', color:'rgba(200,190,240,0.55)', marginBottom:'14px' }}>Mit den aktuellen Filtern bleibt das Archiv leer.</div>
+                  <button onClick={clearAll} style={{ padding:'7px 16px', background:'rgba(124,77,255,0.15)', border:'1px solid rgba(160,140,255,0.5)', color:'#f0eeff', fontFamily:'var(--font-mono)', fontSize:'10px', letterSpacing:'0.22em', cursor:'pointer', borderRadius:'2px', textTransform:'uppercase' }}>Filter zurücksetzen</button>
+                </div>
+              ) : (
+                <div style={{ display:'grid', gridTemplateColumns: tweaks.compactCards ? 'repeat(auto-fill, minmax(310px, 1fr))' : 'repeat(auto-fill, minmax(400px, 1fr))', gap:'16px' }}>
+                  {filtered.map((char, i) => (
+                    <CharCard key={char.id} char={char} compact={tweaks.compactCards} delay={Math.min(i * 0.04, 0.4)} />
+                  ))}
+                </div>
+              )}
+            </section>
           </div>
         )}
 
-        {/* Gruppen */}
-        {!loading && groups.map(g => (
-          <PlayerGroup
-            key={g.ownerId}
-            displayName={g.displayName}
-            chars={g.chars}
-            isDM={isDM}
-            onToggle={toggleVisible}
-            onOpen={row => setOpenRow(row)}
-          />
-        ))}
+        {/* Closing flourish */}
+        {!loading && (
+          <div className="reveal-up" style={{ display:'flex', alignItems:'center', gap:'14px', marginTop:'48px', justifyContent:'center' }}>
+            <div style={{ width:'80px', height:'1px', background:'linear-gradient(270deg, rgba(124,77,255,0.5), transparent)' }} />
+            <svg width="6" height="6" viewBox="0 0 6 6"><polygon points={hexPoints(6)} fill="rgba(124,77,255,0.4)" stroke="rgba(160,140,255,0.5)" strokeWidth="0.5" /></svg>
+            <div style={{ width:'80px', height:'1px', background:'linear-gradient(90deg, rgba(124,77,255,0.5), transparent)' }} />
+          </div>
+        )}
       </div>
+
+      {/* ── FOOTER ── */}
+      <div style={{ position:'relative', zIndex:10, padding:'10px 32px', borderTop:'1px solid rgba(160,140,255,0.07)', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:'rgba(160,140,255,0.22)', letterSpacing:'0.2em' }}>◈ REGISTER-STATUS: NOMINAL ◈ EPOCHE: UNBEKANNT</div>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:'rgba(160,140,255,0.22)', letterSpacing:'0.2em' }}>MERURIA // SPIELERCHARAKTERE</div>
+      </div>
+
+      <TweaksPanel>
+        <TweakSection label="Darstellung"/>
+        <TweakToggle id="compactCards" label="Kompakte Karten"/>
+        <TweakSection label="Atmosphäre"/>
+        <TweakToggle id="showParticles" label="Partikel"/>
+        <TweakToggle id="showHexes" label="Hexagone"/>
+      </TweaksPanel>
     </div>
   );
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById('root')).render(
   <SiteGate><App /></SiteGate>
 );
 </script>

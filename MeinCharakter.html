@@ -504,7 +504,8 @@ function ZauberSection({ zauber, updZauber, editing }) {
 }
 
 async function loadCharacters() {
-  const { data } = await window._sb.from('characters').select('*').order('created_at');
+  const uid = window.SITE_USER?.id;
+  const { data } = await window._sb.from('characters').select('*').eq('owner_id', uid).order('created_at');
   return (data || []).map(row => ({
     id: row.id,
     name: row.name,
