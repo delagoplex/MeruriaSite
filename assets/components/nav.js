@@ -227,6 +227,9 @@ const NAV = [{
     label: 'Kollektikon',
     href: 'Kollektikon.html'
   }, {
+    label: 'Karte',
+    href: 'Karte.html'
+  }, {
     label: 'Kalender',
     href: 'Kalender.html'
   }, {
@@ -259,6 +262,14 @@ const NAV = [{
   }, {
     label: 'Missionen',
     href: 'DM_Missionen.html',
+    locked: true
+  }, {
+    label: 'NSC-Verwaltung',
+    href: 'NSC-Verwaltung.html',
+    locked: true
+  }, {
+    label: 'Kartenmanagement',
+    href: 'Kartenmanagement.html',
     locked: true
   }]
 }];

@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karte · Meruria</title>
+<link rel="stylesheet" href="assets/styles/global/fonts.css">
+<link rel="stylesheet" href="assets/styles/global/base.css">
+<link rel="stylesheet" href="assets/styles/pages/Karte.css">
+<script src="assets/scripts/vendor/react.development.js"></script>
+<script src="assets/scripts/vendor/react-dom.development.js"></script>
+<script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/scripts/vendor/supabase.min.js"></script>
+<script src="assets/scripts/supabase-client.js"></script>
+</head>
+<body>
+<div id="root"></div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     Script 1 — Hex math + Supabase (read-only)
+     ═══════════════════════════════════════════════════ -->
+<script type="text/babel">
+const { useState, useEffect, useRef, useCallback, useMemo } = React;
+
+// ── Hex constants (pointy-top axial) ─────────────────────────
+const HEX_SIZE = 96;
+const HEX_W    = Math.sqrt(3) * HEX_SIZE;
+const HEX_H    = 2 * HEX_SIZE;
+
+const NEIGHBORS = [
+  { dq:  1, dr:  0, ang:   0 },
+  { dq:  1, dr: -1, ang:  60 },
+  { dq:  0, dr: -1, ang: 120 },
+  { dq: -1, dr:  0, ang: 180 },
+  { dq: -1, dr:  1, ang: 240 },
+  { dq:  0, dr:  1, ang: 300 },
+];
+
+const APOTHEM = (Math.sqrt(3) / 2) * HEX_SIZE;
+
+function axialToPixel(q, r) {
+  return { x: HEX_SIZE * Math.sqrt(3) * (q + r / 2), y: HEX_SIZE * 1.5 * r };
+}
+function hexKey(q, r) { return `${q},${r}`; }
+
+const TERRAIN_COLORS = {
+  'Ebene':      'oklch(0.84 0.14 140)',
+  'Wald':       'oklch(0.52 0.13 155)',
+  'Sumpf':      'oklch(0.42 0.06 110)',
+  'Hügelland':  'oklch(0.72 0.11 105)',
+  'Wüste':      'oklch(0.88 0.13 90)',
+  'Kolonie':    'oklch(0.73 0.15 65)',
+  'Vulkan':     'oklch(0.58 0.22 28)',
+  'Tundra':     'oklch(0.92 0.04 230)',
+  'Küste':      'oklch(0.80 0.12 195)',
+  'See':        'oklch(0.65 0.15 230)',
+  'Ozean':      'oklch(0.40 0.17 255)',
+  'Gebirge':    'oklch(0.62 0.04 65)',
+  'Hochland':   'oklch(0.72 0.06 285)',
+  'Ruine':      'oklch(0.58 0.13 335)',
+  'Sonstiges':  'oklch(0.65 0.18 295)',
+};
+const DEFAULT_HEX_COLOR = 'oklch(0.70 0.15 285)';
+function terrainColor(t) { return TERRAIN_COLORS[t] || DEFAULT_HEX_COLOR; }
+
+function easeInOutCubic(t) {
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+
+// ── Supabase: load only visible hexes ────────────────────────
+function rowToHex(h) {
+  return {
+    id: h.id, q: h.q, r: h.r,
+    name: h.name || '', terrain: h.terrain || '',
+    features: h.features || '', beschreibung: h.beschreibung || '',
+    bild_url: h.bild_url || '',
+    has_submap: !!h.has_submap, submap_id: h.submap_id || null,
+  };
+}
+
+async function loadRootMap() {
+  const { data } = await window._sb.from('karte_maps')
+    .select('id, name')
+    .is('parent_hex_id', null)
+    .limit(1)
+    .maybeSingle();
+  return data; // null if no map exists yet
+}
+
+async function loadMap(mapId) {
+  const { data } = await window._sb.from('karte_maps')
+    .select('id, name').eq('id', mapId).single();
+  return data;
+}
+
+async function loadVisibleHexes(mapId) {
+  const { data } = await window._sb.from('karte_hexes')
+    .select('*').eq('map_id', mapId).eq('visible', true);
+  return Object.fromEntries(
+    (data || []).map(h => [hexKey(h.q, h.r), rowToHex(h)])
+  );
+}
+
+Object.assign(window, {
+  HEX_SIZE, HEX_W, HEX_H, NEIGHBORS, APOTHEM,
+  axialToPixel, hexKey, TERRAIN_COLORS, terrainColor, DEFAULT_HEX_COLOR,
+  easeInOutCubic, rowToHex, loadRootMap, loadMap, loadVisibleHexes,
+});
+</script>
+
+
+<!-- ═══════════════════════════════════════════════════
+     Script 2 — Hex tile components (read-only)
+     ═══════════════════════════════════════════════════ -->
+<script type="text/babel">
+const { useState: uS2 } = React;
+
+function HexBorder({ selected, hovered, color = DEFAULT_HEX_COLOR }) {
+  const w = HEX_W, h = HEX_H;
+  const points = `${w/2},0 ${w},${h/4} ${w},${h*3/4} ${w/2},${h} 0,${h*3/4} 0,${h/4}`;
+  const strokeColor = selected
+    ? `color-mix(in oklch, white 40%, ${color})`
+    : (hovered ? `color-mix(in oklch, white 18%, ${color})` : color);
+  const opacity = selected ? 1 : (hovered ? 0.9 : 0.6);
+  const sw = selected ? 2.2 : 1.4;
+  return (
+    <svg className="mk-hex-border" viewBox={`0 0 ${w} ${h}`} width={w} height={h} preserveAspectRatio="none" style={{ overflow:'visible' }}>
+      <polygon points={points} fill="none" style={{ stroke: strokeColor, strokeOpacity: opacity }} strokeWidth={sw} strokeLinejoin="miter"/>
+      <polygon
+        points={`${w/2},6 ${w-5},${h/4+2} ${w-5},${h*3/4-2} ${w/2},${h-6} 5,${h*3/4-2} 5,${h/4+2}`}
+        fill="none" style={{ stroke: strokeColor }} strokeWidth="0.5" strokeOpacity={selected ? 0.45 : 0.2}
+      />
+    </svg>
+  );
+}
+
+// Read-only hex tile: no grip, no edit overlay — just click to open info panel
+function HexTile({ hex, selected, hovered, onSelect, onHoverChange }) {
+  const { x, y } = axialToPixel(hex.q, hex.r);
+  const tcolor = terrainColor(hex.terrain);
+
+  return (
+    <div
+      className={`mk-hex${selected ? ' is-selected' : ''}${hovered && !selected ? ' is-hovered' : ''}`}
+      style={{
+        width: HEX_W, height: HEX_H,
+        left: x - HEX_W/2, top: y - HEX_H/2,
+        pointerEvents: 'auto',
+        zIndex: selected ? 12 : (hovered ? 8 : 1),
+        '--hex-color': tcolor,
+      }}
+      onMouseEnter={() => onHoverChange(hexKey(hex.q, hex.r), true)}
+      onMouseLeave={() => onHoverChange(hexKey(hex.q, hex.r), false)}
+    >
+      <div className="mk-hex-inner">
+        <div className="mk-hex-clip"/>
+        <div className="mk-slot-clip mk-slot-clip-canvas">
+          {hex.bild_url ? (
+            <img src={hex.bild_url} style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }} alt=""/>
+          ) : null}
+        </div>
+        <HexBorder selected={selected} hovered={hovered} color={tcolor}/>
+        {/* Submap indicator for players */}
+        {hex.has_submap && (
+          <div style={{
+            position:'absolute', bottom:28, left:'50%', transform:'translateX(-50%)',
+            fontFamily:'var(--font-mono)', fontSize:7, letterSpacing:'0.12em',
+            color:'rgba(160,140,255,0.75)',
+            textShadow:'0 0 8px rgba(124,77,255,0.5)',
+            pointerEvents:'none', userSelect:'none',
+          }}>⬡ erkunden</div>
+        )}
+        {/* Click target */}
+        <div
+          className="mk-hex-overlay"
+          onMouseDown={(e) => e.stopPropagation()}
+          onClick={(e) => { e.stopPropagation(); onSelect(hex.q, hex.r); }}
+        />
+      </div>
+    </div>
+  );
+}
+
+Object.assign(window, { HexBorder, HexTile });
+</script>
+
+
+<!-- ═══════════════════════════════════════════════════
+     Script 3 — Camera, pan/zoom, animation
+     ═══════════════════════════════════════════════════ -->
+<script type="text/babel">
+const { useState: uS3, useEffect: uE3, useRef: uR3, useCallback: uC3 } = React;
+
+function useCameraAnimator(camera, setCamera) {
+  const animRef = uR3(null);
+  const animateTo = uC3((target, duration = 650) => {
+    if (animRef.current) cancelAnimationFrame(animRef.current.raf);
+    const start = { ...camera };
+    const t0 = performance.now();
+    const tick = (now) => {
+      const k = Math.min(1, (now - t0) / duration);
+      const e = easeInOutCubic(k);
+      setCamera({
+        x:    start.x    + (target.x    - start.x)    * e,
+        y:    start.y    + (target.y    - start.y)    * e,
+        zoom: start.zoom + (target.zoom - start.zoom) * e,
+      });
+      if (k < 1) { animRef.current.raf = requestAnimationFrame(tick); }
+      else { animRef.current = null; }
+    };
+    animRef.current = { raf: requestAnimationFrame(tick) };
+  }, [camera, setCamera]);
+
+  const cancelAnim = uC3(() => {
+    if (animRef.current) { cancelAnimationFrame(animRef.current.raf); animRef.current = null; }
+  }, []);
+  uE3(() => () => cancelAnim(), [cancelAnim]);
+  return { animateTo, cancelAnim };
+}
+
+Object.assign(window, { useCameraAnimator });
+</script>
+
+
+<!-- ═══════════════════════════════════════════════════
+     Script 4 — Info panel (read-only drawer)
+     ═══════════════════════════════════════════════════ -->
+<script type="text/babel">
+// Read-only info panel shown when player clicks a hex
+function InfoPanel({ hex, onClose, onExploreSubmap }) {
+  if (!hex) return null;
+  const tcolor = terrainColor(hex.terrain);
+  const HEX_MASK = "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)";
+
+  return (
+    <React.Fragment>
+      <div className="mk-drawer-backdrop" onClick={onClose}/>
+      <aside className="mk-drawer" onMouseDown={(e) => e.stopPropagation()}>
+        <header className="mk-drawer-head">
+          <div>
+            <div className="mk-drawer-eyebrow">Hexagon · Info</div>
+            <div className="mk-drawer-title">{hex.name || 'Unbekannte Region'}</div>
+            {hex.terrain && (
+              <div className="mk-drawer-coords" style={{ color: tcolor }}>◈ {hex.terrain}</div>
+            )}
+          </div>
+          <button className="mk-drawer-close" onClick={onClose} title="Schließen (Esc)">×</button>
+        </header>
+
+        <div className="mk-drawer-body">
+          {/* Hex image */}
+          {hex.bild_url && (
+            <div className="mk-drawer-imgwrap" style={{ pointerEvents:'none' }}>
+              <div className="mk-slot-clip" style={{ clipPath: HEX_MASK }}>
+                <img src={hex.bild_url} style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }} alt=""/>
+              </div>
+              <HexBorder selected={true} color={tcolor}/>
+            </div>
+          )}
+
+          {/* Features */}
+          {hex.features && (
+            <div className="mk-field" style={{ pointerEvents:'none' }}>
+              <label>Besonderheiten</label>
+              <div style={{
+                fontFamily:'var(--font-body)', fontSize:13, fontWeight:300,
+                color:'rgba(200,190,240,0.75)', lineHeight:1.6,
+                padding:'8px 0',
+              }}>{hex.features}</div>
+            </div>
+          )}
+
+          {/* Beschreibung */}
+          {hex.beschreibung && (
+            <div className="mk-field" style={{ pointerEvents:'none' }}>
+              <label>Beschreibung</label>
+              <div style={{
+                fontFamily:'var(--font-body)', fontSize:13, fontWeight:300,
+                color:'rgba(200,190,240,0.7)', lineHeight:1.65,
+                padding:'8px 0',
+              }}>{hex.beschreibung}</div>
+            </div>
+          )}
+
+          {/* Neither features nor description */}
+          {!hex.features && !hex.beschreibung && (
+            <div style={{
+              padding:'24px 0', textAlign:'center',
+              fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em',
+              color:'rgba(124,77,255,0.35)', textTransform:'uppercase',
+            }}>— keine Informationen —</div>
+          )}
+
+          {/* Submap explore button */}
+          {hex.has_submap && hex.submap_id && (
+            <div className="mk-field" style={{ marginTop:8 }}>
+              <button
+                style={{
+                  width:'100%', padding:'12px 14px',
+                  display:'flex', alignItems:'center', gap:10,
+                  fontFamily:'var(--font-body)', fontSize:12, fontWeight:300, letterSpacing:'0.06em',
+                  color:'rgba(160,140,255,0.9)',
+                  background:'rgba(124,77,255,0.12)',
+                  border:'1px solid rgba(124,77,255,0.4)',
+                  borderRadius:4, cursor:'pointer', transition:'all 0.15s',
+                }}
+                onClick={onExploreSubmap}
+                onMouseEnter={e => { e.currentTarget.style.background='rgba(124,77,255,0.22)'; e.currentTarget.style.color='rgba(200,190,240,0.9)'; }}
+                onMouseLeave={e => { e.currentTarget.style.background='rgba(124,77,255,0.12)'; e.currentTarget.style.color='rgba(160,140,255,0.9)'; }}
+              >
+                <span style={{ fontSize:16 }}>⬡</span>
+                <span>Region erkunden →</span>
+              </button>
+            </div>
+          )}
+        </div>
+
+        <footer className="mk-drawer-foot" style={{ justifyContent:'flex-end' }}>
+          <button className="mk-btn-primary" onClick={onClose}>Schließen</button>
+        </footer>
+      </aside>
+    </React.Fragment>
+  );
+}
+
+Object.assign(window, { InfoPanel });
+</script>
+
+
+<!-- ═══════════════════════════════════════════════════
+     Script 5 — Main app (player read-only)
+     ═══════════════════════════════════════════════════ -->
+<script type="text/babel">
+const { useState: uS5, useEffect: uE5, useRef: uR5, useCallback: uC5, useMemo: uM5 } = React;
+
+const MIN_ZOOM = 0.35;
+const MAX_ZOOM = 5;
+const PANEL_W  = 440;
+const FOCUS_ZOOM = 3.2;
+
+function HexLabel({ hex }) {
+  if (!hex.name && !hex.terrain) return null;
+  const { x, y } = axialToPixel(hex.q, hex.r);
+  const tcolor = terrainColor(hex.terrain);
+  return (
+    <div
+      className="mk-hex-label-floating"
+      style={{ left: x, top: y + HEX_H * 0.30, transform:'translate(-50%,-50%)', '--hex-color': tcolor }}
+    >
+      {hex.terrain ? <div className="mk-hex-label-terr" style={{ color: tcolor }}>◈ {hex.terrain}</div> : null}
+      {hex.name ? <div className="mk-hex-label-name">{hex.name}</div> : null}
+    </div>
+  );
+}
+
+function MerMapPlayer() {
+  const [currentMapId, setCurrentMapId]     = uS5(null);
+  const [currentMapName, setCurrentMapName] = uS5('');
+  const [mapStack, setMapStack]             = uS5([]);
+
+  const [hexes, setHexes]     = uS5({});
+  const [camera, setCamera]   = uS5({ x: 0, y: 0, zoom: 1 });
+  const [selectedKey, setSel] = uS5(null);
+  const [hoveredKey, setHov]  = uS5(null);
+  const [isLoading, setIsLoading] = uS5(true);
+  const [noMap, setNoMap]     = uS5(false);
+
+  const stageRef = uR5(null);
+  const [vp, setVp] = uS5({ w: window.innerWidth, h: window.innerHeight });
+  const drag = uR5({ active: false, lx: 0, ly: 0 });
+  const [isDragging, setIsDragging] = uS5(false);
+
+  // ─── Initial load ─────────────────────────────────────
+  uE5(() => {
+    async function init() {
+      const rootMap = await loadRootMap();
+      if (!rootMap) { setNoMap(true); setIsLoading(false); return; }
+      setCurrentMapId(rootMap.id);
+      setCurrentMapName(rootMap.name || 'Karte');
+      const hexData = await loadVisibleHexes(rootMap.id);
+      setHexes(hexData);
+      setIsLoading(false);
+    }
+    init();
+  }, []);
+
+  // ─── Reload hexes when map changes ────────────────────
+  const [hexesMapId, setHexesMapId] = uS5(null);
+  uE5(() => {
+    if (!currentMapId || currentMapId === hexesMapId) return;
+    setHexesMapId(currentMapId);
+    setIsLoading(true);
+    setSel(null);
+    loadVisibleHexes(currentMapId).then(h => {
+      setHexes(h);
+      setIsLoading(false);
+    });
+  }, [currentMapId, hexesMapId]);
+
+  // ─── Viewport ─────────────────────────────────────────
+  uE5(() => {
+    const onResize = () => setVp({ w: window.innerWidth, h: window.innerHeight });
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  // ─── Camera animator ──────────────────────────────────
+  const { animateTo, cancelAnim } = useCameraAnimator(camera, setCamera);
+
+  // ─── Pan (middle mouse) ───────────────────────────────
+  uE5(() => {
+    const el = stageRef.current; if (!el) return;
+    const onDown = (e) => {
+      if (e.button !== 1) return;
+      e.preventDefault();
+      drag.current.active = true; drag.current.lx = e.clientX; drag.current.ly = e.clientY;
+      setIsDragging(true); cancelAnim();
+    };
+    el.addEventListener('mousedown', onDown, true);
+    return () => el.removeEventListener('mousedown', onDown, true);
+  }, [cancelAnim]);
+
+  uE5(() => {
+    const onAux = (e) => { if (e.button === 1) e.preventDefault(); };
+    document.addEventListener('auxclick', onAux);
+    return () => document.removeEventListener('auxclick', onAux);
+  }, []);
+
+  uE5(() => {
+    const onMove = (e) => {
+      if (!drag.current.active) return;
+      const dx = e.clientX - drag.current.lx, dy = e.clientY - drag.current.ly;
+      drag.current.lx = e.clientX; drag.current.ly = e.clientY;
+      setCamera((c) => ({ ...c, x: c.x - dx / c.zoom, y: c.y - dy / c.zoom }));
+    };
+    const onUp = () => { if (drag.current.active) { drag.current.active = false; setIsDragging(false); } };
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+    return () => { window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp); };
+  }, []);
+
+  // ─── Zoom ─────────────────────────────────────────────
+  const panelOpen = !!selectedKey;
+  const onWheel = (e) => {
+    e.preventDefault(); cancelAnim();
+    const factor = Math.exp(-e.deltaY * 0.0015);
+    setCamera((c) => {
+      const nextZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, c.zoom * factor));
+      const rect = stageRef.current.getBoundingClientRect();
+      const sx = e.clientX - rect.left, sy = e.clientY - rect.top;
+      const cx = panelOpen ? (rect.width - PANEL_W) / 2 : rect.width / 2;
+      const cy = rect.height / 2;
+      const wx = c.x + (sx - cx) / c.zoom, wy = c.y + (sy - cy) / c.zoom;
+      return { x: wx - (sx - cx) / nextZoom, y: wy - (sy - cy) / nextZoom, zoom: nextZoom };
+    });
+  };
+  uE5(() => {
+    const el = stageRef.current; if (!el) return;
+    const handler = (e) => onWheel(e);
+    el.addEventListener('wheel', handler, { passive: false });
+    return () => el.removeEventListener('wheel', handler);
+  }, [panelOpen, camera]);
+
+  // ─── Hex selection ────────────────────────────────────
+  const onHexClick = uC5((q, r) => {
+    const k = hexKey(q, r);
+    if (selectedKey === k) { setSel(null); return; }
+    setSel(k);
+    const { x, y } = axialToPixel(q, r);
+    animateTo({ x, y, zoom: Math.max(camera.zoom, FOCUS_ZOOM) }, 650);
+  }, [selectedKey, animateTo, camera.zoom]);
+
+  const onHexHover = uC5((k, isEnter) => {
+    setHov((cur) => isEnter ? k : (cur === k ? null : cur));
+  }, []);
+
+  const closePanel = uC5(() => setSel(null), []);
+
+  // Esc key
+  uE5(() => {
+    const onKey = (e) => { if (e.key === 'Escape') setSel(null); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  // ─── Submap navigation ────────────────────────────────
+  const navigateInto = uC5(async (hex) => {
+    if (!hex.submap_id) return;
+    setSel(null);
+    setMapStack((s) => [...s, { id: currentMapId, name: currentMapName }]);
+    const subMap = await loadMap(hex.submap_id);
+    setCurrentMapId(hex.submap_id);
+    setCurrentMapName(subMap?.name || 'Subkarte');
+  }, [currentMapId, currentMapName]);
+
+  const navigateUp = uC5((i) => {
+    const target = mapStack[i]; if (!target) return;
+    setMapStack((s) => s.slice(0, i));
+    setSel(null);
+    setCurrentMapId(target.id);
+    setCurrentMapName(target.name);
+  }, [mapStack]);
+
+  // ─── Camera controls ──────────────────────────────────
+  const resetView = () => animateTo({ x: 0, y: 0, zoom: 1 }, 550);
+  const zoomBy = (factor) => {
+    cancelAnim();
+    setCamera((c) => ({ ...c, zoom: Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, c.zoom * factor)) }));
+  };
+
+  // ─── World transform ──────────────────────────────────
+  const centerX = panelOpen ? (vp.w - PANEL_W) / 2 : vp.w / 2;
+  const centerY = vp.h / 2;
+  const worldTx = `translate(${centerX}px, ${centerY}px) scale(${camera.zoom}) translate(${-camera.x}px, ${-camera.y}px)`;
+
+  const hexList = Object.values(hexes);
+  const selectedHex = selectedKey ? hexes[selectedKey] : null;
+
+  // ─── Loading / empty states ───────────────────────────
+  if (isLoading && !currentMapId) {
+    return (
+      <div style={{
+        position:'fixed', inset:0, display:'flex', alignItems:'center', justifyContent:'center',
+        background:'#05040f', fontFamily:'var(--font-mono)', fontSize:10,
+        letterSpacing:'0.28em', color:'rgba(124,77,255,0.6)', textTransform:'uppercase',
+      }}>◈ Lade Karte …</div>
+    );
+  }
+
+  if (noMap) {
+    return (
+      <div style={{
+        position:'fixed', inset:0, display:'flex', alignItems:'center', justifyContent:'center',
+        flexDirection:'column', gap:12, background:'#05040f',
+        fontFamily:'var(--font-mono)', letterSpacing:'0.18em', textTransform:'uppercase',
+      }}>
+        <div style={{ fontSize:10, color:'rgba(124,77,255,0.5)' }}>◈ Keine Karte verfügbar</div>
+        <div style={{ fontSize:8, color:'rgba(124,77,255,0.3)' }}>Der DM hat noch keine Karte angelegt</div>
+      </div>
+    );
+  }
+
+  return (
+    <React.Fragment>
+      {/* Top bar */}
+      <header className="mk-topbar">
+        <a className="mk-back" href="index.html">◂ Meruria</a>
+        <span className="mk-title">KARTE</span>
+        <span className="mk-subtitle">◈ Die gewobenen Reiche</span>
+        {/* Breadcrumb */}
+        {mapStack.length > 0 && (
+          <div style={{
+            display:'flex', alignItems:'center', gap:6, marginLeft:14,
+            fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.18em',
+            textTransform:'uppercase',
+          }}>
+            {mapStack.map((m, i) => (
+              <React.Fragment key={m.id}>
+                <button
+                  onClick={() => navigateUp(i)}
+                  style={{
+                    background:'transparent', border:'none', cursor:'pointer',
+                    fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.18em',
+                    color:'rgba(124,77,255,0.6)', textTransform:'uppercase', padding:'2px 4px',
+                    transition:'color 0.15s',
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.color='rgba(200,190,240,0.9)'}
+                  onMouseLeave={e => e.currentTarget.style.color='rgba(124,77,255,0.6)'}
+                >{m.name || 'Karte'}</button>
+                <span style={{ color:'rgba(124,77,255,0.3)' }}>›</span>
+              </React.Fragment>
+            ))}
+            <span style={{ color:'rgba(160,140,255,0.7)' }}>{currentMapName}</span>
+          </div>
+        )}
+        <div style={{ flex: 1 }}/>
+        {isLoading && (
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(124,77,255,0.5)', textTransform:'uppercase' }}>
+            ◈ lade …
+          </span>
+        )}
+      </header>
+
+      {/* Stage */}
+      <div
+        ref={stageRef}
+        className={`mk-stage${isDragging ? ' is-dragging' : ''}`}
+        style={{ top: 56 }}
+        onClick={closePanel}
+      >
+        {!isLoading && (
+          <div className="mk-world" style={{ transform: worldTx }}>
+            {hexList.map((h) => (
+              <HexTile
+                key={hexKey(h.q, h.r)}
+                hex={h}
+                selected={hexKey(h.q, h.r) === selectedKey}
+                hovered={hexKey(h.q, h.r) === hoveredKey}
+                onSelect={onHexClick}
+                onHoverChange={onHexHover}
+              />
+            ))}
+            <div className="mk-labels-layer">
+              {hexList.map((h) => <HexLabel key={`lbl-${h.id}`} hex={h}/>)}
+            </div>
+          </div>
+        )}
+
+        {!isLoading && hexList.length === 0 && (
+          <div className="mk-empty-map-hint">
+            <div className="h">Noch keine Gebiete enthüllt</div>
+            <div className="s">Der DM wird neue Regionen nach und nach freischalten</div>
+          </div>
+        )}
+      </div>
+
+      {/* Bottom-right tools */}
+      <div className="mk-tools">
+        <button className="mk-tool-btn" title="Vergrößern" onClick={() => zoomBy(1.25)}>+</button>
+        <button className="mk-tool-btn" title="Verkleinern" onClick={() => zoomBy(0.8)}>−</button>
+        <button className="mk-tool-btn" title="Ansicht zurücksetzen" onClick={resetView}>
+          <span className="lbl">⌖</span>
+        </button>
+      </div>
+
+      {/* HUD */}
+      <div className="mk-hud">
+        <div className="mk-hud-row"><span>◇ Zoom</span><span>{(camera.zoom * 100).toFixed(0)}%</span></div>
+        <div className="mk-hud-row" style={{ marginTop:4, paddingTop:8, borderTop:'1px solid rgba(124,77,255,0.18)', color:'rgba(160,140,255,0.55)' }}>
+          <span>◇ Mittel-Maustaste</span><span>Karte ziehen</span>
+        </div>
+        <div className="mk-hud-row" style={{ color:'rgba(160,140,255,0.55)' }}>
+          <span>◇ Mausrad</span><span>Zoom</span>
+        </div>
+        <div className="mk-hud-row" style={{ color:'rgba(160,140,255,0.55)' }}>
+          <span>◇ Klick</span><span>Info anzeigen</span>
+        </div>
+      </div>
+
+      {/* Info panel */}
+      {selectedHex && (
+        <InfoPanel
+          hex={selectedHex}
+          onClose={closePanel}
+          onExploreSubmap={() => navigateInto(selectedHex)}
+        />
+      )}
+    </React.Fragment>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<MerMapPlayer/>);
+</script>
+
+
+</body></html>

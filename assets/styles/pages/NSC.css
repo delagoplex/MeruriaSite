@@ -1,0 +1,17 @@
+:root {
+  --accent: #7c4dff;
+}
+
+::-webkit-scrollbar { height: 4px; }
+
+@keyframes flicker-mid { 0%,80%,100%{opacity:1} 82%{opacity:0.55} 84%{opacity:1} 87%{opacity:0.7} 89%{opacity:1} 91%{opacity:0.4} 93%{opacity:1} }
+@keyframes slideDown { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
+@keyframes pulse-glow { 0%,100%{opacity:0.5} 50%{opacity:1} }
+@keyframes pulse-dot { 0%,100%{opacity:0.55; transform:scale(1)} 50%{opacity:1; transform:scale(1.15)} }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes overlayIn { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:translateX(0)} }
+@keyframes hexFloat0 { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-18px) rotate(4deg)} }
+@keyframes hexFloat1 { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-12px) rotate(-3deg)} }
+@keyframes hexFloat2 { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-22px) rotate(6deg)} }
+@keyframes hexFloat3 { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-8px) rotate(-2deg)} }
+@keyframes unknownDrift { 0%,100%{transform:translate(0,0)} 50%{transform:translate(2px,-2px)} }
