@@ -187,8 +187,54 @@ function AttributeGrid({ char }) {
 }
 
 /* ── Stärken (geübte Skills als Pills) ─────── */
+function mergeSkills(char) {
+  return SKILLS_DEFAULT.map(def => {
+    const found = (char.skills || []).find(s => s.name === def.name);
+    return found ? { ...def, prof: found.prof } : { ...def };
+  });
+}
+
+/* ── Editierbare Fertigkeiten ────────────────── */
+function EditableSkillPills({ char, upd }) {
+  const skills = mergeSkills(char);
+  function cycle(skillName) {
+    const updated = skills.map(s => s.name === skillName ? { ...s, prof: (s.prof + 1) % 3 } : s);
+    upd({ skills: updated });
+  }
+  const icon  = ['○', '◆', '◈'];
+  const iclr  = ['rgba(124,77,255,0.22)', 'rgba(124,77,255,0.75)', 'rgba(140,210,255,0.85)'];
+  const nclr  = ['rgba(124,77,255,0.35)', 'rgba(200,190,240,0.88)', 'rgba(200,190,240,0.88)'];
+  const bclr  = ['rgba(124,77,255,0.22)', 'rgba(124,77,255,0.85)', 'rgba(140,210,255,0.85)'];
+  return (
+    <Card style={{marginBottom:11}}>
+      <SecTitle label="Fertigkeiten" />
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"1px 10px"}}>
+        {skills.map(s => {
+          const bonus = skillBonus(s, char.stats, char.profBonus);
+          return (
+            <div key={s.name} style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
+              <button onClick={() => cycle(s.name)} title={["Keine","Übung","Expertise"][s.prof]}
+                style={{background:"transparent",border:"none",cursor:"pointer",color:iclr[s.prof],
+                  fontSize:12,padding:0,lineHeight:1,flexShrink:0,width:16,transition:"color .12s"}}>
+                {icon[s.prof]}
+              </button>
+              <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".07em",
+                color:nclr[s.prof],flex:1,textTransform:"uppercase",transition:"color .12s",
+                overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{s.name}</span>
+              <span style={{fontFamily:"var(--font-mono)",fontSize:9,color:bclr[s.prof],fontWeight:600,flexShrink:0}}>{fmtMod(bonus)}</span>
+            </div>
+          );
+        })}
+      </div>
+      <div style={{fontFamily:"var(--font-mono)",fontSize:7,color:"rgba(124,77,255,0.28)",marginTop:8,letterSpacing:".1em"}}>
+        ○ Keine · ◆ Übung (+{char.profBonus}) · ◈ Expertise (+{char.profBonus * 2})
+      </div>
+    </Card>
+  );
+}
+
 function SkillPills({ char }) {
-  const profs = char.skills.filter(s=>s.prof>0);
+  const profs = mergeSkills(char).filter(s=>s.prof>0);
   return (
     <Card style={{marginBottom:11}}>
       <SecTitle label="Stärken · Geübte Fertigkeiten" />
@@ -685,7 +731,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
             }
           </div>
           {E ? <EditableStatsGrid char={char} updStat={updStat} /> : <AttributeGrid char={char} />}
-          <SkillPills char={char} />
+          {E ? <EditableSkillPills char={char} upd={upd} /> : <SkillPills char={char} />}
           {tweaks.showCompanions && char.companions && char.companions.length > 0 && (
             <div>
               <div style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".28em",color:"rgba(124,77,255,0.45)",textTransform:"uppercase",marginBottom:8}}>Begleiter</div>
@@ -774,5 +820,5 @@ Object.assign(window, {
   SKILLS_DEFAULT, buildChar, charFromEntry, saveCharToDB,
   DivisionRank, DeityCard, CombatCompact, AttributeGrid,
   SkillPills, PersonalitySection, QuestCard, CompanionCard, FbCard, KontakteTablet,
-  Divider, ERow, EditableStatsGrid, EditablePersonality, SteckbriefView,
+  Divider, ERow, EditableStatsGrid, EditableSkillPills, EditablePersonality, SteckbriefView,
 });
