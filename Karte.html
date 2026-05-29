@@ -57,7 +57,7 @@ const TERRAIN_COLORS = {
   'Ozean':      'oklch(0.40 0.17 255)',
   'Gebirge':    'oklch(0.62 0.04 65)',
   'Hochland':   'oklch(0.72 0.06 285)',
-  'Ruine':      'oklch(0.58 0.13 335)',
+  'Höhle':      'oklch(0.58 0.13 335)',
   'Sonstiges':  'oklch(0.65 0.18 295)',
 };
 const DEFAULT_HEX_COLOR = 'oklch(0.70 0.15 285)';
@@ -367,6 +367,16 @@ function MerMapPlayer() {
   const [noMap, setNoMap]     = uS5(false);
 
   const stageRef = uR5(null);
+  const worldRef = uR5(null);
+  const willChangeTimer = uR5(null);
+  const setWorldAnimating = (on) => {
+    clearTimeout(willChangeTimer.current);
+    if (on) {
+      worldRef.current?.classList.add('is-animating');
+    } else {
+      willChangeTimer.current = setTimeout(() => worldRef.current?.classList.remove('is-animating'), 150);
+    }
+  };
   const [vp, setVp] = uS5({ w: window.innerWidth, h: window.innerHeight });
   const drag = uR5({ active: false, lx: 0, ly: 0 });
   const [isDragging, setIsDragging] = uS5(false);
@@ -419,7 +429,7 @@ function MerMapPlayer() {
       if (!stageRef.current?.contains(e.target)) return;
       e.preventDefault();
       drag.current.active = true; drag.current.lx = e.clientX; drag.current.ly = e.clientY;
-      setIsDragging(true); cancelAnim();
+      setIsDragging(true); cancelAnim(); setWorldAnimating(true);
     };
     const onMove = (e) => {
       if (!drag.current.active) return;
@@ -427,7 +437,7 @@ function MerMapPlayer() {
       drag.current.lx = e.clientX; drag.current.ly = e.clientY;
       setCamera((c) => ({ ...c, x: c.x - dx / c.zoom, y: c.y - dy / c.zoom }));
     };
-    const onUp = () => { drag.current.active = false; setIsDragging(false); };
+    const onUp = () => { drag.current.active = false; setIsDragging(false); setWorldAnimating(false); };
     window.addEventListener('pointerdown', onDown, { capture: true, passive: false });
     window.addEventListener('pointermove', onMove);
     window.addEventListener('pointerup', onUp);
@@ -443,7 +453,7 @@ function MerMapPlayer() {
   // ─── Zoom ─────────────────────────────────────────────
   const panelOpen = !!selectedKey;
   const onWheel = (e) => {
-    e.preventDefault(); cancelAnim();
+    e.preventDefault(); cancelAnim(); setWorldAnimating(true); setWorldAnimating(false);
     const factor = Math.exp(-e.deltaY * 0.0015);
     setCamera((c) => {
       const nextZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, c.zoom * factor));
@@ -594,7 +604,7 @@ function MerMapPlayer() {
         onClick={closePanel}
       >
         {!isLoading && (
-          <div className={`mk-world${bgUrl ? ' has-bg' : ''}`} style={{ transform: worldTx, '--zoom': camera.zoom, '--label-scale': 1 / Math.sqrt(camera.zoom) }}>
+          <div ref={worldRef} className={`mk-world${bgUrl ? ' has-bg' : ''}`} style={{ transform: worldTx, '--zoom': camera.zoom, '--label-scale': 1 / Math.sqrt(camera.zoom) }}>
             {bgUrl && (
               <img
                 src={bgUrl}

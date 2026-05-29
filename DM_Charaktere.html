@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meruria — DM · Charakterverwaltung</title>
+<link rel="stylesheet" href="assets/styles/global/fonts.css">
+<link rel="stylesheet" href="assets/styles/global/base.css">
+<script src="assets/scripts/vendor/react.production.min.js"></script>
+<script src="assets/scripts/vendor/react-dom.production.min.js"></script>
+<script src="assets/components/nav.js"></script>
+<script src="assets/scripts/vendor/supabase.min.js"></script>
+<script src="assets/scripts/supabase-client.js"></script>
+<script src="assets/components/site-gate.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { min-height: 100vh; background: var(--bg); color: var(--white); }
+#root { min-height: 100vh; }
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(124,77,255,0.3); border-radius: 2px; }
+
+.dm-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 80px 24px 60px;
+}
+
+/* ── Header ── */
+.dm-header {
+  display: flex; align-items: baseline; gap: 16px;
+  margin-bottom: 32px;
+}
+.dm-title {
+  font-family: var(--font-display);
+  font-size: 22px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--white);
+}
+.dm-subtitle {
+  font-family: var(--font-mono);
+  font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(124,77,255,0.55);
+}
+
+/* ── Group heading ── */
+.dm-group {
+  margin-bottom: 28px;
+}
+.dm-group-label {
+  font-family: var(--font-mono);
+  font-size: 8.5px; letter-spacing: 0.26em; text-transform: uppercase;
+  color: rgba(124,77,255,0.5);
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(124,77,255,0.12);
+  margin-bottom: 2px;
+}
+
+/* ── Character row ── */
+.dm-row {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(124,77,255,0.07);
+  transition: background 0.12s;
+}
+.dm-row:hover { background: rgba(124,77,255,0.04); }
+.dm-row.is-hidden { opacity: 0.45; }
+
+.dm-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1.5px solid rgba(124,77,255,0.25);
+  flex-shrink: 0;
+  background: rgba(10,7,28,0.8);
+  display: flex; align-items: center; justify-content: center;
+}
+.dm-avatar img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.dm-avatar-placeholder {
+  font-family: var(--font-display);
+  font-size: 15px;
+  color: rgba(124,77,255,0.4);
+}
+
+.dm-info { min-width: 0; }
+.dm-name {
+  font-family: var(--font-display);
+  font-size: 13px; letter-spacing: 0.1em;
+  color: var(--white);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.dm-meta {
+  font-family: var(--font-mono);
+  font-size: 8.5px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(160,140,255,0.5);
+  margin-top: 3px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* ── Controls ── */
+.dm-controls {
+  display: flex; align-items: center; gap: 8px;
+  flex-shrink: 0;
+}
+
+.dm-status-select {
+  font-family: var(--font-mono);
+  font-size: 9px; letter-spacing: 0.14em;
+  background: rgba(8,6,22,0.9);
+  border: 1px solid rgba(124,77,255,0.25);
+  border-radius: 3px;
+  color: var(--white);
+  padding: 5px 8px;
+  cursor: pointer; outline: none;
+  transition: border-color 0.15s;
+  width: 130px;
+}
+.dm-status-select:focus { border-color: rgba(124,77,255,0.55); }
+.dm-status-select option { background: #0a0718; }
+
+.dm-vis-btn {
+  width: 32px; height: 32px;
+  background: rgba(8,6,22,0.9);
+  border: 1px solid rgba(124,77,255,0.25);
+  border-radius: 3px;
+  color: rgba(160,140,255,0.5);
+  cursor: pointer; outline: none;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.dm-vis-btn:hover { border-color: rgba(124,77,255,0.55); color: rgba(200,190,240,0.9); }
+.dm-vis-btn.is-visible {
+  border-color: rgba(80,200,140,0.45);
+  color: rgba(80,200,140,0.9);
+  background: rgba(80,200,140,0.06);
+}
+
+.dm-saving {
+  font-family: var(--font-mono);
+  font-size: 8px; letter-spacing: 0.18em;
+  color: rgba(124,77,255,0.5);
+  width: 20px; text-align: center;
+}
+
+/* ── States ── */
+.dm-loading, .dm-empty, .dm-denied {
+  text-align: center;
+  padding: 80px 0;
+  font-family: var(--font-mono);
+  font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(124,77,255,0.4);
+}
+
+/* ── Summary bar ── */
+.dm-summary {
+  display: flex; gap: 20px;
+  margin-bottom: 28px;
+  padding: 12px 16px;
+  background: rgba(8,6,22,0.6);
+  border: 1px solid rgba(124,77,255,0.12);
+  border-radius: 3px;
+}
+.dm-summary-item {
+  display: flex; flex-direction: column; gap: 2px;
+}
+.dm-summary-val {
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: var(--white);
+}
+.dm-summary-lbl {
+  font-family: var(--font-mono);
+  font-size: 7.5px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(160,140,255,0.45);
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script>
+(function () {
+const { useState, useEffect, useCallback } = React;
+const { SiteNav, SiteGate } = window;
+
+const STATUS_OPTIONS = ['Aktiv', 'Wartend', 'Im Ruhestand', 'Gefallen'];
+const STATUS_COLOR = {
+  'Aktiv':        '#5fe39a',
+  'Wartend':      '#d6b25c',
+  'Im Ruhestand': '#8aa3c4',
+  'Gefallen':     '#e36760',
+};
+
+const DIVISION_THEME = {
+  'Die Kuratoren':     '#3dbf8c',
+  'Die Sturmritter':   '#f06040',
+  'Die Sentinels':     '#6ec6f0',
+  'Die Friedenshüter': '#c47fa8',
+  'Die Outfitters':    '#d4681a',
+  'Die Pathfinders':   '#c8b800',
+  'Die Quellensucher': '#1aacb8',
+  'Die Bergungsgarde': '#8b5e3c',
+};
+
+// ── Auth check ────────────────────────────────────────────
+function useIsDM() {
+  const [isDM, setIsDM] = useState(null); // null = loading
+  useEffect(() => {
+    (async () => {
+      const { data: { user } } = await window._sb.auth.getUser();
+      if (!user) { setIsDM(false); return; }
+      const { data: p } = await window._sb.from('profiles').select('role').eq('id', user.id).single();
+      setIsDM(p?.role === 'dm');
+    })();
+  }, []);
+  return isDM;
+}
+
+// ── Character row ─────────────────────────────────────────
+function CharRow({ row, profileName, onVisibleChange, onStatusChange }) {
+  const [saving, setSaving] = useState(false);
+  const d = row.char_data || {};
+  const name    = d.name || row.name || 'Unbenannt';
+  const klasse  = d.class || '—';
+  const stufe   = d.level || 1;
+  const rasse   = d.race  || '—';
+  const division = d.division || null;
+  const status  = d.status || 'Aktiv';
+  const bild    = d.bild  || null;
+  const accent  = DIVISION_THEME[division] || 'rgba(124,77,255,0.4)';
+
+  const save = useCallback(async (fn) => {
+    setSaving(true);
+    await fn();
+    setSaving(false);
+  }, []);
+
+  const toggleVisible = () => save(async () => {
+    const next = !row.visible;
+    const { error } = await window._sb.from('characters').update({ visible: next }).eq('id', row.id);
+    if (!error) onVisibleChange(row.id, next);
+  });
+
+  const changeStatus = (e) => {
+    const next = e.target.value;
+    save(async () => {
+      const newData = { ...row.char_data, status: next };
+      const { error } = await window._sb.from('characters').update({ char_data: newData }).eq('id', row.id);
+      if (!error) onStatusChange(row.id, next);
+    });
+  };
+
+  return React.createElement('div', {
+    className: `dm-row${row.visible ? '' : ' is-hidden'}`,
+  },
+    // Avatar
+    React.createElement('div', { className: 'dm-avatar', style: { borderColor: row.visible ? accent + '66' : 'rgba(124,77,255,0.15)' } },
+      bild
+        ? React.createElement('img', { src: bild, alt: '' })
+        : React.createElement('span', { className: 'dm-avatar-placeholder' }, name[0] || '?')
+    ),
+    // Info
+    React.createElement('div', { className: 'dm-info' },
+      React.createElement('div', { className: 'dm-name', style: { color: row.visible ? 'var(--white)' : 'rgba(200,190,240,0.5)' } }, name),
+      React.createElement('div', { className: 'dm-meta' },
+        [profileName, `Stf. ${stufe}`, klasse, rasse, division ? division.replace(/^Die /, '') : null]
+          .filter(Boolean).join(' · ')
+      )
+    ),
+    // Controls
+    React.createElement('div', { className: 'dm-controls' },
+      // Status select
+      React.createElement('select', {
+        className: 'dm-status-select',
+        value: status,
+        onChange: changeStatus,
+        style: { color: STATUS_COLOR[status] || 'var(--white)' },
+      },
+        STATUS_OPTIONS.map(s =>
+          React.createElement('option', { key: s, value: s, style: { color: STATUS_COLOR[s] } }, s)
+        )
+      ),
+      // Visible toggle
+      React.createElement('button', {
+        className: `dm-vis-btn${row.visible ? ' is-visible' : ''}`,
+        onClick: toggleVisible,
+        title: row.visible ? 'Für Spieler sichtbar — klicken zum Verbergen' : 'Versteckt — klicken zum Zeigen',
+      }, row.visible ? '◆' : '○'),
+      // Saving indicator
+      React.createElement('div', { className: 'dm-saving' }, saving ? '…' : '')
+    )
+  );
+}
+
+// ── Main app ──────────────────────────────────────────────
+function App() {
+  const isDM = useIsDM();
+  const [rows, setRows] = useState([]);
+  const [profiles, setProfiles] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (isDM !== true) return;
+    (async () => {
+      const { data } = await window._sb
+        .from('characters')
+        .select('*')
+        .eq('type', 'spieler')
+        .order('created_at');
+      const r = data || [];
+      const ids = [...new Set(r.map(c => c.owner_id))];
+      let pm = {};
+      if (ids.length) {
+        const { data: profs } = await window._sb.from('profiles').select('id,display_name').in('id', ids);
+        pm = Object.fromEntries((profs || []).map(p => [p.id, p.display_name || 'Spieler']));
+      }
+      setRows(r);
+      setProfiles(pm);
+      setLoading(false);
+    })();
+  }, [isDM]);
+
+  const onVisibleChange = useCallback((id, next) => {
+    setRows(rs => rs.map(r => r.id === id ? { ...r, visible: next } : r));
+  }, []);
+
+  const onStatusChange = useCallback((id, next) => {
+    setRows(rs => rs.map(r => r.id === id ? { ...r, char_data: { ...r.char_data, status: next } } : r));
+  }, []);
+
+  // Group by owner
+  const grouped = React.useMemo(() => {
+    const map = {};
+    for (const r of rows) {
+      const key = r.owner_id;
+      if (!map[key]) map[key] = [];
+      map[key].push(r);
+    }
+    return Object.entries(map).map(([oid, chars]) => ({
+      spieler: profiles[oid] || 'Unbekannt',
+      chars: chars.sort((a, b) => (a.char_data?.name || '').localeCompare(b.char_data?.name || '', 'de')),
+    })).sort((a, b) => a.spieler.localeCompare(b.spieler, 'de'));
+  }, [rows, profiles]);
+
+  // Summary counts
+  const summary = React.useMemo(() => {
+    const statOf = r => r.char_data?.status || 'Aktiv';
+    return {
+      total:     rows.length,
+      visible:   rows.filter(r => r.visible).length,
+      aktiv:     rows.filter(r => statOf(r) === 'Aktiv').length,
+      wartend:   rows.filter(r => statOf(r) === 'Wartend').length,
+      ruhestand: rows.filter(r => statOf(r) === 'Im Ruhestand').length,
+      gefallen:  rows.filter(r => statOf(r) === 'Gefallen').length,
+    };
+  }, [rows]);
+
+  const inner = (() => {
+    if (isDM === null || loading) return React.createElement('div', { className: 'dm-loading' }, '◈ Lade …');
+    if (isDM === false) return React.createElement('div', { className: 'dm-denied' }, '◈ Kein Zugriff — DM-Konto erforderlich');
+    if (rows.length === 0) return React.createElement('div', { className: 'dm-empty' }, '◈ Keine Spielercharaktere gefunden');
+
+    return React.createElement(React.Fragment, null,
+      // Summary bar
+      React.createElement('div', { className: 'dm-summary' },
+        [
+          { val: summary.total,     lbl: 'Gesamt' },
+          { val: summary.visible,   lbl: 'Sichtbar' },
+          { val: summary.aktiv,     lbl: 'Aktiv',       color: '#5fe39a' },
+          { val: summary.wartend,   lbl: 'Wartend',     color: '#d6b25c' },
+          { val: summary.ruhestand, lbl: 'Ruhestand',   color: '#8aa3c4' },
+          { val: summary.gefallen,  lbl: 'Gefallen',    color: '#e36760' },
+        ].map(({ val, lbl, color }) =>
+          React.createElement('div', { key: lbl, className: 'dm-summary-item' },
+            React.createElement('div', { className: 'dm-summary-val', style: color ? { color } : undefined }, val),
+            React.createElement('div', { className: 'dm-summary-lbl' }, lbl)
+          )
+        )
+      ),
+      // Groups
+      grouped.map(({ spieler, chars }) =>
+        React.createElement('div', { key: spieler, className: 'dm-group' },
+          React.createElement('div', { className: 'dm-group-label' }, spieler),
+          chars.map(r =>
+            React.createElement(CharRow, {
+              key: r.id,
+              row: r,
+              profileName: profiles[r.owner_id] || 'Spieler',
+              onVisibleChange,
+              onStatusChange,
+            })
+          )
+        )
+      )
+    );
+  })();
+
+  return React.createElement(SiteGate, null,
+    React.createElement('div', { className: 'page-root' },
+      React.createElement(SiteNav, { active: 'dm-bereich' }),
+      React.createElement('main', { className: 'dm-wrap' },
+        React.createElement('div', { className: 'dm-header' },
+          React.createElement('h1', { className: 'dm-title' }, 'Charakterverwaltung'),
+          React.createElement('span', { className: 'dm-subtitle' }, 'DM-Bereich')
+        ),
+        inner
+      )
+    )
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(App));
+})();
+</script>
+</body></html>

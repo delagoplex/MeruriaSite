@@ -51,7 +51,7 @@ function hexKey(q, r) { return `${q},${r}`; }
 const TERRAINS = [
   '', 'Ebene', 'Wald', 'Hügelland', 'Gebirge', 'Wüste',
   'Sumpf', 'Tundra', 'Vulkan', 'See', 'Küste', 'Ozean',
-  'Hochland', 'Kolonie', 'Ruine', 'Sonstiges',
+  'Hochland', 'Kolonie', 'Höhle', 'Sonstiges',
 ];
 
 const TERRAIN_COLORS = {
@@ -68,7 +68,7 @@ const TERRAIN_COLORS = {
   'Ozean':      'oklch(0.40 0.17 255)',
   'Gebirge':    'oklch(0.62 0.04 65)',
   'Hochland':   'oklch(0.72 0.06 285)',
-  'Ruine':      'oklch(0.58 0.13 335)',
+  'Höhle':      'oklch(0.58 0.13 335)',
   'Sonstiges':  'oklch(0.65 0.18 295)',
 };
 const DEFAULT_HEX_COLOR = 'oklch(0.70 0.15 285)';
@@ -459,7 +459,16 @@ function BildPosPad({ pos, onChange }) {
     <div style={{ display:'flex', flexDirection:'column', gap:6 }}>
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between' }}>
         <label style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(160,140,255,0.6)' }}>Bildposition</label>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(160,140,255,0.4)' }}>{p.x}% · {p.y}%</span>
+        <div style={{ display:'flex', alignItems:'center', gap:8 }}>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(160,140,255,0.4)' }}>{p.x}% · {p.y}%</span>
+          <button
+            onClick={() => onChange({ x: 50, y: 50 })}
+            title="Bildposition zurücksetzen"
+            style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.12em', textTransform:'uppercase', color:'rgba(160,140,255,0.6)', background:'rgba(124,77,255,0.08)', border:'1px solid rgba(124,77,255,0.22)', borderRadius:3, cursor:'pointer', padding:'2px 7px', lineHeight:1.6, transition:'all 0.15s' }}
+            onMouseEnter={e => { e.currentTarget.style.background='rgba(124,77,255,0.18)'; e.currentTarget.style.borderColor='rgba(124,77,255,0.5)'; e.currentTarget.style.color='rgba(200,190,240,0.9)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background='rgba(124,77,255,0.08)'; e.currentTarget.style.borderColor='rgba(124,77,255,0.22)'; e.currentTarget.style.color='rgba(160,140,255,0.6)'; }}
+          >↺ Reset</button>
+        </div>
       </div>
       <div
         ref={padRef}
@@ -476,10 +485,6 @@ function BildPosPad({ pos, onChange }) {
         {/* Focal dot */}
         <div style={{ position:'absolute', left:`${p.x}%`, top:`${p.y}%`, transform:'translate(-50%,-50%)', width:10, height:10, borderRadius:'50%', background:'rgba(200,180,255,0.95)', boxShadow:'0 0 8px rgba(124,77,255,0.9)', border:'1.5px solid rgba(255,255,255,0.6)', pointerEvents:'none' }}/>
       </div>
-      <button
-        style={{ alignSelf:'flex-start', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(160,140,255,0.5)', background:'none', border:'none', cursor:'pointer', padding:0 }}
-        onClick={() => onChange({ x: 50, y: 50 })}
-      >zurücksetzen</button>
     </div>
   );
 }
@@ -528,19 +533,8 @@ function EditorDrawer({ hex, onChange, onClose, onDelete, onNavigateInto, onCrea
               />
             </div>
           )}
-          {/* Sichtbarkeit + Subkarte — nebeneinander unter dem Hex */}
+          {/* Subkarte + Sichtbarkeit — nebeneinander unter dem Hex */}
           <div style={{ display:'flex', gap:8, marginBottom:4 }}>
-            <button
-              className={`mk-tool-btn${hex.visible ? ' is-active' : ''}`}
-              style={{ width:'calc(50% - 4px)', justifyContent:'center', gap:6, fontSize:11, letterSpacing:'0.12em' }}
-              onClick={() => updateDraft('visible', !hex.visible)}
-              title="Spieler-Sichtbarkeit umschalten"
-            >
-              {hex.visible
-                ? <React.Fragment><span style={{color:'rgba(80,200,140,0.9)'}}>◆</span> Sichtbar</React.Fragment>
-                : <React.Fragment><span style={{color:'rgba(124,77,255,0.4)'}}>○</span> Verborgen</React.Fragment>
-              }
-            </button>
             <button
               style={{
                 width:'calc(50% - 4px)', padding: '7px 10px',
@@ -559,6 +553,17 @@ function EditorDrawer({ hex, onChange, onClose, onDelete, onNavigateInto, onCrea
             >
               <span style={{ fontSize: 14 }}>⬡</span>
               <span>{hex.has_submap ? 'Subkarte →' : 'Subkarte anlegen'}</span>
+            </button>
+            <button
+              className={`mk-tool-btn${hex.visible ? ' is-active' : ''}`}
+              style={{ width:'calc(50% - 4px)', justifyContent:'center', gap:6, fontSize:11, letterSpacing:'0.12em' }}
+              onClick={() => updateDraft('visible', !hex.visible)}
+              title="Spieler-Sichtbarkeit umschalten"
+            >
+              {hex.visible
+                ? <React.Fragment><span style={{color:'rgba(80,200,140,0.9)'}}>◆</span> Sichtbar</React.Fragment>
+                : <React.Fragment><span style={{color:'rgba(124,77,255,0.4)'}}>○</span> Verborgen</React.Fragment>
+              }
             </button>
           </div>
 
@@ -684,6 +689,16 @@ function MerMap() {
   const [vp, setVp]               = uS5({ w: window.innerWidth, h: window.innerHeight });
   const drag                      = uR5({ active: false, lx: 0, ly: 0 });
   const [isDragging, setIsDragging] = uS5(false);
+  const worldRef = uR5(null);
+  const willChangeTimer = uR5(null);
+  const setWorldAnimating = (on) => {
+    clearTimeout(willChangeTimer.current);
+    if (on) {
+      worldRef.current?.classList.add('is-animating');
+    } else {
+      willChangeTimer.current = setTimeout(() => worldRef.current?.classList.remove('is-animating'), 150);
+    }
+  };
   const [bgUrl, setBgUrl]           = uS5(null);
   const [bgUploading, setBgUploading] = uS5(false);
   const bgFileRef = uR5(null);
@@ -800,7 +815,7 @@ function MerMap() {
       if (!stageRef.current?.contains(e.target)) return;
       e.preventDefault();
       drag.current.active = true; drag.current.lx = e.clientX; drag.current.ly = e.clientY;
-      setIsDragging(true); cancelAnim();
+      setIsDragging(true); cancelAnim(); setWorldAnimating(true);
     };
     const onMove = (e) => {
       if (!drag.current.active) return;
@@ -813,7 +828,7 @@ function MerMap() {
         setCamera((c) => ({ ...c, x: c.x - dx / c.zoom, y: c.y - dy / c.zoom }));
       }
     };
-    const onUp = () => { drag.current.active = false; setIsDragging(false); };
+    const onUp = () => { drag.current.active = false; setIsDragging(false); setWorldAnimating(false); };
     window.addEventListener('pointerdown', onDown, { capture: true, passive: false });
     window.addEventListener('pointermove', onMove);
     window.addEventListener('pointerup', onUp);
@@ -828,7 +843,7 @@ function MerMap() {
 
   // ─── Zoom / BG scale ──────────────────────────────────
   const onWheel = (e) => {
-    e.preventDefault(); cancelAnim();
+    e.preventDefault(); cancelAnim(); setWorldAnimating(true); setWorldAnimating(false);
     const factor = Math.exp(-e.deltaY * 0.0015);
     if (bgAlignModeRef.current) {
       setBgTransform((t) => ({ ...t, scale: Math.max(0.05, Math.min(20, t.scale * factor)) }));
@@ -1257,7 +1272,7 @@ function MerMap() {
         onDrop={mapEmpty && dragInfo?.fromStash ? (e) => { e.preventDefault(); dropOnEmptyMap(); } : undefined}
       >
         {!isLoading && (
-          <div className={`mk-world${bgUrl ? ' has-bg' : ''}`} style={{ transform: worldTx, '--zoom': camera.zoom, '--label-scale': 1 / Math.sqrt(camera.zoom) }}>
+          <div ref={worldRef} className={`mk-world${bgUrl ? ' has-bg' : ''}`} style={{ transform: worldTx, '--zoom': camera.zoom, '--label-scale': 1 / Math.sqrt(camera.zoom) }}>
             {bgUrl && (
               <img
                 src={bgUrl}

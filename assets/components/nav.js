@@ -268,6 +268,10 @@ const NAV = [{
     href: 'NSC-Verwaltung.html',
     locked: true
   }, {
+    label: 'Charakterverwaltung',
+    href: 'DM_Charaktere.html',
+    locked: true
+  }, {
     label: 'Kartenmanagement',
     href: 'Kartenmanagement.html',
     locked: true

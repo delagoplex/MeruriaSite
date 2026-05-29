@@ -11,6 +11,7 @@
 
 <script src="assets/scripts/data/charaktererstellung-data.js"></script>
 <script src="assets/scripts/data/charaktererstellung-gottheiten-data.js"></script>
+<script src="assets/scripts/data/divisions-data.js"></script>
 <script src="assets/scripts/data/npc-stats-data.js"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
@@ -848,13 +849,27 @@ function OutputPhase({
       if (r.src === 'multi') return (possible[k] || [])[0] || null;
       return r.val;
     };
+    const divisionName = g('division');
+    const divObj = (window.DIVISIONS_DATA || []).find(d => d.name === divisionName) || null;
+
+    const gottheitName = g('gottheit');
+    const allGods = [
+      ...(window.GODS_DATA?.gods        || []),
+      ...(window.GODS_DATA?.demons      || []),
+      ...(window.GODS_DATA?.naturgeister|| []),
+    ];
+    const godObj = allGods.find(g => g.name === gottheitName) || null;
+
     const draft = {
       name,
       race: g('rasse'),
       class: g('klasse'),
       background: g('hintergrund'),
-      division: g('division'),
-      deity: g('gottheit'),
+      division:   divisionName,
+      divisionId: divObj?.id   || null,
+      deity:      gottheitName,
+      deityId:    godObj?.id   || null,
+      deityDomain:godObj?.domain || '—',
       samen: g('samen'),
       stats: getFinalStats(),
       alignment: null,
