@@ -135,6 +135,9 @@ body::after {
     repeating-linear-gradient(-45deg, transparent, transparent 6px, rgba(124,77,255,0.06) 6px, rgba(124,77,255,0.06) 7px);
   background-blend-mode: normal;
 }
+.mk-world.has-bg .mk-hex-inner .mk-hex-clip {
+  background: transparent;
+}
 .mk-hex-overlay {
   position:absolute; inset:0;
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);

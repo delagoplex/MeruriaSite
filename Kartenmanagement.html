@@ -82,7 +82,7 @@ function easeInOutCubic(t) {
 async function loadOrCreateRootMap() {
   const sb = window._sb;
   let { data } = await sb.from('karte_maps')
-    .select('id, name')
+    .select('id, name, bg_url')
     .is('parent_hex_id', null)
     .limit(1)
     .maybeSingle();
@@ -99,7 +99,7 @@ async function loadOrCreateRootMap() {
 async function loadMap(mapId) {
   const { data } = await window._sb
     .from('karte_maps')
-    .select('id, name, parent_hex_id')
+    .select('id, name, parent_hex_id, bg_url')
     .eq('id', mapId)
     .single();
   return data;
@@ -621,6 +621,9 @@ function MerMap() {
   const [vp, setVp]               = uS5({ w: window.innerWidth, h: window.innerHeight });
   const drag                      = uR5({ active: false, lx: 0, ly: 0 });
   const [isDragging, setIsDragging] = uS5(false);
+  const [bgUrl, setBgUrl]           = uS5(null);
+  const [bgUploading, setBgUploading] = uS5(false);
+  const bgFileRef = uR5(null);
 
   // Ref so debounced saves always have current mapId
   const currentMapIdRef = uR5(null);
@@ -668,6 +671,7 @@ function MerMap() {
       const rootMap = await loadOrCreateRootMap();
       setCurrentMapId(rootMap.id);
       setCurrentMapName(rootMap.name || 'Meruria');
+      setBgUrl(rootMap.bg_url || null);
       currentMapIdRef.current = rootMap.id;
 
       // Load hexes + stash
@@ -879,6 +883,21 @@ function MerMap() {
     sbUpsertStash({ ...item, folder });
   }, [stash]);
 
+  // ─── Map background upload ────────────────────────────
+  const uploadBg = uC5(async (file) => {
+    if (!file) return;
+    setBgUploading(true);
+    const clean = file.name.replace(/[^a-z0-9._-]/gi, '_');
+    const path = `maps/${currentMapId}/${Date.now()}-${clean}`;
+    const { error } = await window._sb.storage.from('karte-bilder').upload(path, file, { upsert: true });
+    if (error) { console.error('bg upload:', error); setBgUploading(false); return; }
+    const { data } = window._sb.storage.from('karte-bilder').getPublicUrl(path);
+    const url = data.publicUrl;
+    setBgUrl(url);
+    await window._sb.from('karte_maps').update({ bg_url: url }).eq('id', currentMapId);
+    setBgUploading(false);
+  }, [currentMapId]);
+
   // ─── Delete hex ───────────────────────────────────────
   const deleteSelected = () => {
     if (!selectedKey) return;
@@ -902,11 +921,12 @@ function MerMap() {
   // ─── Submap navigation ────────────────────────────────
   const navigateInto = uC5(async (hex) => {
     if (!hex.submap_id) return;
-    setMapStack((s) => [...s, { id: currentMapId, name: currentMapName }]);
+    setMapStack((s) => [...s, { id: currentMapId, name: currentMapName, bgUrl }]);
     const subMap = await loadMap(hex.submap_id);
     setCurrentMapId(hex.submap_id);
     setCurrentMapName(hex.name || subMap?.name || 'Subkarte');
-  }, [currentMapId, currentMapName]);
+    setBgUrl(subMap?.bg_url || null);
+  }, [currentMapId, currentMapName, bgUrl]);
 
   const navigateUp = uC5((i) => {
     const target = mapStack[i];
@@ -914,28 +934,26 @@ function MerMap() {
     setMapStack((s) => s.slice(0, i));
     setCurrentMapId(target.id);
     setCurrentMapName(target.name);
+    setBgUrl(target.bgUrl || null);
   }, [mapStack]);
 
   const createSubmap = uC5(async (hex) => {
     const k = hexKey(hex.q, hex.r);
-    // Hex muss in DB existieren bevor die FK-Referenz angelegt wird
     await sbUpsertHex(currentMapIdRef.current, hex);
-    // Create sub-map in Supabase
     const { data: newMap, error } = await window._sb.from('karte_maps')
       .insert({ name: hex.name || 'Subkarte', parent_hex_id: hex.id })
       .select('id, name')
       .single();
     if (error) { console.error('createSubmap:', error); return; }
-    // Update hex
     const updatedHex = { ...hex, has_submap: true, submap_id: newMap.id };
     setHexes((h) => ({ ...h, [k]: updatedHex }));
     sbUpsertHex(currentMapIdRef.current, updatedHex);
-    // Navigate into new sub-map
-    setMapStack((s) => [...s, { id: currentMapId, name: currentMapName }]);
+    setMapStack((s) => [...s, { id: currentMapId, name: currentMapName, bgUrl }]);
     setCurrentMapId(newMap.id);
     setCurrentMapName(hex.name || newMap.name);
+    setBgUrl(null);
     setEditing(false); setSel(null);
-  }, [currentMapId, currentMapName]);
+  }, [currentMapId, currentMapName, bgUrl]);
 
   // ─── Migration from localStorage ──────────────────────
   const handleMigrate = uC5(async () => {
@@ -1139,7 +1157,15 @@ function MerMap() {
         onDrop={mapEmpty && dragInfo?.fromStash ? (e) => { e.preventDefault(); dropOnEmptyMap(); } : undefined}
       >
         {!isLoading && (
-          <div className="mk-world" style={{ transform: worldTx, '--zoom': camera.zoom }}>
+          <div className={`mk-world${bgUrl ? ' has-bg' : ''}`} style={{ transform: worldTx, '--zoom': camera.zoom }}>
+            {bgUrl && (
+              <img
+                src={bgUrl}
+                style={{ position:'absolute', left:0, top:0, transform:'translate(-50%,-50%)', maxWidth:'none', zIndex:0, pointerEvents:'none', userSelect:'none', opacity:0.9 }}
+                alt=""
+                draggable={false}
+              />
+            )}
             {hexList.map((h) => (
               <HexTile
                 key={hexKey(h.q, h.r)}
@@ -1208,6 +1234,22 @@ function MerMap() {
 
       {/* Bottom-right tools */}
       <div className="mk-tools">
+        <button
+          className={`mk-tool-btn${bgUrl ? ' is-active' : ''}`}
+          title={bgUrl ? 'Kartenhintergrund ersetzen' : 'Kartenhintergrund wählen'}
+          onClick={() => bgFileRef.current?.click()}
+          disabled={bgUploading}
+        >
+          {bgUploading
+            ? <span style={{ fontSize: 10 }}>…</span>
+            : <svg width="18" height="16" viewBox="0 0 18 16" fill="none" stroke="currentColor" strokeWidth="1.4">
+                <rect x="1" y="3" width="16" height="11" rx="1"/>
+                <circle cx="6" cy="8.5" r="2"/>
+                <path d="M10 11 L13 7 L16 11"/>
+              </svg>
+          }
+        </button>
+        <input ref={bgFileRef} type="file" accept="image/*" style={{ display:'none' }} onChange={e => uploadBg(e.target.files[0])}/>
         <button className="mk-tool-btn" title="Vergrößern" onClick={() => zoomBy(1.25)}>+</button>
         <button className="mk-tool-btn" title="Verkleinern" onClick={() => zoomBy(0.8)}>−</button>
         <button className="mk-tool-btn" title="Ansicht zurücksetzen" onClick={resetView}>

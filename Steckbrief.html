@@ -131,35 +131,17 @@ Object.assign(window, { mod, fmtMod, attrKey, skillBonus, ImageSlot, SecTitle, C
 
 
 <!-- ═══════════════════════════════════════════
-     SCRIPT 3 — Nav · Seite · Render
+     SCRIPT 3 — Render
      ═══════════════════════════════════════════ -->
 <script type="text/babel">
 const { useState:useS3, useEffect:useE3 } = React;
-const { ImageSlot, SecTitle, Card, Corners, IRow,
-  DivisionRank, DeityCard, CombatCompact, AttributeGrid,
-  SkillPills, PersonalitySection, QuestCard, CompanionCard, FbCard, KontakteTablet } = window;
-const { useTweaks, TweaksPanel, TweakSection, TweakToggle } = window;
+const { SteckbriefView, buildChar } = window;
 const { SiteNav, SiteGate } = window;
 
-const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"showCompanions":true,"showQuests":true,"showKontakte":true,"showWissenswertes":true}/*EDITMODE-END*/;
-
-/* ── Divider ─────────────────────────────── */
-function Divider({ label }) {
-  return (
-    <div style={{display:"flex",alignItems:"center",gap:14,margin:"4px 22px 18px"}}>
-      <div style={{flex:1,height:1,background:"rgba(124,77,255,0.1)"}} />
-      {label && <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".28em",color:"rgba(124,77,255,0.3)",textTransform:"uppercase"}}>{label}</span>}
-      <div style={{flex:1,height:1,background:"rgba(124,77,255,0.1)"}} />
-    </div>
-  );
-}
-
-/* ── Haupt-Seite ─────────────────────────── */
 function SteckbriefPage() {
   const [char, setChar] = useS3(null);
   const [loading, setLoading] = useS3(true);
   const [err, setErr] = useS3(null);
-  const [tweaks,setTweak] = useTweaks(TWEAK_DEFAULTS);
 
   useE3(() => {
     const id = new URLSearchParams(window.location.search).get('id');
@@ -167,198 +149,33 @@ function SteckbriefPage() {
     window._sb.from('characters').select('*').eq('id', id).single().then(({ data, error }) => {
       if (error || !data) { setErr('Charakter nicht gefunden.'); setLoading(false); return; }
       const d = data.char_data || {};
-      setChar(d.hp !== undefined ? d : window.buildChar(d));
+      setChar(d.hp !== undefined ? d : buildChar(d));
       setLoading(false);
     });
   }, []);
 
   if (loading) return (
     <div style={{minHeight:"100vh",paddingTop:"var(--nav-h)",display:"flex",alignItems:"center",justifyContent:"center"}}>
-      <SiteNav />
+      {SiteNav && <SiteNav />}
       <span style={{fontFamily:"var(--font-mono)",fontSize:9,letterSpacing:".3em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase"}}>Lade Charakter…</span>
     </div>
   );
 
   if (err || !char) return (
     <div style={{minHeight:"100vh",paddingTop:"var(--nav-h)",display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:16}}>
-      <SiteNav />
+      {SiteNav && <SiteNav />}
       <span style={{fontFamily:"var(--font-mono)",fontSize:11,color:"rgba(227,103,96,0.8)"}}>{err || 'Unbekannter Fehler'}</span>
       <a href="Spielercharaktere.html" style={{fontFamily:"var(--font-mono)",fontSize:9,letterSpacing:".2em",color:"rgba(124,77,255,0.6)",textDecoration:"underline"}}>← Zurück zur Übersicht</a>
     </div>
   );
 
-  return (
-    <div style={{minHeight:"100vh",paddingTop:"var(--nav-h)"}}>
-      <SiteNav />
-
-      <TweaksPanel tweaks={tweaks} setTweak={setTweak}>
-        <TweakSection label="Sektionen">
-          <TweakToggle id="showCompanions"  label="Begleiter anzeigen" />
-          <TweakToggle id="showQuests"      label="Quests anzeigen" />
-          <TweakToggle id="showKontakte"     label="Kontakte anzeigen" />
-          <TweakToggle id="showWissenswertes" label="Wissenswertes anzeigen" />
-        </TweakSection>
-      </TweaksPanel>
-
-      {/* ── Seiten-Kopf ────────────────────── */}
-      <div style={{padding:"18px 28px 15px",borderBottom:"1px solid rgba(124,77,255,0.1)"}}>
-        <div style={{fontFamily:"var(--font-mono)",fontSize:9,letterSpacing:".3em",color:"rgba(124,77,255,0.5)",textTransform:"uppercase",marginBottom:6}}>
-          Meruria · Charaktere
-        </div>
-        <div style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between",flexWrap:"wrap",gap:12}}>
-          <div>
-            <h1 style={{fontFamily:"var(--font-display)",fontWeight:400,fontSize:28,letterSpacing:".22em",
-              color:"var(--white)",textTransform:"uppercase",textShadow:"0 0 32px rgba(124,77,255,0.2)"}}>
-              {char.name}
-            </h1>
-            <div style={{display:"flex",gap:6,marginTop:8,flexWrap:"wrap"}}>
-              {[`${char.class} · ${char.subclass}`,`Stufe ${char.level}`,char.race,char.background,`${char.division} · ${char.rank} ${["I","II","III","IV","V"][char.rankLevel-1]}`]
-                .map((t,i)=>(
-                  <span key={i} style={{fontFamily:"var(--font-mono)",fontSize:8.5,padding:"2px 9px",
-                    background:"rgba(124,77,255,0.1)",border:"1px solid rgba(124,77,255,0.28)",borderRadius:2,
-                    color:"rgba(200,190,240,0.82)",letterSpacing:".1em"}}>{t}</span>
-                ))}
-            </div>
-          </div>
-          <div style={{textAlign:"right"}}>
-            <div style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".2em",color:"rgba(124,77,255,0.35)",textTransform:"uppercase",marginBottom:2}}>Erfahrungspunkte</div>
-            <div style={{fontFamily:"var(--font-mono)",fontSize:22,color:"rgba(124,77,255,0.65)"}}>{char.xp.toLocaleString("de-DE")}</div>
-          </div>
-        </div>
-        <div style={{marginTop:10,width:36,height:1,background:"rgba(124,77,255,0.55)"}} />
-      </div>
-
-      {/* ── 3-Spalten-Grid ────────────────── */}
-      <div style={{display:"grid",gridTemplateColumns:"220px 1fr 290px",gap:14,padding:"16px 22px 0",alignItems:"start"}}>
-
-        {/* LINKS — Identität & Infos */}
-        <div style={{display:"flex",flexDirection:"column",gap:11}}>
-
-          <Card>
-            <SecTitle label="Identität" />
-            <IRow label="Volk"        value={char.race}        bright />
-            <IRow label="Klasse"      value={char.class}       bright />
-            <IRow label="Subklasse"   value={char.subclass} />
-            <IRow label="Hintergrund" value={char.background} />
-            <IRow label="Gesinnung"   value={char.alignment}   bright />
-            <IRow label="Geschlecht"  value={char.gender} />
-            <IRow label="Herkunft"    value={char.birthplace} />
-          </Card>
-
-          <Card>
-            <SecTitle label="Persönliche Daten" />
-            <IRow label="Geburtstag"   value={char.birthday} />
-            <IRow label="Sternzeichen" value={char.zodiac}  bright />
-            <IRow label="Alter"        value={`${char.age} Jahre`} />
-            <IRow label="Größe"        value={char.height} />
-            <IRow label="Gewicht"      value={char.weight} />
-            <IRow label="Augen"        value={char.eyes} />
-            <IRow label="Haare"        value={char.hair} />
-            <IRow label="Haut"         value={char.skin} />
-          </Card>
-
-          <DivisionRank char={char} />
-          <DeityCard     char={char} />
-          <CombatCompact char={char} />
-        </div>
-
-        {/* MITTE — Geschichte & Stats */}
-        <div style={{display:"flex",flexDirection:"column",gap:11}}>
-
-          {/* Über mich */}
-          <Card style={{position:"relative"}}>
-            <Corners op={0.28} />
-            <SecTitle label="Über mich" />
-            <p style={{fontFamily:"var(--font-body)",fontSize:13,fontWeight:300,color:"var(--silver)",lineHeight:1.9,textWrap:"pretty"}}>
-              {char.story}
-            </p>
-          </Card>
-
-          {/* Erste Tage */}
-          <div style={{background:"var(--card-bg)",borderLeft:"2px solid rgba(124,77,255,0.5)",
-            border:"1px solid rgba(124,77,255,0.2)",borderLeftWidth:3,
-            borderRadius:"0 4px 4px 0",padding:"13px 14px",position:"relative"}}>
-            <SecTitle label="Meine ersten Tage auf Meruria" />
-            <p style={{fontFamily:"var(--font-body)",fontSize:12.5,fontWeight:300,color:"var(--silver)",lineHeight:1.88,textWrap:"pretty",fontStyle:"italic"}}>
-              „{char.ersteTage}"
-            </p>
-          </div>
-
-          <AttributeGrid char={char} />
-          <SkillPills    char={char} />
-
-          {/* Begleiter */}
-          {tweaks.showCompanions && char.companions.length > 0 && (
-            <div>
-              <div style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".28em",color:"rgba(124,77,255,0.45)",textTransform:"uppercase",marginBottom:8}}>Begleiter</div>
-              <div style={{width:24,height:1,background:"linear-gradient(90deg,rgba(124,77,255,0.65),transparent)",marginBottom:10}} />
-              <div style={{display:"flex",flexDirection:"column",gap:10}}>
-                {char.companions.map(comp=><CompanionCard key={comp.id} comp={comp}/>)}
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* RECHTS — Portrait & Persönlichkeit */}
-        <div style={{display:"flex",flexDirection:"column",gap:11}}>
-          <div style={{position:"relative",borderRadius:4,overflow:"hidden",border:"1px solid rgba(124,77,255,0.38)"}}>
-            <Corners op={0.58} sz={18} />
-            <ImageSlot slotId="char-portrait" label="Charakter-Portrait" height={310} hue={270} portrait />
-          </div>
-          <PersonalitySection char={char} />
-        </div>
-      </div>
-
-      {/* ── Quests ──────────────────────────── */}
-      {tweaks.showQuests && (
-        <div style={{padding:"22px 22px 8px"}}>
-          <Divider label="Erledigte Quests" />
-          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))",gap:12}}>
-            {char.quests.map((q,i)=><QuestCard key={i} quest={q}/>)}
-          </div>
-        </div>
-      )}
-
-      {/* ── Kontakte ────────────────────────── */}
-      {tweaks.showKontakte && char.contacts && char.contacts.length > 0 && (
-        <div style={{padding:"22px 22px 8px"}}>
-          <Divider label="Kontakte" />
-          <KontakteTablet char={char} />
-        </div>
-      )}
-
-      {/* ── Wissenswertes ───────────────────── */}
-      {tweaks.showWissenswertes && (
-        <div style={{padding:"22px 22px 24px"}}>
-          {/* Header */}
-          <div style={{display:"flex",alignItems:"baseline",justifyContent:"space-between",gap:20,marginBottom:20,flexWrap:"wrap"}}>
-            <div>
-              <div style={{fontFamily:"var(--font-mono)",fontSize:9,letterSpacing:".28em",color:"rgba(124,77,255,0.45)",textTransform:"uppercase",marginBottom:4}}>Wissenswertes</div>
-              <div style={{width:28,height:1,background:"linear-gradient(90deg,rgba(124,77,255,0.65),transparent)"}} />
-            </div>
-            <p style={{fontFamily:"var(--font-body)",fontSize:12,fontWeight:300,fontStyle:"italic",
-              color:"rgba(190,182,225,0.45)",flex:1,minWidth:220,textAlign:"right"}}>
-              Was mich ausmacht — in meinen eigenen Worten.
-            </p>
-          </div>
-          {/* Grid */}
-          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))",gap:12}}>
-            {char.freundebuch.map((item,i)=><FbCard key={i} item={item} index={i}/>)}
-          </div>
-        </div>
-      )}
-
-      {/* ── Footer ──────────────────────────── */}
-      <div style={{borderTop:"1px solid rgba(124,77,255,0.07)",margin:"22px 0 0",padding:"13px 28px",display:"flex",justifyContent:"space-between"}}>
-        <span style={{fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(124,77,255,0.26)",letterSpacing:".1em"}}>Meruria — Steckbrief</span>
-        <span style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(124,77,255,0.2)"}}>D&amp;D 5e · {char.race} {char.class} Stufe {char.level}</span>
-      </div>
-    </div>
-  );
+  return <SteckbriefView char={char} />;
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(<SiteGate><SteckbriefPage/></SiteGate>);
 </script>
+
+
 
 
 
