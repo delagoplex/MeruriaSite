@@ -6,7 +6,7 @@
 const { useState, useRef } = React;
 const h = React.createElement;
 
-function ImageUpload({ imageUrl, onUploaded, bucket, pathPrefix, shape = 'square', width, height }) {
+function ImageUpload({ imageUrl, onUploaded, bucket, pathPrefix, shape = 'square', width, height, objectPosition }) {
   const fileRef = useRef(null);
   const [uploading, setUploading] = useState(false);
 
@@ -46,7 +46,7 @@ function ImageUpload({ imageUrl, onUploaded, bucket, pathPrefix, shape = 'square
       },
     },
       imageUrl
-        ? h('img', { src: imageUrl, style: { width: '100%', height: '100%', objectFit: 'cover', display: 'block' }, alt: '' })
+        ? h('img', { src: imageUrl, style: { width: '100%', height: '100%', objectFit: 'cover', objectPosition: objectPosition || '50% 50%', display: 'block' }, alt: '' })
         : h('div', {
             style: {
               display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8,

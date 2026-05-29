@@ -73,15 +73,16 @@ function rowToHex(h) {
     id: h.id, q: h.q, r: h.r,
     name: h.name || '', terrain: h.terrain || '',
     features: h.features || '', beschreibung: h.beschreibung || '',
-    bild_url: h.bild_url || '',
+    bild_url: h.bild_url || '', bild_pos: h.bild_pos || null,
     has_submap: !!h.has_submap, submap_id: h.submap_id || null,
   };
 }
 
 async function loadRootMap() {
   const { data } = await window._sb.from('karte_maps')
-    .select('id, name')
+    .select('id, name, bg_url, bg_transform')
     .is('parent_hex_id', null)
+    .order('created_at', { ascending: true })
     .limit(1)
     .maybeSingle();
   return data; // null if no map exists yet
@@ -89,7 +90,7 @@ async function loadRootMap() {
 
 async function loadMap(mapId) {
   const { data } = await window._sb.from('karte_maps')
-    .select('id, name').eq('id', mapId).single();
+    .select('id, name, bg_url, bg_transform').eq('id', mapId).single();
   return data;
 }
 
@@ -156,7 +157,7 @@ function HexTile({ hex, selected, hovered, onSelect, onHoverChange }) {
         <div className="mk-hex-clip"/>
         <div className="mk-slot-clip mk-slot-clip-canvas">
           {hex.bild_url ? (
-            <img src={hex.bild_url} style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }} alt=""/>
+            <img src={hex.bild_url} style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition: hex.bild_pos ? `${hex.bild_pos.x}% ${hex.bild_pos.y}%` : '50% 50%', display:'block' }} alt=""/>
           ) : null}
         </div>
         <HexBorder selected={selected} hovered={hovered} color={tcolor}/>
@@ -252,7 +253,7 @@ function InfoPanel({ hex, onClose, onExploreSubmap }) {
           {hex.bild_url && (
             <div className="mk-drawer-imgwrap" style={{ pointerEvents:'none' }}>
               <div className="mk-slot-clip" style={{ clipPath: HEX_MASK }}>
-                <img src={hex.bild_url} style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }} alt=""/>
+                <img src={hex.bild_url} style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition: hex.bild_pos ? `${hex.bild_pos.x}% ${hex.bild_pos.y}%` : '50% 50%', display:'block' }} alt=""/>
               </div>
               <HexBorder selected={true} color={tcolor}/>
             </div>
@@ -369,6 +370,8 @@ function MerMapPlayer() {
   const [vp, setVp] = uS5({ w: window.innerWidth, h: window.innerHeight });
   const drag = uR5({ active: false, lx: 0, ly: 0 });
   const [isDragging, setIsDragging] = uS5(false);
+  const [bgUrl, setBgUrl] = uS5(null);
+  const [bgTransform, setBgTransform] = uS5({ x: 0, y: 0, scale: 1 });
 
   // ─── Initial load ─────────────────────────────────────
   uE5(() => {
@@ -377,6 +380,8 @@ function MerMapPlayer() {
       if (!rootMap) { setNoMap(true); setIsLoading(false); return; }
       setCurrentMapId(rootMap.id);
       setCurrentMapName(rootMap.name || 'Karte');
+      setBgUrl(rootMap.bg_url || null);
+      setBgTransform(rootMap.bg_transform || { x: 0, y: 0, scale: 1 });
       const hexData = await loadVisibleHexes(rootMap.id);
       setHexes(hexData);
       setIsLoading(false);
@@ -483,11 +488,13 @@ function MerMapPlayer() {
   const navigateInto = uC5(async (hex) => {
     if (!hex.submap_id) return;
     setSel(null);
-    setMapStack((s) => [...s, { id: currentMapId, name: currentMapName }]);
+    setMapStack((s) => [...s, { id: currentMapId, name: currentMapName, bgUrl, bgTransform }]);
     const subMap = await loadMap(hex.submap_id);
     setCurrentMapId(hex.submap_id);
     setCurrentMapName(subMap?.name || 'Subkarte');
-  }, [currentMapId, currentMapName]);
+    setBgUrl(subMap?.bg_url || null);
+    setBgTransform(subMap?.bg_transform || { x: 0, y: 0, scale: 1 });
+  }, [currentMapId, currentMapName, bgUrl, bgTransform]);
 
   const navigateUp = uC5((i) => {
     const target = mapStack[i]; if (!target) return;
@@ -495,6 +502,8 @@ function MerMapPlayer() {
     setSel(null);
     setCurrentMapId(target.id);
     setCurrentMapName(target.name);
+    setBgUrl(target.bgUrl || null);
+    setBgTransform(target.bgTransform || { x: 0, y: 0, scale: 1 });
   }, [mapStack]);
 
   // ─── Camera controls ──────────────────────────────────
@@ -585,7 +594,20 @@ function MerMapPlayer() {
         onClick={closePanel}
       >
         {!isLoading && (
-          <div className="mk-world" style={{ transform: worldTx, '--zoom': camera.zoom }}>
+          <div className={`mk-world${bgUrl ? ' has-bg' : ''}`} style={{ transform: worldTx, '--zoom': camera.zoom, '--label-scale': 1 / Math.sqrt(camera.zoom) }}>
+            {bgUrl && (
+              <img
+                src={bgUrl}
+                style={{
+                  position:'absolute', left:0, top:0,
+                  transform:`translate(${bgTransform.x}px,${bgTransform.y}px) scale(${bgTransform.scale}) translate(-50%,-50%)`,
+                  transformOrigin:'0 0',
+                  maxWidth:'none', zIndex:0, pointerEvents:'none', userSelect:'none', opacity:0.9,
+                }}
+                alt=""
+                draggable={false}
+              />
+            )}
             {hexList.map((h) => (
               <HexTile
                 key={hexKey(h.q, h.r)}

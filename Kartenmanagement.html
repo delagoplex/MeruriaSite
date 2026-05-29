@@ -82,24 +82,36 @@ function easeInOutCubic(t) {
 async function loadOrCreateRootMap() {
   const sb = window._sb;
   let { data } = await sb.from('karte_maps')
-    .select('id, name, bg_url')
+    .select('id, name, bg_url, bg_transform')
     .is('parent_hex_id', null)
+    .order('created_at', { ascending: true })
     .limit(1)
     .maybeSingle();
   if (!data) {
     const res = await sb.from('karte_maps')
       .insert({ name: 'Meruria' })
-      .select('id, name')
+      .select('id, name, bg_url, bg_transform')
       .single();
-    data = res.data;
+    // If the unique index fires (concurrent insert), fall back to fetching
+    if (res.error) {
+      const fallback = await sb.from('karte_maps')
+        .select('id, name, bg_url, bg_transform')
+        .is('parent_hex_id', null)
+        .order('created_at', { ascending: true })
+        .limit(1)
+        .single();
+      data = fallback.data;
+    } else {
+      data = res.data;
+    }
   }
-  return data; // { id, name }
+  return data;
 }
 
 async function loadMap(mapId) {
   const { data } = await window._sb
     .from('karte_maps')
-    .select('id, name, parent_hex_id, bg_url')
+    .select('id, name, parent_hex_id, bg_url, bg_transform')
     .eq('id', mapId)
     .single();
   return data;
@@ -110,7 +122,7 @@ function rowToHex(h) {
     id: h.id, q: h.q, r: h.r,
     name: h.name || '', terrain: h.terrain || '',
     features: h.features || '', beschreibung: h.beschreibung || '',
-    bild_url: h.bild_url || '', visible: !!h.visible,
+    bild_url: h.bild_url || '', bild_pos: h.bild_pos || null, visible: !!h.visible,
     has_submap: !!h.has_submap, submap_id: h.submap_id || null,
   };
 }
@@ -138,7 +150,7 @@ async function sbUpsertHex(mapId, hex) {
     id: hex.id, map_id: mapId, q: hex.q, r: hex.r,
     name: hex.name || '', terrain: hex.terrain || '',
     features: hex.features || '', beschreibung: hex.beschreibung || '',
-    bild_url: hex.bild_url || '', visible: !!hex.visible,
+    bild_url: hex.bild_url || '', bild_pos: hex.bild_pos || null, visible: !!hex.visible,
     has_submap: !!hex.has_submap, submap_id: hex.submap_id || null,
     updated_at: new Date().toISOString(),
   }, { onConflict: 'id' });
@@ -244,7 +256,7 @@ function HexTile({ hex, selected, hovered, editing, onSelect, onHoverChange, onG
         {/* Hex image */}
         <div className="mk-slot-clip mk-slot-clip-canvas">
           {hex.bild_url ? (
-            <img src={hex.bild_url} style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }} alt=""/>
+            <img src={hex.bild_url} style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition: hex.bild_pos ? `${hex.bild_pos.x}% ${hex.bild_pos.y}%` : '50% 50%', display:'block' }} alt=""/>
           ) : null}
         </div>
 
@@ -344,7 +356,7 @@ function StashCard({ hex, onDragStart, onDragEnd, isDragging, onFolderChange }) 
         {hex.bild_url ? (
           <img
             src={hex.bild_url}
-            style={{ width:'100%', height:'100%', objectFit:'cover', display:'block',
+            style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition: hex.bild_pos ? `${hex.bild_pos.x}% ${hex.bild_pos.y}%` : '50% 50%', display:'block',
               clipPath:'polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%)' }}
             alt=""
           />
@@ -430,6 +442,48 @@ Object.assign(window, { useCameraAnimator });
 const { useState: uS4, useRef: uR4, useCallback: uC4 } = React;
 const ImageUpload = window.ImageUpload;
 
+function BildPosPad({ pos, onChange }) {
+  const padRef = uR4(null);
+  const dragging = uR4(false);
+
+  const applyPos = (e) => {
+    const rect = padRef.current.getBoundingClientRect();
+    const x = Math.round(Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100)));
+    const y = Math.round(Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100)));
+    onChange({ x, y });
+  };
+
+  const p = pos || { x: 50, y: 50 };
+
+  return (
+    <div style={{ display:'flex', flexDirection:'column', gap:6 }}>
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+        <label style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(160,140,255,0.6)' }}>Bildposition</label>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(160,140,255,0.4)' }}>{p.x}% · {p.y}%</span>
+      </div>
+      <div
+        ref={padRef}
+        style={{ width:'100%', height:72, background:'rgba(8,6,22,0.7)', border:'1px solid rgba(124,77,255,0.25)', borderRadius:3, position:'relative', cursor:'crosshair', userSelect:'none', flexShrink:0 }}
+        onPointerDown={(e) => { dragging.current = true; e.currentTarget.setPointerCapture(e.pointerId); applyPos(e); }}
+        onPointerMove={(e) => { if (dragging.current) applyPos(e); }}
+        onPointerUp={() => { dragging.current = false; }}
+      >
+        {/* Grid lines */}
+        <div style={{ position:'absolute', inset:0, backgroundImage:'linear-gradient(rgba(124,77,255,0.08) 1px,transparent 1px),linear-gradient(90deg,rgba(124,77,255,0.08) 1px,transparent 1px)', backgroundSize:'25% 33.33%', pointerEvents:'none' }}/>
+        {/* Center crosshair */}
+        <div style={{ position:'absolute', left:'50%', top:0, bottom:0, width:1, background:'rgba(124,77,255,0.15)', pointerEvents:'none' }}/>
+        <div style={{ position:'absolute', top:'50%', left:0, right:0, height:1, background:'rgba(124,77,255,0.15)', pointerEvents:'none' }}/>
+        {/* Focal dot */}
+        <div style={{ position:'absolute', left:`${p.x}%`, top:`${p.y}%`, transform:'translate(-50%,-50%)', width:10, height:10, borderRadius:'50%', background:'rgba(200,180,255,0.95)', boxShadow:'0 0 8px rgba(124,77,255,0.9)', border:'1.5px solid rgba(255,255,255,0.6)', pointerEvents:'none' }}/>
+      </div>
+      <button
+        style={{ alignSelf:'flex-start', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(160,140,255,0.5)', background:'none', border:'none', cursor:'pointer', padding:0 }}
+        onClick={() => onChange({ x: 50, y: 50 })}
+      >zurücksetzen</button>
+    </div>
+  );
+}
+
 function EditorDrawer({ hex, onChange, onClose, onDelete, onNavigateInto, onCreateSubmap }) {
   if (!hex) return null;
 
@@ -464,7 +518,16 @@ function EditorDrawer({ hex, onChange, onClose, onDelete, onNavigateInto, onCrea
             onUploaded={(url) => updateDraft('bild_url', url)}
             bucket="karte-bilder"
             pathPrefix={`hexes/${hex.id}`}
+            objectPosition={hex.bild_pos ? `${hex.bild_pos.x}% ${hex.bild_pos.y}%` : '50% 50%'}
           />
+          {hex.bild_url && (
+            <div style={{ marginTop: 8, marginBottom: 4 }}>
+              <BildPosPad
+                pos={hex.bild_pos}
+                onChange={(pos) => updateDraft('bild_pos', pos)}
+              />
+            </div>
+          )}
           {/* Sichtbarkeit + Subkarte — nebeneinander unter dem Hex */}
           <div style={{ display:'flex', gap:8, marginBottom:4 }}>
             <button
@@ -624,10 +687,16 @@ function MerMap() {
   const [bgUrl, setBgUrl]           = uS5(null);
   const [bgUploading, setBgUploading] = uS5(false);
   const bgFileRef = uR5(null);
+  const [bgTransform, setBgTransform] = uS5({ x: 0, y: 0, scale: 1 });
+  const [bgAlignMode, setBgAlignMode] = uS5(false);
+  const bgAlignModeRef = uR5(false);
+  const cameraRef = uR5({ x: 0, y: 0, zoom: 1 });
 
   // Ref so debounced saves always have current mapId
   const currentMapIdRef = uR5(null);
   uE5(() => { currentMapIdRef.current = currentMapId; }, [currentMapId]);
+  uE5(() => { bgAlignModeRef.current = bgAlignMode; }, [bgAlignMode]);
+  uE5(() => { cameraRef.current = camera; }, [camera]);
 
   // ─── Undo history ──────────────────────────────────────
   const [history, setHistory] = uS5([]);
@@ -672,6 +741,7 @@ function MerMap() {
       setCurrentMapId(rootMap.id);
       setCurrentMapName(rootMap.name || 'Meruria');
       setBgUrl(rootMap.bg_url || null);
+      setBgTransform(rootMap.bg_transform || { x: 0, y: 0, scale: 1 });
       currentMapIdRef.current = rootMap.id;
 
       // Load hexes + stash
@@ -721,10 +791,12 @@ function MerMap() {
   // ─── Camera animator ──────────────────────────────────
   const { animateTo, cancelAnim } = useCameraAnimator(camera, setCamera);
 
-  // ─── Pan (middle mouse) ───────────────────────────────
+  // ─── Pan (middle mouse) / BG drag (left mouse in align mode) ────────────
   uE5(() => {
     const onDown = (e) => {
-      if (e.button !== 1) return;
+      const isMid = e.button === 1;
+      const isBgDrag = e.button === 0 && bgAlignModeRef.current;
+      if (!isMid && !isBgDrag) return;
       if (!stageRef.current?.contains(e.target)) return;
       e.preventDefault();
       drag.current.active = true; drag.current.lx = e.clientX; drag.current.ly = e.clientY;
@@ -734,7 +806,12 @@ function MerMap() {
       if (!drag.current.active) return;
       const dx = e.clientX - drag.current.lx, dy = e.clientY - drag.current.ly;
       drag.current.lx = e.clientX; drag.current.ly = e.clientY;
-      setCamera((c) => ({ ...c, x: c.x - dx / c.zoom, y: c.y - dy / c.zoom }));
+      if (bgAlignModeRef.current) {
+        const z = cameraRef.current.zoom;
+        setBgTransform((t) => ({ ...t, x: t.x + dx / z, y: t.y + dy / z }));
+      } else {
+        setCamera((c) => ({ ...c, x: c.x - dx / c.zoom, y: c.y - dy / c.zoom }));
+      }
     };
     const onUp = () => { drag.current.active = false; setIsDragging(false); };
     window.addEventListener('pointerdown', onDown, { capture: true, passive: false });
@@ -749,19 +826,23 @@ function MerMap() {
     };
   }, [cancelAnim]);
 
-  // ─── Zoom ─────────────────────────────────────────────
+  // ─── Zoom / BG scale ──────────────────────────────────
   const onWheel = (e) => {
     e.preventDefault(); cancelAnim();
     const factor = Math.exp(-e.deltaY * 0.0015);
-    setCamera((c) => {
-      const nextZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, c.zoom * factor));
-      const rect = stageRef.current.getBoundingClientRect();
-      const sx = e.clientX - rect.left, sy = e.clientY - rect.top;
-      const cx = editing ? (rect.width - DRAWER_W) / 2 : rect.width / 2;
-      const cy = rect.height / 2;
-      const wx = c.x + (sx - cx) / c.zoom, wy = c.y + (sy - cy) / c.zoom;
-      return { x: wx - (sx - cx) / nextZoom, y: wy - (sy - cy) / nextZoom, zoom: nextZoom };
-    });
+    if (bgAlignModeRef.current) {
+      setBgTransform((t) => ({ ...t, scale: Math.max(0.05, Math.min(20, t.scale * factor)) }));
+    } else {
+      setCamera((c) => {
+        const nextZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, c.zoom * factor));
+        const rect = stageRef.current.getBoundingClientRect();
+        const sx = e.clientX - rect.left, sy = e.clientY - rect.top;
+        const cx = editing ? (rect.width - DRAWER_W) / 2 : rect.width / 2;
+        const cy = rect.height / 2;
+        const wx = c.x + (sx - cx) / c.zoom, wy = c.y + (sy - cy) / c.zoom;
+        return { x: wx - (sx - cx) / nextZoom, y: wy - (sy - cy) / nextZoom, zoom: nextZoom };
+      });
+    }
   };
   uE5(() => {
     const el = stageRef.current; if (!el) return;
@@ -789,7 +870,7 @@ function MerMap() {
     if (hexes[k]) return;
     pushHistory();
     const newId = crypto.randomUUID();
-    const newHex = { id: newId, q, r, name: '', terrain: '', features: '', beschreibung: '', bild_url: '', visible: false, has_submap: false, submap_id: null };
+    const newHex = { id: newId, q, r, name: '', terrain: '', features: '', beschreibung: '', bild_url: '', bild_pos: null, visible: false, has_submap: false, submap_id: null };
     setHexes((h) => ({ ...h, [k]: newHex }));
     setSel(k);
     const { x, y } = axialToPixel(q, r);
@@ -898,6 +979,19 @@ function MerMap() {
     setBgUploading(false);
   }, [currentMapId]);
 
+  // ─── BG transform save (debounced) ───────────────────
+  const bgTransformSaveTimer = uR5(null);
+  uE5(() => {
+    if (!currentMapId) return;
+    clearTimeout(bgTransformSaveTimer.current);
+    bgTransformSaveTimer.current = setTimeout(() => {
+      window._sb.from('karte_maps')
+        .update({ bg_transform: bgTransform })
+        .eq('id', currentMapIdRef.current)
+        .then(({ error }) => { if (error) console.error('bg_transform save:', error); });
+    }, 600);
+  }, [bgTransform, currentMapId]);
+
   // ─── Delete hex ───────────────────────────────────────
   const deleteSelected = () => {
     if (!selectedKey) return;
@@ -921,12 +1015,14 @@ function MerMap() {
   // ─── Submap navigation ────────────────────────────────
   const navigateInto = uC5(async (hex) => {
     if (!hex.submap_id) return;
-    setMapStack((s) => [...s, { id: currentMapId, name: currentMapName, bgUrl }]);
+    setMapStack((s) => [...s, { id: currentMapId, name: currentMapName, bgUrl, bgTransform }]);
     const subMap = await loadMap(hex.submap_id);
     setCurrentMapId(hex.submap_id);
     setCurrentMapName(hex.name || subMap?.name || 'Subkarte');
     setBgUrl(subMap?.bg_url || null);
-  }, [currentMapId, currentMapName, bgUrl]);
+    setBgTransform(subMap?.bg_transform || { x: 0, y: 0, scale: 1 });
+    setBgAlignMode(false);
+  }, [currentMapId, currentMapName, bgUrl, bgTransform]);
 
   const navigateUp = uC5((i) => {
     const target = mapStack[i];
@@ -935,6 +1031,8 @@ function MerMap() {
     setCurrentMapId(target.id);
     setCurrentMapName(target.name);
     setBgUrl(target.bgUrl || null);
+    setBgTransform(target.bgTransform || { x: 0, y: 0, scale: 1 });
+    setBgAlignMode(false);
   }, [mapStack]);
 
   const createSubmap = uC5(async (hex) => {
@@ -948,12 +1046,14 @@ function MerMap() {
     const updatedHex = { ...hex, has_submap: true, submap_id: newMap.id };
     setHexes((h) => ({ ...h, [k]: updatedHex }));
     sbUpsertHex(currentMapIdRef.current, updatedHex);
-    setMapStack((s) => [...s, { id: currentMapId, name: currentMapName, bgUrl }]);
+    setMapStack((s) => [...s, { id: currentMapId, name: currentMapName, bgUrl, bgTransform }]);
     setCurrentMapId(newMap.id);
     setCurrentMapName(hex.name || newMap.name);
     setBgUrl(null);
+    setBgTransform({ x: 0, y: 0, scale: 1 });
+    setBgAlignMode(false);
     setEditing(false); setSel(null);
-  }, [currentMapId, currentMapName, bgUrl]);
+  }, [currentMapId, currentMapName, bgUrl, bgTransform]);
 
   // ─── Migration from localStorage ──────────────────────
   const handleMigrate = uC5(async () => {
@@ -1150,18 +1250,23 @@ function MerMap() {
       {/* Stage */}
       <div
         ref={stageRef}
-        className={`mk-stage${isDragging ? ' is-dragging' : ''}${dragInfo ? ' is-drop-active' : ''}`}
+        className={`mk-stage${isDragging ? ' is-dragging' : ''}${dragInfo ? ' is-drop-active' : ''}${bgAlignMode ? ' bg-align-mode' : ''}`}
         style={{ top: 56 }}
-        onClick={() => { if (editing) closeDrawer(); }}
+        onClick={() => { if (editing && !bgAlignMode) closeDrawer(); }}
         onDragOver={mapEmpty && dragInfo?.fromStash ? (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; } : undefined}
         onDrop={mapEmpty && dragInfo?.fromStash ? (e) => { e.preventDefault(); dropOnEmptyMap(); } : undefined}
       >
         {!isLoading && (
-          <div className={`mk-world${bgUrl ? ' has-bg' : ''}`} style={{ transform: worldTx, '--zoom': camera.zoom }}>
+          <div className={`mk-world${bgUrl ? ' has-bg' : ''}`} style={{ transform: worldTx, '--zoom': camera.zoom, '--label-scale': 1 / Math.sqrt(camera.zoom) }}>
             {bgUrl && (
               <img
                 src={bgUrl}
-                style={{ position:'absolute', left:0, top:0, transform:'translate(-50%,-50%)', maxWidth:'none', zIndex:0, pointerEvents:'none', userSelect:'none', opacity:0.9 }}
+                style={{
+                  position:'absolute', left:0, top:0,
+                  transform:`translate(${bgTransform.x}px,${bgTransform.y}px) scale(${bgTransform.scale}) translate(-50%,-50%)`,
+                  transformOrigin:'0 0',
+                  maxWidth:'none', zIndex:0, pointerEvents:'none', userSelect:'none', opacity:0.9,
+                }}
                 alt=""
                 draggable={false}
               />
@@ -1194,6 +1299,28 @@ function MerMap() {
                 onParentHover={onGhostParentHover}
               />
             ))}
+          </div>
+        )}
+
+        {/* BG align mode — overlay captures pointer events so hexes can't be clicked */}
+        {bgAlignMode && bgUrl && (
+          <div style={{
+            position:'absolute', inset:0, zIndex:10,
+            cursor: isDragging ? 'grabbing' : 'grab',
+          }}/>
+        )}
+
+        {/* BG align mode banner */}
+        {bgAlignMode && (
+          <div style={{
+            position:'absolute', top:16, left:'50%', transform:'translateX(-50%)',
+            zIndex:60, pointerEvents:'none',
+            background:'rgba(124,77,255,0.22)', border:'1px solid rgba(200,180,255,0.45)',
+            borderRadius:3, padding:'6px 18px',
+            fontFamily:'var(--font-mono)', fontSize:'9.5px', letterSpacing:'0.22em',
+            textTransform:'uppercase', color:'rgba(220,210,255,0.9)',
+          }}>
+            Hintergrund-Modus · Ziehen = verschieben · Scrollen = Größe
           </div>
         )}
 
@@ -1250,6 +1377,26 @@ function MerMap() {
           }
         </button>
         <input ref={bgFileRef} type="file" accept="image/*" style={{ display:'none' }} onChange={e => uploadBg(e.target.files[0])}/>
+        {bgUrl && (
+          <button
+            className={`mk-tool-btn${bgAlignMode ? ' is-active' : ''}`}
+            title={bgAlignMode ? 'Hintergrund sperren' : 'Hintergrund ausrichten'}
+            onClick={() => setBgAlignMode(v => !v)}
+          >
+            {bgAlignMode
+              ? <svg width="16" height="18" viewBox="0 0 16 18" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <rect x="2" y="8" width="12" height="9" rx="1.5"/>
+                  <path d="M5 8V5a3 3 0 0 1 6 0v3"/>
+                  <line x1="8" y1="12" x2="8" y2="14"/>
+                </svg>
+              : <svg width="16" height="18" viewBox="0 0 16 18" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <rect x="2" y="8" width="12" height="9" rx="1.5"/>
+                  <path d="M5 8V5a3 3 0 0 1 6 0" strokeDasharray="2 1.5"/>
+                  <line x1="8" y1="12" x2="8" y2="14"/>
+                </svg>
+            }
+          </button>
+        )}
         <button className="mk-tool-btn" title="Vergrößern" onClick={() => zoomBy(1.25)}>+</button>
         <button className="mk-tool-btn" title="Verkleinern" onClick={() => zoomBy(0.8)}>−</button>
         <button className="mk-tool-btn" title="Ansicht zurücksetzen" onClick={resetView}>
