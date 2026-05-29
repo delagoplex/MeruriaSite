@@ -11,6 +11,7 @@
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
+<script src="assets/components/image-upload.js"></script>
 </head>
 <body>
 <div id="root"></div>
@@ -427,61 +428,7 @@ Object.assign(window, { useCameraAnimator });
      ═══════════════════════════════════════════════════ -->
 <script type="text/babel">
 const { useState: uS4, useRef: uR4, useCallback: uC4 } = React;
-
-// Image upload to Supabase Storage
-function HexImageUpload({ hex, onUploaded }) {
-  const fileRef = uR4(null);
-  const [uploading, setUploading] = uS4(false);
-
-  const upload = async (file) => {
-    if (!file) return;
-    setUploading(true);
-    const path = `hexes/${hex.id}/${Date.now()}-${file.name.replace(/[^a-z0-9._-]/gi, '_')}`;
-    const { error } = await window._sb.storage.from('karte-bilder').upload(path, file, { upsert: true });
-    if (error) { console.error('Upload error:', error); setUploading(false); return; }
-    const { data } = window._sb.storage.from('karte-bilder').getPublicUrl(path);
-    onUploaded(data.publicUrl);
-    setUploading(false);
-  };
-
-  const HEX_MASK = "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)";
-  return (
-    <div
-      className="mk-drawer-imgwrap"
-      onClick={() => !uploading && fileRef.current && fileRef.current.click()}
-      style={{ cursor: uploading ? 'wait' : 'pointer', position: 'relative' }}
-    >
-      <div className="mk-slot-clip" style={{ clipPath: HEX_MASK }}>
-        {hex.bild_url ? (
-          <img src={hex.bild_url} style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }} alt=""/>
-        ) : (
-          <div style={{
-            width:'100%', height:'100%', display:'flex', alignItems:'center', justifyContent:'center',
-            fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em',
-            color:'rgba(124,77,255,0.4)', textTransform:'uppercase', flexDirection:'column', gap:8,
-          }}>
-            {uploading ? (
-              <span>hochladen…</span>
-            ) : (
-              <React.Fragment>
-                <span style={{ fontSize:18 }}>+</span>
-                <span>Bild wählen</span>
-              </React.Fragment>
-            )}
-          </div>
-        )}
-      </div>
-      <HexBorder selected={true}/>
-      <input
-        ref={fileRef}
-        type="file"
-        accept="image/*"
-        style={{ display:'none' }}
-        onChange={(e) => upload(e.target.files[0])}
-      />
-    </div>
-  );
-}
+const ImageUpload = window.ImageUpload;
 
 function EditorDrawer({ hex, onChange, onClose, onDelete, onNavigateInto, onCreateSubmap }) {
   if (!hex) return null;
@@ -511,10 +458,12 @@ function EditorDrawer({ hex, onChange, onClose, onDelete, onNavigateInto, onCrea
         </header>
 
         <div className="mk-drawer-body">
-          {/* Hex image upload */}
-          <HexImageUpload
-            hex={hex}
+          <ImageUpload
+            shape="hex"
+            imageUrl={hex.bild_url}
             onUploaded={(url) => updateDraft('bild_url', url)}
+            bucket="karte-bilder"
+            pathPrefix={`hexes/${hex.id}`}
           />
           {/* Sichtbarkeit + Subkarte — nebeneinander unter dem Hex */}
           <div style={{ display:'flex', gap:8, marginBottom:4 }}>
@@ -609,7 +558,7 @@ function EditorDrawer({ hex, onChange, onClose, onDelete, onNavigateInto, onCrea
   );
 }
 
-Object.assign(window, { HexImageUpload, EditorDrawer });
+Object.assign(window, { EditorDrawer });
 </script>
 
 

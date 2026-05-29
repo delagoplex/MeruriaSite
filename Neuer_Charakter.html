@@ -14,6 +14,7 @@
 <script src="assets/scripts/data/npc-stats-data.js"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
+<script src="assets/components/image-upload.js"></script>
 </head>
 <body>
 <div id="root"></div>
@@ -1899,14 +1900,15 @@ function NscOutputPhase({ nscTags, nscPossible }) {
     // ── Bild ──────────────────────────────────────────────────────────────
     section(/*#__PURE__*/React.createElement(React.Fragment, null,
       sectionHd("Bild"),
-      /*#__PURE__*/React.createElement("div", {style:{display:'flex',gap:10,alignItems:'center',flexWrap:'wrap'}},
-        /*#__PURE__*/React.createElement("input", {value:bildUrl, onChange:e=>setBildUrl(e.target.value),
-          placeholder:"URL oder assets/images/… — leer lassen für kein Bild",
-          style:{...fieldStyle, width:'360px'}}),
-        bildUrl.trim() && /*#__PURE__*/React.createElement("img", {src:bildUrl.trim(), alt:"Preview",
-          style:{height:52,width:52,objectFit:'cover',borderRadius:3,border:'1px solid rgba(160,140,255,.25)'},
-          onError:e=>e.target.style.display='none'})
-      )
+      /*#__PURE__*/React.createElement(window.ImageUpload, {
+        shape: 'square',
+        imageUrl: bildUrl,
+        onUploaded: url => setBildUrl(url),
+        bucket: 'karte-bilder',
+        pathPrefix: 'charaktere',
+        width: 160,
+        height: 160,
+      })
     )),
     // ── Spielwerte / Steckbrief ────────────────────────────────────────────
     section(/*#__PURE__*/React.createElement(React.Fragment, null,

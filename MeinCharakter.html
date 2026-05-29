@@ -12,6 +12,7 @@
 <script src="assets/components/nav.js"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
+<script src="assets/components/image-upload.js"></script>
 <script src="assets/components/site-gate.jsx" type="text/babel"></script>
 <script src="assets/components/tweaks-panel-13.jsx" type="text/babel"></script>
 <script src="assets/scripts/data/zauber-data.js"></script>
@@ -136,11 +137,12 @@ Object.assign(window, { mod, fmtMod, attrKey, skillBonus, ImageSlot, SecTitle, C
      ═══════════════════════════════════════════ -->
 <script type="text/babel">
 const { useState: useApp, useRef } = React;
-const { ImageSlot, SecTitle, Card, Corners, IRow,
+const { SecTitle, Card, Corners, IRow,
   DivisionRank, DeityCard, CombatCompact, AttributeGrid,
   SkillPills, PersonalitySection, QuestCard, CompanionCard, FbCard, KontakteTablet,
   buildChar } = window;
 const { useTweaks, TweaksPanel, TweakSection, TweakToggle } = window;
+const ImageUpload = window.ImageUpload;
 const { SiteNav, SiteGate } = window;
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"showCompanions":true,"showQuests":true,"showKontakte":true,"showWissenswertes":true,"showZauber":true}/*EDITMODE-END*/;
@@ -1026,7 +1028,15 @@ function SteckbriefView({ entry, onBack, hasMultiple }) {
         <div style={{display:"flex",flexDirection:"column",gap:11}}>
           <div style={{position:"relative",borderRadius:4,overflow:"hidden",border:"1px solid rgba(124,77,255,0.38)"}}>
             <Corners op={0.58} sz={18} />
-            <ImageSlot slotId={`${entry.id}-portrait`} label="Charakter-Portrait" height={310} hue={270} portrait />
+            <ImageUpload
+              shape="square"
+              imageUrl={char.bild || null}
+              onUploaded={url => upd({ bild: url })}
+              bucket="karte-bilder"
+              pathPrefix={`charaktere/${entry.id}`}
+              width="100%"
+              height={310}
+            />
           </div>
           {E ? <EditablePersonality char={char} upd={upd} taStyle={taStyle} /> : <PersonalitySection char={char} />}
         </div>
