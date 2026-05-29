@@ -31,8 +31,10 @@ function buildChar(d) {
     class:       d.class       || '—',
     background:  d.background  || '—',
     division:    d.division    || '—',
+    divisionId:  d.divisionId  || null,
     deity:       d.deity       || '—',
-    deityDomain: '—',                    // TODO: aus Gottheitsdaten ableiten
+    deityId:     d.deityId     || null,
+    deityDomain: '—',
     deityHue:    55,
     stats:       d.stats       || {str:10,dex:10,con:10,int:10,wis:10,cha:10},
 
@@ -81,44 +83,252 @@ function buildChar(d) {
 
 /* ── Division & Rang ──────────────────────── */
 function DivisionRank({ char }) {
-  const roman = ["I","II","III","IV","V"];
+  const div = (window.DIVISIONS_DATA || []).find(d => d.id === char.divisionId) || null;
+  const acc = div?.accent || 'rgba(124,77,255,0.7)';
   return (
     <Card style={{marginBottom:11}}>
       <SecTitle label="Division & Rang" />
-      <div style={{fontFamily:"var(--font-display)",fontSize:11,letterSpacing:".18em",color:"rgba(210,202,245,0.9)",textTransform:"uppercase",marginBottom:7}}>{char.division}</div>
+      <div style={{display:"flex",gap:10,alignItems:"center",marginBottom:8}}>
+        {div && (
+          <img src={div.logo} alt={div.name}
+            style={{width:36,height:36,objectFit:"contain",flexShrink:0,
+              filter:`drop-shadow(0 0 5px ${acc}) drop-shadow(0 0 10px ${acc}88)`}}/>
+        )}
+        <div style={{fontFamily:"var(--font-display)",fontSize:11,letterSpacing:".18em",
+          color:"rgba(210,202,245,0.9)",textTransform:"uppercase"}}>{char.division}</div>
+      </div>
       <div style={{display:"flex",alignItems:"center",gap:10}}>
         <div style={{display:"flex",gap:4}}>
-          {Array.from({length:char.rankMax},(_,i)=>{
+          {Array.from({length:char.rankMax||5},(_,i)=>{
             const filled = i < char.rankLevel;
             return <span key={i} style={{display:"inline-block",width:9,height:9,
               transform:"rotate(45deg)",flexShrink:0,
-              background:filled?"rgba(124,77,255,0.68)":"transparent",
-              border:`1px solid rgba(124,77,255,${filled?0.55:0.2})`}} />;
+              background:filled?`${acc}aa`:"transparent",
+              border:`1px solid ${filled?acc:"rgba(124,77,255,0.2)"}`}} />;
           })}
         </div>
-        <span style={{fontFamily:"var(--font-mono)",fontSize:10,color:"var(--white)"}}>{char.rank}
-          <span style={{color:"rgba(124,77,255,0.6)"}}> · </span>
-          <span style={{color:"rgba(124,77,255,0.85)"}}>{roman[char.rankLevel-1]}</span>
+        <span style={{fontFamily:"var(--font-mono)",fontSize:10,color:"var(--white)"}}>
+          {char.rank}
         </span>
       </div>
     </Card>
   );
 }
 
+/* ── Editierbare Division & Rang ─────────────── */
+function EditableDivisionRank({ char, upd }) {
+  const [open, setOpen] = useSteckbrief(false);
+  const divs = window.DIVISIONS_DATA || [];
+  const div  = divs.find(d => d.id === char.divisionId) || null;
+  const acc  = div?.accent || 'rgba(124,77,255,0.7)';
+
+  function selectDiv(d) {
+    const lowest = d.raenge[d.raenge.length - 1];
+    upd({ division: d.name, divisionId: d.id,
+          rank: lowest.titel, rankLevel: 1, rankMax: d.raenge.length });
+    setOpen(false);
+  }
+
+  function selectRang(r) {
+    if (!div) return;
+    upd({ rank: r.titel, rankLevel: div.raenge.length - r.rang + 1 });
+  }
+
+  return (
+    <Card style={{marginBottom:11}}>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:10}}>
+        <SecTitle label="Division & Rang" />
+        <button onClick={()=>setOpen(v=>!v)}
+          style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".14em",textTransform:"uppercase",
+            padding:"3px 10px",background:open?"rgba(124,77,255,0.18)":"transparent",
+            border:"1px solid rgba(124,77,255,0.3)",borderRadius:2,cursor:"pointer",
+            color:"rgba(160,140,255,0.8)",transition:"all .15s"}}>
+          {open ? "✕ Schließen" : "⊞ Wählen"}
+        </button>
+      </div>
+
+      {/* Aktuelle Division */}
+      {div ? (
+        <div style={{display:"flex",gap:10,alignItems:"center",marginBottom:10}}>
+          <img src={div.logo} alt={div.name}
+            style={{width:36,height:36,objectFit:"contain",
+              filter:`drop-shadow(0 0 5px ${acc}) drop-shadow(0 0 10px ${acc}88)`}}/>
+          <div>
+            <div style={{fontFamily:"var(--font-display)",fontSize:11,letterSpacing:".16em",
+              color:"rgba(210,202,245,0.9)",textTransform:"uppercase",marginBottom:2}}>{div.name}</div>
+            <div style={{fontFamily:"var(--font-mono)",fontSize:8,color:acc,letterSpacing:".08em"}}>{char.rank}</div>
+          </div>
+        </div>
+      ) : (
+        <div style={{fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(124,77,255,0.35)",
+          letterSpacing:".12em",marginBottom:10}}>— Keine Division gewählt —</div>
+      )}
+
+      {/* Rang-Auswahl (wenn Division gewählt und Picker zu) */}
+      {div && !open && (
+        <div style={{display:"flex",flexDirection:"column",gap:2}}>
+          {div.raenge.slice().reverse().map(r => {
+            const sel = char.rank === r.titel;
+            return (
+              <button key={r.rang} onClick={()=>selectRang(r)}
+                style={{display:"flex",alignItems:"center",gap:8,padding:"3px 6px",
+                  background:sel?`${acc}22`:"transparent",
+                  border:`1px solid ${sel?acc:"transparent"}`,borderRadius:2,
+                  cursor:"pointer",textAlign:"left",transition:"all .12s"}}>
+                <span style={{fontFamily:"var(--font-mono)",fontSize:7,color:sel?acc:"rgba(124,77,255,0.3)",
+                  letterSpacing:".1em",flexShrink:0,width:14}}>
+                  {r.rang === 1 ? "★" : r.rang}
+                </span>
+                <span style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".08em",
+                  color:sel?"var(--white)":"rgba(200,190,240,0.55)",textTransform:"uppercase"}}>
+                  {r.titel}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Divisions-Picker */}
+      {open && (
+        <div style={{borderTop:"1px solid rgba(124,77,255,0.14)",paddingTop:12}}>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(80px,1fr))",gap:6}}>
+            {divs.map(d => {
+              const sel = char.divisionId === d.id;
+              const a   = d.accent || 'rgba(124,77,255,0.7)';
+              return (
+                <button key={d.id} onClick={()=>selectDiv(d)} title={d.name}
+                  style={{padding:"8px 4px",display:"flex",flexDirection:"column",alignItems:"center",gap:5,
+                    background:sel?`${a}22`:"rgba(7,4,18,0.7)",
+                    border:`1px solid ${sel?a:"rgba(124,77,255,0.2)"}`,
+                    borderRadius:3,cursor:"pointer",transition:"all .15s"}}>
+                  <img src={d.logo} alt={d.name}
+                    style={{width:38,height:38,objectFit:"contain",
+                      filter:`drop-shadow(0 0 4px ${a}) drop-shadow(0 0 8px ${a}${sel?"bb":"55"})`}}/>
+                  <span style={{fontFamily:"var(--font-mono)",fontSize:6,letterSpacing:".07em",
+                    color:sel?"var(--white)":"rgba(200,190,240,0.55)",textTransform:"uppercase",
+                    textAlign:"center",lineHeight:1.3,
+                    overflow:"hidden",textOverflow:"ellipsis",maxWidth:"100%"}}>
+                    {d.name.replace('Die ','').replace('Der ','')}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </Card>
+  );
+}
+
 /* ── Gottheit ─────────────────────────────── */
+function findGod(id) {
+  if (!id || !window.GODS_DATA) return null;
+  return (window.GODS_DATA.gods || []).find(g => g.id === id) || null;
+}
+
+function DeitySymbol({ god, size = 72 }) {
+  if (!god) return null;
+  const clr = god.palette?.[2] || 'rgba(124,77,255,0.7)';
+  return (
+    <div style={{width:size,height:size,flexShrink:0,borderRadius:3,overflow:"hidden",
+      background:"rgba(7,4,18,0.9)",border:`1px solid ${clr}55`}}>
+      <img src={god.insigniaSrc} alt={god.name}
+        style={{width:"100%",height:"100%",objectFit:"contain",display:"block",
+          filter:`drop-shadow(0 0 6px ${clr}) drop-shadow(0 0 12px ${clr}88)`}}/>
+    </div>
+  );
+}
+
 function DeityCard({ char }) {
+  const god  = findGod(char.deityId);
+  const name = god ? god.name : (char.deity || '—');
   return (
     <Card style={{marginBottom:11}}>
       <SecTitle label="Gottheit" />
       <div style={{display:"flex",gap:12,alignItems:"center"}}>
-        <div style={{width:72,height:72,flexShrink:0}}>
-          <ImageSlot slotId="deity-symbol" label="Symbol" height={72} hue={char.deityHue||55} />
-        </div>
-        <div>
-          <div style={{fontFamily:"var(--font-display)",fontSize:12,letterSpacing:".16em",color:"var(--white)",textTransform:"uppercase",marginBottom:4}}>{char.deity}</div>
-          <div style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".12em",color:"rgba(124,77,255,0.5)"}}>{char.deityDomain}</div>
+        {god
+          ? <DeitySymbol god={god} size={72}/>
+          : <div style={{width:72,height:72,flexShrink:0}}>
+              <ImageSlot slotId="deity-symbol" label="Symbol" height={72} hue={char.deityHue||55}/>
+            </div>
+        }
+        <div style={{minWidth:0}}>
+          <div style={{fontFamily:"var(--font-display)",fontSize:12,letterSpacing:".16em",color:"var(--white)",textTransform:"uppercase"}}>{name}</div>
+          {god?.title && <div style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".08em",color:"rgba(160,140,255,0.5)",marginTop:4,lineHeight:1.5}}>{god.title}</div>}
         </div>
       </div>
+    </Card>
+  );
+}
+
+/* ── Editierbare Gottheit ─────────────────── */
+function EditableDeityCard({ char, upd }) {
+  const [open, setOpen] = useSteckbrief(false);
+  const god = findGod(char.deityId);
+  const gods = window.GODS_DATA?.gods || [];
+
+  function select(g) {
+    upd({ deity: g.name, deityId: g.id, deityDomain: g.domain, deityHue: 270 });
+    setOpen(false);
+  }
+
+  return (
+    <Card style={{marginBottom:11,position:"relative"}}>
+      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:10}}>
+        <SecTitle label="Gottheit" />
+        <button onClick={()=>setOpen(v=>!v)}
+          style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".14em",textTransform:"uppercase",
+            padding:"3px 10px",background:open?"rgba(124,77,255,0.18)":"transparent",
+            border:"1px solid rgba(124,77,255,0.3)",borderRadius:2,cursor:"pointer",
+            color:"rgba(160,140,255,0.8)",transition:"all .15s"}}>
+          {open ? "✕ Schließen" : "⊞ Wählen"}
+        </button>
+      </div>
+
+      {/* Aktuelle Gottheit */}
+      <div style={{display:"flex",gap:12,alignItems:"center",marginBottom: open ? 14 : 0}}>
+        {god
+          ? <DeitySymbol god={god} size={64}/>
+          : <div style={{width:64,height:64,flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center",
+              background:"rgba(7,4,18,0.9)",border:"1px solid rgba(124,77,255,0.2)",borderRadius:3,
+              fontFamily:"var(--font-mono)",fontSize:7,color:"rgba(124,77,255,0.3)",letterSpacing:".1em"}}>— —</div>
+        }
+        <div style={{minWidth:0}}>
+          <div style={{fontFamily:"var(--font-display)",fontSize:12,letterSpacing:".16em",color:"var(--white)",textTransform:"uppercase",marginBottom:3}}>
+            {god ? god.name : (char.deity || '—')}
+          </div>
+          {god?.title && <div style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".08em",color:"rgba(160,140,255,0.5)",lineHeight:1.5}}>{god.title}</div>}
+        </div>
+      </div>
+
+      {/* Picker */}
+      {open && (
+        <div style={{borderTop:"1px solid rgba(124,77,255,0.14)",paddingTop:12}}>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(72px,1fr))",gap:6}}>
+            {gods.map(g => {
+              const sel = char.deityId === g.id;
+              const clr = g.palette?.[2] || "rgba(124,77,255,0.7)";
+              return (
+                <button key={g.id} onClick={()=>select(g)} title={g.name}
+                  style={{padding:"6px 4px",display:"flex",flexDirection:"column",alignItems:"center",gap:4,
+                    background:sel?"rgba(124,77,255,0.18)":"rgba(7,4,18,0.7)",
+                    border:`1px solid ${sel?clr:"rgba(124,77,255,0.2)"}`,
+                    borderRadius:3,cursor:"pointer",transition:"all .15s"}}>
+                  <img src={g.insigniaSrc} alt={g.name}
+                    style={{width:36,height:36,objectFit:"contain",display:"block",
+                      filter:`drop-shadow(0 0 4px ${clr}) drop-shadow(0 0 8px ${clr}${sel?"bb":"55"})`}}/>
+                  <span style={{fontFamily:"var(--font-mono)",fontSize:6.5,letterSpacing:".07em",
+                    color:sel?"var(--white)":"rgba(200,190,240,0.55)",textTransform:"uppercase",
+                    whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis",maxWidth:"100%"}}>
+                    {g.name}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </Card>
   );
 }
@@ -145,6 +355,36 @@ function CombatCompact({ char }) {
           <span style={{fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(175,168,210,0.5)"}}>{w.damage}</span>
         </div>
       ))}
+    </Card>
+  );
+}
+
+/* ── Editierbare Kampfwerte ───────────────── */
+function EditableCombatCompact({ char, upd }) {
+  const fields = [
+    { key:'hp',         label:'TP',   type:'number', min:1  },
+    { key:'ac',         label:'RK',   type:'number', min:1  },
+    { key:'initiative', label:'INIT', type:'number', min:-5 },
+    { key:'speed',      label:'BEWG', type:'number', min:0  },
+  ];
+  return (
+    <Card>
+      <SecTitle label="Kampf" />
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginBottom:11}}>
+        {fields.map(({key,label,type,min})=>(
+          <div key={key} style={{background:"rgba(7,4,18,0.9)",border:"1px solid rgba(124,77,255,0.28)",borderRadius:3,
+            padding:"6px 8px",display:"flex",flexDirection:"column",alignItems:"center"}}>
+            <input
+              type={type} min={min} value={char[key]??0}
+              onChange={e=>upd({[key]:parseInt(e.target.value)||0})}
+              style={{fontFamily:"var(--font-mono)",fontSize:18,color:"var(--white)",lineHeight:1,
+                background:"transparent",border:"none",textAlign:"center",width:"100%",
+                outline:"none",WebkitAppearance:"none",MozAppearance:"textfield"}}/>
+            <span style={{fontFamily:"var(--font-mono)",fontSize:6.5,letterSpacing:".18em",
+              color:"rgba(124,77,255,0.5)",textTransform:"uppercase",marginTop:2}}>{label}</span>
+          </div>
+        ))}
+      </div>
     </Card>
   );
 }
@@ -234,24 +474,29 @@ function EditableSkillPills({ char, upd }) {
 }
 
 function SkillPills({ char }) {
-  const profs = mergeSkills(char).filter(s=>s.prof>0);
+  const skills = mergeSkills(char);
+  const icon  = ['○', '◆', '◈'];
+  const iclr  = ['rgba(124,77,255,0.22)', 'rgba(124,77,255,0.75)', 'rgba(140,210,255,0.85)'];
+  const nclr  = ['rgba(124,77,255,0.35)', 'rgba(200,190,240,0.88)', 'rgba(200,190,240,0.88)'];
+  const bclr  = ['rgba(124,77,255,0.22)', 'rgba(124,77,255,0.85)', 'rgba(140,210,255,0.85)'];
   return (
     <Card style={{marginBottom:11}}>
-      <SecTitle label="Stärken · Geübte Fertigkeiten" />
-      <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
-        {profs.map(s=>{
-          const bonus = skillBonus(s,char.stats,char.profBonus);
+      <SecTitle label="Fertigkeiten" />
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"1px 10px"}}>
+        {skills.map(s => {
+          const bonus = skillBonus(s, char.stats, char.profBonus);
           return (
-            <span key={s.name} style={{fontFamily:"var(--font-mono)",fontSize:9,padding:"3px 10px",
-              background:"rgba(124,77,255,0.12)",border:"1px solid rgba(124,77,255,0.32)",borderRadius:2,
-              color:"rgba(200,190,240,0.88)",letterSpacing:".06em",display:"inline-flex",gap:7,alignItems:"center"}}>
-              {s.name}<span style={{color:"rgba(124,77,255,0.92)",fontWeight:600}}>{fmtMod(bonus)}</span>
-            </span>
+            <div key={s.name} style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
+              <span style={{color:iclr[s.prof],fontSize:12,lineHeight:1,flexShrink:0,width:16}}>{icon[s.prof]}</span>
+              <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".07em",
+                color:nclr[s.prof],flex:1,textTransform:"uppercase",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{s.name}</span>
+              <span style={{fontFamily:"var(--font-mono)",fontSize:9,color:bclr[s.prof],fontWeight:600,flexShrink:0}}>{fmtMod(bonus)}</span>
+            </div>
           );
         })}
       </div>
-      <div style={{fontFamily:"var(--font-mono)",fontSize:7.5,color:"rgba(124,77,255,0.28)",marginTop:8,letterSpacing:".1em"}}>
-        Übungsbonus +{char.profBonus}
+      <div style={{fontFamily:"var(--font-mono)",fontSize:7,color:"rgba(124,77,255,0.28)",marginTop:8,letterSpacing:".1em"}}>
+        ○ Keine · ◆ Übung (+{char.profBonus}) · ◈ Expertise (+{char.profBonus * 2})
       </div>
     </Card>
   );
@@ -706,9 +951,9 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
               <IRow label="Haut"         value={char.skin} />
             </>}
           </Card>
-          <DivisionRank char={char} />
-          <DeityCard    char={char} />
-          <CombatCompact char={char} />
+          {E ? <EditableDivisionRank char={char} upd={upd} /> : <DivisionRank char={char} />}
+          {E ? <EditableDeityCard char={char} upd={upd} /> : <DeityCard char={char} />}
+          {E ? <EditableCombatCompact char={char} upd={upd} /> : <CombatCompact char={char} />}
         </div>
 
         {/* MITTE */}
@@ -747,7 +992,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
         <div style={{display:"flex",flexDirection:"column",gap:11}}>
           <div style={{position:"relative",borderRadius:4,overflow:"hidden",border:"1px solid rgba(124,77,255,0.38)"}}>
             <Corners op={0.58} sz={18} />
-            {canEdit && ImageUpload
+            {E && ImageUpload
               ? <ImageUpload shape="square" imageUrl={char.bild||null}
                   onUploaded={url=>upd({bild:url})} bucket="karte-bilder"
                   pathPrefix={`charaktere/${entry.id}`} width="100%" height={310} />
@@ -818,7 +1063,8 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
 
 Object.assign(window, {
   SKILLS_DEFAULT, buildChar, charFromEntry, saveCharToDB,
-  DivisionRank, DeityCard, CombatCompact, AttributeGrid,
+  DivisionRank, DeityCard, CombatCompact, EditableCombatCompact, AttributeGrid,
   SkillPills, PersonalitySection, QuestCard, CompanionCard, FbCard, KontakteTablet,
-  Divider, ERow, EditableStatsGrid, EditableSkillPills, EditablePersonality, SteckbriefView,
+  Divider, ERow, EditableStatsGrid, EditableSkillPills, EditablePersonality,
+  EditableDivisionRank, DeitySymbol, EditableDeityCard, SteckbriefView,
 });

@@ -16,6 +16,8 @@
 <script src="assets/components/site-gate.jsx" type="text/babel"></script>
 <script src="assets/components/tweaks-panel-13.jsx" type="text/babel"></script>
 <script src="assets/scripts/data/zauber-data.js"></script>
+<script src="assets/scripts/data/gottheiten-data.js"></script>
+<script src="assets/scripts/data/divisions-data.js"></script>
 
 </head>
 <body>
@@ -137,7 +139,6 @@ Object.assign(window, { mod, fmtMod, attrKey, skillBonus, ImageSlot, SecTitle, C
      ═══════════════════════════════════════════ -->
 <script type="text/babel">
 const { useState: useApp, useRef } = React;
-const { SteckbriefView, charFromEntry, saveCharToDB, buildChar } = window;
 const { SiteNav, SiteGate } = window;
 
 function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
@@ -444,14 +445,16 @@ function ZauberSection({ zauber, updZauber, editing }) {
           <div style={{fontFamily:'var(--font-mono)',fontSize:9,letterSpacing:'.28em',color:'rgba(124,77,255,0.45)',textTransform:'uppercase',marginBottom:4}}>Zauber</div>
           <div style={{width:28,height:1,background:'linear-gradient(90deg,rgba(124,77,255,0.65),transparent)'}} />
         </div>
-        <button onClick={()=>setShowPicker(true)}
-          style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.16em',textTransform:'uppercase',
-            padding:'5px 12px',background:'transparent',border:'1px solid rgba(124,77,255,0.25)',
-            borderRadius:3,cursor:'pointer',color:'rgba(124,77,255,0.55)',transition:'all .15s'}}
-          onMouseEnter={e=>{e.currentTarget.style.borderColor='rgba(124,77,255,0.6)';e.currentTarget.style.color='rgba(200,190,240,0.9)';}}
-          onMouseLeave={e=>{e.currentTarget.style.borderColor='rgba(124,77,255,0.25)';e.currentTarget.style.color='rgba(124,77,255,0.55)';}}>
-          + Zauber
-        </button>
+        {editing && (
+          <button onClick={()=>setShowPicker(true)}
+            style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.16em',textTransform:'uppercase',
+              padding:'5px 12px',background:'transparent',border:'1px solid rgba(124,77,255,0.25)',
+              borderRadius:3,cursor:'pointer',color:'rgba(124,77,255,0.55)',transition:'all .15s'}}
+            onMouseEnter={e=>{e.currentTarget.style.borderColor='rgba(124,77,255,0.6)';e.currentTarget.style.color='rgba(200,190,240,0.9)';}}
+            onMouseLeave={e=>{e.currentTarget.style.borderColor='rgba(124,77,255,0.25)';e.currentTarget.style.color='rgba(124,77,255,0.55)';}}>
+            + Zauber
+          </button>
+        )}
       </div>
       {zauber.length === 0 && (
         <div style={{fontFamily:'var(--font-mono)',fontSize:9,color:'rgba(160,140,255,0.2)',padding:'8px 0'}}>Keine Zauber eingetragen.</div>
@@ -484,10 +487,12 @@ function ZauberSection({ zauber, updZauber, editing }) {
                   {isKampf && z.schaden && ` · ${z.schaden} ${z.schadenTyp||''}`}
                 </div>
               </div>
-              <button onClick={e=>{e.stopPropagation();removeZauber(z.id);}}
-                style={{background:'none',border:'none',cursor:'pointer',color:'rgba(200,80,80,0.35)',fontSize:13,padding:'2px 4px',lineHeight:1,transition:'color .12s',flexShrink:0}}
-                onMouseEnter={e=>e.currentTarget.style.color='rgba(240,110,110,0.85)'}
-                onMouseLeave={e=>e.currentTarget.style.color='rgba(200,80,80,0.35)'}>✕</button>
+              {editing && (
+                <button onClick={e=>{e.stopPropagation();removeZauber(z.id);}}
+                  style={{background:'none',border:'none',cursor:'pointer',color:'rgba(200,80,80,0.35)',fontSize:13,padding:'2px 4px',lineHeight:1,transition:'color .12s',flexShrink:0}}
+                  onMouseEnter={e=>e.currentTarget.style.color='rgba(240,110,110,0.85)'}
+                  onMouseLeave={e=>e.currentTarget.style.color='rgba(200,80,80,0.35)'}>✕</button>
+              )}
             </div>
           );
         })}
@@ -766,7 +771,7 @@ function App() {
     </div>
   );
   if (chars.length === 0) return <EmptyState />;
-  if (entry) return <SteckbriefView entry={entry} onBack={handleBack} hasMultiple={chars.length > 1} />;
+  if (entry) { const SV = window.SteckbriefView; return <SV entry={entry} onBack={handleBack} hasMultiple={chars.length > 1} />; }
 
   return (
     <CharSelection
