@@ -345,7 +345,7 @@ function HexLabel({ hex }) {
   return (
     <div
       className="mk-hex-label-floating"
-      style={{ left: x, top: y + HEX_H * 0.30, transform:'translate(-50%,-50%)', '--hex-color': tcolor }}
+      style={{ left: x, top: y + HEX_H * 0.30, '--hex-color': tcolor }}
     >
       {hex.terrain ? <div className="mk-hex-label-terr" style={{ color: tcolor }}>◈ {hex.terrain}</div> : null}
       {hex.name ? <div className="mk-hex-label-name">{hex.name}</div> : null}
@@ -409,35 +409,31 @@ function MerMapPlayer() {
 
   // ─── Pan (middle mouse) ───────────────────────────────
   uE5(() => {
-    const el = stageRef.current; if (!el) return;
     const onDown = (e) => {
       if (e.button !== 1) return;
+      if (!stageRef.current?.contains(e.target)) return;
       e.preventDefault();
       drag.current.active = true; drag.current.lx = e.clientX; drag.current.ly = e.clientY;
       setIsDragging(true); cancelAnim();
     };
-    el.addEventListener('mousedown', onDown, true);
-    return () => el.removeEventListener('mousedown', onDown, true);
-  }, [cancelAnim]);
-
-  uE5(() => {
-    const onAux = (e) => { if (e.button === 1) e.preventDefault(); };
-    document.addEventListener('auxclick', onAux);
-    return () => document.removeEventListener('auxclick', onAux);
-  }, []);
-
-  uE5(() => {
     const onMove = (e) => {
       if (!drag.current.active) return;
       const dx = e.clientX - drag.current.lx, dy = e.clientY - drag.current.ly;
       drag.current.lx = e.clientX; drag.current.ly = e.clientY;
       setCamera((c) => ({ ...c, x: c.x - dx / c.zoom, y: c.y - dy / c.zoom }));
     };
-    const onUp = () => { if (drag.current.active) { drag.current.active = false; setIsDragging(false); } };
-    window.addEventListener('mousemove', onMove);
-    window.addEventListener('mouseup', onUp);
-    return () => { window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp); };
-  }, []);
+    const onUp = () => { drag.current.active = false; setIsDragging(false); };
+    window.addEventListener('pointerdown', onDown, { capture: true, passive: false });
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp);
+    window.addEventListener('pointercancel', onUp);
+    return () => {
+      window.removeEventListener('pointerdown', onDown, true);
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+      window.removeEventListener('pointercancel', onUp);
+    };
+  }, [cancelAnim]);
 
   // ─── Zoom ─────────────────────────────────────────────
   const panelOpen = !!selectedKey;
@@ -510,7 +506,7 @@ function MerMapPlayer() {
 
   // ─── World transform ──────────────────────────────────
   const centerX = panelOpen ? (vp.w - PANEL_W) / 2 : vp.w / 2;
-  const centerY = vp.h / 2;
+  const centerY = (vp.h - 56) / 2;
   const worldTx = `translate(${centerX}px, ${centerY}px) scale(${camera.zoom}) translate(${-camera.x}px, ${-camera.y}px)`;
 
   const hexList = Object.values(hexes);
@@ -589,7 +585,7 @@ function MerMapPlayer() {
         onClick={closePanel}
       >
         {!isLoading && (
-          <div className="mk-world" style={{ transform: worldTx }}>
+          <div className="mk-world" style={{ transform: worldTx, '--zoom': camera.zoom }}>
             {hexList.map((h) => (
               <HexTile
                 key={hexKey(h.q, h.r)}

@@ -87,7 +87,7 @@ async function loadOrCreateRootMap() {
     .maybeSingle();
   if (!data) {
     const res = await sb.from('karte_maps')
-      .insert({ name: 'Hauptkarte' })
+      .insert({ name: 'Meruria' })
       .select('id, name')
       .single();
     data = res.data;
@@ -159,7 +159,7 @@ async function sbUpsertStash(item) {
   const { error } = await window._sb.from('karte_stash').upsert({
     id: item.id, name: item.name || '', terrain: item.terrain || '',
     features: item.features || '', beschreibung: item.beschreibung || '',
-    bild_url: item.bild_url || '', sort_order: Date.now(),
+    bild_url: item.bild_url || '', folder: item.folder || null, sort_order: Date.now(),
   }, { onConflict: 'id' });
   if (error) console.error('sbUpsertStash:', error);
 }
@@ -318,13 +318,23 @@ function HexGhost({ parentQ, parentR, dir, onAdd, onDropHex, isDropActive, onPar
 }
 
 // Stash card — image from bild_url instead of image-slot
-function StashCard({ hex, onDragStart, onDragEnd, isDragging }) {
+function StashCard({ hex, onDragStart, onDragEnd, isDragging, onFolderChange }) {
   const tcolor = terrainColor(hex.terrain);
+  const [editFolder, setEditFolder] = uS2(false);
+  const [folderVal, setFolderVal]   = uS2('');
+
+  const startEdit = (e) => { e.stopPropagation(); setFolderVal(hex.folder || ''); setEditFolder(true); };
+  const commitEdit = () => {
+    const v = folderVal.trim();
+    if (v !== (hex.folder || '')) onFolderChange(hex.id, v || null);
+    setEditFolder(false);
+  };
+
   return (
     <div
       className={`mk-stash-card${isDragging ? ' is-dragging' : ''}`}
-      draggable={true}
-      onDragStart={(e) => onDragStart(e, hex)}
+      draggable={!editFolder}
+      onDragStart={(e) => { if (!editFolder) onDragStart(e, hex); }}
       onDragEnd={onDragEnd}
       title={hex.name ? `${hex.name}${hex.terrain ? ' · ' + hex.terrain : ''}` : 'Unbenanntes Hex'}
       style={{ '--hex-color': tcolor }}
@@ -345,6 +355,24 @@ function StashCard({ hex, onDragStart, onDragEnd, isDragging }) {
       <div className="mk-stash-card-label">
         {hex.terrain ? <div className="mk-stash-card-terr" style={{ color: tcolor }}>{hex.terrain}</div> : null}
         <div className="mk-stash-card-name">{hex.name || '— ohne Name —'}</div>
+      </div>
+      <div className="mk-stash-folder-badge">
+        {editFolder ? (
+          <input
+            className="mk-stash-folder-input"
+            autoFocus
+            value={folderVal}
+            placeholder="Ordner …"
+            onChange={(e) => setFolderVal(e.target.value)}
+            onKeyDown={(e) => { if (e.key === 'Enter') commitEdit(); if (e.key === 'Escape') setEditFolder(false); }}
+            onBlur={commitEdit}
+            onMouseDown={(e) => e.stopPropagation()}
+          />
+        ) : (
+          <button className="mk-stash-folder-btn" onClick={startEdit} onMouseDown={(e) => e.stopPropagation()}>
+            {hex.folder ? `⊞ ${hex.folder}` : '⊞'}
+          </button>
+        )}
       </div>
     </div>
   );
@@ -488,7 +516,39 @@ function EditorDrawer({ hex, onChange, onClose, onDelete, onNavigateInto, onCrea
             hex={hex}
             onUploaded={(url) => updateDraft('bild_url', url)}
           />
-          <div className="mk-drawer-imghint">◇ Anklicken zum Bild auswählen ◇</div>
+          {/* Sichtbarkeit + Subkarte — nebeneinander unter dem Hex */}
+          <div style={{ display:'flex', gap:8, marginBottom:4 }}>
+            <button
+              className={`mk-tool-btn${hex.visible ? ' is-active' : ''}`}
+              style={{ width:'calc(50% - 4px)', justifyContent:'center', gap:6, fontSize:11, letterSpacing:'0.12em' }}
+              onClick={() => updateDraft('visible', !hex.visible)}
+              title="Spieler-Sichtbarkeit umschalten"
+            >
+              {hex.visible
+                ? <React.Fragment><span style={{color:'rgba(80,200,140,0.9)'}}>◆</span> Sichtbar</React.Fragment>
+                : <React.Fragment><span style={{color:'rgba(124,77,255,0.4)'}}>○</span> Verborgen</React.Fragment>
+              }
+            </button>
+            <button
+              style={{
+                width:'calc(50% - 4px)', padding: '7px 10px',
+                display: 'flex', alignItems: 'center', justifyContent:'center', gap: 7,
+                fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 300,
+                letterSpacing: '0.08em',
+                color: hex.has_submap ? 'rgba(160,140,255,0.9)' : 'rgba(160,140,255,0.5)',
+                background: hex.has_submap ? 'rgba(124,77,255,0.12)' : 'rgba(124,77,255,0.06)',
+                border: `1px solid ${hex.has_submap ? 'rgba(124,77,255,0.45)' : 'rgba(124,77,255,0.2)'}`,
+                borderRadius: 4, cursor: 'pointer', transition: 'all 0.15s',
+              }}
+              onClick={handleSubmapAction}
+              onMouseEnter={e => { e.currentTarget.style.background='rgba(124,77,255,0.2)'; e.currentTarget.style.color='rgba(200,190,240,0.9)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background=hex.has_submap?'rgba(124,77,255,0.12)':'rgba(124,77,255,0.06)'; e.currentTarget.style.color=hex.has_submap?'rgba(160,140,255,0.9)':'rgba(160,140,255,0.5)'; }}
+              title={hex.has_submap ? 'Subkarte öffnen' : 'Subkarte anlegen'}
+            >
+              <span style={{ fontSize: 14 }}>⬡</span>
+              <span>{hex.has_submap ? 'Subkarte →' : 'Subkarte anlegen'}</span>
+            </button>
+          </div>
 
           {/* Name */}
           <div className="mk-field">
@@ -538,43 +598,6 @@ function EditorDrawer({ hex, onChange, onClose, onDelete, onNavigateInto, onCrea
             />
           </div>
 
-          {/* Sichtbarkeit toggle */}
-          <div className="mk-field" style={{ marginTop: 4 }}>
-            <label style={{ marginBottom: 6 }}>Spieler-Sichtbarkeit</label>
-            <button
-              className={`mk-tool-btn${hex.visible ? ' is-active' : ''}`}
-              style={{ width:'100%', justifyContent:'center', gap:8, fontSize:11, letterSpacing:'0.12em' }}
-              onClick={() => updateDraft('visible', !hex.visible)}
-            >
-              {hex.visible
-                ? <React.Fragment><span style={{color:'rgba(80,200,140,0.9)'}}>◆</span> Für Spieler sichtbar</React.Fragment>
-                : <React.Fragment><span style={{color:'rgba(124,77,255,0.4)'}}>○</span> Verborgen</React.Fragment>
-              }
-            </button>
-          </div>
-
-          {/* Subkarte */}
-          <div className="mk-field" style={{ marginTop: 4 }}>
-            <label style={{ marginBottom: 6 }}>Subkarte</label>
-            <button
-              style={{
-                width: '100%', padding: '10px 14px',
-                display: 'flex', alignItems: 'center', gap: 10,
-                fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 300,
-                letterSpacing: '0.06em',
-                color: hex.has_submap ? 'rgba(160,140,255,0.9)' : 'rgba(160,140,255,0.5)',
-                background: hex.has_submap ? 'rgba(124,77,255,0.12)' : 'rgba(124,77,255,0.06)',
-                border: `1px solid ${hex.has_submap ? 'rgba(124,77,255,0.45)' : 'rgba(124,77,255,0.2)'}`,
-                borderRadius: 4, cursor: 'pointer', transition: 'all 0.15s',
-              }}
-              onClick={handleSubmapAction}
-              onMouseEnter={e => { e.currentTarget.style.background='rgba(124,77,255,0.2)'; e.currentTarget.style.color='rgba(200,190,240,0.9)'; }}
-              onMouseLeave={e => { e.currentTarget.style.background=hex.has_submap?'rgba(124,77,255,0.12)':'rgba(124,77,255,0.06)'; e.currentTarget.style.color=hex.has_submap?'rgba(160,140,255,0.9)':'rgba(160,140,255,0.5)'; }}
-            >
-              <span style={{ fontSize: 16 }}>⬡</span>
-              <span>{hex.has_submap ? 'Subkarte öffnen →' : 'Subkarte anlegen'}</span>
-            </button>
-          </div>
         </div>
 
         <footer className="mk-drawer-foot">
@@ -609,7 +632,7 @@ function HexLabel({ hex }) {
   return (
     <div
       className="mk-hex-label-floating"
-      style={{ left: x, top: y + HEX_H * 0.30, transform: 'translate(-50%, -50%)', '--hex-color': tcolor }}
+      style={{ left: x, top: y + HEX_H * 0.30, '--hex-color': tcolor }}
     >
       {hex.terrain ? <div className="mk-hex-label-terr" style={{ color: tcolor }}>◈ {hex.terrain}</div> : null}
       {hex.name ? <div className="mk-hex-label-name">{hex.name}</div> : null}
@@ -623,7 +646,7 @@ function MerMap() {
 
   // ─── Map navigation state ──────────────────────────────
   const [currentMapId, setCurrentMapId]     = uS5(null);
-  const [currentMapName, setCurrentMapName] = uS5('Hauptkarte');
+  const [currentMapName, setCurrentMapName] = uS5('Meruria');
   const [mapStack, setMapStack]             = uS5([]); // [{id, name}]
 
   // ─── Map data state ────────────────────────────────────
@@ -635,6 +658,12 @@ function MerMap() {
   const [editing, setEditing] = uS5(false);
   const [confirm, setConfirm] = uS5(null);
   const [lagerOpen, setLagerOpen] = uS5(false);
+  const [activeLagerFolder, setActiveLagerFolder] = uS5('__all__');
+  const [extraFolders, setExtraFolders]   = uS5([]);
+  const [addingFolder, setAddingFolder]   = uS5(false);
+  const [newFolderVal, setNewFolderVal]   = uS5('');
+  const [renamingFolder, setRenamingFolder] = uS5(null);
+  const [renameFolderVal, setRenameFolderVal] = uS5('');
   const [isLoading, setIsLoading] = uS5(true);
   const [migrationBanner, setMigrationBanner] = uS5(false);
 
@@ -689,7 +718,7 @@ function MerMap() {
       // Load or create root map
       const rootMap = await loadOrCreateRootMap();
       setCurrentMapId(rootMap.id);
-      setCurrentMapName(rootMap.name || 'Hauptkarte');
+      setCurrentMapName(rootMap.name || 'Meruria');
       currentMapIdRef.current = rootMap.id;
 
       // Load hexes + stash
@@ -741,35 +770,31 @@ function MerMap() {
 
   // ─── Pan (middle mouse) ───────────────────────────────
   uE5(() => {
-    const el = stageRef.current; if (!el) return;
     const onDown = (e) => {
       if (e.button !== 1) return;
+      if (!stageRef.current?.contains(e.target)) return;
       e.preventDefault();
       drag.current.active = true; drag.current.lx = e.clientX; drag.current.ly = e.clientY;
       setIsDragging(true); cancelAnim();
     };
-    el.addEventListener('mousedown', onDown, true);
-    return () => el.removeEventListener('mousedown', onDown, true);
-  }, [cancelAnim]);
-
-  uE5(() => {
-    const onAux = (e) => { if (e.button === 1) e.preventDefault(); };
-    document.addEventListener('auxclick', onAux);
-    return () => document.removeEventListener('auxclick', onAux);
-  }, []);
-
-  uE5(() => {
     const onMove = (e) => {
       if (!drag.current.active) return;
       const dx = e.clientX - drag.current.lx, dy = e.clientY - drag.current.ly;
       drag.current.lx = e.clientX; drag.current.ly = e.clientY;
       setCamera((c) => ({ ...c, x: c.x - dx / c.zoom, y: c.y - dy / c.zoom }));
     };
-    const onUp = () => { if (drag.current.active) { drag.current.active = false; setIsDragging(false); } };
-    window.addEventListener('mousemove', onMove);
-    window.addEventListener('mouseup', onUp);
-    return () => { window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp); };
-  }, []);
+    const onUp = () => { drag.current.active = false; setIsDragging(false); };
+    window.addEventListener('pointerdown', onDown, { capture: true, passive: false });
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp);
+    window.addEventListener('pointercancel', onUp);
+    return () => {
+      window.removeEventListener('pointerdown', onDown, true);
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+      window.removeEventListener('pointercancel', onUp);
+    };
+  }, [cancelAnim]);
 
   // ─── Zoom ─────────────────────────────────────────────
   const onWheel = (e) => {
@@ -799,7 +824,7 @@ function MerMap() {
     if (openModal) { setSel(hexKey(q, r)); setEditing(true); }
   }, [animateTo, camera.zoom]);
 
-  const onHexClick = uC5((q, r) => { focusHex(q, r, true); }, [focusHex]);
+  const onHexClick = uC5((q, r) => { focusHex(q, r, true); setLagerOpen(false); }, [focusHex]);
   const onHexHover = uC5((k, isEnter) => {
     setHov((cur) => isEnter ? k : (cur === k ? null : cur));
   }, []);
@@ -879,13 +904,13 @@ function MerMap() {
     const h = hexes[oldKey]; if (!h) { setDragInfo(null); return; }
     pushHistory();
     setHexes((prev) => { const out = { ...prev }; delete out[oldKey]; return out; });
-    const stashItem = { id: h.id, name: h.name || '', terrain: h.terrain || '', features: h.features || '', beschreibung: h.beschreibung || '', bild_url: h.bild_url || '' };
+    const stashItem = { id: h.id, name: h.name || '', terrain: h.terrain || '', features: h.features || '', beschreibung: h.beschreibung || '', bild_url: h.bild_url || '', folder: activeLagerFolder === '__all__' ? null : activeLagerFolder };
     setStash((prev) => [...prev, stashItem]);
     if (selectedKey === oldKey) { setSel(null); setEditing(false); }
     setDragInfo(null);
     sbDeleteHex(h.id);
     sbUpsertStash(stashItem);
-  }, [dragInfo, hexes, selectedKey, pushHistory]);
+  }, [dragInfo, hexes, selectedKey, pushHistory, activeLagerFolder]);
 
   const dropOnEmptyMap = uC5(() => {
     if (!dragInfo || !dragInfo.fromStash) { setDragInfo(null); return; }
@@ -898,6 +923,12 @@ function MerMap() {
     sbDeleteStash(placed.id);
     sbUpsertHex(currentMapIdRef.current, movedHex);
   }, [dragInfo, stash, pushHistory]);
+
+  const onFolderChange = uC5((itemId, folder) => {
+    setStash(prev => prev.map(s => s.id === itemId ? { ...s, folder } : s));
+    const item = stash.find(s => s.id === itemId); if (!item) return;
+    sbUpsertStash({ ...item, folder });
+  }, [stash]);
 
   // ─── Delete hex ───────────────────────────────────────
   const deleteSelected = () => {
@@ -925,7 +956,7 @@ function MerMap() {
     setMapStack((s) => [...s, { id: currentMapId, name: currentMapName }]);
     const subMap = await loadMap(hex.submap_id);
     setCurrentMapId(hex.submap_id);
-    setCurrentMapName(subMap?.name || 'Subkarte');
+    setCurrentMapName(hex.name || subMap?.name || 'Subkarte');
   }, [currentMapId, currentMapName]);
 
   const navigateUp = uC5((i) => {
@@ -953,7 +984,7 @@ function MerMap() {
     // Navigate into new sub-map
     setMapStack((s) => [...s, { id: currentMapId, name: currentMapName }]);
     setCurrentMapId(newMap.id);
-    setCurrentMapName(newMap.name);
+    setCurrentMapName(hex.name || newMap.name);
     setEditing(false); setSel(null);
   }, [currentMapId, currentMapName]);
 
@@ -1035,13 +1066,49 @@ function MerMap() {
 
   // ─── World transform ──────────────────────────────────
   const centerX = editing ? (vp.w - DRAWER_W) / 2 : vp.w / 2;
-  const centerY = vp.h / 2;
+  const centerY = (vp.h - 56) / 2;
   const worldTx = `translate(${centerX}px, ${centerY}px) scale(${camera.zoom}) translate(${-camera.x}px, ${-camera.y}px)`;
 
   const hexList = Object.values(hexes);
   const selectedHex = selectedKey ? hexes[selectedKey] : null;
   const mapEmpty = hexList.length === 0;
-  const lagerHeight = lagerOpen ? 138 : 0;
+
+  const stashFolders = uM5(() => {
+    const fromStash = stash.map(s => s.folder).filter(Boolean);
+    return [...new Set([...extraFolders, ...fromStash])].sort();
+  }, [stash, extraFolders]);
+
+  const displayedStash = uM5(() =>
+    activeLagerFolder === '__all__' ? stash : stash.filter(s => s.folder === activeLagerFolder)
+  , [stash, activeLagerFolder]);
+
+  // Auto-reset folder tab when active folder disappears entirely
+  uE5(() => {
+    if (activeLagerFolder !== '__all__'
+      && !stash.some(s => s.folder === activeLagerFolder)
+      && !extraFolders.includes(activeLagerFolder))
+      setActiveLagerFolder('__all__');
+  }, [stash, activeLagerFolder, extraFolders]);
+
+  const createFolder = uC5(() => {
+    const name = newFolderVal.trim();
+    if (name && !stashFolders.includes(name)) {
+      setExtraFolders(prev => [...prev, name]);
+      setActiveLagerFolder(name);
+    }
+    setAddingFolder(false); setNewFolderVal('');
+  }, [newFolderVal, stashFolders]);
+
+  const renameFolder = uC5((oldName) => {
+    const newName = renameFolderVal.trim();
+    setRenamingFolder(null);
+    if (!newName || newName === oldName) return;
+    const affected = stash.filter(s => s.folder === oldName);
+    setStash(prev => prev.map(s => s.folder === oldName ? { ...s, folder: newName } : s));
+    affected.forEach(s => sbUpsertStash({ ...s, folder: newName }));
+    setExtraFolders(prev => prev.map(f => f === oldName ? newName : f));
+    if (activeLagerFolder === oldName) setActiveLagerFolder(newName);
+  }, [renameFolderVal, stash, activeLagerFolder]);
 
   // ─── Auth gates ───────────────────────────────────────
   if (authState === 'loading' || (authState === 'ok' && isLoading && !currentMapId)) {
@@ -1072,7 +1139,7 @@ function MerMap() {
 
   return (
     <React.Fragment>
-      <style>{`:root { --lager-h: ${lagerHeight}px; }`}</style>
+      <style>{`:root { --lager-h: ${lagerOpen ? 138 : 0}px; }`}</style>
 
       {/* Top bar with breadcrumb */}
       <header className="mk-topbar">
@@ -1123,7 +1190,7 @@ function MerMap() {
         onDrop={mapEmpty && dragInfo?.fromStash ? (e) => { e.preventDefault(); dropOnEmptyMap(); } : undefined}
       >
         {!isLoading && (
-          <div className="mk-world" style={{ transform: worldTx }}>
+          <div className="mk-world" style={{ transform: worldTx, '--zoom': camera.zoom }}>
             {hexList.map((h) => (
               <HexTile
                 key={hexKey(h.q, h.r)}
@@ -1230,31 +1297,79 @@ function MerMap() {
         </button>
       </div>
 
-      {/* Lager bar */}
+      {/* Lager sidebar */}
       {lagerOpen && (
         <div
           className={`mk-lager${dragInfo?.fromMap ? ' is-drop-active' : ''}`}
           onDragOver={dragInfo?.fromMap ? (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; } : undefined}
           onDrop={dragInfo?.fromMap ? (e) => { e.preventDefault(); dropOnLager(); } : undefined}
         >
+          {/* Header mit inline Ordner-Tabs */}
           <div className="mk-lager-header">
-            <div style={{ display:'flex', alignItems:'baseline', gap:14 }}>
-              <span className="mk-lager-title">◈ Lager</span>
-              <span className="mk-lager-count">{stash.length === 0 ? 'leer' : `${stash.length} Hex${stash.length === 1 ? '' : 'e'}`}</span>
+            <span className="mk-lager-title">◈ Lager</span>
+            <div className="mk-lager-tabs">
+              <button
+                className={`mk-lager-folder-tab${activeLagerFolder === '__all__' ? ' is-active' : ''}`}
+                onClick={() => setActiveLagerFolder('__all__')}
+              >
+                Alle <span className="tab-count">{stash.length}</span>
+              </button>
+              {stashFolders.map(f => (
+                renamingFolder === f ? (
+                  <input
+                    key={f}
+                    className="mk-lager-folder-input"
+                    autoFocus
+                    value={renameFolderVal}
+                    onChange={(e) => setRenameFolderVal(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === 'Enter') renameFolder(f); if (e.key === 'Escape') setRenamingFolder(null); }}
+                    onBlur={() => renameFolder(f)}
+                  />
+                ) : (
+                  <button
+                    key={f}
+                    className={`mk-lager-folder-tab${activeLagerFolder === f ? ' is-active' : ''}`}
+                    onClick={() => setActiveLagerFolder(f)}
+                    onDoubleClick={() => { setRenamingFolder(f); setRenameFolderVal(f); }}
+                    title={`${f} — Doppelklick zum Umbenennen`}
+                  >
+                    {f} <span className="tab-count">{stash.filter(s => s.folder === f).length}</span>
+                  </button>
+                )
+              ))}
+              {addingFolder ? (
+                <input
+                  className="mk-lager-folder-input"
+                  autoFocus
+                  value={newFolderVal}
+                  placeholder="Name …"
+                  onChange={(e) => setNewFolderVal(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === 'Enter') createFolder(); if (e.key === 'Escape') { setAddingFolder(false); setNewFolderVal(''); } }}
+                  onBlur={createFolder}
+                />
+              ) : (
+                <button className="mk-lager-folder-add" onClick={() => setAddingFolder(true)} title="Neuen Ordner erstellen">+</button>
+              )}
             </div>
+            <span className="mk-lager-count">{stash.length === 0 ? 'leer' : `${stash.length} Hex${stash.length === 1 ? '' : 'e'}`}</span>
             <button className="mk-lager-toggle" onClick={() => setLagerOpen(false)} title="Lager schließen">×</button>
           </div>
+
+          {/* Cards */}
           <div className="mk-lager-body">
             {stash.length === 0 ? (
               <div className="mk-lager-empty">
                 {dragInfo?.fromMap ? '↓ hier ablegen, um zu lagern' : '— Hex am Grip greifen und hier ablegen —'}
               </div>
+            ) : displayedStash.length === 0 ? (
+              <div className="mk-lager-empty">— Keine Hexe in diesem Ordner —</div>
             ) : (
-              stash.map((h) => (
+              displayedStash.map((h) => (
                 <StashCard
                   key={h.id} hex={h}
                   onDragStart={onStashDragStart} onDragEnd={onStashDragEnd}
                   isDragging={dragInfo?.fromStash && dragInfo.id === h.id}
+                  onFolderChange={onFolderChange}
                 />
               ))
             )}
