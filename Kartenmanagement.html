@@ -50,16 +50,17 @@ function hexKey(q, r) { return `${q},${r}`; }
 // ── Terrain choices ─────────────────────────────────────────
 const TERRAINS = [
   '', 'Ebene', 'Wald', 'Hügelland', 'Gebirge', 'Wüste',
-  'Sumpf', 'Tundra', 'Vulkan', 'See', 'Küste', 'Ozean',
+  'Steppe', 'Sumpf', 'Tundra', 'Vulkan', 'See', 'Küste', 'Ozean',
   'Hochland', 'Kolonie', 'Höhle', 'Dschungel', 'Insel', 'Magisch', 'Sonstiges',
 ];
 
 const TERRAIN_COLORS = {
   'Ebene':      'oklch(0.84 0.14 140)',
-  'Wald':       'oklch(0.52 0.13 155)',
+  'Wald':       'oklch(0.45 0.17 145)',
   'Sumpf':      'oklch(0.42 0.06 110)',
   'Hügelland':  'oklch(0.72 0.11 105)',
   'Wüste':      'oklch(0.88 0.13 90)',
+  'Steppe':     'oklch(0.80 0.13 80)',
   'Kolonie':    'oklch(0.73 0.15 65)',
   'Vulkan':     'oklch(0.58 0.22 28)',
   'Tundra':     'oklch(0.92 0.04 230)',
@@ -69,7 +70,7 @@ const TERRAIN_COLORS = {
   'Gebirge':    'oklch(0.62 0.04 65)',
   'Hochland':   'oklch(0.72 0.06 285)',
   'Höhle':      'oklch(0.58 0.13 335)',
-  'Dschungel':  'oklch(0.45 0.17 145)',
+  'Dschungel':  'oklch(0.52 0.13 155)',
   'Insel':      'oklch(0.78 0.14 185)',
   'Magisch':    'oklch(0.62 0.22 310)',
   'Sonstiges':  'oklch(0.65 0.18 295)',
