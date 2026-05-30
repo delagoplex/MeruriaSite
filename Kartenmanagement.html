@@ -126,8 +126,15 @@ function rowToHex(h) {
     id: h.id, q: h.q, r: h.r,
     name: h.name || '', terrain: h.terrain || '',
     features: h.features || '', beschreibung: h.beschreibung || '',
-    bild_url: h.bild_url || '', bild_pos: h.bild_pos || null, visible: !!h.visible,
+    bild_url: h.bild_url || '', bild_pos: h.bild_pos || null, banner_url: h.banner_url || '', visible: !!h.visible,
     has_submap: !!h.has_submap, submap_id: h.submap_id || null,
+    tags: h.tags || [],
+    datensonde: !!h.datensonde,
+    kolonie: h.kolonie || null,
+    ressourcen: h.ressourcen || {},
+    bevoelkerung: h.bevoelkerung || '',
+    kolonien: h.kolonien || '',
+    erkundung: h.erkundung || [],
   };
 }
 
@@ -154,8 +161,15 @@ async function sbUpsertHex(mapId, hex) {
     id: hex.id, map_id: mapId, q: hex.q, r: hex.r,
     name: hex.name || '', terrain: hex.terrain || '',
     features: hex.features || '', beschreibung: hex.beschreibung || '',
-    bild_url: hex.bild_url || '', bild_pos: hex.bild_pos || null, visible: !!hex.visible,
+    bild_url: hex.bild_url || '', bild_pos: hex.bild_pos || null, banner_url: hex.banner_url || '', visible: !!hex.visible,
     has_submap: !!hex.has_submap, submap_id: hex.submap_id || null,
+    tags: hex.tags || [],
+    datensonde: !!hex.datensonde,
+    kolonie: hex.kolonie || null,
+    ressourcen: hex.ressourcen || {},
+    bevoelkerung: hex.bevoelkerung || '',
+    kolonien: hex.kolonien || '',
+    erkundung: hex.erkundung || [],
     updated_at: new Date().toISOString(),
   }, { onConflict: 'id' });
   if (error) console.error('sbUpsertHex:', error);
@@ -493,18 +507,95 @@ function BildPosPad({ pos, onChange }) {
   );
 }
 
-function EditorDrawer({ hex, onChange, onClose, onDelete, onNavigateInto, onCreateSubmap }) {
-  if (!hex) return null;
+const KOLL_CATS = [
+  { id:'fische',         label:'Fische',         hue:200 },
+  { id:'insekten',       label:'Insekten',        hue:95  },
+  { id:'pflanzen',       label:'Pflanzen',        hue:140 },
+  { id:'mineralien',     label:'Mineralien',      hue:60  },
+  { id:'kreaturen',      label:'Kreaturen',       hue:285 },
+  { id:'kreaturenteile', label:'Kreaturenteile',  hue:0   },
+  { id:'wal',            label:'Trümmer d. Wals', hue:210 },
+  { id:'lebensspeicher', label:'Lebensspeicher',  hue:45  },
+];
+const KOLONIE_STUFEN = ['', 'Lager', 'Außenposten', 'Dorf', 'Stadt'];
 
-  const updateDraft = (key, val) => onChange({ ...hex, [key]: val });
+function EditorDrawer({ hex, onChange, onClose, onDelete, onNavigateInto, onCreateSubmap, isSubmap }) {
+  if (!hex) return null;
+  const [tagInput, setTagInput] = uS4('');
+  const [newErkName, setNewErkName] = uS4('');
+
+  const upd = (key, val) => onChange({ ...hex, [key]: val });
+
+  // Tags
+  const tags = hex.tags || [];
+  const addTag = () => {
+    const v = tagInput.trim();
+    if (v && !tags.includes(v)) upd('tags', [...tags, v]);
+    setTagInput('');
+  };
+
+  // Ressourcen (submap)
+  const res = hex.ressourcen || {};
+  const updRes = (id, field, val) => {
+    const cur = res[id] || { entdeckt: 0, komplettiert: 0 };
+    upd('ressourcen', { ...res, [id]: { ...cur, [field]: +val } });
+  };
+
+  // Kolonie (submap)
+  const kol = hex.kolonie || { stufe: '', kolonisierung: 0, bau: 0, stimmung: 0, handel: false };
+  const updKol = (field, val) => upd('kolonie', { ...kol, [field]: val });
+
+  // Erkundung (main map)
+  const erk = hex.erkundung || [];
+  const addErk = () => {
+    const v = newErkName.trim();
+    if (v) { upd('erkundung', [...erk, { name: v, entdeckt: 0, komplettiert: 0 }]); setNewErkName(''); }
+  };
+  const updErk = (i, field, val) =>
+    upd('erkundung', erk.map((e, idx) => idx === i ? { ...e, [field]: field === 'name' ? val : +val } : e));
+  const removeErk = (i) => upd('erkundung', erk.filter((_, idx) => idx !== i));
 
   const handleSubmapAction = () => {
-    if (hex.has_submap) {
-      onNavigateInto(hex);
-      onClose();
-    } else {
-      onCreateSubmap(hex);
-    }
+    if (hex.has_submap) { onNavigateInto(hex); onClose(); }
+    else { onCreateSubmap(hex); }
+  };
+
+  const SectionHead = ({ label }) => (
+    <div style={{ display:'flex', alignItems:'center', gap:8, margin:'18px 0 10px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(124,77,255,0.5)' }}>
+      <span>{label}</span><div style={{ flex:1, height:1, background:'rgba(124,77,255,0.18)' }}/>
+    </div>
+  );
+
+  const SliderRow = ({ label, value, onChange: oc }) => (
+    <div style={{ marginBottom:8 }}>
+      <div style={{ display:'flex', justifyContent:'space-between', marginBottom:2 }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.1em', color:'rgba(160,140,255,0.6)' }}>{label}</span>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(124,77,255,0.7)' }}>{value}%</span>
+      </div>
+      <input type="range" min="0" max="100" value={value} onChange={e => oc(+e.target.value)} style={{ width:'100%', accentColor:'rgba(124,77,255,0.9)', cursor:'pointer' }}/>
+    </div>
+  );
+
+  const DualBar = ({ catId, label, hue }) => {
+    const v = res[catId] || { entdeckt: 0, komplettiert: 0 };
+    return (
+      <div style={{ marginBottom:12 }}>
+        <div style={{ display:'flex', justifyContent:'space-between', marginBottom:4 }}>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.1em', color:`oklch(0.72 0.13 ${hue})` }}>{label}</span>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'rgba(120,100,200,0.5)' }}>{v.entdeckt}% · {v.komplettiert}%</span>
+        </div>
+        <div style={{ marginBottom:3 }}>
+          <div style={{ display:'flex', alignItems:'center', gap:6 }}>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'rgba(160,140,255,0.4)', width:62, letterSpacing:'0.1em' }}>ENTDECKT</span>
+            <input type="range" min="0" max="100" value={v.entdeckt} onChange={e => updRes(catId,'entdeckt',e.target.value)} style={{ flex:1, accentColor:`oklch(0.7 0.13 ${hue})`, cursor:'pointer' }}/>
+          </div>
+        </div>
+        <div style={{ display:'flex', alignItems:'center', gap:6 }}>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'rgba(160,140,255,0.4)', width:62, letterSpacing:'0.1em' }}>KOMPLETT</span>
+          <input type="range" min="0" max="100" value={v.komplettiert} onChange={e => updRes(catId,'komplettiert',e.target.value)} style={{ flex:1, accentColor:`oklch(0.85 0.15 ${hue})`, cursor:'pointer' }}/>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -524,101 +615,163 @@ function EditorDrawer({ hex, onChange, onClose, onDelete, onNavigateInto, onCrea
           <ImageUpload
             shape="hex"
             imageUrl={hex.bild_url}
-            onUploaded={(url) => updateDraft('bild_url', url)}
+            onUploaded={(url) => upd('bild_url', url)}
             bucket="karte-bilder"
             pathPrefix={`hexes/${hex.id}`}
             objectPosition={hex.bild_pos ? `${hex.bild_pos.x}% ${hex.bild_pos.y}%` : '50% 50%'}
           />
           {hex.bild_url && (
             <div style={{ marginTop: 8, marginBottom: 4 }}>
-              <BildPosPad
-                pos={hex.bild_pos}
-                onChange={(pos) => updateDraft('bild_pos', pos)}
-              />
+              <BildPosPad pos={hex.bild_pos} onChange={(pos) => upd('bild_pos', pos)}/>
             </div>
           )}
-          {/* Subkarte + Sichtbarkeit — nebeneinander unter dem Hex */}
+
+          {/* Subkarte + Sichtbarkeit */}
           <div style={{ display:'flex', gap:8, marginBottom:4 }}>
             <button
-              style={{
-                width:'calc(50% - 4px)', padding: '7px 10px',
-                display: 'flex', alignItems: 'center', justifyContent:'center', gap: 7,
-                fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 300,
-                letterSpacing: '0.08em',
-                color: hex.has_submap ? 'rgba(160,140,255,0.9)' : 'rgba(160,140,255,0.5)',
-                background: hex.has_submap ? 'rgba(124,77,255,0.12)' : 'rgba(124,77,255,0.06)',
-                border: `1px solid ${hex.has_submap ? 'rgba(124,77,255,0.45)' : 'rgba(124,77,255,0.2)'}`,
-                borderRadius: 4, cursor: 'pointer', transition: 'all 0.15s',
-              }}
+              style={{ width:'calc(50% - 4px)', padding:'7px 10px', display:'flex', alignItems:'center', justifyContent:'center', gap:7, fontFamily:'var(--font-body)', fontSize:11, fontWeight:300, letterSpacing:'0.08em', color: hex.has_submap ? 'rgba(160,140,255,0.9)' : 'rgba(160,140,255,0.5)', background: hex.has_submap ? 'rgba(124,77,255,0.12)' : 'rgba(124,77,255,0.06)', border:`1px solid ${hex.has_submap ? 'rgba(124,77,255,0.45)' : 'rgba(124,77,255,0.2)'}`, borderRadius:4, cursor:'pointer', transition:'all 0.15s' }}
               onClick={handleSubmapAction}
               onMouseEnter={e => { e.currentTarget.style.background='rgba(124,77,255,0.2)'; e.currentTarget.style.color='rgba(200,190,240,0.9)'; }}
               onMouseLeave={e => { e.currentTarget.style.background=hex.has_submap?'rgba(124,77,255,0.12)':'rgba(124,77,255,0.06)'; e.currentTarget.style.color=hex.has_submap?'rgba(160,140,255,0.9)':'rgba(160,140,255,0.5)'; }}
-              title={hex.has_submap ? 'Subkarte öffnen' : 'Subkarte anlegen'}
             >
-              <span style={{ fontSize: 14 }}>⬡</span>
+              <span style={{ fontSize:14 }}>⬡</span>
               <span>{hex.has_submap ? 'Subkarte →' : 'Subkarte anlegen'}</span>
             </button>
             <button
               className={`mk-tool-btn${hex.visible ? ' is-active' : ''}`}
               style={{ width:'calc(50% - 4px)', justifyContent:'center', gap:6, fontSize:11, letterSpacing:'0.12em' }}
-              onClick={() => updateDraft('visible', !hex.visible)}
-              title="Spieler-Sichtbarkeit umschalten"
+              onClick={() => upd('visible', !hex.visible)}
             >
               {hex.visible
                 ? <React.Fragment><span style={{color:'rgba(80,200,140,0.9)'}}>◆</span> Sichtbar</React.Fragment>
-                : <React.Fragment><span style={{color:'rgba(124,77,255,0.4)'}}>○</span> Verborgen</React.Fragment>
-              }
+                : <React.Fragment><span style={{color:'rgba(124,77,255,0.4)'}}>○</span> Verborgen</React.Fragment>}
             </button>
           </div>
 
           {/* Name */}
           <div className="mk-field">
             <label htmlFor="mk-name">Name</label>
-            <input
-              id="mk-name" className="mk-input" type="text"
-              placeholder="z. B. Sturmkrone, Aschewüste …"
-              value={hex.name || ''}
-              onChange={(e) => updateDraft('name', e.target.value)}
-            />
+            <input id="mk-name" className="mk-input" type="text" placeholder="z. B. Sturmkrone …" value={hex.name || ''} onChange={e => upd('name', e.target.value)}/>
           </div>
 
-          {/* Terrain */}
+          {/* Gelände */}
           <div className="mk-field">
             <label htmlFor="mk-terrain">Gelände</label>
-            <select
-              id="mk-terrain" className="mk-select"
-              value={hex.terrain || ''}
-              onChange={(e) => updateDraft('terrain', e.target.value)}
-            >
-              {TERRAINS.map((t) => (
-                <option key={t} value={t}>{t || '— bitte wählen —'}</option>
-              ))}
+            <select id="mk-terrain" className="mk-select" value={hex.terrain || ''} onChange={e => upd('terrain', e.target.value)}>
+              {TERRAINS.map(t => <option key={t} value={t}>{t || '— bitte wählen —'}</option>)}
             </select>
           </div>
 
-          {/* Features */}
+          {/* Tags */}
           <div className="mk-field">
-            <label htmlFor="mk-features">Besonderheiten</label>
-            <textarea
-              id="mk-features" className="mk-textarea"
-              placeholder="Heilige Quelle, Ruinen, Drachenhort …"
-              value={hex.features || ''}
-              onChange={(e) => updateDraft('features', e.target.value)}
-            />
+            <label>Klima & Atmosphäre</label>
+            <div style={{ display:'flex', flexWrap:'wrap', gap:5, marginBottom:6 }}>
+              {tags.map(t => (
+                <span key={t} style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'3px 8px', background:'rgba(124,77,255,0.12)', border:'1px solid rgba(124,77,255,0.3)', borderRadius:20, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.1em', color:'rgba(200,180,255,0.85)' }}>
+                  {t}
+                  <button onClick={() => upd('tags', tags.filter(x => x !== t))} style={{ background:'none', border:'none', cursor:'pointer', color:'rgba(200,140,140,0.7)', fontSize:11, lineHeight:1, padding:0 }}>×</button>
+                </span>
+              ))}
+            </div>
+            <div style={{ display:'flex', gap:6 }}>
+              <input className="mk-input" style={{ flex:1 }} type="text" placeholder="z. B. Tropisch, Neblig …" value={tagInput} onChange={e => setTagInput(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addTag(); }}}/>
+              <button onClick={addTag} style={{ padding:'0 12px', fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(160,140,255,0.8)', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.3)', borderRadius:4, cursor:'pointer' }}>+</button>
+            </div>
           </div>
+
+          {/* Besonderheiten — nur Subkarte */}
+          {isSubmap && (
+            <div className="mk-field">
+              <label htmlFor="mk-features">Besonderheiten</label>
+              <textarea id="mk-features" className="mk-textarea" placeholder="Heilige Quelle, Ruinen, Drachenhort …" value={hex.features || ''} onChange={e => upd('features', e.target.value)}/>
+            </div>
+          )}
 
           {/* Beschreibung */}
           <div className="mk-field">
             <label htmlFor="mk-desc">Beschreibung</label>
-            <textarea
-              id="mk-desc" className="mk-textarea"
-              placeholder="Stimmung, Geschichte, Bewohner …"
-              value={hex.beschreibung || ''}
-              onChange={(e) => updateDraft('beschreibung', e.target.value)}
-              style={{ minHeight: 120 }}
-            />
+            <textarea id="mk-desc" className="mk-textarea" placeholder="Stimmung, Geschichte, Bewohner …" value={hex.beschreibung || ''} onChange={e => upd('beschreibung', e.target.value)} style={{ minHeight:100 }}/>
           </div>
 
+          {/* ── Subkarten-Felder ── */}
+          {isSubmap && (
+            <React.Fragment>
+              {/* Datensonde */}
+              <SectionHead label="Knotenpunkt"/>
+              <button
+                className={`mk-tool-btn${hex.datensonde ? ' is-active' : ''}`}
+                style={{ width:'100%', justifyContent:'center', gap:8, fontSize:11, letterSpacing:'0.12em', marginBottom:4 }}
+                onClick={() => upd('datensonde', !hex.datensonde)}
+              >
+                <span style={{ color: hex.datensonde ? 'rgba(80,200,140,0.9)' : 'rgba(200,80,80,0.7)' }}>{hex.datensonde ? '✓' : '✗'}</span>
+                Datensonde {hex.datensonde ? 'installiert' : 'nicht installiert'}
+              </button>
+
+              {/* Ressourcen */}
+              <SectionHead label="Ressourcen"/>
+              {KOLL_CATS.map(c => <DualBar key={c.id} catId={c.id} label={c.label} hue={c.hue}/>)}
+
+              {/* Kolonie */}
+              <SectionHead label="Kolonie"/>
+              <div className="mk-field">
+                <label>Ausbaustufe</label>
+                <select className="mk-select" value={kol.stufe || ''} onChange={e => updKol('stufe', e.target.value)}>
+                  {KOLONIE_STUFEN.map(s => <option key={s} value={s}>{s || '— keine Kolonie —'}</option>)}
+                </select>
+              </div>
+              <SliderRow label="Kolonisierung" value={kol.kolonisierung||0} onChange={v => updKol('kolonisierung', v)}/>
+              <SliderRow label="Bau & Infrastruktur" value={kol.bau||0} onChange={v => updKol('bau', v)}/>
+              <SliderRow label="Gesamtstimmung" value={kol.stimmung||0} onChange={v => updKol('stimmung', v)}/>
+              <button
+                className={`mk-tool-btn${kol.handel ? ' is-active' : ''}`}
+                style={{ width:'100%', justifyContent:'center', gap:8, fontSize:11, letterSpacing:'0.12em', marginTop:4, marginBottom:4 }}
+                onClick={() => updKol('handel', !kol.handel)}
+              >
+                <span style={{ color: kol.handel ? 'rgba(80,200,140,0.9)' : 'rgba(200,80,80,0.7)' }}>{kol.handel ? '✓' : '✗'}</span>
+                Handel {kol.handel ? 'möglich' : 'nicht möglich'}
+              </button>
+            </React.Fragment>
+          )}
+
+          {/* ── Hauptkarten-Felder ── */}
+          {!isSubmap && (
+            <React.Fragment>
+              <SectionHead label="Bevölkerung & Kolonien"/>
+              <div className="mk-field">
+                <label htmlFor="mk-bev">Bevölkerung</label>
+                <input id="mk-bev" className="mk-input" type="text" placeholder="z. B. ~3.200 · hauptsächlich Nomaden" value={hex.bevoelkerung || ''} onChange={e => upd('bevoelkerung', e.target.value)}/>
+              </div>
+              <div className="mk-field">
+                <label htmlFor="mk-kol">Kolonien</label>
+                <input id="mk-kol" className="mk-input" type="text" placeholder="z. B. 3 aktive Kolonien" value={hex.kolonien || ''} onChange={e => upd('kolonien', e.target.value)}/>
+              </div>
+
+              <SectionHead label="Erkundungsfortschritt"/>
+              {erk.map((e, i) => (
+                <div key={i} style={{ marginBottom:12, padding:'10px 10px 8px', background:'rgba(8,6,22,0.5)', border:'1px solid rgba(124,77,255,0.15)', borderRadius:4 }}>
+                  <div style={{ display:'flex', gap:6, marginBottom:8 }}>
+                    <input className="mk-input" style={{ flex:1, fontSize:11 }} value={e.name} onChange={ev => updErk(i, 'name', ev.target.value)} placeholder="Kategorie …"/>
+                    <button onClick={() => removeErk(i)} style={{ padding:'0 10px', fontFamily:'var(--font-mono)', fontSize:10, color:'rgba(200,80,80,0.7)', background:'rgba(200,80,80,0.07)', border:'1px solid rgba(200,80,80,0.2)', borderRadius:4, cursor:'pointer' }}>✕</button>
+                  </div>
+                  <SliderRow label="Entdeckt" value={e.entdeckt} onChange={v => updErk(i,'entdeckt',v)}/>
+                  <SliderRow label="Komplettiert" value={e.komplettiert} onChange={v => updErk(i,'komplettiert',v)}/>
+                </div>
+              ))}
+              <div style={{ display:'flex', gap:6, marginBottom:4 }}>
+                <input className="mk-input" style={{ flex:1 }} type="text" placeholder="Neue Kategorie …" value={newErkName} onChange={e => setNewErkName(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addErk(); }}}/>
+                <button onClick={addErk} style={{ padding:'0 12px', fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(160,140,255,0.8)', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.3)', borderRadius:4, cursor:'pointer' }}>+</button>
+              </div>
+            </React.Fragment>
+          )}
+
+          {/* Banner */}
+          <div className="mk-field">
+            <label>Banner <span style={{ fontWeight:300, opacity:0.55, fontSize:10 }}>— wird in der Spieleransicht oben angezeigt</span></label>
+            <ImageUpload shape="square" width={404} height={110} imageUrl={hex.banner_url} onUploaded={(url) => upd('banner_url', url)} bucket="karte-bilder" pathPrefix={`hexes/${hex.id}/banner`}/>
+            {hex.banner_url && (
+              <button onClick={() => upd('banner_url', '')} style={{ marginTop:6, width:'100%', padding:'5px 10px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', color:'rgba(200,80,80,0.7)', background:'rgba(200,80,80,0.06)', border:'1px solid rgba(200,80,80,0.2)', borderRadius:4, cursor:'pointer' }}>✕ Banner entfernen</button>
+            )}
+          </div>
         </div>
 
         <footer className="mk-drawer-foot">
@@ -679,6 +832,7 @@ function MerMap() {
   const [editing, setEditing] = uS5(false);
   const [confirm, setConfirm] = uS5(null);
   const [lagerOpen, setLagerOpen] = uS5(false);
+  const [labelsVisible, setLabelsVisible] = uS5(true);
   const [activeLagerFolder, setActiveLagerFolder] = uS5('__all__');
   const [extraFolders, setExtraFolders]   = uS5([]);
   const [addingFolder, setAddingFolder]   = uS5(false);
@@ -909,7 +1063,7 @@ function MerMap() {
     if (hexes[k]) return;
     pushHistory();
     const newId = crypto.randomUUID();
-    const newHex = { id: newId, q, r, name: '', terrain: '', features: '', beschreibung: '', bild_url: '', bild_pos: null, visible: false, has_submap: false, submap_id: null };
+    const newHex = { id: newId, q, r, name: '', terrain: '', features: '', beschreibung: '', bild_url: '', bild_pos: null, banner_url: '', visible: false, has_submap: false, submap_id: null, tags: [], datensonde: false, kolonie: null, ressourcen: {}, bevoelkerung: '', kolonien: '', erkundung: [] };
     setHexes((h) => ({ ...h, [k]: newHex }));
     setSel(k);
     const { x, y } = axialToPixel(q, r);
@@ -1323,9 +1477,11 @@ function MerMap() {
                 gripDragging={dragInfo?.fromMap && dragInfo.id === h.id}
               />
             ))}
-            <div className="mk-labels-layer">
-              {hexList.map((h) => <HexLabel key={`lbl-${h.id}`} hex={h}/>)}
-            </div>
+            {labelsVisible && (
+              <div className="mk-labels-layer">
+                {hexList.map((h) => <HexLabel key={`lbl-${h.id}`} hex={h}/>)}
+              </div>
+            )}
             {ghosts.map((g) => (
               <HexGhost
                 key={g.key}
@@ -1449,6 +1605,18 @@ function MerMap() {
           <span className="lbl" style={{ fontSize:13 }}>↺</span>
         </button>
         <button
+          className={`mk-tool-btn${!labelsVisible ? ' is-active' : ''}`}
+          title={labelsVisible ? 'Beschriftungen ausblenden' : 'Beschriftungen einblenden'}
+          onClick={() => setLabelsVisible((v) => !v)}
+        >
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.4" style={{display:'block'}}>
+            <rect x="2" y="5" width="14" height="8" rx="1.5"/>
+            <line x1="5" y1="9" x2="13" y2="9" strokeWidth="1.8"/>
+            <line x1="5" y1="12" x2="10" y2="12"/>
+            {!labelsVisible && <line x1="1" y1="17" x2="17" y2="1" strokeWidth="1.6" stroke="currentColor"/>}
+          </svg>
+        </button>
+        <button
           className={`mk-tool-btn${lagerOpen ? ' is-active' : ''}`}
           title={`${lagerOpen ? 'Lager schließen' : 'Lager öffnen'} (${stash.length})`}
           onClick={() => setLagerOpen((v) => !v)}
@@ -1562,6 +1730,7 @@ function MerMap() {
           onDelete={deleteSelected}
           onNavigateInto={navigateInto}
           onCreateSubmap={createSubmap}
+          isSubmap={mapStack.length > 0}
         />
       )}
 
