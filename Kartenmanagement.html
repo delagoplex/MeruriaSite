@@ -69,7 +69,7 @@ const TERRAIN_COLORS = {
   'Ozean':      'oklch(0.40 0.17 255)',
   'Gebirge':    'oklch(0.62 0.04 65)',
   'Hochland':   'oklch(0.72 0.06 285)',
-  'Höhle':      'oklch(0.58 0.13 335)',
+  'Höhle':      'oklch(0.52 0.04 280)',
   'Dschungel':  'oklch(0.52 0.13 155)',
   'Insel':      'oklch(0.78 0.14 185)',
   'Magisch':    'oklch(0.62 0.22 310)',
@@ -737,6 +737,26 @@ function MerMap() {
     setHistory((h) => {
       if (h.length === 0) return h;
       const last = h[h.length - 1];
+      const cur = stateRef.current;
+      const mapId = currentMapIdRef.current;
+      // Sync hex changes to DB
+      const curHexIds = new Set(Object.values(cur.hexes).map(hx => hx.id));
+      const snapHexIds = new Set(Object.values(last.hexes).map(hx => hx.id));
+      for (const hx of Object.values(cur.hexes)) {
+        if (!snapHexIds.has(hx.id)) sbDeleteHex(hx.id);
+      }
+      for (const hx of Object.values(last.hexes)) {
+        if (!curHexIds.has(hx.id)) sbUpsertHex(mapId, hx);
+      }
+      // Sync stash changes to DB
+      const curStashIds = new Set(cur.stash.map(s => s.id));
+      const snapStashIds = new Set(last.stash.map(s => s.id));
+      for (const item of cur.stash) {
+        if (!snapStashIds.has(item.id)) sbDeleteStash(item.id);
+      }
+      for (const item of last.stash) {
+        if (!curStashIds.has(item.id)) sbUpsertStash(item);
+      }
       setHexes(last.hexes);
       setStash(last.stash);
       setSel(null); setEditing(false);
@@ -763,37 +783,37 @@ function MerMap() {
       setBgTransform(rootMap.bg_transform || { x: 0, y: 0, scale: 1 });
       currentMapIdRef.current = rootMap.id;
 
-      // Load hexes + stash
-      const [sbHexes, sbStash] = await Promise.all([
-        loadHexes(rootMap.id),
-        loadStash(),
-      ]);
-      setHexes(sbHexes);
+      // Load stash only — hexes are loaded by the hexesMapId effect below
+      const sbStash = await loadStash();
       setStash(sbStash);
-
-      // Check for localStorage migration offer
-      if (Object.keys(sbHexes).length === 0) {
-        const localData = getLocalData();
-        if (localData && Object.keys(localData.hexes || {}).length > 0) {
-          setMigrationBanner(true);
-        }
-      }
-
-      setIsLoading(false);
     }
     init();
   }, []);
 
   // ─── Reload hexes when map changes ────────────────────
   const [hexesMapId, setHexesMapId] = uS5(null);
+  const migrationCheckedRef = uR5(false);
   uE5(() => {
     if (!currentMapId || currentMapId === hexesMapId) return;
     setHexesMapId(currentMapId);
     setIsLoading(true);
     setSel(null); setEditing(false);
+    // Cancel pending saves so they don't write to the new map's ID
+    Object.values(saveDebounce.current).forEach(clearTimeout);
+    saveDebounce.current = {};
     loadHexes(currentMapId).then(h => {
       setHexes(h);
       setIsLoading(false);
+      // Migration check — only once, on the initial root map load
+      if (!migrationCheckedRef.current) {
+        migrationCheckedRef.current = true;
+        if (Object.keys(h).length === 0) {
+          const localData = getLocalData();
+          if (localData && Object.keys(localData.hexes || {}).length > 0) {
+            setMigrationBanner(true);
+          }
+        }
+      }
     });
   }, [currentMapId, hexesMapId]);
 
@@ -935,8 +955,7 @@ function MerMap() {
         const out = { ...prev }; delete out[oldKey];
         out[tk] = { ...h, q: toQ, r: toR }; return out;
       });
-      // Delete old, upsert new position
-      sbDeleteHex(h.id);
+      // Single upsert updates q/r in place — no separate delete needed for same-ID moves
       sbUpsertHex(currentMapIdRef.current, { ...h, q: toQ, r: toR });
       setSel(tk);
     } else if (info.fromStash) {
@@ -945,8 +964,8 @@ function MerMap() {
       setStash((prev) => prev.filter((s) => s.id !== info.id));
       const movedHex = { ...placed, q: toQ, r: toR, visible: false, has_submap: false, submap_id: null };
       setHexes((prev) => ({ ...prev, [tk]: movedHex }));
-      sbDeleteStash(placed.id);
       sbUpsertHex(currentMapIdRef.current, movedHex);
+      sbDeleteStash(placed.id);
       setSel(tk);
     }
   }, [dragInfo, hexes, stash, pushHistory]);
@@ -961,8 +980,8 @@ function MerMap() {
     setStash((prev) => [...prev, stashItem]);
     if (selectedKey === oldKey) { setSel(null); setEditing(false); }
     setDragInfo(null);
-    sbDeleteHex(h.id);
     sbUpsertStash(stashItem);
+    sbDeleteHex(h.id);
   }, [dragInfo, hexes, selectedKey, pushHistory, activeLagerFolder]);
 
   const dropOnEmptyMap = uC5(() => {
@@ -973,8 +992,8 @@ function MerMap() {
     const movedHex = { ...placed, q: 0, r: 0, visible: false, has_submap: false, submap_id: null };
     setHexes(() => ({ '0,0': movedHex }));
     setSel('0,0'); setDragInfo(null);
-    sbDeleteStash(placed.id);
     sbUpsertHex(currentMapIdRef.current, movedHex);
+    sbDeleteStash(placed.id);
   }, [dragInfo, stash, pushHistory]);
 
   const onFolderChange = uC5((itemId, folder) => {
