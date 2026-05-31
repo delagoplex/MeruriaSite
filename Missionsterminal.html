@@ -625,7 +625,38 @@ function DetailCard({
       marginBottom: '24px',
       textWrap: 'pretty'
     }
-  }, q.desc), /*#__PURE__*/React.createElement("div", {
+  }, q.desc),
+  q.requirements && q.requirements.length > 0 && /*#__PURE__*/React.createElement("div", { style: { marginBottom: '24px' } },
+    /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontFamily: 'var(--font-display)', fontSize: '11px', fontWeight: 500,
+        letterSpacing: '0.28em', color: 'var(--purple-bright)', textTransform: 'uppercase',
+        marginBottom: '8px', paddingBottom: '4px', borderBottom: '1px solid rgba(160,140,255,0.2)'
+      }
+    }, "Anforderungen"),
+    /*#__PURE__*/React.createElement("div", { style: { display: 'flex', flexWrap: 'wrap', gap: '8px' } },
+      q.requirements.map((r, i) =>
+        /*#__PURE__*/React.createElement("div", {
+          key: i,
+          style: {
+            display: 'flex', alignItems: 'center', gap: '8px',
+            padding: '7px 12px',
+            background: 'rgba(124,77,255,0.07)',
+            border: '1px solid rgba(124,77,255,0.25)',
+            borderRadius: '3px'
+          }
+        },
+          /*#__PURE__*/React.createElement("svg", { width: "12", height: "12", viewBox: "0 0 12 12", fill: "none", stroke: "rgba(160,140,255,0.7)", strokeWidth: "1.3" },
+            /*#__PURE__*/React.createElement("polygon", { points: "6,1 11,4 11,8 6,11 1,8 1,4" })
+          ),
+          /*#__PURE__*/React.createElement("span", {
+            style: { fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '.18em', textTransform: 'uppercase', color: 'rgba(200,185,255,0.85)' }
+          }, r.count > 1 ? `${r.count}× ${r.label}` : r.label)
+        )
+      )
+    )
+  ),
+  /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-display)',
       fontSize: '11px',

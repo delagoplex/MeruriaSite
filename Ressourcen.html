@@ -30,7 +30,8 @@ const {
   useState,
   useCallback,
   useMemo,
-  useEffect
+  useEffect,
+  useRef
 } = React;
 const {
   useTweaks,
@@ -307,9 +308,15 @@ function modBarColor(mod, barIdx) {
 // ── Fish Detail Modal ─────────────────────────────────────────────────────────
 function FishDetailModal({
   fish,
-  onClose
+  onClose,
+  recipes
 }) {
   const [imgOk, setImgOk] = useState(true);
+  const [recipeModal, setRecipeModal] = useState(false);
+  const matchingRecipes = (recipes || []).filter(r =>
+    r.status === 'approved' &&
+    (r.zutaten || []).some(z => z.name && z.name.toLowerCase() === (fish.name_de || '').toLowerCase())
+  );
   const s = fish.stärke ?? 0;
   const mod = dndMod(s);
   const rarity = fishRarity(fish);
@@ -333,7 +340,7 @@ function FishDetailModal({
     label: 'Handwerk',
     name: 'Unbekannte Verarbeitung'
   }];
-  return /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "fish-modal-overlay",
     onClick: onClose
   }, /*#__PURE__*/React.createElement("div", {
@@ -541,45 +548,11 @@ function FishDetailModal({
     style: {
       marginBottom: '14px'
     }
-  }, "Verarbeitung"), CRAFTING_PLACEHOLDERS.map((slot, i) => /*#__PURE__*/React.createElement("div", {
-    key: i,
-    className: "fish-recipe-slot"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "fish-recipe-icon"
-  }, slot.icon), /*#__PURE__*/React.createElement("div", {
-    style: {
-      minWidth: 0
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
-      letterSpacing: '0.18em',
-      textTransform: 'uppercase',
-      color: 'rgba(38,198,218,0.3)',
-      marginBottom: '3px'
-    }
-  }, slot.label), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: 'var(--font-body)',
-      fontSize: '10px',
-      color: 'rgba(var(--text-rgb),0.2)',
-      letterSpacing: '0.03em'
-    }
-  }, slot.name)))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginTop: 'auto',
-      paddingTop: '16px',
-      borderTop: '1px solid rgba(38,198,218,0.06)',
-      fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
-      color: 'rgba(38,198,218,0.18)',
-      letterSpacing: '0.18em',
-      textTransform: 'uppercase',
-      textAlign: 'center',
-      lineHeight: 1.8
-    }
-  }, "Rezepte werden", /*#__PURE__*/React.createElement("br", null), "noch erg\xE4nzt"))));
+  }, "Verarbeitung"), /*#__PURE__*/React.createElement("div", {
+    className: "fish-recipe-slot",
+    onClick: matchingRecipes.length > 0 ? () => setRecipeModal(true) : undefined,
+    style: matchingRecipes.length > 0 ? {cursor: 'pointer', borderRadius: '4px'} : undefined
+  }, /*#__PURE__*/React.createElement("div", {className: "fish-recipe-icon"}, '🍳'), /*#__PURE__*/React.createElement("div", {style: {minWidth: 0}}, /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-mono)', fontSize: '7.5px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(38,198,218,0.3)', marginBottom: '3px'}}, "Gericht"), /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-body)', fontSize: '10px', color: matchingRecipes.length > 0 ? 'rgba(38,198,218,0.7)' : 'rgba(var(--text-rgb),0.2)', letterSpacing: '0.03em'}}, matchingRecipes.length > 0 ? matchingRecipes.length + ' Rezept' + (matchingRecipes.length === 1 ? '' : 'e') + ' →' : "Unbekanntes Rezept"))), /*#__PURE__*/React.createElement("div", {className: "fish-recipe-slot"}, /*#__PURE__*/React.createElement("div", {className: "fish-recipe-icon"}, '⚗️'), /*#__PURE__*/React.createElement("div", {style: {minWidth: 0}}, /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-mono)', fontSize: '7.5px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(38,198,218,0.3)', marginBottom: '3px'}}, "Alchemie"), /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-body)', fontSize: '10px', color: 'rgba(var(--text-rgb),0.2)', letterSpacing: '0.03em'}}, "Unbekannte Zutat"))), /*#__PURE__*/React.createElement("div", {className: "fish-recipe-slot"}, /*#__PURE__*/React.createElement("div", {className: "fish-recipe-icon"}, '🧵'), /*#__PURE__*/React.createElement("div", {style: {minWidth: 0}}, /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-mono)', fontSize: '7.5px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(38,198,218,0.3)', marginBottom: '3px'}}, "Handwerk"), /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-body)', fontSize: '10px', color: 'rgba(var(--text-rgb),0.2)', letterSpacing: '0.03em'}}, "Unbekannte Verarbeitung"))), /*#__PURE__*/React.createElement("div", {style: {marginTop: 'auto', paddingTop: '16px', borderTop: '1px solid rgba(38,198,218,0.06)', fontFamily: 'var(--font-mono)', fontSize: '7.5px', color: 'rgba(38,198,218,0.18)', letterSpacing: '0.18em', textTransform: 'uppercase', textAlign: 'center', lineHeight: 1.8}}, matchingRecipes.length === 0 ? /*#__PURE__*/React.createElement(React.Fragment, null, "Rezepte werden", /*#__PURE__*/React.createElement("br", null), "noch ergänzt") : null)))), recipeModal && /*#__PURE__*/React.createElement("div", {onClick: e => { e.stopPropagation(); setRecipeModal(false); }, style: {position: 'fixed', inset: 0, background: 'rgba(5,4,15,0.92)', zIndex: 300, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px'}}, /*#__PURE__*/React.createElement("div", {onClick: e => e.stopPropagation(), style: {background: '#0c0a1e', border: '1px solid rgba(160,140,255,0.18)', borderRadius: '8px', maxWidth: '480px', width: '100%', maxHeight: '70vh', overflowY: 'auto', padding: '24px', position: 'relative', display: 'flex', flexDirection: 'column', gap: '0'}}, /*#__PURE__*/React.createElement("button", {onClick: () => setRecipeModal(false), style: {position: 'absolute', top: '12px', right: '12px', background: 'transparent', border: 'none', color: 'rgba(200,190,240,0.4)', fontSize: '16px', cursor: 'pointer', padding: '4px 8px', borderRadius: '3px', lineHeight: 1}}, '✕'), /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(160,140,255,0.45)', marginBottom: '20px', paddingRight: '32px'}}, 'Rezepte mit ' + fish.name_de), matchingRecipes.map((r, i) => /*#__PURE__*/React.createElement("div", {key: r.id, style: {borderTop: i > 0 ? '1px solid rgba(160,140,255,0.07)' : 'none', paddingTop: i > 0 ? '16px' : '0', marginTop: i > 0 ? '16px' : '0', display: 'flex', flexDirection: 'column', gap: '6px'}}, /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-display)', fontSize: '13px', letterSpacing: '0.06em', color: 'rgba(200,190,240,0.9)'}}, r.name), /*#__PURE__*/React.createElement("div", {style: {display: 'flex', gap: '12px', flexWrap: 'wrap'}}, r.sg != null && /*#__PURE__*/React.createElement("span", {style: {fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '0.16em', color: 'rgba(38,198,218,0.55)'}}, 'SG ' + r.sg), r.ergebnis && /*#__PURE__*/React.createElement("span", {style: {fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 300, color: 'rgba(200,190,240,0.65)'}}, '→ ' + r.ergebnis)), r.effekte && /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 300, color: 'rgba(var(--text-rgb),0.5)', lineHeight: 1.65}}, r.effekte), (r.zutaten || []).length > 0 && /*#__PURE__*/React.createElement("div", {style: {display: 'flex', flexWrap: 'wrap', gap: '5px', marginTop: '2px'}}, (r.zutaten || []).map((z, zi) => /*#__PURE__*/React.createElement("span", {key: zi, style: {fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.1em', padding: '2px 7px', background: 'rgba(160,140,255,0.07)', border: '1px solid rgba(160,140,255,0.14)', borderRadius: '2px', color: 'rgba(200,190,240,0.6)'}}, z.menge ? z.menge + ' ' + z.name : z.name))))))));
 }
 
 // ── Fish Card ─────────────────────────────────────────────────────────────────
@@ -1248,9 +1221,15 @@ function PlaceholderTab({
 function ResourceDetailModal({
   item,
   onClose,
-  fallbackIcon
+  fallbackIcon,
+  recipes
 }) {
   const [imgOk, setImgOk] = useState(true);
+  const [recipeModal, setRecipeModal] = useState(false);
+  const matchingRecipes = (recipes || []).filter(r =>
+    r.status === 'approved' &&
+    (r.zutaten || []).some(z => z.name && z.name.toLowerCase() === (item.name_de || '').toLowerCase())
+  );
   const rarity = resRarity(item);
   useEffect(() => {
     const handle = e => {
@@ -1259,7 +1238,7 @@ function ResourceDetailModal({
     document.addEventListener('keydown', handle);
     return () => document.removeEventListener('keydown', handle);
   }, [onClose]);
-  return /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "fish-modal-overlay",
     onClick: onClose
   }, /*#__PURE__*/React.createElement("div", {
@@ -1503,61 +1482,11 @@ function ResourceDetailModal({
     style: {
       marginBottom: '14px'
     }
-  }, "Verarbeitung"), [{
-    icon: '🍳',
-    label: 'Kochen',
-    name: 'Unbekanntes Rezept'
-  }, {
-    icon: '⚗️',
-    label: 'Alchemie',
-    name: 'Unbekannte Zutat'
-  }, {
-    icon: '🔨',
-    label: 'Schmieden',
-    name: 'Unbekanntes Rezept'
-  }, {
-    icon: '🧵',
-    label: 'Handwerk',
-    name: 'Unbekannte Verarbeitung'
-  }].map((slot, i) => /*#__PURE__*/React.createElement("div", {
-    key: i,
-    className: "fish-recipe-slot"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "fish-recipe-icon"
-  }, slot.icon), /*#__PURE__*/React.createElement("div", {
-    style: {
-      minWidth: 0
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
-      letterSpacing: '0.18em',
-      textTransform: 'uppercase',
-      color: 'rgba(38,198,218,0.3)',
-      marginBottom: '3px'
-    }
-  }, slot.label), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: 'var(--font-body)',
-      fontSize: '10px',
-      color: 'rgba(var(--text-rgb),0.2)',
-      letterSpacing: '0.03em'
-    }
-  }, slot.name)))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginTop: 'auto',
-      paddingTop: '16px',
-      borderTop: '1px solid rgba(38,198,218,0.06)',
-      fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
-      color: 'rgba(38,198,218,0.18)',
-      letterSpacing: '0.18em',
-      textTransform: 'uppercase',
-      textAlign: 'center',
-      lineHeight: 1.8
-    }
-  }, "Rezepte werden", /*#__PURE__*/React.createElement("br", null), "noch erg\xE4nzt"))));
+  }, "Verarbeitung"), /*#__PURE__*/React.createElement("div", {
+    className: "fish-recipe-slot",
+    onClick: matchingRecipes.length > 0 ? () => setRecipeModal(true) : undefined,
+    style: matchingRecipes.length > 0 ? {cursor: 'pointer', borderRadius: '4px'} : undefined
+  }, /*#__PURE__*/React.createElement("div", {className: "fish-recipe-icon"}, '🍳'), /*#__PURE__*/React.createElement("div", {style: {minWidth: 0}}, /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-mono)', fontSize: '7.5px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(38,198,218,0.3)', marginBottom: '3px'}}, "Kochen"), /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-body)', fontSize: '10px', color: matchingRecipes.length > 0 ? 'rgba(38,198,218,0.7)' : 'rgba(var(--text-rgb),0.2)', letterSpacing: '0.03em'}}, matchingRecipes.length > 0 ? matchingRecipes.length + ' Rezept' + (matchingRecipes.length === 1 ? '' : 'e') + ' →' : "Unbekanntes Rezept"))), /*#__PURE__*/React.createElement("div", {className: "fish-recipe-slot"}, /*#__PURE__*/React.createElement("div", {className: "fish-recipe-icon"}, '⚗️'), /*#__PURE__*/React.createElement("div", {style: {minWidth: 0}}, /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-mono)', fontSize: '7.5px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(38,198,218,0.3)', marginBottom: '3px'}}, "Alchemie"), /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-body)', fontSize: '10px', color: 'rgba(var(--text-rgb),0.2)', letterSpacing: '0.03em'}}, "Unbekannte Zutat"))), /*#__PURE__*/React.createElement("div", {className: "fish-recipe-slot"}, /*#__PURE__*/React.createElement("div", {className: "fish-recipe-icon"}, '🔨'), /*#__PURE__*/React.createElement("div", {style: {minWidth: 0}}, /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-mono)', fontSize: '7.5px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(38,198,218,0.3)', marginBottom: '3px'}}, "Schmieden"), /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-body)', fontSize: '10px', color: 'rgba(var(--text-rgb),0.2)', letterSpacing: '0.03em'}}, "Unbekanntes Rezept"))), /*#__PURE__*/React.createElement("div", {className: "fish-recipe-slot"}, /*#__PURE__*/React.createElement("div", {className: "fish-recipe-icon"}, '🧵'), /*#__PURE__*/React.createElement("div", {style: {minWidth: 0}}, /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-mono)', fontSize: '7.5px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(38,198,218,0.3)', marginBottom: '3px'}}, "Handwerk"), /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-body)', fontSize: '10px', color: 'rgba(var(--text-rgb),0.2)', letterSpacing: '0.03em'}}, "Unbekannte Verarbeitung"))), /*#__PURE__*/React.createElement("div", {style: {marginTop: 'auto', paddingTop: '16px', borderTop: '1px solid rgba(38,198,218,0.06)', fontFamily: 'var(--font-mono)', fontSize: '7.5px', color: 'rgba(38,198,218,0.18)', letterSpacing: '0.18em', textTransform: 'uppercase', textAlign: 'center', lineHeight: 1.8}}, matchingRecipes.length === 0 ? /*#__PURE__*/React.createElement(React.Fragment, null, "Rezepte werden", /*#__PURE__*/React.createElement("br", null), "noch ergänzt") : null)))), recipeModal && /*#__PURE__*/React.createElement("div", {onClick: e => { e.stopPropagation(); setRecipeModal(false); }, style: {position: 'fixed', inset: 0, background: 'rgba(5,4,15,0.92)', zIndex: 300, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px'}}, /*#__PURE__*/React.createElement("div", {onClick: e => e.stopPropagation(), style: {background: '#0c0a1e', border: '1px solid rgba(160,140,255,0.18)', borderRadius: '8px', maxWidth: '480px', width: '100%', maxHeight: '70vh', overflowY: 'auto', padding: '24px', position: 'relative', display: 'flex', flexDirection: 'column', gap: '0'}}, /*#__PURE__*/React.createElement("button", {onClick: () => setRecipeModal(false), style: {position: 'absolute', top: '12px', right: '12px', background: 'transparent', border: 'none', color: 'rgba(200,190,240,0.4)', fontSize: '16px', cursor: 'pointer', padding: '4px 8px', borderRadius: '3px', lineHeight: 1}}, '✕'), /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(160,140,255,0.45)', marginBottom: '20px', paddingRight: '32px'}}, 'Rezepte mit ' + item.name_de), matchingRecipes.map((r, i) => /*#__PURE__*/React.createElement("div", {key: r.id, style: {borderTop: i > 0 ? '1px solid rgba(160,140,255,0.07)' : 'none', paddingTop: i > 0 ? '16px' : '0', marginTop: i > 0 ? '16px' : '0', display: 'flex', flexDirection: 'column', gap: '6px'}}, /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-display)', fontSize: '13px', letterSpacing: '0.06em', color: 'rgba(200,190,240,0.9)'}}, r.name), /*#__PURE__*/React.createElement("div", {style: {display: 'flex', gap: '12px', flexWrap: 'wrap'}}, r.sg != null && /*#__PURE__*/React.createElement("span", {style: {fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '0.16em', color: 'rgba(38,198,218,0.55)'}}, 'SG ' + r.sg), r.ergebnis && /*#__PURE__*/React.createElement("span", {style: {fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 300, color: 'rgba(200,190,240,0.65)'}}, '→ ' + r.ergebnis)), r.effekte && /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 300, color: 'rgba(var(--text-rgb),0.5)', lineHeight: 1.65}}, r.effekte), (r.zutaten || []).length > 0 && /*#__PURE__*/React.createElement("div", {style: {display: 'flex', flexWrap: 'wrap', gap: '5px', marginTop: '2px'}}, (r.zutaten || []).map((z, zi) => /*#__PURE__*/React.createElement("span", {key: zi, style: {fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.1em', padding: '2px 7px', background: 'rgba(160,140,255,0.07)', border: '1px solid rgba(160,140,255,0.14)', borderRadius: '2px', color: 'rgba(200,190,240,0.6)'}}, z.menge ? z.menge + ' ' + z.name : z.name))))))));
 }
 
 // ── Resource Card ─────────────────────────────────────────────────────────────
@@ -1852,7 +1781,8 @@ function ResourceTab({
   onCount,
   isDM,
   vis,
-  onToggle
+  onToggle,
+  recipes
 }) {
   const [filters, setFilters] = useState({
     search: '',
@@ -1955,7 +1885,8 @@ function ResourceTab({
   }, emptyMsg)), selectedItem && /*#__PURE__*/React.createElement(ResourceDetailModal, {
     item: selectedItem,
     onClose: () => setSelectedItem(null),
-    fallbackIcon: fallbackIcon
+    fallbackIcon: fallbackIcon,
+    recipes: recipes
   }));
 }
 
@@ -2218,14 +2149,12 @@ function AccessDenied() {
 }
 function App() {
   if (window.SITE_USER?.role !== 'dm') return /*#__PURE__*/React.createElement(AccessDenied, null);
-  const [mouse, setMouse] = useState({
-    x: 0.5,
-    y: 0.5
-  });
+  const mouseRef = useRef({ x: 0.5, y: 0.5 });
   const [tweaks] = useTweaks(TWEAK_DEFAULTS);
   const [activeTab, setActiveTab] = useState('fische');
   const [tabCount, setTabCount] = useState(null);
   const [selectedFish, setSelectedFish] = useState(null);
+  const [allRecipes, setAllRecipes] = useState([]);
   const isDM = window.SITE_USER?.role === 'dm';
   const [vis, setVis] = useState({
     fische: new Set(),
@@ -2312,10 +2241,13 @@ function App() {
       });
     }
   }
-  const handleMouseMove = useCallback(e => setMouse({
-    x: e.clientX / window.innerWidth,
-    y: e.clientY / window.innerHeight
-  }), []);
+  useEffect(() => {
+    window._sb.from('recipes').select('*').eq('status', 'approved')
+      .then(({ data }) => { if (data) setAllRecipes(data); });
+  }, []);
+  const handleMouseMove = useCallback(e => {
+    mouseRef.current = { x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight };
+  }, []);
   const handleTabChange = useCallback(id => {
     setActiveTab(id);
     if (id !== activeTab) setTabCount(null);
@@ -2330,8 +2262,8 @@ function App() {
       position: 'relative'
     }
   }, tweaks.showParticles && /*#__PURE__*/React.createElement(ParticleField, {
-    mouseX: mouse.x,
-    mouseY: mouse.y
+    mouseX: mouseRef.current.x,
+    mouseY: mouseRef.current.y
   }), /*#__PURE__*/React.createElement(SiteNav, {
     rightLabel: "RESSOURCEN"
   }), isDM && /*#__PURE__*/React.createElement(DmBanner, {
@@ -2358,7 +2290,8 @@ function App() {
     onToggle: toggleVisible
   }), selectedFish && /*#__PURE__*/React.createElement(FishDetailModal, {
     fish: selectedFish,
-    onClose: () => setSelectedFish(null)
+    onClose: () => setSelectedFish(null),
+    recipes: allRecipes
   }), activeTab === 'pflanzen' && /*#__PURE__*/React.createElement(ResourceTab, {
     data: ALL_PFLANZEN,
     catKey: "pflanzen",
@@ -2367,7 +2300,8 @@ function App() {
     onCount: setTabCount,
     isDM: isDM,
     vis: vis.pflanzen,
-    onToggle: toggleVisible
+    onToggle: toggleVisible,
+    recipes: allRecipes
   }), activeTab === 'mineralien' && /*#__PURE__*/React.createElement(ResourceTab, {
     data: ALL_MINERALIEN,
     catKey: "mineralien",
@@ -2376,7 +2310,8 @@ function App() {
     onCount: setTabCount,
     isDM: isDM,
     vis: vis.mineralien,
-    onToggle: toggleVisible
+    onToggle: toggleVisible,
+    recipes: allRecipes
   }), activeTab === 'insekten' && /*#__PURE__*/React.createElement(ResourceTab, {
     data: ALL_INSEKTEN,
     catKey: "insekten",
@@ -2385,7 +2320,8 @@ function App() {
     onCount: setTabCount,
     isDM: isDM,
     vis: vis.insekten,
-    onToggle: toggleVisible
+    onToggle: toggleVisible,
+    recipes: allRecipes
   }), activeTab === 'monsterteile' && /*#__PURE__*/React.createElement(PlaceholderTab, {
     id: "monsterteile",
     label: "Monsterteile"

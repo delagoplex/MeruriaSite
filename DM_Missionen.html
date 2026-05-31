@@ -306,6 +306,7 @@ function CreateForm({
     txt: '',
     max: 1
   }]);
+  const [requirements, setRequirements] = useState([]);
   const [saving, setSaving] = useState(false);
   const set = (k, v) => setForm(f => ({
     ...f,
@@ -346,6 +347,7 @@ function CreateForm({
       beschreibung: form.beschreibung.trim(),
       anweisungen,
       rewards,
+      requirements,
       status: form.status
     }).select().single();
     setSaving(false);
@@ -426,7 +428,38 @@ function CreateForm({
     value: form.beschreibung,
     onChange: e => set('beschreibung', e.target.value),
     placeholder: "Auftragstext\u2026"
-  })), /*#__PURE__*/React.createElement("div", {
+  })),
+  /*#__PURE__*/React.createElement("div", { style: { marginBottom: '16px' } },
+    /*#__PURE__*/React.createElement("label", { style: { marginBottom: '8px' } }, "Anforderungen"),
+    /*#__PURE__*/React.createElement("div", { style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
+      ['Kuratoren','Sturmritter','Sentinels','Friedensh\u00fcter','Outfitters','Pathfinders','Quellensucher','Bergungsgarde'].map(div => {
+        const req = requirements.find(r => r.label === div);
+        const active = !!req;
+        return /*#__PURE__*/React.createElement("div", { key: div, style: { display: 'flex', alignItems: 'center', gap: '4px' } },
+          /*#__PURE__*/React.createElement("button", {
+            type: "button",
+            onClick: () => setRequirements(rs => active ? rs.filter(r => r.label !== div) : [...rs, { label: div, count: 1 }]),
+            style: {
+              padding: '4px 10px', fontFamily: 'var(--font-mono)', fontSize: '9px',
+              letterSpacing: '.14em', textTransform: 'uppercase', cursor: 'pointer',
+              border: `1px solid ${active ? 'rgba(124,77,255,0.7)' : 'rgba(124,77,255,0.2)'}`,
+              borderRadius: '2px',
+              background: active ? 'rgba(124,77,255,0.2)' : 'rgba(124,77,255,0.05)',
+              color: active ? 'rgba(200,180,255,0.95)' : 'rgba(160,140,255,0.45)',
+              transition: 'all .15s'
+            }
+          }, active ? `\u2713 ${div}` : div),
+          active && /*#__PURE__*/React.createElement("input", {
+            type: "number", min: "1", max: "9", value: req.count,
+            onChange: e => setRequirements(rs => rs.map(r => r.label === div ? { ...r, count: Number(e.target.value) || 1 } : r)),
+            title: "Anzahl",
+            style: { width: '42px', padding: '4px 6px', textAlign: 'center', fontSize: '11px' }
+          })
+        );
+      })
+    )
+  ),
+  /*#__PURE__*/React.createElement("div", {
     style: {
       marginBottom: '14px'
     }
@@ -628,11 +661,113 @@ function AppRow({
   }, "Ausstehend"));
 }
 
+// ─── EDIT FORM ────────────────────────────────────────────────────────────────
+function EditForm({ mission, onSaved, onCancel }) {
+  const [form, setForm] = useState({
+    name: mission.name || '',
+    kategorie: mission.kategorie || 'Suche',
+    sw: mission.sw || 1,
+    lv: mission.lv || 1,
+    auftraggeber: mission.auftraggeber || '',
+    region: mission.region || '',
+    beschreibung: mission.beschreibung || '',
+    status: mission.status || '',
+    rewards_xp: mission.rewards?.xp ?? 0,
+    rewards_schillinge: mission.rewards?.schillinge ?? 0,
+    rewards_item: mission.rewards?.item || ''
+  });
+  const [steps, setSteps] = useState(
+    (mission.anweisungen || []).length
+      ? mission.anweisungen.map(s => ({ txt: s.txt, max: s.max || 1 }))
+      : [{ txt: '', max: 1 }]
+  );
+  const [requirements, setRequirements] = useState(mission.requirements || []);
+  const [saving, setSaving] = useState(false);
+  const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
+  const addStep = () => setSteps(s => [...s, { txt: '', max: 1 }]);
+  const removeStep = i => setSteps(s => s.filter((_, j) => j !== i));
+  const setStep = (i, k, v) => setSteps(s => s.map((s2, j) => j === i ? { ...s2, [k]: v } : s2));
+  async function handleSave() {
+    if (!form.name.trim()) return;
+    setSaving(true);
+    const anweisungen = steps.filter(s => s.txt.trim()).map(s => ({ txt: s.txt.trim(), n: 0, max: Number(s.max) || 1 }));
+    const rewards = { xp: Number(form.rewards_xp) || 0, schillinge: Number(form.rewards_schillinge) || 0, item: form.rewards_item.trim() || null };
+    const { data, error } = await window._sb.from('missions').update({
+      name: form.name.trim(), kategorie: form.kategorie, sw: Number(form.sw), lv: Number(form.lv),
+      auftraggeber: form.auftraggeber.trim(), region: form.region.trim(),
+      beschreibung: form.beschreibung.trim(), anweisungen, rewards, requirements, status: form.status
+    }).eq('id', mission.id).select().single();
+    setSaving(false);
+    if (!error && data) onSaved(data);
+  }
+  const row2 = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' };
+  return /*#__PURE__*/React.createElement("div", {
+    style: { flex: 1, overflowY: 'auto', padding: '22px' }
+  },
+    /*#__PURE__*/React.createElement("div", { style: { fontFamily: 'var(--font-display)', fontSize: '15px', letterSpacing: '.2em', color: '#f0eeff', textTransform: 'uppercase', marginBottom: '20px' } }, "Mission bearbeiten"),
+    /*#__PURE__*/React.createElement("div", { className: "field" }, /*#__PURE__*/React.createElement("label", null, "Name"), /*#__PURE__*/React.createElement("input", { value: form.name, onChange: e => set('name', e.target.value) })),
+    /*#__PURE__*/React.createElement("div", { className: "field", style: row2 },
+      /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, "Kategorie"), /*#__PURE__*/React.createElement("select", { value: form.kategorie, onChange: e => set('kategorie', e.target.value) }, /*#__PURE__*/React.createElement("option", { value: "Suche" }, "Suche"), /*#__PURE__*/React.createElement("option", { value: "Gespraech" }, "Gespräch"), /*#__PURE__*/React.createElement("option", { value: "Jagd" }, "Jagd"))),
+      /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, "Status"), /*#__PURE__*/React.createElement("select", { value: form.status, onChange: e => set('status', e.target.value) }, STATUS_OPTS.map(o => /*#__PURE__*/React.createElement("option", { key: o.value, value: o.value }, o.label))))
+    ),
+    /*#__PURE__*/React.createElement("div", { className: "field", style: row2 },
+      /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, "Schwierigkeit (1–5)"), /*#__PURE__*/React.createElement("input", { type: "number", min: "1", max: "5", value: form.sw, onChange: e => set('sw', e.target.value) })),
+      /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, "Mindest-Stufe"), /*#__PURE__*/React.createElement("input", { type: "number", min: "1", value: form.lv, onChange: e => set('lv', e.target.value) }))
+    ),
+    /*#__PURE__*/React.createElement("div", { className: "field", style: row2 },
+      /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, "Auftraggeber"), /*#__PURE__*/React.createElement("input", { value: form.auftraggeber, onChange: e => set('auftraggeber', e.target.value), placeholder: "Division…" })),
+      /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, "Region"), /*#__PURE__*/React.createElement("input", { value: form.region, onChange: e => set('region', e.target.value), placeholder: "Ort…" }))
+    ),
+    /*#__PURE__*/React.createElement("div", { className: "field" }, /*#__PURE__*/React.createElement("label", null, "Beschreibung"), /*#__PURE__*/React.createElement("textarea", { value: form.beschreibung, onChange: e => set('beschreibung', e.target.value), placeholder: "Auftragstext…" })),
+    /*#__PURE__*/React.createElement("div", { style: { marginBottom: '16px' } },
+      /*#__PURE__*/React.createElement("label", { style: { marginBottom: '8px' } }, "Anforderungen"),
+      /*#__PURE__*/React.createElement("div", { style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
+        ['Kuratoren','Sturmritter','Sentinels','Friedenshüter','Outfitters','Pathfinders','Quellensucher','Bergungsgarde'].map(div => {
+          const req = requirements.find(r => r.label === div);
+          const active = !!req;
+          return /*#__PURE__*/React.createElement("div", { key: div, style: { display: 'flex', alignItems: 'center', gap: '4px' } },
+            /*#__PURE__*/React.createElement("button", {
+              type: "button",
+              onClick: () => setRequirements(rs => active ? rs.filter(r => r.label !== div) : [...rs, { label: div, count: 1 }]),
+              style: { padding: '4px 10px', fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '.14em', textTransform: 'uppercase', cursor: 'pointer', border: `1px solid ${active ? 'rgba(124,77,255,0.7)' : 'rgba(124,77,255,0.2)'}`, borderRadius: '2px', background: active ? 'rgba(124,77,255,0.2)' : 'rgba(124,77,255,0.05)', color: active ? 'rgba(200,180,255,0.95)' : 'rgba(160,140,255,0.45)', transition: 'all .15s' }
+            }, active ? `✓ ${div}` : div),
+            active && /*#__PURE__*/React.createElement("input", { type: "number", min: "1", max: "9", value: req.count, onChange: e => setRequirements(rs => rs.map(r => r.label === div ? { ...r, count: Number(e.target.value) || 1 } : r)), title: "Anzahl", style: { width: '42px', padding: '4px 6px', textAlign: 'center', fontSize: '11px' } })
+          );
+        })
+      )
+    ),
+    /*#__PURE__*/React.createElement("div", { style: { marginBottom: '14px' } },
+      /*#__PURE__*/React.createElement("div", { style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' } },
+        /*#__PURE__*/React.createElement("label", { style: { margin: 0 } }, "Anweisungen"),
+        /*#__PURE__*/React.createElement("button", { onClick: addStep, style: { fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '.15em', padding: '3px 9px', background: 'rgba(124,77,255,0.12)', border: '1px solid rgba(124,77,255,0.3)', borderRadius: '2px', color: 'rgba(167,139,255,0.8)', cursor: 'pointer' } }, "+ Schritt")
+      ),
+      steps.map((step, i) => /*#__PURE__*/React.createElement("div", { key: i, style: { display: 'grid', gridTemplateColumns: '1fr 70px 28px', gap: '8px', marginBottom: '8px', alignItems: 'center' } },
+        /*#__PURE__*/React.createElement("input", { value: step.txt, onChange: e => setStep(i, 'txt', e.target.value), placeholder: `Schritt ${i + 1}…` }),
+        /*#__PURE__*/React.createElement("input", { type: "number", min: "1", value: step.max, onChange: e => setStep(i, 'max', e.target.value), title: "Anzahl", style: { textAlign: 'center' } }),
+        /*#__PURE__*/React.createElement("button", { onClick: () => removeStep(i), style: { background: 'transparent', border: '1px solid rgba(200,60,60,0.3)', borderRadius: '2px', color: 'rgba(255,120,120,0.6)', cursor: 'pointer', fontSize: '13px', lineHeight: 1, padding: '3px' } }, "×")
+      ))
+    ),
+    /*#__PURE__*/React.createElement("div", { style: { padding: '14px', background: 'rgba(124,77,255,0.05)', border: '1px solid rgba(124,77,255,0.15)', borderRadius: '3px', marginBottom: '20px' } },
+      /*#__PURE__*/React.createElement("label", { style: { marginBottom: '10px' } }, "Belohnungen"),
+      /*#__PURE__*/React.createElement("div", { style: row2 },
+        /*#__PURE__*/React.createElement("div", { className: "field" }, /*#__PURE__*/React.createElement("label", null, "XP"), /*#__PURE__*/React.createElement("input", { type: "number", min: "0", value: form.rewards_xp, onChange: e => set('rewards_xp', e.target.value) })),
+        /*#__PURE__*/React.createElement("div", { className: "field" }, /*#__PURE__*/React.createElement("label", null, "Schillinge"), /*#__PURE__*/React.createElement("input", { type: "number", min: "0", value: form.rewards_schillinge, onChange: e => set('rewards_schillinge', e.target.value) }))
+      ),
+      /*#__PURE__*/React.createElement("div", { className: "field", style: { marginBottom: 0 } }, /*#__PURE__*/React.createElement("label", null, "Gegenstand (optional)"), /*#__PURE__*/React.createElement("input", { value: form.rewards_item, onChange: e => set('rewards_item', e.target.value), placeholder: "Itemname…" }))
+    ),
+    /*#__PURE__*/React.createElement("div", { style: { display: 'flex', gap: '10px' } },
+      /*#__PURE__*/React.createElement(Btn, { onClick: handleSave, disabled: saving || !form.name.trim() }, saving ? 'Speichern…' : 'Speichern'),
+      /*#__PURE__*/React.createElement(Btn, { onClick: onCancel, secondary: true }, "Abbrechen")
+    )
+  );
+}
+
 // ─── MISSION DETAIL (DM view) ─────────────────────────────────────────────────
 function MissionDetail({
   mission,
   onDelete,
-  onArchive
+  onArchive,
+  onEdit
 }) {
   const [apps, setApps] = useState([]);
   const [profiles, setProfiles] = useState({});
@@ -730,7 +865,10 @@ function MissionDetail({
       gap: '8px',
       marginTop: '14px'
     }
-  }, mission.status !== 'archiviert' ? /*#__PURE__*/React.createElement(Btn, {
+  }, /*#__PURE__*/React.createElement(Btn, {
+    small: true,
+    onClick: onEdit
+  }, "Bearbeiten"), mission.status !== 'archiviert' ? /*#__PURE__*/React.createElement(Btn, {
     small: true,
     secondary: true,
     onClick: onArchive
@@ -1140,6 +1278,7 @@ function App() {
   const [missions, setMissions] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
   const [creating, setCreating] = useState(false);
+  const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [appCounts, setAppCounts] = useState({});
 
@@ -1210,6 +1349,10 @@ function App() {
     await window._sb.from('missions').delete().eq('id', selectedId);
     setMissions(prev => prev.filter(m => m.id !== selectedId));
     setSelectedId(null);
+  }
+  function handleEdited(updated) {
+    setMissions(prev => prev.map(m => m.id === updated.id ? updated : m));
+    setEditing(false);
   }
   async function handleArchive() {
     if (!selectedId) return;
@@ -1373,11 +1516,16 @@ function App() {
   }, "Mission ausw\xE4hlen oder neue erstellen")), creating && /*#__PURE__*/React.createElement(CreateForm, {
     onCreated: handleCreated,
     onCancel: () => setCreating(false)
-  }), !creating && selected && /*#__PURE__*/React.createElement(MissionDetail, {
+  }), !creating && editing && selected && /*#__PURE__*/React.createElement(EditForm, {
+    mission: selected,
+    onSaved: handleEdited,
+    onCancel: () => setEditing(false)
+  }), !creating && !editing && selected && /*#__PURE__*/React.createElement(MissionDetail, {
     key: selected.id,
     mission: selected,
     onDelete: handleDelete,
-    onArchive: handleArchive
+    onArchive: handleArchive,
+    onEdit: () => setEditing(true)
   }))));
 }
 ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement(App, null)));

@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meruria — Rezepte</title>
+<link rel="stylesheet" href="assets/styles/global/fonts.css">
+<link rel="stylesheet" href="assets/styles/global/base.css">
+<link rel="stylesheet" href="assets/styles/pages/Rezepte.css">
+<script src="assets/scripts/vendor/react.production.min.js"></script>
+<script src="assets/scripts/vendor/react-dom.production.min.js"></script>
+<script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/components/nav.js"></script>
+<script src="assets/scripts/vendor/supabase.min.js"></script>
+<script src="assets/scripts/supabase-client.js"></script>
+<script src="assets/components/site-gate.js"></script>
+<script src="assets/scripts/data/kollektikon-data.js"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect, useRef, useMemo, useCallback } = React;
+const { SiteNav, SiteGate } = window;
+
+const GLYPH_CHARS = '▒▓█░▐▌▄▀■□▪▫◆◇○●◎▸▴';
+
+function recipeImageUrl(name) {
+  const slug = name.toLowerCase()
+    .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
+    .replace(/\s+/g, '_').replace(/[^a-z0-9_\-]/g, '_');
+  return 'assets/images/recipes/' + slug + '.png';
+}
+
+function scramble(name) {
+  return name.split('').map((c, i) =>
+    c === ' ' ? ' ' : GLYPH_CHARS[(c.charCodeAt(0) + i * 3) % GLYPH_CHARS.length]
+  ).join('');
+}
+
+const CAT_LABEL = {
+  fische: 'Fisch', insekten: 'Insekt', pflanzen: 'Pflanze',
+  mineralien: 'Mineral', kreaturen: 'Kreatur', kreaturenteile: 'Kreaturenteil',
+  wal: 'Wal-Trümmer', lebensspeicher: 'Lebensspeicher',
+};
+
+// ── Ingredient pool — lazy loaded when creator opens ─────────────────────────
+const ALL_KOLLEKTIKON = window.KOLLEKTIKON_CATALOG || [];
+
+const kollektikonByName = new Map(ALL_KOLLEKTIKON.map(e => [e.name.toLowerCase(), e.id]));
+function resolveKollektikonId(name) { return kollektikonByName.get(name.toLowerCase()) || null; }
+
+const RESOURCE_SCRIPTS = [
+  'assets/scripts/data/resources/ff14_fish-data.js',
+  'assets/scripts/data/resources/mineralien/ff14_mineralien-data.js',
+  'assets/scripts/data/resources/pflanzen/ff14_pflanzen-data.js',
+  'assets/scripts/data/resources/pflanzen/fantasy_plant-data.js',
+  'assets/scripts/data/resources/insekten/insekten-data.js',
+];
+
+let _ingredientsReady = false;
+let _ingredientsLoading = false;
+const _ingredientsCbs = [];
+
+function loadIngredients(cb) {
+  if (_ingredientsReady) { cb(); return; }
+  _ingredientsCbs.push(cb);
+  if (_ingredientsLoading) return;
+  _ingredientsLoading = true;
+  let done = 0;
+  RESOURCE_SCRIPTS.forEach(src => {
+    const s = document.createElement('script');
+    s.src = src;
+    s.onload = () => { if (++done === RESOURCE_SCRIPTS.length) { _ingredientsReady = true; _ingredientsCbs.splice(0).forEach(f => f()); } };
+    document.head.appendChild(s);
+  });
+}
+
+function buildIngredients() {
+  return [
+    ...(window.FISH_DB || []).map(f => ({ id: f.id, name: f.name_de, cat: 'fische' })),
+    ...[...(window.PFLANZEN_DB || []), ...(window.FANTASY_PLANT_DB || [])].map(p => ({ id: p.id, name: p.name_de, cat: 'pflanzen' })),
+    ...(window.MINERALIEN_DB || []).map(m => ({ id: m.id, name: m.name_de, cat: 'mineralien' })),
+    ...(window.INSEKTEN_DB || []).map(i => ({ id: i.id, name: i.name_de, cat: 'insekten' })),
+  ].filter(e => e.name)
+   .sort((a, b) => a.name.localeCompare(b.name, 'de', { sensitivity: 'base' }));
+}
+
+// knownNames: Set<string> of lowercase names visible to this player.
+// null means DM (show everything).
+function displayZutat(zutat, knownNames) {
+  if (!knownNames || knownNames.has(zutat.name.toLowerCase())) return zutat.name;
+  const cat = CAT_LABEL[zutat.cat] || zutat.cat || 'Unbekannt';
+  return { encrypted: true, glyph: scramble(zutat.name), cat };
+}
+
+// ── Zutat row ─────────────────────────────────────────────────────────────────
+function ZutatDisplay({ zutat, knownNames }) {
+  const d = displayZutat(zutat, knownNames);
+  const label = typeof d === 'string' ? d
+    : <span className="rez-zutat-encrypted" title="Unbekannte Zutat">{d.glyph} <span style={{ opacity: 0.6, fontSize: '9px' }}>[{d.cat}]</span></span>;
+  return (
+    <div style={{ display: 'flex', gap: '8px', alignItems: 'baseline' }}>
+      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'rgba(160,140,255,0.45)', minWidth: '90px', flexShrink: 0 }}>
+        {zutat.menge || '–'}
+      </span>
+      <span>{label}</span>
+    </div>
+  );
+}
+
+// ── Panel helpers ─────────────────────────────────────────────────────────────
+function hexPts(size) {
+  const c = size / 2, p = [];
+  for (let i = 0; i < 6; i++) { const a = Math.PI / 180 * (60 * i - 30); p.push(`${c + c * Math.cos(a)},${c + c * Math.sin(a)}`); }
+  return p.join(' ');
+}
+function Oct({ size = 10, color = 'rgba(124,77,255,0.6)', fill = 'rgba(124,77,255,0.18)', sw = 1 }) {
+  return <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ display:'block', flexShrink:0 }}><polygon points={hexPts(size)} fill={fill} stroke={color} strokeWidth={sw}/></svg>;
+}
+
+const PANEL_GLYPHS = '▪▫□■◇◆▮▯•◦▬│┃⬚'.split('');
+const randG = () => PANEL_GLYPHS[(Math.random() * PANEL_GLYPHS.length) | 0];
+const scrambleRnd = t => { let o = ''; for (const c of t) o += (c === ' ' || c === '\n') ? c : randG(); return o; };
+
+function Scramble({ text, revealed, onReveal, tag: Tag = 'span', className = '', style }) {
+  const [display, setDisplay] = useState(() => revealed ? text : scrambleRnd(text));
+  const [phase, setPhase] = useState(revealed ? 'revealed' : 'locked');
+  const rafRef = useRef(null);
+  useEffect(() => () => cancelAnimationFrame(rafRef.current), []);
+  useEffect(() => {
+    if (revealed && phase !== 'revealed' && phase !== 'decoding') runDecode();
+    else if (!revealed && phase === 'revealed') { cancelAnimationFrame(rafRef.current); setDisplay(scrambleRnd(text)); setPhase('locked'); }
+  }, [revealed]);
+  function runDecode() {
+    setPhase('decoding');
+    const chars = [...text], total = 460 + Math.min(chars.length * 20, 760), start = performance.now(); let last = 0;
+    const step = now => {
+      const t = now - start;
+      if (now - last > 32 || t >= total) { last = now; let o = ''; for (let i = 0; i < chars.length; i++) { const c = chars[i]; if (c === ' ' || c === '\n') { o += c; continue; } const settle = (i / chars.length) * total * 0.62 + total * 0.32; o += t >= settle ? c : randG(); } setDisplay(o); }
+      if (t < total) rafRef.current = requestAnimationFrame(step); else { setDisplay(text); setPhase('revealed'); }
+    };
+    rafRef.current = requestAnimationFrame(step);
+  }
+  const canClick = phase === 'locked' && !!onReveal;
+  return (
+    <Tag className={className} style={style}>
+      <span style={{ position: 'relative', display: 'block', overflow: 'hidden' }}>
+        <span style={{ visibility: 'hidden', userSelect: 'none' }} aria-hidden="true">{text}</span>
+        <span
+          className={`rez-scr ${phase}${canClick ? ' clickable' : ''}`}
+          style={{ position: 'absolute', top: 0, left: 0, right: 0, cursor: canClick ? 'pointer' : undefined }}
+          title={canClick ? 'Klicken zum Enthüllen' : undefined}
+          onClick={canClick ? onReveal : undefined}
+        >{display}</span>
+      </span>
+    </Tag>
+  );
+}
+
+function PanelSH({ kick, title }) {
+  return (
+    <div className="rez-sh">
+      <div className="rez-sh-kick">{kick}</div>
+      <div className="rez-sh-row"><Oct size={9} /><h3>{title}</h3></div>
+      <div className="rez-sh-under"></div>
+    </div>
+  );
+}
+
+const CAT_COLORS = {
+  fische:         { c:'rgba(110,170,255,0.92)', bg:'rgba(110,170,255,0.08)', bd:'rgba(110,170,255,0.32)' },
+  pflanzen:       { c:'rgba(120,220,160,0.9)',  bg:'rgba(120,220,160,0.07)', bd:'rgba(120,220,160,0.3)' },
+  mineralien:     { c:'rgba(190,190,210,0.9)',  bg:'rgba(190,190,210,0.07)', bd:'rgba(190,190,210,0.3)' },
+  insekten:       { c:'rgba(210,175,80,0.9)',   bg:'rgba(210,175,80,0.07)',  bd:'rgba(210,175,80,0.3)' },
+  kreaturenteile: { c:'rgba(220,100,100,0.9)',  bg:'rgba(220,100,100,0.07)', bd:'rgba(220,100,100,0.3)' },
+  default:        { c:'rgba(160,140,255,0.9)',  bg:'rgba(160,140,255,0.07)', bd:'rgba(160,140,255,0.3)' },
+};
+
+// ── Recipe Detail Modal ───────────────────────────────────────────────────────
+function RecipeDetailModal({ recipe, knownNames, isDM, playerRevealed, onReveal, myIngredientRevealIds, onRevealIngredient, onToggleCooked, onClose, onEdit, onDelete }) {
+  const [animKey, setAnimKey] = useState(0);
+  const [testMode, setTestMode] = useState(false);
+  const [testRevealedMain, setTestRevealedMain] = useState(false);
+  const [testRevealedIngs, setTestRevealedIngs] = useState(new Set());
+  const [confirmDelete, setConfirmDelete] = useState(false);
+
+  useEffect(() => {
+    const h = e => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', h);
+    return () => document.removeEventListener('keydown', h);
+  }, [onClose]);
+
+  function toggleTestMode() {
+    setTestMode(m => {
+      if (m) { setTestRevealedMain(false); setTestRevealedIngs(new Set()); }
+      return !m;
+    });
+  }
+  function testRevealMain() { setTestRevealedMain(true); setAnimKey(k => k + 1); }
+  function testRevealIng(ingKey) { setTestRevealedIngs(s => { const n = new Set(s); n.add(ingKey); return n; }); }
+
+  const zutaten = recipe.zutaten || [];
+  const revealed = isDM || (recipe.wurde_gekocht && playerRevealed);
+  const effRevealed = testMode ? testRevealedMain : revealed;
+  function effIngRevealed(ingKey) {
+    return testMode ? testRevealedIngs.has(ingKey) : (isDM || !!(myIngredientRevealIds && myIngredientRevealIds.has(recipe.id + ':' + ingKey)));
+  }
+
+  return (
+    <div className="rez-modal-overlay" onClick={onClose}>
+      <div className="rez-panel" onClick={e => e.stopPropagation()}>
+        <button className="rez-panel-close" onClick={onClose}>✕</button>
+
+        {/* ── Header ── */}
+        <div className="rez-panel-head">
+          <div className="rez-panel-head-main">
+            <div className={`rez-panel-kicker${testMode ? ' rez-panel-kicker--test' : ''}`}>
+              {testMode ? '▸ Testmodus — klicken zum Enthüllen' : 'Rezeptkodex · Kochen'}
+              {isDM && (
+                <span className="rez-dm-tools">
+                  {!testMode && !confirmDelete && <button className="rez-btn rez-btn-sm" onClick={() => onEdit(recipe)}>◈ Bearbeiten</button>}
+                  {!testMode && !confirmDelete && (
+                    <button className="rez-btn rez-btn-sm rez-btn-reject" onClick={() => setConfirmDelete(true)}>Löschen</button>
+                  )}
+                  {confirmDelete && (
+                    <>
+                      <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', color:'rgba(240,120,120,0.8)', letterSpacing:'0.14em' }}>Wirklich löschen?</span>
+                      <button className="rez-btn rez-btn-sm rez-btn-reject" onClick={() => { onDelete(recipe.id); onClose(); }}>Ja</button>
+                      <button className="rez-btn rez-btn-sm" onClick={() => setConfirmDelete(false)}>Nein</button>
+                    </>
+                  )}
+                  {!confirmDelete && (
+                    <button className={`rez-btn rez-btn-sm${testMode ? ' rez-btn-test-active' : ''}`} onClick={toggleTestMode}>
+                      {testMode ? '✕ Test beenden' : '▸ Test Reveal'}
+                    </button>
+                  )}
+                </span>
+              )}
+            </div>
+            <div className="rez-panel-title-row">
+              <Scramble tag="h1" className="rez-panel-title" text={recipe.name} revealed={effRevealed}
+                onReveal={testMode && !testRevealedMain ? testRevealMain : undefined} />
+            </div>
+            <div className="rez-panel-under" />
+            {recipe.beschreibung && (
+              <Scramble tag="p" className="rez-panel-desc" text={recipe.beschreibung} revealed={effRevealed}
+                onReveal={testMode && !testRevealedMain ? testRevealMain : undefined} />
+            )}
+            {isDM && recipe.status === 'approved' && (
+              <button
+                className={`rez-reveal-bar${recipe.wurde_gekocht ? ' done' : ''}`}
+                onClick={e => { e.stopPropagation(); onToggleCooked(recipe.id, recipe.wurde_gekocht); onClose(); }}
+              >
+                {recipe.wurde_gekocht ? '✓ Wurde gekocht — Zurücksetzen' : '🍳 Noch nicht gekocht — Freischalten'}
+              </button>
+            )}
+            {!isDM && recipe.wurde_gekocht && !playerRevealed && (
+              <button
+                className="rez-reveal-bar"
+                onClick={e => { e.stopPropagation(); onReveal(recipe.id); }}
+              >
+                🔓 Rezept enthüllen
+              </button>
+            )}
+          </div>
+          <div className="rez-plate-col">
+            <div className="rez-plate">
+              {effRevealed && (
+                <img
+                  key={animKey}
+                  src={recipeImageUrl(recipe.name)}
+                  alt={recipe.name}
+                  className="rez-plate-img rez-plate-img--revealed"
+                  onError={e => {
+                    e.target.style.display = 'none';
+                    e.target.parentNode.querySelector('.rez-plate-placeholder').style.display = 'flex';
+                  }}
+                />
+              )}
+              <div
+                className={`rez-plate-placeholder${effRevealed ? '' : ' rez-plate-placeholder--locked'}`}
+                style={effRevealed ? { display: 'none' } : {}}
+                onClick={testMode && !testRevealedMain ? testRevealMain : undefined}
+                title={testMode && !testRevealedMain ? 'Klicken zum Enthüllen' : undefined}
+              >
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="64" height="64">
+                  <path d="M36 34 Q33 26 36 18 Q39 10 36 2"  stroke="rgba(124,77,255,0.35)" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+                  <path d="M50 32 Q47 24 50 16 Q53  8 50 0"  stroke="rgba(124,77,255,0.28)" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+                  <path d="M64 34 Q61 26 64 18 Q67 10 64 2"  stroke="rgba(124,77,255,0.35)" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+                  <ellipse cx="50" cy="44" rx="32" ry="6" fill="rgba(124,77,255,0.07)" stroke="rgba(124,77,255,0.45)" strokeWidth="1.5"/>
+                  <path d="M18 44 Q18 80 50 80 Q82 80 82 44 Z" fill="rgba(124,77,255,0.08)" stroke="rgba(124,77,255,0.4)" strokeWidth="1.5"/>
+                  <path d="M18 46 Q8 46 8 58 Q8 70 18 70" stroke="rgba(124,77,255,0.4)" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+                  <path d="M82 46 Q92 46 92 58 Q92 70 82 70" stroke="rgba(124,77,255,0.4)" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+                  <line x1="34" y1="80" x2="30" y2="92" stroke="rgba(124,77,255,0.35)" strokeWidth="1.5" strokeLinecap="round"/>
+                  <line x1="50" y1="80" x2="50" y2="93" stroke="rgba(124,77,255,0.35)" strokeWidth="1.5" strokeLinecap="round"/>
+                  <line x1="66" y1="80" x2="70" y2="92" stroke="rgba(124,77,255,0.35)" strokeWidth="1.5" strokeLinecap="round"/>
+                  <circle cx="40" cy="62" r="1.5" fill="rgba(124,77,255,0.3)"/>
+                  <circle cx="54" cy="58" r="1"   fill="rgba(124,77,255,0.22)"/>
+                  <circle cx="62" cy="66" r="1.2" fill="rgba(124,77,255,0.25)"/>
+                </svg>
+              </div>
+              {effRevealed && <div className="rez-plate-scan" />}
+              <span className="rez-ptick a"></span><span className="rez-ptick b"></span>
+              <span className="rez-ptick c"></span><span className="rez-ptick d"></span>
+            </div>
+            <div className="rez-plate-cap">{effRevealed ? 'Illustration' : '◈ Versiegelt'}</div>
+          </div>
+        </div>
+
+        <div className="rez-panel-body">
+          {/* ── Meta ── */}
+          <div className="rez-panel-meta">
+            <div className="rez-panel-meta-grid">
+              <div className="rez-panel-meta-item">
+                <div className="rez-panel-ml">Disziplin</div>
+                <div className="rez-panel-mv">Kochen</div>
+              </div>
+              {recipe.sg != null && (
+                <div className="rez-panel-meta-item">
+                  <div className="rez-panel-ml">Probe</div>
+                  <div className="rez-panel-mv">KON / WEI</div>
+                </div>
+              )}
+            </div>
+            {recipe.sg != null && (
+              <div className="rez-panel-sg-hex">
+                <svg viewBox="0 0 100 110">
+                  <polygon points="50,4 92,28 92,82 50,106 8,82 8,28" fill="rgba(124,77,255,0.08)" stroke="rgba(124,77,255,0.5)" strokeWidth="1.5"/>
+                  <polygon points="50,12 85,32 85,78 50,98 15,78 15,32" fill="none" stroke="rgba(124,77,255,0.18)" strokeWidth="1"/>
+                </svg>
+                <div className="rez-panel-sg-overlay">
+                  <span className="rez-panel-sg-l">SG</span>
+                  <span className="rez-panel-sg-n">{recipe.sg}</span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* ── Ingredients ── */}
+          {zutaten.length > 0 && (
+            <>
+              <PanelSH kick="Bestandteile" title="Zutaten" />
+              <div className="rez-ztable">
+                <div className="rez-zhead"><span>Menge</span><span>Zutat</span><span>Kategorie</span></div>
+                {zutaten.map((z, i) => {
+                  const k = CAT_COLORS[z.cat] || CAT_COLORS.default;
+                  // Stable key: kollektikon_id if available, else name-based fallback
+                  const ingKey = z.kollektikon_id || ('name:' + z.name.toLowerCase());
+                  const ingRevealed = effIngRevealed(ingKey);
+                  const canReveal = testMode ? !ingRevealed : (!isDM && (knownNames && knownNames.has(z.name.toLowerCase())) && !ingRevealed);
+                  const revealCb = testMode ? () => testRevealIng(ingKey) : (canReveal ? () => onRevealIngredient(ingKey) : undefined);
+                  return (
+                    <div className="rez-zrow" key={i}>
+                      <div className="rez-zamt">{z.menge || '—'}</div>
+                      <Scramble
+                        tag="div"
+                        className="rez-zname"
+                        text={z.name}
+                        revealed={ingRevealed}
+                        onReveal={canReveal ? revealCb : undefined}
+                      />
+                      <span className="rez-zcat" style={{ color:k.c, background:k.bg, border:`1px solid ${k.bd}`, opacity: ingRevealed ? 1 : 0.35 }}>
+                        <span className="rez-zcat-dot" style={{ background:k.c }}></span>
+                        {ingRevealed ? (CAT_LABEL[z.cat] || z.cat || '—') : '???'}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </>
+          )}
+
+          {/* ── Ergebnis ── */}
+          <PanelSH kick="Resultat" title="Ergebnis" />
+          <div className="rez-result-box">
+            <div className="rez-result-item">
+              <Oct size={8} color="rgba(124,77,255,0.55)" fill="rgba(124,77,255,0.12)" />
+              <Scramble tag="div" className="rez-result-name" text={recipe.ergebnis || '—'} revealed={effRevealed}
+                onReveal={testMode && !testRevealedMain ? testRevealMain : undefined} />
+            </div>
+            {recipe.portionen && (
+              <div className="rez-result-item">
+                <Oct size={8} color="rgba(124,77,255,0.55)" fill="rgba(124,77,255,0.12)" />
+                <Scramble tag="div" className="rez-result-name" text={recipe.portionen} revealed={effRevealed}
+                  onReveal={testMode && !testRevealedMain ? testRevealMain : undefined} />
+              </div>
+            )}
+          </div>
+
+          {/* ── Effekte ── */}
+          {recipe.effekte && (
+            <>
+              <PanelSH kick="Verzehr-Wirkung" title="Effekte" />
+              <div className="rez-eff">
+                <div className="rez-eff-t">◆ Temporärer Effekt</div>
+                <Scramble tag="div" className="rez-eff-text" text={recipe.effekte} revealed={effRevealed}
+                  onReveal={testMode && !testRevealedMain ? testRevealMain : undefined} />
+              </div>
+            </>
+          )}
+
+          {/* ── Footer ── */}
+          <div className="rez-panel-foot">
+            <span>Kategorie · Kochen</span>
+            {recipe.sg != null && <><span className="rez-panel-fs">·</span><span>SG {recipe.sg}</span></>}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Recipe Card ───────────────────────────────────────────────────────────────
+function RecipeCard({ recipe, knownNames, isDM, playerRevealed, myIngredientRevealIds, onOpen, onApprove, onRejectStart, onWithdraw, onToggleCooked }) {
+  const isPending = recipe.status === 'pending';
+  const isRejected = recipe.status === 'rejected';
+  const uid = window.SITE_USER?.id;
+  const isOwn = uid && recipe.submitted_by === uid;
+  const revealed = isDM || (recipe.wurde_gekocht && playerRevealed);
+
+  return (
+    <div className={`rez-card2${isPending ? ' rez-card2--pending' : ''}${isRejected ? ' rez-card2--rejected' : ''}`} onClick={() => onOpen(recipe)}>
+      {/* top accent rail */}
+      <div className="rez-card2-rail" />
+
+      {/* kicker row */}
+      <div className="rez-card2-kicker">
+        <span>Rezeptkodex · Kochen</span>
+        <div style={{ display: 'flex', gap: '5px' }}>
+          {!recipe.wurde_gekocht && !isDM && <span className="rez-badge" style={{ opacity: 0.45 }}>unbekannt</span>}
+          {isPending && <span className="rez-badge rez-badge-pending">Ausstehend</span>}
+          {isRejected && <span className="rez-badge rez-badge-rejected">Abgelehnt</span>}
+        </div>
+      </div>
+
+      {/* title */}
+      <div className="rez-card2-title-row">
+        <Oct size={8} color="rgba(124,77,255,0.5)" fill="rgba(124,77,255,0.1)" />
+        <Scramble tag="div" className="rez-card2-name" text={recipe.name} revealed={revealed} />
+      </div>
+
+      {isDM && recipe.submitter_name && (
+        <div className="rez-card-submitter">von {recipe.submitter_name}</div>
+      )}
+
+      {/* ingredients preview */}
+      {(recipe.zutaten || []).length > 0 && (
+        <div className="rez-card2-zutaten" onClick={e => e.stopPropagation()}>
+          {recipe.zutaten.slice(0, 4).map((z, i) => {
+            const ingKey = z.kollektikon_id || ('name:' + z.name.toLowerCase());
+            const ingRevealed = isDM || (myIngredientRevealIds && myIngredientRevealIds.has(recipe.id + ':' + ingKey));
+            return (
+              <span key={i} className={`rez-card2-ztag${!ingRevealed ? ' rez-scr locked' : ''}`}>
+                {ingRevealed ? (z.menge ? `${z.menge} ${z.name}` : z.name) : scramble(z.name).slice(0, 10)}
+              </span>
+            );
+          })}
+          {recipe.zutaten.length > 4 && <span className="rez-card2-zmore">+{recipe.zutaten.length - 4}</span>}
+        </div>
+      )}
+
+      {/* result */}
+      {recipe.ergebnis && (
+        <div className="rez-card2-result">
+          <span className="rez-card2-result-arrow">→</span>
+          <Scramble tag="span" className="rez-card2-result-text" text={recipe.ergebnis} revealed={revealed} />
+        </div>
+      )}
+
+      {/* SG */}
+      {recipe.sg != null && (
+        <div className="rez-card2-sg">SG {recipe.sg}</div>
+      )}
+
+      {/* rejection note */}
+      {isRejected && recipe.abgelehnt_grund && (
+        <div className="rez-card2-rejected-note">{recipe.abgelehnt_grund}</div>
+      )}
+
+      {/* DM cooked toggle */}
+      {isDM && recipe.status === 'approved' && (
+        <div className="rez-pending-actions" onClick={e => e.stopPropagation()}>
+          <button className={`rez-btn rez-btn-sm${recipe.wurde_gekocht ? ' rez-btn-cooked-on' : ''}`} onClick={() => onToggleCooked(recipe.id, recipe.wurde_gekocht)}>
+            {recipe.wurde_gekocht ? '🍳 Wurde gekocht' : '🍳 Noch nicht gekocht'}
+          </button>
+        </div>
+      )}
+
+      {/* DM pending actions */}
+      {isDM && isPending && (
+        <div className="rez-pending-actions" onClick={e => e.stopPropagation()}>
+          <button className="rez-btn rez-btn-sm rez-btn-approve" onClick={() => onApprove(recipe.id)}>Genehmigen</button>
+          <button className="rez-btn rez-btn-sm rez-btn-reject" onClick={() => onRejectStart(recipe)}>Ablehnen</button>
+        </div>
+      )}
+
+      {/* Player withdraw */}
+      {!isDM && isOwn && isPending && (
+        <div className="rez-pending-actions" onClick={e => e.stopPropagation()}>
+          <button className="rez-btn rez-btn-sm rez-btn-withdraw" onClick={() => onWithdraw(recipe.id)}>Zurückziehen</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Reject Modal ─────────────────────────────────────────────────────────────
+function RejectModal({ recipe, onConfirm, onCancel }) {
+  const [grund, setGrund] = useState('');
+  return (
+    <div className="rez-modal-overlay" onClick={onCancel}>
+      <div className="rez-modal" style={{ maxWidth: '420px' }} onClick={e => e.stopPropagation()}>
+        <button className="rez-modal-close" onClick={onCancel}>✕</button>
+        <div className="rez-modal-title" style={{ fontSize: '14px' }}>Rezept ablehnen</div>
+        <div style={{ fontFamily: 'var(--font-body)', fontSize: '12px', color: 'rgba(200,190,240,0.65)' }}>
+          „{recipe.name}" ablehnen?
+        </div>
+        <div className="rez-form-group">
+          <div className="rez-form-label">Begründung (optional)</div>
+          <textarea
+            className="rez-reject-reason"
+            placeholder="Kommentar für den Spieler…"
+            value={grund}
+            onChange={e => setGrund(e.target.value)}
+          />
+        </div>
+        <div className="rez-form-actions">
+          <button className="rez-btn" onClick={onCancel}>Abbrechen</button>
+          <button className="rez-btn rez-btn-reject" onClick={() => onConfirm(recipe.id, grund)}>Ablehnen</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Ingredient Picker ─────────────────────────────────────────────────────────
+function IngredientPicker({ isDM, sichtbar, onAdd }) {
+  const [search, setSearch] = useState('');
+  const [show, setShow] = useState(false);
+  const [ingredients, setIngredients] = useState(null); // null = not loaded yet
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    loadIngredients(() => setIngredients(buildIngredients()));
+  }, []);
+
+  const pool = useMemo(() => {
+    if (!ingredients) return [];
+    if (isDM) return ingredients;
+    return ingredients.filter(e => sichtbar[e.cat]?.has(e.id));
+  }, [ingredients, isDM, sichtbar]);
+
+  const filtered = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    if (!q) return pool.slice(0, 25);
+    return pool.filter(e => e.name.toLowerCase().includes(q)).slice(0, 25);
+  }, [pool, search]);
+
+  function pick(entry) {
+    onAdd({ kollektikon_id: resolveKollektikonId(entry.name), name: entry.name, cat: entry.cat, menge: '' });
+    setSearch('');
+    setShow(false);
+  }
+
+  function pickFreetext() {
+    if (!search.trim()) return;
+    onAdd({ kollektikon_id: null, name: search.trim(), cat: null, menge: '' });
+    setSearch('');
+    setShow(false);
+  }
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <input
+        ref={inputRef}
+        className="rez-picker-search"
+        placeholder={ingredients === null ? 'Lädt Zutaten…' : isDM ? 'Zutat suchen oder frei eingeben…' : 'Zutat suchen…'}
+        disabled={ingredients === null}
+        value={search}
+        onChange={e => { setSearch(e.target.value); setShow(true); }}
+        onFocus={() => setShow(true)}
+        onBlur={() => setTimeout(() => setShow(false), 150)}
+        onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); if (filtered.length > 0) pick(filtered[0]); else if (isDM && search.trim()) pickFreetext(); } }}
+      />
+      {show && (search.trim() !== '' || filtered.length > 0) && (
+        <div className="rez-picker-results">
+          {filtered.map(e => (
+            <div key={e.id} className="rez-picker-item" onMouseDown={() => pick(e)}>
+              <span>{e.name}</span>
+              <span className="rez-picker-cat">{CAT_LABEL[e.cat] || e.cat}</span>
+            </div>
+          ))}
+          {isDM && search.trim() && !filtered.some(e => e.name.toLowerCase() === search.trim().toLowerCase()) && (
+            <div className="rez-picker-freetext" onMouseDown={pickFreetext}>
+              + „{search.trim()}" als unbekannte Zutat hinzufügen
+            </div>
+          )}
+          {filtered.length === 0 && !isDM && (
+            <div className="rez-picker-freetext" style={{ cursor: 'default' }}>Keine bekannten Zutaten gefunden</div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Creator / Editor Modal ────────────────────────────────────────────────────
+function CreatorModal({ isDM, sichtbar, onClose, onSubmit, editRecipe }) {
+  const [name, setName] = useState(editRecipe?.name || '');
+  const [beschreibung, setBeschreibung] = useState(editRecipe?.beschreibung || '');
+  const [ergebnis, setErgebnis] = useState(editRecipe?.ergebnis || '');
+  const [portionen, setPortionen] = useState(editRecipe?.portionen || '');
+  const [sg, setSg] = useState(editRecipe?.sg != null ? String(editRecipe.sg) : '');
+  const [effekte, setEffekte] = useState(editRecipe?.effekte || '');
+  const [zutaten, setZutaten] = useState(editRecipe?.zutaten || []);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
+
+  function addZutat(z) { setZutaten(prev => [...prev, z]); }
+  function removeZutat(i) { setZutaten(prev => prev.filter((_, idx) => idx !== i)); }
+  function updateMenge(i, menge) { setZutaten(prev => prev.map((z, idx) => idx === i ? { ...z, menge } : z)); }
+
+  async function handleSubmit() {
+    if (!name.trim() || !ergebnis.trim()) { setError('Name und Ergebnis sind Pflichtfelder.'); return; }
+    setSaving(true); setError('');
+    const uid = window.SITE_USER?.id;
+    if (!uid) { setError('Nicht eingeloggt.'); setSaving(false); return; }
+    const payload = {
+      name: name.trim(),
+      beschreibung: beschreibung.trim(),
+      zutaten,
+      ergebnis: ergebnis.trim(),
+      portionen: portionen.trim() || null,
+      sg: sg ? parseInt(sg, 10) : null,
+      effekte: effekte.trim() || null,
+    };
+    if (editRecipe) {
+      const { error: err } = await window._sb.from('recipes').update(payload).eq('id', editRecipe.id);
+      if (err) { setError(err.message); setSaving(false); return; }
+    } else {
+      const { error: err } = await window._sb.from('recipes').insert({
+        ...payload,
+        kategorie: 'Kochen',
+        submitted_by: uid,
+        dm_erstellt: !!isDM,
+        status: isDM ? 'approved' : 'pending',
+        approved_at: isDM ? new Date().toISOString() : null,
+      });
+      if (err) { setError(err.message); setSaving(false); return; }
+    }
+    onSubmit();
+  }
+
+  useEffect(() => {
+    const h = e => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', h);
+    return () => document.removeEventListener('keydown', h);
+  }, [onClose]);
+
+  return (
+    <div className="rez-modal-overlay">
+      <div className="rez-creator-modal">
+        <button className="rez-modal-close" onClick={onClose}>✕</button>
+        <div className="rez-modal-title">{editRecipe ? 'Rezept bearbeiten' : isDM ? 'Rezept erstellen' : 'Rezept vorschlagen'}</div>
+        <hr className="rez-divider" />
+
+        <div className="rez-form-group">
+          <label className="rez-form-label">Name *</label>
+          <input className="rez-input" value={name} onChange={e => setName(e.target.value)} placeholder="Name des Gerichts" />
+        </div>
+
+        <div className="rez-form-group">
+          <label className="rez-form-label">Beschreibung</label>
+          <textarea className="rez-textarea" value={beschreibung} onChange={e => setBeschreibung(e.target.value)} placeholder="Kurze Beschreibung…" />
+        </div>
+
+        <div className="rez-form-group">
+          <label className="rez-form-label">Zutaten</label>
+          {zutaten.length > 0 && (
+            <div className="rez-zutat-list">
+              {zutaten.map((z, i) => (
+                <div key={i} className="rez-zutat-row">
+                  <span className="rez-zutat-name">
+                    {!z.kollektikon_id && (
+                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', color: 'rgba(160,140,255,0.4)', marginRight: '5px' }}>?</span>
+                    )}
+                    {z.name}
+                  </span>
+                  <input
+                    className="rez-input rez-zutat-menge-input"
+                    style={{ padding: '5px 8px', fontSize: '11px' }}
+                    value={z.menge}
+                    onChange={e => updateMenge(i, e.target.value)}
+                    placeholder="Menge…"
+                  />
+                  <button className="rez-zutat-remove" onClick={() => removeZutat(i)} title="Entfernen">✕</button>
+                </div>
+              ))}
+            </div>
+          )}
+          <IngredientPicker isDM={isDM} sichtbar={sichtbar} onAdd={addZutat} />
+          {!isDM && (
+            <div className="rez-form-hint">
+              Nur für Spieler freigeschaltete Ressourcen verfügbar.
+            </div>
+          )}
+          {isDM && (
+            <div className="rez-form-hint">
+              Unbekannte Zutaten (frei eingegeben) erscheinen für Spieler verschlüsselt.
+            </div>
+          )}
+        </div>
+
+        <div style={{ display: 'flex', gap: '12px' }}>
+          <div className="rez-form-group" style={{ flex: 1 }}>
+            <label className="rez-form-label">Ergebnis *</label>
+            <input className="rez-input" value={ergebnis} onChange={e => setErgebnis(e.target.value)} placeholder="Was entsteht?" />
+          </div>
+          <div className="rez-form-group" style={{ flex: 1 }}>
+            <label className="rez-form-label">Portionen</label>
+            <input className="rez-input" value={portionen} onChange={e => setPortionen(e.target.value)} placeholder="z.B. 2 Portionen" />
+          </div>
+          <div className="rez-form-group" style={{ width: '80px', flexShrink: 0 }}>
+            <label className="rez-form-label">SG</label>
+            <input className="rez-input" type="number" min="1" max="30" value={sg} onChange={e => setSg(e.target.value)} placeholder="—" />
+          </div>
+        </div>
+
+        <div className="rez-form-group">
+          <label className="rez-form-label">Effekte</label>
+          <textarea className="rez-textarea" style={{ minHeight: '56px' }} value={effekte} onChange={e => setEffekte(e.target.value)} placeholder="Magische oder mechanische Effekte…" />
+        </div>
+
+        {error && (
+          <div style={{ fontFamily: 'var(--font-body)', fontSize: '11px', color: 'rgba(240,120,120,0.85)' }}>{error}</div>
+        )}
+
+        <div className="rez-form-actions">
+          <button className="rez-btn" onClick={onClose}>Abbrechen</button>
+          <button className="rez-btn rez-btn-primary" onClick={handleSubmit} disabled={saving}>
+            {saving ? 'Wird gespeichert…' : editRecipe ? 'Speichern' : isDM ? 'Erstellen' : 'Vorschlagen'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Main App ──────────────────────────────────────────────────────────────────
+function App() {
+  const isDM = window.SITE_USER?.role === 'dm';
+  const uid = window.SITE_USER?.id;
+
+  const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [tab, setTab] = useState('all');
+  const [search, setSearch] = useState('');
+  const [detailRecipe, setDetailRecipe] = useState(null);
+  const [showCreator, setShowCreator] = useState(false);
+  const [editRecipe, setEditRecipe] = useState(null);
+  const [rejectTarget, setRejectTarget] = useState(null);
+  const [sichtbar, setSichtbar] = useState({ fische: new Set(), pflanzen: new Set(), mineralien: new Set(), insekten: new Set() });
+  const [resourceNameMap, setResourceNameMap] = useState(null);
+  const [myRevealedIds, setMyRevealedIds] = useState(new Set());
+  const [myIngredientRevealIds, setMyIngredientRevealIds] = useState(new Set());
+
+  // Load resource databases in background for accurate encryption
+  useEffect(() => {
+    if (isDM) return;
+    loadIngredients(() => {
+      const map = new Map();
+      buildIngredients().forEach(e => map.set(e.name.toLowerCase(), { cat: e.cat, id: e.id }));
+      setResourceNameMap(map);
+    });
+  }, []);
+
+  // knownNames: null = DM (show all), Set = player-visible names
+  const knownNames = useMemo(() => {
+    if (isDM) return null;
+    const names = new Set();
+    ALL_KOLLEKTIKON
+      .filter(e => e.status === 'sighted' || e.status === 'komplett')
+      .forEach(e => names.add(e.name.toLowerCase()));
+    if (resourceNameMap) {
+      resourceNameMap.forEach((info, nameLower) => {
+        if (sichtbar[info.cat]?.has(info.id)) names.add(nameLower);
+      });
+    }
+    return names;
+  }, [isDM, sichtbar, resourceNameMap]);
+
+  async function loadRecipes() {
+    const [{ data: recipesData }, { data: profilesData }] = await Promise.all([
+      window._sb.from('recipes').select('*').order('created_at', { ascending: false }),
+      window._sb.from('profiles').select('id, display_name'),
+    ]);
+    const profileMap = new Map((profilesData || []).map(p => [p.id, p.display_name || '—']));
+    if (recipesData) setRecipes(recipesData.map(r => ({
+      ...r,
+      submitter_name: profileMap.get(r.submitted_by) || '—',
+    })));
+    setLoading(false);
+  }
+
+  useEffect(() => { loadRecipes(); }, []);
+
+  useEffect(() => {
+    if (!uid || isDM) return;
+    Promise.all([
+      window._sb.from('recipe_reveals').select('recipe_id').eq('player_id', uid),
+      window._sb.from('ingredient_reveals').select('recipe_id, kollektikon_id').eq('player_id', uid),
+    ]).then(([{ data: rd }, { data: id }]) => {
+      if (rd) setMyRevealedIds(new Set(rd.map(r => r.recipe_id)));
+      if (id) setMyIngredientRevealIds(new Set(id.map(r => r.recipe_id + ':' + r.kollektikon_id)));
+    });
+  }, [uid]);
+
+  async function handleReveal(recipeId) {
+    if (!uid) return;
+    const { error } = await window._sb.from('recipe_reveals').insert({ recipe_id: recipeId, player_id: uid });
+    if (!error) setMyRevealedIds(prev => new Set([...prev, recipeId]));
+  }
+
+  async function handleRevealIngredient(recipeId, kollektikonId) {
+    if (!uid || !kollektikonId) return;
+    const key = recipeId + ':' + kollektikonId;
+    const { error } = await window._sb.from('ingredient_reveals').insert({ player_id: uid, recipe_id: recipeId, kollektikon_id: kollektikonId });
+    if (!error) setMyIngredientRevealIds(prev => new Set([...prev, key]));
+  }
+
+  useEffect(() => {
+    window._sb.from('ressourcen_sichtbar').select('cat, resource_id').then(({ data }) => {
+      if (!data) return;
+      const v = { fische: new Set(), pflanzen: new Set(), mineralien: new Set(), insekten: new Set() };
+      data.forEach(row => { if (v[row.cat]) v[row.cat].add(row.resource_id); });
+      setSichtbar(v);
+    });
+  }, []);
+
+  const approved = useMemo(() => recipes.filter(r => r.status === 'approved'), [recipes]);
+  const pending  = useMemo(() => recipes.filter(r => r.status === 'pending'),  [recipes]);
+  const mine     = useMemo(() => recipes.filter(r => r.submitted_by === uid),   [recipes, uid]);
+
+  // Per-recipe ingredient reveal helpers
+  function ingKey(z) { return z.kollektikon_id || ('name:' + z.name.toLowerCase()); }
+  function hasAnyIngRevealed(r) {
+    return (r.zutaten || []).some(z => myIngredientRevealIds.has(r.id + ':' + ingKey(z)));
+  }
+  function allIngsRevealed(r) {
+    const zs = r.zutaten || [];
+    return zs.length > 0 && zs.every(z => myIngredientRevealIds.has(r.id + ':' + ingKey(z)));
+  }
+  // All ingredients that are VISIBLE to this player have been revealed
+  function allVisibleIngsRevealed(r) {
+    const visible = (r.zutaten || []).filter(z => knownNames && knownNames.has(z.name.toLowerCase()));
+    if (visible.length === 0) return true;
+    return visible.every(z => myIngredientRevealIds.has(r.id + ':' + ingKey(z)));
+  }
+
+  function applySearch(list) {
+    const q = search.trim().toLowerCase();
+    if (!q) return list;
+    return list.filter(r =>
+      r.name.toLowerCase().includes(q) ||
+      (r.ergebnis || '').toLowerCase().includes(q) ||
+      (r.zutaten || []).some(z => z.name.toLowerCase().includes(q))
+    );
+  }
+
+  const displayList = useMemo(() => {
+    let base;
+    if      (tab === 'all')        base = approved;
+    // ≥1 ingredient revealed, but not all visible ingredients revealed yet
+    else if (tab === 'found')      base = approved.filter(r => hasAnyIngRevealed(r) && !allVisibleIngsRevealed(r));
+    // has unrevealed ingredients
+    else if (tab === 'incomplete') base = approved.filter(r => !allIngsRevealed(r));
+    // all ingredients revealed
+    else if (tab === 'complete')   base = approved.filter(r => allIngsRevealed(r));
+    // DM marked as cooked AND player has revealed
+    else if (tab === 'cooked')     base = approved.filter(r => r.wurde_gekocht && myRevealedIds.has(r.id));
+    else if (tab === 'pending')    base = pending;
+    else                           base = mine;
+    return applySearch(base);
+  }, [tab, approved, pending, mine, myIngredientRevealIds, myRevealedIds, search]);
+
+  async function handleToggleCooked(id, current) {
+    await window._sb.from('recipes').update({ wurde_gekocht: !current }).eq('id', id);
+    loadRecipes();
+  }
+
+  async function handleApprove(id) {
+    await window._sb.from('recipes').update({ status: 'approved', approved_at: new Date().toISOString() }).eq('id', id);
+    loadRecipes();
+  }
+
+  async function handleRejectConfirm(id, grund) {
+    await window._sb.from('recipes').update({ status: 'rejected', abgelehnt_grund: grund || null }).eq('id', id);
+    setRejectTarget(null);
+    loadRecipes();
+  }
+
+  async function handleWithdraw(id) {
+    await window._sb.from('recipes').delete().eq('id', id);
+    loadRecipes();
+  }
+
+  function handleCreatorSubmit() {
+    setShowCreator(false);
+    setEditRecipe(null);
+    loadRecipes();
+  }
+
+  const tabs = [
+    { id: 'all',        label: 'Alle Rezepte',     count: approved.length },
+    ...(!isDM ? [{ id: 'found',      label: 'Zutat gefunden' }] : []),
+    ...(!isDM ? [{ id: 'incomplete', label: 'Unvollständig' }] : []),
+    ...(!isDM ? [{ id: 'complete',   label: 'Vollständig' }] : []),
+    ...(!isDM ? [{ id: 'cooked',     label: 'Gekocht' }] : []),
+    ...(isDM  ? [{ id: 'pending',    label: 'Ausstehend',       count: pending.length }] : []),
+    ...(uid   ? [{ id: 'mine',       label: 'Meine Vorschläge' }] : []),
+  ];
+
+  return (
+    <div className="rez-root">
+      <SiteNav rightLabel="REZEPTE" />
+
+      <div className="rez-header">
+        <div className="rez-header-kicker">◈ Rezeptkodex</div>
+        <h1 className="rez-title">Rezepte</h1>
+        <div className="rez-title-under" />
+        <p className="rez-subtitle">
+          {isDM ? 'Meisterkodex — alle Zutaten sichtbar · Rezepte direkt genehmigt' : 'Kochbuch der Spieler & Meister'}
+        </p>
+        <div className="rez-header-rule" />
+      </div>
+
+      <div className="rez-toolbar">
+        <input
+          className="rez-search"
+          placeholder="▸ Name, Zutat, Ergebnis…"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+        />
+        {!loading && (
+          <span className="rez-result-count">{displayList.length} / {approved.length} Rezepte</span>
+        )}
+        <div style={{ flex: 1 }} />
+        {uid && (
+          <button className="rez-btn rez-btn-primary" onClick={() => setShowCreator(true)}>
+            + {isDM ? 'Erstellen' : 'Vorschlagen'}
+          </button>
+        )}
+      </div>
+
+      <div className="rez-tabs">
+        {tabs.map(t => (
+          <button key={t.id} className={`rez-tab${tab === t.id ? ' active' : ''}`} onClick={() => setTab(t.id)}>
+            {t.label}
+            {t.count != null && <span className="rez-tab-count">{t.count}</span>}
+          </button>
+        ))}
+      </div>
+
+      {loading ? (
+        <div className="rez-empty"><span className="rez-empty-text">Lädt…</span></div>
+      ) : displayList.length === 0 ? (
+        <div className="rez-empty">
+          <span className="rez-empty-text">
+            {tab === 'all'        ? 'Noch keine Rezepte vorhanden.' :
+             tab === 'found'      ? 'Noch keine Zutaten enthüllt.' :
+             tab === 'incomplete' ? 'Alle Rezepte vollständig enthüllt.' :
+             tab === 'complete'   ? 'Noch kein Rezept vollständig enthüllt.' :
+             tab === 'cooked'     ? 'Noch kein Rezept wurde gekocht.' :
+             tab === 'pending'    ? 'Keine ausstehenden Vorschläge.' :
+                                    'Du hast noch keine Rezepte vorgeschlagen.'}
+          </span>
+        </div>
+      ) : (
+        <div className="rez-grid">
+          {displayList.map(recipe => (
+            <RecipeCard
+              key={recipe.id}
+              recipe={recipe}
+              knownNames={knownNames}
+              isDM={isDM}
+              playerRevealed={myRevealedIds.has(recipe.id)}
+              myIngredientRevealIds={myIngredientRevealIds}
+              onOpen={setDetailRecipe}
+              onApprove={handleApprove}
+              onRejectStart={setRejectTarget}
+              onWithdraw={handleWithdraw}
+              onToggleCooked={handleToggleCooked}
+            />
+          ))}
+        </div>
+      )}
+
+      {detailRecipe && (
+        <RecipeDetailModal
+          recipe={detailRecipe}
+          knownNames={knownNames}
+          isDM={isDM}
+          playerRevealed={myRevealedIds.has(detailRecipe.id)}
+          onReveal={handleReveal}
+          myIngredientRevealIds={myIngredientRevealIds}
+          onRevealIngredient={(kid) => handleRevealIngredient(detailRecipe.id, kid)}
+          onToggleCooked={handleToggleCooked}
+          onClose={() => setDetailRecipe(null)}
+          onEdit={r => { setDetailRecipe(null); setEditRecipe(r); }}
+          onDelete={async id => { await window._sb.from('recipes').delete().eq('id', id); setDetailRecipe(null); loadRecipes(); }}
+        />
+      )}
+
+      {(showCreator || editRecipe) && (
+        <CreatorModal
+          isDM={isDM}
+          sichtbar={sichtbar}
+          onClose={() => { setShowCreator(false); setEditRecipe(null); }}
+          onSubmit={handleCreatorSubmit}
+          editRecipe={editRecipe}
+        />
+      )}
+
+      {rejectTarget && (
+        <RejectModal
+          recipe={rejectTarget}
+          onConfirm={handleRejectConfirm}
+          onCancel={() => setRejectTarget(null)}
+        />
+      )}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <SiteGate><App /></SiteGate>
+);
+</script>
+</body></html>

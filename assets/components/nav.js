@@ -161,9 +161,6 @@ const NAV = [{
     label: 'Orte',
     href: '#'
   }, {
-    label: 'Rezepte',
-    href: '#'
-  }, {
     label: 'Organisationen',
     href: '#'
   }, {
@@ -239,6 +236,9 @@ const NAV = [{
   }, {
     label: 'Missionsterminal',
     href: 'Missionsterminal.html'
+  }, {
+    label: 'Rezepte',
+    href: 'Rezepte.html'
   }]
 }, {
   id: 'dm-bereich',
