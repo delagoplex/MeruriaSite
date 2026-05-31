@@ -282,13 +282,23 @@
 }
 .rez-card2-thumb {
   position: relative;
+  width: 100%;
   height: 130px;
+  flex-shrink: 0;
   overflow: hidden;
   background: linear-gradient(135deg, rgba(124,77,255,0.05) 25%, transparent 25%, transparent 50%, rgba(124,77,255,0.05) 50%, rgba(124,77,255,0.05) 75%, transparent 75%);
   background-size: 10px 10px;
   border-bottom: 1px solid rgba(124,77,255,0.08);
 }
-.rez-card2-thumb .rez-plate-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border: none; }
+.rez-card2-thumb .rez-plate-img {
+  display: block;
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: none;
+}
 .rez-card2-thumb-placeholder {
   display: flex;
   align-items: center;
