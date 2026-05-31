@@ -2,6 +2,8 @@
 <html lang="de"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/images/favicon/favicon-m.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/images/favicon/favicon-m-180.png">
 <title>Meruria — NSC-Verwaltung</title>
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
@@ -45,6 +47,79 @@ const addBt = { background:'rgba(124,77,255,0.08)', border:'1px solid rgba(124,7
   fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.18em', textTransform:'uppercase',
   marginTop:6, display:'inline-block' };
 
+// ── Meruria birthday picker ────────────────────────────────
+const MONTHS_M = [
+  {name:"Janvar",days:19},{name:"Fevorn",days:18},{name:"Mareth",days:19},
+  {name:"Aprel",days:19},{name:"Mairen",days:18},{name:"Junvar",days:19},
+  {name:"Juval",days:19},{name:"Auvar",days:19},{name:"Septhar",days:19},
+  {name:"Oktar",days:18},{name:"Novren",days:18},{name:"Derath",days:19},
+];
+const MS_M = MONTHS_M.reduce((a,m,i)=>{a.push(i===0?1:a[i-1]+MONTHS_M[i-1].days);return a;},[]);
+function doyText(doy) {
+  for (let i=MONTHS_M.length-1;i>=0;i--)
+    if (doy>=MS_M[i]) return `${doy-MS_M[i]+1}. ${MONTHS_M[i].name}`;
+  return '—';
+}
+function NscBirthdayPicker({ doy, onChange }) {
+  const initMo = () => { if (!doy) return 0; for (let i=MONTHS_M.length-1;i>=0;i--) if (doy>=MS_M[i]) return i; return 0; };
+  const [open, setOpen] = dmUS(false);
+  const [mo, setMo] = dmUS(initMo);
+  const ref = dmUR(null);
+  dmUE(() => {
+    if (!open) return;
+    const h = e => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+    document.addEventListener('mousedown', h);
+    return () => document.removeEventListener('mousedown', h);
+  }, [open]);
+  function pick(mi, d) { onChange(MS_M[mi]+d-1); setOpen(false); }
+  const M = MONTHS_M[mo];
+  const selDay = doy && MS_M[mo]<=doy && doy<MS_M[mo]+M.days ? doy-MS_M[mo]+1 : null;
+  return (
+    <div ref={ref} style={{position:'relative'}}>
+      <button type="button" onClick={()=>{if(!open){setMo(initMo());setOpen(true);}else setOpen(false);}}
+        style={{...iSt, textAlign:'left', cursor:'pointer', color: doy ? '#f0eeff' : 'rgba(160,140,255,0.4)'}}>
+        {doy ? doyText(doy) : 'Kein Datum'} <span style={{opacity:.4,fontSize:10}}>▾</span>
+      </button>
+      {open && (
+        <div style={{position:'absolute',top:'calc(100% + 3px)',left:0,zIndex:1500,
+          background:'rgba(11,8,28,0.99)',border:'1px solid rgba(124,77,255,0.4)',borderRadius:4,
+          boxShadow:'0 18px 48px rgba(0,0,0,0.75)',width:'min(320px,90vw)',overflow:'hidden'}}>
+          <div style={{display:'flex',flexWrap:'wrap',gap:2,padding:'7px 7px 5px',
+            borderBottom:'1px solid rgba(124,77,255,0.12)'}}>
+            {MONTHS_M.map((m,i)=>(
+              <button key={i} type="button" onClick={()=>setMo(i)}
+                style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.1em',padding:'3px 6px',cursor:'pointer',
+                  background:mo===i?'rgba(124,77,255,0.28)':'transparent',
+                  border:`1px solid ${mo===i?'rgba(124,77,255,0.55)':'rgba(124,77,255,0.12)'}`,
+                  borderRadius:2,color:mo===i?'#f0eeff':'rgba(200,190,240,0.45)'}}>
+                {m.name}
+              </button>
+            ))}
+          </div>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(7,1fr)',gap:2,padding:'7px'}}>
+            {Array.from({length:M.days},(_,i)=>i+1).map(d=>(
+              <button key={d} type="button" onClick={()=>pick(mo,d)}
+                style={{fontFamily:'var(--font-mono)',fontSize:11,padding:'6px 2px',cursor:'pointer',textAlign:'center',
+                  background:selDay===d?'rgba(124,77,255,0.42)':'rgba(124,77,255,0.05)',
+                  border:`1px solid ${selDay===d?'rgba(124,77,255,0.75)':'rgba(124,77,255,0.12)'}`,
+                  borderRadius:2,color:selDay===d?'#f0eeff':'rgba(200,190,240,0.8)'}}>
+                {d}
+              </button>
+            ))}
+          </div>
+          <div style={{padding:'4px 7px 7px',borderTop:'1px solid rgba(124,77,255,0.1)'}}>
+            <button type="button" onClick={()=>{onChange(null);setOpen(false);}}
+              style={{fontFamily:'var(--font-mono)',fontSize:7.5,letterSpacing:'.18em',textTransform:'uppercase',
+                color:'rgba(200,190,240,0.3)',background:'transparent',border:'none',cursor:'pointer',padding:'2px 0'}}>
+              Datum entfernen
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── Empty / to-draft converters ────────────────────────────
 function emptyDraft() {
   return {
@@ -54,6 +129,7 @@ function emptyDraft() {
     talente:[], makel:'', routine:[], ausruestung:[], begleiter:{ name:'', art:'' },
     motivationen:[], geheimnisse:[], kontakte:{ familie:[], freunde:[], rivalen:[] },
     bild:'', visible: false,
+    geburtstag_doy: null,
   };
 }
 function nscToDraft(nsc) {
@@ -83,9 +159,10 @@ function nscToDraft(nsc) {
     },
     bild: nsc.bild || '',
     visible: !!nsc.visible,
+    geburtstag_doy: nsc.geburtstag_doy || null,
   };
 }
-function draftToPayload(d, existingName) {
+function draftToPayload(d, existingName, currentNsc) {
   return {
     name: d.name.trim() || existingName || 'Unbenannt',
     titel: d.titel.trim() || null,
@@ -117,7 +194,8 @@ function draftToPayload(d, existingName) {
       rivalen: (d.kontakte.rivalen||[]).filter(e=>e.name?.trim()).map(e=>({name:e.name.trim(),rolle:e.rolle?.trim()||'',verstorben:!!e.verstorben})),
     },
     bild: d.bild.trim() || null,
-    visible: d.visible,
+    visible: currentNsc ? currentNsc.visible : d.visible,
+    geburtstag_doy: d.geburtstag_doy || null,
   };
 }
 
@@ -267,6 +345,42 @@ function ContactNameInput({ value, onChange, nscs, charPersp, excludeId }) {
 }
 
 // ── Edit Form ──────────────────────────────────────────────
+function Sektion({ title, summary, defaultOpen, children }) {
+  const [open, setOpen] = dmUS(!!defaultOpen);
+  return (
+    <div style={{ marginBottom:5, borderRadius:3,
+      border:`1px solid ${open ? 'rgba(124,77,255,0.28)' : summary ? 'rgba(124,77,255,0.16)' : 'rgba(124,77,255,0.09)'}`,
+    }}>
+      <button type="button" onClick={() => setOpen(o => !o)} style={{
+        width:'100%', padding:'11px 14px', display:'flex', alignItems:'center', gap:10,
+        background: open ? 'rgba(124,77,255,0.07)' : 'transparent',
+        border:'none', borderRadius:'2px', cursor:'pointer', textAlign:'left',
+      }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.26em',
+          textTransform:'uppercase', flexShrink:0,
+          color: open ? '#c9b8ff' : summary ? 'rgba(200,190,240,0.65)' : 'rgba(160,140,255,0.38)' }}>
+          {title}
+        </span>
+        {!open && summary && (
+          <span style={{ fontFamily:'var(--font-body)', fontSize:11.5, color:'rgba(160,140,255,0.4)',
+            flex:1, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', textAlign:'right' }}>
+            {summary}
+          </span>
+        )}
+        {(!open || !summary) && <div style={{ flex:1 }}/>}
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'rgba(124,77,255,0.45)', flexShrink:0 }}>
+          {open ? '▲' : '▼'}
+        </span>
+      </button>
+      {open && (
+        <div style={{ padding:'14px 14px 18px', borderTop:'1px solid rgba(124,77,255,0.12)' }}>
+          {children}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function NscEditForm({ nsc, onSaved, nscs = [], charPersp = [] }) {
   const isNew = !nsc;
   const [draft, setDraft] = dmUS(() => isNew ? emptyDraft() : nscToDraft(nsc));
@@ -288,7 +402,7 @@ function NscEditForm({ nsc, onSaved, nscs = [], charPersp = [] }) {
 
   const handleSave = async () => {
     setSaving(true); setSaveError(null);
-    const payload = draftToPayload(draft, nsc?.name);
+    const payload = draftToPayload(draft, nsc?.name, isNew ? null : nsc);
     let data, error;
     if (isNew) {
       ({ data, error } = await window._sb.from('nscs').insert(payload).select().single());
@@ -300,21 +414,41 @@ function NscEditForm({ nsc, onSaved, nscs = [], charPersp = [] }) {
     onSaved(mapNscRow(data), isNew);
   };
 
-  const saveBtnRow = (
-    <div style={{ display:'flex', gap:8, margin:'0 0 16px' }}>
-      <button type="button" onClick={handleSave} disabled={saving} style={{
-        flex:1, padding:'8px', background: saving ? 'rgba(124,77,255,0.04)' : 'rgba(124,77,255,0.16)',
-        border:`1px solid ${saving ? 'rgba(124,77,255,0.25)' : 'rgba(124,77,255,0.75)'}`,
-        borderRadius:2, color: saving ? 'rgba(124,77,255,0.4)' : '#c9b8ff',
-        fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase',
-        cursor: saving ? 'default' : 'pointer',
-      }}>{saving ? '◈ Speichern …' : isNew ? '＋ NSC anlegen' : '✓ Änderungen speichern'}</button>
+  // Summaries für geschlossene Sektionen
+  const IMG_BASE      = 'assets/images/npc/';
+  const sumBild       = draft.bild ? (draft.bild.startsWith(IMG_BASE) ? draft.bild.slice(IMG_BASE.length) : draft.bild).slice(0,40) : null;
+  const sumIdentitaet = [draft.titel, draft.name].filter(Boolean).join(' · ') || null;
+  const sumBasis      = [draft.rasse, draft.alter ? `${draft.alter} J` : null, draft.beruf].filter(Boolean).join(' · ') || null;
+  const sumRolle      = [draft.division !== 'Keine' ? draft.division.replace(/^Die /,'') : null, draft.rang, draft.wohnort].filter(Boolean).join(' · ') || null;
+  const sumStatus     = draft.status.join(', ') || null;
+  const sumErschein   = (draft.unvergesslich || draft.eigenschaften.filter(s=>s.trim())[0] || null)?.slice(0,50);
+  const nRoutine      = draft.routine.filter(e=>e.tat?.trim()).length;
+  const nAusruestung  = draft.ausruestung.filter(e=>e.name?.trim()).length;
+  const sumBegleiter  = draft.begleiter?.name?.trim() || null;
+  const nMotiv        = draft.motivationen.filter(s=>s.trim()).length;
+  const nKontakte     = [...(draft.kontakte.familie||[]),...(draft.kontakte.freunde||[]),...(draft.kontakte.rivalen||[])].filter(e=>e.name?.trim()).length;
+  const nGeheimnisse  = draft.geheimnisse.filter(s=>s.trim()).length;
+
+  const F = ({ label, children, full }) => (
+    <div style={full ? {} : {}}>
+      <label style={lbSt}>{label}</label>
+      {children}
     </div>
   );
 
   return (
-    <div style={{ padding:'18px 24px 60px' }}>
-      {saveBtnRow}
+    <div style={{ padding:'16px 18px 60px' }}>
+
+      {/* Save */}
+      <div style={{ display:'flex', gap:8, marginBottom:14 }}>
+        <button type="button" onClick={handleSave} disabled={saving} style={{
+          flex:1, padding:'9px', background: saving ? 'rgba(124,77,255,0.04)' : 'rgba(124,77,255,0.16)',
+          border:`1px solid ${saving ? 'rgba(124,77,255,0.25)' : 'rgba(124,77,255,0.75)'}`,
+          borderRadius:2, color: saving ? 'rgba(124,77,255,0.4)' : '#c9b8ff',
+          fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase',
+          cursor: saving ? 'default' : 'pointer',
+        }}>{saving ? '◈ Speichern …' : isNew ? '＋ NSC anlegen' : '✓ Änderungen speichern'}</button>
+      </div>
       {saveError && (
         <div style={{ marginBottom:12, padding:'8px 12px', background:'rgba(227,103,96,0.12)',
           border:'1px solid rgba(227,103,96,0.5)', borderRadius:2,
@@ -323,156 +457,448 @@ function NscEditForm({ nsc, onSaved, nscs = [], charPersp = [] }) {
         </div>
       )}
 
-      {/* Medien & Sichtbarkeit */}
-      <div style={secSt}>◇ Medien &amp; Sichtbarkeit</div>
-      <label style={lbSt}>Bild-URL</label>
-      <input style={iSt} value={draft.bild} onChange={e=>set('bild',e.target.value)} placeholder="https://…"/>
-      <label style={{ display:'flex', alignItems:'center', gap:8, marginTop:10, cursor:'pointer',
-        fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em',
-        color: draft.visible ? '#5fe39a' : 'rgba(200,190,240,0.55)', textTransform:'uppercase' }}>
-        <input type="checkbox" checked={draft.visible} onChange={e=>set('visible',e.target.checked)}/>
-        {draft.visible ? '◆ Für Spieler sichtbar' : '○ Für Spieler verborgen'}
-      </label>
+      <Sektion title="Bild" summary={sumBild}>
+        {(() => {
+          const BASE = 'assets/images/npc/';
+          const filename = draft.bild?.startsWith(BASE) ? draft.bild.slice(BASE.length) : (draft.bild || '');
+          const isExternal = draft.bild && !draft.bild.startsWith(BASE);
+          return (
+            <>
+              <div style={{ display:'flex', alignItems:'stretch' }}>
+                <span style={{
+                  padding:'5px 8px', flexShrink:0,
+                  background:'rgba(5,3,15,0.8)', border:'1px solid rgba(124,77,255,0.3)',
+                  borderRight:'none', borderRadius:'2px 0 0 2px',
+                  fontFamily:'var(--font-mono)', fontSize:9.5, color:'rgba(160,140,255,0.45)',
+                  letterSpacing:'0.08em', display:'flex', alignItems:'center', userSelect:'none',
+                }}>assets/images/npc/</span>
+                <input
+                  style={{ ...iSt, borderRadius:'0 2px 2px 0', flex:1,
+                    borderColor: isExternal ? 'rgba(255,180,80,0.5)' : 'rgba(124,77,255,0.4)' }}
+                  value={filename}
+                  onChange={e => set('bild', e.target.value ? BASE + e.target.value : '')}
+                  placeholder="name.png"
+                />
+              </div>
+              {isExternal && (
+                <div style={{ marginTop:5, fontFamily:'var(--font-mono)', fontSize:8,
+                  color:'rgba(255,180,80,0.7)', letterSpacing:'0.12em' }}>
+                  ⚠ Externer Pfad gespeichert: {draft.bild}
+                </div>
+              )}
+              {draft.bild && (
+                <div style={{ marginTop:8, display:'flex', alignItems:'center', gap:10 }}>
+                  <img src={draft.bild} alt="" style={{ width:48, height:48, objectFit:'cover',
+                    objectPosition:'top', borderRadius:2, border:'1px solid rgba(124,77,255,0.3)',
+                    background:'rgba(10,6,28,0.8)', flexShrink:0 }}
+                    onError={e => { e.target.style.opacity=0.3; }}/>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em',
+                    color:'rgba(160,140,255,0.4)', wordBreak:'break-all' }}>{draft.bild}</span>
+                </div>
+              )}
+            </>
+          );
+        })()}
+      </Sektion>
 
-      {/* Identität */}
-      <div style={secSt}>◇ Identität</div>
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8 }}>
-        <div><label style={lbSt}>Name *</label>
-          <input style={iSt} value={draft.name} onChange={e=>set('name',e.target.value)}/></div>
-        <div><label style={lbSt}>Titel</label>
-          <input style={iSt} value={draft.titel} onChange={e=>set('titel',e.target.value)}/></div>
-      </div>
-      <div style={{ marginTop:8 }}>
-        <label style={lbSt}>Voller Name (ein Namensteil pro Zeile)</label>
-        <textarea style={taSt} value={draft.vollerName.join('\n')}
-          onChange={e=>set('vollerName',e.target.value.split('\n'))}
-          placeholder="z.B. Velira&#10;Von Ashenmoor"/>
-      </div>
-
-      {/* Basis */}
-      <div style={secSt}>◇ Basis</div>
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:8 }}>
-        <div><label style={lbSt}>Rasse</label><input style={iSt} value={draft.rasse} onChange={e=>set('rasse',e.target.value)}/></div>
-        <div><label style={lbSt}>Geschlecht</label><input style={iSt} value={draft.geschlecht} onChange={e=>set('geschlecht',e.target.value)}/></div>
-        <div><label style={lbSt}>Alter (Jahre)</label><input style={iSt} type="number" value={draft.alter} onChange={e=>set('alter',e.target.value)}/></div>
-        <div><label style={lbSt}>Lebensphase</label><input style={iSt} value={draft.lebensphase} onChange={e=>set('lebensphase',e.target.value)}/></div>
-        <div><label style={lbSt}>Beruf</label><input style={iSt} value={draft.beruf} onChange={e=>set('beruf',e.target.value)}/></div>
-        <div><label style={lbSt}>Gottheit</label><input style={iSt} value={draft.gottheit} onChange={e=>set('gottheit',e.target.value)}/></div>
-      </div>
-
-      {/* Rolle */}
-      <div style={secSt}>◇ Rolle</div>
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8 }}>
-        <div><label style={lbSt}>Division</label>
-          <select style={iSt} value={draft.division} onChange={e=>set('division',e.target.value)}>
-            {['Keine','Die Kuratoren','Die Sturmritter','Die Sentinels','Die Friedenshüter','Die Outfitters','Die Pathfinders','Die Quellensucher','Die Bergungsgarde'].map(d=><option key={d} value={d}>{d}</option>)}
-          </select></div>
-        <div><label style={lbSt}>Rang</label><input style={iSt} value={draft.rang} onChange={e=>set('rang',e.target.value)}/></div>
-        <div><label style={lbSt}>Organisation</label><input style={iSt} value={draft.organisation} onChange={e=>set('organisation',e.target.value)}/></div>
-        <div><label style={lbSt}>Kapsel</label><input style={iSt} value={draft.kapsel} onChange={e=>set('kapsel',e.target.value)}/></div>
-        <div style={{ gridColumn:'span 2' }}><label style={lbSt}>Wohnort</label><input style={iSt} value={draft.wohnort} onChange={e=>set('wohnort',e.target.value)}/></div>
-      </div>
-
-      {/* Status */}
-      <div style={secSt}>◇ Status</div>
-      <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
-        {STATUS_ORDER.map(s => {
-          const on = draft.status.includes(s);
-          const def = STATUS_DEF[s] || {};
-          return <button key={s} type="button"
-            onClick={()=>set('status', on ? draft.status.filter(x=>x!==s) : [...draft.status,s])}
-            style={{ padding:'4px 10px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em',
-              background: on ? hexA(def.color||'#7c4dff',0.20) : 'transparent',
-              border:`1px solid ${on ? hexA(def.color||'#7c4dff',0.7) : 'rgba(160,140,255,0.25)'}`,
-              color: on ? '#f0eeff' : 'rgba(200,190,240,0.55)',
-              borderRadius:2, cursor:'pointer', textTransform:'uppercase' }}>{def.glyph||''} {s}</button>;
-        })}
-      </div>
-
-      {/* Erscheinung */}
-      <div style={secSt}>◇ Erscheinung &amp; Persönlichkeit</div>
-      <div><label style={lbSt}>Unvergessliches Merkmal</label>
-        <textarea style={taSt} value={draft.unvergesslich} onChange={e=>set('unvergesslich',e.target.value)}/></div>
-      <div style={{ marginTop:8 }}><label style={lbSt}>Eigenschaften (eine pro Zeile)</label>
-        <textarea style={taSt} value={draft.eigenschaften.join('\n')} onChange={e=>set('eigenschaften',e.target.value.split('\n'))}/></div>
-      <div style={{ marginTop:8 }}><label style={lbSt}>Talente (eines pro Zeile)</label>
-        <textarea style={taSt} value={draft.talente.join('\n')} onChange={e=>set('talente',e.target.value.split('\n'))}/></div>
-      <div style={{ marginTop:8 }}><label style={lbSt}>Makel</label>
-        <textarea style={taSt} value={draft.makel} onChange={e=>set('makel',e.target.value)}/></div>
-
-      {/* Routine */}
-      <div style={secSt}>◇ Routine</div>
-      {draft.routine.map((e,i)=>(
-        <div key={i} style={{ display:'grid', gridTemplateColumns:'80px 100px 1fr auto', gap:4, marginBottom:4 }}>
-          <input placeholder="Zeit" value={e.zeit||''} onChange={ev=>{const a=[...draft.routine];a[i]={...a[i],zeit:ev.target.value};set('routine',a);}} style={iSt}/>
-          <input placeholder="Ort"  value={e.ort||''}  onChange={ev=>{const a=[...draft.routine];a[i]={...a[i],ort:ev.target.value};set('routine',a);}}  style={iSt}/>
-          <input placeholder="Tätigkeit" value={e.tat||''} onChange={ev=>{const a=[...draft.routine];a[i]={...a[i],tat:ev.target.value};set('routine',a);}} style={iSt}/>
-          <button onClick={()=>rmArr('routine',i)} style={rmBt}>×</button>
+      <Sektion title="Identität" summary={sumIdentitaet} defaultOpen={true}>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10, marginBottom:10 }}>
+          <F label="Name *"><input style={iSt} value={draft.name} onChange={e=>set('name',e.target.value)}/></F>
+          <F label="Titel"><input style={iSt} value={draft.titel} onChange={e=>set('titel',e.target.value)}/></F>
         </div>
-      ))}
-      <button onClick={()=>addArr('routine',{zeit:'',ort:'',tat:''})} style={addBt}>+ Eintrag</button>
+        <F label="Voller Name (ein Namensteil pro Zeile)">
+          <textarea style={taSt} value={draft.vollerName.join('\n')}
+            onChange={e=>set('vollerName',e.target.value.split('\n'))}
+            placeholder="z.B. Velira&#10;Von Ashenmoor"/>
+        </F>
+      </Sektion>
 
-      {/* Ausrüstung */}
-      <div style={secSt}>◇ Ausrüstung</div>
-      {draft.ausruestung.map((it,i)=>(
-        <div key={i} style={{ display:'grid', gridTemplateColumns:'1fr 2fr auto', gap:4, marginBottom:4 }}>
-          <input placeholder="Name" value={it.name||''} onChange={ev=>{const a=[...draft.ausruestung];a[i]={...a[i],name:ev.target.value};set('ausruestung',a);}} style={iSt}/>
-          <input placeholder="Beschreibung" value={it.beschreibung||''} onChange={ev=>{const a=[...draft.ausruestung];a[i]={...a[i],beschreibung:ev.target.value};set('ausruestung',a);}} style={iSt}/>
-          <button onClick={()=>rmArr('ausruestung',i)} style={rmBt}>×</button>
+      <Sektion title="Basis" summary={sumBasis}>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:10 }}>
+          <F label="Rasse"><input style={iSt} value={draft.rasse} onChange={e=>set('rasse',e.target.value)}/></F>
+          <F label="Geschlecht"><input style={iSt} value={draft.geschlecht} onChange={e=>set('geschlecht',e.target.value)}/></F>
+          <F label="Alter (Jahre)"><input style={iSt} type="number" value={draft.alter} onChange={e=>set('alter',e.target.value)}/></F>
+          <F label="Geburtstag"><NscBirthdayPicker doy={draft.geburtstag_doy} onChange={v=>set('geburtstag_doy',v)}/></F>
+          <F label="Lebensphase"><input style={iSt} value={draft.lebensphase} onChange={e=>set('lebensphase',e.target.value)}/></F>
+          <F label="Beruf"><input style={iSt} value={draft.beruf} onChange={e=>set('beruf',e.target.value)}/></F>
+          <F label="Gottheit"><input style={iSt} value={draft.gottheit} onChange={e=>set('gottheit',e.target.value)}/></F>
         </div>
-      ))}
-      <button onClick={()=>addArr('ausruestung',{name:'',beschreibung:''})} style={addBt}>+ Gegenstand</button>
+      </Sektion>
 
-      {/* Begleiter */}
-      <div style={secSt}>◇ Begleiter</div>
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8 }}>
-        <div><label style={lbSt}>Name</label>
-          <input style={iSt} value={draft.begleiter?.name||''} onChange={e=>set('begleiter',{...(draft.begleiter||{}),name:e.target.value})}/></div>
-        <div><label style={lbSt}>Art</label>
-          <input style={iSt} value={draft.begleiter?.art||''} onChange={e=>set('begleiter',{...(draft.begleiter||{}),art:e.target.value})} placeholder="z.B. Tier, Vertrauter"/></div>
+      <Sektion title="Rolle" summary={sumRolle}>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10 }}>
+          <F label="Division">
+            <select style={iSt} value={draft.division} onChange={e=>set('division',e.target.value)}>
+              {['Keine','Die Kuratoren','Die Sturmritter','Die Sentinels','Die Friedenshüter','Die Outfitters','Die Pathfinders','Die Quellensucher','Die Bergungsgarde'].map(d=><option key={d} value={d}>{d}</option>)}
+            </select>
+          </F>
+          <F label="Rang"><input style={iSt} value={draft.rang} onChange={e=>set('rang',e.target.value)}/></F>
+          <F label="Organisation"><input style={iSt} value={draft.organisation} onChange={e=>set('organisation',e.target.value)}/></F>
+          <F label="Kapsel"><input style={iSt} value={draft.kapsel} onChange={e=>set('kapsel',e.target.value)}/></F>
+          <div style={{ gridColumn:'span 2' }}>
+            <F label="Wohnort"><input style={iSt} value={draft.wohnort} onChange={e=>set('wohnort',e.target.value)}/></F>
+          </div>
+        </div>
+      </Sektion>
+
+      <Sektion title="Status" summary={sumStatus}>
+        <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
+          {STATUS_ORDER.map(s => {
+            const on = draft.status.includes(s);
+            const def = STATUS_DEF[s] || {};
+            return <button key={s} type="button"
+              onClick={()=>set('status', on ? draft.status.filter(x=>x!==s) : [...draft.status,s])}
+              style={{ padding:'5px 12px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em',
+                background: on ? hexA(def.color||'#7c4dff',0.20) : 'transparent',
+                border:`1px solid ${on ? hexA(def.color||'#7c4dff',0.7) : 'rgba(160,140,255,0.22)'}`,
+                color: on ? '#f0eeff' : 'rgba(200,190,240,0.5)',
+                borderRadius:2, cursor:'pointer', textTransform:'uppercase' }}>{def.glyph||''} {s}</button>;
+          })}
+        </div>
+      </Sektion>
+
+      <Sektion title="Erscheinung & Persönlichkeit" summary={sumErschein}>
+        <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
+          <F label="Unvergessliches Merkmal"><textarea style={taSt} value={draft.unvergesslich} onChange={e=>set('unvergesslich',e.target.value)}/></F>
+          <F label="Eigenschaften (eine pro Zeile)"><textarea style={taSt} value={draft.eigenschaften.join('\n')} onChange={e=>set('eigenschaften',e.target.value.split('\n'))}/></F>
+          <F label="Talente (eines pro Zeile)"><textarea style={taSt} value={draft.talente.join('\n')} onChange={e=>set('talente',e.target.value.split('\n'))}/></F>
+          <F label="Makel"><textarea style={taSt} value={draft.makel} onChange={e=>set('makel',e.target.value)}/></F>
+        </div>
+      </Sektion>
+
+      <Sektion title="Routine" summary={nRoutine ? `${nRoutine} Einträge` : null}>
+        {draft.routine.map((e,i)=>(
+          <div key={i} style={{ display:'grid', gridTemplateColumns:'80px 110px 1fr auto', gap:6, marginBottom:6 }}>
+            <input placeholder="Zeit" value={e.zeit||''} onChange={ev=>{const a=[...draft.routine];a[i]={...a[i],zeit:ev.target.value};set('routine',a);}} style={iSt}/>
+            <input placeholder="Ort"  value={e.ort||''}  onChange={ev=>{const a=[...draft.routine];a[i]={...a[i],ort:ev.target.value};set('routine',a);}}  style={iSt}/>
+            <input placeholder="Tätigkeit" value={e.tat||''} onChange={ev=>{const a=[...draft.routine];a[i]={...a[i],tat:ev.target.value};set('routine',a);}} style={iSt}/>
+            <button onClick={()=>rmArr('routine',i)} style={rmBt}>×</button>
+          </div>
+        ))}
+        <button onClick={()=>addArr('routine',{zeit:'',ort:'',tat:''})} style={addBt}>+ Eintrag</button>
+      </Sektion>
+
+      <Sektion title="Ausrüstung" summary={nAusruestung ? `${nAusruestung} Gegenstände` : null}>
+        {draft.ausruestung.map((it,i)=>(
+          <div key={i} style={{ display:'grid', gridTemplateColumns:'1fr 2fr auto', gap:6, marginBottom:6 }}>
+            <input placeholder="Name" value={it.name||''} onChange={ev=>{const a=[...draft.ausruestung];a[i]={...a[i],name:ev.target.value};set('ausruestung',a);}} style={iSt}/>
+            <input placeholder="Beschreibung" value={it.beschreibung||''} onChange={ev=>{const a=[...draft.ausruestung];a[i]={...a[i],beschreibung:ev.target.value};set('ausruestung',a);}} style={iSt}/>
+            <button onClick={()=>rmArr('ausruestung',i)} style={rmBt}>×</button>
+          </div>
+        ))}
+        <button onClick={()=>addArr('ausruestung',{name:'',beschreibung:''})} style={addBt}>+ Gegenstand</button>
+      </Sektion>
+
+      <Sektion title="Begleiter" summary={sumBegleiter}>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10 }}>
+          <F label="Name"><input style={iSt} value={draft.begleiter?.name||''} onChange={e=>set('begleiter',{...(draft.begleiter||{}),name:e.target.value})}/></F>
+          <F label="Art"><input style={iSt} value={draft.begleiter?.art||''} onChange={e=>set('begleiter',{...(draft.begleiter||{}),art:e.target.value})} placeholder="z.B. Tier, Vertrauter"/></F>
+        </div>
+      </Sektion>
+
+      <Sektion title="Motivationen" summary={nMotiv ? `${nMotiv} Einträge` : null}>
+        {draft.motivationen.map((m,i)=>(
+          <div key={i} style={{ display:'flex', gap:6, marginBottom:6 }}>
+            <input value={m} onChange={ev=>{const a=[...draft.motivationen];a[i]=ev.target.value;set('motivationen',a);}} style={iSt} placeholder="Motivation …"/>
+            <button onClick={()=>rmArr('motivationen',i)} style={rmBt}>×</button>
+          </div>
+        ))}
+        <button onClick={()=>addArr('motivationen','')} style={addBt}>+ Motivation</button>
+      </Sektion>
+
+      <Sektion title="Kontakte" summary={nKontakte ? `${nKontakte} Kontakte` : null}>
+        {[['Familie','familie'],['Freunde','freunde'],['Rivalen','rivalen']].map(([title,sub])=>(
+          <div key={sub} style={{ marginBottom:16 }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.26em',
+              color:'rgba(160,140,255,0.5)', textTransform:'uppercase', marginBottom:8 }}>{title}</div>
+            {(draft.kontakte[sub]||[]).map((p,i)=>(
+              <div key={i} style={{ display:'grid', gridTemplateColumns:'2fr 2fr auto auto', gap:6, marginBottom:6, alignItems:'center' }}>
+                <ContactNameInput value={p.name||''} onChange={v=>updK(sub,i,'name',v)} nscs={nscs} charPersp={charPersp} excludeId={nsc?.id}/>
+                <input placeholder="Rolle" value={p.rolle||''} onChange={ev=>updK(sub,i,'rolle',ev.target.value)} style={iSt}/>
+                <label style={{ display:'flex', alignItems:'center', gap:4, color:'rgba(160,140,255,0.55)', fontSize:10, cursor:'pointer', whiteSpace:'nowrap' }}>
+                  <input type="checkbox" checked={p.verstorben||false} onChange={ev=>updK(sub,i,'verstorben',ev.target.checked)}/> ✝
+                </label>
+                <button onClick={()=>rmK(sub,i)} style={rmBt}>×</button>
+              </div>
+            ))}
+            <button onClick={()=>addK(sub)} style={addBt}>+ {title.slice(0,-1)} hinzufügen</button>
+          </div>
+        ))}
+      </Sektion>
+
+      <Sektion title="Geheimnisse" summary={nGeheimnisse ? `${nGeheimnisse} Geheimnisse` : null}>
+        {draft.geheimnisse.map((g,i)=>(
+          <div key={i} style={{ display:'flex', gap:6, marginBottom:6, alignItems:'flex-start' }}>
+            <textarea value={g} onChange={ev=>{const a=[...draft.geheimnisse];a[i]=ev.target.value;set('geheimnisse',a);}} style={{...taSt,minHeight:52}}/>
+            <button onClick={()=>rmArr('geheimnisse',i)} style={rmBt}>×</button>
+          </div>
+        ))}
+        <button onClick={()=>addArr('geheimnisse','')} style={addBt}>+ Geheimnis</button>
+      </Sektion>
+
+      <div style={{ marginTop:14 }}>
+        <button type="button" onClick={handleSave} disabled={saving} style={{
+          width:'100%', padding:'9px', background: saving ? 'rgba(124,77,255,0.04)' : 'rgba(124,77,255,0.16)',
+          border:`1px solid ${saving ? 'rgba(124,77,255,0.25)' : 'rgba(124,77,255,0.75)'}`,
+          borderRadius:2, color: saving ? 'rgba(124,77,255,0.4)' : '#c9b8ff',
+          fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase',
+          cursor: saving ? 'default' : 'pointer',
+        }}>{saving ? '◈ Speichern …' : isNew ? '＋ NSC anlegen' : '✓ Änderungen speichern'}</button>
       </div>
+    </div>
+  );
+}
 
-      {/* Motivationen */}
-      <div style={secSt}>◇ Motivationen</div>
-      {draft.motivationen.map((m,i)=>(
-        <div key={i} style={{ display:'flex', gap:4, marginBottom:4 }}>
-          <input value={m} onChange={ev=>{const a=[...draft.motivationen];a[i]=ev.target.value;set('motivationen',a);}} style={iSt} placeholder="Motivation …"/>
-          <button onClick={()=>rmArr('motivationen',i)} style={rmBt}>×</button>
-        </div>
-      ))}
-      <button onClick={()=>addArr('motivationen','')} style={addBt}>+ Motivation</button>
+// ── NSC Ansicht Tab ────────────────────────────────────────
+function NscAnsichtTab({ nsc }) {
+  const acc = accentOf(nsc, true);
+  const accDim = hexA(acc, 0.18);
 
-      {/* Kontakte */}
-      <div style={secSt}>◇ Kontakte</div>
-      {[['Familie','familie'],['Freunde','freunde'],['Rivalen','rivalen']].map(([title,sub])=>(
-        <div key={sub} style={{ marginBottom:14 }}>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.22em',
-            color:'rgba(200,190,240,0.5)', textTransform:'uppercase', marginBottom:5 }}>{title}</div>
-          {(draft.kontakte[sub]||[]).map((p,i)=>(
-            <div key={i} style={{ display:'grid', gridTemplateColumns:'2fr 2fr auto auto', gap:4, marginBottom:4, alignItems:'center' }}>
-              <ContactNameInput value={p.name||''} onChange={v=>updK(sub,i,'name',v)} nscs={nscs} charPersp={charPersp} excludeId={nsc?.id}/>
-              <input placeholder="Rolle" value={p.rolle||''} onChange={ev=>updK(sub,i,'rolle',ev.target.value)} style={iSt}/>
-              <label style={{ display:'flex', alignItems:'center', gap:4, color:'rgba(160,140,255,0.55)', fontSize:10, cursor:'pointer', whiteSpace:'nowrap' }}>
-                <input type="checkbox" checked={p.verstorben||false} onChange={ev=>updK(sub,i,'verstorben',ev.target.checked)}/> ✝
-              </label>
-              <button onClick={()=>rmK(sub,i)} style={rmBt}>×</button>
+  const SecHead = ({ label }) => (
+    <div style={{ display:'flex', alignItems:'center', gap:8, margin:'22px 0 10px' }}>
+      <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.30em',
+        color: hexA(acc, 0.6), textTransform:'uppercase' }}>◇ {label}</span>
+      <div style={{ flex:1, height:1, background: hexA(acc, 0.18) }}/>
+    </div>
+  );
+
+  const gridSt = { display:'grid', gridTemplateColumns:'110px 1fr', gap:'6px 14px', alignItems:'baseline' };
+  const keySt  = { fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.16em',
+    color:'rgba(160,140,255,0.5)', textTransform:'uppercase' };
+  const valSt  = { fontFamily:'var(--font-body)', fontSize:12.5, color:'rgba(228,222,255,0.88)' };
+
+  const KV = ({ k, v }) => !v && v !== 0 ? null : (
+    <><span style={keySt}>{k}</span><span style={valSt}>{v}</span></>
+  );
+
+  const Pill = ({ text, color }) => (
+    <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.12em',
+      textTransform:'uppercase', padding:'3px 8px',
+      background: hexA(color || acc, 0.12), border:`1px solid ${hexA(color || acc, 0.35)}`,
+      borderRadius:2, color: hexA(color || acc, 0.9) }}>{text}</span>
+  );
+
+  const hasRolle = (nsc.division && nsc.division !== 'Keine') || nsc.rang || nsc.organisation || nsc.kapsel || nsc.wohnort;
+  const hasErscheinung = nsc.unvergesslich || nsc.eigenschaften?.length > 0 || nsc.talente?.length > 0 || nsc.makel;
+  const hasKontakte = nsc.kontakte && (nsc.kontakte.familie?.length > 0 || nsc.kontakte.freunde?.length > 0 || nsc.kontakte.rivalen?.length > 0);
+
+  return (
+    <div style={{ padding:'20px 24px 60px' }}>
+
+      {/* ── Kopf ── */}
+      <div style={{ display:'flex', gap:18, alignItems:'flex-start', padding:'16px', borderRadius:3,
+        background: hexA(acc, 0.05), border:`1px solid ${hexA(acc, 0.2)}` }}>
+        {nsc.bild && (
+          <div style={{ width:88, height:88, flexShrink:0, borderRadius:2, overflow:'hidden',
+            border:`1px solid ${hexA(acc, 0.4)}` }}>
+            <img src={nsc.bild} style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'top' }} alt=""/>
+          </div>
+        )}
+        <div style={{ flex:1, minWidth:0 }}>
+          <div style={{ display:'flex', alignItems:'center', gap:8, flexWrap:'wrap', marginBottom:5 }}>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.18em',
+              textTransform:'uppercase', color: nsc.visible ? '#5fe39a' : 'rgba(160,140,255,0.4)' }}>
+              {nsc.visible ? '◆ Sichtbar' : '○ Verborgen'}
+            </span>
+            {nsc.division && nsc.division !== 'Keine' && (
+              <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.14em',
+                textTransform:'uppercase', color: hexA(acc, 0.65) }}>
+                · {nsc.division.replace(/^Die /, '')}{romanFor(nsc) ? ` ${romanFor(nsc)}` : ''}
+              </span>
+            )}
+            {nsc.beruf && (
+              <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.14em',
+                textTransform:'uppercase', color:'rgba(160,140,255,0.5)' }}>· {nsc.beruf}</span>
+            )}
+          </div>
+          {nsc.titel && (
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em',
+              color: hexA(acc, 0.75), textTransform:'uppercase', marginBottom:3 }}>{nsc.titel}</div>
+          )}
+          <div style={{ fontFamily:'var(--font-display)', fontSize:20, fontWeight:400,
+            letterSpacing:'0.07em', color:'#f0eeff', marginBottom:4,
+            textShadow:`0 0 18px ${hexA(acc, 0.3)}` }}>{nsc.name}</div>
+          {nsc.vollerName && nsc.vollerName.filter(s => s.trim()).length > 0 && (
+            <div style={{ fontFamily:'var(--font-body)', fontSize:11.5, color:'rgba(200,190,240,0.5)',
+              fontStyle:'italic', marginBottom:6 }}>
+              {nsc.vollerName.filter(s => s.trim()).join(' ')}
             </div>
-          ))}
-          <button onClick={()=>addK(sub)} style={addBt}>+ {title.slice(0,-1)} hinzufügen</button>
+          )}
+          <StatusPills status={nsc.status} />
         </div>
-      ))}
+      </div>
 
-      {/* Geheimnisse */}
-      <div style={secSt}>◇ Geheimnisse</div>
-      {draft.geheimnisse.map((g,i)=>(
-        <div key={i} style={{ display:'flex', gap:4, marginBottom:4, alignItems:'flex-start' }}>
-          <textarea value={g} onChange={ev=>{const a=[...draft.geheimnisse];a[i]=ev.target.value;set('geheimnisse',a);}} style={{...taSt,minHeight:44}}/>
-          <button onClick={()=>rmArr('geheimnisse',i)} style={rmBt}>×</button>
-        </div>
-      ))}
-      <button onClick={()=>addArr('geheimnisse','')} style={addBt}>+ Geheimnis</button>
+      {/* ── Basis ── */}
+      <SecHead label="Basis" />
+      <div style={gridSt}>
+        <KV k="Rasse"       v={nsc.rasse} />
+        <KV k="Geschlecht"  v={nsc.geschlecht} />
+        <KV k="Alter"       v={nsc.alter != null ? `${nsc.alter} Jahre` : null} />
+        <KV k="Geburtstag"  v={nsc.geburtstag_doy ? doyText(nsc.geburtstag_doy) : null} />
+        <KV k="Lebensphase" v={nsc.lebensphase} />
+        <KV k="Beruf"       v={nsc.beruf} />
+        <KV k="Gottheit"    v={nsc.gottheit} />
+      </div>
 
-      <div style={{ marginTop:24 }}>{saveBtnRow}</div>
+      {/* ── Rolle ── */}
+      {hasRolle && (
+        <>
+          <SecHead label="Rolle" />
+          <div style={gridSt}>
+            {nsc.division && nsc.division !== 'Keine' && <KV k="Division" v={nsc.division} />}
+            <KV k="Rang"         v={nsc.rang} />
+            <KV k="Organisation" v={nsc.organisation} />
+            <KV k="Kapsel"       v={nsc.kapsel} />
+            <KV k="Wohnort"      v={nsc.wohnort} />
+          </div>
+        </>
+      )}
+
+      {/* ── Erscheinung & Persönlichkeit ── */}
+      {hasErscheinung && (
+        <>
+          <SecHead label="Erscheinung & Persönlichkeit" />
+          {nsc.unvergesslich && (
+            <div style={{ padding:'8px 12px', borderLeft:`2px solid ${hexA(acc, 0.55)}`,
+              background: hexA(acc, 0.06), marginBottom:10, borderRadius:'0 2px 2px 0',
+              fontFamily:'var(--font-body)', fontSize:12.5, fontStyle:'italic',
+              color:'rgba(230,225,255,0.85)', lineHeight:1.65 }}>
+              {nsc.unvergesslich}
+            </div>
+          )}
+          {nsc.eigenschaften?.filter(s => s.trim()).length > 0 && (
+            <div style={{ marginBottom:10 }}>
+              <div style={{ ...keySt, marginBottom:6 }}>Eigenschaften</div>
+              <div style={{ display:'flex', flexWrap:'wrap', gap:5 }}>
+                {nsc.eigenschaften.filter(s => s.trim()).map((e,i) => <Pill key={i} text={e} />)}
+              </div>
+            </div>
+          )}
+          {nsc.talente?.filter(s => s.trim()).length > 0 && (
+            <div style={{ marginBottom:10 }}>
+              <div style={{ ...keySt, marginBottom:6 }}>Talente</div>
+              <div style={{ display:'flex', flexWrap:'wrap', gap:5 }}>
+                {nsc.talente.filter(s => s.trim()).map((t,i) => <Pill key={i} text={t} color="#5fe39a" />)}
+              </div>
+            </div>
+          )}
+          {nsc.makel && (
+            <div style={gridSt}><KV k="Makel" v={nsc.makel} /></div>
+          )}
+        </>
+      )}
+
+      {/* ── Routine ── */}
+      {nsc.routine?.length > 0 && (
+        <>
+          <SecHead label="Routine" />
+          <div style={{ display:'flex', flexDirection:'column', gap:3 }}>
+            {nsc.routine.map((e,i) => (
+              <div key={i} style={{ display:'grid', gridTemplateColumns:'70px 90px 1fr', gap:10,
+                padding:'6px 10px', borderRadius:2,
+                background:'rgba(124,77,255,0.04)', border:'1px solid rgba(124,77,255,0.1)' }}>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color: hexA(acc, 0.75),
+                  letterSpacing:'0.12em' }}>{e.zeit || '—'}</span>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(160,140,255,0.5)',
+                  letterSpacing:'0.1em' }}>{e.ort || ''}</span>
+                <span style={valSt}>{e.tat || ''}</span>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* ── Ausrüstung ── */}
+      {nsc.ausruestung?.length > 0 && (
+        <>
+          <SecHead label="Ausrüstung" />
+          <div style={{ display:'flex', flexDirection:'column', gap:3 }}>
+            {nsc.ausruestung.map((it,i) => (
+              <div key={i} style={{ display:'flex', gap:14, padding:'6px 10px',
+                background:'rgba(124,77,255,0.04)', border:'1px solid rgba(124,77,255,0.1)', borderRadius:2 }}>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:9.5, color: hexA(acc, 0.85),
+                  letterSpacing:'0.1em', flexShrink:0, minWidth:100 }}>{it.name}</span>
+                {it.beschreibung && (
+                  <span style={{ fontFamily:'var(--font-body)', fontSize:12,
+                    color:'rgba(200,190,240,0.6)' }}>{it.beschreibung}</span>
+                )}
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* ── Begleiter ── */}
+      {nsc.begleiter?.name && (
+        <>
+          <SecHead label="Begleiter" />
+          <div style={{ display:'flex', gap:10, alignItems:'baseline' }}>
+            <span style={valSt}>{nsc.begleiter.name}</span>
+            {nsc.begleiter.art && <span style={keySt}>{nsc.begleiter.art}</span>}
+          </div>
+        </>
+      )}
+
+      {/* ── Motivationen ── */}
+      {nsc.motivationen?.filter(s => s.trim()).length > 0 && (
+        <>
+          <SecHead label="Motivationen" />
+          <div style={{ display:'flex', flexDirection:'column', gap:4 }}>
+            {nsc.motivationen.filter(s => s.trim()).map((m,i) => (
+              <div key={i} style={{ display:'flex', gap:8, alignItems:'baseline',
+                padding:'7px 10px', borderRadius:2,
+                background: hexA(acc, 0.05), border:`1px solid ${hexA(acc, 0.15)}` }}>
+                <span style={{ color: hexA(acc, 0.5), fontSize:9, flexShrink:0 }}>◇</span>
+                <span style={valSt}>{m}</span>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* ── Kontakte ── */}
+      {hasKontakte && (
+        <>
+          <SecHead label="Kontakte" />
+          {[['Familie', nsc.kontakte.familie], ['Freunde', nsc.kontakte.freunde], ['Rivalen', nsc.kontakte.rivalen]].map(([title, list]) =>
+            list?.length > 0 ? (
+              <div key={title} style={{ marginBottom:12 }}>
+                <div style={{ ...keySt, marginBottom:5 }}>{title}</div>
+                <div style={{ display:'flex', flexDirection:'column', gap:3 }}>
+                  {list.map((p,i) => (
+                    <div key={i} style={{ display:'flex', gap:10, alignItems:'baseline',
+                      padding:'5px 10px', borderRadius:2,
+                      background:'rgba(124,77,255,0.04)', border:'1px solid rgba(124,77,255,0.1)' }}>
+                      <span style={{ ...valSt,
+                        color: p.verstorben ? 'rgba(160,140,255,0.4)' : 'rgba(228,222,255,0.88)',
+                        textDecoration: p.verstorben ? 'line-through' : 'none' }}>{p.name}</span>
+                      {p.rolle && <span style={keySt}>{p.rolle}</span>}
+                      {p.verstorben && <span style={{ color:'rgba(160,140,255,0.4)', fontSize:9 }}>✝</span>}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : null
+          )}
+        </>
+      )}
+
+      {/* ── Geheimnisse ── */}
+      {nsc.geheimnisse?.filter(s => s.trim()).length > 0 && (
+        <>
+          <SecHead label="Geheimnisse" />
+          <div style={{ display:'flex', flexDirection:'column', gap:5 }}>
+            {nsc.geheimnisse.filter(s => s.trim()).map((g,i) => (
+              <div key={i} style={{ padding:'10px 14px', borderRadius:2,
+                background:'rgba(227,103,96,0.07)', border:'1px solid rgba(227,103,96,0.25)' }}>
+                <span style={{ fontFamily:'var(--font-body)', fontSize:12.5,
+                  color:'rgba(255,210,200,0.85)', lineHeight:1.65 }}>{g}</span>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
     </div>
   );
 }
@@ -494,7 +920,7 @@ function getFactPreview(nsc, k) {
 }
 
 // ── Character multiselect dropdown ────────────────────────
-function CharPickerDropdown({ options, selected, onToggle }) {
+function CharPickerDropdown({ options, selected, onToggle, players = [] }) {
   const [open, setOpen] = dmUS(false);
   const [search, setSearch] = dmUS('');
   const ref = dmUR(null);
@@ -506,14 +932,32 @@ function CharPickerDropdown({ options, selected, onToggle }) {
     return () => document.removeEventListener('mousedown', handler);
   }, [open]);
 
-  const filtered = search.trim()
-    ? options.filter(p => p.label.toLowerCase().includes(search.trim().toLowerCase()))
-    : options;
+  const q = search.trim().toLowerCase();
+  const filtered = q ? options.filter(p => p.label.toLowerCase().includes(q)) : options;
 
   const label = selected.length === 0            ? 'Keiner ausgewählt'
               : selected.length === options.length ? 'Alle Charaktere'
               : selected.length === 1              ? (options.find(p => p.id === selected[0])?.label || '1 Charakter')
               : `${selected.length} Charaktere`;
+
+  // Toggle all chars of a player
+  function togglePlayer(playerCharIds) {
+    const allOn = playerCharIds.every(id => selected.includes(id));
+    playerCharIds.forEach(id => {
+      const on = selected.includes(id);
+      if (allOn && on) onToggle(id);       // all on → turn off
+      else if (!allOn && !on) onToggle(id); // not all on → turn on missing
+    });
+  }
+
+  // Build grouped list: players with their chars, then ungrouped chars
+  const [collapsed, setCollapsed] = dmUS({});
+  const toggleCollapse = (id) => setCollapsed(prev => ({ ...prev, [id]: !prev[id] }));
+  const groupedPlayerIds = new Set(players.flatMap(p => p.charIds));
+  const ungrouped = filtered.filter(c => !groupedPlayerIds.has(c.id));
+  const filteredPlayers = q
+    ? players.filter(p => p.label.toLowerCase().includes(q) || p.charIds.some(id => options.find(o => o.id === id)?.label.toLowerCase().includes(q)))
+    : players;
 
   return (
     <div ref={ref} style={{ position:'relative', marginBottom:8 }}>
@@ -535,40 +979,90 @@ function CharPickerDropdown({ options, selected, onToggle }) {
         <div style={{
           position:'absolute', top:'calc(100% + 3px)', left:0, right:0, zIndex:50,
           background:'rgba(8,6,22,0.99)', border:'1px solid rgba(124,77,255,0.35)',
-          borderRadius:3, boxShadow:'0 8px 32px rgba(0,0,0,0.65)',
-          overflow:'hidden',
+          borderRadius:3, boxShadow:'0 8px 32px rgba(0,0,0,0.65)', overflow:'hidden',
         }}>
           <div style={{ padding:'7px 9px', borderBottom:'1px solid rgba(160,140,255,0.12)' }}>
             <input autoFocus value={search} onChange={e => setSearch(e.target.value)}
-              placeholder="Suchen …"
+              placeholder="Spieler oder Charakter …"
               style={{ ...iSt, fontSize:11, padding:'5px 8px' }}/>
           </div>
-          <div style={{ maxHeight:220, overflowY:'auto' }}>
-            {filtered.length === 0 ? (
+          <div style={{ maxHeight:280, overflowY:'auto' }}>
+            {filteredPlayers.length === 0 && ungrouped.length === 0 ? (
               <div style={{ padding:'10px 12px', fontFamily:'var(--font-body)', fontSize:12,
                 color:'rgba(160,140,255,0.4)', fontStyle:'italic' }}>Kein Treffer</div>
-            ) : filtered.map(p => {
-              const checked = selected.includes(p.id);
-              return (
-                <label key={p.id}
-                  style={{
+            ) : <>
+              {filteredPlayers.map(player => {
+                const playerChars = player.charIds
+                  .map(id => options.find(o => o.id === id))
+                  .filter(Boolean)
+                  .filter(c => !q || c.label.toLowerCase().includes(q) || player.label.toLowerCase().includes(q));
+                if (playerChars.length === 0 && !player.label.toLowerCase().includes(q)) return null;
+                const allOn = player.charIds.every(id => selected.includes(id));
+                const someOn = player.charIds.some(id => selected.includes(id));
+                return (
+                  <div key={player.id}>
+                    {/* Player row */}
+                    <div style={{
+                      display:'flex', alignItems:'center', background:'rgba(124,77,255,0.06)',
+                      borderBottom:'1px solid rgba(160,140,255,0.08)',
+                    }}>
+                      <label style={{ display:'flex', alignItems:'center', gap:10, padding:'8px 12px 5px', cursor:'pointer', flex:1 }}>
+                        <input type="checkbox" checked={allOn} ref={el => { if (el) el.indeterminate = someOn && !allOn; }}
+                          onChange={() => togglePlayer(player.charIds)}
+                          style={{ accentColor:'#c9b8ff', cursor:'pointer', flexShrink:0 }}/>
+                        <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.2em',
+                          color: someOn ? 'rgba(200,190,240,0.9)' : 'rgba(160,140,255,0.55)', textTransform:'uppercase' }}>
+                          {player.label}
+                        </span>
+                      </label>
+                      <button type="button" onClick={() => toggleCollapse(player.id)}
+                        style={{ background:'none', border:'none', cursor:'pointer', padding:'0 12px',
+                          color:'rgba(160,140,255,0.4)', fontSize:9, flexShrink:0 }}>
+                        {collapsed[player.id] ? '▶' : '▼'}
+                      </button>
+                    </div>
+                    {/* Char rows */}
+                    {!collapsed[player.id] && playerChars.map(c => {
+                      const checked = selected.includes(c.id);
+                      return (
+                        <label key={c.id} style={{
+                          display:'flex', alignItems:'center', gap:10, padding:'6px 12px 6px 32px',
+                          cursor:'pointer',
+                          background: checked ? 'rgba(124,77,255,0.07)' : 'transparent',
+                          borderBottom:'1px solid rgba(160,140,255,0.05)',
+                          transition:'background 0.12s',
+                        }}>
+                          <input type="checkbox" checked={checked} onChange={() => onToggle(c.id)}
+                            style={{ accentColor:'#c9b8ff', cursor:'pointer', flexShrink:0 }}/>
+                          <span style={{ fontFamily:'var(--font-body)', fontSize:11,
+                            color: checked ? '#c9b8ff' : 'rgba(180,170,220,0.65)' }}>
+                            {c.label}
+                          </span>
+                        </label>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+              {ungrouped.map(c => {
+                const checked = selected.includes(c.id);
+                return (
+                  <label key={c.id} style={{
                     display:'flex', alignItems:'center', gap:10, padding:'7px 12px',
                     cursor:'pointer',
                     background: checked ? 'rgba(124,77,255,0.08)' : 'transparent',
                     borderBottom:'1px solid rgba(160,140,255,0.06)',
-                    transition:'background 0.12s',
-                  }}
-                  onMouseEnter={e => { if (!checked) e.currentTarget.style.background='rgba(160,140,255,0.06)'; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = checked ? 'rgba(124,77,255,0.08)' : 'transparent'; }}>
-                  <input type="checkbox" checked={checked} onChange={() => onToggle(p.id)}
-                    style={{ accentColor:'#c9b8ff', cursor:'pointer', flexShrink:0 }}/>
-                  <span style={{ fontFamily:'var(--font-mono)', fontSize:9.5, letterSpacing:'0.14em',
-                    color: checked ? '#c9b8ff' : 'rgba(200,190,240,0.72)', textTransform:'uppercase' }}>
-                    {p.label}
-                  </span>
-                </label>
-              );
-            })}
+                  }}>
+                    <input type="checkbox" checked={checked} onChange={() => onToggle(c.id)}
+                      style={{ accentColor:'#c9b8ff', cursor:'pointer', flexShrink:0 }}/>
+                    <span style={{ fontFamily:'var(--font-mono)', fontSize:9.5, letterSpacing:'0.14em',
+                      color: checked ? '#c9b8ff' : 'rgba(200,190,240,0.72)', textTransform:'uppercase' }}>
+                      {c.label}
+                    </span>
+                  </label>
+                );
+              })}
+            </>}
           </div>
         </div>
       )}
@@ -577,11 +1071,19 @@ function CharPickerDropdown({ options, selected, onToggle }) {
 }
 
 // ── Visibility Panel ───────────────────────────────────────
-function VisibilityPanel({ nsc, unlocks, charPersp }) {
+function VisibilityPanel({ nsc, unlocks, charPersp, players = [], onNscUpdated }) {
   const [dmTarget, setDmTarget] = dmUS(() => charPersp.map(p => p.id));
+  const [saving, setSaving] = dmUS(false);
 
   const toggleTarget = (pid) =>
     setDmTarget(prev => prev.includes(pid) ? prev.filter(id => id !== pid) : [...prev, pid]);
+
+  const toggleVisible = async () => {
+    setSaving(true);
+    const { data, error } = await window._sb.from('nscs').update({ visible: !nsc.visible }).eq('id', nsc.id).select().single();
+    setSaving(false);
+    if (!error && data) onNscUpdated?.(mapNscRow(data));
+  };
 
   const allKeys = factsOf(nsc);
 
@@ -600,12 +1102,32 @@ function VisibilityPanel({ nsc, unlocks, charPersp }) {
 
   return (
     <div style={{ padding:'18px 24px 60px' }}>
+
+      {/* ── NSC-Sichtbarkeit ── */}
+      <button type="button" onClick={toggleVisible} disabled={saving} style={{
+        width:'100%', padding:'10px 14px', marginBottom:20, textAlign:'left',
+        cursor: saving ? 'default' : 'pointer',
+        background: nsc.visible ? 'rgba(95,227,154,0.1)' : 'rgba(160,140,255,0.06)',
+        border: `1px solid ${nsc.visible ? 'rgba(95,227,154,0.45)' : 'rgba(160,140,255,0.22)'}`,
+        borderRadius:3, display:'flex', alignItems:'center', gap:10, transition:'all 0.15s',
+      }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:13, lineHeight:1,
+          color: nsc.visible ? '#5fe39a' : 'rgba(160,140,255,0.35)' }}>
+          {nsc.visible ? '◆' : '○'}
+        </span>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:9.5, letterSpacing:'0.18em',
+          textTransform:'uppercase', color: nsc.visible ? '#5fe39a' : 'rgba(200,190,240,0.45)', flex:1 }}>
+          {nsc.visible ? 'Für Spieler sichtbar' : 'Für Spieler verborgen'}
+        </span>
+        {saving && <span style={{ fontFamily:'var(--font-mono)', fontSize:7, color:'rgba(160,140,255,0.4)' }}>◈ …</span>}
+      </button>
+
       {/* Charakter-Picker */}
       <div style={{ padding:'12px 16px', background:'rgba(124,77,255,0.04)', borderRadius:3,
         border:'1px solid rgba(124,77,255,0.2)', marginBottom:18 }}>
         <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.28em', color:'rgba(124,77,255,0.7)',
           textTransform:'uppercase', marginBottom:8 }}>◈ Freischalten für</div>
-        <CharPickerDropdown options={charPersp} selected={dmTarget} onToggle={toggleTarget}/>
+        <CharPickerDropdown options={charPersp} selected={dmTarget} onToggle={toggleTarget} players={players}/>
         <div style={{ display:'flex', gap:8, alignItems:'center' }}>
           <button type="button" onClick={() => setDmTarget(charPersp.map(p => p.id))} style={{
             padding:'2px 10px', background:'transparent',
@@ -640,7 +1162,7 @@ function VisibilityPanel({ nsc, unlocks, charPersp }) {
       {/* Gesamt-Progress */}
       <div style={{ marginBottom:18, fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.18em',
         color:'rgba(160,140,255,0.55)', textTransform:'uppercase' }}>
-        {unlockedCount} / {allKeys.length} Fakten haben mindestens einen Freischaltung
+        {unlockedCount} / {allKeys.length} Fakten haben mindestens eine Freischaltung
       </div>
 
       {/* Fakten-Gruppen */}
@@ -684,12 +1206,12 @@ function VisibilityPanel({ nsc, unlocks, charPersp }) {
 
 // ── App ────────────────────────────────────────────────────
 function App() {
-  const { nscs: rawNscs, perspectives, charPids, loading } = useNSCData();
+  const { nscs: rawNscs, perspectives, charPids, players, loading } = useNSCData();
   const [nscs, setNscs] = dmUS([]);
   dmUE(() => { setNscs(rawNscs); }, [rawNscs]);
 
   const charPersp = dmUM(() => perspectives.filter(p => p.id !== 'alle'), [perspectives]);
-  const unlocks = useUnlocks(nscs, charPids, 'alle');
+  const unlocks = useUnlocks(nscs, charPids, 'alle', players);
 
   const [selectedId, setSelectedId] = dmUS(null);
   const [activeTab, setActiveTab] = dmUS('bearbeiten');
@@ -724,12 +1246,13 @@ function App() {
   }, [nscs, search, visFilter]);
 
   const startNew = () => { setSelectedId(null); setNewMode(true); setActiveTab('bearbeiten'); };
-  const selectNsc = (nsc) => { setSelectedId(nsc.id); setNewMode(false); };
+  const selectNsc = (nsc) => { setSelectedId(nsc.id); setNewMode(false); setActiveTab(t => t === 'bearbeiten' ? 'bearbeiten' : 'ansicht'); };
 
   // Tab config
   const tabs = [
-    { id:'bearbeiten', label:'Daten bearbeiten' },
-    { id:'sichtbarkeit', label:'Sichtbarkeit', disabled: newMode },
+    { id:'ansicht',      label:'Ansicht',         disabled: newMode },
+    { id:'bearbeiten',   label:'Daten bearbeiten' },
+    { id:'sichtbarkeit', label:'Sichtbarkeit',     disabled: newMode },
   ];
 
   if (loading) return (
@@ -859,10 +1382,13 @@ function App() {
           {/* Tab content */}
           <div style={{ flex:1, overflowY:'auto' }}>
             {(newMode || selectedNsc) ? (
-              activeTab === 'bearbeiten' ? (
-                <NscEditForm nsc={newMode ? null : selectedNsc} onSaved={handleSaved} nscs={nscs} charPersp={charPersp}/>
+              selectedNsc && activeTab === 'ansicht' ? (
+                <NscAnsichtTab nsc={selectedNsc} />
+              ) : activeTab === 'bearbeiten' ? (
+                <NscEditForm key={newMode ? 'new' : selectedNsc?.id} nsc={newMode ? null : selectedNsc} onSaved={handleSaved} nscs={nscs} charPersp={charPersp}/>
               ) : selectedNsc && activeTab === 'sichtbarkeit' ? (
-                <VisibilityPanel nsc={selectedNsc} unlocks={unlocks} charPersp={charPersp}/>
+                <VisibilityPanel nsc={selectedNsc} unlocks={unlocks} charPersp={charPersp} players={players}
+                onNscUpdated={updated => setNscs(prev => prev.map(n => n.id === updated.id ? updated : n))}/>
               ) : null
             ) : (
               <div style={{ padding:'60px 30px', textAlign:'center',

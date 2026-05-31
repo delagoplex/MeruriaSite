@@ -2,6 +2,8 @@
 <html lang="de"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/images/favicon/favicon-m.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/images/favicon/favicon-m-180.png">
 <title>Meruria — Kalender (Interaktiv)</title>
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
@@ -17,6 +19,20 @@
 <body>
 
 <div id="nav-root"></div>
+
+<!-- DAY POPUP -->
+<div id="dayPopup" class="day-popup-overlay" style="display:none">
+  <div class="day-popup">
+    <div class="day-popup-head">
+      <div>
+        <div class="day-popup-date" id="dpDate"></div>
+        <div class="day-popup-sub" id="dpSub"></div>
+      </div>
+      <button class="day-popup-close" id="dpClose">✕</button>
+    </div>
+    <div class="day-popup-body" id="dpBody"></div>
+  </div>
+</div>
 
 <!-- ══ PAGE ═══════════════════════════════════════ -->
 <div class="page">
@@ -94,9 +110,9 @@
 
       <div class="day-grid" id="dayGrid"></div>
 
-      <div style="padding:14px 22px; font-family:var(--fm); font-size:9.5px; letter-spacing:.22em; color:var(--dim); text-transform:uppercase; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; border-top:1px solid rgba(124,77,255,0.10);">
-        <span id="monthSign">Im Zeichen ...</span>
-        <span id="monthVibe">...</span>
+      <div class="month-sign-footer">
+        <span class="month-sign-label" id="monthSign">Im Zeichen ...</span>
+        <span class="month-sign-vibe" id="monthVibe">...</span>
       </div>
     </div>
 
@@ -204,7 +220,7 @@ const ASH_PHASES = [
 const FIXED_HOLIDAYS = [
   // Janvar
   { month:0, day:1, span:3, kind:"w", name:"Tag der Landung", desc:"Das wichtigste Fest des Jahres. Tag 1: Gedenken an die Reise und die Verlorenen. Tag 2: Ankunft mit Feuer und Musik. Tag 3: Treueschwur an die Kolonie." },
-  { month:0, day:19, span:1, kind:"w", name:"Der Erste Schritt", desc:"Persönlicher Feiertag am letzten Tag des Monats. Jeder Velaer setzt sich ein kleines Ziel und schreibt es auf. Familien tauschen ihre Wünsche aus." },
+  { month:0, day:19, span:1, kind:"w", name:"Der Erste Schritt", desc:"Persönlicher Feiertag am letzten Tag des Monats. Jeder Veluner setzt sich ein kleines Ziel und schreibt es auf. Familien tauschen ihre Wünsche aus." },
   // Fevorn
   { month:1, day:7, span:1, kind:"r", name:"Aurelias Klinge", desc:"Turniere, Wettkämpfe und Waffensegnungen zu Ehren Aurelias. Gefallene Krieger werden namentlich genannt. Kein Trauertag — ein Ehrentag." },
   { month:1, day:18, span:1, kind:"r", name:"Selunara-Nacht", desc:"Die dunkelste Nacht des Fevorn wird Selunara geweiht. Laternen werden auf Gewässer gesetzt, leise Gebete gesprochen." },
@@ -216,7 +232,7 @@ const FIXED_HOLIDAYS = [
   { month:3, day:17, span:1, kind:"b", name:"Hydeas Segen", desc:"Kleine Opfergaben — Blüten, Früchte — werden in Flüsse oder Seen geworfen. Fischer und Wasserträger beten für eine sichere Saison." },
   // Mairen
   { month:4, day:9, span:1, kind:"b", name:"Die Stille", desc:"Stiller Besänftigungstag für Ophelis, Thraxis und Maledor. Kein Lärm, keine Feste — stille Rituale, Schutzzeichen an Türen. Kinder bleiben drinnen." },
-  { month:4, day:18, span:1, kind:"w", name:"Tag der Erinnerung", desc:"Stiller Gedenktag an die verlorene Heimat. Velaer kochen alte Rezepte, hören alte Musik, lesen aus mitgebrachten Büchern." },
+  { month:4, day:18, span:1, kind:"w", name:"Tag der Erinnerung", desc:"Stiller Gedenktag an die verlorene Heimat. Veluner kochen alte Rezepte, hören alte Musik, lesen aus mitgebrachten Büchern." },
   // Junvar
   { month:5, day:6, span:2, kind:"r", name:"Siennas Zenit", desc:"Hochsommerfest zu Ehren Siennas. Märkte, Sonnenfeiern. Am zweiten Tag großes Freudenfeuer — Sienna soll sehen, dass man ihr Licht trägt." },
   { month:5, day:14, span:1, kind:"w", name:"Nacht der Irrlichter", desc:"In der Jahresmitte werden Lichter und Laternen durch die Siedlung getragen — zu Ehren der Reisenden. Wer auf Expedition ist, gilt als gesegnet." },
@@ -376,17 +392,31 @@ function formatDate(abs) {
 
 const TODAY_KEY = "meruria-today-abs";
 const TODAY_DEFAULT = 14;
-
+const SETTINGS_KEY = "kalender_today";
+function parseDay(v) {
+  const n = v != null ? parseInt(v, 10) : TODAY_DEFAULT;
+  return (isNaN(n)) ? TODAY_DEFAULT : n;
+}
 function getToday() {
   const v = localStorage.getItem(TODAY_KEY);
-  const n = v ? parseInt(v, 10) : TODAY_DEFAULT;
-  return (isNaN(n) || n < 1) ? TODAY_DEFAULT : n;
+  return parseDay(v) || TODAY_DEFAULT;
 }
-function setToday(v) {
+async function setToday(v) {
   localStorage.setItem(TODAY_KEY, String(v));
+  if (window._sb) {
+    await window._sb.from('settings').upsert({ key: SETTINGS_KEY, value: String(v) }, { onConflict: 'key' });
+  }
 }
 
+// Hide setter until auth resolves; show only for DMs
+const todaySetEl = document.getElementById('todayBanner').querySelector('.today-set');
+todaySetEl.style.display = 'none';
+window.addEventListener('site-user-ready', (e) => {
+  if (e.detail?.role === 'dm') todaySetEl.style.display = '';
+}, { once: true });
+
 let TODAY = getToday();
+
 let view  = absToYearDoy(TODAY === 0 ? 1 : TODAY);
 let viewMonth = dayOfYearToMonth(view.doy).monthIdx;
 let viewYear = view.year || 1;
@@ -405,6 +435,11 @@ function renderTodayBanner() {
   const tagLbl = TODAY === 0 ? "Tag 0 (Landung)" : TODAY > 0 ? `Tag ${TODAY} n.d.L.` : `Tag ${-TODAY} v.d.L.`;
   document.getElementById("todayMeta").innerHTML =
     `${tagLbl} &nbsp;·&nbsp; Goldmond: ${gp.name}${gp.peak?' ✦':''} &nbsp;·&nbsp; Aschmond: ${ap.name}${ap.peak?' ✦':''}`;
+  // Current zodiac sign
+  const todayDoy = absToYearDoy(TODAY === 0 ? 1 : TODAY).doy;
+  const todayMonthIdx = dayOfYearToMonth(todayDoy).monthIdx;
+  const todaySign = MONTHS[todayMonthIdx]?.sign || '—';
+  const todayMonthName = MONTHS[todayMonthIdx]?.name || '—';
   if (TODAY >= 0) {
     document.getElementById("todayInput").value = TODAY;
     document.getElementById("todayEra").value = "ndl";
@@ -440,15 +475,18 @@ function renderMonthGrid() {
 
   for (let d = 1; d <= M.days; d++) {
     const abs = firstAbs + (d - 1);
+    const doy = MONTH_START[viewMonth] + (d - 1);
     const gpd = goldPhaseDay(abs);
     const apd = ashPhaseDay(abs);
     const gp  = findPhase(GOLD_PHASES, gpd);
     const ap  = findPhase(ASH_PHASES,  apd);
     const hols = holidaysOnDay(abs);
+    const birthdays = window._birthdayMap[doy] || [];
 
     const cell = document.createElement("div");
     cell.className = "day";
     if (hols.length) cell.classList.add("has-holiday");
+    if (birthdays.length) cell.classList.add("has-birthday");
     if (abs === TODAY) cell.classList.add("today");
     if (abs === selectedAbs) cell.classList.add("selected");
     cell.dataset.abs = abs;
@@ -459,12 +497,22 @@ function renderMonthGrid() {
 
     const holDots = hols.map(h => `<span class="day-holiday-dot ${h.kind}" title="${h.name}"></span>`).join("");
 
+    let bdayHexes = '';
+    if (birthdays.length) {
+      const visible = birthdays.slice(0, 4);
+      const rest = birthdays.length - visible.length;
+      bdayHexes = `<div class="day-birthdays">${
+        visible.map(p => bdayHexHtml(p, 'sm')).join('')
+      }${rest > 0 ? `<span class="bday-hex-more">+${rest}</span>` : ''}</div>`;
+    }
+
     cell.innerHTML = `
       ${peakBadge}
       <div class="day-top">
         <span class="day-num">${d}</span>
         ${abs === TODAY ? '<span class="day-todaytag">Heute</span>' : ''}
       </div>
+      ${bdayHexes}
       <div class="day-bot">
         <div class="day-moons" title="Goldmond ${gp.name} · Aschmond ${ap.name}">
           ${goldMoonSVG(gpd)}
@@ -478,6 +526,7 @@ function renderMonthGrid() {
       selectedAbs = abs;
       renderMonthGrid();
       renderDetail();
+      openDayPopup(abs);
     });
 
     grid.appendChild(cell);
@@ -553,6 +602,117 @@ function renderAll() {
 }
 
 /* ══════════════════════════════════════════════════
+   GEBURTSTAGE
+   ══════════════════════════════════════════════════ */
+
+window._birthdayMap = {}; // doy (1-224) → [{name, bild, type:'sc'|'nsc'}]
+
+function doyToCalText(doy) {
+  for (let i = MONTHS.length - 1; i >= 0; i--) {
+    if (doy >= MONTH_START[i]) return `${doy - MONTH_START[i] + 1}. ${MONTHS[i].name}`;
+  }
+  return '—';
+}
+
+function bdayHexHtml(p, size = 'sm') {
+  const cls = size === 'lg' ? 'day-popup-bday-hex' : 'bday-hex';
+  const initials = p.name.split(' ').filter(Boolean).map(w => w[0]).slice(0, 2).join('');
+  const inner = p.bild
+    ? `<img src="${p.bild}" style="width:100%;height:100%;object-fit:cover;object-position:top;" alt=""/>`
+    : `<span class="${size==='lg'?'day-popup-bday-hex-init':'bday-hex-init'}">${initials}</span>`;
+  return `<div class="${cls} ${p.type}" title="${p.name}">${inner}</div>`;
+}
+
+/* ── Day Popup ──────────────────────────────── */
+function openDayPopup(abs) {
+  const { year, doy } = absToYearDoy(abs === 0 ? 1 : abs);
+  const { monthIdx, dayInMonth } = dayOfYearToMonth(doy || 1);
+  const M  = MONTHS[monthIdx];
+  const wd = WEEKDAYS[weekdayIdx(abs)];
+  const tagAbsLbl = abs === 0 ? 'Tag 0 · Landung' : abs > 0 ? `Tag ${abs} n.d.L.` : `Tag ${-abs} v.d.L.`;
+  const gpd = goldPhaseDay(abs), apd = ashPhaseDay(abs);
+  const gp  = findPhase(GOLD_PHASES, gpd), ap = findPhase(ASH_PHASES, apd);
+  const hols = holidaysOnDay(abs);
+  const birthdays = (window._birthdayMap[doy || 0] || []);
+
+  document.getElementById('dpDate').textContent = `${dayInMonth}. ${M.name}`;
+  document.getElementById('dpSub').textContent  = `${wd} · ${yearLabel(year)} · ${tagAbsLbl}`;
+
+  const kindLabel = { w:'Weltlich', r:'Religiös', b:'Besänftigung' };
+  let html = '';
+
+  // Monde
+  html += `<div>
+    <div class="day-popup-section-label">Die Monde</div>
+    <div class="day-popup-moons">
+      <div class="day-popup-moon">${goldMoonSVG(gpd,24)}<div>
+        <span class="day-popup-moon-name gold">${gp.name}</span>
+        ${gp.peak ? '<span class="day-popup-peak gold">✦ Vollmond</span>' : ''}
+      </div></div>
+      <div class="day-popup-moon">${ashMoonSVG(apd,24)}<div>
+        <span class="day-popup-moon-name ash">${ap.name}</span>
+        ${ap.peak ? '<span class="day-popup-peak ash">✦ Vollmond</span>' : ''}
+      </div></div>
+    </div>
+  </div>`;
+
+  // Feiertage
+  if (hols.length) {
+    html += `<div><div class="day-popup-section-label">Feiertage</div>`;
+    for (const h of hols) {
+      html += `<div class="detail-holiday ${h.kind}" style="margin-bottom:8px">
+        <div class="detail-holiday-top">
+          <span class="detail-holiday-name">${h.name}${h.span>1?` <span style="color:var(--dim);font-size:11px;">(Tag ${h.dayOfFeast}/${h.span})</span>`:''}</span>
+          <span class="detail-holiday-tag ${h.kind}">${kindLabel[h.kind]}</span>
+        </div>
+        <div class="detail-holiday-desc">${h.desc}</div>
+      </div>`;
+    }
+    html += `</div>`;
+  }
+
+  // Geburtstage
+  if (birthdays.length) {
+    html += `<div><div class="day-popup-section-label">Geburtstage</div><div class="day-popup-birthday-list">`;
+    for (const p of birthdays) {
+      const initials = p.name.split(' ').filter(Boolean).map(w=>w[0]).slice(0,2).join('');
+      const portrait = p.bild
+        ? `<img src="${p.bild}" style="width:100%;height:100%;object-fit:cover;object-position:top;" alt=""/>`
+        : `<span class="day-popup-bday-hex-init">${initials}</span>`;
+      html += `<div class="day-popup-birthday-item">
+        <div class="day-popup-bday-hex ${p.type}">${portrait}</div>
+        <div class="day-popup-bday-info">
+          <span class="day-popup-bday-name">${p.name}</span>
+          <span class="day-popup-bday-type ${p.type}">${p.type==='sc'?'Spielercharakter':'NSC'}</span>
+        </div>
+      </div>`;
+    }
+    html += `</div></div>`;
+  }
+
+  if (!hols.length && !birthdays.length) {
+    html += `<div class="detail-empty">Keine besonderen Ereignisse an diesem Tag.</div>`;
+  }
+
+  document.getElementById('dpBody').innerHTML = html;
+  const overlay = document.getElementById('dayPopup');
+  overlay.style.display = 'flex';
+  overlay.addEventListener('click', onOverlayClick);
+  document.addEventListener('keydown', onPopupKey);
+}
+
+function closeDayPopup() {
+  const overlay = document.getElementById('dayPopup');
+  overlay.style.display = 'none';
+  overlay.removeEventListener('click', onOverlayClick);
+  document.removeEventListener('keydown', onPopupKey);
+}
+function onOverlayClick(e) { if (e.target === document.getElementById('dayPopup')) closeDayPopup(); }
+function onPopupKey(e)     { if (e.key === 'Escape') closeDayPopup(); }
+
+document.getElementById('dpClose').addEventListener('click', closeDayPopup);
+
+/* ══════════════════════════════════════════════════
    EVENTS
    ══════════════════════════════════════════════════ */
 
@@ -582,13 +742,13 @@ document.getElementById("todayJump").addEventListener("click", () => {
   selectedAbs = TODAY;
   renderAll();
 });
-document.getElementById("todayBtn").addEventListener("click", () => {
+document.getElementById("todayBtn").addEventListener("click", async () => {
   const raw = parseInt(document.getElementById("todayInput").value, 10);
   const era = document.getElementById("todayEra").value;
   if (isNaN(raw) || raw < 1) return;
   const v = era === "vdl" ? -Math.min(raw, MIN_YEAR_VDL * YEAR_DAYS) : raw;
   TODAY = v;
-  setToday(TODAY);
+  await setToday(TODAY);
   const { year, doy } = absToYearDoy(TODAY === 0 ? 1 : TODAY);
   viewYear = year || 1;
   viewMonth = dayOfYearToMonth(doy).monthIdx;
@@ -709,6 +869,62 @@ document.getElementById("nextHolidayBtn").addEventListener("click", () => {
 });
 
 renderAll();
+
+// Load birthdays from Supabase and populate _birthdayMap
+(async function () {
+  if (!window._sb) return;
+  const [{ data: chars }, { data: nscs }] = await Promise.all([
+    window._sb.from('characters').select('char_data').eq('visible', true),
+    window._sb.from('nscs').select('name, bild, geburtstag_doy').eq('visible', true).not('geburtstag_doy', 'is', null),
+  ]);
+  const map = {};
+  for (const row of chars || []) {
+    const d = row.char_data || {};
+    if (!d.geburtstag_doy) continue;
+    (map[d.geburtstag_doy] = map[d.geburtstag_doy] || []).push({
+      name: d.name || 'Charakter', bild: d.bild || null, type: 'sc'
+    });
+  }
+  for (const nsc of nscs || []) {
+    (map[nsc.geburtstag_doy] = map[nsc.geburtstag_doy] || []).push({
+      name: nsc.name, bild: nsc.bild || null, type: 'nsc'
+    });
+  }
+  window._birthdayMap = map;
+  renderMonthGrid();
+})();
+
+// Load today from Supabase and subscribe to realtime changes
+(async function () {
+  if (!window._sb) return;
+  const { data } = await window._sb.from('settings').select('value').eq('key', SETTINGS_KEY).single();
+  if (data) {
+    const v = parseDay(data.value);
+    localStorage.setItem(TODAY_KEY, String(v));
+    if (v !== TODAY) {
+      TODAY = v;
+      const { year, doy } = absToYearDoy(TODAY === 0 ? 1 : TODAY);
+      viewYear = year || 1;
+      viewMonth = dayOfYearToMonth(doy).monthIdx;
+      selectedAbs = TODAY;
+      renderAll();
+    }
+  }
+  window._sb.channel('kalender-today').on('postgres_changes', {
+    event: '*', schema: 'public', table: 'settings',
+    filter: `key=eq.${SETTINGS_KEY}`
+  }, payload => {
+    if (!payload.new?.value) return;
+    const v = parseDay(payload.new.value);
+    localStorage.setItem(TODAY_KEY, String(v));
+    TODAY = v;
+    const { year, doy } = absToYearDoy(TODAY === 0 ? 1 : TODAY);
+    viewYear = year || 1;
+    viewMonth = dayOfYearToMonth(doy).monthIdx;
+    selectedAbs = TODAY;
+    renderAll();
+  }).subscribe();
+})();
 </script>
 
 

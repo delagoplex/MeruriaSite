@@ -239,6 +239,9 @@ const NAV = [{
   }, {
     label: 'Rezepte',
     href: 'Rezepte.html'
+  }, {
+    label: 'Rekrutierung',
+    href: 'Rekrutierung.html'
   }]
 }, {
   id: 'dm-bereich',
@@ -254,6 +257,10 @@ const NAV = [{
   }, {
     label: 'Tarot',
     href: 'Tarot.html',
+    locked: true
+  }, {
+    label: 'Segen & Flüche',
+    href: 'SegenUndFlueche.html',
     locked: true
   }, {
     label: 'Kampfsimulation',
@@ -274,6 +281,22 @@ const NAV = [{
   }, {
     label: 'Kartenmanagement',
     href: 'Kartenmanagement.html',
+    locked: true
+  }, {
+    label: 'Rezeptverwaltung',
+    href: 'DM_Rezepte.html',
+    locked: true
+  }, {
+    label: 'Kollektikon',
+    href: 'DM_Kollektikon.html',
+    locked: true
+  }, {
+    label: 'Rekrutierungspreise',
+    href: 'DM_Rekrutierung.html',
+    locked: true
+  }, {
+    label: 'Kolonisierung & Bau',
+    href: 'Kolonisierungs-Bausystem.html',
     locked: true
   }]
 }];

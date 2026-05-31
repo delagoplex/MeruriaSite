@@ -38,6 +38,7 @@ function LoginForm({
       email: data.user.email,
       role: profile?.role || 'player'
     };
+    window.dispatchEvent(new CustomEvent('site-user-ready', { detail: window.SITE_USER }));
     setLoading(false);
     onAuth();
   }
@@ -229,6 +230,7 @@ function SiteGate({
           email: session.user.email,
           role: profile?.role || 'player'
         };
+        window.dispatchEvent(new CustomEvent('site-user-ready', { detail: window.SITE_USER }));
         setAuthed(true);
       }
       setReady(true);

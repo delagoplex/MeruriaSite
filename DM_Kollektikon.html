@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/images/favicon/favicon-m.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/images/favicon/favicon-m-180.png">
+<title>Meruria — DM · Kollektikon</title>
+<link rel="stylesheet" href="assets/styles/global/fonts.css">
+<link rel="stylesheet" href="assets/styles/global/base.css">
+<script src="assets/scripts/vendor/react.production.min.js"></script>
+<script src="assets/scripts/vendor/react-dom.production.min.js"></script>
+<script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/components/nav.js"></script>
+<script src="assets/scripts/vendor/supabase.min.js"></script>
+<script src="assets/scripts/supabase-client.js"></script>
+<script src="assets/components/site-gate.js"></script>
+<script src="assets/scripts/data/resources/ff14_fish-data.js"></script>
+<script src="assets/scripts/data/resources/mineralien/ff14_mineralien-data.js"></script>
+<script src="assets/scripts/data/resources/pflanzen/ff14_pflanzen-data.js"></script>
+<script src="assets/scripts/data/resources/pflanzen/fantasy_plant-data.js"></script>
+<script src="assets/scripts/data/resources/insekten/insekten-data.js"></script>
+<script src="assets/scripts/data/monster/monsterhandbuch-data.js"></script>
+<script src="assets/scripts/data/monster/foliant-der-feinde-data.js"></script>
+<script src="assets/scripts/data/monster/drakkenheim-data.js"></script>
+<script src="assets/scripts/data/monster/almanach-der-monster-data.js"></script>
+<script src="assets/scripts/data/monster/floral-dragons-data.js"></script>
+<script src="assets/scripts/data/monster/ruhm-der-riesen-data.js"></script>
+<script src="assets/scripts/data/monster/schatzkammer-der-drachen-data.js"></script>
+<script src="assets/scripts/data/monster/flee-mortals-data.js"></script>
+<script src="assets/scripts/data/monster/avernus-data.js"></script>
+<script src="assets/scripts/data/monster/tome-of-beasts-data.js"></script>
+<script src="assets/scripts/data/monster/tome-of-beasts-2-data.js"></script>
+<script src="assets/scripts/data/monster/sonstige-data.js"></script>
+<script src="assets/scripts/data/monster-data.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { min-height: 100vh; background: var(--bg); color: var(--white); }
+#root { min-height: 100vh; }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(124,77,255,0.3); border-radius: 2px; }
+
+.dm-kol-wrap { max-width: 1100px; margin: 0 auto; padding: 80px 24px 80px; }
+
+/* Header */
+.dm-kol-header { margin-bottom: 36px; }
+.dm-kol-kicker { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.26em; text-transform: uppercase; color: rgba(124,77,255,0.55); margin-bottom: 8px; }
+.dm-kol-title { font-family: var(--font-display); font-size: 22px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--white); }
+
+/* Tabs */
+.dm-kol-tabs { display: flex; gap: 4px; margin-bottom: 32px; border-bottom: 1px solid rgba(124,77,255,0.15); }
+.dm-kol-tab { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; padding: 10px 18px; cursor: pointer; background: none; border: none; color: rgba(200,190,240,0.5); border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color .15s, border-color .15s; }
+.dm-kol-tab:hover { color: rgba(200,190,240,0.8); }
+.dm-kol-tab.active { color: var(--white); border-bottom-color: rgba(124,77,255,0.7); }
+
+/* Section label */
+.dm-section-label { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.26em; text-transform: uppercase; color: rgba(124,77,255,0.5); padding-bottom: 8px; border-bottom: 1px solid rgba(124,77,255,0.12); margin-bottom: 20px; }
+
+/* Threshold table */
+.thresh-table { width: 100%; border-collapse: collapse; }
+.thresh-table th { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(124,77,255,0.5); padding: 6px 8px; text-align: center; font-weight: 400; }
+.thresh-table th.col-label { text-align: left; }
+.thresh-table td { padding: 4px 4px; vertical-align: middle; }
+.thresh-table tr:hover td { background: rgba(124,77,255,0.03); }
+.thresh-cat-row td { background: rgba(124,77,255,0.06); }
+.thresh-cat-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(160,140,255,0.7); padding: 8px 8px 4px; }
+.thresh-rarity-label { font-family: var(--font-body); font-size: 11px; color: var(--silver); padding: 0 8px; white-space: nowrap; }
+.thresh-input { width: 56px; font-family: var(--font-mono); font-size: 11px; text-align: center; background: rgba(5,4,15,0.6); border: 1px solid rgba(124,77,255,0.2); border-radius: 3px; color: var(--white); padding: 5px 4px; outline: none; transition: border-color .15s; }
+.thresh-input:focus { border-color: rgba(124,77,255,0.55); }
+.thresh-input.dirty { border-color: rgba(255,180,60,0.5); }
+.thresh-save-btn { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase; padding: 5px 10px; background: rgba(124,77,255,0.15); border: 1px solid rgba(124,77,255,0.3); border-radius: 3px; color: rgba(200,190,240,0.8); cursor: pointer; transition: background .15s; white-space: nowrap; }
+.thresh-save-btn:hover { background: rgba(124,77,255,0.25); }
+.thresh-save-btn.saved { border-color: rgba(80,220,120,0.4); color: rgba(80,220,120,0.8); }
+
+/* Counts section */
+.counts-toolbar { display: flex; gap: 10px; margin-bottom: 16px; align-items: center; flex-wrap: wrap; }
+.counts-search { flex: 1; min-width: 200px; font-family: var(--font-body); font-size: 12px; background: rgba(5,4,15,0.6); border: 1px solid rgba(124,77,255,0.22); border-radius: 3px; color: var(--white); padding: 8px 12px; outline: none; transition: border-color .15s; }
+.counts-search:focus { border-color: rgba(124,77,255,0.55); }
+.counts-cat-tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+.counts-cat-tab { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; padding: 6px 12px; background: rgba(124,77,255,0.08); border: 1px solid rgba(124,77,255,0.2); border-radius: 3px; color: rgba(200,190,240,0.6); cursor: pointer; transition: all .15s; }
+.counts-cat-tab:hover { background: rgba(124,77,255,0.15); color: rgba(200,190,240,0.9); }
+.counts-cat-tab.active { background: rgba(124,77,255,0.22); border-color: rgba(124,77,255,0.5); color: var(--white); }
+
+/* Resource list */
+.counts-list { display: flex; flex-direction: column; gap: 1px; }
+.counts-row { display: grid; grid-template-columns: 1fr auto auto auto auto; align-items: center; gap: 14px; padding: 9px 12px; border-bottom: 1px solid rgba(124,77,255,0.07); transition: background .12s; }
+.counts-row:hover { background: rgba(124,77,255,0.035); }
+.counts-info { min-width: 0; }
+.counts-name { font-family: var(--font-body); font-size: 12px; color: var(--white); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.counts-rarity { font-family: var(--font-mono); font-size: 7.5px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(160,140,255,0.4); margin-top: 2px; }
+
+/* Menge block */
+.counts-menge-block { display: flex; align-items: center; gap: 7px; }
+.counts-current-val { font-family: var(--font-mono); font-size: 13px; color: rgba(200,190,240,0.65); min-width: 44px; text-align: right; }
+.counts-stepper { display: flex; align-items: center; border: 1px solid rgba(124,77,255,0.2); border-radius: 3px; overflow: hidden; transition: border-color .15s; }
+.counts-stepper:focus-within { border-color: rgba(124,77,255,0.55); }
+.counts-stepper.active { border-color: rgba(255,180,60,0.5); }
+.stepper-btn { width: 26px; height: 30px; background: rgba(124,77,255,0.1); border: none; border-right: 1px solid rgba(124,77,255,0.15); color: rgba(160,140,255,0.7); font-size: 14px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .12s, color .12s; flex-shrink: 0; }
+.stepper-btn:last-child { border-right: none; border-left: 1px solid rgba(124,77,255,0.15); }
+.stepper-btn:hover { background: rgba(124,77,255,0.22); color: var(--white); }
+.stepper-btn:active { background: rgba(124,77,255,0.32); }
+.counts-mod-input { width: 52px; font-family: var(--font-mono); font-size: 12px; text-align: center; background: rgba(5,4,15,0.6); border: none; color: var(--white); padding: 5px 4px; outline: none; -moz-appearance: textfield; }
+.counts-mod-input::-webkit-outer-spin-button,
+.counts-mod-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.counts-arrow { font-family: var(--font-mono); font-size: 11px; color: rgba(124,77,255,0.35); }
+.counts-new-val { font-family: var(--font-mono); font-size: 13px; color: rgba(200,190,240,0.85); min-width: 44px; font-weight: 600; }
+.counts-new-val.up { color: rgba(80,220,120,0.9); }
+.counts-new-val.down { color: rgba(220,100,80,0.85); }
+
+/* Stage block */
+.counts-stage-block { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; min-width: 120px; }
+.counts-stage-badge { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.12em; padding: 3px 7px; border-radius: 2px; background: rgba(124,77,255,0.08); border: 1px solid rgba(124,77,255,0.18); color: rgba(160,140,255,0.55); white-space: nowrap; }
+.counts-stage-badge.s0 { background: rgba(160,100,255,0.1); border-color: rgba(160,100,255,0.3); color: rgba(160,100,255,0.75); }
+.counts-stage-badge.s1 { background: rgba(110,170,255,0.07); border-color: rgba(110,170,255,0.22); color: rgba(110,170,255,0.65); }
+.counts-stage-badge.s8 { background: rgba(200,160,40,0.1); border-color: rgba(200,160,40,0.35); color: rgba(200,160,40,0.8); }
+.counts-delta { font-family: var(--font-mono); font-size: 8.5px; letter-spacing: 0.1em; }
+.counts-delta.up  { color: rgba(80,220,120,0.85); }
+.counts-delta.down { color: rgba(220,100,80,0.75); }
+.counts-delta.max { color: rgba(200,160,40,0.65); }
+.counts-next { font-family: var(--font-mono); font-size: 8px; color: rgba(160,140,255,0.42); letter-spacing: 0.07em; }
+
+/* Reveal mode & save */
+.reveal-mode-wrap { display: flex; gap: 3px; }
+.reveal-mode-btn { font-family: var(--font-mono); font-size: 7.5px; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 8px; background: rgba(124,77,255,0.06); border: 1px solid rgba(124,77,255,0.16); border-radius: 2px; color: rgba(160,140,255,0.45); cursor: pointer; transition: all .15s; }
+.reveal-mode-btn:hover { background: rgba(124,77,255,0.13); color: rgba(200,190,240,0.8); }
+.reveal-mode-btn.active { background: rgba(124,77,255,0.2); border-color: rgba(124,77,255,0.5); color: var(--white); }
+.counts-save-btn { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 12px; background: rgba(124,77,255,0.12); border: 1px solid rgba(124,77,255,0.28); border-radius: 3px; color: rgba(200,190,240,0.7); cursor: pointer; transition: background .15s; white-space: nowrap; }
+.counts-save-btn:hover:not(:disabled) { background: rgba(124,77,255,0.22); }
+.counts-save-btn:disabled { opacity: 0.35; cursor: default; }
+.counts-save-btn.saved { border-color: rgba(80,220,120,0.4); color: rgba(80,220,120,0.8); }
+.counts-empty { font-family: var(--font-body); font-size: 12px; color: rgba(160,140,255,0.4); padding: 24px 12px; text-align: center; }
+.counts-hint { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.14em; color: rgba(124,77,255,0.4); margin-top: 8px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect, useRef, useMemo, useCallback } = React;
+const { SiteNav, SiteGate } = window;
+
+const CATS = [
+  { id: 'fische',     label: 'Fische' },
+  { id: 'insekten',   label: 'Insekten' },
+  { id: 'pflanzen',   label: 'Pflanzen' },
+  { id: 'mineralien', label: 'Mineralien' },
+  { id: 'kreaturen',  label: 'Kreaturen' },
+];
+
+const RARITIES = [
+  { id: 'gewoehnlich', label: 'Gewöhnlich' },
+  { id: 'selten',      label: 'Selten' },
+  { id: 'sehrselten',  label: 'Sehr Selten' },
+  { id: 'einzigartig', label: 'Einzigartig' },
+];
+
+const STAGE_LABELS = ['Unbekannt', 'Sichtung', 'Bekannt', 'Beobachtet', 'Vertraut', 'Studiert', 'Erforscht', 'Meisterhaft', 'Komplett'];
+
+function _rarFromSg(sg) {
+  return sg <= 1 ? 'gewoehnlich' : sg === 2 ? 'selten' : sg === 3 ? 'sehrselten' : 'einzigartig';
+}
+function _rarFromStaerke(s) {
+  return s <= 2 ? 'gewoehnlich' : s <= 4 ? 'selten' : s === 5 ? 'sehrselten' : 'einzigartig';
+}
+function _rarFromCr(cr) {
+  if (cr <= 1) return 'gewoehnlich';
+  if (cr <= 5) return 'selten';
+  if (cr <= 10) return 'sehrselten';
+  return 'einzigartig';
+}
+
+function computeStage(count, threshRow) {
+  if (!count || count <= 0) return 0;
+  if (!threshRow) return 1;
+  let stage = 1;
+  const keys = ['stufe_2', 'stufe_3', 'stufe_4', 'stufe_5', 'stufe_6', 'stufe_7', 'stufe_8'];
+  for (let i = 0; i < keys.length; i++) {
+    if (threshRow[keys[i]] != null && count >= threshRow[keys[i]]) stage = i + 2;
+  }
+  return stage;
+}
+
+function buildResources() {
+  const allPlants = [...(window.PFLANZEN_DB || []), ...(window.FANTASY_PLANT_DB || [])];
+  return {
+    fische:     (window.FISH_DB     || []).map(r => ({ id: String(r.id), name: r.name_de,  rarity: _rarFromStaerke(r.stärke || 2) })),
+    insekten:   (window.INSEKTEN_DB || []).map(r => ({ id: String(r.id), name: r.name_de,  rarity: _rarFromSg(r.seltenheitsgrad || 1) })),
+    pflanzen:   allPlants.map(r =>                  ({ id: String(r.id), name: r.name_de,  rarity: _rarFromSg(r.seltenheitsgrad || 1) })),
+    mineralien: (window.MINERALIEN_DB || []).map(r => ({ id: String(r.id), name: r.name_de, rarity: _rarFromSg(r.seltenheitsgrad || 1) })),
+    kreaturen:  (window.MONSTER_DATA  || []).map(m => {
+      let h = 5381;
+      for (let i = 0; i < m.name.length; i++) h = (Math.imul(h, 33) ^ m.name.charCodeAt(i)) >>> 0;
+      return { id: String(h % 2000000000), name: m.name, rarity: _rarFromCr(m.cr || 0) };
+    }),
+  };
+}
+
+// ── Threshold row ─────────────────────────────────────────────────────────────
+function ThresholdRow({ catId, rarity, initialRow, onSave }) {
+  const keys = ['stufe_2', 'stufe_3', 'stufe_4', 'stufe_5', 'stufe_6', 'stufe_7', 'stufe_8'];
+  const defaults = { stufe_2: 3, stufe_3: 6, stufe_4: 10, stufe_5: 15, stufe_6: 22, stufe_7: 30, stufe_8: 40 };
+  const [vals, setVals] = useState(() => {
+    const v = {};
+    keys.forEach(k => { v[k] = String((initialRow && initialRow[k] != null) ? initialRow[k] : defaults[k]); });
+    return v;
+  });
+  const [saved, setSaved] = useState(false);
+
+  useEffect(() => {
+    const v = {};
+    keys.forEach(k => { v[k] = String((initialRow && initialRow[k] != null) ? initialRow[k] : defaults[k]); });
+    setVals(v);
+  }, [initialRow]);
+
+  const dirty = useMemo(() => keys.some(k => {
+    const orig = (initialRow && initialRow[k] != null) ? initialRow[k] : defaults[k];
+    return String(orig) !== vals[k];
+  }), [vals, initialRow]);
+
+  async function handleSave() {
+    const row = { cat: catId, rarity: rarity.id };
+    keys.forEach(k => { row[k] = parseInt(vals[k], 10) || defaults[k]; });
+    const { error } = await window._sb.from('kollektikon_thresholds').upsert(row, { onConflict: 'cat,rarity' });
+    if (!error) { setSaved(true); onSave(row); setTimeout(() => setSaved(false), 1800); }
+  }
+
+  return (
+    <tr>
+      <td><span className="thresh-rarity-label">{rarity.label}</span></td>
+      {keys.map((k, i) => (
+        <td key={k} style={{ textAlign: 'center' }}>
+          <input
+            className={`thresh-input${vals[k] !== String((initialRow?.[k] ?? defaults[k])) ? ' dirty' : ''}`}
+            type="number" min="1" max="999"
+            value={vals[k]}
+            onChange={e => setVals(v => ({ ...v, [k]: e.target.value }))}
+          />
+        </td>
+      ))}
+      <td style={{ paddingLeft: '8px' }}>
+        <button className={`thresh-save-btn${saved ? ' saved' : ''}`} onClick={handleSave} disabled={!dirty && !saved}>
+          {saved ? '✓ Gespeichert' : 'Speichern'}
+        </button>
+      </td>
+    </tr>
+  );
+}
+
+// ── Thresholds section ────────────────────────────────────────────────────────
+function ThresholdsSection({ thresholdsMap, onThresholdSaved }) {
+  return (
+    <div>
+      <div className="dm-section-label">Schwellen — Anzahl Exemplare pro Stufe</div>
+      <div style={{ overflowX: 'auto' }}>
+        <table className="thresh-table">
+          <thead>
+            <tr>
+              <th className="col-label" style={{ minWidth: '100px' }}>Seltenheit</th>
+              {['Stufe 2','Stufe 3','Stufe 4','Stufe 5','Stufe 6','Stufe 7','Stufe 8'].map(l => (
+                <th key={l}>{l}</th>
+              ))}
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {CATS.map(cat => (
+              <React.Fragment key={cat.id}>
+                <tr className="thresh-cat-row">
+                  <td colSpan={9}><span className="thresh-cat-label">{cat.label}</span></td>
+                </tr>
+                {RARITIES.map(rar => (
+                  <ThresholdRow
+                    key={`${cat.id}:${rar.id}`}
+                    catId={cat.id}
+                    rarity={rar}
+                    initialRow={thresholdsMap[`${cat.id}:${rar.id}`]}
+                    onSave={onThresholdSaved}
+                  />
+                ))}
+              </React.Fragment>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="counts-hint" style={{ marginTop: '16px' }}>
+        Stufe 1 (Sichtung) wird ab 1 Exemplar automatisch erreicht. Die hier eingetragenen Werte gelten ab Stufe 2.
+      </div>
+    </div>
+  );
+}
+
+// ── Single count row ──────────────────────────────────────────────────────────
+const THRESH_KEYS = ['stufe_2','stufe_3','stufe_4','stufe_5','stufe_6','stufe_7','stufe_8'];
+
+function nextStageInfo(count, threshRow) {
+  if (!threshRow) return null;
+  for (let i = 0; i < THRESH_KEYS.length; i++) {
+    const t = threshRow[THRESH_KEYS[i]];
+    if (t != null && t > count) return { stufe: i + 2, fehlt: t - count };
+  }
+  return null;
+}
+
+function CountRow({ catId, resource, initialData, thresholdsMap, onSaved }) {
+  const currentMenge = initialData?.menge || 0;
+  const [modifier, setModifier] = useState('');
+  const [revealMode, setRevealMode] = useState(initialData?.reveal_mode || null);
+  const [saved, setSaved] = useState(false);
+
+  useEffect(() => { setRevealMode(initialData?.reveal_mode || null); }, [initialData]);
+
+  const modVal = (modifier === '' || modifier === '-') ? 0 : (parseInt(modifier, 10) || 0);
+  const newMenge = Math.max(0, currentMenge + modVal);
+  const threshRow = thresholdsMap[`${catId}:${resource.rarity}`];
+  const currentStage = computeStage(currentMenge, threshRow);
+  const newStage = computeStage(newMenge, threshRow);
+  const stageUp = newStage > currentStage;
+  const stageDown = newStage < currentStage;
+
+  // "noch X" based on preview if modifier active, else from current
+  const previewCount = modVal !== 0 ? newMenge : currentMenge;
+  const nextInfo = nextStageInfo(previewCount, threshRow);
+
+  const origMode = initialData?.reveal_mode || null;
+  const dirty = modVal !== 0 || revealMode !== origMode;
+
+  async function handleSave() {
+    const { error } = await window._sb.from('kollektikon_counts')
+      .upsert({ cat: catId, resource_id: resource.id, menge: newMenge, reveal_mode: revealMode }, { onConflict: 'cat,resource_id' });
+    if (!error) {
+      setSaved(true);
+      setModifier('');
+      onSaved(`${catId}:${resource.id}`, { menge: newMenge, reveal_mode: revealMode });
+      setTimeout(() => setSaved(false), 1500);
+    }
+  }
+
+  const stageBadgeCls = currentStage === 0 && revealMode ? ' s0' : currentStage === 0 ? '' : currentStage >= 8 ? ' s8' : ' s1';
+  const stageBadgeTxt = currentStage === 0 && revealMode ? 'Stufe 0' : STAGE_LABELS[currentStage];
+
+  return (
+    <div className="counts-row">
+      <div className="counts-info">
+        <div className="counts-name">{resource.name}</div>
+        <div className="counts-rarity">{RARITIES.find(r => r.id === resource.rarity)?.label || resource.rarity}</div>
+      </div>
+
+      <div className="reveal-mode-wrap">
+        {['name','bild','beides'].map(m => (
+          <button key={m} className={`reveal-mode-btn${revealMode === m ? ' active' : ''}`}
+            onClick={() => setRevealMode(revealMode === m ? null : m)}>
+            {m.charAt(0).toUpperCase() + m.slice(1)}
+          </button>
+        ))}
+      </div>
+
+      <div className="counts-menge-block">
+        <span className="counts-current-val">{currentMenge.toLocaleString('de')}</span>
+        <div className={`counts-stepper${modVal !== 0 ? ' active' : ''}`}>
+          <button className="stepper-btn" onClick={() => setModifier(String(modVal - 1))}>−</button>
+          <input
+            className="counts-mod-input"
+            type="number"
+            placeholder="0"
+            value={modifier}
+            onChange={e => setModifier(e.target.value)}
+            onKeyDown={e => { if (e.key === 'Enter' && dirty) handleSave(); }}
+          />
+          <button className="stepper-btn" onClick={() => setModifier(String(modVal + 1))}>+</button>
+        </div>
+        {modVal !== 0 && <>
+          <span className="counts-arrow">→</span>
+          <span className={`counts-new-val${stageUp ? ' up' : stageDown ? ' down' : ''}`}>
+            {newMenge.toLocaleString('de')}
+          </span>
+        </>}
+      </div>
+
+      <div className="counts-stage-block">
+        <span className={`counts-stage-badge${stageBadgeCls}`}>{stageBadgeTxt}</span>
+        {stageUp  && <span className="counts-delta up">↑ Stufe {newStage}!</span>}
+        {stageDown && <span className="counts-delta down">↓ Stufe {newStage}</span>}
+        {!stageUp && !stageDown && nextInfo && (
+          <span className="counts-next">Noch {nextInfo.fehlt.toLocaleString('de')} → St.{nextInfo.stufe}</span>
+        )}
+        {!stageUp && !stageDown && !nextInfo && currentMenge > 0 && (
+          <span className="counts-delta max">✓ Komplett</span>
+        )}
+      </div>
+
+      <button className={`counts-save-btn${saved ? ' saved' : ''}`} onClick={handleSave} disabled={!dirty}>
+        {saved ? '✓' : 'OK'}
+      </button>
+    </div>
+  );
+}
+
+// ── Counts section ────────────────────────────────────────────────────────────
+function CountsSection({ countsMap, thresholdsMap, onSaved }) {
+  const [activeCat, setActiveCat] = useState('fische');
+  const [search, setSearch] = useState('');
+  const resources = useMemo(() => buildResources(), []);
+
+  const filtered = useMemo(() => {
+    const pool = resources[activeCat] || [];
+    const q = search.trim().toLowerCase();
+    if (!q) return pool;
+    return pool.filter(r => r.name.toLowerCase().includes(q));
+  }, [resources, activeCat, search]);
+
+  const displayed = useMemo(() => {
+    return [...filtered].sort((a, b) => {
+      const da = countsMap[`${activeCat}:${a.id}`] || {};
+      const db = countsMap[`${activeCat}:${b.id}`] || {};
+      const ca = da.menge || 0, cb = db.menge || 0;
+      const ra = da.reveal_mode, rb = db.reveal_mode;
+      // Found first, then stage-0, then unknown, then alphabetical
+      if (ca > 0 && cb === 0) return -1;
+      if (cb > 0 && ca === 0) return 1;
+      if (ra && !rb) return -1;
+      if (rb && !ra) return 1;
+      return a.name.localeCompare(b.name, 'de');
+    });
+  }, [filtered, countsMap, activeCat]);
+
+  const total = resources[activeCat]?.length || 0;
+  const found = useMemo(() => (resources[activeCat] || []).filter(r => {
+    const d = countsMap[`${activeCat}:${r.id}`] || {};
+    return (d.menge || 0) > 0 || d.reveal_mode;
+  }).length, [resources, activeCat, countsMap]);
+
+  return (
+    <div>
+      <div className="dm-section-label">Gesammelte Mengen pro Ressource</div>
+      <div className="counts-toolbar">
+        <input
+          className="counts-search"
+          placeholder="▸ Ressource suchen…"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+        />
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'rgba(160,140,255,0.45)', whiteSpace: 'nowrap' }}>
+          {found}/{total} entdeckt
+        </span>
+      </div>
+      <div className="counts-cat-tabs" style={{ marginBottom: '16px' }}>
+        {CATS.map(c => (
+          <button key={c.id} className={`counts-cat-tab${activeCat === c.id ? ' active' : ''}`} onClick={() => { setActiveCat(c.id); setSearch(''); }}>
+            {c.label}
+          </button>
+        ))}
+      </div>
+      <div className="counts-list">
+        {displayed.length === 0 ? (
+          <div className="counts-empty">Keine Einträge gefunden.</div>
+        ) : displayed.map(r => (
+          <CountRow
+            key={`${activeCat}:${r.id}`}
+            catId={activeCat}
+            resource={r}
+            initialData={countsMap[`${activeCat}:${r.id}`] || null}
+            thresholdsMap={thresholdsMap}
+            onSaved={onSaved}
+          />
+        ))}
+      </div>
+      <div className="counts-hint">
+        Eingabe bestätigen mit Enter oder OK-Button. Gelbe Umrandung = ungespeicherte Änderung.
+      </div>
+    </div>
+  );
+}
+
+// ── App ───────────────────────────────────────────────────────────────────────
+function App() {
+  const [activeTab, setActiveTab] = useState('mengen');
+  const [countsMap, setCountsMap] = useState({});
+  const [thresholdsMap, setThresholdsMap] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function load() {
+      const [countRes, threshRes] = await Promise.all([
+        window._sb.from('kollektikon_counts').select('cat, resource_id, menge'),
+        window._sb.from('kollektikon_thresholds').select('*'),
+      ]);
+      if (countRes.data) {
+        const cm = {};
+        countRes.data.forEach(({ cat, resource_id, menge, reveal_mode }) => {
+          cm[`${cat}:${resource_id}`] = { menge, reveal_mode: reveal_mode || null };
+        });
+        setCountsMap(cm);
+      }
+      if (threshRes.data) {
+        const tm = {};
+        threshRes.data.forEach(row => { tm[`${row.cat}:${row.rarity}`] = row; });
+        setThresholdsMap(tm);
+      }
+      setLoading(false);
+    }
+    load();
+  }, []);
+
+  function handleCountSaved(key, data) {
+    setCountsMap(prev => ({ ...prev, [key]: data }));
+  }
+  function handleThresholdSaved(row) {
+    setThresholdsMap(prev => ({ ...prev, [`${row.cat}:${row.rarity}`]: row }));
+  }
+
+  return (
+    <div>
+      <SiteNav rightLabel="DM · KOLLEKTIKON" />
+      <div className="dm-kol-wrap">
+        <div className="dm-kol-header">
+          <div className="dm-kol-kicker">◈ Meisterverwaltung</div>
+          <div className="dm-kol-title">Kollektikon</div>
+        </div>
+
+        <div className="dm-kol-tabs">
+          <button className={`dm-kol-tab${activeTab === 'mengen' ? ' active' : ''}`} onClick={() => setActiveTab('mengen')}>
+            Mengen
+          </button>
+          <button className={`dm-kol-tab${activeTab === 'schwellen' ? ' active' : ''}`} onClick={() => setActiveTab('schwellen')}>
+            Schwellen
+          </button>
+        </div>
+
+        {loading ? (
+          <div style={{ fontFamily: 'var(--font-body)', fontSize: '12px', color: 'rgba(160,140,255,0.4)', padding: '24px 0' }}>Lädt…</div>
+        ) : activeTab === 'mengen' ? (
+          <CountsSection countsMap={countsMap} thresholdsMap={thresholdsMap} onSaved={handleCountSaved} />
+        ) : (
+          <ThresholdsSection thresholdsMap={thresholdsMap} onThresholdSaved={handleThresholdSaved} />
+        )}
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <SiteGate><App /></SiteGate>
+);
+</script>
+</body></html>

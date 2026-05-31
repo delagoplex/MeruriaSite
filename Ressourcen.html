@@ -2,6 +2,8 @@
 <html lang="de"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/images/favicon/favicon-m.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/images/favicon/favicon-m-180.png">
 <title>Meruria — Ressourcen</title>
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
@@ -706,7 +708,9 @@ function FishSidebar({
   total,
   filtered,
   isOpen,
-  onClose
+  onClose,
+  isDM,
+  vis
 }) {
   const allKlimas = useMemo(() => {
     const s = new Set();
@@ -731,9 +735,10 @@ function FishSidebar({
     stärke: [],
     seltenheit: [],
     wassersort: '',
-    sort: 'name-az'
+    sort: 'name-az',
+    sichtbarkeit: ''
   });
-  const hasAny = filters.search || filters.größe.length || filters.klima.length || filters.stärke.length || filters.seltenheit.length || filters.wassersort || filters.sort !== 'name-az';
+  const hasAny = filters.search || filters.größe.length || filters.klima.length || filters.stärke.length || filters.seltenheit.length || filters.wassersort || filters.sort !== 'name-az' || (isDM && filters.sichtbarkeit);
   return /*#__PURE__*/React.createElement("aside", {
     className: `res-sidebar${isOpen ? ' res-sidebar--open' : ''}`
   }, /*#__PURE__*/React.createElement("div", {
@@ -886,7 +891,18 @@ function FishSidebar({
       color: t.color,
       borderColor: t.color + '55'
     } : {}
-  }, t.label)))), /*#__PURE__*/React.createElement(FilterGroup, {
+  }, t.label)))), isDM && /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Sichtbarkeit",
+    active: !!filters.sichtbarkeit,
+    onReset: () => set('sichtbarkeit', ''),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: { display: 'flex', flexDirection: 'column', gap: '3px' }
+  }, ['sichtbar', 'verborgen'].map(o => /*#__PURE__*/React.createElement("button", {
+    key: o,
+    className: `sort-btn${filters.sichtbarkeit === o ? ' active' : ''}`,
+    onClick: () => set('sichtbarkeit', filters.sichtbarkeit === o ? '' : o)
+  }, o === 'sichtbar' ? 'Sichtbar' : 'Verborgen')))), /*#__PURE__*/React.createElement(FilterGroup, {
     title: "Sortierung",
     active: filters.sort !== 'name-az',
     onReset: () => set('sort', 'name-az'),
@@ -1571,7 +1587,9 @@ function ResourceSidebar({
   onClose,
   allFundorte,
   allKategorien,
-  searchPlaceholder
+  searchPlaceholder,
+  isDM,
+  vis
 }) {
   const set = (key, val) => setFilters(f => ({
     ...f,
@@ -1589,9 +1607,10 @@ function ResourceSidebar({
     fundort: [],
     kategorie: [],
     seltenheit: [],
-    sort: 'name-az'
+    sort: 'name-az',
+    sichtbarkeit: ''
   });
-  const hasAny = filters.search || filters.fundort.length || filters.kategorie.length || filters.seltenheit.length || filters.sort !== 'name-az';
+  const hasAny = filters.search || filters.fundort.length || filters.kategorie.length || filters.seltenheit.length || filters.sort !== 'name-az' || (isDM && filters.sichtbarkeit);
   return /*#__PURE__*/React.createElement("aside", {
     className: `res-sidebar${isOpen ? ' res-sidebar--open' : ''}`
   }, /*#__PURE__*/React.createElement("div", {
@@ -1724,7 +1743,18 @@ function ResourceSidebar({
       color: t.color,
       borderColor: t.color + '55'
     } : {}
-  }, t.label)))), /*#__PURE__*/React.createElement(FilterGroup, {
+  }, t.label)))), isDM && /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Sichtbarkeit",
+    active: !!filters.sichtbarkeit,
+    onReset: () => set('sichtbarkeit', ''),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: { display: 'flex', flexDirection: 'column', gap: '3px' }
+  }, ['sichtbar', 'verborgen'].map(o => /*#__PURE__*/React.createElement("button", {
+    key: o,
+    className: `sort-btn${filters.sichtbarkeit === o ? ' active' : ''}`,
+    onClick: () => set('sichtbarkeit', filters.sichtbarkeit === o ? '' : o)
+  }, o === 'sichtbar' ? 'Sichtbar' : 'Verborgen')))), /*#__PURE__*/React.createElement(FilterGroup, {
     title: "Sortierung",
     active: filters.sort !== 'name-az',
     onReset: () => set('sort', 'name-az'),
@@ -1789,7 +1819,8 @@ function ResourceTab({
     fundort: [],
     kategorie: [],
     seltenheit: [],
-    sort: 'name-az'
+    sort: 'name-az',
+    sichtbarkeit: ''
   });
   const [filterOpen, setFilterOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -1804,7 +1835,7 @@ function ResourceTab({
     baseData.forEach(d => s.add(d.kategorie));
     return [...s].sort();
   }, [baseData]);
-  const hasActiveFilters = filters.search || filters.fundort.length || filters.kategorie.length || filters.seltenheit.length || filters.sort !== 'name-az';
+  const hasActiveFilters = filters.search || filters.fundort.length || filters.kategorie.length || filters.seltenheit.length || filters.sort !== 'name-az' || (isDM && filters.sichtbarkeit);
   const filtered = useMemo(() => {
     let r = baseData;
     if (filters.search) {
@@ -1814,6 +1845,8 @@ function ResourceTab({
     if (filters.fundort.length) r = r.filter(d => (d.fundort || []).some(f => filters.fundort.includes(f)));
     if (filters.kategorie.length) r = r.filter(d => filters.kategorie.includes(d.kategorie));
     if (filters.seltenheit.length) r = r.filter(d => filters.seltenheit.includes(resRarity(d).label));
+    if (isDM && filters.sichtbarkeit === 'sichtbar')  r = r.filter(d => vis.has(d.id));
+    if (isDM && filters.sichtbarkeit === 'verborgen') r = r.filter(d => !vis.has(d.id));
     r = [...r];
     switch (filters.sort) {
       case 'name-az':
@@ -1856,7 +1889,9 @@ function ResourceTab({
     onClose: () => setFilterOpen(false),
     allFundorte: allFundorte,
     allKategorien: allKategorien,
-    searchPlaceholder: searchPlaceholder
+    searchPlaceholder: searchPlaceholder,
+    isDM: isDM,
+    vis: vis
   }), /*#__PURE__*/React.createElement("main", {
     className: "res-main"
   }, /*#__PURE__*/React.createElement("button", {
@@ -1994,10 +2029,11 @@ function FishTab({
     stärke: [],
     seltenheit: [],
     wassersort: '',
-    sort: 'name-az'
+    sort: 'name-az',
+    sichtbarkeit: ''
   });
   const [filterOpen, setFilterOpen] = useState(false);
-  const hasActiveFilters = filters.search || filters.größe.length || filters.klima.length || filters.stärke.length || filters.seltenheit.length || filters.wassersort || filters.sort !== 'name-az';
+  const hasActiveFilters = filters.search || filters.größe.length || filters.klima.length || filters.stärke.length || filters.seltenheit.length || filters.wassersort || filters.sort !== 'name-az' || (isDM && filters.sichtbarkeit);
   const filtered = useMemo(() => {
     let r = isDM ? ALL_FISH : ALL_FISH.filter(f => vis.has(f.id));
     if (filters.search) {
@@ -2012,6 +2048,8 @@ function FishTab({
     }));
     if (filters.seltenheit.length) r = r.filter(f => filters.seltenheit.includes(fishRarity(f).label));
     if (filters.wassersort) r = r.filter(f => f.wassersort === filters.wassersort);
+    if (isDM && filters.sichtbarkeit === 'sichtbar')  r = r.filter(f => vis.has(f.id));
+    if (isDM && filters.sichtbarkeit === 'verborgen') r = r.filter(f => !vis.has(f.id));
     r = [...r];
     switch (filters.sort) {
       case 'name-az':
@@ -2073,7 +2111,9 @@ function FishTab({
     total: totalForCount,
     filtered: filtered.length,
     isOpen: filterOpen,
-    onClose: () => setFilterOpen(false)
+    onClose: () => setFilterOpen(false),
+    isDM: isDM,
+    vis: vis
   }), /*#__PURE__*/React.createElement("main", {
     className: "res-main"
   }, /*#__PURE__*/React.createElement("button", {
@@ -2164,47 +2204,33 @@ function App() {
   });
   useEffect(() => {
     async function loadVis() {
-      const {
-        data
-      } = await window._sb.from('ressourcen_sichtbar').select('cat, resource_id');
+      const { data } = await window._sb.from('kollektikon_counts').select('cat, resource_id, menge, reveal_mode');
       if (data) {
-        const v = {
-          fische: new Set(),
-          pflanzen: new Set(),
-          mineralien: new Set(),
-          insekten: new Set()
-        };
+        const v = { fische: new Set(), pflanzen: new Set(), mineralien: new Set(), insekten: new Set() };
         data.forEach(row => {
-          if (v[row.cat] !== undefined) v[row.cat].add(row.resource_id);
+          if (v[row.cat] !== undefined && (row.reveal_mode !== null || row.menge > 0))
+            v[row.cat].add(parseInt(row.resource_id, 10));
         });
         setVis(v);
       }
     }
     loadVis();
-    const channel = window._sb.channel('res-sichtbar-live').on('postgres_changes', {
+    const channel = window._sb.channel('res-kol-counts-live').on('postgres_changes', {
       event: '*',
       schema: 'public',
-      table: 'ressourcen_sichtbar'
+      table: 'kollektikon_counts'
     }, payload => {
       setVis(prev => {
-        const v = {
-          fische: new Set(prev.fische),
-          pflanzen: new Set(prev.pflanzen),
-          mineralien: new Set(prev.mineralien),
-          insekten: new Set(prev.insekten)
-        };
-        if (payload.eventType === 'INSERT') {
-          const {
-            cat,
-            resource_id
-          } = payload.new;
-          if (v[cat] !== undefined) v[cat].add(resource_id);
-        } else if (payload.eventType === 'DELETE') {
-          const {
-            cat,
-            resource_id
-          } = payload.old;
-          if (v[cat] !== undefined) v[cat].delete(resource_id);
+        const v = { fische: new Set(prev.fische), pflanzen: new Set(prev.pflanzen), mineralien: new Set(prev.mineralien), insekten: new Set(prev.insekten) };
+        if (payload.eventType === 'DELETE') {
+          const { cat, resource_id } = payload.old;
+          if (v[cat] !== undefined) v[cat].delete(parseInt(resource_id, 10));
+        } else {
+          const { cat, resource_id, menge, reveal_mode } = payload.new;
+          if (v[cat] !== undefined) {
+            if (reveal_mode !== null || menge > 0) v[cat].add(parseInt(resource_id, 10));
+            else v[cat].delete(parseInt(resource_id, 10));
+          }
         }
         return v;
       });
@@ -2215,29 +2241,16 @@ function App() {
     const isVis = vis[cat].has(id);
     setVis(prev => {
       const s = new Set(prev[cat]);
-      if (isVis) s.delete(id);else s.add(id);
-      return {
-        ...prev,
-        [cat]: s
-      };
+      if (isVis) s.delete(id); else s.add(id);
+      return { ...prev, [cat]: s };
     });
     try {
-      if (isVis) {
-        await window._sb.from('ressourcen_sichtbar').delete().eq('cat', cat).eq('resource_id', id);
-      } else {
-        await window._sb.from('ressourcen_sichtbar').insert({
-          cat,
-          resource_id: id
-        });
-      }
+      await window._sb.rpc('set_resource_visible', { p_cat: cat, p_resource_id: String(id), p_visible: !isVis });
     } catch {
       setVis(prev => {
         const s = new Set(prev[cat]);
-        if (isVis) s.add(id);else s.delete(id);
-        return {
-          ...prev,
-          [cat]: s
-        };
+        if (isVis) s.add(id); else s.delete(id);
+        return { ...prev, [cat]: s };
       });
     }
   }

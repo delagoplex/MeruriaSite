@@ -2,6 +2,8 @@
 <html lang="de"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/images/favicon/favicon-m.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/images/favicon/favicon-m-180.png">
 <title>Meruria — Welt-Enzyklopädie</title>
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
@@ -56,9 +58,9 @@ function hexPoints(s) {
 }
 
 // ── ENZYKLOPÄDIE EINTRÄGE ────────────────────────────────
-// Reihenfolge im Astrolabium (1→8 von oben zickzack nach unten):
-// 1 Völker (oben) · 2 Orte (NW) · 3 Ressourcen (NE) · 4 Organisationen (W) ·
-// 5 Gottheiten (E) · 6 Religionen (SW) · 7 Monster (SE) · 8 Galerie (unten)
+// Reihenfolge im Astrolabium (1→6 von oben zickzack nach unten):
+// 1 Völker (oben) · 2 Orte (NW) · 3 Organisationen (NE) ·
+// 4 Gottheiten (SW) · 5 Religionen (SE) · 6 Galerie (unten)
 const ENTRIES = [{
   glyph: '☥',
   kuerzel: 'VLK',
@@ -90,22 +92,6 @@ const ENTRIES = [{
   accent: '#d4b15a',
   bgStart: '#101205',
   href: '#',
-  locked: false
-}, {
-  glyph: '◈',
-  kuerzel: 'RES',
-  name: 'Ressourcen',
-  subtitle: 'Rohstoffe, Materialien & Handelsgüter',
-  beschreibung: 'Was Meruria hergibt: Erze, Hölzer, Kräuter, Reagenzien, fremdartige Substanzen aus der Wrack-Bergung. Erscheinungsort, Eigenschaften, Verarbeitungswege und Marktwert.',
-  meta: {
-    kuerzel: 'XX',
-    label: 'Einträge',
-    wert: '— offen',
-    note: 'Quellensucher und Outfitters speisen das Register mit Funden und Materialproben.'
-  },
-  accent: '#d4801a',
-  bgStart: '#110a02',
-  href: 'Ressourcen.html',
   locked: false
 }, {
   glyph: '⊛',
@@ -155,22 +141,6 @@ const ENTRIES = [{
   bgStart: '#100509',
   href: '#',
   locked: false
-}, {
-  glyph: '⌬',
-  kuerzel: 'MON',
-  name: 'Monster',
-  subtitle: 'Bestiarium der Wildnis',
-  beschreibung: 'Was jenseits der Stadtmauern lauert. Anatomie, Verhalten, Reviergrenzen, Schwächen — und Berichte derer, die einer Begegnung entkommen sind. Zugang nur für autorisierte Spielleiter.',
-  meta: {
-    kuerzel: '🔒',
-    label: 'Zugriff',
-    wert: 'gesperrt',
-    note: 'Inhalte enthalten Spielleiter-Material. Schalte das Bestiarium über deinen Kampagnenleiter frei.'
-  },
-  accent: '#c44a4a',
-  bgStart: '#100303',
-  href: 'Monster.html',
-  locked: true
 }, {
   glyph: '▣',
   kuerzel: 'GAL',
@@ -414,9 +384,9 @@ const ASTRO = {
   plate: 320
 };
 
-// Reading-order angle mapping for indexes 0..7 (matches the screenshot order):
-//  0 oben · 1 NW · 2 NE · 3 W · 4 E · 5 SW · 6 SE · 7 unten
-const ENTRY_ANGLES = [-90, -135, -45, 180, 0, 135, 45, 90];
+// Reading-order angle mapping for indexes 0..5 (Hexagon, Zickzack von oben):
+//  0 oben · 1 NW · 2 NE · 3 SW · 4 SE · 5 unten
+const ENTRY_ANGLES = [-90, -150, -30, 150, 30, 90];
 function entryPosition(i) {
   const angle = ENTRY_ANGLES[i] ?? -90;
   const rad = angle * Math.PI / 180;
@@ -645,7 +615,7 @@ function CenterPlate({
       textWrap: 'pretty',
       maxWidth: '220px'
     }
-  }, "Acht Register \xFCber alles, was Meruria ausmacht. Ber\xFChre eine Kammer, um ihren Inhalt zu lesen."), /*#__PURE__*/React.createElement("div", {
+  }, "Sechs Register \xFCber alles, was Meruria ausmacht. Ber\xFChre eine Kammer, um ihren Inhalt zu lesen."), /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: '18px',
       fontFamily: 'var(--font-mono)',

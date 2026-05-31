@@ -111,22 +111,39 @@ function mapNscRow(row) {
 }
 
 // Loads NSCs and player-character perspectives from Supabase.
-// Returns { nscs, perspectives, charPids, loading }.
+// Returns { nscs, perspectives, charPids, players, loading }.
 function useNSCData() {
   const [nscs, setNscs] = useState([]);
   const [perspectives, setPerspectives] = useState([]);
+  const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function load() {
       const sb = window._sb;
-      const [{ data: nscRows }, { data: charRows }] = await Promise.all([
+      const [{ data: nscRows }, { data: charRows }, { data: profileRows }] = await Promise.all([
         sb.from('nscs').select('*').order('name'),
-        sb.from('characters').select('id,name').eq('type','spieler').order('name'),
+        sb.from('characters').select('id,name,owner_id').eq('type','spieler').order('name'),
+        sb.from('profiles').select('id,display_name'),
       ]);
       setNscs((nscRows || []).map(mapNscRow));
-      const charPersp = (charRows || []).map(c => ({ id: c.id, label: `Als ${c.name}` }));
-      setPerspectives([{ id:'alle', label:'Als Spieler · alle Charaktere' }, ...charPersp]);
+
+      const profileMap = new Map((profileRows || []).map(p => [p.id, p.display_name || 'Unbekannt']));
+      const charPersp = (charRows || []).map(c => ({
+        id: c.id, label: c.name, owner_id: c.owner_id,
+        owner_name: profileMap.get(c.owner_id) || 'Unbekannt',
+      }));
+
+      // Group characters by player
+      const playerMap = new Map();
+      for (const c of charPersp) {
+        if (!playerMap.has(c.owner_id)) {
+          playerMap.set(c.owner_id, { id: `player:${c.owner_id}`, label: profileMap.get(c.owner_id) || 'Unbekannt', charIds: [] });
+        }
+        playerMap.get(c.owner_id).charIds.push(c.id);
+      }
+      setPlayers(Array.from(playerMap.values()));
+      setPerspectives([{ id:'alle', label:'Alle' }, ...charPersp]);
       setLoading(false);
     }
     load();
@@ -134,14 +151,14 @@ function useNSCData() {
 
   const charPids = perspectives.filter(p => p.id !== 'alle').map(p => p.id);
   const updateNsc = (updated) => setNscs(prev => prev.map(n => n.id === updated.id ? updated : n));
-  return { nscs, perspectives, charPids, loading, updateNsc };
+  return { nscs, perspectives, charPids, players, loading, updateNsc };
 }
 
 // Hook für DM-Unlocks mit Supabase-Persistenz.
 // Verwaltet pro Spielercharakter-ID (UUID) eine eigene Faktenmenge.
 //   activePerspective = 'alle'  → Vereinigung über alle Charaktere
 //   activePerspective = '<uuid>'  → nur Fakten dieses Charakters
-function useUnlocks(nscs, charPids, activePerspective='alle') {
+function useUnlocks(nscs, charPids, activePerspective='alle', players=[]) {
   const [byPersp, setByPersp] = useState({});
   const initRef = useRef(false);
 
@@ -177,24 +194,33 @@ function useUnlocks(nscs, charPids, activePerspective='alle') {
 
   const charSets = (nscId) => charPids.map(pid => byPersp[pid]?.[nscId] || new Set());
 
+  const targetPids = (persp) => {
+    if (persp === 'alle') return charPids;
+    if (persp && persp.startsWith('player:')) {
+      const ownerId = persp.slice(7);
+      return players.find(p => p.id === persp)?.charIds || charPids.filter(pid => {
+        // fallback: check byPersp keys
+        return true;
+      });
+    }
+    return [persp];
+  };
   const isUnlocked = (nscId, key) => {
-    if (activePerspective === 'alle') return charSets(nscId).some(s => s.has(key));
-    return byPersp[activePerspective]?.[nscId]?.has(key) ?? false;
+    const pids = targetPids(activePerspective);
+    return pids.some(pid => byPersp[pid]?.[nscId]?.has(key));
   };
   const unlockedFor = (nsc) => {
-    if (activePerspective === 'alle') {
-      const merged = new Set();
-      for (const s of charSets(nsc.id)) for (const k of s) merged.add(k);
-      return merged;
-    }
-    return byPersp[activePerspective]?.[nsc.id] || new Set();
+    const pids = targetPids(activePerspective);
+    const merged = new Set();
+    for (const pid of pids) for (const k of (byPersp[pid]?.[nsc.id] || new Set())) merged.add(k);
+    return merged;
   };
   const stageFor = (nsc) => stageFromUnlocked(nsc, unlockedFor(nsc));
 
   const toggleUnlock = (nscId, key) => {
     setByPersp(prev => {
       const next = { ...prev };
-      const targets = activePerspective === 'alle' ? charPids : [activePerspective];
+      const targets = targetPids(activePerspective);
       let shouldUnlock;
       if (activePerspective === 'alle') {
         shouldUnlock = !charSets(nscId).some(s => s.has(key));

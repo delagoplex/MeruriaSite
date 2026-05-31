@@ -2,6 +2,8 @@
 <html lang="de"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/images/favicon/favicon-m.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/images/favicon/favicon-m-180.png">
 <title>Meruria</title>
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
@@ -16,6 +18,8 @@
 <script src="assets/components/tweaks-panel-13.jsx" type="text/babel"></script>
 <script src="assets/components/footer.jsx" type="text/babel"></script>
 <script src="assets/scripts/vendor/image-slot.js"></script>
+<script src="assets/components/kollektikon-bar.js"></script>
+<script src="assets/scripts/data/galerie-data.js"></script>
 
 </head>
 <body>
@@ -52,26 +56,30 @@ const NAV_TABS = [
 
 // ── Portal cards (6 player-facing overview pages) ──
 const PORTALS = [
-  { id:'spielerhandbuch', n:'I', label:'Spielerhandbuch', hue:250,
+  { id:'spielerhandbuch',   href:'Spielerhandbuch.html',   n:'I',   label:'Spielerhandbuch',   hue:250,
     tag:'Regeln & Welt-Verständnis',
     blurb:'Wie die Welt funktioniert — Realismus, Handwerk, Schutzherren, Gesinnungen und Regierungsformen.',
     peek:['Realismus','Sammeln & Handwerk','Schutzherren','Gesinnungen','Regierungsformen'] },
-  { id:'charaktererstellung', n:'II', label:'Charaktererstellung', hue:235,
+  { id:'charaktererstellung', href:'Charaktererstellung.html', n:'II',  label:'Charaktererstellung', hue:235,
     tag:'Werde wer du sein willst',
     blurb:'Rassen, Klassen, Talente, Hintergründe, Zauber und Ausrüstung — alles für deinen neuen Charakter.',
     peek:['Neuer Charakter','Rassen','Klassen','Talente','Hintergründe','Zauber','Ausrüstung'] },
-  { id:'enzyklopaedie', n:'III', label:'Enzyklopädie', hue:215,
+  { id:'enzyklopaedie',    href:'Enzyklopädie.html',        n:'III', label:'Enzyklopädie',        hue:215,
     tag:'Die Welt im Detail',
     blurb:'Völker, Orte, Götter, Religionen, Organisationen — alles, was in Meruria existiert.',
     peek:['Völker','Orte','Ressourcen','Organisationen','Gottheiten','Religionen','Monster','Galerie'] },
-  { id:'divisionen', n:'IV', label:'Divisionen', hue:290,
+  { id:'divisionen',       href:'Divisionen.html',           n:'IV',  label:'Divisionen',           hue:290,
     tag:'Acht Wege, das Schicksal zu formen',
     blurb:'Die acht Divisionen sind das Rückgrat der Welt. Kuratoren, Sturmritter, Sentinels und mehr.',
     peek:['I — Kuratoren','II — Sturmritter','III — Sentinels','IV — Friedenshüter','V — Outfitters','VI — Pathfinders','VII — Quellensucher','VIII — Bergungsgarde'] },
-  { id:'charaktere', n:'V', label:'Charaktere', hue:30,
+  { id:'charaktere',       href:'Charaktere.html',           n:'V',   label:'Charaktere',           hue:30,
     tag:'Helden, Schurken, Verbündete',
     blurb:'Die Steckbriefe aller Charaktere — Spielercharaktere, NSCs und alles dazwischen.',
     peek:['Spielercharaktere','Verbündete','Antagonisten','Begegnete Seelen'] },
+  { id:'tools',            href:'Kollektikon.html',           n:'VI',  label:'Tools',                hue:175,
+    tag:'Werkzeuge für die Expedition',
+    blurb:'Kollektikon, Karte, Kalender, Missionsterminal, Rezepte und Steckbrief — alles auf einen Blick.',
+    peek:['Kollektikon','Karte','Kalender','Missionsterminal','Rezepte','Steckbrief'] },
 ];
 
 // ── Carousel placeholder images (drop-in art targets) ──
@@ -199,7 +207,7 @@ function PortalCard({ p, index }) {
   return (
     <a
       ref={ref}
-      href="#"
+      href={p.href || '#'}
       className="reveal"
       style={{ transitionDelay:`${index*70}ms`, textDecoration:'none', color:'inherit' }}
       onMouseEnter={() => setHover(true)}
@@ -333,75 +341,98 @@ Object.assign(window, { PortalCard });
 <script type="text/babel">
 const { useState:uS4, useEffect:uE4, useRef:uR4 } = React;
 
-const CP_W=152, CP_H=200;
-const CL_W=280, CL_H=200;
-const CGAP=14;
-const BASE_SPD=0.030, CFRIC=0.9984;
-
-function imgDims(img){ return img.w==='l' ? {w:CL_W,h:CL_H} : {w:CP_W,h:CP_H}; }
+const CP_W=152, CP_H=196;
+const CL_W=272, CL_H=196;
+const CS_W=CP_H;
+const CGAP=28;
+const BASE_SPD=0.036, CFRIC=0.9984;
 
 function Carousel({ images }) {
-  const trackRef = uR4(null);
-  const phys     = uR4({ offset:0, vel:0, drag:false, lx:0, lt:0 }).current;
-  const [hov, setHov] = uS4(null);
-
+  const trackRef   = uR4(null);
+  const phys       = uR4({ offset:0, vel:0, drag:false, lx:0, lt:0 }).current;
+  const [hovIdx, setHovIdx] = uS4(null);
+  const aspectsRef = uR4({});
+  const singleWRef = uR4(0);
+  const [, setAspectVer] = uS4(0);
   const n = images.length;
-  const singleW = images.reduce((s,im) => s + imgDims(im).w + CGAP, 0);
+
+  function imgDims(img) {
+    const fmt = aspectsRef.current[img.id] || (img.landscape ? 'landscape' : 'portrait');
+    if (fmt === 'square')    return { w:CS_W, h:CP_H };
+    if (fmt === 'landscape') return { w:CL_W, h:CL_H };
+    return { w:CP_W, h:CP_H };
+  }
+
+  function handleAspect(id, e) {
+    const el = e.currentTarget;
+    if (!el.naturalWidth) return;
+    const fmt = el.naturalWidth === el.naturalHeight ? 'square'
+              : el.naturalWidth > el.naturalHeight   ? 'landscape' : 'portrait';
+    if (aspectsRef.current[id] !== fmt) {
+      aspectsRef.current[id] = fmt;
+      setAspectVer(v => v + 1);
+    }
+  }
+
+  const singleW = images.reduce((s, img) => s + imgDims(img).w + CGAP, 0);
+  singleWRef.current = singleW;
   const tripled = [...images, ...images, ...images];
 
   uE4(() => {
-    phys.offset = singleW;
+    phys.offset = singleWRef.current;
     let raf, last = performance.now();
-    const tick = (now) => {
+    function tick(now) {
       const dt = Math.min(now - last, 50); last = now;
+      const sw = singleWRef.current;
       if (!phys.drag) {
         if (Math.abs(phys.vel) > 0.002) phys.vel *= Math.pow(CFRIC, dt); else phys.vel = 0;
         phys.offset += (BASE_SPD + phys.vel) * dt;
-        while (phys.offset >= singleW*2) phys.offset -= singleW;
-        while (phys.offset <  singleW)   phys.offset += singleW;
+        while (phys.offset >= sw * 2) phys.offset -= sw;
+        while (phys.offset < sw)     phys.offset += sw;
         if (trackRef.current) trackRef.current.style.transform = `translateX(${-phys.offset}px)`;
       }
       raf = requestAnimationFrame(tick);
-    };
+    }
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [singleW]);
+  }, []);
 
   uE4(() => {
-    const onMove = (e) => {
+    function onMove(e) {
       if (!phys.drag) return;
       const now = performance.now(), dx = e.clientX - phys.lx, dt = now - phys.lt;
       if (dt > 0) phys.vel = -dx / dt;
       phys.offset -= dx;
-      while (phys.offset >= singleW*2) phys.offset -= singleW;
-      while (phys.offset <  singleW)   phys.offset += singleW;
+      const sw = singleWRef.current;
+      while (phys.offset >= sw * 2) phys.offset -= sw;
+      while (phys.offset < sw)     phys.offset += sw;
       if (trackRef.current) trackRef.current.style.transform = `translateX(${-phys.offset}px)`;
       phys.lx = e.clientX; phys.lt = now;
-    };
-    const onUp = () => { phys.drag = false; document.body.style.cursor=''; };
+    }
+    function onUp() { phys.drag = false; }
     window.addEventListener('mousemove', onMove);
     window.addEventListener('mouseup',   onUp);
     return () => { window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp); };
-  }, [singleW]);
+  }, []);
 
-  function onDown(e){ e.preventDefault(); phys.drag=true; phys.lx=e.clientX; phys.lt=performance.now(); phys.vel=0; document.body.style.cursor='grabbing'; }
+  function onDown(e) { e.preventDefault(); phys.drag=true; phys.lx=e.clientX; phys.lt=performance.now(); phys.vel=0; }
 
-  function tileStyle(ii) {
-    const isHov = hov === ii;
-    const {w,h} = imgDims(images[ii]);
+  function iStyle(ii) {
+    const hov = hovIdx === ii;
+    const { w, h } = imgDims(images[ii]);
     let tx = 0;
-    if (hov !== null && !isHov) {
-      let d = ii - hov; if (d > n/2) d -= n; if (d < -n/2) d += n;
+    if (hovIdx !== null && !hov) {
+      let d = ii - hovIdx; if (d > n/2) d -= n; if (d < -n/2) d += n;
       if (Math.abs(d) <= 3) tx = (d > 0 ? 1 : -1) * 28 / Math.abs(d);
     }
     return {
-      width:w, height:h, flexShrink:0, position:'relative', overflow:'hidden',
-      borderRadius:3, alignSelf:'flex-end', cursor:'pointer',
-      transform: isHov ? 'scale(1.16) translateY(-10px)' : (tx ? `translateX(${tx}px)` : 'none'),
-      boxShadow: isHov ? '0 0 26px rgba(124,77,255,0.85), 0 0 56px rgba(124,77,255,0.3)' : 'none',
-      border: isHov ? '1.5px solid rgba(124,77,255,0.85)' : '1.5px solid rgba(124,77,255,0.12)',
-      zIndex: isHov ? 20 : 1,
-      transition:'transform 0.22s ease, box-shadow 0.2s ease, border-color 0.2s ease',
+      width:w, height:h, flexShrink:0, borderRadius:4, overflow:'hidden', position:'relative', cursor:'pointer',
+      alignSelf:'flex-end',
+      transform: hov ? 'scale(1.18) translateY(-12px)' : (tx ? `translateX(${tx}px)` : undefined),
+      boxShadow: hov ? '0 0 26px rgba(124,77,255,0.88),0 0 52px rgba(124,77,255,0.28)' : 'none',
+      border: hov ? '1.5px solid rgba(124,77,255,0.88)' : '1.5px solid rgba(124,77,255,0.12)',
+      zIndex: hov ? 20 : 1,
+      transition:'transform 0.22s ease,box-shadow 0.2s ease,border-color 0.2s ease',
     };
   }
 
@@ -412,31 +443,32 @@ function Carousel({ images }) {
           const ii = gi % n;
           const im = images[ii];
           return (
-            <div key={gi} style={tileStyle(ii)} onMouseEnter={() => setHov(ii)} onMouseLeave={() => setHov(null)}>
-              <div style={{
-                width:'100%', height:'100%', position:'relative',
-                display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:6,
-                background: `repeating-linear-gradient(-45deg, transparent, transparent 8px, oklch(0.65 0.18 ${im.hue} / 0.13) 8px, oklch(0.65 0.18 ${im.hue} / 0.13) 9px), linear-gradient(160deg, rgba(28,16,62,0.97) 0%, rgba(14,9,36,0.98) 100%)`,
-              }}>
-                <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse at 50% 45%, oklch(0.65 0.18 ${im.hue} / 0.22) 0%, transparent 60%)` }}/>
-                <svg viewBox="0 0 40 30" width={im.w==='l'?22:18} height={im.w==='l'?16:13} fill="none" style={{opacity:0.5,zIndex:1}}>
-                  <rect x="1" y="1" width="38" height="28" rx="2" stroke={`oklch(0.65 0.18 ${im.hue})`} strokeWidth="1.3"/>
-                  <circle cx="12" cy="11" r="4" stroke={`oklch(0.65 0.18 ${im.hue})`} strokeWidth="1" opacity="0.8"/>
-                  <path d="M1 22 L10 15 L18 20 L26 13 L39 22" stroke={`oklch(0.65 0.18 ${im.hue})`} strokeWidth="1.1" opacity="0.8"/>
-                </svg>
-                <span style={{fontFamily:'var(--font-mono)',fontSize:7,letterSpacing:'0.18em',color:`oklch(0.65 0.18 ${im.hue} / 0.55)`,textTransform:'uppercase',zIndex:1,textAlign:'center',padding:'0 6px',lineHeight:1.3}}>
-                  artwork
-                </span>
-              </div>
-              <div style={{position:'absolute',bottom:0,left:0,right:0,padding:'5px 8px',background:'rgba(5,4,15,0.85)',borderTop:'1px solid rgba(124,77,255,0.13)'}}>
-                <div style={{fontFamily:'var(--font-mono)',fontSize:9,color:'rgba(240,238,255,0.65)',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{im.title}</div>
+            <div key={gi} style={iStyle(ii)} onMouseEnter={() => setHovIdx(ii)} onMouseLeave={() => setHovIdx(null)}>
+              {im.img ? (
+                <img src={im.img} alt={im.title} onLoad={e => handleAspect(im.id, e)}
+                  style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }}/>
+              ) : (
+                <div style={{ width:'100%', height:'100%', position:'relative', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:6,
+                  background:`repeating-linear-gradient(-45deg,transparent,transparent 8px,oklch(0.65 0.18 ${im.hue||270} / 0.13) 8px,oklch(0.65 0.18 ${im.hue||270} / 0.13) 9px),linear-gradient(160deg,rgba(28,16,62,0.97) 0%,rgba(14,9,36,0.98) 100%)`,
+                }}>
+                  <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse at 50% 45%,oklch(0.65 0.18 ${im.hue||270} / 0.2) 0%,transparent 60%)` }}/>
+                  <svg viewBox="0 0 40 30" width={im.landscape?22:18} height={im.landscape?16:13} fill="none" style={{ opacity:0.55, zIndex:1, flexShrink:0 }}>
+                    <rect x="1" y="1" width="38" height="28" rx="2" stroke={`oklch(0.65 0.18 ${im.hue||270})`} strokeWidth="1.3"/>
+                    <circle cx="12" cy="11" r="4" stroke={`oklch(0.65 0.18 ${im.hue||270})`} strokeWidth="1" opacity="0.8"/>
+                    <path d="M1 22 L10 15 L18 20 L26 13 L39 22" stroke={`oklch(0.65 0.18 ${im.hue||270})`} strokeWidth="1.1" opacity="0.8"/>
+                  </svg>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:7, letterSpacing:'0.18em', color:`oklch(0.65 0.18 ${im.hue||270} / 0.52)`, textTransform:'uppercase', zIndex:1, textAlign:'center', padding:'0 6px', lineHeight:1.3 }}>artwork</span>
+                </div>
+              )}
+              <div style={{ position:'absolute', bottom:0, left:0, right:0, padding:'5px 7px', background:'rgba(5,4,15,0.83)', borderTop:'1px solid rgba(124,77,255,0.12)' }}>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(240,238,255,0.6)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{im.title}</div>
               </div>
             </div>
           );
         })}
       </div>
-      <div style={{position:'absolute',top:0,left:0,bottom:0,width:120,background:'linear-gradient(to right,#05040f 30%,transparent)',pointerEvents:'none',zIndex:10}}/>
-      <div style={{position:'absolute',top:0,right:0,bottom:0,width:120,background:'linear-gradient(to left,#05040f 30%,transparent)',pointerEvents:'none',zIndex:10}}/>
+      <div style={{ position:'absolute', top:0, left:0, bottom:0, width:100, background:'linear-gradient(to right,#05040f 40%,transparent)', pointerEvents:'none', zIndex:10 }}/>
+      <div style={{ position:'absolute', top:0, right:0, bottom:0, width:100, background:'linear-gradient(to left,#05040f 40%,transparent)', pointerEvents:'none', zIndex:10 }}/>
     </div>
   );
 }
@@ -749,140 +781,6 @@ const MT_KAT = {
   Jagd:      { color: '#ff8db5', glyph: '✦', label: 'JAGD' },
 };
 
-const MT_QUESTS = [
-  {
-    id: 'q01', name: 'Verlorene Schriftrollen', kategorie: 'Suche', sw: 1, lv: 4,
-    auftraggeber: 'Die Kuratoren', region: 'Nebelwald, Sektor III',
-    desc: 'Im Schatten der alten Tempelruinen wurden Schriftrollen aus der Vor-Wundenzeit gesichtet. Wir vermuten, sie tragen Aufzeichnungen über Aetherius. Bringt sie ungelesen zurück ins Archiv.',
-    anweisungen: [
-      { txt: 'Sammle 4 Vergessene Schriftrollen im Nebelwald.', n:0, max:4 },
-      { txt: 'Übergib die Funde an Archivar Velian.', n:0, max:1 },
-    ],
-    rewards: { xp: 120, schillinge: 240, item: 'Stoffrobe der Akolythen' },
-    status: 'neu',
-  },
-  {
-    id: 'q02', name: 'Stimme aus dem Nebel', kategorie: 'Gespraech', sw: 1, lv: 3,
-    auftraggeber: 'Die Kuratoren', region: 'Sigilstein-Plateau',
-    desc: 'Ein Eremit am alten Sigilstein soll Visionen empfangen. Hört seinen Worten zu und kehrt mit allem zurück, was er offenbart — auch wenn es Unsinn klingt.',
-    anweisungen: [
-      { txt: 'Erreiche den Sigilstein bei Mondaufgang.', n:0, max:1 },
-      { txt: 'Sprich mit dem Eremiten Orenn.', n:0, max:1 },
-    ],
-    rewards: { xp: 80, schillinge: 160, item: null },
-    status: '',
-  },
-  {
-    id: 'q03', name: 'Schattenkatze von Tarnheim', kategorie: 'Jagd', sw: 2, lv: 6,
-    auftraggeber: 'Die Sentinels', region: 'Tarnheim — Westviertel',
-    desc: 'Eine Bestie schleicht durch die Gassen von Tarnheim. Drei Bürger sind bereits verschwunden. Stellt sie, bevor die nächste Mondnacht beginnt.',
-    anweisungen: [
-      { txt: 'Folge der Blutspur ab dem Westtor.', n:0, max:1 },
-      { txt: 'Erlege die Schattenkatze.', n:0, max:1 },
-    ],
-    rewards: { xp: 280, schillinge: 520, item: 'Klaue der Schattenkatze' },
-    status: 'empfohlen',
-  },
-  {
-    id: 'q04', name: 'Quellfeuer-Probe', kategorie: 'Suche', sw: 2, lv: 5,
-    auftraggeber: 'Die Quellensucher', region: 'Quellgrund-Höhlen',
-    desc: 'Wir benötigen drei Phiolen Quellfeuer aus den unteren Höhlen. Vorsicht — die Flamme reagiert auf Eisen.',
-    anweisungen: [
-      { txt: 'Sammle 3 Phiolen Quellfeuer.', n:1, max:3 },
-      { txt: 'Bringe sie zur Sammelstelle.', n:0, max:1 },
-    ],
-    rewards: { xp: 220, schillinge: 380, item: 'Phiole „Restglut"' },
-    status: '',
-  },
-  {
-    id: 'q05', name: 'Mondsteinpilger', kategorie: 'Gespraech', sw: 1, lv: 3,
-    auftraggeber: 'Die Friedenshüter', region: 'Straße nach Selunara',
-    desc: 'Eine Pilgerin trägt einen Mondstein zum Tempel von Selunara. Begleitet sie sicher — Strauchdiebe haben die Straße ins Visier genommen.',
-    anweisungen: [
-      { txt: 'Treffe Pilgerin Halia am Westtor.', n:0, max:1 },
-      { txt: 'Geleite sie zum Tempel.', n:0, max:1 },
-    ],
-    rewards: { xp: 100, schillinge: 200, item: null },
-    status: '',
-  },
-  {
-    id: 'q06', name: 'Sirenenruf am Hadir', kategorie: 'Jagd', sw: 3, lv: 9,
-    auftraggeber: 'Die Sentinels', region: 'Hadir-Fluss, Unterlauf',
-    desc: 'Die Sirenen kehren zurück. Schiffer berichten von singenden Stimmen unter der Strömung. Stellt sie — aber hört nicht hin.',
-    anweisungen: [
-      { txt: 'Erreiche den Unterlauf bei Dämmerung.', n:0, max:1 },
-      { txt: 'Stelle 2 Sirenen.', n:0, max:2 },
-    ],
-    rewards: { xp: 540, schillinge: 980, item: 'Wachs-Ohrstöpsel (versiegelt)' },
-    status: '',
-  },
-  {
-    id: 'q07', name: 'Erkundung Sektor-VII', kategorie: 'Suche', sw: 1, lv: 4,
-    auftraggeber: 'Die Pathfinders', region: 'Verbotenes Gebiet VII',
-    desc: 'Sektor-VII wurde seit drei Zyklen nicht mehr kartiert. Geht hinein, zeichnet die Wege, und bringt eure Karten zurück.',
-    anweisungen: [
-      { txt: 'Erkunde 3 markierte Wegpunkte.', n:0, max:3 },
-      { txt: 'Liefere die Kartenfragmente ab.', n:0, max:1 },
-    ],
-    rewards: { xp: 160, schillinge: 280, item: 'Kartographenwerkzeuge' },
-    status: '',
-  },
-  {
-    id: 'q08', name: 'Sturmwacht', kategorie: 'Jagd', sw: 1, lv: 4,
-    auftraggeber: 'Die Sturmritter', region: 'Außenposten Greifenklau',
-    desc: 'Hetzer aus den Wildlanden bedrängen unsere Außenposten. Verteidigt Greifenklau, bis die Verstärkung eintrifft.',
-    anweisungen: [
-      { txt: 'Erreiche Greifenklau vor Einbruch der Nacht.', n:0, max:1 },
-      { txt: 'Schlage 6 Hetzer zurück.', n:0, max:6 },
-    ],
-    rewards: { xp: 180, schillinge: 320, item: 'Sturmrittabzeichen' },
-    status: '',
-  },
-  {
-    id: 'q09', name: 'Pfad der Verlorenen', kategorie: 'Suche', sw: 1, lv: 3,
-    auftraggeber: 'Die Friedenshüter', region: 'Steinkreis von Othrim',
-    desc: 'Drei Wanderer kehrten nicht heim. Ihre letzte Spur führt zum Steinkreis. Folgt ihr.',
-    anweisungen: [
-      { txt: 'Folge der Spur zum Steinkreis.', n:0, max:1 },
-      { txt: 'Bringe Hinweise zurück.', n:0, max:1 },
-    ],
-    rewards: { xp: 90, schillinge: 180, item: null },
-    status: '',
-  },
-  {
-    id: 'q10', name: 'Letzte Karawane', kategorie: 'Gespraech', sw: 2, lv: 5,
-    auftraggeber: 'Die Outfitters', region: 'Tarnheim — Marktplatz',
-    desc: 'Eine Karawanenführerin verweigert die Abgabe. Verhandelt mit ihr — mit Worten, nicht mit Stahl.',
-    anweisungen: [
-      { txt: 'Triff Karawanenführerin Sevra.', n:0, max:1 },
-      { txt: 'Schließe eine Vereinbarung.', n:0, max:1 },
-    ],
-    rewards: { xp: 200, schillinge: 360, item: 'Handelssiegel' },
-    status: '',
-  },
-  {
-    id: 'q11', name: 'Echo des Abgrunds', kategorie: 'Jagd', sw: 3, lv: 10,
-    auftraggeber: 'Die Quellensucher', region: 'Abgrund-Schacht XII',
-    desc: 'Etwas hallt aus dem zwölften Schacht — kein Tier, kein Mensch. Bringt es zum Schweigen, oder bringt es uns.',
-    anweisungen: [
-      { txt: 'Steige in den Schacht XII hinab.', n:0, max:1 },
-      { txt: 'Stille das Echo.', n:0, max:1 },
-    ],
-    rewards: { xp: 620, schillinge: 1120, item: 'Abgrund-Resonator' },
-    status: '',
-  },
-  {
-    id: 'q12', name: 'Bergungs-Notruf', kategorie: 'Suche', sw: 1, lv: 4,
-    auftraggeber: 'Die Bergungsgarde', region: 'Aetherius-Riff',
-    desc: 'Ein Wrack ist am Aetherius-Riff gestrandet. Sichert die Fracht, bevor die Strömung sie verschluckt.',
-    anweisungen: [
-      { txt: 'Erreiche das Aetherius-Riff.', n:0, max:1 },
-      { txt: 'Sichere 5 Frachtkisten.', n:0, max:5 },
-    ],
-    rewards: { xp: 140, schillinge: 260, item: 'Bergungshaken' },
-    status: 'neu',
-  },
-];
 
 // Helpers
 function MTSchwierigkeit({ level, max = 5 }) {
@@ -1152,8 +1050,8 @@ function MTDetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
             />
             <MTRewardRow
               icon={<svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="5.5" fill="none" stroke="currentColor" strokeWidth="1.2"/><circle cx="7" cy="7" r="2.5" fill="currentColor" opacity="0.5"/></svg>}
-              label="Schillinge"
-              value={q.rewards.schillinge.toLocaleString('de-DE')}
+              label="Hade"
+              value={(q.rewards.hade ?? 0).toLocaleString('de-DE')}
             />
             {q.rewards.item && (
               <MTRewardRow
@@ -1319,19 +1217,33 @@ function MTPanel({ children, style }) {
 }
 
 function MissionsterminalSection() {
+  const [quests, setQuests] = uSx([]);
+  const [loading, setLoading] = uSx(true);
   const [filter, setFilter] = uSx('alle');
   const [search, setSearch] = uSx('');
-  const [selectedId, setSelectedId] = uSx(() => {
-    const firstNew = MT_QUESTS.find(q => q.status === 'neu');
-    return firstNew ? firstNew.id : MT_QUESTS[0].id;
-  });
+  const [selectedId, setSelectedId] = uSx(null);
   const [view, setView] = uSx('details');
   const [acceptedIds, setAcceptedIds] = uSx(() => new Set());
-  const [progress, setProgress] = uSx(() => {
-    const init = {};
-    MT_QUESTS.forEach(q => { init[q.id] = q.anweisungen.map(s => s.n); });
-    return init;
-  });
+  const [progress, setProgress] = uSx({});
+
+  uEx(() => {
+    async function load() {
+      const { data } = await window._sb
+        .from('missions')
+        .select('*')
+        .neq('status', 'archiviert')
+        .order('created_at', { ascending: false });
+      const mapped = (data || []).map(m => ({ ...m, desc: m.beschreibung }));
+      setQuests(mapped);
+      const firstNew = mapped.find(q => q.status === 'neu');
+      setSelectedId(firstNew ? firstNew.id : (mapped[0]?.id ?? null));
+      const init = {};
+      mapped.forEach(q => { init[q.id] = (q.anweisungen || []).map(s => s.n || 0); });
+      setProgress(init);
+      setLoading(false);
+    }
+    load();
+  }, []);
 
   const stepClick = (questId, stepIdx, max) => {
     setProgress(prev => {
@@ -1344,21 +1256,21 @@ function MissionsterminalSection() {
   };
 
   const counts = uMx(() => ({
-    alle: MT_QUESTS.length,
-    Suche: MT_QUESTS.filter(q=>q.kategorie==='Suche').length,
-    Gespraech: MT_QUESTS.filter(q=>q.kategorie==='Gespraech').length,
-    Jagd: MT_QUESTS.filter(q=>q.kategorie==='Jagd').length,
-  }), []);
+    alle: quests.length,
+    Suche: quests.filter(q=>q.kategorie==='Suche').length,
+    Gespraech: quests.filter(q=>q.kategorie==='Gespraech').length,
+    Jagd: quests.filter(q=>q.kategorie==='Jagd').length,
+  }), [quests]);
 
   const filtered = uMx(() => {
     const s = search.trim().toLowerCase();
     const rank = q => q.status === 'neu' ? 0 : q.status === 'empfohlen' ? 1 : 2;
-    return MT_QUESTS.filter(x => {
+    return quests.filter(x => {
       if (filter !== 'alle' && x.kategorie !== filter) return false;
       if (s && !(x.name.toLowerCase().includes(s) || x.auftraggeber.toLowerCase().includes(s))) return false;
       return true;
     }).sort((a, b) => rank(a) - rank(b));
-  }, [filter, search]);
+  }, [quests, filter, search]);
 
   uEx(() => {
     if (filtered.length && !filtered.find(q => q.id === selectedId)) {
@@ -1366,7 +1278,7 @@ function MissionsterminalSection() {
     }
   }, [filtered, selectedId]);
 
-  const selected = MT_QUESTS.find(q => q.id === selectedId) || MT_QUESTS[0];
+  const selected = quests.find(q => q.id === selectedId) ?? null;
 
   const handleAccept = () => {
     setAcceptedIds(prev => {
@@ -1398,10 +1310,10 @@ function MissionsterminalSection() {
               background:'#7fb8ff', boxShadow:'0 0 8px #7fb8ff',
               animation:'pulse-glow 2s ease infinite'
             }}/>
-            {MT_QUESTS.filter(q=>q.status==='neu').length} neue Aufträge
+            {quests.filter(q=>q.status==='neu').length} neue Aufträge
           </span>
           <span style={{ width:'1px', height:'14px', background:'rgba(160,140,255,0.2)' }}/>
-          <span>{filtered.length} / {MT_QUESTS.length} gesamt</span>
+          <span>{filtered.length} / {quests.length} gesamt</span>
         </div>
       </div>
 
@@ -1467,7 +1379,12 @@ function MissionsterminalSection() {
 
           {/* List */}
           <div style={{ flex:1, minHeight:0, overflowY:'auto' }}>
-            {filtered.length === 0 && (
+            {loading && (
+              <div style={{ padding:'40px 20px', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(160,140,255,0.4)', letterSpacing:'0.22em', textTransform:'uppercase' }}>
+                ◈ Lade Aufträge…
+              </div>
+            )}
+            {!loading && filtered.length === 0 && (
               <div style={{
                 padding:'40px 20px', textAlign:'center',
                 fontFamily:'var(--font-body)', fontStyle:'italic',
@@ -1540,15 +1457,21 @@ function MissionsterminalSection() {
           >
             Auftrag
           </MTPanelHeader>
-          <MTDetailCard
-            key={selected.id + view}
-            q={selected}
-            view={view}
-            onAccept={handleAccept}
-            accepted={acceptedIds.has(selected.id)}
-            progress={progress[selected.id] || []}
-            onStepClick={(stepIdx, max) => stepClick(selected.id, stepIdx, max)}
-          />
+          {selected ? (
+            <MTDetailCard
+              key={selected.id + view}
+              q={selected}
+              view={view}
+              onAccept={handleAccept}
+              accepted={acceptedIds.has(selected.id)}
+              progress={progress[selected.id] || []}
+              onStepClick={(stepIdx, max) => stepClick(selected.id, stepIdx, max)}
+            />
+          ) : (
+            <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(160,140,255,0.3)', letterSpacing:'0.22em', textTransform:'uppercase' }}>
+              {loading ? '◈ Verbinde…' : '— keine Aufträge —'}
+            </div>
+          )}
         </MTPanel>
       </div>
 
@@ -1564,95 +1487,9 @@ function MissionsterminalSection() {
 
 /* ─────────────────────────────────────────────────
    KOLLEKTIKON — abgeleitet aus window.KOLLEKTIKON_*
+   KollektikonBar + KOL_CAT_ICONS kommen aus assets/components/kollektikon-bar.js
    ───────────────────────────────────────────────── */
-const FISH_ICON     = <g><path d="M70 50 C 60 35, 30 35, 20 50 C 30 65, 60 65, 70 50 Z" fill="none" strokeWidth="2"/><path d="M70 50 L 85 38 L 85 62 Z" fill="none" strokeWidth="2"/><circle cx="32" cy="48" r="2.4" fill="currentColor"/></g>;
-const INSECT_ICON   = <g><ellipse cx="50" cy="50" rx="3.5" ry="22" fill="currentColor" stroke="none"/><path d="M50 38 C 36 22 16 24 18 42 C 24 50 38 48 50 50 Z" fill="none" strokeWidth="1.6"/><path d="M50 38 C 64 22 84 24 82 42 C 76 50 62 48 50 50 Z" fill="none" strokeWidth="1.6"/><path d="M50 50 C 38 56 22 60 22 72 C 30 76 44 70 50 64 Z" fill="none" strokeWidth="1.4"/><path d="M50 50 C 62 56 78 60 78 72 C 70 76 56 70 50 64 Z" fill="none" strokeWidth="1.4"/><path d="M48 30 L 42 22 M52 30 L 58 22" strokeWidth="1.4"/></g>;
-const PLANT_ICON    = <g><path d="M50 86 L 50 30" strokeWidth="2"/><path d="M50 50 C 30 46, 18 30, 22 18 C 36 22, 50 36, 50 50 Z" fill="none" strokeWidth="1.8"/><path d="M50 62 C 70 58, 82 42, 78 30 C 64 34, 50 48, 50 62 Z" fill="none" strokeWidth="1.8"/><path d="M50 76 C 42 72, 38 64, 42 58 C 48 60, 52 68, 50 76 Z" fill="none" strokeWidth="1.6"/></g>;
-const MINERAL_ICON  = <g><path d="M50 14 L 78 38 L 64 82 L 36 82 L 22 38 Z" fill="none" strokeWidth="2"/><path d="M50 14 L 50 82 M22 38 L 78 38 M36 82 L 50 38 L 64 82" strokeWidth="1.2" opacity="0.6"/></g>;
-const CREATURE_ICON = <g><path d="M28 32 L 22 18 L 38 26 L 50 14 L 62 26 L 78 18 L 72 32 L 80 50 L 70 70 L 50 84 L 30 70 L 20 50 Z" fill="none" strokeWidth="1.8"/><circle cx="40" cy="44" r="3" fill="currentColor"/><circle cx="60" cy="44" r="3" fill="currentColor"/><path d="M38 62 Q 50 70 62 62" strokeWidth="1.6" fill="none"/></g>;
-const PART_ICON     = <g transform="rotate(-22 50 50) translate(-10.5 25) scale(0.18)" strokeLinejoin="round" strokeLinecap="round"><path d="M 148 110 L 532 110 C 532 88, 550 68, 572 68 C 594 68, 610 84, 610 106 C 610 120, 604 132, 594 140 C 604 148, 610 160, 610 174 C 610 196, 594 212, 572 212 C 550 212, 532 192, 532 170 L 148 170 C 148 192, 130 212, 108 212 C 86 212, 70 196, 70 174 C 70 160, 76 148, 86 140 C 76 132, 70 120, 70 106 C 70 84, 86 68, 108 68 C 130 68, 148 88, 148 110 Z" fill="none" strokeWidth="11"/></g>;
-const WAL_ICON      = <g><path d="M14 52 C 20 36 40 26 60 30 C 72 32 82 40 86 50 L 78 54 L 72 48 L 64 54 L 56 46 L 48 56 L 38 48 Z" fill="none" strokeWidth="2"/><circle cx="68" cy="42" r="1.8" fill="currentColor"/><path d="M28 40 L 34 50 M48 28 L 52 42" strokeWidth="1.2" opacity="0.55"/></g>;
-const LIFE_ICON     = <g><circle cx="50" cy="50" r="26" fill="none" strokeWidth="2"/><path d="M50 24 L 50 76 M24 50 L 76 50 M32 32 L 68 68 M68 32 L 32 68" strokeWidth="1.1" opacity="0.5"/><circle cx="50" cy="50" r="6.5" fill="none" strokeWidth="1.6"/><circle cx="50" cy="50" r="1.6" fill="currentColor"/></g>;
-
-const _kolCatIconMap = {
-  fische:FISH_ICON, insekten:INSECT_ICON, pflanzen:PLANT_ICON, mineralien:MINERAL_ICON,
-  kreaturen:CREATURE_ICON, kreaturenteile:PART_ICON, wal:WAL_ICON, lebensspeicher:LIFE_ICON,
-};
 // Kollektikon data is now fetched from Supabase inside KollektikonSection.
-
-function KollektikonBar({ d, i }) {
-  const ref = uRx(null);
-  const [visible, setVisible] = uSx(false);
-  uEx(() => {
-    const el = ref.current; if (!el) return;
-    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { setVisible(true); io.unobserve(el); } }), { threshold:0.25 });
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-  const pctFound = d.total ? d.found / d.total : 0;
-  const pctKomp  = d.total ? (d.komplett || 0) / d.total : 0;
-  const c = `oklch(0.72 0.16 ${d.hue})`;
-  const cA = a => `oklch(0.72 0.16 ${d.hue} / ${a})`;
-
-  return (
-    <div ref={ref} style={{
-      background:'rgba(10,8,28,0.7)',
-      border:`1px solid ${cA(0.18)}`,
-      padding:'14px 16px 12px', borderRadius:3,
-      position:'relative', overflow:'hidden',
-    }}>
-      <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:8 }}>
-        <svg viewBox="0 0 100 100" width="22" height="22" fill="none" stroke={c} style={{ color:c, opacity:0.9, flexShrink:0 }}>
-          {d.icon}
-        </svg>
-        <span style={{
-          fontFamily:'var(--font-display)', fontSize:11, letterSpacing:'0.2em', fontWeight:400,
-          color:'rgba(220,210,250,0.85)', textTransform:'uppercase',
-          minWidth:0, flex:1, overflowWrap:'anywhere', lineHeight:1.2,
-        }}>{d.label}</span>
-      </div>
-      {/* two-layer progress */}
-      <div style={{ position:'relative', height:4, marginBottom:6 }}>
-        {pctKomp > 0 && (
-          <div style={{ position:'absolute', left:0, top:0, bottom:0,
-            width: visible ? `${pctKomp*100}%` : '0%',
-            boxShadow:`0 0 7px 1px ${cA(0.42)}, 0 0 14px 3px ${cA(0.18)}, 0 0 22px 6px ${cA(0.08)}`,
-            borderRadius:2, pointerEvents:'none',
-            transition:`width 1.2s cubic-bezier(.2,.85,.2,1) ${0.3+i*0.08}s`,
-          }}/>
-        )}
-        <div style={{ position:'absolute', inset:0, background:'rgba(124,77,255,0.08)', border:`1px solid ${cA(0.13)}`, borderRadius:2, overflow:'hidden' }}>
-          {/* white — in Forschung */}
-          <div style={{ position:'absolute', left:0, top:0, bottom:0,
-            width: visible ? `${pctFound*100}%` : '0%',
-            background:'linear-gradient(90deg, rgba(220,215,250,0.16), rgba(240,238,255,0.26))',
-            transition:`width 1.0s cubic-bezier(.2,.85,.2,1) ${i*0.08}s`,
-          }}/>
-          {/* color — komplett */}
-          <div style={{ position:'absolute', left:-1, top:-1, bottom:-1,
-            width: visible ? `${pctKomp*100}%` : '0%',
-            background:`linear-gradient(90deg, ${c}, ${cA(0.85)})`,
-            boxShadow:'inset 0 0 4px rgba(255,255,255,0.5)',
-            borderRadius:2,
-            transition:`width 1.2s cubic-bezier(.2,.85,.2,1) ${0.3+i*0.08}s`,
-          }}/>
-        </div>
-      </div>
-      <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', gap:6 }}>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(200,190,240,0.65)', letterSpacing:'0.1em', whiteSpace:'nowrap' }}>
-          <span style={{ color:'#f0eeff' }}>{d.found}</span>
-          <span style={{ opacity:0.5 }}> / {d.total || '—'}</span>
-          {d.komplett > 0 && (
-            <span style={{ color:c, marginLeft:4 }}>· {d.komplett} <span style={{ fontSize:7, opacity:0.75, letterSpacing:'0.16em' }}>KOMP</span></span>
-          )}
-        </span>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:c, letterSpacing:'0.18em' }}>
-          {d.total ? `${Math.round(pctFound*100)} %` : '—'}
-        </span>
-      </div>
-    </div>
-  );
-}
 
 function RecentCard({ item, idx, total, gold }) {
   const [hov, setHov] = uSx(false);
@@ -1762,35 +1599,29 @@ function RecentRow({ items, kind, title }) {
 }
 
 function KollektikonSection() {
-  const [visCounts, setVisCounts] = uSx(null);
+  const [foundCounts, setFoundCounts] = uSx(null);
   uEx(() => {
     async function load() {
-      const { data } = await window._sb.from('ressourcen_sichtbar').select('cat, resource_id');
+      const { data } = await window._sb
+        .from('kollektikon_counts')
+        .select('cat, menge')
+        .gt('menge', 0);
       if (data) {
         const counts = {};
         for (const row of data) counts[row.cat] = (counts[row.cat] || 0) + 1;
-        setVisCounts(counts);
+        setFoundCounts(counts);
       }
     }
     load();
   }, []);
 
-  const CATS = [
-    { id:'fische',         label:'Fische',        labelShort:'Fisch',    total:1506, hue:200 },
-    { id:'pflanzen',       label:'Pflanzen',       labelShort:'Pflanze',  total:732,  hue:130 },
-    { id:'mineralien',     label:'Mineralien',     labelShort:'Mineral',  total:99,   hue:40  },
-    { id:'kreaturen',      label:'Kreaturen',      labelShort:'Kreatur',  total:1520, hue:0   },
-    { id:'insekten',       label:'Insekten',       labelShort:'Insekt',   total:0,    hue:75  },
-    { id:'kreaturenteile', label:'Kreaturenteile', labelShort:'Teil',     total:0,    hue:15  },
-    { id:'wal',            label:'Walbiologe',     labelShort:'Wal',      total:0,    hue:220 },
-    { id:'lebensspeicher', label:'Lebensspeicher', labelShort:'Speicher', total:0,    hue:300 },
-  ];
+  const CATS = KOL_CATEGORIES;
 
   const KOLLEKTIKON_DATA = CATS.map(cat => ({
     ...cat,
-    found: visCounts ? (visCounts[cat.id] || 0) : 0,
+    found: foundCounts ? (foundCounts[cat.id] || 0) : 0,
     komplett: 0,
-    icon: _kolCatIconMap[cat.id],
+    icon: KOL_CAT_ICONS[cat.id],
   }));
 
   const totalFound = KOLLEKTIKON_DATA.reduce((s,d) => s + d.found, 0);
@@ -2130,12 +1961,12 @@ function NeuerCharakterButton() {
 /* ─────────────────────────────────────────────────
    RECENT CHARACTERS — 4 newest SC / NSC entries
    ───────────────────────────────────────────────── */
-const RECENT_CHARS = [
-  { kind:'SC',  name:'Kira Astralweise',  rasse:'Eladrin',         klasse:'Magierin',     div:null,                tagline:'Sucht den verlorenen Sigilstein.',  hue:265, days:1 },
-  { kind:'NSC', name:'Archivar Velian',   rasse:'Mensch',          klasse:'Gelehrter',    div:'Die Kuratoren',     tagline:'Schreibt jedes Wort mit.',           hue:235, days:2 },
-  { kind:'SC',  name:'Borg Steinfels',    rasse:'Berg-Zwerg',      klasse:'Paladin',      div:null,                tagline:'Eid auf das Licht von Aurelias.',    hue:60,  days:4 },
-  { kind:'NSC', name:'Sevra Goldhand',    rasse:'Halbling',        klasse:'Karawanenführerin', div:'Die Outfitters', tagline:'Verhandelt mit Worten, nicht Stahl.', hue:30, days:6 },
-];
+function _charHue(name) {
+  return (String(name).split('').reduce((a,c) => a + c.charCodeAt(0), 0) * 137) % 360;
+}
+function _daysAgo(ts) {
+  return Math.max(1, Math.round((Date.now() - new Date(ts).getTime()) / 86400000));
+}
 
 function RecentCharCard({ c }) {
   const [hov, setHov] = uSx(false);
@@ -2144,7 +1975,7 @@ function RecentCharCard({ c }) {
   const accentEdge = `oklch(0.72 0.16 ${c.hue} / 0.45)`;
   const isSC = c.kind === 'SC';
   return (
-    <a href="#"
+    <a href={c.kind === 'SC' ? `Steckbrief.html?id=${c.id}` : 'Spielercharaktere.html'}
       onMouseEnter={()=>setHov(true)}
       onMouseLeave={()=>setHov(false)}
       style={{
@@ -2166,16 +1997,24 @@ function RecentCharCard({ c }) {
       }}>
         <svg width="78" height="86" viewBox="0 0 78 86" style={{ position:'absolute', inset:0 }}>
           <polygon points="39,2 73,22 73,64 39,84 5,64 5,22"
-            fill={accentSoft} stroke={accentEdge} strokeWidth="1.3"/>
+            fill={c.bild ? 'none' : accentSoft} stroke={accentEdge} strokeWidth="1.3"/>
           <polygon points="39,10 65,25 65,61 39,76 13,61 13,25"
             fill="none" stroke={accentEdge} strokeOpacity="0.5" strokeWidth="0.8"/>
         </svg>
-        <span style={{
-          position:'relative', zIndex:1,
-          fontFamily:'var(--font-display)', fontSize:22, fontWeight:500,
-          letterSpacing:'0.04em', color:'#f0eeff',
-          textShadow:`0 0 14px ${accentEdge}`,
-        }}>{c.name.split(' ').map(w=>w[0]).slice(0,2).join('')}</span>
+        {c.bild ? (
+          <img src={c.bild} alt={c.name} style={{
+            position:'absolute', inset:0, width:'100%', height:'100%',
+            objectFit:'cover', objectPosition:'center top',
+            clipPath:'polygon(50% 2.3%, 93.6% 25.6%, 93.6% 74.4%, 50% 97.7%, 6.4% 74.4%, 6.4% 25.6%)',
+          }}/>
+        ) : (
+          <span style={{
+            position:'relative', zIndex:1,
+            fontFamily:'var(--font-display)', fontSize:22, fontWeight:500,
+            letterSpacing:'0.04em', color:'#f0eeff',
+            textShadow:`0 0 14px ${accentEdge}`,
+          }}>{c.name.split(' ').map(w=>w[0]).slice(0,2).join('')}</span>
+        )}
       </div>
 
       <div style={{ flex:1, minWidth:0, display:'flex', flexDirection:'column', justifyContent:'center' }}>
@@ -2206,23 +2045,72 @@ function RecentCharCard({ c }) {
           color: accent, letterSpacing:'0.04em', marginTop:2,
           whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis',
         }}>{c.rasse} · {c.klasse}{c.div ? ` · ${c.div.replace(/^Die\s+/, '')}` : ''}</div>
-        <div style={{
+        {c.tagline && <div style={{
           fontFamily:'var(--font-body)', fontWeight:300, fontStyle:'italic',
           fontSize:10.5, color:'rgba(200,190,240,0.55)',
           letterSpacing:'0.02em', marginTop:4, lineHeight:1.4,
           whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis',
-        }}>„{c.tagline}"</div>
+        }}>„{c.tagline}"</div>}
       </div>
     </a>
   );
 }
 
 function RecentCharacters() {
+  const [chars, setChars] = uSx([]);
+
+  uEx(() => {
+    async function load() {
+      const [{ data: scData }, { data: nscData }] = await Promise.all([
+        window._sb.from('characters')
+          .select('id,name,char_data,created_at')
+          .eq('type', 'spieler').eq('visible', true)
+          .order('created_at', { ascending: false }).limit(4),
+        window._sb.from('nscs')
+          .select('id,name,rasse,beruf,rang,division,unvergesslich,bild,created_at')
+          .eq('visible', true)
+          .order('created_at', { ascending: false }).limit(4),
+      ]);
+
+      const scs = (scData || []).map(r => {
+        const d = r.char_data || {};
+        return {
+          id: r.id,
+          kind: 'SC',
+          name: d.name || r.name || '—',
+          rasse: d.race || '—',
+          klasse: d.class || '—',
+          div: d.division || null,
+          tagline: d.motto || d.background || '',
+          hue: _charHue(r.name || ''),
+          bild: d.bild || null,
+          days: _daysAgo(r.created_at),
+          _ts: r.created_at,
+        };
+      });
+
+      const nscs = (nscData || []).map(r => ({
+        id: r.id,
+        kind: 'NSC',
+        name: r.name || '—',
+        rasse: r.rasse || '—',
+        klasse: r.beruf || r.rang || '—',
+        div: r.division || null,
+        tagline: r.unvergesslich || '',
+        hue: _charHue(r.name || ''),
+        bild: r.bild || null,
+        days: _daysAgo(r.created_at),
+        _ts: r.created_at,
+      }));
+
+      setChars([...scs, ...nscs].sort((a,b) => new Date(b._ts) - new Date(a._ts)).slice(0,4));
+    }
+    load();
+  }, []);
+
   return (
     <div style={{ display:'flex', flexDirection:'column', height:'100%' }}>
-      <div style={{
-        display:'flex', alignItems:'center', gap:12, marginBottom:14,
-      }}>
+      <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:14 }}>
         <span style={{
           fontFamily:'var(--font-mono)', fontSize:9,
           letterSpacing:'0.3em', color:'rgba(124,77,255,0.7)',
@@ -2235,7 +2123,10 @@ function RecentCharacters() {
         display:'grid', gridTemplateColumns:'1fr 1fr', gridTemplateRows:'1fr 1fr',
         gap:10,
       }}>
-        {RECENT_CHARS.map(c => <RecentCharCard key={c.name} c={c}/>)}
+        {chars.length === 0
+          ? <div style={{ gridColumn:'1/-1', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(160,140,255,0.3)', letterSpacing:'0.22em', textTransform:'uppercase' }}>◈ Lade…</div>
+          : chars.map(c => <RecentCharCard key={c.name + c.kind} c={c}/>)
+        }
       </div>
     </div>
   );
@@ -2411,16 +2302,12 @@ function Tageskarte() {
       setFlipped(true);
       return;
     }
-    setFlipped(false);
-    setTimeout(() => {
-      setCardIdx((idx) => {
-        let next = Math.floor(Math.random()*TAGESKARTE_MAJORS.length);
-        if (next === idx) next = (next+1) % TAGESKARTE_MAJORS.length;
-        return next;
-      });
-      burstAtCard();
-      setFlipped(true);
-    }, 320);
+    setCardIdx((idx) => {
+      let next = Math.floor(Math.random()*TAGESKARTE_MAJORS.length);
+      if (next === idx) next = (next+1) % TAGESKARTE_MAJORS.length;
+      return next;
+    });
+    burstAtCard();
   };
 
   const clear = (e) => {
@@ -2584,7 +2471,8 @@ Object.assign(window, { HeuteStrip, VorgeschichteTeaser, Tageskarte, Missionster
      ═══════════════════════════════════════════ -->
 <script type="text/babel">
 const { useState:uS5, useEffect:uE5, useCallback:uC5, useRef:uR5 } = React;
-const { ParticleField, PortalCard, Carousel, PORTALS:PRTS, CAROUSEL_IMAGES:IMGS, HeuteStrip, VorgeschichteTeaser, Tageskarte, MissionsterminalSection, KollektikonSection, NeuerCharakterButton, RecentCharacters, CTAButton } = window;
+const { ParticleField, PortalCard, Carousel, PORTALS:PRTS, HeuteStrip, VorgeschichteTeaser, Tageskarte, MissionsterminalSection, KollektikonSection, NeuerCharakterButton, RecentCharacters, CTAButton } = window;
+const IMGS = window.GALERIE_ALL_IMAGES || [];
 const { useTweaks, TweaksPanel, TweakSection, TweakToggle, SiteNav, SiteFooter } = window;
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
@@ -2696,7 +2584,7 @@ function App() {
             letterSpacing:'0.5em', color:'rgba(200,190,240,0.65)',
             textTransform:'uppercase',
           }}>
-            Die gewobenen Reiche
+            Die neue Welt
           </div>
           <div style={{ width:60, height:1, background:'linear-gradient(to left, transparent, rgba(124,77,255,0.6))' }}/>
         </div>

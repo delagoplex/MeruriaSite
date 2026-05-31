@@ -41,7 +41,8 @@ function buildChar(d) {
     // ── TODO: Quiz-Erweiterungen ───────────────────────────────
     alignment:   d.alignment   || '—',   // TODO: quiz
     zodiac:      d.zodiac      || '—',   // TODO: quiz
-    birthday:    d.birthday    || '—',   // TODO: quiz
+    birthday:        d.birthday        || '—',   // TODO: quiz
+    geburtstag_doy:  d.geburtstag_doy  || null,
 
     // ── Festwerte / Stufe 1 ────────────────────────────────────
     subclass: '—', level:1, xp:0, profBonus:2,
@@ -722,6 +723,126 @@ function Divider({ label }) {
   );
 }
 
+/* ── Meruria calendar data for birthday picker ── */
+const MONTHS_MERURIA = [
+  {name:"Janvar",days:19},{name:"Fevorn",days:18},{name:"Mareth",days:19},
+  {name:"Aprel",days:19},{name:"Mairen",days:18},{name:"Junvar",days:19},
+  {name:"Juval",days:19},{name:"Auvar",days:19},{name:"Septhar",days:19},
+  {name:"Oktar",days:18},{name:"Novren",days:18},{name:"Derath",days:19},
+];
+const MONTH_START_MERURIA = MONTHS_MERURIA.reduce((acc, m, i) => {
+  acc.push(i === 0 ? 1 : acc[i-1] + MONTHS_MERURIA[i-1].days); return acc;
+}, []);
+function doyToCalText(doy) {
+  for (let i = MONTHS_MERURIA.length-1; i >= 0; i--) {
+    if (doy >= MONTH_START_MERURIA[i])
+      return `${doy - MONTH_START_MERURIA[i] + 1}. ${MONTHS_MERURIA[i].name}`;
+  }
+  return '—';
+}
+
+/* ── BirthdayPickerRow ───────────────────── */
+function BirthdayPickerRow({ char, upd }) {
+  const doy = char.geburtstag_doy || null;
+
+  const initMonth = () => {
+    if (!doy) return 0;
+    for (let i = MONTHS_MERURIA.length-1; i >= 0; i--)
+      if (doy >= MONTH_START_MERURIA[i]) return i;
+    return 0;
+  };
+  const [open, setOpen] = useSteckbrief(false);
+  const [picMonth, setPicMonth] = useSteckbrief(initMonth);
+  const ref = useSteckRef(null);
+
+  React.useEffect(() => {
+    if (!open) return;
+    const handler = e => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [open]);
+
+  function openPicker() {
+    setPicMonth(initMonth());
+    setOpen(true);
+  }
+
+  function pickDay(monthIdx, day) {
+    const newDoy = MONTH_START_MERURIA[monthIdx] + day - 1;
+    upd({ birthday: `${day}. ${MONTHS_MERURIA[monthIdx].name}`, geburtstag_doy: newDoy });
+    setOpen(false);
+  }
+
+  function clearDate() {
+    upd({ birthday: '—', geburtstag_doy: null });
+    setOpen(false);
+  }
+
+  const displayText = doy ? doyToCalText(doy) : (char.birthday && char.birthday !== '—' ? char.birthday : null);
+  const M = MONTHS_MERURIA[picMonth];
+  const selectedDay = doy && MONTH_START_MERURIA[picMonth] <= doy && doy < MONTH_START_MERURIA[picMonth] + M.days
+    ? doy - MONTH_START_MERURIA[picMonth] + 1 : null;
+
+  const rowStyle = {display:"flex",alignItems:"center",gap:6,padding:"3px 0",
+    borderBottom:"1px solid rgba(124,77,255,0.06)",position:"relative"};
+  const labelStyle = {fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",
+    color:"rgba(124,77,255,0.4)",textTransform:"uppercase",flex:"0 0 80px"};
+  const btnStyle = {fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:300,
+    color: displayText ? "var(--white)" : "rgba(200,190,240,0.3)",
+    background:"transparent",border:"none",borderBottom:"1px solid rgba(124,77,255,0.25)",
+    padding:"1px 4px",flex:1,outline:"none",minWidth:0,cursor:"pointer",textAlign:"left"};
+  const dropStyle = {
+    position:"absolute",top:"calc(100% + 4px)",left:0,zIndex:1200,
+    background:"rgba(11,8,28,0.99)",border:"1px solid rgba(124,77,255,0.35)",
+    borderRadius:4,boxShadow:"0 20px 52px rgba(0,0,0,0.75)",
+    width:"min(340px,92vw)",overflow:"hidden",
+  };
+  const tabActive  = {fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".1em",padding:"3px 7px",
+    background:"rgba(124,77,255,0.25)",border:"1px solid rgba(124,77,255,0.5)",borderRadius:2,
+    color:"var(--white)",cursor:"pointer",fontWeight:600};
+  const tabInactive = {...tabActive, background:"transparent",
+    border:"1px solid rgba(124,77,255,0.12)",color:"rgba(200,190,240,0.45)",fontWeight:300};
+  const dayActive   = {fontFamily:"var(--font-display)",fontSize:12,padding:"6px 2px",
+    background:"rgba(124,77,255,0.4)",border:"1px solid rgba(124,77,255,0.7)",
+    borderRadius:2,color:"var(--white)",cursor:"pointer",textAlign:"center"};
+  const dayInactive = {...dayActive, background:"rgba(124,77,255,0.05)",
+    border:"1px solid rgba(124,77,255,0.12)",color:"rgba(200,190,240,0.8)"};
+
+  return (
+    <div style={rowStyle} ref={ref}>
+      <span style={labelStyle}>Geburtstag</span>
+      <button style={btnStyle} onClick={() => open ? setOpen(false) : openPicker()}>
+        {displayText || 'Kein Datum'} <span style={{fontSize:9,opacity:0.45}}>▾</span>
+      </button>
+      {open && (
+        <div style={dropStyle}>
+          <div style={{display:"flex",flexWrap:"wrap",gap:2,padding:"8px 8px 6px",
+            borderBottom:"1px solid rgba(124,77,255,0.12)"}}>
+            {MONTHS_MERURIA.map((m,i) => (
+              <button key={i} style={picMonth===i ? tabActive : tabInactive}
+                onClick={() => setPicMonth(i)}>{m.name}</button>
+            ))}
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:2,padding:"8px"}}>
+            {Array.from({length:M.days},(_,i)=>i+1).map(d => (
+              <button key={d} style={selectedDay===d ? dayActive : dayInactive}
+                onClick={() => pickDay(picMonth, d)}>{d}</button>
+            ))}
+          </div>
+          <div style={{padding:"5px 8px 8px",borderTop:"1px solid rgba(124,77,255,0.1)"}}>
+            <button onClick={clearDate}
+              style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".18em",
+                textTransform:"uppercase",color:"rgba(200,190,240,0.35)",
+                background:"transparent",border:"none",cursor:"pointer",padding:"3px 0"}}>
+              Datum entfernen
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 /* ── ERow (editable IRow) ────────────────── */
 function ERow({ label, field, char, upd, bright }) {
   return (
@@ -932,7 +1053,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
           <Card>
             <SecTitle label="Persönliche Daten" />
             {E ? <>
-              <ERow label="Geburtstag"   field="birthday" char={char} upd={upd} />
+              <BirthdayPickerRow char={char} upd={upd} />
               <ERow label="Sternzeichen" field="zodiac"   char={char} upd={upd} bright />
               <ERow label="Alter"        field="age"      char={char} upd={upd} />
               <ERow label="Größe"        field="height"   char={char} upd={upd} />

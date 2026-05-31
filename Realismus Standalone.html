@@ -83,6 +83,9 @@ const CATEGORIES = [{
 }, {
   id: 'abenteuer',
   label: 'Zwischen den Abenteuern'
+}, {
+  id: 'unterwasser',
+  label: 'Unterwasser'
 }];
 const LEBENSSTILE = [{
   name: 'Jämmerlich',
@@ -263,7 +266,8 @@ const SECTION_ANCHORS = {
   }, {
     id: 'sec-munition',
     label: 'Munition'
-  }]
+  }],
+  unterwasser: []
 };
 function scrollToSection(id) {
   const el = document.getElementById(id);
@@ -710,12 +714,19 @@ function HungerCalc() {
 // ── FOOD SECTION ──────────────────────────────────────────────────────────────
 
 // ── COIN FLIP ─────────────────────────────────────────────────────────────────
+// Place custom images at:
+//   assets/images/coin/kopf.png  (or .jpg/.webp)
+//   assets/images/coin/zahl.png
+// If a file is missing the default SVG motif is shown instead.
 
 function CoinFlip() {
   const [result, setResult] = useState(null);
   const [flipping, setFlipping] = useState(false);
   const [angle, setAngle] = useState(0);
+  const [kopfErr, setKopfErr] = useState(false);
+  const [zahlErr, setZahlErr] = useState(false);
   const baseAngle = useRef(0);
+
   const flip = () => {
     if (flipping) return;
     setFlipping(true);
@@ -728,273 +739,124 @@ function CoinFlip() {
     const newAngle = baseAngle.current + spins + diff;
     baseAngle.current = newAngle;
     setAngle(newAngle);
-    setTimeout(() => {
-      setResult(r);
-      setFlipping(false);
-    }, 1500);
+    setTimeout(() => { setResult(r); setFlipping(false); }, 1500);
   };
-  const ticks = Array.from({
-    length: 48
-  }).map((_, i) => {
-    const a = i / 48 * Math.PI * 2 - Math.PI / 2;
-    return /*#__PURE__*/React.createElement("line", {
-      key: i,
-      x1: 100 + 87 * Math.cos(a),
-      y1: 100 + 87 * Math.sin(a),
-      x2: 100 + 93 * Math.cos(a),
-      y2: 100 + 93 * Math.sin(a),
-      stroke: "rgba(80,52,0,0.55)",
-      strokeWidth: "1.5"
+
+  // Build a coin face SVG (120×120 viewBox)
+  const coinFace = (side) => {
+    const isKopf = side === 'kopf';
+    const gradId = isKopf ? 'cg-k' : 'cg-z';
+    const light1 = isKopf ? '#fde87a' : '#f5d45a';
+    const light2 = isKopf ? '#c8920c' : '#be8408';
+    const dark   = isKopf ? '#7a5002' : '#725000';
+    const edge   = '#5a3c02';
+    const ink    = 'rgba(60,38,2,0.82)';
+    const ticks  = Array.from({length: 36}).map((_, i) => {
+      const a = i / 36 * Math.PI * 2 - Math.PI / 2;
+      return React.createElement('line', {
+        key: i,
+        x1: 60 + 54 * Math.cos(a), y1: 60 + 54 * Math.sin(a),
+        x2: 60 + 57 * Math.cos(a), y2: 60 + 57 * Math.sin(a),
+        stroke: 'rgba(90,60,2,0.5)', strokeWidth: i % 3 === 0 ? '1.2' : '0.7'
+      });
     });
-  });
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: 'rgba(210,160,20,0.07)',
-      border: '1px solid rgba(210,160,20,0.22)',
-      borderRadius: '8px',
-      padding: '28px 20px 24px',
-      marginBottom: '24px',
-      textAlign: 'center'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
-      letterSpacing: '0.3em',
-      color: 'rgba(210,160,40,0.55)',
-      textTransform: 'uppercase',
-      marginBottom: '22px'
-    }
-  }, "Wirf eine M\xFCnze"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      perspective: '800px',
-      width: '200px',
-      height: '200px',
-      margin: '0 auto 20px'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: '100%',
-      height: '100%',
-      position: 'relative',
-      transformStyle: 'preserve-3d',
-      transform: `rotateY(${angle}deg)`,
-      transition: flipping ? 'transform 1.5s cubic-bezier(0.2,0.75,0.45,1.0)' : 'none',
-      filter: 'drop-shadow(0 6px 20px rgba(200,150,10,0.45))'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'absolute',
-      inset: 0,
-      backfaceVisibility: 'hidden',
-      WebkitBackfaceVisibility: 'hidden'
-    }
-  }, /*#__PURE__*/React.createElement("svg", {
-    viewBox: "0 0 200 200",
-    style: {
-      width: '100%',
-      height: '100%'
-    }
-  }, /*#__PURE__*/React.createElement("defs", null, /*#__PURE__*/React.createElement("radialGradient", {
-    id: "cgk",
-    cx: "38%",
-    cy: "32%"
-  }, /*#__PURE__*/React.createElement("stop", {
-    offset: "0%",
-    stopColor: "#f8d870"
-  }), /*#__PURE__*/React.createElement("stop", {
-    offset: "55%",
-    stopColor: "#d4a018"
-  }), /*#__PURE__*/React.createElement("stop", {
-    offset: "100%",
-    stopColor: "#8a6008"
-  }))), /*#__PURE__*/React.createElement("circle", {
-    cx: "100",
-    cy: "100",
-    r: "98",
-    fill: "#6a4806"
-  }), /*#__PURE__*/React.createElement("circle", {
-    cx: "100",
-    cy: "100",
-    r: "94",
-    fill: "url(#cgk)"
-  }), ticks, /*#__PURE__*/React.createElement("circle", {
-    cx: "100",
-    cy: "100",
-    r: "80",
-    fill: "none",
-    stroke: "rgba(80,52,0,0.35)",
-    strokeWidth: "1"
-  }), /*#__PURE__*/React.createElement("ellipse", {
-    cx: "108",
-    cy: "76",
-    rx: "23",
-    ry: "28",
-    fill: "rgba(80,50,5,0.75)"
-  }), /*#__PURE__*/React.createElement("ellipse", {
-    cx: "100",
-    cy: "108",
-    rx: "15",
-    ry: "9",
-    fill: "rgba(80,50,5,0.75)"
-  }), /*#__PURE__*/React.createElement("rect", {
-    x: "79",
-    y: "108",
-    width: "34",
-    height: "12",
-    rx: "5",
-    fill: "rgba(80,50,5,0.75)"
-  }), /*#__PURE__*/React.createElement("circle", {
-    cx: "116",
-    cy: "69",
-    r: "3.5",
-    fill: "rgba(80,50,5,0.6)"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M 126 83 Q 130 89 127 94",
-    stroke: "rgba(80,50,5,0.55)",
-    strokeWidth: "2",
-    fill: "none",
-    strokeLinecap: "round"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M 86 54 Q 80 44 74 48 Q 70 54 76 58",
-    fill: "rgba(100,80,10,0.7)"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M 81 46 Q 75 36 69 40 Q 65 46 71 50",
-    fill: "rgba(100,80,10,0.6)"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M 76 40 Q 70 30 64 34 Q 60 40 66 44",
-    fill: "rgba(100,80,10,0.5)"
-  }), /*#__PURE__*/React.createElement("text", {
-    x: "100",
-    y: "157",
-    textAnchor: "middle",
-    fontFamily: "Georgia,serif",
-    fontSize: "15",
-    fontWeight: "bold",
-    fill: "rgba(70,44,4,0.85)",
-    letterSpacing: "4"
-  }, "KOPF"))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'absolute',
-      inset: 0,
-      backfaceVisibility: 'hidden',
-      WebkitBackfaceVisibility: 'hidden',
-      transform: 'rotateY(180deg)'
-    }
-  }, /*#__PURE__*/React.createElement("svg", {
-    viewBox: "0 0 200 200",
-    style: {
-      width: '100%',
-      height: '100%'
-    }
-  }, /*#__PURE__*/React.createElement("defs", null, /*#__PURE__*/React.createElement("radialGradient", {
-    id: "cgz",
-    cx: "38%",
-    cy: "32%"
-  }, /*#__PURE__*/React.createElement("stop", {
-    offset: "0%",
-    stopColor: "#f0cc58"
-  }), /*#__PURE__*/React.createElement("stop", {
-    offset: "55%",
-    stopColor: "#c89018"
-  }), /*#__PURE__*/React.createElement("stop", {
-    offset: "100%",
-    stopColor: "#886008"
-  }))), /*#__PURE__*/React.createElement("circle", {
-    cx: "100",
-    cy: "100",
-    r: "98",
-    fill: "#6a4806"
-  }), /*#__PURE__*/React.createElement("circle", {
-    cx: "100",
-    cy: "100",
-    r: "94",
-    fill: "url(#cgz)"
-  }), ticks, /*#__PURE__*/React.createElement("circle", {
-    cx: "100",
-    cy: "100",
-    r: "80",
-    fill: "none",
-    stroke: "rgba(80,52,0,0.35)",
-    strokeWidth: "1"
-  }), /*#__PURE__*/React.createElement("circle", {
-    cx: "100",
-    cy: "94",
-    r: "36",
-    fill: "none",
-    stroke: "rgba(70,44,4,0.45)",
-    strokeWidth: "2"
-  }), /*#__PURE__*/React.createElement("text", {
-    x: "100",
-    y: "118",
-    textAnchor: "middle",
-    fontFamily: "Georgia,serif",
-    fontSize: "64",
-    fontWeight: "bold",
-    fill: "rgba(70,44,4,0.8)"
-  }, "I"), /*#__PURE__*/React.createElement("text", {
-    x: "100",
-    y: "157",
-    textAnchor: "middle",
-    fontFamily: "Georgia,serif",
-    fontSize: "15",
-    fontWeight: "bold",
-    fill: "rgba(70,44,4,0.85)",
-    letterSpacing: "4"
-  }, "ZAHL"))))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: 'var(--font-display)',
-      fontSize: '22px',
-      fontWeight: '300',
-      letterSpacing: '0.14em',
-      color: flipping ? 'rgba(200,190,240,0.35)' : 'var(--white)',
-      minHeight: '30px',
-      marginBottom: '8px',
-      transition: 'color 0.3s'
-    }
-  }, flipping ? 'Münze wird geworfen...' : result === 'kopf' ? 'Kopf' : result === 'zahl' ? 'Zahl' : '—'), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: 'var(--font-body)',
-      fontWeight: '300',
-      fontSize: '13px',
-      color: 'rgba(210,170,60,0.8)',
-      minHeight: '22px',
-      marginBottom: '20px'
-    }
-  }, !flipping && result === 'kopf' && '— Zwei Samen der Furcht', !flipping && result === 'zahl' && '— Ein Samen der Furcht', !flipping && !result && /*#__PURE__*/React.createElement("span", {
-    style: {
-      color: 'rgba(200,190,240,0.3)',
-      fontStyle: 'italic',
-      fontSize: '12px'
-    }
-  }, "Noch kein Wurf")), /*#__PURE__*/React.createElement("button", {
-    onClick: flip,
-    disabled: flipping,
-    style: {
-      background: 'transparent',
-      border: '1px solid rgba(210,160,20,0.45)',
-      borderRadius: '3px',
-      color: 'rgba(210,170,50,0.85)',
-      fontFamily: 'var(--font-display)',
-      fontSize: '11px',
-      letterSpacing: '0.2em',
-      textTransform: 'uppercase',
-      padding: '10px 28px',
-      cursor: flipping ? 'wait' : 'pointer',
-      transition: 'all 0.2s',
-      opacity: flipping ? 0.4 : 1
+    const motif = isKopf
+      ? React.createElement(React.Fragment, null,
+          React.createElement('polygon', { points: '60,28 74,36 74,52 60,60 46,52 46,36', fill: 'none', stroke: ink, strokeWidth: '1.2', strokeOpacity: '0.55' }),
+          React.createElement('polygon', { points: '60,36 68,41 68,50 60,55 52,50 52,41', fill: ink, fillOpacity: '0.25' }),
+          React.createElement('circle',  { cx: '60', cy: '46', r: '4', fill: ink, fillOpacity: '0.5' }),
+          React.createElement('text',    { x: '60', y: '79', textAnchor: 'middle', fontFamily: 'var(--font-display,Georgia,serif)', fontSize: '10', fill: ink, fillOpacity: '0.65', letterSpacing: '2' }, 'KOPF')
+        )
+      : React.createElement(React.Fragment, null,
+          React.createElement('circle', { cx: '60', cy: '52', r: '22', fill: 'none', stroke: ink, strokeWidth: '0.8', strokeOpacity: '0.4', strokeDasharray: '2 3' }),
+          React.createElement('text',   { x: '60', y: '64', textAnchor: 'middle', fontFamily: 'Georgia,serif', fontSize: '32', fontWeight: 'bold', fill: ink, fillOpacity: '0.65' }, 'I'),
+          React.createElement('text',   { x: '60', y: '79', textAnchor: 'middle', fontFamily: 'var(--font-display,Georgia,serif)', fontSize: '10', fill: ink, fillOpacity: '0.65', letterSpacing: '2' }, 'ZAHL')
+        );
+    return React.createElement('svg', { viewBox: '0 0 120 120', style: { width: '100%', height: '100%' } },
+      React.createElement('defs', null,
+        React.createElement('radialGradient', { id: gradId, cx: '35%', cy: '30%', r: '65%' },
+          React.createElement('stop', { offset: '0%',   stopColor: light1 }),
+          React.createElement('stop', { offset: '50%',  stopColor: light2 }),
+          React.createElement('stop', { offset: '100%', stopColor: dark })
+        )
+      ),
+      React.createElement('circle',  { cx: '60', cy: '60', r: '58', fill: edge }),
+      React.createElement('circle',  { cx: '60', cy: '60', r: '55', fill: `url(#${gradId})` }),
+      React.createElement('ellipse', { cx: '46', cy: '38', rx: '14', ry: '9', fill: 'rgba(255,240,140,0.18)', transform: 'rotate(-30 46 38)' }),
+      ...ticks,
+      React.createElement('circle', { cx: '60', cy: '60', r: '49', fill: 'none', stroke: ink, strokeWidth: '0.6', strokeOpacity: '0.4' }),
+      React.createElement('circle', { cx: '60', cy: '60', r: '37', fill: 'none', stroke: ink, strokeWidth: '0.8', strokeOpacity: '0.35' }),
+      motif
+    );
+  };
+
+  // Coin face wrapper: SVG + optional image overlay (from assets/images/coin/)
+  const face = (side) => {
+    const hasImg = side === 'kopf' ? !kopfErr : !zahlErr;
+    return React.createElement('div', { style: { position: 'relative', width: '100%', height: '100%' } },
+      coinFace(side),
+      React.createElement('img', {
+        src: `assets/images/coin/${side}.png`,
+        onError: () => side === 'kopf' ? setKopfErr(true) : setZahlErr(true),
+        style: {
+          display: hasImg ? 'block' : 'none',
+          position: 'absolute',
+          left: '20%', top: '20%', width: '60%', height: '60%',
+          borderRadius: '50%', objectFit: 'cover',
+          boxShadow: 'inset 0 0 8px rgba(0,0,0,0.3)'
+        }
+      })
+    );
+  };
+
+  return React.createElement('div', {
+    style: { background: 'rgba(210,160,20,0.06)', border: '1px solid rgba(210,160,20,0.2)',
+      borderRadius: '8px', padding: '18px 16px 16px', marginBottom: '24px', textAlign: 'center' }
+  },
+    React.createElement('div', {
+      style: { fontFamily: 'var(--font-mono)', fontSize: 8, letterSpacing: '0.3em',
+        color: 'rgba(210,160,40,0.5)', textTransform: 'uppercase', marginBottom: 14 }
+    }, 'Wirf eine Münze'),
+
+    React.createElement('div', { style: { perspective: '600px', width: 120, height: 120, margin: '0 auto 14px' } },
+      React.createElement('div', {
+        style: {
+          width: '100%', height: '100%', position: 'relative', transformStyle: 'preserve-3d',
+          transform: `rotateY(${angle}deg)`,
+          transition: flipping ? 'transform 1.5s cubic-bezier(0.2,0.75,0.45,1.0)' : 'none',
+          filter: 'drop-shadow(0 4px 16px rgba(190,130,0,0.55))'
+        }
+      },
+        React.createElement('div', { style: { position: 'absolute', inset: 0, backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' } }, face('kopf')),
+        React.createElement('div', { style: { position: 'absolute', inset: 0, backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' } }, face('zahl'))
+      )
+    ),
+
+    React.createElement('div', {
+      style: { fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 300,
+        letterSpacing: '0.14em', color: flipping ? 'rgba(200,190,240,0.3)' : 'var(--white)',
+        minHeight: 26, marginBottom: 4, transition: 'color 0.3s' }
+    }, flipping ? 'Wird geworfen…' : result === 'kopf' ? 'Kopf' : result === 'zahl' ? 'Zahl' : '—'),
+
+    React.createElement('div', {
+      style: { fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: 12,
+        color: 'rgba(210,170,60,0.75)', minHeight: 18, marginBottom: 14 }
     },
-    onMouseEnter: e => {
-      if (!flipping) {
-        e.currentTarget.style.background = 'rgba(210,160,20,0.15)';
-        e.currentTarget.style.color = '#f8d860';
-      }
-    },
-    onMouseLeave: e => {
-      e.currentTarget.style.background = 'transparent';
-      e.currentTarget.style.color = 'rgba(210,170,50,0.85)';
-    }
-  }, result && !flipping ? 'Noch einmal werfen' : 'Münze werfen'));
+      !flipping && result === 'kopf' && '— Zwei Samen der Furcht',
+      !flipping && result === 'zahl' && '— Ein Samen der Furcht',
+      !flipping && !result && React.createElement('span', { style: { color: 'rgba(200,190,240,0.28)', fontStyle: 'italic', fontSize: 11 } }, 'Noch kein Wurf')
+    ),
+
+    React.createElement('button', {
+      onClick: flip, disabled: flipping,
+      style: { background: 'transparent', border: '1px solid rgba(210,160,20,0.4)', borderRadius: 3,
+        color: 'rgba(210,170,50,0.85)', fontFamily: 'var(--font-display)', fontSize: 10,
+        letterSpacing: '0.2em', textTransform: 'uppercase', padding: '8px 22px',
+        cursor: flipping ? 'wait' : 'pointer', transition: 'all 0.2s', opacity: flipping ? 0.4 : 1 },
+      onMouseEnter: e => { if (!flipping) { e.currentTarget.style.background = 'rgba(210,160,20,0.14)'; e.currentTarget.style.color = '#f8d860'; } },
+      onMouseLeave: e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'rgba(210,170,50,0.85)'; }
+    }, result && !flipping ? 'Noch einmal' : 'Münze werfen')
+  );
 }
 
 // ── ROLL BUTTON ───────────────────────────────────────────────────────────────
@@ -1592,7 +1454,124 @@ function ZeitContent() {
       lineHeight: '1.75',
       color: 'rgba(200,190,240,0.75)'
     }
-  }, chosen.detail)));
+  }, chosen.detail)),
+/*#__PURE__*/React.createElement("div", {
+  style: {
+    marginTop: '32px',
+    paddingTop: '24px',
+    borderTop: '1px solid rgba(124,77,255,0.18)'
+  }
+},
+  /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.22em',
+      color: 'rgba(124,77,255,0.55)',
+      textTransform: 'uppercase',
+      marginBottom: '4px'
+    }
+  }, "Meruria"),
+  /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '15px',
+      fontWeight: '300',
+      color: 'var(--white)',
+      marginBottom: '18px'
+    }
+  }, "Veluner Zeitrechnung"),
+  /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(4, 1fr)',
+      gap: '8px',
+      marginBottom: '22px'
+    }
+  },
+    [{n:'224',l:'Tage/Jahr',s:'Ein Meruria-Jahr'},{n:'12',l:'Monate',s:'18 oder 19 Tage'},{n:'7',l:'Wochentage',s:'32 Wochen/Jahr'},{n:'2',l:'Monde',s:'Gold & Asche'}].map(({n,l,s}) =>
+      /*#__PURE__*/React.createElement("div", {
+        key: l,
+        style: {
+          padding: '12px 10px',
+          background: 'rgba(124,77,255,0.06)',
+          border: '1px solid rgba(124,77,255,0.14)',
+          borderRadius: '3px',
+          textAlign: 'center'
+        }
+      },
+        /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-display)',fontSize:'22px',fontWeight:'300',color:'var(--white)',marginBottom:'2px'}}, n),
+        /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.15em',textTransform:'uppercase',color:'rgba(124,77,255,0.7)'}}, l),
+        /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-body)',fontSize:'10px',color:'rgba(200,190,240,0.4)',marginTop:'2px'}}, s)
+      )
+    )
+  ),
+  /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'7px',letterSpacing:'0.2em',textTransform:'uppercase',color:'rgba(124,77,255,0.55)',marginBottom:'8px'}}, "Die zwölf Monate"),
+  /*#__PURE__*/React.createElement(TW, null,
+    /*#__PURE__*/React.createElement("table", {className:"eq-table"},
+      /*#__PURE__*/React.createElement("thead", null,
+        /*#__PURE__*/React.createElement("tr", null,
+          /*#__PURE__*/React.createElement("th", null, "#"),
+          /*#__PURE__*/React.createElement("th", null, "Monat"),
+          /*#__PURE__*/React.createElement("th", null, "Tage"),
+          /*#__PURE__*/React.createElement("th", null, "Sternzeichen")
+        )
+      ),
+      /*#__PURE__*/React.createElement("tbody", null,
+        [['I','Janvar','19','Die Arche'],['II','Fevorn','18','Die B\xF6e'],['III','Mareth','19','Die Wurzel'],['IV','Aprel','19','Die Linse'],['V','Mairen','18','Die Stille'],['VI','Junvar','19','Das Irrlicht'],['VII','Juval','19','Die Klinge'],['VIII','Auvar','19','Die Glut'],['IX','Septhar','19','Die Br\xFCcke'],['X','Oktar','18','Der Schleier'],['XI','Novren','18','Das Labyrinth'],['XII','Derath','19','Der Spalt']].map(([nr,name,tage,zeichen]) =>
+          /*#__PURE__*/React.createElement("tr", {key:name},
+            /*#__PURE__*/React.createElement("td", {style:{opacity:'0.5',fontFamily:'var(--font-mono)',fontSize:'10px'}}, nr),
+            /*#__PURE__*/React.createElement("td", null, name),
+            /*#__PURE__*/React.createElement("td", null, tage),
+            /*#__PURE__*/React.createElement("td", {style:{opacity:'0.65'}}, zeichen)
+          )
+        )
+      )
+    )
+  ),
+  /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'7px',letterSpacing:'0.2em',textTransform:'uppercase',color:'rgba(124,77,255,0.55)',marginBottom:'8px',marginTop:'16px'}}, "Die sieben Wochentage"),
+  /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(7, 1fr)',
+      gap: '6px',
+      marginBottom: '22px'
+    }
+  },
+    [['1','Aven','Aufbruch'],['2','Eiru','Ruhig'],['3','Orun','Mitte'],['4','Ulai','Wende'],['5','Ivar','Leicht'],['6','Orel','Markt'],['7','Elu','Abschluss']].map(([nr,name,rolle]) =>
+      /*#__PURE__*/React.createElement("div", {
+        key: name,
+        style: {
+          padding: '8px 6px',
+          background: 'rgba(124,77,255,0.05)',
+          border: '1px solid rgba(124,77,255,0.12)',
+          borderRadius: '3px',
+          textAlign: 'center'
+        }
+      },
+        /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'7px',color:'rgba(124,77,255,0.45)',marginBottom:'3px'}}, 'T'+nr),
+        /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-display)',fontSize:'12px',color:'var(--white)',marginBottom:'2px'}}, name),
+        /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-body)',fontSize:'9px',color:'rgba(200,190,240,0.4)'}}, rolle)
+      )
+    )
+  ),
+  /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'7px',letterSpacing:'0.2em',textTransform:'uppercase',color:'rgba(124,77,255,0.55)',marginBottom:'8px'}}, "Die zwei Monde"),
+  /*#__PURE__*/React.createElement("div", {style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'10px'}},
+    /*#__PURE__*/React.createElement("div", {style:{padding:'14px 16px',background:'rgba(217,176,107,0.06)',border:'1px solid rgba(217,176,107,0.2)',borderLeft:'3px solid rgba(217,176,107,0.7)',borderRadius:'0 3px 3px 0'}},
+      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-display)',fontSize:'14px',color:'#d9b06b',marginBottom:'6px'}}, "Goldmond"),
+      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'9px',color:'rgba(217,176,107,0.6)',letterSpacing:'0.1em',marginBottom:'4px'}}, "Zyklus: 28 Tage"),
+      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-body)',fontSize:'11px',color:'rgba(200,190,240,0.55)',lineHeight:'1.5'}}, "Vollmond: Mondsegen (Tag 16) — Der gr\xF6\xDFere, hellere Mond.")
+    ),
+    /*#__PURE__*/React.createElement("div", {style:{padding:'14px 16px',background:'rgba(168,182,212,0.06)',border:'1px solid rgba(168,182,212,0.2)',borderLeft:'3px solid rgba(168,182,212,0.7)',borderRadius:'0 3px 3px 0'}},
+      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-display)',fontSize:'14px',color:'#a8b6d4',marginBottom:'6px'}}, "Aschmond"),
+      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'9px',color:'rgba(168,182,212,0.6)',letterSpacing:'0.1em',marginBottom:'4px'}}, "Zyklus: 17 Tage"),
+      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-body)',fontSize:'11px',color:'rgba(200,190,240,0.55)',lineHeight:'1.5'}}, "Vollmond: Aschenhauch (Tag 12) — Kleiner, blasser, schneller.")
+    )
+  ),
+  /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-body)',fontSize:'10px',color:'rgba(200,190,240,0.35)',marginTop:'12px',fontStyle:'italic'}},
+    "Doppelte Segensnacht (beide Vollmond): alle ∼2 Jahre · Gro\xDFer Gleichlauf (beide Neumond): alle 476 Tage"
+  )
+));
 }
 function HungerContent() {
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(SH, {
@@ -1952,7 +1931,13 @@ function TraglastContent() {
     }
   }, "\u2153"), " des normalen Gewichts. Im Gep\xE4ck tr\xE4gt sie ihr volles Gewicht.")), /*#__PURE__*/React.createElement(SubH, {
     id: "sec-traglast-calc"
-  }, "Traglast berechnen"), /*#__PURE__*/React.createElement(TraglastCalc, null));
+  }, "Traglast berechnen"), /*#__PURE__*/React.createElement(TraglastCalc, null), /*#__PURE__*/React.createElement("div", {
+  className: "feat reveal-up"
+}, /*#__PURE__*/React.createElement("div", {
+  className: "feat-name"
+}, "Fahrzeuge ziehen"), /*#__PURE__*/React.createElement("div", {
+  className: "feat-text"
+}, "Ein Tier, das eine Kutsche, einen Karren, einen Streitwagen, einen Schlitten oder einen Wagen zieht, kann ein Gewicht von bis zu dem ", /*#__PURE__*/React.createElement("strong", {style:{color:'rgba(200,190,240,0.85)'}}, "F\xFCnffachen"), " seiner Grundtragf\xE4higkeit bewegen – einschlie\xDFlich des Gewichts des Fahrzeugs. Wenn mehrere Tiere dasselbe Fahrzeug ziehen, k\xF6nnen sie ihre Tragf\xE4higkeiten addieren.")));
 }
 function ReisenContent() {
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(SH, {
@@ -3031,14 +3016,8 @@ function FurchtContent() {
   }, t))), /*#__PURE__*/React.createElement(SubH, {
     id: "sec-stress"
   }, "Stress"), /*#__PURE__*/React.createElement(Txt, {
-    c: /*#__PURE__*/React.createElement(React.Fragment, null, "Stress wird als nummerischer ", /*#__PURE__*/React.createElement(Acc, {
-      c: "Stresswert"
-    }), " verfolgt und bei W\xFCrfen als ", /*#__PURE__*/React.createElement(Bad, {
-      c: "Malus"
-    }), " abgezogen. Ein ganzer Ruhetag senkt den Stresswert um ", /*#__PURE__*/React.createElement(Acc, {
-      c: "1"
-    }), ". Stress steigt durch:")
-  }), ['Aufreibende, dramatische Augenblicke (besonders bei Samen der Furcht).', 'Jede 24 Stunden ohne lange Rast.', 'Mitansehen des Todes einer geliebten Person.', 'Wirklichkeit werdende Albträume oder Urängste.', 'Beeinträchtigung des Realitätsverständnisses.', 'Mitansehen einer Verwandlung in eine grauenhafte Kreatur.'].map(t => /*#__PURE__*/React.createElement("div", {
+    c: /*#__PURE__*/React.createElement(React.Fragment, null, "Stress wird als nummerischer ", /*#__PURE__*/React.createElement(Acc, { c: "Stresswert" }), " verfolgt. Bei jedem ", /*#__PURE__*/React.createElement(Acc, { c: "Angriffs-, Attributs- oder Rettungswurf" }), " wird der aktuelle Stresswert als ", /*#__PURE__*/React.createElement(Bad, { c: "Malus" }), " vom Ergebnis abgezogen. Der SL kann den Stresswert ", /*#__PURE__*/React.createElement(Acc, { c: "nach Ermessen um 1 erh\xF6hen" }), ", wenn eine der folgenden Situationen eintritt:")
+  }), ['Ein aufreibender, dramatischer Augenblick — vor allem, wenn ein Samen der Furcht des Charakters berührt wird.', 'Alle 24 Stunden, die der Charakter ohne lange Rast verbringt.', 'Mitansehen des Todes einer geliebten Person.', 'Wirklichkeit werdende Albträume oder Urängste.', 'Beeinträchtigung des fundamentalen Realitätsverständnisses des Charakters.', 'Mitansehen, wie sich eine Person in eine grauenhafte und/oder unnatürliche Kreatur verwandelt.'].map(t => /*#__PURE__*/React.createElement("div", {
     key: t,
     className: "feat reveal-up",
     style: {
@@ -3182,6 +3161,24 @@ function FurchtContent() {
       r: '−1W8',
       v: 'Kein Kampf, keine aktive Quest',
       h: 'Du nimmst dir mehrere Tage vollständige Ruhe. Der Effekt kommt zum täglichen Abbau von −1 pro Ruhetag hinzu, lässt sich aber nicht mit anderen Methoden kombinieren.'
+    }, {
+      a: 'Gefühle besänftigen',
+      d: 'Sofort',
+      r: '— (unterdrückt)',
+      v: 'Zauber',
+      h: 'Unterdrückt die Effekte des Stresswerts für die Zauberdauer — wie auch die Zustände Bezaubert und Verängstigt. Der Stresswert selbst bleibt unverändert.'
+    }, {
+      a: 'Schwache Genesung',
+      d: 'Sofort',
+      r: '−1',
+      v: 'Zauber',
+      h: 'Verringert den Stresswert des Ziels um 1.'
+    }, {
+      a: 'Vollständige Genesung',
+      d: 'Sofort',
+      r: 'auf 0',
+      v: 'Zauber',
+      h: 'Setzt den Stresswert des Ziels vollständig auf 0 zurück.'
     }];
     return /*#__PURE__*/React.createElement(TW, null, /*#__PURE__*/React.createElement("table", {
       className: "eq-table",
@@ -3796,6 +3793,129 @@ function AbenteuerContent() {
   }), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(MunitionRoller, null)));
 }
 
+// ── UNTERWASSER CONTENT ───────────────────────────────────────────────────────
+
+function UnterwasserContent() {
+  const RULES = [{
+    key: 'nahkampf',
+    icon: '⚔',
+    title: 'Nahkampf',
+    color: 'rgba(124,77,255,1)',
+    colorDim: 'rgba(124,77,255,0.55)',
+    colorBg: 'rgba(124,77,255,0.06)',
+    colorBorder: 'rgba(124,77,255,0.2)',
+    colorBorderLeft: 'rgba(124,77,255,0.8)',
+    summary: 'Nachteil auf Angriffswürfe ohne Schwimmgeschwindigkeit',
+    detail: 'Eine Kreatur ohne natürliche oder magische Schwimmgeschwindigkeit hat beim Angriffswurf einen Nachteil.',
+    ausnahmen: ['Dolch', 'Speer', 'Kurzschwert', 'Dreizack']
+  }, {
+    key: 'fernkampf',
+    icon: '🏹',
+    title: 'Fernkampf',
+    color: 'rgba(60,180,255,1)',
+    colorDim: 'rgba(60,180,255,0.55)',
+    colorBg: 'rgba(60,180,255,0.06)',
+    colorBorder: 'rgba(60,180,255,0.2)',
+    colorBorderLeft: 'rgba(60,180,255,0.8)',
+    summary: 'Automatisches Verfehlen außerhalb der Normalreichweite',
+    detail: 'Angriffe auf Ziele außerhalb der normalen Reichweite verfehlen automatisch. Selbst innerhalb der normalen Reichweite gilt Nachteil.',
+    ausnahmen: ['Armbrust', 'Netz', 'Speer', 'Dreizack', 'Pfeil']
+  }, {
+    key: 'feuer',
+    icon: '🔥',
+    title: 'Feuerschaden',
+    color: 'rgba(255,120,40,1)',
+    colorDim: 'rgba(255,120,40,0.55)',
+    colorBg: 'rgba(255,120,40,0.06)',
+    colorBorder: 'rgba(255,120,40,0.2)',
+    colorBorderLeft: 'rgba(255,120,40,0.8)',
+    summary: 'Widerstand gegen Feuer bei vollständigem Eintauchen',
+    detail: 'Kreaturen und Objekte, die vollständig eingetaucht sind, haben Widerstand gegen Feuerschaden.',
+    ausnahmen: null
+  }];
+  return /*#__PURE__*/React.createElement("div", null,
+    /*#__PURE__*/React.createElement(SH, {mono: "Regelwerk", title: "Unterwasser"}),
+    /*#__PURE__*/React.createElement(Txt, {c: "Kämpfe unter Wasser folgen besonderen Regeln. Schwimmfähigkeit und Waffenwahl entscheiden darüber, ob ein Angriff mit Nachteil ausgeführt wird oder überhaupt trifft."}),
+    /*#__PURE__*/React.createElement("div", {
+      style: {display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '8px'}
+    },
+      RULES.map(r =>
+        /*#__PURE__*/React.createElement("div", {
+          key: r.key,
+          style: {
+            padding: '18px 20px',
+            background: r.colorBg,
+            border: '1px solid ' + r.colorBorder,
+            borderLeft: '3px solid ' + r.colorBorderLeft,
+            borderRadius: '0 4px 4px 0'
+          }
+        },
+          /*#__PURE__*/React.createElement("div", {
+            style: {display: 'flex', alignItems: 'baseline', gap: '10px', marginBottom: '8px'}
+          },
+            /*#__PURE__*/React.createElement("div", {
+              style: {
+                fontFamily: 'var(--font-display)',
+                fontSize: '15px',
+                fontWeight: '400',
+                color: r.color,
+                letterSpacing: '0.12em'
+              }
+            }, r.title),
+            /*#__PURE__*/React.createElement("div", {
+              style: {
+                fontFamily: 'var(--font-body)',
+                fontSize: '11px',
+                color: r.colorDim
+              }
+            }, r.summary)
+          ),
+          /*#__PURE__*/React.createElement("div", {
+            style: {
+              fontFamily: 'var(--font-body)',
+              fontWeight: '300',
+              fontSize: '12px',
+              lineHeight: '1.75',
+              color: 'rgba(200,190,240,0.65)',
+              marginBottom: r.ausnahmen ? '12px' : '0'
+            }
+          }, r.detail),
+          r.ausnahmen && /*#__PURE__*/React.createElement("div", null,
+            /*#__PURE__*/React.createElement("div", {
+              style: {
+                fontFamily: 'var(--font-mono)',
+                fontSize: '7px',
+                letterSpacing: '0.2em',
+                textTransform: 'uppercase',
+                color: r.colorDim,
+                marginBottom: '6px'
+              }
+            }, "Kein Nachteil mit"),
+            /*#__PURE__*/React.createElement("div", {
+              style: {display: 'flex', flexWrap: 'wrap', gap: '5px'}
+            },
+              r.ausnahmen.map(w =>
+                /*#__PURE__*/React.createElement("span", {
+                  key: w,
+                  style: {
+                    fontFamily: 'var(--font-body)',
+                    fontSize: '11px',
+                    padding: '2px 9px',
+                    background: 'rgba(124,77,255,0.1)',
+                    border: '1px solid rgba(124,77,255,0.25)',
+                    borderRadius: '2px',
+                    color: 'rgba(200,190,240,0.8)'
+                  }
+                }, w)
+              )
+            )
+          )
+        )
+      )
+    )
+  );
+}
+
 // ── SICHT CONTENT ─────────────────────────────────────────────────────────────
 
 function MiniFov({
@@ -4151,7 +4271,8 @@ function App() {
     erschoepfung: /*#__PURE__*/React.createElement(ErschoepfungContent, null),
     verletzungen: /*#__PURE__*/React.createElement(VerletzungenContent, null),
     furcht: /*#__PURE__*/React.createElement(FurchtContent, null),
-    abenteuer: /*#__PURE__*/React.createElement(AbenteuerContent, null)
+    abenteuer: /*#__PURE__*/React.createElement(AbenteuerContent, null),
+    unterwasser: /*#__PURE__*/React.createElement(UnterwasserContent, null)
   };
   return /*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement("div", {
     onMouseMove: handleMouseMove,

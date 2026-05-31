@@ -2,6 +2,8 @@
 <html lang="de"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/images/favicon/favicon-m.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/images/favicon/favicon-m-180.png">
 <title>Meruria — DM · Missionen</title>
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
@@ -299,7 +301,7 @@ function CreateForm({
     beschreibung: '',
     status: '',
     rewards_xp: 100,
-    rewards_schillinge: 200,
+    rewards_hade: 200,
     rewards_item: ''
   });
   const [steps, setSteps] = useState([{
@@ -331,7 +333,7 @@ function CreateForm({
     }));
     const rewards = {
       xp: Number(form.rewards_xp) || 0,
-      schillinge: Number(form.rewards_schillinge) || 0,
+      hade: Number(form.rewards_hade) || 0,
       item: form.rewards_item.trim() || null
     };
     const {
@@ -544,11 +546,11 @@ function CreateForm({
     onChange: e => set('rewards_xp', e.target.value)
   })), /*#__PURE__*/React.createElement("div", {
     className: "field"
-  }, /*#__PURE__*/React.createElement("label", null, "Schillinge"), /*#__PURE__*/React.createElement("input", {
+  }, /*#__PURE__*/React.createElement("label", null, "Hade"), /*#__PURE__*/React.createElement("input", {
     type: "number",
     min: "0",
-    value: form.rewards_schillinge,
-    onChange: e => set('rewards_schillinge', e.target.value)
+    value: form.rewards_hade,
+    onChange: e => set('rewards_hade', e.target.value)
   }))), /*#__PURE__*/React.createElement("div", {
     className: "field",
     style: {
@@ -673,7 +675,7 @@ function EditForm({ mission, onSaved, onCancel }) {
     beschreibung: mission.beschreibung || '',
     status: mission.status || '',
     rewards_xp: mission.rewards?.xp ?? 0,
-    rewards_schillinge: mission.rewards?.schillinge ?? 0,
+    rewards_hade: mission.rewards?.hade ?? 0,
     rewards_item: mission.rewards?.item || ''
   });
   const [steps, setSteps] = useState(
@@ -691,7 +693,7 @@ function EditForm({ mission, onSaved, onCancel }) {
     if (!form.name.trim()) return;
     setSaving(true);
     const anweisungen = steps.filter(s => s.txt.trim()).map(s => ({ txt: s.txt.trim(), n: 0, max: Number(s.max) || 1 }));
-    const rewards = { xp: Number(form.rewards_xp) || 0, schillinge: Number(form.rewards_schillinge) || 0, item: form.rewards_item.trim() || null };
+    const rewards = { xp: Number(form.rewards_xp) || 0, hade: Number(form.rewards_hade) || 0, item: form.rewards_item.trim() || null };
     const { data, error } = await window._sb.from('missions').update({
       name: form.name.trim(), kategorie: form.kategorie, sw: Number(form.sw), lv: Number(form.lv),
       auftraggeber: form.auftraggeber.trim(), region: form.region.trim(),
@@ -751,7 +753,7 @@ function EditForm({ mission, onSaved, onCancel }) {
       /*#__PURE__*/React.createElement("label", { style: { marginBottom: '10px' } }, "Belohnungen"),
       /*#__PURE__*/React.createElement("div", { style: row2 },
         /*#__PURE__*/React.createElement("div", { className: "field" }, /*#__PURE__*/React.createElement("label", null, "XP"), /*#__PURE__*/React.createElement("input", { type: "number", min: "0", value: form.rewards_xp, onChange: e => set('rewards_xp', e.target.value) })),
-        /*#__PURE__*/React.createElement("div", { className: "field" }, /*#__PURE__*/React.createElement("label", null, "Schillinge"), /*#__PURE__*/React.createElement("input", { type: "number", min: "0", value: form.rewards_schillinge, onChange: e => set('rewards_schillinge', e.target.value) }))
+        /*#__PURE__*/React.createElement("div", { className: "field" }, /*#__PURE__*/React.createElement("label", null, "Hade"), /*#__PURE__*/React.createElement("input", { type: "number", min: "0", value: form.rewards_hade, onChange: e => set('rewards_hade', e.target.value) }))
       ),
       /*#__PURE__*/React.createElement("div", { className: "field", style: { marginBottom: 0 } }, /*#__PURE__*/React.createElement("label", null, "Gegenstand (optional)"), /*#__PURE__*/React.createElement("input", { value: form.rewards_item, onChange: e => set('rewards_item', e.target.value), placeholder: "Itemname…" }))
     ),

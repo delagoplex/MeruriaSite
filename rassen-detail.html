@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/images/favicon/favicon-m.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/images/favicon/favicon-m-180.png">
+<title>Meruria — Rassendetails</title>
+<link rel="stylesheet" href="assets/styles/global/fonts.css">
+<link rel="stylesheet" href="assets/styles/global/base.css">
+<link rel="stylesheet" href="assets/styles/pages/RassenDetail.css">
+<script src="assets/scripts/vendor/react.production.min.js"></script>
+<script src="assets/scripts/vendor/react-dom.production.min.js"></script>
+<script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/scripts/vendor/supabase.min.js"></script>
+<script src="assets/scripts/supabase-client.js"></script>
+<script src="assets/components/nav.js"></script>
+<script src="assets/components/site-gate.js"></script>
+<script src="assets/scripts/data/rassen-data.js"></script>
+<script src="assets/scripts/data/rassen-detail-data.js"></script>
+<script>
+(function() {
+  var rasse = new URLSearchParams(location.search).get('rasse') || '';
+  var data  = (window.RASSEN_DETAIL_DATA || {})[rasse];
+  var hex   = (data && data.accent) ? data.accent : '#7c4dff';
+  var r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+  var root = document.documentElement;
+  root.style.setProperty('--accent',     hex);
+  root.style.setProperty('--accent-rgb', r+','+g+','+b);
+  if (data) document.title = 'Meruria — ' + data.name;
+})();
+</script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useRef, useCallback } = React;
+
+const IN_IFRAME = window.self !== window.top;
+const RASSE     = new URLSearchParams(location.search).get('rasse') || '';
+const DATA      = (window.RASSEN_DETAIL_DATA || {})[RASSE] || null;
+const SiteNav   = window.SiteNav;
+const SiteGate  = window.SiteGate;
+
+function rgb(hex) {
+  return {
+    r: parseInt(hex.slice(1,3),16),
+    g: parseInt(hex.slice(3,5),16),
+    b: parseInt(hex.slice(5,7),16),
+  };
+}
+function makeAcc(hex) {
+  const {r,g,b} = rgb(hex);
+  return alpha => `rgba(${r},${g},${b},${alpha})`;
+}
+
+// ── SICHT LOOKUP ─────────────────────────────────────────
+function findSicht(name) {
+  for (const e of (window.RASSEN_DATA || [])) {
+    if (e.type === 'race' && e.name === name) return e.sicht || null;
+    if (e.type === 'group' && e.subraces) {
+      const sr = e.subraces.find(s => s.name === name);
+      if (sr) return sr.sicht || null;
+    }
+  }
+  return null;
+}
+
+// ── FOV DIAGRAM ───────────────────────────────────────────
+function FovDiagram({ sicht, accent, wandelform = false }) {
+  const s = wandelform && sicht.wandelform ? sicht.wandelform : sicht;
+  const { weite = 18, radius = 120, dunkel = 0 } = s;
+  const W = 200, H = 200, cx = 100, cy = 100, rN = 72, rD = 93;
+  const half = radius / 2;
+  const sa   = (-90 - half) * Math.PI / 180;
+  const ea   = (-90 + half) * Math.PI / 180;
+  const lA   = radius > 180 ? 1 : 0;
+  const pt   = (a, r) => [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+  const wedge = r => {
+    const [sx, sy] = pt(sa, r);
+    const [ex, ey] = pt(ea, r);
+    return `M ${cx},${cy} L ${sx.toFixed(2)},${sy.toFixed(2)} A ${r},${r} 0 ${lA},1 ${ex.toFixed(2)},${ey.toFixed(2)} Z`;
+  };
+  const full = radius >= 360;
+  return (
+    <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ display:'block', overflow:'hidden', borderRadius:'3px' }}>
+      <rect width={W} height={H} fill="rgba(0,0,10,0.55)" />
+      <circle cx={cx} cy={cy} r={rN}       fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth={1} />
+      <circle cx={cx} cy={cy} r={rN * 0.5} fill="none" stroke="rgba(255,255,255,0.03)" strokeWidth={1} />
+      {dunkel > 0 && (full
+        ? <circle cx={cx} cy={cy} r={rD} fill="rgba(60,80,200,0.1)" stroke="rgba(80,120,255,0.22)" strokeWidth={1} />
+        : <path d={wedge(rD)}             fill="rgba(60,80,200,0.1)" stroke="rgba(80,120,255,0.22)" strokeWidth={1} />
+      )}
+      {full
+        ? <circle cx={cx} cy={cy} r={rN} fill={`${accent}20`} stroke={`${accent}66`} strokeWidth={1.5} />
+        : <path d={wedge(rN)}             fill={`${accent}20`} stroke={`${accent}66`} strokeWidth={1.5} />
+      }
+      <line x1={cx} y1={cy} x2={cx} y2={cy - rN} stroke={`${accent}40`} strokeWidth={1} strokeDasharray="3,2" />
+      <circle cx={cx} cy={cy} r={5} fill={accent} opacity={0.85} />
+      <circle cx={cx} cy={cy} r={5} fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth={0.5} />
+      <text x={cx} y={14} textAnchor="middle" fontFamily="var(--font-mono)" fontSize="7" fill={`${accent}55`} letterSpacing="2">VORNE</text>
+      {dunkel > 0 && <text x={cx + rD + 4} y={cy + 4} textAnchor="start" fontFamily="var(--font-mono)" fontSize="7" fill="rgba(80,120,255,0.45)">{dunkel}m</text>}
+      <text x={cx + rN + 4} y={cy + 4} textAnchor="start" fontFamily="var(--font-mono)" fontSize="7" fill={`${accent}66`}>{weite}m</text>
+    </svg>
+  );
+}
+
+// ── SICHT SECTION ─────────────────────────────────────────
+function SichtSection({ sicht, accent }) {
+  const [showWandel, setShowWandel] = useState(false);
+  const hasWandel = !!sicht.wandelform;
+  const active = showWandel && sicht.wandelform ? sicht.wandelform : sicht;
+  const notiz  = active.notiz || null;
+
+  return (
+    <Section label="Wahrnehmung" title="Sicht & Wahrnehmung">
+      {hasWandel && (
+        <div style={{ display:'flex', gap:'6px', marginBottom:'14px' }}>
+          {[['Normalform', false], ['Wandelform', true]].map(([label, val]) => (
+            <button key={label} onClick={() => setShowWandel(val)} style={{
+              fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'10px', letterSpacing:'0.1em',
+              padding:'5px 12px', borderRadius:'3px', cursor:'pointer',
+              border:`1px solid ${val === showWandel ? accent+'88' : accent+'28'}`,
+              background: val === showWandel ? `${accent}1c` : 'transparent',
+              color: val === showWandel ? accent : `${accent}66`, transition:'all 0.2s',
+            }}>{label}</button>
+          ))}
+        </div>
+      )}
+      <div style={{
+        display:'grid', gridTemplateColumns:'200px 1fr', gap:'20px',
+        border:`1px solid ${accent}22`, borderRadius:'4px', padding:'20px', background:`${accent}07`,
+      }}>
+        <div>
+          <FovDiagram sicht={sicht} accent={accent} wandelform={showWandel} />
+          <div style={{ textAlign:'center', fontFamily:'var(--font-mono)', fontSize:'8px', color:`${accent}44`, marginTop:'8px', letterSpacing:'0.15em' }}>
+            SICHTFELD
+          </div>
+        </div>
+        <div style={{ display:'flex', flexDirection:'column', gap:'14px', justifyContent:'center' }}>
+          {[
+            { label:'Sichtweite',  value:`${active.weite} m` },
+            { label:'Dunkelsicht', value: active.dunkel > 0 ? `${active.dunkel} m` : '—' },
+            { label:'Sichtfeld',   value:`${active.radius}°` },
+          ].map(row => (
+            <div key={row.label}>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.2em', color:`${accent}55`, textTransform:'uppercase', marginBottom:'3px' }}>{row.label}</div>
+              <div style={{ fontFamily:'var(--font-body)', fontSize:'13px', fontWeight:'300', color:'rgba(var(--text2-rgb),0.85)' }}>{row.value}</div>
+            </div>
+          ))}
+          {notiz && (
+            <div style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', fontStyle:'italic', color:`${accent}66`, marginTop:'4px', lineHeight:'1.6' }}>
+              {notiz}
+            </div>
+          )}
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+function useScrollReveal() {
+  useEffect(() => {
+    const els = document.querySelectorAll('.reveal,.reveal-right');
+    const obs = new IntersectionObserver(entries =>
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+      { threshold: 0.1 }
+    );
+    els.forEach(el => obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+}
+
+// ── NOT FOUND ────────────────────────────────────────────
+function NotFound() {
+  return (
+    <div style={{ minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'20px', padding:'40px' }}>
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.3em', color:'rgba(var(--accent-rgb),0.5)', textTransform:'uppercase' }}>Rassenarchiv</div>
+      <h1 style={{ fontFamily:'var(--font-display)', fontSize:'32px', fontWeight:'300', letterSpacing:'0.15em', color:'var(--white)', textTransform:'uppercase' }}>
+        {RASSE || 'Rasse'} nicht gefunden
+      </h1>
+      <a href="Rassen.html" className="rd-back" target={IN_IFRAME ? '_top' : '_self'}>
+        <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M10 4L6 8l4 4"/></svg>
+        Alle Rassen
+      </a>
+    </div>
+  );
+}
+
+// ── HERO ─────────────────────────────────────────────────
+function Hero({ data }) {
+  const bgRef = useRef(null);
+  const acc   = makeAcc(data.accent);
+  const {r,g,b} = rgb(data.accent);
+
+  useEffect(() => {
+    const el = bgRef.current;
+    if (!el) return;
+    const onScroll = () => { el.style.transform = `translateY(${window.scrollY * 0.35}px)`; };
+    window.addEventListener('scroll', onScroll, { passive:true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  return (
+    <div className="rd-hero">
+      <div className="rd-hero-bg-clip">
+        <div className="rd-hero-bg" ref={bgRef}>
+          {data.headerImage ? (
+            <>
+              <img src={data.headerImage} alt="" style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', objectPosition:'center top' }} />
+              <div style={{ position:'absolute', inset:0, background:`linear-gradient(180deg,rgba(3,2,15,0.25) 0%,rgba(3,2,15,0.55) 60%,#03020f 100%)` }} />
+              <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse at 30% 80%,${acc(0.18)} 0%,transparent 50%)` }} />
+            </>
+          ) : (
+            <>
+              <div style={{ position:'absolute', inset:0,
+                background:`radial-gradient(ellipse at 30% 60%,${acc(0.18)} 0%,transparent 60%),radial-gradient(ellipse at 70% 30%,rgba(${r},${g},${b},0.10) 0%,transparent 55%),linear-gradient(180deg,#03020f 0%,#05040f 100%)`
+              }} />
+              <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', opacity:0.05 }} viewBox="0 0 1200 500" preserveAspectRatio="xMidYMid slice">
+                <path d="M200 480 Q300 180 500 90 Q400 290 350 480" fill={acc(1)} />
+                <path d="M900 500 Q1000 170 1100 70 Q1050 270 980 500" fill={acc(0.7)} />
+                <path d="M600 460 Q680 190 790 110 Q750 290 700 460" fill={acc(0.5)} />
+              </svg>
+              {Array.from({length:42}).map((_,i) => (
+                <div key={i} style={{ position:'absolute', width:i%6===0?2:1, height:i%6===0?2:1, borderRadius:'50%', background:acc(0.5), left:`${(i*41+9)%100}%`, top:`${(i*57+5)%80}%`, opacity:0.12+i%5*0.05 }} />
+              ))}
+            </>
+          )}
+        </div>
+      </div>
+      <div className="rd-hero-fade" />
+      <div className="rd-hero-inner">
+        <a href="Rassen.html" target={IN_IFRAME ? '_top' : '_self'} className="rd-back">
+          <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M10 4L6 8l4 4"/></svg>
+          Alle Rassen
+        </a>
+        <div className="rd-hero-eyebrow">Rassen</div>
+        <h1 className="rd-hero-title">{data.name}</h1>
+        <div className="rd-hero-subtitle">{data.subtitle}</div>
+        <div className="rd-hero-tags">
+          {data.tags.map(tag => <span key={tag} className="rd-tag">{tag}</span>)}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── SECTION WRAPPER ───────────────────────────────────────
+function Section({ label, title, children, className }) {
+  return (
+    <div className={`rd-section reveal ${className || ''}`}>
+      {label && <div className="rd-section-label">{label}</div>}
+      {title && <h2 className="rd-section-title">{title}</h2>}
+      <div className="rd-section-divider" />
+      {children}
+    </div>
+  );
+}
+
+// ── LORE SECTIONS ────────────────────────────────────────
+function LoreSections({ data }) {
+  return (
+    <>
+      {data.lore.intro && (
+        <Section label="Charaktererstellung" title="Über diese Rasse">
+          {data.lore.intro.map((p,i) => <p key={i} className="rd-body-text">{p}</p>)}
+        </Section>
+      )}
+      {data.lore.gesellschaft && (
+        <Section label="Gesellschaft & Kultur" title="Gesellschaft & Kultur" className="reveal-right">
+          {data.lore.gesellschaft.map((p,i) => <p key={i} className="rd-body-text">{p}</p>)}
+        </Section>
+      )}
+    </>
+  );
+}
+
+// ── PLACEHOLDER ───────────────────────────────────────────
+function Placeholder({ name }) {
+  return (
+    <Section label="Charaktererstellung" title={name}>
+      <div className="rd-placeholder-box">
+        <p>Der Eintrag für <strong style={{ color:'rgba(var(--accent-rgb),0.7)' }}>{name}</strong> wird noch ausgearbeitet.</p>
+        <p style={{ marginTop:'10px' }}>Lore, Gesellschaft, bekannte Personen und Spielmechanik folgen in einem späteren Update.</p>
+      </div>
+    </Section>
+  );
+}
+
+// ── NAME ROLLER ───────────────────────────────────────────
+function NameRoller({ section }) {
+  const [result, setResult] = useState('');
+  const [idx, setIdx]       = useState(-1);
+  const roll = () => {
+    const i = Math.floor(Math.random() * section.namen.length);
+    setIdx(i); setResult(section.namen[i]);
+  };
+  return (
+    <Section label="Namen" title={section.label}>
+      {section.beschreibung && <p className="rd-body-text">{section.beschreibung}</p>}
+      <div style={{ marginTop:'20px' }}>
+        <button className="rd-dice-btn" onClick={roll}>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="3"/><circle cx="8" cy="8" r="1.5" fill="currentColor"/><circle cx="16" cy="16" r="1.5" fill="currentColor"/><circle cx="16" cy="8" r="1.5" fill="currentColor"/><circle cx="8" cy="16" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
+          Name würfeln
+        </button>
+        {result && <div className="rd-roll-result">{result}</div>}
+      </div>
+      <div className="rd-name-grid" style={{ marginTop:'28px' }}>
+        {section.namen.map((n,i) => (
+          <div key={i} className={`rd-name-cell${i===idx?' active':''}`} onClick={() => { setIdx(i); setResult(n); }}>
+            <span className="num">{String(i+1).padStart(2,'0')}</span>{n}
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+// ── TRAIT ROLLER ─────────────────────────────────────────
+function TraitRoller({ section }) {
+  const [result, setResult] = useState('');
+  const [idx, setIdx]       = useState(-1);
+  const roll = () => {
+    const i = Math.floor(Math.random() * section.merkmale.length);
+    setIdx(i); setResult(section.merkmale[i]);
+  };
+  return (
+    <Section label="Merkmale" title={section.label}>
+      {section.beschreibung && <p className="rd-body-text">{section.beschreibung}</p>}
+      <div style={{ marginTop:'20px' }}>
+        <button className="rd-dice-btn" onClick={roll}>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="3"/><circle cx="8" cy="8" r="1.5" fill="currentColor"/><circle cx="16" cy="16" r="1.5" fill="currentColor"/></svg>
+          Merkmal würfeln
+        </button>
+        {result && <div className="rd-roll-result">{result}</div>}
+      </div>
+      <div className="rd-trait-grid" style={{ marginTop:'20px' }}>
+        {section.merkmale.map((m,i) => (
+          <div key={i} className={`rd-trait-pill${i===idx?' active':''}`} onClick={() => { setIdx(i); setResult(m); }}>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', opacity:0.5, marginRight:'8px' }}>{i+1}</span>{m}
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+// ── ROLL TABLES ───────────────────────────────────────────
+function RollTables({ section }) {
+  const [results, setResults] = useState({});
+  const roll = (name, items) => {
+    const r = items[Math.floor(Math.random() * items.length)];
+    setResults(prev => ({ ...prev, [name]: r }));
+  };
+  return (
+    <Section label="Tabellen" title={section.label}>
+      {section.beschreibung && <p className="rd-body-text">{section.beschreibung}</p>}
+      <div className="rd-tables-grid" style={{ marginTop:'20px' }}>
+        {section.tabellen.map(t => (
+          <div key={t.name} className="rd-table-block">
+            <div className="rd-table-header">{t.name}</div>
+            <div style={{ padding:'8px 0' }}>
+              {t.eintraege.map((e,i) => (
+                <div key={i} className="rd-table-row" onClick={() => setResults(prev => ({...prev,[t.name]:e}))} style={{ cursor:'pointer' }}>
+                  <span className="idx">{i+1}</span><span>{e}</span>
+                </div>
+              ))}
+            </div>
+            <div style={{ padding:'8px 16px 12px' }}>
+              <button className="rd-dice-btn" style={{ fontSize:'10px', padding:'8px 16px' }} onClick={() => roll(t.name, t.eintraege)}>Würfeln</button>
+              {results[t.name] && <div className="rd-roll-result" style={{ fontSize:'14px', padding:'12px 20px' }}>{results[t.name]}</div>}
+            </div>
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+// ── SPECIAL SECTION DISPATCHER ────────────────────────────
+function SpecialSection({ section }) {
+  if (section.type === 'nameRoller')  return <NameRoller  section={section} />;
+  if (section.type === 'traitRoller') return <TraitRoller section={section} />;
+  if (section.type === 'tables')      return <RollTables  section={section} />;
+  return null;
+}
+
+// ── CHAR GEN ─────────────────────────────────────────────
+function CharGen({ gen }) {
+  const [result, setResult] = useState(null);
+  const roll = () => {
+    const r = {};
+    gen.felder.forEach(f => {
+      switch (f.type) {
+        case 'choice': r[f.label] = f.optionen[Math.floor(Math.random() * f.optionen.length)]; break;
+        case 'table':  r[f.label] = f.optionen[Math.floor(Math.random() * f.optionen.length)]; break;
+        case 'range':  r[f.label] = `${Math.floor(Math.random() * (f.max - f.min + 1)) + f.min}${f.suffix || ''}`; break;
+        default:       r[f.label] = '—';
+      }
+    });
+    setResult(r);
+  };
+  return (
+    <Section label="Charaktererstellung" title="Charaktergenerierung">
+      <div className="rd-chargen-btn-row">
+        <button className="rd-dice-btn" onClick={roll}>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="3"/><circle cx="8" cy="8" r="1.5" fill="currentColor"/><circle cx="16" cy="16" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
+          Charakter würfeln
+        </button>
+      </div>
+      {result && (
+        <table className="rd-chargen-table" style={{ animation:'result-pop 0.3s ease both' }}>
+          <tbody>
+            {gen.felder.map(f => (
+              <tr key={f.label}>
+                <td>{f.label}</td>
+                <td>{result[f.label]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </Section>
+  );
+}
+
+// ── BEZIEHUNGEN ───────────────────────────────────────────
+function Beziehungen({ items }) {
+  return (
+    <Section label="Gesellschaft" title="Beziehungen zu anderen Völkern" className="reveal-right">
+      <div className="rd-bez-grid">
+        {items.map(item => (
+          <div key={item.volk} className="rd-bez-card">
+            <div className="rd-bez-volk">{item.volk}</div>
+            <div className="rd-bez-relation">{item.relation}</div>
+            <div className="rd-bez-text">{item.text}</div>
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+// ── BEKANNTE ──────────────────────────────────────────────
+function Bekannte({ items }) {
+  if (!items || items.length === 0) return (
+    <Section label="Personen" title="Bekannte Personen">
+      <p className="rd-bek-empty">Noch keine bekannten Personen dokumentiert.</p>
+    </Section>
+  );
+  return (
+    <Section label="Personen" title="Bekannte Personen">
+      <div className="rd-bek-grid">
+        {items.map((p,i) => (
+          <div key={i} className="rd-bek-card">
+            <div className="rd-bek-name">{p.name}</div>
+            <div className="rd-bek-rolle">{p.rolle}</div>
+            <div className="rd-bek-text">{p.beschreibung}</div>
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+// ── RADAR ─────────────────────────────────────────────────
+function Radar({ data: rd }) {
+  const acc = makeAcc(DATA.accent);
+  const N = rd.labels.length;
+  const W = 200, CX = 100, CY = 105, R = 72;
+  const angle = i => Math.PI * 2 * i / N - Math.PI / 2;
+  const pt    = (i, r) => ({ x: CX + r * Math.cos(angle(i)), y: CY + r * Math.sin(angle(i)) });
+  const poly  = arr => arr.map(p => `${p.x},${p.y}`).join(' ');
+
+  const dataPoints = rd.values.map((v, i) => pt(i, v / 100 * R));
+  const gridLevels = [0.25, 0.5, 0.75, 1.0];
+
+  return (
+    <Section label="Profil" title="Merkmals-Profil">
+      <div className="rd-radar-wrap">
+        <svg viewBox="0 0 200 210" width="220" height="230" style={{ flexShrink:0 }}>
+          {gridLevels.map(level => (
+            <polygon key={level} points={poly(rd.labels.map((_,i) => pt(i, level * R)))}
+              fill="none" stroke={acc(0.15)} strokeWidth="0.5" />
+          ))}
+          {rd.labels.map((_,i) => {
+            const o = pt(i, R);
+            return <line key={i} x1={CX} y1={CY} x2={o.x} y2={o.y} stroke={acc(0.2)} strokeWidth="0.5" />;
+          })}
+          <polygon points={poly(dataPoints)} fill={acc(0.18)} stroke={acc(0.85)} strokeWidth="1.5" />
+          {dataPoints.map((p,i) => <circle key={i} cx={p.x} cy={p.y} r="3" fill={acc(0.9)} />)}
+          {rd.labels.map((label,i) => {
+            const o = pt(i, R + 18);
+            return <text key={i} x={o.x} y={o.y} textAnchor="middle" dominantBaseline="middle"
+              fontSize="8" fill={acc(0.75)} fontFamily="var(--font-mono)" letterSpacing="0.08em">{label}</text>;
+          })}
+        </svg>
+        <div className="rd-radar-desc">
+          {rd.labels.map((label,i) => (
+            <div key={label} style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'10px' }}>
+              <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.15em', color:'rgba(var(--accent-rgb),0.6)', textTransform:'uppercase' }}>{label}</span>
+              <div style={{ display:'flex', alignItems:'center', gap:'8px' }}>
+                <div style={{ width:'80px', height:'3px', background:'rgba(var(--accent-rgb),0.1)', borderRadius:'2px', overflow:'hidden' }}>
+                  <div style={{ height:'100%', width:`${rd.values[i]}%`, background:`rgba(var(--accent-rgb),0.75)`, borderRadius:'2px' }} />
+                </div>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(var(--text2-rgb),0.5)', width:'28px' }}>{rd.values[i]}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+// ── QUIZ ─────────────────────────────────────────────────
+function Quiz({ data: qd }) {
+  const acc = makeAcc(DATA.accent);
+  const [step,    setStep]    = useState(0);
+  const [scores,  setScores]  = useState({});
+  const [done,    setDone]    = useState(false);
+  const [winner,  setWinner]  = useState(null);
+
+  const select = useCallback(tags => {
+    const next = {...scores};
+    tags.forEach(t => { next[t] = (next[t] || 0) + 1; });
+    setScores(next);
+    if (step + 1 >= qd.steps.length) {
+      const w = Object.entries(next).sort((a,b) => b[1]-a[1])[0]?.[0] || null;
+      setWinner(w); setDone(true);
+    } else {
+      setStep(step + 1);
+    }
+  }, [step, scores, qd.steps.length]);
+
+  const reset = () => { setStep(0); setScores({}); setDone(false); setWinner(null); };
+
+  const cur = qd.steps[step];
+
+  return (
+    <Section label="Kenne deinen Charakter" title="Klassenempfehlung">
+      {!done ? (
+        <>
+          <div className="rd-quiz-progress">
+            {qd.steps.map((_,i) => <div key={i} className={`rd-quiz-dot${i<step?' done':i===step?' done':''}`} style={i===step?{background:acc(0.5),borderColor:acc(0.8)}:{}} />)}
+          </div>
+          <div className="rd-quiz-question">{cur.frage}</div>
+          <div className="rd-quiz-options">
+            {cur.optionen.map((opt,i) => (
+              <button key={i} className="rd-quiz-opt" onClick={() => select(opt.tags)}>{opt.text}</button>
+            ))}
+          </div>
+        </>
+      ) : (
+        <div className="rd-quiz-result">
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.3em', color:'rgba(var(--accent-rgb),0.5)', textTransform:'uppercase', marginBottom:'12px' }}>Empfehlung</div>
+          <div className="rd-quiz-result-class" style={{ color:`rgba(var(--accent-rgb),1)` }}>{winner}</div>
+          <div className="rd-quiz-result-desc">{qd.klassen[winner] || '—'}</div>
+          <button className="rd-quiz-reset" onClick={reset}>Nochmal</button>
+        </div>
+      )}
+    </Section>
+  );
+}
+
+// ── STAT BLOCK ────────────────────────────────────────────
+function StatBlock({ data: sd }) {
+  const acc = makeAcc(DATA.accent);
+  return (
+    <Section label="Spielmechanik" title="Rassenmerkmale">
+      {sd.features.map((f,i) => (
+        <div key={i} className="rd-feature">
+          <div className="rd-feature-name">{f.name}</div>
+          {f.text && <div className="rd-feature-text">{f.text}</div>}
+          {f.subfeatures && f.subfeatures.map(sf => (
+            <div key={sf.name} className="rd-subfeature">
+              <div className="rd-subfeature-name">{sf.name}</div>
+              <div className="rd-feature-text">{sf.text}</div>
+            </div>
+          ))}
+          {f.talente && (
+            <div style={{ marginTop:'8px' }}>
+              {f.talente.map(t => (
+                <span key={t} className="rd-talent-pill">{t}</span>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+    </Section>
+  );
+}
+
+// ── GEBÄUDE LINK ─────────────────────────────────────────
+function GebaeudeLinkSection({ data }) {
+  return (
+    <Section label="Kolonisierung" title="Gebäudekatalog">
+      <p className="rd-body-text">
+        {data.name} können in Meruria eigene Kolonien gründen. Ihr rassenspezifischer Gebäudekatalog enthält alle verfügbaren Bauwerke, Phasen und Bonusse.
+      </p>
+      <a
+        href={`Gebaude.html?rasse=${encodeURIComponent(data.name)}`}
+        target={IN_IFRAME ? '_top' : '_self'}
+        className="rd-gebaude-link"
+        style={{ marginTop:'16px', display:'inline-flex' }}
+      >
+        {data.name} · Gebäudekatalog
+        <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M6 4l4 4-4 4"/></svg>
+      </a>
+    </Section>
+  );
+}
+
+// ── APP ───────────────────────────────────────────────────
+function App() {
+  useScrollReveal();
+
+  if (!DATA) return <NotFound />;
+
+  const sicht = findSicht(DATA.name);
+
+  return (
+    <div className="page-root">
+      {!IN_IFRAME && <SiteNav rightLabel="RASSENARCHIV" />}
+      <Hero data={DATA} />
+      <main className="rd-main">
+        {DATA.lore ? <LoreSections data={DATA} /> : <Placeholder name={DATA.name} />}
+        {sicht && <SichtSection sicht={sicht} accent={DATA.accent} />}
+        {DATA.specialSection    && <SpecialSection section={DATA.specialSection} />}
+        {DATA.charakterGenerator && <CharGen gen={DATA.charakterGenerator} />}
+        {DATA.beziehungen       && <Beziehungen items={DATA.beziehungen} />}
+        <Bekannte items={DATA.bekannte || []} />
+        {DATA.radar    && <Radar    data={DATA.radar} />}
+        {DATA.quiz     && <Quiz     data={DATA.quiz} />}
+        {DATA.statblock && <StatBlock data={DATA.statblock} />}
+        <GebaeudeLinkSection data={DATA} />
+      </main>
+    </div>
+  );
+}
+
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <SiteGate><App /></SiteGate>
+);
+</script>
+</body>
+</html>

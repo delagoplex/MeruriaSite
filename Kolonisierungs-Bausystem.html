@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/images/favicon/favicon-m.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/images/favicon/favicon-m-180.png">
+<title>Meruria — Kolonisierungs- &amp; Bausystem</title>
+<link rel="stylesheet" href="assets/styles/global/fonts.css">
+<link rel="stylesheet" href="assets/styles/global/base.css">
+<link rel="stylesheet" href="assets/styles/pages/Kolonisierungs-Bausystem.css">
+<script src="assets/scripts/vendor/react.production.min.js"></script>
+<script src="assets/scripts/vendor/react-dom.production.min.js"></script>
+<script src="assets/components/nav.js"></script>
+<script src="assets/scripts/vendor/supabase.min.js"></script>
+<script src="assets/scripts/supabase-client.js"></script>
+<script src="assets/components/site-gate.js"></script>
+</head>
+
+<body>
+<div id="root"></div>
+<div class="space-bg"></div>
+<div class="stars s1"></div>
+<div class="stars s2"></div>
+
+<div class="layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-kicker">Kolonisierung &amp; Bau</div>
+    <nav id="sidenav">
+      <button class="side-btn active" data-tab="grundprinzipien"><svg class="hex" viewBox="0 0 12 12"><polygon points="11.196,3 11.196,9 6,12 0.804,9 0.804,3 6,0"></polygon></svg><span>Grundprinzipien</span><span class="s-num">01</span></button>
+      <button class="side-btn" data-tab="kolonist"><svg class="hex" viewBox="0 0 12 12"><polygon points="11.196,3 11.196,9 6,12 0.804,9 0.804,3 6,0"></polygon></svg><span>Weg eines Kolonisten</span><span class="s-num">02</span></button>
+      <button class="side-btn" data-tab="auftragstypen"><svg class="hex" viewBox="0 0 12 12"><polygon points="11.196,3 11.196,9 6,12 0.804,9 0.804,3 6,0"></polygon></svg><span>Auftragstypen</span><span class="s-num">03</span></button>
+      <button class="side-btn" data-tab="phasen"><svg class="hex" viewBox="0 0 12 12"><polygon points="11.196,3 11.196,9 6,12 0.804,9 0.804,3 6,0"></polygon></svg><span>Siedlungsphasen</span><span class="s-num">04</span></button>
+      <button class="side-btn" data-tab="gebaeude"><svg class="hex" viewBox="0 0 12 12"><polygon points="11.196,3 11.196,9 6,12 0.804,9 0.804,3 6,0"></polygon></svg><span>Gebäudekategorien</span><span class="s-num">05</span></button>
+      <button class="side-btn" data-tab="ressourcen"><svg class="hex" viewBox="0 0 12 12"><polygon points="11.196,3 11.196,9 6,12 0.804,9 0.804,3 6,0"></polygon></svg><span>Ressourcensystem</span><span class="s-num">06</span></button>
+      <button class="side-btn" data-tab="wohlbefinden"><svg class="hex" viewBox="0 0 12 12"><polygon points="11.196,3 11.196,9 6,12 0.804,9 0.804,3 6,0"></polygon></svg><span>Wohlbefindenssystem</span><span class="s-num">07</span></button>
+      <button class="side-btn" data-tab="stimmung"><svg class="hex" viewBox="0 0 12 12"><polygon points="11.196,3 11.196,9 6,12 0.804,9 0.804,3 6,0"></polygon></svg><span>Gesamtstimmung</span><span class="s-num">08</span></button>
+      <button class="side-btn" data-tab="ereignisse"><svg class="hex" viewBox="0 0 12 12"><polygon points="11.196,3 11.196,9 6,12 0.804,9 0.804,3 6,0"></polygon></svg><span>Ereignisse</span><span class="s-num">09</span></button>
+      <button class="side-btn" data-tab="beziehungen"><svg class="hex" viewBox="0 0 12 12"><polygon points="11.196,3 11.196,9 6,12 0.804,9 0.804,3 6,0"></polygon></svg><span>Beziehungen</span><span class="s-num">10</span></button>
+      <button class="side-btn" data-tab="erweiterbarkeit"><svg class="hex" viewBox="0 0 12 12"><polygon points="11.196,3 11.196,9 6,12 0.804,9 0.804,3 6,0"></polygon></svg><span>Erweiterbarkeit</span><span class="s-num">11</span></button>
+      <button class="side-btn" data-tab="anhaenge"><svg class="hex" viewBox="0 0 12 12"><polygon points="11.196,3 11.196,9 6,12 0.804,9 0.804,3 6,0"></polygon></svg><span>Anhänge</span><span class="s-num">12</span></button>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="eq-main">
+    <div class="page-title">
+      <div class="pt-kicker">Spielleiter-Referenz · Regelwerk v2.0</div>
+      <h1>Kolonisierung <span class="amp">&amp;</span> Bau</h1>
+      <div class="pt-deco">
+        <span class="line"></span>
+        <svg class="hex" viewBox="0 0 12 12"><polygon points="11.196,3 11.196,9 6,12 0.804,9 0.804,3 6,0"></polygon></svg>
+      </div>
+      <p class="pt-lead">Meruria wird Haus für Haus, Person für Person aufgebaut. Jeder Kolonist zählt.</p>
+    </div>
+
+    <!-- PILL TABS -->
+    <div class="pill-tabs" id="pilltabs">
+      <button class="pill active" data-tab="grundprinzipien">Grundprinzipien</button>
+      <button class="pill" data-tab="kolonist">Weg eines Kolonisten</button>
+      <button class="pill" data-tab="auftragstypen">Auftragstypen</button>
+      <button class="pill" data-tab="phasen">Siedlungsphasen</button>
+      <button class="pill" data-tab="gebaeude">Gebäudekategorien</button>
+      <button class="pill" data-tab="ressourcen">Ressourcensystem</button>
+      <button class="pill" data-tab="wohlbefinden">Wohlbefindenssystem</button>
+      <button class="pill" data-tab="stimmung">Gesamtstimmung</button>
+      <button class="pill" data-tab="ereignisse">Ereignisse</button>
+      <button class="pill" data-tab="beziehungen">Beziehungen</button>
+      <button class="pill" data-tab="erweiterbarkeit">Erweiterbarkeit</button>
+      <button class="pill" data-tab="anhaenge">Anhänge</button>
+    </div>
+
+    <!-- ============ PANELS ============ -->
+
+    <!-- 01 GRUNDPRINZIPIEN -->
+    <section class="panel active" data-panel="grundprinzipien">
+      <div class="sec-head reveal">
+        <div class="sec-kicker"><span class="idx">01</span> Philosophie</div>
+        <h2>Grundprinzipien</h2>
+        <p class="sec-intro">Die ersten Bewohner einer Kolonie sind keine anonyme Masse — sie sind Individuen mit Namen, Geschichten und Bedürfnissen. Die Spielercharaktere sind dabei keine Herrscher, sondern Pioniere, Botschafter und Handwerker des Wandels.</p>
+      </div>
+      <div class="grid-3 reveal">
+        <article class="card principle">
+          <span class="p-num">// 01</span>
+          <h3>Habitat vor Ästhetik</h3>
+          <p>Ein Gebäude ist nur wertvoll, wenn es zur Rasse passt, die es bewohnen soll.</p>
+        </article>
+        <article class="card principle">
+          <span class="p-num">// 02</span>
+          <h3>Quests als Motor</h3>
+          <p>Gebäude entstehen nicht automatisch. Sie entstehen, weil Charaktere Aufgaben übernehmen, Ressourcen heranschaffen und Entscheidungen treffen.</p>
+        </article>
+        <article class="card principle">
+          <span class="p-num">// 03</span>
+          <h3>Jeder Kolonist zählt</h3>
+          <p>Eine Kolonie ist keine Zahl. Sie ist eine Gemeinschaft aus Individuen, von denen jedes ein Zuhause, eine Aufgabe und ein Wohlbefinden hat.</p>
+        </article>
+      </div>
+      <div class="reveal">
+        <div class="layers">
+          <div class="layer">
+            <span class="tag">Mikro-Ebene</span>
+            <p>Jeder Kolonist hat ein Zuhause, Bedürfnisse und ein individuelles Wohlbefinden (WB).</p>
+          </div>
+          <div class="layer">
+            <span class="tag">Makro-Ebene</span>
+            <p>Die Gesamtstimmung der Siedlung entsteht aus dem Durchschnitt aller WB-Werte und dem Vorhandensein von Gemeinschaftsgebäuden.</p>
+          </div>
+        </div>
+        <p class="note"><strong>Wichtig:</strong> Eine junge Kolonie hat 6–20 Personen. Das ist bewusst klein gehalten — jede Person soll spürbar sein. Kolonistenzahlen in den Hunderten gibt es erst in sehr weit entwickelten Siedlungen.</p>
+      </div>
+    </section>
+
+    <!-- 02 WEG EINES KOLONISTEN -->
+    <section class="panel" data-panel="kolonist">
+      <div class="sec-head reveal">
+        <div class="sec-kicker"><span class="idx">02</span> Traumkapseln</div>
+        <h2>Der Weg eines Kolonisten</h2>
+        <p class="sec-intro">Vom Schlaf ins Leben — wie aus einer geborgenen Kapsel ein Mitglied der Gemeinschaft wird.</p>
+      </div>
+      <div class="capsule-intro reveal">
+        <span class="capsule-icon">❄️</span>
+        <p>Neue Bewohner kommen aus <strong>Traumkapseln</strong> — einzelnen Kryostasis-Einheiten, die verstreut in der Wildnis Merurias liegen. Jede Kapsel enthält <strong>genau eine Person</strong>. Erst beim Öffnen zeigt sich, wer darin schläft.</p>
+      </div>
+      <div class="timeline reveal">
+        <div class="tl-step">
+          <div class="tl-marker"><div class="tl-dot">1</div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <span class="tl-phase">Phase 1</span>
+            <h3>Fund der Traumkapsel</h3>
+            <p>Spieler oder NSC-Späher entdecken eine Kapsel. Sie wird gesichert, die Person stabilisiert. Der DM erstellt den NSC-Steckbrief erst in diesem Moment — Name, Rasse, Beruf, Persönlichkeit, Wohn- und Nahrungspräferenz.</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-marker"><div class="tl-dot">2</div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <span class="tl-phase">Phase 2</span>
+            <h3>Transport zur Hauptstadt</h3>
+            <p>Das NSC-Aufnahme-Team übernimmt. Meist ein kurzer, narrativ beschriebener Übergang — Spieler werden nur einbezogen, wenn es sinnvoll ist.</p>
+            <ul>
+              <li>Medizinischer Check (läuft im Hintergrund)</li>
+              <li>Orientierungsgespräch: Wer bin ich? Wo bin ich? Was ist passiert?</li>
+              <li>Erste Stabilisierung und Versorgung</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-marker"><div class="tl-dot">3</div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <span class="tl-phase">Phase 3</span>
+            <h3>Entscheidung: Wohin?</h3>
+            <p>Der Person wird erklärt, welche Kolonien existieren. Sie entscheidet selbst — beeinflusst von Rasse, Persönlichkeit, dem was die Spieler erzählen und der Empfehlung des Aufnahme-Teams. Die Spieler können Einfluss nehmen, aber die Person hat das letzte Wort.</p>
+            <div class="decision-table">
+              <div class="decision-row"><span class="opt">Will in eine Kolonie</span><span class="res">Weiter zu Phase 4 — Eskorte</span></div>
+              <div class="decision-row"><span class="opt">Will in der Hauptstadt bleiben</span><span class="res">Bleibt dort als NSC</span></div>
+              <div class="decision-row"><span class="opt">Unsicher / braucht Zeit</span><span class="res">Entscheidung offen, später möglich</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-marker"><div class="tl-dot">4</div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <span class="tl-phase">Phase 4</span>
+            <h3>Eskorte &amp; Ankunft</h3>
+            <p>Oft werden mehrere Personen gleichzeitig eskortiert. Die Eskorte ist eine Quest mit Reisegefahren, Zeit zum Kennenlernen und einer Ankunftsszene.</p>
+            <ul>
+              <li>Erst nach der Ankunft wird das Wohlbefinden initial berechnet</li>
+              <li>Ein Unterkunfts-Auftrag erscheint am Terminal, falls noch kein passendes Zimmer existiert</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-label reveal" style="margin-top:42px;">Kolonisten-Steckbrief · Vorlage</div>
+      <p class="sec-intro reveal" style="margin-bottom:20px;">Beim Öffnen der Kapsel füllt der DM den Steckbrief aus. Nach der Ankunft kommen die fünf Wohlbefindens-Kategorien hinzu. (Eingaben dienen nur als Notiz im Moment — nichts wird gespeichert.)</p>
+      <div class="steckbrief reveal">
+        <div class="sb-head"><span class="term-led"></span> Kolonist-Steckbrief</div>
+        <div class="sb-body">
+          <div class="sb-grid">
+            <div class="sb-field"><label>Name</label><input type="text" placeholder="___"></div>
+            <div class="sb-field"><label>Rasse</label><input type="text" placeholder="___"></div>
+            <div class="sb-field"><label>Alter</label><input type="text" placeholder="___"></div>
+            <div class="sb-field"><label>Beruf / Rolle</label><input type="text" placeholder="___"></div>
+            <div class="sb-field full"><label>Persönlichkeit</label><input type="text" placeholder="___"></div>
+            <div class="sb-field full"><label>Besonderheit</label><input type="text" placeholder="___"></div>
+            <div class="sb-field"><label>Sozialtyp</label><input type="text" placeholder="Introvertiert / Extrovertiert"></div>
+            <div class="sb-field"><label>Religiös</label><input type="text" placeholder="Ja / Nein"></div>
+          </div>
+
+          <div class="sb-divider"></div>
+
+          <div class="sb-section">
+            <div class="sb-section-label"><span class="em">🏠</span> Unterkunft <span class="sb-wb">WB 0 / 1 / 2</span></div>
+            <div class="sb-grid">
+              <div class="sb-field"><label>Möchte</label><input type="text" placeholder="Einzel / Doppel / Kollektiv / Spezial"></div>
+              <div class="sb-field"><label>Derzeit</label><input type="text" placeholder="___"></div>
+            </div>
+          </div>
+
+          <div class="sb-section">
+            <div class="sb-section-label"><span class="em">🍖</span> Nahrung <span class="sb-wb">WB 0 / 1 / 2</span></div>
+            <div class="sb-grid">
+              <div class="sb-field"><label>Braucht</label><input type="text" placeholder="___"></div>
+              <div class="sb-field"><label>Kantine / Lieblingsnahrung</label><input type="text" placeholder="Ja / Nein"></div>
+            </div>
+          </div>
+
+          <div class="sb-section">
+            <div class="sb-section-label"><span class="em">🌍</span> Habitat <span class="sb-wb">WB 0 / 1 / 2</span></div>
+            <div class="sb-grid">
+              <div class="sb-field full"><label>Terrain passt</label><input type="text" placeholder="Ideal / Akzeptabel / Falsch"></div>
+            </div>
+          </div>
+
+          <div class="sb-section">
+            <div class="sb-section-label"><span class="em">👥</span> Gemeinschaft <span class="sb-wb">WB 0 / 1 / 2</span></div>
+            <div class="sb-grid">
+              <div class="sb-field"><label>Versammlungsort</label><input type="text" placeholder="Ja / Nein"></div>
+              <div class="sb-field"><label>Kultstätte (wenn religiös)</label><input type="text" placeholder="Ja / Nein"></div>
+            </div>
+          </div>
+
+          <div class="sb-section">
+            <div class="sb-section-label"><span class="em">🎯</span> Zweck <span class="sb-wb">WB 0 / 1 / 2</span></div>
+            <div class="sb-grid">
+              <div class="sb-field"><label>Rolle in der Kolonie</label><input type="text" placeholder="___"></div>
+              <div class="sb-field"><label>Passende Werkstatt / Einrichtung</label><input type="text" placeholder="Ja / Nein"></div>
+            </div>
+          </div>
+
+          <div class="sb-divider"></div>
+
+          <div class="sb-grid">
+            <div class="sb-field"><label>Persönliche Punkte (+/–)</label><input type="text" placeholder="___"></div>
+            <div class="sb-field"><label>Gesamt-WB / Zustand</label><input type="text" placeholder="__ / 10 · ___"></div>
+            <div class="sb-field full"><label>Aktive persönliche Quest</label><input type="text" placeholder="___"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-label reveal" style="margin-top:42px;">Wohnpräferenzen nach Rassentyp</div>
+      <p class="sec-intro reveal" style="margin-bottom:20px;">Ein Überblick, welche Rassengruppen welchen Wohntyp bevorzugen — relevant für den WB-Wert Unterkunft.</p>
+      <div class="ref-wrap reveal" style="margin-top:0;">
+        <table class="ref-table">
+          <thead><tr><th>Wohntyp</th><th>Rassen (Beispiele)</th></tr></thead>
+          <tbody>
+            <tr><td class="rt-phase"><b>Stark individuell</b></td><td>Dunkelelfen, Tieflinge, Dhampire, Githyanki, Githzerai</td></tr>
+            <tr><td class="rt-phase"><b>Paar / Familie bevorzugt</b></td><td>Menschen, Halbelfen, Hügelzwerge, Leichtfüße, Stämmige</td></tr>
+            <tr><td class="rt-phase"><b>Kollektiv bevorzugt</b></td><td>Goblins, Kobolde, Grottenschrate, Orks, Thri-Kreen</td></tr>
+            <tr><td class="rt-phase"><b>Rassenspezifische Unterkunft</b></td><td>Aarakocra (Nest), Meereselfen (Pfahlbau), Plasmoid (Feuchtkammer)</td></tr>
+            <tr><td class="rt-phase"><b>Sehr flexibel</b></td><td>Menschen, Plasmoid, Warforged, Autognome, Wechselbälger</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sub-label reveal" style="margin-top:42px;">Persönliche Quests · Beispiele</div>
+      <p class="sec-intro reveal" style="margin-bottom:20px;">Ab WB ≥ 5 kann jeder Kolonist eine persönliche Quest haben. Sie entsteht aus seiner Geschichte und seinen Bedürfnissen. Abschluss gibt dauerhaft +1 WB.</p>
+      <div class="fact-list reveal">
+        <div class="fact"><span class="fl">„Mein Bruder liegt noch in einer Traumkapsel irgendwo im Wald — findet ihn."</span></div>
+        <div class="fact"><span class="fl">„Ich brauche unbedingt meine Werkzeuge zurück."</span></div>
+        <div class="fact"><span class="fl">„Ich kann nur schlafen wenn ich etwas Mondholz in meinem Zimmer habe."</span></div>
+        <div class="fact"><span class="fl">„Ich möchte einen kleinen Garten direkt vor meinem Haus anlegen."</span></div>
+      </div>
+    </section>
+
+    <!-- 03 AUFTRAGSTYPEN -->
+    <section class="panel" data-panel="auftragstypen">
+      <div class="sec-head reveal">
+        <div class="sec-kicker"><span class="idx">03</span> Am Missionsterminal</div>
+        <h2>Auftragstypen &amp; Prioritäten</h2>
+        <p class="sec-intro">Über das Missionsterminal werden alle Bauaufgaben vergeben. Jeder Auftrag hat einen Typ und eine Priorität — von kritisch bis optional.</p>
+      </div>
+      <div class="orders reveal">
+        <div class="order-row"><span class="order-name"><span class="em">🏠</span> Unterkunft</span><span class="order-trigger">Neuer Kolonist ohne Zuhause</span><span class="prio rot">Kritisch</span></div>
+        <div class="order-row"><span class="order-name"><span class="em">🍖</span> Versorgung</span><span class="order-trigger">Nahrung unter kritischem Level</span><span class="prio rot">Kritisch</span></div>
+        <div class="order-row"><span class="order-name"><span class="em">🛡️</span> Sicherheit</span><span class="order-trigger">Bedrohung in der Nähe</span><span class="prio rot">Kritisch</span></div>
+        <div class="order-row"><span class="order-name"><span class="em">💊</span> Fürsorge</span><span class="order-trigger">Kolonist krank oder verletzt</span><span class="prio orange">Hoch</span></div>
+        <div class="order-row"><span class="order-name"><span class="em">🔨</span> Bau</span><span class="order-trigger">Gemeinschaftsgebäude geplant</span><span class="prio orange">Hoch</span></div>
+        <div class="order-row"><span class="order-name"><span class="em">📦</span> Ressourcen</span><span class="order-trigger">Baumaterial fehlt</span><span class="prio gelb">Mittel</span></div>
+        <div class="order-row"><span class="order-name"><span class="em">🧭</span> Erkundung</span><span class="order-trigger">Neuer Bereich erschlossen werden</span><span class="prio gelb">Mittel</span></div>
+        <div class="order-row"><span class="order-name"><span class="em">🤝</span> Diplomatisch</span><span class="order-trigger">Kontakt mit anderer Kolonie</span><span class="prio gelb">Mittel</span></div>
+        <div class="order-row"><span class="order-name"><span class="em">🎯</span> Persönlich</span><span class="order-trigger">Kolonist hat persönliche Quest</span><span class="prio gruen">Optional</span></div>
+      </div>
+
+      <div class="sub-label reveal" style="margin-top:42px;">Auftragsformat · Vorlage</div>
+      <p class="sec-intro reveal" style="margin-bottom:20px;">Jeder Auftrag am Terminal folgt diesem Format — ob als physische Tafel oder magisches Display.</p>
+      <div class="terminal-card reveal">
+        <div class="tc-head"><span class="term-led"></span> MISSIONSTERMINAL — AUFTRAG</div>
+        <div class="tc-body">
+          <div class="tc-row"><span class="tc-k">Auftrag #</span><span class="tc-v">___ &nbsp;&nbsp;&nbsp; Typ: ___ &nbsp;&nbsp;&nbsp; Priorität: 🔴 / 🟠 / 🟡 / 🟢</span></div>
+          <div class="tc-divider"></div>
+          <div class="tc-row"><span class="tc-k">Titel</span><span class="tc-v">___</span></div>
+          <div class="tc-row"><span class="tc-k">Kolonie</span><span class="tc-v">___</span></div>
+          <div class="tc-row"><span class="tc-k">Für wen</span><span class="tc-v">___ (Name des Kolonisten oder „Alle")</span></div>
+          <div class="tc-divider"></div>
+          <div class="tc-row"><span class="tc-k">Was zu tun ist</span><span class="tc-v">___</span></div>
+          <div class="tc-divider"></div>
+          <div class="tc-row"><span class="tc-k">Benötigte Ressourcen</span><span class="tc-v">___</span></div>
+          <div class="tc-row"><span class="tc-k">Geschätzte Bauzeit</span><span class="tc-v">___</span></div>
+          <div class="tc-divider"></div>
+          <div class="tc-row"><span class="tc-k">Belohnung</span><span class="tc-v">___ GP</span></div>
+          <div class="tc-row"><span class="tc-k">WB-Effekt</span><span class="tc-v">___</span></div>
+        </div>
+      </div>
+
+      <div class="sub-label reveal" style="margin-top:42px;">Wann erscheinen neue Aufträge?</div>
+      <div class="fact-list reveal">
+        <div class="fact"><span class="fl">Neuer Kolonist ankommt <span>ohne Unterkunft → sofort Auftrag 🏠 Kritisch</span></span></div>
+        <div class="fact"><span class="fl">Gebäude fertiggestellt <span>wenn das nächste sinnvoll wäre, erscheint automatisch ein Folgeauftrag</span></span></div>
+        <div class="fact"><span class="fl">Ereignis erfordert Reaktion <span>Angriff, Nahrungsknappheit, besonderer Fund</span></span></div>
+        <div class="fact"><span class="fl">Kolonist WB ≤ 4 <span>automatischer Hilferuf-Auftrag für diesen Kolonisten</span></span></div>
+        <div class="fact"><span class="fl">Ressourcen unter Mindestschwelle <span>automatisch 📦 Ressourcen-Auftrag</span></span></div>
+      </div>
+    </section>
+
+    <!-- 04 SIEDLUNGSPHASEN -->
+    <section class="panel" data-panel="phasen">
+      <div class="sec-head reveal">
+        <div class="sec-kicker"><span class="idx">04</span> Entwicklung</div>
+        <h2>Siedlungsphasen</h2>
+        <p class="sec-intro">Jede Kolonie durchläuft mehrere Entwicklungsphasen. Die aktuelle Phase bestimmt, welche Gebäude überhaupt gebaut werden können — und wie viele Kolonisten die Siedlung trägt.</p>
+      </div>
+
+      <div class="phase-overview reveal">
+        <button class="po-node" data-scroll="ph-0" type="button"><span class="po-dot">0</span><span class="po-label">Erkundung</span></button>
+        <button class="po-node" data-scroll="ph-05" type="button"><span class="po-dot">0.5</span><span class="po-label">Vorbereitung</span></button>
+        <button class="po-node" data-scroll="ph-1" type="button"><span class="po-dot">1</span><span class="po-label">Lager</span></button>
+        <button class="po-node" data-scroll="ph-2" type="button"><span class="po-dot">2</span><span class="po-label">Außenposten</span></button>
+        <button class="po-node" data-scroll="ph-3" type="button"><span class="po-dot">3</span><span class="po-label">Dorf</span></button>
+        <button class="po-node" data-scroll="ph-4" type="button"><span class="po-dot">4</span><span class="po-label">Stadt</span></button>
+      </div>
+
+      <div class="timeline reveal">
+        <div class="tl-step phase-step" id="ph-0">
+          <div class="tl-marker"><div class="tl-dot">0</div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <span class="tl-phase">Phase 0</span>
+            <h3>Erkundung &amp; Standortwahl</h3>
+            <div class="phase-meta">
+              <div class="pmeta"><span class="pm-k">Kolonisten</span><span class="pm-v">noch keine</span></div>
+              <div class="pmeta"><span class="pm-k">Gebäude</span><span class="pm-v">noch keine</span></div>
+            </div>
+            <p>Bevor ein einziges Gebäude steht, muss der richtige Ort gefunden werden. Am Ende dieser Phase steht eine Standortkarte mit markierten Bauzonen, Ressourcenquellen und Risiken.</p>
+            <span class="pu-label">Was in dieser Phase passiert</span>
+            <ul class="phase-unlock-list">
+              <li><b>Umgebungsanalyse</b> — Terrain, Ressourcen und Gefahren der Umgebung werden bewertet.</li>
+              <li><b>Habitatprüfung</b> — passt der Ort zur Rasse? (Siehe Rassen-Gebäudekatalog.)</li>
+              <li><b>Einwilligung</b> — die ersten Kolonisten müssen zustimmen, an diesen Ort ziehen zu wollen, und die Standortwahl absegnen.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tl-step phase-step" id="ph-05">
+          <div class="tl-marker"><div class="tl-dot frac">0.5</div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <span class="tl-phase">Phase 0.5</span>
+            <h3>Geländevorbereitung</h3>
+            <div class="phase-meta">
+              <div class="pmeta"><span class="pm-k">Kolonisten</span><span class="pm-v">noch keine</span></div>
+              <div class="pmeta"><span class="pm-k">Gebäude</span><span class="pm-v">noch keine</span></div>
+            </div>
+            <p>Der gewählte Standort wird für die Bauarbeiten urbar gemacht, bevor das erste Lager errichtet werden kann. Erst wenn das Gebiet sicher und erschlossen ist, können die Kolonisten nachrücken.</p>
+            <span class="pu-label">Was in dieser Phase passiert</span>
+            <ul class="phase-unlock-list">
+              <li><b>Bedrohungen eliminieren</b> — gefährliche Kreaturen, feindliche Lager oder Umweltgefahren werden beseitigt oder vertrieben.</li>
+              <li><b>Ressourcenquellen beanspruchen</b> — nahegelegene Vorkommen wie Holz, Stein und Wasser werden gesichert und für die Kolonie reserviert.</li>
+              <li><b>Gelände roden &amp; sichern</b> — die Bauzonen werden freigeräumt und erste Zugangswege angelegt.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tl-step phase-step" id="ph-1">
+          <div class="tl-marker"><div class="tl-dot">1</div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <span class="tl-phase">Phase 1</span>
+            <h3>Lager</h3>
+            <div class="phase-meta">
+              <div class="pmeta"><span class="pm-k">Kolonisten</span><span class="pm-v">6 – 20 Personen</span></div>
+              <div class="pmeta"><span class="pm-k">Gebäude</span><span class="pm-v">Gebäude 1 – 10</span></div>
+            </div>
+            <p>Der erste Schritt. Die ersten Kolonisten bauen gemeinsam mit den Spielern ihr Lager auf. Das Wohlbefinden aller Kolonisten beginnt bei nur 2 – 4 Punkten — vieles fehlt noch.</p>
+            <div class="phase-badges">
+              <span class="pbadge off"><span class="ic">✗</span> Kein Handel möglich</span>
+            </div>
+            <span class="pu-label">Freigeschaltete Gebäude</span>
+            <ul class="phase-unlock-list">
+              <li><b>Alle Wohngebäude</b> — Unterkünfte für die ersten Kolonisten.</li>
+              <li><b>Basis-Gemeinschaftsgebäude</b> — Kantine, Lagerhaus und Versammlungsort.</li>
+              <li><b>Großprojekte der Phase 1</b> — erste prägende Bauten der Rasse.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tl-step phase-step" id="ph-2">
+          <div class="tl-marker"><div class="tl-dot">2</div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <span class="tl-phase">Phase 2</span>
+            <h3>Außenposten</h3>
+            <div class="phase-meta">
+              <div class="pmeta"><span class="pm-k">Kolonisten</span><span class="pm-v">15 – 40 Personen</span></div>
+              <div class="pmeta"><span class="pm-k">Gebäude</span><span class="pm-v">Gebäude 11 – 25</span></div>
+            </div>
+            <p>Die Kolonie nimmt Form an und die Spezialisierung beginnt. Ab dieser Phase erscheinen neue Aufträge automatisch am Missionsterminal.</p>
+            <div class="phase-badges">
+              <span class="pbadge on"><span class="ic">✓</span> Handel möglich</span>
+              <span class="pbadge on"><span class="ic">✓</span> Aufträge erscheinen automatisch</span>
+            </div>
+            <span class="pu-label">Freigeschaltete Gebäude</span>
+            <ul class="phase-unlock-list">
+              <li><b>Werkstatt, Heilstätte und Kultstätte</b> — die spezialisierten Gemeinschaftsgebäude.</li>
+              <li><b>Großprojekte der Phase 2</b> — größere rassenspezifische Bauten.</li>
+              <li><b>Handel mit anderen Kolonien</b> wird möglich.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tl-step phase-step" id="ph-3">
+          <div class="tl-marker"><div class="tl-dot">3</div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <span class="tl-phase">Phase 3</span>
+            <h3>Dorf</h3>
+            <div class="phase-meta">
+              <div class="pmeta"><span class="pm-k">Kolonisten</span><span class="pm-v">40 – 100 Personen</span></div>
+              <div class="pmeta"><span class="pm-k">Gebäude</span><span class="pm-v">Gebäude 26 – 50</span></div>
+            </div>
+            <p>Ein echtes Gemeinwesen — die Rasse fühlt sich endlich zuhause. Die Kolonie hat ihre eigene Ressourcenproduktion etabliert und versorgt sich zunehmend selbst.</p>
+            <div class="phase-badges">
+              <span class="pbadge on"><span class="ic">✓</span> Eigene Ressourcenproduktion</span>
+              <span class="pbadge on"><span class="ic">✓</span> Stadtrat-Sitz möglich</span>
+            </div>
+            <span class="pu-label">Freigeschaltete Gebäude</span>
+            <ul class="phase-unlock-list">
+              <li><b>Großprojekte der Phase 3</b> — monumentale, identitätsstiftende Bauten.</li>
+              <li><b>Kulturgebäude</b> — Bauten für Wissen, Glaube und Gemeinschaft.</li>
+              <li><b>Eigener Vertreter im Stadtrat Merurias</b> wird möglich.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tl-step phase-step" id="ph-4">
+          <div class="tl-marker"><div class="tl-dot">4</div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <span class="tl-phase">Phase 4</span>
+            <h3>Stadt</h3>
+            <div class="phase-meta">
+              <div class="pmeta"><span class="pm-k">Kolonisten</span><span class="pm-v">100+ Personen</span></div>
+              <div class="pmeta"><span class="pm-k">Gebäude</span><span class="pm-v">Gebäude 51 und mehr</span></div>
+            </div>
+            <p>Die Kolonie ist selbstständig und verwaltet sich größtenteils selbst. Sie produziert nun eigene Quests und Konflikte und wird zu einer treibenden Kraft in Meruria.</p>
+            <div class="phase-badges">
+              <span class="pbadge on"><span class="ic">✓</span> Stadtrat-Vertreter aktiv</span>
+              <span class="pbadge star"><span class="ic">⭐</span> Endgebäude verfügbar</span>
+            </div>
+            <span class="pu-label">Freigeschaltete Gebäude</span>
+            <ul class="phase-unlock-list">
+              <li><b>Alle Gebäude</b> — inklusive der Endgebäude (⭐).</li>
+              <li><b>Stadtrat-Vertreter aktiv</b> — die Kolonie redet in Meruria mit.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="ref-wrap reveal">
+        <div class="sub-label">Schnellreferenz · alle Phasen auf einen Blick</div>
+        <div class="ref-scroll">
+          <table class="ref-table">
+            <thead>
+              <tr><th>Phase</th><th>Kolonisten</th><th>Gebäude</th><th>Freigeschaltet</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="rt-phase">0 <b>Erkundung</b></td><td>noch keine</td><td>noch keine</td><td>Standortwahl &amp; Habitatprüfung</td></tr>
+              <tr><td class="rt-phase">0.5 <b>Vorbereitung</b></td><td>noch keine</td><td>noch keine</td><td>Gebiet sichern, Ressourcenquellen beanspruchen</td></tr>
+              <tr><td class="rt-phase">1 <b>Lager</b></td><td>6 – 20</td><td>1 – 10</td><td>Wohngebäude, Basis-Gemeinschaftsgebäude, Großprojekte P1</td></tr>
+              <tr><td class="rt-phase">2 <b>Außenposten</b></td><td>15 – 40</td><td>11 – 25</td><td>Werkstatt, Heilstätte, Kultstätte, Großprojekte P2, Handel</td></tr>
+              <tr><td class="rt-phase">3 <b>Dorf</b></td><td>40 – 100</td><td>26 – 50</td><td>Großprojekte P3, Kulturgebäude, Stadtrat-Sitz möglich</td></tr>
+              <tr><td class="rt-phase">4 <b>Stadt</b></td><td>100+</td><td>51+</td><td>Alle Gebäude inkl. Endgebäude (⭐), Stadtrat aktiv</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 GEBÄUDEKATEGORIEN -->
+    <section class="panel" data-panel="gebaeude">
+      <div class="sec-head reveal">
+        <div class="sec-kicker"><span class="idx">05</span> Bauen</div>
+        <h2>Gebäudekategorien</h2>
+        <p class="sec-intro">Jede Rasse hat drei Arten von Gebäuden — ausführlich in den jeweiligen Rassen-Gebäudekatalogen beschrieben.</p>
+      </div>
+      <div class="build-cats reveal">
+        <article class="card bcat">
+          <span class="b-emoji">🏠</span>
+          <h3>Wohngebäude</h3>
+          <p>Unterkunft für einzelne Kolonisten oder Familien. Ein Kolonist gilt erst als angekommen, wenn er ein passendes Zuhause hat.</p>
+          <span class="phase-badge">Immer P1</span>
+        </article>
+        <article class="card bcat">
+          <span class="b-emoji">🏛️</span>
+          <h3>Gemeinschaftsgebäude</h3>
+          <p>Kantine, Lager, Versammlungsort, Werkstatt, Heilstätte, Kultstätte — das Rückgrat des sozialen Lebens.</p>
+          <span class="phase-badge">P1 – P2</span>
+        </article>
+        <article class="card bcat">
+          <span class="b-emoji">🏗️</span>
+          <h3>Großprojekte</h3>
+          <p>Rassenspezifische Bauten, die die Siedlung prägen und ihren Charakter sichtbar machen.</p>
+          <span class="phase-badge">P1 – P4</span>
+        </article>
+      </div>
+      <div class="sub-label reveal">Die 6 Standard-Gemeinschaftsgebäude</div>
+      <div class="comm-grid reveal">
+        <div class="comm"><h4>Kantine</h4><p class="fn">Nahrungsversorgung</p><p class="wb">Nahrung WB <b>0→1</b> (ohne Lieblingsnahrung) oder <b>0→2</b> (mit)</p></div>
+        <div class="comm"><h4>Lagerhaus</h4><p class="fn">Ressourcenlagerung</p><p class="wb">Ermöglicht <b>Bauprojekte überhaupt</b></p></div>
+        <div class="comm"><h4>Versammlungsort</h4><p class="fn">Gemeinschaft &amp; Entscheidungen</p><p class="wb">Gemeinschaft WB <b>+1 / +2</b> bei regelmäßiger Nutzung</p></div>
+        <div class="comm"><h4>Werkstatt</h4><p class="fn">Ressourcenverarbeitung</p><p class="wb">Zweck WB <b>+1</b> für Handwerker · Baukosten <b>–10 %</b></p></div>
+        <div class="comm"><h4>Heilstätte</h4><p class="fn">Krankenversorgung</p><p class="wb">Gemeinschaft WB <b>+1</b> für alle · halbe Erholungszeit</p></div>
+        <div class="comm"><h4>Kultstätte</h4><p class="fn">Glaube &amp; Kultur</p><p class="wb">Gemeinschaft WB <b>+1</b> für Gläubige · <b>–1</b> wenn fehlend</p></div>
+      </div>
+
+      <div class="sub-label reveal" style="margin-top:42px;">Wohngebäude · Zimmertypen</div>
+      <p class="sec-intro reveal" style="margin-bottom:20px;">Ein Kolonist gilt erst dann als wirklich angekommen, wenn er ein <em>passendes</em> Zuhause hat. Jedes Wohngebäude besteht aus einer bestimmten Zimmerart.</p>
+      <div class="comm-grid reveal">
+        <div class="comm"><h4>Einzelzimmer</h4><p class="fn">1 Person allein</p><p class="wb">Privatsphäre, eigene Tür</p></div>
+        <div class="comm"><h4>Doppelzimmer</h4><p class="fn">2 Personen (Paar oder Mitbewohner)</p><p class="wb">Günstiger zu bauen</p></div>
+        <div class="comm"><h4>Kinderzimmer</h4><p class="fn">1–2 Kinder</p><p class="wb">Immer an Elternzimmer angrenzend</p></div>
+        <div class="comm"><h4>Gemeinschaftsschlafraum</h4><p class="fn">3–6 Personen kollektiv</p><p class="wb">Für kollektiv lebende Rassen</p></div>
+        <div class="comm"><h4>Nistplatz</h4><p class="fn">1–2 Personen (flugfähige Rassen)</p><p class="wb">Muss erhöht / offen sein</p></div>
+        <div class="comm"><h4>Wasserrankt</h4><p class="fn">1–3 aquatische Personen</p><p class="wb">Braucht Wasseranschluss</p></div>
+        <div class="comm"><h4>Erdkammer</h4><p class="fn">1–2 Personen (grabende Rassen)</p><p class="wb">Unterirdisch, kein Tageslicht</p></div>
+      </div>
+
+      <div class="sub-label reveal" style="margin-top:42px;">Bauprozess · Schritt für Schritt</div>
+      <div class="steps reveal">
+        <div class="step-card"><span class="sc-num">// 01</span><h4>Bedarf erkennen</h4><p>Durch einen neuen Kolonisten ohne Zuhause oder einen Gemeinschaftswunsch. Erscheint automatisch am Missionsterminal.</p></div>
+        <div class="step-card"><span class="sc-num">// 02</span><h4>Ressourcen beschaffen</h4><p>Durch Erkundungsquests, Handel oder vorhandene Produktionsgebäude.</p></div>
+        <div class="step-card"><span class="sc-num">// 03</span><h4>Bauen</h4><p>Spieler mit passendem Skill: Bauzeit –1 Tag. Mit Magie: –2 Tage. NSC-Handwerker allein: normale Bauzeit.</p></div>
+        <div class="step-card"><span class="sc-num">// 04</span><h4>Einzug &amp; Einweihung</h4><p>Kurze Rollenspielszene. Das Wohlbefinden wird neu berechnet, neue Aufträge erscheinen am Terminal.</p></div>
+      </div>
+
+      <div class="sub-label reveal" style="margin-top:42px;">Größenskala &amp; Bauzeiten</div>
+      <div class="ref-wrap reveal" style="margin-top:0;">
+        <table class="ref-table">
+          <thead>
+            <tr><th>Größe</th><th>Bauzeit</th><th>Ressourcen (ca.)</th><th>Beispiel</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="rt-phase"><b>Winzig</b></td><td>0,5 – 1 Tag</td><td>5 – 15 Einheiten</td><td>Notschlafplatz, Schrein</td></tr>
+            <tr><td class="rt-phase"><b>Klein</b></td><td>1 – 2 Tage</td><td>15 – 25 Einheiten</td><td>Einzelhütte, Werkzeugschuppen</td></tr>
+            <tr><td class="rt-phase"><b>Mittel</b></td><td>3 – 5 Tage</td><td>25 – 45 Einheiten</td><td>Familienhäuschen, Kantine</td></tr>
+            <tr><td class="rt-phase"><b>Groß</b></td><td>7 – 14 Tage</td><td>45 – 90 Einheiten</td><td>Gemeinschaftshaus, Werkstatt</td></tr>
+            <tr><td class="rt-phase"><b>Monumental</b></td><td>20 – 60 Tage</td><td>90 – 200+ Einheiten</td><td>Tempel, Rathaus, Endgebäude</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 06 RESSOURCENSYSTEM -->
+    <section class="panel" data-panel="ressourcen">
+      <div class="sec-head reveal">
+        <div class="sec-kicker"><span class="idx">06</span> Material</div>
+        <h2>Ressourcensystem</h2>
+        <p class="sec-intro">Acht Ressourcenkategorien bilden die materielle Grundlage jedes Bauprojekts. Ihre Qualität entscheidet über Bauzeit und Wohlbefinden beim Einzug.</p>
+      </div>
+      <div class="res-grid reveal">
+        <div class="res-chip"><h4>Holz</h4><p class="ex">Leichtholz, Hartholz, Mondholz, Dracheneiche, Lebendholz</p></div>
+        <div class="res-chip"><h4>Stein</h4><p class="ex">Gewöhnlicher Stein, Marmor, Obsidian, Mondstein, Grauer Stein</p></div>
+        <div class="res-chip"><h4>Pflanzlich</h4><p class="ex">Hartgras, Heilkräuter, Moos, Pilze, Nachtblumen, Seetang</p></div>
+        <div class="res-chip"><h4>Tierisch</h4><p class="ex">Windfedern, Drachenschuppen, Tierhäute, Knochen, Spinnenseide</p></div>
+        <div class="res-chip"><h4>Mineralisch</h4><p class="ex">Eisenerz, Mithral, Runen-Kristalle, Kupfer, Edelsteine</p></div>
+        <div class="res-chip"><h4>Magisch</h4><p class="ex">Arkane Essenz, Seelenstaub, Mondlicht-Öl, Feuerherz, Schattenessenz</p></div>
+        <div class="res-chip"><h4>Nahrung</h4><p class="ex">Fleisch, Fisch, Getreide, Pilze, Früchte, Insekten, Blutessenz</p></div>
+        <div class="res-chip"><h4>Handwerk</h4><p class="ex">Werkzeuge, Zahnräder, Glasfenster, Keramik, Seile, Fässer</p></div>
+      </div>
+      <div class="sub-label reveal">Ressourcenqualität</div>
+      <div class="quality reveal">
+        <div class="qual"><span class="sym">○</span><div><h4>Einfach</h4><p>Normaler Bau, keine Boni.</p></div></div>
+        <div class="qual"><span class="sym">◑</span><div><h4>Gut</h4><p>Bauzeit –20 % oder WB +0,5 bei Einzug.</p></div></div>
+        <div class="qual"><span class="sym">●</span><div><h4>Exzellent</h4><p>Bauzeit –40 % und WB +1 bei Einzug.</p></div></div>
+      </div>
+
+      <div class="sub-label reveal" style="margin-top:42px;">Ressourcengewinnung</div>
+      <div class="fact-list reveal">
+        <div class="fact"><span class="fl">Erkundungsquest <span>Charaktere suchen aktiv (Survival / Nature, DC 12–18 je nach Ressource).</span></span></div>
+        <div class="fact"><span class="fl">Produktionsgebäude <span>Sägewerk, Mine, Farm — passive Produktion alle 7 Tage.</span></span></div>
+        <div class="fact"><span class="fl">Handel <span>Andere Kolonien, reisende Händler, Markt.</span></span></div>
+        <div class="fact"><span class="fl">Quests &amp; Belohnungen <span>Als Missionsbelohnung am Terminal.</span></span></div>
+        <div class="fact"><span class="fl">Magische Quellen <span>Seltene, mächtige Ressourcen in gefährlichen Gebieten.</span></span></div>
+      </div>
+
+      <div class="sub-label reveal" style="margin-top:42px;">Lagerkapazität</div>
+      <div class="ref-wrap reveal" style="margin-top:0;">
+        <table class="ref-table">
+          <thead><tr><th>Lagertyp</th><th>Kapazität</th></tr></thead>
+          <tbody>
+            <tr><td class="rt-phase"><b>Kein Lager</b></td><td>max. 20 Einheiten</td></tr>
+            <tr><td class="rt-phase"><b>Kleines Lager / Plattform</b></td><td>bis 100 Einheiten</td></tr>
+            <tr><td class="rt-phase"><b>Mittleres Lagerhaus</b></td><td>bis 300 Einheiten</td></tr>
+            <tr><td class="rt-phase"><b>Großes Warenlager</b></td><td>bis 1.000 Einheiten</td></tr>
+          </tbody>
+        </table>
+        <p class="note" style="margin-top:18px;">Gestohlene oder zerstörte Ressourcen sind <strong>verloren</strong>.</p>
+      </div>
+    </section>
+
+    <!-- 07 WOHLBEFINDEN -->
+    <section class="panel" data-panel="wohlbefinden">
+      <div class="sec-head reveal">
+        <div class="sec-kicker"><span class="idx">07</span> Das Herzstück</div>
+        <h2>Wohlbefindenssystem</h2>
+        <p class="sec-intro">Jeder Kolonist hat einen Wohlbefindenswert von 0–10 Punkten. Es ist kein Glückswert — es ist ein Bedürfnis-Erfüllungs-Score. Fünf Kategorien geben je 0, 1 oder 2 Punkte.</p>
+      </div>
+      <div class="sub-label reveal">Die fünf Bedürfniskategorien · je 0 / 1 / 2 Punkte</div>
+      <div class="wb-cats reveal">
+        <div class="wb-cat">
+          <span class="wb-em">🏠</span><h4>Unterkunft</h4>
+          <div class="wb-scale"><div class="lvl"><b>0</b> Kein Schlafplatz</div><div class="lvl"><b>1</b> Akzeptable Unterkunft</div><div class="lvl"><b>2</b> Ideale Unterkunft für diese Rasse</div></div>
+          <div class="wb-lift"><b>Gehoben durch</b><span>Passendes Wohngebäude &amp; Zimmertyp</span></div>
+        </div>
+        <div class="wb-cat">
+          <span class="wb-em">🍖</span><h4>Nahrung</h4>
+          <div class="wb-scale"><div class="lvl"><b>0</b> Hungert</div><div class="lvl"><b>1</b> Ausreichend Nahrung</div><div class="lvl"><b>2</b> Lieblingsnahrung + Kantine</div></div>
+          <div class="wb-lift"><b>Gehoben durch</b><span>Kantine &amp; Lieblingsnahrung</span></div>
+        </div>
+        <div class="wb-cat">
+          <span class="wb-em">🌍</span><h4>Habitat</h4>
+          <div class="wb-scale"><div class="lvl"><b>0</b> Falsches Terrain</div><div class="lvl"><b>1</b> Terrain neutral/akzeptabel</div><div class="lvl"><b>2</b> Ideales Terrain für diese Rasse</div></div>
+          <div class="wb-lift"><b>Gehoben durch</b><span>Richtige Standortwahl &amp; Terrain</span></div>
+        </div>
+        <div class="wb-cat">
+          <span class="wb-em">👥</span><h4>Gemeinschaft</h4>
+          <div class="wb-scale"><div class="lvl"><b>0</b> Völlig isoliert</div><div class="lvl"><b>1</b> Versammlungsort vorhanden</div><div class="lvl"><b>2</b> Aktive Gemeinschaft + Rituale</div></div>
+          <div class="wb-lift"><b>Gehoben durch</b><span>Versammlungsort, Rituale &amp; Feste</span></div>
+        </div>
+        <div class="wb-cat">
+          <span class="wb-em">🎯</span><h4>Zweck</h4>
+          <div class="wb-scale"><div class="lvl"><b>0</b> Keine Aufgabe</div><div class="lvl"><b>1</b> Hat eine Rolle in der Kolonie</div><div class="lvl"><b>2</b> Bedeutungsvolle, passende Aufgabe</div></div>
+          <div class="wb-lift"><b>Gehoben durch</b><span>Passende Werkstatt / Einrichtung</span></div>
+        </div>
+      </div>
+
+      <!-- WB CALCULATOR -->
+      <div class="calc reveal">
+        <div class="calc-head">
+          <div class="ct"><span class="term-led"></span> WB-Rechner · Bedürfnis-Erfüllung</div>
+          <div class="ct">Tippe je Kategorie 0 / 1 / 2</div>
+        </div>
+        <div class="calc-grid">
+          <div class="calc-controls" id="calcControls"></div>
+          <div class="calc-readout">
+            <div class="gauge">
+              <svg viewBox="0 0 120 120">
+                <circle class="track" cx="60" cy="60" r="52"></circle>
+                <circle class="fill" id="gaugeFill" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="326.7"></circle>
+              </svg>
+              <div class="gauge-center">
+                <div class="gauge-val" id="gaugeVal">0</div>
+                <div class="gauge-max">/ 10</div>
+              </div>
+            </div>
+            <div class="state-display">
+              <span class="sd-emoji" id="sdEmoji">💔</span>
+              <span class="sd-name" id="sdName">Verlässt die Siedlung</span>
+              <span class="sd-eff" id="sdEff">Geht — es sei denn, Spieler greifen ein.</span>
+              <span class="sd-base" id="sdBase">Basis 0 · Persönlich ±0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-label reveal" style="margin-top:42px;">Zustände &amp; spielmechanische Folgen</div>
+      <div class="states reveal">
+        <div class="state-row"><span class="state-pts">9–10</span><span class="state-name"><span class="em">🌟</span> Aufblühend</span><span class="state-eff">Arbeitet schneller; Bonus auf Quests; bringt Freunde mit.</span></div>
+        <div class="state-row"><span class="state-pts">7–8</span><span class="state-name"><span class="em">😊</span> Zufrieden</span><span class="state-eff">Normalbetrieb; stabil; bleibt in der Siedlung.</span></div>
+        <div class="state-row"><span class="state-pts">5–6</span><span class="state-name"><span class="em">😐</span> Neutral</span><span class="state-eff">Macht das Nötigste; kein Bonus, kein Malus.</span></div>
+        <div class="state-row"><span class="state-pts">3–4</span><span class="state-name"><span class="em">😟</span> Unzufrieden</span><span class="state-eff">Arbeitet langsamer; Quests schwieriger.</span></div>
+        <div class="state-row"><span class="state-pts">1–2</span><span class="state-name"><span class="em">😠</span> Elend</span><span class="state-eff">Droht zu gehen; könnte Unruhe stiften.</span></div>
+        <div class="state-row"><span class="state-pts">0</span><span class="state-name"><span class="em">💔</span> Verlässt die Siedlung</span><span class="state-eff">Geht — es sei denn, Spieler greifen ein.</span></div>
+      </div>
+
+      <div class="sub-label reveal" style="margin-top:42px;">Wann wird das Wohlbefinden neu berechnet?</div>
+      <p class="sec-intro reveal" style="margin-bottom:20px;">Das WB wird <strong>nicht täglich</strong> berechnet. Der DM prüft es in diesen Momenten:</p>
+      <div class="info-grid reveal">
+        <div class="fact"><span class="fl">Neues Gebäude fertiggestellt</span></div>
+        <div class="fact"><span class="fl">Persönliche Quest eines Kolonisten abgeschlossen</span></div>
+        <div class="fact"><span class="fl">Signifikantes Ereignis <span>Angriff, Nahrungsknappheit, Fest …</span></span></div>
+        <div class="fact"><span class="fl">Einmal pro Siedlungsphase <span>nach ca. 5–10 Sitzungen</span></span></div>
+      </div>
+    </section>
+
+    <!-- 08 GESAMTSTIMMUNG -->
+    <section class="panel" data-panel="stimmung">
+      <div class="sec-head reveal">
+        <div class="sec-kicker"><span class="idx">08</span> Makro-Ebene</div>
+        <h2>Gesamtstimmung der Siedlung</h2>
+        <p class="sec-intro">Die Stimmung der ganzen Kolonie entsteht aus dem Durchschnitt aller individuellen WB-Werte.</p>
+      </div>
+      <div class="calc-formula reveal">
+        Gesamtstimmung = <span class="hl">Durchschnitt aller WB-Werte</span>, gerundet auf eine ganze Zahl.
+        <span class="ex">Beispiel: 6 Kolonisten mit WB 7, 5, 8, 4, 6, 7 → Durchschnitt 6,2 → Gesamtstimmung 6</span>
+      </div>
+      <div class="mood-table reveal">
+        <div class="mood-row"><span class="mood-avg">9–10</span><span class="mood-name"><span class="em">🌟</span> Aufblühend</span><span class="mood-eff">Bauzeit –20 %; neue Kolonisten ziehen freiwillig an.</span></div>
+        <div class="mood-row"><span class="mood-avg">7–8</span><span class="mood-name"><span class="em">😊</span> Gut</span><span class="mood-eff">Normalbetrieb + gelegentliche freiwillige Hilfe der NSCs.</span></div>
+        <div class="mood-row"><span class="mood-avg">5–6</span><span class="mood-name"><span class="em">😐</span> Stabil</span><span class="mood-eff">Normalbetrieb.</span></div>
+        <div class="mood-row"><span class="mood-avg">3–4</span><span class="mood-name"><span class="em">😟</span> Angespannt</span><span class="mood-eff">Bauzeit +20 %; NSCs helfen weniger.</span></div>
+        <div class="mood-row"><span class="mood-avg">1–2</span><span class="mood-name"><span class="em">😠</span> Krisenmodus</span><span class="mood-eff">Kein Wachstum; NSCs streiken oder verlassen die Siedlung.</span></div>
+      </div>
+
+      <div class="sub-label reveal" style="margin-top:42px;">Zusätzliche Gesamtmodifikatoren</div>
+      <p class="sec-intro reveal" style="margin-bottom:20px;">Über den Durchschnitt hinaus gibt es Ereignisse, die <strong>alle</strong> Kolonisten gleichzeitig betreffen:</p>
+      <div class="fact-list reveal">
+        <div class="fact"><span class="fl">Siedlung angegriffen</span><span class="fval neg">–1 · 7 Tage</span></div>
+        <div class="fact"><span class="fl">Gemeinschaftsfest</span><span class="fval pos">+1 · 3 Tage</span></div>
+        <div class="fact"><span class="fl">Nahrungsvorräte komplett leer</span><span class="fval neg">–2</span></div>
+        <div class="fact"><span class="fl">Großes Gemeinschaftsgebäude fertig <span>dauerhaft, wenn genutzt</span></span><span class="fval pos">+1</span></div>
+        <div class="fact"><span class="fl">Wichtige Person gestorben <span>bis Nachfolger gefunden</span></span><span class="fval neg">–1</span></div>
+        <div class="fact"><span class="fl">Erster großer Erfolg der Kolonie <span>dauerhaft</span></span><span class="fval pos">+1</span></div>
+      </div>
+    </section>
+
+    <!-- 09 EREIGNISSE -->
+    <section class="panel" data-panel="ereignisse">
+      <div class="sec-head reveal">
+        <div class="sec-kicker"><span class="idx">09</span> Komplikationen</div>
+        <h2>Ereignisse &amp; Komplikationen</h2>
+        <p class="sec-intro">Das Bauen in einer neuen Welt ist selten problemlos. Der DM kann Ereignisse aktiv einsetzen — oder mit einem W20 auswürfeln.</p>
+      </div>
+
+      <div class="dice-box reveal">
+        <button class="dice-btn" id="rollBtn" type="button">⬢ 1d20 würfeln</button>
+        <div class="dice-result empty" id="diceResult">
+          <div class="dr-roll">Ergebnis</div>
+          <div class="dr-line"><span class="dr-num" id="drNum">—</span><span class="dr-text" id="drText">Würfle, um ein zufälliges Ereignis zu ziehen.</span></div>
+        </div>
+      </div>
+
+      <div class="ref-wrap reveal" style="margin-top:0;">
+        <table class="ref-table" id="eventTable">
+          <thead><tr><th>W20</th><th>Ereignis</th><th>Art</th></tr></thead>
+          <tbody>
+            <tr data-roll="1"><td class="rt-roll">1</td><td>Sturm beschädigt das neueste Gebäude (20 % Schaden)</td><td><span class="etag neg">Naturkatastrophe</span></td></tr>
+            <tr data-roll="2"><td class="rt-roll">2</td><td>Ressourcendiebstahl — ein Lager wurde geplündert</td><td><span class="etag neg">Kriminalität</span></td></tr>
+            <tr data-roll="3"><td class="rt-roll">3</td><td>Unbekannte Kreatur hat sich in der Baustelle eingenistet</td><td><span class="etag neu">Wildnis</span></td></tr>
+            <tr data-roll="4"><td class="rt-roll">4</td><td>Streit unter Kolonisten — WB aller Beteiligten –1</td><td><span class="etag neg">Soziales</span></td></tr>
+            <tr data-roll="5"><td class="rt-roll">5</td><td>Handwerker kann nicht arbeiten — Bauprojekt pausiert 3 Tage</td><td><span class="etag neu">Soziales</span></td></tr>
+            <tr data-roll="6"><td class="rt-roll">6</td><td>Seltene Ressource in der Nähe entdeckt</td><td><span class="etag pos">Positiv</span></td></tr>
+            <tr data-roll="7"><td class="rt-roll">7</td><td>Reisender Händler bietet seltene Waren an</td><td><span class="etag pos">Positiv</span></td></tr>
+            <tr data-roll="8"><td class="rt-roll">8</td><td>Nachbarkolonie braucht Hilfe</td><td><span class="etag neu">Diplomatisch</span></td></tr>
+            <tr data-roll="9"><td class="rt-roll">9</td><td>Alte Ruine unter der Baustelle entdeckt</td><td><span class="etag neu">Geheimnis</span></td></tr>
+            <tr data-roll="10"><td class="rt-roll">10</td><td>Traumkapsel in unmittelbarer Nähe gefunden</td><td><span class="etag pos">Positiv</span></td></tr>
+            <tr data-roll="11"><td class="rt-roll">11</td><td>Magische Anomalie beeinflusst Baumaterialien</td><td><span class="etag neu">Magisch</span></td></tr>
+            <tr data-roll="12"><td class="rt-roll">12</td><td>Ein Gebäude hat einen versteckten Konstruktionsfehler</td><td><span class="etag neg">Handwerk</span></td></tr>
+            <tr data-roll="13"><td class="rt-roll">13</td><td>Gerüchte über eine Bedrohung in der Nähe</td><td><span class="etag neg">Bedrohung</span></td></tr>
+            <tr data-roll="14"><td class="rt-roll">14</td><td>Ein Kolonist vermisst — Suchaktion?</td><td><span class="etag neu">Drama</span></td></tr>
+            <tr data-roll="15"><td class="rt-roll">15</td><td>Außergewöhnliche Ernte oder Jagd — Nahrungsüberschuss</td><td><span class="etag pos">Positiv</span></td></tr>
+            <tr data-roll="16"><td class="rt-roll">16</td><td>Weg zur Kolonie wurde zerstört oder blockiert</td><td><span class="etag neg">Logistik</span></td></tr>
+            <tr data-roll="17"><td class="rt-roll">17</td><td>Botschaft von einer anderen Kolonie — Bündnisangebot</td><td><span class="etag pos">Diplomatisch</span></td></tr>
+            <tr data-roll="18"><td class="rt-roll">18</td><td>Geheimnisvoller Fremder sucht Asyl in der Kolonie</td><td><span class="etag neu">Drama</span></td></tr>
+            <tr data-roll="19"><td class="rt-roll">19</td><td>Festival-Einladung einer anderen Rasse</td><td><span class="etag neu">Diplomatisch</span></td></tr>
+            <tr data-roll="20"><td class="rt-roll">20</td><td>Wunderbares Omen — alle Würfe diese Sitzung mit Vorteil</td><td><span class="etag pos">Positiv</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 10 BEZIEHUNGEN -->
+    <section class="panel" data-panel="beziehungen">
+      <div class="sec-head reveal">
+        <div class="sec-kicker"><span class="idx">10</span> Inter-Kolonien</div>
+        <h2>Beziehungen zwischen Kolonien</h2>
+        <p class="sec-intro">Wenn mehrere Kolonien gleichzeitig existieren, entstehen Mechaniken zwischen ihnen — von Handel bis Konflikt.</p>
+      </div>
+      <div class="grid-2 reveal">
+        <article class="card">
+          <h3>🤝 Handel</h3>
+          <ul class="card-list">
+            <li>Kolonie A produziert Holz, Kolonie B Stein → <b>Tauschangebote</b>.</li>
+            <li>Handelsquests: Karawane oder Schiff losschicken (Quest mit Reisegefahr).</li>
+            <li>Händler-NSCs bringen automatisch Waren, wenn ein Markt oder Dock vorhanden ist.</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>🛡️ Bündnisse</h3>
+          <ul class="card-list">
+            <li>Gemeinsame Verteidigung bei Angriffen.</li>
+            <li>Geteilte Ressourcenpools — Überschüsse teilen.</li>
+            <li>Diplomatische Quests schließen Bündnisse.</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>⚔️ Spannungen</h3>
+          <ul class="card-list">
+            <li>Ressourcenkonflikte, wenn beide dieselbe Quelle nutzen wollen.</li>
+            <li>Territoriale Disputes bei Siedlungserweiterung.</li>
+            <li>Kulturelle Missverständnisse (z. B. Goblins neben Elfen).</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>✦ Kultureller Austausch</h3>
+          <ul class="card-list">
+            <li>Seltene Gebäude können mit Erlaubnis von einer Rasse zur anderen „weitergegeben" werden.</li>
+            <li>Etwa eine Elfenbibliothek, die auch Menschen nutzen dürfen.</li>
+            <li>Oder eine Zwergen-Schmiede, die Halborks Zugang gewährt.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- 11 ERWEITERBARKEIT -->
+    <section class="panel" data-panel="erweiterbarkeit">
+      <div class="sec-head reveal">
+        <div class="sec-kicker"><span class="idx">11</span> Erweiterung</div>
+        <h2>Erweiterbarkeit &amp; neue Rassen</h2>
+        <p class="sec-intro">Das System ist darauf ausgelegt, jede neue Rasse und jedes neue Gebäude nahtlos aufzunehmen.</p>
+      </div>
+      <div class="sub-label reveal">Neue Rasse hinzufügen</div>
+      <div class="steps reveal">
+        <div class="step-card"><span class="sc-num">// 01</span><h4>Habitatprofil</h4><p>Terrain-Präferenz, Bauweise, Wohnpräferenz und WB-Trigger dokumentieren.</p></div>
+        <div class="step-card"><span class="sc-num">// 02</span><h4>Gebäudekatalog</h4><p>Alle drei Kategorien (Wohnen, Gemeinschaft, Großprojekte) mit Karten und Effekten ausarbeiten.</p></div>
+        <div class="step-card"><span class="sc-num">// 03</span><h4>Wohnpräferenz</h4><p>Individuell / Paar / Kollektiv / Spezial festlegen — beeinflusst den WB-Trigger Unterkunft.</p></div>
+        <div class="step-card"><span class="sc-num">// 04</span><h4>WB-Trigger</h4><p>Was hebt eine WB-Kategorie auf 2 Punkte? Was senkt sie auf 0? Beide Richtungen definieren.</p></div>
+      </div>
+      <div class="sub-label reveal" style="margin-top:42px;">Neues Gebäude hinzufügen</div>
+      <p class="sec-intro reveal" style="margin-bottom:20px;">Jedes neue Gebäude bekommt eine Gebäudekarte mit diesen Pflichtfeldern:</p>
+      <div class="comm-grid reveal">
+        <div class="comm"><h4>Name &amp; Kategorie</h4><p class="fn">🏠 Wohnen · 🏛️ Gemeinschaft · 🏗️ Großprojekt</p><p class="wb">Phase (P1–P4) und Größe (Winzig – Monumental)</p></div>
+        <div class="comm"><h4>Zimmertypen</h4><p class="fn">nur bei Wohngebäuden</p><p class="wb">Einzel / Doppel / Kollektiv / Spezial</p></div>
+        <div class="comm"><h4>Baukosten</h4><p class="fn">Ressourcen &amp; Mengen</p><p class="wb">+ Bauzeit in Tagen</p></div>
+        <div class="comm"><h4>WB-Effekt</h4><p class="fn">welche Kategorie</p><p class="wb">wie viele Punkte, wie lange</p></div>
+        <div class="comm"><h4>Freischaltet</h4><p class="fn">optional</p><p class="wb">Folgegebäude wenn dieses fertiggestellt ist</p></div>
+        <div class="comm"><h4>DM-Hinweis</h4><p class="fn">optional</p><p class="wb">Rollenspielpotential, Szenen, Besonderheiten</p></div>
+      </div>
+    </section>
+
+    <!-- 12 ANHÄNGE -->
+    <section class="panel" data-panel="anhaenge">
+      <div class="sec-head reveal">
+        <div class="sec-kicker"><span class="idx">12</span> Referenz</div>
+        <h2>Anhänge &amp; Schnellreferenzen</h2>
+        <p class="sec-intro">Checklisten, Schnellformeln und Vorlagen für den Spieltisch.</p>
+      </div>
+
+      <div class="sub-label reveal">DM-Checkliste · Neuer Kolonist</div>
+      <div class="fact-list reveal">
+        <div class="fact"><span class="fl"><b>Phase 1 — Fund der Traumkapsel</b></span></div>
+        <div class="fact"><span class="fl">□ Traumkapsel entdeckt</span></div>
+        <div class="fact"><span class="fl">□ NSC-Steckbrief beim Öffnen erstellen</span></div>
+        <div class="fact"><span class="fl">□ WB initial: Habitat-Kategorie sofort berechnen</span></div>
+        <div class="fact" style="margin-top:8px;"><span class="fl"><b>Phase 2 — Transport zur Hauptstadt</b></span></div>
+        <div class="fact"><span class="fl">□ Transport narrativ beschreiben</span></div>
+        <div class="fact"><span class="fl">□ Spieler einbeziehen? <span>wenn sinnvoll (Trauma, besondere Fähigkeit)</span></span></div>
+        <div class="fact"><span class="fl">□ NSC-Aufnahme-Team übernimmt</span></div>
+        <div class="fact" style="margin-top:8px;"><span class="fl"><b>Phase 3 — Entscheidung: Wohin?</b></span></div>
+        <div class="fact"><span class="fl">□ Kolonien erklären</span></div>
+        <div class="fact"><span class="fl">□ Spieler können beeinflussen (Überzeugungswurf)</span></div>
+        <div class="fact"><span class="fl">□ Person entscheidet selbst (hat das letzte Wort)</span></div>
+        <div class="fact" style="margin-top:8px;"><span class="fl"><b>Phase 4 — Eskorte &amp; Ankunft</b></span></div>
+        <div class="fact"><span class="fl">□ Eskorte-Quest (ggf. mit anderen bündeln)</span></div>
+        <div class="fact"><span class="fl">□ Ankunftsszene spielen</span></div>
+        <div class="fact"><span class="fl">□ WB komplett berechnen (alle 5 Kategorien)</span></div>
+        <div class="fact"><span class="fl">□ Unterkunft vorhanden? <span>Nein → Auftrag 🏠 Kritisch · Ja → Einzugsszene, WB Unterkunft updaten</span></span></div>
+        <div class="fact"><span class="fl">□ Persönliche Quest? <span>wenn WB ≥ 5</span></span></div>
+        <div class="fact"><span class="fl">□ Gesamtstimmung neu berechnen</span></div>
+      </div>
+
+      <div class="sub-label reveal" style="margin-top:42px;">WB-Schnellberechnung</div>
+      <div class="wb-cats reveal">
+        <div class="wb-cat">
+          <span class="wb-em">🏠</span><h4>Unterkunft</h4>
+          <div class="wb-scale"><div class="lvl"><b>0</b> Kein Schlafplatz</div><div class="lvl"><b>1</b> Akzeptable Unterkunft</div><div class="lvl"><b>2</b> Ideale Unterkunft für diese Rasse</div></div>
+        </div>
+        <div class="wb-cat">
+          <span class="wb-em">🍖</span><h4>Nahrung</h4>
+          <div class="wb-scale"><div class="lvl"><b>0</b> Hungert</div><div class="lvl"><b>1</b> Ausreichend</div><div class="lvl"><b>2</b> Lieblingsnahrung + Kantine</div></div>
+        </div>
+        <div class="wb-cat">
+          <span class="wb-em">🌍</span><h4>Habitat</h4>
+          <div class="wb-scale"><div class="lvl"><b>0</b> Falsches Terrain</div><div class="lvl"><b>1</b> Neutral / Akzeptabel</div><div class="lvl"><b>2</b> Ideales Terrain</div></div>
+        </div>
+        <div class="wb-cat">
+          <span class="wb-em">👥</span><h4>Gemeinschaft</h4>
+          <div class="wb-scale"><div class="lvl"><b>0</b> Völlig isoliert</div><div class="lvl"><b>1</b> Versammlungsort vorhanden</div><div class="lvl"><b>2</b> Aktive Gemeinschaft + Rituale</div></div>
+        </div>
+        <div class="wb-cat">
+          <span class="wb-em">🎯</span><h4>Zweck</h4>
+          <div class="wb-scale"><div class="lvl"><b>0</b> Keine Aufgabe</div><div class="lvl"><b>1</b> Hat eine Rolle</div><div class="lvl"><b>2</b> Bedeutungsvolle, passende Aufgabe</div></div>
+        </div>
+      </div>
+      <p class="note reveal" style="margin-top:18px;"><strong>Persönliche Punkte</strong> (+/–) kommen obendrauf. Maximum 10 Punkte gesamt.</p>
+
+      <div class="sub-label reveal" style="margin-top:42px;">Auftragsvorlage · zum Ausdrucken</div>
+      <div class="terminal-card reveal">
+        <div class="tc-head"><span class="term-led"></span> MISSIONSTERMINAL — AUFTRAG</div>
+        <div class="tc-body">
+          <div class="tc-row"><span class="tc-k">Auftrag #</span><span class="tc-v">___ &nbsp;&nbsp;&nbsp; Datum: ___</span></div>
+          <div class="tc-row"><span class="tc-k">Typ</span><span class="tc-v">🏠 / 🍖 / 🛡️ / 💊 / 🔨 / 📦 / 🧭 / 🤝 / 🎯</span></div>
+          <div class="tc-row"><span class="tc-k">Priorität</span><span class="tc-v">🔴 Kritisch &nbsp;/&nbsp; 🟠 Hoch &nbsp;/&nbsp; 🟡 Mittel &nbsp;/&nbsp; 🟢 Optional</span></div>
+          <div class="tc-divider"></div>
+          <div class="tc-row"><span class="tc-k">Titel</span><span class="tc-v">___</span></div>
+          <div class="tc-row"><span class="tc-k">Kolonie</span><span class="tc-v">___</span></div>
+          <div class="tc-row"><span class="tc-k">Für wen</span><span class="tc-v">___</span></div>
+          <div class="tc-divider"></div>
+          <div class="tc-row"><span class="tc-k">Was zu tun ist</span><span class="tc-v">___</span></div>
+          <div class="tc-divider"></div>
+          <div class="tc-row"><span class="tc-k">Ressourcen</span><span class="tc-v">___</span></div>
+          <div class="tc-row"><span class="tc-k">Bauzeit</span><span class="tc-v">___</span></div>
+          <div class="tc-divider"></div>
+          <div class="tc-row"><span class="tc-k">Belohnung</span><span class="tc-v">___ GP &nbsp;&nbsp;&nbsp; WB-Effekt: ___</span></div>
+          <div class="tc-row"><span class="tc-k">Status</span><span class="tc-v">□ Offen &nbsp;&nbsp; □ In Arbeit &nbsp;&nbsp; □ Abgeschlossen</span></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer class="status">
+  <div>◈ ARCHIV-STATUS: NOMINAL ◈ EPOCHE: UNBEKANNT</div>
+  <div>MERURIA // DIE VERWOBENEN REICHE</div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- Tab switching ---------- */
+  var panels = document.querySelectorAll('.panel');
+  var sideBtns = document.querySelectorAll('#sidenav .side-btn');
+  var pills = document.querySelectorAll('#pilltabs .pill');
+
+  function revealPanel(panel) {
+    var els = panel.querySelectorAll('.reveal');
+    els.forEach(function (el, i) {
+      el.classList.remove('in');
+      setTimeout(function () { el.classList.add('in'); }, 60 + i * 75);
+    });
+  }
+
+  function activate(tab) {
+    panels.forEach(function (p) {
+      var on = p.getAttribute('data-panel') === tab;
+      p.classList.toggle('active', on);
+      if (on) revealPanel(p);
+    });
+    sideBtns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-tab') === tab); });
+    pills.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-tab') === tab); });
+    if (history.replaceState) history.replaceState(null, '', '#' + tab);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    var activePill = document.querySelector('#pilltabs .pill.active');
+    if (activePill) { try { activePill.parentNode.scrollLeft = activePill.offsetLeft - 40; } catch (e) {} }
+  }
+
+  function bind(list) {
+    list.forEach(function (b) {
+      b.addEventListener('click', function () { activate(b.getAttribute('data-tab')); });
+    });
+  }
+  bind(sideBtns);
+  bind(pills);
+
+  /* phase-overview nodes scroll to the matching phase step */
+  document.querySelectorAll('.po-node').forEach(function (n) {
+    n.addEventListener('click', function () {
+      var el = document.getElementById(n.getAttribute('data-scroll'));
+      if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 72, behavior: 'smooth' });
+    });
+  });
+
+  /* timeline dots (left numbers) scroll their phase to the top */
+  document.querySelectorAll('.phase-step .tl-dot').forEach(function (d) {
+    d.addEventListener('click', function () {
+      var step = d.closest('.phase-step');
+      if (step) window.scrollTo({ top: step.getBoundingClientRect().top + window.pageYOffset - 72, behavior: 'smooth' });
+    });
+  });
+
+  /* cross-links jump to another tab */
+  document.addEventListener('click', function (e) {
+    var x = e.target.closest ? e.target.closest('[data-goto]') : null;
+    if (x) { e.preventDefault(); activate(x.getAttribute('data-goto')); }
+  });
+
+  /* open from hash if present */
+  var initial = (location.hash || '').replace('#', '');
+  var valid = ['grundprinzipien','kolonist','auftragstypen','phasen','gebaeude','ressourcen','wohlbefinden','stimmung','ereignisse','beziehungen','erweiterbarkeit','anhaenge'];
+  if (valid.indexOf(initial) !== -1) {
+    activate(initial);
+  } else {
+    revealPanel(document.querySelector('.panel.active'));
+  }
+
+  /* ---------- Ereignis-Würfel (1d20) ---------- */
+  var rollBtn = document.getElementById('rollBtn');
+  if (rollBtn) {
+    var diceResult = document.getElementById('diceResult');
+    var drNum = document.getElementById('drNum');
+    var drText = document.getElementById('drText');
+    var eventTable = document.getElementById('eventTable');
+    var spinning = false;
+    rollBtn.addEventListener('click', function () {
+      if (spinning) return;
+      spinning = true;
+      var ticks = 0;
+      var iv = setInterval(function () {
+        drNum.textContent = 1 + Math.floor(Math.random() * 20);
+        diceResult.classList.remove('empty');
+        ticks++;
+        if (ticks > 12) {
+          clearInterval(iv);
+          var n = 1 + Math.floor(Math.random() * 20);
+          drNum.textContent = n;
+          eventTable.querySelectorAll('tr.rolled').forEach(function (r) { r.classList.remove('rolled'); });
+          var row = eventTable.querySelector('tr[data-roll="' + n + '"]');
+          if (row) { row.classList.add('rolled'); drText.textContent = row.children[1].textContent; }
+          spinning = false;
+        }
+      }, 55);
+    });
+  }
+
+  /* ---------- WB Calculator ---------- */
+  var cats = [
+    { key: 'unterkunft', emoji: '🏠', name: 'Unterkunft', labels: ['Kein Schlafplatz', 'Akzeptabel', 'Ideal'] },
+    { key: 'nahrung', emoji: '🍖', name: 'Nahrung', labels: ['Hungert', 'Ausreichend', 'Liebling + Kantine'] },
+    { key: 'habitat', emoji: '🌍', name: 'Habitat', labels: ['Falsch', 'Neutral', 'Ideal'] },
+    { key: 'gemeinschaft', emoji: '👥', name: 'Gemeinschaft', labels: ['Isoliert', 'Versammlungsort', 'Aktiv + Rituale'] },
+    { key: 'zweck', emoji: '🎯', name: 'Zweck', labels: ['Keine Aufgabe', 'Hat eine Rolle', 'Bedeutungsvoll'] }
+  ];
+  var states = [
+    { min: 9, max: 10, emoji: '🌟', name: 'Aufblühend', color: '#7cf2a0', eff: 'Arbeitet schneller; Bonus auf Quests; bringt Freunde mit.' },
+    { min: 7, max: 8, emoji: '😊', name: 'Zufrieden', color: '#bfe88f', eff: 'Normalbetrieb; stabil; bleibt in der Siedlung.' },
+    { min: 5, max: 6, emoji: '😐', name: 'Neutral', color: '#ffe06b', eff: 'Macht das Nötigste; kein Bonus, kein Malus.' },
+    { min: 3, max: 4, emoji: '😟', name: 'Unzufrieden', color: '#ffa24d', eff: 'Arbeitet langsamer; Quests schwieriger.' },
+    { min: 1, max: 2, emoji: '😠', name: 'Elend', color: '#ff7a4d', eff: 'Droht zu gehen; könnte Unruhe stiften.' },
+    { min: 0, max: 0, emoji: '💔', name: 'Verlässt die Siedlung', color: '#ff5d6c', eff: 'Geht — es sei denn, Spieler greifen ein.' }
+  ];
+  var values = { unterkunft: 0, nahrung: 0, habitat: 0, gemeinschaft: 0, zweck: 0 };
+  var manual = 0;
+
+  var personalItems = [
+    { id: 'quest', label: 'Persönliche Quest abgeschlossen', type: 'count', step: 1 },
+    { id: 'lieblingsgebaeude', label: 'Lieblingsgebäude gebaut', type: 'toggle', val: 1 },
+    { id: 'freundschaft', label: 'Besondere Freundschaft mit Spielercharakter', type: 'toggle', val: 1 },
+    { id: 'geschenk', label: 'Überraschungsgeschenk / besondere Geste', type: 'toggle', val: 1, hint: '+1 temp.' },
+    { id: 'verlust', label: 'Verlust einer wichtigen Person', type: 'count', step: -2 },
+    { id: 'trauma', label: 'Traumatisches Erlebnis', type: 'toggle', val: -3 },
+    { id: 'werte', label: 'Muss gegen eigene Werte handeln', type: 'toggle', val: -1 }
+  ];
+  var pval = {};
+  var pcount = {};
+  personalItems.forEach(function (it) { pval[it.id] = 0; pcount[it.id] = 0; });
+
+  function sign(n) { return (n > 0 ? '+' : (n < 0 ? '−' : '±')) + Math.abs(n); }
+  function computePersonal() {
+    var p = manual;
+    personalItems.forEach(function (it) {
+      p += (it.type === 'count') ? pcount[it.id] * it.step : pval[it.id];
+    });
+    return p;
+  }
+
+  var controls = document.getElementById('calcControls');
+  var segGroups = [];
+
+  /* 5 Bedürfnis-Kategorien */
+  cats.forEach(function (c) {
+    var block = document.createElement('div');
+    var lbl = document.createElement('div');
+    lbl.className = 'ctl-label';
+    lbl.innerHTML = '<span class="ce">' + c.emoji + '</span><span class="cn">' + c.name + '</span><span class="cv" id="cv-' + c.key + '">0 / 2</span>';
+    var seg = document.createElement('div');
+    seg.className = 'seg';
+    [0, 1, 2].forEach(function (v) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = v === 0 ? 'on' : '';
+      b.innerHTML = '<span class="sp">' + v + '</span>' + c.labels[v];
+      b.addEventListener('click', function () {
+        values[c.key] = v;
+        seg.querySelectorAll('button').forEach(function (x, i) { x.classList.toggle('on', i === v); });
+        document.getElementById('cv-' + c.key).textContent = v + ' / 2';
+        update();
+      });
+      seg.appendChild(b);
+    });
+    block.appendChild(lbl);
+    block.appendChild(seg);
+    controls.appendChild(block);
+    segGroups.push({ key: c.key, seg: seg });
+  });
+
+  var div1 = document.createElement('div'); div1.className = 'calc-divider'; controls.appendChild(div1);
+
+  /* Persönliche Bonus- & Maluspunkte als anklickbare Posten */
+  var chipEls = {};
+  function paintChip(id) {
+    var e = chipEls[id], it = e.item;
+    if (it.type === 'count') {
+      var contrib = pcount[id] * it.step;
+      e.pill.className = 'pc-val ' + (it.step < 0 ? 'neg' : 'pos');
+      e.pill.textContent = (pcount[id] === 0) ? sign(it.step) : sign(contrib);
+      e.count.textContent = pcount[id];
+      e.el.classList.toggle('on', pcount[id] > 0);
+    } else {
+      var cur = pval[id];
+      e.pill.className = 'pc-val ' + (it.val < 0 ? 'neg' : 'pos');
+      e.pill.textContent = (cur === 0) ? (it.hint || sign(it.val)) : sign(cur);
+      e.el.classList.toggle('on', cur !== 0);
+    }
+  }
+  (function () {
+    var block = document.createElement('div');
+    var lbl = document.createElement('div'); lbl.className = 'pp-seclabel'; lbl.textContent = 'Persönliche Bonus- & Maluspunkte';
+    var wrap = document.createElement('div'); wrap.className = 'pp-chips';
+    personalItems.forEach(function (it) {
+      var lab = document.createElement('span'); lab.className = 'pc-label'; lab.textContent = it.label;
+      var pill = document.createElement('span');
+      if (it.type === 'count') {
+        var row = document.createElement('div'); row.className = 'pp-chip count';
+        var stepEl = document.createElement('div'); stepEl.className = 'pp-cstep';
+        var minus = document.createElement('button'); minus.type = 'button'; minus.className = 'pp-cbtn'; minus.textContent = '−';
+        var cnt = document.createElement('span'); cnt.className = 'pp-ccount'; cnt.textContent = '0';
+        var plus = document.createElement('button'); plus.type = 'button'; plus.className = 'pp-cbtn'; plus.textContent = '+';
+        minus.addEventListener('click', function () { if (pcount[it.id] > 0) { pcount[it.id]--; paintChip(it.id); update(); } });
+        plus.addEventListener('click', function () { pcount[it.id]++; paintChip(it.id); update(); });
+        stepEl.appendChild(minus); stepEl.appendChild(cnt); stepEl.appendChild(plus);
+        row.appendChild(lab); row.appendChild(stepEl); row.appendChild(pill);
+        chipEls[it.id] = { el: row, pill: pill, count: cnt, item: it };
+        wrap.appendChild(row);
+      } else {
+        var chip = document.createElement('button'); chip.type = 'button'; chip.className = 'pp-chip';
+        chip.appendChild(lab); chip.appendChild(pill);
+        chipEls[it.id] = { el: chip, pill: pill, item: it };
+        chip.addEventListener('click', function () {
+          pval[it.id] = pval[it.id] ? 0 : it.val;
+          paintChip(it.id); update();
+        });
+        wrap.appendChild(chip);
+      }
+    });
+    block.appendChild(lbl); block.appendChild(wrap); controls.appendChild(block);
+    personalItems.forEach(function (it) { paintChip(it.id); });
+  })();
+
+  /* freie Feinanpassung */
+  function setManual(v) {
+    manual = Math.max(-3, Math.min(3, v));
+    document.getElementById('cv-manual').textContent = sign(manual);
+    update();
+  }
+  (function () {
+    var block = document.createElement('div');
+    var lbl = document.createElement('div'); lbl.className = 'ctl-label';
+    lbl.innerHTML = '<span class="ce">✦</span><span class="cn">Weitere Anpassung</span><span class="cv" id="cv-manual">±0</span>';
+    var row = document.createElement('div'); row.className = 'pp-stepper';
+    var minus = document.createElement('button'); minus.type = 'button'; minus.className = 'pp-btn'; minus.textContent = '−';
+    var plus = document.createElement('button'); plus.type = 'button'; plus.className = 'pp-btn'; plus.textContent = '+';
+    var hint = document.createElement('span'); hint.className = 'pp-hint'; hint.textContent = 'Sonstige Boni & Mali';
+    minus.addEventListener('click', function () { setManual(manual - 1); });
+    plus.addEventListener('click', function () { setManual(manual + 1); });
+    row.appendChild(minus); row.appendChild(plus); row.appendChild(hint);
+    block.appendChild(lbl); block.appendChild(row); controls.appendChild(block);
+  })();
+
+  /* Reset */
+  (function () {
+    var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'calc-reset'; btn.textContent = '↺ Tracker zurücksetzen';
+    btn.addEventListener('click', function () {
+      Object.keys(values).forEach(function (k) { values[k] = 0; });
+      segGroups.forEach(function (g) {
+        g.seg.querySelectorAll('button').forEach(function (x, i) { x.classList.toggle('on', i === 0); });
+        document.getElementById('cv-' + g.key).textContent = '0 / 2';
+      });
+      personalItems.forEach(function (it) { pval[it.id] = 0; pcount[it.id] = 0; paintChip(it.id); });
+      setManual(0);
+    });
+    controls.appendChild(btn);
+  })();
+
+  var CIRC = 2 * Math.PI * 52;
+  var gaugeFill = document.getElementById('gaugeFill');
+  var gaugeVal = document.getElementById('gaugeVal');
+  var sdEmoji = document.getElementById('sdEmoji');
+  var sdName = document.getElementById('sdName');
+  var sdEff = document.getElementById('sdEff');
+  var sdBase = document.getElementById('sdBase');
+  gaugeFill.setAttribute('stroke-dasharray', CIRC.toFixed(1));
+
+  function stateFor(total) {
+    for (var i = 0; i < states.length; i++) {
+      if (total >= states[i].min && total <= states[i].max) return states[i];
+    }
+    return states[states.length - 1];
+  }
+  function update() {
+    var base = values.unterkunft + values.nahrung + values.habitat + values.gemeinschaft + values.zweck;
+    var personal = computePersonal();
+    var total = Math.max(0, Math.min(10, base + personal));
+    var st = stateFor(total);
+    gaugeFill.style.strokeDashoffset = (CIRC * (1 - total / 10)).toFixed(1);
+    gaugeFill.style.stroke = st.color;
+    gaugeVal.textContent = total;
+    sdEmoji.textContent = st.emoji;
+    sdName.textContent = st.name;
+    sdName.style.color = st.color;
+    sdEff.textContent = st.eff;
+    sdBase.textContent = 'Bedürfnisse ' + base + ' · Persönlich ' + sign(personal) + ' · Gesamt ' + total;
+    sdEmoji.style.transform = 'scale(1.18)';
+    setTimeout(function () { sdEmoji.style.transform = 'scale(1)'; }, 180);
+  }
+  update();
+})();
+</script>
+<script>
+ReactDOM.createRoot(document.getElementById('root')).render(
+  React.createElement(SiteGate, null, React.createElement(SiteNav, null))
+);
+</script>
+</body>
+</html>

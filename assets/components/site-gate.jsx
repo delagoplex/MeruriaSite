@@ -25,6 +25,7 @@ function LoginForm({ onAuth }) {
     const { data: profile } = await window._sb
       .from('profiles').select('role').eq('id', data.user.id).single();
     window.SITE_USER = { id: data.user.id, email: data.user.email, role: profile?.role || 'player' };
+    window.dispatchEvent(new CustomEvent('site-user-ready', { detail: window.SITE_USER }));
     setLoading(false);
     onAuth();
   }
@@ -118,6 +119,7 @@ function SiteGate({ children }) {
         const { data: profile } = await window._sb
           .from('profiles').select('role').eq('id', session.user.id).single();
         window.SITE_USER = { id: session.user.id, email: session.user.email, role: profile?.role || 'player' };
+        window.dispatchEvent(new CustomEvent('site-user-ready', { detail: window.SITE_USER }));
         setAuthed(true);
       }
       setReady(true);

@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/images/favicon/favicon-m.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/images/favicon/favicon-m-180.png">
+<title>Meruria — Segen &amp; Flüche</title>
+<link rel="stylesheet" href="assets/styles/global/fonts.css">
+<link rel="stylesheet" href="assets/styles/global/base.css">
+<link rel="stylesheet" href="assets/styles/pages/SegenFlueche.css">
+<script src="assets/scripts/vendor/react.production.min.js"></script>
+<script src="assets/scripts/vendor/react-dom.production.min.js"></script>
+<script src="assets/components/nav.js"></script>
+<script src="assets/scripts/vendor/supabase.min.js"></script>
+<script src="assets/scripts/supabase-client.js"></script>
+<script src="assets/components/site-gate.js"></script>
+<script src="assets/scripts/data/flueche-und-segen-data.js"></script>
+</head>
+<body>
+
+<div id="nav-root"></div>
+<div id="page-content" style="display:none">
+
+<!-- ─────── MASTHEAD ─────── -->
+<section class="masthead">
+  <div class="eyebrow">Meruria · Oraculum</div>
+  <h1 class="title">Segen &amp; Flüche</h1>
+  <div class="flourish"><span class="flourish-dot"></span></div>
+  <p class="lede">
+    Wähle ein Deck, mische es im Geiste und ziehe eine Karte aus dem Schleier.
+    Gezogene Karten bleiben am unteren Rand sichtbar — klicke eine an, um zu ihrer Beschreibung zu springen.
+  </p>
+</section>
+
+<!-- ─────── DECK PICKER ─────── -->
+<div class="deck-picker">
+  <button class="deck-btn active" data-deck="chaos">
+    <div class="deck-btn-icon chaos-icon"></div>
+    <div class="deck-btn-label">Chaos</div>
+    <div class="deck-btn-sub">Segen &amp; Flüche gemischt</div>
+  </button>
+  <button class="deck-btn" data-deck="segen">
+    <div class="deck-btn-icon segen-icon"></div>
+    <div class="deck-btn-label">Segen</div>
+    <div class="deck-btn-sub">Nur Segenkarten</div>
+  </button>
+  <button class="deck-btn" data-deck="flueche">
+    <div class="deck-btn-icon flueche-icon"></div>
+    <div class="deck-btn-label">Flüche</div>
+    <div class="deck-btn-sub">Nur Fluchkarten</div>
+  </button>
+</div>
+
+<!-- ─────── STACK SCENE ─────── -->
+<div class="wrap">
+  <div class="scene" id="scene">
+    <div class="table-glow"></div>
+    <div class="table-disc"></div>
+    <svg class="compass" viewBox="0 0 200 200" aria-hidden="true">
+      <circle cx="100" cy="100" r="98" fill="none" stroke="rgba(160,140,255,0.4)" stroke-width="0.4"/>
+      <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(160,140,255,0.3)" stroke-width="0.3" stroke-dasharray="1 4"/>
+      <circle cx="100" cy="100" r="55" fill="none" stroke="rgba(160,140,255,0.35)" stroke-width="0.3"/>
+      <polygon points="100,5 132,23 132,57 100,75 68,57 68,23" fill="none" stroke="rgba(124,77,255,0.5)" stroke-width="0.5"/>
+      <polygon points="100,125 132,143 132,177 100,195 68,177 68,143" fill="none" stroke="rgba(124,77,255,0.5)" stroke-width="0.5"/>
+      <g stroke="rgba(124,77,255,0.45)" stroke-width="0.3">
+        <line x1="100" y1="2" x2="100" y2="22"/><line x1="100" y1="178" x2="100" y2="198"/>
+        <line x1="2" y1="100" x2="22" y2="100"/><line x1="178" y1="100" x2="198" y2="100"/>
+      </g>
+    </svg>
+    <div class="stack" id="stack" aria-label="Kartendeck"></div>
+  </div>
+
+  <div class="actions">
+    <button class="btn primary big-action" id="drawBtn">Karte ziehen</button>
+    <div class="action-row pick-row">
+      <select id="typePick" class="pick-select">
+        <option value="">— Typ —</option>
+        <option value="segen">Segen</option>
+        <option value="fluch">Fluch</option>
+      </select>
+      <select id="cardPick" class="pick-select" disabled>
+        <option value="">— Karte —</option>
+      </select>
+      <button class="btn" id="pickBtn" disabled>In Hand nehmen</button>
+    </div>
+    <button class="btn ghost" id="clearBtn">Clear</button>
+  </div>
+</div>
+
+<!-- ─────── CARD REFERENCE ─────── -->
+<div class="wrap">
+  <section class="block" id="segenSection">
+    <div class="section-head">
+      <div class="section-eyebrow">I — Segen</div>
+      <h2 class="section-title">Segen</h2>
+      <div class="section-rule"></div>
+      <p class="section-sub">Karten, die Gunst, Schutz oder Glück gewähren.</p>
+    </div>
+    <div class="card-list" id="segenList"></div>
+  </section>
+
+  <section class="block" id="fluecheSection">
+    <div class="section-head">
+      <div class="section-eyebrow" id="fluecheEyebrow">II — Flüche</div>
+      <h2 class="section-title">Flüche</h2>
+      <div class="section-rule"></div>
+      <p class="section-sub">Karten, die mit Pech, Schwäche oder Dunkel belegen.</p>
+    </div>
+    <div class="card-list" id="fluecheList"></div>
+  </section>
+</div>
+
+<footer>
+  <span>◇ SEGEN &amp; FLÜCHE ◇</span>
+  <span>MERURIA // THE WOVEN REALMS</span>
+</footer>
+
+<!-- ─────── DRAWN TRAY ─────── -->
+<div class="tray is-empty" id="tray" aria-live="polite">
+  <div class="tray-bg"></div>
+  <div class="tray-inner">
+    <div class="tray-side">
+      <div class="tray-label">Gezogene Karten</div>
+      <button class="tray-clear-btn" id="trayClearBtn">Clear</button>
+    </div>
+    <div class="drawn-cards" id="drawnCards">
+      <div class="drawn-empty" id="drawnEmpty">
+        Der Schleier ruht. Klicke auf <b>Karte ziehen</b>, um eine Karte aus dem Deck zu lösen.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ========================= DATA ========================= */
+const SEGEN   = window.SEGEN_KARTEN  || [];
+const FLUECHE = window.FLUCH_KARTEN  || [];
+const ALL     = [...SEGEN, ...FLUECHE];
+
+function activeDeck() {
+  if (currentDeck === 'segen')   return SEGEN;
+  if (currentDeck === 'flueche') return FLUECHE;
+  return ALL;
+}
+function isFluch(card) { return card.id.startsWith('f'); }
+
+/* ========================= STATE ========================= */
+let currentDeck = 'chaos';
+const drawnIds = [];
+const drawnSet = new Set();
+
+/* ========================= ACCENT ========================= */
+function accentRgb() {
+  if (currentDeck === 'segen')   return [249, 216, 74];
+  if (currentDeck === 'flueche') return [64, 205, 33];
+  return [124, 77, 255];
+}
+
+/* ========================= GLYPHS ========================= */
+const SEGEN_GLYPH = `<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round">
+  <circle cx="50" cy="50" r="16" fill="rgba(255,255,255,0.12)"/>
+  <circle cx="50" cy="50" r="7" fill="rgba(255,255,255,0.3)"/>
+  <line x1="50" y1="12" x2="50" y2="24"/><line x1="50" y1="76" x2="50" y2="88"/>
+  <line x1="12" y1="50" x2="24" y2="50"/><line x1="76" y1="50" x2="88" y2="50"/>
+  <line x1="23" y1="23" x2="31" y2="31"/><line x1="77" y1="23" x2="69" y2="31"/>
+  <line x1="23" y1="77" x2="31" y2="69"/><line x1="77" y1="77" x2="69" y2="69"/>
+  <line x1="37" y1="14" x2="40" y2="22"/><line x1="63" y1="14" x2="60" y2="22"/>
+  <line x1="86" y1="37" x2="78" y2="40"/><line x1="86" y1="63" x2="78" y2="60"/>
+  <line x1="63" y1="86" x2="60" y2="78"/><line x1="37" y1="86" x2="40" y2="78"/>
+  <line x1="14" y1="63" x2="22" y2="60"/><line x1="14" y1="37" x2="22" y2="40"/>
+</svg>`;
+
+const FLUCH_GLYPH = `<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="50" cy="38" r="20"/>
+  <path d="M36 52 L36 66 Q36 72 42 72 L58 72 Q64 72 64 66 L64 52"/>
+  <line x1="44" y1="72" x2="44" y2="62"/><line x1="56" y1="72" x2="56" y2="62"/>
+  <line x1="44" y1="62" x2="56" y2="62" stroke-width="1" opacity="0.5"/>
+  <circle cx="42" cy="34" r="6" fill="rgba(0,0,0,0.3)"/>
+  <circle cx="58" cy="34" r="6" fill="rgba(0,0,0,0.3)"/>
+  <path d="M44 48 Q50 54 56 48" stroke-width="1" opacity="0.6"/>
+  <path d="M26 18 Q20 12 28 8 Q26 16 32 18" fill="rgba(255,255,255,0.12)" stroke-width="1"/>
+  <path d="M74 18 Q80 12 72 8 Q74 16 68 18" fill="rgba(255,255,255,0.12)" stroke-width="1"/>
+</svg>`;
+
+function glyphFor(card) { return isFluch(card) ? FLUCH_GLYPH : SEGEN_GLYPH; }
+function typeClass(card) { return isFluch(card) ? 'is-fluch' : 'is-segen'; }
+function typeLabel(card) { return isFluch(card) ? 'Fluch' : 'Segen'; }
+
+/* ========================= CARD BACK ========================= */
+function backPattern() {
+  const [r,g,b] = accentRgb();
+  const c1 = `rgba(${r},${g},${b},0.12)`;
+  const c2 = `rgba(${r},${g},${b},0.65)`;
+  const c3 = `rgba(${r},${g},${b},0.35)`;
+  const c4 = `rgba(${r},${g},${b},0.50)`;
+  const c5 = `rgba(${r},${g},${b},0.70)`;
+  const c6 = `rgba(${r},${g},${b},0.90)`;
+  return `<svg viewBox="0 0 100 170" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="sbg" cx="50%" cy="50%" r="60%">
+        <stop offset="0%" stop-color="#1a0f3e"/><stop offset="100%" stop-color="#08061a"/>
+      </radialGradient>
+      <pattern id="sgrid" width="8" height="8" patternUnits="userSpaceOnUse">
+        <path d="M 8 0 L 0 0 0 8" fill="none" stroke="${c1}" stroke-width="0.4"/>
+      </pattern>
+    </defs>
+    <rect width="100" height="170" fill="url(#sbg)"/>
+    <rect width="100" height="170" fill="url(#sgrid)"/>
+    <rect x="4" y="4" width="92" height="162" fill="none" stroke="${c2}" stroke-width="0.6"/>
+    <rect x="8" y="8" width="84" height="154" fill="none" stroke="${c3}" stroke-width="0.3"/>
+    <g fill="none" stroke="${c5}" stroke-width="0.55">
+      <polygon points="50,55 64,63 64,77 50,85 36,77 36,63"/>
+      <polygon points="50,85 64,93 64,107 50,115 36,107 36,93"/>
+      <polygon points="50,40 60,46 60,58 50,64 40,58 40,46"/>
+      <polygon points="50,106 60,112 60,124 50,130 40,124 40,112"/>
+    </g>
+    <g fill="none" stroke="${c4}" stroke-width="0.45">
+      <circle cx="50" cy="85" r="28"/><circle cx="50" cy="85" r="20" stroke-dasharray="2 2"/>
+    </g>
+    <g fill="${c6}">
+      <circle cx="50" cy="85" r="2"/><circle cx="14" cy="14" r="1.5"/>
+      <circle cx="86" cy="14" r="1.5"/><circle cx="14" cy="156" r="1.5"/><circle cx="86" cy="156" r="1.5"/>
+    </g>
+    <g fill="none" stroke="${c5}" stroke-width="0.4">
+      <path d="M50,18 L50,32"/><path d="M50,138 L50,152"/>
+    </g>
+  </svg>`;
+}
+
+/* ========================= CARD HTML ========================= */
+function buildCardFront(card) {
+  const g = glyphFor(card);
+  return `<div class="card-front ${typeClass(card)}">
+    <div class="cf-frame"></div>
+    <div class="cf-corner tl">${g}</div>
+    <div class="cf-corner br">${g}</div>
+    <div class="cf-rank">${typeLabel(card)}</div>
+    <div class="cf-symbol"><div class="cf-art">${g}</div></div>
+    <div class="cf-name">${card.name}</div>
+    <div class="cf-divider"></div>
+    <div class="cf-keywords">${card.keywords}</div>
+  </div>`;
+}
+function buildCardBack() { return `<div class="card-back">${backPattern()}</div>`; }
+
+/* ========================= STACK ========================= */
+const stackEl = document.getElementById('stack');
+const STACK_LAYERS = 18;
+function renderStack() {
+  stackEl.innerHTML = '';
+  for (let i = 0; i < STACK_LAYERS; i++) {
+    const c = document.createElement('div');
+    c.className = 'stack-card';
+    const xy = (i % 2 === 0 ? 1 : -1) * (i * 0.15);
+    c.style.transform = `translate3d(${xy}px,${-i*0.4}px,${i*1.2}px)`;
+    c.style.filter = i < STACK_LAYERS-1 ? `brightness(${0.5+(i/STACK_LAYERS)*0.55})` : '';
+    const fromTop = (STACK_LAYERS-1)-i;
+    if (fromTop <= 4) c.setAttribute('data-fan', String(fromTop));
+    c.innerHTML = buildCardBack();
+    if (i === STACK_LAYERS-1) c.id = 'topCard';
+    else c.style.opacity = '0.95';
+    stackEl.appendChild(c);
+  }
+}
+renderStack();
+
+let wobbleT = 0;
+(function wobble() {
+  wobbleT += 0.012;
+  stackEl.style.transform = `translate(-50%,-50%) rotateZ(${Math.sin(wobbleT)*1.2}deg)`;
+  requestAnimationFrame(wobble);
+})();
+
+/* ========================= DRAW STATE ========================= */
+const drawBtn   = document.getElementById('drawBtn');
+const clearBtn  = document.getElementById('clearBtn');
+const drawnCardsEl = document.getElementById('drawnCards');
+const drawnEmptyEl = document.getElementById('drawnEmpty');
+const trayEl    = document.getElementById('tray');
+
+function pickRandom() {
+  const pool = activeDeck().filter(c => !drawnSet.has(c.id));
+  return pool.length ? pool[Math.floor(Math.random()*pool.length)] : null;
+}
+
+function updateBtn() {
+  drawBtn.disabled = drawnSet.size >= activeDeck().length;
+}
+
+function updateTrayChrome() {
+  const empty = drawnIds.length === 0;
+  trayEl.classList.toggle('is-empty', empty);
+  document.documentElement.style.setProperty('--tray-pad', (empty ? 60 : 180)+'px');
+}
+
+function relayoutDrawn() {
+  const n = drawnIds.length;
+  if (n <= 1) { document.documentElement.style.setProperty('--olap','0px'); return; }
+  const cardW = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--drawn-w'));
+  const innerW = drawnCardsEl.clientWidth - 28;
+  const naturalW = n*cardW + (n-1)*10;
+  if (naturalW <= innerW) { document.documentElement.style.setProperty('--olap','0px'); return; }
+  const stride = (innerW-cardW)/(n-1);
+  document.documentElement.style.setProperty('--olap',(stride-cardW-10)+'px');
+}
+window.addEventListener('resize', relayoutDrawn);
+
+function highlightInList(id, on) {
+  document.querySelectorAll(`[data-card-id="${id}"]`).forEach(el => el.classList.toggle('is-active', on));
+  const el = drawnCardsEl.querySelector(`[data-id="${id}"]`);
+  if (el) el.classList.toggle('is-active', on);
+}
+
+function markListAsDrawn() {
+  document.querySelectorAll('.cl-item').forEach(el => el.classList.toggle('is-drawn', drawnSet.has(el.dataset.cardId)));
+}
+
+function scrollToCardEntry(id) {
+  const el = document.querySelector(`.cl-item[data-card-id="${id}"]`);
+  if (!el) return;
+  window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 110, behavior:'smooth' });
+  el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
+  setTimeout(() => el.classList.remove('flash'), 1700);
+}
+
+function renderDrawn(newId) {
+  drawnCardsEl.innerHTML = '';
+  updateTrayChrome();
+  if (!drawnIds.length) { drawnCardsEl.appendChild(drawnEmptyEl); relayoutDrawn(); return; }
+
+  drawnIds.forEach(id => {
+    const card = ALL.find(c => c.id === id);
+    const el = document.createElement('div');
+    el.className = 'drawn ' + typeClass(card);
+    el.dataset.id = id;
+    el.title = 'Klicke, um zur Beschreibung zu springen';
+    el.innerHTML = buildCardFront(card) + `<button class="remove" aria-label="Karte entfernen">×</button>`;
+    const inner = el.querySelector('.card-front');
+    while (inner.firstChild) el.appendChild(inner.firstChild);
+    inner.remove();
+    el.querySelector('.remove').addEventListener('click', ev => { ev.stopPropagation(); removeCard(id); });
+    el.addEventListener('click', () => scrollToCardEntry(id));
+    el.addEventListener('mouseenter', () => highlightInList(id, true));
+    el.addEventListener('mouseleave', () => highlightInList(id, false));
+    drawnCardsEl.appendChild(el);
+  });
+  relayoutDrawn();
+  if (newId) {
+    const newEl = drawnCardsEl.querySelector(`[data-id="${newId}"]`);
+    if (newEl) {
+      newEl.style.opacity = '0'; newEl.style.transform = 'translateY(8px)';
+      setTimeout(() => {
+        newEl.style.transition = 'opacity 220ms ease,transform 380ms cubic-bezier(.2,.7,.2,1)';
+        newEl.style.opacity = '1'; newEl.style.transform = '';
+      }, 30);
+    }
+  }
+}
+
+function removeCard(id) {
+  drawnIds.splice(drawnIds.indexOf(id), 1);
+  drawnSet.delete(id);
+  renderDrawn(); markListAsDrawn(); updateBtn();
+}
+
+clearBtn.addEventListener('click', () => { if (drawnIds.length) animateClear(); });
+document.getElementById('trayClearBtn').addEventListener('click', () => { if (drawnIds.length) animateClear(); });
+
+/* ========================= BURST / SPARKS ========================= */
+function spawnStarBurst(cx, cy) {
+  const [r,g,b] = accentRgb();
+  const flash = document.createElement('div');
+  flash.className = 'burst-flash';
+  flash.style.cssText = `left:${cx}px;top:${cy}px;transform:translate(-50%,-50%) scale(0.2);
+    background:radial-gradient(circle,rgba(255,255,255,0.85),rgba(${r},${g},${b},0.4) 35%,rgba(${r},${g},${b},0.1) 60%,transparent 80%)`;
+  document.body.appendChild(flash);
+  flash.animate([
+    {transform:'translate(-50%,-50%) scale(0.2)',opacity:0},
+    {transform:'translate(-50%,-50%) scale(1)',opacity:1,offset:0.2},
+    {transform:'translate(-50%,-50%) scale(2.4)',opacity:0}
+  ],{duration:750,easing:'cubic-bezier(.2,.7,.3,1)',fill:'forwards'}).onfinish = () => flash.remove();
+
+  [0,220].forEach((delay,k) => setTimeout(() => {
+    const ring = document.createElement('div');
+    ring.className = 'burst-ring';
+    ring.style.cssText = `left:${cx}px;top:${cy}px;
+      border-color:rgba(${r},${g},${b},0.9);
+      box-shadow:0 0 30px rgba(${r},${g},${b},0.7),inset 0 0 20px rgba(${r},${g},${b},0.3)`;
+    document.body.appendChild(ring);
+    ring.animate([
+      {transform:'translate(-50%,-50%) scale(0.1)',opacity:0.95,borderWidth:'3px'},
+      {transform:`translate(-50%,-50%) scale(${k===0?4:6})`,opacity:0,borderWidth:'1px'}
+    ],{duration:1100,easing:'cubic-bezier(.2,.8,.3,1)',fill:'forwards'}).onfinish = () => ring.remove();
+  }, delay));
+
+  const N = 56;
+  for (let i=0; i<N; i++) {
+    const angle = (i/N)*Math.PI*2 + (Math.random()-0.5)*0.45;
+    const dist  = 110 + Math.random()*260;
+    const dx=Math.cos(angle)*dist, dy=Math.sin(angle)*dist*0.85;
+    const dur = 1000+Math.random()*1100;
+    const rv = Math.random();
+    let cls = 'spark';
+    if (rv<0.14) cls += ' cross'; else if (rv<0.32) cls += ' big';
+    if (Math.random()<0.32) cls += ' alt';
+    const el = document.createElement('div');
+    el.className = cls;
+    el.style.cssText = `left:${cx}px;top:${cy}px;
+      background:radial-gradient(circle,rgba(255,255,255,1) 0%,rgba(${r},${g},${b},0.9) 30%,rgba(${r},${g},${b},0.5) 60%,transparent 78%);
+      box-shadow:0 0 14px rgba(${r},${g},${b},0.9),0 0 28px rgba(${r},${g},${b},0.6)`;
+    document.body.appendChild(el);
+    const swirl = angle+(Math.random()-0.5)*0.7;
+    const mx=Math.cos(swirl)*dist*0.45, my=Math.sin(swirl)*dist*0.4;
+    const ps = cls.includes('big')?1.9:(cls.includes('cross')?1.6:1.3);
+    el.animate([
+      {transform:'translate(-50%,-50%) scale(0.1) rotate(0deg)',opacity:0},
+      {transform:`translate(calc(-50% + ${mx}px),calc(-50% + ${my}px)) scale(${ps}) rotate(180deg)`,opacity:1,offset:0.28},
+      {transform:`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) scale(0) rotate(420deg)`,opacity:0}
+    ],{duration:dur,easing:'cubic-bezier(.15,.85,.3,1)',fill:'forwards'}).onfinish = () => el.remove();
+  }
+}
+
+/* ========================= FLY ANIMATION ========================= */
+function smoothstep(t) { return t<=0?0:t>=1?1:t*t*(3-2*t); }
+
+function buildDrawKeyframes(dx,dy,startScale,endScale) {
+  const N=32, out=[], cpx=dx*0.32, cpy=-340, maxLift=200;
+  const presentScale=startScale*1.12, peakT=0.34, rotStart=0.10, rotEnd=0.45;
+  for (let i=0;i<=N;i++) {
+    const t=i/N, u=1-t;
+    const wT = t<peakT ? peakT*smoothstep(t/peakT) : peakT+(1-peakT)*smoothstep((t-peakT)/(1-peakT));
+    const wu=1-wT;
+    const x=2*wu*wT*cpx+wT*wT*dx, y=2*wu*wT*cpy+wT*wT*dy;
+    const zPhase = t<=peakT ? t/peakT : 1-(t-peakT)/(1-peakT);
+    const z=maxLift*Math.sin(Math.max(0,zPhase)*Math.PI/2);
+    const rot=180*smoothstep((t-rotStart)/(rotEnd-rotStart));
+    const scale = t<=peakT ? startScale+(presentScale-startScale)*smoothstep(t/peakT)
+                           : presentScale+(endScale-presentScale)*smoothstep((t-peakT)/(1-peakT));
+    const tiltZ=-2.5*Math.sin(t*Math.PI);
+    out.push({
+      transform:`translate3d(${x.toFixed(2)}px,${y.toFixed(2)}px,${z.toFixed(2)}px) rotateY(${rot.toFixed(2)}deg) rotateZ(${tiltZ.toFixed(2)}deg) scale(${scale.toFixed(4)})`,
+      offset:+t.toFixed(4)
+    });
+  }
+  return out;
+}
+
+function animateDraw(card) {
+  const topCard = document.getElementById('topCard');
+  const startRect = topCard.getBoundingClientRect();
+  topCard.style.visibility = 'hidden';
+  spawnStarBurst(startRect.left+startRect.width/2, startRect.top+startRect.height/2);
+
+  drawnIds.push(card.id); drawnSet.add(card.id);
+  renderDrawn(); markListAsDrawn(); updateBtn();
+
+  const newDrawn = drawnCardsEl.querySelector(`[data-id="${card.id}"]`);
+  if (!newDrawn) { topCard.style.visibility='visible'; return; }
+  newDrawn.style.visibility = 'hidden';
+  void newDrawn.offsetWidth;
+  const targetRect = newDrawn.getBoundingClientRect();
+
+  const flyer = document.createElement('div');
+  flyer.className = 'flyer';
+  flyer.style.width = targetRect.width+'px';
+  flyer.style.height = targetRect.height+'px';
+
+  const back = document.createElement('div');
+  back.className = 'card-back'; back.innerHTML = backPattern();
+  flyer.appendChild(back);
+
+  const front = newDrawn.cloneNode(true);
+  front.querySelector('.remove')?.remove();
+  front.removeAttribute('data-id');
+  front.style.cssText = 'position:absolute;inset:0;margin:0;width:auto;height:auto;transform:rotateY(180deg);transform-origin:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:none;cursor:default;pointer-events:none;';
+  flyer.appendChild(front);
+
+  const startCx = startRect.left+startRect.width/2;
+  const startCy = startRect.top+startRect.height/2;
+  flyer.style.left = (startCx-targetRect.width/2)+'px';
+  flyer.style.top  = (startCy-targetRect.height/2)+'px';
+  document.body.appendChild(flyer);
+
+  const targetCx = targetRect.left+targetRect.width/2;
+  const targetCy = targetRect.top+targetRect.height/2;
+  const keyframes = buildDrawKeyframes(targetCx-startCx, targetCy-startCy, startRect.width/targetRect.width, 1);
+  const anim = flyer.animate(keyframes, {duration:1300,easing:'linear',fill:'forwards'});
+  anim.addEventListener('finish', () => {
+    flyer.style.transform = keyframes[keyframes.length-1].transform;
+    newDrawn.style.visibility=''; flyer.remove(); topCard.style.visibility='visible';
+  });
+}
+
+function animateClear() {
+  const ids = [...drawnIds];
+  const topCard = document.getElementById('topCard');
+  const stackRect = topCard.getBoundingClientRect();
+  const fullW = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--card-w'));
+  const fullH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--card-h'));
+
+  const items = ids.map(id => {
+    const el = drawnCardsEl.querySelector(`[data-id="${id}"]`);
+    if (!el) return null;
+    const rect = el.getBoundingClientRect();
+    el.style.visibility = 'hidden';
+    return { id, rect, card: ALL.find(c => c.id===id) };
+  }).filter(Boolean);
+
+  drawnIds.length = 0; drawnSet.clear(); markListAsDrawn(); updateBtn();
+
+  const sCx=stackRect.left+stackRect.width/2, sCy=stackRect.top+stackRect.height/2;
+  items.forEach((it, idx) => {
+    const dCx=it.rect.left+it.rect.width/2, dCy=it.rect.top+it.rect.height/2;
+    const flyer = document.createElement('div');
+    flyer.className='flyer';
+    flyer.innerHTML = buildCardBack()+buildCardFront(it.card);
+    flyer.style.left=(dCx-fullW/2)+'px'; flyer.style.top=(dCy-fullH/2)+'px';
+    flyer.style.transform=`scale(${it.rect.width/fullW}) rotateY(180deg)`;
+    flyer.style.transition='transform 950ms cubic-bezier(.4,.05,.2,1)';
+    document.body.appendChild(flyer);
+    setTimeout(() => {
+      flyer.style.transform=`translate(${sCx-dCx}px,${sCy-dCy}px) scale(1) rotateY(0deg)`;
+    }, 40+idx*90);
+    setTimeout(() => { flyer.remove(); if (idx===items.length-1) renderDrawn(); }, 40+idx*90+980);
+  });
+}
+
+/* ========================= DRAW EVENTS ========================= */
+drawBtn.addEventListener('click', () => { if (!drawBtn.disabled) { const c=pickRandom(); if(c) animateDraw(c); } });
+stackEl.addEventListener('click', () => { if (!drawBtn.disabled) { const c=pickRandom(); if(c) animateDraw(c); } });
+
+/* ========================= PICK UI ========================= */
+const typePick = document.getElementById('typePick');
+const cardPick = document.getElementById('cardPick');
+const pickBtn  = document.getElementById('pickBtn');
+
+function populateTypePick() {
+  const prev = typePick.value;
+  typePick.innerHTML = '<option value="">— Typ —</option>';
+  if (currentDeck !== 'flueche') typePick.innerHTML += '<option value="segen">Segen</option>';
+  if (currentDeck !== 'segen')   typePick.innerHTML += '<option value="fluch">Fluch</option>';
+  typePick.value = (currentDeck === 'segen') ? 'segen' : (currentDeck === 'flueche') ? 'fluch' : prev;
+  populateCardPick();
+}
+
+function populateCardPick() {
+  cardPick.innerHTML = '<option value="">— Karte —</option>';
+  pickBtn.disabled = true;
+  const type = typePick.value;
+  if (!type) { cardPick.disabled = true; return; }
+  const pool = (type === 'segen' ? SEGEN : FLUECHE).filter(c => !drawnSet.has(c.id));
+  pool.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c.id; opt.textContent = c.name;
+    cardPick.appendChild(opt);
+  });
+  cardPick.disabled = pool.length === 0;
+}
+
+typePick.addEventListener('change', populateCardPick);
+cardPick.addEventListener('change', () => { pickBtn.disabled = !cardPick.value; });
+pickBtn.addEventListener('click', () => {
+  const id = cardPick.value;
+  if (!id || drawnSet.has(id)) return;
+  const card = ALL.find(c => c.id === id);
+  if (!card) return;
+  typePick.value = '';
+  cardPick.innerHTML = '<option value="">— Karte —</option>';
+  cardPick.disabled = true;
+  pickBtn.disabled = true;
+  animateDraw(card);
+});
+
+/* ========================= DECK PICKER ========================= */
+function switchDeck(deck) {
+  if (deck === currentDeck) return;
+  currentDeck = deck;
+  document.documentElement.dataset.deck = deck;
+
+  document.querySelectorAll('.deck-btn').forEach(b => b.classList.toggle('active', b.dataset.deck===deck));
+
+  // reset drawn
+  drawnIds.length=0; drawnSet.clear();
+  renderDrawn(); markListAsDrawn(); updateBtn();
+  populateTypePick();
+
+  // rebuild stack backs with new colour
+  renderStack();
+
+  // update eyebrow numbering
+  const eye = document.getElementById('fluecheEyebrow');
+  if (eye) eye.textContent = deck==='flueche' ? 'I — Flüche' : 'II — Flüche';
+}
+
+document.querySelectorAll('.deck-btn').forEach(btn => {
+  btn.addEventListener('click', () => switchDeck(btn.dataset.deck));
+});
+
+// init
+document.documentElement.dataset.deck = 'chaos';
+
+/* ========================= CARD LIST ========================= */
+function buildListEntry(card) {
+  const el = document.createElement('div');
+  el.className = `cl-item ${typeClass(card)}`;
+  el.dataset.cardId = card.id;
+  el.innerHTML = `
+    <div class="cl-glyph">${glyphFor(card)}</div>
+    <div class="cl-body">
+      <div class="cl-name">${card.name}</div>
+      <div class="cl-keys">${card.keywords}</div>
+      <div class="cl-badge">${typeLabel(card)}</div>
+    </div>`;
+  el.addEventListener('mouseenter', () => highlightInList(card.id, true));
+  el.addEventListener('mouseleave', () => highlightInList(card.id, false));
+  return el;
+}
+
+const segenListEl   = document.getElementById('segenList');
+const fluecheListEl = document.getElementById('fluecheList');
+
+SEGEN.forEach(c => segenListEl.appendChild(buildListEntry(c)));
+FLUECHE.forEach(c => fluecheListEl.appendChild(buildListEntry(c)));
+
+/* ========================= INIT ========================= */
+updateBtn();
+renderDrawn();
+populateTypePick();
+</script>
+
+</div><!-- /page-content -->
+
+<script>
+(function () {
+const { SiteNav, SiteGate } = window;
+function AccessDenied() {
+  return React.createElement("div", {
+    style: { position:'fixed', inset:0, background:'rgba(5,4,15,0.97)', display:'flex',
+      flexDirection:'column', alignItems:'center', justifyContent:'center', gap:16, zIndex:999 }
+  },
+    React.createElement("a", { href:"index.html", style:{ position:'absolute', top:24, left:24,
+      fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.22em',
+      color:'rgba(200,190,240,0.4)', textDecoration:'none', textTransform:'uppercase' },
+      onMouseEnter: e => e.currentTarget.style.color='#f0eeff',
+      onMouseLeave: e => e.currentTarget.style.color='rgba(200,190,240,0.4)'
+    }, "← Zurück"),
+    React.createElement("div", { style:{ fontFamily:'var(--font-mono)', fontSize:9,
+      letterSpacing:'0.42em', color:'rgba(124,77,255,0.4)', textTransform:'uppercase' } }, "Kein Zugriff"),
+    React.createElement("div", { style:{ fontFamily:'var(--font-display)', fontSize:14,
+      letterSpacing:'0.3em', color:'rgba(200,190,240,0.25)', textTransform:'uppercase' } },
+      "Meruria — Segen & Flüche")
+  );
+}
+function App() {
+  if (window.SITE_USER?.role !== 'dm') return React.createElement(AccessDenied, null);
+  document.getElementById('page-content').style.display = '';
+  return React.createElement(SiteNav, null);
+}
+ReactDOM.createRoot(document.getElementById('nav-root')).render(
+  React.createElement(SiteGate, null, React.createElement(App, null))
+);
+})();
+</script>
+
+</body></html>

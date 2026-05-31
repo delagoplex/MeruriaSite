@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/images/favicon/favicon-m.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/images/favicon/favicon-m-180.png">
 <title>Meruria — Kollektikon</title>
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
@@ -16,6 +18,7 @@
 <script src="assets/components/filter-utils.js"></script>
 <script src="assets/components/site-gate.js"></script>
 <script src="assets/components/tweaks-panel-13.js"></script>
+<script src="assets/components/kollektikon-bar.js"></script>
 <script src="assets/scripts/data/resources/ff14_fish-data.js"></script>
 <script src="assets/scripts/data/resources/mineralien/ff14_mineralien-data.js"></script>
 <script src="assets/scripts/data/resources/pflanzen/ff14_pflanzen-data.js"></script>
@@ -51,184 +54,8 @@ const {
   useMemo
 } = React;
 
-/* ── Category icons (also used at large size in overlay) ── */
-const CAT_ICONS = {
-  fische: /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("path", {
-    d: "M70 50 C 60 35, 30 35, 20 50 C 30 65, 60 65, 70 50 Z",
-    fill: "none",
-    strokeWidth: "2"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M70 50 L 85 38 L 85 62 Z",
-    fill: "none",
-    strokeWidth: "2"
-  }), /*#__PURE__*/React.createElement("circle", {
-    cx: "32",
-    cy: "48",
-    r: "2.4",
-    fill: "currentColor"
-  })),
-  insekten: /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("ellipse", {
-    cx: "50",
-    cy: "50",
-    rx: "3.5",
-    ry: "22",
-    fill: "currentColor",
-    stroke: "none"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M50 38 C 36 22 16 24 18 42 C 24 50 38 48 50 50 Z",
-    fill: "none",
-    strokeWidth: "1.6"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M50 38 C 64 22 84 24 82 42 C 76 50 62 48 50 50 Z",
-    fill: "none",
-    strokeWidth: "1.6"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M50 50 C 38 56 22 60 22 72 C 30 76 44 70 50 64 Z",
-    fill: "none",
-    strokeWidth: "1.4"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M50 50 C 62 56 78 60 78 72 C 70 76 56 70 50 64 Z",
-    fill: "none",
-    strokeWidth: "1.4"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M48 30 L 42 22 M52 30 L 58 22",
-    strokeWidth: "1.4"
-  })),
-  pflanzen: /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("path", {
-    d: "M50 86 L 50 30",
-    strokeWidth: "2"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M50 50 C 30 46, 18 30, 22 18 C 36 22, 50 36, 50 50 Z",
-    fill: "none",
-    strokeWidth: "1.8"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M50 62 C 70 58, 82 42, 78 30 C 64 34, 50 48, 50 62 Z",
-    fill: "none",
-    strokeWidth: "1.8"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M50 76 C 42 72, 38 64, 42 58 C 48 60, 52 68, 50 76 Z",
-    fill: "none",
-    strokeWidth: "1.6"
-  })),
-  mineralien: /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("path", {
-    d: "M50 14 L 78 38 L 64 82 L 36 82 L 22 38 Z",
-    fill: "none",
-    strokeWidth: "2"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M50 14 L 50 82 M22 38 L 78 38 M36 82 L 50 38 L 64 82",
-    strokeWidth: "1.2",
-    opacity: "0.6"
-  })),
-  kreaturen: /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("path", {
-    d: "M28 32 L 22 18 L 38 26 L 50 14 L 62 26 L 78 18 L 72 32 L 80 50 L 70 70 L 50 84 L 30 70 L 20 50 Z",
-    fill: "none",
-    strokeWidth: "1.8"
-  }), /*#__PURE__*/React.createElement("circle", {
-    cx: "40",
-    cy: "44",
-    r: "3",
-    fill: "currentColor"
-  }), /*#__PURE__*/React.createElement("circle", {
-    cx: "60",
-    cy: "44",
-    r: "3",
-    fill: "currentColor"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M38 62 Q 50 70 62 62",
-    strokeWidth: "1.6",
-    fill: "none"
-  })),
-  kreaturenteile: /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("path", {
-    d: "M20 50 C 20 34, 36 22, 50 30 C 64 22, 80 34, 80 50 C 80 66, 64 78, 50 70 C 36 78, 20 66, 20 50 Z M50 30 L 50 70 M28 38 L 72 62 M28 62 L 72 38",
-    fill: "none",
-    strokeWidth: "1.6"
-  })),
-  wal: /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("path", {
-    d: "M14 52 C 20 36 40 26 60 30 C 72 32 82 40 86 50 L 78 54 L 72 48 L 64 54 L 56 46 L 48 56 L 38 48 Z",
-    fill: "none",
-    strokeWidth: "2"
-  }), /*#__PURE__*/React.createElement("circle", {
-    cx: "68",
-    cy: "42",
-    r: "1.8",
-    fill: "currentColor"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M28 40 L 34 50 M48 28 L 52 42",
-    strokeWidth: "1.2",
-    opacity: "0.55"
-  })),
-  lebensspeicher: /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("circle", {
-    cx: "50",
-    cy: "50",
-    r: "26",
-    fill: "none",
-    strokeWidth: "2"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M50 24 L 50 76 M24 50 L 76 50 M32 32 L 68 68 M68 32 L 32 68",
-    strokeWidth: "1.1",
-    opacity: "0.55"
-  }), /*#__PURE__*/React.createElement("circle", {
-    cx: "50",
-    cy: "50",
-    r: "6.5",
-    fill: "none",
-    strokeWidth: "1.6"
-  }), /*#__PURE__*/React.createElement("circle", {
-    cx: "50",
-    cy: "50",
-    r: "1.6",
-    fill: "currentColor"
-  }))
-};
-const CATEGORIES = [{
-  id: 'fische',
-  label: 'Fische',
-  hue: 200,
-  total: 1506,
-  short: 'Aquatische Lebensformen'
-}, {
-  id: 'insekten',
-  label: 'Insekten',
-  hue: 95,
-  total: 1346,
-  short: 'Gliedfüßer & Krabbeltiere'
-}, {
-  id: 'pflanzen',
-  label: 'Pflanzen',
-  hue: 140,
-  total: 732,
-  short: 'Flora & Botanik'
-}, {
-  id: 'mineralien',
-  label: 'Mineralien',
-  hue: 60,
-  total: 99,
-  short: 'Gestein & Kristalle'
-}, {
-  id: 'kreaturen',
-  label: 'Kreaturen',
-  hue: 285,
-  total: 1520,
-  short: 'Wesen Merurias'
-}, {
-  id: 'kreaturenteile',
-  label: 'Kreaturenteile',
-  hue: 0,
-  total: 0,
-  short: 'Trophäen & Material'
-}, {
-  id: 'wal',
-  label: 'Trümmer des Weißen Wals',
-  hue: 210,
-  total: 0,
-  short: 'Fragmente eines kosmischen Mythos'
-}, {
-  id: 'lebensspeicher',
-  label: 'Teile des Lebensspeichers',
-  hue: 45,
-  total: 0,
-  short: 'Reliquien des Urspeichers'
-}];
+const CAT_ICONS = window.KOL_CAT_ICONS;
+const CATEGORIES = window.KOL_CATEGORIES;
 
 /* ── Per-item icon variants (silhouettes) ── */
 const ICON = {
@@ -785,225 +612,44 @@ const STAGE_LABELS = ['Unbekannt', 'Sichtung', 'Bekannt', 'Beobachtet', 'Vertrau
 const STAGE_LABELS_SHORT = ['Unbekannt', 'Sichtung', 'Bekannt', 'Beobachtet', 'Vertraut', 'Studiert', 'Erforscht', 'Meisterhaft', 'Komplett'];
 // Field unlock thresholds — when info gets revealed inside the detail panel
 const FIELD_UNLOCKS = {
-  habitat: 2,
-  tagsOnCard: 2,
-  size: 3,
-  price: 3,
-  date: 5,
-  by: 5,
-  desc: 8,
-  tags: 8
+  tagsOnCard: 1,
+  size: 1,
+  price: 1,
+  desc: 2,
+  habitat: 6,
+  tags: 6,
+  date: 8,
+  by: 8
 };
 const GOLD = 'oklch(0.82 0.14 80)';
 const GOLD_SOFT = 'oklch(0.82 0.14 80 / 0.6)';
 const GOLD_GLOW = 'oklch(0.82 0.14 80 / 0.35)';
 
-/* ── Reward unlocks (8 per category) ──
-   Each entry: title (kurz, was geht), desc (Detailtext)
-   Stages 1–8 map 1:1 to indices 0–7.
-*/
-const REWARDS = {
-  fische: [{
-    title: 'Eintrag im Kollektikon',
-    desc: 'Name, Icon und Seltenheit erscheinen im Kollektikon.'
-  }, {
-    title: 'Vorkommen kartiert',
-    desc: 'Bevorzugte Gewässer werden auf der Weltkarte hervorgehoben.'
-  }, {
-    title: 'Beim Fischhändler erhältlich',
-    desc: 'Markthändler nehmen den Fang nun an und führen ihn im Sortiment.'
-  }, {
-    title: 'Marktpreis −10 %',
-    desc: 'Kauf- und Tauschpreis bei Händlern sinkt um 10 %.'
-  }, {
-    title: 'Passender Köder im Handel',
-    desc: 'Köder müssen nicht mehr selbst hergestellt werden — Händler führen sie.'
-  }, {
-    title: 'Marktpreis −20 %',
-    desc: 'Kauf- und Tauschpreis sinkt weiter, insgesamt −20 %.'
-  }, {
-    title: 'Großfang-Bonus',
-    desc: 'Größenklasse bekannt — größere Exemplare bringen +25 % Verkaufswert.'
-  }, {
-    title: 'Goldener Fang freischaltbar',
-    desc: 'Sehr seltene Schimmer-Variante kann nun gezielt geangelt werden.'
-  }],
-  insekten: [{
-    title: 'Eintrag im Kollektikon',
-    desc: 'Name, Icon und Seltenheit erscheinen im Kollektikon.'
-  }, {
-    title: 'Lebensraum kartiert',
-    desc: 'Schwärm- und Brutgebiete werden auf der Karte markiert.'
-  }, {
-    title: 'Alchemist nimmt sie an',
-    desc: 'Alchemisten zahlen für ganze Exemplare.'
-  }, {
-    title: 'Alchemist-Rabatt −10 %',
-    desc: 'Ankaufspreise bei Alchemisten sinken um 10 %.'
-  }, {
-    title: 'Fanggerät im Handel',
-    desc: 'Netze, Köderlampen und Glasfallen sind im Sortiment.'
-  }, {
-    title: 'Alchemist-Rabatt −20 %',
-    desc: 'Ankaufspreise sinken weiter auf insgesamt −20 %.'
-  }, {
-    title: 'Schwarm-Ortung',
-    desc: 'Schwärme können aus größerer Distanz aufgespürt werden.'
-  }, {
-    title: 'Leuchtende Variante',
-    desc: 'Sehr seltene biolumineszente Form kann nun gefangen werden.'
-  }],
-  pflanzen: [{
-    title: 'Eintrag im Kollektikon',
-    desc: 'Name, Icon und Seltenheit erscheinen im Kollektikon.'
-  }, {
-    title: 'Wuchsort kartiert',
-    desc: 'Bekannte Vorkommen werden auf der Weltkarte angezeigt.'
-  }, {
-    title: 'Apotheker führt sie',
-    desc: 'Apotheker und Kräuterhändler nehmen Bestände an.'
-  }, {
-    title: 'Apotheker-Rabatt −10 %',
-    desc: 'Trank- und Tinktur-Preise sinken um 10 %.'
-  }, {
-    title: 'Saatgut im Handel',
-    desc: 'Saatgut kaufbar — eigener Anbau möglich.'
-  }, {
-    title: 'Apotheker-Rabatt −20 %',
-    desc: 'Trank- und Tinktur-Preise sinken auf insgesamt −20 %.'
-  }, {
-    title: 'Erntebonus +25 %',
-    desc: 'Korrekter Erntezeitpunkt erhöht Ertrag pro Pflanze.'
-  }, {
-    title: 'Veredelte Form',
-    desc: 'Selten gezüchtete Variante mit verstärkter Wirkung kann angebaut werden.'
-  }],
-  mineralien: [{
-    title: 'Eintrag im Kollektikon',
-    desc: 'Name, Icon und Seltenheit erscheinen im Kollektikon.'
-  }, {
-    title: 'Vorkommen kartiert',
-    desc: 'Adern und Schichten werden auf der Karte markiert.'
-  }, {
-    title: 'Schmied kauft an',
-    desc: 'Schmiede nehmen Erze und Bausteine im Tauschhandel an.'
-  }, {
-    title: 'Schmiede-Rabatt −10 %',
-    desc: 'Schmiedearbeiten mit diesem Material sind 10 % günstiger.'
-  }, {
-    title: 'Spitzhacke-Set im Handel',
-    desc: 'Werkzeug zum effizienten Abbau ist im Sortiment.'
-  }, {
-    title: 'Schmiede-Rabatt −20 %',
-    desc: 'Schmiedearbeiten kosten insgesamt 20 % weniger.'
-  }, {
-    title: 'Ausbeute +25 %',
-    desc: 'Sauberer Abbau liefert mehr Rohmaterial pro Ader.'
-  }, {
-    title: 'Gereinigte Variante',
-    desc: 'Hochreine Form mit doppelter Effektkraft kann gewonnen werden.'
-  }],
-  kreaturen: [{
-    title: 'Eintrag im Kollektikon',
-    desc: 'Name, Icon und Seltenheit erscheinen im Kollektikon.'
-  }, {
-    title: 'Habitat kartiert',
-    desc: 'Reviere und Wanderwege werden auf der Weltkarte angezeigt.'
-  }, {
-    title: 'Schwächen bekannt',
-    desc: 'Verwundbare Stellen werden im Kampf hervorgehoben.'
-  }, {
-    title: 'Trophäenwert +10 %',
-    desc: 'Beim Verkauf von Trophäen 10 % mehr Erlös.'
-  }, {
-    title: 'Jagd-Ausrüstung im Handel',
-    desc: 'Spezialfallen und Gegengift sind im Sortiment.'
-  }, {
-    title: 'Trophäenwert +20 %',
-    desc: 'Trophäen bringen insgesamt 20 % mehr Erlös.'
-  }, {
-    title: 'Spurensuche-Bonus',
-    desc: 'Spuren bleiben länger sichtbar; Lager werden präziser kartiert.'
-  }, {
-    title: 'Seltene Variante kartiert',
-    desc: 'Albino-/Schleier-Variante kann gezielt aufgespürt werden.'
-  }],
-  kreaturenteile: [{
-    title: 'Eintrag im Kollektikon',
-    desc: 'Name, Icon und Seltenheit erscheinen im Kollektikon.'
-  }, {
-    title: 'Herkunft markiert',
-    desc: 'Das Eltern-Lebewesen wird in der Karteikarte verlinkt.'
-  }, {
-    title: 'Handwerker nimmt an',
-    desc: 'Rüstungs- und Waffenhandwerker kaufen den Bestand an.'
-  }, {
-    title: 'Handwerker-Rabatt −10 %',
-    desc: 'Arbeit mit diesem Material wird 10 % günstiger.'
-  }, {
-    title: 'Verarbeitungsanleitung',
-    desc: 'Detaillierte Anleitungen — höhere Erfolgschance beim Crafting.'
-  }, {
-    title: 'Handwerker-Rabatt −20 %',
-    desc: 'Arbeit mit diesem Material wird insgesamt 20 % günstiger.'
-  }, {
-    title: 'Ausbeute +25 %',
-    desc: 'Saubere Trennung liefert mehr brauchbare Teile pro Beute.'
-  }, {
-    title: 'Veredelte Form',
-    desc: 'Sehr seltene veredelte Variante kann gewonnen werden.'
-  }],
-  wal: [{
-    title: 'Eintrag im Kollektikon',
-    desc: 'Name, Icon und Seltenheit erscheinen im Kollektikon.'
-  }, {
-    title: 'Fundort-Hinweis',
-    desc: 'Die Bergungsgarde markiert verwandte Fundorte auf der Karte.'
-  }, {
-    title: 'Gelehrte hören zu',
-    desc: 'Akademiker zahlen für jedes verifizierte Stück Lore-Punkte.'
-  }, {
-    title: 'Symbolik teilweise entschlüsselt',
-    desc: 'Ritzungen werden im Codex übersetzt — +10 % Erkenntnis.'
-  }, {
-    title: 'Spezialtransport verfügbar',
-    desc: 'Die Bergungsgarde stellt einen kühlbaren Container.'
-  }, {
-    title: 'Resonanz dokumentiert',
-    desc: 'Andere Trümmer reagieren in der Nähe sichtbar — +20 % Erkenntnis.'
-  }, {
-    title: 'Verwandte Fragmente',
-    desc: 'Drei verwandte Trümmer auf der Karte hervorgehoben.'
-  }, {
-    title: 'Vollständige Mythe',
-    desc: 'Die zugehörige Lore-Passage des Weißen Wals wird freigeschaltet.'
-  }],
-  lebensspeicher: [{
-    title: 'Eintrag im Kollektikon',
-    desc: 'Name, Icon und Seltenheit erscheinen im Kollektikon.'
-  }, {
-    title: 'Fundort kartiert',
-    desc: 'Ruinenkammer und Zugangsweg werden hinterlegt.'
-  }, {
-    title: 'Lagerung möglich',
-    desc: 'Die Bergungsgarde übernimmt sichere Aufbewahrung.'
-  }, {
-    title: 'Schutzcontainer beim Schmied',
-    desc: 'Bleigefütterte Hülle bestellbar — verhindert Echo-Lecks.'
-  }, {
-    title: 'Pulsanalyse Stufe 1',
-    desc: 'Erste Resonanz-Messwerte werden notiert.'
-  }, {
-    title: 'Pulsanalyse Stufe 2',
-    desc: 'Vergleich mit verwandten Teilen möglich.'
-  }, {
-    title: 'Echo einer anderen Erinnerung',
-    desc: 'Beim Halten erinnert man sich an ein weiteres Bild.'
-  }, {
-    title: 'Anbindung an den Urspeicher',
-    desc: 'Verbindung zu anderen Kernen sichtbar — Quest-Trigger.'
-  }]
-};
+/* ── Ressourcenkarten-Stufen (gilt für alle Kategorien) ── */
+const REWARDS = [
+  { title: 'Sichtung',    info: 'Name · Bild · Seltenheit · Gewicht · Verkaufspreis · Kategorie-Tags', bonus: null },
+  { title: 'Bekannt',     info: 'Beschreibung · Klima-Tags', bonus: null },
+  { title: 'Beobachtet',  info: null,  bonus: 'Händler verkauft diese Ressource' },
+  { title: 'Vertraut',    info: 'Verarbeitungskategorien sichtbar', bonus: 'Taucht im Missionsterminal auf' },
+  { title: 'Studiert',    info: 'Nutzen', bonus: 'Händler bietet passendes Werkzeug / Köder an' },
+  { title: 'Erforscht',   info: 'Alle Fundort-Tags · Wachstumsdauer / Respawn-Zeit', bonus: 'Marktpreis −10 %' },
+  { title: 'Meisterhaft', info: 'Verarbeitungsrezepte werden aufgedeckt', bonus: 'Händler bietet mehr Einheiten an' },
+  { title: 'Komplett',    info: 'Vollständig erforscht', bonus: '+X % Kollektikon-Fortschritt' },
+];
+
+/* ── Kollektikon-Meilensteine (Gesamtfortschritt) ── */
+const MILESTONES = [
+  { pct: 10, title: '+1 auf alle Aufspürwürfe', boni: ['Pflanzen & Pilze: +1 auf Naturkunde / Wahrnehmung', 'Gestein & Erze: +1 auf Naturkunde / Wahrnehmung', 'Fische: +1 auf Überleben, Akrobatik und Fingerfertigkeit', 'Insekten: ???', 'Kreaturenteile: ???'] },
+  { pct: 20, title: '+1 auf alle Erntewürfe', boni: ['Pflanzen & Pilze: +1 auf Naturkunde', 'Gestein & Erze: +1 auf Naturkunde', 'Fische: +1 auf Überleben, Akrobatik und Fingerfertigkeit', 'Insekten: ???', 'Kreaturenteile: ???'] },
+  { pct: 30, title: '+2 auf alle Aufspürwürfe (insgesamt +3)', boni: ['Pflanzen & Pilze: +2 auf Naturkunde / Wahrnehmung', 'Gestein & Erze: +2 auf Naturkunde / Wahrnehmung', 'Fische: +2 auf Überleben, Akrobatik und Fingerfertigkeit', 'Insekten: ???', 'Kreaturenteile: ???'] },
+  { pct: 40, title: '+2 auf alle Erntewürfe (insgesamt +3)', boni: ['Pflanzen & Pilze: +2 auf Naturkunde', 'Gestein & Erze: +2 auf Naturkunde', 'Fische: +2 auf Überleben, Akrobatik und Fingerfertigkeit', 'Insekten: ???', 'Kreaturenteile: ???'] },
+  { pct: 50, title: '+3 auf alle Aufspürwürfe (insgesamt +6)', boni: ['Pflanzen & Pilze: +3 auf Naturkunde / Wahrnehmung', 'Gestein & Erze: +3 auf Naturkunde / Wahrnehmung', 'Fische: +3 auf Überleben, Akrobatik und Fingerfertigkeit', 'Insekten: ???', 'Kreaturenteile: ???'] },
+  { pct: 60, title: '+3 auf alle Erntewürfe (insgesamt +6)', boni: ['Pflanzen & Pilze: +3 auf Naturkunde', 'Gestein & Erze: +3 auf Naturkunde', 'Fische: +3 auf Überleben, Akrobatik und Fingerfertigkeit', 'Insekten: ???', 'Kreaturenteile: ???'] },
+  { pct: 70, title: 'Vorteil beim Aufspüren + Vorteil beim Ernten', boni: ['Alle Kategorien: Vorteil auf alle Aufspür- und Erntewürfe'] },
+  { pct: 80, title: '???', boni: [] },
+  { pct: 90, title: '???', boni: [] },
+  { pct: 100, title: '???', boni: [] },
+];
 
 // Entries are built dynamically in Script 3 from resource data + ressourcen_sichtbar.
 
@@ -1017,6 +663,7 @@ Object.assign(window, {
   STAGE_LABELS_SHORT,
   FIELD_UNLOCKS,
   REWARDS,
+  MILESTONES,
   GOLD,
   GOLD_SOFT,
   GOLD_GLOW
@@ -1292,15 +939,13 @@ function RewardRow({
       color: unlocked ? '#f0eeff' : 'rgba(180,170,220,0.45)',
       marginBottom: 3
     }
-  }, reward.title), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: 'var(--font-body)',
-      fontWeight: 300,
-      fontSize: 11.5,
-      color: unlocked ? 'var(--silver)' : 'rgba(160,140,255,0.4)',
-      lineHeight: 1.55
-    }
-  }, reward.desc)), /*#__PURE__*/React.createElement("div", {
+  }, reward.title),
+  reward.info && /*#__PURE__*/React.createElement("div", {
+    style: { fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: 11, color: unlocked ? 'var(--silver)' : 'rgba(160,140,255,0.35)', lineHeight: 1.5, marginTop: 2 }
+  }, '◈ ', reward.info),
+  reward.bonus && /*#__PURE__*/React.createElement("div", {
+    style: { fontFamily: 'var(--font-mono)', fontSize: 10, color: unlocked ? (isMaxStage ? GD : accentA(0.9)) : 'rgba(160,140,255,0.3)', marginTop: 3, letterSpacing: '0.04em' }
+  }, '◆ ', reward.bonus)), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: 7.5,
@@ -1322,7 +967,7 @@ function RewardList({
   isMax,
   previousStage
 }) {
-  const list = RW[category] || [];
+  const list = Array.isArray(RW) ? RW : (RW[category] || []);
   if (list.length === 0) return null;
   return /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1522,10 +1167,66 @@ function StageProgress({
     }, i));
   })));
 }
+/* ── Milestone section (overall Kollektikon progress) ── */
+function MilestoneSection({ overallPct }) {
+  const pct = Math.round(overallPct * 100);
+  const [collapsed, setCollapsed] = React.useState(true);
+  const [open, setOpen] = React.useState(null);
+  const GDA = a => `oklch(0.82 0.14 80 / ${a})`;
+  const reachedCount = MILESTONES.filter(m => pct >= m.pct).length;
+  return /*#__PURE__*/React.createElement("div", {
+    style: { margin: '20px 28px 0', border: '1px solid rgba(124,77,255,0.18)', borderRadius: 3, overflow: 'hidden', background: 'rgba(8,6,22,0.55)' }
+  },
+    /*#__PURE__*/React.createElement("div", {
+      onClick: () => setCollapsed(c => !c),
+      style: { padding: '10px 14px', borderBottom: collapsed ? 'none' : '1px solid rgba(124,77,255,0.1)', fontFamily: 'var(--font-mono)', fontSize: 8, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(160,140,255,0.55)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', userSelect: 'none' }
+    },
+      /*#__PURE__*/React.createElement("span", null, '◈ Kollektikon-Meilensteine'),
+      /*#__PURE__*/React.createElement("span", { style: { display: 'flex', alignItems: 'center', gap: 10 } },
+        /*#__PURE__*/React.createElement("span", { style: { color: reachedCount > 0 ? 'rgba(80,220,120,0.6)' : 'rgba(124,77,255,0.35)', fontSize: 8 } }, reachedCount, ' / ', MILESTONES.length, ' erreicht'),
+        /*#__PURE__*/React.createElement("span", { style: { fontSize: 10, opacity: 0.45, display: 'inline-block', transition: 'transform 0.2s', transform: collapsed ? 'rotate(-90deg)' : 'rotate(0deg)' } }, '▾')
+      )
+    ),
+    !collapsed && /*#__PURE__*/React.createElement("div", { style: { display: 'flex', flexDirection: 'column' } },
+      MILESTONES.map((m, i) => {
+        const reached = pct >= m.pct;
+        const isNext = !reached && (i === 0 || pct >= MILESTONES[i - 1].pct);
+        const accent = reached ? (m.pct === 100 ? GDA(1) : 'rgba(200,190,240,0.85)') : isNext ? 'rgba(160,140,255,0.5)' : 'rgba(124,77,255,0.28)';
+        const isOpen = open === i;
+        return /*#__PURE__*/React.createElement("div", { key: m.pct, style: { borderBottom: i < MILESTONES.length - 1 ? '1px solid rgba(124,77,255,0.07)' : 'none' } },
+          /*#__PURE__*/React.createElement("div", {
+            onClick: () => m.boni.length > 0 && setOpen(isOpen ? null : i),
+            style: { display: 'grid', gridTemplateColumns: '36px 1fr auto', alignItems: 'center', gap: 10, padding: '8px 14px', cursor: m.boni.length > 0 ? 'pointer' : 'default', background: isOpen ? 'rgba(124,77,255,0.06)' : 'transparent', transition: 'background 0.15s' }
+          },
+            /*#__PURE__*/React.createElement("div", {
+              style: { fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600, color: reached ? GDA(0.9) : 'rgba(124,77,255,0.35)', textAlign: 'center', letterSpacing: '0.04em' }
+            }, m.pct + ' %'),
+            /*#__PURE__*/React.createElement("div", {
+              style: { fontFamily: reached ? 'var(--font-body)' : 'var(--font-mono)', fontSize: reached ? 12 : 10, color: accent, letterSpacing: reached ? 'normal' : '0.1em', opacity: reached ? 1 : 0.7 }
+            }, m.title),
+            reached
+              ? /*#__PURE__*/React.createElement("span", { style: { fontFamily: 'var(--font-mono)', fontSize: 8, color: 'rgba(80,220,120,0.75)', letterSpacing: '0.14em' } }, '✓ AKTIV')
+              : isNext
+              ? /*#__PURE__*/React.createElement("span", { style: { fontFamily: 'var(--font-mono)', fontSize: 8, color: 'rgba(160,140,255,0.5)', letterSpacing: '0.12em' } }, 'NÄCHSTES')
+              : /*#__PURE__*/React.createElement("span", { style: { fontFamily: 'var(--font-mono)', fontSize: 8, color: 'rgba(124,77,255,0.28)', letterSpacing: '0.12em' } }, 'GESPERRT')
+          ),
+          isOpen && m.boni.length > 0 && /*#__PURE__*/React.createElement("div", {
+            style: { padding: '6px 14px 10px 60px', display: 'flex', flexDirection: 'column', gap: 4 }
+          }, m.boni.map((b, j) => /*#__PURE__*/React.createElement("div", {
+            key: j, style: { fontFamily: 'var(--font-body)', fontSize: 11, color: 'rgba(180,170,220,0.65)', lineHeight: 1.4 }
+          }, '· ', b)))
+        );
+      })
+    )
+  );
+}
+
+
 Object.assign(window, {
   StageBadge,
   StageProgress,
-  RewardList
+  RewardList,
+  MilestoneSection
 });
 
 /* Helper — striped bg with hue */
@@ -1570,6 +1271,9 @@ function EntryCard({
   const found = entry.found;
   const hue = entry.hue;
   const stage = entry.stage || 0;
+  const revealMode = entry.revealMode || null;
+  const showRealIcon = found || revealMode === 'bild' || revealMode === 'beides';
+  const showRealName = found || revealMode === 'name' || revealMode === 'beides';
   const cMain = `oklch(0.72 0.16 ${hue})`;
   const cA = a => `oklch(0.72 0.16 ${hue} / ${a})`;
   const isMax = found && stage >= MS;
@@ -1664,7 +1368,7 @@ function EntryCard({
       opacity: hov ? 1 : 0.7,
       transition: 'opacity 0.3s'
     }
-  }), found ? /*#__PURE__*/React.createElement("svg", {
+  }), showRealIcon ? (found ? /*#__PURE__*/React.createElement("svg", {
     viewBox: "0 0 100 100",
     width: "56",
     height: "56",
@@ -1675,9 +1379,7 @@ function EntryCard({
       filter: `drop-shadow(0 0 10px ${cA(0.5)})`,
       zIndex: 1
     }
-  }, IC[entry.icon] || CIC[entry.cat]) : entry.obscuredName ?
-  /*#__PURE__*/
-  // Unfound kreaturen: show icon faint, name will be scrambled below
+  }, IC[entry.icon] || CIC[entry.cat]) :
   React.createElement("svg", {
     viewBox: "0 0 100 100",
     width: "56",
@@ -1689,7 +1391,7 @@ function EntryCard({
       opacity: 0.22,
       zIndex: 1
     }
-  }, IC[entry.icon] || CIC[entry.cat]) : /*#__PURE__*/React.createElement("div", {
+  }, IC[entry.icon] || CIC[entry.cat])) : /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'relative',
       width: 56,
@@ -1740,7 +1442,7 @@ function EntryCard({
     cMain: cMain,
     cA: cA,
     compact: true
-  })), !found && !entry.obscuredName && /*#__PURE__*/React.createElement("div", {
+  })), !found && !revealMode && /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'absolute',
       top: 5,
@@ -1753,7 +1455,7 @@ function EntryCard({
       letterSpacing: '0.2em',
       textTransform: 'uppercase'
     }
-  }, "unbekannt"), !found && entry.obscuredName && /*#__PURE__*/React.createElement("div", {
+  }, "unbekannt"), !found && revealMode && /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'absolute',
       top: 5,
@@ -1765,15 +1467,15 @@ function EntryCard({
       color: cA(0.5),
       letterSpacing: '0.12em'
     }
-  }, "\u25C8 GESPERRT")), /*#__PURE__*/React.createElement("div", {
+  }, "\u25C8 Gesichtet")), /*#__PURE__*/React.createElement("div", {
     style: {
-      padding: '9px 11px 10px',
+      padding: '13px 11px 10px',
       display: 'flex',
       flexDirection: 'column',
       gap: 5,
       flex: 1
     }
-  }, found || !entry.obscuredName ? /*#__PURE__*/React.createElement("div", {
+  }, showRealName ? /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-display)',
       fontWeight: 400,
@@ -2808,7 +2510,18 @@ function _normalizeGroesse(g) {
   };
   return [map[(g || '').toLowerCase()] || g];
 }
-function buildKollektikonEntries(visibleMap, metaMap) {
+function computeStage(count, threshRow) {
+  if (!count || count <= 0) return 0;
+  if (!threshRow) return 1;
+  let stage = 1;
+  const keys = ['stufe_2', 'stufe_3', 'stufe_4', 'stufe_5', 'stufe_6', 'stufe_7', 'stufe_8'];
+  for (let i = 0; i < keys.length; i++) {
+    if (threshRow[keys[i]] != null && count >= threshRow[keys[i]]) stage = i + 2;
+  }
+  return stage;
+}
+
+function buildKollektikonEntries(countsMap, thresholdsMap) {
   const ALL_PLANTS = [...(window.PFLANZEN_DB || []), ...(window.FANTASY_PLANT_DB || [])];
   const DB = {
     fische: window.FISH_DB || [],
@@ -2818,15 +2531,18 @@ function buildKollektikonEntries(visibleMap, metaMap) {
   };
   const entries = [];
   for (const cat of C3) {
-    // Kreaturen: show all monsters, DM-toggled visibility via ressourcen_sichtbar
+    // Kreaturen: visibility and stage from kollektikon_counts + thresholds
     if (cat.id === 'kreaturen') {
       const monsters = window.MONSTER_DATA || [];
-      const visKreaturen = visibleMap['kreaturen'] || new Set();
       monsters.forEach((mon, idx) => {
         const rid = _monsterKolId(mon.name);
-        const isSeen = visKreaturen.has(rid);
-        const meta = metaMap[`kreaturen:${rid}`] || {};
         const cr = mon.cr || 0;
+        const rarity = _rarFromCr(cr);
+        const countData = countsMap[`kreaturen:${rid}`] || {};
+        const count = countData.menge || 0;
+        const revealMode = countData.reveal_mode || null;
+        const isSeen = count > 0;
+        const stage = computeStage(count, thresholdsMap[`kreaturen:${rarity}`]);
         const entry = {
           id: `kreaturen-${rid}`,
           _rid: rid,
@@ -2834,7 +2550,7 @@ function buildKollektikonEntries(visibleMap, metaMap) {
           name: mon.name,
           hue: cat.hue,
           found: isSeen,
-          stage: isSeen ? meta.stage || 0 : 0,
+          stage,
           price: 0,
           icon: _CREATURE_ICONS[idx % _CREATURE_ICONS.length],
           rarity: _rarFromCr(cr)
@@ -2846,10 +2562,12 @@ function buildKollektikonEntries(visibleMap, metaMap) {
           habitat: _umgebungToHabitat(mon.umgebung)
         };
         if (isSeen) {
+          entry.revealMode = null;
           entry.habitat = (mon.umgebung || []).join(', ');
           entry.size = mon.groesse || '';
           entry.desc = mon.beschreibung && mon.beschreibung[0] || '';
         } else {
+          entry.revealMode = revealMode;
           entry.obscuredName = _scrambleName(mon.name);
           entry.habitat = '';
           entry.size = '';
@@ -2861,12 +2579,9 @@ function buildKollektikonEntries(visibleMap, metaMap) {
     }
     const db = DB[cat.id];
     if (!db || db.length === 0) continue;
-    const visIds = visibleMap[cat.id] || new Set();
     const pool = _ICON_POOLS[cat.id] || [];
     for (const res of db) {
       const rid = res.id;
-      const isSeen = visIds.has(rid);
-      const meta = metaMap[`${cat.id}:${rid}`] || {};
       let rarity, fullTags, habitat, size;
       if (cat.id === 'fische') {
         rarity = _rarFromStaerke(res.stärke || 2);
@@ -2910,6 +2625,11 @@ function buildKollektikonEntries(visibleMap, metaMap) {
         habitat = (res.fundort || []).join(', ');
         size = '';
       }
+      const countData = countsMap[`${cat.id}:${rid}`] || {};
+      const count = countData.menge || 0;
+      const revealMode = countData.reveal_mode || null;
+      const isSeen = count > 0;
+      const stage = computeStage(count, thresholdsMap[`${cat.id}:${rarity}`]);
       const entry = {
         id: `${cat.id}-${rid}`,
         _rid: rid,
@@ -2917,17 +2637,19 @@ function buildKollektikonEntries(visibleMap, metaMap) {
         name: res.name_de,
         hue: cat.hue,
         found: isSeen,
-        stage: isSeen ? meta.stage || 0 : 0,
+        stage,
         price: isSeen ? _parsePrice(res.verkaufspreis) : 0,
         icon: pool.length ? pool[rid % pool.length] : null,
         rarity
       };
       entry.tags = fullTags;
       if (isSeen) {
+        entry.revealMode = null;
         entry.habitat = habitat;
         entry.size = size;
         entry.desc = res.desc_de || '';
       } else {
+        entry.revealMode = revealMode;
         entry.obscuredName = _scrambleName(res.name_de);
         entry.habitat = '';
         entry.size = '';
@@ -3009,65 +2731,50 @@ function KollektikonPage() {
   const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
   const searchRef = uR3(null);
 
-  // Visibility from ressourcen_sichtbar + stage meta from kollektikon_meta
-  const [visibleMap, setVisibleMap] = uS3({});
-  const [metaMap, setMetaMap] = uS3({});
+  // Counts + thresholds from Supabase — stage computed dynamically
+  const [countsMap, setCountsMap] = uS3({});
+  const [thresholdsMap, setThresholdsMap] = uS3({});
   uE3(() => {
     async function load() {
-      const [visRes, metaRes] = await Promise.all([window._sb.from('ressourcen_sichtbar').select('cat, resource_id'), window._sb.from('kollektikon_meta').select('cat, resource_id, stage')]);
-      if (visRes.data) {
-        const vm = {};
-        visRes.data.forEach(({
-          cat,
-          resource_id
-        }) => {
-          if (!vm[cat]) vm[cat] = new Set();
-          vm[cat].add(resource_id);
+      const [countRes, threshRes] = await Promise.all([
+        window._sb.from('kollektikon_counts').select('cat, resource_id, menge'),
+        window._sb.from('kollektikon_thresholds').select('*'),
+      ]);
+      if (countRes.data) {
+        const cm = {};
+        countRes.data.forEach(({ cat, resource_id, menge, reveal_mode }) => {
+          cm[`${cat}:${resource_id}`] = { menge, reveal_mode: reveal_mode || null };
         });
-        setVisibleMap(vm);
+        setCountsMap(cm);
       }
-      if (metaRes.data) {
-        const mm = {};
-        metaRes.data.forEach(({
-          cat,
-          resource_id,
-          stage
-        }) => {
-          mm[`${cat}:${resource_id}`] = {
-            stage
-          };
+      if (threshRes.data) {
+        const tm = {};
+        threshRes.data.forEach(row => {
+          tm[`${row.cat}:${row.rarity}`] = row;
         });
-        setMetaMap(mm);
+        setThresholdsMap(tm);
       }
     }
     load();
-    const ch = window._sb.channel('kol-res-vis').on('postgres_changes', {
+    const ch = window._sb.channel('kol-counts').on('postgres_changes', {
       event: '*',
       schema: 'public',
-      table: 'ressourcen_sichtbar'
+      table: 'kollektikon_counts'
     }, payload => {
-      setVisibleMap(prev => {
-        const vm = Object.fromEntries(Object.entries(prev).map(([k, v]) => [k, new Set(v)]));
-        if (payload.eventType === 'INSERT') {
-          const {
-            cat,
-            resource_id
-          } = payload.new;
-          if (!vm[cat]) vm[cat] = new Set();
-          vm[cat].add(resource_id);
-        } else if (payload.eventType === 'DELETE') {
-          const {
-            cat,
-            resource_id
-          } = payload.old;
-          if (vm[cat]) vm[cat].delete(resource_id);
+      setCountsMap(prev => {
+        const cm = { ...prev };
+        if (payload.eventType === 'DELETE') {
+          delete cm[`${payload.old.cat}:${payload.old.resource_id}`];
+        } else {
+          const { cat, resource_id, menge, reveal_mode } = payload.new;
+          cm[`${cat}:${resource_id}`] = { menge, reveal_mode: reveal_mode || null };
         }
-        return vm;
+        return cm;
       });
     }).subscribe();
     return () => window._sb.removeChannel(ch);
   }, []);
-  const E3 = uM3(() => buildKollektikonEntries(visibleMap, metaMap), [visibleMap, metaMap]);
+  const E3 = uM3(() => buildKollektikonEntries(countsMap, thresholdsMap), [countsMap, thresholdsMap]);
   function toggleTag(facetKey, value) {
     setFilterTags(prev => {
       const cur = prev[activeCat]?.[facetKey] || [];
@@ -3377,7 +3084,9 @@ function KollektikonPage() {
       marginRight: 5,
       verticalAlign: 'middle'
     }
-  }), Math.round(overallKomplettPct * 100), " % Komplett"))))), /*#__PURE__*/React.createElement("div", {
+  }), Math.round(overallKomplettPct * 100), " % Komplett"))))),
+  /*#__PURE__*/React.createElement(MilestoneSection, { overallPct }),
+  /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '22px 28px 0'
     }

@@ -102,8 +102,7 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
   const [hov, setHov] = appUS(false);
   const unlocked = unlocks.unlockedFor(nsc);
   const stage = unlocks.stageFor(nsc);
-  const visible = (k) => gm || unlocked.has(k);
-  const acc = accentOf(nsc, visible('division'));
+  const acc = accentOf(nsc, true);
   const accDim = hexA(acc, 0.4);
   const accBg  = hexA(acc, 0.10);
   const statusList = Array.isArray(nsc.status) ? nsc.status : (nsc.status ? [nsc.status] : []);
@@ -114,7 +113,7 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
 
   // Subhead — nur Rasse (Beruf wandert nicht mehr in die Kopfzeile, der ist in der Meta sichtbar)
   const headBits = [];
-  if (visible('rasse') && nsc.rasse) headBits.push(nsc.rasse);
+  if (nsc.rasse) headBits.push(nsc.rasse);
 
   return (
     <div className="reveal-up" style={{ transitionDelay:`${delay}s` }}>
@@ -169,7 +168,7 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
               )}
             </div>
             <div style={{ flex:1, minWidth:0, paddingTop:'4px', paddingRight: compact ? 60 : 90 }}>
-              {visible('titel') && nsc.titel && (
+              {nsc.titel && (
                 <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em',
                   color: unlocked.has('titel') ? acc : 'rgba(200,190,240,0.45)',
                   textTransform:'uppercase', marginBottom:3,
@@ -222,7 +221,7 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
           )}
 
           {/* Unvergessliche Eigenschaft */}
-          {visible('unvergesslich') && nsc.unvergesslich && (
+          {nsc.unvergesslich && (
             <div style={{ position:'relative', zIndex:1, marginBottom: compact ? 8 : 12,
               padding:'8px 10px', borderLeft:`2px solid ${hexA(acc, 0.6)}`,
               background: hexA(acc, 0.05),
@@ -236,7 +235,7 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
           )}
 
           {/* Eigenschaften pills */}
-          {!compact && visible('eigenschaften') && nsc.eigenschaften && nsc.eigenschaften.length > 0 && (
+          {!compact && nsc.eigenschaften && nsc.eigenschaften.length > 0 && (
             <div style={{ position:'relative', zIndex:1, marginBottom:12, opacity: unlocked.has('eigenschaften') ? 1 : 0.55 }}>
               <TraitPills items={nsc.eigenschaften} acc={acc} max={4}/>
             </div>
@@ -251,20 +250,20 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
               borderTop:`1px solid ${hexA(acc, 0.22)}`,
               fontFamily:'var(--font-mono)', fontSize:'8.5px', letterSpacing:'0.16em', textTransform:'uppercase',
             }}>
-              {visible('division')     && nsc.division && nsc.division !== 'Keine' &&
+              {nsc.division && nsc.division !== 'Keine' &&
                 <MetaLine label="Division"     value={`${romanFor(nsc) ? `${romanFor(nsc)} · ` : ''}${(nsc.division || '—').replace(/^Die /,'')}`} acc={acc} divisionAccent unlocked={unlocked.has('division')}/>}
-              {visible('organisation') && nsc.organisation && (!nsc.division || nsc.division === 'Keine') &&
+              {nsc.organisation && (!nsc.division || nsc.division === 'Keine') &&
                 <MetaLine label="Organisation" value={nsc.organisation} acc={acc} divisionAccent unlocked={unlocked.has('organisation')}/>}
-              {visible('rang')         && nsc.rang &&
+              {nsc.rang &&
                 <MetaLine label="Rang"         value={`${romanFor(nsc) ? `${romanFor(nsc)} · ` : ''}${nsc.rang}`} acc={acc} unlocked={unlocked.has('rang')}/>}
-              {visible('wohnort')      && nsc.wohnort &&
+              {nsc.wohnort &&
                 <MetaLine label="Wohnort"      value={nsc.wohnort} acc={acc} unlocked={unlocked.has('wohnort')}/>}
-              {visible('alter')        && nsc.alter && (
+              {nsc.alter && (
                 <MetaLine label="Alter"
-                  value={`${nsc.alter}${visible('lebensphase') && nsc.lebensphase ? ` · ${nsc.lebensphase}` : ''}`}
+                  value={`${nsc.alter}${nsc.lebensphase ? ` · ${nsc.lebensphase}` : ''}`}
                   acc={acc} unlocked={unlocked.has('alter')}/>
               )}
-              {visible('gottheit')     && nsc.gottheit &&
+              {nsc.gottheit &&
                 <MetaLine label="Gottheit"     value={nsc.gottheit} acc={acc} unlocked={unlocked.has('gottheit')}/>}
             </div>
           )}
@@ -379,13 +378,13 @@ function App() {
   const handleMouseMove = appUC(e => { setMouse({ x: e.clientX/window.innerWidth, y: e.clientY/window.innerHeight }); }, []);
 
   // NSC-Daten und Blickwinkel aus Supabase
-  const { nscs, perspectives, charPids, loading: dataLoading } = useNSCData();
+  const { nscs, perspectives, charPids, players, loading: dataLoading } = useNSCData();
 
   // Aktive Perspektive (welcher Spielercharakter blickt gerade)
   const [perspective, setPerspective] = appUS('alle');
 
   // Fakt-basiertes Freischaltsystem (persistiert in Supabase, pro Perspektive)
-  const unlocks = useUnlocks(nscs, charPids, perspective);
+  const unlocks = useUnlocks(nscs, charPids, perspective, players);
 
   // Lookup: NSC-id -> aktuelle berechnete Stufe
   const stageById = appUM(() => {
@@ -550,22 +549,62 @@ function App() {
             <span style={{ opacity:0.4 }}>›</span>
             <span style={{ color:'#c9b8ff' }}>NSC</span>
           </div>
-          <div style={{ display:'flex', alignItems:'center', gap:10 }}>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.28em', color:'rgba(160,140,255,0.55)', textTransform:'uppercase' }}>
+          <div style={{ display:'flex', alignItems:'flex-start', gap:10, flexWrap:'wrap' }}>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.28em', color:'rgba(160,140,255,0.55)', textTransform:'uppercase', paddingTop:7, flexShrink:0 }}>
               ◇ Blickwinkel
             </span>
-            <select value={perspective} onChange={e => setPerspective(e.target.value)} style={{
-              padding:'6px 12px',
-              background:'rgba(10,6,28,0.85)',
-              border:`1px solid ${perspective === 'alle' ? 'rgba(160,140,255,0.45)' : 'rgba(124,77,255,0.7)'}`,
-              borderRadius:2, color:'#f0eeff',
-              fontFamily:'var(--font-mono)', fontSize:10.5, letterSpacing:'0.14em',
-              cursor:'pointer', outline:'none',
-              boxShadow: perspective === 'alle' ? 'none' : '0 0 14px rgba(124,77,255,0.22)',
-              transition:'all 0.2s',
-            }}>
-              {perspectives.map(p => <option key={p.id} value={p.id}>{p.label}</option>)}
-            </select>
+            <div style={{ display:'flex', gap:6, flexWrap:'wrap', alignItems:'flex-start' }}>
+              {/* "Alle" chip */}
+              <button onClick={() => setPerspective('alle')} style={{
+                fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase',
+                padding:'5px 12px', borderRadius:3, cursor:'pointer', border:'1px solid',
+                background: perspective === 'alle' ? 'rgba(160,140,255,0.2)' : 'rgba(160,140,255,0.05)',
+                borderColor: perspective === 'alle' ? 'rgba(160,140,255,0.7)' : 'rgba(160,140,255,0.25)',
+                color: perspective === 'alle' ? '#f0eeff' : 'rgba(160,140,255,0.5)',
+                boxShadow: perspective === 'alle' ? '0 0 10px rgba(124,77,255,0.2)' : 'none',
+                transition:'all 0.15s',
+              }}>Alle</button>
+              {/* Separator */}
+              {players.length > 0 && <span style={{ color:'rgba(124,77,255,0.2)', alignSelf:'center', fontSize:12 }}>|</span>}
+              {/* Player groups */}
+              {players.map(player => {
+                const playerActive = perspective === player.id;
+                const playerChars = perspectives.filter(p => player.charIds.includes(p.id));
+                const anyCharActive = playerChars.some(c => c.id === perspective);
+                return (
+                  <div key={player.id} style={{ display:'flex', gap:4, alignItems:'center', flexWrap:'wrap' }}>
+                    {/* Player chip */}
+                    <button onClick={() => setPerspective(player.id)} style={{
+                      fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.12em', textTransform:'uppercase',
+                      padding:'5px 11px', borderRadius:3, cursor:'pointer', border:'1px solid',
+                      background: playerActive ? 'rgba(124,77,255,0.22)' : (anyCharActive ? 'rgba(124,77,255,0.08)' : 'rgba(124,77,255,0.04)'),
+                      borderColor: playerActive ? 'rgba(124,77,255,0.7)' : (anyCharActive ? 'rgba(124,77,255,0.35)' : 'rgba(124,77,255,0.18)'),
+                      color: playerActive ? '#f0eeff' : (anyCharActive ? 'rgba(200,190,240,0.7)' : 'rgba(160,140,255,0.45)'),
+                      boxShadow: playerActive ? '0 0 10px rgba(124,77,255,0.25)' : 'none',
+                      transition:'all 0.15s',
+                    }}>{player.label}</button>
+                    {/* Character chips */}
+                    {playerChars.map(c => {
+                      const charActive = perspective === c.id;
+                      return (
+                        <button key={c.id} onClick={() => setPerspective(c.id)} style={{
+                          fontFamily:'var(--font-body)', fontWeight:300, fontSize:11, letterSpacing:'0.04em',
+                          padding:'4px 10px', borderRadius:3, cursor:'pointer', border:'1px solid',
+                          background: charActive ? 'rgba(124,77,255,0.18)' : 'rgba(124,77,255,0.04)',
+                          borderColor: charActive ? 'rgba(124,77,255,0.6)' : 'rgba(124,77,255,0.15)',
+                          color: charActive ? '#f0eeff' : 'rgba(180,170,220,0.5)',
+                          boxShadow: charActive ? '0 0 8px rgba(124,77,255,0.2)' : 'none',
+                          transition:'all 0.15s',
+                        }}>{c.label}</button>
+                      );
+                    })}
+                    {players.indexOf(player) < players.length - 1 && (
+                      <span style={{ color:'rgba(124,77,255,0.2)', fontSize:12 }}>|</span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
 
@@ -698,7 +737,7 @@ function App() {
                   <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.22em',
                     padding:'3px 8px', background:'rgba(124,77,255,0.18)', border:'1px solid rgba(160,140,255,0.6)',
                     color:'#c9b8ff', textTransform:'uppercase', borderRadius:2 }}>
-                    ◇ Blickwinkel: {perspectives.find(p => p.id === perspective)?.label.replace('Als ','') || perspective}
+                    ◇ Blickwinkel: {perspective === 'alle' ? 'Alle' : players.find(p => p.id === perspective)?.label || perspectives.find(p => p.id === perspective)?.label || perspective}
                   </span>
                 )}
               </div>

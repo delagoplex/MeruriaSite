@@ -2,6 +2,8 @@
 <html lang="de"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/images/favicon/favicon-m.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/images/favicon/favicon-m-180.png">
 <title>Meruria — Rassen</title>
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
@@ -1094,34 +1096,7 @@ function DetailOverlay({
       display: 'flex',
       flexDirection: 'column'
     }
-  }, page ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'absolute',
-      top: '16px',
-      left: '16px',
-      zIndex: 201
-    }
-  }, /*#__PURE__*/React.createElement("button", {
-    style: closeBtnStyle,
-    onClick: onClose,
-    onMouseEnter: e => {
-      e.currentTarget.style.color = 'var(--white)';
-      e.currentTarget.style.borderColor = 'rgba(124,77,255,0.55)';
-    },
-    onMouseLeave: e => {
-      e.currentTarget.style.color = 'rgba(var(--text2-rgb),0.55)';
-      e.currentTarget.style.borderColor = 'rgba(124,77,255,0.25)';
-    }
-  }, /*#__PURE__*/React.createElement("svg", {
-    viewBox: "0 0 16 16",
-    width: "11",
-    height: "11",
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: "1.5"
-  }, /*#__PURE__*/React.createElement("path", {
-    d: "M10 4L6 8l4 4"
-  })), "Alle Rassen")), /*#__PURE__*/React.createElement("iframe", {
+  }, page ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("iframe", {
     src: page,
     title: race.name,
     style: {

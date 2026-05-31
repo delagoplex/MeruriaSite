@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meruria — Gebäudekatalog</title>
+<link rel="stylesheet" href="assets/styles/global/fonts.css">
+<link rel="stylesheet" href="assets/styles/global/base.css">
+<link rel="stylesheet" href="assets/styles/pages/Gebaude.css">
+<script src="assets/scripts/vendor/react.development.js"></script>
+<script src="assets/scripts/vendor/react-dom.development.js"></script>
+<script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/scripts/vendor/supabase.min.js"></script>
+<script src="assets/scripts/supabase-client.js"></script>
+<script src="assets/components/nav.js"></script>
+<script src="assets/components/site-gate.js"></script>
+<script src="assets/scripts/data/gebaeude-data.js"></script>
+<script>
+  (function() {
+    var param = new URLSearchParams(window.location.search).get('rasse') || 'Aarakocra';
+    var all = window.GEBAEUDE_RASSEN || [];
+    window.RACE = all.find(function(r) { return r.name === param; }) || all[0] || null;
+    if (window.RACE) document.title = 'Meruria — ' + window.RACE.name + ' \xB7 Geb\xe4udekatalog';
+
+    var hex = (window.RASSEN_ACCENTS || {})[param] || '#7c4dff';
+    window.GEBAEUDE_ACCENT = hex;
+    var r = parseInt(hex.slice(1,3),16);
+    var g = parseInt(hex.slice(3,5),16);
+    var b = parseInt(hex.slice(5,7),16);
+    var root = document.documentElement;
+    root.style.setProperty('--accent',       hex);
+    root.style.setProperty('--accent-rgb',   r+','+g+','+b);
+    root.style.setProperty('--accent-soft',  'rgba('+r+','+g+','+b+',0.55)');
+    root.style.setProperty('--line',         'rgba('+r+','+g+','+b+',0.16)');
+    root.style.setProperty('--line-strong',  'rgba('+r+','+g+','+b+',0.30)');
+    root.style.setProperty('--card',         'rgba('+r+','+g+','+b+',0.045)');
+    root.style.setProperty('--card-hover',   'rgba('+r+','+g+','+b+',0.085)');
+  })();
+</script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+const { useState, useMemo, useEffect, useRef } = React;
+
+const RACE         = window.RACE;
+const RASSEN_INDEX = window.RASSEN_INDEX || [];
+const KAT          = window.KAT || {};
+const PHASEN       = window.PHASEN || [];
+const SiteNav      = window.SiteNav;
+const SiteGate     = window.SiteGate;
+const IN_IFRAME    = window.self !== window.top;
+
+const ACCENT_HEX = window.GEBAEUDE_ACCENT || '#7c4dff';
+function acc(alpha) {
+  const r = parseInt(ACCENT_HEX.slice(1,3),16);
+  const g = parseInt(ACCENT_HEX.slice(3,5),16);
+  const b = parseInt(ACCENT_HEX.slice(5,7),16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+/* ── Rassen-Wechsler ── */
+function RaceSwitcher() {
+  const [open, setOpen] = useState(false);
+  const [q, setQ] = useState("");
+  const ref = useRef(null);
+  const slug = (name) => `Gebaude.html?rasse=${encodeURIComponent(name)}`;
+
+  useEffect(() => {
+    if (!open) return;
+    const onDoc = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+    const onEsc = (e) => { if (e.key === "Escape") setOpen(false); };
+    document.addEventListener("mousedown", onDoc);
+    document.addEventListener("keydown", onEsc);
+    return () => { document.removeEventListener("mousedown", onDoc); document.removeEventListener("keydown", onEsc); };
+  }, [open]);
+
+  const query = q.trim().toLowerCase();
+  const match = (n) => n.toLowerCase().includes(query);
+
+  let counter = 0;
+  const rows = [];
+  RASSEN_INDEX.forEach((e) => {
+    if (e.type === "race") {
+      counter++;
+      if (!query || match(e.name)) {
+        const cur = RACE && e.name === RACE.name;
+        const num = counter;
+        rows.push(
+          <a key={e.name} href={slug(e.name)} className={"switch-link" + (cur ? " cur" : "")}>
+            <span className="lnum">{String(num).padStart(2,"0")}</span>{e.name}
+          </a>
+        );
+      }
+    } else {
+      const subMatches = e.subraces.filter(s => !query || match(s) || match(e.name));
+      const groupShown = subMatches.length > 0;
+      e.subraces.forEach(()=>counter++);
+      if (groupShown) {
+        rows.push(<div key={e.name+"-grp"} className="switch-group-label">{e.name}</div>);
+        subMatches.forEach((s) => {
+          const cur = RACE && s === RACE.name;
+          rows.push(
+            <a key={s} href={slug(s)} className={"switch-link sub" + (cur ? " cur" : "")}>{s}</a>
+          );
+        });
+      }
+    }
+  });
+
+  const raceCount = RASSEN_INDEX.reduce((n,e) => n + (e.type==="race" ? 1 : e.subraces.length), 0);
+
+  return (
+    <div className="switcher" ref={ref}>
+      <button className="switch-btn" onClick={() => setOpen(o=>!o)}>
+        Rasse wechseln
+        <svg viewBox="0 0 12 12" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.5" style={{transform: open?"rotate(180deg)":"none", transition:"transform 0.2s"}}><path d="M2 4l4 4 4-4"/></svg>
+      </button>
+      {open && (
+        <div className="switch-panel">
+          <div className="switch-search">
+            <input autoFocus value={q} onChange={e=>setQ(e.target.value)} placeholder={`Rasse suchen … (${raceCount} Rassen)`} />
+          </div>
+          <div className="switch-list">
+            {rows.length ? rows : <div className="switch-group-label" style={{padding:"18px 16px"}}>Keine Treffer</div>}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ── Kopf / Hero ── */
+function Kopf() {
+  return (
+    <header className="hero">
+      <div className="hero-bg-clip">
+      <div className="hero-bg">
+        <div className="hero-grad" />
+        <svg style={{position:"absolute",inset:0,width:"100%",height:"100%",opacity:0.05}} viewBox="0 0 1200 480" preserveAspectRatio="xMidYMid slice">
+          <path d="M180 460 Q280 180 480 90 Q380 280 330 460" fill={acc(1)}/>
+          <path d="M880 470 Q980 160 1090 70 Q1040 260 960 470" fill={acc(0.7)}/>
+        </svg>
+        {Array.from({length:42}).map((_,i)=>(
+          <div key={i} style={{position:"absolute",width:i%6===0?2:1,height:i%6===0?2:1,borderRadius:"50%",background:acc(0.5),left:`${(i*41+9)%100}%`,top:`${(i*57+5)%80}%`,opacity:0.12+i%5*0.05}}/>
+        ))}
+      </div>
+      </div>
+      <div className="hero-feather">
+        <svg viewBox="0 0 80 200" width="50" height="124" fill="none">
+          <path d="M40 190 Q20 120 30 60 Q40 10 50 60 Q60 120 40 190" stroke={acc(1)} strokeWidth="1.5"/>
+          <path d="M40 150 Q25 110 30 80" stroke={acc(0.6)} strokeWidth="1"/>
+          <path d="M40 150 Q55 110 50 80" stroke={acc(0.6)} strokeWidth="1"/>
+        </svg>
+      </div>
+      <div className="hero-inner">
+        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:"16px",flexWrap:"wrap",marginBottom:"22px"}}>
+          <div style={{display:"flex",alignItems:"center",gap:"10px"}}>
+            <a href="Rassen.html" target={IN_IFRAME ? "_top" : "_self"} className="crumb">
+              <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M10 4L6 8l4 4"/></svg>
+              Alle Rassen
+            </a>
+            {RACE && (
+              <a href={`rassen-detail.html?rasse=${encodeURIComponent(RACE.name)}`} target={IN_IFRAME ? "_top" : "_self"} className="crumb">
+                Rassendetails
+                <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M6 4l4 4-4 4"/></svg>
+              </a>
+            )}
+          </div>
+          <RaceSwitcher />
+        </div>
+        <div className="kop-kicker">
+          <span>Enzyklopädie · Kolonisierung &amp; Bau · Gebäudekatalog</span>
+          {RACE.uebergruppe && (
+            <span className="gruppe-pill"><span className="dot" />Übergruppe: {RACE.uebergruppe}</span>
+          )}
+        </div>
+        <h1 className="race-name">{RACE.name}</h1>
+        <div className="race-tagline">{RACE.tagline}</div>
+        {RACE.quote && <div className="race-quote">„{RACE.quote}"</div>}
+      </div>
+    </header>
+  );
+}
+
+/* ── Habitatprofil ── */
+function HabField({ label, sign, warn, span2, children }) {
+  return (
+    <div className={"hab" + (warn?" warn":"") + (span2?" span2":"")}>
+      <div className="hab-k">
+        {sign && <span className={"sign " + sign}>{sign==="plus"?"+":"–"}</span>}
+        {label}
+      </div>
+      {children}
+    </div>
+  );
+}
+function Placeholder() {
+  return <span className="hab-v"><span className="placeholder-note">— im Habitatprofil ergänzen —</span></span>;
+}
+
+function Habitatprofil() {
+  const h = RACE.habitat;
+  return (
+    <section className="sec" id="habitat">
+      <div className="sec-head">
+        <div className="sec-kicker"><span className="idx">01</span> Steckbrief</div>
+        <h2>Habitatprofil</h2>
+        <p className="sec-intro">Wer diese Rasse ist und wie sie lebt — Terrain, Bauweise und die Bedürfnisse, die jedes Gebäude erfüllen muss.</p>
+      </div>
+      <div className="habitat-grid">
+        <HabField label="Terrain-Präferenz"><div className="hab-v">{h.terrainPraeferenz}</div></HabField>
+        <HabField label="Wohnpräferenz"><div className="hab-v">{h.wohnpraeferenz}</div></HabField>
+        <HabField label="Bauweise" span2><div className="hab-v">{h.bauweise}</div></HabField>
+
+        <HabField label="Ressourcen-Affinität">
+          <div className="chip-row">{h.ressourcenAffinitaet.map(r=> <span key={r} className="res-chip">{r}</span>)}</div>
+        </HabField>
+        <HabField label="Ressourcen-Aversion">
+          {h.ressourcenAversion
+            ? <div className="chip-row">{h.ressourcenAversion.map(r=> <span key={r} className="res-chip aversion">{r}</span>)}</div>
+            : <Placeholder/>}
+        </HabField>
+
+        <HabField label="Pflichtgebäude">
+          {h.pflichtgebaeude && h.pflichtgebaeude.length
+            ? <div className="chip-row">{h.pflichtgebaeude.map(r=> <span key={r} className="res-chip">{r}</span>)}</div>
+            : <Placeholder/>}
+        </HabField>
+        <HabField label="Wunschgebäude">
+          {h.wunschgebaeude && h.wunschgebaeude.length
+            ? <div className="chip-row">{h.wunschgebaeude.map(r=> <span key={r} className="res-chip">{r}</span>)}</div>
+            : <Placeholder/>}
+        </HabField>
+
+        <HabField label="WB-Trigger" sign="plus">
+          <ul className="hab-list plus">{h.wbTriggerPlus.map((t,i)=><li key={i}>{t}</li>)}</ul>
+        </HabField>
+        <HabField label="WB-Trigger" sign="minus" warn>
+          <ul className="hab-list">{h.wbTriggerMinus.map((t,i)=><li key={i}>{t}</li>)}</ul>
+        </HabField>
+
+        <HabField label="Verbote" warn span2>
+          <ul className="hab-list">{h.verbote.map((t,i)=><li key={i}>{t}</li>)}</ul>
+        </HabField>
+
+        <HabField label="Besonderheit" span2><div className="hab-v">{h.besonderheit}</div></HabField>
+      </div>
+    </section>
+  );
+}
+
+/* ── Bau-Terminal (Kosten) ── */
+function BauTerminal({ kosten, bauzeit }) {
+  return (
+    <div className="terminal">
+      <div className="terminal-head">
+        <span className="t-title">Baukosten</span>
+        <span className="t-dots"><span/><span/><span/></span>
+      </div>
+      <div className="terminal-body">
+        {kosten.map((k,i)=>(
+          <div className="cost-row" key={i}>
+            <span className="qty">{k.q}</span>
+            <span className="nm">{k.n}{k.rare && <span className="rare"> · {k.rare}</span>}</span>
+          </div>
+        ))}
+      </div>
+      <div className="terminal-foot"><span className="blink"/>Bauzeit: {bauzeit}</div>
+    </div>
+  );
+}
+
+/* ── Gebäude-Kachel ── */
+function GebaeudeKachel({ b, onOpen }) {
+  const kat = KAT[b.kategorie];
+  const cssVars = { "--cat-color": kat.color, "--cat-bg": kat.bg, "--cat-border": kat.border, "--cat-glow": kat.glow };
+  const teaser = b.beschreibung || (b.zimmer && b.zimmer.join(" · ")) || (b.effekt && b.effekt[0]) || "";
+  return (
+    <button className="btile" style={cssVars} onClick={onOpen}>
+      <div className="bt-head">
+        <div className="bt-badges">
+          <span className="cat-badge"><span className="bt-emoji">{kat.emoji}</span>{kat.label}</span>
+          <span className="phase-marker">{b.phase}</span>
+          {b.pflicht && <span className="pflicht-marker">Pflicht</span>}
+          {b.endgebaeude && <span className="star-marker">⭐</span>}
+        </div>
+        <div className="bt-name">{b.name}</div>
+        <div className="bt-size">{b.groesse}</div>
+      </div>
+      <div className="bt-body">
+        <p className="bt-teaser">{teaser}</p>
+        <div className="bt-foot">
+          <span className="bt-meta">{b.kosten.length} Ressourcen<span className="dot"/>{b.bauzeit}</span>
+          <span className="bt-open">Details
+            <svg viewBox="0 0 14 14" width="10" height="10" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M5 3l4 4-4 4"/></svg>
+          </span>
+        </div>
+      </div>
+    </button>
+  );
+}
+
+/* ── Gebäude-Detail Pop-up ── */
+function GebaeudeModal({ b, onClose }) {
+  const kat = KAT[b.kategorie];
+  const cssVars = { "--cat-color": kat.color, "--cat-bg": kat.bg, "--cat-border": kat.border, "--cat-glow": kat.glow };
+
+  useEffect(() => {
+    const onEsc = (e) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", onEsc);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.removeEventListener("keydown", onEsc); document.body.style.overflow = prev; };
+  }, []);
+
+  return (
+    <div className="modal-overlay" onClick={(e)=>{ if(e.target===e.currentTarget) onClose(); }}>
+      <div className="modal-scrim" onClick={onClose} />
+      <div className="modal" style={cssVars} role="dialog" aria-modal="true">
+        <div className="modal-head">
+          <button className="modal-close" onClick={onClose} aria-label="Schließen">
+            <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M4 4l8 8M12 4l-8 8"/></svg>
+          </button>
+          <div className="bc-badges">
+            <span className="cat-badge"><span style={{fontSize:"0.85rem"}}>{kat.emoji}</span>{kat.label}</span>
+            <span className="phase-marker">{b.phase}</span>
+            {b.pflicht && <span className="pflicht-marker">Pflicht</span>}
+            {b.endgebaeude && <span className="star-marker">⭐ Endgebäude</span>}
+          </div>
+          <div className="modal-name">{b.name}</div>
+          <div className="modal-sub">
+            <span className="grosse">{b.groesse}</span>
+            {b.fuer && <span> · {b.fuer}</span>}
+          </div>
+        </div>
+        <div className="modal-body">
+          {b.beschreibung && <p className="bc-desc">{b.beschreibung}</p>}
+
+          {b.zimmer && (
+            <div className="bc-field">
+              <span className="bc-field-label">Zimmer</span>
+              <ul className="bc-zimmer">{b.zimmer.map((z,i)=><li key={i}>{z}</li>)}</ul>
+            </div>
+          )}
+
+          {b.voraussetzung && (
+            <div className="voraussetzung">
+              <span className="v-label">Voraussetzung</span>
+              <span className="v-val">{b.voraussetzung}</span>
+            </div>
+          )}
+
+          <BauTerminal kosten={b.kosten} bauzeit={b.bauzeit} />
+
+          {b.effekt && b.effekt.length > 0 && (
+            <div className="bc-field">
+              <span className="bc-field-label">Effekt</span>
+              <ul className="bc-effect-list">{b.effekt.map((e,i)=><li key={i}>{e}</li>)}</ul>
+            </div>
+          )}
+
+          {b.wb && (
+            <div className="wb-line"><b>WB ·</b> {b.wb}</div>
+          )}
+
+          {b.kapazitaet && (
+            <div className="kapa-line">
+              <svg viewBox="0 0 14 14" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.4"><rect x="2" y="3" width="10" height="8" rx="1"/><path d="M2 6h10"/></svg>
+              {b.kapazitaet}
+            </div>
+          )}
+
+          {b.schaltetFrei && (
+            <div className="unlock">
+              <span className="u-label">Schaltet frei</span>
+              <span className="u-val">{b.schaltetFrei}</span>
+            </div>
+          )}
+
+          {b.dm && (
+            <div className="dm-hint"><span className="dm-tag">Hinweis für den DM</span>{b.dm}</div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Filter + Katalog ── */
+function Gebaeudekatalog() {
+  const [phaseF, setPhaseF] = useState([]);
+  const [katF, setKatF] = useState([]);
+  const [selected, setSelected] = useState(null);
+
+  const togglePhase = (p) => setPhaseF(f => f.includes(p) ? f.filter(x=>x!==p) : [...f,p]);
+  const toggleKat = (k) => setKatF(f => f.includes(k) ? f.filter(x=>x!==k) : [...f,k]);
+  const reset = () => { setPhaseF([]); setKatF([]); };
+
+  const filtered = useMemo(() => RACE.gebaeude.filter(b =>
+    (phaseF.length === 0 || phaseF.includes(b.phase)) &&
+    (katF.length === 0 || katF.includes(b.kategorie))
+  ), [phaseF, katF]);
+
+  const active = phaseF.length || katF.length;
+
+  return (
+    <section className="sec" id="katalog">
+      <div className="sec-head">
+        <div className="sec-kicker"><span className="idx">02</span> Bausystem</div>
+        <h2>Gebäudekatalog</h2>
+        <p className="sec-intro">Alle Gebäude, die diese Rasse bauen kann — nach Kategorie und Siedlungsphase. Karte anklicken für Baukosten, Effekte und DM-Hinweise.</p>
+      </div>
+
+      <div className="filterbar">
+        <div className="filter-group">
+          <span className="filter-label">Phase</span>
+          {PHASEN.map(p => (
+            <button key={p} className={"fchip" + (phaseF.includes(p)?" active":"")} onClick={()=>togglePhase(p)}>{p}</button>
+          ))}
+        </div>
+        <div className="filter-group">
+          <span className="filter-label">Kategorie</span>
+          {Object.entries(KAT).map(([k,v]) => (
+            <button key={k} className={"fchip" + (katF.includes(k)?" active":"")} onClick={()=>toggleKat(k)} style={katF.includes(k)?{borderColor:v.color,color:"#fff"}:{}}>
+              <span className="emoji">{v.emoji}</span>{v.label}
+            </button>
+          ))}
+        </div>
+        <span className="filter-count">{filtered.length} / {RACE.gebaeude.length} Gebäude</span>
+        {active ? <button className="filter-reset" onClick={reset}>Zurücksetzen ✕</button> : null}
+      </div>
+
+      <div className="build-grid tiles">
+        {filtered.length
+          ? filtered.map((b)=><GebaeudeKachel key={b.name} b={b} onOpen={()=>setSelected(b)} />)
+          : <div className="empty-state">Keine Gebäude für diese Filterkombination.</div>}
+      </div>
+
+      {selected && <GebaeudeModal b={selected} onClose={()=>setSelected(null)} />}
+    </section>
+  );
+}
+
+function NotFound() {
+  return (
+    <div className="not-found">
+      <h2>Rasse nicht gefunden</h2>
+      <p>Für diese Rasse gibt es noch keine Gebäudedaten.</p>
+      <a href="Rassen.html" className="crumb" style={{marginTop:"12px"}}>← Alle Rassen</a>
+    </div>
+  );
+}
+
+function App() {
+  if (!RACE) return <>{!IN_IFRAME && <SiteNav rightLabel="RASSEN-GEBÄUDEKATALOG" />}<NotFound /></>;
+  return (
+    <>
+      {!IN_IFRAME && <SiteNav rightLabel="RASSEN-GEBÄUDEKATALOG" />}
+      <Kopf />
+      <div className="shell">
+        <Habitatprofil />
+        <Gebaeudekatalog />
+      </div>
+      <footer>
+        <div className="f-line">{RACE.name} · Gebäudekatalog — Meruria Kolonisierungssystem</div>
+        {RACE.fussnotiz && <div className="f-sub">{RACE.fussnotiz}</div>}
+      </footer>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<SiteGate><App /></SiteGate>);
+</script>
+</body>
+</html>

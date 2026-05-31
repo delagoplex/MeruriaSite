@@ -2,6 +2,8 @@
 <html lang="de"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/images/favicon/favicon-m.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/images/favicon/favicon-m-180.png">
 <title>Meruria — Rezepte</title>
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
@@ -183,6 +185,7 @@ function RecipeDetailModal({ recipe, knownNames, isDM, playerRevealed, onReveal,
   const [testRevealedMain, setTestRevealedMain] = useState(false);
   const [testRevealedIngs, setTestRevealedIngs] = useState(new Set());
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
 
   useEffect(() => {
     const h = e => { if (e.key === 'Escape') onClose(); };
@@ -202,6 +205,9 @@ function RecipeDetailModal({ recipe, knownNames, isDM, playerRevealed, onReveal,
   const zutaten = recipe.zutaten || [];
   const revealed = isDM || (recipe.wurde_gekocht && playerRevealed);
   const effRevealed = testMode ? testRevealedMain : revealed;
+  // Track whether the recipe was already revealed when the modal opened.
+  // Animation should only play on first-time reveal, not on every modal open.
+  const alreadyRevealedRef = useRef(revealed);
   function effIngRevealed(ingKey) {
     return testMode ? testRevealedIngs.has(ingKey) : (isDM || !!(myIngredientRevealIds && myIngredientRevealIds.has(recipe.id + ':' + ingKey)));
   }
@@ -270,7 +276,10 @@ function RecipeDetailModal({ recipe, knownNames, isDM, playerRevealed, onReveal,
                   key={animKey}
                   src={recipeImageUrl(recipe.name)}
                   alt={recipe.name}
-                  className="rez-plate-img rez-plate-img--revealed"
+                  className={`rez-plate-img${(!alreadyRevealedRef.current || testMode) ? ' rez-plate-img--revealed' : ''}`}
+                  style={{ cursor: 'zoom-in' }}
+                  title="Vergrößern"
+                  onClick={e => { e.stopPropagation(); setLightboxOpen(true); }}
                   onError={e => {
                     e.target.style.display = 'none';
                     e.target.parentNode.querySelector('.rez-plate-placeholder').style.display = 'flex';
@@ -406,6 +415,11 @@ function RecipeDetailModal({ recipe, knownNames, isDM, playerRevealed, onReveal,
           </div>
         </div>
       </div>
+      {lightboxOpen && (
+        <div className="rez-lightbox" onClick={e => { e.stopPropagation(); setLightboxOpen(false); }}>
+          <img className="rez-lightbox-img" src={recipeImageUrl(recipe.name)} alt={recipe.name} />
+        </div>
+      )}
     </div>
   );
 }
@@ -429,7 +443,7 @@ function RecipeCard({ recipe, knownNames, isDM, playerRevealed, myIngredientReve
           <img
             src={recipeImageUrl(recipe.name)}
             alt={recipe.name}
-            className="rez-plate-img rez-plate-img--revealed"
+            className="rez-plate-img"
             onError={e => { e.target.style.display = 'none'; e.target.parentNode.querySelector('.rez-card2-thumb-placeholder').style.display = 'flex'; }}
           />
         )}
@@ -778,7 +792,7 @@ function CreatorModal({ isDM, sichtbar, onClose, onSubmit, editRecipe }) {
 
 // ── Main App ──────────────────────────────────────────────────────────────────
 function App() {
-  const isDM = window.SITE_USER?.role === 'dm';
+  const isDM = false;
   const uid = window.SITE_USER?.id;
 
   const [recipes, setRecipes] = useState([]);
@@ -859,17 +873,21 @@ function App() {
   }
 
   useEffect(() => {
-    window._sb.from('ressourcen_sichtbar').select('cat, resource_id').then(({ data }) => {
+    window._sb.from('kollektikon_counts').select('cat, resource_id, menge, reveal_mode').then(({ data }) => {
       if (!data) return;
       const v = { fische: new Set(), pflanzen: new Set(), mineralien: new Set(), insekten: new Set() };
-      data.forEach(row => { if (v[row.cat]) v[row.cat].add(row.resource_id); });
+      data.forEach(row => {
+        if (v[row.cat] && (row.menge > 0 || row.reveal_mode !== null))
+          v[row.cat].add(parseInt(row.resource_id, 10));
+      });
       setSichtbar(v);
     });
   }, []);
 
-  const approved = useMemo(() => recipes.filter(r => r.status === 'approved'), [recipes]);
-  const pending  = useMemo(() => recipes.filter(r => r.status === 'pending'),  [recipes]);
-  const mine     = useMemo(() => recipes.filter(r => r.submitted_by === uid),   [recipes, uid]);
+  const approved      = useMemo(() => recipes.filter(r => r.status === 'approved'), [recipes]);
+  const pending       = useMemo(() => recipes.filter(r => r.status === 'pending'),  [recipes]);
+  const mineApproved  = useMemo(() => recipes.filter(r => r.submitted_by === uid && r.status === 'approved'), [recipes, uid]);
+  const minePending   = useMemo(() => recipes.filter(r => r.submitted_by === uid && r.status !== 'approved'), [recipes, uid]);
 
   // Per-recipe ingredient reveal helpers
   function ingKey(z) { return z.kollektikon_id || ('name:' + z.name.toLowerCase()); }
@@ -908,10 +926,11 @@ function App() {
     else if (tab === 'complete')   base = approved.filter(r => allIngsRevealed(r));
     // DM marked as cooked AND player has revealed
     else if (tab === 'cooked')     base = approved.filter(r => r.wurde_gekocht && myRevealedIds.has(r.id));
-    else if (tab === 'pending')    base = pending;
-    else                           base = mine;
+    else if (tab === 'pending')       base = pending;
+    else if (tab === 'mine_approved') base = mineApproved;
+    else                              base = minePending;
     return applySearch(base);
-  }, [tab, approved, pending, mine, myIngredientRevealIds, myRevealedIds, search]);
+  }, [tab, approved, pending, mineApproved, minePending, myIngredientRevealIds, myRevealedIds, search]);
 
   async function handleToggleCooked(id, current) {
     await window._sb.from('recipes').update({ wurde_gekocht: !current }).eq('id', id);
@@ -946,8 +965,9 @@ function App() {
     ...(!isDM ? [{ id: 'incomplete', label: 'Unvollständig' }] : []),
     ...(!isDM ? [{ id: 'complete',   label: 'Vollständig' }] : []),
     ...(!isDM ? [{ id: 'cooked',     label: 'Gekocht' }] : []),
-    ...(isDM  ? [{ id: 'pending',    label: 'Ausstehend',       count: pending.length }] : []),
-    ...(uid   ? [{ id: 'mine',       label: 'Meine Vorschläge' }] : []),
+    ...(isDM  ? [{ id: 'pending',      label: 'Ausstehend',     count: pending.length }] : []),
+    ...(uid   ? [{ id: 'mine_approved', label: 'Meine Rezepte', count: mineApproved.length }] : []),
+    ...(uid   ? [{ id: 'mine_pending',  label: 'Vorschläge',    count: minePending.length }] : []),
   ];
 
   return (
@@ -1001,8 +1021,9 @@ function App() {
              tab === 'incomplete' ? 'Alle Rezepte vollständig enthüllt.' :
              tab === 'complete'   ? 'Noch kein Rezept vollständig enthüllt.' :
              tab === 'cooked'     ? 'Noch kein Rezept wurde gekocht.' :
-             tab === 'pending'    ? 'Keine ausstehenden Vorschläge.' :
-                                    'Du hast noch keine Rezepte vorgeschlagen.'}
+             tab === 'pending'       ? 'Keine ausstehenden Vorschläge.' :
+             tab === 'mine_approved' ? 'Noch keine deiner Vorschläge wurde angenommen.' :
+                                       'Du hast noch keine Rezepte vorgeschlagen.'}
           </span>
         </div>
       ) : (

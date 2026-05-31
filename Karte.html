@@ -2,6 +2,8 @@
 <html lang="de"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/images/favicon/favicon-m.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/images/favicon/favicon-m-180.png">
 <title>Karte · Meruria</title>
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
@@ -51,8 +53,9 @@ const TERRAIN_COLORS = {
   'Wüste':      'oklch(0.88 0.13 90)',
   'Steppe':     'oklch(0.80 0.13 80)',
   'Kolonie':    'oklch(0.73 0.15 65)',
-  'Vulkan':     'oklch(0.58 0.22 28)',
-  'Tundra':     'oklch(0.92 0.04 230)',
+  'Vulkan':        'oklch(0.58 0.22 28)',
+  'Aschenöde':      'oklch(0.65 0.20 42)',
+  'Tundra':        'oklch(0.92 0.04 230)',
   'Küste':      'oklch(0.80 0.12 195)',
   'See':        'oklch(0.65 0.15 230)',
   'Ozean':      'oklch(0.40 0.17 255)',
@@ -61,7 +64,8 @@ const TERRAIN_COLORS = {
   'Höhle':      'oklch(0.58 0.13 335)',
   'Dschungel':  'oklch(0.52 0.13 155)',
   'Insel':      'oklch(0.78 0.14 185)',
-  'Magisch':    'oklch(0.62 0.22 310)',
+  'Gletscher':  'oklch(0.93 0.06 210)',
+  'Magisch':    'oklch(0.72 0.28 310)',
   'Sonstiges':  'oklch(0.65 0.18 295)',
 };
 const DEFAULT_HEX_COLOR = 'oklch(0.70 0.15 285)';
@@ -669,7 +673,7 @@ function MerMapPlayer() {
       <header className="mk-topbar">
         <a className="mk-back" href="index.html">◂ Meruria</a>
         <span className="mk-title">KARTE</span>
-        <span className="mk-subtitle">◈ Die gewobenen Reiche</span>
+        <span className="mk-subtitle">◈ Die neue Welt</span>
         {/* Breadcrumb */}
         {mapStack.length > 0 && (
           <div style={{
@@ -712,7 +716,7 @@ function MerMapPlayer() {
         onClick={closePanel}
       >
         {!isLoading && (
-          <div ref={worldRef} className={`mk-world${bgUrl ? ' has-bg' : ''}`} style={{ transform: worldTx, '--zoom': camera.zoom, '--label-scale': 1 / Math.sqrt(camera.zoom) }}>
+          <div ref={worldRef} className={`mk-world${bgUrl ? ' has-bg' : ''}`} style={{ transform: worldTx, '--zoom': camera.zoom, '--label-scale': 1 / Math.pow(camera.zoom, 0.25) }}>
             {bgUrl && (
               <img
                 src={bgUrl}

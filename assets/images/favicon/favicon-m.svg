@@ -1,0 +1,39 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bgGlow" cx="50%" cy="34%" r="72%">
+      <stop offset="0%" stop-color="#271754"/>
+      <stop offset="52%" stop-color="#100a2e"/>
+      <stop offset="100%" stop-color="#05040f"/>
+    </radialGradient>
+    <radialGradient id="mGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#7c4dff" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#7c4dff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="mStroke" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#d8ccff"/>
+    </linearGradient>
+  </defs>
+
+  <!-- background squircle -->
+  <rect x="2" y="2" width="60" height="60" rx="15" fill="url(#bgGlow)"
+        stroke="#a08cff" stroke-opacity="0.30" stroke-width="1.5"/>
+
+  <!-- soft glow behind the M -->
+  <circle cx="32" cy="33" r="20" fill="url(#mGlow)"/>
+
+  <!-- accent sparkle, top right -->
+  <path d="M49 13 L50.4 16.6 L54 18 L50.4 19.4 L49 23 L47.6 19.4 L44 18 L47.6 16.6 Z"
+        fill="#b9a4ff"/>
+
+  <!-- serif feet (subtle, Cinzel feel) -->
+  <g stroke="#c8c0e8" stroke-width="2.4" stroke-linecap="round" opacity="0.9">
+    <line x1="14.5" y1="46.8" x2="21.5" y2="46.8"/>
+    <line x1="42.5" y1="46.8" x2="49.5" y2="46.8"/>
+  </g>
+
+  <!-- the M -->
+  <path d="M18 46 V20 L32 37 L46 20 V46"
+        fill="none" stroke="url(#mStroke)" stroke-width="5.2"
+        stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
