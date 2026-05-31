@@ -423,6 +423,36 @@ function RecipeCard({ recipe, knownNames, isDM, playerRevealed, myIngredientReve
       {/* top accent rail */}
       <div className="rez-card2-rail" />
 
+      {/* thumbnail */}
+      <div className="rez-card2-thumb">
+        {revealed && (
+          <img
+            src={recipeImageUrl(recipe.name)}
+            alt={recipe.name}
+            className="rez-plate-img rez-plate-img--revealed"
+            onError={e => { e.target.style.display = 'none'; e.target.parentNode.querySelector('.rez-card2-thumb-placeholder').style.display = 'flex'; }}
+          />
+        )}
+        <div className={`rez-card2-thumb-placeholder${!revealed ? ' rez-card2-thumb-placeholder--locked' : ''}`}
+             style={revealed ? { display: 'none' } : {}}>
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="42" height="42">
+            <path d="M36 34 Q33 26 36 18 Q39 10 36 2"  stroke="rgba(124,77,255,0.35)" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+            <path d="M50 32 Q47 24 50 16 Q53  8 50 0"  stroke="rgba(124,77,255,0.28)" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+            <path d="M64 34 Q61 26 64 18 Q67 10 64 2"  stroke="rgba(124,77,255,0.35)" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+            <ellipse cx="50" cy="44" rx="32" ry="6" fill="rgba(124,77,255,0.07)" stroke="rgba(124,77,255,0.45)" strokeWidth="1.5"/>
+            <path d="M18 44 Q18 80 50 80 Q82 80 82 44 Z" fill="rgba(124,77,255,0.08)" stroke="rgba(124,77,255,0.4)" strokeWidth="1.5"/>
+            <path d="M18 46 Q8 46 8 58 Q8 70 18 70" stroke="rgba(124,77,255,0.4)" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+            <path d="M82 46 Q92 46 92 58 Q92 70 82 70" stroke="rgba(124,77,255,0.4)" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+            <line x1="34" y1="80" x2="30" y2="92" stroke="rgba(124,77,255,0.35)" strokeWidth="1.5" strokeLinecap="round"/>
+            <line x1="50" y1="80" x2="50" y2="93" stroke="rgba(124,77,255,0.35)" strokeWidth="1.5" strokeLinecap="round"/>
+            <line x1="66" y1="80" x2="70" y2="92" stroke="rgba(124,77,255,0.35)" strokeWidth="1.5" strokeLinecap="round"/>
+            <circle cx="40" cy="62" r="1.5" fill="rgba(124,77,255,0.3)"/>
+            <circle cx="54" cy="58" r="1"   fill="rgba(124,77,255,0.22)"/>
+            <circle cx="62" cy="66" r="1.2" fill="rgba(124,77,255,0.25)"/>
+          </svg>
+        </div>
+      </div>
+
       {/* kicker row */}
       <div className="rez-card2-kicker">
         <span>Rezeptkodex · Kochen</span>
