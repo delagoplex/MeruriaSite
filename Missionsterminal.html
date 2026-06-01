@@ -64,6 +64,41 @@ const KAT = {
   }
 };
 
+// Division accent colors — keyed by full division name as stored in nscs.division
+const DIVISION_ACCENT = {
+  'Die Kuratoren':     '#3dbf8c',
+  'Die Sturmritter':   '#f06040',
+  'Die Sentinels':     '#6ec6f0',
+  'Die Friedenshüter': '#c47fa8',
+  'Die Outfitters':    '#d4681a',
+  'Die Pathfinders':   '#c8b800',
+  'Die Quellensucher': '#1aacb8',
+  'Die Bergungsgarde': '#8b5e3c',
+};
+const DIVISION_LOGO = {
+  'Die Kuratoren':     'assets/images/divisions/Logo_01_Kuratoren.png',
+  'Die Sturmritter':   'assets/images/divisions/Logo_02_Sturmritter.png',
+  'Die Sentinels':     'assets/images/divisions/Logo_03_Sentinels.png',
+  'Die Friedenshüter': 'assets/images/divisions/Logo_04_Friendenshüter.png',
+  'Die Outfitters':    'assets/images/divisions/Logo_05_Outfitters.png',
+  'Die Pathfinders':   'assets/images/divisions/Logo_06_Pathfinders.png',
+  'Die Quellensucher': 'assets/images/divisions/Logo_07_Quellensucher.png',
+  'Die Bergungsgarde': 'assets/images/divisions/Logo_08_Bergungsgarde.png',
+};
+// nscDivisionMap: name → { division, bild }
+function getDivColor(name, nscDivisionMap) {
+  if (!name) return null;
+  if (DIVISION_ACCENT[name]) return DIVISION_ACCENT[name];
+  const info = nscDivisionMap[name];
+  return info ? (DIVISION_ACCENT[info.division] || null) : null;
+}
+function getDivImage(name, nscDivisionMap) {
+  if (!name) return null;
+  if (DIVISION_LOGO[name]) return DIVISION_LOGO[name];
+  const info = nscDivisionMap[name];
+  return info?.bild || null;
+}
+
 // Mission data is loaded from Supabase at runtime.
 
 // ─── PARTICLES ────────────────────────────────────────────────────────────────
@@ -319,11 +354,16 @@ function FilterChip({
 
 // ─── AUFTRAGGEBER SIGIL ──────────────────────────────────────────────────────
 function AuftraggeberSigil({
-  name
+  name,
+  color,
+  image
 }) {
-  // hash name to a hue offset for variety
-  const hash = name.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
-  const initials = name.replace(/^Die\s+/, '').split(/\s+/).map(w => w[0]).slice(0, 2).join('');
+  const initials = (name || '?').replace(/^Die\s+/, '').split(/\s+/).map(w => w[0]).slice(0, 2).join('');
+  const stroke = color || 'rgba(167,139,255,0.6)';
+  const fill   = image ? 'none' : (color ? color + '20' : 'rgba(124,77,255,0.12)');
+  const inner  = color ? color + '30' : 'rgba(167,139,255,0.18)';
+  // CSS clip-path percentage coords derived from SVG polygon points in 46×52 space
+  const hexClip = 'polygon(50% 3.8%, 93.5% 25%, 93.5% 75%, 50% 96.2%, 6.5% 75%, 6.5% 25%)';
   return /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'relative',
@@ -334,7 +374,20 @@ function AuftraggeberSigil({
       justifyContent: 'center',
       flexShrink: 0
     }
-  }, /*#__PURE__*/React.createElement("svg", {
+  },
+  image && /*#__PURE__*/React.createElement("img", {
+    src: image,
+    alt: '',
+    style: {
+      position: 'absolute',
+      inset: 0,
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
+      clipPath: hexClip
+    }
+  }),
+  /*#__PURE__*/React.createElement("svg", {
     width: "46",
     height: "52",
     viewBox: "0 0 46 52",
@@ -344,15 +397,16 @@ function AuftraggeberSigil({
     }
   }, /*#__PURE__*/React.createElement("polygon", {
     points: "23,2 43,13 43,39 23,50 3,39 3,13",
-    fill: "rgba(124,77,255,0.12)",
-    stroke: "rgba(167,139,255,0.6)",
+    fill: fill,
+    stroke: stroke,
     strokeWidth: "1.2"
   }), /*#__PURE__*/React.createElement("polygon", {
     points: "23,7 38,15.5 38,36.5 23,45 8,36.5 8,15.5",
     fill: "none",
-    stroke: "rgba(167,139,255,0.18)",
+    stroke: inner,
     strokeWidth: "0.8"
-  })), /*#__PURE__*/React.createElement("span", {
+  })),
+  !image && /*#__PURE__*/React.createElement("span", {
     style: {
       position: 'relative',
       zIndex: 1,
@@ -360,7 +414,7 @@ function AuftraggeberSigil({
       fontSize: '14px',
       fontWeight: 500,
       letterSpacing: '0.05em',
-      color: '#e8e0ff'
+      color: color || '#e8e0ff'
     }
   }, initials));
 }
@@ -490,10 +544,13 @@ function DetailCard({
   onWithdraw,
   myApp,
   progress,
-  onStepClick
+  onStepClick,
+  nscDivisionMap
 }) {
   const accepted = !!myApp;
   const appStatus = myApp?.app_status || null;
+  const divColor = getDivColor(q.auftraggeber, nscDivisionMap || {});
+  const divImage = getDivImage(q.auftraggeber, nscDivisionMap || {});
   const APP_COLORS = {
     pending: '#7fb8ff',
     accepted: 'rgba(100,220,140,0.9)',
@@ -584,12 +641,14 @@ function DetailCard({
       gap: '14px',
       marginBottom: '18px',
       padding: '12px 14px',
-      background: 'rgba(124,77,255,0.06)',
-      border: '1px solid rgba(160,140,255,0.14)',
+      background: divColor ? divColor + '12' : 'rgba(124,77,255,0.06)',
+      border: '1px solid ' + (divColor ? divColor + '40' : 'rgba(160,140,255,0.14)'),
       borderRadius: '3px'
     }
   }, /*#__PURE__*/React.createElement(AuftraggeberSigil, {
-    name: q.auftraggeber
+    name: q.auftraggeber,
+    color: divColor,
+    image: divImage
   }), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
@@ -703,7 +762,7 @@ function DetailCard({
       opacity: "0.5"
     })),
     label: "Hade",
-    value: q.rewards.hade.toLocaleString('de-DE')
+    value: (q.rewards.hade ?? 0).toLocaleString('de-DE')
   }), q.rewards.item && /*#__PURE__*/React.createElement(RewardRow, {
     icon: /*#__PURE__*/React.createElement("svg", {
       width: "14",
@@ -1214,6 +1273,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [myApplications, setMyApplications] = useState({}); // mission_id → app row
   const [myChars, setMyChars] = useState([]);
+  const [nscDivisionMap, setNscDivisionMap] = useState({});
   const [filter, setFilter] = useState('alle');
   const [search, setSearch] = useState('');
   const [selectedId, setSelectedId] = useState(null);
@@ -1230,13 +1290,18 @@ function App() {
         data: adata
       }, {
         data: cdata
+      }, {
+        data: ndata
       }] = await Promise.all([window._sb.from('missions').select('*').neq('status', 'archiviert').order('created_at', {
         ascending: false
       }), uid ? window._sb.from('mission_applications').select('*').eq('player_id', uid) : {
         data: []
       }, uid ? window._sb.from('characters').select('id,name,race,class,division,char_data').eq('type', 'spieler') : {
         data: []
-      }]);
+      }, window._sb.from('nscs').select('name,division,bild')]);
+      const nscMap = {};
+      (ndata || []).forEach(n => { nscMap[n.name] = { division: n.division || 'Keine', bild: n.bild || null }; });
+      setNscDivisionMap(nscMap);
       const mapped = (mdata || []).map(m => ({
         ...m,
         desc: m.beschreibung
@@ -1635,7 +1700,8 @@ function App() {
     onAccept: () => setPickerMission(selected),
     onWithdraw: handleWithdraw,
     progress: progress[selected.id] || [],
-    onStepClick: (stepIdx, max) => stepClick(selected.id, stepIdx, max)
+    onStepClick: (stepIdx, max) => stepClick(selected.id, stepIdx, max),
+    nscDivisionMap: nscDivisionMap
   })))), /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'relative',

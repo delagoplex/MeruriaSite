@@ -95,6 +95,10 @@ const APP_STATUS = {
     color: 'rgba(255,120,120,0.8)'
   }
 };
+const DIVISIONS = [
+  'Die Kuratoren','Die Sturmritter','Die Sentinels','Die Friedenshüter',
+  'Die Outfitters','Die Pathfinders','Die Quellensucher','Die Bergungsgarde'
+];
 
 // ─── SMALL UTILS ─────────────────────────────────────────────────────────────
 function Btn({
@@ -289,7 +293,8 @@ function MissionRow({
 // ─── CREATE FORM ─────────────────────────────────────────────────────────────
 function CreateForm({
   onCreated,
-  onCancel
+  onCancel,
+  nscOptions
 }) {
   const [form, setForm] = useState({
     name: '',
@@ -416,11 +421,19 @@ function CreateForm({
   }))), /*#__PURE__*/React.createElement("div", {
     className: "field",
     style: row2
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, "Auftraggeber"), /*#__PURE__*/React.createElement("input", {
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, "Auftraggeber"), /*#__PURE__*/React.createElement("select", {
     value: form.auftraggeber,
-    onChange: e => set('auftraggeber', e.target.value),
-    placeholder: "Division\u2026"
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, "Region"), /*#__PURE__*/React.createElement("input", {
+    onChange: e => set('auftraggeber', e.target.value)
+  }, /*#__PURE__*/React.createElement("option", { value: "" }, "\u2014 w\xE4hlen \u2014"),
+    /*#__PURE__*/React.createElement("optgroup", { label: "Divisionen" },
+      DIVISIONS.map(d => /*#__PURE__*/React.createElement("option", { key: d, value: d }, d))
+    ),
+    /*#__PURE__*/React.createElement("optgroup", { label: "NSCs" },
+      (nscOptions || []).map(n => /*#__PURE__*/React.createElement("option", { key: n.name, value: n.name },
+        n.division && n.division !== 'Keine' ? n.name + ' (' + n.division + ')' : n.name
+      ))
+    )
+  )), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, "Region"), /*#__PURE__*/React.createElement("input", {
     value: form.region,
     onChange: e => set('region', e.target.value),
     placeholder: "Ort\u2026"
@@ -664,7 +677,7 @@ function AppRow({
 }
 
 // ─── EDIT FORM ────────────────────────────────────────────────────────────────
-function EditForm({ mission, onSaved, onCancel }) {
+function EditForm({ mission, onSaved, onCancel, nscOptions }) {
   const [form, setForm] = useState({
     name: mission.name || '',
     kategorie: mission.kategorie || 'Suche',
@@ -717,7 +730,11 @@ function EditForm({ mission, onSaved, onCancel }) {
       /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, "Mindest-Stufe"), /*#__PURE__*/React.createElement("input", { type: "number", min: "1", value: form.lv, onChange: e => set('lv', e.target.value) }))
     ),
     /*#__PURE__*/React.createElement("div", { className: "field", style: row2 },
-      /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, "Auftraggeber"), /*#__PURE__*/React.createElement("input", { value: form.auftraggeber, onChange: e => set('auftraggeber', e.target.value), placeholder: "Division…" })),
+      /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, "Auftraggeber"), /*#__PURE__*/React.createElement("select", { value: form.auftraggeber, onChange: e => set('auftraggeber', e.target.value) },
+        /*#__PURE__*/React.createElement("option", { value: "" }, "— w\xE4hlen —"),
+        /*#__PURE__*/React.createElement("optgroup", { label: "Divisionen" }, DIVISIONS.map(d => /*#__PURE__*/React.createElement("option", { key: d, value: d }, d))),
+        /*#__PURE__*/React.createElement("optgroup", { label: "NSCs" }, (nscOptions || []).map(n => /*#__PURE__*/React.createElement("option", { key: n.name, value: n.name }, n.division && n.division !== 'Keine' ? n.name + ' (' + n.division + ')' : n.name)))
+      )),
       /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, "Region"), /*#__PURE__*/React.createElement("input", { value: form.region, onChange: e => set('region', e.target.value), placeholder: "Ort…" }))
     ),
     /*#__PURE__*/React.createElement("div", { className: "field" }, /*#__PURE__*/React.createElement("label", null, "Beschreibung"), /*#__PURE__*/React.createElement("textarea", { value: form.beschreibung, onChange: e => set('beschreibung', e.target.value), placeholder: "Auftragstext…" })),
@@ -1278,6 +1295,7 @@ function App() {
   const user = window.SITE_USER;
   const [activeTab, setActiveTab] = useState('missions');
   const [missions, setMissions] = useState([]);
+  const [nscOptions, setNscOptions] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
   const [creating, setCreating] = useState(false);
   const [editing, setEditing] = useState(false);
@@ -1318,12 +1336,12 @@ function App() {
   }
   async function loadMissions() {
     setLoading(true);
-    const {
-      data
-    } = await window._sb.from('missions').select('*').order('created_at', {
-      ascending: false
-    });
+    const [{ data }, { data: nscData }] = await Promise.all([
+      window._sb.from('missions').select('*').order('created_at', { ascending: false }),
+      window._sb.from('nscs').select('name,division').order('name')
+    ]);
     setMissions(data || []);
+    setNscOptions(nscData || []);
 
     // Count applications per mission
     if (data && data.length) {
@@ -1517,11 +1535,13 @@ function App() {
     }
   }, "Mission ausw\xE4hlen oder neue erstellen")), creating && /*#__PURE__*/React.createElement(CreateForm, {
     onCreated: handleCreated,
-    onCancel: () => setCreating(false)
+    onCancel: () => setCreating(false),
+    nscOptions: nscOptions
   }), !creating && editing && selected && /*#__PURE__*/React.createElement(EditForm, {
     mission: selected,
     onSaved: handleEdited,
-    onCancel: () => setEditing(false)
+    onCancel: () => setEditing(false),
+    nscOptions: nscOptions
   }), !creating && !editing && selected && /*#__PURE__*/React.createElement(MissionDetail, {
     key: selected.id,
     mission: selected,
