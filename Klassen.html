@@ -12,6 +12,8 @@
 <script src="assets/scripts/vendor/react-dom.production.min.js"></script>
 
 <script src="assets/scripts/data/klassen-data.js"></script>
+<script src="assets/scripts/data/klassen-merkmale-data.js"></script>
+<script src="assets/scripts/data/klassen-detail-data.js"></script>
 <script src="assets/components/tweaks-panel-4.js"></script>
 <script src="assets/components/nav.js"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
@@ -438,8 +440,13 @@ function KlasseDetail({
 }) {
   const [visible, setVisible] = useState(false);
   const [leaving, setLeaving] = useState(false);
+  const [selectedSubklasse, setSelectedSubklasse] = useState(null);
+  const [anrufungenOpen, setAnrufungenOpen] = useState(false);
+  const [openAnrufungen, setOpenAnrufungen] = useState(new Set());
   const pal = klasse.palette;
   const accent = pal[2];
+  const detail = (window.KLASSEN_DETAIL || {})[klasse.id] || null;
+  const selectedUk = detail ? (detail.unterklassen || []).find(u => u.id === selectedSubklasse) || null : null;
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 30);
     return () => clearTimeout(t);
@@ -779,7 +786,243 @@ function KlasseDetail({
       background: accent + '15',
       textShadow: `0 0 8px ${accent}44`
     }
-  }, f)))))));
+  }, f)))),
+  /* ── Startausrüstung ─────────────────────────────── */
+  detail ? React.createElement("div", {
+    style: { borderTop: `1px solid ${accent}18`, paddingTop: '22px', ...s(0.42) }
+  },
+    React.createElement("div", {
+      style: { fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: accent + '77', textTransform: 'uppercase', marginBottom: '10px' }
+    }, "Startausr\xFCstung"),
+    React.createElement("div", {
+      style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px 24px' }
+    },
+      statRow('Startkapital', detail.startVermoegen),
+      statRow('Werkzeug\xFCbung', detail.werkzeugUebung || '—'),
+      statRow('Fertigkeiten', detail.fertigkeiten.anzahl + ' nach Wahl: ' + detail.fertigkeiten.auswahl.join(', '))
+    )
+  ) : null,
+  /* ── Stufentabelle ───────────────────────────────── */
+  detail ? React.createElement("div", {
+    style: { borderTop: `1px solid ${accent}18`, paddingTop: '22px', ...s(0.46) }
+  },
+    React.createElement("div", {
+      style: { fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: accent + '77', textTransform: 'uppercase', marginBottom: '12px' }
+    }, "Stufentabelle"),
+    React.createElement("div", { style: { overflowX: 'auto' } },
+      React.createElement("div", {
+        style: {
+          display: 'grid',
+          gridTemplateColumns: '40px 44px minmax(120px,1fr) ' + detail.stufentabelle.extraSpalten.map(() => '80px').join(' '),
+          padding: '0 4px 6px',
+          borderBottom: `1px solid ${accent}33`,
+          marginBottom: '2px'
+        }
+      },
+        React.createElement("div", { style: { fontFamily: 'var(--font-mono)', fontSize: '7px', color: accent + '88', letterSpacing: '0.15em', textTransform: 'uppercase' } }, "Stufe"),
+        React.createElement("div", { style: { fontFamily: 'var(--font-mono)', fontSize: '7px', color: accent + '88', letterSpacing: '0.15em', textTransform: 'uppercase' } }, "\xDCB"),
+        React.createElement("div", { style: { fontFamily: 'var(--font-mono)', fontSize: '7px', color: accent + '88', letterSpacing: '0.15em', textTransform: 'uppercase' } }, "Merkmale"),
+        detail.stufentabelle.extraSpalten.map((col, ci) =>
+          React.createElement("div", { key: ci, style: { fontFamily: 'var(--font-mono)', fontSize: '7px', color: accent + '88', letterSpacing: '0.1em', textTransform: 'uppercase', textAlign: 'right' } }, col)
+        )
+      ),
+      detail.stufentabelle.zeilen.map((row, ri) => {
+        const mData = window.KLASSEN_MERKMALE || {};
+        const nameStr = row.merkmaleIds.map(id => {
+          const m = mData[id];
+          return m ? (m.optional ? m.name + ' *' : m.name) : id;
+        }).join(', ') + (row.note ? ' (' + row.note + ')' : '');
+        return React.createElement("div", {
+          key: ri,
+          style: {
+            display: 'grid',
+            gridTemplateColumns: '40px 44px minmax(120px,1fr) ' + detail.stufentabelle.extraSpalten.map(() => '80px').join(' '),
+            padding: '5px 4px',
+            borderBottom: `1px solid ${accent}0c`,
+            background: ri % 2 === 0 ? accent + '08' : 'transparent'
+          }
+        },
+          React.createElement("div", { style: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: pal[3], letterSpacing: '0.1em' } }, row.stufe),
+          React.createElement("div", { style: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: accent + '99' } }, '+' + row.uebungsbonus),
+          React.createElement("div", { style: { fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '10px', color: 'rgba(var(--text-rgb),0.7)', lineHeight: 1.3 } }, nameStr || '—'),
+          row.extra.map((val, ei) =>
+            React.createElement("div", { key: ei, style: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: accent + 'bb', textAlign: 'right' } }, val)
+          )
+        );
+      })
+    )
+  ) : null,
+  /* ── Klassenmerkmale (vollständig) ──────────────── */
+  detail ? React.createElement("div", {
+    style: { borderTop: `1px solid ${accent}18`, paddingTop: '22px', display: 'flex', flexDirection: 'column', gap: '20px', ...s(0.50) }
+  },
+    React.createElement("div", {
+      style: { fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: accent + '77', textTransform: 'uppercase' }
+    }, "Klassenmerkmale"),
+    (() => {
+      const invocationIds = (detail.merkmaleIds || []).filter(id => id.startsWith('hexenmeister_anrufung_'));
+      return (detail.merkmaleIds || []).map((id, fi) => {
+        if (id.startsWith('hexenmeister_anrufung_')) return null;
+        const m = (window.KLASSEN_MERKMALE || {})[id];
+        if (!m) return null;
+        const isAnrufungSystem = id === 'hexenmeister_schauerliche_anrufungen';
+        return React.createElement("div", { key: fi },
+          React.createElement("div", {
+            style: { display: 'flex', alignItems: 'baseline', gap: '10px', marginBottom: '6px', flexWrap: 'wrap' }
+          },
+            React.createElement("div", {
+              style: { fontFamily: 'var(--font-display)', fontSize: '14px', color: pal[3], letterSpacing: '0.08em' }
+            }, m.name),
+            m.optional ? React.createElement("span", {
+              style: { fontFamily: 'var(--font-mono)', fontSize: '8px', color: accent + '77', border: `1px solid ${accent}44`, padding: '1px 6px', borderRadius: '2px', letterSpacing: '0.1em' }
+            }, "Optional") : null,
+            React.createElement("div", {
+              style: { fontFamily: 'var(--font-mono)', fontSize: '8px', color: accent + '55', letterSpacing: '0.1em' }
+            }, "Stufe " + m.stufe)
+          ),
+          (m.beschreibung || []).map((p, pi) =>
+            React.createElement("p", {
+              key: pi,
+              style: { fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: 1.75, color: 'rgba(var(--text-rgb),0.7)', letterSpacing: '0.01em', margin: '0 0 6px' }
+            }, p)
+          ),
+          isAnrufungSystem && invocationIds.length > 0 ? React.createElement("div", { style: { marginTop: '10px' } },
+            React.createElement("button", {
+              onClick: () => setAnrufungenOpen(v => !v),
+              style: {
+                display: 'flex', alignItems: 'center', gap: '8px',
+                background: accent + '0d', border: `1px solid ${accent}33`,
+                padding: '8px 14px', borderRadius: '3px', cursor: 'pointer',
+                fontFamily: 'var(--font-mono)', fontSize: '9px', color: accent + 'bb',
+                letterSpacing: '0.15em', textTransform: 'uppercase', width: '100%',
+                textAlign: 'left', outline: 'none', transition: 'background 0.15s'
+              }
+            },
+              React.createElement("span", {
+                style: { display: 'inline-block', transition: 'transform 0.2s', transform: anrufungenOpen ? 'rotate(90deg)' : 'none', flexShrink: 0, fontSize: '8px' }
+              }, '▶'),
+              'Alle Anrufungen (' + invocationIds.length + ')'
+            ),
+            anrufungenOpen ? React.createElement("div", {
+              style: { marginTop: '4px', display: 'flex', flexDirection: 'column', gap: '2px' }
+            },
+              invocationIds.map((aId, ai) => {
+                const aM = (window.KLASSEN_MERKMALE || {})[aId];
+                if (!aM) return null;
+                const isOpen = openAnrufungen.has(aId);
+                return React.createElement("div", { key: ai, style: { border: `1px solid ${accent}1a`, borderRadius: '2px', overflow: 'hidden' } },
+                  React.createElement("button", {
+                    onClick: () => setOpenAnrufungen(prev => { const n = new Set(prev); if (n.has(aId)) n.delete(aId); else n.add(aId); return n; }),
+                    style: {
+                      display: 'flex', alignItems: 'center', gap: '8px', width: '100%',
+                      background: isOpen ? accent + '18' : accent + '07',
+                      padding: '6px 12px', cursor: 'pointer', border: 'none', outline: 'none',
+                      fontFamily: 'var(--font-body)', fontSize: '12px',
+                      color: isOpen ? pal[3] : 'rgba(var(--text-rgb),0.68)',
+                      textAlign: 'left', transition: 'all 0.12s', letterSpacing: '0.01em'
+                    }
+                  },
+                    React.createElement("span", {
+                      style: { display: 'inline-block', transition: 'transform 0.2s', transform: isOpen ? 'rotate(90deg)' : 'none', flexShrink: 0, fontSize: '7px', color: accent + '88', marginRight: '2px' }
+                    }, '▶'),
+                    aM.name,
+                    aM.stufe ? React.createElement("span", {
+                      style: { marginLeft: 'auto', fontFamily: 'var(--font-mono)', fontSize: '8px', color: accent + '44', flexShrink: 0, paddingLeft: '12px' }
+                    }, 'Stufe ' + aM.stufe) : null
+                  ),
+                  isOpen ? React.createElement("div", {
+                    style: { padding: '10px 16px 10px 28px', background: accent + '06', borderTop: `1px solid ${accent}15` }
+                  },
+                    (aM.beschreibung || []).map((p, pi) =>
+                      React.createElement("p", {
+                        key: pi, style: { fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: 1.75, color: 'rgba(var(--text-rgb),0.7)', letterSpacing: '0.01em', margin: '0 0 6px' }
+                      }, p)
+                    )
+                  ) : null
+                );
+              }).filter(Boolean)
+            ) : null
+          ) : null
+        );
+      }).filter(Boolean);
+    })()
+  ) : null,
+  /* ── Unterklassen (Tabs) ─────────────────────────── */
+  detail && detail.unterklassen && detail.unterklassen.length > 0 ? React.createElement("div", {
+    style: { borderTop: `1px solid ${accent}18`, paddingTop: '22px', ...s(0.56) }
+  },
+    React.createElement("div", {
+      style: { fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: accent + '77', textTransform: 'uppercase', marginBottom: '12px' }
+    }, "Unterklassen"),
+    /* Tab-Leiste */
+    React.createElement("div", {
+      style: { display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '20px' }
+    },
+      detail.unterklassen.map((uk, ui) => {
+        const active = selectedSubklasse === uk.id;
+        return React.createElement("button", {
+          key: ui,
+          onClick: () => setSelectedSubklasse(active ? null : uk.id),
+          style: {
+            fontFamily: 'var(--font-mono)',
+            fontSize: '9px',
+            letterSpacing: '0.12em',
+            padding: '5px 13px',
+            border: `1px solid ${active ? accent : accent + '40'}`,
+            background: active ? accent + '20' : 'transparent',
+            color: active ? pal[3] : accent + '88',
+            cursor: 'pointer',
+            borderRadius: '2px',
+            transition: 'all 0.15s',
+            outline: 'none'
+          }
+        }, uk.name);
+      })
+    ),
+    /* Tab-Inhalt */
+    selectedUk ? React.createElement("div", {
+      style: { borderTop: `1px solid ${accent}18`, paddingTop: '18px' }
+    },
+      selectedUk.beschreibung ? React.createElement("p", {
+        style: { fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: 1.8, color: 'rgba(var(--text-rgb),0.62)', letterSpacing: '0.01em', marginBottom: '20px', fontStyle: 'italic', paddingLeft: '12px', borderLeft: `2px solid ${accent}33` }
+      }, selectedUk.beschreibung) : null,
+      (selectedUk.merkmaleIds && selectedUk.merkmaleIds.length > 0)
+        ? selectedUk.merkmaleIds.map((id, fi) => {
+            const m = (window.KLASSEN_MERKMALE || {})[id];
+            if (!m) return null;
+            return React.createElement("div", { key: fi, style: { marginBottom: '18px' } },
+              React.createElement("div", {
+                style: { display: 'flex', alignItems: 'baseline', gap: '10px', marginBottom: '5px', flexWrap: 'wrap' }
+              },
+                React.createElement("div", {
+                  style: { fontFamily: 'var(--font-display)', fontSize: '13px', color: pal[3], letterSpacing: '0.08em' }
+                }, m.name),
+                React.createElement("div", {
+                  style: { fontFamily: 'var(--font-mono)', fontSize: '8px', color: accent + '55', letterSpacing: '0.1em' }
+                }, 'Stufe ' + m.stufe)
+              ),
+              (m.beschreibung || []).map((p, pi) =>
+                React.createElement("p", {
+                  key: pi,
+                  style: { fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: 1.75, color: 'rgba(var(--text-rgb),0.7)', letterSpacing: '0.01em', margin: '0 0 6px' }
+                }, p)
+              )
+            );
+          }).filter(Boolean)
+        : React.createElement("div", {
+            style: { fontFamily: 'var(--font-mono)', fontSize: '9px', color: accent + '44', letterSpacing: '0.15em', fontStyle: 'italic' }
+          }, "Pfadmerkmale folgen.")
+    ) : null
+  ) : null,
+  /* ── Platzhalter (kein Detail vorhanden) ─────────── */
+  !detail ? React.createElement("div", {
+    style: { borderTop: `1px solid ${accent}10`, paddingTop: '16px', ...s(0.42) }
+  },
+    React.createElement("div", {
+      style: { fontFamily: 'var(--font-mono)', fontSize: '9px', color: accent + '44', letterSpacing: '0.2em', fontStyle: 'italic' }
+    }, "Vollst\xE4ndige Klassendetails folgen.")
+  ) : null
+  )));
 }
 
 // ── SECTION BANNER ─────────────────────────────────────

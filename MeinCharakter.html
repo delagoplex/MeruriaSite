@@ -20,6 +20,13 @@
 <script src="assets/scripts/data/zauber-data.js"></script>
 <script src="assets/scripts/data/gottheiten-data.js"></script>
 <script src="assets/scripts/data/divisions-data.js"></script>
+<script src="assets/scripts/data/klassen-data.js"></script>
+<script src="assets/scripts/data/klassen-detail-data.js"></script>
+<script src="assets/scripts/data/klassen-merkmale-data.js"></script>
+<script src="assets/scripts/data/charaktererstellung-data.js"></script>
+<script src="assets/scripts/data/rassen-data.js"></script>
+<script src="assets/scripts/data/rassen-detail-data.js"></script>
+<script src="assets/scripts/data/talente-data.js"></script>
 
 </head>
 <body>
@@ -546,11 +553,13 @@ async function importCharsFromFile(file) {
         const inserts = data.map(c => {
           const char = c._char || c;
           return {
+            owner_id: window.SITE_USER?.id || null,
             name: char.name || c.name || 'Importiert',
             race: char.race || c.race || null,
             class: char.class || c.class || null,
             division: char.division || c.division || null,
             char_data: char,
+            type: 'spieler',
           };
         });
         await window._sb.from('characters').insert(inserts);
@@ -562,13 +571,113 @@ async function importCharsFromFile(file) {
 }
 
 /* ── Auswahl-Bildschirm ────────────────────── */
+function CharCard({ ch, onSelect, onDelete, onExport }) {
+  const [hover, setHover] = useApp(false);
+  const [delConfirm, setDelConfirm] = useApp(false);
+  const bild = ch._char?.bild || null;
+  const level = ch._char?.level || null;
+  const subclass = ch._char?.subclass && ch._char.subclass !== '—' ? ch._char.subclass : null;
+
+  if (delConfirm) return (
+    <div style={{background:"rgba(7,4,18,0.95)",border:"1px solid rgba(200,60,60,0.45)",borderRadius:6,
+      padding:"20px 16px",display:"flex",flexDirection:"column",gap:12,alignItems:"center",justifyContent:"center",
+      minHeight:220}}>
+      <div style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".12em",color:"rgba(230,110,110,0.85)",
+        textTransform:"uppercase",textAlign:"center"}}>„{ch.name}" löschen?</div>
+      <div style={{display:"flex",gap:8}}>
+        <button onClick={()=>{onDelete(ch.id);setDelConfirm(false);}}
+          style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".12em",textTransform:"uppercase",
+            padding:"6px 14px",background:"rgba(200,50,50,0.2)",border:"1px solid rgba(200,60,60,0.5)",
+            borderRadius:3,cursor:"pointer",color:"rgba(240,140,140,0.9)"}}>Löschen</button>
+        <button onClick={()=>setDelConfirm(false)}
+          style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".12em",textTransform:"uppercase",
+            padding:"6px 14px",background:"transparent",border:"1px solid rgba(124,77,255,0.3)",
+            borderRadius:3,cursor:"pointer",color:"rgba(124,77,255,0.6)"}}>Abbrechen</button>
+      </div>
+    </div>
+  );
+
+  return (
+    <div
+      onClick={()=>onSelect(ch)}
+      onMouseEnter={()=>setHover(true)}
+      onMouseLeave={()=>setHover(false)}
+      style={{position:"relative",background:"rgba(7,4,18,0.92)",
+        border:`1px solid rgba(124,77,255,${hover?0.5:0.2})`,borderRadius:6,
+        overflow:"hidden",transition:"border-color .18s,transform .18s",
+        transform:hover?"translateY(-2px)":"none",cursor:"pointer"}}>
+
+      {/* Bild */}
+      <div style={{position:"relative",paddingBottom:"130%",background:"linear-gradient(160deg,rgba(20,12,46,0.95),rgba(8,5,22,0.98))"}}>
+        {bild
+          ? <img src={bild} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",objectPosition:"top"}} alt="" />
+          : <div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center"}}>
+              <span style={{fontFamily:"var(--font-display)",fontSize:52,color:"rgba(124,77,255,0.15)",letterSpacing:".1em"}}>
+                {ch.name?.[0]||'?'}
+              </span>
+            </div>
+        }
+        {/* Gradient-Overlay unten */}
+        <div style={{position:"absolute",bottom:0,left:0,right:0,height:"55%",
+          background:"linear-gradient(to top,rgba(5,4,15,0.98) 0%,transparent 100%)",pointerEvents:"none"}} />
+        {/* Level-Badge */}
+        {level && <div style={{position:"absolute",top:8,right:8,
+          fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".16em",
+          background:"rgba(5,4,15,0.82)",border:"1px solid rgba(124,77,255,0.35)",
+          borderRadius:3,padding:"2px 7px",color:"rgba(160,140,255,0.8)"}}>
+          Stufe {level}
+        </div>}
+        {/* Typ-Badge für NSC */}
+        {ch.type === 'nsc' && <div style={{position:"absolute",top:8,left:8,
+          fontFamily:"var(--font-mono)",fontSize:7,letterSpacing:".14em",
+          background:"rgba(5,4,15,0.82)",border:"1px solid rgba(180,120,60,0.4)",
+          borderRadius:3,padding:"2px 7px",color:"rgba(220,170,100,0.75)"}}>NSC</div>}
+
+        {/* Hover-Aktionen */}
+        {hover && <div style={{position:"absolute",top:8,right:level?52:8,display:"flex",gap:5}}>
+          <button onClick={e=>{e.stopPropagation();onExport(ch);}}
+            title="Exportieren"
+            style={{fontFamily:"var(--font-mono)",fontSize:10,width:26,height:26,display:"flex",alignItems:"center",
+              justifyContent:"center",background:"rgba(5,4,15,0.85)",border:"1px solid rgba(124,77,255,0.35)",
+              borderRadius:3,cursor:"pointer",color:"rgba(160,140,255,0.7)",transition:"all .15s"}}
+            onMouseEnter={e=>e.currentTarget.style.color="#e8e2ff"}
+            onMouseLeave={e=>e.currentTarget.style.color="rgba(160,140,255,0.7)"}>↓</button>
+          <button onClick={e=>{e.stopPropagation();setDelConfirm(true);}}
+            title="Löschen"
+            style={{fontFamily:"var(--font-mono)",fontSize:13,width:26,height:26,display:"flex",alignItems:"center",
+              justifyContent:"center",background:"rgba(5,4,15,0.85)",border:"1px solid rgba(200,60,60,0.3)",
+              borderRadius:3,cursor:"pointer",color:"rgba(200,80,80,0.55)",transition:"all .15s"}}
+            onMouseEnter={e=>e.currentTarget.style.color="rgba(240,110,110,0.9)"}
+            onMouseLeave={e=>e.currentTarget.style.color="rgba(200,80,80,0.55)"}>×</button>
+        </div>}
+      </div>
+
+      {/* Info-Bereich */}
+      <div style={{padding:"10px 12px 12px"}}>
+        <div style={{fontFamily:"var(--font-display)",fontSize:13,letterSpacing:".16em",
+          color:"var(--white)",textTransform:"uppercase",marginBottom:6,
+          whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{ch.name}</div>
+        <div style={{display:"flex",gap:4,flexWrap:"wrap"}}>
+          {[ch.race, ch.class, subclass, ch.division].filter(Boolean).map((t,i)=>(
+            <span key={i} style={{fontFamily:"var(--font-mono)",fontSize:7,padding:"1px 6px",
+              background:"rgba(124,77,255,0.1)",border:"1px solid rgba(124,77,255,0.22)",borderRadius:2,
+              color:"rgba(200,190,240,0.65)",letterSpacing:".06em",whiteSpace:"nowrap"}}>{t}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function CharSelection({ chars, onSelect, onNew, onReload }) {
-  const [confirmDelete, setConfirmDelete] = useApp(null);
+  const [q, setQ] = useApp('');
+  const [raceF, setRaceF] = useApp('');
+  const [classF, setClassF] = useApp('');
+  const [divF, setDivF] = useApp('');
   const importRef = useRef(null);
 
   async function handleDelete(id) {
     await deleteChar(id);
-    setConfirmDelete(null);
     await onReload();
   }
 
@@ -580,150 +689,135 @@ function CharSelection({ chars, onSelect, onNew, onReload }) {
     await onReload();
   }
 
+  // Unique filter options derived from actual chars
+  const uniq = field => [...new Set(chars.map(c=>c[field]).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'de'));
+  const races = uniq('race'), classes = uniq('class'), divs = uniq('division');
+
+  const filtered = chars.filter(ch => {
+    if (raceF  && ch.race     !== raceF)  return false;
+    if (classF && ch.class    !== classF) return false;
+    if (divF   && ch.division !== divF)   return false;
+    if (q) {
+      const s = q.toLowerCase();
+      return [ch.name, ch.race, ch.class, ch.division].some(v => v?.toLowerCase().includes(s));
+    }
+    return true;
+  });
+
+  const selStyle = {
+    fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".12em",textTransform:"uppercase",
+    padding:"5px 10px",background:"#0e0c20",border:"1px solid rgba(124,77,255,0.22)",
+    borderRadius:3,cursor:"pointer",color:"rgba(200,190,240,0.75)",outline:"none",colorScheme:"dark"
+  };
+
   const toolBtn = {
-    fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".18em",textTransform:"uppercase",
-    padding:"7px 16px",background:"transparent",border:"1px solid rgba(124,77,255,0.2)",borderRadius:3,
+    fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".16em",textTransform:"uppercase",
+    padding:"6px 14px",background:"transparent",border:"1px solid rgba(124,77,255,0.2)",borderRadius:3,
     cursor:"pointer",color:"rgba(124,77,255,0.45)",transition:"all .18s"
   };
 
+  const hasFilter = raceF || classF || divF || q;
+
   return (
-    <div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center"}}>
-      <div style={{maxWidth:640,width:"100%",padding:"0 24px"}}>
-        <div style={{marginBottom:24,marginTop:32,display:"flex",justifyContent:"flex-start"}}>
-          <a href="Charaktere.html"
+    <div style={{minHeight:"100vh",padding:"0 32px 48px"}}>
+      {/* Header */}
+      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"24px 0 20px",
+        borderBottom:"1px solid rgba(124,77,255,0.1)",marginBottom:24}}>
+        <div style={{display:"flex",alignItems:"center",gap:20}}>
+          {/* Zurück-Button */}
+          <a href="index.html"
             style={{display:"inline-flex",alignItems:"center",gap:6,fontFamily:"var(--font-mono)",
               fontSize:8,letterSpacing:".18em",textTransform:"uppercase",color:"rgba(124,77,255,0.45)",
               textDecoration:"none",border:"1px solid rgba(124,77,255,0.2)",borderRadius:3,
-              padding:"5px 12px",transition:"all .18s"}}
+              padding:"5px 12px",transition:"all .18s",flexShrink:0}}
             onMouseEnter={e=>{e.currentTarget.style.color="rgba(160,140,255,0.8)";e.currentTarget.style.borderColor="rgba(124,77,255,0.5)";}}
             onMouseLeave={e=>{e.currentTarget.style.color="rgba(124,77,255,0.45)";e.currentTarget.style.borderColor="rgba(124,77,255,0.2)";}}>
             ← Zurück
           </a>
+          <div>
+            <div style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".28em",color:"rgba(124,77,255,0.45)",
+              textTransform:"uppercase",marginBottom:3}}>Meruria · Charaktere</div>
+            <h1 style={{fontFamily:"var(--font-display)",fontWeight:400,fontSize:22,letterSpacing:".2em",
+              color:"var(--white)",textTransform:"uppercase",textShadow:"0 0 28px rgba(124,77,255,0.2)"}}>
+              Charakter wählen
+            </h1>
+          </div>
         </div>
-        <div style={{fontFamily:"var(--font-mono)",fontSize:9,letterSpacing:".3em",color:"rgba(124,77,255,0.5)",textTransform:"uppercase",marginBottom:12,textAlign:"center"}}>
-          Meruria · Charaktere
-        </div>
-        <h1 style={{fontFamily:"var(--font-display)",fontWeight:400,fontSize:24,letterSpacing:".22em",
-          color:"var(--white)",textTransform:"uppercase",textAlign:"center",marginBottom:4,
-          textShadow:"0 0 32px rgba(124,77,255,0.2)"}}>
-          Charakter wählen
-        </h1>
-        <div style={{width:36,height:1,background:"rgba(124,77,255,0.55)",margin:"0 auto 32px"}} />
-
-        {[
-          { key:'spieler', label:'Spielercharaktere' },
-          { key:'nsc',     label:'Nicht-Spieler-Charaktere' },
-        ].map(({ key, label }) => {
-          const group = chars.filter(ch => ch.type === key);
-          if (group.length === 0) return null;
-          return (
-            <div key={key} style={{marginBottom:24}}>
-              <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:10}}>
-                <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".28em",
-                  color:"rgba(124,77,255,0.4)",textTransform:"uppercase",whiteSpace:"nowrap"}}>{label}</span>
-                <div style={{flex:1,height:1,background:"rgba(124,77,255,0.12)"}}/>
-              </div>
-              <div style={{display:"flex",flexDirection:"column",gap:10}}>
-                {group.map(ch => {
-                  const delConfirm = confirmDelete === ch.id;
-                  return (
-                    <div key={ch.id} style={{display:"flex",alignItems:"center",
-                      background:"rgba(7,4,18,0.9)",border:`1px solid rgba(124,77,255,${delConfirm?0.55:0.25})`,
-                      borderRadius:4,transition:"all .18s",overflow:"hidden"}}>
-                      {delConfirm ? (
-                        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",
-                          padding:"14px 18px",width:"100%",gap:16}}>
-                          <span style={{fontFamily:"var(--font-mono)",fontSize:8.5,letterSpacing:".12em",
-                            color:"rgba(230,110,110,0.9)",textTransform:"uppercase",flex:1}}>
-                            „{ch.name}" wirklich löschen?
-                          </span>
-                          <div style={{display:"flex",gap:8,flexShrink:0}}>
-                            <button onClick={()=>handleDelete(ch.id)}
-                              style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".14em",textTransform:"uppercase",
-                                padding:"5px 14px",background:"rgba(200,50,50,0.18)",border:"1px solid rgba(200,60,60,0.5)",
-                                borderRadius:3,cursor:"pointer",color:"rgba(240,140,140,0.9)",transition:"all .18s"}}>
-                              Löschen
-                            </button>
-                            <button onClick={()=>setConfirmDelete(null)}
-                              style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".14em",textTransform:"uppercase",
-                                padding:"5px 14px",background:"transparent",border:"1px solid rgba(124,77,255,0.3)",
-                                borderRadius:3,cursor:"pointer",color:"rgba(124,77,255,0.6)",transition:"all .18s"}}>
-                              Abbrechen
-                            </button>
-                          </div>
-                        </div>
-                      ) : (
-                        <>
-                          <button onClick={()=>onSelect(ch)}
-                            style={{display:"flex",alignItems:"center",gap:16,padding:"14px 18px",
-                              background:"transparent",border:"none",cursor:"pointer",textAlign:"left",flex:1,minWidth:0,
-                              transition:"background .18s"}}
-                            onMouseEnter={e=>e.currentTarget.style.background="rgba(124,77,255,0.07)"}
-                            onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
-                            <div style={{flex:1,minWidth:0}}>
-                              <div style={{fontFamily:"var(--font-display)",fontSize:14,letterSpacing:".18em",color:"var(--white)",textTransform:"uppercase",marginBottom:4}}>{ch.name}</div>
-                              <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
-                                {[ch.race, ch.class, ch.division].filter(Boolean).map((t,i)=>(
-                                  <span key={i} style={{fontFamily:"var(--font-mono)",fontSize:8,padding:"1px 7px",
-                                    background:"rgba(124,77,255,0.1)",border:"1px solid rgba(124,77,255,0.25)",borderRadius:2,
-                                    color:"rgba(200,190,240,0.7)",letterSpacing:".08em"}}>{t}</span>
-                                ))}
-                              </div>
-                            </div>
-                            <span style={{fontFamily:"var(--font-mono)",fontSize:10,color:"rgba(124,77,255,0.35)",flexShrink:0}}>→</span>
-                          </button>
-                          <div style={{display:"flex",gap:6,padding:"0 14px",flexShrink:0,
-                            borderLeft:"1px solid rgba(124,77,255,0.1)"}}>
-                            <button onClick={()=>exportChars([ch], `${ch.name||'charakter'}.json`)} title="Exportieren"
-                              style={{fontFamily:"var(--font-mono)",fontSize:11,padding:"5px 9px",lineHeight:1,
-                                background:"transparent",border:"1px solid rgba(124,77,255,0.15)",borderRadius:3,
-                                cursor:"pointer",color:"rgba(124,77,255,0.35)",transition:"all .15s"}}
-                              onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.5)";e.currentTarget.style.color="rgba(160,140,255,0.75)";}}
-                              onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.15)";e.currentTarget.style.color="rgba(124,77,255,0.35)";}}>
-                              ↓
-                            </button>
-                            <button onClick={()=>setConfirmDelete(ch.id)} title="Löschen"
-                              style={{fontFamily:"var(--font-mono)",fontSize:14,padding:"2px 8px",lineHeight:1,
-                                background:"transparent",border:"1px solid rgba(200,60,60,0.15)",borderRadius:3,
-                                cursor:"pointer",color:"rgba(200,80,80,0.35)",transition:"all .15s"}}
-                              onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(200,60,60,0.5)";e.currentTarget.style.color="rgba(240,110,110,0.75)";}}
-                              onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(200,60,60,0.15)";e.currentTarget.style.color="rgba(200,80,80,0.35)";}}>
-                              ×
-                            </button>
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          );
-        })}
-
-        <div style={{display:"flex",gap:8,marginBottom:12}}>
+        <div style={{display:"flex",gap:8,alignItems:"center"}}>
           <button onClick={()=>exportChars(chars)} style={toolBtn}
             onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.5)";e.currentTarget.style.color="rgba(160,140,255,0.8)";}}
             onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.2)";e.currentTarget.style.color="rgba(124,77,255,0.45)";}}>
-            ↓ Alle exportieren
+            ↓ Export
           </button>
           <button onClick={()=>importRef.current.click()} style={toolBtn}
             onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.5)";e.currentTarget.style.color="rgba(160,140,255,0.8)";}}
             onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.2)";e.currentTarget.style.color="rgba(124,77,255,0.45)";}}>
-            ↑ Importieren
+            ↑ Import
           </button>
           <input ref={importRef} type="file" accept=".json,application/json" style={{display:"none"}} onChange={handleImport} />
+          <button onClick={onNew}
+            style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".18em",textTransform:"uppercase",
+              padding:"7px 18px",background:"rgba(124,77,255,0.18)",border:"1px solid rgba(124,77,255,0.5)",
+              borderRadius:3,cursor:"pointer",color:"rgba(200,190,240,0.9)",transition:"all .18s"}}
+            onMouseEnter={e=>{e.currentTarget.style.background="rgba(124,77,255,0.3)";e.currentTarget.style.borderColor="rgba(160,140,255,0.7)";}}
+            onMouseLeave={e=>{e.currentTarget.style.background="rgba(124,77,255,0.18)";e.currentTarget.style.borderColor="rgba(124,77,255,0.5)";}}>
+            + Neu
+          </button>
         </div>
-
-        <button onClick={onNew}
-          style={{width:"100%",padding:"12px",background:"transparent",border:"1px dashed rgba(124,77,255,0.3)",
-            borderRadius:4,cursor:"pointer",fontFamily:"var(--font-mono)",fontSize:9,
-            letterSpacing:".22em",color:"rgba(124,77,255,0.5)",textTransform:"uppercase",transition:"all .18s"}}
-          onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.6)";e.currentTarget.style.color="rgba(160,140,255,0.85)";}}
-          onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.3)";e.currentTarget.style.color="rgba(124,77,255,0.5)";}}>
-          + Neuen Charakter erstellen
-        </button>
       </div>
+
+      {/* Filter-Leiste */}
+      <div style={{display:"flex",gap:8,alignItems:"center",marginBottom:22,flexWrap:"wrap"}}>
+        <input value={q} onChange={e=>setQ(e.target.value)} placeholder="Suchen …"
+          style={{fontFamily:"var(--font-body)",fontSize:12,color:"var(--white)",
+            background:"rgba(124,77,255,0.06)",border:"1px solid rgba(124,77,255,0.22)",
+            borderRadius:4,padding:"5px 11px",outline:"none",width:180,colorScheme:"dark"}} />
+
+        {races.length > 1 && <select value={raceF} onChange={e=>setRaceF(e.target.value)} style={selStyle}>
+          <option value="">Volk</option>
+          {races.map(r=><option key={r} value={r}>{r}</option>)}
+        </select>}
+
+        {classes.length > 1 && <select value={classF} onChange={e=>setClassF(e.target.value)} style={selStyle}>
+          <option value="">Klasse</option>
+          {classes.map(c=><option key={c} value={c}>{c}</option>)}
+        </select>}
+
+        {divs.length > 1 && <select value={divF} onChange={e=>setDivF(e.target.value)} style={selStyle}>
+          <option value="">Division</option>
+          {divs.map(d=><option key={d} value={d}>{d}</option>)}
+        </select>}
+
+        {hasFilter && <button onClick={()=>{setQ('');setRaceF('');setClassF('');setDivF('');}}
+          style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".12em",padding:"5px 10px",
+            background:"transparent",border:"1px solid rgba(124,77,255,0.18)",borderRadius:3,
+            cursor:"pointer",color:"rgba(124,77,255,0.45)",transition:"all .15s"}}
+          onMouseEnter={e=>e.currentTarget.style.color="rgba(200,160,255,0.7)"}
+          onMouseLeave={e=>e.currentTarget.style.color="rgba(124,77,255,0.45)"}>
+          × Filter löschen
+        </button>}
+
+        <span style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(124,77,255,0.35)",
+          marginLeft:"auto",letterSpacing:".12em"}}>
+          {filtered.length} Charakter{filtered.length!==1?'e':''}
+        </span>
+      </div>
+
+      {/* Grid */}
+      {filtered.length === 0
+        ? <div style={{textAlign:"center",padding:"60px 0",fontFamily:"var(--font-mono)",fontSize:9,
+            letterSpacing:".2em",color:"rgba(124,77,255,0.3)",textTransform:"uppercase"}}>
+            Keine Charaktere gefunden
+          </div>
+        : <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(180px,1fr))",gap:14}}>
+            {filtered.map(ch => (
+              <CharCard key={ch.id} ch={ch}
+                onSelect={onSelect}
+                onDelete={handleDelete}
+                onExport={c=>exportChars([c],`${c.name||'charakter'}.json`)} />
+            ))}
+          </div>
+      }
     </div>
   );
 }
@@ -742,15 +836,26 @@ function EmptyState() {
         <p style={{fontFamily:"var(--font-body)",fontSize:13,fontWeight:300,color:"var(--silver)",lineHeight:1.8,marginBottom:28}}>
           Du hast noch keinen Charakter erstellt. Starte die Charaktererstellung, um deinen ersten Abenteurer auf Meruria zu erschaffen.
         </p>
-        <a href="Neuer_Charakter.html"
-          style={{display:"inline-flex",alignItems:"center",gap:10,padding:"12px 28px",
-            background:"rgba(124,77,255,0.18)",border:"1px solid rgba(124,77,255,0.55)",
-            borderRadius:3,color:"rgba(200,190,240,0.95)",fontFamily:"var(--font-display)",
-            fontSize:11,letterSpacing:".18em",textTransform:"uppercase",textDecoration:"none",transition:"all .2s"}}
-          onMouseEnter={e=>{e.currentTarget.style.background="rgba(124,77,255,0.32)";e.currentTarget.style.borderColor="rgba(160,140,255,0.8)";e.currentTarget.style.color="#f0eeff";}}
-          onMouseLeave={e=>{e.currentTarget.style.background="rgba(124,77,255,0.18)";e.currentTarget.style.borderColor="rgba(124,77,255,0.55)";e.currentTarget.style.color="rgba(200,190,240,0.95)";}}>
-          Charakter erstellen →
-        </a>
+        <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap"}}>
+          <a href="index.html"
+            style={{display:"inline-flex",alignItems:"center",gap:8,padding:"11px 22px",
+              background:"transparent",border:"1px solid rgba(124,77,255,0.25)",
+              borderRadius:3,color:"rgba(160,140,255,0.6)",fontFamily:"var(--font-mono)",
+              fontSize:9,letterSpacing:".18em",textTransform:"uppercase",textDecoration:"none",transition:"all .2s"}}
+            onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.5)";e.currentTarget.style.color="rgba(200,190,240,0.9)";}}
+            onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.25)";e.currentTarget.style.color="rgba(160,140,255,0.6)";}}>
+            ← Zurück
+          </a>
+          <a href="Neuer_Charakter.html"
+            style={{display:"inline-flex",alignItems:"center",gap:10,padding:"12px 28px",
+              background:"rgba(124,77,255,0.18)",border:"1px solid rgba(124,77,255,0.55)",
+              borderRadius:3,color:"rgba(200,190,240,0.95)",fontFamily:"var(--font-display)",
+              fontSize:11,letterSpacing:".18em",textTransform:"uppercase",textDecoration:"none",transition:"all .2s"}}
+            onMouseEnter={e=>{e.currentTarget.style.background="rgba(124,77,255,0.32)";e.currentTarget.style.borderColor="rgba(160,140,255,0.8)";e.currentTarget.style.color="#f0eeff";}}
+            onMouseLeave={e=>{e.currentTarget.style.background="rgba(124,77,255,0.18)";e.currentTarget.style.borderColor="rgba(124,77,255,0.55)";e.currentTarget.style.color="rgba(200,190,240,0.95)";}}>
+            Charakter erstellen →
+          </a>
+        </div>
       </div>
     </div>
   );

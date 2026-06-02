@@ -20,6 +20,27 @@ html, body { overflow: hidden; }
 ::-webkit-scrollbar-thumb { background: rgba(124,77,255,0.25); border-radius: 2px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(124,77,255,0.45); }
 
+.zauber-link {
+  background: none;
+  border: none;
+  padding: 0 1px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: inherit;
+  font-weight: 400;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: rgba(140,180,255,0.9);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: rgba(140,180,255,0.45);
+  transition: color 0.15s, text-decoration-color 0.15s;
+}
+.zauber-link:hover {
+  color: rgba(180,210,255,1);
+  text-decoration-color: rgba(180,210,255,0.7);
+}
+
 @media (max-width: 768px) {
   html, body { overflow: auto !important; }
   #root { height: auto !important; min-height: 100svh; }

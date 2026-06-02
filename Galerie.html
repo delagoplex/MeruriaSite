@@ -15,7 +15,23 @@
 <script src="assets/components/nav.js"></script>
 <script src="assets/components/page-header.jsx" type="text/babel"></script>
 <script src="assets/scripts/data/galerie-data.js"></script>
-
+<script src="assets/scripts/data/monster/monsterhandbuch-data.js"></script>
+<script src="assets/scripts/data/monster/foliant-der-feinde-data.js"></script>
+<script src="assets/scripts/data/monster/schatzkammer-der-drachen-data.js"></script>
+<script src="assets/scripts/data/monster/almanach-der-monster-data.js"></script>
+<script src="assets/scripts/data/monster/floral-dragons-data.js"></script>
+<script src="assets/scripts/data/monster/ruhm-der-riesen-data.js"></script>
+<script src="assets/scripts/data/monster/drakkenheim-data.js"></script>
+<script src="assets/scripts/data/monster/flee-mortals-data.js"></script>
+<script src="assets/scripts/data/monster/avernus-data.js"></script>
+<script src="assets/scripts/data/monster/tome-of-beasts-data.js"></script>
+<script src="assets/scripts/data/monster/tome-of-beasts-2-data.js"></script>
+<script src="assets/scripts/data/monster/sonstige-data.js"></script>
+<script src="assets/scripts/data/monster-data.js"></script>
+<script src="assets/scripts/vendor/supabase.min.js"></script>
+<script src="assets/scripts/supabase-client.js"></script>
+<script src="assets/components/site-gate.js"></script>
+<script src="assets/components/carousel.jsx" type="text/babel"></script>
 </head>
 <body>
 <div id="root"></div>
@@ -27,7 +43,7 @@
 const { useState, useEffect, useRef } = React;
 
 /* YYYY-MM-DD → DD-MM-YYYY */
-function fmtDate(d) { const [y,m,day] = d.split('-'); return `${day}-${m}-${y}`; }
+function fmtDate(d) { if (!d) return ''; const [y,m,day] = d.split('-'); return `${day}-${m}-${y}`; }
 
 /* Striped bg per hue */
 function mkBg(hue) {
@@ -61,7 +77,7 @@ function ImgPlaceholder({ label, height, hue, img, fill, fit }) {
         ? { position:'absolute', inset:0, overflow:'hidden' }
         : { width:'100%', height: height || 300, position:'relative', overflow:'hidden', borderRadius:'3px', flexShrink:0 }
       }>
-        <img src={img} alt={label || 'artwork'} style={{ width:'100%', height:'100%', objectFit: fit || 'cover', display:'block' }} />
+        <img src={img} alt={label || 'artwork'} loading="lazy" style={{ width:'100%', height:'100%', objectFit: fit || 'cover', display:'block' }} />
       </div>
     );
   }
@@ -191,23 +207,35 @@ function CollectionCard({ collection, onClick }) {
 /* ── Image card inside overlay ────────────────── */
 function OverlayImageCard({ image, onSelect }) {
   const [hov, setHov] = useS2(false);
+  const hidden = image.hidden;
   return (
     <div
       onClick={onSelect}
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       style={{
-        borderRadius:4, overflow:'hidden', cursor:'pointer',
-        border: hov ? '1px solid rgba(124,77,255,0.55)' : '1px solid rgba(124,77,255,0.16)',
+        position:'relative', borderRadius:4, overflow:'hidden', cursor:'pointer',
+        border: hov ? '1px solid rgba(124,77,255,0.55)' : hidden ? '1px solid rgba(160,140,255,0.12)' : '1px solid rgba(124,77,255,0.16)',
         boxShadow: hov ? '0 8px 32px rgba(0,0,0,0.6),0 0 16px rgba(124,77,255,0.12)' : '0 2px 12px rgba(0,0,0,0.4)',
         transform: hov ? 'translateY(-2px)' : 'none',
         transition: hov ? 'all 0.1s linear' : 'all 0.4s cubic-bezier(0.23,1,0.32,1)',
         background:'rgba(8,6,22,0.9)',
+        filter: hidden ? 'grayscale(0.7) brightness(0.7)' : 'none',
+        opacity: hidden ? 0.72 : 1,
       }}
     >
       <ImgPH label={image.title} height={175} hue={image.hue} img={image.img} />
+      {hidden && (
+        <div style={{
+          position:'absolute', top:8, right:8, zIndex:2,
+          fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.18em',
+          padding:'2px 7px', borderRadius:2, textTransform:'uppercase',
+          background:'rgba(5,4,15,0.75)', border:'1px solid rgba(160,140,255,0.25)',
+          color:'rgba(160,140,255,0.55)',
+        }}>○ Verborgen</div>
+      )}
       <div style={{ padding:'12px 14px 13px' }}>
-        <div style={{ fontFamily:'var(--font-display)', fontSize:11, fontWeight:400, letterSpacing:'0.14em', color:'rgba(240,238,255,0.92)', textTransform:'uppercase', marginBottom:4 }}>
+        <div style={{ fontFamily:'var(--font-display)', fontSize:11, fontWeight:400, letterSpacing:'0.14em', color: hidden ? 'rgba(200,190,240,0.5)' : 'rgba(240,238,255,0.92)', textTransform:'uppercase', marginBottom:4 }}>
           {image.title}
         </div>
         <div style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(124,77,255,0.6)', marginBottom:7 }}>
@@ -217,7 +245,7 @@ function OverlayImageCard({ image, onSelect }) {
           {image.desc}
         </p>
         <div style={{ display:'flex', flexWrap:'wrap', gap:4 }}>
-          {image.tags.map(t => <TagC key={t} label={t} small />)}
+          {image.tags && image.tags.map(t => <TagC key={t} label={t} small />)}
         </div>
       </div>
     </div>
@@ -280,142 +308,7 @@ function CollectionOverlay({ collection, onClose, onSelectImage }) {
   );
 }
 
-/* ── Carousel ─────────────────────────────────── */
-const CP_W=152, CP_H=196; // portrait
-const CL_W=272, CL_H=196; // landscape — same height, wider
-const CGAP=28;
-const BASE_SPD=0.036, CFRIC=0.9984;
-
-const CS_W=CP_H; // square: 196×196
-
-function Carousel({ images, reverse }) {
-  const trackRef = useR2(null);
-  const revRef   = useR2(reverse);
-  revRef.current = reverse;
-  const phys     = useR2({ offset:0, vel:0, drag:false, lx:0, lt:0 }).current;
-  const [hovIdx, setHovIdx] = useS2(null);
-  const aspectsRef = useR2({});
-  const singleWRef = useR2(0);
-  const [, setAspectVer] = useS2(0);
-  const n = images.length;
-
-  function imgDims(img) {
-    const fmt = aspectsRef.current[img.id] || (img.landscape ? 'landscape' : 'portrait');
-    if (fmt === 'square')    return {w:CS_W, h:CP_H};
-    if (fmt === 'landscape') return {w:CL_W, h:CL_H};
-    return {w:CP_W, h:CP_H};
-  }
-
-  function handleAspect(id, e) {
-    const el = e.currentTarget;
-    if (!el.naturalWidth) return;
-    const fmt = el.naturalWidth === el.naturalHeight ? 'square'
-              : el.naturalWidth > el.naturalHeight   ? 'landscape' : 'portrait';
-    if (aspectsRef.current[id] !== fmt) {
-      aspectsRef.current[id] = fmt;
-      setAspectVer(v => v + 1);
-    }
-  }
-
-  // singleW = sum of (width + gap) for all images in one copy
-  const singleW = images.reduce((s, img) => s + imgDims(img).w + CGAP, 0);
-  singleWRef.current = singleW;
-  const tripled = [...images, ...images, ...images];
-
-  useE2(() => {
-    phys.offset = singleWRef.current;
-    let raf, last = performance.now();
-    function tick(now) {
-      const dt = Math.min(now - last, 50); last = now;
-      const sw = singleWRef.current;
-      if (!phys.drag) {
-        if (Math.abs(phys.vel) > 0.002) phys.vel *= Math.pow(CFRIC, dt); else phys.vel = 0;
-        phys.offset += ((revRef.current ? -1 : 1) * BASE_SPD + phys.vel) * dt;
-        while (phys.offset >= sw * 2) phys.offset -= sw;
-        while (phys.offset < sw)     phys.offset += sw;
-        if (trackRef.current) trackRef.current.style.transform = `translateX(${-phys.offset}px)`;
-      }
-      raf = requestAnimationFrame(tick);
-    }
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, []);
-
-  useE2(() => {
-    function onMove(e) {
-      if (!phys.drag) return;
-      const now = performance.now(), dx = e.clientX - phys.lx, dt = now - phys.lt;
-      if (dt > 0) phys.vel = -dx / dt;
-      phys.offset -= dx;
-      const sw = singleWRef.current;
-      while (phys.offset >= sw * 2) phys.offset -= sw;
-      while (phys.offset < sw)     phys.offset += sw;
-      if (trackRef.current) trackRef.current.style.transform = `translateX(${-phys.offset}px)`;
-      phys.lx = e.clientX; phys.lt = now;
-    }
-    function onUp() { phys.drag = false; }
-    window.addEventListener('mousemove', onMove);
-    window.addEventListener('mouseup',   onUp);
-    return () => { window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp); };
-  }, []);
-
-  function onDown(e) { e.preventDefault(); phys.drag=true; phys.lx=e.clientX; phys.lt=performance.now(); phys.vel=0; }
-
-  function iStyle(ii) {
-    const hov = hovIdx === ii;
-    const {w,h} = imgDims(images[ii]);
-    let tx = 0;
-    if (hovIdx !== null && !hov) {
-      let d = ii - hovIdx; if (d > n/2) d -= n; if (d < -n/2) d += n;
-      if (Math.abs(d) <= 3) tx = (d > 0 ? 1 : -1) * 28 / Math.abs(d);
-    }
-    return {
-      width:w, height:h, flexShrink:0, borderRadius:4, overflow:'hidden', position:'relative', cursor:'pointer',
-      alignSelf:'flex-end',
-      transform: hov ? `scale(1.18) translateY(-12px)` : tx ? `translateX(${tx}px)` : undefined,
-      boxShadow: hov ? '0 0 26px rgba(124,77,255,0.88),0 0 52px rgba(124,77,255,0.28)' : 'none',
-      border: hov ? '1.5px solid rgba(124,77,255,0.88)' : '1.5px solid rgba(124,77,255,0.12)',
-      zIndex: hov ? 20 : 1,
-      transition:'transform 0.22s ease,box-shadow 0.2s ease,border-color 0.2s ease',
-    };
-  }
-
-  return (
-    <div onMouseDown={onDown} style={{ position:'relative', overflow:'visible', height:CP_H+52, userSelect:'none', cursor:'grab' }}>
-      <div ref={trackRef} style={{ position:'absolute', top:26, left:0, display:'flex', gap:CGAP, alignItems:'flex-start', height:CP_H, willChange:'transform' }}>
-        {tripled.map((img, gi) => {
-          const ii = gi % n;
-          return (
-            <div key={gi} style={iStyle(ii)} onMouseEnter={() => setHovIdx(ii)} onMouseLeave={() => setHovIdx(null)}>
-              {images[ii%n].img ? (
-                <img src={images[ii%n].img} alt={images[ii%n].title} onLoad={e => handleAspect(images[ii%n].id, e)} style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }} />
-              ) : (
-              <div style={{ width:'100%', height:'100%', position:'relative', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:6,
-                background:`repeating-linear-gradient(-45deg,transparent,transparent 8px,oklch(0.65 0.18 ${images[ii%n].hue||270} / 0.13) 8px,oklch(0.65 0.18 ${images[ii%n].hue||270} / 0.13) 9px),linear-gradient(160deg,rgba(28,16,62,0.97) 0%,rgba(14,9,36,0.98) 100%)`,
-              }}>
-                <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse at 50% 45%,oklch(0.65 0.18 ${images[ii%n].hue||270} / 0.2) 0%,transparent 60%)` }} />
-                <svg viewBox="0 0 40 30" width={images[ii%n].landscape?22:18} height={images[ii%n].landscape?16:13} fill="none" style={{ opacity:0.55, zIndex:1, flexShrink:0 }}>
-                  <rect x="1" y="1" width="38" height="28" rx="2" stroke={`oklch(0.65 0.18 ${images[ii%n].hue||270})`} strokeWidth="1.3"/>
-                  <circle cx="12" cy="11" r="4" stroke={`oklch(0.65 0.18 ${images[ii%n].hue||270})`} strokeWidth="1" opacity="0.8"/>
-                  <path d="M1 22 L10 15 L18 20 L26 13 L39 22" stroke={`oklch(0.65 0.18 ${images[ii%n].hue||270})`} strokeWidth="1.1" opacity="0.8"/>
-                </svg>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:7, letterSpacing:'0.18em', color:`oklch(0.65 0.18 ${images[ii%n].hue||270} / 0.52)`, textTransform:'uppercase', zIndex:1, textAlign:'center', padding:'0 6px', lineHeight:1.3 }}>
-                  artwork
-                </span>
-              </div>
-              )}
-              <div style={{ position:'absolute', bottom:0, left:0, right:0, padding:'5px 7px', background:'rgba(5,4,15,0.83)', borderTop:'1px solid rgba(124,77,255,0.12)' }}>
-                <div style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(240,238,255,0.6)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{images[ii%n].title}</div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      <div style={{ position:'absolute', top:0, left:0, bottom:0, width:100, background:'linear-gradient(to right,#05040f 40%,transparent)', pointerEvents:'none', zIndex:10 }} />
-      <div style={{ position:'absolute', top:0, right:0, bottom:0, width:100, background:'linear-gradient(to left,#05040f 40%,transparent)', pointerEvents:'none', zIndex:10 }} />
-    </div>
-  );
-}
+// Carousel loaded from assets/components/carousel.jsx
 
 /* ── ImageModal ───────────────────────────────── */
 function ImageModal({ image, onClose }) {
@@ -438,7 +331,7 @@ function ImageModal({ image, onClose }) {
         {/* Image panel */}
         <div style={{ flex:'0 0 58%', minHeight:400, position:'relative', background:'#000' }}>
           {image.img
-            ? <img src={image.img} alt={image.title} style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }} />
+            ? <img src={image.img} alt={image.title} loading="lazy" style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }} />
             : <ImgPH label={image.title} height="100%" hue={image.hue} />
           }
         </div>
@@ -486,7 +379,7 @@ function ImageModal({ image, onClose }) {
   );
 }
 
-Object.assign(window, { CollectionCard, CollectionOverlay, Carousel, ImageModal });
+Object.assign(window, { CollectionCard, CollectionOverlay, ImageModal });
 </script>
 
 
@@ -494,11 +387,17 @@ Object.assign(window, { CollectionCard, CollectionOverlay, Carousel, ImageModal 
      SCRIPT 3 — Nav + GalleryPage + render
      ═══════════════════════════════════════════ -->
 <script type="text/babel">
-const { useState: useS3, useEffect: useE3, useRef: useR3 } = React;
+const { useState: useS3, useEffect: useE3, useRef: useR3, useMemo: useMemo3 } = React;
 const { COLLECTIONS:COLS, ALL_IMAGES:ALL_IMGS, DEFAULT_FEATURED, FeaturedDisplay:FeatDisp, CollectionCard:ColCard, CollectionOverlay:ColOverlay, Carousel:Car, ImageModal } = window;
 const { useTweaks, TweaksPanel, TweakSection, TweakToggle, TweakSlider, SiteNav, PageHeader } = window;
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"carouselReverse":false,"headerHeight":180}/*EDITMODE-END*/;
+
+function _monsterKolId(name) {
+  let h = 5381;
+  for (let i = 0; i < name.length; i++) h = (Math.imul(h, 33) ^ name.charCodeAt(i)) >>> 0;
+  return h % 2000000000;
+}
 
 /* ── GalleryPage ──────────────────────────────── */
 function GalleryPage() {
@@ -506,9 +405,134 @@ function GalleryPage() {
   const [openCol,    setOpenCol]  = useS3(null);
   const [modalImg,   setModalImg] = useS3(null);
   const [tweaks, setTweak]        = useTweaks(TWEAK_DEFAULTS);
+  // Monster-Collection starts empty — populated after visibility check
+  const [cols, setCols] = useS3(() =>
+    COLS.map(col => col.id === 'monster' ? { ...col, images: [] } : col)
+  );
 
-  const leftCols  = COLS.slice(0, 3);
-  const rightCols = COLS.slice(3, 6);
+  useE3(() => {
+    const isDM = window.SITE_USER?.role === 'dm';
+    async function loadChars() {
+      const [{ data: chars }, { data: nscs }, { data: visData }] = await Promise.all([
+        window._sb.from('characters').select('id,name,char_data,created_at,visible').eq('type', 'spieler').order('created_at', { ascending: false }),
+        window._sb.from('nscs').select('id,name,bild,created_at,visible').not('bild', 'is', null).order('name'),
+        window._sb.from('ressourcen_sichtbar').select('resource_id').eq('cat', 'kreaturen'),
+      ]);
+
+      // Build monster collection only from visible entries
+      const visSet = new Set((visData || []).map(r => r.resource_id));
+      const md = window.MONSTER_DATA;
+      if (md && md.length) {
+        const existingImgs = new Map(
+          COLS.find(c => c.id === 'monster')?.images.map(img => [img.img, img]) ?? []
+        );
+        const seen = new Set();
+        const monsterImages = md
+          .filter(m => {
+            if (!m.bild || !existingImgs.has(m.bild)) return false;
+            const visible = visSet.has(_monsterKolId(m.name));
+            return isDM || visible;
+          })
+          .map((m, i) => {
+            if (seen.has(m.bild)) return null;
+            seen.add(m.bild);
+            const base = existingImgs.get(m.bild);
+            return { ...base, id: 'md_' + i, title: m.name,
+              hidden: isDM && !visSet.has(_monsterKolId(m.name)) };
+          })
+          .filter(Boolean);
+        setCols(prev => prev.map(col =>
+          col.id === 'monster' ? { ...col, images: monsterImages } : col
+        ));
+      }
+
+      const charImgs = (chars || [])
+        .filter(c => c.char_data?.bild && (isDM || c.visible !== false))
+        .map(c => ({
+          id:     'char_' + c.id,
+          title:  c.name,
+          hue:    150,
+          date:   c.created_at?.slice(0, 10) ?? '',
+          img:    c.char_data.bild,
+          hidden: isDM && c.visible === false,
+          collectionName: 'Charaktere & NSCs',
+        }));
+
+      const nscImgs = (nscs || [])
+        .filter(n => isDM || n.visible)
+        .map(n => ({
+          id:     'nsc_' + n.id,
+          title:  n.name,
+          hue:    200,
+          date:   n.created_at?.slice(0, 10) ?? '',
+          img:    n.bild,
+          hidden: isDM && !n.visible,
+          collectionName: 'Charaktere & NSCs',
+        }));
+
+      const images = [...charImgs, ...nscImgs];
+      if (!images.length) return;
+      setCols(prev => prev.map(col =>
+        col.id === 'charaktere' ? { ...col, images } : col
+      ));
+      setFeatured(f => f === DEFAULT_FEATURED ? images[0] : f);
+    }
+    loadChars();
+  }, []);
+
+  useE3(() => {
+    async function loadMonsterStorage() {
+      // List subfolders under monster/ in the images bucket
+      // Folders sit at bucket root — list them
+      const { data: folders } = await window._sb.storage.from('images').list('');
+      if (!folders || !folders.length) return;
+
+      // List files in each folder in parallel
+      const fileListings = await Promise.all(
+        folders
+          .filter(f => !f.metadata) // folders have no metadata object
+          .map(folder => window._sb.storage.from('images')
+            .list(folder.name, { limit: 1000 })
+            .then(({ data }) => (data || [])
+              .filter(file => file.metadata && /\.(png|webp|jpg)$/i.test(file.name))
+              .map(file => folder.name + '/' + file.name)
+            )
+          )
+      );
+
+      const paths = fileListings.flat();
+      if (!paths.length) return;
+
+      const { data: signed } = await window._sb.storage.from('images').createSignedUrls(paths, 86400);
+      if (!signed) return;
+
+      const storageImgs = signed
+        .filter(u => u.signedUrl)
+        .map((u, i) => {
+          const parts = paths[i].split('/');
+          const filename = parts[parts.length - 1].replace(/\.[^.]+$/, '');
+          const title = filename.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+          return { id: 'st_' + i, title, hue: 270, date: '', img: u.signedUrl };
+        });
+
+      if (!storageImgs.length) return;
+      setCols(prev => prev.map(col =>
+        col.id === 'monster'
+          ? { ...col, images: [...col.images, ...storageImgs] }
+          : col
+      ));
+    }
+    loadMonsterStorage();
+  }, []);
+
+  const allImgs = cols.flatMap(c => c.images.map(img => ({ ...img, collectionName: c.name })));
+  // Carousel uses a shuffled sample — rendering 800×3 img tags burns bandwidth needlessly
+  const carouselImgs = useMemo3(() => {
+    const shuffled = [...allImgs].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, 80);
+  }, [cols]);
+  const leftCols  = cols.slice(0, 3);
+  const rightCols = cols.slice(3, 6);
 
   return (
     <div style={{ minHeight:'100vh' }}>
@@ -578,22 +602,23 @@ function GalleryPage() {
           <span style={{ fontFamily:'var(--font-display)', fontSize:9, letterSpacing:'0.35em', color:'rgba(124,77,255,0.5)', textTransform:'uppercase' }}>Alle Bilder</span>
           <div style={{ flex:1, height:1, background:'rgba(124,77,255,0.12)' }} />
           <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'rgba(124,77,255,0.3)' }}>
-            {ALL_IMGS.length} Einträge · Klicken &amp; Ziehen zum Drehen
+            {allImgs.length} Einträge · Klicken &amp; Ziehen zum Drehen
           </span>
         </div>
-        <Car images={ALL_IMGS} reverse={tweaks.carouselReverse} />
+        <Car images={carouselImgs} reverse={tweaks.carouselReverse} />
       </div>
 
       {/* Footer */}
       <div style={{ borderTop:'1px solid rgba(124,77,255,0.07)', padding:'13px 28px', display:'flex', justifyContent:'space-between' }}>
         <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(124,77,255,0.26)', letterSpacing:'0.1em' }}>Meruria — Galerie</span>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'rgba(124,77,255,0.22)' }}>{COLS.length} Sammlungen · {ALL_IMGS.length} Bilder</span>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'rgba(124,77,255,0.22)' }}>{cols.length} Sammlungen · {allImgs.length} Bilder</span>
       </div>
     </div>
   );
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<GalleryPage />);
+const { SiteGate } = window;
+ReactDOM.createRoot(document.getElementById('root')).render(<SiteGate><GalleryPage /></SiteGate>);
 </script>
 
 

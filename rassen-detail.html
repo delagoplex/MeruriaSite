@@ -18,6 +18,8 @@
 <script src="assets/components/site-gate.js"></script>
 <script src="assets/scripts/data/rassen-data.js"></script>
 <script src="assets/scripts/data/rassen-detail-data.js"></script>
+<script src="assets/scripts/data/talente-data.js"></script>
+<script src="assets/scripts/data/gebaeude-data.js"></script>
 <script>
 (function() {
   var rasse = new URLSearchParams(location.search).get('rasse') || '';
@@ -37,8 +39,13 @@
 const { useState, useEffect, useRef, useCallback } = React;
 
 const IN_IFRAME = window.self !== window.top;
-const RASSE     = new URLSearchParams(location.search).get('rasse') || '';
+const _params   = new URLSearchParams(location.search);
+const RASSE     = _params.get('rasse') || '';
 const DATA      = (window.RASSEN_DETAIL_DATA || {})[RASSE] || null;
+const BACK_HREF  = _params.get('from') === 'talente'
+  ? 'Talente.html?talent=' + (_params.get('talent') || '')
+  : 'Rassen.html';
+const BACK_LABEL = _params.get('from') === 'talente' ? 'Talente' : 'Alle Rassen';
 const SiteNav   = window.SiteNav;
 const SiteGate  = window.SiteGate;
 
@@ -179,9 +186,9 @@ function NotFound() {
       <h1 style={{ fontFamily:'var(--font-display)', fontSize:'32px', fontWeight:'300', letterSpacing:'0.15em', color:'var(--white)', textTransform:'uppercase' }}>
         {RASSE || 'Rasse'} nicht gefunden
       </h1>
-      <a href="Rassen.html" className="rd-back" target={IN_IFRAME ? '_top' : '_self'}>
+      <a href={BACK_HREF} className="rd-back" target={IN_IFRAME ? '_top' : '_self'}>
         <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M10 4L6 8l4 4"/></svg>
-        Alle Rassen
+        {BACK_LABEL}
       </a>
     </div>
   );
@@ -230,9 +237,9 @@ function Hero({ data }) {
       </div>
       <div className="rd-hero-fade" />
       <div className="rd-hero-inner">
-        <a href="Rassen.html" target={IN_IFRAME ? '_top' : '_self'} className="rd-back">
+        <a href={BACK_HREF} target={IN_IFRAME ? '_top' : '_self'} className="rd-back">
           <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M10 4L6 8l4 4"/></svg>
-          Alle Rassen
+          {BACK_LABEL}
         </a>
         <div className="rd-hero-eyebrow">Rassen</div>
         <h1 className="rd-hero-title">{data.name}</h1>
@@ -257,18 +264,71 @@ function Section({ label, title, children, className }) {
   );
 }
 
+// ── IMAGE PLACEHOLDER ────────────────────────────────────
+function ImgPH({ url, label, caption, width=300, height=360, position='right' }) {
+  const acc = makeAcc(DATA.accent);
+  return (
+    <div className={position === 'right' ? 'rd-float-right' : 'rd-float-left'} style={{ width }}>
+      {url ? (
+        /* Real image: no fixed height, adapts to natural aspect ratio */
+        <img src={url} alt={label || ''} loading="lazy"
+          style={{ width:'100%', height:'auto', display:'block', borderRadius:4,
+            boxShadow:`0 4px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(var(--accent-rgb),0.12)` }}/>
+      ) : (
+        /* Placeholder: fixed height with decorative frame */
+        <div className="rd-img-ph reveal-right" style={{ width, height }}>
+          <div className="rd-img-ph-glow"/>
+          <svg viewBox="0 0 40 40" width="32" height="32" fill="none" style={{ opacity:0.28, zIndex:1 }}>
+            <circle cx="20" cy="15" r="7" stroke={acc(0.9)} strokeWidth="1.2"/>
+            <path d="M8 36 Q12 28 20 26 Q28 28 32 36" stroke={acc(0.9)} strokeWidth="1.2"/>
+            <path d="M13 9 Q9 3 15 5" stroke={acc(0.9)} strokeWidth="1" opacity="0.6"/>
+            <path d="M27 9 Q31 3 25 5" stroke={acc(0.9)} strokeWidth="1" opacity="0.6"/>
+          </svg>
+          <div className="rd-img-ph-label">{label}</div>
+        </div>
+      )}
+      {caption && <div className="rd-img-ph-caption">{caption}</div>}
+    </div>
+  );
+}
+
 // ── LORE SECTIONS ────────────────────────────────────────
 function LoreSections({ data }) {
+  const l = data.lore;
   return (
     <>
-      {data.lore.intro && (
+      {l.intro && (
         <Section label="Charaktererstellung" title="Über diese Rasse">
-          {data.lore.intro.map((p,i) => <p key={i} className="rd-body-text">{p}</p>)}
+          <div className={l.introBild ? 'rd-clearfix' : ''}>
+            {l.introBild && (
+              <ImgPH
+                url={l.introBild.url}
+                label={l.introBild.label || 'Illustration'}
+                caption={l.introBild.caption}
+                width={l.introBild.width || 270}
+                height={l.introBild.height || 330}
+                position={l.introBild.position || 'right'}
+              />
+            )}
+            {l.intro.map((p,i) => <p key={i} className="rd-body-text">{p}</p>)}
+          </div>
         </Section>
       )}
-      {data.lore.gesellschaft && (
+      {l.gesellschaft && (
         <Section label="Gesellschaft & Kultur" title="Gesellschaft & Kultur" className="reveal-right">
-          {data.lore.gesellschaft.map((p,i) => <p key={i} className="rd-body-text">{p}</p>)}
+          <div className={l.gesellschaftBild ? 'rd-clearfix' : ''}>
+            {l.gesellschaftBild && (
+              <ImgPH
+                url={l.gesellschaftBild.url}
+                label={l.gesellschaftBild.label || 'Illustration'}
+                caption={l.gesellschaftBild.caption}
+                width={l.gesellschaftBild.width || 240}
+                height={l.gesellschaftBild.height || 300}
+                position={l.gesellschaftBild.position || 'left'}
+              />
+            )}
+            {l.gesellschaft.map((p,i) => <p key={i} className="rd-body-text">{p}</p>)}
+          </div>
         </Section>
       )}
     </>
@@ -289,29 +349,75 @@ function Placeholder({ name }) {
 
 // ── NAME ROLLER ───────────────────────────────────────────
 function NameRoller({ section }) {
-  const [result, setResult] = useState('');
-  const [idx, setIdx]       = useState(-1);
-  const roll = () => {
-    const i = Math.floor(Math.random() * section.namen.length);
-    setIdx(i); setResult(section.namen[i]);
-  };
+  const [result,   setResult]   = useState(null);
+  const [roll,     setRoll]     = useState(null);
+  const [rolling,  setRolling]  = useState(false);
+  const [showList, setShowList] = useState(false);
+  const [idx,      setIdx]      = useState(-1);
+  const names = section.namen || [];
+
+  function rollDice() {
+    if (rolling || !names.length) return;
+    setRolling(true); setResult(null);
+    let count = 0;
+    const iv = setInterval(() => {
+      setResult(names[Math.floor(Math.random() * names.length)]);
+      count++;
+      if (count > 14) {
+        clearInterval(iv);
+        const i = Math.floor(Math.random() * names.length);
+        setIdx(i); setRoll(i + 1); setResult(names[i]); setRolling(false);
+      }
+    }, 55);
+  }
+
   return (
     <Section label="Namen" title={section.label}>
       {section.beschreibung && <p className="rd-body-text">{section.beschreibung}</p>}
-      <div style={{ marginTop:'20px' }}>
-        <button className="rd-dice-btn" onClick={roll}>
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="3"/><circle cx="8" cy="8" r="1.5" fill="currentColor"/><circle cx="16" cy="16" r="1.5" fill="currentColor"/><circle cx="16" cy="8" r="1.5" fill="currentColor"/><circle cx="8" cy="16" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
-          Name würfeln
+      <div style={{ marginTop:'20px', marginBottom:'8px' }}>
+        <button className="rd-dice-btn" onClick={rollDice} style={{ marginBottom:'20px' }}>
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.5"
+               className={rolling ? 'rd-dice-rolling' : ''}>
+            <rect x="3" y="3" width="18" height="18" rx="3"/>
+            <circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/>
+            <circle cx="15.5" cy="8.5" r="1.2" fill="currentColor"/>
+            <circle cx="8.5" cy="15.5" r="1.2" fill="currentColor"/>
+            <circle cx="15.5" cy="15.5" r="1.2" fill="currentColor"/>
+            <circle cx="12" cy="12" r="1.2" fill="currentColor"/>
+          </svg>
+          Würfeln
         </button>
-        {result && <div className="rd-roll-result">{result}</div>}
+        <div className="rd-roll-display">
+          {result ? (
+            <div style={{ animation: rolling ? 'none' : 'result-pop 0.4s cubic-bezier(0.23,1,0.32,1) forwards' }}>
+              <div className="rd-roll-label">{roll && !rolling ? `Ergebnis: ${roll}` : '— — —'}</div>
+              <div className="rd-roll-name">{result}</div>
+              <div className="rd-roll-label">{DATA.name.toLowerCase()} · name</div>
+            </div>
+          ) : (
+            <div className="rd-roll-empty">— Noch kein Wurf —</div>
+          )}
+        </div>
+        <button className="rd-name-toggle" onClick={() => setShowList(s => !s)}>
+          <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" strokeWidth="1.5"
+               style={{ transform: showList ? 'rotate(180deg)' : 'rotate(0deg)' }}>
+            <path d="M2 4l4 4 4-4"/>
+          </svg>
+          {showList ? 'Liste ausblenden' : `Alle ${names.length} Namen anzeigen`}
+        </button>
       </div>
-      <div className="rd-name-grid" style={{ marginTop:'28px' }}>
-        {section.namen.map((n,i) => (
-          <div key={i} className={`rd-name-cell${i===idx?' active':''}`} onClick={() => { setIdx(i); setResult(n); }}>
-            <span className="num">{String(i+1).padStart(2,'0')}</span>{n}
+      {showList && (
+        <div className="rd-name-list-wrap">
+          <div className="rd-name-grid">
+            {names.map((n, i) => (
+              <div key={i} className={`rd-name-cell${i===idx?' active':''}`}
+                   onClick={() => { setIdx(i); setResult(n); setRoll(i+1); setShowList(false); }}>
+                <span className="num">{String(i+1).padStart(2,'0')}</span>{n}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      )}
     </Section>
   );
 }
@@ -377,11 +483,72 @@ function RollTables({ section }) {
   );
 }
 
+// ── VARIANT CARDS ─────────────────────────────────────────
+function VariantCards({ section }) {
+  const [sel, setSel] = React.useState(0);
+  const v = section.varianten[sel];
+  function rollRandom() { setSel(Math.floor(Math.random() * section.varianten.length)); }
+  return (
+    <Section label="Abstammung" title={section.label}>
+      {section.beschreibung && <p className="rd-body-text" style={{ marginBottom:'4px' }}>{section.beschreibung}</p>}
+      <div className="rd-vc-tabs">
+        {section.varianten.map((va, i) => (
+          <button key={va.farbe}
+                  className={'rd-vc-tab' + (sel===i ? ' active' : '')}
+                  style={sel===i ? { '--vc': va.farbeHex } : {}}
+                  onClick={() => setSel(i)}>
+            <span className="rd-vc-dot" style={{ background: va.farbeHex }} />
+            {va.farbe}
+          </button>
+        ))}
+        <button className="rd-dice-btn" style={{ fontSize:'11px', padding:'7px 14px', marginLeft:'auto' }} onClick={rollRandom}>
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <rect x="3" y="3" width="18" height="18" rx="3"/>
+            <circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/>
+            <circle cx="15.5" cy="8.5" r="1.2" fill="currentColor"/>
+            <circle cx="8.5" cy="15.5" r="1.2" fill="currentColor"/>
+            <circle cx="15.5" cy="15.5" r="1.2" fill="currentColor"/>
+          </svg>
+          Würfeln
+        </button>
+      </div>
+      <div className="rd-vc-panel" style={{ '--vc': v.farbeHex }}>
+        <div className="rd-vc-head">
+          <div className="rd-vc-title">{v.name}</div>
+          <div className="rd-vc-badge">{v.schadensart}</div>
+        </div>
+        {v.bild
+          ? <img className="rd-vc-img" src={v.bild} alt={v.name} />
+          : <div className="rd-vc-img-placeholder">Kein Bild hinterlegt</div>
+        }
+        <div className="rd-vc-body">
+          <div className="rd-vc-appear">
+            <div className="rd-vc-row"><span className="rd-vc-lbl">Augen</span><span className="rd-vc-val">{v.augenfarbe}</span></div>
+            <div className="rd-vc-row"><span className="rd-vc-lbl">Haut</span><span className="rd-vc-val">{v.hautfarbe}</span></div>
+            <div className="rd-vc-row"><span className="rd-vc-lbl">Haar</span><span className="rd-vc-val">{v.haarfarbe}</span></div>
+          </div>
+          <div className="rd-vc-feats">
+            <div className="rd-vc-feat">
+              <div className="rd-vc-feat-name">Odemwaffe</div>
+              <div className="rd-vc-feat-text">{v.odemwaffe}</div>
+            </div>
+            <div className="rd-vc-feat">
+              <div className="rd-vc-feat-name">Drakonische Resistenz</div>
+              <div className="rd-vc-feat-text">{v.resistenz}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Section>
+  );
+}
+
 // ── SPECIAL SECTION DISPATCHER ────────────────────────────
 function SpecialSection({ section }) {
-  if (section.type === 'nameRoller')  return <NameRoller  section={section} />;
-  if (section.type === 'traitRoller') return <TraitRoller section={section} />;
-  if (section.type === 'tables')      return <RollTables  section={section} />;
+  if (section.type === 'nameRoller')   return <NameRoller   section={section} />;
+  if (section.type === 'traitRoller')  return <TraitRoller  section={section} />;
+  if (section.type === 'tables')       return <RollTables   section={section} />;
+  if (section.type === 'variantCards') return <VariantCards section={section} />;
   return null;
 }
 
@@ -392,10 +559,15 @@ function CharGen({ gen }) {
     const r = {};
     gen.felder.forEach(f => {
       switch (f.type) {
-        case 'choice': r[f.label] = f.optionen[Math.floor(Math.random() * f.optionen.length)]; break;
-        case 'table':  r[f.label] = f.optionen[Math.floor(Math.random() * f.optionen.length)]; break;
-        case 'range':  r[f.label] = `${Math.floor(Math.random() * (f.max - f.min + 1)) + f.min}${f.suffix || ''}`; break;
-        default:       r[f.label] = '—';
+        case 'choice':         r[f.label] = f.optionen[Math.floor(Math.random() * f.optionen.length)]; break;
+        case 'table':          r[f.label] = f.optionen[Math.floor(Math.random() * f.optionen.length)]; break;
+        case 'range':          r[f.label] = `${Math.floor(Math.random() * (f.max - f.min + 1)) + f.min}${f.suffix || ''}`; break;
+        case 'gendered-table': {
+          const pool = (r['Geschlecht'] || '').toLowerCase().includes('weiblich') ? f.weiblich : f.maennlich;
+          r[f.label] = pool[Math.floor(Math.random() * pool.length)];
+          break;
+        }
+        default: r[f.label] = '—';
       }
     });
     setResult(r);
@@ -441,24 +613,109 @@ function Beziehungen({ items }) {
   );
 }
 
+// ── ALLE BEKANNTE POPUP ───────────────────────────────────
+function AlleBekanntPopup({ items, onClose }) {
+  useEffect(() => {
+    const fn = e => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', fn);
+    return () => document.removeEventListener('keydown', fn);
+  }, []);
+  return ReactDOM.createPortal(
+    <div className="rd-popup-overlay" onClick={e => { if (e.target===e.currentTarget) onClose(); }}>
+      <div className="rd-popup-scrim" onClick={onClose}/>
+      <div className="rd-popup-box">
+        <div className="rd-popup-head">
+          <div>
+            <div className="rd-popup-kicker">Lore · {DATA.name}</div>
+            <div className="rd-popup-title">Alle bekannten Personen</div>
+          </div>
+          <button className="rd-popup-close" onClick={onClose} aria-label="Schließen">
+            <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M4 4l8 8M12 4l-8 8"/>
+            </svg>
+          </button>
+        </div>
+        <div className="rd-popup-body">
+          {items.map((b, i) => (
+            <div key={i} className="rd-popup-item">
+              <div className="rd-popup-avatar" style={{ padding: b.bild ? 0 : undefined, overflow:'hidden' }}>
+                {b.bild
+                  ? <img src={b.bild} alt={b.name} style={{ width:'100%', height:'100%', objectFit:'cover', display:'block', borderRadius:'50%' }} loading="lazy"/>
+                  : (b.name || '?')[0]
+                }
+              </div>
+              <div>
+                <div className="rd-popup-item-name">{b.name}</div>
+                <div className="rd-popup-item-rolle">{b.rolle}</div>
+                <p className="rd-popup-item-text">{b.beschreibung}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>,
+    document.body
+  );
+}
+
 // ── BEKANNTE ──────────────────────────────────────────────
 function Bekannte({ items }) {
+  const [showPopup, setShowPopup] = useState(false);
   if (!items || items.length === 0) return (
-    <Section label="Personen" title="Bekannte Personen">
+    <Section label="Personen" title={`Bekannte ${DATA.name}`}>
       <p className="rd-bek-empty">Noch keine bekannten Personen dokumentiert.</p>
     </Section>
   );
+  const featured = items[0];
+  const rest     = items.slice(1, 4);
   return (
-    <Section label="Personen" title="Bekannte Personen">
-      <div className="rd-bek-grid">
-        {items.map((p,i) => (
-          <div key={i} className="rd-bek-card">
-            <div className="rd-bek-name">{p.name}</div>
-            <div className="rd-bek-rolle">{p.rolle}</div>
-            <div className="rd-bek-text">{p.beschreibung}</div>
-          </div>
-        ))}
+    <Section label="Personen" title={`Bekannte ${DATA.name}`}>
+      {showPopup && <AlleBekanntPopup items={items} onClose={() => setShowPopup(false)}/>}
+
+      {/* Featured */}
+      <div className="rd-bek-featured reveal">
+        <div className="rd-bek-feat-portrait" style={{ padding: featured.bild ? 0 : undefined, overflow:'hidden' }}>
+          {featured.bild
+            ? <img src={featured.bild} alt={featured.name} style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }} loading="lazy"/>
+            : <svg viewBox="0 0 40 40" width="32" height="32" fill="none" style={{ opacity:0.3 }}>
+                <circle cx="20" cy="15" r="7" stroke="currentColor" strokeWidth="1.2"/>
+                <path d="M8 36 Q12 28 20 26 Q28 28 32 36" stroke="currentColor" strokeWidth="1.2"/>
+              </svg>
+          }
+        </div>
+        <div>
+          <div className="rd-bek-feat-tag">Bekanntestes Individuum</div>
+          <div className="rd-bek-feat-name">{featured.name}</div>
+          <div className="rd-bek-feat-rolle">{featured.rolle}</div>
+          <p className="rd-bek-feat-text">{featured.beschreibung}</p>
+        </div>
       </div>
+
+      {/* Weitere */}
+      {rest.length > 0 && (
+        <>
+          <div className="rd-bek-subheader">
+            <div className="rd-bek-subheader-label">Weitere bekannte Individuen</div>
+            <button className="rd-bek-alle-btn" onClick={() => setShowPopup(true)}>
+              <svg viewBox="0 0 14 14" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.4">
+                <rect x="2" y="2" width="10" height="10" rx="1.5"/>
+                <line x1="5" y1="5" x2="9" y2="5"/><line x1="5" y1="7.5" x2="9" y2="7.5"/><line x1="5" y1="10" x2="8" y2="10"/>
+              </svg>
+              Alle anzeigen
+            </button>
+          </div>
+          <div className="rd-bek-grid">
+            {rest.map((p, i) => (
+              <div key={i} className="rd-bek-card reveal">
+                {p.bild && <img src={p.bild} alt={p.name} style={{ width:'100%', height:'110px', objectFit:'cover', borderRadius:'3px', marginBottom:'12px', display:'block' }} loading="lazy"/>}
+                <div className="rd-bek-name">{p.name}</div>
+                <div className="rd-bek-rolle">{p.rolle}</div>
+                <div className="rd-bek-text">{p.beschreibung}</div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
     </Section>
   );
 }
@@ -564,50 +821,413 @@ function Quiz({ data: qd }) {
 }
 
 // ── STAT BLOCK ────────────────────────────────────────────
-function StatBlock({ data: sd }) {
+function StatBlock({ data: sd, onTalentClick }) {
   const acc = makeAcc(DATA.accent);
+  const meta = [
+    sd.attributErhoehungen && { label: 'Attributerhöhungen', value: sd.attributErhoehungen.join(' · ') },
+    sd.alter               && { label: 'Alter',               value: sd.alter },
+    sd.gesinnung           && { label: 'Gesinnung',           value: sd.gesinnung },
+    sd.geschwindigkeit     && { label: 'Geschwindigkeit',      value: sd.geschwindigkeit },
+    sd.sprachen            && { label: 'Sprachen',             value: Array.isArray(sd.sprachen) ? sd.sprachen.join(', ') : sd.sprachen },
+  ].filter(Boolean);
+
   return (
     <Section label="Spielmechanik" title="Rassenmerkmale">
-      {sd.features.map((f,i) => (
-        <div key={i} className="rd-feature">
-          <div className="rd-feature-name">{f.name}</div>
-          {f.text && <div className="rd-feature-text">{f.text}</div>}
-          {f.subfeatures && f.subfeatures.map(sf => (
-            <div key={sf.name} className="rd-subfeature">
-              <div className="rd-subfeature-name">{sf.name}</div>
-              <div className="rd-feature-text">{sf.text}</div>
+      {sd.beschreibung && <p className="rd-body-text" style={{ marginBottom:'24px' }}>{sd.beschreibung}</p>}
+      {meta.length > 0 && (
+        <div className="rd-statmeta">
+          {meta.map(m => (
+            <div key={m.label} className="rd-statmeta-row">
+              <span className="rd-statmeta-label">{m.label}</span>
+              <span className="rd-statmeta-value">{m.value}</span>
             </div>
           ))}
-          {f.talente && (
-            <div style={{ marginTop:'8px' }}>
-              {f.talente.map(t => (
-                <span key={t} className="rd-talent-pill">{t}</span>
-              ))}
-            </div>
-          )}
         </div>
-      ))}
+      )}
+      <div style={{ marginTop: meta.length ? '28px' : 0 }}>
+        {sd.features.map((f,i) => (
+          <div key={i} className="rd-feature">
+            <div className="rd-feature-name">{f.name}</div>
+            {f.text && <div className="rd-feature-text">{f.text}</div>}
+            {f.subfeatures && f.subfeatures.map(sf => (
+              <div key={sf.name} className="rd-subfeature">
+                <div className="rd-subfeature-name">{sf.name}</div>
+                <div className="rd-feature-text">{sf.text}</div>
+              </div>
+            ))}
+            {f.talente && (
+              <div style={{ marginTop:'8px' }}>
+                {f.talente.map(t => {
+                  const known = (window.TALENTE_DATA || []).some(x => x.name.toLowerCase() === t.toLowerCase());
+                  return known
+                    ? <button key={t} className="rd-talent-pill rd-talent-pill--btn" onClick={() => onTalentClick(t)}>{t}</button>
+                    : <span key={t} className="rd-talent-pill">{t}</span>;
+                })}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
     </Section>
   );
 }
 
-// ── GEBÄUDE LINK ─────────────────────────────────────────
-function GebaeudeLinkSection({ data }) {
+// ── KÖRPERLICHE MERKMALE ──────────────────────────────────
+function KoerperlicherMerkmale({ data: km }) {
+  const acc = makeAcc(DATA.accent);
+  const rows = [
+    { label: 'Bewegungsrate',    value: km.bewegungsrate },
+    { label: 'Volljährigkeit',   value: km.volljaehrigkeit },
+    { label: 'Lebenserwartung',  value: km.lebenserwartung },
+    km.groesse && { label: 'Größe', value: [
+      km.groesse.kategorie,
+      km.groesse.min && km.groesse.max ? `${km.groesse.min} – ${km.groesse.max}` : null,
+      km.groesse.formel ? `zufällig: ${km.groesse.formel}` : null,
+    ].filter(Boolean).join(' · ') },
+    km.gewicht && { label: 'Gewicht', value: [
+      km.gewicht.min && km.gewicht.max ? `${km.gewicht.min} – ${km.gewicht.max}` : null,
+      km.gewicht.formel ? `zufällig: ${km.gewicht.formel}` : null,
+    ].filter(Boolean).join(' · ') },
+    km.augenfarbe     && { label: 'Augenfarbe',     value: km.augenfarbe },
+    km.gefiederfarbe  && { label: 'Gefiederfarbe',  value: km.gefiederfarbe },
+    km.hautfarbe      && { label: 'Hautfarbe',       value: km.hautfarbe },
+    km.haarfarbe      && { label: 'Haarfarbe',       value: km.haarfarbe },
+    km.besonderheit   && { label: 'Besonderheit',    value: km.besonderheit },
+  ].filter(Boolean);
+
   return (
-    <Section label="Kolonisierung" title="Gebäudekatalog">
-      <p className="rd-body-text">
-        {data.name} können in Meruria eigene Kolonien gründen. Ihr rassenspezifischer Gebäudekatalog enthält alle verfügbaren Bauwerke, Phasen und Bonusse.
-      </p>
-      <a
-        href={`Gebaude.html?rasse=${encodeURIComponent(data.name)}`}
-        target={IN_IFRAME ? '_top' : '_self'}
-        className="rd-gebaude-link"
-        style={{ marginTop:'16px', display:'inline-flex' }}
-      >
-        {data.name} · Gebäudekatalog
-        <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M6 4l4 4-4 4"/></svg>
-      </a>
+    <Section label="Körperbau" title="Körperliche Merkmale">
+      <div className="rd-statmeta">
+        {rows.map(r => (
+          <div key={r.label} className="rd-statmeta-row">
+            <span className="rd-statmeta-label">{r.label}</span>
+            <span className="rd-statmeta-value">{r.value}</span>
+          </div>
+        ))}
+      </div>
     </Section>
+  );
+}
+
+// ── TAB BAR ───────────────────────────────────────────────
+function TabBar({ active, onChange, gebCount }) {
+  const TABS = [
+    { id:'detail',   glyph:'⬡', label:'Rassendetails' },
+    { id:'gebaeude', glyph:'◈', label:'Gebäudekatalog', count: gebCount },
+  ];
+  return (
+    <div className="rd-tabbar">
+      <div className="rd-tabbar-inner">
+        {TABS.map(t => (
+          <button key={t.id} className={'rd-tab' + (active===t.id?' active':'')} onClick={() => onChange(t.id)}>
+            <span className="rd-tab-glyph">{t.glyph}</span>
+            {t.label}
+            {t.count != null && <span className="rd-tab-count">{t.count}</span>}
+          </button>
+        ))}
+        <div className="rd-tab-spacer">
+          <div className="rd-tab-spacer-line"/>
+          <div className="rd-tab-hud">
+            <span className="rd-tab-hud-dot"/>
+            {DATA.name}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── GEBÄUDEKATALOG TAB (inline) ────────────────────────────
+const G_KAT    = window.KAT    || {};
+const G_PHASEN = window.PHASEN || [];
+
+function GBauTerminal({ kosten, bauzeit }) {
+  return (
+    <div className="terminal">
+      <div className="terminal-head"><span className="t-title">Baukosten</span><span className="t-dots"><span/><span/><span/></span></div>
+      <div className="terminal-body">
+        {kosten.map((k,i) => (
+          <div className="cost-row" key={i}>
+            <span className="qty">{k.q}</span>
+            <span className="nm">{k.n}{k.rare&&<span className="rare"> · {k.rare}</span>}</span>
+          </div>
+        ))}
+      </div>
+      <div className="terminal-foot"><span className="blink"/>Bauzeit: {bauzeit}</div>
+    </div>
+  );
+}
+
+function GKachel({ b, onOpen }) {
+  const kat = G_KAT[b.kategorie] || {};
+  const cv  = { '--cat-color':kat.color,'--cat-bg':kat.bg,'--cat-border':kat.border,'--cat-glow':kat.glow };
+  const teaser = b.beschreibung || (b.zimmer&&b.zimmer.join(' · ')) || (b.effekt&&b.effekt[0]) || '';
+  return (
+    <button className="btile" style={cv} onClick={onOpen}>
+      <div className="bt-head">
+        <div className="bt-badges">
+          <span className="cat-badge"><span className="bt-emoji">{kat.emoji}</span>{kat.label}</span>
+          <span className="phase-marker">{b.phase}</span>
+          {b.pflicht && <span className="pflicht-marker">Pflicht</span>}
+          {b.endgebaeude && <span className="star-marker">⭐</span>}
+        </div>
+        <div className="bt-name">{b.name}</div>
+        <div className="bt-size">{b.groesse}</div>
+      </div>
+      <div className="bt-body">
+        <p className="bt-teaser">{teaser}</p>
+        <div className="bt-foot">
+          <span className="bt-meta">{b.kosten.length} Ressourcen<span className="dot"/>{b.bauzeit}</span>
+          <span className="bt-open">Details <svg viewBox="0 0 14 14" width="10" height="10" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M5 3l4 4-4 4"/></svg></span>
+        </div>
+      </div>
+    </button>
+  );
+}
+
+function GModal({ b, onClose }) {
+  const kat = G_KAT[b.kategorie] || {};
+  const cv  = { '--cat-color':kat.color,'--cat-bg':kat.bg,'--cat-border':kat.border,'--cat-glow':kat.glow };
+  useEffect(() => {
+    const fn = e => { if (e.key==='Escape') onClose(); };
+    document.addEventListener('keydown', fn);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.removeEventListener('keydown', fn); document.body.style.overflow = prev; };
+  }, []);
+  return (
+    <div className="modal-overlay" onClick={e=>{ if(e.target===e.currentTarget) onClose(); }}>
+      <div className="modal-scrim" onClick={onClose}/>
+      <div className="modal" style={cv} role="dialog" aria-modal="true">
+        <div className="modal-head">
+          <button className="modal-close" onClick={onClose} aria-label="Schließen">
+            <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M4 4l8 8M12 4l-8 8"/></svg>
+          </button>
+          <div className="bc-badges">
+            <span className="cat-badge"><span style={{fontSize:'0.85rem'}}>{kat.emoji}</span>{kat.label}</span>
+            <span className="phase-marker">{b.phase}</span>
+            {b.pflicht && <span className="pflicht-marker">Pflicht</span>}
+            {b.endgebaeude && <span className="star-marker">⭐ Endgebäude</span>}
+          </div>
+          <div className="modal-name">{b.name}</div>
+          <div className="modal-sub"><span className="grosse">{b.groesse}</span>{b.fuer&&<span> · {b.fuer}</span>}</div>
+        </div>
+        <div className="modal-body">
+          {b.beschreibung && <p className="bc-desc">{b.beschreibung}</p>}
+          {b.zimmer && <div className="bc-field"><span className="bc-field-label">Zimmer</span><ul className="bc-zimmer">{b.zimmer.map((z,i)=><li key={i}>{z}</li>)}</ul></div>}
+          {b.voraussetzung && <div className="voraussetzung"><span className="v-label">Voraussetzung</span><span className="v-val">{b.voraussetzung}</span></div>}
+          <GBauTerminal kosten={b.kosten} bauzeit={b.bauzeit}/>
+          {b.effekt&&b.effekt.length>0 && <div className="bc-field"><span className="bc-field-label">Effekt</span><ul className="bc-effect-list">{b.effekt.map((e,i)=><li key={i}>{e}</li>)}</ul></div>}
+          {b.wb && <div className="wb-line"><b>WB ·</b> {b.wb}</div>}
+          {b.kapazitaet && <div className="kapa-line">{b.kapazitaet}</div>}
+          {b.schaltetFrei && <div className="unlock"><span className="u-label">Schaltet frei</span><span className="u-val">{b.schaltetFrei}</span></div>}
+          {b.dm && <div className="dm-hint"><span className="dm-tag">DM-Hinweis</span>{b.dm}</div>}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function GebaeudekatalogTab({ race }) {
+  const [phaseF,   setPhaseF]   = useState([]);
+  const [katF,     setKatF]     = useState([]);
+  const [selected, setSelected] = useState(null);
+  const h = race.habitat;
+  const acc = makeAcc(DATA.accent);
+
+  const togglePhase = p => setPhaseF(f => f.includes(p) ? f.filter(x=>x!==p) : [...f,p]);
+  const toggleKat   = k => setKatF(f =>   f.includes(k) ? f.filter(x=>x!==k) : [...f,k]);
+  const reset = () => { setPhaseF([]); setKatF([]); };
+  const filtered = (race.gebaeude||[]).filter(b =>
+    (!phaseF.length || phaseF.includes(b.phase)) &&
+    (!katF.length   || katF.includes(b.kategorie))
+  );
+  const active = phaseF.length || katF.length;
+
+  return (
+    <div className="rd-gebaude-shell">
+      {/* Habitatprofil */}
+      <section style={{ marginBottom:'48px' }}>
+        <div style={{ display:'flex', alignItems:'center', gap:'10px', marginBottom:'20px' }}>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.3em', color:acc(0.5), textTransform:'uppercase' }}>01 · Steckbrief</span>
+          <div style={{ flex:1, height:'1px', background:`rgba(var(--accent-rgb),0.12)` }}/>
+        </div>
+        <h2 style={{ fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:300, letterSpacing:'0.18em', color:'var(--white)', textTransform:'uppercase', marginBottom:'20px' }}>Habitatprofil</h2>
+        <div className="habitat-grid">
+          {[
+            { label:'Terrain-Präferenz', content:<div className="hab-v">{h.terrainPraeferenz}</div> },
+            { label:'Wohnpräferenz',     content:<div className="hab-v">{h.wohnpraeferenz}</div> },
+          ].map(({label,content}) => (
+            <div key={label} className="hab"><div className="hab-k">{label}</div>{content}</div>
+          ))}
+          <div className="hab span2"><div className="hab-k">Bauweise</div><div className="hab-v">{h.bauweise}</div></div>
+          <div className="hab"><div className="hab-k">Ressourcen-Affinität</div>
+            <div className="chip-row">{h.ressourcenAffinitaet.map(r=><span key={r} className="res-chip">{r}</span>)}</div>
+          </div>
+          <div className="hab"><div className="hab-k">Ressourcen-Aversion</div>
+            {h.ressourcenAversion?.length ? <div className="chip-row">{h.ressourcenAversion.map(r=><span key={r} className="res-chip aversion">{r}</span>)}</div>
+              : <span className="hab-v"><span className="placeholder-note">—</span></span>}
+          </div>
+          <div className="hab"><div className="hab-k">Pflichtgebäude</div>
+            {h.pflichtgebaeude?.length ? <div className="chip-row">{h.pflichtgebaeude.map(r=><span key={r} className="res-chip">{r}</span>)}</div>
+              : <span className="hab-v"><span className="placeholder-note">—</span></span>}
+          </div>
+          <div className="hab"><div className="hab-k">Wunschgebäude</div>
+            {h.wunschgebaeude?.length ? <div className="chip-row">{h.wunschgebaeude.map(r=><span key={r} className="res-chip">{r}</span>)}</div>
+              : <span className="hab-v"><span className="placeholder-note">—</span></span>}
+          </div>
+          <div className="hab"><div className="hab-k"><span className="sign plus">+</span>WB-Trigger</div>
+            <ul className="hab-list plus">{h.wbTriggerPlus.map((t,i)=><li key={i}>{t}</li>)}</ul>
+          </div>
+          <div className="hab warn"><div className="hab-k"><span className="sign minus">–</span>WB-Trigger</div>
+            <ul className="hab-list">{h.wbTriggerMinus.map((t,i)=><li key={i}>{t}</li>)}</ul>
+          </div>
+          <div className="hab warn span2"><div className="hab-k">Verbote</div>
+            <ul className="hab-list">{h.verbote.map((t,i)=><li key={i}>{t}</li>)}</ul>
+          </div>
+          <div className="hab span2"><div className="hab-k">Besonderheit</div><div className="hab-v">{h.besonderheit}</div></div>
+        </div>
+      </section>
+
+      {/* Gebäudekatalog */}
+      <section>
+        <div style={{ display:'flex', alignItems:'center', gap:'10px', marginBottom:'20px' }}>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.3em', color:acc(0.5), textTransform:'uppercase' }}>02 · Bausystem</span>
+          <div style={{ flex:1, height:'1px', background:`rgba(var(--accent-rgb),0.12)` }}/>
+        </div>
+        <h2 style={{ fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:300, letterSpacing:'0.18em', color:'var(--white)', textTransform:'uppercase', marginBottom:'20px' }}>Gebäudekatalog</h2>
+        <div className="filterbar">
+          <div className="filter-group">
+            <span className="filter-label">Phase</span>
+            {G_PHASEN.map(p => (
+              <button key={p} className={'fchip'+(phaseF.includes(p)?' active':'')} onClick={()=>togglePhase(p)}>{p}</button>
+            ))}
+          </div>
+          <div className="filter-group">
+            <span className="filter-label">Kategorie</span>
+            {Object.entries(G_KAT).map(([k,v]) => (
+              <button key={k} className={'fchip'+(katF.includes(k)?' active':'')} onClick={()=>toggleKat(k)}
+                style={katF.includes(k)?{borderColor:v.color,color:'#fff'}:{}}>
+                <span className="emoji">{v.emoji}</span>{v.label}
+              </button>
+            ))}
+          </div>
+          <span className="filter-count">{filtered.length} / {race.gebaeude.length} Gebäude</span>
+          {active ? <button className="filter-reset" onClick={reset}>Zurücksetzen ✕</button> : null}
+        </div>
+        <div className="build-grid tiles" style={{ marginTop:'20px' }}>
+          {filtered.length
+            ? filtered.map(b => <GKachel key={b.name} b={b} onOpen={()=>setSelected(b)}/>)
+            : <div className="empty-state">Keine Gebäude für diese Filterkombination.</div>}
+        </div>
+        {selected && <GModal b={selected} onClose={()=>setSelected(null)}/>}
+      </section>
+    </div>
+  );
+}
+
+// ── TOC ──────────────────────────────────────────────────
+const NAV_H = 52;
+
+function RassenTOC({ items, headerBottom }) {
+  const navRef  = useRef(null);
+  const [active, setActive] = useState(items[0]?.id || '');
+
+  // Slide up with hero, lock below nav once hero is past
+  useEffect(() => {
+    const update = () => {
+      const ideal = (headerBottom || 0) - window.scrollY;
+      const val   = Math.max(0, ideal);
+      if (navRef.current) {
+        navRef.current.style.top    = val + 'px';
+        navRef.current.style.height = `calc(100vh - ${val}px)`;
+      }
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    return () => { window.removeEventListener('scroll', update); window.removeEventListener('resize', update); };
+  }, [headerBottom]);
+
+  // Active section tracking
+  useEffect(() => {
+    const nodes = items.map(it => document.getElementById(it.id)).filter(Boolean);
+    if (!nodes.length) return;
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) setActive(e.target.id); });
+    }, { threshold: 0, rootMargin: `-${NAV_H + 20}px 0px -58% 0px` });
+    nodes.forEach(el => obs.observe(el));
+    return () => obs.disconnect();
+  }, [items.map(it => it.id).join(',')]);
+
+  function go(e, id) {
+    e.preventDefault();
+    const el = document.getElementById(id);
+    if (el) {
+      const y = el.getBoundingClientRect().top + window.scrollY - NAV_H - 16;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+      setActive(id);
+    }
+  }
+
+  return (
+    <nav ref={navRef} className="rd-toc" aria-label="Inhaltsverzeichnis">
+      <div className="rd-toc-race">{DATA.name}</div>
+      <div className="rd-toc-title">Inhalt</div>
+      <div className="rd-toc-links">
+        {items.map(it => (
+          <a key={it.id} href={'#'+it.id} className={'rd-toc-link'+(active===it.id?' active':'')} onClick={e=>go(e,it.id)}>
+            {it.label}
+          </a>
+        ))}
+      </div>
+    </nav>
+  );
+}
+
+// ── TALENT MODAL ─────────────────────────────────────────
+function TalentModal({ talent, onClose }) {
+  const acc = makeAcc(DATA.accent);
+  useEffect(() => {
+    const fn = e => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', fn);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.removeEventListener('keydown', fn); document.body.style.overflow = prev; };
+  }, []);
+  const cv = {
+    '--cat-border': acc(0.3),
+    '--cat-glow':   acc(0.07),
+    '--cat-color':  acc(1),
+  };
+  return (
+    <div className="modal-overlay" onClick={e => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className="modal-scrim" onClick={onClose} />
+      <div className="modal" style={cv} role="dialog" aria-modal="true">
+        <div className="modal-head">
+          <button className="modal-close" onClick={onClose} aria-label="Schließen">
+            <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M4 4l8 8M12 4l-8 8"/></svg>
+          </button>
+          <div className="rd-talent-modal-label" style={{ color: acc(0.65) }}>
+            {talent.angeboren ? 'Angeborenes Talent' : 'Talent'} · {talent.kategorie}
+          </div>
+          <div className="modal-name">{talent.name}</div>
+          {talent.voraussetzung && (
+            <div className="modal-sub">Voraussetzung: {talent.voraussetzung}</div>
+          )}
+        </div>
+        <div className="modal-body">
+          {(talent.beschreibung || []).map((p, i) => (
+            <p key={i} className="rd-talent-modal-para">{p}</p>
+          ))}
+          {talent.vorzuege && talent.vorzuege.length > 0 && (
+            <ul className="rd-talent-modal-list">
+              {talent.vorzuege.map((v, i) => <li key={i}>{v}</li>)}
+            </ul>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -615,26 +1235,88 @@ function GebaeudeLinkSection({ data }) {
 function App() {
   useScrollReveal();
 
+  const initTab = new URLSearchParams(location.search).get('tab') === 'gebaeude' ? 'gebaeude' : 'detail';
+  const [tab, setTab] = useState(initTab);
+  const [selectedTalent, setSelectedTalent] = useState(null);
+  const [headerBottom,   setHeaderBottom]   = useState(0);
+  const heroWrapRef = useRef(null);
+
+  useEffect(() => {
+    const measure = () => {
+      if (heroWrapRef.current) {
+        const rect = heroWrapRef.current.getBoundingClientRect();
+        setHeaderBottom(rect.bottom + window.scrollY);
+      }
+    };
+    measure();
+    window.addEventListener('resize', measure, { passive: true });
+    return () => window.removeEventListener('resize', measure);
+  }, []);
+
+  function handleTalentClick(name) {
+    const t = (window.TALENTE_DATA || []).find(x => x.name.toLowerCase() === name.toLowerCase());
+    if (t) setSelectedTalent(t);
+  }
+
   if (!DATA) return <NotFound />;
 
   const sicht = findSicht(DATA.name);
+  const GBDAT = window.GEBAEUDE_RASSEN || [];
+  const gebRace = GBDAT.find(r => r.name === DATA.name);
+
+  function switchTab(id) {
+    setTab(id);
+    const url = new URL(location.href);
+    if (id === 'gebaeude') url.searchParams.set('tab', 'gebaeude');
+    else url.searchParams.delete('tab');
+    history.replaceState(null, '', url.toString());
+  }
+
+  const tocItems = [
+    DATA.lore                   && { id:'toc-lore',      label:'Hintergrund' },
+    sicht                       && { id:'toc-sicht',     label:'Sicht & Wahrnehmung' },
+    DATA.specialSection         && { id:'toc-special',   label: DATA.specialSection.label },
+    DATA.namenSection           && { id:'toc-namen',     label:'Namen' },
+    DATA.charakterGenerator     && { id:'toc-chargen',   label:'Charaktergenerierung' },
+    DATA.beziehungen            && { id:'toc-bez',       label:'Beziehungen' },
+                                   { id:'toc-bekannte', label:'Bekannte' },
+    DATA.radar                  && { id:'toc-radar',     label:'Stärken & Schwächen' },
+    DATA.quiz                   && { id:'toc-quiz',      label:'Klasse finden' },
+    DATA.koerperlicherMerkmale  && { id:'toc-km',        label:'Körperliche Merkmale' },
+    DATA.statblock              && { id:'toc-statblock', label:'Rassenmerkmale' },
+  ].filter(Boolean);
 
   return (
     <div className="page-root">
       {!IN_IFRAME && <SiteNav rightLabel="RASSENARCHIV" />}
-      <Hero data={DATA} />
-      <main className="rd-main">
-        {DATA.lore ? <LoreSections data={DATA} /> : <Placeholder name={DATA.name} />}
-        {sicht && <SichtSection sicht={sicht} accent={DATA.accent} />}
-        {DATA.specialSection    && <SpecialSection section={DATA.specialSection} />}
-        {DATA.charakterGenerator && <CharGen gen={DATA.charakterGenerator} />}
-        {DATA.beziehungen       && <Beziehungen items={DATA.beziehungen} />}
-        <Bekannte items={DATA.bekannte || []} />
-        {DATA.radar    && <Radar    data={DATA.radar} />}
-        {DATA.quiz     && <Quiz     data={DATA.quiz} />}
-        {DATA.statblock && <StatBlock data={DATA.statblock} />}
-        <GebaeudeLinkSection data={DATA} />
+      <div ref={heroWrapRef}>
+        <Hero data={DATA} />
+        <TabBar active={tab} onChange={switchTab} gebCount={gebRace ? gebRace.gebaeude.length : null} />
+      </div>
+
+      {tab === 'detail' && tocItems.length > 1 && <RassenTOC items={tocItems} headerBottom={headerBottom} />}
+
+      <main className="rd-main" style={{ display: tab === 'detail' ? undefined : 'none' }}>
+        <div id="toc-lore">{DATA.lore ? <LoreSections data={DATA} /> : <Placeholder name={DATA.name} />}</div>
+        {sicht     && <div id="toc-sicht">    <SichtSection sicht={sicht} accent={DATA.accent} /></div>}
+        {DATA.specialSection     && <div id="toc-special">  <SpecialSection section={DATA.specialSection} /></div>}
+        {DATA.namenSection       && <div id="toc-namen">    <SpecialSection section={DATA.namenSection} /></div>}
+        {DATA.charakterGenerator && <div id="toc-chargen">  <CharGen gen={DATA.charakterGenerator} /></div>}
+        {DATA.beziehungen        && <div id="toc-bez">      <Beziehungen items={DATA.beziehungen} /></div>}
+        <div id="toc-bekannte">    <Bekannte items={DATA.bekannte || []} /></div>
+        {DATA.radar    && <div id="toc-radar">    <Radar    data={DATA.radar} /></div>}
+        {DATA.quiz     && <div id="toc-quiz">     <Quiz     data={DATA.quiz} /></div>}
+        {DATA.koerperlicherMerkmale && <div id="toc-km"><KoerperlicherMerkmale data={DATA.koerperlicherMerkmale} /></div>}
+        {DATA.statblock && <div id="toc-statblock"><StatBlock data={DATA.statblock} onTalentClick={handleTalentClick} /></div>}
       </main>
+
+      <div style={{ display: tab === 'gebaeude' ? undefined : 'none' }}>
+        {gebRace
+          ? <GebaeudekatalogTab race={gebRace} />
+          : <div style={{ padding:'80px 48px', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.2em', color:'rgba(var(--accent-rgb),0.3)', textTransform:'uppercase' }}>Noch keine Gebäudedaten für diese Rasse.</div>
+        }
+      </div>
+      {selectedTalent && <TalentModal talent={selectedTalent} onClose={() => setSelectedTalent(null)} />}
     </div>
   );
 }

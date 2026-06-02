@@ -443,9 +443,8 @@ function EditableSkillPills({ char, upd }) {
     upd({ skills: updated });
   }
   const icon  = ['○', '◆', '◈'];
-  const iclr  = ['rgba(124,77,255,0.22)', 'rgba(124,77,255,0.75)', 'rgba(140,210,255,0.85)'];
-  const nclr  = ['rgba(124,77,255,0.35)', 'rgba(200,190,240,0.88)', 'rgba(200,190,240,0.88)'];
-  const bclr  = ['rgba(124,77,255,0.22)', 'rgba(124,77,255,0.85)', 'rgba(140,210,255,0.85)'];
+  const iclr  = ['rgba(124,77,255,0.3)', 'rgba(124,77,255,0.75)', 'rgba(140,210,255,0.85)'];
+  const bclr  = ['rgba(200,190,240,0.5)', 'rgba(124,77,255,0.85)', 'rgba(140,210,255,0.85)'];
   return (
     <Card style={{marginBottom:11}}>
       <SecTitle label="Fertigkeiten" />
@@ -460,7 +459,7 @@ function EditableSkillPills({ char, upd }) {
                 {icon[s.prof]}
               </button>
               <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".07em",
-                color:nclr[s.prof],flex:1,textTransform:"uppercase",transition:"color .12s",
+                color:"rgba(200,190,240,0.82)",flex:1,textTransform:"uppercase",transition:"color .12s",
                 overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{s.name}</span>
               <span style={{fontFamily:"var(--font-mono)",fontSize:9,color:bclr[s.prof],fontWeight:600,flexShrink:0}}>{fmtMod(bonus)}</span>
             </div>
@@ -477,9 +476,8 @@ function EditableSkillPills({ char, upd }) {
 function SkillPills({ char }) {
   const skills = mergeSkills(char);
   const icon  = ['○', '◆', '◈'];
-  const iclr  = ['rgba(124,77,255,0.22)', 'rgba(124,77,255,0.75)', 'rgba(140,210,255,0.85)'];
-  const nclr  = ['rgba(124,77,255,0.35)', 'rgba(200,190,240,0.88)', 'rgba(200,190,240,0.88)'];
-  const bclr  = ['rgba(124,77,255,0.22)', 'rgba(124,77,255,0.85)', 'rgba(140,210,255,0.85)'];
+  const iclr  = ['rgba(124,77,255,0.3)', 'rgba(124,77,255,0.75)', 'rgba(140,210,255,0.85)'];
+  const bclr  = ['rgba(200,190,240,0.5)', 'rgba(124,77,255,0.85)', 'rgba(140,210,255,0.85)'];
   return (
     <Card style={{marginBottom:11}}>
       <SecTitle label="Fertigkeiten" />
@@ -490,7 +488,7 @@ function SkillPills({ char }) {
             <div key={s.name} style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
               <span style={{color:iclr[s.prof],fontSize:12,lineHeight:1,flexShrink:0,width:16}}>{icon[s.prof]}</span>
               <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".07em",
-                color:nclr[s.prof],flex:1,textTransform:"uppercase",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{s.name}</span>
+                color:"rgba(200,190,240,0.82)",flex:1,textTransform:"uppercase",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{s.name}</span>
               <span style={{fontFamily:"var(--font-mono)",fontSize:9,color:bclr[s.prof],fontWeight:600,flexShrink:0}}>{fmtMod(bonus)}</span>
             </div>
           );
@@ -725,10 +723,18 @@ function Divider({ label }) {
 
 /* ── Meruria calendar data for birthday picker ── */
 const MONTHS_MERURIA = [
-  {name:"Janvar",days:19},{name:"Fevorn",days:18},{name:"Mareth",days:19},
-  {name:"Aprel",days:19},{name:"Mairen",days:18},{name:"Junvar",days:19},
-  {name:"Juval",days:19},{name:"Auvar",days:19},{name:"Septhar",days:19},
-  {name:"Oktar",days:18},{name:"Novren",days:18},{name:"Derath",days:19},
+  {name:"Janvar", days:19, sign:"Die Arche"},
+  {name:"Fevorn", days:18, sign:"Die Böe"},
+  {name:"Mareth", days:19, sign:"Die Wurzel"},
+  {name:"Aprel",  days:19, sign:"Die Linse"},
+  {name:"Mairen", days:18, sign:"Die Stille"},
+  {name:"Junvar", days:19, sign:"Das Irrlicht"},
+  {name:"Juval",  days:19, sign:"Die Klinge"},
+  {name:"Auvar",  days:19, sign:"Die Glut"},
+  {name:"Septhar",days:19, sign:"Die Brücke"},
+  {name:"Oktar",  days:18, sign:"Der Schleier"},
+  {name:"Novren", days:18, sign:"Das Labyrinth"},
+  {name:"Derath", days:19, sign:"Der Spalt"},
 ];
 const MONTH_START_MERURIA = MONTHS_MERURIA.reduce((acc, m, i) => {
   acc.push(i === 0 ? 1 : acc[i-1] + MONTHS_MERURIA[i-1].days); return acc;
@@ -769,12 +775,16 @@ function BirthdayPickerRow({ char, upd }) {
 
   function pickDay(monthIdx, day) {
     const newDoy = MONTH_START_MERURIA[monthIdx] + day - 1;
-    upd({ birthday: `${day}. ${MONTHS_MERURIA[monthIdx].name}`, geburtstag_doy: newDoy });
+    upd({
+      birthday: `${day}. ${MONTHS_MERURIA[monthIdx].name}`,
+      geburtstag_doy: newDoy,
+      zodiac: MONTHS_MERURIA[monthIdx].sign,
+    });
     setOpen(false);
   }
 
   function clearDate() {
-    upd({ birthday: '—', geburtstag_doy: null });
+    upd({ birthday: '—', geburtstag_doy: null, zodiac: '—' });
     setOpen(false);
   }
 
@@ -840,6 +850,205 @@ function BirthdayPickerRow({ char, upd }) {
         </div>
       )}
     </div>
+  );
+}
+
+/* ── SelectERow (generic dropdown ERow) ─── */
+function SelectERow({ label, field, char, upd, options, bright }) {
+  return (
+    <div style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase",flex:"0 0 80px"}}>{label}</span>
+      <select
+        value={char[field]||''}
+        onChange={e => upd({[field]: e.target.value})}
+        style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:bright?400:300,color:"#e8e2ff",
+          background:"#0e0c20",border:"none",borderBottom:"1px solid rgba(124,77,255,0.25)",
+          padding:"2px 4px",flex:1,outline:"none",minWidth:0,cursor:"pointer",colorScheme:"dark"}}>
+        <option value="">— wählen —</option>
+        {options.map(o => <option key={o} value={o}>{o}</option>)}
+      </select>
+    </div>
+  );
+}
+
+/* ── KlasseSelectRow ─────────────────────── */
+function KlasseSelectRow({ char, upd }) {
+  const klassen = window.KLASSEN_DATA?.klassen || [];
+  return (
+    <div style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase",flex:"0 0 80px"}}>Klasse</span>
+      <select
+        value={char.class||''}
+        onChange={e => upd({ class: e.target.value, subclass: '—' })}
+        style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:400,color:"#e8e2ff",
+          background:"#0e0c20",border:"none",borderBottom:"1px solid rgba(124,77,255,0.25)",
+          padding:"2px 4px",flex:1,outline:"none",minWidth:0,cursor:"pointer",colorScheme:"dark"}}>
+        <option value="">— wählen —</option>
+        {klassen.map(k => <option key={k.id} value={k.name}>{k.name}</option>)}
+      </select>
+    </div>
+  );
+}
+
+/* ── SubklasseSelectRow ──────────────────── */
+function SubklasseSelectRow({ char, upd }) {
+  const klassen = window.KLASSEN_DATA?.klassen || [];
+  const klasseObj = klassen.find(k => k.name === char.class);
+  const detail = klasseObj ? (window.KLASSEN_DETAIL || {})[klasseObj.id] : null;
+  const unterklassen = detail?.unterklassen || [];
+  const baseStyle = {fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:300,color:"#e8e2ff",
+    background:"#0e0c20",border:"none",borderBottom:"1px solid rgba(124,77,255,0.25)",
+    padding:"2px 4px",flex:1,outline:"none",minWidth:0};
+  return (
+    <div style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase",flex:"0 0 80px"}}>Subklasse</span>
+      {unterklassen.length > 0
+        ? <select value={char.subclass||'—'} onChange={e => upd({subclass: e.target.value})}
+            style={{...baseStyle,cursor:"pointer",colorScheme:"dark",fontWeight:300}}>
+            <option value="—">— wählen —</option>
+            {unterklassen.map(uk => <option key={uk.id} value={uk.name}>{uk.name}</option>)}
+          </select>
+        : <input value={char.subclass??''} onChange={e => upd({subclass: e.target.value})} style={baseStyle} />
+      }
+    </div>
+  );
+}
+
+/* ── RassentalentRow ─────────────────────── */
+function rassentalentOptions(race) {
+  if (!race || !window.TALENTE_DATA) return [];
+  return window.TALENTE_DATA.filter(t => {
+    if (!t.angeboren || !t.voraussetzung) return false;
+    const parts = t.voraussetzung.split(/,| oder /).map(v => v.trim()).filter(Boolean);
+    return parts.some(p => race === p || race.includes(p) || p.startsWith(race));
+  });
+}
+function RassentalentRow({ char, upd }) {
+  const opts = rassentalentOptions(char.race);
+  return (
+    <div style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase",flex:"0 0 80px"}}>Rassentalent</span>
+      {opts.length > 0
+        ? <select value={char.rassentalent||''} onChange={e => upd({rassentalent: e.target.value||null})}
+            style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:400,color:"#e8e2ff",
+              background:"#0e0c20",border:"none",borderBottom:"1px solid rgba(124,77,255,0.25)",
+              padding:"2px 4px",flex:1,outline:"none",minWidth:0,cursor:"pointer",colorScheme:"dark"}}>
+            <option value="">— keines —</option>
+            {opts.map(t => <option key={t.id} value={t.name}>{t.name}</option>)}
+          </select>
+        : <span style={{fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(124,77,255,0.25)",fontStyle:"italic"}}>
+            {char.race ? 'Keine angeborenen Talente für diese Rasse' : 'Erst Volk wählen'}
+          </span>
+      }
+    </div>
+  );
+}
+
+/* ── RassenmerkmaleCard ──────────────────── */
+function RassenmerkmaleCard({ char, upd }) {
+  const detail = (window.RASSEN_DETAIL_DATA || {})[char.race];
+  const features = detail?.statblock?.features || [];
+  const opts = rassentalentOptions(char.race);
+  if (!char.race || features.length === 0) return null;
+  const E = !!upd;
+  const selectedTalent = opts.find(t => t.name === char.rassentalent);
+
+  const rowStyle = {borderBottom:"1px solid rgba(124,77,255,0.07)",paddingBottom:8,marginBottom:8};
+  const titleStyle = {fontFamily:"var(--font-display)",fontSize:11.5,color:"rgba(200,190,240,0.9)",letterSpacing:".06em"};
+  const textStyle = {fontFamily:"var(--font-body)",fontSize:10.5,fontWeight:300,color:"rgba(200,190,240,0.52)",lineHeight:1.65,margin:"3px 0 0"};
+
+  return (
+    <Card>
+      <SecTitle label="Rassenmerkmale" />
+      <div style={{display:"flex",flexDirection:"column",gap:0}}>
+        {features.map((f, i) => {
+          const isLast = i === features.length - 1;
+          const isTalent = f.name === 'Angeborenes Talent';
+          return (
+            <div key={f.name} style={{...rowStyle, ...(isLast ? {borderBottom:"none",paddingBottom:0,marginBottom:0} : {})}}>
+              <span style={titleStyle}>{f.name}</span>
+              {isTalent ? (
+                E ? (
+                  <select value={char.rassentalent||''} onChange={e => upd({rassentalent: e.target.value||null})}
+                    style={{fontFamily:"var(--font-body)",fontSize:11,color:"#e8e2ff",display:"block",marginTop:5,
+                      background:"#0e0c20",border:"none",borderBottom:"1px solid rgba(124,77,255,0.3)",
+                      padding:"3px 4px",width:"100%",outline:"none",cursor:"pointer",colorScheme:"dark"}}>
+                    <option value="">— keines —</option>
+                    {opts.map(t => <option key={t.id} value={t.name}>{t.name}</option>)}
+                  </select>
+                ) : selectedTalent ? (
+                  <>
+                    <p style={{...textStyle,fontWeight:500,color:"rgba(200,190,240,0.75)"}}>{selectedTalent.name}</p>
+                    {(selectedTalent.vorzuege||selectedTalent.beschreibung||[]).map((v,j) => (
+                      <p key={j} style={{...textStyle,paddingLeft:8,borderLeft:"2px solid rgba(124,77,255,0.2)",marginTop:4}}>{v}</p>
+                    ))}
+                  </>
+                ) : (
+                  <p style={{...textStyle,color:"rgba(124,77,255,0.3)",fontStyle:"italic"}}>Kein Talent gewählt</p>
+                )
+              ) : (
+                <p style={textStyle}>{f.text}</p>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </Card>
+  );
+}
+
+/* ── KlassenmerkmaleCard ─────────────────── */
+function KlassenmerkmaleCard({ char }) {
+  const klassen = window.KLASSEN_DATA?.klassen || [];
+  const klasseObj = klassen.find(k => k.name === char.class);
+  if (!klasseObj) return null;
+  const detail = (window.KLASSEN_DETAIL || {})[klasseObj.id];
+  if (!detail) return null;
+
+  const merkmale = window.KLASSEN_MERKMALE || {};
+  const level = char.level || 1;
+
+  // Basisklassen-Features bis aktuellem Level
+  const activeIds = new Set();
+  (detail.stufentabelle?.zeilen || [])
+    .filter(z => z.stufe <= level)
+    .forEach(z => z.merkmaleIds.forEach(id => activeIds.add(id)));
+
+  // Subklassen-Features bis aktuellem Level
+  const unterklasseObj = (detail.unterklassen || []).find(uk => uk.name === char.subclass);
+  if (unterklasseObj) {
+    (unterklasseObj.merkmaleIds || []).forEach(id => {
+      const m = merkmale[id];
+      if (m && m.stufe <= level) activeIds.add(id);
+    });
+    // Platzhalter-Pfadmerkmal entfernen wenn Subklasse aktiv
+    activeIds.delete('barbar_pfadmerkmal');
+  }
+
+  const features = [...activeIds]
+    .map(id => merkmale[id]).filter(Boolean)
+    .sort((a, b) => a.stufe - b.stufe || a.name.localeCompare(b.name, 'de'));
+
+  if (features.length === 0) return null;
+
+  return (
+    <Card>
+      <SecTitle label="Klassenmerkmale" />
+      <div style={{display:"flex",flexDirection:"column",gap:9}}>
+        {features.map(m => (
+          <div key={m.id} style={{borderBottom:"1px solid rgba(124,77,255,0.07)",paddingBottom:8}}>
+            <div style={{display:"flex",alignItems:"baseline",gap:7,marginBottom:3,flexWrap:"wrap"}}>
+              <span style={{fontFamily:"var(--font-display)",fontSize:11.5,color:"rgba(200,190,240,0.9)",letterSpacing:".06em"}}>{m.name}</span>
+              {m.optional && <span style={{fontFamily:"var(--font-mono)",fontSize:7,color:"rgba(124,77,255,0.5)",border:"1px solid rgba(124,77,255,0.3)",padding:"0 4px",borderRadius:2}}>Optional</span>}
+              <span style={{fontFamily:"var(--font-mono)",fontSize:7,color:"rgba(124,77,255,0.35)",letterSpacing:".1em"}}>Stufe {m.stufe}</span>
+            </div>
+            <p style={{fontFamily:"var(--font-body)",fontSize:10.5,fontWeight:300,color:"rgba(200,190,240,0.52)",lineHeight:1.65,margin:0}}>
+              {(m.beschreibung?.[0] || '').slice(0, 200)}{(m.beschreibung?.[0]||'').length > 200 ? '…' : ''}
+            </p>
+          </div>
+        ))}
+      </div>
+    </Card>
   );
 }
 
@@ -909,7 +1118,7 @@ function EditablePersonality({ char, upd, taStyle }) {
    ─────────────────────────────────────────────────────────── */
 const STECKBRIEF_TWEAK_DEFAULTS = {showZauber:true,showCompanions:true,showQuests:true,showKontakte:true,showWissenswertes:true};
 
-function SteckbriefView({ char: charProp = null, entry = null, onBack = null, hasMultiple = false }) {
+function SteckbriefView({ char: charProp = null, entry = null, onBack = null, hasMultiple = false, hideNav = false, extraTopPadding = 0 }) {
   const canEdit = !!entry;
   const [char, setChar]     = useSteckbrief(() => entry ? charFromEntry(entry) : (charProp || {}));
   const [editing, setEditing] = useSteckbrief(false);
@@ -945,8 +1154,8 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
   const ZauberSect = window.ZauberSection;
 
   return (
-    <div style={{minHeight:"100vh",paddingTop:"var(--nav-h)"}}>
-      {SiteNav && <SiteNav />}
+    <div style={{minHeight:"100vh",paddingTop: hideNav ? 0 : "var(--nav-h)"}}>
+      {!hideNav && SiteNav && <SiteNav />}
 
       {TweaksPanel && (
         <TweaksPanel tweaks={tweaks} setTweak={setTweak}>
@@ -1033,12 +1242,12 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
           <Card>
             <SecTitle label="Identität" />
             {E ? <>
-              <ERow label="Volk"        field="race"       char={char} upd={upd} bright />
-              <ERow label="Klasse"      field="class"      char={char} upd={upd} bright />
-              <ERow label="Subklasse"   field="subclass"   char={char} upd={upd} />
-              <ERow label="Hintergrund" field="background" char={char} upd={upd} />
-              <ERow label="Gesinnung"   field="alignment"  char={char} upd={upd} bright />
-              <ERow label="Geschlecht"  field="gender"     char={char} upd={upd} />
+              <SelectERow label="Volk"        field="race"       char={char} upd={upd} bright options={(window.RASSEN_DATA||[]).flatMap(r=>r.type==='group'?(r.subraces||[]).map(s=>s.name):[r.name]).sort((a,b)=>a.localeCompare(b,'de'))} />
+              <KlasseSelectRow char={char} upd={upd} />
+              <SubklasseSelectRow char={char} upd={upd} />
+              <SelectERow label="Hintergrund" field="background" char={char} upd={upd} options={window.ALLE_HINTERGRUENDE||[]} />
+              <SelectERow label="Gesinnung" field="alignment" char={char} upd={upd} bright options={["Rechtschaffen gut","Neutral gut","Chaotisch gut","Rechtschaffen neutral","Neutral","Chaotisch neutral","Rechtschaffen böse","Neutral böse","Chaotisch böse","Gesinnungslos"]} />
+              <SelectERow label="Geschlecht"  field="gender"     char={char} upd={upd} options={["männlich","weiblich","divers","keine Angabe"]} />
               <ERow label="Herkunft"    field="birthplace" char={char} upd={upd} />
             </> : <>
               <IRow label="Volk"        value={char.race}       bright />
@@ -1054,7 +1263,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
             <SecTitle label="Persönliche Daten" />
             {E ? <>
               <BirthdayPickerRow char={char} upd={upd} />
-              <ERow label="Sternzeichen" field="zodiac"   char={char} upd={upd} bright />
+              <IRow label="Sternzeichen" value={char.zodiac || '—'} bright />
               <ERow label="Alter"        field="age"      char={char} upd={upd} />
               <ERow label="Größe"        field="height"   char={char} upd={upd} />
               <ERow label="Gewicht"      field="weight"   char={char} upd={upd} />
@@ -1075,10 +1284,6 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
           {E ? <EditableDivisionRank char={char} upd={upd} /> : <DivisionRank char={char} />}
           {E ? <EditableDeityCard char={char} upd={upd} /> : <DeityCard char={char} />}
           {E ? <EditableCombatCompact char={char} upd={upd} /> : <CombatCompact char={char} />}
-        </div>
-
-        {/* MITTE */}
-        <div style={{display:"flex",flexDirection:"column",gap:11}}>
           <Card style={{position:"relative"}}>
             <Corners op={0.28} />
             <SecTitle label="Über mich" />
@@ -1087,17 +1292,14 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
               : <p style={{fontFamily:"var(--font-body)",fontSize:13,fontWeight:300,color:"var(--silver)",lineHeight:1.9,textWrap:"pretty"}}>{char.story}</p>
             }
           </Card>
-          <div style={{background:"var(--card-bg)",borderLeft:"2px solid rgba(124,77,255,0.5)",
-            border:"1px solid rgba(124,77,255,0.2)",borderLeftWidth:3,
-            borderRadius:"0 4px 4px 0",padding:"13px 14px",position:"relative"}}>
-            <SecTitle label="Meine ersten Tage auf Meruria" />
-            {E
-              ? <textarea value={char.ersteTage||''} onChange={e=>upd({ersteTage:e.target.value})} style={{...taStyle,fontStyle:"italic"}} />
-              : <p style={{fontFamily:"var(--font-body)",fontSize:12.5,fontWeight:300,color:"var(--silver)",lineHeight:1.88,textWrap:"pretty",fontStyle:"italic"}}>„{char.ersteTage}"</p>
-            }
-          </div>
+        </div>
+
+        {/* MITTE */}
+        <div style={{display:"flex",flexDirection:"column",gap:11}}>
           {E ? <EditableStatsGrid char={char} updStat={updStat} /> : <AttributeGrid char={char} />}
           {E ? <EditableSkillPills char={char} upd={upd} /> : <SkillPills char={char} />}
+          <KlassenmerkmaleCard char={char} />
+          <RassenmerkmaleCard char={char} upd={E ? upd : null} />
           {tweaks.showCompanions && char.companions && char.companions.length > 0 && (
             <div>
               <div style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".28em",color:"rgba(124,77,255,0.45)",textTransform:"uppercase",marginBottom:8}}>Begleiter</div>
@@ -1126,15 +1328,22 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
             }
           </div>
           {E ? <EditablePersonality char={char} upd={upd} taStyle={taStyle} /> : <PersonalitySection char={char} />}
+          <div style={{background:"var(--card-bg)",borderLeft:"2px solid rgba(124,77,255,0.5)",
+            border:"1px solid rgba(124,77,255,0.2)",borderLeftWidth:3,
+            borderRadius:"0 4px 4px 0",padding:"13px 14px",position:"relative"}}>
+            <SecTitle label="Meine ersten Tage auf Meruria" />
+            {E
+              ? <textarea value={char.ersteTage||''} onChange={e=>upd({ersteTage:e.target.value})} style={{...taStyle,fontStyle:"italic"}} />
+              : <p style={{fontFamily:"var(--font-body)",fontSize:12.5,fontWeight:300,color:"var(--silver)",lineHeight:1.88,textWrap:"pretty",fontStyle:"italic"}}>„{char.ersteTage}"</p>
+            }
+          </div>
+          {canEdit && ZauberSect && tweaks.showZauber && (
+            <Card>
+              <ZauberSect zauber={zauber} updZauber={updZauber} editing={E} />
+            </Card>
+          )}
         </div>
       </div>
-
-      {/* ── Zauber (nur Edit-Modus, nur wenn ZauberSection verfügbar) ── */}
-      {canEdit && ZauberSect && tweaks.showZauber && (
-        <div style={{padding:"22px 22px 8px"}}>
-          <ZauberSect zauber={zauber} updZauber={updZauber} editing={E} />
-        </div>
-      )}
 
       {/* ── Quests ── */}
       {tweaks.showQuests && char.quests && char.quests.length > 0 && (

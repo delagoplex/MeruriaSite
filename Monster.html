@@ -1897,6 +1897,7 @@ function MonsterDetail({
   }, /*#__PURE__*/React.createElement("img", {
     src: imgSrc,
     alt: monster.name,
+    loading: "lazy",
     onClick: () => setImgOpen(true),
     style: {
       width: '100%',
@@ -2441,6 +2442,7 @@ function MonsterDetail({
   }, /*#__PURE__*/React.createElement("img", {
     src: imgSrc,
     alt: monster.name,
+    loading: "eager",
     onClick: e => e.stopPropagation(),
     style: {
       maxWidth: '90vw',

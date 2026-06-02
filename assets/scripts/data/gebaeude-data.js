@@ -2,7 +2,7 @@ window.RASSEN_INDEX = [
   { type:'race',  name:'Aarakocra' },
   { type:'race',  name:'Aasimar' },
   { type:'race',  name:'Autognome' },
-  { type:'race',  name:'Bearfolk' },
+  { type:'race',  name:'Bärenvolk' },
   { type:'race',  name:'Cnidaran' },
   { type:'race',  name:'Darakhul' },
   { type:'race',  name:'Dhampire' },
@@ -36,26 +36,26 @@ window.RASSEN_INDEX = [
   { type:'race',  name:'Loxodon' },
   { type:'race',  name:'Locathah' },
   { type:'race',  name:'Lotol' },
-  { type:'race',  name:'Mandrake' },
+  { type:'race',  name:'Alraunen' },
   { type:'race',  name:'Menschen' },
   { type:'race',  name:'Minotauren' },
-  { type:'race',  name:'Mycelian' },
-  { type:'race',  name:'Oozekin' },
+  { type:'race',  name:'Myzelier' },
+  { type:'race',  name:'Schleimling' },
   { type:'race',  name:'Opteran' },
   { type:'race',  name:'Orks' },
-  { type:'race',  name:'Owlin' },
+  { type:'race',  name:'Eulenleute' },
   { type:'race',  name:'Plasmoid' },
   { type:'race',  name:'Ratatosk' },
   { type:'race',  name:'Sahuagin' },
   { type:'race',  name:'Satarre' },
   { type:'race',  name:'Satyrn' },
-  { type:'race',  name:'Shadow Goblin' },
+  { type:'race',  name:'Schattengoblin' },
   { type:'race',  name:'Tabaxi' },
   { type:'race',  name:'Thri-Kreen' },
   { type:'race',  name:'Tieflinge' },
   { type:'race',  name:'Tortels' },
   { type:'race',  name:'Tritons' },
-  { type:'race',  name:'Umbral Human' },
+  { type:'race',  name:'Schattenmenschen' },
   { type:'race',  name:'Wandler' },
   { type:'race',  name:'Warforged' },
   { type:'race',  name:'Wechselbälger' },
@@ -2319,7 +2319,7 @@ window.GEBAEUDE_RASSEN = [
     ]
   },
   {
-    "name": "Bearfolk",
+    "name": "Bärenvolk",
     "uebergruppe": null,
     "tagline": "",
     "quote": "Wir sind freundlich. Wir sind geduldig. Wir sind sehr, sehr groß. Vergiss das nicht.",
@@ -2327,7 +2327,7 @@ window.GEBAEUDE_RASSEN = [
     "habitat": {
       "terrainPraeferenz": "Wälder, Gebirge, gemäßigte Zonen",
       "bauweise": "",
-      "wohnpraeferenz": "Bearfolk sind große Bärenmenschen – gutmütig aber massiv",
+      "wohnpraeferenz": "Bärenvolk sind große Bärenmenschen – gutmütig aber massiv",
       "pflichtgebaeude": [
         "Bärenkantine",
         "Wintervorrat",
@@ -2356,7 +2356,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Wohnen",
         "phase": "P1",
         "groesse": "Groß",
-        "fuer": "1 Bearfolk",
+        "fuer": "1 Bärenvolk",
         "zimmer": [
           "1 großes Schlaflager (Fell auf Stein)",
           "1 Feuerstelle",
@@ -2382,7 +2382,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "2 Tage",
         "wb": "Unterkunft +2 (Natürlichkeit = Heimat) Winterschlaf-Bonus: +2 HP Reg. pro Ruhetag im Winter",
-        "dm": "Bearfolk schlafen tief – im Winter manchmal sehr tief. Ein Bearfolk der aus dem Winterschlaf geweckt wird ist zunächst verwirrt und dann sehr hungrig."
+        "dm": "Bärenvolk schlafen tief – im Winter manchmal sehr tief. Ein Bärenvolk der aus dem Winterschlaf geweckt wird ist zunächst verwirrt und dann sehr hungrig."
       },
       {
         "name": "Paarhöhle",
@@ -2390,7 +2390,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Wohnen",
         "phase": "P1",
         "groesse": "Sehr Groß",
-        "fuer": "2 Bearfolk",
+        "fuer": "2 Bärenvolk",
         "zimmer": [
           "1 gemeinsames Schlaflager (riesig)",
           "1 Feuerstelle",
@@ -2416,7 +2416,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "3 Tage",
         "wb": "Unterkunft +2 für beide, Gemeinschaft +1",
-        "dm": "Bearfolk-Paare teilen alles – inklusive Winterschlaf Sie reden wenig aber bedeutungsvoll. Eine Szene wo zwei Bearfolk schweigend zusammen Honig essen ist bezaubernd und sagt alles."
+        "dm": "Bärenvolk-Paare teilen alles – inklusive Winterschlaf Sie reden wenig aber bedeutungsvoll. Eine Szene wo zwei Bärenvolk schweigend zusammen Honig essen ist bezaubernd und sagt alles."
       },
       {
         "name": "Familienhöhle",
@@ -2455,7 +2455,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "4 Tage",
         "wb": "Unterkunft +2 (alle), Gemeinschaft +2",
-        "dm": "Bearfolk-Jungtiere sind überraschend verspielt. Ein Jungtier das auf Spieler einschlägt (Spiel!) kann trotzdem 2d6 Schaden machen. Aus Versehen."
+        "dm": "Bärenvolk-Jungtiere sind überraschend verspielt. Ein Jungtier das auf Spieler einschlägt (Spiel!) kann trotzdem 2d6 Schaden machen. Aus Versehen."
       },
       {
         "name": "Rudelhöhle (klein)",
@@ -2463,7 +2463,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Wohnen",
         "phase": "P1",
         "groesse": "Sehr Groß",
-        "fuer": "3–8 Bearfolk",
+        "fuer": "3–8 Bärenvolk",
         "zimmer": [
           "Individuelle Schlaflager in einer großen Höhle",
           "2 Feuerstellen",
@@ -2489,7 +2489,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "5 Tage",
         "wb": "Unterkunft +2, Gemeinschaft +2 (Rudel-Wärme)",
-        "dm": "Bearfolk-Rudelgeschichten werden abends erzählt. Spieler die dazukommen werden immer eingeladen. Honig ist die Währung der Freundschaft."
+        "dm": "Bärenvolk-Rudelgeschichten werden abends erzählt. Spieler die dazukommen werden immer eingeladen. Honig ist die Währung der Freundschaft."
       },
       {
         "name": "Rudelhöhle (gross)",
@@ -2497,7 +2497,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Wohnen",
         "phase": "P1",
         "groesse": "Monumental",
-        "fuer": "9–20 Bearfolk",
+        "fuer": "9–20 Bärenvolk",
         "zimmer": [
           "Weitverzweigte Höhle mit Schlafbereichen",
           "1 Ältesten-Sektion (tiefster, wärmster Raum)",
@@ -2532,7 +2532,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P1",
         "groesse": "Sehr Groß",
-        "beschreibung": "Sehr große Halle mit massiven Tischen und gewaltigen Portionen. Bearfolk essen viel – und gern mit Fremden. Einladung ist Ehrensache.",
+        "beschreibung": "Sehr große Halle mit massiven Tischen und gewaltigen Portionen. Bärenvolk essen viel – und gern mit Fremden. Einladung ist Ehrensache.",
         "kosten": [
           {
             "q": "32×",
@@ -2565,7 +2565,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P1",
         "groesse": "Groß",
-        "beschreibung": "Riesiges Lager für den Winter. Bearfolk fressen sich im Herbst voll – und legen einen Vorrat an. Ohne dieses Lager ist der Winter lebensgefährlich.",
+        "beschreibung": "Riesiges Lager für den Winter. Bärenvolk fressen sich im Herbst voll – und legen einen Vorrat an. Ohne dieses Lager ist der Winter lebensgefährlich.",
         "kosten": [
           {
             "q": "26×",
@@ -2598,7 +2598,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P1",
         "groesse": "Groß",
-        "beschreibung": "Große flache Felsen im Kreis wo Bearfolk sitzen und reden. Langwierig, geduldig, gründlich. Bearfolk-Entscheidungen stehen dann für immer.",
+        "beschreibung": "Große flache Felsen im Kreis wo Bärenvolk sitzen und reden. Langwierig, geduldig, gründlich. Bärenvolk-Entscheidungen stehen dann für immer.",
         "kosten": [
           {
             "q": "22×",
@@ -2627,7 +2627,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P2",
         "groesse": "Mittel",
-        "beschreibung": "Honigverarbeitung zu Met, Heilsalbe und Klebstoff. Bearfolk-Honig ist der beste weit und breit – sie haben die Bienen auf ihrer Seite.",
+        "beschreibung": "Honigverarbeitung zu Met, Heilsalbe und Klebstoff. Bärenvolk-Honig ist der beste weit und breit – sie haben die Bienen auf ihrer Seite.",
         "kosten": [
           {
             "q": "20×",
@@ -2659,7 +2659,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P2",
         "groesse": "Mittel",
-        "beschreibung": "Bearfolk-Heiler nutzen Honig, Kräuter und ihr tiefes Naturwissen. Ihre Wunden heilen durch Ruhe, Wärme und viel Essen.",
+        "beschreibung": "Bärenvolk-Heiler nutzen Honig, Kräuter und ihr tiefes Naturwissen. Ihre Wunden heilen durch Ruhe, Wärme und viel Essen.",
         "kosten": [
           {
             "q": "20×",
@@ -2691,7 +2691,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P2",
         "groesse": "Groß",
-        "beschreibung": "Uralter Baum oder Felsen den Bearfolk als heilig betrachten. Einfach, groß, ehrwürdig. Kein Dekor – die Natur selbst ist der Schrein.",
+        "beschreibung": "Uralter Baum oder Felsen den Bärenvolk als heilig betrachten. Einfach, groß, ehrwürdig. Kein Dekor – die Natur selbst ist der Schrein.",
         "kosten": [
           {
             "q": "24×",
@@ -2725,7 +2725,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Habitat",
         "phase": "P1",
         "groesse": "Monumental",
-        "beschreibung": "Markierter Wald als Jagdgebiet. Bearfolk jagen allein und schweigend – und sie jagen gut. Pflichtfundament ihrer Kolonie.",
+        "beschreibung": "Markierter Wald als Jagdgebiet. Bärenvolk jagen allein und schweigend – und sie jagen gut. Pflichtfundament ihrer Kolonie.",
         "kosten": [
           {
             "q": "36×",
@@ -2758,7 +2758,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Militär",
         "phase": "P1",
         "groesse": "Groß",
-        "beschreibung": "Massive Felsbrocken als Verteidigungswall. Bearfolk heben die Steine selbst – kein Werkzeug nötig. Schlicht und unüberwindbar.",
+        "beschreibung": "Massive Felsbrocken als Verteidigungswall. Bärenvolk heben die Steine selbst – kein Werkzeug nötig. Schlicht und unüberwindbar.",
         "kosten": [
           {
             "q": "60×",
@@ -2785,7 +2785,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Handel",
         "phase": "P2",
         "groesse": "Groß",
-        "beschreibung": "Offener Platz für Fell, Honig, Met und Fleisch. Bearfolk sind faire Händler – und ihre Körpergröße ist ein natürliches Verkaufsargument.",
+        "beschreibung": "Offener Platz für Fell, Honig, Met und Fleisch. Bärenvolk sind faire Händler – und ihre Körpergröße ist ein natürliches Verkaufsargument.",
         "kosten": [
           {
             "q": "26×",
@@ -2817,7 +2817,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Nahrung",
         "phase": "P2",
         "groesse": "Groß",
-        "beschreibung": "Kultivierter Bienenbereich mit Körben und Blütenwiesen. Die Bienen und Bearfolk respektieren sich gegenseitig. Es funktioniert.",
+        "beschreibung": "Kultivierter Bienenbereich mit Körben und Blütenwiesen. Die Bienen und Bärenvolk respektieren sich gegenseitig. Es funktioniert.",
         "kosten": [
           {
             "q": "28×",
@@ -2849,7 +2849,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Militär",
         "phase": "P2",
         "groesse": "Groß",
-        "beschreibung": "Lager für Bearfolk-Krieger. Keine Rüstung – ihr Fell ist Rüstung. Keine Schilde – ihre Arme sind Schilde. Massiv und fast unzerstörbar.",
+        "beschreibung": "Lager für Bärenvolk-Krieger. Keine Rüstung – ihr Fell ist Rüstung. Keine Schilde – ihre Arme sind Schilde. Massiv und fast unzerstörbar.",
         "kosten": [
           {
             "q": "36×",
@@ -2881,7 +2881,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Wissen",
         "phase": "P3",
         "groesse": "Groß",
-        "beschreibung": "Bearfolk-Wissen wird oral weitergegeben – von den Ältesten zu den Jungen beim Feuer. Dieses Archiv hält das Wissen für immer lebendig.",
+        "beschreibung": "Bärenvolk-Wissen wird oral weitergegeben – von den Ältesten zu den Jungen beim Feuer. Dieses Archiv hält das Wissen für immer lebendig.",
         "kosten": [
           {
             "q": "36×",
@@ -2918,7 +2918,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Militär",
         "phase": "P3",
         "groesse": "Monumental",
-        "beschreibung": "Massive Felsburg – Bearfolk haben sie buchstäblich mit bloßen Händen gebaut. Niemand nimmt eine Felsburg ein wenn Bearfolk sie verteidigen.",
+        "beschreibung": "Massive Felsburg – Bärenvolk haben sie buchstäblich mit bloßen Händen gebaut. Niemand nimmt eine Felsburg ein wenn Bärenvolk sie verteidigen.",
         "kosten": [
           {
             "q": "120×",
@@ -2940,7 +2940,7 @@ window.GEBAEUDE_RASSEN = [
         "bauzeit": "22 Tage",
         "effekt": [
           "Verteidigung WB +5.",
-          "Bearfolk: +2 auf alle Würfe in der Heimat.",
+          "Bärenvolk: +2 auf alle Würfe in der Heimat.",
           "Angreifer: –2 auf alle Würfe (Einschüchterung)."
         ],
         "schaltetFrei": "Uralte Höhle (P4)."
@@ -2951,7 +2951,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Handel",
         "phase": "P4",
         "groesse": "Monumental",
-        "beschreibung": "Riesiger Waldmarkt mit Bearfolk-Produkten: Honig, Met, Fell, Leder und frisches Wildbret. Besucher fühlen sich ein bisschen nervös – und kommen trotzdem immer wieder.",
+        "beschreibung": "Riesiger Waldmarkt mit Bärenvolk-Produkten: Honig, Met, Fell, Leder und frisches Wildbret. Besucher fühlen sich ein bisschen nervös – und kommen trotzdem immer wieder.",
         "kosten": [
           {
             "q": "65×",
@@ -3015,13 +3015,13 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "42 Tage",
         "effekt": [
-          "Bearfolk erhalten Vertreter im Stadtrat Merurias.",
-          "Alle Bearfolk-Kolonisten: +1 auf alle Würfe.",
+          "Bärenvolk erhalten Vertreter im Stadtrat Merurias.",
+          "Alle Bärenvolk-Kolonisten: +1 auf alle Würfe.",
           "Alle WB-Werte der Kolonie: +1.",
-          "Uralter Segen: Bearfolk können 1×/Kampagne",
+          "Uralter Segen: Bärenvolk können 1×/Kampagne",
           "Winterschlaf-Heilung nutzen (volle HP nach 7 Tagen)."
         ],
-        "schaltetFrei": "— (Endgebäude der Bearfolk-Kolonie)",
+        "schaltetFrei": "— (Endgebäude der Bärenvolk-Kolonie)",
         "endgebaeude": true
       }
     ]
@@ -27371,7 +27371,7 @@ window.GEBAEUDE_RASSEN = [
     ]
   },
   {
-    "name": "Mandrake",
+    "name": "Alraunen",
     "uebergruppe": null,
     "tagline": "",
     "quote": "Wir haben Wurzeln. Buchstäblich. Und wir lassen nicht los.",
@@ -27379,7 +27379,7 @@ window.GEBAEUDE_RASSEN = [
     "habitat": {
       "terrainPraeferenz": "Wälder, Gärten, fruchtbares Farmland",
       "bauweise": "",
-      "wohnpraeferenz": "Mandrake sind pflanzliche Humanoide – sie brauchen Erde und Sonne",
+      "wohnpraeferenz": "Alraunen sind pflanzliche Humanoide – sie brauchen Erde und Sonne",
       "pflichtgebaeude": [
         "Hainkantine",
         "Nährstofflager",
@@ -27408,7 +27408,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Wohnen",
         "phase": "P1",
         "groesse": "Klein",
-        "fuer": "1 Mandrake",
+        "fuer": "1 Alraunen",
         "zimmer": [
           "1 Erdschlafnische (Wurzeln vergraben sich)",
           "1 Sonnenöffnung (Photosynthese-Platz)",
@@ -27434,7 +27434,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "1–2 Tage",
         "wb": "Unterkunft +2 (Erde und Sonne = alles) Malus –2 wenn kein Erdkontakt möglich",
-        "dm": "Mandrake schlafen mit eingewurzelten Füßen. Besucher die sie wecken müssen sollten wissen: Das dauert. Und sie sind danach mürrisch."
+        "dm": "Alraunen schlafen mit eingewurzelten Füßen. Besucher die sie wecken müssen sollten wissen: Das dauert. Und sie sind danach mürrisch."
       },
       {
         "name": "Paarwurzelkammer",
@@ -27442,7 +27442,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Wohnen",
         "phase": "P1",
         "groesse": "Klein",
-        "fuer": "2 Mandrake",
+        "fuer": "2 Alraunen",
         "zimmer": [
           "2 nebeneinanderliegende Erdnischen",
           "1 gemeinsame Sonnenplattform",
@@ -27468,7 +27468,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "2 Tage",
         "wb": "Unterkunft +2, Gemeinschaft +1 (Wurzeln verflechten) Wurzel-Bond: +1 auf Rettungswürfe wenn Partner nahe",
-        "dm": "Mandrake-Paare deren Wurzeln sich verflechten spüren die Emotionen des anderen. Das macht Heimlichkeiten schwierig – und Vertrauen tief."
+        "dm": "Alraunen-Paare deren Wurzeln sich verflechten spüren die Emotionen des anderen. Das macht Heimlichkeiten schwierig – und Vertrauen tief."
       },
       {
         "name": "Familienhain",
@@ -27507,7 +27507,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "3 Tage",
         "wb": "Unterkunft +2 (alle), Gemeinschaft +1",
-        "dm": "Mandrake-Schösslinge sehen aus wie Kinder aus Holz und Blättern. Sie keimen jedes Frühjahr. Spieler die einem beim Wachsen zusehen, schmelzen."
+        "dm": "Alraunen-Schösslinge sehen aus wie Kinder aus Holz und Blättern. Sie keimen jedes Frühjahr. Spieler die einem beim Wachsen zusehen, schmelzen."
       },
       {
         "name": "Gemeinschaftshain (klein)",
@@ -27515,7 +27515,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Wohnen",
         "phase": "P1",
         "groesse": "Groß",
-        "fuer": "3–8 Mandrake",
+        "fuer": "3–8 Alraunen",
         "zimmer": [
           "Individuelle Erdnischen im Kreis",
           "1 gemeinsame Sonnenlichtung",
@@ -27541,7 +27541,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "4 Tage",
         "wb": "Unterkunft +1, Gemeinschaft +2 (Wurzelnetz verbindet)",
-        "dm": "Im Gemeinschaftshain kommunizieren Mandrake durch Wurzelschwingungen. Fremde spüren es als leises Summen unter den Füßen."
+        "dm": "Im Gemeinschaftshain kommunizieren Alraunen durch Wurzelschwingungen. Fremde spüren es als leises Summen unter den Füßen."
       },
       {
         "name": "Gemeinschaftshain (gross)",
@@ -27549,7 +27549,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Wohnen",
         "phase": "P1",
         "groesse": "Monumental",
-        "fuer": "9–20 Mandrake",
+        "fuer": "9–20 Alraunen",
         "zimmer": [
           "Weitläufige Erdnischen-Anlage",
           "2 Sonnenlichtungen",
@@ -27584,7 +27584,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P1",
         "groesse": "Groß",
-        "beschreibung": "Offene Lichtung wo Mandrake gemeinsam Photosynthese betreiben und Nährstoffe aufnehmen. Gespräche, Geschichten und gemeinsames Wachsen.",
+        "beschreibung": "Offene Lichtung wo Alraunen gemeinsam Photosynthese betreiben und Nährstoffe aufnehmen. Gespräche, Geschichten und gemeinsames Wachsen.",
         "kosten": [
           {
             "q": "20×",
@@ -27617,7 +27617,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P1",
         "groesse": "Mittel",
-        "beschreibung": "Nährstoffreiche Kompostlager und Bewässerungs- systeme. Mandrake brauchen Nährstoffe wie andere Rassen Nahrung. Pflichtlager.",
+        "beschreibung": "Nährstoffreiche Kompostlager und Bewässerungs- systeme. Alraunen brauchen Nährstoffe wie andere Rassen Nahrung. Pflichtlager.",
         "kosten": [
           {
             "q": "16×",
@@ -27650,7 +27650,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P1",
         "groesse": "Groß",
-        "beschreibung": "Hain wo alte Mandrake sich mit eingewurzelten Füßen zusammensetzen und durch das Wurzelnetz debattieren. Entscheidungen kommen langsam – aber sie halten.",
+        "beschreibung": "Hain wo alte Alraunen sich mit eingewurzelten Füßen zusammensetzen und durch das Wurzelnetz debattieren. Entscheidungen kommen langsam – aber sie halten.",
         "kosten": [
           {
             "q": "18×",
@@ -27679,7 +27679,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P2",
         "groesse": "Mittel",
-        "beschreibung": "Mandrake sind wandelnde Kräuterkundige. Hier werden Heiltränke, Gifte und seltene Essenzen aus Pflanzen destilliert.",
+        "beschreibung": "Alraunen sind wandelnde Kräuterkundige. Hier werden Heiltränke, Gifte und seltene Essenzen aus Pflanzen destilliert.",
         "kosten": [
           {
             "q": "20×",
@@ -27711,7 +27711,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P2",
         "groesse": "Groß",
-        "beschreibung": "Ein Garten voller Heilpflanzen der Mandrake und andere Rassen heilt. Das Beste der Mandrake- Heilkunst wächst hier buchstäblich aus der Erde.",
+        "beschreibung": "Ein Garten voller Heilpflanzen der Alraunen und andere Rassen heilt. Das Beste der Alraunen- Heilkunst wächst hier buchstäblich aus der Erde.",
         "kosten": [
           {
             "q": "24×",
@@ -27743,7 +27743,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P2",
         "groesse": "Mittel",
-        "beschreibung": "Heiliger Steinkreis mit uralten Bäumen. Mandrake beten zur Erde, zum Wachstum und zur ewigen Erneuerung des Lebens.",
+        "beschreibung": "Heiliger Steinkreis mit uralten Bäumen. Alraunen beten zur Erde, zum Wachstum und zur ewigen Erneuerung des Lebens.",
         "kosten": [
           {
             "q": "22×",
@@ -27777,7 +27777,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Habitat",
         "phase": "P1",
         "groesse": "Monumental",
-        "beschreibung": "Unterirdisches Wurzelnetz verbindet die ganze Kolonie. Mandrake kommunizieren dadurch, fühlen Eindringlinge und teilen Nährstoffe. Pflichtfundament ihrer Existenz.",
+        "beschreibung": "Unterirdisches Wurzelnetz verbindet die ganze Kolonie. Alraunen kommunizieren dadurch, fühlen Eindringlinge und teilen Nährstoffe. Pflichtfundament ihrer Existenz.",
         "kosten": [
           {
             "q": "40×",
@@ -27842,7 +27842,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Handel",
         "phase": "P2",
         "groesse": "Mittel",
-        "beschreibung": "Grüner Markt mit frischen Kräutern, Heiltränken, seltenen Pflanzen und Mandrake-Essenzen. Das begehrteste Naturwarenhandel Merurias.",
+        "beschreibung": "Grüner Markt mit frischen Kräutern, Heiltränken, seltenen Pflanzen und Alraunen-Essenzen. Das begehrteste Naturwarenhandel Merurias.",
         "kosten": [
           {
             "q": "24×",
@@ -27906,7 +27906,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Militär",
         "phase": "P2",
         "groesse": "Groß",
-        "beschreibung": "Lebendiges Fort aus Dornen, Rankpflanzen und Giftgewächsen. Mandrake-Krieger kämpfen aus dem Dickicht heraus – unsichtbar und tödlich.",
+        "beschreibung": "Lebendiges Fort aus Dornen, Rankpflanzen und Giftgewächsen. Alraunen-Krieger kämpfen aus dem Dickicht heraus – unsichtbar und tödlich.",
         "kosten": [
           {
             "q": "36×",
@@ -27928,7 +27928,7 @@ window.GEBAEUDE_RASSEN = [
         "bauzeit": "6 Tage",
         "effekt": [
           "Verteidigung WB +2.",
-          "Mandrake im Dickicht: +2 auf Heimlichkeit."
+          "Alraunen im Dickicht: +2 auf Heimlichkeit."
         ],
         "schaltetFrei": "Dornenbastion (P3)."
       },
@@ -27938,7 +27938,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Wissen",
         "phase": "P3",
         "groesse": "Groß",
-        "beschreibung": "Uralte Bäume deren Wurzeln Jahrhunderte an Wissen gespeichert haben. Mandrake-Weise lesen die Ringe wie Bücher.",
+        "beschreibung": "Uralte Bäume deren Wurzeln Jahrhunderte an Wissen gespeichert haben. Alraunen-Weise lesen die Ringe wie Bücher.",
         "kosten": [
           {
             "q": "40×",
@@ -28035,7 +28035,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Zentrum",
         "phase": "P4",
         "groesse": "Monumental",
-        "beschreibung": "Ein Hain uralter heiliger Bäume dessen Wurzeln tiefer reichen als die Geschichte Merurias. Hier schlägt das Herz der Mandrake-Kolonie.",
+        "beschreibung": "Ein Hain uralter heiliger Bäume dessen Wurzeln tiefer reichen als die Geschichte Merurias. Hier schlägt das Herz der Alraunen-Kolonie.",
         "voraussetzung": "Altes Wachstum + Dornenbastion + Großer Naturmarkt müssen fertiggestellt sein.",
         "kosten": [
           {
@@ -28066,13 +28066,13 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "45 Tage",
         "effekt": [
-          "Mandrake erhalten Vertreter im Stadtrat Merurias.",
-          "Alle Mandrake-Kolonisten: +1 auf alle Würfe.",
+          "Alraunen erhalten Vertreter im Stadtrat Merurias.",
+          "Alle Alraunen-Kolonisten: +1 auf alle Würfe.",
           "Alle WB-Werte der Kolonie: +1.",
           "Uralte Stimme: 1×/Monat Rat vom Hain erhalten",
           "(DM gibt Prophezeiung oder Hinweis)."
         ],
-        "schaltetFrei": "— (Endgebäude der Mandrake-Kolonie)",
+        "schaltetFrei": "— (Endgebäude der Alraunen-Kolonie)",
         "endgebaeude": true
       }
     ]
@@ -29444,7 +29444,7 @@ window.GEBAEUDE_RASSEN = [
     ]
   },
   {
-    "name": "Mycelian",
+    "name": "Myzelier",
     "uebergruppe": null,
     "tagline": "",
     "quote": "Alles ist verbunden. Durch uns. Wir sind das Netz unter der Erde.",
@@ -29452,7 +29452,7 @@ window.GEBAEUDE_RASSEN = [
     "habitat": {
       "terrainPraeferenz": "Wälder, Höhlen, feuchte Täler",
       "bauweise": "",
-      "wohnpraeferenz": "Mycelian sind pilzartige Humanoide mit Myzel-Verbindung",
+      "wohnpraeferenz": "Myzelier sind pilzartige Humanoide mit Myzel-Verbindung",
       "pflichtgebaeude": [
         "Sporenküche",
         "Myzel-Vorrat",
@@ -29481,7 +29481,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Wohnen",
         "phase": "P1",
         "groesse": "Mittel",
-        "fuer": "1 Mycelian",
+        "fuer": "1 Myzelier",
         "zimmer": [
           "1 Pilzkappen-Schlafbereich (weich, federnd)",
           "1 Sporen-Garten (persönlich)",
@@ -29507,7 +29507,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "1–2 Tage (wächst selbst)",
         "wb": "Unterkunft +2 (Pilze = Heimat) Myzel-Verbindung +1 wenn mit Netz verbunden",
-        "dm": "Mycelian-Häuser wachsen buchstäblich. Wenn ein Mycelian glücklich ist, blüht das Haus auf. Wenn unglücklich – welkt es. Ein guter Stimmungs- indikator für Spieler."
+        "dm": "Myzelier-Häuser wachsen buchstäblich. Wenn ein Myzelier glücklich ist, blüht das Haus auf. Wenn unglücklich – welkt es. Ein guter Stimmungs- indikator für Spieler."
       },
       {
         "name": "Paarpilz-Haus",
@@ -29515,7 +29515,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Wohnen",
         "phase": "P1",
         "groesse": "Groß",
-        "fuer": "2 Mycelian",
+        "fuer": "2 Myzelier",
         "zimmer": [
           "2 verbundene Pilzkappen (Myzel unter der Erde)",
           "1 gemeinsamer Sporen-Garten",
@@ -29541,7 +29541,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "2 Tage",
         "wb": "Unterkunft +2, Gemeinschaft +1 (Myzel verbindet) Gedanken-Austausch: leichter zwischen Paaren",
-        "dm": "Mycelian-Paare teilen Gedanken durch das Myzel. Sie kennen die Emotionen des anderen – was Streit erschwert und Verständnis erleichtert."
+        "dm": "Myzelier-Paare teilen Gedanken durch das Myzel. Sie kennen die Emotionen des anderen – was Streit erschwert und Verständnis erleichtert."
       },
       {
         "name": "Familienpilz-Hain",
@@ -29580,7 +29580,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "3 Tage",
         "wb": "Unterkunft +2 (alle), Gemeinschaft +2",
-        "dm": "Mycelian-Sprösslinge wachsen aus dem Boden. Sie können kaum laufen aber schon durch das Myzel kommunizieren. Unheimlich und herzerwärmend."
+        "dm": "Myzelier-Sprösslinge wachsen aus dem Boden. Sie können kaum laufen aber schon durch das Myzel kommunizieren. Unheimlich und herzerwärmend."
       },
       {
         "name": "Myzel-Kolonie (klein)",
@@ -29588,7 +29588,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Wohnen",
         "phase": "P1",
         "groesse": "Monumental",
-        "fuer": "3–8 Mycelian",
+        "fuer": "3–8 Myzelier",
         "zimmer": [
           "Pilzkappen-Cluster verbunden durch Myzel",
           "1 gemeinsamer Sporengarten",
@@ -29622,7 +29622,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Wohnen",
         "phase": "P1",
         "groesse": "Gigantisch",
-        "fuer": "9–20 Mycelian",
+        "fuer": "9–20 Myzelier",
         "zimmer": [
           "Riesiger Pilzkappen-Wald",
           "1 Ältesten-Riesenpilz (Zentrum)",
@@ -29657,7 +29657,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P1",
         "groesse": "Groß",
-        "beschreibung": "Große Pilzküche wo Mycelian gemeinsam kochen. Pilzsuppe, Sporenbrote und Myzel-Tees. Nährreich und manchmal leicht halluzinogen.",
+        "beschreibung": "Große Pilzküche wo Myzelier gemeinsam kochen. Pilzsuppe, Sporenbrote und Myzel-Tees. Nährreich und manchmal leicht halluzinogen.",
         "kosten": [
           {
             "q": "22×",
@@ -29690,7 +29690,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P1",
         "groesse": "Groß",
-        "beschreibung": "Unterirdisches Myzel-Nährstoffdepot. Mycelian ziehen Nahrung aus dem Netz – dieses Lager stärkt das Netz für alle.",
+        "beschreibung": "Unterirdisches Myzel-Nährstoffdepot. Myzelier ziehen Nahrung aus dem Netz – dieses Lager stärkt das Netz für alle.",
         "kosten": [
           {
             "q": "18×",
@@ -29752,7 +29752,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P2",
         "groesse": "Mittel",
-        "beschreibung": "Sporen zu Heilmitteln, Schlafmitteln, Giften und Baumaterialien verarbeiten. Mycelian sind exzellente Sporenchemiker.",
+        "beschreibung": "Sporen zu Heilmitteln, Schlafmitteln, Giften und Baumaterialien verarbeiten. Myzelier sind exzellente Sporenchemiker.",
         "kosten": [
           {
             "q": "20×",
@@ -29784,7 +29784,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P2",
         "groesse": "Mittel",
-        "beschreibung": "Heilpilze, Myzel-Tinkturen und Sporenbäder. Mycelian-Heilung ist ganzheitlich – Körper, Geist und Myzel-Verbindung werden behandelt.",
+        "beschreibung": "Heilpilze, Myzel-Tinkturen und Sporenbäder. Myzelier-Heilung ist ganzheitlich – Körper, Geist und Myzel-Verbindung werden behandelt.",
         "kosten": [
           {
             "q": "20×",
@@ -29816,7 +29816,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P2",
         "groesse": "Groß",
-        "beschreibung": "Ein uralter Riesenpilz als heiliger Ort. Das Myzel unter ihm ist tausende Jahre alt. Mycelian beten durch Berühren und Verbinden.",
+        "beschreibung": "Ein uralter Riesenpilz als heiliger Ort. Das Myzel unter ihm ist tausende Jahre alt. Myzelier beten durch Berühren und Verbinden.",
         "kosten": [
           {
             "q": "28×",
@@ -29884,7 +29884,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Militär",
         "phase": "P1",
         "groesse": "Groß",
-        "beschreibung": "Dichter Pilzwald als Schutzwall mit giftigen Sporenwolken. Eindringlinge husten, niesen und schlafen ein. Mycelian sind immun.",
+        "beschreibung": "Dichter Pilzwald als Schutzwall mit giftigen Sporenwolken. Eindringlinge husten, niesen und schlafen ein. Myzelier sind immun.",
         "kosten": [
           {
             "q": "40×",
@@ -29948,7 +29948,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Nahrung",
         "phase": "P2",
         "groesse": "Monumental",
-        "beschreibung": "Riesige Pilzfarm mit hunderten Sorten: Essbar, heilend, halluzinogen, giftig. Mycelian kennen jeden Pilz und seinen Zweck.",
+        "beschreibung": "Riesige Pilzfarm mit hunderten Sorten: Essbar, heilend, halluzinogen, giftig. Myzelier kennen jeden Pilz und seinen Zweck.",
         "kosten": [
           {
             "q": "44×",
@@ -29980,7 +29980,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Militär",
         "phase": "P2",
         "groesse": "Mittel",
-        "beschreibung": "Mycelian-Krieger die Sporenwolken als Waffe nutzen. Sie erscheinen plötzlich aus Pilzwäldern, sprühen und verschwinden wieder. Effektiv und unheimlich.",
+        "beschreibung": "Myzelier-Krieger die Sporenwolken als Waffe nutzen. Sie erscheinen plötzlich aus Pilzwäldern, sprühen und verschwinden wieder. Effektiv und unheimlich.",
         "kosten": [
           {
             "q": "30×",
@@ -30140,19 +30140,19 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "48 Tage",
         "effekt": [
-          "Mycelian erhalten Vertreter im Stadtrat Merurias.",
-          "Alle Mycelian-Kolonisten: +1 auf alle Würfe.",
+          "Myzelier erhalten Vertreter im Stadtrat Merurias.",
+          "Alle Myzelier-Kolonisten: +1 auf alle Würfe.",
           "Alle WB-Werte der Kolonie: +1.",
           "Myzel-Puls: Alle Kolonien in 10km Umkreis erhalten",
           "+5% Nahrungsproduktion durch Myzel-Verbindung."
         ],
-        "schaltetFrei": "— (Endgebäude der Mycelian-Kolonie)",
+        "schaltetFrei": "— (Endgebäude der Myzelier-Kolonie)",
         "endgebaeude": true
       }
     ]
   },
   {
-    "name": "Oozekin",
+    "name": "Schleimling",
     "uebergruppe": null,
     "tagline": "",
     "quote": "Wir passen uns an. Wir fließen. Wir werden nie vollständig zerstört.",
@@ -30160,7 +30160,7 @@ window.GEBAEUDE_RASSEN = [
     "habitat": {
       "terrainPraeferenz": "Sümpfe, Höhlen, feuchte Wälder",
       "bauweise": "",
-      "wohnpraeferenz": "Oozekin sind schleimige Humanoide oozeartiger Abstammung",
+      "wohnpraeferenz": "Schleimling sind schleimige Humanoide oozeartiger Abstammung",
       "pflichtgebaeude": [
         "Gärkantine",
         "Substrat-Lager",
@@ -30189,7 +30189,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Wohnen",
         "phase": "P1",
         "groesse": "Mittel",
-        "fuer": "1 Oozekin",
+        "fuer": "1 Schleimling",
         "zimmer": [
           "1 tiefes Schleim-Ruhebecken",
           "1 Substrat-Nische (Nahrung)",
@@ -30215,7 +30215,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "1–2 Tage",
         "wb": "Unterkunft +2 (Feuchtigkeit und Schleim = Heimat) Malus –2 wenn trocken oder zu warm",
-        "dm": "Oozekin-Becken riechen chemisch-süßlich. Der Boden um sie herum ist leicht angeätzt. Besucher sollten Lederschuhe ausziehen – oder gleich neue kaufen."
+        "dm": "Schleimling-Becken riechen chemisch-süßlich. Der Boden um sie herum ist leicht angeätzt. Besucher sollten Lederschuhe ausziehen – oder gleich neue kaufen."
       },
       {
         "name": "Paarbecken",
@@ -30223,7 +30223,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Wohnen",
         "phase": "P1",
         "groesse": "Groß",
-        "fuer": "2 Oozekin",
+        "fuer": "2 Schleimling",
         "zimmer": [
           "1 gemeinsames Schleim-Becken",
           "2 individuelle Substrat-Nischen",
@@ -30249,7 +30249,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "2 Tage",
         "wb": "Unterkunft +2 für beide, Gemeinschaft +1",
-        "dm": "Oozekin-Paare verschmelzen im Schlaf leicht. Morgens brauchen sie manchmal eine Weile um herauszufinden wo der andere aufhört."
+        "dm": "Schleimling-Paare verschmelzen im Schlaf leicht. Morgens brauchen sie manchmal eine Weile um herauszufinden wo der andere aufhört."
       },
       {
         "name": "Familienbecken",
@@ -30288,7 +30288,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "3 Tage",
         "wb": "Unterkunft +2 (alle), Gemeinschaft +1",
-        "dm": "Oozekin-Ableger sind winzige schleimige Wesen. Sie lernen durch Absorption – buchstäblich. Ein Ableger der an einem Spieler klebt ist niedlich und leicht beunruhigend."
+        "dm": "Schleimling-Ableger sind winzige schleimige Wesen. Sie lernen durch Absorption – buchstäblich. Ein Ableger der an einem Spieler klebt ist niedlich und leicht beunruhigend."
       },
       {
         "name": "Schwarm-Pool (klein)",
@@ -30296,7 +30296,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Wohnen",
         "phase": "P1",
         "groesse": "Monumental",
-        "fuer": "3–8 Oozekin",
+        "fuer": "3–8 Schleimling",
         "zimmer": [
           "Verbundener Becken-Komplex",
           "1 kollektiver Substrat-Bereich",
@@ -30322,7 +30322,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "5 Tage",
         "wb": "Unterkunft +2, Gemeinschaft +2 (Kollektiv-Berührung)",
-        "dm": "Im gemeinsamen Pool teilen Oozekin Erinnerungen. Spieler die fragen was sie träumen bekommen erstaunliche Antworten."
+        "dm": "Im gemeinsamen Pool teilen Schleimling Erinnerungen. Spieler die fragen was sie träumen bekommen erstaunliche Antworten."
       },
       {
         "name": "Schwarm-Pool (gross)",
@@ -30330,7 +30330,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Wohnen",
         "phase": "P1",
         "groesse": "Gigantisch",
-        "fuer": "9–20 Oozekin",
+        "fuer": "9–20 Schleimling",
         "zimmer": [
           "Riesiger verbundener Pool-Komplex",
           "1 Ältesten-Tiefpool (konzentriertster Schleim)",
@@ -30365,7 +30365,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P1",
         "groesse": "Groß",
-        "beschreibung": "Oozekin fermentieren Substrat zu Nahrung. Die Kantine ist ein großes Gärbecken mit verschiedenen Kulturen. Riecht intensiv.",
+        "beschreibung": "Schleimling fermentieren Substrat zu Nahrung. Die Kantine ist ein großes Gärbecken mit verschiedenen Kulturen. Riecht intensiv.",
         "kosten": [
           {
             "q": "22×",
@@ -30398,7 +30398,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P1",
         "groesse": "Groß",
-        "beschreibung": "Großes feuchtes Lager für Substrat, Gärpilze und organische Materialien. Für Oozekin ist Substrat was für andere Nahrung ist.",
+        "beschreibung": "Großes feuchtes Lager für Substrat, Gärpilze und organische Materialien. Für Schleimling ist Substrat was für andere Nahrung ist.",
         "kosten": [
           {
             "q": "18×",
@@ -30419,7 +30419,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "2 Tage",
         "effekt": [
-          "Versorgung WB +2 (kritisch für Oozekin).",
+          "Versorgung WB +2 (kritisch für Schleimling).",
           "Puffert 45 Tage.",
           "Ohne Lager: –3 auf alle WB-Werte."
         ],
@@ -30431,7 +30431,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P1",
         "groesse": "Groß",
-        "beschreibung": "Großer Pool wo Oozekin durch Berührung debattieren. Keine Worte – direkte Gedankenübertragung durch Schleim. Schnell, ehrlich, manchmal überwältigend.",
+        "beschreibung": "Großer Pool wo Schleimling durch Berührung debattieren. Keine Worte – direkte Gedankenübertragung durch Schleim. Schnell, ehrlich, manchmal überwältigend.",
         "kosten": [
           {
             "q": "22×",
@@ -30460,7 +30460,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P2",
         "groesse": "Mittel",
-        "beschreibung": "Oozekin destillieren ihre natürlichen Säuren zu Waffen, Werkzeugen und Reinigungsmitteln. Die einzige Rasse die Säure industriell nutzt.",
+        "beschreibung": "Schleimling destillieren ihre natürlichen Säuren zu Waffen, Werkzeugen und Reinigungsmitteln. Die einzige Rasse die Säure industriell nutzt.",
         "kosten": [
           {
             "q": "24×",
@@ -30492,7 +30492,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P2",
         "groesse": "Mittel",
-        "beschreibung": "Oozekin-Heilschleim ist medizinisch wertvoll. Diese Station produziert und verteilt ihn. Wunden schließen sich in Schleim schneller.",
+        "beschreibung": "Schleimling-Heilschleim ist medizinisch wertvoll. Diese Station produziert und verteilt ihn. Wunden schließen sich in Schleim schneller.",
         "kosten": [
           {
             "q": "20×",
@@ -30524,7 +30524,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P2",
         "groesse": "Groß",
-        "beschreibung": "Pool der den Ursprung aller Oozekin ehrt – den Ur-Schleim aus dem alles begann. Mystisch, chemisch und seltsam erhebend.",
+        "beschreibung": "Pool der den Ursprung aller Schleimling ehrt – den Ur-Schleim aus dem alles begann. Mystisch, chemisch und seltsam erhebend.",
         "kosten": [
           {
             "q": "28×",
@@ -30558,7 +30558,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Habitat",
         "phase": "P1",
         "groesse": "Monumental",
-        "beschreibung": "Kanalnetz aus Schleimharz das die ganze Kolonie verbindet. Oozekin fließen hindurch statt zu laufen. Pflichtfundament – ohne Kanäle ist es kein Zuhause.",
+        "beschreibung": "Kanalnetz aus Schleimharz das die ganze Kolonie verbindet. Schleimling fließen hindurch statt zu laufen. Pflichtfundament – ohne Kanäle ist es kein Zuhause.",
         "kosten": [
           {
             "q": "50×",
@@ -30580,7 +30580,7 @@ window.GEBAEUDE_RASSEN = [
         "bauzeit": "5 Tage",
         "effekt": [
           "Habitat WB +1. Freischaltet alle P2-Gebäude.",
-          "Bewegung: Oozekin 2× schneller in der Kolonie.",
+          "Bewegung: Schleimling 2× schneller in der Kolonie.",
           "Ohne Netz: Habitat –3 (Isolation)."
         ],
         "pflicht": true
@@ -30591,7 +30591,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Militär",
         "phase": "P1",
         "groesse": "Groß",
-        "beschreibung": "Graben mit Säurelösung um die Kolonie. Was hindurchläuft wird aufgelöst. Nicht angenehm. Oozekin sind natürlich immun.",
+        "beschreibung": "Graben mit Säurelösung um die Kolonie. Was hindurchläuft wird aufgelöst. Nicht angenehm. Schleimling sind natürlich immun.",
         "kosten": [
           {
             "q": "36×",
@@ -30623,7 +30623,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Handel",
         "phase": "P2",
         "groesse": "Mittel",
-        "beschreibung": "Markt für organische Materialien, Heilschleim, Säureprodukte und Oozekin-Waren. Händler kommen in Schutzausrüstung – die Waren sind es wert.",
+        "beschreibung": "Markt für organische Materialien, Heilschleim, Säureprodukte und Schleimling-Waren. Händler kommen in Schutzausrüstung – die Waren sind es wert.",
         "kosten": [
           {
             "q": "26×",
@@ -30655,7 +30655,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Nahrung",
         "phase": "P2",
         "groesse": "Groß",
-        "beschreibung": "Kultivierte Substrat-Gärten mit Gärpilzen und organischen Kulturen. Oozekin-Nahrung in Hülle und Fülle – wenn auch nichts für andere Rassen.",
+        "beschreibung": "Kultivierte Substrat-Gärten mit Gärpilzen und organischen Kulturen. Schleimling-Nahrung in Hülle und Fülle – wenn auch nichts für andere Rassen.",
         "kosten": [
           {
             "q": "36×",
@@ -30687,7 +30687,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Militär",
         "phase": "P2",
         "groesse": "Mittel",
-        "beschreibung": "Oozekin-Wachen die durch Kanäle fließen können. Sie erscheinen aus dem Boden, greifen an und verschwinden wieder. Unsichtbar bis es zu spät ist.",
+        "beschreibung": "Schleimling-Wachen die durch Kanäle fließen können. Sie erscheinen aus dem Boden, greifen an und verschwinden wieder. Unsichtbar bis es zu spät ist.",
         "kosten": [
           {
             "q": "28×",
@@ -30719,7 +30719,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Wissen",
         "phase": "P3",
         "groesse": "Groß",
-        "beschreibung": "Großer Pool wo alle Oozekin-Erinnerungen gespeichert sind. Wer eintaucht kann auf das kollektive Gedächtnis des gesamten Schwarms zugreifen.",
+        "beschreibung": "Großer Pool wo alle Schleimling-Erinnerungen gespeichert sind. Wer eintaucht kann auf das kollektive Gedächtnis des gesamten Schwarms zugreifen.",
         "kosten": [
           {
             "q": "45×",
@@ -30847,14 +30847,14 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "50 Tage",
         "effekt": [
-          "Oozekin erhalten Vertreter im Stadtrat Merurias.",
-          "Alle Oozekin-Kolonisten: +1 auf alle Würfe.",
+          "Schleimling erhalten Vertreter im Stadtrat Merurias.",
+          "Alle Schleimling-Kolonisten: +1 auf alle Würfe.",
           "Alle WB-Werte der Kolonie: +1.",
-          "Unsterblichkeit des Schwarms: Gefallene Oozekin",
+          "Unsterblichkeit des Schwarms: Gefallene Schleimling",
           "kehren als Teil des Kollektivs zurück (Erinnerungen",
           "bleiben erhalten, DM-Absprache für Körper)."
         ],
-        "schaltetFrei": "— (Endgebäude der Oozekin-Kolonie)",
+        "schaltetFrei": "— (Endgebäude der Schleimling-Kolonie)",
         "endgebaeude": true
       }
     ]
@@ -32018,7 +32018,7 @@ window.GEBAEUDE_RASSEN = [
     ]
   },
   {
-    "name": "Owlin",
+    "name": "Eulenleute",
     "uebergruppe": null,
     "tagline": "",
     "quote": "Wir hören was du denkst, bevor du es sagst. Wir sehen was du tust, bevor du es tust.",
@@ -32055,7 +32055,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Wohnen",
         "phase": "P1",
         "groesse": "Klein",
-        "fuer": "1 Owlin",
+        "fuer": "1 Eulenleute",
         "zimmer": [
           "1 Schlafnische (hoch im Baum, ruhig)",
           "1 Bücherregal-Ast",
@@ -32081,7 +32081,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "1–2 Tage",
         "wb": "Unterkunft +2 (Stille und Höhe sind Heimat) Malus –2 wenn auf Bodenniveau oder laut",
-        "dm": "Owlin schlafen tagsüber. Spieler die nachts kommen finden sie wach und aufmerksam. Tagsüber: mürrisch und einsilbig."
+        "dm": "Eulenleute schlafen tagsüber. Spieler die nachts kommen finden sie wach und aufmerksam. Tagsüber: mürrisch und einsilbig."
       },
       {
         "name": "Partnerhorst",
@@ -32089,7 +32089,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Wohnen",
         "phase": "P1",
         "groesse": "Klein",
-        "fuer": "2 Owlin",
+        "fuer": "2 Eulenleute",
         "zimmer": [
           "2 Schlafnischen (Seite an Seite)",
           "1 gemeinsamer Leseplatz mit Mondlicht-Öffnung",
@@ -32114,8 +32114,8 @@ window.GEBAEUDE_RASSEN = [
           }
         ],
         "bauzeit": "2 Tage",
-        "wb": "Unterkunft +2 für beide Wissen-WB +1 wenn beide Owlin Gelehrte sind",
-        "dm": "Owlin-Paare kommunizieren oft nonverbal – ein Blick, ein Kopfnicken. Fremde fühlen sich dabei oft sehr beobachtet."
+        "wb": "Unterkunft +2 für beide Wissen-WB +1 wenn beide Eulenleute Gelehrte sind",
+        "dm": "Eulenleute-Paare kommunizieren oft nonverbal – ein Blick, ein Kopfnicken. Fremde fühlen sich dabei oft sehr beobachtet."
       },
       {
         "name": "Familienbaum",
@@ -32154,7 +32154,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "3 Tage",
         "wb": "Unterkunft +2 (alle), Gemeinschaft +1",
-        "dm": "Owlin-Jungtiere stellen Fragen über alles. Sie können Spieler stundenlang befragen und dabei erstaunlich kluge Dinge bemerken."
+        "dm": "Eulenleute-Jungtiere stellen Fragen über alles. Sie können Spieler stundenlang befragen und dabei erstaunlich kluge Dinge bemerken."
       },
       {
         "name": "Gemeinschaftshorst (klein)",
@@ -32162,7 +32162,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Wohnen",
         "phase": "P1",
         "groesse": "Mittel",
-        "fuer": "3–7 Owlin",
+        "fuer": "3–7 Eulenleute",
         "zimmer": [
           "Schlafnischen in den Ästen eines großen Baumes",
           "1 zentraler Diskussionsast (ruhig!)",
@@ -32188,7 +32188,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "3–4 Tage",
         "wb": "Unterkunft +1, Gemeinschaft +1 (stille Kameradschaft)",
-        "dm": "Owlin-Gemeinschaften kommunizieren nachts durch leise Rufe. Wer schlafen will, stört sie – und wird beobachtet."
+        "dm": "Eulenleute-Gemeinschaften kommunizieren nachts durch leise Rufe. Wer schlafen will, stört sie – und wird beobachtet."
       },
       {
         "name": "Gemeinschaftshorst (gross)",
@@ -32196,7 +32196,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Wohnen",
         "phase": "P1",
         "groesse": "Groß",
-        "fuer": "8–18 Owlin",
+        "fuer": "8–18 Eulenleute",
         "zimmer": [
           "Mehrstöckige Baumplattformen mit Nischen",
           "1 große Bibliotheksplattform",
@@ -32223,7 +32223,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "6 Tage",
         "wb": "Unterkunft +2, Gemeinschaft +1",
-        "dm": "Größere Owlin-Gemeinschaften haben immer eine geheime Diskussion laufen. Spieler die gut lauschen erfahren mehr als erwartet."
+        "dm": "Größere Eulenleute-Gemeinschaften haben immer eine geheime Diskussion laufen. Spieler die gut lauschen erfahren mehr als erwartet."
       },
       {
         "name": "Mondkantine",
@@ -32231,7 +32231,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P1",
         "groesse": "Mittel",
-        "beschreibung": "Eine offene Plattform im Mondlicht. Owlin essen schweigend oder flüsternd. Frische Mäuse, Fische, Insekten – serviert im Mondschein.",
+        "beschreibung": "Eine offene Plattform im Mondlicht. Eulenleute essen schweigend oder flüsternd. Frische Mäuse, Fische, Insekten – serviert im Mondschein.",
         "kosten": [
           {
             "q": "20×",
@@ -32264,7 +32264,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P1",
         "groesse": "Klein",
-        "beschreibung": "Versteckte Hohlräume im Baum oder Felsen mit Trockenvorräten. Owlin verstecken Nahrung wie Vögel – an vielen kleinen Orten.",
+        "beschreibung": "Versteckte Hohlräume im Baum oder Felsen mit Trockenvorräten. Eulenleute verstecken Nahrung wie Vögel – an vielen kleinen Orten.",
         "kosten": [
           {
             "q": "14×",
@@ -32296,7 +32296,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P1",
         "groesse": "Klein",
-        "beschreibung": "Ein Owlin sitzt still auf einem hohen Ast und hört. Alles. Jedes Geräusch im Wald wird gedeutet. Pflichtgebäude ihrer Sicherheitskultur.",
+        "beschreibung": "Ein Eulenleute sitzt still auf einem hohen Ast und hört. Alles. Jedes Geräusch im Wald wird gedeutet. Pflichtgebäude ihrer Sicherheitskultur.",
         "kosten": [
           {
             "q": "12×",
@@ -32325,7 +32325,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P2",
         "groesse": "Klein",
-        "beschreibung": "Federn zu Federkielen, Pfeilen, Kleidung und Schreibwerkzeug. Owlin verschwenden nichts. Jede Feder hat ihren Zweck.",
+        "beschreibung": "Federn zu Federkielen, Pfeilen, Kleidung und Schreibwerkzeug. Eulenleute verschwenden nichts. Jede Feder hat ihren Zweck.",
         "kosten": [
           {
             "q": "16×",
@@ -32357,7 +32357,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P2",
         "groesse": "Klein",
-        "beschreibung": "Owlin-Heiler beobachten Patienten stundenlang bevor sie handeln. Kräuter, Mondwasser und ruhige Hände heilen mehr als Hast.",
+        "beschreibung": "Eulenleute-Heiler beobachten Patienten stundenlang bevor sie handeln. Kräuter, Mondwasser und ruhige Hände heilen mehr als Hast.",
         "kosten": [
           {
             "q": "14×",
@@ -32389,7 +32389,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P2",
         "groesse": "Mittel",
-        "beschreibung": "Offene Plattform zur Mondbeobachtung mit Mondstein-Stelen und Ritualgefäßen. Owlin beten schweigend unter dem Mondlicht.",
+        "beschreibung": "Offene Plattform zur Mondbeobachtung mit Mondstein-Stelen und Ritualgefäßen. Eulenleute beten schweigend unter dem Mondlicht.",
         "kosten": [
           {
             "q": "20×",
@@ -32423,7 +32423,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Habitat",
         "phase": "P1",
         "groesse": "Groß",
-        "beschreibung": "Hoch über den Baumwipfeln: eine weitläufige Plattform von der aus die Kolonie alles sieht. Pflichtfundament – Owlin brauchen den Überblick.",
+        "beschreibung": "Hoch über den Baumwipfeln: eine weitläufige Plattform von der aus die Kolonie alles sieht. Pflichtfundament – Eulenleute brauchen den Überblick.",
         "kosten": [
           {
             "q": "36×",
@@ -32456,7 +32456,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Habitat",
         "phase": "P1",
         "groesse": "Monumental",
-        "beschreibung": "Abgegrenztes Waldgebiet das vor Lärm und Fremden geschützt wird. Owlin brauchen Stille zum Denken, Jagen und Ruhen.",
+        "beschreibung": "Abgegrenztes Waldgebiet das vor Lärm und Fremden geschützt wird. Eulenleute brauchen Stille zum Denken, Jagen und Ruhen.",
         "kosten": [
           {
             "q": "30×",
@@ -32489,7 +32489,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Wissen",
         "phase": "P2",
         "groesse": "Groß",
-        "beschreibung": "Ein uralter Baum dessen Äste mit Büchern, Schriftrollen und Wissensplatten behängt sind. Owlin-Gelehrte meditieren hier nächtelang.",
+        "beschreibung": "Ein uralter Baum dessen Äste mit Büchern, Schriftrollen und Wissensplatten behängt sind. Eulenleute-Gelehrte meditieren hier nächtelang.",
         "kosten": [
           {
             "q": "28×",
@@ -32558,7 +32558,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Militär",
         "phase": "P2",
         "groesse": "Mittel",
-        "beschreibung": "Verstecktes Nest für Owlin-Jäger die nachts patrouillieren. Lautlos, unsichtbar, tödlich. Feinde werden nie wissen woher der Angriff kam.",
+        "beschreibung": "Verstecktes Nest für Eulenleute-Jäger die nachts patrouillieren. Lautlos, unsichtbar, tödlich. Feinde werden nie wissen woher der Angriff kam.",
         "kosten": [
           {
             "q": "24×",
@@ -32590,7 +32590,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Wissen",
         "phase": "P3",
         "groesse": "Monumental",
-        "beschreibung": "Das umfangreichste Wissensarchiv Merurias – in einem alten Waldriesen untergebracht. Owlin bewachen ihr Wissen eifersüchtig.",
+        "beschreibung": "Das umfangreichste Wissensarchiv Merurias – in einem alten Waldriesen untergebracht. Eulenleute bewachen ihr Wissen eifersüchtig.",
         "kosten": [
           {
             "q": "50×",
@@ -32628,7 +32628,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Militär",
         "phase": "P3",
         "groesse": "Groß",
-        "beschreibung": "Zentrales Nest der Owlin-Nachtwächter. Schichtplan läuft durch alle Nächte ohne Unterbrechung. Die Kolonie schläft – die Wacht nie.",
+        "beschreibung": "Zentrales Nest der Eulenleute-Nachtwächter. Schichtplan läuft durch alle Nächte ohne Unterbrechung. Die Kolonie schläft – die Wacht nie.",
         "kosten": [
           {
             "q": "40×",
@@ -32684,7 +32684,7 @@ window.GEBAEUDE_RASSEN = [
         "effekt": [
           "Produziert 3d10×10 GP alle 30 Tage.",
           "Exklusive Waren: Arkane Gegenstände verfügbar.",
-          "Käufer zahlen +20% für Owlin-Wissen."
+          "Käufer zahlen +20% für Eulenleute-Wissen."
         ],
         "schaltetFrei": "— (Endgebäude dieser Kategorie)"
       },
@@ -32725,13 +32725,13 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "40 Tage",
         "effekt": [
-          "Owlin erhalten Vertreter im Stadtrat Merurias.",
-          "Alle Owlin-Kolonisten: +1 auf alle Würfe.",
+          "Eulenleute erhalten Vertreter im Stadtrat Merurias.",
+          "Alle Eulenleute-Kolonisten: +1 auf alle Würfe.",
           "Alle WB-Werte der Kolonie: +1.",
           "Mondvision: 1×/Monat eine prophetische Vision",
           "(DM gibt einen Hinweis auf kommendes Ereignis)."
         ],
-        "schaltetFrei": "— (Endgebäude der Owlin-Kolonie)",
+        "schaltetFrei": "— (Endgebäude der Eulenleute-Kolonie)",
         "endgebaeude": true
       }
     ]
@@ -36338,7 +36338,7 @@ window.GEBAEUDE_RASSEN = [
     ]
   },
   {
-    "name": "Shadow Goblin",
+    "name": "Schattengoblin",
     "uebergruppe": null,
     "tagline": "",
     "quote": "Im Schatten sehen wir alles. Im Licht seht ihr uns nicht.",
@@ -36346,7 +36346,7 @@ window.GEBAEUDE_RASSEN = [
     "habitat": {
       "terrainPraeferenz": "Höhlen, Ruinen, Schattenebene-Nähe",
       "bauweise": "",
-      "wohnpraeferenz": "Shadow Goblins leben im Dunkel – kein Sonnenlicht",
+      "wohnpraeferenz": "Schattengoblins leben im Dunkel – kein Sonnenlicht",
       "pflichtgebaeude": [
         "Dunkelkantine",
         "Schattenlager",
@@ -36375,7 +36375,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Wohnen",
         "phase": "P1",
         "groesse": "Winzig",
-        "fuer": "1 Shadow Goblin",
+        "fuer": "1 Schattengoblin",
         "zimmer": [
           "1 versteckte Schlafnische (unsichtbar von außen)",
           "1 Waffenversteck (3 verschiedene Orte)",
@@ -36401,7 +36401,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "1 Tag",
         "wb": "Unterkunft +2 (versteckt = sicher = zuhause) Malus –3 wenn im Sonnenlicht oder sichtbar",
-        "dm": "Shadow Goblin-Behausungen sind nahezu unsichtbar. DC 18 Wahrnehmung um sie zu finden – und selbst dann sieht man nur den Eingang, nicht das Innere."
+        "dm": "Schattengoblin-Behausungen sind nahezu unsichtbar. DC 18 Wahrnehmung um sie zu finden – und selbst dann sieht man nur den Eingang, nicht das Innere."
       },
       {
         "name": "Paar-Nische",
@@ -36409,7 +36409,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Wohnen",
         "phase": "P1",
         "groesse": "Klein",
-        "fuer": "2 Shadow Goblins",
+        "fuer": "2 Schattengoblins",
         "zimmer": [
           "2 Schlafnischen (beide mit eigenem Ausgang)",
           "1 gemeinsame Beutekammer (getrennt gesichert)",
@@ -36435,7 +36435,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "1–2 Tage",
         "wb": "Unterkunft +2 für beide, Gemeinschaft +1",
-        "dm": "Shadow Goblin-Paare vertrauen einander – was für Shadow Goblins bedeutet: Sie teilen 40% ihrer Geheimnisse. Das ist viel."
+        "dm": "Schattengoblin-Paare vertrauen einander – was für Schattengoblins bedeutet: Sie teilen 40% ihrer Geheimnisse. Das ist viel."
       },
       {
         "name": "Familien-Dunkelkammer",
@@ -36470,7 +36470,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "2–3 Tage",
         "wb": "Unterkunft +2 (alle), Gemeinschaft +1",
-        "dm": "Shadow Goblin-Kinder lernen schleichen bevor sie laufen lernen. Ein Kind das Spieler von Geburt an beobachtet hat – und sie erst jetzt erwähnt – ist eine herrliche Szene."
+        "dm": "Schattengoblin-Kinder lernen schleichen bevor sie laufen lernen. Ein Kind das Spieler von Geburt an beobachtet hat – und sie erst jetzt erwähnt – ist eine herrliche Szene."
       },
       {
         "name": "Schattenbande (klein)",
@@ -36478,7 +36478,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Wohnen",
         "phase": "P1",
         "groesse": "Groß",
-        "fuer": "3–8 Shadow Goblins",
+        "fuer": "3–8 Schattengoblins",
         "zimmer": [
           "Individuelle Nischen im Netz",
           "1 gemeinsamer Fluchtweg-Hub",
@@ -36512,7 +36512,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Wohnen",
         "phase": "P1",
         "groesse": "Sehr Groß",
-        "fuer": "9–20 Shadow Goblins",
+        "fuer": "9–20 Schattengoblins",
         "zimmer": [
           "Weitverzweigtes Nischen-Netzwerk",
           "1 Anführer-Schattenraum (unentdeckbar)",
@@ -36539,7 +36539,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "6 Tage",
         "wb": "Unterkunft +2, Gemeinschaft +2",
-        "dm": "Eine große Shadow Goblin-Bande hat Informationen über fast jeden in der Region. Das ist ihr wertvollstes Gut."
+        "dm": "Eine große Schattengoblin-Bande hat Informationen über fast jeden in der Region. Das ist ihr wertvollstes Gut."
       },
       {
         "name": "Dunkelkantine",
@@ -36547,7 +36547,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P1",
         "groesse": "Klein",
-        "beschreibung": "Absolut dunkle Kantine wo Shadow Goblins essen. Wer das Licht anmacht wird nicht eingeladen. Gespräche im Dunkeln sind ehrlicher.",
+        "beschreibung": "Absolut dunkle Kantine wo Schattengoblins essen. Wer das Licht anmacht wird nicht eingeladen. Gespräche im Dunkeln sind ehrlicher.",
         "kosten": [
           {
             "q": "16×",
@@ -36642,7 +36642,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P2",
         "groesse": "Klein",
-        "beschreibung": "Werkstatt für Schleich-Ausrüstung: Dunkelklingen, Schattenstiefel, Tarnumhänge und Nebelbomben. Shadow Goblins sind handwerklich gut.",
+        "beschreibung": "Werkstatt für Schleich-Ausrüstung: Dunkelklingen, Schattenstiefel, Tarnumhänge und Nebelbomben. Schattengoblins sind handwerklich gut.",
         "kosten": [
           {
             "q": "18×",
@@ -36674,7 +36674,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P2",
         "groesse": "Winzig",
-        "beschreibung": "Shadow Goblin-Heiler arbeiten im Dunkeln und sind überraschend gut. Schatten-Kräuter und Nebelessenz-Tinkturen heilen schnell.",
+        "beschreibung": "Schattengoblin-Heiler arbeiten im Dunkeln und sind überraschend gut. Schatten-Kräuter und Nebelessenz-Tinkturen heilen schnell.",
         "kosten": [
           {
             "q": "12×",
@@ -36740,7 +36740,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Habitat",
         "phase": "P1",
         "groesse": "Monumental",
-        "beschreibung": "Weitverzweigtes Tunnelnetz – magisch verdunkelt so dass selbst Dunkelsicht darin versagt. Nur Shadow Goblins navigieren hier sicher.",
+        "beschreibung": "Weitverzweigtes Tunnelnetz – magisch verdunkelt so dass selbst Dunkelsicht darin versagt. Nur Schattengoblins navigieren hier sicher.",
         "kosten": [
           {
             "q": "44×",
@@ -36869,7 +36869,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Militär",
         "phase": "P2",
         "groesse": "Mittel",
-        "beschreibung": "Shadow Goblin-Wachen die dauerhaft getarnt patrouillieren. Niemand sieht sie. Niemand weiß wo sie sind. Außer ihnen.",
+        "beschreibung": "Schattengoblin-Wachen die dauerhaft getarnt patrouillieren. Niemand sieht sie. Niemand weiß wo sie sind. Außer ihnen.",
         "kosten": [
           {
             "q": "24×",
@@ -37004,7 +37004,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Zentrum",
         "phase": "P4",
         "groesse": "Monumental",
-        "beschreibung": "Ein Thron den niemand außer Shadow Goblins sehen kann. Der Anführer sitzt im absoluten Dunkel – umgeben von Unsichtbaren. Macht durch Mysterium.",
+        "beschreibung": "Ein Thron den niemand außer Schattengoblins sehen kann. Der Anführer sitzt im absoluten Dunkel – umgeben von Unsichtbaren. Macht durch Mysterium.",
         "voraussetzung": "Schattenarchiv + Schattenfestung + Schwarzmarkt müssen fertiggestellt sein.",
         "kosten": [
           {
@@ -37035,13 +37035,13 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "44 Tage",
         "effekt": [
-          "Shadow Goblins erhalten Vertreter im Stadtrat.",
-          "Alle Shadow Goblin-Kolonisten: +1 auf alle Würfe.",
+          "Schattengoblins erhalten Vertreter im Stadtrat.",
+          "Alle Schattengoblin-Kolonisten: +1 auf alle Würfe.",
           "Alle WB-Werte der Kolonie: +1.",
           "Schattenmacht: 1×/Woche Kolonie vollständig",
           "unsichtbar für 1 Stunde (Notfall-Verschwinden)."
         ],
-        "schaltetFrei": "— (Endgebäude der Shadow Goblin-Kol.)",
+        "schaltetFrei": "— (Endgebäude der Schattengoblin-Kol.)",
         "endgebaeude": true
       }
     ]
@@ -40466,7 +40466,7 @@ window.GEBAEUDE_RASSEN = [
     ]
   },
   {
-    "name": "Umbral Human",
+    "name": "Schattenmenschen",
     "uebergruppe": null,
     "tagline": "",
     "quote": "Wir kamen aus dem Licht. Wir haben das Dunkel gewählt. Das ist der Unterschied.",
@@ -40474,7 +40474,7 @@ window.GEBAEUDE_RASSEN = [
     "habitat": {
       "terrainPraeferenz": "Dunkle Täler, Wälder, Schattenebenennähe",
       "bauweise": "",
-      "wohnpraeferenz": "Umbral Humans sind Menschen die von der Schattenebene geprägt wurden",
+      "wohnpraeferenz": "Schattenmenschens sind Menschen die von der Schattenebene geprägt wurden",
       "pflichtgebaeude": [
         "Schattenkantine",
         "Dunkellager",
@@ -40503,7 +40503,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Wohnen",
         "phase": "P1",
         "groesse": "Klein",
-        "fuer": "1 Umbral Human",
+        "fuer": "1 Schattenmenschen",
         "zimmer": [
           "1 Schlafraum (verdunkelte Fenster)",
           "1 kleiner Arbeitsbereich",
@@ -40529,7 +40529,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "1–2 Tage",
         "wb": "Unterkunft +2 (Dämmerung bevorzugt) Malus –1 wenn in hellem Sonnenlicht",
-        "dm": "Umbral Humans sehen wie normale Menschen aus – bis man in ihre Augen schaut. Dann ist da etwas Dunkles das zurückschaut."
+        "dm": "Schattenmenschens sehen wie normale Menschen aus – bis man in ihre Augen schaut. Dann ist da etwas Dunkles das zurückschaut."
       },
       {
         "name": "Paarunterkunft",
@@ -40537,7 +40537,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Wohnen",
         "phase": "P1",
         "groesse": "Mittel",
-        "fuer": "2 Umbral Humans",
+        "fuer": "2 Schattenmenschens",
         "zimmer": [
           "1 gemeinsamer Schlafraum (Dämmerungslicht)",
           "1 gemeinsamer Arbeitsraum",
@@ -40563,7 +40563,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "2 Tage",
         "wb": "Unterkunft +2 für beide, Gemeinschaft +1",
-        "dm": "Umbral Human-Paare teilen Schatten-Erfahrungen. Sie verstehen sich ohne Worte – ein Blickaustausch genügt oft."
+        "dm": "Schattenmenschen-Paare teilen Schatten-Erfahrungen. Sie verstehen sich ohne Worte – ein Blickaustausch genügt oft."
       },
       {
         "name": "Familienhaus",
@@ -40598,7 +40598,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "3 Tage",
         "wb": "Unterkunft +2 (alle), Gemeinschaft +1",
-        "dm": "Umbral Human-Kinder sind unheimlich ruhig. Sie beobachten viel und sprechen wenig. Wenn sie etwas sagen, lohnt es sich zuzuhören."
+        "dm": "Schattenmenschen-Kinder sind unheimlich ruhig. Sie beobachten viel und sprechen wenig. Wenn sie etwas sagen, lohnt es sich zuzuhören."
       },
       {
         "name": "Gemeinschaftshaus (klein)",
@@ -40606,7 +40606,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Wohnen",
         "phase": "P1",
         "groesse": "Groß",
-        "fuer": "3–8 Umbral Humans",
+        "fuer": "3–8 Schattenmenschens",
         "zimmer": [
           "Individuelle Schlafräume (alle verdunkelt)",
           "1 gemeinsamer Schattenraum",
@@ -40632,7 +40632,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "4 Tage",
         "wb": "Unterkunft +1, Gemeinschaft +2 (Umbral-Gemeinschaft)",
-        "dm": "Umbral Human-Gemeinschaften sind still nach außen und intensiv nach innen. Spieler werden herzlich aber reserviert empfangen."
+        "dm": "Schattenmenschen-Gemeinschaften sind still nach außen und intensiv nach innen. Spieler werden herzlich aber reserviert empfangen."
       },
       {
         "name": "Gemeinschaftshaus (gross)",
@@ -40640,7 +40640,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Wohnen",
         "phase": "P1",
         "groesse": "Sehr Groß",
-        "fuer": "9–20 Umbral Humans",
+        "fuer": "9–20 Schattenmenschens",
         "zimmer": [
           "Verdunkelte Wohnkomplexe",
           "1 Ältesten-Flügel",
@@ -40667,7 +40667,7 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "6 Tage",
         "wb": "Unterkunft +2, Gemeinschaft +2",
-        "dm": "Große Umbral Human-Gemeinschaften haben eine kollektive Ruhe die fast magisch wirkt. In ihrer Nähe werden Spieler seltsam friedlich."
+        "dm": "Große Schattenmenschen-Gemeinschaften haben eine kollektive Ruhe die fast magisch wirkt. In ihrer Nähe werden Spieler seltsam friedlich."
       },
       {
         "name": "Schattenkantine",
@@ -40675,7 +40675,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P1",
         "groesse": "Groß",
-        "beschreibung": "Gedämpfte Beleuchtung, ruhige Gespräche, gutes Essen. Umbral Humans essen wie normale Menschen – nur mit weniger Licht und mehr Schweigen.",
+        "beschreibung": "Gedämpfte Beleuchtung, ruhige Gespräche, gutes Essen. Schattenmenschens essen wie normale Menschen – nur mit weniger Licht und mehr Schweigen.",
         "kosten": [
           {
             "q": "22×",
@@ -40708,7 +40708,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P1",
         "groesse": "Mittel",
-        "beschreibung": "Kühl, dunkel und gut organisiert. Umbral Humans sind sorgfältige Verwalter – jedes Teil hat seinen Platz.",
+        "beschreibung": "Kühl, dunkel und gut organisiert. Schattenmenschens sind sorgfältige Verwalter – jedes Teil hat seinen Platz.",
         "kosten": [
           {
             "q": "18×",
@@ -40740,7 +40740,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P1",
         "groesse": "Mittel",
-        "beschreibung": "Ruhiger, dunkler Versammlungsraum. Umbral Human- Entscheidungen sind durchdacht und final. Wenig Diskussion – viel Schweigen davor.",
+        "beschreibung": "Ruhiger, dunkler Versammlungsraum. Schattenmenschen- Entscheidungen sind durchdacht und final. Wenig Diskussion – viel Schweigen davor.",
         "kosten": [
           {
             "q": "18×",
@@ -40801,7 +40801,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Gemeinschaft",
         "phase": "P2",
         "groesse": "Klein",
-        "beschreibung": "Umbral Human-Heilerinnen nutzen Schattenkräuter und Nebelessenz. Ihr Wissen verbindet Mensch- liche Heilkunst mit Schattenebenen-Magie.",
+        "beschreibung": "Schattenmenschen-Heilerinnen nutzen Schattenkräuter und Nebelessenz. Ihr Wissen verbindet Mensch- liche Heilkunst mit Schattenebenen-Magie.",
         "kosten": [
           {
             "q": "16×",
@@ -40867,7 +40867,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Habitat",
         "phase": "P1",
         "groesse": "Groß",
-        "beschreibung": "Netz aus verdunkelten Wegen und Tunneln. Umbral Humans können durch Schattenebenen- Schlitze reisen. Pflichtfundament.",
+        "beschreibung": "Netz aus verdunkelten Wegen und Tunneln. Schattenmenschens können durch Schattenebenen- Schlitze reisen. Pflichtfundament.",
         "kosten": [
           {
             "q": "36×",
@@ -40964,7 +40964,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Militär",
         "phase": "P2",
         "groesse": "Groß",
-        "beschreibung": "Magisches Schattenfeld das die Kolonie umhüllt. Sichtweite darin: 6 Meter für Fremde. Für Umbral Humans: normal.",
+        "beschreibung": "Magisches Schattenfeld das die Kolonie umhüllt. Sichtweite darin: 6 Meter für Fremde. Für Schattenmenschens: normal.",
         "kosten": [
           {
             "q": "36×",
@@ -40996,7 +40996,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Militär",
         "phase": "P2",
         "groesse": "Mittel",
-        "beschreibung": "Umbral Human-Krieger die im Schattenfeld patrouillieren. Unsichtbar für normale Augen, absolut tödlich wenn aufgedeckt.",
+        "beschreibung": "Schattenmenschen-Krieger die im Schattenfeld patrouillieren. Unsichtbar für normale Augen, absolut tödlich wenn aufgedeckt.",
         "kosten": [
           {
             "q": "28×",
@@ -41028,7 +41028,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Wissen",
         "phase": "P3",
         "groesse": "Groß",
-        "beschreibung": "Archiv über die Schattenebene, Umbral-Geschichte und das Wissen das Umbral Humans von beiden Welten geerbt haben.",
+        "beschreibung": "Archiv über die Schattenebene, Umbral-Geschichte und das Wissen das Schattenmenschens von beiden Welten geerbt haben.",
         "kosten": [
           {
             "q": "36×",
@@ -41130,7 +41130,7 @@ window.GEBAEUDE_RASSEN = [
         "katLabel": "Großprojekt · Zentrum",
         "phase": "P4",
         "groesse": "Monumental",
-        "beschreibung": "Der Rat der Umbral Humans tagt in einem Raum der gleichzeitig hier und in der Schattenebene ist. Weisheit aus zwei Welten. Entscheidungen die beide Ebenen berücksichtigen.",
+        "beschreibung": "Der Rat der Schattenmenschens tagt in einem Raum der gleichzeitig hier und in der Schattenebene ist. Weisheit aus zwei Welten. Entscheidungen die beide Ebenen berücksichtigen.",
         "voraussetzung": "Schattengedächtnis + Umbral-Festung + Nachtmarkt-Groß müssen fertiggestellt sein.",
         "kosten": [
           {
@@ -41161,13 +41161,13 @@ window.GEBAEUDE_RASSEN = [
         ],
         "bauzeit": "44 Tage",
         "effekt": [
-          "Umbral Humans erhalten Vertreter im Stadtrat.",
-          "Alle Umbral Human-Kolonisten: +1 auf alle Würfe.",
+          "Schattenmenschens erhalten Vertreter im Stadtrat.",
+          "Alle Schattenmenschen-Kolonisten: +1 auf alle Würfe.",
           "Alle WB-Werte der Kolonie: +1.",
           "Schattenwissen: 1×/Kampagne Schattenebenen-Reise",
           "für die Gruppe möglich (DM-Absprache)."
         ],
-        "schaltetFrei": "— (Endgebäude der Umbral Human-Kol.)",
+        "schaltetFrei": "— (Endgebäude der Schattenmenschen-Kol.)",
         "endgebaeude": true
       }
     ]
