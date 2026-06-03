@@ -480,6 +480,11 @@
 .rd-roll-label { font-family:var(--font-mono); font-size:8px; letter-spacing:0.25em; color:rgba(var(--accent-rgb),0.4); text-transform:uppercase; }
 .rd-roll-name  { font-family:var(--font-display); font-size:42px; font-weight:300; letter-spacing:0.12em; color:var(--white); text-shadow:0 0 40px rgba(var(--accent-rgb),0.5); animation:result-pop 0.4s cubic-bezier(0.23,1,0.32,1) forwards; }
 .rd-roll-empty { font-family:var(--font-mono); font-size:9px; letter-spacing:0.3em; color:rgba(var(--accent-rgb),0.18); text-transform:uppercase; padding-top:24px; }
+.rd-name-tabs { display:flex; flex-wrap:wrap; gap:6px; margin-top:18px; margin-bottom:4px; }
+.rd-name-tab { display:inline-flex; align-items:center; padding:6px 14px; background:rgba(var(--accent-rgb),.06); border:1px solid rgba(var(--accent-rgb),.14); border-radius:20px; font-family:var(--font-body); font-size:12px; color:var(--silver); cursor:pointer; transition:background .16s, border-color .16s, color .16s; }
+.rd-name-tab:hover { background:rgba(var(--accent-rgb),.12); color:var(--white); }
+.rd-name-tab.active { color:var(--white); background:rgba(var(--accent-rgb),.18); border-color:rgba(var(--accent-rgb),.55); }
+
 .rd-name-toggle {
   display:inline-flex; align-items:center; gap:8px; background:none; border:none; cursor:pointer;
   font-family:var(--font-mono); font-size:8px; letter-spacing:0.22em; text-transform:uppercase;

@@ -125,7 +125,7 @@ function emptyDraft() {
   return {
     name:'', titel:'', vollerName:[], rasse:'', geschlecht:'', alter:'',
     lebensphase:'', beruf:'', division:'Keine', rang:'', organisation:'', kapsel:'',
-    wohnort:'', gottheit:'', unvergesslich:'', eigenschaften:[], status:['Lebendig'],
+    wohnort:'', gottheit:'', habe:0, unvergesslich:'', eigenschaften:[], status:['Lebendig'],
     talente:[], makel:'', routine:[], ausruestung:[], begleiter:{ name:'', art:'' },
     motivationen:[], geheimnisse:[], kontakte:{ familie:[], freunde:[], rivalen:[] },
     bild:'', visible: false,
@@ -141,7 +141,7 @@ function nscToDraft(nsc) {
     lebensphase: nsc.lebensphase || '', beruf: nsc.beruf || '',
     division: nsc.division || 'Keine', rang: nsc.rang || '',
     organisation: nsc.organisation || '', kapsel: nsc.kapsel || '',
-    wohnort: nsc.wohnort || '', gottheit: nsc.gottheit || '',
+    wohnort: nsc.wohnort || '', gottheit: nsc.gottheit || '', habe: nsc.habe ?? 0,
     unvergesslich: nsc.unvergesslich || '',
     eigenschaften: nsc.eigenschaften || [],
     status: nsc.status || [],
@@ -178,6 +178,7 @@ function draftToPayload(d, existingName, currentNsc) {
     kapsel: d.kapsel.trim() || null,
     wohnort: d.wohnort.trim() || null,
     gottheit: d.gottheit.trim() || null,
+    habe: parseInt(d.habe) || 0,
     unvergesslich: d.unvergesslich.trim() || null,
     eigenschaften: d.eigenschaften.filter(s=>s.trim()),
     status: d.status,
@@ -522,6 +523,12 @@ function NscEditForm({ nsc, onSaved, nscs = [], charPersp = [] }) {
           <F label="Lebensphase"><input style={iSt} value={draft.lebensphase} onChange={e=>set('lebensphase',e.target.value)}/></F>
           <F label="Beruf"><input style={iSt} value={draft.beruf} onChange={e=>set('beruf',e.target.value)}/></F>
           <F label="Gottheit"><input style={iSt} value={draft.gottheit} onChange={e=>set('gottheit',e.target.value)}/></F>
+          <F label="Habe (Hade)">
+            <div style={{ display:'flex', alignItems:'center', gap:5 }}>
+              <input style={iSt} type="number" min="0" value={draft.habe} onChange={e=>set('habe', Math.max(0, parseInt(e.target.value)||0))}/>
+              <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'rgba(210,175,60,0.5)', letterSpacing:'.1em', flexShrink:0 }}>Hade</span>
+            </div>
+          </F>
         </div>
       </Sektion>
 
@@ -738,6 +745,7 @@ function NscAnsichtTab({ nsc }) {
         <KV k="Lebensphase" v={nsc.lebensphase} />
         <KV k="Beruf"       v={nsc.beruf} />
         <KV k="Gottheit"    v={nsc.gottheit} />
+        {nsc.habe > 0 && <KV k="Habe" v={<span style={{ color:'rgba(210,175,60,0.85)' }}>{nsc.habe.toLocaleString('de-DE')} Hade</span>} />}
       </div>
 
       {/* ── Rolle ── */}

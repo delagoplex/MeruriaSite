@@ -4289,6 +4289,610 @@ window.KLASSEN_MERKMALE = {
     ]
   },
 
+  // ── MAGIESCHMIED ─────────────────────────────────────────────────────────────
+
+  "magieschmied_magisches_tuefteln": {
+    id: "magieschmied_magisches_tuefteln",
+    name: "Magisches Tüfteln",
+    stufe: 1,
+    optional: false,
+    quelle: "Magieschmied",
+    beschreibung: [
+      "Mit Diebeswerkzeug oder Handwerkszeug kannst du einen winzigen nichtmagischen Gegenstand berühren und ihm eine magische Eigenschaft verleihen: Licht (1,5 m hell / 1,5 m dämmrig) · Botschaft (bis 6 Sek., hörbar bis 3 m) · Geruch oder Geräusch (bis 3 m) · Optischer Effekt (Bild, Text bis 25 Wörter, Linien).",
+      "Die Eigenschaft bleibt dauerhaft. Die Höchstzahl gleichzeitig tüftelter Gegenstände entspricht deinem Intelligenzmodifikator (mindestens 1). Bei Überschreitung wird die älteste Eigenschaft ersetzt."
+    ]
+  },
+
+  "magieschmied_zauberwirken": {
+    id: "magieschmied_zauberwirken",
+    name: "Zauberwirken",
+    stufe: 1,
+    optional: false,
+    quelle: "Magieschmied",
+    beschreibung: [
+      "Du kanalisierst Magie durch Werkzeug. Diebeswerkzeug oder Handwerkszeug dienen als Zauberfokus (M-Komponente). Ab Stufe 2 kann jeder durchdrungene Gegenstand als Zauberfokus dienen.",
+      "Auf der 1. Stufe kennst du 2 Zaubertricks. Du bereitest eine Anzahl Magieschmied-Zauber vor, die deinem INT-Mod. + halber Magieschmiedstufe (min. 1) entspricht. Die Liste kann nach jeder langen Rast geändert werden.",
+      "Attribut zum Zauberwirken: Intelligenz. SG = 8 + Übungsbonus + INT-Mod. Ritual-Zauber können als Ritual gewirkt werden, sofern vorbereitet."
+    ]
+  },
+
+  "magieschmied_schusswaffen_geuebheit": {
+    id: "magieschmied_schusswaffen_geuebheit",
+    name: "Schusswaffen Geübtheit",
+    stufe: 1,
+    optional: true,
+    quelle: "Magieschmied",
+    beschreibung: [
+      "Du erhältst Übung im Umgang mit Schusswaffen."
+    ]
+  },
+
+  "magieschmied_gegenstand_durchdringen": {
+    id: "magieschmied_gegenstand_durchdringen",
+    name: "Gegenstand Durchdringen",
+    stufe: 2,
+    optional: false,
+    quelle: "Magieschmied",
+    beschreibung: [
+      "Ab der 2. Stufe kannst du nichtmagische Gegenstände mit Magieschmied-Durchdringungen versehen und sie so zu magischen Gegenständen machen. Die Anzahl bekannter Durchdringungen und durchdrungener Gegenstände pro langer Rast steht in der Stufentabelle.",
+      "Durchdringungen bleiben dauerhaft, verschwinden aber nach deinem Tod (nach INT-Mod. Tagen, min. 1) oder wenn du die Kenntnis der Durchdringung ersetzt. Jeder Gegenstand kann nur eine deiner Durchdringungen enthalten. Bei Überschreitung des Maximums wird die älteste Durchdringung entfernt."
+    ]
+  },
+
+  "magieschmied_spezialist": {
+    id: "magieschmied_spezialist",
+    name: "Magieschmied-Spezialist",
+    stufe: 3,
+    optional: false,
+    quelle: "Magieschmied",
+    beschreibung: [
+      "Auf der 3. Stufe wählst du einen Spezialisten: Alchemist, Artillerist, Kampfschmied oder Rüstungsschmied. Deine Wahl verleiht dir auf der 5., 9. und 15. Stufe jeweils ein Merkmal."
+    ]
+  },
+
+  "magieschmied_das_richtige_werkzeug": {
+    id: "magieschmied_das_richtige_werkzeug",
+    name: "Das richtige Werkzeug",
+    stufe: 3,
+    optional: false,
+    quelle: "Magieschmied",
+    beschreibung: [
+      "Mit Diebeswerkzeug oder Handwerkszeug kannst du magisch einen Satz Handwerkszeug an einem freien Platz innerhalb von 1,5 m erzeugen. Dies erfordert 1 Stunde Arbeit (kann mit einer Rast zusammenfallen). Das Werkzeug ist nichtmagisch und verschwindet, wenn du dieses Merkmal erneut einsetzt."
+    ]
+  },
+
+  "magieschmied_spezialistenmerkmal": {
+    id: "magieschmied_spezialistenmerkmal",
+    name: "Merkmal: Spezialist",
+    stufe: 5,
+    optional: false,
+    quelle: "Magieschmied",
+    beschreibung: [
+      "Auf der 5., 9. und 15. Stufe erhältst du jeweils ein weiteres Merkmal deines gewählten Spezialisten."
+    ]
+  },
+
+  "magieschmied_werkzeug_expertise": {
+    id: "magieschmied_werkzeug_expertise",
+    name: "Werkzeug-Expertise",
+    stufe: 6,
+    optional: false,
+    quelle: "Magieschmied",
+    beschreibung: [
+      "Dein Übungsbonus wird bei allen Attributswürfen verdoppelt, bei denen deine Werkzeug-Expertise zur Anwendung kommt."
+    ]
+  },
+
+  "magieschmied_geistesblitz": {
+    id: "magieschmied_geistesblitz",
+    name: "Geistesblitz",
+    stufe: 7,
+    optional: false,
+    quelle: "Magieschmied",
+    beschreibung: [
+      "Wenn du oder eine Kreatur in deinem Sichtfeld innerhalb von 9 m einen Attributs- oder Rettungswurf ausführt, kannst du als Reaktion deinen Intelligenzmodifikator zum Wurf hinzufügen. Die Anzahl der Anwendungen entspricht deinem INT-Mod. (min. 1). Verbrauchte Anwendungen stehen dir nach einer langen Rast wieder zur Verfügung."
+    ]
+  },
+
+  "magieschmied_eingeweihter_magischer_gegenstaende": {
+    id: "magieschmied_eingeweihter_magischer_gegenstaende",
+    name: "Eingeweihter Magischer Gegenstände",
+    stufe: 10,
+    optional: false,
+    quelle: "Magieschmied",
+    beschreibung: [
+      "Du kannst dich auf bis zu vier magische Gegenstände gleichzeitig einstimmen (statt drei). Das Herstellen magischer Gegenstände mit Seltenheitsgrad Gewöhnlich oder Ungewöhnlich dauert nur ein Viertel der üblichen Zeit und kostet nur die Hälfte an Gold."
+    ]
+  },
+
+  "magieschmied_zauberspeicher": {
+    id: "magieschmied_zauberspeicher",
+    name: "Zauberspeicher",
+    stufe: 11,
+    optional: false,
+    quelle: "Magieschmied",
+    beschreibung: [
+      "Nach einer langen Rast kannst du eine einfache/Kriegswaffe oder einen Zauberfokus berühren und einen Magieschmied-Zauber des 1. oder 2. Grades (Wirkzeit Aktion) darin speichern. Eine Kreatur, die den Gegenstand hält, kann als Aktion den Zauber wirken (dein INT-Mod. kommt dabei zur Anwendung).",
+      "Der Zauber bleibt gespeichert, bis er (INT-Mod. × 2)-mal gewirkt wurde (min. 2×) oder du dieses Merkmal erneut verwendest."
+    ]
+  },
+
+  "magieschmied_gelehrter_magischer_gegenstaende": {
+    id: "magieschmied_gelehrter_magischer_gegenstaende",
+    name: "Gelehrter Magischer Gegenstände",
+    stufe: 14,
+    optional: false,
+    quelle: "Magieschmied",
+    beschreibung: [
+      "Du kannst dich auf bis zu fünf magische Gegenstände gleichzeitig einstimmen. Außerdem kannst du alle Voraussetzungen hinsichtlich Klasse, Volk, Zauber und Stufe ignorieren, wenn du einen magischen Gegenstand verwendest oder dich auf ihn einstimmst."
+    ]
+  },
+
+  "magieschmied_meister_magischer_gegenstaende": {
+    id: "magieschmied_meister_magischer_gegenstaende",
+    name: "Meister Magischer Gegenstände",
+    stufe: 18,
+    optional: false,
+    quelle: "Magieschmied",
+    beschreibung: [
+      "Du kannst dich auf bis zu sechs magische Gegenstände gleichzeitig einstimmen."
+    ]
+  },
+
+  "magieschmied_seele_des_magieschmieds": {
+    id: "magieschmied_seele_des_magieschmieds",
+    name: "Seele des Magieschmieds",
+    stufe: 20,
+    optional: false,
+    quelle: "Magieschmied",
+    beschreibung: [
+      "Du erhältst +1 auf alle Rettungswürfe pro magischem Gegenstand, auf den du aktuell eingestimmt bist. Wenn du 0 Trefferpunkte erreichst ohne zu sterben, kannst du als Reaktion eine deiner Magieschmied-Durchdringungen beenden und dabei auf 1 Trefferpunkt statt auf 0 sinken."
+    ]
+  },
+
+  // ── MAGIESCHMIED: DURCHDRINGUNGEN ────────────────────────────────────────────
+
+  "magieschmied_durchdringung_arkane_antriebsruestung": {
+    id: "magieschmied_durchdringung_arkane_antriebsruestung",
+    name: "Durchdringung: Arkane Antriebsrüstung",
+    stufe: 14,
+    optional: false,
+    quelle: "Magieschmied-Durchdringung",
+    beschreibung: [
+      "Voraussetzung: 14. Stufe. Gegenstand: Rüstung (erfordert Einstimmung). Der Träger erhält: +1,5 m Bewegungsrate · Panzerhandschuhe als magische Nahkampfwaffe (1W8 Energieschaden, Wurfwaffe, Grundreichweite 6 m / max. 18 m, kehrt zurück) · Rüstung kann nicht gegen seinen Willen entfernt werden · Fehlende Gliedmaßen werden ersetzt."
+    ]
+  },
+
+  "magieschmied_durchdringung_gedankenschaerfer": {
+    id: "magieschmied_durchdringung_gedankenschaerfer",
+    name: "Durchdringung: Gedankenschärfer",
+    stufe: 2,
+    optional: false,
+    quelle: "Magieschmied-Durchdringung",
+    beschreibung: [
+      "Gegenstand: Rüstung oder Robe. Der Gegenstand hat 4 Ladungen. Wenn dem Träger ein Konstitutionsrettungswurf zur Aufrechterhaltung der Konzentration misslingt, kann er eine Reaktion und eine Ladung verbrauchen, um den Wurf gelingen zu lassen. Täglich im Morgengrauen werden 1W4 Ladungen zurückgewonnen."
+    ]
+  },
+
+  "magieschmied_durchdringung_gleissende_waffe": {
+    id: "magieschmied_durchdringung_gleissende_waffe",
+    name: "Durchdringung: Gleißende Waffe",
+    stufe: 6,
+    optional: false,
+    quelle: "Magieschmied-Durchdringung",
+    beschreibung: [
+      "Voraussetzung: 6. Stufe. Gegenstand: Einfache oder Kriegswaffe (erfordert Einstimmung). +1 auf Angriff und Schaden. Als Bonusaktion: Licht (9 m hell, 9 m dämmrig) ein/ausschalten. 4 Ladungen: Als Reaktion nach einem Treffer eine Ladung verbrauchen, um den Angreifer bis Ende seines nächsten Zuges zu blenden (KON-Rettungswurf gegen Zauber-SG). Täglich 1W4 Ladungen zurück."
+    ]
+  },
+
+  "magieschmied_durchdringung_helm_der_wahrnehmung": {
+    id: "magieschmied_durchdringung_helm_der_wahrnehmung",
+    name: "Durchdringung: Helm der Wahrnehmung",
+    stufe: 10,
+    optional: false,
+    quelle: "Magieschmied-Durchdringung",
+    beschreibung: [
+      "Voraussetzung: 10. Stufe. Gegenstand: Helm (erfordert Einstimmung). Der Träger ist bei Initiativewürfen im Vorteil und kann nicht überrascht werden, solange er nicht kampfunfähig ist."
+    ]
+  },
+
+  "magieschmied_durchdringung_homunkulusdiener": {
+    id: "magieschmied_durchdringung_homunkulusdiener",
+    name: "Durchdringung: Homunkulusdiener",
+    stufe: 2,
+    optional: false,
+    quelle: "Magieschmied-Durchdringung",
+    beschreibung: [
+      "Gegenstand: Edelstein oder Kristall im Wert von mind. 100 GM. Der durchdrungene Gegenstand wird zum Herz eines Homunkulusdieners, dessen Körper sich sofort um ihn formt. Der Homunkulus ist mit dir verbündet und gehorcht deinen Befehlen.",
+      "Im Kampf folgt er deiner Initiative. Er führt nur Ausweichaktionen aus, wenn du ihn nicht mit einer Bonusaktion zu etwas anderem befielst. Ausbessern gibt ihm 2W6 TP zurück. Stirbst du oder er, verschwindet er und hinterlässt sein Herz."
+    ]
+  },
+
+  "magieschmied_durchdringung_magischen_gegenstand_replizieren": {
+    id: "magieschmied_durchdringung_magischen_gegenstand_replizieren",
+    name: "Durchdringung: Magischen Gegenstand Replizieren",
+    stufe: 2,
+    optional: false,
+    quelle: "Magieschmied-Durchdringung",
+    beschreibung: [
+      "Du replizierst einen bestimmten magischen Gegenstand. Diese Durchdringung kann mehrfach erlernt werden – wähle bei jedem Erlernen einen anderen Gegenstand aus den Listen replizierbarer Gegenstände (stufenabhängig). Tränke und Schriftrollen sind ausgenommen."
+    ]
+  },
+
+  "magieschmied_durchdringung_repetierschuss": {
+    id: "magieschmied_durchdringung_repetierschuss",
+    name: "Durchdringung: Repetierschuss",
+    stufe: 2,
+    optional: false,
+    quelle: "Magieschmied-Durchdringung",
+    beschreibung: [
+      "Gegenstand: Einfache oder Kriegswaffe mit der Geschosse-Eigenschaft (erfordert Einstimmung). +1 auf Fernkampfangriff und Schaden, Laden-Eigenschaft wird ignoriert. Wenn die Waffe nicht geladen ist, erzeugt sie automatisch ein magisches Geschoss pro Fernkampfangriff. Die erzeugte Munition verschwindet nach Treffer oder Verfehlung."
+    ]
+  },
+
+  "magieschmied_durchdringung_resistent_ruestung": {
+    id: "magieschmied_durchdringung_resistent_ruestung",
+    name: "Durchdringung: Resistent Rüstung",
+    stufe: 6,
+    optional: false,
+    quelle: "Magieschmied-Durchdringung",
+    beschreibung: [
+      "Voraussetzung: 6. Stufe. Gegenstand: Rüstung (erfordert Einstimmung). Der Träger erhält Resistenz gegen eine Schadensart deiner Wahl bei der Durchdringung: Blitz, Energie, Feuer, Gift, Gleißend, Kälte, Nekrotisch, Psychisch, Säure oder Schall."
+    ]
+  },
+
+  "magieschmied_durchdringung_ring_der_zauberauffuellung": {
+    id: "magieschmied_durchdringung_ring_der_zauberauffuellung",
+    name: "Durchdringung: Ring der Zauberauffüllung",
+    stufe: 6,
+    optional: false,
+    quelle: "Magieschmied-Durchdringung",
+    beschreibung: [
+      "Voraussetzung: 6. Stufe. Gegenstand: Ring (erfordert Einstimmung). Der Träger kann als Aktion einen verbrauchten Zauberplatz des 3. Grades oder geringer auffüllen. Kann erst beim nächsten Morgengrauen erneut genutzt werden."
+    ]
+  },
+
+  "magieschmied_durchdringung_ruestung_der_magischen_staerke": {
+    id: "magieschmied_durchdringung_ruestung_der_magischen_staerke",
+    name: "Durchdringung: Rüstung der magischen Stärke",
+    stufe: 2,
+    optional: false,
+    quelle: "Magieschmied-Durchdringung",
+    beschreibung: [
+      "Gegenstand: Rüstung (erfordert Einstimmung). 6 Ladungen. Der Träger kann Ladungen verbrauchen für: +INT-Mod. auf einen Stärkewurf oder STR-Rettungswurf · Als Reaktion umgestoßen werden verhindern. Täglich 1W6 Ladungen zurück im Morgengrauen."
+    ]
+  },
+
+  "magieschmied_durchdringung_schild_der_abstossung": {
+    id: "magieschmied_durchdringung_schild_der_abstossung",
+    name: "Durchdringung: Schild der Abstoßung",
+    stufe: 6,
+    optional: false,
+    quelle: "Magieschmied-Durchdringung",
+    beschreibung: [
+      "Voraussetzung: 6. Stufe. Gegenstand: Schild (erfordert Einstimmung). +1 auf RK. 4 Ladungen: Als Reaktion nach einem Nahkampftreffer eine Ladung verbrauchen und den Angreifer bis zu 4,5 m wegstoßen. Täglich 1W4 Ladungen zurück im Morgengrauen."
+    ]
+  },
+
+  "magieschmied_durchdringung_stiefel_des_gewundenen_pfads": {
+    id: "magieschmied_durchdringung_stiefel_des_gewundenen_pfads",
+    name: "Durchdringung: Stiefel des gewundenen Pfads",
+    stufe: 6,
+    optional: false,
+    quelle: "Magieschmied-Durchdringung",
+    beschreibung: [
+      "Voraussetzung: 6. Stufe. Gegenstand: Ein Paar Stiefel (erfordert Einstimmung). Der Träger kann als Bonusaktion bis zu 4,5 m an einen freien Platz teleportieren, den er sehen kann und den er zu irgendeinem Zeitpunkt im aktuellen Zug bereits eingenommen hat."
+    ]
+  },
+
+  "magieschmied_durchdringung_verbesserte_verteidigung": {
+    id: "magieschmied_durchdringung_verbesserte_verteidigung",
+    name: "Durchdringung: Verbesserte Verteidigung",
+    stufe: 2,
+    optional: false,
+    quelle: "Magieschmied-Durchdringung",
+    beschreibung: [
+      "Gegenstand: Rüstung oder Schild. Der Träger erhält +1 auf RK. Der Bonus erhöht sich auf +2, wenn du die 10. Stufe dieser Klasse erreichst."
+    ]
+  },
+
+  "magieschmied_durchdringung_verbesserte_waffe": {
+    id: "magieschmied_durchdringung_verbesserte_waffe",
+    name: "Durchdringung: Verbesserte Waffe",
+    stufe: 2,
+    optional: false,
+    quelle: "Magieschmied-Durchdringung",
+    beschreibung: [
+      "Gegenstand: Einfache oder Kriegswaffe. +1 auf Angriffs- und Schadenswürfe. Der Bonus erhöht sich auf +2 ab der 10. Stufe dieser Klasse."
+    ]
+  },
+
+  "magieschmied_durchdringung_verbesserter_arkaner_fokus": {
+    id: "magieschmied_durchdringung_verbesserter_arkaner_fokus",
+    name: "Durchdringung: Verbesserter Arkaner Fokus",
+    stufe: 2,
+    optional: false,
+    quelle: "Magieschmied-Durchdringung",
+    beschreibung: [
+      "Gegenstand: Rute, Zauberstecken oder Zauberstab (erfordert Einstimmung). +1 auf Zauberangriffswürfe. Außerdem ignoriert der Träger bei Zauberangriffen die Hälfte der Deckung. Der Bonus erhöht sich auf +2 ab der 10. Stufe dieser Klasse."
+    ]
+  },
+
+  "magieschmied_durchdringung_zurueckkehrende_waffe": {
+    id: "magieschmied_durchdringung_zurueckkehrende_waffe",
+    name: "Durchdringung: Zurückkehrende Waffe",
+    stufe: 2,
+    optional: false,
+    quelle: "Magieschmied-Durchdringung",
+    beschreibung: [
+      "Gegenstand: Einfache oder Kriegswaffe mit der Wurfwaffe-Eigenschaft. +1 auf Angriffs- und Schadenswürfe. Wird ein Fernkampfangriff mit ihr ausgeführt, kehrt sie unmittelbar danach in die Hand des Trägers zurück."
+    ]
+  },
+
+  // ── MAGIESCHMIED: ALCHEMIST ───────────────────────────────────────────────────
+
+  "magieschmied_alchemist_handwerkliches_geschick": {
+    id: "magieschmied_alchemist_handwerkliches_geschick",
+    name: "Handwerkliches Geschick",
+    stufe: 3,
+    optional: false,
+    quelle: "Alchemist",
+    beschreibung: [
+      "Du erhältst Übung im Umgang mit Alchemistenausrüstung. Wenn du diese bereits hast, erhältst du Übung in einem anderen Handwerkszeug deiner Wahl.",
+      "Immer vorbereitete Zauber: Stufe 3 – Heilendes Wort, Strahl der Übelkeit · Stufe 5 – Flammenkugel, Melfs Säurepfeil · Stufe 9 – Gasförmige Gestalt, Massenheilendes Wort · Stufe 13 – Dürre, Todesschutz · Stufe 17 – Todeswelle, Tote erwecken."
+    ]
+  },
+
+  "magieschmied_alchemist_experimentelles_elixier": {
+    id: "magieschmied_alchemist_experimentelles_elixier",
+    name: "Experimentelles Elixier",
+    stufe: 3,
+    optional: false,
+    quelle: "Alchemist",
+    beschreibung: [
+      "Nach einer langen Rast erzeugst du magisch ein Experimentelles Elixier in einer leeren Flasche (Alchemistenausrüstung erforderlich). Würfle für den Effekt (1W6): 1 Heilung (2W4+INT-Mod. TP) · 2 Flinkheit (+3 m Bewegungsrate, 1 Std.) · 3 Unempfindlichkeit (+1 RK, 10 Min.) · 4 Tapferkeit (W4 zu Angriff/Rettungswurf, 1 Min.) · 5 Flug (3 m Flugbewegung, 10 Min.) · 6 Verwandlung (Gestalt verändern, 10 Min.).",
+      "Elixiere halten bis zum Konsum oder zur nächsten langen Rast. Mit Zauberplatz 1+ kannst du als Aktion zusätzliche Elixiere mit gewähltem Effekt erzeugen. Auf Stufe 6 erzeugst du 2, auf Stufe 15 erzeugst du 3 Elixiere nach jeder langen Rast."
+    ]
+  },
+
+  "magieschmied_alchemist_gelehrter_der_alchemie": {
+    id: "magieschmied_alchemist_gelehrter_der_alchemie",
+    name: "Gelehrter der Alchemie",
+    stufe: 5,
+    optional: false,
+    quelle: "Alchemist",
+    beschreibung: [
+      "Wenn du einen Zauber mit Alchemistenausrüstung als Fokus wirkst, erhältst du bei einem der Zauberwürfe einen Bonus in Höhe deines INT-Mod. (min. +1). Der Wurf muss TP wiederherstellen oder Säure-, Feuer-, Gift- oder nekrotischen Schaden verursachen."
+    ]
+  },
+
+  "magieschmied_alchemist_staerkende_reagenzien": {
+    id: "magieschmied_alchemist_staerkende_reagenzien",
+    name: "Stärkende Reagenzien",
+    stufe: 9,
+    optional: false,
+    quelle: "Alchemist",
+    beschreibung: [
+      "Wenn eine Kreatur ein Experimentelles Elixier von dir trinkt, erhält sie außerdem 2W6 + INT-Mod. temporäre Trefferpunkte (min. 1).",
+      "Du kannst Schwache Genesung mit Alchemistenausrüstung als Fokus ohne Zauberplatz und ohne Vorbereitung wirken. Anzahl der Anwendungen = INT-Mod. (min. 1). Verbrauchte Anwendungen stehen nach einer langen Rast wieder zur Verfügung."
+    ]
+  },
+
+  "magieschmied_alchemist_meister_der_alchemie": {
+    id: "magieschmied_alchemist_meister_der_alchemie",
+    name: "Meister der Alchemie",
+    stufe: 15,
+    optional: false,
+    quelle: "Alchemist",
+    beschreibung: [
+      "Du erhältst Resistenz gegen Säure- und Giftschaden und bist immun gegen den Zustand Vergiftet.",
+      "Du kannst Vollständige Genesung und Heilung ohne Zauberplatz, Vorbereitung oder Materialkomponenten wirken, sofern du Alchemistenausrüstung als Fokus verwendest. Jeder dieser Zauber kann erst nach einer langen Rast erneut genutzt werden."
+    ]
+  },
+
+  // ── MAGIESCHMIED: ARTILLERIST ─────────────────────────────────────────────────
+
+  "magieschmied_artillerist_handwerkliches_geschick": {
+    id: "magieschmied_artillerist_handwerkliches_geschick",
+    name: "Handwerkliches Geschick",
+    stufe: 3,
+    optional: false,
+    quelle: "Artillerist",
+    beschreibung: [
+      "Du erhältst Übung im Umgang mit Holzschnitzwerkzeug. Wenn du diese bereits hast, erhältst du Übung in einem anderen Handwerkszeug deiner Wahl.",
+      "Immer vorbereitete Zauber: Stufe 3 – Donnerwoge, Schild · Stufe 5 – Sengender Strahl, Zerbersten · Stufe 9 – Feuerball, Windwall · Stufe 13 – Eissturm, Feuerwand · Stufe 17 – Energiewand, Kältekegel."
+    ]
+  },
+
+  "magieschmied_artillerist_mystische_kanone": {
+    id: "magieschmied_artillerist_mystische_kanone",
+    name: "Mystische Kanone",
+    stufe: 3,
+    optional: false,
+    quelle: "Artillerist",
+    beschreibung: [
+      "Als Aktion erzeugst du magisch eine kleine oder winzige mystische Kanone an einem freien Platz innerhalb 1,5 m (benötigt Holzschnitz- oder Schmiedewerkzeug). Nach einer langen Rast oder Verbrauch eines Zauberplatzes kannst du eine neue erzeugen. Du kannst nur eine Kanone zugleich haben.",
+      "RK 18, TP = 5 × Magieschmiedstufe, immun gegen Gift und Psychisch. Wähle den Typ: Beschützer (Bonusaktion: 1W8+INT temporäre TP an Kanone und Kreaturen in 3 m) · Energieballiste (Bonusaktion: Fernkampf-Zauberangriff 36 m, 2W8 Energie) · Flammenwerfer (Bonusaktion: Kegel 4,5 m, GES-Rettungswurf, 2W8 Feuer bei Misserfolg, halb bei Erfolg). Als Bonusaktion kann die Kanone 4,5 m laufen (falls Beine vorhanden). Kann nach 1 Std. oder als Aktion vorzeitig verschwinden."
+    ]
+  },
+
+  "magieschmied_artillerist_arkane_feuerwaffe": {
+    id: "magieschmied_artillerist_arkane_feuerwaffe",
+    name: "Arkane Feuerwaffe",
+    stufe: 5,
+    optional: false,
+    quelle: "Artillerist",
+    beschreibung: [
+      "Nach einer langen Rast kannst du mit Holzschnitzwerkzeug einen Zauberstab, Zauberstecken oder eine Rute zur arkanen Feuerwaffe umrüsten (Siegel bleiben bis du sie in einen anderen Gegenstand schnitzt). Als Zauberfokus nutzbar. Wenn du durch die Feuerwaffe einen Magieschmied-Zauber wirkst, würfelst du 1W8 und addierst das Ergebnis auf einen Schadenswurf des Zaubers."
+    ]
+  },
+
+  "magieschmied_artillerist_explosive_kanone": {
+    id: "magieschmied_artillerist_explosive_kanone",
+    name: "Explosive Kanone",
+    stufe: 9,
+    optional: false,
+    quelle: "Artillerist",
+    beschreibung: [
+      "Alle Schadenswürfe der mystischen Kanone sind um 1W8 erhöht. Außerdem kannst du als Aktion aus bis zu 18 m Entfernung die Kanone detonieren: Sie wird zerstört, und alle Kreaturen innerhalb von 6 m müssen einen GES-Rettungswurf ablegen. Misserfolg: 3W8 Energieschaden; Erfolg: halb."
+    ]
+  },
+
+  "magieschmied_artillerist_verstaerkte_stellung": {
+    id: "magieschmied_artillerist_verstaerkte_stellung",
+    name: "Verstärkte Stellung",
+    stufe: 15,
+    optional: false,
+    quelle: "Artillerist",
+    beschreibung: [
+      "Du und deine Verbündeten erhalten innerhalb von 3 m einer deiner mystischen Kanonen halbe Deckung durch ein schimmerndes magisches Schutzfeld.",
+      "Du kannst jetzt zwei Kanonen gleichzeitig haben. Beide können mit derselben Aktion erschaffen (aber nicht demselben Zauberplatz) und mit derselben Bonusaktion aktiviert werden."
+    ]
+  },
+
+  // ── MAGIESCHMIED: KAMPFSCHMIED ────────────────────────────────────────────────
+
+  "magieschmied_kampfschmied_handwerkliches_geschick": {
+    id: "magieschmied_kampfschmied_handwerkliches_geschick",
+    name: "Handwerkliches Geschick",
+    stufe: 3,
+    optional: false,
+    quelle: "Kampfschmied",
+    beschreibung: [
+      "Du erhältst Übung im Umgang mit Schmiedewerkzeug. Wenn du diese bereits hast, erhältst du Übung in einem anderen Handwerkszeug deiner Wahl.",
+      "Immer vorbereitete Zauber: Stufe 3 – Heldenmut, Schild · Stufe 5 – Brandmarkendes Niederstrecken, Schützendes Band · Stufe 9 – Aura der Gesundheit, Schusshagel beschwören · Stufe 13 – Aura der Reinheit, Feuerschild · Stufe 17 – Massen-Wunden heilen, Verbannendes Niederstrecken."
+    ]
+  },
+
+  "magieschmied_kampfschmied_kampfbereitschaft": {
+    id: "magieschmied_kampfschmied_kampfbereitschaft",
+    name: "Kampfbereitschaft",
+    stufe: 3,
+    optional: false,
+    quelle: "Kampfschmied",
+    beschreibung: [
+      "Du erhältst Übung im Umgang mit Kriegswaffen. Wenn du mit einer magischen Waffe angreifst, kannst du Angriffs- und Schadenswürfen deinen Intelligenzmodifikator statt Stärke oder Geschicklichkeit hinzufügen."
+    ]
+  },
+
+  "magieschmied_kampfschmied_stahlverteidiger": {
+    id: "magieschmied_kampfschmied_stahlverteidiger",
+    name: "Stahlverteidiger",
+    stufe: 3,
+    optional: false,
+    quelle: "Kampfschmied",
+    beschreibung: [
+      "Du hast einen Stahlverteidiger erschaffen – ein magisches Konstrukt als Gefährte. Er ist mit dir verbündet und gehorcht deinen Befehlen. Im Kampf nutzt er deine Initiative und ist unmittelbar nach dir am Zug.",
+      "Er führt nur Ausweichaktionen aus, wenn du ihn nicht mit einer Bonusaktion zu etwas anderem befielst. Ausbessern gibt ihm 2W6 TP zurück. Als Aktion mit Schmiedewerkzeug (in 1,5 m) und einem Zauberplatz 1+ kann er in 1 Minute mit vollen TP wiederbelebt werden. Nach jeder langen Rast kannst du mit Schmiedewerkzeug einen neuen erschaffen (der alte stirbt dabei)."
+    ]
+  },
+
+  "magieschmied_kampfschmied_zusaetzlicher_angriff": {
+    id: "magieschmied_kampfschmied_zusaetzlicher_angriff",
+    name: "Zusätzlicher Angriff",
+    stufe: 5,
+    optional: false,
+    quelle: "Kampfschmied",
+    beschreibung: [
+      "Du kannst zweimal angreifen, wenn du eine Angriffsaktion in deinem Zug ausführst."
+    ]
+  },
+
+  "magieschmied_kampfschmied_arkaner_stoss": {
+    id: "magieschmied_kampfschmied_arkaner_stoss",
+    name: "Arkaner Stoß",
+    stufe: 9,
+    optional: false,
+    quelle: "Kampfschmied",
+    beschreibung: [
+      "Wenn du oder dein Stahlverteidiger ein Ziel mit einer magischen Waffe trifft, kannst du magische Energie kanalisieren: entweder 2W6 zusätzlichen Energieschaden, oder 2W6 Trefferpunkte an ein Ziel deiner Wahl innerhalb von 9 m wiederherstellen.",
+      "Anwendungen = INT-Mod. (min. 1), max. einmal pro Zug. Verbrauchte Anwendungen stehen nach einer langen Rast wieder zur Verfügung."
+    ]
+  },
+
+  "magieschmied_kampfschmied_verbesserter_verteidiger": {
+    id: "magieschmied_kampfschmied_verbesserter_verteidiger",
+    name: "Verbesserter Verteidiger",
+    stufe: 15,
+    optional: false,
+    quelle: "Kampfschmied",
+    beschreibung: [
+      "Arkaner Stoß und Stahlverteidiger werden mächtiger: Extraschaden und Heilung durch Arkanen Stoß steigen auf 4W6. Dein Stahlverteidiger erhält +2 auf RK. Wenn der Stahlverteidiger seine Angriffsabwehr einsetzt, erleidet der Angreifer 1W4 + INT-Mod. Energieschaden."
+    ]
+  },
+
+  // ── MAGIESCHMIED: RÜSTUNGSSCHMIED ────────────────────────────────────────────
+
+  "magieschmied_ruestungsschmied_handwerkszeug": {
+    id: "magieschmied_ruestungsschmied_handwerkszeug",
+    name: "Handwerkszeug",
+    stufe: 3,
+    optional: false,
+    quelle: "Rüstungsschmied",
+    beschreibung: [
+      "Du erhältst Übung im Umgang mit schwerer Rüstung und Schmiedewerkzeug. Falls du letzteres bereits hast, erhältst du Übung in einem anderen Handwerkszeug deiner Wahl.",
+      "Immer vorbereitete Zauber: Stufe 3 – Donnerwoge, Magisches Geschoss · Stufe 5 – Spiegelbilder, Zerbersten · Stufe 9 – Blitz, Hypnotisches Muster · Stufe 13 – Feuerschild, Mächtige Unsichtbarkeit · Stufe 17 – Energiewand, Wände passieren."
+    ]
+  },
+
+  "magieschmied_ruestungsschmied_arkane_ruestung": {
+    id: "magieschmied_ruestungsschmied_arkane_ruestung",
+    name: "Arkane Rüstung",
+    stufe: 3,
+    optional: false,
+    quelle: "Rüstungsschmied",
+    beschreibung: [
+      "Als Aktion (Schmiedewerkzeug erforderlich) verwandelst du deine getragene Rüstung in eine arkane Rüstung. Vorteile: Stärkevoraussetzung entfällt · Als Zauberfokus nutzbar · Kann nicht gegen deinen Willen entfernt werden · Bedeckt deinen ganzen Körper (Helm als Bonusaktion auf/ab) · Ersetzt fehlende Gliedmaßen · Kann als Aktion an/abgelegt werden. Die Rüstung bleibt arkan bis du eine andere anlegst oder stirbst."
+    ]
+  },
+
+  "magieschmied_ruestungsschmied_ruestungsmodell": {
+    id: "magieschmied_ruestungsschmied_ruestungsmodell",
+    name: "Rüstungsmodell",
+    stufe: 3,
+    optional: false,
+    quelle: "Rüstungsschmied",
+    beschreibung: [
+      "Wähle ein Rüstungsmodell: Wächter oder Infiltrator. Bei Angriffen mit der Spezialwaffe des Modells verwendest du INT statt STR/GES. Das Modell kann nach jeder kurzen/langen Rast (mit Schmiedewerkzeug) gewechselt werden.",
+      "Wächter: Donnerhandschuhe (einfache Nahkampfwaffe, 1W8 Schall, Angreifer bei Angriffen auf andere bis nächsten Zug im Nachteil) · Defensives Feld (Bonusaktion: temporäre TP = Magieschmiedstufe, Anwendungen = Übungsbonus, nach langer Rast zurück).",
+      "Infiltrator: Blitzwerfer (einfache Fernkampfwaffe 27/90 m, 1W6 Blitz, einmal/Zug +1W6 gleißend) · Energieschritte (+1,5 m Bewegungsrate) · Dämpfendes Feld (Vorteil bei Heimlichkeit, hebt Nachteil durch Rüstung auf)."
+    ]
+  },
+
+  "magieschmied_ruestungsschmied_zusaetzlicher_angriff": {
+    id: "magieschmied_ruestungsschmied_zusaetzlicher_angriff",
+    name: "Zusätzlicher Angriff",
+    stufe: 5,
+    optional: false,
+    quelle: "Rüstungsschmied",
+    beschreibung: [
+      "Du kannst zweimal angreifen, wenn du eine Angriffsaktion in deinem Zug ausführst."
+    ]
+  },
+
+  "magieschmied_ruestungsschmied_ruestungsmodifikationen": {
+    id: "magieschmied_ruestungsschmied_ruestungsmodifikationen",
+    name: "Rüstungsmodifikationen",
+    stufe: 9,
+    optional: false,
+    quelle: "Rüstungsschmied",
+    beschreibung: [
+      "Deine arkane Rüstung zählt bei Gegenstand durchdringen als vier separate Gegenstände: Helm, Rüstung (Brustteil), Stiefel und Spezialwaffe. Jeder kann eine Durchdringung tragen, die beim Wechsel des Rüstungsmodells übernommen wird. Zusätzlich erhöht sich die maximale Anzahl gleichzeitig durchdrungener Gegenstände um 2 (nur für Teile der arkanen Rüstung)."
+    ]
+  },
+
+  "magieschmied_ruestungsschmied_perfektionierte_ruestung": {
+    id: "magieschmied_ruestungsschmied_perfektionierte_ruestung",
+    name: "Perfektionierte Rüstung",
+    stufe: 15,
+    optional: false,
+    quelle: "Rüstungsschmied",
+    beschreibung: [
+      "Wächter: Wenn eine Riesig-oder-kleinere Kreatur in Sichtweite ihren Zug innerhalb von 9 m beendet, kannst du als Reaktion sie zu einem STR-Rettungswurf zwingen und bis zu 9 m in deine Richtung ziehen. Wenn das Ziel in 1,5 m endet, kannst du als Teil der Reaktion einen Nahkampfangriff ausführen. Anwendungen = Übungsbonus, nach langer Rast zurück.",
+      "Infiltrator: Kreaturen, die Schaden durch den Blitzwerfer erleiden, leuchten bis zum Beginn deines nächsten Zuges (1,5 m dämmriges Licht), sind bei Angriffen gegen dich im Nachteil, und der nächste Angriff gegen sie ist im Vorteil (+1W6 Blitzschaden bei Treffer)."
+    ]
+  },
+
   // ── KLERIKER ─────────────────────────────────────────────────────────────────
 
   "kleriker_zauberwirken": {
@@ -6038,6 +6642,3749 @@ window.KLASSEN_MERKMALE = {
     quelle: "Chronurgy",
     beschreibung: [
       "(Folgt – wird zu einem späteren Zeitpunkt ergänzt.)"
+    ]
+  },
+
+  // ── MÖNCH ───────────────────────────────────────────────────────────────────
+
+  "moench_ungeruestete_verteidigung": {
+    id: "moench_ungeruestete_verteidigung",
+    name: "Ungerüstete Verteidigung",
+    stufe: 1,
+    optional: false,
+    quelle: "Mönch",
+    beschreibung: [
+      "Ab der 1. Stufe entspricht deine Rüstungsklasse 10 + deinem Geschicklichkeitsmodifikator + deinem Weisheitsmodifikator, solange du weder eine Rüstung noch einen Schild trägst."
+    ]
+  },
+
+  "moench_kampfkuenste": {
+    id: "moench_kampfkuenste",
+    name: "Kampfkünste",
+    stufe: 1,
+    optional: false,
+    quelle: "Mönch",
+    beschreibung: [
+      "Auf der 1. Stufe erlangst du durch deine Übung in den Kampfkünsten Meisterschaft im Umgang mit Mönchswaffen und im waffenlosen Kampf. Als Mönchswaffe gelten alle Kurzschwerter und jede einfache Waffe, die nicht als zweihändig oder schwer gekennzeichnet ist. Du erhältst die folgenden Vorzüge, wenn du weder eine Rüstung noch einen Schild trägst und solange du unbewaffnet bist oder nur eine Mönchswaffe benutzt.",
+      "Für deine Angriffs- und Schadenswürfe mit Mönchswaffen oder waffenlosen Schlägen darfst du deinen Geschicklichkeitsmodifikator anstelle deines Stärkemodifikators verwenden.",
+      "Für deine waffenlosen Angriffe und die mit Mönchswaffen kannst du einen W4 anstelle des regulären Schadenswürfels benutzen. Dieser W4 verbessert sich auf höheren Stufen, so wie es in der Aufstiegstabelle des Mönchs unter Kampfkünste angegeben ist.",
+      "Wählst du in deinem Zug die Angriffsaktion mit einer Mönchswaffe oder einem waffenlosen Schlag, darfst du einen zusätzlichen waffenlosen Schlag als Bonusaktion ausführen. Diesen Vorzug kannst du nur nutzen, wenn du in diesem Zug noch keine Bonusaktion aufgewendet hast."
+    ]
+  },
+
+  "moench_ki": {
+    id: "moench_ki",
+    name: "Ki",
+    stufe: 2,
+    optional: false,
+    quelle: "Mönch",
+    beschreibung: [
+      "Ab Stufe 2 erlaubt dir dein Training, die mystische Energie des Ki nutzbar zu machen. Dein Zugriff auf diese Energie wird durch Ki-Punkte dargestellt, deren Anzahl deine Stufe als Mönch bestimmt. Du kannst diese Punkte ausgeben, um verschiedene Ki-Fähigkeiten einzusetzen. Zu Beginn kennst du drei solcher Fähigkeiten: Schlaghagel, Geduldige Verteidigung und Windschritt.",
+      "Gibst du einen Ki-Punkt aus, ist er verbraucht. Alle verbrauchten Ki-Punkte stehen dir erst wieder nach einer kurzen oder langen Rast zur Verfügung. Du musst mindestens 30 Minuten der Rast mit Meditation verbringen, um die Ki-Punkte wiederzuerlangen.",
+      "SG für Rettungswürfe gegen Ki-Fähigkeiten = 8 + dein Übungsbonus + dein Weisheitsmodifikator.",
+      "Schlaghagel: Sofort nachdem du die Angriffsaktion in deinem Zug ausgeführt hast, kannst du 1 Ki-Punkt ausgeben, um zwei waffenlose Schläge als Bonusaktion auszuführen.",
+      "Geduldige Verteidigung: Du kannst 1 Ki-Punkt ausgeben, um die Ausweichenaktion als Bonusaktion in deinem Zug zu verwenden.",
+      "Windschritt: Du kannst 1 Ki-Punkt ausgeben, um die Rückzugs- oder Spurtenaktion als Bonusaktion in deinem Zug zu verwenden. Zusätzlich wird deine Sprungweite beziehungsweise -höhe für diesen Zug verdoppelt."
+    ]
+  },
+
+  "moench_ungeruestete_bewegung": {
+    id: "moench_ungeruestete_bewegung",
+    name: "Ungerüstete Bewegung",
+    stufe: 2,
+    optional: false,
+    quelle: "Mönch",
+    beschreibung: [
+      "Beginnend mit der 2. Stufe steigt deine Bewegungsrate um 3 m, solange du weder eine Rüstung noch einen Schild trägst. Dieser Bonus erhöht sich auf bestimmten Stufen als Mönch, so wie es in der Aufstiegstabelle angegeben ist."
+    ]
+  },
+
+  "moench_geweihte_waffe": {
+    id: "moench_geweihte_waffe",
+    name: "Geweihte Waffe",
+    stufe: 2,
+    optional: true,
+    quelle: "Mönch",
+    beschreibung: [
+      "Du hast gelernt, eine ganze Reihe Waffen als Mönchswaffen zu nutzen, nicht nur einfache Nahkampfwaffen und Kurzschwerter. Nach jeder kurzen oder langen Rast kannst du eine Waffe berühren und dein Ki auf sie fokussieren. Die Waffe zählt dann als Mönchswaffe, bis du dieses Merkmal erneut einsetzt.",
+      "Die gewählte Waffe muss folgende Kriterien erfüllen: Sie muss eine einfache Waffe oder Kriegswaffe sein. Du musst im Umgang mit ihr geübt sein. Sie darf nicht die Eigenschaft Schwer oder Speziell besitzen."
+    ]
+  },
+
+  "moench_klostertradition": {
+    id: "moench_klostertradition",
+    name: "Klostertradition",
+    stufe: 3,
+    optional: false,
+    quelle: "Mönch",
+    beschreibung: [
+      "Sobald du die 3. Stufe erreichst, verschreibst du dich einer Klostertradition. Deine Wahl verleiht dir auf der 3., 6., 11. und 17. Stufe jeweils ein Merkmal.",
+      "Drei unterschiedliche Traditionen werden für gewöhnlich in den Klöstern gelehrt: Weg der Offenen Hand, Weg des Schattens und Weg der Vier Elemente. Einige Klöster ehren alle drei und unterweisen jeden Mönch entsprechend seiner Neigungen."
+    ]
+  },
+
+  "moench_klostertradition_merkmal": {
+    id: "moench_klostertradition_merkmal",
+    name: "Merkmal: Klostertradition",
+    stufe: 6,
+    optional: false,
+    quelle: "Mönch",
+    beschreibung: [
+      "Du erhältst ein weiteres Merkmal aus deiner gewählten Klostertradition."
+    ]
+  },
+
+  "moench_geschosse_abwehren": {
+    id: "moench_geschosse_abwehren",
+    name: "Geschosse abwehren",
+    stufe: 3,
+    optional: false,
+    quelle: "Mönch",
+    beschreibung: [
+      "Ab der 3. Stufe kannst du deine Reaktion verwenden, um Geschosse abzuwehren oder zurückzuwerfen, wenn du von dem Angriff einer Fernkampfwaffe getroffen wirst. Reduziere in diesem Fall den Schaden des Angriffs um 1W10 + deinen Geschicklichkeitsmodifikator + deine Stufe als Mönch.",
+      "Falls der Schaden dadurch auf 0 verringert wird, kannst du das Geschoss fangen, sollte es klein genug sein, um es mit einer Hand zu halten, und du mindestens eine Hand frei haben. Fängst du ein Geschoss auf diese Weise, kannst du 1 Ki-Punkt ausgeben, um einen Fernkampfangriff mit der Waffe oder der Munition auszuführen, die du gerade gefangen hast. Das Geschoss gilt als Mönchswaffe und besitzt eine Grundreichweite von 6 m und eine Maximalreichweite von 18 m."
+    ]
+  },
+
+  "moench_ki_getriebener_angriff": {
+    id: "moench_ki_getriebener_angriff",
+    name: "Ki-Getriebener Angriff",
+    stufe: 3,
+    optional: true,
+    quelle: "Mönch",
+    beschreibung: [
+      "Du kannst in deinem Zug als Teil deiner Aktion einen oder mehrere Ki-Punkte verbrauchen, um als Bonusaktion vor Ende deines Zugs noch einen waffenlosen Angriff oder einen Angriff mit einer Mönchswaffe durchzuführen."
+    ]
+  },
+
+  "moench_sturz_abfedern": {
+    id: "moench_sturz_abfedern",
+    name: "Sturz abfedern",
+    stufe: 4,
+    optional: false,
+    quelle: "Mönch",
+    beschreibung: [
+      "Ab der 4. Stufe kannst du deine Reaktion einsetzen, um den Fallschaden durch einen Sturz um deine Stufe als Mönch mal 5 zu reduzieren."
+    ]
+  },
+
+  "moench_beschleunigte_heilung": {
+    id: "moench_beschleunigte_heilung",
+    name: "Beschleunigte Heilung",
+    stufe: 4,
+    optional: true,
+    quelle: "Mönch",
+    beschreibung: [
+      "Du kannst als Aktion zwei Ki-Punkte verbrauchen und einen Kampfkünste-Würfel werfen. Du erhältst Trefferpunkte in Höhe des Wurfergebnisses + deines Übungsbonus."
+    ]
+  },
+
+  "moench_zusaetzlicher_angriff": {
+    id: "moench_zusaetzlicher_angriff",
+    name: "Zusätzlicher Angriff",
+    stufe: 5,
+    optional: false,
+    quelle: "Mönch",
+    beschreibung: [
+      "Beginnend mit der 5. Stufe kannst du zweimal anstatt einmal angreifen, wenn du eine Angriffsaktion in deinem Zug ausführst."
+    ]
+  },
+
+  "moench_betaeubender_schlag": {
+    id: "moench_betaeubender_schlag",
+    name: "Betäubender Schlag",
+    stufe: 5,
+    optional: false,
+    quelle: "Mönch",
+    beschreibung: [
+      "Angefangen mit der 5. Stufe bist du in der Lage, den Fluss des Ki im Körper deines Gegners zu stören. Wenn du eine andere Kreatur mit einem Nahkampfangriff triffst, kannst du 1 Ki-Punkt ausgeben, um einen betäubenden Schlag anzusetzen. Dem Ziel muss ein Konstitutionsrettungswurf gelingen oder es gilt bis zum Ende deines nächsten Zuges als betäubt."
+    ]
+  },
+
+  "moench_zielgenauigkeit": {
+    id: "moench_zielgenauigkeit",
+    name: "Zielgenauigkeit",
+    stufe: 5,
+    optional: true,
+    quelle: "Mönch",
+    beschreibung: [
+      "Wenn du bei einem Angriffswurf nicht triffst, kannst du bis zu drei Ki-Punkte verbrauchen, um dein Wurfergebnis pro Ki-Punkt um zwei Punkte zu erhöhen, wodurch du möglicherweise doch triffst."
+    ]
+  },
+
+  "moench_ki_schlaege": {
+    id: "moench_ki_schlaege",
+    name: "Ki-Schläge",
+    stufe: 6,
+    optional: false,
+    quelle: "Mönch",
+    beschreibung: [
+      "Deine waffenlosen Angriffe zählen ab der 6. Stufe als magisch, wenn es darum geht, Resistenzen und Immunitäten gegen nicht-magische Angriffe und nicht-magischen Schaden zu überwinden."
+    ]
+  },
+
+  "moench_entrinnen": {
+    id: "moench_entrinnen",
+    name: "Entrinnen",
+    stufe: 7,
+    optional: false,
+    quelle: "Mönch",
+    beschreibung: [
+      "Ab der 7. Stufe kannst du dich dank deiner instinktiven Gewandheit dem Wirkungsbereich bestimmter Effekte entziehen, wie etwa dem Blitzodem eines blauen Drachen oder dem Zauber Feuerball. Bist du einem Effekt ausgesetzt, der einen Geschicklichkeitsrettungswurf erlaubt, um den Schaden zu halbieren, nimmst du bei einem erfolgreichen Rettungswurf gar keinen Schaden und bei einem Misserfolg lediglich die Hälfte des Schadens."
+    ]
+  },
+
+  "moench_ruhiger_geist": {
+    id: "moench_ruhiger_geist",
+    name: "Ruhiger Geist",
+    stufe: 7,
+    optional: false,
+    quelle: "Mönch",
+    beschreibung: [
+      "Beginnend mit Stufe 7 kannst du deine Aktion verwenden, um einen auf dich wirkenden Effekt zu beenden, durch den du verängstigt oder bezaubert bist."
+    ]
+  },
+
+  "moench_verbesserte_ungeruestete_bewegung": {
+    id: "moench_verbesserte_ungeruestete_bewegung",
+    name: "Verbesserte Ungerüstete Bewegung",
+    stufe: 9,
+    optional: false,
+    quelle: "Mönch",
+    beschreibung: [
+      "Auf der 9. Stufe verbessert sich das Merkmal Ungerüstete Bewegung. Du erhältst die Fähigkeit, dich in deinem Zug an senkrechten Oberflächen entlang und über Flüssigkeiten zu bewegen, ohne zu stürzen oder einzusinken, solange du in Bewegung bleibst."
+    ]
+  },
+
+  "moench_reinheit_des_koerpers": {
+    id: "moench_reinheit_des_koerpers",
+    name: "Reinheit des Körpers",
+    stufe: 10,
+    optional: false,
+    quelle: "Mönch",
+    beschreibung: [
+      "Auf Stufe 10 lässt dich deine Kunst, den Fluss des Ki in deinem Körper zu beherrschen, immun gegen Gifte und Krankheiten werden."
+    ]
+  },
+
+  "moench_sprache_von_sonne_und_mond": {
+    id: "moench_sprache_von_sonne_und_mond",
+    name: "Sprache von Sonne und Mond",
+    stufe: 13,
+    optional: false,
+    quelle: "Mönch",
+    beschreibung: [
+      "Angefangen auf Stufe 13 lernst du, das Ki in den Gedanken anderer Wesen wahrzunehmen, sodass du jede gesprochene Sprache verstehen kannst. Überdies ist jede Kreatur, die eine Sprache beherrscht, imstande, auch dich zu verstehen."
+    ]
+  },
+
+  "moench_diamantseele": {
+    id: "moench_diamantseele",
+    name: "Diamantseele",
+    stufe: 14,
+    optional: false,
+    quelle: "Mönch",
+    beschreibung: [
+      "Durch deine Beherrschung des Ki giltst du ab der 14. Stufe in allen Rettungswürfen als geübt. Zusätzlich kannst du jedes Mal, wenn du einen Rettungswurf ablegst und dabei scheiterst, 1 Ki-Punkt ausgeben, um erneut zu würfeln. Das zweite Ergebnis musst du allerdings anwenden."
+    ]
+  },
+
+  "moench_zeitloser_koerper": {
+    id: "moench_zeitloser_koerper",
+    name: "Zeitloser Körper",
+    stufe: 15,
+    optional: false,
+    quelle: "Mönch",
+    beschreibung: [
+      "Dein Ki schützt dich ab Stufe 15 vor den negativen Auswirkungen des Alterns. Zusätzlich kannst du nicht mehr auf magischem Wege gealtert werden. Trotzdem kannst du immer noch aufgrund eines hohen Alters sterben. Darüber hinaus nährt dich dein Ki, sodass du nicht mehr essen und trinken musst."
+    ]
+  },
+
+  "moench_geist_ueber_koerper": {
+    id: "moench_geist_ueber_koerper",
+    name: "Geist über Körper",
+    stufe: 18,
+    optional: false,
+    quelle: "Mönch",
+    beschreibung: [
+      "Ab der 18. Stufe kannst du als Aktion 4 Ki-Punkte ausgeben, um für 1 Minute unsichtbar zu werden. In dieser Zeit bist du gegen jeglichen Schaden resistent, außer gegen Energieschaden.",
+      "Außerdem kannst du 8 Ki-Punkte ausgeben, um den Zauber Astrale Projektion zu wirken, ohne über die dafür benötigten Materialkomponenten verfügen zu müssen. Dabei kannst du allerdings keine anderen Kreaturen mitnehmen."
+    ]
+  },
+
+  "moench_perfektes_selbst": {
+    id: "moench_perfektes_selbst",
+    name: "Perfektes Selbst",
+    stufe: 20,
+    optional: false,
+    quelle: "Mönch",
+    beschreibung: [
+      "Wenn du ab Stufe 20 beim Würfeln der Initiative keine Ki-Punkte mehr besitzen solltest, erhältst du 4 Ki-Punkte zurück."
+    ]
+  },
+
+  // ── MÖNCH: WEG DES ASTRALEN SELBST ─────────────────────────────────────────
+
+  "moench_astral_arme_des_astralen_selbst": {
+    id: "moench_astral_arme_des_astralen_selbst",
+    name: "Arme des Astralen Selbst",
+    stufe: 3,
+    optional: false,
+    quelle: "Weg des Astralen Selbst",
+    beschreibung: [
+      "Deine Beherrschung des Ki ermöglicht es dir, einen Teil deines astralen Selbst zu manifestieren. Du kannst als Bonusaktion einen Ki-Punkt verbrauchen, um die Arme deines astralen Selbst hervorzurufen.",
+      "Jede Kreatur deiner Wahl, die du in einer Reichweite von drei Metern sehen kannst, muss einen Rettungswurf auf Geschicklichkeit bestehen, ansonsten erleidet sie Energieschaden entsprechend zwei Würfen deines Kampfkünste-Würfels.",
+      "Deine spektralen Arme schweben zehn Minuten lang nahe deiner Schultern oder umschließen deine Arme. Während sie zugegen sind: Du kannst bei Stärke-Attributs- und Rettungswürfen deinen Weisheitsmodifikator verwenden. Du kannst mit deinen spektralen Armen waffenlose Angriffe durchführen, deren Reichweite 1,5 m größer ist als gewöhnlich, und dabei deinen Weisheitsmodifikator für Angriffs- und Schadenswürfe verwenden. Die Schadensart ist Energieschaden."
+    ]
+  },
+
+  "moench_astral_antlitz_des_astralen_selbst": {
+    id: "moench_astral_antlitz_des_astralen_selbst",
+    name: "Antlitz des Astralen Selbst",
+    stufe: 6,
+    optional: false,
+    quelle: "Weg des Astralen Selbst",
+    beschreibung: [
+      "Du kannst das Gesicht deines astralen Selbst manifestieren. Du kannst als Bonusaktion oder als Teil der Bonusaktion, mit der du deine astralen Arme hervorrufst, einen Ki-Punkt verbrauchen, damit dein astrales Antlitz für zehn Minuten sichtbar wird.",
+      "Während dein spektrales Antlitz zugegen ist: Astralsicht – Du kannst sowohl in magischer als auch nicht-magischer Dunkelheit 36 Meter weit sehen. Weisheit des Geistes – Du bist bei Attributswürfen auf Weisheit (Motiv erkennen) und Charisma (Einschüchtern) im Vorteil. Worte des Geistes – Wenn du sprichst, kannst du bewirken, dass nur eine bestimmte Kreatur innerhalb von 18 Metern dich hört, oder deine Stimme verstärken, sodass sie von allen Kreaturen im Umkreis von 180 Metern gehört wird."
+    ]
+  },
+
+  "moench_astral_koerper_des_astralen_selbst": {
+    id: "moench_astral_koerper_des_astralen_selbst",
+    name: "Körper des Astralen Selbst",
+    stufe: 11,
+    optional: false,
+    quelle: "Weg des Astralen Selbst",
+    beschreibung: [
+      "Wenn du sowohl deine astralen Arme als auch dein astrales Antlitz manifestiert hast, kannst du zusätzlich deinen astralen Körper erscheinen lassen (erfordert keine Aktion). Dieser spektrale Körper umhüllt deine physische Form wie eine Rüstung.",
+      "Während dein spektraler Körper zugegen ist: Energie umleiten – Erleidest du Blitz-, Energie-, Feuer-, Kälte-, Säure- oder Schallschaden, kannst du diesen mit deiner Reaktion umlenken und um 1W10 + deinen Weisheitsmodifikator verringern (mindestens 1). Verstärkte Arme – Wenn du ein Ziel mit deinen Armen des astralen Selbst triffst, kannst du in jedem deiner Züge zusätzlichen Schaden in Höhe deines Kampfkünste-Würfels verursachen."
+    ]
+  },
+
+  "moench_astral_erwecktes_astrales_selbst": {
+    id: "moench_astral_erwecktes_astrales_selbst",
+    name: "Erwecktes Astrales Selbst",
+    stufe: 17,
+    optional: false,
+    quelle: "Weg des Astralen Selbst",
+    beschreibung: [
+      "Du hast dich vollständig mit deinem astralen Selbst verbunden und kannst jetzt sein volles Potenzial ausschöpfen. Als Bonusaktion kannst du fünf Ki-Punkte verbrauchen, um Arme, Antlitz und Körper herbeizurufen und für zehn Minuten zu erwecken.",
+      "Während dein astrales Selbst erweckt ist: Astraler Fausthagel – Wenn du das Merkmal Zusätzlicher Angriff nutzt, um zweimal anzugreifen, kannst du stattdessen dreimal angreifen, vorausgesetzt du greifst dabei immer mit deinen astralen Armen an. Geistige Rüstung – Du erhältst einen Bonus von +2 auf die Rüstungsklasse."
+    ]
+  },
+
+  // ── MÖNCH: WEG DER BARMHERZIGKEIT ───────────────────────────────────────────
+
+  "moench_barm_angewandte_barmherzigkeit": {
+    id: "moench_barm_angewandte_barmherzigkeit",
+    name: "Angewandte Barmherzigkeit",
+    stufe: 3,
+    optional: false,
+    quelle: "Weg der Barmherzigkeit",
+    beschreibung: [
+      "Du bist in den Fertigkeiten Heilkunde und Motiv erkennen sowie mit Kräuterkunde-Ausrüstung geübt.",
+      "Außerdem besitzt du eine Maske, die du oft trägst, wenn du die Merkmale dieser Unterklasse anwendest. Mögliche Aussehen (W6): 1 Rabe, 2 Schwarzweiß, 3 Weinendes Antlitz, 4 Lachendes Antlitz, 5 Totenschädel, 6 Schmetterling."
+    ]
+  },
+
+  "moench_barm_heilende_hand": {
+    id: "moench_barm_heilende_hand",
+    name: "Heilende Hand",
+    stufe: 3,
+    optional: false,
+    quelle: "Weg der Barmherzigkeit",
+    beschreibung: [
+      "Deine geheimnisvolle Berührung kann Wunden heilen. Du kannst als Aktion einen Ki-Punkt verbrauchen, um eine Kreatur zu berühren und ihre Trefferpunkte in Höhe eines Wurfs deines Kampfkünste-Würfels + deines Weisheitsmodifikators zu regenerieren. Du kannst einen der unbewaffneten Schläge deines Schlaghagels mit einer Nutzung dieses Merkmals ersetzen, ohne einen Ki-Punkt für die Heilung zu verbrauchen."
+    ]
+  },
+
+  "moench_barm_verletzende_hand": {
+    id: "moench_barm_verletzende_hand",
+    name: "Verletzende Hand",
+    stufe: 3,
+    optional: false,
+    quelle: "Weg der Barmherzigkeit",
+    beschreibung: [
+      "Du kannst mit deinem Ki Wunden verursachen. Triffst du eine Kreatur mit einem waffenlosen Angriff, kannst du einen Ki-Punkt verbrauchen, um ihr zusätzlichen nekrotischen Schaden in Höhe eines Wurfs deines Kampfkünste-Würfels + deines Weisheitsmodifikators zuzufügen. Du kannst dieses Merkmal nur einmal pro Zug anwenden."
+    ]
+  },
+
+  "moench_barm_medizinische_beruehrung": {
+    id: "moench_barm_medizinische_beruehrung",
+    name: "Medizinische Berührung",
+    stufe: 6,
+    optional: false,
+    quelle: "Weg der Barmherzigkeit",
+    beschreibung: [
+      "Wenn du deine Heilende Hand auf eine Kreatur wirkst, kannst du auch eine auf ihr liegende Krankheit oder einen der folgenden Zustände heilen: Betäubt, Blind, Gelähmt, Taub oder Vergiftet.",
+      "Wenn du deine Verletzende Hand auf eine Kreatur wirkst, kannst du ihr bis zum Ende deines nächsten Zugs den Zustand Vergiftet zufügen."
+    ]
+  },
+
+  "moench_barm_schlaege_voll_heilung_und_leid": {
+    id: "moench_barm_schlaege_voll_heilung_und_leid",
+    name: "Schläge voll Heilung und Leid",
+    stufe: 11,
+    optional: false,
+    quelle: "Weg der Barmherzigkeit",
+    beschreibung: [
+      "Wenn du deinen Schlaghagel einsetzt, kannst du jetzt jeden der unbewaffneten Schläge mit einem Einsatz deiner Heilenden Hand ersetzen, ohne einen Ki-Punkt für die Heilung zu verbrauchen.",
+      "Außerdem kannst du, wenn du deinen Schlaghagel einsetzt, mit jedem unbewaffneten Schlag deine Verletzende Hand einsetzen, ohne einen Ki-Punkt dafür zu verbrauchen. Du kannst deine Verletzende Hand weiterhin nur einmal pro Zug einsetzen."
+    ]
+  },
+
+  "moench_barm_hand_der_hohen_barmherzigkeit": {
+    id: "moench_barm_hand_der_hohen_barmherzigkeit",
+    name: "Hand der Hohen Barmherzigkeit",
+    stufe: 17,
+    optional: false,
+    quelle: "Weg der Barmherzigkeit",
+    beschreibung: [
+      "Du kannst als Aktion den Leichnam einer Kreatur, die innerhalb der letzten 24 Stunden gestorben ist, berühren und 5 Ki-Punkte verbrauchen. Daraufhin erwacht die Kreatur zu neuem Leben. Ihre Trefferpunkte entsprechen 4W10 + deinem Weisheitsmodifikator. Starb die Kreatur, während sie unter einem der folgenden Zustände litt, belebst du sie davon geheilt wieder: Betäubt, Blind, Gelähmt, Taub, Vergiftet.",
+      "Du kannst dieses Merkmal erst nach einer langen Rast erneut verwenden."
+    ]
+  },
+
+  // ── MÖNCH: WEG DES BETRUNKENEN MEISTERS ────────────────────────────────────
+
+  "moench_betrunken_zusaetzliche_uebung": {
+    id: "moench_betrunken_zusaetzliche_uebung",
+    name: "Zusätzliche Übung",
+    stufe: 3,
+    optional: false,
+    quelle: "Weg des Betrunkenen Meisters",
+    beschreibung: [
+      "Du erhältst Übung in der Fertigkeit Auftreten, wenn du nicht bereits darin geübt bist. Du erhältst außerdem Übung im Umgang mit Brauereivorräten, wenn du nicht bereits diese Übung besitzt."
+    ]
+  },
+
+  "moench_betrunken_trunkene_technik": {
+    id: "moench_betrunken_trunkene_technik",
+    name: "Trunkene Technik",
+    stufe: 3,
+    optional: false,
+    quelle: "Weg des Betrunkenen Meisters",
+    beschreibung: [
+      "Auf der 3. Stufe lernst du, wie du dich während deines Schlaghagels rasch hin und her bewegst. Immer, wenn du Schlaghagel einsetzt, erhältst du die Vorteile der Aktion Rückzug, und deine Schrittbewegungsrate erhöht sich um 3 m bis zum Ende deines aktuellen Zuges."
+    ]
+  },
+
+  "moench_betrunken_betrunkenes_taumeln": {
+    id: "moench_betrunken_betrunkenes_taumeln",
+    name: "Betrunkenes Taumeln",
+    stufe: 6,
+    optional: false,
+    quelle: "Weg des Betrunkenen Meisters",
+    beschreibung: [
+      "Ab der 6. Stufe kannst du rasche, taumelnde Bewegungen vollführen. Du erhältst die folgenden Vorzüge.",
+      "Auf die Füße springen: Wenn du den Zustand liegend hast, kannst du aufstehen, indem du 1,50 m deiner Bewegungsrate aufwendest statt der Hälfte.",
+      "Attacke umlenken: Wenn eine Kreatur dich mit einem Nahkampfangriff verfehlt, kannst du als Reaktion 1 Ki-Punkt ausgeben, damit der Angriff stattdessen eine Kreatur deiner Wahl trifft, die du innerhalb von 1,50 m um dich sehen kannst und die nicht der Angreifer ist."
+    ]
+  },
+
+  "moench_betrunken_glueck_des_trunkenboldes": {
+    id: "moench_betrunken_glueck_des_trunkenboldes",
+    name: "Glück des Trunkenboldes",
+    stufe: 11,
+    optional: false,
+    quelle: "Weg des Betrunkenen Meisters",
+    beschreibung: [
+      "Beginnend mit der 11. Stufe hast du immer im richtigen Moment Glück. Wenn du einen Attributswurf, einen Angriffswurf oder einen Rettungswurf ausführst, bei dem du im Nachteil bist, kannst du 2 Ki-Punkte ausgeben, um bei diesem Wurf nicht länger im Nachteil zu sein."
+    ]
+  },
+
+  "moench_betrunken_betrunkene_raserei": {
+    id: "moench_betrunken_betrunkene_raserei",
+    name: "Betrunkene Raserei",
+    stufe: 17,
+    optional: false,
+    quelle: "Weg des Betrunkenen Meisters",
+    beschreibung: [
+      "Ab der 17. Stufe kannst du eine gewaltige Zahl von Angriffen gegen eine Gruppe von Gegnern ausführen. Wenn du deinen Schlaghagel einsetzt, kannst du bis zu drei zusätzliche Angriffe damit durchführen (bis zu insgesamt fünf Schlaghagel-Angriffen), sofern jeder Schlaghagel-Angriff in diesem Zug eine andere Kreatur zum Ziel hat."
+    ]
+  },
+
+  // ── MÖNCH: WEG DES DRACHENAHNEN ─────────────────────────────────────────────
+
+  "moench_drache_drakonischer_juenger": {
+    id: "moench_drache_drakonischer_juenger",
+    name: "Drakonischer Jünger",
+    stufe: 3,
+    optional: false,
+    quelle: "Weg des Drachenahnen",
+    beschreibung: [
+      "Du kannst drakonische Macht kanalisieren, um deine Präsenz zu stärken und deine waffenlosen Angriffe zu versehen.",
+      "Drakonische Präsenz: Scheiterst du bei einem Rettungswurf auf Charisma (Einschüchtern) oder Charisma (Überzeugen), kannst du deine Reaktion nutzen, um den Wurf zu wiederholen. Wenn du mit diesem Merkmal einen gescheiterten Wurf in einen erfolgreichen verwandelt hast, kannst du es erst nach einer langen Rast erneut einsetzen.",
+      "Drakonischer Schlag: Wenn du einem Ziel Schaden mit einem waffenlosen Angriff zufügst, kannst du die Schadensart in Blitz, Feuer, Gift, Kälte oder Säure verwandeln.",
+      "Zunge des Drachen: Du kannst Drakonisch oder eine andere Sprache deiner Wahl sprechen, lesen und schreiben."
+    ]
+  },
+
+  "moench_drache_odem_des_drachen": {
+    id: "moench_drache_odem_des_drachen",
+    name: "Odem des Drachen",
+    stufe: 3,
+    optional: false,
+    quelle: "Weg des Drachenahnen",
+    beschreibung: [
+      "Du kannst destruktive Energiewellen kanalisieren. Wenn du in deinem Zug die Angreifen-Aktion ausführst, kannst du einen der Angriffe durch ein Ausatmen drakonischer Energie ersetzen. Wähle einen Kegel von 6 m oder eine 9 m lange, 1,5 m breite Linie. Wähle eine Schadensart: Blitz, Feuer, Gift, Kälte oder Säure. Jede Kreatur im Bereich muss einen Geschicklichkeitsrettungswurf gegen deinen Ki-SG ausführen und erleidet bei Misserfolg Schaden in Höhe von zwei Würfen deines Kampfkunstwürfels (auf der 11. Stufe drei Würfe), bei Erfolg die Hälfte.",
+      "Die Häufigkeit entspricht deinem Übungsbonus. Verbrauchte Anwendungen stehen nach einer langen Rast wieder zur Verfügung. Sind keine mehr verfügbar, kannst du 2 Ki-Punkte ausgeben und das Merkmal erneut einsetzen."
+    ]
+  },
+
+  "moench_drache_ausgebreitete_fluegel": {
+    id: "moench_drache_ausgebreitete_fluegel",
+    name: "Ausgebreitete Flügel",
+    stufe: 6,
+    optional: false,
+    quelle: "Weg des Drachenahnen",
+    beschreibung: [
+      "Wenn du dein Merkmal Windschritt einsetzt, kannst du geisterhafte drakonische Flügel ausbreiten, die am Ende deines Zugs wieder verschwinden. Solange die Flügel vorhanden sind, hast du eine Flugbewegungsrate in Höhe deiner Schrittbewegungsrate.",
+      "Die Häufigkeit entspricht deinem Übungsbonus. Verbrauchte Anwendungen stehen nach einer langen Rast wieder zur Verfügung."
+    ]
+  },
+
+  "moench_drache_aspekt_des_wyrms": {
+    id: "moench_drache_aspekt_des_wyrms",
+    name: "Aspekt des Wyrms",
+    stufe: 11,
+    optional: false,
+    quelle: "Weg des Drachenahnen",
+    beschreibung: [
+      "Als Bonusaktion kannst du eine Aura drakonischer Macht erzeugen, die eine Minute lang drei Meter weit von dir ausstrahlt. Du wählst einen der folgenden Effekte:",
+      "Furchterregende Präsenz: Wenn du diese Aura erzeugst sowie als Bonusaktion in nachfolgenden Zügen, kannst du eine Kreatur innerhalb der Aura auswählen. Das Ziel muss einen Weisheitsrettungswurf gegen deinen Ki-SG bestehen, oder es ist eine Minute lang vor dir verängstigt.",
+      "Resistenz: Wähle eine Schadensart (Blitz, Feuer, Gift, Kälte oder Säure). Du und deine Verbündeten innerhalb der Aura sind gegen diesen Schaden resistent.",
+      "Wenn du diese Aura erzeugt hast, kannst du sie erst nach einer langen Rast wieder erzeugen, es sei denn, du verbrauchst drei Ki-Punkte."
+    ]
+  },
+
+  "moench_drache_aspekt_des_ahnen": {
+    id: "moench_drache_aspekt_des_ahnen",
+    name: "Aspekt des Ahnen",
+    stufe: 17,
+    optional: false,
+    quelle: "Weg des Drachenahnen",
+    beschreibung: [
+      "Dein drakonischer Geist erreicht seinen Gipfelpunkt. Du erhältst folgende Vorteile:",
+      "Blindsicht: Du erhältst Blindsicht auf drei Meter. Innerhalb dieser Reichweite kannst du effektiv alles sehen, was sich nicht in vollständiger Deckung befindet, selbst bei Dunkelheit oder im Zustand Blind. Du kannst sogar unsichtbare Kreaturen innerhalb der Reichweite sehen.",
+      "Explosive Raserei: Wenn du deinen Aspekt des Wyrms aktivierst, kannst du eine beliebige Anzahl von Kreaturen innerhalb deiner Aura auswählen. Jede muss einen Geschicklichkeitsrettungswurf ablegen oder erleidet 3W10 Elementarschaden (Schadensart nach Wahl).",
+      "Odem verstärken: Wenn du deinen Odem des Drachen einsetzt, kannst du einen Ki-Punkt verbrauchen, um seine Form zu ändern: ein 18-m-Kegel oder eine 27 m lange, 1,5 m breite Linie. Schaden bei Misserfolg: vier Würfe des Kampfkunstwürfels."
+    ]
+  },
+
+  // ── MÖNCH: WEG DES KENSEI ───────────────────────────────────────────────────
+
+  "moench_kensei_pfad_des_kensei": {
+    id: "moench_kensei_pfad_des_kensei",
+    name: "Pfad des Kensei",
+    stufe: 3,
+    optional: false,
+    quelle: "Weg des Kensei",
+    beschreibung: [
+      "Wenn du diese Tradition auf der 3. Stufe wählst, erhältst du folgende Vorzüge:",
+      "Kensei-Waffen: Suche dir zwei Arten von Waffen als deine Kensei-Waffen aus: eine Nahkampfwaffe und eine Fernkampfwaffe (keine schwere oder spezielle Eigenschaft; Langbogen erlaubt). Du erhältst Übung im Umgang mit ihnen. Diese Waffenarten zählen für dich als Mönchswaffen. Auf der 6., 11. und 17. Stufe kannst du je eine weitere Kensei-Waffe wählen.",
+      "Flinke Parade: Wenn du als Teil deiner Angriffsaktion einen waffenlosen Schlag ausführst und dabei eine Nahkampf-Kensei-Waffe hältst, erhältst du bis zum Beginn deines nächsten Zuges einen Bonus von +2 auf RK.",
+      "Schuss des Kensei: Du kannst als Bonusaktion deine Fernkampfangriffe mit einer Kensei-Waffe verstärken. Jedes Ziel erleidet 1W4 zusätzlichen Schaden. Dieser Vorteil hält bis zum Ende des Zuges an.",
+      "Weg des Pinsels: Du erhältst Übung mit Kalligraphiewerkzeugen oder Malutensilien."
+    ]
+  },
+
+  "moench_kensei_eins_mit_der_klinge": {
+    id: "moench_kensei_eins_mit_der_klinge",
+    name: "Eins mit der Klinge",
+    stufe: 6,
+    optional: false,
+    quelle: "Weg des Kensei",
+    beschreibung: [
+      "Magische Kensei-Waffen: Deine Angriffe mit Kensei-Waffen gelten als magisch, wenn es darum geht, Resistenz und Immunität gegen nicht-magische Angriffe zu überwinden.",
+      "Geschickter Schlag: Wenn du ein Ziel mit einer Kensei-Waffe angreifst, kannst du 1 Ki-Punkt ausgeben, damit die Waffe dem Ziel zusätzlichen Schaden in Höhe deines Kampfkünste-Würfels zufügt. Du kannst dieses Merkmal in jedem deiner Züge nur einmal einsetzen."
+    ]
+  },
+
+  "moench_kensei_die_klinge_schaerfen": {
+    id: "moench_kensei_die_klinge_schaerfen",
+    name: "Die Klinge schärfen",
+    stufe: 11,
+    optional: false,
+    quelle: "Weg des Kensei",
+    beschreibung: [
+      "Als Bonusaktion kannst du bis zu 3 Ki-Punkte ausgeben. Damit gibst du einer Kensei-Waffe, die du berührst, einen Bonus auf Angriffs- und Schadenswürfe in Höhe der aufgewendeten Ki-Punkte. Dieser Bonus hält 1 Minute lang an oder bis du dieses Merkmal erneut einsetzt. Dieses Merkmal hat keinen Effekt auf eine magische Waffe, die bereits über einen solchen Bonus verfügt."
+    ]
+  },
+
+  "moench_kensei_unfehlbare_treffsicherheit": {
+    id: "moench_kensei_unfehlbare_treffsicherheit",
+    name: "Unfehlbare Treffsicherheit",
+    stufe: 17,
+    optional: false,
+    quelle: "Weg des Kensei",
+    beschreibung: [
+      "Ab der 17. Stufe verleiht dir deine Meisterschaft im Umgang mit Waffen außerordentliche Treffsicherheit. Scheitert in deinem Zug einer deiner Angriffswürfe mit einer Mönchswaffe, kannst du den Wurf wiederholen. Du kannst dieses Merkmal in jedem deiner Züge nur einmal einsetzen."
+    ]
+  },
+
+  // ── MÖNCH: WEG DES LANGEN TODES ─────────────────────────────────────────────
+
+  "moench_tod_beruehrung_des_todes": {
+    id: "moench_tod_beruehrung_des_todes",
+    name: "Berührung des Todes",
+    stufe: 3,
+    optional: false,
+    quelle: "Weg des Langen Todes",
+    beschreibung: [
+      "Ab dem Zeitpunkt, in dem du dich auf der 3. Stufe für diese Tradition entscheidest, erlaubt es dir dein Studium des Todes, Lebenskraft aus einer anderen Kreatur zu ziehen, wenn sich diese dem Ende nähert. Wenn du eine Kreatur innerhalb von 1,5 Metern auf 0 Trefferpunkte reduzierst, erhältst du temporäre Trefferpunkte in Höhe deines Weisheitsmodifikators + deiner Mönchsstufe (mindestens 1 temporärer Trefferpunkt)."
+    ]
+  },
+
+  "moench_tod_stunde_der_ernte": {
+    id: "moench_tod_stunde_der_ernte",
+    name: "Stunde der Ernte",
+    stufe: 6,
+    optional: false,
+    quelle: "Weg des Langen Todes",
+    beschreibung: [
+      "Auf der 6. Stufe erhältst du die Fähigkeit, die Personen in deiner Umgebung zu verstören oder zu verängstigen, denn deine Seele wurde vom Schatten des Todes berührt. Wenn du diese Aktion ausführst, müssen alle Kreaturen innerhalb von 9 Metern, die dich sehen können, einen Weisheitsrettungswurf schaffen, um nicht bis zum Ende des nächsten Zugs verängstigt zu werden."
+    ]
+  },
+
+  "moench_tod_meisterschaft_des_todes": {
+    id: "moench_tod_meisterschaft_des_todes",
+    name: "Meisterschaft des Todes",
+    stufe: 11,
+    optional: false,
+    quelle: "Weg des Langen Todes",
+    beschreibung: [
+      "Ab der 11. Stufe kannst du deine Vertrautheit mit dem Tod nutzen, um seinem Griff zu entkommen. Wenn du auf 0 Trefferpunkte fällst, kannst du 1 Ki-Punkt aufwenden (keine Aktion nötig), um stattdessen 1 Trefferpunkt zu haben."
+    ]
+  },
+
+  "moench_tod_beruehrung_des_langen_todes": {
+    id: "moench_tod_beruehrung_des_langen_todes",
+    name: "Berührung des Langen Todes",
+    stufe: 17,
+    optional: false,
+    quelle: "Weg des Langen Todes",
+    beschreibung: [
+      "Ab der 17. Stufe kannst du die Energie des Todes mit einer Berührung in eine Kreatur kanalisieren. Als Aktion berührst du eine Kreatur innerhalb von 1,5 Metern um dich und gibst 1 bis 10 Ki-Punkte aus. Das Ziel muss einen Konstitutionsrettungswurf ablegen. Bei einem misslungenen Rettungswurf erleidet es 2W10 Punkte nekrotischen Schaden pro aufgewendetem Ki-Punkt, oder halb so viel Schaden bei einem erfolgreichen Wurf."
+    ]
+  },
+
+  // ── MÖNCH: WEG DER OFFENEN HAND ─────────────────────────────────────────────
+
+  "moench_offen_technik_der_offenen_hand": {
+    id: "moench_offen_technik_der_offenen_hand",
+    name: "Die Technik der Offenen Hand",
+    stufe: 3,
+    optional: false,
+    quelle: "Weg der Offenen Hand",
+    beschreibung: [
+      "Mit der Wahl dieser Tradition auf Stufe 3 bist du in der Lage, das Ki deines Gegners zu beeinflussen. Jedes Mal, wenn du eine Kreatur mit einem Schlag triffst, der dir durch dein Merkmal Schlaghagel gewährt wurde, kannst du einen der folgenden Effekte wählen:",
+      "• Dem Ziel muss ein Geschicklichkeitsrettungswurf gelingen oder es gilt als liegend.",
+      "• Dem Ziel muss ein Stärkerettungswurf gelingen oder es wird bis zu 4,50 m von dir weggestoßen.",
+      "• Das Ziel kann bis zum Ende deines nächsten Zuges keine Reaktionen einsetzen."
+    ]
+  },
+
+  "moench_offen_unversehrtheit_des_koerpers": {
+    id: "moench_offen_unversehrtheit_des_koerpers",
+    name: "Unversehrtheit des Körpers",
+    stufe: 6,
+    optional: false,
+    quelle: "Weg der Offenen Hand",
+    beschreibung: [
+      "Auf der 6. Stufe erlangst du die Fähigkeit, dich selbst zu heilen. Als Aktion kannst du Trefferpunkte in Höhe des Dreifachen deiner Stufe als Mönch wiederherstellen. Du musst eine lange Rast abschließen, um diese Fähigkeit erneut einsetzen zu können."
+    ]
+  },
+
+  "moench_offen_innere_ruhe": {
+    id: "moench_offen_innere_ruhe",
+    name: "Innere Ruhe",
+    stufe: 11,
+    optional: false,
+    quelle: "Weg der Offenen Hand",
+    beschreibung: [
+      "Von der 11. Stufe an kannst du dich in eine besondere Art der Meditation vertiefen, die dich mit einer Aura des Friedens umgibt. Am Ende einer langen Rast erhältst du die Effekte des Zaubers Heiligtum, die bis zum Anfang der nächsten langen Rast anhalten (der Zauber kann wie gewöhnlich vorzeitig beendet werden)."
+    ]
+  },
+
+  "moench_offen_vibrierende_handflaeche": {
+    id: "moench_offen_vibrierende_handflaeche",
+    name: "Vibrierende Handfläche",
+    stufe: 17,
+    optional: false,
+    quelle: "Weg der Offenen Hand",
+    beschreibung: [
+      "Mit dem Aufstieg in die 17. Stufe erhältst du die Fähigkeit, tödliche Vibrationen im Körper eines Gegners aufzubauen. Wenn du eine Kreatur mit einem waffenlosen Schlag triffst, kannst du 3 Ki-Punkte ausgeben, um die nicht wahrnehmbaren Vibrationen in ihrem Körper beginnen zu lassen. Diese kannst du für eine Dauer an Tagen aufrechterhalten, die deiner Stufe als Mönch entspricht.",
+      "Die Vibrationen sind so lange harmlos, bis du eine Aktion aufwendest, um sie zu beenden. Du und das Ziel müssen sich dabei auf derselben Existenzebene befinden. Führst du die Aktion aus, muss die Kreatur einen Konstitutionsrettungswurf ablegen. Bei einem Misserfolg werden die Trefferpunkte der Kreatur auf 0 reduziert. Ist der Rettungswurf erfolgreich, nimmt das Ziel 10W10 nekrotischen Schaden.",
+      "Du kannst immer nur eine Kreatur gleichzeitig mit dieser Fähigkeit beeinflussen."
+    ]
+  },
+
+  // ── MÖNCH: WEG DES SCHATTENS ────────────────────────────────────────────────
+
+  "moench_schatten_schattenkuenste": {
+    id: "moench_schatten_schattenkuenste",
+    name: "Schattenkünste",
+    stufe: 3,
+    optional: false,
+    quelle: "Weg des Schattens",
+    beschreibung: [
+      "Mit der Wahl dieser Tradition auf der 3. Stufe kannst du dein Ki nutzen, um die Effekte bestimmter Zaubersprüche nachzuahmen. Als Aktion kannst du 2 Ki-Punkte ausgeben, um Dunkelheit, Spurloses Gehen, Stille oder Dunkelsicht zu wirken, ohne über die benötigten Materialkomponenten verfügen zu müssen. Außerdem erlernst du den Zaubertrick Einfache Illusion, falls du ihn nicht bereits beherrschst."
+    ]
+  },
+
+  "moench_schatten_schattenschritt": {
+    id: "moench_schatten_schattenschritt",
+    name: "Schattenschritt",
+    stufe: 6,
+    optional: false,
+    quelle: "Weg des Schattens",
+    beschreibung: [
+      "Auf Stufe 6 erlangst du die Fähigkeit, in einen Schatten einzutauchen und aus einem anderen hervorzutreten. Befindest du dich in dämmrigem Licht oder in Dunkelheit, kannst du dich als Bonusaktion bis zu 18 m zu einem freien Bereich teleportieren, den du sehen kannst und der ebenfalls in dämmriges Licht oder Dunkelheit getaucht ist. Danach bist du bei deinem ersten Nahkampfangriff im Vorteil, den du vor Ende deines Zuges ausführst."
+    ]
+  },
+
+  "moench_schatten_mantel_aus_schatten": {
+    id: "moench_schatten_mantel_aus_schatten",
+    name: "Mantel aus Schatten",
+    stufe: 11,
+    optional: false,
+    quelle: "Weg des Schattens",
+    beschreibung: [
+      "Mit dem Erreichen der 11. Stufe hast du gelernt, eins mit den Schatten zu werden. Wenn du dich in dämmrigem Licht oder in Dunkelheit befindest, kannst du deine Aktion verwenden, um unsichtbar zu werden. Du bleibst unsichtbar, bis du einen Angriff ausführst, einen Zauber wirkst oder dich in einen Bereich mit hellem Licht bewegst."
+    ]
+  },
+
+  "moench_schatten_opportunist": {
+    id: "moench_schatten_opportunist",
+    name: "Opportunist",
+    stufe: 17,
+    optional: false,
+    quelle: "Weg des Schattens",
+    beschreibung: [
+      "Ab der 17. Stufe kannst du es ausnutzen, wenn eine Kreatur durch einen Treffer kurzzeitig abgelenkt ist. Immer wenn eine Kreatur innerhalb von 1,50 m von einem Angriff getroffen wird, den nicht du selbst ausgeführt hast, kannst du deine Reaktion aufwenden, um einen Nahkampfangriff auf die getroffene Kreatur auszuführen."
+    ]
+  },
+
+  // ── MÖNCH: WEG DER SONNENSEELE ──────────────────────────────────────────────
+
+  "moench_sonne_strahlendes_sonnengeschoss": {
+    id: "moench_sonne_strahlendes_sonnengeschoss",
+    name: "Strahlendes Sonnengeschoss",
+    stufe: 3,
+    optional: false,
+    quelle: "Weg der Sonnenseele",
+    beschreibung: [
+      "Von dem Moment an, da du diese Tradition auf der 3. Stufe wählst, bist du in der Lage, gleißende, in magischem Glanz erstrahlende Geschosse zu schleudern.",
+      "Du erhältst eine neue Angriffsmöglichkeit: einen Fernkampf-Zauberangriff mit einer Reichweite von 9 m. Du bist mit diesem Angriff geübt, addierst deinen Geschicklichkeitsmodifikator auf seine Angriffs- und Schadenswürfe, und er fügt gleißenden Schaden zu. Der Schadenswürfel ist ein W4 und verbessert sich entsprechend der Kampfkünste-Spalte der Aufstiegstabelle.",
+      "Wenn du in deinem Zug die Angriffsaktion wählst und diesen besonderen Angriff einsetzt, kannst du 1 Ki-Punkt ausgeben, um ihn als Bonusaktion zweimal auszuführen. Wenn du Zusätzlicher Angriff erhältst, kann dieser besondere Angriff für jeden Angriff als Teil der Angriffsaktion genutzt werden."
+    ]
+  },
+
+  "moench_sonne_versengender_lichtbogenschlag": {
+    id: "moench_sonne_versengender_lichtbogenschlag",
+    name: "Versengender Lichtbogenschlag",
+    stufe: 6,
+    optional: false,
+    quelle: "Weg der Sonnenseele",
+    beschreibung: [
+      "Auf der 6. Stufe erhältst du die Fähigkeit, dein Ki in Wellen gleißenden Lichts auszustoßen. Sofort nachdem du in deinem Zug die Angriffsaktion ausgeführt hast, kannst du 2 Ki-Punkte ausgeben, um als Bonusaktion den Zauber Brennende Hände zu wirken.",
+      "Du kannst zusätzliche Ki-Punkte ausgeben, um Brennende Hände als höherstufiger Zauber zu sprechen. Jeder zusätzliche Ki-Punkt erhöht den Grad um 1. Die maximale Zahl von Ki-Punkten (2 plus etwaige zusätzliche) entspricht deiner halben Mönchsstufe."
+    ]
+  },
+
+  "moench_sonne_versengende_sonnenexplosion": {
+    id: "moench_sonne_versengende_sonnenexplosion",
+    name: "Versengende Sonnenexplosion",
+    stufe: 11,
+    optional: false,
+    quelle: "Weg der Sonnenseele",
+    beschreibung: [
+      "Auf der 11. Stufe erhältst du die Fähigkeit, eine Lichtkugel zu erschaffen, die eine verheerende Explosion verursacht. Als Aktion erschaffst du auf magische Weise eine Kugel und schleuderst sie auf eine Stelle deiner Wahl innerhalb von 45 m, wo sie in einer Sphäre mit einem Radius von 6 m explodiert.",
+      "Jede Kreatur in dieser Sphäre muss einen Konstitutionsrettungswurf bestehen oder erleidet 2W6 gleißenden Schaden. Eine Kreatur hinter vollständiger undurchsichtiger Deckung muss keinen Rettungswurf durchführen. Du kannst für jeden ausgegebenen Ki-Punkt (bis zu 3) den Schaden um 2W6 erhöhen."
+    ]
+  },
+
+  "moench_sonne_sonnenschild": {
+    id: "moench_sonne_sonnenschild",
+    name: "Sonnenschild",
+    stufe: 17,
+    optional: false,
+    quelle: "Weg der Sonnenseele",
+    beschreibung: [
+      "Ab der 17. Stufe umgibt dich eine leuchtende, magische Aura. Du strahlst in einem Radius von 9 m helles Licht aus und dämmriges Licht für weitere 9 m. Du kannst das Licht als Bonusaktion erlöschen oder wieder erstrahlen lassen.",
+      "Wenn eine Kreatur dich mit einem Nahkampfangriff trifft, während dieses Licht strahlt, kannst du deine Reaktion nutzen, um der Kreatur gleißenden Schaden in Höhe von 5 + deinem Weisheitsmodifikator zuzufügen."
+    ]
+  },
+
+  // ── MÖNCH: WEG DER VIER ELEMENTE ────────────────────────────────────────────
+
+  // ── ZAUBERER ─────────────────────────────────────────────────────────────────
+
+  "zauberer_zauberwirken": {
+    id: "zauberer_zauberwirken",
+    name: "Zauberwirken",
+    stufe: 1,
+    optional: false,
+    quelle: "Zauberer",
+    beschreibung: [
+      "Ein Ereignis in deiner Vergangenheit oder im Leben deiner Vorfahren hat dich mit arkaner Zauberkraft erfüllt. Zu Beginn sind dir vier beliebige Zaubertricks aus der Zauberliste des Zauberers bekannt. Weitere lernst du auf höheren Stufen.",
+      "Du kennst zwei frei wählbare Zauber des 1. Grades. Beim Stufenaufstieg lernst du weitere Zauber und kannst einen bekannten Zauber ersetzen.",
+      "Zauberwirk-Attribut: Charisma. SG = 8 + Übungsbonus + CHA-Mod. Angriffsmod = Übungsbonus + CHA-Mod. Als Zauberfokus kannst du einen arkanen Fokus verwenden."
+    ]
+  },
+
+  "zauberer_ursprung_der_zauberei": {
+    id: "zauberer_ursprung_der_zauberei",
+    name: "Ursprung der Zauberei",
+    stufe: 1,
+    optional: false,
+    quelle: "Zauberer",
+    beschreibung: [
+      "Wähle den Ursprung deiner angeborenen magischen Kraft. Deine Wahl verleiht dir auf der 1., 6., 14. und 18. Stufe jeweils ein Merkmal."
+    ]
+  },
+
+  "zauberer_ursprung_merkmal": {
+    id: "zauberer_ursprung_merkmal",
+    name: "Merkmal: Ursprung der Zauberei",
+    stufe: 6,
+    optional: false,
+    quelle: "Zauberer",
+    beschreibung: [
+      "Du erhältst ein weiteres Merkmal aus deinem gewählten Ursprung der Zauberei."
+    ]
+  },
+
+  "zauberer_quelle_der_magie": {
+    id: "zauberer_quelle_der_magie",
+    name: "Quelle der Magie",
+    stufe: 2,
+    optional: false,
+    quelle: "Zauberer",
+    beschreibung: [
+      "Ab der 2. Stufe bist du in der Lage, die Quelle der Magie in dir selbst anzuzapfen. Dein Quell wird durch Zaubereipunkte (= deine Stufe) repräsentiert. Alle verbrauchten Zaubereipunkte stehen nach einer langen Rast wieder zur Verfügung.",
+      "Flexibles Zauberwirken — Zauberplätze erschaffen: Als Bonusaktion kannst du Zaubereipunkte in einen Zauberplatz umwandeln. Kosten: 1. Grad = 2 Punkte, 2. Grad = 3, 3. Grad = 5, 4. Grad = 6, 5. Grad = 7. Max. Grad 5. Erzeugte Zauberplätze verschwinden nach einer langen Rast.",
+      "Zauberplätze in Zaubereipunkte umwandeln: Als Bonusaktion kannst du einen Zauberplatz aufgeben, um Zaubereipunkte in Höhe des Grades zu erhalten."
+    ]
+  },
+
+  "zauberer_metamagie": {
+    id: "zauberer_metamagie",
+    name: "Metamagie",
+    stufe: 3,
+    optional: false,
+    quelle: "Zauberer",
+    beschreibung: [
+      "Auf der 3. Stufe erlangst du die Fähigkeit, deine Zauber zu verändern. Suche dir zwei Metamagie-Optionen aus. Auf den Stufen 10 und 17 erhältst du je eine weitere. Du kannst immer nur eine Option pro gewirktem Zauber anwenden (außer anders angegeben)."
+    ]
+  },
+
+  "zauberer_metamagie_bedachter_zauber": {
+    id: "zauberer_metamagie_bedachter_zauber",
+    name: "Metamagie: Bedachter Zauber",
+    stufe: 3,
+    optional: false,
+    quelle: "Zauberer",
+    beschreibung: [
+      "Gib 1 Zaubereipunkt aus und bestimme eine Anzahl betroffener Kreaturen, die maximal der Höhe deines Charismamodifikators entspricht (mindestens 1). Jeder ausgewählten Kreatur gelingt der Rettungswurf gegen diesen Zauber automatisch."
+    ]
+  },
+
+  "zauberer_metamagie_beschleunigter_zauber": {
+    id: "zauberer_metamagie_beschleunigter_zauber",
+    name: "Metamagie: Beschleunigter Zauber",
+    stufe: 3,
+    optional: false,
+    quelle: "Zauberer",
+    beschreibung: [
+      "Wenn du einen Zauber wirkst, der einen Zeitaufwand von einer Aktion besitzt, kannst du 2 Zaubereipunkte ausgeben, um den Zeitaufwand für dieses Mal in eine Bonusaktion zu ändern."
+    ]
+  },
+
+  "zauberer_metamagie_gespiegelter_zauber": {
+    id: "zauberer_metamagie_gespiegelter_zauber",
+    name: "Metamagie: Gespiegelter Zauber",
+    stufe: 3,
+    optional: false,
+    quelle: "Zauberer",
+    beschreibung: [
+      "Wenn du einen Zauber wirkst, der nur eine Kreatur (nicht du selbst) zum Ziel hat, kannst du Zaubereipunkte in Höhe des Grades des Zaubers ausgeben (1 bei einem Zaubertrick), um ihn auf eine weitere Kreatur in Reichweite zu wirken. Der Zauber darf auf seinem aktuellen Grad nicht mehr als eine Kreatur zum Ziel haben."
+    ]
+  },
+
+  "zauberer_metamagie_konzentrierter_zauber": {
+    id: "zauberer_metamagie_konzentrierter_zauber",
+    name: "Metamagie: Konzentrierter Zauber",
+    stufe: 3,
+    optional: false,
+    quelle: "Zauberer",
+    beschreibung: [
+      "Wenn du einen Zauber wirkst, der eine Kreatur zu einem Rettungswurf zwingt, kannst du 3 Zaubereipunkte ausgeben, damit eines der Ziele bei seinem ersten Rettungswurf im Nachteil ist."
+    ]
+  },
+
+  "zauberer_metamagie_maechtiger_zauber": {
+    id: "zauberer_metamagie_maechtiger_zauber",
+    name: "Metamagie: Mächtiger Zauber",
+    stufe: 3,
+    optional: false,
+    quelle: "Zauberer",
+    beschreibung: [
+      "Wenn du den Schaden eines Zaubers auswürfelst, kannst du 1 Zaubereipunkt ausgeben, um eine Anzahl von Würfeln bis zur Höhe deines Charismamodifikators (mindestens 1) erneut zu würfeln. Die neuen Ergebnisse musst du verwenden.",
+      "Du kannst Mächtiger Zauber anwenden, auch wenn du den ursprünglichen Zauber bereits mit einer anderen Metamagieoption gewirkt hast."
+    ]
+  },
+
+  "zauberer_metamagie_subtiler_zauber": {
+    id: "zauberer_metamagie_subtiler_zauber",
+    name: "Metamagie: Subtiler Zauber",
+    stufe: 3,
+    optional: false,
+    quelle: "Zauberer",
+    beschreibung: [
+      "Wenn du einen Zauber wirkst, kannst du 1 Zaubereipunkt ausgeben, um ihn ohne jegliche Gesten- und verbale Komponenten zu wirken."
+    ]
+  },
+
+  "zauberer_metamagie_verlaengerter_zauber": {
+    id: "zauberer_metamagie_verlaengerter_zauber",
+    name: "Metamagie: Verlängerter Zauber",
+    stufe: 3,
+    optional: false,
+    quelle: "Zauberer",
+    beschreibung: [
+      "Wenn du einen Zauber wirkst, der eine Wirkdauer von 1 Minute oder länger besitzt, kannst du 1 Zaubereipunkt ausgeben, um seine Wirkdauer bis zu einem Maximum von 24 Stunden zu verdoppeln."
+    ]
+  },
+
+  "zauberer_metamagie_verwandelter_zauber": {
+    id: "zauberer_metamagie_verwandelter_zauber",
+    name: "Metamagie: Verwandelter Zauber",
+    stufe: 3,
+    optional: false,
+    quelle: "Zauberer",
+    beschreibung: [
+      "Wenn du einen Zauber mit einer der folgenden Schadensarten wirkst, kannst du 1 Zaubereipunkt verbrauchen, um die Schadensart in eine andere aufgeführte zu ändern: Blitz, Feuer, Gift, Kälte, Säure, Schall."
+    ]
+  },
+
+  "zauberer_metamagie_weitreichender_zauber": {
+    id: "zauberer_metamagie_weitreichender_zauber",
+    name: "Metamagie: Weitreichender Zauber",
+    stufe: 3,
+    optional: false,
+    quelle: "Zauberer",
+    beschreibung: [
+      "Wenn du einen Zauber wirkst, der eine Reichweite von 1,50 m oder mehr besitzt, kannst du 1 Zaubereipunkt ausgeben, um seine Reichweite zu verdoppeln.",
+      "Wirkst du einen Zauber mit Berührungsreichweite, kannst du 1 Zaubereipunkt ausgeben, um seine Reichweite auf 9 m zu erhöhen."
+    ]
+  },
+
+  "zauberer_metamagie_zielsuchzauber": {
+    id: "zauberer_metamagie_zielsuchzauber",
+    name: "Metamagie: Zielsuchzauber",
+    stufe: 3,
+    optional: false,
+    quelle: "Zauberer",
+    beschreibung: [
+      "Wenn ein Angriffswurf für einen Zauber misslingt, kannst du 2 Zaubereipunkte verbrauchen und den W20 erneut würfeln. Du musst das zweite Ergebnis wählen.",
+      "Du kannst den Zielsuchzauber verwenden, auch wenn du beim Wirken bereits eine andere Metamagieoption verwendet hast."
+    ]
+  },
+
+  "zauberer_magische_vielseitigkeit": {
+    id: "zauberer_magische_vielseitigkeit",
+    name: "Magische Vielseitigkeit",
+    stufe: 4,
+    optional: true,
+    quelle: "Zauberer",
+    beschreibung: [
+      "Wenn du mit dieser Klasse eine Stufe erreichst, die dir das Merkmal Attributswerterhöhung gewährt, kannst du eine der folgenden Möglichkeiten wählen:",
+      "• Eine bereits gewählte Metamagie-Option durch eine andere ersetzen.",
+      "• Einen Zaubertrick, den du durch das Merkmal Zauberwirken dieser Klasse gelernt hast, durch einen anderen aus der Zauberliste des Zauberers ersetzen."
+    ]
+  },
+
+  "zauberer_magische_fuehrung": {
+    id: "zauberer_magische_fuehrung",
+    name: "Magische Führung",
+    stufe: 5,
+    optional: true,
+    quelle: "Zauberer",
+    beschreibung: [
+      "Du kannst deine innere Magiequelle nutzen, um zu versuchen, einen Misserfolg in einen Erfolg zu verwandeln. Wenn ein Attributswurf misslingt, kannst du einen Zaubereipunkt verbrauchen und den W20 erneut würfeln. Du musst das zweite Ergebnis wählen."
+    ]
+  },
+
+  "zauberer_zaubereiauffrischung": {
+    id: "zauberer_zaubereiauffrischung",
+    name: "Zaubereiauffrischung",
+    stufe: 20,
+    optional: false,
+    quelle: "Zauberer",
+    beschreibung: [
+      "Auf der 20. Stufe erhältst du jedes Mal, wenn du eine kurze Rast beendest, 4 Zaubereipunkte zurück."
+    ]
+  },
+
+  // ── ZAUBERER: DRACHENBLUTLINIE ───────────────────────────────────────────────
+
+  "zauberer_drachen_drachenvorfahre": {
+    id: "zauberer_drachen_drachenvorfahre",
+    name: "Drachenvorfahre",
+    stufe: 1,
+    optional: false,
+    quelle: "Drachenblutlinie",
+    beschreibung: [
+      "Auf der 1. Stufe wählst du, von welcher Art dein drakonischer Vorfahre war. Die damit zusammenhängende Schadensart wird in späteren Fähigkeiten verwendet:",
+      "Blau → Blitz | Bronze → Blitz | Gold → Feuer | Grün → Gift | Kupfer → Säure | Messing → Feuer | Rot → Feuer | Schwarz → Säure | Silber → Kälte | Weiß → Kälte.",
+      "Du kannst Drakonisch lesen, schreiben und sprechen. Außerdem darfst du immer, wenn du einen Charismawurf bei der Interaktion mit einem Drachen ablegst, deinen Übungsbonus verdoppeln."
+    ]
+  },
+
+  "zauberer_drachen_drakonische_widerstandskraft": {
+    id: "zauberer_drachen_drakonische_widerstandskraft",
+    name: "Drakonische Widerstandskraft",
+    stufe: 1,
+    optional: false,
+    quelle: "Drachenblutlinie",
+    beschreibung: [
+      "Auf der 1. Stufe erhöht sich dein Trefferpunktemaximum um 1, und auf jeder weiteren Stufe dieser Klasse erneut um 1.",
+      "Außerdem sind Teile deiner Haut mit einer dünnen Schicht drachenartiger Schuppen bedeckt. Wenn du keine Rüstung trägst, ist deine Rüstungsklasse 13 + dein Geschicklichkeitsmodifikator."
+    ]
+  },
+
+  "zauberer_drachen_elementare_affinitaet": {
+    id: "zauberer_drachen_elementare_affinitaet",
+    name: "Elementare Affinität",
+    stufe: 6,
+    optional: false,
+    quelle: "Drachenblutlinie",
+    beschreibung: [
+      "Angefangen mit der 6. Stufe kannst du deinen Charismamodifikator zum Schadenswurf eines Zaubers addieren, dessen Schadensart der deines Drachenvorfahren entspricht. Gleichzeitig kannst du 1 Zaubereipunkt ausgeben, um für 1 Stunde eine Resistenz gegen diese Schadensart zu erhalten."
+    ]
+  },
+
+  "zauberer_drachen_drachenfluegel": {
+    id: "zauberer_drachen_drachenfluegel",
+    name: "Drachenflügel",
+    stufe: 14,
+    optional: false,
+    quelle: "Drachenblutlinie",
+    beschreibung: [
+      "Auf der 14. Stufe erlangst du die Fähigkeit, als Bonusaktion deinem Rücken Flügel entspringen zu lassen, die dir eine Flugbewegungsrate in Höhe deiner aktuellen Bewegungsrate verleihen. Die Flügel bleiben bis du sie mit einer Bonusaktion wieder verschwinden lässt.",
+      "Du kannst deine Flügel nicht hervorrufen, solange du eine Rüstung trägst, die nicht speziell dafür angefertigt wurde."
+    ]
+  },
+
+  "zauberer_drachen_drakonische_praesenz": {
+    id: "zauberer_drachen_drakonische_praesenz",
+    name: "Drakonische Präsenz",
+    stufe: 18,
+    optional: false,
+    quelle: "Drachenblutlinie",
+    beschreibung: [
+      "Ab der 18. Stufe kannst du als Aktion 5 Zaubereipunkte ausgeben, um eine Aura der Ehrfurcht oder des Schreckens (deine Wahl) mit einem 18-m-Radius zu erschaffen. Für 1 Minute (oder bis du deine Konzentration verlierst) muss jede feindliche Kreatur, die ihren Zug in deiner Aura beginnt, einen Weisheitsrettungswurf ablegen.",
+      "Bei einem Misserfolg wird sie bezaubert (Ehrfurcht) oder verängstigt (Schrecken), bis die Aura endet. Eine Kreatur, deren Rettungswurf gelingt, ist für die nächsten 24 Stunden immun gegen deine Aura."
+    ]
+  },
+
+  // ── ZAUBERER: GÖTTLICHE SEELE ────────────────────────────────────────────────
+
+  "zauberer_goett_goettliche_magie": {
+    id: "zauberer_goett_goettliche_magie",
+    name: "Göttliche Magie",
+    stufe: 1,
+    optional: false,
+    quelle: "Göttliche Seele",
+    beschreibung: [
+      "Dank deiner Verbindung zum Göttlichen kannst du Zauber der Klerikerklasse erlernen. Wenn dein Merkmal Zauberwirken dir ermöglicht, einen Zauberer-Zauber zu ersetzen, darfst du den neuen Zauber von der Zauberliste des Klerikers oder des Zauberers wählen. Er gilt für dich als Zaubererzauber.",
+      "Außerdem wählst du eine Affinität für die Quelle deiner göttlichen Macht und lernst einen zusätzlichen Zauber (zählt nicht gegen deine bekannten Zauber):",
+      "Gut → Wunden heilen | Böse → Wunden verursachen | Rechtschaffen → Segnen | Chaos → Verderben | Neutral → Schutz vor Gut und Böse."
+    ]
+  },
+
+  "zauberer_goett_guenstling_der_goetter": {
+    id: "zauberer_goett_guenstling_der_goetter",
+    name: "Günstling der Götter",
+    stufe: 1,
+    optional: false,
+    quelle: "Göttliche Seele",
+    beschreibung: [
+      "Beginnend mit der 1. Stufe wacht eine göttliche Macht über dein Schicksal. Wenn dir ein Rettungswurf misslingt oder du mit einem Angriffswurf verfehlst, kannst du mit 2W4 würfeln und das Ergebnis auf deinen ursprünglichen Wurf rechnen.",
+      "Wenn du dieses Merkmal eingesetzt hast, kannst du es erst wieder verwenden, nachdem du eine kurze oder lange Rast beendet hast."
+    ]
+  },
+
+  "zauberer_goett_verstaerkte_heilung": {
+    id: "zauberer_goett_verstaerkte_heilung",
+    name: "Verstärkte Heilung",
+    stufe: 6,
+    optional: false,
+    quelle: "Göttliche Seele",
+    beschreibung: [
+      "Ab der 6. Stufe kann die heilige Energie, die dich durchströmt, Heilzauber verstärken. Immer, wenn du oder ein Verbündeter innerhalb von 1,50 m einen Würfelwurf durchführt, um festzustellen, wie viele TP durch einen Zauber wiederhergestellt werden, kannst du 1 Zaubereipunkt ausgeben, um eine beliebige Anzahl dieser Würfel einmal neu zu würfeln (sofern du nicht kampfunfähig bist). Einmal pro Zug."
+    ]
+  },
+
+  "zauberer_goett_uebernatuerliche_schwingen": {
+    id: "zauberer_goett_uebernatuerliche_schwingen",
+    name: "Übernatürliche Schwingen",
+    stufe: 14,
+    optional: false,
+    quelle: "Göttliche Seele",
+    beschreibung: [
+      "Beginnend mit der 14. Stufe kannst du als Bonusaktion auf deinem Rücken ein Paar geisterhafte Schwingen erscheinen lassen. Solange die Schwingen existieren, verfügst du über eine Flugbewegungsrate von 9 m.",
+      "Die Schwingen bleiben bestehen, bis du kampfunfähig wirst, stirbst oder sie als Bonusaktion auflöst. Das Aussehen richtet sich nach deiner Affinität: Adlerflügel (Gut/Rechtschaffen), Fledermausflügel (Böse/Chaos), Libelle (Neutral)."
+    ]
+  },
+
+  "zauberer_goett_ueberirdische_erholungskraft": {
+    id: "zauberer_goett_ueberirdische_erholungskraft",
+    name: "Überirdische Erholungskraft",
+    stufe: 18,
+    optional: false,
+    quelle: "Göttliche Seele",
+    beschreibung: [
+      "Auf der 18. Stufe erwirbst du die Fähigkeit, dich von schweren Wunden zu erholen. Als Bonusaktion kannst du TP in Höhe der Hälfte deiner maximalen TP zurückerhalten, wenn du über weniger als die Hälfte deiner TP verfügst.",
+      "Wenn du dieses Merkmal verwendet hast, kannst du es erst wieder einsetzen, nachdem du eine lange Rast beendet hast."
+    ]
+  },
+
+  // ── ZAUBERER: SCHATTENMAGIE ──────────────────────────────────────────────────
+
+  "zauberer_schatten_dunkelaugen": {
+    id: "zauberer_schatten_dunkelaugen",
+    name: "Dunkelaugen",
+    stufe: 1,
+    optional: false,
+    quelle: "Schattenmagie",
+    beschreibung: [
+      "Ab der 1. Stufe verfügst du über Dunkelsicht mit einer Reichweite von 36 m.",
+      "Wenn du die 3. Stufe dieser Klasse erreichst, erlernst du den Zauber Dunkelheit (zählt nicht gegen bekannte Zauber). Du kannst ihn auch wirken, indem du 2 Zaubereipunkte ausgibst. Wenn du ihn mit Zaubereipunkten wirkst, kannst du durch die von ihm erschaffene Dunkelheit sehen."
+    ]
+  },
+
+  "zauberer_schatten_grabes_staerke": {
+    id: "zauberer_schatten_grabes_staerke",
+    name: "Grabes Stärke",
+    stufe: 1,
+    optional: false,
+    quelle: "Schattenmagie",
+    beschreibung: [
+      "Beginnend mit der 1. Stufe ist es durch deine Existenz an der Grenze zwischen Leben und Tod schwer, dich zu besiegen. Wenn du durch Schaden auf 0 TP sinken würdest, kannst du einen Charismarettungswurf (SG 5 + erlittener Schaden) durchführen. Bei Erfolg wirst du stattdessen auf 1 TP reduziert.",
+      "Du kannst dieses Merkmal nicht einsetzen, wenn du durch gleißenden Schaden oder einen kritischen Treffer auf 0 TP fällst. Nach einem erfolgreichen Rettungswurf ist eine lange Rast nötig für erneuten Einsatz."
+    ]
+  },
+
+  "zauberer_schatten_hund_des_unheils": {
+    id: "zauberer_schatten_hund_des_unheils",
+    name: "Hund des Unheils",
+    stufe: 6,
+    optional: false,
+    quelle: "Schattenmagie",
+    beschreibung: [
+      "Auf der 6. Stufe erwirbst du die Fähigkeit, als Bonusaktion 3 Zaubereipunkte auszugeben, um einen Hund des Unheils zu beschwören (Spielwerte des Schreckenswolfs, aber mittelgroß und Monstrosität). Er erhält temporäre TP in Höhe deiner halben Zaubererstufe.",
+      "Er kann sich durch Kreaturen und Objekte wie durch schwieriges Gelände bewegen (5 Energieschaden beim Zugende in einem Objekt). Er weiß automatisch, wo sein Ziel ist. Er kann sich nur auf sein Ziel zubewegen und nur dieses angreifen. Kreaturen innerhalb von 1,50 m des Hunds sind im Nachteil bei Rettungswürfen gegen deine Zauber. Der Hund verschwindet nach 5 Minuten oder wenn das Ziel auf 0 TP sinkt."
+    ]
+  },
+
+  "zauberer_schatten_schattenwandeln": {
+    id: "zauberer_schatten_schattenwandeln",
+    name: "Schattenwandeln",
+    stufe: 14,
+    optional: false,
+    quelle: "Schattenmagie",
+    beschreibung: [
+      "Auf der 14. Stufe erwirbst du die Fähigkeit, dich von einem Schatten zum nächsten zu bewegen. Wenn du dich in dämmrigem Licht oder Dunkelheit befindest, kannst du dich auf magische Weise bis zu 36 m zu einem nicht besetzten Bereich teleportieren, den du sehen kannst und der sich ebenfalls in dämmrigem Licht oder Dunkelheit befindet."
+    ]
+  },
+
+  "zauberer_schatten_schattenform": {
+    id: "zauberer_schatten_schattenform",
+    name: "Schattenform",
+    stufe: 18,
+    optional: false,
+    quelle: "Schattenmagie",
+    beschreibung: [
+      "Beginnend mit der 18. Stufe kannst du als Bonusaktion 6 Zaubereipunkte ausgeben, um dich in eine schattenhafte Gestalt zu verwandeln. In dieser Gestalt hast du Resistenz gegen jedweden Schaden (außer Energie- und gleißendem Schaden) und kannst dich durch Kreaturen und Objekte wie durch schwieriges Gelände bewegen (5 Energieschaden beim Zugende in einem Objekt).",
+      "Die Gestalt hält 1 Minute an und endet sofort bei Kampfunfähigkeit, Tod oder als Bonusaktion."
+    ]
+  },
+
+  // ── ZAUBERER: STURMZAUBEREI ──────────────────────────────────────────────────
+
+  "zauberer_sturm_windsprecher": {
+    id: "zauberer_sturm_windsprecher",
+    name: "Windsprecher",
+    stufe: 1,
+    optional: false,
+    quelle: "Sturmzauberei",
+    beschreibung: [
+      "Die arkane Magie, über die du gebietest, ist von dem Element der Luft durchdrungen. Du kannst Urtümlich sprechen, lesen und schreiben. Die Kenntnis dieser Sprache ermöglicht dir, dich mit jenen zu verständigen, die die Dialekte sprechen: Aqual, Aural, Ignal und Terral."
+    ]
+  },
+
+  "zauberer_sturm_stuermische_magie": {
+    id: "zauberer_sturm_stuermische_magie",
+    name: "Stürmische Magie",
+    stufe: 1,
+    optional: false,
+    quelle: "Sturmzauberei",
+    beschreibung: [
+      "Ab der 1. Stufe kannst du in deinem Zug eine Bonusaktion nutzen, um wirbelnde Stöße elementarer Luft um dich herum entstehen zu lassen, entweder direkt bevor oder nachdem du einen Zauber des 1. Grads oder höher gewirkt hast. Wenn du das tust, kannst du bis zu 3 m in die Höhe fliegen, ohne Gelegenheitsangriffe zu provozieren."
+    ]
+  },
+
+  "zauberer_sturm_herz_des_sturms": {
+    id: "zauberer_sturm_herz_des_sturms",
+    name: "Herz des Sturms",
+    stufe: 6,
+    optional: false,
+    quelle: "Sturmzauberei",
+    beschreibung: [
+      "Auf der 6. Stufe erhältst du Resistenz gegen Blitzschaden und Schallschaden.",
+      "Immer wenn du außerdem einen Zauber des 1. Grads oder höher wirkst, der Blitz- oder Schallschaden verursacht, bricht die Magie des Sturms aus dir hervor: Ein Ziel deiner Wahl innerhalb von 3 m erleidet Blitz- oder Schallschaden (deine Wahl) in Höhe der Hälfte deiner Zaubererstufe."
+    ]
+  },
+
+  "zauberer_sturm_sturmlenker": {
+    id: "zauberer_sturm_sturmlenker",
+    name: "Sturmlenker",
+    stufe: 6,
+    optional: false,
+    quelle: "Sturmzauberei",
+    beschreibung: [
+      "Auf der 6. Stufe erwirbst du die Fähigkeit, das Wetter um dich herum subtil zu manipulieren.",
+      "Wenn es regnet, kannst du als Aktion bewirken, dass es in einer Sphäre mit einem Radius von 6 m aufhört zu regnen (als Bonusaktion beenden).",
+      "Wenn es windig ist, kannst du jede Runde als Bonusaktion in einer Sphäre mit einem Radius von 30 m die Windrichtung bestimmen (hält bis Ende deines nächsten Zuges an)."
+    ]
+  },
+
+  "zauberer_sturm_wut_des_sturms": {
+    id: "zauberer_sturm_wut_des_sturms",
+    name: "Wut des Sturms",
+    stufe: 14,
+    optional: false,
+    quelle: "Sturmzauberei",
+    beschreibung: [
+      "Beginnend mit der 14. Stufe kannst du, wenn du von einem Nahkampfangriff getroffen wirst, deine Reaktion nutzen, um dem Angreifer Blitzschaden in Höhe deiner Zaubererstufe zuzufügen. Der Angreifer muss einen Stärkerettungswurf gegen deinen Zauber-SG ablegen. Bei Misserfolg wird er in gerader Linie bis zu 6 m von dir weggestoßen."
+    ]
+  },
+
+  "zauberer_sturm_windseele": {
+    id: "zauberer_sturm_windseele",
+    name: "Windseele",
+    stufe: 18,
+    optional: false,
+    quelle: "Sturmzauberei",
+    beschreibung: [
+      "Auf der 18. Stufe erhältst du Immunität gegen Blitz- und Schallschaden.",
+      "Außerdem erhältst du eine magische Flugbewegungsrate von 18 m. Als Aktion kannst du deine Flugbewegungsrate 1 Stunde lang auf 9 m reduzieren und innerhalb von 9 m eine Anzahl Kreaturen gleich deinem Charismamodifikator + 3 bestimmen. Diese erhalten für 1 Stunde eine Flugbewegungsrate von 9 m. Danach erst nach kurzer oder langer Rast wieder möglich."
+    ]
+  },
+
+  // ── ZAUBERER: UHRWERKSEELE ───────────────────────────────────────────────────
+
+  "zauberer_uhrwerk_uhrwerkmagie": {
+    id: "zauberer_uhrwerk_uhrwerkmagie",
+    name: "Uhrwerkmagie",
+    stufe: 1,
+    optional: false,
+    quelle: "Uhrwerkseele",
+    beschreibung: [
+      "Wenn du bestimmte Stufen erreichst, lernst du neue Zauber (zählen nicht gegen bekannte Zauber). Beim Stufenaufstieg kannst du einen dieser Zauber durch einen anderen gleichen Grades ersetzen (muss ein Bann- oder Verwandlungsmagiezauber aus der Liste des Zauberers, Hexenmeisters oder Magiers sein):",
+      "1. Grad: Alarm, Schutz vor Gut und Böse; 3. Grad: Beistand, Schwache Genesung; 5. Grad: Magie bannen, Schutz vor Energie; 7. Grad: Bewegungsfreiheit, Konstrukt beschwören; 9. Grad: Energiewand, Vollständige Genesung."
+    ]
+  },
+
+  "zauberer_uhrwerk_gleichgewicht_wiederherstellen": {
+    id: "zauberer_uhrwerk_gleichgewicht_wiederherstellen",
+    name: "Gleichgewicht wiederherstellen",
+    stufe: 1,
+    optional: false,
+    quelle: "Uhrwerkseele",
+    beschreibung: [
+      "Deine Verbindung zur Ebene der absoluten Ordnung ermöglicht es dir, chaotische Situationen auszugleichen. Ist eine Kreatur innerhalb von 18 Metern dabei, einen W20 mit Vorteil oder Nachteil zu würfeln, kannst du als Reaktion den Vorteil bzw. Nachteil verhindern.",
+      "Die Häufigkeit entspricht deinem Übungsbonus. Verbrauchte Anwendungen nach langer Rast zurück."
+    ]
+  },
+
+  "zauberer_uhrwerk_bastion_des_gesetzes": {
+    id: "zauberer_uhrwerk_bastion_des_gesetzes",
+    name: "Bastion des Gesetzes",
+    stufe: 6,
+    optional: false,
+    quelle: "Uhrwerkseele",
+    beschreibung: [
+      "Als Aktion kannst du 1–5 Zaubereipunkte verbrauchen, um einen magischen Schutz um dich oder eine andere Kreatur innerhalb von neun Metern zu erschaffen. Der Schutz hält bis zur nächsten langen Rast oder bis du das Merkmal erneut verwendest.",
+      "Der Schutz entspricht so vielen W8-Würfeln wie verbrauchte Zaubereipunkte. Wenn die geschützte Kreatur Schaden erleidet, kann sie eine beliebige Anzahl dieser Würfel werfen und den erlittenen Schaden um das Ergebnis verringern."
+    ]
+  },
+
+  "zauberer_uhrwerk_trance_der_ordnung": {
+    id: "zauberer_uhrwerk_trance_der_ordnung",
+    name: "Trance der Ordnung",
+    stufe: 14,
+    optional: false,
+    quelle: "Uhrwerkseele",
+    beschreibung: [
+      "Du erhältst die Fähigkeit, dein Bewusstsein an den endlosen Berechnungen von Mechanus auszurichten. Als Bonusaktion kannst du folgende Effekte für eine Minute aktivieren: Angriffswürfe auf dich können keinen Vorteil erlangen; wenn du einen Angriffs-, Attributs- oder Rettungswurf ausführst, kannst du ein Ergebnis von unter 10 auf dem W20 als 10 behandeln.",
+      "Du kannst diese Bonusaktion erst nach einer langen Rast erneut verwenden, es sei denn, du verbrauchst fünf Zaubereipunkte."
+    ]
+  },
+
+  "zauberer_uhrwerk_uhrwerkkavalkade": {
+    id: "zauberer_uhrwerk_uhrwerkkavalkade",
+    name: "Uhrwerkkavalkade",
+    stufe: 18,
+    optional: false,
+    quelle: "Uhrwerkseele",
+    beschreibung: [
+      "Du beschwörst als Aktion Geister der Ordnung, die in einem Würfel mit neun Metern Kantenlänge erscheinen und folgende Effekte erzeugen, bevor sie verschwinden:",
+      "• Bis zu 100 TP werden wiederhergestellt (beliebig auf Kreaturen im Würfel aufgeteilt).",
+      "• Alle beschädigten Gegenstände im Würfel werden sofort repariert.",
+      "• Alle Zauber des 6. oder eines niedrigeren Grads auf Kreaturen und Gegenständen deiner Wahl im Würfel werden beendet.",
+      "Du kannst diese Aktion erst nach einer langen Rast erneut verwenden, es sei denn, du verbrauchst sieben Zaubereipunkte."
+    ]
+  },
+
+  // ── ZAUBERER: UNGEWÖHNLICHER VERSTAND ────────────────────────────────────────
+
+  "zauberer_verstand_psionische_zauber": {
+    id: "zauberer_verstand_psionische_zauber",
+    name: "Psionische Zauber",
+    stufe: 1,
+    optional: false,
+    quelle: "Ungewöhnlicher Verstand",
+    beschreibung: [
+      "Wenn du bestimmte Stufen erreichst, lernst du neue Zauber (zählen nicht gegen bekannte Zauber). Beim Stufenaufstieg kannst du einen durch ein Merkmal erlernten Zauber durch einen anderen gleichen Grades ersetzen (muss ein Erkenntniszauber oder Verzauberung aus der Liste des Zauberers, Hexenmeisters oder Magiers sein):",
+      "1. Grad: Arme von Hadar, Dissonantes Flüstern, Gedankensplitter; 3. Grad: Gedanken wahrnehmen, Gefühle besänftigen; 5. Grad: Hunger von Hadar, Verständigung; 7. Grad: Aberration beschwören, Evards Schwarze Tentakel; 9. Grad: Rarys Telepathisches Band, Telekinese."
+    ]
+  },
+
+  "zauberer_verstand_telepathische_sprache": {
+    id: "zauberer_verstand_telepathische_sprache",
+    name: "Telepathische Sprache",
+    stufe: 1,
+    optional: false,
+    quelle: "Ungewöhnlicher Verstand",
+    beschreibung: [
+      "Als Bonusaktion wählst du eine Kreatur in Sichtweite innerhalb von neun Metern. Du und die Kreatur könnt telepathisch miteinander sprechen. Maximaler Abstand: Charismamodifikator × 1,6 km (mindestens 1,6 km). Ihr müsst in einer gemeinsamen Sprache mental sprechen.",
+      "Die Verbindung hält so viele Minuten an wie du Zaubererstufen besitzt und endet bei Kampfunfähigkeit, Tod oder Aufbau einer neuen Verbindung."
+    ]
+  },
+
+  "zauberer_verstand_psionische_zauberei": {
+    id: "zauberer_verstand_psionische_zauberei",
+    name: "Psionische Zauberei",
+    stufe: 6,
+    optional: false,
+    quelle: "Ungewöhnlicher Verstand",
+    beschreibung: [
+      "Wenn du einen Zauberspruch des 1. Grades oder höher des Merkmals Psionische Zauber wirkst, kannst du anstelle eines Zauberplatzes eine Anzahl von Zaubereipunkten verbrauchen, die dem Grad des Zaubers entspricht. Wenn du auf diese Weise wirkst, sind keine Verbal- oder Gestenkomponenten erforderlich (nur Materialkomponenten, die verbraucht werden)."
+    ]
+  },
+
+  "zauberer_verstand_psychische_verteidigung": {
+    id: "zauberer_verstand_psychische_verteidigung",
+    name: "Psychische Verteidigung",
+    stufe: 6,
+    optional: false,
+    quelle: "Ungewöhnlicher Verstand",
+    beschreibung: [
+      "Du erhältst Resistenz gegen psychischen Schaden sowie Vorteil bei Rettungswürfen auf die Zustände Bezaubert oder Verängstigt."
+    ]
+  },
+
+  "zauberer_verstand_offenbarung_in_fleisch": {
+    id: "zauberer_verstand_offenbarung_in_fleisch",
+    name: "Offenbarung in Fleisch",
+    stufe: 14,
+    optional: false,
+    quelle: "Ungewöhnlicher Verstand",
+    beschreibung: [
+      "Als Bonusaktion kannst du einen oder mehr Zaubereipunkte verbrauchen, um deinen Körper zehn Minuten lang zu verwandeln. Für jeden ausgegebenen Punkt erhältst du einen der folgenden Vorteile (Effekt bis Verwandlungsende):",
+      "• Unsichtbare Kreaturen in 18 m sehen (nicht in voller Deckung). Augen werden schwarz oder zu Tentakeln.",
+      "• Flugbewegungsrate = Schrittbewegungsrate + Schweben (Haut glänzt oder leuchtet).",
+      "• Schwimmbewegungsrate = 2× Schrittbewegungsrate + Unterwasseratmung (Kiemen oder Schwimmhäute).",
+      "• Körper schleimig/elastisch: durch 2,5-cm-Lücken schlüpfen (1,5 m Bewegung); aus nicht-magischen Fesseln/Griffen entkommen."
+    ]
+  },
+
+  "zauberer_verstand_verzerrende_implosion": {
+    id: "zauberer_verstand_verzerrende_implosion",
+    name: "Verzerrende Implosion",
+    stufe: 18,
+    optional: false,
+    quelle: "Ungewöhnlicher Verstand",
+    beschreibung: [
+      "Als Aktion kannst du dich in einen freien Bereich innerhalb von 36 Metern teleportieren. Jede Kreatur in einem Umkreis von neun Metern um den verlassenen Bereich muss einen Stärkerettungswurf ablegen. Bei Misserfolg: 3W10 Energieschaden und wird zum verlassenen Bereich gezogen. Bei Erfolg: halber Schaden, keine Bewegung.",
+      "Du kannst dieses Merkmal erst nach einer langen Rast erneut verwenden, es sei denn, du verbrauchst fünf Zaubereipunkte."
+    ]
+  },
+
+  // ── ZAUBERER: WILDE MAGIE ────────────────────────────────────────────────────
+
+  "zauberer_wild_woge_der_wilden_magie": {
+    id: "zauberer_wild_woge_der_wilden_magie",
+    name: "Woge der Wilden Magie",
+    stufe: 1,
+    optional: false,
+    quelle: "Wilde Magie",
+    beschreibung: [
+      "Beginnend mit der Wahl dieses Ursprungs kann dein Zauberwirken wilde Wogen aus ungezügelter Magie freisetzen. Einmal pro Zug, sofort nachdem du einen Zauber des 1. oder eines höheren Grades gewirkt hast, kann dich der SL mit einem W20 würfeln lassen. Ist das Ergebnis eine 1, musst du mit der Tabelle Woge der Wilden Magie einen zufälligen magischen Effekt bestimmen.",
+      "Falls der Effekt ein Zauber ist, gilt er als zu wild für Metamagie. Würde er Konzentration erfordern, entfällt diese Bedingung und er hält für seine vollständige Dauer an."
+    ]
+  },
+
+  "zauberer_wild_gezeiten_des_chaos": {
+    id: "zauberer_wild_gezeiten_des_chaos",
+    name: "Gezeiten des Chaos",
+    stufe: 1,
+    optional: false,
+    quelle: "Wilde Magie",
+    beschreibung: [
+      "Ab der 1. Stufe kannst du die Kräfte des Chaos beeinflussen, um bei einem Angriffs-, Attributs- oder Rettungswurf im Vorteil zu sein. Hast du diese Fähigkeit einmal eingesetzt, kannst du sie erst nach einer langen Rast erneut anwenden.",
+      "Jederzeit, bevor du die Anwendung dieser Fähigkeit wiedererlangst, kann der SL dich sofort nach dem Wirken eines Zaubers des 1. Grades oder höher auf die Tabelle Woge der Wilden Magie würfeln lassen. Dann erhältst du die Anwendung zurück."
+    ]
+  },
+
+  "zauberer_wild_schicksal_zurechtbiegen": {
+    id: "zauberer_wild_schicksal_zurechtbiegen",
+    name: "Das Schicksal zurechtbiegen",
+    stufe: 6,
+    optional: false,
+    quelle: "Wilde Magie",
+    beschreibung: [
+      "Beginnend mit der 6. Stufe bist du in der Lage, mit Hilfe deiner wilden Magie der Bestimmung ein Schnippchen zu schlagen. Führt eine andere Kreatur, die du sehen kannst, einen Angriffs-, Attributs- oder Rettungswurf aus, kannst du deine Reaktion einsetzen und 2 Zaubereipunkte ausgeben, um das Ergebnis eines W4 als Bonus oder Malus (deine Wahl) auf den Wurf der Kreatur anzurechnen. Du kannst die Fähigkeit nach dem Wurf einsetzen, musst es jedoch, bevor das Ergebnis angewendet wird."
+    ]
+  },
+
+  "zauberer_wild_kontrolliertes_chaos": {
+    id: "zauberer_wild_kontrolliertes_chaos",
+    name: "Kontrolliertes Chaos",
+    stufe: 14,
+    optional: false,
+    quelle: "Wilde Magie",
+    beschreibung: [
+      "Auf Stufe 14 erhältst du ein gewisses Maß an Kontrolle über die unberechenbaren Auswirkungen deiner wilden Magie. Immer wenn du auf der Tabelle Woge der Wilden Magie würfelst, kannst du ein zweites Mal würfeln und dir eines der beiden Ergebnisse aussuchen."
+    ]
+  },
+
+  "zauberer_wild_zauberbombardement": {
+    id: "zauberer_wild_zauberbombardement",
+    name: "Zauberbombardement",
+    stufe: 18,
+    optional: false,
+    quelle: "Wilde Magie",
+    beschreibung: [
+      "Angefangen mit der 18. Stufe verstärkt sich die vernichtende Energie deiner Zaubersprüche. Wenn du beim Schadenswurf eines Zaubers auf einem der Würfel das höchstmögliche Ergebnis erzielst, darfst du diesen ein weiteres Mal würfeln und auch das zweite Ergebnis zum Schaden addieren. Du kannst diese Fähigkeit nur einmal pro Zug einsetzen."
+    ]
+  },
+
+  // ── WALDLÄUFER ──────────────────────────────────────────────────────────────
+
+  "waldlaeufer_erzfeind": {
+    id: "waldlaeufer_erzfeind",
+    name: "Erzfeind",
+    stufe: 1,
+    optional: false,
+    quelle: "Waldläufer",
+    beschreibung: [
+      "Ab der 1. Stufe hast du im Beobachten, Aufspüren und Jagen einer bestimmten Art von Gegner tiefgreifende Erfahrungen gesammelt. Suche dir eine Art von Erzfeind aus: Aberrationen, Drachen, Elementare, Feenwesen, himmlische Wesen, Konstrukte, Monstrositäten, Pflanzen, Riesen, Schlicke, Tiere, Unholde oder Untote. Alternativ kannst du zwei Völker der Humanoiden als Erzfeinde wählen.",
+      "Du bist im Vorteil bei Würfen auf Weisheit (Überlebenskunst), wenn du deine Erzfeinde aufzuspüren versuchst, und bei Würfen auf Intelligenz, wenn es darum geht, dich an Informationen über deine Erzfeinde zu erinnern. Außerdem erlernst du eine zusätzliche Sprache, die von einem deiner Erzfeinde gesprochen wird.",
+      "Auf den Stufen 6 und 14 suchst du dir je einen weiteren Erzfeind und eine entsprechende Sprache aus."
+    ]
+  },
+
+  "waldlaeufer_erzfeind_verbesserung": {
+    id: "waldlaeufer_erzfeind_verbesserung",
+    name: "Verbesserung: Erzfeind",
+    stufe: 6,
+    optional: false,
+    quelle: "Waldläufer",
+    beschreibung: [
+      "Du suchst dir einen weiteren Erzfeind aus und erlernst die entsprechende Sprache."
+    ]
+  },
+
+  "waldlaeufer_bevorzugtes_gelande": {
+    id: "waldlaeufer_bevorzugtes_gelande",
+    name: "Bevorzugtes Gelände",
+    stufe: 1,
+    optional: false,
+    quelle: "Waldläufer",
+    beschreibung: [
+      "Du bist mit einer bestimmten Art von natürlichem Gelände besonders vertraut. Suche dir eine Art aus: Arktisch, Gebirge, Grasland, Küste, Sumpf, Unterreich, Wald oder Wüste. Musst du einen Wurf auf Weisheit oder Intelligenz im Zusammenhang mit deinem bevorzugten Gelände ablegen, wird dein Übungsbonus verdoppelt (sofern du die betreffende Fertigkeit beherrschst).",
+      "Beim Reisen (länger als 1 Stunde) in deinem bevorzugten Gelände: Schwieriges Gelände verringert nicht das Reisetempo. Die Gruppe verirrt sich nicht (außer durch Magie). Du bleibst aufmerksam gegenüber Gefahren. Allein reisend kannst du dich heimlich fortbewegen ohne Geschwindigkeitsverlust. Beim Sammeln von Vorräten findest du doppelt so viel. Beim Spuren lesen erkennst du Anzahl, Größe und Zeitpunkt der Spuren.",
+      "Auf Stufe 6 und 10 darfst du dir je ein weiteres bevorzugtes Gelände aussuchen."
+    ]
+  },
+
+  "waldlaeufer_bevorzugtes_gelande_verbesserung": {
+    id: "waldlaeufer_bevorzugtes_gelande_verbesserung",
+    name: "Verbesserung: Bevorzugtes Gelände",
+    stufe: 6,
+    optional: false,
+    quelle: "Waldläufer",
+    beschreibung: [
+      "Du suchst dir ein weiteres bevorzugtes Gelände aus."
+    ]
+  },
+
+  "waldlaeufer_gebliebter_feind": {
+    id: "waldlaeufer_gebliebter_feind",
+    name: "Gebliebter Feind",
+    stufe: 1,
+    optional: true,
+    quelle: "Waldläufer",
+    beschreibung: [
+      "Ersetzt das Merkmal Erzfeind (kombinierbar mit Feindestöter). Triffst du eine Kreatur mit einem Angriffswurf, kannst du sie für eine Minute (oder bis du die Konzentration verlierst) als Erzfeind markieren.",
+      "In jedem Zug, in dem du deinen Erzfeind triffst und ihm Schaden zufügst (auch im Markierungszug), kannst du den Schaden um 1W4 erhöhen.",
+      "Die Häufigkeit des Markierens entspricht deinem Übungsbonus. Verbrauchte Anwendungen stehen nach einer langen Rast wieder zur Verfügung. Schadensbonus steigt: ab Stufe 6 auf 1W6, ab Stufe 14 auf 1W8."
+    ]
+  },
+
+  "waldlaeufer_geschickte_erkundung": {
+    id: "waldlaeufer_geschickte_erkundung",
+    name: "Geschickte Erkundung",
+    stufe: 1,
+    optional: true,
+    quelle: "Waldläufer",
+    beschreibung: [
+      "Ersetzt das Merkmal Bevorzugtes Gelände. Du erhältst den Vorzug Pfiffig sowie weitere Vorzüge auf Stufe 6 und 10.",
+      "Pfiffig (Stufe 1): Wähle eine deiner geübten Fertigkeiten — dein Übungsbonus wird für diese Fertigkeit verdoppelt. Außerdem kannst du zwei Sprachen deiner Wahl sprechen, lesen und schreiben.",
+      "Vagabund (Stufe 6): Deine Schrittbewegungsrate steigt um 1,5 Meter. Deine Kletter- und Schwimmbewegungsrate entsprechen deiner Schrittbewegungsrate.",
+      "Nimmermüde (Stufe 10): Als Aktion verleihst du dir temporäre Trefferpunkte in Höhe von 1W8 + Weisheitsmodifikator (mindestens 1). Häufigkeit = Übungsbonus. Verbrauchte Anwendungen nach langer Rast zurück."
+    ]
+  },
+
+  "waldlaeufer_kampfstil": {
+    id: "waldlaeufer_kampfstil",
+    name: "Kampfstil",
+    stufe: 2,
+    optional: false,
+    quelle: "Waldläufer",
+    beschreibung: [
+      "Mit Erreichen der 2. Stufe wählst du eine bestimmte Art zu kämpfen als Spezialisierung. Du kannst keinen der Stile mehr als einmal wählen.",
+      "Verfügbare Stile: Blinder Kampf, Bogenschießen, Druidischer Krieger, Duellieren, Kampf mit zwei Waffen, Verteidigung, Wurfwaffenkampf."
+    ]
+  },
+
+  "waldlaeufer_kampfstil_blinder_kampf": {
+    id: "waldlaeufer_kampfstil_blinder_kampf",
+    name: "Kampfstil: Blinder Kampf",
+    stufe: 2,
+    optional: false,
+    quelle: "Waldläufer",
+    beschreibung: [
+      "Du erlangst Blindsicht mit einer Reichweite von drei Metern. Du kannst effektiv alles sehen, was nicht in vollständiger Deckung ist, selbst bei Dunkelheit oder im Zustand Blind. Du kannst sogar unsichtbare Kreaturen sehen, wenn es ihnen nicht gelingt, sich vor dir zu verstecken."
+    ]
+  },
+
+  "waldlaeufer_kampfstil_bogenschiessen": {
+    id: "waldlaeufer_kampfstil_bogenschiessen",
+    name: "Kampfstil: Bogenschießen",
+    stufe: 2,
+    optional: false,
+    quelle: "Waldläufer",
+    beschreibung: [
+      "Du erhältst einen Bonus von +2 auf alle Angriffswürfe mit Fernkampfwaffen."
+    ]
+  },
+
+  "waldlaeufer_kampfstil_druidischer_krieger": {
+    id: "waldlaeufer_kampfstil_druidischer_krieger",
+    name: "Kampfstil: Druidischer Krieger",
+    stufe: 2,
+    optional: false,
+    quelle: "Waldläufer",
+    beschreibung: [
+      "Du beherrschst zwei Zaubertricks deiner Wahl aus der Zauberliste des Druiden. Sie zählen als Waldläuferzauber und du nutzt Weisheit als Zauberwirk-Attribut. Beim Stufenaufstieg kannst du einen der Zaubertricks ersetzen."
+    ]
+  },
+
+  "waldlaeufer_kampfstil_duellieren": {
+    id: "waldlaeufer_kampfstil_duellieren",
+    name: "Kampfstil: Duellieren",
+    stufe: 2,
+    optional: false,
+    quelle: "Waldläufer",
+    beschreibung: [
+      "Kämpfst du nur mit einer einhändig geführten Nahkampfwaffe und keiner Waffe in der anderen Hand, erhältst du einen Bonus von +2 auf die Schadenswürfe mit dieser Waffe."
+    ]
+  },
+
+  "waldlaeufer_kampfstil_kampf_mit_zwei_waffen": {
+    id: "waldlaeufer_kampfstil_kampf_mit_zwei_waffen",
+    name: "Kampfstil: Kampf mit zwei Waffen",
+    stufe: 2,
+    optional: false,
+    quelle: "Waldläufer",
+    beschreibung: [
+      "Wenn du mit zwei Waffen angreifst, kannst du den passenden Attributsmodifikator zum Schaden der zweiten Waffe addieren."
+    ]
+  },
+
+  "waldlaeufer_kampfstil_verteidigung": {
+    id: "waldlaeufer_kampfstil_verteidigung",
+    name: "Kampfstil: Verteidigung",
+    stufe: 2,
+    optional: false,
+    quelle: "Waldläufer",
+    beschreibung: [
+      "Solange du eine Rüstung trägst, erhältst du einen Bonus von +1 auf deine Rüstungsklasse."
+    ]
+  },
+
+  "waldlaeufer_kampfstil_wurfwaffenkampf": {
+    id: "waldlaeufer_kampfstil_wurfwaffenkampf",
+    name: "Kampfstil: Wurfwaffenkampf",
+    stufe: 2,
+    optional: false,
+    quelle: "Waldläufer",
+    beschreibung: [
+      "Hat eine Waffe die Eigenschaft Wurfwaffe, wird das Ziehen der Waffe zum Teil des Angriffs. Triffst du bei einem Fernkampfangriff mit einer Wurfwaffe, erhältst du zudem einen Schadensbonus von +2."
+    ]
+  },
+
+  "waldlaeufer_zauberwirken": {
+    id: "waldlaeufer_zauberwirken",
+    name: "Zauberwirken",
+    stufe: 2,
+    optional: false,
+    quelle: "Waldläufer",
+    beschreibung: [
+      "Mit Erreichen der 2. Stufe hast du gelernt, die magische Essenz der Natur zu nutzen, um Zauber zu wirken.",
+      "Du kennst zwei frei wählbare Waldläuferzauber des 1. Grades. Beim Stufenaufstieg lernst du weitere Zauber (nur für Grade, für die du Zauberplätze besitzt). Du kannst bei jedem Aufstieg einen bekannten Zauber ersetzen.",
+      "Zauberwirk-Attribut: Weisheit. SG = 8 + Übungsbonus + WEI-Mod. Angriffsmod = Übungsbonus + WEI-Mod."
+    ]
+  },
+
+  "waldlaeufer_zauberfokus": {
+    id: "waldlaeufer_zauberfokus",
+    name: "Zauberfokus",
+    stufe: 2,
+    optional: true,
+    quelle: "Waldläufer",
+    beschreibung: [
+      "Du kannst einen druidischen Fokus als Zauberfokus für deine Waldläuferzauber verwenden. Ein druidischer Fokus kann ein Mistelzweig, ein Eibenstock, ein Kampfstab aus speziellem Holz oder ein Totemobjekt mit Federn, Fell, Knochen und Zähnen eines heiligen Tieres sein."
+    ]
+  },
+
+  "waldlaeufer_waldlaeuferarchetyp": {
+    id: "waldlaeufer_waldlaeuferarchetyp",
+    name: "Waldläuferarchetyp",
+    stufe: 3,
+    optional: false,
+    quelle: "Waldläufer",
+    beschreibung: [
+      "Auf der 3. Stufe suchst du dir einen Archetypen aus, dem du nacheiferst und der deinen Weg als Waldläufer bestimmt. Deine Wahl gewährt dir auf der 3., 7., 11. und 15. Stufe jeweils ein Merkmal."
+    ]
+  },
+
+  "waldlaeufer_waldlaeuferarchetyp_merkmal": {
+    id: "waldlaeufer_waldlaeuferarchetyp_merkmal",
+    name: "Merkmal: Waldläuferarchetyp",
+    stufe: 7,
+    optional: false,
+    quelle: "Waldläufer",
+    beschreibung: [
+      "Du erhältst ein weiteres Merkmal aus deinem gewählten Waldläuferarchetyp."
+    ]
+  },
+
+  "waldlaeufer_urtuemliche_wahrnehmung": {
+    id: "waldlaeufer_urtuemliche_wahrnehmung",
+    name: "Urtümliche Wahrnehmung",
+    stufe: 3,
+    optional: false,
+    quelle: "Waldläufer",
+    beschreibung: [
+      "Ab der 3. Stufe kannst du als Aktion einen Zauberplatz aufgeben, um deine Wahrnehmung auf die unmittelbare Umgebung zu konzentrieren. Für 1 Minute pro Grad des aufgewendeten Zauberplatzes kannst du spüren, ob sich eine der folgenden Kreaturenarten innerhalb von 1,5 km befindet (9 km in deinem bevorzugten Gelände): Aberrationen, Drachen, Elementare, Feenwesen, himmlische Wesen, Unholde und Untote. Du erfährst weder den Ort noch die Anzahl."
+    ]
+  },
+
+  "waldlaeufer_urbewusstsein": {
+    id: "waldlaeufer_urbewusstsein",
+    name: "Urbewusstsein",
+    stufe: 3,
+    optional: true,
+    quelle: "Waldläufer",
+    beschreibung: [
+      "Ersetzt das Merkmal Urtümliche Wahrnehmung. Du kannst folgende Zauber wirken, ohne einen Zauberplatz zu verbrauchen (je einmal pro langer Rast):",
+      "Stufe 3: Mit Tieren sprechen; Stufe 5: Tiersinn; Stufe 9: Mit Pflanzen sprechen; Stufe 13: Kreatur aufspüren; Stufe 17: Einswerden mit der Natur.",
+      "Diese Zauber zählen nicht gegen deine bekannten Waldläuferzauber."
+    ]
+  },
+
+  "waldlaeufer_kriegerische_vielseitigkeit": {
+    id: "waldlaeufer_kriegerische_vielseitigkeit",
+    name: "Kriegerische Vielseitigkeit",
+    stufe: 4,
+    optional: true,
+    quelle: "Waldläufer",
+    beschreibung: [
+      "Wenn du mit dieser Klasse eine Stufe erreichst, die dir das Merkmal Attributswerterhöhung gewährt, kannst du einen dir bekannten Kampfstil durch einen anderen Kampfstil ersetzen, der Waldläufern zur Verfügung steht."
+    ]
+  },
+
+  "waldlaeufer_zusaetzlicher_angriff": {
+    id: "waldlaeufer_zusaetzlicher_angriff",
+    name: "Zusätzlicher Angriff",
+    stufe: 5,
+    optional: false,
+    quelle: "Waldläufer",
+    beschreibung: [
+      "Ab der 5. Stufe kannst du zweimal anstatt einmal angreifen, wenn du deine Angriffsaktion in deinem Zug einsetzt."
+    ]
+  },
+
+  "waldlaeufer_sicherer_schritt": {
+    id: "waldlaeufer_sicherer_schritt",
+    name: "Sicherer Schritt",
+    stufe: 8,
+    optional: false,
+    quelle: "Waldläufer",
+    beschreibung: [
+      "Von der 8. Stufe an kostet es dich keine zusätzliche Bewegung mehr, nicht-magisches schwieriges Gelände zu durchqueren. Du kannst dich auch durch nicht-magische Pflanzen bewegen, ohne verlangsamt oder verletzt zu werden.",
+      "Außerdem bist du im Vorteil bei Rettungswürfen gegen Pflanzen, die magisch erschaffen oder manipuliert wurden, um deine Bewegung einzuschränken."
+    ]
+  },
+
+  "waldlaeufer_tarnung": {
+    id: "waldlaeufer_tarnung",
+    name: "Tarnung",
+    stufe: 10,
+    optional: false,
+    quelle: "Waldläufer",
+    beschreibung: [
+      "Beginnend mit Stufe 10 kannst du dir innerhalb von 1 Minute eine Tarnung aus natürlichen Materialien (Schlamm, Schmutz, Pflanzen, Ruß o. ä.) verschaffen. Bist du getarnt, kannst du dich verstecken, indem du dich gegen eine feste Oberfläche drückst, die mindestens so hoch und breit ist wie du selbst.",
+      "Du erhältst einen Bonus von +10 auf Würfe auf Geschicklichkeit (Heimlichkeit), solange du in dieser Position verharrst. Sobald du dich bewegst oder eine Aktion oder Reaktion ausführst, musst du dich von Neuem tarnen."
+    ]
+  },
+
+  "waldlaeufer_naturschleier": {
+    id: "waldlaeufer_naturschleier",
+    name: "Naturschleier",
+    stufe: 10,
+    optional: true,
+    quelle: "Waldläufer",
+    beschreibung: [
+      "Ersetzt das Merkmal Tarnung. Als Bonusaktion kannst du dich bis zum Ende deines nächsten Zugs samt aller Ausrüstung auf magische Weise unsichtbar machen.",
+      "Die Häufigkeit entspricht deinem Übungsbonus. Verbrauchte Anwendungen stehen nach einer langen Rast wieder zur Verfügung."
+    ]
+  },
+
+  "waldlaeufer_verschwinden": {
+    id: "waldlaeufer_verschwinden",
+    name: "Verschwinden",
+    stufe: 14,
+    optional: false,
+    quelle: "Waldläufer",
+    beschreibung: [
+      "Du kannst dich ab der 14. Stufe als Bonusaktion in deinem Zug verstecken. Außerdem kannst du nicht mehr durch nicht-magische Methoden aufgespürt werden, außer du möchtest absichtlich eine Fährte hinterlassen."
+    ]
+  },
+
+  "waldlaeufer_wilde_sinne": {
+    id: "waldlaeufer_wilde_sinne",
+    name: "Wilde Sinne",
+    stufe: 18,
+    optional: false,
+    quelle: "Waldläufer",
+    beschreibung: [
+      "Ab der 18. Stufe besitzt du übernatürliche Sinne, die dir im Kampf gegen Kreaturen helfen, die du nicht sehen kannst. Wenn du eine solche Kreatur angreifst, bist du aufgrund deiner Unfähigkeit, sie zu sehen, nicht mehr im Nachteil bei Angriffswürfen gegen sie.",
+      "Du kennst außerdem den Standort jeder unsichtbaren Kreatur im Umkreis von 6 m, solange sie sich nicht vor dir versteckt und du weder geblendet noch taub bist."
+    ]
+  },
+
+  "waldlaeufer_feindestoeter": {
+    id: "waldlaeufer_feindestoeter",
+    name: "Feindestöter",
+    stufe: 20,
+    optional: false,
+    quelle: "Waldläufer",
+    beschreibung: [
+      "Auf Stufe 20 wirst du zu einem beispiellosen Jäger deiner Feinde. Einmal in jedem deiner Züge darfst du deinen Weisheitsmodifikator zu einem Angriffs- oder Schadenswurf addieren, den du gegen einen deiner Erzfeinde ausführst. Du kannst dir aussuchen, ob du die Fähigkeit vor oder nach deinem Wurf einsetzt, musst dich jedoch entscheiden, bevor das Ergebnis des Wurfs angewendet wird."
+    ]
+  },
+
+  // ── WALDLÄUFER: DRACHLINGWÄCHTER ─────────────────────────────────────────────
+
+  "waldlaeufer_drach_drakonische_gabe": {
+    id: "waldlaeufer_drach_drakonische_gabe",
+    name: "Drakonische Gabe",
+    stufe: 3,
+    optional: false,
+    quelle: "Drachlingwächter",
+    beschreibung: [
+      "Deine Verbindung mit dem Drachling verschafft dir Wissen und ermächtigt deine Präsenz:",
+      "Thaumaturgie: Du erlernst den Zaubertrick Thaumaturgie als Waldläuferzauber.",
+      "Zunge der Drachen: Du kannst Drakonisch oder eine andere Sprache deiner Wahl sprechen, lesen und schreiben."
+    ]
+  },
+
+  "waldlaeufer_drach_drachlinggefaehrte": {
+    id: "waldlaeufer_drach_drachlinggefaehrte",
+    name: "Drachlinggefährte",
+    stufe: 3,
+    optional: false,
+    quelle: "Drachlingwächter",
+    beschreibung: [
+      "Als Aktion beschwörst du magisch den Drachling, der an dich gebunden ist. Er erscheint in einem freien Bereich deiner Wahl im Umkreis von neun Metern. Der Drachling ist dir und deinen Gefährten freundlich gesonnen und gehorcht deinen Befehlen. Er verwendet mehrfach deinen Übungsbonus in seinen Spielwerten.",
+      "Im Kampf nutzt der Drachling deine Initiative und ist unmittelbar nach dir am Zug. Er führt nur Ausweichaktionen aus, sofern du nicht eine Bonusaktion nutzt, um ihm eine andere Aktion zu befehlen. Wenn du kampfunfähig bist, wählt er selbst seine Aktion.",
+      "Der Drachling bleibt bis seine TP auf 0 sinken, du das Merkmal erneut anwendest, oder bis du stirbst. Nach einer Beschwörung ist eine lange Rast nötig, um ihn erneut zu beschwören (oder ein Zauberplatz des 1. Grades oder höher)."
+    ]
+  },
+
+  "waldlaeufer_drach_band_von_reisszahn_und_schuppe": {
+    id: "waldlaeufer_drach_band_von_reisszahn_und_schuppe",
+    name: "Band von Reißzahn und Schuppe",
+    stufe: 7,
+    optional: false,
+    quelle: "Drachlingwächter",
+    beschreibung: [
+      "Die Bindung mit deinem Drachling wird vertieft. Wenn du ihn beschwörst, wachsen ihm Flügel (Flugbewegungsrate = Schrittbewegungsrate).",
+      "Solange der Drachling beschworen ist: Drachenreittier – der Drachling wächst auf mittlere Größe; du kannst ihn als Reittier nutzen (wenn du selbst höchstens mittelgroß bist). Magischer Reißzahn – sein Biss verursacht zusätzlich 1W6 Schaden der drakonischen Essenz. Resistenz – du bist gegen die Schadensart der drakonischen Essenz resistent."
+    ]
+  },
+
+  "waldlaeufer_drach_drachlingodem": {
+    id: "waldlaeufer_drach_drachlingodem",
+    name: "Drachlingodem",
+    stufe: 11,
+    optional: false,
+    quelle: "Drachlingwächter",
+    beschreibung: [
+      "Als Aktion kannst du oder dein Drachling schädlichen Odem in einem Kegel von neun Metern ausatmen. Wähle Blitz-, Feuer-, Gift-, Kälte- oder Säureschaden. Jede Kreatur im Kegel muss einen Geschicklichkeitsrettungswurf gegen deinen Zauber-SG ausführen. Bei Misserfolg: 8W6 Schaden (bei Stufe 15 erhöht auf 10W6), bei Erfolg die Hälfte.",
+      "Nach einer Aktivierung ist eine lange Rast nötig für erneuten Einsatz (oder ein Zauberplatz des 3. Grades oder höher)."
+    ]
+  },
+
+  "waldlaeufer_drach_perfektioniertes_band": {
+    id: "waldlaeufer_drach_perfektioniertes_band",
+    name: "Perfektioniertes Band",
+    stufe: 15,
+    optional: false,
+    quelle: "Drachlingwächter",
+    beschreibung: [
+      "Solange dein Drachling beschworen ist:",
+      "Großer Drachling: Er wächst auf große Größe. Beim Reiten kann er jetzt auch die Flugbewegungsrate nutzen.",
+      "Reflexive Resistenz: Wenn du oder der Drachling Schaden erleidet (max. 9 m Abstand), kannst du als Reaktion Resistenz gegen den Schadenstyp verleihen. Häufigkeit = Übungsbonus. Verbrauchte nach langer Rast zurück.",
+      "Verstärkter Biss: Der Biss verursacht insgesamt 2W6 zusätzlichen Schaden der drakonischen Essenz."
+    ]
+  },
+
+  // ── WALDLÄUFER: DÜSTERPIRSCHER ───────────────────────────────────────────────
+
+  "waldlaeufer_duest_magie": {
+    id: "waldlaeufer_duest_magie",
+    name: "Magie des Düsterpirschers",
+    stufe: 3,
+    optional: false,
+    quelle: "Düsterpirscher",
+    beschreibung: [
+      "Ab der 3. Stufe lernst du zusätzliche Zauber, die nicht gegen deine bekannten Waldläuferzauber zählen:",
+      "Stufe 3: Selbstverkleidung; Stufe 5: Seiltrick; Stufe 9: Furcht; Stufe 13: Mächtige Unsichtbarkeit; Stufe 17: Äußerlichkeiten."
+    ]
+  },
+
+  "waldlaeufer_duest_schrecklicher_hinterhalt": {
+    id: "waldlaeufer_duest_schrecklicher_hinterhalt",
+    name: "Schrecklicher Hinterhalt",
+    stufe: 3,
+    optional: false,
+    quelle: "Düsterpirscher",
+    beschreibung: [
+      "Auf der 3. Stufe meisterst du die Kunst des Hinterhalts. Du kannst dir auf deine Initiativewürfe einen Bonus in Höhe deines Weisheitsmodifikators geben.",
+      "Zu Beginn deines ersten Zuges in jedem Kampf erhöht sich deine Bewegungsrate um 3 m (bis zum Zugende). Wenn du in diesem Zug eine Angriffsaktion ausführst, kannst du als Teil dieser Aktion einen zusätzlichen Waffenangriff durchführen. Bei einem Treffer erleidet das Ziel 1W8 zusätzlichen Schaden (entsprechend dem Waffentyp)."
+    ]
+  },
+
+  "waldlaeufer_duest_duestersicht": {
+    id: "waldlaeufer_duest_duestersicht",
+    name: "Düstersicht",
+    stufe: 3,
+    optional: false,
+    quelle: "Düsterpirscher",
+    beschreibung: [
+      "Auf der 3. Stufe erhältst du Dunkelsicht mit einer Reichweite von bis zu 18 m. Wenn du aufgrund deines Volkes bereits über Dunkelsicht verfügst, erhöht sich die Reichweite um 9 m.",
+      "Außerdem bist du geschickt darin, Kreaturen zu umgehen, die Dunkelsicht besitzen. Während du dich in der Dunkelheit aufhältst, bist du unsichtbar für Kreaturen, die auf Dunkelsicht angewiesen sind, um dich zu sehen."
+    ]
+  },
+
+  "waldlaeufer_duest_unbeugsamer_verstand": {
+    id: "waldlaeufer_duest_unbeugsamer_verstand",
+    name: "Unbeugsamer Verstand",
+    stufe: 7,
+    optional: false,
+    quelle: "Düsterpirscher",
+    beschreibung: [
+      "Auf der 7. Stufe wirst du zum Meister darin, dich den Verstand beeinflussenden Kräften zu widersetzen. Du erhältst Übung in Weisheitsrettungswürfen. Wenn du diese bereits besitzt, erhältst du stattdessen Übung in Intelligenz- oder Charismarettungswürfen (deine Wahl)."
+    ]
+  },
+
+  "waldlaeufer_duest_wirbelangriff": {
+    id: "waldlaeufer_duest_wirbelangriff",
+    name: "Wirbelangriff des Pirschers",
+    stufe: 11,
+    optional: false,
+    quelle: "Düsterpirscher",
+    beschreibung: [
+      "Auf der 11. Stufe lernst du, mit solch unerwarteter Flinkheit anzugreifen, dass du erneut attackieren kannst, wenn du nicht triffst. Wenn du mit einem Waffenangriff verfehlst, kannst du einmal in jedem deiner Züge als Teil derselben Aktion einen weiteren Waffenangriff durchführen."
+    ]
+  },
+
+  "waldlaeufer_duest_schattenfinte": {
+    id: "waldlaeufer_duest_schattenfinte",
+    name: "Schattenfinte",
+    stufe: 15,
+    optional: false,
+    quelle: "Düsterpirscher",
+    beschreibung: [
+      "Beginnend mit der 15. Stufe kannst du auf unvorhergesehene Arten ausweichen, denn schummrige Schatten umhüllen dich. Immer wenn eine Kreatur einen Angriffswurf gegen dich ausführt und bei diesem Wurf nicht im Vorteil ist, kannst du deine Reaktion nutzen, damit die Kreatur bei dem Wurf im Nachteil ist. Du musst dieses Merkmal einsetzen, bevor das Würfelergebnis bekannt ist."
+    ]
+  },
+
+  // ── WALDLÄUFER: FEENWANDERER ─────────────────────────────────────────────────
+
+  "waldlaeufer_feen_graessliche_schlaege": {
+    id: "waldlaeufer_feen_graessliche_schlaege",
+    name: "Grässliche Schläge",
+    stufe: 3,
+    optional: false,
+    quelle: "Feenwanderer",
+    beschreibung: [
+      "Du kannst die Schläge deiner Waffe mit einer den Verstand marternden Magie aus dem Feenwild anreichern. Einmal pro Zug kannst du einer Kreatur bei einem erfolgreichen Waffenangriff 1W4 psychischen Schaden zusätzlich zufügen. Steigt auf 1W6 ab der 11. Stufe."
+    ]
+  },
+
+  "waldlaeufer_feen_magie": {
+    id: "waldlaeufer_feen_magie",
+    name: "Magie des Feenwanderers",
+    stufe: 3,
+    optional: false,
+    quelle: "Feenwanderer",
+    beschreibung: [
+      "Wenn du bestimmte Stufen erreichst, lernst du neue Zauber (zählen nicht gegen bekannte Waldläuferzauber):",
+      "Stufe 3: Person bezaubern; Stufe 5: Nebelschritt; Stufe 9: Magie bannen; Stufe 13: Dimensionstür; Stufe 17: Ablenkung.",
+      "Du erhältst zudem einen übernatürlichen Segen von einem Feenwesen oder einem Ort der Feenmacht (W6-Tabelle: Schmetterlinge bei Rast, Blumen im Haar, Kräuterduft, tanzender Schatten, Hörner/Geweih, saisonale Farbwechsel)."
+    ]
+  },
+
+  "waldlaeufer_feen_ausserweltlicher_glanz": {
+    id: "waldlaeufer_feen_ausserweltlicher_glanz",
+    name: "Außerweltlicher Glanz",
+    stufe: 3,
+    optional: false,
+    quelle: "Feenwanderer",
+    beschreibung: [
+      "Durch deine feenhafte Beschaffenheit bist du übernatürlich anmutig. Du erhältst bei Charismawürfen einen Bonus, der deinem Weisheitsmodifikator entspricht (mindestens +1).",
+      "Außerdem bist du in einer der folgenden Fertigkeiten deiner Wahl geübt: Auftreten, Täuschen oder Überzeugen."
+    ]
+  },
+
+  "waldlaeufer_feen_betoerende_verdrehung": {
+    id: "waldlaeufer_feen_betoerende_verdrehung",
+    name: "Betörende Verdrehung",
+    stufe: 7,
+    optional: false,
+    quelle: "Feenwanderer",
+    beschreibung: [
+      "Die Magie des Feenwild bewacht deinen Geist. Du bist bei Rettungswürfen gegen Bezauberung und Verängstigung im Vorteil.",
+      "Wenn du innerhalb von 36 Metern siehst, wie einer Kreatur ein Rettungswurf auf Bezauberung oder Verängstigung gelingt, kannst du deine Reaktion verwenden, um eine andere Kreatur in 36 Metern zu einem Weisheitsrettungswurf gegen deinen Zauber-SG zu zwingen. Bei Misserfolg ist dein Ziel eine Minute lang von dir bezaubert oder verängstigt. Das Ziel kann am Ende jedes Zuges erneut würfeln."
+    ]
+  },
+
+  "waldlaeufer_feen_feenverstaerkung": {
+    id: "waldlaeufer_feen_feenverstaerkung",
+    name: "Feenverstärkung",
+    stufe: 11,
+    optional: false,
+    quelle: "Feenwanderer",
+    beschreibung: [
+      "Der königliche Hof des Feenwild gesteht dir die Hilfe der Feenwesen zu. Du kennst den Zauber Feenwesen beschwören, der nicht gegen deine bekannten Waldläuferzauber zählt. Du kannst ihn ohne Materialkomponenten wirken und einmal pro langer Rast ohne Zauberplatz.",
+      "Wenn du mit dem Wirken dieses Zaubers beginnst, kannst du ihn so verändern, dass er keine Konzentration erfordert. Falls du das tust, beträgt die Wirkungsdauer eine Minute."
+    ]
+  },
+
+  "waldlaeufer_feen_nebelwanderer": {
+    id: "waldlaeufer_feen_nebelwanderer",
+    name: "Nebelwanderer",
+    stufe: 15,
+    optional: false,
+    quelle: "Feenwanderer",
+    beschreibung: [
+      "Du kannst den Zauber Nebelschritt wirken, ohne einen Zauberplatz zu verbrauchen. Häufigkeit = Weisheitsmodifikator (mindestens einmal). Verbrauchte Anwendungen nach langer Rast zurück.",
+      "Immer wenn du Nebelschritt wirkst, kannst du eine bereitwillige Kreatur innerhalb von 1,5 Metern mitnehmen. Sie erscheint in einem freien Bereich innerhalb von 1,5 Metern deines Zielortes."
+    ]
+  },
+
+  // ── WALDLÄUFER: HERR DER TIERE ───────────────────────────────────────────────
+
+  "waldlaeufer_herr_begleiter": {
+    id: "waldlaeufer_herr_begleiter",
+    name: "Der Begleiter des Waldläufers",
+    stufe: 3,
+    optional: false,
+    quelle: "Herr der Tiere",
+    beschreibung: [
+      "Mit der Entscheidung für diesen Archetyp wählst du einen Tiergefährten (max. mittelgroß, HG 1/4 oder weniger). Du addierst deinen Übungsbonus zur RK, den Angriffs- und Schadenswürfen, Rettungswürfen und geübten Fertigkeiten des Tiers. Sein TP-Maximum entspricht den Spielwerten oder dem Vierfachen deiner Stufe (höchstes gilt).",
+      "Das Tier gehorcht deinen Anweisungen. Befehligung: Bewegung ohne Aktion per Wort. Für Angreifen/Spurten/Rückzug/Ausweichen/Hilfe: Aktion nötig. Ab Zusätzlicher Angriff: du kannst einen Angriff ausführen, wenn du dem Tier die Angriffsaktion befiehlst.",
+      "Stirbt das Tier, kannst du in 8 Stunden einen magischen Bund zu einem neuen Tier aufbauen."
+    ]
+  },
+
+  "waldlaeufer_herr_urbegleiter": {
+    id: "waldlaeufer_herr_urbegleiter",
+    name: "Urbegleiter",
+    stufe: 3,
+    optional: true,
+    quelle: "Herr der Tiere",
+    beschreibung: [
+      "Ersetzt das Merkmal Begleiter des Waldläufers. Du rufst magisch ein Urtier herbei (Urtier des Landes, Meeres oder der Lüfte), das Kraft aus deiner Bindung an die Natur schöpft. Die Spielwerte verwenden mehrfach deinen Übungsbonus.",
+      "Im Kampf handelt das Urtier während deines Zugs. Als Aktion kann es nur ausweichen – du kannst ihm per Bonusaktion eine andere Aktion befehlen oder auf einen deiner Angriffe verzichten, um ihm die Angriffsaktion zu befehlen.",
+      "Stirbt das Urtier, kannst du als Aktion einen Zauberplatz des 1. Grades verbrauchen und es nach einer Minute der Berührung mit vollen TP wieder ins Leben zurückbringen. Am Ende einer langen Rast kannst du ein anderes Urtier beschwören."
+    ]
+  },
+
+  "waldlaeufer_herr_aussergewoehnliches_training": {
+    id: "waldlaeufer_herr_aussergewoehnliches_training",
+    name: "Außergewöhnliches Training",
+    stufe: 7,
+    optional: false,
+    quelle: "Herr der Tiere",
+    beschreibung: [
+      "Ab Stufe 7 kannst du als Bonusaktion deinem Tiergefährten befehlen, in seinem Zug die Rennen-, Rückzugs-, Ausweich- oder Hilfsaktion auszuführen, solange er nicht angreift."
+    ]
+  },
+
+  "waldlaeufer_herr_tierische_wut": {
+    id: "waldlaeufer_herr_tierische_wut",
+    name: "Tierische Wut",
+    stufe: 11,
+    optional: false,
+    quelle: "Herr der Tiere",
+    beschreibung: [
+      "Befiehlst du von Stufe 11 an deinem Tiergefährten die Angriffsaktion, kann dieser zweimal angreifen anstatt einmal oder die Mehrfachangriffsaktion ausführen, falls er über diese verfügt."
+    ]
+  },
+
+  "waldlaeufer_herr_zauber_teilen": {
+    id: "waldlaeufer_herr_zauber_teilen",
+    name: "Zauber teilen",
+    stufe: 15,
+    optional: false,
+    quelle: "Herr der Tiere",
+    beschreibung: [
+      "Beginnend mit der 15. Stufe kann ein Zauber, den du wirkst und der dich selbst zum Ziel hat, zusätzlich auch deinen Tiergefährten betreffen, solange sich dieser innerhalb von 9 m befindet."
+    ]
+  },
+
+  // ── WALDLÄUFER: HORIZONTWANDERER ─────────────────────────────────────────────
+
+  "waldlaeufer_horiz_magie": {
+    id: "waldlaeufer_horiz_magie",
+    name: "Magie des Horizontwanderers",
+    stufe: 3,
+    optional: false,
+    quelle: "Horizontwanderer",
+    beschreibung: [
+      "Beginnend mit der 3. Stufe lernst du zusätzliche Zauber (zählen nicht gegen bekannte Waldläuferzauber):",
+      "Stufe 3: Schutz vor Gut und Böse; Stufe 5: Nebelschritt; Stufe 9: Hast; Stufe 13: Verbannung; Stufe 17: Kreis der Teleportation."
+    ]
+  },
+
+  "waldlaeufer_horiz_portal_entdecken": {
+    id: "waldlaeufer_horiz_portal_entdecken",
+    name: "Portal entdecken",
+    stufe: 3,
+    optional: false,
+    quelle: "Horizontwanderer",
+    beschreibung: [
+      "Auf der 3. Stufe erwirbst du die Fähigkeit, auf magische Weise Ebenenportale aufzuspüren. Als Aktion kannst du die Entfernung und Richtung zum nächsten Ebenenportal innerhalb von 1,5 km bestimmen.",
+      "Nachdem du dieses Merkmal eingesetzt hast, kannst du es nicht wieder verwenden, bis du eine kurze oder lange Rast beendet hast."
+    ]
+  },
+
+  "waldlaeufer_horiz_krieger_der_ebenen": {
+    id: "waldlaeufer_horiz_krieger_der_ebenen",
+    name: "Krieger der Ebenen",
+    stufe: 3,
+    optional: false,
+    quelle: "Horizontwanderer",
+    beschreibung: [
+      "Auf der 3. Stufe lernst du, die Energie des Multiversums zu nutzen, um deine Angriffe zu verstärken. Als Bonusaktion bestimmst du eine Kreatur innerhalb von 9 m. Das nächste Mal, wenn du diese Kreatur mit einem Waffenangriff triffst, wird jeglicher Schaden zu Energieschaden, und die Kreatur erleidet 1W8 zusätzlichen Energieschaden. Ab der 11. Stufe erhöht sich der zusätzliche Schaden auf 2W8."
+    ]
+  },
+
+  "waldlaeufer_horiz_aetherschritt": {
+    id: "waldlaeufer_horiz_aetherschritt",
+    name: "Ätherschritt",
+    stufe: 7,
+    optional: false,
+    quelle: "Horizontwanderer",
+    beschreibung: [
+      "Ab der 7. Stufe bist du in der Lage, durch die Ätherebene zu schreiten. Als Bonusaktion kannst du den Zauber Ätherische Gestalten ohne Zauberplatz wirken, aber der Zauber endet am Ende deines aktuellen Zuges.",
+      "Nachdem du dieses Merkmal eingesetzt hast, kannst du es erst wieder verwenden, nachdem du eine kurze oder lange Rast beendet hast."
+    ]
+  },
+
+  "waldlaeufer_horiz_distanzschlag": {
+    id: "waldlaeufer_horiz_distanzschlag",
+    name: "Distanzschlag",
+    stufe: 11,
+    optional: false,
+    quelle: "Horizontwanderer",
+    beschreibung: [
+      "Auf der 11. Stufe erwirbst du die Fähigkeit, dich von einem Augenblick auf den anderen zwischen den Ebenen zu bewegen. Wenn du die Angriffsaktion ausführst, kannst du dich vor jedem Angriff bis zu 3 m auf einen nicht besetzten Bereich teleportieren, den du sehen kannst.",
+      "Wenn du mindestens zwei unterschiedliche Kreaturen mit der Aktion angreifst, kannst du einen zusätzlichen Angriff gegen eine dritte Kreatur ausführen."
+    ]
+  },
+
+  "waldlaeufer_horiz_spektrale_verteidigung": {
+    id: "waldlaeufer_horiz_spektrale_verteidigung",
+    name: "Spektrale Verteidigung",
+    stufe: 15,
+    optional: false,
+    quelle: "Horizontwanderer",
+    beschreibung: [
+      "Ab der 15. Stufe kannst du dank deiner Fähigkeit, dich zwischen den Ebenen zu bewegen, durch die Grenzen zwischen den Ebenen hindurchschlüpfen, um im Kampf weniger Schaden zu nehmen. Wenn du Schaden durch einen Angriff erleidest, kannst du deine Reaktion nutzen, um dir selbst in diesem Zug Resistenz gegen jeglichen Schaden dieses Angriffs zu geben."
+    ]
+  },
+
+  // ── WALDLÄUFER: HÜTER DES SCHWARMS ──────────────────────────────────────────
+
+  "waldlaeufer_schwarm_versammelter_schwarm": {
+    id: "waldlaeufer_schwarm_versammelter_schwarm",
+    name: "Versammelter Schwarm",
+    stufe: 3,
+    optional: false,
+    quelle: "Hüter des Schwarms",
+    beschreibung: [
+      "Ein Schwarm nicht greifbarer Naturgeister hat sich mit dir verbunden (Aussehen: wimmelnde Insekten, winzige Zweigplagen, flatternde Vögel oder verspielte Luftgeister).",
+      "Einmal pro Zug, direkt nach einem erfolgreichen Waffenangriff, kann der Schwarm eine der folgenden Aktionen ausführen:",
+      "• Das Ziel erleidet 1W6 Stichschaden.",
+      "• Das Ziel muss einen Stärkerettungswurf gegen deinen Zauber-SG bestehen oder wird 4,5 m horizontal verschoben.",
+      "• Der Schwarm bewegt dich horizontal 1,5 m in eine Richtung deiner Wahl."
+    ]
+  },
+
+  "waldlaeufer_schwarm_magie": {
+    id: "waldlaeufer_schwarm_magie",
+    name: "Magie des Schwarmbändigers",
+    stufe: 3,
+    optional: false,
+    quelle: "Hüter des Schwarms",
+    beschreibung: [
+      "Du lernst den Zaubertrick Magierhand (die Hand nimmt die Gestalt deines Schwarms an).",
+      "Zusätzliche Zauber (zählen nicht gegen bekannte Waldläuferzauber):",
+      "Stufe 3: Feenfeuer, Magierhand; Stufe 5: Spinnennetz; Stufe 9: Gasförmige Gestalt; Stufe 13: Arkanes Auge; Stufe 17: Insektenplage."
+    ]
+  },
+
+  "waldlaeufer_schwarm_wimmelnde_woge": {
+    id: "waldlaeufer_schwarm_wimmelnde_woge",
+    name: "Wimmelnde Woge",
+    stufe: 7,
+    optional: false,
+    quelle: "Hüter des Schwarms",
+    beschreibung: [
+      "Du kannst deinen Schwarm zu einer Masse verdichten, die dich hochhebt. Als Bonusaktion verleihst du dir eine Flugbewegungsrate von drei Metern und kannst schweben. Die Wirkkraft hält eine Minute lang an oder bis du kampfunfähig wirst.",
+      "Die Häufigkeit entspricht deinem Übungsbonus. Verbrauchte Anwendungen nach langer Rast zurück."
+    ]
+  },
+
+  "waldlaeufer_schwarm_maechtiger_schwarm": {
+    id: "waldlaeufer_schwarm_maechtiger_schwarm",
+    name: "Mächtiger Schwarm",
+    stufe: 11,
+    optional: false,
+    quelle: "Hüter des Schwarms",
+    beschreibung: [
+      "Dein versammelter Schwarm wird auf folgende Arten mächtiger:",
+      "• Der Stichschaden deines Schwarms steigt auf 1W8.",
+      "• Misslingt einer Kreatur der Rettungswurf dagegen verschoben zu werden, kann der Schwarm sie nun auch zu Boden werfen (Zustand: liegend).",
+      "• Lässt du dich vom Schwarm bewegen, verleiht er dir außerdem halbe Deckung bis zum Beginn deines nächsten Zugs."
+    ]
+  },
+
+  "waldlaeufer_schwarm_schwarmaufloesung": {
+    id: "waldlaeufer_schwarm_schwarmaufloesung",
+    name: "Schwarmauflösung",
+    stufe: 15,
+    optional: false,
+    quelle: "Hüter des Schwarms",
+    beschreibung: [
+      "Du kannst dich in deinem Schwarm auflösen, um Gefahren zu entgehen. Wenn du Schaden erleidest, kannst du deine Reaktion verwenden, um dir Resistenz gegen diese Schadensart zu geben. Du verschwindest in deinem Schwarm und teleportierst dich zu einem freien Bereich innerhalb von neun Metern.",
+      "Die Häufigkeit entspricht deinem Übungsbonus. Verbrauchte Anwendungen nach langer Rast zurück."
+    ]
+  },
+
+  // ── WALDLÄUFER: JÄGER ───────────────────────────────────────────────────────
+
+  "waldlaeufer_jaeger_beute": {
+    id: "waldlaeufer_jaeger_beute",
+    name: "Des Jägers Beute",
+    stufe: 3,
+    optional: false,
+    quelle: "Jäger",
+    beschreibung: [
+      "Auf Stufe 3 erhältst du eines der folgenden Merkmale deiner Wahl:",
+      "Kolossschlächter: Wenn du eine Kreatur triffst, die weniger TP als ihr Maximum besitzt, erleidet sie zusätzlich 1W8 Schaden (einmal pro Zug).",
+      "Riesentöter: Trifft oder verfehlt dich innerhalb von 1,50 m eine Kreatur der Größe Groß oder größer, kannst du als Reaktion sofort danach selbst angreifen.",
+      "Hordenbrecher: Einmal pro Zug kannst du bei einem Waffenangriff einen weiteren Angriff mit derselben Waffe auf eine andere Kreatur ausführen, die sich innerhalb von 1,50 m des ursprünglichen Ziels befindet."
+    ]
+  },
+
+  "waldlaeufer_jaeger_defensive_taktiken": {
+    id: "waldlaeufer_jaeger_defensive_taktiken",
+    name: "Defensive Taktiken",
+    stufe: 7,
+    optional: false,
+    quelle: "Jäger",
+    beschreibung: [
+      "Beim Erreichen der 7. Stufe erhältst du eines der folgenden Merkmale nach Wahl:",
+      "Der Horde entkommen: Gelegenheitsangriffe gegen dich sind im Nachteil.",
+      "Verteidigung gegen Mehrfachangriffe: Sobald dich eine Kreatur mit einem Angriff trifft, erhältst du +4 auf deine RK für alle weiteren Angriffe dieser Kreatur in diesem Zug.",
+      "Eiserner Wille: Du bist bei Rettungswürfen gegen Verängstigung im Vorteil."
+    ]
+  },
+
+  "waldlaeufer_jaeger_mehrfachangriff": {
+    id: "waldlaeufer_jaeger_mehrfachangriff",
+    name: "Mehrfachangriff",
+    stufe: 11,
+    optional: false,
+    quelle: "Jäger",
+    beschreibung: [
+      "Mit der 11. Stufe erhältst du eines der folgenden Merkmale deiner Wahl:",
+      "Geschosshagel: Als Aktion führst du einen Fernkampfangriff gegen eine beliebige Anzahl von Kreaturen aus, die sich im Umkreis von 3 m zu einem Punkt befinden (je ein Angriffswurf pro Ziel, je ein Munitionsverbrauch).",
+      "Wirbelwindangriff: Als Aktion führst du einen Nahkampfangriff gegen eine beliebige Anzahl von Kreaturen innerhalb von 1,50 m aus (je ein Angriffswurf pro Ziel)."
+    ]
+  },
+
+  "waldlaeufer_jaeger_ausserordentliche_verteidigung": {
+    id: "waldlaeufer_jaeger_ausserordentliche_verteidigung",
+    name: "Außerordentliche Verteidigung des Jägers",
+    stufe: 15,
+    optional: false,
+    quelle: "Jäger",
+    beschreibung: [
+      "Auf Stufe 15 erhältst du eines der folgenden Merkmale deiner Wahl:",
+      "Entrinnen: Bei Effekten, die einen Geschicklichkeitsrettungswurf zur Schadenshalbierung erlauben, nimmst du bei Erfolg keinen Schaden und bei Misserfolg nur die Hälfte.",
+      "Gegen den Strom: Verfehlt dich eine feindliche Kreatur mit einem Nahkampfangriff, kannst du als Reaktion sie zwingen, denselben Angriff gegen eine andere Kreatur deiner Wahl auszuführen.",
+      "Unglaubliches Ausweichen: Trifft dich eine sichtbare Kreatur mit einem Angriff, kannst du als Reaktion den Schaden halbieren."
+    ]
+  },
+
+  // ── WALDLÄUFER: MONSTERJÄGER ─────────────────────────────────────────────────
+
+  "waldlaeufer_monster_magie": {
+    id: "waldlaeufer_monster_magie",
+    name: "Magie des Monsterjägers",
+    stufe: 3,
+    optional: false,
+    quelle: "Monsterjäger",
+    beschreibung: [
+      "Beginnend mit der 3. Stufe lernst du zusätzliche Zauber (zählen nicht gegen bekannte Waldläuferzauber):",
+      "Stufe 3: Schutz vor Gut und Böse; Stufe 5: Zone der Wahrheit; Stufe 9: Schutzkreis; Stufe 13: Verbannung; Stufe 17: Monster festhalten."
+    ]
+  },
+
+  "waldlaeufer_monster_jaegersinne": {
+    id: "waldlaeufer_monster_jaegersinne",
+    name: "Jägersinne",
+    stufe: 3,
+    optional: false,
+    quelle: "Monsterjäger",
+    beschreibung: [
+      "Ab der 3. Stufe kannst du mit einem Blick auf eine Kreatur magisch feststellen, wie du sie am besten verwundest. Als Aktion bestimmst du eine Kreatur innerhalb von 18 m. Du erfährst sofort, ob sie irgendwelche Schadensimmunitäten, -resistenzen oder -empfindlichkeiten besitzt (und welche). Ist die Kreatur vor Erkenntnismagie versteckt, fühlst du, dass sie keine solchen Eigenschaften besitzt.",
+      "Häufigkeit = Weisheitsmodifikator (mindestens einmal). Verbrauchte Anwendungen nach langer Rast zurück."
+    ]
+  },
+
+  "waldlaeufer_monster_jagdbeute": {
+    id: "waldlaeufer_monster_jagdbeute",
+    name: "Jagdbeute",
+    stufe: 3,
+    optional: false,
+    quelle: "Monsterjäger",
+    beschreibung: [
+      "Beginnend mit der 3. Stufe kannst du als Bonusaktion eine Kreatur innerhalb von 18 m zum Ziel dieses Merkmals bestimmen. Das erste Mal pro Zug, wenn du dieses Ziel mit einem Waffenangriff triffst, erleidet es 1W6 zusätzlichen Schaden.",
+      "Dieser Vorzug hält bis zu einer kurzen oder langen Rast an und endet vorzeitig, wenn du eine andere Kreatur zum Ziel bestimmst."
+    ]
+  },
+
+  "waldlaeufer_monster_uebernatuerliche_verteidigung": {
+    id: "waldlaeufer_monster_uebernatuerliche_verteidigung",
+    name: "Übernatürliche Verteidigung",
+    stufe: 7,
+    optional: false,
+    quelle: "Monsterjäger",
+    beschreibung: [
+      "Ab der 7. Stufe halten dein Geist und dein Körper den Angriffen deiner Beute besser stand. Immer, wenn dich das Ziel deiner Jagdbeute zwingt, einen Rettungswurf durchzuführen, und immer, wenn du versuchst, seinem Haltegriff zu entkommen, addiere 1W6 zu deinem Wurf."
+    ]
+  },
+
+  "waldlaeufer_monster_todfeind_aller_magieanwender": {
+    id: "waldlaeufer_monster_todfeind_aller_magieanwender",
+    name: "Todfeind aller Magieanwender",
+    stufe: 11,
+    optional: false,
+    quelle: "Monsterjäger",
+    beschreibung: [
+      "Auf der 11. Stufe erwirbst du die Fähigkeit, die Magie eines anderen Wesens zu unterbinden. Wenn du siehst, wie eine Kreatur innerhalb von 18 m einen Zauber wirkt oder teleportiert, kannst du deine Reaktion nutzen. Die Kreatur muss einen Weisheitsrettungswurf gegen deinen Zauber-SG bestehen oder ihr Zauber/Teleportation scheitert und ist vergeudet.",
+      "Nachdem du dieses Merkmal eingesetzt hast, kannst du es erst nach einer kurzen oder langen Rast erneut verwenden."
+    ]
+  },
+
+  "waldlaeufer_monster_gegenangriff": {
+    id: "waldlaeufer_monster_gegenangriff",
+    name: "Gegenangriff des Jägers",
+    stufe: 15,
+    optional: false,
+    quelle: "Monsterjäger",
+    beschreibung: [
+      "Auf der 15. Stufe erwirbst du die Fähigkeit, deiner Beute einen Gegenstoß zu versetzen. Wenn das Ziel deiner Jagdbeute dich zwingt, einen Rettungswurf abzulegen, kannst du deine Reaktion nutzen, um sofort einen Waffenangriff gegen deine Beute auszuführen. Trifft der Angriff, ist dein Rettungswurf automatisch erfolgreich (zusätzlich zu den normalen Effekten des Angriffs)."
+    ]
+  },
+
+  // ── SCHURKE ─────────────────────────────────────────────────────────────────
+
+  "schurke_expertise": {
+    id: "schurke_expertise",
+    name: "Expertise",
+    stufe: 1,
+    optional: false,
+    quelle: "Schurke",
+    beschreibung: [
+      "Auf der 1. Stufe wählst du zwei deiner Fertigkeiten aus, in denen du geübt bist, oder eine Fertigkeit und den Umgang mit Diebeswerkzeug. Dein Übungsbonus wird bei allen Attributswürfen verdoppelt, bei denen diese Fertigkeiten oder Diebeswerkzeug zur Anwendung kommen.",
+      "Auf der 6. Stufe kannst du dir zwei weitere geübte Fertigkeiten oder eine Fertigkeit und Diebeswerkzeug aussuchen, auf die du den gleichen Vorzug erhältst."
+    ]
+  },
+
+  "schurke_hinterhaeltiger_angriff": {
+    id: "schurke_hinterhaeltiger_angriff",
+    name: "Hinterhältiger Angriff",
+    stufe: 1,
+    optional: false,
+    quelle: "Schurke",
+    beschreibung: [
+      "Beginnend ab Stufe 1 weißt du, wie man die Ablenkung eines Feindes ausnutzt, um gezielt zuzuschlagen. Einmal pro Zug kannst du einer Kreatur, die du triffst, zusätzlich 1W6 Schaden zufügen, falls du bei dem Angriffswurf im Vorteil bist. Der Angriff muss mit einer Fernkampfwaffe oder einer Waffe mit der Eigenschaft Finesse ausgeführt werden.",
+      "Du musst bei dem Angriffswurf nicht im Vorteil sein, wenn sich ein anderer Gegner des Ziels innerhalb von 1,50 m um dieses befindet, dieser Gegner nicht kampfunfähig ist und du nicht im Nachteil bist.",
+      "Schadenssteigerung: Stufen 1–2: 1W6, 3–4: 2W6, 5–6: 3W6, 7–8: 4W6, 9–10: 5W6, 11–12: 6W6, 13–14: 7W6, 15–16: 8W6, 17–18: 9W6, 19–20: 10W6."
+    ]
+  },
+
+  "schurke_diebessprache": {
+    id: "schurke_diebessprache",
+    name: "Diebessprache",
+    stufe: 1,
+    optional: false,
+    quelle: "Schurke",
+    beschreibung: [
+      "Während deiner Ausbildung zum Schurken hast du die Diebessprache erlernt. Diese geheime Mischung aus Dialekt, Jargon und Codes erlaubt es dir, in einer scheinbar gewöhnlichen Unterhaltung Botschaften zu verstecken. Nur eine andere Kreatur, die ebenfalls die Diebessprache beherrscht, kann diese Botschaften verstehen. Das Mitteilen dauert viermal so lange wie das direkte Formulieren.",
+      "Außerdem kennst du einen Satz geheimer Zeichen und Symbole für einfache Informationen: Sicherheit eines Gebiets, Diebesgildenterritorium, mögliche Beute, leichte Ziele oder Unterschlupf für flüchtige Diebe."
+    ]
+  },
+
+  "schurke_raffinierte_aktion": {
+    id: "schurke_raffinierte_aktion",
+    name: "Raffinierte Aktion",
+    stufe: 2,
+    optional: false,
+    quelle: "Schurke",
+    beschreibung: [
+      "Ab der 2. Stufe kannst du in jedem deiner Züge eine Bonusaktion verwenden, um die Spurten-, Rückzugs- oder Versteckenaktion auszuführen."
+    ]
+  },
+
+  "schurke_schurkenarchetyp": {
+    id: "schurke_schurkenarchetyp",
+    name: "Schurkenarchetyp",
+    stufe: 3,
+    optional: false,
+    quelle: "Schurke",
+    beschreibung: [
+      "Auf der 3. Stufe wählst du einen Archetyp, dem du in der Ausübung deiner Fähigkeiten nacheiferst. Deine Wahl verleiht dir auf den Stufen 3, 9, 13 und 17 jeweils ein Merkmal."
+    ]
+  },
+
+  "schurke_schurkenarchetyp_merkmal": {
+    id: "schurke_schurkenarchetyp_merkmal",
+    name: "Merkmal: Schurkenarchetyp",
+    stufe: 9,
+    optional: false,
+    quelle: "Schurke",
+    beschreibung: [
+      "Du erhältst ein weiteres Merkmal aus deinem gewählten Schurkenarchetyp."
+    ]
+  },
+
+  "schurke_zielsicher": {
+    id: "schurke_zielsicher",
+    name: "Zielsicher",
+    stufe: 3,
+    optional: true,
+    quelle: "Schurke",
+    beschreibung: [
+      "Als Bonusaktion verschaffst du dir für deinen nächsten Angriffswurf in diesem Zug einen Vorteil. Du kannst diese Bonusaktion nur nutzen, wenn du dich in diesem Zug noch nicht bewegt hast. Nach Einsetzen der Bonusaktion beträgt deine Bewegungsrate bis zum Ende des Zugs null."
+    ]
+  },
+
+  "schurke_unglaubliches_ausweichen": {
+    id: "schurke_unglaubliches_ausweichen",
+    name: "Unglaubliches Ausweichen",
+    stufe: 5,
+    optional: false,
+    quelle: "Schurke",
+    beschreibung: [
+      "Trifft dich ab Stufe 5 der Angriff einer Kreatur, die du sehen kannst, darfst du deine Reaktion aufwenden, um den Schaden des Angriffs zu halbieren."
+    ]
+  },
+
+  "schurke_entrinnen": {
+    id: "schurke_entrinnen",
+    name: "Entrinnen",
+    stufe: 7,
+    optional: false,
+    quelle: "Schurke",
+    beschreibung: [
+      "Ab der 7. Stufe kannst du dich dank deiner instinktiven Gewandheit dem Wirkungsbereich bestimmter Effekte entziehen, wie etwa dem Blitzodem eines blauen Drachen oder dem Zauber Feuerball. Bist du einem Effekt ausgesetzt, der einen Geschicklichkeitsrettungswurf erlaubt, nimmst du bei einem erfolgreichen Rettungswurf gar keinen Schaden und bei einem Misserfolg lediglich die Hälfte des Schadens."
+    ]
+  },
+
+  "schurke_verlaessliches_talent": {
+    id: "schurke_verlaessliches_talent",
+    name: "Verlässliches Talent",
+    stufe: 11,
+    optional: false,
+    quelle: "Schurke",
+    beschreibung: [
+      "Auf Stufe 11 beherrscht du deine geübten Fertigkeiten schon beinahe bis zur Perfektion. Immer wenn du einen Fertigkeitswurf ablegst, der dich deinen Übungsbonus verwenden lässt, kannst du bei einem Würfelergebnis von 9 oder niedriger die 10 verwenden."
+    ]
+  },
+
+  "schurke_blindgespuer": {
+    id: "schurke_blindgespuer",
+    name: "Blindgespür",
+    stufe: 14,
+    optional: false,
+    quelle: "Schurke",
+    beschreibung: [
+      "Angefangen mit der 14. Stufe bist du fähig, mit deinen scharfen Sinnen den Aufenthaltsort einer versteckten oder unsichtbaren Kreatur, die du hören kannst, innerhalb von 3 m festzustellen."
+    ]
+  },
+
+  "schurke_entschluepfender_geist": {
+    id: "schurke_entschluepfender_geist",
+    name: "Entschlüpfender Geist",
+    stufe: 15,
+    optional: false,
+    quelle: "Schurke",
+    beschreibung: [
+      "Auf der 15. Stufe hast du große mentale Stärke erreicht. Du bist jetzt geübt in Weisheitsrettungswürfen."
+    ]
+  },
+
+  "schurke_schwer_zu_fassen": {
+    id: "schurke_schwer_zu_fassen",
+    name: "Schwer zu fassen",
+    stufe: 18,
+    optional: false,
+    quelle: "Schurke",
+    beschreibung: [
+      "Beginnend mit der 18. Stufe hast du deine Fähigkeit auszuweichen so perfektioniert, dass Angreifer kaum die Oberhand über dich gewinnen. Kein Angriffswurf gegen dich ist im Vorteil, solange du nicht kampfunfähig bist."
+    ]
+  },
+
+  "schurke_glueckstreffer": {
+    id: "schurke_glueckstreffer",
+    name: "Glückstreffer",
+    stufe: 20,
+    optional: false,
+    quelle: "Schurke",
+    beschreibung: [
+      "Ab Stufe 20 besitzt du das unglaubliche Talent, immer dann Erfolg zu haben, wenn es nötig ist. Verfehlt dein Angriff ein Ziel innerhalb deiner Reichweite, kannst du den misslungenen Wurf in einen Treffer verwandeln. Alternativ kannst du auch einen fehlgeschlagenen Attributswurf so behandeln, als hättest du eine 20 gewürfelt.",
+      "Hast du diese Fähigkeit einmal eingesetzt, musst du eine kurze oder lange Rast beenden, bevor du sie erneut anwenden kannst."
+    ]
+  },
+
+  // ── SCHURKE: ARKANER BETRÜGER ────────────────────────────────────────────────
+
+  "schurke_betrueger_zauberwirken": {
+    id: "schurke_betrueger_zauberwirken",
+    name: "Zauberwirken",
+    stufe: 3,
+    optional: false,
+    quelle: "Arkaner Betrüger",
+    beschreibung: [
+      "Mit Erreichen der 3. Stufe erlangst du die Fähigkeit, Zauber zu wirken. Du lernst drei Zaubertricks: Magierhand sowie zwei beliebige Zaubertricks aus der Zauberliste des Magiers (auf Stufe 10 ein weiterer).",
+      "Du kennst drei Zauber des 1. Grades (zwei davon aus Verzauberung oder Illusion). Beim Stufenaufstieg kannst du nur Zauber aus Verzauberungs- oder Illusionsschulen lernen – außer auf den Stufen 8, 14 und 20 (dort beliebige Schulen).",
+      "Zauberwirk-Attribut: Intelligenz. SG = 8 + Übungsbonus + INT-Mod. Angriffsmod = Übungsbonus + INT-Mod.",
+      "Zauberplätze je Schurken-Stufe (Zaubertricks / Bekannte Zauber / 1. Grad / 2. Grad / 3. Grad / 4. Grad): Stufe 3: 3/3/2/–/–/–; Stufe 4–6: 3/4/3/–/–/–; Stufe 7: 3/5/4/2/–/–; Stufe 8–9: 3/6/4/2/–/–; Stufe 10: 4/7/4/3/–/–; Stufe 11–12: 4/8/4/3/–/–; Stufe 13: 4/9/4/3/2/–; Stufe 14: 4/10/4/3/2/–; Stufe 15–16: 4/10-11/4/3/3/–; Stufe 17–18: 4/11/4/3/3/–; Stufe 19: 4/12/4/3/3/1; Stufe 20: 4/13/4/3/3/1."
+    ]
+  },
+
+  "schurke_betrueger_magierhand_kniff": {
+    id: "schurke_betrueger_magierhand_kniff",
+    name: "Magierhand-Kniff",
+    stufe: 3,
+    optional: false,
+    quelle: "Arkaner Betrüger",
+    beschreibung: [
+      "Wenn du ab Stufe 3 den Zauber Magierhand wirkst, kannst du die geisterhafte Hand unsichtbar werden lassen und folgende zusätzliche Aufgaben ausführen: ein Objekt in einem von einer Kreatur getragenen Behälter verstauen; ein Objekt daraus hervorholen; Diebeswerkzeug einsetzen, um auf Entfernung Schlösser zu knacken oder Fallen zu entschärfen.",
+      "Eine dieser Aufgaben kannst du unbemerkt ausführen, falls dir ein Wurf auf Geschicklichkeit (Fingerfertigkeit) gegen den Wahrnehmungswurf der Kreatur gelingt. Außerdem kannst du die Hand mit der Bonusaktion aus Raffinierte Aktion kontrollieren."
+    ]
+  },
+
+  "schurke_betrueger_magischer_hinterhalt": {
+    id: "schurke_betrueger_magischer_hinterhalt",
+    name: "Magischer Hinterhalt",
+    stufe: 9,
+    optional: false,
+    quelle: "Arkaner Betrüger",
+    beschreibung: [
+      "Beginnend mit der 9. Stufe ist eine Kreatur, auf die du aus einem Versteck heraus einen Zauber wirkst, in diesem Zug im Nachteil bei sämtlichen Rettungswürfen gegen den Zauber."
+    ]
+  },
+
+  "schurke_betrueger_vielseitiger_trickser": {
+    id: "schurke_betrueger_vielseitiger_trickser",
+    name: "Vielseitiger Trickser",
+    stufe: 13,
+    optional: false,
+    quelle: "Arkaner Betrüger",
+    beschreibung: [
+      "Auf Stufe 13 kannst du als Bonusaktion eine Kreatur innerhalb von 1,50 m um die geisterhafte Magierhand bestimmen. Du bist bis zum Ende des Zuges im Vorteil bei Angriffswürfen gegen diese Kreatur."
+    ]
+  },
+
+  "schurke_betrueger_zauberdieb": {
+    id: "schurke_betrueger_zauberdieb",
+    name: "Zauberdieb",
+    stufe: 17,
+    optional: false,
+    quelle: "Arkaner Betrüger",
+    beschreibung: [
+      "Ab Stufe 17 kannst du einem Zauberwirker auf magische Weise die Kenntnis über einen gerade gesprochenen Zauber entreißen. Als Reaktion (wenn eine Kreatur einen Zauber wirkt, der dich trifft oder in dessen Wirkungsbereich du dich befindest) zwingst du die Kreatur zu einem Rettungswurf mit ihrem Zauberwirk-Attributsmodifikator (SG = dein Zauberwirk-SG). Bei Misserfolg unterdrückst du die Auswirkungen auf dich und stiehlst das Wissen (wenn der Zauber mindestens 1. Grades ist und du den passenden Zauberplatz besitzt). Für 8 Stunden kennst du den Zauber. Die Kreatur kann ihn erst nach Ablauf wieder wirken.",
+      "Hast du diese Fähigkeit einmal eingesetzt, kannst du sie erst nach einer langen Rast erneut anwenden."
+    ]
+  },
+
+  // ── SCHURKE: ASSASSINE ───────────────────────────────────────────────────────
+
+  "schurke_assassin_zusaetzliche_uebung": {
+    id: "schurke_assassin_zusaetzliche_uebung",
+    name: "Zusätzliche Übung",
+    stufe: 3,
+    optional: false,
+    quelle: "Assassine",
+    beschreibung: [
+      "Bei der Wahl dieses Archetyps auf der 3. Stufe wirst du geübt im Umgang mit der Verkleidungsausrüstung und der Giftmischerausrüstung."
+    ]
+  },
+
+  "schurke_assassin_attentat": {
+    id: "schurke_assassin_attentat",
+    name: "Attentat",
+    stufe: 3,
+    optional: false,
+    quelle: "Assassine",
+    beschreibung: [
+      "Ab der 3. Stufe bist du am tödlichsten, wenn du deine Feinde kalt erwischst. Du bist im Vorteil bei Angriffswürfen gegen Kreaturen, die in diesem Kampf noch keinen Zug ausgeführt haben. Außerdem ist jeder Treffer, den du gegen einen überraschten Gegner erzielst, ein kritischer Treffer."
+    ]
+  },
+
+  "schurke_assassin_infiltrationsexperte": {
+    id: "schurke_assassin_infiltrationsexperte",
+    name: "Infiltrationsexperte",
+    stufe: 9,
+    optional: false,
+    quelle: "Assassine",
+    beschreibung: [
+      "Beginnend mit der 9. Stufe kannst du perfekte falsche Identitäten erschaffen. Du musst 7 Tage und 25 GM aufwenden, um eine Geschichte und einen Beruf auszudenken, Verbindungen einzurichten und eine Ausstattung zu besorgen. Du kannst keine bereits existierende Identität erschaffen.",
+      "Sobald du eine Identität als Verkleidung angenommen hast, glauben andere Kreaturen so lange, dass du tatsächlich diese Person bist, bis ihnen ein offensichtlicher Grund gegeben wird, daran zu zweifeln."
+    ]
+  },
+
+  "schurke_assassin_imitator": {
+    id: "schurke_assassin_imitator",
+    name: "Imitator",
+    stufe: 13,
+    optional: false,
+    quelle: "Assassine",
+    beschreibung: [
+      "Auf der 13. Stufe erhältst du die Fähigkeit, fehlerfrei die Stimme, die Schrift und das Verhalten einer anderen Person nachzuahmen. Du musst mindestens 3 Stunden studieren.",
+      "Deine List ist für den gewöhnlichen Beobachter nicht zu durchschauen. Bei misstrauischen Kreaturen bist du im Vorteil bei jedem Wurf auf Charisma (Täuschen), um eine Enttarnung zu vermeiden."
+    ]
+  },
+
+  "schurke_assassin_todesstoss": {
+    id: "schurke_assassin_todesstoss",
+    name: "Todesstoss",
+    stufe: 17,
+    optional: false,
+    quelle: "Assassine",
+    beschreibung: [
+      "Ab der 17. Stufe wirst du zu einem Meister des sofortigen Todes. Wenn du eine überraschte Kreatur angreifst und triffst, muss sie einen Konstitutionsrettungswurf ablegen (SG 8 + dein GES-Modifikator + dein Übungsbonus). Bei einem Misserfolg verdopple den Schaden deines Angriffs gegen die Kreatur."
+    ]
+  },
+
+  // ── SCHURKE: DIEB ───────────────────────────────────────────────────────────
+
+  "schurke_dieb_flinke_finger": {
+    id: "schurke_dieb_flinke_finger",
+    name: "Flinke Finger",
+    stufe: 3,
+    optional: false,
+    quelle: "Dieb",
+    beschreibung: [
+      "Ab der 3. Stufe kannst du die Bonusaktion aus Raffinierte Aktion auch für folgende Zwecke verwenden: einen Wurf auf Geschicklichkeit (Fingerfertigkeit) abzulegen, Diebeswerkzeug einzusetzen, ein Schloss zu öffnen, eine Falle zu entschärfen oder die Aktion Objekt benutzen auszuführen."
+    ]
+  },
+
+  "schurke_dieb_kletteraffe": {
+    id: "schurke_dieb_kletteraffe",
+    name: "Kletteraffe",
+    stufe: 3,
+    optional: false,
+    quelle: "Dieb",
+    beschreibung: [
+      "Mit der Wahl dieses Archetyps auf der 3. Stufe erhältst du die Fähigkeit, schneller als normal zu klettern. Klettern kostet dich keine zusätzliche Bewegung mehr.",
+      "Außerdem springst du aus dem Lauf 0,30 m pro Punkt deines Geschicklichkeitsmodifikators weiter als gewöhnlich."
+    ]
+  },
+
+  "schurke_dieb_ausserordentliches_schleichen": {
+    id: "schurke_dieb_ausserordentliches_schleichen",
+    name: "Außerordentliches Schleichen",
+    stufe: 9,
+    optional: false,
+    quelle: "Dieb",
+    beschreibung: [
+      "Angefangen mit der 9. Stufe bist du bei Würfen auf Geschicklichkeit (Heimlichkeit) im Vorteil, wenn du dich in diesem Zug nicht weiter als deine halbe Bewegungsrate fortbewegst."
+    ]
+  },
+
+  "schurke_dieb_magischen_gegenstand_benutzen": {
+    id: "schurke_dieb_magischen_gegenstand_benutzen",
+    name: "Magischen Gegenstand benutzen",
+    stufe: 13,
+    optional: false,
+    quelle: "Dieb",
+    beschreibung: [
+      "Ab der 13. Stufe darfst du magische Gegenstände einsetzen, die nicht für dich gedacht sind. Ignoriere alle Anforderungen für Volk, Klasse und Stufe beim Benutzen von magischen Gegenständen."
+    ]
+  },
+
+  "schurke_dieb_reflexe_des_diebes": {
+    id: "schurke_dieb_reflexe_des_diebes",
+    name: "Die Reflexe des Diebes",
+    stufe: 17,
+    optional: false,
+    quelle: "Dieb",
+    beschreibung: [
+      "Mit Erreichen von Stufe 17 darfst du im ersten Initiativedurchgang jedes Kampfes zwei Züge ausführen. Den ersten Zug spielst du regulär nach deiner Initiative, den zweiten zu dem Zeitpunkt, wenn deine Initiative −10 an der Reihe wäre. Du kannst diese Fähigkeit nicht einsetzen, wenn du überrascht bist."
+    ]
+  },
+
+  // ── SCHURKE: DRAUFGÄNGER ─────────────────────────────────────────────────────
+
+  "schurke_drauf_komplexe_beinarbeit": {
+    id: "schurke_drauf_komplexe_beinarbeit",
+    name: "Komplexe Beinarbeit",
+    stufe: 3,
+    optional: false,
+    quelle: "Draufgänger",
+    beschreibung: [
+      "Wenn du diesen Archetyp auf der 3. Stufe wählst, lernst du, einen Treffer zu landen und anschließend zu entwischen. Wenn du während deines Zuges einen Nahkampfangriff gegen eine Kreatur durchführst, kann diese Kreatur für den Rest deines Zuges keine Gelegenheitsangriffe gegen dich ausführen."
+    ]
+  },
+
+  "schurke_drauf_verwegene_dreistigkeit": {
+    id: "schurke_drauf_verwegene_dreistigkeit",
+    name: "Verwegene Dreistigkeit",
+    stufe: 3,
+    optional: false,
+    quelle: "Draufgänger",
+    beschreibung: [
+      "Beginnend mit der 3. Stufe kannst du dir auf deine Initiativewürfe einen Bonus in Höhe deines Charismamodifikators geben.",
+      "Außerdem kannst du deinen Hinterhältigen Angriff einsetzen ohne Vorteil, wenn du dich innerhalb von 1,50 m um die Kreatur befindest, keine andere Kreatur sich innerhalb von 1,50 m um dich befindet und du nicht im Nachteil bist."
+    ]
+  },
+
+  "schurke_drauf_verve": {
+    id: "schurke_drauf_verve",
+    name: "Verve",
+    stufe: 9,
+    optional: false,
+    quelle: "Draufgänger",
+    beschreibung: [
+      "Auf der 9. Stufe wird dein Charme außerordentlich betörend. Als Aktion führst du einen Wurf auf Charisma (Überzeugen) gegen Weisheit (Motiv erkennen) der Kreatur durch (muss dich hören können, gemeinsame Sprache).",
+      "Feindliche Kreatur bei Erfolg: Im Nachteil bei Angriffswürfen, die nicht dich treffen, keine Gelegenheitsangriffe auf andere. Hält 1 Minute oder bis ein Gefährte die Kreatur angreift.",
+      "Nicht-feindliche Kreatur bei Erfolg: 1 Minute bezaubert – betrachtet dich als freundliche Bekanntschaft. Endet sofort bei Schaden durch dich oder deine Gefährten."
+    ]
+  },
+
+  "schurke_drauf_elegantes_manoever": {
+    id: "schurke_drauf_elegantes_manoever",
+    name: "Elegantes Manöver",
+    stufe: 13,
+    optional: false,
+    quelle: "Draufgänger",
+    beschreibung: [
+      "Ab der 13. Stufe kannst du eine Bonusaktion in deinem Zug nutzen, um im Vorteil bei deinem nächsten Wurf auf Geschicklichkeit (Akrobatik) oder auf Stärke (Athletik) im selben Zug zu sein."
+    ]
+  },
+
+  "schurke_drauf_meisterduellant": {
+    id: "schurke_drauf_meisterduellant",
+    name: "Meisterduellant",
+    stufe: 17,
+    optional: false,
+    quelle: "Draufgänger",
+    beschreibung: [
+      "Beginnend mit der 17. Stufe kannst du aus verfehlten Hieben doch noch Treffer machen. Wenn du mit einem Angriffswurf verfehlst, kannst du erneut würfeln und bist im Vorteil bei diesem Wurf. Danach kannst du dieses Merkmal erst wieder nach einer kurzen oder langen Rast einsetzen."
+    ]
+  },
+
+  // ── SCHURKE: ERMITTLER ───────────────────────────────────────────────────────
+
+  "schurke_ermittler_luegen_raushoeren": {
+    id: "schurke_ermittler_luegen_raushoeren",
+    name: "Lügen raushören",
+    stufe: 3,
+    optional: false,
+    quelle: "Ermittler",
+    beschreibung: [
+      "Wenn du diesen Archetyp auf der 3. Stufe wählst, entwickelst du ein Talent für das Erkennen von Lügen. Immer, wenn du einen Wurf auf Weisheit (Motiv erkennen) durchführst, um festzustellen, ob eine Kreatur lügt, behandelst du ein Würfelergebnis von 7 oder niedriger auf dem W20 wie eine 8."
+    ]
+  },
+
+  "schurke_ermittler_auge_fuers_detail": {
+    id: "schurke_ermittler_auge_fuers_detail",
+    name: "Auge fürs Detail",
+    stufe: 3,
+    optional: false,
+    quelle: "Ermittler",
+    beschreibung: [
+      "Ab der 3. Stufe kannst du als Bonusaktion einen Wurf auf Weisheit (Wahrnehmung) durchführen, um versteckte Kreaturen zu entdecken, oder einen Wurf auf Intelligenz (Nachforschungen), um Hinweise zu entdecken oder zu entschlüsseln."
+    ]
+  },
+
+  "schurke_ermittler_gewiefte_kampfweise": {
+    id: "schurke_ermittler_gewiefte_kampfweise",
+    name: "Gewiefte Kampfweise",
+    stufe: 3,
+    optional: false,
+    quelle: "Ermittler",
+    beschreibung: [
+      "Ab 3. Stufe kannst du als Bonusaktion einen Wurf auf Weisheit (Motiv erkennen) gegen eine sichtbare, nicht kampfunfähige Kreatur durchführen (gegen Charisma (Täuschen) des Ziels). Bei Erfolg kannst du deinen Hinterhältigen Angriff gegen dieses Ziel einsetzen, selbst ohne Vorteil (aber nicht bei Nachteil).",
+      "Dieser Vorzug hält 1 Minute an oder bis du dieses Merkmal erfolgreich gegen ein anderes Ziel einsetzt."
+    ]
+  },
+
+  "schurke_ermittler_unbeirrter_blick": {
+    id: "schurke_ermittler_unbeirrter_blick",
+    name: "Unbeirrter Blick",
+    stufe: 9,
+    optional: false,
+    quelle: "Ermittler",
+    beschreibung: [
+      "Ab der 9. Stufe bist du bei allen Würfen auf Weisheit (Wahrnehmung) oder Intelligenz (Nachforschungen) im Vorteil, wenn du dich im selben Zug nur bis zur Hälfte deiner Bewegungsrate bewegst."
+    ]
+  },
+
+  "schurke_ermittler_unfehlbarer_blick": {
+    id: "schurke_ermittler_unfehlbarer_blick",
+    name: "Unfehlbarer Blick",
+    stufe: 13,
+    optional: false,
+    quelle: "Ermittler",
+    beschreibung: [
+      "Beginnend mit der 13. Stufe kannst du als Aktion 9 m um dich herum Illusionen, Gestaltwandler in Nicht-Originalform und andere sinnesirreführende Magie entdecken (sofern du nicht blind oder taub bist). Du spürst, dass ein Effekt versucht, dir etwas vorzugaukeln, erfährst aber nicht, was er verbirgt.",
+      "Dir stehen Anwendungen in Höhe deines Weisheitsmodifikators zur Verfügung (mindestens 1). Verbrauchte Anwendungen stehen nach einer langen Rast wieder zur Verfügung."
+    ]
+  },
+
+  "schurke_ermittler_schwaechenkennen": {
+    id: "schurke_ermittler_schwaechenkennen",
+    name: "Schwächen erkennen",
+    stufe: 17,
+    optional: false,
+    quelle: "Ermittler",
+    beschreibung: [
+      "Auf der 17. Stufe lernst du die Schwächen einer Kreatur auszunutzen. Wenn eine Kreatur von deinem Merkmal Gewiefte Kampfweise betroffen ist, erhöht sich der Schaden deines Hinterhältigen Angriffes gegen diese Kreatur um 3W6."
+    ]
+  },
+
+  // ── SCHURKE: PHANTOM ─────────────────────────────────────────────────────────
+
+  "schurke_phantom_gefluster_der_toten": {
+    id: "schurke_phantom_gefluster_der_toten",
+    name: "Geflüster der Toten",
+    stufe: 3,
+    optional: false,
+    quelle: "Phantom",
+    beschreibung: [
+      "Echos der Stimmen derer, die gestorben sind, heften sich dir an. Nach einer kurzen oder langen Rast kannst du eine Fertigkeit oder Werkzeugübung auswählen, die du nicht besitzt. Eine geisterhafte Präsenz erscheint und lässt dich an ihrem Wissen teilhaben. Du verlierst die gewählte Übung, sobald du dieses Merkmal erneut verwendest."
+    ]
+  },
+
+  "schurke_phantom_wehklagen_der_toten": {
+    id: "schurke_phantom_wehklagen_der_toten",
+    name: "Wehklagen der Toten",
+    stufe: 3,
+    optional: false,
+    quelle: "Phantom",
+    beschreibung: [
+      "Unmittelbar nachdem du deinen Hinterhältigen Angriff durchgeführt und einer Kreatur Schaden zugefügt hast, kannst du eine zweite Kreatur innerhalb von neun Metern als Ziel auswählen. Wirf halb so viele Würfel wie für deinen Hinterhältigen Angriff (aufgerundet). Die zweite Kreatur erleidet nekrotischen Schaden in Höhe des Wurfergebnisses.",
+      "Die Häufigkeit entspricht deinem Übungsbonus. Verbrauchte Anwendungen stehen nach einer langen Rast wieder zur Verfügung."
+    ]
+  },
+
+  "schurke_phantom_zeichen_der_verstorbenen": {
+    id: "schurke_phantom_zeichen_der_verstorbenen",
+    name: "Zeichen der Verstorbenen",
+    stufe: 9,
+    optional: false,
+    quelle: "Phantom",
+    beschreibung: [
+      "Wenn jemand in deiner Gegenwart stirbt, kannst du einen kleinen Splitter der scheidenden Seele ergattern. Stirbt eine Kreatur, die du innerhalb von neun Metern siehst, manifestiert sich als Reaktion ein winziges Seelenstück in deiner offenen Hand. Max. Seelenstücke = dein Übungsbonus.",
+      "Mögliche Verwendungen: (1) Trägst du ein Seelenstück, bist du bei Todes- und Konstitutionsrettungswürfen im Vorteil. (2) Beim Hinterhältigen Angriff kannst du ein Seelenstück zerstören, um sofort Wehklagen der Toten zu wirken (ohne gespeicherte Verwendung zu verbrauchen). (3) Als Aktion ein Seelenstück zerstören und dem Geist eine Frage stellen – er antwortet kurz und klar in einer zu Lebzeiten gekannten Sprache."
+    ]
+  },
+
+  "schurke_phantom_spektralgestalt": {
+    id: "schurke_phantom_spektralgestalt",
+    name: "Spektralgestalt",
+    stufe: 13,
+    optional: false,
+    quelle: "Phantom",
+    beschreibung: [
+      "Als Bonusaktion nimmst du eine Spektralgestalt an. In dieser Gestalt: Flugbewegungsrate 3 m, kannst du schweben, Angriffswürfe gegen dich sind im Nachteil. Du kannst dich durch Kreaturen und solide Objekte bewegen (als schwieriges Gelände). Beendest du deinen Zug in einer Kreatur oder einem Gegenstand: 1W10 Energieschaden.",
+      "Du behältst diese Gestalt 10 Minuten lang oder beendest sie als Bonusaktion. Für erneute Anwendung: lange Rast oder eines deiner Seelenstücke als Teil der Bonusaktion zerstören."
+    ]
+  },
+
+  "schurke_phantom_freund_des_todes": {
+    id: "schurke_phantom_freund_des_todes",
+    name: "Freund des Todes",
+    stufe: 17,
+    optional: false,
+    quelle: "Phantom",
+    beschreibung: [
+      "Dein Bund mit dem Tod gewährt dir folgende Vorzüge:",
+      "• Wenn du Wehklagen der Toten einsetzt, fügst du den nekrotischen Schaden beiden angegriffenen Kreaturen zu.",
+      "• Nach einer langen Rast erscheint in deiner Hand ein Seelenstück, falls du aktuell keins besitzt."
+    ]
+  },
+
+  // ── SCHURKE: SEELENMESSER ────────────────────────────────────────────────────
+
+  "schurke_seele_psionische_kraft": {
+    id: "schurke_seele_psionische_kraft",
+    name: "Psionische Kraft",
+    stufe: 3,
+    optional: false,
+    quelle: "Seelenmesser",
+    beschreibung: [
+      "In dir sprudelt eine Quelle psionischer Energie. Deine Psi-Energie-Würfel (W6) = Zweifaches deines Übungsbonus. Die Größe steigt: Stufe 5 = W8, Stufe 11 = W10, Stufe 17 = W12. Als Bonusaktion kannst du einmal einen Würfel regenerieren (danach erst nach kurzer oder langer Rast erneut). Alle Würfel kehren nach einer langen Rast zurück.",
+      "Psi-gestütztes Geschick: Wenn ein Attributswurf mit einer geübten Fertigkeit oder einem Werkzeug fehlschlägt, kannst du einen Psi-Energie-Würfel werfen und das Ergebnis addieren. Der Würfel wird nur verbraucht, wenn der Wurf dadurch erfolgreich wird.",
+      "Psychisches Geflüster: Als Aktion wählst du bis zu Übungsbonus viele Kreaturen in Sichtweite und würfelst einen Psi-Energie-Würfel. Das Ergebnis bestimmt Stunden der telepathischen Verbindung. Keine gemeinsame Sprache nötig. Beim ersten Einsatz nach einer langen Rast wird der Würfel nicht verbraucht."
+    ]
+  },
+
+  "schurke_seele_psychische_klingen": {
+    id: "schurke_seele_psychische_klingen",
+    name: "Psychische Klingen",
+    stufe: 3,
+    optional: false,
+    quelle: "Seelenmesser",
+    beschreibung: [
+      "Wann immer du die Angriffsaktion ausführst, kannst du eine psychische Klinge in einer freien Hand manifestieren und den Angriff damit ausführen. Diese magische Klinge ist eine einfache Nahkampfwaffe mit den Eigenschaften Finesse und Wurfwaffe (Grundreichweite 18 m, keine Maximalreichweite). Bei einem Treffer: 1W6 + Attributsmodifikator psychischer Schaden. Die Klinge verschwindet sofort nach dem Angriff.",
+      "Als Bonusaktion danach: einen weiteren Nah- oder Fernkampfangriff mit einer zweiten psychischen Klinge (andere Hand frei). Schadenswürfel: 1W4 statt 1W6."
+    ]
+  },
+
+  "schurke_seele_seelenklingen": {
+    id: "schurke_seele_seelenklingen",
+    name: "Seelenklingen",
+    stufe: 9,
+    optional: false,
+    quelle: "Seelenmesser",
+    beschreibung: [
+      "Deine psychischen Klingen geben dir folgende Kräfte (erfordern Psi-Energie-Würfel):",
+      "Psychische Teleportation: Als Bonusaktion manifestierst du eine Klinge, verbrauchst einen Psi-Energie-Würfel und würfelst ihn. Du wirfst die Klinge auf einen freien Bereich in max. dem Dreifachen des Ergebnisses in Metern. Du wirst dorthin teleportiert.",
+      "Zielsuchhiebe: Wenn du mit einer psychischen Klinge verfehlst, kannst du einen Psi-Energie-Würfel werfen und das Ergebnis zum Angriffswurf addieren. Wird er dadurch ein Treffer, wird der Würfel verbraucht."
+    ]
+  },
+
+  "schurke_seele_psychischer_schleier": {
+    id: "schurke_seele_psychischer_schleier",
+    name: "Psychischer Schleier",
+    stufe: 13,
+    optional: false,
+    quelle: "Seelenmesser",
+    beschreibung: [
+      "Als magische Aktion wirst du zusammen mit sämtlicher Kleidung und Ausrüstung eine Stunde lang unsichtbar. Du kannst den Effekt vorzeitig beenden (keine Aktion nötig). Die Unsichtbarkeit endet sofort, nachdem du einer Kreatur Schaden zugefügt oder sie zu einem Rettungswurf gezwungen hast.",
+      "Du kannst dieses Merkmal erst nach einer langen Rast erneut verwenden, es sei denn, du verbrauchst einen Psi-Energie-Würfel."
+    ]
+  },
+
+  "schurke_seele_geist_zerfetzen": {
+    id: "schurke_seele_geist_zerfetzen",
+    name: "Geist zerfetzen",
+    stufe: 17,
+    optional: false,
+    quelle: "Seelenmesser",
+    beschreibung: [
+      "Wenn du mit deinen psychischen Klingen mit einem Hinterhältigen Angriff Schaden zufügst, kannst du das Ziel zu einem Weisheitsrettungswurf zwingen (SG = 8 + dein Übungsbonus + dein GES-Modifikator). Bei Misserfolg ist die Kreatur eine Minute lang betäubt. Das Ziel kann am Ende jedes seiner Züge erneut würfeln.",
+      "Du kannst dieses Merkmal erst nach einer langen Rast erneut verwenden, es sei denn, du verbrauchst drei Psi-Energie-Würfel."
+    ]
+  },
+
+  // ── SCHURKE: SPÄHER ──────────────────────────────────────────────────────────
+
+  "schurke_spaeer_plaenkler": {
+    id: "schurke_spaeer_plaenkler",
+    name: "Plänkler",
+    stufe: 3,
+    optional: false,
+    quelle: "Späher",
+    beschreibung: [
+      "Beginnend mit der 3. Stufe kannst du dich als Reaktion bis zu deiner halben Bewegungsrate bewegen, wenn ein Gegner seinen Zug innerhalb von 1,50 m um dich beendet. Diese Bewegung provoziert keine Gelegenheitsangriffe."
+    ]
+  },
+
+  "schurke_spaeer_ueberlebenskuenstler": {
+    id: "schurke_spaeer_ueberlebenskuenstler",
+    name: "Überlebenskünstler",
+    stufe: 3,
+    optional: false,
+    quelle: "Späher",
+    beschreibung: [
+      "Wenn du auf der 3. Stufe diesen Archetyp wählst, erhältst du Übung in den Fertigkeiten Naturkunde und Überlebenskunst (falls nicht bereits vorhanden). Dein Übungsbonus wird bei Attributswürfen mit diesen beiden Fertigkeiten verdoppelt."
+    ]
+  },
+
+  "schurke_spaeer_ausserordentliche_beweglichkeit": {
+    id: "schurke_spaeer_ausserordentliche_beweglichkeit",
+    name: "Außerordentliche Beweglichkeit",
+    stufe: 9,
+    optional: false,
+    quelle: "Späher",
+    beschreibung: [
+      "Auf der 9. Stufe erhöht sich deine Schrittbewegungsrate um 3 m. Wenn du über eine Klettern- oder Schwimmbewegungsrate verfügst, steigt diese ebenfalls um 3 m."
+    ]
+  },
+
+  "schurke_spaeer_meister_des_hinterhalts": {
+    id: "schurke_spaeer_meister_des_hinterhalts",
+    name: "Meister des Hinterhalts",
+    stufe: 13,
+    optional: false,
+    quelle: "Späher",
+    beschreibung: [
+      "Ab der 13. Stufe bist du im Vorteil bei Initiativewürfen. Außerdem ist es für dich und andere einfacher, die erste Kreatur anzugreifen, die du während der ersten Runde eines Kampfes triffst: Angreifer sind bei Angriffswürfen gegen dieses Ziel im Vorteil bis zum Beginn deines nächsten Zuges."
+    ]
+  },
+
+  "schurke_spaeer_ploetzlicher_schlag": {
+    id: "schurke_spaeer_ploetzlicher_schlag",
+    name: "Plötzlicher Schlag",
+    stufe: 17,
+    optional: false,
+    quelle: "Späher",
+    beschreibung: [
+      "Beginnend mit der 17. Stufe kannst du als Bonusaktion einen zusätzlichen Angriff ausführen, wenn du die Angriffsaktion wählst. Dieser Angriff kann als Hinterhältiger Angriff durchgeführt werden, selbst wenn du diesen in diesem Zug bereits eingesetzt hast. Du kannst deinen Hinterhältigen Angriff allerdings nur einmal im Zug gegen dasselbe Ziel anwenden."
+    ]
+  },
+
+  // ── SCHURKE: STRIPPENZIEHER ──────────────────────────────────────────────────
+
+  "schurke_strippen_meister_der_intrige": {
+    id: "schurke_strippen_meister_der_intrige",
+    name: "Meister der Intrige",
+    stufe: 3,
+    optional: false,
+    quelle: "Strippenzieher",
+    beschreibung: [
+      "Wenn du auf der 3. Stufe diesen Archetyp wählst, erhältst du Übung im Umgang mit Verkleidungsausrüstung, Fälscherausrüstung und einem Spiel deiner Wahl. Du erlernst außerdem zwei Sprachen deiner Wahl.",
+      "Außerdem kannst du die Sprachmuster und den Akzent einer Kreatur überzeugend nachahmen, wenn du sie mindestens 1 Minute lang sprechen hören kannst."
+    ]
+  },
+
+  "schurke_strippen_meister_der_taktik": {
+    id: "schurke_strippen_meister_der_taktik",
+    name: "Meister der Taktik",
+    stufe: 3,
+    optional: false,
+    quelle: "Strippenzieher",
+    beschreibung: [
+      "Beginnend mit der 3. Stufe kannst du die Helfen-Aktion als Bonusaktion verwenden. Wenn du außerdem die Helfen-Aktion nutzt, um einen Verbündeten beim Angriff zu unterstützen, kann das Ziel sich innerhalb von 9 m um dich herum befinden (statt nur 1,50 m)."
+    ]
+  },
+
+  "schurke_strippen_erkenntnisreicher_manipulator": {
+    id: "schurke_strippen_erkenntnisreicher_manipulator",
+    name: "Erkenntnisreicher Manipulator",
+    stufe: 9,
+    optional: false,
+    quelle: "Strippenzieher",
+    beschreibung: [
+      "Ab der 9. Stufe kannst du in Erfahrung bringen, wie mächtig eine Kreatur im Vergleich zu dir ist, wenn du sie außerhalb des Kampfes mindestens 1 Minute lang beobachtest oder mit ihr interagierst. Der SL teilt dir mit, ob sie dir ebenbürtig, überlegen oder unterlegen hinsichtlich zwei der folgenden Eigenschaften ist: Intelligenzwert, Weisheitswert, Charismawert, Klassenstufen."
+    ]
+  },
+
+  "schurke_strippen_ablenken": {
+    id: "schurke_strippen_ablenken",
+    name: "Ablenken",
+    stufe: 13,
+    optional: false,
+    quelle: "Strippenzieher",
+    beschreibung: [
+      "Beginnend mit der 13. Stufe kannst du einen Angriff, der für dich bestimmt war, auf eine andere Kreatur umlenken. Wenn du das Ziel eines Angriffs bist, während dir eine Kreatur innerhalb von 1,50 m Deckung gewährt, kannst du deine Reaktion nutzen, damit diese Kreatur an deiner statt zum Ziel wird."
+    ]
+  },
+
+  "schurke_strippen_seele_der_taeuschung": {
+    id: "schurke_strippen_seele_der_taeuschung",
+    name: "Seele der Täuschung",
+    stufe: 17,
+    optional: false,
+    quelle: "Strippenzieher",
+    beschreibung: [
+      "Ab der 17. Stufe können deine Gedanken nicht mittels Telepathie oder auf andere Weise gelesen werden (es sei denn, du lässt es zu). Du kannst dem Gedankenleser falsche Gedanken präsentieren (Charisma (Täuschen) gegen Weisheit (Motiv erkennen)).",
+      "Außerdem kannst du entscheiden, dass Wahrheitserkennungsmagie deine Worte als wahr erkennt. Du kannst auch nicht durch Magie gezwungen werden, die Wahrheit zu sagen."
+    ]
+  },
+
+  // ── PALADIN ─────────────────────────────────────────────────────────────────
+
+  "paladin_goettliches_gespuer": {
+    id: "paladin_goettliches_gespuer",
+    name: "Göttliches Gespür",
+    stufe: 1,
+    optional: false,
+    quelle: "Paladin",
+    beschreibung: [
+      "Deine Sinne nehmen die Gegenwart von starkem Bösen wie den Geruch der Verderbnis wahr, wohingegen das machtvolle Gute wie himmlische Musik in deinen Ohren klingt. Als Aktion kannst du deine Aufmerksamkeit auf die Suche nach solchen Kräften richten. Bis zum Ende deines nächsten Zuges ist dir innerhalb von 18 m der Standort jeglicher himmlischen und untoten Kreatur sowie jedes Unholds bekannt, außer eine Kreatur befindet sich in vollständiger Deckung. Dir ist die Art dieser Wesen bewusst (himmlisch, untot, Unhold), doch ihre Identität bleibt dir verborgen. Innerhalb desselben Radius spürst du auch die Präsenz jedes Ortes oder Gegenstandes, der geweiht bzw. entweiht wurde.",
+      "Diese Fähigkeit kannst du so oft nutzen, wie es deinem Charismamodifikator + 1 entspricht. Nach einer langen Rast stehen dir alle verbrauchten Anwendungen wieder zur Verfügung."
+    ]
+  },
+
+  "paladin_handauflegen": {
+    id: "paladin_handauflegen",
+    name: "Handauflegen",
+    stufe: 1,
+    optional: false,
+    quelle: "Paladin",
+    beschreibung: [
+      "Deine gesegnete Berührung kann Wunden heilen. Du besitzt einen Vorrat an Heilkraft, der sich nach einer langen Rast wieder auffüllt und ausreicht, um Trefferpunkte in Höhe deiner 5-fachen Stufe als Paladin wiederherzustellen.",
+      "Als Aktion kannst du eine Kreatur berühren und bei ihr eine Anzahl Trefferpunkte wiederherstellen, die deine aktuell im Vorrat befindlichen Punkte nicht übersteigen darf.",
+      "Alternativ kannst du 5 Punkte aus deinem Vorrat aufwenden, um die Kreatur von einer Krankheit zu heilen oder ein Gift zu neutralisieren, das auf sie einwirkt. Du kannst mehrere Gifte und Krankheiten mit einer Anwendung von Handauflegen unschädlich machen, musst aber jeweils einzeln die entsprechenden Punkte ausgeben. Diese Fähigkeit wirkt nicht bei Konstrukten oder Untoten."
+    ]
+  },
+
+  "paladin_kampfstil": {
+    id: "paladin_kampfstil",
+    name: "Kampfstil",
+    stufe: 2,
+    optional: false,
+    quelle: "Paladin",
+    beschreibung: [
+      "Auf der 2. Stufe entscheidest du dich für einen Kampfstil, auf den du dich spezialisierst. Du kannst keinen der Stile mehr als einmal wählen, selbst wenn du später erneut aussuchen darfst.",
+      "Verfügbare Kampfstile: Abfangen, Blinder Kampf, Duellieren, Gesegneter Krieger, Kampf mit Großen Waffen, Leibwache, Verteidigung."
+    ]
+  },
+
+  "paladin_kampfstil_abfangen": {
+    id: "paladin_kampfstil_abfangen",
+    name: "Kampfstil: Abfangen",
+    stufe: 2,
+    optional: false,
+    quelle: "Paladin",
+    beschreibung: [
+      "Trifft eine Kreatur innerhalb eines Radius von 1,5 Metern ein anderes Ziel als dich mit ihrem Angriff, kannst du deine Reaktion verwenden, um den vom Ziel erlittenen Schaden um 1W10 + deinen Übungsbonus (auf bis zu 0 Schaden) zu verringern. Du musst dafür ein Schild, eine einfache Waffe oder eine Kriegswaffe tragen."
+    ]
+  },
+
+  "paladin_kampfstil_blinder_kampf": {
+    id: "paladin_kampfstil_blinder_kampf",
+    name: "Kampfstil: Blinder Kampf",
+    stufe: 2,
+    optional: false,
+    quelle: "Paladin",
+    beschreibung: [
+      "Du erlangst Blindsicht mit einer Reichweite von drei Metern. Innerhalb dieser Reichweite kannst du effektiv alles sehen, was nicht in vollständiger Deckung ist, selbst bei Dunkelheit oder im Zustand Blind. Du kannst sogar unsichtbare Kreaturen innerhalb der Reichweite sehen, wenn es ihnen nicht gelingt, sich vor dir zu verstecken."
+    ]
+  },
+
+  "paladin_kampfstil_duellieren": {
+    id: "paladin_kampfstil_duellieren",
+    name: "Kampfstil: Duellieren",
+    stufe: 2,
+    optional: false,
+    quelle: "Paladin",
+    beschreibung: [
+      "Kämpfst du nur mit einer einhändig geführten Nahkampfwaffe und keiner Waffe in der anderen Hand, erhältst du einen Bonus von +2 auf die Schadenswürfe mit dieser Waffe."
+    ]
+  },
+
+  "paladin_kampfstil_gesegneter_krieger": {
+    id: "paladin_kampfstil_gesegneter_krieger",
+    name: "Kampfstil: Gesegneter Krieger",
+    stufe: 2,
+    optional: false,
+    quelle: "Paladin",
+    beschreibung: [
+      "Du beherrschst zwei Zaubertricks deiner Wahl aus der Zauberliste des Klerikers. Sie zählen für dich als Paladin-Zauber und du nutzt Charisma als Attribut zum Zauberwirken. Wenn du mit dieser Klasse um eine Stufe aufsteigst, kannst du einen der Zaubertricks durch einen anderen von der Zauberliste des Klerikers ersetzen."
+    ]
+  },
+
+  "paladin_kampfstil_kampf_mit_grossen_waffen": {
+    id: "paladin_kampfstil_kampf_mit_grossen_waffen",
+    name: "Kampfstil: Kampf mit Großen Waffen",
+    stufe: 2,
+    optional: false,
+    quelle: "Paladin",
+    beschreibung: [
+      "Greifst du mit einer beidhändig geführten Nahkampfwaffe an und würfelst bei deinem Schadenswurf eine 1 oder 2, darfst du den entsprechenden Schadenswürfel erneut würfeln. Das zweite Ergebnis musst du verwenden, auch wenn es wieder eine 1 oder 2 sein sollte. Die Waffe muss die Waffeneigenschaft zweihändig oder vielseitig besitzen."
+    ]
+  },
+
+  "paladin_kampfstil_leibwache": {
+    id: "paladin_kampfstil_leibwache",
+    name: "Kampfstil: Leibwache",
+    stufe: 2,
+    optional: false,
+    quelle: "Paladin",
+    beschreibung: [
+      "Führt eine Kreatur, die du sehen kannst, einen Angriff auf eine bis zu 1,50 m von dir entfernt stehende Kreatur aus (die nicht du selbst bist), kannst du deine Reaktion verwenden, damit der Angreifer bei seinem Wurf im Nachteil ist. Du musst dafür einen Schild tragen."
+    ]
+  },
+
+  "paladin_kampfstil_verteidigung": {
+    id: "paladin_kampfstil_verteidigung",
+    name: "Kampfstil: Verteidigung",
+    stufe: 2,
+    optional: false,
+    quelle: "Paladin",
+    beschreibung: [
+      "Solange du eine Rüstung trägst, erhältst du einen Bonus von +1 auf deine Rüstungsklasse."
+    ]
+  },
+
+  "paladin_zauberwirken": {
+    id: "paladin_zauberwirken",
+    name: "Zauberwirken",
+    stufe: 2,
+    optional: false,
+    quelle: "Paladin",
+    beschreibung: [
+      "Mit Erreichen von Stufe 2 lernst du, durch Meditation und Gebete von der göttlichen Magie zu zehren, um Zauber zu wirken.",
+      "Du musst Zaubersprüche vorbereiten, um sie wirken zu können. Wähle dazu eine Anzahl von Paladinzaubern, die deiner halben Stufe als Paladin + deinem Charismamodifikator entspricht (mindestens 1). Du kannst nur Sprüche aussuchen, für deren Grad du auch Zauberplätze besitzt. Du kannst deine Liste nach jeder langen Rast ändern (mindestens 1 Minute Gebet/Meditation pro Spruch und Grad).",
+      "Zauberwirk-Attribut: Charisma. SG für Rettungswürfe = 8 + Übungsbonus + Charismamodifikator. Modifikator für Zauberangriffe = Übungsbonus + Charismamodifikator.",
+      "Als Zauberfokus kannst du ein heiliges Symbol verwenden."
+    ]
+  },
+
+  "paladin_goettliches_niederstrecken": {
+    id: "paladin_goettliches_niederstrecken",
+    name: "Göttliches Niederstrecken",
+    stufe: 2,
+    optional: false,
+    quelle: "Paladin",
+    beschreibung: [
+      "Wenn du ab der 2. Stufe eine Kreatur mit einem Nahkampf-Waffenangriff triffst, kannst du einen Zauberplatz aufgeben, um dem Ziel zusätzlich gleißenden Schaden zuzufügen. Der zusätzliche Schaden beträgt 2W8 + 1W8 für jeden Grad des Zauberplatzes über den 1. hinaus, bis zu einem Maximum von 5W8. Der Schaden erhöht sich nochmals um 1W8, wenn es sich bei dem Ziel um einen Unhold oder einen Untoten handelt."
+    ]
+  },
+
+  "paladin_goettliche_gesundheit": {
+    id: "paladin_goettliche_gesundheit",
+    name: "Göttliche Gesundheit",
+    stufe: 3,
+    optional: false,
+    quelle: "Paladin",
+    beschreibung: [
+      "Mit der 3. Stufe wirst du aufgrund der göttlichen Magie, die dich durchfließt, immun gegen Krankheiten."
+    ]
+  },
+
+  "paladin_heiliger_schwur": {
+    id: "paladin_heiliger_schwur",
+    name: "Heiliger Schwur",
+    stufe: 3,
+    optional: false,
+    quelle: "Paladin",
+    beschreibung: [
+      "Wenn du die 3. Stufe erreichst, leistest du einen heiligen Schwur, der dich als Paladin auf ewig bindet. Deine Wahl verleiht dir auf den Stufen 3, 7, 15 und 20 jeweils ein Merkmal, das Schwurzauber und die Fähigkeit, Göttliche Macht zu fokussieren, umfasst.",
+      "Schwurzauber: Zu jedem Schwur gehört eine Liste von Zaubern, die mit ihm in Verbindung stehen. Du erlangst Zugang zu diesen Sprüchen, wenn du die entsprechenden Stufen als Paladin erreichst. Schwurzauber gelten immer als vorbereitet und zählen nicht auf deine maximale Anzahl vorbereiteter Zauber an.",
+      "Göttliche Macht fokussieren: Dein Schwur lässt dich göttliche Energie fokussieren, um magische Effekte hervorzurufen. Bevor du erneut Göttliche Macht fokussieren kannst, musst du eine kurze oder lange Rast einlegen. Rettungswurf-SG: gleich wie dein Zauberwirk-SG."
+    ]
+  },
+
+  "paladin_heiliger_schwur_merkmal": {
+    id: "paladin_heiliger_schwur_merkmal",
+    name: "Merkmal: Heiliger Schwur",
+    stufe: 7,
+    optional: false,
+    quelle: "Paladin",
+    beschreibung: [
+      "Du erhältst ein weiteres Merkmal aus deinem gewählten Heiligen Schwur."
+    ]
+  },
+
+  "paladin_goettliche_macht_kanalisation": {
+    id: "paladin_goettliche_macht_kanalisation",
+    name: "Göttliche Macht kanalisieren",
+    stufe: 3,
+    optional: true,
+    quelle: "Paladin",
+    beschreibung: [
+      "Du kannst eine Anwendung von Göttliche Macht fokussieren verbrauchen, um deine Zauber zu verstärken. Als Bonusaktion berührst du dein heiliges Symbol, sprichst ein Gebet und erhältst einen verbrauchten Zauberplatz zurück, dessen Grad maximal die Hälfte deines Übungsbonus (aufgerundet) betragen kann.",
+      "Du kannst dieses Merkmal so oft einsetzen wie folgt: einmal auf der 3. Stufe, zweimal auf der 7. Stufe und dreimal auf der 15. Stufe. Verbrauchte Anwendungen stehen dir nach einer langen Rast wieder zur Verfügung."
+    ]
+  },
+
+  "paladin_kriegerische_vielseitigkeit": {
+    id: "paladin_kriegerische_vielseitigkeit",
+    name: "Kriegerische Vielseitigkeit",
+    stufe: 4,
+    optional: true,
+    quelle: "Paladin",
+    beschreibung: [
+      "Wenn du mit dieser Klasse eine Stufe erreichst, die dir das Merkmal Attributswerterhöhung gewährt, kannst du einen dir bekannten Kampfstil durch einen anderen Kampfstil ersetzen, der Paladinen zur Verfügung steht."
+    ]
+  },
+
+  "paladin_zusaetzlicher_angriff": {
+    id: "paladin_zusaetzlicher_angriff",
+    name: "Zusätzlicher Angriff",
+    stufe: 5,
+    optional: false,
+    quelle: "Paladin",
+    beschreibung: [
+      "Beginnend mit der 5. Stufe kannst du zweimal anstatt einmal angreifen, wenn du eine Angriffsaktion in deinem Zug ausführst."
+    ]
+  },
+
+  "paladin_aura_des_schutzes": {
+    id: "paladin_aura_des_schutzes",
+    name: "Aura des Schutzes",
+    stufe: 6,
+    optional: false,
+    quelle: "Paladin",
+    beschreibung: [
+      "Immer wenn nach dem Erreichen der 6. Stufe du oder eine verbündete Kreatur innerhalb von 3 m einen Rettungswurf ablegen müssen, erhält die entsprechende Kreatur einen Bonus in Höhe deines Charismamodifikators (mindestens +1). Du musst bei Bewusstsein sein, damit dieser Bonus gewährt wird.",
+      "Auf der 18. Stufe erhöht sich der Radius der Aura auf 9 m."
+    ]
+  },
+
+  "paladin_aura_der_tapferkeit": {
+    id: "paladin_aura_der_tapferkeit",
+    name: "Aura der Tapferkeit",
+    stufe: 10,
+    optional: false,
+    quelle: "Paladin",
+    beschreibung: [
+      "Beginnend ab der 10. Stufe können du und verbündete Kreaturen innerhalb von 3 m nicht verängstigt werden, solange du bei Bewusstsein bist.",
+      "Auf der 18. Stufe erhöht sich der Radius der Aura auf 9 m."
+    ]
+  },
+
+  "paladin_verbessertes_goettliches_niederstrecken": {
+    id: "paladin_verbessertes_goettliches_niederstrecken",
+    name: "Verbessertes Göttliches Niederstrecken",
+    stufe: 11,
+    optional: false,
+    quelle: "Paladin",
+    beschreibung: [
+      "Ab Stufe 11 bist du derart von rechtschaffener Macht durchdrungen, dass alle deine Nahkampf-Waffenangriffe göttliche Kraft in sich bergen. Jedes Mal, wenn du eine Kreatur mit einer Nahkampfwaffe triffst, erleidet sie zusätzlich 1W8 gleißenden Schaden.",
+      "Solltest du zusätzlich dein Merkmal Göttliches Niederstrecken einsetzen, werden diese 1W8 zu dem zusätzlichen Schaden des Göttlichen Niederstreckens hinzugezählt."
+    ]
+  },
+
+  "paladin_reinigende_beruehrung": {
+    id: "paladin_reinigende_beruehrung",
+    name: "Reinigende Berührung",
+    stufe: 14,
+    optional: false,
+    quelle: "Paladin",
+    beschreibung: [
+      "Mit Erreichen von Stufe 14 kannst du deine Aktion verwenden, um durch Berührung einen Zauber zu beenden, der auf dich oder eine Kreatur wirkt, die deine Berührung bereitwillig zulässt.",
+      "Du kannst diese Fähigkeit so oft einsetzen, wie es der Höhe deines Charismamodifikators entspricht (mindestens 1 Mal). Nach einer langen Rast stehen dir alle verbrauchten Anwendungen wieder zur Verfügung."
+    ]
+  },
+
+  "paladin_auraverbesserungen": {
+    id: "paladin_auraverbesserungen",
+    name: "Auraverbesserungen",
+    stufe: 18,
+    optional: false,
+    quelle: "Paladin",
+    beschreibung: [
+      "Ab der 18. Stufe erhöht sich der Radius all deiner Paladin-Auren (Aura des Schutzes, Aura der Tapferkeit sowie die Aura deines Heiligen Schwurs) von 3 m auf 9 m."
+    ]
+  },
+
+  // ── PALADIN: EIDBRECHER ──────────────────────────────────────────────────────
+
+  "paladin_eidbrecher_goettliche_macht_fokussieren": {
+    id: "paladin_eidbrecher_goettliche_macht_fokussieren",
+    name: "Göttliche Macht fokussieren",
+    stufe: 3,
+    optional: false,
+    quelle: "Eidbrecher",
+    beschreibung: [
+      "Ein Eidbrecher-Paladin der Stufe 3 oder höher erhält die Fähigkeit, zwei Arten Göttlicher Macht zu fokussieren.",
+      "Untote kontrollieren: Der Paladin kann mit einer Aktion eine untote Kreatur, die er innerhalb von 9 m sehen kann, als Ziel auswählen. Das Ziel muss einen Weisheitsrettungswurf ablegen. Bei einem Fehlschlag muss das Ziel den Befehlen des Paladins für die nächsten 24 Stunden oder bis der Paladin Göttliche Macht fokussieren erneut verwendet, gehorchen. Ein Untoter, dessen Herausforderungsgrad mindestens der Stufe des Paladins entspricht, ist immun gegen diesen Effekt.",
+      "Entsetzlicher Aspekt: Der Paladin kann mit einer Aktion seine dunkelsten Emotionen in einer Entladung magischen Schreckens fokussieren. Jede Kreatur nach Wahl des Paladins, die sich innerhalb von 9 m von ihm befindet und ihn sehen kann, muss einen Weisheitsrettungswurf ablegen. Bei Misserfolg fürchtet sich die Kreatur 1 Minute lang vor dem Paladin. Eine verängstigt Kreatur, die ihre Runde innerhalb von 9 m endet, kann am Ende jedes ihrer Züge erneut würfeln.",
+      "Eidbrecher-Zauber (automatisch vorbereitet): Stufe 3 – Höllischer Tadel, Wunden verursachen; Stufe 5 – Krone des Wahnsinns, Dunkelheit; Stufe 9 – Tote beleben, Fluch; Stufe 13 – Dürre, Verwirrung; Stufe 17 – Ansteckung, Person beherrschen."
+    ]
+  },
+
+  "paladin_eidbrecher_aura_des_hasses": {
+    id: "paladin_eidbrecher_aura_des_hasses",
+    name: "Aura des Hasses",
+    stufe: 7,
+    optional: false,
+    quelle: "Eidbrecher",
+    beschreibung: [
+      "Beginnend mit Stufe 7 erhält der Paladin sowie alle Unholde und Untote in einem 3-m-Umkreis um ihn einen Bonus auf Waffenangriffswürfe in Höhe des Charismamodifikators des Paladins (mindestens +1). Eine Kreatur kann diesen Vorteil nur von einem Paladin gleichzeitig erhalten.",
+      "Auf Stufe 18 erhöht sich der Umkreis der Aura auf 9 m."
+    ]
+  },
+
+  "paladin_eidbrecher_uebernatuerliche_resistenz": {
+    id: "paladin_eidbrecher_uebernatuerliche_resistenz",
+    name: "Übernatürliche Resistenz",
+    stufe: 15,
+    optional: false,
+    quelle: "Eidbrecher",
+    beschreibung: [
+      "Auf Stufe 15 erhält der Paladin Resistenz gegen Wucht-, Stich- und Hiebwaffenschaden von nicht-magischen Waffen."
+    ]
+  },
+
+  "paladin_eidbrecher_schreckensfuerst": {
+    id: "paladin_eidbrecher_schreckensfuerst",
+    name: "Schreckensfürst",
+    stufe: 20,
+    optional: false,
+    quelle: "Eidbrecher",
+    beschreibung: [
+      "Auf Stufe 20 kann der Paladin sich selbst mit einer Aktion in eine Aura der Finsternis einhüllen, die eine Minute anhält. Die Aura reduziert helles Licht in einem 9-m-Umkreis zu dämmrigem Licht.",
+      "Immer, wenn ein Feind, der sich vor dem Paladin fürchtet, seine Runde innerhalb der Aura beginnt, erhält er 4W10 psychischen Schaden. Der Paladin und Kreaturen seiner Wahl innerhalb der Aura sind in tiefere Schatten gehüllt – Kreaturen, die von ihrer Sehkraft abhängig sind, erhalten Nachteil auf Angriffswürfe gegen diese.",
+      "Während die Aura anhält, kann der Paladin als Bonusaktion die Schatten eine Kreatur angreifen lassen (Nahkampfzauberangriff; Treffer: 3W10 + Charismamodifikator nekrotischer Schaden).",
+      "Nach einer Aktivierung kann die Aura erst nach einer langen Rast erneut eingesetzt werden."
+    ]
+  },
+
+  // ── PALADIN: SCHWUR DER ALTEN ────────────────────────────────────────────────
+
+  "paladin_alten_goettliche_macht_fokussieren": {
+    id: "paladin_alten_goettliche_macht_fokussieren",
+    name: "Göttliche Macht fokussieren",
+    stufe: 3,
+    optional: false,
+    quelle: "Schwur der Alten",
+    beschreibung: [
+      "Der Zorn der Natur: Als Aktion lässt du geisterhafte Ranken aus dem Boden schießen und greifst damit eine Kreatur, die nicht weiter als 3 m von dir entfernt ist. Der Kreatur muss ein Stärke- oder Geschicklichkeitsrettungswurf gelingen (ihre Wahl) oder sie wird festgehalten. Solange sie festgehalten wird, wiederholt die Kreatur am Ende jedes ihrer Züge den Rettungswurf. Bei einem Erfolg kann sie sich befreien.",
+      "Vertreibe die Ungläubigen: Als Aktion zeigst du dein heiliges Symbol. Alle Feenwesen oder Unholde, die dich sehen oder hören können und sich innerhalb von 9 m befinden, müssen einen Weisheitsrettungswurf ablegen. Bei einem Misserfolg ist die Kreatur 1 Minute oder bis sie Schaden erleidet vertrieben. Vertriebene Kreaturen versuchen sich so weit wie möglich zu entfernen und dürfen dir nicht absichtlich näher als 9 m kommen.",
+      "Schwurzauber (automatisch vorbereitet): Stufe 3 – Fesselnder Schlag, Mit Tieren sprechen; Stufe 5 – Mondstrahl, Nebelschritt; Stufe 9 – Pflanzenwachstum, Schutz vor Energie; Stufe 13 – Eissturm, Steinhaut; Stufe 17 – Einswerden mit der Natur, Hölzerner Weg."
+    ]
+  },
+
+  "paladin_alten_aura_der_abwehr": {
+    id: "paladin_alten_aura_der_abwehr",
+    name: "Aura der Abwehr",
+    stufe: 7,
+    optional: false,
+    quelle: "Schwur der Alten",
+    beschreibung: [
+      "Beginnend mit Stufe 7 umfließt dich die uralte Magie so stark, dass sie einen mystischen Schutz bildet. Du und verbündete Kreaturen innerhalb von 3 m besitzen eine Resistenz gegen den Schaden von Zaubern.",
+      "Auf der 18. Stufe erhöht sich der Radius der Aura auf 9 m."
+    ]
+  },
+
+  "paladin_alten_unsterblicher_waechter": {
+    id: "paladin_alten_unsterblicher_waechter",
+    name: "Unsterblicher Wächter",
+    stufe: 15,
+    optional: false,
+    quelle: "Schwur der Alten",
+    beschreibung: [
+      "Wirst du ab der 15. Stufe auf 0 Trefferpunkte reduziert und stirbst nicht sofort, kannst du dir aussuchen, stattdessen auf 1 Trefferpunkt zurückgesetzt zu werden. Sobald du diese Fähigkeit einmal eingesetzt hast, kannst du sie erst wieder nach einer langen Rast anwenden.",
+      "Außerdem erleidest du keine Nachteile aufgrund eines hohen Alters und kannst nicht auf magischem Wege gealtert werden."
+    ]
+  },
+
+  "paladin_alten_champion_der_uralten": {
+    id: "paladin_alten_champion_der_uralten",
+    name: "Champion der Uralten",
+    stufe: 20,
+    optional: false,
+    quelle: "Schwur der Alten",
+    beschreibung: [
+      "Auf Stufe 20 kannst du die Gestalt einer uralten Naturgewalt annehmen (Erscheinung nach Wahl, z. B. grüne Haut, rindeartige Struktur, Geweih). Mit dem Aufwenden deiner Aktion verwandelst du dich und erhältst für 1 Minute folgende Vorzüge:",
+      "• Zu Beginn jedes deiner Züge erlangst du 10 verlorene Trefferpunkte zurück.",
+      "• Wenn du einen Paladinzauber wirkst, der einen Zeitaufwand von 1 Zug hat, kannst du ihn stattdessen als Bonusaktion wirken.",
+      "• Feindliche Kreaturen innerhalb von 3 m sind im Nachteil bei Rettungswürfen gegen deine Paladinzauber und dein Merkmal Göttliche Macht fokussieren.",
+      "Nach einer Aktivierung kannst du erst nach einer langen Rast erneut verwandeln."
+    ]
+  },
+
+  // ── PALADIN: SCHWUR DER EROBERUNG ────────────────────────────────────────────
+
+  "paladin_eroberung_goettliche_macht_fokussieren": {
+    id: "paladin_eroberung_goettliche_macht_fokussieren",
+    name: "Göttliche Macht fokussieren",
+    stufe: 3,
+    optional: false,
+    quelle: "Schwur der Eroberung",
+    beschreibung: [
+      "Präsenz des Eroberers: Als Aktion zwingst du jede Kreatur deiner Wahl, die du innerhalb von 9 m siehst, einen Weisheitsrettungswurf abzulegen. Bei einem gescheiterten Wurf fürchtet sich die Kreatur vor dir und erhält 1 Minute lang den Zustand verängstigt. Die verängstigte Kreatur kann am Ende jedes ihrer Züge erneut würfeln.",
+      "Geführter Schlag: Du kannst Göttliche Macht fokussieren, um einen Bonus von +10 auf einen Angriffswurf zu erhalten. Du triffst diese Entscheidung, nachdem du das Ergebnis gesehen hast, aber bevor der SL dir mitteilt, ob der Angriff getroffen oder verfehlt hat.",
+      "Schwurzauber (automatisch vorbereitet): Stufe 3 – Rüstung von Agathys, Befehl; Stufe 5 – Person festhalten, Waffe des Glaubens; Stufe 9 – Fluch, Furcht; Stufe 13 – Tier beherrschen, Steinhaut; Stufe 17 – Todeswolke, Person beherrschen."
+    ]
+  },
+
+  "paladin_eroberung_aura_der_eroberung": {
+    id: "paladin_eroberung_aura_der_eroberung",
+    name: "Aura der Eroberung",
+    stufe: 7,
+    optional: false,
+    quelle: "Schwur der Eroberung",
+    beschreibung: [
+      "Ab der 7. Stufe umgibt dich stets eine bedrohliche Aura, solange du nicht kampfunfähig bist. Mit dir im Mittelpunkt erstreckt sich die Aura 3 m nach allen Seiten, aber nicht durch vollständige Deckung hindurch.",
+      "Wenn eine Kreatur von dir verängstigt ist, wird ihre Bewegungsrate in der Aura auf 0 reduziert, und die Kreatur erleidet psychischen Schaden in Höhe deiner halben Paladinstufe, wenn sie ihren Zug in der Aura beginnt.",
+      "Auf der 18. Stufe vergrößert sich die Reichweite der Aura auf 9 m."
+    ]
+  },
+
+  "paladin_eroberung_scharfer_tadel": {
+    id: "paladin_eroberung_scharfer_tadel",
+    name: "Scharfer Tadel",
+    stufe: 15,
+    optional: false,
+    quelle: "Schwur der Eroberung",
+    beschreibung: [
+      "Beginnend mit der 15. Stufe werden jene, die es wagen, dich anzugreifen, mental für ihre Unverfrorenheit bestraft. Immer, wenn eine Kreatur dich mit einem Angriff trifft, erleidet diese Kreatur psychischen Schaden in Höhe deines Charismamodifikators (mindestens 1), falls du nicht kampfunfähig bist."
+    ]
+  },
+
+  "paladin_eroberung_unbezwingbarer_eroberer": {
+    id: "paladin_eroberung_unbezwingbarer_eroberer",
+    name: "Unbezwingbarer Eroberer",
+    stufe: 20,
+    optional: false,
+    quelle: "Schwur der Eroberung",
+    beschreibung: [
+      "Auf der 20. Stufe kannst du als Aktion magisch zu einem Avatar der Eroberung werden und erhältst 1 Minute lang folgende Vorzüge:",
+      "• Du erhältst Resistenz gegen jedweden Schaden.",
+      "• Wenn du in deinem Zug die Angriffsaktion ausführst, kannst du als Teil dieser Aktion einen zusätzlichen Angriff ausführen.",
+      "• Deine Angriffe mit Nahkampfwaffen erzielen einen kritischen Treffer bei einem Würfelergebnis von 19 oder 20 auf dem W20.",
+      "Nachdem du dieses Merkmal genutzt hast, kannst du es nicht verwenden, bis du eine lange Rast beendet hast."
+    ]
+  },
+
+  // ── PALADIN: SCHWUR DER HINGABE ──────────────────────────────────────────────
+
+  "paladin_hingabe_goettliche_macht_fokussieren": {
+    id: "paladin_hingabe_goettliche_macht_fokussieren",
+    name: "Göttliche Macht fokussieren",
+    stufe: 3,
+    optional: false,
+    quelle: "Schwur der Hingabe",
+    beschreibung: [
+      "Heilige Waffe: Als Aktion kannst du eine Waffe, die du in der Hand hältst, für 1 Minute mit positiver Energie aufladen. Du addierst deinen Charismamodifikator (mindestens 1) zu Angriffswürfen. Die Waffe strahlt helles Licht (6 m) und dämmriges Licht (weitere 6 m) aus und wird für die Dauer magisch. Du kannst den Effekt als Teil einer beliebigen Aktion beenden.",
+      "Die Unheiligen vertreiben: Als Aktion zeigst du dein heiliges Symbol und sprichst ein Gebet. Alle Unholde oder Untoten, die dich sehen oder hören können und sich innerhalb von 9 m befinden, müssen einen Weisheitsrettungswurf ablegen. Bei einem Misserfolg sind sie 1 Minute oder bis sie Schaden erleiden vertrieben.",
+      "Schwurzauber (automatisch vorbereitet): Stufe 3 – Heiligtum, Schutz vor Gut und Böse; Stufe 5 – Schwache Genesung, Zone der Wahrheit; Stufe 9 – Leuchtfeuer der Hoffnung, Magie bannen; Stufe 13 – Bewegungsfreiheit, Hüter des Glaubens; Stufe 17 – Heiliges Gespräch, Flammenschlag."
+    ]
+  },
+
+  "paladin_hingabe_aura_der_hingabe": {
+    id: "paladin_hingabe_aura_der_hingabe",
+    name: "Aura der Hingabe",
+    stufe: 7,
+    optional: false,
+    quelle: "Schwur der Hingabe",
+    beschreibung: [
+      "Beginnend mit Stufe 7 können du und verbündete Kreaturen innerhalb von 3 m nicht mehr bezaubert werden, solange du bei Bewusstsein bist.",
+      "Auf der 18. Stufe erhöht sich der Radius der Aura auf 9 m."
+    ]
+  },
+
+  "paladin_hingabe_reinheit_des_geistes": {
+    id: "paladin_hingabe_reinheit_des_geistes",
+    name: "Reinheit des Geistes",
+    stufe: 15,
+    optional: false,
+    quelle: "Schwur der Hingabe",
+    beschreibung: [
+      "Ab der 15. Stufe stehst du dauerhaft unter den Effekten des Zaubers Schutz vor Gut und Böse."
+    ]
+  },
+
+  "paladin_hingabe_heiliger_nimbus": {
+    id: "paladin_hingabe_heiliger_nimbus",
+    name: "Heiliger Nimbus",
+    stufe: 20,
+    optional: false,
+    quelle: "Schwur der Hingabe",
+    beschreibung: [
+      "Als Aktion kannst du dich ab der 20. Stufe mit einer Aura des Lichts umgeben. Für 1 Minute strahlst du in einem Radius von 9 m helles Licht aus und in weiteren 9 m dämmriges Licht.",
+      "Immer wenn eine feindliche Kreatur ihren Zug in diesem Bereich hellen Lichts beginnt, erleidet sie 10 Punkte gleißenden Schaden. Zusätzlich bist du für die Dauer im Vorteil bei Rettungswürfen gegen Zauber, die von Unholden oder Untoten gewirkt werden.",
+      "Hast du diese Fähigkeit einmal verwendet, kannst du sie erst wieder nach einer langen Rast einsetzen."
+    ]
+  },
+
+  // ── PALADIN: SCHWUR DER KRONE ────────────────────────────────────────────────
+
+  "paladin_krone_goettliche_macht_fokussieren": {
+    id: "paladin_krone_goettliche_macht_fokussieren",
+    name: "Göttliche Macht fokussieren",
+    stufe: 3,
+    optional: false,
+    quelle: "Schwur der Krone",
+    beschreibung: [
+      "Herausforderung des Recken: Als Bonusaktion sprichst du eine Herausforderung aus. Alle Kreaturen deiner Wahl innerhalb von 9 Metern, die dich sehen können, müssen einen Weisheitsrettungswurf ablegen. Bei einem misslungenen Wurf kann sich die Kreatur nicht freiwillig mehr als 9 Meter von dir entfernen. Der Effekt endet, wenn du kampfunfähig bist oder stirbst oder wenn die Kreatur mehr als 9 Meter von dir weg ist.",
+      "Das Blatt wenden: Als Bonusaktion stärkst du verwundete Kreaturen. Alle Kreaturen deiner Wahl innerhalb von 9 Metern, die dich hören können, erhalten 1W6 + deinen Charismamodifikator (mindestens 1) Trefferpunkte, wenn sie nicht mehr als die Hälfte ihrer Trefferpunkte besitzen.",
+      "Schwurzauber (automatisch vorbereitet): Stufe 3 – Befehl, Duell; Stufe 5 – Schützendes Band, Zone der Wahrheit; Stufe 9 – Aura der Gesundheit, Schutzgeister; Stufe 13 – Hüter des Glaubens, Verbannung; Stufe 17 – Geas, Kreis der Macht."
+    ]
+  },
+
+  "paladin_krone_goettliches_buendnis": {
+    id: "paladin_krone_goettliches_buendnis",
+    name: "Göttliches Bündnis",
+    stufe: 7,
+    optional: false,
+    quelle: "Schwur der Krone",
+    beschreibung: [
+      "Ab der 7. Stufe kannst du, wenn eine Kreatur innerhalb von 1,5 Metern um dich Schaden erleidet, deine Reaktion verwenden, um auf magische Weise deine Gesundheit mit der des Ziels auszutauschen. Die Kreatur erleidet keinen Schaden, stattdessen erleidest du den Schaden. Der Schaden kann nicht verringert oder verhindert werden."
+    ]
+  },
+
+  "paladin_krone_standhafte_seele": {
+    id: "paladin_krone_standhafte_seele",
+    name: "Standhafte Seele",
+    stufe: 15,
+    optional: false,
+    quelle: "Schwur der Krone",
+    beschreibung: [
+      "Ab der 15. Stufe hast du einen Vorteil bei Rettungswürfen, um nicht gelähmt oder betäubt zu werden."
+    ]
+  },
+
+  "paladin_krone_erhabener_recke": {
+    id: "paladin_krone_erhabener_recke",
+    name: "Erhabener Recke",
+    stufe: 20,
+    optional: false,
+    quelle: "Schwur der Krone",
+    beschreibung: [
+      "Wenn du die 20. Stufe erreichst, kannst du deine Aktion verwenden, um für 1 Stunde folgende Vorteile zu erlangen:",
+      "• Du erhältst Resistenz gegen Wucht-, Stich- und Hiebschaden durch nichtmagische Waffen.",
+      "• Deine Verbündeten erhalten einen Vorteil bei Todesrettungswürfen, solange sie sich innerhalb von 9 Metern um dich befinden.",
+      "• Du erhältst einen Vorteil bei Weisheitsrettungswürfen, wie auch deine Verbündeten innerhalb von 9 Metern.",
+      "Der Effekt endet, wenn du kampfunfähig wirst oder stirbst. Danach ist eine lange Rast erforderlich."
+    ]
+  },
+
+  // ── PALADIN: SCHWUR DER LÄUTERUNG ────────────────────────────────────────────
+
+  "paladin_laeuterung_goettliche_macht_fokussieren": {
+    id: "paladin_laeuterung_goettliche_macht_fokussieren",
+    name: "Göttliche Macht fokussieren",
+    stufe: 3,
+    optional: false,
+    quelle: "Schwur der Läuterung",
+    beschreibung: [
+      "Gesandter des Friedens: Als Bonusaktion erhältst du für die nächsten 10 Minuten einen Bonus von +5 auf deine Würfe auf Charisma (Überzeugen).",
+      "Gewalt bestrafen: Als Reaktion, sofort nachdem ein Angreifer innerhalb von 9 m jemand anderem als dir mit einem Angriff Schaden zugefügt hat, kannst du den Angreifer einen Weisheitsrettungswurf ablegen lassen. Bei einem gescheiterten Wurf erleidet er gleißenden Schaden in Höhe des Schadens, den er gerade zugefügt hat. Bei einem erfolgreichen Wurf erleidet er die Hälfte dieses Schadens.",
+      "Schwurzauber (automatisch vorbereitet): Stufe 3 – Heiligtum, Schlaf; Stufe 5 – Gefühle besänftigen, Person festhalten; Stufe 9 – Gegenzauber, Hypnotisches Muster; Stufe 13 – Otilukes Unverwüstliche Sphäre, Steinhaut; Stufe 17 – Monster festhalten, Energiewand."
+    ]
+  },
+
+  "paladin_laeuterung_aura_des_waechters": {
+    id: "paladin_laeuterung_aura_des_waechters",
+    name: "Aura des Wächters",
+    stufe: 7,
+    optional: false,
+    quelle: "Schwur der Läuterung",
+    beschreibung: [
+      "Beginnend mit der 7. Stufe bist du fähig, andere auf Kosten deiner eigenen Gesundheit vor Schaden zu bewahren. Wenn eine Kreatur innerhalb von 3 m um dich herum Schaden erleidet, kannst du deine Reaktion nutzen, um diesen Schaden anstelle der Kreatur zu erleiden. Dieser Schaden kann nicht reduziert werden.",
+      "Auf der 18. Stufe vergrößert sich die Reichweite der Aura auf 9 m."
+    ]
+  },
+
+  "paladin_laeuterung_schuetzender_geist": {
+    id: "paladin_laeuterung_schuetzender_geist",
+    name: "Schützender Geist",
+    stufe: 15,
+    optional: false,
+    quelle: "Schwur der Läuterung",
+    beschreibung: [
+      "Ab der 15. Stufe heilt eine heilige Entität deine Wunden im Kampf. Du erhältst Trefferpunkte in Höhe von 1W6 + deiner halben Paladinstufe zurück, wenn du deinen Zug im Kampf mit weniger als der Hälfte deiner Trefferpunkte beendest und nicht kampfunfähig bist."
+    ]
+  },
+
+  "paladin_laeuterung_gesandter_der_laeuterung": {
+    id: "paladin_laeuterung_gesandter_der_laeuterung",
+    name: "Gesandter der Läuterung",
+    stufe: 20,
+    optional: false,
+    quelle: "Schwur der Läuterung",
+    beschreibung: [
+      "Auf der 20. Stufe wirst du zur lebenden Verkörperung des Friedens. Du erhältst zwei Vorzüge:",
+      "• Du erhältst Resistenz gegen jedweden Schaden, den andere Kreaturen verursachen (ihre Angriffe, Zauber und andere Effekte).",
+      "• Immer, wenn eine Kreatur dich mit einem Angriff trifft, erleidet sie gleißenden Schaden in Höhe des halben Schadens, den du durch den Angriff erleidest.",
+      "Wenn du eine Kreatur angreifst, einen Zauber auf sie wirkst oder ihr Schaden aus einer anderen Quelle als diesem Merkmal zufügst, kannst du diese Vorzüge erst wieder gegen diese Kreatur einsetzen, nachdem du eine lange Rast beendet hast."
+    ]
+  },
+
+  // ── PALADIN: SCHWUR DES RUHMES ───────────────────────────────────────────────
+
+  "paladin_ruhm_goettliche_macht_fokussieren": {
+    id: "paladin_ruhm_goettliche_macht_fokussieren",
+    name: "Göttliche Macht fokussieren",
+    stufe: 3,
+    optional: false,
+    quelle: "Schwur des Ruhmes",
+    beschreibung: [
+      "Beispielloser Athlet: Als Bonusaktion bist du für die nächsten zehn Minuten bei Attributswürfen auf Stärke (Athletik) und Geschicklichkeit (Akrobatik) im Vorteil. Du kannst doppelt so viel Gewicht tragen, schieben, ziehen und heben, und die Höhe und Weite deiner Sprünge vergrößert sich um drei Meter (ohne zusätzliche Bewegungskosten).",
+      "Beflügelnder Schlag: Als Bonusaktion, direkt nachdem du einer Kreatur mit Göttliches Niederstrecken Schaden zugefügt hast, kannst du Kreaturen deiner Wahl (inklusive dir) im Umkreis von neun Metern temporäre Trefferpunkte verleihen. Verfügbare temporäre Trefferpunkte: 2W8 + deine Klassenstufe. Teile sie nach Belieben auf.",
+      "Schwurzauber (automatisch vorbereitet): Stufe 3 – Heldenmut, Lenkendes Geschoss; Stufe 5 – Attribut verbessern, Magische Waffe; Stufe 9 – Hast, Schutz vor Energie; Stufe 13 – Bewegungsfreiheit, Zwang; Stufe 17 – Flammenschlag, Heiliges Gespräch."
+    ]
+  },
+
+  "paladin_ruhm_aura_des_eifers": {
+    id: "paladin_ruhm_aura_des_eifers",
+    name: "Aura des Eifers",
+    stufe: 7,
+    optional: false,
+    quelle: "Schwur des Ruhmes",
+    beschreibung: [
+      "Du strahlst eine Aura aus, die dich und deine Begleiter mit übernatürlicher Geschwindigkeit erfüllt. Deine Schrittbewegungsrate erhöht sich um drei Meter. Solange du nicht kampfunfähig bist, erhöht sich die Schrittbewegungsrate jedes Verbündeten, der seinen Zug innerhalb von 1,5 Metern von dir beginnt, bis zum Ende dieses Zugs ebenfalls um drei Meter.",
+      "Die Reichweite der Aura erhöht sich auf drei Meter, wenn du die 18. Stufe dieser Klasse erreichst."
+    ]
+  },
+
+  "paladin_ruhm_glorreiche_verteidigung": {
+    id: "paladin_ruhm_glorreiche_verteidigung",
+    name: "Glorreiche Verteidigung",
+    stufe: 15,
+    optional: false,
+    quelle: "Schwur des Ruhmes",
+    beschreibung: [
+      "Du kannst plötzlich aus der Verteidigung heraus angreifen. Wenn du oder eine andere Kreatur in deinem Sichtfeld im Umkreis von drei Metern von einem Angriff getroffen wird, kannst du deine Reaktion verwenden, um der RK des Ziels einen Bonus in Höhe deines Charismamodifikators (mindestens +1) zu verleihen, wodurch der Angriff möglicherweise doch nicht trifft. Schlägt der Angriff dadurch fehl, kannst du als Teil dieser Reaktion einen Waffenangriff gegen den Angreifer durchführen (sofern er in Waffenreichweite ist).",
+      "Die Häufigkeit entspricht deinem Charismamodifikator (mindestens einmal). Verbrauchte Anwendungen stehen nach einer langen Rast wieder zur Verfügung."
+    ]
+  },
+
+  "paladin_ruhm_lebende_legende": {
+    id: "paladin_ruhm_lebende_legende",
+    name: "Lebende Legende",
+    stufe: 20,
+    optional: false,
+    quelle: "Schwur des Ruhmes",
+    beschreibung: [
+      "Als Bonusaktion gewinnst du eine Minute lang folgende Vorzüge:",
+      "• Du beeindruckst durch dein außerweltliches Aussehen und bist bei allen Charismawürfen im Vorteil.",
+      "• Du kannst einmal in jedem deiner Züge einen von dir fehlgeschlagenen Waffenangriff in einen Treffer umwandeln.",
+      "• Scheiterst du bei einem Rettungswurf, kannst du deine Reaktion verwenden, um erneut zu würfeln. Du musst das Ergebnis dieses zweiten Wurfes nutzen.",
+      "Du kannst diese Bonusaktion erst nach einer langen Rast erneut verwenden, es sei denn, du verbrauchst dafür einen Zauberplatz des 5. Grads."
+    ]
+  },
+
+  // ── PALADIN: SCHWUR DER WACHSAMEN ───────────────────────────────────────────
+
+  "paladin_wachsamen_goettliche_macht_fokussieren": {
+    id: "paladin_wachsamen_goettliche_macht_fokussieren",
+    name: "Göttliche Macht fokussieren",
+    stufe: 3,
+    optional: false,
+    quelle: "Schwur der Wachsamen",
+    beschreibung: [
+      "Schutzmantel des Glaubens: Als Aktion wählst du innerhalb deines Sichtfeldes im Umkreis von neun Metern Kreaturen aus, deren Anzahl maximal deinem Charismamodifikator entspricht (mindestens eine Kreatur). Du und die anderen Kreaturen sind eine Minute lang bei Rettungswürfen auf Charisma, Intelligenz und Weisheit im Vorteil.",
+      "Außerplanare vertreiben: Als Aktion präsentierst du dein heiliges Symbol. Alle Aberrationen, Himmlischen, Elementare, Feenwesen und Unholde, die dich innerhalb von neun Metern hören können, müssen einen Weisheitsrettungswurf ausführen. Bei Misserfolg gilt die Kreatur eine Minute oder bis sie Schaden erleidet als vertrieben.",
+      "Schwurzauber (automatisch vorbereitet): Stufe 3 – Alarm, Magie entdecken; Stufe 5 – Mondstrahl, Unsichtbares sehen; Stufe 9 – Gegenzauber, Unauffindbarkeit; Stufe 13 – Aura der Reinheit, Verbannung; Stufe 17 – Ausspähung, Monster festhalten."
+    ]
+  },
+
+  "paladin_wachsamen_aura_des_waechters": {
+    id: "paladin_wachsamen_aura_des_waechters",
+    name: "Aura des Wächters",
+    stufe: 7,
+    optional: false,
+    quelle: "Schwur der Wachsamen",
+    beschreibung: [
+      "Solange du nicht kampfunfähig bist, strahlst du eine Aura der Wachsamkeit aus. Würfeln du und Kreaturen deiner Wahl innerhalb von drei Metern Initiative aus, erhaltet ihr einen Bonus auf euer Ergebnis, der deinem Übungsbonus entspricht.",
+      "Ab der 18. Stufe erhöht sich der Radius der Aura auf neun Meter."
+    ]
+  },
+
+  "paladin_wachsamen_wachsamer_rueffel": {
+    id: "paladin_wachsamen_wachsamer_rueffel",
+    name: "Wachsamer Rüffel",
+    stufe: 15,
+    optional: false,
+    quelle: "Schwur der Wachsamen",
+    beschreibung: [
+      "Du hast gelernt, alle zu bestrafen, die es wagen, dich oder deine Schützlinge zu täuschen. Wenn du oder eine andere Kreatur, die du innerhalb von neun Metern sehen kannst, einen erfolgreichen Rettungswurf auf Intelligenz, Weisheit oder Charisma ausführt, kannst du deine Reaktion verwenden, um der Kreatur, die den Rettungswurf forciert hat, Energieschaden in Höhe von 2W8 + deinem Charismamodifikator zuzufügen."
+    ]
+  },
+
+  "paladin_wachsamen_sterbliche_bastion": {
+    id: "paladin_wachsamen_sterbliche_bastion",
+    name: "Sterbliche Bastion",
+    stufe: 20,
+    optional: false,
+    quelle: "Schwur der Wachsamen",
+    beschreibung: [
+      "Als Bonusaktion gewinnst du eine Minute lang folgende Vorzüge:",
+      "• Du hast innerhalb von 36 Metern wahre Sicht.",
+      "• Du bist bei Angriffswürfen gegen Aberrationen, Himmlische, Elementare, Feenwesen und Unholde im Vorteil.",
+      "• Fügst du einer getroffenen Kreatur mit einem Angriffswurf Schaden zu, kannst du die Kreatur zusätzlich zwingen, einen Rettungswurf auf Charisma gegen deinen Zauberrettungswurf-SG auszuführen. Bei Misserfolg verbannst du die Kreatur magisch auf ihre heimische Existenzebene (sofern sie sich nicht schon dort befindet). Bei einem erfolgreichen Rettungswurf kann die Kreatur innerhalb der nächsten 24 Stunden nicht mithilfe dieses Merkmals verbannt werden.",
+      "Du kannst diese Bonusaktion erst nach einer langen Rast erneut verwenden, es sei denn, du verbrauchst dafür einen Zauberplatz des 5. Grads."
+    ]
+  },
+
+  "moench_element_schueler_der_elemente": {
+    id: "moench_element_schueler_der_elemente",
+    name: "Schüler der Elemente",
+    stufe: 3,
+    optional: false,
+    quelle: "Weg der Vier Elemente",
+    beschreibung: [
+      "Mit der Wahl dieser Tradition auf der 3. Stufe lernst du magische Disziplinen, welche die Kräfte der vier Elemente nutzen. Du kennst die Disziplin der Elementaren Einstimmung und eine andere deiner Wahl. Je eine zusätzliche Disziplin lernst du auf den Stufen 6, 11 und 17. Auf jeder dieser Stufen darfst du außerdem eine bekannte Disziplin durch eine andere ersetzen.",
+      "Ab der 5. Stufe kannst du zusätzliche Ki-Punkte ausgeben, um den Grad eines gewirkten Elementarzaubers zu erhöhen (1 Grad pro zusätzlichem Ki-Punkt). Maximum Ki-Punkte: Stufen 5–8: 3, Stufen 9–12: 4, Stufen 13–16: 5, Stufen 17–20: 6.",
+      "Verfügbare Elementare Disziplinen:",
+      "Elementare Einstimmung (immer bekannt): Als Aktion kontrollierst du elementare Kräfte in deiner Nähe auf geringfügige Weise (Funkenregen, Windhauch, Nebelschwade, Geröll, Kerze entzünden/löschen, Material kühlen/erwärmen, Elementarmasse formen).",
+      "Ansturm der Orkangeister: 2 Ki – Windstoß.",
+      "Atem des Winters (Voraussetzung: 17. Stufe): 6 Ki – Kältekegel.",
+      "Faust der Vier Donnerschläge: 2 Ki – Donnerwoge.",
+      "Faust des Stetigen Windes: 2 Ki – Kreatur in 9 m muss Stärkerettungswurf ablegen. Misserfolg: 3W10 + 1W10 je weiteren Ki-Punkt Wuchtschaden, 6 m weggestoßen und liegend. Erfolg: halber Schaden.",
+      "Flammen des Phönix (Voraussetzung: 11. Stufe): 4 Ki – Feuerball.",
+      "Fluss der Hungrigen Flamme (Voraussetzung: 17. Stufe): 5 Ki – Feuerwand.",
+      "Forme den Fließenden Fluss: 1 Ki – Wasser oder Eis in einem Bereich von max. 9 m Seite innerhalb von 36 m formen, erhöhen, absenken oder verwandeln.",
+      "Giftzähne der Feuerschlange: 1 Ki – Waffenlose Angriffe haben +3 m Reichweite und verursachen Feuerschaden bis Zugende. Optional: 1 weiterer Ki-Punkt für +1W10 Feuerschaden.",
+      "Gongschlag des Berggipfels (Voraussetzung: 6. Stufe): 3 Ki – Zerbersten.",
+      "Nebelhaltung (Voraussetzung: 11. Stufe): 4 Ki – Gasförmige Gestalt auf dich selbst.",
+      "Schutz des Ewigen Berges (Voraussetzung: 17. Stufe): 5 Ki – Steinhaut auf dich selbst.",
+      "Umklammerung des Nordwindes (Voraussetzung: 6. Stufe): 3 Ki – Person festhalten.",
+      "Wasserpeitsche: 2 Ki – Kreatur in 9 m muss Geschicklichkeitsrettungswurf ablegen. Misserfolg: 3W10 + 1W10 je weiteren Ki-Punkt Wuchtschaden, dann entweder liegend oder 7,50 m herangezogen. Erfolg: halber Schaden.",
+      "Weitreichender Ascheangriff: 2 Ki – Brennende Hände.",
+      "Welle der Wallenden Erde (Voraussetzung: 17. Stufe): 6 Ki – Steinwand.",
+      "Windritt (Voraussetzung: 11. Stufe): 4 Ki – Fliegen auf dich selbst."
     ]
   },
 

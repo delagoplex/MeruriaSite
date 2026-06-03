@@ -17,7 +17,6 @@
 <script src="assets/components/site-gate.jsx" type="text/babel"></script>
 <script src="assets/components/tweaks-panel-13.jsx" type="text/babel"></script>
 <script src="assets/components/footer.jsx" type="text/babel"></script>
-<script src="assets/scripts/vendor/image-slot.js"></script>
 <script src="assets/components/kollektikon-bar.js"></script>
 <script src="assets/scripts/data/galerie-data.js"></script>
 
@@ -1570,13 +1569,6 @@ function _vg_unused() {
       >
         {/* Image slot (left) */}
         <div style={{ position:'relative', minHeight:420 }}>
-          <image-slot
-            id="vorgeschichte-wal"
-            shape="rect"
-            fit="cover"
-            placeholder="Der Weiße Wal — Artwork ablegen"
-            style={{ position:'absolute', inset:0, width:'100%', height:'100%' }}
-          ></image-slot>
           <div style={{
             position:'absolute', inset:0, pointerEvents:'none',
             background:'linear-gradient(90deg, rgba(5,4,15,0) 50%, rgba(8,6,22,0.85) 100%)',
@@ -2344,18 +2336,6 @@ function App() {
         textAlign:'center',
         overflow:'hidden',
       }}>
-        {/* Background image slot — user drops their artwork here */}
-        <image-slot
-          id="hero-bg"
-          shape="rect"
-          fit="cover"
-          placeholder="Kopfbild — Artwork hier ablegen"
-          style={{
-            position:'absolute', inset:0, width:'100%', height:'100%',
-            zIndex:0, opacity:0.78,
-          }}
-        ></image-slot>
-
         {/* Vignette + atmospheric overlays on top of image */}
         <div style={{
           position:'absolute', inset:0, zIndex:1, pointerEvents:'none',

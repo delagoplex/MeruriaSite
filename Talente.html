@@ -172,7 +172,8 @@ function FilterSidebar({
   const allRassen = useMemo(() => {
     const set = new Set();
     allData.forEach(t => {
-      if (t.angeboren && t.voraussetzung) set.add(t.voraussetzung);
+      if (t.angeboren && t.voraussetzung)
+        t.voraussetzung.split(/,\s*| oder /).forEach(r => set.add(r.trim()));
     });
     return [...set].sort();
   }, [allData]);
@@ -1105,7 +1106,10 @@ function App() {
     const r = allData.filter(t => {
       if (search && !t.name.toLowerCase().includes(search.toLowerCase()) && !(t.kurzbeschreibung || '').toLowerCase().includes(search.toLowerCase())) return false;
       if ((filters.kategorien || []).length && !filters.kategorien.includes(t.kategorie)) return false;
-      if ((filters.rassen || []).length && !filters.rassen.includes(t.voraussetzung)) return false;
+      if ((filters.rassen || []).length) {
+        const talentRassen = t.voraussetzung ? t.voraussetzung.split(/,\s*| oder /).map(r => r.trim()) : [];
+        if (!filters.rassen.some(r => talentRassen.includes(r))) return false;
+      }
       if (filters.nurOhneVoraussetzung && t.voraussetzung) return false;
       if (typeFilter === 'angeboren' && !t.angeboren) return false;
       if (typeFilter === 'erlernbar' && t.angeboren) return false;

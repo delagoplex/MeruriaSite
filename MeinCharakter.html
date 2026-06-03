@@ -27,6 +27,8 @@
 <script src="assets/scripts/data/rassen-data.js"></script>
 <script src="assets/scripts/data/rassen-detail-data.js"></script>
 <script src="assets/scripts/data/talente-data.js"></script>
+<script src="assets/scripts/data/hintergruende-data.js"></script>
+<script src="assets/scripts/data/ausrüstung-data.js"></script>
 
 </head>
 <body>
@@ -178,9 +180,10 @@ const TYPE_COLORS_SPELL = {
 };
 
 /* ── SpellPicker Modal ──────────────────────────────────────────── */
-function SpellPicker({ onAdd, onClose }) {
+function SpellPicker({ onAdd, onClose, defaultKlasse = '' }) {
   const [q, setQ] = useApp('');
-  const [filterKlasse, setFilterKlasse] = useApp('');
+  const [filterKlasse, setFilterKlasse] = useApp(defaultKlasse);
+  const [filterGrad, setFilterGrad] = useApp('');
   const [mode, setMode] = useApp('alle');
 
   const allZauber = window.ZAUBER_DATA || [];
@@ -200,9 +203,10 @@ function SpellPicker({ onAdd, onClose }) {
   const results = React.useMemo(() => {
     let list = base;
     if (filterKlasse) list = list.filter(z => z.klassen?.includes(filterKlasse));
+    if (filterGrad !== '') list = list.filter(z => z.grad === Number(filterGrad));
     if (q.trim()) { const low = q.toLowerCase(); list = list.filter(z => z.name.toLowerCase().includes(low)); }
     return list.slice(0, 150);
-  }, [q, filterKlasse, base, mode]);
+  }, [q, filterKlasse, filterGrad, base, mode]);
 
   function handleAdd(z) {
     if (mode === 'heilung') {
@@ -256,12 +260,27 @@ function SpellPicker({ onAdd, onClose }) {
               border:'1px solid rgba(124,77,255,0.2)',borderRadius:3,padding:'6px 10px',
               color:'var(--white)',outline:'none'}} />
           <select value={filterKlasse} onChange={e=>setFilterKlasse(e.target.value)}
-            style={{fontFamily:'var(--font-mono)',fontSize:9,background:'rgba(124,77,255,0.07)',
+            style={{fontFamily:'var(--font-mono)',fontSize:9,background:'#0d0b24',
               border:'1px solid rgba(124,77,255,0.2)',borderRadius:3,padding:'6px 8px',
               color:'rgba(200,190,240,0.8)',outline:'none',flexShrink:0,width:130}}>
-            <option value="">Alle Klassen</option>
-            {KLASSEN_SPELL.map(k => <option key={k} value={k}>{k}</option>)}
+            <option value="" style={{background:'#0d0b24',color:'rgba(200,190,240,0.85)'}}>Alle Klassen</option>
+            {KLASSEN_SPELL.map(k => <option key={k} value={k} style={{background:'#0d0b24',color:'rgba(200,190,240,0.85)'}}>{k}</option>)}
           </select>
+        </div>
+        <div style={{padding:'0 12px 8px',display:'flex',gap:4,flexWrap:'wrap'}}>
+          {[['','Alle'],['0','Trick'],['1','1'],['2','2'],['3','3'],['4','4'],['5','5'],['6','6'],['7','7'],['8','8'],['9','9']].map(([v,l]) => {
+            const active = filterGrad === v;
+            return (
+              <button key={v} onClick={()=>setFilterGrad(v)}
+                style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.1em',
+                  padding:'3px 7px',borderRadius:2,cursor:'pointer',transition:'all .12s',
+                  background: active ? 'rgba(124,77,255,0.25)' : 'transparent',
+                  border: active ? '1px solid rgba(124,77,255,0.55)' : '1px solid rgba(124,77,255,0.15)',
+                  color: active ? 'rgba(200,190,240,0.9)' : 'rgba(160,140,255,0.4)'}}>
+                {l}
+              </button>
+            );
+          })}
         </div>
         <div style={{fontSize:'0.65rem',color:'rgba(160,140,255,0.3)',padding:'0 12px 6px',fontFamily:'var(--font-mono)'}}>
           {results.length} Zauber
@@ -431,7 +450,7 @@ function ZauberPreview({ zauberEntry, onClose }) {
 }
 
 /* ── Zauber-Sektion ─────────────────────────────────────────────── */
-function ZauberSection({ zauber, updZauber, editing }) {
+function ZauberSection({ zauber, updZauber, editing, charKlasse = '' }) {
   const [showPicker, setShowPicker] = useApp(false);
   const [preview, setPreview] = useApp(null);
 
@@ -506,7 +525,7 @@ function ZauberSection({ zauber, updZauber, editing }) {
           );
         })}
       </div>
-      {showPicker && <SpellPicker onAdd={addZauber} onClose={()=>setShowPicker(false)} />}
+      {showPicker && <SpellPicker onAdd={addZauber} onClose={()=>setShowPicker(false)} defaultKlasse={charKlasse} />}
       {preview && <ZauberPreview zauberEntry={preview} onClose={()=>setPreview(null)} />}
     </>
   );
@@ -634,7 +653,7 @@ function CharCard({ ch, onSelect, onDelete, onExport }) {
           borderRadius:3,padding:"2px 7px",color:"rgba(220,170,100,0.75)"}}>NSC</div>}
 
         {/* Hover-Aktionen */}
-        {hover && <div style={{position:"absolute",top:8,right:level?52:8,display:"flex",gap:5}}>
+        {hover && <div style={{position:"absolute",top:8,left:8,display:"flex",gap:5}}>
           <button onClick={e=>{e.stopPropagation();onExport(ch);}}
             title="Exportieren"
             style={{fontFamily:"var(--font-mono)",fontSize:10,width:26,height:26,display:"flex",alignItems:"center",
@@ -656,7 +675,7 @@ function CharCard({ ch, onSelect, onDelete, onExport }) {
       <div style={{padding:"10px 12px 12px"}}>
         <div style={{fontFamily:"var(--font-display)",fontSize:13,letterSpacing:".16em",
           color:"var(--white)",textTransform:"uppercase",marginBottom:6,
-          whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{ch.name}</div>
+          wordBreak:"break-word",lineHeight:1.35}}>{ch.name}</div>
         <div style={{display:"flex",gap:4,flexWrap:"wrap"}}>
           {[ch.race, ch.class, subclass, ch.division].filter(Boolean).map((t,i)=>(
             <span key={i} style={{fontFamily:"var(--font-mono)",fontSize:7,padding:"1px 6px",

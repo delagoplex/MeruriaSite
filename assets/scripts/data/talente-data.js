@@ -407,7 +407,7 @@ window.TALENTE_DATA = [
   {
     id: "elfische-treffsicherheit",
     name: "Elfische Treffsicherheit",
-    voraussetzung: "Elfen oder Halbelfen",
+    voraussetzung: "Dunkelelfen, Eladrin, Hochelfen, Meereselfen, Schattenfeen, Waldelfen oder Halbelfen",
     kurzbeschreibung: "Die legendäre Treffsicherheit der Elfen mit Präzisionsangriffen ist nun auch dein.",
     beschreibung: [
       "Die Treffsicherheit der Elfen ist legendär, besonders die der Elfenbogenschützen und Zauberwirker. Sie haben eine unheimliche Treffsicherheit mit Angriffen, die eher auf Präzision als auf roher Gewalt beruhen. Du erhältst die folgenden Vorteile:"
@@ -591,6 +591,22 @@ window.TALENTE_DATA = [
     angeboren: true
   },
   {
+    id: "funkenteiler",
+    name: "Funkenteiler",
+    voraussetzung: "Giff",
+    kurzbeschreibung: "Deine Kampfkunst ermöglicht es dir, deinen Astralfunken zu teilen und kritische Treffer zurückzugewinnen.",
+    beschreibung: [
+      "Deine natürliche Begabung und Erfahrung im Kampf hat dir eine größere Kampfkunst verliehen, die nur wenige andere deiner Rasse erreichen. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Dein kritischer Trefferbereich für Angriffe erhöht sich um 1.",
+      "Wenn du einen kritischen Treffer landest, erhältst du 1 Nutzung deines Zugs „Astralfunke“ zurück.",
+      "Wenn du einen Angriff machst und deinen Zug „Astralfunke“ verwendest, kannst du eine zweite Kreatur, die sich innerhalb einer Anzahl von Fuß, die deinem Übungsbonus multipliziert mit fünf entspricht, befinden, dazu bringen, Kraftschaden in Höhe der Hälfte des Schadens zu erleiden, den der Angriff verursacht hat."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
     id: "furchteinflossender-stuermer",
     name: "Furchteinflößender Stürmer",
     voraussetzung: "Zentauren",
@@ -654,6 +670,22 @@ window.TALENTE_DATA = [
     angeboren: true
   },
   {
+    id: "geschicklicher-ruessel",
+    name: "Geschicklicher Rüssel",
+    voraussetzung: "Loxodon",
+    kurzbeschreibung: "Du hast es gemeistert, deinen Rüssel ähnlich wie eine Hand für komplizierte Aufgaben einzusetzen.",
+    beschreibung: [
+      "Du hast es gemeistert, deinen Rüssel für komplizierte Aufgaben einzusetzen, um ihn ähnlich wie eine Hand zu verwenden. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Du kannst jede Aktion mit deinem Rüssel ausführen, die du mit einem Arm ausführen könntest.",
+      "Dein Rüssel kann einhändige Waffen, Schilde und Werkzeuge führen sowie magische Gegenstände aktivieren.",
+      "Wenn du mit einer Waffe angreifst, die du mit deinem Rüssel führst, erhöht sich deine Reichweite um 1,5 Meter (5 Fuß)."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
     id: "giftige-rache",
     name: "Giftige Rache",
     voraussetzung: "Wandler (Schuppenflut)",
@@ -698,6 +730,22 @@ window.TALENTE_DATA = [
       "Würdest du psychischen Schaden erleiden, kannst du deine Reaktion verwenden, um einen Schadenswurf zu widerstehen. Du erhältst keinen Schaden durch diesen Schadenswurf. Du kannst diese Eigenschaft so oft einsetzen, wie es deinem Übungsbonus entspricht, und du erhältst alle verbrauchten Einsätze zurück, wenn du eine lange Rast beendest. Diese Eigenschaft kann in bestimmten Situationen, nach Ermessen des Spielleiters, fehlschlagen.",
       "Du erhältst einen Vorteil bei Rettungswürfen gegen Gedankenlesen.",
       "Du wirst immun gegen kritische Treffer. Wenn ein Treffer ein kritischer Treffer sein sollte, wird er stattdessen zu einem normalen Treffer."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "astrale_widerstandsfaehigkeit",
+    name: "Astrale Widerstandsfähigkeit",
+    voraussetzung: "Giff, Plasmoid oder Thri-kreen",
+    kurzbeschreibung: "Deine Exposition gegenüber dem Astralmeer hat dich gestählt und deinen Körper robuster gemacht.",
+    beschreibung: [
+      "Deine Exposition gegenüber dem Astralmeer hat dich gestählt, und dein Körper ist dadurch robuster als der vieler anderer. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Dein Trefferpunktmaximum erhöht sich um einen Betrag, der deiner Stufe entspricht, wenn du dieses Talent erhältst. Jedes Mal, wenn du danach eine Stufe aufsteigst, erhöht sich dein Trefferpunktmaximum um zusätzlich 1 Trefferpunkt.",
+      "Du erhältst Resistenz gegen psychischen Schaden und Kraftschaden.",
+      "Du erhältst Vorteil auf Konstitutionswürfe und Rettungswürfe."
     ],
     kategorie: "Kampf",
     angeboren: true
@@ -779,6 +827,22 @@ window.TALENTE_DATA = [
       "Du erlernst den Zauber Segnen und den Zauber Göttliche Gunst. Beide Zauber kannst du einmal wirken, ohne einen Zauberplatz zu verbrauchen. Wenn du auf diese Weise den Segensspruch wirkst, kannst du ihn außerdem als Bonusaktion wirken. Du erlangst die Fähigkeit, diese Zauber zu wirken, wieder, wenn du eine lange Rast beendest. Dein Attributsmodifikator für diese Zaubersprüche ist Intelligenz, Weisheit oder Charisma. Wähle das Attribut, wenn du dieses Talent wählst."
     ],
     kategorie: "Magie",
+    angeboren: true
+  },
+  {
+    id: "ausweichendes-formen",
+    name: "Ausweichendes Formen",
+    voraussetzung: "Plasmoid",
+    kurzbeschreibung: "Du hast gelernt, deinen Körper in Gefahrensituationen umzuformen, um Schaden besser zu vermeiden.",
+    beschreibung: [
+      "Du hast gelernt, deinen Körper in Gefahrensituationen umzuformen, um Schaden besser zu vermeiden. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Solange du keine Rüstung trägst, kannst du deine Rüstungsklasse als 13 + deinen Geschicklichkeitsmodifikator berechnen. Du kannst einen Schild verwenden und trotzdem von diesem Vorteil profitieren.",
+      "Wenn eine Kreatur einen Angriffswurf gegen dich macht und dabei genau deine Rüstungsklasse würfelt, erleidest du nur halb so viel Schaden durch den Angriff. Wenn du einem Effekt ausgesetzt bist, der dir erlaubt, einen Geschicklichkeitsrettungswurf zu machen, um nur halb so viel Schaden zu erleiden, nimmst du nur halb so viel Schaden wie du sonst nehmen würdest.",
+      "Wenn du Schaden erleidest, kannst du deine Reaktion verwenden, um dich bis zur Hälfte deiner Bewegungsgeschwindigkeit zu bewegen. Diese Bewegung provoziert keine Gelegenheitsangriffe."
+    ],
+    kategorie: "Kampf",
     angeboren: true
   },
   {
@@ -1044,6 +1108,23 @@ window.TALENTE_DATA = [
     angeboren: false
   },
   {
+    id: "heilungsfabrik",
+    name: "Heilungsfabrik",
+    voraussetzung: "Autognome",
+    kurzbeschreibung: "Dein Erschaffer hat dich so konzipiert, dass du stärker von lebenserhaltendem Zaubern und Effekten profitierst.",
+    beschreibung: [
+      "Dein Erschaffer hat dich so konzipiert, dass du stärker von mehreren lebenserhaltendem Zaubern und Effekten profitierst. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Du lernst den Zaubertrick Flicken. Du kannst ihn einmal als Bonusaktion wirken, danach musst du eine kurze Rast beenden, bevor du ihn so erneut wirken kannst. Intelligenz, Weisheit oder Charisma ist deine Zauberfertigkeitscharakteristik für diesen Zauber.",
+      "Wenn du deinen Rassenzug „Heilungsmaschine“ nutzt, um Trefferwürfel auszugeben und dich zu heilen, wenn der Zaubertrick Flicken auf dich gewirkt wird, kannst du eine Anzahl von Trefferwürfeln gleich deinem Übungsbonus ausgeben, anstatt nur einen.",
+      "Wenn du Heilung erhältst, kannst du diese Heilung um einen Betrag erhöhen, der deinem Übungsbonus entspricht.",
+      "Zusätzlich zu den Heilzaubern in deinem Zug „Heilungsmaschine“ wirst du auch von folgenden Zaubern beeinflusst: Heilen, Massenheilen, Machtwort Heilen und Heilungsgebet."
+    ],
+    kategorie: "Magie",
+    angeboren: true
+  },
+  {
     id: "hochelfenmagie",
     name: "Hochelfenmagie",
     voraussetzung: "Hochelfen",
@@ -1061,7 +1142,7 @@ window.TALENTE_DATA = [
   {
     id: "hockenstaerke",
     name: "Hockenstärke",
-    voraussetzung: "Gnome, Goblins, Feen, Halblinge, Harengons, Zwerge oder Kobolde",
+    voraussetzung: "Autognome, Gnome, Goblins, Feen, Halblinge, Harengons, Zwerge oder Kobolde",
     kurzbeschreibung: "Du bist für deine Rasse ungewöhnlich wendig.",
     beschreibung: [
       "Du bist für deine Rasse ungewöhnlich wendig. Du erhältst die folgenden Vorteile:"
@@ -1508,6 +1589,22 @@ window.TALENTE_DATA = [
     angeboren: false
   },
   {
+    id: "loxodon-unbeugsamkeit",
+    name: "Loxodon-Unbeugsamkeit",
+    voraussetzung: "Loxodon",
+    kurzbeschreibung: "Deine natürliche Statur und Stärke hat dich widerstandsfähiger und robuster gemacht als viele andere.",
+    beschreibung: [
+      "Deine natürliche Statur und Stärke hat dich widerstandsfähiger und robuster gemacht als viele andere. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Deine natürliche Rüstung erhöht sich auf 13 + deinen Konstitutionsmodifikator, anstatt 12 + deinen Konstitutionsmodifikator.",
+      "Dein Trefferpunktmaximum erhöht sich um einen Betrag, der deiner Stufe entspricht, wenn du dieses Talent erhältst. Jedes Mal, wenn du danach eine Stufe aufsteigst, erhöht sich dein Trefferpunktmaximum um zusätzlich 1 Trefferpunkt.",
+      "Du erhältst Resistenz gegen Wucht-, Stich- und Hiebschaden durch nichtmagische Angriffe."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
     id: "magie-der-ozeane",
     name: "Magie der Ozeane",
     voraussetzung: "Tritons oder Meereselfen",
@@ -1834,6 +1931,22 @@ window.TALENTE_DATA = [
     angeboren: true
   },
   {
+    id: "nahkampfspezialist",
+    name: "Nahkampfspezialist",
+    voraussetzung: "Giff",
+    kurzbeschreibung: "Spezialausbildung im Nahkampf: kein Nachteil für Schusswaffen in Reichweite und Komboangriffe aus Nah- und Fernkampf.",
+    beschreibung: [
+      "Du hast an einer speziellen Ausbildung teilgenommen und deine Fähigkeiten im Nahkampf geschärft. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Wenn du dich innerhalb von 1,5 Metern (5 Fuß) eines Feindes befindest, erleiden deine Angriffe mit Schusswaffen keinen Nachteil.",
+      "Wenn du einen Nahkampfwaffenangriff mit einer Waffe machst, die du in einer Hand führst, kannst du eine geladene Schusswaffe in deiner anderen Hand auf dasselbe Ziel abfeuern. Du kannst dies nur einmal pro Runde tun.",
+      "Wenn du dich in Nahkampfreichweite eines Ziels befindest und mit einem Angriff verfehlst, erhältst du einen kumulativen +1-Bonus auf deine Angriffswürfe. Dieser Bonus stapelt sich, bis du triffst oder den Kampf beginnst oder beendest."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
     id: "naturmagie-der-tortels",
     name: "Naturmagie der Tortels",
     voraussetzung: "Tortels",
@@ -1893,6 +2006,22 @@ window.TALENTE_DATA = [
       "Du erlernst den Zauber Mit Pflanzen sprechen. Du kannst diesen einmal pro lange Rast benutzen. Dein Attributsmodifikator für diesen Zauber ist Intelligenz, Weisheit oder Charisma. Wähle das Attribut, wenn du dieses Talent wählst."
     ],
     kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "pseudopod-krieger",
+    name: "Pseudopod-Krieger",
+    voraussetzung: "Plasmoid",
+    kurzbeschreibung: "Du hast dich daran gewöhnt, deinen Pseudopod im Kampf einzusetzen, und verfügst damit über Fähigkeiten, die für andere deiner Rasse untypisch sind.",
+    beschreibung: [
+      "Du hast dich daran gewöhnt, deinen Pseudopod im Kampf einzusetzen, und verfügst damit über Fähigkeiten, die für andere deiner Rasse untypisch sind. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Mit deinem Rassenzug „Selbst formen“ kannst du deine Bonusaktion verwenden, um bis zu 2 Pseudopoden zu erschaffen, anstatt nur einen. Du kannst dieselbe Bonusaktion verwenden, um beide gleichzeitig zu steuern.",
+      "Du kannst deine Pseudopoden für jede Aktion verwenden, nicht nur für die in deinem Zug „Selbst formen“ aufgeführten, einschließlich Angriffe mit einer Waffe, die sie halten. Wenn du mit dem Pseudopod angreifst, hast du eine Reichweite von 3 Metern.",
+      "Deine Pseudopoden fungieren als natürliche Waffen. Sie haben eine Reichweite von 3 Metern und verwenden deinen Stärke- oder Geschicklichkeitsmodifikator und verursachen bei einem Treffer 1W4 Wuchtschaden plus deinen Stärke- oder Geschicklichkeitsmodifikator."
+    ],
+    kategorie: "Kampf",
     angeboren: true
   },
   {
@@ -2226,6 +2355,22 @@ window.TALENTE_DATA = [
     angeboren: true
   },
   {
+    id: "stosszaehner",
+    name: "Stoßzähner",
+    voraussetzung: "Loxodon",
+    kurzbeschreibung: "Du hast gelernt, deine Stoßzähne als gefährliche Waffen einzusetzen.",
+    beschreibung: [
+      "Du hast gelernt, deine Stoßzähne als gefährliche Waffen einzusetzen. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Deine Stoßzähne werden zu natürlichen Waffen. Sie verursachen 1W6 + deinen Stärkemodifikator Stichschaden.",
+      "Wenn du mit deinen Stoßzähnen angreifst, erhöht sich dein kritischer Trefferbereich um 1.",
+      "Wenn du dich mindestens 3 Meter (10 Fuß) in einer geraden Linie auf ein Ziel zubewegst, kannst du als Bonusaktion einen rammenden Angriff mit deinen Stoßzähnen durchführen. Wenn der Angriff trifft, wird das Ziel zudem zu Boden geworfen."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
     id: "stuermer",
     name: "Stürmer",
     voraussetzung: null,
@@ -2238,6 +2383,22 @@ window.TALENTE_DATA = [
     ],
     kategorie: "Kampf",
     angeboren: false
+  },
+  {
+    id: "sturmgeboren",
+    name: "Sturmgeboren",
+    voraussetzung: "Eulenleute",
+    kurzbeschreibung: "Sturmresistenz, Blitzlasso und Donnerschlag als Zaubertricks, und Bonus auf Blitz- und Donnerschaden in Höhe des Übungsbonus.",
+    beschreibung: [
+      "Du wurdest mit der Gunst des Sturms geboren, oder sie wurde dir zu einem Zeitpunkt in deinem Leben verliehen. Die Wut des Sturms liegt in dir. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Du erhältst Resistenz gegen Blitzschaden und Donnerschaden.",
+      "Du lernst die Zaubertricks Blitzlasso und Donnerschlag. Deine Zauberfertigkeitscharakteristik für diese Zaubertricks ist Intelligenz, Weisheit oder Charisma.",
+      "Wann immer du Blitzschaden oder Donnerschaden verursachst, kannst du diesen Schaden um einen Betrag erhöhen, der deinem Übungsbonus entspricht."
+    ],
+    kategorie: "Magie",
+    angeboren: true
   },
   {
     id: "territorialverhalten",
@@ -2440,6 +2601,22 @@ window.TALENTE_DATA = [
     angeboren: true
   },
   {
+    id: "verbesserte-panzerplatten",
+    name: "Verbesserte Panzerplatten",
+    voraussetzung: "Kriegsgeschmiedete oder Autognome",
+    kurzbeschreibung: "Dein Körper wurde aus untypischem Material gefertigt oder mit Schutzmagie versehen. Wähle eine von drei Verstärkungsoptionen.",
+    beschreibung: [
+      "Dein Erschaffer hat dich aus einem untypischen Material gefertigt oder deine natürliche Rüstung mit Schutzmagie versehen, die deine Fähigkeit, Schaden zu widerstehen, verbessert hat. Wähle eine der folgenden Optionen:"
+    ],
+    vorzuege: [
+      "Adamantinplatten: Dein Körper wurde mit Adamantin verstärkt, was dir größere Widerstandsfähigkeit gegen Angriffe verleiht. Deine Rüstungsklasse erhöht sich um 1 und du wirst immun gegen kritische Treffer. Wenn ein Treffer ein kritischer wäre, wird er stattdessen zu einem normalen Treffer.",
+      "Eisenholzkörper: Dein Körper besteht aus leichtem, organischem Holz, das so hart wie Stahl ist und dir mehr Beweglichkeit ermöglicht, ohne auf Schutz zu verzichten. Deine Bewegungsgeschwindigkeit erhöht sich um 3 Meter (10 Fuß). Wenn du einen Geschicklichkeitsrettungswurf machst, um Schaden zu vermeiden, kannst du den Schaden, den du nimmst, um die Hälfte reduzieren.",
+      "Elementarer Schutz: Dein Körper ist mit Magie verzaubert, die gegen die Elemente schützt. Wenn du eine lange Rast beendest, kannst du einen Schadenstyp wählen: Säure, Kälte, Feuer, Blitz oder Donner. Du erhältst Resistenz gegen den gewählten Schadenstyp, bis du deine nächste lange Rast beendest. Außerdem kannst du, wenn du Schaden eines dieser Schadenstypen erleidest, deine Reaktion nutzen und einen Trefferwürfel ausgeben, um Elemente absorbieren zu wirken."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
     id: "verderbnis-des-abgrunds",
     name: "Verderbnis des Abgrunds",
     voraussetzung: "Genasi",
@@ -2468,6 +2645,23 @@ window.TALENTE_DATA = [
       "Haare: Du verzauberst deine Haare, um sie sehr lang wachsen zu lassen. Als Aktion kannst du versuchen, eine Kreatur in 1,5 m Reichweite mit deinen Haaren zu fesseln. Die Kreatur muss einen Stärkerettungswurf bestehen (SG = 8 + Übungsbonus + gewählter Attributsmodifikator) oder gilt als festgesetzt, bis der Effekt endet. Eine festgesetzte Kreatur kann ihre Aktion nutzen, um die Haarschlingen anzugreifen (RK 0, trifft automatisch). Der Effekt endet, wenn deine Trefferpunkte oder die der Haarschlingen (= halbes TP-Maximum, abgerundet) auf 0 fallen oder du stirbst.",
       "Fingernägel: Du verzauberst deine Fingernägel, um sie messerscharf werden zu lassen. Als Aktion kannst du einen waffenlosen Angriff mit deinen Fingernägeln ausführen. Bei einem Treffer verursachst du 2W6 Stichschaden und die Kreatur erleidet den Zustand blutend: Sie erleidet zu Beginn jedes ihrer Züge 1W4 Stichschaden und muss am Ende jedes Zuges einen Konstitutionsrettungswurf bestehen (SG = 8 + Übungsbonus + gewählter Attributsmodifikator), um die Blutung zu stillen.",
       "Zähne: Du verzauberst deine Zähne für einen gefährlichen Biss. Deine Zähne sind eine natürliche Zweitwaffe, in deren Umgang du geübt bist. Wenn du in deinem Zug die Angriffsaktion ausführst, kannst du als Bonusaktion mit deinen Zähnen gegen dasselbe Ziel angreifen (Angriffs- und Schadenswürfe + Stärke oder Geschicklichkeitsmodifikator, Wahl beim Erwerb). Bei einem Treffer verursachst du 1W6 Stichschaden, und die betroffene Kreatur muss einen Weisheitsrettungswurf bestehen (SG = 8 + Übungsbonus + gewählter Attributsmodifikator) oder wird verängstigt. Die Anzahl verängstigter Ziele skaliert: auf Stufe 6 ein weiteres Ziel in 3 m, auf Stufe 11 zwei weitere, auf Stufe 16 bis zu 4; alle zusätzlichen Ziele werden zufällig ausgewählt."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "vogel-der-beute",
+    name: "Vogel der Beute",
+    voraussetzung: "Eulenleute",
+    kurzbeschreibung: "Blindsicht 3 m, Wahrnehmungs-Expertise, kein Nachteil in schwachem Licht und Vorteil auf sicht- und gehörbasierte Wahrnehmungswürfe.",
+    beschreibung: [
+      "Du hast einige der Kerneigenschaften geerbt, die Eulen zu hervorragenden Jägern machen, besonders in der Totenstille der Nacht, und deine unglaublichen Sinne zu deinem Vorteil geschärft. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Du erhältst Blindsicht in einem Bereich von 3 Metern (10 Fuß).",
+      "Du erhältst Übung in der Fertigkeit Weisheit (Wahrnehmung). Wenn du bereits Übung in der Fertigkeit Weisheit (Wahrnehmung) hast, erhältst du stattdessen Expertise darin.",
+      "Schwaches Licht gibt dir keinen Nachteil auf Weisheit-(Wahrnehmungs)-Würfe, die auf Sicht beruhen.",
+      "Du erhältst Vorteil auf Weisheit-(Wahrnehmungs)-Würfe, die auf Sicht oder Gehör beruhen."
     ],
     kategorie: "Allgemein",
     angeboren: true
@@ -2526,7 +2720,7 @@ window.TALENTE_DATA = [
   {
     id: "waechter-der-winde",
     name: "Wächter der Winde",
-    voraussetzung: "Aarakocra",
+    voraussetzung: "Aarakocra oder Eulenleute",
     kurzbeschreibung: "Luftkampf-Ausbildung: Wahrnehmungs-Expertise, Waffenübung, Nachteil auf Gelegenheitsangriffe in der Luft und Sturzangriffs-Bonus.",
     beschreibung: [
       "Du bist sowohl für die Erkundung des Himmels als auch für den Luftkampf ausgebildet. Du erhältst die folgenden Vorteile:"

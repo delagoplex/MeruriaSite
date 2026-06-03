@@ -127,7 +127,7 @@ window.RASSEN_DETAIL_DATA = {
     sprachen:      ['Gemeinsprache', 'eine weitere Sprache nach Wahl'],
     features: [
       { name:'Kreaturtyp',   text:'Humanoider.' },
-      { name:'Größe',        text:'Aarakocra sind im Durchschnitt 150 cm groß und zwischen 80 und 100 kg schwer. Deine Größenkategorie ist mittelgroß.' },
+      { name:'Größenkategorie',        text:'Aarakocra sind im Durchschnitt 150 cm groß und zwischen 80 und 100 kg schwer. Deine Größenkategorie ist mittelgroß.' },
       { name:'Flug',         text:'Du hast Flügel, daher entspricht deine Flugbewegungsrate deiner Schrittbewegungsrate. Du kannst deine Flugbewegungsrate nicht benutzen, wenn du mittelschwere oder schwere Rüstung trägst.' },
       { name:'Krallen',      text:'Du hast Krallen, mit denen du waffenlose Angriffe ausführen kannst. Wenn du mit ihnen triffst, bewirkt der Treffer 1W6 + deinen Stärkemodifikator an Hiebschaden statt des üblichen Wuchtschadens.' },
       { name:'Windrufer',    text:'Ab der 3. Stufe kannst du mit diesem Merkmal den Zauber Windstoß wirken, ohne Materialkomponenten zu benötigen. Wenn du den Zauber mit diesem Merkmal wirkst, kannst du ihn erst nach einer langen Rast erneut wirken. Du kannst den Zauber auch mit einem beliebigen verfügbaren Zauberplatz 2. oder höheren Grades wirken. Dein Attribut zum Wirken von Windstoß ist Intelligenz, Weisheit oder Charisma — wähle das Attribut aus, wenn du dieses Volk auswählst.' },
@@ -238,7 +238,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',         text:'Humanoider.' },
-      { name:'Größe',                text:'Aasimar haben die normale Größe ihres Volkes. Deine Größenkategorie ist mittelgroß.' },
+      { name:'Größenkategorie',                text:'Aasimar haben die normale Größe ihres Volkes. Deine Größenkategorie ist mittelgroß.' },
       { name:'Celestische Resistenz',text:'Du bist gegen nekrotischen und gleißenden Schaden resistent.' },
       { name:'Dunkelsicht',          text:'Im Radius von 18 Metern kannst du in dämmrigem Licht wie in hellem Licht sehen.' },
       { name:'Heilende Hände',       text:'Als Aktion kannst du eine Kreatur berühren und Würfel in Höhe deines Übungsbonus werfen (W4). Die Kreatur gewinnt Trefferpunkte zurück. Einmal pro langer Rast.' },
@@ -367,7 +367,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp', text:'Humanoider.' },
-      { name:'Größe',        text:'Deine Größenkategorie ist mittelgroß oder klein. Du wählst die Größe, wenn du dieses Volk wählst.' },
+      { name:'Größenkategorie',        text:'Deine Größenkategorie ist mittelgroß oder klein. Du wählst die Größe, wenn du dieses Volk wählst.' },
       { name:'Dunkelsicht',  text:'Im Radius von 18 Metern kannst du in dämmrigem Licht wie in hellem Licht sehen.' },
       { name:'Erbe',         text:'Du behältst alle Fertigkeiten, in denen deine vorherige Rasse geübt ist, und besondere Bewegungsraten.' },
       { name:'Untote Natur', text:'Du brauchst nicht zu atmen.' },
@@ -382,10 +382,455 @@ window.RASSEN_DETAIL_DATA = {
 // PLACEHOLDER-RASSEN — alle übrigen 76 Rassen
 // ══════════════════════════════════════════════════════════════════════
 
-'Autognome':                { name:'Autognome',                accent:'#8090a0', subtitle:'Selbsterschaffene Wesen · Meister ihrer eigenen Existenz', tags:['Konstrukt','Klein','9 m Bewegung','Maschinenkörper','Neutral'],                  headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null },
-'Bärenvolk':                 { name:'Bärenvolk',                 accent:'#8b5e3c', subtitle:'Kinder der Natur · Träger des Bärenmutes',                tags:['Humanoid','Groß','9 m Bewegung','Natursinn','Neutral'],                            headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null },
+// ══════════════════════════════════════════════════════════════════════
+// AUTOGNOME — vollständige Daten
+// ══════════════════════════════════════════════════════════════════════
+'Autognome': {
+  name: 'Autognome', accent: '#8090a0',
+  subtitle: 'Mechanische Wesen · Erschaffer ihrer eigenen Zukunft',
+  tags: ['Konstrukt','Klein','9 m Bewegung','Gepanzerte Hülle','Neutral'],
+  headerImage: null,
+  lore: {
+    intro: [
+      'Autognome sind mechanische Wesen, die von Fels-Gnomen erschaffen werden. Manchmal, durch eine Fehlfunktion oder besondere Umstände, wird ein Autognome von seinem Erschaffer getrennt und muss fortan auf eigene Faust zurechtkommen.',
+      'Ein Autognome ähnelt seinem Erschaffer, und die meisten sind so programmiert, dass sie Gnomisch sprechen und verstehen. Die inneren Bauteile eines Autognomen können sehr unterschiedlich sein: Ein Autognome könnte ein tatsächlich schlagendes Herz in seiner Brusthöhle haben, während ein anderer durch Sternenstaub oder komplizierte Uhrwerksräder angetrieben wird.',
+    ],
+    gesellschaft: [
+      'Autognome haben keine eigene Gesellschaft in dem Sinne, wie biologische Völker sie kennen. Sie entstammen gnomischen Werkstätten und tragen die Handschrift ihres Erschaffers — jedes Exemplar ist ein Unikat, geformt durch die Vision eines einzelnen Gnoms. Wenn sie auf sich allein gestellt sind, müssen sie ihren Platz in der Welt neu erfinden.',
+      'Viele Autognome empfinden eine tiefe Verbindung zu den Handwerkskünsten: Sie sammeln Werkzeuge, perfektionieren Mechanismen und finden Erfüllung in der Präzision. Andere wiederum suchen genau das Gegenteil — Chaos und Unvorhersehbarkeit, alles das, was ihre Programmierung nie vorgesehen hat.',
+      'Wie Gnome können Autognome jahrhundertelang leben, in der Regel bis zu 500 Jahre. In dieser Zeit wandeln sich ihre Ziele und Werte — ein Autognome, der als stumpfes Werkzeug begann, kann nach Jahrzehnten ein weiser Philosoph sein.',
+    ],
+    introBild:        { url: null, label: 'Autognome · Illustration', caption: 'Charakter-Illustration', position: 'right', width: 360, height: 360 },
+    gesellschaftBild: { url: null, label: 'Werkstatt · Illustration', caption: 'In der Werkstatt eines Fels-Gnomen', position: 'left', width: 240, height: 300 },
+  },
+  specialSection: {
+    type: 'traitRoller',
+    label: 'Geschichte des Autognomen (W8)',
+    beschreibung: 'Würfle hier deine Herkunftsgeschichte aus — welches Ereignis hat dich auf den Pfad des Abenteuers geführt? Oder wähle einen Eintrag, der dir gefällt.',
+    merkmale: [
+      'Dein Erschaffer gab dir Autonomie und drängte dich, deinen Träumen zu folgen.',
+      'Dein Erschaffer starb und ließ dich auf dich allein gestellt zurück.',
+      'Ein Fehler ließ dich deine ursprüngliche Programmierung vergessen. Du erinnerst dich nicht, wer dich gebaut hat oder woher du kommst.',
+      'Es gefiel dir nicht, wie dein Erschaffer dich behandelte, also bist du von zu Hause weggelaufen.',
+      'Dein Erschaffer baute dich, um eine besondere Mission zu erfüllen.',
+      'Du fühltest dich in der Rolle gefangen, für die du gebaut wurdest, und verließt deinen Erschaffer in dem Entschluss, einen höheren Zweck zu finden.',
+      'Du wurdest gestohlen oder verkauft und hast dich aus der Gefangenschaft befreit. Seitdem bist du auf der Flucht — oder auf der Suche.',
+      'Dein Erschaffer schickte dich auf eine Reise, die nie enden sollte. Was er dir nicht sagte: Er wusste, dass er nicht mehr da sein würde, wenn du zurückkehrst.',
+    ],
+  },
+  charakterGenerator: {
+    felder: [
+      { label:'Alter',           type:'range',  min:1, max:500, suffix:' Jahre' },
+      { label:'Hüllenmaterial',  type:'table',  optionen:['poliertes Messing','geschwärzter Stahl','verwittertes Kupfer','silbern verchromt','rohes Eisen','bronzefarbenes Blech'] },
+      { label:'Innerer Antrieb', type:'table',  optionen:['Uhrwerksräder aus Mondsilber','echtes schlagendes Herz','fließender Sternenstaub','Dampf und Kristallröhren','magnetische Felder','alchimistische Lösung'] },
+      { label:'Augenform',       type:'table',  optionen:['kleine Glaslinsen','leuchtende Edelsteinsplitter','rotierende Zahnrad-Iris','Spiegelaugen','mattierte Metallscheiben','funkelndes blaues Quarz'] },
+      { label:'Besonderheit',    type:'table',  optionen:['tickendes Geräusch beim Gehen','kleiner Kaminabzug am Rücken','Anzeigenleuchten am Handgelenk','verstecktes Fach in der Brust','melodisches Summen bei Konzentration','Dampfwölkchen beim Ausatmen'] },
+    ],
+  },
+  beziehungen: [
+    { volk:'Fels-Gnome',   relation:'Verbundenheit', text:'Fels-Gnome sind Schöpfer, Eltern und manchmal Gefängniswärter. Die Beziehung ist komplex — voller Zuneigung und ungelöster Fragen zugleich.' },
+    { volk:'Waldgnome',    relation:'Neugier',        text:'Waldgnome finden Autognome faszinierend und seltsam zugleich. Etwas so Mechanisches in einem so natürlichen Wesen — das wirft Fragen auf.' },
+    { volk:'Zwerge',       relation:'Respekt',        text:'Zwerge schätzen Handwerk über alles. Ein gut gebauter Autognome wird von Zwergen mit einem Respekt behandelt, den sie selten Menschen gegenüber aufbringen.' },
+    { volk:'Menschen',     relation:'Staunen',        text:'Menschen staunen über Autognome — und fragen sich gleichzeitig, ob etwas so Maschinelles wirklich denken und fühlen kann.' },
+    { volk:'Tieflinge',    relation:'Solidarität',    text:'Beide kennen den Blick der Anderen: Faszination, Skepsis, Misstrauen. Tieflinge und Autognome verbindet ein unausgesprochenes Verständnis.' },
+    { volk:'Elfen',        relation:'Distanz',        text:'Elfen, die ihr Leben der Natur und der Magie widmen, sehen in Autognomen ein Wesen, das weit entfernt von allem ist, was sie kennen. Respektvolle Distanz.' },
+  ],
+  bekannte: [
+    { bild: null, name:'Klick-14',      rolle:'Wandernde Botschafterin der Divisionen',   beschreibung:'Die erste Autognome, die von allen acht Divisionen als gleichwertige Bündnispartnerin anerkannt wurde. Ihr Name stammt von dem charakteristischen Geräusch ihres internen Mechanismus bei jedem Schritt.' },
+    { bild: null, name:'Elos Zahnrad',  rolle:'Meistermechaniker und Einsiedler',         beschreibung:'Lebt in einer abgelegenen Werkstatt und baut Mechanismen, die niemand außer ihm vollständig versteht. Er spricht wenig — aber wenn er es tut, hört man besser zu.' },
+    { bild: null, name:'Prism',         rolle:'Händlerin und Informationsbrokerin',       beschreibung:'Eine Autognome ohne Erinnerung an ihre Erschaffung. Sie reist durch Meruria und sammelt Hinweise auf ihre Herkunft — während sie nebenbei Informationen kauft und verkauft.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt',               beschreibung:'Dieser Eintrag ist für einen bekannten Autognome in Meruria reserviert.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt',               beschreibung:'Dieser Eintrag ist für einen bekannten Autognome in Meruria reserviert.' },
+  ],
+  radar: { labels:['Mobilität','Kampf','Magie','Soziales','Überleben','Weisheit'], values:[38,55,30,42,82,68] },
+  quiz: {
+    steps: [
+      { frage:'Was treibt deinen Autognome an?', optionen:[
+        { text:'Präzision — ich will jede Aufgabe perfekt erfüllen',                   tags:['Kämpfer','Magier'] },
+        { text:'Entdeckung — ich suche, was jenseits meiner Programmierung liegt',     tags:['Waldläufer','Barde'] },
+        { text:'Schutz — ich bewahre, was mir wichtig ist',                            tags:['Paladin','Kleriker'] },
+        { text:'Freiheit — ich beweise, dass ich mehr bin als ein Werkzeug',           tags:['Schurke','Hexenmeister'] },
+      ]},
+      { frage:'Wie verhält sich dein Autognome zu seinem Erschaffer?', optionen:[
+        { text:'Mit Dankbarkeit — er hat mir das Leben gegeben',                       tags:['Paladin','Kleriker'] },
+        { text:'Mit Schmerz — ich musste fliehen oder habe ihn verloren',             tags:['Schurke','Hexenmeister'] },
+        { text:'Mit Gleichgültigkeit — ich erinnere mich nicht mehr',                 tags:['Magier','Waldläufer'] },
+        { text:'Mit Entschlossenheit — ich muss seine Mission vollenden',             tags:['Kämpfer','Zauberer'] },
+      ]},
+      { frage:'Welches Werkzeug trägt dein Autognome immer bei sich?', optionen:[
+        { text:'Präzisionswerkzeug — für Reparaturen und feine Arbeit',               tags:['Magier','Kämpfer'] },
+        { text:'Musikinstrument — eingebaut oder mitgeführt',                          tags:['Barde','Kleriker'] },
+        { text:'Alchemisten-Kit — für Gifte, Heilmittel oder Experimente',            tags:['Schurke','Druide'] },
+        { text:'Keins — meine Hände sind mein Werkzeug',                              tags:['Barbar','Waldläufer'] },
+      ]},
+      { frage:'Wie reagiert dein Autognome auf Gefahr?', optionen:[
+        { text:'Mit kühlem Kalkül — ich berechne die beste Option',                   tags:['Magier','Schurke'] },
+        { text:'Mit der Rüstung voran — meine Hülle hält mehr aus als Fleisch',      tags:['Kämpfer','Paladin'] },
+        { text:'Mit Kreativität — ich finde unerwartete Lösungen',                    tags:['Barde','Zauberer'] },
+        { text:'Mit ruhiger Entschlossenheit — Angst kenne ich nicht',               tags:['Kleriker','Barbar'] },
+      ]},
+    ],
+    klassen: {
+      'Kämpfer':     'Deine gepanzerte Hülle und dein unerschütterlicher Fokus machen dich zum verlässlichsten Krieger in jeder Gruppe.',
+      'Magier':      'Mechanische Präzision trifft arkane Theorie. Du verstehst Magie wie ein Uhrwerk — Zahnrad um Zahnrad.',
+      'Schurke':     'Klein, beweglich und überraschend widerstandsfähig. Du bist ein Werkzeug — aber du bestimmst, wofür.',
+      'Paladin':     'Dein Schwur ist in Metall gegossen. Du brichst ihn nicht — du kannst es gar nicht.',
+      'Kleriker':    'Dein Glaube läuft wie ein Mechanismus: beständig, präzise, unaufhaltsam.',
+      'Barde':       'Musik aus Metallsaiten und Dampfpfeifen. Deine Kunst ist einzigartig — und unvergesslich.',
+      'Waldläufer':  'Du durchquerst die Wildnis, ohne zu erschöpfen. Die Natur kennt dich nicht — das ist dein Vorteil.',
+      'Hexenmeister':'Dein Pakt gibt dir etwas, das keine Werkstatt erschaffen kann. Du fragst dich, was der Preis wirklich ist.',
+      'Zauberer':    'Deine innere Mechanik resoniert mit der Magie auf eine Weise, die selbst Gnome nicht vollständig verstehen.',
+      'Druide':      'Du bist aus Metall gemacht — aber die Kräfte der Natur kümmert das nicht. Deine Seele ist so echt wie jede andere.',
+      'Barbar':      'Wenn die Wut kommt, vergisst du die Berechnungen. Nur Metall, Stärke — und das Ziel.',
+    },
+  },
+  statblock: {
+    beschreibung: 'Autognome sind mechanische Konstrukte, erschaffen von genialen Fels-Gnomen. Jedes Exemplar ist ein Einzelstück — geformt durch den Willen seines Erschaffers und die Zufälle seines Lebens.',
+    alter:           'Keine Kindheit · Lebenserwartung bis zu 500 Jahre',
+    gesinnung:       'Neutral',
+    geschwindigkeit: '9 m',
+    sprachen:        ['Gemeinsprache', 'Gnomisch', 'eine weitere Sprache nach Wahl'],
+    features: [
+      { name:'Kreaturtyp',            text:'Konstrukt.' },
+      { name:'Größenkategorie',       text:'Du bist Klein.' },
+      { name:'Gepanzerte Hülle',      text:'Du bist von dünnem Metall oder einem anderen haltbaren Material umhüllt. Solange du keine Rüstung trägst, beträgt deine Rüstungsklasse 13 + dein Geschicklichkeitsmodifikator.' },
+      { name:'Für den Erfolg gebaut', text:'Du kannst einem Angriffswurf, Eigenschaftswurf oder Rettungswurf einen W4 hinzufügen, nachdem du den W20-Wurf gesehen hast, aber bevor die Auswirkungen bestimmt werden. Du kannst diese Eigenschaft so oft nutzen, wie dein Übungsbonus beträgt, und erhältst alle verbrauchten Nutzungen nach einer langen Rast zurück.' },
+      { name:'Heilungsmaschine',      text:'Wenn der Zauber Flicken auf dich gewirkt wird, kannst du einen Trefferwürfel ausgeben, ihn würfeln und eine Anzahl von Trefferpunkten gleich dem Ergebnis plus deinem Konstitutionsmodifikator (mindestens 1) zurückgewinnen. Außerdem profitierst du von folgenden Zaubern, die normalerweise keine Konstrukte betreffen: Wunden heilen, Heilendes Wort, Wunden massenheilen, Heilendes Wort der Masse und Sterbende verschonen.' },
+      { name:'Mechanische Natur',     text:'Du hast Resistenz gegen Giftschaden und Immunität gegen Krankheiten, und du hast Vorteil auf Rettungswürfe gegen Lähmung oder Vergiftung. Du musst weder essen noch trinken noch atmen.' },
+      { name:'Ruhender Wächter',      text:'Wenn du eine lange Rast machst, verbringst du mindestens 6 Stunden in einem inaktiven, bewegungslosen Zustand, anstatt zu schlafen. In diesem Zustand wirkst du leblos, bleibst aber bei Bewusstsein.' },
+      { name:'Spezialisiertes Design',text:'Du erhältst zwei Werkzeugkenntnisse deiner Wahl.' },
+      { name:'Angeborenes Talent', text:null, talente:['Heilungsfabrik','Hockenstärke','Verbesserte Panzerplatten'] },
+    ],
+  },
+  namenSection: {
+    type: 'nameRoller',
+    label: 'Autognome-Namen',
+    beschreibung: 'Autognome tragen meist die Namen, die ihnen ihre gnomischen Erschaffer gaben — oder sie wählten irgendwann einen eigenen. Manche bevorzugen sachliche Bezeichnungen, andere träumen von einem Namen, der klingt wie eine Melodie. Namen unterscheiden sich nicht nach Geschlecht.',
+    namen: ['Alston','Alvyn','Boddynock','Breena','Bimpnottin','Brocc','Burgell','Caramip','Carlin','Dimble','Donella','Duvamil','Ellyjobell','Ellywick','Erky','Folkor','Fonkin','Frug','Garrick','Gerbo','Gimble','Glim','Jebeddo','Kellen','Lilli','Loopmottin','Lorilla','Mardnab','Namfoodle','Nissa','Nyx','Oda','Orla','Orryn','Roondar','Roywyn','Scheppen','Seebo','Shamil','Sindri','Tana','Timbers','Warryn','Waywocket','Wrenn','Zanna','Zook','Daergel','Nackle','Ningel','Raulnor','Klick','Echo','Prism','Flux','Spark','Cog','Bolt','Pivot','Ratch','Coil','Pulse','Whir','Drone','Clank','Ping','Cipher','Datum','Apex','Zenith','Vector','Ferro','Nexus','Volt','Ohm','Tick','Tock','Axel','Zero','Morse','Quill'],
+  },
+},
+'Bärenvolk': {
+  name: 'Bärenvolk', accent: '#8b5e3c',
+  subtitle: 'Kinder des Waldes · Hüter der Nadelwälder',
+  tags: ['Humanoid','Mittelgroß','9 m · 4,5 m Klettern','Feiner Geruchssinn','Meistens Rechtschaffen'],
+  headerImage: null,
+  lore: {
+    intro: [
+      'Bärenvolk erscheint auf den ersten Blick wie normale Schwarzbären, die nach Nahrung suchen. Aber bei genauerem Hinsehen bemerkt man den Ausdruck von Intelligenz in ihren großen, schwarzen Augen — sowie die Tatsache, dass sie hauptsächlich auf ihren Hinterbeinen gehen und greifbare Klauenhände besitzen. Ihre Hinterbeine sind etwas länger als die tierischer Bären, was ihnen eine humanoidere Gliedmaßenanordnung verleiht. Sie haben gewöhnlich schwarzes oder braunes Fell, selten auch zimtfarben, staubig-braun oder sogar weiß.',
+      'Niemand weiß wirklich, wie das Bärenvolk entstanden ist. Manche sagen, dass eine Gruppe von Bären in einer magischen Quelle badete, die ihnen Intelligenz verlieh und sie sich fortpflanzten. Andere sagen, sie seien einfach entstanden — aus dem Nichts aufgetaucht. Wieder andere behaupten, sie seien Opfer eines Experiments geworden, das sie in blutdürstige Monster verwandelte. Letzteres ist offensichtliche Verleumdung, wenn man ein Bärenvolk fragt.',
+      'Was das Bärenvolk selbst über seine Herkunft denkt, ist überraschend nüchtern: Sie sind da. Sie erinnern sich an keinen Moment, in dem das nicht so war. Die Frage, woher sie kommen, interessiert sie weit weniger als die Frage, wohin sie heute gehen und was es zum Abendessen gibt.',
+    ],
+    gesellschaft: [
+      'Bärenvolk lebt in kleinen Familienverbänden, ähnlich wie normale Bären — aber mehrere Familien können sich einen Bau teilen und bei Jagd und Nahrungssuche zusammenarbeiten. Ihre Behausungen befinden sich oft in Nadelwäldern mit frischem und kühlem Klima. Innerhalb eines Baus sind die Mütter in der Regel die Matriarchen, die Aufgaben zuweisen und für Ordnung sorgen. Männliche Bärenvolk werden in der Regel mit Wach- und Betreuungsaufgaben betraut.',
+      'Ihre Sprache ist sehr primitiv und besteht aus gutturalem Grunzen und gelegentlichen Ausrufsbrüllen. Sie basiert auf der Kommunikation normaler Bären und kann daher auch verwendet werden, um ihnen einfache Botschaften zu übermitteln — eine Brücke zwischen Wildnis und Zivilisation, die das Bärenvolk mit stiller Würde hält.',
+      'In Meruria sind Bärenvolk am häufigsten in den nördlicheren Regionen anzutreffen, wo dichte Nadelwälder und raues Klima ihnen zusagen. Reisende, die auf einen Bärenvolk-Bau stoßen, sollten keine Angst haben — aber auch keinen Honig anbieten. Das ist mittlerweile ein Witz unter Bärenvolk. Sie finden ihn trotzdem immer noch lustig.',
+    ],
+    introBild:        { url: null, label: 'Bärenvolk · Illustration', caption: 'Charakter-Illustration', position: 'right', width: 360, height: 360 },
+    gesellschaftBild: { url: null, label: 'Bärenvolk-Bau', caption: 'Familienbau im Nadelwald', position: 'left', width: 240, height: 300 },
+  },
+  specialSection: {
+    type: 'traitRoller',
+    label: 'Was dich antreibt',
+    beschreibung: 'Bärenvolk ist vielseitiger als ihr Ruf vermuten lässt. Würfle oder wähle, was deinen Charakter prägt.',
+    merkmale: [
+      'Ich bewege mich nicht schnell — aber wenn ich mich bewege, bleibt etwas zurück, das vorher nicht kaputt war.',
+      'Meine Familie ist mein Bau. Wer sie bedroht, bedroht mich. Das endet selten gut für den anderen.',
+      'Ich bin neugierig auf humanoide Kulturen. Es gibt so viele Arten, ein Haus zu bauen, und alle davon sind eigenartig faszinierend.',
+      'Ich schlafe zu viel. Das ist kein Fehler — das ist Strategie. Ausgeruhte Kämpfer gewinnen.',
+      'Gerüche sind meine Sprache. Ich weiß, wer durch einen Raum gegangen ist, lange bevor jemand anderes eine Spur findet.',
+      'Ich esse zu viel. Auch das ist Strategie. Ich esse, solange es Nahrung gibt — man weiß nie, wann der Winter kommt.',
+      'Ich habe die Sprache der normalen Bären nie ganz verlernt. Manchmal rede ich lieber mit ihnen als mit Humanoiden.',
+      'Meine Klauen haben mich aus mehr Situationen gerettet als alle Werkzeuge, die ich je besessen habe.',
+    ],
+  },
+  namenSection: {
+    type: 'nameRoller',
+    label: 'Namen des Bärenvolks',
+    beschreibung: 'Bärenvolk verwendet Namen, die von Knurren und Grunzlauten durchsetzt sind. Da diese für andere Humanoide unhörbar sind, verwenden sie gemeinsprachige Beschreibungen ihrer Gewohnheiten oder Manieren. Es gibt keinen Unterschied zwischen männlichen und weiblichen Namen.',
+    tabellen: [
+      { name:'Namen (mit Bedeutung)', eintraege:[
+        'Graruuk (Baumbrecher)','Hrekor (Honigsucher)','Reerok (Fleischtöter)','Ommrok (Stille-Wächter)',
+        'Buurak (Erdschläfer)','Grethok (Wasserläufer)','Huumor (Fellwärmer)','Raakon (Nachtschnüffler)',
+        'Brektor (Felsspalter)','Omhrak (Winterschläfer)','Gorruuk (Waldläufer)','Huurak (Fischgreifer)',
+        'Rethkor (Beeren-Fresser)','Okruun (Spurenleser)','Grommak (Donnertatze)','Brekkor (Stämme-Drücker)',
+        'Humrak (Sonnenwärmer)','Raathor (Schneeläufer)','Ommur (Wurzel-Gräber)','Grethak (Mondwächter)',
+      ]},
+    ],
+  },
+  charakterGenerator: {
+    felder: [
+      { label:'Name',         type:'table',  optionen:['Graruuk','Hrekor','Reerok','Ommrok','Buurak','Grethok','Huumor','Raakon','Brektor','Omhrak','Gorruuk','Huurak','Rethkor','Okruun','Grommak','Brekkor','Humrak','Raathor','Ommur','Grethak'] },
+      { label:'Fellfarbe',    type:'table',  optionen:['schwarz','dunkelbraun','mittelbraun','hellbraun','zimtfarben','staubig-braun','graubraun','selten weiß'] },
+      { label:'Augenfarbe',   type:'table',  optionen:['tief schwarz','dunkelbraun','bernsteinfarben','haselnussbraun'] },
+      { label:'Besonderheit', type:'table',  optionen:['Besonders großer Wuchs','Auffällig helles Fell','Narbe aus altem Kampf','Außergewöhnlich ruhiges Auftreten','Stets gut riechend nach Harz und Erde','Kann auf allen Vieren laufen ohne sich dabei zu schämen'] },
+      { label:'Talent',       type:'table',  optionen:[] },
+    ],
+  },
+  beziehungen: [
+    { volk:'Menschen',   relation:'Neugierige Toleranz',     text:'Menschen bauen viel und schnell. Das ist ineffizient. Aber sie sind überall und irgendwie muss man mit ihnen umgehen. Ich tue es. Meistens.' },
+    { volk:'Zwerge',     relation:'Gegenseitiger Respekt',   text:'Zwerge graben tief und halten zusammen. Das verstehe ich. Wir sind anders in der Form — aber ähnlich in der Substanz.' },
+    { volk:'Elfen',      relation:'Stille Achtung',          text:'Elfen kennen die Wälder gut. Nicht so gut wie wir, aber gut genug, dass wir über gemeinsame Dinge sprechen können.' },
+    { volk:'Halblinge',  relation:'Amüsierte Zuneigung',     text:'Klein, laut, fröhlich. Ich verstehe sie nicht vollständig. Aber sie kochen gut und beschweren sich selten. Das genügt.' },
+    { volk:'Orks',       relation:'Respektvolles Abwägen',   text:'Orks sind stark und direkt. Ich respektiere Direktheit. Ob ich ihnen vertraue, hängt davon ab, was sie mit ihrer Stärke anstellen.' },
+    { volk:'Normale Bären', relation:'Verwandtschaft',       text:'Wir sprechen noch ihre Sprache, auch wenn wir längst mehr sind als sie. Das vergessen wir nicht. Sie sind Familie — nur etwas einfacher.' },
+  ],
+  bekannte: [
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für ein bekanntes Mitglied des Bärenvolks in Meruria reserviert.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für ein bekanntes Mitglied des Bärenvolks in Meruria reserviert.' },
+  ],
+  radar: { labels:['Mobilität','Kampf','Magie','Soziales','Überleben','Wahrnehmung'], values:[62,85,18,45,88,78] },
+  quiz: {
+    steps: [
+      { frage:'Was treibt dein Bärenvolk an?', optionen:[
+        { text:'Schutz — Meine Familie, mein Bau, meine Leute. Wer daran rührt, bekommt mich zu spüren.',                   tags:['Paladin','Kämpfer'] },
+        { text:'Jagd — Ich lebe für die Verfolgung, das Spüren, das Stellen. Beute oder Gefahr — der Instinkt ist derselbe.', tags:['Waldläufer','Barbar'] },
+        { text:'Neugier — Die Welt draußen ist groß und seltsam. Ich will sie verstehen.',                                    tags:['Barde','Druide'] },
+        { text:'Stärke — Ich bin stark. Das ist eine Verantwortung. Ich lerne, damit umzugehen.',                             tags:['Barbar','Kämpfer'] },
+      ]},
+      { frage:'Wie setzt du deinen Geruchs- und Gehörsinn ein?', optionen:[
+        { text:'Als Alarmsystem — Ich rieche Feinde, bevor sie mich sehen. Das rettet Leben.',                                tags:['Waldläufer','Schurke'] },
+        { text:'Als Spurenleser — Kein Versteck bleibt mir verborgen. Geruch ist die ehrlichste Spur.',                      tags:['Waldläufer','Schurke'] },
+        { text:'Im Umgang mit Tieren — Ich kommuniziere mit Bären. Das macht mich nützlicher als die meisten.',              tags:['Druide','Waldläufer'] },
+        { text:'Kaum bewusst — Er funktioniert einfach. Ich folge ihm, ohne viel nachzudenken.',                              tags:['Barbar','Kämpfer'] },
+      ]},
+      { frage:'Wie nutzt du deine Klauen?', optionen:[
+        { text:'Als Waffe erster Wahl — Wozu Schmiede bezahlen, wenn ich alles habe, was ich brauche?',                      tags:['Barbar','Kämpfer'] },
+        { text:'Als letztes Mittel — Ich bevorzuge Werkzeuge, aber in der Not reichen Klauen.',                               tags:['Kämpfer','Paladin'] },
+        { text:'Zum Klettern — Meine Klettergeschwindigkeit ist mein unterschätzter Vorteil.',                                tags:['Schurke','Waldläufer'] },
+        { text:'Selten — Meine Stärke liegt in anderen Bereichen.',                                                           tags:['Druide','Kleriker'] },
+      ]},
+      { frage:'Welche Rolle spielst du in der Gruppe?', optionen:[
+        { text:'Frontlinie — STÄ+2, KON+1, Klauen, Kraftvolle Statur. Ich weiche nicht.',                                   tags:['Barbar','Kämpfer'] },
+        { text:'Beschützer — Einschüchterung, Stärke, Ausdauer. Ich bin die Wand, hinter der andere stehen.',                tags:['Paladin','Kämpfer'] },
+        { text:'Naturkundiger Kundschafter — Überleben, Wahrnehmung, Spurenlesen, Tierkommunikation.',                       tags:['Waldläufer','Druide'] },
+        { text:'Unvermuteter Zauberer — Stärke und Magie schließen sich nicht aus. Nur andere denken das.',                  tags:['Druide','Kleriker'] },
+      ]},
+    ],
+    klassen: {
+      'Barbar':      'STÄ+2, KON+1, Klauen als natürliche Waffe, Kraftvolle Statur — der Bärenvolk-Barbar ist eine wandelnde Naturgewalt.',
+      'Kämpfer':     'STÄ+2, KON+1, Klauen, Einschüchtern — solide Frontlinie mit natürlichen Waffen und Einschüchterung.',
+      'Paladin':     'STÄ+2, KON+1, Einschüchtern — der Schutzpaladin, der Feinde bereits mit seiner Erscheinung beeindruckt.',
+      'Waldläufer':  'STÄ+2, Überleben, Wahrnehmung, Klettern, Bärensprache — der geborene Naturkundige.',
+      'Druide':      'KON+1, Naturverbundenheit, Bärensprache, Wildformaffinität — thematisch perfekt.',
+      'Kleriker':    'STÄ+2, KON+1 für körperliche Präsenz; Kriegs- oder Naturdömäne passt gut.',
+      'Mönch':       'STÄ+2 für Stärke-Mönch; Klauen als natürliche Waffe ergänzt unbewaffneten Stil.',
+      'Schurke':     'Klettern, Wahrnehmung, Dunkelsicht — der Bärenvolk-Schurke als Naturkundschafter.',
+      'Barde':       'Einschüchtern, Bärensprache als ungewöhnliche soziale Kompetenz — der unerwartete Entertainer.',
+      'Hexenmeister':'STÄ+2 für körperliche Präsenz; das Fremdartige des Bärenvolks passt zu okkulten Pakten.',
+    },
+  },
+  koerperlicherMerkmale: {
+    bewegungsrate:   '9 m (Gehen), 4,5 m (Klettern)',
+    volljaehrigkeit: '15 Jahre',
+    lebenserwartung: 'bis zu 95 Jahre',
+    groesse:  { kategorie:'Mittelgroß', min:'180 cm', max:'210 cm', formel:'198 cm + 2W8 · 0,5 cm' },
+    gewicht:  { min:'181 kg', max:'ca. 250 kg', formel:'181 kg + (2W8 × 2W8) kg' },
+    augenfarbe: 'tief schwarz oder dunkelbraun',
+    hautfarbe:  'unter dem Fell: dunkel',
+    haarfarbe:  'schwarz, braun, zimtfarben, staubig-braun oder selten weiß (Fell)',
+  },
+  statblock: {
+    features: [
+      { name:'Kreaturtyp',          text:'Humanoid.' },
+      { name:'Größenkategorie',     text:'Mittelgroß (180–210 cm, 181–250 kg).' },
+      { name:'Dunkelsicht',         text:'Du kannst in schwachem Licht innerhalb von 18 Metern so sehen, als wäre es helles Licht, und in Dunkelheit so, als wäre es schwaches Licht. In der Dunkelheit kannst du keine Farben unterscheiden, nur Grautöne.' },
+      { name:'Feiner Geruchs- und Gehörsinn', text:'Du hast Vorteil auf Weisheit-(Wahrnehmungs)-Würfe, die auf Schall oder Geruch beruhen.' },
+      { name:'Klauen',              text:'Deine großen Klauen gelten als natürliche Waffen, die als unbewaffnete Angriffe eingesetzt werden können. Bei einem Treffer verursachen sie Hiebschaden in Höhe von 1W6 + deinem Stärkemodifikator.' },
+      { name:'Natürliche Instinkte', text:'Du hast Übung in den Fertigkeiten Einschüchtern und Überleben.' },
+      { name:'Kraftvolle Statur',   text:'Du giltst als eine Größenkategorie größer, wenn das maximale Gewicht bestimmt wird, das du tragen, schieben, ziehen oder heben kannst.' },
+      { name:'Bärensprache',        text:'Du kannst einfache Ideen mit Bären durch die Bärenvolkssprache, Gesten und Düfte kommunizieren. Die Bärenvolkssprache ist sehr primitiv und besteht aus gutturalem Grunzen und gelegentlichen Ausrufsbrüllen.' },
+      { name:'Angeborenes Talent',  text:null, talente:[] },
+    ],
+  },
+},
 'Cnidaran':                 { name:'Cnidaran',                 accent:'#40b8e0', subtitle:'Wesen des Tiefsees · Träger des Giftstachels',            tags:['Monstrosity','Mittelgroß','Schwimmen','Giftangriff','Neutral'],                    headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null },
-'Darakhul':                 { name:'Darakhul',                 accent:'#6040a0', subtitle:'Untote mit Bewusstsein · Träger des Todes',               tags:['Untoter','Mittelgroß','9 m Bewegung','Dunkelsicht','Chaotisch Böse'],            headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null },
+'Darakhul': {
+  name: 'Darakhul', accent: '#6040a0',
+  subtitle: 'Untote mit Bewusstsein · Träger des Dunkels',
+  tags: ['Humanoid (untoter Natur)','Mittelgroß oder Klein','Dunkelsicht 18 m','Sonnenlichtsensitivität','Meist Böse'],
+  headerImage: null,
+  lore: {
+    intro: [
+      'Darakhul sind untote Wesen mit vollem Bewusstsein — das Ergebnis des Darakhul-Fiebers, das die Leichen anderer Rassen in etwas Neues, Hungerndes und Beharrliches verwandelt. Sie sehen aus wie Ghule: hageres, schädelartiges Gesicht, bezahnter Rachen, straffe graue Haut. Aber anders als gewöhnliche Ghule behalten Darakhul ihren Verstand, ihre Erinnerungen und ihren Willen. Das macht sie zu etwas Besonderem — und zu etwas besonders Gefährlichem.',
+      'Für abenteuerlustige Darakhul — jene im selbstauferlegten Exil oder jene, die nie einem Darakhul-Imperium angehörten — ist das Streben danach, ihren eigenen Hunger zu meistern, ebenso Teil ihrer Reise wie jede andere Aufgabe. Diese Charaktere wollen über ihre ghulartigen Gelüste hinauswachsen und einen Teil ihres früheren Lebens zurückgewinnen. Niemand weiß besser als die Darakhul, dass sie ihre Natur nicht überwinden können, ohne sich ihr zu stellen.',
+      'Das Vorurteil der Lebenden gegenüber den Untoten ist stark und viszeral. Die Menschheit begegnet den Darakhul mit Misstrauen, wenn nicht gar mit offener Feindseligkeit. Es ist schwierig — aber nicht unmöglich — für einen Darakhul, diese Ängste zu zerstreuen.',
+    ],
+    gesellschaft: [
+      'Eine gute Verkleidung ist eines der besten Werkzeuge für einen Darakhul, der seinen Weg unter den Atmenden machen will. Fast alle Darakhul, die an der Oberfläche reisen, halten ein Verkleidungsset bereit: die Verbände eines Aussätzigen, verhüllende Gewänder, Schleier oder die Kopf-bis-Fuß-Kleidung der Wüstenvölker. Jede dieser Verkleidungen erfordert angemessene Details — die richtigen Sprachkenntnisse sowie Kenntnis der Region und ihrer Bräuche.',
+      'Selbst eine überzeugende Verkleidung erklärt nicht den Bedarf eines Darakhul, allein und hinter verschlossenen Türen zu essen. Kulturelle oder religiöse Anforderungen können solches Verhalten in den meisten Situationen rechtfertigen. In anderen Fällen reichen eine geschickte Anwendung von Schminke und ein paar Goldmünzen in den richtigen Händen aus. Die Sicherstellung einer ausreichenden Versorgung mit rohem Fleisch bleibt der Fantasie des Darakhul überlassen.',
+      'In Meruria sind bekannte Darakhul eine Rarität an der Oberfläche. Diejenigen, die hier leben, haben gelernt, wann sie ihre Natur verbergen und wann sie sie als Vorteil nutzen. Ein Darakhul als Verbündeter ist eine ernste Angelegenheit. Ein Darakhul als Feind ist es noch mehr.',
+    ],
+    introBild:        { url: null, label: 'Darakhul · Illustration', caption: 'Charakter-Illustration', position: 'right', width: 360, height: 360 },
+    gesellschaftBild: { url: null, label: 'Darakhul unter Lebenden', caption: 'Der Schnitt des Umhangs', position: 'left', width: 240, height: 300 },
+  },
+  specialSection: {
+    type: 'variantCards', feat1Label: 'Attribute & Sonderfähigkeit', feat2Label: 'Spieltipp',
+    label: 'Erbe-Unterrassen der Darakhul',
+    beschreibung: 'Was du warst, bevor das Fieber dich verwandelte, hängt noch an dir. Wähle dein Erbe.',
+    varianten: [
+      {
+        farbe: 'Bärenvolk', name: 'Bärenvolk-Erbe', schadensart: 'Defensiv', farbeHex: '#8b5e3c', bild: null,
+        augenfarbe: 'tief schwarz', hautfarbe: 'graues, straffes Fell über Knochen', haarfarbe: 'vertrocknetes braunes oder schwarzes Fell',
+        odemwaffe: 'STR+2, KON+1 · Mittelgroß · 9 m · Kiefer des Todes: Biss verursacht 1W6+STR Stich · Untote Standhaftigkeit: 1×/langer Rast auf 1 TP statt 0 fallen',
+        resistenz: 'Zäheste Frontlinie. STR+2+KON+1, größerer Biss und Standhaftigkeit machen ihn zum besten Überlebenskämpfer unter den Darakhul.',
+      },
+      {
+        farbe: 'Drachengeborener', name: 'Drachengeborenen-Erbe', schadensart: 'Nekrotisch', farbeHex: '#6040a0', bild: null,
+        augenfarbe: 'leere lila oder silberne Augen', hautfarbe: 'schuppengraue starre Haut', haarfarbe: 'keine (verwitterte Hornkämme)',
+        odemwaffe: 'STR+2, KON+1 · Mittelgroß · 7,5 m (schwere Rüstung verlangsamt nicht) · Korrumpierter Biss: Bonusaktion, bei Treffer +Stufe nekrotischer Schaden, 1×/langer Rast',
+        resistenz: 'Einzige Darakhul-Linie mit konstant nutzbarem Bonus-Nekrotikschaden. Stärke-Nahkämpfer mit ungewöhnlicher Reichweite im Schadenstyp.',
+      },
+      {
+        farbe: 'Drow', name: 'Drow-Erbe', schadensart: 'Gift', farbeHex: '#3040a0', bild: null,
+        augenfarbe: 'leere weiße oder rot glühende Augen', hautfarbe: 'aschgraue starre Haut', haarfarbe: 'weißes oder silbernes vertrocknetes Haar',
+        odemwaffe: 'INT+2, KON+1 · Mittelgroß · 9 m · Giftiger Biss: bei Treffer +1W6 Gift (steigt auf 3W6 auf Stufe 11), 1×/kurze oder lange Rast',
+        resistenz: 'INT+2 für Magier oder Arkanisten. Giftbiss skaliert gut und ergänzt Resistenz gegen Gift aus Untote Widerstandsfähigkeit thematisch.',
+      },
+      {
+        farbe: 'Zwerg', name: 'Zwerg-Erbe', schadensart: 'Ausdauer', farbeHex: '#607060', bild: null,
+        augenfarbe: 'stumpf grau oder braun', hautfarbe: 'steingraue, faltige Haut', haarfarbe: 'vertrocknetes graues oder braunes Haar/Bart',
+        odemwaffe: 'WEI+2, KON+1 · Mittelgroß · 7,5 m (schwere Rüstung verlangsamt nicht) · Zwergische Robustheit: +1 TP max beim Erhalt dieses Talents und bei jedem Stufenaufstieg',
+        resistenz: 'WEI+2 für Kleriker und Mönche. Die TP-Erhöhung stapelt mit allem und macht ihn zum dicksten Darakhul über lange Zeit.',
+      },
+      {
+        farbe: 'Elf/Schattenfe', name: 'Elfen/Schattenfe-Erbe', schadensart: 'Wahrnehmung', farbeHex: '#205840', bild: null,
+        augenfarbe: 'leere, leicht leuchtende Augen', hautfarbe: 'bleich-graue starre Haut mit Elfenzügen', haarfarbe: 'vertrocknetes dunkles oder silbernes Haar',
+        odemwaffe: 'GES+2, KON+1 · Mittelgroß · 9 m · Übernatürliche Sinne: Wahrnehmung geübt + Vorteil auf Wahrnehmungs-Würfe, um Kreaturen in 9 m zu bemerken, die nicht alle TP haben',
+        resistenz: 'GES+2 für Schurken und flinke Kämpfer. Blutwitterung durch Übernatürliche Sinne macht ihn zum besten Jagd-Kundschafter.',
+      },
+      {
+        farbe: 'Gnom', name: 'Gnom-Erbe', schadensart: 'Magiehunger', farbeHex: '#5060c0', bild: null,
+        augenfarbe: 'schwach flackernde blaue oder lila Augen', hautfarbe: 'graue schrumpelige Haut', haarfarbe: 'vertrocknetes graues oder weißes Haar',
+        odemwaffe: 'INT+2, KON+1 · Klein · 7,5 m · Magischer Hunger: Reaktion wenn eine Kreatur in 9 m einen Zauber wirkt — konsumiere verbleibende Magie für temporäre TP (min. 1, Höhe = KON-Mod), 1×/kurze oder lange Rast',
+        resistenz: 'INT+2 für Magier. Magischer Hunger ist einzigartig reaktiv und gibt kostenlose Ressourcen in jedem magischen Kampf.',
+      },
+      {
+        farbe: 'Halbling', name: 'Halbling-Erbe', schadensart: 'Unglück', farbeHex: '#80a040', bild: null,
+        augenfarbe: 'stumpf braun oder grau', hautfarbe: 'gelblich-graue, ledrige Haut', haarfarbe: 'vertrocknetes krauses Haar',
+        odemwaffe: 'GES+2, KON+1 · Klein · 7,5 m · Unheil: Wenn ein Angreifer eine 20 auf dem W20 würfelt, muss er neu würfeln. Verfehlt der zweite Wurf, erleidet er nekrotischen Schaden = 2× KON-Mod (mind. 2)',
+        resistenz: 'GES+2 für Schurken. Unheil ist passiver Schutz gegen kritische Treffer — einzigartig defensive Reaktion ohne Ressourcenverbrauch.',
+      },
+      {
+        farbe: 'Mensch/Halbelf', name: 'Mensch/Halbelf-Erbe', schadensart: 'Vielseitigkeit', farbeHex: '#806040', bild: null,
+        augenfarbe: 'leer grau oder braun', hautfarbe: 'menschlich-graue starre Haut', haarfarbe: 'vertrocknetes Haar in jeder Farbe',
+        odemwaffe: 'Freier Attribut+2 (nicht KON), KON+1 · Mittelgroß · 9 m · Vielseitigkeit: Übung in 2 Fertigkeiten und 1 Werkzeug der Wahl',
+        resistenz: 'Flexibelste Linie. Freie Attributwahl + Vielseitigkeit erlauben jeden Klassenbau. Ideal wenn kein anderes Erbe zur Klasse passt.',
+      },
+      {
+        farbe: 'Kobold', name: 'Kobold-Erbe', schadensart: 'Hinterlist', farbeHex: '#a04020', bild: null,
+        augenfarbe: 'glühend rot oder orange', hautfarbe: 'schuppige graue Haut mit Koboldstruktur', haarfarbe: 'keine (trockene Hornkämme)',
+        odemwaffe: 'INT+2, KON+1 · Klein · 9 m · Hinterhältiger Biss: Wenn du Vorteil auf den Bissangriff hast, verursachst du +1W4 Stich zusätzlich',
+        resistenz: 'INT+2 für Arkanisten. Hinterhältiger Biss belohnt Positionsvorteil — stark mit Schurke/Kämpfer-Multiclass oder Vorteilsquellen.',
+      },
+      {
+        farbe: 'Schattengoblin', name: 'Schattengoblin-Erbe', schadensart: 'Schrecken', farbeHex: '#202040', bild: null,
+        augenfarbe: 'blassgelb oder weiß glühend', hautfarbe: 'dunkelgraue fast schwarze Haut', haarfarbe: 'keine oder vertrocknetes schwarzes Haar',
+        odemwaffe: 'GES+2, KON+1 · Klein · 9 m · Dunkle Tat: Aktion, Kreatur in 9 m muss WEI-RW (SG 10 + CHA-Mod) oder ist bis Ende ihres Zuges verängstigt',
+        resistenz: 'GES+2 für flinke Builds. Dunkle Tat als Kampfmanöver zum Einschränken von Gegnern — gut mit Schurke oder für Kontroll-Builds.',
+      },
+      {
+        farbe: 'Teuflingsblut', name: 'Teuflingsblut-Erbe', schadensart: 'Vergeltung', farbeHex: '#900020', bild: null,
+        augenfarbe: 'rot glühend', hautfarbe: 'dunkelgraue feste Haut mit Teuflingsresten', haarfarbe: 'vertrocknete Hörner, kein Haar',
+        odemwaffe: 'CHA+2, KON+1 · Mittelgroß · 9 m · Nekrotische Vergeltung: Reaktion wenn getroffen — Angreifer erleidet nekrotischen Schaden = CHA-Mod (min. 1) und hat Nachteil auf Angriffe bis Ende seines nächsten Zuges, 1×/langer Rast',
+        resistenz: 'CHA+2 für Barden, Hexenmeister, Paladine. Nekrotische Vergeltung als Reaktion ist sowohl defensiv als auch offensiv — einzige CHA-Darakhul-Linie.',
+      },
+    ],
+  },
+  namenSection: {
+    type: 'nameRoller',
+    label: 'Namen der Darakhul',
+    beschreibung: 'Ghule behalten in der Regel ihre Vornamen aus ihrer Zeit unter den Lebenden. Nachnamen werden nach dem Übergang verliehen oder gewählt — nach Gönner, Legion, Tempel oder persönlichem Umstand.',
+    tabellen: [
+      { name:'Priesterschafts-Nachnamen', eintraege:['Al-Mot','Al-Qaan','Akma-aldan','Blutflut','Vardeson'] },
+      { name:'Legions-Nachnamen', eintraege:['Knochenbrecher','Elfenbein','Made','Mortus','Räuber','Secundus'] },
+      { name:'Traditionelle Nachnamen', eintraege:['Schwarzwasser','Blutgeboren','Calva','Canis','Carver','Corvan','Morgenbinder','Dämonenfinder','Edlest','Fuligin','Geist','Gnollspeiser','Jäger','Jaeger','Bergmann','Orcandus','Osseor','Rabenspeiser','Schattenschmied','Strigator','Styxtrinker','Gerber','Umbro','Ungesättigt','Verskull','Vespertan','Flüsterer','Wurmgesang','Geistbeschwörer'] },
+    ],
+  },
+  charakterGenerator: {
+    felder: [
+      { label:'Erbe-Unterrasse', type:'table', optionen:['Bärenvolk-Erbe','Drachengeborenen-Erbe','Drow-Erbe','Zwerg-Erbe','Elfen/Schattenfe-Erbe','Gnom-Erbe','Halbling-Erbe','Mensch/Halbelf-Erbe','Kobold-Erbe','Schattengoblin-Erbe','Teuflingsblut-Erbe'] },
+      { label:'Nachname',        type:'table', optionen:['Schwarzwasser','Blutgeboren','Knochenbrecher','Made','Mortus','Geist','Jäger','Flüsterer','Schattenschmied','Al-Mot','Ungesättigt','Wurmgesang','Strigator','Fuligin','Vardeson'] },
+      { label:'Hautfarbe',       type:'table', optionen:['straff grau','aschgrau faltig','steingrau','gelblich grau','dunkelgrau fast schwarz','bleich mit sichtbaren Adern'] },
+      { label:'Augenfarbe',      type:'table', optionen:['leer grau','rot glühend','lila flackernd','schwach blau leuchtend','weiß und starr','tot braun'] },
+      { label:'Verkleidung',     type:'table', optionen:['Aussätzigen-Verbände','verhüllende Gewänder','Wüstenvolks-Kleidung','Schleier und Kapuze','Tempeldiener-Robe','dunkler Reisecape'] },
+    ],
+  },
+  beziehungen: [
+    { volk:'Menschen',    relation:'Misstrauen/Furcht',        text:'Menschen riechen den Tod an mir, auch wenn sie es nicht wissen. Der Instinkt ist stärker als jede Logik. Ich habe gelernt, gut zu verkleiden.' },
+    { volk:'Elfen',       relation:'Tiefe Abneigung',          text:'Elfen hassen das Undying in mir. Ich verdenke es ihnen nicht. Ich hasse es manchmal selbst.' },
+    { volk:'Zwerge',      relation:'Pragmatische Distanz',     text:'Zwerge respektieren Stärke und Ausdauer. Meinen sie manchmal. Aber der Totengeruch ist eine Grenze, die wenige Zwerge überschreiten wollen.' },
+    { volk:'Kleriker',    relation:'Kompliziert bis feindlich',text:'Manche wollen mich vertreiben. Andere sind neugierig. Ich bevorzuge die Neugierigen — zumindest sind sie ehrlich.' },
+    { volk:'Andere Darakhul', relation:'Komplexe Solidarität',text:'Wir kennen unseren Hunger. Wir kennen unser Urteil. Das schafft Verständnis, aber keine Freundschaft — Darakhul sind nicht durch Wärme verbunden.' },
+    { volk:'Ghule',       relation:'Verachtung/Distanz',       text:'Gewöhnliche Ghule sind das, was ich fast bin. Ihr Bewusstlosigkeit ist keine Schwäche — sie ist Freiheit. Ich bin neidisch auf eine Art, die mir nicht gefällt.' },
+  ],
+  bekannte: [
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Darakhul in Meruria reserviert.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Darakhul in Meruria reserviert.' },
+  ],
+  radar: { labels:['Mobilität','Kampf','Magie','Soziales','Überleben','Heimlichkeit'], values:[60,82,52,30,92,75] },
+  quiz: {
+    steps: [
+      { frage:'Welches Erbe trägst du?', optionen:[
+        { text:'Körperliches Erbe — Bärenvolk, Drachengeborener, Zwerg oder Teuflingsblut. Ich war robust und bin es noch mehr.',  tags:['Barbar','Kämpfer','Paladin'] },
+        { text:'Flinkes Erbe — Drow, Elf, Halbling, Schattengoblin. Ich war schnell und das bin ich immer noch.',                  tags:['Schurke','Waldläufer'] },
+        { text:'Mentales Erbe — Gnom, Kobold, Mensch/Halbelf. Ich war klug oder anpassungsfähig und das hat überlebt.',            tags:['Magier','Barde','Hexenmeister'] },
+        { text:'Ich wähle nach Klasse, nicht nach Hintergrund.',                                                                    tags:['Kämpfer','Kleriker'] },
+      ]},
+      { frage:'Wie gehst du mit deinem Hunger um?', optionen:[
+        { text:'Ich akzeptiere ihn — er ist Teil von mir. Ich manage ihn, aber ich kämpfe nicht dagegen.',                          tags:['Barbar','Kämpfer'] },
+        { text:'Ich kämpfe dagegen — jeder Tag ohne Eskalation ist ein Sieg.',                                                       tags:['Paladin','Kleriker'] },
+        { text:'Ich nutze ihn — der Hunger macht mich schärfer, schneller, fokussierter.',                                          tags:['Schurke','Waldläufer'] },
+        { text:'Ich ignoriere ihn so lange wie möglich und handle wenn nötig.',                                                      tags:['Magier','Barde'] },
+      ]},
+      { frage:'Wie lebst du unter den Lebenden?', optionen:[
+        { text:'Mit einer Verkleidung — ich pflege meine Tarnung sorgfältig und lebe unter falscher Identität.',                    tags:['Schurke','Barde'] },
+        { text:'Offen aber vorsichtig — manche wissen was ich bin. Wenige. Alle vertrauen mir trotzdem.',                           tags:['Paladin','Kleriker'] },
+        { text:'Weitgehend isoliert — ich bewege mich nachts, meide Menschenmassen, arbeite allein.',                               tags:['Waldläufer','Magier'] },
+        { text:'Ich zeige meine Natur als Drohung wenn nötig — Respekt durch Furcht ist immer noch Respekt.',                       tags:['Barbar','Hexenmeister'] },
+      ]},
+      { frage:'Welche Rolle spielst du in der Gruppe?', optionen:[
+        { text:'Frontlinie — Resistenzen, Ausdauer, Biss. Ich weiche nicht.',                                                        tags:['Barbar','Kämpfer'] },
+        { text:'Aufklärer und Kundschafter — Dunkelsicht, Blutwitterung, Nachtmobilität.',                                          tags:['Schurke','Waldläufer'] },
+        { text:'Magischer Spezialist — INT-Erbe, nekrotische Energie, besondere Reaktionen.',                                       tags:['Magier','Hexenmeister'] },
+        { text:'Anpassungsfähiger Kämpfer — ich passe mich jeder Lücke in der Gruppe an.',                                          tags:['Kämpfer','Barde'] },
+      ]},
+    ],
+    klassen: {
+      'Barbar':      'STR+2 (Bärenvolk/Drachengeborener), Untote Resistenzen, Standhaftigkeit — der Darakhul-Barbar ist schwer zu töten und fürchtet keinen Schaden.',
+      'Kämpfer':     'Viele Erbe-Optionen passen: STR für Frontlinie, GES für Finesse, Vielseitigkeit für Fertigkeiten.',
+      'Schurke':     'GES+2 (Elf/Halbling/Schattengoblin), Dunkelsicht, Übernatürliche Sinne — perfekter Nachtkämpfer.',
+      'Paladin':     'STR+2 + CHA (Teuflingsblut) oder Standhaftigkeit (Bärenvolk) — ungewöhnlicher aber starker Untoten-Paladin.',
+      'Kleriker':    'WEI+2 (Zwerg) oder INT+2 (Gnom/Drow) — nekrotische Domäne thematisch perfekt.',
+      'Magier':      'INT+2 (Gnom/Drow/Kobold), Magischer Hunger für passive Ressourcen — der Arkanist des Dunkels.',
+      'Hexenmeister':'CHA+2 (Teuflingsblut), Nekrotische Vergeltung — thematisch und mechanisch stimmig.',
+      'Barde':       'CHA+2 (Teuflingsblut) oder Vielseitigkeit (Mensch/Halbelf) — der Tarnung-Spezialist unter den Barden.',
+      'Waldläufer':  'GES+2 (Elf), Übernatürliche Sinne, Dunkelsicht — der Blutspür-Waldläufer.',
+      'Mönch':       'WEI+2 (Zwerg) + KON+1 + Resistenzen — zäher Stärke-Mönch mit Untoten-Vorteilen.',
+    },
+  },
+  koerperlicherMerkmale: {
+    bewegungsrate:   'nach Erbe-Unterrasse (7,5 m oder 9 m)',
+    volljaehrigkeit: 'keine bekannte Grenze — Darakhul sterben meist gewaltsam',
+    lebenserwartung: 'theoretisch unbegrenzt',
+    groesse:  { kategorie:'nach Erbe-Unterrasse (Mittelgroß oder Klein)', min:'variiert', max:'variiert', formel:'nach Erbe' },
+    gewicht:  { min:'variiert', max:'variiert', formel:'nach Erbe; meist deutlich leichter als in der Lebendform' },
+    augenfarbe: 'leer grau, rot glühend, lila oder weiß — je nach Erbe',
+    hautfarbe:  'straff grau bis aschgrau; alle kosmetischen Merkmale verblassen mit der Zeit',
+    haarfarbe:  'vertrocknet; verblasst und fällt oft aus',
+  },
+  statblock: {
+    features: [
+      { name:'Kreaturtyp',              text:'Humanoid (anfällig für Effekte, die Untote betreffen; kann durch Wunden-heilen-Zauber geheilt werden).' },
+      { name:'Unvollkommener Untod',    text:'Obwohl du ein Humanoid bist, bist du anfällig für Effekte, die Untote betreffen — einschließlich Vertreiben durch Kleriker. Spieleffekte die dich zurückbringen erwecken dich als Darakhul. Echter Auferstehungszauber oder Wunsch kann dich als vollständig Lebenden deiner ursprünglichen Rasse zurückbringen.' },
+      { name:'Dunkelsicht',             text:'Du kannst in schwachem Licht innerhalb von 18 Metern so sehen, als wäre es helles Licht, und in Dunkelheit so, als wäre es schwaches Licht. In der Dunkelheit kannst du keine Farben unterscheiden, nur Grautöne.' },
+      { name:'Hunger nach Fleisch',     text:'Du musst täglich 500 g rohes Fleisch verzehren oder die Auswirkungen des Verhungerns erleiden. Nach 24 Stunden ohne Mahlzeit erhältst du eine Erschöpfungsstufe. Solange du durch diese Eigenschaft Erschöpfung hast, kannst du keine TP zurückgewinnen oder Erschöpfung entfernen, bis du mindestens 1 Stunde damit verbracht hast, 5 kg rohes Fleisch zu verzehren.' },
+      { name:'Kraftvoller Kiefer',      text:'Dein Biss ist eine natürliche Nahkampfwaffe für unbewaffnete Angriffe. Bei einem Treffer verursacht er 1W4 + STR-Mod Stichschaden (statt normalem Wuchtschaden).' },
+      { name:'Sonnenlichtsensitivität', text:'Du hast Nachteil auf Angriffswürfe und Weisheit-(Wahrnehmungs)-Würfe, die auf Sicht beruhen, wenn du, dein Ziel oder das Wahrgenommene sich in direktem Sonnenlicht befindet.' },
+      { name:'Untote Widerstandsfähigkeit', text:'Resistenz gegen nekrotischen Schaden und Giftschaden. Immunität gegen Krankheiten. Vorteil auf Rettungswürfe gegen Bezauberung oder Vergiftung. Bei einer kurzen Rast kannst du eine Erschöpfungsstufe senken, sofern du in den letzten 24 Stunden mindestens 500 g rohes Fleisch zu dir genommen hast.' },
+      { name:'Untote Vitalität',        text:'Du musst nicht atmen und schläfst nicht normal. Stattdessen trittst du täglich für 6 Stunden in einen todesähnlichen Ruhezustand, in dem du halbbewusst bleibst (Nachteil auf Wahrnehmungs-Würfe). Danach erhältst du denselben Vorteil wie ein Mensch nach 8 Stunden Schlaf.' },
+    ],
+  },
+},
 'Chromatische Drachenblütige': {
   name: 'Chromatische Drachenblütige', accent: '#c84030',
   subtitle: 'Erben der Chromatischen · Kinder des Bösen',
@@ -417,7 +862,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Drachenblütigen',
     beschreibung: 'Würfle oder wähle einen Vor-, Jugend- und Klannamen für deinen Drachenblütigen-Charakter.',
     tabellen: [
@@ -495,7 +940,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',             text:'Humanoider. Gilt als Drachenblütiger bei allen Voraussetzungen und Effekten.' },
-      { name:'Größe',                    text:'Drachenblütige sind mit ihren über 180 cm und etwa 250 Pfund weit größer und schwerer als Menschen. Deine Größenkategorie ist mittelgroß.' },
+      { name:'Größenkategorie',                    text:'Drachenblütige sind mit ihren über 180 cm und etwa 250 Pfund weit größer und schwerer als Menschen. Deine Größenkategorie ist mittelgroß.' },
       { name:'Chromatische Abstammung',  text:'Du hast einen chromatischen Drachen im Stammbaum. Wähle eine Abstammung: Blau (Blitz), Grün (Gift), Rot (Feuer), Schwarz (Säure) oder Weiß (Kälte). Sie bestimmt die Schadensart deiner anderen Merkmale.' },
       { name:'Odemwaffe',                text:'Wenn du die Angreifen-Aktion ausführst, kannst du einen Angriff durch deinen Odem ersetzen: eine 9 m lange, 1,5 m breite Linie magischer Energie. Betroffene Kreaturen müssen einen Geschicklichkeitsrettungswurf ablegen (SG = 8 + KON-Mod + Übungsbonus). Misserfolg: 1W10 Schaden der Abstammungsart; Erfolg: halber Schaden. Steigt um 1W10 auf Stufe 5, 11 und 17. Anwendungen pro langer Rast: gleich deinem Übungsbonus.' },
       { name:'Drakonische Resistenz',    text:'Du bist gegen die Schadensart resistent, die mit deiner chromatischen Abstammung assoziiert ist.' },
@@ -536,7 +981,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Drachenblütigen',
     beschreibung: 'Würfle oder wähle einen Vor-, Jugend- und Klannamen für deinen Drachenblütigen-Charakter.',
     tabellen: [
@@ -614,7 +1059,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',          text:'Humanoider. Gilt als Drachenblütiger bei allen Voraussetzungen und Effekten.' },
-      { name:'Größe',                 text:'Drachenblütige sind mit ihren über 180 cm und etwa 250 Pfund weit größer und schwerer als Menschen. Deine Größenkategorie ist mittelgroß.' },
+      { name:'Größenkategorie',                 text:'Drachenblütige sind mit ihren über 180 cm und etwa 250 Pfund weit größer und schwerer als Menschen. Deine Größenkategorie ist mittelgroß.' },
       { name:'Edelstein-Abstammung',  text:'Du hast einen Edelsteindrachen im Stammbaum. Wähle eine Abstammung: Amethyst (Energie), Kristall (Gleißend), Saphir (Schall), Smaragd (Psychisch) oder Topas (Nekrotisch). Sie bestimmt die Schadensart deiner anderen Merkmale.' },
       { name:'Odemwaffe',             text:'Wenn du die Angreifen-Aktion ausführst, kannst du einen Angriff durch deinen Odem ersetzen: einen 4,5 m langen Kegel magischer Energie. Betroffene Kreaturen müssen einen Geschicklichkeitsrettungswurf ablegen (SG = 8 + KON-Mod + Übungsbonus). Misserfolg: 1W10 Schaden der Abstammungsart; Erfolg: halber Schaden. Steigt um 1W10 auf Stufe 5, 11 und 17. Anwendungen pro langer Rast: gleich deinem Übungsbonus.' },
       { name:'Drakonische Resistenz', text:'Du bist gegen die Schadensart resistent, die mit deiner Edelstein-Abstammung assoziiert ist.' },
@@ -656,7 +1101,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Drachenblütigen',
     beschreibung: 'Würfle oder wähle einen Vor-, Jugend- und Klannamen für deinen Drachenblütigen-Charakter.',
     tabellen: [
@@ -733,7 +1178,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',            text:'Humanoider. Gilt als Drachenblütiger bei allen Voraussetzungen und Effekten.' },
-      { name:'Größe',                   text:'Drachenblütige sind mit ihren über 180 cm und etwa 250 Pfund weit größer und schwerer als Menschen. Deine Größenkategorie ist mittelgroß.' },
+      { name:'Größenkategorie',                   text:'Drachenblütige sind mit ihren über 180 cm und etwa 250 Pfund weit größer und schwerer als Menschen. Deine Größenkategorie ist mittelgroß.' },
       { name:'Metallische Abstammung',  text:'Du hast einen metallischen Drachenvorfahren. Wähle eine Abstammung: Bronze (Blitz), Gold (Feuer), Kupfer (Säure), Messing (Feuer) oder Silber (Kälte). Sie bestimmt die Schadensart deiner anderen Merkmale.' },
       { name:'Odemwaffe',               text:'Wenn du die Angreifen-Aktion ausführst, kannst du einen Angriff durch deinen Odem ersetzen: einen 4,5 m langen Kegel magischer Energie. Betroffene Kreaturen müssen einen Geschicklichkeitsrettungswurf ablegen (SG = 8 + KON-Mod + Übungsbonus). Misserfolg: 1W10 Schaden der Abstammungsart; Erfolg: halber Schaden. Steigt um 1W10 auf Stufe 5, 11 und 17. Anwendungen pro langer Rast: gleich deinem Übungsbonus.' },
       { name:'Drakonische Resistenz',   text:'Du bist gegen die Schadensart resistent, die mit deiner metallischen Abstammung assoziiert ist.' },
@@ -780,7 +1225,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Dunkelelfen',
     beschreibung: 'Dunkelelfische Namen besitzen meist doppelte Buchstaben und klingen fließend.',
     tabellen: [
@@ -868,7 +1313,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',              text:'Humanoider. Gilt als Elf bei allen Voraussetzungen und Effekten.' },
-      { name:'Größe',                     text:'Elfen sind zwischen 134 cm und 170 cm groß und eher schlank gebaut. Ihre Größenkategorie ist mittelgroß.' },
+      { name:'Größenkategorie',                     text:'Elfen sind zwischen 134 cm und 170 cm groß und eher schlank gebaut. Ihre Größenkategorie ist mittelgroß.' },
       { name:'Überlegene Dunkelsicht',    text:'Deine Dunkelsicht hat eine Reichweite von 36 m.' },
       { name:'Geschärfte Sinne',          text:'Du bist in der Fertigkeit Wahrnehmung geübt.' },
       { name:'Feenblut',                  text:'Du hast Vorteil bei Rettungswürfen gegen Bezauberungen und bist immun gegen Schlafzauber.' },
@@ -917,7 +1362,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Echsenmenschen',
     beschreibung: 'Echsenmenschen-Namen sind geschlechtsneutral und klingen oft zischend oder knackend. Würfle oder wähle einen Namen.',
     tabellen: [
@@ -999,7 +1444,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',       text:'Humanoider.' },
-      { name:'Größe',              text:'Deine Größenkategorie ist mittelgroß.' },
+      { name:'Größenkategorie',              text:'Deine Größenkategorie ist mittelgroß.' },
       { name:'Atem anhalten',      text:'Du kannst bis zu 15 Minuten lang den Atem anhalten.' },
       { name:'Biss',               text:'Du hast Fangzähne, mit denen du waffenlose Angriffe ausführen kannst. Bei einem Treffer bewirkt der Angriff 1W6 + deinen Stärkemodifikator an Hiebschaden statt des üblichen Wuchtschadens.' },
       { name:'Hungriger Kiefer',   text:'Als Bonusaktion führst du einen besonderen Bissangriff durch. Bei einem Treffer bewirkt dieser normalen Schaden, und du erhältst temporäre Trefferpunkte in Höhe deines Übungsbonus. Anwendungen pro langer Rast: gleich deinem Übungsbonus.' },
@@ -1029,7 +1474,7 @@ window.RASSEN_DETAIL_DATA = {
     gesellschaftBild: { url: null, label: 'Feenwild · Illustration', caption: 'Eladrin in ihrem Reich', position: 'left', width: 240, height: 300 },
   },
   specialSection: {
-    type: 'variantCards',
+    type: 'variantCards', feat1Label: 'Feenschritt-Effekt', feat2Label: 'Wesen & Jahreszeit',
     label: 'Eladrin-Jahreszeiten',
     beschreibung: 'Wähle oder würfle deine Jahreszeit. Sie bestimmt den Zusatzeffekt deines Feenschritts ab Stufe 3 sowie dein Erscheinungsbild.',
     varianten: [
@@ -1068,7 +1513,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Eladrin',
     beschreibung: 'Eladrin-Namen klingen elfisch, sind aber oft klangvoller und melodischer.',
     tabellen: [
@@ -1152,7 +1597,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',      text:'Humanoider. Gilt als Elf bei allen Voraussetzungen und Effekten.' },
-      { name:'Größe',             text:'Elfen sind zwischen 144 cm und 190 cm groß und schlank gebaut. Deine Größenkategorie ist mittelgroß.' },
+      { name:'Größenkategorie',             text:'Elfen sind zwischen 144 cm und 190 cm groß und schlank gebaut. Deine Größenkategorie ist mittelgroß.' },
       { name:'Dunkelsicht',       text:'Im Radius von 18 m kannst du in dämmrigem Licht wie in hellem Licht sehen, in Dunkelheit wie in dämmrigem Licht. Im Dunkeln erkennst du nur Graustufen.' },
       { name:'Geschärfte Sinne',  text:'Du bist in der Fertigkeit Wahrnehmung geübt.' },
       { name:'Feenblut',          text:'Du hast Vorteil bei Rettungswürfen gegen Bezauberungen und bist immun gegen Schlafzauber.' },
@@ -1203,7 +1648,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Erd-Genasi',
     beschreibung: 'Elementarische Namen, die ihre steinerne Natur widerspiegeln, oder Namen aus der Kultur ihrer Kindheit.',
     tabellen: [
@@ -1287,7 +1732,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',    text:'Humanoider.' },
-      { name:'Größe',           text:'Mittelgroß oder klein — du wählst die Größenkategorie, wenn du dieses Volk wählst.' },
+      { name:'Größenkategorie',           text:'Mittelgroß oder klein — du wählst die Größenkategorie, wenn du dieses Volk wählst.' },
       { name:'Dunkelsicht',     text:'Im Radius von 18 m kannst du in dämmrigem Licht wie in hellem Licht sehen, in Dunkelheit wie in dämmrigem Licht. Im Dunkeln erkennst du nur Graustufen.' },
       { name:'Erdschritt',      text:'Du bewegst dich über schwieriges Gelände, ohne zusätzliche Bewegung aufzuwenden, wenn du deine Schrittbewegungsrate auf dem Boden oder einem Fußboden nutzt.' },
       { name:'Steintarnung',    text:'Du kennst den Zaubertrick Klingenbann und kannst ihn normal oder als Bonusaktion wirken. Anwendungen pro langer Rast: gleich deinem Übungsbonus. Ab Stufe 5: Spurloses Gehen 1×/langer Rast (ohne Materialkomponenten). Beide Zauber können auch mit Zauberplätzen gewirkt werden. Zaubermerkmal (wähle bei Rassenauswahl): Intelligenz, Weisheit oder Charisma.' },
@@ -1295,7 +1740,134 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
 },
-'Erina':                    { name:'Erina',                    accent:'#a87060', subtitle:'Stachelbewehrte Wanderer · Kinder des Waldes',            tags:['Humanoid','Klein','7,5 m Bewegung','Stachelrüstung','Neutral Gut'],             headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null },
+'Erina': {
+  name: 'Erina', accent: '#a87060',
+  subtitle: 'Stachelbewehrte Wanderer · Hüter des ersten Hains',
+  tags: ['Humanoid','Klein','7,5 m Bewegung','Stacheln','Neutral Gut'],
+  headerImage: null,
+  lore: {
+    intro: [
+      'Das rätselhafte Igelfolk führt seine Geschichte auf den Beginn der Welt zurück — weiter zurück als selbst Elfen zurückverfolgen können — zu den ersten Hainen und wilden Grasländern, zu jenen grünen Orten zwischen den elementaren Polen, die alles hervorbrachten, was ist. Oder so behaupten es zumindest die Erina-Druiden. Die Erina sind eine kleingewachsene Rasse zweibeiniger Igelwesen, die oft der Aufmerksamkeit mächtiger Herrscher entgehen — obwohl jeder, der durch die Wildnis reist, gut daran täte, sie als Verbündete zu haben.',
+      'Erina sind hochintelligent und von natürlicher Neugier getrieben. Sie erkunden ständig die Grenzen ihres Territoriums, führen sorgfältige Aufzeichnungen ihrer Umgebung und haben ein scharfes Auge für Dinge, die fehl am Platz oder neuartig sind. Ihre Ernährung besteht aus Sammeln und Stöbern — Früchte, Wurzeln, Insekten und kleines Wild. Die wenigen Erina in Städten leben auf dieselbe Weise, was sie gelegentlich in Konflikt mit dem Gesetz bringt, obwohl sie von Natur aus nicht gierig sind.',
+      'Erina sprechen ihre eigene Sprache: ein surrendes Lautgefüge, unterbrochen von Klicken. Unter sich kommunizieren sie auch durch Zuckungen der Nase und Schnurrhaare — obwohl diese alte nonverbale Sprache in den letzten Generationen aus der Mode gekommen ist. Außerhalb ihrer Lande nehmen Erinas Namen mit langen, offenen Vokalen an, die ihren Ohren Freude bereiten und die sie bei der Vorstellung sicher ausgedehnt aussprechen.',
+    ],
+    gesellschaft: [
+      'Erina-Gemeinschaften graben ausgedehnte Bauten mit einer verwirrenden Anzahl von Tunneln und Kammern, mehreren getarnten Ein- und Ausgängen. Das Eindringen in einen Erina-Bau ist ein albtraumhaftes Erlebnis: Die kleinen Verteidiger bewegen sich mit erschreckender Geschwindigkeit über, unter und neben ihren Feinden und greifen aus frisch gegrabenen Löchern an, bevor sie sich in Sicherheit zurückziehen. Territoriale Verteidigung ist keine Pflicht — sie ist Reflex.',
+      'Erina neigen dazu, Gottheiten zu verehren, die sich auf Herd und Heim konzentrieren. Manchmal werden einige von überwältigender Neugier erfasst und verlassen ihre Häuser, um die Welt jenseits zu erkunden. Wenn eine große Bedrohung droht, begeben sich die Kolonie-Verteidiger auf eine Mission, ihr direkt entgegenzutreten.',
+      'Erina-Gemeinschaften sind misstrauisch gegenüber Hexenmeistern und Zauberern. Mitglieder, die Abkommen mit fremden Wesenheiten schließen oder gefährliche Verbindungen zu mächtiger Magie aufweisen, werden oft aus dem Bau eskortiert. Kompatible Feywesen können gelegentlich in der Nähe oder sogar innerhalb eines Erina-Baus leben — ein seltenes Zeichen von Vertrauen.',
+    ],
+    introBild:        { url: null, label: 'Erina · Illustration', caption: 'Charakter-Illustration', position: 'right', width: 360, height: 360 },
+    gesellschaftBild: { url: null, label: 'Erina-Bau', caption: 'Tunnel, Kammern, Fallen — das Zuhause', position: 'left', width: 240, height: 300 },
+  },
+  specialSection: {
+    type: 'traitRoller',
+    label: 'Warum du den Bau verlassen hast',
+    beschreibung: 'Erina verlassen ihre Gemeinschaft nicht ohne Grund. Würfle oder wähle, was dich herausgetrieben hat.',
+    merkmale: [
+      'Neugier — ich musste wissen, was hinter dem nächsten Horizont ist. Dann hinter dem übernächsten.',
+      'Auftrag — mein Bau steht unter Bedrohung. Ich bin losgegangen, um ihr die Stirn zu bieten, bevor sie uns erreicht.',
+      'Eskortiert — meine Verbindung zu Magie hat die Gemeinschaft beunruhigt. Wir haben uns einvernehmlich getrennt.',
+      'Verlust — mein Bau ist nicht mehr. Ich suche entweder Rache oder einen neuen Anfang.',
+      'Forscherdrang — ich führe Aufzeichnungen über die Welt, die außerhalb unserer Tunnel liegt. Jemand muss es tun.',
+      'Zufall — ich bin zu weit gegangen und habe den Weg zurück nicht mehr gefunden. Dann hat es mich aufgehört zu stören.',
+      'Berufung — ich habe die Natur tiefer verstanden als die meisten meines Volkes und muss das irgendwo einsetzen.',
+      'Fremdbestimmung — jemand brauchte mich dringend genug, dass ich mitgegangen bin. Warum genau, erkläre ich später.',
+    ],
+  },
+  namenSection: {
+    type: 'nameRoller',
+    label: 'Namen der Erina',
+    beschreibung: 'Erina-Namen lassen sich nur schlecht übersetzen. Außerhalb ihrer Lande nehmen Erinas Namen mit langen, offenen Vokalen an — in ihrer eigenen Sprache selten und für ihre Ohren besonders angenehm. Bei der Vorstellung werden die Vokale gedehnt.',
+    tabellen: [
+      { name:'Einzelnamen', eintraege:['May-nay','Wayee','Leemay','Einore','Die-Nu','Lowno','Ailee','Oora','Meeya','Teelow','Nairee','Loowei','Oarno','Yeemai','Deeno','Railee','Oomai','Weenay','Kielo','Nuaree','Seelow','Taiyo','Oowai','Meiloe','Deeora','Naiyee','Lowmai','Aioree','Kiinay','Yoowee'] },
+    ],
+  },
+  charakterGenerator: {
+    felder: [
+      { label:'Name',           type:'table',  optionen:['May-nay','Wayee','Leemay','Einore','Die-Nu','Lowno','Ailee','Oora','Meeya','Teelow','Nairee','Loowei','Oarno','Yeemai','Deeno','Railee','Oomai','Weenay','Kielo','Nuaree'] },
+      { label:'Attribut-Wahl', type:'choice',  optionen:['WEI+1 (Druide/Waldläufer)','CHA+1 (Barde/Paladin)'] },
+      { label:'Fellfarbe',      type:'table',  optionen:['braun mit cremefarbenen Stacheln','graubraun','dunkelbraun fast schwarz','rötlichbraun','hellgrau','gefleckt braun-weiß'] },
+      { label:'Stachelfarbe',   type:'table',  optionen:['cremefarben','dunkelbraun','schwarz','weiß','gemischt dunkel und hell','gelbbraun'] },
+      { label:'Augenfarbe',     type:'table',  optionen:['tief schwarz','dunkelbraun','bernsteinfarben','haselnuss','sehr dunkel fast violet'] },
+      { label:'Besonderheit',   type:'table',  optionen:['Nase zuckt ständig','Führt sorgfältige Aufzeichnungen über alles','Hat immer etwas Kleines in einem Beutel versteckt','Zieht instinktiv an Wänden entlang','Kann nicht am Graben vorbeigehen ohne es zu prüfen','Stacheln sträuben sich bei Überraschung sichtbar'] },
+    ],
+  },
+  beziehungen: [
+    { volk:'Feywesen',     relation:'Natürliche Nachbarn',     text:'Feen und Erina teilen oft dieselben Wälder. Manchmal wohnen sie sogar zusammen. Das ist keine Freundschaft — das ist Ökosystem.' },
+    { volk:'Menschen',     relation:'Gegenseitige Neugier',    text:'Menschen sind groß und auffällig und stellen viele Fragen. Ich auch. Das schafft eine Art Verständnis, auch wenn wir aneinander vorbeifragen.' },
+    { volk:'Halblinge',    relation:'Verwandte Seelen',         text:'Klein, neugierig, territorial in ihrer Weise. Halblinge verstehen, was es bedeutet, von Größeren nicht ernst genommen zu werden. Das verbindet.' },
+    { volk:'Druiden',      relation:'Tief empfundener Respekt', text:'Druiden verstehen die Erde. Ich auch. Wir reden nicht immer viel miteinander. Wir müssen nicht.' },
+    { volk:'Hexenmeister', relation:'Instinktives Misstrauen',  text:'Mein Bau hat mich gelehrt: Abkommen mit fremden Wesenheiten enden selten gut. Das gilt draußen genauso wie drinnen.' },
+    { volk:'Gnome',        relation:'Wettbewerb des Wissens',   text:'Gnome sammeln Wissen in Bibliotheken. Ich sammle es auf der Haut der Welt. Wir debattieren manchmal über die beste Methode. Wir kommen zu keinem Ergebnis.' },
+  ],
+  bekannte: [
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für eine bekannte Erina in Meruria reserviert.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für eine bekannte Erina in Meruria reserviert.' },
+  ],
+  radar: { labels:['Mobilität','Kampf','Magie','Soziales','Überleben','Wahrnehmung'], values:[60,55,55,65,88,90] },
+  quiz: {
+    steps: [
+      { frage:'Was treibt deine Erina an?', optionen:[
+        { text:'Neugier — ich muss wissen, was da draußen ist. Das ist keine Wahl, das ist Biologie.',                               tags:['Schurke','Waldläufer','Magier'] },
+        { text:'Schutz — meine Gemeinschaft, mein Territorium, mein Bau. Das verteidige ich.',                                      tags:['Waldläufer','Druide','Kämpfer'] },
+        { text:'Wissen — ich führe Aufzeichnungen. Die Welt ist ein Buch und ich lese es.',                                         tags:['Magier','Druide','Barde'] },
+        { text:'Zugehörigkeit — ich suche eine neue Gemeinschaft, nachdem meine alte sich verändert hat.',                           tags:['Barde','Kleriker','Paladin'] },
+      ]},
+      { frage:'Wie nutzt du Stacheln und Graben taktisch?', optionen:[
+        { text:'Stacheln als passiver Schaden — ich greife, werde gegriffen, und trotzdem verliert der Feind TP.',                  tags:['Kämpfer','Barbar'] },
+        { text:'Graben für Überraschungsangriffe — ich tauche auf, greife an, verschwinde wieder.',                                  tags:['Schurke','Waldläufer'] },
+        { text:'Graben zur Erkundung — ich schaffe Zugang, wo andere keinen finden.',                                               tags:['Schurke','Waldläufer'] },
+        { text:'Selten — mein Build setzt auf andere Fähigkeiten.',                                                                 tags:['Magier','Barde'] },
+      ]},
+      { frage:'Welche Attributwahl passt zu dir?', optionen:[
+        { text:'WEI+1 — ich bin Naturverbundener, Druide oder spirituell orientierter Waldläufer.',                                  tags:['Druide','Waldläufer','Kleriker'] },
+        { text:'CHA+1 — ich bin sozial, überzeugend, oder nutze Charisma als magische Quelle.',                                     tags:['Barde','Paladin','Hexenmeister'] },
+        { text:'WEI+1 — ich bin Mönch und WEI ist meine Kampfquelle.',                                                              tags:['Mönch'] },
+        { text:'CHA+1 — ich bin Barbar und Einschüchterung ist eine Sozialkompetenz.',                                              tags:['Barbar','Kämpfer'] },
+      ]},
+      { frage:'Welche Rolle spielst du in der Gruppe?', optionen:[
+        { text:'Kundschafter — Wahrnehmung geübt, Dunkelsicht, Grabgeschwindigkeit. Ich bin überall.',                              tags:['Waldläufer','Schurke'] },
+        { text:'Naturmagie — GES+2, WEI+1, Giftresistenz, Druide oder Waldläufer.',                                                tags:['Druide','Waldläufer'] },
+        { text:'Unterstützer — Stacheln, Giftresistenz, Wahrnehmung. Ich halte alles im Blick.',                                   tags:['Barde','Kleriker'] },
+        { text:'Überraschungskämpfer — ich tauche auf, steche zu, verschwinde.',                                                    tags:['Schurke','Kämpfer'] },
+      ]},
+    ],
+    klassen: {
+      'Waldläufer':  'GES+2, WEI+1, Wahrnehmung, Grabgeschwindigkeit — der geborene Naturkundige und Kundschafter.',
+      'Druide':      'GES+2, WEI+1, Giftresistenz, territorialer Hintergrund — thematisch und mechanisch perfekt.',
+      'Schurke':     'GES+2, Wahrnehmung, Grabgeschwindigkeit für Infiltration, Stacheln für Griff-Situationen.',
+      'Barde':       'GES+2, CHA+1, Wahrnehmung, gesellige Natur — der soziale Aufklärer.',
+      'Mönch':       'GES+2, WEI+1 für KI, Stacheln ergänzen unbewaffneten Stil thematisch.',
+      'Kleriker':    'WEI+1, Giftresistenz, Wahrnehmung — Natur- oder Kriegsdomäne passend.',
+      'Kämpfer':     'GES+2 für Finesse-Kämpfer, Stacheln für Greifen-Taktiken, Giftresistenz.',
+      'Barbar':      'GES+2, Stacheln maximieren im Griff-Build, Giftresistenz für Ausdauer.',
+      'Paladin':     'GES+2, CHA+1 — der Schwur des Hains oder des Schutzes für den Bau-Verteidiger.',
+      'Magier':      'GES+2 für Ablenkungsmanöver, Wahrnehmung für Informationsvorteile, thematisch für Naturmagie.',
+    },
+  },
+  koerperlicherMerkmale: {
+    bewegungsrate:   '7,5 m (Gehen), 6 m (Graben durch Erde/Sand)',
+    volljaehrigkeit: '15 Jahre',
+    lebenserwartung: 'bis zu 60 Jahre (einige Älteste deutlich länger)',
+    groesse:  { kategorie:'Klein', min:'ca. 90 cm', max:'ca. 90 cm', formel:'alle ähnlich groß' },
+    gewicht:  { min:'ca. 23 kg', max:'ca. 23 kg', formel:'ca. 23 kg Durchschnitt' },
+    augenfarbe: 'tief schwarz, dunkelbraun oder bernsteinfarben',
+    hautfarbe:  'unter dem Fell: dunkel',
+    haarfarbe:  'Stacheln braun bis cremefarbig; Fell braun, graubraun oder rötlich',
+  },
+  statblock: {
+    features: [
+      { name:'Kreaturtyp',       text:'Humanoid.' },
+      { name:'Größenkategorie',  text:'Klein (ca. 90 cm, ca. 23 kg).' },
+      { name:'Dunkelsicht',      text:'Du kannst in schwachem Licht innerhalb von 18 Metern so sehen, als wäre es helles Licht, und in Dunkelheit so, als wäre es schwaches Licht. In der Dunkelheit kannst du keine Farben unterscheiden, nur Grautöne.' },
+      { name:'Robust',           text:'Vorteil auf Rettungswürfe gegen Gift und Resistenz gegen Giftschaden.' },
+      { name:'Stacheln',         text:'Während du eine Kreatur greifst oder von einer Kreatur gegriffen wirst, erleidet die Kreatur zu Beginn deines Zuges 1W4 Stichschaden.' },
+      { name:'Scharfe Sinne',    text:'Du hast Übung in der Fertigkeit Wahrnehmung.' },
+      { name:'Graben',           text:'Du hast eine Grabgeschwindigkeit von 6 Metern. Du kannst dich nur durch Erde und Sand graben, nicht durch Schlamm, Eis oder Fels.' },
+      { name:'Angeborenes Talent', text:null, talente:[] },
+    ],
+  },
+},
 'Feen': {
   name: 'Feen', accent: '#e870d8',
   subtitle: 'Kinder des Feenwildes · Geflügelte Zauberwesen',
@@ -1363,7 +1935,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Feen',
     beschreibung: 'Feen-Namen klingen verspielt und sylvanisch — kurze Klänge, oft mit Naturmotiven.',
     tabellen: [
@@ -1447,7 +2019,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',  text:'Feenwesen.' },
-      { name:'Größe',         text:'Deine Größenkategorie ist klein (62–92 cm).' },
+      { name:'Größenkategorie',         text:'Deine Größenkategorie ist klein (62–92 cm).' },
       { name:'Feenmagie',     text:'Du kennst den Zaubertrick Druidenkunst. Ab Stufe 3: Feenfeuer 1×/langer Rast. Ab Stufe 5: Vergrößern/Verkleinern 1×/langer Rast. Beide Zauber können auch mit Zauberplätzen gewirkt werden. Zaubermerkmal (wähle bei Rassenauswahl): Intelligenz, Charisma oder Weisheit.' },
       { name:'Feenflug',      text:'Deine Flugbewegungsrate entspricht deiner Schrittbewegungsrate. Du kannst sie nicht nutzen, wenn du mittelschwere oder schwere Rüstung trägst.' },
       { name:'Angeborenes Talent', text:null, talente:['Hockenstärke','Meister der Feenmagie','Pflanzenfreundschaft'] },
@@ -1488,7 +2060,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Felsengnome',
     beschreibung: 'Felsengnome tragen 6–12 Vor- und Spitznamen. Bei Menschen behalten sie nur die lustigsten. Nachnamen sind Clan-Wörter aus der Natursprache.',
     tabellen: [
@@ -1577,7 +2149,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',        text:'Humanoider. Gilt als Gnom bei allen Voraussetzungen und Effekten.' },
-      { name:'Größe',               text:'Klein (93–116 cm, ca. 34–54 Pfund).' },
+      { name:'Größenkategorie',               text:'Klein (93–116 cm, ca. 34–54 Pfund).' },
       { name:'Dunkelsicht',         text:'Im Umkreis von 18 m wird dämmriges Licht wie helles Licht und Dunkelheit wie dämmriges Licht behandelt. Im Dunkeln siehst du nur Graustufen.' },
       { name:'Gnomische Gerissenheit', text:'Du bist im Vorteil bei allen Rettungswürfen gegen Magie, sofern sie auf Intelligenz, Weisheit oder Charisma basieren.' },
       { name:'Artefaktkunde',       text:'Bei Intelligenz-(Geschichte)-Würfen, die mit magischen Gegenständen, alchemistischen Objekten oder technischen Geräten zusammenhängen, addierst du deinen doppelten Übungsbonus.' },
@@ -1622,7 +2194,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Feuer-Genasi',
     beschreibung: 'Elementarische Namen, die die Natur des Feuers widerspiegeln, oder Namen aus der Kultur ihrer Kindheit.',
     tabellen: [
@@ -1707,7 +2279,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',       text:'Humanoider.' },
-      { name:'Größe',              text:'Mittelgroß oder klein — du wählst die Größenkategorie, wenn du dieses Volk wählst.' },
+      { name:'Größenkategorie',              text:'Mittelgroß oder klein — du wählst die Größenkategorie, wenn du dieses Volk wählst.' },
       { name:'Dunkelsicht',        text:'Im Radius von 18 m kannst du in dämmrigem Licht wie in hellem Licht sehen, in Dunkelheit wie in dämmrigem Licht. Im Dunkeln erkennst du nur Graustufen.' },
       { name:'Feuerresistenz',     text:'Du bist gegen Feuerschaden resistent.' },
       { name:'Kondensation',       text:'Du bist von den Effekten von Durst unbetroffen.' },
@@ -1751,7 +2323,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Firbolg',
     beschreibung: 'Firbolg nutzen normalerweise keinen Namen. Die hier angegebenen sind Anleihen aus anderen Kulturen oder Naturbeschreibungen.',
     tabellen: [
@@ -1837,7 +2409,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',              text:'Humanoider.' },
-      { name:'Größe',                     text:'Deine Größenkategorie ist mittelgroß (198–243 cm).' },
+      { name:'Größenkategorie',                     text:'Deine Größenkategorie ist mittelgroß (198–243 cm).' },
       { name:'Firbolg-Magie',             text:'Du kannst Magie entdecken und Selbstverkleidung wirken (Selbstverkleidung ermöglicht bis zu 1 m größer/kleiner zu erscheinen). Jeder Zauber 1×/langer Rast, oder mit Zauberplätzen. Zaubermerkmal (wähle bei Rassenauswahl): Intelligenz, Charisma oder Weisheit.' },
       { name:'Sprache von Tier und Pflanze', text:'Du kannst mit Tieren, Pflanzen und Vegetation kommunizieren. Sie verstehen dich, du hast jedoch keine Spezialfähigkeit, ihre Antworten zu verstehen. Vorteil auf alle Charismawürfe, um sie zu beeinflussen.' },
       { name:'Verborgener Schritt',       text:'Als Bonusaktion wirst du bis zum Beginn deines nächsten Zuges unsichtbar. Der Zustand endet frühzeitig, wenn du angreifst, Schaden verursachst oder jemanden zu einem Rettungswurf zwingst. Anwendungen pro langer Rast: gleich deinem Übungsbonus.' },
@@ -1879,7 +2451,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Gebirgszwerge',
     beschreibung: 'Zwergische Namen klingen hart und konsonantreich. Nachnamen sind Klan-Namen, oft mit Beruf oder Ort verbunden.',
     tabellen: [
@@ -1967,7 +2539,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',              text:'Humanoider. Gilt als Zwerg bei allen Voraussetzungen und Effekten.' },
-      { name:'Größe',                     text:'Mittelgroß (117–147 cm, ~115–215 Pfund).' },
+      { name:'Größenkategorie',                     text:'Mittelgroß (117–147 cm, ~115–215 Pfund).' },
       { name:'Dunkelsicht',               text:'Im Umkreis von 18 m wird dämmriges Licht wie helles Licht und Dunkelheit wie dämmriges Licht behandelt. Im Dunkeln siehst du nur Graustufen.' },
       { name:'Zwergische Unverwüstlichkeit', text:'Du bist bei Rettungswürfen gegen Gifte im Vorteil und besitzt Resistenz gegen Giftschaden.' },
       { name:'Zwergisches Kampftraining', text:'Du bist geübt im Umgang mit Streitäxten, Beilen, leichten Hämmern und Kriegshämmern.' },
@@ -1978,8 +2550,274 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
 },
-'Geppettin':                { name:'Geppettin',                accent:'#b0a060', subtitle:'Lebendige Puppen · Kinder des Handwerks',                 tags:['Konstrukt','Klein','9 m Bewegung','Unsterblicher Körper','Neutral'],            headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null },
-'Giff':                     { name:'Giff',                     accent:'#8890a0', subtitle:'Hippomorphe Soldaten · Meister des Schwarzpulvers',       tags:['Humanoid','Groß','9 m Bewegung','Schusswaffe','Meistens Neutral'],              headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null },
+'Geppettin': {
+  name: 'Geppettin', accent: '#b0a060',
+  subtitle: 'Lebendige Spielzeuge · Kinder des Handwerks und der Magie',
+  tags: ['Konstrukt','Klein','7,5 m Bewegung','Harmlos (tarnt sich)','Alle Gesinnungen'],
+  headerImage: null,
+  lore: {
+    intro: [
+      'Stets eine Freude für Kinder, ähneln Geppettin lebenden Spielsachen aus Holz, Stoff oder Porzellan. Obwohl sie leicht mit Puppen verwechselt werden können, werden Geppettin nicht von einem Puppenspieler manipuliert — sie sind belebt, empfindungsfähig und unabhängig. Als Rasse sind sie eine Kuriosität: selten genug, um aufzufallen, aber zahlreich genug, um als echte Rasse und nicht als zufälliger Ausrutscher der Magie zu gelten.',
+      'Körperlich sind Geppettin ziemlich klein — oft etwas kleiner als Halblinge. Obwohl sie aus eher zerbrechlichen Materialien bestehen, verleiht ihnen ihre Empfindungsfähigkeit eine seltsame Zähigkeit. Sie hungern nie, ermüden selten und sind geschickt darin, harmlos zu wirken. Die meisten finden Arbeit in der Unterhaltung. Einige erzielen fantastische Erfolge als Spione und Meuchler.',
+      'Geppettin benennen sich selten selbst — typischerweise bekommen sie ihren Namen verliehen, von Kindern oder von Erwachsenen mit Kosenamen. Das stört die meisten nicht. Sie haben andere Dinge im Kopf.',
+    ],
+    gesellschaft: [
+      'Obwohl sie Kindern Freude bereiten, flößen Geppettin vielen Erwachsenen eine kalte Angst ein — die Art von Angst, die von der unheimlichen Erkenntnis begleitet wird, dass etwas Unbelebtes tatsächlich lebendig ist. Die erste Reaktion einer Person fällt gewöhnlich in zwei Lager: jene, die den Geppettoan entzückend finden, in Erinnerung an geliebte Kindheitserinnerungen; und jene, die von einer beunruhigenden Phobie erfasst werden.',
+      'Biskuit sind aus Porzellan und neigen zum Bösen — ihre glatten, kalten Oberflächen verbergen oft ebenso glatte, kalte Berechnungen. Marionetten aus Holz liegen meist irgendwo dazwischen: pragmatisch, robust, schwer zu erschüttern. Zerlumpte aus Stoff sind im Allgemeinen gut — weiches Material, weiche Haltung, aber unterschätze nicht, was Stoff ertragen kann.',
+      'In Meruria werden Geppettin an verschiedenen Orten angetroffen: als Bühnenunterhaltung, als Kinder-Begleiter in adeligen Häusern, oder in dunklen Gassen als das, wofür man sie am wenigsten hält. Ihre Fähigkeit, als gewöhnliches Spielzeug zu erscheinen, ist ihr stärkstes Werkzeug — und ihr gefährlichstes Geheimnis.',
+    ],
+    introBild:        { url: null, label: 'Geppettin · Illustration', caption: 'Charakter-Illustration', position: 'right', width: 360, height: 360 },
+    gesellschaftBild: { url: null, label: 'Geppettin unter Menschen', caption: 'Entzückend oder unheimlich', position: 'left', width: 240, height: 300 },
+  },
+  specialSection: {
+    type: 'variantCards', feat1Label: 'Material & Fähigkeit', feat2Label: 'Spieltipp',
+    label: 'Geppettin-Unterrassen',
+    beschreibung: 'Drei Materialien — drei Arten, lebendig zu sein. Wähle dein Substrat.',
+    varianten: [
+      {
+        farbe: 'Biskuit', name: 'Biskuit', schadensart: 'Porzellan', farbeHex: '#d4c4a8', bild: null,
+        augenfarbe: 'aufgemalte gläserne Augen; oft intensiv und starr',
+        hautfarbe:  'weißes oder elfenbeinfarbenes Porzellan, oft mit aufgemalten Zügen',
+        haarfarbe:  'aufgemalt oder aus Glasfasern; unbeweglich',
+        odemwaffe:  'GES+1, CHA+2 · Klein · 7,5 m · Spiegelglanz: 1×/kurze Rast, wenn du mit einem Täuschungswurf als Spielzeug erkannt wirst, kannst du den Angreifer mit deiner glatten Oberfläche ablenken (Nachteil auf seinen nächsten Angriff) · Neigt zum Bösen',
+        resistenz:  'CHA+2 für Barden, Hexenmeister. Spiegelglanz ergänzt Harmlos für soziale und heimliche Builds. Fragilität ist thematisch — Porzellan bricht, aber es schneidet auch.',
+      },
+      {
+        farbe: 'Marionette', name: 'Marionette', schadensart: 'Holz', farbeHex: '#8b6914', bild: null,
+        augenfarbe: 'geschnitzte Holzaugen; oft ausdruckslos oder übertrieben',
+        hautfarbe:  'lackiertes oder natürliches Holz; kann bemalt oder graviert sein',
+        haarfarbe:  'Fäden, Draht oder geschnitztes Holzhaar; beweglich',
+        odemwaffe:  'GES+1, STR+1, CHA+1 · Klein · 7,5 m · Holzrobustheit: du hast Resistenz gegen Wuchtschaden · Meist Neutral',
+        resistenz:  'Ausgeglichenste Unterrasse: drei Attribute je +1. Wuchtresistenz macht ihn zum defensivsten Geppettoan. Ideal für Kämpfer und Schurken.',
+      },
+      {
+        farbe: 'Zerlumpte', name: 'Zerlumpte', schadensart: 'Stoff', farbeHex: '#b08878', bild: null,
+        augenfarbe: 'aufgenähte Knopfaugen; warm und ausdrucksstark',
+        hautfarbe:  'weiches Stoff in allen Farben, oft mit Mustern oder Flicken',
+        haarfarbe:  'Garn, Wolle oder Stoff-Bänder; weich und beweglich',
+        odemwaffe:  'GES+1, WEI+1, CHA+1 · Klein · 7,5 m · Stofffaltung: du kannst dich in einem unbewachten Moment zusammenfalten (Größe Winzig) und hast dabei Vorteil auf Heimlichkeit-Würfe; Bonusaktion um zu entfalten · Im Allgemeinen Gut',
+        resistenz:  'WEI+1 für Druiden, Mönche, Kleriker. Stofffaltung ist die nützlichste Utility-Fähigkeit der drei Unterrassen für Erkundung und Heimlichkeit.',
+      },
+    ],
+  },
+  namenSection: {
+    type: 'nameRoller',
+    label: 'Namen der Geppettin',
+    beschreibung: 'Geppettin benennen sich selten selbst — sie bekommen Namen verliehen, meist von Kindern oder Erwachsenen mit Kosenamen. Die Namen klingen verspielt, niedlich oder manchmal überraschend dunkel.',
+    tabellen: [
+      { name:'Vergebene Namen', eintraege:['Birdie','Cuddles','Desmond','Dusty','Hobbes','Fluffie','Frowny','Lizzie','Patches','Princess','Pup-pup','Rote Jacke','Teddy','Buttons','Clocky','Dimples','Freckles','Giggles','Knotty','Lockets','Moppet','Nibble','Oogie','Pipkin','Quilter','Raggedy','Spool','Tangle','Thimble','Wobbles'] },
+    ],
+  },
+  charakterGenerator: {
+    felder: [
+      { label:'Unterrasse',     type:'choice', optionen:['Biskuit (CHA+2, Spiegelglanz)','Marionette (STR+1+WEI+1, Wuchtresistenz)','Zerlumpte (WEI+1, Stofffaltung)'] },
+      { label:'Name',           type:'table',  optionen:['Birdie','Cuddles','Desmond','Dusty','Hobbes','Fluffie','Frowny','Lizzie','Patches','Princess','Pup-pup','Teddy','Buttons','Clocky','Dimples','Freckles','Giggles','Knotty','Moppet','Nibble'] },
+      { label:'Material',       type:'table',  optionen:['weißes Porzellan mit bemalten Zügen','elfenbeinfarbenes Porzellan','natürliches Holz lackiert','bemaltes Holz bunt','weiches Baumwollstoff gemustert','geflickter Stoff in Erdtönen'] },
+      { label:'Augenfarbe',     type:'table',  optionen:['gläsern blau','gläsern grün','gläsern braun','Knopfaugen schwarz','geschnitzte Holzaugen','aufgemalt und übertrieben groß'] },
+      { label:'Besonderheit',   type:'table',  optionen:['Lacht immer zur falschen Zeit','Kann vollständig still werden — unheimlich still','Hat Glöckchen, die klingeln wenn man es nicht erwartet','Zieht immer Kinder magisch an','Bewegt sich leicht falsch — einen Moment zu spät oder zu früh','Singt leise wenn es allein ist'] },
+    ],
+  },
+  beziehungen: [
+    { volk:'Kinder',      relation:'Natürliche Verbundenheit',  text:'Kinder fürchten mich nicht. Sie sehen was ich bin: etwas Spielzeugartiges, das lebt. Das ist für sie wunderbar. Für mich auch.' },
+    { volk:'Erwachsene',  relation:'Unheimliche Faszination',   text:'Erwachsene teilen sich in zwei Gruppen: die, die entzückt sind, und die, die Angst haben. Ich weiß nie im Voraus, zu welcher Gruppe jemand gehört.' },
+    { volk:'Gnome',       relation:'Kollegiale Neugier',         text:'Gnome erschaffen gerne Dinge. Manchmal erschaffen sie Dinge, die leben. Wir haben eine seltsame Verbindung.' },
+    { volk:'Autognome',   relation:'Konstrukt-Geschwisterlichkeit', text:'Wir sind beide aus Handwerk entstanden. Wir sind beide belebt. Was das für uns bedeutet, diskutieren wir manchmal. Selten zu einem Ergebnis.' },
+    { volk:'Kleriker',    relation:'Theologische Neugier',       text:'Kleriker fragen sich, ob ich eine Seele habe. Ich frage mich das auch manchmal. Wir teilen die Frage, wenn nicht die Antwort.' },
+    { volk:'Hexenmeister', relation:'Instrumentalisierungsgefahr', text:'Manche wollen mich als Werkzeug. Ich bin kein Werkzeug. Das müssen manche mehrfach lernen.' },
+  ],
+  bekannte: [
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Geppettoan in Meruria reserviert.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Geppettoan in Meruria reserviert.' },
+  ],
+  radar: { labels:['Mobilität','Kampf','Magie','Soziales','Heimlichkeit','Täuschung'], values:[50,45,48,72,85,95] },
+  quiz: {
+    steps: [
+      { frage:'Welche Unterrasse spielst du?', optionen:[
+        { text:'Biskuit — Porzellan, CHA+2, Spiegelglanz. Ich bin das Gefährlichste was aussieht wie eine Puppe.',                  tags:['Barde','Hexenmeister','Schurke'] },
+        { text:'Marionette — Holz, ausgeglichene Attribute, Wuchtresistenz. Ich bin robuster als ich aussehe.',                     tags:['Kämpfer','Schurke','Barde'] },
+        { text:'Zerlupfte — Stoff, WEI+1, Stofffaltung. Ich verschwinde in Ecken, die andere für unmöglich halten.',               tags:['Schurke','Mönch','Druide'] },
+        { text:'Ich entscheide nach Klasse.',                                                                                       tags:['Kämpfer','Magier'] },
+      ]},
+      { frage:'Wie nutzt du Harmlos?', optionen:[
+        { text:'Als Hauptwerkzeug — ich bin eine Puppe bis ich es nicht mehr bin. Das ist der Plan.',                               tags:['Schurke','Barde'] },
+        { text:'Als soziale Öffnung — Kinder und nostalgische Erwachsene öffnen mir Türen.',                                       tags:['Barde','Hexenmeister'] },
+        { text:'Als Ablenkung — während alle auf den Geppettoan schauen, passiert woanders etwas.',                                 tags:['Schurke','Barde'] },
+        { text:'Selten bewusst — ich lebe und handle offen als das, was ich bin.',                                                  tags:['Kämpfer','Kleriker'] },
+      ]},
+      { frage:'Wie reagierst du auf die Angst der anderen?', optionen:[
+        { text:'Ich nutze sie aus — Angst vor Puppen ist ein Vorteil, kein Problem.',                                              tags:['Schurke','Hexenmeister'] },
+        { text:'Ich versuche sie zu zerstreuen — ich bin kein Monster, ich bin eine Person.',                                      tags:['Barde','Paladin'] },
+        { text:'Gleichgültig — die einen finden mich süß, die anderen unheimlich. Beides ist akzeptabel.',                         tags:['Kämpfer','Druide'] },
+        { text:'Fasziniert — die Reaktion der Menschen auf mich verrät mir viel über sie.',                                        tags:['Magier','Barde'] },
+      ]},
+      { frage:'Welche Rolle spielst du in der Gruppe?', optionen:[
+        { text:'Infiltrator — als harmlose Puppe komme ich überall rein. Danach bin ich es nicht mehr.',                           tags:['Schurke','Barde'] },
+        { text:'Soziale Schnittstelle — Harmlos öffnet mir Türen, CHA macht mir den Rest.',                                       tags:['Barde','Hexenmeister'] },
+        { text:'Überraschungskämpfer — niemand erwartet Widerstand von einer Puppe.',                                              tags:['Kämpfer','Schurke'] },
+        { text:'Magischer Spezialist — Konstruktanatomie und WEI/INT erlauben kreative Zauberei.',                                 tags:['Magier','Kleriker'] },
+      ]},
+    ],
+    klassen: {
+      'Schurke':     'GES+1, Harmlos für freie Infiltration, CHA+1 oder +2 (Biskuit) für Täuschung — der Geppettoan-Schurke ist erschreckend effektiv.',
+      'Barde':       'CHA+1 oder +2 (Biskuit), Harmlos für soziale Situationen, Konstruktanatomie gegen Schlaf.',
+      'Hexenmeister':'Biskuit CHA+2, Spiegelglanz als taktisches Werkzeug, thematisch für Schatten- oder Fee-Pakt.',
+      'Kämpfer':     'Marionette STR+1+GES+1, Wuchtresistenz — überraschend solider Frontlinie-Kämpfer.',
+      'Mönch':       'Zerlupfte WEI+1+GES+1, Stofffaltung für Positionierung, KI-Synergien.',
+      'Druide':      'Zerlupfte WEI+1, Konstruktanatomie gegen Schlaf/Krankheit, Naturthematik über Ursprung.',
+      'Kleriker':    'WEI+1 (Zerlupfte), Konstruktanatomie, thematische Tiefe für Lebens- oder Wissensdomäne.',
+      'Magier':      'INT-Boost extern nötig; Konstruktanatomie + GES+1 für Mobilität und Konzentration.',
+      'Paladin':     'CHA+1 (alle) oder +2 (Biskuit), Harmlos als unerwartete soziale Waffe.',
+      'Barbar':      'Marionette STR+1, Wuchtresistenz ergänzt Unverwüstlichkeit — unerwarteter Barbar-Build.',
+    },
+  },
+  koerperlicherMerkmale: {
+    bewegungsrate:   '7,5 m (Gehen)',
+    volljaehrigkeit: 'sofort bei Erwachen der Empfindungsfähigkeit',
+    lebenserwartung: 'altern nicht; können theoretisch unbegrenzt leben',
+    groesse:  { kategorie:'Klein', min:'ca. 70 cm', max:'ca. 90 cm', formel:'etwas kleiner als Halblinge' },
+    gewicht:  { min:'variiert stark nach Material', max:'variiert stark nach Material', formel:'Porzellan schwerer als Stoff' },
+    augenfarbe: 'aufgemalt, gläsern oder als Knöpfe — je nach Typ',
+    hautfarbe:  'Porzellan, Holz oder Stoff — je nach Unterrasse',
+    haarfarbe:  'aufgemalt, aus Garn oder Draht — selten echt',
+  },
+  statblock: {
+    features: [
+      { name:'Kreaturtyp',         text:'Konstrukt (lebendig und empfindungsfähig).' },
+      { name:'Größenkategorie',    text:'Klein (ca. 70–90 cm, kleiner als Halblinge).' },
+      { name:'Dunkelsicht',        text:'Du kannst in schwachem Licht innerhalb von 18 Metern so sehen, als wäre es helles Licht, und in Dunkelheit so, als wäre es schwaches Licht. In der Dunkelheit kannst du keine Farben unterscheiden, nur Grautöne.' },
+      { name:'Konstruktanatomie',  text:'Immun gegen nicht-magische Krankheiten. Du musst weder essen noch atmen (kannst es aber). Statt zu schlafen 4h inaktiver Zustand täglich — du bist dir der Umgebung bewusst und nimmst herannahende Feinde wahr. Schlafauslösende Magie wirkt trotzdem.' },
+      { name:'Harmlos',            text:'Du hast Vorteil auf CHA-(Täuschung)-Würfe, um als gewöhnliches Spielzeug zu erscheinen.' },
+      { name:'— Biskuit: Spiegelglanz', text:'1×/kurze Rast, wenn ein Täuschungswurf erkannt wird oder ein Angreifer dich für Beute hält: der Angreifer hat Nachteil auf seinen nächsten Angriffswurf gegen dich.' },
+      { name:'— Marionette: Holzrobustheit', text:'Resistenz gegen Wuchtschaden.' },
+      { name:'— Zerlupfte: Stofffaltung', text:'Als Aktion kannst du dich auf Winzig-Größe zusammenfalten (Vorteil auf Heimlichkeit). Als Bonusaktion wieder entfalten. Kein Tragen von Ausrüstung im gefalteten Zustand.' },
+    ],
+  },
+},
+'Giff': {
+  name: 'Giff', accent: '#8890a0',
+  subtitle: 'Hippomorphe Soldaten · Kinder des verlorenen Götterlichts',
+  tags: ['Humanoid','Mittelgroß','9 m Schwimmen','Astralfunke','Meistens Neutral'],
+  headerImage: null,
+  lore: {
+    intro: [
+      'Giff sind große, breitschultrige Wesen mit nilpferdähnlichen Zügen — breite Schnauzen, mächtige Kiefer, dicke Haut. Manche haben glatte Haut, andere kurze Borsten auf Gesicht und Schädeldecke. Wo immer sie auftauchen, werden sie bemerkt. Das ist keine Absicht — das ist schlicht ihre Natur.',
+      'Die Heimatwelt der Giff ist Legende. Kein lebender Giff hat sie je gesehen, und niemand weiß, wo sie liegt. Die Götter, die sie erschufen, sind ebenfalls vergessen — ihre titanischen, versteinerten Körper treiben auf dem Astralmeer, isoliert und unkenntlich. Was bleibt, ist ein Echo: ein Astralfunke, den die Giff in sich tragen, ohne seinen Ursprung zu kennen.',
+      'Giff spüren diesen Funken am stärksten im Wildraum oder auf dem Astralmeer — als ob etwas tief in ihnen nach Hause sucht, ohne zu wissen, wo Hause ist. Die meisten geben sich damit nicht lange ab. Es gibt Aufträge, Waffen und gute Kompagnons. Das reicht.',
+    ],
+    gesellschaft: [
+      'Giff sind geborene Soldaten — nicht weil jemand sie dazu gezwungen hat, sondern weil Struktur, Rang und Disziplin ihnen die Welt erklären. In einer Welt ohne Götter und ohne Heimat ist die Kompagnie das einzige, das zählt: Wer neben dir steht, wer deinen Rücken deckt, wen du im Notfall opferst.',
+      'Schusswaffen sind für Giff keine Werkzeuge — sie sind Statussymbole, Kunstwerke und Erbe zugleich. Ein Giff ohne eine gepflegte Feuerwaffe ist ein Giff, dem etwas Wesentliches fehlt. Die Verbindung zu diesen Waffen geht tiefer als Vorliebe; sie ist in ihrer Seele verankert, ein Echo ihrer vergessenen Götter, die Schusswaffen schätzten.',
+      'Eine bekannte Meinungsverschiedenheit unter Giff betrifft die Aussprache ihres eigenen Namens: hartes G oder weiches G? Diese Frage führt zu verletzten Gefühlen, lauten Streitereien und gelegentlichen Kopfstoßwettbewerben — aber selten zu mehr. Beides ist schließlich akzeptabel. Nur frag einen Giff niemals nach seiner Meinung, wenn du keine Stunde Zeit hast.',
+      'In Meruria sind Giff als Söldner, Leibwächter und Kanoniere bekannt. Divisionen, die sie anheuern, wissen: Ein Giff kostet mehr als ein Mensch, hält aber auch mehr aus — und stellt keine unangenehmen Fragen, solange die Bezahlung stimmt.',
+    ],
+    introBild:        { url: null, label: 'Giff · Illustration', caption: 'Charakter-Illustration', position: 'right', width: 360, height: 360 },
+    gesellschaftBild: { url: null, label: 'Söldnerkompagnie · Illustration', caption: 'Die Kompagnie ist die Familie', position: 'left', width: 240, height: 300 },
+  },
+  specialSection: {
+    type: 'traitRoller',
+    label: 'Militärisches Erbe',
+    beschreibung: 'Jeder Giff trägt eine Vergangenheit in Uniform — oder eine Narbe davon. Würfle oder wähle deinen Hintergrund.',
+    merkmale: [
+      'Veteran — ich habe in mindestens drei Konflikten gedient. Ich erinnere mich an alle. Einige davon wünschte ich zu vergessen.',
+      'Deserteur — ich habe meine Kompagnie verlassen. Die Gründe sind meine eigenen. Wer fragt, bekommt keine Antwort.',
+      'Letzter Überlebender — meine ganze Einheit ist gefallen. Ich bin übrig. Das ist kein Ruhm — das ist eine Schuld.',
+      'Ausbilder — ich habe andere trainiert, zu töten. Manche davon sind noch am Leben. Ich bin stolz auf sie.',
+      'Kanonier — ich habe die größten Geschütze bedient, die man sich vorstellen kann. Meine Ohren haben sich nie ganz erholt.',
+      'Kundschafter — ich wurde nie gesehen. Ich habe alles gesehen. Für einen Giff dieser Größe ist das eine bemerkenswerte Leistung.',
+      'Waffenschmied — ich habe jede Waffe, die ich je geführt habe, selbst gebaut oder gewartet. Ich vertraue keiner Waffe, die ich nicht kenne.',
+      'Söldner ohne Kompagnie — ich arbeite allein. Bezahle gut, frag nicht zu viel, und wir kommen klar.',
+    ],
+  },
+  namenSection: {
+    type: 'nameRoller',
+    label: 'Namen der Giff',
+    beschreibung: 'Giff-Namen klingen hart und konsonantenstark, oft mit militärischen Spitznamen oder Rangbezeichnungen, die den echten Namen ersetzen. Geschlecht unterscheidet Namen kaum.',
+    namen: ['Bhorbal','Chkavar','Dhomruk','Frogmok','Grummash','Hremmur','Jhavok','Kholbrak','Lhograk','Mhorruk','Nhokbar','Pabwubba','Rhomuk','Shavrak','Thurkham','Uhgmork','Vhorram','Whumrok','Xhavrak','Yommuk','Zhomrak','Akhbar','Bulmok','Chorrum','Dhakkur','Ebhrak','Formuk','Groshak','Humrak','Inkhbar','Jorrhuk','Khomrak','Lhurruk','Morgash','Norruk','Ohgram','Phorkum','Rhumrak','Sgorrak','Thumkor','Uglrak','Vorrhum','Whorrak','Xhorruk','Yorram','Zhumrak','Bolgrak','Dhumrak','Frommuk','Grakhur'],
+  },
+  charakterGenerator: {
+    felder: [
+      { label:'Vorname',       type:'table',  optionen:['Bhorbal','Chkavar','Dhomruk','Frogmok','Grummash','Hremmur','Jhavok','Kholbrak','Lhograk','Mhorruk','Nhokbar','Pabwubba','Rhomuk','Shavrak','Thurkham','Vhorram','Whumrok','Zhomrak'] },
+      { label:'Spitzname',     type:'table',  optionen:['Der Kanonier','Eisenfaust','Dreimal-Treffer','Keine-Fragen','Alter Brummer','Kugeldicht','Letzter Mann','Pulverfass','Stummdeck','Stahlkopf'] },
+      { label:'Hautfarbe',     type:'table',  optionen:['nilpferdgrau mit rosa Flecken','dunkelbraun-grau','graublau wie Seemannsjacke','blass-grau mit Narben','gelbbraun und fleckig','tief-anthrazit mit Glanz'] },
+      { label:'Besonderheit',  type:'table',  optionen:['kurze Borsten auf dem Schädel','glatte Haut bis auf Narben','kleine Hörner über den Schläfen','ungewöhnlich helle Augen','mächtige Stoßzähne','Ohren die ständig zucken'] },
+      { label:'Aussprache',    type:'choice', optionen:['Hartes G (Giff wie "Gift")','Weiches G (Giff wie "Gilet")'] },
+      { label:'Militär-Erbe',  type:'table',  optionen:['Veteran','Deserteur','Letzter Überlebender','Ausbilder','Kanonier','Kundschafter','Waffenschmied','Söldner ohne Kompagnie'] },
+      { label:'Lieblingswaffe',type:'table',  optionen:['Muskete','Pistole','Donnerbüchse','Handfeuerwaffe','Armbrust (in Ermangelung)','Schrotflinte'] },
+    ],
+  },
+  beziehungen: [
+    { volk:'Menschen',       relation:'Brauchbare Arbeitgeber',   text:'Menschen stellen Giff ein und bezahlen pünktlich. Das ist alles, was ich von einem Arbeitgeber verlange. Freundschaft ist optional.' },
+    { volk:'Zwerge',         relation:'Handwerklicher Respekt',   text:'Zwerge bauen die besten Waffen. Wir wissen das zu schätzen. Wer die beste Waffe baut, verdient Respekt — auch wenn er klein ist.' },
+    { volk:'Gnome',          relation:'Nützliche Erfinder',       text:'Gnome erfinden Dinge, die explodieren. Das ist sehr nützlich. Ich lasse sie in meiner Nähe, solange sie nichts in die falsche Richtung richten.' },
+    { volk:'Elfen',          relation:'Unverständnis',            text:'Elfen kämpfen mit Bögen und Magie und reden viel von Eleganz. Ich verstehe das nicht. Ein gutes Gewehr ist elegant. Ein Elfenbogen ist... ausreichend.' },
+    { volk:'Tieflinge',      relation:'Professionelle Neutralität',text:'Tieflinge haben einen schlechten Ruf. Ich kenne genug von ihnen, die ihren Sold verdient haben. Ich urteile nach Leistung, nicht nach Aussehen.' },
+    { volk:'Andere Giff',    relation:'Komplizierte Kameradschaft',text:'Giff verstehen sich auf Anhieb — außer wenn es um die Aussprache geht. Dann wird es laut. Manchmal auch körperlich. Aber danach ist es gut.' },
+  ],
+  bekannte: [
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Giff in Meruria reserviert.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Giff in Meruria reserviert.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Giff in Meruria reserviert.' },
+  ],
+  radar: { labels:['Mobilität','Kampf','Magie','Soziales','Überleben','Weisheit'], values:[60,92,10,42,78,45] },
+  quiz: {
+    steps: [
+      { frage:'Was treibt deinen Giff an?', optionen:[
+        { text:'Loyalität — ich habe eine Kompagnie, einen Auftrag, einen Eid. Der gilt.',                             tags:['Kämpfer','Paladin'] },
+        { text:'Sold — ich bin kein Idealist. Wer gut bezahlt, bekommt gute Arbeit.',                                 tags:['Kämpfer','Schurke'] },
+        { text:'Ruhm — mein Name soll in Kanonenkugeln geschrieben werden.',                                          tags:['Barbar','Kämpfer'] },
+        { text:'Antworten — ich will wissen, woher dieser Funke in mir kommt.',                                       tags:['Kleriker','Hexenmeister'] },
+      ]},
+      { frage:'Wie nutzt du deinen Astralfunken?', optionen:[
+        { text:'Agressiv — ich entlade ihn bei jedem Treffer. Schaden ist die Sprache, die alle verstehen.',          tags:['Kämpfer','Barbar'] },
+        { text:'Taktisch — ich spare ihn für entscheidende Momente. Übungsbonus-mal Treffer, verteilt klug.',         tags:['Kämpfer','Paladin'] },
+        { text:'Fernkampf — ein Gewehrschuss mit Astralfunke auf große Distanz ist mein Spezialgebiet.',              tags:['Kämpfer','Waldläufer'] },
+        { text:'Mit Schusswaffe — Übungsbonus auf Schaden + kein Nachteil auf große Entfernung = Dominanz.',         tags:['Waldläufer','Kämpfer'] },
+      ]},
+      { frage:'Welche Waffe bevorzugst du?', optionen:[
+        { text:'Schusswaffe — Pistolet, Muskete, Donnerbüchse. Was knallt.',                                          tags:['Kämpfer','Waldläufer'] },
+        { text:'Nahkampfwaffe — ich will das Ziel sehen, wenn es fällt.',                                             tags:['Kämpfer','Barbar'] },
+        { text:'Beides — je nach Situation.',                                                                          tags:['Kämpfer','Schurke'] },
+        { text:'Die beste verfügbare Waffe — Schönheit liegt in der Effektivität.',                                    tags:['Waldläufer','Kämpfer'] },
+      ]},
+      { frage:'Welche Rolle spielst du in einer Gruppe?', optionen:[
+        { text:'Fernkampf-Spezialist — Astralfunke + Schusswaffe-Meisterschaft = niemand ist sicher.',               tags:['Kämpfer','Waldläufer'] },
+        { text:'Frontkämpfer — Nilpferdstatur, Astralfunke im Nahkampf, ich stehe und falle nicht.',                 tags:['Kämpfer','Barbar'] },
+        { text:'Universalsoldat — ich kann alles. Gut. Manche Dinge sogar sehr gut.',                                tags:['Kämpfer','Paladin'] },
+        { text:'Anführer — ich kenne Befehlsstrukturen. Ich mache das Chaos zur Formation.',                          tags:['Paladin','Kämpfer'] },
+      ]},
+    ],
+    klassen: {
+      'Kämpfer':     'Der perfekte Giff. Astralfunke skaliert mit Übungsbonus, Schusswaffe-Meisterschaft, Nilpferdstatur — jede Klassenfähigkeit passt.',
+      'Waldläufer':  'Schusswaffe ohne Nachteil auf weite Distanz + Astralfunke = der gefährlichste Scharfschütze im Feld.',
+      'Barbar':      'Nilpferdstatur + STR-Vorteil + Stärkerettungswürfe + Astralfunke im Wutanfall — massiv und nicht aufzuhalten.',
+      'Paladin':     'Astralfunke als zusätzlicher Schadensbonus neben Göttlichem Strahl. STR-Vorteil für körperliche Präsenz.',
+      'Schurke':     'Kein Nachteil auf Fernkampf-Angriffe + Schusswaffe-Meisterschaft + Hinterhaltsschaden. Sehr unorthodox. Sehr effektiv.',
+      'Kleriker':    'Nilpferdstatur und STR-Rettungswürfe für Kriegskleriker. Astralfunke als spiritueller Bonus thematisch passend.',
+      'Mönch':       'STR-Mönch möglich: Nilpferdstatur + STR-Vorteil. Ungewöhnlich, aber die Traglast-Bonus für Grappling ist nützlich.',
+      'Hexenmeister':'Die Verbindung zur Astralebene passt thematisch gut. Astralfunke als Ergänzung zu Eldrischem Strahl.',
+    },
+  },
+  koerperlicherMerkmale: {
+    bewegungsrate:   '9 m (Gehen und Schwimmen)',
+    volljaehrigkeit: 'keine offizielle Angabe · reif mit ca. 20 Jahren',
+    lebenserwartung: 'keine offizielle Angabe · schätzungsweise 80–120 Jahre',
+    groesse:  { kategorie:'Mittelgroß', min:'175 cm', max:'215 cm', formel:'173 cm + 2W20 · 1 cm' },
+    gewicht:  { min:'120 kg', max:'200 kg', formel:'ca. 150–180 kg Durchschnitt' },
+    augenfarbe: 'dunkelbraun, schwarz oder bernsteinfarben',
+    hautfarbe:  'nilpferdgrau, dunkelbraun-grau oder blass-grau; teils rosa Flecken',
+    haarfarbe:  'keine (kurze Borsten möglich auf Schädel und Gesicht)',
+  },
+  statblock: {
+    features: [
+      { name:'Kreaturentyp',   text:'Humanoider.' },
+      { name:'Größenkategorie',text:'Mittelgroß.' },
+      { name:'Astralfunke',    text:'Wenn du ein Ziel mit einer einfachen oder kriegerischen Waffe triffst, kannst du das Ziel zusätzlichen Kraftschaden in Höhe deines Übungsbonus erleiden lassen. Du kannst diesen Zug so oft nutzen, wie dein Übungsbonus beträgt, aber nicht öfter als einmal pro Runde. Du erhältst alle verbrauchten Nutzungen zurück, wenn du eine lange Rast beendest.' },
+      { name:'Waffenmeisterschaft mit Schusswaffen', text:'Du hast Übung mit allen Schusswaffen und ignorierst die Ladeeigenschaft jeder Schusswaffe. Außerdem erleidest du keinen Nachteil auf deinen Angriffswurf, wenn du mit einer Schusswaffe auf große Entfernungen schießt.' },
+      { name:'Nilpferdstatur', text:'Du hast Vorteil auf Stärke-basierte Eigenschaftswürfe und Stärkerettungswürfe. Außerdem giltst du für die Bestimmung deiner Tragekapazität und des Gewichts, das du schieben, ziehen oder heben kannst, als eine Größenkategorie größer.' },
+      { name:'Angeborenes Talent', text:null, talente:['Astrale Widerstandsfähigkeit','Funkenteiler','Nahkampfspezialist'] },
+    ],
+  },
+},
 'Githyanki': {
   name: 'Githyanki', accent: '#d0b030',
   subtitle: 'Krieger der Astralebene · Erben des Widerstands',
@@ -2014,7 +2852,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Githyanki',
     beschreibung: 'Githyanki-Namen klingen hart und kriegerisch — kurze Silben, manchmal mit Apostrophen.',
     tabellen: [
@@ -2100,7 +2938,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',              text:'Humanoider.' },
-      { name:'Größe',                     text:'Deine Größenkategorie ist mittelgroß (185–230 cm).' },
+      { name:'Größenkategorie',                     text:'Deine Größenkategorie ist mittelgroß (185–230 cm).' },
       { name:'Psychische Unverwüstlichkeit', text:'Du bist gegen psychischen Schaden resistent.' },
       { name:'Githyanki-Psionik',         text:'Du kennst den Zaubertrick Magierhand (die Hand ist unsichtbar). Ab Stufe 3: Springen 1×/langer Rast. Ab Stufe 5: Nebelschritt 1×/langer Rast. Beide Zauber können auch mit Zauberplätzen gewirkt werden. Zaubermerkmal (wähle bei Rassenauswahl): Intelligenz, Weisheit oder Charisma.' },
       { name:'Astrales Wissen',           text:'Wenn du eine lange Rast beendest, projizierst du dein Bewusstsein kurz in die Astralebene. Du bist bis zum Ende der nächsten langen Rast in einer Fertigkeit sowie mit einer Waffe oder einem Werkzeug deiner Wahl (aus dem Spielerhandbuch) geübt.' },
@@ -2142,7 +2980,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Githzerai',
     beschreibung: 'Githzerai-Namen klingen ruhig und syllabisch — oft weicher als die harten Githyanki-Namen.',
     tabellen: [
@@ -2228,7 +3066,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',              text:'Humanoider.' },
-      { name:'Größe',                     text:'Deine Größenkategorie ist mittelgroß (185–230 cm).' },
+      { name:'Größenkategorie',                     text:'Deine Größenkategorie ist mittelgroß (185–230 cm).' },
       { name:'Psychische Unverwüstlichkeit', text:'Du bist gegen psychischen Schaden resistent.' },
       { name:'Githzerai-Psionik',         text:'Du kennst den Zaubertrick Magierhand (die Hand ist unsichtbar). Ab Stufe 3: Schild 1×/langer Rast. Ab Stufe 5: Gedanken wahrnehmen 1×/langer Rast. Beide Zauber können auch mit Zauberplätzen gewirkt werden. Für keinen dieser Zauber sind Materialkomponenten erforderlich, wenn du sie mit diesem Merkmal wirkst. Zaubermerkmal (wähle bei Rassenauswahl): Intelligenz, Weisheit oder Charisma.' },
       { name:'Mentale Disziplin',         text:'Dank deiner psychischen Abwehrfähigkeit bist du bei Rettungswürfen gegen die Zustände Bezaubert und Verängstigt sowie zu deren Aufhebung bei dir selbst im Vorteil.' },
@@ -2236,7 +3074,162 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
 },
-'Gnoll':                    { name:'Gnoll',                    accent:'#a07040', subtitle:'Kinder der Hyäne · Diener der Blutgöttin',                tags:['Humanoid','Mittelgroß','9 m Bewegung','Aasfressen','Chaotisch Böse'],           headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null },
+'Gnoll': {
+  name: 'Gnoll', accent: '#a07040',
+  subtitle: 'Kinder der Hyäne · Raubtiere mit Verstand',
+  tags: ['Humanoid','Mittelgroß','9 m Bewegung','Geruchssinn','Meist Chaotisch Böse'],
+  headerImage: null,
+  lore: {
+    intro: [
+      'Gnolls sind hyänenartige Humanoide — zähnestarrend, muskulös, mit einem Kichern, das nicht lustig gemeint ist. Als Produkt einer Kultur, die Faulheit, Selbstsucht und Dominanz schätzt, sind die meisten Gnolls böse. Ihr Alltag ist brutal und kurz: Die seltenen Exemplare, die eines natürlichen Todes sterben, erleben kaum mehr als 70 Sommer. Das prägt eine Weltsicht, in der heute gefressen wird, weil morgen vielleicht nicht kommt.',
+      'Gnoll-Weibchen sind größer und kräftiger als ihre männlichen Gegenstücke — bis zu 2,40 Meter groß und über 115 Kilogramm schwer. In den meisten Gnoll-Gesellschaften bedeutet größer auch mächtiger, und die Hierarchien sind entsprechend. Subtilität ist nicht ihre Stärke; lautstarke Einschüchterung schon.',
+      'Trotzdem gibt es immer Ausnahmen. Ein Gnoll, der aus seinem Rudel herausgebrochen ist — freiwillig oder nicht — trägt seine Natur wie eine Rüstung: furchteinflößend, widerwillig respektiert, und manchmal überraschend loyal gegenüber denen, die ihm Respekt entgegenbringen.',
+    ],
+    gesellschaft: [
+      'Gnoll-Gesellschaften sind nach Dominanz organisiert. Die Stärkste frisst zuerst, entscheidet zuerst, spricht zuerst. Rangstreitigkeiten werden körperlich ausgetragen und selten vergessen. Eine Kultur der Einschüchterung zieht sich durch jeden Aspekt des Zusammenlebens — wer einschüchtert, dominiert; wer sich einschüchtern lässt, gehorcht.',
+      'Zivilisierte Gnolls finden ihren Platz in menschlichen Gesellschaften als Söldner, Tempelwächter oder Schläger. Sie lernen, ihre Unterwürfigkeit gegenüber Mächtigeren zu zeigen — nicht aus echtem Respekt, sondern aus pragmatischer Anpassung. Wilde Gnolls dagegen kennen ihr Terrain seit Generationen und lesen Wüste oder Steppe wie ein offenes Buch.',
+      'In Meruria begegnet man Gnolls am häufigsten als Söldner oder als Teil mobiler Raubbanden. Ein Gnoll in einer Stadt ist entweder unter strenger Kontrolle, auf der Flucht, oder hat etwas gelernt, das die meisten seiner Art nie lernen: dass Einschüchterung manchmal stärker wirkt, wenn man sie sich für den richtigen Moment aufhebt.',
+    ],
+    introBild:        { url: null, label: 'Gnoll · Illustration', caption: 'Charakter-Illustration', position: 'right', width: 360, height: 360 },
+    gesellschaftBild: { url: null, label: 'Gnoll-Rudel', caption: 'Hierarchie durch Dominanz', position: 'left', width: 240, height: 300 },
+  },
+  specialSection: {
+    type: 'variantCards', feat1Label: 'Attribute & Sondermerkmal', feat2Label: 'Spieltipp',
+    label: 'Gnoll-Unterrassen',
+    beschreibung: 'Vier Unterrassen — vier Umgebungen, die einen Gnoll formen. Wähle deine Herkunft.',
+    varianten: [
+      {
+        farbe: 'Zivilisiert', name: 'Zivilisierter Gnoll', schadensart: 'Söldner', farbeHex: '#a07040', bild: null,
+        augenfarbe: 'gelbbraun oder bernsteinfarben',
+        hautfarbe:  'geflecktes braunes oder graues Fell, gepflegt',
+        haarfarbe:  'Mähne aus grobem Haar; dunkelbraun bis schwarz',
+        odemwaffe:  'STR+2, KON+1 · Mittelgroß · 9 m · Unterwürfig: Bei Überzeugung gegenüber offensichtlich Mächtigeren gilt doppelter Übungsbonus · Geruchssinn, Tyrann, Weiterleben, Gnoll-Waffenausbildung',
+        resistenz:  'Vielseitigste Unterrasse. KON+1 für Ausdauer. Unterwürfig ergänzt Tyrann für Charaktere, die sowohl einschüchtern als auch schmeicheln können.',
+      },
+      {
+        farbe: 'Wild', name: 'Wilder Gnoll', schadensart: 'Jäger', farbeHex: '#7a5830', bild: null,
+        augenfarbe: 'hellgelb oder ockerfarben',
+        hautfarbe:  'geflecktes braunes oder sandiges Fell, verwittert',
+        haarfarbe:  'struppige Mähne; braun, sandfarbig oder grau',
+        odemwaffe:  'STR+2, WEI+1 · Mittelgroß · 9 m · Aassuche: Bei Überleben für Nahrung/Wasser gilt doppelter Übungsbonus · Geruchssinn, Tyrann, Weiterleben, Gnoll-Waffenausbildung',
+        resistenz:  'Bester Outdoor-Gnoll. WEI+1 für Waldläufer und Druiden. Aassuche macht ihn zum zuverlässigsten Überlebenskünstler jeder Gruppe.',
+      },
+      {
+        farbe: 'Wüste', name: 'Wüstengnoll', schadensart: 'Karawanenführer', farbeHex: '#c8a050', bild: null,
+        augenfarbe: 'goldgelb bis bernsteinfarben, schmal',
+        hautfarbe:  'sandfarbenes oder hellbraunes Fell, dünn und hitzeadaptiert',
+        haarfarbe:  'kurze Mähne; blond bis sandfarbig',
+        odemwaffe:  'STR+2, CHA+1 · Mittelgroß · 9 m · Hitzetoleranz: Resistenz gegen Feuerschaden, 3× so lang ohne Wasser überlebensfähig · Geruchssinn, Tyrann, Weiterleben, Gnoll-Waffenausbildung',
+        resistenz:  'Einzige CHA-Gnoll-Linie. Feuerresistenz + CHA+1 für Barden, Paladine oder soziale Söldner. Thematisch stark in Wüstenkampagnen.',
+      },
+      {
+        farbe: 'Nekropole', name: 'Nekropolengnoll', schadensart: 'Grabräuber', farbeHex: '#5a5060', bild: null,
+        augenfarbe: 'blassgrau oder grünlich schimmernd',
+        hautfarbe:  'graues, bleiches Fell mit dunklen Flecken',
+        haarfarbe:  'dünne verfilzte Mähne; grau oder schwarz',
+        odemwaffe:  'STR+2, GES+1 · Mittelgroß · 9 m · Unter den Toten: Resistenz gegen nekrotischen Schaden · Fluchtrotzigkeit: Vorteil auf RW gegen Flüche · Geruchssinn, Tyrann, Weiterleben, Gnoll-Waffenausbildung',
+        resistenz:  'Stärkste defensive Unterrasse. GES+1 für Schurken. Nekrose-Resistenz + Fluchimmunität macht ihn in Gewölben und Gräbern fast unverwundbar.',
+      },
+    ],
+  },
+  namenSection: {
+    type: 'nameRoller',
+    label: 'Namen der Gnolls',
+    beschreibung: 'Gnollische Namen klingen für Uneingeweihte fast wie Knurren. Gnolls verwenden Düfte und kleine Gesten, um subtile Bedeutungen zu vermitteln — zwei miteinander sprechende Gnolls können einem Beobachter fast wie bellende Hunde erscheinen.',
+    tabellen: [
+      { name:'Männliche Namen', eintraege:['Gnarg','Rakh','Vorrk','Dresh','Fangg','Hakk','Jorrk','Krak','Lurk','Morrg','Narg','Orrk','Prakh','Rakkar','Skrag','Trakh','Urrk','Vrakh','Wrrg','Xarg','Yorrk','Zargh','Brakk','Crag','Drakh','Fakh','Grakk','Hrarg','Irakh','Jrakk'] },
+      { name:'Weibliche Namen', eintraege:['Gnarra','Rakhha','Vorrka','Dresha','Fangga','Hakka','Jorra','Kraka','Lurka','Morra','Narga','Orra','Praka','Rakhara','Skraga','Traka','Urka','Vraka','Wrga','Xarga','Yorra','Zarga','Braka','Craga','Draka','Faka','Graka','Hraga','Iraka','Jraka'] },
+    ],
+  },
+  charakterGenerator: {
+    felder: [
+      { label:'Unterrasse',   type:'table',  optionen:['Zivilisierter Gnoll (KON+1)','Wilder Gnoll (WEI+1)','Wüstengnoll (CHA+1)','Nekropolengnoll (GES+1)'] },
+      { label:'Fellfarbe',    type:'table',  optionen:['braun gefleckt','grau gefleckt','sandfarbig','dunkelbraun fast schwarz','blassgrau','rotbraun gefleckt'] },
+      { label:'Augenfarbe',   type:'table',  optionen:['bernsteinfarben','gelbbraun','hellgelb','blassgrau','grünlich schimmernd','ockerfarben'] },
+      { label:'Mähne',        type:'table',  optionen:['buschig und dunkel','struppig und verwittert','kurz und sandfarbig','verfilzt und grau','gepflegt und schwarz','fast nicht vorhanden'] },
+      { label:'Besonderheit', type:'table',  optionen:['Immer kichernd — es ist keine Freude','Narben von Rangkämpfen','Übergroße Zähne (auffällig)','Riecht alles bevor andere es sehen','Kauert auch im Stehen etwas','Trägt Knochen als Schmuck'] },
+    ],
+  },
+  beziehungen: [
+    { volk:'Menschen',    relation:'Angst/Nützlichkeit',      text:'Menschen fürchten uns. Das ist angemessen. Wenn sie uns brauchen, bezahlen sie gut. Wenn sie uns nicht brauchen, machen sie einen weiten Bogen. Das ist auch angemessen.' },
+    { volk:'Orks',        relation:'Wettbewerb/Respekt',      text:'Orks sind stark und direkt. Wir konkurrieren im selben Raum. Ich respektiere, was ich bekämpfen könnte.' },
+    { volk:'Zwerge',      relation:'Gegenseitige Verachtung', text:'Zwerge graben Gräber und nennen es Kultur. Wir plündern Gräber und nennen es Überleben. Wir sind nicht so verschieden. Das ärgert uns beide.' },
+    { volk:'Hyänen',      relation:'Tierische Verbundenheit', text:'Das Lachen der Hyäne ist kein Lachen. Ich weiß das. Ich bin das.' },
+    { volk:'Söldner',     relation:'Berufliche Solidarität',  text:'Söldner urteilen nicht. Söldner fragen nicht woher du kommst. Söldner zahlen. Das ist die sauberste Beziehung, die ich kenne.' },
+    { volk:'Kleriker',    relation:'Gefährliche Nähe',        text:'Kleriker haben Götter hinter sich. Das macht sie unangenehm. Einige Gnoll-Stämme verehren die Blutgöttin. Ich tue es nicht. Aber ich verstehe, warum andere es tun.' },
+  ],
+  bekannte: [
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Gnoll in Meruria reserviert.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Gnoll in Meruria reserviert.' },
+  ],
+  radar: { labels:['Mobilität','Kampf','Magie','Soziales','Überleben','Einschüchterung'], values:[75,88,15,35,72,92] },
+  quiz: {
+    steps: [
+      { frage:'Welche Unterrasse spielst du?', optionen:[
+        { text:'Zivilisiert — ich habe gelernt, mich anzupassen. KON+1 und Unterwürfig für pragmatische Flexibilität.',             tags:['Kämpfer','Paladin','Barbar'] },
+        { text:'Wild — ich kenne das Land. WEI+1 und Aassuche für den geborenen Überlebenskünstler.',                               tags:['Waldläufer','Druide','Barbar'] },
+        { text:'Wüste — Feuerresistenz und CHA+1. Ich führe Karawanen und dominiere soziale Räume.',                                tags:['Paladin','Barde','Kämpfer'] },
+        { text:'Nekropole — GES+1, Nekrose-Resistenz, Fluchimmunität. Gräber sind mein Zuhause.',                                   tags:['Schurke','Kämpfer','Waldläufer'] },
+      ]},
+      { frage:'Wie nutzt du Tyrann und Weiterleben?', optionen:[
+        { text:'Tyrann als Hauptwerkzeug — ich dominiere durch Einschüchterung. Der Nachteil auf Furcht ist mein Preis.',            tags:['Barbar','Kämpfer'] },
+        { text:'Weiterleben taktisch — ich nutze die Bonusbewegung beim Ausscheren für Neupositionierung, nicht Flucht.',            tags:['Kämpfer','Schurke'] },
+        { text:'Ich ignoriere Tyrann weitgehend — mein Build dreht sich um andere Fähigkeiten.',                                    tags:['Waldläufer','Druide'] },
+        { text:'Beides kombiniert — einschüchtern, Chaos stiften, ausscheren, neu angreifen.',                                      tags:['Barbar','Kämpfer'] },
+      ]},
+      { frage:'Was treibt deinen Gnoll an?', optionen:[
+        { text:'Dominanz — ich will der Mächtigste im Raum sein. Immer.',                                                           tags:['Barbar','Kämpfer'] },
+        { text:'Überleben — der nächste Tag ist nicht garantiert. Ich handle entsprechend.',                                        tags:['Waldläufer','Schurke'] },
+        { text:'Kontrolle — ich habe gelernt, dass echte Macht nicht immer in Muskeln liegt.',                                      tags:['Barde','Paladin'] },
+        { text:'Rudel — ich schütze die, die mir treu sind. Brutal wenn nötig.',                                                    tags:['Barbar','Paladin'] },
+      ]},
+      { frage:'Welche Rolle spielst du in der Gruppe?', optionen:[
+        { text:'Frontlinie — STR+2, Waffentraining, Tyrann. Ich bin das, was den Feind beschäftigt.',                               tags:['Barbar','Kämpfer'] },
+        { text:'Jäger/Kundschafter — Geruchssinn, Weiterleben, WEI+1 (Wild). Ich finde und verfolge.',                             tags:['Waldläufer','Schurke'] },
+        { text:'Einschüchterungs-Spezialist — Tyrann + CHA (Wüste) als soziale Drohgebärde.',                                      tags:['Paladin','Barde'] },
+        { text:'Grabräuber — GES+1 (Nekropole), Nekrose-Resistenz, Fluchimmunität. In Gewölben unschlagbar.',                       tags:['Schurke','Kämpfer'] },
+      ]},
+    ],
+    klassen: {
+      'Barbar':      'STR+2, Tyrann, Weiterleben für Mobilität — der Gnoll-Barbar ist laut, brutal und erschreckend effektiv.',
+      'Kämpfer':     'STR+2, Gnoll-Waffenausbildung (Bögen + Speere), alle vier Unterrassen sinnvoll.',
+      'Waldläufer':  'Wilder Gnoll: WEI+1 + Aassuche + Geruchssinn — bester natürlicher Kundschafter.',
+      'Schurke':     'Nekropolengnoll: GES+1 + Nekrose-Resistenz + Fluchimmunität für Gewölbe-Schurke.',
+      'Paladin':     'Wüstengnoll: CHA+1 + Feuerresistenz — Einschüchterungs-Paladin mit ungewöhnlicher Aura.',
+      'Barde':       'Wüstengnoll: CHA+1 + Tyrann für Einschüchterung als soziales Werkzeug — brutaler Barde.',
+      'Druide':      'Wilder Gnoll: WEI+1 + Geruchssinn + Naturverbindung — der Stammes-Druide.',
+      'Kleriker':    'Zivilisiert: KON+1 für Ausdauer; nekrotische Domäne für Nekropolengnoll.',
+      'Mönch':       'STR+2 für Stärke-Mönch; Tyrann als Einschüchterungs-Unterstützung.',
+      'Hexenmeister':'Wüstengnoll: CHA+1, thematisch stimmig für Blutpakt oder dunklen Vertrag.',
+    },
+  },
+  koerperlicherMerkmale: {
+    bewegungsrate:   '9 m (Gehen)',
+    volljaehrigkeit: '12 Jahre',
+    lebenserwartung: 'bis zu 70 Jahre (meist gewaltsam kürzer)',
+    groesse:  { kategorie:'Mittelgroß', min:'195 cm (m) / 210 cm (w)', max:'225 cm (m) / 240 cm (w)', formel:'Weibchen größer und schwerer' },
+    gewicht:  { min:'ca. 100 kg (m)', max:'über 115 kg (w)', formel:'Weibchen ca. 14 kg schwerer' },
+    augenfarbe: 'bernsteinfarben, gelbbraun oder hellgelb',
+    hautfarbe:  'geflecktes Fell in braun, grau, sand oder schwarz',
+    haarfarbe:  'Mähne aus grobem Haar; dunkelbraun bis grau',
+  },
+  statblock: {
+    features: [
+      { name:'Kreaturtyp',              text:'Humanoid.' },
+      { name:'Größenkategorie',         text:'Mittelgroß. Weibchen: 210–240 cm, über 115 kg. Männchen: ~15 cm kleiner, ~14 kg leichter.' },
+      { name:'Dunkelsicht',             text:'Du kannst in schwachem Licht innerhalb von 18 Metern so sehen, als wäre es helles Licht, und in Dunkelheit so, als wäre es schwaches Licht. In der Dunkelheit kannst du keine Farben unterscheiden, nur Grautöne.' },
+      { name:'Geruchssinn',             text:'Du hast Vorteil auf Weisheit-(Wahrnehmungs)-Würfe, die auf Geruch beruhen.' },
+      { name:'Tyrann',                  text:'Du hast Nachteil auf Rettungswürfe gegen Furcht. Wenn du einen CHA-(Einschüchterungs)-Wurf gegenüber offensichtlich kleineren oder schwächeren Zielen machst, gilt doppelter Übungsbonus statt normalem.' },
+      { name:'Weiterleben um einen anderen Tag zu kämpfen', text:'Wenn du die Ausscheren-Aktion ausführst, erhöht sich deine Gehgeschwindigkeit um 3 Meter.' },
+      { name:'Gnoll-Waffenausbildung',  text:'Du hast Übung mit Speer, Kurzbogen, Langbogen, leichter Armbrust und schwerer Armbrust.' },
+      { name:'— Zivilisiert: Unterwürfig', text:'Bei Überzeugung gegenüber offensichtlich Mächtigeren gilt doppelter Übungsbonus statt normalem.' },
+      { name:'— Wild: Aassuche',        text:'Bei Überleben zum Sammeln von Nahrung oder Auffinden von Wasser gilt doppelter Übungsbonus statt normalem.' },
+      { name:'— Wüste: Hitzetoleranz', text:'Resistenz gegen Feuerschaden. Du kannst dreimal so lange ohne Wasser auskommen wie die meisten Humanoiden.' },
+      { name:'— Nekropole: Unter den Toten', text:'Resistenz gegen nekrotischen Schaden.' },
+      { name:'— Nekropole: Fluchtrotzigkeit', text:'Vorteil auf Rettungswürfe gegen Flüche.' },
+    ],
+  },
+},
 'Goblins': {
   name: 'Goblins', accent: '#78b828',
   subtitle: 'Überlebenskünstler · Erben der Feengabe',
@@ -2271,7 +3264,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Goblins',
     beschreibung: 'Goblin-Namen sind kurz, praktisch und oft lautmalerisch. Viele klingen nach dem, was ihr Träger am besten kann — oder am häufigsten verursacht.',
     tabellen: [
@@ -2356,7 +3349,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',         text:'Humanoider. Gilt als Goblin bei allen Voraussetzungen und Effekten.' },
-      { name:'Größe',                text:'Klein (106–141 cm, ca. 34–54 Pfund).' },
+      { name:'Größenkategorie',                text:'Klein (106–141 cm, ca. 34–54 Pfund).' },
       { name:'Dunkelsicht',          text:'Im Umkreis von 18 m wird dämmriges Licht wie helles Licht und Dunkelheit wie dämmriges Licht behandelt. Im Dunkeln siehst du nur Graustufen.' },
       { name:'Feenblut',             text:'Du bist bei Rettungswürfen gegen den Bezaubert-Zustand sowie zu dessen Aufhebung bei dir selbst im Vorteil.' },
       { name:'Behändes Entkommen',   text:'In jedem deiner Züge kannst du Rückzug oder Verstecken als Bonusaktion ausführen.' },
@@ -2399,7 +3392,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Goliaths',
     beschreibung: 'Goliath-Namen klingen hart und silbenreich. Der Beiname wird bei Eintritt ins Erwachsenenalter verliehen — er beschreibt die größte bisherige Tat.',
     tabellen: [
@@ -2488,7 +3481,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',   text:'Humanoider.' },
-      { name:'Größe',          text:'Mittelgroß (187–245 cm, 187–473 Pfund).' },
+      { name:'Größenkategorie',          text:'Mittelgroß (187–245 cm, 187–473 Pfund).' },
       { name:'Gebirgsgänger',  text:'Du bist gegen Kälteschaden resistent. Außerdem kannst du dich auf große Höhen einstellen, ohne je dort gewesen zu sein — bis zu 6.000 m Höhe.' },
       { name:'Kleiner Riese',  text:'Du bist in Athletik geübt und zählst eine Größenkategorie größer, wenn deine Traglast sowie das Gewicht bestimmt wird, das du schieben, ziehen oder anheben kannst.' },
       { name:'Steinhärte',     text:'Wenn du Schaden erleidest, kannst du als Reaktion einen W12 werfen. Füge deinen Konstitutionsmodifikator hinzu und ziehe die Summe vom erlittenen Schaden ab. Anwendungen pro langer Rast: gleich deinem Übungsbonus.' },
@@ -2530,7 +3523,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Grauzwerge',
     beschreibung: 'Grauzwerge tragen zwergische Namen und üblicherweise einen Klannamen. Ihre Namen klingen wie die anderer Zwerge — aber dunkel.',
     tabellen: [
@@ -2617,7 +3610,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',              text:'Humanoider. Gilt als Zwerg bei allen Voraussetzungen und Effekten.' },
-      { name:'Größe',                     text:'Mittelgroß (106–137 cm, ~110–210 Pfund).' },
+      { name:'Größenkategorie',                     text:'Mittelgroß (106–137 cm, ~110–210 Pfund).' },
       { name:'Dunkelsicht',               text:'Im Umkreis von 36 m wird dämmriges Licht wie helles Licht und Dunkelheit wie dämmriges Licht behandelt. Im Dunkeln siehst du nur Graustufen.' },
       { name:'Zwergische Unverwüstlichkeit', text:'Du bist bei Rettungswürfen gegen Gifte im Vorteil und besitzt Resistenz gegen Giftschaden.' },
       { name:'Zwergisches Kampftraining', text:'Du bist geübt im Umgang mit Streitäxten, Beilen, leichten Hämmern und Kriegshämmern.' },
@@ -2663,7 +3656,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Grottenschrate',
     beschreibung: 'Grottenschrat-Namen sind rau, kurz und klingen wie etwas, das in einer Höhle hallt.',
     tabellen: [
@@ -2746,7 +3739,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',         text:'Humanoider. Gilt als Goblin bei allen Voraussetzungen und Effekten.' },
-      { name:'Größe',                text:'Mittelgroß (190–235 cm, 217–455 Pfund).' },
+      { name:'Größenkategorie',                text:'Mittelgroß (190–235 cm, 217–455 Pfund).' },
       { name:'Dunkelsicht',          text:'Im Umkreis von 18 m wird dämmriges Licht wie helles Licht und Dunkelheit wie dämmriges Licht behandelt. Im Dunkeln siehst du nur Graustufen.' },
       { name:'Feenblut',             text:'Du bist bei Rettungswürfen gegen den Bezaubert-Zustand sowie zu dessen Aufhebung bei dir selbst im Vorteil.' },
       { name:'Lange Gliedmaßen',     text:'Wenn du in einem Zug einen Nahkampfangriff ausführst, beträgt deine Reichweite dabei 1,5 m mehr als sonst.' },
@@ -2793,7 +3786,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Halbelfen',
     beschreibung: 'Halbelfen verwenden entweder menschliche oder elfische Namen — oft bewusst gegen die Erwartung der Gesellschaft, in der sie aufwachsen.',
     tabellen: [
@@ -2880,7 +3873,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',  text:'Humanoider. Gilt als Elf bei allen Voraussetzungen und Effekten.' },
-      { name:'Größe',         text:'Mittelgroß (147–193 cm, 102–260 Pfund).' },
+      { name:'Größenkategorie',         text:'Mittelgroß (147–193 cm, 102–260 Pfund).' },
       { name:'Dunkelsicht',   text:'Im Umkreis von 18 m wird dämmriges Licht wie helles Licht und Dunkelheit wie dämmriges Licht behandelt. Im Dunkeln siehst du nur Graustufen.' },
       { name:'Feenblut',      text:'Du bist bei Rettungswürfen gegen Bezauberungen im Vorteil und immun gegen magischen Schlaf.' },
       { name:'Vielseitigkeit', text:'Du bist in 2 Fertigkeiten deiner Wahl geübt.' },
@@ -2922,7 +3915,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Halborks',
     beschreibung: 'Halborks tragen orkische oder menschliche Namen — je nachdem, wo sie aufgewachsen sind. Manche tauschen ihren Namen, um einzuschüchtern oder zu entkommen.',
     tabellen: [
@@ -3010,7 +4003,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',        text:'Humanoider. Gilt als Ork bei allen Voraussetzungen und Effekten.' },
-      { name:'Größe',               text:'Mittelgroß (147–203 cm, 137–375 Pfund).' },
+      { name:'Größenkategorie',               text:'Mittelgroß (147–203 cm, 137–375 Pfund).' },
       { name:'Dunkelsicht',         text:'Im Umkreis von 18 m wird dämmriges Licht wie helles Licht und Dunkelheit wie dämmriges Licht behandelt. Im Dunkeln siehst du nur Graustufen.' },
       { name:'Bedrohlich',          text:'Du bist in der Fertigkeit Einschüchtern geübt.' },
       { name:'Durchhaltevermögen',  text:'Wenn deine Trefferpunkte auf 0 fallen und du nicht stirbst, kannst du sie auf 1 setzen. 1×/langer Rast.' },
@@ -3053,7 +4046,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Harengons',
     beschreibung: 'Harengon-Namen kombinieren Vor- und Nachsilben zu einem Gesamtnamen und fügen einen Klan-Namen hinzu.',
     tabellen: [
@@ -3141,7 +4134,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',      text:'Humanoider.' },
-      { name:'Größe',             text:'Klein oder Mittelgroß — du wählst bei der Rassenauswahl.' },
+      { name:'Größenkategorie',             text:'Klein oder Mittelgroß — du wählst bei der Rassenauswahl.' },
       { name:'Gute Beinarbeit',   text:'Wenn du bei einem Geschicklichkeitsrettungswurf scheiterst, kannst du als Reaktion 1W4 würfeln und das Ergebnis zum Rettungswurf addieren. Nicht einsetzbar wenn du liegst oder deine Bewegungsrate 0 ist.' },
       { name:'Hasenelan',         text:'Du kannst deinen Initiativewürfen deinen Übungsbonus hinzufügen.' },
       { name:'Hasensinne',        text:'Du bist in der Wahrnehmungs-Fertigkeit geübt.' },
@@ -3182,7 +4175,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Hexblute',
     beschreibung: 'Hexblute tragen den Namen, den sie vor ihrer Verwandlung hatten. Schau bei der Rasse nach, die du vorher warst.',
     tabellen: [
@@ -3268,7 +4261,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',     text:'Feenwesen.' },
-      { name:'Größe',            text:'Klein oder Mittelgroß — du wählst bei der Rassenauswahl.' },
+      { name:'Größenkategorie',            text:'Klein oder Mittelgroß — du wählst bei der Rassenauswahl.' },
       { name:'Dunkelsicht',      text:'Im Umkreis von 18 m wird dämmriges Licht wie helles Licht und Dunkelheit wie dämmriges Licht behandelt. Im Dunkeln siehst du nur Graustufen.' },
       { name:'Erbe',             text:'Du behältst alle Fertigkeiten, in denen deine vorherige Rasse geübt ist, sowie besondere Bewegungsraten (Klettern, Fliegen, Schwimmen).' },
       { name:'Untote Natur',     text:'Du brauchst nicht zu atmen.' },
@@ -3298,7 +4291,7 @@ window.RASSEN_DETAIL_DATA = {
     gesellschaftBild: { url: null, label: 'Elfische Bibliothek · Illustration', caption: 'Hüter alten Wissens', position: 'left', width: 240, height: 300 },
   },
   specialSection: {
-    type: 'variantCards',
+    type: 'variantCards', feat1Label: 'Beschreibung', feat2Label: 'Rassenmerkmale',
     label: 'Hochelfen-Varianten',
     beschreibung: 'Hochelfen treten in zwei Hauptvarianten auf — wähle deine Herkunft.',
     varianten: [
@@ -3321,7 +4314,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Hochelfen',
     beschreibung: 'Hochelfische Namen sind fließend und klangvoll. Junge Elfen erhalten zunächst einen Kindernamen.',
     tabellen: [
@@ -3409,7 +4402,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',               text:'Humanoider. Gilt als Elf bei allen Voraussetzungen und Effekten.' },
-      { name:'Größe',                      text:'Elfen sind zwischen 137 cm und 193 cm groß und schlank gebaut. Ihre Größenkategorie ist mittelgroß.' },
+      { name:'Größenkategorie',                      text:'Elfen sind zwischen 137 cm und 193 cm groß und schlank gebaut. Ihre Größenkategorie ist mittelgroß.' },
       { name:'Dunkelsicht',                text:'Im Radius von 18 m kannst du in dämmrigem Licht wie in hellem Licht sehen, in Dunkelheit wie in dämmrigem Licht. Im Dunkeln erkennst du nur Graustufen.' },
       { name:'Geschärfte Sinne',           text:'Du bist in der Fertigkeit Wahrnehmung geübt.' },
       { name:'Feenblut',                   text:'Du hast Vorteil bei Rettungswürfen gegen Bezauberungen und bist immun gegen Schlafzauber.' },
@@ -3454,7 +4447,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Hügelzwerge',
     beschreibung: 'Zwergische Namen klingen hart und konsonantreich. Nachnamen sind Klan-Namen, oft mit Beruf oder Ort verbunden.',
     tabellen: [
@@ -3542,7 +4535,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',              text:'Humanoider. Gilt als Zwerg bei allen Voraussetzungen und Effekten.' },
-      { name:'Größe',                     text:'Mittelgroß (106–137 cm, ~115–215 Pfund).' },
+      { name:'Größenkategorie',                     text:'Mittelgroß (106–137 cm, ~115–215 Pfund).' },
       { name:'Dunkelsicht',               text:'Im Umkreis von 18 m wird dämmriges Licht wie helles Licht und Dunkelheit wie dämmriges Licht behandelt. Im Dunkeln siehst du nur Graustufen.' },
       { name:'Zwergische Unverwüstlichkeit', text:'Du bist bei Rettungswürfen gegen Gifte im Vorteil und besitzt Resistenz gegen Giftschaden.' },
       { name:'Zwergisches Kampftraining', text:'Du bist geübt im Umgang mit Streitäxten, Beilen, leichten Hämmern und Kriegshämmern.' },
@@ -3587,7 +4580,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Kenku',
     beschreibung: 'Kenku-Namen basieren auf Geräuschen, die sie gerne oder häufig nachahmen. Sie klingen wie das, was sie darstellen.',
     tabellen: [
@@ -3672,7 +4665,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',        text:'Humanoider.' },
-      { name:'Größe',               text:'Klein oder Mittelgroß — du wählst bei der Rassenauswahl.' },
+      { name:'Größenkategorie',               text:'Klein oder Mittelgroß — du wählst bei der Rassenauswahl.' },
       { name:'Expertenduplikation', text:'Wenn du Schriften oder Kunstwerke kopierst, bist du bei allen Attributswürfen für ein exaktes Duplikat im Vorteil.' },
       { name:'Kenku-Gedächtnis',    text:'Du bist in 2 Fertigkeiten deiner Wahl geübt. Außerdem kannst du dir bei Attributswürfen mit geübten Fertigkeiten vor dem W20-Wurf einen Vorteil verschaffen. Anwendungen pro langer Rast entsprechen deinem Übungsbonus.' },
       { name:'Stimmen nachahmen',   text:'Du kannst Geräusche und Stimmen, die du gehört hast, präzise wiedergeben. Erkennung als Imitation: WEI-(Einsicht)-Rettungswurf gegen SG 8 + Übungsbonus + CHA-Modifikator.' },
@@ -3699,7 +4692,7 @@ window.RASSEN_DETAIL_DATA = {
     gesellschaftBild: { url: null, label: 'Kobold-Tunnel · Illustration', caption: 'Drakonisches Erbe unter der Erde', position: 'left', width: 240, height: 300 },
   },
   specialSection: {
-    type: 'variantCards',
+    type: 'variantCards', feat1Label: 'Stammesmerkmal', feat2Label: 'Spieltipp',
     label: 'Kobold-Vermächtnis',
     beschreibung: 'Die Verbindung mit Drachen manifestiert sich bei jedem Kobold anders. Wähle dein Vermächtnis.',
     varianten: [
@@ -3724,7 +4717,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Kobolde',
     beschreibung: 'Kobold-Namen sind kurz, kratzig und oft lautmalerisch. Viele klingen wie etwas, das in einem Tunnel hallt.',
     tabellen: [
@@ -3808,7 +4801,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',        text:'Humanoider.' },
-      { name:'Größe',               text:'Klein (61–91 cm, 24–44 Pfund).' },
+      { name:'Größenkategorie',               text:'Klein (61–91 cm, 24–44 Pfund).' },
       { name:'Dunkelsicht',         text:'Im Umkreis von 18 m wird dämmriges Licht wie helles Licht und Dunkelheit wie dämmriges Licht behandelt. Im Dunkeln siehst du nur Graustufen.' },
       { name:'Kaltblütig',          text:'Du bist immun gegen die Auswirkungen von heißen Temperaturen.' },
       { name:'Drakonischer Schrei', text:'Als Bonusaktion entfesselst du einen Schrei auf Gegner innerhalb von 3 m. Bis zum Beginn deines nächsten Zuges haben du und deine Verbündeten Vorteil bei Angriffswürfen gegen diese Gegner. Anwendungen pro langer Rast entsprechen deinem Übungsbonus.' },
@@ -3851,7 +4844,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Halblinge',
     beschreibung: 'Halbling-Namen klingen warm, fließend und einladend. Nachnamen sind oft Bilder aus der Natur oder dem Landleben.',
     tabellen: [
@@ -3937,7 +4930,7 @@ window.RASSEN_DETAIL_DATA = {
   },
   statblock: {
     features: [
-      { name:'Größe',                   text:'Klein (81–106 cm, ca. 34–54 Pfund).' },
+      { name:'Größenkategorie',                   text:'Klein (81–106 cm, ca. 34–54 Pfund).' },
       { name:'Halblingsglück',          text:'Würfelst du bei einem Angriffs-, Attributs- oder Rettungswurf eine 1, darfst du den Wurf wiederholen und musst das zweite Ergebnis verwenden.' },
       { name:'Tapferkeit',              text:'Du bist im Vorteil bei Rettungswürfen, um den Zustand Verängstigt zu vermeiden.' },
       { name:'Halblingsgewandheit',     text:'Du kannst dich durch Bereiche bewegen, die von Kreaturen eingenommen werden, die eine Größenkategorie größer sind als du.' },
@@ -3947,8 +4940,267 @@ window.RASSEN_DETAIL_DATA = {
   },
 },
 'Leonin':                   { name:'Leonin',                   accent:'#d0a840', subtitle:'Kinder der Savanne · Krieger mit Löwenmut',               tags:['Humanoid','Mittelgroß','9,5 m Bewegung','Löwenbrüllen','Meistens Gut'],       headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null },
-'Loxodon':                  { name:'Loxodon',                  accent:'#9090a8', subtitle:'Weisheitshüter mit Rüssel · Gedächtnisträger der Ewigkeit',tags:['Humanoid','Groß','9 m Bewegung','Rüsselsinn','Meistens Gut'],                headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null },
-'Locathah':                 { name:'Locathah',                 accent:'#3090b0', subtitle:'Wiedergeborene des Meeres · Krieger der Strömungen',      tags:['Humanoid','Mittelgroß','Schwimmen','Wiedergeburt','Neutral'],                  headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null },
+'Loxodon': {
+  name: 'Loxodon', accent: '#9090a8',
+  subtitle: 'Weisheitshüter mit Rüssel · Gedächtnisträger der Ewigkeit',
+  tags: ['Humanoid','Mittelgroß','9 m Bewegung','Rüsselsinn','Meistens Gut'],
+  headerImage: null,
+  lore: {
+    intro: [
+      'Loxodons sind eine Rasse elefantenartiger Humanoider — zäh wie Panzer, überraschend flink auf den Beinen und unermüdlich im Kampf. Ihr Gesicht trägt die breite Stirn und den tastenden Rüssel ihrer nichtsprechenden Verwandten, doch ihre Augen leuchten mit einer Ruhe, die wenige andere Völker kennen. Wer einen Loxodon zum ersten Mal sieht, erwartet einen langsamen Koloss. Was er bekommt, ist jemanden, der ihn bereits eingeschätzt hat, bevor er selbst ein Wort gesprochen hat.',
+      'Die Welt ist ein einfacher Ort für einen Loxodon. Sie sprechen in lässigen Absolutheiten — Recht und Unrecht, Tugend und Verderbtheit — was manche fragen lässt, ob der Loxodon-Verstand überhaupt subtile Grautöne wahrnehmen kann. Eine Debatte mit einem Loxodon grenzt an Nutzlosigkeit: Ihre Meinungen bilden sich schnell, und keine Diskussion wird ihren Weg ändern. Sie werden ihre volle Masse und Kampfkunst einsetzen, um selbst eine neu gebildete Überzeugung zu verteidigen. Angelegenheiten des Glaubens und des Verhaltens, zusammenfassend als die Bescheidene Wahrheit bekannt, werden von Generation zu Generation weitergegeben und mit scheinbar wenig Überlegung akzeptiert — weil Loxodons überzeugt sind, dass Überzeugungen, die einer Überlegung bedürfen, keine echten Überzeugungen sind.',
+      'Loxodons sind von Natur aus selbstbewusst, fast naiv so. Sie betrachten jede Herausforderung als Gelegenheit, sich zu erproben, zu siegen und ihre persönliche Fähigkeit unter Beweis zu stellen. Ihre eingebaute Bewaffnung und natürliche Begabung mit Waffen gibt ihnen gute Chancen gegen jede Bedrohung und führt zu einer fast unerschütterlichen Entschlossenheit. Was andere als Problem sehen, sieht ein Loxodon als Test. Viele von ihnen suchen diesen Test bewusst — in der Überzeugung, dass jede Chance, Willen und Tugend zu erproben, ein Geschenk ist.',
+    ],
+    gesellschaft: [
+      'Loxodon-Gemeinschaften sind nach strikten, aber transparenten Regeln organisiert. Wer die Bescheidene Wahrheit bricht, wird nicht ausgeschlossen — er wird zur Rechenschaft gezogen: Ein ranghoher Soldat oder Kleriker führt zunächst einen körperlichen Angriff durch und überwältigt den Übertreter mit physischem Schmerz; dann hört ein Beichtvater das Schuldbekenntnis. Dieses Verfahren funktioniert unter Loxodons hervorragend — und gilt anderen Völkern regelmäßig als barbarisch. Loxodons verstehen diese Einschätzung, teilen sie aber nicht.',
+      'Wenn der Bedarf an Zauberkunst entsteht, ist Loxodon-Magie direkt, eindeutig und überwältigend kraftvoll. Ihre Kleriker spenden Gerechtigkeit ohne Entschuldigung, beschwören Avatare des Gesetzes und der Vergeltung und erwecken ganze Armeen zu neuen Aufgaben. Was Loxodons an List fehlt, machen sie durch rohe Stärke wett — ein Grundsatz, der für Schwert wie für Zauber gilt.',
+      'In Meruria sind Loxodons vor allem in den alten Handelsstädten des Binnenlandes zu finden, wo ihre Zuverlässigkeit und körperliche Stärke sie zu gesuchten Beschützern, Händlern und Vollstreckern macht. Eine Loxodon-Wache braucht keine Drohung auszusprechen. Ihre bloße Anwesenheit reicht. Loxodons, die in menschlichen Städten leben, haben sich oft eine merkwürdige Fähigkeit erworben: Sie verstehen Subtext — sie mögen ihn nicht, aber sie hören ihn heraus. Manche bezeichnen das als die teuerste Lektion, die Meruria ihnen beigebracht hat.',
+    ],
+    introBild:        { url: null, label: 'Loxodon · Illustration', caption: 'Charakter-Illustration', position: 'right', width: 360, height: 360 },
+    gesellschaftBild: { url: null, label: 'Loxodon-Gemeinschaft', caption: 'Zusammenkunft der Herden', position: 'left', width: 240, height: 300 },
+  },
+  specialSection: {
+    type: 'traitRoller',
+    label: 'Die Bescheidene Wahrheit',
+    beschreibung: 'Jeder Loxodon kennt einen Satz aus der Bescheidenen Wahrheit, der ihn mehr geprägt hat als alle anderen. Würfle oder wähle deinen Leitspruch.',
+    merkmale: [
+      'Wer zögert, verliert — nicht weil Hast klug ist, sondern weil Entscheidung stärker ist als Zweifel.',
+      'Eine Schuld wird bezahlt. Mit Blut, mit Arbeit oder mit Wahrheit — aber sie wird bezahlt.',
+      'Stärke ist kein Werkzeug. Sie ist ein Versprechen: Ich werde schützen, was mir anvertraut ist.',
+      'Grautöne existieren. Aber sie sind das Problem derer, die entscheiden müssen. Ich habe entschieden.',
+      'Wer mein Vertrauen trägt, trägt mein Leben. Beides gebe ich nicht leichtfertig.',
+      'Ich frage mich nicht, ob ein Kampf gewonnen werden kann. Ich frage mich, ob er es wert ist, ihn zu beginnen.',
+      'Die Herde erinnert. Ich bin ihr Gedächtnis. Das ist kein Amt — das ist mein Name.',
+      'Bezauberung ist der Versuch, mich zu einer Meinung zu überreden, die nicht meine ist. Das hat noch nie funktioniert.',
+    ],
+  },
+  namenSection: {
+    type: 'nameRoller',
+    label: 'Namen der Loxodons',
+    beschreibung: 'Loxodons tragen einen persönlichen Namen sowie einen Herdennamen, der die Linie ihrer Vorfahren beschreibt. Der Herdenname wird im formellen Gespräch zuerst genannt.',
+    tabellen: [
+      { name:'Männliche Vornamen', eintraege:['Bayul','Brooj','Fanoor','Ghaad','Imir','Jalarg','Keeth','Lodi','Lodd','Mubdo','Niru','Noor','Oond','Othrux','Phruu','Rooj','Ruuth','Stovyl','Vond','Yural','Druvakh','Gorrath','Heethar','Kulvar','Thovaan','Urroq','Vardhon','Wuumak','Xethir','Zolvar'] },
+      { name:'Weibliche Vornamen', eintraege:['Ardha','Baava','Chulu','Dhara','Eeva','Faadha','Goru','Haala','Imra','Jaaru','Kaava','Luura','Maadu','Naathi','Oora','Paala','Raaku','Saadha','Taara','Uuva','Varsha','Waadu','Yaara','Zaava','Bretha','Druuna','Gheeva','Khuuma','Mhoru','Thiivaa'] },
+      { name:'Herdennamen', eintraege:['Ewiger Tritt','Steinherz','Erdgedächtnis','Ungebrochener Stoß','Hüterin der Schwelle','Stille vor dem Stampfen','Alte Herde','Erinnerte Last','Rüssel der Wahrheit','Tiefe Spur','Granitblut','Unerschütterlicher Pfad','Väter der Ebene','Herde ohne Ende','Bescheidene Wahrheit'] },
+    ],
+  },
+  charakterGenerator: {
+    felder: [
+      { label:'Geschlecht',   type:'choice',         optionen:['männlich','weiblich','nicht-binär'] },
+      { label:'Vorname',      type:'gendered-table',  maennlich:['Bayul','Brooj','Fanoor','Ghaad','Imir','Jalarg','Keeth','Lodi','Mubdo','Niru','Noor','Oond','Phruu','Rooj','Ruuth','Stovyl','Vond','Yural','Druvakh','Gorrath'], weiblich:['Ardha','Baava','Chulu','Dhara','Eeva','Faadha','Goru','Haala','Imra','Jaaru','Kaava','Luura','Maadu','Naathi','Oora','Paala','Raaku','Saadha','Taara','Uuva'] },
+      { label:'Herdenname',   type:'table',           optionen:['Ewiger Tritt','Steinherz','Erdgedächtnis','Ungebrochener Stoß','Alte Herde','Granitblut','Rüssel der Wahrheit','Tiefe Spur','Bescheidene Wahrheit','Väter der Ebene'] },
+      { label:'Hautfarbe',    type:'table',           optionen:['dunkelgrau und faltig','mittelgrau mit hellen Abzeichen','blaugrau wie Schieferstein','rotbraun und warm','sandfarben und rau','fast schwarz mit silbrigen Falten'] },
+      { label:'Augenfarbe',   type:'table',           optionen:['tiefes Braun','bernsteinfarben','goldgelb','dunkelgrün wie altes Moos','blassgrau'] },
+      { label:'Leitspruch',   type:'table',           optionen:['Wer zögert, verliert.','Eine Schuld wird bezahlt.','Stärke ist ein Versprechen.','Die Herde erinnert.','Ich habe entschieden.','Bezauberung hat noch nie funktioniert.'] },
+      { label:'Talent',       type:'table',           optionen:['Geschicklicher Rüssel','Loxodon-Unbeugsamkeit','Stoßzähner'] },
+    ],
+  },
+  beziehungen: [
+    { volk:'Menschen',   relation:'Geduldige Skepsis',       text:'Menschen denken schnell und in alle Richtungen gleichzeitig. Das bewundere ich — gelegentlich. Meistens frage ich mich, warum sie nicht einfach entscheiden.' },
+    { volk:'Zwerge',     relation:'Tiefer gegenseitiger Respekt', text:'Zwerge bauen, um die Ewigkeit zu überdauern. Wir erinnern, um die Ewigkeit zu bewahren. Das ist nicht dasselbe, aber es ist nah genug.' },
+    { volk:'Elfen',      relation:'Höfliche Distanz',         text:'Elfen sind geduldig, das stimmt. Aber ihre Geduld dient der Raffinesse. Meine dient der Wahrheit. Das sind zwei verschiedene Tugenden.' },
+    { volk:'Orks',       relation:'Anerkannte Stärke',        text:'Orks kämpfen direkt und ohne Umwege. Das respektiere ich. Wir sind nicht dieselben — aber wir verstehen einander.' },
+    { volk:'Halblinge',  relation:'Freundliche Verwirrung',   text:'Ich verstehe Halblinge nicht vollständig. Sie lachen sehr viel für Leute ohne besonderen Grund. Das irritiert mich. Aber sie sind ehrlich in ihrer Freude, und das zählt.' },
+    { volk:'Gnome',      relation:'Konstruktiver Vorbehalt',  text:'Gnome erfinden Lösungen für Probleme, die ich noch nicht sehe. Manchmal sind das Probleme, die es nicht gibt. Meistens aber doch. Ich beobachte sie gerne.' },
+  ],
+  bekannte: [
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Loxodon in Meruria reserviert.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Loxodon in Meruria reserviert.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Loxodon in Meruria reserviert.' },
+  ],
+  radar: { labels:['Mobilität','Kampf','Magie','Soziales','Überleben','Weisheit'], values:[60,88,42,48,82,70] },
+  quiz: {
+    steps: [
+      { frage:'Was treibt deinen Loxodon an?', optionen:[
+        { text:'Gerechtigkeit — Ich halte die Bescheidene Wahrheit aufrecht, auch wenn es unbequem ist.',                                    tags:['Paladin','Kleriker'] },
+        { text:'Stärke beweisen — Jede Herausforderung ist eine Gelegenheit. Ich suche sie aktiv.',                                          tags:['Barbar','Kämpfer'] },
+        { text:'Die Herde schützen — Ich bin das Bollwerk zwischen meinen Gefährten und allem, was ihnen schadet.',                          tags:['Kämpfer','Paladin'] },
+        { text:'Wahrheit durchsetzen — Fehlinformationen, Manipulation und List sind Feinde, die ich bekämpfe wie jeden anderen.',            tags:['Kleriker','Mönch'] },
+      ]},
+      { frage:'Wie setzt du deinen Rüssel und deinen Geruchssinn ein?', optionen:[
+        { text:'Taktisch — Ich rieche Angst, Täuschung und Gefahr. Das nutze ich, bevor ein Kampf beginnt.',                                 tags:['Waldläufer','Schurke'] },
+        { text:'Im Kampf — Mein Rüssel ist eine zusätzliche Waffe. Ich greife, ich stoße, ich überwältige.',                                 tags:['Barbar','Kämpfer'] },
+        { text:'Als Detektiv — Kein Zeuge lügt mich an, ohne dass ich es merke. Geruch lügt nicht.',                                        tags:['Schurke','Kleriker'] },
+        { text:'Selten bewusst — Er funktioniert einfach. Ich folge dem, was er mir sagt, ohne groß darüber nachzudenken.',                  tags:['Waldläufer','Mönch'] },
+      ]},
+      { frage:'Wie gehst du mit Konflikten um?', optionen:[
+        { text:'Direkt — Ich spreche klar, ich handele klar. Subtext ist Zeitverschwendung.',                                                tags:['Barbar','Kämpfer'] },
+        { text:'Gemäß der Bescheidenen Wahrheit — Es gibt eine richtige Antwort. Ich finde sie und setze sie um.',                          tags:['Paladin','Kleriker'] },
+        { text:'Mit Stärke als letztem Argument — Zuerst rede ich. Dann zeige ich, warum Reden klüger war.',                                tags:['Kämpfer','Paladin'] },
+        { text:'Mit Geduld — Ich warte, bis der richtige Moment da ist. Dann handele ich unverzögerlich.',                                   tags:['Mönch','Waldläufer'] },
+      ]},
+      { frage:'Welche Rolle spielst du in der Gruppe?', optionen:[
+        { text:'Frontlinie — KON+2, natürliche Rüstung, Kraftvolle Statur. Ich weiche nicht.',                                              tags:['Kämpfer','Barbar'] },
+        { text:'Stärke-Kleriker oder Paladin — KON+2, WEI+1, Gelassenheit gegen Bezauberung.',                                              tags:['Kleriker','Paladin'] },
+        { text:'Kundschafter — Feiner Geruchssinn, Rüssel-Kontrolle, Gelassenheit gegen Illusionen und Bezauberung.',                       tags:['Waldläufer','Schurke'] },
+        { text:'Unerschütterliche Mitte — ich bin das ruhige Zentrum der Gruppe, das nicht wankt.',                                          tags:['Mönch','Kämpfer'] },
+      ]},
+    ],
+    klassen: {
+      'Barbar':      'KON+2, natürliche Rüstung, Kraftvolle Statur — der Loxodon-Barbar ist eine lebende Festung, die weder Bezauberung noch Furcht kennt.',
+      'Kämpfer':     'KON+2, WEI+1, natürliche Rüstung — solide Frontlinie mit Gelassenheit und übernatürlicher Ausdauer.',
+      'Paladin':     'KON+2, WEI+1, Gelassenheit — der Gerechtigkeits-Paladin, der die Bescheidene Wahrheit mit dem Schwert verteidigt.',
+      'Kleriker':    'WEI+1, KON+2, Gelassenheit — mächtige Klerikerkombo; Loxodon-Magie ist direkt und überwältigend.',
+      'Mönch':       'KON+2 für KI-Mönch interessant; Gelassenheit und Feiner Geruchssinn passen thematisch perfekt.',
+      'Waldläufer':  'Feiner Geruchssinn, KON+2 für Ausdauer, Gelassenheit — der unbeirrbare Spurenleser.',
+      'Schurke':     'Feiner Geruchssinn für Nachforschungen, Gelassenheit gegen Manipulation — der Loxodon-Detektiv.',
+      'Druide':      'WEI+1, KON+2, Gelassenheit — ruhige, natürliche Kraft; thematisch stimmig für Hüter-Druiden.',
+      'Hexenmeister':'KON+2 für Konzentration, Gelassenheit gegen Bezauberung — schwierig mit Loxodon-Direktheit, aber interessanter Kontrast.',
+      'Barde':       'Gelassenheit, Feiner Geruchssinn — der Barde, der bei Verhandlungen lügende Gesprächspartner riecht.',
+    },
+  },
+  koerperlicherMerkmale: {
+    bewegungsrate:   '9 m (Gehen)',
+    volljaehrigkeit: '60 Jahre',
+    lebenserwartung: 'bis zu 450 Jahre',
+    groesse:  { kategorie:'Mittelgroß', min:'210 cm', max:'240 cm', formel:'208 cm + 1W12 · 2 cm' },
+    gewicht:  { min:'130 kg', max:'181 kg', formel:'ca. 155 kg Durchschnitt' },
+    augenfarbe: 'tiefes Braun, Bernstein oder Goldgelb',
+    hautfarbe:  'dunkelgrau, blaugrau, rotbraun oder sandfarben; immer faltig',
+    haarfarbe:  'keine (vereinzelt Borsten an Kinn und Ohren)',
+  },
+  statblock: {
+    features: [
+      { name:'Kreaturentyp',        text:'Humanoider.' },
+      { name:'Größenkategorie',     text:'Mittelgroß (210–240 cm, 130–181 kg).' },
+      { name:'Kraftvolle Statur',   text:'Du giltst für die Bestimmung deiner Tragekapazität und des Gewichts, das du schieben, ziehen oder heben kannst, als eine Größenkategorie größer.' },
+      { name:'Loxodon-Gelassenheit', text:'Du hast Vorteil auf Würfe gegen Bezauberung oder Furcht.' },
+      { name:'Natürliche Rüstung',  text:'Du hast dicke, ledrige Haut. Wenn du keine Rüstung trägst, beträgt deine Rüstungsklasse 12 + dein Konstitutionsmodifikator. Du kannst deine natürliche Rüstung verwenden, um deine Rüstungsklasse zu bestimmen, wenn die Rüstung, die du trägst, dir eine niedrigere Rüstungsklasse geben würde. Die Vorteile eines Schildes gelten wie gewohnt, während du deine natürliche Rüstung verwendest.' },
+      { name:'Rüssel',              text:'Du kannst Dinge mit deinem Rüssel greifen und ihn als Schnorchel verwenden. Er hat eine Reichweite von 1,5 Metern und kann eine Anzahl von Kilogramm heben, die dem Fünffachen deines Stärkewertes entspricht. Du kannst ihn verwenden, um folgende einfache Aufgaben auszuführen: einen Gegenstand oder eine Kreatur heben, fallen lassen, halten, schieben oder ziehen; eine Tür oder einen Behälter öffnen oder schließen; jemanden greifen; oder einen unbewaffneten Angriff machen. Er kann keine Waffen oder Schilde führen oder etwas tun, das manuelle Präzision erfordert, wie das Verwenden von Werkzeugen oder magischen Gegenständen oder das Ausführen der somatischen Komponenten eines Zaubers.' },
+      { name:'Feiner Geruchssinn',  text:'Dank deines empfindlichen Rüssels hast du Vorteil auf Weisheit-(Wahrnehmungs)-, Weisheit-(Überleben)- und Intelligenz-(Nachforschungs)-Würfe, die Geruch beinhalten.' },
+      { name:'Angeborenes Talent',  text:null, talente:['Geschicklicher Rüssel','Loxodon-Unbeugsamkeit','Stoßzähner'] },
+    ],
+  },
+},
+'Locathah': {
+  name: 'Locathah', accent: '#3090b0',
+  subtitle: 'Überlebende der Tiefe · Krieger der Strömungen',
+  tags: ['Humanoid','Mittelgroß','9 m Schwimmen','Leviathan-Wille','Meistens Neutral'],
+  headerImage: null,
+  lore: {
+    intro: [
+      'Die Locathah sind ein Fischvolk mit schuppiger, zäher Haut, das entlang der Meeresküsten in untergetauchten Stammesgemeinschaften lebt. Ihre Geschichte ist eine Geschichte des Leidens und des Überlebens: Jahrhundertelang wurden sie von anderen Wasserbewohnern versklavt, gejagt und misshandelt. Wer einen Locathah trifft, trifft jemanden, dessen Vorfahren nicht aufgegeben haben.',
+      'Locathah reifen früh — mit zehn Jahren sind sie erwachsen — und können bis zu achtzig Jahre alt werden. In diesen sieben Jahrzehnten als Erwachsener stellt ein Locathah mehr auf die Probe als die meisten anderen Völker in einem ganzen Leben. Dieser frühe Ernst prägt sie: Sie sind wachsam, hartnäckig und misstrauen Versprechungen mehr als Schmerz.',
+    ],
+    gesellschaft: [
+      'Locathah-Stämme sind eng verwobene Gemeinschaften, in denen Mitgefühl keine Schwäche ist, sondern Strategie. Wer allein schwimmt, stirbt allein — das ist keine Philosophie, das ist Erfahrung. Die Älteren des Stammes vermitteln Konflikte, die Jüngeren werden früh in Jagd und Wache eingeführt.',
+      'Sie jagen sowohl über als auch unter Wasser, was sie zu vielseitigen Kämpfern und Kundschaftern macht. Ihre natürliche Rüstung aus Schuppen macht einfache Rüstungen überflüssig, und ihr sogenannter Leviathan-Wille — die innere Stärke, die aus Generationen von Unterdrückung geboren wurde — lässt sie magische Einflüsse abschütteln, denen andere erliegen.',
+      'In Meruria sind Locathah in Küstenstädten eine bekannte, wenn auch seltene Erscheinung. Sie arbeiten als Fischer, Taucher, Küstenwächter oder Söldner. Ihr Ruf als unbestechliche, standfeste Verbündete hat sich unter Seefahrern herumgesprochen. Wer einen Locathah als Freund gewinnt, gewinnt jemanden, der nicht wegläuft.',
+    ],
+    introBild:        { url: null, label: 'Locathah · Illustration', caption: 'Charakter-Illustration', position: 'right', width: 360, height: 360 },
+    gesellschaftBild: { url: null, label: 'Unterwasser-Stammessiedlung', caption: 'Heimat unter den Wellen', position: 'left', width: 240, height: 300 },
+  },
+  specialSection: {
+    type: 'traitRoller',
+    label: 'Narbe der Knechtschaft',
+    beschreibung: 'Jeder Locathah trägt die Geschichte seines Stammes in sich. Würfle oder wähle, was deinen Charakter geprägt hat.',
+    merkmale: [
+      'Befreiter — ich oder meine unmittelbaren Vorfahren wurden versklavt. Freiheit ist für mich kein Wort, sie ist ein Körpergefühl.',
+      'Wächter — mein Stamm hat mich als Kind in die Wache aufgenommen. Ich habe gelernt, Gefahr zu riechen, bevor sie sichtbar wird.',
+      'Tieftaucher — ich bin tiefer getaucht als die meisten meines Volkes. Was ich dort unten gesehen habe, erzähle ich nicht.',
+      'Stammesheiler — ich habe gelernt, Wunden zu versorgen, weil es niemanden sonst gab. Jetzt kann ich es nicht mehr lassen.',
+      'Exilierter — mein Stamm ist nicht mehr. Ich bin das, was übrig ist. Das ist keine Schwäche — das ist Zeugnis.',
+      'Verbündeter unter Fremden — ich bin an Land aufgewachsen, zwischen anderen Völkern. Ich verstehe zwei Welten und passe in keine davon ganz.',
+      'Rachensoldat — ich habe in einem der alten Küstenkriege gekämpft. Der Krieg hat mich nicht gebrochen, aber er hat etwas in mir verändert.',
+      'Neugeborener Stamm — ich helfe gerade dabei, eine neue Gemeinschaft aufzubauen. Wir sind jung, wir sind wenige, und wir werden nicht verschwinden.',
+    ],
+  },
+  namenSection: {
+    type: 'nameRoller',
+    label: 'Namen der Locathah',
+    beschreibung: 'Locathah-Namen klingen fließend und kürzer als menschliche Namen — sie wurden für Unterwasser-Kommunikation geformt, wo lange Silben verlorengehen.',
+    tabellen: [
+      { name:'Männliche Vornamen', eintraege:['Aruun','Bellus','Drevos','Finnar','Garak','Hothas','Ikkar','Junok','Kethis','Lorak','Mavar','Nissel','Ovark','Pellas','Quirrak','Rothas','Sarvel','Tivak','Ulkos','Varnek','Wellak','Xorul','Yarris','Zorvel','Akvon','Briskal','Cethon','Dunvel','Eshrak','Fovath'] },
+      { name:'Weibliche Vornamen', eintraege:['Aeliss','Bellara','Coris','Deva','Elkan','Finali','Gessa','Hular','Issera','Joval','Kaella','Lyssa','Miraal','Nurris','Ovela','Pessara','Qualla','Rivel','Savaala','Thalris','Uvess','Variel','Welliss','Xarael','Yarova','Zorris','Akvael','Brissal','Cethis','Durris'] },
+      { name:'Stammesnamen', eintraege:['Tiefenstrom','Wellenjäger','Gezeitenwächter','Schuppenflosse','Salzblut','Strömungsrat','Korallenpfad','Dunkelwasser','Brandungsherz','Meeresauge','Riffwächter','Sturmküste','Kelp-Hain','Tintenwasser','Flutborn','Silberströmung'] },
+    ],
+  },
+  charakterGenerator: {
+    felder: [
+      { label:'Geschlecht',    type:'choice',         optionen:['männlich','weiblich','nicht-binär'] },
+      { label:'Vorname',       type:'gendered-table', maennlich:['Aruun','Bellus','Drevos','Finnar','Garak','Hothas','Ikkar','Junok','Kethis','Lorak','Mavar','Nissel','Ovark','Pellas','Quirrak','Rothas','Sarvel','Tivak','Ulkos','Varnek'], weiblich:['Aeliss','Bellara','Coris','Deva','Elkan','Finali','Gessa','Hular','Issera','Joval','Kaella','Lyssa','Miraal','Nurris','Ovela','Pessara','Qualla','Rivel','Savaala','Thalris'] },
+      { label:'Stammesname',   type:'table',          optionen:['Tiefenstrom','Wellenjäger','Gezeitenwächter','Schuppenflosse','Salzblut','Strömungsrat','Korallenpfad','Dunkelwasser','Brandungsherz','Meeresauge'] },
+      { label:'Schuppen-farbe',type:'table',          optionen:['blaugrün schimmernd','silbrig-grau','dunkelgrün mit Goldflecken','türkis mit schwarzen Streifen','rotbraun und matt','perlmutt-weiß'] },
+      { label:'Augenfarbe',    type:'table',          optionen:['meeresblau','gelbgrün','silbrig','dunkelbraun fast schwarz','bernsteinfarben'] },
+      { label:'Prägung',       type:'table',          optionen:['Befreiter','Wächter','Tieftaucher','Stammesheiler','Exilierter','Verbündeter unter Fremden','Rachensoldat','Neugeborener Stamm'] },
+      { label:'Talent',        type:'table',          optionen:['Kampftraining','Athletische Perfektion','Wirkmächtiger Wille'] },
+    ],
+  },
+  beziehungen: [
+    { volk:'Menschen',        relation:'Vorsichtiges Vertrauen', text:'Menschen bauen Häfen und Schiffe. Sie brauchen uns, wenn sie ins Wasser wollen. Wir brauchen sie, wenn wir an Land handeln wollen. Das ist kein Freundschaft, aber es ist ein Anfang.' },
+    { volk:'Elfen',           relation:'Geteiltes Misstrauen',   text:'Elfen reden viel von Harmonie mit der Natur. Wir haben die Natur als Sklaven bewohnt. Sie meinen es gut — aber gut gemeint ist nicht dasselbe wie verstanden.' },
+    { volk:'Zwerge',          relation:'Gegenseitiger Respekt',  text:'Zwerge kennen Unterdrückung aus ihrer Geschichte. Wir reden nicht viel darüber. Wir müssen nicht — das Schweigen zwischen uns sagt genug.' },
+    { volk:'Halblinge',       relation:'Sympathische Neugier',   text:'Sie sind klein und unbeschwert. Das irritiert mich manchmal. Aber Halblinge urteilen nicht — und das ist seltener als man denkt.' },
+    { volk:'Orks',            relation:'Kriegerische Achtung',   text:'Orks wurden auch lange unterschätzt und misshandelt. Das verbindet. Ich vertraue einem Ork schneller als einem Adligen.' },
+    { volk:'Meeresvölker',    relation:'Alte Wunden',            text:'Nicht alle Wasserbewohner sind Freunde. Einige haben uns einst versklavt. Diese Narben vergessen wir nicht — und wir vergeben nicht leichtfertig.' },
+  ],
+  bekannte: [
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Locathah in Meruria reserviert.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Locathah in Meruria reserviert.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Locathah in Meruria reserviert.' },
+  ],
+  radar: { labels:['Mobilität','Kampf','Magie','Soziales','Überleben','Weisheit'], values:[72,78,15,52,85,55] },
+  quiz: {
+    steps: [
+      { frage:'Was treibt deinen Locathah an?', optionen:[
+        { text:'Freiheit — niemand wird mich je wieder kontrollieren. Das ist keine Option, das ist ein Gelübde.',         tags:['Barbar','Schurke'] },
+        { text:'Stamm — meine Leute kommen zuerst. Alles andere ist sekundär.',                                          tags:['Paladin','Kämpfer'] },
+        { text:'Stärke — ich werde so stark, dass niemand mehr wagt, mein Volk anzufassen.',                             tags:['Barbar','Kämpfer'] },
+        { text:'Verständigung — ich will eine Brücke sein zwischen Land und Meer, zwischen meinem Volk und anderen.',    tags:['Barde','Kleriker'] },
+      ]},
+      { frage:'Wie nutzt du deinen Leviathan-Willen?', optionen:[
+        { text:'Als Bollwerk — ich stelle mich zwischen die Manipulation und meinen Stamm.',                              tags:['Paladin','Kämpfer'] },
+        { text:'Als Überlebenstool — Bezauberung und Lähmung hatten meine Vorfahren gebrochen. Mich nicht.',             tags:['Barbar','Schurke'] },
+        { text:'Als Zeichen — mein unbeugsamer Wille lässt andere wissen: Ich bin nicht leicht zu brechen.',             tags:['Kämpfer','Barde'] },
+        { text:'Kaum bewusst — er funktioniert einfach. Ich denke nicht groß darüber nach.',                             tags:['Waldläufer','Mönch'] },
+      ]},
+      { frage:'Wie setzt du deine Amphibienfähigkeit ein?', optionen:[
+        { text:'Taktisch — Wasser ist mein Heimfeld. Ich ziehe Kämpfe dorthin, wo ich den Vorteil habe.',                tags:['Waldläufer','Schurke'] },
+        { text:'Aufklärend — ich tauche, wo andere nicht können. Information ist meine stärkste Waffe.',                 tags:['Schurke','Waldläufer'] },
+        { text:'Rettend — wenn jemand über Bord geht, bin ich schneller im Wasser als jeder andere.',                    tags:['Paladin','Kleriker'] },
+        { text:'Selten — ich lebe jetzt meist an Land und nutze meine Wasserseite nur wenn nötig.',                      tags:['Barde','Magier'] },
+      ]},
+      { frage:'Welche Rolle spielst du in einer Gruppe?', optionen:[
+        { text:'Angriffskraft — STR+2, Athletik, natürliche Rüstung, ich bin vorne.',                                   tags:['Barbar','Kämpfer'] },
+        { text:'Kundschafter — Schwimmen, Wahrnehmung, Leviathan-Wille gegen psychische Fallen.',                        tags:['Schurke','Waldläufer'] },
+        { text:'Unzerstörbarer Beschützer — natürliche Rüstung, Wille, ich weiche nicht.',                              tags:['Paladin','Kämpfer'] },
+        { text:'Spezialist für nasse Operationen — wer Wasser braucht, braucht mich.',                                   tags:['Waldläufer','Schurke'] },
+      ]},
+    ],
+    klassen: {
+      'Barbar':      'STR+2, natürliche Rüstung, Leviathan-Wille — der Locathah-Barbar ist ein Kraftpaket, das weder Bezauberung noch Furcht kennt.',
+      'Kämpfer':     'STR+2, DEX+1, natürliche Rüstung, Athletik — solide Frontlinie mit einzigartiger Gewässer-Mobilität.',
+      'Paladin':     'STR+2, Leviathan-Wille, Athletik — der Beschützer-Paladin mit übernatürlicher Standhaftigkeit.',
+      'Schurke':     'DEX+1, Wahrnehmung, Schwimmen — der ideale Aqua-Infiltrator und Kundschafter.',
+      'Waldläufer':  'STR+2, DEX+1, Schwimmen, Wahrnehmung — der Küsten- und Meeresläufer par excellence.',
+      'Mönch':       'DEX+1, natürliche Rüstung, Leviathan-Wille — für Stärke-Mönch auch STR+2 verwertbar.',
+      'Kleriker':    'STR+2, Leviathan-Wille für Konzentration, Athletik für körperliche Präsenz.',
+      'Barde':       'Wahrnehmung, Leviathan-Wille, Küsten-Hintergrund — der Geschichtenerzähler, der die Unterdrückten kennt.',
+      'Druide':      'Amphibienfähigkeit und Meeresverbindung — thematisch stimmig, besonders in Küstenkampagnen.',
+      'Hexenmeister':'STR+2 für körperliche Präsenz, DEX+1 für Konzentration, Leviathan-Wille als Schutz.',
+    },
+  },
+  koerperlicherMerkmale: {
+    bewegungsrate:   '9 m (Gehen und Schwimmen)',
+    volljaehrigkeit: '10 Jahre',
+    lebenserwartung: 'bis zu 80 Jahre',
+    groesse:  { kategorie:'Mittelgroß', min:'150 cm', max:'180 cm', formel:'148 cm + 2W10 · 1,5 cm' },
+    gewicht:  { min:'60 kg', max:'80 kg', formel:'ca. 68 kg Durchschnitt' },
+    augenfarbe: 'meeresblau, gelbgrün oder silbrig',
+    hautfarbe:  'schuppig; blaugrün, silbergrau, türkis oder rotbraun',
+    haarfarbe:  'keine (Schuppen statt Haar)',
+  },
+  statblock: {
+    features: [
+      { name:'Kreaturentyp',              text:'Humanoider.' },
+      { name:'Größenkategorie',           text:'Mittelgroß (150–180 cm, ca. 60–80 kg).' },
+      { name:'Natürliche Rüstung',        text:'Du hast zähe, schuppige Haut. Wenn du keine Rüstung trägst, beträgt deine Rüstungsklasse 12 + dein Geschicklichkeitsmodifikator. Du kannst deine natürliche Rüstung verwenden, wenn die Rüstung, die du trägst, dir eine niedrigere RK geben würde. Schilde gelten wie gewohnt.' },
+      { name:'Aufmerksam und athletisch', text:'Du bist in den Fertigkeiten Athletik und Wahrnehmung geübt.' },
+      { name:'Leviathan-Wille',           text:'Du hast Vorteil auf Rettungswürfe gegen Bezauberung, Furcht, Lähmung, Vergiftung, Betäubung und Einschläferung.' },
+      { name:'Begrenzte Amphibienfähigkeit', text:'Du kannst sowohl Luft als auch Wasser atmen. Du musst jedoch mindestens alle 4 Stunden untergetaucht sein — andernfalls beginnst du zu ersticken.' },
+    ],
+  },
+},
 'Lotol':                    { name:'Lotol',                    accent:'#60a880', subtitle:'Geheimnisvolle Wanderer · Kinder der Tiefe',              tags:['Humanoid','Mittelgroß','9 m Bewegung','Dunkelsicht','Neutral'],                 headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null },
 'Luft-Genasi': {
   name: 'Luft-Genasi', accent: '#90d0e8',
@@ -3986,7 +5238,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Luft-Genasi',
     beschreibung: 'Elementarische Namen, die Winde und Wetter widerspiegeln, oder Namen aus der Kultur ihrer Kindheit.',
     tabellen: [
@@ -4071,7 +5323,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',      text:'Humanoider.' },
-      { name:'Größe',             text:'Mittelgroß oder klein — du wählst die Größenkategorie, wenn du dieses Volk wählst.' },
+      { name:'Größenkategorie',             text:'Mittelgroß oder klein — du wählst die Größenkategorie, wenn du dieses Volk wählst.' },
       { name:'Dunkelsicht',       text:'Im Radius von 18 m kannst du in dämmrigem Licht wie in hellem Licht sehen, in Dunkelheit wie in dämmrigem Licht. Im Dunkeln erkennst du nur Graustufen.' },
       { name:'Blitzresistent',    text:'Du bist gegen Blitzschaden resistent.' },
       { name:'Spiel mit dem Wind',text:'Du kennst den Zaubertrick Schockgriff. Ab Stufe 3: Federfall 1×/langer Rast (ohne Materialkomponenten). Ab Stufe 5: Schweben 1×/langer Rast (ohne Materialkomponenten). Beide Zauber können auch mit Zauberplätzen gewirkt werden. Zaubermerkmal (wähle bei Rassenauswahl): Intelligenz, Weisheit oder Charisma.' },
@@ -4115,7 +5367,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Meereselfen',
     beschreibung: 'Meereselfische Namen klingen wie Wasser — fließend, rhythmisch, mit sanften Konsonanten.',
     tabellen: [
@@ -4203,7 +5455,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',      text:'Humanoider. Gilt als Elf bei allen Voraussetzungen und Effekten.' },
-      { name:'Größe',             text:'Elfen sind zwischen 144 cm und 170 cm groß und schlank gebaut. Ihre Größenkategorie ist mittelgroß.' },
+      { name:'Größenkategorie',             text:'Elfen sind zwischen 144 cm und 170 cm groß und schlank gebaut. Ihre Größenkategorie ist mittelgroß.' },
       { name:'Dunkelsicht',       text:'Im Radius von 18 m kannst du in dämmrigem Licht wie in hellem Licht sehen, in Dunkelheit wie in dämmrigem Licht. Im Dunkeln erkennst du nur Graustufen.' },
       { name:'Geschärfte Sinne',  text:'Du bist in der Fertigkeit Wahrnehmung geübt.' },
       { name:'Feenblut',          text:'Du hast Vorteil bei Rettungswürfen gegen Bezauberungen und bist immun gegen Schlafzauber.' },
@@ -4233,7 +5485,7 @@ window.RASSEN_DETAIL_DATA = {
     gesellschaftBild: { url: null, label: 'Menschliche Stadt · Illustration', caption: 'Städte, Imperien, Institutionen — die Signatur der Menschen', position: 'left', width: 240, height: 300 },
   },
   specialSection: {
-    type: 'variantCards',
+    type: 'variantCards', feat1Label: 'Verbreitung & Erscheinung', feat2Label: 'Namenstradition',
     label: 'Ethnien der Menschen',
     beschreibung: 'Elf Ethnien prägen die Menschenvölker Merurias. Wähle deine Herkunft.',
     varianten: [
@@ -4328,7 +5580,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Menschen',
     beschreibung: 'Menschen-Namen variieren stark nach Ethnie und Region. Wähle eine Ethnie und würfle dort auf Namen.',
     tabellen: [
@@ -4417,7 +5669,7 @@ window.RASSEN_DETAIL_DATA = {
   },
   statblock: {
     features: [
-      { name:'Größe',                    text:'Mittelgroß (145–190 cm, 114–270 Pfund).' },
+      { name:'Größenkategorie',                    text:'Mittelgroß (145–190 cm, 114–270 Pfund).' },
       { name:'Alle Attribute +1',        text:'Jeder einzelne Attributswert wird um 1 Punkt erhöht.' },
       { name:'Variante (optional)',       text:'Ersetzt Alle Attribute +1: Zwei Attributswerte um je 1 erhöhen, plus eine Fertigkeit nach Wahl, plus ein Talent nach Wahl.' },
       { name:'Angeborenes Talent',        text:null, talente:['Wunderkind','Menschliche Entschlossenheit','Überlebenskünstler'] },
@@ -4458,7 +5710,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Minotauren',
     beschreibung: 'Minotauren-Namen klingen rau und kraftvoll. Manche tragen zusätzlich einen Beinamen für vollbrachte Taten.',
     tabellen: [
@@ -4546,7 +5798,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',        text:'Humanoider.' },
-      { name:'Größe',               text:'Mittelgroß (172–197 cm, 189–377 Pfund).' },
+      { name:'Größenkategorie',               text:'Mittelgroß (172–197 cm, 189–377 Pfund).' },
       { name:'Blutiger Ansturm',    text:'Nachdem du in deinem Zug die Spurt-Aktion ausgeführt und mindestens 6 m zurückgelegt hast, kannst du als Bonusaktion einen Nahkampfangriff mit deinen Hörnern ausführen.' },
       { name:'Erinnerung des Labyrinths', text:'Du weißt immer, wo Norden ist. Du bist bei Weisheit-(Überlebenskunst)-Würfen zum Navigieren oder Spurenfolgen im Vorteil.' },
       { name:'Hämmernde Hörner',    text:'Nachdem du bei der Angreifen-Aktion eine Kreatur mit einem Nahkampfangriff getroffen hast, kannst du als Bonusaktion versuchen, sie mit deinen Hörnern zu stoßen (max. 1 Größenstufe größer als du, innerhalb 1,5 m). STR-Rettungswurf gegen SG 8 + Übungsbonus + STR-Mod. oder Rückstoß bis 3 m.' },
@@ -4592,7 +5844,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Orks',
     beschreibung: 'Orkische Namen klingen kraftvoll und karg. Wenige Silben, klare Bedeutung.',
     tabellen: [
@@ -4678,7 +5930,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',                   text:'Humanoider.' },
-      { name:'Größe',                          text:'Mittelgroß (182–240 cm, 194–382 Pfund).' },
+      { name:'Größenkategorie',                          text:'Mittelgroß (182–240 cm, 194–382 Pfund).' },
       { name:'Dunkelsicht',                    text:'Im Umkreis von 18 m wird dämmriges Licht wie helles Licht und Dunkelheit wie dämmriges Licht behandelt. Im Dunkeln siehst du nur Graustufen.' },
       { name:'Adrenalinrausch',                text:'Als Bonusaktion Spurt-Aktion ausführen + temporäre TP in Höhe des Übungsbonus erhalten. Anwendungen pro langer Rast entsprechen dem Übungsbonus.' },
       { name:'Starker Körperbau',              text:'Du zählst als eine Größenkategorie größer für Traglast sowie Schieben, Ziehen und Anheben.' },
@@ -4687,10 +5939,522 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
 },
-'Eulenleute':                    { name:'Eulenleute',                    accent:'#a89060', subtitle:'Weise Eulenwesen · Lautlose Jäger der Nacht',             tags:['Humanoid','Mittelgroß','9 m Bewegung','Flug','Neutral'],                       headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null },
-'Plasmoid':                 { name:'Plasmoid',                 accent:'#80d0c0', subtitle:'Gestaltloser Wandler · Wesen ohne feste Form',            tags:['Ooze','Mittelgroß','9 m Bewegung','Formlosigkeit','Neutral'],                  headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null },
-'Ratatosk':                 { name:'Ratatosk',                 accent:'#c87840', subtitle:'Kosmische Eichhörnchenwesen · Boten zwischen den Welten', tags:['Fee','Klein','7,5 m Bewegung','Telepathie','Chaotisch Neutral'],               headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null },
-'Sahuagin':                 { name:'Sahuagin',                 accent:'#2070a0', subtitle:'Haifischmensch · Teufel der Tiefsee',                     tags:['Humanoid','Mittelgroß','Schwimmen','Blutgier','Meistens Böse'],                headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null },
+'Eulenleute': {
+  name: 'Eulenleute', accent: '#a89060',
+  subtitle: 'Lautlose Jäger der Nacht · Kinder des Feenwild',
+  tags: ['Humanoid','Mittelgroß oder Klein','9 m Flug','Dunkelsicht 36 m','Meistens Neutral'],
+  headerImage: null,
+  lore: {
+    intro: [
+      'Eulenleute sind entfernte Verwandte der Rieseneulen aus dem Feenwild — befiederte Humanoide mit Armen, Beinen und Flügeln, die sich von Rücken und Schultern erstrecken. Sie kommen in vielen Formen vor: manche sind klein und flauschig, andere breitflügelig und majestätisch. Was alle gemeinsam haben, ist die absolute Lautlosigkeit ihrer Bewegungen.',
+      'Ihre Federn dämpfen jeden Flügelschlag, jeden Schritt, jede Annäherung. Eulenleute schleichen sich nicht absichtlich an — sie bewegen sich einfach so. In Bibliotheken, stillen Gängen oder nächtlichen Wäldern tauchen sie auf, ohne dass jemand es bemerkt, bis es zu spät ist. Viele nennen sie scherzend „Nachteulen", weil ihre Aktivität mit der Dunkelheit wächst.',
+    ],
+    gesellschaft: [
+      'Eulenleute stammen aus dem Feenwild, wo ihre Vorfahren in losen, nachtaktiven Gemeinschaften lebten, die sich mehr um Beobachtung als um Konfrontation drehten. Wissen ist ihre Währung — nicht Gold, nicht Macht. Ein Eulenmensch, der etwas weiß, das andere nicht wissen, ist der reichste im Raum.',
+      'In Meruria sind Eulenleute bekannte Gesichter in Bibliotheken, Archiven, Gilden und Schattenmärkten. Ihre Dunkelsicht, ihre Lautlosigkeit und ihr ruhiger Verstand machen sie zu natürlichen Kundschaftern, Späher und Informationsbrokern. Wer einen Eulenleute als Verbündeten hat, hat Augen in der Dunkelheit.',
+      'Die meisten Eulenleute sind nachtaktiv — manche aus Natur, andere aus Gewohnheit, einige einfach weil die Nacht mehr Frieden bietet als der Tag. „Nachteule" ist kein Beleidigung — für die meisten ist es ein Kompliment.',
+    ],
+    introBild:        { url: null, label: 'Eulenleute · Illustration', caption: 'Charakter-Illustration', position: 'right', width: 360, height: 360 },
+    gesellschaftBild: { url: null, label: 'Feenwild-Bibliothek', caption: 'Wo Wissen im Dunkeln wartet', position: 'left', width: 240, height: 300 },
+  },
+  specialSection: {
+    type: 'traitRoller',
+    label: 'Charakter der Stille',
+    beschreibung: 'Eulenleute sind so verschieden wie Eulenarten. Würfle oder wähle, was deinen Charakter prägt.',
+    merkmale: [
+      'Archivar — ich habe mehr Zeit in Bibliotheken verbracht als draußen. Das bereue ich nicht.',
+      'Nächtlicher Kundschafter — ich sehe in der Dunkelheit, was andere nicht sehen wollen. Das ist mein Vorteil.',
+      'Feenwild-Flüchtling — ich kam aus dem Feenwild in die Sterbliche Welt. Manches hier ist befremdlich. Manches ist besser.',
+      'Stiller Beobachter — ich spreche wenig. Ich beobachte viel. Wenn ich rede, hört man besser zu.',
+      'Überraschender Kämpfer — die Leute unterschätzen mich, weil ich lautlos bin. Das ist ein Fehler, den sie nur einmal machen.',
+      'Informationsbroker — ich weiß Dinge. Die richtigen Dinge. Für den richtigen Preis.',
+      'Nachtruhe-Verweigerer — ich schlafe tagsüber, lebe nachts. Die Welt bei Tag ist laut und blendet. Ich bevorzuge die Stille.',
+      'Feenwild-Nostalgiker — manchmal vermisse ich den Feenwild. Die Farben. Das ewige Zwielicht. Dann erinnere ich mich an die Gefahren und bin froh, weg zu sein.',
+    ],
+  },
+  namenSection: {
+    type: 'nameRoller',
+    label: 'Namen der Eulenleute',
+    beschreibung: 'Eulenleute-Namen klingen weich und fließend, oft mit stillen Konsonanten. Manche tragen auch Rufnamen, die andere ihnen gegeben haben. Kein Geschlechtsunterschied.',
+    namen: ['Aelindra','Bywren','Caloss','Duveth','Eryndal','Fyval','Gwirin','Horath','Ilyndra','Jorveth','Kyloss','Luinar','Myvral','Nolindra','Orveth','Pyrval','Quivral','Rylosse','Sylvindra','Thovral','Ulindra','Vyreth','Worvinal','Xyloss','Yaveth','Zorval','Aeryth','Bolvindra','Celoss','Durveth','Elorvindra','Folval','Gryveth','Hulindra','Indraloss','Jyvral','Kolvindra','Lyrveth','Morval','Nyloss','Orvindra','Pyleth','Quvral','Ryrveth','Syloss','Tholvindra'],
+  },
+  charakterGenerator: {
+    felder: [
+      { label:'Vorname',         type:'table',  optionen:['Aelindra','Bywren','Caloss','Duveth','Eryndal','Fyval','Gwirin','Horath','Ilyndra','Jorveth','Kyloss','Luinar','Myvral','Nolindra','Orveth','Pyrval','Quivral','Rylosse','Sylvindra','Thovral'] },
+      { label:'Größe',           type:'choice', optionen:['Mittelgroß','Klein'] },
+      { label:'Gefieder',        type:'table',  optionen:['schneeweiß mit grauen Spitzen','tiefbraun mit cremefarbener Unterseite','gesprenkeltes Grau-Weiß','nachtschwarzes Gefieder','rotbraun wie Herbstlaub','silbergrau mit dunklen Streifen'] },
+      { label:'Augenfarbe',      type:'table',  optionen:['tiefes Goldgelb','bernsteinfarben','leuchtendes Orange','dunkelbraun fast schwarz','eisblau (selten)'] },
+      { label:'Federform',       type:'table',  optionen:['große Schleiereulenscheibe','spitze Ohrbüschel wie Uhu','runde glatte Kopfform','auffällige Augenringe','breite Stirnfedern','markante Brauen-Federn'] },
+      { label:'Prägung',         type:'table',  optionen:['Archivar','Nächtlicher Kundschafter','Feenwild-Flüchtling','Stiller Beobachter','Überraschender Kämpfer','Informationsbroker','Nachtruhe-Verweigerer','Feenwild-Nostalgiker'] },
+    ],
+  },
+  beziehungen: [
+    { volk:'Elfen',         relation:'Feenwild-Verbindung',      text:'Elfen kennen das Feenwild aus Geschichten und Abstammung. Wir kennen es aus Erfahrung. Das gibt uns mehr gemeinsam als es auf den ersten Blick scheint.' },
+    { volk:'Gnome',         relation:'Geteilte Neugier',          text:'Gnome lieben Wissen und Rätsel. Wir auch. In einer Bibliothek ist ein Gnom der einzige, der so still sein kann wie ich. Fast.' },
+    { volk:'Halblinge',     relation:'Freundliche Verwirrung',    text:'Halblinge reden viel. Ich höre zu. Sie denken, das bedeutet ich mag sie. Manchmal stimmt das sogar.' },
+    { volk:'Menschen',      relation:'Nützliche Beziehung',       text:'Menschen schlafen nachts. Ich arbeite nachts. Was sie im Schlaf verpassen, halte ich fest. Das ist eine nützliche Arbeitsteilung.' },
+    { volk:'Tieflinge',     relation:'Dunkle Vertraute',          text:'Tieflinge kennen die Nacht. Ich auch. Wir begegnen uns oft an Orten, wo andere nicht hinsehen. Das verbindet.' },
+    { volk:'Zwerge',        relation:'Respektvolle Distanz',      text:'Zwerge sind laut. Ihre Hämmer, ihre Stimmen, ihr Lachen. Ich schätze sie, aber in ihrer Gesellschaft bin ich erschöpfter als nach einem langen Flug.' },
+  ],
+  bekannte: [
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Eulenleute in Meruria reserviert.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Eulenleute in Meruria reserviert.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Eulenleute in Meruria reserviert.' },
+  ],
+  radar: { labels:['Mobilität','Kampf','Magie','Soziales','Überleben','Weisheit'], values:[82,55,25,52,68,80] },
+  quiz: {
+    steps: [
+      { frage:'Was treibt deinen Eulenleute an?', optionen:[
+        { text:'Wissen — ich sammle Informationen wie andere Gold sammeln.',                                           tags:['Magier','Barde'] },
+        { text:'Freiheit — Flügel zu haben bedeutet, niemals eingesperrt zu sein.',                                   tags:['Waldläufer','Schurke'] },
+        { text:'Schutz — ich beobachte, damit andere nicht in Fallen tappen.',                                        tags:['Paladin','Kleriker'] },
+        { text:'Jagd — in der Dunkelheit bin ich der Jäger, nie die Beute.',                                          tags:['Schurke','Waldläufer'] },
+      ]},
+      { frage:'Wie nutzt du deine Lautlosigkeit?', optionen:[
+        { text:'Aufklärung — ich gehe voraus, höre alles, kehre mit Informationen zurück.',                           tags:['Schurke','Waldläufer'] },
+        { text:'Überraschungsangriff — der erste Treffer gehört mir, bevor jemand reagieren kann.',                   tags:['Schurke','Kämpfer'] },
+        { text:'Sozial — ich tauche lautlos auf und beobachte erst, bevor ich mich zeige.',                           tags:['Barde','Schurke'] },
+        { text:'Ich versuche es ehrlich gesagt nicht — es passiert einfach. Leute erschrecken sich trotzdem.',        tags:['Kleriker','Magier'] },
+      ]},
+      { frage:'Wofür nutzt du deine Fluggeschwindigkeit?', optionen:[
+        { text:'Aufklärung aus der Luft — ich sehe das Schlachtfeld aus der Vogelperspektive.',                       tags:['Waldläufer','Kämpfer'] },
+        { text:'Angriff aus der Höhe — dann zurückfliehen, bevor der Feind reagiert.',                                tags:['Schurke','Waldläufer'] },
+        { text:'Reichweitenangriffe — ich bleibe oben, du bleibst unten.',                                            tags:['Waldläufer','Kämpfer'] },
+        { text:'Flucht — manchmal ist der klügste Zug, einfach wegzufliegen.',                                        tags:['Barde','Schurke'] },
+      ]},
+      { frage:'Welche Rolle spielst du in einer Gruppe?', optionen:[
+        { text:'Kundschafter — Dunkelsicht, Lautlosigkeit, Flug. Ich sehe, was andere nicht sehen.',                  tags:['Schurke','Waldläufer'] },
+        { text:'Informationssammler — ich weiß mehr als ich sage, sage mehr als andere wissen.',                      tags:['Barde','Magier'] },
+        { text:'Nacht-Wache — wenn alle schlafen, bin ich am wachsten. Das ist fair.',                                tags:['Kleriker','Paladin'] },
+        { text:'Überraschungsangreifer — mit Heimlichkeit und Dunkelsicht bin ich der erste Schlag.',                 tags:['Schurke','Kämpfer'] },
+      ]},
+    ],
+    klassen: {
+      'Schurke':     'Heimlichkeit-Übung + Lautlosigkeit + Dunkelsicht + Flug = der perfekte Hinterhalt-Schurke. Nichts passt besser.',
+      'Waldläufer':  'Flug für Aufklärung, Dunkelsicht für Nachtkampf, Heimlichkeit für lautlose Jagd — alle Stärken skalieren hier.',
+      'Barde':       'Dunkelsicht und Lautlosigkeit für soziale Infiltration. Wissen ist die stärkste Waffe eines Barden.',
+      'Magier':      'Dunkelsicht + Flug für Distanz-Zauberwirker, die nie in Nahkampf geraten wollen.',
+      'Kleriker':    'Dunkelsicht und Lautlosigkeit für den Kriegskleriker, der Überraschungsangriffe mit göttlicher Macht kombiniert.',
+      'Paladin':     'Flug + Heimlichkeit für einen Paladin, der in der Dunkelheit als strahlender Rächer erscheint.',
+      'Kämpfer':     'Flug gibt jedem Kämpfer-Archetyp Reichweite und Mobilität, die schwer zu kontern ist.',
+      'Druide':      'Feenwild-Herkunft passt thematisch perfekt. Flug und Dunkelsicht ergänzen natürliche Magie.',
+      'Hexenmeister':'Feenwild-Pakt und Feenwild-Herkunft — thematisch der kohärenteste Eulenleute-Hexenmeister.',
+      'Mönch':       'Lautlosigkeit + Flug + Heimlichkeit: der Mönch, den niemand kommen hört.',
+    },
+  },
+  koerperlicherMerkmale: {
+    bewegungsrate:   '9 m (Gehen und Fliegen; kein Flug in mittlerer/schwerer Rüstung)',
+    volljaehrigkeit: 'keine offizielle Angabe · schätzungsweise ähnlich Elfen',
+    lebenserwartung: 'keine offizielle Angabe',
+    groesse:  { kategorie:'Mittelgroß oder Klein (Wahl)', min:'90 cm', max:'180 cm', formel:'Größe wird bei Charaktererstellung gewählt' },
+    gewicht:  { min:'30 kg', max:'90 kg', formel:'je nach Größe' },
+    augenfarbe: 'goldgelb, bernsteinfarben oder dunkelbraun',
+    hautfarbe:  'unter Gefieder nicht sichtbar',
+    haarfarbe:  'kein Haar — Gefieder in weiß, braun, grau, schwarz oder Mischungen',
+  },
+  statblock: {
+    features: [
+      { name:'Kreaturentyp',    text:'Humanoider.' },
+      { name:'Größenkategorie', text:'Mittelgroß oder Klein — du wählst die Größe bei der Charaktererstellung.' },
+      { name:'Dunkelsicht',     text:'Du kannst in schwachem Licht innerhalb von 36 Metern um dich herum so sehen, als wäre es helles Licht, und in Dunkelheit so, als wäre es schwaches Licht. In Dunkelheit nimmst du Farben nur als Grautöne wahr.' },
+      { name:'Flug',            text:'Dank deiner Flügel hast du eine Fluggeschwindigkeit von 9 Metern. Du kannst diese Fluggeschwindigkeit nicht nutzen, wenn du mittlere oder schwere Rüstung trägst.' },
+      { name:'Lautlose Federn', text:'Du hast Übung in der Fertigkeit Heimlichkeit.' },
+      { name:'Angeborenes Talent', text:null, talente:['Sturmgeboren','Vogel der Beute','Wächter der Winde'] },
+    ],
+  },
+},
+'Plasmoid': {
+  name: 'Plasmoid', accent: '#80d0c0',
+  subtitle: 'Gestaltloser Wandler · Wesen ohne feste Form',
+  tags: ['Schleim','Mittelgroß oder Klein','9 m Bewegung','Amorph','Neutral'],
+  headerImage: null,
+  lore: {
+    intro: [
+      'Plasmoide sind formlose Wesen ohne typische Gestalt. In der Gegenwart anderer Kreaturen nehmen sie oft eine ähnliche Form an — aber es besteht kaum eine Chance, einen Plasmoiden mit etwas anderem zu verwechseln. Sie nehmen Nahrung durch Osmose auf wie eine Amöbe, scheiden Abfallstoffe durch winzige Poren aus und atmen, indem sie Sauerstoff durch einen anderen Satz Poren aufnehmen. Obwohl die meisten Plasmoide durchscheinend grau sind, können sie ihre Farbe und Durchsichtigkeit verändern, indem sie Farbstoffe durch ihre Poren aufnehmen.',
+      'Plasmoide haben keine inneren Organe der üblichen Art. Ihr Körper besteht aus Zellen, Fasern, plasmaartiger Flüssigkeit und Nervenbündeln. Diese Nerven ermöglichen es ihnen, Licht, Wärme, Textur, Schall, Schmerz und Vibrationen wahrzunehmen. Plasmoide können die äußeren Schichten ihres Körpers versteifen, um eine menschenähnliche Form zu halten, sodass sie Kleidung und Accessoires tragen können. Sie sprechen, indem sie Luft durch röhrenartige Hohlräume pressen, die sich verengen, um Laute zu erzeugen.',
+      'Wenn Plasmoide schlafen, verlieren sie ihre Starrheit und breiten sich aus — weshalb sie manchmal mit einem Fels oder einem anderen Merkmal der Umgebung verwechselt werden. Wer jemals versehentlich auf einen schlafenden Plasmoiden gesessen hat, vergisst diesen Moment nicht so schnell.',
+    ],
+    gesellschaft: [
+      'Plasmoide stammen ursprünglich aus dem Astralmeer, wo ihre formlose Natur ihnen einen entscheidenden Überlebensvorteil verschafft. Im Vakuum des Astralraums brauchen sie keinen Atemrhythmus, können sich durch kleinste Risse zwängen und bieten angreifenden Waffen wenig Angriffsfläche. Viele Plasmoide wurden von Spelljammer-Crews angeheuert — als Kundschafter, Schlossbrecherspezialisten oder schlicht als lebende Dichtungsmasse für rissige Schiffsrümpfe.',
+      'Plasmoid-Gesellschaften existieren weniger als feste Strukturen denn als lose Zusammenschlüsse von Individuen, die ähnliche Interessen teilen. Sie haben kein ausgeprägtes Konzept von persönlichem Raum — aus offensichtlichen Gründen — und empfinden enge physische Nähe zu anderen Wesen als vollkommen normal. Das kann in gemischten Gruppen zu Missverständnissen führen.',
+      'In Meruria sind Plasmoide eine Seltenheit, die überall für Aufsehen sorgt. Ihre Fähigkeit, jede Form anzunehmen, macht sie zu begehrten Geheimagenten, Detektiven und Infiltratoren — aber auch zu Objekten der Neugier, des Misstrauens und gelegentlich der offenen Bewunderung. Ein Plasmoid, der gelernt hat, wie Menschen auf ihn reagieren, ist ein Plasmoid, der weiß, welche Form er für welchen Raum wählen muss.',
+    ],
+    introBild:        { url: null, label: 'Plasmoid · Illustration', caption: 'Charakter-Illustration', position: 'right', width: 360, height: 360 },
+    gesellschaftBild: { url: null, label: 'Plasmoid im Astralmeer', caption: 'Heimat zwischen den Sternen', position: 'left', width: 240, height: 300 },
+  },
+  specialSection: {
+    type: 'traitRoller',
+    label: 'Wie du aussiehst — wenn du aussehen willst',
+    beschreibung: 'Plasmoide haben keine feste Erscheinung. Würfle oder wähle, welche Form dein Charakter bevorzugt.',
+    merkmale: [
+      'Ich halte stets eine menschenähnliche Form — Menschen fühlen sich wohler dabei, und ich lerne schneller, wenn sie sich wohlfühlen.',
+      'Meine Form ist grob humanoid, aber ich lasse bewusst Details weg. Ein Gesicht ohne Nase. Finger, die ineinanderfließen. Ich genieße die Reaktionen.',
+      'Im Schlaf verliere ich mich vollständig. Meine Gruppe hat gelernt, mich morgens mit einem Stock zu wecken, bevor jemand versehentlich auf mir sitzt.',
+      'Meine bevorzugte Farbe ist ein tiefer Blauton. Ich habe keine gute Erklärung dafür. Mir gefällt es einfach.',
+      'Ich imitiere unbewusst die Form der Person, mit der ich spreche. Das ist kein Trick — ich tue es einfach.',
+      'Ich behalte keine feste Form. Ich fließe. Andere müssen damit umgehen. Ich tue es schon mein Leben lang.',
+      'Meine Augen leuchten schwach im Dunkeln. Das war früher nützlich. Jetzt macht es Schleichversuche manchmal kompliziert.',
+      'Ich habe einen Pseudopod, den ich selten einziehe. Die anderen Gruppenmitglieder haben aufgehört, überrascht zu sein, wenn er irgendwo auftaucht.',
+    ],
+  },
+  namenSection: {
+    type: 'nameRoller',
+    label: 'Namen der Plasmoide',
+    beschreibung: 'Plasmoide übernehmen oft Namen aus den Kulturen, mit denen sie in Kontakt kommen, oder erschaffen lautmalerische Eigennamen, die die Geräusche widerspiegeln, die ihr Körper beim Sprechen erzeugt.',
+    tabellen: [
+      { name:'Selbstgewählte Namen', eintraege:['Blorp','Gluu','Squelch','Murble','Oovin','Slith','Gloop','Velsh','Morph','Puddra','Shlurp','Oozal','Glibber','Murph','Squelva','Blurb','Slova','Gloob','Velva','Mursh','Oovala','Slibb','Gluuva','Blorph','Squelsh','Murbel','Oovish','Slova','Glibba','Velsh'] },
+      { name:'Übernommene Namen', eintraege:['Arion','Cass','Deva','Emil','Fenn','Gael','Hira','Iven','Joss','Kael','Lira','Morn','Nira','Orin','Pell','Rael','Sora','Teva','Urin','Vael','Wren','Xael','Yora','Zenn','Aris','Bren','Cael','Dorn','Evin','Fael'] },
+    ],
+  },
+  charakterGenerator: {
+    felder: [
+      { label:'Name',          type:'choice',  optionen:['Selbstgewählt (lautmalerisch)','Übernommen (von anderer Rasse)'] },
+      { label:'Größe',         type:'choice',  optionen:['Mittelgroß','Klein'] },
+      { label:'Grundfarbe',    type:'table',   optionen:['durchscheinend grau','milchig weiß','blassblau','gelblich-grün','tintenviolett','fast völlig transparent'] },
+      { label:'Lumineszenz',   type:'table',   optionen:['keine','schwaches inneres Leuchten','pulsierende Schlieren','punktuelle Lichtblitze bei Aufregung','konstanter Schimmer an den Rändern'] },
+      { label:'Bevorzugte Form', type:'table', optionen:['humanoid und gepflegt','humanoid aber bewusst unvollständig','fließend und formlos','kompakter Klumpen mit Pseudopoden','wechselnd je nach Stimmung'] },
+      { label:'Talent',        type:'table',   optionen:['Astrale Widerstandsfähigkeit','Pseudopod-Krieger','Ausweichendes Formen'] },
+    ],
+  },
+  beziehungen: [
+    { volk:'Menschen',   relation:'Faszinierte Unruhe',     text:'Menschen können nicht aufhören, mich anzustarren. Das ist kein Problem. Ich starre zurück — was schwerer ist, als es klingt, wenn man keine festen Augen hat.' },
+    { volk:'Elfen',      relation:'Ästhetische Neugier',    text:'Elfen fragen mich manchmal, ob ich schön bin. Ich habe keine Antwort. Ich bin, was ich bin. Das scheint sie mehr zu beschäftigen als mich.' },
+    { volk:'Zwerge',     relation:'Pragmatische Akzeptanz', text:'Zwerge fragen mich, ob ich in Risse passen kann. Wenn ich ja sage, bekommen sie einen respektvollen Blick. Das ist die effizienteste Form der Anerkennung, die ich kenne.' },
+    { volk:'Githyanki',  relation:'Gemeinsames Erbe',       text:'Wir beide stammen aus dem Astralmeer. Sie haben Schwerter und Drachen. Ich habe Poren und Anpassungsfähigkeit. Ich behaupte, mein Ansatz ist vielseitiger.' },
+    { volk:'Halblinge',  relation:'Gegenseitige Sympathie', text:'Halblinge haben aufgehört, mich als unheimlich zu empfinden, schneller als alle anderen. Ich weiß nicht ob das Mut oder Unbekümmertheit ist. Beides ist mir recht.' },
+    { volk:'Orks',       relation:'Respektvolle Distanz',   text:'Orks schlagen mich nicht — das ist ein gutes Zeichen. Sie sind sich nicht sicher, ob ich Schaden nehmen würde, und das hält sie nachdenklich. Nachdenken ist gut.' },
+  ],
+  bekannte: [
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Plasmoiden in Meruria reserviert.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Plasmoiden in Meruria reserviert.' },
+  ],
+  radar: { labels:['Mobilität','Kampf','Magie','Soziales','Überleben','Heimlichkeit'], values:[72,55,50,62,80,88] },
+  quiz: {
+    steps: [
+      { frage:'Wie nutzt du deine Formlosigkeit?', optionen:[
+        { text:'Als Infiltrator — Ich quetsche mich durch Spalten, übernehme Formen, überwinde Hindernisse, die andere aufhalten.',  tags:['Schurke','Waldläufer'] },
+        { text:'Als Kämpfer — Mein Körper nimmt Schlag und Biss anders auf als Fleisch. Das ist mein Vorteil.',                      tags:['Barbar','Kämpfer'] },
+        { text:'Als Detektiv — Mein Körper ist ein Werkzeug zur Informationsbeschaffung. Ich gehe dorthin, wo andere nicht können.',  tags:['Schurke','Magier'] },
+        { text:'Kaum bewusst — Ich existiere einfach so. Die Form ist Beiwerk.',                                                      tags:['Barde','Druide'] },
+      ]},
+      { frage:'Was bedeutet deine fehlende feste Form für dich?', optionen:[
+        { text:'Freiheit — Ich bin nicht gebunden an ein Gesicht, einen Körper, eine Identität. Das ist Stärke.',                    tags:['Barbar','Schurke'] },
+        { text:'Anpassung — Ich gebe jedem Raum, was er braucht. Das ist meine soziale Waffe.',                                     tags:['Barde','Hexenmeister'] },
+        { text:'Einsamkeit — Niemand sieht mich wie ich wirklich bin. Ich weiß nicht mal, was das bedeutet.',                       tags:['Magier','Kleriker'] },
+        { text:'Gleichgültigkeit — Form ist Form. Funktion ist Funktion. Ich denke nicht viel darüber nach.',                        tags:['Kämpfer','Mönch'] },
+      ]},
+      { frage:'Wie setzt du deinen Pseudopod ein?', optionen:[
+        { text:'Als zusätzliche Hand — Türen öffnen, Dinge greifen, Ablenkungen schaffen.',                                          tags:['Schurke','Kämpfer'] },
+        { text:'Als Erkundungswerkzeug — Ich strecke ihn vor, bevor ich selbst vorangehe.',                                          tags:['Waldläufer','Schurke'] },
+        { text:'Selten — Ich bevorzuge eine menschenähnliche Form. Der Pseudopod wirkt auf andere oft beunruhigend.',                tags:['Barde','Paladin'] },
+        { text:'Demonstrativ — Ich lasse ihn ausgefahren. Ich finde, andere sollten sich daran gewöhnen.',                           tags:['Barbar','Hexenmeister'] },
+      ]},
+      { frage:'Welche Rolle spielst du in der Gruppe?', optionen:[
+        { text:'Schleicher und Späher — Ich komme rein, hole Information raus, komme wieder raus.',                                  tags:['Schurke','Waldläufer'] },
+        { text:'Frontlinie mit Resistenz — Säure und Gift prallen ab. Ich stehe, wo andere weichen.',                               tags:['Kämpfer','Barbar'] },
+        { text:'Flexibler Allrounder — Ich passe mich jeder Situation an. Das ist mein Kern.',                                       tags:['Barde','Druide'] },
+        { text:'Magischer Spezialist — Mein Körper ist seltsam. Meine Magie ist seltsam. Das passt.',                               tags:['Magier','Hexenmeister'] },
+      ]},
+    ],
+    klassen: {
+      'Schurke':     'Amorph für Schlupflöcher, Dunkelsicht, Pseudopod für Handgriffe — der Plasmoid-Schurke ist der perfekte Infiltrator.',
+      'Kämpfer':     'Natürliche Widerstandsfähigkeit, Amorph für Griffe, solide Grundlage für jeden Kampfstil.',
+      'Barbar':      'Resistenz stapelt mit Unverwüstlichkeit; Amorph im Griff einleiten ist stark für Grapple-Barbaren.',
+      'Waldläufer':  'Dunkelsicht, Amorph für Geländevorteile, Pseudopod für Fernmanipulation — vielseitiger Kundschafter.',
+      'Barde':       'Formwandlung als soziales Werkzeug; Plasmoid-Barde kann buchstäblich jede Rolle spielen.',
+      'Druide':      'Schleim-Kreaturtyp + Formwandlung passt thematisch hervorragend zum Naturverbundenen.',
+      'Mönch':       'Amorph für Grappling, Dunkelsicht, Resistenz — Ki und Formlosigkeit ergänzen sich.',
+      'Kleriker':    'Natürliche Widerstandsfähigkeit + Astrale Widerstandsfähigkeit als angeborenes Talent macht ihn sehr zäh.',
+      'Magier':      'INT-Boost möglich; Plasmoid passt thematisch zu Transmutation und Abjuration.',
+      'Hexenmeister':'CHA-Boost möglich; die fremdartige Natur des Plasmoiden passt gut zu okkulten Pakten.',
+    },
+  },
+  koerperlicherMerkmale: {
+    bewegungsrate:   '9 m (Gehen)',
+    volljaehrigkeit: 'unbekannt (Plasmoide altern anders)',
+    lebenserwartung: 'unbekannt',
+    groesse:  { kategorie:'Mittelgroß oder Klein (Wahl)', min:'variabel', max:'variabel', formel:'nach Wahl bei Charaktererstellung' },
+    gewicht:  { min:'variabel', max:'variabel', formel:'ca. 45–90 kg je nach Größe und Dichte' },
+    augenfarbe: 'variabel; oft dunklere Einschlüsse im Körper',
+    hautfarbe:  'durchscheinend grau; kann durch Farbstoffe verändert werden',
+    haarfarbe:  'keine',
+  },
+  statblock: {
+    features: [
+      { name:'Kreaturtyp',              text:'Schleim.' },
+      { name:'Größenkategorie',         text:'Mittelgroß oder Klein — du wählst die Größe bei Charaktererstellung.' },
+      { name:'Amorph',                  text:'Du kannst dich durch einen Spalt quetschen, der nur 2,5 Zentimeter breit ist, sofern du nichts trägst oder bei dir hast. Außerdem hast du Vorteil auf Eigenschaftswürfe, die du machst, um einen Griff einzuleiten oder zu entkommen.' },
+      { name:'Dunkelsicht',             text:'Du kannst in schwachem Licht innerhalb von 18 Metern so sehen, als wäre es helles Licht, und in Dunkelheit so, als wäre es schwaches Licht. In dieser Dunkelheit nimmst du Farben nur als Grautöne wahr.' },
+      { name:'Atem anhalten',           text:'Du kannst deinen Atem für 1 Stunde anhalten.' },
+      { name:'Natürliche Widerstandsfähigkeit', text:'Du hast Resistenz gegen Säure- und Giftschaden und hast Vorteil auf Rettungswürfe gegen Vergiftung.' },
+      { name:'Selbst formen',           text:'Als Aktion kannst du deinen Körper umformen, um dir einen Kopf, einen oder zwei Arme, ein oder zwei Beine sowie behelfsmäßige Hände und Füße zu geben, oder du kannst zu einem gliederlosen Klumpen zurückkehren. Solange du eine menschenähnliche Form hast, kannst du Kleidung und Rüstung tragen, die für einen Humanoiden deiner Größe gemacht sind. Als Bonusaktion kannst du einen Pseudopod herausstrecken, der bis zu 15 Zentimeter breit und 3 Meter lang ist, oder ihn wieder einziehen. Als Teil dieser Bonusaktion kannst du damit einen Gegenstand handhaben, eine Tür oder einen Behälter öffnen oder schließen oder einen winzigen Gegenstand aufheben oder ablegen. Der Pseudopod kann nicht angreifen, magische Gegenstände aktivieren oder mehr als 4,5 Kilogramm heben.' },
+      { name:'Angeborenes Talent',      text:null, talente:['Astrale Widerstandsfähigkeit','Pseudopod-Krieger','Ausweichendes Formen'] },
+    ],
+  },
+},
+'Ratatosk': {
+  name: 'Ratatosk', accent: '#c87840',
+  subtitle: 'Kosmische Trickster · Klatschboten der Weltebenen',
+  tags: ['Humanoid','Winzig–Klein','7,5 m Bewegung','Telepathie','Meistens Chaotisch Gut'],
+  headerImage: null,
+  lore: {
+    intro: [
+      'Ratatosks sind unersättliche Trickster. Sie teilen Klatsch aus allen Ebenen, erfreuen sich daran, Geheimnisse zu erfahren, und verbreiten diese Informationshäppchen auf schelmische Weise weiter. Sie ähneln Eichhörnchen mit glattem Fell und kleinen Stoßzähnen. Trotz ihrer himmlischen Abstammung sind sie tief mit der sterblichen Welt verbunden — was sie zu etwas macht, das weder ganz Himmelswesen noch ganz Sterblicher ist, aber von beidem das Neugierigste mitgenommen hat.',
+      'Ratatosks bilden enge matriarchalische Familieneinheiten, sogenannte Drays, innerhalb größerer Gemeinschaften, die Scurries heißen. Abenteuerlustigere Ratatosks agieren oft als planare Führer und Beschützer — obwohl es ebenso üblich ist, einen Ratatosk als Boten, Dieb oder Spion anzutreffen. Ob das nun Heldentum oder Opportunismus ist, hängt davon ab, wen man fragt.',
+      'Ratatosks sprechen nicht mit Zunge und Lippen — sie sprechen durch Telepathie. Das macht sie zu ausgezeichneten Gesprächspartnern, die niemanden unterbrechen kann, und zu schrecklichen Gesprächspartnern, die man nicht zum Schweigen bringen kann.',
+    ],
+    gesellschaft: [
+      'Es gibt zwei Hauptlinien der Ratatosks: die Ekorre und die Tradvakt. Die Ekorre sind das Bild, das die meisten vor Augen haben — glattes Fell in Rot- und Brauntönen, winzige Stoßzähne, endlose Neugier. Sie bewohnen Yggdrasil und seine Äste, tragen Botschaften durch die Ebenen und unterhalten ein nie endendes Klatschnetzwerk über alle Existenzebenen hinweg. Klug, egozentrisch und hoffnungslos überzeugt davon, dass ihre neueste Information die wichtigste der Welt ist.',
+      'Die Tradvakt, auch Ratatosk-Kriegsherren genannt, sind größer als ihre Ekorre-Vettern und betrachten sich als Hüter und Beschützer von Yggdrasil. Sie trainieren von klein auf, um Waffen und Kampftaktiken zu meistern, und handeln, um Ordnung in ihren Gemeinschaften zu erhalten. Tradvakt-Abenteurer suchen entweder proaktiv nach Feinden des Weltbaums — oder sie wollen schlicht beweisen, dass ein 90-Zentimeter-Kämpfer jeden im Raum besiegen kann.',
+      'In Meruria sind Ratatosks selten, aber unvergesslich. Wer einmal einen gesehen hat, erinnert sich. Wer einmal einem telepathisch zugehört hat, wünscht er hätte es nicht.',
+    ],
+    introBild:        { url: null, label: 'Ratatosk · Illustration', caption: 'Charakter-Illustration', position: 'right', width: 360, height: 360 },
+    gesellschaftBild: { url: null, label: 'Ratatosk auf Yggdrasil', caption: 'Bote zwischen den Ebenen', position: 'left', width: 240, height: 300 },
+  },
+  specialSection: {
+    type: 'variantCards', feat1Label: 'Attribute & Merkmale', feat2Label: 'Rolle & Identität',
+    label: 'Unterrassen der Ratatosks',
+    beschreibung: 'Zwei Linien — zwei Wege, ein Eichhörnchen zu sein. Wähle deine Abstammung.',
+    varianten: [
+      {
+        farbe: 'Ekorre', name: 'Ekorre', schadensart: 'Kundschafter', farbeHex: '#c06020', bild: null,
+        augenfarbe: 'haselnuss, bernsteinfarben oder leuchtend gold',
+        hautfarbe:  'glattes Fell in Rot- und Brauntönen',
+        haarfarbe:  'fuchsrot, kastanienbraun oder dunkelbraun',
+        odemwaffe:  'GES+2, STÄ-2, INT oder CHA +1 · Winzig (ca. 45 cm, 9–23 kg) · Segen von Yggdrasil: Nachricht + Boshafter Spott als Tricks; ab Stufe 5 Spiegelbild (1×/langer Rast, CHA) · Winzige Waffen: Leicht/Finesse normal, andere zweihändig mit Nachteil, Schwer nicht möglich',
+        resistenz:  'Klatschbote · Botennetz · Trickster',
+      },
+      {
+        farbe: 'Tradvakt', name: 'Tradvakt', schadensart: 'Kämpfer', farbeHex: '#607040', bild: null,
+        augenfarbe: 'dunkelbraun oder tief schwarz',
+        hautfarbe:  'dichtes Fell in Grau-, Braun- oder Grüntönen',
+        haarfarbe:  'graubraun, dunkelgrün oder schwarz',
+        odemwaffe:  'GES+2, STÄ-2, KON+1 · Klein (60–90 cm, 27–45 kg) · Kriegsgeplapper: Bonusaktion, Kreatur in 9 m muss CHA-RW (SG 8 + Übungsbonus + KON-Mod) bestehen oder Nachteil auf Angriffswürfe bis zum nächsten Zug. 1×/kurze oder lange Rast.',
+        resistenz:  'Baumschützer · Kriegsherr · Wächter Yggdrasils',
+      },
+    ],
+  },
+  namenSection: {
+    type: 'nameRoller',
+    label: 'Namen der Ratatosks',
+    beschreibung: 'Ratatosks unterscheiden nicht zwischen männlichen und weiblichen Namen. Namen sind oft kurz; hochangesehene Familien fügen Infixe wie -ee- oder -ekke- ein. Ratatosks, die in anderen Ebenen leben, nehmen manchmal regionale Namen an.',
+    tabellen: [
+      { name:'Vornamen', eintraege:['Chiringa','Daresh','Ekirp','Ekkitta','Kerasil','Najuta','Orrin','Skirekkeret','Tiptup','Turorri','Brekkit','Chirrip','Daveek','Ekorin','Flitta','Greekol','Hekorra','Ikkeris','Jorrip','Keetak','Lirrek','Mirrosk','Neekit','Orrekka','Preetip','Reekkol','Skirrit','Teekor','Ukkaris','Virreek'] },
+      { name:'Familiennamen', eintraege:['Hellgesang','Borstzahn','Flinktatze','Hüpfzweig','Stillesblatt','Klugbart','Schnellklaue','Scharfzahn','Flinkschweif','Baumgebunden','Hohlfrucht','Eisenbüschel','Weitsprung','Nachtgeplapper','Urwissen','Kiefernkamm','Grummelnacken','Schnellhorst','Dornenfell','Windsprung'] },
+    ],
+  },
+  charakterGenerator: {
+    felder: [
+      { label:'Unterrasse',   type:'choice',  optionen:['Ekorre (Winzig)','Tradvakt (Klein)'] },
+      { label:'Vorname',      type:'table',   optionen:['Chiringa','Daresh','Ekirp','Ekkitta','Kerasil','Najuta','Orrin','Skirekkeret','Tiptup','Turorri','Brekkit','Chirrip','Daveek','Ekorin','Flitta','Greekol','Hekorra','Ikkeris','Jorrip','Keetak'] },
+      { label:'Familienname', type:'table',   optionen:['Hellgesang','Borstzahn','Flinktatze','Hüpfzweig','Stillesblatt','Klugbart','Schnellklaue','Scharfzahn','Flinkschweif','Baumgebunden'] },
+      { label:'Fellfarbe',    type:'table',   optionen:['fuchsrot','kastanienbraun','hellbraun','dunkelbraun','graubraun','schwarz','silbern-grau'] },
+      { label:'Augenfarbe',   type:'table',   optionen:['haselnuss','bernsteinfarben','tief schwarz','smaragdgrün','leuchtendes Gold'] },
+      { label:'Besonderheit', type:'table',   optionen:['Stoßzähne auffällig sichtbar','Fell mit ungewöhnlichen Abzeichen','Telepathie flüstert statt hallt','Immer in Bewegung','Scheinbar allwissend','Auffällig langer buschiger Schwanz'] },
+    ],
+  },
+  beziehungen: [
+    { volk:'Menschen',    relation:'Amüsierte Überlegenheit',  text:'Menschen sind so groß und wissen so wenig. Es ist fast rührend. Ich helfe ihnen gerne — gegen angemessene Information als Gegenleistung.' },
+    { volk:'Elfen',       relation:'Konkurrierendes Interesse', text:'Elfen denken, sie kennen alle Geheimnisse. Das ist falsch. Ich kenne mehr. Aber ich sage es ihnen nicht.' },
+    { volk:'Gnome',       relation:'Kollegiale Neugier',        text:'Gnome stellen dieselben Fragen wie ich — sie experimentieren nur anders damit. Das ist respektierbar.' },
+    { volk:'Halblinge',   relation:'Verwandte Seelen',          text:'Klein, schnell, unterschätzt. Wir haben mehr gemeinsam als die Größeren je zugeben würden.' },
+    { volk:'Githyanki',   relation:'Wachsame Neugier',          text:'Sie reisen ebenenübergreifend wie wir — aber mit viel mehr Schwertern und viel weniger Humor.' },
+    { volk:'Himmelswesen',relation:'Kompliziertes Erbe',        text:'Wir stammen von ihnen ab. Sie erkennen uns als Verwandte an — manchmal. Das reicht uns.' },
+  ],
+  bekannte: [
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Ratatosk in Meruria reserviert.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Ratatosk in Meruria reserviert.' },
+  ],
+  radar: { labels:['Mobilität','Kampf','Magie','Soziales','Überleben','Information'], values:[78,42,62,88,65,95] },
+  quiz: {
+    steps: [
+      { frage:'Ekorre oder Tradvakt?', optionen:[
+        { text:'Ekorre — Ich sammle Informationen, webe Netzwerke, spreche Zauber. Kampf ist der letzte Ausweg.',          tags:['Barde','Schurke','Hexenmeister'] },
+        { text:'Tradvakt — Ich kämpfe. Klein heißt nicht schwach. Mein Kriegsgeplapper macht Gegner langsam.',             tags:['Kämpfer','Schurke','Waldläufer'] },
+        { text:'Ekorre, aber ungewöhnlich kampforientiert — Ich nutze Magie und Klingen gleichermaßen.',                    tags:['Schurke','Hexenmeister'] },
+        { text:'Tradvakt, aber diplomatischer als typisch — Ich kämpfe wenn nötig, rede aber lieber.',                     tags:['Paladin','Barde'] },
+      ]},
+      { frage:'Wie setzt du Telepathie ein?', optionen:[
+        { text:'Als soziales Werkzeug — Ich spreche mit jedem gleichzeitig. Informationsvorteil ist alles.',                tags:['Barde','Hexenmeister'] },
+        { text:'Als taktisches Hilfsmittel — Stille Koordination mit Verbündeten im Kampf.',                               tags:['Kämpfer','Waldläufer'] },
+        { text:'Als Verhörtechnik — Niemand lügt mich an, ohne dass ich es bemerke.',                                      tags:['Schurke','Kleriker'] },
+        { text:'Kaum bewusst — Es ist einfach wie ich rede. Besonderes denke ich mir nicht dabei.',                         tags:['Barbar','Druide'] },
+      ]},
+      { frage:'Was treibt deinen Ratatosk an?', optionen:[
+        { text:'Information — Wer weiß, hat Macht. Ich sammle alles und vergesse nichts.',                                  tags:['Schurke','Barde'] },
+        { text:'Schutz — Yggdrasil und seine Bewohner brauchen Wächter. Ich bin einer.',                                   tags:['Paladin','Kämpfer'] },
+        { text:'Abenteuer — Die Ebenen sind groß und ich bin klein. Das ist kein Hindernis.',                               tags:['Waldläufer','Barbar'] },
+        { text:'Neugier — Es gibt immer mehr zu entdecken. Das ist genug Grund.',                                           tags:['Magier','Druide'] },
+      ]},
+      { frage:'Welche Rolle spielst du in der Gruppe?', optionen:[
+        { text:'Kundschafter und Informant — Ich komme überall rein und weiß danach mehr als vorher.',                     tags:['Schurke','Waldläufer'] },
+        { text:'Unterstützer — Telepathie, Magie, Ablenkung — ich halte alles am Laufen.',                                 tags:['Barde','Hexenmeister'] },
+        { text:'Überraschungskämpfer — Klein, schnell, unterschätzt. Das ist mein Vorteil.',                               tags:['Schurke','Kämpfer'] },
+        { text:'Soziale Schnittstelle — Ich rede mit jedem. Buchstäblich.',                                                 tags:['Barde','Paladin'] },
+      ]},
+    ],
+    klassen: {
+      'Schurke':     'GES+2, Telepathie, kleine Größe für Verstecken — der Ratatosk-Schurke ist der perfekte Infiltrator jeder Ebene.',
+      'Barde':       'GES+2, CHA+1 (Ekorre), Telepathie, Klatschnetzwerk — sozialer Barde mit einzigartigem Informationsvorteil.',
+      'Hexenmeister':'CHA+1 (Ekorre), Segen von Yggdrasil, Telepathie — thematisch und mechanisch stark.',
+      'Kämpfer':     'KON+1 (Tradvakt), Kriegsgeplapper, Winzige Größe für Deckung — der überraschende Nahkämpfer.',
+      'Waldläufer':  'GES+2, Klettern, Dunkelsicht, Telepathie für stille Koordination.',
+      'Magier':      'INT+1 (Ekorre möglich), Segen von Yggdrasil — der planare Gelehrte.',
+      'Druide':      'Himmlisches Erbe + Naturverbindung über Yggdrasil — ungewöhnlich aber thematisch stimmig.',
+      'Mönch':       'GES+2, Klettern, Kleine Größe — der schnelle, schwer zu treffende Mönch.',
+      'Paladin':     'KON+1 (Tradvakt), Kriegsgeplapper, himmlisches Erbe — der Schutzpaladin des Weltbaums.',
+      'Kleriker':    'KON+1 (Tradvakt), himmlische Abstammung — Licht- oder Wissensdomäne passt gut.',
+    },
+  },
+  koerperlicherMerkmale: {
+    bewegungsrate:   '7,5 m (Gehen), 3 m (Klettern)',
+    volljaehrigkeit: '10 Jahre',
+    lebenserwartung: 'bis zu 180 Jahre (himmlische Natur)',
+    groesse: { kategorie:'Winzig (Ekorre) oder Klein (Tradvakt)', min:'45 cm (Ekorre) / 60 cm (Tradvakt)', max:'45 cm (Ekorre) / 90 cm (Tradvakt)', formel:'nach Unterrasse' },
+    gewicht: { min:'9 kg (Ekorre) / 27 kg (Tradvakt)', max:'23 kg (Ekorre) / 45 kg (Tradvakt)', formel:'nach Unterrasse' },
+    augenfarbe: 'haselnuss, bernsteinfarben, schwarz oder leuchtend gold',
+    hautfarbe:  'unter dem Fell: variiert',
+    haarfarbe:  'fuchsrot, kastanienbraun, grau oder schwarz (Fell)',
+  },
+  statblock: {
+    features: [
+      { name:'Kreaturtyp',              text:'Humanoid (mit himmlischer Abstammung — anfällig für Effekte, die Himmelswesen betreffen).' },
+      { name:'Geertes Himmelswesen',    text:'Du stammst von Himmelswesen ab, bist aber stark mit der sterblichen Welt verbunden. Obwohl du ein Humanoid bist, bist du dennoch anfällig für Effekte, die Himmelswesen betreffen.' },
+      { name:'Dunkelsicht',             text:'Du kannst in schwachem Licht innerhalb von 18 Metern so sehen, als wäre es helles Licht, und in Dunkelheit so, als wäre es schwaches Licht. In der Dunkelheit kannst du keine Farben unterscheiden, nur Grautöne.' },
+      { name:'Scharfe Stoßzähne',       text:'Deine scharfen Stoßzähne sind natürliche Waffen für unbewaffnete Angriffe. Bei einem Treffer verursachen sie 1 Stichschaden + 1W4 psychischen Schaden.' },
+      { name:'Telepathisch',            text:'Du kannst telepathisch mit jeder Kreatur sprechen, die du sehen kannst und die sich innerhalb einer Anzahl von Fuß befindet, die dem Zehnfachen deiner Stufe entspricht. Du musst keine gemeinsame Sprache teilen, aber die Kreatur muss mindestens eine Sprache verstehen.' },
+      { name:'— Ekorre: Segen von Yggdrasil', text:'Du kennst die Zaubertricks Nachricht und Boshafter Spott. Ab Stufe 5: Spiegelbild einmal pro langer Rast. Charisma ist deine Zaubermerkmalcharakteristik.' },
+      { name:'— Ekorre: Winzige Waffen', text:'Du kannst Waffen mit der Leicht- oder Finesse-Eigenschaft normal führen. Andere Waffen werden als zweihändig behandelt und du hast Nachteil auf Angriffe damit. Schwere Waffen kannst du nicht verwenden.' },
+      { name:'— Tradvakt: Kriegsgeplapper', text:'Als Bonusaktion muss eine Nicht-Ratatosk-Kreatur innerhalb von 9 Metern, die dich hören kann, einen Charisma-Rettungswurf (SG 8 + Übungsbonus + KON-Mod) bestehen oder bis zum Beginn deines nächsten Zuges Nachteil auf Angriffswürfe haben. Einmal pro kurzer oder langer Rast.' },
+    ],
+  },
+},
+'Sahuagin': {
+  name: 'Sahuagin', accent: '#2070a0',
+  subtitle: 'Teufel der Tiefsee · Herrschaft unter den Wellen',
+  tags: ['Humanoid','Mittelgroß','9 m · 12 m Schwimmen','Blutrausch','Rechtschaffen Böse'],
+  headerImage: null,
+  lore: {
+    intro: [
+      'Sahuagin — die Meeresteufel — sind haifischartige Humanoide aus den dunklen Tiefen des Ozeans. Muskulös, schuppig, mit Klauen und Reißzähnen, die nicht dekorativ sind. Sie können 1,80 bis 2,10 Meter groß werden und bewegen sich sowohl zu Land als auch im Wasser mit beunruhigender Effizienz. Ihre überlegene Dunkelsicht reicht bis zu 36 Metern — angepasst an einen Lebensraum, in den das Licht nicht dringt.',
+      'Ihre reglementierte Natur macht Sahuagin universell rechtschaffen, und fast alle sind böse. Meeresteufel, die diesen Trends trotzen, werden entweder getötet oder verbannt — was den gelegentlichen Sahuagin-Abenteurer erklärt. Sie sind keine Aussteiger aus Überzeugung, sondern aus Notwendigkeit: Wer anders denkt als das Kollektiv, hat dort keinen Platz mehr.',
+      'Sahuagin altern, aber keine Obergrenze ihrer Lebensspanne ist bekannt. Die ältesten unter ihnen haben Meeresströmungen beobachtet, die sich im Laufe von Jahrhunderten veränderten. Ob das Weisheit erzeugt oder nur Ungeduld, hängt davon ab, welchen Sahuagin man fragt.',
+    ],
+    gesellschaft: [
+      'Sahuagin-Gesellschaften sind hierarchisch und militärisch. Stärke, Rang und Blutrausch-Disziplin bestimmen den Status. Schwäche wird nicht geduldet. Die Haitelempathie — die Fähigkeit, Haien einfache Befehle zu übermitteln — macht sie zu gefürchteten Kommandanten unter Wasser, wo sie Haie als Kavallerie einsetzen.',
+      'An der Oberfläche sind Sahuagin selten und fast immer mit einem spezifischen Ziel hier: Erkundung, Handel in extremen Ausnahmefällen, oder — häufiger — eine Art von Konflikt. Ihre begrenzte Amphibienfähigkeit zwingt sie, alle vier Stunden untergetaucht zu sein, was ihren Aktionsradius auf Land stark einschränkt.',
+      'In Meruria begegnet man Sahuagin am ehesten in Küstenstädten mit Zugang zu tiefem Wasser — als Einzelne, die aus ihrer Gemeinschaft verstoßen wurden und sich nun unter den Lebenden zurechtfinden müssen. Sie sind keine angenehmen Gesellschafter, aber sie sind berechenbar: Was sie sagen, meinen sie. Was sie androhen, meinen sie auch.',
+    ],
+    introBild:        { url: null, label: 'Sahuagin · Illustration', caption: 'Charakter-Illustration', position: 'right', width: 360, height: 360 },
+    gesellschaftBild: { url: null, label: 'Sahuagin-Tiefseeburg', caption: 'Hierarchie in der Dunkelheit', position: 'left', width: 240, height: 300 },
+  },
+  specialSection: {
+    type: 'traitRoller',
+    label: 'Warum du an der Oberfläche bist',
+    beschreibung: 'Ein Sahuagin an Land ist ein verstoßener Sahuagin — oder ein sehr zielgerichteter. Würfle oder wähle.',
+    merkmale: [
+      'Verbannt — meine Überzeugungen oder Handlungen haben mich unvereinbar mit meiner Gemeinschaft gemacht. Ich bin gegangen, bevor sie mich töten konnten.',
+      'Auftrag — ich wurde gesandt, um etwas zu erkunden, zu stehlen oder zu vernichten. Was danach kommt, hängt vom Ergebnis ab.',
+      'Überleben — meine Gemeinschaft wurde ausgelöscht. Ich bin das Übrige.',
+      'Neugier — die Oberfläche existiert. Das genügte mir als Grund.',
+      'Ehrgeiz — unter meinesgleichen habe ich keine Aufstiegschance. Hier vielleicht schon.',
+      'Fremdheit — ich denke anders als Sahuagin denken sollen. Das war schon immer so. Jetzt bin ich woanders.',
+      'Hunger — nicht nach Blut, sondern nach Wissen. Das Meer hat keine Bibliotheken.',
+      'Beziehung — ein einziges anderes Wesen hat mich dazu gebracht, mein Volk zu verlassen. Ich werde das niemals zugeben.',
+    ],
+  },
+  namenSection: {
+    type: 'nameRoller',
+    label: 'Namen der Sahuagin',
+    beschreibung: 'Sahuagin-Namen klingen rau und aquatisch — viele Zisch- und Gurgellaute, die auf Aquanisch beruhen. An der Oberfläche kürzen manche Sahuagin ihre Namen für andere Rassen ab.',
+    tabellen: [
+      { name:'Namen', eintraege:['Sarkhull','Vorrakh','Ghethis','Drathux','Skorriv','Vareth','Lurkhiss','Trakhiv','Orrgan','Skrethis','Vargull','Druvakh','Gothrix','Skrathus','Narkhiv','Varesh','Orrthis','Skrevakh','Drothull','Lurrkhis','Vargan','Skrothiv','Narthex','Varakk','Grevish','Skrathiv','Drulghan','Norrkhis','Varthex','Skruvakh'] },
+    ],
+  },
+  charakterGenerator: {
+    felder: [
+      { label:'Name',          type:'table',  optionen:['Sarkhull','Vorrakh','Ghethis','Drathux','Skorriv','Vareth','Lurkhiss','Trakhiv','Orrgan','Skrethis','Vargull','Druvakh','Gothrix','Skrathus','Narkhiv','Varesh','Orrthis','Skrevakh','Drothull','Lurrkhis'] },
+      { label:'Schuppenfarbe', type:'table',  optionen:['tiefgrün mit dunklen Streifen','blaugrün schimmernd','dunkelgrau fast schwarz','türkis mit schwarzen Abzeichen','grünblau und glänzend','olivgrün und matt'] },
+      { label:'Augenfarbe',    type:'table',  optionen:['gelb mit schwarzen Schlitzen','grüngelb','bernsteinfarben','silbrig-gelb','fast weiß und kalt'] },
+      { label:'Besonderheit',  type:'table',  optionen:['Klauen hinterlassen immer Kratzer auf Oberflächen','Braucht mehr als 4h ohne Wasser sofort Probleme','Blutrausch ist sichtbar — Augen verfärben sich','Hai in der Nähe bewegt sich nach seinen Befehlen','Spricht selten und direkt','Versteht Gnade konzeptuell aber nicht praktisch'] },
+    ],
+  },
+  beziehungen: [
+    { volk:'Küstenvölker',  relation:'Feindseliger Respekt',    text:'Sie fürchten das Meer. Ich bin das Meer. Das ist kein Missverständnis — das ist eine korrekte Einschätzung.' },
+    { volk:'Locathah',      relation:'Alte Feindschaft',        text:'Locathah wurden uns gegenüber lange Zeit schwach gestellt. Manche haben sich erhoben. Ich respektiere das, auch wenn ich es nicht laut sage.' },
+    { volk:'Seefahrer',     relation:'Pragmatisches Abkommen',  text:'Sie brauchen Informationen über das Meer. Ich brauche Zugang zur Oberfläche. Manchmal ergibt das eine Transaktion. Keine Freundschaft.' },
+    { volk:'Meeresgötter',  relation:'Religiöse Pflicht',       text:'Das Meer hat Götter. Ich bin vom Meer. Das schafft Erwartungen, die ich erfülle oder nicht, je nach Situation.' },
+    { volk:'Wasserelementare', relation:'Intrinsische Verbindung', text:'Wasser ist mein Element. Wasserelementare sind... Wasser. Wir verstehen uns auf einer Ebene, die ich nicht gut erklären kann.' },
+    { volk:'Menschen',      relation:'Tiefe Skepsis',            text:'Menschen leben an der Oberfläche und denken, das Meer gehöre ihnen, weil sie Schiffe bauen. Das ist eine Fehlannahme, die ich korrigiere wenn nötig.' },
+  ],
+  bekannte: [
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Sahuagin in Meruria reserviert.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Sahuagin in Meruria reserviert.' },
+  ],
+  radar: { labels:['Mobilität','Kampf','Magie','Soziales','Überleben','Wasser'], values:[72,90,20,28,78,98] },
+  quiz: {
+    steps: [
+      { frage:'Was treibt deinen Sahuagin an?', optionen:[
+        { text:'Dominanz — ich bin das Raubtier. Das ist nicht böse, das ist Natur.',                                                 tags:['Barbar','Kämpfer'] },
+        { text:'Überleben — verstoßen und allein an der Oberfläche. Ich passe mich an.',                                            tags:['Kämpfer','Waldläufer'] },
+        { text:'Ehrgeiz — unter meinesgleichen hatte ich keine Chance. Hier ist das anders.',                                       tags:['Paladin','Kämpfer'] },
+        { text:'Wissen — das Meer hat mir alles gegeben. Jetzt lerne ich, was das Land weiß.',                                      tags:['Magier','Kleriker'] },
+      ]},
+      { frage:'Wie nutzt du Blutrausch?', optionen:[
+        { text:'Konsequent — ich aktiviere ihn so oft wie möglich. KON-Mod Nutzungen sind meine Ressource.',                        tags:['Barbar','Kämpfer'] },
+        { text:'Gezielt — nur wenn ein Feind bereits verwundet ist. Dann ist der Vorteil am wertvollsten.',                         tags:['Schurke','Kämpfer'] },
+        { text:'Selten — ich versuche, meinen Blutrausch zu kontrollieren. Das ist nicht immer möglich.',                           tags:['Paladin','Kleriker'] },
+        { text:'Als letztes Mittel — wenn nichts anderes mehr funktioniert.',                                                       tags:['Magier','Barde'] },
+      ]},
+      { frage:'Wie nutzt du Haitelempathie?', optionen:[
+        { text:'Taktisch — ich kommandiere Haie als Ablenkung oder Angriffswelle.',                                                 tags:['Waldläufer','Kämpfer'] },
+        { text:'Defensiv — ein Hai auf meiner Seite hält viele Feinde auf Abstand.',                                               tags:['Paladin','Kämpfer'] },
+        { text:'Selten — wir sind nicht immer in der Nähe von Haien.',                                                             tags:['Magier','Schurke'] },
+        { text:'Als Erkennungszeichen — andere wissen, was es bedeutet, wenn ich einen Hai befehlige.',                            tags:['Barde','Paladin'] },
+      ]},
+      { frage:'Welche Rolle spielst du in der Gruppe?', optionen:[
+        { text:'Frontlinie — STR+2, natürliche Rüstung, Klauen und Biss, Blutrausch. Ich bin das Raubtier.',                       tags:['Barbar','Kämpfer'] },
+        { text:'Aquatischer Spezialist — 12 m Schwimmen, Haitelempathie, alles was Wasser betrifft.',                              tags:['Waldläufer','Kämpfer'] },
+        { text:'Überlebensmaschinerie — Natürliche Rüstung, Blutrausch, Angriffe ohne Waffe.',                                     tags:['Barbar','Kämpfer'] },
+        { text:'Ungewöhnlicher Magier — STR+2 für körperliche Sicherheit, WEI+1 für Zauberei.',                                   tags:['Kleriker','Druide'] },
+      ]},
+    ],
+    klassen: {
+      'Barbar':      'STR+2, Blutrausch als Ergänzung zu Raserei, natürliche Rüstung + Klauen — der Sahuagin-Barbar ist eine Kampfmaschine.',
+      'Kämpfer':     'STR+2, natürliche Rüstung, Waffenfreie Angriffe, Blutrausch — vielseitiger Frontlinie-Kämpfer.',
+      'Paladin':     'STR+2, WEI+1 indirekt für Konzentration, natürliche Rüstung — Gerichts- oder Meeres-Paladin.',
+      'Waldläufer':  'STR+2, WEI+1, 12 m Schwimmen, Haitelempathie — der aquatische Kundschafter.',
+      'Kleriker':    'WEI+1, STR+2 für körperliche Präsenz — Sturm- oder Kriegsdomäne passend.',
+      'Druide':      'WEI+1, Meeresverbindung, Haitelempathie — Ozean-Druide mit eingebautem tierischen Begleiter-Thema.',
+      'Mönch':       'STR+2, natürliche Rüstung als Alternative zu Unarmored Defense, Blutrausch für Vorteil.',
+      'Schurke':     'Natürliche Rüstung, Blutrausch für Vorteil gegen verwundete Feinde — starker Sneak-Attack-Synergieeffekt.',
+      'Hexenmeister':'WEI+1 für Hexenblattvariante, Haitelempathie thematisch passend zu Meer-Patrons.',
+      'Magier':      'WEI+1 nützlich für Konzentration; Sahuagin-Magier ist ungewöhnlich aber interessant.',
+    },
+  },
+  koerperlicherMerkmale: {
+    bewegungsrate:   '9 m (Gehen), 12 m (Schwimmen); alle 4h muss man untergetaucht sein',
+    volljaehrigkeit: 'spätes Teenageralter',
+    lebenserwartung: 'keine bekannte Obergrenze',
+    groesse:  { kategorie:'Mittelgroß', min:'180 cm', max:'210 cm', formel:'muskulös und schwergebaut' },
+    gewicht:  { min:'ca. 100 kg', max:'ca. 140 kg', formel:'mehr Muskel als Knochen' },
+    augenfarbe: 'gelb mit schwarzen Schlitzen oder grüngelb',
+    hautfarbe:  'schuppig grün, blaugrün oder dunkelgrau',
+    haarfarbe:  'keine (Schuppen und Flossen)',
+  },
+  statblock: {
+    features: [
+      { name:'Kreaturtyp',              text:'Humanoid.' },
+      { name:'Größenkategorie',         text:'Mittelgroß (180–210 cm, ca. 100–140 kg, muskulös).' },
+      { name:'Überlegene Dunkelsicht',  text:'Du kannst in schwachem Licht innerhalb von 36 Metern so sehen, als wäre es helles Licht, und in Dunkelheit so, als wäre es schwaches Licht. In der Dunkelheit kannst du keine Farben unterscheiden, nur Grautöne.' },
+      { name:'Blutrausch',              text:'Als Bonusaktion verfällst du bis zum Ende deines Zuges in einen Blutrausch. Dabei hast du Vorteil auf Nahkampfangriffswürfe gegen jede Kreatur, die nicht alle TP hat. KON-Mod Nutzungen pro langer Rast (mind. 1).' },
+      { name:'Begrenzte Amphibienfähigkeit', text:'Du kannst Luft und Wasser atmen, musst jedoch mindestens alle 4 Stunden untergetaucht sein — sonst beginnst du zu ersticken.' },
+      { name:'Natürliche Rüstung',      text:'Deine RK beträgt 12 + GES-Mod (wenn du keine Rüstung trägst).' },
+      { name:'Natürliche Angriffe',     text:'Du hast Übung mit deinen Klauen (1W4 Hiebschaden) und deinem Biss (1W4 Stichschaden).' },
+      { name:'Haitelempathie',          text:'Du kannst einem Hai innerhalb von 36 Metern magisch durch begrenzte Telepathie einfache Befehle übermitteln (z. B. „komm her", „verteidige mich", „greif an").' },
+    ],
+  },
+},
 'Satarre':                  { name:'Satarre',                  accent:'#6040a8', subtitle:'Spinnenarachnoiden · Diener der Finsternis',              tags:['Monstrosity','Mittelgroß','9 m Bewegung','Spinnenklettern','Böse'],            headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null },
 'Satyrn': {
   name: 'Satyrn', accent: '#d0a830',
@@ -4726,7 +6490,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Satyrn',
     beschreibung: 'Satyr-Namen klingen beschwingt und melodisch — oft mit Bezug zur Natur oder Musik.',
     tabellen: [
@@ -4812,7 +6576,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',     text:'Feenwesen.' },
-      { name:'Größe',            text:'Mittelgroß (142–187 cm, 92–250 Pfund).' },
+      { name:'Größenkategorie',            text:'Mittelgroß (142–187 cm, 92–250 Pfund).' },
       { name:'Heitere Sprünge',  text:'Bei Hoch- oder Weitsprüngen (auch aus dem Stand) würfelst du 1W8 und addierst Ergebnis × 0,3 zur gesprungenen Distanz. Die Zusatzdistanz kostet keine Bewegung.' },
       { name:'Magieresistenz',   text:'Du bist bei Rettungswürfen gegen Zaubern im Vorteil.' },
       { name:'Wiederkäuer',      text:'Du kannst mit einer Ration Nahrung dreimal so lange auskommen.' },
@@ -4856,7 +6620,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Schattenfeen',
     beschreibung: 'Schattenfeen-Namen klingen hart und knapp — kurze Silben, wenig Schmuck.',
     tabellen: [
@@ -4942,7 +6706,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',             text:'Humanoider. Gilt als Elf bei allen Voraussetzungen und Effekten.' },
-      { name:'Größe',                    text:'Elfen sind zwischen 140 cm und 185 cm groß und schlank gebaut. Ihre Größenkategorie ist mittelgroß.' },
+      { name:'Größenkategorie',                    text:'Elfen sind zwischen 140 cm und 185 cm groß und schlank gebaut. Ihre Größenkategorie ist mittelgroß.' },
       { name:'Dunkelsicht',              text:'Im Radius von 18 m kannst du in dämmrigem Licht wie in hellem Licht sehen, in Dunkelheit wie in dämmrigem Licht. Im Dunkeln erkennst du nur Graustufen.' },
       { name:'Geschärfte Sinne',         text:'Du bist in der Fertigkeit Wahrnehmung geübt.' },
       { name:'Feenblut',                 text:'Du hast Vorteil bei Rettungswürfen gegen Bezauberungen und bist immun gegen Schlafzauber.' },
@@ -4953,7 +6717,136 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
 },
-'Schattengoblin':            { name:'Schattengoblin',            accent:'#504868', subtitle:'Schattendurchdrungene Goblins · Kinder der Dunkelheit',   tags:['Humanoid','Klein','9 m Bewegung','Überl. Dunkelsicht','Chaotisch Neutral'],  headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null },
+'Schattengoblin': {
+  name: 'Schattengoblin', accent: '#504868',
+  subtitle: 'Kinder der Schattenfe · Listige Täuscher des Zwielichts',
+  tags: ['Humanoid','Klein','9 m Bewegung','Schattentarnung','Neutral bis Gut'],
+  headerImage: null,
+  lore: {
+    intro: [
+      'Schattengoblins haben sich entwickelt, um im Schattenreich als Diener und Verbündete der Schattenfe zu gedeihen. Mit der Zeit gründeten sie ihre eigene Stadt und schlugen ihren eigenen Weg ein. Diese Goblins stehen den Schattenfe näher als ihren monströsen Vettern in den sterblichen Landen und besitzen eine listige Wesensart, die es ihnen ermöglicht, sich in die Schattenhöfe zu integrieren. Sie haben oft blaue oder violette Haut und leuchtend orange oder gelbe Augen.',
+      'Schattengoblins sind Meister der Täuschung und lernen von Kindheit an, diejenigen auszunutzen, die sie unterschätzen würden. Sie teilen den natürlichen Widerstand der Schattenfe gegen den korrumpierenden Einfluss des Schattenreichs und zeigen eine überraschende Affinität für Schattenweberei und Mondmagie — etwas, das die meisten Schattengoblins als vorteilhaftes Geheimnis für sich behalten.',
+      'Gute Schurken und noch bessere Meuchler, haben Schattengoblins einen dunklen Ruf — erfreuen sich aber auch an derben Witzen, Trunkenheit, Raufereien und Ringkämpfen sowie anderen Geschicklichkeitsleistungen. Bei denen sie oft verlieren. Das stört sie weniger als man denkt.',
+    ],
+    gesellschaft: [
+      'Die Wesensart eines Schattengoblins ist ein ständiges Gleichgewicht zwischen Verspieltheit und Nützlichkeit. Trotz ihres Rufs sind sie nicht von Natur aus böse — ähnlich wie die Schattenfe, mit denen sie koexistieren. Ihre Neigung zu neutralen oder neutral-guten Gesinnungen überrascht viele, die erwarten, dass jemand aus dem Schattenreich das Dunkelste seines Wesens zur Schau stellt.',
+      'Individuelle Namen unter Schattengoblins deuten entweder Dunkelheit oder Verspieltheit an — am besten beides. Viele empfinden es als persönlichen Makel, einen Vornamen mit jemandem zu teilen, und geben sich große Mühe, ihre Kinder einzigartig zu benennen. Familiennamen sind weit beschreibender und konzentrieren sich auf Nützlichkeit.',
+      'In Meruria sind Schattengoblins eine seltene, aber präsente Erscheinung — besonders in Städten mit aktiven Schattenhändlernetzwerken. Ihr Talent für Täuschung und Heimlichkeit macht sie zu begehrten Kontakten für alle, die diskrete Arbeit brauchen. Ihr Ruf für derbe Witze macht sie zu weniger begehrten Tischgesellschaftern — obwohl die Witze ehrlich gesagt manchmal wirklich gut sind.',
+    ],
+    introBild:        { url: null, label: 'Schattengoblin · Illustration', caption: 'Charakter-Illustration', position: 'right', width: 360, height: 360 },
+    gesellschaftBild: { url: null, label: 'Schattengoblin in den Schattenhöfen', caption: 'Zwischen Scherz und Schatten', position: 'left', width: 240, height: 300 },
+  },
+  specialSection: {
+    type: 'traitRoller',
+    label: 'Verspieltheit & Nützlichkeit',
+    beschreibung: 'Jeder Schattengoblin balanciert diese zwei Seiten anders. Würfle oder wähle, was deinen Charakter prägt.',
+    merkmale: [
+      'Ich verliere jeden Ringkampf. Das ist mir egal. Der Spaß ist im Kampf, nicht im Sieg.',
+      'Mein Witz ist dunkler als meine Haut. Die meisten lachen trotzdem — bis sie verstehen, worüber ich lache.',
+      'Ich habe drei Identitäten. Keine davon ist mein echter Name.',
+      'Ich sehe im Dunkeln besser als im Licht. Buchstäblich und im übertragenen Sinne.',
+      'Die Schattenfe haben mir alles beigebracht, was ich weiß. Ich ihnen auch einiges.',
+      'Ich werde unterschätzt. Das war früher ein Problem. Jetzt ist es mein Geschäftsmodell.',
+      'Meine Schattentarnung ist nicht Magie — es ist Übung. Zwanzig Jahre Übung.',
+      'Ich mag Raufereien. Ich mag Trunkenheit. Ich mag beides gleichzeitig noch mehr.',
+    ],
+  },
+  namenSection: {
+    type: 'nameRoller',
+    label: 'Namen der Schattengoblins',
+    beschreibung: 'Namen deuten Dunkelheit oder Verspieltheit an — am besten beides. Viele Schattengoblins bestehen darauf, einen einzigartigen Namen zu haben. Familiennamen sind beschreibend und nützlichkeitsorientiert.',
+    tabellen: [
+      { name:'Männliche Vornamen', eintraege:['Bollair','Bruddaq','Desolay','Dessoto','Falko','Farsight','Fringo','Messerino','Picklo','Stinko','Thundero','Twisp','Daggo','Grimlink','Nikkro','Patchwick','Scrabble','Shadwick','Skrix','Umbro','Vorraq','Wrickle','Yazzik','Zibbo','Darklo','Flinko','Gratch','Hisswick','Inkblot','Jibber'] },
+      { name:'Weibliche Vornamen', eintraege:['Daniy','Jojoni','Lunara','Morrameko','Nona','Olara','Omagda','Pippi','Sihaddra','Tippita','Vellissa','Brixxa','Crimsa','Duskveil','Flickra','Glimra','Hexxa','Ixxi','Jadewing','Kessra','Lirrix','Mirsha','Nixxa','Ombrix','Pursha','Quirra','Rimska','Starwick','Twixxa','Ulvra'] },
+      { name:'Familiennamen', eintraege:['Glöckner','Metzgersohn','Kerzenschmied','Wolkenjäger','Küfersohn','Fuchshäuter','Glimmerfänger','Goldbeißer','Eisenschläger','Sumpfhund','Mondschein','Netzflicker','Topflecker','Töpfer','Meersalz','Schäferstochter','Schädelschnüffler','Schwanzhändler','Wargbändiger','Wieselklug','Webersohn'] },
+    ],
+  },
+  charakterGenerator: {
+    felder: [
+      { label:'Vorname (m)',   type:'table', optionen:['Bollair','Bruddaq','Desolay','Falko','Farsight','Fringo','Messerino','Picklo','Stinko','Thundero','Twisp','Daggo','Nikkro','Skrix','Umbro','Vorraq','Zibbo','Darklo','Flinko','Gratch'] },
+      { label:'Vorname (w)',   type:'table', optionen:['Daniy','Jojoni','Lunara','Morrameko','Nona','Olara','Pippi','Sihaddra','Tippita','Vellissa','Brixxa','Duskveil','Glimra','Hexxa','Lirrix','Nixxa','Pursha','Rimska','Twixxa','Ulvra'] },
+      { label:'Familienname',  type:'table', optionen:['Glöckner','Metzgersohn','Kerzenschmied','Glimmerfänger','Goldbeißer','Mondschein','Netzflicker','Sumpfhund','Wieselklug','Schädelschnüffler'] },
+      { label:'Hautfarbe',     type:'table', optionen:['tiefblau','violett','dunkelviolett mit Schatten','blaugrau','fast schwarz mit blauem Schimmer','tintenschwarz'] },
+      { label:'Augenfarbe',    type:'table', optionen:['leuchtend orange','goldgelb','bernsteinfarben glühend','neongelb','hellorange mit schwarzen Schlitzen'] },
+      { label:'Besonderheit',  type:'table', optionen:['Immer schattenseitig positioniert','Lacht zu oft und zu leise','Drei falsche Namen parat','Mondlicht-Empfindlichkeit (gut, nicht schlecht)','Trägt immer etwas Verstecktes','Trunkenheit macht ihn/sie klüger, behauptet er/sie'] },
+    ],
+  },
+  beziehungen: [
+    { volk:'Schattenfe',   relation:'Respektvolle Nähe',       text:'Sie haben uns gemacht — zumindest haben sie uns geprägt. Wir schulden ihnen viel. Manche würden sagen zu viel. Ich sage: es ist kompliziert.' },
+    { volk:'Gewöhnliche Goblins', relation:'Distanzierte Verwandtschaft', text:'Wir kommen von denselben Vorfahren. Das ist alles, was wir gemeinsam haben. Sie sind laut, wir sind listig. Nicht dasselbe.' },
+    { volk:'Menschen',     relation:'Produktives Misstrauen',  text:'Menschen unterschätzen uns. Das ist ihr Fehler. Manchmal nutzen wir ihn aus. Meistens machen wir einfach unser Ding.' },
+    { volk:'Elfen',        relation:'Vorsichtige Achtung',     text:'Elfen und Schattenfe sind verwandt. Über uns denken sie ähnlich — das heißt, wir interessieren sie, ohne dass sie uns ganz vertrauen. Passt uns.' },
+    { volk:'Dunkelelfen',  relation:'Konkurrierende Allianz',  text:'Beide zuhause im Dunkeln. Beide listig. Beide würden dem anderen bei Gelegenheit in den Rücken fallen. Wir verstehen uns gut.' },
+    { volk:'Halblinge',    relation:'Unerwartete Sympathie',   text:'Klein, unterschätzt, überraschend effektiv. Ich erkenne das. Sie erkennen es in mir. Das Gespräch ist kurz und produktiv.' },
+  ],
+  bekannte: [
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Schattengoblin in Meruria reserviert.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Schattengoblin in Meruria reserviert.' },
+  ],
+  radar: { labels:['Mobilität','Kampf','Magie','Soziales','Heimlichkeit','Täuschung'], values:[75,48,55,62,92,95] },
+  quiz: {
+    steps: [
+      { frage:'Was treibt deinen Schattengoblin an?', optionen:[
+        { text:'Nützlichkeit — Ich will gebraucht werden. Nicht geliebt. Gebraucht.',                                                tags:['Schurke','Waldläufer'] },
+        { text:'Verspieltheit — Das Leben ist ein Spiel. Ich gewinne öfter als man denkt.',                                         tags:['Barde','Schurke'] },
+        { text:'Schatten — Ich gehöre der Dunkelheit. Das ist keine Metapher, das ist Zuhause.',                                    tags:['Hexenmeister','Magier'] },
+        { text:'Überleben — Ich habe gelernt zu täuschen, weil Täuschen leben bedeutet.',                                           tags:['Schurke','Kämpfer'] },
+      ]},
+      { frage:'Wie nutzt du Böser Blick und Schattentarnung?', optionen:[
+        { text:'Als Kombination — ich verstecke mich im Schatten und lasse dann den Bösen Blick wirken.',                           tags:['Schurke','Kämpfer'] },
+        { text:'Böser Blick als soziale Waffe — Nachteil auf einen Rettungswurf kann über Leben und Tod entscheiden.',              tags:['Barde','Hexenmeister'] },
+        { text:'Schattentarnung als Hauptressource — ich kämpfe selten, weil niemand mich findet.',                                 tags:['Schurke','Waldläufer'] },
+        { text:'Selten bewusst — ich tue, was die Situation erfordert, ohne zu planen.',                                            tags:['Barbar','Kämpfer'] },
+      ]},
+      { frage:'Was ist deine Einstellung zur Schattenmagie?', optionen:[
+        { text:'Ein Geheimnis — niemand muss wissen, dass ich Zugang dazu habe.',                                                   tags:['Hexenmeister','Magier'] },
+        { text:'Ein Werkzeug — ich nutze was funktioniert, und Schattenmagie funktioniert.',                                        tags:['Schurke','Hexenmeister'] },
+        { text:'Kein Interesse — ich bin Schattengoblin wegen meinen körperlichen Fähigkeiten, nicht wegen Magie.',                 tags:['Kämpfer','Barbar'] },
+        { text:'Faszination — Mondmagie und Schattenweberei sind das Interessanteste, was ich kenne.',                              tags:['Magier','Druide'] },
+      ]},
+      { frage:'Welche Rolle spielst du in der Gruppe?', optionen:[
+        { text:'Infiltrator — in Schatten, hinter Schlössern, an Informationen die niemand haben sollte.',                          tags:['Schurke','Waldläufer'] },
+        { text:'Saboteur — Böser Blick, Täuschung, Ablenkung. Ich gewinne Kämpfe bevor sie beginnen.',                             tags:['Barde','Schurke'] },
+        { text:'Magischer Kundschafter — Dunkel, unsichtbar, mit Schattenmagie.',                                                   tags:['Hexenmeister','Magier'] },
+        { text:'Überraschungskämpfer — Klein und unterschätzt ist mein Vorteil.',                                                   tags:['Barbar','Kämpfer'] },
+      ]},
+    ],
+    klassen: {
+      'Schurke':     'GES+2, CHA+1, Täuschung geübt, Schattentarnung, Menschenkenntnis — der Schattengoblin-Schurke ist der geborene Infiltrator.',
+      'Barde':       'CHA+1, Täuschung und Menschenkenntnis, Böser Blick — sozialer Barde mit eingebautem Nachteil-Tool.',
+      'Hexenmeister':'CHA+1, Schattenmagie-Affinität, Unholdsegen gegen Bezauberung — thematisch perfekt für Dunkel-Hexenmeister.',
+      'Kämpfer':     'GES+2 für Finesse-Waffen, Schattentarnung für Positionsvorteil, Böser Blick als Kampfunterbrechung.',
+      'Waldläufer':  'GES+2, Dunkelsicht, Schattentarnung — der lautlose Kundschafter der Schatten.',
+      'Mönch':       'GES+2 für Stärke/GES-Mönch, Schattentarnung für Überraschungsangriffe.',
+      'Magier':      'Schattenmagie-Affinität thematisch stimmig; GES+2 für Konzentrations-Schutz durch Mobilität.',
+      'Druide':      'Mondmagie-Affinität + Schattenreich-Hintergrund passt zu bestimmten Druiden-Konzepten.',
+      'Paladin':     'CHA+1 + Unholdsegen + Böser Blick — ungewöhnlich aber der Schattenreich-Paladin hat seine Nische.',
+      'Barbar':      'GES+2 für Finesse-Barbar, Schattentarnung für überraschenden Ansturm, Unholdsegen als Schutz.',
+    },
+  },
+  koerperlicherMerkmale: {
+    bewegungsrate:   '9 m (Gehen)',
+    volljaehrigkeit: '8 Jahre',
+    lebenserwartung: 'bis zu 70 Jahre',
+    groesse:  { kategorie:'Klein', min:'90 cm', max:'120 cm', formel:'88 cm + 2W10 · 1 cm' },
+    gewicht:  { min:'11 kg', max:'18 kg', formel:'ca. 14 kg Durchschnitt' },
+    augenfarbe: 'leuchtend orange, goldgelb oder neongelb',
+    hautfarbe:  'blau, violett oder blaugrau; schimmert im Schatten',
+    haarfarbe:  'schwarz, dunkelblau oder violett; selten grau',
+  },
+  statblock: {
+    features: [
+      { name:'Kreaturtyp',        text:'Humanoid.' },
+      { name:'Größenkategorie',   text:'Klein (90–120 cm, 11–18 kg).' },
+      { name:'Dunkelsicht',       text:'Du kannst in schwachem Licht innerhalb von 18 Metern so sehen, als wäre es helles Licht, und in Dunkelheit so, als wäre es schwaches Licht. In der Dunkelheit kannst du keine Farben unterscheiden, nur Grautöne.' },
+      { name:'Scharfer Verstand', text:'Du hast Übung in den Fertigkeiten Täuschung und Menschenkenntnis.' },
+      { name:'Schattentarnung',   text:'Du hast Vorteil auf Geschicklichkeit-(Heimlichkeit)-Würfe, die darauf abzielen, dich in schwachem Licht oder Dunkelheit zu verstecken.' },
+      { name:'Böser Blick',       text:'Als Aktion führst du eine Kombination aus unhöflichen Gesten und Geräuschen aus. Eine Kreatur in 9 m, die dich hören und sehen kann, muss einen CHA-Rettungswurf (SG 8 + CHA-Mod + Übungsbonus) bestehen oder hat Nachteil auf den nächsten Eigenschaftswurf, Angriffswurf oder Rettungswurf vor Beginn deines nächsten Zuges.' },
+      { name:'Sonnenlichtsensitivität', text:'Du hast Nachteil auf Angriffswürfe und Weisheit-(Wahrnehmungs)-Würfe, die auf Sicht beruhen, wenn du, dein Ziel oder das Wahrgenommene sich in direktem Sonnenlicht befindet.' },
+      { name:'Unholdsegen',       text:'Du hast Vorteil auf Rettungswürfe gegen Bezauberung und Magie kann dich nicht einschläfern.' },
+    ],
+  },
+},
 'Stämmige': {
   name: 'Stämmige', accent: '#c07050',
   subtitle: 'Robuste Hüter · Starkherzen des Südens',
@@ -4988,7 +6881,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Halblinge',
     beschreibung: 'Halbling-Namen klingen warm, fließend und einladend. Nachnamen sind oft Bilder aus der Natur oder dem Landleben.',
     tabellen: [
@@ -5074,7 +6967,7 @@ window.RASSEN_DETAIL_DATA = {
   },
   statblock: {
     features: [
-      { name:'Größe',               text:'Klein (81–106 cm, ca. 40–60 Pfund).' },
+      { name:'Größenkategorie',               text:'Klein (81–106 cm, ca. 40–60 Pfund).' },
       { name:'Halblingsglück',      text:'Würfelst du bei einem Angriffs-, Attributs- oder Rettungswurf eine 1, darfst du den Wurf wiederholen und musst das zweite Ergebnis verwenden.' },
       { name:'Tapferkeit',          text:'Du bist im Vorteil bei Rettungswürfen, um den Zustand Verängstigt zu vermeiden.' },
       { name:'Halblingsgewandheit', text:'Du kannst dich durch Bereiche bewegen, die von Kreaturen eingenommen werden, die eine Größenkategorie größer sind als du.' },
@@ -5117,7 +7010,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Tabaxi',
     beschreibung: 'Tabaxi-Namen verbinden einen vorderen und hinteren Teil. Die Endung verrät die Klan-Stellung: -junges (Kind), -pfote (Schüler), Krieger/Heiler-Namen (individuell), -stern (Anführer).',
     tabellen: [
@@ -5206,7 +7099,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',     text:'Humanoider.' },
-      { name:'Größe',            text:'Klein oder Mittelgroß — du wählst bei der Rassenauswahl.' },
+      { name:'Größenkategorie',            text:'Klein oder Mittelgroß — du wählst bei der Rassenauswahl.' },
       { name:'Dunkelsicht',      text:'Im Umkreis von 18 m wird dämmriges Licht wie helles Licht und Dunkelheit wie dämmriges Licht behandelt. Im Dunkeln siehst du nur Graustufen.' },
       { name:'Katzenkrallen',    text:'Waffenlose Angriffe mit Klauen: 1W6 + STR-Mod. Hiebschaden. Kletterbewegung entspricht der Schrittbewegung.' },
       { name:'Katzentalent',     text:'Du bist in Wahrnehmung und Heimlichkeit geübt.' },
@@ -5250,7 +7143,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Tiefengnome',
     beschreibung: 'Tiefengnom-Namen klingen rauer und kürzer als die Felsengnome-Namen. Spitznamen werden oft nach Fähigkeiten vergeben.',
     tabellen: [
@@ -5339,7 +7232,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',          text:'Humanoider. Gilt als Gnom bei allen Voraussetzungen und Effekten.' },
-      { name:'Größe',                 text:'Klein (93–116 cm, ca. 34–54 Pfund).' },
+      { name:'Größenkategorie',                 text:'Klein (93–116 cm, ca. 34–54 Pfund).' },
       { name:'Dunkelsicht',           text:'Im Umkreis von 36 m wird dämmriges Licht wie helles Licht und Dunkelheit wie dämmriges Licht behandelt. Im Dunkeln siehst du nur Graustufen.' },
       { name:'Gnomische Gerissenheit', text:'Du bist im Vorteil bei allen Rettungswürfen gegen Magie, sofern sie auf Intelligenz, Weisheit oder Charisma basieren.' },
       { name:'Gabe der Tiefengnome',  text:'Ab Stufe 3: Selbstverkleidung 1×/langer Rast. Ab Stufe 5: Unauffindbarkeit 1×/langer Rast (keine Materialkomponenten). Beide Zauber können auch mit Zauberplätzen gewirkt werden.' },
@@ -5367,7 +7260,7 @@ window.RASSEN_DETAIL_DATA = {
     gesellschaftBild: { url: null, label: 'Tiefling in der Stadt · Illustration', caption: 'Blicke, Getuschel, Misstrauen — und trotzdem hier', position: 'left', width: 240, height: 300 },
   },
   specialSection: {
-    type: 'variantCards',
+    type: 'variantCards', feat1Label: 'Attribute & Zauber', feat2Label: 'Spieltipp',
     label: 'Blutlinien der Tieflinge',
     beschreibung: 'Neun Blutlinien — neun Arten, das infernalische Erbe zu tragen. Jede gibt andere Zauber und eine Attributserhöhung.',
     varianten: [
@@ -5428,7 +7321,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Tieflinge',
     beschreibung: 'Tieflinge tragen Namen aus ihrer Geburtskultur, infernalische Überlieferungsnamen — oder Tugendnamen, die sie selbst wählen.',
     tabellen: [
@@ -5514,7 +7407,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',         text:'Humanoider.' },
-      { name:'Größe',                text:'Mittelgroß (152–177 cm, 104–244 Pfund).' },
+      { name:'Größenkategorie',                text:'Mittelgroß (152–177 cm, 104–244 Pfund).' },
       { name:'Dunkelsicht',          text:'Im Umkreis von 18 m wird dämmriges Licht wie helles Licht und Dunkelheit wie dämmriges Licht behandelt. Im Dunkeln siehst du nur Graustufen.' },
       { name:'Höllische Resistenz',  text:'Du besitzt eine Resistenz gegen Feuerschaden.' },
       { name:'Infernalisches Erbe',  text:'Du erhältst Zauber und eine Attributserhöhung je nach Blutlinie. Zaubermerkmal: Charisma. Stufenplan: Zaubertrick (1), Stufe-2-Zauber (3), weiterer Zauber (5) — je 1×/langer Rast oder mit Zauberplätzen.' },
@@ -5557,7 +7450,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Tortels',
     beschreibung: 'Tortel-Namen klingen ruhig, rund und oft nach Wasser oder Erde.',
     tabellen: [
@@ -5642,7 +7535,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',        text:'Humanoider.' },
-      { name:'Größe',               text:'Klein oder Mittelgroß — du wählst bei der Rassenauswahl.' },
+      { name:'Größenkategorie',               text:'Klein oder Mittelgroß — du wählst bei der Rassenauswahl.' },
       { name:'Atem anhalten',       text:'Du kannst bis zu eine Stunde lang den Atem anhalten.' },
       { name:'Intuition der Natur', text:'Du bist in einer Fertigkeit deiner Wahl geübt: Heilkunde, Heimlichkeit, Mit Tieren umgehen, Naturkunde, Überlebenskunst oder Wahrnehmung.' },
       { name:'Kaltblütig',          text:'Du bist immun gegen die Auswirkungen von heißen Temperaturen.' },
@@ -5687,7 +7580,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Tritons',
     beschreibung: 'Triton-Namen klingen fließend und meerestypisch — oft mit langen Vokalen und weichen Konsonanten.',
     tabellen: [
@@ -5775,7 +7668,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',             text:'Humanoider.' },
-      { name:'Größe',                    text:'Mittelgroß (147–182 cm, 89–277 Pfund).' },
+      { name:'Größenkategorie',                    text:'Mittelgroß (147–182 cm, 89–277 Pfund).' },
       { name:'Dunkelsicht',              text:'Im Umkreis von 18 m wird dämmriges Licht wie helles Licht und Dunkelheit wie dämmriges Licht behandelt. Im Dunkeln siehst du nur Graustufen.' },
       { name:'Amphibisch',               text:'Du kannst Luft und Wasser atmen.' },
       { name:'Gesandter des Meeres',     text:'Du kannst einfache Ideen an alle Tiere, Elementare und Monstrositäten mit Schwimmbewegungsrate vermitteln. Sie können dich verstehen — du sie jedoch nicht automatisch.' },
@@ -5785,7 +7678,142 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
 },
-'Schattenmenschen':             { name:'Schattenmenschen',             accent:'#606888', subtitle:'Schattengetränkte Menschen · Wandler des Halblichts',     tags:['Humanoid','Mittelgroß','9 m Bewegung','Dunkelsicht','Neutral'],               headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null },
+'Schattenmenschen': {
+  name: 'Schattenmenschen', accent: '#606888',
+  subtitle: 'Umbralfüllte Menschen · Wechselbälger des Schattens',
+  tags: ['Humanoid','Mittelgroß','9 m Bewegung','Verblassen','Neutral bis Chaotisch'],
+  headerImage: null,
+  lore: {
+    intro: [
+      'Das Schattenreich verändert Wesen mit seiner Magie, und im Fall der umbralen Menschen kann dieser Einfluss radikale Auswirkungen haben. Diese Schattenbewohner sind nicht bloß von Schatten korrumpierte Menschen — sie wurden durch ihre Exposition gegenüber dem Schatten über Generationen hinweg langsam verwandelt und sind allmählich daran gewöhnt. Dies sind die Wechselbälger.',
+      'Jenseits des natürlichen Einflusses des Schattens haben die Schattenfe seit langem mit den Schatten und ihren Auswirkungen auf Sterbliche experimentiert — zur Bestrafung Törichter, zur Erschaffung besserer Diener oder einfach zum Spaß. Einige umbrale Menschen, jene die überleben, sind das Ergebnis dieser Rituale. Diese verzerrten Seelen werden von anderen oft als die Beschenkten bezeichnet, aber sie selbst denken selten, wenn überhaupt, in solchen Begriffen.',
+      'Umbrale Menschen altern langsamer als normale Menschen — ihr natürlicher Alterungsprozess verlangsamt sich und wird dem eines Elfen oder einer Schattenfe ähnlich. Was sie in dieser verlängerten Zeit erleben und wer sie dabei werden, liegt vollständig bei ihnen.',
+    ],
+    gesellschaft: [
+      'Umbrale Menschen sind eine stille Präsenz in den Grenzgebieten zwischen sterblicher Welt und Schattenreich. Sie teilen die Gemeinschaften der Schattenfe und der Wechselbälger — oder sie leben isoliert, abseits von Gesellschaften, die ihnen mit Argwohn begegnen. Ihr Erscheinungsbild kann unauffällig menschlich sein oder subtil fremd: blasse Haut, graue Augen, eine Stille, die sich um sie legt.',
+      'Die Beschenkten — jene, die einen Handel mit Schattenfe abgeschlossen haben oder deren Verwandlung durch diese eingeleitet wurde — tragen ein sichtbares Zeichen: immer, auch wenn es nur für sie selbst erkennbar ist. Manchmal erscheinen sie als normale umbrale Menschen, manchmal als Schattenfe. Manchmal zeigen sich dramatischere Veränderungen: Schwänze, Hufe, rudimentäre Flügel. Gelegentlich raubt die Veränderung dem Betroffenen seine Erinnerungen.',
+      'In Meruria sind umbrale Menschen an der Oberfläche selten und oft Gegenstand von Gerüchten. Manche leben als Händler oder Gesandte zwischen Welten. Andere verbergen ihre Natur hinter sorgfältig gepflegten Identitäten. Und einige haben längst aufgehört, sich darum zu kümmern, was andere von ihnen denken.',
+    ],
+    introBild:        { url: null, label: 'Umbraler Mensch · Illustration', caption: 'Charakter-Illustration', position: 'right', width: 360, height: 360 },
+    gesellschaftBild: { url: null, label: 'Schattenreich-Gemeinschaft', caption: 'Zwischen zwei Welten', position: 'left', width: 240, height: 300 },
+  },
+  specialSection: {
+    type: 'variantCards', feat1Label: 'Basismerkmale', feat2Label: 'Spieltipp',
+    label: 'Unterrassen der Schattenmenschen',
+    beschreibung: 'Wähle deine Unterrasse — Wechselbalg oder Beschenkter.',
+    varianten: [
+      {
+        farbe: 'Umbraler Mensch', name: 'Umbraler Mensch', schadensart: 'Wechselbalg', farbeHex: '#606888', bild: null,
+        augenfarbe: 'grau, silbern oder fast farblos',
+        hautfarbe:  'blass bis aschgrau; kühler Unterton',
+        haarfarbe:  'schwarz, dunkelgrau oder weißlich-silber',
+        odemwaffe:  'Freier +2/+1 auf zwei Attributwerte · Mittelgroß · 9 m · Dunkle Infusion: Resistenz gegen Kälteschaden · Verblassen: Aktion, werde unsichtbar bis zur Bewegung oder Aktion; Übungsbonus×/Tag',
+        resistenz:  'Flexibelste Unterrasse. Freie Attributwahl für jeden Klassenbau. Verblassen gibt passive Tarnung in Kämpfen und Erkundung — ohne Zauberplatz.',
+      },
+      {
+        farbe: 'Die Beschenkten', name: 'Die Beschenkten', schadensart: 'Fe-Pakt', farbeHex: '#8040a0', bild: null,
+        augenfarbe: 'violett, golden oder leer schwarz — je nach Geschenk',
+        hautfarbe:  'verändert durch das Geschenk; kann stark variieren',
+        haarfarbe:  'oft unnatürliche Farbe als Zeichen des Pakts',
+        odemwaffe:  'WEI+1 zusätzlich · Verfluchte Infusion: Resistenz gegen nekrotischen Schaden · Schattengeschenk: wähle einen mächtigen Vorteil mit Preis (Fertigkeitsvorteil/-nachteil, kein Essen/Atmen, halbe Bewegung + neue Geschwindigkeit, +6/-2 auf Attribute, oder TP bei Dämmerung ohne Kurze-Rast-Heilung)',
+        resistenz:  'Stärkste Unterrasse — mit bleibenden Kosten. Schattengeschenk ist mächtig und soll es sein. Der Preis ist real und permanent. Ideal für thematisch starke Konzepte.',
+      },
+    ],
+  },
+  namenSection: {
+    type: 'nameRoller',
+    label: 'Namen der Schattenmenschen',
+    beschreibung: 'Umbrale Menschen folgen menschlichen Namensbräuchen oder übernehmen Schattenfe-Gepflogenheiten. Die Beschenkten nutzen oft die Gelegenheit, sich vollständig neu zu erfinden — sowohl im Namen als auch in der Persönlichkeit.',
+    tabellen: [
+      { name:'Schattenreich-inspirierte Namen', eintraege:['Ashveil','Brume','Cinder','Duskren','Embris','Fendle','Grath','Halvex','Imra','Joreth','Kethis','Lurenis','Morrow','Nethis','Oryn','Penumbra','Quellan','Riveth','Sorrith','Thenux','Ulvren','Vareth','Wythern','Xareth','Ymris','Zorvel','Ashari','Blanche','Calveth','Dimora'] },
+      { name:'Neue Namen der Beschenkten', eintraege:['Neugeboren','Gezeichnet','Geschenkt','Verändert','Erinnert','Vergessen','Umgeformt','Versprochen','Gebrochen','Bezahlt','Erworben','Gegeben','Genommen','Verwandelt','Zurückgekehrt','Erneuert','Versiegelt','Gefallen','Auferstanden','Gebunden'] },
+    ],
+  },
+  charakterGenerator: {
+    felder: [
+      { label:'Unterrasse',    type:'choice',  optionen:['Umbraler Mensch (Wechselbalg)','Die Beschenkten'] },
+      { label:'Name',          type:'table',   optionen:['Ashveil','Brume','Cinder','Duskren','Embris','Fendle','Grath','Halvex','Imra','Joreth','Kethis','Lurenis','Morrow','Nethis','Oryn','Quellan','Riveth','Sorrith','Ulvren','Vareth'] },
+      { label:'Hautfarbe',     type:'table',   optionen:['blass wie Mondlicht','kalt grauweißlich','aschgrau mit blauen Adern','fast transparent im Licht','dunkelgrau mit silbrigem Schimmer'] },
+      { label:'Augenfarbe',    type:'table',   optionen:['silbergrau','violett','fast farblos','leer schwarz','gelbgolden (Beschenkte)','tief blau wie Tinte'] },
+      { label:'Zeichen (Beschenkte)', type:'table', optionen:['kleines Horn oder Hörneranlage','rudimentäre Flügel (unflugfähig)','gespaltene Pupillen','Schatten der sich falsch bewegt','Huf statt einem Fuß','Stimme die zweistimmig klingt'] },
+      { label:'Schattengeschenk', type:'table', optionen:['Fertigkeit mit Vorteil/Nachteil','kein Essen/Atmen + 4h Rast, dauernde Erschöpfung','halbe Basis-Bewegung + neue Bewegungsart','+6 auf einen Wert, -2 auf zwei','TP bei Dämmerung, keine Kurze-Rast-Heilung'] },
+    ],
+  },
+  beziehungen: [
+    { volk:'Schattenfe',     relation:'Komplizierte Zugehörigkeit', text:'Sie haben uns geprägt — manche von uns absichtlich, manche zufällig. Respekt, Vorsicht und eine gewisse Abhängigkeit, die ich mir nicht gern eingestehe.' },
+    { volk:'Menschen',       relation:'Entfremdete Verwandtschaft', text:'Ich bin, was sie werden könnten, wenn sie zu lange im Schatten bleiben. Das wissen sie, auch wenn sie es nicht sagen.' },
+    { volk:'Wechselbälger',  relation:'Geschwisterliche Nähe',      text:'Auch sie kennen das Zwischen-den-Welten. Auch sie sind mehr als eine Sache. Das Gespräch fällt leicht.' },
+    { volk:'Elfen',          relation:'Geteiltes langes Leben',      text:'Wir altern beide langsam. Das schafft eine Art Verständnis — auch wenn sie in unsere Dunkelheit selten freiwillig blicken.' },
+    { volk:'Kleriker',       relation:'Wachsame Skepsis',            text:'Kleriker des Lichts betrachten mich mit Vorbehalt. Ich verstehe das. Ich trage das Schattenreich in mir. Das ist kein Missverständnis.' },
+    { volk:'Dunkelelfen',    relation:'Fachkundiges Misstrauen',     text:'Sie kennen Dunkelheit von innen. Ich kenne sie von außen, durch Einfluss, nicht Erziehung. Das macht uns ähnlich und sehr verschieden.' },
+  ],
+  bekannte: [
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Schattenmenschen in Meruria reserviert.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Schattenmenschen in Meruria reserviert.' },
+  ],
+  radar: { labels:['Mobilität','Kampf','Magie','Soziales','Heimlichkeit','Anpassung'], values:[70,52,60,58,82,90] },
+  quiz: {
+    steps: [
+      { frage:'Welche Unterrasse spielst du?', optionen:[
+        { text:'Umbraler Mensch — ich bin durch den Schatten geprägt, aber nicht gebrochen. Ich nutze Verblassen als stilles Werkzeug.',  tags:['Schurke','Waldläufer','Kämpfer'] },
+        { text:'Beschenkter — ich habe einen Preis gezahlt. Das Geschenk ist real. Der Preis auch.',                                       tags:['Hexenmeister','Paladin','Kleriker'] },
+        { text:'Beschenkter, thematisch — das Konzept des Pakts und des bleibenden Preises ist der Kern meines Charakters.',               tags:['Hexenmeister','Barde'] },
+        { text:'Ich entscheide nach Klasse.',                                                                                               tags:['Kämpfer','Magier'] },
+      ]},
+      { frage:'Wie nutzt du Verblassen?', optionen:[
+        { text:'Als Kampfwerkzeug — ich verschwinde, positioniere mich, greife überraschend an.',                                          tags:['Schurke','Kämpfer'] },
+        { text:'Als Fluchthilfe — wenn es kritisch wird, werde ich unsichtbar und gewinne Abstand.',                                       tags:['Magier','Barde'] },
+        { text:'Zur Erkundung — ich schleiche mich in Bereiche, ohne Heimlichkeitswürfe zu riskieren.',                                    tags:['Schurke','Waldläufer'] },
+        { text:'Selten — ich baue nicht auf Unsichtbarkeit, sondern auf andere Stärken.',                                                   tags:['Barbar','Paladin'] },
+      ]},
+      { frage:'Was bedeutet dein Schattenreich-Erbe für dich?', optionen:[
+        { text:'Eine Last — ich kämpfe dagegen an, werde aber nie ganz frei davon sein.',                                                  tags:['Paladin','Kleriker'] },
+        { text:'Ein Werkzeug — ich nutze, was ich habe, ohne emotional daran hängend zu sein.',                                           tags:['Kämpfer','Schurke'] },
+        { text:'Meine Identität — ich bin das Schattenreich, und ich stehe dazu.',                                                         tags:['Hexenmeister','Barbar'] },
+        { text:'Ein Geheimnis — nicht jeder muss wissen, woher ich komme.',                                                               tags:['Barde','Schurke'] },
+      ]},
+      { frage:'Welche Rolle spielst du in der Gruppe?', optionen:[
+        { text:'Kundschafter — Verblassen, Kälteresistenz, Dunkelsicht. Ich gehe voran.',                                                  tags:['Schurke','Waldläufer'] },
+        { text:'Flexibler Allrounder — freie Attribute erlauben jeden Bau. Ich fülle die Lücke.',                                         tags:['Kämpfer','Barde'] },
+        { text:'Pakt-Träger — mein Schattengeschenk definiert meine Rolle mehr als meine Klasse.',                                        tags:['Hexenmeister','Kleriker'] },
+        { text:'Magischer Spezialist — das Schattenreich ist eine Quelle arkanischer Macht.',                                             tags:['Magier','Hexenmeister'] },
+      ]},
+    ],
+    klassen: {
+      'Schurke':     'Freie GES-Erhöhung, Verblassen für Positionsvorteil, Dunkelsicht — der Schatten-Schurke mit eingebauter Tarnoption.',
+      'Hexenmeister':'Beschenkte WEI+1 oder freier CHA-Boost; Schattengeschenk passt perfekt zum Pakt-Konzept.',
+      'Kämpfer':     'Freie STR- oder GES-Erhöhung, Verblassen für überraschende Positionswechsel, Kälteresistenz.',
+      'Paladin':     'Freier CHA-Boost, Verfluchte Infusion gegen Nekrose, thematische Tiefe durch Schattenreich-Hintergrund.',
+      'Waldläufer':  'Freie GES/WEI-Erhöhung, Dunkelsicht, Verblassen als natürliche Fähigkeit.',
+      'Magier':      'Freie INT-Erhöhung + WEI+1 (Beschenkte) für Konzentration; Schattenmagie-Thematik.',
+      'Barde':       'Freie CHA-Erhöhung, Verblassen für soziale Situationen und Flucht.',
+      'Kleriker':    'WEI+1 (Beschenkte), Schattengeschenk für mächtige Domänenergänzung.',
+      'Druide':      'WEI+1 (Beschenkte), Kälteresistenz, Schattenreich-Verbindung zu Mondmagie.',
+      'Mönch':       'Freie GES/WEI-Erhöhung, Verblassen für Ki-freie Unsichtbarkeit.',
+    },
+  },
+  koerperlicherMerkmale: {
+    bewegungsrate:   '9 m (Gehen)',
+    volljaehrigkeit: 'wie Menschen',
+    lebenserwartung: 'verlangsamt auf Elfen-/Schattenfe-Niveau',
+    groesse:  { kategorie:'Mittelgroß', min:'150 cm', max:'190 cm', formel:'wie Menschen' },
+    gewicht:  { min:'variiert', max:'variiert', formel:'wie Menschen, oft etwas leichter' },
+    augenfarbe: 'silbergrau, violett oder farblos; Beschenkte: je nach Geschenk',
+    hautfarbe:  'blass bis aschgrau, kühler Unterton',
+    haarfarbe:  'schwarz, dunkelgrau oder silbrig; Beschenkte: oft unnatürlich',
+  },
+  statblock: {
+    features: [
+      { name:'Kreaturtyp',          text:'Humanoid.' },
+      { name:'Größenkategorie',     text:'Mittelgroß (150–190+ cm).' },
+      { name:'Dunkelsicht',         text:'Du kannst in schwachem Licht innerhalb von 18 Metern so sehen, als wäre es helles Licht, und in Dunkelheit so, als wäre es schwaches Licht. In der Dunkelheit kannst du keine Farben unterscheiden, nur Grautöne.' },
+      { name:'Dunkle Infusion',     text:'Du hast Resistenz gegen Kälteschaden.' },
+      { name:'Verblassen',          text:'Während du vollkommen still stehst, kannst du eine Aktion nutzen, um unsichtbar zu werden. Du wirst wieder sichtbar, wenn du dich bewegst oder eine Aktion ausführst. Du kannst diese Fähigkeit so oft pro Tag nutzen, wie dein Übungsbonus beträgt.' },
+      { name:'— Beschenkte: Verfluchte Infusion', text:'Zusätzlich zu Dunkler Infusion hast du Resistenz gegen nekrotischen Schaden.' },
+      { name:'— Beschenkte: Schattengeschenk', text:'Du hast einen Handel mit einer Schattenfe abgeschlossen. Wähle eine Option: (1) Übung+Vorteil in einer Fertigkeit, Nachteil in einer anderen. (2) Kein Essen/Atmen nötig, 4h für lange Rast, aber eine permanente Erschöpfungsstufe. (3) Halbe Bewegungsrate, dafür Flug-/Schwimm-/Klettergeschwindigkeit gleich halber Basis. (4) +6 auf einen Attributwert (max 20), -2 auf zwei andere. (5) TP = KON-Wert bei Dämmerung täglich, aber keine Trefferwürfel in kurzen Rasten.' },
+    ],
+  },
+},
 'Waldelfen': {
   name: 'Waldelfen', accent: '#60a840',
   subtitle: 'Kinder des Waldes · Hüter der grünen Wildnis',
@@ -5820,7 +7848,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Waldelfen',
     beschreibung: 'Waldelfische Namen tragen oft Naturelemente in sich. Kindernamen werden durch Taten zu echten Namen.',
     tabellen: [
@@ -5907,7 +7935,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',               text:'Humanoider. Gilt als Elf bei allen Voraussetzungen und Effekten.' },
-      { name:'Größe',                      text:'Elfen sind zwischen 140 cm und 185 cm groß und schlank gebaut. Ihre Größenkategorie ist mittelgroß.' },
+      { name:'Größenkategorie',                      text:'Elfen sind zwischen 140 cm und 185 cm groß und schlank gebaut. Ihre Größenkategorie ist mittelgroß.' },
       { name:'Dunkelsicht',                text:'Im Radius von 18 m kannst du in dämmrigem Licht wie in hellem Licht sehen, in Dunkelheit wie in dämmrigem Licht. Im Dunkeln erkennst du nur Graustufen.' },
       { name:'Geschärfte Sinne',           text:'Du bist in der Fertigkeit Wahrnehmung geübt.' },
       { name:'Feenblut',                   text:'Du hast Vorteil bei Rettungswürfen gegen Bezauberungen und bist immun gegen Schlafzauber.' },
@@ -5952,7 +7980,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Waldgnome',
     beschreibung: 'Waldgnome tragen 6–12 Vor- und Spitznamen. Bei Menschen behalten sie nur die lustigsten. Nachnamen sind oft Naturbilder aus dem Gnomischen.',
     tabellen: [
@@ -6041,7 +8069,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',          text:'Humanoider. Gilt als Gnom bei allen Voraussetzungen und Effekten.' },
-      { name:'Größe',                 text:'Klein (96–121 cm, ca. 34–54 Pfund).' },
+      { name:'Größenkategorie',                 text:'Klein (96–121 cm, ca. 34–54 Pfund).' },
       { name:'Dunkelsicht',           text:'Im Umkreis von 18 m wird dämmriges Licht wie helles Licht und Dunkelheit wie dämmriges Licht behandelt. Im Dunkeln siehst du nur Graustufen.' },
       { name:'Gnomische Gerissenheit', text:'Du bist im Vorteil bei allen Rettungswürfen gegen Magie, sofern sie auf Intelligenz, Weisheit oder Charisma basieren.' },
       { name:'Geborene Illusionisten', text:'Du beherrschst den Zaubertrick Einfache Illusion. Das Zaubermerkmal dafür ist Intelligenz.' },
@@ -6069,7 +8097,7 @@ window.RASSEN_DETAIL_DATA = {
     gesellschaftBild: { url: null, label: 'Wandler in Transformation · Illustration', caption: 'Tierisches Erbe, menschliche Wahl', position: 'left', width: 240, height: 300 },
   },
   specialSection: {
-    type: 'variantCards',
+    type: 'variantCards', feat1Label: 'Attribute & Wandlung', feat2Label: 'Spieltipp',
     label: 'Lykanthropie der Ahnen',
     beschreibung: 'Elf Ahnen-Linien — elf Arten, das Tier zu tragen. Wähle deine Abstammung.',
     varianten: [
@@ -6142,7 +8170,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Wandler',
     beschreibung: 'Wandler tragen Namen entsprechend der Kultur, aus der sie stammen oder in der sie leben. Schau bei der entsprechenden Kultur nach.',
     tabellen: [
@@ -6226,7 +8254,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',        text:'Humanoider.' },
-      { name:'Größe',               text:'Mittelgroß (147–172 cm, 89–227 Pfund).' },
+      { name:'Größenkategorie',               text:'Mittelgroß (147–172 cm, 89–227 Pfund).' },
       { name:'Dunkelsicht',         text:'Im Umkreis von 18 m wird dämmriges Licht wie helles Licht und Dunkelheit wie dämmriges Licht behandelt. Im Dunkeln siehst du nur Graustufen.' },
       { name:'Tierische Instinkte', text:'Du bist in einer Fertigkeit deiner Wahl geübt: Akrobatik, Athletik, Einschüchtern oder Überlebenskunst.' },
       { name:'Wandeln',             text:'Als Bonusaktion das tierischere Erscheinungsbild annehmen. Dauer: 1 Minute, bis du stirbst oder mit Bonusaktion abbrichst. Beim Wandeln: temporäre TP = 2× Übungsbonus. Anwendungen = Übungsbonus, alle nach langer Rast. Beim Wandeln erhältst du den Linie-spezifischen Vorzug (siehe Ahnen-Linie).' },
@@ -6235,7 +8263,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
 },
-'Warforged':                { name:'Warforged',                accent:'#7090a8', subtitle:'Lebende Konstrukte · Krieger aus Stahl und Magie',         tags:['Humanoid','Mittelgroß','9 m Bewegung','Konstrukt','Neutral'],                  headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null },
+'Kriegsgeschmiedete':       { name:'Kriegsgeschmiedete',       accent:'#7090a8', subtitle:'Lebende Konstrukte · Krieger aus Stahl und Magie',         tags:['Humanoid','Mittelgroß','9 m Bewegung','Konstrukt','Neutral'],                  headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null },
 'Wasser-Genasi': {
   name: 'Wasser-Genasi', accent: '#2090c8',
   subtitle: 'Erben der Mariden · Kinder der ewigen Wellen',
@@ -6272,7 +8300,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Wasser-Genasi',
     beschreibung: 'Elementarische Namen, die Gewässer und Strömungen widerspiegeln, oder Namen aus der Kultur ihrer Kindheit.',
     tabellen: [
@@ -6357,7 +8385,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',   text:'Humanoider.' },
-      { name:'Größe',          text:'Mittelgroß oder klein — du wählst die Größenkategorie, wenn du dieses Volk wählst.' },
+      { name:'Größenkategorie',          text:'Mittelgroß oder klein — du wählst die Größenkategorie, wenn du dieses Volk wählst.' },
       { name:'Dunkelsicht',    text:'Im Radius von 18 m kannst du in dämmrigem Licht wie in hellem Licht sehen, in Dunkelheit wie in dämmrigem Licht. Im Dunkeln erkennst du nur Graustufen.' },
       { name:'Säuresistenz',   text:'Du bist gegen Säureschaden resistent.' },
       { name:'Ruf der Welle',  text:'Du kennst den Zaubertrick Säurespritzer. Ab Stufe 3: Wasser erschaffen oder zerstören 1×/langer Rast. Ab Stufe 5: Auf Wasser gehen 1×/langer Rast (ohne Materialkomponenten). Beide Zauber können auch mit Zauberplätzen gewirkt werden. Zaubermerkmal (wähle bei Rassenauswahl): Intelligenz, Weisheit oder Charisma.' },
@@ -6400,7 +8428,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Wechselbälger',
     beschreibung: 'Wechselbälger-Namen klingen oft neutral und anpassungsfähig. Jede Persönlichkeit, die sie annehmen, trägt den Namen der entsprechenden Kultur.',
     tabellen: [
@@ -6485,7 +8513,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',          text:'Feenwesen.' },
-      { name:'Größe',                 text:'Klein oder Mittelgroß — du wählst bei der Rassenauswahl (wahre Gestalt). Der Gestaltwandler erlaubt auch Wechsel zwischen beiden.' },
+      { name:'Größenkategorie',                 text:'Klein oder Mittelgroß — du wählst bei der Rassenauswahl (wahre Gestalt). Der Gestaltwandler erlaubt auch Wechsel zwischen beiden.' },
       { name:'Gestaltwandler',        text:'Als Aktion Erscheinungsbild und Stimme ändern: Haut, Haare, Frisur, Geschlecht, Größe (Klein↔Mittelgroß), Gewicht, anderes Volk (Spielwerte unverändert). Nicht: Personen, die du nie gesehen hast; Kreaturen mit grundlegend anderer Gliedmaßen-Anordnung. Kleidung/Ausrüstung unverändert. Gestalt hält an bis du sie als Aktion änderst oder stirbst.' },
       { name:'Wechselbalg-Instinkte', text:'Du bist in 2 Fertigkeiten deiner Wahl geübt: Auftreten, Einschüchtern, Motiv erkennen, Täuschen oder Überzeugen.' },
       { name:'Angeborenes Talent',    text:null, talente:['Chamäleon','Morphender Körper','Ausweichendes Morphen'] },
@@ -6526,7 +8554,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Wiedergeborenen',
     beschreibung: 'Wiedergeborene tragen den Namen ihrer vorherigen Rasse — sofern sie sich daran erinnern. Wer sich nicht erinnert, wählt frei aus einer beliebigen Rassentabelle.',
     tabellen: [
@@ -6610,7 +8638,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',                  text:'Humanoid.' },
-      { name:'Größe',                         text:'Klein oder Mittelgroß — wie vorherige Rasse, wählbar bei Rassenauswahl.' },
+      { name:'Größenkategorie',                         text:'Klein oder Mittelgroß — wie vorherige Rasse, wählbar bei Rassenauswahl.' },
       { name:'Dunkelsicht',                   text:'Im Umkreis von 18 m wird dämmriges Licht wie helles Licht und Dunkelheit wie dämmriges Licht behandelt. Im Dunkeln siehst du nur Graustufen.' },
       { name:'Erbe',                          text:'Du behältst alle Fertigkeiten, in denen deine vorherige Rasse geübt ist, sowie Klettern-, Fliegen- oder Schwimmbewegungsraten.' },
       { name:'Untote Natur',                  text:'Vorteil auf Rettungswürfe gegen Krankheit und Vergiftung + Resistenz gegen Giftschaden · Vorteil auf Todesrettungswürfe · Kein Essen, Trinken oder Atmen nötig · Kein Schlaf, kein magischer Schlaf möglich; lange Rast in 4 Stunden inaktiv/bewegungslos, bei Bewusstsein.' },
@@ -6653,7 +8681,7 @@ window.RASSEN_DETAIL_DATA = {
     ],
   },
   namenSection: {
-    type: 'tables',
+    type: 'nameRoller',
     label: 'Namen der Yuan-ti',
     beschreibung: 'Yuan-ti-Namen klingen zischend und haben oft s- und z-Laute.',
     tabellen: [
@@ -6738,7 +8766,7 @@ window.RASSEN_DETAIL_DATA = {
   statblock: {
     features: [
       { name:'Kreaturentyp',        text:'Humanoider.' },
-      { name:'Größe',               text:'Klein oder Mittelgroß — du wählst bei der Rassenauswahl.' },
+      { name:'Größenkategorie',               text:'Klein oder Mittelgroß — du wählst bei der Rassenauswahl.' },
       { name:'Dunkelsicht',         text:'Im Umkreis von 18 m wird dämmriges Licht wie helles Licht und Dunkelheit wie dämmriges Licht behandelt. Im Dunkeln siehst du nur Graustufen.' },
       { name:'Giftunempfindlichkeit', text:'Du bist bei Rettungswürfen gegen den Vergiftet-Zustand sowie zu dessen Aufhebung bei dir selbst im Vorteil. Außerdem bist du gegen Giftschaden resistent.' },
       { name:'Kaltblütig',          text:'Du bist immun gegen die Auswirkungen von heißen Temperaturen.' },

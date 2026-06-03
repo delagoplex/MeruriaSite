@@ -1091,6 +1091,130 @@ window.KLASSEN_DETAIL = {
     ]
   },
 
+  "magieschmied": {
+    id: "magieschmied",
+    trefferwuerfel: "1W8",
+    startVermoegen: "5W4 × 1.000 Hade",
+    ruestungsUebung: "Leichte Rüstungen, mittelschwere Rüstungen, Schilde",
+    waffenUebung: "Einfache Waffen",
+    werkzeugUebung: "Diebeswerkzeug, Tüftlerwerkzeug, ein Handwerkszeug deiner Wahl",
+    rettungswurfUebung: ["Intelligenz", "Konstitution"],
+    fertigkeiten: {
+      anzahl: 2,
+      auswahl: ["Arkane Kunde", "Fingerfertigkeit", "Geschichte", "Nachforschungen", "Wahrnehmung"]
+    },
+    stufentabelle: {
+      extraSpalten: ["Bk. Durchdringungen", "Durchdr. Gegenstände", "Zaubertricks", "1.", "2.", "3.", "4.", "5."],
+      zeilen: [
+        { stufe: 1,  uebungsbonus: 2, merkmaleIds: ["magieschmied_magisches_tuefteln", "magieschmied_zauberwirken", "magieschmied_schusswaffen_geuebheit"],  extra: ["-",  "-",  2,  2, "-", "-", "-", "-"] },
+        { stufe: 2,  uebungsbonus: 2, merkmaleIds: ["magieschmied_gegenstand_durchdringen"],                                                                 extra: [4,    2,   2,  2, "-", "-", "-", "-"] },
+        { stufe: 3,  uebungsbonus: 2, merkmaleIds: ["magieschmied_spezialist", "magieschmied_das_richtige_werkzeug"],                                        extra: [4,    2,   2,  3, "-", "-", "-", "-"] },
+        { stufe: 4,  uebungsbonus: 2, merkmaleIds: ["allgemein_attributswerterhöhung"],                                                                       extra: [4,    2,   2,  3, "-", "-", "-", "-"] },
+        { stufe: 5,  uebungsbonus: 3, merkmaleIds: ["magieschmied_spezialistenmerkmal"],                                                                      extra: [4,    2,   2,  4,  2, "-", "-", "-"] },
+        { stufe: 6,  uebungsbonus: 3, merkmaleIds: ["magieschmied_werkzeug_expertise"],                                                                       extra: [6,    3,   2,  4,  2, "-", "-", "-"] },
+        { stufe: 7,  uebungsbonus: 3, merkmaleIds: ["magieschmied_geistesblitz"],                                                                             extra: [6,    3,   2,  4,  3, "-", "-", "-"] },
+        { stufe: 8,  uebungsbonus: 3, merkmaleIds: ["allgemein_attributswerterhöhung"],                                                                       extra: [6,    3,   2,  4,  3, "-", "-", "-"] },
+        { stufe: 9,  uebungsbonus: 4, merkmaleIds: ["magieschmied_spezialistenmerkmal"],                                                                      extra: [6,    3,   2,  4,  3,  2, "-", "-"] },
+        { stufe: 10, uebungsbonus: 4, merkmaleIds: ["magieschmied_eingeweihter_magischer_gegenstaende"],                                                      extra: [8,    4,   3,  4,  3,  2, "-", "-"] },
+        { stufe: 11, uebungsbonus: 4, merkmaleIds: ["magieschmied_zauberspeicher"],                                                                           extra: [8,    4,   3,  4,  3,  3, "-", "-"] },
+        { stufe: 12, uebungsbonus: 4, merkmaleIds: ["allgemein_attributswerterhöhung"],                                                                       extra: [8,    4,   3,  4,  3,  3, "-", "-"] },
+        { stufe: 13, uebungsbonus: 5, merkmaleIds: [],                                                                                                        extra: [8,    4,   3,  4,  3,  3,  1, "-"] },
+        { stufe: 14, uebungsbonus: 5, merkmaleIds: ["magieschmied_gelehrter_magischer_gegenstaende"],                                                         extra: [10,   5,   4,  4,  3,  3,  1, "-"] },
+        { stufe: 15, uebungsbonus: 5, merkmaleIds: ["magieschmied_spezialistenmerkmal"],                                                                      extra: [10,   5,   4,  4,  3,  3,  2, "-"] },
+        { stufe: 16, uebungsbonus: 5, merkmaleIds: ["allgemein_attributswerterhöhung"],                                                                       extra: [10,   5,   4,  4,  3,  3,  2, "-"] },
+        { stufe: 17, uebungsbonus: 6, merkmaleIds: [],                                                                                                        extra: [10,   5,   4,  4,  3,  3,  3,  1] },
+        { stufe: 18, uebungsbonus: 6, merkmaleIds: ["magieschmied_meister_magischer_gegenstaende"],                                                           extra: [12,   6,   4,  4,  3,  3,  3,  1] },
+        { stufe: 19, uebungsbonus: 6, merkmaleIds: ["allgemein_attributswerterhöhung"],                                                                       extra: [12,   6,   4,  4,  3,  3,  3,  2] },
+        { stufe: 20, uebungsbonus: 6, merkmaleIds: ["magieschmied_seele_des_magieschmieds"],                                                                  extra: [12,   6,   4,  4,  3,  3,  3,  2] }
+      ]
+    },
+    merkmaleIds: [
+      "magieschmied_magisches_tuefteln",
+      "magieschmied_zauberwirken",
+      "magieschmied_schusswaffen_geuebheit",
+      "magieschmied_gegenstand_durchdringen",
+      "magieschmied_spezialist",
+      "magieschmied_das_richtige_werkzeug",
+      "allgemein_attributswerterhöhung",
+      "magieschmied_spezialistenmerkmal",
+      "magieschmied_werkzeug_expertise",
+      "magieschmied_geistesblitz",
+      "magieschmied_eingeweihter_magischer_gegenstaende",
+      "magieschmied_zauberspeicher",
+      "magieschmied_gelehrter_magischer_gegenstaende",
+      "magieschmied_meister_magischer_gegenstaende",
+      "magieschmied_seele_des_magieschmieds",
+      "magieschmied_durchdringung_arkane_antriebsruestung",
+      "magieschmied_durchdringung_gedankenschaerfer",
+      "magieschmied_durchdringung_gleissende_waffe",
+      "magieschmied_durchdringung_helm_der_wahrnehmung",
+      "magieschmied_durchdringung_homunkulusdiener",
+      "magieschmied_durchdringung_magischen_gegenstand_replizieren",
+      "magieschmied_durchdringung_repetierschuss",
+      "magieschmied_durchdringung_resistent_ruestung",
+      "magieschmied_durchdringung_ring_der_zauberauffuellung",
+      "magieschmied_durchdringung_ruestung_der_magischen_staerke",
+      "magieschmied_durchdringung_schild_der_abstossung",
+      "magieschmied_durchdringung_stiefel_des_gewundenen_pfads",
+      "magieschmied_durchdringung_verbesserte_verteidigung",
+      "magieschmied_durchdringung_verbesserte_waffe",
+      "magieschmied_durchdringung_verbesserter_arkaner_fokus",
+      "magieschmied_durchdringung_zurueckkehrende_waffe"
+    ],
+    unterklassen: [
+      {
+        id: "magieschmied_alchemist",
+        name: "Alchemist",
+        beschreibung: "Alchemisten kombinieren Reagenzien, um mystische Effekte zu bewirken. Alchemie ist die älteste Magieschmied-Tradition – ihre Vielseitigkeit wird sowohl in Kriegs- als auch Friedenszeiten geschätzt.",
+        merkmaleIds: [
+          "magieschmied_alchemist_handwerkliches_geschick",
+          "magieschmied_alchemist_experimentelles_elixier",
+          "magieschmied_alchemist_gelehrter_der_alchemie",
+          "magieschmied_alchemist_staerkende_reagenzien",
+          "magieschmied_alchemist_meister_der_alchemie"
+        ]
+      },
+      {
+        id: "magieschmied_artillerist",
+        name: "Artillerist",
+        beschreibung: "Artilleristen schleudern magische Energie und Explosionen auf das Schlachtfeld. Sie erschaffen mystische Kanonen und verstehen die volle Macht destruktiver Magie.",
+        merkmaleIds: [
+          "magieschmied_artillerist_handwerkliches_geschick",
+          "magieschmied_artillerist_mystische_kanone",
+          "magieschmied_artillerist_arkane_feuerwaffe",
+          "magieschmied_artillerist_explosive_kanone",
+          "magieschmied_artillerist_verstaerkte_stellung"
+        ]
+      },
+      {
+        id: "magieschmied_kampfschmied",
+        name: "Kampfschmied",
+        beschreibung: "Kampfschmiede mischen Verteidigungsexpertise, Reparaturkenntnisse und Heilfähigkeiten. Ihr selbst erschaffener Stahlverteidiger begleitet sie in den Kampf.",
+        merkmaleIds: [
+          "magieschmied_kampfschmied_handwerkliches_geschick",
+          "magieschmied_kampfschmied_kampfbereitschaft",
+          "magieschmied_kampfschmied_stahlverteidiger",
+          "magieschmied_kampfschmied_zusaetzlicher_angriff",
+          "magieschmied_kampfschmied_arkaner_stoss",
+          "magieschmied_kampfschmied_verbesserter_verteidiger"
+        ]
+      },
+      {
+        id: "magieschmied_ruestungsschmied",
+        name: "Rüstungsschmied",
+        beschreibung: "Rüstungsschmiede modifizieren ihre Rüstung zu einer zweiten Haut. Sie gehen eine tiefe Verbindung mit ihrer arkanen Rüstung ein und werden praktisch eins mit ihr.",
+        merkmaleIds: [
+          "magieschmied_ruestungsschmied_handwerkszeug",
+          "magieschmied_ruestungsschmied_arkane_ruestung",
+          "magieschmied_ruestungsschmied_ruestungsmodell",
+          "magieschmied_ruestungsschmied_zusaetzlicher_angriff",
+          "magieschmied_ruestungsschmied_ruestungsmodifikationen",
+          "magieschmied_ruestungsschmied_perfektionierte_ruestung"
+        ]
+      }
+    ]
+  },
+
   "magier": {
     id: "magier",
     trefferwuerfel: "1W6",
@@ -1282,6 +1406,826 @@ window.KLASSEN_DETAIL = {
         name: "Chronurgy",
         beschreibung: "(Folgt – wird zu einem späteren Zeitpunkt ergänzt.)",
         merkmaleIds: ["magier_chronurgy_placeholder"]
+      }
+    ]
+  },
+
+  "moench": {
+    id: "moench",
+    trefferwuerfel: "1W8",
+    startVermoegen: "5W4 × 100 Hade",
+    ruestungsUebung: "keine",
+    waffenUebung: "Einfache Waffen, Kurzschwerter",
+    werkzeugUebung: "Ein Handwerkszeug oder Musikinstrument nach Wahl",
+    rettungswurfUebung: ["Stärke", "Geschicklichkeit"],
+    fertigkeiten: {
+      anzahl: 2,
+      auswahl: ["Akrobatik", "Athletik", "Geschichte", "Motiv erkennen", "Religion", "Heimlichkeit"]
+    },
+    stufentabelle: {
+      extraSpalten: ["Kampfkünste", "Ki-Punkte", "Ung. Bewegung"],
+      zeilen: [
+        { stufe: 1,  uebungsbonus: 2, merkmaleIds: ["moench_ungeruestete_verteidigung", "moench_kampfkuenste"], extra: ["1W4", "—", "—"] },
+        { stufe: 2,  uebungsbonus: 2, merkmaleIds: ["moench_ki", "moench_ungeruestete_bewegung", "moench_geweihte_waffe"], extra: ["1W4", "2", "+3 m"] },
+        { stufe: 3,  uebungsbonus: 2, merkmaleIds: ["moench_klostertradition", "moench_geschosse_abwehren", "moench_ki_getriebener_angriff"], extra: ["1W4", "3", "+3 m"] },
+        { stufe: 4,  uebungsbonus: 2, merkmaleIds: ["allgemein_attributswerterhöhung", "moench_sturz_abfedern", "moench_beschleunigte_heilung"], extra: ["1W4", "4", "+3 m"] },
+        { stufe: 5,  uebungsbonus: 3, merkmaleIds: ["moench_zusaetzlicher_angriff", "moench_betaeubender_schlag", "moench_zielgenauigkeit"], extra: ["1W6", "5", "+3 m"] },
+        { stufe: 6,  uebungsbonus: 3, merkmaleIds: ["moench_ki_schlaege", "moench_klostertradition_merkmal"], extra: ["1W6", "6", "+4,5 m"] },
+        { stufe: 7,  uebungsbonus: 3, merkmaleIds: ["moench_entrinnen", "moench_ruhiger_geist"], extra: ["1W6", "7", "+4,5 m"] },
+        { stufe: 8,  uebungsbonus: 3, merkmaleIds: ["allgemein_attributswerterhöhung"], extra: ["1W6", "8", "+4,5 m"] },
+        { stufe: 9,  uebungsbonus: 4, merkmaleIds: ["moench_verbesserte_ungeruestete_bewegung"], extra: ["1W6", "9", "+4,5 m"] },
+        { stufe: 10, uebungsbonus: 4, merkmaleIds: ["moench_reinheit_des_koerpers"], extra: ["1W6", "10", "+6 m"] },
+        { stufe: 11, uebungsbonus: 4, merkmaleIds: ["moench_klostertradition_merkmal"], extra: ["1W8", "11", "+6 m"] },
+        { stufe: 12, uebungsbonus: 4, merkmaleIds: ["allgemein_attributswerterhöhung"], extra: ["1W8", "12", "+6 m"] },
+        { stufe: 13, uebungsbonus: 5, merkmaleIds: ["moench_sprache_von_sonne_und_mond"], extra: ["1W8", "13", "+6 m"] },
+        { stufe: 14, uebungsbonus: 5, merkmaleIds: ["moench_diamantseele"], extra: ["1W8", "14", "+7,5 m"] },
+        { stufe: 15, uebungsbonus: 5, merkmaleIds: ["moench_zeitloser_koerper"], extra: ["1W8", "15", "+7,5 m"] },
+        { stufe: 16, uebungsbonus: 5, merkmaleIds: ["allgemein_attributswerterhöhung"], extra: ["1W8", "16", "+7,5 m"] },
+        { stufe: 17, uebungsbonus: 6, merkmaleIds: ["moench_klostertradition_merkmal"], extra: ["1W10", "17", "+7,5 m"] },
+        { stufe: 18, uebungsbonus: 6, merkmaleIds: ["moench_geist_ueber_koerper"], extra: ["1W10", "18", "+9 m"] },
+        { stufe: 19, uebungsbonus: 6, merkmaleIds: ["allgemein_attributswerterhöhung"], extra: ["1W10", "19", "+9 m"] },
+        { stufe: 20, uebungsbonus: 6, merkmaleIds: ["moench_perfektes_selbst"], extra: ["1W10", "20", "+9 m"] }
+      ]
+    },
+    merkmaleIds: [
+      "moench_ungeruestete_verteidigung",
+      "moench_kampfkuenste",
+      "moench_ki",
+      "moench_ungeruestete_bewegung",
+      "moench_geweihte_waffe",
+      "moench_klostertradition",
+      "moench_geschosse_abwehren",
+      "moench_ki_getriebener_angriff",
+      "allgemein_attributswerterhöhung",
+      "moench_sturz_abfedern",
+      "moench_beschleunigte_heilung",
+      "moench_zusaetzlicher_angriff",
+      "moench_betaeubender_schlag",
+      "moench_zielgenauigkeit",
+      "moench_ki_schlaege",
+      "moench_klostertradition_merkmal",
+      "moench_entrinnen",
+      "moench_ruhiger_geist",
+      "moench_verbesserte_ungeruestete_bewegung",
+      "moench_reinheit_des_koerpers",
+      "moench_sprache_von_sonne_und_mond",
+      "moench_diamantseele",
+      "moench_zeitloser_koerper",
+      "moench_geist_ueber_koerper",
+      "moench_perfektes_selbst"
+    ],
+    unterklassen: [
+      {
+        id: "moench_weg_des_astralen_selbst",
+        name: "Weg des Astralen Selbst",
+        beschreibung: "Mönche, die dem Weg des Astralen Selbst folgen, glauben, dass ihr Körper nur eine Illusion ist. Ihr Ki repräsentiert ihre wahre Form: ein astrales Selbst. Das astrale Selbst kann als Macht der Ordnung oder des Chaos wirken.",
+        merkmaleIds: [
+          "moench_astral_arme_des_astralen_selbst",
+          "moench_astral_antlitz_des_astralen_selbst",
+          "moench_astral_koerper_des_astralen_selbst",
+          "moench_astral_erwecktes_astrales_selbst"
+        ]
+      },
+      {
+        id: "moench_weg_der_barmherzigkeit",
+        name: "Weg der Barmherzigkeit",
+        beschreibung: "Mönche, die dem Weg der Barmherzigkeit folgen, lernen die Lebenskraft anderer zu manipulieren und stehen so Bedürftigen zur Seite. Sie sind wandelnde Heiler und tragen gewöhnlich Roben mit großen Kapuzen und häufig maskierten Gesichtern.",
+        merkmaleIds: [
+          "moench_barm_angewandte_barmherzigkeit",
+          "moench_barm_heilende_hand",
+          "moench_barm_verletzende_hand",
+          "moench_barm_medizinische_beruehrung",
+          "moench_barm_schlaege_voll_heilung_und_leid",
+          "moench_barm_hand_der_hohen_barmherzigkeit"
+        ]
+      },
+      {
+        id: "moench_weg_des_betrunkenen_meisters",
+        name: "Weg des Betrunkenen Meisters",
+        beschreibung: "Der Weg des Betrunkenen Meisters lehrt seine Schüler, sich mit den abgehackten, unberechenbaren Bewegungen eines Trunkenboldes zu bewegen. Hinter dem unbeholfenen Herumgestolpere verbirgt sich ein kontrollierter Tanz aus Verteidigungsmanövern, Paraden und Angriffen.",
+        merkmaleIds: [
+          "moench_betrunken_zusaetzliche_uebung",
+          "moench_betrunken_trunkene_technik",
+          "moench_betrunken_betrunkenes_taumeln",
+          "moench_betrunken_glueck_des_trunkenboldes",
+          "moench_betrunken_betrunkene_raserei"
+        ]
+      },
+      {
+        id: "moench_weg_des_drachenahnen",
+        name: "Weg des Drachenahnen",
+        beschreibung: "Der Legende nach gründete der Drachengott in Gestalt eines jungen Mönchs das erste Kloster des Wegs des Drachenahnen. Die fundamentale Lehre besagt, dass das Nachahmen von Drachen eine tiefere Integration mit der Welt und ihrer Magie bedeutet.",
+        merkmaleIds: [
+          "moench_drache_drakonischer_juenger",
+          "moench_drache_odem_des_drachen",
+          "moench_drache_ausgebreitete_fluegel",
+          "moench_drache_aspekt_des_wyrms",
+          "moench_drache_aspekt_des_ahnen"
+        ]
+      },
+      {
+        id: "moench_weg_des_kensei",
+        name: "Weg des Kensei",
+        beschreibung: "Mönche des Wegs des Kensei trainieren unermüdlich mit ihren Waffen, sodass diese schließlich Verlängerungen ihrer selbst werden. Ein Kensei sieht eine Waffe, wie ein Kalligraph oder ein Maler einen Stift oder einen Pinsel sieht.",
+        merkmaleIds: [
+          "moench_kensei_pfad_des_kensei",
+          "moench_kensei_eins_mit_der_klinge",
+          "moench_kensei_die_klinge_schaerfen",
+          "moench_kensei_unfehlbare_treffsicherheit"
+        ]
+      },
+      {
+        id: "moench_weg_des_langen_todes",
+        name: "Weg des Langen Todes",
+        beschreibung: "Mönche, die dem Weg des Langen Todes folgen, sind besessen von der Bedeutung und dem Prozess des Sterbens. Sie fangen Kreaturen ein und bereiten aufwendige Experimente vor, um den Moment ihres Todes aufzuzeichnen und zu verstehen.",
+        merkmaleIds: [
+          "moench_tod_beruehrung_des_todes",
+          "moench_tod_stunde_der_ernte",
+          "moench_tod_meisterschaft_des_todes",
+          "moench_tod_beruehrung_des_langen_todes"
+        ]
+      },
+      {
+        id: "moench_weg_der_offenen_hand",
+        name: "Weg der Offenen Hand",
+        beschreibung: "Mönche des Weges der Offenen Hand sind die unangefochtenen Meister der Kampfkünste, sei es bewaffnet oder unbewaffnet. Sie erlernen Techniken, um ihre Gegner zu Fall zu bringen, manipulieren Ki, um ihre Verletzungen zu heilen, und üben sich in fortgeschrittener Meditation.",
+        merkmaleIds: [
+          "moench_offen_technik_der_offenen_hand",
+          "moench_offen_unversehrtheit_des_koerpers",
+          "moench_offen_innere_ruhe",
+          "moench_offen_vibrierende_handflaeche"
+        ]
+      },
+      {
+        id: "moench_weg_des_schattens",
+        name: "Weg des Schattens",
+        beschreibung: "Mönche des Weges des Schattens gehen einer Tradition nach, die Heimlichkeit und List schätzt. Diese Mönche werden auch Ninjas oder Schattentänzer genannt und dienen als Spione oder Assassinen.",
+        merkmaleIds: [
+          "moench_schatten_schattenkuenste",
+          "moench_schatten_schattenschritt",
+          "moench_schatten_mantel_aus_schatten",
+          "moench_schatten_opportunist"
+        ]
+      },
+      {
+        id: "moench_weg_der_sonnenseele",
+        name: "Weg der Sonnenseele",
+        beschreibung: "Mönche des Weges der Sonnenseele lernen, ihre Lebensenergie in gleißende Lichtblitze umzuwandeln. Sie vertreten die Überzeugung, dass Meditation das ewige Licht entfesseln kann, das die Seele jedes lebenden Wesens ausstrahlt.",
+        merkmaleIds: [
+          "moench_sonne_strahlendes_sonnengeschoss",
+          "moench_sonne_versengender_lichtbogenschlag",
+          "moench_sonne_versengende_sonnenexplosion",
+          "moench_sonne_sonnenschild"
+        ]
+      },
+      {
+        id: "moench_weg_der_vier_elemente",
+        name: "Weg der Vier Elemente",
+        beschreibung: "Du folgst einer Klostertradition, die dich lehrt, dir die Kraft der Elemente nutzbar zu machen. Wenn du dein Ki bündelst, kannst du dich mit den rohen Energien der Schöpfung verbinden und die vier Elemente nach deinem Willen formen.",
+        merkmaleIds: [
+          "moench_element_schueler_der_elemente"
+        ]
+      }
+    ]
+  },
+
+  "paladin": {
+    id: "paladin",
+    trefferwuerfel: "1W10",
+    startVermoegen: "5W4 × 1.000 Hade",
+    ruestungsUebung: "Alle Rüstungen, Schilde",
+    waffenUebung: "Einfache Waffen, Kriegswaffen",
+    werkzeugUebung: "keine",
+    rettungswurfUebung: ["Weisheit", "Charisma"],
+    fertigkeiten: {
+      anzahl: 2,
+      auswahl: ["Athletik", "Einschüchtern", "Heilkunde", "Motiv erkennen", "Überzeugen", "Religion"]
+    },
+    stufentabelle: {
+      extraSpalten: ["1. Grad", "2. Grad", "3. Grad", "4. Grad", "5. Grad"],
+      zeilen: [
+        { stufe: 1,  uebungsbonus: 2, merkmaleIds: ["paladin_goettliches_gespuer", "paladin_handauflegen"], extra: ["—", "—", "—", "—", "—"] },
+        { stufe: 2,  uebungsbonus: 2, merkmaleIds: ["paladin_kampfstil", "paladin_zauberwirken", "paladin_goettliches_niederstrecken"], extra: [2, "—", "—", "—", "—"] },
+        { stufe: 3,  uebungsbonus: 2, merkmaleIds: ["paladin_goettliche_gesundheit", "paladin_heiliger_schwur", "paladin_goettliche_macht_kanalisation"], extra: [3, "—", "—", "—", "—"] },
+        { stufe: 4,  uebungsbonus: 2, merkmaleIds: ["allgemein_attributswerterhöhung", "paladin_kriegerische_vielseitigkeit"], extra: [3, "—", "—", "—", "—"] },
+        { stufe: 5,  uebungsbonus: 3, merkmaleIds: ["paladin_zusaetzlicher_angriff"], extra: [4, 2, "—", "—", "—"] },
+        { stufe: 6,  uebungsbonus: 3, merkmaleIds: ["paladin_aura_des_schutzes"], extra: [4, 2, "—", "—", "—"] },
+        { stufe: 7,  uebungsbonus: 3, merkmaleIds: ["paladin_heiliger_schwur_merkmal"], extra: [4, 3, "—", "—", "—"] },
+        { stufe: 8,  uebungsbonus: 3, merkmaleIds: ["allgemein_attributswerterhöhung"], extra: [4, 3, "—", "—", "—"] },
+        { stufe: 9,  uebungsbonus: 4, merkmaleIds: [], extra: [4, 3, 2, "—", "—"] },
+        { stufe: 10, uebungsbonus: 4, merkmaleIds: ["paladin_aura_der_tapferkeit"], extra: [4, 3, 2, "—", "—"] },
+        { stufe: 11, uebungsbonus: 4, merkmaleIds: ["paladin_verbessertes_goettliches_niederstrecken"], extra: [4, 3, 3, "—", "—"] },
+        { stufe: 12, uebungsbonus: 4, merkmaleIds: ["allgemein_attributswerterhöhung"], extra: [4, 3, 3, "—", "—"] },
+        { stufe: 13, uebungsbonus: 5, merkmaleIds: [], extra: [4, 3, 3, 1, "—"] },
+        { stufe: 14, uebungsbonus: 5, merkmaleIds: ["paladin_reinigende_beruehrung"], extra: [4, 3, 3, 1, "—"] },
+        { stufe: 15, uebungsbonus: 5, merkmaleIds: ["paladin_heiliger_schwur_merkmal"], extra: [4, 3, 3, 2, "—"] },
+        { stufe: 16, uebungsbonus: 5, merkmaleIds: ["allgemein_attributswerterhöhung"], extra: [4, 3, 3, 2, "—"] },
+        { stufe: 17, uebungsbonus: 6, merkmaleIds: [], extra: [4, 3, 3, 3, 1] },
+        { stufe: 18, uebungsbonus: 6, merkmaleIds: ["paladin_auraverbesserungen"], extra: [4, 3, 3, 3, 1] },
+        { stufe: 19, uebungsbonus: 6, merkmaleIds: ["allgemein_attributswerterhöhung"], extra: [4, 3, 3, 3, 2] },
+        { stufe: 20, uebungsbonus: 6, merkmaleIds: ["paladin_heiliger_schwur_merkmal"], extra: [4, 3, 3, 3, 2] }
+      ]
+    },
+    merkmaleIds: [
+      "paladin_goettliches_gespuer",
+      "paladin_handauflegen",
+      "paladin_kampfstil",
+      "paladin_kampfstil_abfangen",
+      "paladin_kampfstil_blinder_kampf",
+      "paladin_kampfstil_duellieren",
+      "paladin_kampfstil_gesegneter_krieger",
+      "paladin_kampfstil_kampf_mit_grossen_waffen",
+      "paladin_kampfstil_leibwache",
+      "paladin_kampfstil_verteidigung",
+      "paladin_zauberwirken",
+      "paladin_goettliches_niederstrecken",
+      "paladin_goettliche_gesundheit",
+      "paladin_heiliger_schwur",
+      "paladin_heiliger_schwur_merkmal",
+      "paladin_goettliche_macht_kanalisation",
+      "allgemein_attributswerterhöhung",
+      "paladin_kriegerische_vielseitigkeit",
+      "paladin_zusaetzlicher_angriff",
+      "paladin_aura_des_schutzes",
+      "paladin_aura_der_tapferkeit",
+      "paladin_verbessertes_goettliches_niederstrecken",
+      "paladin_reinigende_beruehrung",
+      "paladin_auraverbesserungen"
+    ],
+    unterklassen: [
+      {
+        id: "paladin_eidbrecher",
+        name: "Eidbrecher",
+        beschreibung: "Ein Eidbrecher ist ein Paladin, der seinen heiligen Schwur gebrochen hat, um finstere Pläne zu verfolgen oder einer dunklen Macht zu dienen. Welches Licht auch im Herzen des Paladins gebrannt hat, es ist längst erloschen.",
+        merkmaleIds: [
+          "paladin_eidbrecher_goettliche_macht_fokussieren",
+          "paladin_eidbrecher_aura_des_hasses",
+          "paladin_eidbrecher_uebernatuerliche_resistenz",
+          "paladin_eidbrecher_schreckensfuerst"
+        ]
+      },
+      {
+        id: "paladin_schwur_der_alten",
+        name: "Schwur der Alten",
+        beschreibung: "Der Schwur der Alten stammt aus längst vergangenen Zeiten. Paladine, die diesen Schwur leisten, werden manchmal Feenritter, grüne Ritter oder gehörnte Ritter genannt und schließen sich der Seite des Lichts im kosmischen Kampf gegen die Dunkelheit an.",
+        merkmaleIds: [
+          "paladin_alten_goettliche_macht_fokussieren",
+          "paladin_alten_aura_der_abwehr",
+          "paladin_alten_unsterblicher_waechter",
+          "paladin_alten_champion_der_uralten"
+        ]
+      },
+      {
+        id: "paladin_schwur_der_eroberung",
+        name: "Schwur der Eroberung",
+        beschreibung: "Der Schwur der Eroberung ist die Bestimmung jener Paladine, die nach Ruhm im Kampf und der Unterwerfung ihrer Feinde streben. Manchmal auch Tyrannenritter oder Eisenhändler genannt, sind sie in strengen Orden organisiert.",
+        merkmaleIds: [
+          "paladin_eroberung_goettliche_macht_fokussieren",
+          "paladin_eroberung_aura_der_eroberung",
+          "paladin_eroberung_scharfer_tadel",
+          "paladin_eroberung_unbezwingbarer_eroberer"
+        ]
+      },
+      {
+        id: "paladin_schwur_der_hingabe",
+        name: "Schwur der Hingabe",
+        beschreibung: "Der Schwur der Hingabe bindet einen Paladin an die höchsten Ideale der Gerechtigkeit, der Tugend und der Ordnung. Diese Paladine werden manchmal Kavaliere, weiße Ritter oder heilige Krieger genannt.",
+        merkmaleIds: [
+          "paladin_hingabe_goettliche_macht_fokussieren",
+          "paladin_hingabe_aura_der_hingabe",
+          "paladin_hingabe_reinheit_des_geistes",
+          "paladin_hingabe_heiliger_nimbus"
+        ]
+      },
+      {
+        id: "paladin_schwur_der_krone",
+        name: "Schwur der Krone",
+        beschreibung: "Der Schwur der Krone hat sich den Idealen der Zivilisation verschrieben. Diese Paladine verschreiben sich der Aufgabe, der Gesellschaft zu dienen und besonders den gerechten Gesetzen, die die Gesellschaft zusammenhalten.",
+        merkmaleIds: [
+          "paladin_krone_goettliche_macht_fokussieren",
+          "paladin_krone_goettliches_buendnis",
+          "paladin_krone_standhafte_seele",
+          "paladin_krone_erhabener_recke"
+        ]
+      },
+      {
+        id: "paladin_schwur_der_laeuterung",
+        name: "Schwur der Läuterung",
+        beschreibung: "Mit dem Schwur der Läuterung schlagen Paladine einen mühsamen Weg ein, der erfordert, dass ein heiliger Krieger nur als letztes Mittel zur Gewalt greift. Diese Paladine glauben, dass jede Person errettet werden kann.",
+        merkmaleIds: [
+          "paladin_laeuterung_goettliche_macht_fokussieren",
+          "paladin_laeuterung_aura_des_waechters",
+          "paladin_laeuterung_schuetzender_geist",
+          "paladin_laeuterung_gesandter_der_laeuterung"
+        ]
+      },
+      {
+        id: "paladin_schwur_des_ruhmes",
+        name: "Schwur des Ruhmes",
+        beschreibung: "Paladine, die den Schwur des Ruhmes leisten, glauben, dass es ihr Schicksal und das ihrer Gefährten ist, es durch heldenhafte Taten zu Ruhm und Ehre zu bringen. Sie trainieren gewissenhaft und ermutigen ihre Gefährten, es ihnen gleichzutun.",
+        merkmaleIds: [
+          "paladin_ruhm_goettliche_macht_fokussieren",
+          "paladin_ruhm_aura_des_eifers",
+          "paladin_ruhm_glorreiche_verteidigung",
+          "paladin_ruhm_lebende_legende"
+        ]
+      },
+      {
+        id: "paladin_schwur_der_wachsamen",
+        name: "Schwur der Wachsamen",
+        beschreibung: "Der Schwur der Wachsamen verpflichtet Paladine, die materielle Ebene vor verheerenden Angriffen durch Kreaturen anderer Ebenen zu beschützen. Für einen Wachsamen sind ein gesundes Misstrauen und genaues Beobachten der Umgebung selbstverständlich.",
+        merkmaleIds: [
+          "paladin_wachsamen_goettliche_macht_fokussieren",
+          "paladin_wachsamen_aura_des_waechters",
+          "paladin_wachsamen_wachsamer_rueffel",
+          "paladin_wachsamen_sterbliche_bastion"
+        ]
+      }
+    ]
+  },
+
+  "waldlaeufer": {
+    id: "waldlaeufer",
+    trefferwuerfel: "1W10",
+    startVermoegen: "5W4 × 1.000 Hade",
+    ruestungsUebung: "Leichte Rüstungen, Mittelschwere Rüstungen, Schilde",
+    waffenUebung: "Einfache Waffen, Kriegswaffen",
+    werkzeugUebung: "keine",
+    rettungswurfUebung: ["Stärke", "Geschicklichkeit"],
+    fertigkeiten: {
+      anzahl: 3,
+      auswahl: ["Athletik", "Heimlichkeit", "Mit Tieren umgehen", "Motiv erkennen", "Nachforschungen", "Naturkunde", "Überlebenskunst", "Wahrnehmung"]
+    },
+    stufentabelle: {
+      extraSpalten: ["Bek. Zauber", "1. Grad", "2. Grad", "3. Grad", "4. Grad", "5. Grad"],
+      zeilen: [
+        { stufe: 1,  uebungsbonus: 2, merkmaleIds: ["waldlaeufer_erzfeind", "waldlaeufer_bevorzugtes_gelande", "waldlaeufer_gebliebter_feind", "waldlaeufer_geschickte_erkundung"], extra: [0, 0, "—", "—", "—", "—"] },
+        { stufe: 2,  uebungsbonus: 2, merkmaleIds: ["waldlaeufer_kampfstil", "waldlaeufer_zauberwirken", "waldlaeufer_zauberfokus"], extra: [2, 2, "—", "—", "—", "—"] },
+        { stufe: 3,  uebungsbonus: 2, merkmaleIds: ["waldlaeufer_waldlaeuferarchetyp", "waldlaeufer_urtuemliche_wahrnehmung", "waldlaeufer_urbewusstsein"], extra: [3, 3, "—", "—", "—", "—"] },
+        { stufe: 4,  uebungsbonus: 2, merkmaleIds: ["allgemein_attributswerterhöhung", "waldlaeufer_kriegerische_vielseitigkeit"], extra: [3, 3, "—", "—", "—", "—"] },
+        { stufe: 5,  uebungsbonus: 3, merkmaleIds: ["waldlaeufer_zusaetzlicher_angriff"], extra: [4, 4, 2, "—", "—", "—"] },
+        { stufe: 6,  uebungsbonus: 3, merkmaleIds: ["waldlaeufer_erzfeind_verbesserung", "waldlaeufer_bevorzugtes_gelande_verbesserung"], extra: [4, 4, 2, "—", "—", "—"] },
+        { stufe: 7,  uebungsbonus: 3, merkmaleIds: ["waldlaeufer_waldlaeuferarchetyp_merkmal"], extra: [5, 4, 3, "—", "—", "—"] },
+        { stufe: 8,  uebungsbonus: 3, merkmaleIds: ["allgemein_attributswerterhöhung", "waldlaeufer_sicherer_schritt"], extra: [5, 4, 3, "—", "—", "—"] },
+        { stufe: 9,  uebungsbonus: 4, merkmaleIds: [], extra: [6, 4, 3, 2, "—", "—"] },
+        { stufe: 10, uebungsbonus: 4, merkmaleIds: ["waldlaeufer_bevorzugtes_gelande_verbesserung", "waldlaeufer_tarnung", "waldlaeufer_naturschleier"], extra: [6, 4, 3, 2, "—", "—"] },
+        { stufe: 11, uebungsbonus: 4, merkmaleIds: ["waldlaeufer_waldlaeuferarchetyp_merkmal"], extra: [7, 4, 3, 3, "—", "—"] },
+        { stufe: 12, uebungsbonus: 4, merkmaleIds: ["allgemein_attributswerterhöhung"], extra: [7, 4, 3, 3, "—", "—"] },
+        { stufe: 13, uebungsbonus: 5, merkmaleIds: [], extra: [8, 4, 3, 3, 1, "—"] },
+        { stufe: 14, uebungsbonus: 5, merkmaleIds: ["waldlaeufer_erzfeind_verbesserung", "waldlaeufer_verschwinden"], extra: [8, 4, 3, 3, 1, "—"] },
+        { stufe: 15, uebungsbonus: 5, merkmaleIds: ["waldlaeufer_waldlaeuferarchetyp_merkmal"], extra: [9, 4, 3, 3, 2, "—"] },
+        { stufe: 16, uebungsbonus: 5, merkmaleIds: ["allgemein_attributswerterhöhung"], extra: [9, 4, 3, 3, 2, "—"] },
+        { stufe: 17, uebungsbonus: 6, merkmaleIds: [], extra: [10, 4, 3, 3, 3, 1] },
+        { stufe: 18, uebungsbonus: 6, merkmaleIds: ["waldlaeufer_wilde_sinne"], extra: [10, 4, 3, 3, 3, 1] },
+        { stufe: 19, uebungsbonus: 6, merkmaleIds: ["allgemein_attributswerterhöhung"], extra: [11, 4, 3, 3, 3, 2] },
+        { stufe: 20, uebungsbonus: 6, merkmaleIds: ["waldlaeufer_feindestoeter"], extra: [11, 4, 3, 3, 3, 2] }
+      ]
+    },
+    merkmaleIds: [
+      "waldlaeufer_erzfeind",
+      "waldlaeufer_erzfeind_verbesserung",
+      "waldlaeufer_bevorzugtes_gelande",
+      "waldlaeufer_bevorzugtes_gelande_verbesserung",
+      "waldlaeufer_gebliebter_feind",
+      "waldlaeufer_geschickte_erkundung",
+      "waldlaeufer_kampfstil",
+      "waldlaeufer_kampfstil_blinder_kampf",
+      "waldlaeufer_kampfstil_bogenschiessen",
+      "waldlaeufer_kampfstil_druidischer_krieger",
+      "waldlaeufer_kampfstil_duellieren",
+      "waldlaeufer_kampfstil_kampf_mit_zwei_waffen",
+      "waldlaeufer_kampfstil_verteidigung",
+      "waldlaeufer_kampfstil_wurfwaffenkampf",
+      "waldlaeufer_zauberwirken",
+      "waldlaeufer_zauberfokus",
+      "waldlaeufer_waldlaeuferarchetyp",
+      "waldlaeufer_waldlaeuferarchetyp_merkmal",
+      "waldlaeufer_urtuemliche_wahrnehmung",
+      "waldlaeufer_urbewusstsein",
+      "waldlaeufer_kriegerische_vielseitigkeit",
+      "allgemein_attributswerterhöhung",
+      "waldlaeufer_zusaetzlicher_angriff",
+      "waldlaeufer_sicherer_schritt",
+      "waldlaeufer_tarnung",
+      "waldlaeufer_naturschleier",
+      "waldlaeufer_verschwinden",
+      "waldlaeufer_wilde_sinne",
+      "waldlaeufer_feindestoeter"
+    ],
+    unterklassen: [
+      {
+        id: "waldlaeufer_drachlingwaechter",
+        name: "Drachlingwächter",
+        beschreibung: "Deine Verbindung zur natürlichen Welt nimmt die Form eines drakonischen Geists an, der sich als Drachling manifestieren kann. Wenn deine Kräfte wachsen, wächst auch dein Drachling und entwickelt sich zu einer majestätischen geflügelten Kreatur.",
+        merkmaleIds: [
+          "waldlaeufer_drach_drakonische_gabe",
+          "waldlaeufer_drach_drachlinggefaehrte",
+          "waldlaeufer_drach_band_von_reisszahn_und_schuppe",
+          "waldlaeufer_drach_drachlingodem",
+          "waldlaeufer_drach_perfektioniertes_band"
+        ]
+      },
+      {
+        id: "waldlaeufer_duesterpirscher",
+        name: "Düsterpirscher",
+        beschreibung: "Düsterpirscher sind an den finstersten Orten ganz in ihrem Element: tief unter der Erde, in düsteren Gassen, urtümlichen Wäldern und an jedem anderen Ort, an dem nur Dämmerlicht herrscht. Sie wagen sich ohne zu zögern in die Dunkelheit vor.",
+        merkmaleIds: [
+          "waldlaeufer_duest_magie",
+          "waldlaeufer_duest_schrecklicher_hinterhalt",
+          "waldlaeufer_duest_duestersicht",
+          "waldlaeufer_duest_unbeugsamer_verstand",
+          "waldlaeufer_duest_wirbelangriff",
+          "waldlaeufer_duest_schattenfinte"
+        ]
+      },
+      {
+        id: "waldlaeufer_feenwanderer",
+        name: "Feenwanderer",
+        beschreibung: "Durch ein verheißungsvolles Ereignis umgibt dich ein mystischer Feenglanz. Du bist ein Waldläufer, der sowohl die materielle Ebene als auch die der Feenwesen verkörpert. So herrlich wie der Frohsinn der Feen, so schrecklich ist ihr Zorn.",
+        merkmaleIds: [
+          "waldlaeufer_feen_graessliche_schlaege",
+          "waldlaeufer_feen_magie",
+          "waldlaeufer_feen_ausserweltlicher_glanz",
+          "waldlaeufer_feen_betoerende_verdrehung",
+          "waldlaeufer_feen_feenverstaerkung",
+          "waldlaeufer_feen_nebelwanderer"
+        ]
+      },
+      {
+        id: "waldlaeufer_herr_der_tiere",
+        name: "Herr der Tiere",
+        beschreibung: "Dieser Archetyp verkörpert die Freundschaft zwischen den zivilisierten Völkern und den Tieren der Wildnis. Tiere und Waldläufer sind in ihrem Bestreben vereint, die Monster zu bekämpfen, die sowohl die Wildnis als auch die Zivilisation bedrohen.",
+        merkmaleIds: [
+          "waldlaeufer_herr_begleiter",
+          "waldlaeufer_herr_urbegleiter",
+          "waldlaeufer_herr_aussergewoehnliches_training",
+          "waldlaeufer_herr_tierische_wut",
+          "waldlaeufer_herr_zauber_teilen"
+        ]
+      },
+      {
+        id: "waldlaeufer_horizontwanderer",
+        name: "Horizontwanderer",
+        beschreibung: "Horizontwanderer beschützen die Welt vor Bedrohungen, die von anderen Ebenen ausgehen. Sie spüren Ebenenportale auf und bewachen sie, wobei sie zwischen den Inneren und Äußeren Ebenen hin- und herreisen.",
+        merkmaleIds: [
+          "waldlaeufer_horiz_magie",
+          "waldlaeufer_horiz_portal_entdecken",
+          "waldlaeufer_horiz_krieger_der_ebenen",
+          "waldlaeufer_horiz_aetherschritt",
+          "waldlaeufer_horiz_distanzschlag",
+          "waldlaeufer_horiz_spektrale_verteidigung"
+        ]
+      },
+      {
+        id: "waldlaeufer_hueter_des_schwarms",
+        name: "Hüter des Schwarms",
+        beschreibung: "Manche Waldläufer fühlen eine tiefe Verbundenheit mit ihrer Umwelt und nutzen ihre Magie, um sich mit einem Schwarm von Naturgeistern zusammenzuschließen. Der Schwarm entwickelt eine beachtliche Kampfkraft und zeigt sich als hilfreicher Begleiter.",
+        merkmaleIds: [
+          "waldlaeufer_schwarm_versammelter_schwarm",
+          "waldlaeufer_schwarm_magie",
+          "waldlaeufer_schwarm_wimmelnde_woge",
+          "waldlaeufer_schwarm_maechtiger_schwarm",
+          "waldlaeufer_schwarm_schwarmaufloesung"
+        ]
+      },
+      {
+        id: "waldlaeufer_jaeger",
+        name: "Jäger",
+        beschreibung: "Den Archetypen des Jägers zu verkörpern bedeutet, deinen Platz als Bollwerk zwischen der Zivilisation und den Schrecken der Wildnis zu akzeptieren. Du lernst spezialisierte Techniken, um sämtliche Gefahren auszuschalten.",
+        merkmaleIds: [
+          "waldlaeufer_jaeger_beute",
+          "waldlaeufer_jaeger_defensive_taktiken",
+          "waldlaeufer_jaeger_mehrfachangriff",
+          "waldlaeufer_jaeger_ausserordentliche_verteidigung"
+        ]
+      },
+      {
+        id: "waldlaeufer_monsterjaeger",
+        name: "Monsterjäger",
+        beschreibung: "Du widmest dich mit Inbrunst der Jagd auf die Kreaturen der Nacht und finstere Magieanwender. Ein Monsterjäger macht Vampire, Drachen, böse Feenwesen, Unholde und andere magische Bedrohungen ausfindig.",
+        merkmaleIds: [
+          "waldlaeufer_monster_magie",
+          "waldlaeufer_monster_jaegersinne",
+          "waldlaeufer_monster_jagdbeute",
+          "waldlaeufer_monster_uebernatuerliche_verteidigung",
+          "waldlaeufer_monster_todfeind_aller_magieanwender",
+          "waldlaeufer_monster_gegenangriff"
+        ]
+      }
+    ]
+  },
+
+  "zauberer": {
+    id: "zauberer",
+    trefferwuerfel: "1W6",
+    startVermoegen: "3W4 × 1.000 Hade",
+    ruestungsUebung: "keine",
+    waffenUebung: "Dolche, Wurfpfeile, Schleudern, Kampfstäbe, Leichte Armbrüste",
+    werkzeugUebung: "keine",
+    rettungswurfUebung: ["Charisma", "Konstitution"],
+    fertigkeiten: {
+      anzahl: 2,
+      auswahl: ["Arkane Kunde", "Einschüchtern", "Motiv erkennen", "Religion", "Täuschen", "Überzeugen"]
+    },
+    stufentabelle: {
+      extraSpalten: ["Zauber-punkte", "Tricks", "Bek. Zauber", "1. Gr.", "2. Gr.", "3. Gr.", "4. Gr.", "5. Gr.", "6. Gr.", "7. Gr.", "8. Gr.", "9. Gr."],
+      zeilen: [
+        { stufe: 1,  uebungsbonus: 2, merkmaleIds: ["zauberer_zauberwirken", "zauberer_ursprung_der_zauberei"], extra: [1,  4,  2,  2, "—", "—", "—", "—", "—", "—", "—", "—"] },
+        { stufe: 2,  uebungsbonus: 2, merkmaleIds: ["zauberer_quelle_der_magie"], extra: [2,  4,  3,  3, "—", "—", "—", "—", "—", "—", "—", "—"] },
+        { stufe: 3,  uebungsbonus: 2, merkmaleIds: ["zauberer_metamagie"], extra: [3,  4,  4,  4,  2, "—", "—", "—", "—", "—", "—", "—"] },
+        { stufe: 4,  uebungsbonus: 2, merkmaleIds: ["allgemein_attributswerterhöhung", "zauberer_magische_vielseitigkeit"], extra: [4,  5,  5,  4,  3, "—", "—", "—", "—", "—", "—", "—"] },
+        { stufe: 5,  uebungsbonus: 3, merkmaleIds: ["zauberer_magische_fuehrung"], extra: [5,  5,  6,  4,  3,  2, "—", "—", "—", "—", "—", "—"] },
+        { stufe: 6,  uebungsbonus: 3, merkmaleIds: ["zauberer_ursprung_merkmal"], extra: [6,  5,  7,  4,  3,  3, "—", "—", "—", "—", "—", "—"] },
+        { stufe: 7,  uebungsbonus: 3, merkmaleIds: [], extra: [7,  5,  8,  4,  3,  3,  1, "—", "—", "—", "—", "—"] },
+        { stufe: 8,  uebungsbonus: 3, merkmaleIds: ["allgemein_attributswerterhöhung"], extra: [8,  5,  9,  4,  3,  3,  2, "—", "—", "—", "—", "—"] },
+        { stufe: 9,  uebungsbonus: 4, merkmaleIds: [], extra: [9,  5, 10,  4,  3,  3,  3,  1, "—", "—", "—", "—"] },
+        { stufe: 10, uebungsbonus: 4, merkmaleIds: ["zauberer_metamagie"], extra: [10,  6, 11,  4,  3,  3,  3,  2, "—", "—", "—", "—"] },
+        { stufe: 11, uebungsbonus: 4, merkmaleIds: [], extra: [11,  6, 12,  4,  3,  3,  3,  2,  1, "—", "—", "—"] },
+        { stufe: 12, uebungsbonus: 4, merkmaleIds: ["allgemein_attributswerterhöhung"], extra: [12,  6, 12,  4,  3,  3,  3,  2,  1, "—", "—", "—"] },
+        { stufe: 13, uebungsbonus: 5, merkmaleIds: [], extra: [13,  6, 13,  4,  3,  3,  3,  2,  1,  1, "—", "—"] },
+        { stufe: 14, uebungsbonus: 5, merkmaleIds: ["zauberer_ursprung_merkmal"], extra: [14,  6, 13,  4,  3,  3,  3,  2,  1,  1, "—", "—"] },
+        { stufe: 15, uebungsbonus: 5, merkmaleIds: [], extra: [15,  6, 14,  4,  3,  3,  3,  2,  1,  1,  1, "—"] },
+        { stufe: 16, uebungsbonus: 5, merkmaleIds: ["allgemein_attributswerterhöhung"], extra: [16,  6, 14,  4,  3,  3,  3,  2,  1,  1,  1, "—"] },
+        { stufe: 17, uebungsbonus: 6, merkmaleIds: ["zauberer_metamagie"], extra: [17,  6, 15,  4,  3,  3,  3,  2,  1,  1,  1,  1] },
+        { stufe: 18, uebungsbonus: 6, merkmaleIds: ["zauberer_ursprung_merkmal"], extra: [18,  6, 15,  4,  3,  3,  3,  3,  1,  1,  1,  1] },
+        { stufe: 19, uebungsbonus: 6, merkmaleIds: ["allgemein_attributswerterhöhung"], extra: [19,  6, 15,  4,  3,  3,  3,  3,  2,  1,  1,  1] },
+        { stufe: 20, uebungsbonus: 6, merkmaleIds: ["zauberer_zaubereiauffrischung"], extra: [20,  6, 15,  4,  3,  3,  3,  3,  2,  2,  1,  1] }
+      ]
+    },
+    merkmaleIds: [
+      "zauberer_zauberwirken",
+      "zauberer_ursprung_der_zauberei",
+      "zauberer_ursprung_merkmal",
+      "zauberer_quelle_der_magie",
+      "zauberer_metamagie",
+      "zauberer_metamagie_bedachter_zauber",
+      "zauberer_metamagie_beschleunigter_zauber",
+      "zauberer_metamagie_gespiegelter_zauber",
+      "zauberer_metamagie_konzentrierter_zauber",
+      "zauberer_metamagie_maechtiger_zauber",
+      "zauberer_metamagie_subtiler_zauber",
+      "zauberer_metamagie_verlaengerter_zauber",
+      "zauberer_metamagie_verwandelter_zauber",
+      "zauberer_metamagie_weitreichender_zauber",
+      "zauberer_metamagie_zielsuchzauber",
+      "allgemein_attributswerterhöhung",
+      "zauberer_magische_vielseitigkeit",
+      "zauberer_magische_fuehrung",
+      "zauberer_zaubereiauffrischung"
+    ],
+    unterklassen: [
+      {
+        id: "zauberer_drachenblutlinie",
+        name: "Drachenblutlinie",
+        beschreibung: "Die Quelle der dir innewohnenden Magie ist eine Vermischung deines Blutes oder das deiner Vorfahren mit drakonischer Zauberkraft. Viele dieser Zauberer führen ihre Ahnenlinie bis zu einem mächtigen Zauberer zurück, der ein Abkommen mit einem Drachen schloss.",
+        merkmaleIds: [
+          "zauberer_drachen_drachenvorfahre",
+          "zauberer_drachen_drakonische_widerstandskraft",
+          "zauberer_drachen_elementare_affinitaet",
+          "zauberer_drachen_drachenfluegel",
+          "zauberer_drachen_drakonische_praesenz"
+        ]
+      },
+      {
+        id: "zauberer_goettliche_seele",
+        name: "Göttliche Seele",
+        beschreibung: "Manchmal stammt der Funken der Magie aus einer göttlichen Quelle, die im Inneren deiner Seele schimmert. Dies ist ein Zeichen dafür, dass die dir angeborene Magie auf eine verwandtschaftliche Verbindung zu einem göttlichen Wesen zurückzuführen ist.",
+        merkmaleIds: [
+          "zauberer_goett_goettliche_magie",
+          "zauberer_goett_guenstling_der_goetter",
+          "zauberer_goett_verstaerkte_heilung",
+          "zauberer_goett_uebernatuerliche_schwingen",
+          "zauberer_goett_ueberirdische_erholungskraft"
+        ]
+      },
+      {
+        id: "zauberer_schattenmagie",
+        name: "Schattenmagie",
+        beschreibung: "Du bist eine Kreatur der Schatten, denn die dir innewohnende Magie stammt aus dem Shadowfell selbst. Die Macht der Schattenmagie verleiht deiner physischen Erscheinung etwas überaus Befremdliches.",
+        merkmaleIds: [
+          "zauberer_schatten_dunkelaugen",
+          "zauberer_schatten_grabes_staerke",
+          "zauberer_schatten_hund_des_unheils",
+          "zauberer_schatten_schattenwandeln",
+          "zauberer_schatten_schattenform"
+        ]
+      },
+      {
+        id: "zauberer_sturmzauberei",
+        name: "Sturmzauberei",
+        beschreibung: "Die dir innewohnende Magie rührt von der elementaren Macht der Luft her. Vielleicht wurdest du während eines tosenden Sturmes geboren oder befindet sich unter deinen Vorfahren ein mächtiges Luftwesen wie ein Djinn.",
+        merkmaleIds: [
+          "zauberer_sturm_windsprecher",
+          "zauberer_sturm_stuermische_magie",
+          "zauberer_sturm_herz_des_sturms",
+          "zauberer_sturm_sturmlenker",
+          "zauberer_sturm_wut_des_sturms",
+          "zauberer_sturm_windseele"
+        ]
+      },
+      {
+        id: "zauberer_uhrwerkseele",
+        name: "Uhrwerkseele",
+        beschreibung: "Die kosmische Kraft der Ordnung hat dich mit Magie erfüllt. Diese Kraft stammt aus Mechanus oder einem ähnlichen Reich — einer Existenzebene, die vollständig von der Effizienz des Uhrwerks geprägt ist.",
+        merkmaleIds: [
+          "zauberer_uhrwerk_uhrwerkmagie",
+          "zauberer_uhrwerk_gleichgewicht_wiederherstellen",
+          "zauberer_uhrwerk_bastion_des_gesetzes",
+          "zauberer_uhrwerk_trance_der_ordnung",
+          "zauberer_uhrwerk_uhrwerkkavalkade"
+        ]
+      },
+      {
+        id: "zauberer_ungewoehnlicher_verstand",
+        name: "Ungewöhnlicher Verstand",
+        beschreibung: "Ein fremdweltiger Einfluss hat sich in deinen Gedanken verstrickt und dir psionische Kräfte verliehen. Du kannst den Geist anderer mit dieser Kraft berühren und die Welt um dich herum verändern.",
+        merkmaleIds: [
+          "zauberer_verstand_psionische_zauber",
+          "zauberer_verstand_telepathische_sprache",
+          "zauberer_verstand_psionische_zauberei",
+          "zauberer_verstand_psychische_verteidigung",
+          "zauberer_verstand_offenbarung_in_fleisch",
+          "zauberer_verstand_verzerrende_implosion"
+        ]
+      },
+      {
+        id: "zauberer_wilde_magie",
+        name: "Wilde Magie",
+        beschreibung: "Die dir innewohnende Magie entspringt den Kräften des Chaos, die der gesamten Schöpfung zugrunde liegen. Wie auch immer du zu deinen magischen Kräften gekommen bist, sie brodeln in dir und warten darauf auszubrechen.",
+        merkmaleIds: [
+          "zauberer_wild_woge_der_wilden_magie",
+          "zauberer_wild_gezeiten_des_chaos",
+          "zauberer_wild_schicksal_zurechtbiegen",
+          "zauberer_wild_kontrolliertes_chaos",
+          "zauberer_wild_zauberbombardement"
+        ]
+      }
+    ]
+  },
+
+  "schurke": {
+    id: "schurke",
+    trefferwuerfel: "1W8",
+    startVermoegen: "4W4 × 1.000 Hade",
+    ruestungsUebung: "Leichte Rüstungen",
+    waffenUebung: "Einfache Waffen, Handarmbrüste, Langschwerter, Rapiere, Kurzschwerter",
+    werkzeugUebung: "Diebeswerkzeug",
+    rettungswurfUebung: ["Geschicklichkeit", "Intelligenz"],
+    fertigkeiten: {
+      anzahl: 4,
+      auswahl: ["Akrobatik", "Athletik", "Auftreten", "Motiv erkennen", "Einschüchtern", "Fingerfertigkeit", "Heimlichkeit", "Überzeugen", "Nachforschungen", "Täuschen", "Wahrnehmung"]
+    },
+    stufentabelle: {
+      extraSpalten: ["Hint. Angriff"],
+      zeilen: [
+        { stufe: 1,  uebungsbonus: 2, merkmaleIds: ["schurke_expertise", "schurke_hinterhaeltiger_angriff", "schurke_diebessprache"], extra: ["1W6"] },
+        { stufe: 2,  uebungsbonus: 2, merkmaleIds: ["schurke_raffinierte_aktion"], extra: ["1W6"] },
+        { stufe: 3,  uebungsbonus: 2, merkmaleIds: ["schurke_schurkenarchetyp", "schurke_zielsicher"], extra: ["2W6"] },
+        { stufe: 4,  uebungsbonus: 2, merkmaleIds: ["allgemein_attributswerterhöhung"], extra: ["2W6"] },
+        { stufe: 5,  uebungsbonus: 3, merkmaleIds: ["schurke_unglaubliches_ausweichen"], extra: ["3W6"] },
+        { stufe: 6,  uebungsbonus: 3, merkmaleIds: ["schurke_expertise"], extra: ["3W6"] },
+        { stufe: 7,  uebungsbonus: 3, merkmaleIds: ["schurke_entrinnen"], extra: ["4W6"] },
+        { stufe: 8,  uebungsbonus: 3, merkmaleIds: ["allgemein_attributswerterhöhung"], extra: ["4W6"] },
+        { stufe: 9,  uebungsbonus: 4, merkmaleIds: ["schurke_schurkenarchetyp_merkmal"], extra: ["5W6"] },
+        { stufe: 10, uebungsbonus: 4, merkmaleIds: ["allgemein_attributswerterhöhung"], extra: ["5W6"] },
+        { stufe: 11, uebungsbonus: 4, merkmaleIds: ["schurke_verlaessliches_talent"], extra: ["6W6"] },
+        { stufe: 12, uebungsbonus: 4, merkmaleIds: ["allgemein_attributswerterhöhung"], extra: ["6W6"] },
+        { stufe: 13, uebungsbonus: 5, merkmaleIds: ["schurke_schurkenarchetyp_merkmal"], extra: ["7W6"] },
+        { stufe: 14, uebungsbonus: 5, merkmaleIds: ["schurke_blindgespuer"], extra: ["7W6"] },
+        { stufe: 15, uebungsbonus: 5, merkmaleIds: ["schurke_entschluepfender_geist"], extra: ["8W6"] },
+        { stufe: 16, uebungsbonus: 5, merkmaleIds: ["allgemein_attributswerterhöhung"], extra: ["8W6"] },
+        { stufe: 17, uebungsbonus: 6, merkmaleIds: ["schurke_schurkenarchetyp_merkmal"], extra: ["9W6"] },
+        { stufe: 18, uebungsbonus: 6, merkmaleIds: ["schurke_schwer_zu_fassen"], extra: ["9W6"] },
+        { stufe: 19, uebungsbonus: 6, merkmaleIds: ["allgemein_attributswerterhöhung"], extra: ["10W6"] },
+        { stufe: 20, uebungsbonus: 6, merkmaleIds: ["schurke_glueckstreffer"], extra: ["10W6"] }
+      ]
+    },
+    merkmaleIds: [
+      "schurke_expertise",
+      "schurke_hinterhaeltiger_angriff",
+      "schurke_diebessprache",
+      "schurke_raffinierte_aktion",
+      "schurke_schurkenarchetyp",
+      "schurke_schurkenarchetyp_merkmal",
+      "schurke_zielsicher",
+      "allgemein_attributswerterhöhung",
+      "schurke_unglaubliches_ausweichen",
+      "schurke_entrinnen",
+      "schurke_verlaessliches_talent",
+      "schurke_blindgespuer",
+      "schurke_entschluepfender_geist",
+      "schurke_schwer_zu_fassen",
+      "schurke_glueckstreffer"
+    ],
+    unterklassen: [
+      {
+        id: "schurke_arkaner_betrueger",
+        name: "Arkaner Betrüger",
+        beschreibung: "Manche Schurken verbessern ihre hervorragenden Fertigkeiten der Heimlichkeit und der Beweglichkeit mit Magie und erlernen Verzauberungstricks und Illusionen. Unter diesen Schurken gibt es Taschendiebe und Einbrecher, aber auch Unruhestifter und Abenteuerer.",
+        merkmaleIds: [
+          "schurke_betrueger_zauberwirken",
+          "schurke_betrueger_magierhand_kniff",
+          "schurke_betrueger_magischer_hinterhalt",
+          "schurke_betrueger_vielseitiger_trickser",
+          "schurke_betrueger_zauberdieb"
+        ]
+      },
+      {
+        id: "schurke_assassine",
+        name: "Assassine",
+        beschreibung: "Du konzentrierst dein Training auf die grausame Kunst des Tötens. Auftragsmörder, Spione, Kopfgeldjäger und speziell ausgebildete Priester gehören diesem Archetyp an. Heimlichkeit, Gift und Verkleidung helfen dir, deine Gegner zu eliminieren.",
+        merkmaleIds: [
+          "schurke_assassin_zusaetzliche_uebung",
+          "schurke_assassin_attentat",
+          "schurke_assassin_infiltrationsexperte",
+          "schurke_assassin_imitator",
+          "schurke_assassin_todesstoss"
+        ]
+      },
+      {
+        id: "schurke_dieb",
+        name: "Dieb",
+        beschreibung: "Du verfeinerst deine Fertigkeiten in den Diebeskünsten. Einbrecher, Banditen, Beutelschneider, Schatzsucher und Grabräuber folgen in der Regel diesem Archetyp. Du verbesserst nicht nur deine Beweglichkeit, sondern lernst auch hilfreiche Fertigkeiten für uralte Ruinen und magische Gegenstände.",
+        merkmaleIds: [
+          "schurke_dieb_flinke_finger",
+          "schurke_dieb_kletteraffe",
+          "schurke_dieb_ausserordentliches_schleichen",
+          "schurke_dieb_magischen_gegenstand_benutzen",
+          "schurke_dieb_reflexe_des_diebes"
+        ]
+      },
+      {
+        id: "schurke_draufgaenger",
+        name: "Draufgänger",
+        beschreibung: "Du konzentrierst deine Ausbildung auf die Kunst des Schwertkampfes und setzt dabei auf eine Mischung aus Geschwindigkeit, Eleganz und Charme. Duellanten und Piraten sind Vertreter dieses Archetyps.",
+        merkmaleIds: [
+          "schurke_drauf_komplexe_beinarbeit",
+          "schurke_drauf_verwegene_dreistigkeit",
+          "schurke_drauf_verve",
+          "schurke_drauf_elegantes_manoever",
+          "schurke_drauf_meisterduellant"
+        ]
+      },
+      {
+        id: "schurke_ermittler",
+        name: "Ermittler",
+        beschreibung: "Als archetypischer Ermittler bist du exzellent darin, Geheimnisse aufzuspüren und Mysterien aufzuklären. Dank deines gewaltigen Wissens und deiner messerscharfen Schlussfolgerungen findest du verborgene Bedrohungen und bereitest ihnen ein Ende.",
+        merkmaleIds: [
+          "schurke_ermittler_luegen_raushoeren",
+          "schurke_ermittler_auge_fuers_detail",
+          "schurke_ermittler_gewiefte_kampfweise",
+          "schurke_ermittler_unbeirrter_blick",
+          "schurke_ermittler_unfehlbarer_blick",
+          "schurke_ermittler_schwaechenkennen"
+        ]
+      },
+      {
+        id: "schurke_phantom",
+        name: "Phantom",
+        beschreibung: "Bei ihren Gratwanderungen zwischen Leben und Tod entdecken einige Schurken eine geheimnisvolle Verbundenheit mit dem Tod. Sie entnehmen den Toten Erkenntnisse, tauchen immer tiefer in negative Kräfte ein und gleichen zuletzt selbst Geistern.",
+        merkmaleIds: [
+          "schurke_phantom_gefluster_der_toten",
+          "schurke_phantom_wehklagen_der_toten",
+          "schurke_phantom_zeichen_der_verstorbenen",
+          "schurke_phantom_spektralgestalt",
+          "schurke_phantom_freund_des_todes"
+        ]
+      },
+      {
+        id: "schurke_seelenmesser",
+        name: "Seelenmesser",
+        beschreibung: "Seelenmesser dringen in den Verstand anderer ein und schlagen dort zu. Sie haben psionische Kraft in sich entdeckt und nutzen sie für ihr schurkisches Handwerk. Sie durchbrechen sowohl physische als auch psychische Barrieren.",
+        merkmaleIds: [
+          "schurke_seele_psionische_kraft",
+          "schurke_seele_psychische_klingen",
+          "schurke_seele_seelenklingen",
+          "schurke_seele_psychischer_schleier",
+          "schurke_seele_geist_zerfetzen"
+        ]
+      },
+      {
+        id: "schurke_spaeer",
+        name: "Späher",
+        beschreibung: "Du bist geschickt im Schleichen und im Überleben fernab der Straßen der Stadt, sodass du während Expeditionen die Gegend vor deinen Gefährten auskundschaften kannst. Jäger, Spione und Kopfgeldjäger gehören zu diesem Archetyp.",
+        merkmaleIds: [
+          "schurke_spaeer_plaenkler",
+          "schurke_spaeer_ueberlebenskuenstler",
+          "schurke_spaeer_ausserordentliche_beweglichkeit",
+          "schurke_spaeer_meister_des_hinterhalts",
+          "schurke_spaeer_ploetzlicher_schlag"
+        ]
+      },
+      {
+        id: "schurke_strippenzieher",
+        name: "Strippenzieher",
+        beschreibung: "Dein Fokus richtet sich auf Personen und auf den Einfluss und die Geheimnisse, über die sie verfügen. Viele Spione, Höflinge und Intriganten entscheiden sich für diesen Archetyp. Du nutzt Worte so oft als Waffen wie Messer oder Gift.",
+        merkmaleIds: [
+          "schurke_strippen_meister_der_intrige",
+          "schurke_strippen_meister_der_taktik",
+          "schurke_strippen_erkenntnisreicher_manipulator",
+          "schurke_strippen_ablenken",
+          "schurke_strippen_seele_der_taeuschung"
+        ]
       }
     ]
   }

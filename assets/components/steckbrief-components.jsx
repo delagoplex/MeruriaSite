@@ -6,6 +6,37 @@
 const { useState: useSteckbrief, useRef: useSteckRef } = React;
 const { mod, fmtMod, attrKey, skillBonus, ImageSlot, SecTitle, Card, Corners, IRow } = window;
 
+/* ── Hilfsfunktionen ─────────────────────── */
+function calcProfBonus(level) { return Math.ceil((level||1)/4)+1; }
+
+function getTrefferwuerfel(charClass) {
+  const k = (window.KLASSEN_DATA?.klassen||[]).find(k=>k.name===charClass);
+  const m = (k?.trefferpunkte||'').match(/W\d+/);
+  return m ? m[0] : null;
+}
+
+function getRasseGroesse(raceName) {
+  const SIZES = ['Klein','Mittelgroß','Groß','Riesig','Gigantisch'];
+  for (const r of (window.RASSEN_DATA||[])) {
+    const check = t => SIZES.find(s=>t?.includes(s));
+    if (r.name===raceName) return check(r.tags)||'Mittelgroß';
+    const sub = (r.subraces||[]).find(s=>s.name===raceName);
+    if (sub) return check(sub.tags)||'Mittelgroß';
+  }
+  return 'Mittelgroß';
+}
+function getGroesseMult(g) { return {Klein:0.5,Mittelgroß:1,Groß:2,Riesig:4,Gigantisch:8}[g]||1; }
+
+/* ── Saves-Defaults (6 Attribute, kein Übungsbonus) ────────── */
+const SAVES_DEFAULT = [
+  {key:"str",label:"Stärke"},
+  {key:"dex",label:"Geschicklichkeit"},
+  {key:"con",label:"Konstitution"},
+  {key:"int",label:"Intelligenz"},
+  {key:"wis",label:"Weisheit"},
+  {key:"cha",label:"Charisma"},
+].map(s => ({...s, prof:0}));
+
 /* ── Skill-Defaults (alle Fertigkeiten, kein Übungsbonus) ── */
 const SKILLS_DEFAULT = [
   {name:"Akrobatik",         attr:"Ges",prof:0},{name:"Arkane Kunde",       attr:"Int",prof:0},
@@ -34,30 +65,37 @@ function buildChar(d) {
     divisionId:  d.divisionId  || null,
     deity:       d.deity       || '—',
     deityId:     d.deityId     || null,
-    deityDomain: '—',
+    deityDomain: d.deityDomain || '—',
     deityHue:    55,
     stats:       d.stats       || {str:10,dex:10,con:10,int:10,wis:10,cha:10},
 
-    // ── TODO: Quiz-Erweiterungen ───────────────────────────────
-    alignment:   d.alignment   || '—',   // TODO: quiz
-    zodiac:      d.zodiac      || '—',   // TODO: quiz
-    birthday:        d.birthday        || '—',   // TODO: quiz
-    geburtstag_doy:  d.geburtstag_doy  || null,
+    // ── Persönlichkeit & Aussehen ──────────────────────────────
+    alignment:      d.alignment      || '—',
+    zodiac:         d.zodiac         || '—',
+    geburtstag_doy: d.geburtstag_doy || null,
+    gender:         d.gender         || '—',
+    age:            d.age            || '—',
+    birthplace:     d.birthplace     || '—',
+    height:         d.height         || '—',
+    weight:         d.weight         || '—',
+    eyes:           d.eyes           || '—',
+    hair:           d.hair           || '—',
+    skin:           d.skin           || '—',
 
     // ── Festwerte / Stufe 1 ────────────────────────────────────
-    subclass: '—', level:1, xp:0, profBonus:2,
+    subclass: d.subclass || '—', level:1, xp:0, profBonus:2,
     rank:'Neuankömmling', rankLevel:1, rankMax:5,
     hp:10, ac:10, initiative:0, speed:9,
-    gender:'—', age:'—', birthplace:'—',
-    height:'—', weight:'—', eyes:'—', hair:'—', skin:'—',
 
-    // ── Platzhalter-Texte ──────────────────────────────────────
-    story:       '',
-    ersteTage:   'Als sich meine Träumerkapsel öffnete, ...',
-    personality: '',
-    ideals:      '',
-    bonds:       '',
-    flaws:       d.samen ? `Samen der Furcht: ${d.samen}` : '',
+    lebensstil: d.lebensstil || '',
+
+    // ── Texte ──────────────────────────────────────────────────
+    story:       d.story       || '',
+    ersteTage:   d.ersteTage   || 'Als sich meine Träumerkapsel öffnete, ...',
+    personality: d.personality || '',
+    ideals:      d.ideals      || '',
+    bonds:       d.bonds       || '',
+    flaws:       d.flaws       || (d.samen ? `Samen der Furcht: ${d.samen}` : ''),
 
     // ── Leer bis selbst befüllt ────────────────────────────────
     weapons:    [],
@@ -66,19 +104,22 @@ function buildChar(d) {
     contacts:   [],
     zauber:     [],
 
-    // ── Freundebuch: TODO-Felder klar markiert ─────────────────
+    // ── Freundebuch ────────────────────────────────────────────
     freundebuch: [
-      {frage:'Meine Lieblingsfarbe',     antwort: d.lieblingsfarbe || '—'}, // TODO: quiz
-      {frage:'Mein Lieblingsessen',      antwort: '—'},
-      {frage:'Lieblingsbeschäftigung',   antwort: '—'},
-      {frage:'Wen ich bewundere',        antwort: '—'},
-      {frage:'Mein größter Traum',       antwort: '—'},
-      {frage:'Meine größte Angst',       antwort: d.samen || '—'},          // aus Quiz
-      {frage:'Wenn ich ein Tier wäre...', antwort: d.tier  || '—'},         // TODO: quiz
-      {frage:'Mein Motto',               antwort: d.motto  || '—'},         // TODO: quiz
+      {frage:'Meine Lieblingsfarbe',      antwort: d.lieblingsfarbe || '—'},
+      {frage:'Mein Lieblingsessen',       antwort: '—'},
+      {frage:'Lieblingsbeschäftigung',    antwort: '—'},
+      {frage:'Wen ich bewundere',         antwort: '—'},
+      {frage:'Mein größter Traum',        antwort: '—'},
+      {frage:'Meine größte Angst',        antwort: d.samen || '—'},
+      {frage:'Wenn ich ein Tier wäre...', antwort: d.tier  || '—'},
+      {frage:'Mein Motto',                antwort: d.motto || '—'},
     ],
 
     skills: SKILLS_DEFAULT,
+    saves:  d.saves || SAVES_DEFAULT,
+    uebungen: d.uebungen || { ruestungen:[], waffen:[], fahrzeuge:[], sprachen:[], werkzeuge:[] },
+    inventar: d.inventar || [],
   };
 }
 
@@ -335,48 +376,67 @@ function EditableDeityCard({ char, upd }) {
 }
 
 /* ── Kampf-Kompakt ────────────────────────── */
-function CombatCompact({ char }) {
-  const stats = [["TP",char.hp],["RK",char.ac],["INIT",fmtMod(char.initiative)],["BEWG",char.speed+"m"]];
+function KampfStatCell({ label, value, dim }) {
   return (
-    <Card>
+    <div style={{background:"rgba(7,4,18,0.9)",border:`1px solid rgba(124,77,255,${dim?0.13:0.22})`,borderRadius:3,
+      padding:dim?"5px 6px":"7px 10px",display:"flex",flexDirection:"column",alignItems:"center"}}>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:dim?11:18,color:dim?"rgba(200,190,240,0.7)":"var(--white)",lineHeight:1}}>{value}</span>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:6.5,letterSpacing:".18em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase",marginTop:3}}>{label}</span>
+    </div>
+  );
+}
+
+function CombatCompact({ char }) {
+  const tw = getTrefferwuerfel(char.class);
+  const pb = calcProfBonus(char.level||1);
+  const pw = calcPassiveWahrnehmung(char);
+  return (
+    <Card style={{marginBottom:11}}>
       <SecTitle label="Kampf" />
-      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginBottom:11}}>
-        {stats.map(([l,v])=>(
-          <div key={l} style={{background:"rgba(7,4,18,0.9)",border:"1px solid rgba(124,77,255,0.22)",borderRadius:3,
-            padding:"7px 10px",display:"flex",flexDirection:"column",alignItems:"center"}}>
-            <span style={{fontFamily:"var(--font-mono)",fontSize:18,color:"var(--white)",lineHeight:1}}>{v}</span>
-            <span style={{fontFamily:"var(--font-mono)",fontSize:6.5,letterSpacing:".18em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase",marginTop:3}}>{l}</span>
-          </div>
-        ))}
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginBottom:6}}>
+        <KampfStatCell label="TP"   value={char.hp} />
+        <KampfStatCell label="RK"   value={char.ac} />
+        <KampfStatCell label="INIT" value={fmtMod(char.initiative)} />
+        <KampfStatCell label="BEWG" value={char.speed+"m"} />
       </div>
-      {char.weapons.map((w,i)=>(
-        <div key={i} style={{display:"flex",alignItems:"center",gap:8,padding:"3px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
-          <span style={{fontFamily:"var(--font-body)",fontSize:11,fontWeight:300,color:"var(--silver)",flex:1}}>{w.name}</span>
-          <span style={{fontFamily:"var(--font-mono)",fontSize:10,color:"rgba(124,77,255,0.78)"}}>{w.bonus}</span>
-          <span style={{fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(175,168,210,0.5)"}}>{w.damage}</span>
-        </div>
-      ))}
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:6}}>
+        <KampfStatCell label="Stufe"    value={char.level||1} dim />
+        <KampfStatCell label={tw?"TW":"TW"} value={tw||'—'} dim />
+        <KampfStatCell label="Übungsb." value={fmtMod(pb)} dim />
+      </div>
+      <div style={{marginTop:6}}>
+        <KampfStatCell label="Passive Wahrnehmung" value={pw} dim />
+      </div>
     </Card>
   );
 }
 
 /* ── Editierbare Kampfwerte ───────────────── */
 function EditableCombatCompact({ char, upd }) {
-  const fields = [
-    { key:'hp',         label:'TP',   type:'number', min:1  },
-    { key:'ac',         label:'RK',   type:'number', min:1  },
-    { key:'initiative', label:'INIT', type:'number', min:-5 },
-    { key:'speed',      label:'BEWG', type:'number', min:0  },
+  const mainFields = [
+    { key:'hp',         label:'TP',   min:1  },
+    { key:'ac',         label:'RK',   min:1  },
+    { key:'initiative', label:'INIT', min:-5 },
+    { key:'speed',      label:'BEWG', min:0  },
   ];
+  const tw = getTrefferwuerfel(char.class);
+  const pb = calcProfBonus(char.level||1);
+  const pw = calcPassiveWahrnehmung(char);
+  const autoCell = (label, value) => (
+    <div style={{background:"rgba(7,4,18,0.9)",border:"1px solid rgba(124,77,255,0.13)",borderRadius:3,
+      padding:"5px 6px",display:"flex",flexDirection:"column",alignItems:"center"}}>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:11,color:"rgba(200,190,240,0.55)",lineHeight:1}}>{value}</span>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:6.5,letterSpacing:".18em",color:"rgba(124,77,255,0.3)",textTransform:"uppercase",marginTop:3}}>{label}</span>
+    </div>
+  );
   return (
-    <Card>
+    <Card style={{marginBottom:11}}>
       <SecTitle label="Kampf" />
-      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginBottom:11}}>
-        {fields.map(({key,label,type,min})=>(
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginBottom:6}}>
+        {mainFields.map(({key,label,min})=>(
           <div key={key} style={{background:"rgba(7,4,18,0.9)",border:"1px solid rgba(124,77,255,0.28)",borderRadius:3,
             padding:"6px 8px",display:"flex",flexDirection:"column",alignItems:"center"}}>
-            <input
-              type={type} min={min} value={char[key]??0}
+            <input type="number" min={min} value={char[key]??0}
               onChange={e=>upd({[key]:parseInt(e.target.value)||0})}
               style={{fontFamily:"var(--font-mono)",fontSize:18,color:"var(--white)",lineHeight:1,
                 background:"transparent",border:"none",textAlign:"center",width:"100%",
@@ -385,6 +445,603 @@ function EditableCombatCompact({ char, upd }) {
               color:"rgba(124,77,255,0.5)",textTransform:"uppercase",marginTop:2}}>{label}</span>
           </div>
         ))}
+      </div>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:6,marginBottom:6}}>
+        <div style={{background:"rgba(7,4,18,0.9)",border:"1px solid rgba(124,77,255,0.28)",borderRadius:3,
+          padding:"6px 8px",display:"flex",flexDirection:"column",alignItems:"center"}}>
+          <input type="number" min={1} max={20} value={char.level||1}
+            onChange={e=>{const l=Math.min(20,Math.max(1,parseInt(e.target.value)||1));upd({level:l,profBonus:calcProfBonus(l)});}}
+            style={{fontFamily:"var(--font-mono)",fontSize:18,color:"var(--white)",lineHeight:1,
+              background:"transparent",border:"none",textAlign:"center",width:"100%",
+              outline:"none",WebkitAppearance:"none",MozAppearance:"textfield"}}/>
+          <span style={{fontFamily:"var(--font-mono)",fontSize:6.5,letterSpacing:".18em",color:"rgba(124,77,255,0.5)",textTransform:"uppercase",marginTop:2}}>Stufe</span>
+        </div>
+        {autoCell('TW', tw||'—')}
+        {autoCell('Übungsb.', fmtMod(pb))}
+      </div>
+      {autoCell('Passive Wahrnehmung', pw)}
+    </Card>
+  );
+}
+
+/* ── Waffen ───────────────────────────────── */
+const WAFFE_ATTR_ABBR = {str:'STÄ',dex:'GES',con:'KON',int:'INT',wis:'WEI',cha:'CHA'};
+const WAFFE_ATTRS = ['str','dex','con','int','wis','cha'];
+const WAFFE_EMPTY = () => ({name:'',angriffsart:'Nahkampf',uebung:false,attribut:'str',reichweite:'1,5 m',schaden:'',schadenstyp:'',notiz:''});
+
+function WaffenStatCell({ label, value, accent }) {
+  return (
+    <div style={{display:"flex",flexDirection:"column",alignItems:"center",minWidth:0,
+      background:"rgba(7,4,18,0.9)",border:"1px solid rgba(124,77,255,0.18)",borderRadius:3,padding:"5px 4px"}}>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:9,fontWeight:accent?600:400,
+        color:accent?"rgba(124,77,255,0.9)":"var(--white)",lineHeight:1,marginBottom:3,
+        maxWidth:"100%",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{value}</span>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:6,letterSpacing:".1em",
+        color:"rgba(124,77,255,0.38)",textTransform:"uppercase",whiteSpace:"nowrap"}}>{label}</span>
+    </div>
+  );
+}
+
+function WaffenCard({ char }) {
+  const weapons = char.weapons || [];
+  if (!weapons.length) return null;
+  return (
+    <Card style={{marginBottom:11}}>
+      <SecTitle label="Waffen" />
+      {weapons.map((w,i) => {
+        const attr = w.attribut || 'str';
+        const bonus = mod(char.stats?.[attr] ?? 10) + (w.uebung ? (char.profBonus||2) : 0);
+        return (
+          <div key={i} style={{borderBottom:"1px solid rgba(124,77,255,0.08)",paddingBottom:8,marginBottom:8}}>
+            <div style={{fontFamily:"var(--font-display)",fontSize:11,letterSpacing:".18em",
+              textTransform:"uppercase",color:"var(--white)",marginBottom:6,
+              paddingBottom:5,borderBottom:"1px solid rgba(124,77,255,0.15)"}}>{w.name||'—'}</div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)",gap:4,marginBottom:4}}>
+              <WaffenStatCell label="Art"       value={w.angriffsart==='Fernkampf'?'Fern':'Nah'} />
+              <WaffenStatCell label="Attribut"  value={WAFFE_ATTR_ABBR[attr]} />
+              <WaffenStatCell label="Übung"     value={w.uebung?'◆':'○'} />
+              <WaffenStatCell label="RW" value={w.reichweite||'—'} />
+              <WaffenStatCell label="Bonus"     value={fmtMod(bonus)} accent />
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:w.notiz?"1fr 1fr 1.5fr":"1fr 1fr",gap:4}}>
+              <WaffenStatCell label="Schaden"     value={w.schaden||'—'} />
+              <WaffenStatCell label="Schadenstyp" value={w.schadenstyp||'—'} />
+              {w.notiz && <WaffenStatCell label="Notiz" value={w.notiz} />}
+            </div>
+          </div>
+        );
+      })}
+    </Card>
+  );
+}
+
+function parseWaffeVorschlag(item, angriffsart) {
+  const parts = (item.schaden || '').split(' ');
+  const schaden = parts[0] || '';
+  const schadenstyp = parts.slice(1).join(' ') || '';
+  let reichweite = angriffsart === 'Nahkampf' ? '1,5 m' : '';
+  const rwMatch = (item.eigenschaften || '').match(/Reichweite ([\d,]+\/[\d,]+)/);
+  if (rwMatch) reichweite = rwMatch[1] + ' m';
+  return { name: item.name, angriffsart, schaden, schadenstyp, reichweite };
+}
+
+function EditableWaffenCard({ char, upd }) {
+  const weapons = char.weapons || [];
+  const iStyle = {fontFamily:"var(--font-body)",fontSize:10.5,color:"var(--white)",background:"transparent",
+    border:"none",borderBottom:"1px solid rgba(124,77,255,0.22)",outline:"none",padding:"1px 3px",width:"100%",minWidth:0};
+  const lbl = {fontFamily:"var(--font-mono)",fontSize:6.5,letterSpacing:".1em",color:"rgba(124,77,255,0.35)",textTransform:"uppercase",marginBottom:2};
+  const selStyle = {...iStyle,fontFamily:"var(--font-mono)",fontSize:9,cursor:"pointer",paddingRight:2};
+
+  const d = window.AUSRUESTUNG_DATA || {};
+  const waffenKat = [
+    {label:'Einfache Nahkampfwaffen', items: d.EINFACHE_NAHKAMPF||[], art:'Nahkampf'},
+    {label:'Kriegswaffen (Nah)',      items: d.KRIEGS_NAHKAMPF  ||[], art:'Nahkampf'},
+    {label:'Einfache Fernkampfwaffen',items: d.EINFACHE_FERNKAMPF||[],art:'Fernkampf'},
+    {label:'Kriegswaffen (Fern)',     items: d.KRIEGS_FERNKAMPF ||[], art:'Fernkampf'},
+  ];
+
+  function updW(i, patch) {
+    const next = weapons.map((w,j) => j===i ? {...w,...patch} : w);
+    upd({weapons:next});
+  }
+  function addW() { upd({weapons:[...weapons, WAFFE_EMPTY()]}); }
+  function delW(i) { upd({weapons:weapons.filter((_,j)=>j!==i)}); }
+
+  function pickVorlage(i, val) {
+    if (!val) return;
+    const [katIdx, itemIdx] = val.split(':').map(Number);
+    const kat = waffenKat[katIdx];
+    if (!kat) return;
+    const item = kat.items[itemIdx];
+    if (!item) return;
+    updW(i, parseWaffeVorschlag(item, kat.art));
+  }
+
+  return (
+    <Card style={{marginBottom:11}}>
+      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:8}}>
+        <SecTitle label="Waffen" style={{marginBottom:0}} />
+        <button onClick={addW} style={{fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(124,77,255,0.7)",
+          background:"rgba(124,77,255,0.1)",border:"1px solid rgba(124,77,255,0.3)",borderRadius:2,
+          padding:"2px 8px",cursor:"pointer",letterSpacing:".1em"}}>+ Waffe</button>
+      </div>
+      {weapons.length === 0 && (
+        <div style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(124,77,255,0.28)",letterSpacing:".1em",padding:"4px 0"}}>Keine Waffen</div>
+      )}
+      {weapons.map((w,i) => {
+        const attr = w.attribut||'str';
+        const bonus = mod(char.stats?.[attr] ?? 10) + (w.uebung ? (char.profBonus||2) : 0);
+        return (
+          <div key={i} style={{borderBottom:"1px solid rgba(124,77,255,0.1)",paddingBottom:8,marginBottom:8}}>
+            {/* Zeile 1: Name + Vorlage-Picker + Löschen */}
+            <div style={{display:"flex",gap:6,alignItems:"center",marginBottom:5}}>
+              <input value={w.name||''} onChange={e=>updW(i,{name:e.target.value})} placeholder="Eigener Name"
+                style={{...iStyle,fontSize:11.5,flex:1,borderBottomColor:"rgba(124,77,255,0.35)"}} />
+              <select value="" onChange={e=>pickVorlage(i,e.target.value)}
+                style={{...selStyle,fontSize:8,background:"rgba(7,4,18,0.8)",flexShrink:0,maxWidth:110,
+                  color:"rgba(124,77,255,0.55)",borderBottomColor:"rgba(124,77,255,0.18)"}}>
+                <option value="">aus Liste…</option>
+                {waffenKat.map((kat,ki) => kat.items.length > 0 && (
+                  <optgroup key={ki} label={kat.label}>
+                    {kat.items.map((item,ii) => (
+                      <option key={ii} value={`${ki}:${ii}`}>{item.name}</option>
+                    ))}
+                  </optgroup>
+                ))}
+              </select>
+              <button onClick={()=>delW(i)} style={{fontFamily:"var(--font-mono)",fontSize:11,color:"rgba(200,80,80,0.55)",
+                background:"transparent",border:"none",cursor:"pointer",padding:"0 2px",flexShrink:0,lineHeight:1}}>×</button>
+            </div>
+            {/* Zeile 2: Art / Attr / Übung / Reichweite / Bonus */}
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 24px 1fr 40px",gap:"0 6px",marginBottom:5,alignItems:"end"}}>
+              <div>
+                <div style={lbl}>Art</div>
+                <select value={w.angriffsart||'Nahkampf'} onChange={e=>updW(i,{angriffsart:e.target.value})}
+                  style={{...selStyle,background:"rgba(7,4,18,0.8)"}}>
+                  <option value="Nahkampf">Nahkampf</option>
+                  <option value="Fernkampf">Fernkampf</option>
+                </select>
+              </div>
+              <div>
+                <div style={lbl}>Attribut</div>
+                <select value={attr} onChange={e=>updW(i,{attribut:e.target.value})}
+                  style={{...selStyle,background:"rgba(7,4,18,0.8)"}}>
+                  {WAFFE_ATTRS.map(a=><option key={a} value={a}>{WAFFE_ATTR_ABBR[a]}</option>)}
+                </select>
+              </div>
+              <div style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
+                <div style={lbl}>Üb</div>
+                <button onClick={()=>updW(i,{uebung:!w.uebung})} title={w.uebung?"Übung":"Keine"}
+                  style={{background:"transparent",border:"none",cursor:"pointer",padding:0,lineHeight:1,
+                    color:w.uebung?"rgba(124,77,255,0.78)":"rgba(124,77,255,0.28)",fontSize:12}}>
+                  {w.uebung?'◆':'○'}
+                </button>
+              </div>
+              <div>
+                <div style={lbl}>Reichweite</div>
+                <input value={w.reichweite||''} onChange={e=>updW(i,{reichweite:e.target.value})} style={iStyle} />
+              </div>
+              <div>
+                <div style={lbl}>Bonus</div>
+                <span style={{fontFamily:"var(--font-mono)",fontSize:11,color:"rgba(124,77,255,0.8)",fontWeight:600,display:"block",padding:"1px 3px"}}>{fmtMod(bonus)}</span>
+              </div>
+            </div>
+            {/* Zeile 3: Schaden / Typ / Notiz */}
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1.5fr",gap:"0 6px",alignItems:"end"}}>
+              <div>
+                <div style={lbl}>Schaden</div>
+                <input value={w.schaden||''} onChange={e=>updW(i,{schaden:e.target.value})} placeholder="1W8" style={iStyle} />
+              </div>
+              <div>
+                <div style={lbl}>Schadenstyp</div>
+                <input value={w.schadenstyp||''} onChange={e=>updW(i,{schadenstyp:e.target.value})} placeholder="Hieb" style={iStyle} />
+              </div>
+              <div>
+                <div style={lbl}>Notiz</div>
+                <input value={w.notiz||''} onChange={e=>updW(i,{notiz:e.target.value})} placeholder="optional" style={iStyle} />
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </Card>
+  );
+}
+
+/* ── Übungen & Sprachen ───────────────────── */
+/* ── Übungen-Konstanten ───────────────────── */
+const RUESTUNGS_OPT  = ['Leichte Rüstung','Mittelschwere Rüstung','Schwere Rüstung','Schilde'];
+const WAFFEN_OPT     = ['Einfache Waffen','Kriegswaffen'];
+const FAHRZEUGE_OPT  = ['Landfahrzeuge','Wasserfahrzeuge'];
+const SPRACHEN_LISTE = [
+  'Gemein','Zwergisch','Elfisch','Riesisch','Gnomisch','Goblinisch','Halblingisch','Orkisch',
+  'Abyssisch','Celestisch','Drakonisch','Tiefensprache','Infernalisch','Sylvanisch',
+  'Gemeinsprache der Unterreiche','Urtümlich',
+];
+
+function getWerkzeugListe() {
+  const d = window.AUSRUESTUNG_DATA || {};
+  return [
+    {grp:'Werkzeuge',      items:(d.WERKZEUGE_ITEMS     ||[]).map(i=>i.name)},
+    {grp:'Handwerkszeuge', items:(d.HANDWERKSZEUGE_ITEMS||[]).map(i=>i.name)},
+    {grp:'Musikinstrumente',items:(d.MUSIKINSTRUMENTE_ITEMS||[]).map(i=>i.name)},
+    {grp:'Spiele',         items:(d.SPIELE_ITEMS        ||[]).map(i=>i.name)},
+  ];
+}
+
+function normArr(val) {
+  if (!val) return [];
+  if (Array.isArray(val)) return val;
+  return val.split(',').map(s=>s.trim()).filter(Boolean);
+}
+
+/* Gemeinsame Pill-Anzeige */
+function UebPills({ items }) {
+  if (!items.length) return <span style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(124,77,255,0.28)"}}>—</span>;
+  return (
+    <div style={{display:"flex",flexWrap:"wrap",gap:3}}>
+      {items.map(v=>(
+        <span key={v} style={{fontFamily:"var(--font-mono)",fontSize:7.5,padding:"2px 7px",
+          background:"rgba(124,77,255,0.12)",border:"1px solid rgba(124,77,255,0.25)",borderRadius:2,
+          color:"rgba(200,190,240,0.75)",letterSpacing:".06em"}}>{v}</span>
+      ))}
+    </div>
+  );
+}
+
+const uebLbl = {fontFamily:"var(--font-mono)",fontSize:7,letterSpacing:".12em",color:"rgba(124,77,255,0.4)",
+  textTransform:"uppercase",marginBottom:4};
+const uebSec = {paddingBottom:8,marginBottom:8,borderBottom:"1px solid rgba(124,77,255,0.07)"};
+
+function UebungenCard({ char }) {
+  const u = char.uebungen || {};
+  const rüst = normArr(u.ruestungen), waf = normArr(u.waffen);
+  const fahr = normArr(u.fahrzeuge), spr = normArr(u.sprachen), werk = normArr(u.werkzeuge);
+  return (
+    <Card style={{marginBottom:11}}>
+      <SecTitle label="Übungen & Sprachen" />
+      <div style={uebSec}><div style={uebLbl}>Rüstungen</div><UebPills items={rüst}/></div>
+      <div style={uebSec}><div style={uebLbl}>Waffen</div><UebPills items={waf}/></div>
+      <div style={uebSec}><div style={uebLbl}>Fahrzeuge</div><UebPills items={fahr}/></div>
+      <div style={uebSec}><div style={uebLbl}>Sprachen</div><UebPills items={spr}/></div>
+      <div style={{paddingBottom:4}}><div style={uebLbl}>Werkzeuge</div><UebPills items={werk}/></div>
+    </Card>
+  );
+}
+
+function EditableUebungenCard({ char, upd }) {
+  const u = char.uebungen || {};
+  function updU(key,val) { upd({uebungen:{...u,[key]:val}}); }
+
+  const rüst = normArr(u.ruestungen), waf = normArr(u.waffen);
+  const fahr = normArr(u.fahrzeuge), spr = normArr(u.sprachen), werk = normArr(u.werkzeuge);
+
+  const selStyle = {fontFamily:"var(--font-mono)",fontSize:8.5,color:"rgba(124,77,255,0.6)",
+    background:"rgba(7,4,18,0.8)",border:"1px solid rgba(124,77,255,0.2)",borderRadius:2,
+    padding:"2px 5px",cursor:"pointer",outline:"none",marginTop:3};
+
+  function ToggleRow({label, arr, opts, field}) {
+    return (
+      <div style={uebSec}>
+        <div style={uebLbl}>{label}</div>
+        <div style={{display:"flex",flexWrap:"wrap",gap:4}}>
+          {opts.map(opt=>{
+            const on = arr.includes(opt);
+            return (
+              <button key={opt} onClick={()=>updU(field,on?arr.filter(x=>x!==opt):[...arr,opt])}
+                style={{fontFamily:"var(--font-mono)",fontSize:7.5,padding:"2px 8px",borderRadius:2,
+                  cursor:"pointer",letterSpacing:".06em",transition:"all .12s",
+                  background:on?"rgba(124,77,255,0.22)":"rgba(124,77,255,0.06)",
+                  border:`1px solid rgba(124,77,255,${on?0.55:0.18})`,
+                  color:on?"rgba(200,190,240,0.92)":"rgba(160,140,255,0.45)"}}>
+                {opt}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  function PillDropRow({label, arr, options, optgroups, field}) {
+    const used = new Set(arr);
+    return (
+      <div style={uebSec}>
+        <div style={uebLbl}>{label}</div>
+        <div style={{display:"flex",flexWrap:"wrap",gap:3,marginBottom:arr.length?5:0}}>
+          {arr.map(v=>(
+            <span key={v} style={{display:"inline-flex",alignItems:"center",gap:3,fontFamily:"var(--font-mono)",
+              fontSize:7.5,padding:"2px 5px 2px 7px",background:"rgba(124,77,255,0.15)",
+              border:"1px solid rgba(124,77,255,0.3)",borderRadius:2,color:"rgba(200,190,240,0.82)"}}>
+              {v}
+              <button onClick={()=>updU(field,arr.filter(x=>x!==v))}
+                style={{background:"transparent",border:"none",cursor:"pointer",
+                  color:"rgba(200,100,100,0.55)",fontSize:10,padding:0,lineHeight:1}}>×</button>
+            </span>
+          ))}
+        </div>
+        <select value="" onChange={e=>{if(e.target.value)updU(field,[...arr,e.target.value]);}}
+          style={selStyle}>
+          <option value="">+ hinzufügen…</option>
+          {optgroups
+            ? optgroups.map(g=>(
+                <optgroup key={g.grp} label={g.grp}>
+                  {g.items.filter(i=>!used.has(i)).map(i=><option key={i} value={i}>{i}</option>)}
+                </optgroup>
+              ))
+            : (options||[]).filter(o=>!used.has(o)).map(o=><option key={o} value={o}>{o}</option>)
+          }
+        </select>
+      </div>
+    );
+  }
+
+  return (
+    <Card style={{marginBottom:11}}>
+      <SecTitle label="Übungen & Sprachen" />
+      <ToggleRow label="Rüstungen" arr={rüst} opts={RUESTUNGS_OPT} field="ruestungen" />
+      <ToggleRow label="Waffen"    arr={waf}  opts={WAFFEN_OPT}    field="waffen" />
+      <ToggleRow label="Fahrzeuge" arr={fahr} opts={FAHRZEUGE_OPT} field="fahrzeuge" />
+      <PillDropRow label="Sprachen"  arr={spr}  options={SPRACHEN_LISTE}   field="sprachen" />
+      <PillDropRow label="Werkzeuge" arr={werk} optgroups={getWerkzeugListe()} field="werkzeuge" />
+    </Card>
+  );
+}
+
+/* ── Lebensstil ───────────────────────────── */
+const LEBENSSTILE = [
+  {name:'Jämmerlich', kosten:'—',               desc:'Kein festes Dach. Leben unter unmenschlichen Bedingungen. Gewalt, Krankheit und Hunger sind ständige Begleiter.'},
+  {name:'Ärmlich',    kosten:'10 Hade/Tag',      desc:'Undichte Hütte oder verseuchte Pension. Kaum rechtlicher Schutz, verzweifelte Umgebung.'},
+  {name:'Schlecht',   kosten:'20 Hade/Tag',      desc:'Einfache Unterkunft in einer Absteige oder Gemeinschaftsraum. Ausreichend, aber unangenehm.'},
+  {name:'Einfach',    kosten:'100 Hade/Tag',     desc:'Sauberes Zimmer in Pension oder Tempel. Kein Hunger, kein Durst. Kleidung in Ordnung.'},
+  {name:'Komfortabel',kosten:'200 Hade/Tag',     desc:'Kleines Häuschen im bürgerlichen Viertel oder Privatzimmer im feinen Gasthaus.'},
+  {name:'Wohlhabend', kosten:'400 Hade/Tag',     desc:'Geräumiges Haus in gutem Viertel, kleiner Mitarbeiterstab. Verbindungen zu Kaufleuten und Höflingen.'},
+  {name:'Edel',       kosten:'mind. 1.000 Hade/Tag', desc:'Stadthaus oder Suite im besten Gasthaus. Verkehr mit den mächtigsten Persönlichkeiten der Gesellschaft.'},
+];
+
+function LebensstilCard({ char }) {
+  const ls = LEBENSSTILE.find(l=>l.name===char.lebensstil);
+  return (
+    <Card style={{marginBottom:11}}>
+      <SecTitle label="Lebensstil" />
+      {ls ? (
+        <>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"baseline",marginBottom:6}}>
+            <span style={{fontFamily:"var(--font-display)",fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"var(--white)"}}>{ls.name}</span>
+            <span style={{fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(124,77,255,0.7)"}}>{ls.kosten}</span>
+          </div>
+          <p style={{fontFamily:"var(--font-body)",fontSize:11,fontWeight:300,color:"rgba(200,190,240,0.55)",lineHeight:1.6,margin:0}}>{ls.desc}</p>
+        </>
+      ) : (
+        <span style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(124,77,255,0.28)"}}>—</span>
+      )}
+    </Card>
+  );
+}
+
+function EditableLebensstilCard({ char, upd }) {
+  const ls = LEBENSSTILE.find(l=>l.name===char.lebensstil);
+  return (
+    <Card style={{marginBottom:11}}>
+      <SecTitle label="Lebensstil" />
+      <select value={char.lebensstil||''} onChange={e=>upd({lebensstil:e.target.value})}
+        style={{fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(200,190,240,0.8)",width:"100%",
+          background:"rgba(7,4,18,0.9)",border:"1px solid rgba(124,77,255,0.25)",borderRadius:2,
+          padding:"4px 6px",cursor:"pointer",outline:"none",marginBottom:ls?8:0}}>
+        <option value="">— wählen —</option>
+        {LEBENSSTILE.map(l=>(
+          <option key={l.name} value={l.name}>{l.name} — {l.kosten}</option>
+        ))}
+      </select>
+      {ls && <p style={{fontFamily:"var(--font-body)",fontSize:10.5,fontWeight:300,
+        color:"rgba(200,190,240,0.45)",lineHeight:1.55,margin:0}}>{ls.desc}</p>}
+    </Card>
+  );
+}
+
+/* ── Inventar ─────────────────────────────── */
+function getAusruestungListe() {
+  const d = window.AUSRUESTUNG_DATA || {};
+  return [
+    {grp:'Abenteuerausrüstung', items: d.ABENTEUER_ITEMS          || []},
+    {grp:'Waffen (Einfach Nah)',items: d.EINFACHE_NAHKAMPF        || []},
+    {grp:'Waffen (Einfach Fern)',items:d.EINFACHE_FERNKAMPF       || []},
+    {grp:'Kriegswaffen (Nah)',  items: d.KRIEGS_NAHKAMPF          || []},
+    {grp:'Kriegswaffen (Fern)', items: d.KRIEGS_FERNKAMPF         || []},
+    {grp:'Leichte Rüstung',     items: d.LEICHTE_RUESTUNG         || []},
+    {grp:'Mittelschwere Rüstung',items:d.MITTELSCHWERE_RUESTUNG   || []},
+    {grp:'Schwere Rüstung',     items: d.SCHWERE_RUESTUNG         || []},
+    {grp:'Schilde',             items: d.SCHILDE                  || []},
+    {grp:'Kleidung',            items: d.KLEIDUNG                 || []},
+    {grp:'Werkzeuge',           items: d.WERKZEUGE_ITEMS          || []},
+    {grp:'Handwerkszeuge',      items: d.HANDWERKSZEUGE_ITEMS     || []},
+    {grp:'Musikinstrumente',    items: d.MUSIKINSTRUMENTE_ITEMS   || []},
+    {grp:'Spiele',              items: d.SPIELE_ITEMS             || []},
+  ].filter(g => g.items.length > 0);
+}
+
+function InventarModal({ char, upd, onClose }) {
+  const inv = char.inventar || [];
+  const str = char.stats?.str ?? 10;
+  const groesse = getRasseGroesse(char.race);
+  const mult = getGroesseMult(groesse);
+  const belastet     = Math.round(str * 5  * mult);
+  const sehrBelastet = Math.round(str * 10 * mult);
+  const ueberlastet  = Math.round(str * 15 * mult);
+  const totalPfund   = inv.reduce((s,i)=>s+(parseFloat(i.pfund)||0),0);
+
+  let status = 'Unbelastet', statusC = 'rgba(80,200,140,0.85)';
+  if (totalPfund > ueberlastet)  { status='Überlastet';   statusC='rgba(220,80,80,0.9)'; }
+  else if (totalPfund > sehrBelastet) { status='Sehr belastet'; statusC='rgba(220,160,60,0.9)'; }
+  else if (totalPfund > belastet)     { status='Belastet';      statusC='rgba(220,160,60,0.75)'; }
+
+  function addItem()    { upd({inventar:[...inv,{name:'',pfund:''}]}); }
+  function delItem(i)   { upd({inventar:inv.filter((_,j)=>j!==i)}); }
+  function updItem(i,p) { upd({inventar:inv.map((it,j)=>j===i?{...it,...p}:it)}); }
+
+  const iStyle = {fontFamily:"var(--font-body)",fontSize:11,color:"var(--white)",background:"transparent",
+    border:"none",borderBottom:"1px solid rgba(124,77,255,0.2)",outline:"none",padding:"2px 4px",minWidth:0};
+
+  return ReactDOM.createPortal(
+    <div onClick={onClose} style={{position:"fixed",inset:0,zIndex:99990,background:"rgba(5,4,15,0.88)",
+      backdropFilter:"blur(10px)",display:"flex",alignItems:"center",justifyContent:"center"}}>
+      <div onClick={e=>e.stopPropagation()} style={{background:"rgba(8,6,22,0.98)",border:"1px solid rgba(124,77,255,0.35)",
+        borderRadius:8,width:"min(480px,92vw)",maxHeight:"80vh",display:"flex",flexDirection:"column",overflow:"hidden"}}>
+        {/* Header */}
+        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",
+          padding:"12px 16px",borderBottom:"1px solid rgba(124,77,255,0.15)"}}>
+          <span style={{fontFamily:"var(--font-display)",fontSize:12,letterSpacing:".22em",textTransform:"uppercase",color:"var(--white)"}}>Inventar</span>
+          <button onClick={onClose} style={{fontFamily:"var(--font-mono)",fontSize:14,color:"rgba(160,140,255,0.6)",
+            background:"transparent",border:"none",cursor:"pointer",padding:"0 4px",lineHeight:1}}>×</button>
+        </div>
+        {/* Listenbereich */}
+        <div style={{flex:1,overflowY:"auto",padding:"10px 16px"}}>
+          {/* Spalten-Header */}
+          <div style={{display:"grid",gridTemplateColumns:"1fr 70px 20px",gap:"0 8px",marginBottom:4}}>
+            {['Gegenstand','Pfund',''].map((h,i)=>(
+              <span key={i} style={{fontFamily:"var(--font-mono)",fontSize:6.5,letterSpacing:".12em",
+                color:"rgba(124,77,255,0.35)",textTransform:"uppercase"}}>{h}</span>
+            ))}
+          </div>
+          {inv.length===0 && <div style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(124,77,255,0.28)",
+            letterSpacing:".1em",padding:"8px 0"}}>Noch keine Gegenstände.</div>}
+          {inv.map((item,i)=>(
+            <div key={i} style={{display:"grid",gridTemplateColumns:"1fr 70px 20px",gap:"0 8px",
+              alignItems:"center",padding:"3px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
+              <input value={item.name||''} onChange={e=>updItem(i,{name:e.target.value})}
+                placeholder="Name" style={{...iStyle,width:"100%"}} />
+              <input value={item.pfund||''} onChange={e=>updItem(i,{pfund:e.target.value})}
+                placeholder="0" inputMode="decimal" style={{...iStyle,width:"100%",textAlign:"right",
+                fontFamily:"var(--font-mono)",fontSize:10}} />
+              <button onClick={()=>delItem(i)} style={{color:"rgba(200,80,80,0.5)",background:"transparent",
+                border:"none",cursor:"pointer",fontSize:11,padding:0,lineHeight:1,textAlign:"center"}}>×</button>
+            </div>
+          ))}
+        </div>
+        {/* Footer */}
+        <div style={{borderTop:"1px solid rgba(124,77,255,0.15)",padding:"10px 16px"}}>
+          <div style={{display:"flex",gap:6,marginBottom:10,alignItems:"center"}}>
+            <select defaultValue="" onChange={e=>{
+              if (!e.target.value) return;
+              const [gi,ii] = e.target.value.split(':').map(Number);
+              const item = getAusruestungListe()[gi]?.items[ii];
+              if (item) upd({inventar:[...inv,{name:item.name, pfund:item.pfund==='—'?'':item.pfund}]});
+              e.target.value = '';
+            }} style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(124,77,255,0.65)",flex:1,
+              background:"rgba(7,4,18,0.9)",border:"1px solid rgba(124,77,255,0.25)",borderRadius:2,
+              padding:"3px 6px",cursor:"pointer",outline:"none"}}>
+              <option value="">Aus Ausrüstung wählen…</option>
+              {getAusruestungListe().map((g,gi)=>(
+                <optgroup key={gi} label={g.grp}>
+                  {g.items.map((item,ii)=>(
+                    <option key={ii} value={`${gi}:${ii}`}>
+                      {item.name}{item.pfund && item.pfund!=='—' ? ` (${item.pfund} Pfd.)` : ''}
+                    </option>
+                  ))}
+                </optgroup>
+              ))}
+            </select>
+            <button onClick={addItem} style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".1em",
+              color:"rgba(124,77,255,0.7)",background:"rgba(124,77,255,0.08)",border:"1px solid rgba(124,77,255,0.28)",
+              borderRadius:2,padding:"3px 10px",cursor:"pointer",flexShrink:0}}>+ Eigener</button>
+          </div>
+          {/* Gewicht & Traglast */}
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4}}>
+            <span style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(124,77,255,0.45)",letterSpacing:".1em",textTransform:"uppercase"}}>Getragen</span>
+            <span style={{fontFamily:"var(--font-mono)",fontSize:11,color:statusC,fontWeight:600}}>
+              {totalPfund.toFixed(1)} Pfund</span>
+          </div>
+          <div style={{height:4,background:"rgba(124,77,255,0.1)",borderRadius:2,marginBottom:6,overflow:"hidden"}}>
+            <div style={{height:"100%",borderRadius:2,background:statusC,
+              width:`${Math.min(100,(totalPfund/ueberlastet)*100).toFixed(1)}%`,transition:"width .3s"}} />
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:4}}>
+            {[['Belastet',belastet],['Sehr belastet',sehrBelastet],['Überlastet',ueberlastet]].map(([l,v])=>(
+              <div key={l} style={{textAlign:"center"}}>
+                <div style={{fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(200,190,240,0.6)"}}>{v}</div>
+                <div style={{fontFamily:"var(--font-mono)",fontSize:6,letterSpacing:".1em",color:"rgba(124,77,255,0.35)",textTransform:"uppercase"}}>{l}</div>
+              </div>
+            ))}
+          </div>
+          <div style={{textAlign:"center",marginTop:6,fontFamily:"var(--font-mono)",fontSize:7.5,color:statusC,letterSpacing:".12em"}}>{status}</div>
+        </div>
+      </div>
+    </div>,
+    document.body
+  );
+}
+
+function InventarCard({ char, upd, editing }) {
+  const [open, setOpen] = useSteckbrief(false);
+  const inv = char.inventar || [];
+  const totalPfund = inv.reduce((s,i)=>s+(parseFloat(i.pfund)||0),0);
+  const str = char.stats?.str ?? 10;
+  const mult = getGroesseMult(getRasseGroesse(char.race));
+  const ueberlastet  = Math.round(str * 15 * mult);
+  const sehrBelastet = Math.round(str * 10 * mult);
+  const belastet     = Math.round(str * 5  * mult);
+  let statusC = 'rgba(124,77,255,0.5)';
+  if (totalPfund > ueberlastet)       statusC = 'rgba(220,80,80,0.9)';
+  else if (totalPfund > sehrBelastet) statusC = 'rgba(220,160,60,0.9)';
+  else if (totalPfund > belastet)     statusC = 'rgba(220,160,60,0.75)';
+  return (
+    <Card style={{marginBottom:11}}>
+      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:inv.length?8:0}}>
+        <SecTitle label="Inventar" style={{marginBottom:0}} />
+        <button onClick={()=>setOpen(true)}
+          style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".1em",textTransform:"uppercase",
+            color:"rgba(124,77,255,0.7)",background:"rgba(124,77,255,0.08)",
+            border:"1px solid rgba(124,77,255,0.28)",borderRadius:2,padding:"3px 10px",cursor:"pointer"}}>
+          {inv.length ? `${inv.length} Items` : 'Öffnen'}
+        </button>
+      </div>
+      {inv.length > 0 && (
+        <div style={{display:"flex",alignItems:"center",gap:8}}>
+          <div style={{flex:1,height:3,background:"rgba(124,77,255,0.1)",borderRadius:2,overflow:"hidden"}}>
+            <div style={{height:"100%",background:statusC,borderRadius:2,
+              width:`${Math.min(100,(totalPfund/ueberlastet)*100).toFixed(1)}%`}} />
+          </div>
+          <span style={{fontFamily:"var(--font-mono)",fontSize:8.5,color:statusC,flexShrink:0}}>
+            {totalPfund.toFixed(1)} / {ueberlastet} Pfd.</span>
+        </div>
+      )}
+      {open && <InventarModal char={char} upd={upd} onClose={()=>setOpen(false)} />}
+    </Card>
+  );
+}
+
+/* ── HabeCard ─────────────────────────────── */
+function HabeCard({ char, upd, editing }) {
+  const habe = char.habe ?? 0;
+  const goldC = 'rgba(210,175,60,0.85)';
+  const goldDim = 'rgba(210,175,60,0.45)';
+  return (
+    <Card>
+      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:8}}>
+        <div style={{display:"flex",alignItems:"center",gap:7}}>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <circle cx="7" cy="7" r="6" stroke={goldDim} strokeWidth="1.2"/>
+            <circle cx="7" cy="7" r="4" stroke={goldC} strokeWidth="0.8" opacity="0.6"/>
+            <text x="7" y="10.5" textAnchor="middle" fontFamily="serif" fontSize="7" fill={goldC} opacity="0.9">H</text>
+          </svg>
+          <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".2em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase"}}>Habe</span>
+        </div>
+        {editing
+          ? <div style={{display:"flex",alignItems:"center",gap:5}}>
+              <input
+                type="number" min="0" value={habe}
+                onChange={e => upd({habe: Math.max(0, parseInt(e.target.value) || 0)})}
+                style={{fontFamily:"var(--font-mono)",fontSize:16,color:goldC,
+                  background:"transparent",border:"none",borderBottom:`1px solid ${goldDim}`,
+                  outline:"none",width:80,textAlign:"right",padding:"1px 4px"}}
+              />
+              <span style={{fontFamily:"var(--font-mono)",fontSize:8,color:goldDim,letterSpacing:".1em"}}>Hade</span>
+            </div>
+          : <div style={{display:"flex",alignItems:"baseline",gap:5}}>
+              <span style={{fontFamily:"var(--font-mono)",fontSize:18,color:goldC,lineHeight:1}}>{habe.toLocaleString("de-DE")}</span>
+              <span style={{fontFamily:"var(--font-mono)",fontSize:8,color:goldDim,letterSpacing:".1em"}}>Hade</span>
+            </div>
+        }
       </div>
     </Card>
   );
@@ -433,6 +1090,13 @@ function mergeSkills(char) {
     const found = (char.skills || []).find(s => s.name === def.name);
     return found ? { ...def, prof: found.prof } : { ...def };
   });
+}
+
+function calcPassiveWahrnehmung(char) {
+  const pb = calcProfBonus(char.level||1);
+  const wis = mod(char.stats?.wis??10);
+  const wahr = mergeSkills(char).find(s=>s.name==='Wahrnehmung');
+  return 10 + wis + (wahr ? skillBonus(wahr, char.stats, pb) : 0);
 }
 
 /* ── Editierbare Fertigkeiten ────────────────── */
@@ -496,6 +1160,78 @@ function SkillPills({ char }) {
       </div>
       <div style={{fontFamily:"var(--font-mono)",fontSize:7,color:"rgba(124,77,255,0.28)",marginTop:8,letterSpacing:".1em"}}>
         ○ Keine · ◆ Übung (+{char.profBonus}) · ◈ Expertise (+{char.profBonus * 2})
+      </div>
+    </Card>
+  );
+}
+
+/* ── Rettungswürfe ────────────────────────── */
+function mergeSaves(char) {
+  return SAVES_DEFAULT.map(def => {
+    const found = (char.saves || []).find(s => s.key === def.key);
+    return found ? { ...def, prof: found.prof } : { ...def };
+  });
+}
+
+function EditableSavingThrows({ char, upd }) {
+  const saves = mergeSaves(char);
+  function toggle(key) {
+    const updated = saves.map(s => s.key === key ? { ...s, prof: s.prof ? 0 : 1 } : s);
+    upd({ saves: updated });
+  }
+  const iclr = ['rgba(124,77,255,0.3)', 'rgba(124,77,255,0.75)'];
+  const bclr = ['rgba(200,190,240,0.5)', 'rgba(124,77,255,0.85)'];
+  return (
+    <Card style={{marginBottom:11}}>
+      <SecTitle label="Rettungswürfe" />
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"1px 10px"}}>
+        {saves.map(s => {
+          const bonus = mod(char.stats[s.key]) + (s.prof ? char.profBonus : 0);
+          return (
+            <div key={s.key} style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
+              <button onClick={() => toggle(s.key)} title={s.prof ? "Übung" : "Keine"}
+                style={{background:"transparent",border:"none",cursor:"pointer",color:iclr[s.prof],
+                  fontSize:12,padding:0,lineHeight:1,flexShrink:0,width:16,transition:"color .12s"}}>
+                {s.prof ? '◆' : '○'}
+              </button>
+              <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".07em",
+                color:"rgba(200,190,240,0.82)",flex:1,textTransform:"uppercase",
+                overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{s.label}</span>
+              <span style={{fontFamily:"var(--font-mono)",fontSize:9,color:bclr[s.prof],fontWeight:600,flexShrink:0}}>{fmtMod(bonus)}</span>
+            </div>
+          );
+        })}
+      </div>
+      <div style={{fontFamily:"var(--font-mono)",fontSize:7,color:"rgba(124,77,255,0.28)",marginTop:8,letterSpacing:".1em"}}>
+        ○ Keine · ◆ Übung (+{char.profBonus})
+      </div>
+    </Card>
+  );
+}
+
+function SavingThrows({ char }) {
+  const saves = mergeSaves(char);
+  const iclr = ['rgba(124,77,255,0.3)', 'rgba(124,77,255,0.75)'];
+  const bclr = ['rgba(200,190,240,0.5)', 'rgba(124,77,255,0.85)'];
+  return (
+    <Card style={{marginBottom:11}}>
+      <SecTitle label="Rettungswürfe" />
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"1px 10px"}}>
+        {saves.map(s => {
+          const bonus = mod(char.stats[s.key]) + (s.prof ? char.profBonus : 0);
+          return (
+            <div key={s.key} style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
+              <span style={{color:iclr[s.prof],fontSize:12,lineHeight:1,flexShrink:0,width:16}}>{s.prof ? '◆' : '○'}</span>
+              <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".07em",
+                color:"rgba(200,190,240,0.82)",flex:1,textTransform:"uppercase",
+                overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{s.label}</span>
+              <span style={{fontFamily:"var(--font-mono)",fontSize:9,color:bclr[s.prof],fontWeight:600,flexShrink:0}}>{fmtMod(bonus)}</span>
+            </div>
+          );
+        })}
+      </div>
+      <div style={{fontFamily:"var(--font-mono)",fontSize:7,color:"rgba(124,77,255,0.28)",marginTop:8,letterSpacing:".1em"}}>
+        ○ Keine · ◆ Übung (+{char.profBonus})
       </div>
     </Card>
   );
@@ -654,7 +1390,7 @@ function KontakteTablet({ char }) {
 }
 
 /* ── Wissenswertes-Karte ─────────────────── */
-function FbCard({ item, index }) {
+function FbCard({ item, index, onChange }) {
   const [hov, setHov] = useSteckbrief(false);
   const num = String(index+1).padStart(2,"0");
   return (
@@ -679,10 +1415,17 @@ function FbCard({ item, index }) {
         lineHeight:1.5 }}>{item.frage}</div>
       <div style={{ width:22, height:1, background:`rgba(124,77,255,${hov?0.45:0.22})`,
         marginBottom:12, transition:"background .25s" }} />
-      <p style={{ fontFamily:"var(--font-body)", fontSize:13, fontWeight:300,
-        lineHeight:1.78, fontStyle:"italic",
-        color:hov?"var(--white)":"var(--silver)",
-        transition:"color .25s ease" }}>{item.antwort}</p>
+      {onChange
+        ? <textarea value={item.antwort||''} onChange={e=>onChange({...item,antwort:e.target.value})}
+            style={{fontFamily:"var(--font-body)",fontSize:12.5,fontWeight:300,lineHeight:1.78,
+              fontStyle:"italic",color:"var(--silver)",width:"100%",background:"transparent",
+              border:"none",borderBottom:"1px solid rgba(124,77,255,0.2)",outline:"none",
+              resize:"vertical",padding:"2px 0",minHeight:60}} />
+        : <p style={{ fontFamily:"var(--font-body)", fontSize:13, fontWeight:300,
+            lineHeight:1.78, fontStyle:"italic",
+            color:hov?"var(--white)":"var(--silver)",
+            transition:"color .25s ease" }}>{item.antwort}</p>
+      }
     </div>
   );
 }
@@ -997,6 +1740,41 @@ function RassenmerkmaleCard({ char, upd }) {
   );
 }
 
+/* ── HintergrundmerkmaleCard ─────────────── */
+function HintergrundmerkmaleCard({ char }) {
+  const hintergruende = window.HINTERGRUENDE_DATA || [];
+  const bg = hintergruende.find(h => h.name === char.background);
+  if (!bg || !bg.merkmal) return null;
+
+  const textStyle = {fontFamily:"var(--font-body)",fontSize:10.5,fontWeight:300,color:"rgba(200,190,240,0.52)",lineHeight:1.65,margin:"3px 0 0"};
+  const titleStyle = {fontFamily:"var(--font-display)",fontSize:11.5,color:"rgba(200,190,240,0.9)",letterSpacing:".06em"};
+  const rowStyle = {borderBottom:"1px solid rgba(124,77,255,0.07)",paddingBottom:8,marginBottom:8};
+
+  return (
+    <Card>
+      <SecTitle label="Hintergrundmerkmal" />
+      <div style={{display:"flex",flexDirection:"column",gap:0}}>
+        <div style={bg.merkmalVariante ? rowStyle : {}}>
+          <span style={titleStyle}>{bg.merkmal.name}</span>
+          <p style={textStyle}>{bg.merkmal.beschreibung}</p>
+        </div>
+        {bg.merkmalVariante && (
+          <div>
+            <div style={{display:"flex",alignItems:"baseline",gap:7,marginBottom:3,flexWrap:"wrap"}}>
+              <span style={titleStyle}>{bg.merkmalVariante.name}</span>
+              <span style={{fontFamily:"var(--font-mono)",fontSize:7,color:"rgba(124,77,255,0.5)",border:"1px solid rgba(124,77,255,0.3)",padding:"0 4px",borderRadius:2}}>Variante</span>
+            </div>
+            {bg.merkmalVariante.bedingung && (
+              <p style={{...textStyle,fontStyle:"italic",color:"rgba(160,140,255,0.35)",marginBottom:4}}>{bg.merkmalVariante.bedingung}</p>
+            )}
+            <p style={textStyle}>{bg.merkmalVariante.beschreibung}</p>
+          </div>
+        )}
+      </div>
+    </Card>
+  );
+}
+
 /* ── KlassenmerkmaleCard ─────────────────── */
 function KlassenmerkmaleCard({ char }) {
   const klassen = window.KLASSEN_DATA?.klassen || [];
@@ -1065,6 +1843,20 @@ function ERow({ label, field, char, upd, bright }) {
   );
 }
 
+/* ── UnitERow (ERow with unit suffix) ───── */
+function UnitERow({ label, field, unit, char, upd }) {
+  return (
+    <div style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase",flex:"0 0 80px"}}>{label}</span>
+      <input value={char[field]??''} onChange={e=>upd({[field]:e.target.value})} inputMode="numeric"
+        style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:300,color:"var(--white)",
+          background:"transparent",border:"none",borderBottom:"1px solid rgba(124,77,255,0.25)",
+          padding:"1px 4px",flex:1,outline:"none",minWidth:0}} />
+      <span style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(124,77,255,0.4)",letterSpacing:".08em",flexShrink:0}}>{unit}</span>
+    </div>
+  );
+}
+
 /* ── EditableStatsGrid ───────────────────── */
 const STAT_KEYS = [
   {key:"str",label:"STÄRKE"},{key:"dex",label:"GESCHICK."},{key:"con",label:"KONST."},
@@ -1123,6 +1915,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
   const [char, setChar]     = useSteckbrief(() => entry ? charFromEntry(entry) : (charProp || {}));
   const [editing, setEditing] = useSteckbrief(false);
   const [zauber, setZauber] = useSteckbrief(() => entry?._char?.zauber || entry?.char_data?.zauber || []);
+  const [lightboxBild, setLightboxBild] = useSteckbrief(null);
   const [tweaks, setTweak]  = (window.useTweaks || (() => [STECKBRIEF_TWEAK_DEFAULTS, ()=>{}]))(STECKBRIEF_TWEAK_DEFAULTS);
   const charRef   = useSteckRef(char);   charRef.current   = char;
   const zauberRef = useSteckRef(zauber); zauberRef.current = zauber;
@@ -1154,7 +1947,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
   const ZauberSect = window.ZauberSection;
 
   return (
-    <div style={{minHeight:"100vh",paddingTop: hideNav ? 0 : "var(--nav-h)"}}>
+    <div style={{minHeight:"100vh"}}>
       {!hideNav && SiteNav && <SiteNav />}
 
       {TweaksPanel && (
@@ -1217,7 +2010,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
                     color:"var(--white)",textTransform:"uppercase",textShadow:"0 0 32px rgba(124,77,255,0.2)"}}>{char.name}</h1>
             }
             <div style={{display:"flex",gap:6,marginTop:8,flexWrap:"wrap"}}>
-              {[`${char.class} · ${char.subclass}`,`Stufe ${char.level}`,char.race,char.background,
+              {[(char.subclass && char.subclass !== '—' ? `${char.class} · ${char.subclass}` : char.class),`Stufe ${char.level}`,char.race,char.background,
                 `${char.division} · ${char.rank} ${["I","II","III","IV","V"][(char.rankLevel||1)-1]}`]
                 .map((t,i)=>(
                   <span key={i} style={{fontFamily:"var(--font-mono)",fontSize:8.5,padding:"2px 9px",
@@ -1242,7 +2035,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
           <Card>
             <SecTitle label="Identität" />
             {E ? <>
-              <SelectERow label="Volk"        field="race"       char={char} upd={upd} bright options={(window.RASSEN_DATA||[]).flatMap(r=>r.type==='group'?(r.subraces||[]).map(s=>s.name):[r.name]).sort((a,b)=>a.localeCompare(b,'de'))} />
+              <SelectERow label="Volk"        field="race"       char={char} upd={upd} bright options={(window.RASSEN_DATA||[]).flatMap(r=>r.type==='group'?(r.subraces||[]).map(s=>s.name):[r.name])} />
               <KlasseSelectRow char={char} upd={upd} />
               <SubklasseSelectRow char={char} upd={upd} />
               <SelectERow label="Hintergrund" field="background" char={char} upd={upd} options={window.ALLE_HINTERGRUENDE||[]} />
@@ -1265,8 +2058,8 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
               <BirthdayPickerRow char={char} upd={upd} />
               <IRow label="Sternzeichen" value={char.zodiac || '—'} bright />
               <ERow label="Alter"        field="age"      char={char} upd={upd} />
-              <ERow label="Größe"        field="height"   char={char} upd={upd} />
-              <ERow label="Gewicht"      field="weight"   char={char} upd={upd} />
+              <UnitERow label="Größe"   field="height" unit="cm"    char={char} upd={upd} />
+              <UnitERow label="Gewicht" field="weight" unit="Pfund" char={char} upd={upd} />
               <ERow label="Augen"        field="eyes"     char={char} upd={upd} />
               <ERow label="Haare"        field="hair"     char={char} upd={upd} />
               <ERow label="Haut"         field="skin"     char={char} upd={upd} />
@@ -1274,32 +2067,31 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
               <IRow label="Geburtstag"   value={char.birthday} />
               <IRow label="Sternzeichen" value={char.zodiac}   bright />
               <IRow label="Alter"        value={`${char.age} Jahre`} />
-              <IRow label="Größe"        value={char.height} />
-              <IRow label="Gewicht"      value={char.weight} />
+              <IRow label="Größe"   value={char.height && char.height !== '—' ? `${char.height} cm` : char.height} />
+              <IRow label="Gewicht" value={char.weight && char.weight !== '—' ? `${char.weight} Pfund` : char.weight} />
               <IRow label="Augen"        value={char.eyes} />
               <IRow label="Haare"        value={char.hair} />
               <IRow label="Haut"         value={char.skin} />
             </>}
           </Card>
+          {E ? <EditableLebensstilCard char={char} upd={upd} /> : <LebensstilCard char={char} />}
           {E ? <EditableDivisionRank char={char} upd={upd} /> : <DivisionRank char={char} />}
           {E ? <EditableDeityCard char={char} upd={upd} /> : <DeityCard char={char} />}
           {E ? <EditableCombatCompact char={char} upd={upd} /> : <CombatCompact char={char} />}
-          <Card style={{position:"relative"}}>
-            <Corners op={0.28} />
-            <SecTitle label="Über mich" />
-            {E
-              ? <textarea value={char.story||''} onChange={e=>upd({story:e.target.value})} style={{...taStyle,minHeight:120,fontStyle:"normal"}} />
-              : <p style={{fontFamily:"var(--font-body)",fontSize:13,fontWeight:300,color:"var(--silver)",lineHeight:1.9,textWrap:"pretty"}}>{char.story}</p>
-            }
-          </Card>
+          {E ? <EditableWaffenCard char={char} upd={upd} /> : <WaffenCard char={char} />}
+          {E ? <EditableUebungenCard char={char} upd={upd} /> : <UebungenCard char={char} />}
+          <InventarCard char={char} upd={upd} editing={E} />
+          <HabeCard char={char} upd={upd} editing={E} />
         </div>
 
         {/* MITTE */}
         <div style={{display:"flex",flexDirection:"column",gap:11}}>
           {E ? <EditableStatsGrid char={char} updStat={updStat} /> : <AttributeGrid char={char} />}
+          {E ? <EditableSavingThrows char={char} upd={upd} /> : <SavingThrows char={char} />}
           {E ? <EditableSkillPills char={char} upd={upd} /> : <SkillPills char={char} />}
           <KlassenmerkmaleCard char={char} />
           <RassenmerkmaleCard char={char} upd={E ? upd : null} />
+          <HintergrundmerkmaleCard char={char} />
           {tweaks.showCompanions && char.companions && char.companions.length > 0 && (
             <div>
               <div style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".28em",color:"rgba(124,77,255,0.45)",textTransform:"uppercase",marginBottom:8}}>Begleiter</div>
@@ -1320,7 +2112,8 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
                   onUploaded={url=>upd({bild:url})} bucket="karte-bilder"
                   pathPrefix={`charaktere/${entry.id}`} width="100%" height={310} />
               : char.bild
-                ? <img src={char.bild} style={{width:"100%",height:310,objectFit:"cover",objectPosition:"top",display:"block"}} alt="" />
+                ? <img src={char.bild} onClick={()=>setLightboxBild(char.bild)}
+                    style={{width:"100%",height:310,objectFit:"cover",objectPosition:"top",display:"block",cursor:"zoom-in"}} alt="" />
                 : <div style={{height:310,display:"flex",alignItems:"center",justifyContent:"center",
                     background:"linear-gradient(160deg,rgba(20,12,46,0.92),rgba(10,7,28,0.96))"}}>
                     <span style={{fontFamily:"var(--font-display)",fontSize:64,color:"rgba(124,77,255,0.2)"}}>{char.name?.[0]||'?'}</span>
@@ -1337,9 +2130,17 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
               : <p style={{fontFamily:"var(--font-body)",fontSize:12.5,fontWeight:300,color:"var(--silver)",lineHeight:1.88,textWrap:"pretty",fontStyle:"italic"}}>„{char.ersteTage}"</p>
             }
           </div>
+          <Card style={{position:"relative"}}>
+            <Corners op={0.28} />
+            <SecTitle label="Über mich" />
+            {E
+              ? <textarea value={char.story||''} onChange={e=>upd({story:e.target.value})} style={{...taStyle,minHeight:120,fontStyle:"normal"}} />
+              : <p style={{fontFamily:"var(--font-body)",fontSize:13,fontWeight:300,color:"var(--silver)",lineHeight:1.9,textWrap:"pretty"}}>{char.story}</p>
+            }
+          </Card>
           {canEdit && ZauberSect && tweaks.showZauber && (
             <Card>
-              <ZauberSect zauber={zauber} updZauber={updZauber} editing={E} />
+              <ZauberSect zauber={zauber} updZauber={updZauber} editing={E} charKlasse={char.class || ''} />
             </Card>
           )}
         </div>
@@ -1377,7 +2178,10 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
             </p>
           </div>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))",gap:12}}>
-            {char.freundebuch.map((item,i)=><FbCard key={i} item={item} index={i}/>)}
+            {char.freundebuch.map((item,i)=>(
+              <FbCard key={i} item={item} index={i}
+                onChange={E ? updated => upd({freundebuch:char.freundebuch.map((x,j)=>j===i?updated:x)}) : null} />
+            ))}
           </div>
         </div>
       )}
@@ -1387,14 +2191,44 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
         <span style={{fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(124,77,255,0.26)",letterSpacing:".1em"}}>Meruria — Steckbrief</span>
         <span style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(124,77,255,0.2)"}}>D&amp;D 5e · {char.race} {char.class} Stufe {char.level}</span>
       </div>
+
+      {/* ── Bild-Lightbox ── */}
+      {lightboxBild && ReactDOM.createPortal(
+        <div onClick={()=>setLightboxBild(null)} style={{
+          position:"fixed",inset:0,zIndex:99999,
+          background:"rgba(5,4,15,0.92)",backdropFilter:"blur(14px)",
+          display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",
+          cursor:"zoom-out",
+        }}>
+          <img src={lightboxBild} alt={char.name||""} onClick={e=>e.stopPropagation()} style={{
+            maxWidth:"90vw",maxHeight:"86vh",objectFit:"contain",
+            borderRadius:5,boxShadow:"0 0 80px rgba(124,77,255,0.3),0 0 0 1px rgba(124,77,255,0.2)",
+          }}/>
+          {char.name && (
+            <div style={{marginTop:16,fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".2em",
+              color:"rgba(200,190,240,0.5)",textTransform:"uppercase"}}>{char.name}</div>
+          )}
+          <button onClick={()=>setLightboxBild(null)} style={{
+            position:"absolute",top:20,right:24,background:"transparent",
+            border:"1px solid rgba(160,140,255,0.25)",color:"rgba(200,190,240,0.6)",
+            borderRadius:3,fontFamily:"var(--font-mono)",fontSize:16,lineHeight:1,
+            width:34,height:34,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",
+          }}>×</button>
+        </div>,
+        document.body
+      )}
     </div>
   );
 }
 
 Object.assign(window, {
-  SKILLS_DEFAULT, buildChar, charFromEntry, saveCharToDB,
+  SKILLS_DEFAULT, SAVES_DEFAULT, buildChar, charFromEntry, saveCharToDB,
   DivisionRank, DeityCard, CombatCompact, EditableCombatCompact, AttributeGrid,
-  SkillPills, PersonalitySection, QuestCard, CompanionCard, FbCard, KontakteTablet,
-  Divider, ERow, EditableStatsGrid, EditableSkillPills, EditablePersonality,
+  SkillPills, SavingThrows, EditableSavingThrows, PersonalitySection,
+  QuestCard, CompanionCard, FbCard, KontakteTablet,
+  Divider, ERow, UnitERow, EditableStatsGrid, EditableSkillPills, EditablePersonality,
+  WaffenCard, EditableWaffenCard,
+  UebungenCard, EditableUebungenCard, InventarCard, HabeCard,
+  LebensstilCard, EditableLebensstilCard,
   EditableDivisionRank, DeitySymbol, EditableDeityCard, SteckbriefView,
 });

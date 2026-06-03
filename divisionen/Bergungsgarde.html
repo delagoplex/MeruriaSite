@@ -442,8 +442,8 @@ function DivisionPage({
     stroke: "none"
   }), /*#__PURE__*/React.createElement("image", {
     href: division.logo,
-    x: "0",
-    y: "0",
+    x: division.logoOffset ? division.logoOffset.x : 0,
+    y: division.logoOffset ? division.logoOffset.y : 0,
     width: "220",
     height: "220",
     clipPath: "url(#divLogoClip)",

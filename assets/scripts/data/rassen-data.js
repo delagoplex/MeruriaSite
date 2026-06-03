@@ -417,7 +417,7 @@ window.RASSEN_DATA = [
     subtitle: 'Schattengetränkte Menschen · Wandler des Halblichts',
     tags: ['Humanoid','Mittelgroß','9 m Bewegung','Dunkelsicht','Neutral'],
     sicht: { weite:18, radius:120, dunkel:18, tiefensicht:true } },
-  { type:'race', id:'warforged',    name:'Warforged',    accent:'#7090a8', insigniaSrc: _insignia,
+  { type:'race', id:'warforged',    name:'Kriegsgeschmiedete',    accent:'#7090a8', insigniaSrc: _insignia,
     subtitle: 'Lebende Konstrukte · Krieger aus Stahl und Magie',
     tags: ['Humanoid','Mittelgroß','9 m Bewegung','Konstrukt','Neutral'],
     sicht: { weite:18, radius:120, dunkel:18, tiefensicht:true } },

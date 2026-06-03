@@ -159,6 +159,7 @@ window.DIVISIONS_DATA = [
     mitglieder: { gesamt: null, nsc: null, sc: null },
     accent: '#6ec6f0',
     palette: ['#0e2e4a', '#1a4a6e', '#6ec6f0'],
+    logoOffset: {x: -2, y: 23},
   },
   {
     id: 'friedenshueter',
@@ -375,6 +376,7 @@ window.DIVISIONS_DATA = [
     mitglieder: { gesamt: null, nsc: null, sc: null },
     accent: '#1aacb8',
     palette: ['#021418', '#031e22', '#1aacb8'],
+    logoOffset: {x: -2, y: 10},
   },
   {
     id: 'bergungsgarde',
@@ -429,5 +431,6 @@ window.DIVISIONS_DATA = [
     mitglieder: { gesamt: null, nsc: null, sc: null },
     accent: '#8b5e3c',
     palette: ['#140e02', '#221600', '#8b5e3c'],
+    logoOffset: {x: 33, y: -11},
   },
 ];

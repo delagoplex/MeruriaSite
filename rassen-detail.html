@@ -349,12 +349,24 @@ function Placeholder({ name }) {
 
 // ── NAME ROLLER ───────────────────────────────────────────
 function NameRoller({ section }) {
+  // Support both flat namen[] and multi-category tabellen[]
+  const pools = section.tabellen
+    ? section.tabellen.map(t => ({ label: t.name.replace(/\s*\(\d+W\d+\)$/, ''), namen: t.eintraege }))
+    : null;
+
+  const [katIdx,   setKatIdx]   = useState(0);
   const [result,   setResult]   = useState(null);
   const [roll,     setRoll]     = useState(null);
   const [rolling,  setRolling]  = useState(false);
   const [showList, setShowList] = useState(false);
   const [idx,      setIdx]      = useState(-1);
-  const names = section.namen || [];
+
+  const names = pools ? (pools[katIdx]?.namen || []) : (section.namen || []);
+
+  function selectKat(i) {
+    setKatIdx(i);
+    setResult(null); setRoll(null); setIdx(-1); setShowList(false);
+  }
 
   function rollDice() {
     if (rolling || !names.length) return;
@@ -374,6 +386,15 @@ function NameRoller({ section }) {
   return (
     <Section label="Namen" title={section.label}>
       {section.beschreibung && <p className="rd-body-text">{section.beschreibung}</p>}
+      {pools && (
+        <div className="rd-name-tabs">
+          {pools.map((p, i) => (
+            <button key={i} className={'rd-name-tab' + (i === katIdx ? ' active' : '')} onClick={() => selectKat(i)}>
+              {p.label}
+            </button>
+          ))}
+        </div>
+      )}
       <div style={{ marginTop:'20px', marginBottom:'8px' }}>
         <button className="rd-dice-btn" onClick={rollDice} style={{ marginBottom:'20px' }}>
           <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.5"
@@ -529,11 +550,11 @@ function VariantCards({ section }) {
           </div>
           <div className="rd-vc-feats">
             <div className="rd-vc-feat">
-              <div className="rd-vc-feat-name">Odemwaffe</div>
+              <div className="rd-vc-feat-name">{section.feat1Label || 'Odemwaffe'}</div>
               <div className="rd-vc-feat-text">{v.odemwaffe}</div>
             </div>
             <div className="rd-vc-feat">
-              <div className="rd-vc-feat-name">Drakonische Resistenz</div>
+              <div className="rd-vc-feat-name">{section.feat2Label || 'Drakonische Resistenz'}</div>
               <div className="rd-vc-feat-text">{v.resistenz}</div>
             </div>
           </div>

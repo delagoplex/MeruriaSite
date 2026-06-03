@@ -14,6 +14,10 @@
 <script src="assets/scripts/data/charaktererstellung-data.js"></script>
 <script src="assets/scripts/data/charaktererstellung-gottheiten-data.js"></script>
 <script src="assets/scripts/data/divisions-data.js"></script>
+<script src="assets/scripts/data/rassen-data.js"></script>
+<script src="assets/scripts/data/klassen-data.js"></script>
+<script src="assets/scripts/data/klassen-detail-data.js"></script>
+<script src="assets/scripts/data/hintergruende-data.js"></script>
 <script src="assets/scripts/data/npc-stats-data.js"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
@@ -29,6 +33,49 @@ const {
   useRef,
   useMemo
 } = React;
+
+// ── Hint-Builder: erweitert OPTION_HINTS aus den geladenen Datendateien ────
+(function buildOptionHints() {
+  const h = window.OPTION_HINTS || {};
+
+  // Rassen — direkte Namensübereinstimmung, da ALLE_RASSEN jetzt echte Namen verwendet
+  (window.RASSEN_DATA || []).forEach(function(r) {
+    if (r.subtitle) h[r.name] = r.subtitle;
+    (r.subraces || []).forEach(function(s) {
+      if (s.name && s.subtitle) h[s.name] = s.subtitle;
+    });
+  });
+
+  // Klassen
+  ((window.KLASSEN_DATA && window.KLASSEN_DATA.klassen) || []).forEach(function(k) {
+    if (k.subtitle) h[k.name] = k.subtitle;
+  });
+
+  // Unterklassen (erste Beschreibungszeile als Hint)
+  var kd = window.KLASSEN_DETAIL || {};
+  Object.values(kd).forEach(function(cls) {
+    (cls.unterklassen || []).forEach(function(uk) {
+      if (!uk.name || !uk.beschreibung) return;
+      var text = uk.beschreibung;
+      var dot = text.indexOf('.');
+      h[uk.name] = dot > 0 && dot < 120 ? text.slice(0, dot + 1) : text.slice(0, 100).trimEnd() + '…';
+    });
+  });
+
+  // Hintergründe (ein Namensunterschied: Adeliger → Adliger)
+  (window.HINTERGRUENDE_DATA || []).forEach(function(bg) {
+    if (!bg.kurzbeschreibung) return;
+    h[bg.name] = bg.kurzbeschreibung;
+    if (bg.name === 'Adeliger') h['Adliger'] = bg.kurzbeschreibung;
+  });
+
+  // Divisionen
+  (window.DIVISIONS_DATA || []).forEach(function(d) {
+    if (d.subtitle) h[d.name] = d.subtitle;
+  });
+
+  window.OPTION_HINTS = h;
+})();
 
 // ── HELPERS ────────────────────────────────────────────────────────────────
 const cut = (a, b) => a.filter(x => b.includes(x));
@@ -379,16 +426,32 @@ function TagPhase({
       textTransform: 'uppercase',
       marginBottom: 9
     }
-  }, "Schritt 1 \xB7 Tag-Auswahl"), /*#__PURE__*/React.createElement("h2", {
-    style: {
-      fontFamily: 'var(--font-d)',
-      fontSize: 'clamp(16px,3vw,26px)',
-      fontWeight: 300,
-      letterSpacing: '.18em',
-      color: '#f0eeff',
-      marginBottom: 11
-    }
-  }, "Was wei\xDFt du schon?"), /*#__PURE__*/React.createElement("p", {
+  }, "Schritt 1 \xB7 Tag-Auswahl"),
+  /*#__PURE__*/React.createElement("div", {style:{display:'flex',alignItems:'flex-start',justifyContent:'space-between',gap:16,flexWrap:'wrap',marginBottom:11}},
+    /*#__PURE__*/React.createElement("h2", {
+      style: {
+        fontFamily: 'var(--font-d)',
+        fontSize: 'clamp(16px,3vw,26px)',
+        fontWeight: 300,
+        letterSpacing: '.18em',
+        color: '#f0eeff',
+        margin: 0,
+      }
+    }, "Was wei\xDFt du schon?"),
+    /*#__PURE__*/React.createElement("button", {
+      onClick: onNext,
+      style: {
+        fontFamily: 'var(--font-m)', fontSize: '8px', letterSpacing: '.16em',
+        textTransform: 'uppercase', padding: '6px 14px', flexShrink: 0,
+        background: 'transparent', border: '1px solid rgba(160,140,255,.2)',
+        borderRadius: 3, cursor: 'pointer', color: 'rgba(160,140,255,.4)',
+        transition: 'all .18s', marginTop: 4,
+      },
+      onMouseEnter: e => { e.currentTarget.style.borderColor='rgba(124,77,255,.45)'; e.currentTarget.style.color='rgba(200,190,240,.75)'; },
+      onMouseLeave: e => { e.currentTarget.style.borderColor='rgba(160,140,255,.2)'; e.currentTarget.style.color='rgba(160,140,255,.4)'; },
+    }, "Direkt zum Quiz →")
+  ),
+  /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: 'var(--font-b)',
       fontWeight: 300,
@@ -419,7 +482,19 @@ function TagPhase({
     selected: tags.klasse,
     onSelect: v => setTag('klasse', v),
     hideOthers: true
-  }), /*#__PURE__*/React.createElement(CatBlock, {
+  }), (() => {
+    const meta = (window.KLASSEN_META || {})[tags.klasse];
+    if (!meta) return null;
+    const subs = ((window.KLASSEN_DETAIL || {})[meta.id]?.unterklassen || []).map(s => s.name || s);
+    if (!subs.length) return null;
+    const stufeHint = meta.subStufe > 1 ? ` (ab Stufe ${meta.subStufe})` : '';
+    return /*#__PURE__*/React.createElement(CatBlock, {
+      title: 'Unterklasse' + stufeHint,
+      items: subs,
+      selected: tags.subklasse,
+      onSelect: v => setTag('subklasse', v)
+    });
+  })(), /*#__PURE__*/React.createElement(CatBlock, {
     title: "Hintergrund",
     items: window.ALLE_HINTERGRUENDE,
     selected: tags.hintergrund,
@@ -462,6 +537,21 @@ function TagPhase({
     items: window.ALLE_DIVISIONEN,
     selected: tags.division,
     onSelect: v => setTag('division', v)
+  }), /*#__PURE__*/React.createElement(CatBlock, {
+    title: "Geschlecht",
+    items: window.ALLE_GESCHLECHTER || ['Männlich','Weiblich','Divers','Keine Angabe'],
+    selected: tags.geschlecht,
+    onSelect: v => setTag('geschlecht', v)
+  }), /*#__PURE__*/React.createElement(CatBlock, {
+    title: "Gesinnung",
+    items: window.ALLE_GESINNUNGEN || [],
+    selected: tags.gesinnung,
+    onSelect: v => setTag('gesinnung', v)
+  }), /*#__PURE__*/React.createElement(CatBlock, {
+    title: "Sternzeichen",
+    items: window.ALLE_STERNZEICHEN || [],
+    selected: tags.sternzeichen,
+    onSelect: v => setTag('sternzeichen', v)
   }), /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: 44,
@@ -509,11 +599,13 @@ function QuizPhase({
       return (possible[q.kat] || []).length > 1;
     });
   }, [quizAnswers, tags, possible, quizData]);
-  const total = useMemo(() => ((quizData || window.CHAR_QUIZ) || []).filter(q => {
+  const answered = quizAnswers.length;
+  const remaining = useMemo(() => ((quizData || window.CHAR_QUIZ) || []).filter(q => {
+    if (quizAnswers.some(a => a.qId === q.id)) return false;
     const tv = tags[q.kat];
     return (tv === null || tv === 'unbekannt') && (possible[q.kat] || []).length > 1;
-  }).length, [tags, possible, quizData]);
-  const answered = quizAnswers.length;
+  }).length, [quizAnswers, tags, possible, quizData]);
+  const total = answered + remaining;
   useEffect(() => {
     if (!currentQ) {
       const t = setTimeout(onFinish, 400);
@@ -609,6 +701,7 @@ function QuizPhase({
     lebensstil: 'Lebensstil',
     gottheit: 'Gottheit',
     samen: 'Same der Furcht',
+    werkzeuge: 'Werkzeugübungen',
     geschlecht: 'Geschlecht',
     status: 'Status',
     lebensphase: 'Lebensphase',
@@ -646,6 +739,19 @@ function OutputPhase({
   const [showNameModal, setShowNameModal] = useState(false);
   const [modalName, setModalName] = useState('');
   const [saving, setSaving] = useState(false);
+
+  // ── Manuelle Auswahl bei mehreren Treffern ────────────────────
+  const [finals, setFinals] = useState({});
+  const setFinal = (kat, val) => setFinals(p => ({...p, [kat]: val}));
+
+  // ── Detail-Felder (Erscheinung + Persönlichkeit) ──────────────
+  const [showDetails, setShowDetails] = useState(false);
+  const [details, setDetails] = useState({
+    alter: '', geburtsort: '', groesse: '', gewicht: '',
+    augen: '', haare: '', haut: '', geburtstag_doy: null,
+    geschichte: '', persoenlichkeit: '', ideal: '', bindung: '', lieblingsfarbe: '',
+  });
+  const setDet = (k, v) => setDetails(p => ({...p, [k]: v}));
 
   // Token
   const [tokenInput, setTokenInput] = useState('');
@@ -810,27 +916,42 @@ function OutputPhase({
     };
   };
   const werkzeuge = tags.werkzeuge instanceof Set && tags.werkzeuge.size > 0 ? [...tags.werkzeuge].join(', ') : tags.werkzeuge === 'unbekannt' ? '— (unbekannt)' : '—';
+
+  // Subklasse — alle Klassen, Empfehlung wenn Stufe > 1
+  const finalKlasse = getFinal('klasse');
+  const klassenMeta = (window.KLASSEN_META || {})[finalKlasse.val];
+  const subklassenListe = klassenMeta
+    ? ((window.KLASSEN_DETAIL || {})[klassenMeta.id]?.unterklassen || []).map(s => s.name || s)
+    : [];
+  const subklasseRow = subklassenListe.length > 0 ? (() => {
+    const chosen = tags.subklasse || finals['subklasse'] || null;
+    const isEmp = klassenMeta.subStufe > 1;
+    return {
+      lbl: isEmp ? `Unterklasse · Empfehlung` : 'Unterklasse',
+      lbl2: isEmp ? `Wahl ab Stufe ${klassenMeta.subStufe}` : null,
+      kat: 'subklasse',
+      val: chosen || (subklassenListe.length > 1
+        ? subklassenListe.slice(0,3).join(' / ') + (subklassenListe.length > 3 ? ` (+${subklassenListe.length-3})` : '')
+        : subklassenListe[0]),
+      src: chosen ? 'sel' : (isEmp ? 'emp' : 'multi'),
+      _opts: subklassenListe,
+    };
+  })() : null;
+
   const rows = [{
-    lbl: 'Rasse',
-    ...getFinal('rasse')
+    lbl: 'Rasse', kat: 'rasse', ...getFinal('rasse')
   }, {
-    lbl: 'Klasse',
-    ...getFinal('klasse')
+    lbl: 'Klasse',      kat: 'klasse',      ...getFinal('klasse')
+  }, ...(subklasseRow ? [subklasseRow] : []), {
+    lbl: 'Hintergrund', kat: 'hintergrund', ...getFinal('hintergrund')
   }, {
-    lbl: 'Hintergrund',
-    ...getFinal('hintergrund')
+    lbl: 'Division',    kat: 'division',    ...getFinal('division')
   }, {
-    lbl: 'Division',
-    ...getFinal('division')
+    lbl: 'Lebensstil',  kat: 'lebensstil',  ...getFinal('lebensstil')
   }, {
-    lbl: 'Lebensstil',
-    ...getFinal('lebensstil')
+    lbl: 'Same der Furcht', kat: 'samen',   ...getFinal('samen')
   }, {
-    lbl: 'Same der Furcht',
-    ...getFinal('samen')
-  }, {
-    lbl: 'Gottheit',
-    ...getFinal('gottheit')
+    lbl: 'Gottheit',    kat: 'gottheit',    ...getFinal('gottheit')
   }, {
     lbl: 'Zauberwirker',
     ...getZauberwirker()
@@ -848,7 +969,7 @@ function OutputPhase({
     const g = k => {
       const r = getFinal(k);
       if (r.src === 'none') return null;
-      if (r.src === 'multi') return (possible[k] || [])[0] || null;
+      if (r.src === 'multi') return finals[k] || (possible[k] || [])[0] || null;
       return r.val;
     };
     const divisionName = g('division');
@@ -874,12 +995,32 @@ function OutputPhase({
       deityDomain:godObj?.domain || '—',
       samen: g('samen'),
       stats: getFinalStats(),
-      alignment: null,
-      zodiac: null,
-      birthday: null,
-      lieblingsfarbe: null,
-      tier: null,
-      motto: null
+      subclass:       tags.subklasse || finals['subklasse'] || null,
+      lebensstil:     g('lebensstil') || null,
+      uebungen: {
+        ruestungen: [], waffen: [], fahrzeuge: [], sprachen: [],
+        werkzeuge: tags.werkzeuge instanceof Set ? [...tags.werkzeuge] : [],
+      },
+      // ── Persönlichkeit & Aussehen ───────────────────────────
+      alignment:      tags.gesinnung    || null,
+      zodiac:         tags.sternzeichen || null,
+      gender:         tags.geschlecht   || null,
+      geburtstag_doy: details.geburtstag_doy || null,
+      age:            details.alter      || null,
+      birthplace:     details.geburtsort || null,
+      height:         details.groesse    || null,
+      weight:         details.gewicht    || null,
+      eyes:           details.augen      || null,
+      hair:           details.haare      || null,
+      skin:           details.haut       || null,
+      story:          details.geschichte    || null,
+      ersteTage:      details.geschichte    || null,
+      personality:    details.persoenlichkeit || null,
+      ideals:         details.ideal      || null,
+      bonds:          details.bindung    || null,
+      lieblingsfarbe: details.lieblingsfarbe || null,
+      tier:  null,
+      motto: null,
     };
     setSaving(true);
     try {
@@ -978,24 +1119,59 @@ function OutputPhase({
     }
   }, rows.map(({
     lbl,
+    lbl2,
     val,
-    src
+    src,
+    kat,
+    _opts
   }) => /*#__PURE__*/React.createElement("div", {
     key: lbl,
-    className: "sh-row"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "sh-lbl"
-  }, lbl), /*#__PURE__*/React.createElement("div", {
-    className: `sh-val ${src === 'quiz' ? 'quiz-det' : src === 'multi' ? 'multi' : ''}`
-  }, val, src === 'quiz' && /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontFamily: 'var(--font-m)',
-      fontSize: '8px',
-      color: 'rgba(94,232,208,.4)',
-      marginLeft: 10,
-      letterSpacing: '.1em'
-    }
-  }, "\u21AF per Quiz"))))), /*#__PURE__*/React.createElement("div", {
+    className: `sh-row${(src === 'multi' || src === 'emp') && kat ? ' sh-row--pick' : ''}`
+  },
+    /*#__PURE__*/React.createElement("div", { style: { display: 'flex', alignItems: 'baseline', gap: 8 } },
+      /*#__PURE__*/React.createElement("div", { className: "sh-lbl" }, lbl),
+      lbl2 && /*#__PURE__*/React.createElement("span", {
+        style: { fontFamily: 'var(--font-m)', fontSize: '7px', letterSpacing: '.16em',
+          color: 'rgba(251,191,36,.55)', textTransform: 'uppercase' }
+      }, lbl2)
+    ),
+  (src === 'multi' || src === 'emp') && kat
+    ? /*#__PURE__*/React.createElement("div", {
+        style: { display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 4 }
+      }, (_opts || possible[kat] || []).map(opt => {
+        const sel = (finals[kat] || (src === 'emp' ? null : (possible[kat] || [])[0])) === opt;
+        const hint = (window.OPTION_HINTS || {})[opt] || null;
+        const isEmp = src === 'emp';
+        return /*#__PURE__*/React.createElement("button", {
+          key: opt,
+          onClick: () => setFinal(kat, opt),
+          style: {
+            padding: '7px 11px', borderRadius: 3, cursor: 'pointer', textAlign: 'left',
+            background: sel ? (isEmp ? 'rgba(251,191,36,.12)' : 'rgba(124,77,255,.22)') : 'rgba(5,4,15,.5)',
+            border: `1px solid ${sel ? (isEmp ? 'rgba(251,191,36,.5)' : 'rgba(124,77,255,.65)') : (isEmp ? 'rgba(251,191,36,.15)' : 'rgba(124,77,255,.2)')}`,
+            opacity: isEmp && !sel ? 0.75 : 1,
+            transition: 'all .15s',
+          }
+        },
+          /*#__PURE__*/React.createElement("div", {
+            style: { fontFamily: 'var(--font-m)', fontSize: '10px', letterSpacing: '.08em',
+              color: sel ? (isEmp ? 'rgba(253,230,138,.95)' : '#f0eeff') : 'rgba(200,190,240,.75)' }
+          }, opt),
+          hint && /*#__PURE__*/React.createElement("div", {
+            style: { fontFamily: 'var(--font-b)', fontSize: '9px', fontWeight: 300,
+              color: sel ? (isEmp ? 'rgba(253,230,138,.5)' : 'rgba(200,190,240,.55)') : 'rgba(160,140,255,.38)',
+              marginTop: 2, lineHeight: 1.4 }
+          }, hint)
+        );
+      }))
+    : /*#__PURE__*/React.createElement("div", {
+        className: `sh-val ${src === 'quiz' ? 'quiz-det' : ''}`
+      }, val, src === 'quiz' && /*#__PURE__*/React.createElement("span", {
+        style: {
+          fontFamily: 'var(--font-m)', fontSize: '8px',
+          color: 'rgba(94,232,208,.4)', marginLeft: 10, letterSpacing: '.1em'
+        }
+      }, "\u21AF per Quiz"))))), /*#__PURE__*/React.createElement("div", {
     style: {
       marginBottom: 44
     }
@@ -1374,7 +1550,77 @@ function OutputPhase({
       color: 'rgba(255,140,100,.7)',
       letterSpacing: '.1em'
     }
-  }, "Alle Werte m\xFCssen zwischen 1 und 30 liegen.")))), /*#__PURE__*/React.createElement("div", {
+  }, "Alle Werte m\xFCssen zwischen 1 und 30 liegen.")))),
+
+  // ── Charakterdetails (optional) ─────────────────────────────
+  /*#__PURE__*/React.createElement("div", {style:{marginBottom:28,border:'1px solid rgba(160,140,255,.12)',borderRadius:4,overflow:'hidden'}},
+    /*#__PURE__*/React.createElement("button", {type:"button", onClick:()=>setShowDetails(v=>!v),
+      style:{width:'100%',display:'flex',alignItems:'center',gap:10,padding:'13px 18px',
+        background:showDetails?'rgba(124,77,255,.06)':'transparent',border:'none',cursor:'pointer',textAlign:'left'}},
+      /*#__PURE__*/React.createElement("span", {style:{fontFamily:'var(--font-m)',fontSize:'9px',letterSpacing:'.26em',
+        textTransform:'uppercase',color:showDetails?'rgba(200,190,240,.8)':'rgba(160,140,255,.4)'}},
+        "Erscheinung & Pers\xF6nlichkeit"),
+      /*#__PURE__*/React.createElement("span", {style:{fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(124,77,255,.35)',marginLeft:'auto'}},
+        showDetails ? '▲ Einklappen' : '▼ Erweitern (optional)'
+      )
+    ),
+    showDetails && /*#__PURE__*/React.createElement("div", {style:{padding:'16px 18px 20px',borderTop:'1px solid rgba(160,140,255,.1)'}},
+      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.26em',
+        color:'rgba(124,77,255,.55)',textTransform:'uppercase',marginBottom:12}}, "Erscheinung"),
+      /*#__PURE__*/React.createElement("div", {style:{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(160px,1fr))',gap:10,marginBottom:18}},
+        [['alter','Alter'],['geburtsort','Geburtsort'],['groesse','Gr\xF6\xDFe'],
+         ['gewicht','Gewicht'],['augen','Augen'],['haare','Haare'],['haut','Haut / Schuppen']].map(([k,lbl])=>
+          /*#__PURE__*/React.createElement("div", {key:k, style:{display:'flex',flexDirection:'column',gap:4}},
+            /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.14em',
+              color:'rgba(160,140,255,.5)',textTransform:'uppercase'}}, lbl),
+            /*#__PURE__*/React.createElement("input", {value:details[k], onChange:e=>setDet(k,e.target.value),
+              style:{fontFamily:'var(--font-b)',fontSize:'12px',background:'rgba(5,4,15,.5)',
+                border:'1px solid rgba(160,140,255,.2)',borderRadius:3,color:'#f0eeff',
+                outline:'none',padding:'6px 9px'},
+              onFocus:e=>e.currentTarget.style.borderColor='rgba(124,77,255,.55)',
+              onBlur:e=>e.currentTarget.style.borderColor='rgba(160,140,255,.2)'})
+          )
+        )
+      ),
+      /*#__PURE__*/React.createElement("div", {style:{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(160px,1fr))',gap:10,marginBottom:18}},
+        /*#__PURE__*/React.createElement("div", {style:{display:'flex',flexDirection:'column',gap:4}},
+          /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.14em',
+            color:'rgba(160,140,255,.5)',textTransform:'uppercase'}}, "Geburtstag"),
+          /*#__PURE__*/React.createElement(BirthdayPicker, {doy:details.geburtstag_doy, onChange:v=>setDet('geburtstag_doy',v)})
+        ),
+        /*#__PURE__*/React.createElement("div", {style:{display:'flex',flexDirection:'column',gap:4}},
+          /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.14em',
+            color:'rgba(160,140,255,.5)',textTransform:'uppercase'}}, "Lieblingsfarbe"),
+          /*#__PURE__*/React.createElement("input", {value:details.lieblingsfarbe, onChange:e=>setDet('lieblingsfarbe',e.target.value),
+            style:{fontFamily:'var(--font-b)',fontSize:'12px',background:'rgba(5,4,15,.5)',
+              border:'1px solid rgba(160,140,255,.2)',borderRadius:3,color:'#f0eeff',
+              outline:'none',padding:'6px 9px'},
+            onFocus:e=>e.currentTarget.style.borderColor='rgba(124,77,255,.55)',
+            onBlur:e=>e.currentTarget.style.borderColor='rgba(160,140,255,.2)'})
+        )
+      ),
+      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.26em',
+        color:'rgba(124,77,255,.55)',textTransform:'uppercase',marginBottom:12}}, "Pers\xF6nlichkeit"),
+      /*#__PURE__*/React.createElement("div", {style:{display:'flex',flexDirection:'column',gap:10}},
+        [['geschichte','Geschichte / Erste Tage'],['persoenlichkeit','Pers\xF6nlichkeitsmerkmal'],
+         ['ideal','Ideal'],['bindung','Bindung']].map(([k,lbl])=>
+          /*#__PURE__*/React.createElement("div", {key:k, style:{display:'flex',flexDirection:'column',gap:4}},
+            /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.14em',
+              color:'rgba(160,140,255,.5)',textTransform:'uppercase'}}, lbl),
+            /*#__PURE__*/React.createElement("textarea", {value:details[k], onChange:e=>setDet(k,e.target.value),
+              rows:k==='geschichte'?4:2,
+              style:{fontFamily:'var(--font-b)',fontSize:'12px',background:'rgba(5,4,15,.5)',
+                border:'1px solid rgba(160,140,255,.2)',borderRadius:3,color:'#f0eeff',
+                outline:'none',padding:'7px 10px',resize:'vertical',lineHeight:1.65},
+              onFocus:e=>e.currentTarget.style.borderColor='rgba(124,77,255,.55)',
+              onBlur:e=>e.currentTarget.style.borderColor='rgba(160,140,255,.2)'})
+          )
+        )
+      )
+    )
+  ),
+
+  /*#__PURE__*/React.createElement("div", {
     style: {
       margin: '0 0 44px',
       padding: '20px 24px',
@@ -1642,6 +1888,76 @@ function OutputPhase({
   }, "Zum Steckbrief \u2192")))));
 }
 
+// ── BIRTHDAY PICKER ────────────────────────────────────────────────────────
+const MONTHS_M = [
+  {name:"Janvar",days:19},{name:"Fevorn",days:18},{name:"Mareth",days:19},
+  {name:"Aprel",days:19},{name:"Mairen",days:18},{name:"Junvar",days:19},
+  {name:"Juval",days:19},{name:"Auvar",days:19},{name:"Septhar",days:19},
+  {name:"Oktar",days:18},{name:"Novren",days:18},{name:"Derath",days:19},
+];
+const MS_M = MONTHS_M.reduce((a,m,i)=>{a.push(i===0?1:a[i-1]+MONTHS_M[i-1].days);return a;},[]);
+function doyText(doy) {
+  for (let i=MONTHS_M.length-1;i>=0;i--)
+    if (doy>=MS_M[i]) return `${doy-MS_M[i]+1}. ${MONTHS_M[i].name}`;
+  return '—';
+}
+function BirthdayPicker({ doy, onChange }) {
+  const initMo = () => { if (!doy) return 0; for (let i=MONTHS_M.length-1;i>=0;i--) if (doy>=MS_M[i]) return i; return 0; };
+  const [open, setOpen] = useState(false);
+  const [mo, setMo] = useState(initMo);
+  const ref = useRef(null);
+  useEffect(() => {
+    if (!open) return;
+    const h = e => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+    document.addEventListener('mousedown', h);
+    return () => document.removeEventListener('mousedown', h);
+  }, [open]);
+  function pick(mi, d) { onChange(MS_M[mi]+d-1); setOpen(false); }
+  const M = MONTHS_M[mo];
+  const selDay = doy && MS_M[mo]<=doy && doy<MS_M[mo]+M.days ? doy-MS_M[mo]+1 : null;
+  const btnSt = {
+    fontFamily:'var(--font-m)', fontSize:'11px', background:'rgba(5,4,15,.5)',
+    border:'1px solid rgba(160,140,255,.2)', borderRadius:3, color: doy ? '#f0eeff' : 'rgba(160,140,255,.4)',
+    outline:'none', padding:'6px 10px', cursor:'pointer', textAlign:'left', width:'100%'
+  };
+  return /*#__PURE__*/React.createElement("div", {ref, style:{position:'relative'}},
+    /*#__PURE__*/React.createElement("button", {type:"button", style:btnSt, onClick:()=>{if(!open){setMo(initMo());setOpen(true);}else setOpen(false);}},
+      doy ? doyText(doy) : 'Kein Datum', " ", /*#__PURE__*/React.createElement("span", {style:{opacity:.4,fontSize:10}}, "▾")
+    ),
+    open && /*#__PURE__*/React.createElement("div", {style:{
+      position:'absolute',top:'calc(100% + 3px)',left:0,zIndex:1500,
+      background:'rgba(11,8,28,.99)',border:'1px solid rgba(124,77,255,.4)',borderRadius:4,
+      boxShadow:'0 18px 48px rgba(0,0,0,.75)',width:'min(320px,90vw)',overflow:'hidden'
+    }},
+      /*#__PURE__*/React.createElement("div", {style:{display:'flex',flexWrap:'wrap',gap:2,padding:'7px 7px 5px',borderBottom:'1px solid rgba(124,77,255,.12)'}},
+        MONTHS_M.map((m,i)=>/*#__PURE__*/React.createElement("button", {key:i, type:"button", onClick:()=>setMo(i),
+          style:{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.1em',padding:'3px 6px',cursor:'pointer',
+            background:mo===i?'rgba(124,77,255,.28)':'transparent',
+            border:`1px solid ${mo===i?'rgba(124,77,255,.55)':'rgba(124,77,255,.12)'}`,
+            borderRadius:2,color:mo===i?'#f0eeff':'rgba(200,190,240,.45)'}},
+          m.name
+        ))
+      ),
+      /*#__PURE__*/React.createElement("div", {style:{display:'grid',gridTemplateColumns:'repeat(7,1fr)',gap:2,padding:'7px'}},
+        Array.from({length:M.days},(_,i)=>i+1).map(d=>/*#__PURE__*/React.createElement("button", {key:d, type:"button", onClick:()=>pick(mo,d),
+          style:{fontFamily:'var(--font-m)',fontSize:'11px',padding:'6px 2px',cursor:'pointer',textAlign:'center',
+            background:selDay===d?'rgba(124,77,255,.42)':'rgba(124,77,255,.05)',
+            border:`1px solid ${selDay===d?'rgba(124,77,255,.75)':'rgba(124,77,255,.12)'}`,
+            borderRadius:2,color:selDay===d?'#f0eeff':'rgba(200,190,240,.8)'}},
+          d
+        ))
+      ),
+      /*#__PURE__*/React.createElement("div", {style:{padding:'4px 7px 7px',borderTop:'1px solid rgba(124,77,255,.1)'}},
+        /*#__PURE__*/React.createElement("button", {type:"button", onClick:()=>{onChange(null);setOpen(false);},
+          style:{fontFamily:'var(--font-m)',fontSize:'7.5px',letterSpacing:'.18em',textTransform:'uppercase',
+            color:'rgba(200,190,240,.3)',background:'transparent',border:'none',cursor:'pointer',padding:'2px 0'}},
+          "Datum entfernen"
+        )
+      )
+    )
+  );
+}
+
 // ── NSC-ERSTELLUNG ─────────────────────────────────────────────────────────
 const NSC_DIVISIONS_LIST = ['Die Kuratoren','Die Sturmritter','Die Sentinels','Die Friedenshüter','Die Outfitters','Die Pathfinders','Die Quellensucher','Die Bergungsgarde','Keine'];
 const NSC_GESCHLECHT_LIST = ['Männlich','Weiblich','Divers','Keine Angabe'];
@@ -1759,6 +2075,54 @@ function NscTagPhase({ nscTags, setNscTag, onNext }) {
   );
 }
 
+// ── NSC Form Helpers ────────────────────────────────────────────────────────
+const nscFieldSt = {
+  fontFamily:'var(--font-b)', fontSize:'12px', background:'rgba(5,4,15,.5)',
+  border:'1px solid rgba(160,140,255,.2)', borderRadius:3, color:'#f0eeff',
+  outline:'none', padding:'6px 9px', width:'100%', boxSizing:'border-box',
+};
+const nscRmBt = {
+  background:'rgba(227,103,96,.08)', border:'1px solid rgba(227,103,96,.35)',
+  borderRadius:2, color:'rgba(227,103,96,.8)', cursor:'pointer', padding:'4px 8px',
+  fontFamily:'var(--font-m)', fontSize:10, flexShrink:0, lineHeight:1,
+};
+const nscAddBt = {
+  background:'rgba(124,77,255,.08)', border:'1px solid rgba(124,77,255,.35)',
+  borderRadius:2, color:'rgba(200,190,240,.7)', cursor:'pointer', padding:'4px 12px',
+  fontFamily:'var(--font-m)', fontSize:'8.5px', letterSpacing:'.18em', textTransform:'uppercase',
+  marginTop:6, display:'inline-block',
+};
+function NscField(label, children) {
+  return /*#__PURE__*/React.createElement("div", {key:label, style:{marginBottom:10}},
+    /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.16em',
+      color:'rgba(160,140,255,.55)',textTransform:'uppercase',display:'block',marginBottom:3}}, label),
+    children
+  );
+}
+function NscSektion(title, children) {
+  return /*#__PURE__*/React.createElement(NscSektionComp, {key:title, title, children});
+}
+function NscSektionComp({ title, children }) {
+  const [open, setOpen] = useState(false);
+  return /*#__PURE__*/React.createElement("div", {style:{marginBottom:5,borderRadius:3,
+    border:`1px solid ${open?'rgba(124,77,255,.28)':'rgba(124,77,255,.1)'}`}},
+    /*#__PURE__*/React.createElement("button", {type:"button", onClick:()=>setOpen(o=>!o),
+      style:{width:'100%',padding:'11px 14px',display:'flex',alignItems:'center',gap:10,
+        background:open?'rgba(124,77,255,.07)':'transparent',border:'none',borderRadius:'2px',
+        cursor:'pointer',textAlign:'left'}},
+      /*#__PURE__*/React.createElement("span", {style:{fontFamily:'var(--font-m)',fontSize:'9px',letterSpacing:'.26em',
+        textTransform:'uppercase',flexShrink:0,
+        color:open?'#c9b8ff':'rgba(160,140,255,.38)'}}, title),
+      /*#__PURE__*/React.createElement("div", {style:{flex:1}}),
+      /*#__PURE__*/React.createElement("span", {style:{fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(124,77,255,.45)',flexShrink:0}},
+        open?'▲':'▼')
+    ),
+    open && /*#__PURE__*/React.createElement("div", {style:{padding:'14px 14px 18px',borderTop:'1px solid rgba(124,77,255,.12)'}},
+      children
+    )
+  );
+}
+
 function NscOutputPhase({ nscTags, nscPossible }) {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -1766,6 +2130,26 @@ function NscOutputPhase({ nscTags, nscPossible }) {
 
   // Bild — always individually settable
   const [bildUrl, setBildUrl] = useState('');
+
+  // ── Zusatz-Felder ─────────────────────────────────────────────
+  const [extra, setExtra] = useState({
+    titel: '', alter: '', geburtstag_doy: null, wohnort: '',
+    rang: '', organisation: '', kapsel: '', habe: 0,
+    unvergesslich: '', eigenschaften: '', talente: '', makel: '',
+    motivationen: [], geheimnisse: [],
+    kontakte: { familie: [], freunde: [], rivalen: [] },
+  });
+  const setEx = (k, v) => setExtra(p => ({...p, [k]: v}));
+  const addMotiv = () => setEx('motivationen', [...extra.motivationen, '']);
+  const rmMotiv  = i => setEx('motivationen', extra.motivationen.filter((_,j)=>j!==i));
+  const setMotiv = (i,v) => setEx('motivationen', extra.motivationen.map((m,j)=>j===i?v:m));
+  const addGeh = () => setEx('geheimnisse', [...extra.geheimnisse, '']);
+  const rmGeh  = i => setEx('geheimnisse', extra.geheimnisse.filter((_,j)=>j!==i));
+  const setGeh = (i,v) => setEx('geheimnisse', extra.geheimnisse.map((g,j)=>j===i?v:g));
+  const addK  = sub => setEx('kontakte', {...extra.kontakte, [sub]: [...(extra.kontakte[sub]||[]), {name:'',rolle:''}]});
+  const rmK   = (sub,i) => setEx('kontakte', {...extra.kontakte, [sub]: (extra.kontakte[sub]||[]).filter((_,j)=>j!==i)});
+  const setK  = (sub,i,field,v) => setEx('kontakte', {...extra.kontakte,
+    [sub]: (extra.kontakte[sub]||[]).map((e,j)=>j===i?{...e,[field]:v}:e)});
 
   // Spielwerte / Steckbrief
   const [statsMode, setStatsMode] = useState('leer'); // 'leer' | 'manuell' | 'monster'
@@ -1853,17 +2237,36 @@ function NscOutputPhase({ nscTags, nscPossible }) {
     const statusVal = g('status');
     try {
       const { error } = await window._sb.from('nscs').insert({
-        name: nscTags.name.trim(),
-        rasse: g('rasse'),
-        geschlecht: g('geschlecht'),
-        status: statusVal ? [statusVal] : [],
-        division: g('division'),
-        lebensphase: g('lebensphase'),
-        gottheit: g('gottheit'),
-        beruf: nscTags.beruf.trim() || null,
-        bild: bildUrl.trim() || null,
-        steckbrief: buildSteckbrief(),
-        visible: false,
+        name:        nscTags.name.trim(),
+        titel:       extra.titel.trim()         || null,
+        rasse:       g('rasse'),
+        geschlecht:  g('geschlecht'),
+        alter_jahre: extra.alter ? parseInt(extra.alter)||null : null,
+        geburtstag_doy: extra.geburtstag_doy    || null,
+        lebensphase: g('lebensphase')            || extra.lebensphase || null,
+        beruf:       nscTags.beruf.trim()        || null,
+        division:    g('division'),
+        rang:        extra.rang.trim()           || null,
+        organisation:extra.organisation.trim()  || null,
+        kapsel:      extra.kapsel.trim()         || null,
+        wohnort:     extra.wohnort.trim()        || null,
+        gottheit:    g('gottheit'),
+        habe:        parseInt(extra.habe)||0,
+        status:      statusVal ? [statusVal] : [],
+        unvergesslich: extra.unvergesslich.trim() || null,
+        eigenschaften: extra.eigenschaften.split('\n').map(s=>s.trim()).filter(Boolean),
+        talente:       extra.talente.split('\n').map(s=>s.trim()).filter(Boolean),
+        makel:         extra.makel.trim()        || null,
+        motivationen:  extra.motivationen.filter(s=>s.trim()),
+        geheimnisse:   extra.geheimnisse.filter(s=>s.trim()),
+        kontakte: {
+          familie:  (extra.kontakte.familie||[]).filter(e=>e.name.trim()).map(e=>({name:e.name.trim(),rolle:e.rolle.trim(),verstorben:false})),
+          freunde:  (extra.kontakte.freunde||[]).filter(e=>e.name.trim()).map(e=>({name:e.name.trim(),rolle:e.rolle.trim(),verstorben:false})),
+          rivalen:  (extra.kontakte.rivalen||[]).filter(e=>e.name.trim()).map(e=>({name:e.name.trim(),rolle:e.rolle.trim(),verstorben:false})),
+        },
+        bild:        bildUrl.trim()              || null,
+        steckbrief:  buildSteckbrief(),
+        visible:     false,
       });
       if (error) { setSaveError(error.message); setSaving(false); return; }
       setSaved(true);
@@ -1890,7 +2293,7 @@ function NscOutputPhase({ nscTags, nscPossible }) {
     /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-m)',fontSize:'9px',letterSpacing:'.3em',color:'rgba(94,232,208,.7)',textTransform:'uppercase'}}, "NSC gespeichert"),
     /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-d)',fontSize:'22px',fontWeight:300,letterSpacing:'.2em',color:'#f0eeff'}}, "„", nscTags.name, "“ wurde angelegt."),
     /*#__PURE__*/React.createElement("div", {style:{display:'flex',gap:12,marginTop:8}},
-      /*#__PURE__*/React.createElement("a", {href:'NSC.html', style:{...btnBase,color:'rgba(160,140,255,.75)',background:'rgba(124,77,255,.1)',border:'1px solid rgba(124,77,255,.35)',padding:'10px 20px',textDecoration:'none'}}, "→ Zum NSC-Register"),
+      /*#__PURE__*/React.createElement("a", {href:'NSC-Verwaltung.html', style:{...btnBase,color:'rgba(160,140,255,.75)',background:'rgba(124,77,255,.1)',border:'1px solid rgba(124,77,255,.35)',padding:'10px 20px',textDecoration:'none'}}, "→ Zum NSC-Register"),
       /*#__PURE__*/React.createElement("button", {onClick:()=>window.location.reload(), style:{...btnBase,color:'rgba(160,140,255,.55)',background:'transparent',border:'1px solid rgba(160,140,255,.2)',padding:'10px 20px'}}, "+ Weiteren NSC anlegen")
     )
   );
@@ -2009,6 +2412,63 @@ function NscOutputPhase({ nscTags, nscPossible }) {
         )
       )
     )),
+
+    // ── Identität (Zusatz) ────────────────────────────────────────────────
+    NscSektion("Identit\xE4t \xB7 Details", [
+      NscField("Titel", /*#__PURE__*/React.createElement("input", {value:extra.titel, onChange:e=>setEx('titel',e.target.value), style:nscFieldSt, placeholder:"z.B. Stadtkapitän, Ältester…"})),
+      NscField("Alter (Jahre)", /*#__PURE__*/React.createElement("input", {type:"number",value:extra.alter, onChange:e=>setEx('alter',e.target.value), style:{...nscFieldSt,width:90}})),
+      NscField("Geburtstag", /*#__PURE__*/React.createElement(BirthdayPicker, {doy:extra.geburtstag_doy, onChange:v=>setEx('geburtstag_doy',v)})),
+      NscField("Wohnort", /*#__PURE__*/React.createElement("input", {value:extra.wohnort, onChange:e=>setEx('wohnort',e.target.value), style:nscFieldSt, placeholder:"Stadt, Viertel, Adresse…"})),
+      NscField("Rang", /*#__PURE__*/React.createElement("input", {value:extra.rang, onChange:e=>setEx('rang',e.target.value), style:nscFieldSt, placeholder:"z.B. Leutnant, Meister…"})),
+      NscField("Organisation", /*#__PURE__*/React.createElement("input", {value:extra.organisation, onChange:e=>setEx('organisation',e.target.value), style:nscFieldSt, placeholder:"Gilde, Kult, Gruppe…"})),
+      NscField("Kapsel", /*#__PURE__*/React.createElement("input", {value:extra.kapsel, onChange:e=>setEx('kapsel',e.target.value), style:nscFieldSt, placeholder:"Kapsel-Nummer…"})),
+      NscField("Habe (Hade)", /*#__PURE__*/React.createElement("input", {type:"number",min:"0",value:extra.habe, onChange:e=>setEx('habe',Math.max(0,parseInt(e.target.value)||0)), style:{...nscFieldSt,width:110}})),
+    ]),
+
+    // ── Erscheinung & Persönlichkeit ──────────────────────────────────────
+    NscSektion("Erscheinung & Pers\xF6nlichkeit", [
+      NscField("Unvergessliches Merkmal", /*#__PURE__*/React.createElement("textarea", {value:extra.unvergesslich, onChange:e=>setEx('unvergesslich',e.target.value), rows:2, style:{...nscFieldSt,resize:'vertical',lineHeight:1.65}})),
+      NscField("Eigenschaften (eine pro Zeile)", /*#__PURE__*/React.createElement("textarea", {value:extra.eigenschaften, onChange:e=>setEx('eigenschaften',e.target.value), rows:3, style:{...nscFieldSt,resize:'vertical',lineHeight:1.65}})),
+      NscField("Talente (eines pro Zeile)", /*#__PURE__*/React.createElement("textarea", {value:extra.talente, onChange:e=>setEx('talente',e.target.value), rows:2, style:{...nscFieldSt,resize:'vertical',lineHeight:1.65}})),
+      NscField("Makel", /*#__PURE__*/React.createElement("textarea", {value:extra.makel, onChange:e=>setEx('makel',e.target.value), rows:2, style:{...nscFieldSt,resize:'vertical',lineHeight:1.65}})),
+    ]),
+
+    // ── Motivationen ─────────────────────────────────────────────────────
+    NscSektion("Motivationen", [
+      ...extra.motivationen.map((m,i)=>/*#__PURE__*/React.createElement("div", {key:i, style:{display:'flex',gap:6,marginBottom:6}},
+        /*#__PURE__*/React.createElement("input", {value:m, onChange:e=>setMotiv(i,e.target.value), style:{...nscFieldSt,flex:1}, placeholder:"Motivation…"}),
+        /*#__PURE__*/React.createElement("button", {onClick:()=>rmMotiv(i), style:nscRmBt}, "\xD7")
+      )),
+      /*#__PURE__*/React.createElement("button", {onClick:addMotiv, style:nscAddBt}, "+ Motivation")
+    ]),
+
+    // ── Kontakte ─────────────────────────────────────────────────────────
+    NscSektion("Kontakte", [
+      ...(['familie','freunde','rivalen'].flatMap(sub=>[
+        /*#__PURE__*/React.createElement("div", {key:'hd-'+sub, style:{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.22em',color:'rgba(160,140,255,.5)',textTransform:'uppercase',marginBottom:6,marginTop:sub==='familie'?0:12}},
+          sub==='familie'?'Familie':sub==='freunde'?'Freunde':'Rivalen'
+        ),
+        ...(extra.kontakte[sub]||[]).map((p,i)=>/*#__PURE__*/React.createElement("div", {key:sub+i, style:{display:'grid',gridTemplateColumns:'1fr 1fr auto',gap:6,marginBottom:6}},
+          /*#__PURE__*/React.createElement("input", {value:p.name, onChange:e=>setK(sub,i,'name',e.target.value), style:nscFieldSt, placeholder:"Name"}),
+          /*#__PURE__*/React.createElement("input", {value:p.rolle, onChange:e=>setK(sub,i,'rolle',e.target.value), style:nscFieldSt, placeholder:"Rolle"}),
+          /*#__PURE__*/React.createElement("button", {onClick:()=>rmK(sub,i), style:nscRmBt}, "\xD7")
+        )),
+        /*#__PURE__*/React.createElement("button", {key:'add-'+sub, onClick:()=>addK(sub), style:{...nscAddBt,marginBottom:4}},
+          `+ ${sub==='familie'?'Familienmitglied':sub==='freunde'?'Freund/in':'Rivale'} hinzuf\xFCgen`
+        ),
+      ]))
+    ]),
+
+    // ── Geheimnisse ───────────────────────────────────────────────────────
+    NscSektion("Geheimnisse", [
+      ...extra.geheimnisse.map((g,i)=>/*#__PURE__*/React.createElement("div", {key:i, style:{display:'flex',gap:6,marginBottom:6,alignItems:'flex-start'}},
+        /*#__PURE__*/React.createElement("textarea", {value:g, onChange:e=>setGeh(i,e.target.value), rows:2,
+          style:{...nscFieldSt,flex:1,resize:'vertical',lineHeight:1.65}}),
+        /*#__PURE__*/React.createElement("button", {onClick:()=>rmGeh(i), style:nscRmBt}, "\xD7")
+      )),
+      /*#__PURE__*/React.createElement("button", {onClick:addGeh, style:nscAddBt}, "+ Geheimnis")
+    ]),
+
     // ── Speichern ─────────────────────────────────────────────────────────
     /*#__PURE__*/React.createElement("div", {style:{padding:'20px 24px',border:'1px solid rgba(124,77,255,.35)',borderRadius:4,background:'rgba(124,77,255,.04)',display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:16}},
       /*#__PURE__*/React.createElement("div", null,
@@ -2040,13 +2500,15 @@ function App() {
 
   // ── SC state ──
   const [tags, setTagsState] = useState({
-    rasse: null, klasse: null, hintergrund: null, zauberwirker: null,
-    samen: null, lebensstil: null, gottheit: null, werkzeuge: new Set(), division: null
+    rasse: null, klasse: null, subklasse: null, hintergrund: null, zauberwirker: null,
+    samen: null, lebensstil: null, gottheit: null, werkzeuge: null, division: null,
+    geschlecht: null, gesinnung: null, sternzeichen: null
   });
   const [possible, setPossible] = useState({
     rasse: window.ALLE_RASSEN || [], klasse: window.ALLE_KLASSEN || [],
     hintergrund: window.ALLE_HINTERGRUENDE || [], division: window.ALLE_DIVISIONEN || [],
-    lebensstil: window.ALLE_LEBENSSTILE || [], gottheit: [], samen: window.ALLE_SAMEN || []
+    lebensstil: window.ALLE_LEBENSSTILE || [], gottheit: [], samen: window.ALLE_SAMEN || [],
+    werkzeuge: window.WERKZEUGE_LIST || [],
   });
   const [quizAnswers, setQuizAnswers] = useState([]);
 
@@ -2073,7 +2535,10 @@ function App() {
     }
   }, []);
 
-  const setTag = (k, v) => setTagsState(p => ({ ...p, [k]:v }));
+  const setTag = (k, v) => setTagsState(p => ({
+    ...p, [k]:v,
+    ...(k === 'klasse' ? { subklasse: null } : {}),
+  }));
   const setWerkzeug = s => setTagsState(p => ({ ...p, werkzeuge:s }));
   const setNscTag = (k, v) => setNscTagsState(p => ({ ...p, [k]:v }));
 
@@ -2095,7 +2560,8 @@ function App() {
   const resetPossible = () => setPossible({
     rasse: window.ALLE_RASSEN||[], klasse: window.ALLE_KLASSEN||[],
     hintergrund: window.ALLE_HINTERGRUENDE||[], division: window.ALLE_DIVISIONEN||[],
-    lebensstil: window.ALLE_LEBENSSTILE||[], gottheit: possible.gottheit, samen: window.ALLE_SAMEN||[]
+    lebensstil: window.ALLE_LEBENSSTILE||[], gottheit: possible.gottheit, samen: window.ALLE_SAMEN||[],
+    werkzeuge: window.WERKZEUGE_LIST||[],
   });
   const resetNscPossible = () => setNscPossible({
     rasse: window.ALLE_RASSEN||[], geschlecht: NSC_GESCHLECHT_LIST,
