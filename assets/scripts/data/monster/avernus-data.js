@@ -183,7 +183,7 @@ window.MONSTER_DATA_AVERNUS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "Sylvanisch"],
+    sprachen: ["Gemeinsprache", "Sylvanisch"],
     umgebung: ["Feenwildnis", "Wald"],
     bild: "assets/images/monster/avernus/tollkappe.png",
     beschreibung: [

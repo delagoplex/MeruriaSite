@@ -390,7 +390,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 11,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt", "Gewässer"],
     bild: "drakkenheim/aufgedunsener_elender.png",
     beschreibung: [
@@ -650,7 +650,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt"],
     sinne: ["Dunkelsicht 36 m (auch in magischer Dunkelheit)"],
     passiveWahrnehmung: 15,
-    sprachen: ["Gemein sowie eine weitere Sprache"],
+    sprachen: ["Gemeinsprache sowie eine weitere Sprache"],
     umgebung: ["Ruinen", "Stadt"],
     bild: "drakkenheim/bluthexe.png",
     beschreibung: [
@@ -1010,7 +1010,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Blindsicht 3 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 17,
-    sprachen: ["Gemein", "Drakonisch", "Telepathie 9 m"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Telepathie 9 m"],
     umgebung: ["Andere Ebenen"],
     bild: "drakkenheim/delerium_drachennestling.png",
     beschreibung: [
@@ -1059,7 +1059,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Blindsicht 9 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 20,
-    sprachen: ["Gemein", "Drakonisch", "Telepathie 18 m"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Telepathie 18 m"],
     umgebung: ["Andere Ebenen"],
     bild: "drakkenheim/junger_delerium_drache.png",
     beschreibung: [
@@ -1107,7 +1107,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Blindsicht 9 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 25,
-    sprachen: ["Gemein", "Drakonisch", "Telepathie 36 m"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen"],
     bild: "drakkenheim/ausgewachsener_delerium_drache.png",
     beschreibung: [
@@ -1159,7 +1159,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 30,
-    sprachen: ["Gemein", "Drakonisch", "Telepathie 1,6 km"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Telepathie 1,6 km"],
     umgebung: ["Andere Ebenen"],
     bild: "drakkenheim/uralter_delerium_drache.png",
     beschreibung: [
@@ -1213,7 +1213,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 10,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt"],
     bild: "drakkenheim/delerium-elender.png",
     beschreibung: [
@@ -1543,7 +1543,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein", "eine weitere Sprache"],
+    sprachen: ["Gemeinsprache", "eine weitere Sprache"],
     umgebung: ["Ruinen", "Stadt"],
     bild: "drakkenheim/dunkler_beichtvater.png",
     beschreibung: [
@@ -1623,7 +1623,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: ["Geblendet", "Vergiftet"],
     sinne: ["Blindsicht 9 m"],
     passiveWahrnehmung: 11,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt", "Wald"],
     bild: "drakkenheim/dunkler_gewaechs_taumler.png",
     beschreibung: [
@@ -2030,7 +2030,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: [],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein", "Riesisch"],
+    sprachen: ["Gemeinsprache", "Riesisch"],
     umgebung: ["Wald"],
     bild: "drakkenheim/eichentroll.png",
     beschreibung: [
@@ -2183,7 +2183,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 10,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Gewässer", "Unterirdisch"],
     bild: "drakkenheim/elender-krieger_der_tiefe.png",
     beschreibung: [
@@ -2490,7 +2490,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: [],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "eine weitere Sprache"],
+    sprachen: ["Gemeinsprache", "eine weitere Sprache"],
     umgebung: ["Stadt", "Ruinen"],
     bild: "drakkenheim/feuerhueter.png",
     beschreibung: [
@@ -2598,7 +2598,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 15,
-    sprachen: ["Gemein sowie zwei weitere Sprachen"],
+    sprachen: ["Gemeinsprache sowie zwei weitere Sprachen"],
     umgebung: ["Ruinen", "Stadt"],
     bild: "drakkenheim/finsterer_kustos.png",
     beschreibung: [
@@ -2727,7 +2727,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 18,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt"],
     bild: "drakkenheim/garmyr-berserker.png",
     beschreibung: [
@@ -2774,7 +2774,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 15,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt"],
     bild: "drakkenheim/garmyr-krieger.png",
     beschreibung: [
@@ -2860,7 +2860,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 19,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt"],
     bild: "drakkenheim/garmyr-spuerhund.png",
     beschreibung: [
@@ -2909,7 +2909,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 17,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt"],
     bild: "drakkenheim/garmyr-thaumaturg.png",
     beschreibung: [
@@ -3005,7 +3005,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: ["Geblendet", "Taub", "Vergiftet", "Liegend"],
     sinne: ["Blindsicht 18 m", "Zittersinn 90 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Wald"],
     bild: "drakkenheim/gefraessige_flora.png",
     beschreibung: [
@@ -3051,7 +3051,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: ["Vergiftet"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 10,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
     bild: "drakkenheim/gefraessiger_ghul.png",
     beschreibung: [
@@ -3102,7 +3102,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: ["Vergiftet"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
     bild: "drakkenheim/ghulfuerst.png",
     beschreibung: [
@@ -3166,7 +3166,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: ["Vergiftet"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
     bild: "drakkenheim/ghulpriester.png",
     beschreibung: [
@@ -3287,7 +3287,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Wahre Sicht 9 m"],
     passiveWahrnehmung: 10,
-    sprachen: ["Gemein", "Tiefensprache"],
+    sprachen: ["Gemeinsprache", "Tiefensprache"],
     umgebung: ["Ruinen", "Stadt"],
     bild: "drakkenheim/greuelelender.png",
     beschreibung: [
@@ -3475,7 +3475,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: ["Brennend", "Erschöpfung", "Gefroren", "Gepackt", "Gelähmt", "Versteinert", "Vergiftet", "Liegend", "Festgehalten", "Schockiert", "Betäubt"],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt"],
     bild: "drakkenheim/greuelverhaengnis.png",
     beschreibung: [
@@ -3763,7 +3763,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: ["Gepackt", "Liegend", "Festgehalten"],
     sinne: ["Blindsicht 6 m"],
     passiveWahrnehmung: 10,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt"],
     bild: "drakkenheim/hautkriecher.png",
     beschreibung: [
@@ -3851,7 +3851,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 24,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt"],
     bild: "drakkenheim/herr_des_festmahls.png",
     beschreibung: [
@@ -3903,7 +3903,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 10,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
     bild: "drakkenheim/hexenmeister_des_rattengottes.png",
     beschreibung: [
@@ -4259,7 +4259,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 18,
-    sprachen: ["Abyssal", "Gemein"],
+    sprachen: ["Abyssal", "Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt"],
     bild: "drakkenheim/kakophonische_chimaere.png",
     beschreibung: [
@@ -4396,7 +4396,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: [],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Stadt", "Ruinen"],
     bild: "drakkenheim/kapuzenlaterne-apotheker.png",
     beschreibung: [
@@ -4439,7 +4439,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: [],
     passiveWahrnehmung: 10,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Stadt", "Ruinen"],
     bild: "drakkenheim/kapuzenlaterne-fallensteller.png",
     beschreibung: [
@@ -4483,7 +4483,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: [],
     passiveWahrnehmung: 15,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Stadt", "Ruinen"],
     bild: "drakkenheim/kapuzenlaterne-spaeher.png",
     beschreibung: [
@@ -4525,7 +4525,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: [],
     passiveWahrnehmung: 16,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Stadt", "Ruinen"],
     bild: "drakkenheim/kapuzenlaterne-veteran.png",
     beschreibung: [
@@ -4569,7 +4569,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m (auch in magischer Dunkelheit)"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt"],
     bild: "drakkenheim/karmesinritter.png",
     beschreibung: [
@@ -4714,7 +4714,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: ["Geblendet", "Bezaubert", "Taub", "Erschöpfung", "Verängstigt", "Liegend"],
     sinne: ["Blindsicht 18 m"],
     passiveWahrnehmung: 17,
-    sprachen: ["Gemein", "Telepathie 9 m"],
+    sprachen: ["Gemeinsprache", "Telepathie 9 m"],
     umgebung: ["Ruinen", "Unterirdisch"],
     bild: "drakkenheim/koerperlose_psyche.png",
     beschreibung: [
@@ -4951,7 +4951,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 10,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt"],
     bild: "drakkenheim/lauernder_elender.png",
     beschreibung: [
@@ -5103,7 +5103,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: [],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Andere Ebenen"],
     bild: "drakkenheim/leerraumpirat_herold.png",
     beschreibung: [
@@ -5167,7 +5167,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: [],
     passiveWahrnehmung: 18,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Andere Ebenen"],
     bild: "drakkenheim/leerraumpirat_kapitaen.png",
     beschreibung: [
@@ -5235,7 +5235,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: [],
     passiveWahrnehmung: 10,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Andere Ebenen"],
     bild: "drakkenheim/leerraumpirat_knirps.png",
     beschreibung: [
@@ -5298,7 +5298,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: [],
     passiveWahrnehmung: 11,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Andere Ebenen"],
     bild: "drakkenheim/leerraumpirat_quartiermeister.png",
     beschreibung: [
@@ -5593,7 +5593,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: ["Erschöpfung", "Versteinert", "Vergiftet"],
     sinne: ["Wahres Sehen 36 m"],
     passiveWahrnehmung: 16,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt"],
     bild: "drakkenheim/mauer_gargoyle.png",
     beschreibung: [
@@ -5637,7 +5637,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Blindsicht 9 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 25,
-    sprachen: ["Gemein", "Drakonisch", "Telepathie 36 m"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Telepathie 36 m"],
     umgebung: ["Ruinen", "Stadt"],
     bild: "drakkenheim/minazorond.png",
     beschreibung: [
@@ -5689,7 +5689,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 17,
-    sprachen: ["Gemein sowie zwei weitere Sprachen"],
+    sprachen: ["Gemeinsprache sowie zwei weitere Sprachen"],
     umgebung: ["Ruinen", "Stadt"],
     bild: "drakkenheim/nachtklinge.png",
     beschreibung: [
@@ -5770,7 +5770,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 18,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
     bild: "drakkenheim/orakel_des_rattengottes.png",
     beschreibung: [
@@ -6016,7 +6016,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein (wiederholt nur Sätze, die es zuvor gehört hat)"],
+    sprachen: ["Gemeinsprache (wiederholt nur Sätze, die es zuvor gehört hat)"],
     umgebung: ["Stadt", "Ruinen"],
     bild: "drakkenheim/psychophant.png",
     beschreibung: [
@@ -6179,7 +6179,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 21,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt"],
     bild: "drakkenheim/ratten-kronprinz.png",
     beschreibung: [
@@ -6226,7 +6226,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
     bild: "drakkenheim/rattenkoenig.png",
     beschreibung: [
@@ -6267,7 +6267,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 16,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt"],
     bild: "drakkenheim/rattenprinz.png",
     beschreibung: [
@@ -6315,7 +6315,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 15,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
     bild: "drakkenheim/rattling-alchemist.png",
     beschreibung: [
@@ -6363,7 +6363,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
     bild: "drakkenheim/rattling-bauwaechter.png",
     beschreibung: [
@@ -6407,7 +6407,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 10,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
     bild: "drakkenheim/rattling-krieger.png",
     beschreibung: [
@@ -6451,7 +6451,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
     bild: "drakkenheim/rattling-pathogenist.png",
     beschreibung: [
@@ -6496,7 +6496,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
     bild: "drakkenheim/rattling-rinnenschuetze.png",
     beschreibung: [
@@ -6689,7 +6689,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 10,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
     bild: "drakkenheim/riesiges_rattling.png",
     beschreibung: [
@@ -6734,7 +6734,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein", "Telepathie 18 m"],
+    sprachen: ["Gemeinsprache", "Telepathie 18 m"],
     umgebung: ["Gewässer", "Unterirdisch"],
     bild: "drakkenheim/ritter_der_tiefe.png",
     beschreibung: [
@@ -6831,7 +6831,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 16,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt"],
     bild: "drakkenheim/karmesin_graefin.png",
     beschreibung: [
@@ -7095,7 +7095,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 15,
-    sprachen: ["Gemein", "Telepathie 18 m"],
+    sprachen: ["Gemeinsprache", "Telepathie 18 m"],
     umgebung: ["Gewässer", "Unterirdisch"],
     bild: "drakkenheim/sirene_der_tiefe.png",
     beschreibung: [
@@ -7141,7 +7141,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt"],
     sinne: [],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein", "eine weitere Sprache"],
+    sprachen: ["Gemeinsprache", "eine weitere Sprache"],
     umgebung: ["Stadt", "Ruinen"],
     bild: "drakkenheim/silberorden_kavalier.png",
     beschreibung: [
@@ -7204,7 +7204,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: [],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Stadt", "Ruinen"],
     bild: "drakkenheim/silberorden_knappe.png",
     beschreibung: [
@@ -7267,7 +7267,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt"],
     sinne: [],
     passiveWahrnehmung: 11,
-    sprachen: ["Gemein", "eine weitere Sprache"],
+    sprachen: ["Gemeinsprache", "eine weitere Sprache"],
     umgebung: ["Stadt", "Ruinen"],
     bild: "drakkenheim/silberorden_paladin.png",
     beschreibung: [
@@ -7331,7 +7331,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: [],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Stadt", "Ruinen"],
     bild: "drakkenheim/silberorden_rekrut.png",
     beschreibung: [
@@ -7751,7 +7751,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 16,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt"],
     bild: "drakkenheim/sturmdunst_harpyie_jaegerin.png",
     beschreibung: [
@@ -7795,7 +7795,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt"],
     bild: "drakkenheim/sturmdunst_harpyie_walkuere.png",
     beschreibung: [
@@ -7841,7 +7841,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 16,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt"],
     bild: "drakkenheim/sturmdunst_harpyie_weise.png",
     beschreibung: [
@@ -8038,7 +8038,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 16,
-    sprachen: ["Gemein", "Riesisch"],
+    sprachen: ["Gemeinsprache", "Riesisch"],
     umgebung: ["Sumpf", "Wald"],
     bild: "drakkenheim/trollhexe.png",
     beschreibung: [
@@ -8107,7 +8107,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: ["Bezaubert", "Erschöpfung", "Verängstigt", "Gelähmt", "Versteinert", "Vergiftet"],
     sinne: ["Blindsicht 9 m", "Wahres Sehen 36 m"],
     passiveWahrnehmung: 17,
-    sprachen: ["Gemein", "Drakonisch"],
+    sprachen: ["Gemeinsprache", "Drakonisch"],
     umgebung: ["Ruinen", "Stadt"],
     bild: "drakkenheim/turmdrache.png",
     beschreibung: [
@@ -8267,7 +8267,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: ["Gelähmt", "Versteinert", "Vergiftet"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 11,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt"],
     bild: "drakkenheim/unschuldiger_ernter.png",
     beschreibung: [
@@ -8890,7 +8890,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 17,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Wald", "Ruinen", "Stadt"],
     bild: "drakkenheim/zelot_der_morrigan.png",
     beschreibung: [

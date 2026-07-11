@@ -70,7 +70,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Angulotl", "Gemein"],
+    sprachen: ["Angulotl", "Gemeinsprache"],
     umgebung: ["Sumpf", "Dschungel", "Küste"],
     bild: "flee-mortals/angulotl-ganove.png",
     beschreibung: [
@@ -530,7 +530,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: ["Bezaubert", "Erschöpfung", "Verängstigt"],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein", "Zwergisch", "Elfisch", "Riesisch", "Urzeitlich"],
+    sprachen: ["Gemeinsprache", "Zwergisch", "Elfisch", "Riesisch", "Urzeitlich"],
     umgebung: ["Andere Ebenen", "Stadt"],
     bild: "flee-mortals/blutkraft.png",
     beschreibung: [
@@ -619,7 +619,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: [],
     sinne: ["Blindsicht 18 m (blind darüber hinaus in wahrer Form)"],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein", "Riesisch (kann in wahrer Form nicht sprechen)"],
+    sprachen: ["Gemeinsprache", "Riesisch (kann in wahrer Form nicht sprechen)"],
     umgebung: ["Grasland", "Wald"],
     bild: "flee-mortals/bredbeddle.png",
     beschreibung: [
@@ -760,7 +760,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: ["Bezaubert", "Benommen", "Verängstigt", "Gelähmt", "Versteinert", "Betäubt"],
     sinne: ["Blindsicht 36 m", "Wahres Sehen 18 m"],
     passiveWahrnehmung: 18,
-    sprachen: ["Gemein", "Drakonisch"],
+    sprachen: ["Gemeinsprache", "Drakonisch"],
     umgebung: ["Arktis", "Gebirge", "Ruinen"],
     bild: "flee-mortals/durixaviinox.png",
     beschreibung: [
@@ -815,7 +815,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: [],
     sinne: [],
     passiveWahrnehmung: 12,
-    sprachen: ["Drakisch", "Gemein"],
+    sprachen: ["Drakisch", "Gemeinsprache"],
     umgebung: ["Sumpf", "Dschungel", "Gewässer"],
     bild: "flee-mortals/echsenmensch-jaeger.png",
     beschreibung: ["Der Echsenmensch-Jäger ist ein Gefolgsmann (Retainer), der einem erfahrenen Helden dient. Er kämpft mit einem Großschwert und nutzt seine amphibischen Fähigkeiten, um in Sümpfen, Dschungeln und Küstengebieten zu navigieren. Mit wachsender Erfahrung seines Mentors entwickelt er sich zu einem vielseitigen Nahkämpfer."],
@@ -856,7 +856,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: [],
     sinne: [],
     passiveWahrnehmung: 10,
-    sprachen: ["Drakisch", "Gemein"],
+    sprachen: ["Drakisch", "Gemeinsprache"],
     umgebung: ["Sumpf", "Dschungel", "Küste"],
     bild: "flee-mortals/echsenmensch-schuppenzahn.png",
     beschreibung: ["Schuppenzähne sind die muskelbepackten Nahkämpfer der Echsenmensch-Kriegerbanden. Mit ihrem peitschenden Schwanz fixieren sie Feinde und zermahlen sie anschließend mit ihrem kräftigen Biss."],
@@ -897,7 +897,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: [],
     sinne: [],
     passiveWahrnehmung: 13,
-    sprachen: ["Drakisch", "Gemein"],
+    sprachen: ["Drakisch", "Gemeinsprache"],
     umgebung: ["Sumpf", "Dschungel", "Küste", "Wald"],
     bild: "flee-mortals/echsenmensch-terrorsaurier.png",
     beschreibung: ["Terrorsaurier sind die furchterregenden fliegenden Jäger der Echsenmensch-Stämme. Sie überwältigen Feinde mit Geschwindigkeit und Überraschung — mal stoßen sie aus der Luft herab, mal tauchen sie aus dem Wasser auf. Ihre schuppige Haut wird beim Fliegen noch widerstandsfähiger, und ihr Blasrohr liefert lähmende Gifte aus sicherer Entfernung."],
@@ -987,7 +987,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: ["Erschöpfung", "Verängstigt", "Versteinert", "Vergiftet"],
     sinne: ["Dunkelsicht 18 m", "Zittersinn 9 m"],
     passiveWahrnehmung: 15,
-    sprachen: ["Gemein", "Ignisch", "Terranisch"],
+    sprachen: ["Gemeinsprache", "Ignisch", "Terranisch"],
     umgebung: ["Gebirge", "Höhle", "Andere Ebenen"],
     bild: "flee-mortals/eisenkraft.png",
     beschreibung: [
@@ -1073,7 +1073,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: ["Versteinert", "Vergiftet"],
     sinne: ["Dunkelsicht 18 m", "Zittersinn 9 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein", "Terranisch"],
+    sprachen: ["Gemeinsprache", "Terranisch"],
     umgebung: ["Gebirge", "Höhle", "Unterirdisch", "Andere Ebenen"],
     bild: "flee-mortals/erdkraft.png",
     beschreibung: [
@@ -1199,7 +1199,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: ["Unsichtbar", "Vergiftet"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein", "Ignisch"],
+    sprachen: ["Gemeinsprache", "Ignisch"],
     umgebung: ["Gebirge", "Höhle", "Andere Ebenen"],
     bild: "flee-mortals/feuerkern.png",
     beschreibung: [
@@ -1334,7 +1334,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: ["Bezaubert", "Benommen", "Verängstigt", "Gelähmt", "Versteinert", "Betäubt"],
     sinne: ["Blindsicht 36 m", "Wahres Sehen 18 m"],
     passiveWahrnehmung: 20,
-    sprachen: ["Gemein", "Drakonisch"],
+    sprachen: ["Gemeinsprache", "Drakonisch"],
     umgebung: ["Gebirge", "Höhle", "Andere Ebenen"],
     bild: "flee-mortals/forzaantirilys.png",
     beschreibung: [
@@ -1428,7 +1428,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: ["Unsichtbar", "Vergiftet"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 16,
-    sprachen: ["Aquanisch", "Gemein", "sowie die Sprachen einer durch Vereiste Spiegelung gespiegelten Kreatur"],
+    sprachen: ["Aquanisch", "Gemeinsprache", "sowie die Sprachen einer durch Vereiste Spiegelung gespiegelten Kreatur"],
     umgebung: ["Arktis", "Gebirge", "Andere Ebenen"],
     bild: "flee-mortals/frostkern.png",
     beschreibung: [
@@ -1678,7 +1678,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 10,
-    sprachen: ["Gemein", "Goblinisch"],
+    sprachen: ["Gemeinsprache", "Goblinisch"],
     umgebung: ["Höhle", "Wald", "Ruinen", "Hügel"],
     bild: "flee-mortals/goblin_assasssine.png",
     beschreibung: [
@@ -1722,7 +1722,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 10,
-    sprachen: ["Gemein", "Goblinisch"],
+    sprachen: ["Gemeinsprache", "Goblinisch"],
     umgebung: ["Höhle", "Wald", "Ruinen", "Hügel"],
     bild: "flee-mortals/goblin_fluchspucker.png",
     beschreibung: [
@@ -1766,7 +1766,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 10,
-    sprachen: ["Gemein", "Goblinisch"],
+    sprachen: ["Gemeinsprache", "Goblinisch"],
     umgebung: ["Höhle", "Wald", "Ruinen", "Hügel"],
     bild: "flee-mortals/goblin_rueckenspalter.png",
     beschreibung: [
@@ -1809,7 +1809,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "Goblinisch"],
+    sprachen: ["Gemeinsprache", "Goblinisch"],
     umgebung: ["Höhle", "Wald", "Ruinen", "Hügel"],
     bild: "flee-mortals/goblin_scharfschuetze.png",
     beschreibung: [
@@ -1999,7 +1999,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein", "Goblinisch", "Infernal"],
+    sprachen: ["Gemeinsprache", "Goblinisch", "Infernal"],
     umgebung: ["Andere Ebenen", "Ruinen", "Stadt"],
     bild: "flee-mortals/hobgoblin_kriegsmagier.png",
     beschreibung: [
@@ -2042,7 +2042,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: ["Gepackt (nur Rauchform)", "Festgesetzt (nur Rauchform)"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 11,
-    sprachen: ["Gemein", "Goblinisch", "Infernal"],
+    sprachen: ["Gemeinsprache", "Goblinisch", "Infernal"],
     umgebung: ["Andere Ebenen", "Ruinen", "Stadt"],
     bild: "flee-mortals/hobgoblin_rauchbinder.png",
     beschreibung: [
@@ -2086,7 +2086,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein", "Goblinisch", "Infernal"],
+    sprachen: ["Gemeinsprache", "Goblinisch", "Infernal"],
     umgebung: ["Andere Ebenen", "Ruinen", "Stadt"],
     bild: "flee-mortals/hobgoblin_soldat.png",
     beschreibung: [
@@ -2128,7 +2128,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein", "Goblinisch", "Infernal"],
+    sprachen: ["Gemeinsprache", "Goblinisch", "Infernal"],
     umgebung: ["Andere Ebenen", "Ruinen", "Stadt"],
     bild: "flee-mortals/hobgoblin_todeshauptmann.png",
     beschreibung: [
@@ -2297,7 +2297,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt"],
     sinne: ["Blindsicht 36 m"],
     passiveWahrnehmung: 15,
-    sprachen: ["Gemein", "Sylvanisch"],
+    sprachen: ["Gemeinsprache", "Sylvanisch"],
     umgebung: ["Wald", "Feenwildnis"],
     bild: "flee-mortals/knochenstalker.png",
     beschreibung: [
@@ -2344,7 +2344,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "Drakonisch"],
+    sprachen: ["Gemeinsprache", "Drakonisch"],
     umgebung: ["Höhle", "Unterirdisch", "Hügel", "Ruinen"],
     bild: "flee-mortals/kobold_venator.png",
     beschreibung: [
@@ -2617,7 +2617,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: ["Bezaubert", "Benommen", "Erschöpft", "Verängstigt", "Gepackt", "Gelähmt", "Versteinert", "Vergiftet", "Liegend", "Fixiert", "Betäubt"],
     sinne: ["Wahres Sehen 18 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Abyssal", "Gemein", "Infernal"],
+    sprachen: ["Abyssal", "Gemeinsprache", "Infernal"],
     umgebung: ["Ruinen"],
     bild: "flee-mortals/lakuna.png",
     beschreibung: [
@@ -2970,7 +2970,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: [],
     sinne: [],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Stadt", "Ruinen", "Hügel"],
     bild: "flee-mortals/menschlicher_halunke.png",
     beschreibung: [
@@ -3014,7 +3014,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: [],
     sinne: [],
     passiveWahrnehmung: 10,
-    sprachen: ["Gemein", "plus zwei weitere Sprachen"],
+    sprachen: ["Gemeinsprache", "plus zwei weitere Sprachen"],
     umgebung: ["Stadt", "Ruinen"],
     bild: "flee-mortals/menschlicher_lehrmagier.png",
     beschreibung: [
@@ -3056,7 +3056,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: [],
     sinne: [],
     passiveWahrnehmung: 11,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Wald", "Hügel", "Küste", "Grasland"],
     bild: "flee-mortals/menschlicher_raeuber.png",
     beschreibung: [
@@ -3099,7 +3099,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: [],
     sinne: [],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein", "plus zwei weitere Sprachen"],
+    sprachen: ["Gemeinsprache", "plus zwei weitere Sprachen"],
     umgebung: ["Stadt", "Ruinen", "Gebirge"],
     bild: "flee-mortals/menschlicher_sturmmagier.png",
     beschreibung: [
@@ -3143,7 +3143,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: [],
     sinne: [],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein", "plus eine weitere Sprache"],
+    sprachen: ["Gemeinsprache", "plus eine weitere Sprache"],
     umgebung: ["Stadt", "Ruinen", "Andere Ebenen"],
     bild: "flee-mortals/menschlicher_todeskultist.png",
     beschreibung: [
@@ -3274,7 +3274,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: ["Bezaubert", "Flankiert", "Verängstigt", "Liegend"],
     sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 20,
-    sprachen: ["Gemein", "Tiefensprache", "Untergemein", "Telepathie 36 m"],
+    sprachen: ["Gemeinsprache", "Tiefensprache", "Untergemein", "Telepathie 36 m"],
     umgebung: ["Ozean", "Unterirdisch", "Ruinen", "Gewässer"],
     bild: "flee-mortals/olothek.png",
     beschreibung: [
@@ -3329,7 +3329,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: ["Bezaubert", "Flankiert", "Verängstigt", "Liegend"],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 16,
-    sprachen: ["Gemein", "Tiefensprache", "Untergemein"],
+    sprachen: ["Gemeinsprache", "Tiefensprache", "Untergemein"],
     umgebung: ["Unterirdisch", "Ruinen"],
     bild: "flee-mortals/ueberbewusstsein.png",
     beschreibung: [
@@ -3381,7 +3381,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: ["Bezaubert", "Benommen", "Verängstigt", "Gelähmt", "Versteinert", "Vergiftet", "Betäubt"],
     sinne: ["Blindsicht 36 m", "Wahres Sehen 18 m"],
     passiveWahrnehmung: 20,
-    sprachen: ["Gemein", "Drakonisch"],
+    sprachen: ["Gemeinsprache", "Drakonisch"],
     umgebung: ["Höhle", "Ozean", "Andere Ebenen"],
     bild: "flee-mortals/qazyldrath.png",
     beschreibung: [
@@ -3436,7 +3436,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m", "Seelensicht 9 m"],
     passiveWahrnehmung: 17,
-    sprachen: ["Abyssal", "Gemein", "Telepathie 36 m"],
+    sprachen: ["Abyssal", "Gemeinsprache", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen"],
     bild: "flee-mortals/ruinant.png",
     beschreibung: [
@@ -3830,7 +3830,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: ["Benommen", "Gepackt", "Gelähmt", "Vergiftet", "Festgesetzt"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 16,
-    sprachen: ["Aurisch", "Gemein"],
+    sprachen: ["Aurisch", "Gemeinsprache"],
     umgebung: ["Gebirge", "Küste", "Andere Ebenen"],
     bild: "flee-mortals/sturmessenz.png",
     beschreibung: [
@@ -3966,7 +3966,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: ["Bezaubert"],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 16,
-    sprachen: ["Gemein", "Infernal"],
+    sprachen: ["Gemeinsprache", "Infernal"],
     umgebung: ["Andere Ebenen"],
     bild: "flee-mortals/teufelsjurist.png",
     beschreibung: [
@@ -4012,7 +4012,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: ["Bezaubert"],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein", "Infernal"],
+    sprachen: ["Gemeinsprache", "Infernal"],
     umgebung: ["Andere Ebenen"],
     bild: "flee-mortals/teufelslegat.png",
     beschreibung: [
@@ -4055,7 +4055,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: ["Bezaubert"],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "Infernal"],
+    sprachen: ["Gemeinsprache", "Infernal"],
     umgebung: ["Andere Ebenen"],
     bild: "flee-mortals/teufelsmagistrat.png",
     beschreibung: [
@@ -4098,7 +4098,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein", "Infernal"],
+    sprachen: ["Gemeinsprache", "Infernal"],
     umgebung: ["Andere Ebenen"],
     bild: "flee-mortals/teufelsnotar.png",
     beschreibung: [
@@ -4139,7 +4139,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt"],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 17,
-    sprachen: ["Gemein", "Infernal"],
+    sprachen: ["Gemeinsprache", "Infernal"],
     umgebung: ["Andere Ebenen"],
     bild: "flee-mortals/teufelsrichter.png",
     beschreibung: [
@@ -4226,7 +4226,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m", "Seelensicht 9 m"],
     passiveWahrnehmung: 15,
-    sprachen: ["Abyssal", "Gemein", "Telepathie 36 m"],
+    sprachen: ["Abyssal", "Gemeinsprache", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen"],
     bild: "flee-mortals/tormenauk.png",
     beschreibung: [
@@ -4314,7 +4314,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt"],
     sinne: ["Dunkelsicht 18 m", "Zittersinn 18 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "Urzeitlich"],
+    sprachen: ["Gemeinsprache", "Urzeitlich"],
     umgebung: ["Wald", "Dschungel", "Feenwildnis", "Sumpf"],
     bild: "flee-mortals/wachstumsprinzip.png",
     beschreibung: [
@@ -4359,7 +4359,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein", "Elfisch", "Sylvanisch"],
+    sprachen: ["Gemeinsprache", "Elfisch", "Sylvanisch"],
     umgebung: ["Wald", "Feenwildnis", "Gewässer"],
     bild: "flee-mortals/weinende_weide.png",
     beschreibung: [
@@ -4406,7 +4406,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m", "Seelensicht 9 m"],
     passiveWahrnehmung: 18,
-    sprachen: ["Abyssal", "Gemein", "Telepathie 36 m"],
+    sprachen: ["Abyssal", "Gemeinsprache", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen"],
     bild: "flee-mortals/wobalas.png",
     beschreibung: [
@@ -4555,7 +4555,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: ["Geblendet", "Bezaubert", "Benommen", "Verängstigt", "Gelähmt", "Versteinert", "Vergiftet", "Betäubt"],
     sinne: ["Blindsicht 36 m", "Wahres Sehen 18 m"],
     passiveWahrnehmung: 27,
-    sprachen: ["Gemein", "Tiefensprache", "Drakonisch"],
+    sprachen: ["Gemeinsprache", "Tiefensprache", "Drakonisch"],
     umgebung: ["Andere Ebenen", "Ozean", "Höhle"],
     bild: "flee-mortals/yserthrax.png",
     beschreibung: [
@@ -4650,7 +4650,7 @@ window.MONSTER_DATA_FLEE_MORTALS = [
     zustandsimmunitaeten: ["Geblendet", "Bezaubert", "Liegend"],
     sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 19,
-    sprachen: ["Gemein", "Kuran'zoi", "Telepathie 36 m"],
+    sprachen: ["Gemeinsprache", "Kuran'zoi", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen", "Ruinen", "Stadt"],
     bild: "flee-mortals/zeitraeuber_vertex.png",
     beschreibung: ["Der Zeiträuber-Vertex ist die mächtigste Kampfeinheit der Zeiträuber — ein schwebender Anführer in psionischer Kraftrüstung, der Raum und Zeit nach Belieben öffnet. Mit seinem kinetischen Verteidigungsfeld schützt er Verbündete in weitem Umkreis vor Schaden, und mit einem einzigen Impuls belebender psionischer Energie ermöglicht er seiner Einheit koordinierte Blitzbewegungen. Die Fähigkeit, Portale zu jedem Ort im Multiversum zu öffnen, macht den Vertex zu einem Kommandeur, der Schlachtpläne einleiten kann, die andere für unmöglich halten."],

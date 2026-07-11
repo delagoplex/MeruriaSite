@@ -131,7 +131,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m", "Erschütterungssinn 36 m"],
     passiveWahrnehmung: 27,
-    sprachen: ["Gemein", "Drakonisch", "bis zu vier weitere Sprachen nach Wahl"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "bis zu vier weitere Sprachen nach Wahl"],
     umgebung: ["Hügel", "Stadt"],
     bild: "floral-dragons/apfelbaum-drache.png",
     beschreibung: [
@@ -585,7 +585,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 18,
-    sprachen: ["Gemein", "Drakonisch", "zwei weitere Sprachen nach Wahl", "Telepathie auf 36 m"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "zwei weitere Sprachen nach Wahl", "Telepathie auf 36 m"],
     umgebung: ["Gebirge"],
     bild: "floral-dragons/kirschblueten-drache.png",
     beschreibung: [
@@ -939,7 +939,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt", "Vergiftet"],
     sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 27,
-    sprachen: ["Gemein", "Drakonisch"],
+    sprachen: ["Gemeinsprache", "Drakonisch"],
     umgebung: ["Wald", "Unterirdisch"],
     bild: "floral-dragons/manchinil-drache.png",
     beschreibung: [
@@ -1451,7 +1451,7 @@ window.MONSTER_DATA_FLORAL_DRAGONS = [
     zustandsimmunitaeten: ["Vergiftet", "Bewusstlos"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 19,
-    sprachen: ["Gemein", "Drakonisch", "sowie zwei weitere Sprachen nach Wahl"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "sowie zwei weitere Sprachen nach Wahl"],
     umgebung: ["Grasland", "Sumpf", "Stadt"],
     bild: "floral-dragons/vampirlilien-drache.png",
     beschreibung: [

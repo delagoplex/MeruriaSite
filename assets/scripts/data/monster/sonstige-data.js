@@ -437,7 +437,7 @@ window.MONSTER_DATA_SONSTIGE = [
     ],
     "passiveWahrnehmung": 12,
     "sprachen": [
-      "Gemein",
+      "Gemeinsprache",
       "Infernal",
       "Telepathie 36 m"
     ],
@@ -1366,7 +1366,7 @@ window.MONSTER_DATA_SONSTIGE = [
     ],
     "passiveWahrnehmung": 24,
     "sprachen": [
-      "Gemein",
+      "Gemeinsprache",
       "Drakonisch",
       "Aqual"
     ],
