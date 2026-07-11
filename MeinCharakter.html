@@ -541,6 +541,7 @@ async function loadCharacters() {
     class: row.class,
     division: row.division,
     type: row.type || 'spieler',
+    createdAt: row.created_at,
     _char: row.char_data && Object.keys(row.char_data).length > 0 ? row.char_data : null,
   }));
 }
@@ -693,6 +694,8 @@ function CharSelection({ chars, onSelect, onNew, onReload }) {
   const [raceF, setRaceF] = useApp('');
   const [classF, setClassF] = useApp('');
   const [divF, setDivF] = useApp('');
+  const [sortBy, setSortBy] = useApp('date');
+  const [sortDir, setSortDir] = useApp('desc');
   const importRef = useRef(null);
 
   async function handleDelete(id) {
@@ -721,6 +724,18 @@ function CharSelection({ chars, onSelect, onNew, onReload }) {
       return [ch.name, ch.race, ch.class, ch.division].some(v => v?.toLowerCase().includes(s));
     }
     return true;
+  });
+
+  const sorted = [...filtered].sort((a, b) => {
+    let cmp = 0;
+    if (sortBy === 'name') {
+      cmp = (a.name || '').localeCompare(b.name || '', 'de');
+    } else if (sortBy === 'level') {
+      cmp = (Number(a._char?.level) || 0) - (Number(b._char?.level) || 0);
+    } else {
+      cmp = new Date(a.createdAt || 0) - new Date(b.createdAt || 0);
+    }
+    return sortDir === 'desc' ? -cmp : cmp;
   });
 
   const selStyle = {
@@ -807,6 +822,18 @@ function CharSelection({ chars, onSelect, onNew, onReload }) {
           {divs.map(d=><option key={d} value={d}>{d}</option>)}
         </select>}
 
+        <select value={sortBy} onChange={e=>setSortBy(e.target.value)} style={selStyle}>
+          <option value="date">Erstellungsdatum</option>
+          <option value="name">Name</option>
+          <option value="level">Stufe</option>
+        </select>
+
+        <button onClick={()=>setSortDir(d=>d==='asc'?'desc':'asc')}
+          title={sortDir==='asc'?'Aufsteigend':'Absteigend'}
+          style={{...selStyle,cursor:"pointer"}}>
+          {sortDir==='asc'?'↑':'↓'}
+        </button>
+
         {hasFilter && <button onClick={()=>{setQ('');setRaceF('');setClassF('');setDivF('');}}
           style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".12em",padding:"5px 10px",
             background:"transparent",border:"1px solid rgba(124,77,255,0.18)",borderRadius:3,
@@ -818,18 +845,18 @@ function CharSelection({ chars, onSelect, onNew, onReload }) {
 
         <span style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(124,77,255,0.35)",
           marginLeft:"auto",letterSpacing:".12em"}}>
-          {filtered.length} Charakter{filtered.length!==1?'e':''}
+          {sorted.length} Charakter{sorted.length!==1?'e':''}
         </span>
       </div>
 
       {/* Grid */}
-      {filtered.length === 0
+      {sorted.length === 0
         ? <div style={{textAlign:"center",padding:"60px 0",fontFamily:"var(--font-mono)",fontSize:9,
             letterSpacing:".2em",color:"rgba(124,77,255,0.3)",textTransform:"uppercase"}}>
             Keine Charaktere gefunden
           </div>
         : <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(180px,1fr))",gap:14}}>
-            {filtered.map(ch => (
+            {sorted.map(ch => (
               <CharCard key={ch.id} ch={ch}
                 onSelect={onSelect}
                 onDelete={handleDelete}
