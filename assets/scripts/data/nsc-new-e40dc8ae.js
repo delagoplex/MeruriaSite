@@ -48,7 +48,7 @@ function DPLocked({ acc, hint }) {
       color:'rgba(160,140,255,0.55)',
     }}>
       <span style={{ width:6, height:6, border:`1px solid ${dpHA(acc, 0.45)}`, display:'inline-block' }}/>
-      <span>{hint || 'Noch nicht freigeschaltet'}</span>
+      <span>{hint || 'Unbekannt'}</span>
     </div>
   );
 }
@@ -70,7 +70,7 @@ function FactRow({ label, value, isOpen, toggleState, acc, gm, onToggle }) {
         ) : (
           <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color:dpHA(acc, 0.55), letterSpacing:'0.18em', textTransform:'uppercase', display:'inline-flex', alignItems:'center', gap:6 }}>
             <span style={{ width:6, height:6, border:`1px solid ${dpHA(acc, 0.45)}`, display:'inline-block' }}/>
-            Noch nicht freigeschaltet
+            Unbekannt
           </span>
         )}
         {gm && <UnlockToggle state={toggleState} onClick={onToggle}/>}
@@ -123,7 +123,7 @@ function IndexedList({ items, keyPrefix, isOpen, onToggle, toggleState, gm, acc,
     return <div style={{ fontFamily:'var(--font-body)', fontStyle:'italic', fontSize:12, color:'rgba(160,140,255,0.45)', padding:'4px 0' }}>—</div>;
   }
   const anyVisible = items.some((_, i) => gm || isOpen(`${keyPrefix}-${i}`));
-  if (!anyVisible) return <DPLocked acc={acc} hint={lockedHint || 'Noch nicht freigeschaltet'}/>;
+  if (!anyVisible) return <DPLocked acc={acc} hint={lockedHint || 'Unbekannt'}/>;
   return (
     <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
       {items.map((it, i) => {

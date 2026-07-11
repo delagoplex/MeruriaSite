@@ -98,7 +98,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Gelähmt", "Bewusstlos"],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 15,
-    sprachen: ["Gemein", "Drakonisch", "Umbral"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Umbral"],
     umgebung: ["Höhle", "Wald", "Ruinen"],
     bild: "tome-of-beasts/aelterer_schattendrache.png",
     beschreibung: ["Ältere Schattendrachen sind große, beunruhigende Drachen mit glänzend schwarzen Schuppen und schattenhaften Flügeln. Ihre leuchtend roten Augen glühen wie Kohlen, und ihre Stimme ist ein tiefes, ausdrucksloses Monoton. Sie sind verschmitzt und habgierig — verschlingen ganze Ziegen und Schafe und buchstabieren bisweilen mit deren Knochen Botschaften. Als Räuber sind sie überraschend geschickt und verbünden sich manchmal mit humanoiden Banden, wobei ihr Anteil an der Beute stets der größte sein muss.", "Ältere Schattendrachen meiden Sonnenlicht und hausen in dunklen, einsamen Orten: tiefen Höhlen, dichten Wäldern und schattigen Ruinen. Für Drachen ihrer Art werden sie alt — bis zu 250 Jahre — und pflanzen sich selten fort. Im Halbdunkel oder in der Dunkelheit verschwinden sie auf magische Weise aus dem Blickfeld; selbst Dunkelsicht kann sie nicht entlarven, denn sie verschmelzen nicht einfach mit dem Schatten — sie werden unsichtbar."],
@@ -138,7 +138,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: [],
     passiveWahrnehmung: 10,
-    sprachen: ["Gemein", "Äonisch", "Riesisch", "Sylvanisch"],
+    sprachen: ["Gemeinsprache", "Äonisch", "Riesisch", "Sylvanisch"],
     umgebung: ["Ruinen", "Stadt"],
     bild: "tome-of-beasts/aeonendrifter.png",
     beschreibung: [
@@ -219,7 +219,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Liegend"],
     sinne: ["Dunkelsicht 18 m", "Zittersinn 18 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein", "Ursprachlich"],
+    sprachen: ["Gemeinsprache", "Ursprachlich"],
     umgebung: ["Grasland", "Ruinen", "Stadt"],
     bild: "tome-of-beasts/aetzfalle.png",
     beschreibung: [
@@ -264,7 +264,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Vergiftet"],
     sinne: ["Dunkelsicht 36 m", "Wahre Sicht 18 m"],
     passiveWahrnehmung: 16,
-    sprachen: ["Abyssal", "Gemein", "Drakonisch", "Elfisch", "Infernalisch", "Telepathie 18 m"],
+    sprachen: ["Abyssal", "Gemeinsprache", "Drakonisch", "Elfisch", "Infernalisch", "Telepathie 18 m"],
     umgebung: ["Stadt", "Unterirdisch"],
     bild: "tome-of-beasts/akyishigal_daemonenfuerst_der_kakerlaken.png",
     beschreibung: [
@@ -352,7 +352,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Auranisch", "Gemein", "Ignanisch"],
+    sprachen: ["Auranisch", "Gemeinsprache", "Ignanisch"],
     umgebung: ["Wüste", "Andere Ebenen"],
     bild: "tome-of-beasts/al-aeshma-dschinn.png",
     beschreibung: [
@@ -427,7 +427,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Vergiftet"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 19,
-    sprachen: ["Gemein", "Drakonisch"],
+    sprachen: ["Gemeinsprache", "Drakonisch"],
     umgebung: ["Wald", "Grasland"],
     bild: "tome-of-beasts/ala.png",
     beschreibung: [
@@ -472,7 +472,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Erschöpfung", "Verängstigt", "Gelähmt", "Versteinert", "Vergiftet"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 17,
-    sprachen: ["Gemein", "Himmlisch", "Drakonisch", "Infernalisch"],
+    sprachen: ["Gemeinsprache", "Himmlisch", "Drakonisch", "Infernalisch"],
     umgebung: ["Andere Ebenen"],
     bild: "tome-of-beasts/algorith.png",
     beschreibung: [
@@ -582,7 +582,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 15,
-    sprachen: ["Gemein", "Elfisch", "Sylvanisch"],
+    sprachen: ["Gemeinsprache", "Elfisch", "Sylvanisch"],
     umgebung: ["Wald", "Feenwildnis"],
     bild: "tome-of-beasts/alseid.png",
     beschreibung: [
@@ -622,7 +622,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 15,
-    sprachen: ["Gemein", "Elfisch", "Sylvanisch", "Druidisch"],
+    sprachen: ["Gemeinsprache", "Elfisch", "Sylvanisch", "Druidisch"],
     umgebung: ["Wald", "Feenwildnis"],
     bild: "tome-of-beasts/alseid_hainwaechter.png",
     beschreibung: [
@@ -705,7 +705,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m", "Zittersinn 36 m"],
     passiveWahrnehmung: 19,
-    sprachen: ["Gemein", "Himmlisch", "Riesig", "Sylvanisch"],
+    sprachen: ["Gemeinsprache", "Himmlisch", "Riesig", "Sylvanisch"],
     umgebung: ["Gewässer", "Dschungel", "Grasland"],
     bild: "tome-of-beasts/andrenjinyi.png",
     beschreibung: [
@@ -839,7 +839,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt"],
     sinne: ["Blindsicht 9 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein", "Elfisch", "Sylvanisch"],
+    sprachen: ["Gemeinsprache", "Elfisch", "Sylvanisch"],
     umgebung: ["Feenwildnis"],
     bild: "tome-of-beasts/angstschmied.png",
     beschreibung: [
@@ -1037,7 +1037,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt", "Vergiftet", "Betäubt"],
     sinne: ["Wahre Sicht 36 m"],
     passiveWahrnehmung: 22,
-    sprachen: ["Himmlisch", "Gemein", "Drakonisch", "Infernalisch", "Telepathie 36 m"],
+    sprachen: ["Himmlisch", "Gemeinsprache", "Drakonisch", "Infernalisch", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen"],
     bild: "tome-of-beasts/arbeyach.png",
     beschreibung: [],
@@ -1131,7 +1131,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "Gnoll", "Sylvisch", "Leerensprache"],
+    sprachen: ["Gemeinsprache", "Gnoll", "Sylvisch", "Leerensprache"],
     umgebung: ["Feenwildnis", "Wald"],
     bild: "tome-of-beasts/aridni.png",
     beschreibung: [
@@ -1266,7 +1266,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Gelähmt", "Bewusstlos"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein", "Drakonisch"],
+    sprachen: ["Gemeinsprache", "Drakonisch"],
     umgebung: ["Stadt", "Gebirge"],
     bild: "tome-of-beasts/aschendrache.png",
     beschreibung: ["Aschendrachen hocken mit Vorliebe auf Schornsteinen, als hätten sie sich gerade hindurchgezwängt, den Schwanz noch in den Rauch gehängt. Sie verstopfen Schlote, bestreuen Menschenmengen mit dichter, erstickender Asche und lachen dabei mit pfeifendem Hüsteln. Schmelzer und Schmiede legen große Aschehaufen aus, um die Drachen von ihren Betrieben fernzuhalten. In der freien Wildbahn siedeln sie an Vulkanplateaus und suchen die Nähe von Roten Drachen oder Flammendrachen, die ihnen genug Asche liefern.", "Aschendrachen fressen Ratten und streunende Tiere, greifen aber auch unbeaufsichtigte Haustiere. Asche verzehren sie nicht — sie wälzen sich nur darin wie eine Katze in Katzenminze. Wer ihr Spiel unterbricht, bekommt ihren glühend heißen Aschenodem zu spüren. Alle drei Winter verlässt ein Männchen sein Revier auf Brautschau; nistet sich ein Paar in einer Stadt ein, machen die rußgeschwängerten Straßen es sofort bekannt."],
@@ -1437,7 +1437,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Vergiftet"],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein", "Infernalisch", "Telepathie 30 m"],
+    sprachen: ["Gemeinsprache", "Infernalisch", "Telepathie 30 m"],
     umgebung: ["Andere Ebenen"],
     bild: "tome-of-beasts/automata-teufel.png",
     beschreibung: [
@@ -1486,7 +1486,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 11,
-    sprachen: ["Gemein", "Ursprünglich"],
+    sprachen: ["Gemeinsprache", "Ursprünglich"],
     umgebung: ["Feenwildnis", "Gebirge"],
     bild: "tome-of-beasts/azza-gremlin.png",
     beschreibung: [
@@ -1531,7 +1531,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 11,
-    sprachen: ["Gemein", "Riesisch"],
+    sprachen: ["Gemeinsprache", "Riesisch"],
     umgebung: ["Wald", "Arktis"],
     bild: "tome-of-beasts/baerenvolk.png",
     beschreibung: [
@@ -1577,7 +1577,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 15,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Gewässer", "Sumpf"],
     bild: "tome-of-beasts/bagiennik.png",
     beschreibung: [
@@ -1623,7 +1623,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 15,
-    sprachen: ["Gemein", "Nurisch", "Sylvisch"],
+    sprachen: ["Gemeinsprache", "Nurisch", "Sylvisch"],
     umgebung: ["Stadt", "Ruinen"],
     bild: "tome-of-beasts/bastet-tempelkatze.png",
     beschreibung: [
@@ -1714,7 +1714,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 10,
-    sprachen: ["Behtu", "Gemein", "Infernalisch"],
+    sprachen: ["Behtu", "Gemeinsprache", "Infernalisch"],
     umgebung: ["Dschungel"],
     bild: "tome-of-beasts/behtu.png",
     beschreibung: [
@@ -1758,7 +1758,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein", "Zwergisch", "Riesisch"],
+    sprachen: ["Gemeinsprache", "Zwergisch", "Riesisch"],
     umgebung: ["Arktis"],
     bild: "tome-of-beasts/beli.png",
     beschreibung: [
@@ -1805,7 +1805,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 15,
-    sprachen: ["Gemein", "Elfisch", "Sylvisch"],
+    sprachen: ["Gemeinsprache", "Elfisch", "Sylvisch"],
     umgebung: ["Gebirge"],
     bild: "tome-of-beasts/bereginyas.png",
     beschreibung: [
@@ -1843,7 +1843,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Vergiftet"],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Abyssal", "Gemein", "Sylvanisch", "Telepathie 36 m"],
+    sprachen: ["Abyssal", "Gemeinsprache", "Sylvanisch", "Telepathie 36 m"],
     umgebung: ["Wald", "Dschungel"],
     bild: "tome-of-beasts/berstuc.png",
     beschreibung: [
@@ -1931,7 +1931,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Vergiftet"],
     sinne: ["Blindsicht 18 m", "Wahrsicht 3 m"],
     passiveWahrnehmung: 11,
-    sprachen: ["Gemein", "Maschinensprache"],
+    sprachen: ["Gemeinsprache", "Maschinensprache"],
     umgebung: ["Stadt"],
     bild: "tome-of-beasts/bibliotheks-automat.png",
     beschreibung: [
@@ -2017,7 +2017,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Erschöpft", "Verängstigt", "Gelähmt", "Versteinert", "Vergiftet"],
     sinne: ["Dunkelsicht 72 m"],
     passiveWahrnehmung: 17,
-    sprachen: ["Gemein", "Drakonisch", "Infernalisch", "Leersprache"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Infernalisch", "Leersprache"],
     umgebung: ["Ruinen", "Wald"],
     bild: "tome-of-beasts/blutherold.png",
     beschreibung: [
@@ -2068,7 +2068,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Vergiftet"],
     sinne: ["Blutwahrnehmung 27 m", "Dunkelsicht 18 m"],
     passiveWahrnehmung: 19,
-    sprachen: ["Gemein", "Riesensprache", "Infernalisch", "Sylvanisch", "Trollkin"],
+    sprachen: ["Gemeinsprache", "Riesensprache", "Infernalisch", "Sylvanisch", "Trollkin"],
     umgebung: ["Wald", "Sumpf"],
     bild: "tome-of-beasts/bluthexe.png",
     beschreibung: [
@@ -2114,7 +2114,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "Ursprünglich", "Sylvisch"],
+    sprachen: ["Gemeinsprache", "Ursprünglich", "Sylvisch"],
     umgebung: ["Sumpf", "Gewässer"],
     bild: "tome-of-beasts/boloti.png",
     beschreibung: [
@@ -2158,7 +2158,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Erschöpfung", "Vergiftet"],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein", "Himmlisch", "Infernalisch", "Nurisch", "Telepathie 30 m"],
+    sprachen: ["Gemeinsprache", "Himmlisch", "Infernalisch", "Nurisch", "Telepathie 30 m"],
     umgebung: ["Stadt", "Grasland"],
     bild: "tome-of-beasts/bouda.png",
     beschreibung: [
@@ -2343,7 +2343,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Erschöpfung", "Verängstigt"],
     sinne: ["Wahre Sicht 36 m"],
     passiveWahrnehmung: 14,
-    sprachen: ["Himmlisch", "Gemein", "Ursprünglich", "Telepathie 36 m"],
+    sprachen: ["Himmlisch", "Gemeinsprache", "Ursprünglich", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen"],
     bild: "tome-of-beasts/buraq.png",
     beschreibung: ["Der Buraq ist ein himmlisches Wesen mit dem Körper eines weißen Pferdes und einem menschlichen Gesicht, das als heiliges Reittier gilt. Er ist bekannt als das Fahrzeug der Propheten und Heiligen, das sie in Augenblicken göttlicher Vision von einer Welt zur nächsten trägt."],
@@ -2382,7 +2382,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Ertaubt", "Verängstigt", "Gelähmt", "Versteinert", "Vergiftet", "Betäubt"],
     sinne: ["Blindsicht 36 m", "Dunkelsicht 12 m"],
     passiveWahrnehmung: 23,
-    sprachen: ["Gemein", "Darakhul", "Derro", "Drakonisch", "Zwergensprache", "Infernalisch", "Nurian", "Urprimär", "Leererede", "Telepathie 90 m"],
+    sprachen: ["Gemeinsprache", "Darakhul", "Derro", "Drakonisch", "Zwergensprache", "Infernalisch", "Nurian", "Urprimär", "Leererede", "Telepathie 90 m"],
     umgebung: ["Andere Ebenen", "Höhle", "Unterirdisch"],
     bild: "tome-of-beasts/camazotz_daemonenfuerst_der_fledermaeuse_und_des_feuers.png",
     beschreibung: [
@@ -2437,7 +2437,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Erschöpfung", "Vergiftet"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 18,
-    sprachen: ["Gemein", "Drakonisch", "Infernalisch"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Infernalisch"],
     umgebung: ["Stadt"],
     bild: "tome-of-beasts/cambium.png",
     beschreibung: ["Das Cambium schleicht gebeugt und verzerrt durch die Gesellschaft der Sterblichen und verbirgt so seine fast drei Meter große Gestalt und seine überzähligen Arme. Die Quelle seines Interesses liegt in jedem Sterblichenkörper: die vier Körpersäfte, die es in präzisen Mengen absaugt — manchmal um eigene Ungleichgewichte zu beheben, manchmal um Seren für den Verkauf auf höllischen Märkten zu brauen.", "Seine Opfer werden in einem verzweifelten Zustand zurückgelassen, begierig nach einer korrigierenden Dosis und bereit, jeden Wunsch des Cambiums zu erfüllen. Nach einer ausreichenden Ernte lässt das Cambium diese Süchtigen langsam an Entzugserscheinungen sterben und überlässt die heimgesuchte Bevölkerung für etwa ein Jahrzehnt sich selbst."],
@@ -2519,7 +2519,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein", "Drakonisch", "Sylvanisch"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Sylvanisch"],
     umgebung: ["Andere Ebenen"],
     bild: "tome-of-beasts/chernomoi.png",
     beschreibung: ["Chernomoi (drakonisch für 'Hortgeist') wohnen diskret in Drachenhorten oder Drachenbornhaushalten, räumen nachts auf und halten gelegentlich ein kleines Schmuckstück als Entlohnung. Sie erscheinen als winzige, geflügelte Drachenverwandte in metallischer Rüstung aus kleinen Münzen und Halbedelsteinen.", "Chernomoi fürchten Wyverne und nisten niemals in deren Nähe. Ansonsten sind sie sehr schützend gegenüber ihren drakonischen Herren und schlagen Alarm, wenn ein Eindringling unbemerkt bleibt. Im Kampf setzen sie ihre kleinen Klingen und ihren Schrei ein, fliehen aber bei Gefahr stets als erste Option — meist direkt zu einem Drachen-, Drachenbornoder Drakovolk-Verbündeten."],
@@ -2677,7 +2677,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Verängstigt", "Vergiftet"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 11,
-    sprachen: ["Gemein", "Elfisch", "Sylvanisch"],
+    sprachen: ["Gemeinsprache", "Elfisch", "Sylvanisch"],
     umgebung: ["Stadt"],
     bild: "tome-of-beasts/clurichaun.png",
     beschreibung: ["Clurichauns sind biestige, alkoholliebende Feenwesen, die Vorratsräume und Weinkeller heimsuchen. Diese betrunkenen Feen waren einst Kobolde, gaben aber schon vor langer Zeit ein Leben der Arbeit zugunsten eines einsamen Ausschweifens auf. Nun verbringen sie jede Nacht damit, zu trinken, falsch zu singen und ihre unglücklichen Wirte mit grausamen Streichen zu quälen.", "Hält der Gastgeber sie jedoch gut mit einem Lieblingsgetränk versorgt und lässt sie ansonsten in Ruhe, schützt der Clurichaun den Weinkeller vor Dieben und Eindringlingen. Die beste Methode, einen Clurichaun zu vertreiben, ist ihn zu einem Trinkwettbewerb herauszufordern — verliert er gegen einen Sterblichen, schleicht er sich in Scham davon und wird nie wieder gesehen. Trotz ihrer Größe können Clurichauns enorme Mengen trinken, ohne großen Schaden zu nehmen."],
@@ -2765,7 +2765,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein", "Sylvan"],
+    sprachen: ["Gemeinsprache", "Sylvan"],
     umgebung: ["Sumpf", "Wald"],
     bild: "tome-of-beasts/dampfluchs.png",
     beschreibung: [
@@ -2808,7 +2808,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Erschöpft", "Vergiftet"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 11,
-    sprachen: ["Gemein", "Darakhul"],
+    sprachen: ["Gemeinsprache", "Darakhul"],
     umgebung: ["Unterirdisch"],
     bild: "tome-of-beasts/darakhul.png",
     beschreibung: [
@@ -3042,7 +3042,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Erschöpfung", "Vergiftet"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 10,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt"],
     bild: "tome-of-beasts/dissimortuum.png",
     beschreibung: [
@@ -3083,7 +3083,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein", "Zwergisch", "Elfisch"],
+    sprachen: ["Gemeinsprache", "Zwergisch", "Elfisch"],
     umgebung: ["Wald", "Stadt", "Ruinen"],
     bild: "tome-of-beasts/domovoi.png",
     beschreibung: [
@@ -3165,7 +3165,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 14,
-    sprachen: ["Dornenklicken", "Gemein", "Sylvanisch"],
+    sprachen: ["Dornenklicken", "Gemeinsprache", "Sylvanisch"],
     umgebung: ["Wald"],
     bild: "tome-of-beasts/dornenkind.png",
     beschreibung: ["Dornenkinder wachsen in tiefen Dornengestrüppen auf Waldlichtungen oder an sonnigen Hängen und Flussufern. Seltener entstehen sie, wenn das Blut eines Zauberers oder magischen Wesens auf den Waldboden fällt, oder wenn obskure druidische Machtgegenstände sie herbeirufen.", "Dornenkinder versammeln sich in großen Gruppen und verwandeln uralte Walddickichte in wahre Festungen. Sie schleichen weit aus ihren Lagern heraus, um die Waldbewohner auszuspionieren, und reiten dabei manchmal auf Spinnen, Tausendfüßlern oder Riesenlibellen. Sie tauschen Neuigkeiten und Klatsch gegen Kleinigkeiten und Blutstropfen — mit der hinterhältigen Bosheit bösartiger Kinder und einem Hang zu Blut."],
@@ -3245,7 +3245,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Gelähmt", "Liegend"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 16,
-    sprachen: ["Gemein", "Drakonisch", "Ursprünglich"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Ursprünglich"],
     umgebung: ["Küste", "Ozean", "Gewässer"],
     bild: "tome-of-beasts/drachenaal.png",
     beschreibung: ["Drachenaale sind an ihrer schlanken Gestalt, dem mächtigen Flossenschaft und den gezackten Kiefern wie ein Paar serratierter Klingen sofort erkennbar. Ihre Färbung reicht von Braun und Schwarz bis hin zu brillanten, irisierenden Mustern. Die meisten sind Einzelgänger und reizbar, doch gelegentlich bilden einige Paare oder kleine Gruppen — manche gewinnen gar humanoide Diener. Sie siedeln in gewundenen Unterwasserhöhlensystemen mit magnetisch ausgerichteten Metallformationen, die sie mit ihrem elektrischen Sinn navigieren. Drachenaale beanspruchen ausgedehnte Küstenstreifen als ihr Territorium und lassen sich von eingeschüchterten Stämmen als mächtige Geister verehren. Kluge Seeleute, die durch bekanntes Drachenaal-Territorium reisen, bringen Abgaben mit, um sie zu besänftigen."],
@@ -3366,7 +3366,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein", "Elfisch", "Sylvanisch", "Umbral"],
+    sprachen: ["Gemeinsprache", "Elfisch", "Sylvanisch", "Umbral"],
     umgebung: ["Wald", "Feenwildnis"],
     bild: "tome-of-beasts/duesterdorn-dryade.png",
     beschreibung: [
@@ -3411,7 +3411,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Erschöpft", "Verängstigt", "Gelähmt", "Versteinert", "Vergiftet"],
     sinne: ["Dunkelsicht 60 m"],
     passiveWahrnehmung: 15,
-    sprachen: ["Gemein", "Elfisch", "Goblinisch", "Infernalisch", "Sylvanisch"],
+    sprachen: ["Gemeinsprache", "Elfisch", "Goblinisch", "Infernalisch", "Sylvanisch"],
     umgebung: ["Wald", "Feenwildnis"],
     bild: "tome-of-beasts/dunkelherold.png",
     beschreibung: [
@@ -3544,7 +3544,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m", "Wahre Sicht 18 m"],
     passiveWahrnehmung: 15,
-    sprachen: ["Himmlisch", "Gemein"],
+    sprachen: ["Himmlisch", "Gemeinsprache"],
     umgebung: ["Andere Ebenen"],
     bild: "tome-of-beasts/einherjar.png",
     beschreibung: [
@@ -3589,7 +3589,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Erschöpft", "Vergiftet"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein", "Darakhul", "Untergemein"],
+    sprachen: ["Gemeinsprache", "Darakhul", "Untergemein"],
     umgebung: ["Unterirdisch"],
     bild: "tome-of-beasts/eisenghul.png",
     beschreibung: [
@@ -3653,7 +3653,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 11,
-    sprachen: ["Gemein", "Riesensprache", "Sylvanisch"],
+    sprachen: ["Gemeinsprache", "Riesensprache", "Sylvanisch"],
     umgebung: ["Arktis", "Gebirge"],
     bild: "tome-of-beasts/eisjungfrau.png",
     beschreibung: [
@@ -3747,7 +3747,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 10,
-    sprachen: ["Gemein", "Erina"],
+    sprachen: ["Gemeinsprache", "Erina"],
     umgebung: ["Wald", "Hügel", "Stadt"],
     bild: "tome-of-beasts/erina-sammler.png",
     beschreibung: [
@@ -3788,7 +3788,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "Erina"],
+    sprachen: ["Gemeinsprache", "Erina"],
     umgebung: ["Wald", "Hügel", "Stadt"],
     bild: "tome-of-beasts/erina-verteidiger.png",
     beschreibung: [
@@ -3831,7 +3831,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Erschöpft", "Verängstigt", "Gelähmt", "Vergiftet"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 11,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Gewässer", "Küste"],
     bild: "tome-of-beasts/ertrunkene_jungfrau.png",
     beschreibung: [
@@ -3877,7 +3877,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Blindsicht 18 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein", "Abyssal", "Riesensprache"],
+    sprachen: ["Gemeinsprache", "Abyssal", "Riesensprache"],
     umgebung: ["Wald", "Wüste", "Dschungel"],
     bild: "tome-of-beasts/eulenharpyie.png",
     beschreibung: [
@@ -3923,7 +3923,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 16,
-    sprachen: ["Gemein", "Elfisch", "Sylvanisch"],
+    sprachen: ["Gemeinsprache", "Elfisch", "Sylvanisch"],
     umgebung: ["Wald", "Feenwildnis"],
     bild: "tome-of-beasts/far_darrig.png",
     beschreibung: [
@@ -4085,7 +4085,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Erschöpfung", "Verängstigt", "Gelähmt", "Versteinert", "Vergiftet"],
     sinne: ["Wahre Sicht 18 m", "Zittersinn 30 m"],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein", "Himmlisch", "Drakonisch", "Elfisch", "Zwergisch", "Riesisch", "Höllisch", "Telepathie 18 m"],
+    sprachen: ["Gemeinsprache", "Himmlisch", "Drakonisch", "Elfisch", "Zwergisch", "Riesisch", "Höllisch", "Telepathie 18 m"],
     umgebung: ["Arktis", "Gebirge"],
     bild: "tome-of-beasts/fenrirsohn.png",
     beschreibung: [
@@ -4247,7 +4247,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt", "Unsichtbar"],
     sinne: ["Wahre Sicht 18 m"],
     passiveWahrnehmung: 17,
-    sprachen: ["Himmlisch", "Gemein", "Elfisch", "Urweltlich", "Sylvanisch"],
+    sprachen: ["Himmlisch", "Gemeinsprache", "Elfisch", "Urweltlich", "Sylvanisch"],
     umgebung: ["Andere Ebenen", "Wald"],
     bild: "tome-of-beasts/feuervogel.png",
     beschreibung: [
@@ -4382,7 +4382,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 22,
-    sprachen: ["Gemein", "Drakonisch", "Riesisch", "Ignan", "Infernal", "Ork"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Riesisch", "Ignan", "Infernal", "Ork"],
     umgebung: ["Gebirge", "Wüste", "Stadt"],
     bild: "tome-of-beasts/flammendrache_erwachsen.png",
     beschreibung: [
@@ -4449,7 +4449,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Blindsicht 9 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 19,
-    sprachen: ["Gemein", "Drakonisch", "Ignan", "Riesisch", "Infernal", "Ork"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Ignan", "Riesisch", "Infernal", "Ork"],
     umgebung: ["Gebirge", "Wüste", "Stadt"],
     bild: "tome-of-beasts/flammendrache_jung.png",
     beschreibung: ["Junge Flammendrachen sind weniger subtil als ihre Älteren — direkter und grausamer in ihrer Bosheit. Ihre Schuppen zeigen erste Risse, die schwach glühen, und ihr Feuer ist bereits verheerend genug, um Gruppen von Abenteurern zu vernichten."],
@@ -4486,7 +4486,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 27,
-    sprachen: ["Gemein", "Drakonisch", "Riesisch", "Ignan", "Infernal", "Ork"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Riesisch", "Ignan", "Infernal", "Ork"],
     umgebung: ["Gebirge", "Wüste", "Stadt"],
     bild: "tome-of-beasts/flammendrache_uralt.png",
     beschreibung: ["Der uralte Flammendrache ist ein Meister der Intrige und des Leidens, der Jahrhunderte damit verbringt, komplexe Intrigen zu spinnen, die ganze Dynastien zerstören. Seine bloße Existenz ist eine Bedrohung für jede Zivilisation in seiner Reichweite."],
@@ -4547,7 +4547,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Blindsicht 9 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 15,
-    sprachen: ["Gemein", "Drakonisch", "Ignan"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Ignan"],
     umgebung: ["Gebirge", "Wüste", "Stadt"],
     bild: "tome-of-beasts/flammendrache_wyrmling.png",
     beschreibung: ["Das Wyrmling des Flammendrachen ist bereits ein launisches, grausames Wesen. Sein junges Feuer ist noch begrenzt, aber seine Neigung zu Sadismus und Manipulation ist von Geburt an ausgeprägt."],
@@ -4581,7 +4581,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Gelähmt", "Erschöpft", "Vergiftet", "Betäubt", "Bewusstlos"],
     sinne: ["Dunkelsicht 72 m"],
     passiveWahrnehmung: 15,
-    sprachen: ["Gemein", "Darakhul"],
+    sprachen: ["Gemeinsprache", "Darakhul"],
     umgebung: ["Ruinen", "Unterirdisch"],
     bild: "tome-of-beasts/flatterfleisch.png",
     beschreibung: [
@@ -4777,7 +4777,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Erschöpfung", "Gepackt", "Gelähmt", "Vergiftet", "Liegend", "Fixiert", "Bewusstlos"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 11,
-    sprachen: ["Gemein", "Ursprünglich"],
+    sprachen: ["Gemeinsprache", "Ursprünglich"],
     umgebung: ["Grasland", "Gebirge"],
     bild: "tome-of-beasts/funke.png",
     beschreibung: [
@@ -5098,7 +5098,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: [],
     passiveWahrnehmung: 17,
-    sprachen: ["Gemein", "Drakonisch", "Elfisch", "Sylvanisch"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Elfisch", "Sylvanisch"],
     umgebung: ["Wald", "Feenwildnis"],
     bild: "tome-of-beasts/graessliche_schoenheit.png",
     beschreibung: [
@@ -5249,7 +5249,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Erschöpft", "Verängstigt", "Gelähmt", "Vergiftet"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 17,
-    sprachen: ["Abyssal", "Himmlisch", "Gemein", "Gnomisch", "Telepathie 18 m"],
+    sprachen: ["Abyssal", "Himmlisch", "Gemeinsprache", "Gnomisch", "Telepathie 18 m"],
     umgebung: ["Andere Ebenen", "Ruinen"],
     bild: "tome-of-beasts/grimmer_narr.png",
     beschreibung: [
@@ -5588,7 +5588,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Vergiftet"],
     sinne: ["Blindsicht 36 m"],
     passiveWahrnehmung: 20,
-    sprachen: ["Gemein", "Darakhul", "Drakonisch", "Zwergisch", "Goblin"],
+    sprachen: ["Gemeinsprache", "Darakhul", "Drakonisch", "Zwergisch", "Goblin"],
     umgebung: ["Unterirdisch", "Höhle"],
     bild: "tome-of-beasts/hoehlendrache_erwachsen.png",
     beschreibung: [
@@ -5660,7 +5660,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Vergiftet"],
     sinne: ["Blindsicht 36 m"],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein", "Darakhul", "Drakonisch"],
+    sprachen: ["Gemeinsprache", "Darakhul", "Drakonisch"],
     umgebung: ["Unterirdisch", "Höhle"],
     bild: "tome-of-beasts/hoehlendrache_jung.png",
     beschreibung: ["Junge Höhlendrachen können noch schlecht fliegen. Ihre Färbung reicht von weißlich bis bräunlich und bietet gute Tarnung gegen Stein. Sie sind bereits gefährliche Raubtiere der Unterwelt, wenn auch noch nicht so unerbittlich wie ihre ausgewachsenen Artgenossen."],
@@ -5700,7 +5700,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Geblendet", "Vergiftet"],
     sinne: ["Blindsicht 18 m", "Erschütterungssinn 36 m"],
     passiveWahrnehmung: 29,
-    sprachen: ["Gemein", "Darakhul", "Drakonisch"],
+    sprachen: ["Gemeinsprache", "Darakhul", "Drakonisch"],
     umgebung: ["Unterirdisch", "Höhle"],
     bild: "tome-of-beasts/hoehlendrache_uralt.png",
     beschreibung: ["Der uralte Höhlendrache ist das ultimative Raubtier der Unterwelt — ein massives, augenloses Scheusal, dessen bloße Anwesenheit selbst hartgesottene Tiefenbewohner in Schrecken versetzt. Jahrhunderte unter der Erde haben ihn zu einem nahezu unaufhaltsamen Wesen geformt, das sich durch Stein und Erde gleitet wie andere Drachen durch die Luft."],
@@ -5957,7 +5957,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Erschöpft", "Verängstigt"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 10,
-    sprachen: ["Gemein (Altes Nurisch)"],
+    sprachen: ["Gemeinsprache (Altes Nurisch)"],
     umgebung: ["Ruinen", "Unterirdisch"],
     bild: "tome-of-beasts/imy-ut_ushabti.png",
     beschreibung: [
@@ -6050,7 +6050,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Blindsicht 3 m", "Dunkelsicht 18 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "Drakonisch"],
+    sprachen: ["Gemeinsprache", "Drakonisch"],
     umgebung: ["Wald", "Dschungel"],
     bild: "tome-of-beasts/jaculus.png",
     beschreibung: [
@@ -6092,7 +6092,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 15,
-    sprachen: ["Gemein", "Riesensprache"],
+    sprachen: ["Gemeinsprache", "Riesensprache"],
     umgebung: ["Arktis", "Gebirge"],
     bild: "tome-of-beasts/jotun-riese.png",
     beschreibung: [
@@ -6259,7 +6259,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 10,
-    sprachen: ["Abyssal", "Gemein", "Infernalisch"],
+    sprachen: ["Abyssal", "Gemeinsprache", "Infernalisch"],
     umgebung: ["Ruinen"],
     bild: "tome-of-beasts/kalke.png",
     beschreibung: [
@@ -6300,7 +6300,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Gelähmt", "Bewusstlos"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 11,
-    sprachen: ["Gemein", "Drakonisch", "Telepathie 18 m"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Telepathie 18 m"],
     umgebung: ["Wald", "Stadt"],
     bild: "tome-of-beasts/karmesindrache.png",
     beschreibung: ["Karmesindrachen sind mit getrockneten-Blut-roten Schuppen, einem tödlichen Skorpionstachel und einem schelmischen Funkeln in den Augen leicht zu erkennen. Sie nisten in Wäldern nahe kleiner Siedlungen und unternehmen nächtliche Überfälle, bei denen sie Feuer legen und die Fliehenden jagen — Eigenschaften, die humanoide Stämme sie als Raubzugpartner schätzen lassen. Goblins nehmen einen Karmesindrachen begeistert als Maskottchen auf; rote Drachen und Flammendrachen behandeln sie bestenfalls als Haustier, was selten gut ausgeht.", "Karmesindrachen imitieren den Jagdruf von Pseudodrachen, um Opfer in Reichweite zu locken, bevor sie diese in Brand setzen. Sie können als Vertraute böser Zauberkundiger dienen — zu verschmitzt für echte Loyalität, aber wild in der Verteidigung ihres Meisters. Ein ausgewachsener Karmesindrache wiegt etwa 5,5 kg, ist rund 45 cm lang (Körper) und hat einen ebenso langen Schwanz."],
@@ -6337,7 +6337,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "Sylvanisch"],
+    sprachen: ["Gemeinsprache", "Sylvanisch"],
     umgebung: ["Stadt", "Ruinen"],
     bild: "tome-of-beasts/kikimora.png",
     beschreibung: [
@@ -6378,7 +6378,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Vergiftet"],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Himmlisch", "Gemein", "Drakonisch", "Infernalisch", "Telepathie 36 m"],
+    sprachen: ["Himmlisch", "Gemeinsprache", "Drakonisch", "Infernalisch", "Telepathie 36 m"],
     umgebung: ["Stadt", "Grasland"],
     bild: "tome-of-beasts/kishi-daemon.png",
     beschreibung: [
@@ -6423,7 +6423,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt", "Gelähmt", "Versteinert", "Liegend", "Festgesetzt", "Betäubt"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein", "Diebesjargon"],
+    sprachen: ["Gemeinsprache", "Diebesjargon"],
     umgebung: ["Stadt", "Unterirdisch"],
     bild: "tome-of-beasts/kleiner_rattenkoenig.png",
     beschreibung: [
@@ -6470,7 +6470,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Erschöpfung", "Vergiftet"],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "Darakhul"],
+    sprachen: ["Gemeinsprache", "Darakhul"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
     bild: "tome-of-beasts/knochenkollektiv.png",
     beschreibung: [
@@ -6565,7 +6565,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Erschöpft", "Verängstigt", "Gelähmt", "Vergiftet"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 16,
-    sprachen: ["Gemein", "Darakhul", "Drakonisch", "Zwergisch"],
+    sprachen: ["Gemeinsprache", "Darakhul", "Drakonisch", "Zwergisch"],
     umgebung: ["Unterirdisch", "Ruinen"],
     bild: "tome-of-beasts/knochenpulver-ghul.png",
     beschreibung: [
@@ -6632,7 +6632,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Erschöpfung", "Verängstigt", "Gelähmt", "Vergiftet", "Liegend", "Festgesetzt", "Betäubt"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 16,
-    sprachen: ["Gemein", "Leerensprache"],
+    sprachen: ["Gemeinsprache", "Leerensprache"],
     umgebung: ["Ruinen", "Gebirge"],
     bild: "tome-of-beasts/knochenschwarm.png",
     beschreibung: [
@@ -6674,7 +6674,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Vergiftet"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 9,
-    sprachen: ["Gemein", "Drakonisch"],
+    sprachen: ["Gemeinsprache", "Drakonisch"],
     umgebung: ["Unterirdisch", "Gebirge"],
     bild: "tome-of-beasts/kobold-alchemist.png",
     beschreibung: [
@@ -6718,7 +6718,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 11,
-    sprachen: ["Gemein", "Drakonisch"],
+    sprachen: ["Gemeinsprache", "Drakonisch"],
     umgebung: ["Unterirdisch", "Gebirge"],
     bild: "tome-of-beasts/kobold-fallensteller.png",
     beschreibung: [
@@ -6761,7 +6761,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 11,
-    sprachen: ["Gemein", "Drakonisch"],
+    sprachen: ["Gemeinsprache", "Drakonisch"],
     umgebung: ["Unterirdisch", "Gebirge"],
     bild: "tome-of-beasts/kobold-haeuptling.png",
     beschreibung: [
@@ -6929,7 +6929,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "Sylvanisch"],
+    sprachen: ["Gemeinsprache", "Sylvanisch"],
     umgebung: ["Wald", "Feenwildnis"],
     bild: "tome-of-beasts/kot_bayun.png",
     beschreibung: [
@@ -6971,7 +6971,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Vergiftet"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein", "Infernalisch", "Uralt", "Leerensprache"],
+    sprachen: ["Gemeinsprache", "Infernalisch", "Uralt", "Leerensprache"],
     umgebung: ["Arktis", "Ozean"],
     bild: "tome-of-beasts/krakenbrut.png",
     beschreibung: [
@@ -7017,7 +7017,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Vergiftet"],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 11,
-    sprachen: ["Himmlisch", "Gemein", "Infernalisch", "Telepathie 36 m"],
+    sprachen: ["Himmlisch", "Gemeinsprache", "Infernalisch", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen", "Stadt"],
     bild: "tome-of-beasts/kristallin-teufel.png",
     beschreibung: [
@@ -7064,7 +7064,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Liegend"],
     sinne: ["Blindsicht 9 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "Ursprünglich"],
+    sprachen: ["Gemeinsprache", "Ursprünglich"],
     umgebung: ["Gebirge", "Küste", "Grasland"],
     bild: "tome-of-beasts/langsamer_sturm.png",
     beschreibung: [
@@ -7107,7 +7107,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Gelähmt", "Bewusstlos"],
     sinne: ["Dunkelsicht 18 m", "Telepathie 18 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "Drakonisch", "Elfisch", "Uralt"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Elfisch", "Uralt"],
     umgebung: ["Stadt"],
     bild: "tome-of-beasts/laternen-drakonett.png",
     beschreibung: [
@@ -7189,7 +7189,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt"],
     sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 21,
-    sprachen: ["Gemein", "Drakonisch", "Leerensprache"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Leerensprache"],
     umgebung: ["Andere Ebenen", "Gebirge"],
     bild: "tome-of-beasts/leerendrache_erwachsen.png",
     beschreibung: ["Leerendrachen treiben durch die leere Weite jenseits der sterblichen Welt und wandern zwischen den Sternen. Sie sind teilnahmslos und gehen nur mit den überirdischen Wesen um, die in den höchsten Sphären wohnen. Leerendrachen sind von intensivem Wissen erfüllt, doch das Blicken in das gähnende Nichts hat seinen Tribut gefordert. Das Nichts, das sie mit sich tragen, frisst langsam an ihrem Verstand — und dieser Wahnsinn ist ansteckend. Trotz ihrer entrückten Existenz horten Leerendrachen Schätze, vor allem Edelsteine, die wie Sterne glitzern. Ihr kostbarster Besitz ist verbotenes und vergessenes Wissen."],
@@ -7253,7 +7253,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt"],
     sinne: ["Blindsicht 9 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 18,
-    sprachen: ["Gemein", "Drakonisch", "Leerensprache"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Leerensprache"],
     umgebung: ["Andere Ebenen", "Gebirge"],
     bild: "tome-of-beasts/leerendrache_jung.png",
     beschreibung: ["Junge Leerendrachen haben bereits die ersten Risse in ihrem Verstand davongetragen — die Berührung des Nichts hinterließ Spuren, die Sterbliche spüren, wenn sie dem Drachen begegnen. Sie treiben zwischen den Sternen und kehren gelegentlich in die sterbliche Welt zurück, angelockt von Stätten uralten Wissens."],
@@ -7293,7 +7293,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt"],
     sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 26,
-    sprachen: ["Himmlisch", "Gemein", "Drakonisch", "Infernal", "Ursprünglich", "Leerensprache"],
+    sprachen: ["Himmlisch", "Gemeinsprache", "Drakonisch", "Infernal", "Ursprünglich", "Leerensprache"],
     umgebung: ["Andere Ebenen", "Gebirge"],
     bild: "tome-of-beasts/leerendrache_uralt.png",
     beschreibung: ["Uralte Leerendrachen sind Wesen jenseits des Begreifbaren — Wanderer, die Zeitalter damit verbracht haben, zwischen den Sternen zu treiben und vergessenes Wissen zu sammeln. Der Wahnsinn der Leere nagt unerbittlich an ihrem Verstand. Wer ihren Blick erwidert, riskiert, einen Splitter dieses Nichts mitzunehmen. Wenn ein uralter Leerendrache stirbt, entlädt sich die kosmische Energie seines Körpers in einem verheerenden Inferno aus Licht, Kälte und psychischem Schmerz.", "Wenn der Drache getötet wird, explodiert er: Jede Kreatur und jedes Objekt innerhalb von etwa 1,5 km erleidet 55 (10W10) Wuchtschaden, 55 (10W10) Kälteschaden und 55 (10W10) psychischen Schaden. Jeder Schadenstyp kann durch einen gelungenen Rettungswurf (SG 21) halbiert werden — GES gegen Wuchtschaden, KON gegen Kälteschaden, WEI gegen psychischen Schaden. Eine Kreatur, der zwei oder drei Rettungswürfe misslingen, wird vom Zauber Planenwanderung erfasst und auf eine zufällige Ebene geschickt."],
@@ -7358,7 +7358,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Blindsicht 9 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "Drakonisch", "Leerensprache"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Leerensprache"],
     umgebung: ["Andere Ebenen"],
     bild: "tome-of-beasts/leerendrache_wyrmling.png",
     beschreibung: ["Wyrmlings des Leerendrachen wirken desorientiert und seltsam, als würden sie die Welt durch einen Filter aus kosmischem Rauschen wahrnehmen. Schon jetzt sind erste Anzeichen des Wahnsinns erkennbar, der alle Leerendrachen befällt."],
@@ -7524,7 +7524,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 10,
-    sprachen: ["Gemein", "Lemurenvolk-Sprache"],
+    sprachen: ["Gemeinsprache", "Lemurenvolk-Sprache"],
     umgebung: ["Dschungel"],
     bild: "tome-of-beasts/lemurenvolk.png",
     beschreibung: [
@@ -7563,7 +7563,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 11,
-    sprachen: ["Gemein", "Lemurenvolk-Sprache"],
+    sprachen: ["Gemeinsprache", "Lemurenvolk-Sprache"],
     umgebung: ["Dschungel"],
     bild: "tome-of-beasts/lemurenvolk-graufelz.png",
     beschreibung: [
@@ -7602,7 +7602,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein", "Elfisch", "Sylvanisch"],
+    sprachen: ["Gemeinsprache", "Elfisch", "Sylvanisch"],
     umgebung: ["Wald"],
     bild: "tome-of-beasts/leshy.png",
     beschreibung: [
@@ -7687,7 +7687,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 16,
-    sprachen: ["Gemein", "Goblinisch", "Leerensprache"],
+    sprachen: ["Gemeinsprache", "Goblinisch", "Leerensprache"],
     umgebung: ["Wald", "Ruinen"],
     bild: "tome-of-beasts/likho.png",
     beschreibung: [
@@ -7730,7 +7730,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Geblendet", "Bezaubert", "Erschöpfung", "Gepackt", "Gelähmt", "Versteinert", "Vergiftet", "Liegend", "Festgesetzt", "Bewusstlos"],
     sinne: ["Blindsicht 36 m", "Wahrsicht 18 m"],
     passiveWahrnehmung: 17,
-    sprachen: ["Gemein", "Himmlisch", "Elementar", "Elfisch", "Riesisch"],
+    sprachen: ["Gemeinsprache", "Himmlisch", "Elementar", "Elfisch", "Riesisch"],
     umgebung: ["Andere Ebenen"],
     bild: "tome-of-beasts/liosalfar.png",
     beschreibung: [
@@ -7774,7 +7774,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "Sylvanisch"],
+    sprachen: ["Gemeinsprache", "Sylvanisch"],
     umgebung: ["Gewässer", "Wald"],
     bild: "tome-of-beasts/lorelei.png",
     beschreibung: [
@@ -7988,7 +7988,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein", "Riesisch", "Rabenvolk", "Sylvanisch"],
+    sprachen: ["Gemeinsprache", "Riesisch", "Rabenvolk", "Sylvanisch"],
     umgebung: ["Feenwildnis"],
     bild: "tome-of-beasts/malphas.png",
     beschreibung: [
@@ -8033,7 +8033,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 16,
-    sprachen: ["Gemein", "Elfisch", "Goblinisch", "Sylvanisch", "Leerensprache"],
+    sprachen: ["Gemeinsprache", "Elfisch", "Goblinisch", "Sylvanisch", "Leerensprache"],
     umgebung: ["Grasland", "Wüste"],
     bild: "tome-of-beasts/mamura.png",
     beschreibung: [
@@ -8123,7 +8123,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt", "Gelähmt", "Versteinert", "Vergiftet", "Betäubt", "Bewusstlos"],
     sinne: ["Dunkelsicht 18 m", "Wahre Sicht 9 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "Riesisch", "Höllisch"],
+    sprachen: ["Gemeinsprache", "Riesisch", "Höllisch"],
     umgebung: ["Andere Ebenen"],
     bild: "tome-of-beasts/masken-geist.png",
     beschreibung: [
@@ -8298,7 +8298,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 27 m"],
     passiveWahrnehmung: 15,
-    sprachen: ["Gemein", "Höllisch", "Sylvanisch"],
+    sprachen: ["Gemeinsprache", "Höllisch", "Sylvanisch"],
     umgebung: ["Wald"],
     bild: "tome-of-beasts/mavka.png",
     beschreibung: [
@@ -8380,7 +8380,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt", "Vergiftet", "Betäubt"],
     sinne: ["Wahre Sicht 36 m"],
     passiveWahrnehmung: 22,
-    sprachen: ["Himmlisch", "Gemein", "Drakonisch", "Infernalisch", "Urprimär", "Telepathie 90 m"],
+    sprachen: ["Himmlisch", "Gemeinsprache", "Drakonisch", "Infernalisch", "Urprimär", "Telepathie 90 m"],
     umgebung: ["Andere Ebenen", "Dschungel"],
     bild: "tome-of-beasts/mechuiti_daemonenfuerst_der_affen.png",
     beschreibung: [
@@ -8450,7 +8450,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 22,
-    sprachen: ["Gemein", "Drakonisch"],
+    sprachen: ["Gemeinsprache", "Drakonisch"],
     umgebung: ["Ozean", "Küste"],
     bild: "tome-of-beasts/meeresdrache_erwachsen.png",
     beschreibung: ["Meeresdrachen sind gewaltige Raubtiere, die in den tiefsten Tiefen der Weltmeere herrschen. Mit ihrem stromlinienförmigen, von Schuppen bedeckten Körper und ihren gewaltigen Flügeln sind sie ebenso bedrohlich in den Lüften wie im Wasser. Sie beanspruchen riesige Unterwasserreiche und betrachten alle Schiffe, die ihr Territorium durchqueren, als ihren rechtmäßigen Besitz."],
@@ -8511,7 +8511,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Blindsicht 9 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 19,
-    sprachen: ["Gemein", "Drakonisch"],
+    sprachen: ["Gemeinsprache", "Drakonisch"],
     umgebung: ["Ozean", "Küste"],
     bild: "tome-of-beasts/meeresdrache_jung.png",
     beschreibung: ["Junge Meeresdrachen haben bereits die Größe und das Temperament entwickelt, um kleinere Schiffe und unerfahrene Seefahrer zu bedrohen. Sie patrouillieren ausgedehnte Küstenabschnitte und fordern von allen, die ihr Territorium durchqueren, Tribut."],
@@ -8549,7 +8549,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 27,
-    sprachen: ["Gemein", "Drakonisch", "Infernal", "Ursprünglich"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Infernal", "Ursprünglich"],
     umgebung: ["Ozean", "Küste"],
     bild: "tome-of-beasts/meeresdrache_uralt.png",
     beschreibung: ["Uralte Meeresdrachen sind Legenden des Meeres, deren Namen von Seefahrern in Ehrfurcht und Schrecken geflüstert werden. Diese gewaltigen Bestien herrschen über ganze Ozeane und können Stürme aus dem Nichts heraufbeschwören. Sie sammeln Schätze aus versunkenen Schiffen über Jahrhunderte hinweg an und betrachten alle Seewesen als ihre Untertanen."],
@@ -8610,7 +8610,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Blindsicht 3 m", "Dunkelsicht 18 m"],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein", "Drakonisch", "Ursprünglich"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Ursprünglich"],
     umgebung: ["Ozean", "Küste"],
     bild: "tome-of-beasts/meeresdrache_wyrmling.png",
     beschreibung: ["Wyrmlings des Meeresdrachens sind von Geburt an aggressiv und territorial. Sie schnappen nach jedem, der ihren Bereich betritt, und trainieren ihre eiskalten Atemattacken an Fischen und ahnungslosen Seevögeln."],
@@ -8687,7 +8687,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Blindsicht 9 m", "Dunkelsicht 72 m"],
     passiveWahrnehmung: 15,
-    sprachen: ["Gemein", "Mi-Go", "Leerensprache"],
+    sprachen: ["Gemeinsprache", "Mi-Go", "Leerensprache"],
     umgebung: ["Andere Ebenen"],
     bild: "tome-of-beasts/mi-go.png",
     beschreibung: [
@@ -8732,7 +8732,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Liegend"],
     sinne: ["Dunkelsicht 18 m", "Zittersinn 9 m"],
     passiveWahrnehmung: 11,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Dschungel", "Wald"],
     bild: "tome-of-beasts/millitaur.png",
     beschreibung: [
@@ -8812,7 +8812,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein", "Sylvanisch"],
+    sprachen: ["Gemeinsprache", "Sylvanisch"],
     umgebung: ["Wüste"],
     bild: "tome-of-beasts/mirager.png",
     beschreibung: [
@@ -8902,7 +8902,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert"],
     sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 20,
-    sprachen: ["Himmlisch", "Gemein", "Drakonisch", "Ursprünglich"],
+    sprachen: ["Himmlisch", "Gemeinsprache", "Drakonisch", "Ursprünglich"],
     umgebung: ["Gebirge", "Stadt"],
     bild: "tome-of-beasts/mithraldrache_erwachsen.png",
     beschreibung: [
@@ -8952,7 +8952,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert"],
     sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 15,
-    sprachen: ["Himmlisch", "Gemein", "Drakonisch", "Ursprünglich"],
+    sprachen: ["Himmlisch", "Gemeinsprache", "Drakonisch", "Ursprünglich"],
     umgebung: ["Gebirge", "Stadt"],
     bild: "tome-of-beasts/mithraldrache_jung.png",
     beschreibung: ["Junge Mithraldrachen plündern noch ähnlich wie chromatische Drachen, getrieben von Gier. Ihre silberweiße Färbung und die durchscheinenden Flügelmembranen sind bereits erkennbar, aber ihr Charakter als Friedensstifter ist noch kaum ausgeprägt."],
@@ -8989,7 +8989,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert"],
     sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 23,
-    sprachen: ["Himmlisch", "Gemein", "Drakonisch", "Ursprünglich"],
+    sprachen: ["Himmlisch", "Gemeinsprache", "Drakonisch", "Ursprünglich"],
     umgebung: ["Gebirge", "Stadt"],
     bild: "tome-of-beasts/mithraldrache_uralt.png",
     beschreibung: ["Der uralte Mithraldrache ist ein unübertroffener Weiser und Schiedsrichter, der Jahrhunderte diplomatischer Erfahrung in sich trägt. Seine Anwesenheit allein kann Kriege beenden und Dynastien versöhnen."],
@@ -9070,7 +9070,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 15,
-    sprachen: ["Gemein", "Sylvanisch", "Kann mit Katzenartigen sprechen"],
+    sprachen: ["Gemeinsprache", "Sylvanisch", "Kann mit Katzenartigen sprechen"],
     umgebung: ["Gebirge", "Grasland"],
     bild: "tome-of-beasts/mngwa.png",
     beschreibung: [
@@ -9288,7 +9288,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 10,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Küste", "Ozean"],
     bild: "tome-of-beasts/morphoi.png",
     beschreibung: [
@@ -9414,7 +9414,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt", "Vergiftet", "Betäubt", "Bewusstlos"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 11,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Wald"],
     bild: "tome-of-beasts/myling.png",
     beschreibung: [
@@ -9454,7 +9454,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 15,
-    sprachen: ["Gemein", "Riesisch", "Goblinisch", "Telepathie 18 m (nur Falschmänner)"],
+    sprachen: ["Gemeinsprache", "Riesisch", "Goblinisch", "Telepathie 18 m (nur Falschmänner)"],
     umgebung: ["Arktis", "Wald"],
     bild: "tome-of-beasts/nachtgarm.png",
     beschreibung: [
@@ -9538,7 +9538,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Gelähmt", "Vergiftet", "Bewusstlos"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 18,
-    sprachen: ["Gemein", "Darakhul", "Drachisch", "Elfisch", "Sylvanisch"],
+    sprachen: ["Gemeinsprache", "Darakhul", "Drachisch", "Elfisch", "Sylvanisch"],
     umgebung: ["Wald", "Feenwildnis"],
     bild: "tome-of-beasts/naina.png",
     beschreibung: [
@@ -9837,7 +9837,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 10,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Grasland", "Wald"],
     bild: "tome-of-beasts/nkosi.png",
     beschreibung: [
@@ -9879,7 +9879,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 10,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Grasland", "Wald"],
     bild: "tome-of-beasts/nkosi-rudelherr.png",
     beschreibung: [
@@ -9922,7 +9922,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Verängstigt"],
     sinne: [],
     passiveWahrnehmung: 10,
-    sprachen: ["Gemein", "die Sprache des Fext-Meisters des Noctiny"],
+    sprachen: ["Gemeinsprache", "die Sprache des Fext-Meisters des Noctiny"],
     umgebung: ["Stadt", "Ruinen"],
     bild: "tome-of-beasts/noctiny.png",
     beschreibung: [
@@ -10004,7 +10004,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 8,
-    sprachen: ["Gemein", "Riesisch"],
+    sprachen: ["Gemeinsprache", "Riesisch"],
     umgebung: ["Hügel", "Gebirge"],
     bild: "tome-of-beasts/oger-haeuptling_verdorben.png",
     beschreibung: [
@@ -10217,7 +10217,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Gelähmt", "Bewusstlos"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 11,
-    sprachen: ["Gemein", "Drakonisch", "Zwergensprache", "Elfisch"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Zwergensprache", "Elfisch"],
     umgebung: ["Stadt"],
     bild: "tome-of-beasts/papierdrache.png",
     beschreibung: [
@@ -10388,7 +10388,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Vergiftet"],
     sinne: ["Blindsicht 9 m", "Dunkelsicht 18 m"],
     passiveWahrnehmung: 16,
-    sprachen: ["Gemein", "Infernalisch", "Telepathie 18 m"],
+    sprachen: ["Gemeinsprache", "Infernalisch", "Telepathie 18 m"],
     umgebung: ["Andere Ebenen", "Unterirdisch"],
     bild: "tome-of-beasts/psoglav-daemon.png",
     beschreibung: [
@@ -10541,7 +10541,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein", "Goblinisch", "Infernalisch", "Sylvisch", "Leererede"],
+    sprachen: ["Gemeinsprache", "Goblinisch", "Infernalisch", "Sylvisch", "Leererede"],
     umgebung: ["Ruinen", "Wüste"],
     bild: "tome-of-beasts/qwyllion.png",
     beschreibung: [
@@ -10585,7 +10585,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt", "Erschöpft", "Vergiftet"],
     sinne: [],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Stadt", "Ruinen"],
     bild: "tome-of-beasts/raederwerkstempler.png",
     beschreibung: [
@@ -10655,7 +10655,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: [],
     passiveWahrnehmung: 11,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Wüste", "Ruinen"],
     bild: "tome-of-beasts/ramag.png",
     beschreibung: [
@@ -10740,7 +10740,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Geblendet", "Ertäubt"],
     sinne: ["Blindsicht 9 m (jenseits davon blind)"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Wald", "Dschungel"],
     bild: "tome-of-beasts/rankenfuerst.png",
     beschreibung: [
@@ -10830,7 +10830,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 10,
-    sprachen: ["Himmlisch", "Gemein", "Telepathie 30 m"],
+    sprachen: ["Himmlisch", "Gemeinsprache", "Telepathie 30 m"],
     umgebung: ["Andere Ebenen"],
     bild: "tome-of-beasts/ratatosk.png",
     beschreibung: [
@@ -10873,7 +10873,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Geblendet", "Taub"],
     sinne: [],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "Druidisch", "Elfisch", "Sylvisch"],
+    sprachen: ["Gemeinsprache", "Druidisch", "Elfisch", "Sylvisch"],
     umgebung: ["Dschungel"],
     bild: "tome-of-beasts/ravenala.png",
     beschreibung: [
@@ -11081,7 +11081,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Gelähmt", "Vergiftet"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "Drakonisch"],
+    sprachen: ["Gemeinsprache", "Drakonisch"],
     umgebung: ["Ruinen", "Unterirdisch"],
     bild: "tome-of-beasts/rostdrache.png",
     beschreibung: [
@@ -11126,7 +11126,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Vergiftet"],
     sinne: ["Blutwahrnehmung 27 m", "Dunkelsicht 18 m"],
     passiveWahrnehmung: 19,
-    sprachen: ["Gemein", "Druidisch", "Riesensprache"],
+    sprachen: ["Gemeinsprache", "Druidisch", "Riesensprache"],
     umgebung: ["Wald", "Höhle", "Küste"],
     bild: "tome-of-beasts/rote_hexe.png",
     beschreibung: [
@@ -11169,7 +11169,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Vergiftet", "Betäubt"],
     sinne: ["Blindsicht 3 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 15,
-    sprachen: ["Abyssal", "Gemein", "Telepathie 36 m"],
+    sprachen: ["Abyssal", "Gemeinsprache", "Telepathie 36 m"],
     umgebung: ["Gebirge", "Wald"],
     bild: "tome-of-beasts/ruebezahl.png",
     beschreibung: [
@@ -11214,7 +11214,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Vergiftet"],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 9,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Küste", "Gewässer"],
     bild: "tome-of-beasts/rum-gremlin.png",
     beschreibung: [
@@ -11256,7 +11256,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt", "Gelähmt", "Vergiftet"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Gewässer", "Sumpf"],
     bild: "tome-of-beasts/rusalka.png",
     beschreibung: [
@@ -11341,7 +11341,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Vergiftet"],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 15,
-    sprachen: ["Himmlisch", "Gemein", "Gnoll", "Infernalisch", "Telepathie 36 m"],
+    sprachen: ["Himmlisch", "Gemeinsprache", "Gnoll", "Infernalisch", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen", "Wüste"],
     bild: "tome-of-beasts/salzteufel.png",
     beschreibung: [
@@ -11386,7 +11386,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 15,
-    sprachen: ["Gemein", "Zwergisch", "Riesensprache", "Gnomisch"],
+    sprachen: ["Gemeinsprache", "Zwergisch", "Riesensprache", "Gnomisch"],
     umgebung: ["Wüste", "Ruinen"],
     bild: "tome-of-beasts/sandhexe.png",
     beschreibung: [
@@ -11432,7 +11432,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Erschöpfung", "Verängstigt", "Vergiftet", "Bewusstlos"],
     sinne: ["Wahre Sicht 18 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein", "Himmlisch", "Riesisch", "Infernal", "Umbrasch"],
+    sprachen: ["Gemeinsprache", "Himmlisch", "Riesisch", "Infernal", "Umbrasch"],
     umgebung: ["Andere Ebenen", "Feenwildnis"],
     bild: "tome-of-beasts/sandmann.png",
     beschreibung: [
@@ -11651,7 +11651,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m", "Zittersinn 3 m"],
     passiveWahrnehmung: 10,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
     bild: "tome-of-beasts/schabling-herr.png",
     beschreibung: [
@@ -11695,7 +11695,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m", "Zittersinn 3 m"],
     passiveWahrnehmung: 9,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Stadt", "Unterirdisch"],
     bild: "tome-of-beasts/schabling-scharmuetzler.png",
     beschreibung: [
@@ -11734,7 +11734,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Gelähmt", "Bewusstlos"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 11,
-    sprachen: ["Gemein", "Drakonisch"],
+    sprachen: ["Gemeinsprache", "Drakonisch"],
     umgebung: ["Stadt"],
     bild: "tome-of-beasts/schankdrache.png",
     beschreibung: ["Schankdrachen hocken in belebten Schenken, lärmenden Tavernen und geschäftigen Gasthäusern. Sie sind Fluch und Segen zugleich für jeden Wirt: Mit Vergnügen treiben sie die Stimmung der Gäste in schwindelnde Höhen oder entfachen blutige Kneipenschlägereien. In Städten sind sie meist Unruhestifter und Witzbold; in abgelegenen Reisestationen aber freunden sie sich oft mit dem Wirt an und helfen, aufgeheizte Gemüter zu beruhigen — im Tausch gegen Unterkunft und ein großzügiges Anschreiben.", "Schankdrachen klatschen unaufhörlich. Von ihren Verstecken aus belauschen sie unzählige Geschichten und handeln mit Informationen; boshafte Exemplare schrecken auch vor Erpressung nicht zurück, um ihren Stammplatz zu sichern. Die ältesten unter ihnen werden über 400 Jahre alt und gelten manchen Wirtsfamilien als lebende Familienerbstücke."],
@@ -11773,7 +11773,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein", "Elfisch", "Umbrasch", "Leerensprache"],
+    sprachen: ["Gemeinsprache", "Elfisch", "Umbrasch", "Leerensprache"],
     umgebung: ["Andere Ebenen", "Feenwildnis", "Ruinen"],
     bild: "tome-of-beasts/schattenbestie.png",
     beschreibung: [
@@ -11820,7 +11820,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein", "Elfisch", "Umbral"],
+    sprachen: ["Gemeinsprache", "Elfisch", "Umbral"],
     umgebung: ["Wald", "Andere Ebenen"],
     bild: "tome-of-beasts/schattenfee.png",
     beschreibung: [
@@ -11863,7 +11863,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein", "Elfisch", "Umbral"],
+    sprachen: ["Gemeinsprache", "Elfisch", "Umbral"],
     umgebung: ["Wald", "Andere Ebenen"],
     bild: "tome-of-beasts/schattenfee-duellant.png",
     beschreibung: [
@@ -11908,7 +11908,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 16,
-    sprachen: ["Gemein", "Elfisch", "Umbral"],
+    sprachen: ["Gemeinsprache", "Elfisch", "Umbral"],
     umgebung: ["Wald", "Andere Ebenen"],
     bild: "tome-of-beasts/schattenfee-verzauberin.png",
     beschreibung: [
@@ -11953,7 +11953,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein", "Elfisch", "Umbral"],
+    sprachen: ["Gemeinsprache", "Elfisch", "Umbral"],
     umgebung: ["Wald", "Andere Ebenen"],
     bild: "tome-of-beasts/schattenfee-waechter.png",
     beschreibung: [
@@ -11999,7 +11999,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein", "Elfisch", "Umbral"],
+    sprachen: ["Gemeinsprache", "Elfisch", "Umbral"],
     umgebung: ["Wald", "Andere Ebenen"],
     bild: "tome-of-beasts/schattenfee-waldjaeger.png",
     beschreibung: [
@@ -12043,7 +12043,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Erschöpfung", "Verängstigt", "Gepackt", "Gelähmt", "Versteinert", "Vergiftet", "Liegend", "Fixiert"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 10,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Ruinen", "Unterirdisch"],
     bild: "tome-of-beasts/schemen.png",
     beschreibung: [
@@ -12087,7 +12087,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bewusstlos"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "Darakhul", "Elfisch"],
+    sprachen: ["Gemeinsprache", "Darakhul", "Elfisch"],
     umgebung: ["Ruinen", "Unterirdisch", "Feenwildnis"],
     bild: "tome-of-beasts/scheznyki.png",
     beschreibung: [
@@ -12350,7 +12350,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 16,
-    sprachen: ["Gemein", "Elfisch", "Sylvisch", "Leerensprache"],
+    sprachen: ["Gemeinsprache", "Elfisch", "Sylvisch", "Leerensprache"],
     umgebung: ["Andere Ebenen", "Ruinen"],
     bild: "tome-of-beasts/selang.png",
     beschreibung: [
@@ -12655,7 +12655,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt", "Gelähmt", "Versteinert", "Liegend", "Bewegungsunfähig", "Betäubt"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 11,
-    sprachen: ["Gemein", "Sylvanisch"],
+    sprachen: ["Gemeinsprache", "Sylvanisch"],
     umgebung: ["Wald", "Andere Ebenen"],
     bild: "tome-of-beasts/sluagh-schwarm.png",
     beschreibung: [
@@ -12697,7 +12697,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Geblendet", "Taub", "Erschöpft", "Gelähmt", "Versteinert", "Vergiftet", "Liegend", "Bewusstlos"],
     sinne: ["Blindsicht 18 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "Drakonisch", "Telepathie 75 m"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Telepathie 75 m"],
     umgebung: ["Stadt", "Ruinen"],
     bild: "tome-of-beasts/smaragdauge.png",
     beschreibung: [
@@ -12929,7 +12929,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Vergiftet"],
     sinne: ["Wahre Sicht 27 m"],
     passiveWahrnehmung: 19,
-    sprachen: ["Abyssal", "Gemein", "Darakhul", "Sphinxisch"],
+    sprachen: ["Abyssal", "Gemeinsprache", "Darakhul", "Sphinxisch"],
     umgebung: ["Wüste", "Ruinen", "Unterirdisch"],
     bild: "tome-of-beasts/sphinx_gypsosphinx.png",
     beschreibung: [
@@ -12981,7 +12981,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Wald", "Sumpf"],
     bild: "tome-of-beasts/spiegelhexe.png",
     beschreibung: [
@@ -13114,7 +13114,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Vergiftet", "Bewusstlos"],
     sinne: ["Dunkelsicht 72 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "Leersprache"],
+    sprachen: ["Gemeinsprache", "Leersprache"],
     umgebung: ["Andere Ebenen"],
     bild: "tome-of-beasts/spinne_leng.png",
     beschreibung: [
@@ -13378,7 +13378,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt", "Gelähmt", "Bewusstlos"],
     sinne: ["Wahre Sicht 36 m"],
     passiveWahrnehmung: 22,
-    sprachen: ["Himmlisch", "Gemein", "Drakonisch", "Zwergensprache", "Elfisch", "Infernalisch", "Primordiell"],
+    sprachen: ["Himmlisch", "Gemeinsprache", "Drakonisch", "Zwergensprache", "Elfisch", "Infernalisch", "Primordiell"],
     umgebung: ["Andere Ebenen"],
     bild: "tome-of-beasts/sterndrache.png",
     beschreibung: [
@@ -13430,7 +13430,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Erschöpfung", "Verängstigt", "Gelähmt", "Versteinert", "Vergiftet"],
     sinne: ["Dunkelsicht 90 m"],
     passiveWahrnehmung: 24,
-    sprachen: ["Gemein", "Infernal", "Leeressprache"],
+    sprachen: ["Gemeinsprache", "Infernal", "Leeressprache"],
     umgebung: ["Andere Ebenen", "Ozean"],
     bild: "tome-of-beasts/sternenbrut_des_cthulhu.png",
     beschreibung: [
@@ -13521,7 +13521,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein", "Elfisch"],
+    sprachen: ["Gemeinsprache", "Elfisch"],
     umgebung: ["Andere Ebenen", "Wald"],
     bild: "tome-of-beasts/stryx.png",
     beschreibung: [
@@ -13565,7 +13565,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Vergiftet"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "Infernal", "Gedankenübertragung 30 m"],
+    sprachen: ["Gemeinsprache", "Infernal", "Gedankenübertragung 30 m"],
     umgebung: ["Gebirge"],
     bild: "tome-of-beasts/stuhac.png",
     beschreibung: [
@@ -13612,7 +13612,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 11,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Gewässer", "Sumpf"],
     bild: "tome-of-beasts/subek.png",
     beschreibung: [
@@ -13704,7 +13704,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Erschöpfung", "Gepackt", "Gelähmt", "Versteinert", "Vergiftet", "Liegend", "Bewegungsunfähig", "Bewusstlos"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein", "Zwergisch", "Ursprünglich"],
+    sprachen: ["Gemeinsprache", "Zwergisch", "Ursprünglich"],
     umgebung: ["Arktis", "Gebirge"],
     bild: "tome-of-beasts/thuellai.png",
     beschreibung: [
@@ -13751,7 +13751,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein", "Zwergisch", "Riesensprache"],
+    sprachen: ["Gemeinsprache", "Zwergisch", "Riesensprache"],
     umgebung: ["Gebirge", "Unterirdisch"],
     bild: "tome-of-beasts/thursir-riese.png",
     beschreibung: [
@@ -13791,7 +13791,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Gelähmt", "Bewusstlos"],
     sinne: ["Blindsicht 18 m", "Dunkelsicht 36 m"],
     passiveWahrnehmung: 16,
-    sprachen: ["Gemein", "Darakhul", "Drakonisch", "Untergemein"],
+    sprachen: ["Gemeinsprache", "Darakhul", "Drakonisch", "Untergemein"],
     umgebung: ["Unterirdisch"],
     bild: "tome-of-beasts/tiefendrache.png",
     beschreibung: ["Der Tiefendrache hat glänzend schwarze Schuppen mit violetten Untertönen, ein langes, fast fremdartig wirkendes Gesicht und ausdruckslose schwarze Augen. Am Ende des langen Schwanzes sitzt ein gezackter Stachel. Das Leben unter der Erde hat diese Drachen verändert: Sie fühlen sich unter Aberrationen und Untoten weit wohler als bei Humanoiden, meiden Sonnenlicht und sind an der Oberfläche streng nachtaktiv.", "Tiefendrachen haben sich eine Nische im Unterreich geschaffen und treiben Handel mit den Darachul. Ihr Gift versorgt die Ghoule mit Nachschub, wenn die Population schrumpft; wer bei seinen Herrschern in Ungnade fällt, wird zum Futter für den Drachen. Ein Tiefendrache ist rund 3,7 m lang plus einen knappen Meter Schwanz und kann bis zu 680 kg wiegen. Tiefendrachen leben in lebenslangen Partnerschaften und reproduzieren sich nur alle 10–20 Jahre."],
@@ -13829,7 +13829,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 9,
-    sprachen: ["Gemein", "Leererede"],
+    sprachen: ["Gemeinsprache", "Leererede"],
     umgebung: ["Küste", "Ozean"],
     bild: "tome-of-beasts/tiefenwesen.png",
     beschreibung: [
@@ -13871,7 +13871,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 72 m"],
     passiveWahrnehmung: 16,
-    sprachen: ["Gemein", "Leererede"],
+    sprachen: ["Gemeinsprache", "Leererede"],
     umgebung: ["Küste", "Ozean"],
     bild: "tome-of-beasts/tiefenwesen-archimandrit.png",
     beschreibung: [
@@ -13914,7 +13914,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "Leererede"],
+    sprachen: ["Gemeinsprache", "Leererede"],
     umgebung: ["Küste", "Ozean"],
     bild: "tome-of-beasts/tiefenwesen-hybridpriester.png",
     beschreibung: [
@@ -13955,7 +13955,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Vergiftet"],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 9,
-    sprachen: ["Himmlisch", "Gemein", "Drakonisch", "Infernalisch", "Telepathie 36 m"],
+    sprachen: ["Himmlisch", "Gemeinsprache", "Drakonisch", "Infernalisch", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen"],
     bild: "tome-of-beasts/tinten-teufel.png",
     beschreibung: [
@@ -14051,7 +14051,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 36 m"],
     passiveWahrnehmung: 17,
-    sprachen: ["Gemein", "Riesisch", "Ursprünglich", "Titanisch", "Gedankenübertragung 36 m"],
+    sprachen: ["Gemeinsprache", "Riesisch", "Ursprünglich", "Titanisch", "Gedankenübertragung 36 m"],
     umgebung: ["Ozean", "Gebirge"],
     bild: "tome-of-beasts/titan_uralt.png",
     beschreibung: [
@@ -14228,7 +14228,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Erschöpfung", "Verängstigt", "Gelähmt", "Versteinert", "Vergiftet"],
     sinne: ["Dunkelsicht 60 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Stadt", "Ruinen"],
     bild: "tome-of-beasts/tophet.png",
     beschreibung: [
@@ -14274,7 +14274,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Vergiftet"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 17,
-    sprachen: ["Gemein", "Tiefes Sprechen", "Gnoll", "Infernal", "Tosculi"],
+    sprachen: ["Gemeinsprache", "Tiefes Sprechen", "Gnoll", "Infernal", "Tosculi"],
     umgebung: ["Wald", "Höhle"],
     bild: "tome-of-beasts/tosculi_bienenkoenigin.png",
     beschreibung: [
@@ -14472,7 +14472,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "Druidisch", "Elfisch", "Sylvan"],
+    sprachen: ["Gemeinsprache", "Druidisch", "Elfisch", "Sylvan"],
     umgebung: ["Wald"],
     bild: "tome-of-beasts/treant_weinend.png",
     beschreibung: [
@@ -14516,7 +14516,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "Gigantisch"],
+    sprachen: ["Gemeinsprache", "Gigantisch"],
     umgebung: ["Gewässer", "Ozean", "Sumpf"],
     bild: "tome-of-beasts/troll_see.png",
     beschreibung: [
@@ -14561,7 +14561,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 11,
-    sprachen: ["Gemein", "Trollkin"],
+    sprachen: ["Gemeinsprache", "Trollkin"],
     umgebung: ["Wald", "Gebirge", "Hügel"],
     bild: "tome-of-beasts/trollkin-pluenderer.png",
     beschreibung: [
@@ -14608,7 +14608,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: [],
     passiveWahrnehmung: 10,
-    sprachen: ["Gemein", "Sylvanisch"],
+    sprachen: ["Gemeinsprache", "Sylvanisch"],
     umgebung: ["Stadt", "Gebirge", "Küste"],
     bild: "tome-of-beasts/turmwandler.png",
     beschreibung: [
@@ -14653,7 +14653,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Verängstigt"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 9,
-    sprachen: ["Gemein", "Goblin", "Sylvan", "Umbral"],
+    sprachen: ["Gemeinsprache", "Goblin", "Sylvan", "Umbral"],
     umgebung: ["Stadt", "Ruinen", "Feenwildnis"],
     bild: "tome-of-beasts/uebler_barbier.png",
     beschreibung: [
@@ -14702,7 +14702,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Erschöpfung", "Verängstigt", "Gelähmt", "Versteinert", "Vergiftet"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "Infernalisch"],
+    sprachen: ["Gemeinsprache", "Infernalisch"],
     umgebung: ["Stadt", "Ruinen"],
     bild: "tome-of-beasts/uhrwerksgraeuel.png",
     beschreibung: ["Im Ruhezustand ähnelt ein Uhrwerksgräuel einem Haufen Schrott auf dem Boden, doch in Bewegung enthüllt er eine große, insektenartige Form mit Rauch, der zwischen den Panzerplatten aufsteigt. Seine vielen orangegelben Augen leuchten wie trübe Laternen und verraten keinerlei Ausdruck oder Absicht.", "Uhrwerksgräuel entstehen aus unüberlegten Versuchen, niedere Teufel in Uhrwerks- oder Dampfkonstrukte zu bannen. Zumeist enden solche Experimente katastrophal — doch gelegentlich geht etwas richtig und ein Uhrwerksgräuel wird erschaffen. Diese teuflischen Automaten sind von extremer Boshaftigkeit, frustriert über die Grenzen ihrer neuen Form, und bereiten anderen gerne Leiden. Benötigen weder Luft, Nahrung, Wasser noch Schlaf."],
@@ -14946,7 +14946,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Erschöpfung", "Verängstigt", "Gelähmt", "Versteinert", "Vergiftet"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 14,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Stadt"],
     bild: "tome-of-beasts/uhrwerkswaechter.png",
     beschreibung: ["Uhrwerkswächter sind massiver gebaut als die üblichen Uhrwerksdiener wohlhabender Haushalte. Ihr Körper besteht aus Messing und Eisen, gekleidet in eine lockere Stadtwachen-Uniform. Ihre Bewegungen sind langsam, aber stetig — sie patrouillieren Tag und Nacht endlos durch die Stadt und pausieren nur für Wartung. Ihre Sprache ist langsam und stockend, aber ihre markanten Rufe und Pfiffe bringen menschliche Wächter im Laufschritt herbei. Benötigen weder Luft, Nahrung, Wasser noch Schlaf."],
@@ -15170,7 +15170,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Erschöpfung", "Gepackt", "Gelähmt", "Versteinert", "Vergiftet", "Liegend", "Festgehalten"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 15,
-    sprachen: ["Gemein", "Umbral", "Leersprache"],
+    sprachen: ["Gemeinsprache", "Umbral", "Leersprache"],
     umgebung: ["Andere Ebenen", "Ruinen", "Stadt"],
     bild: "tome-of-beasts/vampir_umbral.png",
     beschreibung: [
@@ -15256,7 +15256,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Vergiftet"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 14,
-    sprachen: ["Himmlisch", "Gemein", "Drakonisch", "Infernalisch", "Telepathie 36 m"],
+    sprachen: ["Himmlisch", "Gemeinsprache", "Drakonisch", "Infernalisch", "Telepathie 36 m"],
     umgebung: ["Andere Ebenen", "Stadt"],
     bild: "tome-of-beasts/vergoldeter-teufel.png",
     beschreibung: [
@@ -15397,7 +15397,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 18,
-    sprachen: ["Gemein", "Sylvan", "Telepathie 18 m (nur Tiere)"],
+    sprachen: ["Gemeinsprache", "Sylvan", "Telepathie 18 m (nur Tiere)"],
     umgebung: ["Wald", "Feenwildnis"],
     bild: "tome-of-beasts/vila.png",
     beschreibung: [
@@ -15537,7 +15537,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Verängstigt"],
     sinne: ["Wahre Sicht 18 m"],
     passiveWahrnehmung: 18,
-    sprachen: ["Gemein", "Zwergisch", "Gigantisch"],
+    sprachen: ["Gemeinsprache", "Zwergisch", "Gigantisch"],
     umgebung: ["Andere Ebenen", "Grasland", "Gebirge"],
     bild: "tome-of-beasts/walkuere.png",
     beschreibung: [
@@ -15628,7 +15628,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 15,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Wald", "Grasland"],
     bild: "tome-of-beasts/weisser_affe.png",
     beschreibung: [
@@ -15669,7 +15669,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Erschöpft", "Gelähmt", "Fixiert"],
     sinne: ["Blindsicht 3 m", "Dunkelsicht 18 m"],
     passiveWahrnehmung: 24,
-    sprachen: ["Gemein", "Drakonisch", "Ursprünglich"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Ursprünglich"],
     umgebung: ["Gebirge"],
     bild: "tome-of-beasts/winddrache_erwachsen.png",
     beschreibung: ["Winddrachen betrachten jeden Ort, den der Wind berührt, als ihr Eigentum. Kaum eine andere Drachengattung ist so für ihre Arroganz bekannt — doch ihre ehrfurchtgebietende Macht gibt dieser Haltung Gewicht. Als Prahler und Tyrannen nehmen sie jede vermeintliche Herausforderung persönlich und erfreuen sich an der Demütigung von Rivalen. Sie herrschen von den höchsten Gipfeln aus über weite Gebiete, die sie kaum selbst besuchen, und kehren nach langen Wanderungen stets zurück, um neue Generationen zu unterjochen. Ihr Hort besteht nicht aus Bergen von Münzen, sondern aus wenigen einzigartigen Trophäen und historischen Schätzen — oft leicht zu tragen."],
@@ -15725,7 +15725,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Erschöpft", "Gelähmt", "Fixiert"],
     sinne: ["Blindsicht 3 m", "Dunkelsicht 18 m"],
     passiveWahrnehmung: 17,
-    sprachen: ["Gemein", "Drakonisch", "Ursprünglich"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Ursprünglich"],
     umgebung: ["Gebirge"],
     bild: "tome-of-beasts/winddrache_jung.png",
     beschreibung: ["Junge Winddrachen haben bereits die Prägung ihrer Gattung verinnerlicht — Herrschaftsansprüche über alles, was der Wind berührt, und eine kaum gebändigte Aggression gegenüber allem, was diese Ansprüche in Frage stellt."],
@@ -15764,7 +15764,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Erschöpft", "Gelähmt", "Fixiert"],
     sinne: ["Blindsicht 3 m", "Dunkelsicht 18 m"],
     passiveWahrnehmung: 27,
-    sprachen: ["Gemein", "Drakonisch", "Zwergisch", "Elfisch", "Ursprünglich"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Zwergisch", "Elfisch", "Ursprünglich"],
     umgebung: ["Gebirge"],
     bild: "tome-of-beasts/winddrache_uralt.png",
     beschreibung: ["Uralte Winddrachen sind Legenden lebendiger Beherrschung — Stürme personifiziert in Schuppenleib und Klaue. Sie haben Generationen von Unterworfenen kommen und gehen sehen und dulden keinerlei Zweifel an ihrer Herrschaft. Ihr Hort ist von unvergleichlichem historischen Wert, meist aus einzigartigen Trophäen, die sie über Jahrhunderte zusammengetragen haben."],
@@ -15902,7 +15902,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein"],
+    sprachen: ["Gemeinsprache"],
     umgebung: ["Grasland"],
     bild: "tome-of-beasts/wuehling.png",
     beschreibung: ["Diese hellbraunen, pelzigen Kreaturen erkunden neugierig ihre Umgebung und finden Halt in der Gemeinschaft ihrer Artgenossen. Wühlings arbeiten bei jeder Aufgabe zusammen: Tunnel graben, nach Nahrung suchen und ihre Jungen aufziehen. Sie sind Allesfresser und fressen Wurzeln, Beeren, Insekten und Reptilien — Schlangen gelten bei ihnen als besondere Delikatesse. Die fortgeschrittensten Wühlingsiedlungen legen primitive Farmen an. Bei Gefahr ziehen sie sich in ihre Bauten zurück, während die Stärksten neue Tunnel graben und die Ausgänge versperren. Ein von seiner Gemeinschaft getrennter Wühling verfällt in Melancholie und stirbt gewöhnlich innerhalb einer Woche an Einsamkeit."],
@@ -15986,7 +15986,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: [],
     passiveWahrnehmung: 18,
-    sprachen: ["Gemein", "Riesensprache"],
+    sprachen: ["Gemeinsprache", "Riesensprache"],
     umgebung: ["Wüste"],
     bild: "tome-of-beasts/wuestenriese.png",
     beschreibung: [
@@ -16170,7 +16170,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m", "Zittersinn 36 m"],
     passiveWahrnehmung: 16,
-    sprachen: ["Gemein", "Tiefensprache", "Untergemein"],
+    sprachen: ["Gemeinsprache", "Tiefensprache", "Untergemein"],
     umgebung: ["Andere Ebenen"],
     bild: "tome-of-beasts/xhkarsh.png",
     beschreibung: [
@@ -16304,7 +16304,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Bezaubert", "Verängstigt"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 11,
-    sprachen: ["Gemein", "Riesensprache", "Trollkin"],
+    sprachen: ["Gemeinsprache", "Riesensprache", "Trollkin"],
     umgebung: ["Wald", "Ruinen"],
     bild: "tome-of-beasts/ziegenmann.png",
     beschreibung: [
@@ -16383,7 +16383,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Gelähmt", "Bewusstlos"],
     sinne: ["Blindsicht 18 m", "Dunkelsicht 27 m"],
     passiveWahrnehmung: 18,
-    sprachen: ["Gemein", "Drakonisch", "Elfisch", "Sylvanisch"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Elfisch", "Sylvanisch"],
     umgebung: ["Wald", "Gewässer", "Höhle"],
     bild: "tome-of-beasts/zmey.png",
     beschreibung: [
@@ -16436,7 +16436,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: ["Gelähmt", "Bewusstlos"],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 13,
-    sprachen: ["Gemein", "Drakonisch", "Sylvanisch"],
+    sprachen: ["Gemeinsprache", "Drakonisch", "Sylvanisch"],
     umgebung: ["Wald", "Gewässer"],
     bild: "tome-of-beasts/zmey-kopfling.png",
     beschreibung: [
@@ -16478,7 +16478,7 @@ window.MONSTER_DATA_TOME_OF_BEASTS = [
     zustandsimmunitaeten: [],
     sinne: ["Dunkelsicht 18 m"],
     passiveWahrnehmung: 12,
-    sprachen: ["Gemein", "Sylvanisch"],
+    sprachen: ["Gemeinsprache", "Sylvanisch"],
     umgebung: ["Stadt"],
     bild: "tome-of-beasts/zwietracht.png",
     beschreibung: [

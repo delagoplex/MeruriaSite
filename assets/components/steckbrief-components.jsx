@@ -654,7 +654,7 @@ const RUESTUNGS_OPT  = ['Leichte Rüstung','Mittelschwere Rüstung','Schwere Rü
 const WAFFEN_OPT     = ['Einfache Waffen','Kriegswaffen'];
 const FAHRZEUGE_OPT  = ['Landfahrzeuge','Wasserfahrzeuge'];
 const SPRACHEN_LISTE = [
-  'Gemein','Zwergisch','Elfisch','Riesisch','Gnomisch','Goblinisch','Halblingisch','Orkisch',
+  'Gemeinsprache','Zwergisch','Elfisch','Riesisch','Gnomisch','Goblinisch','Halblingisch','Orkisch',
   'Abyssisch','Celestisch','Drakonisch','Tiefensprache','Infernalisch','Sylvanisch',
   'Gemeinsprache der Unterreiche','Urtümlich',
 ];
@@ -716,9 +716,9 @@ function EditableUebungenCard({ char, upd }) {
   const rüst = normArr(u.ruestungen), waf = normArr(u.waffen);
   const fahr = normArr(u.fahrzeuge), spr = normArr(u.sprachen), werk = normArr(u.werkzeuge);
 
-  const selStyle = {fontFamily:"var(--font-mono)",fontSize:8.5,color:"rgba(124,77,255,0.6)",
-    background:"rgba(7,4,18,0.8)",border:"1px solid rgba(124,77,255,0.2)",borderRadius:2,
-    padding:"2px 5px",cursor:"pointer",outline:"none",marginTop:3};
+  const selStyle = {fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(200,190,240,0.8)",width:"100%",
+    background:"rgba(7,4,18,0.9)",border:"1px solid rgba(124,77,255,0.25)",borderRadius:2,
+    padding:"4px 6px",cursor:"pointer",outline:"none",marginTop:3};
 
   function ToggleRow({label, arr, opts, field}) {
     return (
