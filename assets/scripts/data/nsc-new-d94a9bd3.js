@@ -122,6 +122,36 @@ function factLabel(key) {
 // Kein Seeding mehr — alles startet blank, DM schaltet explizit frei.
 function defaultUnlockedFor(_nsc) { return []; }
 
+// ── Status-Gruppen: objektiver Zustand vs. Haltung gegenüber der Gruppe ──────
+const NSC_ZUSTAENDE = ['Lebendig','Verschollen','Gefallen','Verstorben'];
+const NSC_HALTUNGEN = ['Verbündet','Neutral','Feind'];
+
+// Effektiver Status aus Sicht einer Perspektive: Ausnahmen pro Charakter
+// (nsc.haltungOverrides = { charId:'Feind' }) ersetzen die Gruppen-Haltung.
+// Spieler-Perspektiven ('player:…') greifen nur, wenn alle Charaktere des
+// Spielers dieselbe effektive Haltung haben — sonst bleibt der Gruppenwert.
+function nscEffectiveStatus(nsc, persp, players = []) {
+  const st = nsc.status || [];
+  if (!persp || persp === 'alle' || persp === '__dm') return st;
+  const ov = nsc.haltungOverrides || {};
+  let charIds = [persp];
+  if (String(persp).startsWith('player:')) {
+    const p = players.find(x => x.id === persp);
+    charIds = (p && p.charIds) || [];
+  }
+  const vals = [...new Set(charIds.map(cid => ov[cid] || ''))];
+  const val = vals.length === 1 ? vals[0] : '';
+  if (!val) return st;
+  const out = [];
+  let placed = false;
+  for (const s of st) {
+    if (NSC_HALTUNGEN.includes(s)) { if (!placed) { out.push(val); placed = true; } }
+    else out.push(s);
+  }
+  if (!placed) out.push(val);
+  return out;
+}
+
 // Sektion, hinter deren Sichtbarkeits-Auge ein indexierter Fakt-Key hängt
 const NSC_SEC_OF_PREFIX = { vna:'vname', eig:'pers', tal:'pers', mak:'pers', rou:'routine',
   gew:'gewohnheiten', aus:'ausr', beg:'begleiter', mot:'motive', fam:'kontakte', fre:'kontakte', riv:'kontakte' };
@@ -207,6 +237,7 @@ function mapNscRow(row) {
     habe:         row.habe ?? 0,
     motivationen: row.motivationen || [],
     geheimnisse,
+    haltungOverrides: row.haltung_overrides || {},
     kontakte:     row.kontakte || { familie:[], freunde:[], rivalen:[] },
     sections:     row.sections || [],
     fieldVis:     row.field_visibility || {},
@@ -408,7 +439,8 @@ function useUnlocks(nscs, charPids, activePerspective='alle', players=[]) {
   };
 
   return { byPersp, isUnlocked, toggleUnlock, toggleForPids, unlockStateForPids,
-           setKeysForPid, resetForPids, unlockedFor, stageFor, resetAll, activePerspective };
+           setKeysForPid, resetForPids, unlockedFor, stageFor, resetAll, activePerspective,
+           effectiveStatusFor: nsc => nscEffectiveStatus(nsc, activePerspective, players) };
 }
 
 // ── Helpers ──────────────────────────────────────────────
@@ -876,6 +908,7 @@ Object.assign(window, {
   GOLD, GOLD_SOFT, GOLD_GLOW, goldA,
   hexPoints, hexPointsInset, hexClipInset, hexA, effStage, accentOf, romanFor,
   factsOf, factLabel, defaultUnlockedFor, stageFromUnlocked, nscFieldVisible,
+  NSC_ZUSTAENDE, NSC_HALTUNGEN, nscEffectiveStatus,
   unlockableFactsOf, NSC_SEC_OF_PREFIX,
   MERURIA_MONTHS, MERURIA_MSTARTS, meruriaDoyParts, meruriaDoyText, meruriaZodiacOf,
   mapNscRow, useNSCData, useUnlocks,

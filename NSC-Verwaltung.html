@@ -32,6 +32,7 @@ const { useState, useEffect, useMemo, useRef, useCallback } = React;
 const { hexA, mapNscRow, factsOf, unlockableFactsOf, NSC_SEC_OF_PREFIX, useUnlocks, stageFromUnlocked,
         MERURIA_MONTHS, MERURIA_MSTARTS, meruriaDoyParts, meruriaDoyText, meruriaZodiacOf,
         STATUS_DEF, SiteNav, SiteGate } = window;
+const HALTUNGEN = window.NSC_HALTUNGEN || ['Verbündet','Neutral','Feind'];
 
 const T = () => window.NSC_TOOL || { divisions:[], statuses:[], klassen:[], rassen:[], raenge:{}, gottheiten:{}, hintergruende:[], groessen:[], gesinnungen:[] };
 const MONO = 'var(--font-mono)';
@@ -99,6 +100,7 @@ function nscToRow(n) {
     habe: parseInt(n.habe) || 0,
     motivationen: n.motivationen || [],
     geheimnisse: n.geheimnisse || [],
+    haltung_overrides: n.haltungOverrides || {},
     kontakte: n.kontakte || { familie:[], freunde:[], rivalen:[] },
     sections: n.sections || [],
     field_visibility: n.fieldVis || {},
@@ -162,12 +164,59 @@ function FieldHead({ label, eye }) {
     </span>
   );
 }
-function StrList({ list, onChange, placeholder, addLabel, eye }) {
+/* Drag&Drop-Umsortierung für Listenzeilen: gezogen wird nur am Anfasser,
+   eine Linie zwischen den Zeilen zeigt die Einfügeposition. */
+function useRowDnD(rows, commit) {
+  const [dragging, setDragging] = useState(null);
+  const [over, setOver] = useState(null); // { i, after }
+  const reset = () => { setDragging(null); setOver(null); };
+  const target = (e, i) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    return { i, after:e.clientY > r.top + r.height / 2 };
+  };
+  const rowProps = i => ({
+    'data-dnd-row': true,
+    onDragOver: e => { if (dragging == null) return; e.preventDefault(); e.dataTransfer.dropEffect = 'move';
+      const t = target(e, i); setOver(o => (o && o.i === t.i && o.after === t.after) ? o : t); },
+    onDragLeave: e => { if (dragging == null) return;
+      if (!e.currentTarget.contains(e.relatedTarget)) setOver(o => (o && o.i === i) ? null : o); },
+    onDrop: e => { if (dragging == null) return; e.preventDefault();
+      const t = target(e, i); let to = t.i + (t.after ? 1 : 0);
+      const f = dragging; reset();
+      if (f < to) to--;
+      if (to === f) return;
+      const a = [...rows]; const [mv] = a.splice(f, 1); a.splice(to, 0, mv);
+      commit(a); },
+  });
+  const handleProps = i => ({
+    draggable: true,
+    onDragStart: e => { setDragging(i); e.dataTransfer.effectAllowed = 'move';
+      const row = e.currentTarget.closest('[data-dnd-row]');
+      if (row && e.dataTransfer.setDragImage) e.dataTransfer.setDragImage(row, 24, row.offsetHeight / 2); },
+    onDragEnd: reset,
+  });
+  const indicator = i => (dragging != null && over && over.i === i) ? (
+    <div style={{ position:'absolute', left:0, right:0, [over.after ? 'bottom' : 'top']:-4, height:2, borderRadius:1,
+      background:'linear-gradient(90deg, #7c4dff, rgba(124,77,255,0.25))', boxShadow:'0 0 8px rgba(124,77,255,0.7)',
+      pointerEvents:'none', zIndex:2 }}/>
+  ) : null;
+  return { dragging, rowProps, handleProps, indicator };
+}
+
+function StrList({ list, onChange, placeholder, addLabel, eye, sortable }) {
   const rows = list || [];
+  const dnd = useRowDnD(rows, onChange);
   return (
     <div>
       {rows.map((val, i) => (
-        <div key={i} style={{ display:'grid', gridTemplateColumns:eye ? '1fr auto auto' : '1fr auto', gap:6, marginBottom:6, alignItems:'center' }}>
+        <div key={i} {...(sortable ? dnd.rowProps(i) : {})}
+          style={{ position:'relative', display:'grid', gridTemplateColumns:(sortable ? 'auto ' : '') + (eye ? '1fr auto auto' : '1fr auto'), gap:6, marginBottom:6, alignItems:'center',
+            opacity:sortable && dnd.dragging === i ? 0.35 : 1, transition:'opacity 0.12s' }}>
+          {sortable && dnd.indicator(i)}
+          {sortable && (
+            <span title="Ziehen zum Umsortieren" {...dnd.handleProps(i)}
+              style={{ cursor:'grab', color:'rgba(160,140,255,0.4)', fontSize:13, padding:'0 3px', userSelect:'none' }}>⠿</span>
+          )}
           <input placeholder={placeholder} value={val}
             onChange={e => { const a = [...rows]; a[i] = e.target.value; onChange(a); }} style={inpSt}/>
           {eye ? eye(i) : null}
@@ -681,7 +730,9 @@ function Editor(props) {
 
   const gebParts = meruriaDoyParts(sel.geburtstag_doy);
   const gebZ = meruriaZodiacOf(sel.geburtstag_doy);
-  const rouDrag = useRef(null);
+  const rouDnd = useRowDnD(sel.routine || [], a => updSel('routine', a));
+  const [showHaltungOv, setShowHaltungOv] = useState(false);
+  const [haltungOvSearch, setHaltungOvSearch] = useState('');
 
   // Statblock
   const AD = { STR:'STÄ', DEX:'GES', CON:'KON', INT:'INT', WIS:'WEI', CHA:'CHA' };
@@ -739,18 +790,86 @@ function Editor(props) {
               style={{ width:'100%', padding:'2px 0', background:'transparent', border:'none', borderBottom:'1px dashed rgba(124,77,255,0.25)', color:'#f0eeff', fontFamily:DISP, fontSize:24, letterSpacing:'0.05em', outline:'none', boxSizing:'border-box' }}/>
             <input value={sel.titel || ''} onChange={e => updSel('titel', e.target.value)} placeholder="Titel oder Beiname (optional)" title="Titel bearbeiten"
               style={{ width:'100%', marginTop:4, padding:'2px 0', background:'transparent', border:'none', borderBottom:'1px dashed rgba(124,77,255,0.15)', color:'rgba(200,190,240,0.65)', fontFamily:MONO, fontSize:10, letterSpacing:'0.2em', textTransform:'uppercase', outline:'none', boxSizing:'border-box' }}/>
-            <div style={{ display:'flex', flexWrap:'wrap', gap:5, marginTop:9 }}>
-              {T().statuses.map(st => {
-                const on = (sel.status || []).includes(st.name);
-                return (
-                  <button key={st.name} onClick={() => updSel('status', on ? sel.status.filter(x => x !== st.name) : [...(sel.status || []), st.name])}
-                    style={{ padding:'4px 11px', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.12em', textTransform:'uppercase', cursor:'pointer', borderRadius:2,
-                      background:on ? hexA(st.color, 0.18) : 'transparent',
-                      border:`1px solid ${on ? hexA(st.color, 0.65) : 'rgba(160,140,255,0.18)'}`,
-                      color:on ? '#f0eeff' : 'rgba(200,190,240,0.4)' }}>{st.glyph} {st.name}</button>
-                );
-              })}
-            </div>
+            {(() => {
+              const groups = [
+                ['Zustand', T().statuses.filter(s => !HALTUNGEN.includes(s.name))],
+                ['Haltung ggü. Gruppe', T().statuses.filter(s => HALTUNGEN.includes(s.name))],
+              ];
+              const pick = (names, name, on) => {
+                const rest = (sel.status || []).filter(x => !names.includes(x));
+                updSel('status', on ? rest : [...rest, name]);
+              };
+              const ovMap = sel.haltungOverrides || {};
+              const ovCount = charPersp.filter(c => ovMap[c.id]).length;
+              return (
+                <div style={{ display:'flex', flexWrap:'wrap', alignItems:'flex-start', gap:16, marginTop:9 }}>
+                  {groups.map(([glabel, defs], gi) => {
+                    const names = defs.map(d => d.name);
+                    return (
+                      <div key={glabel} style={gi ? { borderLeft:'1px solid rgba(124,77,255,0.22)', paddingLeft:16 } : null}>
+                        <div style={{ fontFamily:MONO, fontSize:7.5, letterSpacing:'0.22em', color:'rgba(160,140,255,0.45)', textTransform:'uppercase', marginBottom:5 }}>{glabel}</div>
+                        <div style={{ display:'flex', flexWrap:'wrap', gap:5, alignItems:'center' }}>
+                          {defs.map(st => {
+                            const on = (sel.status || []).includes(st.name);
+                            return (
+                              <button key={st.name} onClick={() => pick(names, st.name, on)}
+                                style={{ padding:'4px 11px', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.12em', textTransform:'uppercase', cursor:'pointer', borderRadius:2,
+                                  background:on ? hexA(st.color, 0.18) : 'transparent',
+                                  border:`1px solid ${on ? hexA(st.color, 0.65) : 'rgba(160,140,255,0.18)'}`,
+                                  color:on ? '#f0eeff' : 'rgba(200,190,240,0.4)' }}>{st.glyph} {st.name}</button>
+                            );
+                          })}
+                          {gi === 1 && (
+                            <button onClick={() => setShowHaltungOv(v => !v)} title="Abweichende Haltung für einzelne Charaktere"
+                              style={{ padding:'4px 9px', fontFamily:MONO, fontSize:8, letterSpacing:'0.1em', textTransform:'uppercase', cursor:'pointer', borderRadius:2,
+                                background:ovCount ? 'rgba(255,180,80,0.12)' : 'transparent',
+                                border:`1px dashed ${ovCount ? 'rgba(255,180,80,0.6)' : 'rgba(160,140,255,0.3)'}`,
+                                color:ovCount ? '#ffb850' : 'rgba(200,190,240,0.45)' }}>± Ausnahmen{ovCount ? ' · ' + ovCount : ''}</button>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })()}
+            {showHaltungOv && (
+              <div style={{ marginTop:10, padding:'10px 14px', border:'1px dashed rgba(124,77,255,0.3)', borderRadius:4, background:'rgba(124,77,255,0.04)' }}>
+                <div style={{ fontFamily:MONO, fontSize:7.5, letterSpacing:'0.22em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase', marginBottom:8 }}>Haltung · Ausnahmen pro Charakter — Standard: wie Gruppe</div>
+                <input value={haltungOvSearch} onChange={e => setHaltungOvSearch(e.target.value)} placeholder="Charakter suchen …"
+                  style={{ ...inpSt, width:220, padding:'5px 9px', fontSize:12, marginBottom:10 }}/>
+                {[...charPersp]
+                  .filter(c => c.label.toLowerCase().includes(haltungOvSearch.trim().toLowerCase()))
+                  .sort((a, b) => {
+                    const ao = (sel.haltungOverrides || {})[a.id] ? 0 : 1, bo = (sel.haltungOverrides || {})[b.id] ? 0 : 1;
+                    return ao - bo || a.label.localeCompare(b.label, 'de');
+                  })
+                  .map(c => {
+                  const ov = (sel.haltungOverrides || {})[c.id] || '';
+                  const setOv = name => { const next = { ...(sel.haltungOverrides || {}) }; if (name) next[c.id] = name; else delete next[c.id]; updSel('haltungOverrides', next); };
+                  return (
+                    <div key={c.id} style={{ display:'grid', gridTemplateColumns:'minmax(120px, 180px) repeat(4, max-content)', alignItems:'center', gap:6, marginBottom:5 }}>
+                      <span title={c.label} style={{ fontFamily:BODY, fontSize:12, color:'#c8c0e8', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{c.label}</span>
+                      {['', ...HALTUNGEN].map(name => {
+                        const def = name ? ((STATUS_DEF || {})[name] || { color:'#c8c0e8', glyph:'◇' }) : null;
+                        const on = ov === name;
+                        const col = def ? def.color : '#a89cd8';
+                        return (
+                          <button key={name || 'default'} onClick={() => setOv(name)}
+                            style={{ padding:'3px 9px', fontFamily:MONO, fontSize:8, letterSpacing:'0.1em', textTransform:'uppercase', cursor:'pointer', borderRadius:2,
+                              background:on ? hexA(col, 0.16) : 'transparent',
+                              border:`1px solid ${on ? hexA(col, 0.6) : 'rgba(160,140,255,0.18)'}`,
+                              color:on ? '#f0eeff' : 'rgba(200,190,240,0.4)' }}>{def ? def.glyph + ' ' + name : 'wie Gruppe'}</button>
+                        );
+                      })}
+                    </div>
+                  );
+                })}
+                {!charPersp.length && <div style={{ fontFamily:BODY, fontSize:12, color:'rgba(200,190,240,0.5)' }}>Keine Spielercharaktere gefunden.</div>}
+                {charPersp.length > 0 && !charPersp.some(c => c.label.toLowerCase().includes(haltungOvSearch.trim().toLowerCase())) &&
+                  <div style={{ fontFamily:BODY, fontSize:12, color:'rgba(200,190,240,0.5)' }}>Kein Charakter passt zu „{haltungOvSearch.trim()}".</div>}
+              </div>
+            )}
             <div style={{ display:'flex', flexWrap:'wrap', gap:8, marginTop:12 }}>
               <button onClick={async () => {
                   const v = !sel.visible;
@@ -871,7 +990,7 @@ function Editor(props) {
             )}
             <div style={{ marginTop:16 }}>
               <FieldHead label="Voller Name · Namensteile einzeln sichtbar schaltbar" eye={<Eye on={vis('vname')} onClick={() => toggleFieldVis('vname')}/>}/>
-              <StrList list={sel.vollerName} onChange={a => updSel('vollerName', a)} placeholder="Namensteil …" addLabel="Namensteil"
+              <StrList list={sel.vollerName} onChange={a => updSel('vollerName', a)} placeholder="Namensteil …" addLabel="Namensteil" sortable
                 eye={i => <Eye on={vis(`vna-${i}`)} onClick={() => toggleFieldVis(`vna-${i}`)}/>}/>
             </div>
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14, marginTop:16 }}>
@@ -985,15 +1104,12 @@ function Editor(props) {
             <div style={cardSt}>
               <SecHeader title="Routine" visOn={vis('routine')} onVis={() => toggleFieldVis('routine')} onRemove={() => rmSec('routine')}/>
               {(sel.routine || []).map((e, i) => (
-                <div key={i} draggable
-                  onDragStart={() => { rouDrag.current = i; }}
-                  onDragOver={ev => ev.preventDefault()}
-                  onDrop={() => { const from = rouDrag.current; rouDrag.current = null;
-                    if (from == null || from === i) return;
-                    const a = [...sel.routine]; const [mv] = a.splice(from, 1); a.splice(i, 0, mv);
-                    updSel('routine', a); }}
-                  style={{ display:'grid', gridTemplateColumns:'auto 150px 200px 1fr auto auto', gap:6, marginBottom:6, alignItems:'center' }}>
-                  <span title="Ziehen zum Umsortieren" style={{ cursor:'grab', color:'rgba(160,140,255,0.4)', fontSize:13, padding:'0 3px', userSelect:'none' }}>⠿</span>
+                <div key={i} {...rouDnd.rowProps(i)}
+                  style={{ position:'relative', display:'grid', gridTemplateColumns:'auto 150px 200px 1fr auto auto', gap:6, marginBottom:6, alignItems:'center',
+                    opacity:rouDnd.dragging === i ? 0.35 : 1, transition:'opacity 0.12s' }}>
+                  {rouDnd.indicator(i)}
+                  <span title="Ziehen zum Umsortieren" {...rouDnd.handleProps(i)}
+                    style={{ cursor:'grab', color:'rgba(160,140,255,0.4)', fontSize:13, padding:'0 3px', userSelect:'none' }}>⠿</span>
                   <input placeholder="Uhrzeit / Tageszeit" value={e.zeit || ''} onChange={ev => updRow('routine', i, 'zeit', ev.target.value)} style={inpSt}/>
                   <input placeholder="Ort" value={e.ort || ''} onChange={ev => updRow('routine', i, 'ort', ev.target.value)} style={inpSt}/>
                   <input placeholder="Tätigkeit" value={e.tat || ''} onChange={ev => updRow('routine', i, 'tat', ev.target.value)} style={inpSt}/>
@@ -1011,6 +1127,15 @@ function Editor(props) {
               <SecHeader title="Angewohnheiten" visOn={vis('gewohnheiten')} onVis={() => toggleFieldVis('gewohnheiten')} onRemove={() => rmSec('gewohnheiten')}/>
               <StrList list={sel.gewohnheiten} onChange={a => updSel('gewohnheiten', a)} placeholder="Angewohnheit …" addLabel="Angewohnheit"
                 eye={i => <Eye on={vis(`gew-${i}`)} onClick={() => toggleFieldVis(`gew-${i}`)}/>}/>
+            </div>
+          )}
+
+          {/* ── Motivationen ── */}
+          {has('motive') && (
+            <div style={cardSt}>
+              <SecHeader title="Motivationen" visOn={vis('motive')} onVis={() => toggleFieldVis('motive')} onRemove={() => rmSec('motive')}/>
+              <StrList list={sel.motivationen} onChange={a => updSel('motivationen', a)} placeholder="Motivation …" addLabel="Motivation"
+                eye={i => <Eye on={vis(`mot-${i}`)} onClick={() => toggleFieldVis(`mot-${i}`)}/>}/>
             </div>
           )}
 
@@ -1058,15 +1183,6 @@ function Editor(props) {
                 );
               })}
               <button onClick={() => addRow('begleiter', { name:'', art:'' })} style={{ ...addBtnSt, marginTop:4 }}>+ Begleiter</button>
-            </div>
-          )}
-
-          {/* ── Motivationen ── */}
-          {has('motive') && (
-            <div style={cardSt}>
-              <SecHeader title="Motivationen" visOn={vis('motive')} onVis={() => toggleFieldVis('motive')} onRemove={() => rmSec('motive')}/>
-              <StrList list={sel.motivationen} onChange={a => updSel('motivationen', a)} placeholder="Motivation …" addLabel="Motivation"
-                eye={i => <Eye on={vis(`mot-${i}`)} onClick={() => toggleFieldVis(`mot-${i}`)}/>}/>
             </div>
           )}
 
@@ -1226,7 +1342,7 @@ function Editor(props) {
           {/* ── Abschnitt-Chips ── */}
           {(() => {
             const SECS = [['bio','Biografie'],['aussehen','Aussehen'],['pers','Persönlichkeit'],['routine','Routine'],['gewohnheiten','Angewohnheiten'],
-              ['ausr','Ausrüstung & Vermögen'],['begleiter','Begleiter'],['motive','Motivationen'],['kontakte','Kontakte'],
+              ['motive','Motivationen'],['ausr','Ausrüstung & Vermögen'],['begleiter','Begleiter'],['kontakte','Kontakte'],
               ['geheim','Geheimnisse'],['statblock','Statblock (Monster-DB)']];
             const chips = SECS.filter(([k]) => !has(k));
             if (!chips.length) return null;
@@ -1479,10 +1595,18 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
                 ))}
             </div>
             <div style={{ marginTop:12, display:'flex', flexWrap:'wrap', gap:5 }}>
-              {(sel.status || []).map(name => {
+              {((dmView || !window.nscEffectiveStatus) ? (sel.status || []) : window.nscEffectiveStatus(sel, persp)).map(name => {
                 const def = (STATUS_DEF || {})[name] || { color:'#c8c0e8', glyph:'◇' };
                 return (
                   <span key={name} style={{ fontFamily:MONO, fontSize:8.5, letterSpacing:'0.12em', textTransform:'uppercase', padding:'3px 9px', background:hexA(def.color, 0.12), border:`1px solid ${hexA(def.color, 0.4)}`, borderRadius:2, color:hexA(def.color, 0.95) }}>{def.glyph} {name}</span>
+                );
+              })}
+              {dmView && charPersp.filter(c => (sel.haltungOverrides || {})[c.id]).map(c => {
+                const name = sel.haltungOverrides[c.id];
+                const def = (STATUS_DEF || {})[name] || { color:'#c8c0e8', glyph:'◇' };
+                return (
+                  <span key={'ov-' + c.id} title="Abweichende Haltung für diesen Charakter"
+                    style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.1em', textTransform:'uppercase', padding:'3px 8px', border:`1px dashed ${hexA(def.color, 0.5)}`, borderRadius:2, color:hexA(def.color, 0.8) }}>± {c.label}: {name}</span>
                 );
               })}
             </div>
@@ -1634,6 +1758,21 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
             </React.Fragment>
           )}
 
+          {/* Motivationen */}
+          {pvMot && (
+            <React.Fragment>
+              {secHead('Motivationen', openCount(pvMot.rows), pvMot.rows.length, mkTgAll('motive', pvMot.keys))}
+              <div style={{ display:'flex', flexDirection:'column', gap:6 }}>
+                {pvMot.rows.map((r, i) => (
+                  <div key={i} style={{ display:'flex', gap:8, alignItems:'center' }}>
+                    <div style={{ padding:'6px 10px 6px 8px', borderLeft:`2px solid ${hexA(acc, 0.55)}`, background:hexA(acc, 0.05), fontFamily:BODY, fontSize:12.5, color:'#f0eeff', lineHeight:1.55, flex:1, minWidth:0, opacity:r.open ? 1 : 0.38 }}>{r.t}</div>
+                    {r.tg}
+                  </div>
+                ))}
+              </div>
+            </React.Fragment>
+          )}
+
           {/* Eigenschaften */}
           {pvEig && (
             <React.Fragment>
@@ -1735,21 +1874,6 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
               </span>
               {mkTg('ausr', 'habe')}
             </div>
-          )}
-
-          {/* Motivationen */}
-          {pvMot && (
-            <React.Fragment>
-              {secHead('Motivationen', openCount(pvMot.rows), pvMot.rows.length, mkTgAll('motive', pvMot.keys))}
-              <div style={{ display:'flex', flexDirection:'column', gap:6 }}>
-                {pvMot.rows.map((r, i) => (
-                  <div key={i} style={{ display:'flex', gap:8, alignItems:'center' }}>
-                    <div style={{ padding:'6px 10px 6px 8px', borderLeft:`2px solid ${hexA(acc, 0.55)}`, background:hexA(acc, 0.05), fontFamily:BODY, fontSize:12.5, color:'#f0eeff', lineHeight:1.55, flex:1, minWidth:0, opacity:r.open ? 1 : 0.38 }}>{r.t}</div>
-                    {r.tg}
-                  </div>
-                ))}
-              </div>
-            </React.Fragment>
           )}
 
           {/* Kontakte */}

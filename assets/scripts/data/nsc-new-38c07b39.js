@@ -210,7 +210,7 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
                   ))}
                 </div>
               )}
-              {!isUnknown && <StatusPills status={nsc.status}/>}
+              {!isUnknown && <StatusPills status={unlocks && unlocks.effectiveStatusFor ? unlocks.effectiveStatusFor(nsc) : nsc.status}/>}
             </div>
           </div>
 

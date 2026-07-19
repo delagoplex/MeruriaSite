@@ -590,7 +590,7 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
             {/* Status pills — nur wenn bekannt */}
             {stage >= 1 && (
               <div style={{ marginTop:12 }}>
-                <StatusPills status={nsc.status}/>
+                <StatusPills status={!gm && unlocks.effectiveStatusFor ? unlocks.effectiveStatusFor(nsc) : nsc.status}/>
               </div>
             )}
           </div>
@@ -760,6 +760,22 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
             </React.Fragment>
           )}
 
+          {/* Section: Motivationen */}
+          {hasSec('motive') && motivKeys.length > 0 && (
+            <React.Fragment>
+              <DPSection title="Motivationen" acc={acc} count={cnt(motivKeys)} total={motivKeys.length}/>
+              <IndexedList items={nsc.motivationen} keyPrefix="mot" isOpen={isOpen} onToggle={tg} toggleState={ts} gm={gm} acc={acc}
+                render={(it, i, open) => (
+                  <div style={{
+                    padding:'6px 10px 6px 8px',
+                    borderLeft:`2px solid ${dpHA(acc, open ? 0.55 : 0.25)}`,
+                    background: dpHA(acc, open ? 0.05 : 0.02),
+                    fontFamily:'var(--font-body)', fontSize:12.5, color: open ? '#f0eeff' : 'rgba(200,190,240,0.55)', lineHeight:1.55,
+                  }}>{it}</div>
+                )}/>
+            </React.Fragment>
+          )}
+
           {/* Section: Eigenschaften */}
           {hasSec('pers') && eigKeys.length > 0 && (
             <React.Fragment>
@@ -851,22 +867,6 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
               </span>
               {gm && <UnlockToggle state={ts('habe')} onClick={() => tg('habe')} size="sm"/>}
             </div>
-          )}
-
-          {/* Section: Motivationen */}
-          {hasSec('motive') && motivKeys.length > 0 && (
-            <React.Fragment>
-              <DPSection title="Motivationen" acc={acc} count={cnt(motivKeys)} total={motivKeys.length}/>
-              <IndexedList items={nsc.motivationen} keyPrefix="mot" isOpen={isOpen} onToggle={tg} toggleState={ts} gm={gm} acc={acc}
-                render={(it, i, open) => (
-                  <div style={{
-                    padding:'6px 10px 6px 8px',
-                    borderLeft:`2px solid ${dpHA(acc, open ? 0.55 : 0.25)}`,
-                    background: dpHA(acc, open ? 0.05 : 0.02),
-                    fontFamily:'var(--font-body)', fontSize:12.5, color: open ? '#f0eeff' : 'rgba(200,190,240,0.55)', lineHeight:1.55,
-                  }}>{it}</div>
-                )}/>
-            </React.Fragment>
           )}
 
           {/* Section: Kontakte */}
