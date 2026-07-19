@@ -40,7 +40,12 @@ const DISP = 'var(--font-display)';
 
 const divOf  = name => T().divisions.find(d => d.name === name) || { accent:'#7c4dff', roman:'—' };
 const raceOf = name => T().rassen.find(r => r.name === name) || null;
-const subOf  = rasse => { const r = raceOf(rasse); return r && r.sub ? { show:true, label:r.sub.label, opts:r.sub.opts } : { show:false, label:'', opts:[] }; };
+const subOf  = rasse => { const r = raceOf(rasse); if (!r || !r.sub) return { show:false, label:'', opts:[] };
+  const opts = r.sub.fromRassen ? T().rassen.map(x => x.name).filter(n => n !== r.name) : r.sub.opts;
+  return { show:true, label:r.sub.label, opts }; };
+const rasseText = (rasse, unterrasse) => { if (!rasse) return ''; if (!unterrasse) return rasse;
+  const r = raceOf(rasse);
+  return r && r.sub && r.sub.fromRassen ? rasse + ' (früher ' + unterrasse + ')' : rasse + ' · ' + unterrasse; };
 
 function ageInfo(rasse, alter) {
   const r = raceOf(rasse);
@@ -1283,7 +1288,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
     const open = dmView || pOpen(key, key);
     eckG[group].push({ key:key + '-' + label, k:label, v:open ? value : 'Noch nicht freigeschaltet', vSt:open ? openVSt : lockedVSt, tg:mkTg(key, key), open });
   };
-  eckRow('person', 'rasse', 'Rasse', sel.rasse ? sel.rasse + (sel.unterrasse ? ' · ' + sel.unterrasse : '') : '');
+  eckRow('person', 'rasse', 'Rasse', rasseText(sel.rasse, sel.unterrasse));
   eckRow('person', 'geschlecht', 'Geschlecht', sel.geschlecht);
   eckRow('person', 'groesse', 'Größe', sel.groesse);
   eckRow('person', 'alter', 'Alter', sel.alter != null && sel.alter !== '' ? sel.alter + ' Jahre' : '');

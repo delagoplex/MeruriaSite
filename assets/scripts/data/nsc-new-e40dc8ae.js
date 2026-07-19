@@ -671,7 +671,12 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
             const rangTitel = rangNum ? ((rangesT[nsc.division] || []).find(r => r.rang === rangNum) || {}).titel : null;
             const zodiac = dpZodiacOf ? dpZodiacOf(nsc.geburtstag_doy) : null;
             const rows = [
-              ['rasse', 'Rasse', nsc.rasse ? nsc.rasse + (nsc.unterrasse ? ' · ' + nsc.unterrasse : '') : null],
+              ['rasse', 'Rasse', (() => {
+                if (!nsc.rasse) return null;
+                if (!nsc.unterrasse) return nsc.rasse;
+                const rd = (((window.NSC_TOOL || {}).rassen) || []).find(r => r.name === nsc.rasse);
+                return rd && rd.sub && rd.sub.fromRassen ? nsc.rasse + ' (früher ' + nsc.unterrasse + ')' : nsc.rasse + ' · ' + nsc.unterrasse;
+              })()],
               ['geschlecht', 'Geschlecht', nsc.geschlecht],
               ['groesse', 'Größe', nsc.groesse],
               ['alter', 'Alter', nsc.alter ? `${nsc.alter} Jahre` : null],
