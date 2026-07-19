@@ -6,8 +6,20 @@ const { useEffect:dpUE, useRef:dpUR, useState:dpUS } = React;
 const { STAGE_LABELS:dpSL, MAX_STAGE:dpMS,
         hexPoints:dpHex, hexA:dpHA, accentOf:dpAO, romanFor:dpRoman,
         GOLD:dpGOLD, GOLD_GLOW:dpGOLD_GLOW, goldA:dpGoldA,
+        meruriaDoyText:dpDoyText, meruriaZodiacOf:dpZodiacOf,
         NSCPortrait, StageProgress, StatusPills, UnlockToggle,
         } = window;
+
+// Sektion, hinter deren globalem Sichtbarkeits-Auge ein Fakt-Key hängt
+const DP_SEC_OF_PREFIX = { vna:'vname', eig:'pers', tal:'pers', mak:'pers', rou:'routine',
+  gew:'gewohnheiten', aus:'ausr', beg:'begleiter', mot:'motive', fam:'kontakte', fre:'kontakte', riv:'kontakte' };
+function dpVisKeyOf(key) {
+  const m = key.match(/^([a-z]+)-(\d+)$/);
+  if (m) return DP_SEC_OF_PREFIX[m[1]] || m[1];
+  if (key === 'habe') return 'ausr';
+  if (key === 'unvergesslich') return 'pers';
+  return key;
+}
 
 const _DP_GLYPHS = '░▒▓█▪◆◈⬡⬢⬤⬧◉●○◇□■▾▸△▷▶▽▼◁◀';
 function _dpScrambleName(name) {
@@ -189,7 +201,7 @@ function RoutineTimeline({ entries, isOpen, onToggle, toggleState, gm, acc }) {
   const STAR_R  = 9;         // Stern-Außenradius
   const STAR_IN = 3.6;       // Stern-Innenradius
   const COL_W   = 30;        // Breite der Sternspalte
-  const visibleEntries = entries.map((e, i) => ({ e, i, k: `routine-${i}`, open: isOpen(`routine-${i}`) }));
+  const visibleEntries = entries.map((e, i) => ({ e, i, k: `rou-${i}`, open: isOpen(`rou-${i}`) }));
   if (!gm && !visibleEntries.some(x => x.open)) {
     return <DPLocked acc={acc} hint="Noch keine Routine bekannt"/>;
   }
@@ -258,7 +270,7 @@ function AusGrid({ items, isOpen, onToggle, toggleState, gm, acc }) {
   if (!items || items.length === 0) {
     return <div style={{ fontFamily:'var(--font-body)', fontStyle:'italic', fontSize:12, color:'rgba(160,140,255,0.45)', padding:'4px 0' }}>—</div>;
   }
-  const visible = items.map((it, i) => ({ it, i, k: `ausruestung-${i}`, open: isOpen(`ausruestung-${i}`) }));
+  const visible = items.map((it, i) => ({ it, i, k: `aus-${i}`, open: isOpen(`aus-${i}`) }));
   if (!gm && !visible.some(x => x.open)) {
     return <DPLocked acc={acc} hint="Noch keine Gegenstände bekannt"/>;
   }
@@ -449,8 +461,15 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
 
   const unlocked = unlocks.unlockedFor(nsc);
   const stage = unlocks.stageFor(nsc);
-  const isOpen = (k) => unlocked.has(k);
+  const gehList = (nsc.geheimnisse || []).filter(g => (g.text || '').trim());
+  const fieldVis = (k) => ((nsc.fieldVis || {})[k]) !== false;
+  const isOpen = (k) => {
+    const mg = k.match(/^geh-(\d+)$/);
+    if (mg) { const g = gehList[+mg[1]]; return !!(g && g.vis) && unlocked.has(k); }
+    return fieldVis(dpVisKeyOf(k)) && unlocked.has(k);
+  };
   const visible = (k) => gm || isOpen(k);
+  const hasSec = (k) => (nsc.sections || []).includes(k);
   // tg: toggle für dmTarget-Charaktere; ts: tri-state für dmTarget
   const tg = (k) => unlocks.toggleForPids(nsc.id, k, dmTarget);
   const ts = (k) => unlocks.unlockStateForPids(nsc.id, k, dmTarget);
@@ -462,20 +481,23 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
   // Helpers für Section-Counts
   const cnt = (keys) => keys.filter(isOpen).length;
 
-  // Eckdaten-Keys (Singletons, die nicht in eigenen Sections sind)
-  const eckdatenKeys = ['titel','rasse','geschlecht','alter','lebensphase',
-                        'beruf','division','rang','organisation','kapsel','wohnort','gottheit'];
-
-  // Geheimnis-Keys
-  const geheimnisKeys = (nsc.geheimnisse || []).map((_, i) => `geheimnis-${i}`);
-  const routineKeys   = (nsc.routine || []).map((_, i) => `routine-${i}`);
-  const ausKeys       = (nsc.ausruestung || []).map((_, i) => `ausruestung-${i}`);
-  const motivKeys     = (nsc.motivationen || []).map((_, i) => `motivation-${i}`);
-  const nameKeys      = (nsc.vollerName || []).map((_, i) => `namestueck-${i}`);
-  const familieKeys   = (nsc.kontakte?.familie || []).map((_, i) => `familie-${i}`);
-  const freundeKeys   = (nsc.kontakte?.freunde || []).map((_, i) => `freunde-${i}`);
-  const rivalenKeys   = (nsc.kontakte?.rivalen || []).map((_, i) => `rivalen-${i}`);
-  const kontaktKeys   = [...familieKeys, ...freundeKeys, ...rivalenKeys];
+  // Indexierte Fakten-Keys (v2-Schema)
+  const geheimnisKeys = gehList.map((_, i) => `geh-${i}`);
+  const routineKeys   = (nsc.routine || []).map((_, i) => `rou-${i}`);
+  const ausList       = (nsc.ausruestung || []).filter(e => (e.name || '').trim());
+  const ausKeys       = ausList.map((_, i) => `aus-${i}`);
+  const motivKeys     = (nsc.motivationen || []).map((_, i) => `mot-${i}`);
+  const nameKeys      = (nsc.vollerName || []).map((_, i) => `vna-${i}`);
+  const eigKeys       = (nsc.eigenschaften || []).map((_, i) => `eig-${i}`);
+  const talKeys       = (nsc.talente || []).map((_, i) => `tal-${i}`);
+  const makKeys       = (nsc.makel || []).map((_, i) => `mak-${i}`);
+  const gewKeys       = (nsc.gewohnheiten || []).map((_, i) => `gew-${i}`);
+  const begList       = (nsc.begleiter || []).filter(b => (b.name || '').trim());
+  const begKeys       = begList.map((_, i) => `beg-${i}`);
+  const famList       = (nsc.kontakte?.familie || []).filter(p => (p.name || '').trim());
+  const freList       = (nsc.kontakte?.freunde || []).filter(p => (p.name || '').trim());
+  const rivList       = (nsc.kontakte?.rivalen || []).filter(p => (p.name || '').trim());
+  const kontaktKeys   = [...famList.map((_, i) => `fam-${i}`), ...freList.map((_, i) => `fre-${i}`), ...rivList.map((_, i) => `riv-${i}`)];
 
   return (
     <div style={{
@@ -525,12 +547,9 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
           </div>
           <div style={{ flex:1, minWidth:0, paddingTop:6 }}>
             {/* Titel-Kicker */}
-            {visible('titel') && nsc.titel && (
+            {nsc.titel && (
               <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em',
-                color: isOpen('titel') ? acc : 'rgba(200,190,240,0.45)',
-                textTransform:'uppercase', marginBottom:4,
-                fontStyle: isOpen('titel') ? 'normal' : 'italic',
-              }}>
+                color:acc, textTransform:'uppercase', marginBottom:4 }}>
                 {nsc.titel}
               </div>
             )}
@@ -554,7 +573,7 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
                 {[
                   ['rasse', nsc.rasse],
                   ['geschlecht', nsc.geschlecht],
-                  ['alter', nsc.alter ? `${nsc.alter} Jahre${visible('lebensphase') && nsc.lebensphase ? ` · ${nsc.lebensphase}` : ''}` : null],
+                  ['alter', nsc.alter ? `${nsc.alter} Jahre` : null],
                 ].filter(([k,v]) => visible(k) && v).map(([k,v], i, a) => (
                   <React.Fragment key={k}>
                     {i > 0 && <span style={{ color:'rgba(160,140,255,0.3)', fontSize:9 }}>·</span>}
@@ -582,18 +601,22 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
           <StageProgress stage={stage} acc={acc}/>
 
           {/* Section: Erscheinung & Auftreten */}
-          <DPSection title="Erscheinung & Auftreten" acc={acc} count={isOpen('unvergesslich') ? 1 : 0} total={1}/>
-          <SingletonBlock open={isOpen('unvergesslich')} gm={gm} acc={acc} onToggle={() => tg('unvergesslich')} toggleState={ts('unvergesslich')}
-            render={(open) => open || gm ? (
-              <div style={{ padding:'10px 14px', border:`1px solid ${dpHA(acc, 0.25)}`,
-                background: dpHA(acc, 0.04),
-                fontFamily:'var(--font-body)', fontSize:13, lineHeight:1.7,
-                color: open ? 'var(--silver)' : 'rgba(200,190,240,0.5)',
-                fontStyle: open ? 'normal' : 'italic' }}>
-                {nsc.unvergesslich || '—'}
-              </div>
-            ) : <DPLocked acc={acc}/>}
-          />
+          {hasSec('pers') && (nsc.unvergesslich || '').trim() && (
+            <React.Fragment>
+              <DPSection title="Erscheinung & Auftreten" acc={acc} count={isOpen('unvergesslich') ? 1 : 0} total={1}/>
+              <SingletonBlock open={isOpen('unvergesslich')} gm={gm} acc={acc} onToggle={() => tg('unvergesslich')} toggleState={ts('unvergesslich')}
+                render={(open) => open || gm ? (
+                  <div style={{ padding:'10px 14px', border:`1px solid ${dpHA(acc, 0.25)}`,
+                    background: dpHA(acc, 0.04),
+                    fontFamily:'var(--font-body)', fontSize:13, lineHeight:1.7,
+                    color: open ? 'var(--silver)' : 'rgba(200,190,240,0.5)',
+                    fontStyle: open ? 'normal' : 'italic' }}>
+                    {nsc.unvergesslich}
+                  </div>
+                ) : <DPLocked acc={acc}/>}
+              />
+            </React.Fragment>
+          )}
 
           {/* Section: Voller Name */}
           {nameKeys.length > 0 && (
@@ -601,7 +624,7 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
               <DPSection title="Voller Name" acc={acc} count={cnt(nameKeys)} total={nameKeys.length}/>
               <div style={{ display:'flex', flexWrap:'wrap', gap:8, alignItems:'baseline' }}>
                 {nsc.vollerName.map((piece, i) => {
-                  const k = `namestueck-${i}`;
+                  const k = `vna-${i}`;
                   const open = isOpen(k);
                   return (
                     <div key={i} style={{ display:'inline-flex', alignItems:'center', gap:6 }}>
@@ -622,113 +645,227 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
             </React.Fragment>
           )}
 
+          {/* Section: Biografie */}
+          {hasSec('bio') && (nsc.biografie || '').trim() && (
+            <React.Fragment>
+              <DPSection title="Biografie" acc={acc} count={isOpen('bio') ? 1 : 0} total={1}/>
+              <SingletonBlock open={isOpen('bio')} gm={gm} acc={acc} onToggle={() => tg('bio')} toggleState={ts('bio')}
+                render={(open) => open || gm ? (
+                  <div style={{ padding:'12px 16px', border:`1px solid ${dpHA(acc, 0.25)}`,
+                    background: dpHA(acc, 0.04),
+                    fontFamily:'var(--font-body)', fontSize:13, lineHeight:1.75, whiteSpace:'pre-wrap',
+                    color: open ? 'var(--silver)' : 'rgba(200,190,240,0.5)',
+                    fontStyle: open ? 'normal' : 'italic' }}>
+                    {nsc.biografie}
+                  </div>
+                ) : <DPLocked acc={acc}/>}
+              />
+            </React.Fragment>
+          )}
+
           {/* Section: Eckdaten */}
-          <DPSection title="Eckdaten" acc={acc} count={cnt(eckdatenKeys.filter(k => nsc[k] !== undefined && nsc[k] !== '' && nsc[k] != null))}
-            total={eckdatenKeys.filter(k => nsc[k] !== undefined && nsc[k] !== '' && nsc[k] != null).length}/>
-          <div style={{ display:'grid', gridTemplateColumns:'auto 1fr', gap:'10px 18px' }}>
-            {nsc.titel        && <FactRow label="Titel"        value={nsc.titel}        isOpen={isOpen('titel')}        toggleState={ts('titel')}        acc={acc} gm={gm} onToggle={() => tg('titel')}/>}
-            <FactRow            label="Rasse"        value={nsc.rasse}                          isOpen={isOpen('rasse')}        toggleState={ts('rasse')}        acc={acc} gm={gm} onToggle={() => tg('rasse')}/>
-            <FactRow            label="Geschlecht"   value={nsc.geschlecht}                     isOpen={isOpen('geschlecht')}   toggleState={ts('geschlecht')}   acc={acc} gm={gm} onToggle={() => tg('geschlecht')}/>
-            <FactRow            label="Alter"        value={nsc.alter ? `${nsc.alter} Jahre` : '—'} isOpen={isOpen('alter')}    toggleState={ts('alter')}        acc={acc} gm={gm} onToggle={() => tg('alter')}/>
-            {nsc.lebensphase  && <FactRow label="Lebensphase"  value={nsc.lebensphase}  isOpen={isOpen('lebensphase')}  toggleState={ts('lebensphase')}  acc={acc} gm={gm} onToggle={() => tg('lebensphase')}/>}
-            {nsc.beruf        && <FactRow label="Beruf"        value={nsc.beruf}        isOpen={isOpen('beruf')}        toggleState={ts('beruf')}        acc={acc} gm={gm} onToggle={() => tg('beruf')}/>}
-            {nsc.division && nsc.division !== 'Keine' && <FactRow label="Division"     value={`${dpRoman(nsc) ? `${dpRoman(nsc)} · ` : ''}${nsc.division}`} isOpen={isOpen('division')} toggleState={ts('division')} acc={acc} gm={gm} onToggle={() => tg('division')}/>}
-            {nsc.rang         && <FactRow label="Rang"         value={`${dpRoman(nsc) ? `${dpRoman(nsc)} · ` : ''}${nsc.rang}`} isOpen={isOpen('rang')}         toggleState={ts('rang')}         acc={acc} gm={gm} onToggle={() => tg('rang')}/>}
-            {nsc.organisation && <FactRow label="Organisation" value={nsc.organisation} isOpen={isOpen('organisation')} toggleState={ts('organisation')} acc={acc} gm={gm} onToggle={() => tg('organisation')}/>}
-            {nsc.kapsel       && <FactRow label="Kapsel"       value={nsc.kapsel}       isOpen={isOpen('kapsel')}       toggleState={ts('kapsel')}       acc={acc} gm={gm} onToggle={() => tg('kapsel')}/>}
-            {nsc.wohnort      && <FactRow label="Wohnort"      value={nsc.wohnort}      isOpen={isOpen('wohnort')}      toggleState={ts('wohnort')}      acc={acc} gm={gm} onToggle={() => tg('wohnort')}/>}
-            {nsc.gottheit     && <FactRow label="Gottheit"     value={nsc.gottheit}     isOpen={isOpen('gottheit')}     toggleState={ts('gottheit')}     acc={acc} gm={gm} onToggle={() => tg('gottheit')}/>}
-          </div>
+          {(() => {
+            const rangNum = parseInt(nsc.rang) || null;
+            const rangesT = (window.NSC_TOOL && window.NSC_TOOL.raenge) || {};
+            const rangTitel = rangNum ? ((rangesT[nsc.division] || []).find(r => r.rang === rangNum) || {}).titel : null;
+            const zodiac = dpZodiacOf ? dpZodiacOf(nsc.geburtstag_doy) : null;
+            const rows = [
+              ['rasse', 'Rasse', nsc.rasse ? nsc.rasse + (nsc.unterrasse ? ' · ' + nsc.unterrasse : '') : null],
+              ['geschlecht', 'Geschlecht', nsc.geschlecht],
+              ['groesse', 'Größe', nsc.groesse],
+              ['alter', 'Alter', nsc.alter ? `${nsc.alter} Jahre` : null],
+              ['geburtstag', 'Geburtstag', nsc.geburtstag_doy && dpDoyText ? dpDoyText(nsc.geburtstag_doy) : null],
+              ['geburtstag', 'Sternzeichen', zodiac ? zodiac.sign : null],
+              ['gesinnung', 'Gesinnung', nsc.gesinnung],
+              ['klasse', 'Klasse', nsc.klasse],
+              ['hintergrund', 'Hintergrund', nsc.hintergrund],
+              ['beruf', 'Beruf', nsc.beruf],
+              ['division', 'Division', nsc.division && nsc.division !== 'Keine' ? `${dpRoman(nsc) ? `${dpRoman(nsc)} · ` : ''}${nsc.division}` : null],
+              ['division', 'Rang', nsc.division && nsc.division !== 'Keine' && nsc.rang ? (rangNum ? `Rang ${rangNum}${rangTitel ? ' · ' + rangTitel : ''}` : nsc.rang) : null],
+              ['organisation', 'Organisation', nsc.organisation],
+              ['kapsel', 'Kapsel', nsc.kapsel],
+              ['wohnort', 'Wohnort', nsc.wohnort],
+              ['gottheit', 'Gottheit', nsc.gottheit],
+            ].filter(r => r[2]);
+            const uKeys = [...new Set(rows.map(r => r[0]))];
+            return (
+              <React.Fragment>
+                <DPSection title="Eckdaten" acc={acc} count={cnt(uKeys)} total={uKeys.length}/>
+                <div style={{ display:'grid', gridTemplateColumns:'auto 1fr', gap:'10px 18px' }}>
+                  {rows.map(([k, label, v], i) => (
+                    <FactRow key={label + i} label={label} value={v} isOpen={isOpen(k)} toggleState={ts(k)} acc={acc} gm={gm} onToggle={() => tg(k)}/>
+                  ))}
+                </div>
+              </React.Fragment>
+            );
+          })()}
 
           {/* Section: Routine */}
-          <DPSection title="Routine" acc={acc} count={cnt(routineKeys)} total={routineKeys.length}/>
-          <RoutineTimeline entries={nsc.routine} isOpen={isOpen} onToggle={tg} toggleState={ts} gm={gm} acc={acc}/>
+          {hasSec('routine') && routineKeys.length > 0 && (
+            <React.Fragment>
+              <DPSection title="Routine" acc={acc} count={cnt(routineKeys)} total={routineKeys.length}/>
+              <RoutineTimeline entries={nsc.routine} isOpen={isOpen} onToggle={tg} toggleState={ts} gm={gm} acc={acc}/>
+            </React.Fragment>
+          )}
+
+          {/* Section: Angewohnheiten */}
+          {hasSec('gewohnheiten') && gewKeys.length > 0 && (
+            <React.Fragment>
+              <DPSection title="Angewohnheiten" acc={acc} count={cnt(gewKeys)} total={gewKeys.length}/>
+              <IndexedList items={nsc.gewohnheiten} keyPrefix="gew" isOpen={isOpen} onToggle={tg} toggleState={ts} gm={gm} acc={acc}
+                render={(it, i, open) => (
+                  <div style={{
+                    padding:'6px 10px 6px 8px',
+                    borderLeft:`2px solid ${dpHA(acc, open ? 0.55 : 0.25)}`,
+                    background: dpHA(acc, open ? 0.05 : 0.02),
+                    fontFamily:'var(--font-body)', fontSize:12.5, color: open ? '#f0eeff' : 'rgba(200,190,240,0.55)', lineHeight:1.55,
+                  }}>{it}</div>
+                )}/>
+            </React.Fragment>
+          )}
 
           {/* Section: Eigenschaften */}
-          <DPSection title="Eigenschaften" acc={acc} count={isOpen('eigenschaften') ? 1 : 0} total={1}/>
-          <SingletonBlock open={isOpen('eigenschaften')} gm={gm} acc={acc} onToggle={() => tg('eigenschaften')} toggleState={ts('eigenschaften')}
-            render={(open) => (open || gm) && (nsc.eigenschaften || []).length > 0
-              ? <div style={{ opacity: open ? 1 : 0.55 }}><Pills items={nsc.eigenschaften} acc={acc}/></div>
-              : (open || gm) ? <div style={{ fontFamily:'var(--font-body)', fontStyle:'italic', fontSize:12, color:'rgba(160,140,255,0.45)' }}>—</div>
-              : <DPLocked acc={acc}/>}
-          />
+          {hasSec('pers') && eigKeys.length > 0 && (
+            <React.Fragment>
+              <DPSection title="Eigenschaften" acc={acc} count={cnt(eigKeys)} total={eigKeys.length}/>
+              <IndexedList items={nsc.eigenschaften} keyPrefix="eig" isOpen={isOpen} onToggle={tg} toggleState={ts} gm={gm} acc={acc}
+                render={(it, i, open) => (
+                  <span style={{
+                    display:'inline-block', padding:'5px 10px',
+                    fontFamily:'var(--font-mono)', fontSize:9.5, letterSpacing:'0.16em', textTransform:'uppercase',
+                    color:'#f0eeff', background: dpHA(acc, 0.14),
+                    border:`1px solid ${dpHA(acc, 0.45)}`, borderRadius:2,
+                    opacity: open ? 1 : 0.55,
+                  }}>{it}</span>
+                )}/>
+            </React.Fragment>
+          )}
 
           {/* Section: Talente */}
-          <DPSection title="Talente" acc={acc} count={isOpen('talente') ? 1 : 0} total={1}/>
-          <SingletonBlock open={isOpen('talente')} gm={gm} acc={acc} onToggle={() => tg('talente')} toggleState={ts('talente')}
-            render={(open) => (open || gm) && (nsc.talente || []).length > 0
-              ? <div style={{ opacity: open ? 1 : 0.55 }}><Bullets items={nsc.talente} acc={acc} columns={2}/></div>
-              : (open || gm) ? <div style={{ fontFamily:'var(--font-body)', fontStyle:'italic', fontSize:12, color:'rgba(160,140,255,0.45)' }}>—</div>
-              : <DPLocked acc={acc}/>}
-          />
+          {hasSec('pers') && talKeys.length > 0 && (
+            <React.Fragment>
+              <DPSection title="Talente" acc={acc} count={cnt(talKeys)} total={talKeys.length}/>
+              <IndexedList items={nsc.talente} keyPrefix="tal" isOpen={isOpen} onToggle={tg} toggleState={ts} gm={gm} acc={acc}
+                render={(it, i, open) => (
+                  <div style={{
+                    display:'flex', alignItems:'baseline', gap:8,
+                    padding:'5px 10px 5px 8px',
+                    borderLeft:`2px solid ${dpHA(acc, 0.55)}`,
+                    background: dpHA(acc, 0.05),
+                    fontFamily:'var(--font-body)', fontSize:12.5, color:'#f0eeff',
+                    opacity: open ? 1 : 0.55,
+                  }}>
+                    <svg width="4" height="4" viewBox="0 0 4 4" style={{ flexShrink:0, transform:'translateY(-1px)' }}>
+                      <polygon points={dpHex(4)} fill={acc} />
+                    </svg>
+                    <span style={{ flex:1, lineHeight:1.5 }}>{it}</span>
+                  </div>
+                )}/>
+            </React.Fragment>
+          )}
 
           {/* Section: Makel */}
-          <DPSection title="Makel" acc={acc} count={isOpen('makel') ? 1 : 0} total={1}/>
-          <SingletonBlock open={isOpen('makel')} gm={gm} acc={acc} onToggle={() => tg('makel')} toggleState={ts('makel')}
-            render={(open) => open || gm ? (
-              <div style={{ padding:'10px 14px',
-                border:`1px solid ${dpHA('#e36760', 0.4)}`,
-                background:'rgba(227,103,96,0.06)',
-                fontFamily:'var(--font-body)', fontSize:12.5, fontStyle:'italic',
-                color: open ? 'rgba(240,200,200,0.85)' : 'rgba(240,200,200,0.5)', lineHeight:1.65 }}>
-                {nsc.makel || '—'}
-              </div>
-            ) : <DPLocked acc={acc}/>}
-          />
+          {hasSec('pers') && makKeys.length > 0 && (
+            <React.Fragment>
+              <DPSection title="Makel" acc={acc} count={cnt(makKeys)} total={makKeys.length}/>
+              <IndexedList items={nsc.makel} keyPrefix="mak" isOpen={isOpen} onToggle={tg} toggleState={ts} gm={gm} acc={acc}
+                render={(it, i, open) => (
+                  <div style={{ padding:'10px 14px',
+                    border:`1px solid ${dpHA('#e36760', 0.4)}`,
+                    background:'rgba(227,103,96,0.06)',
+                    fontFamily:'var(--font-body)', fontSize:12.5, fontStyle:'italic',
+                    color: open ? 'rgba(240,200,200,0.85)' : 'rgba(240,200,200,0.5)', lineHeight:1.65 }}>
+                    {it}
+                  </div>
+                )}/>
+            </React.Fragment>
+          )}
 
           {/* Section: Begleiter */}
-          <DPSection title="Begleiter" acc={acc} count={isOpen('begleiter') ? 1 : 0} total={1}/>
-          <SingletonBlock open={isOpen('begleiter')} gm={gm} acc={acc} onToggle={() => tg('begleiter')} toggleState={ts('begleiter')}
-            render={(open) => open || gm
-              ? <div style={{ opacity: open ? 1 : 0.55 }}><BegleiterCard b={nsc.begleiter} acc={acc}/></div>
-              : <DPLocked acc={acc}/>}
-          />
+          {hasSec('begleiter') && begKeys.length > 0 && (
+            <React.Fragment>
+              <DPSection title="Begleiter" acc={acc} count={cnt(begKeys)} total={begKeys.length}/>
+              <IndexedList items={begList} keyPrefix="beg" isOpen={isOpen} onToggle={tg} toggleState={ts} gm={gm} acc={acc}
+                render={(b, i, open) => (
+                  <div style={{ opacity: open ? 1 : 0.55 }}><BegleiterCard b={b} acc={acc}/></div>
+                )}/>
+            </React.Fragment>
+          )}
 
           {/* Section: Ausrüstung & Gegenstände */}
-          <DPSection title="Ausrüstung & Gegenstände" acc={acc} count={cnt(ausKeys)} total={ausKeys.length}/>
-          <AusGrid items={nsc.ausruestung} isOpen={isOpen} onToggle={tg} toggleState={ts} gm={gm} acc={acc}/>
+          {hasSec('ausr') && ausKeys.length > 0 && (
+            <React.Fragment>
+              <DPSection title="Ausrüstung & Gegenstände" acc={acc} count={cnt(ausKeys)} total={ausKeys.length}/>
+              <AusGrid items={ausList} isOpen={isOpen} onToggle={tg} toggleState={ts} gm={gm} acc={acc}/>
+            </React.Fragment>
+          )}
 
-          {/* Section: Motivationen */}
-          <DPSection title="Motivationen" acc={acc} count={cnt(motivKeys)} total={motivKeys.length}/>
-          <IndexedList items={nsc.motivationen} keyPrefix="motivation" isOpen={isOpen} onToggle={tg} toggleState={ts} gm={gm} acc={acc}
-            render={(it, i, open) => (
-              <div style={{
-                padding:'6px 10px 6px 8px',
-                borderLeft:`2px solid ${dpHA(acc, open ? 0.55 : 0.25)}`,
-                background: dpHA(acc, open ? 0.05 : 0.02),
-                fontFamily:'var(--font-body)', fontSize:12.5, color: open ? '#f0eeff' : 'rgba(200,190,240,0.55)', lineHeight:1.55,
-              }}>{it}</div>
-            )}/>
-
-          {/* Section: Kontakte */}
-          <DPSection title="Kontakte" acc={acc} count={cnt(kontaktKeys)} total={kontaktKeys.length}/>
-          {(familieKeys.length + freundeKeys.length + rivalenKeys.length) === 0 ? (
-            <div style={{ fontFamily:'var(--font-body)', fontStyle:'italic', fontSize:12, color:'rgba(160,140,255,0.45)', padding:'4px 0' }}>—</div>
-          ) : (
-            <div style={{ display:'flex', flexDirection:'column', gap:16 }}>
-              {[
-                ['Familie', 'familie',  nsc.kontakte?.familie || [], '#c9b8ff', '◇'],
-                ['Freunde', 'freunde',  nsc.kontakte?.freunde || [], '#5fe39a', '◆'],
-                ['Rivalen', 'rivalen',  nsc.kontakte?.rivalen || [], '#e36760', '⚔'],
-              ].map(([title, prefix, items, color, glyph]) => (
-                <div key={prefix}>
-                  <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:6 }}>
-                    <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.24em', color, textTransform:'uppercase' }}>
-                      {glyph} {title}
-                    </span>
-                    <div style={{ flex:1, height:1, background:'rgba(160,140,255,0.12)' }}/>
-                  </div>
-                  <IndexedList items={items} keyPrefix={prefix} isOpen={isOpen} onToggle={tg} toggleState={ts} gm={gm} acc={acc}
-                    render={(p, i, open) => <KontaktEntry p={p} acc={acc} badgeColor={color} onSelectNsc={onSelectNsc}/>}/>
-                </div>
-              ))}
+          {/* Vermögen */}
+          {hasSec('ausr') && (nsc.habe || 0) > 0 && (visible('habe') || gm) && (
+            <div style={{ display:'flex', alignItems:'center', gap:12, marginTop:14, padding:'12px 16px', borderRadius:3,
+              border:`1px solid rgba(214,178,92,${isOpen('habe') ? 0.5 : 0.25})`,
+              background:'linear-gradient(135deg, rgba(214,178,92,0.10), rgba(214,178,92,0.03))',
+              boxShadow: isOpen('habe') ? '0 0 18px rgba(214,178,92,0.12)' : 'none' }}>
+              <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.3em', textTransform:'uppercase', color:'rgba(214,178,92,0.8)' }}>◈ Vermögen</span>
+              <span style={{ flex:1 }}/>
+              <span style={isOpen('habe') || gm
+                ? { fontFamily:'var(--font-mono)', fontSize:14, letterSpacing:'0.1em', color:'#e8c878', textShadow:'0 0 10px rgba(214,178,92,0.4)' }
+                : { fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.16em', textTransform:'uppercase', color:'rgba(214,178,92,0.4)' }}>
+                {isOpen('habe') || gm ? nsc.habe.toLocaleString('de-DE') + ' Hade' : 'Unbekannt'}
+              </span>
+              {gm && <UnlockToggle state={ts('habe')} onClick={() => tg('habe')} size="sm"/>}
             </div>
           )}
 
+          {/* Section: Motivationen */}
+          {hasSec('motive') && motivKeys.length > 0 && (
+            <React.Fragment>
+              <DPSection title="Motivationen" acc={acc} count={cnt(motivKeys)} total={motivKeys.length}/>
+              <IndexedList items={nsc.motivationen} keyPrefix="mot" isOpen={isOpen} onToggle={tg} toggleState={ts} gm={gm} acc={acc}
+                render={(it, i, open) => (
+                  <div style={{
+                    padding:'6px 10px 6px 8px',
+                    borderLeft:`2px solid ${dpHA(acc, open ? 0.55 : 0.25)}`,
+                    background: dpHA(acc, open ? 0.05 : 0.02),
+                    fontFamily:'var(--font-body)', fontSize:12.5, color: open ? '#f0eeff' : 'rgba(200,190,240,0.55)', lineHeight:1.55,
+                  }}>{it}</div>
+                )}/>
+            </React.Fragment>
+          )}
+
+          {/* Section: Kontakte */}
+          {hasSec('kontakte') && kontaktKeys.length > 0 && (
+            <React.Fragment>
+              <DPSection title="Kontakte" acc={acc} count={cnt(kontaktKeys)} total={kontaktKeys.length}/>
+              <div style={{ display:'flex', flexDirection:'column', gap:16 }}>
+                {[
+                  ['Familie', 'fam',  famList, '#c9b8ff', '◇'],
+                  ['Freunde', 'fre',  freList, '#5fe39a', '◆'],
+                  ['Rivalen', 'riv',  rivList, '#e36760', '⚔'],
+                ].filter(([, , items]) => items.length > 0).map(([title, prefix, items, color, glyph]) => (
+                  <div key={prefix}>
+                    <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:6 }}>
+                      <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.24em', color, textTransform:'uppercase' }}>
+                        {glyph} {title}
+                      </span>
+                      <div style={{ flex:1, height:1, background:'rgba(160,140,255,0.12)' }}/>
+                    </div>
+                    <IndexedList items={items} keyPrefix={prefix} isOpen={isOpen} onToggle={tg} toggleState={ts} gm={gm} acc={acc}
+                      render={(p, i, open) => <KontaktEntry p={p} acc={acc} badgeColor={color} onSelectNsc={onSelectNsc}/>}/>
+                  </div>
+                ))}
+              </div>
+            </React.Fragment>
+          )}
+
           {/* Section: Geheimnisse */}
-          <DPSection title="Geheimnisse" acc={acc} count={cnt(geheimnisKeys)} total={geheimnisKeys.length}/>
-          <IndexedList items={nsc.geheimnisse} keyPrefix="geheimnis" isOpen={isOpen} onToggle={tg} toggleState={ts} gm={gm} acc="#e36760"
-            render={(it, i, open) => <GeheimnisEntry text={it} idx={i} acc="#e36760"/>}/>
+          {hasSec('geheim') && geheimnisKeys.length > 0 && (
+            <React.Fragment>
+              <DPSection title="Geheimnisse" acc={acc} count={cnt(geheimnisKeys)} total={geheimnisKeys.length}/>
+              <IndexedList items={gehList} keyPrefix="geh" isOpen={isOpen} onToggle={tg} toggleState={ts} gm={gm} acc="#e36760"
+                render={(it, i, open) => <GeheimnisEntry text={it.text} idx={i} acc="#e36760"/>}/>
+            </React.Fragment>
+          )}
 
           {/* Footer stamp */}
           <div style={{ marginTop:28, padding:'12px 14px',

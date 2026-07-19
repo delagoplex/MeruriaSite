@@ -1,0 +1,17 @@
+/* NSC-Verwaltung.css — DM-Verwaltungsseite (Vollbild-App unter der Nav) */
+
+:root { --nav-h: 52px; }
+
+html, body { overflow: hidden; }
+
+select option { background: #0b081c; color: #f0eeff; }
+input::placeholder, textarea::placeholder { color: rgba(160,140,255,0.35); }
+input[type="number"]::-webkit-inner-spin-button { opacity: 0.4; }
+
+.nscv-shell {
+  display: flex;
+  height: calc(100vh - var(--nav-h));
+  overflow: hidden;
+  background: radial-gradient(ellipse 900px 500px at 70% -10%, rgba(124,77,255,0.10), transparent), var(--bg);
+}
+.nscv-shell ::-webkit-scrollbar { width: 5px; height: 5px; }

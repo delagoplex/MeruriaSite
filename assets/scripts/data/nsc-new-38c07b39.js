@@ -170,9 +170,7 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
             <div style={{ flex:1, minWidth:0, paddingTop:'4px', paddingRight: compact ? 60 : 90 }}>
               {nsc.titel && (
                 <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em',
-                  color: unlocked.has('titel') ? acc : 'rgba(200,190,240,0.45)',
-                  textTransform:'uppercase', marginBottom:3,
-                  fontStyle: unlocked.has('titel') ? 'normal' : 'italic',
+                  color:acc, textTransform:'uppercase', marginBottom:3,
                 }}>
                   {nsc.titel}
                 </div>
@@ -235,11 +233,14 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
           )}
 
           {/* Eigenschaften pills */}
-          {!compact && nsc.eigenschaften && nsc.eigenschaften.length > 0 && (
-            <div style={{ position:'relative', zIndex:1, marginBottom:12, opacity: unlocked.has('eigenschaften') ? 1 : 0.55 }}>
-              <TraitPills items={nsc.eigenschaften} acc={acc} max={4}/>
-            </div>
-          )}
+          {!compact && nsc.eigenschaften && nsc.eigenschaften.length > 0 && (() => {
+            const openEig = nsc.eigenschaften.filter((_, i) => unlocked.has(`eig-${i}`));
+            return (
+              <div style={{ position:'relative', zIndex:1, marginBottom:12, opacity: openEig.length ? 1 : 0.55 }}>
+                <TraitPills items={openEig.length ? openEig : nsc.eigenschaften} acc={acc} max={4}/>
+              </div>
+            );
+          })()}
 
           {/* Footer meta strip — nur unlockte Cells */}
           {!compact && (
@@ -255,12 +256,12 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
               {nsc.organisation && (!nsc.division || nsc.division === 'Keine') &&
                 <MetaLine label="Organisation" value={nsc.organisation} acc={acc} divisionAccent unlocked={unlocked.has('organisation')}/>}
               {nsc.rang &&
-                <MetaLine label="Rang"         value={`${romanFor(nsc) ? `${romanFor(nsc)} · ` : ''}${nsc.rang}`} acc={acc} unlocked={unlocked.has('rang')}/>}
+                <MetaLine label="Rang"         value={`${romanFor(nsc) ? `${romanFor(nsc)} · ` : ''}${parseInt(nsc.rang) ? 'Rang ' + parseInt(nsc.rang) : nsc.rang}`} acc={acc} unlocked={unlocked.has('division')}/>}
               {nsc.wohnort &&
                 <MetaLine label="Wohnort"      value={nsc.wohnort} acc={acc} unlocked={unlocked.has('wohnort')}/>}
               {nsc.alter && (
                 <MetaLine label="Alter"
-                  value={`${nsc.alter}${nsc.lebensphase ? ` · ${nsc.lebensphase}` : ''}`}
+                  value={`${nsc.alter} Jahre`}
                   acc={acc} unlocked={unlocked.has('alter')}/>
               )}
               {nsc.gottheit &&

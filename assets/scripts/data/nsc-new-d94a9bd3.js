@@ -14,44 +14,104 @@ const DIVISION_THEME = window.NSC_DIVISION_THEME;
 const DIVISION_ORDER = Object.keys(DIVISION_THEME).filter(d => d !== 'Keine');
 const STAGE_THRESHOLDS = window.NSC_STAGE_THRESHOLDS;
 
-// ── Fakt-basiertes Freischaltsystem ──────────────────────
-// Liefert die vollständige Liste aller "Fakten" eines NSC.
-// Singletons als feste Keys, Listen als indexierte Keys (motivation-0, …).
+// ── Meruria-Kalender (12 Monate, 224 Tage) ───────────────
+const MERURIA_MONTHS = [
+  { name:'Janvar', days:19, sign:'Die Arche',      traits:'Bewahrung, Heimweh, Schutz' },
+  { name:'Fevorn', days:18, sign:'Die Böe',        traits:'Anpassung, Mut, Risiko' },
+  { name:'Mareth', days:19, sign:'Die Wurzel',     traits:'Geduld, Stärke, Beharrlichkeit' },
+  { name:'Aprel',  days:19, sign:'Die Linse',      traits:'Wachsamkeit, Entdeckung, Neugier' },
+  { name:'Mairen', days:18, sign:'Die Stille',     traits:'Isolation, innere Stärke, Verlust' },
+  { name:'Junvar', days:19, sign:'Das Irrlicht',   traits:'Reisende, Unruhe, Bestimmung' },
+  { name:'Juval',  days:19, sign:'Die Klinge',     traits:'Entschlossenheit, Härte, Opfer' },
+  { name:'Auvar',  days:19, sign:'Die Glut',       traits:'Hoffnung, Neuanfang, Wandel' },
+  { name:'Septhar',days:19, sign:'Die Brücke',     traits:'Verbindung, Überwindung, Wandel' },
+  { name:'Oktar',  days:18, sign:'Der Schleier',   traits:'Dunkelheit, Rückzug, Geheimnisse' },
+  { name:'Novren', days:18, sign:'Das Labyrinth',  traits:'Komplexität, Täuschung, Erkenntnis' },
+  { name:'Derath', days:19, sign:'Der Spalt',      traits:'Übergänge, Entscheidungen, Neubeginn' },
+];
+const MERURIA_MSTARTS = MERURIA_MONTHS.reduce((a, m, i) => {
+  a.push(i === 0 ? 1 : a[i-1] + MERURIA_MONTHS[i-1].days); return a;
+}, []);
+function meruriaDoyParts(doy) {
+  if (!doy) return { mon:'', tag:'' };
+  for (let i = MERURIA_MONTHS.length - 1; i >= 0; i--)
+    if (doy >= MERURIA_MSTARTS[i]) return { mon:String(i), tag:String(doy - MERURIA_MSTARTS[i] + 1) };
+  return { mon:'', tag:'' };
+}
+function meruriaDoyText(doy) {
+  const p = meruriaDoyParts(doy);
+  return p.mon === '' ? '' : p.tag + '. ' + MERURIA_MONTHS[parseInt(p.mon)].name;
+}
+function meruriaZodiacOf(doy) {
+  const p = meruriaDoyParts(doy);
+  return p.mon === '' ? null : MERURIA_MONTHS[parseInt(p.mon)];
+}
+
+// ── Fakt-basiertes Freischaltsystem (v2) ─────────────────
+// Ein "Fakt" existiert nur, wenn der NSC dafür Inhalt hat; Listen-Fakten
+// sind pro Eintrag freischaltbar (eig-0, tal-0, geh-0, …). Sektions-Fakten
+// zählen nur, wenn die Sektion am NSC aktiv ist (nsc.sections).
+function nscFieldVisible(nsc, key) { return ((nsc.fieldVis || {})[key]) !== false; }
+
 function factsOf(nsc) {
   const keys = [];
-  for (const k of ['titel','rasse','geschlecht','alter','lebensphase','beruf',
-                   'division','rang','organisation','kapsel','wohnort','gottheit',
-                   'eigenschaften','unvergesslich','talente','makel','begleiter']) {
-    keys.push(k);
+  const has = k => (nsc.sections || []).includes(k);
+  // Eckdaten-Singletons — nur wenn ein Wert vorhanden ist
+  if (nsc.rasse) keys.push('rasse');
+  if (nsc.geschlecht) keys.push('geschlecht');
+  if (nsc.groesse) keys.push('groesse');
+  if (nsc.alter != null && nsc.alter !== '') keys.push('alter');
+  if (nsc.geburtstag_doy) keys.push('geburtstag');
+  if (nsc.gesinnung) keys.push('gesinnung');
+  if (nsc.klasse) keys.push('klasse');
+  if (nsc.hintergrund) keys.push('hintergrund');
+  if (nsc.beruf) keys.push('beruf');
+  if (nsc.gottheit) keys.push('gottheit');
+  if (nsc.division && nsc.division !== 'Keine') keys.push('division');
+  if (nsc.organisation) keys.push('organisation');
+  if (nsc.kapsel) keys.push('kapsel');
+  if (nsc.wohnort) keys.push('wohnort');
+  (nsc.vollerName || []).forEach((_, i) => keys.push(`vna-${i}`));
+  if (has('bio') && (nsc.biografie || '').trim()) keys.push('bio');
+  if (has('pers')) {
+    if ((nsc.unvergesslich || '').trim()) keys.push('unvergesslich');
+    (nsc.eigenschaften || []).forEach((_, i) => keys.push(`eig-${i}`));
+    (nsc.talente || []).forEach((_, i) => keys.push(`tal-${i}`));
+    (nsc.makel || []).forEach((_, i) => keys.push(`mak-${i}`));
   }
-  (nsc.vollerName  || []).forEach((_, i) => keys.push(`namestueck-${i}`));
-  (nsc.routine     || []).forEach((_, i) => keys.push(`routine-${i}`));
-  (nsc.ausruestung || []).forEach((_, i) => keys.push(`ausruestung-${i}`));
-  (nsc.motivationen|| []).forEach((_, i) => keys.push(`motivation-${i}`));
-  (nsc.geheimnisse || []).forEach((_, i) => keys.push(`geheimnis-${i}`));
-  const k = nsc.kontakte || {};
-  (k.familie || []).forEach((_, i) => keys.push(`familie-${i}`));
-  (k.freunde || []).forEach((_, i) => keys.push(`freunde-${i}`));
-  (k.rivalen || []).forEach((_, i) => keys.push(`rivalen-${i}`));
+  if (has('routine')) (nsc.routine || []).forEach((_, i) => keys.push(`rou-${i}`));
+  if (has('gewohnheiten')) (nsc.gewohnheiten || []).forEach((_, i) => keys.push(`gew-${i}`));
+  if (has('ausr')) {
+    (nsc.ausruestung || []).filter(e => (e.name || '').trim()).forEach((_, i) => keys.push(`aus-${i}`));
+    if ((nsc.habe || 0) > 0) keys.push('habe');
+  }
+  if (has('begleiter')) (nsc.begleiter || []).filter(b => (b.name || '').trim()).forEach((_, i) => keys.push(`beg-${i}`));
+  if (has('motive')) (nsc.motivationen || []).forEach((_, i) => keys.push(`mot-${i}`));
+  if (has('kontakte')) {
+    const k = nsc.kontakte || {};
+    (k.familie || []).filter(p => (p.name || '').trim()).forEach((_, i) => keys.push(`fam-${i}`));
+    (k.freunde || []).filter(p => (p.name || '').trim()).forEach((_, i) => keys.push(`fre-${i}`));
+    (k.rivalen || []).filter(p => (p.name || '').trim()).forEach((_, i) => keys.push(`riv-${i}`));
+  }
+  if (has('geheim')) (nsc.geheimnisse || []).filter(g => (g.text || '').trim()).forEach((_, i) => keys.push(`geh-${i}`));
   return keys;
 }
 
 // Menschenlesbare Gruppenbezeichnung für einen Fakt-Key (für DM-Tooltips)
 function factLabel(key) {
   const map = {
-    titel:'Titel', rasse:'Rasse', geschlecht:'Geschlecht', alter:'Alter',
-    lebensphase:'Lebensphase',
-    beruf:'Beruf', division:'Division', rang:'Rang', organisation:'Organisation',
-    kapsel:'Kapsel', wohnort:'Wohnort', gottheit:'Gottheit',
-    eigenschaften:'Eigenschaften', unvergesslich:'Unvergesslich',
-    talente:'Talente', makel:'Makel', begleiter:'Begleiter',
+    rasse:'Rasse', geschlecht:'Geschlecht', groesse:'Größe', alter:'Alter',
+    geburtstag:'Geburtstag', gesinnung:'Gesinnung', klasse:'Klasse',
+    hintergrund:'Hintergrund', beruf:'Beruf', division:'Division',
+    organisation:'Organisation', kapsel:'Kapsel', wohnort:'Wohnort',
+    gottheit:'Gottheit', unvergesslich:'Unvergesslich', bio:'Biografie', habe:'Vermögen',
   };
   if (map[key]) return map[key];
   const m = key.match(/^([a-z]+)-(\d+)$/);
   if (m) {
-    const tbl = { routine:'Routine', ausruestung:'Ausrüstung', motivation:'Motivation',
-                  geheimnis:'Geheimnis', familie:'Familie', freunde:'Freund', rivalen:'Rival',
-                  namestueck:'Namensteil' };
+    const tbl = { vna:'Namensteil', eig:'Eigenschaft', tal:'Talent', mak:'Makel',
+                  rou:'Routine', gew:'Angewohnheit', aus:'Ausrüstung', beg:'Begleiter',
+                  mot:'Motivation', fam:'Familie', fre:'Freund', riv:'Rival', geh:'Geheimnis' };
     return `${tbl[m[1]] || m[1]} #${+m[2]+1}`;
   }
   return key;
@@ -62,11 +122,14 @@ function defaultUnlockedFor(_nsc) { return []; }
 
 // Stufe aus Anteil freigeschalteter Fakten berechnen.
 // „Eingeweiht" (MAX_STAGE) erfordert 100 % aller Fakten — sonst fällt der NSC eine Stufe tiefer.
+// Es zählen nur Keys, die aktuell auch als Fakt existieren (verwaiste Unlocks ignorieren).
 function stageFromUnlocked(nsc, unlockedSet) {
-  const total = factsOf(nsc).length;
+  const facts = factsOf(nsc);
+  const total = facts.length;
   if (total === 0) return 0;
-  if (unlockedSet.size >= total) return MAX_STAGE; // alles offen → Eingeweiht
-  const pct = unlockedSet.size / total;
+  const open = facts.reduce((n, k) => n + (unlockedSet.has(k) ? 1 : 0), 0);
+  if (open >= total) return MAX_STAGE; // alles offen → Eingeweiht
+  const pct = open / total;
   for (let s = MAX_STAGE - 1; s >= 0; s--) {
     if (pct >= STAGE_THRESHOLDS[s]) return s;
   }
@@ -74,7 +137,14 @@ function stageFromUnlocked(nsc, unlockedSet) {
 }
 
 // Maps a DB row from the nscs table to the frontend NSC object shape.
+// Normalisiert Alt-Formate (makel als String, begleiter als Objekt,
+// geheimnisse als String-Array) aufs v2-Schema.
 function mapNscRow(row) {
+  const makel = Array.isArray(row.makel) ? row.makel : (row.makel ? [row.makel] : []);
+  const begleiter = Array.isArray(row.begleiter) ? row.begleiter
+    : (row.begleiter && row.begleiter.name) ? [row.begleiter] : [];
+  const geheimnisse = (row.geheimnisse || []).map(g =>
+    typeof g === 'string' ? { text:g, vis:true } : { text:g.text || '', vis:g.vis !== false });
   return {
     id:           row.id,
     slug:         row.slug,
@@ -82,9 +152,15 @@ function mapNscRow(row) {
     titel:        row.titel || null,
     vollerName:   row.voller_name || [],
     rasse:        row.rasse || null,
+    unterrasse:   row.unterrasse || null,
     geschlecht:   row.geschlecht || null,
     alter:        row.alter_jahre ?? null,
     lebensphase:  row.lebensphase || null,
+    klasse:       row.klasse || null,
+    gesinnung:    row.gesinnung || null,
+    groesse:      row.groesse || null,
+    hintergrund:  row.hintergrund || null,
+    geburtstag_doy: row.geburtstag_doy ?? null,
     beruf:        row.beruf || null,
     division:     row.division || 'Keine',
     rang:         row.rang || null,
@@ -92,17 +168,23 @@ function mapNscRow(row) {
     kapsel:       row.kapsel || null,
     wohnort:      row.wohnort || null,
     gottheit:     row.gottheit || null,
+    biografie:    row.biografie || null,
     unvergesslich:row.unvergesslich || null,
     eigenschaften:row.eigenschaften || [],
     status:       row.status || [],
     talente:      row.talente || [],
-    makel:        row.makel || null,
+    makel,
     routine:      row.routine || [],
+    gewohnheiten: row.gewohnheiten || [],
     ausruestung:  row.ausruestung || [],
-    begleiter:    row.begleiter || null,
+    begleiter,
+    habe:         row.habe ?? 0,
     motivationen: row.motivationen || [],
-    geheimnisse:  row.geheimnisse || [],
+    geheimnisse,
     kontakte:     row.kontakte || { familie:[], freunde:[], rivalen:[] },
+    sections:     row.sections || [],
+    fieldVis:     row.field_visibility || {},
+    steckbrief:   row.steckbrief || null,
     bild:         row.bild || null,
     art:          row.art || null,
     accent:       row.accent || null,
@@ -184,12 +266,13 @@ function useUnlocks(nscs, charPids, activePerspective='alle', players=[]) {
   }, [nscs, charPids]);
 
   const persist = (nscId, pid, keysSet) => {
+    // Immer Upsert (POST) — PATCH wird in manchen Umgebungen geblockt.
     window._sb.from('nsc_unlocks').upsert({
       character_id: pid,
       nsc_id: nscId,
       unlocked_keys: Array.from(keysSet),
       updated_at: new Date().toISOString(),
-    });
+    }, { onConflict: 'character_id,nsc_id' }).then(() => {});
   };
 
   const charSets = (nscId) => charPids.map(pid => byPersp[pid]?.[nscId] || new Set());
@@ -273,6 +356,18 @@ function useUnlocks(nscs, charPids, activePerspective='alle', players=[]) {
     return 'some';
   };
 
+  // Exakte Faktenmenge für einen Charakter setzen (z. B. „Alles freischalten/sperren")
+  const setKeysForPid = (nscId, pid, keysArr) => {
+    setByPersp(prev => {
+      const next = { ...prev };
+      next[pid] = { ...next[pid] };
+      const cur = new Set(keysArr);
+      next[pid][nscId] = cur;
+      persist(nscId, pid, cur);
+      return next;
+    });
+  };
+
   const resetForPids = (nscId, pids) => {
     if (!pids || pids.length === 0) return;
     setByPersp(prev => {
@@ -287,7 +382,7 @@ function useUnlocks(nscs, charPids, activePerspective='alle', players=[]) {
   };
 
   return { byPersp, isUnlocked, toggleUnlock, toggleForPids, unlockStateForPids,
-           resetForPids, unlockedFor, stageFor, resetAll, activePerspective };
+           setKeysForPid, resetForPids, unlockedFor, stageFor, resetAll, activePerspective };
 }
 
 // ── Helpers ──────────────────────────────────────────────
@@ -754,7 +849,8 @@ Object.assign(window, {
   DIVISION_THEME, DIVISION_ORDER,
   GOLD, GOLD_SOFT, GOLD_GLOW, goldA,
   hexPoints, hexPointsInset, hexClipInset, hexA, effStage, accentOf, romanFor,
-  factsOf, factLabel, defaultUnlockedFor, stageFromUnlocked,
+  factsOf, factLabel, defaultUnlockedFor, stageFromUnlocked, nscFieldVisible,
+  MERURIA_MONTHS, MERURIA_MSTARTS, meruriaDoyParts, meruriaDoyText, meruriaZodiacOf,
   mapNscRow, useNSCData, useUnlocks,
   NAV, NavItem, FloatingHexField, ParticleField, useScrollReveal,
   NSCPortrait, StageBadge, StageProgress, StatusPills, LockedSlot, Field,
