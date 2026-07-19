@@ -146,7 +146,8 @@ function unlockableKeys(nsc) {
       const list = (nsc.geheimnisse || []).filter(g => (g.text || '').trim());
       return !!(list[+m[2]] && list[+m[2]].vis);
     }
-    return vis(SEC_OF_PREFIX[m[1]] || m[1]);
+    // Sektion UND Einzeleintrag müssen sichtbar sein
+    return vis(SEC_OF_PREFIX[m[1]] || m[1]) && vis(k);
   });
 }
 
@@ -171,14 +172,15 @@ function FieldHead({ label, eye }) {
     </span>
   );
 }
-function StrList({ list, onChange, placeholder, addLabel }) {
+function StrList({ list, onChange, placeholder, addLabel, eye }) {
   const rows = list || [];
   return (
     <div>
       {rows.map((val, i) => (
-        <div key={i} style={{ display:'grid', gridTemplateColumns:'1fr auto', gap:6, marginBottom:6 }}>
+        <div key={i} style={{ display:'grid', gridTemplateColumns:eye ? '1fr auto auto' : '1fr auto', gap:6, marginBottom:6, alignItems:'center' }}>
           <input placeholder={placeholder} value={val}
             onChange={e => { const a = [...rows]; a[i] = e.target.value; onChange(a); }} style={inpSt}/>
+          {eye ? eye(i) : null}
           <button onClick={() => onChange(rows.filter((_, j) => j !== i))} style={rmBtnSt}>×</button>
         </div>
       ))}
@@ -223,6 +225,62 @@ function SecHeader({ title, visOn, onVis, onRemove, extra }) {
       {extra}
       <div style={{ flex:1 }}/>
       <button onClick={onRemove} style={{ background:'transparent', border:'none', color:'rgba(160,140,255,0.35)', fontFamily:MONO, fontSize:9, letterSpacing:'0.14em', cursor:'pointer', textTransform:'uppercase' }}>× entfernen</button>
+    </div>
+  );
+}
+
+// ── Perspektiven-Auswahl (kompakt, mit Autocomplete) ───────
+function PerspPicker({ persp, setPersp, charPersp, onPick }) {
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState('');
+  const ref = useRef(null);
+  useEffect(() => {
+    if (!open) return;
+    const h = e => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+    document.addEventListener('mousedown', h);
+    return () => document.removeEventListener('mousedown', h);
+  }, [open]);
+  const isDm = persp === '__dm';
+  const label = isDm ? '◈ DM (Spielleitung)' : ((charPersp.find(c => c.id === persp) || {}).label || '◈ DM (Spielleitung)');
+  const q = query.trim().toLowerCase();
+  const opts = [{ id:'__dm', label:'◈ DM (Spielleitung)', dm:true }, ...charPersp.map(c => ({ id:c.id, label:c.label }))]
+    .filter(o => !q || o.label.toLowerCase().includes(q));
+  const pick = o => { setPersp(o.id); setOpen(false); setQuery(''); if (onPick) onPick(o.id); };
+  return (
+    <div ref={ref} style={{ position:'relative', flex:1, minWidth:0 }}>
+      <input
+        value={open ? query : label}
+        onFocus={() => { setOpen(true); setQuery(''); }}
+        onChange={e => { setQuery(e.target.value); setOpen(true); }}
+        onKeyDown={e => { if (e.key === 'Enter' && opts.length === 1) pick(opts[0]); if (e.key === 'Escape') setOpen(false); }}
+        placeholder="Perspektive suchen …" title="Aus wessen Sicht die Liste und die Vorschau gezeigt werden"
+        style={{ width:'100%', padding:'6px 22px 6px 8px', background:'rgba(5,3,15,0.85)',
+          border:`1px solid ${isDm ? 'rgba(255,184,80,0.4)' : 'rgba(124,77,255,0.45)'}`, borderRadius:3,
+          color:isDm ? '#ffb850' : '#f0eeff', fontFamily:MONO, fontSize:9.5, letterSpacing:'0.08em',
+          outline:'none', boxSizing:'border-box', cursor:'pointer' }}/>
+      <span style={{ position:'absolute', right:7, top:'50%', transform:'translateY(-50%)', fontSize:8, color:'rgba(160,140,255,0.5)', pointerEvents:'none' }}>▾</span>
+      {open && (
+        <div style={{ position:'absolute', top:'calc(100% + 3px)', left:0, right:0, zIndex:120,
+          background:'rgba(8,6,22,0.99)', border:'1px solid rgba(124,77,255,0.4)', borderRadius:3,
+          boxShadow:'0 12px 36px rgba(0,0,0,0.7)', overflow:'hidden auto', maxHeight:220 }}>
+          {opts.length === 0 && (
+            <div style={{ padding:'8px 10px', fontFamily:BODY, fontSize:11.5, fontStyle:'italic', color:'rgba(160,140,255,0.45)' }}>Kein Treffer</div>
+          )}
+          {opts.map(o => {
+            const on = o.id === persp;
+            return (
+              <button key={o.id} onClick={() => pick(o)}
+                style={{ display:'block', width:'100%', padding:'7px 10px', textAlign:'left', cursor:'pointer',
+                  background:on ? 'rgba(124,77,255,0.18)' : 'transparent', border:'none',
+                  borderBottom:'1px solid rgba(124,77,255,0.08)',
+                  fontFamily:MONO, fontSize:9.5, letterSpacing:'0.08em',
+                  color:o.dm ? '#ffb850' : on ? '#f0eeff' : 'rgba(220,210,255,0.8)' }}>
+                {o.label}
+              </button>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
@@ -496,9 +554,15 @@ function App() {
             <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Suchen …"
               style={{ flex:1, minWidth:0, padding:'8px 10px', background:'rgba(5,3,15,0.85)', border:'1px solid rgba(124,77,255,0.3)', borderRadius:3, color:'#f0eeff', fontFamily:BODY, fontSize:12.5, outline:'none', boxSizing:'border-box' }}/>
           </div>
-          <div style={{ display:'flex', gap:4, margin:'10px 0 6px' }}>
+          <div style={{ display:'flex', alignItems:'center', gap:6, margin:'10px 0 0' }}>
+            <span style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.2em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase', flexShrink:0 }}>◇ Sicht</span>
+            <PerspPicker persp={persp} setPersp={setPersp} charPersp={charPersp}
+              onPick={id => { if (selId) setView(id === '__dm' ? 'edit' : 'preview'); }}/>
+          </div>
+          <div style={{ display:'flex', gap:4, margin:'8px 0 6px' }}>
             {[['alle','Alle'],['sichtbar','Sichtbar'],['verborgen','Verborgen']].map(([k, label]) => (
               <button key={k} onClick={() => setFilter(k)}
+                title={persp === '__dm' ? 'Nach Spieler-Sichtbarkeit filtern' : 'Nach Sichtbarkeit aus Sicht von ' + ((charPersp.find(c => c.id === persp) || {}).label || 'Spieler') + ' filtern'}
                 style={{ flex:1, padding:'5px 4px', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.14em', textTransform:'uppercase', cursor:'pointer', borderRadius:3,
                   background:filter === k ? 'rgba(124,77,255,0.16)' : 'transparent',
                   border:`1px solid ${filter === k ? 'rgba(124,77,255,0.55)' : 'rgba(124,77,255,0.15)'}`,
@@ -536,8 +600,15 @@ function App() {
             const acc = divOf(n.division).accent;
             const isSel = n.id === selId && !creating;
             const dead = (n.status || []).includes('Verstorben');
+            const charView = persp !== '__dm' && charPersp.some(c => c.id === persp);
+            let cCount = null;
+            if (charView) {
+              const cSet = (unlocks.byPersp[persp] || {})[n.id] || new Set();
+              const keys = unlockableKeys(n);
+              cCount = keys.filter(k => cSet.has(k)).length + '/' + keys.length;
+            }
             return (
-              <button key={n.id} onClick={() => { setSelId(n.id); setCreating(false); setView('edit'); }}
+              <button key={n.id} onClick={() => { setSelId(n.id); setCreating(false); setView(charView ? 'preview' : 'edit'); }}
                 style={{ width:'100%', padding:'10px 14px', display:'flex', alignItems:'center', gap:10, cursor:'pointer', border:'none',
                   borderBottom:'1px solid rgba(160,140,255,0.08)', borderLeft:`3px solid ${isSel ? acc : 'transparent'}`,
                   background:isSel ? hexA(acc, 0.14) : 'transparent', opacity:dead ? 0.65 : 1, transition:'background 0.15s', textAlign:'left' }}>
@@ -553,7 +624,9 @@ function App() {
                 </span>
                 <span style={{ display:'flex', flexDirection:'column', alignItems:'flex-end', gap:3, flexShrink:0 }}>
                   <span style={{ fontFamily:MONO, fontSize:10, color:n.visible ? '#5fe39a' : 'rgba(160,140,255,0.3)' }}>{n.visible ? '◆' : '○'}</span>
-                  <span style={{ fontFamily:MONO, fontSize:8, color:hexA(acc, 0.7) }}>{divOf(n.division).roman}</span>
+                  {cCount !== null
+                    ? <span title="Freigeschaltete Fakten für diesen Charakter" style={{ fontFamily:MONO, fontSize:8, color:'rgba(200,190,240,0.55)' }}>{cCount}</span>
+                    : <span style={{ fontFamily:MONO, fontSize:8, color:hexA(acc, 0.7) }}>{divOf(n.division).roman}</span>}
                 </span>
               </button>
             );
@@ -610,6 +683,9 @@ function Editor(props) {
   const updKon = (sub, i, k, v) => { const a = [...((sel.kontakte || {})[sub] || [])]; a[i] = { ...a[i], [k]:v }; updSel('kontakte', { ...sel.kontakte, [sub]:a }); };
   const rmKon = (sub, i) => updSel('kontakte', { ...sel.kontakte, [sub]:((sel.kontakte || {})[sub] || []).filter((_, j) => j !== i) });
   const addKon = sub => updSel('kontakte', { ...sel.kontakte, [sub]:[...((sel.kontakte || {})[sub] || []), { name:'', rolle:'' }] });
+
+  // Rohindex → Faktenindex (Fakten zählen nur gefüllte Einträge)
+  const filteredIdx = (list, i, pred) => pred(list[i]) ? list.slice(0, i + 1).filter(pred).length - 1 : null;
 
   const gebParts = meruriaDoyParts(sel.geburtstag_doy);
   const gebZ = meruriaZodiacOf(sel.geburtstag_doy);
@@ -802,8 +878,9 @@ function Editor(props) {
               </div>
             )}
             <div style={{ marginTop:16 }}>
-              <FieldHead label="Voller Name · Namensteile einzeln freischaltbar" eye={<Eye on={vis('vname')} onClick={() => toggleFieldVis('vname')}/>}/>
-              <StrList list={sel.vollerName} onChange={a => updSel('vollerName', a)} placeholder="Namensteil …" addLabel="Namensteil"/>
+              <FieldHead label="Voller Name · Namensteile einzeln sichtbar schaltbar" eye={<Eye on={vis('vname')} onClick={() => toggleFieldVis('vname')}/>}/>
+              <StrList list={sel.vollerName} onChange={a => updSel('vollerName', a)} placeholder="Namensteil …" addLabel="Namensteil"
+                eye={i => <Eye on={vis(`vna-${i}`)} onClick={() => toggleFieldVis(`vna-${i}`)}/>}/>
             </div>
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14, marginTop:16 }}>
               <div>
@@ -844,16 +921,19 @@ function Editor(props) {
                 <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12, alignItems:'start' }}>
                   <div>
                     <label style={{ ...lbSt, display:'block', marginBottom:5 }}>Eigenschaften</label>
-                    <StrList list={sel.eigenschaften} onChange={a => updSel('eigenschaften', a)} placeholder="Eigenschaft …" addLabel="Eigenschaft"/>
+                    <StrList list={sel.eigenschaften} onChange={a => updSel('eigenschaften', a)} placeholder="Eigenschaft …" addLabel="Eigenschaft"
+                      eye={i => <Eye on={vis(`eig-${i}`)} onClick={() => toggleFieldVis(`eig-${i}`)}/>}/>
                   </div>
                   <div>
                     <label style={{ ...lbSt, display:'block', marginBottom:5 }}>Talente</label>
-                    <StrList list={sel.talente} onChange={a => updSel('talente', a)} placeholder="Talent …" addLabel="Talent"/>
+                    <StrList list={sel.talente} onChange={a => updSel('talente', a)} placeholder="Talent …" addLabel="Talent"
+                      eye={i => <Eye on={vis(`tal-${i}`)} onClick={() => toggleFieldVis(`tal-${i}`)}/>}/>
                   </div>
                 </div>
                 <div>
                   <label style={{ ...lbSt, display:'block', marginBottom:5 }}>Makel</label>
-                  <StrList list={sel.makel} onChange={a => updSel('makel', a)} placeholder="Makel …" addLabel="Makel"/>
+                  <StrList list={sel.makel} onChange={a => updSel('makel', a)} placeholder="Makel …" addLabel="Makel"
+                    eye={i => <Eye on={vis(`mak-${i}`)} onClick={() => toggleFieldVis(`mak-${i}`)}/>}/>
                 </div>
               </div>
             </div>
@@ -871,11 +951,12 @@ function Editor(props) {
                     if (from == null || from === i) return;
                     const a = [...sel.routine]; const [mv] = a.splice(from, 1); a.splice(i, 0, mv);
                     updSel('routine', a); }}
-                  style={{ display:'grid', gridTemplateColumns:'auto 150px 200px 1fr auto', gap:6, marginBottom:6, alignItems:'center' }}>
+                  style={{ display:'grid', gridTemplateColumns:'auto 150px 200px 1fr auto auto', gap:6, marginBottom:6, alignItems:'center' }}>
                   <span title="Ziehen zum Umsortieren" style={{ cursor:'grab', color:'rgba(160,140,255,0.4)', fontSize:13, padding:'0 3px', userSelect:'none' }}>⠿</span>
                   <input placeholder="Uhrzeit / Tageszeit" value={e.zeit || ''} onChange={ev => updRow('routine', i, 'zeit', ev.target.value)} style={inpSt}/>
                   <input placeholder="Ort" value={e.ort || ''} onChange={ev => updRow('routine', i, 'ort', ev.target.value)} style={inpSt}/>
                   <input placeholder="Tätigkeit" value={e.tat || ''} onChange={ev => updRow('routine', i, 'tat', ev.target.value)} style={inpSt}/>
+                  <Eye on={vis(`rou-${i}`)} onClick={() => toggleFieldVis(`rou-${i}`)}/>
                   <button onClick={() => rmRow('routine', i)} style={rmBtnSt}>×</button>
                 </div>
               ))}
@@ -887,7 +968,8 @@ function Editor(props) {
           {has('gewohnheiten') && (
             <div style={cardSt}>
               <SecHeader title="Angewohnheiten" visOn={vis('gewohnheiten')} onVis={() => toggleFieldVis('gewohnheiten')} onRemove={() => rmSec('gewohnheiten')}/>
-              <StrList list={sel.gewohnheiten} onChange={a => updSel('gewohnheiten', a)} placeholder="Angewohnheit …" addLabel="Angewohnheit"/>
+              <StrList list={sel.gewohnheiten} onChange={a => updSel('gewohnheiten', a)} placeholder="Angewohnheit …" addLabel="Angewohnheit"
+                eye={i => <Eye on={vis(`gew-${i}`)} onClick={() => toggleFieldVis(`gew-${i}`)}/>}/>
             </div>
           )}
 
@@ -895,13 +977,17 @@ function Editor(props) {
           {has('ausr') && (
             <div style={cardSt}>
               <SecHeader title="Ausrüstung & Vermögen" visOn={vis('ausr')} onVis={() => toggleFieldVis('ausr')} onRemove={() => rmSec('ausr')}/>
-              {(sel.ausruestung || []).map((e, i) => (
-                <div key={i} style={{ display:'grid', gridTemplateColumns:'1fr 2fr auto', gap:6, marginBottom:6 }}>
-                  <input placeholder="Gegenstand" value={e.name || ''} onChange={ev => updRow('ausruestung', i, 'name', ev.target.value)} style={inpSt}/>
-                  <input placeholder="Beschreibung" value={e.beschreibung || ''} onChange={ev => updRow('ausruestung', i, 'beschreibung', ev.target.value)} style={inpSt}/>
-                  <button onClick={() => rmRow('ausruestung', i)} style={rmBtnSt}>×</button>
-                </div>
-              ))}
+              {(sel.ausruestung || []).map((e, i) => {
+                const fi = filteredIdx(sel.ausruestung, i, x => (x.name || '').trim());
+                return (
+                  <div key={i} style={{ display:'grid', gridTemplateColumns:'1fr 2fr auto auto', gap:6, marginBottom:6, alignItems:'center' }}>
+                    <input placeholder="Gegenstand" value={e.name || ''} onChange={ev => updRow('ausruestung', i, 'name', ev.target.value)} style={inpSt}/>
+                    <input placeholder="Beschreibung" value={e.beschreibung || ''} onChange={ev => updRow('ausruestung', i, 'beschreibung', ev.target.value)} style={inpSt}/>
+                    {fi !== null ? <Eye on={vis(`aus-${fi}`)} onClick={() => toggleFieldVis(`aus-${fi}`)}/> : <span style={{ width:15 }}/>}
+                    <button onClick={() => rmRow('ausruestung', i)} style={rmBtnSt}>×</button>
+                  </div>
+                );
+              })}
               <div style={{ display:'flex', alignItems:'center', gap:14, marginTop:8 }}>
                 <button onClick={() => addRow('ausruestung', { name:'', beschreibung:'' })} style={addBtnSt}>+ Gegenstand</button>
                 <div style={{ display:'flex', alignItems:'center', gap:7, marginLeft:'auto' }}>
@@ -918,13 +1004,17 @@ function Editor(props) {
           {has('begleiter') && (
             <div style={cardSt}>
               <SecHeader title="Begleiter" visOn={vis('begleiter')} onVis={() => toggleFieldVis('begleiter')} onRemove={() => rmSec('begleiter')}/>
-              {(sel.begleiter || []).map((b, i) => (
-                <div key={i} style={{ display:'grid', gridTemplateColumns:'1fr 1fr auto', gap:6, marginBottom:6 }}>
-                  <input placeholder="Name" value={b.name || ''} onChange={ev => updRow('begleiter', i, 'name', ev.target.value)} style={inpSt}/>
-                  <input placeholder="Art — z.B. Rabe, Vertrauter" value={b.art || ''} onChange={ev => updRow('begleiter', i, 'art', ev.target.value)} style={inpSt}/>
-                  <button onClick={() => rmRow('begleiter', i)} style={rmBtnSt}>×</button>
-                </div>
-              ))}
+              {(sel.begleiter || []).map((b, i) => {
+                const fi = filteredIdx(sel.begleiter, i, x => (x.name || '').trim());
+                return (
+                  <div key={i} style={{ display:'grid', gridTemplateColumns:'1fr 1fr auto auto', gap:6, marginBottom:6, alignItems:'center' }}>
+                    <input placeholder="Name" value={b.name || ''} onChange={ev => updRow('begleiter', i, 'name', ev.target.value)} style={inpSt}/>
+                    <input placeholder="Art — z.B. Rabe, Vertrauter" value={b.art || ''} onChange={ev => updRow('begleiter', i, 'art', ev.target.value)} style={inpSt}/>
+                    {fi !== null ? <Eye on={vis(`beg-${fi}`)} onClick={() => toggleFieldVis(`beg-${fi}`)}/> : <span style={{ width:15 }}/>}
+                    <button onClick={() => rmRow('begleiter', i)} style={rmBtnSt}>×</button>
+                  </div>
+                );
+              })}
               <button onClick={() => addRow('begleiter', { name:'', art:'' })} style={{ ...addBtnSt, marginTop:4 }}>+ Begleiter</button>
             </div>
           )}
@@ -933,7 +1023,8 @@ function Editor(props) {
           {has('motive') && (
             <div style={cardSt}>
               <SecHeader title="Motivationen" visOn={vis('motive')} onVis={() => toggleFieldVis('motive')} onRemove={() => rmSec('motive')}/>
-              <StrList list={sel.motivationen} onChange={a => updSel('motivationen', a)} placeholder="Motivation …" addLabel="Motivation"/>
+              <StrList list={sel.motivationen} onChange={a => updSel('motivationen', a)} placeholder="Motivation …" addLabel="Motivation"
+                eye={i => <Eye on={vis(`mot-${i}`)} onClick={() => toggleFieldVis(`mot-${i}`)}/>}/>
             </div>
           )}
 
@@ -947,7 +1038,7 @@ function Editor(props) {
               <datalist id="nsc-namelist">
                 {nameOpts.map((n, i) => <option key={i} value={n}/>)}
               </datalist>
-              {[['familie','Familie'],['freunde','Freunde'],['rivalen','Rivalen']].map(([sub, title]) => (
+              {[['familie','Familie','fam'],['freunde','Freunde','fre'],['rivalen','Rivalen','riv']].map(([sub, title, prefix]) => (
                 <div key={sub} style={{ marginBottom:14 }}>
                   <div style={{ fontFamily:MONO, fontSize:8.5, letterSpacing:'0.26em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase', marginBottom:7 }}>{title}</div>
                   {((sel.kontakte || {})[sub] || []).map((p, i) => {
@@ -956,8 +1047,9 @@ function Editor(props) {
                     const pcTarget = !target && nm ? charPersp.find(c => c.label === nm) : null;
                     const active = !!nm;
                     const kAcc = pcTarget ? '#ffb850' : target ? divOf(target.division).accent : '#7c4dff';
+                    const fi = filteredIdx((sel.kontakte || {})[sub] || [], i, x => (x.name || '').trim());
                     return (
-                      <div key={i} style={{ display:'grid', gridTemplateColumns:'auto 1.2fr 1fr auto auto', gap:6, marginBottom:6, alignItems:'center' }}>
+                      <div key={i} style={{ display:'grid', gridTemplateColumns:'auto 1.2fr 1fr auto auto auto', gap:6, marginBottom:6, alignItems:'center' }}>
                         <span title={p.name} style={{ width:31, height:31, flexShrink:0, borderRadius:3, overflow:'hidden', display:'flex', alignItems:'center', justifyContent:'center',
                           background:(target && target.bild) ? '#000' : hexA(kAcc, (target || pcTarget) ? 0.14 : 0.05),
                           border:`1px solid ${hexA(kAcc, (target || pcTarget) ? 0.5 : 0.2)}`, fontFamily:DISP, fontSize:12,
@@ -974,6 +1066,7 @@ function Editor(props) {
                             : { padding:'0 12px', whiteSpace:'nowrap', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.12em', textTransform:'uppercase', borderRadius:3, cursor:active ? 'pointer' : 'default', background:'rgba(124,77,255,0.08)', border:'1px solid rgba(124,77,255,0.35)', color:'rgba(200,190,240,0.65)', opacity:active ? 1 : 0.25, pointerEvents:active ? 'auto' : 'none' }}>
                           {pcTarget ? '◈ SC' : target ? '→ öffnen' : '✦ NSC anlegen'}
                         </button>
+                        {fi !== null ? <Eye on={vis(`${prefix}-${fi}`)} onClick={() => toggleFieldVis(`${prefix}-${fi}`)}/> : <span style={{ width:15 }}/>}
                         <button onClick={() => rmKon(sub, i)} style={rmBtnSt}>×</button>
                       </div>
                     );
@@ -1129,10 +1222,11 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
   const tgU = key => !dmView && unlocks.toggleForPids(sel.id, key, [persp]);
   const setU = arr => !dmView && unlocks.setKeysForPid(sel.id, persp, arr);
 
-  const pOpen = (secKey, key) => dmView ? true : ((sel.fieldVis || {})[secKey] !== false && uSet.has(key));
+  const gVis = k => (sel.fieldVis || {})[k] !== false;
+  const pOpen = (secKey, key) => dmView ? true : (gVis(secKey) && gVis(key) && uSet.has(key));
   const mkTg = (secKey, key) => {
     if (dmView) return null;
-    const gHidden = (sel.fieldVis || {})[secKey] === false;
+    const gHidden = !gVis(secKey) || !gVis(key);
     const on = uSet.has(key);
     return (
       <button onClick={gHidden ? undefined : () => tgU(key)}
@@ -1143,10 +1237,11 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
       </button>
     );
   };
-  const mkTgAll = (secKey, keys) => {
-    if (dmView || !keys.length) return null;
-    const gHidden = (sel.fieldVis || {})[secKey] === false;
-    const allOn = keys.every(k => uSet.has(k));
+  const mkTgAll = (secKey, allKeysOfSec) => {
+    if (dmView || !allKeysOfSec.length) return null;
+    const keys = allKeysOfSec.filter(gVis);  // nur global sichtbare Einträge schalten
+    const gHidden = !gVis(secKey) || !keys.length;
+    const allOn = keys.length > 0 && keys.every(k => uSet.has(k));
     return (
       <button onClick={gHidden ? undefined : () => setU(allOn ? [...uSet].filter(k => !keys.includes(k)) : [...new Set([...uSet, ...keys])])}
         title={gHidden ? 'Global verborgen — Auge im Bearbeiten-Tab öffnen' : (allOn ? 'Alle Einträge sperren für ' : 'Alle Einträge freischalten für ') + perspName}

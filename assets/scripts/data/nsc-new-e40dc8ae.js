@@ -466,7 +466,8 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
   const isOpen = (k) => {
     const mg = k.match(/^geh-(\d+)$/);
     if (mg) { const g = gehList[+mg[1]]; return !!(g && g.vis) && unlocked.has(k); }
-    return fieldVis(dpVisKeyOf(k)) && unlocked.has(k);
+    // Sektions-Auge UND Einzeleintrag-Auge müssen offen sein
+    return fieldVis(dpVisKeyOf(k)) && fieldVis(k) && unlocked.has(k);
   };
   const visible = (k) => gm || isOpen(k);
   const hasSec = (k) => (nsc.sections || []).includes(k);
