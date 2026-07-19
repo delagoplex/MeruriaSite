@@ -74,6 +74,7 @@ function factsOf(nsc) {
   if (nsc.wohnort) keys.push('wohnort');
   (nsc.vollerName || []).forEach((_, i) => keys.push(`vna-${i}`));
   if (has('bio') && (nsc.biografie || '').trim()) keys.push('bio');
+  if (has('aussehen') && Object.values(nsc.aussehen || {}).some(v => String(v || '').trim())) keys.push('aussehen');
   if (has('pers')) {
     if ((nsc.unvergesslich || '').trim()) keys.push('unvergesslich');
     (nsc.eigenschaften || []).forEach((_, i) => keys.push(`eig-${i}`));
@@ -105,7 +106,7 @@ function factLabel(key) {
     geburtstag:'Geburtstag', gesinnung:'Gesinnung', klasse:'Klasse',
     hintergrund:'Hintergrund', beruf:'Beruf', division:'Division',
     organisation:'Organisation', kapsel:'Kapsel', wohnort:'Wohnort',
-    gottheit:'Gottheit', unvergesslich:'Unvergesslich', bio:'Biografie', habe:'Vermögen',
+    gottheit:'Gottheit', unvergesslich:'Unvergesslich', bio:'Biografie', aussehen:'Aussehen', habe:'Vermögen',
   };
   if (map[key]) return map[key];
   const m = key.match(/^([a-z]+)-(\d+)$/);
@@ -193,6 +194,7 @@ function mapNscRow(row) {
     wohnort:      row.wohnort || null,
     gottheit:     row.gottheit || null,
     biografie:    row.biografie || null,
+    aussehen:     (row.aussehen && typeof row.aussehen === 'object') ? row.aussehen : {},
     unvergesslich:row.unvergesslich || null,
     eigenschaften:row.eigenschaften || [],
     status:       row.status || [],

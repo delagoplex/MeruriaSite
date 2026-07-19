@@ -664,6 +664,36 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
             </React.Fragment>
           )}
 
+          {/* Section: Aussehen */}
+          {(() => {
+            const ash = (nsc.aussehen && typeof nsc.aussehen === 'object') ? nsc.aussehen : {};
+            const units = { groesse:' cm', gewicht:' Pfund' };
+            const rows = [['groesse','Größe'],['gewicht','Gewicht'],['hautfarbe','Hautfarbe'],['augenfarbe','Augenfarbe'],['haarfarbe','Haarfarbe'],['merkmale','Besondere Merkmale'],['weiteres','Weiteres']]
+              .map(([k, label]) => { const v = String(ash[k] || '').trim(); return { k, label, v:v ? v + (units[k] || '') : '' }; }).filter(r => r.v);
+            if (!hasSec('aussehen') || !rows.length) return null;
+            return (
+              <React.Fragment>
+                <DPSection title="Aussehen" acc={acc} count={isOpen('aussehen') ? 1 : 0} total={1}/>
+                <SingletonBlock open={isOpen('aussehen')} gm={gm} acc={acc} onToggle={() => tg('aussehen')} toggleState={ts('aussehen')}
+                  render={(open) => open || gm ? (
+                    <div style={{ padding:'12px 16px', border:`1px solid ${dpHA(acc, 0.25)}`,
+                      background: dpHA(acc, 0.04),
+                      display:'grid', gridTemplateColumns:'repeat(3, minmax(0, 1fr))', gap:'10px 26px' }}>
+                      {rows.map(r => (
+                        <div key={r.k} style={(r.k === 'merkmale' || r.k === 'weiteres') ? { gridColumn:'1 / -1' } : null}>
+                          <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.2em', color:'rgba(160,140,255,0.48)', textTransform:'uppercase', display:'block', marginBottom:2 }}>{r.label}</span>
+                          <span style={{ fontFamily:'var(--font-body)', fontSize:13, lineHeight:1.6, whiteSpace:'pre-wrap', display:'block',
+                            color: open ? 'var(--silver)' : 'rgba(200,190,240,0.5)',
+                            fontStyle: open ? 'normal' : 'italic' }}>{r.v}</span>
+                        </div>
+                      ))}
+                    </div>
+                  ) : <DPLocked acc={acc}/>}
+                />
+              </React.Fragment>
+            );
+          })()}
+
           {/* Section: Eckdaten */}
           {(() => {
             const rangNum = parseInt(nsc.rang) || null;

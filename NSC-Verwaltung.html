@@ -86,6 +86,7 @@ function nscToRow(n) {
     wohnort: (n.wohnort || '').trim() || null,
     gottheit: n.gottheit || null,
     biografie: n.biografie || null,
+    aussehen: (n.aussehen && typeof n.aussehen === 'object') ? n.aussehen : {},
     unvergesslich: n.unvergesslich || null,
     eigenschaften: n.eigenschaften || [],
     status: n.status || [],
@@ -897,6 +898,53 @@ function Editor(props) {
             </div>
           )}
 
+          {/* ── Aussehen ── */}
+          {has('aussehen') && (() => {
+            const ash = (sel.aussehen && typeof sel.aussehen === 'object') ? sel.aussehen : {};
+            const upd = k => e => updSel('aussehen', { ...ash, [k]:e.target.value });
+            return (
+              <div style={cardSt}>
+                <SecHeader title="Aussehen" visOn={vis('aussehen')} onVis={() => toggleFieldVis('aussehen')} onRemove={() => rmSec('aussehen')}/>
+                <div style={{ display:'grid', gridTemplateColumns:'repeat(3, 1fr)', gap:14 }}>
+                  {[['groesse','Größe','z. B. 182','cm'],['gewicht','Gewicht','z. B. 160','Pfund']].map(([k, label, ph, unit]) => {
+                    const step = d => {
+                      const cur = parseInt(String(ash[k] || '').trim(), 10);
+                      updSel('aussehen', { ...ash, [k]:String(Math.max(0, (isNaN(cur) ? 0 : cur) + d)) });
+                    };
+                    return (
+                      <div key={k}>
+                        <FieldHead label={label} eye={null}/>
+                        <div style={{ position:'relative' }}>
+                          <input type="number" className="ash-num" value={ash[k] || ''} onChange={upd(k)} placeholder={ph} style={{ ...inpSt, paddingRight:86 }}/>
+                          <div style={{ position:'absolute', right:6, top:'50%', transform:'translateY(-50%)', display:'flex', alignItems:'center', gap:7 }}>
+                            <span style={{ fontFamily:MONO, fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(160,140,255,0.55)', pointerEvents:'none' }}>{unit}</span>
+                            <div style={{ display:'flex', flexDirection:'column', gap:3, borderLeft:'1px solid rgba(124,77,255,0.25)', paddingLeft:5 }}>
+                              <button type="button" tabIndex={-1} className="ash-step" onClick={() => step(1)}>▴</button>
+                              <button type="button" tabIndex={-1} className="ash-step" onClick={() => step(-1)}>▾</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                  {[['hautfarbe','Hautfarbe',''],['augenfarbe','Augenfarbe',''],['haarfarbe','Haarfarbe','']].map(([k, label, ph]) => (
+                    <div key={k}>
+                      <FieldHead label={label} eye={null}/>
+                      <input value={ash[k] || ''} onChange={upd(k)} placeholder={ph} style={inpSt}/>
+                    </div>
+                  ))}
+                </div>
+                {[['merkmale','Besondere Merkmale','Narben, Tattoos, Gangart, Stimme …'],['weiteres','Weiteres','Kleidung, Schmuck, Ausstrahlung …']].map(([k, label, ph]) => (
+                  <div key={k} style={{ marginTop:14 }}>
+                    <FieldHead label={label} eye={null}/>
+                    <textarea value={ash[k] || ''} onChange={upd(k)} placeholder={ph}
+                      style={{ ...inpSt, minHeight:70, lineHeight:1.6, resize:'vertical' }}/>
+                  </div>
+                ))}
+              </div>
+            );
+          })()}
+
           {/* ── Persönlichkeit ── */}
           {has('pers') && (
             <div style={cardSt}>
@@ -1173,7 +1221,7 @@ function Editor(props) {
 
           {/* ── Abschnitt-Chips ── */}
           {(() => {
-            const SECS = [['bio','Biografie'],['pers','Persönlichkeit'],['routine','Routine'],['gewohnheiten','Angewohnheiten'],
+            const SECS = [['bio','Biografie'],['aussehen','Aussehen'],['pers','Persönlichkeit'],['routine','Routine'],['gewohnheiten','Angewohnheiten'],
               ['ausr','Ausrüstung & Vermögen'],['begleiter','Begleiter'],['motive','Motivationen'],['kontakte','Kontakte'],
               ['geheim','Geheimnisse'],['statblock','Statblock (Monster-DB)']];
             const chips = SECS.filter(([k]) => !has(k));
@@ -1338,6 +1386,11 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
   const unvOpen = dmView || pOpen('pers', 'unvergesslich');
   const bioText = (sel.biografie || '').trim();
   const bioOpen = dmView || pOpen('bio', 'bio');
+  const ashObj = (sel.aussehen && typeof sel.aussehen === 'object') ? sel.aussehen : {};
+  const ashUnits = { groesse:' cm', gewicht:' Pfund' };
+  const ashRows = [['groesse','Größe'],['gewicht','Gewicht'],['hautfarbe','Hautfarbe'],['augenfarbe','Augenfarbe'],['haarfarbe','Haarfarbe'],['merkmale','Besondere Merkmale'],['weiteres','Weiteres']]
+    .map(([k, label]) => { const v = String(ashObj[k] || '').trim(); return { k, label, v:v ? v + (ashUnits[k] || '') : '' }; }).filter(r => r.v);
+  const aussehenOpen = dmView || pOpen('aussehen', 'aussehen');
   const habeShow = has('ausr') && (sel.habe || 0) > 0;
   const habeOpen = dmView || pOpen('ausr', 'habe');
 
@@ -1487,6 +1540,23 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
               {secHead('Biografie', bioOpen ? 1 : 0, 1, mkTg('bio', 'bio'))}
               {bioOpen
                 ? <div style={{ padding:'12px 16px', border:`1px solid ${hexA(acc, 0.25)}`, background:hexA(acc, 0.04), fontFamily:BODY, fontSize:13, lineHeight:1.75, color:'#c8c0e8', whiteSpace:'pre-wrap' }}>{bioText}</div>
+                : lockRow}
+            </React.Fragment>
+          )}
+
+          {/* Aussehen */}
+          {has('aussehen') && ashRows.length > 0 && (
+            <React.Fragment>
+              {secHead('Aussehen', aussehenOpen ? 1 : 0, 1, mkTg('aussehen', 'aussehen'))}
+              {aussehenOpen
+                ? <div style={{ padding:'12px 16px', border:`1px solid ${hexA(acc, 0.25)}`, background:hexA(acc, 0.04), display:'grid', gridTemplateColumns:'repeat(3, minmax(0, 1fr))', gap:'10px 26px' }}>
+                    {ashRows.map(r => (
+                      <div key={r.k} style={(r.k === 'merkmale' || r.k === 'weiteres') ? { gridColumn:'1 / -1' } : null}>
+                        <span style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.2em', color:'rgba(160,140,255,0.48)', textTransform:'uppercase', display:'block', marginBottom:2 }}>{r.label}</span>
+                        <span style={{ fontFamily:BODY, fontWeight:300, fontSize:13, color:'#f0eeff', lineHeight:1.6, whiteSpace:'pre-wrap', display:'block' }}>{r.v}</span>
+                      </div>
+                    ))}
+                  </div>
                 : lockRow}
             </React.Fragment>
           )}
