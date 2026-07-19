@@ -14,6 +14,13 @@
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
 <script src="assets/components/image-upload.js"></script>
+<script src="assets/scripts/data/resources/ff14_fish-data.js"></script>
+<script src="assets/scripts/data/resources/insekten/insekten-data.js"></script>
+<script src="assets/scripts/data/resources/pflanzen/ff14_pflanzen-data.js"></script>
+<script src="assets/scripts/data/resources/pflanzen/fantasy_plant-data.js"></script>
+<script src="assets/scripts/data/resources/mineralien/ff14_mineralien-data.js"></script>
+<script src="assets/scripts/data/monster/monsterhandbuch-data.js"></script>
+<script src="assets/scripts/karte-v2.js"></script>
 </head>
 <body>
 <div id="root"></div>
@@ -87,10 +94,12 @@ function easeInOutCubic(t) {
 }
 
 // ── Supabase helpers ─────────────────────────────────────────
+const MAP_COLS = 'id, name, bg_url, bg_transform, kind, ebene, floors';
+
 async function loadOrCreateRootMap() {
   const sb = window._sb;
   let { data } = await sb.from('karte_maps')
-    .select('id, name, bg_url, bg_transform')
+    .select(MAP_COLS)
     .is('parent_hex_id', null)
     .order('created_at', { ascending: true })
     .limit(1)
@@ -98,12 +107,12 @@ async function loadOrCreateRootMap() {
   if (!data) {
     const res = await sb.from('karte_maps')
       .insert({ name: 'Meruria' })
-      .select('id, name, bg_url, bg_transform')
+      .select(MAP_COLS)
       .single();
     // If the unique index fires (concurrent insert), fall back to fetching
     if (res.error) {
       const fallback = await sb.from('karte_maps')
-        .select('id, name, bg_url, bg_transform')
+        .select(MAP_COLS)
         .is('parent_hex_id', null)
         .order('created_at', { ascending: true })
         .limit(1)
@@ -119,7 +128,7 @@ async function loadOrCreateRootMap() {
 async function loadMap(mapId) {
   const { data } = await window._sb
     .from('karte_maps')
-    .select('id, name, parent_hex_id, bg_url, bg_transform')
+    .select(MAP_COLS + ', parent_hex_id, parent_area_id')
     .eq('id', mapId)
     .single();
   return data;
@@ -232,7 +241,7 @@ Object.assign(window, {
 <script type="text/babel">
 const { useState: uS2, useRef: uR2 } = React;
 
-function HexBorder({ selected, hovered, color = DEFAULT_HEX_COLOR }) {
+function HexBorder({ selected, hovered, color = DEFAULT_HEX_COLOR, dashed }) {
   const w = HEX_W, h = HEX_H;
   const points = `${w/2},0 ${w},${h/4} ${w},${h*3/4} ${w/2},${h} 0,${h*3/4} 0,${h/4}`;
   const strokeColor = selected
@@ -242,10 +251,10 @@ function HexBorder({ selected, hovered, color = DEFAULT_HEX_COLOR }) {
   const sw = selected ? 2.2 : 1.4;
   return (
     <svg className="mk-hex-border" viewBox={`0 0 ${w} ${h}`} width={w} height={h} preserveAspectRatio="none" style={{ overflow: 'visible' }}>
-      <polygon points={points} fill="none" style={{ stroke: strokeColor, strokeOpacity: opacity }} strokeWidth={sw} strokeLinejoin="miter"/>
+      <polygon points={points} fill="none" style={{ stroke: strokeColor, strokeOpacity: opacity }} strokeWidth={sw} strokeLinejoin="miter" strokeDasharray={dashed ? '8 6' : undefined}/>
       <polygon
         points={`${w/2},6 ${w-5},${h/4+2} ${w-5},${h*3/4-2} ${w/2},${h-6} 5,${h*3/4-2} 5,${h/4+2}`}
-        fill="none" style={{ stroke: strokeColor }} strokeWidth="0.5" strokeOpacity={selected ? 0.45 : 0.2}
+        fill="none" style={{ stroke: strokeColor }} strokeWidth="0.5" strokeOpacity={selected ? 0.45 : 0.2} strokeDasharray={dashed ? '8 6' : undefined}
       />
     </svg>
   );
@@ -260,7 +269,7 @@ function HexTile({ hex, selected, hovered, editing, onSelect, onHoverChange, onG
     left: x - HEX_W/2, top: y - HEX_H/2,
     pointerEvents: 'auto',
     zIndex: selected ? 12 : (hovered ? 8 : 1),
-    opacity: gripDragging ? 0.35 : 1,
+    opacity: gripDragging ? 0.35 : (hex.visible ? 1 : 0.5),
     transition: 'opacity 0.15s',
     '--hex-color': tcolor,
   };
@@ -282,7 +291,11 @@ function HexTile({ hex, selected, hovered, editing, onSelect, onHoverChange, onG
           ) : null}
         </div>
 
-        <HexBorder selected={selected} hovered={hovered} color={tcolor}/>
+        <HexBorder selected={selected} hovered={hovered} color={tcolor} dashed={!hex.visible}/>
+
+        {!hex.visible && (
+          <div style={{ position:'absolute', top:'22%', left:'50%', transform:'translateX(-50%)', pointerEvents:'none', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(220,80,120,0.75)', textShadow:'0 1px 4px rgba(0,0,0,0.8)' }}>✕ Verborgen</div>
+        )}
 
         {(hovered || selected) ? (
           <div className="mk-hex-coord">{hex.q} · {-hex.r}</div>
@@ -461,7 +474,7 @@ Object.assign(window, { useCameraAnimator });
      Script 4 — Editor drawer
      ═══════════════════════════════════════════════════ -->
 <script type="text/babel">
-const { useState: uS4, useRef: uR4, useCallback: uC4 } = React;
+const { useState: uS4, useRef: uR4, useCallback: uC4, useMemo: uM4 } = React;
 const ImageUpload = window.ImageUpload;
 
 function BildPosPad({ pos, onChange }) {
@@ -511,22 +524,98 @@ function BildPosPad({ pos, onChange }) {
   );
 }
 
-const KOLL_CATS = [
-  { id:'fische',         label:'Fische',         hue:200 },
-  { id:'insekten',       label:'Insekten',        hue:95  },
-  { id:'pflanzen',       label:'Pflanzen',        hue:140 },
-  { id:'mineralien',     label:'Mineralien',      hue:60  },
-  { id:'kreaturen',      label:'Kreaturen',       hue:285 },
-  { id:'kreaturenteile', label:'Kreaturenteile',  hue:0   },
-  { id:'wal',            label:'Trümmer d. Wals', hue:210 },
-  { id:'lebensspeicher', label:'Lebensspeicher',  hue:45  },
-];
-const KOLONIE_STUFEN = ['', 'Lager', 'Außenposten', 'Dorf', 'Stadt'];
+const OBJ_TAG_SUGGESTIONS = ['Biome', 'Gewässer', 'POI', 'Gebietsbosse'];
 
-function EditorDrawer({ hex, onChange, onClose, onDelete, onNavigateInto, onCreateSubmap, isSubmap }) {
-  if (!hex) return null;
+// Auf Modulebene definiert, damit Reacts Reconciler die Inputs zwischen
+// Renders wiedererkennt und der Fokus beim Tippen erhalten bleibt.
+function ObjChip({ on, label, onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      style={{
+        flex:1, padding:'5px 8px', borderRadius:4, cursor:'pointer',
+        fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.1em', textTransform:'uppercase',
+        background: on ? 'rgba(40,120,80,0.16)' : 'rgba(20,12,46,0.5)',
+        border: `1px solid ${on ? 'rgba(80,200,140,0.5)' : 'rgba(124,77,255,0.3)'}`,
+        color: on ? 'rgba(120,220,160,0.95)' : 'rgba(160,140,255,0.6)',
+      }}
+    >{on ? '✓' : '○'} {label}</button>
+  );
+}
+
+function ObjField({ label, value, onCh, placeholder, list, textarea }) {
+  return (
+    <div style={{ marginBottom:8 }}>
+      <label style={{ display:'block', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.16em', textTransform:'uppercase', color:'rgba(160,140,255,0.55)', marginBottom:3 }}>{label}</label>
+      {textarea
+        ? <textarea className="mk-textarea" style={{ minHeight:52 }} value={value} placeholder={placeholder} onChange={e => onCh(e.target.value)}/>
+        : <input className="mk-input" type="text" value={value} placeholder={placeholder} list={list} onChange={e => onCh(e.target.value)}/>}
+    </div>
+  );
+}
+
+// ── Objective card (collapsible editor) ──────────────────────────
+function ObjectiveCard({ o, onUpdate, onDelete, startOpen }) {
+  const [open, setOpen] = uS4(!!startOpen);
+  const upd = (key, val) => onUpdate({ ...o, [key]: val });
+  const status = o.komplettiert
+    ? { l: 'Komplettiert', c: 'rgba(120,220,160,0.9)', m: '✓✓' }
+    : o.entdeckt
+      ? { l: 'Entdeckt', c: 'rgba(180,165,230,0.9)', m: '✓' }
+      : { l: 'Offen', c: 'rgba(217,176,107,0.8)', m: '◇' };
+  const Chip = ObjChip;
+  const Field = ObjField;
+
+  return (
+    <div style={{ marginBottom:10, background:'rgba(8,6,22,0.55)', border:'1px solid rgba(124,77,255,0.18)', borderRadius:5, overflow:'hidden' }}>
+      <div
+        onClick={() => setOpen(v => !v)}
+        style={{ display:'flex', alignItems:'center', gap:8, padding:'9px 10px', cursor:'pointer', borderBottom: open ? '1px solid rgba(124,77,255,0.14)' : 'none' }}
+      >
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'rgba(160,140,255,0.55)' }}>{open ? '▼' : '▶'}</span>
+        <span style={{ flex:1, fontFamily:'var(--font-body)', fontSize:12.5, fontWeight: o.titel ? 400 : 300, color:'rgba(230,222,255,0.9)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
+          {o.titel || 'Unbenanntes Ziel'}
+        </span>
+        {!o.freigeschaltet && (
+          <span title="Für Spieler noch nicht sichtbar" style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', color:'rgba(220,140,160,0.75)' }}>⛒</span>
+        )}
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.1em', color: status.c, textTransform:'uppercase' }}>{status.m} {status.l}</span>
+      </div>
+      {open && (
+        <div style={{ padding:'10px 10px 8px' }}>
+          <Field label="Titel" value={o.titel} onCh={v => upd('titel', v)} placeholder="z. B. Den Weidenschrat vertreiben"/>
+          <Field label="Tags (Komma-getrennt)" value={(o.tags || []).join(', ')} onCh={v => onUpdate({ ...o, tags: v.split(',').map(t => t.trim()).filter(Boolean) })} placeholder={OBJ_TAG_SUGGESTIONS.join(', ')} list="mk-obj-tag-list"/>
+          <Field label="Beschreibung" value={o.beschreibung} onCh={v => upd('beschreibung', v)} textarea placeholder="Worum geht es …"/>
+          <Field label="Bedingung" value={o.bedingung} onCh={v => upd('bedingung', v)} placeholder="Was muss getan werden …"/>
+          <Field label="Belohnung" value={o.belohnung} onCh={v => upd('belohnung', v)} placeholder="Was gibt es dafür …"/>
+          <Field label="Monster (Komma-getrennt · nur DM)" value={(o.monster || []).join(', ')} onCh={v => onUpdate({ ...o, monster: v.split(',').map(t => t.trim()).filter(Boolean) })} placeholder="z. B. Troll, Nebelwyrm" list="mk-monster-list"/>
+          <div style={{ display:'flex', gap:6, marginBottom:8 }}>
+            <Chip on={o.entdeckt} label="Entdeckt" onClick={() => onUpdate({ ...o, entdeckt: !o.entdeckt, komplettiert: o.entdeckt ? false : o.komplettiert })}/>
+            <Chip on={o.komplettiert} label="Komplett" onClick={() => onUpdate({ ...o, komplettiert: !o.komplettiert, entdeckt: !o.komplettiert ? true : o.entdeckt })}/>
+            <Chip on={o.freigeschaltet} label="Sichtbar" onClick={() => upd('freigeschaltet', !o.freigeschaltet)}/>
+          </div>
+          <button
+            onClick={onDelete}
+            style={{ width:'100%', padding:'5px 10px', fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(200,80,80,0.7)', background:'rgba(200,80,80,0.06)', border:'1px solid rgba(200,80,80,0.2)', borderRadius:4, cursor:'pointer' }}
+          >✕ Ziel löschen</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function EditorDrawer({
+  node, nodeType, onChange, onClose, onDelete, onNavigateInto, onCreateSubmap, isSubmap,
+  objectives, onObjAdd, onObjUpdate, onObjDelete, lastObjId,
+  poolRows, onPoolOpen,
+}) {
+  if (!node) return null;
+  const hex = node;
+  const isArea = nodeType === 'area';
   const [tagInput, setTagInput] = uS4('');
   const [newErkName, setNewErkName] = uS4('');
+  const [tab, setTab] = uS4('details');
+  const [editMode, setEditMode] = uS4(false);
 
   const upd = (key, val) => onChange({ ...hex, [key]: val });
 
@@ -538,17 +627,6 @@ function EditorDrawer({ hex, onChange, onClose, onDelete, onNavigateInto, onCrea
     setTagInput('');
   };
 
-  // Ressourcen (submap)
-  const res = hex.ressourcen || {};
-  const updRes = (id, field, val) => {
-    const cur = res[id] || { entdeckt: 0, komplettiert: 0 };
-    upd('ressourcen', { ...res, [id]: { ...cur, [field]: +val } });
-  };
-
-  // Kolonie (submap)
-  const kol = hex.kolonie || { stufe: '', kolonisierung: 0, bau: 0, stimmung: 0, handel: false };
-  const updKol = (field, val) => upd('kolonie', { ...kol, [field]: val });
-
   // Erkundung (main map)
   const erk = hex.erkundung || [];
   const addErk = () => {
@@ -558,11 +636,6 @@ function EditorDrawer({ hex, onChange, onClose, onDelete, onNavigateInto, onCrea
   const updErk = (i, field, val) =>
     upd('erkundung', erk.map((e, idx) => idx === i ? { ...e, [field]: field === 'name' ? val : +val } : e));
   const removeErk = (i) => upd('erkundung', erk.filter((_, idx) => idx !== i));
-
-  const handleSubmapAction = () => {
-    if (hex.has_submap) { onNavigateInto(hex); onClose(); }
-    else { onCreateSubmap(hex); }
-  };
 
   const SectionHead = ({ label }) => (
     <div style={{ display:'flex', alignItems:'center', gap:8, margin:'18px 0 10px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(124,77,255,0.5)' }}>
@@ -580,77 +653,184 @@ function EditorDrawer({ hex, onChange, onClose, onDelete, onNavigateInto, onCrea
     </div>
   );
 
-  const DualBar = ({ catId, label, hue }) => {
-    const v = res[catId] || { entdeckt: 0, komplettiert: 0 };
-    return (
-      <div style={{ marginBottom:12 }}>
-        <div style={{ display:'flex', justifyContent:'space-between', marginBottom:4 }}>
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.1em', color:`oklch(0.72 0.13 ${hue})` }}>{label}</span>
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'rgba(120,100,200,0.5)' }}>{v.entdeckt}% · {v.komplettiert}%</span>
-        </div>
-        <div style={{ marginBottom:3 }}>
-          <div style={{ display:'flex', alignItems:'center', gap:6 }}>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'rgba(160,140,255,0.4)', width:62, letterSpacing:'0.1em' }}>ENTDECKT</span>
-            <input type="range" min="0" max="100" value={v.entdeckt} onChange={e => updRes(catId,'entdeckt',e.target.value)} style={{ flex:1, accentColor:`oklch(0.7 0.13 ${hue})`, cursor:'pointer' }}/>
-          </div>
-        </div>
-        <div style={{ display:'flex', alignItems:'center', gap:6 }}>
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'rgba(160,140,255,0.4)', width:62, letterSpacing:'0.1em' }}>KOMPLETT</span>
-          <input type="range" min="0" max="100" value={v.komplettiert} onChange={e => updRes(catId,'komplettiert',e.target.value)} style={{ flex:1, accentColor:`oklch(0.85 0.15 ${hue})`, cursor:'pointer' }}/>
-        </div>
-      </div>
-    );
-  };
+  // Tab button
+  const TabBtn = ({ id, label, accent }) => (
+    <button
+      onClick={() => setTab(id)}
+      style={{
+        flex:1, padding:'11px 0', background:'transparent', border:'none', cursor:'pointer',
+        fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.24em', textTransform:'uppercase',
+        color: tab === id ? (accent || '#f3eefe') : 'rgba(160,140,255,0.55)',
+        borderBottom: `2px solid ${tab === id ? (accent || 'rgba(160,140,255,0.85)') : 'transparent'}`,
+        transition:'all 0.15s',
+      }}
+    >{label}</button>
+  );
+
+  const objList = objectives || [];
+  const poolCounts = {};
+  (poolRows || []).forEach(r => { poolCounts[r.cat] = (poolCounts[r.cat] || 0) + 1; });
 
   return (
     <React.Fragment>
       <div className="mk-drawer-backdrop"/>
-      <aside className="mk-drawer" onMouseDown={(e) => e.stopPropagation()}>
-        <header className="mk-drawer-head">
+      <aside
+        className="mk-drawer"
+        onMouseDown={(e) => e.stopPropagation()}
+        style={{ width:560, maxWidth:'94vw', background:'linear-gradient(180deg, rgba(14,9,34,0.98) 0%, rgba(8,6,22,0.98) 100%)', borderLeft:'1px solid rgba(217,176,107,0.35)', boxShadow:'-24px 0 60px rgba(0,0,0,0.65)' }}
+      >
+        <header style={{ padding:'18px 22px 16px', borderBottom:'1px solid rgba(124,77,255,0.18)', display:'flex', alignItems:'flex-start', justifyContent:'space-between', flexShrink:0 }}>
           <div>
-            <div className="mk-drawer-eyebrow">Hexagon · DM-Editor</div>
-            <div className="mk-drawer-title">{hex.name || 'Unbenannt'}</div>
-            <div className="mk-drawer-coords">X {hex.q} · Y {-hex.r}</div>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.32em', color:'rgba(217,176,107,0.85)', textTransform:'uppercase' }}>
+              {isArea
+                ? `Fläche · ${hex.typ === 'eingang' ? 'Eingang' : 'POI'} · Bearbeiten`
+                : `Hexagon · ${hex.q} · ${-hex.r} · Bearbeiten`}
+            </div>
+            <div style={{ fontFamily:'var(--font-display)', fontWeight:400, fontSize:20, letterSpacing:'0.14em', color:'#f3eefe', textTransform:'uppercase', marginTop:6 }}>{hex.name || 'Unbenannt'}</div>
           </div>
-          <button className="mk-drawer-close" onClick={onClose} title="Schließen (Esc)">×</button>
+          <div style={{ display:'flex', gap:8, flexShrink:0 }}>
+          <button
+            onClick={() => setEditMode(v => !v)}
+            title="Zwischen Ansicht und Bearbeiten wechseln"
+            style={{
+              height:32, padding:'0 12px',
+              background: editMode ? 'rgba(217,176,107,0.16)' : 'transparent',
+              border: `1px solid ${editMode ? 'rgba(217,176,107,0.55)' : 'rgba(160,140,255,0.25)'}`,
+              borderRadius:2,
+              color: editMode ? 'rgba(240,220,170,0.95)' : 'rgba(200,190,240,0.75)',
+              fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.18em', textTransform:'uppercase',
+              cursor:'pointer', transition:'all 0.18s',
+            }}
+            onMouseEnter={e => e.currentTarget.style.background = 'rgba(217,176,107,0.22)'}
+            onMouseLeave={e => e.currentTarget.style.background = editMode ? 'rgba(217,176,107,0.16)' : 'transparent'}
+          >{editMode ? '✓ Ansicht' : '✎ Bearbeiten'}</button>
+          <button
+            onClick={onClose} title="Schließen (Esc)"
+            style={{ width:32, height:32, flexShrink:0, background:'transparent', border:'1px solid rgba(220,80,120,0.18)', borderRadius:2, color:'rgba(220,140,160,0.4)', fontFamily:'var(--font-mono)', fontSize:14, cursor:'pointer', transition:'all 0.18s' }}
+            onMouseEnter={e => { e.currentTarget.style.color='#ffd0dc'; e.currentTarget.style.borderColor='rgba(220,80,120,0.75)'; e.currentTarget.style.background='rgba(180,40,80,0.16)'; }}
+            onMouseLeave={e => { e.currentTarget.style.color='rgba(220,140,160,0.4)'; e.currentTarget.style.borderColor='rgba(220,80,120,0.18)'; e.currentTarget.style.background='transparent'; }}
+          >×</button>
+          </div>
         </header>
 
+        {/* Tabs */}
+        <div style={{ display:'flex', borderBottom:'1px solid rgba(124,77,255,0.18)', flexShrink:0 }}>
+          <TabBtn id="details" label="Details"/>
+          <TabBtn id="ziele" label={`Ziele · ${objList.length}`} accent="rgba(217,176,107,0.9)"/>
+          <TabBtn id="ressourcen" label="Ressourcen"/>
+        </div>
+
         <div className="mk-drawer-body">
+          {tab === 'details' && (<React.Fragment>
+          {/* Sichtbarkeit */}
+          <button
+            onClick={() => upd('visible', !hex.visible)}
+            style={{
+              width:'100%', display:'flex', alignItems:'center', gap:10, padding:'10px 12px', marginBottom:12,
+              background: hex.visible ? 'rgba(40,120,80,0.12)' : 'rgba(180,40,80,0.10)',
+              border: `1px solid ${hex.visible ? 'rgba(80,200,140,0.4)' : 'rgba(220,80,120,0.4)'}`,
+              borderRadius:3, cursor:'pointer', transition:'all 0.18s', textAlign:'left',
+            }}
+          >
+            <span style={{ fontSize:15, color: hex.visible ? 'rgba(120,220,160,0.9)' : 'rgba(220,140,160,0.9)' }}>{hex.visible ? '👁' : '✕'}</span>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.2em', textTransform:'uppercase', color: hex.visible ? 'rgba(120,220,160,0.9)' : 'rgba(220,140,160,0.9)' }}>
+              {hex.visible ? 'Für Spieler sichtbar' : 'Für Spieler verborgen'}
+            </span>
+            <span style={{ flex:1 }}/>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.14em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>Klick zum Umschalten</span>
+          </button>
+
+          {/* ── Ansichtsmodus ── */}
+          {!editMode && (<React.Fragment>
+            {hex.bild_url && (
+              <img src={hex.bild_url} loading="lazy" style={{ width:'100%', boxSizing:'border-box', height:150, objectFit:'cover', objectPosition: !isArea && hex.bild_pos ? `${hex.bild_pos.x}% ${hex.bild_pos.y}%` : '50% 50%', display:'block', borderRadius:3, border:'1px solid rgba(124,77,255,0.25)' }} alt=""/>
+            )}
+            {(hex.tags || []).length > 0 && (
+              <div style={{ display:'flex', flexWrap:'wrap', gap:5 }}>
+                {hex.tags.map(t => (
+                  <span key={t} style={{ padding:'3px 9px', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.25)', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.1em', color:'rgba(180,165,230,0.8)' }}>{t}</span>
+                ))}
+              </div>
+            )}
+            {hex.beschreibung && (
+              <div>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.3em', textTransform:'uppercase', color:'rgba(124,77,255,0.75)', marginBottom:6 }}>Beschreibung</div>
+                <div style={{ fontSize:13, fontWeight:300, fontFamily:'var(--font-body)', color:'rgba(200,190,240,0.7)', lineHeight:1.65 }}>{hex.beschreibung}</div>
+              </div>
+            )}
+            {(() => {
+              const facts = [];
+              if (!isArea && hex.terrain) facts.push(['Terrain', hex.terrain]);
+              if (isArea) facts.push(['Typ', hex.typ === 'eingang' ? 'Eingang (führt zu Unterkarte)' : 'POI (nur Info + Bild)']);
+              if (hex.has_submap) facts.push(['Unterkarte', hex.name || 'vorhanden']);
+              if (isArea) facts.push(['Status', `${hex.entdeckt ? '✓ entdeckt' : '○ unentdeckt'} · ${hex.komplettiert ? '✓✓ komplettiert' : '○ offen'}`]);
+              if (isSubmap && !isArea) facts.push(['Datensonde', hex.datensonde ? '✓ installiert' : '✗ nicht installiert']);
+              if (!isSubmap && !isArea && hex.bevoelkerung) facts.push(['Bevölkerung', hex.bevoelkerung]);
+              if (!isSubmap && !isArea && hex.kolonien) facts.push(['Kolonien', hex.kolonien]);
+              if (isSubmap && !isArea && hex.features) facts.push(['Besonderheiten', hex.features]);
+              (!isArea ? (hex.erkundung || []) : []).forEach(e => facts.push([e.name || 'Erkundung', `${e.entdeckt}% entdeckt · ${e.komplettiert}% komplettiert`]));
+              return facts.map(([k, v]) => (
+                <div key={k + v} style={{ display:'flex', gap:8, alignItems:'baseline' }}>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(124,77,255,0.5)', width:96, flexShrink:0 }}>{k}</span>
+                  <span style={{ fontSize:13, fontWeight:300, fontFamily:'var(--font-body)', color:'rgba(200,190,240,0.75)' }}>{v}</span>
+                </div>
+              ));
+            })()}
+            {!hex.bild_url && !(hex.tags || []).length && !hex.beschreibung && (
+              <div style={{ padding:'14px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(124,77,255,0.35)', textTransform:'uppercase' }}>— noch keine Details · ✎ Bearbeiten oben rechts —</div>
+            )}
+          </React.Fragment>)}
+
+          {/* ── Bearbeitungsmodus ── */}
+          {editMode && (<React.Fragment>
           <ImageUpload
-            shape="hex"
+            shape="square"
+            width="100%"
+            height={150}
             imageUrl={hex.bild_url}
             onUploaded={(url) => upd('bild_url', url)}
             bucket="karte-bilder"
-            pathPrefix={`hexes/${hex.id}`}
-            objectPosition={hex.bild_pos ? `${hex.bild_pos.x}% ${hex.bild_pos.y}%` : '50% 50%'}
+            pathPrefix={isArea ? `areas/${hex.id}` : `hexes/${hex.id}`}
+            objectPosition={!isArea && hex.bild_pos ? `${hex.bild_pos.x}% ${hex.bild_pos.y}%` : '50% 50%'}
           />
-          {hex.bild_url && (
-            <div style={{ marginTop: 8, marginBottom: 4 }}>
-              <BildPosPad pos={hex.bild_pos} onChange={(pos) => upd('bild_pos', pos)}/>
+          {!isArea && hex.bild_url && (
+            <div style={{ marginTop: 8, marginBottom: 4, display:'flex', gap:14, alignItems:'flex-end' }}>
+              <div style={{ flex:1, minWidth:0 }}>
+                <BildPosPad pos={hex.bild_pos} onChange={(pos) => upd('bild_pos', pos)}/>
+              </div>
+              {/* Live-Vorschau des Hex-Zuschnitts auf der Karte */}
+              <div style={{ flexShrink:0, display:'flex', flexDirection:'column', alignItems:'center', gap:4 }}>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.16em', textTransform:'uppercase', color:'rgba(160,140,255,0.55)' }}>Hex-Vorschau</span>
+                <div style={{ width:88, height:101, clipPath:'polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%)', overflow:'hidden', background:'rgba(8,6,22,0.7)' }}>
+                  <img
+                    src={hex.bild_url}
+                    style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition: hex.bild_pos ? `${hex.bild_pos.x}% ${hex.bild_pos.y}%` : '50% 50%', display:'block' }}
+                    alt=""
+                  />
+                </div>
+              </div>
             </div>
           )}
 
-          {/* Subkarte + Sichtbarkeit */}
-          <div style={{ display:'flex', gap:8, marginBottom:4 }}>
-            <button
-              style={{ width:'calc(50% - 4px)', padding:'7px 10px', display:'flex', alignItems:'center', justifyContent:'center', gap:7, fontFamily:'var(--font-body)', fontSize:11, fontWeight:300, letterSpacing:'0.08em', color: hex.has_submap ? 'rgba(160,140,255,0.9)' : 'rgba(160,140,255,0.5)', background: hex.has_submap ? 'rgba(124,77,255,0.12)' : 'rgba(124,77,255,0.06)', border:`1px solid ${hex.has_submap ? 'rgba(124,77,255,0.45)' : 'rgba(124,77,255,0.2)'}`, borderRadius:4, cursor:'pointer', transition:'all 0.15s' }}
-              onClick={handleSubmapAction}
-              onMouseEnter={e => { e.currentTarget.style.background='rgba(124,77,255,0.2)'; e.currentTarget.style.color='rgba(200,190,240,0.9)'; }}
-              onMouseLeave={e => { e.currentTarget.style.background=hex.has_submap?'rgba(124,77,255,0.12)':'rgba(124,77,255,0.06)'; e.currentTarget.style.color=hex.has_submap?'rgba(160,140,255,0.9)':'rgba(160,140,255,0.5)'; }}
-            >
-              <span style={{ fontSize:14 }}>⬡</span>
-              <span>{hex.has_submap ? 'Subkarte →' : 'Subkarte anlegen'}</span>
-            </button>
-            <button
-              className={`mk-tool-btn${hex.visible ? ' is-active' : ''}`}
-              style={{ width:'calc(50% - 4px)', justifyContent:'center', gap:6, fontSize:11, letterSpacing:'0.12em' }}
-              onClick={() => upd('visible', !hex.visible)}
-            >
-              {hex.visible
-                ? <React.Fragment><span style={{color:'rgba(80,200,140,0.9)'}}>◆</span> Sichtbar</React.Fragment>
-                : <React.Fragment><span style={{color:'rgba(124,77,255,0.4)'}}>○</span> Verborgen</React.Fragment>}
-            </button>
-          </div>
+          {/* Subkarte anlegen (Navigation in bestehende Subkarte: Footer-Button) */}
+          {!hex.has_submap && (
+            <div style={{ display:'flex', gap:8, marginBottom:4 }}>
+              <button
+                title="Hex-Subkarte anlegen"
+                style={{ flex:1, padding:'9px 8px', fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.16em', textTransform:'uppercase', color:'rgba(160,140,255,0.75)', background:'rgba(124,77,255,0.06)', border:'1px dashed rgba(124,77,255,0.35)', borderRadius:3, cursor:'pointer', transition:'all 0.15s' }}
+                onClick={() => onCreateSubmap(hex, 'hex')}
+                onMouseEnter={e => e.currentTarget.style.background='rgba(124,77,255,0.14)'}
+                onMouseLeave={e => e.currentTarget.style.background='rgba(124,77,255,0.06)'}
+              >⬡ Hex-Subkarte anlegen</button>
+              <button
+                title="Bild-Subkarte anlegen (Grundriss / Gebiet)"
+                style={{ flex:1, padding:'9px 8px', fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.16em', textTransform:'uppercase', color:'rgba(240,220,170,0.85)', background:'rgba(217,176,107,0.06)', border:'1px dashed rgba(217,176,107,0.4)', borderRadius:3, cursor:'pointer', transition:'all 0.15s' }}
+                onClick={() => onCreateSubmap(hex, 'image')}
+                onMouseEnter={e => e.currentTarget.style.background='rgba(217,176,107,0.14)'}
+                onMouseLeave={e => e.currentTarget.style.background='rgba(217,176,107,0.06)'}
+              >▦ Bild-Subkarte anlegen</button>
+            </div>
+          )}
 
           {/* Name */}
           <div className="mk-field">
@@ -658,13 +838,36 @@ function EditorDrawer({ hex, onChange, onClose, onDelete, onNavigateInto, onCrea
             <input id="mk-name" className="mk-input" type="text" placeholder="z. B. Sturmkrone …" value={hex.name || ''} onChange={e => upd('name', e.target.value)}/>
           </div>
 
-          {/* Gelände */}
-          <div className="mk-field">
-            <label htmlFor="mk-terrain">Gelände</label>
-            <select id="mk-terrain" className="mk-select" value={hex.terrain || ''} onChange={e => upd('terrain', e.target.value)}>
-              {TERRAINS.map(t => <option key={t} value={t}>{t || '— bitte wählen —'}</option>)}
-            </select>
-          </div>
+          {/* Gelände (Hex) / Typ (Fläche) */}
+          {!isArea ? (
+            <div className="mk-field">
+              <label htmlFor="mk-terrain">Gelände</label>
+              <select id="mk-terrain" className="mk-select" value={hex.terrain || ''} onChange={e => upd('terrain', e.target.value)}>
+                {TERRAINS.map(t => <option key={t} value={t}>{t || '— bitte wählen —'}</option>)}
+              </select>
+            </div>
+          ) : (
+            <React.Fragment>
+              <div className="mk-field">
+                <label htmlFor="mk-typ">Typ</label>
+                <select id="mk-typ" className="mk-select" value={hex.typ || 'poi'} onChange={e => upd('typ', e.target.value)}>
+                  <option value="poi">POI — nur Info + Bild</option>
+                  <option value="eingang">Eingang — führt zu Unterkarte</option>
+                </select>
+              </div>
+              {/* Entdeckt / Komplettiert */}
+              <div style={{ display:'flex', gap:6, marginBottom:10 }}>
+                <button
+                  onClick={() => onChange({ ...hex, entdeckt: !hex.entdeckt, komplettiert: hex.entdeckt ? false : hex.komplettiert })}
+                  style={{ flex:1, padding:'6px 8px', borderRadius:4, cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.1em', textTransform:'uppercase', background: hex.entdeckt ? 'rgba(40,120,80,0.16)' : 'rgba(20,12,46,0.5)', border:`1px solid ${hex.entdeckt ? 'rgba(80,200,140,0.5)' : 'rgba(124,77,255,0.3)'}`, color: hex.entdeckt ? 'rgba(120,220,160,0.95)' : 'rgba(160,140,255,0.6)' }}
+                >{hex.entdeckt ? '✓' : '○'} Entdeckt</button>
+                <button
+                  onClick={() => onChange({ ...hex, komplettiert: !hex.komplettiert, entdeckt: !hex.komplettiert ? true : hex.entdeckt })}
+                  style={{ flex:1, padding:'6px 8px', borderRadius:4, cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.1em', textTransform:'uppercase', background: hex.komplettiert ? 'rgba(40,120,80,0.16)' : 'rgba(20,12,46,0.5)', border:`1px solid ${hex.komplettiert ? 'rgba(80,200,140,0.5)' : 'rgba(124,77,255,0.3)'}`, color: hex.komplettiert ? 'rgba(120,220,160,0.95)' : 'rgba(160,140,255,0.6)' }}
+                >{hex.komplettiert ? '✓✓' : '○'} Komplettiert</button>
+              </div>
+            </React.Fragment>
+          )}
 
           {/* Tags */}
           <div className="mk-field">
@@ -683,8 +886,8 @@ function EditorDrawer({ hex, onChange, onClose, onDelete, onNavigateInto, onCrea
             </div>
           </div>
 
-          {/* Besonderheiten — nur Subkarte */}
-          {isSubmap && (
+          {/* Besonderheiten — nur Subkarte (Hex; Areas haben keine features-Spalte) */}
+          {isSubmap && !isArea && (
             <div className="mk-field">
               <label htmlFor="mk-features">Besonderheiten</label>
               <textarea id="mk-features" className="mk-textarea" placeholder="Heilige Quelle, Ruinen, Drachenhort …" value={hex.features || ''} onChange={e => upd('features', e.target.value)}/>
@@ -698,7 +901,7 @@ function EditorDrawer({ hex, onChange, onClose, onDelete, onNavigateInto, onCrea
           </div>
 
           {/* ── Subkarten-Felder ── */}
-          {isSubmap && (
+          {isSubmap && !isArea && (
             <React.Fragment>
               {/* Datensonde */}
               <SectionHead label="Knotenpunkt"/>
@@ -710,35 +913,11 @@ function EditorDrawer({ hex, onChange, onClose, onDelete, onNavigateInto, onCrea
                 <span style={{ color: hex.datensonde ? 'rgba(80,200,140,0.9)' : 'rgba(200,80,80,0.7)' }}>{hex.datensonde ? '✓' : '✗'}</span>
                 Datensonde {hex.datensonde ? 'installiert' : 'nicht installiert'}
               </button>
-
-              {/* Ressourcen */}
-              <SectionHead label="Ressourcen"/>
-              {KOLL_CATS.map(c => <DualBar key={c.id} catId={c.id} label={c.label} hue={c.hue}/>)}
-
-              {/* Kolonie */}
-              <SectionHead label="Kolonie"/>
-              <div className="mk-field">
-                <label>Ausbaustufe</label>
-                <select className="mk-select" value={kol.stufe || ''} onChange={e => updKol('stufe', e.target.value)}>
-                  {KOLONIE_STUFEN.map(s => <option key={s} value={s}>{s || '— keine Kolonie —'}</option>)}
-                </select>
-              </div>
-              <SliderRow label="Kolonisierung" value={kol.kolonisierung||0} onChange={v => updKol('kolonisierung', v)}/>
-              <SliderRow label="Bau & Infrastruktur" value={kol.bau||0} onChange={v => updKol('bau', v)}/>
-              <SliderRow label="Gesamtstimmung" value={kol.stimmung||0} onChange={v => updKol('stimmung', v)}/>
-              <button
-                className={`mk-tool-btn${kol.handel ? ' is-active' : ''}`}
-                style={{ width:'100%', justifyContent:'center', gap:8, fontSize:11, letterSpacing:'0.12em', marginTop:4, marginBottom:4 }}
-                onClick={() => updKol('handel', !kol.handel)}
-              >
-                <span style={{ color: kol.handel ? 'rgba(80,200,140,0.9)' : 'rgba(200,80,80,0.7)' }}>{kol.handel ? '✓' : '✗'}</span>
-                Handel {kol.handel ? 'möglich' : 'nicht möglich'}
-              </button>
             </React.Fragment>
           )}
 
           {/* ── Hauptkarten-Felder ── */}
-          {!isSubmap && (
+          {!isSubmap && !isArea && (
             <React.Fragment>
               <SectionHead label="Bevölkerung & Kolonien"/>
               <div className="mk-field">
@@ -769,25 +948,346 @@ function EditorDrawer({ hex, onChange, onClose, onDelete, onNavigateInto, onCrea
           )}
 
           {/* Banner */}
-          <div className="mk-field">
-            <label>Banner <span style={{ fontWeight:300, opacity:0.55, fontSize:10 }}>— wird in der Spieleransicht oben angezeigt</span></label>
-            <ImageUpload shape="square" width={404} height={110} imageUrl={hex.banner_url} onUploaded={(url) => upd('banner_url', url)} bucket="karte-bilder" pathPrefix={`hexes/${hex.id}/banner`}/>
-            {hex.banner_url && (
-              <button onClick={() => upd('banner_url', '')} style={{ marginTop:6, width:'100%', padding:'5px 10px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', color:'rgba(200,80,80,0.7)', background:'rgba(200,80,80,0.06)', border:'1px solid rgba(200,80,80,0.2)', borderRadius:4, cursor:'pointer' }}>✕ Banner entfernen</button>
+          {!isArea && (
+            <div className="mk-field">
+              <label>Banner <span style={{ fontWeight:300, opacity:0.55, fontSize:10 }}>— optionales Breitbild oben im Spieler-Panel (unabhängig vom Hex-Bild)</span></label>
+              <ImageUpload shape="square" width={404} height={110} imageUrl={hex.banner_url} onUploaded={(url) => upd('banner_url', url)} bucket="karte-bilder" pathPrefix={`hexes/${hex.id}/banner`}/>
+              {hex.banner_url && (
+                <button onClick={() => upd('banner_url', '')} style={{ marginTop:6, width:'100%', padding:'5px 10px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', color:'rgba(200,80,80,0.7)', background:'rgba(200,80,80,0.06)', border:'1px solid rgba(200,80,80,0.2)', borderRadius:4, cursor:'pointer' }}>✕ Banner entfernen</button>
+              )}
+            </div>
+          )}
+          </React.Fragment>)}
+          </React.Fragment>)}
+
+          {/* ── Tab: Ziele ── */}
+          {tab === 'ziele' && (<React.Fragment>
+            <datalist id="mk-obj-tag-list">
+              {OBJ_TAG_SUGGESTIONS.map(t => <option key={t} value={t}/>)}
+            </datalist>
+            <datalist id="mk-monster-list">
+              {(window.MONSTER_DATA_MONSTERHANDBUCH || []).map(m => <option key={m.name} value={m.name}/>)}
+            </datalist>
+            {/* Sektions-Kopf mit + */}
+            <div style={{ display:'flex', alignItems:'center', gap:8, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(124,77,255,0.45)' }}>
+              <span>Ziele</span>
+              <div style={{ flex:1, height:1, background:'rgba(124,77,255,0.15)' }}/>
+              <button
+                onClick={() => { onObjAdd(); setEditMode(true); }}
+                title="Neues Ziel hinzufügen"
+                style={{ width:24, height:24, border:'1px dashed rgba(124,77,255,0.4)', borderRadius:2, background:'transparent', color:'rgba(160,140,255,0.8)', fontSize:14, cursor:'pointer', lineHeight:1, transition:'all 0.15s' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(160,140,255,0.9)'; e.currentTarget.style.background='rgba(124,77,255,0.12)'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(124,77,255,0.4)'; e.currentTarget.style.background='transparent'; }}
+              >+</button>
+            </div>
+
+            {objList.length === 0 && (
+              <div style={{ padding:'18px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(124,77,255,0.35)', textTransform:'uppercase' }}>
+                — keine Ziele · mit + hinzufügen —
+              </div>
             )}
-          </div>
+
+            {/* Ansicht: Lese-Karten */}
+            {!editMode && objList.map(o => {
+              const st = o.komplettiert
+                ? { l: 'Komplettiert', c: 'rgba(120,220,160,0.9)', m: '✓✓' }
+                : o.entdeckt
+                  ? { l: 'Entdeckt', c: 'rgba(180,165,230,0.9)', m: '✓' }
+                  : { l: 'Offen', c: 'rgba(217,176,107,0.8)', m: '◇' };
+              const Row = ({ label, color, value, mono }) => (
+                <div style={{ display:'flex', gap:8, alignItems:'baseline', marginTop:5 }}>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.18em', textTransform:'uppercase', color, width:74, flexShrink:0 }}>{label}</span>
+                  <span style={{ fontFamily: mono ? 'var(--font-mono)' : 'var(--font-body)', fontSize: mono ? 11 : 12, fontWeight:300, color: mono ? 'rgba(240,200,210,0.9)' : 'rgba(200,190,240,0.7)', lineHeight:1.45 }}>{value}</span>
+                </div>
+              );
+              return (
+                <div key={o.id} style={{ flexShrink:0, border:'1px solid rgba(124,77,255,0.22)', borderRadius:3, background:'rgba(10,8,28,0.5)', padding:'12px 14px' }}>
+                  <div style={{ display:'flex', alignItems:'center', gap:9 }}>
+                    <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color: st.c, flexShrink:0 }}>{st.m}</span>
+                    <span style={{ fontFamily:'var(--font-body)', fontSize:14, fontWeight:500, color:'#f3eefe', minWidth:0, flex:1 }}>{o.titel || 'Unbenannt'}</span>
+                    {!o.freigeschaltet && (
+                      <span title="Für Spieler noch nicht sichtbar" style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', color:'rgba(220,140,160,0.75)', flexShrink:0 }}>⛒ verborgen</span>
+                    )}
+                    <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.16em', color: st.c, textTransform:'uppercase', flexShrink:0 }}>{st.l}</span>
+                  </div>
+                  {(o.tags || []).length > 0 && (
+                    <div style={{ display:'flex', flexWrap:'wrap', gap:4, marginTop:7 }}>
+                      {o.tags.map(t => (
+                        <span key={t} style={{ padding:'2px 8px', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.25)', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', color:'rgba(180,165,230,0.8)' }}>{t}</span>
+                      ))}
+                    </div>
+                  )}
+                  {o.beschreibung && <div style={{ fontSize:12, fontWeight:300, fontFamily:'var(--font-body)', color:'rgba(200,190,240,0.6)', lineHeight:1.5, marginTop:7 }}>{o.beschreibung}</div>}
+                  {o.bedingung && <Row label="Bedingung" color="rgba(217,176,107,0.75)" value={o.bedingung}/>}
+                  {o.belohnung && <Row label="Belohnung" color="rgba(120,220,160,0.75)" value={o.belohnung}/>}
+                  {(o.monster || []).length > 0 && <Row label="Monster" color="rgba(220,140,160,0.7)" value={o.monster.join(', ')} mono/>}
+                </div>
+              );
+            })}
+
+            {/* Bearbeiten: Editor-Karten */}
+            {editMode && objList.map(o => (
+              <ObjectiveCard
+                key={o.id}
+                o={o}
+                startOpen={o.id === lastObjId}
+                onUpdate={onObjUpdate}
+                onDelete={() => onObjDelete(o)}
+              />
+            ))}
+
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'rgba(160,140,255,0.4)', letterSpacing:'0.1em', textTransform:'uppercase' }}>
+              Monster sehen Spieler nie · Fortschritt berechnet sich automatisch aus den Tags
+            </div>
+          </React.Fragment>)}
+
+          {/* ── Tab: Ressourcen ── */}
+          {tab === 'ressourcen' && (<React.Fragment>
+            <div style={{ display:'flex', alignItems:'center', gap:8, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(124,77,255,0.45)' }}>
+              <span>Ressourcen-Pools · {hex.name || (isArea ? 'Fläche' : 'Hex')}</span>
+              <div style={{ flex:1, height:1, background:'rgba(124,77,255,0.15)' }}/>
+            </div>
+            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10 }}>
+              {(window.KARTE_POOL_TYPES || []).map(pt => {
+                const n = poolCounts[pt.key] || 0;
+                return (
+                  <button
+                    key={pt.key}
+                    onClick={() => onPoolOpen(pt.key)}
+                    style={{
+                      display:'flex', flexDirection:'column', gap:4, padding:'11px 13px',
+                      background:'rgba(20,12,46,0.5)', border:`1px solid oklch(0.68 0.13 ${pt.hue} / 0.5)`,
+                      borderRadius:3, cursor:'pointer', textAlign:'left', transition:'all 0.18s',
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.background = 'rgba(30,20,60,0.7)'}
+                    onMouseLeave={e => e.currentTarget.style.background = 'rgba(20,12,46,0.5)'}
+                  >
+                    <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.2em', textTransform:'uppercase', color:`oklch(0.78 0.13 ${pt.hue})` }}>{pt.label}</span>
+                    <span style={{ fontFamily:'var(--font-body)', fontSize:11.5, fontWeight:300, color:'rgba(200,190,240,0.75)' }}>
+                      {n ? `${n} Arten im Pool` : 'leer — erstellen →'}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'rgba(160,140,255,0.4)', letterSpacing:'0.1em', textTransform:'uppercase' }}>
+              Fang-Status kommt automatisch aus dem Kollektikon
+            </div>
+          </React.Fragment>)}
         </div>
 
-        <footer className="mk-drawer-foot">
-          <button className="mk-btn-danger" onClick={onDelete}>✕ Hex löschen</button>
-          <button className="mk-btn-primary" onClick={onClose}>✓ Übernehmen</button>
+        <footer style={{ padding:'10px 22px 12px', borderTop:'1px solid rgba(124,77,255,0.18)', display:'flex', alignItems:'stretch', gap:10, flexShrink:0 }}>
+          {hex.has_submap ? (
+            <button
+              onClick={() => { onNavigateInto(hex); onClose(); }}
+              style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:10, padding:'9px 14px', background:'linear-gradient(135deg, rgba(124,77,255,0.16) 0%, rgba(124,77,255,0.06) 100%)', border:'1px solid rgba(160,140,255,0.45)', borderRadius:3, color:'#f3eefe', cursor:'pointer', transition:'all 0.18s' }}
+              onMouseEnter={e => { e.currentTarget.style.background='linear-gradient(135deg, rgba(124,77,255,0.30) 0%, rgba(124,77,255,0.14) 100%)'; e.currentTarget.style.borderColor='rgba(220,210,255,0.85)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background='linear-gradient(135deg, rgba(124,77,255,0.16) 0%, rgba(124,77,255,0.06) 100%)'; e.currentTarget.style.borderColor='rgba(160,140,255,0.45)'; }}
+            >
+              <span style={{ fontFamily:'var(--font-display)', fontSize:16, color:'rgba(220,210,255,0.85)', lineHeight:1 }}>⬡</span>
+              <span style={{ fontFamily:'var(--font-display)', fontSize:12, letterSpacing:'0.18em', textTransform:'uppercase', color:'#f3eefe' }}>{hex.name || 'Subkarte'} öffnen</span>
+            </button>
+          ) : (
+            <div style={{ flex:1 }}/>
+          )}
+          <button
+            onClick={onDelete}
+            style={{ padding:'9px 14px', border:'1px solid rgba(220,80,120,0.4)', borderRadius:2, background:'transparent', color:'rgba(220,140,160,0.8)', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.24em', textTransform:'uppercase', cursor:'pointer', transition:'all 0.18s' }}
+            onMouseEnter={e => { e.currentTarget.style.background='rgba(180,40,80,0.14)'; e.currentTarget.style.borderColor='rgba(220,80,120,0.85)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background='transparent'; e.currentTarget.style.borderColor='rgba(220,80,120,0.4)'; }}
+          >{isArea ? 'Fläche löschen' : 'Hex löschen'}</button>
+          <button
+            onClick={onClose}
+            style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.28em', textTransform:'uppercase', padding:'9px 16px', borderRadius:2, cursor:'pointer', border:'1px solid rgba(160,140,255,0.6)', background:'rgba(124,77,255,0.18)', color:'#f3eefe', transition:'all 0.15s' }}
+            onMouseEnter={e => e.currentTarget.style.background='rgba(124,77,255,0.32)'}
+            onMouseLeave={e => e.currentTarget.style.background='rgba(124,77,255,0.18)'}
+          >Fertig</button>
         </footer>
       </aside>
     </React.Fragment>
   );
 }
 
-Object.assign(window, { EditorDrawer });
+// ── Pool-Modal: Arten aus den echten Datenbanken auswählen ──────
+function PoolModal({ cat, anchorLabel, poolSet, caughtCounts, onToggle, onRandomAdd, onClose }) {
+  const [search, setSearch] = uS4('');
+  const [habFilter, setHabFilter] = uS4('');
+  const [rarFilter, setRarFilter] = uS4('');
+  const [genCounts, setGenCounts] = uS4({});
+  const [genTotal, setGenTotal] = uS4('');
+
+  const pt = (window.KARTE_POOL_TYPES || []).find(p => p.key === cat) || { label: cat, hue: 285, habLabel: 'Habitat' };
+  const katalog = (window.karteGetKatalog()[cat] || []);
+  const RAR = window.KARTE_RARITY_META;
+  const RAR_ORDER = window.KARTE_RARITY_ORDER;
+
+  const habOptions = uM4(() => {
+    const s = new Set();
+    katalog.forEach(it => it.habs.forEach(h => s.add(h)));
+    return [...s].sort((a, b) => a.localeCompare(b, 'de'));
+  }, [cat]);
+
+  const q = search.toLowerCase();
+  const rows = katalog.filter(it =>
+    (!q || it.name.toLowerCase().includes(q)) &&
+    (!habFilter || it.habs.includes(habFilter)) &&
+    (!rarFilter || it.rarity === rarFilter)
+  );
+
+  const inPoolCount = katalog.filter(it => poolSet.has(it.id)).length;
+  const caughtCount = katalog.filter(it => poolSet.has(it.id) && (caughtCounts[`${cat}:${it.id}`] || 0) > 0).length;
+
+  const pick = (arr, n) => {
+    const c = [...arr];
+    const out = [];
+    while (n-- > 0 && c.length) out.push(c.splice(Math.floor(Math.random() * c.length), 1)[0]);
+    return out;
+  };
+  const runGenerator = () => {
+    const free = katalog.filter(it => !poolSet.has(it.id));
+    const total = parseInt(genTotal, 10) || 0;
+    let picked = [];
+    if (total > 0) {
+      picked = pick(free, total);
+    } else {
+      RAR_ORDER.forEach(r => {
+        const n = parseInt(genCounts[r], 10) || 0;
+        if (n > 0) picked.push(...pick(free.filter(it => it.rarity === r && !picked.includes(it)), n));
+      });
+    }
+    if (picked.length) onRandomAdd(picked.map(it => it.id));
+  };
+
+  const filterInput = { background:'rgba(20,12,46,0.5)', border:'1px solid rgba(124,77,255,0.25)', borderRadius:2, padding:'8px 12px', fontFamily:'var(--font-body)', fontSize:13, color:'#f3eefe' };
+
+  return (
+    <div
+      style={{ position:'fixed', inset:0, zIndex:400, display:'flex', alignItems:'center', justifyContent:'center', background:'rgba(5,4,15,0.72)', backdropFilter:'blur(8px)' }}
+      onClick={onClose}
+      onMouseDown={e => e.stopPropagation()}
+    >
+      <div
+        style={{ width:580, maxWidth:'94vw', maxHeight:'84vh', display:'flex', flexDirection:'column', overflow:'hidden', background:'linear-gradient(180deg, rgba(14,9,34,0.99) 0%, rgba(8,6,22,0.99) 100%)', border:'1px solid rgba(160,140,255,0.4)', borderRadius:3, boxShadow:'0 24px 60px rgba(0,0,0,0.75), 0 0 40px rgba(124,77,255,0.2)' }}
+        onClick={e => e.stopPropagation()}
+      >
+        {/* Head */}
+        <header style={{ padding:'16px 20px 14px', borderBottom:'1px solid rgba(124,77,255,0.18)', display:'flex', alignItems:'center', justifyContent:'space-between', flexShrink:0 }}>
+          <div>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.3em', color:`oklch(0.78 0.13 ${pt.hue})`, textTransform:'uppercase' }}>⬡ {pt.label}-Pool-Ersteller</div>
+            <div style={{ fontFamily:'var(--font-display)', fontSize:17, letterSpacing:'0.14em', color:'#f3eefe', textTransform:'uppercase', marginTop:4 }}>{anchorLabel}</div>
+          </div>
+          <button
+            onClick={onClose} title="Schließen (Esc)"
+            style={{ width:32, height:32, background:'transparent', border:'1px solid rgba(160,140,255,0.25)', borderRadius:2, color:'rgba(200,190,240,0.75)', fontFamily:'var(--font-mono)', fontSize:14, cursor:'pointer' }}
+            onMouseEnter={e => e.currentTarget.style.background = 'rgba(124,77,255,0.15)'}
+            onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+          >×</button>
+        </header>
+
+        {/* Filters */}
+        <div style={{ padding:'12px 20px', borderBottom:'1px solid rgba(124,77,255,0.12)', display:'flex', gap:10, flexShrink:0 }}>
+          <input style={{ ...filterInput, flex:1, minWidth:0 }} type="text" placeholder="Suchen …" value={search} onChange={e => setSearch(e.target.value)}/>
+          <select style={{ ...filterInput, cursor:'pointer', maxWidth:150 }} value={habFilter} onChange={e => setHabFilter(e.target.value)}>
+            <option value="" style={{ background:'#0a0820' }}>{pt.habLabel}: alle</option>
+            {habOptions.map(h => <option key={h} value={h} style={{ background:'#0a0820' }}>{h}</option>)}
+          </select>
+          <select style={{ ...filterInput, cursor:'pointer', maxWidth:150 }} value={rarFilter} onChange={e => setRarFilter(e.target.value)}>
+            <option value="" style={{ background:'#0a0820' }}>Seltenheit: alle</option>
+            {RAR_ORDER.map(r => <option key={r} value={r} style={{ background:'#0a0820' }}>{RAR[r].label}</option>)}
+          </select>
+        </div>
+
+        {/* Column header */}
+        <div style={{ display:'flex', alignItems:'center', gap:12, padding:'8px 30px 8px 20px', borderBottom:'1px solid rgba(124,77,255,0.2)', fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.2em', color:'rgba(124,77,255,0.65)', textTransform:'uppercase', flexShrink:0 }}>
+          <span style={{ width:20, flexShrink:0 }}/>
+          <span style={{ flex:1 }}>Name</span>
+          <span style={{ width:86, flexShrink:0 }}>{pt.habLabel}</span>
+          <span style={{ width:104, flexShrink:0 }}>Seltenheit</span>
+          <span style={{ width:88, flexShrink:0, textAlign:'center' }}>Status</span>
+        </div>
+
+        {/* Rows */}
+        <div style={{ flex:1, overflowY:'auto', padding:'4px 20px 10px' }}>
+          {rows.length === 0 && (
+            <div style={{ padding:'24px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.2em', color:'rgba(124,77,255,0.4)', textTransform:'uppercase' }}>— keine Treffer —</div>
+          )}
+          {rows.map(it => {
+            const inPool = poolSet.has(it.id);
+            const caught = (caughtCounts[`${cat}:${it.id}`] || 0) > 0;
+            return (
+              <div key={it.id} style={{ display:'flex', alignItems:'center', gap:12, padding:'9px 10px 9px 0', borderBottom:'1px solid rgba(124,77,255,0.08)' }}>
+                <button
+                  onClick={() => onToggle(it.id, inPool)}
+                  style={{ width:20, height:20, flexShrink:0, border:`1px solid ${inPool ? 'rgba(160,140,255,0.9)' : 'rgba(124,77,255,0.35)'}`, borderRadius:2, background: inPool ? 'rgba(160,140,255,0.95)' : 'transparent', color:'#05040f', fontSize:13, lineHeight:1, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', transition:'all 0.15s' }}
+                >{inPool ? '✓' : ''}</button>
+                <span style={{ fontFamily:'var(--font-body)', fontSize:14, fontWeight: inPool ? 500 : 300, color: inPool ? '#f3eefe' : 'rgba(200,190,240,0.55)', flex:1, minWidth:0, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{it.name}</span>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.12em', color:'rgba(160,140,255,0.6)', textTransform:'uppercase', width:86, flexShrink:0, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{it.habitat}</span>
+                <span style={{ width:104, flexShrink:0 }}>
+                  <span style={{ display:'inline-block', padding:'2px 9px', border:`1px solid ${RAR[it.rarity].color}`, borderRadius:20, fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.1em', color: RAR[it.rarity].color, textTransform:'uppercase' }}>{RAR[it.rarity].label}</span>
+                </span>
+                <span style={{ width:88, flexShrink:0, display:'flex', justifyContent:'center' }}>
+                  {inPool ? (
+                    <span
+                      title="Fang-Status kommt automatisch aus dem Kollektikon"
+                      style={{ padding:'3px 9px', border:`1px solid ${caught ? 'rgba(80,200,140,0.55)' : 'rgba(124,77,255,0.3)'}`, borderRadius:20, background: caught ? 'rgba(40,120,80,0.18)' : 'transparent', color: caught ? 'rgba(120,220,160,0.95)' : 'rgba(160,140,255,0.5)', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.12em', textTransform:'uppercase' }}
+                    >{caught ? '✓ erfasst' : 'offen'}</span>
+                  ) : (
+                    <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(124,77,255,0.25)' }}>—</span>
+                  )}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Generator */}
+        <div style={{ padding:'12px 20px', borderTop:'1px solid rgba(124,77,255,0.14)', display:'flex', alignItems:'flex-end', gap:10, flexWrap:'wrap', flexShrink:0 }}>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.18em', color:'rgba(217,176,107,0.85)', textTransform:'uppercase', paddingBottom:8 }}>⚄ Generator</span>
+          {RAR_ORDER.map(r => (
+            <div key={r} style={{ display:'flex', flexDirection:'column', gap:3 }}>
+              <span style={{ fontFamily:'var(--font-mono)', fontSize:6.5, letterSpacing:'0.12em', color: RAR[r].color, textTransform:'uppercase', textAlign:'center' }}>{RAR[r].label}</span>
+              <input
+                type="number" min="0" value={genCounts[r] || ''}
+                onChange={e => setGenCounts(g => ({ ...g, [r]: e.target.value }))}
+                style={{ width:70, boxSizing:'border-box', background:'rgba(20,12,46,0.5)', border:`1px solid ${RAR[r].color}`, borderRadius:2, padding:'6px 4px', fontFamily:'var(--font-mono)', fontSize:10, color: RAR[r].color, textAlign:'center' }}
+              />
+            </div>
+          ))}
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'rgba(160,140,255,0.5)', textTransform:'uppercase', paddingBottom:8 }}>oder</span>
+          <div style={{ display:'flex', flexDirection:'column', gap:3 }}>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:6.5, letterSpacing:'0.12em', color:'rgba(160,140,255,0.95)', textTransform:'uppercase', textAlign:'center' }}>Gesamt</span>
+            <input
+              type="number" min="0" value={genTotal}
+              onChange={e => setGenTotal(e.target.value)}
+              title="Gesamtanzahl (beliebige Seltenheit)"
+              style={{ width:70, boxSizing:'border-box', background:'rgba(20,12,46,0.5)', border:'1px solid rgba(124,77,255,0.7)', borderRadius:2, padding:'6px 4px', fontFamily:'var(--font-mono)', fontSize:10, color:'rgba(180,165,230,0.95)', textAlign:'center' }}
+            />
+          </div>
+          <button
+            onClick={runGenerator}
+            style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.2em', textTransform:'uppercase', padding:'8px 14px', borderRadius:2, cursor:'pointer', border:'1px solid rgba(217,176,107,0.55)', background:'rgba(217,176,107,0.12)', color:'rgba(240,220,170,0.95)', transition:'all 0.15s' }}
+            onMouseEnter={e => e.currentTarget.style.background = 'rgba(217,176,107,0.25)'}
+            onMouseLeave={e => e.currentTarget.style.background = 'rgba(217,176,107,0.12)'}
+          >Generieren</button>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'rgba(160,140,255,0.4)', letterSpacing:'0.1em', width:'100%', textTransform:'uppercase' }}>Lost zusätzlich zu den bereits festgelegten Ressourcen aus</span>
+        </div>
+
+        {/* Footer */}
+        <footer style={{ padding:'12px 20px 14px', borderTop:'1px solid rgba(124,77,255,0.18)', display:'flex', alignItems:'center', justifyContent:'space-between', flexShrink:0 }}>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', color:'rgba(160,140,255,0.65)', textTransform:'uppercase' }}>{inPoolCount} im Pool · {caughtCount} erfasst</span>
+          <button
+            onClick={onClose}
+            style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.28em', textTransform:'uppercase', padding:'9px 18px', borderRadius:2, cursor:'pointer', border:'1px solid rgba(160,140,255,0.6)', background:'rgba(124,77,255,0.18)', color:'#f3eefe' }}
+            onMouseEnter={e => e.currentTarget.style.background = 'rgba(124,77,255,0.32)'}
+            onMouseLeave={e => e.currentTarget.style.background = 'rgba(124,77,255,0.18)'}
+          >Fertig</button>
+        </footer>
+      </div>
+    </div>
+  );
+}
+
+Object.assign(window, { EditorDrawer, ObjectiveCard, PoolModal });
 </script>
 
 
@@ -799,7 +1299,7 @@ const { useState: uS5, useEffect: uE5, useRef: uR5, useCallback: uC5, useMemo: u
 
 const MIN_ZOOM = 0.35;
 const MAX_ZOOM = 5;
-const DRAWER_W = 440;
+const DRAWER_W = 560;
 const FOCUS_ZOOM = 3.2;
 
 // Floating hex label — terrain + name
@@ -810,7 +1310,7 @@ function HexLabel({ hex }) {
   return (
     <div
       className="mk-hex-label-floating"
-      style={{ left: x, top: y + HEX_H * 0.30, '--hex-color': tcolor }}
+      style={{ left: x, top: y + HEX_H * 0.30, '--hex-color': tcolor, opacity: hex.visible === false ? 0.55 : 1 }}
     >
       {hex.terrain ? <div className="mk-hex-label-terr" style={{ color: tcolor }}>◈ {hex.terrain}</div> : null}
       {hex.name ? <div className="mk-hex-label-name">{hex.name}</div> : null}
@@ -869,11 +1369,44 @@ function MerMap() {
   const bgAlignModeRef = uR5(false);
   const cameraRef = uR5({ x: 0, y: 0, zoom: 1 });
 
+  // ─── Karte v2: Bild-Karten, Objectives, Pools ─────────
+  const [mapMeta, setMapMeta]       = uS5({ kind: 'hex', ebene: '', floors: [] });
+  const [floorIdx, setFloorIdx]     = uS5(0);
+  const [areas, setAreas]           = uS5([]);
+  const [selectedAreaId, setSelAreaId] = uS5(null);
+  const [objectives, setObjectives] = uS5([]);
+  const [lastObjId, setLastObjId]   = uS5(null);
+  const [poolRows, setPoolRows]     = uS5([]);
+  const [kollCounts, setKollCounts] = uS5({});
+  const [poolModal, setPoolModal]   = uS5(null);   // { cat } | null
+  const [tool, setTool]             = uS5(null);   // 'rect' | 'circle' | 'hex'
+  const [drawMode, setDrawMode]     = uS5(false);
+  const [drawPts, setDrawPts]       = uS5([]);
+  const [shapeStart, setShapeStart] = uS5(null);
+  const [shapeCur, setShapeCur]     = uS5(null);
+  const [floorsPanelOpen, setFloorsPanelOpen] = uS5(false);
+  const [floorUploading, setFloorUploading]   = uS5(false);
+  const floorFileRef = uR5(null);
+  const gizmoRef = uR5(null);
+  const suppressClickRef = uR5(false);
+
   // Ref so debounced saves always have current mapId
   const currentMapIdRef = uR5(null);
   uE5(() => { currentMapIdRef.current = currentMapId; }, [currentMapId]);
   uE5(() => { bgAlignModeRef.current = bgAlignMode; }, [bgAlignMode]);
   uE5(() => { cameraRef.current = camera; }, [camera]);
+
+  // Refs, damit globale Pointer-Handler keinen veralteten State sehen
+  const editingRef = uR5(false);       uE5(() => { editingRef.current = editing; }, [editing]);
+  const toolRef = uR5(null);           uE5(() => { toolRef.current = tool; }, [tool]);
+  const drawModeRef = uR5(false);      uE5(() => { drawModeRef.current = drawMode; }, [drawMode]);
+  const shapeStartRef = uR5(null);     uE5(() => { shapeStartRef.current = shapeStart; }, [shapeStart]);
+  const shapeCurRef = uR5(null);       uE5(() => { shapeCurRef.current = shapeCur; }, [shapeCur]);
+  const floorIdxRef = uR5(0);          uE5(() => { floorIdxRef.current = floorIdx; }, [floorIdx]);
+  const mapMetaRef = uR5(mapMeta);     uE5(() => { mapMetaRef.current = mapMeta; }, [mapMeta]);
+  const areasRef = uR5([]);            uE5(() => { areasRef.current = areas; }, [areas]);
+  const selectedAreaIdRef = uR5(null); uE5(() => { selectedAreaIdRef.current = selectedAreaId; }, [selectedAreaId]);
+  const selectedKeyRef = uR5(null);    uE5(() => { selectedKeyRef.current = selectedKey; }, [selectedKey]);
 
   // ─── Undo history ──────────────────────────────────────
   const [history, setHistory] = uS5([]);
@@ -939,11 +1472,15 @@ function MerMap() {
       setCurrentMapName(rootMap.name || 'Meruria');
       setBgUrl(rootMap.bg_url || null);
       setBgTransform(rootMap.bg_transform || { x: 0, y: 0, scale: 1 });
+      setMapMeta({ kind: rootMap.kind || 'hex', ebene: rootMap.ebene || '', floors: rootMap.floors || [] });
       currentMapIdRef.current = rootMap.id;
 
       // Load stash only — hexes are loaded by the hexesMapId effect below
       const sbStash = await loadStash();
       setStash(sbStash);
+
+      // Globaler Fang-Status aus dem Kollektikon (für Pool-Anzeige)
+      karteLoadKollektikonStatus().then(s => setKollCounts(s.counts)).catch(() => {});
     }
     init();
   }, []);
@@ -956,11 +1493,23 @@ function MerMap() {
     setHexesMapId(currentMapId);
     setIsLoading(true);
     setSel(null); setEditing(false);
+    setSelAreaId(null); setFloorIdx(0);
+    setTool(null); setDrawMode(false); setDrawPts([]); setShapeStart(null); setShapeCur(null);
+    setPoolModal(null); setFloorsPanelOpen(false);
     // Cancel pending saves so they don't write to the new map's ID
     Object.values(saveDebounce.current).forEach(clearTimeout);
     saveDebounce.current = {};
-    loadHexes(currentMapId).then(h => {
+    Promise.all([loadHexes(currentMapId), loadAreas(currentMapId)]).then(async ([h, areaList]) => {
       setHexes(h);
+      setAreas(areaList);
+      const hexIds = Object.values(h).map(x => x.id);
+      const areaIds = areaList.map(a => a.id);
+      const [objs, pools] = await Promise.all([
+        loadObjectives(hexIds, areaIds),
+        loadPools(hexIds, areaIds),
+      ]);
+      setObjectives(objs);
+      setPoolRows(pools);
       setIsLoading(false);
       // Migration check — only once, on the initial root map load
       if (!migrationCheckedRef.current) {
@@ -1031,7 +1580,8 @@ function MerMap() {
       setBgTransform((t) => ({ ...t, scale: Math.max(0.05, Math.min(20, t.scale * factor)) }));
     } else {
       setCamera((c) => {
-        const nextZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, c.zoom * factor));
+        const minZoom = mapMetaRef.current.kind === 'image' ? 0.05 : MIN_ZOOM;
+        const nextZoom = Math.max(minZoom, Math.min(MAX_ZOOM, c.zoom * factor));
         const rect = stageRef.current.getBoundingClientRect();
         const sx = e.clientX - rect.left, sy = e.clientY - rect.top;
         const cx = editing ? (rect.width - DRAWER_W) / 2 : rect.width / 2;
@@ -1055,7 +1605,7 @@ function MerMap() {
     if (openModal) { setSel(hexKey(q, r)); setEditing(true); }
   }, [animateTo, camera.zoom]);
 
-  const onHexClick = uC5((q, r) => { focusHex(q, r, true); setLagerOpen(false); }, [focusHex]);
+  const onHexClick = uC5((q, r) => { setSelAreaId(null); focusHex(q, r, true); setLagerOpen(false); }, [focusHex]);
   const onHexHover = uC5((k, isEnter) => {
     setHov((cur) => isEnter ? k : (cur === k ? null : cur));
   }, []);
@@ -1084,6 +1634,309 @@ function MerMap() {
     saveDebounce.current[next.id] = setTimeout(() => {
       sbUpsertHex(currentMapIdRef.current, next);
     }, 700);
+  }, []);
+
+  // ─── Areas: update / delete / select ──────────────────
+  const updateArea = uC5((next) => {
+    setAreas((a) => a.map(x => x.id === next.id ? next : x));
+    clearTimeout(saveDebounce.current['a' + next.id]);
+    saveDebounce.current['a' + next.id] = setTimeout(() => sbUpsertArea(next), 700);
+  }, []);
+
+  const deleteSelectedArea = () => {
+    const a = areas.find(x => x.id === selectedAreaId);
+    if (!a) return;
+    setConfirm({
+      title: 'Fläche entfernen?',
+      message: a.has_submap && a.submap_id
+        ? `„${a.name || 'Fläche'}" hat eine Subkarte. Beides wird endgültig gelöscht.`
+        : `„${a.name || 'Fläche'}" wird endgültig gelöscht.`,
+      onYes: async () => {
+        setAreas(prev => prev.filter(x => x.id !== a.id));
+        setObjectives(prev => prev.filter(o => o.area_id !== a.id));
+        setPoolRows(prev => prev.filter(r => r.area_id !== a.id));
+        setSelAreaId(null); setEditing(false); setConfirm(null);
+        if (a.has_submap && a.submap_id) await sbDeleteSubmap(a.submap_id);
+        sbDeleteArea(a.id);
+      },
+    });
+  };
+
+  const selectArea = uC5((a) => {
+    if (toolRef.current || drawModeRef.current) return;
+    setSel(null);
+    setSelAreaId(a.id);
+    setEditing(true);
+    setLagerOpen(false);
+    const c = areaCentroid(a.points);
+    animateTo({ x: c[0], y: c[1], zoom: Math.max(cameraRef.current.zoom, 1) }, 550);
+  }, [animateTo]);
+
+  // ─── Objectives (für ausgewähltes Hex oder Fläche) ───
+  const currentAnchor = uC5(() => {
+    if (selectedAreaIdRef.current) return { area_id: selectedAreaIdRef.current };
+    const h = stateRef.current.hexes[selectedKeyRef.current];
+    return h ? { hex_id: h.id } : null;
+  }, []);
+
+  const addObjective = uC5(() => {
+    const anchor = currentAnchor();
+    if (!anchor) return;
+    const o = {
+      id: crypto.randomUUID(), hex_id: anchor.hex_id || null, area_id: anchor.area_id || null,
+      titel: '', tags: [], beschreibung: '', bedingung: '', belohnung: '', monster: [],
+      entdeckt: false, komplettiert: false, freigeschaltet: false,
+      sort_order: Math.floor(Date.now() / 1000),
+    };
+    setObjectives(p => [...p, o]);
+    setLastObjId(o.id);
+    sbUpsertObjective(o);
+  }, [currentAnchor]);
+
+  const updateObjective = uC5((o) => {
+    setObjectives(p => p.map(x => x.id === o.id ? o : x));
+    clearTimeout(saveDebounce.current['o' + o.id]);
+    saveDebounce.current['o' + o.id] = setTimeout(() => sbUpsertObjective(o), 700);
+  }, []);
+
+  const deleteObjective = uC5((o) => {
+    setObjectives(p => p.filter(x => x.id !== o.id));
+    clearTimeout(saveDebounce.current['o' + o.id]);
+    sbDeleteObjective(o.id);
+  }, []);
+
+  // ─── Pools ────────────────────────────────────────────
+  const poolToggle = uC5((cat) => (rid, inPool) => {
+    const anchor = currentAnchor();
+    if (!anchor) return;
+    if (inPool) {
+      setPoolRows(p => p.filter(r => !(r.cat === cat && String(r.resource_id) === String(rid) &&
+        (anchor.hex_id ? r.hex_id === anchor.hex_id : r.area_id === anchor.area_id))));
+      sbRemovePoolItem(anchor, cat, rid);
+    } else {
+      setPoolRows(p => [...p, { cat, resource_id: String(rid), hex_id: anchor.hex_id || null, area_id: anchor.area_id || null }]);
+      sbAddPoolItem(anchor, cat, rid);
+    }
+  }, [currentAnchor]);
+
+  const poolRandomAdd = uC5((cat) => (rids) => {
+    const anchor = currentAnchor();
+    if (!anchor) return;
+    setPoolRows(p => [...p, ...rids.map(rid => ({ cat, resource_id: String(rid), hex_id: anchor.hex_id || null, area_id: anchor.area_id || null }))]);
+    rids.forEach(rid => sbAddPoolItem(anchor, cat, rid));
+  }, [currentAnchor]);
+
+  // ─── Bild-Karten: Geometrie-Helfer ───────────────────
+  function areaCentroid(pts) {
+    let x = 0, y = 0;
+    (pts || []).forEach(p => { x += p[0]; y += p[1]; });
+    const n = (pts || []).length || 1;
+    return [x / n, y / n];
+  }
+
+  const screenToWorld = uC5((e) => {
+    const rect = stageRef.current.getBoundingClientRect();
+    const cam = cameraRef.current;
+    const cx = editingRef.current ? (rect.width - DRAWER_W) / 2 : rect.width / 2;
+    const cy = rect.height / 2;
+    return [
+      Math.round(cam.x + (e.clientX - rect.left - cx) / cam.zoom),
+      Math.round(cam.y + (e.clientY - rect.top - cy) / cam.zoom),
+    ];
+  }, []);
+
+  function shapeGeom(t, a, b) {
+    const x0 = Math.min(a[0], b[0]), x1 = Math.max(a[0], b[0]);
+    const y0 = Math.min(a[1], b[1]), y1 = Math.max(a[1], b[1]);
+    const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2, rx = (x1 - x0) / 2, ry = (y1 - y0) / 2;
+    if (t === 'rect') return [[x0, y0], [x1, y0], [x1, y1], [x0, y1]];
+    const pts = [];
+    if (t === 'circle') {
+      for (let i = 0; i < 24; i++) { const w = i / 24 * Math.PI * 2; pts.push([Math.round(cx + Math.cos(w) * rx), Math.round(cy + Math.sin(w) * ry)]); }
+      return pts;
+    }
+    for (let i = 0; i < 6; i++) { const w = Math.PI / 6 + i / 6 * Math.PI * 2; pts.push([Math.round(cx + Math.cos(w) * rx), Math.round(cy + Math.sin(w) * ry)]); }
+    return pts;
+  }
+
+  const createAreaFromPoints = uC5((points) => {
+    const a = {
+      id: crypto.randomUUID(), map_id: currentMapIdRef.current, floor: floorIdxRef.current,
+      name: 'Neue Fläche', typ: 'poi', points,
+      beschreibung: '', bild_url: '', tags: [], visible: false,
+      entdeckt: false, komplettiert: false, has_submap: false, submap_id: null,
+    };
+    setAreas(p => [...p, a]);
+    setSel(null); setSelAreaId(a.id); setEditing(true);
+    sbUpsertArea(a);
+  }, []);
+
+  const finishShape = uC5(() => {
+    const a = shapeStartRef.current, b = shapeCurRef.current, t = toolRef.current;
+    setShapeStart(null); setShapeCur(null); setTool(null);
+    if (!a || !b || !t || (Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1])) <= 12) return;
+    createAreaFromPoints(shapeGeom(t, a, b));
+  }, [createAreaFromPoints]);
+
+  const drawPtsRef = uR5([]);
+  uE5(() => { drawPtsRef.current = drawPts; }, [drawPts]);
+
+  const finishDraw = uC5(() => {
+    const pts = drawPtsRef.current;
+    setDrawMode(false);
+    setDrawPts([]);
+    if (pts.length >= 3) createAreaFromPoints(pts);
+  }, [createAreaFromPoints]);
+
+  // ─── Gizmo (Verschieben / Skalieren / Rotieren) ──────
+  const startGizmo = uC5((g) => { gizmoRef.current = g; }, []);
+
+  uE5(() => {
+    const onMove = (e) => {
+      const g = gizmoRef.current;
+      if (g) {
+        const p = screenToWorld(e);
+        let newPts = null, newRot;
+        if (g.mode === 'move') {
+          const dx = p[0] - g.start[0], dy = p[1] - g.start[1];
+          newPts = g.startPts.map(q => [Math.round(q[0] + dx), Math.round(q[1] + dy)]);
+        } else if (g.mode === 'scale') {
+          const ax = g.anchor;
+          let fx = (p[0] - ax[0]) / ((g.start[0] - ax[0]) || 1);
+          let fy = (p[1] - ax[1]) / ((g.start[1] - ax[1]) || 1);
+          if (g.axis === 'x') fy = 1;
+          if (g.axis === 'y') fx = 1;
+          if (e.shiftKey) {
+            const f = g.axis === 'x' ? fx : g.axis === 'y' ? fy : Math.max(Math.abs(fx), Math.abs(fy));
+            fx = f; fy = f;
+          }
+          fx = Math.max(0.05, fx); fy = Math.max(0.05, fy);
+          newPts = g.startPts.map(q => [Math.round(ax[0] + (q[0] - ax[0]) * fx), Math.round(ax[1] + (q[1] - ax[1]) * fy)]);
+        } else if (g.mode === 'rotate') {
+          const a0 = Math.atan2(g.start[1] - g.c[1], g.start[0] - g.c[0]);
+          const a1 = Math.atan2(p[1] - g.c[1], p[0] - g.c[0]);
+          const da = a1 - a0, cos = Math.cos(da), sin = Math.sin(da);
+          newRot = (g.startRot || 0) + da;
+          newPts = g.startPts.map(q => {
+            const rx = q[0] - g.c[0], ry = q[1] - g.c[1];
+            return [Math.round(g.c[0] + rx * cos - ry * sin), Math.round(g.c[1] + rx * sin + ry * cos)];
+          });
+        }
+        if (newPts) {
+          g.lastPts = newPts;
+          if (newRot !== undefined) g.lastRot = newRot;
+          setAreas(prev => prev.map(a => a.id === g.areaId ? { ...a, points: newPts, ...(newRot !== undefined ? { rot: newRot } : {}) } : a));
+        }
+        return;
+      }
+      if (shapeStartRef.current) setShapeCur(screenToWorld(e));
+    };
+    const onUp = () => {
+      if (gizmoRef.current) {
+        const g = gizmoRef.current;
+        gizmoRef.current = null;
+        suppressClickRef.current = true;
+        // Flag nach dem zugehörigen click-Event wieder löschen, falls keiner kommt
+        setTimeout(() => { suppressClickRef.current = false; }, 0);
+        const a = areasRef.current.find(x => x.id === g.areaId);
+        if (a) sbUpsertArea(g.lastPts ? { ...a, points: g.lastPts } : a);
+        return;
+      }
+      if (shapeStartRef.current) {
+        suppressClickRef.current = true;
+        setTimeout(() => { suppressClickRef.current = false; }, 0);
+        finishShape();
+      }
+    };
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp);
+    return () => {
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+    };
+  }, [screenToWorld, finishShape]);
+
+  // Pfeiltasten: ausgewählte Fläche verschieben (Shift = ×10)
+  uE5(() => {
+    const onKey = (e) => {
+      if (!e.key.startsWith('Arrow')) return;
+      const tag = (document.activeElement || {}).tagName || '';
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes(tag)) return;
+      if (mapMetaRef.current.kind !== 'image' || !selectedAreaIdRef.current) return;
+      e.preventDefault();
+      const step = e.shiftKey ? 10 : 1;
+      const dx = e.key === 'ArrowLeft' ? -step : e.key === 'ArrowRight' ? step : 0;
+      const dy = e.key === 'ArrowUp' ? -step : e.key === 'ArrowDown' ? step : 0;
+      const cur = areasRef.current.find(x => x.id === selectedAreaIdRef.current);
+      if (!cur) return;
+      const moved = { ...cur, points: cur.points.map(q => [q[0] + dx, q[1] + dy]) };
+      setAreas(prev => prev.map(a => a.id === moved.id ? moved : a));
+      clearTimeout(saveDebounce.current['a' + moved.id]);
+      saveDebounce.current['a' + moved.id] = setTimeout(() => sbUpsertArea(moved), 700);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  // ─── Etagen (floors) verwalten ───────────────────────
+  const saveFloors = uC5((floors) => {
+    setMapMeta(m => ({ ...m, floors }));
+    // Upsert statt Update — siehe setMapEbene (PATCH wird teils clientseitig blockiert)
+    window._sb.from('karte_maps').upsert({ id: currentMapIdRef.current, floors }, { onConflict: 'id' })
+      .then(({ error }) => { if (error) console.error('saveFloors:', error); });
+  }, []);
+
+  const addFloor = uC5(async (file) => {
+    if (!file) return;
+    setFloorUploading(true);
+    const clean = file.name.replace(/[^a-z0-9._-]/gi, '_');
+    const path = `maps/${currentMapIdRef.current}/floors/${Date.now()}-${clean}`;
+    const { error } = await window._sb.storage.from('karte-bilder').upload(path, file, { upsert: true });
+    if (error) { console.error('floor upload:', error); setFloorUploading(false); return; }
+    const { data } = window._sb.storage.from('karte-bilder').getPublicUrl(path);
+    const url = data.publicUrl;
+    const img = new Image();
+    img.onload = () => {
+      const floors = [...(mapMetaRef.current.floors || []), {
+        id: crypto.randomUUID(), label: `Ebene ${(mapMetaRef.current.floors || []).length + 1}`,
+        bg: url, w: img.naturalWidth, h: img.naturalHeight,
+      }];
+      saveFloors(floors);
+      setFloorIdx(floors.length - 1);
+      setFloorUploading(false);
+    };
+    img.onerror = () => setFloorUploading(false);
+    img.src = url;
+  }, [saveFloors]);
+
+  const renameFloor = uC5((i, label) => {
+    const floors = (mapMetaRef.current.floors || []).map((f, idx) => idx === i ? { ...f, label } : f);
+    saveFloors(floors);
+  }, [saveFloors]);
+
+  const deleteFloor = uC5((i) => {
+    const floors = (mapMetaRef.current.floors || []).filter((_, idx) => idx !== i);
+    // Areas dieser Etage entfernen, spätere Etagen rutschen nach
+    const gone = areasRef.current.filter(a => (a.floor || 0) === i);
+    const keep = areasRef.current
+      .filter(a => (a.floor || 0) !== i)
+      .map(a => (a.floor || 0) > i ? { ...a, floor: a.floor - 1 } : a);
+    gone.forEach(a => sbDeleteArea(a.id));
+    keep.filter(a => (a.floor || 0) >= i).forEach(a => sbUpsertArea(a));
+    setAreas(keep);
+    setObjectives(prev => prev.filter(o => !o.area_id || !gone.some(a => a.id === o.area_id)));
+    setPoolRows(prev => prev.filter(r => !r.area_id || !gone.some(a => a.id === r.area_id)));
+    saveFloors(floors);
+    setFloorIdx(f => Math.max(0, Math.min(f, floors.length - 1)));
+  }, [saveFloors]);
+
+  const switchFloor = uC5((dir) => {
+    setFloorIdx(f => {
+      const count = (mapMetaRef.current.floors || []).length;
+      const nf = Math.max(0, Math.min(count - 1, f + dir));
+      if (nf !== f) { setSel(null); setSelAreaId(null); setEditing(false); setDrawMode(false); setDrawPts([]); }
+      return nf;
+    });
   }, []);
 
   // ─── Drag/drop ────────────────────────────────────────
@@ -1171,7 +2024,7 @@ function MerMap() {
     const { data } = window._sb.storage.from('karte-bilder').getPublicUrl(path);
     const url = data.publicUrl;
     setBgUrl(url);
-    await window._sb.from('karte_maps').update({ bg_url: url }).eq('id', currentMapId);
+    await window._sb.from('karte_maps').upsert({ id: currentMapId, bg_url: url }, { onConflict: 'id' });
     setBgUploading(false);
   }, [currentMapId]);
 
@@ -1182,8 +2035,7 @@ function MerMap() {
     clearTimeout(bgTransformSaveTimer.current);
     bgTransformSaveTimer.current = setTimeout(() => {
       window._sb.from('karte_maps')
-        .update({ bg_transform: bgTransform })
-        .eq('id', currentMapIdRef.current)
+        .upsert({ id: currentMapIdRef.current, bg_transform: bgTransform }, { onConflict: 'id' })
         .then(({ error }) => { if (error) console.error('bg_transform save:', error); });
     }, 600);
   }, [bgTransform, currentMapId]);
@@ -1201,6 +2053,8 @@ function MerMap() {
       onYes: async () => {
         pushHistory();
         setHexes((hs) => { const out = { ...hs }; delete out[selectedKey]; return out; });
+        setObjectives(prev => prev.filter(o => o.hex_id !== h.id));
+        setPoolRows(prev => prev.filter(r => r.hex_id !== h.id));
         setSel(null); setEditing(false); setConfirm(null);
         if (hasSubmap) await sbDeleteSubmap(h.submap_id);
         sbDeleteHex(h.id);
@@ -1209,16 +2063,21 @@ function MerMap() {
   };
 
   // ─── Submap navigation ────────────────────────────────
-  const navigateInto = uC5(async (hex) => {
-    if (!hex.submap_id) return;
-    setMapStack((s) => [...s, { id: currentMapId, name: currentMapName, bgUrl, bgTransform }]);
-    const subMap = await loadMap(hex.submap_id);
-    setCurrentMapId(hex.submap_id);
-    setCurrentMapName(hex.name || subMap?.name || 'Subkarte');
+  const pushCurrentToStack = uC5(() => {
+    setMapStack((s) => [...s, { id: currentMapId, name: currentMapName, bgUrl, bgTransform, mapMeta }]);
+  }, [currentMapId, currentMapName, bgUrl, bgTransform, mapMeta]);
+
+  const navigateInto = uC5(async (node) => {
+    if (!node.submap_id) return;
+    pushCurrentToStack();
+    const subMap = await loadMap(node.submap_id);
+    setCurrentMapId(node.submap_id);
+    setCurrentMapName(node.name || subMap?.name || 'Subkarte');
     setBgUrl(subMap?.bg_url || null);
     setBgTransform(subMap?.bg_transform || { x: 0, y: 0, scale: 1 });
+    setMapMeta({ kind: subMap?.kind || 'hex', ebene: subMap?.ebene || '', floors: subMap?.floors || [] });
     setBgAlignMode(false);
-  }, [currentMapId, currentMapName, bgUrl, bgTransform]);
+  }, [pushCurrentToStack]);
 
   const navigateUp = uC5((i) => {
     const target = mapStack[i];
@@ -1228,28 +2087,75 @@ function MerMap() {
     setCurrentMapName(target.name);
     setBgUrl(target.bgUrl || null);
     setBgTransform(target.bgTransform || { x: 0, y: 0, scale: 1 });
+    setMapMeta(target.mapMeta || { kind: 'hex', ebene: '', floors: [] });
     setBgAlignMode(false);
   }, [mapStack]);
 
-  const createSubmap = uC5(async (hex) => {
-    const k = hexKey(hex.q, hex.r);
-    await sbUpsertHex(currentMapIdRef.current, hex);
+  // Subkarte anlegen — für Hexes und Flächen, wahlweise Hex- oder Bild-Karte
+  const createSubmap = uC5(async (node, kind) => {
+    const isAreaNode = !!node.points;
+    const mapKind = kind === 'image' ? 'image' : 'hex';
+    if (isAreaNode) { await sbUpsertArea(node); } else { await sbUpsertHex(currentMapIdRef.current, node); }
+    const insert = {
+      name: node.name || 'Subkarte',
+      kind: mapKind,
+      floors: mapKind === 'image' ? [] : null,
+    };
+    if (isAreaNode) insert.parent_area_id = node.id; else insert.parent_hex_id = node.id;
     const { data: newMap, error } = await window._sb.from('karte_maps')
-      .insert({ name: hex.name || 'Subkarte', parent_hex_id: hex.id })
-      .select('id, name')
+      .insert(insert)
+      .select('id, name, kind, ebene, floors')
       .single();
     if (error) { console.error('createSubmap:', error); return; }
-    const updatedHex = { ...hex, has_submap: true, submap_id: newMap.id };
-    setHexes((h) => ({ ...h, [k]: updatedHex }));
-    sbUpsertHex(currentMapIdRef.current, updatedHex);
-    setMapStack((s) => [...s, { id: currentMapId, name: currentMapName, bgUrl, bgTransform }]);
+    const updatedNode = { ...node, has_submap: true, submap_id: newMap.id, ...(isAreaNode && node.typ === 'poi' ? { typ: 'eingang' } : {}) };
+    if (isAreaNode) {
+      setAreas((a) => a.map(x => x.id === node.id ? updatedNode : x));
+      sbUpsertArea(updatedNode);
+    } else {
+      const k = hexKey(node.q, node.r);
+      setHexes((h) => ({ ...h, [k]: updatedNode }));
+      sbUpsertHex(currentMapIdRef.current, updatedNode);
+    }
+    pushCurrentToStack();
     setCurrentMapId(newMap.id);
-    setCurrentMapName(hex.name || newMap.name);
+    setCurrentMapName(node.name || newMap.name);
     setBgUrl(null);
     setBgTransform({ x: 0, y: 0, scale: 1 });
+    setMapMeta({ kind: newMap.kind || 'hex', ebene: newMap.ebene || '', floors: newMap.floors || [] });
     setBgAlignMode(false);
-    setEditing(false); setSel(null);
-  }, [currentMapId, currentMapName, bgUrl, bgTransform]);
+    setEditing(false); setSel(null); setSelAreaId(null);
+  }, [pushCurrentToStack]);
+
+  // Ebene (Welt/Region/Gebiet/Ort) der aktuellen Karte setzen.
+  // Bewusst als Upsert (POST) statt Update (PATCH): PATCH wird in manchen
+  // Umgebungen (Antivirus/Proxy/Extension) blockiert und erscheint als CORS-Fehler.
+  const setMapEbene = uC5(async (ebene) => {
+    setMapMeta(m => ({ ...m, ebene }));
+    const mapId = currentMapIdRef.current;
+    let lastError = null;
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      const { data, error } = await window._sb.from('karte_maps')
+        .upsert({ id: mapId, ebene: ebene || null }, { onConflict: 'id' })
+        .select('id, ebene');
+      if (!error && data && data.length > 0) return;   // gespeichert
+      lastError = error;
+      if (error && /fetch/i.test(error.message || '')) {
+        // Netzwerk-Hänger — kurz warten und erneut versuchen
+        await new Promise(r => setTimeout(r, 700 * attempt));
+        continue;
+      }
+      if (error) {
+        console.error('setMapEbene:', error);
+        alert('Ebene konnte nicht gespeichert werden:\n' + error.message);
+      } else {
+        console.warn('setMapEbene: Upsert hat keine Zeile getroffen (RLS/Berechtigung?)', mapId);
+        alert('Ebene wurde nicht gespeichert — kein Zeilen-Treffer (Berechtigung/RLS?).');
+      }
+      return;
+    }
+    console.error('setMapEbene: Netzwerkfehler nach 3 Versuchen', lastError);
+    alert('Ebene konnte nicht gespeichert werden — Netzwerkfehler nach 3 Versuchen.\nMögliche Ursachen: Offline, Adblocker/Antivirus, oder die Seite ist in mehreren Tabs offen.');
+  }, []);
 
   // ─── Migration from localStorage ──────────────────────
   const handleMigrate = uC5(async () => {
@@ -1283,26 +2189,49 @@ function MerMap() {
   }, []);
 
   // ─── Camera controls ──────────────────────────────────
-  const resetView = () => animateTo({ x: 0, y: 0, zoom: 1 }, 550);
+  const imageFitCam = uC5(() => {
+    const fl = (mapMetaRef.current.floors || [])[floorIdxRef.current];
+    if (!fl) return { x: 0, y: 0, zoom: 1 };
+    const z = Math.min(window.innerWidth / fl.w, (window.innerHeight - 56) / fl.h) * 0.86;
+    return { x: fl.w / 2, y: fl.h / 2, zoom: Math.max(0.05, z) };
+  }, []);
+
+  const resetView = () => {
+    if (mapMeta.kind === 'image') animateTo(imageFitCam(), 550);
+    else animateTo({ x: 0, y: 0, zoom: 1 }, 550);
+  };
   const zoomBy = (factor) => {
     cancelAnim();
-    setCamera((c) => ({ ...c, zoom: Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, c.zoom * factor)) }));
+    setCamera((c) => {
+      const minZoom = mapMetaRef.current.kind === 'image' ? 0.05 : MIN_ZOOM;
+      return { ...c, zoom: Math.max(minZoom, Math.min(MAX_ZOOM, c.zoom * factor)) };
+    });
   };
 
-  // ─── Close drawer ─────────────────────────────────────
-  const closeDrawer = uC5(() => { setEditing(false); setSel(null); }, []);
+  // Kamera beim Betreten einer Bild-Karte / Etagenwechsel einpassen
+  uE5(() => {
+    if (mapMeta.kind === 'image') setCamera(imageFitCam());
+    else setCamera({ x: 0, y: 0, zoom: 1 });
+  }, [hexesMapId, floorIdx, mapMeta.kind, (mapMeta.floors || []).length, imageFitCam]);
 
-  // Esc key
+  // ─── Close drawer ─────────────────────────────────────
+  const closeDrawer = uC5(() => { setEditing(false); setSel(null); setSelAreaId(null); }, []);
+
+  // Esc / Enter keys
   uE5(() => {
     const onKey = (e) => {
       if (e.key === 'Escape') {
-        if (confirm) setConfirm(null);
+        if (poolModal) setPoolModal(null);
+        else if (confirm) setConfirm(null);
+        else if (drawMode) { setDrawMode(false); setDrawPts([]); }
+        else if (tool || shapeStart) { setTool(null); setShapeStart(null); setShapeCur(null); }
         else if (editing) closeDrawer();
       }
+      if (e.key === 'Enter' && drawMode && drawPts.length >= 3) finishDraw();
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [confirm, editing, closeDrawer]);
+  }, [confirm, editing, closeDrawer, poolModal, drawMode, drawPts, tool, shapeStart, finishDraw]);
 
   // ─── Ghost buttons ────────────────────────────────────
   const ghosts = uM5(() => {
@@ -1334,7 +2263,19 @@ function MerMap() {
 
   const hexList = Object.values(hexes);
   const selectedHex = selectedKey ? hexes[selectedKey] : null;
-  const mapEmpty = hexList.length === 0;
+  const isImageMap = mapMeta.kind === 'image';
+  const floors = mapMeta.floors || [];
+  const floor = floors[floorIdx] || null;
+  const floorAreas = areas.filter(a => (a.floor || 0) === floorIdx);
+  const selectedArea = selectedAreaId ? areas.find(a => a.id === selectedAreaId) : null;
+  const selectedNode = selectedArea || selectedHex;
+  const nodeObjectives = selectedNode
+    ? objectives.filter(o => selectedArea ? o.area_id === selectedArea.id : o.hex_id === selectedNode.id)
+    : [];
+  const nodePoolRows = selectedNode
+    ? poolRows.filter(r => selectedArea ? r.area_id === selectedArea.id : r.hex_id === selectedNode.id)
+    : [];
+  const mapEmpty = isImageMap ? floors.length === 0 : hexList.length === 0;
 
   const stashFolders = uM5(() => {
     const fromStash = stash.map(s => s.folder).filter(Boolean);
@@ -1434,12 +2375,31 @@ function MerMap() {
             <span style={{ color:'rgba(160,140,255,0.7)' }}>{currentMapName}</span>
           </div>
         )}
+        {/* Ebene der aktuellen Karte */}
+        <select
+          value={mapMeta.ebene || ''}
+          onChange={e => setMapEbene(e.target.value)}
+          title="Ebene dieser Karte (für Anzeige & Fortschritt)"
+          style={{
+            marginLeft:14, background:'rgba(8,6,22,0.7)', border:'1px solid rgba(124,77,255,0.25)',
+            borderRadius:3, color:'rgba(160,140,255,0.75)', fontFamily:'var(--font-mono)',
+            fontSize:8.5, letterSpacing:'0.14em', textTransform:'uppercase', padding:'3px 6px', cursor:'pointer',
+          }}
+        >
+          <option value="">— Ebene —</option>
+          {['Welt','Region','Gebiet','Ort'].map(e => <option key={e} value={e}>{e}</option>)}
+        </select>
+        {isImageMap && (
+          <span style={{ marginLeft:10, fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.18em', color:'rgba(217,176,107,0.65)', textTransform:'uppercase' }}>▦ Bild-Karte</span>
+        )}
         <div style={{ flex: 1 }}/>
         <span style={{
           fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.28em',
           color:'rgba(160,140,255,0.55)', textTransform:'uppercase',
         }}>
-          {isLoading ? '◈ lade …' : `${hexList.length} ${hexList.length === 1 ? 'Hex' : 'Hexe'} · ${stash.length} im Lager`}
+          {isLoading ? '◈ lade …'
+            : isImageMap ? `${floorAreas.length} Flächen · Ebene ${floors.length ? floorIdx + 1 : 0}/${floors.length}`
+            : `${hexList.length} ${hexList.length === 1 ? 'Hex' : 'Hexe'} · ${stash.length} im Lager`}
         </span>
       </header>
 
@@ -1447,12 +2407,25 @@ function MerMap() {
       <div
         ref={stageRef}
         className={`mk-stage${isDragging ? ' is-dragging' : ''}${dragInfo ? ' is-drop-active' : ''}${bgAlignMode ? ' bg-align-mode' : ''}`}
-        style={{ top: 56 }}
-        onClick={() => { if (editing && !bgAlignMode) closeDrawer(); }}
-        onDragOver={mapEmpty && dragInfo?.fromStash ? (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; } : undefined}
-        onDrop={mapEmpty && dragInfo?.fromStash ? (e) => { e.preventDefault(); dropOnEmptyMap(); } : undefined}
+        style={{ top: 56, cursor: (tool || drawMode) ? 'crosshair' : undefined }}
+        onPointerDown={(e) => {
+          if (isImageMap && tool && e.button === 0) {
+            const p = screenToWorld(e);
+            setShapeStart(p); setShapeCur(p);
+          }
+        }}
+        onClick={(e) => {
+          if (suppressClickRef.current) { suppressClickRef.current = false; return; }
+          if (isImageMap && drawMode) {
+            setDrawPts(pts => [...pts, screenToWorld(e)]);
+            return;
+          }
+          if (editing && !bgAlignMode) closeDrawer();
+        }}
+        onDragOver={mapEmpty && !isImageMap && dragInfo?.fromStash ? (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; } : undefined}
+        onDrop={mapEmpty && !isImageMap && dragInfo?.fromStash ? (e) => { e.preventDefault(); dropOnEmptyMap(); } : undefined}
       >
-        {!isLoading && (
+        {!isLoading && !isImageMap && (
           <div ref={worldRef} className={`mk-world${bgUrl ? ' has-bg' : ''}`} style={{ transform: worldTx, '--zoom': camera.zoom, '--label-scale': 1 / Math.pow(camera.zoom, 0.25) }}>
             {bgUrl && (
               <img
@@ -1500,6 +2473,187 @@ function MerMap() {
           </div>
         )}
 
+        {/* ── Bild-Karte ── */}
+        {!isLoading && isImageMap && floor && (
+          <div ref={worldRef} className="mk-world" style={{ transform: worldTx, '--zoom': camera.zoom, '--label-scale': 1 / Math.pow(camera.zoom, 0.25) }}>
+            <img
+              src={floor.bg}
+              style={{ position:'absolute', left:0, top:0, width:floor.w, height:floor.h, maxWidth:'none', pointerEvents:'none', userSelect:'none', opacity:0.95 }}
+              alt="" draggable={false}
+            />
+            <svg
+              width={floor.w} height={floor.h} viewBox={`0 0 ${floor.w} ${floor.h}`}
+              style={{ position:'absolute', left:0, top:0, overflow:'visible' }}
+            >
+              {/* Flächen */}
+              {floorAreas.map(a => {
+                const sel = a.id === selectedAreaId;
+                return (
+                  <polygon
+                    key={a.id}
+                    points={a.points.map(p => p.join(',')).join(' ')}
+                    style={{
+                      fill: sel ? 'rgba(160,140,255,0.34)' : (a.visible ? 'rgba(124,77,255,0.10)' : 'rgba(220,80,120,0.10)'),
+                      stroke: sel ? 'rgba(220,210,255,0.95)' : (a.visible ? 'rgba(160,140,255,0.75)' : 'rgba(220,80,120,0.6)'),
+                      strokeWidth: 2 / Math.max(camera.zoom, 0.01),
+                      strokeDasharray: a.visible ? '14 8' : '5 7',
+                      cursor: sel ? 'move' : 'pointer',
+                    }}
+                    onClick={(e) => { e.stopPropagation(); if (drawMode || tool) return; if (!sel) selectArea(a); }}
+                    onPointerDown={(e) => {
+                      if (!sel || drawMode || tool || e.button !== 0) return;
+                      e.stopPropagation();
+                      startGizmo({ mode: 'move', areaId: a.id, start: screenToWorld(e), startPts: a.points.map(q => [...q]) });
+                    }}
+                  />
+                );
+              })}
+
+              {/* Zeichen-Vorschau (Polygon) */}
+              {drawMode && drawPts.length > 0 && (
+                <React.Fragment>
+                  <polyline
+                    points={drawPts.map(p => p.join(',')).join(' ')}
+                    style={{ fill:'rgba(217,176,107,0.12)', stroke:'rgba(217,176,107,0.9)', strokeWidth: 2 / Math.max(camera.zoom, 0.01), strokeDasharray:'6 5' }}
+                  />
+                  {drawPts.map((p, i) => (
+                    <circle key={i} cx={p[0]} cy={p[1]} r={5 / Math.max(camera.zoom, 0.01)} style={{ fill:'rgba(217,176,107,0.95)' }}/>
+                  ))}
+                </React.Fragment>
+              )}
+
+              {/* Form-Vorschau (Rechteck/Ellipse/Hexagon) */}
+              {shapeStart && shapeCur && (
+                <polygon
+                  points={shapeGeom(tool, shapeStart, shapeCur).map(p => p.join(',')).join(' ')}
+                  style={{ fill:'rgba(217,176,107,0.14)', stroke:'rgba(217,176,107,0.9)', strokeWidth: 2 / Math.max(camera.zoom, 0.01), strokeDasharray:'6 5' }}
+                />
+              )}
+
+              {/* Gizmo */}
+              {selectedArea && !tool && !drawMode && (() => {
+                const xs = selectedArea.points.map(p => p[0]), ys = selectedArea.points.map(p => p[1]);
+                const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+                const z = Math.max(camera.zoom, 0.01);
+                const c = areaCentroid(selectedArea.points);
+                const mx = (x0 + x1) / 2, my = (y0 + y1) / 2;
+                const grabScale = (anchor, axis) => (e) => {
+                  if (e.button !== 0) return;
+                  e.stopPropagation();
+                  startGizmo({ mode: 'scale', areaId: selectedArea.id, anchor, axis, start: screenToWorld(e), startPts: selectedArea.points.map(q => [...q]) });
+                };
+                const handles = [
+                  { x: x0, y: y0, cursor: 'nwse-resize', down: grabScale([x1, y1], 'xy') },
+                  { x: x1, y: y0, cursor: 'nesw-resize', down: grabScale([x0, y1], 'xy') },
+                  { x: x0, y: y1, cursor: 'nesw-resize', down: grabScale([x1, y0], 'xy') },
+                  { x: x1, y: y1, cursor: 'nwse-resize', down: grabScale([x0, y0], 'xy') },
+                  { x: mx, y: y0, cursor: 'ns-resize', down: grabScale([mx, y1], 'y') },
+                  { x: mx, y: y1, cursor: 'ns-resize', down: grabScale([mx, y0], 'y') },
+                  { x: x0, y: my, cursor: 'ew-resize', down: grabScale([x1, my], 'x') },
+                  { x: x1, y: my, cursor: 'ew-resize', down: grabScale([x0, my], 'x') },
+                ];
+                const ang = (selectedArea.rot || 0) - Math.PI / 2;
+                const rBox = Math.hypot((x1 - x0) / 2, (y1 - y0) / 2);
+                const rHandle = rBox + 40 / z;
+                const rotX = c[0] + Math.cos(ang) * rHandle, rotY = c[1] + Math.sin(ang) * rHandle;
+                return (
+                  <React.Fragment>
+                    <polygon points={`${x0},${y0} ${x1},${y0} ${x1},${y1} ${x0},${y1}`} style={{ fill:'none', stroke:'rgba(220,210,255,0.55)', strokeWidth: 2 / z, strokeDasharray:`${8/z} ${6/z}`, pointerEvents:'none' }}/>
+                    <line x1={c[0] + Math.cos(ang) * rBox * 0.6} y1={c[1] + Math.sin(ang) * rBox * 0.6} x2={rotX} y2={rotY} style={{ stroke:'rgba(220,210,255,0.4)', strokeWidth: 2 / z, pointerEvents:'none' }}/>
+                    <circle
+                      cx={rotX} cy={rotY} r={9 / z}
+                      style={{ fill:'rgba(8,6,22,0.9)', stroke:'rgba(217,176,107,0.95)', strokeWidth: 2 / z, cursor:'grab' }}
+                      onPointerDown={(e) => {
+                        if (e.button !== 0) return;
+                        e.stopPropagation();
+                        startGizmo({ mode: 'rotate', areaId: selectedArea.id, c, startRot: selectedArea.rot || 0, start: screenToWorld(e), startPts: selectedArea.points.map(q => [...q]) });
+                      }}
+                    />
+                    {handles.map((h, i) => (
+                      <circle key={i} cx={h.x} cy={h.y} r={9 / z} style={{ fill:'rgba(8,6,22,0.9)', stroke:'rgba(220,210,255,0.95)', strokeWidth: 2 / z, cursor: h.cursor }} onPointerDown={h.down}/>
+                    ))}
+                  </React.Fragment>
+                );
+              })()}
+            </svg>
+
+            {/* Flächen-Labels */}
+            {labelsVisible && (
+              <div className="mk-labels-layer">
+                {floorAreas.map(a => {
+                  const c = areaCentroid(a.points);
+                  return (
+                    <div
+                      key={`albl-${a.id}`}
+                      className="mk-hex-label-floating"
+                      style={{ left: c[0], top: c[1], opacity: a.visible ? 1 : 0.6, '--hex-color': a.visible ? (a.typ === 'eingang' ? 'oklch(0.78 0.1 80)' : 'oklch(0.7 0.15 285)') : 'oklch(0.6 0.15 0)' }}
+                    >
+                      <div className="mk-hex-label-terr" style={{ color: a.visible ? (a.typ === 'eingang' ? 'rgba(217,176,107,0.85)' : 'rgba(160,140,255,0.8)') : 'rgba(220,80,120,0.8)' }}>
+                        {a.visible ? (a.typ === 'eingang' ? '⬡ Betretbar' : '◈ POI') : '✕ Verborgen'}
+                      </div>
+                      {a.name ? <div className="mk-hex-label-name">{a.name}</div> : null}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Bild-Karte ohne Etagen */}
+        {!isLoading && isImageMap && !floor && (
+          <div className="mk-empty-map-hint">
+            <div className="h">Bild-Karte ohne Grundriss</div>
+            <div className="s">lade ein Hintergrundbild als erste Ebene hoch</div>
+            <button className="mk-empty-create" onClick={(e) => { e.stopPropagation(); floorFileRef.current?.click(); }} disabled={floorUploading}>
+              {floorUploading ? '… lädt hoch' : '+ Grundriss hochladen'}
+            </button>
+          </div>
+        )}
+
+        {/* Zeichenmodus-Banner */}
+        {isImageMap && (drawMode || tool) && (
+          <div style={{
+            position:'absolute', top:16, left:'50%', transform:'translateX(-50%)',
+            zIndex:60, display:'flex', alignItems:'center', gap:12,
+            background:'rgba(217,176,107,0.16)', border:'1px solid rgba(217,176,107,0.5)',
+            borderRadius:3, padding:'6px 14px',
+            fontFamily:'var(--font-mono)', fontSize:'9.5px', letterSpacing:'0.18em',
+            textTransform:'uppercase', color:'rgba(240,220,170,0.95)',
+          }}>
+            {drawMode
+              ? <React.Fragment>
+                  <span>✎ Polygon · Klick = Punkt setzen ({drawPts.length})</span>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); finishDraw(); }}
+                    disabled={drawPts.length < 3}
+                    style={{ opacity: drawPts.length < 3 ? 0.4 : 1, padding:'2px 10px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.12em', textTransform:'uppercase', color:'rgba(240,220,170,0.95)', background:'rgba(217,176,107,0.2)', border:'1px solid rgba(217,176,107,0.6)', borderRadius:3, cursor:'pointer' }}
+                  >✓ Fertig (Enter)</button>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); setDrawMode(false); setDrawPts([]); }}
+                    style={{ padding:'2px 10px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.12em', textTransform:'uppercase', color:'rgba(220,140,160,0.9)', background:'transparent', border:'1px solid rgba(220,80,120,0.4)', borderRadius:3, cursor:'pointer' }}
+                  >✕ Abbrechen (Esc)</button>
+                </React.Fragment>
+              : <span>{tool === 'rect' ? '▭ Rechteck' : tool === 'circle' ? '◯ Kreis / Ellipse' : '⬡ Hexagon'} · Aufziehen mit gedrückter Maustaste</span>}
+          </div>
+        )}
+
+        {/* Etagen-Umschalter */}
+        {isImageMap && floors.length > 1 && (
+          <div style={{
+            position:'absolute', top:16, right: editing ? DRAWER_W + 16 : 16, zIndex:55,
+            display:'flex', alignItems:'center', gap:8,
+            background:'rgba(8,6,22,0.9)', border:'1px solid rgba(124,77,255,0.3)',
+            borderRadius:4, padding:'6px 10px',
+          }}>
+            <button className="mk-tool-btn" style={{ width:26, height:26, opacity: floorIdx >= floors.length - 1 ? 0.35 : 1 }} disabled={floorIdx >= floors.length - 1} onClick={() => switchFloor(1)} title="Etage höher">▲</button>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', color:'rgba(160,140,255,0.8)', textTransform:'uppercase' }}>
+              Ebene {floorIdx + 1}/{floors.length} · {floor?.label || ''}
+            </span>
+            <button className="mk-tool-btn" style={{ width:26, height:26, opacity: floorIdx <= 0 ? 0.35 : 1 }} disabled={floorIdx <= 0} onClick={() => switchFloor(-1)} title="Etage tiefer">▼</button>
+          </div>
+        )}
+
         {/* BG align mode — overlay captures pointer events so hexes can't be clicked */}
         {bgAlignMode && bgUrl && (
           <div style={{
@@ -1522,8 +2676,8 @@ function MerMap() {
           </div>
         )}
 
-        {/* Empty-map hint */}
-        {!isLoading && mapEmpty && (
+        {/* Empty-map hint (nur Hex-Karten) */}
+        {!isLoading && !isImageMap && mapEmpty && (
           <div className={`mk-empty-map-hint${dragInfo?.fromStash ? ' is-drop-active' : ''}`}>
             <div className="h">Leere Karte</div>
             <div className="s">
@@ -1559,6 +2713,35 @@ function MerMap() {
 
       {/* Bottom-right tools */}
       <div className="mk-tools">
+        {isImageMap && (<React.Fragment>
+          <button
+            className={`mk-tool-btn${drawMode ? ' is-active' : ''}`}
+            title="Polygon zeichnen (Klick für Punkte, Enter zum Abschließen)"
+            onClick={() => { setDrawMode(v => !v); setDrawPts([]); setTool(null); setShapeStart(null); setShapeCur(null); setSelAreaId(null); setEditing(false); }}
+          >✎</button>
+          <button
+            className={`mk-tool-btn${tool === 'rect' ? ' is-active' : ''}`}
+            title="Rechteck aufziehen"
+            onClick={() => { setTool(t => t === 'rect' ? null : 'rect'); setDrawMode(false); setDrawPts([]); setShapeStart(null); setShapeCur(null); setSelAreaId(null); setEditing(false); }}
+          >▭</button>
+          <button
+            className={`mk-tool-btn${tool === 'circle' ? ' is-active' : ''}`}
+            title="Kreis / Ellipse aufziehen"
+            onClick={() => { setTool(t => t === 'circle' ? null : 'circle'); setDrawMode(false); setDrawPts([]); setShapeStart(null); setShapeCur(null); setSelAreaId(null); setEditing(false); }}
+          >◯</button>
+          <button
+            className={`mk-tool-btn${tool === 'hex' ? ' is-active' : ''}`}
+            title="Hexagon aufziehen"
+            onClick={() => { setTool(t => t === 'hex' ? null : 'hex'); setDrawMode(false); setDrawPts([]); setShapeStart(null); setShapeCur(null); setSelAreaId(null); setEditing(false); }}
+          >⬡</button>
+          <button
+            className={`mk-tool-btn${floorsPanelOpen ? ' is-active' : ''}`}
+            title="Etagen verwalten"
+            onClick={() => setFloorsPanelOpen(v => !v)}
+          >▤</button>
+          <input ref={floorFileRef} type="file" accept="image/*" style={{ display:'none' }} onChange={e => { addFloor(e.target.files[0]); e.target.value = ''; }}/>
+        </React.Fragment>)}
+        {!isImageMap && (<React.Fragment>
         <button
           className={`mk-tool-btn${bgUrl ? ' is-active' : ''}`}
           title={bgUrl ? 'Kartenhintergrund ersetzen' : 'Kartenhintergrund wählen'}
@@ -1595,11 +2778,13 @@ function MerMap() {
             }
           </button>
         )}
+        </React.Fragment>)}
         <button className="mk-tool-btn" title="Vergrößern" onClick={() => zoomBy(1.25)}>+</button>
         <button className="mk-tool-btn" title="Verkleinern" onClick={() => zoomBy(0.8)}>−</button>
         <button className="mk-tool-btn" title="Ansicht zurücksetzen" onClick={resetView}>
           <span className="lbl">⌖</span>
         </button>
+        {!isImageMap && (
         <button
           className={`mk-tool-btn${history.length === 0 ? ' is-disabled' : ''}`}
           title={history.length === 0 ? 'Nichts rückgängig' : 'Rückgängig'}
@@ -1608,6 +2793,7 @@ function MerMap() {
         >
           <span className="lbl" style={{ fontSize:13 }}>↺</span>
         </button>
+        )}
         <button
           className={`mk-tool-btn${!labelsVisible ? ' is-active' : ''}`}
           title={labelsVisible ? 'Beschriftungen ausblenden' : 'Beschriftungen einblenden'}
@@ -1620,6 +2806,7 @@ function MerMap() {
             {!labelsVisible && <line x1="1" y1="17" x2="17" y2="1" strokeWidth="1.6" stroke="currentColor"/>}
           </svg>
         </button>
+        {!isImageMap && (
         <button
           className={`mk-tool-btn${lagerOpen ? ' is-active' : ''}`}
           title={`${lagerOpen ? 'Lager schließen' : 'Lager öffnen'} (${stash.length})`}
@@ -1643,10 +2830,56 @@ function MerMap() {
             }}>{stash.length}</span>
           )}
         </button>
+        )}
       </div>
 
+      {/* Etagen-Panel */}
+      {isImageMap && floorsPanelOpen && (
+        <div style={{
+          position:'fixed', right:16, bottom:76, zIndex:120, width:280,
+          background:'rgba(10,7,28,0.97)', border:'1px solid rgba(124,77,255,0.35)',
+          borderRadius:6, padding:'12px 14px', boxShadow:'0 8px 32px rgba(0,0,0,0.5)',
+        }}>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.2em', textTransform:'uppercase', color:'rgba(160,140,255,0.7)', marginBottom:10 }}>▤ Etagen</div>
+          {floors.length === 0 && (
+            <div style={{ fontFamily:'var(--font-body)', fontSize:11.5, fontWeight:300, color:'rgba(200,190,240,0.5)', marginBottom:10 }}>Noch keine Etagen.</div>
+          )}
+          {floors.map((f, i) => (
+            <div key={f.id || i} style={{ display:'flex', alignItems:'center', gap:6, marginBottom:6 }}>
+              <button
+                className={`mk-tool-btn${i === floorIdx ? ' is-active' : ''}`}
+                style={{ width:26, height:26, flexShrink:0, fontSize:10 }}
+                title="Zu dieser Etage wechseln"
+                onClick={() => { setFloorIdx(i); setSelAreaId(null); setEditing(false); }}
+              >{i + 1}</button>
+              <input
+                className="mk-input"
+                style={{ flex:1, fontSize:11, padding:'5px 8px' }}
+                value={f.label || ''}
+                placeholder={`Ebene ${i + 1}`}
+                onChange={e => renameFloor(i, e.target.value)}
+              />
+              <button
+                title="Etage löschen (inkl. Flächen)"
+                onClick={() => setConfirm({
+                  title: 'Etage löschen?',
+                  message: `„${f.label || `Ebene ${i + 1}`}" wird mit allen Flächen endgültig gelöscht.`,
+                  onYes: () => { deleteFloor(i); setConfirm(null); },
+                })}
+                style={{ width:26, height:26, flexShrink:0, fontFamily:'var(--font-mono)', fontSize:10, color:'rgba(200,80,80,0.7)', background:'rgba(200,80,80,0.07)', border:'1px solid rgba(200,80,80,0.2)', borderRadius:4, cursor:'pointer' }}
+              >✕</button>
+            </div>
+          ))}
+          <button
+            onClick={() => floorFileRef.current?.click()}
+            disabled={floorUploading}
+            style={{ width:'100%', marginTop:4, padding:'7px 10px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(160,140,255,0.8)', background:'rgba(124,77,255,0.08)', border:'1px dashed rgba(124,77,255,0.4)', borderRadius:4, cursor:'pointer' }}
+          >{floorUploading ? '… lädt hoch' : '+ Etage hinzufügen (Bild)'}</button>
+        </div>
+      )}
+
       {/* Lager sidebar */}
-      {lagerOpen && (
+      {!isImageMap && lagerOpen && (
         <div
           className={`mk-lager${dragInfo?.fromMap ? ' is-drop-active' : ''}`}
           onDragOver={dragInfo?.fromMap ? (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; } : undefined}
@@ -1726,15 +2959,37 @@ function MerMap() {
       )}
 
       {/* Editor drawer */}
-      {editing && selectedHex && (
+      {editing && selectedNode && (
         <EditorDrawer
-          hex={selectedHex}
-          onChange={updateHex}
+          key={selectedNode.id}
+          node={selectedNode}
+          nodeType={selectedArea ? 'area' : 'hex'}
+          onChange={selectedArea ? updateArea : updateHex}
           onClose={closeDrawer}
-          onDelete={deleteSelected}
+          onDelete={selectedArea ? deleteSelectedArea : deleteSelected}
           onNavigateInto={navigateInto}
           onCreateSubmap={createSubmap}
           isSubmap={mapStack.length > 0}
+          objectives={nodeObjectives}
+          onObjAdd={addObjective}
+          onObjUpdate={updateObjective}
+          onObjDelete={deleteObjective}
+          lastObjId={lastObjId}
+          poolRows={nodePoolRows}
+          onPoolOpen={(cat) => setPoolModal({ cat })}
+        />
+      )}
+
+      {/* Pool-Modal */}
+      {poolModal && selectedNode && (
+        <PoolModal
+          cat={poolModal.cat}
+          anchorLabel={selectedNode.name || (selectedArea ? 'Fläche' : `Hex ${selectedNode.q}·${-selectedNode.r}`)}
+          poolSet={new Set(nodePoolRows.filter(r => r.cat === poolModal.cat).map(r => String(r.resource_id)))}
+          caughtCounts={kollCounts}
+          onToggle={poolToggle(poolModal.cat)}
+          onRandomAdd={poolRandomAdd(poolModal.cat)}
+          onClose={() => setPoolModal(null)}
         />
       )}
 

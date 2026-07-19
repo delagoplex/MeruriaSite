@@ -13,6 +13,12 @@
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
+<script src="assets/scripts/data/resources/ff14_fish-data.js"></script>
+<script src="assets/scripts/data/resources/insekten/insekten-data.js"></script>
+<script src="assets/scripts/data/resources/pflanzen/ff14_pflanzen-data.js"></script>
+<script src="assets/scripts/data/resources/pflanzen/fantasy_plant-data.js"></script>
+<script src="assets/scripts/data/resources/mineralien/ff14_mineralien-data.js"></script>
+<script src="assets/scripts/karte-v2.js"></script>
 </head>
 <body>
 <div id="root"></div>
@@ -93,9 +99,11 @@ function rowToHex(h) {
   };
 }
 
+const MAP_COLS = 'id, name, bg_url, bg_transform, kind, ebene, floors';
+
 async function loadRootMap() {
   const { data } = await window._sb.from('karte_maps')
-    .select('id, name, bg_url, bg_transform')
+    .select(MAP_COLS)
     .is('parent_hex_id', null)
     .order('created_at', { ascending: true })
     .limit(1)
@@ -105,7 +113,7 @@ async function loadRootMap() {
 
 async function loadMap(mapId) {
   const { data } = await window._sb.from('karte_maps')
-    .select('id, name, bg_url, bg_transform').eq('id', mapId).single();
+    .select(MAP_COLS).eq('id', mapId).single();
   return data;
 }
 
@@ -232,205 +240,376 @@ Object.assign(window, { useCameraAnimator });
      Script 4 — Info panel (read-only drawer)
      ═══════════════════════════════════════════════════ -->
 <script type="text/babel">
-const KOLL_CATS_PLAYER = [
-  { id:'fische',         label:'Fische',         hue:200 },
-  { id:'insekten',       label:'Insekten',        hue:95  },
-  { id:'pflanzen',       label:'Pflanzen',        hue:140 },
-  { id:'mineralien',     label:'Mineralien',      hue:60  },
-  { id:'kreaturen',      label:'Kreaturen',       hue:285 },
-  { id:'kreaturenteile', label:'Kreaturenteile',  hue:0   },
-  { id:'wal',            label:'Trümmer d. Wals', hue:210 },
-  { id:'lebensspeicher', label:'Lebensspeicher',  hue:45  },
-];
+const { useState: uS4, useEffect: uE4 } = React;
 
-function InfoPanel({ hex, onClose, onExploreSubmap, isSubmap }) {
-  if (!hex) return null;
-  const tcolor = terrainColor(hex.terrain);
+// ── Fortschrittsbalken im Prototyp-Stil (Icon + Doppelfüllung + Glow) ──
+function barIcon(kind) {
+  const h = React.createElement;
+  const I = {
+    fische: h('g', { key: 'i' },
+      h('path', { d: 'M70 50 C 60 35, 30 35, 20 50 C 30 65, 60 65, 70 50 Z', fill: 'none', strokeWidth: '2' }),
+      h('path', { d: 'M70 50 L 85 38 L 85 62 Z', fill: 'none', strokeWidth: '2' }),
+      h('circle', { cx: '32', cy: '48', r: '2.4', fill: 'currentColor' })),
+    insekten: h('g', { key: 'i' },
+      h('ellipse', { cx: '50', cy: '50', rx: '3.5', ry: '22', fill: 'currentColor', stroke: 'none' }),
+      h('path', { d: 'M50 38 C 36 22 16 24 18 42 C 24 50 38 48 50 50 Z', fill: 'none', strokeWidth: '1.6' }),
+      h('path', { d: 'M50 38 C 64 22 84 24 82 42 C 76 50 62 48 50 50 Z', fill: 'none', strokeWidth: '1.6' }),
+      h('path', { d: 'M50 50 C 38 56 22 60 22 72 C 30 76 44 70 50 64 Z', fill: 'none', strokeWidth: '1.4' }),
+      h('path', { d: 'M50 50 C 62 56 78 60 78 72 C 70 76 56 70 50 64 Z', fill: 'none', strokeWidth: '1.4' }),
+      h('path', { d: 'M48 30 L 42 22 M52 30 L 58 22', strokeWidth: '1.4' })),
+    pflanzen: h('g', { key: 'i' },
+      h('path', { d: 'M50 86 L 50 30', strokeWidth: '2' }),
+      h('path', { d: 'M50 50 C 30 46, 18 30, 22 18 C 36 22, 50 36, 50 50 Z', fill: 'none', strokeWidth: '1.8' }),
+      h('path', { d: 'M50 62 C 70 58, 82 42, 78 30 C 64 34, 50 48, 50 62 Z', fill: 'none', strokeWidth: '1.8' }),
+      h('path', { d: 'M50 76 C 42 72, 38 64, 42 58 C 48 60, 52 68, 50 76 Z', fill: 'none', strokeWidth: '1.6' })),
+    gewaesser: h('g', { key: 'i' },
+      h('path', { d: 'M20 42 C 30 34 40 34 50 42 C 60 50 70 50 80 42', fill: 'none', strokeWidth: '2' }),
+      h('path', { d: 'M20 58 C 30 50 40 50 50 58 C 60 66 70 66 80 58', fill: 'none', strokeWidth: '2' }),
+      h('path', { d: 'M20 74 C 30 66 40 66 50 74 C 60 82 70 82 80 74', fill: 'none', strokeWidth: '1.4', opacity: '0.6' })),
+    poi: h('g', { key: 'i' },
+      h('path', { d: 'M50 14 L 78 38 L 64 82 L 36 82 L 22 38 Z', fill: 'none', strokeWidth: '2' }),
+      h('path', { d: 'M50 14 L 50 82 M22 38 L 78 38 M36 82 L 50 38 L 64 82', strokeWidth: '1.2', opacity: '0.6' })),
+    boss: h('g', { key: 'i' },
+      h('path', { d: 'M28 32 L 22 18 L 38 26 L 50 14 L 62 26 L 78 18 L 72 32 L 80 50 L 70 70 L 50 84 L 30 70 L 20 50 Z', fill: 'none', strokeWidth: '1.8' }),
+      h('circle', { cx: '40', cy: '44', r: '3', fill: 'currentColor' }),
+      h('circle', { cx: '60', cy: '44', r: '3', fill: 'currentColor' }),
+      h('path', { d: 'M38 62 Q 50 70 62 62', strokeWidth: '1.6', fill: 'none' })),
+    sonst: h('g', { key: 'i' },
+      h('circle', { cx: '50', cy: '50', r: '26', fill: 'none', strokeWidth: '2' }),
+      h('path', { d: 'M50 24 L 50 76 M24 50 L 76 50 M32 32 L 68 68 M68 32 L 32 68', strokeWidth: '1.1', opacity: '0.55' }),
+      h('circle', { cx: '50', cy: '50', r: '6.5', fill: 'none', strokeWidth: '1.6' }),
+      h('circle', { cx: '50', cy: '50', r: '1.6', fill: 'currentColor' })),
+  };
+  return I[kind] || I.sonst;
+}
 
-  const SectionHead = ({ label }) => (
-    <div style={{ display:'flex', alignItems:'center', gap:8, margin:'16px 0 8px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(124,77,255,0.45)' }}>
-      <span>{label}</span><div style={{ flex:1, height:1, background:'rgba(124,77,255,0.15)' }}/>
+function barKind(label) {
+  const l = (label || '').toLowerCase();
+  if (l.includes('fisch')) return { kind: 'fische', hue: 200 };
+  if (l.includes('insekt')) return { kind: 'insekten', hue: 95 };
+  if (l.includes('biom') || l.includes('pflanz') || l.includes('flora')) return { kind: 'pflanzen', hue: 140 };
+  if (l.includes('gewässer') || l.includes('wasser') || l.includes('see') || l.includes('fluss')) return { kind: 'gewaesser', hue: 210 };
+  if (l.includes('gebiete')) return { kind: 'poi', hue: 285 };
+  if (l.includes('poi') || l.includes('mineral') || l.includes('ort')) return { kind: 'poi', hue: 60 };
+  if (l.includes('boss') || l.includes('kreatur') || l.includes('monster') || l.includes('besiegt')) return { kind: 'boss', hue: 285 };
+  return { kind: 'sonst', hue: 45 };
+}
+
+function barLabel(kat) {
+  const M = { 'Biome': 'Erforschte Biome', 'Gewässer': 'Erforschte Gewässer', 'POI': 'Erforschte Orte', 'Gebietsbosse': 'Besiegte Gebietsbosse' };
+  return M[kat] || kat;
+}
+
+function makeBar(label, entdeckt, komplettiert) {
+  const { kind, hue } = barKind(label);
+  const c = `oklch(0.72 0.16 ${hue})`;
+  const cA = a => `oklch(0.72 0.16 ${hue} / ${a})`;
+  return {
+    label, c, icon: barIcon(kind),
+    trackBorder: cA(0.13),
+    wA: (entdeckt || 0) + '%', wB: (komplettiert || 0) + '%',
+    glow: (komplettiert || 0) > 0 ? `0 0 7px 1px ${cA(0.42)}, 0 0 14px 3px ${cA(0.18)}, 0 0 22px 6px ${cA(0.08)}` : 'none',
+    fillGrad: `linear-gradient(90deg, ${c}, ${cA(0.85)})`,
+    pct: (entdeckt || 0) + ' %',
+  };
+}
+
+function FancyBar({ b }) {
+  return (
+    <div style={{ marginBottom:12 }}>
+      <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:5 }}>
+        <svg viewBox="0 0 100 100" width="16" height="16" fill="none" style={{ color: b.c, stroke: b.c, opacity:0.9, flexShrink:0 }}>{b.icon}</svg>
+        <span style={{ fontFamily:'var(--font-display)', fontSize:10, letterSpacing:'0.18em', fontWeight:400, color:'rgba(220,210,250,0.85)', textTransform:'uppercase', minWidth:0, flex:1, lineHeight:1.2 }}>{b.label}</span>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color: b.c, letterSpacing:'0.18em', flexShrink:0 }}>{b.pct}</span>
+      </div>
+      <div style={{ position:'relative', height:4 }}>
+        <div style={{ position:'absolute', left:0, top:0, bottom:0, width: b.wB, boxShadow: b.glow, borderRadius:2, pointerEvents:'none' }}/>
+        <div style={{ position:'absolute', inset:0, background:'rgba(124,77,255,0.08)', border:`1px solid ${b.trackBorder}`, borderRadius:2, overflow:'hidden' }}>
+          <div style={{ position:'absolute', left:0, top:0, bottom:0, width: b.wA, background:'linear-gradient(90deg, rgba(220,215,250,0.16), rgba(240,238,255,0.26))', transition:'width 1s cubic-bezier(.2,.85,.2,1)' }}/>
+          <div style={{ position:'absolute', left:-1, top:-1, bottom:-1, width: b.wB, background: b.fillGrad, boxShadow:'inset 0 0 4px rgba(255,255,255,0.5)', borderRadius:2, transition:'width 1.2s cubic-bezier(.2,.85,.2,1)' }}/>
+        </div>
+      </div>
     </div>
   );
+}
 
-  const DualBar = ({ label, colorA, colorB, valA, valB }) => (
-    <div style={{ marginBottom:10 }}>
-      <div style={{ display:'flex', justifyContent:'space-between', marginBottom:4 }}>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.1em', color:'rgba(160,140,255,0.65)' }}>{label}</span>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'rgba(120,100,200,0.5)' }}>{valA}% · {valB}%</span>
-      </div>
-      <div style={{ height:5, borderRadius:3, background:'rgba(255,255,255,0.07)', overflow:'hidden', marginBottom:3 }}>
-        <div style={{ height:'100%', width:`${valA}%`, background:colorA, borderRadius:3, transition:'width 0.4s' }}/>
-      </div>
-      <div style={{ height:3, borderRadius:3, background:'rgba(255,255,255,0.05)', overflow:'hidden' }}>
-        <div style={{ height:'100%', width:`${valB}%`, background:colorB, borderRadius:3, transition:'width 0.4s' }}/>
-      </div>
-      <div style={{ display:'flex', gap:10, marginTop:3 }}>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'rgba(160,140,255,0.35)', letterSpacing:'0.1em' }}>◈ ENTDECKT</span>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'rgba(160,140,255,0.25)', letterSpacing:'0.1em' }}>◈ KOMPLETTIERT</span>
-      </div>
-    </div>
+const POOL_BAR_LABELS = { fische: 'Gefangene Fische', insekten: 'Gefangene Insekten', pflanzen: 'Gesammelte Pflanzen', mineralien: 'Abgebaute Mineralien' };
+
+function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectives, poolRows, kollStatus }) {
+  if (!hex) return null;
+  const isArea = nodeType === 'area';
+  const tcolor = isArea ? (hex.typ === 'eingang' ? 'oklch(0.78 0.1 80)' : 'oklch(0.7 0.15 285)') : terrainColor(hex.terrain);
+  const [tab, setTab] = uS4('details');
+  const [stats, setStats] = uS4(null);
+  const [statsLoading, setStatsLoading] = uS4(false);
+  const [fullImg, setFullImg] = uS4(false);
+
+  // Rollup über Unterkarten direkt beim Öffnen laden (speist die Fortschrittsbalken im Details-Tab)
+  uE4(() => {
+    if (!hex.has_submap || !hex.submap_id) { setStats([]); return; }
+    setStatsLoading(true);
+    karteCollectSubtreeStats(
+      { hexId: isArea ? null : hex.id, areaId: isArea ? hex.id : null, submapId: hex.submap_id },
+      { onlyVisible: true }
+    ).then(s => { setStats(s); setStatsLoading(false); })
+     .catch(() => { setStats([]); setStatsLoading(false); });
+  }, [hex.id]);
+
+  const objList = (objectives || []).filter(o => o.freigeschaltet);
+  const nodePools = poolRows || [];
+  const hasPoolData = nodePools.length > 0;
+
+  // Fortschrittsbalken: Objectives-Rollup nach Tags + Pool-Fangquoten + Legacy-Erkundung
+  const bars = [];
+  (stats || []).forEach(s => bars.push(makeBar(barLabel(s.kat), s.entdeckt, s.komplettiert)));
+  (window.KARTE_POOL_TYPES || []).forEach(pt => {
+    const items = nodePools.filter(r => r.cat === pt.key);
+    if (!items.length) return;
+    const caught = items.filter(r => ((kollStatus && kollStatus.counts) || {})[`${pt.key}:${r.resource_id}`] > 0).length;
+    const pct = Math.round(caught / items.length * 100);
+    bars.push(makeBar(POOL_BAR_LABELS[pt.key] || pt.label, pct, pct));
+  });
+  if (!isArea) (hex.erkundung || []).forEach(e => bars.push(makeBar(e.name, e.entdeckt, e.komplettiert)));
+
+  const TabBtn = ({ id, label, accent }) => (
+    <button
+      onClick={() => setTab(id)}
+      style={{
+        flex:1, padding:'11px 0', background:'transparent', border:'none', cursor:'pointer',
+        fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.24em', textTransform:'uppercase',
+        color: tab === id ? (accent || '#f3eefe') : 'rgba(160,140,255,0.55)',
+        borderBottom: `2px solid ${tab === id ? (accent || 'rgba(160,140,255,0.85)') : 'transparent'}`,
+        transition:'all 0.15s',
+      }}
+    >{label}</button>
   );
 
   const tags = hex.tags || [];
-  const res = hex.ressourcen || {};
-  const kol = hex.kolonie || {};
-  const erk = hex.erkundung || [];
-  const STUFE_COLORS = { Lager:'rgba(180,140,80,0.85)', Außenposten:'rgba(140,160,200,0.85)', Dorf:'rgba(100,180,120,0.85)', Stadt:'rgba(200,160,80,0.9)' };
+  const topBild = isArea ? hex.bild_url : (hex.banner_url || hex.bild_url);
+
+  // Fakten-Zeilen für den Details-Tab
+  const facts = [];
+  if (isSubmap && !isArea && hex.features) facts.push(['Besonderheiten', hex.features]);
+  if (isSubmap && !isArea) facts.push(['Datensonde', hex.datensonde ? '✓ installiert' : '✗ nicht installiert']);
+  if (!isSubmap && !isArea && hex.bevoelkerung) facts.push(['Bevölkerung', hex.bevoelkerung]);
+  if (!isSubmap && !isArea && hex.kolonien) facts.push(['Kolonien', hex.kolonien]);
+
+  const FactRow = ({ k, v }) => (
+    <div style={{ display:'flex', gap:8, alignItems:'baseline', marginBottom:8 }}>
+      <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(124,77,255,0.5)', width:96, flexShrink:0 }}>{k}</span>
+      <span style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:300, color:'rgba(200,190,240,0.75)', lineHeight:1.5 }}>{v}</span>
+    </div>
+  );
 
   return (
     <React.Fragment>
       <div className="mk-drawer-backdrop" onClick={onClose}/>
-      <aside className="mk-drawer" onMouseDown={(e) => e.stopPropagation()}>
-        <header className="mk-drawer-head">
+      <aside
+        className="mk-drawer"
+        onMouseDown={(e) => e.stopPropagation()}
+        style={{ background:'linear-gradient(180deg, rgba(14,9,34,0.98) 0%, rgba(8,6,22,0.98) 100%)', borderLeft:'1px solid rgba(160,140,255,0.28)', boxShadow:'-24px 0 60px rgba(0,0,0,0.65)' }}
+      >
+        {/* Top-Bild (klickbar → Vollbild) */}
+        {topBild && (
+          <button
+            onClick={() => setFullImg(true)}
+            title="Bild in Vollansicht öffnen"
+            style={{ display:'block', width:'100%', padding:0, border:'none', background:'none', cursor:'zoom-in', position:'relative', flexShrink:0 }}
+          >
+            <img src={topBild} loading="lazy" style={{ width:'100%', height:210, objectFit:'cover', display:'block' }} alt=""/>
+            <span style={{ position:'absolute', inset:0, background:'linear-gradient(to bottom, rgba(8,6,22,0.15) 0%, rgba(8,6,22,0) 35%, rgba(14,9,34,0.92) 100%)', pointerEvents:'none' }}/>
+          </button>
+        )}
+        <button
+          onClick={onClose} title="Schließen (Esc)"
+          style={{ position:'absolute', top:12, right:12, zIndex:5, width:32, height:32, background:'rgba(8,6,22,0.55)', border:'1px solid rgba(220,80,120,0.18)', borderRadius:2, color:'rgba(220,140,160,0.55)', fontFamily:'var(--font-mono)', fontSize:14, cursor:'pointer', transition:'all 0.18s' }}
+          onMouseEnter={e => { e.currentTarget.style.color='#ffd0dc'; e.currentTarget.style.borderColor='rgba(220,80,120,0.75)'; e.currentTarget.style.background='rgba(180,40,80,0.16)'; }}
+          onMouseLeave={e => { e.currentTarget.style.color='rgba(220,140,160,0.55)'; e.currentTarget.style.borderColor='rgba(220,80,120,0.18)'; e.currentTarget.style.background='rgba(8,6,22,0.55)'; }}
+        >×</button>
+
+        <header style={{ padding: topBild ? '14px 22px 16px' : '18px 22px 16px', borderBottom:'1px solid rgba(124,77,255,0.18)', display:'flex', alignItems:'flex-start', justifyContent:'space-between', position:'relative', zIndex:2, flexShrink:0 }}>
           <div>
-            <div className="mk-drawer-eyebrow">Hexagon · Info</div>
-            <div className="mk-drawer-title">{hex.name || 'Unbekannte Region'}</div>
-            {hex.terrain && <div className="mk-drawer-coords" style={{ color: tcolor }}>◈ {hex.terrain}</div>}
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.32em', color:'rgba(124,77,255,0.7)', textTransform:'uppercase' }}>
+              {isArea ? (hex.typ === 'eingang' ? 'Betretbarer Ort' : 'Point of Interest') : 'Hexfeld · Info'}
+            </div>
+            <div style={{ fontFamily:'var(--font-display)', fontWeight:400, fontSize:22, letterSpacing:'0.16em', color:'#f3eefe', textTransform:'uppercase', marginTop:6, textShadow:'0 0 18px rgba(124,77,255,0.35)' }}>
+              {hex.name || 'Unbekannte Region'}
+            </div>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', color: tcolor, marginTop:6 }}>
+              ◈ {isArea ? (hex.typ === 'eingang' ? 'Betretbar' : 'POI') : (hex.terrain || 'Unbekannt')}
+            </div>
           </div>
-          <button className="mk-drawer-close" onClick={onClose} title="Schließen (Esc)">×</button>
         </header>
 
-        <div className="mk-drawer-body">
-          {/* Banner */}
-          {hex.banner_url && (
-            <div style={{ margin:'-16px -16px 12px', pointerEvents:'none' }}>
-              <img src={hex.banner_url} style={{ width:'100%', height:140, objectFit:'cover', objectPosition:'50% 50%', display:'block' }} alt=""/>
-            </div>
-          )}
+        {/* Tabs */}
+        <div style={{ display:'flex', borderBottom:'1px solid rgba(124,77,255,0.18)', flexShrink:0 }}>
+          <TabBtn id="details" label="Details"/>
+          <TabBtn id="ziele" label={`Ziele${objList.length ? ` · ${objList.length}` : ''}`} accent="rgba(217,176,107,0.9)"/>
+          {hasPoolData && <TabBtn id="ressourcen" label="Ressourcen"/>}
+        </div>
 
+        <div className="mk-drawer-body">
+          {tab === 'details' && (<React.Fragment>
           {/* Tags */}
           {tags.length > 0 && (
-            <div style={{ display:'flex', flexWrap:'wrap', gap:5, marginBottom:12, pointerEvents:'none' }}>
+            <div style={{ display:'flex', flexWrap:'wrap', gap:5, marginBottom:14, pointerEvents:'none' }}>
               {tags.map(t => (
-                <span key={t} style={{ padding:'3px 9px', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.25)', borderRadius:20, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.1em', color:'rgba(180,165,230,0.8)' }}>{t}</span>
+                <span key={t} style={{ padding:'3px 9px', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.25)', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.1em', color:'rgba(180,165,230,0.8)' }}>{t}</span>
               ))}
-            </div>
-          )}
-
-          {/* Besonderheiten — nur Subkarte */}
-          {isSubmap && hex.features && (
-            <div className="mk-field" style={{ pointerEvents:'none' }}>
-              <label>Besonderheiten</label>
-              <div style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:300, color:'rgba(200,190,240,0.75)', lineHeight:1.6, padding:'8px 0' }}>{hex.features}</div>
             </div>
           )}
 
           {/* Beschreibung */}
           {hex.beschreibung && (
-            <div className="mk-field" style={{ pointerEvents:'none' }}>
-              <label>Beschreibung</label>
-              <div style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:300, color:'rgba(200,190,240,0.7)', lineHeight:1.65, padding:'8px 0' }}>{hex.beschreibung}</div>
+            <div style={{ marginBottom:16 }}>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.3em', textTransform:'uppercase', color:'rgba(124,77,255,0.75)', marginBottom:6 }}>Beschreibung</div>
+              <div style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:300, color:'rgba(200,190,240,0.7)', lineHeight:1.65 }}>{hex.beschreibung}</div>
             </div>
           )}
 
-          {/* ── Subkarten-Felder ── */}
-          {isSubmap && (
+          {/* Fakten */}
+          {facts.map(([k, v]) => <FactRow key={k} k={k} v={v}/>)}
+
+          {/* Erkundungsfortschritt — automatisch berechnet (Ziele-Tags, Pool-Fangquoten, Legacy-Erkundung) */}
+          {(bars.length > 0 || statsLoading) && (
             <React.Fragment>
-              {/* Datensonde */}
-              <SectionHead label="Knotenpunkt"/>
-              <div style={{ display:'flex', alignItems:'center', gap:10, padding:'8px 10px', background:'rgba(8,6,22,0.6)', border:`1px solid ${hex.datensonde ? 'rgba(80,200,140,0.3)' : 'rgba(200,80,80,0.2)'}`, borderRadius:4 }}>
-                <span style={{ fontSize:16, color: hex.datensonde ? 'rgba(80,200,140,0.9)' : 'rgba(200,80,80,0.7)' }}>{hex.datensonde ? '✓' : '✗'}</span>
-                <span style={{ fontFamily:'var(--font-body)', fontSize:12, fontWeight:300, color:'rgba(200,190,240,0.7)' }}>Datensonde {hex.datensonde ? 'installiert' : 'nicht installiert'}</span>
+              <div style={{ display:'flex', alignItems:'center', gap:8, margin:'0 0 10px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(124,77,255,0.45)' }}>
+                <span>Erkundungsfortschritt</span><div style={{ flex:1, height:1, background:'rgba(124,77,255,0.15)' }}/>
               </div>
-
-              {/* Ressourcen */}
-              {KOLL_CATS_PLAYER.some(c => (res[c.id]?.entdeckt || 0) > 0 || (res[c.id]?.komplettiert || 0) > 0) && (
-                <React.Fragment>
-                  <SectionHead label="Ressourcen"/>
-                  {KOLL_CATS_PLAYER.map(c => {
-                    const v = res[c.id] || { entdeckt:0, komplettiert:0 };
-                    if (v.entdeckt === 0 && v.komplettiert === 0) return null;
-                    return (
-                      <DualBar key={c.id} label={c.label}
-                        colorA={`oklch(0.68 0.13 ${c.hue})`} colorB={`oklch(0.82 0.15 ${c.hue})`}
-                        valA={v.entdeckt} valB={v.komplettiert}/>
-                    );
-                  })}
-                </React.Fragment>
+              {statsLoading && bars.length === 0 && (
+                <div style={{ padding:'10px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(124,77,255,0.45)', textTransform:'uppercase' }}>◈ berechne …</div>
               )}
-
-              {/* Kolonie */}
-              {(kol.stufe || kol.kolonisierung > 0 || kol.bau > 0 || kol.stimmung > 0) && (
-                <React.Fragment>
-                  <SectionHead label="Kolonie"/>
-                  {kol.stufe && (
-                    <div style={{ marginBottom:10 }}>
-                      <span style={{ padding:'3px 10px', background:'rgba(8,6,22,0.7)', border:`1px solid ${STUFE_COLORS[kol.stufe]||'rgba(124,77,255,0.3)'}`, borderRadius:20, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', color: STUFE_COLORS[kol.stufe]||'rgba(160,140,255,0.8)', textTransform:'uppercase' }}>{kol.stufe}</span>
-                    </div>
-                  )}
-                  {kol.kolonisierung > 0 && (
-                    <DualBar label="Kolonisierung" colorA="rgba(180,140,80,0.7)" colorB="rgba(200,170,100,0.9)" valA={kol.kolonisierung} valB={kol.bau||0}/>
-                  )}
-                  <DualBar label="Stimmung" colorA="rgba(100,180,140,0.7)" colorB="rgba(120,200,160,0.9)" valA={kol.stimmung||0} valB={kol.stimmung||0}/>
-                  <div style={{ display:'flex', alignItems:'center', gap:8, marginTop:6 }}>
-                    <span style={{ fontSize:14, color: kol.handel ? 'rgba(80,200,140,0.9)' : 'rgba(200,80,80,0.7)' }}>{kol.handel ? '✓' : '✗'}</span>
-                    <span style={{ fontFamily:'var(--font-body)', fontSize:12, fontWeight:300, color:'rgba(200,190,240,0.6)' }}>Handel {kol.handel ? 'möglich' : 'nicht möglich'}</span>
-                  </div>
-                </React.Fragment>
-              )}
-            </React.Fragment>
-          )}
-
-          {/* ── Hauptkarten-Felder ── */}
-          {!isSubmap && (
-            <React.Fragment>
-              {(hex.bevoelkerung || hex.kolonien) && (
-                <React.Fragment>
-                  <SectionHead label="Region"/>
-                  {hex.bevoelkerung && (
-                    <div style={{ display:'flex', gap:8, alignItems:'baseline', marginBottom:8 }}>
-                      <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(124,77,255,0.5)', width:80 }}>Bevölkerung</span>
-                      <span style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:300, color:'rgba(200,190,240,0.75)' }}>{hex.bevoelkerung}</span>
-                    </div>
-                  )}
-                  {hex.kolonien && (
-                    <div style={{ display:'flex', gap:8, alignItems:'baseline' }}>
-                      <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(124,77,255,0.5)', width:80 }}>Kolonien</span>
-                      <span style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:300, color:'rgba(200,190,240,0.75)' }}>{hex.kolonien}</span>
-                    </div>
-                  )}
-                </React.Fragment>
-              )}
-
-              {erk.length > 0 && (
-                <React.Fragment>
-                  <SectionHead label="Erkundungsfortschritt"/>
-                  {erk.map((e, i) => (
-                    <DualBar key={i} label={e.name}
-                      colorA="rgba(124,100,220,0.75)" colorB="rgba(160,140,255,0.9)"
-                      valA={e.entdeckt} valB={e.komplettiert}/>
-                  ))}
-                </React.Fragment>
-              )}
+              {bars.map((b, i) => <FancyBar key={`${b.label}-${i}`} b={b}/>)}
             </React.Fragment>
           )}
 
           {/* Fallback empty */}
-          {!hex.features && !hex.beschreibung && tags.length === 0 && !hex.bevoelkerung && !hex.kolonien && erk.length === 0 && (
+          {!hex.beschreibung && tags.length === 0 && facts.length === 0 && bars.length === 0 && !statsLoading && (
             <div style={{ padding:'24px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(124,77,255,0.35)', textTransform:'uppercase' }}>— keine Informationen —</div>
           )}
+          </React.Fragment>)}
 
-          {/* Submap explore */}
-          {hex.has_submap && hex.submap_id && (
-            <div className="mk-field" style={{ marginTop:8 }}>
-              <button
-                style={{ width:'100%', padding:'12px 14px', display:'flex', alignItems:'center', gap:10, fontFamily:'var(--font-body)', fontSize:12, fontWeight:300, letterSpacing:'0.06em', color:'rgba(160,140,255,0.9)', background:'rgba(124,77,255,0.12)', border:'1px solid rgba(124,77,255,0.4)', borderRadius:4, cursor:'pointer', transition:'all 0.15s' }}
-                onClick={onExploreSubmap}
-                onMouseEnter={e => { e.currentTarget.style.background='rgba(124,77,255,0.22)'; e.currentTarget.style.color='rgba(200,190,240,0.9)'; }}
-                onMouseLeave={e => { e.currentTarget.style.background='rgba(124,77,255,0.12)'; e.currentTarget.style.color='rgba(160,140,255,0.9)'; }}
-              >
-                <span style={{ fontSize:16 }}>⬡</span>
-                <span>Region erkunden →</span>
-              </button>
+          {/* ── Tab: Ziele ── */}
+          {tab === 'ziele' && (<React.Fragment>
+            <div style={{ display:'flex', alignItems:'center', gap:8, margin:'0 0 10px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(124,77,255,0.45)' }}>
+              <span>Ziele</span><div style={{ flex:1, height:1, background:'rgba(124,77,255,0.15)' }}/>
             </div>
-          )}
+            {objList.length === 0 && !hex.has_submap && (
+              <div style={{ padding:'18px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(124,77,255,0.35)', textTransform:'uppercase' }}>
+                — keine Ziele bekannt —
+              </div>
+            )}
+            {objList.map(o => {
+              const st = o.komplettiert
+                ? { l: 'Komplettiert', c: 'rgba(120,220,160,0.9)', m: '✓✓' }
+                : o.entdeckt
+                  ? { l: 'Entdeckt', c: 'rgba(180,165,230,0.9)', m: '✓' }
+                  : { l: 'Offen', c: 'rgba(217,176,107,0.8)', m: '◇' };
+              return (
+                <div key={o.id} style={{ border:'1px solid rgba(124,77,255,0.22)', borderRadius:3, padding:'11px 13px', marginBottom:9, background:'rgba(10,8,28,0.5)' }}>
+                  <div style={{ display:'flex', alignItems:'center', gap:9 }}>
+                    <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color: st.c, flexShrink:0 }}>{st.m}</span>
+                    <span style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:400, color:'#f3eefe', minWidth:0, flex:1, overflowWrap:'anywhere' }}>{o.titel || 'Unbekanntes Ziel'}</span>
+                    <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.18em', color: st.c, textTransform:'uppercase', flexShrink:0 }}>{st.l}</span>
+                  </div>
+                  {o.beschreibung && <div style={{ fontFamily:'var(--font-body)', fontSize:12, fontWeight:300, color:'rgba(200,190,240,0.6)', lineHeight:1.5, marginTop:6 }}>{o.beschreibung}</div>}
+                  {o.bedingung && (
+                    <div style={{ display:'flex', gap:8, alignItems:'baseline', marginTop:7 }}>
+                      <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(217,176,107,0.75)', width:74, flexShrink:0 }}>Bedingung</span>
+                      <span style={{ fontFamily:'var(--font-body)', fontSize:12, fontWeight:300, color:'rgba(200,190,240,0.7)', lineHeight:1.45 }}>{o.bedingung}</span>
+                    </div>
+                  )}
+                  {o.belohnung && (
+                    <div style={{ display:'flex', gap:8, alignItems:'baseline', marginTop:5 }}>
+                      <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(120,220,160,0.75)', width:74, flexShrink:0 }}>Belohnung</span>
+                      <span style={{ fontFamily:'var(--font-body)', fontSize:12, fontWeight:300, color:'rgba(200,190,240,0.7)', lineHeight:1.45 }}>{o.belohnung}</span>
+                    </div>
+                  )}
+                  {(o.tags || []).length > 0 && (
+                    <div style={{ display:'flex', flexWrap:'wrap', gap:4, marginTop:7 }}>
+                      {o.tags.map(t => (
+                        <span key={t} style={{ padding:'2px 8px', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.25)', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', color:'rgba(180,165,230,0.8)' }}>{t}</span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+
+          </React.Fragment>)}
+
+          {/* ── Tab: Ressourcen ── */}
+          {tab === 'ressourcen' && (<React.Fragment>
+            {(window.KARTE_POOL_TYPES || []).map(pt => {
+              const items = nodePools.filter(r => r.cat === pt.key);
+              if (!items.length) return null;
+              const RAR = window.KARTE_RARITY_META;
+              return (
+                <React.Fragment key={pt.key}>
+                  <div style={{ display:'flex', alignItems:'center', gap:8, margin:'12px 0 6px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase' }}>
+                    <span style={{ color:`oklch(0.78 0.13 ${pt.hue})` }}>{pt.label}</span>
+                    <div style={{ flex:1, height:1, background:'rgba(124,77,255,0.15)' }}/>
+                    <span style={{ color:'rgba(160,140,255,0.55)', fontSize:8 }}>{items.length} Arten</span>
+                  </div>
+                  {items.map(r => {
+                    const it = window.karteKatalogItem(pt.key, r.resource_id);
+                    const count = (kollStatus?.counts || {})[`${pt.key}:${r.resource_id}`] || 0;
+                    const caught = count > 0;
+                    const stage = caught && it
+                      ? window.karteComputeStage(count, (kollStatus?.thresholds || {})[`${pt.key}:${it.rarity}`])
+                      : 0;
+                    return (
+                      <div key={`${pt.key}-${r.resource_id}`} style={{ display:'flex', alignItems:'center', gap:10, padding:'6px 2px', borderBottom:'1px solid rgba(124,77,255,0.08)' }}>
+                        <span style={{ fontFamily:'var(--font-display)', fontSize:15, lineHeight:1, color: caught && it ? RAR[it.rarity].color : 'rgba(124,77,255,0.3)', textShadow: caught ? '0 0 10px rgba(124,77,255,0.45)' : 'none', flexShrink:0, width:16, textAlign:'center' }}>⬡</span>
+                        <span style={{ fontFamily: caught ? 'var(--font-body)' : 'var(--font-mono)', fontSize:13, fontWeight:300, color: caught ? 'rgba(235,228,255,0.9)' : 'rgba(160,140,255,0.35)', letterSpacing: caught ? 'normal' : '0.25em', minWidth:0, flex:1 }}>
+                          {caught && it ? it.name : '???'}
+                        </span>
+                        {caught && it && (
+                          <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.14em', color:'rgba(160,140,255,0.7)', textTransform:'uppercase', flexShrink:0 }}>Stufe {stage}/8</span>
+                        )}
+                      </div>
+                    );
+                  })}
+                </React.Fragment>
+              );
+            })}
+            {nodePools.length === 0 && (
+              <div style={{ padding:'18px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(124,77,255,0.35)', textTransform:'uppercase' }}>— keine Ressourcendaten —</div>
+            )}
+          </React.Fragment>)}
         </div>
 
-        <footer className="mk-drawer-foot" style={{ justifyContent:'flex-end' }}>
-          <button className="mk-btn-primary" onClick={onClose}>Schließen</button>
-        </footer>
+        {/* Footer: Unterkarte betreten */}
+        {hex.has_submap && hex.submap_id && (
+          <footer style={{ padding:'12px 22px 14px', borderTop:'1px solid rgba(124,77,255,0.18)', flexShrink:0 }}>
+            <button
+              onClick={onExploreSubmap}
+              style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:10, width:'100%', padding:'9px 14px', background:'linear-gradient(135deg, rgba(124,77,255,0.16) 0%, rgba(124,77,255,0.06) 100%)', border:'1px solid rgba(160,140,255,0.45)', borderRadius:3, color:'#f3eefe', cursor:'pointer', transition:'all 0.18s' }}
+              onMouseEnter={e => { e.currentTarget.style.background='linear-gradient(135deg, rgba(124,77,255,0.30) 0%, rgba(124,77,255,0.14) 100%)'; e.currentTarget.style.borderColor='rgba(220,210,255,0.85)'; e.currentTarget.style.boxShadow='0 0 18px rgba(160,140,255,0.4)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background='linear-gradient(135deg, rgba(124,77,255,0.16) 0%, rgba(124,77,255,0.06) 100%)'; e.currentTarget.style.borderColor='rgba(160,140,255,0.45)'; e.currentTarget.style.boxShadow='none'; }}
+            >
+              <span style={{ fontFamily:'var(--font-display)', fontSize:16, color:'rgba(220,210,255,0.85)', lineHeight:1 }}>⬡</span>
+              <span style={{ fontFamily:'var(--font-display)', fontSize:12, letterSpacing:'0.18em', textTransform:'uppercase', color:'#f3eefe' }}>
+                {isArea ? `${hex.name || 'Ort'} betreten` : `${hex.name || 'Gebiet'} erkunden`}
+              </span>
+            </button>
+          </footer>
+        )}
       </aside>
+
+      {/* Vollbild-Viewer */}
+      {fullImg && topBild && (
+        <div
+          onClick={() => setFullImg(false)}
+          style={{ position:'fixed', inset:0, zIndex:300, background:'rgba(5,4,15,0.92)', backdropFilter:'blur(10px)', display:'flex', alignItems:'center', justifyContent:'center', flexDirection:'column', gap:14, cursor:'zoom-out' }}
+        >
+          <img src={topBild} loading="lazy" style={{ maxWidth:'88vw', maxHeight:'82vh', display:'block', border:'1px solid rgba(160,140,255,0.4)', boxShadow:'0 0 80px rgba(124,77,255,0.3), 0 30px 90px rgba(0,0,0,0.8)' }} alt=""/>
+          <div style={{ display:'flex', alignItems:'center', gap:14 }}>
+            <span style={{ fontFamily:'var(--font-display)', fontSize:15, letterSpacing:'0.22em', textTransform:'uppercase', color:'#f3eefe' }}>{hex.name || ''}</span>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.2em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>Klick zum Schließen</span>
+          </div>
+        </div>
+      )}
     </React.Fragment>
   );
 }
@@ -495,6 +674,19 @@ function MerMapPlayer() {
   const [bgUrl, setBgUrl] = uS5(null);
   const [bgTransform, setBgTransform] = uS5({ x: 0, y: 0, scale: 1 });
 
+  // ─── Karte v2: Bild-Karten, Objectives, Pools ─────────
+  const [mapMeta, setMapMeta]     = uS5({ kind: 'hex', ebene: '', floors: [] });
+  const [floorIdx, setFloorIdx]   = uS5(0);
+  const [areas, setAreas]         = uS5([]);
+  const [selectedAreaId, setSelAreaId] = uS5(null);
+  const [objectives, setObjectives] = uS5([]);
+  const [poolRows, setPoolRows]   = uS5([]);
+  const [kollStatus, setKollStatus] = uS5(null);
+  const mapMetaRef = uR5(mapMeta);
+  uE5(() => { mapMetaRef.current = mapMeta; }, [mapMeta]);
+  const floorIdxRef = uR5(0);
+  uE5(() => { floorIdxRef.current = floorIdx; }, [floorIdx]);
+
   // ─── Initial load ─────────────────────────────────────
   uE5(() => {
     async function init() {
@@ -504,22 +696,30 @@ function MerMapPlayer() {
       setCurrentMapName(rootMap.name || 'Karte');
       setBgUrl(rootMap.bg_url || null);
       setBgTransform(rootMap.bg_transform || { x: 0, y: 0, scale: 1 });
-      const hexData = await loadVisibleHexes(rootMap.id);
-      setHexes(hexData);
-      setIsLoading(false);
+      setMapMeta({ kind: rootMap.kind || 'hex', ebene: rootMap.ebene || '', floors: rootMap.floors || [] });
+      karteLoadKollektikonStatus().then(setKollStatus).catch(() => {});
     }
     init();
   }, []);
 
-  // ─── Reload hexes when map changes ────────────────────
+  // ─── Reload hexes/areas when map changes ──────────────
   const [hexesMapId, setHexesMapId] = uS5(null);
   uE5(() => {
     if (!currentMapId || currentMapId === hexesMapId) return;
     setHexesMapId(currentMapId);
     setIsLoading(true);
-    setSel(null);
-    loadVisibleHexes(currentMapId).then(h => {
+    setSel(null); setSelAreaId(null); setFloorIdx(0);
+    Promise.all([loadVisibleHexes(currentMapId), loadAreas(currentMapId, true)]).then(async ([h, areaList]) => {
       setHexes(h);
+      setAreas(areaList);
+      const hexIds = Object.values(h).map(x => x.id);
+      const areaIds = areaList.map(a => a.id);
+      const [objs, pools] = await Promise.all([
+        loadObjectives(hexIds, areaIds),
+        loadPools(hexIds, areaIds),
+      ]);
+      setObjectives(objs);
+      setPoolRows(pools);
       setIsLoading(false);
     });
   }, [currentMapId, hexesMapId]);
@@ -563,12 +763,13 @@ function MerMapPlayer() {
   }, [cancelAnim]);
 
   // ─── Zoom ─────────────────────────────────────────────
-  const panelOpen = !!selectedKey;
+  const panelOpen = !!selectedKey || !!selectedAreaId;
   const onWheel = (e) => {
     e.preventDefault(); cancelAnim(); setWorldAnimating(true); setWorldAnimating(false);
     const factor = Math.exp(-e.deltaY * 0.0015);
     setCamera((c) => {
-      const nextZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, c.zoom * factor));
+      const minZoom = mapMetaRef.current.kind === 'image' ? 0.05 : MIN_ZOOM;
+      const nextZoom = Math.max(minZoom, Math.min(MAX_ZOOM, c.zoom * factor));
       const rect = stageRef.current.getBoundingClientRect();
       const sx = e.clientX - rect.left, sy = e.clientY - rect.top;
       const cx = panelOpen ? (rect.width - PANEL_W) / 2 : rect.width / 2;
@@ -587,52 +788,93 @@ function MerMapPlayer() {
   // ─── Hex selection ────────────────────────────────────
   const onHexClick = uC5((q, r) => {
     const k = hexKey(q, r);
+    setSelAreaId(null);
     if (selectedKey === k) { setSel(null); return; }
     setSel(k);
     const { x, y } = axialToPixel(q, r);
     animateTo({ x, y, zoom: Math.max(camera.zoom, FOCUS_ZOOM) }, 650);
   }, [selectedKey, animateTo, camera.zoom]);
 
+  const onAreaClick = uC5((a) => {
+    if (selectedAreaId === a.id) { setSelAreaId(null); return; }
+    setSel(null);
+    setSelAreaId(a.id);
+    let x = 0, y = 0;
+    (a.points || []).forEach(p => { x += p[0]; y += p[1]; });
+    const n = (a.points || []).length || 1;
+    animateTo({ x: x / n, y: y / n, zoom: Math.max(camera.zoom, 1) }, 550);
+  }, [selectedAreaId, animateTo, camera.zoom]);
+
   const onHexHover = uC5((k, isEnter) => {
     setHov((cur) => isEnter ? k : (cur === k ? null : cur));
   }, []);
 
-  const closePanel = uC5(() => setSel(null), []);
+  const closePanel = uC5(() => { setSel(null); setSelAreaId(null); }, []);
 
   // Esc key
   uE5(() => {
-    const onKey = (e) => { if (e.key === 'Escape') setSel(null); };
+    const onKey = (e) => { if (e.key === 'Escape') { setSel(null); setSelAreaId(null); } };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
   // ─── Submap navigation ────────────────────────────────
-  const navigateInto = uC5(async (hex) => {
-    if (!hex.submap_id) return;
-    setSel(null);
-    setMapStack((s) => [...s, { id: currentMapId, name: currentMapName, bgUrl, bgTransform }]);
-    const subMap = await loadMap(hex.submap_id);
-    setCurrentMapId(hex.submap_id);
-    setCurrentMapName(subMap?.name || 'Subkarte');
+  const navigateInto = uC5(async (node) => {
+    if (!node.submap_id) return;
+    setSel(null); setSelAreaId(null);
+    setMapStack((s) => [...s, { id: currentMapId, name: currentMapName, bgUrl, bgTransform, mapMeta }]);
+    const subMap = await loadMap(node.submap_id);
+    setCurrentMapId(node.submap_id);
+    setCurrentMapName(node.name || subMap?.name || 'Subkarte');
     setBgUrl(subMap?.bg_url || null);
     setBgTransform(subMap?.bg_transform || { x: 0, y: 0, scale: 1 });
-  }, [currentMapId, currentMapName, bgUrl, bgTransform]);
+    setMapMeta({ kind: subMap?.kind || 'hex', ebene: subMap?.ebene || '', floors: subMap?.floors || [] });
+  }, [currentMapId, currentMapName, bgUrl, bgTransform, mapMeta]);
 
   const navigateUp = uC5((i) => {
     const target = mapStack[i]; if (!target) return;
     setMapStack((s) => s.slice(0, i));
-    setSel(null);
+    setSel(null); setSelAreaId(null);
     setCurrentMapId(target.id);
     setCurrentMapName(target.name);
     setBgUrl(target.bgUrl || null);
     setBgTransform(target.bgTransform || { x: 0, y: 0, scale: 1 });
+    setMapMeta(target.mapMeta || { kind: 'hex', ebene: '', floors: [] });
   }, [mapStack]);
 
   // ─── Camera controls ──────────────────────────────────
-  const resetView = () => animateTo({ x: 0, y: 0, zoom: 1 }, 550);
+  const imageFitCam = uC5(() => {
+    const fl = (mapMetaRef.current.floors || [])[floorIdxRef.current];
+    if (!fl) return { x: 0, y: 0, zoom: 1 };
+    const z = Math.min(window.innerWidth / fl.w, (window.innerHeight - 56) / fl.h) * 0.86;
+    return { x: fl.w / 2, y: fl.h / 2, zoom: Math.max(0.05, z) };
+  }, []);
+
+  const resetView = () => {
+    if (mapMeta.kind === 'image') animateTo(imageFitCam(), 550);
+    else animateTo({ x: 0, y: 0, zoom: 1 }, 550);
+  };
   const zoomBy = (factor) => {
     cancelAnim();
-    setCamera((c) => ({ ...c, zoom: Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, c.zoom * factor)) }));
+    setCamera((c) => {
+      const minZoom = mapMetaRef.current.kind === 'image' ? 0.05 : MIN_ZOOM;
+      return { ...c, zoom: Math.max(minZoom, Math.min(MAX_ZOOM, c.zoom * factor)) };
+    });
+  };
+
+  // Kamera beim Betreten einer Bild-Karte / Etagenwechsel einpassen
+  uE5(() => {
+    if (mapMeta.kind === 'image') setCamera(imageFitCam());
+    else setCamera({ x: 0, y: 0, zoom: 1 });
+  }, [hexesMapId, floorIdx, mapMeta.kind, imageFitCam]);
+
+  const switchFloor = (dir) => {
+    setFloorIdx(f => {
+      const count = (mapMetaRef.current.floors || []).length;
+      const nf = Math.max(0, Math.min(count - 1, f + dir));
+      if (nf !== f) { setSel(null); setSelAreaId(null); }
+      return nf;
+    });
   };
 
   // ─── World transform ──────────────────────────────────
@@ -642,6 +884,18 @@ function MerMapPlayer() {
 
   const hexList = Object.values(hexes);
   const selectedHex = selectedKey ? hexes[selectedKey] : null;
+  const isImageMap = mapMeta.kind === 'image';
+  const floors = mapMeta.floors || [];
+  const floor = floors[floorIdx] || null;
+  const floorAreas = areas.filter(a => (a.floor || 0) === floorIdx);
+  const selectedArea = selectedAreaId ? areas.find(a => a.id === selectedAreaId) : null;
+  const selectedNode = selectedArea || selectedHex;
+  const nodeObjectives = selectedNode
+    ? objectives.filter(o => selectedArea ? o.area_id === selectedArea.id : o.hex_id === selectedNode.id)
+    : [];
+  const nodePoolRows = selectedNode
+    ? poolRows.filter(r => selectedArea ? r.area_id === selectedArea.id : r.hex_id === selectedNode.id)
+    : [];
 
   // ─── Loading / empty states ───────────────────────────
   if (isLoading && !currentMapId) {
@@ -715,7 +969,7 @@ function MerMapPlayer() {
         style={{ top: 56 }}
         onClick={closePanel}
       >
-        {!isLoading && (
+        {!isLoading && !isImageMap && (
           <div ref={worldRef} className={`mk-world${bgUrl ? ' has-bg' : ''}`} style={{ transform: worldTx, '--zoom': camera.zoom, '--label-scale': 1 / Math.pow(camera.zoom, 0.25) }}>
             {bgUrl && (
               <img
@@ -748,10 +1002,81 @@ function MerMapPlayer() {
           </div>
         )}
 
-        {!isLoading && hexList.length === 0 && (
+        {/* ── Bild-Karte ── */}
+        {!isLoading && isImageMap && floor && (
+          <div ref={worldRef} className="mk-world" style={{ transform: worldTx, '--zoom': camera.zoom, '--label-scale': 1 / Math.pow(camera.zoom, 0.25) }}>
+            <img
+              src={floor.bg}
+              style={{ position:'absolute', left:0, top:0, width:floor.w, height:floor.h, maxWidth:'none', pointerEvents:'none', userSelect:'none', opacity:0.95 }}
+              alt="" draggable={false}
+            />
+            <svg
+              width={floor.w} height={floor.h} viewBox={`0 0 ${floor.w} ${floor.h}`}
+              style={{ position:'absolute', left:0, top:0, overflow:'visible' }}
+            >
+              {floorAreas.map(a => {
+                const sel = a.id === selectedAreaId;
+                const accent = a.typ === 'eingang' ? '217,176,107' : '160,140,255';
+                return (
+                  <polygon
+                    key={a.id}
+                    points={a.points.map(p => p.join(',')).join(' ')}
+                    style={{
+                      fill: sel ? `rgba(${accent},0.3)` : `rgba(${accent},0.1)`,
+                      stroke: sel ? 'rgba(220,210,255,0.95)' : `rgba(${accent},0.7)`,
+                      strokeWidth: 2 / Math.max(camera.zoom, 0.01),
+                      strokeDasharray: '14 8',
+                      cursor: 'pointer',
+                    }}
+                    onClick={(e) => { e.stopPropagation(); onAreaClick(a); }}
+                  />
+                );
+              })}
+            </svg>
+            {labelsVisible && (
+              <div className="mk-labels-layer">
+                {floorAreas.map(a => {
+                  let cx = 0, cy = 0;
+                  (a.points || []).forEach(p => { cx += p[0]; cy += p[1]; });
+                  const n = (a.points || []).length || 1;
+                  return (
+                    <div
+                      key={`albl-${a.id}`}
+                      className="mk-hex-label-floating"
+                      style={{ left: cx / n, top: cy / n, '--hex-color': a.typ === 'eingang' ? 'oklch(0.78 0.1 80)' : 'oklch(0.7 0.15 285)' }}
+                    >
+                      <div className="mk-hex-label-terr" style={{ color: a.typ === 'eingang' ? 'rgba(217,176,107,0.85)' : 'rgba(160,140,255,0.8)' }}>
+                        {a.typ === 'eingang' ? '⬡ Betretbar' : '◈ POI'}
+                      </div>
+                      {a.name ? <div className="mk-hex-label-name">{a.name}</div> : null}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Etagen-Umschalter */}
+        {isImageMap && floors.length > 1 && (
+          <div style={{
+            position:'absolute', top:16, right: panelOpen ? PANEL_W + 16 : 16, zIndex:55,
+            display:'flex', alignItems:'center', gap:8,
+            background:'rgba(8,6,22,0.9)', border:'1px solid rgba(124,77,255,0.3)',
+            borderRadius:4, padding:'6px 10px',
+          }}>
+            <button className="mk-tool-btn" style={{ width:26, height:26, opacity: floorIdx >= floors.length - 1 ? 0.35 : 1 }} disabled={floorIdx >= floors.length - 1} onClick={() => switchFloor(1)} title="Etage höher">▲</button>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', color:'rgba(160,140,255,0.8)', textTransform:'uppercase' }}>
+              Ebene {floorIdx + 1}/{floors.length} · {floor?.label || ''}
+            </span>
+            <button className="mk-tool-btn" style={{ width:26, height:26, opacity: floorIdx <= 0 ? 0.35 : 1 }} disabled={floorIdx <= 0} onClick={() => switchFloor(-1)} title="Etage tiefer">▼</button>
+          </div>
+        )}
+
+        {!isLoading && (isImageMap ? !floor && floorAreas.length === 0 : hexList.length === 0) && (
           <div className="mk-empty-map-hint">
-            <div className="h">Noch keine Gebiete enthüllt</div>
-            <div className="s">Der DM wird neue Regionen nach und nach freischalten</div>
+            <div className="h">{isImageMap ? 'Noch nichts enthüllt' : 'Noch keine Gebiete enthüllt'}</div>
+            <div className="s">Der DM wird neue Bereiche nach und nach freischalten</div>
           </div>
         )}
       </div>
@@ -792,12 +1117,17 @@ function MerMapPlayer() {
       </div>
 
       {/* Info panel */}
-      {selectedHex && (
+      {selectedNode && (
         <InfoPanel
-          hex={selectedHex}
+          key={selectedNode.id}
+          hex={selectedNode}
+          nodeType={selectedArea ? 'area' : 'hex'}
           onClose={closePanel}
-          onExploreSubmap={() => navigateInto(selectedHex)}
+          onExploreSubmap={() => navigateInto(selectedNode)}
           isSubmap={mapStack.length > 0}
+          objectives={nodeObjectives}
+          poolRows={nodePoolRows}
+          kollStatus={kollStatus}
         />
       )}
     </React.Fragment>
