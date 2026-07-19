@@ -355,10 +355,12 @@ function QuickCreate({ onCreate, canCancel, onCancel }) {
             {T().divisions.map(d => <option key={d.name} value={d.name}>{d.roman !== '—' ? d.roman + ' · ' + d.name : d.name}</option>)}
           </select>
         </div>
-        <div>
-          <label style={{ ...lbSt, display:'block', marginBottom:6 }}>Rang in der Division</label>
-          <RangButtons value={q.rang} onPick={n => set('rang', n)} division={q.division}/>
-        </div>
+        {q.division !== 'Keine' && (
+          <div style={{ animation:'fadeIn 0.25s ease' }}>
+            <label style={{ ...lbSt, display:'block', marginBottom:6 }}>Rang in der Division</label>
+            <RangButtons value={q.rang} onPick={n => set('rang', n)} division={q.division}/>
+          </div>
+        )}
       </div>
       {(() => {
         const info = ((T().raenge || {})[q.division] || []).find(r => r.rang === q.rang);
@@ -875,15 +877,17 @@ function Editor(props) {
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14, marginTop:16 }}>
               <div>
                 <FieldHead label="Division" eye={<Eye on={vis('division')} onClick={() => toggleFieldVis('division')}/>}/>
-                <select value={sel.division || 'Keine'} onChange={e => updSel('division', e.target.value)}
+                <select value={sel.division || 'Keine'} onChange={e => { const v = e.target.value; updSel('division', v); if (v === 'Keine') updSel('rang', null); }}
                   style={{ ...selSt, border:`1px solid ${hexA(acc, 0.55)}` }}>
                   {T().divisions.map(d => <option key={d.name} value={d.name}>{d.roman !== '—' ? d.roman + ' · ' + d.name : d.name}</option>)}
                 </select>
               </div>
-              <div>
-                <label style={{ ...lbSt, display:'block', marginBottom:5 }}>Rang</label>
-                <RangButtons value={rangNum} onPick={n => updSel('rang', n)} division={sel.division}/>
-              </div>
+              {sel.division && sel.division !== 'Keine' && (
+                <div style={{ animation:'fadeIn 0.25s ease' }}>
+                  <label style={{ ...lbSt, display:'block', marginBottom:5 }}>Rang</label>
+                  <RangButtons value={rangNum} onPick={n => updSel('rang', n)} division={sel.division}/>
+                </div>
+              )}
             </div>
             <RangInfo division={sel.division} rang={rangNum}/>
           </div>
