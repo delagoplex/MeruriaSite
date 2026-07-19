@@ -462,7 +462,7 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
   const unlocked = unlocks.unlockedFor(nsc);
   const stage = unlocks.stageFor(nsc);
   const gehList = (nsc.geheimnisse || []).filter(g => (g.text || '').trim());
-  const fieldVis = (k) => ((nsc.fieldVis || {})[k]) !== false;
+  const fieldVis = (k) => ((nsc.fieldVis || {})[k]) === true;
   const isOpen = (k) => {
     const mg = k.match(/^geh-(\d+)$/);
     if (mg) { const g = gehList[+mg[1]]; return !!(g && g.vis) && unlocked.has(k); }

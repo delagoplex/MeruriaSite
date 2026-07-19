@@ -47,8 +47,8 @@ ALTER TABLE public.nscs
   ALTER COLUMN begleiter SET NOT NULL;
 
 -- ── geheimnisse: TEXT[] → JSONB [{text, vis}] ────────────────────────────────
--- Bestehende Geheimnisse waren im alten System per Unlock freischaltbar,
--- also global sichtbar → vis = true.
+-- Sichtbarkeit ist in v2 Opt-in: auch migrierte Geheimnisse starten verborgen
+-- (vis = false) und werden vom DM explizit sichtbar geschaltet.
 DO $$
 BEGIN
   IF (SELECT data_type FROM information_schema.columns
@@ -60,7 +60,7 @@ BEGIN
       ALTER COLUMN geheimnisse SET NOT NULL;
     UPDATE public.nscs
     SET geheimnisse = COALESCE(
-      (SELECT jsonb_agg(jsonb_build_object('text', el, 'vis', true))
+      (SELECT jsonb_agg(jsonb_build_object('text', el, 'vis', false))
        FROM jsonb_array_elements_text(geheimnisse) AS el
        WHERE btrim(el) <> ''),
       '[]'::jsonb

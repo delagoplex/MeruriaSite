@@ -51,7 +51,8 @@ function meruriaZodiacOf(doy) {
 // Ein "Fakt" existiert nur, wenn der NSC dafür Inhalt hat; Listen-Fakten
 // sind pro Eintrag freischaltbar (eig-0, tal-0, geh-0, …). Sektions-Fakten
 // zählen nur, wenn die Sektion am NSC aktiv ist (nsc.sections).
-function nscFieldVisible(nsc, key) { return ((nsc.fieldVis || {})[key]) !== false; }
+// Sichtbarkeit ist OPT-IN: ein Auge ist nur offen, wenn explizit true gesetzt.
+function nscFieldVisible(nsc, key) { return ((nsc.fieldVis || {})[key]) === true; }
 
 function factsOf(nsc) {
   const keys = [];
@@ -120,11 +121,34 @@ function factLabel(key) {
 // Kein Seeding mehr — alles startet blank, DM schaltet explizit frei.
 function defaultUnlockedFor(_nsc) { return []; }
 
+// Sektion, hinter deren Sichtbarkeits-Auge ein indexierter Fakt-Key hängt
+const NSC_SEC_OF_PREFIX = { vna:'vname', eig:'pers', tal:'pers', mak:'pers', rou:'routine',
+  gew:'gewohnheiten', aus:'ausr', beg:'begleiter', mot:'motive', fam:'kontakte', fre:'kontakte', riv:'kontakte' };
+
+// Alle Fakten, die Spieler überhaupt entdecken KÖNNEN:
+// Sektions-Auge und Einzel-Auge müssen explizit geöffnet sein (Opt-in).
+function unlockableFactsOf(nsc) {
+  const vis = k => (nsc.fieldVis || {})[k] === true;
+  return factsOf(nsc).filter(k => {
+    const m = k.match(/^([a-z]+)-(\d+)$/);
+    if (!m) {
+      if (k === 'habe') return vis('ausr') && vis('habe');
+      if (k === 'unvergesslich') return vis('pers') && vis('unvergesslich');
+      return vis(k);
+    }
+    if (m[1] === 'geh') {
+      const list = (nsc.geheimnisse || []).filter(g => (g.text || '').trim());
+      return !!(list[+m[2]] && list[+m[2]].vis);
+    }
+    return vis(NSC_SEC_OF_PREFIX[m[1]] || m[1]) && vis(k);
+  });
+}
+
 // Stufe aus Anteil freigeschalteter Fakten berechnen.
 // „Eingeweiht" (MAX_STAGE) erfordert 100 % aller Fakten — sonst fällt der NSC eine Stufe tiefer.
-// Es zählen nur Keys, die aktuell auch als Fakt existieren (verwaiste Unlocks ignorieren).
+// Basis sind nur die global sichtbaren (entdeckbaren) Fakten; verwaiste Unlocks zählen nicht.
 function stageFromUnlocked(nsc, unlockedSet) {
-  const facts = factsOf(nsc);
+  const facts = unlockableFactsOf(nsc);
   const total = facts.length;
   if (total === 0) return 0;
   const open = facts.reduce((n, k) => n + (unlockedSet.has(k) ? 1 : 0), 0);
@@ -144,7 +168,7 @@ function mapNscRow(row) {
   const begleiter = Array.isArray(row.begleiter) ? row.begleiter
     : (row.begleiter && row.begleiter.name) ? [row.begleiter] : [];
   const geheimnisse = (row.geheimnisse || []).map(g =>
-    typeof g === 'string' ? { text:g, vis:true } : { text:g.text || '', vis:g.vis !== false });
+    typeof g === 'string' ? { text:g, vis:false } : { text:g.text || '', vis:g.vis === true });
   return {
     id:           row.id,
     slug:         row.slug,
@@ -850,6 +874,7 @@ Object.assign(window, {
   GOLD, GOLD_SOFT, GOLD_GLOW, goldA,
   hexPoints, hexPointsInset, hexClipInset, hexA, effStage, accentOf, romanFor,
   factsOf, factLabel, defaultUnlockedFor, stageFromUnlocked, nscFieldVisible,
+  unlockableFactsOf, NSC_SEC_OF_PREFIX,
   MERURIA_MONTHS, MERURIA_MSTARTS, meruriaDoyParts, meruriaDoyText, meruriaZodiacOf,
   mapNscRow, useNSCData, useUnlocks,
   NAV, NavItem, FloatingHexField, ParticleField, useScrollReveal,

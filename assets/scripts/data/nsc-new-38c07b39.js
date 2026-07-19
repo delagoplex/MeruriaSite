@@ -4,7 +4,7 @@ const { useState:appUS, useEffect:appUE, useMemo:appUM, useCallback:appUC } = Re
 const { useTweaks } = window;
 const { STAGE_LABELS, MAX_STAGE, STATUS_DEF, STATUS_ORDER,
         DIVISION_ORDER, DIVISION_THEME, GOLD, GOLD_GLOW, goldA,
-        hexPoints, hexA, accentOf, romanFor, useNSCData, useUnlocks, factsOf,
+        hexPoints, hexA, accentOf, romanFor, useNSCData, useUnlocks, factsOf, unlockableFactsOf,
         NAV, NavItem, FloatingHexField, ParticleField, useScrollReveal,
         NSCPortrait, StageBadge, StatusPills, NSCDetailPanel, SiteNav, PageHeader } = window;
 
@@ -108,12 +108,17 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
   const statusList = Array.isArray(nsc.status) ? nsc.status : (nsc.status ? [nsc.status] : []);
   const isDead = statusList.includes('Gefallen') || statusList.includes('Verstorben');
   const isUnknown = stage === 0;
-  const totalFacts = factsOf(nsc).length;
-  const openFacts = unlocked.size;
+  const uFacts = unlockableFactsOf(nsc);
+  const totalFacts = uFacts.length;
+  const openFacts = uFacts.filter(k => unlocked.has(k)).length;
+  // Sichtbarkeit ist Opt-in: Auge(n) offen UND freigeschaltet
+  const fv = k => ((nsc.fieldVis || {})[k]) === true;
+  const openK = (k, sec) => gm || ((!sec || fv(sec)) && fv(k) && unlocked.has(k));
+  const hasSec = k => (nsc.sections || []).includes(k);
 
   // Subhead — nur Rasse (Beruf wandert nicht mehr in die Kopfzeile, der ist in der Meta sichtbar)
   const headBits = [];
-  if (nsc.rasse) headBits.push(nsc.rasse);
+  if (nsc.rasse && openK('rasse')) headBits.push(nsc.rasse);
 
   return (
     <div className="reveal-up" style={{ transitionDelay:`${delay}s` }}>
@@ -218,13 +223,13 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
             </div>
           )}
 
-          {/* Unvergessliche Eigenschaft */}
-          {nsc.unvergesslich && (
+          {/* Unvergessliche Eigenschaft — nur wenn sichtbar & freigeschaltet */}
+          {nsc.unvergesslich && hasSec('pers') && openK('unvergesslich', 'pers') && (
             <div style={{ position:'relative', zIndex:1, marginBottom: compact ? 8 : 12,
               padding:'8px 10px', borderLeft:`2px solid ${hexA(acc, 0.6)}`,
               background: hexA(acc, 0.05),
               fontFamily:'var(--font-body)', fontSize: compact ? 11 : 12.5, fontStyle:'italic',
-              color: unlocked.has('unvergesslich') ? 'rgba(230,225,255,0.85)' : 'rgba(200,190,240,0.5)',
+              color:'rgba(230,225,255,0.85)',
               lineHeight:1.55 }}>
               <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.24em',
                 color: hexA(acc, 0.7), textTransform:'uppercase', marginRight:6 }}>◇</span>
@@ -233,11 +238,12 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
           )}
 
           {/* Eigenschaften pills */}
-          {!compact && nsc.eigenschaften && nsc.eigenschaften.length > 0 && (() => {
-            const openEig = nsc.eigenschaften.filter((_, i) => unlocked.has(`eig-${i}`));
+          {!compact && nsc.eigenschaften && nsc.eigenschaften.length > 0 && hasSec('pers') && (() => {
+            const openEig = nsc.eigenschaften.filter((_, i) => openK(`eig-${i}`, 'pers'));
+            if (!openEig.length) return null;
             return (
-              <div style={{ position:'relative', zIndex:1, marginBottom:12, opacity: openEig.length ? 1 : 0.55 }}>
-                <TraitPills items={openEig.length ? openEig : nsc.eigenschaften} acc={acc} max={4}/>
+              <div style={{ position:'relative', zIndex:1, marginBottom:12 }}>
+                <TraitPills items={openEig} acc={acc} max={4}/>
               </div>
             );
           })()}
@@ -252,20 +258,20 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
               fontFamily:'var(--font-mono)', fontSize:'8.5px', letterSpacing:'0.16em', textTransform:'uppercase',
             }}>
               {nsc.division && nsc.division !== 'Keine' &&
-                <MetaLine label="Division"     value={`${romanFor(nsc) ? `${romanFor(nsc)} · ` : ''}${(nsc.division || '—').replace(/^Die /,'')}`} acc={acc} divisionAccent unlocked={unlocked.has('division')}/>}
+                <MetaLine label="Division"     value={`${romanFor(nsc) ? `${romanFor(nsc)} · ` : ''}${(nsc.division || '—').replace(/^Die /,'')}`} acc={acc} divisionAccent unlocked={openK('division')}/>}
               {nsc.organisation && (!nsc.division || nsc.division === 'Keine') &&
-                <MetaLine label="Organisation" value={nsc.organisation} acc={acc} divisionAccent unlocked={unlocked.has('organisation')}/>}
+                <MetaLine label="Organisation" value={nsc.organisation} acc={acc} divisionAccent unlocked={openK('organisation')}/>}
               {nsc.rang &&
-                <MetaLine label="Rang"         value={`${romanFor(nsc) ? `${romanFor(nsc)} · ` : ''}${parseInt(nsc.rang) ? 'Rang ' + parseInt(nsc.rang) : nsc.rang}`} acc={acc} unlocked={unlocked.has('division')}/>}
+                <MetaLine label="Rang"         value={`${romanFor(nsc) ? `${romanFor(nsc)} · ` : ''}${parseInt(nsc.rang) ? 'Rang ' + parseInt(nsc.rang) : nsc.rang}`} acc={acc} unlocked={openK('division')}/>}
               {nsc.wohnort &&
-                <MetaLine label="Wohnort"      value={nsc.wohnort} acc={acc} unlocked={unlocked.has('wohnort')}/>}
+                <MetaLine label="Wohnort"      value={nsc.wohnort} acc={acc} unlocked={openK('wohnort')}/>}
               {nsc.alter && (
                 <MetaLine label="Alter"
                   value={`${nsc.alter} Jahre`}
-                  acc={acc} unlocked={unlocked.has('alter')}/>
+                  acc={acc} unlocked={openK('alter')}/>
               )}
               {nsc.gottheit &&
-                <MetaLine label="Gottheit"     value={nsc.gottheit} acc={acc} unlocked={unlocked.has('gottheit')}/>}
+                <MetaLine label="Gottheit"     value={nsc.gottheit} acc={acc} unlocked={openK('gottheit')}/>}
             </div>
           )}
 
@@ -310,7 +316,7 @@ function MetaLine({ label, value, acc, unlocked=true, divisionAccent }) {
         textShadow: unlocked && divisionAccent ? `0 0 10px ${hexA(acc, 0.4)}` : 'none',
         fontStyle: unlocked ? 'normal' : 'italic',
         overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap',
-      }}>{value}</span>
+      }}>{unlocked ? value : 'Unbekannt'}</span>
     </div>
   );
 }
@@ -397,7 +403,7 @@ function App() {
   // Filter-Werte nur aus Fakten, die der Spieler auch tatsächlich freigeschaltet hat
   const FILTER_VALUES = appUM(() => {
     const known = nscs.filter(n => (stageById[n.id] || 0) >= 1);
-    const vis = (n, k) => unlocks.unlockedFor(n).has(k);
+    const vis = (n, k) => ((n.fieldVis || {})[k]) === true && unlocks.unlockedFor(n).has(k);
     return {
       rasse:      uniq(known.filter(n => vis(n,'rasse')).map(n => n.rasse)),
       geschlecht: uniq(known.filter(n => vis(n,'geschlecht')).map(n => n.geschlecht)),
@@ -433,7 +439,7 @@ function App() {
         const unlockedKeys = unlocks.unlockedFor(n);
         for (const g of ['rasse','geschlecht','division','beruf','gottheit']) {
           if (filters[g].length) {
-            if (!unlockedKeys.has(g) || !filters[g].includes(n[g])) return false;
+            if (((n.fieldVis || {})[g]) !== true || !unlockedKeys.has(g) || !filters[g].includes(n[g])) return false;
           }
         }
         if (filters.status.length) {
@@ -482,7 +488,7 @@ function App() {
             if (!filters[g].some(s => sList.includes(s))) return false;
           }
         } else if (ATTR_KEYS.has(g) && filters[g].length) {
-          if (!unlockedKeys.has(g) || !filters[g].includes(n[g])) return false;
+          if (((n.fieldVis || {})[g]) !== true || !unlockedKeys.has(g) || !filters[g].includes(n[g])) return false;
         }
       }
       if (group === 'kennenstufe') {
@@ -490,7 +496,7 @@ function App() {
       } else if (group === 'status') {
         if (!nscStatus(n).includes(value)) return false;
       } else if (ATTR_KEYS.has(group)) {
-        if (!unlockedKeys.has(group) || n[group] !== value) return false;
+        if (((n.fieldVis || {})[group]) !== true || !unlockedKeys.has(group) || n[group] !== value) return false;
       } else {
         if (n[group] !== value) return false;
       }

@@ -29,7 +29,7 @@
 (() => {
 
 const { useState, useEffect, useMemo, useRef, useCallback } = React;
-const { hexA, mapNscRow, factsOf, useUnlocks, stageFromUnlocked,
+const { hexA, mapNscRow, factsOf, unlockableFactsOf, NSC_SEC_OF_PREFIX, useUnlocks, stageFromUnlocked,
         MERURIA_MONTHS, MERURIA_MSTARTS, meruriaDoyParts, meruriaDoyText, meruriaZodiacOf,
         STATUS_DEF, SiteNav, SiteGate } = window;
 
@@ -131,25 +131,9 @@ function useDMData() {
 }
 
 // ── Global sichtbare (freischaltbare) Fakten eines NSC ─────
-const SEC_OF_PREFIX = { vna:'vname', eig:'pers', tal:'pers', mak:'pers', rou:'routine',
-  gew:'gewohnheiten', aus:'ausr', beg:'begleiter', mot:'motive', fam:'kontakte', fre:'kontakte', riv:'kontakte' };
-function unlockableKeys(nsc) {
-  const vis = k => (nsc.fieldVis || {})[k] !== false;
-  return factsOf(nsc).filter(k => {
-    const m = k.match(/^([a-z]+)-(\d+)$/);
-    if (!m) {
-      if (k === 'habe') return vis('ausr');
-      if (k === 'unvergesslich') return vis('pers');
-      return vis(k);
-    }
-    if (m[1] === 'geh') {
-      const list = (nsc.geheimnisse || []).filter(g => (g.text || '').trim());
-      return !!(list[+m[2]] && list[+m[2]].vis);
-    }
-    // Sektion UND Einzeleintrag müssen sichtbar sein
-    return vis(SEC_OF_PREFIX[m[1]] || m[1]) && vis(k);
-  });
-}
+// Geteilte Logik aus nsc-new-d94a9bd3.js — Sichtbarkeit ist Opt-in.
+const SEC_OF_PREFIX = NSC_SEC_OF_PREFIX;
+const unlockableKeys = unlockableFactsOf;
 
 // ── Kleine Bausteine ───────────────────────────────────────
 const lbSt = { fontFamily:MONO, fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(160,140,255,0.55)' };
@@ -471,8 +455,8 @@ function App() {
   const sel = nscs.find(n => n.id === selId) || null;
   const updNsc = (id, patch) => { setNscs(prev => prev.map(n => n.id === id ? { ...n, ...patch } : n)); scheduleSave(id); };
   const updSel = (k, v) => sel && updNsc(sel.id, { [k]:v });
-  const toggleFieldVis = key => sel && updNsc(sel.id, { fieldVis:{ ...sel.fieldVis, [key]:(sel.fieldVis || {})[key] === false ? true : false } });
-  const vis = key => sel && (sel.fieldVis || {})[key] !== false;
+  const toggleFieldVis = key => sel && updNsc(sel.id, { fieldVis:{ ...sel.fieldVis, [key]:(sel.fieldVis || {})[key] !== true } });
+  const vis = key => !!sel && (sel.fieldVis || {})[key] === true;
 
   async function createNsc(q) {
     const row = {
@@ -914,7 +898,7 @@ function Editor(props) {
               <SecHeader title="Persönlichkeit" visOn={vis('pers')} onVis={() => toggleFieldVis('pers')} onRemove={() => rmSec('pers')}/>
               <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
                 <div>
-                  <label style={{ ...lbSt, display:'block', marginBottom:5 }}>Unvergessliches Merkmal</label>
+                  <FieldHead label="Unvergessliches Merkmal" eye={<Eye on={vis('unvergesslich')} onClick={() => toggleFieldVis('unvergesslich')}/>}/>
                   <textarea value={sel.unvergesslich || ''} onChange={e => updSel('unvergesslich', e.target.value)}
                     placeholder="Was vergisst niemand, der ihr begegnet?" style={{ ...inpSt, minHeight:56, resize:'vertical' }}/>
                 </div>
@@ -992,6 +976,7 @@ function Editor(props) {
                 <button onClick={() => addRow('ausruestung', { name:'', beschreibung:'' })} style={addBtnSt}>+ Gegenstand</button>
                 <div style={{ display:'flex', alignItems:'center', gap:7, marginLeft:'auto' }}>
                   <label style={{ ...lbSt, color:'rgba(210,175,60,0.6)' }}>Vermögen</label>
+                  <Eye on={vis('habe')} onClick={() => toggleFieldVis('habe')}/>
                   <input type="number" value={sel.habe || 0} onChange={e => updSel('habe', Math.max(0, parseInt(e.target.value) || 0))}
                     style={{ ...inpSt, width:110, fontFamily:MONO, fontSize:12, border:'1px solid rgba(210,175,60,0.35)' }}/>
                   <span style={{ fontFamily:MONO, fontSize:9, color:'rgba(210,175,60,0.55)', letterSpacing:'0.1em' }}>HADE</span>
@@ -1222,7 +1207,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
   const tgU = key => !dmView && unlocks.toggleForPids(sel.id, key, [persp]);
   const setU = arr => !dmView && unlocks.setKeysForPid(sel.id, persp, arr);
 
-  const gVis = k => (sel.fieldVis || {})[k] !== false;
+  const gVis = k => (sel.fieldVis || {})[k] === true;
   const pOpen = (secKey, key) => dmView ? true : (gVis(secKey) && gVis(key) && uSet.has(key));
   const mkTg = (secKey, key) => {
     if (dmView) return null;
@@ -1252,8 +1237,8 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
     );
   };
 
-  // Zählung analog factsOf: alle vorhandenen Fakten zählen, offen = freigeschaltet & global sichtbar
-  const facts = factsOf(sel);
+  // Stufen-Basis: nur entdeckbare (global sichtbare) Fakten — wie stageFromUnlocked
+  const facts = dmView ? factsOf(sel) : unlockableKeys(sel);
   const factOpen = k => {
     if (dmView) return true;
     const m = k.match(/^([a-z]+)-(\d+)$/);
@@ -1375,24 +1360,13 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
         </div>
       )}
       <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:14, flexWrap:'wrap' }}>
-        <span style={{ fontFamily:MONO, fontSize:8.5, letterSpacing:'0.22em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>Vertrautheit · Ansicht als</span>
-        <button onClick={() => setPersp('__dm')}
-          style={{ padding:'6px 13px', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.14em', textTransform:'uppercase', cursor:'pointer', borderRadius:3,
-            background:dmView ? 'rgba(255,184,80,0.16)' : 'transparent',
-            border:`1px solid ${dmView ? 'rgba(255,184,80,0.7)' : 'rgba(255,184,80,0.25)'}`,
-            color:dmView ? '#ffb850' : 'rgba(255,184,80,0.5)' }}>◈ DM</button>
-        {charPersp.map(c => {
-          const on = c.id === persp;
-          const cSet = (unlocks.byPersp[c.id] || {})[sel.id] || new Set();
-          const cOpen = allKeys.filter(k => cSet.has(k)).length;
-          return (
-            <button key={c.id} onClick={() => setPersp(c.id)}
-              style={{ padding:'6px 13px', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.14em', textTransform:'uppercase', cursor:'pointer', borderRadius:3,
-                background:on ? 'rgba(124,77,255,0.2)' : 'transparent',
-                border:`1px solid ${on ? 'rgba(124,77,255,0.7)' : 'rgba(124,77,255,0.2)'}`,
-                color:on ? '#f0eeff' : 'rgba(200,190,240,0.5)' }}>{c.label} · {cOpen}/{allKeys.length}</button>
-          );
-        })}
+        <span style={{ fontFamily:MONO, fontSize:8.5, letterSpacing:'0.22em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>Ansicht als</span>
+        <span style={dmView
+          ? { padding:'6px 13px', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.14em', textTransform:'uppercase', borderRadius:3, background:'rgba(255,184,80,0.16)', border:'1px solid rgba(255,184,80,0.7)', color:'#ffb850' }
+          : { padding:'6px 13px', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.14em', textTransform:'uppercase', borderRadius:3, background:'rgba(124,77,255,0.2)', border:'1px solid rgba(124,77,255,0.7)', color:'#f0eeff' }}>
+          {dmView ? '◈ DM (Spielleitung)' : perspName + ' · ' + allKeys.filter(k => uSet.has(k)).length + '/' + allKeys.length}
+        </span>
+        <span style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.12em', color:'rgba(160,140,255,0.35)', textTransform:'uppercase' }}>· wechseln über „Sicht" in der Seitenleiste</span>
         <div style={{ flex:1 }}/>
         {!dmView && (
           <React.Fragment>
