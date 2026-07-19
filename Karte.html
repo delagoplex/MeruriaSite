@@ -101,6 +101,10 @@ function rowToHex(h) {
 
 const MAP_COLS = 'id, name, bg_url, bg_transform, kind, ebene, floors';
 
+// Feste Hierarchie: Welt → Region → Gebiet (Hex) → Ort (Bild)
+const EBENEN = ['Welt', 'Region', 'Gebiet', 'Ort'];
+function depthEbene(depth) { return EBENEN[Math.min(depth, 3)]; }
+
 async function loadRootMap() {
   const { data } = await window._sb.from('karte_maps')
     .select(MAP_COLS)
@@ -129,6 +133,7 @@ Object.assign(window, {
   HEX_SIZE, HEX_W, HEX_H, NEIGHBORS, APOTHEM,
   axialToPixel, hexKey, TERRAIN_COLORS, terrainColor, DEFAULT_HEX_COLOR,
   easeInOutCubic, rowToHex, loadRootMap, loadMap, loadVisibleHexes,
+  EBENEN, depthEbene,
 });
 </script>
 
@@ -349,7 +354,7 @@ function FancyBar({ b }) {
 
 const POOL_BAR_LABELS = { fische: 'Gefangene Fische', insekten: 'Gefangene Insekten', pflanzen: 'Gesammelte Pflanzen', mineralien: 'Abgebaute Mineralien' };
 
-function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectives, poolRows, kollStatus }) {
+function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectives, poolRows, kollStatus, childEbene }) {
   if (!hex) return null;
   const isArea = nodeType === 'area';
   const tcolor = isArea ? (hex.typ === 'eingang' ? 'oklch(0.78 0.1 80)' : 'oklch(0.7 0.15 285)') : terrainColor(hex.terrain);
@@ -370,7 +375,19 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
   }, [hex.id]);
 
   const objList = (objectives || []).filter(o => o.freigeschaltet);
-  const nodePools = poolRows || [];
+
+  // Ressourcen: Pools werden pro Ort gepflegt und hier über den Teilbaum aggregiert.
+  // Bis die Aggregation geladen ist, dienen die eigenen Pool-Zeilen als Startwert.
+  const [aggPools, setAggPools] = uS4(null);
+  uE4(() => {
+    if (!hex.has_submap || !hex.submap_id) { setAggPools(poolRows || []); return; }
+    karteCollectSubtreePools(
+      { hexId: isArea ? null : hex.id, areaId: isArea ? hex.id : null, submapId: hex.submap_id },
+      { onlyVisible: true }
+    ).then(setAggPools).catch(() => setAggPools(poolRows || []));
+  }, [hex.id]);
+
+  const nodePools = aggPools || poolRows || [];
   const hasPoolData = nodePools.length > 0;
 
   // Fortschrittsbalken: Objectives-Rollup nach Tags + Pool-Fangquoten + Legacy-Erkundung
@@ -638,7 +655,9 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
             >
               <span style={{ fontFamily:'var(--font-display)', fontSize:16, color:'rgba(220,210,255,0.85)', lineHeight:1 }}>⬡</span>
               <span style={{ fontFamily:'var(--font-display)', fontSize:12, letterSpacing:'0.18em', textTransform:'uppercase', color:'#f3eefe' }}>
-                {isArea ? `${hex.name || 'Ort'} betreten` : `${hex.name || 'Gebiet'} erkunden`}
+                {childEbene === 'Ort'
+                  ? `${hex.name || 'Ort'} betreten`
+                  : `${childEbene || 'Region'} ${hex.name ? `„${hex.name}"` : ''} erkunden`}
               </span>
             </button>
           </footer>
@@ -976,6 +995,15 @@ function MerMapPlayer() {
         <a className="mk-back" href="index.html">◂ Meruria</a>
         <span className="mk-title">KARTE</span>
         <span className="mk-subtitle">◈ Die neue Welt</span>
+        <span style={{
+          marginLeft:10, padding:'3px 9px', borderRadius:3,
+          background: isImageMap ? 'rgba(217,176,107,0.08)' : 'rgba(124,77,255,0.08)',
+          border: `1px solid ${isImageMap ? 'rgba(217,176,107,0.35)' : 'rgba(124,77,255,0.3)'}`,
+          fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.18em', textTransform:'uppercase',
+          color: isImageMap ? 'rgba(240,220,170,0.85)' : 'rgba(160,140,255,0.8)',
+        }}>
+          {isImageMap ? '▦' : '⬡'} {depthEbene(mapStack.length)}
+        </span>
         {/* Breadcrumb */}
         {mapStack.length > 0 && (
           <div style={{
@@ -1176,6 +1204,7 @@ function MerMapPlayer() {
           objectives={nodeObjectives}
           poolRows={nodePoolRows}
           kollStatus={kollStatus}
+          childEbene={selectedArea ? 'Ort' : depthEbene(mapStack.length + 1)}
         />
       )}
     </React.Fragment>

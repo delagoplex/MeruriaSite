@@ -97,6 +97,10 @@ function easeInOutCubic(t) {
 // ── Supabase helpers ─────────────────────────────────────────
 const MAP_COLS = 'id, name, bg_url, bg_transform, kind, ebene, floors';
 
+// Feste Hierarchie: Welt → Region → Gebiet (Hex) → Ort (Bild); Orte können in Orte führen
+const EBENEN = ['Welt', 'Region', 'Gebiet', 'Ort'];
+function depthEbene(depth) { return EBENEN[Math.min(depth, 3)]; }
+
 async function loadOrCreateRootMap() {
   const sb = window._sb;
   let { data } = await sb.from('karte_maps')
@@ -107,7 +111,7 @@ async function loadOrCreateRootMap() {
     .maybeSingle();
   if (!data) {
     const res = await sb.from('karte_maps')
-      .insert({ name: 'Meruria' })
+      .insert({ name: 'Meruria', ebene: 'Welt' })
       .select(MAP_COLS)
       .single();
     // If the unique index fires (concurrent insert), fall back to fetching
@@ -228,7 +232,7 @@ function getLocalData() {
 Object.assign(window, {
   HEX_SIZE, HEX_W, HEX_H, NEIGHBORS, APOTHEM,
   axialToPixel, hexKey, TERRAINS, TERRAIN_COLORS, terrainColor,
-  DEFAULT_HEX_COLOR, easeInOutCubic,
+  DEFAULT_HEX_COLOR, easeInOutCubic, EBENEN, depthEbene,
   loadOrCreateRootMap, loadMap, loadHexes, loadStash,
   sbUpsertHex, sbDeleteHex, sbDeleteSubmap, sbUpsertStash, sbDeleteStash,
   rowToHex, getLocalData,
@@ -475,7 +479,7 @@ Object.assign(window, { useCameraAnimator });
      Script 4 — Editor drawer
      ═══════════════════════════════════════════════════ -->
 <script type="text/babel">
-const { useState: uS4, useRef: uR4, useCallback: uC4, useMemo: uM4 } = React;
+const { useState: uS4, useRef: uR4, useCallback: uC4, useMemo: uM4, useEffect: uE4 } = React;
 const ImageUpload = window.ImageUpload;
 
 function BildPosPad({ pos, onChange }) {
@@ -651,7 +655,7 @@ function ObjectiveCard({ o, onUpdate, onDelete, startOpen }) {
 function EditorDrawer({
   node, nodeType, onChange, onClose, onDelete, onNavigateInto, onCreateSubmap, isSubmap,
   objectives, onObjAdd, onObjUpdate, onObjDelete, lastObjId,
-  poolRows, onPoolOpen,
+  poolRows, onPoolOpen, childEbene, kollCounts,
 }) {
   if (!node) return null;
   const hex = node;
@@ -711,6 +715,18 @@ function EditorDrawer({
   const objList = objectives || [];
   const poolCounts = {};
   (poolRows || []).forEach(r => { poolCounts[r.cat] = (poolCounts[r.cat] || 0) + 1; });
+
+  // Pools werden nur auf Orts-Ebene gepflegt: an Gebiets-Hexes (Kind-Ebene = Ort)
+  // bzw. an Flächen, die in einen (Unter-)Ort führen. Darüber: aggregierte Anzeige.
+  const poolEditable = isArea ? !!hex.has_submap : childEbene === 'Ort';
+  const [aggPools, setAggPools] = uS4(null);
+  uE4(() => {
+    if (tab !== 'ressourcen' || poolEditable || aggPools) return;
+    window.karteCollectSubtreePools(
+      { hexId: isArea ? null : hex.id, areaId: isArea ? hex.id : null, submapId: hex.submap_id || null },
+      { onlyVisible: false }
+    ).then(setAggPools).catch(() => setAggPools([]));
+  }, [tab, poolEditable, aggPools]);
 
   return (
     <React.Fragment>
@@ -882,25 +898,21 @@ function EditorDrawer({
             </div>
           )}
 
-          {/* Subkarte anlegen (Navigation in bestehende Subkarte: Footer-Button) */}
-          {!hex.has_submap && (
-            <div style={{ display:'flex', gap:8, marginBottom:4 }}>
+          {/* Subkarte anlegen — Typ folgt der festen Hierarchie (Navigation: Footer-Button) */}
+          {!hex.has_submap && childEbene && (() => {
+            const isOrt = childEbene === 'Ort';
+            const base = isOrt ? 'rgba(217,176,107,0.06)' : 'rgba(124,77,255,0.06)';
+            const hover = isOrt ? 'rgba(217,176,107,0.14)' : 'rgba(124,77,255,0.14)';
+            return (
               <button
-                title="Hex-Subkarte anlegen"
-                style={{ flex:1, padding:'9px 8px', fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.16em', textTransform:'uppercase', color:'rgba(160,140,255,0.75)', background:'rgba(124,77,255,0.06)', border:'1px dashed rgba(124,77,255,0.35)', borderRadius:3, cursor:'pointer', transition:'all 0.15s' }}
-                onClick={() => onCreateSubmap(hex, 'hex')}
-                onMouseEnter={e => e.currentTarget.style.background='rgba(124,77,255,0.14)'}
-                onMouseLeave={e => e.currentTarget.style.background='rgba(124,77,255,0.06)'}
-              >⬡ Hex-Subkarte anlegen</button>
-              <button
-                title="Bild-Subkarte anlegen (Grundriss / Gebiet)"
-                style={{ flex:1, padding:'9px 8px', fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.16em', textTransform:'uppercase', color:'rgba(240,220,170,0.85)', background:'rgba(217,176,107,0.06)', border:'1px dashed rgba(217,176,107,0.4)', borderRadius:3, cursor:'pointer', transition:'all 0.15s' }}
-                onClick={() => onCreateSubmap(hex, 'image')}
-                onMouseEnter={e => e.currentTarget.style.background='rgba(217,176,107,0.14)'}
-                onMouseLeave={e => e.currentTarget.style.background='rgba(217,176,107,0.06)'}
-              >▦ Bild-Subkarte anlegen</button>
-            </div>
-          )}
+                title={isOrt ? 'Ortskarte anlegen (Bild-Karte mit Etagen & Flächen)' : `${childEbene}skarte anlegen (Hex-Karte)`}
+                style={{ width:'100%', marginBottom:4, padding:'9px 8px', fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.16em', textTransform:'uppercase', color: isOrt ? 'rgba(240,220,170,0.85)' : 'rgba(160,140,255,0.75)', background: base, border:`1px dashed ${isOrt ? 'rgba(217,176,107,0.4)' : 'rgba(124,77,255,0.35)'}`, borderRadius:3, cursor:'pointer', transition:'all 0.15s' }}
+                onClick={() => onCreateSubmap(hex)}
+                onMouseEnter={e => e.currentTarget.style.background = hover}
+                onMouseLeave={e => e.currentTarget.style.background = base}
+              >{isOrt ? '▦' : '⬡'} {childEbene}skarte anlegen</button>
+            );
+          })()}
 
           {/* Gelände (Hex) / Typ (Fläche) — Name wird über die Überschrift bearbeitet */}
           {!isArea ? (
@@ -1181,9 +1193,9 @@ function EditorDrawer({
           </React.Fragment>)}
 
           {/* ── Tab: Ressourcen ── */}
-          {tab === 'ressourcen' && (<React.Fragment>
+          {tab === 'ressourcen' && poolEditable && (<React.Fragment>
             <div style={{ display:'flex', alignItems:'center', gap:8, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(124,77,255,0.45)' }}>
-              <span>Ressourcen-Pools · {hex.name || (isArea ? 'Fläche' : 'Hex')}</span>
+              <span>Ressourcen-Pools · Ort {hex.name || ''}</span>
               <div style={{ flex:1, height:1, background:'rgba(124,77,255,0.15)' }}/>
             </div>
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10 }}>
@@ -1211,6 +1223,49 @@ function EditorDrawer({
             </div>
             <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'rgba(160,140,255,0.4)', letterSpacing:'0.1em', textTransform:'uppercase' }}>
               Fang-Status kommt automatisch aus dem Kollektikon
+            </div>
+          </React.Fragment>)}
+
+          {/* Aggregierte Anzeige auf Welt / Region / Gebiet */}
+          {tab === 'ressourcen' && !poolEditable && (<React.Fragment>
+            <div style={{ display:'flex', alignItems:'center', gap:8, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(124,77,255,0.45)' }}>
+              <span>Ressourcen · Summe aller Orte darunter</span>
+              <div style={{ flex:1, height:1, background:'rgba(124,77,255,0.15)' }}/>
+            </div>
+            {!aggPools && (
+              <div style={{ padding:'12px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(124,77,255,0.45)', textTransform:'uppercase' }}>◈ sammle …</div>
+            )}
+            {aggPools && aggPools.length === 0 && (
+              <div style={{ padding:'12px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(124,77,255,0.35)', textTransform:'uppercase' }}>— noch keine Pools in den Orten —</div>
+            )}
+            {aggPools && (window.KARTE_POOL_TYPES || []).map(pt => {
+              const items = aggPools.filter(r => r.cat === pt.key);
+              if (!items.length) return null;
+              const RAR = window.KARTE_RARITY_META;
+              const caughtN = items.filter(r => ((kollCounts || {})[`${pt.key}:${r.resource_id}`] || 0) > 0).length;
+              return (
+                <React.Fragment key={pt.key}>
+                  <div style={{ display:'flex', alignItems:'center', gap:8, margin:'10px 0 4px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase' }}>
+                    <span style={{ color:`oklch(0.78 0.13 ${pt.hue})` }}>{pt.label}</span>
+                    <div style={{ flex:1, height:1, background:'rgba(124,77,255,0.15)' }}/>
+                    <span style={{ color:'rgba(160,140,255,0.55)', fontSize:8 }}>{items.length} Arten · {caughtN} erfasst</span>
+                  </div>
+                  {items.map(r => {
+                    const it = window.karteKatalogItem(pt.key, r.resource_id);
+                    const caught = ((kollCounts || {})[`${pt.key}:${r.resource_id}`] || 0) > 0;
+                    return (
+                      <div key={`${pt.key}-${r.resource_id}`} style={{ display:'flex', alignItems:'center', gap:10, padding:'4px 2px', borderBottom:'1px solid rgba(124,77,255,0.08)' }}>
+                        <span style={{ fontFamily:'var(--font-body)', fontSize:12.5, fontWeight:300, color:'rgba(220,212,245,0.85)', minWidth:0, flex:1 }}>{it ? it.name : r.resource_id}</span>
+                        {it && <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', color: RAR[it.rarity].color, flexShrink:0 }}>{RAR[it.rarity].label}</span>}
+                        <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', color: caught ? 'rgba(120,220,160,0.95)' : 'rgba(160,140,255,0.4)', width:56, textAlign:'right', flexShrink:0 }}>{caught ? '✓ erfasst' : 'offen'}</span>
+                      </div>
+                    );
+                  })}
+                </React.Fragment>
+              );
+            })}
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'rgba(160,140,255,0.4)', letterSpacing:'0.1em', textTransform:'uppercase' }}>
+              Ressourcen werden pro Ort gepflegt — öffne den Ort zum Bearbeiten
             </div>
           </React.Fragment>)}
         </div>
@@ -2230,14 +2285,18 @@ function MerMap() {
     setBgAlignMode(false);
   }, [mapStack]);
 
-  // Subkarte anlegen — für Hexes und Flächen, wahlweise Hex- oder Bild-Karte
-  const createSubmap = uC5(async (node, kind) => {
+  // Subkarte anlegen — Typ und Ebene ergeben sich aus der festen Hierarchie:
+  // Welt → Region → Gebiet (Hex) → Ort (Bild); Flächen führen immer in Orte.
+  const createSubmap = uC5(async (node) => {
     const isAreaNode = !!node.points;
-    const mapKind = kind === 'image' ? 'image' : 'hex';
+    const depth = mapStack.length;
+    const childEbene = isAreaNode ? 'Ort' : depthEbene(depth + 1);
+    const mapKind = childEbene === 'Ort' ? 'image' : 'hex';
     if (isAreaNode) { await sbUpsertArea(node); } else { await sbUpsertHex(currentMapIdRef.current, node); }
     const insert = {
       name: node.name || 'Subkarte',
       kind: mapKind,
+      ebene: childEbene,
       floors: mapKind === 'image' ? [] : null,
     };
     if (isAreaNode) insert.parent_area_id = node.id; else insert.parent_hex_id = node.id;
@@ -2263,38 +2322,7 @@ function MerMap() {
     setMapMeta({ kind: newMap.kind || 'hex', ebene: newMap.ebene || '', floors: newMap.floors || [] });
     setBgAlignMode(false);
     setEditing(false); setSel(null); setSelAreaId(null);
-  }, [pushCurrentToStack]);
-
-  // Ebene (Welt/Region/Gebiet/Ort) der aktuellen Karte setzen.
-  // Bewusst als Upsert (POST) statt Update (PATCH): PATCH wird in manchen
-  // Umgebungen (Antivirus/Proxy/Extension) blockiert und erscheint als CORS-Fehler.
-  const setMapEbene = uC5(async (ebene) => {
-    setMapMeta(m => ({ ...m, ebene }));
-    const mapId = currentMapIdRef.current;
-    let lastError = null;
-    for (let attempt = 1; attempt <= 3; attempt++) {
-      const { data, error } = await window._sb.from('karte_maps')
-        .upsert({ id: mapId, ebene: ebene || null }, { onConflict: 'id' })
-        .select('id, ebene');
-      if (!error && data && data.length > 0) return;   // gespeichert
-      lastError = error;
-      if (error && /fetch/i.test(error.message || '')) {
-        // Netzwerk-Hänger — kurz warten und erneut versuchen
-        await new Promise(r => setTimeout(r, 700 * attempt));
-        continue;
-      }
-      if (error) {
-        console.error('setMapEbene:', error);
-        alert('Ebene konnte nicht gespeichert werden:\n' + error.message);
-      } else {
-        console.warn('setMapEbene: Upsert hat keine Zeile getroffen (RLS/Berechtigung?)', mapId);
-        alert('Ebene wurde nicht gespeichert — kein Zeilen-Treffer (Berechtigung/RLS?).');
-      }
-      return;
-    }
-    console.error('setMapEbene: Netzwerkfehler nach 3 Versuchen', lastError);
-    alert('Ebene konnte nicht gespeichert werden — Netzwerkfehler nach 3 Versuchen.\nMögliche Ursachen: Offline, Adblocker/Antivirus, oder die Seite ist in mehreren Tabs offen.');
-  }, []);
+  }, [pushCurrentToStack, mapStack]);
 
   // ─── Migration from localStorage ──────────────────────
   const handleMigrate = uC5(async () => {
@@ -2514,23 +2542,16 @@ function MerMap() {
             <span style={{ color:'rgba(160,140,255,0.7)' }}>{currentMapName}</span>
           </div>
         )}
-        {/* Ebene der aktuellen Karte */}
-        <select
-          value={mapMeta.ebene || ''}
-          onChange={e => setMapEbene(e.target.value)}
-          title="Ebene dieser Karte (für Anzeige & Fortschritt)"
-          style={{
-            marginLeft:14, background:'rgba(8,6,22,0.7)', border:'1px solid rgba(124,77,255,0.25)',
-            borderRadius:3, color:'rgba(160,140,255,0.75)', fontFamily:'var(--font-mono)',
-            fontSize:8.5, letterSpacing:'0.14em', textTransform:'uppercase', padding:'3px 6px', cursor:'pointer',
-          }}
-        >
-          <option value="">— Ebene —</option>
-          {['Welt','Region','Gebiet','Ort'].map(e => <option key={e} value={e}>{e}</option>)}
-        </select>
-        {isImageMap && (
-          <span style={{ marginLeft:10, fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.18em', color:'rgba(217,176,107,0.65)', textTransform:'uppercase' }}>▦ Bild-Karte</span>
-        )}
+        {/* Ebene ergibt sich aus der festen Hierarchie (Welt → Region → Gebiet → Ort) */}
+        <span style={{
+          marginLeft:14, padding:'3px 9px', borderRadius:3,
+          background: isImageMap ? 'rgba(217,176,107,0.08)' : 'rgba(124,77,255,0.08)',
+          border: `1px solid ${isImageMap ? 'rgba(217,176,107,0.35)' : 'rgba(124,77,255,0.3)'}`,
+          fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.18em', textTransform:'uppercase',
+          color: isImageMap ? 'rgba(240,220,170,0.85)' : 'rgba(160,140,255,0.8)',
+        }}>
+          {isImageMap ? '▦' : '⬡'} {depthEbene(mapStack.length)}
+        </span>
         <div style={{ flex: 1 }}/>
         <span style={{
           fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.28em',
@@ -3116,6 +3137,8 @@ function MerMap() {
           lastObjId={lastObjId}
           poolRows={nodePoolRows}
           onPoolOpen={(cat) => setPoolModal({ cat })}
+          childEbene={selectedArea ? 'Ort' : depthEbene(mapStack.length + 1)}
+          kollCounts={kollCounts}
         />
       )}
 

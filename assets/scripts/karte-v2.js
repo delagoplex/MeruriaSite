@@ -254,6 +254,44 @@
     }));
   }
 
+  // ── Pool-Aggregation über die Hierarchie ───────────────────────
+  // Sammelt alle Pool-Einträge des Start-Knotens und aller Unterkarten
+  // (Orte) darunter und führt sie pro Kategorie zusammen (Duplikate raus).
+  // Rückgabe: [{ cat, resource_id }]
+  async function collectSubtreePools(startNode, opts) {
+    const onlyVisible = !!(opts && opts.onlyVisible);
+    const seen = new Set();
+    const out = [];
+    const push = rows => rows.forEach(r => {
+      const k = `${r.cat}:${r.resource_id}`;
+      if (!seen.has(k)) { seen.add(k); out.push({ cat: r.cat, resource_id: String(r.resource_id) }); }
+    });
+    push(await loadPools(
+      startNode.hexId ? [startNode.hexId] : [],
+      startNode.areaId ? [startNode.areaId] : []
+    ));
+    let queue = startNode.submapId ? [startNode.submapId] : [];
+    const seenMaps = new Set();
+    let depth = 0;
+    while (queue.length && depth < 6) {
+      const next = [];
+      for (const mapId of queue) {
+        if (seenMaps.has(mapId)) continue;
+        seenMaps.add(mapId);
+        let hq = window._sb.from('karte_hexes').select('id, has_submap, submap_id, visible').eq('map_id', mapId);
+        if (onlyVisible) hq = hq.eq('visible', true);
+        const [hexRes, areaList] = await Promise.all([hq, loadAreas(mapId, onlyVisible)]);
+        const hexRows = hexRes.data || [];
+        push(await loadPools(hexRows.map(h => h.id), areaList.map(a => a.id)));
+        hexRows.forEach(h => { if (h.has_submap && h.submap_id) next.push(h.submap_id); });
+        areaList.forEach(a => { if (a.has_submap && a.submap_id) next.push(a.submap_id); });
+      }
+      queue = next;
+      depth++;
+    }
+    return out;
+  }
+
   // ── Icon-Eingabe für Erkundungs-Symbole ────────────────────────
   // Akzeptiert entweder reine Pfaddaten ("M50 14 …", viewBox 0 0 100 100)
   // oder komplettes SVG-Markup (z. B. von svgrepo.com kopiert) — daraus werden
@@ -284,5 +322,6 @@
     rowToObjective, loadObjectives, sbUpsertObjective, sbDeleteObjective,
     loadPools, sbAddPoolItem, sbRemovePoolItem,
     karteCollectSubtreeStats: collectSubtreeStats,
+    karteCollectSubtreePools: collectSubtreePools,
   });
 })();
