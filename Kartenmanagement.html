@@ -20,6 +20,7 @@
 <script src="assets/scripts/data/resources/pflanzen/fantasy_plant-data.js"></script>
 <script src="assets/scripts/data/resources/mineralien/ff14_mineralien-data.js"></script>
 <script src="assets/scripts/data/monster/monsterhandbuch-data.js"></script>
+<script src="assets/scripts/data/rassen-data.js"></script>
 <script src="assets/scripts/karte-v2.js"></script>
 </head>
 <body>
@@ -554,6 +555,49 @@ function ObjField({ label, value, onCh, placeholder, list, textarea }) {
   );
 }
 
+// ── Kolonie-Karte: Name + Rassen-Tags ────────────────────────────
+function KolonieCard({ kol, onUpdate, onDelete }) {
+  const [raceInput, setRaceInput] = uS4('');
+  const rassen = kol.rassen || [];
+  const addRace = () => {
+    const v = raceInput.trim();
+    if (v && !rassen.includes(v)) onUpdate({ ...kol, rassen: [...rassen, v] });
+    setRaceInput('');
+  };
+  return (
+    <div style={{ marginBottom:8, padding:'10px 12px', background:'rgba(10,8,28,0.5)', border:'1px solid rgba(124,77,255,0.22)', borderRadius:3 }}>
+      <div style={{ display:'flex', gap:6, marginBottom:7 }}>
+        <input
+          className="mk-input" style={{ flex:1, fontSize:12.5 }} type="text"
+          placeholder="Name der Kolonie …" value={kol.name || ''}
+          onChange={e => onUpdate({ ...kol, name: e.target.value })}
+        />
+        <button
+          onClick={onDelete} title="Kolonie entfernen"
+          style={{ width:30, flexShrink:0, fontFamily:'var(--font-mono)', fontSize:10, color:'rgba(220,140,160,0.7)', background:'transparent', border:'1px solid rgba(220,80,120,0.35)', borderRadius:2, cursor:'pointer' }}
+        >×</button>
+      </div>
+      <div style={{ display:'flex', flexWrap:'wrap', gap:4, marginBottom: rassen.length ? 6 : 0 }}>
+        {rassen.map(r => (
+          <span key={r} style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'2px 8px', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.25)', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.1em', color:'rgba(180,165,230,0.8)' }}>
+            {r}
+            <button onClick={() => onUpdate({ ...kol, rassen: rassen.filter(x => x !== r) })} style={{ background:'none', border:'none', cursor:'pointer', color:'rgba(200,140,140,0.7)', fontSize:10, lineHeight:1, padding:0 }}>×</button>
+          </span>
+        ))}
+      </div>
+      <div style={{ display:'flex', gap:6 }}>
+        <input
+          className="mk-input" style={{ flex:1, fontSize:11, padding:'5px 9px' }} type="text"
+          placeholder="Rasse hinzufügen …" value={raceInput} list="mk-rassen-list"
+          onChange={e => setRaceInput(e.target.value)}
+          onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addRace(); } }}
+        />
+        <button onClick={addRace} style={{ padding:'0 11px', fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(160,140,255,0.8)', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.3)', borderRadius:3, cursor:'pointer' }}>+</button>
+      </div>
+    </div>
+  );
+}
+
 // ── Objective card (collapsible editor) ──────────────────────────
 function ObjectiveCard({ o, onUpdate, onDelete, startOpen }) {
   const [open, setOpen] = uS4(!!startOpen);
@@ -616,8 +660,13 @@ function EditorDrawer({
   const [newErkName, setNewErkName] = uS4('');
   const [tab, setTab] = uS4('details');
   const [editMode, setEditMode] = uS4(false);
+  const [nameEdit, setNameEdit] = uS4(false);
 
   const upd = (key, val) => onChange({ ...hex, [key]: val });
+
+  // Kolonien: strukturierte Liste [{name, rassen:[]}] im (ehem. Kolonie-System-)JSONB-Feld
+  const kolonien = Array.isArray(hex.kolonie) ? hex.kolonie : [];
+  const updKolonien = (list) => upd('kolonie', list);
 
   // Tags
   const tags = hex.tags || [];
@@ -627,29 +676,21 @@ function EditorDrawer({
     setTagInput('');
   };
 
-  // Erkundung (main map)
+  // Erkundung (main map) — neues System: Gesamtanzahl + gefunden
   const erk = hex.erkundung || [];
   const addErk = () => {
     const v = newErkName.trim();
-    if (v) { upd('erkundung', [...erk, { name: v, entdeckt: 0, komplettiert: 0 }]); setNewErkName(''); }
+    if (v) { upd('erkundung', [...erk, { name: v, gefunden: 0, total: 0 }]); setNewErkName(''); }
   };
   const updErk = (i, field, val) =>
-    upd('erkundung', erk.map((e, idx) => idx === i ? { ...e, [field]: field === 'name' ? val : +val } : e));
+    upd('erkundung', erk.map((e, idx) => idx === i
+      ? { ...e, [field]: (field === 'gefunden' || field === 'total') ? Math.max(0, +val || 0) : val }
+      : e));
   const removeErk = (i) => upd('erkundung', erk.filter((_, idx) => idx !== i));
 
   const SectionHead = ({ label }) => (
     <div style={{ display:'flex', alignItems:'center', gap:8, margin:'18px 0 10px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(124,77,255,0.5)' }}>
       <span>{label}</span><div style={{ flex:1, height:1, background:'rgba(124,77,255,0.18)' }}/>
-    </div>
-  );
-
-  const SliderRow = ({ label, value, onChange: oc }) => (
-    <div style={{ marginBottom:8 }}>
-      <div style={{ display:'flex', justifyContent:'space-between', marginBottom:2 }}>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.1em', color:'rgba(160,140,255,0.6)' }}>{label}</span>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(124,77,255,0.7)' }}>{value}%</span>
-      </div>
-      <input type="range" min="0" max="100" value={value} onChange={e => oc(+e.target.value)} style={{ width:'100%', accentColor:'rgba(124,77,255,0.9)', cursor:'pointer' }}/>
     </div>
   );
 
@@ -686,7 +727,27 @@ function EditorDrawer({
                 ? `Fläche · ${hex.typ === 'eingang' ? 'Eingang' : 'POI'} · Bearbeiten`
                 : `Hexagon · ${hex.q} · ${-hex.r} · Bearbeiten`}
             </div>
-            <div style={{ fontFamily:'var(--font-display)', fontWeight:400, fontSize:20, letterSpacing:'0.14em', color:'#f3eefe', textTransform:'uppercase', marginTop:6 }}>{hex.name || 'Unbenannt'}</div>
+            {nameEdit ? (
+              <input
+                autoFocus
+                value={hex.name || ''}
+                placeholder="Name …"
+                onChange={e => upd('name', e.target.value)}
+                onBlur={() => setNameEdit(false)}
+                onKeyDown={e => { if (e.key === 'Enter' || e.key === 'Escape') { e.stopPropagation(); setNameEdit(false); } }}
+                style={{ display:'block', width:'100%', fontFamily:'var(--font-display)', fontWeight:400, fontSize:20, letterSpacing:'0.14em', color:'#f3eefe', textTransform:'uppercase', marginTop:6, background:'transparent', border:'none', borderBottom:'1px dashed rgba(217,176,107,0.5)', outline:'none', padding:0 }}
+              />
+            ) : (
+              <div
+                onClick={() => setNameEdit(true)}
+                title="Klicken zum Umbenennen"
+                style={{ fontFamily:'var(--font-display)', fontWeight:400, fontSize:20, letterSpacing:'0.14em', color:'#f3eefe', textTransform:'uppercase', marginTop:6, cursor:'text', borderBottom:'1px dashed transparent' }}
+                onMouseEnter={e => e.currentTarget.style.borderBottomColor = 'rgba(217,176,107,0.4)'}
+                onMouseLeave={e => e.currentTarget.style.borderBottomColor = 'transparent'}
+              >
+                {hex.name || 'Unbenannt'} <span style={{ fontSize:11, color:'rgba(217,176,107,0.5)', verticalAlign:'middle' }}>✎</span>
+              </div>
+            )}
           </div>
           <div style={{ display:'flex', gap:8, flexShrink:0 }}>
           <button
@@ -766,9 +827,18 @@ function EditorDrawer({
               if (isArea) facts.push(['Status', `${hex.entdeckt ? '✓ entdeckt' : '○ unentdeckt'} · ${hex.komplettiert ? '✓✓ komplettiert' : '○ offen'}`]);
               if (isSubmap && !isArea) facts.push(['Datensonde', hex.datensonde ? '✓ installiert' : '✗ nicht installiert']);
               if (!isSubmap && !isArea && hex.bevoelkerung) facts.push(['Bevölkerung', hex.bevoelkerung]);
-              if (!isSubmap && !isArea && hex.kolonien) facts.push(['Kolonien', hex.kolonien]);
+              if (!isSubmap && !isArea && kolonien.length > 0) {
+                kolonien.forEach(k => facts.push(['Kolonie', `${k.name || 'Unbenannt'}${(k.rassen || []).length ? ` — ${k.rassen.join(', ')}` : ''}`]));
+              } else if (!isSubmap && !isArea && hex.kolonien) {
+                facts.push(['Kolonien', hex.kolonien]);
+              }
               if (isSubmap && !isArea && hex.features) facts.push(['Besonderheiten', hex.features]);
-              (!isArea ? (hex.erkundung || []) : []).forEach(e => facts.push([e.name || 'Erkundung', `${e.entdeckt}% entdeckt · ${e.komplettiert}% komplettiert`]));
+              // Erkundung: nur Einträge im neuen Format (gefunden/gesamt) anzeigen —
+              // Altbestand mit %-Werten erscheint erst wieder, wenn er neu erfasst wurde
+              (!isArea ? (hex.erkundung || []) : []).forEach(e => {
+                const total = +e.total || 0;
+                if (total > 0) facts.push([e.name || 'Erkundung', `${+e.gefunden || 0} / ${total} gefunden`]);
+              });
               return facts.map(([k, v]) => (
                 <div key={k + v} style={{ display:'flex', gap:8, alignItems:'baseline' }}>
                   <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(124,77,255,0.5)', width:96, flexShrink:0 }}>{k}</span>
@@ -832,13 +902,7 @@ function EditorDrawer({
             </div>
           )}
 
-          {/* Name */}
-          <div className="mk-field">
-            <label htmlFor="mk-name">Name</label>
-            <input id="mk-name" className="mk-input" type="text" placeholder="z. B. Sturmkrone …" value={hex.name || ''} onChange={e => upd('name', e.target.value)}/>
-          </div>
-
-          {/* Gelände (Hex) / Typ (Fläche) */}
+          {/* Gelände (Hex) / Typ (Fläche) — Name wird über die Überschrift bearbeitet */}
           {!isArea ? (
             <div className="mk-field">
               <label htmlFor="mk-terrain">Gelände</label>
@@ -871,18 +935,20 @@ function EditorDrawer({
 
           {/* Tags */}
           <div className="mk-field">
-            <label>Klima & Atmosphäre</label>
-            <div style={{ display:'flex', flexWrap:'wrap', gap:5, marginBottom:6 }}>
-              {tags.map(t => (
-                <span key={t} style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'3px 8px', background:'rgba(124,77,255,0.12)', border:'1px solid rgba(124,77,255,0.3)', borderRadius:20, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.1em', color:'rgba(200,180,255,0.85)' }}>
-                  {t}
-                  <button onClick={() => upd('tags', tags.filter(x => x !== t))} style={{ background:'none', border:'none', cursor:'pointer', color:'rgba(200,140,140,0.7)', fontSize:11, lineHeight:1, padding:0 }}>×</button>
-                </span>
-              ))}
-            </div>
+            <label>Tags</label>
+            {tags.length > 0 && (
+              <div style={{ display:'flex', flexWrap:'wrap', gap:5, marginBottom:6 }}>
+                {tags.map(t => (
+                  <span key={t} style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'3px 9px', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.25)', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.1em', color:'rgba(180,165,230,0.8)' }}>
+                    {t}
+                    <button onClick={() => upd('tags', tags.filter(x => x !== t))} style={{ background:'none', border:'none', cursor:'pointer', color:'rgba(200,140,140,0.7)', fontSize:11, lineHeight:1, padding:0 }}>×</button>
+                  </span>
+                ))}
+              </div>
+            )}
             <div style={{ display:'flex', gap:6 }}>
               <input className="mk-input" style={{ flex:1 }} type="text" placeholder="z. B. Tropisch, Neblig …" value={tagInput} onChange={e => setTagInput(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addTag(); }}}/>
-              <button onClick={addTag} style={{ padding:'0 12px', fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(160,140,255,0.8)', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.3)', borderRadius:4, cursor:'pointer' }}>+</button>
+              <button onClick={addTag} title="Tag hinzufügen" style={{ padding:'0 12px', fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(160,140,255,0.8)', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.3)', borderRadius:4, cursor:'pointer' }}>+</button>
             </div>
           </div>
 
@@ -924,22 +990,95 @@ function EditorDrawer({
                 <label htmlFor="mk-bev">Bevölkerung</label>
                 <input id="mk-bev" className="mk-input" type="text" placeholder="z. B. ~3.200 · hauptsächlich Nomaden" value={hex.bevoelkerung || ''} onChange={e => upd('bevoelkerung', e.target.value)}/>
               </div>
-              <div className="mk-field">
-                <label htmlFor="mk-kol">Kolonien</label>
-                <input id="mk-kol" className="mk-input" type="text" placeholder="z. B. 3 aktive Kolonien" value={hex.kolonien || ''} onChange={e => upd('kolonien', e.target.value)}/>
+              {/* Kolonien: Name + Rassen-Tags */}
+              <div style={{ display:'flex', alignItems:'center', gap:8, margin:'14px 0 8px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(124,77,255,0.5)' }}>
+                <span>Kolonien</span>
+                <div style={{ flex:1, height:1, background:'rgba(124,77,255,0.18)' }}/>
+                <button
+                  onClick={() => updKolonien([...kolonien, { name: '', rassen: [] }])}
+                  title="Kolonie hinzufügen"
+                  style={{ width:24, height:24, border:'1px dashed rgba(124,77,255,0.4)', borderRadius:2, background:'transparent', color:'rgba(160,140,255,0.8)', fontSize:14, cursor:'pointer', lineHeight:1 }}
+                >+</button>
               </div>
-
-              <SectionHead label="Erkundungsfortschritt"/>
-              {erk.map((e, i) => (
-                <div key={i} style={{ marginBottom:12, padding:'10px 10px 8px', background:'rgba(8,6,22,0.5)', border:'1px solid rgba(124,77,255,0.15)', borderRadius:4 }}>
-                  <div style={{ display:'flex', gap:6, marginBottom:8 }}>
-                    <input className="mk-input" style={{ flex:1, fontSize:11 }} value={e.name} onChange={ev => updErk(i, 'name', ev.target.value)} placeholder="Kategorie …"/>
-                    <button onClick={() => removeErk(i)} style={{ padding:'0 10px', fontFamily:'var(--font-mono)', fontSize:10, color:'rgba(200,80,80,0.7)', background:'rgba(200,80,80,0.07)', border:'1px solid rgba(200,80,80,0.2)', borderRadius:4, cursor:'pointer' }}>✕</button>
-                  </div>
-                  <SliderRow label="Entdeckt" value={e.entdeckt} onChange={v => updErk(i,'entdeckt',v)}/>
-                  <SliderRow label="Komplettiert" value={e.komplettiert} onChange={v => updErk(i,'komplettiert',v)}/>
-                </div>
+              <datalist id="mk-rassen-list">
+                {(window.RASSEN_DATA || []).filter(r => r && r.name).map(r => <option key={r.name} value={r.name}/>)}
+              </datalist>
+              {kolonien.length === 0 && (
+                <div style={{ padding:'8px 0 4px', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.2em', color:'rgba(124,77,255,0.35)', textTransform:'uppercase' }}>— keine Kolonien · mit + anlegen —</div>
+              )}
+              {kolonien.map((k, i) => (
+                <KolonieCard
+                  key={i}
+                  kol={k}
+                  onUpdate={(next) => updKolonien(kolonien.map((x, idx) => idx === i ? next : x))}
+                  onDelete={() => updKolonien(kolonien.filter((_, idx) => idx !== i))}
+                />
               ))}
+
+              {/* Erkundungsfortschritt: gefunden / gesamt */}
+              <div style={{ display:'flex', alignItems:'center', gap:8, margin:'14px 0 8px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(124,77,255,0.5)' }}>
+                <span>Erkundungsfortschritt</span>
+                <div style={{ flex:1, height:1, background:'rgba(124,77,255,0.18)' }}/>
+              </div>
+              {erk.map((e, i) => {
+                const total = +e.total || 0;
+                const gefunden = Math.min(+e.gefunden || 0, total || Infinity);
+                const pct = total > 0 ? Math.round(gefunden / total * 100) : 0;
+                const barColor = e.farbe || 'rgba(160,140,255,0.85)';
+                return (
+                  <div key={i} style={{ marginBottom:8, padding:'9px 10px', background:'rgba(10,8,28,0.5)', border:'1px solid rgba(124,77,255,0.22)', borderRadius:3 }}>
+                    <div style={{ display:'flex', gap:6, alignItems:'center' }}>
+                      <input className="mk-input" style={{ flex:1, fontSize:12, minWidth:0 }} value={e.name || ''} onChange={ev => updErk(i, 'name', ev.target.value)} placeholder="Kategorie …"/>
+                      <input className="mk-input" style={{ width:58, fontSize:11.5, textAlign:'center', flexShrink:0 }} type="number" min="0" value={e.gefunden ?? 0} onChange={ev => updErk(i, 'gefunden', ev.target.value)} title="Gefunden"/>
+                      <span style={{ fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(160,140,255,0.5)', flexShrink:0 }}>/</span>
+                      <input className="mk-input" style={{ width:58, fontSize:11.5, textAlign:'center', flexShrink:0 }} type="number" min="0" value={e.total ?? 0} onChange={ev => updErk(i, 'total', ev.target.value)} title="Gesamtanzahl"/>
+                      <button onClick={() => removeErk(i)} title="Entfernen" style={{ width:28, height:28, flexShrink:0, fontFamily:'var(--font-mono)', fontSize:10, color:'rgba(220,140,160,0.7)', background:'transparent', border:'1px solid rgba(220,80,120,0.35)', borderRadius:2, cursor:'pointer' }}>×</button>
+                    </div>
+
+                    {/* Optional: Farbe (Colorpicker) + Symbol (SVG-Pfad) */}
+                    <div style={{ display:'flex', gap:6, alignItems:'center', marginTop:6 }}>
+                      <input
+                        type="color"
+                        value={e.farbe || '#a08cff'}
+                        onChange={ev => updErk(i, 'farbe', ev.target.value)}
+                        title="Balken-/Symbolfarbe wählen"
+                        style={{ width:30, height:26, padding:0, flexShrink:0, background:'rgba(20,12,46,0.5)', border:`1px solid ${e.farbe ? e.farbe : 'rgba(124,77,255,0.25)'}`, borderRadius:2, cursor:'pointer' }}
+                      />
+                      {e.farbe && (
+                        <button onClick={() => updErk(i, 'farbe', '')} title="Farbe zurücksetzen (Automatik)" style={{ width:22, height:26, flexShrink:0, fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(160,140,255,0.6)', background:'transparent', border:'1px solid rgba(124,77,255,0.25)', borderRadius:2, cursor:'pointer', padding:0 }}>↺</button>
+                      )}
+                      {(() => {
+                        const parsed = window.karteParseIcon(e.icon);
+                        const vbW = parsed ? ((parsed.viewBox.split(/\s+/).map(Number)[2]) || 100) : 100;
+                        const sw = vbW <= 50 ? 1.5 : 2;
+                        return (
+                          <svg viewBox={parsed ? parsed.viewBox : '0 0 100 100'} width="22" height="22" fill="none" style={{ color: barColor, stroke: barColor, opacity:0.9, flexShrink:0 }} title="Symbol-Vorschau">
+                            {parsed
+                              ? parsed.paths.map((d, pi) => <path key={pi} d={d} fill="none" strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round"/>)
+                              : <g><circle cx="50" cy="50" r="26" fill="none" strokeWidth="2"/><circle cx="50" cy="50" r="6.5" fill="none" strokeWidth="1.6"/></g>}
+                          </svg>
+                        );
+                      })()}
+                      <input
+                        className="mk-input"
+                        style={{ flex:1, fontSize:10, fontFamily:'var(--font-mono)', minWidth:0, padding:'5px 8px' }}
+                        type="text"
+                        value={e.icon || ''}
+                        onChange={ev => updErk(i, 'icon', ev.target.value)}
+                        placeholder="Symbol: SVG-Code (z. B. von svgrepo.com) oder Pfaddaten einfügen …"
+                        title="Komplettes SVG oder reinen Pfad einfügen — leer = automatisches Icon"
+                      />
+                    </div>
+
+                    <div style={{ display:'flex', alignItems:'center', gap:8, marginTop:6 }}>
+                      <div style={{ flex:1, position:'relative', height:4, background:'rgba(124,77,255,0.08)', border:'1px solid rgba(124,77,255,0.15)', borderRadius:2, overflow:'hidden' }}>
+                        <div style={{ position:'absolute', left:0, top:0, bottom:0, width:`${pct}%`, background: e.farbe ? e.farbe : 'linear-gradient(90deg, rgba(124,100,220,0.9), rgba(160,140,255,0.85))', borderRadius:2, transition:'width 0.4s' }}/>
+                      </div>
+                      <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.14em', color:'rgba(160,140,255,0.65)', flexShrink:0 }}>{pct} %</span>
+                    </div>
+                  </div>
+                );
+              })}
               <div style={{ display:'flex', gap:6, marginBottom:4 }}>
                 <input className="mk-input" style={{ flex:1 }} type="text" placeholder="Neue Kategorie …" value={newErkName} onChange={e => setNewErkName(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addErk(); }}}/>
                 <button onClick={addErk} style={{ padding:'0 12px', fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(160,140,255,0.8)', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.3)', borderRadius:4, cursor:'pointer' }}>+</button>

@@ -300,12 +300,26 @@ function barLabel(kat) {
   return M[kat] || kat;
 }
 
-function makeBar(label, entdeckt, komplettiert) {
+// opts: { color: '#rrggbb' (Colorpicker-Override), iconPath: SVG-Pfad ODER komplettes SVG-Markup }
+function makeBar(label, entdeckt, komplettiert, opts) {
+  const o = opts || {};
   const { kind, hue } = barKind(label);
-  const c = `oklch(0.72 0.16 ${hue})`;
-  const cA = a => `oklch(0.72 0.16 ${hue} / ${a})`;
+  const c = o.color || `oklch(0.72 0.16 ${hue})`;
+  const cA = a => o.color
+    ? `color-mix(in srgb, ${o.color} ${Math.round(a * 100)}%, transparent)`
+    : `oklch(0.72 0.16 ${hue} / ${a})`;
+  const parsed = o.iconPath ? window.karteParseIcon(o.iconPath) : null;
+  let icon = barIcon(kind), viewBox = '0 0 100 100';
+  if (parsed) {
+    viewBox = parsed.viewBox;
+    const vbW = (parsed.viewBox.split(/\s+/).map(Number)[2]) || 100;
+    const sw = vbW <= 50 ? 1.5 : 2;
+    icon = parsed.paths.map((d, i) =>
+      React.createElement('path', { key: i, d, fill: 'none', strokeWidth: sw, strokeLinecap: 'round', strokeLinejoin: 'round' })
+    );
+  }
   return {
-    label, c, icon: barIcon(kind),
+    label, c, icon, viewBox,
     trackBorder: cA(0.13),
     wA: (entdeckt || 0) + '%', wB: (komplettiert || 0) + '%',
     glow: (komplettiert || 0) > 0 ? `0 0 7px 1px ${cA(0.42)}, 0 0 14px 3px ${cA(0.18)}, 0 0 22px 6px ${cA(0.08)}` : 'none',
@@ -318,7 +332,7 @@ function FancyBar({ b }) {
   return (
     <div style={{ marginBottom:12 }}>
       <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:5 }}>
-        <svg viewBox="0 0 100 100" width="16" height="16" fill="none" style={{ color: b.c, stroke: b.c, opacity:0.9, flexShrink:0 }}>{b.icon}</svg>
+        <svg viewBox={b.viewBox || '0 0 100 100'} width="16" height="16" fill="none" style={{ color: b.c, stroke: b.c, opacity:0.9, flexShrink:0 }}>{b.icon}</svg>
         <span style={{ fontFamily:'var(--font-display)', fontSize:10, letterSpacing:'0.18em', fontWeight:400, color:'rgba(220,210,250,0.85)', textTransform:'uppercase', minWidth:0, flex:1, lineHeight:1.2 }}>{b.label}</span>
         <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color: b.c, letterSpacing:'0.18em', flexShrink:0 }}>{b.pct}</span>
       </div>
@@ -369,7 +383,17 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
     const pct = Math.round(caught / items.length * 100);
     bars.push(makeBar(POOL_BAR_LABELS[pt.key] || pt.label, pct, pct));
   });
-  if (!isArea) (hex.erkundung || []).forEach(e => bars.push(makeBar(e.name, e.entdeckt, e.komplettiert)));
+  if (!isArea) (hex.erkundung || []).forEach(e => {
+    const opts = { color: e.farbe || null, iconPath: e.icon || null };
+    const total = +e.total || 0;
+    if (total > 0) {
+      const gefunden = Math.min(+e.gefunden || 0, total);
+      const pct = Math.round(gefunden / total * 100);
+      bars.push(makeBar(`${e.name} · ${gefunden}/${total}`, pct, pct, opts));
+    } else {
+      bars.push(makeBar(e.name, e.entdeckt || 0, e.komplettiert || 0, opts));
+    }
+  });
 
   const TabBtn = ({ id, label, accent }) => (
     <button
@@ -387,12 +411,15 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
   const tags = hex.tags || [];
   const topBild = isArea ? hex.bild_url : (hex.banner_url || hex.bild_url);
 
+  // Kolonien: strukturierte Liste [{name, rassen:[]}] (Fallback: alter Freitext)
+  const kolonien = Array.isArray(hex.kolonie) ? hex.kolonie : [];
+
   // Fakten-Zeilen für den Details-Tab
   const facts = [];
   if (isSubmap && !isArea && hex.features) facts.push(['Besonderheiten', hex.features]);
   if (isSubmap && !isArea) facts.push(['Datensonde', hex.datensonde ? '✓ installiert' : '✗ nicht installiert']);
   if (!isSubmap && !isArea && hex.bevoelkerung) facts.push(['Bevölkerung', hex.bevoelkerung]);
-  if (!isSubmap && !isArea && hex.kolonien) facts.push(['Kolonien', hex.kolonien]);
+  if (!isSubmap && !isArea && kolonien.length === 0 && hex.kolonien) facts.push(['Kolonien', hex.kolonien]);
 
   const FactRow = ({ k, v }) => (
     <div style={{ display:'flex', gap:8, alignItems:'baseline', marginBottom:8 }}>
@@ -470,6 +497,27 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
           {/* Fakten */}
           {facts.map(([k, v]) => <FactRow key={k} k={k} v={v}/>)}
 
+          {/* Kolonien: Name + Rassen-Chips */}
+          {!isArea && kolonien.length > 0 && (
+            <React.Fragment>
+              <div style={{ display:'flex', alignItems:'center', gap:8, margin:'8px 0 8px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(124,77,255,0.45)' }}>
+                <span>Kolonien</span><div style={{ flex:1, height:1, background:'rgba(124,77,255,0.15)' }}/>
+              </div>
+              {kolonien.map((k, i) => (
+                <div key={i} style={{ marginBottom:8, padding:'9px 12px', background:'rgba(10,8,28,0.5)', border:'1px solid rgba(124,77,255,0.22)', borderRadius:3 }}>
+                  <div style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:400, color:'#f3eefe', marginBottom: (k.rassen || []).length ? 6 : 0 }}>{k.name || 'Unbenannte Kolonie'}</div>
+                  {(k.rassen || []).length > 0 && (
+                    <div style={{ display:'flex', flexWrap:'wrap', gap:4 }}>
+                      {k.rassen.map(r => (
+                        <span key={r} style={{ padding:'2px 8px', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.25)', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', color:'rgba(180,165,230,0.8)' }}>{r}</span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </React.Fragment>
+          )}
+
           {/* Erkundungsfortschritt — automatisch berechnet (Ziele-Tags, Pool-Fangquoten, Legacy-Erkundung) */}
           {(bars.length > 0 || statsLoading) && (
             <React.Fragment>
@@ -484,7 +532,7 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
           )}
 
           {/* Fallback empty */}
-          {!hex.beschreibung && tags.length === 0 && facts.length === 0 && bars.length === 0 && !statsLoading && (
+          {!hex.beschreibung && tags.length === 0 && facts.length === 0 && kolonien.length === 0 && bars.length === 0 && !statsLoading && (
             <div style={{ padding:'24px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(124,77,255,0.35)', textTransform:'uppercase' }}>— keine Informationen —</div>
           )}
           </React.Fragment>)}

@@ -254,7 +254,25 @@
     }));
   }
 
+  // ── Icon-Eingabe für Erkundungs-Symbole ────────────────────────
+  // Akzeptiert entweder reine Pfaddaten ("M50 14 …", viewBox 0 0 100 100)
+  // oder komplettes SVG-Markup (z. B. von svgrepo.com kopiert) — daraus werden
+  // alle <path d="…"> und die viewBox extrahiert; Farben werden verworfen,
+  // damit das Symbol die Balkenfarbe erbt.
+  function parseIcon(val) {
+    if (!val || !val.trim()) return null;
+    const s = val.trim();
+    if (s.includes('<')) {
+      const vb = /viewBox\s*=\s*"([^"]+)"/i.exec(s);
+      const paths = [...s.matchAll(/\sd\s*=\s*"([^"]+)"/g)].map(m => m[1]).filter(d => d.trim());
+      if (!paths.length) return null;
+      return { viewBox: vb ? vb[1] : '0 0 24 24', paths };
+    }
+    return { viewBox: '0 0 100 100', paths: [s] };
+  }
+
   Object.assign(window, {
+    karteParseIcon: parseIcon,
     KARTE_POOL_TYPES: POOL_TYPES,
     KARTE_RARITY_META: RARITY_META,
     KARTE_RARITY_ORDER: RARITY_ORDER,
