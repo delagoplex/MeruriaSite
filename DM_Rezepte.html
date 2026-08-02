@@ -15,6 +15,7 @@
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
 <script src="assets/components/site-gate.js"></script>
+<script src="assets/components/page-hero.jsx" type="text/babel"></script>
 <script src="assets/scripts/data/kollektikon-data.js"></script>
 </head>
 <body>
@@ -22,7 +23,7 @@
 
 <script type="text/babel">
 const { useState, useEffect, useRef, useMemo, useCallback } = React;
-const { SiteNav, SiteGate } = window;
+const { SiteNav, SiteGate, PageHero } = window;
 
 const GLYPH_CHARS = '▒▓█░▐▌▄▀■□▪▫◆◇○●◎▸▴';
 
@@ -818,13 +819,11 @@ function App() {
     <div className="rez-root">
       <SiteNav rightLabel="DM · REZEPTE" />
 
-      <div className="rez-header">
-        <div className="rez-header-kicker">◈ Rezeptverwaltung</div>
-        <h1 className="rez-title">Rezepte</h1>
-        <div className="rez-title-under" />
-        <p className="rez-subtitle">Meisterkodex — alle Zutaten sichtbar · Rezepte direkt genehmigt</p>
-        <div className="rez-header-rule" />
-      </div>
+      <PageHero
+        kicker="Welt · Küche"
+        title="Rezepte"
+        sub="Meisterkodex — alle Zutaten sichtbar · Rezepte direkt genehmigt"
+      />
 
       <div className="rez-toolbar">
         <input

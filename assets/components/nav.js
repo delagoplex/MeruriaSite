@@ -115,7 +115,7 @@ const NAV = [{
     href: 'Sammeln und Handwerk.html'
   }, {
     label: 'Schutzherren',
-    href: '#'
+    href: 'Schutzherren.html'
   }, {
     label: 'Gesinnungen',
     href: '#'

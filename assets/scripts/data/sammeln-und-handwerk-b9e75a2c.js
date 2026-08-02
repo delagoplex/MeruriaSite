@@ -358,50 +358,6 @@ function CraftSidebar({ chapters, activeId, onSelect }) {
   );
 }
 
-// ── PAGE HEADER ────────────────────────────────────────────────────
-function PageHeader() {
-  return (
-    <header style={{
-      padding: '54px 0 36px',
-      borderBottom: '1px solid rgba(124,77,255,0.13)',
-      marginBottom: '36px',
-    }}>
-      <div style={{
-        fontFamily: 'var(--font-mono)', fontSize: '9.5px', letterSpacing: '0.32em',
-        color: 'rgba(124,77,255,0.62)', textTransform: 'uppercase', marginBottom: '14px',
-      }}>◇ Spielerhandbuch · Kapitel II ◇</div>
-      <h1 style={{
-        fontFamily: 'var(--font-display)', fontSize: 'clamp(34px, 4vw, 52px)', fontWeight: 300,
-        letterSpacing: '0.18em', color: 'rgba(240,238,255,0.96)',
-        textTransform: 'uppercase', marginBottom: '12px', lineHeight: 1.1,
-      }}>Sammeln &amp; Handwerk</h1>
-      <p style={{
-        fontFamily: 'var(--font-body)', fontWeight: 300, fontStyle: 'italic',
-        fontSize: '15px', color: 'rgba(180,165,235,0.78)', letterSpacing: '0.04em',
-        maxWidth: '720px', lineHeight: 1.6,
-      }}>
-        Vom Wegrand zur Werkbank — wie Pflanzen, Mineralien und Kreaturenteile zu Tränken,
-        Klingen und magischen Artefakten werden. Material schlägt Zeit, Entscheidungen schlagen Rezepte.
-      </p>
-      <div style={{ marginTop: '18px', display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
-        {[
-          { label:'5 Konkoktionstypen' },
-          { label:'62 Pflanzen · 30 Materialien' },
-          { label:'Freies Reagenzien-System' },
-          { label:'Sockeln · Wachsende Gegenstände' },
-        ].map((b, i) => (
-          <span key={i} style={{
-            fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '0.18em',
-            textTransform: 'uppercase', color: 'rgba(160,140,255,0.75)',
-            padding: '5px 11px', border: '1px solid rgba(124,77,255,0.22)',
-            borderRadius: '2px',
-          }}>{b.label}</span>
-        ))}
-      </div>
-    </header>
-  );
-}
-
 // ── FORMATTERS ─────────────────────────────────────────────────────
 function fmtHade(n) {
   if (n == null) return '—';
@@ -420,6 +376,6 @@ function fmtZeit(h) {
 Object.assign(window, {
   Oct, SH, SubH, Txt, Acc, Hl, Callout, Table, RarityPill,
   DiceButton, rollDice, parseDiceSpec,
-  CraftSidebar, PageHeader,
+  CraftSidebar,
   fmtHade, fmtZeit,
 });

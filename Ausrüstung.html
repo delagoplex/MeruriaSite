@@ -19,6 +19,7 @@
 <script src="assets/scripts/supabase-client.js"></script>
 <script src="assets/components/site-gate.js"></script>
 <script src="assets/components/page-header.js"></script>
+<script src="assets/components/page-hero.js"></script>
 <script src="assets/components/particle-field.js"></script>
 <script src="assets/components/footer.js"></script>
 <script src="assets/components/float-nav.js"></script>
@@ -44,6 +45,7 @@ const {
   SiteFooter,
   ParticleField,
   PageHeader,
+  PageHero,
   FloatNav
 } = window;
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
@@ -4435,12 +4437,13 @@ const PAGE_HEADER_H = 180 + 52; // PageHeader + nav
 function Sidebar({
   activeCategory,
   onSelect,
-  accent
+  accent,
+  headerBottom
 }) {
   const asideRef = React.useRef(null);
   useEffect(() => {
     const update = () => {
-      const ideal = PAGE_HEADER_H - window.scrollY;
+      const ideal = headerBottom - window.scrollY;
       const val = Math.max(52, ideal);
       if (asideRef.current) {
         asideRef.current.style.top = val + 'px';
@@ -4458,7 +4461,7 @@ function Sidebar({
       window.removeEventListener('scroll', update);
       window.removeEventListener('resize', update);
     };
-  }, []);
+  }, [headerBottom]);
   return /*#__PURE__*/React.createElement("aside", {
     ref: asideRef,
     style: {
@@ -4466,8 +4469,8 @@ function Sidebar({
       flexShrink: 0,
       position: 'fixed',
       left: 0,
-      top: `${PAGE_HEADER_H}px`,
-      height: `calc(100vh - ${PAGE_HEADER_H}px)`,
+      top: `${headerBottom}px`,
+      height: `calc(100vh - ${headerBottom}px)`,
       borderRight: '1px solid rgba(var(--accent-rgb),0.1)',
       padding: '28px 0',
       background: 'rgba(var(--bg-rgb),0.85)',
@@ -4582,6 +4585,21 @@ function App() {
   const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
   const [activeCategory, setActiveCategory] = useState('abenteuer');
   const accent = tweaks.accentColor || '#7c4dff';
+  const heroRef = React.useRef(null);
+  const [headerBottom, setHeaderBottom] = useState(PAGE_HEADER_H);
+  useEffect(() => {
+    const measure = () => {
+      if (heroRef.current) {
+        const rect = heroRef.current.getBoundingClientRect();
+        setHeaderBottom(rect.bottom + window.scrollY);
+      }
+    };
+    measure();
+    window.addEventListener('resize', measure, {
+      passive: true
+    });
+    return () => window.removeEventListener('resize', measure);
+  }, []);
   const handleMouseMove = useCallback(e => {
     setMouse({
       x: e.clientX / window.innerWidth,
@@ -4608,6 +4626,11 @@ function App() {
   }), /*#__PURE__*/React.createElement(SiteNav, {
     rightLabel: "AUSR\xDCSTUNGS-ARCHIV v1.0"
   }), /*#__PURE__*/React.createElement("div", {
+    ref: heroRef
+  }, /*#__PURE__*/React.createElement(PageHero, {
+    kicker: "Welt \xB7 Handel",
+    title: "Ausr\xFCstung"
+  })), /*#__PURE__*/React.createElement("div", {
     className: "page-body",
     style: {
       position: 'relative',
@@ -4616,7 +4639,8 @@ function App() {
   }, /*#__PURE__*/React.createElement(Sidebar, {
     activeCategory: activeCategory,
     onSelect: handleSelect,
-    accent: accent
+    accent: accent,
+    headerBottom: headerBottom
   }), /*#__PURE__*/React.createElement("div", {
     style: {
       flex: 1,
@@ -4625,39 +4649,6 @@ function App() {
       maxWidth: '1100px'
     }
   }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: '36px'
-    }
-  }, /*#__PURE__*/React.createElement("h1", {
-    className: "reveal-left visible",
-    style: {
-      fontFamily: 'var(--font-display)',
-      fontSize: '42px',
-      fontWeight: '300',
-      letterSpacing: '0.18em',
-      color: 'var(--white)',
-      textShadow: '0 0 30px rgba(124,77,255,0.35)'
-    }
-  }, "Ausr\xFCstung"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '8px',
-      marginTop: '12px'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: '50px',
-      height: '1px',
-      background: 'linear-gradient(90deg,rgba(124,77,255,0.8),transparent)',
-      animation: 'pulse-glow 3s infinite'
-    }
-  }), /*#__PURE__*/React.createElement(OctSvg, {
-    size: 8,
-    color: "rgba(124,77,255,0.5)",
-    fill: "rgba(124,77,255,0.2)",
-    strokeWidth: 1
-  }))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       gap: '6px',

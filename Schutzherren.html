@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/images/favicon/favicon-m.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/images/favicon/favicon-m-180.png">
+<title>Meruria — Gruppen-Schutzherren</title>
+<link rel="stylesheet" href="assets/styles/global/fonts.css">
+<link rel="stylesheet" href="assets/styles/global/base.css">
+<link rel="stylesheet" href="assets/styles/pages/Schutzherren.css">
+<script src="assets/scripts/vendor/react.production.min.js"></script>
+<script src="assets/scripts/vendor/react-dom.production.min.js"></script>
+<script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/components/nav.js"></script>
+<script src="assets/scripts/vendor/supabase.min.js"></script>
+<script src="assets/scripts/supabase-client.js"></script>
+<script src="assets/components/site-gate.jsx" type="text/babel"></script>
+<script src="assets/components/footer.jsx" type="text/babel"></script>
+<script src="assets/components/page-hero.jsx" type="text/babel"></script>
+<script src="assets/scripts/data/schutzherren-data.js"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect } = React;
+const DATA = window.SCHUTZHERREN_DATA;
+
+const CATEGORIES = [
+  { id:'grundlagen',      label:'Grundlagen' },
+  { id:'adliger',         label:'Adliger' },
+  { id:'akademie',        label:'Akademie' },
+  { id:'gilde',           label:'Gilde' },
+  { id:'militaerverband', label:'Militärverband' },
+  { id:'orden',           label:'Religiöser Orden' },
+  { id:'souveraen',       label:'Souverän' },
+  { id:'wesen',           label:'Uraltes Wesen' },
+  { id:'syndikat',        label:'Verbrechersyndikat' },
+  { id:'eigener',         label:'Eigener Schutzherr' },
+];
+
+// Übersichtstabelle (W8) → Kapitel-Sprungziele
+const PATRON_LINKS = {
+  'Adliger':'adliger', 'Akademie':'akademie', 'Gilde':'gilde',
+  'Militärverband':'militaerverband', 'Religiöser Orden':'orden',
+  'Souverän':'souveraen', 'Uraltes Wesen':'wesen', 'Verbrechersyndikat':'syndikat',
+};
+
+// ── HELPERS ─────────────────────────────────────────────────────────────────
+function Sidebar({ active, onSelect }) {
+  return (
+    <aside style={{
+      width:'var(--sidebar-w)', flexShrink:0, position:'sticky', top:'var(--nav-h)',
+      height:'calc(100vh - var(--nav-h))', overflowY:'auto',
+      padding:'28px 18px 28px 22px',
+      borderRight:'1px solid rgba(160,140,255,0.08)',
+      background:'linear-gradient(180deg, rgba(8,6,22,0.45) 0%, rgba(5,4,15,0.7) 100%)',
+    }}>
+      <div style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.32em',color:'rgba(124,77,255,0.55)',textTransform:'uppercase',marginBottom:'18px',paddingLeft:'4px'}}>◈ Kapitel</div>
+      {/* Grundlagen — hervorgehobener Primär-Eintrag */}
+      {(() => {
+        const on = active === 'grundlagen';
+        return (
+          <button onClick={()=>onSelect('grundlagen')} style={{
+            position:'relative', display:'flex', alignItems:'center', gap:'12px',
+            width:'100%', textAlign:'left', padding:'11px 12px', marginBottom:'12px',
+            background: on
+              ? 'linear-gradient(135deg, rgba(124,77,255,0.24) 0%, rgba(124,77,255,0.06) 100%)'
+              : 'rgba(124,77,255,0.03)',
+            border:'1px solid', borderColor: on ? 'rgba(160,140,255,0.7)' : 'rgba(124,77,255,0.16)',
+            borderRadius:'3px', cursor:'pointer', transition:'all 0.18s',
+          }}
+            onMouseEnter={e=>{if(!on){e.currentTarget.style.borderColor='rgba(160,140,255,0.55)';e.currentTarget.style.background='rgba(124,77,255,0.09)';}}}
+            onMouseLeave={e=>{if(!on){e.currentTarget.style.borderColor='rgba(124,77,255,0.16)';e.currentTarget.style.background='rgba(124,77,255,0.03)';}}}
+          >
+            {/* Eck-Klammern */}
+            <span style={{position:'absolute',top:-1,left:-1,width:10,height:10,borderTop:`1px solid rgba(160,140,255,${on?0.85:0.35})`,borderLeft:`1px solid rgba(160,140,255,${on?0.85:0.35})`,transition:'border-color 0.18s'}}/>
+            <span style={{position:'absolute',bottom:-1,right:-1,width:10,height:10,borderBottom:`1px solid rgba(160,140,255,${on?0.85:0.35})`,borderRight:`1px solid rgba(160,140,255,${on?0.85:0.35})`,transition:'border-color 0.18s'}}/>
+            <span style={{minWidth:0}}>
+              <span style={{display:'block',fontFamily:'var(--font-mono)',fontSize:'7px',letterSpacing:'0.3em',color: on ? 'rgba(160,140,255,0.65)' : 'rgba(124,77,255,0.45)',textTransform:'uppercase',marginBottom:'4px',transition:'color 0.18s'}}>01 · Primär ◆</span>
+              <span style={{display:'block',fontFamily:'var(--font-display)',fontSize:'12px',fontWeight: on ? 500 : 400,letterSpacing:'0.14em',color: on ? '#f0eeff' : 'rgba(200,190,240,0.6)',textTransform:'uppercase',transition:'color 0.18s'}}>Grundlagen</span>
+            </span>
+          </button>
+        );
+      })()}
+      <div style={{fontFamily:'var(--font-mono)',fontSize:'7.5px',letterSpacing:'0.3em',color:'rgba(124,77,255,0.4)',textTransform:'uppercase',margin:'0 0 8px 4px'}}>◇ Schutzherren</div>
+      <nav style={{display:'flex',flexDirection:'column',gap:'2px'}}>
+        {CATEGORIES.filter(c=>c.id!=='grundlagen').map((cat,i) => {
+          const on = cat.id === active;
+          return (
+            <button key={cat.id} onClick={()=>onSelect(cat.id)} style={{
+              display:'flex', alignItems:'center', gap:'10px',
+              padding:'10px 12px', textAlign:'left',
+              background: on ? 'linear-gradient(90deg, rgba(124,77,255,0.18), rgba(124,77,255,0.04))' : 'transparent',
+              border:'1px solid', borderColor: on ? 'rgba(124,77,255,0.45)' : 'transparent',
+              borderRadius:'2px', cursor:'pointer', transition:'all 0.18s',
+            }}
+              onMouseEnter={e=>{if(!on){e.currentTarget.style.background='rgba(124,77,255,0.06)';e.currentTarget.style.borderColor='rgba(124,77,255,0.15)';}}}
+              onMouseLeave={e=>{if(!on){e.currentTarget.style.background='transparent';e.currentTarget.style.borderColor='transparent';}}}
+            >
+              <span style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.18em',color: on ? '#c9b8ff' : 'rgba(124,77,255,0.45)',minWidth:'18px'}}>{String(i+2).padStart(2,'0')}</span>
+              <span style={{fontFamily:'var(--font-display)',fontSize:'11px',fontWeight: on ? 500 : 400,letterSpacing: cat.label.length > 15 ? '0.08em' : '0.12em',color: on ? '#f0eeff' : 'rgba(200,190,240,0.6)',textTransform:'uppercase',whiteSpace:'nowrap'}}>{cat.label}</span>
+            </button>
+          );
+        })}
+      </nav>
+
+      <div style={{marginTop:'40px',padding:'14px 12px',background:'rgba(124,77,255,0.05)',border:'1px solid rgba(124,77,255,0.14)',borderRadius:'3px'}}>
+        <div style={{fontFamily:'var(--font-mono)',fontSize:'7.5px',letterSpacing:'0.28em',color:'rgba(124,77,255,0.55)',textTransform:'uppercase',marginBottom:'8px'}}>◈ Hinweis</div>
+        <p style={{fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'10.5px',lineHeight:1.6,color:'rgba(200,190,240,0.55)'}}>
+          Alle Tabellen lassen sich direkt auswürfeln — oder ihr wählt gemeinsam einen Eintrag aus.
+        </p>
+      </div>
+    </aside>
+  );
+}
+
+function SectionHeader({ mono, title, sub }) {
+  return (
+    <div style={{marginBottom:'22px'}}>
+      <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.32em',color:'rgba(124,77,255,0.6)',textTransform:'uppercase',marginBottom:'10px'}}>◈ {mono}</div>
+      <h2 style={{fontFamily:'var(--font-display)',fontSize:'clamp(28px,3.5vw,42px)',fontWeight:'300',letterSpacing:'0.14em',color:'#f0eeff',textShadow:'0 0 28px rgba(124,77,255,0.32)',lineHeight:1.05,textTransform:'uppercase'}}>{title}</h2>
+      {sub && <p style={{marginTop:'12px',fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'13px',color:'rgba(200,190,240,0.5)',letterSpacing:'0.04em',maxWidth:'620px',lineHeight:1.7}}>{sub}</p>}
+      <div style={{marginTop:'18px',width:'72px',height:'1px',background:'linear-gradient(to right, rgba(124,77,255,0.7), rgba(124,77,255,0))'}}/>
+    </div>
+  );
+}
+
+function SubH({ children }) {
+  return <h3 style={{fontFamily:'var(--font-display)',fontSize:'15px',fontWeight:'400',letterSpacing:'0.18em',color:'#e8e0ff',textTransform:'uppercase',margin:'30px 0 12px',display:'flex',alignItems:'center',gap:'10px'}}>
+    <span style={{width:'8px',height:'8px',background:'rgba(124,77,255,0.7)',transform:'rotate(45deg)',display:'inline-block',flexShrink:0}}/>
+    {children}
+  </h3>;
+}
+
+function TW({ children }) {
+  return <div style={{borderRadius:'3px',overflow:'hidden',border:'1px solid rgba(124,77,255,0.18)',background:'rgba(10,7,28,0.6)',marginBottom:'14px'}}>{children}</div>;
+}
+
+function useReveal(active) {
+  useEffect(() => {
+    document.querySelectorAll('.reveal-up').forEach(el => el.classList.remove('visible'));
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    setTimeout(() => {
+      document.querySelectorAll('.reveal-up:not(.visible)').forEach(el => io.observe(el));
+    }, 40);
+    return () => io.disconnect();
+  }, [active]);
+}
+
+// ── WÜRFELTABELLE ───────────────────────────────────────────────────────────
+function RollTable({ table, onJump }) {
+  const [rolling, setRolling] = useState(false);
+  const [result, setResult]   = useState(null); // row index
+  const [display, setDisplay] = useState(null);
+  const n = table.rows.length;
+
+  const roll = () => {
+    if (rolling) return;
+    setRolling(true); setResult(null);
+    let count = 0;
+    const iv = setInterval(() => {
+      setDisplay(Math.floor(Math.random() * n));
+      if (++count > 13) {
+        clearInterval(iv);
+        const idx = Math.floor(Math.random() * n);
+        setDisplay(idx); setResult(idx); setRolling(false);
+      }
+    }, 65);
+  };
+
+  const activeRow = display !== null ? display : null;
+  const resText = result !== null ? table.rows[result][1] : null;
+  const jumpId = resText && onJump ? PATRON_LINKS[resText] : null;
+
+  return (
+    <div style={{marginBottom:'8px'}}>
+      {table.dice && (
+        <button className="dice-btn" onClick={roll} disabled={rolling} style={{marginBottom:'14px'}}>
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" style={{animation:rolling?'diceTumble 0.5s linear infinite':'none',transformOrigin:'center'}}>
+            <rect x="3" y="3" width="18" height="18" rx="3"/>
+            <circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/>
+            <circle cx="15.5" cy="8.5" r="1.2" fill="currentColor"/>
+            <circle cx="8.5" cy="15.5" r="1.2" fill="currentColor"/>
+            <circle cx="15.5" cy="15.5" r="1.2" fill="currentColor"/>
+            <circle cx="12" cy="12" r="1.2" fill="currentColor"/>
+          </svg>
+          Würfeln
+        </button>
+      )}
+      <TW>
+        <table className="eq-table">
+          <thead>
+            <tr>
+              <th className={table.dice ? 'mono' : ''} style={{width: table.dice ? '70px' : '160px'}}>{table.headers[0]}</th>
+              <th>{table.headers[1]}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {table.rows.map((row, i) => {
+              const on = activeRow === i;
+              return (
+                <tr key={i}
+                  onClick={table.dice ? () => { setDisplay(i); setResult(i); } : undefined}
+                  style={{
+                    cursor: table.dice ? 'pointer' : 'default',
+                    background: on ? 'rgba(124,77,255,0.18)' : 'transparent',
+                    transition:'background 0.2s',
+                  }}>
+                  <td className={table.dice ? 'mono' : ''} style={{
+                    color: on ? '#f0eeff' : (table.dice ? 'rgba(180,165,255,0.85)' : '#e8e0ff'),
+                    fontWeight: on ? 500 : (table.dice ? 400 : 400),
+                    fontFamily: table.dice ? undefined : 'var(--font-display)',
+                    fontSize: table.dice ? undefined : '12.5px',
+                    letterSpacing: table.dice ? undefined : '0.06em',
+                    textTransform: table.dice ? undefined : 'uppercase',
+                  }}>{row[0]}</td>
+                  <td style={{color: on ? '#f0eeff' : undefined}}>{row[1]}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </TW>
+      {result !== null && (
+        <div style={{animation:'resultPop 0.32s ease forwards',display:'flex',alignItems:'center',gap:'14px',flexWrap:'wrap',padding:'13px 18px',background:'rgba(124,77,255,0.1)',border:'1px solid rgba(124,77,255,0.3)',borderRadius:'3px',marginBottom:'14px'}}>
+          <span style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.28em',color:'rgba(160,140,255,0.75)',textTransform:'uppercase'}}>Ergebnis · {result+1}</span>
+          <span style={{fontFamily:'var(--font-body)',fontWeight:400,fontSize:'13px',color:'#f0eeff',lineHeight:1.6,flex:1,minWidth:'200px'}}>{resText}</span>
+          {jumpId && (
+            <button onClick={()=>onJump(jumpId)} style={{
+              display:'inline-flex',alignItems:'center',gap:'7px',padding:'6px 13px',
+              background:'rgba(124,77,255,0.14)',border:'1px solid rgba(124,77,255,0.45)',borderRadius:'2px',
+              fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.22em',color:'rgba(220,210,255,0.9)',
+              textTransform:'uppercase',cursor:'pointer',transition:'all 0.15s',
+            }}
+              onMouseEnter={e=>{e.currentTarget.style.background='rgba(124,77,255,0.28)';e.currentTarget.style.color='#fff';}}
+              onMouseLeave={e=>{e.currentTarget.style.background='rgba(124,77,255,0.14)';e.currentTarget.style.color='rgba(220,210,255,0.9)';}}
+            >Zum Kapitel →</button>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── CONTENT-BAUSTEINE ───────────────────────────────────────────────────────
+function Blocks({ blocks, onJump }) {
+  return (
+    <div className="sh-body">
+      {blocks.map((b, i) => {
+        if (b.p) return <p key={i}>{b.p}</p>;
+        if (b.list) return (
+          <div key={i} style={{display:'flex',flexDirection:'column',gap:'0px',margin:'6px 0 16px'}}>
+            {b.list.map((item, j) => (
+              <div key={j} className="feat reveal-up">
+                {item.name && <div className="feat-name">{item.name}</div>}
+                <div className="feat-text">{item.text}</div>
+              </div>
+            ))}
+          </div>
+        );
+        if (b.table) return (
+          <div key={i} className="reveal-up">
+            <div style={{fontFamily:'var(--font-mono)',fontSize:'8.5px',letterSpacing:'0.26em',color:'rgba(124,77,255,0.6)',textTransform:'uppercase',margin:'4px 0 10px'}}>◇ {b.table.title}</div>
+            <RollTable table={b.table} onJump={onJump}/>
+          </div>
+        );
+        return null;
+      })}
+    </div>
+  );
+}
+
+function PatronContent({ patron, onJump }) {
+  return (
+    <div>
+      <SectionHeader mono="Gruppen-Schutzherren" title={patron.title}/>
+
+      {patron.image && (
+        <figure className="sh-figure reveal-up">
+          <img src={patron.image} alt={patron.title}/>
+          {patron.caption && <figcaption className="sh-caption">{patron.caption}</figcaption>}
+        </figure>
+      )}
+
+      {patron.quote && (
+        <blockquote className="sh-quote reveal-up">
+          <p>{patron.quote.text}</p>
+          {patron.quote.author && <div className="sh-quote-author">{patron.quote.author}</div>}
+        </blockquote>
+      )}
+
+      <div className="sh-body">
+        {patron.intro.map((p, i) => <p key={i}>{p}</p>)}
+      </div>
+
+      {patron.sections.map((sec, i) => (
+        <div key={i}>
+          <SubH>{sec.title}</SubH>
+          <Blocks blocks={sec.blocks} onJump={onJump}/>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function GrundlagenContent({ onJump }) {
+  const intro = DATA.intro;
+  return (
+    <div>
+      <SectionHeader mono="Spielerhandbuch · Sitzung Null" title="Grundlagen"
+        sub="Was ein Gruppen-Schutzherr ist, wie er funktioniert — und welche Arten von Schutzherren es in Meruria gibt."/>
+
+      {/* Vignette */}
+      <div className="reveal-up" style={{margin:'0 0 26px',padding:'22px 26px',background:'linear-gradient(135deg, rgba(18,12,42,0.7) 0%, rgba(10,7,28,0.9) 100%)',border:'1px solid rgba(124,77,255,0.22)',borderRadius:'4px',maxWidth:'820px'}}>
+        <div style={{fontFamily:'var(--font-display)',fontSize:'13px',fontWeight:500,letterSpacing:'0.18em',color:'#f0eeff',textTransform:'uppercase',marginBottom:'10px'}}>{intro.vignetteTitle}</div>
+        <p style={{fontFamily:'var(--font-body)',fontWeight:300,fontSize:'13px',lineHeight:1.85,color:'rgba(200,190,240,0.72)'}}>{intro.vignetteText}</p>
+      </div>
+
+      {intro.sections.map((sec, i) => (
+        <div key={i}>
+          <SubH>{sec.title}</SubH>
+          <Blocks blocks={sec.blocks} onJump={onJump}/>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+Object.assign(window, { Sidebar, SectionHeader, SubH, TW, useReveal, RollTable, Blocks, PatronContent, GrundlagenContent, CATEGORIES });
+</script>
+
+<!-- ───── APP ───── -->
+<script type="text/babel">
+const { SiteNav, SiteGate, SiteFooter, PageHero } = window;
+const { Sidebar, useReveal, PatronContent, GrundlagenContent } = window;
+
+function App() {
+  const [active, setActive] = useState('grundlagen');
+  useReveal(active);
+
+  const handleSelect = (id) => { setActive(id); window.scrollTo({top:0}); };
+
+  const patron = DATA.patrons.find(p => p.id === active);
+
+  return (
+    <div style={{position:'relative',minHeight:'100vh'}}>
+
+      {/* NAV */}
+      <SiteNav rightLabel="SPIELERHANDBUCH"/>
+
+      {/* HERO */}
+      <PageHero
+        kicker="Spielerhandbuch"
+        title="Gruppen-Schutzherren"
+        sub="Wem dient eure Abenteurergruppe? Acht Arten von Schutzherren — mit Stärkungen, Kontakten, Rollen und Quests, alle direkt auswürfelbar."
+      />
+
+      {/* BODY */}
+      <div style={{display:'flex',alignItems:'flex-start',minHeight:'calc(100vh - 52px)'}}>
+        <Sidebar active={active} onSelect={handleSelect}/>
+        <div style={{flex:1,padding:'40px 44px 88px',minWidth:0,maxWidth:'1080px'}}>
+          {active === 'grundlagen'
+            ? <GrundlagenContent onJump={handleSelect}/>
+            : <PatronContent patron={patron} onJump={handleSelect}/>}
+        </div>
+      </div>
+
+      {/* FOOTER */}
+      <SiteFooter/>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<SiteGate><App/></SiteGate>);
+</script>
+
+</body></html>

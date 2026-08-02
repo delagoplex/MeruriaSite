@@ -15,6 +15,7 @@
 <script src="assets/components/nav.js"></script>
 <script src="assets/components/site-gate.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
+<script src="assets/components/page-hero.jsx" type="text/babel"></script>
 </head>
 <body>
 
@@ -55,6 +56,13 @@ function App() {
   return (
     <>
       <SiteNav />
+      {activeId === 'uebersicht' && (
+        <PageHero
+          kicker="Spielerhandbuch"
+          title="Sammeln & Handwerk"
+          sub="Vom Wegrand zur Werkbank — wie Pflanzen, Mineralien und Kreaturenteile zu Tränken, Klingen und magischen Artefakten werden. Material schlägt Zeit, Entscheidungen schlagen Rezepte."
+        />
+      )}
       <div style={{ display:'flex', position:'relative', zIndex:1 }}>
         <CraftSidebar chapters={window.CRAFT_CHAPTERS} activeId={activeId} onSelect={setActiveId} />
         <main style={{
@@ -62,8 +70,6 @@ function App() {
           maxWidth:'calc(100vw - var(--sidebar-w))',
           minWidth: 0,
         }}>
-          {activeId === 'uebersicht' && <PageHeader />}
-
           <div style={{
             maxWidth:'1080px', margin:'0 auto',
             paddingTop: activeId === 'uebersicht' ? '0' : '40px',

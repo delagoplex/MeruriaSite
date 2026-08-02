@@ -16,6 +16,7 @@
 <script src="assets/scripts/data/divisions-data.js"></script>
 <script src="assets/components/nsc-statblock.js"></script>
 <script src="assets/components/rekrutierungsrechner.js"></script>
+<script src="assets/components/page-hero.js"></script>
 </head>
 <body>
 <div id="root"></div>
@@ -24,12 +25,11 @@
 const h        = React.createElement;
 const useState = React.useState;
 
-const { SiteNav, SiteGate, NscStatblock, Rekrutierungsrechner } = window;
+const { SiteNav, SiteGate, NscStatblock, Rekrutierungsrechner, PageHero } = window;
 const DIVS = window.DIVISIONS_DATA || [];
 
 // ── Styles ──────────────────────────────────────────────────
 const PAGE_BG    = '#05040f';
-const NAV_H      = 52;
 
 // ── DivisionTab ─────────────────────────────────────────────
 function DivisionTab(props) {
@@ -94,50 +94,21 @@ function App() {
     },
       h(SiteNav, null),
 
+      // Header
+      h(PageHero, {
+        kicker: 'Division · Rekrutierung',
+        title:  'Rekrutierung',
+        sub:    'Wähle eine Division und einen Rang, um den Statblock des zugehörigen NSC einzusehen. Der Rechner zeigt dir, was eine Rekrutierung kostet — oder einbringt.',
+      }),
+
       // ── Page content ──────────────────────────────────────
       h('div', {
         style: {
           maxWidth:  860,
           margin:    '0 auto',
-          padding:   (NAV_H + 40) + 'px 24px 80px',
+          padding:   '40px 24px 80px',
         },
       },
-
-        // Header
-        h('div', { style: { marginBottom: 32 } },
-          h('div', {
-            style: {
-              fontFamily:    'var(--font-mono)',
-              fontSize:      9,
-              letterSpacing: '0.4em',
-              color:         'rgba(124,77,255,0.5)',
-              textTransform: 'uppercase',
-              marginBottom:  10,
-            },
-          }, '◈ Tools · Velundra'),
-          h('h1', {
-            style: {
-              fontFamily:    'var(--font-display)',
-              fontSize:      28,
-              fontWeight:    400,
-              letterSpacing: '0.18em',
-              textTransform: 'uppercase',
-              color:         '#f0eeff',
-              margin:        0,
-            },
-          }, 'Rekrutierung'),
-          h('p', {
-            style: {
-              fontFamily:  'var(--font-body)',
-              fontSize:    13,
-              fontWeight:  300,
-              color:       'rgba(200,190,240,0.6)',
-              lineHeight:  1.65,
-              marginTop:   10,
-              maxWidth:    540,
-            },
-          }, 'Wähle eine Division und einen Rang, um den Statblock des zugehörigen NSC einzusehen. Der Rechner zeigt dir, was eine Rekrutierung kostet — oder einbringt.')
-        ),
 
         // Divider
         h('div', {

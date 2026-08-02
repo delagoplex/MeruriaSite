@@ -14,6 +14,7 @@
 <script src="assets/scripts/supabase-client.js"></script>
 <script src="assets/components/site-gate.js"></script>
 <script src="assets/scripts/data/divisions-data.js"></script>
+<script src="assets/components/page-hero.js"></script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { min-height: 100vh; background: var(--bg); color: var(--white); }
@@ -36,7 +37,7 @@ const h         = React.createElement;
 const useState  = React.useState;
 const useEffect = React.useEffect;
 
-const { SiteNav, SiteGate } = window;
+const { SiteNav, SiteGate, PageHero } = window;
 const DIVS = window.DIVISIONS_DATA || [];
 
 const DEFAULT_RANG_PREISE = {1:500,2:450,3:400,4:350,5:300,6:250,7:200,8:150,9:100,10:50};
@@ -233,15 +234,15 @@ function App() {
   return h(SiteGate, null,
     h('div', { style: { minHeight:'100vh', background:'#05040f' } },
       h(SiteNav, null),
-      h('div', { style: { maxWidth:900, margin:'0 auto', padding:'72px 24px 80px' } },
 
-        // Header
-        h('div', { style: { marginBottom:28 } },
-          h('div', { style: { fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.35em', color:'rgba(124,77,255,0.45)', textTransform:'uppercase', marginBottom:10 }}, '◈ DM-Bereich'),
-          h('h1', { style: { fontFamily:'var(--font-display)', fontSize:26, fontWeight:400, letterSpacing:'0.18em', textTransform:'uppercase', color:'#f0eeff', marginBottom:8 }}, 'Rekrutierungspreise'),
-          h('p', { style: { fontFamily:'var(--font-body)', fontSize:13, fontWeight:300, color:'rgba(200,190,240,0.5)', lineHeight:1.65, maxWidth:520 }},
-            'Grundpreis in Hade pro Rang-Schritt — pro Division einstellbar. Gebühr = Rangunterschied × Grundpreis des NSC-Rangs in seiner Division.')
-        ),
+      // Header
+      h(PageHero, {
+        kicker: 'Division · Rekrutierung',
+        title:  'Rekrutierungspreise',
+        sub:    'Grundpreis in Hade pro Rang-Schritt — pro Division einstellbar. Gebühr = Rangunterschied × Grundpreis des NSC-Rangs in seiner Division.',
+      }),
+
+      h('div', { style: { maxWidth:900, margin:'0 auto', padding:'40px 24px 80px' } },
 
         h('div', { style: { height:1, background:'linear-gradient(to right, rgba(124,77,255,0.4), transparent)', marginBottom:24 }}),
 

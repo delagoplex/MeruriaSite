@@ -20,6 +20,7 @@
 <script src="assets/scripts/supabase-client.js"></script>
 <script src="assets/components/site-gate.js"></script>
 <script src="assets/components/page-header.js"></script>
+<script src="assets/components/page-hero.js"></script>
 <script src="assets/components/particle-field.js"></script>
 <script src="assets/components/floating-hex-field.js"></script>
 <script src="assets/components/footer.js"></script>
@@ -45,6 +46,7 @@ const {
   SiteNav,
   ParticleField,
   FloatingHexField,
+  PageHero,
   FloatNav
 } = window;
 const {
@@ -1255,7 +1257,7 @@ function App() {
   });
   const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
   const [headerBottom, setHeaderBottom] = useState(0);
-  const sideNavRef = useRef(null);
+  const pageTitleRef = useRef(null);
   const handleMouseMove = useCallback(e => {
     setMouse({
       x: e.clientX / window.innerWidth,
@@ -1264,9 +1266,9 @@ function App() {
   }, []);
   useEffect(() => {
     const measure = () => {
-      if (sideNavRef.current) {
-        const rect = sideNavRef.current.getBoundingClientRect();
-        setHeaderBottom(rect.bottom + window.scrollY + 32);
+      if (pageTitleRef.current) {
+        const rect = pageTitleRef.current.getBoundingClientRect();
+        setHeaderBottom(rect.bottom + window.scrollY);
       }
     };
     measure();
@@ -1312,10 +1314,13 @@ function App() {
     mouseY: mouse.y
   }), /*#__PURE__*/React.createElement(PageHeader, {
     height: tweaks.headerHeight
-  }), /*#__PURE__*/React.createElement("div", {
-    ref: sideNavRef
-  }, /*#__PURE__*/React.createElement(SiteNav, {
+  }), /*#__PURE__*/React.createElement(SiteNav, {
     rightLabel: "KLASSEN-ARCHIV v1.0"
+  }), /*#__PURE__*/React.createElement("div", {
+    ref: pageTitleRef
+  }, /*#__PURE__*/React.createElement(PageHero, {
+    kicker: "Charaktererstellung",
+    title: "Klassen"
   })), /*#__PURE__*/React.createElement("div", {
     className: "page-body"
   }, /*#__PURE__*/React.createElement(TOCSidebar, {
@@ -1329,48 +1334,6 @@ function App() {
       minWidth: 0
     }
   }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: '32px'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
-      letterSpacing: '0.25em',
-      color: 'rgba(var(--accent-rgb),0.4)',
-      textTransform: 'uppercase',
-      marginBottom: '6px'
-    }
-  }, "Charaktererstellung"), /*#__PURE__*/React.createElement("h1", {
-    className: "reveal-left",
-    style: {
-      fontFamily: 'var(--font-display)',
-      fontSize: '42px',
-      fontWeight: '300',
-      letterSpacing: '0.18em',
-      color: 'var(--white)',
-      textShadow: '0 0 30px rgba(124,77,255,0.35)'
-    }
-  }, "Klassen"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '8px',
-      marginTop: '12px'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: '50px',
-      height: '1px',
-      background: 'linear-gradient(90deg,rgba(124,77,255,0.8),transparent)',
-      animation: 'pulse-glow 3s infinite'
-    }
-  }), /*#__PURE__*/React.createElement(OctSvg, {
-    size: 8,
-    color: "rgba(124,77,255,0.5)",
-    fill: "rgba(124,77,255,0.2)",
-    strokeWidth: 1
-  }))), /*#__PURE__*/React.createElement("div", {
     id: "klassen-section",
     style: {
       marginBottom: '48px',
