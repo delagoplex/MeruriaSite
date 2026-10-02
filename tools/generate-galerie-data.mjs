@@ -40,30 +40,8 @@ function toTitle(filename) {
     .replace(/\b\w/g, c => c.toUpperCase());
 }
 
-// ── Scan monster folders ───────────────────────────────────────────────────
-const folders = readdirSync(IMG_DIR)
-  .filter(f => statSync(join(IMG_DIR, f)).isDirectory())
-  .sort();
-
-let id = 0;
-let newCount = 0;
-const monsterImages = [];
-
-for (const folder of folders) {
-  const hue   = FOLDER_HUE[folder] ?? 240;
-  const files  = readdirSync(join(IMG_DIR, folder))
-    .filter(f => /\.(png|webp|jpg)$/i.test(f))
-    .sort();
-
-  for (const file of files) {
-    const img   = 'assets/images/monster/' + folder + '/' + file;
-    const title = toTitle(file);
-    const date  = existingDates[img] ?? (newCount++, TODAY);
-    monsterImages.push({ id: `m${++id}`, title, hue, date, img });
-  }
-}
-
-// ── Manually curated character images ─────────────────────────────────────
+// Monster images are intentionally excluded from the public gallery.
+// Keep this generator focused on the curated character/setting images only.
 const charaktere = [
   { id:'c1', title:'Aurelia',   hue:150, img:'assets/images/gods/backgrounds/BG_Aurelia.webp'  },
   { id:'c2', title:'Elysarion', hue:200, img:'assets/images/gods/backgrounds/BG_Elysarion.png' },
@@ -87,10 +65,7 @@ const out = `// AUTO-GENERATED — do not edit by hand.
 window.GALERIE_COLLECTIONS = [
   { id:'charaktere', name:'Charaktere & NSCs', hue:150, images:[
 ${charaktere.map(ser).join(',\n')}
-  ]},
-  { id:'monster', name:'Monster & Kreaturen', hue:25, images:[
-${monsterImages.map(ser).join(',\n')}
-  ]},
+  ]}
 ];
 
 window.GALERIE_ALL_IMAGES = window.GALERIE_COLLECTIONS.flatMap(c => c.images.map(img => ({...img, collectionName: c.name})));
@@ -98,4 +73,4 @@ window.GALERIE_DEFAULT_FEATURED = window.GALERIE_ALL_IMAGES[0];
 `;
 
 writeFileSync(OUTFILE, out, 'utf8');
-console.log(`✓ galerie-data.js — ${monsterImages.length} monster images (${newCount} neu) across ${folders.length} folders`);
+console.log('✓ galerie-data.js — monster images excluded from public gallery');
