@@ -12,7 +12,7 @@
 <script src="assets/scripts/vendor/react.production.min.js"></script>
 <script src="assets/scripts/vendor/react-dom.production.min.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
-<script src="assets/scripts/data/nsc-new-1581b8b2.js"></script>
+<script src="assets/scripts/data/nsc-data.js"></script>
 <script src="assets/scripts/data/nsc-tool-data.js"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
@@ -21,11 +21,11 @@
 </head>
 <body>
 <div id="root"></div>
-<script src="assets/scripts/data/nsc-new-d94a9bd3.js" type="text/babel"></script>
+<script src="assets/scripts/data/nsc-shared.js" type="text/babel"></script>
 <script type="text/babel">
 /* NSC-Verwaltung v2 — DM-Tool: Anlegen, Bearbeiten, Sichtbarkeit & Freischaltungen.
    Design nach NSC-Verwaltung.dc.html; Persistenz via Supabase (nur Upserts, kein PATCH).
-   IIFE: hält alle Deklarationen aus dem globalen Scope (Kollision mit nsc-new-d94a9bd3.js). */
+   IIFE: hält alle Deklarationen aus dem globalen Scope (Kollision mit nsc-shared.js). */
 (() => {
 
 const { useState, useEffect, useMemo, useRef, useCallback } = React;
@@ -139,7 +139,7 @@ function useDMData() {
 }
 
 // ── Global sichtbare (freischaltbare) Fakten eines NSC ─────
-// Geteilte Logik aus nsc-new-d94a9bd3.js — Sichtbarkeit ist Opt-in.
+// Geteilte Logik aus nsc-shared.js — Sichtbarkeit ist Opt-in.
 const SEC_OF_PREFIX = NSC_SEC_OF_PREFIX;
 const unlockableKeys = unlockableFactsOf;
 

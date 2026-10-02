@@ -66,4 +66,4 @@ window.NSC_DIVISION_THEME = {
 };
 
 // NSC_LIST and NSC_PERSPECTIVES removed — loaded from Supabase at runtime.
-// See useNSCData() in nsc-new-d94a9bd3.js.
+// See useNSCData() in nsc-shared.js.
