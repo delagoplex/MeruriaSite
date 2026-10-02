@@ -21,7 +21,6 @@
 <script src="assets/scripts/supabase-client.js"></script>
 <script src="assets/components/site-gate.js"></script>
 <script src="assets/components/particle-field.js"></script>
-<script src="assets/components/tweaks-panel-8.js"></script>
 <script src="assets/components/filter-utils.js"></script>
 </head>
 <body>
@@ -36,10 +35,6 @@ const {
   useRef
 } = React;
 const {
-  useTweaks,
-  TweaksPanel,
-  TweakSection,
-  TweakToggle,
   SiteNav,
   ParticleField
 } = window;
@@ -254,9 +249,9 @@ const SORT_OPTIONS = [{
 // Visibility data lives in Supabase table ressourcen_sichtbar; real-time subscription
 // keeps player tabs in sync without a page refresh.
 
-const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+const TWEAK_DEFAULTS = {
   "showParticles": true
-} /*EDITMODE-END*/;
+};
 
 // ── Tabs ──────────────────────────────────────────────────────────────────────
 const TABS = [{
@@ -2190,7 +2185,7 @@ function AccessDenied() {
 function App() {
   if (window.SITE_USER?.role !== 'dm') return /*#__PURE__*/React.createElement(AccessDenied, null);
   const mouseRef = useRef({ x: 0.5, y: 0.5 });
-  const [tweaks] = useTweaks(TWEAK_DEFAULTS);
+  const tweaks = TWEAK_DEFAULTS;
   const [activeTab, setActiveTab] = useState('fische');
   const [tabCount, setTabCount] = useState(null);
   const [selectedFish, setSelectedFish] = useState(null);

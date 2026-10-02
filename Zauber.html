@@ -17,7 +17,6 @@
 <script src="assets/scripts/supabase-client.js"></script>
 <script src="assets/components/site-gate.js"></script>
 <script src="assets/components/particle-field.js"></script>
-<script src="assets/components/tweaks-panel-8.js"></script>
 <script src="assets/components/filter-utils.js"></script>
 
 </head>
@@ -33,11 +32,6 @@ const {
   useMemo
 } = React;
 const {
-  useTweaks,
-  TweaksPanel,
-  TweakSection,
-  TweakToggle,
-  TweakRadio,
   SiteNav,
   ParticleField,
   useDragScroll,
@@ -78,10 +72,10 @@ function OctSvg({
     opacity: opacity
   }));
 }
-const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+const TWEAK_DEFAULTS = {
   "showParticles": true,
   "compactList": false
-} /*EDITMODE-END*/;
+};
 const ZEITAUFWAND_FIXED = ['Aktion', 'Bonusaktion', 'Reaktion'];
 const normalizeZeitaufwandKey = k => {
   if (k === '1 Aktion') return 'Aktion';
@@ -1003,7 +997,7 @@ function EmptyState({
 
 // ─── MAIN APP ─────────────────────────────────────────────────────────────────
 function App() {
-  const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const t = TWEAK_DEFAULTS;
   const allZauber = window.ZAUBER_DATA || [];
   const [mouse, setMouse] = useState({
     x: 0.5,
@@ -1238,14 +1232,6 @@ function App() {
     zauber: selected
   }) : /*#__PURE__*/React.createElement(EmptyState, {
     msg: "Zauber ausw\xE4hlen"
-  }))), /*#__PURE__*/React.createElement(TweaksPanel, null, /*#__PURE__*/React.createElement(TweakSection, {
-    title: "Darstellung"
-  }, /*#__PURE__*/React.createElement(TweakToggle, {
-    label: "Partikel",
-    tKey: "showParticles"
-  }), /*#__PURE__*/React.createElement(TweakToggle, {
-    label: "Kompakte Liste",
-    tKey: "compactList"
   }))));
 }
 const root = ReactDOM.createRoot(document.getElementById('root'));

@@ -31,7 +31,7 @@ python3 -m http.server 8080
 ├── Bergungsgarde.html          │
 ├── Die Kuratoren.html          ┘
 └── assets/
-    ├── components/             — shared React/JSX components (nav, footer, page-header, tweaks-panel)
+    ├── components/             — shared React/JSX components (nav, footer, page-header)
     ├── fonts/                  — .woff2 font files
     ├── images/
     │   ├── insignia/           — faction insignia
@@ -56,4 +56,3 @@ Plain HTML + CSS + React (via Babel Standalone in the browser). No bundler, no n
 
 - **Dark / light mode** — toggle in the nav bar, persists via `localStorage`
 - **Monster compendium** — 400+ monsters from the German D&D 5e Monster Manual, filterable by type, subtype, CR, size, alignment, environment, and source; legendary monsters flagged separately
-- **Tweaks panel** — live-editable design parameters per page (particle visibility, header height, etc.)

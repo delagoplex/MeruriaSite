@@ -10,7 +10,6 @@
 <script src="assets/scripts/vendor/react.production.min.js"></script>
 <script src="assets/scripts/vendor/react-dom.production.min.js"></script>
 <script src="assets/scripts/vendor/babel-standalone.js"></script>
-<script src="assets/components/tweaks-panel-13.jsx" type="text/babel"></script>
 <script src="assets/components/nav.js"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
@@ -33,10 +32,9 @@
 
 <script type="text/babel">
 const { useState, useEffect, useRef, useMemo, useCallback } = React;
-const { useTweaks, TweaksPanel, TweakSection, TweakToggle } = window;
 const { SiteNav, SiteGate } = window;
 
-const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"showParticles": true, "showHexes": true, "compactCards": false}/*EDITMODE-END*/;
+const TWEAK_DEFAULTS = {"showParticles": true, "showHexes": true, "compactCards": false};
 
 // ── HELPERS ──────────────────────────────────────────────
 function hexPoints(s) {
@@ -525,7 +523,7 @@ function ActivePill({ label, onRemove }) {
 // ── APP ──────────────────────────────────────────────────
 function App() {
   const [mouse, setMouse] = useState({ x:0.5, y:0.5 });
-  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const tweaks = TWEAK_DEFAULTS;
   const handleMouseMove = useCallback(e => { setMouse({ x: e.clientX/window.innerWidth, y: e.clientY/window.innerHeight }); }, []);
 
   const [characters, setCharacters] = useState([]);
@@ -829,16 +827,7 @@ function App() {
       <div style={{ position:'relative', zIndex:10, padding:'10px 32px', borderTop:'1px solid rgba(160,140,255,0.07)', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
         <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:'rgba(160,140,255,0.22)', letterSpacing:'0.2em' }}>◈ REGISTER-STATUS: NOMINAL ◈ EPOCHE: UNBEKANNT</div>
         <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:'rgba(160,140,255,0.22)', letterSpacing:'0.2em' }}>MERURIA // SPIELERCHARAKTERE</div>
-      </div>
-
-      <TweaksPanel>
-        <TweakSection label="Darstellung"/>
-        <TweakToggle id="compactCards" label="Kompakte Karten"/>
-        <TweakSection label="Atmosphäre"/>
-        <TweakToggle id="showParticles" label="Partikel"/>
-        <TweakToggle id="showHexes" label="Hexagone"/>
-      </TweaksPanel>
-    </div>
+      </div></div>
   );
 }
 

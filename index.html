@@ -15,7 +15,6 @@
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
 <script src="assets/components/site-gate.jsx" type="text/babel"></script>
-<script src="assets/components/tweaks-panel-13.jsx" type="text/babel"></script>
 <script src="assets/components/footer.jsx" type="text/babel"></script>
 <script src="assets/components/kollektikon-bar.js"></script>
 <script src="assets/scripts/data/galerie-data.js"></script>
@@ -2304,15 +2303,15 @@ Object.assign(window, { HeuteStrip, VorgeschichteTeaser, Tageskarte, Missionster
 const { useState:uS5, useEffect:uE5, useCallback:uC5, useRef:uR5 } = React;
 const { ParticleField, PortalCard, Carousel, PORTALS:PRTS, HeuteStrip, VorgeschichteTeaser, Tageskarte, MissionsterminalSection, KollektikonSection, NeuerCharakterButton, RecentCharacters, CTAButton } = window;
 const IMGS = [...(window.GALERIE_ALL_IMAGES || [])].sort(() => Math.random() - 0.5).slice(0, 80);
-const { useTweaks, TweaksPanel, TweakSection, TweakToggle, SiteNav, SiteFooter } = window;
+const { SiteNav, SiteFooter } = window;
 
-const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+const TWEAK_DEFAULTS = {
   "showParticles": true
-}/*EDITMODE-END*/;
+};
 
 function App() {
   const [mouse, setMouse] = uS5({x:0.5, y:0.5});
-  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const tweaks = TWEAK_DEFAULTS;
   const [titleHover, setTitleHover] = uS5(false);
   const heroRef = uR5(null);
 
@@ -2550,13 +2549,7 @@ function App() {
       </section>
 
       {/* ── FOOTER ── */}
-      <SiteFooter />
-
-      <TweaksPanel>
-        <TweakSection label="Atmosphäre"/>
-        <TweakToggle id="showParticles" label="Partikel"/>
-      </TweaksPanel>
-    </div>
+      <SiteFooter /></div>
   );
 }
 

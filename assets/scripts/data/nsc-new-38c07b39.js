@@ -1,14 +1,13 @@
 /* nsc-app.jsx — NSC overview page: filters, search, card grid + detail panel */
 
 const { useState:appUS, useEffect:appUE, useMemo:appUM, useCallback:appUC } = React;
-const { useTweaks } = window;
 const { STAGE_LABELS, MAX_STAGE, STATUS_DEF, STATUS_ORDER,
         DIVISION_ORDER, DIVISION_THEME, GOLD, GOLD_GLOW, goldA,
         hexPoints, hexA, accentOf, romanFor, useNSCData, useUnlocks, factsOf, unlockableFactsOf,
         NAV, NavItem, FloatingHexField, ParticleField, useScrollReveal,
         NSCPortrait, StageBadge, StatusPills, NSCDetailPanel, SiteNav, PageHeader } = window;
 
-const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"showParticles": true, "showHexes": true, "compactCards": false}/*EDITMODE-END*/;
+const TWEAK_DEFAULTS = {"showParticles": true, "showHexes": true, "compactCards": false};
 
 const uniq = arr => Array.from(new Set(arr.filter(Boolean))).sort((a,b) => a.localeCompare(b,'de'));
 const statusOf = n => Array.isArray(n.status) ? n.status : (n.status ? [n.status] : []);

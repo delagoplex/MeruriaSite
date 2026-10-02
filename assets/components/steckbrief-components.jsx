@@ -1916,7 +1916,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
   const [editing, setEditing] = useSteckbrief(false);
   const [zauber, setZauber] = useSteckbrief(() => entry?._char?.zauber || entry?.char_data?.zauber || []);
   const [lightboxBild, setLightboxBild] = useSteckbrief(null);
-  const [tweaks, setTweak]  = (window.useTweaks || (() => [STECKBRIEF_TWEAK_DEFAULTS, ()=>{}]))(STECKBRIEF_TWEAK_DEFAULTS);
+  const tweaks = STECKBRIEF_TWEAK_DEFAULTS;
   const charRef   = useSteckRef(char);   charRef.current   = char;
   const zauberRef = useSteckRef(zauber); zauberRef.current = zauber;
 
@@ -1943,24 +1943,12 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
     upd({ stats: { ...char.stats, [key]: Math.max(1, Math.min(30, parseInt(val)||1)) } });
   }
 
-  const { SiteNav, TweaksPanel, TweakSection, TweakToggle, ImageUpload } = window;
+  const { SiteNav, ImageUpload } = window;
   const ZauberSect = window.ZauberSection;
 
   return (
     <div style={{minHeight:"100vh"}}>
       {!hideNav && SiteNav && <SiteNav />}
-
-      {TweaksPanel && (
-        <TweaksPanel tweaks={tweaks} setTweak={setTweak}>
-          <TweakSection label="Sektionen">
-            {canEdit && <TweakToggle id="showZauber"       label="Zauber anzeigen" />}
-            <TweakToggle id="showCompanions"  label="Begleiter anzeigen" />
-            <TweakToggle id="showQuests"      label="Quests anzeigen" />
-            <TweakToggle id="showKontakte"    label="Kontakte anzeigen" />
-            <TweakToggle id="showWissenswertes" label="Wissenswertes anzeigen" />
-          </TweakSection>
-        </TweaksPanel>
-      )}
 
       {/* ── Kopf ── */}
       <div style={{padding:"18px 28px 15px",borderBottom:"1px solid rgba(124,77,255,0.1)"}}>

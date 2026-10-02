@@ -19,7 +19,6 @@
 <script src="assets/scripts/supabase-client.js"></script>
 <script src="assets/components/site-gate.js"></script>
 <script src="assets/components/page-header.js"></script>
-<script src="assets/components/tweaks-panel-2.js"></script>
 <script src="assets/components/particle-field.js"></script>
 <script src="assets/components/floating-hex-field.js"></script>
 <script src="assets/components/footer.js"></script>
@@ -39,17 +38,13 @@ const {
   useCallback
 } = React;
 const {
-  useTweaks,
-  TweaksPanel,
-  TweakSection,
-  TweakToggle,
   ParticleField,
   FloatingHexField,
   FloatNav
 } = window;
-const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+const TWEAK_DEFAULTS = {
   "showParticles": true
-} /*EDITMODE-END*/;
+};
 const NAV_H = 52;
 const ACCENT = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
 const DIVISIONS = [window.DIVISIONS_DATA.find(d => d.id === 'kuratoren')];
@@ -804,7 +799,7 @@ function App() {
     x: 0.5,
     y: 0.5
   });
-  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const tweaks = TWEAK_DEFAULTS;
   const [headerBottom, setHeaderBottom] = useState(0);
   const heroRef = useRef(null);
   const handleMouseMove = useCallback(e => {
@@ -857,12 +852,7 @@ function App() {
     heroRef: heroRef
   }))), /*#__PURE__*/React.createElement(SiteFooter, {
     accent: ACCENT
-  }), /*#__PURE__*/React.createElement(FloatNav, null), /*#__PURE__*/React.createElement(TweaksPanel, null, /*#__PURE__*/React.createElement(TweakSection, {
-    label: "Darstellung"
-  }), /*#__PURE__*/React.createElement(TweakToggle, {
-    id: "showParticles",
-    label: "Partikel"
-  })));
+  }), /*#__PURE__*/React.createElement(FloatNav, null));
 }
 ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement(App, null)));
 })();

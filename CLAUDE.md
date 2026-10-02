@@ -16,7 +16,7 @@ Each page is a self-contained HTML file with:
 - A single `<script type="text/babel">` block containing the full React app for that page (state, rendering, and `ReactDOM.createRoot`)
 - React and Babel loaded from `assets/scripts/vendor/` as browser globals (not modules)
 
-The `TWEAK_DEFAULTS` constant in each page (delimited by `/*EDITMODE-BEGIN*/` and `/*EDITMODE-END*/`) controls live-editable design parameters like particle visibility and header height. The `useTweaks` hook from the tweaks panel reads and exposes these values.
+The `TWEAK_DEFAULTS` constant in each page holds fixed design parameters like particle visibility and header height (the former live tweaks panel was removed; edit the constants directly).
 
 **Pages:**
 - `index.html` — landing/home page
@@ -37,7 +37,6 @@ The `TWEAK_DEFAULTS` constant in each page (delimited by `/*EDITMODE-BEGIN*/` an
 |---|---|---|
 | `nav.jsx` | `window.SiteNav` | Sticky nav bar with dropdown menus and dark/light mode toggle |
 | `site-gate.jsx` | `window.SiteGate` | Site-wide password gate (30-day session, `localStorage` key `site_auth`) |
-| `tweaks-panel-*.jsx` | `window.useTweaks`, `window.TweaksPanel`, … | Live design tweaks overlay |
 | `particle-field.jsx` | `window.ParticleField` | Animated background particles |
 | `filter-utils.jsx` | `window.FilterGroup`, `window.XBtn`, … | Filter UI primitives used by Monster.html |
 

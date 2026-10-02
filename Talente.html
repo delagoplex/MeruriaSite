@@ -11,7 +11,6 @@
 
 <script src="assets/scripts/data/talente-data.js"></script>
 <script src="assets/scripts/data/zauber-data.js"></script>
-<script src="assets/components/tweaks-panel-8.js"></script>
 <script src="assets/components/filter-utils.js"></script>
 <script src="assets/components/nav.js"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
@@ -34,21 +33,17 @@ const {
   useMemo
 } = React;
 const {
-  useTweaks,
-  TweaksPanel,
-  TweakSection,
-  TweakToggle,
   SiteNav,
   ParticleField,
   useDragScroll,
   XBtn,
   FilterGroup
 } = window;
-const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+const TWEAK_DEFAULTS = {
   "showParticles": true,
   "compactList": false,
   "showBullets": true
-} /*EDITMODE-END*/;
+};
 
 // ─── KATEGORIE FARBEN ─────────────────────────────────────────────────────────
 const KATEGORIE_STYLE = {
@@ -1081,7 +1076,7 @@ function EmptyState({
 
 // ─── APP ──────────────────────────────────────────────────────────────────────
 function App() {
-  const [tw, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const tw = TWEAK_DEFAULTS;
   const allData = window.TALENTE_DATA || [];
   const [search, setSearch] = useState('');
   const initTalentId = new URLSearchParams(location.search).get('talent');
@@ -1255,18 +1250,7 @@ function App() {
   }))), zauberModal && /*#__PURE__*/React.createElement(ZauberModal, {
     zauber: zauberModal,
     onClose: () => setZauberModal(null)
-  }), /*#__PURE__*/React.createElement(TweaksPanel, null, /*#__PURE__*/React.createElement(TweakSection, {
-    title: "Darstellung"
-  }, /*#__PURE__*/React.createElement(TweakToggle, {
-    label: "Partikel",
-    tKey: "showParticles"
-  }), /*#__PURE__*/React.createElement(TweakToggle, {
-    label: "Kompakte Liste",
-    tKey: "compactList"
-  }), /*#__PURE__*/React.createElement(TweakToggle, {
-    label: "Bullet-Ansicht",
-    tKey: "showBullets"
-  }))));
+  }));
 }
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(/*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement(App, null)));

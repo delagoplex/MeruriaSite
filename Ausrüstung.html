@@ -13,7 +13,6 @@
 <script src="assets/scripts/vendor/react-dom.production.min.js"></script>
 
 <script src="assets/scripts/data/ausrüstung-data.js"></script>
-<script src="assets/components/tweaks-panel-8.js"></script>
 <script src="assets/components/nav.js"></script>
 <script src="assets/scripts/vendor/supabase.min.js"></script>
 <script src="assets/scripts/supabase-client.js"></script>
@@ -36,11 +35,6 @@ const {
   useCallback
 } = React;
 const {
-  useTweaks,
-  TweaksPanel,
-  TweakSection,
-  TweakToggle,
-  TweakColor,
   SiteNav,
   SiteFooter,
   ParticleField,
@@ -48,10 +42,10 @@ const {
   PageHero,
   FloatNav
 } = window;
-const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+const TWEAK_DEFAULTS = {
   "showParticles": true,
   "accentColor": "#7c4dff"
-} /*EDITMODE-END*/;
+};
 
 // ── HEX ──────────────────────────────────────────────────
 function hexPoints(s) {
@@ -4582,7 +4576,7 @@ function App() {
     x: 0.5,
     y: 0.5
   });
-  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const tweaks = TWEAK_DEFAULTS;
   const [activeCategory, setActiveCategory] = useState('abenteuer');
   const accent = tweaks.accentColor || '#7c4dff';
   const heroRef = React.useRef(null);
@@ -4702,15 +4696,7 @@ function App() {
     accent: accent
   })))), /*#__PURE__*/React.createElement(SiteFooter, {
     accent: accent
-  }), /*#__PURE__*/React.createElement(FloatNav, null), /*#__PURE__*/React.createElement(TweaksPanel, null, /*#__PURE__*/React.createElement(TweakSection, {
-    label: "Darstellung"
-  }), /*#__PURE__*/React.createElement(TweakColor, {
-    id: "accentColor",
-    label: "Akzentfarbe"
-  }), /*#__PURE__*/React.createElement(TweakToggle, {
-    id: "showParticles",
-    label: "Partikel"
-  })));
+  }), /*#__PURE__*/React.createElement(FloatNav, null));
 }
 ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement(App, null)));
 })();

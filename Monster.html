@@ -29,7 +29,6 @@
 <script src="assets/scripts/supabase-client.js"></script>
 <script src="assets/components/site-gate.js"></script>
 <script src="assets/components/particle-field.js"></script>
-<script src="assets/components/tweaks-panel-8.js"></script>
 <script src="assets/components/filter-utils.js"></script>
 
 </head>
@@ -46,20 +45,16 @@ const {
   useMemo
 } = React;
 const {
-  useTweaks,
-  TweaksPanel,
-  TweakSection,
-  TweakToggle,
   SiteNav,
   ParticleField,
   useDragScroll,
   XBtn,
   FilterGroup
 } = window;
-const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+const TWEAK_DEFAULTS = {
   "showParticles": true,
   "compactList": false
-} /*EDITMODE-END*/;
+};
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
 function formatCR(cr) {
@@ -2553,7 +2548,7 @@ function _monsterKolId(name) {
 
 // ─── MAIN APP ─────────────────────────────────────────────────────────────────
 function App() {
-  const [t] = useTweaks(TWEAK_DEFAULTS);
+  const t = TWEAK_DEFAULTS;
   const allMonster = window.MONSTER_DATA || [];
   const [mouse, setMouse] = useState({
     x: 0.5,
@@ -2865,14 +2860,6 @@ function App() {
     monster: selected
   }) : /*#__PURE__*/React.createElement(EmptyState, {
     msg: "Monster ausw\xE4hlen"
-  }))), /*#__PURE__*/React.createElement(TweaksPanel, null, /*#__PURE__*/React.createElement(TweakSection, {
-    title: "Darstellung"
-  }, /*#__PURE__*/React.createElement(TweakToggle, {
-    label: "Partikel",
-    tKey: "showParticles"
-  }), /*#__PURE__*/React.createElement(TweakToggle, {
-    label: "Kompakte Liste",
-    tKey: "compactList"
   }))));
 }
 const root = ReactDOM.createRoot(document.getElementById('root'));
