@@ -1,4 +1,4 @@
-// Orks — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Orks — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Orks'] = {
   name: 'Orks', accent: '#709040',
   subtitle: 'Kinder Gruumshs · Wächter und Krieger',

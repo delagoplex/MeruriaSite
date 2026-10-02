@@ -1,4 +1,4 @@
-// Leichtfüße — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Leichtfüße — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Leichtfüße'] = {
   name: 'Leichtfüße', accent: '#e8a830',
   subtitle: 'Wandervolk der Straßen · Meister des Versteckens',

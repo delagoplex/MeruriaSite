@@ -1,4 +1,4 @@
-// Githyanki — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Githyanki — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Githyanki'] = {
   name: 'Githyanki', accent: '#d0b030',
   subtitle: 'Krieger der Astralebene · Erben des Widerstands',

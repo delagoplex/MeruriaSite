@@ -8,7 +8,7 @@ function hexToRgb(hex) {
   return [parseInt(h.slice(0,2),16), parseInt(h.slice(2,4),16), parseInt(h.slice(4,6),16)];
 }
 
-// Single-canvas variant used on all pages except index.html
+// Single-canvas variant used on all pages except /index.html
 function ParticleField({ mouseX, mouseY, accent='#a08cff', clipTop=0 }) {
   const [accentR, accentG, accentB] = hexToRgb(accent);
   const canvasRef = useRef(null);
@@ -47,7 +47,7 @@ function ParticleField({ mouseX, mouseY, accent='#a08cff', clipTop=0 }) {
   return <canvas ref={canvasRef} style={style} />;
 }
 
-// Dual-canvas enhanced variant used on index.html
+// Dual-canvas enhanced variant used on /index.html
 function ParticleFieldEnhanced({ mouseX, mouseY }) {
   const bgRef = useRef(null);
   const fgRef = useRef(null);

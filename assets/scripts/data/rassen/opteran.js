@@ -1,2 +1,2 @@
-// Opteran — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Opteran — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Opteran'] = { name:'Opteran',                  accent:'#70a870', subtitle:'Geflügelte Insektenwesen · Krieger der Schwärme',         tags:['Monstrosity','Mittelgroß','9 m Bewegung','Insektenflug','Neutral'],            headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null };

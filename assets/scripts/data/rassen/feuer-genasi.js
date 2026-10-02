@@ -1,4 +1,4 @@
-// Feuer-Genasi — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Feuer-Genasi — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Feuer-Genasi'] = {
   name: 'Feuer-Genasi', accent: '#e05020',
   subtitle: 'Erben der Ifrits · Träger der ewigen Flamme',

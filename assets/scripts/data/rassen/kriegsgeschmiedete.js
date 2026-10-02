@@ -1,2 +1,2 @@
-// Kriegsgeschmiedete — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Kriegsgeschmiedete — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Kriegsgeschmiedete'] = { name:'Kriegsgeschmiedete',       accent:'#7090a8', subtitle:'Lebende Konstrukte · Krieger aus Stahl und Magie',         tags:['Humanoid','Mittelgroß','9 m Bewegung','Konstrukt','Neutral'],                  headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null };

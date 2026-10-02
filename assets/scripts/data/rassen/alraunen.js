@@ -1,2 +1,2 @@
-// Alraunen — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Alraunen — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Alraunen'] = { name:'Alraunen',                 accent:'#90b840', subtitle:'Tönendes Pflanzenfolk · Kinder des Waldes',               tags:['Pflanze','Klein','9 m Bewegung','Betäubungsruf','Neutral'],                    headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null };

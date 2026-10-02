@@ -1,4 +1,4 @@
-// Tabaxi — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Tabaxi — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Tabaxi'] = {
   name: 'Tabaxi', accent: '#d89858',
   subtitle: 'Kinder des Katzenfürsten · Hüter des Sternenklans',

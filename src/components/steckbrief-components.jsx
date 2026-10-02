@@ -1918,7 +1918,6 @@ function EditablePersonality({ char, upd, taStyle }) {
    Read-only:  <SteckbriefView char={processedChar} />
    Edit mode:  <SteckbriefView entry={dbRow} onBack={fn} hasMultiple={bool} />
    ─────────────────────────────────────────────────────────── */
-const STECKBRIEF_TWEAK_DEFAULTS = {showZauber:true,showCompanions:true,showQuests:true,showKontakte:true,showWissenswertes:true};
 
 function SteckbriefView({ char: charProp = null, entry = null, onBack = null, hasMultiple = false, hideNav = false, extraTopPadding = 0 }) {
   const canEdit = !!entry;
@@ -1926,7 +1925,6 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
   const [editing, setEditing] = useSteckbrief(false);
   const [zauber, setZauber] = useSteckbrief(() => entry?._char?.zauber || entry?.char_data?.zauber || []);
   const [lightboxBild, setLightboxBild] = useSteckbrief(null);
-  const tweaks = STECKBRIEF_TWEAK_DEFAULTS;
   const charRef   = useSteckRef(char);   charRef.current   = char;
   const zauberRef = useSteckRef(zauber); zauberRef.current = zauber;
 
@@ -1974,7 +1972,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
               </button>
             )}
             {!canEdit && (
-              <a href="Spielercharaktere.html" style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".18em",
+              <a href="/charaktere/spielercharaktere.html" style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".18em",
                 color:"rgba(124,77,255,0.5)",textDecoration:"none",textTransform:"uppercase",transition:"color .15s"}}
                 onMouseEnter={e=>e.currentTarget.style.color="rgba(160,140,255,0.85)"}
                 onMouseLeave={e=>e.currentTarget.style.color="rgba(124,77,255,0.5)"}>
@@ -2090,7 +2088,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
           <KlassenmerkmaleCard char={char} />
           <RassenmerkmaleCard char={char} upd={E ? upd : null} />
           <HintergrundmerkmaleCard char={char} />
-          {tweaks.showCompanions && char.companions && char.companions.length > 0 && (
+          {char.companions && char.companions.length > 0 && (
             <div>
               <div style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".28em",color:"rgba(124,77,255,0.45)",textTransform:"uppercase",marginBottom:8}}>Begleiter</div>
               <div style={{width:24,height:1,background:"linear-gradient(90deg,rgba(124,77,255,0.65),transparent)",marginBottom:10}} />
@@ -2136,7 +2134,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
               : <p style={{fontFamily:"var(--font-body)",fontSize:13,fontWeight:300,color:"var(--silver)",lineHeight:1.9,textWrap:"pretty"}}>{char.story}</p>
             }
           </Card>
-          {canEdit && ZauberSect && tweaks.showZauber && (
+          {canEdit && ZauberSect && (
             <Card>
               <ZauberSect zauber={zauber} updZauber={updZauber} editing={E} charKlasse={char.class || ''} />
             </Card>
@@ -2145,7 +2143,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
       </div>
 
       {/* ── Quests ── */}
-      {tweaks.showQuests && char.quests && char.quests.length > 0 && (
+      {char.quests && char.quests.length > 0 && (
         <div style={{padding:"22px 22px 8px"}}>
           <Divider label="Erledigte Quests" />
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))",gap:12}}>
@@ -2155,7 +2153,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
       )}
 
       {/* ── Kontakte ── */}
-      {tweaks.showKontakte && char.contacts && char.contacts.length > 0 && (
+      {char.contacts && char.contacts.length > 0 && (
         <div style={{padding:"22px 22px 8px"}}>
           <Divider label="Kontakte" />
           <KontakteTablet char={char} />
@@ -2163,7 +2161,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
       )}
 
       {/* ── Wissenswertes ── */}
-      {tweaks.showWissenswertes && char.freundebuch && char.freundebuch.length > 0 && (
+      {char.freundebuch && char.freundebuch.length > 0 && (
         <div style={{padding:"22px 22px 24px"}}>
           <div style={{display:"flex",alignItems:"baseline",justifyContent:"space-between",gap:20,marginBottom:20,flexWrap:"wrap"}}>
             <div>

@@ -1,4 +1,4 @@
-// Page entry for index.html
+// Page entry for /index.html
 import '../components/nav.jsx';
 import '../components/site-gate.jsx';
 import '../components/footer.jsx';
@@ -35,27 +35,27 @@ var NAV_TABS = [
 
 // ── Portal cards (6 player-facing overview pages) ──
 var PORTALS = [
-  { id:'spielerhandbuch',   href:'Spielerhandbuch.html',   n:'I',   label:'Spielerhandbuch',   hue:250,
+  { id:'spielerhandbuch',   href:'/spielerhandbuch/index.html',   n:'I',   label:'Spielerhandbuch',   hue:250,
     tag:'Regeln & Welt-Verständnis',
     blurb:'Wie die Welt funktioniert — Realismus, Handwerk, Schutzherren, Gesinnungen und Regierungsformen.',
     peek:['Realismus','Sammeln & Handwerk','Schutzherren','Gesinnungen','Regierungsformen'] },
-  { id:'charaktererstellung', href:'Charaktererstellung.html', n:'II',  label:'Charaktererstellung', hue:235,
+  { id:'charaktererstellung', href:'/charaktererstellung/index.html', n:'II',  label:'Charaktererstellung', hue:235,
     tag:'Werde wer du sein willst',
     blurb:'Rassen, Klassen, Talente, Hintergründe, Zauber und Ausrüstung — alles für deinen neuen Charakter.',
     peek:['Neuer Charakter','Rassen','Klassen','Talente','Hintergründe','Zauber','Ausrüstung'] },
-  { id:'enzyklopaedie',    href:'Enzyklopädie.html',        n:'III', label:'Enzyklopädie',        hue:215,
+  { id:'enzyklopaedie',    href:'/enzyklopaedie/index.html',        n:'III', label:'Enzyklopädie',        hue:215,
     tag:'Die Welt im Detail',
     blurb:'Völker, Orte, Götter, Religionen, Organisationen — alles, was in Meruria existiert.',
     peek:['Völker','Orte','Ressourcen','Organisationen','Gottheiten','Religionen','Monster','Galerie'] },
-  { id:'divisionen',       href:'Divisionen.html',           n:'IV',  label:'Divisionen',           hue:290,
+  { id:'divisionen',       href:'/divisionen/index.html',           n:'IV',  label:'Divisionen',           hue:290,
     tag:'Acht Wege, das Schicksal zu formen',
     blurb:'Die acht Divisionen sind das Rückgrat der Welt. Kuratoren, Sturmritter, Sentinels und mehr.',
     peek:['I — Kuratoren','II — Sturmritter','III — Sentinels','IV — Friedenshüter','V — Outfitters','VI — Pathfinders','VII — Quellensucher','VIII — Bergungsgarde'] },
-  { id:'charaktere',       href:'Charaktere.html',           n:'V',   label:'Charaktere',           hue:30,
+  { id:'charaktere',       href:'/charaktere/index.html',           n:'V',   label:'Charaktere',           hue:30,
     tag:'Helden, Schurken, Verbündete',
     blurb:'Die Steckbriefe aller Charaktere — Spielercharaktere, NSCs und alles dazwischen.',
     peek:['Spielercharaktere','Verbündete','Antagonisten','Begegnete Seelen'] },
-  { id:'tools',            href:'Kollektikon.html',           n:'VI',  label:'Spiel',                hue:175,
+  { id:'tools',            href:'/spiel/kollektikon.html',           n:'VI',  label:'Spiel',                hue:175,
     tag:'Werkzeuge für die Expedition',
     blurb:'Kollektikon, Karte, Kalender, Missionsterminal, Rezepte und Steckbrief — alles auf einen Blick.',
     peek:['Kollektikon','Karte','Kalender','Missionsterminal','Rezepte','Steckbrief'] },
@@ -595,7 +595,7 @@ function HeuteStrip() {
 
 /* ─────────────────────────────────────────────────
    MISSIONSTERMINAL section — full functional terminal
-   (mirrors Missionsterminal.html, embedded into Meruria home)
+   (mirrors /spiel/missionsterminal.html, embedded into Meruria home)
    ───────────────────────────────────────────────── */
 var MT_KAT = {
   Suche:     { color: '#a78bff', glyph: '⬡', label: 'SUCHE' },
@@ -1275,7 +1275,7 @@ function MissionsterminalSection() {
 
       {/* CTA — Terminal betreten */}
       <div style={{ marginTop:24 }}>
-        <CTAButton href="Missionsterminal.html" label="Terminal betreten"/>
+        <CTAButton href="/spiel/missionsterminal.html" label="Terminal betreten"/>
       </div>
     </div>
   );
@@ -1285,7 +1285,7 @@ function MissionsterminalSection() {
 
 /* ─────────────────────────────────────────────────
    KOLLEKTIKON — abgeleitet aus window.KOLLEKTIKON_*
-   KollektikonBar + KOL_CAT_ICONS kommen aus assets/components/kollektikon-bar.js
+   KollektikonBar + KOL_CAT_ICONS kommen aus assets/scripts/shared/kollektikon-bar.js
    ───────────────────────────────────────────────── */
 // Kollektikon data is now fetched from Supabase inside KollektikonSection.
 
@@ -1295,7 +1295,7 @@ function RecentCard({ item, idx, total, gold }) {
   const cA = a => `oklch(0.72 0.16 ${item.hue} / ${a})`;
   const goldA = a => `oklch(0.82 0.14 80 / ${a})`;
   return (
-    <a href="Kollektikon.html"
+    <a href="/spiel/kollektikon.html"
       onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
       style={{
         width:144, height:178, flexShrink:0,
@@ -1499,7 +1499,7 @@ function KollektikonSection() {
 
       {/* CTA — Zum vollständigen Kollektikon */}
       <div style={{ marginTop:32 }}>
-        <CTAButton href="Kollektikon.html" label="Zum vollständigen Kollektikon"/>
+        <CTAButton href="/spiel/kollektikon.html" label="Zum vollständigen Kollektikon"/>
       </div>
     </div>
   );
@@ -1766,7 +1766,7 @@ function RecentCharCard({ c }) {
   const accentEdge = `oklch(0.72 0.16 ${c.hue} / 0.45)`;
   const isSC = c.kind === 'SC';
   return (
-    <a href={c.kind === 'SC' ? `Steckbrief.html?id=${c.id}` : 'Spielercharaktere.html'}
+    <a href={c.kind === 'SC' ? `/charaktere/steckbrief.html?id=${c.id}` : '/charaktere/spielercharaktere.html'}
       onMouseEnter={()=>setHov(true)}
       onMouseLeave={()=>setHov(false)}
       style={{
@@ -1948,7 +1948,7 @@ var TAGESKARTE_MAJORS = [
   ['XXI','Die Welt','Vollendung · Ganzheit · Erfüllung'],
 ];
 
-/* Major arcana SVG glyphs — matched to Tarot.html */
+/* Major arcana SVG glyphs — matched to /dm/tarot.html */
 var MAJOR_SVGS = [
   `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 24 52 L 18 22 L 32 38 L 50 14 L 68 38 L 82 22 L 76 52 Z" fill="rgba(124,77,255,0.35)"/><rect x="22" y="52" width="56" height="8" fill="rgba(124,77,255,0.45)"/><circle cx="18" cy="22" r="3.5" fill="rgba(220,210,255,0.9)" stroke-width="1.1"/><circle cx="50" cy="14" r="3.5" fill="rgba(220,210,255,0.9)" stroke-width="1.1"/><circle cx="82" cy="22" r="3.5" fill="rgba(220,210,255,0.9)" stroke-width="1.1"/></svg>`,
   `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 50 10 L 78 70 L 22 70 Z" fill="rgba(124,77,255,0.4)"/><ellipse cx="50" cy="72" rx="36" ry="6" fill="rgba(124,77,255,0.5)"/><polygon points="50,34 53,42 62,42 55,48 58,56 50,50 42,56 45,48 38,42 47,42" fill="rgba(220,210,255,0.95)" stroke-width="0.4"/><circle cx="50" cy="10" r="2.5" fill="rgba(220,210,255,0.95)" stroke="none"/></svg>`,
@@ -2020,7 +2020,7 @@ function Tageskarte() {
   const cardRef = uRx(null);
   const card = TAGESKARTE_MAJORS[cardIdx];
 
-  // ── Star burst (ported from Tarot.html spawnStarBurst) ──
+  // ── Star burst (ported from /dm/tarot.html spawnStarBurst) ──
   const spawnStarBurst = (cx, cy) => {
     // Central flash
     const flash = document.createElement('div');
@@ -2260,13 +2260,8 @@ var { ParticleField, PortalCard, Carousel, PORTALS:PRTS, HeuteStrip, Vorgeschich
 var IMGS = [...(window.GALERIE_ALL_IMAGES || [])].sort(() => Math.random() - 0.5).slice(0, 80);
 var { SiteNav, SiteFooter } = window;
 
-var TWEAK_DEFAULTS = {
-  "showParticles": true
-};
-
 function App() {
   const [mouse, setMouse] = uS5({x:0.5, y:0.5});
-  const tweaks = TWEAK_DEFAULTS;
   const [titleHover, setTitleHover] = uS5(false);
   const heroRef = uR5(null);
 
@@ -2276,7 +2271,7 @@ function App() {
 
   return (
     <div onMouseMove={onMove} style={{position:'relative', minHeight:'100vh'}}>
-      {tweaks.showParticles && <ParticleField mouse={mouse}/>}
+      <ParticleField mouse={mouse}/>
 
       <SiteNav/>
 
@@ -2421,7 +2416,7 @@ function App() {
         </div>
 
         <div style={{ marginTop:28 }}>
-          <CTAButton href="Charaktere.html" label="Zu den Charakteren"/>
+          <CTAButton href="/charaktere/index.html" label="Zu den Charakteren"/>
         </div>
       </section>
 
@@ -2446,7 +2441,7 @@ function App() {
         </div>
         <HeuteStrip/>
         <div style={{ marginTop:24 }}>
-          <CTAButton href="Kalender.html" label="Zum Kalender"/>
+          <CTAButton href="/spiel/kalender.html" label="Zum Kalender"/>
         </div>
       </section>
 
@@ -2476,7 +2471,7 @@ function App() {
       }}>
         <Tageskarte/>
         <div style={{ marginTop:24 }}>
-          <CTAButton href="Tarot.html" label="Komplettes Tarot-Deck"/>
+          <CTAButton href="/dm/tarot.html" label="Komplettes Tarot-Deck"/>
         </div>
       </section>
 
@@ -2499,7 +2494,7 @@ function App() {
           <Carousel images={IMGS}/>
         </div>
         <div style={{ padding:'0 48px 32px', maxWidth:'1440px', margin:'0 auto' }}>
-          <CTAButton href="Galerie.html" label="Zur Galerie"/>
+          <CTAButton href="/enzyklopaedie/galerie.html" label="Zur Galerie"/>
         </div>
       </section>
 

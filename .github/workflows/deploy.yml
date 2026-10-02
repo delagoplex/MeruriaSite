@@ -12,7 +12,7 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -24,6 +24,9 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      # generate-galerie.yml only commits the file afterwards (a GITHUB_TOKEN push cannot trigger
+      # this workflow again), so regenerate it here to publish new gallery images right away.
+      - run: node tools/generate-galerie-data.mjs
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:

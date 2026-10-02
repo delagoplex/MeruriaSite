@@ -1,4 +1,4 @@
-// Yuan-ti — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Yuan-ti — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Yuan-ti'] = {
   name: 'Yuan-ti', accent: '#60a850',
   subtitle: 'Schlangengeborene · Erben uralter Rituale',

@@ -1,4 +1,4 @@
-// Chromatische Drachenblütige — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Chromatische Drachenblütige — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Chromatische Drachenblütige'] = {
   name: 'Chromatische Drachenblütige', accent: '#c84030',
   subtitle: 'Erben der Chromatischen · Kinder des Bösen',

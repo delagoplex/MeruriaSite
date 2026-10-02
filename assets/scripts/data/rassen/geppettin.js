@@ -1,4 +1,4 @@
-// Geppettin — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Geppettin — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Geppettin'] = {
   name: 'Geppettin', accent: '#b0a060',
   subtitle: 'Lebendige Spielzeuge · Kinder des Handwerks und der Magie',

@@ -1,4 +1,4 @@
-// Edelstein Drachenblütige — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Edelstein Drachenblütige — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Edelstein Drachenblütige'] = {
   name: 'Edelstein Drachenblütige', accent: '#9060e0',
   subtitle: 'Erben Sardiors · Kinder des Geistes',

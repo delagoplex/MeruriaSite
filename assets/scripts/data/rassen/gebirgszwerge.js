@@ -1,4 +1,4 @@
-// Gebirgszwerge — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Gebirgszwerge — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Gebirgszwerge'] = {
   name: 'Gebirgszwerge', accent: '#9890a8',
   subtitle: 'Krieger des Steins · Hüter der Bergfestungen',

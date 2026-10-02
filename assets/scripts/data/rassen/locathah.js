@@ -1,4 +1,4 @@
-// Locathah — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Locathah — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Locathah'] = {
   name: 'Locathah', accent: '#3090b0',
   subtitle: 'Überlebende der Tiefe · Krieger der Strömungen',

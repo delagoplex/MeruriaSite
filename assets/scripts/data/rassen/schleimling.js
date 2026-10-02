@@ -1,2 +1,2 @@
-// Schleimling — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Schleimling — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Schleimling'] = { name:'Schleimling',                  accent:'#70c080', subtitle:'Formloser Schleimling · Anpassungskünstler der Materie',  tags:['Schlick','Mittelgroß','9 m Bewegung','Formlosigkeit','Neutral'],               headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null };

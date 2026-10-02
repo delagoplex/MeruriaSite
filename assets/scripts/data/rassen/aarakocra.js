@@ -1,4 +1,4 @@
-// Aarakocra — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Aarakocra — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Aarakocra'] = {
   name: 'Aarakocra', accent: '#1ab8a0',
   subtitle: 'Kinder des Himmels · Diener der Winde',

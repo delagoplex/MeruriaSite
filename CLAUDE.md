@@ -10,39 +10,54 @@ The site is built with **Vite** (multi-page, every `.html` file is an entry) and
 
 ## Architecture
 
+Pages live in topic folders; the folder and file names are the public URLs (lowercase, no umlauts or spaces):
+
+| Folder | Content |
+|---|---|
+| `/` | `index.html` (home), `impressum.html` |
+| `spielerhandbuch/` | `index` (hub), `informationen`, `vorgeschichte`, `realismus`, `sammeln-und-handwerk`, `schutzherren`, `rezepte`, `rezeptkodex` |
+| `charaktererstellung/` | `index` (hub), `neuer-charakter`, `rassen`, `rassen-detail?rasse=<Name>`, `klassen`, `talente`, `hintergruende`, `zauber`, `ausruestung` |
+| `enzyklopaedie/` | `index` (hub), `gottheiten`, `galerie`, `fische`, `gebaeude` |
+| `divisionen/` | `index` (overview of the eight divisions), `kuratoren`, `sturmritter`, `sentinels`, `friedenshueter`, `outfitters`, `pathfinders`, `quellensucher`, `bergungsgarde` |
+| `charaktere/` | `index` (hub), `mein-charakter`, `spielercharaktere`, `nsc`, `steckbrief` |
+| `spiel/` | `kollektikon`, `karte`, `kalender`, `kalender-interaktiv`, `missionsterminal`, `rekrutierung` |
+| `dm/` | DM-only pages (access is checked by role, not by path): `monster`, `ressourcen`, `tarot`, `kampfsimulation`, `missionen`, `nsc-verwaltung`, `charakterverwaltung`, `kartenmanagement`, `kolonisierung-und-bau`, `kollektikon`, `rekrutierungspreise`, `rezeptverwaltung`, `segen-und-flueche` |
+
 Each page consists of:
-- an `.html` file in the project root (or `divisionen/`) with `<link>` tags for CSS from `assets/styles/global/` and `assets/styles/pages/` (kept unbundled and in written order), classic `<script>` tags for vendor libs and data files (`assets/scripts/`), and **one** `<script type="module" src="/src/pages/<page>.jsx">`
-- a page entry `src/pages/<page>.jsx` that imports the shared components it needs (`import '../components/nav.jsx'`) and contains the page's React app (state, rendering, `ReactDOM.createRoot`)
+- `<folder>/<name>.html` with `<base href="/">` (so `assets/...` works from every folder), `<link>` tags for CSS from `assets/styles/global/` and `assets/styles/pages/<folder>/<name>.css` (kept unbundled and in written order), classic `<script>` tags for vendor libs and data files, and **one** `<script type="module" src="/src/pages/<folder>/<name>.jsx">`
+- a page entry `src/pages/<folder>/<name>.jsx` that imports the shared components it needs (`import '../../components/nav.jsx'`) and contains the page's React app
 - shared components in `src/components/*.jsx`, each registering itself on `window` (`window.SiteNav`, …); page-specific helper files live in `src/pages/parts/`
 
 Pages that were compiled earlier by the old `compile-jsx` tool contain `React.createElement(...)` calls instead of JSX in their entry file; new code can use JSX freely.
 
-All eight division pages share one entry, `src/pages/division.jsx`: each `divisionen/<Name>.html` sets `<body data-division="<id>">` and the per-division colours come from `DIVISION_THEMES` in that file (add a division = add a theme entry).
+All eight division pages share one entry, `src/pages/divisionen/division.jsx`: each `divisionen/<name>.html` sets `<body data-division="<id>">` and the per-division colours come from `DIVISION_THEMES` in that file (add a division = add a theme entry).
+
+`rassen-detail.html?rasse=<Name>` is one data-driven page for every race (content per race in `assets/scripts/data/rassen/<slug>.js`, index in `rassen-detail-index.js`; optional fields: `lebensraum`, `beziehungenIntro`, `namenSection` incl. `type: 'prose'`, `radar.beschreibung`).
 
 `TWEAK_DEFAULTS` in each page holds fixed design parameters like particle visibility and header height.
 
-**Pages:**
-- `index.html` — landing/home page
-- `Gottheiten.html` — deities
-- `Rassen.html` — races overview
-- `rassen-detail.html?rasse=<Name>` — one data-driven page for every race (content per race in `assets/scripts/data/rassen/<slug>.js`, index in `rassen-detail-index.js`; optional fields: `lebensraum`, `beziehungenIntro`, `namenSection` incl. `type: 'prose'`, `radar.beschreibung`). `Aarakocra.html`, `Aasimar.html` and `Dhampir.html` only redirect there.
-- `Klassen.html` — classes
-- `Monster.html` — monster compendium (password-protected, separate session from site gate)
-- `divisionen/` — the eight faction pages (subfolder with `<base href="../">` so all asset paths resolve from project root)
-  - `Die Kuratoren.html`, `Sturmritter.html`, `Sentinels.html`, `Friedenshueter.html`
-  - `Outfitters.html`, `Pathfinders.html`, `Quellensucher.html`, `Bergungsgarde.html`
-  - `index.html` — redirects to `Die Kuratoren.html` via `<meta http-equiv="refresh">`
+**Old URLs** (before the move into folders, e.g. `/Klassen.html`) keep working: `src/legacy-redirects.json` lists every old path, and the build writes small redirect pages for them into `dist/`. When you move or rename a page, add its old path there.
 
 **Navigation** is defined in the `NAV` array inside `src/components/nav.jsx` and shared across all pages via `window.SiteNav`.
+
+## Database security (Supabase)
+
+Access is enforced by Row Level Security, not by the client-side role checks (`window.SITE_USER?.role`), which only hide UI. Rules for new tables/functions:
+- every table: `ENABLE ROW LEVEL SECURITY` plus explicit policies; players only get what their policy allows, DM rules use `public.is_dm()`
+- `SECURITY DEFINER` functions must check `public.is_dm()` (or `auth.uid()`) themselves and set `SET search_path = public, pg_temp`
+- never rely on `WITH CHECK`-less UPDATE policies for tables with privileged columns: restrict columns with `GRANT UPDATE (col)` or a guard trigger (see `profiles`, `characters` in `039_security_hardening.sql`)
+- roll tokens are only redeemed through `check_roll_token` / `redeem_roll_token` (players cannot read the token table)
+- known gap: `nscs` rows that are `visible` are fully readable by players; the per-field unlock system (`nsc_unlocks`, `field_visibility`) hides secrets only in the UI
 
 ## Shared components (`src/components/`)
 
 | File | Exports | Purpose |
 |---|---|---|
 | `nav.jsx` | `window.SiteNav` | Sticky nav bar with dropdown menus and dark/light mode toggle |
-| `site-gate.jsx` | `window.SiteGate` | Site-wide password gate (30-day session, `localStorage` key `site_auth`) |
+| `site-gate.jsx` | `window.SiteGate` | Site-wide login gate (Supabase e-mail/password, see Authentication) |
 | `particle-field.jsx` | `window.ParticleField` | Animated background particles |
-| `filter-utils.jsx` | `window.FilterGroup`, `window.XBtn`, … | Filter UI primitives used by Monster.html |
+| `shared-helpers.jsx` | `window.hexPoints`, `window.useScrollReveal` | Helpers shared by the hub/overview pages that used identical copies |
+| `filter-utils.jsx` | `window.FilterGroup`, `window.XBtn`, … | Filter UI primitives used by /dm/monster.html |
 
 ### Authentication
 
@@ -60,8 +75,6 @@ The `ThemeToggle` component (☀/☽) in `SiteNav` toggles `data-theme` on `<htm
 
 ```
 assets/
-├── components/        — plain (non-JSX) classic scripts only; JSX components live in src/components/
-├── fonts/             — .woff2 font files referenced by fonts.css
 ├── images/
 │   ├── insignia/      — faction insignia images
 │   ├── races/         — race artwork
@@ -76,6 +89,7 @@ assets/
 │       ├── flee-mortals/      — Flee, Mortals! (MCDM Productions)
 │       └── sonstige/          — Sammelort für nicht-zusammenhängende Einzelmonster
 ├── scripts/
+│   ├── shared/        — plain classic scripts used by several pages (kollektikon-bar, nsc-statblock, rekrutierungsrechner)
 │   ├── data/
 │   │   ├── monster-data.js      — aggregator: merges all sources alphabetically → window.MONSTER_DATA
 │   │   ├── monster/
@@ -96,10 +110,7 @@ assets/
     │   ├── base.css       — resets, CSS variables (dark + light theme), scroll-reveal, shared classes
     │   ├── division.css   — structural classes shared by all eight division pages
     │   └── fonts.css      — @font-face declarations
-    └── pages/             — per-page stylesheets
-        ├── index.css, Rassen.css, Klassen.css, Gottheiten.css, Monster.css
-        └── Sturmritter.css, Sentinels.css, Friedenshueter.css, Outfitters.css,
-            Pathfinders.css, Quellensucher.css, Bergungsgarde.css, DieKuratoren.css
+    └── pages/             — per-page stylesheets, mirroring the page paths (pages/dm/monster.css, pages/divisionen/sturmritter.css, …)
 ```
 
 ## Styling approach
@@ -126,10 +137,17 @@ Static layout and typography are in CSS files. Dynamic styles — those that dep
 ## Development
 
 ```bash
-npm install        # once
-npm run dev        # Vite dev server with hot reload
-npm run build      # production build into dist/ (what GitHub Actions deploys)
-npm run preview    # serve dist/ locally
+# once
+npm install
+
+# Vite dev server with hot reload
+npm run dev
+
+# production build into dist/ (what GitHub Actions deploys)
+npm run build
+
+# serve dist/ locally
+npm run preview
 ```
 
 Deployment: push to `master` → GitHub Actions builds and publishes to Pages (Settings → Pages → Source must be "GitHub Actions"). `public/CNAME` carries the custom domain `meruria.de`.
@@ -150,7 +168,7 @@ window.MONSTER_DATA = [
 ].sort((a, b) => a.name.localeCompare(b.name, 'de'));
 ```
 
-Adding a new book: create `<book>-data.js`, declare the window variable, add it to the aggregator spread list, add `<script>` tag in `Monster.html`.
+Adding a new book: create `<book>-data.js`, declare the window variable, add it to the aggregator spread list, add `<script>` tag in `/dm/monster.html`.
 
 | Datei | Variable | `source`-Wert | Bilder-Verzeichnis |
 |---|---|---|---|
@@ -399,11 +417,11 @@ Defined in `:root` in `base.css`. Light-mode overrides under `[data-theme="light
 | `--sidebar-w` | `200–220px` | TOC sidebar width (per-page) |
 | `--accent` | varies | Division page accent color |
 
-Monster type colors are defined as CSS custom properties in `Monster.css` (e.g. `--type-drache: #f32b00`) and as `oklch()` values in the `TYPE_COLORS` JS object in `Monster.html`.
+Monster type colors are defined as CSS custom properties in `Monster.css` (e.g. `--type-drache: #f32b00`) and as `oklch()` values in the `TYPE_COLORS` JS object in `/dm/monster.html`.
 
 ## Kollektikon data (`assets/scripts/data/kollektikon-data.js`)
 
-Single source of truth for the Kollektikon, shared by `index.html` and `Kollektikon.html`. Neither page contains hardcoded data — both derive their arrays at runtime.
+Single source of truth for the Kollektikon, shared by `/index.html` and `/spiel/kollektikon.html`. Neither page contains hardcoded data — both derive their arrays at runtime.
 
 | Variable | Purpose |
 |---|---|

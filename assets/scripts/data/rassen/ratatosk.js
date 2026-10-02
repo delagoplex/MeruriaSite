@@ -1,4 +1,4 @@
-// Ratatosk — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Ratatosk — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Ratatosk'] = {
   name: 'Ratatosk', accent: '#c87840',
   subtitle: 'Kosmische Trickster · Klatschboten der Weltebenen',

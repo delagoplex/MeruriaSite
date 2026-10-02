@@ -1,4 +1,4 @@
-// Dunkelelfen — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Dunkelelfen — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Dunkelelfen'] = {
   name: 'Dunkelelfen', accent: '#b040e0',
   subtitle: 'Kinder des Unterreichs · Meister von Licht und Finsternis',

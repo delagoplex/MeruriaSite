@@ -1,4 +1,4 @@
-// Githzerai — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Githzerai — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Githzerai'] = {
   name: 'Githzerai', accent: '#6090c8',
   subtitle: 'Mönche des Limbus · Meister der inneren Ordnung',

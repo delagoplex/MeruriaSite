@@ -129,7 +129,7 @@ window.NSC_TOOL = {
     { id:'c3', name:'Charakter 3' },
     { id:'c4', name:'Charakter 4' },
   ],
-  // Gottheiten (aus Gottheiten.html / gottheiten-data.js)
+  // Gottheiten (aus /enzyklopaedie/gottheiten.html / gottheiten-data.js)
   gottheiten: {
     goetter: ['Aurelia','Elysarion','Sienna','Avalaste','Cecillia','Lorelei','Vindeah','Ferys','Daramur','Eiritha','Hadir','Selunara','Aetherius','Serenith','Hydea','Melion','Ophelis','Thraxis','Maledor'],
     daemonen: ['Baalbrezan','Cahbri','Grikuuth','Kizrovidus','Meleshor','Nalphimex','Netrosk','Vezvoriak',"Yx'larak"],

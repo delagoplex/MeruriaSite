@@ -1,4 +1,4 @@
-// Tortels — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Tortels — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Tortels'] = {
   name: 'Tortels', accent: '#509868',
   subtitle: 'Panzerträger der Welt · Wanderer mit Haus auf dem Rücken',

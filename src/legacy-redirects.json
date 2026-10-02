@@ -1,0 +1,238 @@
+[
+  {
+    "from": "Impressum.html",
+    "to": "/impressum.html"
+  },
+  {
+    "from": "Spielerhandbuch.html",
+    "to": "/spielerhandbuch/index.html"
+  },
+  {
+    "from": "Informationen.html",
+    "to": "/spielerhandbuch/informationen.html"
+  },
+  {
+    "from": "Vorgeschichte.html",
+    "to": "/spielerhandbuch/vorgeschichte.html"
+  },
+  {
+    "from": "Realismus Standalone.html",
+    "to": "/spielerhandbuch/realismus.html"
+  },
+  {
+    "from": "Sammeln und Handwerk.html",
+    "to": "/spielerhandbuch/sammeln-und-handwerk.html"
+  },
+  {
+    "from": "Schutzherren.html",
+    "to": "/spielerhandbuch/schutzherren.html"
+  },
+  {
+    "from": "Rezepte.html",
+    "to": "/spielerhandbuch/rezepte.html"
+  },
+  {
+    "from": "Meruria Rezeptkodex (Standalone).html",
+    "to": "/spielerhandbuch/rezeptkodex.html"
+  },
+  {
+    "from": "Charaktererstellung.html",
+    "to": "/charaktererstellung/index.html"
+  },
+  {
+    "from": "Neuer_Charakter.html",
+    "to": "/charaktererstellung/neuer-charakter.html"
+  },
+  {
+    "from": "Rassen.html",
+    "to": "/charaktererstellung/rassen.html"
+  },
+  {
+    "from": "rassen-detail.html",
+    "to": "/charaktererstellung/rassen-detail.html"
+  },
+  {
+    "from": "Klassen.html",
+    "to": "/charaktererstellung/klassen.html"
+  },
+  {
+    "from": "Talente.html",
+    "to": "/charaktererstellung/talente.html"
+  },
+  {
+    "from": "Hintergruende.html",
+    "to": "/charaktererstellung/hintergruende.html"
+  },
+  {
+    "from": "Zauber.html",
+    "to": "/charaktererstellung/zauber.html"
+  },
+  {
+    "from": "Ausrüstung.html",
+    "to": "/charaktererstellung/ausruestung.html"
+  },
+  {
+    "from": "Enzyklopädie.html",
+    "to": "/enzyklopaedie/index.html"
+  },
+  {
+    "from": "Gottheiten.html",
+    "to": "/enzyklopaedie/gottheiten.html"
+  },
+  {
+    "from": "Galerie.html",
+    "to": "/enzyklopaedie/galerie.html"
+  },
+  {
+    "from": "Fische.html",
+    "to": "/enzyklopaedie/fische.html"
+  },
+  {
+    "from": "Gebaude.html",
+    "to": "/enzyklopaedie/gebaeude.html"
+  },
+  {
+    "from": "Divisionen.html",
+    "to": "/divisionen/index.html"
+  },
+  {
+    "from": "divisionen/Die Kuratoren.html",
+    "to": "/divisionen/kuratoren.html"
+  },
+  {
+    "from": "divisionen/Sturmritter.html",
+    "to": "/divisionen/sturmritter.html"
+  },
+  {
+    "from": "divisionen/Sentinels.html",
+    "to": "/divisionen/sentinels.html"
+  },
+  {
+    "from": "divisionen/Friedenshueter.html",
+    "to": "/divisionen/friedenshueter.html"
+  },
+  {
+    "from": "divisionen/Outfitters.html",
+    "to": "/divisionen/outfitters.html"
+  },
+  {
+    "from": "divisionen/Pathfinders.html",
+    "to": "/divisionen/pathfinders.html"
+  },
+  {
+    "from": "divisionen/Quellensucher.html",
+    "to": "/divisionen/quellensucher.html"
+  },
+  {
+    "from": "divisionen/Bergungsgarde.html",
+    "to": "/divisionen/bergungsgarde.html"
+  },
+  {
+    "from": "Charaktere.html",
+    "to": "/charaktere/index.html"
+  },
+  {
+    "from": "MeinCharakter.html",
+    "to": "/charaktere/mein-charakter.html"
+  },
+  {
+    "from": "Spielercharaktere.html",
+    "to": "/charaktere/spielercharaktere.html"
+  },
+  {
+    "from": "NSC.html",
+    "to": "/charaktere/nsc.html"
+  },
+  {
+    "from": "Steckbrief.html",
+    "to": "/charaktere/steckbrief.html"
+  },
+  {
+    "from": "Kollektikon.html",
+    "to": "/spiel/kollektikon.html"
+  },
+  {
+    "from": "Karte.html",
+    "to": "/spiel/karte.html"
+  },
+  {
+    "from": "Kalender.html",
+    "to": "/spiel/kalender.html"
+  },
+  {
+    "from": "Kalender_interaktiv.html",
+    "to": "/spiel/kalender-interaktiv.html"
+  },
+  {
+    "from": "Missionsterminal.html",
+    "to": "/spiel/missionsterminal.html"
+  },
+  {
+    "from": "Rekrutierung.html",
+    "to": "/spiel/rekrutierung.html"
+  },
+  {
+    "from": "Monster.html",
+    "to": "/dm/monster.html"
+  },
+  {
+    "from": "Ressourcen.html",
+    "to": "/dm/ressourcen.html"
+  },
+  {
+    "from": "Tarot.html",
+    "to": "/dm/tarot.html"
+  },
+  {
+    "from": "Kampfsimulation.html",
+    "to": "/dm/kampfsimulation.html"
+  },
+  {
+    "from": "DM_Missionen.html",
+    "to": "/dm/missionen.html"
+  },
+  {
+    "from": "NSC-Verwaltung.html",
+    "to": "/dm/nsc-verwaltung.html"
+  },
+  {
+    "from": "DM_Charaktere.html",
+    "to": "/dm/charakterverwaltung.html"
+  },
+  {
+    "from": "Kartenmanagement.html",
+    "to": "/dm/kartenmanagement.html"
+  },
+  {
+    "from": "Kolonisierungs-Bausystem.html",
+    "to": "/dm/kolonisierung-und-bau.html"
+  },
+  {
+    "from": "DM_Kollektikon.html",
+    "to": "/dm/kollektikon.html"
+  },
+  {
+    "from": "DM_Rekrutierung.html",
+    "to": "/dm/rekrutierungspreise.html"
+  },
+  {
+    "from": "DM_Rezepte.html",
+    "to": "/dm/rezeptverwaltung.html"
+  },
+  {
+    "from": "SegenUndFlueche.html",
+    "to": "/dm/segen-und-flueche.html"
+  },
+  {
+    "from": "Aarakocra.html",
+    "to": "/charaktererstellung/rassen-detail.html?rasse=Aarakocra"
+  },
+  {
+    "from": "Aasimar.html",
+    "to": "/charaktererstellung/rassen-detail.html?rasse=Aasimar"
+  },
+  {
+    "from": "Dhampir.html",
+    "to": "/charaktererstellung/rassen-detail.html?rasse=Dhampire"
+  }
+]

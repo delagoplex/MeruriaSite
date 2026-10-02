@@ -1,4 +1,4 @@
-// Felsengnome — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Felsengnome — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Felsengnome'] = {
   name: 'Felsengnome', accent: '#8090a0',
   subtitle: 'Erfindergeister · Meister von Mechanik und Tüftelei',

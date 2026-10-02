@@ -1,4 +1,4 @@
-// Kenku — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Kenku — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Kenku'] = {
   name: 'Kenku', accent: '#606878',
   subtitle: 'Gedächtnismeister · Vogelwesen ohne Flug',

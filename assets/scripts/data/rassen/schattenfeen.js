@@ -1,4 +1,4 @@
-// Schattenfeen — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Schattenfeen — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Schattenfeen'] = {
   name: 'Schattenfeen', accent: '#8070b0',
   subtitle: 'Zwischen Leben und Tod · Diener der Rabenkönigin',

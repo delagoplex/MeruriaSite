@@ -1,4 +1,4 @@
-// Wiedergeborene — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Wiedergeborene — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Wiedergeborene'] = {
   name: 'Wiedergeborene', accent: '#6878a8',
   subtitle: 'Rückkehrer vom Tod · Träger verblasster Erinnerungen',

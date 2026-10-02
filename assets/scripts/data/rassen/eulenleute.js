@@ -1,4 +1,4 @@
-// Eulenleute — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Eulenleute — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Eulenleute'] = {
   name: 'Eulenleute', accent: '#a89060',
   subtitle: 'Lautlose Jäger der Nacht · Kinder des Feenwild',

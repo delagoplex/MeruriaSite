@@ -1,4 +1,4 @@
-// Feen — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Feen — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Feen'] = {
   name: 'Feen', accent: '#e870d8',
   subtitle: 'Kinder des Feenwildes · Geflügelte Zauberwesen',

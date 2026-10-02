@@ -1,4 +1,4 @@
-// Minotauren — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Minotauren — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Minotauren'] = {
   name: 'Minotauren', accent: '#b06840',
   subtitle: 'Kinder des Labyrinths · Unaufhaltsame Krieger',

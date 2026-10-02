@@ -1,4 +1,4 @@
-// Grauzwerge — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Grauzwerge — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Grauzwerge'] = {
   name: 'Grauzwerge', accent: '#7060a8',
   subtitle: 'Psionische Unterreichzwerge · Befreite der Aberrationen',

@@ -1,4 +1,4 @@
-// Tritons — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Tritons — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Tritons'] = {
   name: 'Tritons', accent: '#3098c0',
   subtitle: 'Wächter der Tiefen · Hüter der Wasseroberfläche',

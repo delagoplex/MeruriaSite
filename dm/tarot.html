@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/assets/images/favicon/favicon-m.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/images/favicon/favicon-m-180.png">
+<title>Meruria — Tarot</title>
+<script src="/assets/scripts/theme-init.js"></script>
+<link rel="stylesheet" href="/assets/styles/global/fonts.css">
+<link rel="stylesheet" href="/assets/styles/global/base.css">
+<link rel="stylesheet" href="/assets/styles/pages/dm/tarot.css">
+<script src="/assets/scripts/vendor/react.production.min.js"></script>
+<script src="/assets/scripts/vendor/react-dom.production.min.js"></script>
+
+<script type="module" src="/src/pages/dm/tarot.jsx"></script>
+<script src="/assets/scripts/vendor/supabase.min.js"></script>
+<script src="/assets/scripts/supabase-client.js"></script>
+</head>
+<body>
+
+<div id="nav-root"></div>
+<div id="page-content" style="display:none">
+
+<!-- ─────── MASTHEAD ─────── -->
+<section class="masthead">
+  <div class="eyebrow">Meruria · Oraculum Arcanum</div>
+  <h1 class="title">Tarot</h1>
+  <div class="flourish"><span class="flourish-dot"></span></div>
+  <p class="lede">
+    Mische das Deck im Geiste, formuliere deine Frage und ziehe eine Karte aus dem Schleier.
+    Die gezogenen Karten bleiben am unteren Rand sichtbar — auch wenn du nach unten zu ihren Bedeutungen scrollst.
+    <span style="display:block; margin-top:6px; color: rgba(124,77,255,0.55); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em;">
+      &nbsp;Klicke eine gezogene Karte, um direkt zu ihrer Erklärung zu springen.&nbsp;
+    </span>
+  </p>
+</section>
+
+<!-- ─────── SYMBOL PARADE ─────── -->
+<div class="symbol-parade">
+  <div class="parade-eyebrow">◇ Sigilla Arcana ◇</div>
+  <div class="parade-row suits" id="paradeSuits" aria-hidden="true"></div>
+  <div class="parade-divider"></div>
+  <div class="parade-row majors" id="paradeMajors" aria-hidden="true"></div>
+</div>
+
+<!-- ─────── STACK SCENE ─────── -->
+<div class="wrap">
+  <div class="scene" id="scene">
+    <div class="table-glow"></div>
+    <div class="table-disc"></div>
+    <svg class="compass" viewBox="0 0 200 200" aria-hidden="true">
+      <circle cx="100" cy="100" r="98" fill="none" stroke="rgba(160,140,255,0.4)" stroke-width="0.4"></circle>
+      <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(160,140,255,0.3)" stroke-width="0.3" stroke-dasharray="1 4"></circle>
+      <circle cx="100" cy="100" r="55" fill="none" stroke="rgba(160,140,255,0.35)" stroke-width="0.3"></circle>
+      <polygon points="100,5 132,23 132,57 100,75 68,57 68,23" fill="none" stroke="rgba(124,77,255,0.5)" stroke-width="0.5"></polygon>
+      <polygon points="100,125 132,143 132,177 100,195 68,177 68,143" fill="none" stroke="rgba(124,77,255,0.5)" stroke-width="0.5"></polygon>
+      <g stroke="rgba(124,77,255,0.45)" stroke-width="0.3">
+        <line x1="100" y1="2" x2="100" y2="22"></line>
+        <line x1="100" y1="178" x2="100" y2="198"></line>
+        <line x1="2" y1="100" x2="22" y2="100"></line>
+        <line x1="178" y1="100" x2="198" y2="100"></line>
+      </g>
+    </svg>
+    <div class="stack" id="stack" aria-label="Tarot deck"></div>
+  </div>
+
+  <div class="actions">
+    <button class="btn primary big-action" id="drawBtn">Karte ziehen</button>
+    <div class="action-row">
+      <button class="btn" id="drawMajorBtn">Großes Arkana ziehen</button>
+      <button class="btn" id="drawMinorBtn">Kleines Arkana ziehen</button>
+    </div>
+    <div class="action-row pick-row">
+      <select id="suitPick" class="pick-select">
+        <option value="">— Typ —</option>
+        <option value="major">Großes Arkana</option>
+        <option value="kelche">Kelche</option>
+        <option value="schwerter">Schwerter</option>
+        <option value="staebe">Stäbe</option>
+        <option value="muenzen">Münzen</option>
+      </select>
+      <select id="cardPick" class="pick-select" disabled>
+        <option value="">— Karte —</option>
+      </select>
+      <button class="btn" id="pickBtn" disabled>In Hand nehmen</button>
+    </div>
+    <button class="btn ghost" id="clearBtn">Clear</button>
+  </div>
+</div>
+
+<!-- ─────── SPREADS ─────── -->
+<div class="wrap">
+  <section class="block">
+    <div class="section-head">
+      <div class="section-eyebrow">I — Legesysteme</div>
+      <h2 class="section-title">Das Legen der Karten</h2>
+      <div class="section-rule"></div>
+      <p class="section-sub">Drei klassische Wege, das Deck zu befragen — vom einzelnen Bild bis zum fünfteiligen Pfad.</p>
+    </div>
+
+    <div class="spreads">
+      <article class="spread">
+        <div class="num">Spread I · Einzelziehung</div>
+        <h3>Frage &amp; Antwort</h3>
+        <div class="glyph"><span class="slot"></span></div>
+        <p><b>Großes Arkana.</b> Stelle eine Frage zu einem tieferen Thema — Charakterentwicklung, Hauptmotive der Kampagne. Ziehe eine oder mehrere Karten und deute sie im Kontext.</p>
+        <p><b>Kleines Arkana.</b> Stelle eine spezifischere Frage zu Ereignissen oder Begegnungen. Berücksichtige Farbsuite und Hofkarte, um Entwicklungen abzuleiten.</p>
+      </article>
+
+      <article class="spread">
+        <div class="num">Spread II · Drei Karten</div>
+        <h3>Vergangenheit · Gegenwart · Zukunft</h3>
+        <div class="glyph"><span class="slot"></span><span class="slot"></span><span class="slot"></span></div>
+        <p>Mische gründlich. Lege drei Karten nebeneinander — sie zeigen, was war, was ist und was kommen könnte. Nur das Große Arkana für Schicksalslinien oder das gesamte Deck für ein umfassenderes Bild.</p>
+        <ol>
+          <li><b>Vergangenheit</b> — frühere Einflüsse</li>
+          <li><b>Gegenwart</b> — die aktuelle Lage</li>
+          <li><b>Zukunft</b> — mögliche Entwicklungen</li>
+        </ol>
+      </article>
+
+      <article class="spread">
+        <div class="num">Spread III · Fünf Karten</div>
+        <h3>Pfad der Erkenntnis</h3>
+        <div class="glyph"><span class="slot"></span><span class="slot"></span><span class="slot"></span><span class="slot"></span><span class="slot"></span></div>
+        <ol>
+          <li><b>Fundament</b> — der Kern der Situation</li>
+          <li><b>Herausforderung</b> — Hindernisse</li>
+          <li><b>Ratschlag</b> — mögliche Lösungen</li>
+          <li><b>Unterstützung</b> — günstige Einflüsse</li>
+          <li><b>Ausblick</b> — potenzielles Ergebnis</li>
+        </ol>
+      </article>
+    </div>
+  </section>
+</div>
+
+<!-- ─────── MAJOR ARCANA ─────── -->
+<div class="wrap">
+  <section class="block">
+    <div class="section-head">
+      <div class="section-eyebrow">II — Arcana Majora</div>
+      <h2 class="section-title">Das Große Arkana</h2>
+      <div class="section-rule"></div>
+      <p class="section-sub">Zweiundzwanzig Bilder vom Narren bis zur Welt — die großen Wendepunkte einer Reise.</p>
+    </div>
+    <div class="majors" id="majorsList"></div>
+  </section>
+</div>
+
+<!-- ─────── MINOR ARCANA ─────── -->
+<div class="wrap">
+  <section class="block">
+    <div class="section-head">
+      <div class="section-eyebrow">III — Arcana Minora</div>
+      <h2 class="section-title">Das Kleine Arkana</h2>
+      <div class="section-rule"></div>
+      <p class="section-sub">Sechsundfünfzig Karten in vier Farben — die Gewebe des Alltags, geordnet nach Element.</p>
+    </div>
+    <div class="suits" id="suitsList"></div>
+  </section>
+</div>
+
+<footer>
+  <span>◇ ORACULUM // 78 KARTEN ◇ EPOCH: UNKNOWN</span>
+  <span>MERURIA // THE WOVEN REALMS</span>
+</footer>
+
+<!-- ─────── DRAWN-CARDS TRAY ─────── -->
+<div class="tray is-empty" id="tray" aria-live="polite">
+  <div class="tray-bg"></div>
+  <div class="tray-inner">
+    <div class="tray-side">
+      <div class="tray-label">Gezogene Karten</div>
+      <button class="tray-clear-btn" id="trayClearBtn">Clear</button>
+    </div>
+    <div class="drawn-cards" id="drawnCards">
+      <div class="drawn-empty" id="drawnEmpty">
+        Der Schleier ruht. Klicke auf <b>Karte ziehen</b>, um eine Karte aus dem Deck zu lösen.
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</div><!-- /page-content -->
+
+
+</body></html>

@@ -10,7 +10,7 @@
 // Die Daten je Rasse liegen einzeln in assets/scripts/data/rassen/<file>.js.
 // Dieses Index-File ist klein und enthält nur Name → Datei + Akzentfarbe.
 // Wer die Daten braucht, lädt sie mit window.loadRassenDetail(name) (Promise)
-// oder – wie rassen-detail.html – per document.write vor dem Seiten-Modul.
+// oder – wie /charaktererstellung/rassen-detail.html – per document.write vor dem Seiten-Modul.
 window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {};
 window.RASSEN_DETAIL_INDEX = {
   'Aarakocra': { file: 'aarakocra', accent: '#1ab8a0' },

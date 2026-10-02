@@ -1,4 +1,4 @@
-// Dhampire — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Dhampire — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Dhampire'] = {
   name: 'Dhampire', accent: '#c0394f',
   subtitle: 'Kinder der Dunkelheit · Zwischen Leben und Tod',

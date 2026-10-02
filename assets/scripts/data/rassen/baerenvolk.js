@@ -1,4 +1,4 @@
-// Bärenvolk — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Bärenvolk — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Bärenvolk'] = {
   name: 'Bärenvolk', accent: '#8b5e3c',
   subtitle: 'Kinder des Waldes · Hüter der Nadelwälder',

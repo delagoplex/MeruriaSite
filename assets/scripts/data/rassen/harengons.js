@@ -1,4 +1,4 @@
-// Harengons — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Harengons — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Harengons'] = {
   name: 'Harengons', accent: '#e090a0',
   subtitle: 'Hasenartige Wanderer · Flinke Glücksbringer',

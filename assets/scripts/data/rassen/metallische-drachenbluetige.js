@@ -1,4 +1,4 @@
-// Metallische Drachenblütige — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Metallische Drachenblütige — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Metallische Drachenblütige'] = {
   name: 'Metallische Drachenblütige', accent: '#d4af50',
   subtitle: 'Erben der Metallischen · Kinder des Guten',

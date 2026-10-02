@@ -1,4 +1,4 @@
-// Kobolde — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Kobolde — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Kobolde'] = {
   name: 'Kobolde', accent: '#c83030',
   subtitle: 'Kinder des Drachens · Hüter der Tunnel',

@@ -1,4 +1,4 @@
-// Autognome — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Autognome — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Autognome'] = {
   name: 'Autognome', accent: '#8090a0',
   subtitle: 'Mechanische Wesen · Erschaffer ihrer eigenen Zukunft',

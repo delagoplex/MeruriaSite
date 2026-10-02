@@ -1,4 +1,4 @@
-// Waldgnome — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Waldgnome — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Waldgnome'] = {
   name: 'Waldgnome', accent: '#70a850',
   subtitle: 'Kinder des Waldes · Freunde der kleinen Tiere',

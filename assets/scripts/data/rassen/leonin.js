@@ -1,2 +1,2 @@
-// Leonin — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Leonin — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Leonin'] = { name:'Leonin',                   accent:'#d0a840', subtitle:'Kinder der Savanne · Krieger mit Löwenmut',               tags:['Humanoid','Mittelgroß','9,5 m Bewegung','Löwenbrüllen','Meistens Gut'],       headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null };

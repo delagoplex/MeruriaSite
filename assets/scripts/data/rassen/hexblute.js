@@ -1,4 +1,4 @@
-// Hexblute — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Hexblute — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Hexblute'] = {
   name: 'Hexblute', accent: '#c050c8',
   subtitle: 'Träger des Pakts · Erben der Vettelmagie',

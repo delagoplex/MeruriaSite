@@ -1,0 +1,1223 @@
+// Page entry for /charaktererstellung/zauber.html
+import '../../components/nav.jsx';
+import '../../components/site-gate.jsx';
+import '../../components/particle-field.jsx';
+import '../../components/filter-utils.jsx';
+
+;(function () {
+(function () {
+const {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useMemo
+} = React;
+const {
+  SiteNav,
+  ParticleField,
+  useDragScroll,
+  XBtn,
+  FilterGroup
+} = window;
+function hexPoints(s) {
+  const cx = s / 2,
+    cy = s / 2,
+    r = s / 2,
+    pts = [];
+  for (let i = 0; i < 8; i++) {
+    const a = Math.PI / 4 * i - Math.PI / 8;
+    pts.push(`${cx + r * Math.cos(a)},${cy + r * Math.sin(a)}`);
+  }
+  return pts.join(' ');
+}
+function OctSvg({
+  size = 8,
+  color = 'currentColor',
+  fill = 'none',
+  strokeWidth = 1,
+  opacity = 1
+}) {
+  return /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: `0 0 ${size} ${size}`,
+    style: {
+      display: 'block',
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(size),
+    fill: fill,
+    stroke: color,
+    strokeWidth: strokeWidth,
+    opacity: opacity
+  }));
+}
+const TWEAK_DEFAULTS = {
+  "compactList": false
+};
+const ZEITAUFWAND_FIXED = ['Aktion', 'Bonusaktion', 'Reaktion'];
+const normalizeZeitaufwandKey = k => {
+  if (k === '1 Aktion') return 'Aktion';
+  if (k === '1 Bonusaktion') return 'Bonusaktion';
+  if (k.startsWith('1 Reaktion')) return 'Reaktion';
+  return k;
+};
+const zeitaufwandKeys = z => {
+  if (z.startsWith('1 Reaktion')) return ['Reaktion'];
+  return z.split(' oder ').map(s => normalizeZeitaufwandKey(s.trim()));
+};
+const sortZeitaufwaende = arr => [...arr].sort((a, b) => {
+  const ia = ZEITAUFWAND_FIXED.indexOf(a),
+    ib = ZEITAUFWAND_FIXED.indexOf(b);
+  if (ia !== -1 && ib !== -1) return ia - ib;
+  if (ia !== -1) return -1;
+  if (ib !== -1) return 1;
+  const toMin = s => {
+    const n = parseInt(s);
+    return s.includes('Stunde') ? n * 60 : n;
+  };
+  const na = toMin(a),
+    nb = toMin(b);
+  if (!isNaN(na) && !isNaN(nb) && na !== nb) return na - nb;
+  return a.localeCompare(b);
+});
+
+// ─── SCHOOL COLORS ────────────────────────────────────────────────────────────
+const SCHOOL_COLORS = {
+  'Illusion': 'oklch(0.62 0.18 280)',
+  'Bannmagie': 'oklch(0.62 0.18 220)',
+  'Nekromantie': 'oklch(0.58 0.16 160)',
+  'Erkenntnismagie': 'oklch(0.62 0.18 250)',
+  'Beschwörung': 'oklch(0.62 0.18 30)',
+  'Verwandlung': 'oklch(0.62 0.18 130)',
+  'Hervorrufung': 'oklch(0.62 0.18 20)',
+  'Verzauberung': 'oklch(0.62 0.18 340)',
+  'Weissagung': 'oklch(0.62 0.18 200)'
+};
+const schoolColor = s => SCHOOL_COLORS[s] || 'oklch(0.62 0.18 270)';
+const alpha = (c, a) => c.replace(')', ` / ${a})`);
+
+// ─── FILTER CHIP ──────────────────────────────────────────────────────────────
+function Chip({
+  label,
+  active,
+  onClick,
+  color
+}) {
+  const c = color || 'var(--purple)';
+  return /*#__PURE__*/React.createElement("button", {
+    onClick: onClick,
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.15em',
+      padding: '0 10px',
+      height: '16px',
+      border: `1px solid ${active ? c : 'rgba(var(--accent-rgb),0.18)'}`,
+      background: active ? c + '22' : 'transparent',
+      color: active ? 'var(--white)' : 'var(--muted)',
+      cursor: 'pointer',
+      borderRadius: '2px',
+      transition: 'all 0.15s',
+      textTransform: 'uppercase',
+      whiteSpace: 'nowrap',
+      flexShrink: 0,
+      display: 'flex',
+      alignItems: 'center'
+    }
+  }, label);
+}
+
+// ─── FILTER SIDEBAR ───────────────────────────────────────────────────────────
+function FilterSidebar({
+  filters,
+  setFilters,
+  allData,
+  search,
+  setSearch,
+  dragRef
+}) {
+  const schools = useMemo(() => [...new Set(allData.map(z => z.schule))].sort(), [allData]);
+  const grades = useMemo(() => [...new Set(allData.map(z => z.grad))].sort((a, b) => a - b), [allData]);
+  const classes = useMemo(() => [...new Set(allData.flatMap(z => z.klassen))].filter(Boolean).sort(), [allData]);
+  const zeitaufwaende = useMemo(() => sortZeitaufwaende([...new Set(allData.flatMap(z => zeitaufwandKeys(z.zeitaufwand)))]), [allData]);
+  const komponenten = ['V', 'G', 'M'];
+  const toggle = (key, val) => {
+    setFilters(f => {
+      const arr = f[key] || [];
+      return {
+        ...f,
+        [key]: arr.includes(val) ? arr.filter(x => x !== val) : [...arr, val]
+      };
+    });
+  };
+  const toggleBool = (key, val) => {
+    setFilters(f => ({
+      ...f,
+      [key]: f[key] === val ? null : val
+    }));
+  };
+  const reset = () => setFilters({
+    schule: [],
+    grad: [],
+    klassen: [],
+    komponenten: [],
+    konzentration: null,
+    ritual: null,
+    zeitaufwand: [],
+    sort: 'grad-asc'
+  });
+  const hasAny = filters.schule.length || filters.grad.length || filters.klassen.length || filters.komponenten.length || filters.konzentration !== null || filters.ritual !== null || filters.zeitaufwand.length || filters.sort !== 'grad-asc';
+  return /*#__PURE__*/React.createElement("div", {
+    ref: dragRef.ref,
+    onMouseDown: dragRef.onMouseDown,
+    onClickCapture: dragRef.onClickCapture,
+    style: {
+      width: 'var(--filter-w)',
+      flexShrink: 0,
+      background: 'rgba(var(--bg2-rgb),0.6)',
+      borderRight: '1px solid var(--border)',
+      padding: '16px 14px 14px 24px',
+      overflowY: 'auto',
+      display: 'flex',
+      flexDirection: 'column',
+      position: 'relative',
+      zIndex: 10,
+      cursor: 'grab',
+      ...dragRef.fadeStyle
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      marginBottom: '14px'
+    }
+  }, /*#__PURE__*/React.createElement("input", {
+    value: search,
+    onChange: e => setSearch(e.target.value),
+    placeholder: "Zauber suchen\u2026",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11.5px',
+      fontWeight: '300',
+      padding: '6px 10px 6px 28px',
+      background: 'rgba(124,77,255,0.06)',
+      border: '1px solid rgba(var(--accent-rgb),0.18)',
+      borderRadius: '3px',
+      color: 'var(--white)',
+      outline: 'none',
+      width: '100%',
+      letterSpacing: '0.03em',
+      transition: 'border-color 0.2s'
+    },
+    onFocus: e => e.target.style.borderColor = 'rgba(124,77,255,0.5)',
+    onBlur: e => e.target.style.borderColor = 'rgba(var(--accent-rgb),0.18)'
+  }), /*#__PURE__*/React.createElement("svg", {
+    style: {
+      position: 'absolute',
+      left: '8px',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      opacity: 0.35,
+      pointerEvents: 'none'
+    },
+    width: "12",
+    height: "12",
+    viewBox: "0 0 12 12",
+    fill: "none"
+  }, /*#__PURE__*/React.createElement("circle", {
+    cx: "5",
+    cy: "5",
+    r: "3.5",
+    stroke: "rgba(var(--accent-rgb),1)",
+    strokeWidth: "1.2"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "8",
+    y1: "8",
+    x2: "11",
+    y2: "11",
+    stroke: "rgba(var(--accent-rgb),1)",
+    strokeWidth: "1.2"
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: '18px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '10px',
+      letterSpacing: '0.25em',
+      color: 'rgba(var(--text-rgb),0.7)',
+      textTransform: 'uppercase'
+    }
+  }, "Filter"), hasAny && /*#__PURE__*/React.createElement(XBtn, {
+    onClick: reset
+  })), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Schule",
+    active: filters.schule.length > 0,
+    onReset: () => setFilters(f => ({
+      ...f,
+      schule: []
+    })),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '3px'
+    }
+  }, schools.map(s => /*#__PURE__*/React.createElement("button", {
+    key: s,
+    onClick: () => toggle('schule', s),
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '7px',
+      padding: '5px 7px',
+      background: filters.schule.includes(s) ? 'rgba(124,77,255,0.12)' : 'transparent',
+      border: `1px solid ${filters.schule.includes(s) ? schoolColor(s) + '66' : 'transparent'}`,
+      borderRadius: '2px',
+      cursor: 'pointer',
+      transition: 'all 0.15s',
+      textAlign: 'left'
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 8,
+    color: schoolColor(s),
+    fill: filters.schule.includes(s) ? schoolColor(s) : 'none',
+    strokeWidth: 1.2,
+    opacity: filters.schule.includes(s) ? 1 : 0.45
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px',
+      fontWeight: '300',
+      color: filters.schule.includes(s) ? 'var(--white)' : 'var(--silver)',
+      letterSpacing: '0.03em'
+    }
+  }, s))))), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Grad",
+    active: filters.grad.length > 0,
+    onReset: () => setFilters(f => ({
+      ...f,
+      grad: []
+    })),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '4px'
+    }
+  }, grades.map(g => /*#__PURE__*/React.createElement(Chip, {
+    key: g,
+    label: g === 0 ? 'Trick' : `${g}`,
+    active: filters.grad.includes(g),
+    onClick: () => toggle('grad', g)
+  })))), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Klassen",
+    active: filters.klassen.length > 0,
+    onReset: () => setFilters(f => ({
+      ...f,
+      klassen: []
+    })),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '3px'
+    }
+  }, classes.map(c => /*#__PURE__*/React.createElement("button", {
+    key: c,
+    onClick: () => toggle('klassen', c),
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '7px',
+      padding: '5px 7px',
+      background: filters.klassen.includes(c) ? 'rgba(124,77,255,0.12)' : 'transparent',
+      border: `1px solid ${filters.klassen.includes(c) ? 'rgba(124,77,255,0.4)' : 'transparent'}`,
+      borderRadius: '2px',
+      cursor: 'pointer',
+      transition: 'all 0.15s',
+      textAlign: 'left'
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 6,
+    color: filters.klassen.includes(c) ? 'rgba(124,77,255,0.9)' : 'rgba(124,77,255,0.5)',
+    fill: filters.klassen.includes(c) ? 'rgba(124,77,255,0.5)' : 'rgba(124,77,255,0.25)',
+    strokeWidth: 1
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px',
+      fontWeight: '300',
+      color: filters.klassen.includes(c) ? 'var(--white)' : 'var(--silver)',
+      letterSpacing: '0.03em'
+    }
+  }, c))))), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Komponenten",
+    active: filters.komponenten.length > 0,
+    onReset: () => setFilters(f => ({
+      ...f,
+      komponenten: []
+    })),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '4px'
+    }
+  }, komponenten.map(k => /*#__PURE__*/React.createElement(Chip, {
+    key: k,
+    label: k,
+    active: filters.komponenten.includes(k),
+    onClick: () => toggle('komponenten', k)
+  })))), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Zeitaufwand",
+    active: filters.zeitaufwand.length > 0,
+    onReset: () => setFilters(f => ({
+      ...f,
+      zeitaufwand: []
+    })),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '3px'
+    }
+  }, zeitaufwaende.map(z => /*#__PURE__*/React.createElement("button", {
+    key: z,
+    onClick: () => toggle('zeitaufwand', z),
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '7px',
+      padding: '5px 7px',
+      background: filters.zeitaufwand.includes(z) ? 'rgba(124,77,255,0.12)' : 'transparent',
+      border: `1px solid ${filters.zeitaufwand.includes(z) ? 'rgba(124,77,255,0.4)' : 'transparent'}`,
+      borderRadius: '2px',
+      cursor: 'pointer',
+      transition: 'all 0.15s',
+      textAlign: 'left'
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 6,
+    color: filters.zeitaufwand.includes(z) ? 'rgba(124,77,255,0.9)' : 'rgba(124,77,255,0.5)',
+    fill: filters.zeitaufwand.includes(z) ? 'rgba(124,77,255,0.5)' : 'rgba(124,77,255,0.25)',
+    strokeWidth: 1
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '10.5px',
+      fontWeight: '300',
+      color: filters.zeitaufwand.includes(z) ? 'var(--white)' : 'var(--silver)',
+      letterSpacing: '0.03em'
+    }
+  }, z))))), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Eigenschaften",
+    active: filters.konzentration !== null || filters.ritual !== null,
+    onReset: () => setFilters(f => ({
+      ...f,
+      konzentration: null,
+      ritual: null
+    })),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '4px'
+    }
+  }, [['konzentration', 'Konzentration'], ['ritual', 'Ritual']].map(([key, label]) => {
+    const val = filters[key];
+    const next = val === null ? true : val === true ? false : null;
+    const isTrue = val === true;
+    const isFalse = val === false;
+    const boxBg = isTrue ? 'rgba(60,180,90,0.15)' : isFalse ? 'rgba(200,60,60,0.12)' : 'transparent';
+    const boxBorder = isTrue ? 'rgba(60,200,90,0.5)' : isFalse ? 'rgba(220,80,80,0.5)' : 'rgba(var(--accent-rgb),0.2)';
+    const icon = isTrue ? '✓' : isFalse ? '✕' : '';
+    const iconColor = isTrue ? 'rgba(80,220,110,0.9)' : isFalse ? 'rgba(230,90,90,0.9)' : 'transparent';
+    return /*#__PURE__*/React.createElement("button", {
+      key: key,
+      onClick: () => setFilters(f => ({
+        ...f,
+        [key]: next
+      })),
+      style: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+        padding: '5px 7px',
+        background: val !== null ? isTrue ? 'rgba(60,180,90,0.07)' : 'rgba(200,60,60,0.07)' : 'transparent',
+        border: `1px solid ${val !== null ? boxBorder : 'transparent'}`,
+        borderRadius: '2px',
+        cursor: 'pointer',
+        transition: 'all 0.18s',
+        textAlign: 'left',
+        width: '100%'
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        width: '14px',
+        height: '14px',
+        border: `1px solid ${boxBorder}`,
+        borderRadius: '2px',
+        background: boxBg,
+        flexShrink: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        transition: 'all 0.18s',
+        fontSize: '9px',
+        color: iconColor,
+        fontFamily: 'var(--font-mono)'
+      }
+    }, icon), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: 'var(--font-body)',
+        fontSize: '11px',
+        fontWeight: '300',
+        color: val !== null ? 'var(--white)' : 'var(--silver)',
+        letterSpacing: '0.03em',
+        flex: 1
+      }
+    }, label), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: 'var(--font-mono)',
+        fontSize: '7.5px',
+        letterSpacing: '0.1em',
+        color: isTrue ? 'rgba(80,220,110,0.6)' : isFalse ? 'rgba(230,90,90,0.6)' : 'rgba(var(--accent-rgb),0.25)',
+        transition: 'color 0.18s'
+      }
+    }, isTrue ? 'JA' : isFalse ? 'NEIN' : '—'));
+  }))), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Sortierung",
+    active: filters.sort !== 'grad-asc',
+    onReset: () => setFilters(f => ({
+      ...f,
+      sort: 'grad-asc'
+    })),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '2px'
+    }
+  }, [['grad-asc', 'Grad ↑'], ['grad-desc', 'Grad ↓'], ['name-az', 'Name A – Z'], ['name-za', 'Name Z – A']].map(([id, label]) => /*#__PURE__*/React.createElement("button", {
+    key: id,
+    className: `sort-btn${filters.sort === id ? ' active' : ''}`,
+    onClick: () => setFilters(f => ({
+      ...f,
+      sort: id
+    }))
+  }, label)))), hasAny && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: 'auto',
+      paddingTop: '14px',
+      borderTop: '1px solid rgba(var(--accent-rgb),0.08)'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: reset,
+    style: {
+      width: '100%',
+      padding: '6px',
+      background: 'rgba(200,60,60,0.08)',
+      border: '1px solid rgba(200,60,60,0.25)',
+      borderRadius: '2px',
+      color: 'rgba(230,90,90,0.65)',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.18em',
+      cursor: 'pointer',
+      transition: 'all 0.15s',
+      textTransform: 'uppercase'
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.background = 'rgba(200,60,60,0.18)';
+      e.currentTarget.style.borderColor = 'rgba(230,90,90,0.5)';
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.background = 'rgba(200,60,60,0.08)';
+      e.currentTarget.style.borderColor = 'rgba(200,60,60,0.25)';
+    }
+  }, "Filter l\xF6schen")));
+}
+
+// ─── SPELL ROW ────────────────────────────────────────────────────────────────
+function SpellRow({
+  zauber,
+  active,
+  onClick,
+  compact
+}) {
+  const sc = schoolColor(zauber.schule);
+  return /*#__PURE__*/React.createElement("div", {
+    onClick: () => onClick(zauber),
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px',
+      padding: compact ? '7px 12px' : '10px 12px',
+      cursor: 'pointer',
+      borderBottom: '1px solid rgba(var(--accent-rgb),0.06)',
+      background: active ? 'rgba(124,77,255,0.12)' : 'transparent',
+      borderLeft: active ? `2px solid ${sc}` : '2px solid transparent',
+      transition: 'all 0.15s'
+    },
+    onMouseEnter: e => {
+      if (!active) {
+        e.currentTarget.style.background = 'rgba(124,77,255,0.06)';
+        e.currentTarget.style.borderLeftColor = alpha(sc, 0.33);
+      }
+    },
+    onMouseLeave: e => {
+      if (!active) {
+        e.currentTarget.style.background = 'transparent';
+        e.currentTarget.style.borderLeftColor = 'transparent';
+      }
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '22px',
+      height: '22px',
+      borderRadius: '2px',
+      background: active ? alpha(sc, 0.22) : 'rgba(124,77,255,0.1)',
+      border: `1px solid ${active ? alpha(sc, 0.5) : 'rgba(var(--accent-rgb),0.28)'}`,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexShrink: 0,
+      transition: 'all 0.15s'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: active ? 'var(--white)' : 'var(--silver)',
+      fontWeight: '400'
+    }
+  }, zauber.grad)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      minWidth: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      fontWeight: active ? '400' : '300',
+      color: active ? 'var(--white)' : 'rgba(var(--text-rgb),0.85)',
+      letterSpacing: '0.03em',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis'
+    }
+  }, zauber.name), !compact && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      color: sc,
+      letterSpacing: '0.18em',
+      marginTop: '1px',
+      opacity: 0.75
+    }
+  }, zauber.schule)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '3px',
+      flexShrink: 0
+    }
+  }, zauber.konzentration && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      letterSpacing: '0.1em',
+      padding: '2px 5px',
+      background: 'rgba(124,77,255,0.1)',
+      border: '1px solid rgba(124,77,255,0.2)',
+      borderRadius: '2px',
+      color: 'rgba(var(--accent-rgb),0.6)'
+    }
+  }, "K"), zauber.ritual && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      letterSpacing: '0.1em',
+      padding: '2px 5px',
+      background: 'rgba(100,200,120,0.08)',
+      border: '1px solid rgba(100,200,120,0.2)',
+      borderRadius: '2px',
+      color: 'rgba(120,200,140,0.6)'
+    }
+  }, "R")));
+}
+
+// ─── DESCRIPTION BLOCK ────────────────────────────────────────────────────────
+function DescBlock({
+  item
+}) {
+  if (typeof item === 'string') {
+    return /*#__PURE__*/React.createElement("p", {
+      style: {
+        fontFamily: 'var(--font-body)',
+        fontSize: '12.5px',
+        fontWeight: '300',
+        lineHeight: 1.82,
+        color: 'rgba(var(--text-rgb),0.8)',
+        letterSpacing: '0.015em',
+        marginBottom: '10px',
+        textWrap: 'pretty'
+      }
+    }, item);
+  }
+  if (item && item.typ === 'tabelle') {
+    return /*#__PURE__*/React.createElement("div", {
+      style: {
+        marginBottom: '14px',
+        overflowX: 'auto'
+      }
+    }, item.titel && /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontFamily: 'var(--font-mono)',
+        fontSize: '8px',
+        letterSpacing: '0.22em',
+        color: 'rgba(var(--accent-rgb),0.55)',
+        textTransform: 'uppercase',
+        marginBottom: '6px'
+      }
+    }, item.titel), /*#__PURE__*/React.createElement("table", {
+      style: {
+        width: '100%',
+        borderCollapse: 'collapse',
+        fontFamily: 'var(--font-body)',
+        fontSize: '11.5px'
+      }
+    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, item.spalten.map((col, i) => /*#__PURE__*/React.createElement("th", {
+      key: i,
+      style: {
+        padding: '6px 10px',
+        textAlign: i === item.spalten.length - 1 ? 'center' : 'left',
+        fontFamily: 'var(--font-mono)',
+        fontSize: '8px',
+        letterSpacing: '0.18em',
+        color: 'rgba(var(--accent-rgb),0.65)',
+        fontWeight: '400',
+        textTransform: 'uppercase',
+        borderBottom: '1px solid rgba(var(--accent-rgb),0.15)',
+        whiteSpace: 'nowrap'
+      }
+    }, col)))), /*#__PURE__*/React.createElement("tbody", null, item.zeilen.map((row, ri) => /*#__PURE__*/React.createElement("tr", {
+      key: ri,
+      style: {
+        background: ri % 2 === 0 ? 'rgba(124,77,255,0.04)' : 'transparent'
+      }
+    }, row.map((cell, ci) => /*#__PURE__*/React.createElement("td", {
+      key: ci,
+      style: {
+        padding: '7px 10px',
+        color: ci === row.length - 1 ? 'rgba(var(--accent-rgb),0.85)' : 'rgba(var(--text-rgb),0.75)',
+        fontWeight: ci === row.length - 1 ? '400' : '300',
+        textAlign: ci === row.length - 1 ? 'center' : 'left',
+        borderBottom: '1px solid rgba(var(--accent-rgb),0.06)',
+        fontFamily: ci === row.length - 1 ? 'var(--font-mono)' : 'var(--font-body)',
+        fontSize: ci === row.length - 1 ? '11px' : '11.5px',
+        letterSpacing: ci === row.length - 1 ? '0.08em' : '0.015em'
+      }
+    }, cell)))))));
+  }
+  return null;
+}
+
+// ─── META ROW ─────────────────────────────────────────────────────────────────
+function MetaItem({
+  label,
+  value,
+  accent
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '3px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '0.26em',
+      color: 'rgba(var(--accent-rgb),0.45)',
+      textTransform: 'uppercase'
+    }
+  }, label), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11.5px',
+      fontWeight: '300',
+      color: accent || 'rgba(var(--text-rgb),0.8)',
+      letterSpacing: '0.02em',
+      lineHeight: 1.4
+    }
+  }, value));
+}
+
+// ─── SPELL DETAIL ─────────────────────────────────────────────────────────────
+function SpellDetail({
+  zauber
+}) {
+  const sc = schoolColor(zauber.schule);
+  if (!zauber) return null;
+  return /*#__PURE__*/React.createElement("div", {
+    key: zauber.name,
+    style: {
+      flex: 1,
+      overflowY: 'auto',
+      padding: '24px 28px',
+      animation: 'fadeIn 0.22s ease'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: '18px',
+      paddingBottom: '16px',
+      borderBottom: `1px solid rgba(var(--accent-rgb),0.1)`
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'flex-start',
+      justifyContent: 'space-between',
+      gap: '12px',
+      marginBottom: '8px'
+    }
+  }, /*#__PURE__*/React.createElement("h1", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: 'clamp(18px,2.2vw,26px)',
+      fontWeight: '400',
+      letterSpacing: '0.14em',
+      color: 'var(--white)',
+      lineHeight: 1.2,
+      textTransform: 'uppercase'
+    }
+  }, zauber.name), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '5px',
+      flexShrink: 0,
+      paddingTop: '3px'
+    }
+  }, zauber.konzentration && /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.12em',
+      padding: '3px 8px',
+      background: 'rgba(124,77,255,0.12)',
+      border: '1px solid rgba(124,77,255,0.3)',
+      borderRadius: '2px',
+      color: 'rgba(180,160,255,0.8)',
+      textTransform: 'uppercase'
+    }
+  }, "Konzentration"), zauber.ritual && /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.12em',
+      padding: '3px 8px',
+      background: 'rgba(80,180,100,0.08)',
+      border: '1px solid rgba(80,180,100,0.25)',
+      borderRadius: '2px',
+      color: 'rgba(120,200,140,0.8)',
+      textTransform: 'uppercase'
+    }
+  }, "Ritual"))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '8px',
+      height: '8px',
+      borderRadius: '50%',
+      background: sc,
+      flexShrink: 0
+    }
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.2em',
+      color: sc,
+      textTransform: 'uppercase'
+    }
+  }, zauber.schule), /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: 'rgba(var(--accent-rgb),0.25)',
+      fontSize: '10px'
+    }
+  }, "\xB7"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.15em',
+      color: 'rgba(var(--accent-rgb),0.55)'
+    }
+  }, zauber.grad === 0 ? 'Zaubertrick' : `Grad ${zauber.grad}`))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      gap: '12px 18px',
+      marginBottom: '20px',
+      padding: '14px',
+      background: 'rgba(124,77,255,0.04)',
+      border: '1px solid rgba(var(--accent-rgb),0.08)',
+      borderRadius: '3px'
+    }
+  }, /*#__PURE__*/React.createElement(MetaItem, {
+    label: "Zeitaufwand",
+    value: zauber.zeitaufwand
+  }), /*#__PURE__*/React.createElement(MetaItem, {
+    label: "Wirkungsdauer",
+    value: zauber.wirkungsdauer
+  }), /*#__PURE__*/React.createElement(MetaItem, {
+    label: "Reichweite",
+    value: zauber.reichweite
+  }), /*#__PURE__*/React.createElement(MetaItem, {
+    label: "Komponenten",
+    value: zauber.komponenten.join(', '),
+    accent: sc
+  }), zauber.material && /*#__PURE__*/React.createElement("div", {
+    style: {
+      gridColumn: '1/-1'
+    }
+  }, /*#__PURE__*/React.createElement(MetaItem, {
+    label: "Material",
+    value: zauber.material
+  })), zauber.klassen.length > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      gridColumn: '1/-1'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '0.26em',
+      color: 'rgba(var(--accent-rgb),0.45)',
+      textTransform: 'uppercase',
+      marginBottom: '5px'
+    }
+  }, "Klassen"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '4px'
+    }
+  }, [...zauber.klassen].sort().map(k => /*#__PURE__*/React.createElement("span", {
+    key: k,
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '10.5px',
+      fontWeight: '300',
+      padding: '2px 8px',
+      background: 'rgba(124,77,255,0.1)',
+      border: '1px solid rgba(124,77,255,0.22)',
+      borderRadius: '2px',
+      color: 'rgba(var(--text-rgb),0.8)',
+      letterSpacing: '0.04em'
+    }
+  }, k))))), /*#__PURE__*/React.createElement("div", null, zauber.beschreibung.map((block, i) => /*#__PURE__*/React.createElement(DescBlock, {
+    key: i,
+    item: block
+  }))));
+}
+
+// ─── EMPTY STATE ──────────────────────────────────────────────────────────────
+function EmptyState({
+  msg
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '12px',
+      opacity: 0.35,
+      padding: '40px'
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "36",
+    height: "36",
+    viewBox: "0 0 36 36"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: "18,2 33,11 33,25 18,34 3,25 3,11",
+    fill: "none",
+    stroke: "rgba(var(--accent-rgb),0.6)",
+    strokeWidth: "1.5"
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.2em',
+      color: 'rgba(var(--accent-rgb),0.6)',
+      textTransform: 'uppercase',
+      textAlign: 'center'
+    }
+  }, msg));
+}
+
+// ─── MAIN APP ─────────────────────────────────────────────────────────────────
+function App() {
+  const t = TWEAK_DEFAULTS;
+  const allZauber = window.ZAUBER_DATA || [];
+  const [mouse, setMouse] = useState({
+    x: 0.5,
+    y: 0.5
+  });
+  const handleMouseMove = useCallback(e => setMouse({
+    x: e.clientX / window.innerWidth,
+    y: e.clientY / window.innerHeight
+  }), []);
+  const [search, setSearch] = useState('');
+  const [selected, setSelected] = useState([...allZauber].filter(z => z.grad === 0).sort((a, b) => a.name.localeCompare(b.name))[0] || allZauber[0] || null);
+  const [filters, setFilters] = useState({
+    schule: [],
+    grad: [],
+    klassen: [],
+    komponenten: [],
+    konzentration: null,
+    ritual: null,
+    zeitaufwand: [],
+    sort: 'grad-asc'
+  });
+  const [classFilter, setClassFilter] = useState(null);
+
+  // Derive all classes for top chips
+  const allClasses = useMemo(() => [...new Set(allZauber.flatMap(z => z.klassen))].filter(Boolean).sort(), [allZauber]);
+  const chipsDrag = useDragScroll({
+    horizontal: true
+  });
+  const listDrag = useDragScroll({
+    vertical: true
+  });
+  const sidebarDrag = useDragScroll({
+    vertical: true
+  });
+
+  // Filter logic
+  const filtered = useMemo(() => {
+    const r = allZauber.filter(z => {
+      if (search && !z.name.toLowerCase().includes(search.toLowerCase())) return false;
+      if (filters.schule.length && !filters.schule.includes(z.schule)) return false;
+      if (filters.grad.length && !filters.grad.includes(z.grad)) return false;
+      if (filters.klassen.length && !filters.klassen.some(k => z.klassen.includes(k))) return false;
+      if (filters.komponenten.length && !filters.komponenten.every(k => z.komponenten.includes(k))) return false;
+      if (filters.konzentration !== null && z.konzentration !== filters.konzentration) return false;
+      if (filters.ritual !== null && z.ritual !== filters.ritual) return false;
+      if (filters.zeitaufwand.length && !zeitaufwandKeys(z.zeitaufwand).some(k => filters.zeitaufwand.includes(k))) return false;
+      if (classFilter && !z.klassen.includes(classFilter)) return false;
+      return true;
+    });
+    switch (filters.sort) {
+      case 'grad-desc':
+        r.sort((a, b) => b.grad - a.grad);
+        break;
+      case 'name-az':
+        r.sort((a, b) => a.name.localeCompare(b.name, 'de'));
+        break;
+      case 'name-za':
+        r.sort((a, b) => b.name.localeCompare(a.name, 'de'));
+        break;
+      default:
+        r.sort((a, b) => a.grad - b.grad);
+        break;
+      // grad-asc
+    }
+    return r;
+  }, [allZauber, search, filters, classFilter]);
+
+  // Auto-select first when filter changes
+  useEffect(() => {
+    setSelected(prev => prev && !filtered.includes(prev) ? filtered[0] || null : prev);
+  }, [filtered]);
+
+  // Group by grade only for grad-based sorts; flat otherwise
+  const grouped = useMemo(() => {
+    const byGrad = filters.sort === 'grad-asc' || filters.sort === 'grad-desc';
+    if (byGrad) {
+      const map = new Map();
+      filtered.forEach(z => {
+        const g = z.grad;
+        if (!map.has(g)) map.set(g, []);
+        map.get(g).push(z);
+      });
+      const entries = [...map.entries()];
+      return filters.sort === 'grad-desc' ? entries.sort((a, b) => b[0] - a[0]) : entries.sort((a, b) => a[0] - b[0]);
+    }
+    return [[null, filtered]];
+  }, [filtered, filters.sort]);
+  return /*#__PURE__*/React.createElement("div", {
+    onMouseMove: handleMouseMove,
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100vh',
+      position: 'relative',
+      zIndex: 1
+    }
+  }, /*#__PURE__*/React.createElement(ParticleField, {
+    mouseX: mouse.x,
+    mouseY: mouse.y
+  }), /*#__PURE__*/React.createElement(SiteNav, null), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      zIndex: 10,
+      borderBottom: '1px solid var(--border)',
+      background: 'rgba(var(--bg-rgb),0.7)',
+      flexShrink: 0,
+      backdropFilter: 'blur(6px)',
+      display: 'flex',
+      alignItems: 'stretch'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 'var(--filter-w)',
+      flexShrink: 0,
+      padding: '10px 14px 10px 24px',
+      borderRight: '1px solid var(--border)',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      gap: '2px'
+    }
+  }, /*#__PURE__*/React.createElement("h1", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '14px',
+      fontWeight: '400',
+      letterSpacing: '0.3em',
+      color: 'rgba(var(--text-rgb),0.6)',
+      textTransform: 'uppercase'
+    }
+  }, "Zauber"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: 'rgba(var(--accent-rgb),0.35)',
+      letterSpacing: '0.15em'
+    }
+  }, filtered.length, " / ", allZauber.length)), /*#__PURE__*/React.createElement("div", {
+    ref: chipsDrag.ref,
+    onMouseDown: chipsDrag.onMouseDown,
+    onClickCapture: chipsDrag.onClickCapture,
+    className: "no-scrollbar",
+    style: {
+      flex: 1,
+      padding: '10px 14px',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '5px',
+      overflowX: 'auto',
+      flexWrap: 'nowrap',
+      cursor: 'grab',
+      ...chipsDrag.fadeStyle
+    }
+  }, /*#__PURE__*/React.createElement(Chip, {
+    label: "Alle",
+    active: !classFilter,
+    onClick: () => setClassFilter(null)
+  }), allClasses.map(c => /*#__PURE__*/React.createElement(Chip, {
+    key: c,
+    label: c,
+    active: classFilter === c,
+    onClick: () => setClassFilter(classFilter === c ? null : c)
+  })), classFilter && /*#__PURE__*/React.createElement(XBtn, {
+    onClick: () => setClassFilter(null)
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      display: 'flex',
+      overflow: 'hidden',
+      position: 'relative',
+      zIndex: 5
+    }
+  }, /*#__PURE__*/React.createElement(FilterSidebar, {
+    filters: filters,
+    setFilters: setFilters,
+    allData: allZauber,
+    search: search,
+    setSearch: setSearch,
+    dragRef: sidebarDrag
+  }), /*#__PURE__*/React.createElement("div", {
+    ref: listDrag.ref,
+    onMouseDown: listDrag.onMouseDown,
+    onClickCapture: listDrag.onClickCapture,
+    style: {
+      width: '300px',
+      flexShrink: 0,
+      borderRight: '1px solid var(--border)',
+      overflowY: 'auto',
+      background: 'rgba(6,5,18,0.5)',
+      cursor: 'grab',
+      ...listDrag.fadeStyle
+    }
+  }, filtered.length === 0 ? /*#__PURE__*/React.createElement(EmptyState, {
+    msg: "Keine Zauber gefunden"
+  }) : grouped.map(([grad, zauber]) => /*#__PURE__*/React.createElement("div", {
+    key: grad ?? '__flat__'
+  }, grad !== null && /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '8px 12px 4px',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.25em',
+      color: 'rgba(var(--accent-rgb),0.4)',
+      textTransform: 'uppercase',
+      background: 'rgba(124,77,255,0.04)',
+      borderBottom: '1px solid rgba(var(--accent-rgb),0.06)',
+      position: 'sticky',
+      top: 0,
+      backdropFilter: 'blur(4px)',
+      zIndex: 2
+    }
+  }, grad === 0 ? 'Zaubertricks' : `Grad ${grad}`, /*#__PURE__*/React.createElement("span", {
+    style: {
+      marginLeft: '6px',
+      opacity: 0.6
+    }
+  }, "(", zauber.length, ")")), zauber.map(z => /*#__PURE__*/React.createElement(SpellRow, {
+    key: z.name,
+    zauber: z,
+    active: selected && selected.name === z.name,
+    onClick: setSelected,
+    compact: t.compactList
+  }))))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      display: 'flex',
+      flexDirection: 'column',
+      overflow: 'hidden',
+      background: 'rgba(var(--bg2-rgb),0.4)'
+    }
+  }, selected ? /*#__PURE__*/React.createElement(SpellDetail, {
+    zauber: selected
+  }) : /*#__PURE__*/React.createElement(EmptyState, {
+    msg: "Zauber ausw\xE4hlen"
+  }))));
+}
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(/*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement(App, null)));
+})();
+
+})();
+

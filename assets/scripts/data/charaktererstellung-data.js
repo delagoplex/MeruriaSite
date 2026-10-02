@@ -130,7 +130,7 @@ window.ALLE_STERNZEICHEN = [
 window.ALLE_GESCHLECHTER = ['Männlich','Weiblich','Divers','Keine Angabe'];
 
 // Lebensstil-Hints (statisch; Rassen/Klassen/Hintergründe/Divisionen werden
-// in Neuer_Charakter.html zur Laufzeit aus den Datendateien aufgebaut)
+// in /charaktererstellung/neuer-charakter.html zur Laufzeit aus den Datendateien aufgebaut)
 window.OPTION_HINTS = {
   'Jämmerlich':  'Kein fester Schlafplatz — überleben ohne Komfort',
   'Ärmlich':     'Notdürftige Unterkunft, geteilte Mahlzeiten',

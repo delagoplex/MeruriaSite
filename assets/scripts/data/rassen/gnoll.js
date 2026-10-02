@@ -1,4 +1,4 @@
-// Gnoll — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Gnoll — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Gnoll'] = {
   name: 'Gnoll', accent: '#a07040',
   subtitle: 'Kinder der Hyäne · Raubtiere mit Verstand',

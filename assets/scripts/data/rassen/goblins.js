@@ -1,4 +1,4 @@
-// Goblins — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Goblins — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Goblins'] = {
   name: 'Goblins', accent: '#78b828',
   subtitle: 'Überlebenskünstler · Erben der Feengabe',

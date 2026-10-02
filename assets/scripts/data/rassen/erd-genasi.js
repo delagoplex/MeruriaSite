@@ -1,4 +1,4 @@
-// Erd-Genasi — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Erd-Genasi — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Erd-Genasi'] = {
   name: 'Erd-Genasi', accent: '#c09050',
   subtitle: 'Erben der Dao · Kinder des lebendigen Steins',

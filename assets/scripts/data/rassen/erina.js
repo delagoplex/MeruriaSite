@@ -1,4 +1,4 @@
-// Erina — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Erina — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Erina'] = {
   name: 'Erina', accent: '#a87060',
   subtitle: 'Stachelbewehrte Wanderer · Hüter des ersten Hains',

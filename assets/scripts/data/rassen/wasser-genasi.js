@@ -1,4 +1,4 @@
-// Wasser-Genasi — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Wasser-Genasi — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Wasser-Genasi'] = {
   name: 'Wasser-Genasi', accent: '#2090c8',
   subtitle: 'Erben der Mariden · Kinder der ewigen Wellen',

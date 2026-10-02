@@ -1,4 +1,4 @@
-// Satyrn — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Satyrn — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Satyrn'] = {
   name: 'Satyrn', accent: '#d0a830',
   subtitle: 'Verkörperung der Ausgelassenheit · Wanderer aus dem Feenwild',

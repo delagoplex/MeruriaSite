@@ -1,4 +1,4 @@
-// Eladrin — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Eladrin — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Eladrin'] = {
   name: 'Eladrin', accent: '#50d0f0',
   subtitle: 'Kinder der Feywild · Wesen des ewigen Wandels',

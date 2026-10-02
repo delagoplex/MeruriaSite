@@ -10,7 +10,7 @@ const { STAGE_LABELS, MAX_STAGE, STATUS_DEF, STATUS_ORDER,
         NAV, NavItem, FloatingHexField, ParticleField, useScrollReveal,
         NSCPortrait, StageBadge, StatusPills, NSCDetailPanel, SiteNav, PageHeader } = window;
 
-const TWEAK_DEFAULTS = {"showParticles": true, "showHexes": true, "compactCards": false};
+const TWEAK_DEFAULTS = {"compactCards": false};
 
 const uniq = arr => Array.from(new Set(arr.filter(Boolean))).sort((a,b) => a.localeCompare(b,'de'));
 const statusOf = n => Array.isArray(n.status) ? n.status : (n.status ? [n.status] : []);
@@ -381,8 +381,6 @@ function ActivePill({ label, onRemove }) {
 function App() {
   const [mouse, setMouse] = appUS({ x:0.5, y:0.5 });
   const [selected, setSelected] = appUS(null);
-  const showParticles = TWEAK_DEFAULTS.showParticles;
-  const showHexes = TWEAK_DEFAULTS.showHexes;
   const compactCards = TWEAK_DEFAULTS.compactCards;
   const handleMouseMove = appUC(e => { setMouse({ x: e.clientX/window.innerWidth, y: e.clientY/window.innerHeight }); }, []);
 
@@ -541,8 +539,8 @@ function App() {
 
   return (
     <div onMouseMove={handleMouseMove} style={{ position:'relative', minHeight:'100vh' }}>
-      {showParticles && <ParticleField mouseX={mouse.x} mouseY={mouse.y} />}
-      {showHexes && <FloatingHexField mouseX={mouse.x} mouseY={mouse.y} />}
+      <ParticleField mouseX={mouse.x} mouseY={mouse.y} />
+      <FloatingHexField mouseX={mouse.x} mouseY={mouse.y} />
 
       <PageHeader />
       <SiteNav rightLabel="NSC-REGISTER" />
@@ -554,7 +552,7 @@ function App() {
           <div style={{ display:'flex', alignItems:'center', gap:10, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(160,140,255,0.55)' }}>
             <a href="Meruria.html" style={{ color:'rgba(160,140,255,0.55)', textDecoration:'none' }}>Meruria</a>
             <span style={{ opacity:0.4 }}>›</span>
-            <a href="Charaktere.html" style={{ color:'rgba(160,140,255,0.55)', textDecoration:'none' }}>Charaktere</a>
+            <a href="/charaktere/index.html" style={{ color:'rgba(160,140,255,0.55)', textDecoration:'none' }}>Charaktere</a>
             <span style={{ opacity:0.4 }}>›</span>
             <span style={{ color:'#c9b8ff' }}>NSC</span>
           </div>

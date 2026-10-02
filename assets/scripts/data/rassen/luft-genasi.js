@@ -1,4 +1,4 @@
-// Luft-Genasi — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Luft-Genasi — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Luft-Genasi'] = {
   name: 'Luft-Genasi', accent: '#90d0e8',
   subtitle: 'Erben der Dschinns · Kinder der freien Lüfte',

@@ -1,4 +1,4 @@
-// Hochelfen — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Hochelfen — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Hochelfen'] = {
   name: 'Hochelfen', accent: '#80c8a0',
   subtitle: 'Hüter alten Wissens · Meister der Arkankunst',

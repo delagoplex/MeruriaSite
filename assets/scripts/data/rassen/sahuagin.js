@@ -1,4 +1,4 @@
-// Sahuagin — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Sahuagin — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Sahuagin'] = {
   name: 'Sahuagin', accent: '#2070a0',
   subtitle: 'Teufel der Tiefsee · Herrschaft unter den Wellen',

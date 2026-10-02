@@ -1,4 +1,4 @@
-// Plasmoid — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Plasmoid — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Plasmoid'] = {
   name: 'Plasmoid', accent: '#80d0c0',
   subtitle: 'Gestaltloser Wandler · Wesen ohne feste Form',

@@ -1,4 +1,4 @@
-// Tieflinge — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Tieflinge — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Tieflinge'] = {
   name: 'Tieflinge', accent: '#c82860',
   subtitle: 'Träger einer uralten Schuld · Erben des infernalischen Blutes',

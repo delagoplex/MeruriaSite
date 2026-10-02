@@ -1,4 +1,4 @@
-/* Shared Carousel component — used by index.html and Galerie.html */
+/* Shared Carousel component — used by /index.html and /enzyklopaedie/galerie.html */
 (function() {
 const { useState, useEffect, useRef } = React;
 

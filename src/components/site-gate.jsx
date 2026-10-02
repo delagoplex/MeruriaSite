@@ -114,15 +114,21 @@ function SiteGate({ children }) {
 
   React.useEffect(() => {
     async function init() {
-      const { data: { session } } = await window._sb.auth.getSession();
-      if (session) {
-        const { data: profile } = await window._sb
-          .from('profiles').select('role').eq('id', session.user.id).single();
-        window.SITE_USER = { id: session.user.id, email: session.user.email, role: profile?.role || 'player' };
-        window.dispatchEvent(new CustomEvent('site-user-ready', { detail: window.SITE_USER }));
-        setAuthed(true);
+      try {
+        const { data: { session } } = await window._sb.auth.getSession();
+        if (session) {
+          const { data: profile } = await window._sb
+            .from('profiles').select('role').eq('id', session.user.id).single();
+          window.SITE_USER = { id: session.user.id, email: session.user.email, role: profile?.role || 'player' };
+          window.dispatchEvent(new CustomEvent('site-user-ready', { detail: window.SITE_USER }));
+          setAuthed(true);
+        }
+      } catch (err) {
+        // Network or auth-lock error: fall back to the login form instead of a blank screen.
+        console.error('SiteGate: Sitzung konnte nicht geprüft werden', err);
+      } finally {
+        setReady(true);
       }
-      setReady(true);
     }
     init();
 

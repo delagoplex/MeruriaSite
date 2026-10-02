@@ -91,13 +91,86 @@
 const { useState, useEffect, useRef } = React;
 
 const NAV = [
-  { id: 'spielerhandbuch', label: 'Spielerhandbuch', href: 'Spielerhandbuch.html', items: [{ label: 'Informationen', href: 'Informationen.html' }, { label: 'Vorgeschichte', href: 'Vorgeschichte.html' }, { label: 'Sitzung Null', href: '#', dividerAfter: true, glitch: false }, { label: 'Realismus', href: 'Realismus Standalone.html' }, { label: 'Sammeln & Handwerk', href: 'Sammeln und Handwerk.html' }, { label: 'Schutzherren', href: 'Schutzherren.html'}, { label: 'Gesinnungen', href: '#'}, { label: 'Regierungsformen', href: '#'}] },
-  { id: 'charaktererstellung', label: 'Charaktererstellung', href: 'Charaktererstellung.html', items: [{ label: 'Neuer Charakter', href: 'Neuer_Charakter.html', dividerAfter: true }, { label: 'Rassen', href: 'Rassen.html' }, { label: 'Klassen', href: 'Klassen.html' }, { label: 'Talente', href: 'Talente.html' }, { label: 'Hintergründe', href: 'Hintergruende.html' }, { label: 'Zauber', href: 'Zauber.html' }, { label: 'Ausrüstung', href: 'Ausrüstung.html' }] },
-  { id: 'enzyklopaedie', label: 'Enzyklopädie', href: 'Enzyklopädie.html', items: [{ label: 'Völker', href: '#' }, { label: 'Orte', href: '#' }, { label: 'Organisationen', href: '#' }, { label: 'Gottheiten', href: 'Gottheiten.html' }, { label: 'Religionen', href: '#' }, { label: 'Galerie', href: 'Galerie.html', highlight: true }] },
-  { id: 'divisionen', label: 'Divisionen', href: 'Divisionen.html', items: [{ label: 'I — Die Kuratoren', href: 'divisionen/Die Kuratoren.html' }, { label: 'II — Die Sturmritter', href: 'divisionen/Sturmritter.html' }, { label: 'III — Die Sentinels', href: 'divisionen/Sentinels.html' }, { label: 'IV — Die Friedenshüter', href: 'divisionen/Friedenshueter.html' }, { label: 'V — Die Outfitters', href: 'divisionen/Outfitters.html' }, { label: 'VI — Die Pathfinders', href: 'divisionen/Pathfinders.html' }, { label: 'VII — Die Quellensucher', href: 'divisionen/Quellensucher.html' }, { label: 'VIII — Die Bergungsgarde', href: 'divisionen/Bergungsgarde.html' }] },
-  { id: 'charaktere', label: 'Charaktere', href: 'Charaktere.html', items: [{ label: 'Meine Charaktere', href: 'MeinCharakter.html' }, { label: 'Spielercharaktere', href: 'Spielercharaktere.html' }, { label: 'NSC', href: 'NSC.html' }] },
-  { id: 'tools', label: 'Spiel', items: [{ label: 'Kollektikon', href: 'Kollektikon.html' }, { label: 'Karte', href: 'Karte.html' }, { label: 'Kalender', href: 'Kalender.html' }, { label: 'Missionsterminal', href: 'Missionsterminal.html' }] },
-  { id: 'dm-bereich', label: 'DM-Bereich', items: [{ label: 'Monster', href: 'Monster.html', locked: true }, { label: 'Ressourcen', href: 'Ressourcen.html', locked: true }, { label: 'Tarot', href: 'Tarot.html', locked: true }, { label: 'Kampfsimulation', href: 'Kampfsimulation.html', locked: true }, { label: 'Missionen', href: 'DM_Missionen.html', locked: true }, { label: 'NSC-Verwaltung', href: 'NSC-Verwaltung.html', locked: true }, { label: 'Charakterverwaltung', href: 'DM_Charaktere.html', locked: true }, { label: 'Kartenmanagement', href: 'Kartenmanagement.html', locked: true }, { label: 'Kolonisierung & Bau', href: 'Kolonisierungs-Bausystem.html', locked: true }] }
+  {
+    id: 'spielerhandbuch', label: 'Spielerhandbuch', href: '/spielerhandbuch/index.html',
+    items: [
+      { label: 'Informationen', href: '/spielerhandbuch/informationen.html' },
+      { label: 'Vorgeschichte', href: '/spielerhandbuch/vorgeschichte.html' },
+      { label: 'Sitzung Null', href: '#', dividerAfter: true, glitch: false },
+      { label: 'Realismus', href: '/spielerhandbuch/realismus.html' },
+      { label: 'Sammeln & Handwerk', href: '/spielerhandbuch/sammeln-und-handwerk.html' },
+      { label: 'Schutzherren', href: '/spielerhandbuch/schutzherren.html' },
+      { label: 'Gesinnungen', href: '#' },
+      { label: 'Regierungsformen', href: '#' },
+    ],
+  },
+  {
+    id: 'charaktererstellung', label: 'Charaktererstellung', href: '/charaktererstellung/index.html',
+    items: [
+      { label: 'Neuer Charakter', href: '/charaktererstellung/neuer-charakter.html', dividerAfter: true },
+      { label: 'Rassen', href: '/charaktererstellung/rassen.html' },
+      { label: 'Klassen', href: '/charaktererstellung/klassen.html' },
+      { label: 'Talente', href: '/charaktererstellung/talente.html' },
+      { label: 'Hintergründe', href: '/charaktererstellung/hintergruende.html' },
+      { label: 'Zauber', href: '/charaktererstellung/zauber.html' },
+      { label: 'Ausrüstung', href: '/charaktererstellung/ausruestung.html' },
+    ],
+  },
+  {
+    id: 'enzyklopaedie', label: 'Enzyklopädie', href: '/enzyklopaedie/index.html',
+    items: [
+      { label: 'Völker', href: '#' },
+      { label: 'Orte', href: '#' },
+      { label: 'Organisationen', href: '#' },
+      { label: 'Gottheiten', href: '/enzyklopaedie/gottheiten.html' },
+      { label: 'Religionen', href: '#' },
+      { label: 'Galerie', href: '/enzyklopaedie/galerie.html', highlight: true },
+    ],
+  },
+  {
+    id: 'divisionen', label: 'Divisionen', href: '/divisionen/index.html',
+    items: [
+      { label: 'I — Die Kuratoren', href: '/divisionen/kuratoren.html' },
+      { label: 'II — Die Sturmritter', href: '/divisionen/sturmritter.html' },
+      { label: 'III — Die Sentinels', href: '/divisionen/sentinels.html' },
+      { label: 'IV — Die Friedenshüter', href: '/divisionen/friedenshueter.html' },
+      { label: 'V — Die Outfitters', href: '/divisionen/outfitters.html' },
+      { label: 'VI — Die Pathfinders', href: '/divisionen/pathfinders.html' },
+      { label: 'VII — Die Quellensucher', href: '/divisionen/quellensucher.html' },
+      { label: 'VIII — Die Bergungsgarde', href: '/divisionen/bergungsgarde.html' },
+    ],
+  },
+  {
+    id: 'charaktere', label: 'Charaktere', href: '/charaktere/index.html',
+    items: [
+      { label: 'Meine Charaktere', href: '/charaktere/mein-charakter.html' },
+      { label: 'Spielercharaktere', href: '/charaktere/spielercharaktere.html' },
+      { label: 'NSC', href: '/charaktere/nsc.html' },
+    ],
+  },
+  {
+    id: 'tools', label: 'Spiel',
+    items: [
+      { label: 'Kollektikon', href: '/spiel/kollektikon.html' },
+      { label: 'Karte', href: '/spiel/karte.html' },
+      { label: 'Kalender', href: '/spiel/kalender.html' },
+      { label: 'Missionsterminal', href: '/spiel/missionsterminal.html' },
+    ],
+  },
+  {
+    id: 'dm-bereich', label: 'DM-Bereich',
+    items: [
+      { label: 'Monster', href: '/dm/monster.html', locked: true },
+      { label: 'Ressourcen', href: '/dm/ressourcen.html', locked: true },
+      { label: 'Tarot', href: '/dm/tarot.html', locked: true },
+      { label: 'Kampfsimulation', href: '/dm/kampfsimulation.html', locked: true },
+      { label: 'Missionen', href: '/dm/missionen.html', locked: true },
+      { label: 'NSC-Verwaltung', href: '/dm/nsc-verwaltung.html', locked: true },
+      { label: 'Charakterverwaltung', href: '/dm/charakterverwaltung.html', locked: true },
+      { label: 'Kartenmanagement', href: '/dm/kartenmanagement.html', locked: true },
+      { label: 'Kolonisierung & Bau', href: '/dm/kolonisierung-und-bau.html', locked: true },
+    ],
+  },
 ];
 
 function NavItem({ tab }) {
@@ -597,7 +670,7 @@ function SiteNav({ rightLabel }) {
   return (
     <div style={{ position: 'sticky', top: 0, zIndex: 100, width: '100%', background: 'var(--nav-bg)', borderBottom: '1px solid var(--nav-border)', backdropFilter: 'blur(16px)' }}>
       <div style={{ display: 'flex', alignItems: 'center', padding: '0 24px', height: '52px' }}>
-        <a href="index.html" className="meruria-logo" style={{ marginRight: '70px', whiteSpace: 'nowrap', flexShrink: 0, textDecoration: 'none' }}>
+        <a href="/index.html" className="meruria-logo" style={{ marginRight: '70px', whiteSpace: 'nowrap', flexShrink: 0, textDecoration: 'none' }}>
           <span style={{ fontFamily: 'var(--font-display)', fontSize: '20px', fontWeight: '300', letterSpacing: '0.3em', color: 'var(--white)', textShadow: '0 0 28px rgba(124,77,255,0.55)', animation: 'flicker-mid 9s infinite' }}>MERURIA</span>
         </a>
         <nav className="meruria-desktop-nav" style={{ display: 'flex', gap: '6px', alignItems: 'center', flex: 1 }}>

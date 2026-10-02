@@ -1,0 +1,587 @@
+// Page entry for /enzyklopaedie/fische.html
+import '../../components/nav.jsx';
+import '../../components/site-gate.jsx';
+import '../../components/particle-field.jsx';
+import '../../components/filter-utils.jsx';
+
+;(function () {
+(function () {
+const {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useMemo
+} = React;
+const {
+  SiteNav,
+  ParticleField
+} = window;
+const {
+  FilterGroup,
+  XBtn
+} = window;
+const ALL_FISH = window.FISH_DB;
+
+// ── Klima colours ─────────────────────────────────────────────────────────────
+const KLIMA_COLOR = {
+  'Gemäßigt': '#4db6e8',
+  'Kalt': '#90d8f8',
+  'Warm': '#ffaa44',
+  'Trocken': '#d4b260',
+  'Tiefsee': '#3a6abf',
+  'Stürmisch': '#9898c0',
+  'Sumpfig': '#58b870',
+  'Toxisch': '#70e028',
+  'Magisch': '#c060e8',
+  'Vulkanisch': '#e85020',
+  'Schattenhaft': '#9050c8',
+  'Kosmisch': '#5050e0'
+};
+const GRÖSSE_ORDER = ['Winzig', 'Klein', 'Mittelgroß', 'Groß', 'Riesig'];
+const STÄRKE_GROUPS = [{
+  label: '1 – 4',
+  min: 1,
+  max: 4
+}, {
+  label: '5 – 8',
+  min: 5,
+  max: 8
+}, {
+  label: '9 – 12',
+  min: 9,
+  max: 12
+}, {
+  label: '13 – 16',
+  min: 13,
+  max: 16
+}];
+const LEVEL_GROUPS = [{
+  label: '1 – 10',
+  min: 1,
+  max: 10
+}, {
+  label: '11 – 30',
+  min: 11,
+  max: 30
+}, {
+  label: '31 – 60',
+  min: 31,
+  max: 60
+}, {
+  label: '61 – 90',
+  min: 61,
+  max: 90
+}, {
+  label: '91+',
+  min: 91,
+  max: 999
+}];
+const SORT_OPTIONS = [{
+  id: 'name-az',
+  label: 'Name A – Z'
+}, {
+  id: 'name-za',
+  label: 'Name Z – A'
+}, {
+  id: 'level-asc',
+  label: 'Level ↑'
+}, {
+  id: 'level-desc',
+  label: 'Level ↓'
+}, {
+  id: 'preis-asc',
+  label: 'Preis ↑'
+}, {
+  id: 'preis-desc',
+  label: 'Preis ↓'
+}, {
+  id: 'staerke',
+  label: 'Stärke ↓'
+}, {
+  id: 'gewicht',
+  label: 'Gewicht ↓'
+}];
+
+// ── Parsing helpers ───────────────────────────────────────────────────────────
+function parseGewicht(s) {
+  if (!s) return 0;
+  const m = s.match(/([\d,]+)\s*(g|kg)/);
+  if (!m) return 0;
+  const v = parseFloat(m[1].replace(',', '.'));
+  return m[2] === 'kg' ? v * 1000 : v;
+}
+function parsePreis(s) {
+  if (!s) return 0;
+  return parseInt(s.split(' ')[0]) || 0;
+}
+
+// ── Stärke bar colour ─────────────────────────────────────────────────────────
+function barColor(stärke, i) {
+  if (i >= stärke) return 'rgba(255,255,255,0.07)';
+  if (stärke >= 13) return '#ffd700';
+  if (stärke >= 9) return '#e85020';
+  if (stärke >= 5) return '#26c6da';
+  return 'rgba(38,198,218,0.6)';
+}
+
+// ── Fish Card ─────────────────────────────────────────────────────────────────
+function FishCard({
+  fish
+}) {
+  const s = fish.stärke ?? 0;
+  return /*#__PURE__*/React.createElement("div", {
+    className: "fish-card"
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'flex-start',
+      gap: '9px',
+      marginBottom: '2px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fish-icon"
+  }, /*#__PURE__*/React.createElement("img", {
+    src: fish.icon,
+    alt: "",
+    loading: "lazy"
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      minWidth: 0,
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fish-name"
+  }, fish.name_de), /*#__PURE__*/React.createElement("div", {
+    className: "fish-level"
+  }, "LVL ", fish.level[0]))), /*#__PURE__*/React.createElement("div", {
+    className: "fish-divider"
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: '4px',
+      marginBottom: '6px'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "fish-size-badge"
+  }, fish.größenkategorie), /*#__PURE__*/React.createElement("div", {
+    className: "staerke-bars",
+    title: `Stärke ${s}/16`
+  }, Array.from({
+    length: 16
+  }, (_, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "staerke-bar",
+    style: {
+      background: barColor(s, i)
+    }
+  })))), /*#__PURE__*/React.createElement("div", {
+    className: "fish-klima"
+  }, (fish.klima || []).map(k => {
+    const col = KLIMA_COLOR[k] || '#8888cc';
+    return /*#__PURE__*/React.createElement("span", {
+      key: k,
+      className: "fish-klima-chip",
+      style: {
+        background: col + '1e',
+        border: `1px solid ${col}44`,
+        color: col
+      }
+    }, k);
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "fish-stats"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "fish-weight"
+  }, fish.gewicht), /*#__PURE__*/React.createElement("span", {
+    className: "fish-price"
+  }, fish.verkaufspreis)), fish.desc_de && /*#__PURE__*/React.createElement("p", {
+    className: "fish-desc"
+  }, fish.desc_de));
+}
+
+// ── Filter Chip ───────────────────────────────────────────────────────────────
+function Chip({
+  label,
+  active,
+  onClick,
+  accentColor
+}) {
+  const cls = ['filter-chip', active ? accentColor ? 'active-klima' : 'active' : ''].filter(Boolean).join(' ');
+  const style = accentColor && active ? {
+    borderColor: accentColor + '77',
+    background: accentColor + '1a',
+    color: 'var(--white)'
+  } : accentColor ? {
+    borderColor: accentColor + '33',
+    color: accentColor + 'cc'
+  } : {};
+  return /*#__PURE__*/React.createElement("button", {
+    className: cls,
+    style: style,
+    onClick: onClick
+  }, label);
+}
+
+// ── Filter Sidebar ────────────────────────────────────────────────────────────
+function FilterSidebar({
+  filters,
+  setFilters,
+  total,
+  filtered
+}) {
+  const allKlimas = useMemo(() => {
+    const s = new Set();
+    ALL_FISH.forEach(f => (f.klima || []).forEach(k => s.add(k)));
+    return [...s].sort();
+  }, []);
+  const set = (key, val) => setFilters(f => ({
+    ...f,
+    [key]: val
+  }));
+  const toggle = (key, val) => setFilters(f => {
+    const arr = f[key] || [];
+    return {
+      ...f,
+      [key]: arr.includes(val) ? arr.filter(x => x !== val) : [...arr, val]
+    };
+  });
+  const resetAll = () => setFilters({
+    search: '',
+    größe: [],
+    klima: [],
+    stärke: [],
+    level: [],
+    sort: 'name-az'
+  });
+  const hasAny = filters.search || filters.größe.length || filters.klima.length || filters.stärke.length || filters.level.length || filters.sort !== 'name-az';
+  return /*#__PURE__*/React.createElement("aside", {
+    className: "fish-sidebar"
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: '16px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '10px',
+      letterSpacing: '0.25em',
+      color: 'rgba(38,198,218,0.65)',
+      textTransform: 'uppercase'
+    }
+  }, "Filter"), hasAny && /*#__PURE__*/React.createElement(XBtn, {
+    onClick: resetAll
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      marginBottom: '18px'
+    }
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    placeholder: "Fisch suchen\u2026",
+    value: filters.search,
+    onChange: e => set('search', e.target.value)
+  }), /*#__PURE__*/React.createElement("svg", {
+    style: {
+      position: 'absolute',
+      right: '8px',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      opacity: 0.3,
+      pointerEvents: 'none'
+    },
+    width: "12",
+    height: "12",
+    viewBox: "0 0 12 12",
+    fill: "none"
+  }, /*#__PURE__*/React.createElement("circle", {
+    cx: "5",
+    cy: "5",
+    r: "3.5",
+    stroke: "rgba(38,198,218,1)",
+    strokeWidth: "1.2"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "8",
+    y1: "8",
+    x2: "11",
+    y2: "11",
+    stroke: "rgba(38,198,218,1)",
+    strokeWidth: "1.2"
+  })), filters.search && /*#__PURE__*/React.createElement("button", {
+    onClick: () => set('search', ''),
+    style: {
+      position: 'absolute',
+      right: '8px',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      background: 'none',
+      border: 'none',
+      color: 'rgba(var(--text-rgb),0.5)',
+      cursor: 'pointer',
+      padding: '0',
+      fontSize: '10px',
+      lineHeight: 1
+    }
+  }, "\u2715")), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Gr\xF6\xDFe",
+    active: filters.größe.length > 0,
+    onReset: () => set('größe', []),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '4px'
+    }
+  }, GRÖSSE_ORDER.map(g => /*#__PURE__*/React.createElement(Chip, {
+    key: g,
+    label: g,
+    active: filters.größe.includes(g),
+    onClick: () => toggle('größe', g)
+  })))), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Klima",
+    active: filters.klima.length > 0,
+    onReset: () => set('klima', []),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '4px'
+    }
+  }, allKlimas.map(k => /*#__PURE__*/React.createElement(Chip, {
+    key: k,
+    label: k,
+    active: filters.klima.includes(k),
+    accentColor: KLIMA_COLOR[k],
+    onClick: () => toggle('klima', k)
+  })))), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "St\xE4rke",
+    active: filters.stärke.length > 0,
+    onReset: () => set('stärke', []),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '4px'
+    }
+  }, STÄRKE_GROUPS.map(g => /*#__PURE__*/React.createElement(Chip, {
+    key: g.label,
+    label: g.label,
+    active: filters.stärke.includes(g.label),
+    onClick: () => toggle('stärke', g.label)
+  })))), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Level",
+    active: filters.level.length > 0,
+    onReset: () => set('level', []),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '4px'
+    }
+  }, LEVEL_GROUPS.map(g => /*#__PURE__*/React.createElement(Chip, {
+    key: g.label,
+    label: g.label,
+    active: filters.level.includes(g.label),
+    onClick: () => toggle('level', g.label)
+  })))), /*#__PURE__*/React.createElement(FilterGroup, {
+    title: "Sortierung",
+    active: filters.sort !== 'name-az',
+    onReset: () => set('sort', 'name-az'),
+    collapsible: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '2px'
+    }
+  }, SORT_OPTIONS.map(opt => /*#__PURE__*/React.createElement("button", {
+    key: opt.id,
+    className: `sort-btn${filters.sort === opt.id ? ' active' : ''}`,
+    onClick: () => set('sort', opt.id)
+  }, opt.label)))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: 'auto',
+      paddingTop: '16px',
+      borderTop: '1px solid rgba(38,198,218,0.08)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fish-count"
+  }, filtered, " / ", total, " Fische"), hasAny && /*#__PURE__*/React.createElement("button", {
+    onClick: resetAll,
+    style: {
+      width: '100%',
+      padding: '6px',
+      background: 'rgba(200,60,60,0.08)',
+      border: '1px solid rgba(200,60,60,0.25)',
+      borderRadius: '2px',
+      color: 'rgba(230,90,90,0.7)',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.18em',
+      cursor: 'pointer',
+      transition: 'all 0.15s',
+      textTransform: 'uppercase'
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.background = 'rgba(200,60,60,0.18)';
+      e.currentTarget.style.borderColor = 'rgba(230,90,90,0.55)';
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.background = 'rgba(200,60,60,0.08)';
+      e.currentTarget.style.borderColor = 'rgba(200,60,60,0.25)';
+    }
+  }, "Filter l\xF6schen")));
+}
+
+// ── App ───────────────────────────────────────────────────────────────────────
+function App() {
+  const [mouse, setMouse] = useState({
+    x: 0.5,
+    y: 0.5
+  });
+  const [filters, setFilters] = useState({
+    search: '',
+    größe: [],
+    klima: [],
+    stärke: [],
+    level: [],
+    sort: 'name-az'
+  });
+  const handleMouseMove = useCallback(e => setMouse({
+    x: e.clientX / window.innerWidth,
+    y: e.clientY / window.innerHeight
+  }), []);
+  const filtered = useMemo(() => {
+    let r = ALL_FISH;
+    if (filters.search) {
+      const q = filters.search.toLowerCase();
+      r = r.filter(f => f.name_de.toLowerCase().includes(q) || f.desc_de.toLowerCase().includes(q));
+    }
+    if (filters.größe.length) r = r.filter(f => filters.größe.includes(f.größenkategorie));
+    if (filters.klima.length) r = r.filter(f => (f.klima || []).some(k => filters.klima.includes(k)));
+    if (filters.stärke.length) r = r.filter(f => filters.stärke.some(g => {
+      const grp = STÄRKE_GROUPS.find(x => x.label === g);
+      return grp && f.stärke >= grp.min && f.stärke <= grp.max;
+    }));
+    if (filters.level.length) r = r.filter(f => filters.level.some(g => {
+      const grp = LEVEL_GROUPS.find(x => x.label === g);
+      return grp && f.level[0] >= grp.min && f.level[0] <= grp.max;
+    }));
+    r = [...r];
+    switch (filters.sort) {
+      case 'name-az':
+        r.sort((a, b) => a.name_de.localeCompare(b.name_de, 'de'));
+        break;
+      case 'name-za':
+        r.sort((a, b) => b.name_de.localeCompare(a.name_de, 'de'));
+        break;
+      case 'level-asc':
+        r.sort((a, b) => a.level[0] - b.level[0]);
+        break;
+      case 'level-desc':
+        r.sort((a, b) => b.level[0] - a.level[0]);
+        break;
+      case 'preis-asc':
+        r.sort((a, b) => parsePreis(a.verkaufspreis) - parsePreis(b.verkaufspreis));
+        break;
+      case 'preis-desc':
+        r.sort((a, b) => parsePreis(b.verkaufspreis) - parsePreis(a.verkaufspreis));
+        break;
+      case 'staerke':
+        r.sort((a, b) => (b.stärke || 0) - (a.stärke || 0));
+        break;
+      case 'gewicht':
+        r.sort((a, b) => parseGewicht(b.gewicht) - parseGewicht(a.gewicht));
+        break;
+    }
+    return r;
+  }, [filters]);
+  return /*#__PURE__*/React.createElement("div", {
+    onMouseMove: handleMouseMove,
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100vh',
+      overflow: 'hidden',
+      position: 'relative'
+    }
+  }, /*#__PURE__*/React.createElement(ParticleField, {
+    mouseX: mouse.x,
+    mouseY: mouse.y
+  }), /*#__PURE__*/React.createElement(SiteNav, {
+    rightLabel: "FISCHVERZEICHNIS v1.0"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "fish-layout"
+  }, /*#__PURE__*/React.createElement(FilterSidebar, {
+    filters: filters,
+    setFilters: setFilters,
+    total: ALL_FISH.length,
+    filtered: filtered.length
+  }), /*#__PURE__*/React.createElement("main", {
+    className: "fish-main"
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: '22px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.28em',
+      color: 'rgba(38,198,218,0.35)',
+      textTransform: 'uppercase',
+      marginBottom: '5px'
+    }
+  }, "Ressourcen"), /*#__PURE__*/React.createElement("h1", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '32px',
+      fontWeight: '300',
+      letterSpacing: '0.18em',
+      color: 'var(--white)',
+      textShadow: '0 0 28px rgba(38,198,218,0.3)',
+      lineHeight: 1
+    }
+  }, "Fischverzeichnis"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      marginTop: '8px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '38px',
+      height: '1px',
+      background: 'linear-gradient(90deg,rgba(38,198,218,0.65),transparent)',
+      animation: 'pulse-glow 3s infinite'
+    }
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.18em',
+      color: 'rgba(38,198,218,0.3)'
+    }
+  }, filtered.length, " Eintr\xE4ge"))), filtered.length > 0 ? /*#__PURE__*/React.createElement("div", {
+    className: "fish-grid"
+  }, filtered.map(f => /*#__PURE__*/React.createElement(FishCard, {
+    key: f.id,
+    fish: f
+  }))) : /*#__PURE__*/React.createElement("div", {
+    className: "fish-empty"
+  }, "Keine Treffer"))));
+}
+ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement(App, null)));
+})();
+
+})();
+

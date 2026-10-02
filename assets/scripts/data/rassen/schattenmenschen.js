@@ -1,4 +1,4 @@
-// Schattenmenschen — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Schattenmenschen — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Schattenmenschen'] = {
   name: 'Schattenmenschen', accent: '#606888',
   subtitle: 'Umbralfüllte Menschen · Wechselbälger des Schattens',

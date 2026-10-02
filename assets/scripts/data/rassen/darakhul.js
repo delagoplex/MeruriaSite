@@ -1,4 +1,4 @@
-// Darakhul — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Darakhul — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Darakhul'] = {
   name: 'Darakhul', accent: '#6040a0',
   subtitle: 'Untote mit Bewusstsein · Träger des Dunkels',

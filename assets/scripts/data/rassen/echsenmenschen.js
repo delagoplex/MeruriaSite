@@ -1,4 +1,4 @@
-// Echsenmenschen — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Echsenmenschen — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Echsenmenschen'] = {
   name: 'Echsenmenschen', accent: '#5ab878',
   subtitle: 'Erben der Urzeit · Hüter der Natur',

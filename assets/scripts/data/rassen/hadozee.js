@@ -1,2 +1,2 @@
-// Hadozee — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Hadozee — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Hadozee'] = { name:'Hadozee',                  accent:'#907850', subtitle:'Segelflieger der Wälder · Affenähnliche Abenteurer',      tags:['Humanoid','Mittelgroß','9 m Bewegung','Gleitflug','Neutral'],                   headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null };

@@ -1,2 +1,2 @@
-// Cnidaran — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Cnidaran — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Cnidaran'] = { name:'Cnidaran',                 accent:'#40b8e0', subtitle:'Wesen des Tiefsees · Träger des Giftstachels',            tags:['Monstrosity','Mittelgroß','Schwimmen','Giftangriff','Neutral'],                    headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null };

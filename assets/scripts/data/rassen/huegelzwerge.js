@@ -1,4 +1,4 @@
-// Hügelzwerge — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Hügelzwerge — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Hügelzwerge'] = {
   name: 'Hügelzwerge', accent: '#b07850',
   subtitle: 'Gütige Handwerker · Hüter des Heilwissens',

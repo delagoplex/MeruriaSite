@@ -1,4 +1,4 @@
-// Giff — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Giff — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Giff'] = {
   name: 'Giff', accent: '#8890a0',
   subtitle: 'Hippomorphe Soldaten · Kinder des verlorenen Götterlichts',

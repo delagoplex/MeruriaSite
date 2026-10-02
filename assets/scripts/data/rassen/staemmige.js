@@ -1,4 +1,4 @@
-// Stämmige — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Stämmige — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Stämmige'] = {
   name: 'Stämmige', accent: '#c07050',
   subtitle: 'Robuste Hüter · Starkherzen des Südens',

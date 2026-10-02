@@ -1,4 +1,4 @@
-// Page entry for Impressum.html
+// Page entry for /impressum.html
 import '../components/nav.jsx';
 import '../components/footer.jsx';
 

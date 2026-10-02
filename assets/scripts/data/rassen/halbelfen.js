@@ -1,4 +1,4 @@
-// Halbelfen — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Halbelfen — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Halbelfen'] = {
   name: 'Halbelfen', accent: '#98d080',
   subtitle: 'Zwischen den Welten · Diplomaten zweier Erbe',

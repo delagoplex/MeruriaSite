@@ -1,4 +1,4 @@
-// Aasimar — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Aasimar — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Aasimar'] = {
   name: 'Aasimar', accent: '#c8a84a',
   subtitle: 'Kinder des Lichts · Gesandte der Götter',

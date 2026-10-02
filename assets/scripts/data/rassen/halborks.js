@@ -1,4 +1,4 @@
-// Halborks — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+// Halborks — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Halborks'] = {
   name: 'Halborks', accent: '#70a840',
   subtitle: 'Gezeichnete des Blutes · Stärke zweier Erbe',
