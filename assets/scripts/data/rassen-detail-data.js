@@ -16,6 +16,8 @@ window.RASSEN_DETAIL_DATA = {
   subtitle: 'Kinder des Himmels · Diener der Winde',
   tags: ['Humanoid','Mittelgroß','9 m Bewegung','Flug','Meistens Gut'],
   headerImage: 'assets/images/races/aarakocra/banner.png',
+  lebensraum: ['Die Aarakocra siedeln vorwiegend in hochgelegenen, windreichen Regionen — Bergkämme, Klippen und die Ausläufer der Elementarebene der Luft.'],
+  beziehungenIntro: 'Aarakocra sind in Meruria selten und werden oft mit Staunen betrachtet. Ihre Andersartigkeit — sowohl körperlich als auch in ihrer Weltanschauung — schafft Distanz, aber auch Faszination.',
   lore: {
     intro: [
       'Diese geflügelten Wesen stammen ursprünglich von der Elementarebene der Luft und bewegen sich stets fliegend fort. Die ersten Aarakocra dienten den Windherzögen — mächtigen Luftwesen — und verfügten über eine Spur der Macht ihrer Meister über die Winde. Auch ihre Nachkommen weisen noch einen Schatten dieser Macht auf.',
@@ -75,7 +77,7 @@ window.RASSEN_DETAIL_DATA = {
     { bild: null, name:'— Unbekannt —',              rolle:'Name noch nicht festgelegt',      beschreibung:'Dieser Eintrag ist für einen weiteren bekannten Aarakocra reserviert.' },
     { bild: null, name:'— Unbekannt —',              rolle:'Name noch nicht festgelegt',      beschreibung:'Dieser Eintrag ist für einen weiteren bekannten Aarakocra reserviert.' },
   ],
-  radar: { labels:['Mobilität','Kampf','Magie','Soziales','Überleben','Weisheit'], values:[95,62,55,48,70,72] },
+  radar: { beschreibung:'Das Merkmals-Profil zeigt die natürlichen Stärken der Aarakocra im Vergleich zu anderen Rassen — basierend auf ihren Rassenmerkmalen und ihrer Kultur.', labels:['Mobilität','Kampf','Magie','Soziales','Überleben','Weisheit'], values:[95,62,55,48,70,72] },
   quiz: {
     steps: [
       { frage:'Wie geht dein Charakter mit Konflikten um?', optionen:[
@@ -144,6 +146,16 @@ window.RASSEN_DETAIL_DATA = {
   subtitle: 'Kinder des Lichts · Gesandte der Götter',
   tags: ['Humanoid','Mittelgroß','9 m Bewegung','Dunkelsicht','Meistens Gut'],
   headerImage: null, // z.B. 'assets/images/races/banner/aasimar.png'
+  lebensraum: ['Aasimar tauchen überall in Meruria auf — es gibt keinen festgelegten Lebensraum.'],
+  beziehungenIntro: 'Aasimar werden je nach Volk und Ort sehr unterschiedlich wahrgenommen — als Gesandte der Götter, als Kuriositäten oder als Bedrohung.',
+  namenSection: {
+    type: 'prose',
+    label: 'Aasimar-Namen',
+    absaetze: [
+      'Aasimar tragen den Namen, den sie vor ihrer Verwandlung hatten — oder den Namen der jeweiligen Kultur, in der sie aufwachsen. Es gibt keinen eigenen Aasimar-Namensstil; schaue dir die Namenstabelle der jeweiligen Ursprungsrasse an.',
+      'Manche Aasimar nehmen mit der Zeit einen zweiten Namen an — einen celestischen Beinamen, der ihre göttliche Natur widerspiegelt. Dieser Name ist kein offizieller Teil ihrer Identität, sondern ein innerer Name, den nur enge Vertraute kennen.',
+    ],
+  },
   lore: {
     intro: [
       'Ob sie von celestischen Wesen abstammen oder mit göttlicher Macht ausgestattet sind — Aasimar sind Sterbliche, die in ihren Seelen einen Funken der Oberen Ebenen tragen. Diese können sie nutzen, um Licht zu erzeugen, Wunden zu heilen und den Zorn der Götter zu entfesseln.',
@@ -194,7 +206,7 @@ window.RASSEN_DETAIL_DATA = {
     { name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Aasimar in Meruria reserviert.' },
     { name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Aasimar in Meruria reserviert.' },
   ],
-  radar: { labels:['Mobilität','Kampf','Magie','Soziales','Überleben','Weisheit'], values:[50,58,82,88,60,75] },
+  radar: { beschreibung:'Aasimar sind sozial begabt und magisch stark — ihr celestisches Erbe macht sie zu natürlichen Anführern und Heilern.', labels:['Mobilität','Kampf','Magie','Soziales','Überleben','Weisheit'], values:[50,58,82,88,60,75] },
   quiz: {
     steps: [
       { frage:'Wie geht dein Charakter mit seiner celestischen Natur um?', optionen:[
@@ -261,6 +273,8 @@ window.RASSEN_DETAIL_DATA = {
   subtitle: 'Kinder der Dunkelheit · Zwischen Leben und Tod',
   tags: ['Humanoid','Mittel oder Klein','12 m Bewegung','Dunkelsicht','Chaotisch-Neutral'],
   headerImage: 'assets/images/races/dhampire/banner.png',
+  lebensraum: ['Dhampire tauchen überall in Meruria auf — meist in Städten, Hafenvierteln und den Rändern der Zivilisation.'],
+  beziehungenIntro: 'Dhampire polarisieren — sie werden gefürchtet, bewundert und missverstanden, oft gleichzeitig.',
   lore: {
     intro: [
       'Dhampire sind zwischen der Welt der Lebenden und der Welt der Toten gefangen. Sie halten zwar an ihrem Leben fest, werden aber doch endlos von üblen Gelüsten geplagt. Ihre Bande mit Untoten gewähren ihnen einen Hauch der Fähigkeiten von Vampiren.',
@@ -321,7 +335,7 @@ window.RASSEN_DETAIL_DATA = {
     { name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Dhampir in Meruria reserviert.' },
     { name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Dhampir in Meruria reserviert.' },
   ],
-  radar: { labels:['Mobilität','Kampf','Magie','Soziales','Überleben','Weisheit'], values:[88,78,45,55,92,50] },
+  radar: { beschreibung:'Dhampire sind außergewöhnlich beweglich und zäh — ihre vampirische Natur macht sie zu natürlichen Überlebenden und Kämpfern aus dem Hinterhalt.', labels:['Mobilität','Kampf','Magie','Soziales','Überleben','Weisheit'], values:[88,78,45,55,92,50] },
   quiz: {
     steps: [
       { frage:'Wie geht dein Charakter mit seinem Hunger um?', optionen:[

@@ -1,4 +1,4 @@
-// Shared page for the seven division pages (all except Die Kuratoren).
+// Shared page for all eight division pages.
 // Each division HTML sets <body data-division="..."> and gets its colours from DIVISION_THEMES.
 import '../components/nav.jsx';
 import '../components/site-gate.jsx';
@@ -31,6 +31,15 @@ const ACCENT = getComputedStyle(document.documentElement).getPropertyValue('--ac
 const DIVISION = window.DIVISIONS_DATA.find(d => d.id === document.body.dataset.division);
 // Per-division text/tint colours (everything else is derived from the division's accent).
 const DIVISION_THEMES = {
+  kuratoren: {
+    asideBg: 'rgba(3,10,7,0.88)',
+    label: "Division I",
+    name: "Die Kuratoren",
+    tocIndent: 'rgba(180,240,210,0.5)', toc: 'rgba(200,240,220,0.7)',
+    divider: 'rgba(200,255,230,0.9)',
+    text: 'rgba(200,240,220,0.72)',
+    dim: '200,240,220', dimBoost: 0,
+  },
   sturmritter: {
     asideBg: 'rgba(28,8,6,0.90)',
     label: "Division II",

@@ -301,6 +301,11 @@ function LoreSections({ data }) {
           </div>
         </Section>
       )}
+      {data.lebensraum && (
+        <Section label="Verbreitung" title="Verbreitung in Meruria">
+          {data.lebensraum.map((p,i) => <p key={i} className="rd-body-text">{p}</p>)}
+        </Section>
+      )}
     </>
   );
 }
@@ -535,11 +540,20 @@ function VariantCards({ section }) {
 }
 
 // ── SPECIAL SECTION DISPATCHER ────────────────────────────
+function ProseSection({ section }) {
+  return (
+    <Section label="Namen" title={section.label}>
+      {section.absaetze.map((p,i) => <p key={i} className="rd-body-text">{p}</p>)}
+    </Section>
+  );
+}
+
 function SpecialSection({ section }) {
   if (section.type === 'nameRoller')   return <NameRoller   section={section} />;
   if (section.type === 'traitRoller')  return <TraitRoller  section={section} />;
   if (section.type === 'tables')       return <RollTables   section={section} />;
   if (section.type === 'variantCards') return <VariantCards section={section} />;
+  if (section.type === 'prose')        return <ProseSection  section={section} />;
   return null;
 }
 
@@ -588,9 +602,10 @@ function CharGen({ gen }) {
 }
 
 // ── BEZIEHUNGEN ───────────────────────────────────────────
-function Beziehungen({ items }) {
+function Beziehungen({ items, intro }) {
   return (
     <Section label="Gesellschaft" title="Beziehungen zu anderen Völkern" className="reveal-right">
+      {intro && <p className="rd-body-text">{intro}</p>}
       <div className="rd-bez-grid">
         {items.map(item => (
           <div key={item.volk} className="rd-bez-card">
@@ -725,6 +740,7 @@ function Radar({ data: rd }) {
 
   return (
     <Section label="Profil" title="Merkmals-Profil">
+      {rd.beschreibung && <p className="rd-body-text">{rd.beschreibung}</p>}
       <div className="rd-radar-wrap">
         <svg viewBox="0 0 200 210" width="220" height="230" style={{ flexShrink:0 }}>
           {gridLevels.map(level => (
@@ -1293,7 +1309,7 @@ function App() {
         {DATA.specialSection     && <div id="toc-special">  <SpecialSection section={DATA.specialSection} /></div>}
         {DATA.namenSection       && <div id="toc-namen">    <SpecialSection section={DATA.namenSection} /></div>}
         {DATA.charakterGenerator && <div id="toc-chargen">  <CharGen gen={DATA.charakterGenerator} /></div>}
-        {DATA.beziehungen        && <div id="toc-bez">      <Beziehungen items={DATA.beziehungen} /></div>}
+        {DATA.beziehungen        && <div id="toc-bez">      <Beziehungen items={DATA.beziehungen} intro={DATA.beziehungenIntro} /></div>}
         <div id="toc-bekannte">    <Bekannte items={DATA.bekannte || []} /></div>
         {DATA.radar    && <div id="toc-radar">    <Radar    data={DATA.radar} /></div>}
         {DATA.quiz     && <div id="toc-quiz">     <Quiz     data={DATA.quiz} /></div>}
