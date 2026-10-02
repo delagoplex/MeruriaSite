@@ -1,6 +1,6 @@
 // AUTO-GENERATED — do not edit by hand.
 // Run: node tools/generate-galerie-data.mjs
-// Existing entries keep their date. New images get today's date (2026-06-02).
+// Existing entries keep their date. New images get today's date (2026-10-02).
 
 window.GALERIE_COLLECTIONS = [
   { id:'charaktere', name:'Charaktere & NSCs', hue:150, images:[
