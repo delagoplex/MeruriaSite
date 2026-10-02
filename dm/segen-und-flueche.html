@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/assets/images/favicon/favicon-m.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/images/favicon/favicon-m-180.png">
+<title>Meruria — Segen &amp; Flüche</title>
+<script src="/assets/scripts/theme-init.js"></script>
+<link rel="stylesheet" href="/assets/styles/global/fonts.css">
+<link rel="stylesheet" href="/assets/styles/global/base.css">
+<link rel="stylesheet" href="/assets/styles/pages/dm/segen-und-flueche.css">
+<script src="/assets/scripts/vendor/react.production.min.js"></script>
+<script src="/assets/scripts/vendor/react-dom.production.min.js"></script>
+<script type="module" src="/src/pages/dm/segen-und-flueche.jsx"></script>
+<script src="/assets/scripts/vendor/supabase.min.js"></script>
+<script src="/assets/scripts/supabase-client.js"></script>
+<script src="/assets/scripts/data/flueche-und-segen-data.js"></script>
+</head>
+<body>
+
+<div id="nav-root"></div>
+<div id="page-content" style="display:none">
+
+<!-- ─────── MASTHEAD ─────── -->
+<section class="masthead">
+  <div class="eyebrow">Meruria · Oraculum</div>
+  <h1 class="title">Segen &amp; Flüche</h1>
+  <div class="flourish"><span class="flourish-dot"></span></div>
+  <p class="lede">
+    Wähle ein Deck, mische es im Geiste und ziehe eine Karte aus dem Schleier.
+    Gezogene Karten bleiben am unteren Rand sichtbar — klicke eine an, um zu ihrer Beschreibung zu springen.
+  </p>
+</section>
+
+<!-- ─────── DECK PICKER ─────── -->
+<div class="deck-picker">
+  <button class="deck-btn active" data-deck="chaos">
+    <div class="deck-btn-icon chaos-icon"></div>
+    <div class="deck-btn-label">Chaos</div>
+    <div class="deck-btn-sub">Segen &amp; Flüche gemischt</div>
+  </button>
+  <button class="deck-btn" data-deck="segen">
+    <div class="deck-btn-icon segen-icon"></div>
+    <div class="deck-btn-label">Segen</div>
+    <div class="deck-btn-sub">Nur Segenkarten</div>
+  </button>
+  <button class="deck-btn" data-deck="flueche">
+    <div class="deck-btn-icon flueche-icon"></div>
+    <div class="deck-btn-label">Flüche</div>
+    <div class="deck-btn-sub">Nur Fluchkarten</div>
+  </button>
+</div>
+
+<!-- ─────── STACK SCENE ─────── -->
+<div class="wrap">
+  <div class="scene" id="scene">
+    <div class="table-glow"></div>
+    <div class="table-disc"></div>
+    <svg class="compass" viewBox="0 0 200 200" aria-hidden="true">
+      <circle cx="100" cy="100" r="98" fill="none" stroke="rgba(160,140,255,0.4)" stroke-width="0.4"/>
+      <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(160,140,255,0.3)" stroke-width="0.3" stroke-dasharray="1 4"/>
+      <circle cx="100" cy="100" r="55" fill="none" stroke="rgba(160,140,255,0.35)" stroke-width="0.3"/>
+      <polygon points="100,5 132,23 132,57 100,75 68,57 68,23" fill="none" stroke="rgba(124,77,255,0.5)" stroke-width="0.5"/>
+      <polygon points="100,125 132,143 132,177 100,195 68,177 68,143" fill="none" stroke="rgba(124,77,255,0.5)" stroke-width="0.5"/>
+      <g stroke="rgba(124,77,255,0.45)" stroke-width="0.3">
+        <line x1="100" y1="2" x2="100" y2="22"/><line x1="100" y1="178" x2="100" y2="198"/>
+        <line x1="2" y1="100" x2="22" y2="100"/><line x1="178" y1="100" x2="198" y2="100"/>
+      </g>
+    </svg>
+    <div class="stack" id="stack" aria-label="Kartendeck"></div>
+  </div>
+
+  <div class="actions">
+    <button class="btn primary big-action" id="drawBtn">Karte ziehen</button>
+    <div class="action-row pick-row">
+      <select id="typePick" class="pick-select">
+        <option value="">— Typ —</option>
+        <option value="segen">Segen</option>
+        <option value="fluch">Fluch</option>
+      </select>
+      <select id="cardPick" class="pick-select" disabled>
+        <option value="">— Karte —</option>
+      </select>
+      <button class="btn" id="pickBtn" disabled>In Hand nehmen</button>
+    </div>
+    <button class="btn ghost" id="clearBtn">Clear</button>
+  </div>
+</div>
+
+<!-- ─────── CARD REFERENCE ─────── -->
+<div class="wrap">
+  <section class="block" id="segenSection">
+    <div class="section-head">
+      <div class="section-eyebrow">I — Segen</div>
+      <h2 class="section-title">Segen</h2>
+      <div class="section-rule"></div>
+      <p class="section-sub">Karten, die Gunst, Schutz oder Glück gewähren.</p>
+    </div>
+    <div class="card-list" id="segenList"></div>
+  </section>
+
+  <section class="block" id="fluecheSection">
+    <div class="section-head">
+      <div class="section-eyebrow" id="fluecheEyebrow">II — Flüche</div>
+      <h2 class="section-title">Flüche</h2>
+      <div class="section-rule"></div>
+      <p class="section-sub">Karten, die mit Pech, Schwäche oder Dunkel belegen.</p>
+    </div>
+    <div class="card-list" id="fluecheList"></div>
+  </section>
+</div>
+
+<footer>
+  <span>◇ SEGEN &amp; FLÜCHE ◇</span>
+  <span>MERURIA // THE WOVEN REALMS</span>
+</footer>
+
+<!-- ─────── DRAWN TRAY ─────── -->
+<div class="tray is-empty" id="tray" aria-live="polite">
+  <div class="tray-bg"></div>
+  <div class="tray-inner">
+    <div class="tray-side">
+      <div class="tray-label">Gezogene Karten</div>
+      <button class="tray-clear-btn" id="trayClearBtn">Clear</button>
+    </div>
+    <div class="drawn-cards" id="drawnCards">
+      <div class="drawn-empty" id="drawnEmpty">
+        Der Schleier ruht. Klicke auf <b>Karte ziehen</b>, um eine Karte aus dem Deck zu lösen.
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</div><!-- /page-content -->
+
+
+</body></html>

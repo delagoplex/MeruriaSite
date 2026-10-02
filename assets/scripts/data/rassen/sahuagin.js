@@ -1,0 +1,127 @@
+// Sahuagin — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+(window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Sahuagin'] = {
+  name: 'Sahuagin', accent: '#2070a0',
+  subtitle: 'Teufel der Tiefsee · Herrschaft unter den Wellen',
+  tags: ['Humanoid','Mittelgroß','9 m · 12 m Schwimmen','Blutrausch','Rechtschaffen Böse'],
+  headerImage: null,
+  lore: {
+    intro: [
+      'Sahuagin — die Meeresteufel — sind haifischartige Humanoide aus den dunklen Tiefen des Ozeans. Muskulös, schuppig, mit Klauen und Reißzähnen, die nicht dekorativ sind. Sie können 1,80 bis 2,10 Meter groß werden und bewegen sich sowohl zu Land als auch im Wasser mit beunruhigender Effizienz. Ihre überlegene Dunkelsicht reicht bis zu 36 Metern — angepasst an einen Lebensraum, in den das Licht nicht dringt.',
+      'Ihre reglementierte Natur macht Sahuagin universell rechtschaffen, und fast alle sind böse. Meeresteufel, die diesen Trends trotzen, werden entweder getötet oder verbannt — was den gelegentlichen Sahuagin-Abenteurer erklärt. Sie sind keine Aussteiger aus Überzeugung, sondern aus Notwendigkeit: Wer anders denkt als das Kollektiv, hat dort keinen Platz mehr.',
+      'Sahuagin altern, aber keine Obergrenze ihrer Lebensspanne ist bekannt. Die ältesten unter ihnen haben Meeresströmungen beobachtet, die sich im Laufe von Jahrhunderten veränderten. Ob das Weisheit erzeugt oder nur Ungeduld, hängt davon ab, welchen Sahuagin man fragt.',
+    ],
+    gesellschaft: [
+      'Sahuagin-Gesellschaften sind hierarchisch und militärisch. Stärke, Rang und Blutrausch-Disziplin bestimmen den Status. Schwäche wird nicht geduldet. Die Haitelempathie — die Fähigkeit, Haien einfache Befehle zu übermitteln — macht sie zu gefürchteten Kommandanten unter Wasser, wo sie Haie als Kavallerie einsetzen.',
+      'An der Oberfläche sind Sahuagin selten und fast immer mit einem spezifischen Ziel hier: Erkundung, Handel in extremen Ausnahmefällen, oder — häufiger — eine Art von Konflikt. Ihre begrenzte Amphibienfähigkeit zwingt sie, alle vier Stunden untergetaucht zu sein, was ihren Aktionsradius auf Land stark einschränkt.',
+      'In Meruria begegnet man Sahuagin am ehesten in Küstenstädten mit Zugang zu tiefem Wasser — als Einzelne, die aus ihrer Gemeinschaft verstoßen wurden und sich nun unter den Lebenden zurechtfinden müssen. Sie sind keine angenehmen Gesellschafter, aber sie sind berechenbar: Was sie sagen, meinen sie. Was sie androhen, meinen sie auch.',
+    ],
+    introBild:        { url: null, label: 'Sahuagin · Illustration', caption: 'Charakter-Illustration', position: 'right', width: 360, height: 360 },
+    gesellschaftBild: { url: null, label: 'Sahuagin-Tiefseeburg', caption: 'Hierarchie in der Dunkelheit', position: 'left', width: 240, height: 300 },
+  },
+  specialSection: {
+    type: 'traitRoller',
+    label: 'Warum du an der Oberfläche bist',
+    beschreibung: 'Ein Sahuagin an Land ist ein verstoßener Sahuagin — oder ein sehr zielgerichteter. Würfle oder wähle.',
+    merkmale: [
+      'Verbannt — meine Überzeugungen oder Handlungen haben mich unvereinbar mit meiner Gemeinschaft gemacht. Ich bin gegangen, bevor sie mich töten konnten.',
+      'Auftrag — ich wurde gesandt, um etwas zu erkunden, zu stehlen oder zu vernichten. Was danach kommt, hängt vom Ergebnis ab.',
+      'Überleben — meine Gemeinschaft wurde ausgelöscht. Ich bin das Übrige.',
+      'Neugier — die Oberfläche existiert. Das genügte mir als Grund.',
+      'Ehrgeiz — unter meinesgleichen habe ich keine Aufstiegschance. Hier vielleicht schon.',
+      'Fremdheit — ich denke anders als Sahuagin denken sollen. Das war schon immer so. Jetzt bin ich woanders.',
+      'Hunger — nicht nach Blut, sondern nach Wissen. Das Meer hat keine Bibliotheken.',
+      'Beziehung — ein einziges anderes Wesen hat mich dazu gebracht, mein Volk zu verlassen. Ich werde das niemals zugeben.',
+    ],
+  },
+  namenSection: {
+    type: 'nameRoller',
+    label: 'Namen der Sahuagin',
+    beschreibung: 'Sahuagin-Namen klingen rau und aquatisch — viele Zisch- und Gurgellaute, die auf Aquanisch beruhen. An der Oberfläche kürzen manche Sahuagin ihre Namen für andere Rassen ab.',
+    tabellen: [
+      { name:'Namen', eintraege:['Sarkhull','Vorrakh','Ghethis','Drathux','Skorriv','Vareth','Lurkhiss','Trakhiv','Orrgan','Skrethis','Vargull','Druvakh','Gothrix','Skrathus','Narkhiv','Varesh','Orrthis','Skrevakh','Drothull','Lurrkhis','Vargan','Skrothiv','Narthex','Varakk','Grevish','Skrathiv','Drulghan','Norrkhis','Varthex','Skruvakh'] },
+    ],
+  },
+  charakterGenerator: {
+    felder: [
+      { label:'Name',          type:'table',  optionen:['Sarkhull','Vorrakh','Ghethis','Drathux','Skorriv','Vareth','Lurkhiss','Trakhiv','Orrgan','Skrethis','Vargull','Druvakh','Gothrix','Skrathus','Narkhiv','Varesh','Orrthis','Skrevakh','Drothull','Lurrkhis'] },
+      { label:'Schuppenfarbe', type:'table',  optionen:['tiefgrün mit dunklen Streifen','blaugrün schimmernd','dunkelgrau fast schwarz','türkis mit schwarzen Abzeichen','grünblau und glänzend','olivgrün und matt'] },
+      { label:'Augenfarbe',    type:'table',  optionen:['gelb mit schwarzen Schlitzen','grüngelb','bernsteinfarben','silbrig-gelb','fast weiß und kalt'] },
+      { label:'Besonderheit',  type:'table',  optionen:['Klauen hinterlassen immer Kratzer auf Oberflächen','Braucht mehr als 4h ohne Wasser sofort Probleme','Blutrausch ist sichtbar — Augen verfärben sich','Hai in der Nähe bewegt sich nach seinen Befehlen','Spricht selten und direkt','Versteht Gnade konzeptuell aber nicht praktisch'] },
+    ],
+  },
+  beziehungen: [
+    { volk:'Küstenvölker',  relation:'Feindseliger Respekt',    text:'Sie fürchten das Meer. Ich bin das Meer. Das ist kein Missverständnis — das ist eine korrekte Einschätzung.' },
+    { volk:'Locathah',      relation:'Alte Feindschaft',        text:'Locathah wurden uns gegenüber lange Zeit schwach gestellt. Manche haben sich erhoben. Ich respektiere das, auch wenn ich es nicht laut sage.' },
+    { volk:'Seefahrer',     relation:'Pragmatisches Abkommen',  text:'Sie brauchen Informationen über das Meer. Ich brauche Zugang zur Oberfläche. Manchmal ergibt das eine Transaktion. Keine Freundschaft.' },
+    { volk:'Meeresgötter',  relation:'Religiöse Pflicht',       text:'Das Meer hat Götter. Ich bin vom Meer. Das schafft Erwartungen, die ich erfülle oder nicht, je nach Situation.' },
+    { volk:'Wasserelementare', relation:'Intrinsische Verbindung', text:'Wasser ist mein Element. Wasserelementare sind... Wasser. Wir verstehen uns auf einer Ebene, die ich nicht gut erklären kann.' },
+    { volk:'Menschen',      relation:'Tiefe Skepsis',            text:'Menschen leben an der Oberfläche und denken, das Meer gehöre ihnen, weil sie Schiffe bauen. Das ist eine Fehlannahme, die ich korrigiere wenn nötig.' },
+  ],
+  bekannte: [
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Sahuagin in Meruria reserviert.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Sahuagin in Meruria reserviert.' },
+  ],
+  radar: { labels:['Mobilität','Kampf','Magie','Soziales','Überleben','Wasser'], values:[72,90,20,28,78,98] },
+  quiz: {
+    steps: [
+      { frage:'Was treibt deinen Sahuagin an?', optionen:[
+        { text:'Dominanz — ich bin das Raubtier. Das ist nicht böse, das ist Natur.',                                                 tags:['Barbar','Kämpfer'] },
+        { text:'Überleben — verstoßen und allein an der Oberfläche. Ich passe mich an.',                                            tags:['Kämpfer','Waldläufer'] },
+        { text:'Ehrgeiz — unter meinesgleichen hatte ich keine Chance. Hier ist das anders.',                                       tags:['Paladin','Kämpfer'] },
+        { text:'Wissen — das Meer hat mir alles gegeben. Jetzt lerne ich, was das Land weiß.',                                      tags:['Magier','Kleriker'] },
+      ]},
+      { frage:'Wie nutzt du Blutrausch?', optionen:[
+        { text:'Konsequent — ich aktiviere ihn so oft wie möglich. KON-Mod Nutzungen sind meine Ressource.',                        tags:['Barbar','Kämpfer'] },
+        { text:'Gezielt — nur wenn ein Feind bereits verwundet ist. Dann ist der Vorteil am wertvollsten.',                         tags:['Schurke','Kämpfer'] },
+        { text:'Selten — ich versuche, meinen Blutrausch zu kontrollieren. Das ist nicht immer möglich.',                           tags:['Paladin','Kleriker'] },
+        { text:'Als letztes Mittel — wenn nichts anderes mehr funktioniert.',                                                       tags:['Magier','Barde'] },
+      ]},
+      { frage:'Wie nutzt du Haitelempathie?', optionen:[
+        { text:'Taktisch — ich kommandiere Haie als Ablenkung oder Angriffswelle.',                                                 tags:['Waldläufer','Kämpfer'] },
+        { text:'Defensiv — ein Hai auf meiner Seite hält viele Feinde auf Abstand.',                                               tags:['Paladin','Kämpfer'] },
+        { text:'Selten — wir sind nicht immer in der Nähe von Haien.',                                                             tags:['Magier','Schurke'] },
+        { text:'Als Erkennungszeichen — andere wissen, was es bedeutet, wenn ich einen Hai befehlige.',                            tags:['Barde','Paladin'] },
+      ]},
+      { frage:'Welche Rolle spielst du in der Gruppe?', optionen:[
+        { text:'Frontlinie — STR+2, natürliche Rüstung, Klauen und Biss, Blutrausch. Ich bin das Raubtier.',                       tags:['Barbar','Kämpfer'] },
+        { text:'Aquatischer Spezialist — 12 m Schwimmen, Haitelempathie, alles was Wasser betrifft.',                              tags:['Waldläufer','Kämpfer'] },
+        { text:'Überlebensmaschinerie — Natürliche Rüstung, Blutrausch, Angriffe ohne Waffe.',                                     tags:['Barbar','Kämpfer'] },
+        { text:'Ungewöhnlicher Magier — STR+2 für körperliche Sicherheit, WEI+1 für Zauberei.',                                   tags:['Kleriker','Druide'] },
+      ]},
+    ],
+    klassen: {
+      'Barbar':      'STR+2, Blutrausch als Ergänzung zu Raserei, natürliche Rüstung + Klauen — der Sahuagin-Barbar ist eine Kampfmaschine.',
+      'Kämpfer':     'STR+2, natürliche Rüstung, Waffenfreie Angriffe, Blutrausch — vielseitiger Frontlinie-Kämpfer.',
+      'Paladin':     'STR+2, WEI+1 indirekt für Konzentration, natürliche Rüstung — Gerichts- oder Meeres-Paladin.',
+      'Waldläufer':  'STR+2, WEI+1, 12 m Schwimmen, Haitelempathie — der aquatische Kundschafter.',
+      'Kleriker':    'WEI+1, STR+2 für körperliche Präsenz — Sturm- oder Kriegsdomäne passend.',
+      'Druide':      'WEI+1, Meeresverbindung, Haitelempathie — Ozean-Druide mit eingebautem tierischen Begleiter-Thema.',
+      'Mönch':       'STR+2, natürliche Rüstung als Alternative zu Unarmored Defense, Blutrausch für Vorteil.',
+      'Schurke':     'Natürliche Rüstung, Blutrausch für Vorteil gegen verwundete Feinde — starker Sneak-Attack-Synergieeffekt.',
+      'Hexenmeister':'WEI+1 für Hexenblattvariante, Haitelempathie thematisch passend zu Meer-Patrons.',
+      'Magier':      'WEI+1 nützlich für Konzentration; Sahuagin-Magier ist ungewöhnlich aber interessant.',
+    },
+  },
+  koerperlicherMerkmale: {
+    bewegungsrate:   '9 m (Gehen), 12 m (Schwimmen); alle 4h muss man untergetaucht sein',
+    volljaehrigkeit: 'spätes Teenageralter',
+    lebenserwartung: 'keine bekannte Obergrenze',
+    groesse:  { kategorie:'Mittelgroß', min:'180 cm', max:'210 cm', formel:'muskulös und schwergebaut' },
+    gewicht:  { min:'ca. 100 kg', max:'ca. 140 kg', formel:'mehr Muskel als Knochen' },
+    augenfarbe: 'gelb mit schwarzen Schlitzen oder grüngelb',
+    hautfarbe:  'schuppig grün, blaugrün oder dunkelgrau',
+    haarfarbe:  'keine (Schuppen und Flossen)',
+  },
+  statblock: {
+    features: [
+      { name:'Kreaturtyp',              text:'Humanoid.' },
+      { name:'Größenkategorie',         text:'Mittelgroß (180–210 cm, ca. 100–140 kg, muskulös).' },
+      { name:'Überlegene Dunkelsicht',  text:'Du kannst in schwachem Licht innerhalb von 36 Metern so sehen, als wäre es helles Licht, und in Dunkelheit so, als wäre es schwaches Licht. In der Dunkelheit kannst du keine Farben unterscheiden, nur Grautöne.' },
+      { name:'Blutrausch',              text:'Als Bonusaktion verfällst du bis zum Ende deines Zuges in einen Blutrausch. Dabei hast du Vorteil auf Nahkampfangriffswürfe gegen jede Kreatur, die nicht alle TP hat. KON-Mod Nutzungen pro langer Rast (mind. 1).' },
+      { name:'Begrenzte Amphibienfähigkeit', text:'Du kannst Luft und Wasser atmen, musst jedoch mindestens alle 4 Stunden untergetaucht sein — sonst beginnst du zu ersticken.' },
+      { name:'Natürliche Rüstung',      text:'Deine RK beträgt 12 + GES-Mod (wenn du keine Rüstung trägst).' },
+      { name:'Natürliche Angriffe',     text:'Du hast Übung mit deinen Klauen (1W4 Hiebschaden) und deinem Biss (1W4 Stichschaden).' },
+      { name:'Haitelempathie',          text:'Du kannst einem Hai innerhalb von 36 Metern magisch durch begrenzte Telepathie einfache Befehle übermitteln (z. B. „komm her", „verteidige mich", „greif an").' },
+    ],
+  },
+};

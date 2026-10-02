@@ -1,4 +1,4 @@
-// Shared Kollektikon data — loaded by index.html and Kollektikon.html.
+// Shared Kollektikon data — loaded by /index.html and /spiel/kollektikon.html.
 // No JSX here; icons are added by each page using their local icon constants.
 
 window.KOLLEKTIKON_CATEGORIES = [

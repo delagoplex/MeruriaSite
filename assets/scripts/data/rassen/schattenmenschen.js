@@ -1,0 +1,137 @@
+// Schattenmenschen — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+(window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Schattenmenschen'] = {
+  name: 'Schattenmenschen', accent: '#606888',
+  subtitle: 'Umbralfüllte Menschen · Wechselbälger des Schattens',
+  tags: ['Humanoid','Mittelgroß','9 m Bewegung','Verblassen','Neutral bis Chaotisch'],
+  headerImage: null,
+  lore: {
+    intro: [
+      'Das Schattenreich verändert Wesen mit seiner Magie, und im Fall der umbralen Menschen kann dieser Einfluss radikale Auswirkungen haben. Diese Schattenbewohner sind nicht bloß von Schatten korrumpierte Menschen — sie wurden durch ihre Exposition gegenüber dem Schatten über Generationen hinweg langsam verwandelt und sind allmählich daran gewöhnt. Dies sind die Wechselbälger.',
+      'Jenseits des natürlichen Einflusses des Schattens haben die Schattenfe seit langem mit den Schatten und ihren Auswirkungen auf Sterbliche experimentiert — zur Bestrafung Törichter, zur Erschaffung besserer Diener oder einfach zum Spaß. Einige umbrale Menschen, jene die überleben, sind das Ergebnis dieser Rituale. Diese verzerrten Seelen werden von anderen oft als die Beschenkten bezeichnet, aber sie selbst denken selten, wenn überhaupt, in solchen Begriffen.',
+      'Umbrale Menschen altern langsamer als normale Menschen — ihr natürlicher Alterungsprozess verlangsamt sich und wird dem eines Elfen oder einer Schattenfe ähnlich. Was sie in dieser verlängerten Zeit erleben und wer sie dabei werden, liegt vollständig bei ihnen.',
+    ],
+    gesellschaft: [
+      'Umbrale Menschen sind eine stille Präsenz in den Grenzgebieten zwischen sterblicher Welt und Schattenreich. Sie teilen die Gemeinschaften der Schattenfe und der Wechselbälger — oder sie leben isoliert, abseits von Gesellschaften, die ihnen mit Argwohn begegnen. Ihr Erscheinungsbild kann unauffällig menschlich sein oder subtil fremd: blasse Haut, graue Augen, eine Stille, die sich um sie legt.',
+      'Die Beschenkten — jene, die einen Handel mit Schattenfe abgeschlossen haben oder deren Verwandlung durch diese eingeleitet wurde — tragen ein sichtbares Zeichen: immer, auch wenn es nur für sie selbst erkennbar ist. Manchmal erscheinen sie als normale umbrale Menschen, manchmal als Schattenfe. Manchmal zeigen sich dramatischere Veränderungen: Schwänze, Hufe, rudimentäre Flügel. Gelegentlich raubt die Veränderung dem Betroffenen seine Erinnerungen.',
+      'In Meruria sind umbrale Menschen an der Oberfläche selten und oft Gegenstand von Gerüchten. Manche leben als Händler oder Gesandte zwischen Welten. Andere verbergen ihre Natur hinter sorgfältig gepflegten Identitäten. Und einige haben längst aufgehört, sich darum zu kümmern, was andere von ihnen denken.',
+    ],
+    introBild:        { url: null, label: 'Umbraler Mensch · Illustration', caption: 'Charakter-Illustration', position: 'right', width: 360, height: 360 },
+    gesellschaftBild: { url: null, label: 'Schattenreich-Gemeinschaft', caption: 'Zwischen zwei Welten', position: 'left', width: 240, height: 300 },
+  },
+  specialSection: {
+    type: 'variantCards', feat1Label: 'Basismerkmale', feat2Label: 'Spieltipp',
+    label: 'Unterrassen der Schattenmenschen',
+    beschreibung: 'Wähle deine Unterrasse — Wechselbalg oder Beschenkter.',
+    varianten: [
+      {
+        farbe: 'Umbraler Mensch', name: 'Umbraler Mensch', schadensart: 'Wechselbalg', farbeHex: '#606888', bild: null,
+        augenfarbe: 'grau, silbern oder fast farblos',
+        hautfarbe:  'blass bis aschgrau; kühler Unterton',
+        haarfarbe:  'schwarz, dunkelgrau oder weißlich-silber',
+        odemwaffe:  'Freier +2/+1 auf zwei Attributwerte · Mittelgroß · 9 m · Dunkle Infusion: Resistenz gegen Kälteschaden · Verblassen: Aktion, werde unsichtbar bis zur Bewegung oder Aktion; Übungsbonus×/Tag',
+        resistenz:  'Flexibelste Unterrasse. Freie Attributwahl für jeden Klassenbau. Verblassen gibt passive Tarnung in Kämpfen und Erkundung — ohne Zauberplatz.',
+      },
+      {
+        farbe: 'Die Beschenkten', name: 'Die Beschenkten', schadensart: 'Fe-Pakt', farbeHex: '#8040a0', bild: null,
+        augenfarbe: 'violett, golden oder leer schwarz — je nach Geschenk',
+        hautfarbe:  'verändert durch das Geschenk; kann stark variieren',
+        haarfarbe:  'oft unnatürliche Farbe als Zeichen des Pakts',
+        odemwaffe:  'WEI+1 zusätzlich · Verfluchte Infusion: Resistenz gegen nekrotischen Schaden · Schattengeschenk: wähle einen mächtigen Vorteil mit Preis (Fertigkeitsvorteil/-nachteil, kein Essen/Atmen, halbe Bewegung + neue Geschwindigkeit, +6/-2 auf Attribute, oder TP bei Dämmerung ohne Kurze-Rast-Heilung)',
+        resistenz:  'Stärkste Unterrasse — mit bleibenden Kosten. Schattengeschenk ist mächtig und soll es sein. Der Preis ist real und permanent. Ideal für thematisch starke Konzepte.',
+      },
+    ],
+  },
+  namenSection: {
+    type: 'nameRoller',
+    label: 'Namen der Schattenmenschen',
+    beschreibung: 'Umbrale Menschen folgen menschlichen Namensbräuchen oder übernehmen Schattenfe-Gepflogenheiten. Die Beschenkten nutzen oft die Gelegenheit, sich vollständig neu zu erfinden — sowohl im Namen als auch in der Persönlichkeit.',
+    tabellen: [
+      { name:'Schattenreich-inspirierte Namen', eintraege:['Ashveil','Brume','Cinder','Duskren','Embris','Fendle','Grath','Halvex','Imra','Joreth','Kethis','Lurenis','Morrow','Nethis','Oryn','Penumbra','Quellan','Riveth','Sorrith','Thenux','Ulvren','Vareth','Wythern','Xareth','Ymris','Zorvel','Ashari','Blanche','Calveth','Dimora'] },
+      { name:'Neue Namen der Beschenkten', eintraege:['Neugeboren','Gezeichnet','Geschenkt','Verändert','Erinnert','Vergessen','Umgeformt','Versprochen','Gebrochen','Bezahlt','Erworben','Gegeben','Genommen','Verwandelt','Zurückgekehrt','Erneuert','Versiegelt','Gefallen','Auferstanden','Gebunden'] },
+    ],
+  },
+  charakterGenerator: {
+    felder: [
+      { label:'Unterrasse',    type:'choice',  optionen:['Umbraler Mensch (Wechselbalg)','Die Beschenkten'] },
+      { label:'Name',          type:'table',   optionen:['Ashveil','Brume','Cinder','Duskren','Embris','Fendle','Grath','Halvex','Imra','Joreth','Kethis','Lurenis','Morrow','Nethis','Oryn','Quellan','Riveth','Sorrith','Ulvren','Vareth'] },
+      { label:'Hautfarbe',     type:'table',   optionen:['blass wie Mondlicht','kalt grauweißlich','aschgrau mit blauen Adern','fast transparent im Licht','dunkelgrau mit silbrigem Schimmer'] },
+      { label:'Augenfarbe',    type:'table',   optionen:['silbergrau','violett','fast farblos','leer schwarz','gelbgolden (Beschenkte)','tief blau wie Tinte'] },
+      { label:'Zeichen (Beschenkte)', type:'table', optionen:['kleines Horn oder Hörneranlage','rudimentäre Flügel (unflugfähig)','gespaltene Pupillen','Schatten der sich falsch bewegt','Huf statt einem Fuß','Stimme die zweistimmig klingt'] },
+      { label:'Schattengeschenk', type:'table', optionen:['Fertigkeit mit Vorteil/Nachteil','kein Essen/Atmen + 4h Rast, dauernde Erschöpfung','halbe Basis-Bewegung + neue Bewegungsart','+6 auf einen Wert, -2 auf zwei','TP bei Dämmerung, keine Kurze-Rast-Heilung'] },
+    ],
+  },
+  beziehungen: [
+    { volk:'Schattenfe',     relation:'Komplizierte Zugehörigkeit', text:'Sie haben uns geprägt — manche von uns absichtlich, manche zufällig. Respekt, Vorsicht und eine gewisse Abhängigkeit, die ich mir nicht gern eingestehe.' },
+    { volk:'Menschen',       relation:'Entfremdete Verwandtschaft', text:'Ich bin, was sie werden könnten, wenn sie zu lange im Schatten bleiben. Das wissen sie, auch wenn sie es nicht sagen.' },
+    { volk:'Wechselbälger',  relation:'Geschwisterliche Nähe',      text:'Auch sie kennen das Zwischen-den-Welten. Auch sie sind mehr als eine Sache. Das Gespräch fällt leicht.' },
+    { volk:'Elfen',          relation:'Geteiltes langes Leben',      text:'Wir altern beide langsam. Das schafft eine Art Verständnis — auch wenn sie in unsere Dunkelheit selten freiwillig blicken.' },
+    { volk:'Kleriker',       relation:'Wachsame Skepsis',            text:'Kleriker des Lichts betrachten mich mit Vorbehalt. Ich verstehe das. Ich trage das Schattenreich in mir. Das ist kein Missverständnis.' },
+    { volk:'Dunkelelfen',    relation:'Fachkundiges Misstrauen',     text:'Sie kennen Dunkelheit von innen. Ich kenne sie von außen, durch Einfluss, nicht Erziehung. Das macht uns ähnlich und sehr verschieden.' },
+  ],
+  bekannte: [
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Schattenmenschen in Meruria reserviert.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Schattenmenschen in Meruria reserviert.' },
+  ],
+  radar: { labels:['Mobilität','Kampf','Magie','Soziales','Heimlichkeit','Anpassung'], values:[70,52,60,58,82,90] },
+  quiz: {
+    steps: [
+      { frage:'Welche Unterrasse spielst du?', optionen:[
+        { text:'Umbraler Mensch — ich bin durch den Schatten geprägt, aber nicht gebrochen. Ich nutze Verblassen als stilles Werkzeug.',  tags:['Schurke','Waldläufer','Kämpfer'] },
+        { text:'Beschenkter — ich habe einen Preis gezahlt. Das Geschenk ist real. Der Preis auch.',                                       tags:['Hexenmeister','Paladin','Kleriker'] },
+        { text:'Beschenkter, thematisch — das Konzept des Pakts und des bleibenden Preises ist der Kern meines Charakters.',               tags:['Hexenmeister','Barde'] },
+        { text:'Ich entscheide nach Klasse.',                                                                                               tags:['Kämpfer','Magier'] },
+      ]},
+      { frage:'Wie nutzt du Verblassen?', optionen:[
+        { text:'Als Kampfwerkzeug — ich verschwinde, positioniere mich, greife überraschend an.',                                          tags:['Schurke','Kämpfer'] },
+        { text:'Als Fluchthilfe — wenn es kritisch wird, werde ich unsichtbar und gewinne Abstand.',                                       tags:['Magier','Barde'] },
+        { text:'Zur Erkundung — ich schleiche mich in Bereiche, ohne Heimlichkeitswürfe zu riskieren.',                                    tags:['Schurke','Waldläufer'] },
+        { text:'Selten — ich baue nicht auf Unsichtbarkeit, sondern auf andere Stärken.',                                                   tags:['Barbar','Paladin'] },
+      ]},
+      { frage:'Was bedeutet dein Schattenreich-Erbe für dich?', optionen:[
+        { text:'Eine Last — ich kämpfe dagegen an, werde aber nie ganz frei davon sein.',                                                  tags:['Paladin','Kleriker'] },
+        { text:'Ein Werkzeug — ich nutze, was ich habe, ohne emotional daran hängend zu sein.',                                           tags:['Kämpfer','Schurke'] },
+        { text:'Meine Identität — ich bin das Schattenreich, und ich stehe dazu.',                                                         tags:['Hexenmeister','Barbar'] },
+        { text:'Ein Geheimnis — nicht jeder muss wissen, woher ich komme.',                                                               tags:['Barde','Schurke'] },
+      ]},
+      { frage:'Welche Rolle spielst du in der Gruppe?', optionen:[
+        { text:'Kundschafter — Verblassen, Kälteresistenz, Dunkelsicht. Ich gehe voran.',                                                  tags:['Schurke','Waldläufer'] },
+        { text:'Flexibler Allrounder — freie Attribute erlauben jeden Bau. Ich fülle die Lücke.',                                         tags:['Kämpfer','Barde'] },
+        { text:'Pakt-Träger — mein Schattengeschenk definiert meine Rolle mehr als meine Klasse.',                                        tags:['Hexenmeister','Kleriker'] },
+        { text:'Magischer Spezialist — das Schattenreich ist eine Quelle arkanischer Macht.',                                             tags:['Magier','Hexenmeister'] },
+      ]},
+    ],
+    klassen: {
+      'Schurke':     'Freie GES-Erhöhung, Verblassen für Positionsvorteil, Dunkelsicht — der Schatten-Schurke mit eingebauter Tarnoption.',
+      'Hexenmeister':'Beschenkte WEI+1 oder freier CHA-Boost; Schattengeschenk passt perfekt zum Pakt-Konzept.',
+      'Kämpfer':     'Freie STR- oder GES-Erhöhung, Verblassen für überraschende Positionswechsel, Kälteresistenz.',
+      'Paladin':     'Freier CHA-Boost, Verfluchte Infusion gegen Nekrose, thematische Tiefe durch Schattenreich-Hintergrund.',
+      'Waldläufer':  'Freie GES/WEI-Erhöhung, Dunkelsicht, Verblassen als natürliche Fähigkeit.',
+      'Magier':      'Freie INT-Erhöhung + WEI+1 (Beschenkte) für Konzentration; Schattenmagie-Thematik.',
+      'Barde':       'Freie CHA-Erhöhung, Verblassen für soziale Situationen und Flucht.',
+      'Kleriker':    'WEI+1 (Beschenkte), Schattengeschenk für mächtige Domänenergänzung.',
+      'Druide':      'WEI+1 (Beschenkte), Kälteresistenz, Schattenreich-Verbindung zu Mondmagie.',
+      'Mönch':       'Freie GES/WEI-Erhöhung, Verblassen für Ki-freie Unsichtbarkeit.',
+    },
+  },
+  koerperlicherMerkmale: {
+    bewegungsrate:   '9 m (Gehen)',
+    volljaehrigkeit: 'wie Menschen',
+    lebenserwartung: 'verlangsamt auf Elfen-/Schattenfe-Niveau',
+    groesse:  { kategorie:'Mittelgroß', min:'150 cm', max:'190 cm', formel:'wie Menschen' },
+    gewicht:  { min:'variiert', max:'variiert', formel:'wie Menschen, oft etwas leichter' },
+    augenfarbe: 'silbergrau, violett oder farblos; Beschenkte: je nach Geschenk',
+    hautfarbe:  'blass bis aschgrau, kühler Unterton',
+    haarfarbe:  'schwarz, dunkelgrau oder silbrig; Beschenkte: oft unnatürlich',
+  },
+  statblock: {
+    features: [
+      { name:'Kreaturtyp',          text:'Humanoid.' },
+      { name:'Größenkategorie',     text:'Mittelgroß (150–190+ cm).' },
+      { name:'Dunkelsicht',         text:'Du kannst in schwachem Licht innerhalb von 18 Metern so sehen, als wäre es helles Licht, und in Dunkelheit so, als wäre es schwaches Licht. In der Dunkelheit kannst du keine Farben unterscheiden, nur Grautöne.' },
+      { name:'Dunkle Infusion',     text:'Du hast Resistenz gegen Kälteschaden.' },
+      { name:'Verblassen',          text:'Während du vollkommen still stehst, kannst du eine Aktion nutzen, um unsichtbar zu werden. Du wirst wieder sichtbar, wenn du dich bewegst oder eine Aktion ausführst. Du kannst diese Fähigkeit so oft pro Tag nutzen, wie dein Übungsbonus beträgt.' },
+      { name:'— Beschenkte: Verfluchte Infusion', text:'Zusätzlich zu Dunkler Infusion hast du Resistenz gegen nekrotischen Schaden.' },
+      { name:'— Beschenkte: Schattengeschenk', text:'Du hast einen Handel mit einer Schattenfe abgeschlossen. Wähle eine Option: (1) Übung+Vorteil in einer Fertigkeit, Nachteil in einer anderen. (2) Kein Essen/Atmen nötig, 4h für lange Rast, aber eine permanente Erschöpfungsstufe. (3) Halbe Bewegungsrate, dafür Flug-/Schwimm-/Klettergeschwindigkeit gleich halber Basis. (4) +6 auf einen Attributwert (max 20), -2 auf zwei andere. (5) TP = KON-Wert bei Dämmerung täglich, aber keine Trefferwürfel in kurzen Rasten.' },
+    ],
+  },
+};

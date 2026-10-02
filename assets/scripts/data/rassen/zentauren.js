@@ -1,0 +1,2 @@
+// Zentauren — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+(window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Zentauren'] = { name:'Zentauren',                accent:'#b09040', subtitle:'Freie Krieger der Ebene · Halbtier-Halbmensch',           tags:['Fee','Groß','12 m Bewegung','Sturmangriff','Neutral'],                         headerImage: 'assets/images/races/zentauren/banner.png', lore:null, bekannte:[], radar:null, quiz:null, statblock:null };

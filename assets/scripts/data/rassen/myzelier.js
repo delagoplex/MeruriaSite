@@ -1,0 +1,2 @@
+// Myzelier — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+(window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Myzelier'] = { name:'Myzelier',                 accent:'#c0a030', subtitle:'Hüter des Pilznetzwerks · Weise Pilzwesen',               tags:['Pflanze','Mittelgroß','9 m Bewegung','Pilznetz','Neutral'],                    headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null };

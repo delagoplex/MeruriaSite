@@ -1,58 +1,82 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) and other contributors when working with code in this repository. `README.md` has the step-by-step setup (quick start, local database, deployment, troubleshooting); this file explains the conventions and the reasons behind them.
 
 ## What this project is
 
 A static website for the tabletop RPG world **Meruria**, deployed to `meruria.de` via GitHub Pages. The site is written in German and documents the world's factions, races, classes, and deities.
 
-There is no build system, bundler, or package manager. Pages are plain HTML files served directly. The only runtime dependencies are vendor scripts checked into `assets/scripts/vendor/`.
+The site is built with **Vite** (multi-page, every `.html` file is an entry) and deployed by a GitHub Actions workflow (`.github/workflows/deploy.yml`) that runs `npm run build` and publishes `dist/` to GitHub Pages. React, ReactDOM and Supabase stay global vendor scripts in `assets/scripts/vendor/` (no Babel in the browser); JSX is compiled at build time to `React.createElement`.
 
 ## Architecture
 
-Each page is a self-contained HTML file with:
-- `<link>` tags loading CSS from `assets/styles/global/` (shared) and `assets/styles/pages/` (per-page)
-- Shared React components loaded via `<script src="assets/components/..." type="text/babel">` tags
-- A single `<script type="text/babel">` block containing the full React app for that page (state, rendering, and `ReactDOM.createRoot`)
-- React and Babel loaded from `assets/scripts/vendor/` as browser globals (not modules)
+Pages live in topic folders; the folder and file names are the public URLs (lowercase, no umlauts or spaces):
 
-The `TWEAK_DEFAULTS` constant in each page (delimited by `/*EDITMODE-BEGIN*/` and `/*EDITMODE-END*/`) controls live-editable design parameters like particle visibility and header height. The `useTweaks` hook from the tweaks panel reads and exposes these values.
+| Folder | Content |
+|---|---|
+| `/` | `index.html` (home), `impressum.html` |
+| `spielerhandbuch/` | `index` (hub), `informationen`, `vorgeschichte`, `realismus`, `sammeln-und-handwerk`, `schutzherren`, `rezepte`, `rezeptkodex` |
+| `charaktererstellung/` | `index` (hub), `neuer-charakter`, `rassen`, `rassen-detail?rasse=<Name>`, `klassen`, `talente`, `hintergruende`, `zauber`, `ausruestung` |
+| `enzyklopaedie/` | `index` (hub), `gottheiten`, `galerie`, `fische`, `gebaeude` |
+| `divisionen/` | `index` (overview of the eight divisions), `kuratoren`, `sturmritter`, `sentinels`, `friedenshueter`, `outfitters`, `pathfinders`, `quellensucher`, `bergungsgarde` |
+| `charaktere/` | `index` (hub), `mein-charakter`, `spielercharaktere`, `nsc`, `steckbrief` |
+| `spiel/` | `kollektikon`, `karte`, `kalender`, `kalender-interaktiv`, `missionsterminal`, `rekrutierung` |
+| `dm/` | DM-only pages (access is checked by role, not by path): `monster`, `ressourcen`, `tarot`, `kampfsimulation`, `missionen`, `nsc-verwaltung`, `charakterverwaltung`, `kartenmanagement`, `kolonisierung-und-bau`, `kollektikon`, `rekrutierungspreise`, `rezeptverwaltung`, `segen-und-flueche` |
 
-**Pages:**
-- `index.html` — landing/home page
-- `Gottheiten.html` — deities
-- `Rassen.html` — races
-- `Klassen.html` — classes
-- `Monster.html` — monster compendium (password-protected, separate session from site gate)
-- `divisionen/` — the eight faction pages (subfolder with `<base href="../">` so all asset paths resolve from project root)
-  - `Die Kuratoren.html`, `Sturmritter.html`, `Sentinels.html`, `Friedenshueter.html`
-  - `Outfitters.html`, `Pathfinders.html`, `Quellensucher.html`, `Bergungsgarde.html`
-  - `index.html` — redirects to `Die Kuratoren.html` via `<meta http-equiv="refresh">`
+Each page consists of:
+- `<folder>/<name>.html` with `<base href="/">` (so `assets/...` works from every folder), `<link>` tags for CSS from `assets/styles/global/` and `assets/styles/pages/<folder>/<name>.css` (kept unbundled and in written order), classic `<script>` tags for vendor libs and data files, and **one** `<script type="module" src="/src/pages/<folder>/<name>.jsx">`
+- a page entry `src/pages/<folder>/<name>.jsx` that imports the shared components it needs (`import '../../components/nav.jsx'`) and contains the page's React app
+- shared components in `src/components/*.jsx`, each registering itself on `window` (`window.SiteNav`, …); page-specific helper files live in `src/pages/parts/`
 
-**Navigation** is defined in the `NAV` array inside `assets/components/nav.jsx` and shared across all pages via `window.SiteNav`.
+Pages that were compiled earlier by the old `compile-jsx` tool contain `React.createElement(...)` calls instead of JSX in their entry file; new code can use JSX freely.
 
-## Shared components (`assets/components/`)
+All eight division pages share one entry, `src/pages/divisionen/division.jsx`: each `divisionen/<name>.html` sets `<body data-division="<id>">` and the per-division colours come from `DIVISION_THEMES` in that file (add a division = add a theme entry).
+
+`rassen-detail.html?rasse=<Name>` is one data-driven page for every race (content per race in `assets/scripts/data/rassen/<slug>.js`, index in `rassen-detail-index.js`; optional fields: `lebensraum`, `beziehungenIntro`, `namenSection` incl. `type: 'prose'`, `radar.beschreibung`).
+
+`TWEAK_DEFAULTS` in each page holds fixed design parameters like particle visibility and header height.
+
+**Old URLs** (before the move into folders, e.g. `/Klassen.html`) keep working: `src/legacy-redirects.json` lists every old path, and the build writes small redirect pages for them into `dist/`. When you move or rename a page, add its old path there.
+
+**Navigation** is defined in the `NAV` array inside `src/components/nav.jsx` and shared across all pages via `window.SiteNav`.
+
+### Conventions and gotchas
+
+- **Add a page:** create `<folder>/<name>.html`, `src/pages/<folder>/<name>.jsx` and (if needed) `assets/styles/pages/<folder>/<name>.css`; add it to `NAV`; no Vite config change is needed (all `.html` files are found automatically). Moving or renaming a page means adding the old path to `src/legacy-redirects.json`.
+- **`<base href="/">`** is set in every page, so `assets/...` paths work from any folder, including values stored in the database. Fragment-only links (`href="#x"`) would resolve against the base; use `onClick` + `scrollIntoView` instead. Bare `href="#"` placeholders are neutralised in `assets/scripts/theme-init.js`.
+- **Load order:** classic `<script>` tags (React, Supabase, data files) run first, then the page module: all `import`ed components, then the page code. A component must not read, at module top level, a global that the page defines (this broke the Steckbrief once); look it up while rendering.
+- **Page code sections** start with `;(function () {` and an `Object.assign(window, { … })` line that exports the page's top-level function declarations (they used to be globals in the old classic-script setup). Keep that line in sync when you add or remove top-level functions that other files rely on.
+- **React is a global** (`React.useState`, `ReactDOM.createRoot`); JSX is compiled to `React.createElement`. Do not add `import React`.
+- **Stylesheet `<link>` tags** are kept exactly as written and in order (`fonts → base → [division] → page`) by a Vite plugin; keep them as plain `<link rel="stylesheet" href="…">` tags so the plugin recognises them.
+- **Windows shell:** Windows PowerShell 5.1 has no `&&`. Give commands one per line. Files in this repo use a mix of LF and CRLF; edit with tools that preserve the existing line endings.
+- **No automated test suite.** Verify with `npm run build`, then click through the affected pages against the local database (log in as the seed DM/player). The build does not catch runtime errors in page code.
+
+## Database security (Supabase)
+
+Access is enforced by Row Level Security, not by the client-side role checks (`window.SITE_USER?.role`), which only hide UI. Rules for new tables/functions:
+- every table: `ENABLE ROW LEVEL SECURITY` plus explicit policies; players only get what their policy allows, DM rules use `public.is_dm()`
+- `SECURITY DEFINER` functions must check `public.is_dm()` (or `auth.uid()`) themselves and set `SET search_path = public, pg_temp`
+- never rely on `WITH CHECK`-less UPDATE policies for tables with privileged columns: restrict columns with `GRANT UPDATE (col)` or a guard trigger (see `profiles`, `characters` in `041_security_hardening.sql`)
+- roll tokens are only redeemed through `check_roll_token` / `redeem_roll_token` (players cannot read the token table)
+- known gap: `nscs` rows that are `visible` are fully readable by players; the per-field unlock system (`nsc_unlocks`, `field_visibility`) hides secrets only in the UI
+
+## Shared components (`src/components/`)
 
 | File | Exports | Purpose |
 |---|---|---|
 | `nav.jsx` | `window.SiteNav` | Sticky nav bar with dropdown menus and dark/light mode toggle |
-| `site-gate.jsx` | `window.SiteGate` | Site-wide password gate (30-day session, `localStorage` key `site_auth`) |
-| `tweaks-panel-*.jsx` | `window.useTweaks`, `window.TweaksPanel`, … | Live design tweaks overlay |
+| `site-gate.jsx` | `window.SiteGate` | Site-wide login gate (Supabase e-mail/password, see Authentication) |
 | `particle-field.jsx` | `window.ParticleField` | Animated background particles |
-| `filter-utils.jsx` | `window.FilterGroup`, `window.XBtn`, … | Filter UI primitives used by Monster.html |
+| `shared-helpers.jsx` | `window.hexPoints`, `window.useScrollReveal` | Helpers shared by the hub/overview pages that used identical copies |
+| `filter-utils.jsx` | `window.FilterGroup`, `window.XBtn`, … | Filter UI primitives used by /dm/monster.html |
 
 ### Authentication
 
-Two independent password gates, both using SHA-256 via `crypto.subtle.digest`:
-
-- **Site gate** (`site-gate.jsx`): wraps every page in `<SiteGate>`. Session lasts 30 days (`localStorage` key `site_auth`). Password: `meruriaHype`.
-- **Monster gate** (inline in `Monster.html`): separate session, 24 hours (`localStorage` key `monster_auth`). Own password hash.
-
-Pages include both scripts and render `<SiteGate><App /></SiteGate>`.
+`site-gate.jsx` wraps every page in `<SiteGate>`: a Supabase e-mail/password login (`window._sb`, created in `assets/scripts/supabase-client.js`). The session lives in Supabase's own `localStorage` entry; after login `window.SITE_USER = { id, email, role }` is set. Pages render `<SiteGate><App /></SiteGate>`. The Monster page has no extra gate any more.
 
 ### Dark / light mode
 
-`nav.jsx` initializes theme on script load (before React renders) to avoid flash:
+`assets/scripts/theme-init.js` (classic script in every page's `<head>`) sets the theme before first paint to avoid a flash:
 ```js
 document.documentElement.dataset.theme = (localStorage.getItem('theme') === 'light') ? 'light' : 'dark';
 ```
@@ -62,8 +86,6 @@ The `ThemeToggle` component (☀/☽) in `SiteNav` toggles `data-theme` on `<htm
 
 ```
 assets/
-├── components/        — shared React/JSX components (see above)
-├── fonts/             — .woff2 font files referenced by fonts.css
 ├── images/
 │   ├── insignia/      — faction insignia images
 │   ├── races/         — race artwork
@@ -78,6 +100,9 @@ assets/
 │       ├── flee-mortals/      — Flee, Mortals! (MCDM Productions)
 │       └── sonstige/          — Sammelort für nicht-zusammenhängende Einzelmonster
 ├── scripts/
+│   ├── supabase-client.js   — creates `window._sb`: production, or the local database on localhost (reads git-ignored `supabase-local.json`)
+│   ├── theme-init.js        — sets the theme before first paint, neutralises `href="#"` placeholders
+│   ├── shared/        — plain classic scripts used by several pages (kollektikon-bar, nsc-statblock, rekrutierungsrechner)
 │   ├── data/
 │   │   ├── monster-data.js      — aggregator: merges all sources alphabetically → window.MONSTER_DATA
 │   │   ├── monster/
@@ -92,16 +117,13 @@ assets/
 │   │   │   └── sonstige-data.js               —   Sammelquelle für vereinzelte Monster → window.MONSTER_DATA_SONSTIGE
 │   │   ├── rassen-data.js, klassen-data.js, …  — other page data
 │   │   └── monster-data.js      — also holds window.UNTERART_LORE
-│   └── vendor/        — React, ReactDOM, Babel Standalone
+│   └── vendor/        — React, ReactDOM, Supabase, image-slot
 └── styles/
     ├── global/
     │   ├── base.css       — resets, CSS variables (dark + light theme), scroll-reveal, shared classes
     │   ├── division.css   — structural classes shared by all eight division pages
     │   └── fonts.css      — @font-face declarations
-    └── pages/             — per-page stylesheets
-        ├── index.css, Rassen.css, Klassen.css, Gottheiten.css, Monster.css
-        └── Sturmritter.css, Sentinels.css, Friedenshueter.css, Outfitters.css,
-            Pathfinders.css, Quellensucher.css, Bergungsgarde.css, DieKuratoren.css
+    └── pages/             — per-page stylesheets, mirroring the page paths (pages/dm/monster.css, pages/divisionen/sturmritter.css, …)
 ```
 
 ## Styling approach
@@ -125,29 +147,50 @@ Static layout and typography are in CSS files. Dynamic styles — those that dep
 - `--nav-h` / `--sidebar-w` — layout dimensions
 - `--accent` — page accent color (division pages only)
 
-## Asset pipeline scripts
-
-`tools/process-page.mjs` unpacks a single bundled HTML page (Framer/bundler format). It decodes base64+gzip assets, deduplicates against existing files by SHA-256 hash, places new assets in the correct `assets/` subdirectory, and rewrites the HTML to reference them.
-
-```bash
-node tools/process-page.mjs <PageName.html>
-```
-
-After running, manually:
-1. Replace the `@font-face` `<style>` block with `<link rel="stylesheet" href="assets/styles/global/fonts.css">`
-2. Add `<link rel="stylesheet" href="assets/styles/global/base.css">`
-3. Move the page `<style>` block to `assets/styles/pages/<PageName>.css`, stripping rules already in `base.css`
-4. Add `<link rel="stylesheet" href="assets/styles/pages/<PageName>.css">`
-
 ## Development
 
-Open any HTML file directly in a browser — no server needed for most pages. Division pages require either a server or `<base href="../">` (already set) to resolve assets correctly.
-
 ```bash
-npx serve .
-# or
-python3 -m http.server 8080
+# once
+npm install
+
+# Vite dev server with hot reload
+npm run dev
+
+# production build into dist/ (what GitHub Actions deploys)
+npm run build
+
+# serve dist/ locally
+npm run preview
 ```
+
+Deployment: push to `master` → `.github/workflows/deploy.yml` generates the gallery data (`tools/generate-galerie-data.mjs`), builds and publishes to Pages (Settings → Pages → Source must be "GitHub Actions"). `public/CNAME` carries the custom domain `meruria.de`. `generate-galerie.yml` additionally commits the regenerated `galerie-data.js` when monster images change. **The database is not deployed by CI** — migrations are applied by hand (see below).
+
+`vite.config.js` auto-discovers all `.html` files as entries. Files that are referenced only at runtime (classic scripts, images, `assets/styles`) are copied unchanged to `dist/assets/` by a small plugin, so URLs are identical in dev and production.
+
+## Local database (Supabase in Docker)
+
+`npm run dev` talks to the **real** database unless a local one is configured, so set this up before testing anything that writes data.
+
+One-time setup (Docker runs inside WSL, so the Supabase CLI is installed there too; the `db:*` npm scripts call it through `wsl -e bash -lc`):
+1. Docker in WSL must be running. Install the CLI in WSL: `curl -fsSL https://github.com/supabase/cli/releases/latest/download/supabase_linux_amd64.tar.gz | tar -xz -C ~/.local/bin supabase` (create `~/.local/bin` first); check with `supabase --version`.
+2. `npm run db:start` — starts the local stack (first run pulls the Docker images, takes a while) and applies all migrations from `supabase/migrations/`.
+3. `npm run db:config` — writes `assets/scripts/supabase-local.json` (git-ignored) from `supabase status`.
+4. `npm run dev` — pages opened via `localhost` now use the local database; the browser console says `[supabase] lokale Entwicklungsdatenbank`.
+
+Test accounts (local only) are created by `supabase/seed.sql`; the passwords are in that file (DM `dm@meruria.test`, player `spieler@meruria.test`). Never put real accounts or real passwords in the seed.
+
+`supabase/config.toml` configures the local stack only. Gotcha: `[auth.email] enable_signup` switches the whole e-mail provider on or off in the CLI (`false` = nobody can log in); new registrations are blocked by `enable_signup = false` in the `[auth]` block.
+
+| Command | Purpose |
+|---|---|
+| `npm run db:start` / `db:stop` | start / stop the local stack |
+| `npm run db:reset` | rebuild the local database from the migrations + seed (all local data is lost) |
+| `npm run db:status` | show URLs and keys |
+| `localStorage.setItem('sb_env','prod')` (browser console) | use the real database from localhost anyway (`removeItem` to go back) |
+
+Migrations are applied in file-name order, so new files need the next free number (`042_…`); never reuse or rename an existing number (the CLI requires unique versions).
+
+**Changing the real database:** write the migration, test it with `npm run db:reset` (and by logging in as the seed player and DM), then run **only the new file** in the Supabase SQL editor of the real project, after the app version that needs it is online. Never run `db:reset` or `seed.sql` against the real project. The CLI's runtime folder `supabase/.temp/` is git-ignored and contains local secrets.
 
 ## Monster data (`assets/scripts/data/monster/`)
 
@@ -163,7 +206,7 @@ window.MONSTER_DATA = [
 ].sort((a, b) => a.name.localeCompare(b.name, 'de'));
 ```
 
-Adding a new book: create `<book>-data.js`, declare the window variable, add it to the aggregator spread list, add `<script>` tag in `Monster.html`.
+Adding a new book: create `<book>-data.js`, declare the window variable, add it to the aggregator spread list, add `<script>` tag in `/dm/monster.html`.
 
 | Datei | Variable | `source`-Wert | Bilder-Verzeichnis |
 |---|---|---|---|
@@ -412,11 +455,11 @@ Defined in `:root` in `base.css`. Light-mode overrides under `[data-theme="light
 | `--sidebar-w` | `200–220px` | TOC sidebar width (per-page) |
 | `--accent` | varies | Division page accent color |
 
-Monster type colors are defined as CSS custom properties in `Monster.css` (e.g. `--type-drache: #f32b00`) and as `oklch()` values in the `TYPE_COLORS` JS object in `Monster.html`.
+Monster type colors are defined as CSS custom properties in `Monster.css` (e.g. `--type-drache: #f32b00`) and as `oklch()` values in the `TYPE_COLORS` JS object in `/dm/monster.html`.
 
 ## Kollektikon data (`assets/scripts/data/kollektikon-data.js`)
 
-Single source of truth for the Kollektikon, shared by `index.html` and `Kollektikon.html`. Neither page contains hardcoded data — both derive their arrays at runtime.
+Single source of truth for the Kollektikon, shared by `/index.html` and `/spiel/kollektikon.html`. Neither page contains hardcoded data — both derive their arrays at runtime.
 
 | Variable | Purpose |
 |---|---|

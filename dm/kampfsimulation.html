@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/assets/images/favicon/favicon-m.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/images/favicon/favicon-m-180.png">
+<title>Meruria — Kampfsimulation</title>
+<script src="/assets/scripts/theme-init.js"></script>
+<link rel="stylesheet" href="/assets/styles/global/fonts.css">
+<link rel="stylesheet" href="/assets/styles/global/base.css">
+<link rel="stylesheet" href="/assets/styles/pages/dm/kampfsimulation.css">
+<script src="/assets/scripts/vendor/react.production.min.js"></script>
+<script src="/assets/scripts/vendor/react-dom.production.min.js"></script>
+
+<script src="/assets/scripts/data/monster/monsterhandbuch-data.js"></script>
+<script src="/assets/scripts/data/monster/foliant-der-feinde-data.js"></script>
+<script src="/assets/scripts/data/monster/schatzkammer-der-drachen-data.js"></script>
+<script src="/assets/scripts/data/monster/almanach-der-monster-data.js"></script>
+<script src="/assets/scripts/data/monster/floral-dragons-data.js"></script>
+<script src="/assets/scripts/data/monster/ruhm-der-riesen-data.js"></script>
+<script src="/assets/scripts/data/monster/drakkenheim-data.js"></script>
+<script src="/assets/scripts/data/monster-data.js"></script>
+<script src="/assets/scripts/data/zauber-data.js"></script>
+<script type="module" src="/src/pages/dm/kampfsimulation.jsx"></script>
+<script src="/assets/scripts/vendor/supabase.min.js"></script>
+<script src="/assets/scripts/supabase-client.js"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     COMBAT ENGINE  (plain JS, no JSX)
+═══════════════════════════════════════════════════════════════════ -->
+<script>
+// ── Dice ─────────────────────────────────────────────────────────────────────
+function d(sides) { return Math.floor(Math.random() * sides) + 1; }
+
+function rollExpr(expr) {
+  if (!expr) return { total: 0, text: '0' };
+  const s = String(expr).trim();
+  const m = s.match(/^(\d+)[Ww](\d+)([+-]\d+)?$/);
+  if (!m) { const n = parseInt(s); return { total: isNaN(n) ? 1 : n, text: s }; }
+  const count = parseInt(m[1]), sides = parseInt(m[2]), mod = m[3] ? parseInt(m[3]) : 0;
+  let total = mod, parts = [];
+  for (let i = 0; i < count; i++) { const r = d(sides); total += r; parts.push(r); }
+  return { total: Math.max(0, total), text: `[${parts.join('+')}]${mod !== 0 ? (mod > 0 ? '+' : '') + mod : ''}` };
+}
+
+function rollD20(adv, dis) {
+  const a = d(20), b = d(20);
+  if (adv && !dis) return { roll: Math.max(a, b), both: [a, b], adv: true };
+  if (dis && !adv) return { roll: Math.min(a, b), both: [a, b], dis: true };
+  return { roll: a, both: [a] };
+}
+
+// ── Attack parser ─────────────────────────────────────────────────────────────
+const SAVE_ATTR_MAP = {
+  'stärke': 'STR', 'stärke-': 'STR', 'str': 'STR',
+  'geschicklichkeit': 'GES', 'geschicklichkeits': 'GES', 'ges': 'GES',
+  'konstitution': 'KON', 'konstitutions': 'KON', 'kon': 'KON',
+  'intelligenz': 'INT', 'int': 'INT',
+  'weisheit': 'WEI', 'weisheits': 'WEI', 'wei': 'WEI',
+  'charisma': 'CHA', 'cha': 'CHA',
+};
+
+function parseSaveAttr(text) {
+  const low = text.toLowerCase();
+  for (const [k, v] of Object.entries(SAVE_ATTR_MAP)) {
+    if (low.includes(k + 'rettungs') || low.includes(k + '-rettungs') ||
+        (k.length === 3 && new RegExp('\\b' + k + '\\b', 'i').test(low))) return v;
+  }
+  return null;
+}
+
+function parseDamage(text) {
+  // "(2W6+5) Hiebschaden" or "7 (2W6+5)" or just "2W6+5"
+  const m1 = text.match(/\((\d+[Ww]\d+[+-]?\d*)\)/);
+  if (m1) return m1[1];
+  const m2 = text.match(/\b(\d+[Ww]\d+(?:[+-]\d+)?)\b/i);
+  if (m2) return m2[1];
+  return null;
+}
+
+function parseRecharge(name) {
+  const m = name.match(/Auflade(?:zeit|ung)?\s*(\d+)(?:\s*[-–]\s*(\d+))?/i);
+  if (!m) return null;
+  return parseInt(m[2] || m[1]); // recharge on this roll or higher
+}
+
+function parseActions(monster) {
+  const actions = [];
+  const allActions = [
+    ...(monster.aktionen || []).map(a => ({ ...a, _type: 'action' })),
+    ...(monster.bonusaktionen || []).map(a => ({ ...a, _type: 'bonus' })),
+    ...(monster.legendaere_aktionen || []).map(a => ({ ...a, _type: 'legendary' })),
+  ];
+
+  // Find Mehrfachangriff
+  const multi = allActions.find(a => /mehrfachangriff/i.test(a.name));
+  let multiCount = 1, multiNames = [];
+  if (multi) {
+    const desc = multi.beschreibung || '';
+    // Count total attacks from words
+    const numWords = { 'einen': 1, 'eine': 1, 'ein': 1, 'zwei': 2, 'zweimal': 2, 'drei': 3, 'dreimal': 3, 'vier': 4, 'viermal': 4, 'fünf': 5 };
+    // "drei Angriffe", "zwei Klauenangriffe", "zweimal"
+    const totalM = desc.match(/\b(einen|eine|ein|zwei|zweimal|drei|dreimal|vier|viermal|fünf)\b\s+(?:angriffe?|mal|\w+angriffe?)/i);
+    if (totalM) multiCount = numWords[totalM[1].toLowerCase()] || 2;
+    else {
+      // count distinct attack name references (commas + "und")
+      const parts = desc.split(/,|und/i).filter(p => p.trim().length > 2);
+      multiCount = Math.max(2, parts.length);
+    }
+    // Try to extract named attacks
+    for (const act of allActions) {
+      if (/mehrfachangriff/i.test(act.name)) continue;
+      if (new RegExp(act.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i').test(desc)) {
+        multiNames.push(act.name);
+      }
+    }
+  }
+
+  for (const action of allActions) {
+    if (/mehrfachangriff/i.test(action.name)) continue;
+    const desc = action.beschreibung || '';
+    const name = action.name || '';
+    const recharge = parseRecharge(name);
+
+    // Weapon or spell attack
+    if (/nahkampf[- ]?waffenangriff|fernkampf[- ]?waffenangriff|nahkampf- oder fernkampf|fernkampf[- ]?zauberangriff|nahkampf[- ]?zauberangriff/i.test(desc)) {
+      const bonusM = desc.match(/\+(\d+) zum Treffen/i);
+      const bonus = bonusM ? parseInt(bonusM[1]) : 0;
+      const dmg = parseDamage(desc);
+      const dmgTypeM = desc.match(/(\w+schaden)/i);
+      const isFern = /fernkampf[- ]?(?:waffen|zauber)angriff/i.test(desc) && !/nahkampf/i.test(desc.substring(0, desc.search(/fernkampf/i)));
+      actions.push({
+        name, type: 'attack', isFern, bonus,
+        damage: dmg || '1W6', damageType: dmgTypeM ? dmgTypeM[1] : '',
+        isMultiTarget: false, recharge,
+        isMultiAttack: multiNames.includes(name),
+        multiCount: multiNames.includes(name) ? Math.max(1, Math.round(multiCount / Math.max(1, multiNames.length))) : 1,
+        _type: action._type,
+      });
+      continue;
+    }
+
+    // Saving throw / AoE
+    const saveAttr = parseSaveAttr(desc);
+    const saveDCM = desc.match(/(?:gegen\s+)?SG\s*(\d+)/i);
+    if (saveAttr && saveDCM) {
+      const dmg = parseDamage(desc);
+      const halfOnSave = /halb(?:en)?|bei Erfolg die Hälfte|halben Schaden/i.test(desc);
+      actions.push({
+        name, type: 'save', saveAttr, saveDC: parseInt(saveDCM[1]),
+        damage: dmg || '1W6', damageType: '',
+        halfOnSave, isAoE: true, recharge,
+        _type: action._type,
+      });
+      continue;
+    }
+  }
+
+  // Healing spell actions (tagged with "Heilzauber:" prefix in beschreibung)
+  for (const action of allActions) {
+    const desc = action.beschreibung || '';
+    if (/^Heilzauber:/i.test(desc)) {
+      const diceM = desc.match(/(\d+[Ww]\d+(?:[+-]\d+)?)/i);
+      if (diceM) actions.push({ name: action.name, type: 'heal', healDice: diceM[1], recharge: null, _type: action._type });
+    }
+  }
+
+  // If no attacks parsed but multiCount > 1, use the first parsed attack multiCount times
+  if (multi && actions.length > 0) {
+    // mark first non-legendary as multi if nothing was named
+    if (multiNames.length === 0) {
+      const first = actions.find(a => a.type === 'attack');
+      if (first) { first.isMultiAttack = true; first.multiCount = multiCount; }
+    }
+  }
+
+  return { actions, multiCount, multiNames };
+}
+
+function extractHealingDice(beschreibung) {
+  const text = (beschreibung || []).filter(b => typeof b === 'string').join(' ');
+  const m1 = text.match(/höhe\s+von\s+(\d+[Ww]\d+(?:[+-]\d+)?)/i);
+  if (m1) return m1[1];
+  const m2 = text.match(/(\d+[Ww]\d+(?:[+-]\d+)?)\s+trefferpunkte[n]?\s+wieder\s+her/i);
+  if (m2) return m2[1];
+  return null;
+}
+
+function isHealingSpell(z) {
+  const text = (z.beschreibung || []).filter(b => typeof b === 'string').join(' ');
+  return /trefferpunkte[n]?\s+zurück\s+in\s+höhe/i.test(text)
+      || /\d+[Ww]\d+\s+trefferpunkte[n]?\s+wieder\s+her/i.test(text)
+      || /stellt\s+\d+\s+trefferpunkt/i.test(text);
+}
+
+// ── Combatant builder ─────────────────────────────────────────────────────────
+function buildCombatant(data, team, uid) {
+  const isMonster = data._kind === 'monster';
+  const { actions, multiCount, multiNames } = parseActions(data);
+  const dex = data.attribute?.DEX ?? 10;
+  const con = data.attribute?.CON ?? 10;
+  const wis = data.attribute?.WIS ?? 10;
+  const baseHp = data.currentTp !== undefined ? data.currentTp
+    : isMonster ? (rollExpr(data.tp_wuerfel).total || data.tp)
+    : (data.maxTp || data.tp || 10);
+  const maxHp = baseHp + (!isMonster && data.tempTp ? data.tempTp : 0);
+
+  const legActions = (data.legendaere_aktionen || []).filter(a => {
+    const d = a.beschreibung || '';
+    return /waffenangriff|rettungswurf/i.test(d);
+  });
+  const legPerRound = data.legendary_actions_count || (data.legendaere_aktionen?.length ? 3 : 0);
+
+  return {
+    uid, name: data.name, team, _kind: data._kind || 'monster',
+    hasInspiration: !!(data.inspiration),
+    data,
+    // Stats
+    rk: data.rk || 10,
+    maxHp, currentHp: maxHp,
+    dexMod: Math.floor((dex - 10) / 2),
+    conMod: Math.floor((con - 10) / 2),
+    wisMod: Math.floor((wis - 10) / 2),
+    saveBonuses: buildSaves(data),
+    // Actions
+    actions, multiCount, multiNames,
+    legActions, legPerRound, legActionsLeft: 0,
+    rechargeStatus: {}, // name -> available bool
+    // Combat state
+    conditions: new Set(),
+    deathSucc: 0, deathFail: 0, stable: false, dead: false,
+    initiative: 0,
+  };
+}
+
+function buildSaves(data) {
+  const attr = data.attribute || {};
+  const listed = data.rettungswuerfe || {};
+  const base = {};
+  const map = { STR: 'STR', GES: 'DEX', KON: 'CON', INT: 'INT', WEI: 'WIS', CHA: 'CHA' };
+  for (const [saveKey, attrKey] of Object.entries(map)) {
+    const raw = attr[attrKey] ?? 10;
+    base[saveKey] = listed[saveKey] !== undefined ? listed[saveKey] : Math.floor((raw - 10) / 2);
+  }
+  return base;
+}
+
+// ── Condition helpers ─────────────────────────────────────────────────────────
+function hasCondition(c, name) { return c.conditions.has(name); }
+function addCondition(c, name) { c.conditions.add(name); }
+function removeCondition(c, name) { c.conditions.delete(name); }
+
+function isIncapacitated(c) {
+  return hasCondition(c, 'Betäubt') || hasCondition(c, 'Gelähmt') ||
+         hasCondition(c, 'Bewusstlos') || hasCondition(c, 'Versteinert');
+}
+
+// ── Simulation ────────────────────────────────────────────────────────────────
+function simulateCombat(rawGroup1, rawGroup2) {
+  const allRounds = [];
+  let curEntries = [];
+  let curHits = {};
+  const push = (cls, text) => curEntries.push({ cls, text });
+  function trackHit(uid, hit) {
+    if (!curHits[uid]) curHits[uid] = { h: 0, m: 0, heal: 0 };
+    if (hit) curHits[uid].h++; else curHits[uid].m++;
+  }
+  function trackHeal(uid) {
+    if (!curHits[uid]) curHits[uid] = { h: 0, m: 0, heal: 0 };
+    curHits[uid].heal++;
+  }
+
+  let uid = 0;
+  const g1 = rawGroup1.map(m => buildCombatant(m, 1, uid++));
+  const g2 = rawGroup2.map(m => buildCombatant(m, 2, uid++));
+  const all = [...g1, ...g2];
+
+  // Initiative
+  all.forEach(c => {
+    c.initiative = d(20) + c.dexMod;
+    push('log-init', `${c.name}: Initiative ${c.initiative} (W20${c.dexMod >= 0 ? '+' : ''}${c.dexMod})`);
+  });
+  all.sort((a, b) => b.initiative - a.initiative || b.dexMod - a.dexMod);
+  allRounds.push({
+    label: 'Initiative',
+    entries: curEntries.splice(0),
+    hpSnapshot: all.map(c => ({ uid: c.uid, name: c.name, team: c.team, currentHp: c.currentHp, maxHp: c.maxHp, dead: false })),
+  });
+
+  // Initialize legendary action pools & recharge
+  all.forEach(c => {
+    c.legActionsLeft = c.legPerRound;
+    c.actions.forEach(a => { c.rechargeStatus[a.name] = true; });
+  });
+
+  function aliveIn(team) { return all.filter(c => c.team === team && !c.dead && !(c._kind === 'player' && c.currentHp <= 0 && c.stable)); }
+  function combatOver() { return !aliveIn(1).filter(c => c.currentHp > 0).length || !aliveIn(2).filter(c => c.currentHp > 0).length; }
+  function enemies(c) { return aliveIn(c.team === 1 ? 2 : 1); }
+
+  function pickTarget(c) {
+    const e = enemies(c);
+    if (!e.length) return null;
+    const conscious = e.filter(t => t.currentHp > 0);
+    const pool = conscious.length ? conscious : e;
+    return pool.reduce((a, b) => a.currentHp < b.currentHp ? a : b);
+  }
+
+  function doSave(target, attr, dc) {
+    const bonus = target.saveBonuses[attr] ?? 0;
+    const roll = d(20);
+    const total = roll + bonus;
+    return { success: total >= dc, roll, total, dc };
+  }
+
+  function applyDamage(target, dmgExpr) {
+    const res = rollExpr(dmgExpr);
+    const real = Math.max(0, res.total);
+    target.currentHp = Math.max(-999, target.currentHp - real);
+    push('log-damage', `  ↳ Schaden: ${real} ${res.text} → ${target.name} hat noch ${Math.max(0, target.currentHp)} TP`);
+    return real;
+  }
+
+  function checkDeath(c) {
+    if (c.dead || c.currentHp > 0) return;
+    if (c._kind === 'player') {
+      if (!hasCondition(c, 'Bewusstlos')) {
+        addCondition(c, 'Bewusstlos');
+        push('log-death', `  💀 ${c.name} wird bewusstlos (0 TP)!`);
+      }
+    } else {
+      c.dead = true;
+      push('log-death', `  ☠ ${c.name} ist besiegt!`);
+    }
+  }
+
+  function doDeathSave(c) {
+    if (c.dead || c.currentHp > 0 || c.stable) return;
+    const roll = d(20);
+    if (roll === 20) {
+      c.currentHp = 1; removeCondition(c, 'Bewusstlos'); c.deathSucc = 0; c.deathFail = 0;
+      push('log-stabilize', `  ✦ ${c.name} erholt sich mit einer 20! (1 TP)`);
+    } else if (roll === 1) {
+      c.deathFail += 2;
+      push('log-death', `  ✦ ${c.name} Todesrettungswurf: 1 (kritisch) — 2 Fehlschläge (${c.deathFail}/3)`);
+    } else if (roll >= 10) {
+      c.deathSucc++;
+      push('log-stabilize', `  ✦ ${c.name} Todesrettungswurf: ${roll} — Erfolg ${c.deathSucc}/3`);
+      if (c.deathSucc >= 3) { c.stable = true; push('log-stabilize', `  ✦ ${c.name} ist stabilisiert.`); }
+    } else {
+      c.deathFail++;
+      push('log-death', `  ✦ ${c.name} Todesrettungswurf: ${roll} — Fehlschlag ${c.deathFail}/3`);
+    }
+    if (c.deathFail >= 3) { c.dead = true; push('log-death', `  ☠ ${c.name} stirbt!`); }
+  }
+
+  function rechargeCheck(c) {
+    c.actions.forEach(a => {
+      if (a.recharge === null || c.rechargeStatus[a.name]) return;
+      const roll = d(6);
+      if (roll >= a.recharge) { c.rechargeStatus[a.name] = true; push('log-recharge', `  ↺ ${c.name}: "${a.name}" aufgeladen (W6=${roll})`); }
+    });
+  }
+
+  function avgDmg(expr) {
+    if (!expr) return 0;
+    const m = String(expr).match(/(\d+)[Ww](\d+)([+-]\d+)?/);
+    if (!m) return parseInt(expr) || 0;
+    return parseInt(m[1]) * (parseInt(m[2]) + 1) / 2 + (m[3] ? parseInt(m[3]) : 0);
+  }
+
+  function pickActions(c) {
+    const usable = c.actions.filter(a => !(a.recharge !== null && !c.rechargeStatus[a.name]) && a._type !== 'legendary');
+    const healAct = usable.find(a => a.type === 'heal');
+    if (healAct) {
+      const allies = all.filter(t => t.team === c.team && t !== c && !t.dead);
+      const urgentHeal = allies.some(t => t.currentHp <= 0);
+      const woundedHeal = allies.some(t => t.currentHp < t.maxHp * 0.4);
+      if (urgentHeal || woundedHeal) return [healAct];
+    }
+    const aoe = usable.find(a => a.type === 'save' && a.isAoE);
+    if (aoe && enemies(c).length >= 2) return [aoe];
+    const multiBase = usable.filter(a => a.type === 'attack' && a.isMultiAttack);
+    if (multiBase.length > 0) {
+      const expanded = [];
+      if (c.multiNames.length > 0) {
+        c.multiNames.forEach(n => { const act = usable.find(a => a.name === n && a.type === 'attack'); if (act) expanded.push(act); });
+        while (expanded.length > 0 && expanded.length < c.multiCount) expanded.push(expanded[expanded.length - 1]);
+      }
+      if (expanded.length === 0 && multiBase[0]) for (let i = 0; i < c.multiCount; i++) expanded.push(multiBase[0]);
+      if (expanded.length > 0) return expanded;
+    }
+    const attacks = usable.filter(a => a.type === 'attack' || a.type === 'save');
+    if (!attacks.length) return [];
+    attacks.sort((a, b) => avgDmg(b.damage) - avgDmg(a.damage));
+    return [attacks[0]];
+  }
+
+  function executeAction(attacker, action, allCombatants) {
+    if (action.type === 'attack') {
+      const target = pickTarget(attacker);
+      if (!target) return;
+      const inspAdv = attacker.hasInspiration ? (attacker.hasInspiration = false, true) : false;
+      const adv = inspAdv || (hasCondition(target, 'Liegend') && !action.isFern);
+      const dis = hasCondition(attacker, 'Vergiftet') || hasCondition(attacker, 'Liegend') || hasCondition(attacker, 'Verängstigt');
+      const { roll, both, adv: wasAdv, dis: wasDis } = rollD20(adv, dis);
+      const advNote = wasAdv ? ' (Vorteil)' : wasDis ? ' (Nachteil)' : '';
+      const total = roll + action.bonus;
+      const isCrit = roll === 20, isFumble = roll === 1;
+      if (isFumble || (!isCrit && total < target.rk)) {
+        trackHit(attacker.uid, false);
+        push('log-miss', `  ${attacker.name} → ${target.name}: ${action.name} — W20=${roll}${both.length > 1 ? `(${both.join(',')})` : ''}${advNote} +${action.bonus}=${total} vs RK${target.rk} VERFEHLT`);
+      } else {
+        trackHit(attacker.uid, true);
+        push('log-hit', `  ${attacker.name} → ${target.name}: ${action.name} — W20=${roll}${both.length > 1 ? `(${both.join(',')})` : ''}${advNote} +${action.bonus}=${total} vs RK${target.rk} GETROFFEN${isCrit ? ' ✦ KRITISCH' : ''}`);
+        let dmgExpr = action.damage;
+        if (isCrit) { const m = dmgExpr.match(/^(\d+)([Ww]\d+)(.*)$/); if (m) dmgExpr = (parseInt(m[1]) * 2) + m[2] + (m[3] || ''); }
+        applyDamage(target, dmgExpr);
+        checkDeath(target);
+        if (/vergiftet|gift/i.test(action.damageType) && !target.dead) {
+          const sv = doSave(target, 'KON', 13);
+          if (!sv.success) { addCondition(target, 'Vergiftet'); push('log-condition', `  ${target.name} ist vergiftet! (Rettungswurf ${sv.total} vs SG13)`); }
+        }
+      }
+      if (action.recharge !== null) attacker.rechargeStatus[action.name] = false;
+    } else if (action.type === 'heal') {
+      const allies = all.filter(t => t.team === attacker.team && !t.dead && (t.currentHp < t.maxHp || (t._kind === 'player' && t.currentHp <= 0)));
+      if (!allies.length) return;
+      allies.sort((a, b) => (a.currentHp / a.maxHp) - (b.currentHp / b.maxHp));
+      const target = allies[0];
+      const healRoll = rollExpr(action.healDice);
+      const healed = Math.min(target.maxHp - target.currentHp, healRoll.total);
+      target.currentHp += healed;
+      trackHeal(attacker.uid);
+      if (hasCondition(target, 'Bewusstlos') && target.currentHp > 0) {
+        removeCondition(target, 'Bewusstlos');
+        target.deathSucc = 0; target.deathFail = 0;
+        push('log-heal', `  💚 ${attacker.name} heilt ${target.name} mit ${action.name}: +${healed} TP ${healRoll.text} → aufgewacht (${target.currentHp}/${target.maxHp} TP)`);
+      } else {
+        push('log-heal', `  💚 ${attacker.name} heilt ${target.name} mit ${action.name}: +${healed} TP ${healRoll.text} (${target.currentHp}/${target.maxHp} TP)`);
+      }
+    } else if (action.type === 'save') {
+      const targets = allCombatants.filter(t => t.team !== attacker.team && !t.dead);
+      if (!targets.length) return;
+      trackHit(attacker.uid, true);
+      push('log-hit', `  ${attacker.name}: ${action.name} (SG ${action.saveDC} ${action.saveAttr}-Rettungswurf)`);
+      if (action.recharge !== null) attacker.rechargeStatus[action.name] = false;
+      targets.forEach(target => {
+        const sv = doSave(target, action.saveAttr, action.saveDC);
+        if (sv.success) {
+          push('log-save-ok', `  ${target.name}: Rettungswurf ${sv.total} vs SG${sv.dc} — ERFOLG${action.halfOnSave ? ' (halber Schaden)' : ' (kein Schaden)'}`);
+          if (action.halfOnSave) applyDamage(target, action.damage);
+        } else {
+          push('log-save-fail', `  ${target.name}: Rettungswurf ${sv.total} vs SG${sv.dc} — FEHLSCHLAG`);
+          applyDamage(target, action.damage);
+        }
+        checkDeath(target);
+      });
+    }
+  }
+
+  function doLegendaryActions(legendaryCreature, allCombatants) {
+    if (!legendaryCreature.legActionsLeft || legendaryCreature.dead) return;
+    const legUsable = legendaryCreature.legActions.filter(a => legendaryCreature.rechargeStatus[a.name] !== false);
+    if (!legUsable.length || !enemies(legendaryCreature).length) return;
+    const act = legUsable[0];
+    const desc = act.beschreibung || '';
+    const bonusM = desc.match(/\+(\d+) zum Treffen/i);
+    const dmg = parseDamage(desc);
+    if (bonusM) {
+      const fakeAction = { name: act.name, type: 'attack', isFern: false, bonus: parseInt(bonusM[1]), damage: dmg || '1W6', damageType: '', recharge: null, isMultiAttack: false };
+      push('log-legendary', `  ⬟ Legendäre Aktion: ${legendaryCreature.name} — ${act.name}`);
+      executeAction(legendaryCreature, fakeAction, allCombatants);
+    }
+    legendaryCreature.legActionsLeft--;
+  }
+
+  // ── Main loop ──
+  const MAX_ROUNDS = 50;
+  let roundNum = 0;
+
+  while (roundNum < MAX_ROUNDS) {
+    roundNum++;
+    all.forEach(c => { c.legActionsLeft = c.legPerRound; });
+
+    for (const combatant of all) {
+      if (combatant.dead) continue;
+      if (combatOver()) break;
+      if (combatant._kind === 'player' && combatant.currentHp <= 0 && !combatant.dead && !combatant.stable) {
+        push('log-turn', `▸ ${combatant.name} (Ini ${combatant.initiative})`);
+        doDeathSave(combatant);
+        continue;
+      }
+      if (isIncapacitated(combatant)) {
+        push('log-turn', `▸ ${combatant.name} ist handlungsunfähig und überspringt seinen Zug.`);
+        continue;
+      }
+      push('log-turn', `▸ ${combatant.name} (Ini ${combatant.initiative}, ${combatant.currentHp}/${combatant.maxHp} TP)`);
+      rechargeCheck(combatant);
+      const acts = pickActions(combatant);
+      if (!acts.length) {
+        push('log-misc', `  ${combatant.name} hat keine nutzbaren Aktionen.`);
+      } else {
+        if (acts.length > 1) push('log-misc', `  Mehrfachangriff (${acts.length}×)`);
+        for (const act of acts) {
+          if (enemies(combatant).length === 0) break;
+          executeAction(combatant, act, all);
+        }
+      }
+      if (hasCondition(combatant, 'Vergiftet')) push('log-condition', `  ${combatant.name} leidet an Vergiftung (Nachteil auf Würfe).`);
+      all.filter(c => c.team !== combatant.team && !c.dead && c.legPerRound > 0 && c.legActionsLeft > 0)
+        .forEach(leg => doLegendaryActions(leg, all));
+    }
+
+    // Save round with end-of-round HP snapshot
+    allRounds.push({
+      label: `Runde ${roundNum}`,
+      entries: curEntries.splice(0),
+      hpSnapshot: all.map(c => ({ uid: c.uid, name: c.name, team: c.team, currentHp: Math.max(0, c.currentHp), maxHp: c.maxHp, dead: c.dead })),
+      hits: curHits,
+    });
+    curHits = {};
+
+    if (combatOver()) break;
+  }
+
+  // Result — append finale to last round
+  const standing1 = all.filter(c => c.team === 1 && !c.dead && c.currentHp > 0);
+  const standing2 = all.filter(c => c.team === 2 && !c.dead && c.currentHp > 0);
+  let winner = 'draw';
+  if (standing1.length && !standing2.length) winner = 1;
+  else if (!standing1.length && standing2.length) winner = 2;
+
+  push('log-round', '── KAMPF ENDE ──');
+  if (winner === 'draw') push('log-misc', 'Beide Gruppen wurden vernichtet oder der Kampf endete unentschieden.');
+  else push('log-misc', `Gruppe ${winner} gewinnt nach ${roundNum} Runden!`);
+  if (allRounds.length > 0) allRounds[allRounds.length - 1].entries.push(...curEntries.splice(0));
+
+  return {
+    winner,
+    roundCount: roundNum,
+    rounds: allRounds,
+    survivors1: g1.map(c => ({ name: c.name, uid: c.uid, currentHp: c.currentHp, maxHp: c.maxHp, dead: c.dead })),
+    survivors2: g2.map(c => ({ name: c.name, uid: c.uid, currentHp: c.currentHp, maxHp: c.maxHp, dead: c.dead })),
+  };
+}
+
+// ── Matching opponents ────────────────────────────────────────────────────────
+// XP thresholds per character level [trivial, easy, medium, hard, deadly, epic]
+const XP_THRESHOLDS = [
+  null,
+  [12,   25,   50,   75,   100,   200],
+  [25,   50,   100,  150,  200,   400],
+  [37,   75,   150,  225,  400,   800],
+  [62,   125,  250,  375,  500,   1000],
+  [125,  250,  500,  750,  1100,  2200],
+  [150,  300,  600,  900,  1400,  2800],
+  [175,  350,  750,  1100, 1700,  3400],
+  [225,  450,  900,  1400, 2100,  4200],
+  [275,  550,  1100, 1600, 2400,  4800],
+  [300,  600,  1200, 1900, 2800,  5600],
+  [400,  800,  1600, 2400, 3600,  7200],
+  [500,  1000, 2000, 3000, 4500,  9000],
+  [550,  1100, 2200, 3400, 5100,  10200],
+  [625,  1250, 2500, 3800, 5700,  11400],
+  [700,  1400, 2800, 4300, 6400,  12800],
+  [800,  1600, 3200, 4800, 7200,  14400],
+  [1000, 2000, 3900, 5900, 8800,  17600],
+  [1050, 2100, 4200, 6300, 9500,  19000],
+  [1200, 2400, 4900, 7300, 11000, 22000],
+  [1400, 2800, 5700, 8500, 12700, 25400],
+];
+
+function encXpMult(count) {
+  if (count === 1)  return 1;
+  if (count === 2)  return 1.5;
+  if (count <= 6)   return 2;
+  if (count <= 10)  return 2.5;
+  if (count <= 14)  return 3;
+  return 4;
+}
+
+function calcEncounterDifficulty(party, enemies) {
+  if (!party.length || !enemies.length) return null;
+  const sums = [0, 0, 0, 0, 0, 0];
+  for (const m of party) {
+    const lvl = m._kind === 'player'
+      ? Math.max(1, Math.min(20, m.stufe || 1))
+      : Math.max(1, Math.min(20, Math.round(m.cr || 1)));
+    const t = XP_THRESHOLDS[lvl];
+    for (let i = 0; i < 6; i++) sums[i] += t[i];
+  }
+  const [t0, t1, t2, t3, t4, t5] = sums;
+  const adjXP = enemies.reduce((s, m) => s + (m.xp || 0), 0) * encXpMult(enemies.length);
+
+  // Main zone (always one of the 5 fixed labels)
+  const ZONES = [
+    { label: 'Trivial',  cls: 'enc-trivial', lo: 0,  hi: t1 },
+    { label: 'Leicht',   cls: 'enc-easy',    lo: t1, hi: t2 },
+    { label: 'Normal',   cls: 'enc-medium',  lo: t2, hi: t3 },
+    { label: 'Schwer',   cls: 'enc-hard',    lo: t3, hi: t4 },
+    { label: 'Tödlich',  cls: 'enc-deadly',  lo: t4, hi: t5 },
+  ];
+  const zIdx = adjXP >= t4 ? 4 : adjXP >= t3 ? 3 : adjXP >= t2 ? 2 : adjXP >= t1 ? 1 : 0;
+  const { label, cls, lo, hi } = ZONES[zIdx];
+  const ratio = hi > lo ? Math.max(0, Math.min(1, (adjXP - lo) / (hi - lo))) : 0.5;
+
+  // Sub-text: directional hint within the zone
+  let sub = null;
+  if (zIdx === 0) {
+    if (adjXP < t0 * 0.4)   sub = 'Kaum eine Bedrohung';
+    else if (ratio > 0.65)  sub = 'Fühlt sich eher leicht an';
+  } else if (zIdx === 4) {
+    if (ratio < 0.35)        sub = 'Fühlt sich eher schwer an';
+    else if (ratio > 0.65)   sub = 'Äußerst tödlich';
+  } else {
+    if (ratio < 0.35)        sub = `Fühlt sich eher ${ZONES[zIdx - 1].label.toLowerCase()} an`;
+    else if (ratio > 0.65)   sub = `Fühlt sich eher ${ZONES[zIdx + 1].label.toLowerCase()} an`;
+  }
+
+  return { label, cls, sub, adjXP };
+}
+
+// Coherence: narrow pool to monsters sharing art/unterart/umgebung with the anchor
+function coherentPool(anchor, xpPool) {
+  const hasUmg = (m, u) => Array.isArray(m.umgebung) ? m.umgebung.includes(u) : m.umgebung === u;
+  const byUnterart = anchor.unterart ? xpPool.filter(m => m.unterart === anchor.unterart) : [];
+  if (byUnterart.length >= 2) return byUnterart;
+  const anchorUmg = Array.isArray(anchor.umgebung) ? anchor.umgebung : (anchor.umgebung ? [anchor.umgebung] : []);
+  const byArtUmg = xpPool.filter(m => m.art === anchor.art && anchorUmg.some(u => hasUmg(m, u)));
+  if (byArtUmg.length >= 2) return byArtUmg;
+  return xpPool.filter(m => m.art === anchor.art);
+}
+
+function applyMonsterFilter(pool, monsterFilter) {
+  if (monsterFilter?.art)      pool = pool.filter(m => m.art === monsterFilter.art);
+  if (monsterFilter?.unterart) pool = pool.filter(m => m.unterart === monsterFilter.unterart);
+  if (monsterFilter?.umgebung) pool = pool.filter(m =>
+    Array.isArray(m.umgebung) ? m.umgebung.includes(monsterFilter.umgebung) : m.umgebung === monsterFilter.umgebung
+  );
+  if (monsterFilter?.crMin !== '' && monsterFilter?.crMin != null) pool = pool.filter(m => (m.cr ?? 0) >= Number(monsterFilter.crMin));
+  if (monsterFilter?.crMax !== '' && monsterFilter?.crMax != null) pool = pool.filter(m => (m.cr ?? 0) <= Number(monsterFilter.crMax));
+  return pool;
+}
+
+function partyBudget(group1, iLow, iHigh) {
+  let lo = 0, hi = 0;
+  for (const m of group1) {
+    const lvl = m._kind === 'player'
+      ? Math.max(1, Math.min(20, m.stufe || 1))
+      : Math.max(1, Math.min(20, Math.ceil(m.cr || 1)));
+    const t = XP_THRESHOLDS[lvl];
+    lo += t[iLow]; hi += t[iHigh];
+  }
+  return [lo, hi];
+}
+
+function findOneAdditionalOpponent(group1, group2, difficulty, monsterFilter, coherent) {
+  let pool = applyMonsterFilter(
+    (window.MONSTER_DATA || []).filter(m => m.xp > 0 && m.tp > 0),
+    monsterFilter
+  );
+  if (!pool.length || !group1.length) return null;
+
+  // Exclude types already in group2
+  const existingKeys = new Set(
+    group2.filter(c => c._kind === 'monster').map(c => c.name + (c.source || ''))
+  );
+  pool = pool.filter(m => !existingKeys.has(m.name + (m.source || '')));
+  if (!pool.length) return null;
+
+  // Party budget upper bound for selected difficulty
+  const brackets = { trivial: [0, 1], leicht: [1, 2], normal: [2, 3], schwer: [3, 4], toedlich: [4, 5] };
+  const [, iHigh] = brackets[difficulty] ?? [2, 3];
+  const [, budgetHigh] = partyBudget(group1, 0, iHigh);
+
+  // Current state of group2
+  const monsters2 = group2.filter(c => c._kind === 'monster');
+  const rawXP2 = monsters2.reduce((s, c) => s + (c.xp || 0), 0);
+  const newCount = monsters2.length + 1;
+  const newMult = encXpMult(newCount);
+  // Max XP the new monster can have without exceeding budget
+  const maxMonsterXP = budgetHigh / newMult - rawXP2;
+
+  // Apply coherence relative to existing group2 monsters
+  let eligible = pool;
+  if (coherent && monsters2.length > 0) {
+    const anchor = monsters2[0];
+    const cp = coherentPool(anchor, pool);
+    if (cp.length) eligible = cp;
+  }
+
+  if (maxMonsterXP > 0) {
+    const fitting = eligible.filter(m => m.xp <= maxMonsterXP * 1.15);
+    if (fitting.length) {
+      fitting.sort((a, b) => Math.abs(b.xp - maxMonsterXP) - Math.abs(a.xp - maxMonsterXP));
+      const top = fitting.slice(0, Math.min(8, fitting.length));
+      return { ...top[Math.floor(Math.random() * top.length)], _kind: 'monster' };
+    }
+  }
+
+  // Budget exceeded → weakest available monster
+  const fallback = coherent && monsters2.length > 0
+    ? coherentPool(monsters2[0], pool)
+    : pool;
+  const sorted = (fallback.length ? fallback : pool).slice().sort((a, b) => a.xp - b.xp);
+  return sorted[0] ? { ...sorted[0], _kind: 'monster' } : null;
+}
+
+function generateMatchingOpponents(group1, difficulty, monsterFilter, coherent) {
+  let pool = applyMonsterFilter(
+    (window.MONSTER_DATA || []).filter(m => m.xp > 0 && m.tp > 0),
+    monsterFilter
+  );
+  if (!pool.length || !group1.length) return [];
+
+  const brackets = { trivial: [0, 1], leicht: [1, 2], normal: [2, 3], schwer: [3, 4], toedlich: [4, 5] };
+  const [iLow, iHigh] = brackets[difficulty] ?? [2, 3];
+  const [budgetLow, budgetHigh] = partyBudget(group1, iLow, iHigh);
+
+  // Try random builds (1–5 monsters, varied count)
+  for (let attempt = 0; attempt < 500; attempt++) {
+    const count   = Math.floor(Math.random() * 5) + 1;
+    const mult    = encXpMult(count);
+    const rawLow  = budgetLow  / mult;
+    const rawHigh = budgetHigh / mult;
+    const perLow  = rawLow  / count;
+    const perHigh = rawHigh / count;
+
+    const eligible = pool.filter(m => m.xp >= perLow * 0.55 && m.xp <= perHigh * 1.55);
+    if (!eligible.length) continue;
+
+    // Pick anchor first, then constrain remaining picks if coherent mode is on
+    const anchor = eligible[Math.floor(Math.random() * eligible.length)];
+    const rest   = coherent && count > 1 ? coherentPool(anchor, eligible) : eligible;
+    if (coherent && count > 1 && !rest.length) continue;
+
+    const picks = [anchor, ...Array.from({ length: count - 1 }, () =>
+      rest[Math.floor(Math.random() * rest.length)]
+    )];
+    const adjusted = picks.reduce((s, m) => s + m.xp, 0) * mult;
+
+    if (adjusted >= budgetLow * 0.7 && adjusted <= budgetHigh * 1.3) {
+      return picks.map(m => ({ ...m, _kind: 'monster' }));
+    }
+  }
+
+  // Fallback: single monster closest to budget midpoint
+  const target = (budgetLow + budgetHigh) / 2;
+  const best = [...pool].sort((a, b) => Math.abs(a.xp - target) - Math.abs(b.xp - target))[0];
+  return [{ ...best, _kind: 'monster' }];
+}
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     REACT APP
+═══════════════════════════════════════════════════════════════════ -->
+</body>
+</html>

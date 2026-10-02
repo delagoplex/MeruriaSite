@@ -30,6 +30,8 @@ refresh_token_reuse_interval = 10
 enable_signup = false
 
 [auth.email]
-enable_signup = false
+# Im CLI schaltet das den E-Mail-Provider komplett an/aus (ohne = kein Login möglich).
+# Neue Registrierungen sperrt weiterhin `enable_signup = false` im [auth]-Block oben.
+enable_signup = true
 double_confirm_changes = true
 enable_confirmations = false

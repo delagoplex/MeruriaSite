@@ -1,5 +1,5 @@
 /* ─────────────────────────────────────────────────────────────────
-   Karte v2 — gemeinsame Datenschicht für Karte.html + Kartenmanagement.html
+   Karte v2 — gemeinsame Datenschicht für /spiel/karte.html + /dm/kartenmanagement.html
    Objectives, Bild-Karten-Areas und Ressourcen-Pools (Supabase),
    Arten-Katalog aus den echten Ressourcen-Datenbanken
    (FISH_DB, INSEKTEN_DB, PFLANZEN_DB + FANTASY_PLANT_DB, MINERALIEN_DB).

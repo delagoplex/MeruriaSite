@@ -1,0 +1,4685 @@
+// Page entry for /charaktererstellung/ausruestung.html
+import '../../components/nav.jsx';
+import '../../components/site-gate.jsx';
+import '../../components/page-header.jsx';
+import '../../components/page-hero.jsx';
+import '../../components/particle-field.jsx';
+import '../../components/footer.jsx';
+import '../../components/float-nav.jsx';
+
+;(function () {
+(function () {
+const {
+  useState,
+  useEffect,
+  useRef,
+  useCallback
+} = React;
+const {
+  SiteNav,
+  SiteFooter,
+  ParticleField,
+  PageHeader,
+  PageHero,
+  FloatNav
+} = window;
+const TWEAK_DEFAULTS = {
+  "accentColor": "#7c4dff"
+};
+
+// ── HEX ──────────────────────────────────────────────────
+function hexPoints(s) {
+  const cx = s / 2,
+    cy = s / 2,
+    r = s / 2,
+    pts = [];
+  for (let i = 0; i < 6; i++) {
+    const a = Math.PI / 180 * (60 * i - 30);
+    pts.push(`${cx + r * Math.cos(a)},${cy + r * Math.sin(a)}`);
+  }
+  return pts.join(' ');
+}
+function OctSvg({
+  size = 24,
+  color = 'currentColor',
+  fill = 'none',
+  strokeWidth = 1,
+  opacity = 1,
+  style = {}
+}) {
+  return /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: `0 0 ${size} ${size}`,
+    style: {
+      display: 'block',
+      flexShrink: 0,
+      ...style
+    }
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(size),
+    fill: fill,
+    stroke: color,
+    strokeWidth: strokeWidth,
+    opacity: opacity
+  }));
+}
+
+// ── SCROLL REVEAL ─────────────────────────────────────────
+function useScrollReveal(dep) {
+  useEffect(() => {
+    document.querySelectorAll('.reveal-up,.reveal-left').forEach(el => el.classList.remove('visible'));
+    let observer;
+    const revealed = new WeakSet();
+    const revealEl = (el, delay) => {
+      if (revealed.has(el)) return;
+      revealed.add(el);
+      setTimeout(() => el.classList.add('visible'), delay);
+    };
+    const init = () => {
+      observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target;
+          observer.unobserve(el);
+          revealEl(el, 0);
+        });
+      }, {
+        threshold: 0.04,
+        rootMargin: '0px 0px -16px 0px'
+      });
+      document.querySelectorAll('.reveal-up,.reveal-left').forEach(el => {
+        el.classList.remove('visible');
+        observer.observe(el);
+      });
+    };
+    const t = setTimeout(init, 80);
+    return () => {
+      clearTimeout(t);
+      observer && observer.disconnect();
+    };
+  }, [dep]);
+}
+
+// ── SECTION HEADER ────────────────────────────────────────
+function SectionHeader({
+  label,
+  accent,
+  mono
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "reveal-left",
+    style: {
+      marginBottom: '22px',
+      paddingBottom: '12px',
+      borderBottom: `1px solid ${accent}22`
+    }
+  }, mono && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.3em',
+      color: `${accent}55`,
+      textTransform: 'uppercase',
+      marginBottom: '5px'
+    }
+  }, mono), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px'
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 8,
+    color: `${accent}66`,
+    fill: `${accent}22`,
+    strokeWidth: 1
+  }), /*#__PURE__*/React.createElement("h2", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '18px',
+      fontWeight: '300',
+      letterSpacing: '0.2em',
+      color: 'rgba(var(--text-rgb),0.85)',
+      textShadow: `0 0 20px ${accent}33`,
+      textTransform: 'uppercase'
+    }
+  }, label)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '40px',
+      height: '1px',
+      background: `linear-gradient(90deg,${accent}77,transparent)`,
+      marginTop: '10px',
+      animation: 'pulse-glow 3s infinite'
+    }
+  }));
+}
+
+// ── ITEM DESCRIPTION TOOLTIP ──────────────────────────────
+function ItemRow({
+  item,
+  accent
+}) {
+  const [expanded, setExpanded] = useState(false);
+  const desc = ITEM_DESCRIPTIONS[item.name];
+  const hasDesc = !!desc;
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("tr", {
+    style: {
+      cursor: hasDesc ? 'pointer' : 'default'
+    },
+    onClick: () => hasDesc && setExpanded(e => !e)
+  }, /*#__PURE__*/React.createElement("td", {
+    className: hasDesc ? 'name-link' : '',
+    style: {
+      color: hasDesc ? `rgba(180,165,255,0.85)` : 'rgba(var(--text-rgb),0.75)',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '6px'
+    }
+  }, hasDesc && /*#__PURE__*/React.createElement("span", {
+    style: {
+      display: 'inline-block',
+      width: '14px',
+      height: '14px',
+      lineHeight: '14px',
+      textAlign: 'center',
+      borderRadius: '50%',
+      border: `1px solid ${accent}44`,
+      fontSize: '9px',
+      color: `${accent}88`,
+      flexShrink: 0,
+      fontFamily: 'var(--font-mono)',
+      transition: 'all 0.15s',
+      transform: expanded ? 'rotate(45deg)' : 'none'
+    }
+  }, "+"), item.name, item.sublink && /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      color: `${accent}55`,
+      letterSpacing: '0.15em',
+      marginLeft: '4px'
+    }
+  }, "\u2193 Untertypen")), /*#__PURE__*/React.createElement("td", {
+    className: "cost"
+  }, item.kosten), /*#__PURE__*/React.createElement("td", {
+    className: "weight"
+  }, item.pfund)), expanded && desc && /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", {
+    colSpan: 3,
+    style: {
+      padding: '0 14px 12px 34px',
+      background: `${accent}08`,
+      borderBottom: `1px solid ${accent}10`
+    }
+  }, /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px',
+      fontWeight: '300',
+      lineHeight: '1.8',
+      color: 'rgba(var(--text-rgb),0.65)',
+      letterSpacing: '0.02em'
+    }
+  }, desc))));
+}
+
+// ── SUB TABLE ─────────────────────────────────────────────
+function SubTable({
+  title,
+  rows,
+  accent,
+  hasKapazitaet
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      marginBottom: '28px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: `${accent}18`,
+      border: `1px solid ${accent}22`,
+      borderRadius: '3px',
+      overflow: 'hidden'
+    }
+  }, /*#__PURE__*/React.createElement("table", {
+    className: "eq-table",
+    style: {
+      width: '100%'
+    }
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`
+    }
+  }, title), !hasKapazitaet && /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`,
+      width: '160px'
+    }
+  }, "Kosten"), !hasKapazitaet && /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`,
+      width: '90px'
+    }
+  }, "Pfund"), hasKapazitaet && /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`
+    }
+  }, "Kapazit\xE4t"))), /*#__PURE__*/React.createElement("tbody", null, rows.map((r, i) => /*#__PURE__*/React.createElement("tr", {
+    key: i
+  }, /*#__PURE__*/React.createElement("td", {
+    style: {
+      color: 'rgba(180,165,255,0.8)'
+    }
+  }, r.name), !hasKapazitaet && /*#__PURE__*/React.createElement("td", {
+    className: "cost"
+  }, r.kosten), !hasKapazitaet && /*#__PURE__*/React.createElement("td", {
+    className: "weight"
+  }, r.pfund), hasKapazitaet && /*#__PURE__*/React.createElement("td", {
+    style: {
+      color: 'rgba(var(--text-rgb),0.65)'
+    }
+  }, r.kapazitaet)))))));
+}
+
+// ── WAFFEN TABLE ─────────────────────────────────────────
+function WaffenTable({
+  title,
+  rows,
+  accent
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      marginBottom: '28px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.25em',
+      color: `${accent}55`,
+      textTransform: 'uppercase',
+      marginBottom: '8px'
+    }
+  }, title), /*#__PURE__*/React.createElement("div", {
+    style: {
+      border: `1px solid ${accent}22`,
+      borderRadius: '3px',
+      overflow: 'hidden',
+      background: 'rgba(var(--panel-rgb),0.6)'
+    }
+  }, /*#__PURE__*/React.createElement("table", {
+    className: "eq-table",
+    style: {
+      width: '100%'
+    }
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Name"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      width: '120px'
+    }
+  }, "Kosten"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      width: '110px'
+    }
+  }, "Schaden"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      width: '70px'
+    }
+  }, "Pfund"), /*#__PURE__*/React.createElement("th", null, "Eigenschaften"))), /*#__PURE__*/React.createElement("tbody", null, rows.map((r, i) => /*#__PURE__*/React.createElement("tr", {
+    key: i
+  }, /*#__PURE__*/React.createElement("td", {
+    style: {
+      color: 'rgba(var(--text-rgb),0.85)',
+      fontWeight: '400'
+    }
+  }, r.name), /*#__PURE__*/React.createElement("td", {
+    className: "cost"
+  }, r.kosten), /*#__PURE__*/React.createElement("td", {
+    style: {
+      color: `${accent}99`,
+      fontFamily: 'var(--font-mono)',
+      fontSize: '11px'
+    }
+  }, r.schaden), /*#__PURE__*/React.createElement("td", {
+    className: "weight"
+  }, r.pfund), /*#__PURE__*/React.createElement("td", {
+    style: {
+      color: 'rgba(var(--text-rgb),0.6)',
+      fontSize: '11px'
+    }
+  }, r.eigenschaften)))))));
+}
+
+// ── WAFFEN CONTENT ────────────────────────────────────────
+function WaffenContent({
+  accent
+}) {
+  const [openProp, setOpenProp] = useState(null);
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(SectionHeader, {
+    label: "Waffen",
+    accent: accent,
+    mono: "Ausr\xFCstung"
+  }), /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.9',
+      color: 'rgba(var(--text-rgb),0.55)',
+      letterSpacing: '0.04em',
+      marginBottom: '10px',
+      maxWidth: '680px'
+    }
+  }, "Deine Klasse verleiht dir \xDCbung im Umgang mit bestimmten Waffen. Ob du nun ein Langschwert bevorzugst oder einen Langbogen \u2014 die Wahl deiner Waffen und deine F\xE4higkeit, sie effektiv zu f\xFChren, k\xF6nnen auf deinen Abenteuern den Unterschied zwischen Leben und Tod ausmachen."), /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.9',
+      color: 'rgba(var(--text-rgb),0.45)',
+      letterSpacing: '0.04em',
+      marginBottom: '32px',
+      maxWidth: '680px'
+    }
+  }, "Es gibt zwei Kategorien: ", /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: 'rgba(var(--text-rgb),0.7)',
+      fontWeight: '500'
+    }
+  }, "Einfache Waffen"), " und ", /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: 'rgba(var(--text-rgb),0.7)',
+      fontWeight: '500'
+    }
+  }, "Kriegswaffen"), ". Hast du \xDCbung im Umgang mit einer Waffe, darfst du bei einem Angriff mit dieser deinen \xDCbungsbonus auf den Wurf addieren."), /*#__PURE__*/React.createElement(WaffenTable, {
+    title: "Einfache Nahkampfwaffen",
+    rows: EINFACHE_NAHKAMPF,
+    accent: accent
+  }), /*#__PURE__*/React.createElement(WaffenTable, {
+    title: "Einfache Fernkampfwaffen",
+    rows: EINFACHE_FERNKAMPF,
+    accent: accent
+  }), /*#__PURE__*/React.createElement(WaffenTable, {
+    title: "Nahkampf-Kriegswaffen",
+    rows: KRIEGS_NAHKAMPF,
+    accent: accent
+  }), /*#__PURE__*/React.createElement(WaffenTable, {
+    title: "Fernkampf-Kriegswaffen",
+    rows: KRIEGS_FERNKAMPF,
+    accent: accent
+  }), /*#__PURE__*/React.createElement("div", {
+    id: "sec-waffen-eigenschaften",
+    className: "reveal-left",
+    style: {
+      marginBottom: '22px',
+      paddingBottom: '12px',
+      borderBottom: `1px solid ${accent}22`,
+      marginTop: '36px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.3em',
+      color: `${accent}55`,
+      textTransform: 'uppercase',
+      marginBottom: '5px'
+    }
+  }, "Regelwerk"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px'
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 8,
+    color: `${accent}66`,
+    fill: `${accent}22`,
+    strokeWidth: 1
+  }), /*#__PURE__*/React.createElement("h2", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '18px',
+      fontWeight: '300',
+      letterSpacing: '0.2em',
+      color: 'rgba(var(--text-rgb),0.85)',
+      textTransform: 'uppercase'
+    }
+  }, "Waffeneigenschaften")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '40px',
+      height: '1px',
+      background: `linear-gradient(90deg,${accent}77,transparent)`,
+      marginTop: '10px',
+      animation: 'pulse-glow 3s infinite'
+    }
+  })), /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.9',
+      color: 'rgba(var(--text-rgb),0.45)',
+      letterSpacing: '0.04em',
+      marginBottom: '20px',
+      maxWidth: '680px'
+    }
+  }, "Viele Waffen besitzen spezielle Eigenschaften. Klicke auf eine Eigenschaft, um ihre Beschreibung zu lesen."), /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '8px',
+      marginBottom: '16px'
+    }
+  }, Object.keys(WAFFEN_EIGENSCHAFTEN).map(prop => /*#__PURE__*/React.createElement("button", {
+    key: prop,
+    onClick: () => setOpenProp(openProp === prop ? null : prop),
+    style: {
+      padding: '5px 14px',
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px',
+      fontWeight: '400',
+      letterSpacing: '0.08em',
+      background: openProp === prop ? `${accent}28` : 'transparent',
+      border: `1px solid ${openProp === prop ? accent + '77' : accent + '28'}`,
+      color: openProp === prop ? 'var(--white)' : `rgba(var(--text-rgb),0.6)`,
+      borderRadius: '2px',
+      cursor: 'pointer',
+      transition: 'all 0.15s'
+    }
+  }, prop))), openProp && /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '14px 18px',
+      border: `1px solid ${accent}22`,
+      borderRadius: '3px',
+      background: `${accent}08`,
+      marginBottom: '28px',
+      animation: 'fadeInUp 0.2s ease forwards'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '12px',
+      letterSpacing: '0.12em',
+      color: 'rgba(var(--text-rgb),0.85)',
+      marginBottom: '6px',
+      textTransform: 'uppercase'
+    }
+  }, openProp), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.8',
+      color: 'rgba(var(--text-rgb),0.65)'
+    }
+  }, WAFFEN_EIGENSCHAFTEN[openProp])), /*#__PURE__*/React.createElement("div", {
+    id: "sec-improvisiert",
+    className: "reveal-left",
+    style: {
+      marginBottom: '22px',
+      paddingBottom: '12px',
+      borderBottom: `1px solid ${accent}22`,
+      marginTop: '12px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px'
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 8,
+    color: `${accent}66`,
+    fill: `${accent}22`,
+    strokeWidth: 1
+  }), /*#__PURE__*/React.createElement("h2", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '18px',
+      fontWeight: '300',
+      letterSpacing: '0.2em',
+      color: 'rgba(var(--text-rgb),0.85)',
+      textTransform: 'uppercase'
+    }
+  }, "Improvisierte Waffen")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '40px',
+      height: '1px',
+      background: `linear-gradient(90deg,${accent}77,transparent)`,
+      marginTop: '10px',
+      animation: 'pulse-glow 3s infinite'
+    }
+  })), /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.9',
+      color: 'rgba(var(--text-rgb),0.55)',
+      letterSpacing: '0.04em',
+      marginBottom: '10px',
+      maxWidth: '680px'
+    }
+  }, "Manchmal haben die Charaktere ihre Waffen nicht bei sich und m\xFCssen mit dem angreifen, was gerade in der N\xE4he ist. Als improvisierte Waffe z\xE4hlt alles, was f\xFCr einen Angriff in einer oder zwei H\xE4nden gef\xFChrt werden kann, wie etwa ein zerbrochenes Glas, ein Tischbein, eine Bratpfanne, ein Wagenrad oder ein toter Goblin."), /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.9',
+      color: 'rgba(var(--text-rgb),0.45)',
+      letterSpacing: '0.04em',
+      marginBottom: '32px',
+      maxWidth: '680px'
+    }
+  }, "Ein Gegenstand, der keine \xC4hnlichkeit mit einer Waffe besitzt, verursacht 1W4 Schaden. Wird eine improvisierte Waffe geworfen, hat sie eine Grundreichweite von 6 m und eine Maximalreichweite von 18 m."), /*#__PURE__*/React.createElement("div", {
+    id: "sec-versilbert",
+    className: "reveal-left",
+    style: {
+      marginBottom: '22px',
+      paddingBottom: '12px',
+      borderBottom: `1px solid ${accent}22`
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px'
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 8,
+    color: `${accent}66`,
+    fill: `${accent}22`,
+    strokeWidth: 1
+  }), /*#__PURE__*/React.createElement("h2", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '18px',
+      fontWeight: '300',
+      letterSpacing: '0.2em',
+      color: 'rgba(var(--text-rgb),0.85)',
+      textTransform: 'uppercase'
+    }
+  }, "Versilberte Waffen")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '40px',
+      height: '1px',
+      background: `linear-gradient(90deg,${accent}77,transparent)`,
+      marginTop: '10px',
+      animation: 'pulse-glow 3s infinite'
+    }
+  })), /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.9',
+      color: 'rgba(var(--text-rgb),0.55)',
+      letterSpacing: '0.04em',
+      marginBottom: '10px',
+      maxWidth: '680px'
+    }
+  }, "Manche Monster, die eine Immunit\xE4t oder Resistenz gegen nicht-magische Waffen besitzen, sind anf\xE4llig f\xFCr silberne Waffen. Du kannst eine einzelne Waffe oder 10 Geschosse f\xFCr ", /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: 'rgba(var(--text-rgb),0.7)',
+      fontWeight: '500'
+    }
+  }, "100 GM"), " mit Silber \xFCberziehen lassen."), /*#__PURE__*/React.createElement("div", {
+    id: "sec-spezielle",
+    className: "reveal-left",
+    style: {
+      marginBottom: '22px',
+      paddingBottom: '12px',
+      borderBottom: `1px solid ${accent}22`,
+      marginTop: '32px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px'
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 8,
+    color: `${accent}66`,
+    fill: `${accent}22`,
+    strokeWidth: 1
+  }), /*#__PURE__*/React.createElement("h2", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '18px',
+      fontWeight: '300',
+      letterSpacing: '0.2em',
+      color: 'rgba(var(--text-rgb),0.85)',
+      textTransform: 'uppercase'
+    }
+  }, "Spezielle Waffen")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '40px',
+      height: '1px',
+      background: `linear-gradient(90deg,${accent}77,transparent)`,
+      marginTop: '10px',
+      animation: 'pulse-glow 3s infinite'
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      border: `1px solid ${accent}22`,
+      borderRadius: '3px',
+      background: 'rgba(var(--panel-rgb),0.6)',
+      overflow: 'hidden'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '14px 18px',
+      borderBottom: `1px solid ${accent}10`
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '500',
+      fontSize: '12px',
+      color: 'rgba(var(--text-rgb),0.9)',
+      marginBottom: '5px'
+    }
+  }, "Lanze"), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '11px',
+      lineHeight: '1.75',
+      color: 'rgba(var(--text-rgb),0.6)'
+    }
+  }, "Du bist bei deinem Angriffswurf im Nachteil, wenn du die Lanze gegen ein Ziel im Umkreis von 1,50 m oder weniger einsetzt. Au\xDFerdem ben\xF6tigst du beide H\xE4nde, um die Lanze effektiv zu f\xFChren, wenn du nicht auf einem Reittier sitzt.")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '14px 18px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '500',
+      fontSize: '12px',
+      color: 'rgba(var(--text-rgb),0.9)',
+      marginBottom: '5px'
+    }
+  }, "Netz"), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '11px',
+      lineHeight: '1.75',
+      color: 'rgba(var(--text-rgb),0.6)'
+    }
+  }, "Eine Kreatur der Gr\xF6\xDFenkategorie gro\xDF oder kleiner, die vom Angriff mit einem Netz getroffen wird, gilt als festgesetzt, bis sie sich befreit. Die betroffene Kreatur kann ihre Aktion verwenden, um einen St\xE4rkewurf gegen SG 10 auszuf\xFChren und sich zu befreien. Dem Netz 5 Punkte Hiebschaden zuzuf\xFCgen (RK 10) befreit die Kreatur ebenfalls. Wenn du eine Aktion, Bonusaktion oder Reaktion verwendest, um mit einem Netz anzugreifen, kannst du nur diesen einen Angriff ausf\xFChren."))));
+}
+
+// ── RÜSTUNG TABLE ─────────────────────────────────────────
+function RuestungTable({
+  title,
+  rows,
+  accent
+}) {
+  const [expandedRow, setExpandedRow] = useState(null);
+  return /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      marginBottom: '28px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      border: `1px solid ${accent}22`,
+      borderRadius: '3px',
+      overflow: 'hidden',
+      background: 'rgba(var(--panel-rgb),0.6)'
+    }
+  }, /*#__PURE__*/React.createElement("table", {
+    className: "eq-table",
+    style: {
+      width: '100%'
+    }
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`,
+      textTransform: 'lowercase',
+      fontVariant: 'small-caps'
+    }
+  }, title), /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`,
+      width: '130px'
+    }
+  }, "Kosten"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`,
+      width: '210px'
+    }
+  }, "R\xFCstungsklasse (RK)"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`,
+      width: '80px'
+    }
+  }, "St\xE4rke"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`,
+      width: '110px'
+    }
+  }, "Heimlichkeit"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`,
+      width: '70px'
+    }
+  }, "Pfund"))), /*#__PURE__*/React.createElement("tbody", null, rows.map((r, i) => {
+    const hasDesc = !!RUESTUNG_DESCS[r.name];
+    const isOpen = expandedRow === i;
+    return /*#__PURE__*/React.createElement(React.Fragment, {
+      key: i
+    }, /*#__PURE__*/React.createElement("tr", {
+      style: {
+        cursor: hasDesc ? 'pointer' : 'default'
+      },
+      onClick: () => hasDesc && setExpandedRow(isOpen ? null : i)
+    }, /*#__PURE__*/React.createElement("td", {
+      style: {
+        color: 'rgba(var(--text-rgb),0.85)',
+        fontWeight: '400',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '6px'
+      }
+    }, hasDesc && /*#__PURE__*/React.createElement("span", {
+      style: {
+        display: 'inline-block',
+        width: '14px',
+        height: '14px',
+        lineHeight: '14px',
+        textAlign: 'center',
+        borderRadius: '50%',
+        border: `1px solid ${accent}44`,
+        fontSize: '9px',
+        color: `${accent}88`,
+        flexShrink: 0,
+        fontFamily: 'var(--font-mono)',
+        transition: 'transform 0.15s',
+        transform: isOpen ? 'rotate(45deg)' : 'none'
+      }
+    }, "+"), r.name), /*#__PURE__*/React.createElement("td", {
+      className: "cost"
+    }, r.kosten), /*#__PURE__*/React.createElement("td", {
+      style: {
+        color: `${accent}99`,
+        fontFamily: 'var(--font-mono)',
+        fontSize: '11px'
+      }
+    }, r.rk), /*#__PURE__*/React.createElement("td", {
+      style: {
+        color: r.staerke !== '—' ? 'rgba(255,180,100,0.8)' : 'rgba(var(--text-rgb),0.35)',
+        fontSize: '11px'
+      }
+    }, r.staerke), /*#__PURE__*/React.createElement("td", {
+      style: {
+        color: r.heimlichkeit === 'Nachteil' ? 'rgba(255,100,100,0.7)' : 'rgba(var(--text-rgb),0.35)',
+        fontSize: '11px'
+      }
+    }, r.heimlichkeit), /*#__PURE__*/React.createElement("td", {
+      className: "weight"
+    }, r.pfund)), isOpen && RUESTUNG_DESCS[r.name] && /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", {
+      colSpan: 6,
+      style: {
+        padding: '0 14px 12px 34px',
+        background: `${accent}08`,
+        borderBottom: `1px solid ${accent}10`
+      }
+    }, /*#__PURE__*/React.createElement("p", {
+      style: {
+        fontFamily: 'var(--font-body)',
+        fontSize: '11px',
+        fontWeight: '300',
+        lineHeight: '1.8',
+        color: 'rgba(var(--text-rgb),0.65)',
+        letterSpacing: '0.02em',
+        animation: 'fadeInUp 0.2s ease forwards'
+      }
+    }, RUESTUNG_DESCS[r.name]))));
+  })))));
+}
+
+// ── RÜSTUNG CONTENT ───────────────────────────────────────
+function RuestungContent({
+  accent
+}) {
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(SectionHeader, {
+    label: "R\xFCstung & Schilde",
+    accent: accent,
+    mono: "Ausr\xFCstung"
+  }), /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.9',
+      color: 'rgba(var(--text-rgb),0.55)',
+      letterSpacing: '0.04em',
+      marginBottom: '10px',
+      maxWidth: '680px'
+    }
+  }, "Abenteurer haben Zugang zu einer Vielzahl von R\xFCstungsarten \u2014 von Lederr\xFCstungen \xFCber Kettenpanzer bis zu kostspieligen Plattenr\xFCstungen. Die Tabelle unterteilt sie in drei Kategorien: leichte, mittelschwere und schwere R\xFCstungen."), /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.9',
+      color: 'rgba(var(--text-rgb),0.45)',
+      letterSpacing: '0.04em',
+      marginBottom: '32px',
+      maxWidth: '680px'
+    }
+  }, "Nur diejenigen, die im Umgang mit einer R\xFCstung ge\xFCbt sind, k\xF6nnen sie effizient tragen. Tr\xE4gst du eine R\xFCstung ohne \xDCbung, bist du bei s\xE4mtlichen St\xE4rke- und Geschicklichkeitsw\xFCrfen im Nachteil und kannst keine Zauber wirken."), /*#__PURE__*/React.createElement("div", {
+    id: "sec-leicht",
+    className: "reveal-left",
+    style: {
+      marginBottom: '10px',
+      paddingBottom: '10px',
+      borderBottom: `1px solid ${accent}18`
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px'
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 7,
+    color: `${accent}55`,
+    fill: `${accent}18`,
+    strokeWidth: 1
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '14px',
+      fontWeight: '300',
+      letterSpacing: '0.18em',
+      color: 'rgba(var(--text-rgb),0.75)',
+      textTransform: 'uppercase'
+    }
+  }, "Leichte R\xFCstung"))), /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.75',
+      color: 'rgba(var(--text-rgb),0.55)',
+      marginBottom: '14px',
+      maxWidth: '680px'
+    }
+  }, "Aus weichen und d\xFCnnen Materialien gefertigt, beg\xFCnstigen leichte R\xFCstungen agile Abenteurer. Wenn du eine leichte R\xFCstung tr\xE4gst, addierst du deinen ", /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: 'rgba(var(--text-rgb),0.7)',
+      fontWeight: '500'
+    }
+  }, "Geschicklichkeitsmodifikator"), " zur Basis-R\xFCstungsklasse."), /*#__PURE__*/React.createElement(RuestungTable, {
+    title: "leichte R\xFCstung",
+    rows: LEICHTE_RUESTUNG,
+    accent: accent
+  }), /*#__PURE__*/React.createElement("div", {
+    id: "sec-mittel",
+    className: "reveal-left",
+    style: {
+      marginBottom: '10px',
+      paddingBottom: '10px',
+      borderBottom: `1px solid ${accent}18`,
+      marginTop: '8px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px'
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 7,
+    color: `${accent}55`,
+    fill: `${accent}18`,
+    strokeWidth: 1
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '14px',
+      fontWeight: '300',
+      letterSpacing: '0.18em',
+      color: 'rgba(var(--text-rgb),0.75)',
+      textTransform: 'uppercase'
+    }
+  }, "Mittelschwere R\xFCstung"))), /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.75',
+      color: 'rgba(var(--text-rgb),0.55)',
+      marginBottom: '14px',
+      maxWidth: '680px'
+    }
+  }, "Mittelschwere R\xFCstung bietet mehr Schutz als leichte R\xFCstung, schr\xE4nkt die Beweglichkeit aber st\xE4rker ein. Du addierst deinen Geschicklichkeitsmodifikator, allerdings nur bis zu einem Maximum von ", /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: 'rgba(var(--text-rgb),0.7)',
+      fontWeight: '500'
+    }
+  }, "+2"), "."), /*#__PURE__*/React.createElement(RuestungTable, {
+    title: "mittelschwere R\xFCstung",
+    rows: MITTELSCHWERE_RUESTUNG,
+    accent: accent
+  }), /*#__PURE__*/React.createElement("div", {
+    id: "sec-schwer",
+    className: "reveal-left",
+    style: {
+      marginBottom: '10px',
+      paddingBottom: '10px',
+      borderBottom: `1px solid ${accent}18`,
+      marginTop: '8px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px'
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 7,
+    color: `${accent}55`,
+    fill: `${accent}18`,
+    strokeWidth: 1
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '14px',
+      fontWeight: '300',
+      letterSpacing: '0.18em',
+      color: 'rgba(var(--text-rgb),0.75)',
+      textTransform: 'uppercase'
+    }
+  }, "Schwere R\xFCstung"))), /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.75',
+      color: 'rgba(var(--text-rgb),0.55)',
+      marginBottom: '14px',
+      maxWidth: '680px'
+    }
+  }, "Von allen R\xFCstungsarten bietet schwere R\xFCstung den besten Schutz. Bei schweren R\xFCstungen darfst du deinen Geschicklichkeitsmodifikator ", /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: 'rgba(var(--text-rgb),0.7)',
+      fontWeight: '500'
+    }
+  }, "nicht"), " auf deine R\xFCstungsklasse anrechnen."), /*#__PURE__*/React.createElement(RuestungTable, {
+    title: "schwere R\xFCstung",
+    rows: SCHWERE_RUESTUNG,
+    accent: accent
+  }), /*#__PURE__*/React.createElement("div", {
+    id: "sec-schilde",
+    className: "reveal-left",
+    style: {
+      marginBottom: '10px',
+      paddingBottom: '10px',
+      borderBottom: `1px solid ${accent}18`,
+      marginTop: '8px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px'
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 7,
+    color: `${accent}55`,
+    fill: `${accent}18`,
+    strokeWidth: 1
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '14px',
+      fontWeight: '300',
+      letterSpacing: '0.18em',
+      color: 'rgba(var(--text-rgb),0.75)',
+      textTransform: 'uppercase'
+    }
+  }, "Schilde"))), /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.75',
+      color: 'rgba(var(--text-rgb),0.55)',
+      marginBottom: '14px',
+      maxWidth: '680px'
+    }
+  }, "Ein Schild ist aus Holz oder Metall gefertigt und wird in einer Hand getragen. Einen Schild zu f\xFChren, erh\xF6ht die R\xFCstungsklasse um ", /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: 'rgba(var(--text-rgb),0.7)',
+      fontWeight: '500'
+    }
+  }, "2"), ". Du kannst immer nur von einem Schild gleichzeitig profitieren."), /*#__PURE__*/React.createElement(RuestungTable, {
+    title: "Schilde",
+    rows: SCHILDE,
+    accent: accent
+  }), /*#__PURE__*/React.createElement("div", {
+    id: "sec-kleidung",
+    className: "reveal-left",
+    style: {
+      marginBottom: '10px',
+      paddingBottom: '10px',
+      borderBottom: `1px solid ${accent}18`,
+      marginTop: '8px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px'
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 7,
+    color: `${accent}55`,
+    fill: `${accent}18`,
+    strokeWidth: 1
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '14px',
+      fontWeight: '300',
+      letterSpacing: '0.18em',
+      color: 'rgba(var(--text-rgb),0.75)',
+      textTransform: 'uppercase'
+    }
+  }, "Kleidung"))), /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      marginBottom: '28px',
+      border: `1px solid ${accent}22`,
+      borderRadius: '3px',
+      overflow: 'hidden',
+      background: 'rgba(var(--panel-rgb),0.6)'
+    }
+  }, /*#__PURE__*/React.createElement("table", {
+    className: "eq-table",
+    style: {
+      width: '100%'
+    }
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`
+    }
+  }, "Kleidung"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`,
+      width: '160px'
+    }
+  }, "Kosten"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`,
+      width: '90px'
+    }
+  }, "Pfund"))), /*#__PURE__*/React.createElement("tbody", null, KLEIDUNG.map((r, i) => /*#__PURE__*/React.createElement("tr", {
+    key: i
+  }, /*#__PURE__*/React.createElement("td", {
+    style: {
+      color: 'rgba(var(--text-rgb),0.8)'
+    }
+  }, r.name), /*#__PURE__*/React.createElement("td", {
+    className: "cost"
+  }, r.kosten), /*#__PURE__*/React.createElement("td", {
+    className: "weight"
+  }, r.pfund)))))), /*#__PURE__*/React.createElement("div", {
+    id: "sec-anlegen",
+    className: "reveal-left",
+    style: {
+      marginBottom: '22px',
+      paddingBottom: '12px',
+      borderBottom: `1px solid ${accent}22`,
+      marginTop: '32px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px'
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 8,
+    color: `${accent}66`,
+    fill: `${accent}22`,
+    strokeWidth: 1
+  }), /*#__PURE__*/React.createElement("h2", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '18px',
+      fontWeight: '300',
+      letterSpacing: '0.2em',
+      color: 'rgba(var(--text-rgb),0.85)',
+      textTransform: 'uppercase'
+    }
+  }, "R\xFCstungen an- und ablegen")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '40px',
+      height: '1px',
+      background: `linear-gradient(90deg,${accent}77,transparent)`,
+      marginTop: '10px',
+      animation: 'pulse-glow 3s infinite'
+    }
+  })), /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.75',
+      color: 'rgba(var(--text-rgb),0.55)',
+      marginBottom: '20px',
+      maxWidth: '680px'
+    }
+  }, "Die Zeit, die man ben\xF6tigt, um R\xFCstungen an- und abzulegen, h\xE4ngt von der Kategorie der R\xFCstung ab. ", /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: 'rgba(var(--text-rgb),0.7)',
+      fontWeight: '500'
+    }
+  }, "Ablegen:"), " Wenn du dabei Hilfe hast, kannst du die Dauer halbieren."), /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      border: `1px solid ${accent}22`,
+      borderRadius: '3px',
+      overflow: 'hidden',
+      background: 'rgba(var(--panel-rgb),0.6)',
+      marginBottom: '32px',
+      maxWidth: '420px'
+    }
+  }, /*#__PURE__*/React.createElement("table", {
+    className: "eq-table",
+    style: {
+      width: '100%'
+    }
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`
+    }
+  }, "Kategorie"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`,
+      width: '110px'
+    }
+  }, "Anlegen"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`,
+      width: '110px'
+    }
+  }, "Ablegen"))), /*#__PURE__*/React.createElement("tbody", null, ANLEGEN_ABLEGEN.map((r, i) => /*#__PURE__*/React.createElement("tr", {
+    key: i
+  }, /*#__PURE__*/React.createElement("td", {
+    style: {
+      color: 'rgba(var(--text-rgb),0.8)'
+    }
+  }, r.kategorie), /*#__PURE__*/React.createElement("td", {
+    style: {
+      color: `${accent}99`,
+      fontFamily: 'var(--font-mono)',
+      fontSize: '11px'
+    }
+  }, r.anlegen), /*#__PURE__*/React.createElement("td", {
+    style: {
+      color: `${accent}77`,
+      fontFamily: 'var(--font-mono)',
+      fontSize: '11px'
+    }
+  }, r.ablegen)))))));
+}
+
+// ── TOOL ACCORDION ────────────────────────────────────────
+function ToolAccordion({
+  name,
+  accent
+}) {
+  const [open, setOpen] = useState(false);
+  const raw = WERKZEUG_DETAILS[name];
+  if (!raw) return null;
+  const data = raw.shared ? SHARED_DESCRIPTIONS[raw.shared] : raw;
+  const isShared = !!raw.shared;
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      borderBottom: `1px solid ${accent}12`,
+      overflow: 'hidden'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => setOpen(o => !o),
+    style: {
+      width: '100%',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px',
+      padding: '9px 14px',
+      background: open ? `${accent}10` : 'transparent',
+      border: 'none',
+      cursor: 'pointer',
+      textAlign: 'left',
+      transition: 'background 0.15s'
+    },
+    onMouseEnter: e => {
+      if (!open) e.currentTarget.style.background = `${accent}08`;
+    },
+    onMouseLeave: e => {
+      if (!open) e.currentTarget.style.background = 'transparent';
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '14px',
+      height: '14px',
+      flexShrink: 0,
+      border: `1px solid ${accent}44`,
+      borderRadius: '2px',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: `${accent}99`,
+      transition: 'transform 0.2s, color 0.15s',
+      transform: open ? 'rotate(45deg)' : 'none'
+    }
+  }, "+"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      fontWeight: open ? '500' : '300',
+      color: open ? 'var(--white)' : 'rgba(var(--text-rgb),0.8)',
+      letterSpacing: '0.04em',
+      flex: 1,
+      transition: 'color 0.15s'
+    }
+  }, name), data.placeholder && /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.15em',
+      color: `${accent}44`,
+      textTransform: 'uppercase'
+    }
+  }, "bald verf\xFCgbar"), isShared && /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.15em',
+      color: `${accent}55`,
+      textTransform: 'uppercase'
+    }
+  }, "gemeinsame Beschreibung")), open && !data.placeholder && /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '0 14px 16px 38px',
+      animation: 'fadeInUp 0.18s ease forwards'
+    }
+  }, isShared && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.18em',
+      color: `${accent}55`,
+      textTransform: 'uppercase',
+      marginBottom: '8px'
+    }
+  }, "Alle ", raw.shared === 'musikinstrument' ? 'Musikinstrumente' : 'Spielsets', " teilen diese Beschreibung"), data.intro && /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px',
+      fontWeight: '300',
+      lineHeight: '1.8',
+      color: 'rgba(var(--text-rgb),0.6)',
+      marginBottom: '12px',
+      letterSpacing: '0.02em'
+    }
+  }, data.intro), data.abschnitte.map((s, i) => /*#__PURE__*/React.createElement("p", {
+    key: i,
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px',
+      fontWeight: '300',
+      lineHeight: '1.8',
+      color: 'rgba(var(--text-rgb),0.6)',
+      marginBottom: '8px',
+      letterSpacing: '0.02em'
+    }
+  }, /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: 'rgba(var(--text-rgb),0.75)',
+      fontWeight: '500'
+    }
+  }, s.titel, ". "), s.text)), data.sg && data.sg.length > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: '12px',
+      border: `1px solid ${accent}18`,
+      borderRadius: '2px',
+      overflow: 'hidden',
+      maxWidth: '480px'
+    }
+  }, /*#__PURE__*/React.createElement("table", {
+    className: "eq-table",
+    style: {
+      width: '100%'
+    }
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}28`,
+      fontSize: '10px'
+    }
+  }, "Aktivit\xE4t"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}28`,
+      width: '80px',
+      fontSize: '10px'
+    }
+  }, "SG"))), /*#__PURE__*/React.createElement("tbody", null, data.sg.map((row, i) => /*#__PURE__*/React.createElement("tr", {
+    key: i
+  }, /*#__PURE__*/React.createElement("td", {
+    style: {
+      fontSize: '11px',
+      color: 'rgba(var(--text-rgb),0.65)'
+    }
+  }, row.aktivitaet), /*#__PURE__*/React.createElement("td", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '11px',
+      color: `${accent}99`,
+      textAlign: 'center'
+    }
+  }, row.sg))))))), open && data.placeholder && /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '10px 14px 14px 38px'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.2em',
+      color: `${accent}33`,
+      textTransform: 'uppercase'
+    }
+  }, "\u2014 Beschreibung wird vorbereitet \u2014")));
+}
+
+// ── WERKZEUG ICON SVGs ────────────────────────────────────
+function ToolIcon({
+  name,
+  size = 40,
+  accent
+}) {
+  const col = accent || '#7c4dff';
+  const icons = {
+    // Sonderwerkzeuge
+    'Fälscherausrüstung': /*#__PURE__*/React.createElement("svg", {
+      width: size,
+      height: size,
+      viewBox: "0 0 40 40",
+      fill: "none"
+    }, /*#__PURE__*/React.createElement("rect", {
+      x: "8",
+      y: "6",
+      width: "18",
+      height: "24",
+      rx: "2",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: `${col}15`
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "12",
+      y1: "12",
+      x2: "22",
+      y2: "12",
+      stroke: col,
+      strokeWidth: "1",
+      opacity: "0.6"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "12",
+      y1: "16",
+      x2: "22",
+      y2: "16",
+      stroke: col,
+      strokeWidth: "1",
+      opacity: "0.6"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "12",
+      y1: "20",
+      x2: "18",
+      y2: "20",
+      stroke: col,
+      strokeWidth: "1",
+      opacity: "0.6"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "28",
+      cy: "28",
+      r: "7",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: `${col}15`
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M25 28 Q28 24 31 28",
+      stroke: col,
+      strokeWidth: "1",
+      fill: "none",
+      opacity: "0.7"
+    })),
+    'Diebeswerkzeug': /*#__PURE__*/React.createElement("svg", {
+      width: size,
+      height: size,
+      viewBox: "0 0 40 40",
+      fill: "none"
+    }, /*#__PURE__*/React.createElement("path", {
+      d: "M14 8 L14 22 Q14 26 18 28 Q22 30 26 28 L26 8",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: `${col}15`
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "20",
+      cy: "18",
+      r: "4",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: `${col}20`
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "20",
+      y1: "22",
+      x2: "20",
+      y2: "32",
+      stroke: col,
+      strokeWidth: "1.2"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "16",
+      y1: "28",
+      x2: "24",
+      y2: "28",
+      stroke: col,
+      strokeWidth: "1",
+      opacity: "0.6"
+    })),
+    'Giftmischerausrüstung': /*#__PURE__*/React.createElement("svg", {
+      width: size,
+      height: size,
+      viewBox: "0 0 40 40",
+      fill: "none"
+    }, /*#__PURE__*/React.createElement("path", {
+      d: "M16 8 L16 18 L10 30 Q10 34 20 34 Q30 34 30 30 L24 18 L24 8 Z",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: `${col}15`
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "14",
+      y1: "14",
+      x2: "26",
+      y2: "14",
+      stroke: col,
+      strokeWidth: "1",
+      opacity: "0.5"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "17",
+      cy: "26",
+      r: "2",
+      fill: col,
+      opacity: "0.5"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "23",
+      cy: "22",
+      r: "1.5",
+      fill: col,
+      opacity: "0.4"
+    })),
+    'Kräuterkundeausrüstung': /*#__PURE__*/React.createElement("svg", {
+      width: size,
+      height: size,
+      viewBox: "0 0 40 40",
+      fill: "none"
+    }, /*#__PURE__*/React.createElement("path", {
+      d: "M20 30 Q20 20 14 14",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: "none"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M20 30 Q20 20 26 14",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: "none"
+    }), /*#__PURE__*/React.createElement("ellipse", {
+      cx: "12",
+      cy: "12",
+      rx: "5",
+      ry: "7",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: `${col}15`,
+      transform: "rotate(-20 12 12)"
+    }), /*#__PURE__*/React.createElement("ellipse", {
+      cx: "28",
+      cy: "12",
+      rx: "5",
+      ry: "7",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: `${col}15`,
+      transform: "rotate(20 28 12)"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "20",
+      y1: "30",
+      x2: "20",
+      y2: "36",
+      stroke: col,
+      strokeWidth: "1.2"
+    })),
+    'Navigationswerkzeuge': /*#__PURE__*/React.createElement("svg", {
+      width: size,
+      height: size,
+      viewBox: "0 0 40 40",
+      fill: "none"
+    }, /*#__PURE__*/React.createElement("circle", {
+      cx: "20",
+      cy: "20",
+      r: "13",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: `${col}10`
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "20",
+      y1: "7",
+      x2: "20",
+      y2: "33",
+      stroke: col,
+      strokeWidth: "0.8",
+      opacity: "0.4"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "7",
+      y1: "20",
+      x2: "33",
+      y2: "20",
+      stroke: col,
+      strokeWidth: "0.8",
+      opacity: "0.4"
+    }), /*#__PURE__*/React.createElement("polygon", {
+      points: "20,10 22,20 20,18 18,20",
+      fill: col,
+      opacity: "0.8"
+    }), /*#__PURE__*/React.createElement("polygon", {
+      points: "20,30 18,20 20,22 22,20",
+      fill: col,
+      opacity: "0.4"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "20",
+      cy: "20",
+      r: "2",
+      fill: col,
+      opacity: "0.7"
+    })),
+    'Verkleidungsausrüstung': /*#__PURE__*/React.createElement("svg", {
+      width: size,
+      height: size,
+      viewBox: "0 0 40 40",
+      fill: "none"
+    }, /*#__PURE__*/React.createElement("path", {
+      d: "M20 8 C12 8 8 14 8 20 C8 28 14 34 20 34 C26 34 32 28 32 20 C32 14 28 8 20 8Z",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: `${col}12`
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M13 18 Q16 14 20 18 Q24 14 27 18",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: "none"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M14 24 Q20 30 26 24",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: "none"
+    })),
+    // Handwerkszeuge
+    'Alchemistenlabor': /*#__PURE__*/React.createElement("svg", {
+      width: size,
+      height: size,
+      viewBox: "0 0 40 40",
+      fill: "none"
+    }, /*#__PURE__*/React.createElement("path", {
+      d: "M16 8 L16 18 L9 30 Q9 34 20 34 Q31 34 31 30 L24 18 L24 8",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: `${col}15`
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "14",
+      y1: "14",
+      x2: "26",
+      y2: "14",
+      stroke: col,
+      strokeWidth: "1.2"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "15",
+      cy: "26",
+      r: "2",
+      fill: col,
+      opacity: "0.6"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "22",
+      cy: "28",
+      r: "1.5",
+      fill: col,
+      opacity: "0.4"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M17 22 Q20 20 23 22",
+      stroke: col,
+      strokeWidth: "0.8",
+      fill: "none",
+      opacity: "0.6"
+    })),
+    'Brauereivorräte': /*#__PURE__*/React.createElement("svg", {
+      width: size,
+      height: size,
+      viewBox: "0 0 40 40",
+      fill: "none"
+    }, /*#__PURE__*/React.createElement("rect", {
+      x: "11",
+      y: "10",
+      width: "18",
+      height: "22",
+      rx: "4",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: `${col}15`
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "11",
+      y1: "17",
+      x2: "29",
+      y2: "17",
+      stroke: col,
+      strokeWidth: "0.8",
+      opacity: "0.5"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "11",
+      y1: "25",
+      x2: "29",
+      y2: "25",
+      stroke: col,
+      strokeWidth: "0.8",
+      opacity: "0.5"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "20",
+      cy: "6",
+      r: "3",
+      stroke: col,
+      strokeWidth: "1",
+      fill: `${col}15`
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "20",
+      y1: "9",
+      x2: "20",
+      y2: "10",
+      stroke: col,
+      strokeWidth: "1"
+    })),
+    'Glasbläserwerkzeuge': /*#__PURE__*/React.createElement("svg", {
+      width: size,
+      height: size,
+      viewBox: "0 0 40 40",
+      fill: "none"
+    }, /*#__PURE__*/React.createElement("path", {
+      d: "M8 20 Q8 12 14 12 L20 12 L26 12 Q32 12 32 20 Q32 30 20 34 Q8 30 8 20Z",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: `${col}12`
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M14 12 L10 6",
+      stroke: col,
+      strokeWidth: "1.2"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "9",
+      cy: "5",
+      r: "2",
+      stroke: col,
+      strokeWidth: "1",
+      fill: `${col}20`
+    })),
+    'Holzschnitzwerkzeuge': /*#__PURE__*/React.createElement("svg", {
+      width: size,
+      height: size,
+      viewBox: "0 0 40 40",
+      fill: "none"
+    }, /*#__PURE__*/React.createElement("path", {
+      d: "M10 30 L28 12",
+      stroke: col,
+      strokeWidth: "3",
+      strokeLinecap: "round"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M28 12 L32 8 L34 10 L30 14Z",
+      fill: col,
+      opacity: "0.7"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M10 30 L6 34 L8 36 L12 32Z",
+      fill: col,
+      opacity: "0.4"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "14",
+      y1: "26",
+      x2: "22",
+      y2: "18",
+      stroke: `${col}50`,
+      strokeWidth: "1"
+    })),
+    'Juwelierwerkzeuge': /*#__PURE__*/React.createElement("svg", {
+      width: size,
+      height: size,
+      viewBox: "0 0 40 40",
+      fill: "none"
+    }, /*#__PURE__*/React.createElement("polygon", {
+      points: "20,8 28,16 24,30 16,30 12,16",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: `${col}15`
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "12",
+      y1: "16",
+      x2: "28",
+      y2: "16",
+      stroke: col,
+      strokeWidth: "0.8",
+      opacity: "0.6"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "16",
+      y1: "16",
+      x2: "20",
+      y2: "8",
+      stroke: col,
+      strokeWidth: "0.8",
+      opacity: "0.5"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "24",
+      y1: "16",
+      x2: "20",
+      y2: "8",
+      stroke: col,
+      strokeWidth: "0.8",
+      opacity: "0.5"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "20",
+      cy: "34",
+      r: "3",
+      stroke: col,
+      strokeWidth: "1",
+      fill: `${col}25`
+    })),
+    'Kalligraphiewerkzeuge': /*#__PURE__*/React.createElement("svg", {
+      width: size,
+      height: size,
+      viewBox: "0 0 40 40",
+      fill: "none"
+    }, /*#__PURE__*/React.createElement("path", {
+      d: "M26 8 L14 32",
+      stroke: col,
+      strokeWidth: "2",
+      strokeLinecap: "round"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M26 8 L30 6 L28 12Z",
+      fill: col,
+      opacity: "0.7"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "12",
+      y1: "22",
+      x2: "20",
+      y2: "22",
+      stroke: col,
+      strokeWidth: "0.8",
+      opacity: "0.5"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "10",
+      y1: "28",
+      x2: "18",
+      y2: "28",
+      stroke: col,
+      strokeWidth: "0.8",
+      opacity: "0.5"
+    }), /*#__PURE__*/React.createElement("rect", {
+      x: "8",
+      y: "6",
+      width: "10",
+      height: "14",
+      rx: "1",
+      stroke: col,
+      strokeWidth: "0.8",
+      fill: "none",
+      opacity: "0.3"
+    })),
+    'Kartographenwerkzeuge': /*#__PURE__*/React.createElement("svg", {
+      width: size,
+      height: size,
+      viewBox: "0 0 40 40",
+      fill: "none"
+    }, /*#__PURE__*/React.createElement("rect", {
+      x: "7",
+      y: "8",
+      width: "26",
+      height: "24",
+      rx: "2",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: `${col}10`
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M13 14 Q17 18 15 22 Q13 26 17 28",
+      stroke: col,
+      strokeWidth: "1",
+      fill: "none",
+      opacity: "0.7"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M20 12 Q24 16 22 20 Q20 24 24 26",
+      stroke: col,
+      strokeWidth: "1",
+      fill: "none",
+      opacity: "0.5"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "27",
+      cy: "14",
+      r: "2",
+      stroke: col,
+      strokeWidth: "1",
+      fill: `${col}30`
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "27",
+      y1: "14",
+      x2: "27",
+      y2: "20",
+      stroke: col,
+      strokeWidth: "0.8",
+      opacity: "0.6"
+    })),
+    'Kochutensilien': /*#__PURE__*/React.createElement("svg", {
+      width: size,
+      height: size,
+      viewBox: "0 0 40 40",
+      fill: "none"
+    }, /*#__PURE__*/React.createElement("path", {
+      d: "M10 22 Q10 32 20 32 Q30 32 30 22 L30 18 L10 18 Z",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: `${col}15`
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "20",
+      y1: "32",
+      x2: "20",
+      y2: "36",
+      stroke: col,
+      strokeWidth: "1.2"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "16",
+      y1: "36",
+      x2: "24",
+      y2: "36",
+      stroke: col,
+      strokeWidth: "1"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M10 18 Q10 14 15 14",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: "none"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "30",
+      y1: "20",
+      x2: "35",
+      y2: "20",
+      stroke: col,
+      strokeWidth: "1.2"
+    })),
+    'Ledererwerkzeuge': /*#__PURE__*/React.createElement("svg", {
+      width: size,
+      height: size,
+      viewBox: "0 0 40 40",
+      fill: "none"
+    }, /*#__PURE__*/React.createElement("path", {
+      d: "M8 28 Q8 20 14 16 Q20 12 26 16 Q32 20 32 28 Q32 34 20 34 Q8 34 8 28Z",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: `${col}12`
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M14 20 Q20 16 26 20",
+      stroke: col,
+      strokeWidth: "1",
+      fill: "none",
+      opacity: "0.6"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "16",
+      cy: "25",
+      r: "1.5",
+      fill: col,
+      opacity: "0.5"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "20",
+      cy: "27",
+      r: "1.5",
+      fill: col,
+      opacity: "0.5"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "24",
+      cy: "25",
+      r: "1.5",
+      fill: col,
+      opacity: "0.5"
+    })),
+    'Malutensilien': /*#__PURE__*/React.createElement("svg", {
+      width: size,
+      height: size,
+      viewBox: "0 0 40 40",
+      fill: "none"
+    }, /*#__PURE__*/React.createElement("rect", {
+      x: "8",
+      y: "8",
+      width: "20",
+      height: "24",
+      rx: "1.5",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: `${col}10`
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M12 18 Q16 14 20 18 Q24 14 26 18",
+      stroke: col,
+      strokeWidth: "1",
+      fill: "none",
+      opacity: "0.6"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M28 10 L34 10 L34 30 L28 30",
+      stroke: col,
+      strokeWidth: "1",
+      fill: "none",
+      opacity: "0.4"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "31",
+      cy: "15",
+      r: "2",
+      fill: col,
+      opacity: "0.5"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "31",
+      cy: "22",
+      r: "2",
+      fill: col,
+      opacity: "0.4"
+    })),
+    'Maurerwerkzeuge': /*#__PURE__*/React.createElement("svg", {
+      width: size,
+      height: size,
+      viewBox: "0 0 40 40",
+      fill: "none"
+    }, /*#__PURE__*/React.createElement("rect", {
+      x: "8",
+      y: "8",
+      width: "10",
+      height: "8",
+      rx: "1",
+      stroke: col,
+      strokeWidth: "1",
+      fill: `${col}20`
+    }), /*#__PURE__*/React.createElement("rect", {
+      x: "22",
+      y: "8",
+      width: "10",
+      height: "8",
+      rx: "1",
+      stroke: col,
+      strokeWidth: "1",
+      fill: `${col}20`
+    }), /*#__PURE__*/React.createElement("rect", {
+      x: "14",
+      y: "18",
+      width: "12",
+      height: "8",
+      rx: "1",
+      stroke: col,
+      strokeWidth: "1",
+      fill: `${col}20`
+    }), /*#__PURE__*/React.createElement("rect", {
+      x: "8",
+      y: "28",
+      width: "10",
+      height: "6",
+      rx: "1",
+      stroke: col,
+      strokeWidth: "1",
+      fill: `${col}20`
+    }), /*#__PURE__*/React.createElement("rect", {
+      x: "22",
+      y: "28",
+      width: "10",
+      height: "6",
+      rx: "1",
+      stroke: col,
+      strokeWidth: "1",
+      fill: `${col}20`
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M32 22 L36 18",
+      stroke: col,
+      strokeWidth: "1.5",
+      strokeLinecap: "round"
+    })),
+    'Schmiedewerkzeuge': /*#__PURE__*/React.createElement("svg", {
+      width: size,
+      height: size,
+      viewBox: "0 0 40 40",
+      fill: "none"
+    }, /*#__PURE__*/React.createElement("path", {
+      d: "M10 34 L28 16",
+      stroke: col,
+      strokeWidth: "3",
+      strokeLinecap: "round"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M28 10 L32 8 L34 10 L28 16 L24 12 Z",
+      fill: col,
+      opacity: "0.7"
+    }), /*#__PURE__*/React.createElement("rect", {
+      x: "8",
+      y: "26",
+      width: "10",
+      height: "10",
+      rx: "1",
+      stroke: col,
+      strokeWidth: "1",
+      fill: `${col}20`
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M10 30 Q14 28 18 30",
+      stroke: col,
+      strokeWidth: "0.8",
+      fill: "none",
+      opacity: "0.5"
+    })),
+    'Schreinerwerkzeuge': /*#__PURE__*/React.createElement("svg", {
+      width: size,
+      height: size,
+      viewBox: "0 0 40 40",
+      fill: "none"
+    }, /*#__PURE__*/React.createElement("rect", {
+      x: "8",
+      y: "14",
+      width: "24",
+      height: "16",
+      rx: "2",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: `${col}12`
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "8",
+      y1: "22",
+      x2: "32",
+      y2: "22",
+      stroke: col,
+      strokeWidth: "0.8",
+      opacity: "0.5"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M16 8 L16 14",
+      stroke: col,
+      strokeWidth: "1.5"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M24 8 L24 14",
+      stroke: col,
+      strokeWidth: "1.5"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M14 30 L14 36",
+      stroke: col,
+      strokeWidth: "1.2"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M26 30 L26 36",
+      stroke: col,
+      strokeWidth: "1.2"
+    })),
+    'Schusterwerkzeuge': /*#__PURE__*/React.createElement("svg", {
+      width: size,
+      height: size,
+      viewBox: "0 0 40 40",
+      fill: "none"
+    }, /*#__PURE__*/React.createElement("path", {
+      d: "M8 26 Q8 18 16 16 Q24 14 30 18 L34 26 Q34 32 22 32 L12 32 Q8 32 8 26Z",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: `${col}12`
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M12 20 Q16 16 22 18",
+      stroke: col,
+      strokeWidth: "1",
+      fill: "none",
+      opacity: "0.6"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "16",
+      y1: "32",
+      x2: "16",
+      y2: "36",
+      stroke: col,
+      strokeWidth: "1.2"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "14",
+      y1: "36",
+      x2: "22",
+      y2: "36",
+      stroke: col,
+      strokeWidth: "1"
+    })),
+    'Töpferwerkzeuge': /*#__PURE__*/React.createElement("svg", {
+      width: size,
+      height: size,
+      viewBox: "0 0 40 40",
+      fill: "none"
+    }, /*#__PURE__*/React.createElement("path", {
+      d: "M14 8 Q10 14 10 22 Q10 32 20 34 Q30 32 30 22 Q30 14 26 8 Z",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: `${col}12`
+    }), /*#__PURE__*/React.createElement("ellipse", {
+      cx: "20",
+      cy: "8",
+      rx: "6",
+      ry: "3",
+      stroke: col,
+      strokeWidth: "1",
+      fill: `${col}20`
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M12 18 Q20 16 28 18",
+      stroke: col,
+      strokeWidth: "0.8",
+      fill: "none",
+      opacity: "0.5"
+    }), /*#__PURE__*/React.createElement("path", {
+      d: "M11 24 Q20 22 29 24",
+      stroke: col,
+      strokeWidth: "0.8",
+      fill: "none",
+      opacity: "0.4"
+    })),
+    'Tüftlerwerkzeuge': /*#__PURE__*/React.createElement("svg", {
+      width: size,
+      height: size,
+      viewBox: "0 0 40 40",
+      fill: "none"
+    }, /*#__PURE__*/React.createElement("circle", {
+      cx: "20",
+      cy: "20",
+      r: "10",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: `${col}10`
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "20",
+      cy: "20",
+      r: "4",
+      stroke: col,
+      strokeWidth: "1",
+      fill: `${col}25`
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "20",
+      y1: "8",
+      x2: "20",
+      y2: "12",
+      stroke: col,
+      strokeWidth: "1.5"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "20",
+      y1: "28",
+      x2: "20",
+      y2: "32",
+      stroke: col,
+      strokeWidth: "1.5"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "8",
+      y1: "20",
+      x2: "12",
+      y2: "20",
+      stroke: col,
+      strokeWidth: "1.5"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "28",
+      y1: "20",
+      x2: "32",
+      y2: "20",
+      stroke: col,
+      strokeWidth: "1.5"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "11.5",
+      y1: "11.5",
+      x2: "14.4",
+      y2: "14.4",
+      stroke: col,
+      strokeWidth: "1.2"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "28.5",
+      y1: "28.5",
+      x2: "25.6",
+      y2: "25.6",
+      stroke: col,
+      strokeWidth: "1.2"
+    })),
+    'Weberwerkzeuge': /*#__PURE__*/React.createElement("svg", {
+      width: size,
+      height: size,
+      viewBox: "0 0 40 40",
+      fill: "none"
+    }, /*#__PURE__*/React.createElement("rect", {
+      x: "8",
+      y: "10",
+      width: "24",
+      height: "22",
+      rx: "2",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: `${col}08`
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "13",
+      y1: "10",
+      x2: "13",
+      y2: "32",
+      stroke: col,
+      strokeWidth: "0.8",
+      opacity: "0.5"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "18",
+      y1: "10",
+      x2: "18",
+      y2: "32",
+      stroke: col,
+      strokeWidth: "0.8",
+      opacity: "0.5"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "23",
+      y1: "10",
+      x2: "23",
+      y2: "32",
+      stroke: col,
+      strokeWidth: "0.8",
+      opacity: "0.5"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "28",
+      y1: "10",
+      x2: "28",
+      y2: "32",
+      stroke: col,
+      strokeWidth: "0.8",
+      opacity: "0.5"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "8",
+      y1: "15",
+      x2: "32",
+      y2: "15",
+      stroke: col,
+      strokeWidth: "1",
+      opacity: "0.4"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "8",
+      y1: "21",
+      x2: "32",
+      y2: "21",
+      stroke: col,
+      strokeWidth: "1",
+      opacity: "0.4"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "8",
+      y1: "27",
+      x2: "32",
+      y2: "27",
+      stroke: col,
+      strokeWidth: "1",
+      opacity: "0.4"
+    })),
+    // Gruppenicons
+    'Musikinstrumente': /*#__PURE__*/React.createElement("svg", {
+      width: size,
+      height: size,
+      viewBox: "0 0 40 40",
+      fill: "none"
+    }, /*#__PURE__*/React.createElement("path", {
+      d: "M22 8 L22 26 Q22 32 16 32 Q10 32 10 26 Q10 20 16 20 Q18 20 22 22",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: "none"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "16",
+      cy: "26",
+      r: "5",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: `${col}15`
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "22",
+      y1: "8",
+      x2: "30",
+      y2: "10",
+      stroke: col,
+      strokeWidth: "1.2"
+    }), /*#__PURE__*/React.createElement("line", {
+      x1: "22",
+      y1: "12",
+      x2: "30",
+      y2: "14",
+      stroke: col,
+      strokeWidth: "1.2"
+    })),
+    'Spiele': /*#__PURE__*/React.createElement("svg", {
+      width: size,
+      height: size,
+      viewBox: "0 0 40 40",
+      fill: "none"
+    }, /*#__PURE__*/React.createElement("rect", {
+      x: "8",
+      y: "8",
+      width: "11",
+      height: "11",
+      rx: "2",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: `${col}15`
+    }), /*#__PURE__*/React.createElement("rect", {
+      x: "21",
+      y: "8",
+      width: "11",
+      height: "11",
+      rx: "2",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: `${col}15`
+    }), /*#__PURE__*/React.createElement("rect", {
+      x: "8",
+      y: "21",
+      width: "11",
+      height: "11",
+      rx: "2",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: `${col}15`
+    }), /*#__PURE__*/React.createElement("rect", {
+      x: "21",
+      y: "21",
+      width: "11",
+      height: "11",
+      rx: "2",
+      stroke: col,
+      strokeWidth: "1.2",
+      fill: `${col}15`
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "13.5",
+      cy: "13.5",
+      r: "1.5",
+      fill: col,
+      opacity: "0.7"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "26.5",
+      cy: "11",
+      r: "1.2",
+      fill: col,
+      opacity: "0.6"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "29",
+      cy: "14",
+      r: "1.2",
+      fill: col,
+      opacity: "0.6"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "24",
+      cy: "14",
+      r: "1.2",
+      fill: col,
+      opacity: "0.6"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "13.5",
+      cy: "26.5",
+      r: "1.5",
+      fill: col,
+      opacity: "0.5"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "11",
+      cy: "24",
+      r: "1.2",
+      fill: col,
+      opacity: "0.5"
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: "16",
+      cy: "29",
+      r: "1.2",
+      fill: col,
+      opacity: "0.5"
+    }))
+  };
+  return icons[name] || /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: "0 0 40 40",
+    fill: "none"
+  }, /*#__PURE__*/React.createElement("rect", {
+    x: "10",
+    y: "10",
+    width: "20",
+    height: "20",
+    rx: "3",
+    stroke: col,
+    strokeWidth: "1.2",
+    fill: `${col}15`
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "10",
+    y1: "20",
+    x2: "30",
+    y2: "20",
+    stroke: col,
+    strokeWidth: "0.8",
+    opacity: "0.4"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "20",
+    y1: "10",
+    x2: "20",
+    y2: "30",
+    stroke: col,
+    strokeWidth: "0.8",
+    opacity: "0.4"
+  }));
+}
+
+// ── WERKZEUG POPUP ────────────────────────────────────────
+function WerkzeugPopup({
+  name,
+  isGroup,
+  groupRows,
+  accent,
+  onClose
+}) {
+  const raw = WERKZEUG_DETAILS[name];
+  let data = null;
+  let isShared = false;
+  if (raw) {
+    isShared = !!raw.shared;
+    data = raw.shared ? SHARED_DESCRIPTIONS[raw.shared] : raw;
+  }
+
+  // For groups (Musikinstrumente / Spiele), use the shared data directly
+  const groupData = isGroup ? name === 'Musikinstrumente' ? SHARED_DESCRIPTIONS['musikinstrument'] : SHARED_DESCRIPTIONS['spiel'] : null;
+  const displayData = isGroup ? groupData : data;
+  useEffect(() => {
+    const handleKey = e => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [onClose]);
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'fixed',
+      inset: 0,
+      zIndex: 1000,
+      background: 'rgba(3,2,12,0.85)',
+      backdropFilter: 'blur(8px)',
+      display: 'flex',
+      alignItems: 'flex-start',
+      justifyContent: 'center',
+      overflowY: 'auto',
+      animation: 'fadeInUp 0.22s ease forwards'
+    },
+    onClick: e => {
+      if (e.target === e.currentTarget) onClose();
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '100%',
+      maxWidth: '680px',
+      margin: '0',
+      minHeight: '100vh',
+      background: 'rgba(6,4,18,0.97)',
+      borderLeft: `1px solid ${accent}22`,
+      borderRight: `1px solid ${accent}22`,
+      padding: '0 0 60px 0',
+      position: 'relative'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'sticky',
+      top: 0,
+      zIndex: 10,
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px',
+      padding: '14px 24px',
+      background: 'rgba(var(--bg-rgb),0.96)',
+      borderBottom: `1px solid ${accent}18`,
+      backdropFilter: 'blur(12px)'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: onClose,
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      background: 'transparent',
+      border: `1px solid ${accent}33`,
+      borderRadius: '3px',
+      padding: '6px 14px',
+      color: `${accent}cc`,
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px',
+      letterSpacing: '0.1em',
+      cursor: 'pointer',
+      transition: 'all 0.15s'
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.background = `${accent}18`;
+      e.currentTarget.style.color = 'var(--white)';
+      e.currentTarget.style.borderColor = `${accent}66`;
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.background = 'transparent';
+      e.currentTarget.style.color = `${accent}cc`;
+      e.currentTarget.style.borderColor = `${accent}33`;
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "12",
+    height: "12",
+    viewBox: "0 0 12 12",
+    fill: "none"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M8 2 L4 6 L8 10",
+    stroke: "currentColor",
+    strokeWidth: "1.5",
+    strokeLinecap: "round",
+    strokeLinejoin: "round"
+  })), "Zur\xFCck"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.2em',
+      color: `${accent}44`,
+      textTransform: 'uppercase'
+    }
+  }, "Werkzeuge")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '36px 40px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '24px',
+      marginBottom: '32px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '80px',
+      height: '80px',
+      flexShrink: 0,
+      border: `1px solid ${accent}33`,
+      borderRadius: '6px',
+      background: `${accent}08`,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/React.createElement(ToolIcon, {
+    name: name,
+    size: 52,
+    accent: accent
+  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.28em',
+      color: `${accent}55`,
+      textTransform: 'uppercase',
+      marginBottom: '6px'
+    }
+  }, isGroup ? 'Kategorie' : 'Werkzeug'), /*#__PURE__*/React.createElement("h2", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '26px',
+      fontWeight: '300',
+      letterSpacing: '0.16em',
+      color: 'var(--white)',
+      textShadow: `0 0 24px ${accent}44`,
+      textTransform: 'uppercase'
+    }
+  }, name), !isGroup && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '16px',
+      marginTop: '8px',
+      flexWrap: 'wrap'
+    }
+  }, (() => {
+    // find in all item arrays
+    const allItems = [...WERKZEUGE_ITEMS, ...HANDWERKSZEUGE_ITEMS, ...MUSIKINSTRUMENTE_ITEMS, ...SPIELE_ITEMS];
+    const item = allItems.find(i => i.name === name);
+    if (!item) return null;
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: 'var(--font-mono)',
+        fontSize: '10px',
+        color: `${accent}77`,
+        letterSpacing: '0.1em'
+      }
+    }, item.kosten), item.pfund !== '—' && /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: 'var(--font-mono)',
+        fontSize: '10px',
+        color: `${accent}55`,
+        letterSpacing: '0.1em'
+      }
+    }, item.pfund, " Pfd."));
+  })()))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      height: '1px',
+      background: `linear-gradient(90deg, ${accent}44, transparent)`,
+      marginBottom: '24px'
+    }
+  }), displayData && !displayData.placeholder && /*#__PURE__*/React.createElement(React.Fragment, null, isShared && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.2em',
+      color: `${accent}55`,
+      textTransform: 'uppercase',
+      marginBottom: '12px'
+    }
+  }, "Gemeinsame Beschreibung"), displayData.intro && /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '13px',
+      lineHeight: '1.9',
+      color: 'rgba(var(--text-rgb),0.65)',
+      letterSpacing: '0.03em',
+      marginBottom: '20px'
+    }
+  }, displayData.intro), displayData.abschnitte && displayData.abschnitte.map((s, i) => /*#__PURE__*/React.createElement("p", {
+    key: i,
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.9',
+      color: 'rgba(185,175,235,0.6)',
+      marginBottom: '12px',
+      letterSpacing: '0.02em'
+    }
+  }, /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: 'rgba(var(--text-rgb),0.8)',
+      fontWeight: '500'
+    }
+  }, s.titel, ". "), s.text)), displayData.sg && displayData.sg.length > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: '20px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.22em',
+      color: `${accent}55`,
+      textTransform: 'uppercase',
+      marginBottom: '10px'
+    }
+  }, "Beispiel-SG"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      border: `1px solid ${accent}18`,
+      borderRadius: '3px',
+      overflow: 'hidden'
+    }
+  }, /*#__PURE__*/React.createElement("table", {
+    className: "eq-table",
+    style: {
+      width: '100%'
+    }
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}28`,
+      fontSize: '10px'
+    }
+  }, "Aktivit\xE4t"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}28`,
+      width: '90px',
+      fontSize: '10px'
+    }
+  }, "SG"))), /*#__PURE__*/React.createElement("tbody", null, displayData.sg.map((row, i) => /*#__PURE__*/React.createElement("tr", {
+    key: i
+  }, /*#__PURE__*/React.createElement("td", {
+    style: {
+      fontSize: '12px',
+      color: 'rgba(var(--text-rgb),0.65)'
+    }
+  }, row.aktivitaet), /*#__PURE__*/React.createElement("td", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '12px',
+      color: `${accent}99`,
+      textAlign: 'center'
+    }
+  }, row.sg)))))))), displayData && displayData.placeholder && /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '32px',
+      textAlign: 'center',
+      border: `1px dashed ${accent}20`,
+      borderRadius: '3px'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.25em',
+      color: `${accent}33`,
+      textTransform: 'uppercase'
+    }
+  }, "\u2014 Beschreibung wird vorbereitet \u2014")), !displayData && /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '32px',
+      textAlign: 'center',
+      border: `1px dashed ${accent}20`,
+      borderRadius: '3px'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.25em',
+      color: `${accent}33`,
+      textTransform: 'uppercase'
+    }
+  }, "\u2014 Keine Beschreibung verf\xFCgbar \u2014")))));
+}
+
+// ── WERKZEUG BUTTON ───────────────────────────────────────
+function WerkzeugButton({
+  name,
+  isGroup,
+  groupRows,
+  accent,
+  onOpen
+}) {
+  const [hovered, setHovered] = useState(false);
+  return /*#__PURE__*/React.createElement("button", {
+    onClick: () => onOpen({
+      name,
+      isGroup,
+      groupRows
+    }),
+    onMouseEnter: () => setHovered(true),
+    onMouseLeave: () => setHovered(false),
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '8px',
+      padding: '14px 8px 12px',
+      background: hovered ? `${accent}18` : `${accent}08`,
+      border: `1px solid ${hovered ? accent + '55' : accent + '22'}`,
+      borderRadius: '4px',
+      cursor: 'pointer',
+      transition: 'all 0.18s',
+      boxShadow: hovered ? `0 0 16px ${accent}22` : 'none',
+      minHeight: '90px'
+    }
+  }, /*#__PURE__*/React.createElement(ToolIcon, {
+    name: name,
+    size: 38,
+    accent: accent
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '10px',
+      fontWeight: hovered ? '500' : '300',
+      letterSpacing: '0.06em',
+      color: hovered ? 'var(--white)' : 'rgba(var(--text-rgb),0.7)',
+      textAlign: 'center',
+      lineHeight: '1.3',
+      transition: 'color 0.15s',
+      width: '100%',
+      display: 'block'
+    }
+  }, name));
+}
+
+// ── WERKZEUG GRID ─────────────────────────────────────────
+function WerkzeugGrid({
+  title,
+  buttons,
+  accent,
+  onOpen
+}) {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      marginBottom: '10px',
+      marginTop: '8px'
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 6,
+    color: `${accent}44`,
+    fill: `${accent}12`,
+    strokeWidth: 1
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.22em',
+      color: `${accent}55`,
+      textTransform: 'uppercase'
+    }
+  }, "Schnellzugriff \xB7 ", title)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(5, 1fr)',
+      gap: '8px',
+      marginBottom: '40px'
+    }
+  }, buttons.map((btn, i) => /*#__PURE__*/React.createElement(WerkzeugButton, {
+    key: i,
+    name: btn.name,
+    isGroup: btn.isGroup,
+    groupRows: btn.groupRows,
+    accent: accent,
+    onOpen: onOpen
+  }))));
+}
+
+// ── ROLL TABLE ────────────────────────────────────────────
+function RollTable({
+  title,
+  rows,
+  accent
+}) {
+  const [highlighted, setHighlighted] = useState(null);
+  const [rolling, setRolling] = useState(false);
+  const rowRefs = useRef([]);
+  const handleRoll = () => {
+    if (rolling) return;
+    setRolling(true);
+    let ticks = 0;
+    const total = 14 + Math.floor(Math.random() * 8);
+    const interval = setInterval(() => {
+      setHighlighted(Math.floor(Math.random() * rows.length));
+      ticks++;
+      if (ticks >= total) {
+        clearInterval(interval);
+        const final = Math.floor(Math.random() * rows.length);
+        setHighlighted(final);
+        setRolling(false);
+      }
+    }, ticks < total * 0.6 ? 60 : ticks < total * 0.85 ? 110 : 190);
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      marginBottom: '36px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px',
+      marginBottom: '12px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 7,
+    color: `${accent}55`,
+    fill: `${accent}18`,
+    strokeWidth: 1
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '14px',
+      fontWeight: '300',
+      letterSpacing: '0.18em',
+      color: 'rgba(var(--text-rgb),0.75)',
+      textTransform: 'uppercase'
+    }
+  }, title)), /*#__PURE__*/React.createElement("button", {
+    onClick: handleRoll,
+    disabled: rolling,
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '6px',
+      padding: '5px 14px',
+      background: rolling ? `${accent}18` : `${accent}22`,
+      border: `1px solid ${accent}55`,
+      borderRadius: '2px',
+      color: rolling ? `${accent}77` : `${accent}cc`,
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.2em',
+      cursor: rolling ? 'not-allowed' : 'pointer',
+      transition: 'all 0.15s',
+      textTransform: 'uppercase'
+    },
+    onMouseEnter: e => {
+      if (!rolling) {
+        e.currentTarget.style.background = `${accent}33`;
+        e.currentTarget.style.color = 'var(--white)';
+      }
+    },
+    onMouseLeave: e => {
+      if (!rolling) {
+        e.currentTarget.style.background = `${accent}22`;
+        e.currentTarget.style.color = `${accent}cc`;
+      }
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "11",
+    height: "11",
+    viewBox: "0 0 11 11",
+    fill: "none",
+    style: {
+      flexShrink: 0,
+      opacity: rolling ? 0.4 : 1
+    }
+  }, /*#__PURE__*/React.createElement("rect", {
+    x: "1",
+    y: "1",
+    width: "9",
+    height: "9",
+    rx: "1.5",
+    stroke: "currentColor",
+    strokeWidth: "1"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "3.5",
+    cy: "3.5",
+    r: "0.9",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "7.5",
+    cy: "7.5",
+    r: "0.9",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "7.5",
+    cy: "3.5",
+    r: "0.9",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "3.5",
+    cy: "7.5",
+    r: "0.9",
+    fill: "currentColor"
+  })), "Roll")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      border: `1px solid ${accent}22`,
+      borderRadius: '3px',
+      overflow: 'hidden',
+      background: 'rgba(var(--panel-rgb),0.6)'
+    }
+  }, /*#__PURE__*/React.createElement("table", {
+    className: "eq-table",
+    style: {
+      width: '100%'
+    }
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`
+    }
+  }, "Gegenstand"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`,
+      width: '160px'
+    }
+  }, "Kosten"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`,
+      width: '90px'
+    }
+  }, "Gewicht"))), /*#__PURE__*/React.createElement("tbody", null, rows.map((r, i) => {
+    const isHit = highlighted === i;
+    return /*#__PURE__*/React.createElement("tr", {
+      key: i,
+      ref: el => rowRefs.current[i] = el,
+      style: {
+        background: isHit ? `${accent}22` : 'transparent',
+        transition: 'background 0.08s',
+        outline: isHit ? `1px solid ${accent}55` : 'none',
+        outlineOffset: '-1px'
+      }
+    }, /*#__PURE__*/React.createElement("td", {
+      style: {
+        color: isHit ? 'var(--white)' : 'rgba(var(--text-rgb),0.8)',
+        fontWeight: isHit ? '500' : '300',
+        transition: 'color 0.08s'
+      }
+    }, r.name), /*#__PURE__*/React.createElement("td", {
+      className: "cost",
+      style: {
+        color: isHit ? `${accent}cc` : undefined
+      }
+    }, r.kosten), /*#__PURE__*/React.createElement("td", {
+      className: "weight",
+      style: {
+        color: isHit ? 'var(--white)' : undefined
+      }
+    }, r.pfund === '—' ? '—' : `${r.pfund} Pfd.`));
+  })))));
+}
+
+// ── WERKZEUGE CONTENT ─────────────────────────────────────
+function WerkzeugeContent({
+  accent
+}) {
+  const [popup, setPopup] = useState(null);
+  return /*#__PURE__*/React.createElement("div", null, popup && /*#__PURE__*/React.createElement(WerkzeugPopup, {
+    name: popup.name,
+    isGroup: popup.isGroup,
+    groupRows: popup.groupRows,
+    accent: accent,
+    onClose: () => setPopup(null)
+  }), /*#__PURE__*/React.createElement(SectionHeader, {
+    label: "Werkzeuge",
+    accent: accent,
+    mono: "Ausr\xFCstung"
+  }), /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.9',
+      color: 'rgba(var(--text-rgb),0.55)',
+      letterSpacing: '0.04em',
+      marginBottom: '10px',
+      maxWidth: '680px'
+    }
+  }, "Der folgende Abschnitt geht im Detail auf die Werkzeuge ein, die im Players Handbook vorgestellt werden, und gibt Tipps, wie du sie in einer Kampagne verwenden kannst."), /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.9',
+      color: 'rgba(var(--text-rgb),0.45)',
+      letterSpacing: '0.04em',
+      marginBottom: '10px',
+      maxWidth: '680px'
+    }
+  }, /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: 'rgba(var(--text-rgb),0.7)',
+      fontWeight: '500'
+    }
+  }, "Bestandteile."), " Der erste Absatz jeder Beschreibung ist den einzelnen Bestandteilen gewidmet, aus denen sich eine Ausr\xFCstung oder ein Werkzeugsatz zusammensetzt. Ein Charakter, der im Umgang mit einem Werkzeug ge\xFCbt ist, versteht es, alle Bestandteile einer Ausr\xFCstung oder eines Werkzeugsatzes zu nutzen."), /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.9',
+      color: 'rgba(var(--text-rgb),0.45)',
+      letterSpacing: '0.04em',
+      marginBottom: '10px',
+      maxWidth: '680px'
+    }
+  }, /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: 'rgba(var(--text-rgb),0.7)',
+      fontWeight: '500'
+    }
+  }, "Fertigkeiten."), " Potenziell bist du dank Werkzeugen im Vorteil bei einem Wurf, wenn besagte Werkzeuge in Verbindung mit bestimmten Fertigkeiten eingesetzt werden. Dies gilt jedoch nur, wenn der Charakter sowohl den Umgang mit dem Werkzeug als auch mit der Fertigkeit beherrscht. Als SL kannst du dann bestimmen, dass ein Charakter bei einem Wurf mit der angegebenen Fertigkeit im Vorteil ist. Wenn zu Beginn eines Absatzes die Bezeichnung einer Fertigkeit steht, wird dort n\xE4her auf die hier beschriebenen M\xF6glichkeiten eingegangen. Nur jemand, der mit dem jeweiligen Werkzeug ge\xFCbt ist, kommt in den Genuss der im jeweiligen Absatz beschriebenen Vorz\xFCge. Es gen\xFCgt nicht, das Werkzeug lediglich zu besitzen."), /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.9',
+      color: 'rgba(var(--text-rgb),0.45)',
+      letterSpacing: '0.04em',
+      marginBottom: '10px',
+      maxWidth: '680px'
+    }
+  }, /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: 'rgba(var(--text-rgb),0.7)',
+      fontWeight: '500'
+    }
+  }, "Besondere Anwendungsm\xF6glichkeit."), " Wie in diesem Absatz beschrieben, bringt deine \xDCbung im Umgang mit einem Werkzeug oftmals eine besondere Anwendungsm\xF6glichkeit in Form eines besonderen Vorzugs mit sich."), /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.9',
+      color: 'rgba(var(--text-rgb),0.45)',
+      letterSpacing: '0.04em',
+      marginBottom: '32px',
+      maxWidth: '680px'
+    }
+  }, /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: 'rgba(var(--text-rgb),0.7)',
+      fontWeight: '500'
+    }
+  }, "Beispiel-SG."), " Am Ende jeder Beschreibung f\xFChrt eine Tabelle unterschiedliche Aktivit\xE4ten auf, die mithilfe eines Werkzeuges durchgef\xFChrt werden k\xF6nnen, sowie den vorgeschlagenen SG f\xFCr den jeweils notwendigen F\xE4higkeitswurf."), /*#__PURE__*/React.createElement("div", {
+    id: "sec-werkzeuge"
+  }), /*#__PURE__*/React.createElement(RollTable, {
+    title: "Werkzeuge",
+    rows: WERKZEUGE_ITEMS,
+    accent: accent
+  }), /*#__PURE__*/React.createElement(WerkzeugGrid, {
+    title: "Werkzeuge",
+    buttons: WERKZEUGE_ITEMS.map(r => ({
+      name: r.name
+    })),
+    accent: accent,
+    onOpen: setPopup
+  }), /*#__PURE__*/React.createElement("div", {
+    id: "sec-handwerk"
+  }), /*#__PURE__*/React.createElement(RollTable, {
+    title: "Handwerkszeuge",
+    rows: HANDWERKSZEUGE_ITEMS,
+    accent: accent
+  }), /*#__PURE__*/React.createElement(WerkzeugGrid, {
+    title: "Handwerkszeuge",
+    buttons: HANDWERKSZEUGE_ITEMS.map(r => ({
+      name: r.name
+    })),
+    accent: accent,
+    onOpen: setPopup
+  }), /*#__PURE__*/React.createElement("div", {
+    id: "sec-musik"
+  }), /*#__PURE__*/React.createElement(RollTable, {
+    title: "Musikinstrumente",
+    rows: MUSIKINSTRUMENTE_ITEMS,
+    accent: accent
+  }), /*#__PURE__*/React.createElement(WerkzeugGrid, {
+    title: "Musikinstrumente",
+    buttons: [{
+      name: 'Musikinstrumente',
+      isGroup: true,
+      groupRows: MUSIKINSTRUMENTE_ITEMS
+    }],
+    accent: accent,
+    onOpen: setPopup
+  }), /*#__PURE__*/React.createElement("div", {
+    id: "sec-spiele"
+  }), /*#__PURE__*/React.createElement(RollTable, {
+    title: "Spiele",
+    rows: SPIELE_ITEMS,
+    accent: accent
+  }), /*#__PURE__*/React.createElement(WerkzeugGrid, {
+    title: "Spiele",
+    buttons: [{
+      name: 'Spiele',
+      isGroup: true,
+      groupRows: SPIELE_ITEMS
+    }],
+    accent: accent,
+    onOpen: setPopup
+  }));
+}
+
+// ── REITTIERE CONTENT ─────────────────────────────────────
+function ReittiereContent({
+  accent
+}) {
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(SectionHeader, {
+    label: "Reittiere & Fahrzeuge",
+    accent: accent,
+    mono: "Ausr\xFCstung"
+  }), /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.9',
+      color: 'rgba(var(--text-rgb),0.55)',
+      letterSpacing: '0.04em',
+      marginBottom: '10px',
+      maxWidth: '680px'
+    }
+  }, "Mit einem guten Reittier vermagst du dich schneller durch die Wildnis zu bewegen, doch seine prim\xE4re Aufgabe ist es, die Ausr\xFCstung zu tragen, die dich andernfalls verlangsamen w\xFCrde. Ein Tier, das einen Wagen, Karren, Schlitten oder Streitwagen zieht, kann bis zum f\xFCnffachen seiner Traglast damit transportieren. Ziehen mehrere Tiere dasselbe Fahrzeug, summiert sich ihre Traglast."), /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.9',
+      color: 'rgba(var(--text-rgb),0.45)',
+      letterSpacing: '0.04em',
+      marginBottom: '32px',
+      maxWidth: '680px'
+    }
+  }, "Andere Reittiere \u2014 fliegende Reittiere (Pegasi, Greifen, Hippogreifen) und Meeresreittiere \u2014 sind selten und stehen f\xFCr gew\xF6hnlich nicht zum Verkauf. An ein solches Reittier gelangen Abenteurer meist nur durch Handel oder indem sie ein Ei finden und das Junge aufziehen."), /*#__PURE__*/React.createElement("div", {
+    id: "sec-lasttiere",
+    className: "reveal-left",
+    style: {
+      marginBottom: '10px',
+      paddingBottom: '10px',
+      borderBottom: `1px solid ${accent}18`
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px'
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 7,
+    color: `${accent}55`,
+    fill: `${accent}18`,
+    strokeWidth: 1
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '14px',
+      fontWeight: '300',
+      letterSpacing: '0.18em',
+      color: 'rgba(var(--text-rgb),0.75)',
+      textTransform: 'uppercase'
+    }
+  }, "Reit- und Lasttiere"))), /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      marginBottom: '32px',
+      border: `1px solid ${accent}22`,
+      borderRadius: '3px',
+      overflow: 'hidden',
+      background: 'rgba(var(--panel-rgb),0.6)'
+    }
+  }, /*#__PURE__*/React.createElement("table", {
+    className: "eq-table",
+    style: {
+      width: '100%'
+    }
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`
+    }
+  }, "Tier"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`,
+      width: '160px'
+    }
+  }, "Kosten"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`,
+      width: '110px'
+    }
+  }, "Bewegungsrate"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`,
+      width: '110px'
+    }
+  }, "Traglast"))), /*#__PURE__*/React.createElement("tbody", null, REIT_LASTTIERE.map((r, i) => /*#__PURE__*/React.createElement("tr", {
+    key: i
+  }, /*#__PURE__*/React.createElement("td", {
+    style: {
+      color: 'rgba(var(--text-rgb),0.85)',
+      fontWeight: '400'
+    }
+  }, r.tier), /*#__PURE__*/React.createElement("td", {
+    className: "cost"
+  }, r.kosten), /*#__PURE__*/React.createElement("td", {
+    style: {
+      color: `${accent}99`,
+      fontFamily: 'var(--font-mono)',
+      fontSize: '11px'
+    }
+  }, r.bewegung), /*#__PURE__*/React.createElement("td", {
+    style: {
+      color: 'rgba(var(--text-rgb),0.65)',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '11px'
+    }
+  }, r.traglast)))))), /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '10px',
+      marginBottom: '32px',
+      maxWidth: '680px'
+    }
+  }, [{
+    titel: 'Rossharnisch',
+    text: 'Hierbei handelt es sich um eine Rüstung, die dafür entworfen wurde, Kopf, Nacken, Brust und Körper eines Reittieres zu schützen. Jede Art von Rüstung kann als Rossharnisch angefertigt werden. Die Kosten entsprechen dem vierfachen Preis für Humanoide und das Gewicht ist doppelt so hoch.'
+  }, {
+    titel: 'Sattel',
+    text: 'Ein Militärsattel stützt den Reiter und hilft ihm dabei, während des Kampfes auf einem Reittier nicht hinunterzufallen. Du bist im Vorteil bei Würfen, um im Sattel zu bleiben. Ein exotischer Sattel wird zum Reiten von fliegenden oder Wasserreittieren benötigt.'
+  }].map((info, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    style: {
+      padding: '12px 16px',
+      border: `1px solid ${accent}18`,
+      borderRadius: '3px',
+      background: `${accent}06`
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '500',
+      fontSize: '12px',
+      color: 'rgba(var(--text-rgb),0.85)'
+    }
+  }, info.titel, ". "), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.8',
+      color: 'rgba(var(--text-rgb),0.6)'
+    }
+  }, info.text)))), /*#__PURE__*/React.createElement("div", {
+    id: "sec-zaumzeug",
+    className: "reveal-left",
+    style: {
+      marginBottom: '10px',
+      paddingBottom: '10px',
+      borderBottom: `1px solid ${accent}18`
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px'
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 7,
+    color: `${accent}55`,
+    fill: `${accent}18`,
+    strokeWidth: 1
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '14px',
+      fontWeight: '300',
+      letterSpacing: '0.18em',
+      color: 'rgba(var(--text-rgb),0.75)',
+      textTransform: 'uppercase'
+    }
+  }, "Zaumzeug, Harnische & gezogene Fahrzeuge"))), /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      marginBottom: '32px',
+      border: `1px solid ${accent}22`,
+      borderRadius: '3px',
+      overflow: 'hidden',
+      background: 'rgba(var(--panel-rgb),0.6)'
+    }
+  }, /*#__PURE__*/React.createElement("table", {
+    className: "eq-table",
+    style: {
+      width: '100%'
+    }
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`
+    }
+  }, "Name"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`,
+      width: '160px'
+    }
+  }, "Kosten"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`,
+      width: '110px'
+    }
+  }, "Gewicht"))), /*#__PURE__*/React.createElement("tbody", null, ZAUMZEUG_ITEMS.map((r, i) => /*#__PURE__*/React.createElement("tr", {
+    key: i
+  }, /*#__PURE__*/React.createElement("td", {
+    style: {
+      color: 'rgba(var(--text-rgb),0.8)'
+    }
+  }, r.name), /*#__PURE__*/React.createElement("td", {
+    className: "cost"
+  }, r.kosten), /*#__PURE__*/React.createElement("td", {
+    className: "weight"
+  }, r.gewicht)))))), /*#__PURE__*/React.createElement("div", {
+    id: "sec-wasser",
+    className: "reveal-left",
+    style: {
+      marginBottom: '10px',
+      paddingBottom: '10px',
+      borderBottom: `1px solid ${accent}18`
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px'
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 7,
+    color: `${accent}55`,
+    fill: `${accent}18`,
+    strokeWidth: 1
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '14px',
+      fontWeight: '300',
+      letterSpacing: '0.18em',
+      color: 'rgba(var(--text-rgb),0.75)',
+      textTransform: 'uppercase'
+    }
+  }, "Wasserfahrzeuge"))), /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      marginBottom: '32px',
+      border: `1px solid ${accent}22`,
+      borderRadius: '3px',
+      overflow: 'hidden',
+      background: 'rgba(var(--panel-rgb),0.6)'
+    }
+  }, /*#__PURE__*/React.createElement("table", {
+    className: "eq-table",
+    style: {
+      width: '100%'
+    }
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`
+    }
+  }, "Name"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`,
+      width: '200px'
+    }
+  }, "Kosten"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`,
+      width: '130px'
+    }
+  }, "Geschwindigkeit"))), /*#__PURE__*/React.createElement("tbody", null, WASSERFAHRZEUGE.map((r, i) => /*#__PURE__*/React.createElement("tr", {
+    key: i
+  }, /*#__PURE__*/React.createElement("td", {
+    style: {
+      color: 'rgba(var(--text-rgb),0.8)'
+    }
+  }, r.name), /*#__PURE__*/React.createElement("td", {
+    className: "cost"
+  }, r.kosten), /*#__PURE__*/React.createElement("td", {
+    style: {
+      color: `${accent}99`,
+      fontFamily: 'var(--font-mono)',
+      fontSize: '11px'
+    }
+  }, r.geschwindigkeit)))))), /*#__PURE__*/React.createElement("div", {
+    id: "sec-fahrzeuge",
+    className: "reveal-left",
+    style: {
+      marginBottom: '22px',
+      paddingBottom: '12px',
+      borderBottom: `1px solid ${accent}22`
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px'
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 8,
+    color: `${accent}66`,
+    fill: `${accent}22`,
+    strokeWidth: 1
+  }), /*#__PURE__*/React.createElement("h2", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '18px',
+      fontWeight: '300',
+      letterSpacing: '0.2em',
+      color: 'rgba(var(--text-rgb),0.85)',
+      textTransform: 'uppercase'
+    }
+  }, "Land- und Wasserfahrzeuge")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '40px',
+      height: '1px',
+      background: `linear-gradient(90deg,${accent}77,transparent)`,
+      marginTop: '10px',
+      animation: 'pulse-glow 3s infinite'
+    }
+  })), /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.9',
+      color: 'rgba(var(--text-rgb),0.55)',
+      letterSpacing: '0.04em',
+      marginBottom: '10px',
+      maxWidth: '680px'
+    }
+  }, "Die \xDCbung im Umgang mit Landfahrzeugen deckt ein breites Spektrum an Transportmitteln ab, von Streitwagen \xFCber Elefantens\xE4nften bis hin zu Wagen und Karren. Die \xDCbung im Umgang mit Wasserfahrzeugen umfasst alle Gef\xE4hrte, die auf Wasser fahren k\xF6nnen. Wer im Umgang mit Fahrzeugen ge\xFCbt ist, wei\xDF, wie man diese bestimmte Art von Fahrzeugen f\xE4hrt, repariert und instand h\xE4lt. Ein Charakter, der den Umgang mit Wasserfahrzeugen beherrscht, kennt sich au\xDFerdem mit allem aus, was in den Wissensbereich eines professionellen Seemanns f\xE4llt \u2014 darunter Wissen \xFCber das Meer und Inseln, das Binden von Knoten und die richtige Einsch\xE4tzung von Witterungsverh\xE4ltnissen und Seegang."), /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '10px',
+      marginBottom: '28px',
+      maxWidth: '680px'
+    }
+  }, [{
+    titel: 'Arkane Kunde',
+    text: 'Wenn du ein magisches Fahrzeug untersuchst, fällt es dir dank deiner Übung im Umgang mit Fahrzeugen leichter, Wissen über das Vehikel in Erfahrung zu bringen und herauszufinden, wie es funktioniert.'
+  }, {
+    titel: 'Fahrzeuge fahren',
+    text: 'Wenn du ein Fahrzeug steuerst, kannst du deinen Übungsbonus zu der RK und den Rettungswürfen des Fahrzeugs rechnen.'
+  }, {
+    titel: 'Nachforschungen, Wahrnehmung',
+    text: 'Wenn du auf der Suche nach Hinweisen oder Geheimnissen ein Fahrzeug überprüfst, bemerkst du dank deiner Übung im Umgang mit Fahrzeugen Dinge, die anderen womöglich gar nicht auffallen würden.'
+  }, {
+    titel: 'Fahrzeugübung',
+    text: 'Bist du im Umgang mit einem Fahrzeug (Land oder Wasser) geübt, darfst du deinen Übungsbonus auf alle Attributs- und Fertigkeitswürfe addieren, die damit in Verbindung stehen, das Fahrzeug in schwierigen Situationen unter Kontrolle zu halten.'
+  }, {
+    titel: 'Ruderboot',
+    text: 'Kielboote und Ruderboote werden auf Seen und Flüssen eingesetzt. Wenn du flussabwärts fährst, kannst du die Geschwindigkeit der Strömung mit einrechnen (typischerweise 4,5 km/h). Ein Ruderboot wiegt 100 Pfund, für den Fall, dass Abenteurer es über Land tragen müssen.'
+  }].map((info, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    style: {
+      padding: '12px 16px',
+      border: `1px solid ${accent}18`,
+      borderRadius: '3px',
+      background: `${accent}06`
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '500',
+      fontSize: '12px',
+      color: 'rgba(var(--text-rgb),0.85)'
+    }
+  }, info.titel, ". "), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.8',
+      color: 'rgba(var(--text-rgb),0.6)'
+    }
+  }, info.text)))), /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      border: `1px solid ${accent}22`,
+      borderRadius: '3px',
+      overflow: 'hidden',
+      maxWidth: '480px',
+      marginBottom: '32px'
+    }
+  }, /*#__PURE__*/React.createElement("table", {
+    className: "eq-table",
+    style: {
+      width: '100%'
+    }
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`
+    }
+  }, "Aktivit\xE4t"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`,
+      width: '80px'
+    }
+  }, "SG"))), /*#__PURE__*/React.createElement("tbody", null, [{
+    aktivitaet: 'Auf rauer See oder über unebenes Gelände fahren',
+    sg: '10'
+  }, {
+    aktivitaet: 'Den Zustand eines Fahrzeugs feststellen',
+    sg: '15'
+  }, {
+    aktivitaet: 'Eine enge Kurve mit hoher Geschwindigkeit nehmen',
+    sg: '20'
+  }].map((r, i) => /*#__PURE__*/React.createElement("tr", {
+    key: i
+  }, /*#__PURE__*/React.createElement("td", {
+    style: {
+      color: 'rgba(var(--text-rgb),0.65)',
+      fontSize: '12px'
+    }
+  }, r.aktivitaet), /*#__PURE__*/React.createElement("td", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '12px',
+      color: `${accent}99`,
+      textAlign: 'center'
+    }
+  }, r.sg)))))));
+}
+
+// ── TAND ROLL TABLE ───────────────────────────────────────
+function TandRollTable({
+  title,
+  items,
+  accent,
+  diceLabel,
+  open: openProp,
+  onOpenChange
+}) {
+  const [openLocal, setOpenLocal] = useState(false);
+  const open = openProp !== undefined ? openProp : openLocal;
+  const setOpen = onOpenChange !== undefined ? onOpenChange : setOpenLocal;
+  const [highlighted, setHighlighted] = useState(null);
+  const [rolling, setRolling] = useState(false);
+  const rowRefs = useRef([]);
+  const handleRoll = e => {
+    e.stopPropagation();
+    if (rolling) return;
+    if (!open) setOpen(true);
+    setRolling(true);
+    let ticks = 0;
+    const total = 16 + Math.floor(Math.random() * 10);
+    const interval = setInterval(() => {
+      ticks++;
+      setHighlighted(Math.floor(Math.random() * items.length));
+      if (ticks >= total) {
+        clearInterval(interval);
+        const final = Math.floor(Math.random() * items.length);
+        setHighlighted(final);
+        setRolling(false);
+        setTimeout(() => {
+          const el = rowRefs.current[final];
+          if (el) {
+            const top = el.offsetTop - 120;
+            el.closest('.tand-scroll-container') && el.closest('.tand-scroll-container').scrollTo({
+              top,
+              behavior: 'smooth'
+            });
+          }
+        }, 80);
+      }
+    }, ticks < total * 0.55 ? 55 : ticks < total * 0.8 ? 100 : 180);
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      marginBottom: '16px',
+      border: `1px solid ${accent}22`,
+      borderRadius: '4px',
+      overflow: 'hidden',
+      background: 'rgba(var(--bg2-rgb),0.7)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    onClick: () => setOpen(o => !o),
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px',
+      padding: '14px 18px',
+      cursor: 'pointer',
+      background: open ? `${accent}10` : 'transparent',
+      transition: 'background 0.15s',
+      userSelect: 'none'
+    },
+    onMouseEnter: e => {
+      if (!open) e.currentTarget.style.background = `${accent}08`;
+    },
+    onMouseLeave: e => {
+      if (!open) e.currentTarget.style.background = 'transparent';
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '16px',
+      height: '16px',
+      flexShrink: 0,
+      border: `1px solid ${accent}44`,
+      borderRadius: '2px',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '10px',
+      color: `${accent}99`,
+      transition: 'transform 0.2s',
+      transform: open ? 'rotate(45deg)' : 'none'
+    }
+  }, "+"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '14px',
+      fontWeight: '300',
+      letterSpacing: '0.18em',
+      color: open ? 'var(--white)' : 'rgba(var(--text-rgb),0.75)',
+      textTransform: 'uppercase',
+      flex: 1,
+      transition: 'color 0.15s'
+    }
+  }, title), /*#__PURE__*/React.createElement("button", {
+    onClick: handleRoll,
+    disabled: rolling,
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '5px',
+      padding: '4px 12px',
+      marginLeft: '8px',
+      background: rolling ? `${accent}18` : `${accent}22`,
+      border: `1px solid ${accent}55`,
+      borderRadius: '2px',
+      color: rolling ? `${accent}77` : `${accent}cc`,
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.2em',
+      cursor: rolling ? 'not-allowed' : 'pointer',
+      transition: 'all 0.15s',
+      textTransform: 'uppercase',
+      flexShrink: 0
+    },
+    onMouseEnter: e => {
+      if (!rolling) {
+        e.currentTarget.style.background = `${accent}33`;
+        e.currentTarget.style.color = 'var(--white)';
+      }
+    },
+    onMouseLeave: e => {
+      if (!rolling) {
+        e.currentTarget.style.background = `${accent}22`;
+        e.currentTarget.style.color = `${accent}cc`;
+      }
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "10",
+    height: "10",
+    viewBox: "0 0 11 11",
+    fill: "none",
+    style: {
+      flexShrink: 0,
+      opacity: rolling ? 0.4 : 1
+    }
+  }, /*#__PURE__*/React.createElement("rect", {
+    x: "1",
+    y: "1",
+    width: "9",
+    height: "9",
+    rx: "1.5",
+    stroke: "currentColor",
+    strokeWidth: "1"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "3.5",
+    cy: "3.5",
+    r: "0.9",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "7.5",
+    cy: "7.5",
+    r: "0.9",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "7.5",
+    cy: "3.5",
+    r: "0.9",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "3.5",
+    cy: "7.5",
+    r: "0.9",
+    fill: "currentColor"
+  })), "Roll")), open && /*#__PURE__*/React.createElement("div", {
+    className: "tand-scroll-container",
+    style: {
+      maxHeight: '420px',
+      overflowY: 'auto',
+      borderTop: `1px solid ${accent}15`
+    }
+  }, /*#__PURE__*/React.createElement("table", {
+    className: "eq-table",
+    style: {
+      width: '100%'
+    }
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}28`,
+      width: '60px'
+    }
+  }, "W", items.length), /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}28`
+    }
+  }, "Gegenstand"))), /*#__PURE__*/React.createElement("tbody", null, items.map((item, i) => {
+    const isHit = highlighted === i;
+    return /*#__PURE__*/React.createElement("tr", {
+      key: i,
+      ref: el => rowRefs.current[i] = el,
+      style: {
+        background: isHit ? `${accent}22` : 'transparent',
+        transition: 'background 0.08s',
+        outline: isHit ? `1px solid ${accent}55` : 'none',
+        outlineOffset: '-1px'
+      }
+    }, /*#__PURE__*/React.createElement("td", {
+      style: {
+        fontFamily: 'var(--font-mono)',
+        fontSize: '11px',
+        color: isHit ? `${accent}cc` : `${accent}55`,
+        textAlign: 'center',
+        width: '60px'
+      }
+    }, i + 1), /*#__PURE__*/React.createElement("td", {
+      style: {
+        color: isHit ? 'var(--white)' : 'rgba(var(--text-rgb),0.75)',
+        fontWeight: isHit ? '500' : '300',
+        fontSize: '12px',
+        transition: 'color 0.08s'
+      }
+    }, item));
+  })))));
+}
+
+// ── TAND CONTENT ──────────────────────────────────────────
+function TandContent({
+  accent
+}) {
+  const [rolling, setRolling] = useState(false);
+  const [selectedTable, setSelectedTable] = useState(null);
+  const [openTand, setOpenTand] = useState(false);
+  const [openSchaurig, setOpenSchaurig] = useState(false);
+  const [openErstaunlich, setOpenErstaunlich] = useState(false);
+  useEffect(() => {
+    const handler = e => {
+      const {
+        id
+      } = e.detail;
+      if (id === 'sec-tand') setOpenTand(true);else if (id === 'sec-schaurig') setOpenSchaurig(true);else if (id === 'sec-erstaunlich') setOpenErstaunlich(true);
+    };
+    window.addEventListener('toc-navigate', handler);
+    return () => window.removeEventListener('toc-navigate', handler);
+  }, []);
+  const handleW3Roll = () => {
+    if (rolling) return;
+    setRolling(true);
+    let ticks = 0;
+    const total = 10 + Math.floor(Math.random() * 6);
+    const tables = ['tand', 'schaurig', 'erstaunlich'];
+    const interval = setInterval(() => {
+      ticks++;
+      setSelectedTable(tables[Math.floor(Math.random() * 3)]);
+      if (ticks >= total) {
+        clearInterval(interval);
+        setSelectedTable(tables[Math.floor(Math.random() * 3)]);
+        setRolling(false);
+      }
+    }, ticks < total * 0.6 ? 80 : 140);
+  };
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(SectionHeader, {
+    label: "Tand",
+    accent: accent,
+    mono: "Ausr\xFCstung"
+  }), /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.9',
+      color: 'rgba(var(--text-rgb),0.55)',
+      letterSpacing: '0.04em',
+      marginBottom: '28px',
+      maxWidth: '680px'
+    }
+  }, "Bei der Erschaffung deines Charakters darfst du mit Hilfe der Tabelle f\xFCr Tand zuf\xE4llig einen Gegenstand bestimmen, den du zu Beginn erh\xE4ltst und der etwas leicht Mystisches besitzt. Der SL kann diese Tabelle verwenden, um R\xE4ume in Gew\xF6lben auszuschm\xFCcken oder die Taschen von Monstern zu f\xFCllen."), /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      marginBottom: '28px',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '16px',
+      flexWrap: 'wrap'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: handleW3Roll,
+    disabled: rolling,
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '6px',
+      padding: '5px 14px',
+      background: rolling ? `${accent}18` : `${accent}22`,
+      border: `1px solid ${accent}55`,
+      borderRadius: '2px',
+      color: rolling ? `${accent}77` : `${accent}cc`,
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.2em',
+      cursor: rolling ? 'not-allowed' : 'pointer',
+      transition: 'all 0.15s',
+      textTransform: 'uppercase'
+    },
+    onMouseEnter: e => {
+      if (!rolling) {
+        e.currentTarget.style.background = `${accent}33`;
+        e.currentTarget.style.color = 'var(--white)';
+      }
+    },
+    onMouseLeave: e => {
+      if (!rolling) {
+        e.currentTarget.style.background = `${accent}22`;
+        e.currentTarget.style.color = `${accent}cc`;
+      }
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "11",
+    height: "11",
+    viewBox: "0 0 11 11",
+    fill: "none",
+    style: {
+      flexShrink: 0,
+      opacity: rolling ? 0.4 : 1
+    }
+  }, /*#__PURE__*/React.createElement("rect", {
+    x: "1",
+    y: "1",
+    width: "9",
+    height: "9",
+    rx: "1.5",
+    stroke: "currentColor",
+    strokeWidth: "1"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "3.5",
+    cy: "3.5",
+    r: "0.9",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "7.5",
+    cy: "7.5",
+    r: "0.9",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "7.5",
+    cy: "3.5",
+    r: "0.9",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "3.5",
+    cy: "7.5",
+    r: "0.9",
+    fill: "currentColor"
+  })), "Roll")), /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      marginBottom: '32px',
+      border: `1px solid ${accent}22`,
+      borderRadius: '3px',
+      overflow: 'hidden',
+      background: 'rgba(var(--panel-rgb),0.6)',
+      maxWidth: '320px'
+    }
+  }, /*#__PURE__*/React.createElement("table", {
+    className: "eq-table",
+    style: {
+      width: '100%'
+    }
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`,
+      width: '60px'
+    }
+  }, "W3"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      background: `${accent}30`
+    }
+  }, "Tabelle"))), /*#__PURE__*/React.createElement("tbody", null, [{
+    w: '1',
+    label: 'Tand',
+    key: 'tand'
+  }, {
+    w: '2',
+    label: 'Schauriger Tand',
+    key: 'schaurig'
+  }, {
+    w: '3',
+    label: 'Erstaunlicher Tand',
+    key: 'erstaunlich'
+  }].map((r, i) => /*#__PURE__*/React.createElement("tr", {
+    key: i,
+    style: {
+      background: selectedTable === r.key ? `${accent}22` : 'transparent',
+      transition: 'background 0.15s',
+      outline: selectedTable === r.key ? `1px solid ${accent}55` : 'none',
+      outlineOffset: '-1px'
+    }
+  }, /*#__PURE__*/React.createElement("td", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '11px',
+      color: selectedTable === r.key ? `${accent}cc` : `${accent}55`,
+      textAlign: 'center'
+    }
+  }, r.w), /*#__PURE__*/React.createElement("td", {
+    style: {
+      color: selectedTable === r.key ? 'var(--white)' : 'rgba(var(--text-rgb),0.75)',
+      fontWeight: selectedTable === r.key ? '500' : '300'
+    }
+  }, r.label)))))), /*#__PURE__*/React.createElement("div", {
+    id: "sec-tand"
+  }), /*#__PURE__*/React.createElement(TandRollTable, {
+    title: "Tand",
+    items: TAND_ITEMS,
+    accent: accent,
+    diceLabel: "",
+    open: openTand,
+    onOpenChange: setOpenTand
+  }), /*#__PURE__*/React.createElement("div", {
+    id: "sec-schaurig"
+  }), /*#__PURE__*/React.createElement(TandRollTable, {
+    title: "Schauriger Tand",
+    items: SCHAURIGER_TAND_ITEMS,
+    accent: accent,
+    diceLabel: "",
+    open: openSchaurig,
+    onOpenChange: setOpenSchaurig
+  }), /*#__PURE__*/React.createElement("div", {
+    id: "sec-erstaunlich"
+  }), /*#__PURE__*/React.createElement(TandRollTable, {
+    title: "Erstaunlicher Tand",
+    items: ERSTAUNLICHER_TAND_ITEMS,
+    accent: accent,
+    diceLabel: "",
+    open: openErstaunlich,
+    onOpenChange: setOpenErstaunlich
+  }));
+}
+
+// ── PLACEHOLDER SECTION ───────────────────────────────────
+function PlaceholderSection({
+  label,
+  accent
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      padding: '40px 28px',
+      border: `1px dashed ${accent}22`,
+      borderRadius: '4px',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '10px',
+      background: `${accent}05`
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 24,
+    color: `${accent}33`,
+    fill: `${accent}0a`,
+    strokeWidth: 1
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '0.25em',
+      color: `${accent}44`,
+      textTransform: 'uppercase'
+    }
+  }, label, " \u2014 Daten werden vorbereitet"));
+}
+
+// ── ABENTEUERAUSRÜSTUNG CONTENT ───────────────────────────
+function AbenteuerContent({
+  accent
+}) {
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(SectionHeader, {
+    label: "Abenteuerausr\xFCstung",
+    accent: accent,
+    mono: "Ausr\xFCstung"
+  }), /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.9',
+      color: 'rgba(var(--text-rgb),0.55)',
+      letterSpacing: '0.04em',
+      marginBottom: '28px',
+      maxWidth: '680px'
+    }
+  }, "Vom einfachen Seil bis zur magischen Phiole \u2014 die richtige Ausr\xFCstung entscheidet \xFCber Leben und Tod. Hier findest du alles, was ein Abenteurer auf seinen Reisen durch die Neue Welt ben\xF6tigt."), /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      marginBottom: '36px',
+      border: `1px solid rgba(124,77,255,0.15)`,
+      borderRadius: '4px',
+      overflow: 'hidden',
+      background: 'rgba(var(--panel-rgb),0.6)'
+    }
+  }, /*#__PURE__*/React.createElement("table", {
+    className: "eq-table",
+    style: {
+      width: '100%'
+    }
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px'
+    }
+  }, /*#__PURE__*/React.createElement("span", null, "Name")), /*#__PURE__*/React.createElement("th", {
+    style: {
+      width: '160px'
+    }
+  }, "Kosten"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      width: '90px'
+    }
+  }, "Pfund"))), /*#__PURE__*/React.createElement("tbody", null, ABENTEUER_ITEMS.map((item, i) => /*#__PURE__*/React.createElement(ItemRow, {
+    key: i,
+    item: item,
+    accent: accent
+  }))))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      gap: '20px',
+      marginBottom: '32px'
+    }
+  }, /*#__PURE__*/React.createElement(SubTable, {
+    title: "Arkaner Fokus",
+    rows: ARKANER_FOKUS,
+    accent: accent
+  }), /*#__PURE__*/React.createElement(SubTable, {
+    title: "Druidischer Fokus",
+    rows: DRUIDISCHER_FOKUS,
+    accent: accent
+  }), /*#__PURE__*/React.createElement(SubTable, {
+    title: "Heiliges Symbol",
+    rows: HEILIGES_SYMBOL,
+    accent: accent
+  }), /*#__PURE__*/React.createElement(SubTable, {
+    title: "Geschosse",
+    rows: GESCHOSSE,
+    accent: accent
+  })), /*#__PURE__*/React.createElement(SubTable, {
+    title: "Beh\xE4lter",
+    rows: BEHAELTER,
+    accent: accent,
+    hasKapazitaet: true
+  }), /*#__PURE__*/React.createElement("div", {
+    id: "sec-pakete",
+    className: "reveal-left",
+    style: {
+      marginBottom: '22px',
+      paddingBottom: '12px',
+      borderBottom: `1px solid ${accent}22`,
+      marginTop: '36px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.3em',
+      color: `${accent}55`,
+      textTransform: 'uppercase',
+      marginBottom: '5px'
+    }
+  }, "Ausr\xFCstung"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px'
+    }
+  }, /*#__PURE__*/React.createElement(OctSvg, {
+    size: 8,
+    color: `${accent}66`,
+    fill: `${accent}22`,
+    strokeWidth: 1
+  }), /*#__PURE__*/React.createElement("h2", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '18px',
+      fontWeight: '300',
+      letterSpacing: '0.2em',
+      color: 'rgba(var(--text-rgb),0.85)',
+      textTransform: 'uppercase'
+    }
+  }, "Ausr\xFCstungspakete")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '40px',
+      height: '1px',
+      background: `linear-gradient(90deg,${accent}77,transparent)`,
+      marginTop: '10px',
+      animation: 'pulse-glow 3s infinite'
+    }
+  })), /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12px',
+      lineHeight: '1.9',
+      color: 'rgba(var(--text-rgb),0.55)',
+      letterSpacing: '0.04em',
+      marginBottom: '20px',
+      maxWidth: '680px'
+    }
+  }, "Die Anfangsausr\xFCstung, die du durch deine Klasse erh\xE4ltst, beinhaltet eine in einem Paket zusammmengefasste Sammlung n\xFCtzlicher Abenteuerausr\xFCstung. Die Inhalte dieser Pakete sind nachfolgend aufgelistet. Wenn du deine Anfangsausr\xFCstung mit Geld selbst zusammenstellst, kannst du ein Paket f\xFCr den angegebenen Preis erwerben, was m\xF6glicherweise g\xFCnstiger ist, als alle Gegenst\xE4nde einzeln zu kaufen."), /*#__PURE__*/React.createElement("div", {
+    className: "reveal-up",
+    style: {
+      border: `1px solid rgba(124,77,255,0.15)`,
+      borderRadius: '4px',
+      overflow: 'hidden',
+      background: 'rgba(var(--panel-rgb),0.6)'
+    }
+  }, AUSRUESTUNGSPAKETE.map((p, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    style: {
+      padding: '14px 18px',
+      borderBottom: i < AUSRUESTUNGSPAKETE.length - 1 ? '1px solid rgba(124,77,255,0.08)' : 'none'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'baseline',
+      gap: '10px',
+      marginBottom: '4px',
+      flexWrap: 'wrap'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '500',
+      fontSize: '12px',
+      color: 'rgba(var(--text-rgb),0.9)',
+      letterSpacing: '0.04em'
+    }
+  }, p.name), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: `${accent}77`,
+      letterSpacing: '0.12em'
+    }
+  }, p.kosten)), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '11px',
+      lineHeight: '1.75',
+      color: 'rgba(var(--text-rgb),0.6)'
+    }
+  }, p.inhalt)))));
+}
+
+// ── SECTION ANCHORS ───────────────────────────────────────
+const SECTION_ANCHORS = {
+  abenteuer: [{
+    id: 'sec-pakete',
+    label: 'Ausrüstungspakete'
+  }],
+  waffen: [{
+    id: 'sec-waffen-eigenschaften',
+    label: 'Waffeneigenschaften'
+  }, {
+    id: 'sec-improvisiert',
+    label: 'Improvisierte Waffen'
+  }, {
+    id: 'sec-versilbert',
+    label: 'Versilberte Waffen'
+  }, {
+    id: 'sec-spezielle',
+    label: 'Spezielle Waffen'
+  }],
+  ruestung: [{
+    id: 'sec-leicht',
+    label: 'Leichte Rüstung'
+  }, {
+    id: 'sec-mittel',
+    label: 'Mittelschwere Rüstung'
+  }, {
+    id: 'sec-schwer',
+    label: 'Schwere Rüstung'
+  }, {
+    id: 'sec-schilde',
+    label: 'Schilde'
+  }, {
+    id: 'sec-kleidung',
+    label: 'Kleidung'
+  }, {
+    id: 'sec-anlegen',
+    label: 'An- & Ablegen'
+  }],
+  werkzeuge: [{
+    id: 'sec-werkzeuge',
+    label: 'Werkzeuge'
+  }, {
+    id: 'sec-handwerk',
+    label: 'Handwerkszeuge'
+  }, {
+    id: 'sec-musik',
+    label: 'Musikinstrumente'
+  }, {
+    id: 'sec-spiele',
+    label: 'Spiele'
+  }],
+  reittiere: [{
+    id: 'sec-lasttiere',
+    label: 'Reit- & Lasttiere'
+  }, {
+    id: 'sec-zaumzeug',
+    label: 'Zaumzeug & Fahrzeuge'
+  }, {
+    id: 'sec-wasser',
+    label: 'Wasserfahrzeuge'
+  }, {
+    id: 'sec-fahrzeuge',
+    label: 'Land- & Wasserfahrzeuge'
+  }],
+  tand: [{
+    id: 'sec-tand',
+    label: 'Tand'
+  }, {
+    id: 'sec-schaurig',
+    label: 'Schauriger Tand'
+  }, {
+    id: 'sec-erstaunlich',
+    label: 'Erstaunlicher Tand'
+  }]
+};
+function scrollToSection(id) {
+  window.dispatchEvent(new CustomEvent('toc-navigate', {
+    detail: {
+      id
+    }
+  }));
+  const el = document.getElementById(id);
+  if (!el) return;
+  const top = el.getBoundingClientRect().top + window.scrollY - 70;
+  window.scrollTo({
+    top: Math.max(0, top),
+    behavior: 'smooth'
+  });
+}
+
+// ── SIDEBAR ───────────────────────────────────────────────
+const PAGE_HEADER_H = 180 + 52; // PageHeader + nav
+function Sidebar({
+  activeCategory,
+  onSelect,
+  accent,
+  headerBottom
+}) {
+  const asideRef = React.useRef(null);
+  useEffect(() => {
+    const update = () => {
+      const ideal = headerBottom - window.scrollY;
+      const val = Math.max(52, ideal);
+      if (asideRef.current) {
+        asideRef.current.style.top = val + 'px';
+        asideRef.current.style.height = `calc(100vh - ${val}px)`;
+      }
+    };
+    update();
+    window.addEventListener('scroll', update, {
+      passive: true
+    });
+    window.addEventListener('resize', update, {
+      passive: true
+    });
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
+  }, [headerBottom]);
+  return /*#__PURE__*/React.createElement("aside", {
+    ref: asideRef,
+    style: {
+      width: 'var(--sidebar-w)',
+      flexShrink: 0,
+      position: 'fixed',
+      left: 0,
+      top: `${headerBottom}px`,
+      height: `calc(100vh - ${headerBottom}px)`,
+      borderRight: '1px solid rgba(var(--accent-rgb),0.1)',
+      padding: '28px 0',
+      background: 'rgba(var(--bg-rgb),0.85)',
+      backdropFilter: 'blur(12px)',
+      zIndex: 50,
+      overflowY: 'auto'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.25em',
+      color: 'rgba(var(--accent-rgb),0.4)',
+      textTransform: 'uppercase',
+      padding: '0 20px',
+      marginBottom: '12px'
+    }
+  }, "Ausr\xFCstung"), CATEGORIES.map(cat => {
+    const isActive = cat.id === activeCategory;
+    const subItems = SECTION_ANCHORS[cat.id] || [];
+    return /*#__PURE__*/React.createElement(React.Fragment, {
+      key: cat.id
+    }, /*#__PURE__*/React.createElement("button", {
+      onClick: () => onSelect(cat.id),
+      style: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+        width: '100%',
+        textAlign: 'left',
+        padding: '9px 20px',
+        background: isActive ? `${accent}12` : 'transparent',
+        border: 'none',
+        borderLeft: isActive ? `2px solid ${accent}` : '2px solid transparent',
+        cursor: 'pointer',
+        fontFamily: 'var(--font-body)',
+        fontWeight: isActive ? '500' : '400',
+        fontSize: '12px',
+        letterSpacing: '0.06em',
+        color: isActive ? 'var(--white)' : 'rgba(var(--text-rgb),0.6)',
+        transition: 'all 0.15s'
+      },
+      onMouseEnter: e => {
+        if (!isActive) {
+          e.currentTarget.style.color = 'var(--white)';
+          e.currentTarget.style.borderLeftColor = `${accent}55`;
+          e.currentTarget.style.background = `${accent}08`;
+        }
+      },
+      onMouseLeave: e => {
+        if (!isActive) {
+          e.currentTarget.style.color = 'rgba(var(--text-rgb),0.6)';
+          e.currentTarget.style.borderLeftColor = 'transparent';
+          e.currentTarget.style.background = 'transparent';
+        }
+      }
+    }, /*#__PURE__*/React.createElement(OctSvg, {
+      size: 6,
+      color: isActive ? accent : 'rgba(124,77,255,0.4)',
+      fill: isActive ? `${accent}44` : 'rgba(124,77,255,0.12)',
+      strokeWidth: 1,
+      style: {
+        flexShrink: 0
+      }
+    }), /*#__PURE__*/React.createElement("span", null, cat.label)), isActive && subItems.map(sub => /*#__PURE__*/React.createElement("button", {
+      key: sub.id,
+      onClick: () => scrollToSection(sub.id),
+      style: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '7px',
+        width: '100%',
+        textAlign: 'left',
+        padding: '5px 20px 5px 32px',
+        background: 'transparent',
+        border: 'none',
+        borderLeft: '2px solid transparent',
+        cursor: 'pointer',
+        fontFamily: 'var(--font-body)',
+        fontSize: '11px',
+        letterSpacing: '0.04em',
+        color: 'rgba(180,165,255,0.5)',
+        transition: 'all 0.15s'
+      },
+      onMouseEnter: e => {
+        e.currentTarget.style.color = 'rgba(var(--text-rgb),0.85)';
+        e.currentTarget.style.borderLeftColor = `${accent}44`;
+        e.currentTarget.style.background = `${accent}07`;
+      },
+      onMouseLeave: e => {
+        e.currentTarget.style.color = 'rgba(180,165,255,0.5)';
+        e.currentTarget.style.borderLeftColor = 'transparent';
+        e.currentTarget.style.background = 'transparent';
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: 'var(--font-mono)',
+        fontSize: '9px',
+        color: `${accent}44`,
+        flexShrink: 0
+      }
+    }, "\xB7"), /*#__PURE__*/React.createElement("span", null, sub.label))));
+  }));
+}
+
+// ── APP ───────────────────────────────────────────────────
+function App() {
+  const [mouse, setMouse] = useState({
+    x: 0.5,
+    y: 0.5
+  });
+  const tweaks = TWEAK_DEFAULTS;
+  const [activeCategory, setActiveCategory] = useState('abenteuer');
+  const accent = tweaks.accentColor || '#7c4dff';
+  const heroRef = React.useRef(null);
+  const [headerBottom, setHeaderBottom] = useState(PAGE_HEADER_H);
+  useEffect(() => {
+    const measure = () => {
+      if (heroRef.current) {
+        const rect = heroRef.current.getBoundingClientRect();
+        setHeaderBottom(rect.bottom + window.scrollY);
+      }
+    };
+    measure();
+    window.addEventListener('resize', measure, {
+      passive: true
+    });
+    return () => window.removeEventListener('resize', measure);
+  }, []);
+  const handleMouseMove = useCallback(e => {
+    setMouse({
+      x: e.clientX / window.innerWidth,
+      y: e.clientY / window.innerHeight
+    });
+  }, []);
+  useScrollReveal(activeCategory);
+  const handleSelect = id => {
+    setActiveCategory(id);
+    // scroll content pane to top
+    const content = document.getElementById('eq-content');
+    if (content) content.parentElement.scrollTop = 0;
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    onMouseMove: handleMouseMove,
+    className: "page-root"
+  }, /*#__PURE__*/React.createElement(ParticleField, {
+    mouseX: mouse.x,
+    mouseY: mouse.y,
+    accent: accent
+  }), /*#__PURE__*/React.createElement(PageHeader, {
+    height: 180,
+    showHex: true
+  }), /*#__PURE__*/React.createElement(SiteNav, {
+    rightLabel: "AUSR\xDCSTUNGS-ARCHIV v1.0"
+  }), /*#__PURE__*/React.createElement("div", {
+    ref: heroRef
+  }, /*#__PURE__*/React.createElement(PageHero, {
+    kicker: "Welt \xB7 Handel",
+    title: "Ausr\xFCstung"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "page-body",
+    style: {
+      position: 'relative',
+      zIndex: 5
+    }
+  }, /*#__PURE__*/React.createElement(Sidebar, {
+    activeCategory: activeCategory,
+    onSelect: handleSelect,
+    accent: accent,
+    headerBottom: headerBottom
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      padding: '32px 36px 64px',
+      minWidth: 0,
+      maxWidth: '1100px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '6px',
+      flexWrap: 'wrap',
+      marginBottom: '32px'
+    }
+  }, CATEGORIES.map(cat => {
+    const isActive = cat.id === activeCategory;
+    return /*#__PURE__*/React.createElement("button", {
+      key: cat.id,
+      onClick: () => handleSelect(cat.id),
+      style: {
+        padding: '5px 14px',
+        fontFamily: 'var(--font-body)',
+        fontSize: '11px',
+        fontWeight: isActive ? '500' : '300',
+        letterSpacing: '0.08em',
+        background: isActive ? `${accent}22` : 'transparent',
+        border: `1px solid ${isActive ? accent + '66' : 'rgba(124,77,255,0.2)'}`,
+        color: isActive ? 'var(--white)' : 'rgba(var(--text-rgb),0.5)',
+        borderRadius: '2px',
+        cursor: 'pointer',
+        transition: 'all 0.15s'
+      },
+      onMouseEnter: e => {
+        if (!isActive) {
+          e.currentTarget.style.color = 'rgba(var(--text-rgb),0.8)';
+          e.currentTarget.style.borderColor = 'rgba(124,77,255,0.4)';
+        }
+      },
+      onMouseLeave: e => {
+        if (!isActive) {
+          e.currentTarget.style.color = 'rgba(var(--text-rgb),0.5)';
+          e.currentTarget.style.borderColor = 'rgba(124,77,255,0.2)';
+        }
+      }
+    }, cat.label);
+  })), /*#__PURE__*/React.createElement("div", {
+    id: "eq-content"
+  }, activeCategory === 'abenteuer' && /*#__PURE__*/React.createElement(AbenteuerContent, {
+    accent: accent
+  }), activeCategory === 'waffen' && /*#__PURE__*/React.createElement(WaffenContent, {
+    accent: accent
+  }), activeCategory === 'ruestung' && /*#__PURE__*/React.createElement(RuestungContent, {
+    accent: accent
+  }), activeCategory === 'werkzeuge' && /*#__PURE__*/React.createElement(WerkzeugeContent, {
+    accent: accent
+  }), activeCategory === 'reittiere' && /*#__PURE__*/React.createElement(ReittiereContent, {
+    accent: accent
+  }), activeCategory === 'tand' && /*#__PURE__*/React.createElement(TandContent, {
+    accent: accent
+  })))), /*#__PURE__*/React.createElement(SiteFooter, {
+    accent: accent
+  }), /*#__PURE__*/React.createElement(FloatNav, null));
+}
+ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement(App, null)));
+})();
+
+})();
+

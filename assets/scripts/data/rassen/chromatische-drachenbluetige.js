@@ -1,0 +1,120 @@
+// Chromatische Drachenblütige — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+(window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Chromatische Drachenblütige'] = {
+  name: 'Chromatische Drachenblütige', accent: '#c84030',
+  subtitle: 'Erben der Chromatischen · Kinder des Bösen',
+  tags: ['Humanoid','Mittelgroß','9 m Bewegung','Atemwaffe','Meistens Böse'],
+  headerImage: 'assets/images/races/chromatische_drachenblütige/banner.png',
+  lore: {
+    intro: [
+      'Drachenblütige mit chromatischen Vorfahren gebieten über die rohe Elementarmacht chromatischer Drachen. Die Schuppenhaut von Drachenblütigen und die tödliche Energie ihrer Odemwaffen strahlen in den leuchtenden Farben der schwarzen, blauen, grünen, roten oder weißen Drachen.',
+      'Sie verkörpern den rohen elementaren Zorn von Vulkanen, beißenden arktischen Stürmen und tobenden Gewittern, aber auch das subtile Wispern von Wäldern und Sümpfen — giftig und ätzend. In ihrer Abstammung liegt Macht, die sie entweder beherrschen oder die sie beherrscht.',
+    ],
+    gesellschaft: [
+      'Chromatische Drachenblütige werden oft mit Misstrauen betrachtet, denn die Drachen ihrer Abstammung gelten als böse Kreaturen. Viele Drachenblütige kämpfen ihr Leben lang gegen diese Vorurteile an — andere erfüllen die Erwartungen ihrer Umwelt.',
+      'Ihre Klane sind straff organisiert und hierarchisch. Stärke und Drachenblut bestimmen Rang und Ansehen. Namen werden in drei Teilen geführt: ein persönlicher Vor-, ein beschreibender Jugend- und ein Klanname, der die Familie und Abstammung bezeichnet.',
+      'In Meruria sind chromatische Drachenblütige seltene, aber furchteinflößende Gestalten. Ihre bloße Anwesenheit signalisiert Gefahr — was manchen von ihnen gut zupass kommt, und andere in Einsamkeit treibt.',
+    ],
+    introBild:        { url: 'assets/images/races/chromatische_drachenblütige/charaktere.png', label: 'Chromatische Drachenblütige · Illustration', caption: 'Charakter-Illustration', position: 'right', width: 360, height: 360 },
+    gesellschaftBild: { url: null, label: 'Klan der Drachen · Illustration', caption: 'Drachenblütige in ihrer Gemeinschaft', position: 'left', width: 240, height: 300 },
+  },
+  specialSection: {
+    type: 'variantCards',
+    label: 'Chromatische Abstammung',
+    beschreibung: 'Wähle eine der fünf chromatischen Abstammungen — sie bestimmt Erscheinung, Odemwaffe und Resistenz.',
+    varianten: [
+      { farbe:'Blau',    name:'Blaue Drachenblütige',    schadensart:'Blitz',   farbeHex:'#3388ee', bild:'assets/images/races/chromatische_drachenblütige/blaue_drachenbluetige.png', augenfarbe:'meistens Weiß, Blau oder Orange',        hautfarbe:'Blau (mit Weiß)',             haarfarbe:'oft kein Haar — sonst Weiß oder Blau',     odemwaffe:'Deine Odemwaffe ist ein furchteinflößender Sturm aus elektrischer Energie, mit der du Blitzschaden verursachst.',        resistenz:'Deine angeborene Affinität zur Elektrizität gewährt dir Resistenz gegenüber Blitzschaden.' },
+      { farbe:'Grün',    name:'Grüne Drachenblütige',    schadensart:'Gift',    farbeHex:'#33aa55', bild:'assets/images/races/chromatische_drachenblütige/gruene_drachenbluetige.png', augenfarbe:'meistens Grün, Türkis oder Orange',       hautfarbe:'Grün (mit Weiß)',             haarfarbe:'oft kein Haar — sonst Grün',               odemwaffe:'Deine Odemwaffe ist ein Strahl aus giftigen Dämpfen, mit der du Giftschaden verursachst.',                              resistenz:'Deine angeborene Affinität für Gifte gewährt dir Resistenz gegenüber Giftschaden.' },
+      { farbe:'Rot',     name:'Rote Drachenblütige',     schadensart:'Feuer',   farbeHex:'#dd3322', bild:'assets/images/races/chromatische_drachenblütige/rote_drachenbluetige.png', augenfarbe:'meistens Rot, Schwarz, Weiß oder Orange', hautfarbe:'Rot (mit Schwarz oder Weiß)', haarfarbe:'oft kein Haar — sonst Weiß oder Rot',      odemwaffe:'Deine Odemwaffe ist ein flammendes Inferno, mit der du Feuerschaden verursachst.',                                      resistenz:'Deine angeborene Affinität zum Feuer gewährt dir Resistenz gegenüber Feuerschaden.' },
+      { farbe:'Schwarz', name:'Schwarze Drachenblütige', schadensart:'Säure',   farbeHex:'#7788aa', bild:'assets/images/races/chromatische_drachenblütige/schwarze_drachenbluetige.png', augenfarbe:'meistens Lila, Rot, Orange oder Weiß',   hautfarbe:'Schwarz bis Grau (mit Weiß)', haarfarbe:'oft kein Haar — sonst Weiß oder Schwarz',  odemwaffe:'Deine Odemwaffe ist ein Schwall aus ätzender Säure, mit der du Säureschaden verursachst.',                              resistenz:'Deine angeborene Affinität zur Säure gewährt dir Resistenz gegenüber Säureschaden.' },
+      { farbe:'Weiß',    name:'Weiße Drachenblütige',    schadensart:'Kälte',   farbeHex:'#99bbdd', bild:'assets/images/races/chromatische_drachenblütige/weisse_drachenbluetige.png', augenfarbe:'meistens Blau, Weiß oder Orange',         hautfarbe:'Weiß (mit Hellblau)',         haarfarbe:'oft kein Haar — sonst Weiß',               odemwaffe:'Deine Odemwaffe ist ein eisiger Atem, mit der du Kälteschaden verursachst.',                                            resistenz:'Deine angeborene Affinität zum Eis gewährt dir Resistenz gegenüber Kälteschaden.' },
+    ],
+  },
+  namenSection: {
+    type: 'nameRoller',
+    label: 'Namen der Drachenblütigen',
+    beschreibung: 'Würfle oder wähle einen Vor-, Jugend- und Klannamen für deinen Drachenblütigen-Charakter.',
+    tabellen: [
+      { name:'Männliche Vornamen (1W50)', eintraege:['Arjhan','Balasar','Bharash','Donaar','Ghesh','Heskan','Kriv','Medrash','Mehen','Nadarr','Pandjed','Patrin','Rhogat','Shamash','Shedinn','Tarhun','Torinn','Azrak','Drazzir','Fyndar','Gornash','Haldor','Jareth','Kharik','Lirash','Marzix','Nalrak','Orvex','Pyrax','Quorin','Ralnor','Syrash','Tarkus','Urzoth','Valthor','Xandar','Yrdan','Zalthar','Drayko','Grulthor','Hrakkon','Jaxar','Kordax','Maldrax','Norik','Pyrthas','Raxthor','Skarn','Vornax','Tyndar'] },
+      { name:'Weibliche Vornamen (1W50)',  eintraege:['Akra','Biri','Daar','Farideh','Harann','Jheri','Kava','Korinn','Mishann','Nala','Perra','Raiann','Sora','Surina','Thava','Uadjit','Alyra','Belara','Caelia','Deryn','Elys','Freyna','Gavara','Haelis','Ilyria','Jhara','Kalira','Lysandra','Mira','Nyara','Orla','Pyra','Raelis','Qiana','Synna','Valara','Talia','Xavia','Wrenna','Yara','Zara','Daelis','Fyra','Gryna','Hestia','Jaira','Kyra','Malina','Nysra','Zephra'] },
+      { name:'Jugendnamen (1W50)',          eintraege:['Kletterer','Ohrenkrümmer','Hüpfer','Frommer','Schildbeißer','Eifriger','Funkenjäger','Himmelstänzer','Wolkenjäger','Sternengucker','Zauberer','Zitterer','Lauerer','Einmischer','Schniefer','Kuschler','Springer','Brüller','Furchtloser','Glamouröser','Bogenbrecher','Fressender','Flüsterer','Angeber','Dachkratzer','Kichernder','Faulpelz','Mauerbröckler','Holzstampfer','Träumer','Fähiger','Diebischer','Reflektierender','Greifer','Humpelnder','Trampler','Kitzelnder','Mauerknacker','Schildschnapper','Fasskratzer','Holzfäller','Krümler','Stirnrunzler','Schildschneider','Stabkratzer','Donnernder','Herumtreiber','Gefährlicher','Lächelnder'] },
+      { name:'Klannamen (1W50)',            eintraege:['Clethtinthiallor','Daardendrian','Delmirev','Drachedandion','Fenkenkabradon','Kepeshkmolik','Kerrhylon','Kimbatuul','Linxakasendalor','Myastan','Nemmonis','Norixius','Ophinshtalajir','Prexijandilin','Shestendeliath','Turnuroth','Verthisathurgiesh','Yarjerit','Bromundar','Crystanax','Drimdalor','Faernesk','Grymgoroth','Helarkon','Ildrekas','Khaldros','Lythrian','Mordraxus','Obsidianth','Pyraxil','Qaldormir','Ralkorian','Scarneth','Thraxindor','Umbraskor','Valthryn','Wyrmfaxus','Xandorien','Yldryss','Zalthrokir','Drimvaxal','Fyrrinax','Galdrekir','Helvardur','Ildrixia','Khaldoria','Lythriel','Dracis','Jarkhuldir'] },
+    ],
+  },
+  charakterGenerator: {
+    felder: [
+      { label:'Geschlecht',  type:'choice',         optionen:['männlich','weiblich'] },
+      { label:'Abstammung',  type:'table',           optionen:['Blau (Blitz)','Grün (Gift)','Rot (Feuer)','Schwarz (Säure)','Weiß (Kälte)'] },
+      { label:'Vorname',     type:'gendered-table',  maennlich:['Arjhan','Balasar','Bharash','Donaar','Ghesh','Heskan','Kriv','Medrash','Mehen','Nadarr','Pandjed','Patrin','Rhogat','Shamash','Shedinn','Tarhun','Torinn','Azrak','Drazzir','Fyndar','Gornash','Haldor','Jareth','Kharik','Lirash','Marzix','Nalrak','Orvex','Pyrax','Quorin','Ralnor','Syrash','Tarkus','Urzoth','Valthor','Xandar','Yrdan','Zalthar','Drayko','Grulthor','Hrakkon','Jaxar','Kordax','Maldrax','Norik','Pyrthas','Raxthor','Skarn','Vornax','Tyndar'], weiblich:['Akra','Biri','Daar','Farideh','Harann','Jheri','Kava','Korinn','Mishann','Nala','Perra','Raiann','Sora','Surina','Thava','Uadjit','Alyra','Belara','Caelia','Deryn','Elys','Freyna','Gavara','Haelis','Ilyria','Jhara','Kalira','Lysandra','Mira','Nyara','Orla','Pyra','Raelis','Qiana','Synna','Valara','Talia','Xavia','Wrenna','Yara','Zara','Daelis','Fyra','Gryna','Hestia','Jaira','Kyra','Malina','Nysra','Zephra'] },
+      { label:'Jugendname',  type:'table',           optionen:['Kletterer','Ohrenkrümmer','Hüpfer','Frommer','Schildbeißer','Eifriger','Funkenjäger','Himmelstänzer','Wolkenjäger','Sternengucker','Zauberer','Zitterer','Lauerer','Einmischer','Schniefer','Kuschler','Springer','Brüller','Furchtloser','Glamouröser','Bogenbrecher','Fressender','Flüsterer','Angeber','Dachkratzer','Kichernder','Faulpelz','Mauerbröckler','Holzstampfer','Träumer','Fähiger','Diebischer','Reflektierender','Greifer','Humpelnder','Trampler','Kitzelnder','Mauerknacker','Schildschnapper','Fasskratzer','Holzfäller','Krümler','Stirnrunzler','Schildschneider','Stabkratzer','Donnernder','Herumtreiber','Gefährlicher','Lächelnder'] },
+      { label:'Klanname',    type:'table',           optionen:['Clethtinthiallor','Daardendrian','Delmirev','Drachedandion','Fenkenkabradon','Kepeshkmolik','Kerrhylon','Kimbatuul','Linxakasendalor','Myastan','Nemmonis','Norixius','Ophinshtalajir','Prexijandilin','Shestendeliath','Turnuroth','Verthisathurgiesh','Yarjerit','Bromundar','Crystanax','Drimdalor','Faernesk','Grymgoroth','Helarkon','Ildrekas','Khaldros','Lythrian','Mordraxus','Obsidianth','Pyraxil','Qaldormir','Ralkorian','Scarneth','Thraxindor','Umbraskor','Valthryn','Wyrmfaxus','Xandorien','Yldryss','Zalthrokir','Drimvaxal','Fyrrinax','Galdrekir','Helvardur','Ildrixia','Khaldoria','Lythriel','Dracis','Jarkhuldir'] },
+      { label:'Talent',      type:'table',           optionen:['Drachenhaut','Drachensicht','Drachenfurcht'] },
+    ],
+  },
+  beziehungen: [
+    { volk:'Menschen',    relation:'Respekt/Furcht',      text:'Menschen respektieren die rohe Stärke von Drachenblütigen — aber das Wissen um ihre drachenhafte Abstammung lässt viele instinktiv Abstand halten.' },
+    { volk:'Elfen',       relation:'Distanz',             text:'Elfen sehen in chromatischen Drachenblütigen das Echo alter Feinde. Die Kriege zwischen Elfenvolk und Drachen sind nicht vergessen.' },
+    { volk:'Zwerge',      relation:'Pragmatismus',        text:'Ein chromatischer Drachenblütiger, der kämpft und seinen Teil beiträgt, verdient Respekt. Zwerge urteilen nach Taten, nicht nach Blut.' },
+    { volk:'Tieflinge',   relation:'Verbundenheit',       text:'Beide tragen ein Stigma, das nicht ihr eigenes ist. Tieflinge und Drachenblütige verstehen einander ohne viele Worte.' },
+    { volk:'And. Drachenblütige', relation:'Rivalität',  text:'Zwischen Drachenblütigen verschiedener Abstammungen herrscht oft ein unausgesprochener Wettkampf — wessen drachenblütiges Erbe ist mächtiger?' },
+    { volk:'Barbaren',    relation:'Anerkennung',         text:'Barbaren schätzen rohe Kraft und Elementargewalt. Ein Drachenblütiger, der Feuer atmet, beeindruckt selbst die härtesten Krieger.' },
+  ],
+  bekannte: [
+    { name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten chromatischen Drachenblütigen in Meruria reserviert.' },
+    { name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten chromatischen Drachenblütigen in Meruria reserviert.' },
+    { name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten chromatischen Drachenblütigen in Meruria reserviert.' },
+  ],
+  radar: { labels:['Mobilität','Kampf','Magie','Soziales','Überleben','Weisheit'], values:[48,85,40,55,78,42] },
+  quiz: {
+    steps: [
+      { frage:'Welche Abstammung hat dein Drachenblütiger?', optionen:[
+        { text:'Blau — Blitz und Sturm',      tags:['Zauberer','Magier'] },
+        { text:'Rot — Feuer und Zerstörung',  tags:['Barbar','Kämpfer'] },
+        { text:'Grün — Gift und Täuschung',   tags:['Schurke','Hexenmeister'] },
+        { text:'Schwarz oder Weiß',           tags:['Kleriker','Waldläufer'] },
+      ]},
+      { frage:'Wie geht dein Charakter mit seinem drachenblütigen Erbe um?', optionen:[
+        { text:'Ich bin stolz darauf — es macht mich mächtig',             tags:['Barbar','Kämpfer'] },
+        { text:'Ich nutze es gezielt, behalte aber die Kontrolle',         tags:['Magier','Zauberer'] },
+        { text:'Es ist ein Werkzeug, kein Teil meiner Identität',          tags:['Schurke','Waldläufer'] },
+        { text:'Ich kämpfe dagegen an — ich will mehr sein als mein Blut', tags:['Paladin','Kleriker'] },
+      ]},
+      { frage:'Wie setzt dein Charakter seine Odemwaffe ein?', optionen:[
+        { text:'Als ersten Angriff — Feind sofort überwältigen',  tags:['Barbar','Kämpfer'] },
+        { text:'Strategisch — wo sie den größten Schaden anrichtet', tags:['Magier','Waldläufer'] },
+        { text:'Selten — nur wenn keine andere Option bleibt',    tags:['Paladin','Kleriker'] },
+        { text:'Als Drohung — oft reicht schon die Warnung',      tags:['Barde','Schurke'] },
+      ]},
+      { frage:'Welche Rolle spielt dein Charakter in einer Gruppe?', optionen:[
+        { text:'Frontlinie — Schaden austeilen und einstecken',    tags:['Kämpfer','Barbar'] },
+        { text:'Hinterreihe — massiven Schaden aus der Distanz',   tags:['Magier','Zauberer'] },
+        { text:'Flexibel — ich passe mich der Situation an',       tags:['Schurke','Barde'] },
+        { text:'Schutzwall — ich bewahre die anderen',             tags:['Paladin','Kleriker'] },
+      ]},
+    ],
+    klassen: {
+      'Barbar':       'Dein drachenblütiger Zorn und deine Raserei ergänzen sich perfekt. Im Kampf bist du ein Elementarsturm.',
+      'Kämpfer':      'Drachenkraft kombiniert mit militärischer Disziplin — ein furchtbarer Gegner auf jedem Schlachtfeld.',
+      'Magier':       'Die Elementarenergie in deinem Blut und arkane Studien: ein Drachenblütiger mit Büchern ist eine Klasse für sich.',
+      'Zauberer':     'Drachenwirker: dein Blut ist nicht nur Erbe — es ist die Quelle deiner Magie.',
+      'Paladin':      'Du brichst das Muster. Ein chromatischer Drachenblütiger mit Schwur wirft viele Fragen auf. Gut so.',
+      'Kleriker':     'Das Göttliche und das Drachenblut in Konflikt — oder in Harmonie? Die Antwort prägt deinen Charakter.',
+      'Schurke':      'Odemwaffe plus Hinterhalt: du triffst zweimal — einmal mit Stahl, einmal mit Elementarenergie.',
+      'Hexenmeister': 'Dein drachenblütiges Erbe und dein Pakt verstärken sich gegenseitig. Du bist mehr als die Summe deiner Teile.',
+      'Barde':        'Drakonisches Charisma plus Bardenkünste — du kommandierst jeden Raum. Und notfalls brennst du ihn nieder.',
+      'Waldläufer':   'Die Wildnis kennt Drachen. Als chromatischer Drachenblütiger bist du sowohl Wächter als auch Warnung.',
+      'Druide':       'Natur und drachenhafte Energie — zwei Urkräfte. Du bist der lebendige Beweis, dass sie koexistieren können.',
+    },
+  },
+  statblock: {
+    features: [
+      { name:'Kreaturentyp',             text:'Humanoider. Gilt als Drachenblütiger bei allen Voraussetzungen und Effekten.' },
+      { name:'Größenkategorie',                    text:'Drachenblütige sind mit ihren über 180 cm und etwa 250 Pfund weit größer und schwerer als Menschen. Deine Größenkategorie ist mittelgroß.' },
+      { name:'Chromatische Abstammung',  text:'Du hast einen chromatischen Drachen im Stammbaum. Wähle eine Abstammung: Blau (Blitz), Grün (Gift), Rot (Feuer), Schwarz (Säure) oder Weiß (Kälte). Sie bestimmt die Schadensart deiner anderen Merkmale.' },
+      { name:'Odemwaffe',                text:'Wenn du die Angreifen-Aktion ausführst, kannst du einen Angriff durch deinen Odem ersetzen: eine 9 m lange, 1,5 m breite Linie magischer Energie. Betroffene Kreaturen müssen einen Geschicklichkeitsrettungswurf ablegen (SG = 8 + KON-Mod + Übungsbonus). Misserfolg: 1W10 Schaden der Abstammungsart; Erfolg: halber Schaden. Steigt um 1W10 auf Stufe 5, 11 und 17. Anwendungen pro langer Rast: gleich deinem Übungsbonus.' },
+      { name:'Drakonische Resistenz',    text:'Du bist gegen die Schadensart resistent, die mit deiner chromatischen Abstammung assoziiert ist.' },
+      { name:'Kaltblütig',               text:'Du bist immun gegen die Auswirkungen von heißen Temperaturen.' },
+      { name:'Chromatischer Schutz (ab Stufe 5)', text:'Als Aktion kanalisierst du deine drakonische Energie: du bist eine Minute lang gegen die Schadensart deiner Abstammung immun. Einmal pro langer Rast.' },
+      { name:'Angeborenes Talent',       text:null, talente:['Drachenhaut','Drachensicht','Drachenfurcht'] },
+    ],
+  },
+};

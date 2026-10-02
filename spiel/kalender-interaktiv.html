@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/assets/images/favicon/favicon-m.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/images/favicon/favicon-m-180.png">
+<title>Meruria — Kalender (Interaktiv)</title>
+<script src="/assets/scripts/theme-init.js"></script>
+<link rel="stylesheet" href="/assets/styles/global/fonts.css">
+<link rel="stylesheet" href="/assets/styles/global/base.css">
+<link rel="stylesheet" href="/assets/styles/pages/spiel/kalender-interaktiv.css">
+<script src="/assets/scripts/vendor/react.production.min.js"></script>
+<script src="/assets/scripts/vendor/react-dom.production.min.js"></script>
+
+<script type="module" src="/src/pages/spiel/kalender-interaktiv.jsx"></script>
+<script src="/assets/scripts/vendor/supabase.min.js"></script>
+<script src="/assets/scripts/supabase-client.js"></script>
+</head>
+<body>
+
+<div id="nav-root"></div>
+
+<!-- DAY POPUP -->
+<div id="dayPopup" class="day-popup-overlay" style="display:none">
+  <div class="day-popup">
+    <div class="day-popup-head">
+      <div>
+        <div class="day-popup-date" id="dpDate"></div>
+        <div class="day-popup-sub" id="dpSub"></div>
+      </div>
+      <button class="day-popup-close" id="dpClose">✕</button>
+    </div>
+    <div class="day-popup-body" id="dpBody"></div>
+  </div>
+</div>
+
+<!-- ══ PAGE ═══════════════════════════════════════ -->
+<div class="page">
+
+  <div class="page-head">
+    <div class="page-eyebrow">Kolonistenarchiv &nbsp;·&nbsp; Zeittafel</div>
+    <h1 class="page-title">Kalender</h1>
+    <div class="page-sub">Funktionale Tafel · n.d.L.</div>
+  </div>
+
+  <!-- TODAY BANNER -->
+  <div class="today-banner" id="todayBanner">
+    <div class="today-left">
+      <span class="today-label">Heute</span>
+      <span class="today-date" id="todayDate">—</span>
+      <span class="today-meta" id="todayMeta">—</span>
+    </div>
+    <div class="today-set">
+      <label for="todayInput">Tag n.d.L.</label>
+      <input class="today-input" id="todayInput" type="number" min="1" step="1" value="14">
+      <select class="today-era" id="todayEra" aria-label="Zeitraum">
+        <option value="ndl" selected="">n.d.L.</option>
+        <option value="vdl">v.d.L.</option>
+      </select>
+      <button class="today-btn" id="todayBtn">Setzen</button>
+    </div>
+  </div>
+
+  <!-- JUMP ROW -->
+  <div class="jump-row">
+    <span class="jump-label">Springen zu</span>
+    <select class="jump-select" id="jumpDay" aria-label="Tag"></select>
+    <select class="jump-select" id="jumpMonth" aria-label="Monat"></select>
+    <select class="jump-select" id="jumpYear" aria-label="Jahr"></select>
+    <button class="jump-btn" id="jumpBtn">Springen</button>
+  </div>
+
+  <!-- SCHNELLSPRUNG -->
+  <div class="jump-row" style="margin-top:-14px;">
+    <span class="jump-label">Schnellsprung ab Heute</span>
+    <button class="jump-btn" id="nextVollmondBtn">Nächster Vollmond →</button>
+    <button class="jump-btn" id="nextMondsegenBtn">Nächster Mondsegen →</button>
+    <button class="jump-btn" id="nextAschenhauchBtn">Nächster Aschenhauch →</button>
+    <button class="jump-btn" id="nextSegensnachtBtn">Nächste Doppelte Segensnacht →</button>
+    <button class="jump-btn" id="nextHolidayBtn">Nächster Feiertag →</button>
+  </div>
+
+  <!-- CALENDAR GRID -->
+  <div class="cal-grid">
+    <div class="month-block">
+      <div class="month-bar">
+        <div class="nav-arrows">
+          <button class="arrow-btn" id="prevMonth" aria-label="Vorheriger Monat">‹</button>
+          <button class="arrow-btn" id="nextMonth" aria-label="Nächster Monat">›</button>
+        </div>
+        <div class="month-bar-mid">
+          <span class="month-roman" id="monthRoman">—</span>
+          <span class="month-name" id="monthName">—</span>
+          <span class="month-year" id="monthYear">—</span>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <button class="today-jump" id="todayJump">Heute</button>
+        </div>
+      </div>
+
+      <div class="weekday-head">
+        <div class="wd-cell">Aven<span class="wd-num">Tag 1</span></div>
+        <div class="wd-cell">Eiru<span class="wd-num">Tag 2</span></div>
+        <div class="wd-cell">Orun<span class="wd-num">Tag 3</span></div>
+        <div class="wd-cell">Ulai<span class="wd-num">Tag 4</span></div>
+        <div class="wd-cell">Ivar<span class="wd-num">Tag 5</span></div>
+        <div class="wd-cell">Orel<span class="wd-num">Tag 6</span></div>
+        <div class="wd-cell">Elu<span class="wd-num">Tag 7</span></div>
+      </div>
+
+      <div class="day-grid" id="dayGrid"></div>
+
+      <div class="month-sign-footer">
+        <span class="month-sign-label" id="monthSign">Im Zeichen ...</span>
+        <span class="month-sign-vibe" id="monthVibe">...</span>
+      </div>
+    </div>
+
+    <!-- DETAIL PANEL -->
+    <aside class="detail" id="detailPanel">
+      <div class="detail-head">
+        <div class="detail-eyebrow">Ausgewählter Tag</div>
+        <div class="detail-date" id="dDate">—</div>
+        <div class="detail-weekday" id="dWeekday">—</div>
+      </div>
+
+      <div class="detail-section">
+        <div class="detail-label">Sternzeichen</div>
+        <div class="detail-zodiac">
+          <div class="detail-zodiac-info">
+            <div class="detail-zodiac-name" id="dZodiacName">—</div>
+            <div class="detail-zodiac-traits" id="dZodiacTraits">—</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <div class="detail-label">Die Monde</div>
+        <div id="dMoons"></div>
+      </div>
+
+      <div class="detail-section">
+        <div class="detail-label">Feiertage</div>
+        <div id="dHolidays"></div>
+      </div>
+
+      <div class="detail-section">
+        <div class="detail-label">Notation</div>
+        <div style="font-family:var(--fd); font-size:13px; letter-spacing:.06em; color:var(--silver); line-height:1.6;" id="dNotation">—</div>
+        <div style="font-family:var(--fm); font-size:10px; letter-spacing:.2em; color:rgba(124,77,255,0.6); margin-top:6px;" id="dAbsolute">—</div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- LEGEND -->
+  <div class="legend-row">
+    <span class="legend-item"><span class="legend-dot t"></span>Heute</span>
+    <span class="legend-item"><span class="legend-dot w"></span>Weltlich</span>
+    <span class="legend-item"><span class="legend-dot r"></span>Religiös</span>
+    <span class="legend-item"><span class="legend-dot b"></span>Besänftigung</span>
+    <span class="legend-item" style="color:var(--gold-bright);">✦ Mondsegen · Goldmond-Vollmond</span>
+    <span class="legend-item" style="color:var(--ash-bright);">✦ Aschenhauch · Aschmond-Vollmond</span>
+  </div>
+
+  <!-- BACK TO KALENDER -->
+  <div class="back-foot">
+    <a href="/spiel/kalender.html" class="back-link"><span class="back-arrow">←</span>Zurück zur Übersicht</a>
+  </div>
+
+</div>
+
+
+
+
+</body></html>

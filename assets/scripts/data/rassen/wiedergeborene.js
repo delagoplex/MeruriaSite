@@ -1,0 +1,128 @@
+// Wiedergeborene — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+(window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Wiedergeborene'] = {
+  name: 'Wiedergeborene', accent: '#6878a8',
+  subtitle: 'Rückkehrer vom Tod · Träger verblasster Erinnerungen',
+  tags: ['Humanoid','Klein oder Mittelgroß','9 m Bewegung','Untote Natur','Unendlich alt'],
+  headerImage: 'assets/images/races/wiedergeborene/banner.png',
+  lore: {
+    intro: [
+      'Der Tod ist nicht immer das Ende. Das zeigen die Wiedergeborenen, die zwar gestorben sind — aber irgendwie trotzdem leben. Manche tragen die Narben eines gewaltsamen Todes, fahles Fleisch und blutlose Adern lassen keinen Zweifel. Andere sind Wunder der Magie oder Wissenschaft, aus verschiedenen Wesen zusammengesetzt, ein mysteriöser Geist in einem fabrizierten Körper.',
+      'Wiedergeborene altern nicht mehr. Was bleibt, ist das neue Leben — und die Suche nach dem, was einmal war. Ihre Erinnerungen an die Zeit vor dem Umbruch sind vage oder nicht vorhanden. Gelegentlich kehren sie zurück. Meistens nicht.',
+    ],
+    gesellschaft: [
+      'Wiedergeborene schlafen nicht, sondern sitzen und grübeln. Die stille Dunkelheit dehnt sich aus. In manchen Momenten der Entspannung oder Aufregung stoßen sie plötzlich auf Erinnerungen — traumartige Visionen, die ebenso schnell wieder verschwinden.',
+      'Sie müssen nicht essen, trinken oder atmen. Sie können nicht magisch eingeschläfert werden. Krankheit und Gift greifen sie weniger an. Todesrettungswürfe treffen sie im Vorteil. Das ist kein Segen ohne Preis — aber es ist ein Leben.',
+      'In Meruria sind Wiedergeborene eine Seltenheit mit einer Ausstrahlung, die schwer zu beschreiben ist. Man merkt es. Manche fühlen sich unwohl. Andere sind fasziniert. Fast alle fragen sich: Was war dieses Wesen, bevor es das wurde, was es jetzt ist?',
+    ],
+    introBild:        { url: 'assets/images/races/wiedergeborene/charaktere.png', label: 'Wiedergeborener · Illustration', caption: 'Charakter-Illustration', position: 'right', width: 360, height: 360 },
+    gesellschaftBild: { url: null, label: 'Erinnerungs-Vision · Illustration', caption: 'Bruchstücke aus einem anderen Leben', position: 'left', width: 240, height: 300 },
+  },
+  specialSection: {
+    type: 'traitRoller',
+    label: 'Ursprung des Wiedergeborenen',
+    beschreibung: 'Wie ist dein Charakter zur Wiedergeburt gekommen? Würfle (W8) oder wähle deinen Ursprung.',
+    merkmale: [
+      '1 — Du wurdest magisch wiederweckt, doch etwas ist schiefgegangen.',
+      '2 — Deine Körperteile sind mit groben Stichen zusammengenäht. Deine Erinnerungen stammen aus mehreren anderen Leben.',
+      '3 — Als du dich aus deinem Grab freigebuddelt hattest, bemerktest du, dass du abgesehen von einem einzigen Namen keinerlei Erinnerungen hattest.',
+      '4 — Du warst jahrelang untoter Diener eines Nekromanten. Eines Tages kehrte dein Bewusstsein zurück.',
+      '5 — Du erwachtest in einem verlassenen Labor neben Entwürfen für Uhrwerkorgane.',
+      '6 — Eine generationenlange Versteinerung ist beendet. Deine Erinnerungen sind verschwunden.',
+      '7 — Dein Körper ist von einem Geist besessen, der seine Erinnerungen mit dir teilt und fehlende Gliedmaßen mit geisterhaften Versionen ersetzt.',
+      '8 — In der Öffentlichkeit fällst du nicht weiter auf — aber du spürst ständig deine pieksige Strohfüllung.',
+    ],
+  },
+  namenSection: {
+    type: 'nameRoller',
+    label: 'Namen der Wiedergeborenen',
+    beschreibung: 'Wiedergeborene tragen den Namen ihrer vorherigen Rasse — sofern sie sich daran erinnern. Wer sich nicht erinnert, wählt frei aus einer beliebigen Rassentabelle.',
+    tabellen: [
+      { name:'Hinweis', eintraege:['Wiedergeborene tragen den Namen ihrer früheren Rasse. Schau bei der Rasse nach, die du vorher warst. Erinnerst du dich nicht, wähle einen Namen aus einer beliebigen Tabelle — oder benenne dich nach einem Fragment, das zurückgeblieben ist: einem Wort, einem Gesicht, einem Geruch.'] },
+      { name:'Namen aus Fragmenten (wenn keine Erinnerung bleibt)', eintraege:['Asche','Damm','Dämmrung','Dorn','Dusk','Echo','Faden','Ferne','Flüstern','Fragment','Funke','Grau','Hauch','Kalte','Leer','Morgen','Nacht','Narbe','Rauch','Rest','Riss','Scherbe','Schweigen','Splitter','Stille','Tau','Vergiss','Wunde','Zunder','Zwielicht'] },
+    ],
+  },
+  charakterGenerator: {
+    felder: [
+      { label:'Name',               type:'table',   optionen:['Asche','Damm','Dämmrung','Dorn','Dusk','Echo','Faden','Ferne','Flüstern','Fragment','Funke','Grau','Hauch','Kalte','Leer','Morgen','Nacht','Narbe','Rauch','Rest','Riss','Scherbe','Schweigen','Splitter','Stille','Tau','Vergiss','Wunde','Zunder','Zwielicht'] },
+      { label:'Größe',              type:'choice',  optionen:['Klein','Mittelgroß'] },
+      { label:'Ursprung',           type:'table',   optionen:['Magische Fehlfunktion','Zusammengenähte Teile','Grab-Amnesie','Ehemaliger Untoter-Diener','Uhrwerk-Labor','Versteinerung','Geist-Besessener','Strohfüllung'] },
+      { label:'Erinnerungs-Fragment', type:'table', optionen:['Körperlicher Schmerz (W1)','Tränenauslösende Erinnerung (W2)','Kindheitserinnerung (W3)','Stimme einer nahen Person (W4)','Etwas, das man früher mochte (W5)','Geruch oder Sinneseindruck (W6)'] },
+      { label:'Hautfarbe',          type:'table',   optionen:['blaugrau','aschgrau','blass wie Kreide','verblasst bräunlich','grau-lila','kaltes Hautbeige'] },
+    ],
+  },
+  beziehungen: [
+    { volk:'Nekromanten',      relation:'Ambivalenz',               text:'Manche haben uns gemacht. Andere haben uns befreit. Der Unterschied ist klein. Das Unbehagen bleibt.' },
+    { volk:'Kleriker',         relation:'Kompliziert',              text:'Kleriker sehen Untotes Leben unterschiedlich: Fluch, Wunder, Gleichgültigkeit. Ich reagiere darauf je nach dem, was ich von dem Kleriker sehe.' },
+    { volk:'Menschen',         relation:'Neugier & Unbehagen',     text:'Menschen merken es. Blutlose Adern, kalte Haut, kein Atemhauch. Manche fragen. Manche vermeiden.' },
+    { volk:'Andere Wiedergeborene', relation:'Seltsame Verbindung', text:'Wir sind alle Einzelfälle — keine zwei gleich. Aber wir erkennen einander. Das gibt etwas.' },
+    { volk:'Hexblute',         relation:'Parallele Transformation', text:'Auch sie sind etwas anderes als das, womit sie begannen. Wir teilen keine Geschichte, aber ein Gefühl.' },
+    { volk:'Gelehrte & Magier', relation:'Forschungsobjekt',       text:'Für Magier bin ich interessant. Das ist manchmal nützlich und manchmal unbequem.' },
+  ],
+  bekannte: [
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Wiedergeborenen in Meruria reserviert.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Wiedergeborenen in Meruria reserviert.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Wiedergeborenen in Meruria reserviert.' },
+  ],
+  radar: { labels:['Mobilität','Kampf','Magie','Soziales','Überleben','Weisheit'], values:[52,55,60,48,95,78] },
+  quiz: {
+    steps: [
+      { frage:'Was treibt deinen Wiedergeborenen an?', optionen:[
+        { text:'Erinnerung — ich will wissen, wer ich war, bevor ich das wurde, was ich bin', tags:['Magier','Kleriker'] },
+        { text:'Neues Leben — das Alte ist weg. Das jetzt Vorhandene zählt',                tags:['Kämpfer','Barbar'] },
+        { text:'Antworten — jemand oder etwas hat mich zurückgebracht. Ich will wissen, warum', tags:['Paladin','Kleriker'] },
+        { text:'Überleben — ich bin schon einmal gestorben. Das wird nicht wieder passieren', tags:['Schurke','Kämpfer'] },
+      ]},
+      { frage:'Wie nutzt dein Charakter das Wissen um ein vergangenes Leben?', optionen:[
+        { text:'Aktiv — ich rufe bei wichtigen Würfen das Fragment-Wissen ab',              tags:['Magier','Kleriker'] },
+        { text:'Als Sicherheitsnetz — für den Moment, wo es auf den Wurf ankommt',         tags:['Schurke','Kämpfer'] },
+        { text:'Selten — ich vertraue meinen aktuellen Fähigkeiten mehr',                  tags:['Barbar','Kämpfer'] },
+        { text:'Strategisch — ich spare Nutzungen für Schlüssel-Skillchecks',              tags:['Schurke','Magier'] },
+      ]},
+      { frage:'Wie erlebt dein Wiedergeborener die schlaflose Nacht?', optionen:[
+        { text:'Als Fluch — die Stille ist schwer. Die Erinnerungen kommen und gehen wie Dämmerung', tags:['Kleriker','Magier'] },
+        { text:'Als Vorteil — vier Stunden Rast, volles Bewusstsein, mehr Zeit als andere',tags:['Schurke','Magier'] },
+        { text:'Als Normalität — ich kenne es nicht anders mehr',                          tags:['Kämpfer','Waldläufer'] },
+        { text:'Als Forschung — in der Nacht suche ich aktiv nach Erinnerungen',          tags:['Magier','Kleriker'] },
+      ]},
+      { frage:'Welche Rolle spielt dein Charakter in einer Gruppe?', optionen:[
+        { text:'Zäher Überlebender — Todesrettungswurf-Vorteil, Gift/Krankheitsresistenz', tags:['Kämpfer','Barbar'] },
+        { text:'Wissensquelle — Wissen um ein vergangenes Leben für Schlüssel-Checks',     tags:['Magier','Kleriker'] },
+        { text:'Unerschütterlicher Kern — kein Schlaf, kein Hunger, kein magischer Schlaf', tags:['Kämpfer','Paladin'] },
+        { text:'Flexibler Erbe — alte Rassen-Fertigkeiten + neue Wiedergeborenen-Vorteile', tags:['Schurke','Barde'] },
+      ]},
+    ],
+    klassen: {
+      'Magier':      'Wissen um vergangenes Leben für Arkan-Checks, Erbe-Fertigkeiten, keine Schlafunterbrechung — der Wiedergeborene-Magier forscht unendlich.',
+      'Kleriker':    'Todesrettungswurf-Vorteil, Wissen für Religion-Checks, Untote Natur — der Kleriker, der dem Tod schon begegnet ist.',
+      'Kämpfer':     'Giftresistenz, Krankheitsresistenz, Todesrettungswurf-Vorteil — fast unzerstörbar in langen Kämpfen.',
+      'Schurke':     'Erbe-Fertigkeiten + Wissen um vergangenes Leben für Täuschungs-Checks, kein Schlaf nötig für Nachtwachen.',
+      'Paladin':     'Todesrettungswurf-Vorteil + Göttliche Gnade = fast unkillbar. Der Paladin, der zurückgekommen ist.',
+      'Barbar':      'Giftresistenz in Rage, Todesrettungswurf-Vorteil — der Barbar, der buchstäblich nicht sterben will.',
+      'Druide':      'Untote Natur für Wildnisüberleben, Erbe-Fertigkeiten, Wissen um altes Leben für Naturkunde.',
+      'Waldläufer':  'Kein Schlaf, Giftresistenz, Erbe-Fertigkeiten — der Grenzgänger, der immer wacht.',
+      'Barde':       'Wissen um vergangenes Leben für Auftreten-Checks, Erbe-Fertigkeiten, unendliche Lebenszeit für Wissensansammlung.',
+      'Hexenmeister':'Erbe-Pakt-Synergien, Untote Natur, Wissen um vergangenes Leben — der Hexenmeister, der schon mehr Leben gelebt hat.',
+    },
+  },
+  koerperlicherMerkmale: {
+    bewegungsrate:   '9 m',
+    volljaehrigkeit: '— (altern nicht mehr)',
+    lebenserwartung: 'unendlich',
+    groesse:  { kategorie:'Klein oder Mittelgroß (wie vorherige Rasse)', min:'wie vorherige Rasse', max:'wie vorherige Rasse', formel:'wie vorherige Rasse' },
+    gewicht:  { min:'wie vorherige Rasse', max:'wie vorherige Rasse', formel:'wie vorherige Rasse' },
+    augenfarbe: 'wie vorherige Rasse — oft matt, leblos wirkend',
+    hautfarbe:  'blau, grau oder verblasstes Braun — blutlos',
+    haarfarbe:  'wie vorherige Rasse — oft verblasst',
+  },
+  statblock: {
+    features: [
+      { name:'Kreaturentyp',                  text:'Humanoid.' },
+      { name:'Größenkategorie',                         text:'Klein oder Mittelgroß — wie vorherige Rasse, wählbar bei Rassenauswahl.' },
+      { name:'Dunkelsicht',                   text:'Im Umkreis von 18 m wird dämmriges Licht wie helles Licht und Dunkelheit wie dämmriges Licht behandelt. Im Dunkeln siehst du nur Graustufen.' },
+      { name:'Erbe',                          text:'Du behältst alle Fertigkeiten, in denen deine vorherige Rasse geübt ist, sowie Klettern-, Fliegen- oder Schwimmbewegungsraten.' },
+      { name:'Untote Natur',                  text:'Vorteil auf Rettungswürfe gegen Krankheit und Vergiftung + Resistenz gegen Giftschaden · Vorteil auf Todesrettungswürfe · Kein Essen, Trinken oder Atmen nötig · Kein Schlaf, kein magischer Schlaf möglich; lange Rast in 4 Stunden inaktiv/bewegungslos, bei Bewusstsein.' },
+      { name:'Wissen um ein vergangenes Leben', text:'Wenn du einen Attributswurf mit Fertigkeit ausführst, kannst du sofort nach dem Sehen des W20-Ergebnisses 1W6 würfeln und das Ergebnis addieren. Anwendungen = Übungsbonus, alle nach langer Rast.' },
+      { name:'Angeborenes Talent',            text:'Du erhältst ein angeborenes Talent deiner vorherigen Rasse.' },
+    ],
+  },
+};

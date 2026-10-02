@@ -6,8 +6,9 @@
 
 import { readdirSync, writeFileSync, readFileSync, statSync, existsSync } from 'fs';
 import { join, basename, extname } from 'path';
+import { fileURLToPath } from 'url';
 
-const ROOT    = new URL('..', import.meta.url).pathname;
+const ROOT    = fileURLToPath(new URL('..', import.meta.url));
 const OUTFILE = join(ROOT, 'assets/scripts/data/galerie-data.js');
 const IMG_DIR = join(ROOT, 'assets/images/monster');
 

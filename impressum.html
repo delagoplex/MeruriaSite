@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="de"><head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/assets/images/favicon/favicon-m.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/images/favicon/favicon-m-180.png">
+<title>Meruria — Impressum</title>
+<script src="/assets/scripts/theme-init.js"></script>
+<link rel="stylesheet" href="/assets/styles/global/fonts.css">
+<link rel="stylesheet" href="/assets/styles/global/base.css">
+<script src="/assets/scripts/vendor/react.production.min.js"></script>
+<script src="/assets/scripts/vendor/react-dom.production.min.js"></script>
+
+<script type="module" src="/src/pages/impressum.jsx"></script>
+<style>
+  :root { --nav-h: 52px; }
+  body { background: var(--bg); color: var(--white); font-family: var(--font-body); }
+  .imp-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 64px 32px 80px;
+  }
+  .imp-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: rgba(var(--accent-rgb), 0.55);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .imp-title {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    color: var(--white);
+    margin-bottom: 48px;
+    text-transform: uppercase;
+  }
+  .imp-section {
+    margin-bottom: 40px;
+  }
+  .imp-section-title {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(var(--accent-rgb), 0.8);
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(var(--accent-rgb), 0.12);
+  }
+  .imp-text {
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--silver);
+  }
+  .imp-text p { margin-bottom: 10px; }
+  .imp-text p:last-child { margin-bottom: 0; }
+  .imp-notice {
+    margin-top: 48px;
+    padding: 20px 24px;
+    border: 1px solid rgba(var(--accent-rgb), 0.15);
+    border-radius: 3px;
+    background: rgba(var(--accent-rgb), 0.04);
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: rgba(var(--text-rgb), 0.6);
+    font-family: var(--font-body);
+    font-style: italic;
+  }
+  .imp-divider {
+    height: 1px;
+    background: rgba(var(--accent-rgb), 0.08);
+    margin: 48px 0;
+  }
+  .imp-contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 4px;
+  }
+  .imp-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .imp-field label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(160,140,255,0.55);
+  }
+  .imp-field input,
+  .imp-field textarea {
+    background: rgba(160,140,255,0.04);
+    border: 1px solid rgba(160,140,255,0.14);
+    border-radius: 3px;
+    padding: 10px 14px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--silver);
+    outline: none;
+    transition: border-color 0.2s;
+    resize: vertical;
+  }
+  .imp-field input:focus,
+  .imp-field textarea:focus {
+    border-color: rgba(160,140,255,0.4);
+  }
+  .imp-field textarea { min-height: 110px; }
+  .imp-send-btn {
+    align-self: flex-start;
+    margin-top: 4px;
+    padding: 9px 24px;
+    background: transparent;
+    border: 1px solid rgba(160,140,255,0.3);
+    border-radius: 3px;
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(160,140,255,0.8);
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+  }
+  .imp-send-btn:hover {
+    background: rgba(160,140,255,0.08);
+    border-color: rgba(160,140,255,0.55);
+    color: rgba(200,190,240,1);
+  }
+  .imp-sent-msg {
+    font-size: 12px;
+    font-weight: 300;
+    color: rgba(160,140,255,0.7);
+    font-family: var(--font-mono);
+    letter-spacing: 0.1em;
+    margin-top: 4px;
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+</body>
+</html>

@@ -1,0 +1,2 @@
+// Thri-Kreen — Rassen-Detaildaten. Wird von /charaktererstellung/rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+(window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Thri-Kreen'] = { name:'Thri-Kreen',               accent:'#a8a840', subtitle:'Sechs-gliedrige Jäger · Nomaden der Wüste',               tags:['Monstrosity','Mittelgroß','9 m Bewegung','Dunkelsicht','Neutral'],             headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null };

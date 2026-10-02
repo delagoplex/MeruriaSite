@@ -1,0 +1,18 @@
+{
+  "name": "meruria-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "db:start": "wsl -e bash -lc \"supabase start\"",
+    "db:stop": "wsl -e bash -lc \"supabase stop\"",
+    "db:reset": "wsl -e bash -lc \"supabase db reset\"",
+    "db:status": "wsl -e bash -lc \"supabase status\"",
+    "db:config": "node tools/write-local-supabase-config.mjs"
+  },
+  "devDependencies": {
+    "vite": "^8.3.2"
+  }
+}

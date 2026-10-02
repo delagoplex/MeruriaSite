@@ -1,0 +1,890 @@
+// Shared page for all eight division pages.
+// Each division HTML sets <body data-division="..."> and gets its colours from DIVISION_THEMES.
+import '../../components/nav.jsx';
+import '../../components/site-gate.jsx';
+import '../../components/page-header.jsx';
+import '../../components/particle-field.jsx';
+import '../../components/floating-hex-field.jsx';
+import '../../components/footer.jsx';
+import '../../components/section-banner.jsx';
+import '../../components/bekannte-section.jsx';
+import '../../components/float-nav.jsx';
+import '../../components/shared-helpers.jsx';
+
+;(function () {
+(function () {
+const {
+  useState,
+  useEffect,
+  useRef,
+  useCallback
+} = React;
+const {
+  ParticleField,
+  FloatingHexField,
+  FloatNav
+} = window;
+const NAV_H = 52;
+const ACCENT = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+const DIVISION = window.DIVISIONS_DATA.find(d => d.id === document.body.dataset.division);
+// Per-division text/tint colours (everything else is derived from the division's accent).
+const DIVISION_THEMES = {
+  kuratoren: {
+    asideBg: 'rgba(3,10,7,0.88)',
+    label: "Division I",
+    name: "Die Kuratoren",
+    tocIndent: 'rgba(180,240,210,0.5)', toc: 'rgba(200,240,220,0.7)',
+    divider: 'rgba(200,255,230,0.9)',
+    text: 'rgba(200,240,220,0.72)',
+    dim: '200,240,220', dimBoost: 0,
+  },
+  sturmritter: {
+    asideBg: 'rgba(28,8,6,0.90)',
+    label: "Division II",
+    name: "Die Sturmritter",
+    tocIndent: 'rgba(255,185,165,0.65)', toc: 'rgba(255,200,185,0.85)',
+    divider: 'rgba(255,200,180,0.92)',
+    text: 'rgba(255,232,225,0.85)',
+    dim: '255,228,220', dimBoost: 0.15,
+  },
+  sentinels: {
+    asideBg: 'rgba(6,18,32,0.90)',
+    label: "Division III",
+    name: "Die Sentinels",
+    tocIndent: 'rgba(150,220,252,0.45)', toc: 'rgba(170,228,254,0.65)',
+    divider: 'rgba(180,235,255,0.85)',
+    text: 'rgba(215,242,255,0.72)',
+    dim: '210,240,255', dimBoost: 0,
+  },
+  friedenshueter: {
+    asideBg: 'rgba(10,3,3,0.90)',
+    label: "Division IV",
+    name: "Die Friedensh\xFCter",
+    tocIndent: 'rgba(255,185,215,0.45)', toc: 'rgba(255,200,225,0.65)',
+    divider: 'rgba(255,195,220,0.85)',
+    text: 'rgba(255,220,235,0.72)',
+    dim: '255,215,230', dimBoost: 0,
+  },
+  outfitters: {
+    asideBg: 'rgba(10,3,3,0.90)',
+    label: "Division V",
+    name: "Die Outfitters",
+    tocIndent: 'rgba(255,190,140,0.45)', toc: 'rgba(255,205,160,0.65)',
+    divider: 'rgba(255,200,140,0.85)',
+    text: 'rgba(255,230,210,0.72)',
+    dim: '255,225,200', dimBoost: 0,
+  },
+  pathfinders: {
+    asideBg: 'rgba(10,3,3,0.90)',
+    label: "Division VI",
+    name: "Die Pathfinders",
+    tocIndent: 'rgba(220,210,80,0.45)', toc: 'rgba(235,225,100,0.65)',
+    divider: 'rgba(245,238,130,0.85)',
+    text: 'rgba(250,245,190,0.72)',
+    dim: '245,238,180', dimBoost: 0,
+  },
+  quellensucher: {
+    asideBg: 'rgba(10,3,3,0.90)',
+    label: "Division VII",
+    name: "Die Quellensucher",
+    tocIndent: 'rgba(140,230,240,0.45)', toc: 'rgba(160,235,242,0.65)',
+    divider: 'rgba(140,240,245,0.85)',
+    text: 'rgba(200,245,250,0.72)',
+    dim: '195,240,245', dimBoost: 0,
+  },
+  bergungsgarde: {
+    asideBg: 'rgba(10,3,3,0.90)',
+    label: "Division VIII",
+    name: "Die Bergungsgarde",
+    tocIndent: 'rgba(200,155,110,0.45)', toc: 'rgba(215,170,130,0.65)',
+    divider: 'rgba(235,200,160,0.85)',
+    text: 'rgba(245,225,205,0.72)',
+    dim: '240,215,190', dimBoost: 0,
+  },
+};
+const THEME = DIVISION_THEMES[DIVISION.id];
+
+// ── HEX HELPER ──────────────────────────────────────────
+function OctSvg({
+  size = 24,
+  color = 'currentColor',
+  fill = 'none',
+  strokeWidth = 1,
+  style = {}
+}) {
+  return /*#__PURE__*/React.createElement("svg", {
+    width: size,
+    height: size,
+    viewBox: `0 0 ${size} ${size}`,
+    style: {
+      display: 'block',
+      flexShrink: 0,
+      ...style
+    }
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(size),
+    fill: fill,
+    stroke: color,
+    strokeWidth: strokeWidth
+  }));
+}
+
+// ── SCROLL REVEAL ────────────────────────────────────────
+function useScrollReveal() {
+  useEffect(() => {
+    let observer;
+    const revealed = new WeakSet();
+    const init = () => {
+      observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target;
+          observer.unobserve(el);
+          if (revealed.has(el)) return;
+          revealed.add(el);
+          setTimeout(() => el.classList.add('visible'), 0);
+        });
+      }, {
+        threshold: 0.06,
+        rootMargin: '0px 0px -24px 0px'
+      });
+      document.querySelectorAll('.reveal-up,.reveal-left').forEach(el => observer.observe(el));
+    };
+    const t = setTimeout(init, 120);
+    return () => {
+      clearTimeout(t);
+      observer && observer.disconnect();
+    };
+  }, []);
+}
+
+// ── TOC SIDEBAR ──────────────────────────────────────────
+const TOC_SECTIONS = [{
+  id: 'uebersicht',
+  label: 'Übersicht',
+  indent: false
+}, {
+  id: 'beschreibung',
+  label: 'Beschreibung',
+  indent: true
+}, {
+  id: 'auftraege',
+  label: 'Auftragseindruck',
+  indent: true
+}, {
+  id: 'rangsystem',
+  label: 'Rangsystem',
+  indent: true
+}];
+function TOCSidebar({
+  navHeight,
+  headerBottom
+}) {
+  const asideRef = React.useRef(null);
+  const [activeId, setActiveId] = useState('uebersicht');
+  useEffect(() => {
+    const update = () => {
+      const ideal = (headerBottom || 0) - window.scrollY;
+      const val = Math.max(0, ideal);
+      if (asideRef.current) {
+        asideRef.current.style.top = val + 'px';
+        asideRef.current.style.height = `calc(100vh - ${val}px)`;
+      }
+    };
+    update();
+    window.addEventListener('scroll', update, {
+      passive: true
+    });
+    window.addEventListener('resize', update, {
+      passive: true
+    });
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
+  }, [headerBottom, navHeight]);
+  useEffect(() => {
+    const ids = TOC_SECTIONS.map(s => s.id);
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) setActiveId(entry.target.id);
+      });
+    }, {
+      rootMargin: `-${navHeight + 20}px 0px -60% 0px`,
+      threshold: 0
+    });
+    ids.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, [navHeight]);
+  const scrollTo = id => {
+    const el = document.getElementById(id);
+    if (el) {
+      const y = el.getBoundingClientRect().top + window.scrollY - navHeight - 16;
+      window.scrollTo({
+        top: y,
+        behavior: 'smooth'
+      });
+    }
+  };
+  return /*#__PURE__*/React.createElement("aside", {
+    ref: asideRef,
+    className: "div-aside",
+    style: {
+      borderRight: `1px solid ${ACCENT}18`,
+      background: THEME.asideBg
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '0 20px 16px',
+      borderBottom: `1px solid ${ACCENT}12`,
+      marginBottom: '8px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '6px',
+      marginBottom: '6px'
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "10",
+    height: "10",
+    viewBox: "0 0 10 10"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(10),
+    fill: `${ACCENT}22`,
+    stroke: ACCENT,
+    strokeWidth: "0.8"
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7px',
+      letterSpacing: '0.3em',
+      color: `${ACCENT}55`,
+      textTransform: 'uppercase'
+    }
+  }, THEME.label)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '11px',
+      fontWeight: '400',
+      letterSpacing: '0.14em',
+      color: `${ACCENT}cc`,
+      lineHeight: 1.4
+    }
+  }, THEME.name)), TOC_SECTIONS.map(entry => {
+    const isActive = activeId === entry.id;
+    return /*#__PURE__*/React.createElement("button", {
+      key: entry.id,
+      onClick: () => scrollTo(entry.id),
+      style: {
+        display: 'flex',
+        alignItems: 'flex-start',
+        gap: '8px',
+        width: '100%',
+        textAlign: 'left',
+        padding: entry.indent ? '6px 20px 6px 28px' : '8px 20px',
+        background: isActive ? `${ACCENT}0e` : 'transparent',
+        border: 'none',
+        borderLeft: isActive ? `2px solid ${ACCENT}` : '2px solid transparent',
+        cursor: 'pointer',
+        fontFamily: 'var(--font-body)',
+        fontWeight: entry.indent ? '300' : '400',
+        fontSize: '11px',
+        letterSpacing: '0.1em',
+        fontVariant: 'small-caps',
+        color: isActive ? ACCENT : entry.indent ? THEME.tocIndent : THEME.toc,
+        transition: 'all 0.15s',
+        lineHeight: 1.55
+      },
+      onMouseEnter: e => {
+        if (!isActive) {
+          e.currentTarget.style.color = 'var(--white)';
+          e.currentTarget.style.borderLeftColor = `${ACCENT}55`;
+          e.currentTarget.style.background = `${ACCENT}07`;
+        }
+      },
+      onMouseLeave: e => {
+        if (!isActive) {
+          e.currentTarget.style.color = entry.indent ? THEME.tocIndent : THEME.toc;
+          e.currentTarget.style.borderLeftColor = 'transparent';
+          e.currentTarget.style.background = 'transparent';
+        }
+      }
+    }, /*#__PURE__*/React.createElement(OctSvg, {
+      size: entry.indent ? 4 : 6,
+      color: isActive ? ACCENT : `${ACCENT}44`,
+      fill: isActive ? `${ACCENT}44` : 'transparent',
+      strokeWidth: 1,
+      style: {
+        flexShrink: 0,
+        marginTop: '3px'
+      }
+    }), /*#__PURE__*/React.createElement("span", {
+      style: {
+        display: 'block',
+        minWidth: 0
+      }
+    }, entry.label));
+  }));
+}
+
+// ── DIVISION PAGE ────────────────────────────────────────
+function DivisionPage({
+  division,
+  heroRef
+}) {
+  const accent = division.accent;
+  const pal = division.palette;
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    id: "uebersicht",
+    style: {
+      width: 'calc(100% + var(--sidebar-w))',
+      marginLeft: 'calc(-1 * var(--sidebar-w))',
+      position: 'relative',
+      height: '340px',
+      background: `linear-gradient(150deg, ${pal[0]} 0%, ${pal[1]}dd 45%, ${pal[0]} 100%)`,
+      borderBottom: `1px solid ${accent}28`,
+      overflow: 'hidden',
+      scrollMarginTop: `${NAV_H}px`
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      backgroundImage: `repeating-linear-gradient(135deg, transparent, transparent 18px, ${accent}06 18px, ${accent}06 19px)`,
+      pointerEvents: 'none',
+      zIndex: 1
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      backgroundImage: `radial-gradient(circle, ${accent}15 1px, transparent 1px)`,
+      backgroundSize: '32px 28px',
+      pointerEvents: 'none',
+      zIndex: 1,
+      opacity: 0.6
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      background: 'radial-gradient(ellipse at 105% 50%, rgba(124,77,255,0.15) 0%, transparent 55%)',
+      pointerEvents: 'none',
+      zIndex: 2
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      background: `radial-gradient(ellipse at 45% 40%, ${accent}1e 0%, transparent 55%)`,
+      pointerEvents: 'none',
+      zIndex: 2
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      left: '-2%',
+      top: '50%',
+      transform: 'translateY(-52%)',
+      pointerEvents: 'none',
+      zIndex: 2,
+      opacity: 0.04,
+      filter: `drop-shadow(0 0 40px ${accent})`
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "340",
+    height: "340",
+    viewBox: "0 0 340 340"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(340),
+    fill: "none",
+    stroke: accent,
+    strokeWidth: "1.5"
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      left: '5%',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      pointerEvents: 'none',
+      zIndex: 2,
+      opacity: 0.06,
+      filter: `drop-shadow(0 0 20px ${accent})`
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "200",
+    height: "200",
+    viewBox: "0 0 200 200"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(200),
+    fill: `${accent}12`,
+    stroke: accent,
+    strokeWidth: "1"
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      right: '3%',
+      top: '10%',
+      pointerEvents: 'none',
+      zIndex: 2,
+      opacity: 0.10
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "60",
+    height: "60",
+    viewBox: "0 0 60 60"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(60),
+    fill: "none",
+    stroke: "rgba(124,77,255,0.8)",
+    strokeWidth: "1"
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      height: '2px',
+      background: `linear-gradient(90deg, transparent 0%, ${accent}77 30%, ${THEME.divider} 50%, ${accent}77 70%, transparent 100%)`,
+      zIndex: 4,
+      pointerEvents: 'none',
+      animation: 'heroScan 6s ease-in-out infinite'
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      left: '4%',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      zIndex: 4,
+      pointerEvents: 'none'
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "220",
+    height: "220",
+    viewBox: "0 0 220 220",
+    style: {
+      display: 'block',
+      filter: `drop-shadow(0 0 24px ${accent}44)`
+    }
+  }, /*#__PURE__*/React.createElement("defs", null, /*#__PURE__*/React.createElement("clipPath", {
+    id: "divLogoClip"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(220)
+  }))), /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(220),
+    fill: `${accent}10`,
+    stroke: "none"
+  }), /*#__PURE__*/React.createElement("image", {
+    href: division.logo,
+    x: division.logoOffset ? division.logoOffset.x : 0,
+    y: division.logoOffset ? division.logoOffset.y : 0,
+    width: "220",
+    height: "220",
+    clipPath: "url(#divLogoClip)",
+    preserveAspectRatio: "xMidYMid meet"
+  }), /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(220),
+    fill: "none",
+    stroke: accent,
+    strokeWidth: "1.5",
+    opacity: "0.7"
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      right: '6%',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      fontFamily: 'var(--font-display)',
+      fontSize: '260px',
+      fontWeight: '300',
+      letterSpacing: '-0.04em',
+      color: `${accent}05`,
+      lineHeight: 1,
+      userSelect: 'none',
+      pointerEvents: 'none',
+      whiteSpace: 'nowrap',
+      zIndex: 3
+    }
+  }, division.nummer), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      padding: '32px 40px',
+      background: `linear-gradient(to top, ${pal[0]}f0 0%, ${pal[0]}88 55%, transparent 100%)`,
+      zIndex: 5,
+      textAlign: 'right'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "reveal-left",
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.32em',
+      color: `${accent}77`,
+      textTransform: 'uppercase',
+      marginBottom: '7px'
+    }
+  }, "Division ", division.nummer, " \xB7 ", division.subtitle), /*#__PURE__*/React.createElement("h1", {
+    className: "reveal-left",
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: 'clamp(32px,4vw,54px)',
+      fontWeight: '300',
+      letterSpacing: '0.16em',
+      color: 'var(--white)',
+      textShadow: `0 0 50px ${accent}44, 0 0 100px ${accent}1e`,
+      lineHeight: 1.1
+    }
+  }, division.name), /*#__PURE__*/React.createElement("div", {
+    className: "reveal-left",
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      marginTop: '12px',
+      justifyContent: 'flex-end'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '24px',
+      height: '1px',
+      background: `linear-gradient(270deg, ${accent}44, transparent)`
+    }
+  }), /*#__PURE__*/React.createElement("svg", {
+    width: "8",
+    height: "8",
+    viewBox: "0 0 8 8"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(8),
+    fill: `${accent}55`,
+    stroke: accent,
+    strokeWidth: "0.8"
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: '48px',
+      height: '1px',
+      background: `linear-gradient(270deg, ${accent}99, transparent)`,
+      animation: 'pulse-glow 3s infinite'
+    }
+  })))), /*#__PURE__*/React.createElement("div", {
+    ref: heroRef,
+    style: {
+      height: 0
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'flex-start'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "div-content"
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      right: '-60px',
+      top: '40px',
+      pointerEvents: 'none',
+      zIndex: 0,
+      opacity: 0.02,
+      filter: `drop-shadow(0 0 30px ${accent})`
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "300",
+    height: "300",
+    viewBox: "0 0 300 300"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(300),
+    fill: "none",
+    stroke: accent,
+    strokeWidth: "1"
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      left: '-40px',
+      bottom: '120px',
+      pointerEvents: 'none',
+      zIndex: 0,
+      opacity: 0.025
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "180",
+    height: "180",
+    viewBox: "0 0 180 180"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(180),
+    fill: "none",
+    stroke: "rgba(124,77,255,0.9)",
+    strokeWidth: "1"
+  }))), /*#__PURE__*/React.createElement("section", {
+    id: "beschreibung",
+    className: "div-section"
+  }, /*#__PURE__*/React.createElement(SectionBanner, {
+    label: "Beschreibung",
+    accent: accent
+  }), /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '14px',
+      lineHeight: 1.9,
+      color: 'rgba(var(--text-rgb),0.78)',
+      letterSpacing: '0.02em',
+      textWrap: 'pretty',
+      borderLeft: `1px solid ${accent}22`,
+      paddingLeft: '16px'
+    }
+  }, division.beschreibung)), /*#__PURE__*/React.createElement("section", {
+    id: "auftraege",
+    className: "div-section"
+  }, /*#__PURE__*/React.createElement(SectionBanner, {
+    label: "Auftragseindruck",
+    accent: accent
+  }), /*#__PURE__*/React.createElement("ul", {
+    className: "auftraege-list"
+  }, division.auftraege.map((auftrag, i) => /*#__PURE__*/React.createElement("li", {
+    key: i,
+    className: "reveal-up",
+    style: {
+      display: 'flex',
+      gap: '14px',
+      alignItems: 'flex-start',
+      padding: '14px 18px',
+      border: `1px solid ${accent}18`,
+      borderRadius: '3px',
+      background: `linear-gradient(135deg, ${accent}06 0%, transparent 100%)`,
+      borderLeft: `2px solid ${accent}55`,
+      position: 'relative',
+      overflow: 'hidden'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      right: '-8px',
+      bottom: '-8px',
+      opacity: 0.06,
+      pointerEvents: 'none'
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "56",
+    height: "56",
+    viewBox: "0 0 56 56"
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(56),
+    fill: "none",
+    stroke: accent,
+    strokeWidth: "1"
+  }))), /*#__PURE__*/React.createElement("svg", {
+    width: "8",
+    height: "8",
+    viewBox: "0 0 8 8",
+    style: {
+      flexShrink: 0,
+      marginTop: '5px'
+    }
+  }, /*#__PURE__*/React.createElement("polygon", {
+    points: hexPoints(8),
+    fill: `${accent}44`,
+    stroke: accent,
+    strokeWidth: "0.8"
+  })), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '13px',
+      lineHeight: 1.8,
+      color: THEME.text,
+      letterSpacing: '0.02em',
+      textWrap: 'pretty',
+      position: 'relative',
+      zIndex: 1
+    }
+  }, auftrag))))), /*#__PURE__*/React.createElement("section", {
+    id: "rangsystem",
+    className: "div-section"
+  }, /*#__PURE__*/React.createElement(SectionBanner, {
+    label: "Rangsystem",
+    accent: accent
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "rang-list"
+  }, division.raenge.map(r => {
+    const isTop = r.rang <= 3;
+    const barW = `${100 - (r.rang - 1) * 8}%`;
+    const dimAlpha = 0.35 + (10 - r.rang) * 0.065;
+    return /*#__PURE__*/React.createElement("div", {
+      key: r.rang,
+      className: "reveal-up",
+      style: {
+        display: 'flex',
+        alignItems: 'stretch',
+        position: 'relative',
+        borderRadius: '3px',
+        overflow: 'hidden',
+        background: isTop ? `linear-gradient(90deg, ${accent}10 0%, transparent 100%)` : 'transparent',
+        border: `1px solid ${isTop ? accent + '28' : accent + '10'}`
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        flexShrink: 0,
+        width: '48px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRight: `1px solid ${accent}${isTop ? '30' : '14'}`,
+        padding: '14px 0',
+        background: isTop ? `${accent}0e` : 'transparent'
+      }
+    }, /*#__PURE__*/React.createElement("svg", {
+      width: "24",
+      height: "24",
+      viewBox: "0 0 24 24",
+      style: {
+        filter: isTop ? `drop-shadow(0 0 4px ${accent}88)` : 'none'
+      }
+    }, /*#__PURE__*/React.createElement("polygon", {
+      points: hexPoints(24),
+      fill: isTop ? `${accent}22` : 'transparent',
+      stroke: isTop ? `${accent}99` : `${accent}33`,
+      strokeWidth: "1"
+    }), /*#__PURE__*/React.createElement("text", {
+      x: "12",
+      y: "16",
+      textAnchor: "middle",
+      fontFamily: "var(--font-mono)",
+      fontSize: "8",
+      fill: isTop ? `${accent}ee` : `${accent}66`
+    }, r.rang))), /*#__PURE__*/React.createElement("div", {
+      style: {
+        flex: 1,
+        padding: '12px 18px',
+        position: 'relative'
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        bottom: 0,
+        width: barW,
+        background: `linear-gradient(90deg, ${accent}${isTop ? '10' : '07'}, transparent)`,
+        pointerEvents: 'none'
+      }
+    }), /*#__PURE__*/React.createElement("div", {
+      style: {
+        position: 'relative',
+        zIndex: 1,
+        display: 'flex',
+        alignItems: 'baseline',
+        gap: '12px',
+        flexWrap: 'wrap'
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: 'var(--font-display)',
+        fontSize: '13px',
+        fontWeight: '400',
+        letterSpacing: '0.14em',
+        color: `rgba(var(--text-rgb),${dimAlpha + 0.1})`,
+        textTransform: 'uppercase',
+        flexShrink: 0
+      }
+    }, r.titel), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: 'var(--font-body)',
+        fontWeight: '300',
+        fontSize: '12px',
+        lineHeight: 1.7,
+        color: `rgba(${THEME.dim},${dimAlpha + THEME.dimBoost})`,
+        letterSpacing: '0.01em'
+      }
+    }, r.beschreibung))), isTop && /*#__PURE__*/React.createElement("div", {
+      style: {
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        bottom: 0,
+        width: '2px',
+        background: `linear-gradient(180deg, ${accent}99, ${accent}33)`
+      }
+    }));
+  })))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      borderLeft: `1px solid ${accent}14`
+    }
+  }, /*#__PURE__*/React.createElement(BekannteSection, {
+    division: division,
+    sidebar: true
+  }))));
+}
+
+// ── APP ──────────────────────────────────────────────────
+function App() {
+  const [mouse, setMouse] = useState({
+    x: 0.5,
+    y: 0.5
+  });
+  const [headerBottom, setHeaderBottom] = useState(0);
+  const heroRef = useRef(null);
+  const handleMouseMove = useCallback(e => {
+    setMouse({
+      x: e.clientX / window.innerWidth,
+      y: e.clientY / window.innerHeight
+    });
+  }, []);
+  useEffect(() => {
+    const measure = () => {
+      if (heroRef.current) {
+        const rect = heroRef.current.getBoundingClientRect();
+        setHeaderBottom(rect.bottom + window.scrollY);
+      }
+    };
+    measure();
+    window.addEventListener('resize', measure, {
+      passive: true
+    });
+    return () => window.removeEventListener('resize', measure);
+  }, []);
+  useScrollReveal();
+  return /*#__PURE__*/React.createElement("div", {
+    onMouseMove: handleMouseMove,
+    className: "page-root"
+  }, /*#__PURE__*/React.createElement(ParticleField, {
+    mouseX: mouse.x,
+    mouseY: mouse.y,
+    accent: ACCENT,
+    clipTop: 232
+  }), /*#__PURE__*/React.createElement(FloatingHexField, {
+    mouseX: mouse.x,
+    mouseY: mouse.y,
+    accent: ACCENT
+  }), /*#__PURE__*/React.createElement(PageHeader, {
+    height: 180,
+    showHex: true
+  }), /*#__PURE__*/React.createElement(SiteNav, {
+    rightLabel: "DIVISIONS-ARCHIV v1.0"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "page-body"
+  }, /*#__PURE__*/React.createElement(TOCSidebar, {
+    navHeight: NAV_H,
+    headerBottom: headerBottom
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "div-col"
+  }, /*#__PURE__*/React.createElement(DivisionPage, {
+    division: DIVISION,
+    heroRef: heroRef
+  }))), /*#__PURE__*/React.createElement(SiteFooter, {
+    accent: ACCENT
+  }), /*#__PURE__*/React.createElement(FloatNav, null));
+}
+ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement(App, null)));
+})();
+
+})();
+
