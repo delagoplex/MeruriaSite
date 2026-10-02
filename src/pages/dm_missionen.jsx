@@ -1,0 +1,1534 @@
+// Page entry for DM_Missionen.html
+import '../components/nav.jsx';
+import '../components/site-gate.jsx';
+
+;(function () {
+(function () {
+const {
+  useState,
+  useEffect,
+  useRef,
+  useCallback
+} = React;
+const {
+  SiteNav,
+  SiteGate
+} = window;
+const KAT = {
+  Suche: {
+    color: '#7fb8ff',
+    glyph: '⬡',
+    label: 'SUCHE'
+  },
+  Gespraech: {
+    color: '#b8ffb8',
+    glyph: '◇',
+    label: 'GESPRÄCH'
+  },
+  Jagd: {
+    color: '#ffb8b8',
+    glyph: '✦',
+    label: 'JAGD'
+  },
+  Sammeln: {
+    color: '#7ed4b8',
+    glyph: '◎',
+    label: 'SAMMELN'
+  },
+  Eskorte: {
+    color: '#ffab57',
+    glyph: '▸',
+    label: 'ESKORTE'
+  }
+};
+const STATUS_OPTS = [{
+  value: '',
+  label: 'Standard'
+}, {
+  value: 'neu',
+  label: 'Neu'
+}, {
+  value: 'empfohlen',
+  label: 'Empfohlen'
+}, {
+  value: 'archiviert',
+  label: 'Archiviert'
+}];
+const APP_STATUS = {
+  pending: {
+    label: 'Ausstehend',
+    color: 'rgba(127,184,255,0.8)'
+  },
+  accepted: {
+    label: 'Angenommen',
+    color: 'rgba(100,220,140,0.8)'
+  },
+  rejected: {
+    label: 'Abgelehnt',
+    color: 'rgba(255,120,120,0.8)'
+  }
+};
+const DIVISIONS = [
+  'Die Kuratoren','Die Sturmritter','Die Sentinels','Die Friedenshüter',
+  'Die Outfitters','Die Pathfinders','Die Quellensucher','Die Bergungsgarde'
+];
+
+// ─── SMALL UTILS ─────────────────────────────────────────────────────────────
+function Btn({
+  onClick,
+  disabled,
+  children,
+  danger,
+  small,
+  secondary
+}) {
+  const base = {
+    fontFamily: 'var(--font-display)',
+    fontSize: small ? '9px' : '11px',
+    letterSpacing: '.18em',
+    textTransform: 'uppercase',
+    padding: small ? '5px 12px' : '9px 20px',
+    border: '1px solid',
+    borderRadius: '3px',
+    cursor: disabled ? 'not-allowed' : 'pointer',
+    opacity: disabled ? 0.45 : 1,
+    transition: 'all .15s',
+    background: danger ? 'rgba(200,60,60,0.15)' : secondary ? 'transparent' : 'rgba(124,77,255,0.18)',
+    borderColor: danger ? 'rgba(200,60,60,0.5)' : secondary ? 'rgba(124,77,255,0.2)' : 'rgba(124,77,255,0.55)',
+    color: danger ? 'rgba(255,120,120,0.9)' : secondary ? 'rgba(124,77,255,0.55)' : 'rgba(200,190,240,0.9)'
+  };
+  return /*#__PURE__*/React.createElement("button", {
+    onClick: disabled ? undefined : onClick,
+    style: base,
+    onMouseEnter: e => {
+      if (!disabled) {
+        e.currentTarget.style.opacity = '0.85';
+      }
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.opacity = disabled ? '0.45' : '1';
+    }
+  }, children);
+}
+function mono(txt, size = '8px', color = 'rgba(124,77,255,0.5)') {
+  return /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: size,
+      letterSpacing: '.2em',
+      color,
+      textTransform: 'uppercase'
+    }
+  }, txt);
+}
+
+// ─── PANEL ────────────────────────────────────────────────────────────────────
+function Panel({
+  children,
+  style
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: 'linear-gradient(180deg, rgba(15,10,40,0.7) 0%, rgba(8,6,22,0.85) 100%)',
+      border: '1px solid rgba(160,140,255,0.18)',
+      borderRadius: '3px',
+      backdropFilter: 'blur(8px)',
+      display: 'flex',
+      flexDirection: 'column',
+      minHeight: 0,
+      overflow: 'hidden',
+      boxShadow: '0 8px 40px rgba(0,0,0,0.5)',
+      ...style
+    }
+  }, children);
+}
+function PanelHead({
+  children,
+  right
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '10px 18px',
+      borderBottom: '1px solid rgba(160,140,255,0.18)',
+      background: 'linear-gradient(180deg,rgba(124,77,255,0.10)0%,rgba(124,77,255,0.02)100%)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: '12px',
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '13px',
+      fontWeight: 400,
+      letterSpacing: '.32em',
+      color: '#f0eeff',
+      textTransform: 'uppercase',
+      textShadow: '0 0 14px rgba(124,77,255,0.4)'
+    }
+  }, children), right);
+}
+
+// ─── MISSION ROW ─────────────────────────────────────────────────────────────
+function MissionRow({
+  m,
+  active,
+  onClick,
+  appCount
+}) {
+  const kat = KAT[m.kategorie] || KAT.Suche;
+  return /*#__PURE__*/React.createElement("div", {
+    onClick: onClick,
+    style: {
+      padding: '10px 16px',
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px',
+      background: active ? 'linear-gradient(90deg,rgba(124,77,255,0.18)0%,rgba(124,77,255,0.06)100%)' : 'transparent',
+      borderLeft: `2px solid ${active ? 'rgba(167,139,255,0.8)' : 'transparent'}`,
+      borderBottom: '1px solid rgba(160,140,255,0.06)',
+      transition: 'all .15s'
+    },
+    onMouseEnter: e => {
+      if (!active) e.currentTarget.style.background = 'rgba(124,77,255,0.05)';
+    },
+    onMouseLeave: e => {
+      if (!active) e.currentTarget.style.background = 'transparent';
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: kat.color,
+      fontSize: '13px',
+      flexShrink: 0
+    }
+  }, kat.glyph), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      minWidth: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '13px',
+      fontWeight: active ? 400 : 300,
+      color: active ? '#f0eeff' : 'rgba(220,210,250,0.85)',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis'
+    }
+  }, m.name), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      marginTop: '2px'
+    }
+  }, mono(m.auftraggeber || '—', '8px', 'rgba(160,140,255,0.45)'), m.status === 'neu' && /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: '7px',
+      padding: '1px 5px',
+      background: 'rgba(127,184,255,0.15)',
+      border: '1px solid rgba(127,184,255,0.4)',
+      borderRadius: '2px',
+      color: '#a3c8ff',
+      fontFamily: 'var(--font-mono)',
+      letterSpacing: '.12em',
+      textTransform: 'uppercase'
+    }
+  }, "NEU"), m.status === 'archiviert' && /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: '7px',
+      padding: '1px 5px',
+      background: 'rgba(160,140,255,0.08)',
+      border: '1px solid rgba(160,140,255,0.2)',
+      borderRadius: '2px',
+      color: 'rgba(160,140,255,0.4)',
+      fontFamily: 'var(--font-mono)',
+      letterSpacing: '.12em',
+      textTransform: 'uppercase'
+    }
+  }, "ARCHIV"))), appCount > 0 && /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      background: 'rgba(124,77,255,0.25)',
+      border: '1px solid rgba(167,139,255,0.5)',
+      borderRadius: '10px',
+      padding: '1px 7px',
+      color: '#c9b8ff',
+      flexShrink: 0
+    }
+  }, appCount));
+}
+
+// ─── CREATE FORM ─────────────────────────────────────────────────────────────
+function CreateForm({
+  onCreated,
+  onCancel,
+  nscOptions
+}) {
+  const [form, setForm] = useState({
+    name: '',
+    kategorie: 'Suche',
+    sw: 1,
+    lv: 3,
+    auftraggeber: '',
+    region: '',
+    beschreibung: '',
+    status: '',
+    rewards_xp: 100,
+    rewards_hade: 200,
+    rewards_item: ''
+  });
+  const [steps, setSteps] = useState([{
+    txt: '',
+    max: 1
+  }]);
+  const [requirements, setRequirements] = useState([]);
+  const [saving, setSaving] = useState(false);
+  const set = (k, v) => setForm(f => ({
+    ...f,
+    [k]: v
+  }));
+  const addStep = () => setSteps(s => [...s, {
+    txt: '',
+    max: 1
+  }]);
+  const removeStep = i => setSteps(s => s.filter((_, j) => j !== i));
+  const setStep = (i, k, v) => setSteps(s => s.map((s2, j) => j === i ? {
+    ...s2,
+    [k]: v
+  } : s2));
+  async function handleSave() {
+    if (!form.name.trim()) return;
+    setSaving(true);
+    const anweisungen = steps.filter(s => s.txt.trim()).map(s => ({
+      txt: s.txt.trim(),
+      n: 0,
+      max: Number(s.max) || 1
+    }));
+    const rewards = {
+      xp: Number(form.rewards_xp) || 0,
+      hade: Number(form.rewards_hade) || 0,
+      item: form.rewards_item.trim() || null
+    };
+    const {
+      data,
+      error
+    } = await window._sb.from('missions').insert({
+      name: form.name.trim(),
+      kategorie: form.kategorie,
+      sw: Number(form.sw),
+      lv: Number(form.lv),
+      auftraggeber: form.auftraggeber.trim(),
+      region: form.region.trim(),
+      beschreibung: form.beschreibung.trim(),
+      anweisungen,
+      rewards,
+      requirements,
+      status: form.status
+    }).select().single();
+    setSaving(false);
+    if (!error && data) onCreated(data);
+  }
+  const row2 = {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: '12px'
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      overflowY: 'auto',
+      padding: '22px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '15px',
+      letterSpacing: '.2em',
+      color: '#f0eeff',
+      textTransform: 'uppercase',
+      marginBottom: '20px'
+    }
+  }, "Neue Mission"), /*#__PURE__*/React.createElement("div", {
+    className: "field"
+  }, /*#__PURE__*/React.createElement("label", null, "Name"), /*#__PURE__*/React.createElement("input", {
+    value: form.name,
+    onChange: e => set('name', e.target.value),
+    placeholder: "Missionsname\u2026"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "field",
+    style: row2
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, "Kategorie"), /*#__PURE__*/React.createElement("select", {
+    value: form.kategorie,
+    onChange: e => set('kategorie', e.target.value)
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "Suche"
+  }, "Suche"), /*#__PURE__*/React.createElement("option", {
+    value: "Gespraech"
+  }, "Gespr\xE4ch"), /*#__PURE__*/React.createElement("option", {
+    value: "Jagd"
+  }, "Jagd"), /*#__PURE__*/React.createElement("option", {
+    value: "Sammeln"
+  }, "Sammeln"), /*#__PURE__*/React.createElement("option", {
+    value: "Eskorte"
+  }, "Eskorte"))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, "Status"), /*#__PURE__*/React.createElement("select", {
+    value: form.status,
+    onChange: e => set('status', e.target.value)
+  }, STATUS_OPTS.filter(o => o.value !== 'archiviert').map(o => /*#__PURE__*/React.createElement("option", {
+    key: o.value,
+    value: o.value
+  }, o.label))))), /*#__PURE__*/React.createElement("div", {
+    className: "field",
+    style: row2
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, "Schwierigkeit (1\u20135)"), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "1",
+    max: "5",
+    value: form.sw,
+    onChange: e => set('sw', e.target.value)
+  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, "Mindest-Stufe"), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "1",
+    value: form.lv,
+    onChange: e => set('lv', e.target.value)
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "field",
+    style: row2
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, "Auftraggeber"), /*#__PURE__*/React.createElement("select", {
+    value: form.auftraggeber,
+    onChange: e => set('auftraggeber', e.target.value)
+  }, /*#__PURE__*/React.createElement("option", { value: "" }, "\u2014 w\xE4hlen \u2014"),
+    /*#__PURE__*/React.createElement("optgroup", { label: "Divisionen" },
+      DIVISIONS.map(d => /*#__PURE__*/React.createElement("option", { key: d, value: d }, d))
+    ),
+    /*#__PURE__*/React.createElement("optgroup", { label: "NSCs" },
+      (nscOptions || []).map(n => /*#__PURE__*/React.createElement("option", { key: n.name, value: n.name },
+        n.division && n.division !== 'Keine' ? n.name + ' (' + n.division + ')' : n.name
+      ))
+    )
+  )), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, "Region"), /*#__PURE__*/React.createElement("input", {
+    value: form.region,
+    onChange: e => set('region', e.target.value),
+    placeholder: "Ort\u2026"
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "field"
+  }, /*#__PURE__*/React.createElement("label", null, "Beschreibung"), /*#__PURE__*/React.createElement("textarea", {
+    value: form.beschreibung,
+    onChange: e => set('beschreibung', e.target.value),
+    placeholder: "Auftragstext\u2026"
+  })),
+  /*#__PURE__*/React.createElement("div", { style: { marginBottom: '16px' } },
+    /*#__PURE__*/React.createElement("label", { style: { marginBottom: '8px' } }, "Anforderungen"),
+    /*#__PURE__*/React.createElement("div", { style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
+      ['Kuratoren','Sturmritter','Sentinels','Friedensh\u00fcter','Outfitters','Pathfinders','Quellensucher','Bergungsgarde'].map(div => {
+        const req = requirements.find(r => r.label === div);
+        const active = !!req;
+        return /*#__PURE__*/React.createElement("div", { key: div, style: { display: 'flex', alignItems: 'center', gap: '4px' } },
+          /*#__PURE__*/React.createElement("button", {
+            type: "button",
+            onClick: () => setRequirements(rs => active ? rs.filter(r => r.label !== div) : [...rs, { label: div, count: 1 }]),
+            style: {
+              padding: '4px 10px', fontFamily: 'var(--font-mono)', fontSize: '9px',
+              letterSpacing: '.14em', textTransform: 'uppercase', cursor: 'pointer',
+              border: `1px solid ${active ? 'rgba(124,77,255,0.7)' : 'rgba(124,77,255,0.2)'}`,
+              borderRadius: '2px',
+              background: active ? 'rgba(124,77,255,0.2)' : 'rgba(124,77,255,0.05)',
+              color: active ? 'rgba(200,180,255,0.95)' : 'rgba(160,140,255,0.45)',
+              transition: 'all .15s'
+            }
+          }, active ? `\u2713 ${div}` : div),
+          active && /*#__PURE__*/React.createElement("input", {
+            type: "number", min: "1", max: "9", value: req.count,
+            onChange: e => setRequirements(rs => rs.map(r => r.label === div ? { ...r, count: Number(e.target.value) || 1 } : r)),
+            title: "Anzahl",
+            style: { width: '42px', padding: '4px 6px', textAlign: 'center', fontSize: '11px' }
+          })
+        );
+      })
+    )
+  ),
+  /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: '14px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: '8px'
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    style: {
+      margin: 0
+    }
+  }, "Anweisungen"), /*#__PURE__*/React.createElement("button", {
+    onClick: addStep,
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '.15em',
+      padding: '3px 9px',
+      background: 'rgba(124,77,255,0.12)',
+      border: '1px solid rgba(124,77,255,0.3)',
+      borderRadius: '2px',
+      color: 'rgba(167,139,255,0.8)',
+      cursor: 'pointer'
+    }
+  }, "+ Schritt")), steps.map((step, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    style: {
+      display: 'grid',
+      gridTemplateColumns: '1fr 70px 28px',
+      gap: '8px',
+      marginBottom: '8px',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("input", {
+    value: step.txt,
+    onChange: e => setStep(i, 'txt', e.target.value),
+    placeholder: `Schritt ${i + 1}…`
+  }), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "1",
+    value: step.max,
+    onChange: e => setStep(i, 'max', e.target.value),
+    title: "Anzahl",
+    style: {
+      textAlign: 'center'
+    }
+  }), /*#__PURE__*/React.createElement("button", {
+    onClick: () => removeStep(i),
+    style: {
+      background: 'transparent',
+      border: '1px solid rgba(200,60,60,0.3)',
+      borderRadius: '2px',
+      color: 'rgba(255,120,120,0.6)',
+      cursor: 'pointer',
+      fontSize: '13px',
+      lineHeight: 1,
+      padding: '3px'
+    }
+  }, "\xD7")))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '14px',
+      background: 'rgba(124,77,255,0.05)',
+      border: '1px solid rgba(124,77,255,0.15)',
+      borderRadius: '3px',
+      marginBottom: '20px'
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    style: {
+      marginBottom: '10px'
+    }
+  }, "Belohnungen"), /*#__PURE__*/React.createElement("div", {
+    style: row2
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "field"
+  }, /*#__PURE__*/React.createElement("label", null, "XP"), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "0",
+    value: form.rewards_xp,
+    onChange: e => set('rewards_xp', e.target.value)
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "field"
+  }, /*#__PURE__*/React.createElement("label", null, "Hade"), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "0",
+    value: form.rewards_hade,
+    onChange: e => set('rewards_hade', e.target.value)
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "field",
+    style: {
+      marginBottom: 0
+    }
+  }, /*#__PURE__*/React.createElement("label", null, "Gegenstand (optional)"), /*#__PURE__*/React.createElement("input", {
+    value: form.rewards_item,
+    onChange: e => set('rewards_item', e.target.value),
+    placeholder: "Itemname\u2026"
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '10px'
+    }
+  }, /*#__PURE__*/React.createElement(Btn, {
+    onClick: handleSave,
+    disabled: saving || !form.name.trim()
+  }, saving ? 'Speichern…' : 'Mission erstellen'), /*#__PURE__*/React.createElement(Btn, {
+    onClick: onCancel,
+    secondary: true
+  }, "Abbrechen")));
+}
+
+// ─── APPLICATION ROW ─────────────────────────────────────────────────────────
+function AppRow({
+  app,
+  profiles,
+  characters,
+  onUpdate
+}) {
+  const profile = profiles[app.player_id];
+  const char = characters[app.character_id];
+  const st = APP_STATUS[app.app_status] || APP_STATUS.pending;
+  const [busy, setBusy] = useState(false);
+  async function setStatus(s) {
+    setBusy(true);
+    await window._sb.from('mission_applications').update({
+      app_status: s
+    }).eq('id', app.id);
+    setBusy(false);
+    onUpdate(app.id, s);
+  }
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '12px 18px',
+      borderBottom: '1px solid rgba(160,140,255,0.08)',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '14px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      minWidth: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '13px',
+      fontWeight: 400,
+      color: '#f0eeff',
+      marginBottom: '3px'
+    }
+  }, profile?.display_name || profile?.email?.split('@')[0] || '—'), char && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '11px',
+      fontWeight: 300,
+      color: 'rgba(160,140,255,0.7)'
+    }
+  }, char.name, (char.race || char.class || char.division) && /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: 'rgba(160,140,255,0.4)',
+      marginLeft: '6px'
+    }
+  }, [char.race, char.class, char.division, `Stufe ${char.char_data?.level ?? 1}`].filter(Boolean).join(' · '))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '.15em',
+      color: st.color,
+      marginTop: '4px',
+      textTransform: 'uppercase'
+    }
+  }, st.label)), app.app_status === 'pending' && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '6px',
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement(Btn, {
+    small: true,
+    onClick: () => setStatus('accepted'),
+    disabled: busy
+  }, "Annehmen"), /*#__PURE__*/React.createElement(Btn, {
+    small: true,
+    danger: true,
+    onClick: () => setStatus('rejected'),
+    disabled: busy
+  }, "Ablehnen")), app.app_status === 'accepted' && /*#__PURE__*/React.createElement(Btn, {
+    small: true,
+    danger: true,
+    onClick: () => setStatus('rejected'),
+    disabled: busy
+  }, "Zur\xFCcksetzen"), app.app_status === 'rejected' && /*#__PURE__*/React.createElement(Btn, {
+    small: true,
+    secondary: true,
+    onClick: () => setStatus('pending'),
+    disabled: busy
+  }, "Ausstehend"));
+}
+
+// ─── EDIT FORM ────────────────────────────────────────────────────────────────
+function EditForm({ mission, onSaved, onCancel, nscOptions }) {
+  const [form, setForm] = useState({
+    name: mission.name || '',
+    kategorie: mission.kategorie || 'Suche',
+    sw: mission.sw || 1,
+    lv: mission.lv || 1,
+    auftraggeber: mission.auftraggeber || '',
+    region: mission.region || '',
+    beschreibung: mission.beschreibung || '',
+    status: mission.status || '',
+    rewards_xp: mission.rewards?.xp ?? 0,
+    rewards_hade: mission.rewards?.hade ?? 0,
+    rewards_item: mission.rewards?.item || ''
+  });
+  const [steps, setSteps] = useState(
+    (mission.anweisungen || []).length
+      ? mission.anweisungen.map(s => ({ txt: s.txt, max: s.max || 1 }))
+      : [{ txt: '', max: 1 }]
+  );
+  const [requirements, setRequirements] = useState(mission.requirements || []);
+  const [saving, setSaving] = useState(false);
+  const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
+  const addStep = () => setSteps(s => [...s, { txt: '', max: 1 }]);
+  const removeStep = i => setSteps(s => s.filter((_, j) => j !== i));
+  const setStep = (i, k, v) => setSteps(s => s.map((s2, j) => j === i ? { ...s2, [k]: v } : s2));
+  async function handleSave() {
+    if (!form.name.trim()) return;
+    setSaving(true);
+    const anweisungen = steps.filter(s => s.txt.trim()).map(s => ({ txt: s.txt.trim(), n: 0, max: Number(s.max) || 1 }));
+    const rewards = { xp: Number(form.rewards_xp) || 0, hade: Number(form.rewards_hade) || 0, item: form.rewards_item.trim() || null };
+    const { data, error } = await window._sb.from('missions').update({
+      name: form.name.trim(), kategorie: form.kategorie, sw: Number(form.sw), lv: Number(form.lv),
+      auftraggeber: form.auftraggeber.trim(), region: form.region.trim(),
+      beschreibung: form.beschreibung.trim(), anweisungen, rewards, requirements, status: form.status
+    }).eq('id', mission.id).select().single();
+    setSaving(false);
+    if (!error && data) onSaved(data);
+  }
+  const row2 = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' };
+  return /*#__PURE__*/React.createElement("div", {
+    style: { flex: 1, overflowY: 'auto', padding: '22px' }
+  },
+    /*#__PURE__*/React.createElement("div", { style: { fontFamily: 'var(--font-display)', fontSize: '15px', letterSpacing: '.2em', color: '#f0eeff', textTransform: 'uppercase', marginBottom: '20px' } }, "Mission bearbeiten"),
+    /*#__PURE__*/React.createElement("div", { className: "field" }, /*#__PURE__*/React.createElement("label", null, "Name"), /*#__PURE__*/React.createElement("input", { value: form.name, onChange: e => set('name', e.target.value) })),
+    /*#__PURE__*/React.createElement("div", { className: "field", style: row2 },
+      /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, "Kategorie"), /*#__PURE__*/React.createElement("select", { value: form.kategorie, onChange: e => set('kategorie', e.target.value) }, /*#__PURE__*/React.createElement("option", { value: "Suche" }, "Suche"), /*#__PURE__*/React.createElement("option", { value: "Gespraech" }, "Gespräch"), /*#__PURE__*/React.createElement("option", { value: "Jagd" }, "Jagd"), /*#__PURE__*/React.createElement("option", { value: "Sammeln" }, "Sammeln"), /*#__PURE__*/React.createElement("option", { value: "Eskorte" }, "Eskorte"))),
+      /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, "Status"), /*#__PURE__*/React.createElement("select", { value: form.status, onChange: e => set('status', e.target.value) }, STATUS_OPTS.map(o => /*#__PURE__*/React.createElement("option", { key: o.value, value: o.value }, o.label))))
+    ),
+    /*#__PURE__*/React.createElement("div", { className: "field", style: row2 },
+      /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, "Schwierigkeit (1–5)"), /*#__PURE__*/React.createElement("input", { type: "number", min: "1", max: "5", value: form.sw, onChange: e => set('sw', e.target.value) })),
+      /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, "Mindest-Stufe"), /*#__PURE__*/React.createElement("input", { type: "number", min: "1", value: form.lv, onChange: e => set('lv', e.target.value) }))
+    ),
+    /*#__PURE__*/React.createElement("div", { className: "field", style: row2 },
+      /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, "Auftraggeber"), /*#__PURE__*/React.createElement("select", { value: form.auftraggeber, onChange: e => set('auftraggeber', e.target.value) },
+        /*#__PURE__*/React.createElement("option", { value: "" }, "— w\xE4hlen —"),
+        /*#__PURE__*/React.createElement("optgroup", { label: "Divisionen" }, DIVISIONS.map(d => /*#__PURE__*/React.createElement("option", { key: d, value: d }, d))),
+        /*#__PURE__*/React.createElement("optgroup", { label: "NSCs" }, (nscOptions || []).map(n => /*#__PURE__*/React.createElement("option", { key: n.name, value: n.name }, n.division && n.division !== 'Keine' ? n.name + ' (' + n.division + ')' : n.name)))
+      )),
+      /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, "Region"), /*#__PURE__*/React.createElement("input", { value: form.region, onChange: e => set('region', e.target.value), placeholder: "Ort…" }))
+    ),
+    /*#__PURE__*/React.createElement("div", { className: "field" }, /*#__PURE__*/React.createElement("label", null, "Beschreibung"), /*#__PURE__*/React.createElement("textarea", { value: form.beschreibung, onChange: e => set('beschreibung', e.target.value), placeholder: "Auftragstext…" })),
+    /*#__PURE__*/React.createElement("div", { style: { marginBottom: '16px' } },
+      /*#__PURE__*/React.createElement("label", { style: { marginBottom: '8px' } }, "Anforderungen"),
+      /*#__PURE__*/React.createElement("div", { style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
+        ['Kuratoren','Sturmritter','Sentinels','Friedenshüter','Outfitters','Pathfinders','Quellensucher','Bergungsgarde'].map(div => {
+          const req = requirements.find(r => r.label === div);
+          const active = !!req;
+          return /*#__PURE__*/React.createElement("div", { key: div, style: { display: 'flex', alignItems: 'center', gap: '4px' } },
+            /*#__PURE__*/React.createElement("button", {
+              type: "button",
+              onClick: () => setRequirements(rs => active ? rs.filter(r => r.label !== div) : [...rs, { label: div, count: 1 }]),
+              style: { padding: '4px 10px', fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '.14em', textTransform: 'uppercase', cursor: 'pointer', border: `1px solid ${active ? 'rgba(124,77,255,0.7)' : 'rgba(124,77,255,0.2)'}`, borderRadius: '2px', background: active ? 'rgba(124,77,255,0.2)' : 'rgba(124,77,255,0.05)', color: active ? 'rgba(200,180,255,0.95)' : 'rgba(160,140,255,0.45)', transition: 'all .15s' }
+            }, active ? `✓ ${div}` : div),
+            active && /*#__PURE__*/React.createElement("input", { type: "number", min: "1", max: "9", value: req.count, onChange: e => setRequirements(rs => rs.map(r => r.label === div ? { ...r, count: Number(e.target.value) || 1 } : r)), title: "Anzahl", style: { width: '42px', padding: '4px 6px', textAlign: 'center', fontSize: '11px' } })
+          );
+        })
+      )
+    ),
+    /*#__PURE__*/React.createElement("div", { style: { marginBottom: '14px' } },
+      /*#__PURE__*/React.createElement("div", { style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' } },
+        /*#__PURE__*/React.createElement("label", { style: { margin: 0 } }, "Anweisungen"),
+        /*#__PURE__*/React.createElement("button", { onClick: addStep, style: { fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '.15em', padding: '3px 9px', background: 'rgba(124,77,255,0.12)', border: '1px solid rgba(124,77,255,0.3)', borderRadius: '2px', color: 'rgba(167,139,255,0.8)', cursor: 'pointer' } }, "+ Schritt")
+      ),
+      steps.map((step, i) => /*#__PURE__*/React.createElement("div", { key: i, style: { display: 'grid', gridTemplateColumns: '1fr 70px 28px', gap: '8px', marginBottom: '8px', alignItems: 'center' } },
+        /*#__PURE__*/React.createElement("input", { value: step.txt, onChange: e => setStep(i, 'txt', e.target.value), placeholder: `Schritt ${i + 1}…` }),
+        /*#__PURE__*/React.createElement("input", { type: "number", min: "1", value: step.max, onChange: e => setStep(i, 'max', e.target.value), title: "Anzahl", style: { textAlign: 'center' } }),
+        /*#__PURE__*/React.createElement("button", { onClick: () => removeStep(i), style: { background: 'transparent', border: '1px solid rgba(200,60,60,0.3)', borderRadius: '2px', color: 'rgba(255,120,120,0.6)', cursor: 'pointer', fontSize: '13px', lineHeight: 1, padding: '3px' } }, "×")
+      ))
+    ),
+    /*#__PURE__*/React.createElement("div", { style: { padding: '14px', background: 'rgba(124,77,255,0.05)', border: '1px solid rgba(124,77,255,0.15)', borderRadius: '3px', marginBottom: '20px' } },
+      /*#__PURE__*/React.createElement("label", { style: { marginBottom: '10px' } }, "Belohnungen"),
+      /*#__PURE__*/React.createElement("div", { style: row2 },
+        /*#__PURE__*/React.createElement("div", { className: "field" }, /*#__PURE__*/React.createElement("label", null, "XP"), /*#__PURE__*/React.createElement("input", { type: "number", min: "0", value: form.rewards_xp, onChange: e => set('rewards_xp', e.target.value) })),
+        /*#__PURE__*/React.createElement("div", { className: "field" }, /*#__PURE__*/React.createElement("label", null, "Hade"), /*#__PURE__*/React.createElement("input", { type: "number", min: "0", value: form.rewards_hade, onChange: e => set('rewards_hade', e.target.value) }))
+      ),
+      /*#__PURE__*/React.createElement("div", { className: "field", style: { marginBottom: 0 } }, /*#__PURE__*/React.createElement("label", null, "Gegenstand (optional)"), /*#__PURE__*/React.createElement("input", { value: form.rewards_item, onChange: e => set('rewards_item', e.target.value), placeholder: "Itemname…" }))
+    ),
+    /*#__PURE__*/React.createElement("div", { style: { display: 'flex', gap: '10px' } },
+      /*#__PURE__*/React.createElement(Btn, { onClick: handleSave, disabled: saving || !form.name.trim() }, saving ? 'Speichern…' : 'Speichern'),
+      /*#__PURE__*/React.createElement(Btn, { onClick: onCancel, secondary: true }, "Abbrechen")
+    )
+  );
+}
+
+// ─── MISSION DETAIL (DM view) ─────────────────────────────────────────────────
+function MissionDetail({
+  mission,
+  onDelete,
+  onArchive,
+  onEdit
+}) {
+  const [apps, setApps] = useState([]);
+  const [profiles, setProfiles] = useState({});
+  const [characters, setCharacters] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [delConfirm, setDelConfirm] = useState(false);
+  useEffect(() => {
+    async function load() {
+      setLoading(true);
+      const {
+        data
+      } = await window._sb.from('mission_applications').select('*').eq('mission_id', mission.id).order('created_at');
+      const apps2 = data || [];
+      setApps(apps2);
+
+      // Load profiles
+      const pids = [...new Set(apps2.map(a => a.player_id))];
+      if (pids.length) {
+        const {
+          data: pd
+        } = await window._sb.from('profiles').select('id,display_name').in('id', pids);
+        const pm = {};
+        (pd || []).forEach(p => {
+          pm[p.id] = p;
+        });
+        setProfiles(pm);
+      }
+
+      // Load characters
+      const cids = [...new Set(apps2.map(a => a.character_id))];
+      if (cids.length) {
+        const {
+          data: cd
+        } = await window._sb.from('characters').select('id,name,race,class,division,char_data').in('id', cids);
+        const cm = {};
+        (cd || []).forEach(c => {
+          cm[c.id] = c;
+        });
+        setCharacters(cm);
+      }
+      setLoading(false);
+    }
+    load();
+  }, [mission.id]);
+  function handleUpdate(appId, newStatus) {
+    setApps(prev => prev.map(a => a.id === appId ? {
+      ...a,
+      app_status: newStatus
+    } : a));
+  }
+  const kat = KAT[mission.kategorie] || KAT.Suche;
+  const pending = apps.filter(a => a.app_status === 'pending').length;
+  const accepted = apps.filter(a => a.app_status === 'accepted').length;
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '18px 22px',
+      borderBottom: '1px solid rgba(160,140,255,0.12)',
+      background: `linear-gradient(180deg,${kat.color}18 0%,rgba(10,8,32,0)100%)`,
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: kat.color,
+      letterSpacing: '.25em',
+      textTransform: 'uppercase',
+      marginBottom: '4px',
+      opacity: .85
+    }
+  }, kat.label, " \xB7 SW ", mission.sw, " \xB7 Stufe ", mission.lv), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '20px',
+      letterSpacing: '.08em',
+      color: '#f0eeff',
+      marginBottom: '6px'
+    }
+  }, mission.name), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: 300,
+      fontSize: '11px',
+      color: 'rgba(160,140,255,0.55)'
+    }
+  }, mission.auftraggeber, mission.region ? ` · ${mission.region}` : ''), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '8px',
+      marginTop: '14px'
+    }
+  }, /*#__PURE__*/React.createElement(Btn, {
+    small: true,
+    onClick: onEdit
+  }, "Bearbeiten"), mission.status !== 'archiviert' ? /*#__PURE__*/React.createElement(Btn, {
+    small: true,
+    secondary: true,
+    onClick: onArchive
+  }, "Archivieren") : /*#__PURE__*/React.createElement(Btn, {
+    small: true,
+    secondary: true,
+    onClick: onArchive
+  }, "Reaktivieren"), delConfirm ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Btn, {
+    small: true,
+    danger: true,
+    onClick: onDelete
+  }, "Wirklich l\xF6schen?"), /*#__PURE__*/React.createElement(Btn, {
+    small: true,
+    secondary: true,
+    onClick: () => setDelConfirm(false)
+  }, "Abbrechen")) : /*#__PURE__*/React.createElement(Btn, {
+    small: true,
+    danger: true,
+    onClick: () => setDelConfirm(true)
+  }, "L\xF6schen"))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '10px 22px',
+      borderBottom: '1px solid rgba(160,140,255,0.08)',
+      display: 'flex',
+      gap: '20px',
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", null, mono('Bewerbungen', '7.5px'), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '16px',
+      color: '#f0eeff',
+      marginTop: '2px'
+    }
+  }, apps.length)), /*#__PURE__*/React.createElement("div", null, mono('Ausstehend', '7.5px', 'rgba(127,184,255,0.6)'), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '16px',
+      color: '#7fb8ff',
+      marginTop: '2px'
+    }
+  }, pending)), /*#__PURE__*/React.createElement("div", null, mono('Angenommen', '7.5px', 'rgba(100,220,140,0.6)'), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '16px',
+      color: 'rgba(100,220,140,0.9)',
+      marginTop: '2px'
+    }
+  }, accepted))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      overflowY: 'auto'
+    }
+  }, loading && /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '30px',
+      textAlign: 'center',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: 'rgba(160,140,255,0.4)',
+      letterSpacing: '.2em'
+    }
+  }, "LADE\u2026"), !loading && apps.length === 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '40px 22px',
+      textAlign: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '.22em',
+      color: 'rgba(160,140,255,0.3)',
+      textTransform: 'uppercase',
+      marginBottom: '8px'
+    }
+  }, "Keine Bewerbungen"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      fontWeight: 300,
+      color: 'rgba(160,140,255,0.35)',
+      fontStyle: 'italic'
+    }
+  }, "Noch hat sich niemand f\xFCr diese Mission beworben.")), !loading && apps.map(app => /*#__PURE__*/React.createElement(AppRow, {
+    key: app.id,
+    app: app,
+    profiles: profiles,
+    characters: characters,
+    onUpdate: handleUpdate
+  }))));
+}
+
+// ─── TOKEN TAB ───────────────────────────────────────────────────────────────
+function TokensTab() {
+  const [tokens, setTokens] = useState([]);
+  const [profiles, setProfiles] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [generating, setGenerating] = useState(false);
+  const [noteInput, setNoteInput] = useState('');
+  function genCode() {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    return Array.from({
+      length: 8
+    }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+  }
+  function fmt(code) {
+    return code.slice(0, 4) + '-' + code.slice(4);
+  }
+  async function load() {
+    setLoading(true);
+    const {
+      data
+    } = await window._sb.from('roll_tokens').select('*').order('created_at', {
+      ascending: false
+    });
+    const ts = data || [];
+    setTokens(ts);
+    const uids = [...new Set(ts.filter(t => t.used_by).map(t => t.used_by))];
+    if (uids.length) {
+      const {
+        data: pd
+      } = await window._sb.from('profiles').select('id,display_name').in('id', uids);
+      const pm = {};
+      (pd || []).forEach(p => {
+        pm[p.id] = p;
+      });
+      setProfiles(pm);
+    }
+    setLoading(false);
+  }
+  useEffect(() => {
+    load();
+  }, []);
+  async function handleGenerate() {
+    setGenerating(true);
+    const code = genCode();
+    const {
+      data: {
+        user
+      }
+    } = await window._sb.auth.getUser();
+    const {
+      data,
+      error
+    } = await window._sb.from('roll_tokens').insert({
+      code,
+      created_by: user.id,
+      note: noteInput.trim() || null
+    }).select().single();
+    if (!error && data) {
+      setTokens(prev => [data, ...prev]);
+      setNoteInput('');
+    }
+    setGenerating(false);
+  }
+  async function handleDelete(code) {
+    await window._sb.from('roll_tokens').delete().eq('code', code);
+    setTokens(prev => prev.filter(t => t.code !== code));
+  }
+  const unused = tokens.filter(t => !t.used_by);
+  const used = tokens.filter(t => t.used_by);
+  const tokenRowStyle = used => ({
+    padding: '10px 18px',
+    borderBottom: '1px solid rgba(160,140,255,0.07)',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '14px',
+    background: used ? 'transparent' : 'rgba(124,77,255,0.03)'
+  });
+  function TokenRow({
+    t
+  }) {
+    const [copied, setCopied] = useState(false);
+    function copy() {
+      navigator.clipboard?.writeText(fmt(t.code));
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    }
+    const profile = profiles[t.used_by];
+    const usedName = profile?.display_name || '—';
+    return /*#__PURE__*/React.createElement("div", {
+      style: tokenRowStyle(!!t.used_by)
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        flex: 1,
+        minWidth: 0
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: 10
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: 'var(--font-mono)',
+        fontSize: '15px',
+        letterSpacing: '.18em',
+        color: t.used_by ? 'rgba(160,140,255,0.35)' : '#f0eeff',
+        textDecoration: t.used_by ? 'line-through' : 'none'
+      }
+    }, fmt(t.code)), !t.used_by && /*#__PURE__*/React.createElement("button", {
+      onClick: copy,
+      style: {
+        fontFamily: 'var(--font-mono)',
+        fontSize: '7.5px',
+        letterSpacing: '.12em',
+        padding: '2px 8px',
+        background: copied ? 'rgba(100,220,140,0.12)' : 'rgba(124,77,255,0.1)',
+        border: `1px solid ${copied ? 'rgba(100,220,140,0.4)' : 'rgba(124,77,255,0.25)'}`,
+        borderRadius: '2px',
+        color: copied ? 'rgba(100,220,140,0.8)' : 'rgba(160,140,255,0.6)',
+        cursor: 'pointer',
+        textTransform: 'uppercase',
+        transition: 'all .15s'
+      }
+    }, copied ? '✓' : 'Kopieren')), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: 'flex',
+        gap: '12px',
+        marginTop: '3px',
+        flexWrap: 'wrap'
+      }
+    }, t.note && /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: 'var(--font-body)',
+        fontSize: '11px',
+        fontWeight: 300,
+        color: 'rgba(160,140,255,0.5)',
+        fontStyle: 'italic'
+      }
+    }, t.note), t.used_by ? /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: 'var(--font-mono)',
+        fontSize: '7.5px',
+        letterSpacing: '.12em',
+        color: 'rgba(160,140,255,0.35)',
+        textTransform: 'uppercase'
+      }
+    }, "eingel\xF6st von ", usedName) : /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: 'var(--font-mono)',
+        fontSize: '7.5px',
+        letterSpacing: '.12em',
+        color: 'rgba(100,220,140,0.6)',
+        textTransform: 'uppercase'
+      }
+    }, "\u25CF verf\xFCgbar"))), !t.used_by && /*#__PURE__*/React.createElement("button", {
+      onClick: () => handleDelete(t.code),
+      style: {
+        background: 'transparent',
+        border: '1px solid rgba(200,60,60,0.25)',
+        borderRadius: '2px',
+        color: 'rgba(255,120,120,0.5)',
+        cursor: 'pointer',
+        fontFamily: 'var(--font-mono)',
+        fontSize: '9px',
+        padding: '4px 9px',
+        letterSpacing: '.1em',
+        textTransform: 'uppercase',
+        transition: 'all .15s',
+        flexShrink: 0
+      },
+      onMouseEnter: e => {
+        e.currentTarget.style.borderColor = 'rgba(200,60,60,0.5)';
+        e.currentTarget.style.color = 'rgba(255,120,120,0.85)';
+      },
+      onMouseLeave: e => {
+        e.currentTarget.style.borderColor = 'rgba(200,60,60,0.25)';
+        e.currentTarget.style.color = 'rgba(255,120,120,0.5)';
+      }
+    }, "L\xF6schen"));
+  }
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: '320px 1fr',
+      gap: '20px',
+      padding: '20px 32px',
+      flex: 1,
+      minHeight: 0
+    }
+  }, /*#__PURE__*/React.createElement(Panel, null, /*#__PURE__*/React.createElement(PanelHead, null, "Neuer Token"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '20px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      fontWeight: 300,
+      color: 'rgba(160,140,255,0.5)',
+      lineHeight: 1.7,
+      marginBottom: '18px'
+    }
+  }, "Generiere einen Einmalcode und gib ihn einem Spieler. Er kann damit einmal neu w\xFCrfeln."), /*#__PURE__*/React.createElement("div", {
+    className: "field"
+  }, /*#__PURE__*/React.createElement("label", null, "Notiz (optional)"), /*#__PURE__*/React.createElement("input", {
+    value: noteInput,
+    onChange: e => setNoteInput(e.target.value),
+    placeholder: "z.B. Spielername\u2026",
+    onKeyDown: e => {
+      if (e.key === 'Enter') handleGenerate();
+    }
+  })), /*#__PURE__*/React.createElement(Btn, {
+    onClick: handleGenerate,
+    disabled: generating
+  }, generating ? 'Generieren…' : '⚄ Code generieren'), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: '24px',
+      padding: '14px',
+      background: 'rgba(124,77,255,0.05)',
+      border: '1px solid rgba(124,77,255,0.12)',
+      borderRadius: '3px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '.2em',
+      color: 'rgba(124,77,255,0.45)',
+      textTransform: 'uppercase',
+      marginBottom: '6px'
+    }
+  }, "Statistik"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '20px'
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '18px',
+      color: 'rgba(100,220,140,0.8)'
+    }
+  }, unused.length), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '.15em',
+      color: 'rgba(100,220,140,0.5)',
+      textTransform: 'uppercase'
+    }
+  }, "Verf\xFCgbar")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '18px',
+      color: 'rgba(160,140,255,0.4)'
+    }
+  }, used.length), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '.15em',
+      color: 'rgba(160,140,255,0.35)',
+      textTransform: 'uppercase'
+    }
+  }, "Eingel\xF6st")))))), /*#__PURE__*/React.createElement(Panel, null, /*#__PURE__*/React.createElement(PanelHead, null, tokens.length, " W\xFCrfelerlaubnis"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      overflowY: 'auto'
+    }
+  }, loading && /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '30px',
+      textAlign: 'center',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: 'rgba(160,140,255,0.4)',
+      letterSpacing: '.2em'
+    }
+  }, "LADE\u2026"), !loading && tokens.length === 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '40px',
+      textAlign: 'center',
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      fontWeight: 300,
+      color: 'rgba(160,140,255,0.35)',
+      fontStyle: 'italic'
+    }
+  }, "Noch keine Token generiert."), unused.map(t => /*#__PURE__*/React.createElement(TokenRow, {
+    key: t.code,
+    t: t
+  })), unused.length > 0 && used.length > 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '6px 18px',
+      borderBottom: '1px solid rgba(160,140,255,0.08)',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '7.5px',
+      letterSpacing: '.2em',
+      color: 'rgba(160,140,255,0.25)',
+      textTransform: 'uppercase',
+      background: 'rgba(5,4,15,0.3)'
+    }
+  }, "Bereits eingel\xF6st"), used.map(t => /*#__PURE__*/React.createElement(TokenRow, {
+    key: t.code,
+    t: t
+  })))));
+}
+
+// ─── APP ─────────────────────────────────────────────────────────────────────
+function App() {
+  const user = window.SITE_USER;
+  const [activeTab, setActiveTab] = useState('missions');
+  const [missions, setMissions] = useState([]);
+  const [nscOptions, setNscOptions] = useState([]);
+  const [selectedId, setSelectedId] = useState(null);
+  const [creating, setCreating] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [appCounts, setAppCounts] = useState({});
+
+  // DM guard
+  if (user && user.role !== 'dm') {
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(SiteNav, {
+      rightLabel: "DM \xB7 MISSIONEN"
+    }), /*#__PURE__*/React.createElement("div", {
+      style: {
+        flex: 1,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        gap: '12px'
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontFamily: 'var(--font-display)',
+        fontSize: '18px',
+        letterSpacing: '.2em',
+        color: 'rgba(160,140,255,0.6)',
+        textTransform: 'uppercase'
+      }
+    }, "Kein Zugriff"), /*#__PURE__*/React.createElement("a", {
+      href: "Missionsterminal.html",
+      style: {
+        fontFamily: 'var(--font-mono)',
+        fontSize: '9px',
+        color: 'rgba(124,77,255,0.5)',
+        letterSpacing: '.2em',
+        textDecoration: 'none'
+      }
+    }, "\u2190 Zum Missionsterminal")));
+  }
+  async function loadMissions() {
+    setLoading(true);
+    const [{ data }, { data: nscData }] = await Promise.all([
+      window._sb.from('missions').select('*').order('created_at', { ascending: false }),
+      window._sb.from('nscs').select('name,division').order('name')
+    ]);
+    setMissions(data || []);
+    setNscOptions(nscData || []);
+
+    // Count applications per mission
+    if (data && data.length) {
+      const {
+        data: counts
+      } = await window._sb.from('mission_applications').select('mission_id').in('mission_id', data.map(m => m.id));
+      const cm = {};
+      (counts || []).forEach(c => {
+        cm[c.mission_id] = (cm[c.mission_id] || 0) + 1;
+      });
+      setAppCounts(cm);
+    }
+    setLoading(false);
+  }
+  useEffect(() => {
+    loadMissions();
+  }, []);
+  function handleCreated(m) {
+    setMissions(prev => [m, ...prev]);
+    setSelectedId(m.id);
+    setCreating(false);
+  }
+  async function handleDelete() {
+    if (!selectedId) return;
+    await window._sb.from('missions').delete().eq('id', selectedId);
+    setMissions(prev => prev.filter(m => m.id !== selectedId));
+    setSelectedId(null);
+  }
+  function handleEdited(updated) {
+    setMissions(prev => prev.map(m => m.id === updated.id ? updated : m));
+    setEditing(false);
+  }
+  async function handleArchive() {
+    if (!selectedId) return;
+    const m = missions.find(x => x.id === selectedId);
+    if (!m) return;
+    const newStatus = m.status === 'archiviert' ? '' : 'archiviert';
+    await window._sb.from('missions').update({
+      status: newStatus
+    }).eq('id', selectedId);
+    setMissions(prev => prev.map(x => x.id === selectedId ? {
+      ...x,
+      status: newStatus
+    } : x));
+  }
+  const selected = missions.find(m => m.id === selectedId);
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      minHeight: '100vh'
+    }
+  }, /*#__PURE__*/React.createElement(SiteNav, {
+    rightLabel: "DM \xB7 MISSIONEN"
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '18px 32px 0',
+      borderBottom: '1px solid rgba(160,140,255,0.08)',
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'flex-end',
+      justifyContent: 'space-between',
+      marginBottom: '14px'
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: 'rgba(167,139,255,0.5)',
+      letterSpacing: '.3em',
+      textTransform: 'uppercase',
+      marginBottom: '6px'
+    }
+  }, "\u25C8 DM-Bereich"), /*#__PURE__*/React.createElement("h1", {
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontSize: '24px',
+      fontWeight: 400,
+      letterSpacing: '.28em',
+      color: '#f0eeff',
+      textTransform: 'uppercase'
+    }
+  }, activeTab === 'missions' ? 'Missionsverwaltung' : 'Würfelerlaubnis')), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: 'rgba(160,140,255,0.4)',
+      letterSpacing: '.18em'
+    }
+  }, activeTab === 'missions' ? `${missions.length} Missionen gesamt` : 'Einmalcodes für Attributwürfeln')), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '2px'
+    }
+  }, [['missions', 'Missionen'], ['tokens', 'Würfelerlaubnis']].map(([id, label]) => /*#__PURE__*/React.createElement("button", {
+    key: id,
+    onClick: () => setActiveTab(id),
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '.18em',
+      textTransform: 'uppercase',
+      padding: '8px 18px',
+      background: activeTab === id ? 'rgba(124,77,255,0.15)' : 'transparent',
+      border: 'none',
+      borderBottom: activeTab === id ? '2px solid rgba(167,139,255,0.7)' : '2px solid transparent',
+      color: activeTab === id ? '#f0eeff' : 'rgba(160,140,255,0.4)',
+      cursor: 'pointer',
+      transition: 'all .15s'
+    }
+  }, label)))), activeTab === 'tokens' && /*#__PURE__*/React.createElement(TokensTab, null), activeTab === 'missions' && /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      minHeight: 0,
+      display: 'grid',
+      gridTemplateColumns: '320px 1fr',
+      gap: '20px',
+      padding: '20px 32px'
+    }
+  }, /*#__PURE__*/React.createElement(Panel, null, /*#__PURE__*/React.createElement(PanelHead, {
+    right: /*#__PURE__*/React.createElement("button", {
+      onClick: () => {
+        setCreating(true);
+        setSelectedId(null);
+      },
+      style: {
+        fontFamily: 'var(--font-mono)',
+        fontSize: '8px',
+        letterSpacing: '.15em',
+        padding: '4px 10px',
+        background: 'rgba(124,77,255,0.2)',
+        border: '1px solid rgba(124,77,255,0.5)',
+        borderRadius: '2px',
+        color: 'rgba(200,190,240,0.9)',
+        cursor: 'pointer',
+        textTransform: 'uppercase'
+      }
+    }, "+ Neu")
+  }, "Missionen"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      overflowY: 'auto'
+    }
+  }, loading && /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '30px',
+      textAlign: 'center',
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      color: 'rgba(160,140,255,0.4)',
+      letterSpacing: '.2em'
+    }
+  }, "LADE\u2026"), !loading && missions.length === 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '30px',
+      textAlign: 'center',
+      fontFamily: 'var(--font-body)',
+      fontSize: '12px',
+      fontWeight: 300,
+      color: 'rgba(160,140,255,0.4)',
+      fontStyle: 'italic'
+    }
+  }, "Noch keine Missionen. Erstelle die erste."), missions.map(m => /*#__PURE__*/React.createElement(MissionRow, {
+    key: m.id,
+    m: m,
+    active: !creating && m.id === selectedId,
+    appCount: appCounts[m.id] || 0,
+    onClick: () => {
+      setSelectedId(m.id);
+      setCreating(false);
+    }
+  })))), /*#__PURE__*/React.createElement(Panel, null, !creating && !selected && /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexDirection: 'column',
+      gap: '10px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '9px',
+      letterSpacing: '.22em',
+      color: 'rgba(160,140,255,0.3)',
+      textTransform: 'uppercase'
+    }
+  }, "Mission ausw\xE4hlen oder neue erstellen")), creating && /*#__PURE__*/React.createElement(CreateForm, {
+    onCreated: handleCreated,
+    onCancel: () => setCreating(false),
+    nscOptions: nscOptions
+  }), !creating && editing && selected && /*#__PURE__*/React.createElement(EditForm, {
+    mission: selected,
+    onSaved: handleEdited,
+    onCancel: () => setEditing(false),
+    nscOptions: nscOptions
+  }), !creating && !editing && selected && /*#__PURE__*/React.createElement(MissionDetail, {
+    key: selected.id,
+    mission: selected,
+    onDelete: handleDelete,
+    onArchive: handleArchive,
+    onEdit: () => setEditing(true)
+  }))));
+}
+ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement(App, null)));
+})();
+
+})();
+

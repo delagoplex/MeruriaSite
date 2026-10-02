@@ -6,17 +6,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A static website for the tabletop RPG world **Meruria**, deployed to `meruria.de` via GitHub Pages. The site is written in German and documents the world's factions, races, classes, and deities.
 
-There is no build system, bundler, or package manager. Pages are plain HTML files served directly. The only runtime dependencies are vendor scripts checked into `assets/scripts/vendor/`.
+The site is built with **Vite** (multi-page, every `.html` file is an entry) and deployed by a GitHub Actions workflow (`.github/workflows/deploy.yml`) that runs `npm run build` and publishes `dist/` to GitHub Pages. React, ReactDOM and Supabase stay global vendor scripts in `assets/scripts/vendor/` (no Babel in the browser); JSX is compiled at build time to `React.createElement`.
 
 ## Architecture
 
-Each page is a self-contained HTML file with:
-- `<link>` tags loading CSS from `assets/styles/global/` (shared) and `assets/styles/pages/` (per-page)
-- Shared React components loaded via `<script src="assets/components/..." type="text/babel">` tags
-- A single `<script type="text/babel">` block containing the full React app for that page (state, rendering, and `ReactDOM.createRoot`)
-- React and Babel loaded from `assets/scripts/vendor/` as browser globals (not modules)
+Each page consists of:
+- an `.html` file in the project root (or `divisionen/`) with `<link>` tags for CSS from `assets/styles/global/` and `assets/styles/pages/` (kept unbundled and in written order), classic `<script>` tags for vendor libs and data files (`assets/scripts/`), and **one** `<script type="module" src="/src/pages/<page>.jsx">`
+- a page entry `src/pages/<page>.jsx` that imports the shared components it needs (`import '../components/nav.jsx'`) and contains the page's React app (state, rendering, `ReactDOM.createRoot`)
+- shared components in `src/components/*.jsx`, each registering itself on `window` (`window.SiteNav`, …); page-specific helper files live in `src/pages/parts/`
 
-The `TWEAK_DEFAULTS` constant in each page holds fixed design parameters like particle visibility and header height (the former live tweaks panel was removed; edit the constants directly).
+Pages that were compiled earlier by the old `compile-jsx` tool contain `React.createElement(...)` calls instead of JSX in their entry file; new code can use JSX freely.
+
+`TWEAK_DEFAULTS` in each page holds fixed design parameters like particle visibility and header height.
 
 **Pages:**
 - `index.html` — landing/home page
@@ -29,9 +30,9 @@ The `TWEAK_DEFAULTS` constant in each page holds fixed design parameters like pa
   - `Outfitters.html`, `Pathfinders.html`, `Quellensucher.html`, `Bergungsgarde.html`
   - `index.html` — redirects to `Die Kuratoren.html` via `<meta http-equiv="refresh">`
 
-**Navigation** is defined in the `NAV` array inside `assets/components/nav.jsx` and shared across all pages via `window.SiteNav`.
+**Navigation** is defined in the `NAV` array inside `src/components/nav.jsx` and shared across all pages via `window.SiteNav`.
 
-## Shared components (`assets/components/`)
+## Shared components (`src/components/`)
 
 | File | Exports | Purpose |
 |---|---|---|
@@ -42,16 +43,11 @@ The `TWEAK_DEFAULTS` constant in each page holds fixed design parameters like pa
 
 ### Authentication
 
-Two independent password gates, both using SHA-256 via `crypto.subtle.digest`:
-
-- **Site gate** (`site-gate.jsx`): wraps every page in `<SiteGate>`. Session lasts 30 days (`localStorage` key `site_auth`). Password: `meruriaHype`.
-- **Monster gate** (inline in `Monster.html`): separate session, 24 hours (`localStorage` key `monster_auth`). Own password hash.
-
-Pages include both scripts and render `<SiteGate><App /></SiteGate>`.
+`site-gate.jsx` wraps every page in `<SiteGate>`: a Supabase e-mail/password login (`window._sb`, created in `assets/scripts/supabase-client.js`). The session lives in Supabase's own `localStorage` entry; after login `window.SITE_USER = { id, email, role }` is set. Pages render `<SiteGate><App /></SiteGate>`. The Monster page has no extra gate any more.
 
 ### Dark / light mode
 
-`nav.jsx` initializes theme on script load (before React renders) to avoid flash:
+`assets/scripts/theme-init.js` (classic script in every page's `<head>`) sets the theme before first paint to avoid a flash:
 ```js
 document.documentElement.dataset.theme = (localStorage.getItem('theme') === 'light') ? 'light' : 'dark';
 ```
@@ -61,7 +57,7 @@ The `ThemeToggle` component (☀/☽) in `SiteNav` toggles `data-theme` on `<htm
 
 ```
 assets/
-├── components/        — shared React/JSX components (see above)
+├── components/        — plain (non-JSX) classic scripts only; JSX components live in src/components/
 ├── fonts/             — .woff2 font files referenced by fonts.css
 ├── images/
 │   ├── insignia/      — faction insignia images
@@ -91,7 +87,7 @@ assets/
 │   │   │   └── sonstige-data.js               —   Sammelquelle für vereinzelte Monster → window.MONSTER_DATA_SONSTIGE
 │   │   ├── rassen-data.js, klassen-data.js, …  — other page data
 │   │   └── monster-data.js      — also holds window.UNTERART_LORE
-│   └── vendor/        — React, ReactDOM, Babel Standalone
+│   └── vendor/        — React, ReactDOM, Supabase, image-slot
 └── styles/
     ├── global/
     │   ├── base.css       — resets, CSS variables (dark + light theme), scroll-reveal, shared classes
@@ -124,29 +120,18 @@ Static layout and typography are in CSS files. Dynamic styles — those that dep
 - `--nav-h` / `--sidebar-w` — layout dimensions
 - `--accent` — page accent color (division pages only)
 
-## Asset pipeline scripts
-
-`tools/process-page.mjs` unpacks a single bundled HTML page (Framer/bundler format). It decodes base64+gzip assets, deduplicates against existing files by SHA-256 hash, places new assets in the correct `assets/` subdirectory, and rewrites the HTML to reference them.
-
-```bash
-node tools/process-page.mjs <PageName.html>
-```
-
-After running, manually:
-1. Replace the `@font-face` `<style>` block with `<link rel="stylesheet" href="assets/styles/global/fonts.css">`
-2. Add `<link rel="stylesheet" href="assets/styles/global/base.css">`
-3. Move the page `<style>` block to `assets/styles/pages/<PageName>.css`, stripping rules already in `base.css`
-4. Add `<link rel="stylesheet" href="assets/styles/pages/<PageName>.css">`
-
 ## Development
 
-Open any HTML file directly in a browser — no server needed for most pages. Division pages require either a server or `<base href="../">` (already set) to resolve assets correctly.
-
 ```bash
-npx serve .
-# or
-python3 -m http.server 8080
+npm install        # once
+npm run dev        # Vite dev server with hot reload
+npm run build      # production build into dist/ (what GitHub Actions deploys)
+npm run preview    # serve dist/ locally
 ```
+
+Deployment: push to `master` → GitHub Actions builds and publishes to Pages (Settings → Pages → Source must be "GitHub Actions"). `public/CNAME` carries the custom domain `meruria.de`.
+
+`vite.config.js` auto-discovers all `.html` files as entries. Files that are referenced only at runtime (classic scripts, images, `assets/styles`) are copied unchanged to `dist/assets/` by a small plugin, so URLs are identical in dev and production.
 
 ## Monster data (`assets/scripts/data/monster/`)
 

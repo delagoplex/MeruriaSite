@@ -5,6 +5,7 @@
 <link rel="icon" href="assets/images/favicon/favicon-m.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/images/favicon/favicon-m-180.png">
 <title>Meruria — Sammeln &amp; Handwerk</title>
+<script src="assets/scripts/theme-init.js"></script>
 <link rel="stylesheet" href="assets/styles/global/fonts.css">
 <link rel="stylesheet" href="assets/styles/global/base.css">
 <link rel="stylesheet" href="assets/styles/pages/Sammeln und Handwerk.css">
@@ -12,126 +13,14 @@
 <script src="assets/scripts/supabase-client.js"></script>
 <script src="assets/scripts/vendor/react.production.min.js"></script>
 <script src="assets/scripts/vendor/react-dom.production.min.js"></script>
-<script src="assets/components/nav.js"></script>
-<script src="assets/components/site-gate.js"></script>
-<script src="assets/scripts/vendor/babel-standalone.js"></script>
-<script src="assets/components/page-hero.jsx" type="text/babel"></script>
+<script type="module" src="/src/pages/sammeln-und-handwerk.jsx"></script>
 </head>
 <body>
 
 <div id="root"></div>
 
 <script src="assets/scripts/data/sammeln-seltenheiten.js"></script>
-<script type="text/babel" src="assets/scripts/data/sammeln-ui.js"></script>
-<script type="text/babel" src="assets/scripts/data/sammeln-alchemie-mixer.js"></script>
-<script type="text/babel" src="assets/scripts/data/sammeln-handwerksrechner.js"></script>
-<script type="text/babel" src="assets/scripts/data/sammeln-simulator.js"></script>
-<script type="text/babel" src="assets/scripts/data/sammeln-kapitel.js"></script>
 
-<script type="text/babel">
-const { useState: useStateApp, useEffect: useEffectApp } = React;
-const { SiteNav } = window;
-
-function App() {
-  const [activeId, setActiveId] = useStateApp(() => {
-    return localStorage.getItem('meruria.craft.chapter') || 'uebersicht';
-  });
-
-  useEffectApp(() => {
-    localStorage.setItem('meruria.craft.chapter', activeId);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [activeId]);
-
-  const chapter = window.CRAFT_CHAPTERS.find(c => c.id === activeId);
-  const ToolView = activeId === 'mixer' ? AlchemyMixer
-                 : activeId === 'rechner' ? HandwerksRechner
-                 : activeId === 'simulator' ? SammelSimulator
-                 : null;
-
-  // Find prev/next within the chapter list
-  const chIdx = window.CRAFT_CHAPTERS.findIndex(c => c.id === activeId);
-  const prev = chIdx > 0 ? window.CRAFT_CHAPTERS[chIdx - 1] : null;
-  const next = chIdx >= 0 && chIdx < window.CRAFT_CHAPTERS.length - 1 ? window.CRAFT_CHAPTERS[chIdx + 1] : null;
-
-  return (
-    <>
-      <SiteNav />
-      {activeId === 'uebersicht' && (
-        <PageHero
-          kicker="Spielerhandbuch"
-          title="Sammeln & Handwerk"
-          sub="Vom Wegrand zur Werkbank — wie Pflanzen, Mineralien und Kreaturenteile zu Tränken, Klingen und magischen Artefakten werden. Material schlägt Zeit, Entscheidungen schlagen Rezepte."
-        />
-      )}
-      <div style={{ display:'flex', position:'relative', zIndex:1 }}>
-        <CraftSidebar chapters={window.CRAFT_CHAPTERS} activeId={activeId} onSelect={setActiveId} />
-        <main style={{
-          flex: 1, padding:'0 36px 60px',
-          maxWidth:'calc(100vw - var(--sidebar-w))',
-          minWidth: 0,
-        }}>
-          <div style={{
-            maxWidth:'1080px', margin:'0 auto',
-            paddingTop: activeId === 'uebersicht' ? '0' : '40px',
-            animation:'fadeInUp 0.4s ease',
-          }} key={activeId}>
-            {chapter && chapter.render({ goTo: setActiveId })}
-
-            {ToolView && (
-              <>
-                <SH
-                  mono={activeId === 'mixer' ? 'Werkbank · Alchemie' : activeId === 'rechner' ? 'Werkbank · Handwerk' : 'Werkbank · Sammeln'}
-                  title={activeId === 'mixer' ? 'Alchemie-Mixer' : activeId === 'rechner' ? 'Handwerks-Rechner' : 'Sammel-Simulator'}
-                />
-                <ToolView />
-              </>
-            )}
-
-            {/* Prev / next */}
-            {chapter && (
-              <nav style={{
-                display:'flex', justifyContent:'space-between', alignItems:'stretch',
-                gap:'14px', marginTop:'48px', paddingTop:'24px',
-                borderTop:'1px solid rgba(124,77,255,0.15)',
-              }}>
-                {prev ? (
-                  <button onClick={()=>setActiveId(prev.id)} style={navBtnStyle}>
-                    <div style={navBtnLabelStyle}>← Vorheriges Kapitel</div>
-                    <div style={navBtnTitleStyle}>{prev.roman} · {prev.label}</div>
-                  </button>
-                ) : <div style={{flex:1}}/>}
-                {next ? (
-                  <button onClick={()=>setActiveId(next.id)} style={{...navBtnStyle, textAlign:'right'}}>
-                    <div style={navBtnLabelStyle}>Nächstes Kapitel →</div>
-                    <div style={navBtnTitleStyle}>{next.roman} · {next.label}</div>
-                  </button>
-                ) : <div style={{flex:1}}/>}
-              </nav>
-            )}
-          </div>
-        </main>
-      </div>
-    </>
-  );
-}
-
-const navBtnStyle = {
-  flex:1, padding:'12px 16px', background:'rgba(10,8,28,0.4)',
-  border:'1px solid rgba(124,77,255,0.2)', borderRadius:'4px',
-  cursor:'pointer', transition:'all 0.2s', textAlign:'left',
-  display:'flex', flexDirection:'column', gap:'4px',
-};
-const navBtnLabelStyle = {
-  fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.2em',
-  color:'rgba(160,140,255,0.55)', textTransform:'uppercase',
-};
-const navBtnTitleStyle = {
-  fontFamily:'var(--font-display)', fontSize:'13px', letterSpacing:'0.14em',
-  color:'rgba(220,210,250,0.9)', textTransform:'uppercase',
-};
-
-ReactDOM.createRoot(document.getElementById('root')).render(<SiteGate><App /></SiteGate>);
-</script>
 
 
 </body></html>

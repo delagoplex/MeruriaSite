@@ -1,2 +1,4 @@
 # Windows alternate data stream files created when downloading files
 *:Zone.Identifier
+node_modules/
+dist/

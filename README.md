@@ -6,43 +6,30 @@ Documents the world's factions, races, classes, deities, and a full monster comp
 
 ## Running locally
 
-No build step required. Open any `.html` file directly in a browser, or serve the root if your browser blocks local `assets/` loads:
-
 ```bash
-npx serve .
-# or
-python3 -m http.server 8080
+npm install
+npm run dev        # dev server with hot reload
+npm run build      # production build into dist/
 ```
+
+Pushing to `master` builds and deploys the site via GitHub Actions (`.github/workflows/deploy.yml`).
 
 ## Structure
 
 ```
-├── index.html                  — home page
-├── Rassen.html                 — races
-├── Klassen.html                — classes
-├── Gottheiten.html             — deities
-├── Monster.html                — monster compendium (filterable, searchable)
-├── Sturmritter.html            ┐
-├── Sentinels.html              │
-├── Friedenshueter.html         │
-├── Outfitters.html             ├─ the eight divisions
-├── Pathfinders.html            │
-├── Quellensucher.html          │
-├── Bergungsgarde.html          │
-├── Die Kuratoren.html          ┘
-└── assets/
-    ├── components/             — shared React/JSX components (nav, footer, page-header)
-    ├── fonts/                  — .woff2 font files
+├── *.html                      — one entry per page (index, Rassen, Klassen, Monster, NSC, …)
+├── divisionen/                 — the eight faction pages
+├── src/
+│   ├── components/             — shared React/JSX components (nav, footer, site-gate, …)
+│   └── pages/                  — one entry per page (imports components + page app code)
+│       └── parts/              — page-specific helper modules
+├── public/CNAME                — custom domain
+├── vite.config.js
+└── assets/                     — copied unchanged into the build
     ├── images/
-    │   ├── insignia/           — faction insignia
-    │   ├── races/              — race artwork
-    │   └── monster/
-    │       └── monsterhandbuch/ — monster images
     ├── scripts/
-    │   ├── data/
-    │   │   └── monster/        — monster data split by source book
-    │   │       └── monsterhandbuch-data.js
-    │   └── vendor/             — React, ReactDOM, Babel Standalone
+    │   ├── data/               — game data (monsters, races, classes, …)
+    │   └── vendor/             — React, ReactDOM, Supabase
     └── styles/
         ├── global/             — base.css, fonts.css, division.css
         └── pages/              — per-page stylesheets
@@ -50,7 +37,7 @@ python3 -m http.server 8080
 
 ## Tech
 
-Plain HTML + CSS + React (via Babel Standalone in the browser). No bundler, no npm, no build step.
+React (global vendor build, JSX compiled at build time), Vite multi-page build, Supabase login, GitHub Pages.
 
 ## Features
 
