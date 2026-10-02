@@ -1,0 +1,138 @@
+// Ratatosk — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+(window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Ratatosk'] = {
+  name: 'Ratatosk', accent: '#c87840',
+  subtitle: 'Kosmische Trickster · Klatschboten der Weltebenen',
+  tags: ['Humanoid','Winzig–Klein','7,5 m Bewegung','Telepathie','Meistens Chaotisch Gut'],
+  headerImage: null,
+  lore: {
+    intro: [
+      'Ratatosks sind unersättliche Trickster. Sie teilen Klatsch aus allen Ebenen, erfreuen sich daran, Geheimnisse zu erfahren, und verbreiten diese Informationshäppchen auf schelmische Weise weiter. Sie ähneln Eichhörnchen mit glattem Fell und kleinen Stoßzähnen. Trotz ihrer himmlischen Abstammung sind sie tief mit der sterblichen Welt verbunden — was sie zu etwas macht, das weder ganz Himmelswesen noch ganz Sterblicher ist, aber von beidem das Neugierigste mitgenommen hat.',
+      'Ratatosks bilden enge matriarchalische Familieneinheiten, sogenannte Drays, innerhalb größerer Gemeinschaften, die Scurries heißen. Abenteuerlustigere Ratatosks agieren oft als planare Führer und Beschützer — obwohl es ebenso üblich ist, einen Ratatosk als Boten, Dieb oder Spion anzutreffen. Ob das nun Heldentum oder Opportunismus ist, hängt davon ab, wen man fragt.',
+      'Ratatosks sprechen nicht mit Zunge und Lippen — sie sprechen durch Telepathie. Das macht sie zu ausgezeichneten Gesprächspartnern, die niemanden unterbrechen kann, und zu schrecklichen Gesprächspartnern, die man nicht zum Schweigen bringen kann.',
+    ],
+    gesellschaft: [
+      'Es gibt zwei Hauptlinien der Ratatosks: die Ekorre und die Tradvakt. Die Ekorre sind das Bild, das die meisten vor Augen haben — glattes Fell in Rot- und Brauntönen, winzige Stoßzähne, endlose Neugier. Sie bewohnen Yggdrasil und seine Äste, tragen Botschaften durch die Ebenen und unterhalten ein nie endendes Klatschnetzwerk über alle Existenzebenen hinweg. Klug, egozentrisch und hoffnungslos überzeugt davon, dass ihre neueste Information die wichtigste der Welt ist.',
+      'Die Tradvakt, auch Ratatosk-Kriegsherren genannt, sind größer als ihre Ekorre-Vettern und betrachten sich als Hüter und Beschützer von Yggdrasil. Sie trainieren von klein auf, um Waffen und Kampftaktiken zu meistern, und handeln, um Ordnung in ihren Gemeinschaften zu erhalten. Tradvakt-Abenteurer suchen entweder proaktiv nach Feinden des Weltbaums — oder sie wollen schlicht beweisen, dass ein 90-Zentimeter-Kämpfer jeden im Raum besiegen kann.',
+      'In Meruria sind Ratatosks selten, aber unvergesslich. Wer einmal einen gesehen hat, erinnert sich. Wer einmal einem telepathisch zugehört hat, wünscht er hätte es nicht.',
+    ],
+    introBild:        { url: null, label: 'Ratatosk · Illustration', caption: 'Charakter-Illustration', position: 'right', width: 360, height: 360 },
+    gesellschaftBild: { url: null, label: 'Ratatosk auf Yggdrasil', caption: 'Bote zwischen den Ebenen', position: 'left', width: 240, height: 300 },
+  },
+  specialSection: {
+    type: 'variantCards', feat1Label: 'Attribute & Merkmale', feat2Label: 'Rolle & Identität',
+    label: 'Unterrassen der Ratatosks',
+    beschreibung: 'Zwei Linien — zwei Wege, ein Eichhörnchen zu sein. Wähle deine Abstammung.',
+    varianten: [
+      {
+        farbe: 'Ekorre', name: 'Ekorre', schadensart: 'Kundschafter', farbeHex: '#c06020', bild: null,
+        augenfarbe: 'haselnuss, bernsteinfarben oder leuchtend gold',
+        hautfarbe:  'glattes Fell in Rot- und Brauntönen',
+        haarfarbe:  'fuchsrot, kastanienbraun oder dunkelbraun',
+        odemwaffe:  'GES+2, STÄ-2, INT oder CHA +1 · Winzig (ca. 45 cm, 9–23 kg) · Segen von Yggdrasil: Nachricht + Boshafter Spott als Tricks; ab Stufe 5 Spiegelbild (1×/langer Rast, CHA) · Winzige Waffen: Leicht/Finesse normal, andere zweihändig mit Nachteil, Schwer nicht möglich',
+        resistenz:  'Klatschbote · Botennetz · Trickster',
+      },
+      {
+        farbe: 'Tradvakt', name: 'Tradvakt', schadensart: 'Kämpfer', farbeHex: '#607040', bild: null,
+        augenfarbe: 'dunkelbraun oder tief schwarz',
+        hautfarbe:  'dichtes Fell in Grau-, Braun- oder Grüntönen',
+        haarfarbe:  'graubraun, dunkelgrün oder schwarz',
+        odemwaffe:  'GES+2, STÄ-2, KON+1 · Klein (60–90 cm, 27–45 kg) · Kriegsgeplapper: Bonusaktion, Kreatur in 9 m muss CHA-RW (SG 8 + Übungsbonus + KON-Mod) bestehen oder Nachteil auf Angriffswürfe bis zum nächsten Zug. 1×/kurze oder lange Rast.',
+        resistenz:  'Baumschützer · Kriegsherr · Wächter Yggdrasils',
+      },
+    ],
+  },
+  namenSection: {
+    type: 'nameRoller',
+    label: 'Namen der Ratatosks',
+    beschreibung: 'Ratatosks unterscheiden nicht zwischen männlichen und weiblichen Namen. Namen sind oft kurz; hochangesehene Familien fügen Infixe wie -ee- oder -ekke- ein. Ratatosks, die in anderen Ebenen leben, nehmen manchmal regionale Namen an.',
+    tabellen: [
+      { name:'Vornamen', eintraege:['Chiringa','Daresh','Ekirp','Ekkitta','Kerasil','Najuta','Orrin','Skirekkeret','Tiptup','Turorri','Brekkit','Chirrip','Daveek','Ekorin','Flitta','Greekol','Hekorra','Ikkeris','Jorrip','Keetak','Lirrek','Mirrosk','Neekit','Orrekka','Preetip','Reekkol','Skirrit','Teekor','Ukkaris','Virreek'] },
+      { name:'Familiennamen', eintraege:['Hellgesang','Borstzahn','Flinktatze','Hüpfzweig','Stillesblatt','Klugbart','Schnellklaue','Scharfzahn','Flinkschweif','Baumgebunden','Hohlfrucht','Eisenbüschel','Weitsprung','Nachtgeplapper','Urwissen','Kiefernkamm','Grummelnacken','Schnellhorst','Dornenfell','Windsprung'] },
+    ],
+  },
+  charakterGenerator: {
+    felder: [
+      { label:'Unterrasse',   type:'choice',  optionen:['Ekorre (Winzig)','Tradvakt (Klein)'] },
+      { label:'Vorname',      type:'table',   optionen:['Chiringa','Daresh','Ekirp','Ekkitta','Kerasil','Najuta','Orrin','Skirekkeret','Tiptup','Turorri','Brekkit','Chirrip','Daveek','Ekorin','Flitta','Greekol','Hekorra','Ikkeris','Jorrip','Keetak'] },
+      { label:'Familienname', type:'table',   optionen:['Hellgesang','Borstzahn','Flinktatze','Hüpfzweig','Stillesblatt','Klugbart','Schnellklaue','Scharfzahn','Flinkschweif','Baumgebunden'] },
+      { label:'Fellfarbe',    type:'table',   optionen:['fuchsrot','kastanienbraun','hellbraun','dunkelbraun','graubraun','schwarz','silbern-grau'] },
+      { label:'Augenfarbe',   type:'table',   optionen:['haselnuss','bernsteinfarben','tief schwarz','smaragdgrün','leuchtendes Gold'] },
+      { label:'Besonderheit', type:'table',   optionen:['Stoßzähne auffällig sichtbar','Fell mit ungewöhnlichen Abzeichen','Telepathie flüstert statt hallt','Immer in Bewegung','Scheinbar allwissend','Auffällig langer buschiger Schwanz'] },
+    ],
+  },
+  beziehungen: [
+    { volk:'Menschen',    relation:'Amüsierte Überlegenheit',  text:'Menschen sind so groß und wissen so wenig. Es ist fast rührend. Ich helfe ihnen gerne — gegen angemessene Information als Gegenleistung.' },
+    { volk:'Elfen',       relation:'Konkurrierendes Interesse', text:'Elfen denken, sie kennen alle Geheimnisse. Das ist falsch. Ich kenne mehr. Aber ich sage es ihnen nicht.' },
+    { volk:'Gnome',       relation:'Kollegiale Neugier',        text:'Gnome stellen dieselben Fragen wie ich — sie experimentieren nur anders damit. Das ist respektierbar.' },
+    { volk:'Halblinge',   relation:'Verwandte Seelen',          text:'Klein, schnell, unterschätzt. Wir haben mehr gemeinsam als die Größeren je zugeben würden.' },
+    { volk:'Githyanki',   relation:'Wachsame Neugier',          text:'Sie reisen ebenenübergreifend wie wir — aber mit viel mehr Schwertern und viel weniger Humor.' },
+    { volk:'Himmelswesen',relation:'Kompliziertes Erbe',        text:'Wir stammen von ihnen ab. Sie erkennen uns als Verwandte an — manchmal. Das reicht uns.' },
+  ],
+  bekannte: [
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Ratatosk in Meruria reserviert.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Ratatosk in Meruria reserviert.' },
+  ],
+  radar: { labels:['Mobilität','Kampf','Magie','Soziales','Überleben','Information'], values:[78,42,62,88,65,95] },
+  quiz: {
+    steps: [
+      { frage:'Ekorre oder Tradvakt?', optionen:[
+        { text:'Ekorre — Ich sammle Informationen, webe Netzwerke, spreche Zauber. Kampf ist der letzte Ausweg.',          tags:['Barde','Schurke','Hexenmeister'] },
+        { text:'Tradvakt — Ich kämpfe. Klein heißt nicht schwach. Mein Kriegsgeplapper macht Gegner langsam.',             tags:['Kämpfer','Schurke','Waldläufer'] },
+        { text:'Ekorre, aber ungewöhnlich kampforientiert — Ich nutze Magie und Klingen gleichermaßen.',                    tags:['Schurke','Hexenmeister'] },
+        { text:'Tradvakt, aber diplomatischer als typisch — Ich kämpfe wenn nötig, rede aber lieber.',                     tags:['Paladin','Barde'] },
+      ]},
+      { frage:'Wie setzt du Telepathie ein?', optionen:[
+        { text:'Als soziales Werkzeug — Ich spreche mit jedem gleichzeitig. Informationsvorteil ist alles.',                tags:['Barde','Hexenmeister'] },
+        { text:'Als taktisches Hilfsmittel — Stille Koordination mit Verbündeten im Kampf.',                               tags:['Kämpfer','Waldläufer'] },
+        { text:'Als Verhörtechnik — Niemand lügt mich an, ohne dass ich es bemerke.',                                      tags:['Schurke','Kleriker'] },
+        { text:'Kaum bewusst — Es ist einfach wie ich rede. Besonderes denke ich mir nicht dabei.',                         tags:['Barbar','Druide'] },
+      ]},
+      { frage:'Was treibt deinen Ratatosk an?', optionen:[
+        { text:'Information — Wer weiß, hat Macht. Ich sammle alles und vergesse nichts.',                                  tags:['Schurke','Barde'] },
+        { text:'Schutz — Yggdrasil und seine Bewohner brauchen Wächter. Ich bin einer.',                                   tags:['Paladin','Kämpfer'] },
+        { text:'Abenteuer — Die Ebenen sind groß und ich bin klein. Das ist kein Hindernis.',                               tags:['Waldläufer','Barbar'] },
+        { text:'Neugier — Es gibt immer mehr zu entdecken. Das ist genug Grund.',                                           tags:['Magier','Druide'] },
+      ]},
+      { frage:'Welche Rolle spielst du in der Gruppe?', optionen:[
+        { text:'Kundschafter und Informant — Ich komme überall rein und weiß danach mehr als vorher.',                     tags:['Schurke','Waldläufer'] },
+        { text:'Unterstützer — Telepathie, Magie, Ablenkung — ich halte alles am Laufen.',                                 tags:['Barde','Hexenmeister'] },
+        { text:'Überraschungskämpfer — Klein, schnell, unterschätzt. Das ist mein Vorteil.',                               tags:['Schurke','Kämpfer'] },
+        { text:'Soziale Schnittstelle — Ich rede mit jedem. Buchstäblich.',                                                 tags:['Barde','Paladin'] },
+      ]},
+    ],
+    klassen: {
+      'Schurke':     'GES+2, Telepathie, kleine Größe für Verstecken — der Ratatosk-Schurke ist der perfekte Infiltrator jeder Ebene.',
+      'Barde':       'GES+2, CHA+1 (Ekorre), Telepathie, Klatschnetzwerk — sozialer Barde mit einzigartigem Informationsvorteil.',
+      'Hexenmeister':'CHA+1 (Ekorre), Segen von Yggdrasil, Telepathie — thematisch und mechanisch stark.',
+      'Kämpfer':     'KON+1 (Tradvakt), Kriegsgeplapper, Winzige Größe für Deckung — der überraschende Nahkämpfer.',
+      'Waldläufer':  'GES+2, Klettern, Dunkelsicht, Telepathie für stille Koordination.',
+      'Magier':      'INT+1 (Ekorre möglich), Segen von Yggdrasil — der planare Gelehrte.',
+      'Druide':      'Himmlisches Erbe + Naturverbindung über Yggdrasil — ungewöhnlich aber thematisch stimmig.',
+      'Mönch':       'GES+2, Klettern, Kleine Größe — der schnelle, schwer zu treffende Mönch.',
+      'Paladin':     'KON+1 (Tradvakt), Kriegsgeplapper, himmlisches Erbe — der Schutzpaladin des Weltbaums.',
+      'Kleriker':    'KON+1 (Tradvakt), himmlische Abstammung — Licht- oder Wissensdomäne passt gut.',
+    },
+  },
+  koerperlicherMerkmale: {
+    bewegungsrate:   '7,5 m (Gehen), 3 m (Klettern)',
+    volljaehrigkeit: '10 Jahre',
+    lebenserwartung: 'bis zu 180 Jahre (himmlische Natur)',
+    groesse: { kategorie:'Winzig (Ekorre) oder Klein (Tradvakt)', min:'45 cm (Ekorre) / 60 cm (Tradvakt)', max:'45 cm (Ekorre) / 90 cm (Tradvakt)', formel:'nach Unterrasse' },
+    gewicht: { min:'9 kg (Ekorre) / 27 kg (Tradvakt)', max:'23 kg (Ekorre) / 45 kg (Tradvakt)', formel:'nach Unterrasse' },
+    augenfarbe: 'haselnuss, bernsteinfarben, schwarz oder leuchtend gold',
+    hautfarbe:  'unter dem Fell: variiert',
+    haarfarbe:  'fuchsrot, kastanienbraun, grau oder schwarz (Fell)',
+  },
+  statblock: {
+    features: [
+      { name:'Kreaturtyp',              text:'Humanoid (mit himmlischer Abstammung — anfällig für Effekte, die Himmelswesen betreffen).' },
+      { name:'Geertes Himmelswesen',    text:'Du stammst von Himmelswesen ab, bist aber stark mit der sterblichen Welt verbunden. Obwohl du ein Humanoid bist, bist du dennoch anfällig für Effekte, die Himmelswesen betreffen.' },
+      { name:'Dunkelsicht',             text:'Du kannst in schwachem Licht innerhalb von 18 Metern so sehen, als wäre es helles Licht, und in Dunkelheit so, als wäre es schwaches Licht. In der Dunkelheit kannst du keine Farben unterscheiden, nur Grautöne.' },
+      { name:'Scharfe Stoßzähne',       text:'Deine scharfen Stoßzähne sind natürliche Waffen für unbewaffnete Angriffe. Bei einem Treffer verursachen sie 1 Stichschaden + 1W4 psychischen Schaden.' },
+      { name:'Telepathisch',            text:'Du kannst telepathisch mit jeder Kreatur sprechen, die du sehen kannst und die sich innerhalb einer Anzahl von Fuß befindet, die dem Zehnfachen deiner Stufe entspricht. Du musst keine gemeinsame Sprache teilen, aber die Kreatur muss mindestens eine Sprache verstehen.' },
+      { name:'— Ekorre: Segen von Yggdrasil', text:'Du kennst die Zaubertricks Nachricht und Boshafter Spott. Ab Stufe 5: Spiegelbild einmal pro langer Rast. Charisma ist deine Zaubermerkmalcharakteristik.' },
+      { name:'— Ekorre: Winzige Waffen', text:'Du kannst Waffen mit der Leicht- oder Finesse-Eigenschaft normal führen. Andere Waffen werden als zweihändig behandelt und du hast Nachteil auf Angriffe damit. Schwere Waffen kannst du nicht verwenden.' },
+      { name:'— Tradvakt: Kriegsgeplapper', text:'Als Bonusaktion muss eine Nicht-Ratatosk-Kreatur innerhalb von 9 Metern, die dich hören kann, einen Charisma-Rettungswurf (SG 8 + Übungsbonus + KON-Mod) bestehen oder bis zum Beginn deines nächsten Zuges Nachteil auf Angriffswürfe haben. Einmal pro kurzer oder langer Rast.' },
+    ],
+  },
+};

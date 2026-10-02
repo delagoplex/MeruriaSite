@@ -1,0 +1,128 @@
+// Kenku — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+(window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Kenku'] = {
+  name: 'Kenku', accent: '#606878',
+  subtitle: 'Gedächtnismeister · Vogelwesen ohne Flug',
+  tags: ['Humanoid','Klein oder Mittelgroß','9 m Bewegung','Kenku-Gedächtnis','Meistens Chaotisch'],
+  headerImage: 'assets/images/races/kenku/banner.png',
+  lore: {
+    intro: [
+      'Kenku sind gefiederte Kreaturen, die Ähnlichkeit mit Raben haben. Ihr Beobachtungssinn ist hervorragend, ihr Erinnerungsvermögen geradezu übernatürlich. Mordekainen selbst schrieb: „Neben dem atemberaubenden Bauwerk des Kenku-Gedächtnisses ist mein Gedächtnispalast nur eine schäbige Hütte."',
+      'Kein Kenku kann sich an die Herkunft seines Volkes erinnern — und es geht das geflügelte Wort, dass es so viele Herkunftsgeschichten wie Kenku gibt. Manche stellen sich ihre Abkunft als Fluch vor, aus dem flugunfähige Vogelwesen hervorgingen. Andere rezitieren erhebende Gedichte über ihre Mission, die Wunder des Multiversums zu beobachten und zu verzeichnen.',
+    ],
+    gesellschaft: [
+      'Kenku leben meist in engen Gruppierungen, die „Schar" genannt werden. Innerhalb einer Schar ist das Misstrauen gegenüber Außenseitern — auch anderen Kenku — ausgeprägt. Sie bauen oft versteckte Nester in der Nähe großer Städte.',
+      'Nachdem ein Kenku schlüpft, bleibt es bei den Eltern. Sobald es erwachsen ist, verlässt es das Nest für immer. Die meisten Kenku mögen das Alleinsein nicht und suchen sich Weggefährten, mit denen sie eine neue Schar gründen.',
+      'In Meruria sind Kenku selten gesehen — aber überall gehört. Wer einen spricht, hört Stimmen von Dutzenden anderen. Das macht Gespräche mit ihnen zu einer eigenen Erfahrung.',
+    ],
+    introBild:        { url: 'assets/images/races/kenku/charaktere.png', label: 'Kenku · Illustration', caption: 'Charakter-Illustration', position: 'right', width: 360, height: 360 },
+    gesellschaftBild: { url: null, label: 'Kenku-Schar · Illustration', caption: 'Versteckte Nester nahe großer Städte', position: 'left', width: 240, height: 300 },
+  },
+  specialSection: {
+    type: 'traitRoller',
+    label: 'Herkunftsgeschichte',
+    beschreibung: 'Kein Kenku weiß, wo es herkommt. Würfle oder wähle die Geschichte, die dein Kenku erzählt.',
+    merkmale: [
+      'Fluch-Glaube — wir wurden bestraft. Unsere Flügel geraubt. Warum, weiß niemand mehr.',
+      'Beobachter-Mythos — wir sind erschaffen worden, um zu sehen, zu hören und zu bewahren. Das ist Zweck, kein Fluch.',
+      'Schöpfungs-Agnostiker — ich weiß es nicht. Ich interessiere mich nicht dafür. Ich lebe.',
+      'Imitationstheorie — was, wenn wir nie etwas Eigenes hatten? Was, wenn das die Wahrheit ist?',
+      'Schattenfell-Kind — ich bin im Schattenfell geboren. Die materielle Ebene ist fremd für mich.',
+      'Städtisches Nestbau-Genie — meine Schar baute das beste versteckte Nest, das ich je gesehen habe. Das ist Kultur.',
+      'Scharverlorener — ich habe meine Schar verloren. Ich suche eine neue oder habe aufgehört zu suchen.',
+      'Eigenerfundene Geschichte — ich habe meine Herkunft selbst erdacht. Sie ist die beste.',
+    ],
+  },
+  namenSection: {
+    type: 'nameRoller',
+    label: 'Namen der Kenku',
+    beschreibung: 'Kenku-Namen basieren auf Geräuschen, die sie gerne oder häufig nachahmen. Sie klingen wie das, was sie darstellen.',
+    tabellen: [
+      { name:'Kenku-Namen (Klänge)', eintraege:['Klirren','Krakel','Krähen','Krächz','Kratz','Knacken','Knistern','Rauschen','Rieseln','Rascheln','Säuseln','Schaben','Schnarren','Schnappen','Schwirren','Sirren','Ticken','Tropfen','Trommeln','Wispern','Zischen','Zwitschern','Flattern','Hallen','Klopfen','Kollern','Murmeln','Pfeifen','Plätschern','Surren'] },
+    ],
+  },
+  charakterGenerator: {
+    felder: [
+      { label:'Name',           type:'table',   optionen:['Klirren','Krakel','Krähen','Krächz','Kratz','Knacken','Knistern','Rauschen','Rieseln','Rascheln','Säuseln','Schaben','Schnarren','Schnappen','Schwirren','Sirren','Ticken','Tropfen','Trommeln','Wispern','Zischen','Zwitschern','Flattern','Hallen','Klopfen','Kollern','Murmeln','Pfeifen','Plätschern','Surren'] },
+      { label:'Größe',          type:'choice',  optionen:['Klein','Mittelgroß'] },
+      { label:'Gefiederfarbe',  type:'table',   optionen:['tiefschwarz','blauschwarz (Rabenschimmer)','dunkelbraun','dunkelgrau','graubraun','schwarzbraun','anthrazit','kohleschwarz mit weißen Flecken'] },
+      { label:'Augenfarbe',     type:'table',   optionen:['rot','dunkelrot','braun','dunkelbraun','grau'] },
+      { label:'2 Kenku-Fertigkeiten', type:'table', optionen:['Wahrnehmung + Heimlichkeit','Täuschung + Einblick','Geschichte + Arkane Kunde','Akrobatik + Heimlichkeit','Auftreten + Täuschung','Diebstahl + Heimlichkeit','Natur + Wahrnehmung','Einblick + Geschichte'] },
+      { label:'Herkunftsgeschichte', type:'table', optionen:['Fluch-Glaube','Beobachter-Mythos','Schöpfungs-Agnostiker','Imitationstheorie','Schattenfell-Kind','Städtisches Nestbau-Genie','Scharverlorener','Eigenerfundene Geschichte'] },
+      { label:'Talent',         type:'table',   optionen:['Fluch des Alten','Meister der Nachahmung','Magische Plagiate'] },
+    ],
+  },
+  beziehungen: [
+    { volk:'Andere Kenku',    relation:'Misstrauische Gemeinschaft', text:'Wir bilden Scharen — und misstrauen uns. Das ist kein Widerspruch, das ist Kenku-Kultur.' },
+    { volk:'Menschen',        relation:'Nützliche Nähe',             text:'Kenku bauen Nester nahe menschlicher Städte. Menschen bemerken uns oft nicht. Das ist gewollt.' },
+    { volk:'Diebe & Schurken', relation:'Berufssolidarität',        text:'Wer im Schatten lebt, kennt uns. Wir kennen ihn. Manchmal hilft das.' },
+    { volk:'Gelehrte',        relation:'Gegenseitige Faszination',   text:'Mordekainen hat Recht. Unser Gedächtnis ist beeindruckend. Kluge Leute wissen das.' },
+    { volk:'Aarakocra',       relation:'Stille Trauer',              text:'Sie fliegen. Wir nicht. Über dieses Gefühl spricht kein Kenku — aber es ist da.' },
+    { volk:'Tieflinge',       relation:'Unvoreingenommenheit',       text:'Beide werden beäugt. Beide haben gelernt, damit umzugehen. Das schafft Verständnis.' },
+  ],
+  bekannte: [
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Kenku in Meruria reserviert.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Kenku in Meruria reserviert.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Kenku in Meruria reserviert.' },
+  ],
+  radar: { labels:['Mobilität','Kampf','Magie','Soziales','Überleben','Weisheit'], values:[60,45,55,72,70,85] },
+  quiz: {
+    steps: [
+      { frage:'Was treibt deinen Kenku an?', optionen:[
+        { text:'Beobachtung — ich will alles sehen, hören und behalten. Das ist mein Zweck',  tags:['Waldläufer','Schurke'] },
+        { text:'Freiheit — kein Fluch, keine Schar, keine Herkunftsgeschichte soll mich binden', tags:['Schurke','Barbar'] },
+        { text:'Schar — ich brauche Weggefährten. Allein funktioniert nicht',                tags:['Barde','Kleriker'] },
+        { text:'Verstehen — ich will wissen, was wir sind und woher wir kommen',             tags:['Magier','Kleriker'] },
+      ]},
+      { frage:'Wie nutzt dein Charakter das Kenku-Gedächtnis?', optionen:[
+        { text:'Für Fertigkeiten — zwei geübte Fertigkeiten, dann Vorteil, wenn nötig',      tags:['Schurke','Waldläufer'] },
+        { text:'Für Wissen — Geschichte, Arkane Kunde, alles was ich einmal gehört habe',   tags:['Magier','Kleriker'] },
+        { text:'Für Soziales — Einblick und Täuschung: ich kenne Stimmen und Gesichter',    tags:['Barde','Schurke'] },
+        { text:'Für Kampf — Wahrnehmung und Akrobatik für taktischen Vorteil',             tags:['Kämpfer','Waldläufer'] },
+      ]},
+      { frage:'Wie nutzt dein Kenku die Stimmen-Nachahmung?', optionen:[
+        { text:'Als soziale Waffe — ich werde zur Person, die jemand hören will',            tags:['Schurke','Barde'] },
+        { text:'Als Aufklärung — ich gebe Geräusche wider, um Informationen zu bestätigen', tags:['Waldläufer','Schurke'] },
+        { text:'Als Ablenkung — das falsche Geräusch am falschen Ort verschafft Zeit',      tags:['Schurke','Kämpfer'] },
+        { text:'Selten — es fühlt sich seltsam an, anderer Stimmen zu stehlen',             tags:['Paladin','Kleriker'] },
+      ]},
+      { frage:'Welche Rolle spielt dein Charakter in einer Gruppe?', optionen:[
+        { text:'Informationsquelle — ich erinnere alles, was wir je gehört haben',           tags:['Magier','Kleriker'] },
+        { text:'Flexibler Spezialist — zwei frei wählbare Fertigkeiten + Vorteil-Pool',     tags:['Schurke','Barde'] },
+        { text:'Sozialer Täuscher — Stimmen nachahmen + Täuschung geübt',                  tags:['Barde','Schurke'] },
+        { text:'Präziser Beobachter — WEI+1, Wahrnehmung geübt, Kenku-Gedächtnis',         tags:['Waldläufer','Kämpfer'] },
+      ]},
+    ],
+    klassen: {
+      'Schurke':     'GES+2, Kenku-Gedächtnis für Heimlichkeit und Täuschung, Stimmen nachahmen — der Kenku-Schurke ist das kompletteste Paket.',
+      'Waldläufer':  'GES+2, WEI+1, Kenku-Gedächtnis für Wahrnehmung und Natur — der aufmerksamste Scout im Team.',
+      'Barde':       'Stimmen nachahmen + Kenku-Gedächtnis für Auftreten und Täuschung — ein Barde wie kein anderer.',
+      'Magier':      'WEI+1 oder INT-Vorteil über Gedächtnis, Expertenduplikation für Zauberbücher — der präziseste Abschreiber aller Zeiten.',
+      'Mönch':       'GES+2, WEI+1, Kenku-Gedächtnis für kampfrelevante Fertigkeiten — ein Mönch, der sich an jeden Schlag erinnert.',
+      'Kleriker':    'WEI+1, Kenku-Gedächtnis für religiöse Fertigkeiten, Stimmen für Göttliche Kommunikation — ungewöhnlich und beeindruckend.',
+      'Kämpfer':     'GES+2 für Finesse, Kenku-Gedächtnis für Wahrnehmung und Akrobatik — präzise und anpassungsfähig.',
+      'Druide':      'WEI+1, Kenku-Gedächtnis für Natur und Wahrnehmung, Naturverbindung durch Vogelherkunft.',
+      'Hexenmeister':'Stimmen nachahmen für Manipulation, Kenku-Gedächtnis für Täuschung und Einblick — ein Pakt-Träger, den niemand durchschaut.',
+      'Paladin':     'WEI+1 für Perception als Vorteil, Kenku-Gedächtnis für heilige Überlieferungen — ein Paladin, der niemals vergisst.',
+    },
+  },
+  koerperlicherMerkmale: {
+    bewegungsrate:   '9 m',
+    volljaehrigkeit: '12 Jahre',
+    lebenserwartung: 'bis zu 60 Jahre',
+    groesse:  { kategorie:'Klein oder Mittelgroß (wählbar)', min:'134 cm', max:'179 cm', formel:'129 cm + 2W10 · 2,5 cm' },
+    gewicht:  { min:'47 Pfund', max:'165 Pfund', formel:'45 Pfund + 1W8 · Wurf von Größe' },
+    augenfarbe: 'meist rot, braun oder grau',
+    hautfarbe:  'Gefieder: meist schwarz, sonst dunkle Farben',
+    haarfarbe:  null,
+  },
+  statblock: {
+    features: [
+      { name:'Kreaturentyp',        text:'Humanoider.' },
+      { name:'Größenkategorie',               text:'Klein oder Mittelgroß — du wählst bei der Rassenauswahl.' },
+      { name:'Expertenduplikation', text:'Wenn du Schriften oder Kunstwerke kopierst, bist du bei allen Attributswürfen für ein exaktes Duplikat im Vorteil.' },
+      { name:'Kenku-Gedächtnis',    text:'Du bist in 2 Fertigkeiten deiner Wahl geübt. Außerdem kannst du dir bei Attributswürfen mit geübten Fertigkeiten vor dem W20-Wurf einen Vorteil verschaffen. Anwendungen pro langer Rast entsprechen deinem Übungsbonus.' },
+      { name:'Stimmen nachahmen',   text:'Du kannst Geräusche und Stimmen, die du gehört hast, präzise wiedergeben. Erkennung als Imitation: WEI-(Einsicht)-Rettungswurf gegen SG 8 + Übungsbonus + CHA-Modifikator.' },
+      { name:'Angeborenes Talent',  text:null, talente:['Fluch des Alten','Meister der Nachahmung','Magische Plagiate'] },
+    ],
+  },
+};

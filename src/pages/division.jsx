@@ -322,7 +322,7 @@ function TOCSidebar({
       },
       onMouseLeave: e => {
         if (!isActive) {
-          e.currentTarget.style.color = entry.indent ? 'rgba(255,200,190,0.45)' : 'rgba(255,210,200,0.65)';
+          e.currentTarget.style.color = entry.indent ? THEME.tocIndent : THEME.toc;
           e.currentTarget.style.borderLeftColor = 'transparent';
           e.currentTarget.style.background = 'transparent';
         }

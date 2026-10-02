@@ -1,0 +1,2 @@
+// Grung — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+(window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Grung'] = { name:'Grung',                    accent:'#50c040', subtitle:'Leuchtfarbige Jäger · Giftige Waldbewohner',              tags:['Humanoid','Klein','7,5 m Bewegung','Giftkörper','Neutral Böse'],               headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null };

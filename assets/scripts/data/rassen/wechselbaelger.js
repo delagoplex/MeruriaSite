@@ -1,0 +1,127 @@
+// Wechselbälger — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+(window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Wechselbälger'] = {
+  name: 'Wechselbälger', accent: '#a890c8',
+  subtitle: 'Gestaltwandler des Feenwild · Lebende Masken',
+  tags: ['Feenwesen','Klein oder Mittelgroß','9 m Bewegung','Gestaltwandler','Meistens Neutral'],
+  headerImage: 'assets/images/races/wechselbälger/banner.png',
+  lore: {
+    intro: [
+      'Wechselbälger können ihr Erscheinungsbild ändern und leben oft unerkannt in der Gesellschaft. Für manche ist ein neues Gesicht nur eine Verkleidung — für andere kann es einen Aspekt der Seele bedeuten, der damit enthüllt wird.',
+      'Die ersten Wechselbälger erschienen im Feenwild, und die wandelbare Essenz dieser Ebene ist noch heute in ihnen vorhanden. In ihrer wahren Gestalt erscheinen sie verblichen, ihre Züge merkwürdig detailarm — selten zu sehen, denn der typische Wechselbalg wechselt sein Erscheinungsbild wie andere ihre Kleidung.',
+    ],
+    gesellschaft: [
+      'Eine zufällige, spontane Gestalt ohne Geschichte heißt Maske — sie dient Stimmungen und wird vielleicht nie wieder verwendet. Viele Wechselbälger entwickeln jedoch Identitäten mit echter Tiefe: Persönlichkeiten mit Geschichte, Überzeugungen, Beziehungen.',
+      'Mehrere Wechselbälger können dieselbe Persönlichkeit teilen. In einer Gemeinde könnten drei von ihnen abwechselnd als Heilerin Andrea arbeiten. Persönlichkeiten können auch vererbt werden — der Jüngere übernimmt die Verbindungen, die Vorige aufgebaut haben.',
+      'In Meruria sind Wechselbälger überall und nirgends. Wer weiß, wie viele er schon getroffen hat — und wie viele davon sie wirklich waren.',
+    ],
+    introBild:        { url: 'assets/images/races/wechselbälger/charaktere.png', label: 'Wechselbalg · Illustration', caption: 'Wahre Gestalt — selten gesehen', position: 'right', width: 360, height: 360 },
+    gesellschaftBild: { url: null, label: 'Identitäten · Illustration', caption: 'Maske, Persönlichkeit, Seele — wo hört eine auf, wo beginnt die nächste?', position: 'left', width: 240, height: 300 },
+  },
+  specialSection: {
+    type: 'traitRoller',
+    label: 'Verhältnis zur eigenen Identität',
+    beschreibung: 'Jeder Wechselbalg hat eine andere Beziehung zur Frage: Was bin ich wirklich? Würfle oder wähle.',
+    merkmale: [
+      'Maskenträger — ich habe keine wahre Gestalt mehr. Alle meine Formen sind gleich wahr.',
+      'Identitätsarchitekt — ich pflege fünf Persönlichkeiten mit eigenen Namen, Geschichten und Kontakten.',
+      'Ehrlicher Lügner — ich täusche aus Notwendigkeit, nicht aus Freude. Jeder meiner Freunde kennt mich wirklich.',
+      'Feenwild-Kind — ich spüre noch die Verbindung zum Feenreich. Manchmal frage ich mich, ob ich zurück sollte.',
+      'Einsamer Wahrheitssucher — ich suche eine Gestalt, in der ich mich vollständig zuhause fühle.',
+      'Kollektiv-Träger — ich teile eine Persönlichkeit mit anderen Wechselbälgern. Das gibt uns Stärke und Anonymität.',
+      'Improvisierer — ich plane keine Gestalten im Voraus. Im Moment entsteht alles.',
+      'Wahrheitsflüsterer — ich zeige meine wahre Gestalt nur jemandem, dem ich wirklich vertraue. Bisher war es einmal.',
+    ],
+  },
+  namenSection: {
+    type: 'nameRoller',
+    label: 'Namen der Wechselbälger',
+    beschreibung: 'Wechselbälger-Namen klingen oft neutral und anpassungsfähig. Jede Persönlichkeit, die sie annehmen, trägt den Namen der entsprechenden Kultur.',
+    tabellen: [
+      { name:'Wechselbalg-Namen (wahre Namen)', eintraege:['Adro','Agni','Akra','Bex','Boro','Cal','Chaz','Dex','Dox','Equo','Errel','Fez','Fid','Gend','Hex','Iki','Ils','Jax','Kas','Kez','Lirax','Mox','Nix','Osk','Pik','Quix','Ral','Rex','Sax','Tix','Umo','Vex','Wix','Xax','Yix','Zex','Amo','Bin','Cix','Dax'] },
+    ],
+  },
+  charakterGenerator: {
+    felder: [
+      { label:'Wahrer Name',        type:'table',   optionen:['Adro','Agni','Akra','Bex','Boro','Cal','Chaz','Dex','Dox','Equo','Errel','Fez','Fid','Gend','Hex','Iki','Ils','Jax','Kas','Kez','Lirax','Mox','Nix','Osk','Pik','Quix','Ral','Rex','Sax','Tix','Umo','Vex','Wix','Xax','Yix','Zex','Amo','Bin','Cix','Dax'] },
+      { label:'Größe (wahre Gestalt)', type:'choice', optionen:['Klein','Mittelgroß'] },
+      { label:'Zweites Attribut +1', type:'table',  optionen:['Stärke','Geschicklichkeit','Konstitution','Intelligenz','Weisheit'] },
+      { label:'2 Instinkt-Fertigkeiten', type:'table', optionen:['Auftreten + Täuschen','Auftreten + Überzeugen','Täuschen + Motiv erkennen','Täuschen + Einschüchtern','Überzeugen + Motiv erkennen','Einschüchtern + Täuschen','Auftreten + Motiv erkennen','Überzeugen + Einschüchtern'] },
+      { label:'Hauptpersönlichkeit', type:'table',  optionen:['Händlerin (herzlich, zuverlässig)','Söldner (direkt, professionell)','Gelehrter (zurückhaltend, präzise)','Schankwirtin (gesellig, neugierig)','Wachmann (ernst, loyal)','Pilgerin (fromm, observierend)','Bettlerin (unauffällig, informiert)','Hofnarr (unberechenbar, freigeistig)'] },
+      { label:'Identitätsverhältnis', type:'table', optionen:['Maskenträger','Identitätsarchitekt','Ehrlicher Lügner','Feenwild-Kind','Einsamer Wahrheitssucher','Kollektiv-Träger','Improvisierer','Wahrheitsflüsterer'] },
+      { label:'Talent',             type:'table',   optionen:['Chamäleon','Morphender Körper','Ausweichendes Morphen'] },
+    ],
+  },
+  beziehungen: [
+    { volk:'Niemand (in erster Linie)', relation:'Vertrauen als Privileg', text:'Ich vertraue niemandem automatisch und niemand vertraut mir automatisch. Das ist fair.' },
+    { volk:'Andere Wechselbälger',  relation:'Kollektives Verständnis',  text:'Wir müssen nicht erklären. Das geteilte Wissen über das Leben in Masken schafft sofort Verbindung.' },
+    { volk:'Feenwesen',             relation:'Heimat-Verbindung',         text:'Das Feenwild liegt in uns. Feenwesen spüren das manchmal — und reagieren darauf unterschiedlich.' },
+    { volk:'Schurken & Informanten', relation:'Berufssolidarität',       text:'Wer in Schatten lebt, schätzt ein Gesicht, das sich anpassen kann.' },
+    { volk:'Paladine & Kleriker',   relation:'Anspannung',               text:'Heilige Völker, die auf Wahrheit bestehen, und Wechselbälger, die Gesichter tragen. Das ist eine schwierige Kombination.' },
+    { volk:'Barden',                relation:'Künstlerische Verwandtschaft', text:'Barden erschaffen Charaktere. Wir sind Charaktere. Es gibt viel zu reden — sobald man weiß, welcher Teil gerade spricht.' },
+  ],
+  bekannte: [
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Wechselbalg in Meruria reserviert.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Wechselbalg in Meruria reserviert.' },
+    { bild: null, name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Wechselbalg in Meruria reserviert.' },
+  ],
+  radar: { labels:['Mobilität','Kampf','Magie','Soziales','Überleben','Weisheit'], values:[55,42,48,95,72,62] },
+  quiz: {
+    steps: [
+      { frage:'Was treibt deinen Wechselbalg an?', optionen:[
+        { text:'Neugier — ich will wissen, wie sich andere Leben anfühlen',                  tags:['Barde','Schurke'] },
+        { text:'Schutz — Anonymität ist die beste Rüstung',                                 tags:['Schurke','Waldläufer'] },
+        { text:'Empathie — ich nehme eine Gestalt an, um wirklich zu verstehen',            tags:['Kleriker','Barde'] },
+        { text:'Macht — wer jedes Gesicht tragen kann, hat Zugang zu allem',               tags:['Hexenmeister','Schurke'] },
+      ]},
+      { frage:'Wie nutzt dein Charakter den Gestaltwandler?', optionen:[
+        { text:'Als Infiltration — ich werde zur Person, die Zugang hat',                   tags:['Schurke','Barde'] },
+        { text:'Als sozialen Schutz — ich zeige das Gesicht, das die Situation braucht',   tags:['Barde','Kleriker'] },
+        { text:'Als Ablenkung — das falsche Gesicht am falschen Ort verschafft Zeit',      tags:['Schurke','Kämpfer'] },
+        { text:'Selten — ich bevorzuge meine wahre Gestalt wenn möglich',                  tags:['Barbar','Kämpfer'] },
+      ]},
+      { frage:'Wie viele Persönlichkeiten pflegt dein Wechselbalg?', optionen:[
+        { text:'Viele — je eine für Verhandeln, Nachforschen, Kämpfen und Sociale',         tags:['Schurke','Barde'] },
+        { text:'Eine Haupt-Persönlichkeit — ich bin fast immer dieselbe',                  tags:['Kämpfer','Kleriker'] },
+        { text:'Spontan — ich erschaffe Masken im Moment, ohne Planung',                  tags:['Barde','Barbar'] },
+        { text:'Zwei — eine soziale, eine taktische',                                      tags:['Schurke','Kämpfer'] },
+      ]},
+      { frage:'Welche Rolle spielt dein Charakter in einer Gruppe?', optionen:[
+        { text:'Soziales Gesicht — CHA+2, zwei Instinkt-Fertigkeiten, Gestaltwandler',     tags:['Barde','Hexenmeister'] },
+        { text:'Informationsquelle — Motiv erkennen + Täuschen als Kernwerkzeuge',         tags:['Schurke','Barde'] },
+        { text:'Flexibler Allrounder — das Gesicht wechselt je nach Bedarf der Gruppe',   tags:['Barde','Kämpfer'] },
+        { text:'Stille Kraft — ich handle, bevor jemand merkt, dass ich da bin',           tags:['Schurke','Waldläufer'] },
+      ]},
+    ],
+    klassen: {
+      'Barde':       'CHA+2, zwei soziale Instinkt-Fertigkeiten, Gestaltwandler — der Barde, der nie zweimal dasselbe Gesicht zeigt.',
+      'Hexenmeister':'CHA+2, Feenwild-Herkunft, Gestaltwandler für Täuschungs-Pakte — der Hexenmeister, den niemand kennt.',
+      'Schurke':     'CHA+2 oder GES+1, Täuschen + Motiv erkennen, Gestaltwandler — der Schurke ohne festes Gesicht.',
+      'Paladin':     'CHA+2, Instinkt-Fertigkeiten für soziale Situationen, Gestaltwandler für Verhandlungen vor dem Kampf.',
+      'Magier':      'INT+1, Gestaltwandler für Tarnung, Wechselbalg-Instinkte für Täuschung — der unbekannte Arcanist.',
+      'Kleriker':    'WEI+1, Motiv erkennen + Überzeugen, Gestaltwandler für Infiltration heiliger Orte.',
+      'Kämpfer':     'STR+1, Einschüchtern geübt, Gestaltwandler für Gefechtsvorteil — unberechenbar.',
+      'Waldläufer':  'GES+1, Täuschen + Überleben, Gestaltwandler als perfekter Scout.',
+      'Druide':      'WEI+1, Feenwesen-Kreaturentyp, Gestaltwandler als Ergänzung zur Wildgestalt.',
+      'Barbar':      'STR+1, Einschüchtern, Gestaltwandler — der unberechenbarste Barbar.',
+    },
+  },
+  koerperlicherMerkmale: {
+    bewegungsrate:   '9 m',
+    volljaehrigkeit: '15 Jahre',
+    lebenserwartung: 'bis zu 110 Jahre',
+    groesse:  { kategorie:'Klein oder Mittelgroß (wählbar, in Gestalt variabel)', min:'60 cm', max:'240 cm', formel:'je nach angenommener Gestalt' },
+    gewicht:  { min:'variabel', max:'variabel', formel:'je nach angenommener Gestalt' },
+    augenfarbe: 'wahre Gestalt: blass, detailarm; in Gestalt: beliebig',
+    hautfarbe:  'wahre Gestalt: verblichen; in Gestalt: beliebig',
+    haarfarbe:  'wahre Gestalt: verblichen; in Gestalt: beliebig',
+  },
+  statblock: {
+    features: [
+      { name:'Kreaturentyp',          text:'Feenwesen.' },
+      { name:'Größenkategorie',                 text:'Klein oder Mittelgroß — du wählst bei der Rassenauswahl (wahre Gestalt). Der Gestaltwandler erlaubt auch Wechsel zwischen beiden.' },
+      { name:'Gestaltwandler',        text:'Als Aktion Erscheinungsbild und Stimme ändern: Haut, Haare, Frisur, Geschlecht, Größe (Klein↔Mittelgroß), Gewicht, anderes Volk (Spielwerte unverändert). Nicht: Personen, die du nie gesehen hast; Kreaturen mit grundlegend anderer Gliedmaßen-Anordnung. Kleidung/Ausrüstung unverändert. Gestalt hält an bis du sie als Aktion änderst oder stirbst.' },
+      { name:'Wechselbalg-Instinkte', text:'Du bist in 2 Fertigkeiten deiner Wahl geübt: Auftreten, Einschüchtern, Motiv erkennen, Täuschen oder Überzeugen.' },
+      { name:'Angeborenes Talent',    text:null, talente:['Chamäleon','Morphender Körper','Ausweichendes Morphen'] },
+    ],
+  },
+};

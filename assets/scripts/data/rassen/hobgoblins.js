@@ -1,0 +1,2 @@
+// Hobgoblins — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+(window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Hobgoblins'] = { name:'Hobgoblins',               accent:'#c04040', subtitle:'Krieger des Blutvolks · Disziplinierte Soldaten',         tags:['Humanoid','Mittelgroß','9 m Bewegung','Dunkelsicht','Meistens Böse'],          headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null };

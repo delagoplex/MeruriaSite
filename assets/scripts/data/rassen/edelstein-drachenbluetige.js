@@ -1,0 +1,121 @@
+// Edelstein Drachenblütige — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+(window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Edelstein Drachenblütige'] = {
+  name: 'Edelstein Drachenblütige', accent: '#9060e0',
+  subtitle: 'Erben Sardiors · Kinder des Geistes',
+  tags: ['Humanoid','Mittelgroß','9 m Bewegung','Psionik','Meistens Neutral'],
+  headerImage: 'assets/images/races/edelstein_drachenblütige/banner.png',
+  lore: {
+    intro: [
+      'Edelstein-Drachenblütige tragen das Erbe von Edelsteindrachen, welche behaupten, die Erben Sardiors des Rubindrachen zu sein. Die Farben und mysteriösen Kräfte von Edelsteindrachen — Amethyst, Kristall, Saphir, Smaragd und Topas — erstrahlen in der Schuppenhaut der Drachenblütigen und durchströmen ihre Adern.',
+      'Ihnen gehören die Wunder des Geistes, die Macht des Willens, das brillante Licht der Einsicht und das donnernde Echo der Entdeckung — doch auch das Darben der Verzweiflung. Ihre Kräfte sind subtiler als die der chromatischen oder metallischen Geschwister, aber kaum weniger beeindruckend.',
+    ],
+    gesellschaft: [
+      'Edelstein-Drachenblütige gelten als die rätselhaftesten ihrer Art. Ihre psionischen Fähigkeiten — angeborene Telepathie und spektrale Flügel — machen sie in jeder Gruppe zu einer schwer einzuschätzenden Größe.',
+      'Wie alle Drachenblütigen tragen sie einen dreifachen Namen: Vorname, Jugendname und Klanname. Ihre Klannamen ragen oft mit melodischeren, selteneren Klängen heraus — ein Widerhall ihres besonderen drachenblütigen Erbes.',
+      'In Meruria begegnet man Edelstein-Drachenblütigen selten, aber unvergesslich. Ihre Verbindung zu Sardior gibt manchen ein Gefühl des Außerseitertums selbst unter Drachenblütigen — zugleich eine Quelle stiller Überlegenheit.',
+    ],
+    introBild:        { url: 'assets/images/races/edelstein_drachenblütige/charaktere.png', label: 'Edelstein-Drachenblütige · Illustration', caption: 'Charakter-Illustration', position: 'right', width: 360, height: 360 },
+    gesellschaftBild: { url: null, label: 'Erben Sardiors · Illustration', caption: 'Edelstein-Drachenblütige und ihr psionisches Erbe', position: 'left', width: 240, height: 300 },
+  },
+  specialSection: {
+    type: 'variantCards',
+    label: 'Edelstein-Abstammung',
+    beschreibung: 'Wähle eine der fünf Edelstein-Abstammungen — sie bestimmt Erscheinung, Odemwaffe und Resistenz.',
+    varianten: [
+      { farbe:'Amethyst', name:'Amethyst-Drachenblütige', schadensart:'Energie',    farbeHex:'#9955cc', bild:'assets/images/races/edelstein_drachenblütige/amethyst_drachenbluetige.png', augenfarbe:'meistens Lila, Violett oder Weiß',       hautfarbe:'Lila bis Violett (mit Silber)',             haarfarbe:'oft kein Haar — sonst Lila oder Violett',     odemwaffe:'Deine Odemwaffe ist ein imposanter Ausbruch aus purer Energie, mit der du Energieschaden verursachst.',        resistenz:'Deine angeborene Affinität zur puren Energie gewährt dir Resistenz gegenüber Energieschaden.' },
+      { farbe:'Kristall',  name:'Kristall-Drachenblütige',  schadensart:'Gleißend',  farbeHex:'#88aacc', bild:'assets/images/races/edelstein_drachenblütige/kristall_drachenbluetige.png', augenfarbe:'meistens Weiß, Silber oder Hellblau',      hautfarbe:'Transparent-weiß bis kristallin (Silber)', haarfarbe:'oft kein Haar — sonst Weiß oder Silber',     odemwaffe:'Deine Odemwaffe ist ein gleißender Strahl aus Licht, mit der du gleißenden Schaden verursachst.',              resistenz:'Deine angeborene Affinität zum Licht gewährt dir Resistenz gegenüber gleißendem Schaden.' },
+      { farbe:'Saphir',    name:'Saphir-Drachenblütige',    schadensart:'Schall',    farbeHex:'#2266bb', bild:'assets/images/races/edelstein_drachenblütige/saphir_drachenbluetige.png', augenfarbe:'meistens Dunkelblau, Blau oder Silber',    hautfarbe:'Blau bis Dunkelblau (mit Silber)',         haarfarbe:'oft kein Haar — sonst Dunkelblau oder Blau',  odemwaffe:'Deine Odemwaffe ist ein donnernder Schallstoß, mit der du Schallschaden verursachst.',                          resistenz:'Deine angeborene Affinität zum Schall gewährt dir Resistenz gegenüber Schallschaden.' },
+      { farbe:'Smaragd',   name:'Smaragd-Drachenblütige',   schadensart:'Psychisch',  farbeHex:'#33aa66', bild:'assets/images/races/edelstein_drachenblütige/smaragd_drachenbluetige.png', augenfarbe:'meistens Grün, Türkis oder Gold',          hautfarbe:'Smaragdgrün (mit Gold)',                   haarfarbe:'oft kein Haar — sonst Grün oder Gold',        odemwaffe:'Deine Odemwaffe ist ein psychischer Strom aus mentaler Energie, mit der du psychischen Schaden verursachst.',   resistenz:'Deine angeborene Affinität für mentale Energie gewährt dir Resistenz gegenüber psychischem Schaden.' },
+      { farbe:'Topas',     name:'Topas-Drachenblütige',     schadensart:'Nekrotisch', farbeHex:'#cc9922', bild:'assets/images/races/edelstein_drachenblütige/topas_drachenbluetige.png', augenfarbe:'meistens Gelb, Gold oder Orange',          hautfarbe:'Gold bis Bernstein (mit Orange)',          haarfarbe:'oft kein Haar — sonst Gold oder Gelb',        odemwaffe:'Deine Odemwaffe ist ein nekrotischer Hauch aus negativer Energie, mit der du nekrotischen Schaden verursachst.', resistenz:'Deine angeborene Affinität zur negativen Energie gewährt dir Resistenz gegenüber nekrotischem Schaden.' },
+    ],
+  },
+  namenSection: {
+    type: 'nameRoller',
+    label: 'Namen der Drachenblütigen',
+    beschreibung: 'Würfle oder wähle einen Vor-, Jugend- und Klannamen für deinen Drachenblütigen-Charakter.',
+    tabellen: [
+      { name:'Männliche Vornamen (1W50)', eintraege:['Arjhan','Balasar','Bharash','Donaar','Ghesh','Heskan','Kriv','Medrash','Mehen','Nadarr','Pandjed','Patrin','Rhogat','Shamash','Shedinn','Tarhun','Torinn','Azrak','Drazzir','Fyndar','Gornash','Haldor','Jareth','Kharik','Lirash','Marzix','Nalrak','Orvex','Pyrax','Quorin','Ralnor','Syrash','Tarkus','Urzoth','Valthor','Xandar','Yrdan','Zalthar','Drayko','Grulthor','Hrakkon','Jaxar','Kordax','Maldrax','Norik','Pyrthas','Raxthor','Skarn','Vornax','Tyndar'] },
+      { name:'Weibliche Vornamen (1W50)',  eintraege:['Akra','Biri','Daar','Farideh','Harann','Jheri','Kava','Korinn','Mishann','Nala','Perra','Raiann','Sora','Surina','Thava','Uadjit','Alyra','Belara','Caelia','Deryn','Elys','Freyna','Gavara','Haelis','Ilyria','Jhara','Kalira','Lysandra','Mira','Nyara','Orla','Pyra','Raelis','Qiana','Synna','Valara','Talia','Xavia','Wrenna','Yara','Zara','Daelis','Fyra','Gryna','Hestia','Jaira','Kyra','Malina','Nysra','Zephra'] },
+      { name:'Jugendnamen (1W50)',          eintraege:['Kletterer','Ohrenkrümmer','Hüpfer','Frommer','Schildbeißer','Eifriger','Funkenjäger','Himmelstänzer','Wolkenjäger','Sternengucker','Zauberer','Zitterer','Lauerer','Einmischer','Schniefer','Kuschler','Springer','Brüller','Furchtloser','Glamouröser','Bogenbrecher','Fressender','Flüsterer','Angeber','Dachkratzer','Kichernder','Faulpelz','Mauerbröckler','Holzstampfer','Träumer','Fähiger','Diebischer','Reflektierender','Greifer','Humpelnder','Trampler','Kitzelnder','Mauerknacker','Schildschnapper','Fasskratzer','Holzfäller','Krümler','Stirnrunzler','Schildschneider','Stabkratzer','Donnernder','Herumtreiber','Gefährlicher','Lächelnder'] },
+      { name:'Klannamen (1W50)',            eintraege:['Clethtinthiallor','Daardendrian','Delmirev','Drachedandion','Fenkenkabradon','Kepeshkmolik','Kerrhylon','Kimbatuul','Linxakasendalor','Myastan','Nemmonis','Norixius','Ophinshtalajir','Prexijandilin','Shestendeliath','Turnuroth','Verthisathurgiesh','Yarjerit','Bromundar','Crystanax','Drimdalor','Faernesk','Grymgoroth','Helarkon','Ildrekas','Khaldros','Lythrian','Mordraxus','Obsidianth','Pyraxil','Qaldormir','Ralkorian','Scarneth','Thraxindor','Umbraskor','Valthryn','Wyrmfaxus','Xandorien','Yldryss','Zalthrokir','Drimvaxal','Fyrrinax','Galdrekir','Helvardur','Ildrixia','Khaldoria','Lythriel','Dracis','Jarkhuldir'] },
+    ],
+  },
+  charakterGenerator: {
+    felder: [
+      { label:'Geschlecht',  type:'choice',         optionen:['männlich','weiblich'] },
+      { label:'Abstammung',  type:'table',           optionen:['Amethyst (Energie)','Kristall (Gleißend)','Saphir (Schall)','Smaragd (Psychisch)','Topas (Nekrotisch)'] },
+      { label:'Vorname',     type:'gendered-table',  maennlich:['Arjhan','Balasar','Bharash','Donaar','Ghesh','Heskan','Kriv','Medrash','Mehen','Nadarr','Pandjed','Patrin','Rhogat','Shamash','Shedinn','Tarhun','Torinn','Azrak','Drazzir','Fyndar','Gornash','Haldor','Jareth','Kharik','Lirash','Marzix','Nalrak','Orvex','Pyrax','Quorin','Ralnor','Syrash','Tarkus','Urzoth','Valthor','Xandar','Yrdan','Zalthar','Drayko','Grulthor','Hrakkon','Jaxar','Kordax','Maldrax','Norik','Pyrthas','Raxthor','Skarn','Vornax','Tyndar'], weiblich:['Akra','Biri','Daar','Farideh','Harann','Jheri','Kava','Korinn','Mishann','Nala','Perra','Raiann','Sora','Surina','Thava','Uadjit','Alyra','Belara','Caelia','Deryn','Elys','Freyna','Gavara','Haelis','Ilyria','Jhara','Kalira','Lysandra','Mira','Nyara','Orla','Pyra','Raelis','Qiana','Synna','Valara','Talia','Xavia','Wrenna','Yara','Zara','Daelis','Fyra','Gryna','Hestia','Jaira','Kyra','Malina','Nysra','Zephra'] },
+      { label:'Jugendname',  type:'table',           optionen:['Kletterer','Ohrenkrümmer','Hüpfer','Frommer','Schildbeißer','Eifriger','Funkenjäger','Himmelstänzer','Wolkenjäger','Sternengucker','Zauberer','Zitterer','Lauerer','Einmischer','Schniefer','Kuschler','Springer','Brüller','Furchtloser','Glamouröser','Bogenbrecher','Fressender','Flüsterer','Angeber','Dachkratzer','Kichernder','Faulpelz','Mauerbröckler','Holzstampfer','Träumer','Fähiger','Diebischer','Reflektierender','Greifer','Humpelnder','Trampler','Kitzelnder','Mauerknacker','Schildschnapper','Fasskratzer','Holzfäller','Krümler','Stirnrunzler','Schildschneider','Stabkratzer','Donnernder','Herumtreiber','Gefährlicher','Lächelnder'] },
+      { label:'Klanname',    type:'table',           optionen:['Clethtinthiallor','Daardendrian','Delmirev','Drachedandion','Fenkenkabradon','Kepeshkmolik','Kerrhylon','Kimbatuul','Linxakasendalor','Myastan','Nemmonis','Norixius','Ophinshtalajir','Prexijandilin','Shestendeliath','Turnuroth','Verthisathurgiesh','Yarjerit','Bromundar','Crystanax','Drimdalor','Faernesk','Grymgoroth','Helarkon','Ildrekas','Khaldros','Lythrian','Mordraxus','Obsidianth','Pyraxil','Qaldormir','Ralkorian','Scarneth','Thraxindor','Umbraskor','Valthryn','Wyrmfaxus','Xandorien','Yldryss','Zalthrokir','Drimvaxal','Fyrrinax','Galdrekir','Helvardur','Ildrixia','Khaldoria','Lythriel','Dracis','Jarkhuldir'] },
+      { label:'Talent',      type:'table',           optionen:['Drachenhaut','Drachensicht','Drachengespür'] },
+    ],
+  },
+  beziehungen: [
+    { volk:'Menschen',    relation:'Faszination',    text:'Die angeborene Telepathie von Edelstein-Drachenblütigen fasziniert und beunruhigt Menschen gleichzeitig — sprechen sie wirklich nicht laut, oder lesen sie Gedanken?' },
+    { volk:'Elfen',       relation:'Respekt',         text:'Elfen schätzen die subtile Macht des Geistes. Ein Edelstein-Drachenblütiger, der Magie und Psionis verbindet, findet in Elfen geduldige Gesprächspartner.' },
+    { volk:'Zwerge',      relation:'Skepsis',         text:'Zwerge trauen unsichtbaren Kräften nicht. Telepathie ist für sie eine Einladung zur Spionage — bis das Vertrauen durch Taten aufgebaut wird.' },
+    { volk:'And. Drachenblütige', relation:'Neugier', text:'Chromatische und metallische Drachenblütige betrachten ihre Edelstein-Geschwister mit Neugier — und manchmal Neid auf die psionischen Fähigkeiten.' },
+    { volk:'Magier',      relation:'Kollegialität',   text:'Gelehrte der Magie sehen in psionischen Fähigkeiten ein verwandtes Phänomen. Edelstein-Drachenblütige und Magier tauschen gerne theoretische Erkenntnisse aus.' },
+    { volk:'Kleriker',    relation:'Verbundenheit',   text:'Die Verbindung zu Sardior, dem Rubindrachen, gibt Klerikern mit drachenblütigem Interesse einen natürlichen Gesprächseinstieg.' },
+  ],
+  bekannte: [
+    { name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Edelstein-Drachenblütigen in Meruria reserviert.' },
+    { name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Edelstein-Drachenblütigen in Meruria reserviert.' },
+    { name:'— Unbekannt —', rolle:'Name noch nicht festgelegt', beschreibung:'Dieser Eintrag ist für einen bekannten Edelstein-Drachenblütigen in Meruria reserviert.' },
+  ],
+  radar: { labels:['Mobilität','Kampf','Magie','Soziales','Überleben','Weisheit'], values:[65,68,78,72,65,68] },
+  quiz: {
+    steps: [
+      { frage:'Welche Abstammung hat dein Edelstein-Drachenblütiger?', optionen:[
+        { text:'Amethyst — pure Energie und Willenskraft',   tags:['Zauberer','Barbar'] },
+        { text:'Kristall — gleißendes Licht und Einsicht',   tags:['Kleriker','Paladin'] },
+        { text:'Saphir — Schall, Echo und Entdeckung',       tags:['Barde','Waldläufer'] },
+        { text:'Smaragd oder Topas',                         tags:['Hexenmeister','Magier'] },
+      ]},
+      { frage:'Wie nutzt dein Charakter seine Telepathie?', optionen:[
+        { text:'Als Vorteil im Kampf — koordinieren ohne Worte',   tags:['Kämpfer','Waldläufer'] },
+        { text:'Zur Manipulation und Information',                 tags:['Schurke','Hexenmeister'] },
+        { text:'Für echte Verbindung — Empathie ohne Sprachbarriere', tags:['Barde','Kleriker'] },
+        { text:'Selten — es fühlt sich zu invasiv an',            tags:['Druide','Magier'] },
+      ]},
+      { frage:'Wie nutzt dein Charakter seinen Edelstein-Flug?', optionen:[
+        { text:'Aktiv — Höhenvorteil im Kampf suchen',   tags:['Kämpfer','Waldläufer'] },
+        { text:'Zur Flucht oder Erkundung',              tags:['Schurke','Magier'] },
+        { text:'Als letzten Ausweg',                     tags:['Kleriker','Paladin'] },
+        { text:'Für ästhetische Momente — fliegen ist schön', tags:['Barde','Zauberer'] },
+      ]},
+      { frage:'Welche Rolle spielt dein Charakter in einer Gruppe?', optionen:[
+        { text:'Koordinator — ich denke und spreche für alle', tags:['Barde','Paladin'] },
+        { text:'Magier — ich entscheide Kämpfe mit Energie',   tags:['Magier','Zauberer'] },
+        { text:'Aufklärer — ich erforsche und beobachte',      tags:['Waldläufer','Schurke'] },
+        { text:'Frontlinie mit psionischer Unterstützung',     tags:['Kämpfer','Barbar'] },
+      ]},
+    ],
+    klassen: {
+      'Zauberer':    'Dein Drachenblut-Erbe und deine Edelstein-Magie sind eins. Psionisch und arkan — du brauchst kein Buch.',
+      'Magier':      'Du studierst, was in dir von Geburt an steckt. Die Theorie hinter deiner Telepathie lässt dich nicht schlafen.',
+      'Barbar':      'Psionic Rage: Wenn du wütest, flüstern deine Gedanken in die Köpfe deiner Feinde.',
+      'Kämpfer':     'Telepathie zur Koordination, Flügel für Positionierung — du bist taktisch kaum zu schlagen.',
+      'Barde':       'Deine Stimme trägt Schall — aber auch deine Gedanken. Kommunikation ist deine Superkraft.',
+      'Waldläufer':  'Stumme Jagd, geistige Verbindung. Du coordierst deinen Trupp ohne ein einziges Wort.',
+      'Schurke':     'Telepathie macht Hinterhalte einfacher. Du weißt, was der Wächter denkt — bevor er es weiß.',
+      'Hexenmeister':'Psionischer Pakt: dein Gönner und du sprechen direkt — ohne Worte, ohne Missverständnisse.',
+      'Kleriker':    'Du dienst einer Gottheit und trägst Sardiors Erbe. Das göttliche und das drakonische Licht vereint.',
+      'Paladin':     'Dein Schwur leuchtet buchstäblich. Ein Edelstein-Paladin ist ein seltenes und beeindruckendes Wesen.',
+      'Druide':      'Natur, Geist und Edelstein — drei Kräfte, die selten zusammenkommen. Du bist die Ausnahme.',
+    },
+  },
+  statblock: {
+    features: [
+      { name:'Kreaturentyp',          text:'Humanoider. Gilt als Drachenblütiger bei allen Voraussetzungen und Effekten.' },
+      { name:'Größenkategorie',                 text:'Drachenblütige sind mit ihren über 180 cm und etwa 250 Pfund weit größer und schwerer als Menschen. Deine Größenkategorie ist mittelgroß.' },
+      { name:'Edelstein-Abstammung',  text:'Du hast einen Edelsteindrachen im Stammbaum. Wähle eine Abstammung: Amethyst (Energie), Kristall (Gleißend), Saphir (Schall), Smaragd (Psychisch) oder Topas (Nekrotisch). Sie bestimmt die Schadensart deiner anderen Merkmale.' },
+      { name:'Odemwaffe',             text:'Wenn du die Angreifen-Aktion ausführst, kannst du einen Angriff durch deinen Odem ersetzen: einen 4,5 m langen Kegel magischer Energie. Betroffene Kreaturen müssen einen Geschicklichkeitsrettungswurf ablegen (SG = 8 + KON-Mod + Übungsbonus). Misserfolg: 1W10 Schaden der Abstammungsart; Erfolg: halber Schaden. Steigt um 1W10 auf Stufe 5, 11 und 17. Anwendungen pro langer Rast: gleich deinem Übungsbonus.' },
+      { name:'Drakonische Resistenz', text:'Du bist gegen die Schadensart resistent, die mit deiner Edelstein-Abstammung assoziiert ist.' },
+      { name:'Kaltblütig',            text:'Du bist immun gegen die Auswirkungen von heißen Temperaturen.' },
+      { name:'Psionischer Geist',     text:'Du kannst allen Kreaturen im Abstand von bis zu neun Metern, die du sehen kannst, telepatisch Botschaften übermitteln. Du musst nicht dieselbe Sprache wie die Kreatur sprechen — sie muss jedoch mindestens eine Sprache beherrschen, um die Botschaft zu verstehen.' },
+      { name:'Edelstein-Flug (ab Stufe 5)', text:'Als Bonusaktion manifestierst du spektrale Flügel an deinem Körper. Die Flügel bleiben eine Minute lang bestehen; in dieser Zeit hast du eine Flugbewegungsrate in Höhe deiner Schrittbewegungsrate und kannst schweben. Einmal pro langer Rast.' },
+      { name:'Angeborenes Talent',    text:null, talente:['Drachenhaut','Drachensicht','Drachengespür'] },
+    ],
+  },
+};

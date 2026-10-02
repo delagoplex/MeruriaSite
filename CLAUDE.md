@@ -25,7 +25,7 @@ All eight division pages share one entry, `src/pages/division.jsx`: each `divisi
 - `index.html` — landing/home page
 - `Gottheiten.html` — deities
 - `Rassen.html` — races overview
-- `rassen-detail.html?rasse=<Name>` — one data-driven page for every race (content in `assets/scripts/data/rassen-detail-data.js`; optional fields: `lebensraum`, `beziehungenIntro`, `namenSection` incl. `type: 'prose'`, `radar.beschreibung`). `Aarakocra.html`, `Aasimar.html` and `Dhampir.html` only redirect there.
+- `rassen-detail.html?rasse=<Name>` — one data-driven page for every race (content per race in `assets/scripts/data/rassen/<slug>.js`, index in `rassen-detail-index.js`; optional fields: `lebensraum`, `beziehungenIntro`, `namenSection` incl. `type: 'prose'`, `radar.beschreibung`). `Aarakocra.html`, `Aasimar.html` and `Dhampir.html` only redirect there.
 - `Klassen.html` — classes
 - `Monster.html` — monster compendium (password-protected, separate session from site gate)
 - `divisionen/` — the eight faction pages (subfolder with `<base href="../">` so all asset paths resolve from project root)

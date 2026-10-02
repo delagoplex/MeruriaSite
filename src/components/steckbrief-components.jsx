@@ -3,7 +3,7 @@
    Requires window globals: React, mod, fmtMod, attrKey, skillBonus,
                             ImageSlot, SecTitle, Card, Corners, IRow
    ═══════════════════════════════════════════════════════════════ */
-const { useState: useSteckbrief, useRef: useSteckRef } = React;
+const { useState: useSteckbrief, useRef: useSteckRef, useEffect: useSteckEffect } = React;
 const { mod, fmtMod, attrKey, skillBonus, ImageSlot, SecTitle, Card, Corners, IRow } = window;
 
 /* ── Hilfsfunktionen ─────────────────────── */
@@ -1689,7 +1689,17 @@ function RassentalentRow({ char, upd }) {
 
 /* ── RassenmerkmaleCard ──────────────────── */
 function RassenmerkmaleCard({ char, upd }) {
-  const detail = (window.RASSEN_DETAIL_DATA || {})[char.race];
+  // Race data is loaded per race on demand (see rassen-detail-index.js).
+  const [detail, setDetail] = useSteckbrief(() => (window.RASSEN_DETAIL_DATA || {})[char.race]);
+  useSteckEffect(() => {
+    let alive = true;
+    if (char.race && window.loadRassenDetail) {
+      window.loadRassenDetail(char.race).then(d => { if (alive) setDetail(d || undefined); });
+    } else {
+      setDetail(undefined);
+    }
+    return () => { alive = false; };
+  }, [char.race]);
   const features = detail?.statblock?.features || [];
   const opts = rassentalentOptions(char.race);
   if (!char.race || features.length === 0) return null;

@@ -1,0 +1,2 @@
+// Lotol — Rassen-Detaildaten. Wird von rassen-detail.html bei Bedarf geladen (siehe rassen-detail-index.js).
+(window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Lotol'] = { name:'Lotol',                    accent:'#60a880', subtitle:'Geheimnisvolle Wanderer · Kinder der Tiefe',              tags:['Humanoid','Mittelgroß','9 m Bewegung','Dunkelsicht','Neutral'],                 headerImage: null, lore:null, bekannte:[], radar:null, quiz:null, statblock:null };
