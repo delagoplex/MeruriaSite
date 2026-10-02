@@ -1,4 +1,4 @@
--- 039_security_hardening.sql
+-- 041_security_hardening.sql
 -- Schließt Lücken aus dem Code-Review. Danach muss die aktuelle App-Version deployt sein
 -- (neuer-charakter.jsx nutzt jetzt check_roll_token / redeem_roll_token statt direktem Tabellenzugriff).
 

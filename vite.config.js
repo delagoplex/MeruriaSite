@@ -19,7 +19,10 @@ const copyRuntimeAssets = () => ({
   apply: 'build',
   closeBundle() {
     for (const dir of RUNTIME_ASSET_DIRS) {
-      fs.cpSync(dir, path.join('dist', dir), { recursive: true });
+      fs.cpSync(dir, path.join('dist', dir), {
+        recursive: true,
+        filter: (src) => !src.endsWith('supabase-local.json'), // dev-only, written by npm run db:config
+      });
     }
   },
 });

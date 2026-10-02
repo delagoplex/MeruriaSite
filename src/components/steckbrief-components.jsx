@@ -1,10 +1,12 @@
 /* ═══════════════════════════════════════════════════════════════
    steckbrief-components.jsx — Shared Steckbrief UI components
-   Requires window globals: React, mod, fmtMod, attrKey, skillBonus,
+   Requires globals (set by the page entry): React, mod, fmtMod, attrKey, skillBonus,
                             ImageSlot, SecTitle, Card, Corners, IRow
    ═══════════════════════════════════════════════════════════════ */
 const { useState: useSteckbrief, useRef: useSteckRef, useEffect: useSteckEffect } = React;
-const { mod, fmtMod, attrKey, skillBonus, ImageSlot, SecTitle, Card, Corners, IRow } = window;
+// mod, fmtMod, attrKey, skillBonus, ImageSlot, SecTitle, Card, Corners and IRow are defined by the
+// page entry (see its first section) and looked up as globals while rendering. Do NOT destructure
+// them from window here: this module runs before the page code.
 
 /* ── Hilfsfunktionen ─────────────────────── */
 function calcProfBonus(level) { return Math.ceil((level||1)/4)+1; }

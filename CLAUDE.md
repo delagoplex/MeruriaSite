@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) and other contributors when working with code in this repository. `README.md` has the step-by-step setup (quick start, local database, deployment, troubleshooting); this file explains the conventions and the reasons behind them.
 
 ## What this project is
 
@@ -40,12 +40,23 @@ All eight division pages share one entry, `src/pages/divisionen/division.jsx`: e
 
 **Navigation** is defined in the `NAV` array inside `src/components/nav.jsx` and shared across all pages via `window.SiteNav`.
 
+### Conventions and gotchas
+
+- **Add a page:** create `<folder>/<name>.html`, `src/pages/<folder>/<name>.jsx` and (if needed) `assets/styles/pages/<folder>/<name>.css`; add it to `NAV`; no Vite config change is needed (all `.html` files are found automatically). Moving or renaming a page means adding the old path to `src/legacy-redirects.json`.
+- **`<base href="/">`** is set in every page, so `assets/...` paths work from any folder, including values stored in the database. Fragment-only links (`href="#x"`) would resolve against the base; use `onClick` + `scrollIntoView` instead. Bare `href="#"` placeholders are neutralised in `assets/scripts/theme-init.js`.
+- **Load order:** classic `<script>` tags (React, Supabase, data files) run first, then the page module: all `import`ed components, then the page code. A component must not read, at module top level, a global that the page defines (this broke the Steckbrief once); look it up while rendering.
+- **Page code sections** start with `;(function () {` and an `Object.assign(window, { … })` line that exports the page's top-level function declarations (they used to be globals in the old classic-script setup). Keep that line in sync when you add or remove top-level functions that other files rely on.
+- **React is a global** (`React.useState`, `ReactDOM.createRoot`); JSX is compiled to `React.createElement`. Do not add `import React`.
+- **Stylesheet `<link>` tags** are kept exactly as written and in order (`fonts → base → [division] → page`) by a Vite plugin; keep them as plain `<link rel="stylesheet" href="…">` tags so the plugin recognises them.
+- **Windows shell:** Windows PowerShell 5.1 has no `&&`. Give commands one per line. Files in this repo use a mix of LF and CRLF; edit with tools that preserve the existing line endings.
+- **No automated test suite.** Verify with `npm run build`, then click through the affected pages against the local database (log in as the seed DM/player). The build does not catch runtime errors in page code.
+
 ## Database security (Supabase)
 
 Access is enforced by Row Level Security, not by the client-side role checks (`window.SITE_USER?.role`), which only hide UI. Rules for new tables/functions:
 - every table: `ENABLE ROW LEVEL SECURITY` plus explicit policies; players only get what their policy allows, DM rules use `public.is_dm()`
 - `SECURITY DEFINER` functions must check `public.is_dm()` (or `auth.uid()`) themselves and set `SET search_path = public, pg_temp`
-- never rely on `WITH CHECK`-less UPDATE policies for tables with privileged columns: restrict columns with `GRANT UPDATE (col)` or a guard trigger (see `profiles`, `characters` in `039_security_hardening.sql`)
+- never rely on `WITH CHECK`-less UPDATE policies for tables with privileged columns: restrict columns with `GRANT UPDATE (col)` or a guard trigger (see `profiles`, `characters` in `041_security_hardening.sql`)
 - roll tokens are only redeemed through `check_roll_token` / `redeem_roll_token` (players cannot read the token table)
 - known gap: `nscs` rows that are `visible` are fully readable by players; the per-field unlock system (`nsc_unlocks`, `field_visibility`) hides secrets only in the UI
 
@@ -89,6 +100,8 @@ assets/
 │       ├── flee-mortals/      — Flee, Mortals! (MCDM Productions)
 │       └── sonstige/          — Sammelort für nicht-zusammenhängende Einzelmonster
 ├── scripts/
+│   ├── supabase-client.js   — creates `window._sb`: production, or the local database on localhost (reads git-ignored `supabase-local.json`)
+│   ├── theme-init.js        — sets the theme before first paint, neutralises `href="#"` placeholders
 │   ├── shared/        — plain classic scripts used by several pages (kollektikon-bar, nsc-statblock, rekrutierungsrechner)
 │   ├── data/
 │   │   ├── monster-data.js      — aggregator: merges all sources alphabetically → window.MONSTER_DATA
@@ -150,9 +163,34 @@ npm run build
 npm run preview
 ```
 
-Deployment: push to `master` → GitHub Actions builds and publishes to Pages (Settings → Pages → Source must be "GitHub Actions"). `public/CNAME` carries the custom domain `meruria.de`.
+Deployment: push to `master` → `.github/workflows/deploy.yml` generates the gallery data (`tools/generate-galerie-data.mjs`), builds and publishes to Pages (Settings → Pages → Source must be "GitHub Actions"). `public/CNAME` carries the custom domain `meruria.de`. `generate-galerie.yml` additionally commits the regenerated `galerie-data.js` when monster images change. **The database is not deployed by CI** — migrations are applied by hand (see below).
 
 `vite.config.js` auto-discovers all `.html` files as entries. Files that are referenced only at runtime (classic scripts, images, `assets/styles`) are copied unchanged to `dist/assets/` by a small plugin, so URLs are identical in dev and production.
+
+## Local database (Supabase in Docker)
+
+`npm run dev` talks to the **real** database unless a local one is configured, so set this up before testing anything that writes data.
+
+One-time setup (Docker runs inside WSL, so the Supabase CLI is installed there too; the `db:*` npm scripts call it through `wsl -e bash -lc`):
+1. Docker in WSL must be running. Install the CLI in WSL: `curl -fsSL https://github.com/supabase/cli/releases/latest/download/supabase_linux_amd64.tar.gz | tar -xz -C ~/.local/bin supabase` (create `~/.local/bin` first); check with `supabase --version`.
+2. `npm run db:start` — starts the local stack (first run pulls the Docker images, takes a while) and applies all migrations from `supabase/migrations/`.
+3. `npm run db:config` — writes `assets/scripts/supabase-local.json` (git-ignored) from `supabase status`.
+4. `npm run dev` — pages opened via `localhost` now use the local database; the browser console says `[supabase] lokale Entwicklungsdatenbank`.
+
+Test accounts (local only) are created by `supabase/seed.sql`; the passwords are in that file (DM `dm@meruria.test`, player `spieler@meruria.test`). Never put real accounts or real passwords in the seed.
+
+`supabase/config.toml` configures the local stack only. Gotcha: `[auth.email] enable_signup` switches the whole e-mail provider on or off in the CLI (`false` = nobody can log in); new registrations are blocked by `enable_signup = false` in the `[auth]` block.
+
+| Command | Purpose |
+|---|---|
+| `npm run db:start` / `db:stop` | start / stop the local stack |
+| `npm run db:reset` | rebuild the local database from the migrations + seed (all local data is lost) |
+| `npm run db:status` | show URLs and keys |
+| `localStorage.setItem('sb_env','prod')` (browser console) | use the real database from localhost anyway (`removeItem` to go back) |
+
+Migrations are applied in file-name order, so new files need the next free number (`042_…`); never reuse or rename an existing number (the CLI requires unique versions).
+
+**Changing the real database:** write the migration, test it with `npm run db:reset` (and by logging in as the seed player and DM), then run **only the new file** in the Supabase SQL editor of the real project, after the app version that needs it is online. Never run `db:reset` or `seed.sql` against the real project. The CLI's runtime folder `supabase/.temp/` is git-ignored and contains local secrets.
 
 ## Monster data (`assets/scripts/data/monster/`)
 

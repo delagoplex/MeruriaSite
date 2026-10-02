@@ -1,0 +1,6 @@
+# Supabase CLI (lokale Laufzeitdaten, nie committen)
+.branches
+.temp
+.env.keys
+.env.local
+.env.*.local
