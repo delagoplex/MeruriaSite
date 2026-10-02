@@ -17,6 +17,8 @@ Each page consists of:
 
 Pages that were compiled earlier by the old `compile-jsx` tool contain `React.createElement(...)` calls instead of JSX in their entry file; new code can use JSX freely.
 
+Seven of the eight division pages share one entry, `src/pages/division.jsx`: each `divisionen/<Name>.html` sets `<body data-division="<id>">` and the per-division colours come from `DIVISION_THEMES` in that file (add a division = add a theme entry). `Die Kuratoren` still has its own entry (`divisionen-die-kuratoren.jsx`) because its markup differs in ~50 places.
+
 `TWEAK_DEFAULTS` in each page holds fixed design parameters like particle visibility and header height.
 
 **Pages:**

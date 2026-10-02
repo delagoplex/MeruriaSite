@@ -1,4 +1,5 @@
-// Page entry for divisionen/Outfitters.html
+// Shared page for the seven division pages (all except Die Kuratoren).
+// Each division HTML sets <body data-division="..."> and gets its colours from DIVISION_THEMES.
 import '../components/nav.jsx';
 import '../components/site-gate.jsx';
 import '../components/page-header.jsx';
@@ -18,7 +19,6 @@ const {
   useCallback
 } = React;
 const {
-  SiteNav,
   ParticleField,
   FloatingHexField,
   FloatNav
@@ -28,7 +28,74 @@ const TWEAK_DEFAULTS = {
 };
 const NAV_H = 52;
 const ACCENT = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
-const DIVISION = window.DIVISIONS_DATA.find(d => d.id === 'outfitters');
+const DIVISION = window.DIVISIONS_DATA.find(d => d.id === document.body.dataset.division);
+// Per-division text/tint colours (everything else is derived from the division's accent).
+const DIVISION_THEMES = {
+  sturmritter: {
+    asideBg: 'rgba(28,8,6,0.90)',
+    label: "Division II",
+    name: "Die Sturmritter",
+    tocIndent: 'rgba(255,185,165,0.65)', toc: 'rgba(255,200,185,0.85)',
+    divider: 'rgba(255,200,180,0.92)',
+    text: 'rgba(255,232,225,0.85)',
+    dim: '255,228,220', dimBoost: 0.15,
+  },
+  sentinels: {
+    asideBg: 'rgba(6,18,32,0.90)',
+    label: "Division III",
+    name: "Die Sentinels",
+    tocIndent: 'rgba(150,220,252,0.45)', toc: 'rgba(170,228,254,0.65)',
+    divider: 'rgba(180,235,255,0.85)',
+    text: 'rgba(215,242,255,0.72)',
+    dim: '210,240,255', dimBoost: 0,
+  },
+  friedenshueter: {
+    asideBg: 'rgba(10,3,3,0.90)',
+    label: "Division IV",
+    name: "Die Friedensh\xFCter",
+    tocIndent: 'rgba(255,185,215,0.45)', toc: 'rgba(255,200,225,0.65)',
+    divider: 'rgba(255,195,220,0.85)',
+    text: 'rgba(255,220,235,0.72)',
+    dim: '255,215,230', dimBoost: 0,
+  },
+  outfitters: {
+    asideBg: 'rgba(10,3,3,0.90)',
+    label: "Division V",
+    name: "Die Outfitters",
+    tocIndent: 'rgba(255,190,140,0.45)', toc: 'rgba(255,205,160,0.65)',
+    divider: 'rgba(255,200,140,0.85)',
+    text: 'rgba(255,230,210,0.72)',
+    dim: '255,225,200', dimBoost: 0,
+  },
+  pathfinders: {
+    asideBg: 'rgba(10,3,3,0.90)',
+    label: "Division VI",
+    name: "Die Pathfinders",
+    tocIndent: 'rgba(220,210,80,0.45)', toc: 'rgba(235,225,100,0.65)',
+    divider: 'rgba(245,238,130,0.85)',
+    text: 'rgba(250,245,190,0.72)',
+    dim: '245,238,180', dimBoost: 0,
+  },
+  quellensucher: {
+    asideBg: 'rgba(10,3,3,0.90)',
+    label: "Division VII",
+    name: "Die Quellensucher",
+    tocIndent: 'rgba(140,230,240,0.45)', toc: 'rgba(160,235,242,0.65)',
+    divider: 'rgba(140,240,245,0.85)',
+    text: 'rgba(200,245,250,0.72)',
+    dim: '195,240,245', dimBoost: 0,
+  },
+  bergungsgarde: {
+    asideBg: 'rgba(10,3,3,0.90)',
+    label: "Division VIII",
+    name: "Die Bergungsgarde",
+    tocIndent: 'rgba(200,155,110,0.45)', toc: 'rgba(215,170,130,0.65)',
+    divider: 'rgba(235,200,160,0.85)',
+    text: 'rgba(245,225,205,0.72)',
+    dim: '240,215,190', dimBoost: 0,
+  },
+};
+const THEME = DIVISION_THEMES[DIVISION.id];
 
 // ── HEX HELPER ──────────────────────────────────────────
 function hexPoints(s) {
@@ -171,7 +238,7 @@ function TOCSidebar({
     className: "div-aside",
     style: {
       borderRight: `1px solid ${ACCENT}18`,
-      background: 'rgba(10,3,3,0.90)'
+      background: THEME.asideBg
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -203,7 +270,7 @@ function TOCSidebar({
       color: `${ACCENT}55`,
       textTransform: 'uppercase'
     }
-  }, "Division V")), /*#__PURE__*/React.createElement("div", {
+  }, THEME.label)), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-display)',
       fontSize: '11px',
@@ -212,7 +279,7 @@ function TOCSidebar({
       color: `${ACCENT}cc`,
       lineHeight: 1.4
     }
-  }, "Die Outfitters")), TOC_SECTIONS.map(entry => {
+  }, THEME.name)), TOC_SECTIONS.map(entry => {
     const isActive = activeId === entry.id;
     return /*#__PURE__*/React.createElement("button", {
       key: entry.id,
@@ -233,7 +300,7 @@ function TOCSidebar({
         fontSize: '11px',
         letterSpacing: '0.1em',
         fontVariant: 'small-caps',
-        color: isActive ? ACCENT : entry.indent ? 'rgba(255,190,140,0.45)' : 'rgba(255,205,160,0.65)',
+        color: isActive ? ACCENT : entry.indent ? THEME.tocIndent : THEME.toc,
         transition: 'all 0.15s',
         lineHeight: 1.55
       },
@@ -386,7 +453,7 @@ function DivisionPage({
       left: 0,
       right: 0,
       height: '2px',
-      background: `linear-gradient(90deg, transparent 0%, ${accent}77 30%, rgba(255,200,140,0.85) 50%, ${accent}77 70%, transparent 100%)`,
+      background: `linear-gradient(90deg, transparent 0%, ${accent}77 30%, ${THEME.divider} 50%, ${accent}77 70%, transparent 100%)`,
       zIndex: 4,
       pointerEvents: 'none',
       animation: 'heroScan 6s ease-in-out infinite'
@@ -637,7 +704,7 @@ function DivisionPage({
       fontWeight: '300',
       fontSize: '13px',
       lineHeight: 1.8,
-      color: 'rgba(255,230,210,0.72)',
+      color: THEME.text,
       letterSpacing: '0.02em',
       textWrap: 'pretty',
       position: 'relative',
@@ -738,7 +805,7 @@ function DivisionPage({
         fontWeight: '300',
         fontSize: '12px',
         lineHeight: 1.7,
-        color: `rgba(255,225,200,${dimAlpha})`,
+        color: `rgba(${THEME.dim},${dimAlpha + THEME.dimBoost})`,
         letterSpacing: '0.01em'
       }
     }, r.beschreibung))), isTop && /*#__PURE__*/React.createElement("div", {
