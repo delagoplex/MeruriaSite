@@ -365,46 +365,15 @@ function GalleryPage() {
   const [openCol,    setOpenCol]  = useS3(null);
   const [modalImg,   setModalImg] = useS3(null);
   const tweaks = TWEAK_DEFAULTS;
-  // Monster-Collection starts empty — populated after visibility check
-  const [cols, setCols] = useS3(() =>
-    COLS.map(col => col.id === 'monster' ? { ...col, images: [] } : col)
-  );
+  const [cols, setCols] = useS3(COLS.filter(col => col.id !== 'monster'));
 
   useE3(() => {
     const isDM = window.SITE_USER?.role === 'dm';
     async function loadChars() {
-      const [{ data: chars }, { data: nscs }, { data: visData }] = await Promise.all([
+      const [{ data: chars }, { data: nscs }] = await Promise.all([
         window._sb.from('characters').select('id,name,char_data,created_at,visible').eq('type', 'spieler').order('created_at', { ascending: false }),
         window._sb.from('nscs').select('id,name,bild,created_at,visible').not('bild', 'is', null).order('name'),
-        window._sb.from('ressourcen_sichtbar').select('resource_id').eq('cat', 'kreaturen'),
       ]);
-
-      // Build monster collection only from visible entries
-      const visSet = new Set((visData || []).map(r => r.resource_id));
-      const md = window.MONSTER_DATA;
-      if (md && md.length) {
-        const existingImgs = new Map(
-          COLS.find(c => c.id === 'monster')?.images.map(img => [img.img, img]) ?? []
-        );
-        const seen = new Set();
-        const monsterImages = md
-          .filter(m => {
-            if (!m.bild || !existingImgs.has(m.bild)) return false;
-            const visible = visSet.has(_monsterKolId(m.name));
-            return isDM || visible;
-          })
-          .map((m, i) => {
-            if (seen.has(m.bild)) return null;
-            seen.add(m.bild);
-            const base = existingImgs.get(m.bild);
-            return { ...base, id: 'md_' + i, title: m.name,
-              hidden: isDM && !visSet.has(_monsterKolId(m.name)) };
-          })
-          .filter(Boolean);
-        setCols(prev => prev.map(col =>
-          col.id === 'monster' ? { ...col, images: monsterImages } : col
-        ));
-      }
 
       const charImgs = (chars || [])
         .filter(c => c.char_data?.bild && (isDM || c.visible !== false))
@@ -438,51 +407,6 @@ function GalleryPage() {
       setFeatured(f => f === DEFAULT_FEATURED ? images[0] : f);
     }
     loadChars();
-  }, []);
-
-  useE3(() => {
-    async function loadMonsterStorage() {
-      // List subfolders under monster/ in the images bucket
-      // Folders sit at bucket root — list them
-      const { data: folders } = await window._sb.storage.from('images').list('');
-      if (!folders || !folders.length) return;
-
-      // List files in each folder in parallel
-      const fileListings = await Promise.all(
-        folders
-          .filter(f => !f.metadata) // folders have no metadata object
-          .map(folder => window._sb.storage.from('images')
-            .list(folder.name, { limit: 1000 })
-            .then(({ data }) => (data || [])
-              .filter(file => file.metadata && /\.(png|webp|jpg)$/i.test(file.name))
-              .map(file => folder.name + '/' + file.name)
-            )
-          )
-      );
-
-      const paths = fileListings.flat();
-      if (!paths.length) return;
-
-      const { data: signed } = await window._sb.storage.from('images').createSignedUrls(paths, 86400);
-      if (!signed) return;
-
-      const storageImgs = signed
-        .filter(u => u.signedUrl)
-        .map((u, i) => {
-          const parts = paths[i].split('/');
-          const filename = parts[parts.length - 1].replace(/\.[^.]+$/, '');
-          const title = filename.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-          return { id: 'st_' + i, title, hue: 270, date: '', img: u.signedUrl };
-        });
-
-      if (!storageImgs.length) return;
-      setCols(prev => prev.map(col =>
-        col.id === 'monster'
-          ? { ...col, images: [...col.images, ...storageImgs] }
-          : col
-      ));
-    }
-    loadMonsterStorage();
   }, []);
 
   const allImgs = cols.flatMap(c => c.images.map(img => ({ ...img, collectionName: c.name })));

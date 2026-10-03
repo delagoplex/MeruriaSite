@@ -1377,19 +1377,7 @@ function App() {
     });
   }
   const appliedCount = Object.keys(myApplications).length;
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(ParticleField, null), /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'fixed',
-      left: 0,
-      right: 0,
-      top: 0,
-      height: '2px',
-      background: 'linear-gradient(180deg, rgba(var(--accent-rgb),calc(0.45*var(--ka))) 0%, transparent 100%)',
-      animation: 'scanline-x 14s linear infinite',
-      pointerEvents: 'none',
-      zIndex: 9998
-    }
-  }), /*#__PURE__*/React.createElement(SiteNav, {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(ParticleField, null), /*#__PURE__*/React.createElement(SiteNav, {
     rightLabel: "MISSIONSTERMINAL"
   }), /*#__PURE__*/React.createElement(PageHero, {
     kicker: "\u25C8 Divisionsterminal \xB7 Auftrags-Knoten 03",

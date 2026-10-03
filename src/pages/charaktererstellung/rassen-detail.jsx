@@ -262,23 +262,239 @@ function ImgPH({ url, label, caption, width=300, height=360, position='right' })
   );
 }
 
+function normalizeGallery(images) {
+  if (!Array.isArray(images)) return [];
+  return images
+    .map(item => typeof item === 'string' ? { url: item } : item)
+    .filter(item => item && item.url)
+    .slice(0, 6);
+}
+
+function RaceGallery({ images, label = 'Illustration', width = 360 }) {
+  const [open, setOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const gallery = normalizeGallery(images);
+
+  useEffect(() => {
+    if (!open) return;
+    const prevOverflow = document.body.style.overflow;
+    const prevHtmlOverflow = document.documentElement.style.overflow;
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+
+    const onKey = e => { if (e.key === 'Escape') setOpen(false); };
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      document.documentElement.style.overflow = prevHtmlOverflow;
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [open]);
+
+  if (!gallery.length) return null;
+
+  const openAt = (idx = 0) => {
+    setActiveIndex(idx);
+    setOpen(true);
+  };
+
+  const active = gallery[activeIndex] || gallery[0];
+
+  return (
+    <>
+      <div className="rd-float-right" style={{ width, cursor: 'pointer' }} onClick={() => openAt(0)}>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: gallery.length > 1 ? 'repeat(2, minmax(0, 1fr))' : '1fr',
+            gap: '8px',
+            padding: '2px',
+            borderRadius: '4px',
+            border: '1px solid rgba(var(--accent-rgb),0.14)',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.38)',
+            background: 'rgba(12, 10, 28, 0.7)',
+            overflow: 'hidden'
+          }}
+        >
+          {gallery.map((img, idx) => (
+            <div key={`${img.url}-${idx}`} style={{ position: 'relative', height: gallery.length > 1 ? '120px' : '320px', overflow: 'hidden' }}>
+              <img
+                src={img.url}
+                alt={img.label || label}
+                loading="lazy"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  display: 'block',
+                  filter: 'saturate(1.06) contrast(1.06)'
+                }}
+              />
+            </div>
+          ))}
+        </div>
+        <div style={{
+          marginTop: '10px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          fontFamily: 'var(--font-mono)',
+          fontSize: '8px',
+          letterSpacing: '0.18em',
+          color: 'rgba(var(--accent-rgb),0.6)',
+          textTransform: 'uppercase'
+        }}>
+          <span>{gallery.length > 1 ? `${gallery.length} Bilder` : 'Illustration'}</span>
+          <span style={{ opacity: 0.85 }}>Zoom</span>
+        </div>
+      </div>
+
+      {open && ReactDOM.createPortal(
+        <div
+          onClick={() => setOpen(false)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 2147483647,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 30,
+            background: 'rgba(3,2,15,0.84)',
+            backdropFilter: 'blur(12px)',
+            isolation: 'isolate',
+            pointerEvents: 'auto',
+          }}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{
+              position: 'relative',
+              zIndex: 2,
+              width: 'min(92vw, 860px)',
+              maxHeight: '88vh',
+              borderRadius: '6px',
+              overflow: 'hidden',
+              border: '1px solid rgba(var(--accent-rgb),0.38)',
+              boxShadow: '0 32px 100px rgba(0,0,0,0.8)',
+              background: 'rgba(6,4,18,0.98)',
+            }}
+          >
+            <button
+              onClick={() => setOpen(false)}
+              aria-label="Schließen"
+              style={{
+                position: 'absolute',
+                right: 14,
+                top: 14,
+                zIndex: 100,
+                border: 'none',
+                background: 'transparent',
+                color: 'rgba(var(--accent-rgb),0.95)',
+                borderRadius: 0,
+                width: '36px',
+                height: '36px',
+                cursor: 'pointer',
+                fontSize: '30px',
+                fontWeight: 300,
+                lineHeight: 1,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: 'none',
+                transform: 'translateZ(0)',
+                pointerEvents: 'auto',
+              }}
+            >×</button>
+
+            <div style={{ position: 'relative', zIndex: 1, background: '#000', padding: '10px', border: '1px solid rgba(var(--accent-rgb),0.18)' }}>
+              <img
+                src={active.url}
+                alt={active.label || label}
+                style={{
+                  display: 'block',
+                  width: '100%',
+                  maxHeight: '78vh',
+                  objectFit: 'contain',
+                  background: '#05040f',
+                  borderRadius: '4px',
+                  border: '1px solid rgba(var(--accent-rgb),0.12)'
+                }}
+              />
+            </div>
+
+            {gallery.length > 1 && (
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: 12,
+                padding: '14px 20px 18px',
+                background: 'rgba(7,5,20,0.96)'
+              }}>
+                <button
+                  onClick={e => { e.stopPropagation(); setActiveIndex(current => (current - 1 + gallery.length) % gallery.length); }}
+                  style={{
+                    border: '1px solid rgba(var(--accent-rgb),0.24)',
+                    background: 'rgba(var(--accent-rgb),0.06)',
+                    color: 'var(--white)',
+                    borderRadius: '3px',
+                    padding: '8px 12px',
+                    cursor: 'pointer',
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: '10px',
+                    letterSpacing: '0.18em',
+                    textTransform: 'uppercase'
+                  }}
+                >Zurück</button>
+
+                <div style={{
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: '9px',
+                  letterSpacing: '0.18em',
+                  color: 'rgba(var(--accent-rgb),0.72)',
+                  textTransform: 'uppercase'
+                }}>
+                  {activeIndex + 1} / {gallery.length}
+                </div>
+
+                <button
+                  onClick={e => { e.stopPropagation(); setActiveIndex(current => (current + 1) % gallery.length); }}
+                  style={{
+                    border: '1px solid rgba(var(--accent-rgb),0.24)',
+                    background: 'rgba(var(--accent-rgb),0.06)',
+                    color: 'var(--white)',
+                    borderRadius: '3px',
+                    padding: '8px 12px',
+                    cursor: 'pointer',
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: '10px',
+                    letterSpacing: '0.18em',
+                    textTransform: 'uppercase'
+                  }}
+                >Weiter</button>
+              </div>
+            )}
+          </div>
+        </div>,
+        document.body
+      )}
+    </>
+  );
+}
+
 // ── LORE SECTIONS ────────────────────────────────────────
 function LoreSections({ data }) {
   const l = data.lore;
+  const introGallery = normalizeGallery(Array.isArray(data.gallery) && data.gallery.length ? data.gallery : [l?.introBild]);
+
   return (
     <>
       {l.intro && (
         <Section label="Charaktererstellung" title="Über diese Rasse">
-          <div className={l.introBild ? 'rd-clearfix' : ''}>
-            {l.introBild && (
-              <ImgPH
-                url={l.introBild.url}
-                label={l.introBild.label || 'Illustration'}
-                caption={l.introBild.caption}
-                width={l.introBild.width || 270}
-                height={l.introBild.height || 330}
-                position={l.introBild.position || 'right'}
-              />
+          <div className={introGallery.length ? 'rd-clearfix' : ''}>
+            {introGallery.length > 0 && (
+              <RaceGallery images={introGallery} label="Illustration" width={l.introBild?.width || 360} />
             )}
             {l.intro.map((p,i) => <p key={i} className="rd-body-text">{p}</p>)}
           </div>
