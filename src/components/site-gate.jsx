@@ -39,14 +39,14 @@ function LoginForm({ onAuth }) {
   })();
 
   return (
-    <div style={{ position:'fixed', inset:0, background:'#05040f', display:'flex', alignItems:'center', justifyContent:'center', zIndex:9999 }}>
+    <div style={{ position:'fixed', inset:0, background:'var(--bg)', display:'flex', alignItems:'center', justifyContent:'center', zIndex:9999 }}>
       <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'28px', animation:'fadeInUp 0.4s ease' }}>
         <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'14px' }}>
           <svg width="40" height="40" viewBox="0 0 40 40">
             <polygon points={hexPts} fill="rgba(80,160,220,0.08)" stroke="rgba(80,160,220,0.35)" strokeWidth="1.2"/>
             <text x="20" y="25" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="14" fill="rgba(80,160,220,0.8)">⚔</text>
           </svg>
-          <div style={{ fontFamily:'var(--font-display)', fontSize:'11px', letterSpacing:'0.45em', color:'rgba(150,190,230,0.45)', textTransform:'uppercase' }}>Meruria</div>
+          <div style={{ fontFamily:'var(--font-display)', fontSize:'11px', letterSpacing:'0.45em', color:'color-mix(in srgb, rgba(150,190,230,0.45), rgb(var(--ink-rgb)) var(--cm))', textTransform:'uppercase' }}>Meruria</div>
         </div>
 
         <form onSubmit={handleSubmit} style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'12px' }}>
@@ -94,12 +94,12 @@ function LoginForm({ onAuth }) {
             fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.28em',
             padding:'8px 24px', background:'rgba(80,160,220,0.1)',
             border:'1px solid rgba(80,160,220,0.3)', borderRadius:'3px',
-            color: loading ? 'rgba(150,200,240,0.4)' : 'rgba(150,200,240,0.75)',
+            color: loading ? 'color-mix(in srgb, rgba(150,200,240,0.4), rgb(var(--ink-rgb)) var(--cm))' : 'color-mix(in srgb, rgba(150,200,240,0.75), rgb(var(--ink-rgb)) var(--cm))',
             cursor: loading ? 'default' : 'pointer', textTransform:'uppercase',
             transition:'all 0.15s'
           }}
             onMouseEnter={e => { if (!loading) { e.currentTarget.style.background='rgba(80,160,220,0.2)'; e.currentTarget.style.borderColor='rgba(80,160,220,0.6)'; e.currentTarget.style.color='var(--white)'; } }}
-            onMouseLeave={e => { e.currentTarget.style.background='rgba(80,160,220,0.1)'; e.currentTarget.style.borderColor='rgba(80,160,220,0.3)'; e.currentTarget.style.color='rgba(150,200,240,0.75)'; }}>
+            onMouseLeave={e => { e.currentTarget.style.background='rgba(80,160,220,0.1)'; e.currentTarget.style.borderColor='rgba(80,160,220,0.3)'; e.currentTarget.style.color='color-mix(in srgb, rgba(150,200,240,0.75), rgb(var(--ink-rgb)) var(--cm))'; }}>
             {loading ? '…' : 'Eintreten'}
           </button>
         </form>
@@ -144,7 +144,7 @@ function SiteGate({ children }) {
 
   window.SITE_LOGOUT = () => window._sb.auth.signOut();
 
-  if (!ready) return <div style={{ position:'fixed', inset:0, background:'#05040f' }} />;
+  if (!ready) return <div style={{ position:'fixed', inset:0, background:'var(--bg)' }} />;
   if (!authed) return <LoginForm onAuth={() => setAuthed(true)} />;
   return children;
 }

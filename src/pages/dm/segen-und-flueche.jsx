@@ -72,7 +72,7 @@ function backPattern() {
   return `<svg viewBox="0 0 100 170" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <radialGradient id="sbg" cx="50%" cy="50%" r="60%">
-        <stop offset="0%" stop-color="#1a0f3e"/><stop offset="100%" stop-color="#08061a"/>
+        <stop offset="0%" stop-color="rgb(var(--panel-rgb))"/><stop offset="100%" stop-color="rgb(var(--panel-rgb))"/>
       </radialGradient>
       <pattern id="sgrid" width="8" height="8" patternUnits="userSpaceOnUse">
         <path d="M 8 0 L 0 0 0 8" fill="none" stroke="${c1}" stroke-width="0.4"/>
@@ -321,7 +321,7 @@ function buildDrawKeyframes(dx,dy,startScale,endScale) {
 
 function animateDraw(card) {
   const topCard = document.getElementById('topCard');
-  const startRect = topCard.getBoundingClientRect();
+  const startRect = window.uiRect(topCard);
   topCard.style.visibility = 'hidden';
   spawnStarBurst(startRect.left+startRect.width/2, startRect.top+startRect.height/2);
 
@@ -332,7 +332,7 @@ function animateDraw(card) {
   if (!newDrawn) { topCard.style.visibility='visible'; return; }
   newDrawn.style.visibility = 'hidden';
   void newDrawn.offsetWidth;
-  const targetRect = newDrawn.getBoundingClientRect();
+  const targetRect = window.uiRect(newDrawn);
 
   const flyer = document.createElement('div');
   flyer.className = 'flyer';
@@ -368,14 +368,14 @@ function animateDraw(card) {
 function animateClear() {
   const ids = [...drawnIds];
   const topCard = document.getElementById('topCard');
-  const stackRect = topCard.getBoundingClientRect();
+  const stackRect = window.uiRect(topCard);
   const fullW = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--card-w'));
   const fullH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--card-h'));
 
   const items = ids.map(id => {
     const el = drawnCardsEl.querySelector(`[data-id="${id}"]`);
     if (!el) return null;
-    const rect = el.getBoundingClientRect();
+    const rect = window.uiRect(el);
     el.style.visibility = 'hidden';
     return { id, rect, card: ALL.find(c => c.id===id) };
   }).filter(Boolean);
@@ -506,19 +506,19 @@ populateTypePick();
 const { SiteNav, SiteGate } = window;
 function AccessDenied() {
   return React.createElement("div", {
-    style: { position:'fixed', inset:0, background:'rgba(5,4,15,0.97)', display:'flex',
+    style: { position:'fixed', inset:0, background:'rgba(var(--bg-rgb),0.97)', display:'flex',
       flexDirection:'column', alignItems:'center', justifyContent:'center', gap:16, zIndex:999 }
   },
     React.createElement("a", { href:"/index.html", style:{ position:'absolute', top:24, left:24,
       fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.22em',
-      color:'rgba(200,190,240,0.4)', textDecoration:'none', textTransform:'uppercase' },
-      onMouseEnter: e => e.currentTarget.style.color='#f0eeff',
-      onMouseLeave: e => e.currentTarget.style.color='rgba(200,190,240,0.4)'
+      color:'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))', textDecoration:'none', textTransform:'uppercase' },
+      onMouseEnter: e => e.currentTarget.style.color='var(--white)',
+      onMouseLeave: e => e.currentTarget.style.color='rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))'
     }, "← Zurück"),
     React.createElement("div", { style:{ fontFamily:'var(--font-mono)', fontSize:9,
-      letterSpacing:'0.42em', color:'rgba(124,77,255,0.4)', textTransform:'uppercase' } }, "Kein Zugriff"),
+      letterSpacing:'0.42em', color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))', textTransform:'uppercase' } }, "Kein Zugriff"),
     React.createElement("div", { style:{ fontFamily:'var(--font-display)', fontSize:14,
-      letterSpacing:'0.3em', color:'rgba(200,190,240,0.25)', textTransform:'uppercase' } },
+      letterSpacing:'0.3em', color:'rgba(var(--text-rgb),calc(0.25*var(--kt) + var(--tb)))', textTransform:'uppercase' } },
       "Meruria — Segen & Flüche")
   );
 }

@@ -110,12 +110,12 @@ import '../../components/site-gate.jsx';
     { key: 'zweck', emoji: '🎯', name: 'Zweck', labels: ['Keine Aufgabe', 'Hat eine Rolle', 'Bedeutungsvoll'] }
   ];
   var states = [
-    { min: 9, max: 10, emoji: '🌟', name: 'Aufblühend', color: '#7cf2a0', eff: 'Arbeitet schneller; Bonus auf Quests; bringt Freunde mit.' },
-    { min: 7, max: 8, emoji: '😊', name: 'Zufrieden', color: '#bfe88f', eff: 'Normalbetrieb; stabil; bleibt in der Siedlung.' },
-    { min: 5, max: 6, emoji: '😐', name: 'Neutral', color: '#ffe06b', eff: 'Macht das Nötigste; kein Bonus, kein Malus.' },
-    { min: 3, max: 4, emoji: '😟', name: 'Unzufrieden', color: '#ffa24d', eff: 'Arbeitet langsamer; Quests schwieriger.' },
-    { min: 1, max: 2, emoji: '😠', name: 'Elend', color: '#ff7a4d', eff: 'Droht zu gehen; könnte Unruhe stiften.' },
-    { min: 0, max: 0, emoji: '💔', name: 'Verlässt die Siedlung', color: '#ff5d6c', eff: 'Geht — es sei denn, Spieler greifen ein.' }
+    { min: 9, max: 10, emoji: '🌟', name: 'Aufblühend', color: 'color-mix(in srgb, #7cf2a0, rgb(var(--ink-rgb)) var(--cm))', eff: 'Arbeitet schneller; Bonus auf Quests; bringt Freunde mit.' },
+    { min: 7, max: 8, emoji: '😊', name: 'Zufrieden', color: 'color-mix(in srgb, #bfe88f, rgb(var(--ink-rgb)) var(--cm))', eff: 'Normalbetrieb; stabil; bleibt in der Siedlung.' },
+    { min: 5, max: 6, emoji: '😐', name: 'Neutral', color: 'color-mix(in srgb, #ffe06b, rgb(var(--ink-rgb)) var(--cm))', eff: 'Macht das Nötigste; kein Bonus, kein Malus.' },
+    { min: 3, max: 4, emoji: '😟', name: 'Unzufrieden', color: 'color-mix(in srgb, #ffa24d, rgb(var(--ink-rgb)) var(--cm))', eff: 'Arbeitet langsamer; Quests schwieriger.' },
+    { min: 1, max: 2, emoji: '😠', name: 'Elend', color: 'color-mix(in srgb, #ff7a4d, rgb(var(--ink-rgb)) var(--cm))', eff: 'Droht zu gehen; könnte Unruhe stiften.' },
+    { min: 0, max: 0, emoji: '💔', name: 'Verlässt die Siedlung', color: 'color-mix(in srgb, #ff5d6c, rgb(var(--ink-rgb)) var(--cm))', eff: 'Geht — es sei denn, Spieler greifen ein.' }
   ];
   var values = { unterkunft: 0, nahrung: 0, habitat: 0, gemeinschaft: 0, zweck: 0 };
   var manual = 0;

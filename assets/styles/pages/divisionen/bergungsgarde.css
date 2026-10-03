@@ -15,21 +15,21 @@
 @keyframes fadeInUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
 @keyframes neu-bg-glitch {
   0%{opacity:0;clip-path:inset(50% 0 50% 0);background:transparent}
-  5%{opacity:1;clip-path:inset(0% 0 72% 0);transform:translateX(-8px);background:rgba(124,77,255,0.45)}
-  15%{clip-path:inset(55% 0 8% 0);transform:translateX(10px);background:rgba(180,140,255,0.50)}
+  5%{opacity:1;clip-path:inset(0% 0 72% 0);transform:translateX(-8px);background:rgba(var(--purple-rgb),calc(0.45*var(--kp)))}
+  15%{clip-path:inset(55% 0 8% 0);transform:translateX(10px);background:rgba(var(--accent-rgb),calc(0.50*var(--ka)))}
   25%{clip-path:inset(18% 0 48% 0);transform:translateX(-6px);background:rgba(80,50,200,0.40)}
-  35%{clip-path:inset(68% 0 4% 0);transform:translateX(8px);background:rgba(180,140,255,0.45)}
-  45%{clip-path:inset(8% 0 62% 0);transform:translateX(-5px);background:rgba(124,77,255,0.35)}
+  35%{clip-path:inset(68% 0 4% 0);transform:translateX(8px);background:rgba(var(--accent-rgb),calc(0.45*var(--ka)))}
+  45%{clip-path:inset(8% 0 62% 0);transform:translateX(-5px);background:rgba(var(--purple-rgb),calc(0.35*var(--kp)))}
   55%{clip-path:inset(40% 0 20% 0);transform:translateX(6px);background:rgba(80,50,200,0.30)}
   70%{opacity:0.4}100%{opacity:0}
 }
 @keyframes neu-bg-glitch2 {
   0%{opacity:0;clip-path:inset(50% 0 50% 0);background:transparent}
-  8%{opacity:1;clip-path:inset(58% 0 0% 0);transform:translateX(12px) scaleX(1.03);background:rgba(180,140,255,0.55)}
-  18%{clip-path:inset(4% 0 58% 0);transform:translateX(-10px);background:rgba(124,77,255,0.48)}
+  8%{opacity:1;clip-path:inset(58% 0 0% 0);transform:translateX(12px) scaleX(1.03);background:rgba(var(--accent-rgb),calc(0.55*var(--ka)))}
+  18%{clip-path:inset(4% 0 58% 0);transform:translateX(-10px);background:rgba(var(--purple-rgb),calc(0.48*var(--kp)))}
   28%{clip-path:inset(32% 0 28% 0);transform:translateX(8px);background:rgba(80,50,200,0.45)}
-  38%{clip-path:inset(78% 0 0% 0);transform:translateX(-7px);background:rgba(180,140,255,0.40)}
-  50%{clip-path:inset(12% 0 45% 0);transform:translateX(6px);background:rgba(124,77,255,0.32)}
+  38%{clip-path:inset(78% 0 0% 0);transform:translateX(-7px);background:rgba(var(--accent-rgb),calc(0.40*var(--ka)))}
+  50%{clip-path:inset(12% 0 45% 0);transform:translateX(6px);background:rgba(var(--purple-rgb),calc(0.32*var(--kp)))}
   70%{opacity:0.3}100%{opacity:0}
 }
 @keyframes neu-scanline {

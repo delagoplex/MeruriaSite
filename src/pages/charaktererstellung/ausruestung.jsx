@@ -140,7 +140,7 @@ function SectionHeader({
       fontSize: '18px',
       fontWeight: '300',
       letterSpacing: '0.2em',
-      color: 'rgba(var(--text-rgb),0.85)',
+      color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))',
       textShadow: `0 0 20px ${accent}33`,
       textTransform: 'uppercase'
     }
@@ -171,7 +171,7 @@ function ItemRow({
   }, /*#__PURE__*/React.createElement("td", {
     className: hasDesc ? 'name-link' : '',
     style: {
-      color: hasDesc ? `rgba(180,165,255,0.85)` : 'rgba(var(--text-rgb),0.75)',
+      color: hasDesc ? `rgba(var(--accent-rgb),calc(0.85*var(--ka)))` : 'rgba(var(--text-rgb),calc(0.75*var(--kt)))',
       display: 'flex',
       alignItems: 'center',
       gap: '6px'
@@ -217,7 +217,7 @@ function ItemRow({
       fontSize: '11px',
       fontWeight: '300',
       lineHeight: '1.8',
-      color: 'rgba(var(--text-rgb),0.65)',
+      color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
       letterSpacing: '0.02em'
     }
   }, desc))));
@@ -269,7 +269,7 @@ function SubTable({
     key: i
   }, /*#__PURE__*/React.createElement("td", {
     style: {
-      color: 'rgba(180,165,255,0.8)'
+      color: 'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))'
     }
   }, r.name), !hasKapazitaet && /*#__PURE__*/React.createElement("td", {
     className: "cost"
@@ -277,7 +277,7 @@ function SubTable({
     className: "weight"
   }, r.pfund), hasKapazitaet && /*#__PURE__*/React.createElement("td", {
     style: {
-      color: 'rgba(var(--text-rgb),0.65)'
+      color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))'
     }
   }, r.kapazitaet)))))));
 }
@@ -330,7 +330,7 @@ function WaffenTable({
     key: i
   }, /*#__PURE__*/React.createElement("td", {
     style: {
-      color: 'rgba(var(--text-rgb),0.85)',
+      color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))',
       fontWeight: '400'
     }
   }, r.name), /*#__PURE__*/React.createElement("td", {
@@ -345,7 +345,7 @@ function WaffenTable({
     className: "weight"
   }, r.pfund), /*#__PURE__*/React.createElement("td", {
     style: {
-      color: 'rgba(var(--text-rgb),0.6)',
+      color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))',
       fontSize: '11px'
     }
   }, r.eigenschaften)))))));
@@ -367,7 +367,7 @@ function WaffenContent({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.9',
-      color: 'rgba(var(--text-rgb),0.55)',
+      color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
       marginBottom: '10px',
       maxWidth: '680px'
@@ -379,19 +379,19 @@ function WaffenContent({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.9',
-      color: 'rgba(var(--text-rgb),0.45)',
+      color: 'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
       marginBottom: '32px',
       maxWidth: '680px'
     }
   }, "Es gibt zwei Kategorien: ", /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: 'rgba(var(--text-rgb),0.7)',
+      color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',
       fontWeight: '500'
     }
   }, "Einfache Waffen"), " und ", /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: 'rgba(var(--text-rgb),0.7)',
+      color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',
       fontWeight: '500'
     }
   }, "Kriegswaffen"), ". Hast du \xDCbung im Umgang mit einer Waffe, darfst du bei einem Angriff mit dieser deinen \xDCbungsbonus auf den Wurf addieren."), /*#__PURE__*/React.createElement(WaffenTable, {
@@ -445,7 +445,7 @@ function WaffenContent({
       fontSize: '18px',
       fontWeight: '300',
       letterSpacing: '0.2em',
-      color: 'rgba(var(--text-rgb),0.85)',
+      color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Waffeneigenschaften")), /*#__PURE__*/React.createElement("div", {
@@ -463,7 +463,7 @@ function WaffenContent({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.9',
-      color: 'rgba(var(--text-rgb),0.45)',
+      color: 'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
       marginBottom: '20px',
       maxWidth: '680px'
@@ -487,7 +487,7 @@ function WaffenContent({
       letterSpacing: '0.08em',
       background: openProp === prop ? `${accent}28` : 'transparent',
       border: `1px solid ${openProp === prop ? accent + '77' : accent + '28'}`,
-      color: openProp === prop ? 'var(--white)' : `rgba(var(--text-rgb),0.6)`,
+      color: openProp === prop ? 'var(--white)' : `rgba(var(--text-rgb),calc(0.6*var(--kt)))`,
       borderRadius: '2px',
       cursor: 'pointer',
       transition: 'all 0.15s'
@@ -506,7 +506,7 @@ function WaffenContent({
       fontFamily: 'var(--font-display)',
       fontSize: '12px',
       letterSpacing: '0.12em',
-      color: 'rgba(var(--text-rgb),0.85)',
+      color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))',
       marginBottom: '6px',
       textTransform: 'uppercase'
     }
@@ -516,7 +516,7 @@ function WaffenContent({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.8',
-      color: 'rgba(var(--text-rgb),0.65)'
+      color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))'
     }
   }, WAFFEN_EIGENSCHAFTEN[openProp])), /*#__PURE__*/React.createElement("div", {
     id: "sec-improvisiert",
@@ -544,7 +544,7 @@ function WaffenContent({
       fontSize: '18px',
       fontWeight: '300',
       letterSpacing: '0.2em',
-      color: 'rgba(var(--text-rgb),0.85)',
+      color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Improvisierte Waffen")), /*#__PURE__*/React.createElement("div", {
@@ -562,7 +562,7 @@ function WaffenContent({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.9',
-      color: 'rgba(var(--text-rgb),0.55)',
+      color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
       marginBottom: '10px',
       maxWidth: '680px'
@@ -574,7 +574,7 @@ function WaffenContent({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.9',
-      color: 'rgba(var(--text-rgb),0.45)',
+      color: 'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
       marginBottom: '32px',
       maxWidth: '680px'
@@ -604,7 +604,7 @@ function WaffenContent({
       fontSize: '18px',
       fontWeight: '300',
       letterSpacing: '0.2em',
-      color: 'rgba(var(--text-rgb),0.85)',
+      color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Versilberte Waffen")), /*#__PURE__*/React.createElement("div", {
@@ -622,14 +622,14 @@ function WaffenContent({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.9',
-      color: 'rgba(var(--text-rgb),0.55)',
+      color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
       marginBottom: '10px',
       maxWidth: '680px'
     }
   }, "Manche Monster, die eine Immunit\xE4t oder Resistenz gegen nicht-magische Waffen besitzen, sind anf\xE4llig f\xFCr silberne Waffen. Du kannst eine einzelne Waffe oder 10 Geschosse f\xFCr ", /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: 'rgba(var(--text-rgb),0.7)',
+      color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',
       fontWeight: '500'
     }
   }, "100 GM"), " mit Silber \xFCberziehen lassen."), /*#__PURE__*/React.createElement("div", {
@@ -658,7 +658,7 @@ function WaffenContent({
       fontSize: '18px',
       fontWeight: '300',
       letterSpacing: '0.2em',
-      color: 'rgba(var(--text-rgb),0.85)',
+      color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Spezielle Waffen")), /*#__PURE__*/React.createElement("div", {
@@ -687,7 +687,7 @@ function WaffenContent({
       fontFamily: 'var(--font-body)',
       fontWeight: '500',
       fontSize: '12px',
-      color: 'rgba(var(--text-rgb),0.9)',
+      color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
       marginBottom: '5px'
     }
   }, "Lanze"), /*#__PURE__*/React.createElement("p", {
@@ -696,7 +696,7 @@ function WaffenContent({
       fontWeight: '300',
       fontSize: '11px',
       lineHeight: '1.75',
-      color: 'rgba(var(--text-rgb),0.6)'
+      color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))'
     }
   }, "Du bist bei deinem Angriffswurf im Nachteil, wenn du die Lanze gegen ein Ziel im Umkreis von 1,50 m oder weniger einsetzt. Au\xDFerdem ben\xF6tigst du beide H\xE4nde, um die Lanze effektiv zu f\xFChren, wenn du nicht auf einem Reittier sitzt.")), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -707,7 +707,7 @@ function WaffenContent({
       fontFamily: 'var(--font-body)',
       fontWeight: '500',
       fontSize: '12px',
-      color: 'rgba(var(--text-rgb),0.9)',
+      color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
       marginBottom: '5px'
     }
   }, "Netz"), /*#__PURE__*/React.createElement("p", {
@@ -716,7 +716,7 @@ function WaffenContent({
       fontWeight: '300',
       fontSize: '11px',
       lineHeight: '1.75',
-      color: 'rgba(var(--text-rgb),0.6)'
+      color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))'
     }
   }, "Eine Kreatur der Gr\xF6\xDFenkategorie gro\xDF oder kleiner, die vom Angriff mit einem Netz getroffen wird, gilt als festgesetzt, bis sie sich befreit. Die betroffene Kreatur kann ihre Aktion verwenden, um einen St\xE4rkewurf gegen SG 10 auszuf\xFChren und sich zu befreien. Dem Netz 5 Punkte Hiebschaden zuzuf\xFCgen (RK 10) befreit die Kreatur ebenfalls. Wenn du eine Aktion, Bonusaktion oder Reaktion verwendest, um mit einem Netz anzugreifen, kannst du nur diesen einen Angriff ausf\xFChren."))));
 }
@@ -788,7 +788,7 @@ function RuestungTable({
       onClick: () => hasDesc && setExpandedRow(isOpen ? null : i)
     }, /*#__PURE__*/React.createElement("td", {
       style: {
-        color: 'rgba(var(--text-rgb),0.85)',
+        color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))',
         fontWeight: '400',
         display: 'flex',
         alignItems: 'center',
@@ -820,12 +820,12 @@ function RuestungTable({
       }
     }, r.rk), /*#__PURE__*/React.createElement("td", {
       style: {
-        color: r.staerke !== '—' ? 'rgba(255,180,100,0.8)' : 'rgba(var(--text-rgb),0.35)',
+        color: r.staerke !== '—' ? 'color-mix(in srgb, rgba(255,180,100,0.8), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--text-rgb),calc(0.35*var(--kt)))',
         fontSize: '11px'
       }
     }, r.staerke), /*#__PURE__*/React.createElement("td", {
       style: {
-        color: r.heimlichkeit === 'Nachteil' ? 'rgba(255,100,100,0.7)' : 'rgba(var(--text-rgb),0.35)',
+        color: r.heimlichkeit === 'Nachteil' ? 'color-mix(in srgb, rgba(255,100,100,0.7), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--text-rgb),calc(0.35*var(--kt)))',
         fontSize: '11px'
       }
     }, r.heimlichkeit), /*#__PURE__*/React.createElement("td", {
@@ -843,7 +843,7 @@ function RuestungTable({
         fontSize: '11px',
         fontWeight: '300',
         lineHeight: '1.8',
-        color: 'rgba(var(--text-rgb),0.65)',
+        color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
         letterSpacing: '0.02em',
         animation: 'fadeInUp 0.2s ease forwards'
       }
@@ -866,7 +866,7 @@ function RuestungContent({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.9',
-      color: 'rgba(var(--text-rgb),0.55)',
+      color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
       marginBottom: '10px',
       maxWidth: '680px'
@@ -878,7 +878,7 @@ function RuestungContent({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.9',
-      color: 'rgba(var(--text-rgb),0.45)',
+      color: 'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
       marginBottom: '32px',
       maxWidth: '680px'
@@ -908,7 +908,7 @@ function RuestungContent({
       fontSize: '14px',
       fontWeight: '300',
       letterSpacing: '0.18em',
-      color: 'rgba(var(--text-rgb),0.75)',
+      color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Leichte R\xFCstung"))), /*#__PURE__*/React.createElement("p", {
@@ -918,13 +918,13 @@ function RuestungContent({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.75',
-      color: 'rgba(var(--text-rgb),0.55)',
+      color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       marginBottom: '14px',
       maxWidth: '680px'
     }
   }, "Aus weichen und d\xFCnnen Materialien gefertigt, beg\xFCnstigen leichte R\xFCstungen agile Abenteurer. Wenn du eine leichte R\xFCstung tr\xE4gst, addierst du deinen ", /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: 'rgba(var(--text-rgb),0.7)',
+      color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',
       fontWeight: '500'
     }
   }, "Geschicklichkeitsmodifikator"), " zur Basis-R\xFCstungsklasse."), /*#__PURE__*/React.createElement(RuestungTable, {
@@ -957,7 +957,7 @@ function RuestungContent({
       fontSize: '14px',
       fontWeight: '300',
       letterSpacing: '0.18em',
-      color: 'rgba(var(--text-rgb),0.75)',
+      color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Mittelschwere R\xFCstung"))), /*#__PURE__*/React.createElement("p", {
@@ -967,13 +967,13 @@ function RuestungContent({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.75',
-      color: 'rgba(var(--text-rgb),0.55)',
+      color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       marginBottom: '14px',
       maxWidth: '680px'
     }
   }, "Mittelschwere R\xFCstung bietet mehr Schutz als leichte R\xFCstung, schr\xE4nkt die Beweglichkeit aber st\xE4rker ein. Du addierst deinen Geschicklichkeitsmodifikator, allerdings nur bis zu einem Maximum von ", /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: 'rgba(var(--text-rgb),0.7)',
+      color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',
       fontWeight: '500'
     }
   }, "+2"), "."), /*#__PURE__*/React.createElement(RuestungTable, {
@@ -1006,7 +1006,7 @@ function RuestungContent({
       fontSize: '14px',
       fontWeight: '300',
       letterSpacing: '0.18em',
-      color: 'rgba(var(--text-rgb),0.75)',
+      color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Schwere R\xFCstung"))), /*#__PURE__*/React.createElement("p", {
@@ -1016,13 +1016,13 @@ function RuestungContent({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.75',
-      color: 'rgba(var(--text-rgb),0.55)',
+      color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       marginBottom: '14px',
       maxWidth: '680px'
     }
   }, "Von allen R\xFCstungsarten bietet schwere R\xFCstung den besten Schutz. Bei schweren R\xFCstungen darfst du deinen Geschicklichkeitsmodifikator ", /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: 'rgba(var(--text-rgb),0.7)',
+      color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',
       fontWeight: '500'
     }
   }, "nicht"), " auf deine R\xFCstungsklasse anrechnen."), /*#__PURE__*/React.createElement(RuestungTable, {
@@ -1055,7 +1055,7 @@ function RuestungContent({
       fontSize: '14px',
       fontWeight: '300',
       letterSpacing: '0.18em',
-      color: 'rgba(var(--text-rgb),0.75)',
+      color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Schilde"))), /*#__PURE__*/React.createElement("p", {
@@ -1065,13 +1065,13 @@ function RuestungContent({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.75',
-      color: 'rgba(var(--text-rgb),0.55)',
+      color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       marginBottom: '14px',
       maxWidth: '680px'
     }
   }, "Ein Schild ist aus Holz oder Metall gefertigt und wird in einer Hand getragen. Einen Schild zu f\xFChren, erh\xF6ht die R\xFCstungsklasse um ", /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: 'rgba(var(--text-rgb),0.7)',
+      color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',
       fontWeight: '500'
     }
   }, "2"), ". Du kannst immer nur von einem Schild gleichzeitig profitieren."), /*#__PURE__*/React.createElement(RuestungTable, {
@@ -1104,7 +1104,7 @@ function RuestungContent({
       fontSize: '14px',
       fontWeight: '300',
       letterSpacing: '0.18em',
-      color: 'rgba(var(--text-rgb),0.75)',
+      color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Kleidung"))), /*#__PURE__*/React.createElement("div", {
@@ -1139,7 +1139,7 @@ function RuestungContent({
     key: i
   }, /*#__PURE__*/React.createElement("td", {
     style: {
-      color: 'rgba(var(--text-rgb),0.8)'
+      color: 'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))'
     }
   }, r.name), /*#__PURE__*/React.createElement("td", {
     className: "cost"
@@ -1171,7 +1171,7 @@ function RuestungContent({
       fontSize: '18px',
       fontWeight: '300',
       letterSpacing: '0.2em',
-      color: 'rgba(var(--text-rgb),0.85)',
+      color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "R\xFCstungen an- und ablegen")), /*#__PURE__*/React.createElement("div", {
@@ -1189,13 +1189,13 @@ function RuestungContent({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.75',
-      color: 'rgba(var(--text-rgb),0.55)',
+      color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       marginBottom: '20px',
       maxWidth: '680px'
     }
   }, "Die Zeit, die man ben\xF6tigt, um R\xFCstungen an- und abzulegen, h\xE4ngt von der Kategorie der R\xFCstung ab. ", /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: 'rgba(var(--text-rgb),0.7)',
+      color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',
       fontWeight: '500'
     }
   }, "Ablegen:"), " Wenn du dabei Hilfe hast, kannst du die Dauer halbieren."), /*#__PURE__*/React.createElement("div", {
@@ -1231,7 +1231,7 @@ function RuestungContent({
     key: i
   }, /*#__PURE__*/React.createElement("td", {
     style: {
-      color: 'rgba(var(--text-rgb),0.8)'
+      color: 'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))'
     }
   }, r.kategorie), /*#__PURE__*/React.createElement("td", {
     style: {
@@ -1304,7 +1304,7 @@ function ToolAccordion({
       fontFamily: 'var(--font-body)',
       fontSize: '12px',
       fontWeight: open ? '500' : '300',
-      color: open ? 'var(--white)' : 'rgba(var(--text-rgb),0.8)',
+      color: open ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.8*var(--kt)))',
       letterSpacing: '0.04em',
       flex: 1,
       transition: 'color 0.15s'
@@ -1345,7 +1345,7 @@ function ToolAccordion({
       fontSize: '11px',
       fontWeight: '300',
       lineHeight: '1.8',
-      color: 'rgba(var(--text-rgb),0.6)',
+      color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))',
       marginBottom: '12px',
       letterSpacing: '0.02em'
     }
@@ -1356,13 +1356,13 @@ function ToolAccordion({
       fontSize: '11px',
       fontWeight: '300',
       lineHeight: '1.8',
-      color: 'rgba(var(--text-rgb),0.6)',
+      color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))',
       marginBottom: '8px',
       letterSpacing: '0.02em'
     }
   }, /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: 'rgba(var(--text-rgb),0.75)',
+      color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
       fontWeight: '500'
     }
   }, s.titel, ". "), s.text)), data.sg && data.sg.length > 0 && /*#__PURE__*/React.createElement("div", {
@@ -1394,7 +1394,7 @@ function ToolAccordion({
   }, /*#__PURE__*/React.createElement("td", {
     style: {
       fontSize: '11px',
-      color: 'rgba(var(--text-rgb),0.65)'
+      color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))'
     }
   }, row.aktivitaet), /*#__PURE__*/React.createElement("td", {
     style: {
@@ -2516,7 +2516,7 @@ function WerkzeugPopup({
       position: 'fixed',
       inset: 0,
       zIndex: 1000,
-      background: 'rgba(3,2,12,0.85)',
+      background: 'rgba(var(--bg-rgb),0.85)',
       backdropFilter: 'blur(8px)',
       display: 'flex',
       alignItems: 'flex-start',
@@ -2532,8 +2532,8 @@ function WerkzeugPopup({
       width: '100%',
       maxWidth: '680px',
       margin: '0',
-      minHeight: '100vh',
-      background: 'rgba(6,4,18,0.97)',
+      minHeight: 'calc(var(--vh, 1vh) * 100)',
+      background: 'rgba(var(--panel-rgb),0.97)',
       borderLeft: `1px solid ${accent}22`,
       borderRight: `1px solid ${accent}22`,
       padding: '0 0 60px 0',
@@ -2696,7 +2696,7 @@ function WerkzeugPopup({
       fontWeight: '300',
       fontSize: '13px',
       lineHeight: '1.9',
-      color: 'rgba(var(--text-rgb),0.65)',
+      color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
       letterSpacing: '0.03em',
       marginBottom: '20px'
     }
@@ -2707,13 +2707,13 @@ function WerkzeugPopup({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.9',
-      color: 'rgba(185,175,235,0.6)',
+      color: 'color-mix(in srgb, rgba(185,175,235,0.6), rgb(var(--ink-rgb)) var(--cm))',
       marginBottom: '12px',
       letterSpacing: '0.02em'
     }
   }, /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: 'rgba(var(--text-rgb),0.8)',
+      color: 'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))',
       fontWeight: '500'
     }
   }, s.titel, ". "), s.text)), displayData.sg && displayData.sg.length > 0 && /*#__PURE__*/React.createElement("div", {
@@ -2756,7 +2756,7 @@ function WerkzeugPopup({
   }, /*#__PURE__*/React.createElement("td", {
     style: {
       fontSize: '12px',
-      color: 'rgba(var(--text-rgb),0.65)'
+      color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))'
     }
   }, row.aktivitaet), /*#__PURE__*/React.createElement("td", {
     style: {
@@ -2840,7 +2840,7 @@ function WerkzeugButton({
       fontSize: '10px',
       fontWeight: hovered ? '500' : '300',
       letterSpacing: '0.06em',
-      color: hovered ? 'var(--white)' : 'rgba(var(--text-rgb),0.7)',
+      color: hovered ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.7*var(--kt)))',
       textAlign: 'center',
       lineHeight: '1.3',
       transition: 'color 0.15s',
@@ -2950,7 +2950,7 @@ function RollTable({
       fontSize: '14px',
       fontWeight: '300',
       letterSpacing: '0.18em',
-      color: 'rgba(var(--text-rgb),0.75)',
+      color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, title)), /*#__PURE__*/React.createElement("button", {
@@ -3060,7 +3060,7 @@ function RollTable({
       }
     }, /*#__PURE__*/React.createElement("td", {
       style: {
-        color: isHit ? 'var(--white)' : 'rgba(var(--text-rgb),0.8)',
+        color: isHit ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.8*var(--kt)))',
         fontWeight: isHit ? '500' : '300',
         transition: 'color 0.08s'
       }
@@ -3100,7 +3100,7 @@ function WerkzeugeContent({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.9',
-      color: 'rgba(var(--text-rgb),0.55)',
+      color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
       marginBottom: '10px',
       maxWidth: '680px'
@@ -3112,14 +3112,14 @@ function WerkzeugeContent({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.9',
-      color: 'rgba(var(--text-rgb),0.45)',
+      color: 'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
       marginBottom: '10px',
       maxWidth: '680px'
     }
   }, /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: 'rgba(var(--text-rgb),0.7)',
+      color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',
       fontWeight: '500'
     }
   }, "Bestandteile."), " Der erste Absatz jeder Beschreibung ist den einzelnen Bestandteilen gewidmet, aus denen sich eine Ausr\xFCstung oder ein Werkzeugsatz zusammensetzt. Ein Charakter, der im Umgang mit einem Werkzeug ge\xFCbt ist, versteht es, alle Bestandteile einer Ausr\xFCstung oder eines Werkzeugsatzes zu nutzen."), /*#__PURE__*/React.createElement("p", {
@@ -3129,14 +3129,14 @@ function WerkzeugeContent({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.9',
-      color: 'rgba(var(--text-rgb),0.45)',
+      color: 'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
       marginBottom: '10px',
       maxWidth: '680px'
     }
   }, /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: 'rgba(var(--text-rgb),0.7)',
+      color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',
       fontWeight: '500'
     }
   }, "Fertigkeiten."), " Potenziell bist du dank Werkzeugen im Vorteil bei einem Wurf, wenn besagte Werkzeuge in Verbindung mit bestimmten Fertigkeiten eingesetzt werden. Dies gilt jedoch nur, wenn der Charakter sowohl den Umgang mit dem Werkzeug als auch mit der Fertigkeit beherrscht. Als SL kannst du dann bestimmen, dass ein Charakter bei einem Wurf mit der angegebenen Fertigkeit im Vorteil ist. Wenn zu Beginn eines Absatzes die Bezeichnung einer Fertigkeit steht, wird dort n\xE4her auf die hier beschriebenen M\xF6glichkeiten eingegangen. Nur jemand, der mit dem jeweiligen Werkzeug ge\xFCbt ist, kommt in den Genuss der im jeweiligen Absatz beschriebenen Vorz\xFCge. Es gen\xFCgt nicht, das Werkzeug lediglich zu besitzen."), /*#__PURE__*/React.createElement("p", {
@@ -3146,14 +3146,14 @@ function WerkzeugeContent({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.9',
-      color: 'rgba(var(--text-rgb),0.45)',
+      color: 'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
       marginBottom: '10px',
       maxWidth: '680px'
     }
   }, /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: 'rgba(var(--text-rgb),0.7)',
+      color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',
       fontWeight: '500'
     }
   }, "Besondere Anwendungsm\xF6glichkeit."), " Wie in diesem Absatz beschrieben, bringt deine \xDCbung im Umgang mit einem Werkzeug oftmals eine besondere Anwendungsm\xF6glichkeit in Form eines besonderen Vorzugs mit sich."), /*#__PURE__*/React.createElement("p", {
@@ -3163,14 +3163,14 @@ function WerkzeugeContent({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.9',
-      color: 'rgba(var(--text-rgb),0.45)',
+      color: 'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
       marginBottom: '32px',
       maxWidth: '680px'
     }
   }, /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: 'rgba(var(--text-rgb),0.7)',
+      color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',
       fontWeight: '500'
     }
   }, "Beispiel-SG."), " Am Ende jeder Beschreibung f\xFChrt eine Tabelle unterschiedliche Aktivit\xE4ten auf, die mithilfe eines Werkzeuges durchgef\xFChrt werden k\xF6nnen, sowie den vorgeschlagenen SG f\xFCr den jeweils notwendigen F\xE4higkeitswurf."), /*#__PURE__*/React.createElement("div", {
@@ -3247,7 +3247,7 @@ function ReittiereContent({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.9',
-      color: 'rgba(var(--text-rgb),0.55)',
+      color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
       marginBottom: '10px',
       maxWidth: '680px'
@@ -3259,7 +3259,7 @@ function ReittiereContent({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.9',
-      color: 'rgba(var(--text-rgb),0.45)',
+      color: 'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
       marginBottom: '32px',
       maxWidth: '680px'
@@ -3289,7 +3289,7 @@ function ReittiereContent({
       fontSize: '14px',
       fontWeight: '300',
       letterSpacing: '0.18em',
-      color: 'rgba(var(--text-rgb),0.75)',
+      color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Reit- und Lasttiere"))), /*#__PURE__*/React.createElement("div", {
@@ -3329,7 +3329,7 @@ function ReittiereContent({
     key: i
   }, /*#__PURE__*/React.createElement("td", {
     style: {
-      color: 'rgba(var(--text-rgb),0.85)',
+      color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))',
       fontWeight: '400'
     }
   }, r.tier), /*#__PURE__*/React.createElement("td", {
@@ -3342,7 +3342,7 @@ function ReittiereContent({
     }
   }, r.bewegung), /*#__PURE__*/React.createElement("td", {
     style: {
-      color: 'rgba(var(--text-rgb),0.65)',
+      color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
       fontFamily: 'var(--font-mono)',
       fontSize: '11px'
     }
@@ -3374,7 +3374,7 @@ function ReittiereContent({
       fontFamily: 'var(--font-body)',
       fontWeight: '500',
       fontSize: '12px',
-      color: 'rgba(var(--text-rgb),0.85)'
+      color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))'
     }
   }, info.titel, ". "), /*#__PURE__*/React.createElement("span", {
     style: {
@@ -3382,7 +3382,7 @@ function ReittiereContent({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.8',
-      color: 'rgba(var(--text-rgb),0.6)'
+      color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))'
     }
   }, info.text)))), /*#__PURE__*/React.createElement("div", {
     id: "sec-zaumzeug",
@@ -3409,7 +3409,7 @@ function ReittiereContent({
       fontSize: '14px',
       fontWeight: '300',
       letterSpacing: '0.18em',
-      color: 'rgba(var(--text-rgb),0.75)',
+      color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Zaumzeug, Harnische & gezogene Fahrzeuge"))), /*#__PURE__*/React.createElement("div", {
@@ -3444,7 +3444,7 @@ function ReittiereContent({
     key: i
   }, /*#__PURE__*/React.createElement("td", {
     style: {
-      color: 'rgba(var(--text-rgb),0.8)'
+      color: 'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))'
     }
   }, r.name), /*#__PURE__*/React.createElement("td", {
     className: "cost"
@@ -3475,7 +3475,7 @@ function ReittiereContent({
       fontSize: '14px',
       fontWeight: '300',
       letterSpacing: '0.18em',
-      color: 'rgba(var(--text-rgb),0.75)',
+      color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Wasserfahrzeuge"))), /*#__PURE__*/React.createElement("div", {
@@ -3510,7 +3510,7 @@ function ReittiereContent({
     key: i
   }, /*#__PURE__*/React.createElement("td", {
     style: {
-      color: 'rgba(var(--text-rgb),0.8)'
+      color: 'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))'
     }
   }, r.name), /*#__PURE__*/React.createElement("td", {
     className: "cost"
@@ -3545,7 +3545,7 @@ function ReittiereContent({
       fontSize: '18px',
       fontWeight: '300',
       letterSpacing: '0.2em',
-      color: 'rgba(var(--text-rgb),0.85)',
+      color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Land- und Wasserfahrzeuge")), /*#__PURE__*/React.createElement("div", {
@@ -3563,7 +3563,7 @@ function ReittiereContent({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.9',
-      color: 'rgba(var(--text-rgb),0.55)',
+      color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
       marginBottom: '10px',
       maxWidth: '680px'
@@ -3605,7 +3605,7 @@ function ReittiereContent({
       fontFamily: 'var(--font-body)',
       fontWeight: '500',
       fontSize: '12px',
-      color: 'rgba(var(--text-rgb),0.85)'
+      color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))'
     }
   }, info.titel, ". "), /*#__PURE__*/React.createElement("span", {
     style: {
@@ -3613,7 +3613,7 @@ function ReittiereContent({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.8',
-      color: 'rgba(var(--text-rgb),0.6)'
+      color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))'
     }
   }, info.text)))), /*#__PURE__*/React.createElement("div", {
     className: "reveal-up",
@@ -3651,7 +3651,7 @@ function ReittiereContent({
     key: i
   }, /*#__PURE__*/React.createElement("td", {
     style: {
-      color: 'rgba(var(--text-rgb),0.65)',
+      color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
       fontSize: '12px'
     }
   }, r.aktivitaet), /*#__PURE__*/React.createElement("td", {
@@ -3756,7 +3756,7 @@ function TandRollTable({
       fontSize: '14px',
       fontWeight: '300',
       letterSpacing: '0.18em',
-      color: open ? 'var(--white)' : 'rgba(var(--text-rgb),0.75)',
+      color: open ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.75*var(--kt)))',
       textTransform: 'uppercase',
       flex: 1,
       transition: 'color 0.15s'
@@ -3873,7 +3873,7 @@ function TandRollTable({
       }
     }, i + 1), /*#__PURE__*/React.createElement("td", {
       style: {
-        color: isHit ? 'var(--white)' : 'rgba(var(--text-rgb),0.75)',
+        color: isHit ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.75*var(--kt)))',
         fontWeight: isHit ? '500' : '300',
         fontSize: '12px',
         transition: 'color 0.08s'
@@ -3928,7 +3928,7 @@ function TandContent({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.9',
-      color: 'rgba(var(--text-rgb),0.55)',
+      color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
       marginBottom: '28px',
       maxWidth: '680px'
@@ -4063,7 +4063,7 @@ function TandContent({
     }
   }, r.w), /*#__PURE__*/React.createElement("td", {
     style: {
-      color: selectedTable === r.key ? 'var(--white)' : 'rgba(var(--text-rgb),0.75)',
+      color: selectedTable === r.key ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.75*var(--kt)))',
       fontWeight: selectedTable === r.key ? '500' : '300'
     }
   }, r.label)))))), /*#__PURE__*/React.createElement("div", {
@@ -4145,7 +4145,7 @@ function AbenteuerContent({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.9',
-      color: 'rgba(var(--text-rgb),0.55)',
+      color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
       marginBottom: '28px',
       maxWidth: '680px'
@@ -4154,7 +4154,7 @@ function AbenteuerContent({
     className: "reveal-up",
     style: {
       marginBottom: '36px',
-      border: `1px solid rgba(124,77,255,0.15)`,
+      border: `1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))`,
       borderRadius: '4px',
       overflow: 'hidden',
       background: 'rgba(var(--panel-rgb),0.6)'
@@ -4245,7 +4245,7 @@ function AbenteuerContent({
       fontSize: '18px',
       fontWeight: '300',
       letterSpacing: '0.2em',
-      color: 'rgba(var(--text-rgb),0.85)',
+      color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Ausr\xFCstungspakete")), /*#__PURE__*/React.createElement("div", {
@@ -4263,7 +4263,7 @@ function AbenteuerContent({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.9',
-      color: 'rgba(var(--text-rgb),0.55)',
+      color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
       marginBottom: '20px',
       maxWidth: '680px'
@@ -4271,7 +4271,7 @@ function AbenteuerContent({
   }, "Die Anfangsausr\xFCstung, die du durch deine Klasse erh\xE4ltst, beinhaltet eine in einem Paket zusammmengefasste Sammlung n\xFCtzlicher Abenteuerausr\xFCstung. Die Inhalte dieser Pakete sind nachfolgend aufgelistet. Wenn du deine Anfangsausr\xFCstung mit Geld selbst zusammenstellst, kannst du ein Paket f\xFCr den angegebenen Preis erwerben, was m\xF6glicherweise g\xFCnstiger ist, als alle Gegenst\xE4nde einzeln zu kaufen."), /*#__PURE__*/React.createElement("div", {
     className: "reveal-up",
     style: {
-      border: `1px solid rgba(124,77,255,0.15)`,
+      border: `1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))`,
       borderRadius: '4px',
       overflow: 'hidden',
       background: 'rgba(var(--panel-rgb),0.6)'
@@ -4280,7 +4280,7 @@ function AbenteuerContent({
     key: i,
     style: {
       padding: '14px 18px',
-      borderBottom: i < AUSRUESTUNGSPAKETE.length - 1 ? '1px solid rgba(124,77,255,0.08)' : 'none'
+      borderBottom: i < AUSRUESTUNGSPAKETE.length - 1 ? '1px solid rgba(var(--purple-rgb),calc(0.08*var(--kp)))' : 'none'
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -4295,7 +4295,7 @@ function AbenteuerContent({
       fontFamily: 'var(--font-body)',
       fontWeight: '500',
       fontSize: '12px',
-      color: 'rgba(var(--text-rgb),0.9)',
+      color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em'
     }
   }, p.name), /*#__PURE__*/React.createElement("span", {
@@ -4311,7 +4311,7 @@ function AbenteuerContent({
       fontWeight: '300',
       fontSize: '11px',
       lineHeight: '1.75',
-      color: 'rgba(var(--text-rgb),0.6)'
+      color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))'
     }
   }, p.inhalt)))));
 }
@@ -4407,7 +4407,7 @@ function scrollToSection(id) {
 }
 
 // ── SIDEBAR ───────────────────────────────────────────────
-const PAGE_HEADER_H = 180 + 52; // PageHeader + nav
+const PAGE_HEADER_H = 52; // nav (the Kopfbild banner was removed)
 function Sidebar({
   activeCategory,
   onSelect,
@@ -4417,11 +4417,11 @@ function Sidebar({
   const asideRef = React.useRef(null);
   useEffect(() => {
     const update = () => {
-      const ideal = headerBottom - window.scrollY;
+      const ideal = (headerBottom - window.scrollY) / window.uiZoom();
       const val = Math.max(52, ideal);
       if (asideRef.current) {
         asideRef.current.style.top = val + 'px';
-        asideRef.current.style.height = `calc(100vh - ${val}px)`;
+        asideRef.current.style.height = `calc(calc(var(--vh, 1vh) * 100) - ${val}px)`;
       }
     };
     update();
@@ -4444,8 +4444,8 @@ function Sidebar({
       position: 'fixed',
       left: 0,
       top: `${headerBottom}px`,
-      height: `calc(100vh - ${headerBottom}px)`,
-      borderRight: '1px solid rgba(var(--accent-rgb),0.1)',
+      height: `calc(calc(var(--vh, 1vh) * 100) - ${headerBottom}px)`,
+      borderRight: '1px solid rgba(var(--accent-rgb),calc(0.1*var(--ka)))',
       padding: '28px 0',
       background: 'rgba(var(--bg-rgb),0.85)',
       backdropFilter: 'blur(12px)',
@@ -4457,7 +4457,7 @@ function Sidebar({
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '0.25em',
-      color: 'rgba(var(--accent-rgb),0.4)',
+      color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
       padding: '0 20px',
       marginBottom: '12px'
@@ -4484,7 +4484,7 @@ function Sidebar({
         fontWeight: isActive ? '500' : '400',
         fontSize: '12px',
         letterSpacing: '0.06em',
-        color: isActive ? 'var(--white)' : 'rgba(var(--text-rgb),0.6)',
+        color: isActive ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.6*var(--kt)))',
         transition: 'all 0.15s'
       },
       onMouseEnter: e => {
@@ -4496,15 +4496,15 @@ function Sidebar({
       },
       onMouseLeave: e => {
         if (!isActive) {
-          e.currentTarget.style.color = 'rgba(var(--text-rgb),0.6)';
+          e.currentTarget.style.color = 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))';
           e.currentTarget.style.borderLeftColor = 'transparent';
           e.currentTarget.style.background = 'transparent';
         }
       }
     }, /*#__PURE__*/React.createElement(OctSvg, {
       size: 6,
-      color: isActive ? accent : 'rgba(124,77,255,0.4)',
-      fill: isActive ? `${accent}44` : 'rgba(124,77,255,0.12)',
+      color: isActive ? accent : 'rgba(var(--purple-rgb),calc(0.4*var(--kp)))',
+      fill: isActive ? `${accent}44` : 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))',
       strokeWidth: 1,
       style: {
         flexShrink: 0
@@ -4526,16 +4526,16 @@ function Sidebar({
         fontFamily: 'var(--font-body)',
         fontSize: '11px',
         letterSpacing: '0.04em',
-        color: 'rgba(180,165,255,0.5)',
+        color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',
         transition: 'all 0.15s'
       },
       onMouseEnter: e => {
-        e.currentTarget.style.color = 'rgba(var(--text-rgb),0.85)';
+        e.currentTarget.style.color = 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))';
         e.currentTarget.style.borderLeftColor = `${accent}44`;
         e.currentTarget.style.background = `${accent}07`;
       },
       onMouseLeave: e => {
-        e.currentTarget.style.color = 'rgba(180,165,255,0.5)';
+        e.currentTarget.style.color = 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))';
         e.currentTarget.style.borderLeftColor = 'transparent';
         e.currentTarget.style.background = 'transparent';
       }
@@ -4641,22 +4641,22 @@ function App() {
         fontWeight: isActive ? '500' : '300',
         letterSpacing: '0.08em',
         background: isActive ? `${accent}22` : 'transparent',
-        border: `1px solid ${isActive ? accent + '66' : 'rgba(124,77,255,0.2)'}`,
-        color: isActive ? 'var(--white)' : 'rgba(var(--text-rgb),0.5)',
+        border: `1px solid ${isActive ? accent + '66' : 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))'}`,
+        color: isActive ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.5*var(--kt)))',
         borderRadius: '2px',
         cursor: 'pointer',
         transition: 'all 0.15s'
       },
       onMouseEnter: e => {
         if (!isActive) {
-          e.currentTarget.style.color = 'rgba(var(--text-rgb),0.8)';
-          e.currentTarget.style.borderColor = 'rgba(124,77,255,0.4)';
+          e.currentTarget.style.color = 'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))';
+          e.currentTarget.style.borderColor = 'rgba(var(--purple-rgb),calc(0.4*var(--kp)))';
         }
       },
       onMouseLeave: e => {
         if (!isActive) {
-          e.currentTarget.style.color = 'rgba(var(--text-rgb),0.5)';
-          e.currentTarget.style.borderColor = 'rgba(124,77,255,0.2)';
+          e.currentTarget.style.color = 'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))';
+          e.currentTarget.style.borderColor = 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))';
         }
       }
     }, cat.label);

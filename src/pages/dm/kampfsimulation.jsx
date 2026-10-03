@@ -468,7 +468,7 @@ function MonsterPicker({
     style: {
       fontSize: '0.72rem',
       fontFamily: 'var(--font-mono)',
-      color: 'rgba(160,140,255,0.45)',
+      color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',
       whiteSpace: 'nowrap',
       minWidth: 22
     }
@@ -483,7 +483,7 @@ function MonsterPicker({
     step: "0.125"
   }), /*#__PURE__*/React.createElement("span", {
     style: {
-      color: 'rgba(160,140,255,0.3)',
+      color: 'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))',
       flexShrink: 0
     }
   }, "\u2013"), /*#__PURE__*/React.createElement("input", {
@@ -498,7 +498,7 @@ function MonsterPicker({
   })), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: '0.68rem',
-      color: 'rgba(160,140,255,0.35)',
+      color: 'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))',
       marginBottom: 8,
       fontFamily: 'var(--font-mono)',
       display: 'flex',
@@ -508,7 +508,7 @@ function MonsterPicker({
     style: {
       background: 'none',
       border: 'none',
-      color: 'rgba(160,140,255,0.5)',
+      color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',
       cursor: 'pointer',
       fontSize: '0.68rem',
       padding: 0
@@ -546,7 +546,7 @@ function MonsterPicker({
         alignItems: 'center',
         justifyContent: 'center',
         fontSize: '0.6rem',
-        color: 'rgba(160,140,255,0.3)'
+        color: 'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))'
       }
     }, "?"), /*#__PURE__*/React.createElement("span", {
       className: "sim-monster-row-name"
@@ -669,7 +669,7 @@ function SpellPicker({
   }, k)))), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: '0.68rem',
-      color: 'rgba(160,140,255,0.35)',
+      color: 'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))',
       marginBottom: 8,
       fontFamily: 'var(--font-mono)'
     }
@@ -711,13 +711,13 @@ function SpellPicker({
       width: 28,
       height: 28,
       borderRadius: '50%',
-      background: 'rgba(160,140,255,0.06)',
-      border: '1px solid rgba(160,140,255,0.12)',
+      background: 'rgba(var(--accent-rgb),calc(0.06*var(--ka)))',
+      border: '1px solid rgba(var(--accent-rgb),calc(0.12*var(--ka)))',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       fontSize: '0.6rem',
-      color: TYPE_COLORS[z.schadenTyp] || 'rgba(160,140,255,0.4)',
+      color: TYPE_COLORS[z.schadenTyp] || 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))',
       flexShrink: 0,
       fontWeight: 700
     }
@@ -916,7 +916,7 @@ function PlayerModal({
     onClick: () => setTab('load')
   }, "Gespeichert (", savedPlayers.length, ")")), tab === 'load' && /*#__PURE__*/React.createElement("div", null, savedPlayers.length === 0 && /*#__PURE__*/React.createElement("p", {
     style: {
-      color: 'rgba(160,140,255,0.4)',
+      color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       fontSize: '0.8rem'
     }
   }, "Keine gespeicherten Charaktere."), /*#__PURE__*/React.createElement("div", {
@@ -931,7 +931,7 @@ function PlayerModal({
     }, p.name, inGroup && /*#__PURE__*/React.createElement("span", {
       style: {
         fontSize: '0.62rem',
-        color: 'rgba(160,140,255,0.4)',
+        color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
         marginLeft: 6
       }
     }, "\u2713")), /*#__PURE__*/React.createElement("div", {
@@ -970,7 +970,7 @@ function PlayerModal({
       }
     }), rows.length === 0 && /*#__PURE__*/React.createElement("p", {
       style: {
-        color: 'rgba(160,140,255,0.4)',
+        color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
         fontSize: '0.8rem'
       }
     }, type === 'nsc' ? 'Keine NSC in der DB.' : 'Keine Spielercharaktere in der DB.'), /*#__PURE__*/React.createElement("div", {
@@ -986,7 +986,7 @@ function PlayerModal({
       }, p.name, inGroup && /*#__PURE__*/React.createElement("span", {
         style: {
           fontSize: '0.62rem',
-          color: 'rgba(160,140,255,0.4)',
+          color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
           marginLeft: 6
         }
       }, "\u2713")), /*#__PURE__*/React.createElement("div", {
@@ -1004,7 +1004,7 @@ function PlayerModal({
       }, "Hinzuf\xFCgen"));
     }), q && filtered.length === 0 && rows.length > 0 && /*#__PURE__*/React.createElement("p", {
       style: {
-        color: 'rgba(160,140,255,0.3)',
+        color: 'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))',
         fontSize: '0.8rem'
       }
     }, "Keine Treffer.")));
@@ -1133,7 +1133,7 @@ function PlayerModal({
     style: {
       fontFamily: 'var(--font-body)',
       fontSize: '0.65rem',
-      color: 'rgba(160,140,255,0.3)',
+      color: 'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))',
       marginLeft: 8,
       textTransform: 'none',
       letterSpacing: 0
@@ -1183,7 +1183,7 @@ function PlayerModal({
     style: {
       fontFamily: 'var(--font-body)',
       fontSize: '0.65rem',
-      color: 'rgba(160,140,255,0.3)',
+      color: 'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))',
       marginLeft: 8,
       textTransform: 'none',
       letterSpacing: 0
@@ -1215,7 +1215,7 @@ function PlayerModal({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: '0.68rem',
-      color: 'rgba(160,140,255,0.4)'
+      color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))'
     }
   }, "Heilung"), /*#__PURE__*/React.createElement("input", {
     className: "sim-form-input",
@@ -1249,7 +1249,7 @@ function PlayerModal({
   }, z.name, /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: '0.68rem',
-      color: 'rgba(160,140,255,0.45)',
+      color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',
       marginLeft: 6,
       fontFamily: 'var(--font-mono)'
     }
@@ -1262,7 +1262,7 @@ function PlayerModal({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: '0.68rem',
-      color: 'rgba(160,140,255,0.4)'
+      color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))'
     }
   }, z.istAngriff ? 'Bonus' : 'SG'), /*#__PURE__*/React.createElement("input", {
     className: "sim-form-input",
@@ -1278,7 +1278,7 @@ function PlayerModal({
   })), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: '0.68rem',
-      color: 'rgba(160,140,255,0.35)',
+      color: 'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))',
       fontFamily: 'var(--font-mono)',
       textAlign: 'right'
     }
@@ -1347,14 +1347,14 @@ function MonsterDetailPopup({
     onClick: e => e.target === e.currentTarget && onClose(),
     style: {
       alignItems: 'flex-start',
-      paddingTop: 'clamp(16px, 4vh, 48px)'
+      paddingTop: 'clamp(16px, calc(var(--vh, 1vh) * 4), 48px)'
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "sim-modal",
     style: {
       maxWidth: 780,
       width: '95vw',
-      maxHeight: '88vh',
+      maxHeight: 'calc(var(--vh, 1vh) * 88)',
       display: 'flex',
       flexDirection: 'column',
       padding: 0,
@@ -1472,7 +1472,7 @@ function GroupPanel({
     className: "sim-combatant-list"
   }, group.length === 0 && /*#__PURE__*/React.createElement("div", {
     style: {
-      color: 'rgba(160,140,255,0.25)',
+      color: 'rgba(var(--accent-rgb),calc(0.25*var(--ka) + var(--tb)))',
       fontSize: '0.75rem',
       textAlign: 'center',
       padding: '20px 0'
@@ -1557,7 +1557,7 @@ function GroupPanel({
     style: {
       fontSize: '0.64rem',
       fontFamily: 'var(--font-mono)',
-      color: 'rgba(160,140,255,0.45)',
+      color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',
       whiteSpace: 'nowrap',
       minWidth: 20
     }
@@ -1573,7 +1573,7 @@ function GroupPanel({
     title: "HG Minimum"
   }), /*#__PURE__*/React.createElement("span", {
     style: {
-      color: 'rgba(160,140,255,0.3)',
+      color: 'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))',
       fontSize: '0.7rem',
       flexShrink: 0
     }
@@ -1590,7 +1590,7 @@ function GroupPanel({
   })), activeFilters > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: '0.64rem',
-      color: 'rgba(160,140,255,0.4)',
+      color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       display: 'flex',
       justifyContent: 'space-between',
       padding: '2px 1px'
@@ -1599,7 +1599,7 @@ function GroupPanel({
     style: {
       background: 'none',
       border: 'none',
-      color: 'rgba(160,140,255,0.45)',
+      color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',
       cursor: 'pointer',
       fontSize: '0.64rem',
       padding: 0
@@ -1978,7 +1978,7 @@ function SimAccessDenied() {
     style: {
       position: 'fixed',
       inset: 0,
-      background: '#05040f',
+      background: 'var(--bg)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -1993,13 +1993,13 @@ function SimAccessDenied() {
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
       letterSpacing: '0.18em',
-      color: 'rgba(200,190,240,0.4)',
+      color: 'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))',
       textDecoration: 'none',
       textTransform: 'uppercase',
       transition: 'color 0.15s'
     },
     onMouseEnter: e => e.currentTarget.style.color = 'var(--white)',
-    onMouseLeave: e => e.currentTarget.style.color = 'rgba(200,190,240,0.4)'
+    onMouseLeave: e => e.currentTarget.style.color = 'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))'
   }, "\u2190 Zur\xFCck"), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
@@ -2012,7 +2012,7 @@ function SimAccessDenied() {
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
       letterSpacing: '0.42em',
-      color: 'rgba(var(--accent-rgb),0.4)',
+      color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Kein Zugriff"), /*#__PURE__*/React.createElement("div", {
@@ -2020,7 +2020,7 @@ function SimAccessDenied() {
       fontFamily: 'var(--font-display)',
       fontSize: '14px',
       letterSpacing: '0.3em',
-      color: 'rgba(var(--text-rgb),0.25)',
+      color: 'rgba(var(--text-rgb),calc(0.25*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Meruria \u2014 Kampfsimulation")));
@@ -2245,7 +2245,7 @@ function SimApp() {
   }, "\u2694 Kampf simulieren")), !canRun && /*#__PURE__*/React.createElement("p", {
     style: {
       textAlign: 'center',
-      color: 'rgba(160,140,255,0.3)',
+      color: 'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))',
       fontSize: '0.75rem',
       marginTop: 8
     }

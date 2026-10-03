@@ -43,13 +43,13 @@ function ImageSlot({ slotId, label, height, hue, portrait }) {
     <div style={base} {...ev}>
       <img src={src} style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}} alt={label} />
       <div style={{position:"absolute",bottom:5,right:7,fontFamily:"var(--font-mono)",fontSize:6.5,
-        color:"rgba(255,255,255,0.3)",background:"rgba(0,0,0,0.6)",padding:"1px 5px",borderRadius:2,letterSpacing:".12em"}}>ersetzen</div>
+        color:"color-mix(in srgb, rgba(255,255,255,0.3), rgb(var(--ink-rgb)) var(--cm))",background:"rgba(0,0,0,0.6)",padding:"1px 5px",borderRadius:2,letterSpacing:".12em"}}>ersetzen</div>
       <input ref={inp} type="file" accept="image/*" style={{display:"none"}} onChange={e=>load(e.target.files[0])} />
     </div>
   );
   return (
     <div style={{...base,
-      background:`repeating-linear-gradient(-45deg,transparent,transparent 8px,${str} 8px,${str} 9px),linear-gradient(160deg,rgba(28,16,62,0.97),rgba(14,9,36,0.98))`,
+      background:`repeating-linear-gradient(-45deg,transparent,transparent 8px,${str} 8px,${str} 9px),linear-gradient(160deg,rgba(var(--panel-rgb),0.97),rgba(var(--panel-rgb),0.98))`,
       display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:8}} {...ev}>
       <div style={{position:"absolute",inset:0,background:`radial-gradient(ellipse at 50% 45%,oklch(0.65 0.18 ${h} / 0.17) 0%,transparent 62%)`}} />
       {portrait
@@ -78,16 +78,16 @@ function ImageSlot({ slotId, label, height, hue, portrait }) {
 function SecTitle({ label }) {
   return (
     <div style={{marginBottom:10}}>
-      <span style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".28em",color:"rgba(124,77,255,0.5)",textTransform:"uppercase"}}>{label}</span>
-      <div style={{width:24,height:1,background:"linear-gradient(90deg,rgba(124,77,255,0.65),transparent)",marginTop:4}} />
+      <span style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".28em",color:"rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))",textTransform:"uppercase"}}>{label}</span>
+      <div style={{width:24,height:1,background:"linear-gradient(90deg,rgba(var(--purple-rgb),calc(0.65*var(--kp))),transparent)",marginTop:4}} />
     </div>
   );
 }
 function Card({children,style}) {
-  return <div style={{background:"var(--card-bg)",border:"1px solid rgba(124,77,255,0.2)",borderRadius:4,padding:"13px 14px",position:"relative",...style}}>{children}</div>;
+  return <div style={{background:"var(--card-bg)",border:"1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))",borderRadius:4,padding:"13px 14px",position:"relative",...style}}>{children}</div>;
 }
 function Corners({op=0.4,sz=14}) {
-  const b=`1.5px solid rgba(124,77,255,${op})`;
+  const b=`1.5px solid rgba(var(--purple-rgb),${op})`;
   return (<>
     <div style={{position:"absolute",top:0,left:0,  width:sz,height:sz,borderTop:b,borderLeft:b,  pointerEvents:"none"}}/>
     <div style={{position:"absolute",top:0,right:0, width:sz,height:sz,borderTop:b,borderRight:b, pointerEvents:"none"}}/>
@@ -97,8 +97,8 @@ function Corners({op=0.4,sz=14}) {
 }
 function IRow({label,value,bright}) {
   return (
-    <div style={{display:"flex",alignItems:"baseline",gap:6,padding:"3.5px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
-      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase",flex:"0 0 80px"}}>{label}</span>
+    <div style={{display:"flex",alignItems:"baseline",gap:6,padding:"3.5px 0",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.06*var(--kp)))"}}>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase",flex:"0 0 80px"}}>{label}</span>
       <span style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:bright?400:300,color:bright?"var(--white)":"var(--silver)",flex:1}}>{value}</span>
     </div>
   );
@@ -181,32 +181,32 @@ function SpellPicker({ onAdd, onClose, defaultKlasse = '' }) {
   }
 
   const overlayStyle = {
-    position:'fixed',inset:0,zIndex:9000,background:'rgba(3,2,10,0.82)',
+    position:'fixed',inset:0,zIndex:9000,background:'rgba(var(--bg-rgb),0.82)',
     display:'flex',alignItems:'center',justifyContent:'center',padding:16,backdropFilter:'blur(4px)',
   };
   const modalStyle = {
-    background:'rgba(8,6,22,0.98)',border:'1px solid rgba(124,77,255,0.28)',borderRadius:6,
-    width:'100%',maxWidth:560,maxHeight:'80vh',display:'flex',flexDirection:'column',boxShadow:'0 8px 40px rgba(0,0,0,0.7)',
+    background:'rgba(var(--panel-rgb),0.98)',border:'1px solid rgba(var(--purple-rgb),calc(0.28*var(--kp)))',borderRadius:6,
+    width:'100%',maxWidth:560,maxHeight:'calc(var(--vh, 1vh) * 80)',display:'flex',flexDirection:'column',boxShadow:'0 8px 40px rgba(var(--shadow-rgb),calc(0.7 * var(--shadow-k)))',
   };
   const tabBtn = active => ({
     fontFamily:'var(--font-mono)',fontSize:9,letterSpacing:'.16em',textTransform:'uppercase',
-    padding:'7px 14px',background:active?'rgba(124,77,255,0.18)':'transparent',
-    border:'none',borderBottom:active?'2px solid rgba(124,77,255,0.7)':'2px solid transparent',
-    cursor:'pointer',color:active?'rgba(200,190,240,0.9)':'rgba(160,140,255,0.4)',transition:'all .15s',
+    padding:'7px 14px',background:active?'rgba(var(--purple-rgb),calc(0.18*var(--kp)))':'transparent',
+    border:'none',borderBottom:active?'2px solid rgba(var(--purple-rgb),calc(0.7*var(--kp)))':'2px solid transparent',
+    cursor:'pointer',color:active?'rgba(var(--text-rgb),calc(0.9*var(--kt)))':'rgba(var(--accent-rgb),calc(0.4*var(--ka)))',transition:'all .15s',
   });
   const rowStyle = {
     display:'flex',alignItems:'center',gap:10,padding:'8px 12px',cursor:'pointer',
-    borderBottom:'1px solid rgba(124,77,255,0.06)',transition:'background .12s',
+    borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.06*var(--kp)))',transition:'background .12s',
   };
 
   return (
     <div style={overlayStyle} onClick={e => e.target === e.currentTarget && onClose()}>
       <div style={modalStyle}>
-        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'14px 16px',borderBottom:'1px solid rgba(124,77,255,0.12)'}}>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'14px 16px',borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))'}}>
           <span style={{fontFamily:'var(--font-display)',fontSize:13,letterSpacing:'.2em',color:'var(--white)',textTransform:'uppercase'}}>Zauber hinzufügen</span>
-          <button onClick={onClose} style={{background:'none',border:'none',cursor:'pointer',color:'rgba(160,140,255,0.5)',fontSize:16}}>✕</button>
+          <button onClick={onClose} style={{background:'none',border:'none',cursor:'pointer',color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',fontSize:16}}>✕</button>
         </div>
-        <div style={{display:'flex',borderBottom:'1px solid rgba(124,77,255,0.1)'}}>
+        <div style={{display:'flex',borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))'}}>
           {[['alle','Alle'],['schaden','Schaden'],['heilung','Heilung']].map(([m,l]) => (
             <button key={m} style={tabBtn(mode===m)} onClick={()=>setMode(m)}>{l}</button>
           ))}
@@ -214,15 +214,15 @@ function SpellPicker({ onAdd, onClose, defaultKlasse = '' }) {
         <div style={{padding:'10px 12px',display:'flex',gap:8}}>
           <input value={q} onChange={e=>setQ(e.target.value)} autoFocus
             placeholder="Zauber suchen…"
-            style={{flex:1,fontFamily:'var(--font-body)',fontSize:12,background:'rgba(124,77,255,0.05)',
-              border:'1px solid rgba(124,77,255,0.2)',borderRadius:3,padding:'6px 10px',
+            style={{flex:1,fontFamily:'var(--font-body)',fontSize:12,background:'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',
+              border:'1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))',borderRadius:3,padding:'6px 10px',
               color:'var(--white)',outline:'none'}} />
           <select value={filterKlasse} onChange={e=>setFilterKlasse(e.target.value)}
-            style={{fontFamily:'var(--font-mono)',fontSize:9,background:'#0d0b24',
-              border:'1px solid rgba(124,77,255,0.2)',borderRadius:3,padding:'6px 8px',
-              color:'rgba(200,190,240,0.8)',outline:'none',flexShrink:0,width:130}}>
-            <option value="" style={{background:'#0d0b24',color:'rgba(200,190,240,0.85)'}}>Alle Klassen</option>
-            {KLASSEN_SPELL.map(k => <option key={k} value={k} style={{background:'#0d0b24',color:'rgba(200,190,240,0.85)'}}>{k}</option>)}
+            style={{fontFamily:'var(--font-mono)',fontSize:9,background:'rgb(var(--panel-rgb))',
+              border:'1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))',borderRadius:3,padding:'6px 8px',
+              color:'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))',outline:'none',flexShrink:0,width:130}}>
+            <option value="" style={{background:'rgb(var(--panel-rgb))',color:'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))'}}>Alle Klassen</option>
+            {KLASSEN_SPELL.map(k => <option key={k} value={k} style={{background:'rgb(var(--panel-rgb))',color:'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))'}}>{k}</option>)}
           </select>
         </div>
         <div style={{padding:'0 12px 8px',display:'flex',gap:4,flexWrap:'wrap'}}>
@@ -232,31 +232,31 @@ function SpellPicker({ onAdd, onClose, defaultKlasse = '' }) {
               <button key={v} onClick={()=>setFilterGrad(v)}
                 style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.1em',
                   padding:'3px 7px',borderRadius:2,cursor:'pointer',transition:'all .12s',
-                  background: active ? 'rgba(124,77,255,0.25)' : 'transparent',
-                  border: active ? '1px solid rgba(124,77,255,0.55)' : '1px solid rgba(124,77,255,0.15)',
-                  color: active ? 'rgba(200,190,240,0.9)' : 'rgba(160,140,255,0.4)'}}>
+                  background: active ? 'rgba(var(--purple-rgb),calc(0.25*var(--kp)))' : 'transparent',
+                  border: active ? '1px solid rgba(var(--purple-rgb),calc(0.55*var(--kp)))' : '1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))',
+                  color: active ? 'rgba(var(--text-rgb),calc(0.9*var(--kt)))' : 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))'}}>
                 {l}
               </button>
             );
           })}
         </div>
-        <div style={{fontSize:'0.65rem',color:'rgba(160,140,255,0.3)',padding:'0 12px 6px',fontFamily:'var(--font-mono)'}}>
+        <div style={{fontSize:'0.65rem',color:'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))',padding:'0 12px 6px',fontFamily:'var(--font-mono)'}}>
           {results.length} Zauber
         </div>
         <div style={{overflowY:'auto',flex:1}}>
           {results.map(z => (
             <div key={z.name+z.grad} style={rowStyle}
-              onMouseEnter={e=>e.currentTarget.style.background='rgba(124,77,255,0.07)'}
+              onMouseEnter={e=>e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.07*var(--kp)))'}
               onMouseLeave={e=>e.currentTarget.style.background='transparent'}
               onClick={() => handleAdd(z)}>
               {mode === 'heilung'
                 ? <div style={{width:26,height:26,borderRadius:'50%',background:'rgba(80,200,120,0.08)',border:'1px solid rgba(80,200,120,0.2)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'0.7rem',flexShrink:0}}>💚</div>
-                : <div style={{width:26,height:26,borderRadius:'50%',background:'rgba(160,140,255,0.06)',border:'1px solid rgba(160,140,255,0.12)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'0.58rem',color:TYPE_COLORS_SPELL[z.schadenTyp]||'rgba(160,140,255,0.4)',flexShrink:0,fontWeight:700}}>
+                : <div style={{width:26,height:26,borderRadius:'50%',background:'rgba(var(--accent-rgb),calc(0.06*var(--ka)))',border:'1px solid rgba(var(--accent-rgb),calc(0.12*var(--ka)))',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'0.58rem',color:TYPE_COLORS_SPELL[z.schadenTyp]||'rgba(var(--accent-rgb),calc(0.4*var(--ka)))',flexShrink:0,fontWeight:700}}>
                     {mode==='schaden' ? (z.schadenTyp||'?').substring(0,2) : (z.schule||'?').substring(0,2)}
                   </div>
               }
               <span style={{fontFamily:'var(--font-body)',fontSize:12.5,color:'var(--white)',flex:1}}>{z.name}</span>
-              <span style={{fontFamily:'var(--font-mono)',fontSize:8.5,color:'rgba(160,140,255,0.4)',whiteSpace:'nowrap'}}>
+              <span style={{fontFamily:'var(--font-mono)',fontSize:8.5,color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',whiteSpace:'nowrap'}}>
                 {mode==='heilung' ? `Grad ${z.grad} · ${z._heilungsDice} TP`
                   : mode==='schaden' ? `Grad ${z.grad} · ${z.schaden} · ${z.schadenTyp||'?'}`
                   : `Grad ${z.grad} · ${z.schule||'?'}`}
@@ -282,7 +282,7 @@ function ZauberPreview({ zauberEntry, onClose }) {
   const komps = (fullSpell.komponenten || []).map(k => kompMap[k] || k).join(', ');
 
   const isHeil = zauberEntry.istHeilung;
-  const typeColor = TYPE_COLORS_SPELL[fullSpell.schadenTyp] || 'rgba(160,140,255,0.6)';
+  const typeColor = TYPE_COLORS_SPELL[fullSpell.schadenTyp] || 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))';
 
   const metaItems = [
     { label: 'Zeitaufwand',   value: fullSpell.zeitaufwand },
@@ -292,45 +292,45 @@ function ZauberPreview({ zauberEntry, onClose }) {
   ].filter(x => x.value);
 
   return (
-    <div style={{position:'fixed',inset:0,zIndex:9100,background:'rgba(3,2,10,0.85)',
+    <div style={{position:'fixed',inset:0,zIndex:9100,background:'rgba(var(--bg-rgb),0.85)',
       display:'flex',alignItems:'center',justifyContent:'center',padding:16,backdropFilter:'blur(4px)'}}
       onClick={e => e.target === e.currentTarget && onClose()}>
-      <div style={{background:'rgba(8,6,22,0.98)',border:'1px solid rgba(124,77,255,0.28)',borderRadius:6,
-        width:'100%',maxWidth:520,maxHeight:'85vh',display:'flex',flexDirection:'column',
-        boxShadow:'0 8px 40px rgba(0,0,0,0.7)'}}>
+      <div style={{background:'rgba(var(--panel-rgb),0.98)',border:'1px solid rgba(var(--purple-rgb),calc(0.28*var(--kp)))',borderRadius:6,
+        width:'100%',maxWidth:520,maxHeight:'calc(var(--vh, 1vh) * 85)',display:'flex',flexDirection:'column',
+        boxShadow:'0 8px 40px rgba(var(--shadow-rgb),calc(0.7 * var(--shadow-k)))'}}>
 
         {/* Kopf */}
-        <div style={{padding:'16px 18px 14px',borderBottom:'1px solid rgba(124,77,255,0.12)',flexShrink:0,
+        <div style={{padding:'16px 18px 14px',borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))',flexShrink:0,
           display:'flex',alignItems:'flex-start',justifyContent:'space-between',gap:12}}>
           <div>
             <div style={{fontFamily:'var(--font-display)',fontSize:16,letterSpacing:'.18em',
               color:'var(--white)',textTransform:'uppercase',marginBottom:5}}>{fullSpell.name}</div>
             <div style={{display:'flex',flexWrap:'wrap',gap:5}}>
               <span style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.12em',
-                padding:'2px 8px',background:'rgba(124,77,255,0.08)',border:'1px solid rgba(124,77,255,0.18)',
-                borderRadius:2,color:'rgba(160,140,255,0.65)'}}>{gradLabel}</span>
+                padding:'2px 8px',background:'rgba(var(--purple-rgb),calc(0.08*var(--kp)))',border:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',
+                borderRadius:2,color:'rgba(var(--accent-rgb),calc(0.65*var(--ka) + var(--tb)))'}}>{gradLabel}</span>
               {fullSpell.schule && (
                 <span style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.12em',
-                  padding:'2px 8px',background:'rgba(124,77,255,0.08)',border:'1px solid rgba(124,77,255,0.18)',
-                  borderRadius:2,color:'rgba(160,140,255,0.65)'}}>{fullSpell.schule}</span>
+                  padding:'2px 8px',background:'rgba(var(--purple-rgb),calc(0.08*var(--kp)))',border:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',
+                  borderRadius:2,color:'rgba(var(--accent-rgb),calc(0.65*var(--ka) + var(--tb)))'}}>{fullSpell.schule}</span>
               )}
               {fullSpell.ritual && (
                 <span style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.12em',
                   padding:'2px 8px',background:'rgba(94,232,208,0.06)',border:'1px solid rgba(94,232,208,0.2)',
-                  borderRadius:2,color:'rgba(94,232,208,0.6)'}}>Ritual</span>
+                  borderRadius:2,color:'color-mix(in srgb, rgba(94,232,208,0.6), rgb(var(--ink-rgb)) var(--cm))'}}>Ritual</span>
               )}
               {fullSpell.konzentration && (
                 <span style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.12em',
                   padding:'2px 8px',background:'rgba(251,191,36,0.06)',border:'1px solid rgba(251,191,36,0.2)',
-                  borderRadius:2,color:'rgba(251,191,36,0.6)'}}>Konzentration</span>
+                  borderRadius:2,color:'color-mix(in srgb, rgba(251,191,36,0.6), rgb(var(--ink-rgb)) var(--cm))'}}>Konzentration</span>
               )}
             </div>
           </div>
           <button onClick={onClose} style={{background:'none',border:'none',cursor:'pointer',
-            color:'rgba(160,140,255,0.4)',fontSize:16,flexShrink:0,padding:'2px 4px',lineHeight:1,
+            color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',fontSize:16,flexShrink:0,padding:'2px 4px',lineHeight:1,
             transition:'color .12s'}}
-            onMouseEnter={e=>e.currentTarget.style.color='rgba(200,190,240,0.8)'}
-            onMouseLeave={e=>e.currentTarget.style.color='rgba(160,140,255,0.4)'}>✕</button>
+            onMouseEnter={e=>e.currentTarget.style.color='rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))'}
+            onMouseLeave={e=>e.currentTarget.style.color='rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))'}>✕</button>
         </div>
 
         {/* Body */}
@@ -340,10 +340,10 @@ function ZauberPreview({ zauberEntry, onClose }) {
           {metaItems.length > 0 && (
             <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:6,marginBottom:14}}>
               {metaItems.map(({label, value}) => (
-                <div key={label} style={{background:'rgba(124,77,255,0.04)',border:'1px solid rgba(124,77,255,0.1)',
+                <div key={label} style={{background:'rgba(var(--purple-rgb),calc(0.04*var(--kp)))',border:'1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
                   borderRadius:3,padding:'8px 10px'}}>
                   <div style={{fontFamily:'var(--font-mono)',fontSize:7.5,letterSpacing:'.2em',
-                    color:'rgba(124,77,255,0.4)',textTransform:'uppercase',marginBottom:3}}>{label}</div>
+                    color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:3}}>{label}</div>
                   <div style={{fontFamily:'var(--font-body)',fontSize:11.5,color:'var(--white)',fontWeight:300}}>{value}</div>
                 </div>
               ))}
@@ -352,7 +352,7 @@ function ZauberPreview({ zauberEntry, onClose }) {
 
           {/* Material */}
           {fullSpell.material && (
-            <div style={{fontFamily:'var(--font-mono)',fontSize:8.5,color:'rgba(160,140,255,0.4)',
+            <div style={{fontFamily:'var(--font-mono)',fontSize:8.5,color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
               marginBottom:12,fontStyle:'italic'}}>Material: {fullSpell.material}</div>
           )}
 
@@ -366,15 +366,15 @@ function ZauberPreview({ zauberEntry, onClose }) {
               )}
               {fullSpell.rettungswurfAttribut && (
                 <span style={{fontFamily:'var(--font-mono)',fontSize:9,letterSpacing:'.1em',padding:'4px 10px',
-                  background:'rgba(124,77,255,0.07)',border:'1px solid rgba(124,77,255,0.2)',
-                  borderRadius:3,color:'rgba(160,140,255,0.75)'}}>
+                  background:'rgba(var(--purple-rgb),calc(0.07*var(--kp)))',border:'1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))',
+                  borderRadius:3,color:'rgba(var(--accent-rgb),calc(0.75*var(--ka) + var(--tb)))'}}>
                   RW: {fullSpell.rettungswurfAttribut}{fullSpell.halbiert ? ' · ½ bei Erfolg' : ''}
                 </span>
               )}
               {fullSpell.istAngriff && (
                 <span style={{fontFamily:'var(--font-mono)',fontSize:9,letterSpacing:'.1em',padding:'4px 10px',
-                  background:'rgba(124,77,255,0.07)',border:'1px solid rgba(124,77,255,0.2)',
-                  borderRadius:3,color:'rgba(160,140,255,0.75)'}}>Zauberangriff</span>
+                  background:'rgba(var(--purple-rgb),calc(0.07*var(--kp)))',border:'1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))',
+                  borderRadius:3,color:'rgba(var(--accent-rgb),calc(0.75*var(--ka) + var(--tb)))'}}>Zauberangriff</span>
               )}
             </div>
           )}
@@ -389,14 +389,14 @@ function ZauberPreview({ zauberEntry, onClose }) {
 
           {/* Klassen */}
           {fullSpell.klassen && fullSpell.klassen.length > 0 && (
-            <div style={{marginTop:16,paddingTop:12,borderTop:'1px solid rgba(124,77,255,0.08)'}}>
+            <div style={{marginTop:16,paddingTop:12,borderTop:'1px solid rgba(var(--purple-rgb),calc(0.08*var(--kp)))'}}>
               <div style={{fontFamily:'var(--font-mono)',fontSize:7.5,letterSpacing:'.22em',
-                color:'rgba(124,77,255,0.3)',textTransform:'uppercase',marginBottom:7}}>Klassen</div>
+                color:'rgba(var(--purple-rgb),calc(0.3*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:7}}>Klassen</div>
               <div style={{display:'flex',flexWrap:'wrap',gap:4}}>
                 {fullSpell.klassen.map(k => (
                   <span key={k} style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.1em',
-                    padding:'2px 8px',background:'rgba(124,77,255,0.05)',border:'1px solid rgba(124,77,255,0.13)',
-                    borderRadius:2,color:'rgba(160,140,255,0.45)'}}>{k}</span>
+                    padding:'2px 8px',background:'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',border:'1px solid rgba(var(--purple-rgb),calc(0.13*var(--kp)))',
+                    borderRadius:2,color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))'}}>{k}</span>
                 ))}
               </div>
             </div>
@@ -428,45 +428,45 @@ function ZauberSection({ zauber, updZauber, editing, charKlasse = '' }) {
     <>
       <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:10}}>
         <div>
-          <div style={{fontFamily:'var(--font-mono)',fontSize:9,letterSpacing:'.28em',color:'rgba(124,77,255,0.45)',textTransform:'uppercase',marginBottom:4}}>Zauber</div>
-          <div style={{width:28,height:1,background:'linear-gradient(90deg,rgba(124,77,255,0.65),transparent)'}} />
+          <div style={{fontFamily:'var(--font-mono)',fontSize:9,letterSpacing:'.28em',color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:4}}>Zauber</div>
+          <div style={{width:28,height:1,background:'linear-gradient(90deg,rgba(var(--purple-rgb),calc(0.65*var(--kp))),transparent)'}} />
         </div>
         {editing && (
           <button onClick={()=>setShowPicker(true)}
             style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.16em',textTransform:'uppercase',
-              padding:'5px 12px',background:'transparent',border:'1px solid rgba(124,77,255,0.25)',
-              borderRadius:3,cursor:'pointer',color:'rgba(124,77,255,0.55)',transition:'all .15s'}}
-            onMouseEnter={e=>{e.currentTarget.style.borderColor='rgba(124,77,255,0.6)';e.currentTarget.style.color='rgba(200,190,240,0.9)';}}
-            onMouseLeave={e=>{e.currentTarget.style.borderColor='rgba(124,77,255,0.25)';e.currentTarget.style.color='rgba(124,77,255,0.55)';}}>
+              padding:'5px 12px',background:'transparent',border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))',
+              borderRadius:3,cursor:'pointer',color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',transition:'all .15s'}}
+            onMouseEnter={e=>{e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.6*var(--kp)))';e.currentTarget.style.color='rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))';}}
+            onMouseLeave={e=>{e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.25*var(--kp)))';e.currentTarget.style.color='rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))';}}>
             + Zauber
           </button>
         )}
       </div>
       {zauber.length === 0 && (
-        <div style={{fontFamily:'var(--font-mono)',fontSize:9,color:'rgba(160,140,255,0.2)',padding:'8px 0'}}>Keine Zauber eingetragen.</div>
+        <div style={{fontFamily:'var(--font-mono)',fontSize:9,color:'rgba(var(--accent-rgb),calc(0.2*var(--ka) + var(--tb)))',padding:'8px 0'}}>Keine Zauber eingetragen.</div>
       )}
       <div style={{display:'flex',flexDirection:'column',gap:5}}>
         {zauber.map(z => {
           const isHeil = z.istHeilung;
           const isKampf = z.istKampfzauber || z.schaden;
-          const typeColor = TYPE_COLORS_SPELL[z.schadenTyp] || 'rgba(160,140,255,0.5)';
+          const typeColor = TYPE_COLORS_SPELL[z.schadenTyp] || 'rgba(var(--accent-rgb),calc(0.5*var(--ka)))';
           return (
             <div key={z.id}
               onClick={() => setPreview(z)}
               style={{display:'flex',alignItems:'center',gap:10,cursor:'pointer',
-                background:'rgba(7,4,18,0.8)',border:'1px solid rgba(124,77,255,0.14)',
+                background:'rgba(var(--panel-rgb),0.8)',border:'1px solid rgba(var(--purple-rgb),calc(0.14*var(--kp)))',
                 borderRadius:3,padding:'7px 11px',transition:'border-color .15s'}}
-              onMouseEnter={e=>e.currentTarget.style.borderColor='rgba(124,77,255,0.35)'}
-              onMouseLeave={e=>e.currentTarget.style.borderColor='rgba(124,77,255,0.14)'}>
+              onMouseEnter={e=>e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.35*var(--kp)))'}
+              onMouseLeave={e=>e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.14*var(--kp)))'}>
               <div style={{width:22,height:22,borderRadius:'50%',flexShrink:0,display:'flex',alignItems:'center',justifyContent:'center',fontSize:'0.55rem',fontWeight:700,
-                background: isHeil ? 'rgba(80,200,120,0.08)' : 'rgba(160,140,255,0.06)',
-                border: isHeil ? '1px solid rgba(80,200,120,0.2)' : '1px solid rgba(160,140,255,0.12)',
-                color: isHeil ? '#4ade80' : (isKampf ? typeColor : 'rgba(160,140,255,0.4)')}}>
+                background: isHeil ? 'rgba(80,200,120,0.08)' : 'rgba(var(--accent-rgb),calc(0.06*var(--ka)))',
+                border: isHeil ? '1px solid rgba(80,200,120,0.2)' : '1px solid rgba(var(--accent-rgb),calc(0.12*var(--ka)))',
+                color: isHeil ? 'color-mix(in srgb, #4ade80, rgb(var(--ink-rgb)) var(--cm))' : (isKampf ? typeColor : 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))')}}>
                 {isHeil ? '💚' : (z.schule||'?').substring(0,2)}
               </div>
               <div style={{flex:1,minWidth:0}}>
                 <div style={{fontFamily:'var(--font-body)',fontSize:12.5,color:'var(--white)',fontWeight:400}}>{z.name}</div>
-                <div style={{fontFamily:'var(--font-mono)',fontSize:8,color:'rgba(160,140,255,0.4)',marginTop:1}}>
+                <div style={{fontFamily:'var(--font-mono)',fontSize:8,color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',marginTop:1}}>
                   {gradBadge(z.grad)}
                   {z.schule && ` · ${z.schule}`}
                   {isHeil && z.heilung && ` · 💚 ${z.heilung} TP`}
@@ -476,7 +476,7 @@ function ZauberSection({ zauber, updZauber, editing, charKlasse = '' }) {
               {editing && (
                 <button onClick={e=>{e.stopPropagation();removeZauber(z.id);}}
                   style={{background:'none',border:'none',cursor:'pointer',color:'rgba(200,80,80,0.35)',fontSize:13,padding:'2px 4px',lineHeight:1,transition:'color .12s',flexShrink:0}}
-                  onMouseEnter={e=>e.currentTarget.style.color='rgba(240,110,110,0.85)'}
+                  onMouseEnter={e=>e.currentTarget.style.color='color-mix(in srgb, rgba(240,110,110,0.85), rgb(var(--ink-rgb)) var(--cm))'}
                   onMouseLeave={e=>e.currentTarget.style.color='rgba(200,80,80,0.35)'}>✕</button>
               )}
             </div>
@@ -557,20 +557,20 @@ function CharCard({ ch, onSelect, onDelete, onExport }) {
   const subclass = ch._char?.subclass && ch._char.subclass !== '—' ? ch._char.subclass : null;
 
   if (delConfirm) return (
-    <div style={{background:"rgba(7,4,18,0.95)",border:"1px solid rgba(200,60,60,0.45)",borderRadius:6,
+    <div style={{background:"rgba(var(--panel-rgb),0.95)",border:"1px solid rgba(200,60,60,0.45)",borderRadius:6,
       padding:"20px 16px",display:"flex",flexDirection:"column",gap:12,alignItems:"center",justifyContent:"center",
       minHeight:220}}>
-      <div style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".12em",color:"rgba(230,110,110,0.85)",
+      <div style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".12em",color:"color-mix(in srgb, rgba(230,110,110,0.85), rgb(var(--ink-rgb)) var(--cm))",
         textTransform:"uppercase",textAlign:"center"}}>„{ch.name}" löschen?</div>
       <div style={{display:"flex",gap:8}}>
         <button onClick={()=>{onDelete(ch.id);setDelConfirm(false);}}
           style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".12em",textTransform:"uppercase",
             padding:"6px 14px",background:"rgba(200,50,50,0.2)",border:"1px solid rgba(200,60,60,0.5)",
-            borderRadius:3,cursor:"pointer",color:"rgba(240,140,140,0.9)"}}>Löschen</button>
+            borderRadius:3,cursor:"pointer",color:"color-mix(in srgb, rgba(240,140,140,0.9), rgb(var(--ink-rgb)) var(--cm))"}}>Löschen</button>
         <button onClick={()=>setDelConfirm(false)}
           style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".12em",textTransform:"uppercase",
-            padding:"6px 14px",background:"transparent",border:"1px solid rgba(124,77,255,0.3)",
-            borderRadius:3,cursor:"pointer",color:"rgba(124,77,255,0.6)"}}>Abbrechen</button>
+            padding:"6px 14px",background:"transparent",border:"1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))",
+            borderRadius:3,cursor:"pointer",color:"rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))"}}>Abbrechen</button>
       </div>
     </div>
   );
@@ -580,52 +580,52 @@ function CharCard({ ch, onSelect, onDelete, onExport }) {
       onClick={()=>onSelect(ch)}
       onMouseEnter={()=>setHover(true)}
       onMouseLeave={()=>setHover(false)}
-      style={{position:"relative",background:"rgba(7,4,18,0.92)",
-        border:`1px solid rgba(124,77,255,${hover?0.5:0.2})`,borderRadius:6,
+      style={{position:"relative",background:"rgba(var(--panel-rgb),0.92)",
+        border:`1px solid rgba(var(--purple-rgb),${hover?0.5:0.2})`,borderRadius:6,
         overflow:"hidden",transition:"border-color .18s,transform .18s",
         transform:hover?"translateY(-2px)":"none",cursor:"pointer"}}>
 
       {/* Bild */}
-      <div style={{position:"relative",paddingBottom:"130%",background:"linear-gradient(160deg,rgba(20,12,46,0.95),rgba(8,5,22,0.98))"}}>
+      <div style={{position:"relative",paddingBottom:"130%",background:"linear-gradient(160deg,rgba(var(--panel-rgb),0.95),rgba(var(--panel-rgb),0.98))"}}>
         {bild
           ? <img src={bild} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",objectPosition:"top"}} alt="" />
           : <div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center"}}>
-              <span style={{fontFamily:"var(--font-display)",fontSize:52,color:"rgba(124,77,255,0.15)",letterSpacing:".1em"}}>
+              <span style={{fontFamily:"var(--font-display)",fontSize:52,color:"rgba(var(--purple-rgb),calc(0.15*var(--kp) + var(--tb)))",letterSpacing:".1em"}}>
                 {ch.name?.[0]||'?'}
               </span>
             </div>
         }
         {/* Gradient-Overlay unten */}
         <div style={{position:"absolute",bottom:0,left:0,right:0,height:"55%",
-          background:"linear-gradient(to top,rgba(5,4,15,0.98) 0%,transparent 100%)",pointerEvents:"none"}} />
+          background:"linear-gradient(to top,rgba(var(--bg-rgb),0.98) 0%,transparent 100%)",pointerEvents:"none"}} />
         {/* Level-Badge */}
         {level && <div style={{position:"absolute",top:8,right:8,
           fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".16em",
-          background:"rgba(5,4,15,0.82)",border:"1px solid rgba(124,77,255,0.35)",
-          borderRadius:3,padding:"2px 7px",color:"rgba(160,140,255,0.8)"}}>
+          background:"rgba(var(--bg-rgb),0.82)",border:"1px solid rgba(var(--purple-rgb),calc(0.35*var(--kp)))",
+          borderRadius:3,padding:"2px 7px",color:"rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))"}}>
           Stufe {level}
         </div>}
         {/* Typ-Badge für NSC */}
         {ch.type === 'nsc' && <div style={{position:"absolute",top:8,left:8,
           fontFamily:"var(--font-mono)",fontSize:7,letterSpacing:".14em",
-          background:"rgba(5,4,15,0.82)",border:"1px solid rgba(180,120,60,0.4)",
-          borderRadius:3,padding:"2px 7px",color:"rgba(220,170,100,0.75)"}}>NSC</div>}
+          background:"rgba(var(--bg-rgb),0.82)",border:"1px solid rgba(180,120,60,0.4)",
+          borderRadius:3,padding:"2px 7px",color:"color-mix(in srgb, rgba(220,170,100,0.75), rgb(var(--ink-rgb)) var(--cm))"}}>NSC</div>}
 
         {/* Hover-Aktionen */}
         {hover && <div style={{position:"absolute",top:8,left:8,display:"flex",gap:5}}>
           <button onClick={e=>{e.stopPropagation();onExport(ch);}}
             title="Exportieren"
             style={{fontFamily:"var(--font-mono)",fontSize:10,width:26,height:26,display:"flex",alignItems:"center",
-              justifyContent:"center",background:"rgba(5,4,15,0.85)",border:"1px solid rgba(124,77,255,0.35)",
-              borderRadius:3,cursor:"pointer",color:"rgba(160,140,255,0.7)",transition:"all .15s"}}
-            onMouseEnter={e=>e.currentTarget.style.color="#e8e2ff"}
-            onMouseLeave={e=>e.currentTarget.style.color="rgba(160,140,255,0.7)"}>↓</button>
+              justifyContent:"center",background:"rgba(var(--bg-rgb),0.85)",border:"1px solid rgba(var(--purple-rgb),calc(0.35*var(--kp)))",
+              borderRadius:3,cursor:"pointer",color:"rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))",transition:"all .15s"}}
+            onMouseEnter={e=>e.currentTarget.style.color="var(--white)"}
+            onMouseLeave={e=>e.currentTarget.style.color="rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))"}>↓</button>
           <button onClick={e=>{e.stopPropagation();setDelConfirm(true);}}
             title="Löschen"
             style={{fontFamily:"var(--font-mono)",fontSize:13,width:26,height:26,display:"flex",alignItems:"center",
-              justifyContent:"center",background:"rgba(5,4,15,0.85)",border:"1px solid rgba(200,60,60,0.3)",
+              justifyContent:"center",background:"rgba(var(--bg-rgb),0.85)",border:"1px solid rgba(200,60,60,0.3)",
               borderRadius:3,cursor:"pointer",color:"rgba(200,80,80,0.55)",transition:"all .15s"}}
-            onMouseEnter={e=>e.currentTarget.style.color="rgba(240,110,110,0.9)"}
+            onMouseEnter={e=>e.currentTarget.style.color="color-mix(in srgb, rgba(240,110,110,0.9), rgb(var(--ink-rgb)) var(--cm))"}
             onMouseLeave={e=>e.currentTarget.style.color="rgba(200,80,80,0.55)"}>×</button>
         </div>}
       </div>
@@ -638,8 +638,8 @@ function CharCard({ ch, onSelect, onDelete, onExport }) {
         <div style={{display:"flex",gap:4,flexWrap:"wrap"}}>
           {[ch.race, ch.class, subclass, ch.division].filter(Boolean).map((t,i)=>(
             <span key={i} style={{fontFamily:"var(--font-mono)",fontSize:7,padding:"1px 6px",
-              background:"rgba(124,77,255,0.1)",border:"1px solid rgba(124,77,255,0.22)",borderRadius:2,
-              color:"rgba(200,190,240,0.65)",letterSpacing:".06em",whiteSpace:"nowrap"}}>{t}</span>
+              background:"rgba(var(--purple-rgb),calc(0.1*var(--kp)))",border:"1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))",borderRadius:2,
+              color:"rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))",letterSpacing:".06em",whiteSpace:"nowrap"}}>{t}</span>
           ))}
         </div>
       </div>
@@ -698,71 +698,71 @@ function CharSelection({ chars, onSelect, onNew, onReload }) {
 
   const selStyle = {
     fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".12em",textTransform:"uppercase",
-    padding:"5px 10px",background:"#0e0c20",border:"1px solid rgba(124,77,255,0.22)",
-    borderRadius:3,cursor:"pointer",color:"rgba(200,190,240,0.75)",outline:"none",colorScheme:"dark"
+    padding:"5px 10px",background:"rgb(var(--panel-rgb))",border:"1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))",
+    borderRadius:3,cursor:"pointer",color:"rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))",outline:"none",colorScheme:"dark"
   };
 
   const toolBtn = {
     fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".16em",textTransform:"uppercase",
-    padding:"6px 14px",background:"transparent",border:"1px solid rgba(124,77,255,0.2)",borderRadius:3,
-    cursor:"pointer",color:"rgba(124,77,255,0.45)",transition:"all .18s"
+    padding:"6px 14px",background:"transparent",border:"1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))",borderRadius:3,
+    cursor:"pointer",color:"rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))",transition:"all .18s"
   };
 
   const hasFilter = raceF || classF || divF || q;
 
   return (
-    <div style={{minHeight:"100vh",padding:"0 32px 48px"}}>
+    <div className="mc-page" style={{minHeight:"calc(var(--vh, 1vh) * 100)",padding:"0 32px 48px"}}>
       {/* Header */}
-      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"24px 0 20px",
-        borderBottom:"1px solid rgba(124,77,255,0.1)",marginBottom:24}}>
-        <div style={{display:"flex",alignItems:"center",gap:20}}>
+      <div className="mc-head" style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"24px 0 20px",
+        borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))",marginBottom:24}}>
+        <div className="mc-head-left" style={{display:"flex",alignItems:"center",gap:20}}>
           {/* Zurück-Button */}
           <a href="/index.html"
             style={{display:"inline-flex",alignItems:"center",gap:6,fontFamily:"var(--font-mono)",
-              fontSize:8,letterSpacing:".18em",textTransform:"uppercase",color:"rgba(124,77,255,0.45)",
-              textDecoration:"none",border:"1px solid rgba(124,77,255,0.2)",borderRadius:3,
+              fontSize:8,letterSpacing:".18em",textTransform:"uppercase",color:"rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))",
+              textDecoration:"none",border:"1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))",borderRadius:3,
               padding:"5px 12px",transition:"all .18s",flexShrink:0}}
-            onMouseEnter={e=>{e.currentTarget.style.color="rgba(160,140,255,0.8)";e.currentTarget.style.borderColor="rgba(124,77,255,0.5)";}}
-            onMouseLeave={e=>{e.currentTarget.style.color="rgba(124,77,255,0.45)";e.currentTarget.style.borderColor="rgba(124,77,255,0.2)";}}>
+            onMouseEnter={e=>{e.currentTarget.style.color="rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))";e.currentTarget.style.borderColor="rgba(var(--purple-rgb),calc(0.5*var(--kp)))";}}
+            onMouseLeave={e=>{e.currentTarget.style.color="rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))";e.currentTarget.style.borderColor="rgba(var(--purple-rgb),calc(0.2*var(--kp)))";}}>
             ← Zurück
           </a>
           <div>
-            <div style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".28em",color:"rgba(124,77,255,0.45)",
+            <div style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".28em",color:"rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))",
               textTransform:"uppercase",marginBottom:3}}>Meruria · Charaktere</div>
             <h1 style={{fontFamily:"var(--font-display)",fontWeight:400,fontSize:22,letterSpacing:".2em",
-              color:"var(--white)",textTransform:"uppercase",textShadow:"0 0 28px rgba(124,77,255,0.2)"}}>
+              color:"var(--white)",textTransform:"uppercase",textShadow:"0 0 28px rgba(var(--purple-rgb),calc(0.2*var(--kp)))"}}>
               Charakter wählen
             </h1>
           </div>
         </div>
-        <div style={{display:"flex",gap:8,alignItems:"center"}}>
+        <div className="mc-tools" style={{display:"flex",gap:8,alignItems:"center"}}>
           <button onClick={()=>exportChars(chars)} style={toolBtn}
-            onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.5)";e.currentTarget.style.color="rgba(160,140,255,0.8)";}}
-            onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.2)";e.currentTarget.style.color="rgba(124,77,255,0.45)";}}>
+            onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(var(--purple-rgb),calc(0.5*var(--kp)))";e.currentTarget.style.color="rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))";}}
+            onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(var(--purple-rgb),calc(0.2*var(--kp)))";e.currentTarget.style.color="rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))";}}>
             ↓ Export
           </button>
           <button onClick={()=>importRef.current.click()} style={toolBtn}
-            onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.5)";e.currentTarget.style.color="rgba(160,140,255,0.8)";}}
-            onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.2)";e.currentTarget.style.color="rgba(124,77,255,0.45)";}}>
+            onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(var(--purple-rgb),calc(0.5*var(--kp)))";e.currentTarget.style.color="rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))";}}
+            onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(var(--purple-rgb),calc(0.2*var(--kp)))";e.currentTarget.style.color="rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))";}}>
             ↑ Import
           </button>
           <input ref={importRef} type="file" accept=".json,application/json" style={{display:"none"}} onChange={handleImport} />
           <button onClick={onNew}
             style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".18em",textTransform:"uppercase",
-              padding:"7px 18px",background:"rgba(124,77,255,0.18)",border:"1px solid rgba(124,77,255,0.5)",
-              borderRadius:3,cursor:"pointer",color:"rgba(200,190,240,0.9)",transition:"all .18s"}}
-            onMouseEnter={e=>{e.currentTarget.style.background="rgba(124,77,255,0.3)";e.currentTarget.style.borderColor="rgba(160,140,255,0.7)";}}
-            onMouseLeave={e=>{e.currentTarget.style.background="rgba(124,77,255,0.18)";e.currentTarget.style.borderColor="rgba(124,77,255,0.5)";}}>
+              padding:"7px 18px",background:"rgba(var(--purple-rgb),calc(0.18*var(--kp)))",border:"1px solid rgba(var(--purple-rgb),calc(0.5*var(--kp)))",
+              borderRadius:3,cursor:"pointer",color:"rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))",transition:"all .18s"}}
+            onMouseEnter={e=>{e.currentTarget.style.background="rgba(var(--purple-rgb),calc(0.3*var(--kp)))";e.currentTarget.style.borderColor="rgba(var(--accent-rgb),calc(0.7*var(--ka)))";}}
+            onMouseLeave={e=>{e.currentTarget.style.background="rgba(var(--purple-rgb),calc(0.18*var(--kp)))";e.currentTarget.style.borderColor="rgba(var(--purple-rgb),calc(0.5*var(--kp)))";}}>
             + Neu
           </button>
         </div>
       </div>
 
       {/* Filter-Leiste */}
-      <div style={{display:"flex",gap:8,alignItems:"center",marginBottom:22,flexWrap:"wrap"}}>
+      <div className="mc-filter" style={{display:"flex",gap:8,alignItems:"center",marginBottom:22,flexWrap:"wrap"}}>
         <input value={q} onChange={e=>setQ(e.target.value)} placeholder="Suchen …"
           style={{fontFamily:"var(--font-body)",fontSize:12,color:"var(--white)",
-            background:"rgba(124,77,255,0.06)",border:"1px solid rgba(124,77,255,0.22)",
+            background:"rgba(var(--purple-rgb),calc(0.06*var(--kp)))",border:"1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))",
             borderRadius:4,padding:"5px 11px",outline:"none",width:180,colorScheme:"dark"}} />
 
         {races.length > 1 && <select value={raceF} onChange={e=>setRaceF(e.target.value)} style={selStyle}>
@@ -794,14 +794,14 @@ function CharSelection({ chars, onSelect, onNew, onReload }) {
 
         {hasFilter && <button onClick={()=>{setQ('');setRaceF('');setClassF('');setDivF('');}}
           style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".12em",padding:"5px 10px",
-            background:"transparent",border:"1px solid rgba(124,77,255,0.18)",borderRadius:3,
-            cursor:"pointer",color:"rgba(124,77,255,0.45)",transition:"all .15s"}}
-          onMouseEnter={e=>e.currentTarget.style.color="rgba(200,160,255,0.7)"}
-          onMouseLeave={e=>e.currentTarget.style.color="rgba(124,77,255,0.45)"}>
+            background:"transparent",border:"1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))",borderRadius:3,
+            cursor:"pointer",color:"rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))",transition:"all .15s"}}
+          onMouseEnter={e=>e.currentTarget.style.color="color-mix(in srgb, rgba(200,160,255,0.7), rgb(var(--ink-rgb)) var(--cm))"}
+          onMouseLeave={e=>e.currentTarget.style.color="rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))"}>
           × Filter löschen
         </button>}
 
-        <span style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(124,77,255,0.35)",
+        <span style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))",
           marginLeft:"auto",letterSpacing:".12em"}}>
           {sorted.length} Charakter{sorted.length!==1?'e':''}
         </span>
@@ -810,10 +810,10 @@ function CharSelection({ chars, onSelect, onNew, onReload }) {
       {/* Grid */}
       {sorted.length === 0
         ? <div style={{textAlign:"center",padding:"60px 0",fontFamily:"var(--font-mono)",fontSize:9,
-            letterSpacing:".2em",color:"rgba(124,77,255,0.3)",textTransform:"uppercase"}}>
+            letterSpacing:".2em",color:"rgba(var(--purple-rgb),calc(0.3*var(--kp) + var(--tb)))",textTransform:"uppercase"}}>
             Keine Charaktere gefunden
           </div>
-        : <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(180px,1fr))",gap:14}}>
+        : <div className="mc-grid" style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(180px,1fr))",gap:14}}>
             {sorted.map(ch => (
               <CharCard key={ch.id} ch={ch}
                 onSelect={onSelect}
@@ -829,12 +829,12 @@ function CharSelection({ chars, onSelect, onNew, onReload }) {
 /* ── Leer-Zustand ──────────────────────────── */
 function EmptyState() {
   return (
-    <div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center"}}>
+    <div style={{minHeight:"calc(var(--vh, 1vh) * 100)",display:"flex",alignItems:"center",justifyContent:"center"}}>
       <div style={{maxWidth:480,width:"100%",padding:"0 24px",textAlign:"center"}}>
-        <div style={{fontFamily:"var(--font-mono)",fontSize:9,letterSpacing:".3em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase",marginBottom:16}}>
+        <div style={{fontFamily:"var(--font-mono)",fontSize:9,letterSpacing:".3em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase",marginBottom:16}}>
           Meruria · Charaktere
         </div>
-        <div style={{fontFamily:"var(--font-display)",fontSize:20,letterSpacing:".22em",color:"rgba(200,192,240,0.6)",textTransform:"uppercase",marginBottom:8}}>
+        <div style={{fontFamily:"var(--font-display)",fontSize:20,letterSpacing:".22em",color:"rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))",textTransform:"uppercase",marginBottom:8}}>
           Noch kein Charakter
         </div>
         <p style={{fontFamily:"var(--font-body)",fontSize:13,fontWeight:300,color:"var(--silver)",lineHeight:1.8,marginBottom:28}}>
@@ -843,20 +843,20 @@ function EmptyState() {
         <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap"}}>
           <a href="/index.html"
             style={{display:"inline-flex",alignItems:"center",gap:8,padding:"11px 22px",
-              background:"transparent",border:"1px solid rgba(124,77,255,0.25)",
-              borderRadius:3,color:"rgba(160,140,255,0.6)",fontFamily:"var(--font-mono)",
+              background:"transparent",border:"1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))",
+              borderRadius:3,color:"rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))",fontFamily:"var(--font-mono)",
               fontSize:9,letterSpacing:".18em",textTransform:"uppercase",textDecoration:"none",transition:"all .2s"}}
-            onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.5)";e.currentTarget.style.color="rgba(200,190,240,0.9)";}}
-            onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.25)";e.currentTarget.style.color="rgba(160,140,255,0.6)";}}>
+            onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(var(--purple-rgb),calc(0.5*var(--kp)))";e.currentTarget.style.color="rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))";}}
+            onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(var(--purple-rgb),calc(0.25*var(--kp)))";e.currentTarget.style.color="rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))";}}>
             ← Zurück
           </a>
           <a href="/charaktererstellung/neuer-charakter.html"
             style={{display:"inline-flex",alignItems:"center",gap:10,padding:"12px 28px",
-              background:"rgba(124,77,255,0.18)",border:"1px solid rgba(124,77,255,0.55)",
-              borderRadius:3,color:"rgba(200,190,240,0.95)",fontFamily:"var(--font-display)",
+              background:"rgba(var(--purple-rgb),calc(0.18*var(--kp)))",border:"1px solid rgba(var(--purple-rgb),calc(0.55*var(--kp)))",
+              borderRadius:3,color:"rgba(var(--text-rgb),calc(0.95*var(--kt) + var(--tb)))",fontFamily:"var(--font-display)",
               fontSize:11,letterSpacing:".18em",textTransform:"uppercase",textDecoration:"none",transition:"all .2s"}}
-            onMouseEnter={e=>{e.currentTarget.style.background="rgba(124,77,255,0.32)";e.currentTarget.style.borderColor="rgba(160,140,255,0.8)";e.currentTarget.style.color="#f0eeff";}}
-            onMouseLeave={e=>{e.currentTarget.style.background="rgba(124,77,255,0.18)";e.currentTarget.style.borderColor="rgba(124,77,255,0.55)";e.currentTarget.style.color="rgba(200,190,240,0.95)";}}>
+            onMouseEnter={e=>{e.currentTarget.style.background="rgba(var(--purple-rgb),calc(0.32*var(--kp)))";e.currentTarget.style.borderColor="rgba(var(--accent-rgb),calc(0.8*var(--ka)))";e.currentTarget.style.color="var(--white)";}}
+            onMouseLeave={e=>{e.currentTarget.style.background="rgba(var(--purple-rgb),calc(0.18*var(--kp)))";e.currentTarget.style.borderColor="rgba(var(--purple-rgb),calc(0.55*var(--kp)))";e.currentTarget.style.color="rgba(var(--text-rgb),calc(0.95*var(--kt) + var(--tb)))";}}>
             Charakter erstellen →
           </a>
         </div>
@@ -886,8 +886,8 @@ function App() {
   }
 
   if (loading) return (
-    <div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center"}}>
-      <span style={{fontFamily:"var(--font-mono)",fontSize:9,letterSpacing:".3em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase"}}>
+    <div style={{minHeight:"calc(var(--vh, 1vh) * 100)",display:"flex",alignItems:"center",justifyContent:"center"}}>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:9,letterSpacing:".3em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase"}}>
         Lade Charaktere…
       </span>
     </div>

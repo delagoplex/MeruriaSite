@@ -1,14 +1,14 @@
 :root {
   --nav-h:      52px;
   --filter-w:   224px;
-  --ac:         #26c6da;
+  --ac:         color-mix(in srgb, #26c6da, rgb(var(--ink-rgb)) var(--cm));
   --ac2:        rgba(38,198,218,0.18);
   --border-f:   rgba(38,198,218,0.12);
-  --muted-f:    rgba(var(--text-rgb),0.45);
+  --muted-f:    rgba(var(--text-rgb),calc(0.45*var(--kt)));
 }
 
 html, body { overflow: hidden; }
-#root { height: 100vh; display: flex; flex-direction: column; }
+#root { height: calc(var(--vh, 1vh) * 100); display: flex; flex-direction: column; }
 
 @keyframes fadeIn    { from{opacity:0}                         to{opacity:1} }
 @keyframes fadeInUp  { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
@@ -58,7 +58,7 @@ html, body { overflow: hidden; }
   border-color: rgba(38,198,218,0.55);
 }
 .fish-sidebar input[type="text"]::placeholder {
-  color: rgba(var(--text-rgb),0.3);
+  color: rgba(var(--text-rgb),calc(0.3*var(--kt) + var(--tb)));
 }
 
 /* ── Main content ────────────────────────────────────────── */
@@ -98,7 +98,7 @@ html, body { overflow: hidden; }
 }
 .fish-card:hover {
   border-color: rgba(38,198,218,0.45);
-  box-shadow: 0 6px 28px rgba(0,0,0,0.65), 0 0 18px rgba(38,198,218,0.1);
+  box-shadow: 0 6px 28px rgba(var(--shadow-rgb),calc(0.65 * var(--shadow-k))), 0 0 18px rgba(38,198,218,0.1);
   transform: translateY(-2px);
 }
 .fish-card:hover::before {
@@ -140,7 +140,7 @@ html, body { overflow: hidden; }
 .fish-level {
   font-family: var(--font-mono);
   font-size: 7.5px;
-  color: rgba(38,198,218,0.55);
+  color: color-mix(in srgb, rgba(38,198,218,0.55), rgb(var(--ink-rgb)) var(--cm));
   letter-spacing: 0.18em;
   margin-top: 2px;
 }
@@ -203,7 +203,7 @@ html, body { overflow: hidden; }
   font-size: 9.5px;
   font-weight: 300;
   line-height: 1.6;
-  color: rgba(var(--text-rgb),0.38);
+  color: rgba(var(--text-rgb),calc(0.38*var(--kt) + var(--tb)));
   letter-spacing: 0.015em;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -222,13 +222,13 @@ html, body { overflow: hidden; }
 .fish-weight {
   font-family: var(--font-mono);
   font-size: 8px;
-  color: rgba(var(--text-rgb),0.38);
+  color: rgba(var(--text-rgb),calc(0.38*var(--kt) + var(--tb)));
   letter-spacing: 0.06em;
 }
 .fish-price {
   font-family: var(--font-mono);
   font-size: 9px;
-  color: rgba(255,214,0,0.75);
+  color: color-mix(in srgb, rgba(255,214,0,0.75), rgb(var(--ink-rgb)) var(--cm));
   letter-spacing: 0.08em;
   white-space: nowrap;
 }
@@ -239,7 +239,7 @@ html, body { overflow: hidden; }
   font-size: 8px;
   letter-spacing: 0.14em;
   padding: 3px 8px;
-  border: 1px solid rgba(var(--accent-rgb),0.2);
+  border: 1px solid rgba(var(--accent-rgb),calc(0.2*var(--ka)));
   background: transparent;
   color: var(--muted-f);
   cursor: pointer;
@@ -259,7 +259,7 @@ html, body { overflow: hidden; }
 }
 .filter-chip:hover:not(.active) {
   border-color: rgba(38,198,218,0.3);
-  color: rgba(var(--text-rgb),0.75);
+  color: rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)));
 }
 
 /* ── Sort buttons ────────────────────────────────────────── */
@@ -283,7 +283,7 @@ html, body { overflow: hidden; }
   color: var(--white);
 }
 .sort-btn:hover:not(.active) {
-  color: rgba(var(--text-rgb),0.75);
+  color: rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)));
   background: rgba(38,198,218,0.04);
 }
 
@@ -291,7 +291,7 @@ html, body { overflow: hidden; }
 .fish-empty {
   text-align: center;
   padding: 80px 20px;
-  color: rgba(38,198,218,0.25);
+  color: color-mix(in srgb, rgba(38,198,218,0.25), rgb(var(--ink-rgb)) var(--cm));
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.22em;
@@ -302,7 +302,7 @@ html, body { overflow: hidden; }
 .fish-count {
   font-family: var(--font-mono);
   font-size: 9px;
-  color: rgba(38,198,218,0.4);
+  color: color-mix(in srgb, rgba(38,198,218,0.4), rgb(var(--ink-rgb)) var(--cm));
   letter-spacing: 0.16em;
   margin-bottom: 10px;
 }
@@ -318,7 +318,7 @@ html, body { overflow: hidden; }
 
 /* ── Light Mode ── */
 [data-theme="light"] .fish-sidebar {
-  background: rgba(215,210,242,0.97) !important;
+  background: rgba(var(--text-hi-rgb),0.97) !important;
   border-right-color: rgba(38,198,218,0.14) !important;
 }
 [data-theme="light"] .fish-sidebar input[type="text"] {

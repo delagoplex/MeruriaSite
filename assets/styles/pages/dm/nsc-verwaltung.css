@@ -4,15 +4,15 @@
 
 html, body { overflow: hidden; }
 
-select option { background: #0b081c; color: #f0eeff; }
-input::placeholder, textarea::placeholder { color: rgba(160,140,255,0.35); }
+select option { background: rgb(var(--panel-rgb)); color: var(--white); }
+input::placeholder, textarea::placeholder { color: rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb))); }
 input[type="number"]::-webkit-inner-spin-button { opacity: 0.4; }
 
 .nscv-shell {
   display: flex;
-  height: calc(100vh - var(--nav-h));
+  height: calc(calc(var(--vh, 1vh) * 100) - var(--nav-h));
   overflow: hidden;
-  background: radial-gradient(ellipse 900px 500px at 70% -10%, rgba(124,77,255,0.10), transparent), var(--bg);
+  background: radial-gradient(ellipse 900px 500px at 70% -10%, rgba(var(--purple-rgb),calc(0.10*var(--kp))), transparent), var(--bg);
 }
 .nscv-shell ::-webkit-scrollbar { width: 5px; height: 5px; }
 
@@ -27,8 +27,23 @@ input.ash-num { -moz-appearance: textfield; appearance: textfield; }
   line-height: 1;
   font-size: 8px;
   font-family: var(--font-mono);
-  color: rgba(160,140,255,0.45);
+  color: rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)));
   cursor: pointer;
   transition: color 0.12s;
 }
-.ash-step:hover { color: #f0eeff; text-shadow: 0 0 6px rgba(124,77,255,0.8); }
+.ash-step:hover { color: var(--white); text-shadow: 0 0 6px rgba(var(--purple-rgb),calc(0.8*var(--kp))); }
+
+/* Phones: list and editor are separate panes (md-* pattern in base.css); the editor hero stacks */
+@media (max-width: 768px) {
+  .nscv-edit[style] { padding: 18px 14px 90px !important; }
+  .nscv-hero[style] { flex-direction: column !important; }
+  .nscv-hero-info[style] { padding: 14px !important; gap: 12px !important; }
+  .nscv-portrait[style] { align-self: stretch; }
+  .nscv-portrait > div, .nscv-portrait > input { width: 100% !important; max-width: 280px; align-self: center; }
+  .nscv-portrait > div { height: 190px !important; }
+}
+@media (max-width: 768px) {
+  /* editor rows are inline grids with fixed pixel columns (drag handle / name / role / text / delete): let them wrap */
+  .nscv-edit.nscv-edit [style*="display: grid"]:not([style*="auto-fit"]):not([style*="auto-fill"]) { grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr)) !important; }
+  .nscv-edit input, .nscv-edit select, .nscv-edit textarea { font-size: 16px !important; }
+}

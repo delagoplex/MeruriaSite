@@ -115,7 +115,7 @@ function Chip({
       letterSpacing: '0.15em',
       padding: '0 10px',
       height: '16px',
-      border: `1px solid ${active ? c : 'rgba(var(--accent-rgb),0.18)'}`,
+      border: `1px solid ${active ? c : 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))'}`,
       background: active ? c + '22' : 'transparent',
       color: active ? 'var(--white)' : 'var(--muted)',
       cursor: 'pointer',
@@ -172,6 +172,7 @@ function FilterSidebar({
   const hasAny = filters.schule.length || filters.grad.length || filters.klassen.length || filters.komponenten.length || filters.konzentration !== null || filters.ritual !== null || filters.zeitaufwand.length || filters.sort !== 'grad-asc';
   return /*#__PURE__*/React.createElement("div", {
     ref: dragRef.ref,
+    "data-mobile-drawer": "",
     onMouseDown: dragRef.onMouseDown,
     onClickCapture: dragRef.onClickCapture,
     style: {
@@ -202,8 +203,8 @@ function FilterSidebar({
       fontSize: '11.5px',
       fontWeight: '300',
       padding: '6px 10px 6px 28px',
-      background: 'rgba(124,77,255,0.06)',
-      border: '1px solid rgba(var(--accent-rgb),0.18)',
+      background: 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))',
+      border: '1px solid rgba(var(--accent-rgb),calc(0.18*var(--ka)))',
       borderRadius: '3px',
       color: 'var(--white)',
       outline: 'none',
@@ -211,8 +212,8 @@ function FilterSidebar({
       letterSpacing: '0.03em',
       transition: 'border-color 0.2s'
     },
-    onFocus: e => e.target.style.borderColor = 'rgba(124,77,255,0.5)',
-    onBlur: e => e.target.style.borderColor = 'rgba(var(--accent-rgb),0.18)'
+    onFocus: e => e.target.style.borderColor = 'rgba(var(--purple-rgb),calc(0.5*var(--kp)))',
+    onBlur: e => e.target.style.borderColor = 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))'
   }), /*#__PURE__*/React.createElement("svg", {
     style: {
       position: 'absolute',
@@ -230,14 +231,14 @@ function FilterSidebar({
     cx: "5",
     cy: "5",
     r: "3.5",
-    stroke: "rgba(var(--accent-rgb),1)",
+    stroke: "rgba(var(--accent-rgb),calc(1*var(--ka)))",
     strokeWidth: "1.2"
   }), /*#__PURE__*/React.createElement("line", {
     x1: "8",
     y1: "8",
     x2: "11",
     y2: "11",
-    stroke: "rgba(var(--accent-rgb),1)",
+    stroke: "rgba(var(--accent-rgb),calc(1*var(--ka)))",
     strokeWidth: "1.2"
   }))), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -251,7 +252,7 @@ function FilterSidebar({
       fontFamily: 'var(--font-display)',
       fontSize: '10px',
       letterSpacing: '0.25em',
-      color: 'rgba(var(--text-rgb),0.7)',
+      color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Filter"), hasAny && /*#__PURE__*/React.createElement(XBtn, {
@@ -278,7 +279,7 @@ function FilterSidebar({
       alignItems: 'center',
       gap: '7px',
       padding: '5px 7px',
-      background: filters.schule.includes(s) ? 'rgba(124,77,255,0.12)' : 'transparent',
+      background: filters.schule.includes(s) ? 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))' : 'transparent',
       border: `1px solid ${filters.schule.includes(s) ? schoolColor(s) + '66' : 'transparent'}`,
       borderRadius: '2px',
       cursor: 'pointer',
@@ -340,8 +341,8 @@ function FilterSidebar({
       alignItems: 'center',
       gap: '7px',
       padding: '5px 7px',
-      background: filters.klassen.includes(c) ? 'rgba(124,77,255,0.12)' : 'transparent',
-      border: `1px solid ${filters.klassen.includes(c) ? 'rgba(124,77,255,0.4)' : 'transparent'}`,
+      background: filters.klassen.includes(c) ? 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))' : 'transparent',
+      border: `1px solid ${filters.klassen.includes(c) ? 'rgba(var(--purple-rgb),calc(0.4*var(--kp)))' : 'transparent'}`,
       borderRadius: '2px',
       cursor: 'pointer',
       transition: 'all 0.15s',
@@ -349,8 +350,8 @@ function FilterSidebar({
     }
   }, /*#__PURE__*/React.createElement(OctSvg, {
     size: 6,
-    color: filters.klassen.includes(c) ? 'rgba(124,77,255,0.9)' : 'rgba(124,77,255,0.5)',
-    fill: filters.klassen.includes(c) ? 'rgba(124,77,255,0.5)' : 'rgba(124,77,255,0.25)',
+    color: filters.klassen.includes(c) ? 'rgba(var(--purple-rgb),calc(0.9*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.5*var(--kp)))',
+    fill: filters.klassen.includes(c) ? 'rgba(var(--purple-rgb),calc(0.5*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.25*var(--kp)))',
     strokeWidth: 1
   }), /*#__PURE__*/React.createElement("span", {
     style: {
@@ -400,8 +401,8 @@ function FilterSidebar({
       alignItems: 'center',
       gap: '7px',
       padding: '5px 7px',
-      background: filters.zeitaufwand.includes(z) ? 'rgba(124,77,255,0.12)' : 'transparent',
-      border: `1px solid ${filters.zeitaufwand.includes(z) ? 'rgba(124,77,255,0.4)' : 'transparent'}`,
+      background: filters.zeitaufwand.includes(z) ? 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))' : 'transparent',
+      border: `1px solid ${filters.zeitaufwand.includes(z) ? 'rgba(var(--purple-rgb),calc(0.4*var(--kp)))' : 'transparent'}`,
       borderRadius: '2px',
       cursor: 'pointer',
       transition: 'all 0.15s',
@@ -409,8 +410,8 @@ function FilterSidebar({
     }
   }, /*#__PURE__*/React.createElement(OctSvg, {
     size: 6,
-    color: filters.zeitaufwand.includes(z) ? 'rgba(124,77,255,0.9)' : 'rgba(124,77,255,0.5)',
-    fill: filters.zeitaufwand.includes(z) ? 'rgba(124,77,255,0.5)' : 'rgba(124,77,255,0.25)',
+    color: filters.zeitaufwand.includes(z) ? 'rgba(var(--purple-rgb),calc(0.9*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.5*var(--kp)))',
+    fill: filters.zeitaufwand.includes(z) ? 'rgba(var(--purple-rgb),calc(0.5*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.25*var(--kp)))',
     strokeWidth: 1
   }), /*#__PURE__*/React.createElement("span", {
     style: {
@@ -441,7 +442,7 @@ function FilterSidebar({
     const isTrue = val === true;
     const isFalse = val === false;
     const boxBg = isTrue ? 'rgba(60,180,90,0.15)' : isFalse ? 'rgba(200,60,60,0.12)' : 'transparent';
-    const boxBorder = isTrue ? 'rgba(60,200,90,0.5)' : isFalse ? 'rgba(220,80,80,0.5)' : 'rgba(var(--accent-rgb),0.2)';
+    const boxBorder = isTrue ? 'rgba(60,200,90,0.5)' : isFalse ? 'rgba(220,80,80,0.5)' : 'rgba(var(--accent-rgb),calc(0.2*var(--ka)))';
     const icon = isTrue ? '✓' : isFalse ? '✕' : '';
     const iconColor = isTrue ? 'rgba(80,220,110,0.9)' : isFalse ? 'rgba(230,90,90,0.9)' : 'transparent';
     return /*#__PURE__*/React.createElement("button", {
@@ -493,7 +494,7 @@ function FilterSidebar({
         fontFamily: 'var(--font-mono)',
         fontSize: '7.5px',
         letterSpacing: '0.1em',
-        color: isTrue ? 'rgba(80,220,110,0.6)' : isFalse ? 'rgba(230,90,90,0.6)' : 'rgba(var(--accent-rgb),0.25)',
+        color: isTrue ? 'color-mix(in srgb, rgba(80,220,110,0.6), rgb(var(--ink-rgb)) var(--cm))' : isFalse ? 'rgba(230,90,90,0.6)' : 'rgba(var(--accent-rgb),calc(0.25*var(--ka)))',
         transition: 'color 0.18s'
       }
     }, isTrue ? 'JA' : isFalse ? 'NEIN' : '—'));
@@ -522,7 +523,7 @@ function FilterSidebar({
     style: {
       marginTop: 'auto',
       paddingTop: '14px',
-      borderTop: '1px solid rgba(var(--accent-rgb),0.08)'
+      borderTop: '1px solid rgba(var(--accent-rgb),calc(0.08*var(--ka)))'
     }
   }, /*#__PURE__*/React.createElement("button", {
     onClick: reset,
@@ -567,14 +568,14 @@ function SpellRow({
       gap: '10px',
       padding: compact ? '7px 12px' : '10px 12px',
       cursor: 'pointer',
-      borderBottom: '1px solid rgba(var(--accent-rgb),0.06)',
-      background: active ? 'rgba(124,77,255,0.12)' : 'transparent',
+      borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.06*var(--ka)))',
+      background: active ? 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))' : 'transparent',
       borderLeft: active ? `2px solid ${sc}` : '2px solid transparent',
       transition: 'all 0.15s'
     },
     onMouseEnter: e => {
       if (!active) {
-        e.currentTarget.style.background = 'rgba(124,77,255,0.06)';
+        e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))';
         e.currentTarget.style.borderLeftColor = alpha(sc, 0.33);
       }
     },
@@ -589,8 +590,8 @@ function SpellRow({
       width: '22px',
       height: '22px',
       borderRadius: '2px',
-      background: active ? alpha(sc, 0.22) : 'rgba(124,77,255,0.1)',
-      border: `1px solid ${active ? alpha(sc, 0.5) : 'rgba(var(--accent-rgb),0.28)'}`,
+      background: active ? alpha(sc, 0.22) : 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
+      border: `1px solid ${active ? alpha(sc, 0.5) : 'rgba(var(--accent-rgb),calc(0.28*var(--ka)))'}`,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -614,7 +615,7 @@ function SpellRow({
       fontFamily: 'var(--font-body)',
       fontSize: '12px',
       fontWeight: active ? '400' : '300',
-      color: active ? 'var(--white)' : 'rgba(var(--text-rgb),0.85)',
+      color: active ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.85*var(--kt)))',
       letterSpacing: '0.03em',
       whiteSpace: 'nowrap',
       overflow: 'hidden',
@@ -641,10 +642,10 @@ function SpellRow({
       fontSize: '7px',
       letterSpacing: '0.1em',
       padding: '2px 5px',
-      background: 'rgba(124,77,255,0.1)',
-      border: '1px solid rgba(124,77,255,0.2)',
+      background: 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))',
       borderRadius: '2px',
-      color: 'rgba(var(--accent-rgb),0.6)'
+      color: 'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))'
     }
   }, "K"), zauber.ritual && /*#__PURE__*/React.createElement("div", {
     style: {
@@ -655,7 +656,7 @@ function SpellRow({
       background: 'rgba(100,200,120,0.08)',
       border: '1px solid rgba(100,200,120,0.2)',
       borderRadius: '2px',
-      color: 'rgba(120,200,140,0.6)'
+      color: 'color-mix(in srgb, rgba(120,200,140,0.6), rgb(var(--ink-rgb)) var(--cm))'
     }
   }, "R")));
 }
@@ -671,7 +672,7 @@ function DescBlock({
         fontSize: '12.5px',
         fontWeight: '300',
         lineHeight: 1.82,
-        color: 'rgba(var(--text-rgb),0.8)',
+        color: 'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))',
         letterSpacing: '0.015em',
         marginBottom: '10px',
         textWrap: 'pretty'
@@ -689,7 +690,7 @@ function DescBlock({
         fontFamily: 'var(--font-mono)',
         fontSize: '8px',
         letterSpacing: '0.22em',
-        color: 'rgba(var(--accent-rgb),0.55)',
+        color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
         textTransform: 'uppercase',
         marginBottom: '6px'
       }
@@ -708,25 +709,25 @@ function DescBlock({
         fontFamily: 'var(--font-mono)',
         fontSize: '8px',
         letterSpacing: '0.18em',
-        color: 'rgba(var(--accent-rgb),0.65)',
+        color: 'rgba(var(--accent-rgb),calc(0.65*var(--ka) + var(--tb)))',
         fontWeight: '400',
         textTransform: 'uppercase',
-        borderBottom: '1px solid rgba(var(--accent-rgb),0.15)',
+        borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.15*var(--ka)))',
         whiteSpace: 'nowrap'
       }
     }, col)))), /*#__PURE__*/React.createElement("tbody", null, item.zeilen.map((row, ri) => /*#__PURE__*/React.createElement("tr", {
       key: ri,
       style: {
-        background: ri % 2 === 0 ? 'rgba(124,77,255,0.04)' : 'transparent'
+        background: ri % 2 === 0 ? 'rgba(var(--purple-rgb),calc(0.04*var(--kp)))' : 'transparent'
       }
     }, row.map((cell, ci) => /*#__PURE__*/React.createElement("td", {
       key: ci,
       style: {
         padding: '7px 10px',
-        color: ci === row.length - 1 ? 'rgba(var(--accent-rgb),0.85)' : 'rgba(var(--text-rgb),0.75)',
+        color: ci === row.length - 1 ? 'rgba(var(--accent-rgb),calc(0.85*var(--ka)))' : 'rgba(var(--text-rgb),calc(0.75*var(--kt)))',
         fontWeight: ci === row.length - 1 ? '400' : '300',
         textAlign: ci === row.length - 1 ? 'center' : 'left',
-        borderBottom: '1px solid rgba(var(--accent-rgb),0.06)',
+        borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.06*var(--ka)))',
         fontFamily: ci === row.length - 1 ? 'var(--font-mono)' : 'var(--font-body)',
         fontSize: ci === row.length - 1 ? '11px' : '11.5px',
         letterSpacing: ci === row.length - 1 ? '0.08em' : '0.015em'
@@ -753,7 +754,7 @@ function MetaItem({
       fontFamily: 'var(--font-mono)',
       fontSize: '7.5px',
       letterSpacing: '0.26em',
-      color: 'rgba(var(--accent-rgb),0.45)',
+      color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, label), /*#__PURE__*/React.createElement("div", {
@@ -761,7 +762,7 @@ function MetaItem({
       fontFamily: 'var(--font-body)',
       fontSize: '11.5px',
       fontWeight: '300',
-      color: accent || 'rgba(var(--text-rgb),0.8)',
+      color: accent || 'rgba(var(--text-rgb),calc(0.8*var(--kt)))',
       letterSpacing: '0.02em',
       lineHeight: 1.4
     }
@@ -786,7 +787,7 @@ function SpellDetail({
     style: {
       marginBottom: '18px',
       paddingBottom: '16px',
-      borderBottom: `1px solid rgba(var(--accent-rgb),0.1)`
+      borderBottom: `1px solid rgba(var(--accent-rgb),calc(0.1*var(--ka)))`
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -819,10 +820,10 @@ function SpellDetail({
       fontSize: '8px',
       letterSpacing: '0.12em',
       padding: '3px 8px',
-      background: 'rgba(124,77,255,0.12)',
-      border: '1px solid rgba(124,77,255,0.3)',
+      background: 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))',
       borderRadius: '2px',
-      color: 'rgba(180,160,255,0.8)',
+      color: 'color-mix(in srgb, rgba(180,160,255,0.8), rgb(var(--ink-rgb)) var(--cm))',
       textTransform: 'uppercase'
     }
   }, "Konzentration"), zauber.ritual && /*#__PURE__*/React.createElement("span", {
@@ -834,7 +835,7 @@ function SpellDetail({
       background: 'rgba(80,180,100,0.08)',
       border: '1px solid rgba(80,180,100,0.25)',
       borderRadius: '2px',
-      color: 'rgba(120,200,140,0.8)',
+      color: 'color-mix(in srgb, rgba(120,200,140,0.8), rgb(var(--ink-rgb)) var(--cm))',
       textTransform: 'uppercase'
     }
   }, "Ritual"))), /*#__PURE__*/React.createElement("div", {
@@ -861,7 +862,7 @@ function SpellDetail({
     }
   }, zauber.schule), /*#__PURE__*/React.createElement("span", {
     style: {
-      color: 'rgba(var(--accent-rgb),0.25)',
+      color: 'rgba(var(--accent-rgb),calc(0.25*var(--ka) + var(--tb)))',
       fontSize: '10px'
     }
   }, "\xB7"), /*#__PURE__*/React.createElement("span", {
@@ -869,7 +870,7 @@ function SpellDetail({
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
       letterSpacing: '0.15em',
-      color: 'rgba(var(--accent-rgb),0.55)'
+      color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))'
     }
   }, zauber.grad === 0 ? 'Zaubertrick' : `Grad ${zauber.grad}`))), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -878,8 +879,8 @@ function SpellDetail({
       gap: '12px 18px',
       marginBottom: '20px',
       padding: '14px',
-      background: 'rgba(124,77,255,0.04)',
-      border: '1px solid rgba(var(--accent-rgb),0.08)',
+      background: 'rgba(var(--purple-rgb),calc(0.04*var(--kp)))',
+      border: '1px solid rgba(var(--accent-rgb),calc(0.08*var(--ka)))',
       borderRadius: '3px'
     }
   }, /*#__PURE__*/React.createElement(MetaItem, {
@@ -911,7 +912,7 @@ function SpellDetail({
       fontFamily: 'var(--font-mono)',
       fontSize: '7.5px',
       letterSpacing: '0.26em',
-      color: 'rgba(var(--accent-rgb),0.45)',
+      color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
       marginBottom: '5px'
     }
@@ -928,10 +929,10 @@ function SpellDetail({
       fontSize: '10.5px',
       fontWeight: '300',
       padding: '2px 8px',
-      background: 'rgba(124,77,255,0.1)',
-      border: '1px solid rgba(124,77,255,0.22)',
+      background: 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))',
       borderRadius: '2px',
-      color: 'rgba(var(--text-rgb),0.8)',
+      color: 'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em'
     }
   }, k))))), /*#__PURE__*/React.createElement("div", null, zauber.beschreibung.map((block, i) => /*#__PURE__*/React.createElement(DescBlock, {
@@ -962,14 +963,14 @@ function EmptyState({
   }, /*#__PURE__*/React.createElement("polygon", {
     points: "18,2 33,11 33,25 18,34 3,25 3,11",
     fill: "none",
-    stroke: "rgba(var(--accent-rgb),0.6)",
+    stroke: "rgba(var(--accent-rgb),calc(0.6*var(--ka)))",
     strokeWidth: "1.5"
   })), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
       letterSpacing: '0.2em',
-      color: 'rgba(var(--accent-rgb),0.6)',
+      color: 'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
       textAlign: 'center'
     }
@@ -1071,7 +1072,7 @@ function App() {
     style: {
       display: 'flex',
       flexDirection: 'column',
-      height: '100vh',
+      height: 'calc(var(--vh, 1vh) * 100)',
       position: 'relative',
       zIndex: 1
     }
@@ -1090,6 +1091,7 @@ function App() {
       alignItems: 'stretch'
     }
   }, /*#__PURE__*/React.createElement("div", {
+    className: "md-head-title",
     style: {
       width: 'var(--filter-w)',
       flexShrink: 0,
@@ -1106,14 +1108,14 @@ function App() {
       fontSize: '14px',
       fontWeight: '400',
       letterSpacing: '0.3em',
-      color: 'rgba(var(--text-rgb),0.6)',
+      color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Zauber"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
-      color: 'rgba(var(--accent-rgb),0.35)',
+      color: 'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))',
       letterSpacing: '0.15em'
     }
   }, filtered.length, " / ", allZauber.length)), /*#__PURE__*/React.createElement("div", {
@@ -1144,6 +1146,7 @@ function App() {
   })), classFilter && /*#__PURE__*/React.createElement(XBtn, {
     onClick: () => setClassFilter(null)
   }))), /*#__PURE__*/React.createElement("div", {
+    className: "md-body",
     style: {
       flex: 1,
       display: 'flex',
@@ -1159,6 +1162,7 @@ function App() {
     setSearch: setSearch,
     dragRef: sidebarDrag
   }), /*#__PURE__*/React.createElement("div", {
+    className: "md-list",
     ref: listDrag.ref,
     onMouseDown: listDrag.onMouseDown,
     onClickCapture: listDrag.onClickCapture,
@@ -1167,7 +1171,7 @@ function App() {
       flexShrink: 0,
       borderRight: '1px solid var(--border)',
       overflowY: 'auto',
-      background: 'rgba(6,5,18,0.5)',
+      background: 'rgba(var(--panel-rgb),0.5)',
       cursor: 'grab',
       ...listDrag.fadeStyle
     }
@@ -1181,10 +1185,10 @@ function App() {
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '0.25em',
-      color: 'rgba(var(--accent-rgb),0.4)',
+      color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
-      background: 'rgba(124,77,255,0.04)',
-      borderBottom: '1px solid rgba(var(--accent-rgb),0.06)',
+      background: 'rgba(var(--purple-rgb),calc(0.04*var(--kp)))',
+      borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.06*var(--ka)))',
       position: 'sticky',
       top: 0,
       backdropFilter: 'blur(4px)',
@@ -1202,6 +1206,7 @@ function App() {
     onClick: setSelected,
     compact: t.compactList
   }))))), /*#__PURE__*/React.createElement("div", {
+    className: "md-detail",
     style: {
       flex: 1,
       display: 'flex',

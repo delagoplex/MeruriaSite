@@ -27,15 +27,15 @@ function DivisionTab(props) {
   var cA = function(a) { return 'rgba('+r+','+g+','+b+','+a+')'; };
   return h('button', { onClick: onClick, style: {
     display: 'flex', alignItems: 'center', gap: 8, padding: '7px 13px',
-    background: active ? cA(0.18) : 'rgba(10,8,28,0.5)',
-    border: '1px solid ' + (active ? div.accent : 'rgba(124,77,255,0.15)'),
+    background: active ? cA(0.18) : 'rgba(var(--panel-rgb),0.5)',
+    border: '1px solid ' + (active ? div.accent : 'rgba(var(--purple-rgb),calc(0.15*var(--kp)))'),
     borderRadius: 3, cursor: 'pointer', flexShrink: 0,
     boxShadow: active ? '0 0 12px '+cA(0.22) : 'none', transition: 'all 0.15s',
   }},
     h('img', { src: div.logo, width: 20, height: 20, style: { objectFit:'contain', opacity: active?1:0.5 }, alt: '' }),
     h('span', { style: {
       fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.16em',
-      textTransform: 'uppercase', color: active ? div.accent : 'rgba(180,170,220,0.5)',
+      textTransform: 'uppercase', color: active ? div.accent : 'color-mix(in srgb, rgba(180,170,220,0.5), rgb(var(--ink-rgb)) var(--cm))',
       whiteSpace: 'nowrap',
     }}, div.name.replace(/^Die\s+/,''))
   );
@@ -67,7 +67,7 @@ function PreisTabelle(props) {
   var cA = function(a) { return 'rgba('+r2+','+g2+','+b2+','+a+')'; };
 
   return h('div', { style: {
-    background: 'rgba(8,6,22,0.85)',
+    background: 'rgba(var(--panel-rgb),0.85)',
     border: '1px solid ' + cA(0.2),
     borderRadius: 4, overflow: 'hidden', marginBottom: 20,
   }},
@@ -89,7 +89,7 @@ function PreisTabelle(props) {
           var preis = local[rang];
           var isSaving = saving[div.id+':'+rang];
           var isSaved  = saved[div.id+':'+rang];
-          return h('tr', { key: rang, style: { borderBottom:'1px solid rgba(124,77,255,0.07)' } },
+          return h('tr', { key: rang, style: { borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.07*var(--kp)))' } },
             // Rang-Badge
             h('td', { style: { padding:'11px 16px', width:60 } },
               h('div', { style: {
@@ -103,7 +103,7 @@ function PreisTabelle(props) {
             h('td', { style: { padding:'11px 16px' } },
               h('span', { style: {
                 fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.12em',
-                textTransform:'uppercase', color:'rgba(200,190,240,0.65)',
+                textTransform:'uppercase', color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
               }}, titel)
             ),
             // Preis-Input
@@ -116,12 +116,12 @@ function PreisTabelle(props) {
                     setLocal(function(p){ var n=Object.assign({},p); n[rang]=v; return n; });
                   },
                 }),
-                h('span', { style: { fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(160,140,255,0.5)', whiteSpace:'nowrap' }}, 'Hade')
+                h('span', { style: { fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', whiteSpace:'nowrap' }}, 'Hade')
               )
             ),
             // Beispiel
             h('td', { style: { padding:'11px 16px', width:200 } },
-              h('span', { style: { fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(160,140,255,0.35)', letterSpacing:'0.08em' }},
+              h('span', { style: { fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))', letterSpacing:'0.08em' }},
                 '1 Schritt = ', preis, ' Hade'
               )
             ),
@@ -204,7 +204,7 @@ function App() {
   var div = DIVS[divIdx] || DIVS[0];
 
   return h(SiteGate, null,
-    h('div', { style: { minHeight:'100vh', background:'#05040f' } },
+    h('div', { style: { minHeight:'calc(var(--vh, 1vh) * 100)', background:'var(--bg)' } },
       h(SiteNav, null),
 
       // Header
@@ -216,10 +216,10 @@ function App() {
 
       h('div', { style: { maxWidth:900, margin:'0 auto', padding:'40px 24px 80px' } },
 
-        h('div', { style: { height:1, background:'linear-gradient(to right, rgba(124,77,255,0.4), transparent)', marginBottom:24 }}),
+        h('div', { style: { height:1, background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.4*var(--kp))), transparent)', marginBottom:24 }}),
 
         // Division-Picker
-        h('div', { style: { fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(124,77,255,0.45)', marginBottom:12 }}, 'Division'),
+        h('div', { style: { fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))', marginBottom:12 }}, 'Division'),
         h('div', { style: { display:'flex', flexWrap:'wrap', gap:7, marginBottom:28 } },
           DIVS.map(function(d, i) {
             return h(DivisionTab, { key:d.id, div:d, active:i===divIdx, onClick:function(){ setDivIdx(i); } });
@@ -227,15 +227,15 @@ function App() {
         ),
 
         loading
-          ? h('div', { style: { fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', color:'rgba(124,77,255,0.4)', textTransform:'uppercase', padding:'24px 0' }}, '◈ Lade…')
+          ? h('div', { style: { fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))', textTransform:'uppercase', padding:'24px 0' }}, '◈ Lade…')
           : h(PreisTabelle, { div:div, allPreise:allPreise, onSave:handleSave, saving:saving, saved:saved }),
 
         // Formel-Erklärung
-        h('div', { style: { padding:'12px 16px', background:'rgba(124,77,255,0.04)', border:'1px solid rgba(124,77,255,0.1)', borderRadius:3 } },
-          h('span', { style: { fontFamily:'var(--font-body)', fontSize:12, fontWeight:300, color:'rgba(160,140,255,0.5)', lineHeight:1.6 } },
-            h('strong', { style: { color:'rgba(200,190,240,0.65)', fontWeight:500 } }, 'Gebühr: '),
+        h('div', { style: { padding:'12px 16px', background:'rgba(var(--purple-rgb),calc(0.04*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))', borderRadius:3 } },
+          h('span', { style: { fontFamily:'var(--font-body)', fontSize:12, fontWeight:300, color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', lineHeight:1.6 } },
+            h('strong', { style: { color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))', fontWeight:500 } }, 'Gebühr: '),
             '(Spieler-Rang − NSC-Rang) × Grundpreis des NSC-Rangs (NSC-Division) × Tage  ·  ',
-            h('strong', { style: { color:'rgba(200,190,240,0.65)', fontWeight:500 } }, 'Honorar: '),
+            h('strong', { style: { color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))', fontWeight:500 } }, 'Honorar: '),
             '(NSC-Rang − Spieler-Rang) × Grundpreis des Spieler-Rangs (Spieler-Division) × Tage'
           )
         )

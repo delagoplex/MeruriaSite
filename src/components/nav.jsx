@@ -10,22 +10,22 @@
     @keyframes slideDown { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
     @keyframes neu-bg-glitch {
       0%  { opacity:0; clip-path:inset(50% 0 50% 0); background:transparent; }
-      5%  { opacity:1; clip-path:inset(0% 0 72% 0);  transform:translateX(-8px);  background:rgba(124,77,255,0.45); }
-      15% { clip-path:inset(55% 0 8% 0);             transform:translateX(10px);  background:rgba(180,140,255,0.50); }
+      5%  { opacity:1; clip-path:inset(0% 0 72% 0);  transform:translateX(-8px);  background:rgba(var(--purple-rgb),calc(0.45*var(--kp))); }
+      15% { clip-path:inset(55% 0 8% 0);             transform:translateX(10px);  background:rgba(var(--accent-rgb),calc(0.50*var(--ka))); }
       25% { clip-path:inset(18% 0 48% 0);            transform:translateX(-6px);  background:rgba(80,50,200,0.40); }
-      35% { clip-path:inset(68% 0 4% 0);             transform:translateX(8px);   background:rgba(180,140,255,0.45); }
-      45% { clip-path:inset(8% 0 62% 0);             transform:translateX(-5px);  background:rgba(124,77,255,0.35); }
+      35% { clip-path:inset(68% 0 4% 0);             transform:translateX(8px);   background:rgba(var(--accent-rgb),calc(0.45*var(--ka))); }
+      45% { clip-path:inset(8% 0 62% 0);             transform:translateX(-5px);  background:rgba(var(--purple-rgb),calc(0.35*var(--kp))); }
       55% { clip-path:inset(40% 0 20% 0);            transform:translateX(6px);   background:rgba(80,50,200,0.30); }
       70% { opacity:0.4; }
       100%{ opacity:0; }
     }
     @keyframes neu-bg-glitch2 {
       0%  { opacity:0; clip-path:inset(50% 0 50% 0); background:transparent; }
-      8%  { opacity:1; clip-path:inset(58% 0 0% 0);  transform:translateX(12px) scaleX(1.03); background:rgba(180,140,255,0.55); }
-      18% { clip-path:inset(4% 0 58% 0);             transform:translateX(-10px);             background:rgba(124,77,255,0.48); }
+      8%  { opacity:1; clip-path:inset(58% 0 0% 0);  transform:translateX(12px) scaleX(1.03); background:rgba(var(--accent-rgb),calc(0.55*var(--ka))); }
+      18% { clip-path:inset(4% 0 58% 0);             transform:translateX(-10px);             background:rgba(var(--purple-rgb),calc(0.48*var(--kp))); }
       28% { clip-path:inset(32% 0 28% 0);            transform:translateX(8px);               background:rgba(80,50,200,0.45); }
-      38% { clip-path:inset(78% 0 0% 0);             transform:translateX(-7px);              background:rgba(180,140,255,0.40); }
-      50% { clip-path:inset(12% 0 45% 0);            transform:translateX(6px);               background:rgba(124,77,255,0.32); }
+      38% { clip-path:inset(78% 0 0% 0);             transform:translateX(-7px);              background:rgba(var(--accent-rgb),calc(0.40*var(--ka))); }
+      50% { clip-path:inset(12% 0 45% 0);            transform:translateX(6px);               background:rgba(var(--purple-rgb),calc(0.32*var(--kp))); }
       70% { opacity:0.3; }
       100%{ opacity:0; }
     }
@@ -74,10 +74,17 @@
       100%{ opacity:0; }
     }
     .meruria-hamburger { display: none; }
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) {
       .meruria-logo { margin-right: auto !important; }
       .meruria-desktop-nav { display: none !important; }
       .meruria-hamburger { display: inline-flex !important; align-items: center; justify-content: center; }
+    }
+    @media (max-width: 768px) {
+      .meruria-nav-label { display: none !important; }
+    }
+    @media (max-width: 480px) {
+      .meruria-nav-row { padding: 0 12px !important; }
+      .meruria-logo span { font-size: 17px !important; letter-spacing: 0.22em !important; }
     }
   `;
   document.head.appendChild(s);
@@ -239,13 +246,13 @@ function NavItem({ tab }) {
         : <button style={triggerStyle} onMouseEnter={triggerHoverOn} onMouseLeave={triggerHoverOff}>{tab.label}</button>
       }
       {open &&
-        <div onMouseEnter={show} onMouseLeave={hide} style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, minWidth: '180px', background: 'var(--nav-dropdown-bg)', border: '1px solid var(--nav-dropdown-border)', borderRadius: '4px', boxShadow: '0 8px 32px rgba(0,0,0,0.35)', animation: 'slideDown 0.18s ease forwards', zIndex: 200, backdropFilter: 'blur(12px)' }}>
+        <div onMouseEnter={show} onMouseLeave={hide} style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, minWidth: '180px', background: 'var(--nav-dropdown-bg)', border: '1px solid var(--nav-dropdown-border)', borderRadius: '4px', boxShadow: '0 8px 32px rgba(var(--shadow-rgb),calc(0.35 * var(--shadow-k)))', animation: 'slideDown 0.18s ease forwards', zIndex: 200, backdropFilter: 'blur(12px)' }}>
           {tab.items.map((item, i) =>
             <React.Fragment key={i}>
               {item.highlight ? (
-                <a href={item.href} style={{ display:'block', padding:'10px 18px', fontFamily:'var(--font-body)', fontWeight:'500', fontSize:'12px', letterSpacing:'0.1em', color:'#c9b8ff', textDecoration:'none', transition:'color 0.15s, padding-left 0.15s, background 0.15s', textShadow:'0 0 10px rgba(124,77,255,0.7), 0 0 20px rgba(124,77,255,0.35)', background:'rgba(124,77,255,0.18)' }}
-                  onMouseEnter={e => { e.currentTarget.style.color='var(--white)'; e.currentTarget.style.background='rgba(124,77,255,0.18)'; e.currentTarget.style.paddingLeft='24px'; e.currentTarget.style.textShadow='0 0 14px rgba(124,77,255,1), 0 0 28px rgba(124,77,255,0.6)'; }}
-                  onMouseLeave={e => { e.currentTarget.style.color='#c9b8ff'; e.currentTarget.style.background='rgba(124,77,255,0.18)'; e.currentTarget.style.paddingLeft='18px'; e.currentTarget.style.textShadow='0 0 10px rgba(124,77,255,0.7), 0 0 20px rgba(124,77,255,0.35)'; }}>
+                <a href={item.href} style={{ display:'block', padding:'10px 18px', fontFamily:'var(--font-body)', fontWeight:'500', fontSize:'12px', letterSpacing:'0.1em', color:'var(--lav)', textDecoration:'none', transition:'color 0.15s, padding-left 0.15s, background 0.15s', textShadow:'0 0 10px rgba(var(--purple-rgb),calc(0.7*var(--kp))), 0 0 20px rgba(var(--purple-rgb),calc(0.35*var(--kp)))', background:'rgba(var(--purple-rgb),calc(0.18*var(--kp)))' }}
+                  onMouseEnter={e => { e.currentTarget.style.color='var(--white)'; e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.18*var(--kp)))'; e.currentTarget.style.paddingLeft='24px'; e.currentTarget.style.textShadow='0 0 14px rgba(var(--purple-rgb),calc(1*var(--kp))), 0 0 28px rgba(var(--purple-rgb),calc(0.6*var(--kp)))'; }}
+                  onMouseLeave={e => { e.currentTarget.style.color='var(--lav)'; e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.18*var(--kp)))'; e.currentTarget.style.paddingLeft='18px'; e.currentTarget.style.textShadow='0 0 10px rgba(var(--purple-rgb),calc(0.7*var(--kp))), 0 0 20px rgba(var(--purple-rgb),calc(0.35*var(--kp)))'; }}>
                   {item.label}
                 </a>
               ) : item.dividerAfter && item.glitch !== false ? (
@@ -254,11 +261,11 @@ function NavItem({ tab }) {
                   {glitchActive && <div key={`bgb-${glitchKey}`} aria-hidden="true" style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, animation: `neu-bg-glitch2 ${dur} ease forwards` }} />}
                   {glitchActive && <div key={`sc-${glitchKey}`} aria-hidden="true" style={{ position: 'absolute', left: 0, right: 0, height: '2px', background: 'rgba(200,185,255,0.7)', pointerEvents: 'none', zIndex: 1, animation: `neu-scanline ${dur} ease forwards` }} />}
                   <div style={{ position: 'relative', zIndex: 2 }}>
-                    {glitchActive && <div key={`txa-${glitchKey}`} aria-hidden="true" style={{ position: 'absolute', inset: 0, padding: '10px 18px', fontFamily: 'var(--font-body)', fontWeight: '500', fontSize: '12px', letterSpacing: '0.1em', color: '#c9b8ff', pointerEvents: 'none', zIndex: 1, animation: `neu-txt-a ${dur} ease forwards` }}>{item.label}</div>}
+                    {glitchActive && <div key={`txa-${glitchKey}`} aria-hidden="true" style={{ position: 'absolute', inset: 0, padding: '10px 18px', fontFamily: 'var(--font-body)', fontWeight: '500', fontSize: '12px', letterSpacing: '0.1em', color: 'var(--lav)', pointerEvents: 'none', zIndex: 1, animation: `neu-txt-a ${dur} ease forwards` }}>{item.label}</div>}
                     {glitchActive && <div key={`txb-${glitchKey}`} aria-hidden="true" style={{ position: 'absolute', inset: 0, padding: '10px 18px', fontFamily: 'var(--font-body)', fontWeight: '500', fontSize: '12px', letterSpacing: '0.1em', color: '#7c4dff', pointerEvents: 'none', zIndex: 1, animation: `neu-txt-b ${dur} ease forwards` }}>{item.label}</div>}
-                    <a key={`lnk-${glitchKey}`} href={item.href} style={{ display: 'block', padding: '10px 18px', fontFamily: 'var(--font-body)', fontWeight: '500', fontSize: '12px', letterSpacing: '0.1em', color: '#c9b8ff', textDecoration: 'none', transition: 'color 0.15s, padding-left 0.15s', textShadow: '0 0 10px rgba(124,77,255,0.8), 0 0 20px rgba(124,77,255,0.4)', background: 'rgba(124,77,255,0.08)', position: 'relative', zIndex: 2, ...(glitchActive ? { animation: `neu-txt-main ${dur} ease forwards` } : {}) }}
-                      onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--white)'; e.currentTarget.style.background = 'rgba(124,77,255,0.18)'; e.currentTarget.style.paddingLeft = '24px'; e.currentTarget.style.textShadow = '0 0 14px rgba(var(--accent-rgb),1), 0 0 28px rgba(124,77,255,0.6)'; }}
-                      onMouseLeave={(e) => { e.currentTarget.style.color = '#c9b8ff'; e.currentTarget.style.background = 'rgba(124,77,255,0.08)'; e.currentTarget.style.paddingLeft = '18px'; e.currentTarget.style.textShadow = '0 0 10px rgba(124,77,255,0.8), 0 0 20px rgba(124,77,255,0.4)'; }}>
+                    <a key={`lnk-${glitchKey}`} href={item.href} style={{ display: 'block', padding: '10px 18px', fontFamily: 'var(--font-body)', fontWeight: '500', fontSize: '12px', letterSpacing: '0.1em', color: 'var(--lav)', textDecoration: 'none', transition: 'color 0.15s, padding-left 0.15s', textShadow: '0 0 10px rgba(var(--purple-rgb),calc(0.8*var(--kp))), 0 0 20px rgba(var(--purple-rgb),calc(0.4*var(--kp)))', background: 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))', position: 'relative', zIndex: 2, ...(glitchActive ? { animation: `neu-txt-main ${dur} ease forwards` } : {}) }}
+                      onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--white)'; e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))'; e.currentTarget.style.paddingLeft = '24px'; e.currentTarget.style.textShadow = '0 0 14px rgba(var(--accent-rgb),calc(1*var(--ka))), 0 0 28px rgba(var(--purple-rgb),calc(0.6*var(--kp)))'; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--lav)'; e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))'; e.currentTarget.style.paddingLeft = '18px'; e.currentTarget.style.textShadow = '0 0 10px rgba(var(--purple-rgb),calc(0.8*var(--kp))), 0 0 20px rgba(var(--purple-rgb),calc(0.4*var(--kp)))'; }}>
                       {item.label}
                     </a>
                   </div>
@@ -278,7 +285,7 @@ function NavItem({ tab }) {
                   </span>
                 </a>
               )}
-              {item.dividerAfter && <div style={{ height: '1px', background: 'rgba(var(--accent-rgb),0.2)', margin: '2px 0 0' }} />}
+              {item.dividerAfter && <div style={{ height: '1px', background: 'rgba(var(--accent-rgb),calc(0.2*var(--ka)))', margin: '2px 0 0' }} />}
             </React.Fragment>
           )}
         </div>
@@ -351,21 +358,21 @@ function AccountModal({ onClose }) {
   const inputStyle = {
     fontFamily: 'var(--font-body)', fontSize: 14, fontWeight: 300,
     color: 'var(--white)', background: 'transparent',
-    border: 'none', borderBottom: '1px solid rgba(124,77,255,0.35)',
+    border: 'none', borderBottom: '1px solid rgba(var(--purple-rgb),calc(0.35*var(--kp)))',
     outline: 'none', padding: '4px 0', width: '100%',
   };
   const labelStyle = {
     fontFamily: 'var(--font-mono)', fontSize: 8, letterSpacing: '.22em',
-    color: 'rgba(124,77,255,0.5)', textTransform: 'uppercase', display: 'block', marginBottom: 6,
+    color: 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', textTransform: 'uppercase', display: 'block', marginBottom: 6,
   };
 
   return (
     <div onClick={e => { if (e.target === e.currentTarget) onClose(); }}
       style={{ position: 'fixed', inset: 0, zIndex: 9999,
-        background: 'rgba(5,4,15,0.82)', backdropFilter: 'blur(8px)',
+        background: 'rgba(var(--bg-rgb),0.82)', backdropFilter: 'blur(8px)',
         display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <div style={{ width: '100%', maxWidth: 400, margin: '0 16px',
-        background: 'rgba(10,7,28,0.98)', border: '1px solid rgba(124,77,255,0.4)',
+        background: 'rgba(var(--panel-rgb),0.98)', border: '1px solid rgba(var(--purple-rgb),calc(0.4*var(--kp)))',
         borderRadius: 6, padding: '32px 32px 28px', position: 'relative' }}>
 
         {/* corner brackets */}
@@ -373,7 +380,7 @@ function AccountModal({ onClose }) {
           ['bottom:0,left:0','borderBottom,borderLeft'],['bottom:0,right:0','borderBottom,borderRight']
         ].map(([pos, sides], i) => {
           const p = Object.fromEntries(pos.split(',').map(s => s.split(':')));
-          const b = Object.fromEntries(sides.split(',').map(s => [s, '1.5px solid rgba(124,77,255,0.55)']));
+          const b = Object.fromEntries(sides.split(',').map(s => [s, '1.5px solid rgba(var(--purple-rgb),calc(0.55*var(--kp)))']));
           return <div key={i} style={{ position:'absolute', width:14, height:14, pointerEvents:'none', ...p, ...b }} />;
         })}
 
@@ -381,23 +388,23 @@ function AccountModal({ onClose }) {
         <button onClick={onClose}
           style={{ position:'absolute', top:12, right:14, background:'transparent', border:'none',
             cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:18, lineHeight:1,
-            color:'rgba(124,77,255,0.4)', padding:'2px 6px', transition:'color .15s' }}
-          onMouseEnter={e => e.currentTarget.style.color='rgba(200,190,240,0.8)'}
-          onMouseLeave={e => e.currentTarget.style.color='rgba(124,77,255,0.4)'}>×</button>
+            color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))', padding:'2px 6px', transition:'color .15s' }}
+          onMouseEnter={e => e.currentTarget.style.color='rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))'}
+          onMouseLeave={e => e.currentTarget.style.color='rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))'}>×</button>
 
         <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'.32em',
-          color:'rgba(124,77,255,0.5)', textTransform:'uppercase', marginBottom:6 }}>
+          color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', textTransform:'uppercase', marginBottom:6 }}>
           Konto · Meruria
         </div>
         <h2 style={{ fontFamily:'var(--font-display)', fontSize:18, fontWeight:300,
-          letterSpacing:'.2em', color:'#f0eeff', textTransform:'uppercase',
+          letterSpacing:'.2em', color:'var(--white)', textTransform:'uppercase',
           margin:'0 0 24px' }}>Einstellungen</h2>
 
         {/* Email (read-only) */}
         <div style={{ marginBottom:20 }}>
           <label style={labelStyle}>E-Mail-Adresse</label>
           <div style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:300,
-            color:'rgba(200,190,240,0.45)' }}>{user?.email || '—'}</div>
+            color:'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))' }}>{user?.email || '—'}</div>
         </div>
 
         {/* Display name */}
@@ -411,19 +418,19 @@ function AccountModal({ onClose }) {
             placeholder="Name eingeben …"
             style={inputStyle}
           />
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'rgba(124,77,255,0.3)',
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'rgba(var(--purple-rgb),calc(0.3*var(--kp) + var(--tb)))',
             letterSpacing:'.1em', marginTop:6 }}>
             Wird auf der Spielercharaktere-Seite als Gruppenüberschrift angezeigt.
           </div>
         </div>
 
         {/* Password change section */}
-        <div style={{ marginBottom:28, borderTop:'1px solid rgba(124,77,255,0.15)', paddingTop:20 }}>
+        <div style={{ marginBottom:28, borderTop:'1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))', paddingTop:20 }}>
           <button onClick={() => { setPwOpen(o => !o); setPwError(''); }}
             style={{ display:'flex', alignItems:'center', gap:8, background:'transparent', border:'none',
               cursor:'pointer', padding:0, width:'100%', textAlign:'left' }}>
             <span style={{ ...labelStyle, marginBottom:0, flex:1 }}>Passwort ändern</span>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'rgba(124,77,255,0.4)',
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))',
               transition:'transform .2s', display:'inline-block',
               transform: pwOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}>▾</span>
           </button>
@@ -450,15 +457,15 @@ function AccountModal({ onClose }) {
 
               {pwError && (
                 <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'.1em',
-                  color:'rgba(240,100,100,0.85)', marginTop:-4 }}>{pwError}</div>
+                  color:'color-mix(in srgb, rgba(240,100,100,0.85), rgb(var(--ink-rgb)) var(--cm))', marginTop:-4 }}>{pwError}</div>
               )}
 
               <button onClick={handlePasswordChange} disabled={pwSaving}
                 style={{ fontFamily:'var(--font-display)', fontSize:11, letterSpacing:'.18em',
                   textTransform:'uppercase', padding:'9px 16px', cursor: pwSaving ? 'not-allowed' : 'pointer',
-                  background: pwSaved ? 'rgba(80,200,140,0.18)' : 'rgba(124,77,255,0.12)',
-                  border: `1px solid ${pwSaved ? 'rgba(80,200,140,0.55)' : 'rgba(124,77,255,0.4)'}`,
-                  borderRadius:3, color: pwSaved ? 'rgba(80,200,140,0.9)' : 'rgba(200,190,240,0.75)',
+                  background: pwSaved ? 'rgba(80,200,140,0.18)' : 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))',
+                  border: `1px solid ${pwSaved ? 'rgba(80,200,140,0.55)' : 'rgba(var(--purple-rgb),calc(0.4*var(--kp)))'}`,
+                  borderRadius:3, color: pwSaved ? 'color-mix(in srgb, rgba(80,200,140,0.9), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--text-rgb),calc(0.75*var(--kt)))',
                   transition:'all .2s', opacity: pwSaving ? 0.6 : 1 }}>
                 {pwSaved ? '✓ Passwort geändert' : pwSaving ? 'Speichern…' : 'Passwort ändern'}
               </button>
@@ -470,19 +477,19 @@ function AccountModal({ onClose }) {
           <button onClick={handleSave} disabled={saving || !draft.trim()}
             style={{ flex:1, fontFamily:'var(--font-display)', fontSize:11, letterSpacing:'.18em',
               textTransform:'uppercase', padding:'10px 20px', cursor: saving ? 'not-allowed' : 'pointer',
-              background: saved ? 'rgba(80,200,140,0.18)' : 'rgba(124,77,255,0.18)',
-              border: `1px solid ${saved ? 'rgba(80,200,140,0.55)' : 'rgba(124,77,255,0.55)'}`,
-              borderRadius:3, color: saved ? 'rgba(80,200,140,0.9)' : 'rgba(200,190,240,0.9)',
+              background: saved ? 'rgba(80,200,140,0.18)' : 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))',
+              border: `1px solid ${saved ? 'rgba(80,200,140,0.55)' : 'rgba(var(--purple-rgb),calc(0.55*var(--kp)))'}`,
+              borderRadius:3, color: saved ? 'color-mix(in srgb, rgba(80,200,140,0.9), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--text-rgb),calc(0.9*var(--kt)))',
               transition:'all .2s', opacity: (!draft.trim() || saving) ? 0.5 : 1 }}>
             {saved ? '✓ Gespeichert' : saving ? 'Speichern…' : 'Speichern'}
           </button>
           <button onClick={onClose}
             style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'.18em',
               textTransform:'uppercase', padding:'10px 18px', cursor:'pointer',
-              background:'transparent', border:'1px solid rgba(124,77,255,0.2)',
-              borderRadius:3, color:'rgba(124,77,255,0.5)', transition:'all .2s' }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(124,77,255,0.45)'; e.currentTarget.style.color='rgba(160,140,255,0.75)'; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(124,77,255,0.2)'; e.currentTarget.style.color='rgba(124,77,255,0.5)'; }}>
+              background:'transparent', border:'1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))',
+              borderRadius:3, color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', transition:'all .2s' }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.45*var(--kp)))'; e.currentTarget.style.color='rgba(var(--accent-rgb),calc(0.75*var(--ka) + var(--tb)))'; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.2*var(--kp)))'; e.currentTarget.style.color='rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))'; }}>
             Abbrechen
           </button>
         </div>
@@ -549,18 +556,18 @@ function UserMenu() {
       {open && (
         <div style={{ position:'absolute', top:'calc(100% + 6px)', right:0, minWidth:200,
           background:'var(--nav-dropdown-bg)', border:'1px solid var(--nav-dropdown-border)',
-          borderRadius:4, boxShadow:'0 8px 32px rgba(0,0,0,0.4)',
+          borderRadius:4, boxShadow:'0 8px 32px rgba(var(--shadow-rgb),calc(0.4 * var(--shadow-k)))',
           animation:'slideDown 0.18s ease forwards', zIndex:200,
           backdropFilter:'blur(12px)', overflow:'hidden' }}>
 
           {/* User info header */}
-          <div style={{ padding:'12px 16px 10px', borderBottom:'1px solid rgba(124,77,255,0.12)' }}>
+          <div style={{ padding:'12px 16px 10px', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))' }}>
             <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'.22em',
-              color:'rgba(124,77,255,0.5)', textTransform:'uppercase', marginBottom:3 }}>
+              color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', textTransform:'uppercase', marginBottom:3 }}>
               {user.role === 'dm' ? 'Spielleitung' : 'Spieler'}
             </div>
             <div style={{ fontFamily:'var(--font-body)', fontSize:11.5, fontWeight:300,
-              color:'rgba(200,190,240,0.7)', overflow:'hidden', textOverflow:'ellipsis',
+              color:'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', overflow:'hidden', textOverflow:'ellipsis',
               whiteSpace:'nowrap', maxWidth:168 }}>
               {user.email}
             </div>
@@ -575,12 +582,12 @@ function UserMenu() {
           </button>
 
           {/* Divider */}
-          <div style={{ height:1, background:'rgba(124,77,255,0.12)' }} />
+          <div style={{ height:1, background:'rgba(var(--purple-rgb),calc(0.12*var(--kp)))' }} />
 
           {/* Logout */}
           <button style={{ ...dropItemStyle, color:'rgba(220,100,100,0.65)' }}
             onClick={handleLogout}
-            onMouseEnter={e => { e.currentTarget.style.color='rgba(240,130,130,0.9)'; e.currentTarget.style.background='rgba(200,60,60,0.1)'; e.currentTarget.style.paddingLeft='22px'; }}
+            onMouseEnter={e => { e.currentTarget.style.color='color-mix(in srgb, rgba(240,130,130,0.9), rgb(var(--ink-rgb)) var(--cm))'; e.currentTarget.style.background='rgba(200,60,60,0.1)'; e.currentTarget.style.paddingLeft='22px'; }}
             onMouseLeave={e => { e.currentTarget.style.color='rgba(220,100,100,0.65)'; e.currentTarget.style.background='transparent'; e.currentTarget.style.paddingLeft='16px'; }}>
             Abmelden
           </button>
@@ -618,8 +625,7 @@ function ThemeToggle() {
   );
 }
 
-function MobileNavSection({ tab, onClose }) {
-  const [open, setOpen] = useState(false);
+function MobileNavSection({ tab, onClose, open, onToggle }) {
 
   if (tab.href && !tab.items) {
     return (
@@ -631,17 +637,17 @@ function MobileNavSection({ tab, onClose }) {
 
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'stretch', borderBottom: '1px solid var(--nav-item-border)' }}>
+      <div style={{ display: 'flex', alignItems: 'stretch', borderBottom: '1px solid var(--nav-item-border)', background: 'linear-gradient(90deg, rgba(var(--purple-rgb),calc(0.42*var(--kp))) 0%, rgba(var(--purple-rgb),calc(0.04*var(--kp))) 100%)' }}>
         {tab.href
           ? <a href={tab.href} onClick={onClose} style={{ flex: 1, padding: '14px 24px', fontFamily: 'var(--font-display)', fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--nav-text)', textDecoration: 'none', transition: 'color 0.15s' }}>{tab.label}</a>
           : <span style={{ flex: 1, padding: '14px 24px', fontFamily: 'var(--font-display)', fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--nav-text)' }}>{tab.label}</span>
         }
-        <button onClick={() => setOpen(o => !o)} style={{ padding: '14px 20px', fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--nav-text)', opacity: 0.5, background: 'transparent', border: 'none', borderLeft: '1px solid var(--nav-item-border)', cursor: 'pointer' }}>
+        <button onClick={onToggle} aria-expanded={open} style={{ padding: '14px 20px', fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--nav-text)', opacity: 0.5, background: 'transparent', border: 'none', borderLeft: '1px solid var(--nav-item-border)', cursor: 'pointer' }}>
           {open ? '▲' : '▼'}
         </button>
       </div>
       {open && (
-        <div style={{ background: 'rgba(0,0,0,0.15)' }}>
+        <div style={{ background: 'rgba(var(--accent-rgb),calc(0.05*var(--ka)))' }}>
           {tab.items.map((item, i) => (
             <a key={i} href={item.href} onClick={onClose} style={{ display: 'flex', alignItems: 'center', gap: '5px', padding: '11px 24px 11px 36px', fontFamily: 'var(--font-body)', fontSize: '12px', fontWeight: '300', letterSpacing: '0.1em', color: 'var(--nav-item-text)', textDecoration: 'none', borderBottom: i < tab.items.length - 1 ? '1px solid var(--nav-item-border)' : 'none', transition: 'color 0.15s' }}>
               {item.label}
@@ -659,8 +665,151 @@ function MobileNavSection({ tab, onClose }) {
   );
 }
 
+// Mobile drawer for page sidebars (TOCs, filter panels). Below 768px base.css hides every
+// `aside`; this button opens it as an off-canvas panel via `html.sidebar-open`.
+const SIDEBAR_SELECTOR = '.page-root aside, .div-aside, aside[style*="--sidebar-w"], [data-mobile-drawer]';
+
+function SidebarToggle() {
+  const [hasSidebar, setHasSidebar] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const check = () => setHasSidebar(!!document.querySelector(SIDEBAR_SELECTOR));
+    check();
+    const obs = new MutationObserver(check);
+    obs.observe(document.body, { childList: true, subtree: true });
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('sidebar-open', open);
+    if (!open) return;
+    const onClick = (e) => {
+      const aside = e.target.closest && e.target.closest(SIDEBAR_SELECTOR);
+      if (!aside) { setOpen(false); return; }
+      if (e.target.closest('input, select, textarea, label, [data-keep-open]')) return;
+      if (aside.hasAttribute('data-mobile-drawer')) return; // filter panels: stay open while picking several filters
+      if (e.target.closest('a, button, [role="button"], li')) setOpen(false);
+    };
+    const onKey = (e) => { if (e.key === 'Escape') setOpen(false); };
+    document.addEventListener('click', onClick);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('click', onClick);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [open]);
+
+  useEffect(() => () => document.documentElement.classList.remove('sidebar-open'), []);
+
+  if (!hasSidebar) return null;
+  // Portal to <body>: a fixed button inside the page tree can be shifted by transformed ancestors
+  return ReactDOM.createPortal(
+    <button
+      className="meruria-sidebar-toggle"
+      onClick={(e) => { e.stopPropagation(); setOpen(o => !o); }}
+      aria-label={open ? 'Seitenmenü schließen' : 'Seitenmenü öffnen'}
+      aria-expanded={open}
+    >
+      {open ? '✕' : '☰'}
+    </button>,
+    document.body
+  );
+}
+
+// Master/detail pages (talente, zauber, hintergruende, monster …) mark their panes with `.md-body`,
+// `.md-list` and `.md-detail`. Below 768px only one of list/detail is visible (base.css, [data-pane]):
+// tapping a list row opens the detail, this button returns to the list.
+function MasterDetailMobile() {
+  const [active, setActive] = useState(false);
+  const [pane, setPane] = useState('list');
+
+  useEffect(() => {
+    const body = () => document.querySelector('.md-body');
+    const sync = () => {
+      const b = body();
+      setActive(!!b);
+      setPane(b && b.dataset.pane === 'detail' ? 'detail' : 'list');
+    };
+    sync();
+    const obs = new MutationObserver(sync);
+    obs.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['data-pane'] });
+    const mq = window.matchMedia('(max-width: 768px)');
+    const onClick = (e) => {
+      const b = body();
+      const list = e.target.closest && e.target.closest('.md-list');
+      if (!mq.matches || !b || !list) return;
+      // lists that mark their rows with [data-md-row] open the detail only from those (filters/buttons in the same list don't)
+      if (list.querySelector('[data-md-row]')) {
+        if (e.target.closest('[data-md-row]')) { b.dataset.pane = 'detail'; window.scrollTo(0, 0); }
+        return;
+      }
+      // otherwise every cursor:pointer row opens it, not group headings or empty space
+      for (let el = e.target; el && el !== list.parentElement; el = el.parentElement) {
+        if (getComputedStyle(el).cursor === 'pointer') { b.dataset.pane = 'detail'; window.scrollTo(0, 0); return; }
+      }
+    };
+    document.addEventListener('click', onClick);
+    return () => { obs.disconnect(); document.removeEventListener('click', onClick); };
+  }, []);
+
+  if (!active || pane !== 'detail') return null;
+  return ReactDOM.createPortal(
+    <button
+      className="meruria-pane-back"
+      onClick={() => { const b = document.querySelector('.md-body'); if (b) b.dataset.pane = 'list'; }}
+    >
+      ← Liste
+    </button>,
+    document.body
+  );
+}
+
+// Plain <table>s with 5+ columns cannot fit a phone. This tags them `rt-stack` and copies each header
+// label into the cells (data-label), so base.css can show every row as a label/value card below 768px.
+// Cells are (re)labelled on every DOM change because React re-renders rows. Tables that already have
+// the class (the sammeln `Table` component) are left alone.
+function TableStacker() {
+  useEffect(() => {
+    let timer = 0; // setTimeout, not requestAnimationFrame: rAF is paused while the tab is hidden
+    const phone = window.matchMedia('(max-width: 768px)');
+    const process = () => {
+      timer = 0;
+      document.querySelectorAll('table').forEach((t) => {
+        if (t.dataset.rtDone === 'skip') return;
+        if (!t.dataset.rtDone) {
+          const heads = t.querySelectorAll('thead th, tr:first-child > th');
+          // 5+ columns always; 3-4 columns only if they really overflow on a phone
+          const tooWide = phone.matches && t.getBoundingClientRect().width > (t.parentElement ? t.parentElement.clientWidth : 0) + 1;
+          const wide = heads.length >= 5 || (heads.length >= 3 && tooWide);
+          if (t.classList.contains('rt-stack')) { t.dataset.rtDone = 'skip'; return; }
+          if (!wide) { if (tooWide) t.classList.add('rt-scroll'); t.dataset.rtDone = 'skip'; return; }
+          t._rtLabels = [...heads].map(h => h.innerText.replace(/\s+/g, ' ').trim());
+          t.classList.add('rt-stack');
+          t.dataset.rtDone = '1';
+        }
+        t.querySelectorAll('tbody tr').forEach((tr) => {
+          [...tr.children].forEach((td, i) => {
+            if (td.tagName === 'TD' && td.colSpan === 1 && !td.hasAttribute('data-label')) td.setAttribute('data-label', t._rtLabels[i] || '');
+          });
+        });
+      });
+    };
+    const schedule = () => { if (!timer) timer = setTimeout(process, 30); };
+    schedule();
+    const obs = new MutationObserver(schedule);
+    obs.observe(document.body, { childList: true, subtree: true });
+    // crossing the phone breakpoint: re-check tables that were judged "fits" at the other width
+    const onBreakpoint = () => { document.querySelectorAll('table[data-rt-done="skip"]').forEach(t => delete t.dataset.rtDone); schedule(); };
+    phone.addEventListener('change', onBreakpoint);
+    return () => { obs.disconnect(); phone.removeEventListener('change', onBreakpoint); if (timer) clearTimeout(timer); };
+  }, []);
+  return null;
+}
+
 function SiteNav({ rightLabel }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [openSection, setOpenSection] = useState(null); // accordion: one mobile section open at a time
 
   useEffect(() => {
     if (!mobileOpen) return;
@@ -670,17 +819,18 @@ function SiteNav({ rightLabel }) {
   }, [mobileOpen]);
 
   return (
+    <>
     <div style={{ position: 'sticky', top: 0, zIndex: 100, width: '100%', background: 'var(--nav-bg)', borderBottom: '1px solid var(--nav-border)', backdropFilter: 'blur(16px)' }}>
-      <div style={{ display: 'flex', alignItems: 'center', padding: '0 24px', height: '52px' }}>
+      <div className="meruria-nav-row" style={{ display: 'flex', alignItems: 'center', padding: '0 24px', height: '52px' }}>
         <a href="/index.html" className="meruria-logo" style={{ marginRight: '70px', whiteSpace: 'nowrap', flexShrink: 0, textDecoration: 'none' }}>
-          <span style={{ fontFamily: 'var(--font-display)', fontSize: '20px', fontWeight: '300', letterSpacing: '0.3em', color: 'var(--white)', textShadow: '0 0 28px rgba(124,77,255,0.55)', animation: 'flicker-mid 9s infinite' }}>MERURIA</span>
+          <span style={{ fontFamily: 'var(--font-display)', fontSize: '20px', fontWeight: '300', letterSpacing: '0.3em', color: 'var(--white)', textShadow: '0 0 28px rgba(var(--purple-rgb),calc(0.55*var(--kp)))', animation: 'flicker-mid 9s infinite' }}>MERURIA</span>
         </a>
         <nav className="meruria-desktop-nav" style={{ display: 'flex', gap: '6px', alignItems: 'center', flex: 1 }}>
           {NAV.map((tab) => <NavItem key={tab.id} tab={tab} />)}
         </nav>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
           {rightLabel && (
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', color: 'rgba(var(--accent-rgb),0.35)', letterSpacing: '0.15em' }}>{rightLabel}</div>
+            <div className="meruria-nav-label" style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', color: 'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))', letterSpacing: '0.15em' }}>{rightLabel}</div>
           )}
           <UserMenu />
           <ThemeToggle />
@@ -696,10 +846,14 @@ function SiteNav({ rightLabel }) {
       </div>
       {mobileOpen && (
         <div onClick={(e) => e.stopPropagation()} style={{ borderTop: '1px solid var(--nav-border)', background: 'var(--nav-dropdown-bg)', backdropFilter: 'blur(16px)', overflowY: 'auto', maxHeight: 'calc(100dvh - 52px)' }}>
-          {NAV.map(tab => <MobileNavSection key={tab.id} tab={tab} onClose={() => setMobileOpen(false)} />)}
+          {NAV.map(tab => <MobileNavSection key={tab.id} tab={tab} open={openSection === tab.id} onToggle={() => setOpenSection(o => o === tab.id ? null : tab.id)} onClose={() => setMobileOpen(false)} />)}
         </div>
       )}
     </div>
+    <SidebarToggle />
+    <MasterDetailMobile />
+    <TableStacker />
+    </>
   );
 }
 

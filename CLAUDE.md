@@ -80,7 +80,15 @@ Access is enforced by Row Level Security, not by the client-side role checks (`w
 ```js
 document.documentElement.dataset.theme = (localStorage.getItem('theme') === 'light') ? 'light' : 'dark';
 ```
-The `ThemeToggle` component (☀/☽) in `SiteNav` toggles `data-theme` on `<html>` and persists to `localStorage`. CSS variables in `base.css` handle all color switching under `[data-theme="light"]`.
+The `ThemeToggle` component (☀/☽) in `SiteNav` toggles `data-theme` on `<html>` and persists to `localStorage`. CSS variables in `base.css` handle all color switching under `[data-theme="light"]` (light palette: lavender-white page `#f6f4fc`, white cards, ink `#1e1540`, accent `#6a3de8`).
+
+**Write colours as tokens, not literals**, in page CSS and inline JSX styles alike, so both themes work without per-page overrides:
+- `rgba(var(--text-rgb), calc(0.5*var(--kt)))` text/ink, `--accent-rgb` (+`--ka`) borders/glows, `--purple-rgb` (+`--kp`) brand fills, `--bg-rgb` / `--bg2-rgb` / `--panel-rgb` surfaces, `--text-hi-rgb` near-white text. In the dark theme the multipliers `--kt/--ka/--kp` are 1; in light they strengthen low alphas. For text colours add `+ var(--tb)` inside the `calc()` (a minimum boost in light).
+- Solid colours: `var(--white)` (primary text), `var(--silver)`, `var(--lav)` / `var(--lav2)` (lavender text), `var(--bg)`.
+- Bright literal text colours (gold, teal, …): `color-mix(in srgb, <colour>, rgb(var(--ink-rgb)) var(--cm))` (`--cm` is 0% in dark, 55% in light). Shadows: `rgba(var(--shadow-rgb), calc(0.5*var(--shadow-k)))`. Very dark data colours (division card gradients): `color-mix(in srgb, <colour> var(--dk), rgb(var(--bg-rgb)))`.
+- A region that must stay dark in the light theme (artwork banner): add `className="dark-scope"`, which restores the dark token values inside.
+- Canvas 2D cannot resolve `var()`: use `themeRgb('--accent-rgb')` (global, `theme-init.js`) when drawing. `text-shadow` glows and the scanline overlay are switched off in light mode (`base.css`).
+- Do not put a token into a value that JS concatenates (`${accent}44`) or parses as hex (`type="color"`, particle accents): keep hex there.
 
 ## Asset structure
 

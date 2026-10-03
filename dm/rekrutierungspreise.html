@@ -17,15 +17,15 @@
 <script src="/assets/scripts/data/divisions-data.js"></script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { min-height: 100vh; background: var(--bg); color: var(--white); }
+body { min-height: calc(var(--vh, 1vh) * 100); background: var(--bg); color: var(--white); }
 input[type="number"] {
   font-family: var(--font-mono); font-size: 13px; font-weight: 400;
-  color: var(--white); background: rgba(5,4,15,0.7);
-  border: 1px solid rgba(124,77,255,0.25); border-radius: 3px;
+  color: var(--white); background: rgba(var(--bg-rgb),0.7);
+  border: 1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp))); border-radius: 3px;
   padding: 6px 10px; outline: none; width: 100%;
   transition: border-color .15s;
 }
-input[type="number"]:focus { border-color: rgba(124,77,255,0.6); }
+input[type="number"]:focus { border-color: rgba(var(--purple-rgb),calc(0.6*var(--kp))); }
 input[type="number"]::-webkit-inner-spin-button { opacity: 0.4; }
 </style>
 </head>

@@ -84,7 +84,7 @@
     const cA = a => `oklch(0.72 0.16 ${d.hue} / ${a})`;
 
     return h('div', { ref, style: {
-      background: 'rgba(10,8,28,0.7)', border: `1px solid ${cA(0.18)}`,
+      background: 'rgba(var(--panel-rgb),0.7)', border: `1px solid ${cA(0.18)}`,
       padding: '14px 16px 12px', borderRadius: 3, position: 'relative', overflow: 'hidden',
     }},
       h('div', { style: { display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 } },
@@ -93,7 +93,7 @@
         ),
         h('span', { style: {
           fontFamily: 'var(--font-display)', fontSize: 11, letterSpacing: '0.2em', fontWeight: 400,
-          color: 'rgba(220,210,250,0.85)', textTransform: 'uppercase',
+          color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))', textTransform: 'uppercase',
           minWidth: 0, flex: 1, overflowWrap: 'anywhere', lineHeight: 1.2,
         }}, d.label)
       ),
@@ -106,13 +106,13 @@
           transition: `width 1.2s cubic-bezier(.2,.85,.2,1) ${0.3 + i * 0.08}s`,
         }}),
         h('div', { style: {
-          position: 'absolute', inset: 0, background: 'rgba(124,77,255,0.08)',
+          position: 'absolute', inset: 0, background: 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))',
           border: `1px solid ${cA(0.13)}`, borderRadius: 2, overflow: 'hidden',
         }},
           h('div', { style: {
             position: 'absolute', left: 0, top: 0, bottom: 0,
             width: visible ? `${pctFound * 100}%` : '0%',
-            background: 'linear-gradient(90deg, rgba(220,215,250,0.16), rgba(240,238,255,0.26))',
+            background: 'linear-gradient(90deg, rgba(220,215,250,0.16), rgba(var(--text-hi-rgb),calc(0.26*var(--kt))))',
             transition: `width 1.0s cubic-bezier(.2,.85,.2,1) ${i * 0.08}s`,
           }}),
           h('div', { style: {
@@ -126,8 +126,8 @@
         )
       ),
       h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 6 } },
-        h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 9, color: 'rgba(200,190,240,0.65)', letterSpacing: '0.1em', whiteSpace: 'nowrap' } },
-          h('span', { style: { color: '#f0eeff' } }, d.found),
+        h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 9, color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))', letterSpacing: '0.1em', whiteSpace: 'nowrap' } },
+          h('span', { style: { color: 'var(--white)' } }, d.found),
           h('span', { style: { opacity: 0.5 } }, ` / ${d.total || '—'}`),
           d.komplett > 0 && h('span', { style: { color: c, marginLeft: 4 } },
             `· ${d.komplett} `,

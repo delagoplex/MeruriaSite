@@ -152,21 +152,21 @@ function DualRangeSlider({
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
-      color: 'rgba(var(--accent-rgb),0.9)',
+      color: 'rgba(var(--accent-rgb),calc(0.9*var(--ka) + var(--tb)))',
       letterSpacing: '0.08em'
     }
   }, valLo.toLocaleString('de-DE')), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '7px',
-      color: 'rgba(var(--accent-rgb),0.35)',
+      color: 'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))',
       letterSpacing: '0.1em'
     }
   }, "HADE"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
-      color: 'rgba(var(--accent-rgb),0.9)',
+      color: 'rgba(var(--accent-rgb),calc(0.9*var(--ka) + var(--tb)))',
       letterSpacing: '0.08em'
     }
   }, valHi.toLocaleString('de-DE'))), /*#__PURE__*/React.createElement("div", {
@@ -184,7 +184,7 @@ function DualRangeSlider({
       left: '7px',
       right: '7px',
       height: '2px',
-      background: 'rgba(var(--accent-rgb),0.15)',
+      background: 'rgba(var(--accent-rgb),calc(0.15*var(--ka)))',
       borderRadius: '2px'
     }
   }), /*#__PURE__*/React.createElement("div", {
@@ -210,8 +210,8 @@ function DualRangeSlider({
         width: '5px',
         height: '5px',
         borderRadius: '50%',
-        background: inRange ? 'rgba(124,77,255,0.7)' : 'rgba(var(--accent-rgb),0.2)',
-        border: inRange ? '1px solid rgba(var(--text-rgb),0.4)' : '1px solid rgba(var(--accent-rgb),0.12)',
+        background: inRange ? 'rgba(var(--purple-rgb),calc(0.7*var(--kp)))' : 'rgba(var(--accent-rgb),calc(0.2*var(--ka)))',
+        border: inRange ? '1px solid rgba(var(--text-rgb),calc(0.4*var(--kt)))' : '1px solid rgba(var(--accent-rgb),calc(0.12*var(--ka)))',
         transition: 'background 0.15s',
         zIndex: 1,
         pointerEvents: 'none'
@@ -228,13 +228,13 @@ function DualRangeSlider({
       height: '14px',
       borderRadius: '50%',
       background: 'var(--purple)',
-      border: '2px solid rgba(var(--text-rgb),0.85)',
+      border: '2px solid rgba(var(--text-rgb),calc(0.85*var(--kt)))',
       cursor: 'grab',
       zIndex: idxLo === idxHi ? 4 : 3,
-      boxShadow: '0 0 6px rgba(124,77,255,0.6)'
+      boxShadow: '0 0 6px rgba(var(--purple-rgb),calc(0.6*var(--kp)))'
     },
-    onMouseEnter: e => e.currentTarget.style.boxShadow = '0 0 10px rgba(124,77,255,0.9)',
-    onMouseLeave: e => e.currentTarget.style.boxShadow = '0 0 6px rgba(124,77,255,0.6)'
+    onMouseEnter: e => e.currentTarget.style.boxShadow = '0 0 10px rgba(var(--purple-rgb),calc(0.9*var(--kp)))',
+    onMouseLeave: e => e.currentTarget.style.boxShadow = '0 0 6px rgba(var(--purple-rgb),calc(0.6*var(--kp)))'
   }), /*#__PURE__*/React.createElement("div", {
     onMouseDown: startDrag('hi'),
     onTouchStart: startDrag('hi'),
@@ -246,13 +246,13 @@ function DualRangeSlider({
       height: '14px',
       borderRadius: '50%',
       background: 'var(--purple)',
-      border: '2px solid rgba(var(--text-rgb),0.85)',
+      border: '2px solid rgba(var(--text-rgb),calc(0.85*var(--kt)))',
       cursor: 'grab',
       zIndex: 3,
-      boxShadow: '0 0 6px rgba(124,77,255,0.6)'
+      boxShadow: '0 0 6px rgba(var(--purple-rgb),calc(0.6*var(--kp)))'
     },
-    onMouseEnter: e => e.currentTarget.style.boxShadow = '0 0 10px rgba(124,77,255,0.9)',
-    onMouseLeave: e => e.currentTarget.style.boxShadow = '0 0 6px rgba(124,77,255,0.6)'
+    onMouseEnter: e => e.currentTarget.style.boxShadow = '0 0 10px rgba(var(--purple-rgb),calc(0.9*var(--kp)))',
+    onMouseLeave: e => e.currentTarget.style.boxShadow = '0 0 6px rgba(var(--purple-rgb),calc(0.6*var(--kp)))'
   })), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
@@ -262,14 +262,14 @@ function DualRangeSlider({
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '7.5px',
-      color: 'rgba(var(--accent-rgb),0.3)',
+      color: 'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))',
       letterSpacing: '0.1em'
     }
   }, steps[0].toLocaleString('de-DE')), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '7.5px',
-      color: 'rgba(var(--accent-rgb),0.3)',
+      color: 'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))',
       letterSpacing: '0.1em'
     }
   }, steps[steps.length - 1].toLocaleString('de-DE'))));
@@ -321,6 +321,7 @@ function FilterSidebar({
   const hadeHiVal = filters.hadeMax ?? (hadeSteps[hadeSteps.length - 1] || 0);
   return /*#__PURE__*/React.createElement("div", {
     ref: dragRef.ref,
+    "data-mobile-drawer": "",
     onMouseDown: dragRef.onMouseDown,
     onClickCapture: dragRef.onClickCapture,
     style: {
@@ -351,8 +352,8 @@ function FilterSidebar({
       fontSize: '11.5px',
       fontWeight: '300',
       padding: '6px 10px 6px 28px',
-      background: 'rgba(124,77,255,0.06)',
-      border: '1px solid rgba(var(--accent-rgb),0.18)',
+      background: 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))',
+      border: '1px solid rgba(var(--accent-rgb),calc(0.18*var(--ka)))',
       borderRadius: '3px',
       color: 'var(--white)',
       outline: 'none',
@@ -360,8 +361,8 @@ function FilterSidebar({
       letterSpacing: '0.03em',
       transition: 'border-color 0.2s'
     },
-    onFocus: e => e.target.style.borderColor = 'rgba(124,77,255,0.5)',
-    onBlur: e => e.target.style.borderColor = 'rgba(var(--accent-rgb),0.18)'
+    onFocus: e => e.target.style.borderColor = 'rgba(var(--purple-rgb),calc(0.5*var(--kp)))',
+    onBlur: e => e.target.style.borderColor = 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))'
   }), /*#__PURE__*/React.createElement("svg", {
     style: {
       position: 'absolute',
@@ -379,14 +380,14 @@ function FilterSidebar({
     cx: "5",
     cy: "5",
     r: "3.5",
-    stroke: "rgba(var(--accent-rgb),1)",
+    stroke: "rgba(var(--accent-rgb),calc(1*var(--ka)))",
     strokeWidth: "1.2"
   }), /*#__PURE__*/React.createElement("line", {
     x1: "8",
     y1: "8",
     x2: "11",
     y2: "11",
-    stroke: "rgba(var(--accent-rgb),1)",
+    stroke: "rgba(var(--accent-rgb),calc(1*var(--ka)))",
     strokeWidth: "1.2"
   }))), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -400,7 +401,7 @@ function FilterSidebar({
       fontFamily: 'var(--font-display)',
       fontSize: '10px',
       letterSpacing: '0.25em',
-      color: 'rgba(var(--text-rgb),0.7)',
+      color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Filter"), hasAny && /*#__PURE__*/React.createElement(XBtn, {
@@ -427,8 +428,8 @@ function FilterSidebar({
       alignItems: 'center',
       gap: '7px',
       padding: '5px 7px',
-      background: (filters.faehigkeiten || []).includes(f) ? 'rgba(124,77,255,0.12)' : 'transparent',
-      border: `1px solid ${(filters.faehigkeiten || []).includes(f) ? 'rgba(124,77,255,0.4)' : 'transparent'}`,
+      background: (filters.faehigkeiten || []).includes(f) ? 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))' : 'transparent',
+      border: `1px solid ${(filters.faehigkeiten || []).includes(f) ? 'rgba(var(--purple-rgb),calc(0.4*var(--kp)))' : 'transparent'}`,
       borderRadius: '2px',
       cursor: 'pointer',
       transition: 'all 0.15s',
@@ -470,8 +471,8 @@ function FilterSidebar({
       alignItems: 'center',
       gap: '7px',
       padding: '5px 7px',
-      background: (filters.werkzeuge || []).includes(w) ? 'rgba(124,77,255,0.12)' : 'transparent',
-      border: `1px solid ${(filters.werkzeuge || []).includes(w) ? 'rgba(124,77,255,0.4)' : 'transparent'}`,
+      background: (filters.werkzeuge || []).includes(w) ? 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))' : 'transparent',
+      border: `1px solid ${(filters.werkzeuge || []).includes(w) ? 'rgba(var(--purple-rgb),calc(0.4*var(--kp)))' : 'transparent'}`,
       borderRadius: '2px',
       cursor: 'pointer',
       transition: 'all 0.15s',
@@ -511,7 +512,7 @@ function FilterSidebar({
     const isTrue = val === true;
     const isFalse = val === false;
     const boxBg = isTrue ? 'rgba(60,180,90,0.15)' : isFalse ? 'rgba(200,60,60,0.12)' : 'transparent';
-    const boxBorder = isTrue ? 'rgba(60,200,90,0.5)' : isFalse ? 'rgba(220,80,80,0.5)' : 'rgba(var(--accent-rgb),0.2)';
+    const boxBorder = isTrue ? 'rgba(60,200,90,0.5)' : isFalse ? 'rgba(220,80,80,0.5)' : 'rgba(var(--accent-rgb),calc(0.2*var(--ka)))';
     const icon = isTrue ? '✓' : isFalse ? '✕' : '';
     const iconColor = isTrue ? 'rgba(80,220,110,0.9)' : isFalse ? 'rgba(230,90,90,0.9)' : 'transparent';
     return /*#__PURE__*/React.createElement("button", {
@@ -562,7 +563,7 @@ function FilterSidebar({
         fontFamily: 'var(--font-mono)',
         fontSize: '7.5px',
         letterSpacing: '0.1em',
-        color: isTrue ? 'rgba(80,220,110,0.6)' : isFalse ? 'rgba(230,90,90,0.6)' : 'rgba(var(--accent-rgb),0.25)',
+        color: isTrue ? 'color-mix(in srgb, rgba(80,220,110,0.6), rgb(var(--ink-rgb)) var(--cm))' : isFalse ? 'rgba(230,90,90,0.6)' : 'rgba(var(--accent-rgb),calc(0.25*var(--ka)))',
         transition: 'color 0.18s'
       }
     }, isTrue ? 'JA' : isFalse ? 'NEIN' : '—'));
@@ -608,7 +609,7 @@ function FilterSidebar({
     style: {
       marginTop: 'auto',
       paddingTop: '14px',
-      borderTop: '1px solid rgba(var(--accent-rgb),0.08)'
+      borderTop: '1px solid rgba(var(--accent-rgb),calc(0.08*var(--ka)))'
     }
   }, /*#__PURE__*/React.createElement("button", {
     onClick: reset,
@@ -652,15 +653,15 @@ function BackgroundRow({
       gap: '10px',
       padding: compact ? '7px 12px' : '10px 12px',
       cursor: 'pointer',
-      borderBottom: '1px solid rgba(var(--accent-rgb),0.06)',
-      background: active ? 'rgba(124,77,255,0.12)' : 'transparent',
+      borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.06*var(--ka)))',
+      background: active ? 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))' : 'transparent',
       borderLeft: active ? '2px solid var(--gold)' : '2px solid transparent',
       transition: 'all 0.15s'
     },
     onMouseEnter: e => {
       if (!active) {
-        e.currentTarget.style.background = 'rgba(124,77,255,0.06)';
-        e.currentTarget.style.borderLeftColor = 'rgba(124,77,255,0.4)';
+        e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))';
+        e.currentTarget.style.borderLeftColor = 'rgba(var(--purple-rgb),calc(0.4*var(--kp)))';
       }
     },
     onMouseLeave: e => {
@@ -679,7 +680,7 @@ function BackgroundRow({
       fontFamily: 'var(--font-body)',
       fontSize: '12px',
       fontWeight: active ? '400' : '300',
-      color: active ? 'var(--white)' : 'rgba(var(--text-rgb),0.85)',
+      color: active ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.85*var(--kt)))',
       letterSpacing: '0.04em',
       whiteSpace: 'nowrap',
       overflow: 'hidden',
@@ -690,7 +691,7 @@ function BackgroundRow({
       fontFamily: 'var(--font-body)',
       fontSize: '10px',
       fontWeight: '300',
-      color: 'rgba(var(--text-rgb),0.4)',
+      color: 'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))',
       letterSpacing: '0.02em',
       marginTop: '2px',
       whiteSpace: 'nowrap',
@@ -705,7 +706,7 @@ const GESINNUNG_COLOR = {
   'gut': {
     bg: 'rgba(60,180,90,0.12)',
     border: 'rgba(60,200,90,0.35)',
-    color: 'rgba(100,220,130,0.9)'
+    color: 'color-mix(in srgb, rgba(100,220,130,0.9), rgb(var(--ink-rgb)) var(--cm))'
   },
   'böse': {
     bg: 'rgba(200,60,60,0.12)',
@@ -715,22 +716,22 @@ const GESINNUNG_COLOR = {
   'rechtschaffen': {
     bg: 'rgba(80,130,220,0.12)',
     border: 'rgba(100,150,230,0.35)',
-    color: 'rgba(130,170,240,0.9)'
+    color: 'color-mix(in srgb, rgba(130,170,240,0.9), rgb(var(--ink-rgb)) var(--cm))'
   },
   'chaotisch': {
     bg: 'rgba(200,120,40,0.12)',
     border: 'rgba(220,140,60,0.35)',
-    color: 'rgba(230,160,80,0.9)'
+    color: 'color-mix(in srgb, rgba(230,160,80,0.9), rgb(var(--ink-rgb)) var(--cm))'
   },
   'jede': {
-    bg: 'rgba(var(--accent-rgb),0.08)',
-    border: 'rgba(var(--accent-rgb),0.2)',
-    color: 'rgba(180,160,255,0.7)'
+    bg: 'rgba(var(--accent-rgb),calc(0.08*var(--ka)))',
+    border: 'rgba(var(--accent-rgb),calc(0.2*var(--ka)))',
+    color: 'color-mix(in srgb, rgba(180,160,255,0.7), rgb(var(--ink-rgb)) var(--cm))'
   },
   'neutral': {
-    bg: 'rgba(var(--accent-rgb),0.08)',
-    border: 'rgba(var(--accent-rgb),0.2)',
-    color: 'rgba(180,160,255,0.7)'
+    bg: 'rgba(var(--accent-rgb),calc(0.08*var(--ka)))',
+    border: 'rgba(var(--accent-rgb),calc(0.2*var(--ka)))',
+    color: 'color-mix(in srgb, rgba(180,160,255,0.7), rgb(var(--ink-rgb)) var(--cm))'
   }
 };
 function GesinnungBadge({
@@ -803,7 +804,7 @@ function W6Table({
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '0.26em',
-      color: 'rgba(var(--accent-rgb),0.5)',
+      color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, title), showTables && /*#__PURE__*/React.createElement("div", {
@@ -812,10 +813,10 @@ function W6Table({
       fontSize: '7px',
       letterSpacing: '0.12em',
       padding: '1px 6px',
-      background: 'rgba(124,77,255,0.08)',
-      border: '1px solid rgba(124,77,255,0.2)',
+      background: 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))',
       borderRadius: '2px',
-      color: 'rgba(var(--accent-rgb),0.6)'
+      color: 'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))'
     }
   }, "1W", entries.length), /*#__PURE__*/React.createElement("button", {
     onClick: handleRoll,
@@ -825,10 +826,10 @@ function W6Table({
       alignItems: 'center',
       gap: '4px',
       padding: '2px 8px',
-      background: rolling ? 'rgba(124,77,255,0.06)' : 'rgba(124,77,255,0.1)',
-      border: '1px solid rgba(124,77,255,0.3)',
+      background: rolling ? 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))',
       borderRadius: '2px',
-      color: rolling ? 'rgba(124,77,255,0.4)' : 'rgba(var(--accent-rgb),0.65)',
+      color: rolling ? 'rgba(var(--purple-rgb),calc(0.4*var(--kp)))' : 'rgba(var(--accent-rgb),calc(0.65*var(--ka)))',
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '0.18em',
@@ -839,14 +840,14 @@ function W6Table({
     },
     onMouseEnter: e => {
       if (!rolling) {
-        e.currentTarget.style.background = 'rgba(124,77,255,0.2)';
+        e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))';
         e.currentTarget.style.color = 'var(--white)';
       }
     },
     onMouseLeave: e => {
       if (!rolling) {
-        e.currentTarget.style.background = 'rgba(124,77,255,0.1)';
-        e.currentTarget.style.color = 'rgba(var(--accent-rgb),0.65)';
+        e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))';
+        e.currentTarget.style.color = 'rgba(var(--accent-rgb),calc(0.65*var(--ka) + var(--tb)))';
       }
     }
   }, /*#__PURE__*/React.createElement("svg", {
@@ -898,10 +899,10 @@ function W6Table({
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '0.18em',
-      color: 'rgba(var(--accent-rgb),0.45)',
+      color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',
       fontWeight: '400',
       textAlign: 'center',
-      borderBottom: '1px solid rgba(var(--accent-rgb),0.12)'
+      borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.12*var(--ka)))'
     }
   }, "#"), /*#__PURE__*/React.createElement("th", {
     style: {
@@ -909,10 +910,10 @@ function W6Table({
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '0.18em',
-      color: 'rgba(var(--accent-rgb),0.45)',
+      color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',
       fontWeight: '400',
       textAlign: 'left',
-      borderBottom: '1px solid rgba(var(--accent-rgb),0.12)'
+      borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.12*var(--ka)))'
     }
   }, title))), /*#__PURE__*/React.createElement("tbody", null, entries.map((entry, i) => {
     const isHit = highlighted === i;
@@ -920,25 +921,25 @@ function W6Table({
       key: i,
       ref: el => rowRefs.current[i] = el,
       style: {
-        background: isHit ? 'rgba(124,77,255,0.14)' : i % 2 === 0 ? 'rgba(124,77,255,0.03)' : 'transparent',
+        background: isHit ? 'rgba(var(--purple-rgb),calc(0.14*var(--kp)))' : i % 2 === 0 ? 'rgba(var(--purple-rgb),calc(0.03*var(--kp)))' : 'transparent',
         transition: 'background 0.08s',
-        outline: isHit ? '1px solid rgba(124,77,255,0.28)' : 'none'
+        outline: isHit ? '1px solid rgba(var(--purple-rgb),calc(0.28*var(--kp)))' : 'none'
       }
     }, /*#__PURE__*/React.createElement("td", {
       style: {
         padding: '7px 8px',
         fontFamily: 'var(--font-mono)',
         fontSize: '9px',
-        color: isHit ? 'rgba(200,180,255,0.9)' : 'rgba(var(--accent-rgb),0.7)',
+        color: isHit ? 'rgba(var(--accent-rgb),calc(0.9*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.7*var(--ka)))',
         textAlign: 'center',
-        borderBottom: '1px solid rgba(var(--accent-rgb),0.06)',
+        borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.06*var(--ka)))',
         fontWeight: '400',
         transition: 'color 0.08s'
       }
     }, i + 1), /*#__PURE__*/React.createElement("td", {
       style: {
         padding: '7px 8px',
-        borderBottom: '1px solid rgba(var(--accent-rgb),0.06)'
+        borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.06*var(--ka)))'
       }
     }, renderEntry(entry, i)));
   }))) : /*#__PURE__*/React.createElement("div", {
@@ -958,15 +959,15 @@ function W6Table({
         alignItems: 'flex-start',
         padding: '4px 6px',
         borderRadius: '2px',
-        background: isHit ? 'rgba(124,77,255,0.12)' : 'transparent',
-        outline: isHit ? '1px solid rgba(124,77,255,0.25)' : 'none',
+        background: isHit ? 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))' : 'transparent',
+        outline: isHit ? '1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))' : 'none',
         transition: 'background 0.08s'
       }
     }, /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: 'var(--font-mono)',
         fontSize: '9px',
-        color: isHit ? 'rgba(200,180,255,0.9)' : 'rgba(var(--accent-rgb),0.5)',
+        color: isHit ? 'rgba(var(--accent-rgb),calc(0.9*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.5*var(--ka)))',
         flexShrink: 0,
         minWidth: '16px',
         paddingTop: '1px',
@@ -997,7 +998,7 @@ function MetaItem({
       fontFamily: 'var(--font-mono)',
       fontSize: '7.5px',
       letterSpacing: '0.26em',
-      color: 'rgba(var(--accent-rgb),0.45)',
+      color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, label), /*#__PURE__*/React.createElement("div", {
@@ -1005,7 +1006,7 @@ function MetaItem({
       fontFamily: 'var(--font-body)',
       fontSize: '11.5px',
       fontWeight: '300',
-      color: 'rgba(var(--text-rgb),0.8)',
+      color: 'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
       lineHeight: 1.5
     }
@@ -1029,7 +1030,7 @@ function SectionHeader({
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '0.28em',
-      color: 'rgba(var(--accent-rgb),0.55)',
+      color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
       flexShrink: 0
     }
@@ -1037,7 +1038,7 @@ function SectionHeader({
     style: {
       flex: 1,
       height: '1px',
-      background: 'rgba(var(--accent-rgb),0.12)'
+      background: 'rgba(var(--accent-rgb),calc(0.12*var(--ka)))'
     }
   }));
 }
@@ -1059,7 +1060,7 @@ function BackgroundDetail({
     style: {
       marginBottom: '18px',
       paddingBottom: '16px',
-      borderBottom: '1px solid rgba(var(--accent-rgb),0.1)'
+      borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.1*var(--ka)))'
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1085,10 +1086,10 @@ function BackgroundDetail({
       fontSize: '7.5px',
       letterSpacing: '0.12em',
       padding: '3px 8px',
-      background: 'rgba(124,77,255,0.1)',
-      border: '1px solid rgba(124,77,255,0.3)',
+      background: 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))',
       borderRadius: '2px',
-      color: 'rgba(180,160,255,0.8)',
+      color: 'color-mix(in srgb, rgba(180,160,255,0.8), rgb(var(--ink-rgb)) var(--cm))',
       textTransform: 'uppercase',
       flexShrink: 0,
       marginTop: '4px'
@@ -1098,7 +1099,7 @@ function BackgroundDetail({
       fontFamily: 'var(--font-body)',
       fontSize: '12.5px',
       fontWeight: '300',
-      color: 'rgba(var(--text-rgb),0.55)',
+      color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.02em',
       lineHeight: 1.6
     }
@@ -1113,7 +1114,7 @@ function BackgroundDetail({
       fontSize: '12.5px',
       fontWeight: '300',
       lineHeight: 1.82,
-      color: 'rgba(var(--text-rgb),0.8)',
+      color: 'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
       marginBottom: '10px',
       textWrap: 'pretty'
@@ -1121,8 +1122,8 @@ function BackgroundDetail({
   }, p))), h.hintergrundVariante && /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '12px 16px',
-      background: 'rgba(124,77,255,0.04)',
-      border: '1px solid rgba(124,77,255,0.12)',
+      background: 'rgba(var(--purple-rgb),calc(0.04*var(--kp)))',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))',
       borderRadius: '3px',
       marginBottom: '20px'
     }
@@ -1131,7 +1132,7 @@ function BackgroundDetail({
       fontFamily: 'var(--font-mono)',
       fontSize: '7.5px',
       letterSpacing: '0.22em',
-      color: 'rgba(var(--accent-rgb),0.5)',
+      color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
       marginBottom: '6px'
     }
@@ -1141,7 +1142,7 @@ function BackgroundDetail({
       fontSize: '12px',
       fontWeight: '300',
       lineHeight: 1.75,
-      color: 'rgba(var(--text-rgb),0.75)',
+      color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
       textWrap: 'pretty'
     }
@@ -1154,8 +1155,8 @@ function BackgroundDetail({
       gap: '12px 18px',
       marginBottom: '20px',
       padding: '14px',
-      background: 'rgba(124,77,255,0.03)',
-      border: '1px solid rgba(var(--accent-rgb),0.08)',
+      background: 'rgba(var(--purple-rgb),calc(0.03*var(--kp)))',
+      border: '1px solid rgba(var(--accent-rgb),calc(0.08*var(--ka)))',
       borderRadius: '3px'
     }
   }, h.faehigkeiten && h.faehigkeiten.length > 0 && /*#__PURE__*/React.createElement("div", {
@@ -1167,7 +1168,7 @@ function BackgroundDetail({
       fontFamily: 'var(--font-mono)',
       fontSize: '7.5px',
       letterSpacing: '0.26em',
-      color: 'rgba(var(--accent-rgb),0.45)',
+      color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
       marginBottom: '5px'
     }
@@ -1184,10 +1185,10 @@ function BackgroundDetail({
       fontSize: '10.5px',
       fontWeight: '300',
       padding: '2px 8px',
-      background: 'rgba(124,77,255,0.1)',
-      border: '1px solid rgba(124,77,255,0.25)',
+      background: 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))',
       borderRadius: '2px',
-      color: 'rgba(var(--text-rgb),0.85)',
+      color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em'
     }
   }, f)))), /*#__PURE__*/React.createElement(MetaItem, {
@@ -1214,7 +1215,7 @@ function BackgroundDetail({
         fontFamily: 'var(--font-body)',
         fontSize: '11.5px',
         fontWeight: '300',
-        color: 'rgba(var(--text-rgb),0.78)',
+        color: 'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
         lineHeight: 1.65,
         letterSpacing: '0.015em'
       }
@@ -1224,8 +1225,8 @@ function BackgroundDetail({
   }), /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '14px 16px',
-      background: 'rgba(124,77,255,0.04)',
-      border: '1px solid rgba(var(--accent-rgb),0.1)',
+      background: 'rgba(var(--purple-rgb),calc(0.04*var(--kp)))',
+      border: '1px solid rgba(var(--accent-rgb),calc(0.1*var(--ka)))',
       borderRadius: '3px',
       marginBottom: '16px'
     }
@@ -1235,7 +1236,7 @@ function BackgroundDetail({
       fontSize: '11px',
       fontWeight: '400',
       letterSpacing: '0.18em',
-      color: 'rgba(var(--text-rgb),0.8)',
+      color: 'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))',
       textTransform: 'uppercase',
       marginBottom: '8px'
     }
@@ -1245,16 +1246,16 @@ function BackgroundDetail({
       fontSize: '12px',
       fontWeight: '300',
       lineHeight: 1.78,
-      color: 'rgba(var(--text-rgb),0.78)',
+      color: 'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
       textWrap: 'pretty'
     }
   }, h.merkmal.beschreibung))), h.merkmalVariante && /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '12px 16px',
-      background: 'rgba(124,77,255,0.03)',
-      border: '1px solid rgba(var(--accent-rgb),0.08)',
-      borderLeft: '2px solid rgba(124,77,255,0.3)',
+      background: 'rgba(var(--purple-rgb),calc(0.03*var(--kp)))',
+      border: '1px solid rgba(var(--accent-rgb),calc(0.08*var(--ka)))',
+      borderLeft: '2px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))',
       borderRadius: '3px',
       marginBottom: '20px'
     }
@@ -1263,7 +1264,7 @@ function BackgroundDetail({
       fontFamily: 'var(--font-mono)',
       fontSize: '7px',
       letterSpacing: '0.2em',
-      color: 'rgba(var(--accent-rgb),0.4)',
+      color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
       marginBottom: '4px'
     }
@@ -1273,7 +1274,7 @@ function BackgroundDetail({
       fontSize: '10.5px',
       fontWeight: '400',
       letterSpacing: '0.16em',
-      color: 'rgba(180,170,240,0.7)',
+      color: 'color-mix(in srgb, rgba(180,170,240,0.7), rgb(var(--ink-rgb)) var(--cm))',
       textTransform: 'uppercase',
       marginBottom: '6px'
     }
@@ -1283,7 +1284,7 @@ function BackgroundDetail({
       fontSize: '11px',
       fontWeight: '300',
       lineHeight: 1.7,
-      color: 'rgba(180,170,220,0.6)',
+      color: 'color-mix(in srgb, rgba(180,170,220,0.6), rgb(var(--ink-rgb)) var(--cm))',
       marginBottom: '6px',
       fontStyle: 'italic'
     }
@@ -1293,7 +1294,7 @@ function BackgroundDetail({
       fontSize: '12px',
       fontWeight: '300',
       lineHeight: 1.78,
-      color: 'rgba(200,195,240,0.75)',
+      color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
       textWrap: 'pretty'
     }
@@ -1308,7 +1309,7 @@ function BackgroundDetail({
         fontFamily: 'var(--font-body)',
         fontSize: '11.5px',
         fontWeight: '300',
-        color: 'rgba(var(--text-rgb),0.78)',
+        color: 'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
         lineHeight: 1.65,
         letterSpacing: '0.015em'
       }
@@ -1322,7 +1323,7 @@ function BackgroundDetail({
         fontFamily: 'var(--font-body)',
         fontSize: '11.5px',
         fontWeight: '300',
-        color: 'rgba(var(--text-rgb),0.78)',
+        color: 'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
         lineHeight: 1.65,
         letterSpacing: '0.015em',
         display: 'flex',
@@ -1342,7 +1343,7 @@ function BackgroundDetail({
         fontFamily: 'var(--font-body)',
         fontSize: '11.5px',
         fontWeight: '300',
-        color: 'rgba(var(--text-rgb),0.78)',
+        color: 'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
         lineHeight: 1.65,
         letterSpacing: '0.015em'
       }
@@ -1356,7 +1357,7 @@ function BackgroundDetail({
         fontFamily: 'var(--font-body)',
         fontSize: '11.5px',
         fontWeight: '300',
-        color: 'rgba(var(--text-rgb),0.78)',
+        color: 'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
         lineHeight: 1.65,
         letterSpacing: '0.015em'
       }
@@ -1364,8 +1365,8 @@ function BackgroundDetail({
   })), h.sonstigeHinweise && /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '12px 16px',
-      background: 'rgba(124,77,255,0.03)',
-      border: '1px solid rgba(var(--accent-rgb),0.08)',
+      background: 'rgba(var(--purple-rgb),calc(0.03*var(--kp)))',
+      border: '1px solid rgba(var(--accent-rgb),calc(0.08*var(--ka)))',
       borderRadius: '3px',
       marginTop: '8px'
     }
@@ -1374,7 +1375,7 @@ function BackgroundDetail({
       fontFamily: 'var(--font-mono)',
       fontSize: '7.5px',
       letterSpacing: '0.22em',
-      color: 'rgba(var(--accent-rgb),0.45)',
+      color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
       marginBottom: '6px'
     }
@@ -1384,7 +1385,7 @@ function BackgroundDetail({
       fontSize: '12px',
       fontWeight: '300',
       lineHeight: 1.75,
-      color: 'rgba(var(--text-rgb),0.65)',
+      color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
       textWrap: 'pretty'
     }
@@ -1413,14 +1414,14 @@ function EmptyState({
   }, /*#__PURE__*/React.createElement("polygon", {
     points: "18,4 32,12 32,24 18,32 4,24 4,12",
     fill: "none",
-    stroke: "rgba(var(--accent-rgb),0.6)",
+    stroke: "rgba(var(--accent-rgb),calc(0.6*var(--ka)))",
     strokeWidth: "1.5"
   })), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
       letterSpacing: '0.2em',
-      color: 'rgba(var(--accent-rgb),0.6)',
+      color: 'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
       textAlign: 'center'
     }
@@ -1483,7 +1484,7 @@ function App() {
     style: {
       display: 'flex',
       flexDirection: 'column',
-      height: '100vh',
+      height: 'calc(var(--vh, 1vh) * 100)',
       position: 'relative',
       zIndex: 1
     }
@@ -1502,6 +1503,7 @@ function App() {
       alignItems: 'stretch'
     }
   }, /*#__PURE__*/React.createElement("div", {
+    className: "md-head-title",
     style: {
       width: 'var(--filter-w)',
       flexShrink: 0,
@@ -1518,14 +1520,14 @@ function App() {
       fontSize: '14px',
       fontWeight: '400',
       letterSpacing: '0.3em',
-      color: 'rgba(var(--text-rgb),0.6)',
+      color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Hintergr\xFCnde"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
-      color: 'rgba(var(--accent-rgb),0.35)',
+      color: 'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))',
       letterSpacing: '0.15em'
     }
   }, filtered.length, " / ", allData.length)), /*#__PURE__*/React.createElement("div", {
@@ -1540,10 +1542,11 @@ function App() {
       fontFamily: 'var(--font-body)',
       fontSize: '11px',
       fontWeight: '300',
-      color: 'rgba(var(--text-rgb),0.35)',
+      color: 'rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em'
     }
   }, "Jeder Charakter hat einen Hintergrund \u2014 w\xE4hle einen, der seine Herkunft und Lebensgeschichte beschreibt."))), /*#__PURE__*/React.createElement("div", {
+    className: "md-body",
     style: {
       flex: 1,
       display: 'flex',
@@ -1559,6 +1562,7 @@ function App() {
     allData: allData,
     dragRef: sidebarDrag
   }), /*#__PURE__*/React.createElement("div", {
+    className: "md-list",
     ref: listDrag.ref,
     onMouseDown: listDrag.onMouseDown,
     onClickCapture: listDrag.onClickCapture,
@@ -1567,7 +1571,7 @@ function App() {
       flexShrink: 0,
       borderRight: '1px solid var(--border)',
       overflowY: 'auto',
-      background: 'rgba(6,5,18,0.5)',
+      background: 'rgba(var(--panel-rgb),0.5)',
       cursor: 'grab',
       ...listDrag.fadeStyle
     }
@@ -1580,6 +1584,7 @@ function App() {
     onClick: setSelected,
     compact: tw.compactList
   }))), /*#__PURE__*/React.createElement("div", {
+    className: "md-detail",
     style: {
       flex: 1,
       display: 'flex',

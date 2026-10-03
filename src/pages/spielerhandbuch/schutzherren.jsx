@@ -36,12 +36,12 @@ function Sidebar({ active, onSelect }) {
   return (
     <aside style={{
       width:'var(--sidebar-w)', flexShrink:0, position:'sticky', top:'var(--nav-h)',
-      height:'calc(100vh - var(--nav-h))', overflowY:'auto',
+      height:'calc(calc(var(--vh, 1vh) * 100) - var(--nav-h))', overflowY:'auto',
       padding:'28px 18px 28px 22px',
-      borderRight:'1px solid rgba(160,140,255,0.08)',
-      background:'linear-gradient(180deg, rgba(8,6,22,0.45) 0%, rgba(5,4,15,0.7) 100%)',
+      borderRight:'1px solid rgba(var(--accent-rgb),calc(0.08*var(--ka)))',
+      background:'linear-gradient(180deg, rgba(var(--panel-rgb),0.45) 0%, rgba(var(--bg-rgb),0.7) 100%)',
     }}>
-      <div style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.32em',color:'rgba(124,77,255,0.55)',textTransform:'uppercase',marginBottom:'18px',paddingLeft:'4px'}}>◈ Kapitel</div>
+      <div style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.32em',color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:'18px',paddingLeft:'4px'}}>◈ Kapitel</div>
       {/* Grundlagen — hervorgehobener Primär-Eintrag */}
       {(() => {
         const on = active === 'grundlagen';
@@ -50,25 +50,25 @@ function Sidebar({ active, onSelect }) {
             position:'relative', display:'flex', alignItems:'center', gap:'12px',
             width:'100%', textAlign:'left', padding:'11px 12px', marginBottom:'12px',
             background: on
-              ? 'linear-gradient(135deg, rgba(124,77,255,0.24) 0%, rgba(124,77,255,0.06) 100%)'
-              : 'rgba(124,77,255,0.03)',
-            border:'1px solid', borderColor: on ? 'rgba(160,140,255,0.7)' : 'rgba(124,77,255,0.16)',
+              ? 'linear-gradient(135deg, rgba(var(--purple-rgb),calc(0.24*var(--kp))) 0%, rgba(var(--purple-rgb),calc(0.06*var(--kp))) 100%)'
+              : 'rgba(var(--purple-rgb),calc(0.03*var(--kp)))',
+            border:'1px solid', borderColor: on ? 'rgba(var(--accent-rgb),calc(0.7*var(--ka)))' : 'rgba(var(--purple-rgb),calc(0.16*var(--kp)))',
             borderRadius:'3px', cursor:'pointer', transition:'all 0.18s',
           }}
-            onMouseEnter={e=>{if(!on){e.currentTarget.style.borderColor='rgba(160,140,255,0.55)';e.currentTarget.style.background='rgba(124,77,255,0.09)';}}}
-            onMouseLeave={e=>{if(!on){e.currentTarget.style.borderColor='rgba(124,77,255,0.16)';e.currentTarget.style.background='rgba(124,77,255,0.03)';}}}
+            onMouseEnter={e=>{if(!on){e.currentTarget.style.borderColor='rgba(var(--accent-rgb),calc(0.55*var(--ka)))';e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.09*var(--kp)))';}}}
+            onMouseLeave={e=>{if(!on){e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.16*var(--kp)))';e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.03*var(--kp)))';}}}
           >
             {/* Eck-Klammern */}
-            <span style={{position:'absolute',top:-1,left:-1,width:10,height:10,borderTop:`1px solid rgba(160,140,255,${on?0.85:0.35})`,borderLeft:`1px solid rgba(160,140,255,${on?0.85:0.35})`,transition:'border-color 0.18s'}}/>
-            <span style={{position:'absolute',bottom:-1,right:-1,width:10,height:10,borderBottom:`1px solid rgba(160,140,255,${on?0.85:0.35})`,borderRight:`1px solid rgba(160,140,255,${on?0.85:0.35})`,transition:'border-color 0.18s'}}/>
+            <span style={{position:'absolute',top:-1,left:-1,width:10,height:10,borderTop:`1px solid rgba(var(--accent-rgb),${on?0.85:0.35})`,borderLeft:`1px solid rgba(var(--accent-rgb),${on?0.85:0.35})`,transition:'border-color 0.18s'}}/>
+            <span style={{position:'absolute',bottom:-1,right:-1,width:10,height:10,borderBottom:`1px solid rgba(var(--accent-rgb),${on?0.85:0.35})`,borderRight:`1px solid rgba(var(--accent-rgb),${on?0.85:0.35})`,transition:'border-color 0.18s'}}/>
             <span style={{minWidth:0}}>
-              <span style={{display:'block',fontFamily:'var(--font-mono)',fontSize:'7px',letterSpacing:'0.3em',color: on ? 'rgba(160,140,255,0.65)' : 'rgba(124,77,255,0.45)',textTransform:'uppercase',marginBottom:'4px',transition:'color 0.18s'}}>01 · Primär ◆</span>
-              <span style={{display:'block',fontFamily:'var(--font-display)',fontSize:'12px',fontWeight: on ? 500 : 400,letterSpacing:'0.14em',color: on ? '#f0eeff' : 'rgba(200,190,240,0.6)',textTransform:'uppercase',transition:'color 0.18s'}}>Grundlagen</span>
+              <span style={{display:'block',fontFamily:'var(--font-mono)',fontSize:'7px',letterSpacing:'0.3em',color: on ? 'rgba(var(--accent-rgb),calc(0.65*var(--ka)))' : 'rgba(var(--purple-rgb),calc(0.45*var(--kp)))',textTransform:'uppercase',marginBottom:'4px',transition:'color 0.18s'}}>01 · Primär ◆</span>
+              <span style={{display:'block',fontFamily:'var(--font-display)',fontSize:'12px',fontWeight: on ? 500 : 400,letterSpacing:'0.14em',color: on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.6*var(--kt)))',textTransform:'uppercase',transition:'color 0.18s'}}>Grundlagen</span>
             </span>
           </button>
         );
       })()}
-      <div style={{fontFamily:'var(--font-mono)',fontSize:'7.5px',letterSpacing:'0.3em',color:'rgba(124,77,255,0.4)',textTransform:'uppercase',margin:'0 0 8px 4px'}}>◇ Schutzherren</div>
+      <div style={{fontFamily:'var(--font-mono)',fontSize:'7.5px',letterSpacing:'0.3em',color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))',textTransform:'uppercase',margin:'0 0 8px 4px'}}>◇ Schutzherren</div>
       <nav style={{display:'flex',flexDirection:'column',gap:'2px'}}>
         {CATEGORIES.filter(c=>c.id!=='grundlagen').map((cat,i) => {
           const on = cat.id === active;
@@ -76,23 +76,23 @@ function Sidebar({ active, onSelect }) {
             <button key={cat.id} onClick={()=>onSelect(cat.id)} style={{
               display:'flex', alignItems:'center', gap:'10px',
               padding:'10px 12px', textAlign:'left',
-              background: on ? 'linear-gradient(90deg, rgba(124,77,255,0.18), rgba(124,77,255,0.04))' : 'transparent',
-              border:'1px solid', borderColor: on ? 'rgba(124,77,255,0.45)' : 'transparent',
+              background: on ? 'linear-gradient(90deg, rgba(var(--purple-rgb),calc(0.18*var(--kp))), rgba(var(--purple-rgb),calc(0.04*var(--kp))))' : 'transparent',
+              border:'1px solid', borderColor: on ? 'rgba(var(--purple-rgb),calc(0.45*var(--kp)))' : 'transparent',
               borderRadius:'2px', cursor:'pointer', transition:'all 0.18s',
             }}
-              onMouseEnter={e=>{if(!on){e.currentTarget.style.background='rgba(124,77,255,0.06)';e.currentTarget.style.borderColor='rgba(124,77,255,0.15)';}}}
+              onMouseEnter={e=>{if(!on){e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.06*var(--kp)))';e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.15*var(--kp)))';}}}
               onMouseLeave={e=>{if(!on){e.currentTarget.style.background='transparent';e.currentTarget.style.borderColor='transparent';}}}
             >
-              <span style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.18em',color: on ? '#c9b8ff' : 'rgba(124,77,255,0.45)',minWidth:'18px'}}>{String(i+2).padStart(2,'0')}</span>
-              <span style={{fontFamily:'var(--font-display)',fontSize:'11px',fontWeight: on ? 500 : 400,letterSpacing: cat.label.length > 15 ? '0.08em' : '0.12em',color: on ? '#f0eeff' : 'rgba(200,190,240,0.6)',textTransform:'uppercase',whiteSpace:'nowrap'}}>{cat.label}</span>
+              <span style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.18em',color: on ? 'var(--lav)' : 'rgba(var(--purple-rgb),calc(0.45*var(--kp)))',minWidth:'18px'}}>{String(i+2).padStart(2,'0')}</span>
+              <span style={{fontFamily:'var(--font-display)',fontSize:'11px',fontWeight: on ? 500 : 400,letterSpacing: cat.label.length > 15 ? '0.08em' : '0.12em',color: on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.6*var(--kt)))',textTransform:'uppercase',whiteSpace:'nowrap'}}>{cat.label}</span>
             </button>
           );
         })}
       </nav>
 
-      <div style={{marginTop:'40px',padding:'14px 12px',background:'rgba(124,77,255,0.05)',border:'1px solid rgba(124,77,255,0.14)',borderRadius:'3px'}}>
-        <div style={{fontFamily:'var(--font-mono)',fontSize:'7.5px',letterSpacing:'0.28em',color:'rgba(124,77,255,0.55)',textTransform:'uppercase',marginBottom:'8px'}}>◈ Hinweis</div>
-        <p style={{fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'10.5px',lineHeight:1.6,color:'rgba(200,190,240,0.55)'}}>
+      <div style={{marginTop:'40px',padding:'14px 12px',background:'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',border:'1px solid rgba(var(--purple-rgb),calc(0.14*var(--kp)))',borderRadius:'3px'}}>
+        <div style={{fontFamily:'var(--font-mono)',fontSize:'7.5px',letterSpacing:'0.28em',color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:'8px'}}>◈ Hinweis</div>
+        <p style={{fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'10.5px',lineHeight:1.6,color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))'}}>
           Alle Tabellen lassen sich direkt auswürfeln — oder ihr wählt gemeinsam einen Eintrag aus.
         </p>
       </div>
@@ -103,23 +103,23 @@ function Sidebar({ active, onSelect }) {
 function SectionHeader({ mono, title, sub }) {
   return (
     <div style={{marginBottom:'22px'}}>
-      <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.32em',color:'rgba(124,77,255,0.6)',textTransform:'uppercase',marginBottom:'10px'}}>◈ {mono}</div>
-      <h2 style={{fontFamily:'var(--font-display)',fontSize:'clamp(28px,3.5vw,42px)',fontWeight:'300',letterSpacing:'0.14em',color:'#f0eeff',textShadow:'0 0 28px rgba(124,77,255,0.32)',lineHeight:1.05,textTransform:'uppercase'}}>{title}</h2>
-      {sub && <p style={{marginTop:'12px',fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'13px',color:'rgba(200,190,240,0.5)',letterSpacing:'0.04em',maxWidth:'620px',lineHeight:1.7}}>{sub}</p>}
-      <div style={{marginTop:'18px',width:'72px',height:'1px',background:'linear-gradient(to right, rgba(124,77,255,0.7), rgba(124,77,255,0))'}}/>
+      <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.32em',color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:'10px'}}>◈ {mono}</div>
+      <h2 style={{fontFamily:'var(--font-display)',fontSize:'clamp(28px,3.5vw,42px)',fontWeight:'300',letterSpacing:'0.14em',color:'var(--white)',textShadow:'0 0 28px rgba(var(--purple-rgb),calc(0.32*var(--kp)))',lineHeight:1.05,textTransform:'uppercase'}}>{title}</h2>
+      {sub && <p style={{marginTop:'12px',fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'13px',color:'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))',letterSpacing:'0.04em',maxWidth:'620px',lineHeight:1.7}}>{sub}</p>}
+      <div style={{marginTop:'18px',width:'72px',height:'1px',background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.7*var(--kp))), rgba(var(--purple-rgb),calc(0*var(--kp))))'}}/>
     </div>
   );
 }
 
 function SubH({ children }) {
-  return <h3 style={{fontFamily:'var(--font-display)',fontSize:'15px',fontWeight:'400',letterSpacing:'0.18em',color:'#e8e0ff',textTransform:'uppercase',margin:'30px 0 12px',display:'flex',alignItems:'center',gap:'10px'}}>
-    <span style={{width:'8px',height:'8px',background:'rgba(124,77,255,0.7)',transform:'rotate(45deg)',display:'inline-block',flexShrink:0}}/>
+  return <h3 style={{fontFamily:'var(--font-display)',fontSize:'15px',fontWeight:'400',letterSpacing:'0.18em',color:'var(--white)',textTransform:'uppercase',margin:'30px 0 12px',display:'flex',alignItems:'center',gap:'10px'}}>
+    <span style={{width:'8px',height:'8px',background:'rgba(var(--purple-rgb),calc(0.7*var(--kp)))',transform:'rotate(45deg)',display:'inline-block',flexShrink:0}}/>
     {children}
   </h3>;
 }
 
 function TW({ children }) {
-  return <div style={{borderRadius:'3px',overflow:'hidden',border:'1px solid rgba(124,77,255,0.18)',background:'rgba(10,7,28,0.6)',marginBottom:'14px'}}>{children}</div>;
+  return <div style={{borderRadius:'3px',overflow:'hidden',border:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',background:'rgba(var(--panel-rgb),0.6)',marginBottom:'14px'}}>{children}</div>;
 }
 
 function useReveal(active) {
@@ -191,18 +191,18 @@ function RollTable({ table, onJump }) {
                   onClick={table.dice ? () => { setDisplay(i); setResult(i); } : undefined}
                   style={{
                     cursor: table.dice ? 'pointer' : 'default',
-                    background: on ? 'rgba(124,77,255,0.18)' : 'transparent',
+                    background: on ? 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))' : 'transparent',
                     transition:'background 0.2s',
                   }}>
                   <td className={table.dice ? 'mono' : ''} style={{
-                    color: on ? '#f0eeff' : (table.dice ? 'rgba(180,165,255,0.85)' : '#e8e0ff'),
+                    color: on ? 'var(--white)' : (table.dice ? 'rgba(var(--accent-rgb),calc(0.85*var(--ka)))' : 'var(--white)'),
                     fontWeight: on ? 500 : (table.dice ? 400 : 400),
                     fontFamily: table.dice ? undefined : 'var(--font-display)',
                     fontSize: table.dice ? undefined : '12.5px',
                     letterSpacing: table.dice ? undefined : '0.06em',
                     textTransform: table.dice ? undefined : 'uppercase',
                   }}>{row[0]}</td>
-                  <td style={{color: on ? '#f0eeff' : undefined}}>{row[1]}</td>
+                  <td style={{color: on ? 'var(--white)' : undefined}}>{row[1]}</td>
                 </tr>
               );
             })}
@@ -210,18 +210,18 @@ function RollTable({ table, onJump }) {
         </table>
       </TW>
       {result !== null && (
-        <div style={{animation:'resultPop 0.32s ease forwards',display:'flex',alignItems:'center',gap:'14px',flexWrap:'wrap',padding:'13px 18px',background:'rgba(124,77,255,0.1)',border:'1px solid rgba(124,77,255,0.3)',borderRadius:'3px',marginBottom:'14px'}}>
-          <span style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.28em',color:'rgba(160,140,255,0.75)',textTransform:'uppercase'}}>Ergebnis · {result+1}</span>
-          <span style={{fontFamily:'var(--font-body)',fontWeight:400,fontSize:'13px',color:'#f0eeff',lineHeight:1.6,flex:1,minWidth:'200px'}}>{resText}</span>
+        <div style={{animation:'resultPop 0.32s ease forwards',display:'flex',alignItems:'center',gap:'14px',flexWrap:'wrap',padding:'13px 18px',background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',border:'1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))',borderRadius:'3px',marginBottom:'14px'}}>
+          <span style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.28em',color:'rgba(var(--accent-rgb),calc(0.75*var(--ka) + var(--tb)))',textTransform:'uppercase'}}>Ergebnis · {result+1}</span>
+          <span style={{fontFamily:'var(--font-body)',fontWeight:400,fontSize:'13px',color:'var(--white)',lineHeight:1.6,flex:1,minWidth:'200px'}}>{resText}</span>
           {jumpId && (
             <button onClick={()=>onJump(jumpId)} style={{
               display:'inline-flex',alignItems:'center',gap:'7px',padding:'6px 13px',
-              background:'rgba(124,77,255,0.14)',border:'1px solid rgba(124,77,255,0.45)',borderRadius:'2px',
-              fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.22em',color:'rgba(220,210,255,0.9)',
+              background:'rgba(var(--purple-rgb),calc(0.14*var(--kp)))',border:'1px solid rgba(var(--purple-rgb),calc(0.45*var(--kp)))',borderRadius:'2px',
+              fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.22em',color:'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
               textTransform:'uppercase',cursor:'pointer',transition:'all 0.15s',
             }}
-              onMouseEnter={e=>{e.currentTarget.style.background='rgba(124,77,255,0.28)';e.currentTarget.style.color='#fff';}}
-              onMouseLeave={e=>{e.currentTarget.style.background='rgba(124,77,255,0.14)';e.currentTarget.style.color='rgba(220,210,255,0.9)';}}
+              onMouseEnter={e=>{e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.28*var(--kp)))';e.currentTarget.style.color='#fff';}}
+              onMouseLeave={e=>{e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.14*var(--kp)))';e.currentTarget.style.color='rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))';}}
             >Zum Kapitel →</button>
           )}
         </div>
@@ -248,7 +248,7 @@ function Blocks({ blocks, onJump }) {
         );
         if (b.table) return (
           <div key={i} className="reveal-up">
-            <div style={{fontFamily:'var(--font-mono)',fontSize:'8.5px',letterSpacing:'0.26em',color:'rgba(124,77,255,0.6)',textTransform:'uppercase',margin:'4px 0 10px'}}>◇ {b.table.title}</div>
+            <div style={{fontFamily:'var(--font-mono)',fontSize:'8.5px',letterSpacing:'0.26em',color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',textTransform:'uppercase',margin:'4px 0 10px'}}>◇ {b.table.title}</div>
             <RollTable table={b.table} onJump={onJump}/>
           </div>
         );
@@ -299,9 +299,9 @@ function GrundlagenContent({ onJump }) {
         sub="Was ein Gruppen-Schutzherr ist, wie er funktioniert — und welche Arten von Schutzherren es in Meruria gibt."/>
 
       {/* Vignette */}
-      <div className="reveal-up" style={{margin:'0 0 26px',padding:'22px 26px',background:'linear-gradient(135deg, rgba(18,12,42,0.7) 0%, rgba(10,7,28,0.9) 100%)',border:'1px solid rgba(124,77,255,0.22)',borderRadius:'4px',maxWidth:'820px'}}>
-        <div style={{fontFamily:'var(--font-display)',fontSize:'13px',fontWeight:500,letterSpacing:'0.18em',color:'#f0eeff',textTransform:'uppercase',marginBottom:'10px'}}>{intro.vignetteTitle}</div>
-        <p style={{fontFamily:'var(--font-body)',fontWeight:300,fontSize:'13px',lineHeight:1.85,color:'rgba(200,190,240,0.72)'}}>{intro.vignetteText}</p>
+      <div className="reveal-up" style={{margin:'0 0 26px',padding:'22px 26px',background:'linear-gradient(135deg, rgba(var(--panel-rgb),0.7) 0%, rgba(var(--panel-rgb),0.9) 100%)',border:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))',borderRadius:'4px',maxWidth:'820px'}}>
+        <div style={{fontFamily:'var(--font-display)',fontSize:'13px',fontWeight:500,letterSpacing:'0.18em',color:'var(--white)',textTransform:'uppercase',marginBottom:'10px'}}>{intro.vignetteTitle}</div>
+        <p style={{fontFamily:'var(--font-body)',fontWeight:300,fontSize:'13px',lineHeight:1.85,color:'rgba(var(--text-rgb),calc(0.72*var(--kt) + var(--tb)))'}}>{intro.vignetteText}</p>
       </div>
 
       {intro.sections.map((sec, i) => (
@@ -329,7 +329,7 @@ function App() {
   const patron = DATA.patrons.find(p => p.id === active);
 
   return (
-    <div style={{position:'relative',minHeight:'100vh'}}>
+    <div style={{position:'relative',minHeight:'calc(var(--vh, 1vh) * 100)'}}>
 
       {/* NAV */}
       <SiteNav rightLabel="SPIELERHANDBUCH"/>
@@ -342,7 +342,7 @@ function App() {
       />
 
       {/* BODY */}
-      <div style={{display:'flex',alignItems:'flex-start',minHeight:'calc(100vh - 52px)'}}>
+      <div style={{display:'flex',alignItems:'flex-start',minHeight:'calc(calc(var(--vh, 1vh) * 100) - 52px)'}}>
         <Sidebar active={active} onSelect={handleSelect}/>
         <div style={{flex:1,padding:'40px 44px 88px',minWidth:0,maxWidth:'1080px'}}>
           {active === 'grundlagen'

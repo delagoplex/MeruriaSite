@@ -1,7 +1,7 @@
 :root {
-  --bg2: #0a0820;
-  --border: rgba(var(--accent-rgb),0.13);
-  --muted: rgba(var(--text-rgb),0.45);
+  --bg2: rgb(var(--panel-rgb));
+  --border: rgba(var(--accent-rgb),calc(0.13*var(--ka)));
+  --muted: rgba(var(--text-rgb),calc(0.45*var(--kt)));
   --nav-h: 52px;
   --filter-w: 220px;
 
@@ -10,8 +10,8 @@
   --type-drache           : #f32b00; /* Feuerrot-Orange     – Drachenmacht         */
   --type-tier             : #d06f00; /* Bernstein           – wilde Tiere          */
   --type-riese            : #a77a29; /* Erdgold             – Stein & Erde         */
-  --type-himmlisch        : #e5c226; /* Strahlendes Gold    – göttliches Licht     */
-  --type-elementar        : #8ca600; /* Energiegrün         – Elementarenergie     */
+  --type-himmlisch        : color-mix(in srgb, #e5c226, rgb(var(--ink-rgb)) var(--cm)); /* Strahlendes Gold    – göttliches Licht     */
+  --type-elementar        : color-mix(in srgb, #8ca600, rgb(var(--ink-rgb)) var(--cm)); /* Energiegrün         – Elementarenergie     */
   --type-schlick          : #2b9300; /* Säuregrün           – Schleim & Ätzend     */
   --type-pflanze          : #009f63; /* Waldgrün            – Natur & Wachstum     */
   --type-monstositaet     : #006e5e; /* Fauliges Teal       – Chimären & Hybriden  */
@@ -24,7 +24,7 @@
 }
 
 html, body { overflow: hidden; }
-#root { height: 100vh; display: flex; flex-direction: column; }
+#root { height: calc(var(--vh, 1vh) * 100); display: flex; flex-direction: column; }
 
 @keyframes slideDown { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
 @keyframes fadeIn { from{opacity:0} to{opacity:1} }
@@ -35,15 +35,15 @@ html, body { overflow: hidden; }
 
 ::-webkit-scrollbar { width: 3px; height: 3px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(var(--accent-rgb),0.25); border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(var(--accent-rgb),0.45); }
+::-webkit-scrollbar-thumb { background: rgba(var(--accent-rgb),calc(0.25*var(--ka))); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(var(--accent-rgb),calc(0.45*var(--ka))); }
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { scrollbar-width: none; }
 
 .stat-divider {
   height: 1px;
-  background: rgba(var(--accent-rgb),0.18);
+  background: rgba(var(--accent-rgb),calc(0.18*var(--ka)));
   margin: 14px 0;
 }
 
@@ -51,14 +51,22 @@ html, body { overflow: hidden; }
   font-family: var(--font-mono);
   font-size: 8px;
   letter-spacing: 0.28em;
-  color: rgba(var(--accent-rgb),0.55);
+  color: rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)));
   text-transform: uppercase;
   padding-bottom: 5px;
-  border-bottom: 1px solid rgba(var(--accent-rgb),0.18);
+  border-bottom: 1px solid rgba(var(--accent-rgb),calc(0.18*var(--ka)));
   margin-bottom: 8px;
 }
 
 @media (max-width: 768px) {
   html, body { overflow: auto !important; }
   #root { height: auto !important; min-height: 100svh; display: flex !important; flex-direction: column !important; }
+}
+
+/* Phones: statblock stacks (portrait on top, values below) instead of values | 450px portrait */
+@media (max-width: 768px) {
+  .md-stat-row[style] { flex-direction: column !important; align-items: stretch !important; }
+  .md-stat-img[style] { order: -1; width: 100% !important; border-left: none !important; border-bottom: 1px solid rgba(var(--accent-rgb),calc(0.15*var(--ka))); padding: 12px !important; }
+  .md-stat-img img { max-height: 60vw !important; width: 100% !important; object-fit: contain; }
+  .md-stat-col[style] { padding: 16px 14px !important; }
 }

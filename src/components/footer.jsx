@@ -3,15 +3,15 @@
 // Props: accent (optional hex color), left (optional left text), right (optional right text)
 
 function SiteFooter({ accent, left, right }) {
-  const textColor = accent ? `${accent}22` : 'rgba(var(--accent-rgb),0.22)';
-  const borderColor = accent ? `${accent}0a` : 'rgba(var(--accent-rgb),0.07)';
+  const textColor = accent ? `${accent}22` : 'rgba(var(--accent-rgb),calc(0.22*var(--ka) + var(--tb)))';
+  const borderColor = accent ? `${accent}0a` : 'rgba(var(--accent-rgb),calc(0.07*var(--ka)))';
   return (
     <div style={{ position:'relative', zIndex:10, padding:'10px 32px', borderTop:`1px solid ${borderColor}`, display:'flex', justifyContent:'space-between', alignItems:'center' }}>
       <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:textColor, letterSpacing:'0.2em' }}>
         {left || '◈ ARCHIV-STATUS: UNBEKANNT'}
       </div>
       <a href="/impressum.html" style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:textColor, letterSpacing:'0.2em', textDecoration:'none', transition:'color 0.15s' }}
-        onMouseEnter={e => e.currentTarget.style.color = accent ? `${accent}66` : 'rgba(var(--accent-rgb),0.55)'}
+        onMouseEnter={e => e.currentTarget.style.color = accent ? `${accent}66` : 'rgba(var(--accent-rgb),calc(0.55*var(--ka)))'}
         onMouseLeave={e => e.currentTarget.style.color = textColor}>
         IMPRESSUM
       </a>

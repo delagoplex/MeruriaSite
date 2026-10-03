@@ -9,7 +9,7 @@ const { useState, useEffect, useRef } = React;
 
 /* ── hexagon ── */
 function hexPts(size){ const c=size/2, p=[]; for(let i=0;i<6;i++){ const a=Math.PI/180*(60*i-30); p.push(`${c+c*Math.cos(a)},${c+c*Math.sin(a)}`);} return p.join(' '); }
-function Oct({ size=10, color='rgba(124,77,255,0.6)', fill='rgba(124,77,255,0.18)', sw=1, style={} }){
+function Oct({ size=10, color='rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))', fill='rgba(var(--purple-rgb),calc(0.18*var(--kp)))', sw=1, style={} }){
   return <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{display:'block',flexShrink:0,...style}}><polygon points={hexPts(size)} fill={fill} stroke={color} strokeWidth={sw}/></svg>;
 }
 
@@ -112,16 +112,16 @@ function RecipeCard({ onClose }){
             <span className="cat-dot" style={{background:CAT.Fisch.c}}></span>
             <span className="cat-txt" style={{color:CAT.Fisch.c}}>Fisch</span>
             <span className="cat-sep">·</span>
-            <span className="cat-txt" style={{color:'rgba(180,165,255,0.7)'}}>Geschmort</span>
+            <span className="cat-txt" style={{color:'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))'}}>Geschmort</span>
             <span className="cat-sep">·</span>
-            <span className="cat-txt" style={{color:'rgba(180,165,255,0.7)'}}>Delikatesse</span>
+            <span className="cat-txt" style={{color:'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))'}}>Delikatesse</span>
           </div>
           <Scramble tag="p" className="desc" text={RECIPE.desc} revealed={!!revealed.desc} onReveal={()=>reveal('desc')} />
         </div>
         <div className="plate-col">
           <div className="plate">
             <image-slot id="rezept-seedrache-bild" shape="rect" fit="cover"
-              placeholder="Bild ablegen" style={{ color:'rgba(208,198,240,0.6)' }}></image-slot>
+              placeholder="Bild ablegen" style={{ color:'color-mix(in srgb, rgba(208,198,240,0.6), rgb(var(--ink-rgb)) var(--cm))' }}></image-slot>
             <span className="ptick a"></span><span className="ptick b"></span>
             <span className="ptick c"></span><span className="ptick d"></span>
           </div>
@@ -147,8 +147,8 @@ function RecipeCard({ onClose }){
               onClick={revealed.sg?undefined:()=>reveal('sg')}
               style={{cursor:revealed.sg?'default':'pointer'}}>
               <svg viewBox="0 0 100 110">
-                <polygon points="50,4 92,28 92,82 50,106 8,82 8,28" fill="rgba(124,77,255,0.08)" stroke="rgba(124,77,255,0.5)" strokeWidth="1.5"/>
-                <polygon points="50,12 85,32 85,78 50,98 15,78 15,32" fill="none" stroke="rgba(124,77,255,0.18)" strokeWidth="1"/>
+                <polygon points="50,4 92,28 92,82 50,106 8,82 8,28" fill="rgba(var(--purple-rgb),calc(0.08*var(--kp)))" stroke="rgba(var(--purple-rgb),calc(0.5*var(--kp)))" strokeWidth="1.5"/>
+                <polygon points="50,12 85,32 85,78 50,98 15,78 15,32" fill="none" stroke="rgba(var(--purple-rgb),calc(0.18*var(--kp)))" strokeWidth="1"/>
               </svg>
               <div className="sg-overlay">
                 <span className="sl">SG</span>

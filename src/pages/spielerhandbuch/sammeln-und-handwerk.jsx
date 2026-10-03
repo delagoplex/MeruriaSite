@@ -58,7 +58,8 @@ function App() {
             paddingTop: activeId === 'uebersicht' ? '0' : '40px',
             animation:'fadeInUp 0.4s ease',
           }} key={activeId}>
-            {chapter && chapter.render({ goTo: setActiveId })}
+            {/* as a component, not chapter.render(...): chapters may use hooks (e.g. ChapterSchmiede) */}
+            {chapter && React.createElement(chapter.render, { goTo: setActiveId })}
 
             {ToolView && (
               <>
@@ -75,7 +76,7 @@ function App() {
               <nav style={{
                 display:'flex', justifyContent:'space-between', alignItems:'stretch',
                 gap:'14px', marginTop:'48px', paddingTop:'24px',
-                borderTop:'1px solid rgba(124,77,255,0.15)',
+                borderTop:'1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))',
               }}>
                 {prev ? (
                   <button onClick={()=>setActiveId(prev.id)} style={navBtnStyle}>
@@ -99,18 +100,18 @@ function App() {
 }
 
 const navBtnStyle = {
-  flex:1, padding:'12px 16px', background:'rgba(10,8,28,0.4)',
-  border:'1px solid rgba(124,77,255,0.2)', borderRadius:'4px',
+  flex:1, padding:'12px 16px', background:'rgba(var(--panel-rgb),0.4)',
+  border:'1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))', borderRadius:'4px',
   cursor:'pointer', transition:'all 0.2s', textAlign:'left',
   display:'flex', flexDirection:'column', gap:'4px',
 };
 const navBtnLabelStyle = {
   fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.2em',
-  color:'rgba(160,140,255,0.55)', textTransform:'uppercase',
+  color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textTransform:'uppercase',
 };
 const navBtnTitleStyle = {
   fontFamily:'var(--font-display)', fontSize:'13px', letterSpacing:'0.14em',
-  color:'rgba(220,210,250,0.9)', textTransform:'uppercase',
+  color:'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))', textTransform:'uppercase',
 };
 
 ReactDOM.createRoot(document.getElementById('root')).render(<SiteGate><App /></SiteGate>);

@@ -1,7 +1,7 @@
 :root {
   --accent: #7c4dff;
-  --accent-soft: rgba(124,77,255,0.5);
-  --border: rgba(160,140,255,0.15);
+  --accent-soft: rgba(var(--purple-rgb),calc(0.5*var(--kp)));
+  --border: rgba(var(--accent-rgb),calc(0.15*var(--ka)));
   --nav-h: 56px;
 }
 
@@ -64,25 +64,25 @@
 }
 .tarot-card-back {
   background:
-    radial-gradient(circle at 50% 50%, rgba(124,77,255,0.18), rgba(8,6,26,0) 70%),
-    linear-gradient(180deg, #100a26, #08061a);
-  border: 1px solid rgba(160,140,255,0.45);
+    radial-gradient(circle at 50% 50%, rgba(var(--purple-rgb),calc(0.18*var(--kp))), rgba(var(--panel-rgb),0) 70%),
+    linear-gradient(180deg, rgb(var(--panel-rgb)), rgb(var(--panel-rgb)));
+  border: 1px solid rgba(var(--accent-rgb),calc(0.45*var(--ka)));
   box-shadow:
-    0 0 0 1px rgba(124,77,255,0.18) inset,
-    0 18px 40px rgba(0,0,0,0.7),
-    0 0 26px rgba(124,77,255,0.22);
+    0 0 0 1px rgba(var(--purple-rgb),calc(0.18*var(--kp))) inset,
+    0 18px 40px rgba(var(--shadow-rgb),calc(0.7 * var(--shadow-k))),
+    0 0 26px rgba(var(--purple-rgb),calc(0.22*var(--kp)));
 }
 .tarot-card-back svg { width:100%; height:100%; display:block; }
 .tarot-card-front {
   transform: rotateY(180deg);
   background:
-    radial-gradient(circle at 50% 35%, rgba(124,77,255,0.14), transparent 70%),
-    linear-gradient(180deg, #100a26, #08061a);
-  border: 1px solid rgba(160,140,255,0.45);
+    radial-gradient(circle at 50% 35%, rgba(var(--purple-rgb),calc(0.14*var(--kp))), transparent 70%),
+    linear-gradient(180deg, rgb(var(--panel-rgb)), rgb(var(--panel-rgb)));
+  border: 1px solid rgba(var(--accent-rgb),calc(0.45*var(--ka)));
   box-shadow:
-    0 0 0 1px rgba(124,77,255,0.18) inset,
-    0 18px 40px rgba(0,0,0,0.7),
-    0 0 26px rgba(124,77,255,0.22);
+    0 0 0 1px rgba(var(--purple-rgb),calc(0.18*var(--kp))) inset,
+    0 18px 40px rgba(var(--shadow-rgb),calc(0.7 * var(--shadow-k))),
+    0 0 26px rgba(var(--purple-rgb),calc(0.22*var(--kp)));
   color: var(--white);
   display: flex; flex-direction: column;
   padding: 16px 14px 14px;
@@ -90,7 +90,7 @@
 }
 .tarot-cf-frame {
   position:absolute; inset:6px;
-  border:1px solid rgba(160,140,255,0.2);
+  border:1px solid rgba(var(--accent-rgb),calc(0.2*var(--ka)));
   border-radius:6px;
   pointer-events:none;
 }
@@ -100,7 +100,7 @@
   letter-spacing: 0.3em;
   text-align: center;
   text-transform: uppercase;
-  color: rgba(124,77,255,0.75);
+  color: rgba(var(--purple-rgb),calc(0.75*var(--kp) + var(--tb)));
 }
 .tarot-cf-symbol {
   flex:1; position:relative;
@@ -108,26 +108,26 @@
 }
 .tarot-cf-symbol svg {
   width: 64%; height: 64%;
-  filter: drop-shadow(0 0 8px rgba(124,77,255,0.5));
+  filter: drop-shadow(0 0 8px rgba(var(--purple-rgb),calc(0.5*var(--kp))));
 }
 .tarot-cf-name {
   text-align:center;
   font-family: var(--font-display);
   font-weight:400; font-size:15px;
   letter-spacing:0.18em; text-transform:uppercase;
-  color:#f0eeff; line-height:1.2;
-  text-shadow: 0 0 18px rgba(124,77,255,0.4);
+  color:var(--white); line-height:1.2;
+  text-shadow: 0 0 18px rgba(var(--purple-rgb),calc(0.4*var(--kp)));
 }
 .tarot-cf-divider {
   width:42px; height:1px;
-  background: linear-gradient(90deg, transparent, rgba(160,140,255,0.6), transparent);
+  background: linear-gradient(90deg, transparent, rgba(var(--accent-rgb),calc(0.6*var(--ka))), transparent);
   margin: 8px auto 6px;
 }
 .tarot-cf-keywords {
   text-align:center;
   font-family: var(--font-body);
   font-weight:300; font-size:10px;
-  letter-spacing:0.06em; color:rgba(200,190,240,0.7);
+  letter-spacing:0.06em; color:rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)));
   line-height:1.4;
 }
 .tarot-cf-corner {
@@ -136,7 +136,7 @@
 }
 .tarot-cf-corner svg {
   width:100%; height:100%; display:block;
-  filter: drop-shadow(0 0 4px rgba(124,77,255,0.5));
+  filter: drop-shadow(0 0 4px rgba(var(--purple-rgb),calc(0.5*var(--kp))));
 }
 .tarot-cf-corner.tl { top:13px; left:14px; }
 .tarot-cf-corner.br { bottom:13px; right:14px; transform:rotate(180deg); }
@@ -154,17 +154,17 @@
 .tk-spark {
   position: fixed; width:8px; height:8px;
   pointer-events:none; z-index:9998;
-  background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(220,210,255,0.95) 30%, rgba(160,140,255,0.6) 60%, transparent 78%);
+  background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(var(--text-rgb),calc(0.95*var(--kt))) 30%, rgba(var(--accent-rgb),calc(0.6*var(--ka))) 60%, transparent 78%);
   border-radius:50%;
-  box-shadow: 0 0 14px rgba(220,210,255,1), 0 0 28px rgba(160,140,255,0.85), 0 0 44px rgba(124,77,255,0.55);
+  box-shadow: 0 0 14px rgba(var(--text-rgb),calc(1*var(--kt))), 0 0 28px rgba(var(--accent-rgb),calc(0.85*var(--ka))), 0 0 44px rgba(var(--purple-rgb),calc(0.55*var(--kp)));
   will-change: transform, opacity;
 }
 .tk-spark.big {
   width:14px; height:14px;
-  box-shadow: 0 0 22px rgba(255,255,255,1), 0 0 40px rgba(160,140,255,1), 0 0 70px rgba(124,77,255,0.7);
+  box-shadow: 0 0 22px rgba(255,255,255,1), 0 0 40px rgba(var(--accent-rgb),calc(1*var(--ka))), 0 0 70px rgba(var(--purple-rgb),calc(0.7*var(--kp)));
 }
 .tk-spark.alt {
-  background: radial-gradient(circle, rgba(255,250,210,1) 0%, rgba(200,170,255,0.9) 40%, rgba(124,77,255,0.5) 65%, transparent 80%);
+  background: radial-gradient(circle, rgba(255,250,210,1) 0%, rgba(200,170,255,0.9) 40%, rgba(var(--purple-rgb),calc(0.5*var(--kp))) 65%, transparent 80%);
   box-shadow: 0 0 16px rgba(255,240,200,0.95), 0 0 32px rgba(200,150,255,0.7);
 }
 .tk-spark.cross {
@@ -172,21 +172,21 @@
     linear-gradient(to bottom, transparent 42%, rgba(255,255,255,1) 50%, transparent 58%),
     linear-gradient(to right,  transparent 42%, rgba(255,255,255,1) 50%, transparent 58%);
   width:18px; height:18px; border-radius:0;
-  box-shadow: 0 0 14px rgba(220,210,255,0.95), 0 0 28px rgba(160,140,255,0.7);
+  box-shadow: 0 0 14px rgba(var(--text-rgb),calc(0.95*var(--kt))), 0 0 28px rgba(var(--accent-rgb),calc(0.7*var(--ka)));
 }
 .tk-burst-ring {
   position:fixed; width:100px; height:100px;
   pointer-events:none; z-index:9997;
   border-radius:50%;
-  border:2px solid rgba(220,210,255,0.95);
-  box-shadow: 0 0 30px rgba(160,140,255,0.9), inset 0 0 20px rgba(160,140,255,0.5);
+  border:2px solid rgba(var(--text-rgb),calc(0.95*var(--kt)));
+  box-shadow: 0 0 30px rgba(var(--accent-rgb),calc(0.9*var(--ka))), inset 0 0 20px rgba(var(--accent-rgb),calc(0.5*var(--ka)));
   will-change: transform, opacity;
 }
 .tk-burst-flash {
   position:fixed; width:200px; height:200px;
   pointer-events:none; z-index:9996;
   border-radius:50%;
-  background: radial-gradient(circle, rgba(255,255,255,0.85), rgba(160,140,255,0.4) 35%, rgba(124,77,255,0.1) 60%, transparent 80%);
+  background: radial-gradient(circle, rgba(255,255,255,0.85), rgba(var(--accent-rgb),calc(0.4*var(--ka))) 35%, rgba(var(--purple-rgb),calc(0.1*var(--kp))) 60%, transparent 80%);
   will-change: transform, opacity;
 }
 
@@ -210,4 +210,12 @@
 @keyframes nc-scan {
   0%{opacity:0;top:0%} 5%{opacity:0.9;top:8%} 15%{top:78%} 25%{top:32%} 35%{top:92%} 45%{top:18%} 55%{top:62%}
   70%{opacity:0.3;top:50%} 100%{opacity:0}
+}
+
+/* Portal cards: 3 columns -> 2 (3 rows) when narrower than 1100px -> 1 below 700px */
+@media (max-width: 1100px) {
+  .portal-grid.portal-grid.portal-grid[style] { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
+@media (max-width: 700px) {
+  .portal-grid.portal-grid.portal-grid[style] { grid-template-columns: minmax(0, 1fr) !important; }
 }

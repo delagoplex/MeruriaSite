@@ -70,7 +70,7 @@ const ENTRIES = [{
     note: 'Erste Strukturen formen sich, doch viele Organisationen sind erst Wochen alt.'
   },
   accent: '#9070e0',
-  bgStart: '#0e0a18',
+  bgStart: 'rgb(var(--panel-rgb))',
   href: '#',
   locked: false
 }, {
@@ -289,7 +289,7 @@ function ParticleField({
         if (p.y > 1) p.y = 0;
         ctx.beginPath();
         ctx.arc(p.x * w + shiftX, p.y * h + shiftY, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(160,140,255,${p.alpha})`;
+        ctx.fillStyle = `rgba(${themeRgb('--accent-rgb')},${p.alpha})`;
         ctx.fill();
       });
       animRef.current = requestAnimationFrame(tick);
@@ -352,7 +352,7 @@ function AstrolabeBackdrop({
   activeAccent
 }) {
   const c = ASTRO.center;
-  const baseStroke = activeAccent || 'rgba(160,140,255,0.35)';
+  const baseStroke = activeAccent || 'rgba(var(--accent-rgb),calc(0.35*var(--ka)))';
   return /*#__PURE__*/React.createElement("svg", {
     width: "100%",
     viewBox: `0 0 ${ASTRO.size} ${ASTRO.size}`,
@@ -368,13 +368,13 @@ function AstrolabeBackdrop({
     r: "50%"
   }, /*#__PURE__*/React.createElement("stop", {
     offset: "0%",
-    stopColor: "rgba(124,77,255,0.10)"
+    stopColor: "rgba(var(--purple-rgb),calc(0.10*var(--kp)))"
   }), /*#__PURE__*/React.createElement("stop", {
     offset: "50%",
-    stopColor: "rgba(124,77,255,0.04)"
+    stopColor: "rgba(var(--purple-rgb),calc(0.04*var(--kp)))"
   }), /*#__PURE__*/React.createElement("stop", {
     offset: "100%",
-    stopColor: "rgba(124,77,255,0)"
+    stopColor: "rgba(var(--purple-rgb),calc(0*var(--kp)))"
   }))), /*#__PURE__*/React.createElement("circle", {
     cx: c,
     cy: c,
@@ -386,7 +386,7 @@ function AstrolabeBackdrop({
     cy: c,
     r: r,
     fill: "none",
-    stroke: "rgba(160,140,255,0.10)",
+    stroke: "rgba(var(--accent-rgb),calc(0.10*var(--ka)))",
     strokeWidth: "0.7",
     strokeDasharray: i === 1 ? '2 6' : i === 3 ? '1 4' : 'none'
   })), Array.from({
@@ -404,7 +404,7 @@ function AstrolabeBackdrop({
       y1: y1,
       x2: x2,
       y2: y2,
-      stroke: "rgba(160,140,255,0.12)",
+      stroke: "rgba(var(--accent-rgb),calc(0.12*var(--ka)))",
       strokeWidth: "0.6",
       strokeDasharray: "2 5"
     });
@@ -424,13 +424,13 @@ function AstrolabeBackdrop({
       y1: y1,
       x2: x2,
       y2: y2,
-      stroke: "rgba(160,140,255,0.18)",
+      stroke: "rgba(var(--accent-rgb),calc(0.18*var(--ka)))",
       strokeWidth: i % 6 === 0 ? 0.9 : 0.5
     });
   }), /*#__PURE__*/React.createElement("polygon", {
     points: hexAt(ASTRO.radius * 2 + 130, c, c),
     fill: "none",
-    stroke: "rgba(160,140,255,0.08)",
+    stroke: "rgba(var(--accent-rgb),calc(0.08*var(--ka)))",
     strokeWidth: "0.8"
   }));
 }
@@ -457,10 +457,10 @@ function CenterPlate({
     r: "60%"
   }, /*#__PURE__*/React.createElement("stop", {
     offset: "0%",
-    stopColor: "rgba(28,18,58,0.92)"
+    stopColor: "rgba(var(--panel-rgb),0.92)"
   }), /*#__PURE__*/React.createElement("stop", {
     offset: "100%",
-    stopColor: "rgba(6,4,18,0.97)"
+    stopColor: "rgba(var(--panel-rgb),0.97)"
   }))), /*#__PURE__*/React.createElement("polygon", {
     points: hexAt(size + 26, c, c),
     fill: "none",
@@ -472,7 +472,7 @@ function CenterPlate({
   }), /*#__PURE__*/React.createElement("polygon", {
     points: hexAt(size, c, c),
     fill: "url(#plateFill)",
-    stroke: selected ? `${acc}aa` : 'rgba(160,140,255,0.45)',
+    stroke: selected ? `${acc}aa` : 'rgba(var(--accent-rgb),calc(0.45*var(--ka)))',
     strokeWidth: "1.5",
     style: {
       transition: 'stroke 0.4s',
@@ -503,7 +503,7 @@ function CenterPlate({
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '0.32em',
-      color: 'rgba(160,140,255,0.55)',
+      color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
       marginBottom: '10px'
     }
@@ -513,8 +513,8 @@ function CenterPlate({
       fontSize: '26px',
       fontWeight: '300',
       letterSpacing: '0.18em',
-      color: '#f0eeff',
-      textShadow: '0 0 30px rgba(124,77,255,0.55)',
+      color: 'var(--white)',
+      textShadow: '0 0 30px rgba(var(--purple-rgb),calc(0.55*var(--kp)))',
       marginBottom: '14px',
       lineHeight: 1.2
     }
@@ -529,7 +529,7 @@ function CenterPlate({
     style: {
       width: '24px',
       height: '1px',
-      background: 'rgba(124,77,255,0.5)'
+      background: 'rgba(var(--purple-rgb),calc(0.5*var(--kp)))'
     }
   }), /*#__PURE__*/React.createElement("svg", {
     width: "6",
@@ -537,12 +537,12 @@ function CenterPlate({
     viewBox: "0 0 6 6"
   }, /*#__PURE__*/React.createElement("polygon", {
     points: hexPoints(6),
-    fill: "rgba(160,140,255,0.5)"
+    fill: "rgba(var(--accent-rgb),calc(0.5*var(--ka)))"
   })), /*#__PURE__*/React.createElement("div", {
     style: {
       width: '24px',
       height: '1px',
-      background: 'rgba(124,77,255,0.5)'
+      background: 'rgba(var(--purple-rgb),calc(0.5*var(--kp)))'
     }
   })), /*#__PURE__*/React.createElement("p", {
     style: {
@@ -550,7 +550,7 @@ function CenterPlate({
       fontWeight: '300',
       fontSize: '11.5px',
       lineHeight: 1.75,
-      color: 'rgba(200,190,240,0.55)',
+      color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
       textWrap: 'pretty',
       maxWidth: '220px'
@@ -561,7 +561,7 @@ function CenterPlate({
       fontFamily: 'var(--font-mono)',
       fontSize: '7px',
       letterSpacing: '0.28em',
-      color: 'rgba(160,140,255,0.4)',
+      color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "\u25C8 Velundra \xB7 Archiv \u25C8")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
@@ -600,7 +600,7 @@ function CenterPlate({
       fontSize: '22px',
       fontWeight: '400',
       letterSpacing: '0.18em',
-      color: '#f0eeff',
+      color: 'var(--white)',
       textShadow: `0 0 20px ${acc}77`,
       marginBottom: '6px',
       lineHeight: 1.2,
@@ -636,7 +636,7 @@ function CenterPlate({
       fontWeight: '300',
       fontSize: '11.5px',
       lineHeight: 1.7,
-      color: 'rgba(240,238,255,0.7)',
+      color: 'rgba(var(--text-hi-rgb),calc(0.7*var(--kt) + var(--tb)))',
       letterSpacing: '0.02em',
       textWrap: 'pretty',
       marginBottom: '12px',
@@ -648,7 +648,7 @@ function CenterPlate({
       fontWeight: '300',
       fontSize: '10.5px',
       lineHeight: 1.55,
-      color: 'rgba(200,190,240,0.48)',
+      color: 'rgba(var(--text-rgb),calc(0.48*var(--kt) + var(--tb)))',
       letterSpacing: '0.01em',
       fontStyle: 'italic',
       textWrap: 'pretty',
@@ -680,7 +680,7 @@ function CenterPlate({
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '0.32em',
-      color: '#f0eeff',
+      color: 'var(--white)',
       textTransform: 'uppercase',
       textDecoration: 'none',
       border: `1px solid ${acc}`,
@@ -817,7 +817,7 @@ function EntryHex({
     }
   }, /*#__PURE__*/React.createElement("polygon", {
     points: hexAt(size, size / 2, size / 2),
-    fill: "rgba(8,6,22,0.85)",
+    fill: "rgba(var(--panel-rgb),0.85)",
     stroke: active ? acc : `${acc}55`,
     strokeWidth: active ? 1.5 : 1,
     style: {
@@ -850,7 +850,7 @@ function EntryHex({
       zIndex: 1,
       fontFamily: 'var(--font-display)',
       fontSize: '30px',
-      color: active ? '#f0eeff' : acc,
+      color: active ? 'var(--white)' : acc,
       lineHeight: 1,
       marginBottom: '4px',
       textShadow: active ? `0 0 14px ${acc}` : 'none',
@@ -865,7 +865,7 @@ function EntryHex({
       fontSize: '10px',
       fontWeight: '400',
       letterSpacing: '0.16em',
-      color: active ? '#f0eeff' : 'rgba(240,238,255,0.78)',
+      color: active ? 'var(--white)' : 'rgba(var(--text-hi-rgb),calc(0.78*var(--kt)))',
       textTransform: 'uppercase',
       textShadow: active ? `0 0 10px ${acc}aa` : 'none',
       transition: 'color 0.3s',
@@ -901,6 +901,18 @@ function App() {
     y: 0.5
   });
   const [selectedIdx, setSelectedIdx] = useState(null);
+  // The astrolabe is laid out in px for ASTRO.size; scale it down to fit narrower containers
+  const astroRef = useRef(null);
+  const [astroScale, setAstroScale] = useState(1);
+  useEffect(() => {
+    const el = astroRef.current;
+    if (!el || typeof ResizeObserver === 'undefined') return;
+    const update = () => setAstroScale(Math.min(1, el.clientWidth / ASTRO.size));
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
   const handleMouseMove = useCallback(e => {
     setMouse({
       x: e.clientX / window.innerWidth,
@@ -918,7 +930,7 @@ function App() {
     onMouseMove: handleMouseMove,
     style: {
       position: 'relative',
-      minHeight: '100vh'
+      minHeight: 'calc(var(--vh, 1vh) * 100)'
     }
   }, /*#__PURE__*/React.createElement(ParticleField, {
     mouseX: mouse.x,
@@ -926,44 +938,7 @@ function App() {
   }), /*#__PURE__*/React.createElement(FloatingHexField, {
     mouseX: mouse.x,
     mouseY: mouse.y
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'relative',
-      zIndex: 10,
-      width: '100%',
-      height: '180px',
-      background: 'linear-gradient(180deg, rgba(20,10,50,0.95) 0%, rgba(10,8,30,0.98) 100%)',
-      borderBottom: '1px solid rgba(160,140,255,0.15)',
-      overflow: 'hidden',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'absolute',
-      inset: 0,
-      background: `radial-gradient(ellipse at 20% 50%, rgba(124,77,255,0.18) 0%, transparent 50%), radial-gradient(ellipse at 80% 50%, rgba(45,125,255,0.14) 0%, transparent 50%), repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(160,140,255,0.04) 60px, rgba(160,140,255,0.04) 61px)`,
-      pointerEvents: 'none'
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'absolute',
-      inset: 0,
-      backgroundImage: `repeating-linear-gradient(135deg, transparent, transparent 18px, rgba(124,77,255,0.03) 18px, rgba(124,77,255,0.03) 19px)`,
-      pointerEvents: 'none'
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
-      color: 'rgba(160,140,255,0.3)',
-      letterSpacing: '0.3em',
-      textTransform: 'uppercase',
-      position: 'relative',
-      zIndex: 1
-    }
-  }, "Kopfbild \u2014 Artwork hier ablegen")), /*#__PURE__*/React.createElement(SiteNav, {
+  }), /*#__PURE__*/React.createElement(SiteNav, {
     rightLabel: "ENZYKLOP\xC4DIE-ARCHIV"
   }), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -985,24 +960,25 @@ function App() {
     style: {
       flex: 1,
       height: '1px',
-      background: 'linear-gradient(90deg, transparent, rgba(160,140,255,0.25), transparent)'
+      background: 'linear-gradient(90deg, transparent, rgba(var(--accent-rgb),calc(0.25*var(--ka))), transparent)'
     }
   }), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '0.4em',
-      color: 'rgba(160,140,255,0.55)',
+      color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "\u25C8 Astrolabium des Wissens \u25C8"), /*#__PURE__*/React.createElement("div", {
     style: {
       flex: 1,
       height: '1px',
-      background: 'linear-gradient(90deg, transparent, rgba(160,140,255,0.25), transparent)'
+      background: 'linear-gradient(90deg, transparent, rgba(var(--accent-rgb),calc(0.25*var(--ka))), transparent)'
     }
   })), /*#__PURE__*/React.createElement("div", {
     className: "reveal-up",
+    ref: astroRef,
     style: {
       transitionDelay: '0.05s',
       position: 'relative',
@@ -1012,6 +988,16 @@ function App() {
       margin: '0 auto 30px'
     },
     onMouseLeave: () => setSelectedIdx(null)
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: `${ASTRO.size}px`,
+      height: `${ASTRO.size}px`,
+      transformOrigin: '0 0',
+      transform: `scale(${astroScale})`
+    }
   }, /*#__PURE__*/React.createElement(AstrolabeBackdrop, {
     activeAccent: activeAccent
   }), /*#__PURE__*/React.createElement(ActiveSpoke, {
@@ -1026,7 +1012,7 @@ function App() {
     active: selectedIdx === i,
     onEnter: () => setSelectedIdx(i),
     onLeave: () => {}
-  })))), /*#__PURE__*/React.createElement(SiteFooter, null));
+  }))))), /*#__PURE__*/React.createElement(SiteFooter, null));
 }
 ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement(App, null)));
 })();

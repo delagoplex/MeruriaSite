@@ -300,13 +300,13 @@ function FancyBar({ b }) {
     <div style={{ marginBottom:12 }}>
       <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:5 }}>
         <svg viewBox={b.viewBox || '0 0 100 100'} width="16" height="16" fill="none" style={{ color: b.c, stroke: b.c, opacity:0.9, flexShrink:0 }}>{b.icon}</svg>
-        <span style={{ fontFamily:'var(--font-display)', fontSize:10, letterSpacing:'0.18em', fontWeight:400, color:'rgba(220,210,250,0.85)', textTransform:'uppercase', minWidth:0, flex:1, lineHeight:1.2 }}>{b.label}</span>
+        <span style={{ fontFamily:'var(--font-display)', fontSize:10, letterSpacing:'0.18em', fontWeight:400, color:'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))', textTransform:'uppercase', minWidth:0, flex:1, lineHeight:1.2 }}>{b.label}</span>
         <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color: b.c, letterSpacing:'0.18em', flexShrink:0 }}>{b.pct}</span>
       </div>
       <div style={{ position:'relative', height:4 }}>
         <div style={{ position:'absolute', left:0, top:0, bottom:0, width: b.wB, boxShadow: b.glow, borderRadius:2, pointerEvents:'none' }}/>
-        <div style={{ position:'absolute', inset:0, background:'rgba(124,77,255,0.08)', border:`1px solid ${b.trackBorder}`, borderRadius:2, overflow:'hidden' }}>
-          <div style={{ position:'absolute', left:0, top:0, bottom:0, width: b.wA, background:'linear-gradient(90deg, rgba(220,215,250,0.16), rgba(240,238,255,0.26))', transition:'width 1s cubic-bezier(.2,.85,.2,1)' }}/>
+        <div style={{ position:'absolute', inset:0, background:'rgba(var(--purple-rgb),calc(0.08*var(--kp)))', border:`1px solid ${b.trackBorder}`, borderRadius:2, overflow:'hidden' }}>
+          <div style={{ position:'absolute', left:0, top:0, bottom:0, width: b.wA, background:'linear-gradient(90deg, rgba(220,215,250,0.16), rgba(var(--text-hi-rgb),calc(0.26*var(--kt))))', transition:'width 1s cubic-bezier(.2,.85,.2,1)' }}/>
           <div style={{ position:'absolute', left:-1, top:-1, bottom:-1, width: b.wB, background: b.fillGrad, boxShadow:'inset 0 0 4px rgba(255,255,255,0.5)', borderRadius:2, transition:'width 1.2s cubic-bezier(.2,.85,.2,1)' }}/>
         </div>
       </div>
@@ -380,8 +380,8 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
       style={{
         flex:1, padding:'11px 0', background:'transparent', border:'none', cursor:'pointer',
         fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.24em', textTransform:'uppercase',
-        color: tab === id ? (accent || '#f3eefe') : 'rgba(160,140,255,0.55)',
-        borderBottom: `2px solid ${tab === id ? (accent || 'rgba(160,140,255,0.85)') : 'transparent'}`,
+        color: tab === id ? (accent || 'var(--white)') : 'rgba(var(--accent-rgb),calc(0.55*var(--ka)))',
+        borderBottom: `2px solid ${tab === id ? (accent || 'rgba(var(--accent-rgb),calc(0.85*var(--ka)))') : 'transparent'}`,
         transition:'all 0.15s',
       }}
     >{label}</button>
@@ -402,8 +402,8 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
 
   const FactRow = ({ k, v }) => (
     <div style={{ display:'flex', gap:8, alignItems:'baseline', marginBottom:8 }}>
-      <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(124,77,255,0.5)', width:96, flexShrink:0 }}>{k}</span>
-      <span style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:300, color:'rgba(200,190,240,0.75)', lineHeight:1.5 }}>{v}</span>
+      <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', width:96, flexShrink:0 }}>{k}</span>
+      <span style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:300, color:'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))', lineHeight:1.5 }}>{v}</span>
     </div>
   );
 
@@ -413,7 +413,7 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
       <aside
         className="mk-drawer"
         onMouseDown={(e) => e.stopPropagation()}
-        style={{ background:'linear-gradient(180deg, rgba(14,9,34,0.98) 0%, rgba(8,6,22,0.98) 100%)', borderLeft:'1px solid rgba(160,140,255,0.28)', boxShadow:'-24px 0 60px rgba(0,0,0,0.65)' }}
+        style={{ background:'linear-gradient(180deg, rgba(var(--panel-rgb),0.98) 0%, rgba(var(--panel-rgb),0.98) 100%)', borderLeft:'1px solid rgba(var(--accent-rgb),calc(0.28*var(--ka)))', boxShadow:'-24px 0 60px rgba(var(--shadow-rgb),calc(0.65 * var(--shadow-k)))' }}
       >
         {/* Top-Bild (klickbar → Vollbild) */}
         {topBild && (
@@ -423,22 +423,22 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
             style={{ display:'block', width:'100%', padding:0, border:'none', background:'none', cursor:'zoom-in', position:'relative', flexShrink:0 }}
           >
             <img src={topBild} loading="lazy" style={{ width:'100%', height:210, objectFit:'cover', display:'block' }} alt=""/>
-            <span style={{ position:'absolute', inset:0, background:'linear-gradient(to bottom, rgba(8,6,22,0.15) 0%, rgba(8,6,22,0) 35%, rgba(14,9,34,0.92) 100%)', pointerEvents:'none' }}/>
+            <span style={{ position:'absolute', inset:0, background:'linear-gradient(to bottom, rgba(var(--panel-rgb),0.15) 0%, rgba(var(--panel-rgb),0) 35%, rgba(var(--panel-rgb),0.92) 100%)', pointerEvents:'none' }}/>
           </button>
         )}
         <button
           onClick={onClose} title="Schließen (Esc)"
-          style={{ position:'absolute', top:12, right:12, zIndex:5, width:32, height:32, background:'rgba(8,6,22,0.55)', border:'1px solid rgba(220,80,120,0.18)', borderRadius:2, color:'rgba(220,140,160,0.55)', fontFamily:'var(--font-mono)', fontSize:14, cursor:'pointer', transition:'all 0.18s' }}
-          onMouseEnter={e => { e.currentTarget.style.color='#ffd0dc'; e.currentTarget.style.borderColor='rgba(220,80,120,0.75)'; e.currentTarget.style.background='rgba(180,40,80,0.16)'; }}
-          onMouseLeave={e => { e.currentTarget.style.color='rgba(220,140,160,0.55)'; e.currentTarget.style.borderColor='rgba(220,80,120,0.18)'; e.currentTarget.style.background='rgba(8,6,22,0.55)'; }}
+          style={{ position:'absolute', top:12, right:12, zIndex:5, width:32, height:32, background:'rgba(var(--panel-rgb),0.55)', border:'1px solid rgba(220,80,120,0.18)', borderRadius:2, color:'color-mix(in srgb, rgba(220,140,160,0.55), rgb(var(--ink-rgb)) var(--cm))', fontFamily:'var(--font-mono)', fontSize:14, cursor:'pointer', transition:'all 0.18s' }}
+          onMouseEnter={e => { e.currentTarget.style.color='color-mix(in srgb, #ffd0dc, rgb(var(--ink-rgb)) var(--cm))'; e.currentTarget.style.borderColor='rgba(220,80,120,0.75)'; e.currentTarget.style.background='rgba(180,40,80,0.16)'; }}
+          onMouseLeave={e => { e.currentTarget.style.color='color-mix(in srgb, rgba(220,140,160,0.55), rgb(var(--ink-rgb)) var(--cm))'; e.currentTarget.style.borderColor='rgba(220,80,120,0.18)'; e.currentTarget.style.background='rgba(var(--panel-rgb),0.55)'; }}
         >×</button>
 
-        <header style={{ padding: topBild ? '14px 22px 16px' : '18px 22px 16px', borderBottom:'1px solid rgba(124,77,255,0.18)', display:'flex', alignItems:'flex-start', justifyContent:'space-between', position:'relative', zIndex:2, flexShrink:0 }}>
+        <header style={{ padding: topBild ? '14px 22px 16px' : '18px 22px 16px', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))', display:'flex', alignItems:'flex-start', justifyContent:'space-between', position:'relative', zIndex:2, flexShrink:0 }}>
           <div>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.32em', color:'rgba(124,77,255,0.7)', textTransform:'uppercase' }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.32em', color:'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>
               {isArea ? (hex.typ === 'eingang' ? 'Betretbarer Ort' : 'Point of Interest') : 'Hexfeld · Info'}
             </div>
-            <div style={{ fontFamily:'var(--font-display)', fontWeight:400, fontSize:22, letterSpacing:'0.16em', color:'#f3eefe', textTransform:'uppercase', marginTop:6, textShadow:'0 0 18px rgba(124,77,255,0.35)' }}>
+            <div style={{ fontFamily:'var(--font-display)', fontWeight:400, fontSize:22, letterSpacing:'0.16em', color:'var(--white)', textTransform:'uppercase', marginTop:6, textShadow:'0 0 18px rgba(var(--purple-rgb),calc(0.35*var(--kp)))' }}>
               {hex.name || 'Unbekannte Region'}
             </div>
             <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', color: tcolor, marginTop:6 }}>
@@ -448,7 +448,7 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
         </header>
 
         {/* Tabs */}
-        <div style={{ display:'flex', borderBottom:'1px solid rgba(124,77,255,0.18)', flexShrink:0 }}>
+        <div style={{ display:'flex', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))', flexShrink:0 }}>
           <TabBtn id="details" label="Details"/>
           <TabBtn id="ziele" label={`Ziele${objList.length ? ` · ${objList.length}` : ''}`} accent="rgba(217,176,107,0.9)"/>
           {hasPoolData && <TabBtn id="ressourcen" label="Ressourcen"/>}
@@ -460,7 +460,7 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
           {tags.length > 0 && (
             <div style={{ display:'flex', flexWrap:'wrap', gap:5, marginBottom:14, pointerEvents:'none' }}>
               {tags.map(t => (
-                <span key={t} style={{ padding:'3px 9px', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.25)', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.1em', color:'rgba(180,165,230,0.8)' }}>{t}</span>
+                <span key={t} style={{ padding:'3px 9px', background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.1em', color:'color-mix(in srgb, rgba(180,165,230,0.8), rgb(var(--ink-rgb)) var(--cm))' }}>{t}</span>
               ))}
             </div>
           )}
@@ -468,8 +468,8 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
           {/* Beschreibung */}
           {hex.beschreibung && (
             <div style={{ marginBottom:16 }}>
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.3em', textTransform:'uppercase', color:'rgba(124,77,255,0.75)', marginBottom:6 }}>Beschreibung</div>
-              <div style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:300, color:'rgba(200,190,240,0.7)', lineHeight:1.65 }}>{hex.beschreibung}</div>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.3em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.75*var(--kp) + var(--tb)))', marginBottom:6 }}>Beschreibung</div>
+              <div style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:300, color:'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', lineHeight:1.65 }}>{hex.beschreibung}</div>
             </div>
           )}
 
@@ -479,16 +479,16 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
           {/* Kolonien: Name + Rassen-Chips */}
           {!isArea && kolonien.length > 0 && (
             <React.Fragment>
-              <div style={{ display:'flex', alignItems:'center', gap:8, margin:'8px 0 8px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(124,77,255,0.45)' }}>
-                <span>Kolonien</span><div style={{ flex:1, height:1, background:'rgba(124,77,255,0.15)' }}/>
+              <div style={{ display:'flex', alignItems:'center', gap:8, margin:'8px 0 8px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))' }}>
+                <span>Kolonien</span><div style={{ flex:1, height:1, background:'rgba(var(--purple-rgb),calc(0.15*var(--kp)))' }}/>
               </div>
               {kolonien.map((k, i) => (
-                <div key={i} style={{ marginBottom:8, padding:'9px 12px', background:'rgba(10,8,28,0.5)', border:'1px solid rgba(124,77,255,0.22)', borderRadius:3 }}>
-                  <div style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:400, color:'#f3eefe', marginBottom: (k.rassen || []).length ? 6 : 0 }}>{k.name || 'Unbenannte Kolonie'}</div>
+                <div key={i} style={{ marginBottom:8, padding:'9px 12px', background:'rgba(var(--panel-rgb),0.5)', border:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))', borderRadius:3 }}>
+                  <div style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:400, color:'var(--white)', marginBottom: (k.rassen || []).length ? 6 : 0 }}>{k.name || 'Unbenannte Kolonie'}</div>
                   {(k.rassen || []).length > 0 && (
                     <div style={{ display:'flex', flexWrap:'wrap', gap:4 }}>
                       {k.rassen.map(r => (
-                        <span key={r} style={{ padding:'2px 8px', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.25)', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', color:'rgba(180,165,230,0.8)' }}>{r}</span>
+                        <span key={r} style={{ padding:'2px 8px', background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', color:'color-mix(in srgb, rgba(180,165,230,0.8), rgb(var(--ink-rgb)) var(--cm))' }}>{r}</span>
                       ))}
                     </div>
                   )}
@@ -500,11 +500,11 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
           {/* Erkundungsfortschritt — automatisch berechnet (Ziele-Tags, Pool-Fangquoten, Legacy-Erkundung) */}
           {(bars.length > 0 || statsLoading) && (
             <React.Fragment>
-              <div style={{ display:'flex', alignItems:'center', gap:8, margin:'0 0 10px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(124,77,255,0.45)' }}>
-                <span>Erkundungsfortschritt</span><div style={{ flex:1, height:1, background:'rgba(124,77,255,0.15)' }}/>
+              <div style={{ display:'flex', alignItems:'center', gap:8, margin:'0 0 10px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))' }}>
+                <span>Erkundungsfortschritt</span><div style={{ flex:1, height:1, background:'rgba(var(--purple-rgb),calc(0.15*var(--kp)))' }}/>
               </div>
               {statsLoading && bars.length === 0 && (
-                <div style={{ padding:'10px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(124,77,255,0.45)', textTransform:'uppercase' }}>◈ berechne …</div>
+                <div style={{ padding:'10px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>◈ berechne …</div>
               )}
               {bars.map((b, i) => <FancyBar key={`${b.label}-${i}`} b={b}/>)}
             </React.Fragment>
@@ -512,17 +512,17 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
 
           {/* Fallback empty */}
           {!hex.beschreibung && tags.length === 0 && facts.length === 0 && kolonien.length === 0 && bars.length === 0 && !statsLoading && (
-            <div style={{ padding:'24px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(124,77,255,0.35)', textTransform:'uppercase' }}>— keine Informationen —</div>
+            <div style={{ padding:'24px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>— keine Informationen —</div>
           )}
           </React.Fragment>)}
 
           {/* ── Tab: Ziele ── */}
           {tab === 'ziele' && (<React.Fragment>
-            <div style={{ display:'flex', alignItems:'center', gap:8, margin:'0 0 10px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(124,77,255,0.45)' }}>
-              <span>Ziele</span><div style={{ flex:1, height:1, background:'rgba(124,77,255,0.15)' }}/>
+            <div style={{ display:'flex', alignItems:'center', gap:8, margin:'0 0 10px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))' }}>
+              <span>Ziele</span><div style={{ flex:1, height:1, background:'rgba(var(--purple-rgb),calc(0.15*var(--kp)))' }}/>
             </div>
             {objList.length === 0 && !hex.has_submap && (
-              <div style={{ padding:'18px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(124,77,255,0.35)', textTransform:'uppercase' }}>
+              <div style={{ padding:'18px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>
                 — keine Ziele bekannt —
               </div>
             )}
@@ -533,29 +533,29 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
                   ? { l: 'Entdeckt', c: 'rgba(180,165,230,0.9)', m: '✓' }
                   : { l: 'Offen', c: 'rgba(217,176,107,0.8)', m: '◇' };
               return (
-                <div key={o.id} style={{ border:'1px solid rgba(124,77,255,0.22)', borderRadius:3, padding:'11px 13px', marginBottom:9, background:'rgba(10,8,28,0.5)' }}>
+                <div key={o.id} style={{ border:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))', borderRadius:3, padding:'11px 13px', marginBottom:9, background:'rgba(var(--panel-rgb),0.5)' }}>
                   <div style={{ display:'flex', alignItems:'center', gap:9 }}>
                     <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color: st.c, flexShrink:0 }}>{st.m}</span>
-                    <span style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:400, color:'#f3eefe', minWidth:0, flex:1, overflowWrap:'anywhere' }}>{o.titel || 'Unbekanntes Ziel'}</span>
+                    <span style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:400, color:'var(--white)', minWidth:0, flex:1, overflowWrap:'anywhere' }}>{o.titel || 'Unbekanntes Ziel'}</span>
                     <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.18em', color: st.c, textTransform:'uppercase', flexShrink:0 }}>{st.l}</span>
                   </div>
-                  {o.beschreibung && <div style={{ fontFamily:'var(--font-body)', fontSize:12, fontWeight:300, color:'rgba(200,190,240,0.6)', lineHeight:1.5, marginTop:6 }}>{o.beschreibung}</div>}
+                  {o.beschreibung && <div style={{ fontFamily:'var(--font-body)', fontSize:12, fontWeight:300, color:'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))', lineHeight:1.5, marginTop:6 }}>{o.beschreibung}</div>}
                   {o.bedingung && (
                     <div style={{ display:'flex', gap:8, alignItems:'baseline', marginTop:7 }}>
-                      <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(217,176,107,0.75)', width:74, flexShrink:0 }}>Bedingung</span>
-                      <span style={{ fontFamily:'var(--font-body)', fontSize:12, fontWeight:300, color:'rgba(200,190,240,0.7)', lineHeight:1.45 }}>{o.bedingung}</span>
+                      <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.18em', textTransform:'uppercase', color:'color-mix(in srgb, rgba(217,176,107,0.75), rgb(var(--ink-rgb)) var(--cm))', width:74, flexShrink:0 }}>Bedingung</span>
+                      <span style={{ fontFamily:'var(--font-body)', fontSize:12, fontWeight:300, color:'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', lineHeight:1.45 }}>{o.bedingung}</span>
                     </div>
                   )}
                   {o.belohnung && (
                     <div style={{ display:'flex', gap:8, alignItems:'baseline', marginTop:5 }}>
-                      <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(120,220,160,0.75)', width:74, flexShrink:0 }}>Belohnung</span>
-                      <span style={{ fontFamily:'var(--font-body)', fontSize:12, fontWeight:300, color:'rgba(200,190,240,0.7)', lineHeight:1.45 }}>{o.belohnung}</span>
+                      <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.18em', textTransform:'uppercase', color:'color-mix(in srgb, rgba(120,220,160,0.75), rgb(var(--ink-rgb)) var(--cm))', width:74, flexShrink:0 }}>Belohnung</span>
+                      <span style={{ fontFamily:'var(--font-body)', fontSize:12, fontWeight:300, color:'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', lineHeight:1.45 }}>{o.belohnung}</span>
                     </div>
                   )}
                   {(o.tags || []).length > 0 && (
                     <div style={{ display:'flex', flexWrap:'wrap', gap:4, marginTop:7 }}>
                       {o.tags.map(t => (
-                        <span key={t} style={{ padding:'2px 8px', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.25)', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', color:'rgba(180,165,230,0.8)' }}>{t}</span>
+                        <span key={t} style={{ padding:'2px 8px', background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', color:'color-mix(in srgb, rgba(180,165,230,0.8), rgb(var(--ink-rgb)) var(--cm))' }}>{t}</span>
                       ))}
                     </div>
                   )}
@@ -575,8 +575,8 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
                 <React.Fragment key={pt.key}>
                   <div style={{ display:'flex', alignItems:'center', gap:8, margin:'12px 0 6px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase' }}>
                     <span style={{ color:`oklch(0.78 0.13 ${pt.hue})` }}>{pt.label}</span>
-                    <div style={{ flex:1, height:1, background:'rgba(124,77,255,0.15)' }}/>
-                    <span style={{ color:'rgba(160,140,255,0.55)', fontSize:8 }}>{items.length} Arten</span>
+                    <div style={{ flex:1, height:1, background:'rgba(var(--purple-rgb),calc(0.15*var(--kp)))' }}/>
+                    <span style={{ color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', fontSize:8 }}>{items.length} Arten</span>
                   </div>
                   {items.map(r => {
                     const it = window.karteKatalogItem(pt.key, r.resource_id);
@@ -586,13 +586,13 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
                       ? window.karteComputeStage(count, (kollStatus?.thresholds || {})[`${pt.key}:${it.rarity}`])
                       : 0;
                     return (
-                      <div key={`${pt.key}-${r.resource_id}`} style={{ display:'flex', alignItems:'center', gap:10, padding:'6px 2px', borderBottom:'1px solid rgba(124,77,255,0.08)' }}>
-                        <span style={{ fontFamily:'var(--font-display)', fontSize:15, lineHeight:1, color: caught && it ? RAR[it.rarity].color : 'rgba(124,77,255,0.3)', textShadow: caught ? '0 0 10px rgba(124,77,255,0.45)' : 'none', flexShrink:0, width:16, textAlign:'center' }}>⬡</span>
-                        <span style={{ fontFamily: caught ? 'var(--font-body)' : 'var(--font-mono)', fontSize:13, fontWeight:300, color: caught ? 'rgba(235,228,255,0.9)' : 'rgba(160,140,255,0.35)', letterSpacing: caught ? 'normal' : '0.25em', minWidth:0, flex:1 }}>
+                      <div key={`${pt.key}-${r.resource_id}`} style={{ display:'flex', alignItems:'center', gap:10, padding:'6px 2px', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.08*var(--kp)))' }}>
+                        <span style={{ fontFamily:'var(--font-display)', fontSize:15, lineHeight:1, color: caught && it ? RAR[it.rarity].color : 'rgba(var(--purple-rgb),calc(0.3*var(--kp) + var(--tb)))', textShadow: caught ? '0 0 10px rgba(var(--purple-rgb),calc(0.45*var(--kp)))' : 'none', flexShrink:0, width:16, textAlign:'center' }}>⬡</span>
+                        <span style={{ fontFamily: caught ? 'var(--font-body)' : 'var(--font-mono)', fontSize:13, fontWeight:300, color: caught ? 'color-mix(in srgb, rgba(var(--text-hi-rgb),0.9), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--accent-rgb),calc(0.35*var(--ka)))', letterSpacing: caught ? 'normal' : '0.25em', minWidth:0, flex:1 }}>
                           {caught && it ? it.name : '???'}
                         </span>
                         {caught && it && (
-                          <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.14em', color:'rgba(160,140,255,0.7)', textTransform:'uppercase', flexShrink:0 }}>Stufe {stage}/8</span>
+                          <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.14em', color:'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))', textTransform:'uppercase', flexShrink:0 }}>Stufe {stage}/8</span>
                         )}
                       </div>
                     );
@@ -601,22 +601,22 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
               );
             })}
             {nodePools.length === 0 && (
-              <div style={{ padding:'18px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(124,77,255,0.35)', textTransform:'uppercase' }}>— keine Ressourcendaten —</div>
+              <div style={{ padding:'18px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>— keine Ressourcendaten —</div>
             )}
           </React.Fragment>)}
         </div>
 
         {/* Footer: Unterkarte betreten */}
         {hex.has_submap && hex.submap_id && (
-          <footer style={{ padding:'12px 22px 14px', borderTop:'1px solid rgba(124,77,255,0.18)', flexShrink:0 }}>
+          <footer style={{ padding:'12px 22px 14px', borderTop:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))', flexShrink:0 }}>
             <button
               onClick={onExploreSubmap}
-              style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:10, width:'100%', padding:'9px 14px', background:'linear-gradient(135deg, rgba(124,77,255,0.16) 0%, rgba(124,77,255,0.06) 100%)', border:'1px solid rgba(160,140,255,0.45)', borderRadius:3, color:'#f3eefe', cursor:'pointer', transition:'all 0.18s' }}
-              onMouseEnter={e => { e.currentTarget.style.background='linear-gradient(135deg, rgba(124,77,255,0.30) 0%, rgba(124,77,255,0.14) 100%)'; e.currentTarget.style.borderColor='rgba(220,210,255,0.85)'; e.currentTarget.style.boxShadow='0 0 18px rgba(160,140,255,0.4)'; }}
-              onMouseLeave={e => { e.currentTarget.style.background='linear-gradient(135deg, rgba(124,77,255,0.16) 0%, rgba(124,77,255,0.06) 100%)'; e.currentTarget.style.borderColor='rgba(160,140,255,0.45)'; e.currentTarget.style.boxShadow='none'; }}
+              style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:10, width:'100%', padding:'9px 14px', background:'linear-gradient(135deg, rgba(var(--purple-rgb),calc(0.16*var(--kp))) 0%, rgba(var(--purple-rgb),calc(0.06*var(--kp))) 100%)', border:'1px solid rgba(var(--accent-rgb),calc(0.45*var(--ka)))', borderRadius:3, color:'var(--white)', cursor:'pointer', transition:'all 0.18s' }}
+              onMouseEnter={e => { e.currentTarget.style.background='linear-gradient(135deg, rgba(var(--purple-rgb),calc(0.30*var(--kp))) 0%, rgba(var(--purple-rgb),calc(0.14*var(--kp))) 100%)'; e.currentTarget.style.borderColor='rgba(var(--text-rgb),calc(0.85*var(--kt)))'; e.currentTarget.style.boxShadow='0 0 18px rgba(var(--accent-rgb),calc(0.4*var(--ka)))'; }}
+              onMouseLeave={e => { e.currentTarget.style.background='linear-gradient(135deg, rgba(var(--purple-rgb),calc(0.16*var(--kp))) 0%, rgba(var(--purple-rgb),calc(0.06*var(--kp))) 100%)'; e.currentTarget.style.borderColor='rgba(var(--accent-rgb),calc(0.45*var(--ka)))'; e.currentTarget.style.boxShadow='none'; }}
             >
-              <span style={{ fontFamily:'var(--font-display)', fontSize:16, color:'rgba(220,210,255,0.85)', lineHeight:1 }}>⬡</span>
-              <span style={{ fontFamily:'var(--font-display)', fontSize:12, letterSpacing:'0.18em', textTransform:'uppercase', color:'#f3eefe' }}>
+              <span style={{ fontFamily:'var(--font-display)', fontSize:16, color:'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))', lineHeight:1 }}>⬡</span>
+              <span style={{ fontFamily:'var(--font-display)', fontSize:12, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--white)' }}>
                 {childEbene === 'Ort'
                   ? `${hex.name || 'Ort'} betreten`
                   : `${childEbene || 'Region'} ${hex.name ? `„${hex.name}"` : ''} erkunden`}
@@ -630,12 +630,12 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
       {fullImg && topBild && (
         <div
           onClick={() => setFullImg(false)}
-          style={{ position:'fixed', inset:0, zIndex:300, background:'rgba(5,4,15,0.92)', backdropFilter:'blur(10px)', display:'flex', alignItems:'center', justifyContent:'center', flexDirection:'column', gap:14, cursor:'zoom-out' }}
+          style={{ position:'fixed', inset:0, zIndex:300, background:'rgba(var(--bg-rgb),0.92)', backdropFilter:'blur(10px)', display:'flex', alignItems:'center', justifyContent:'center', flexDirection:'column', gap:14, cursor:'zoom-out' }}
         >
-          <img src={topBild} loading="lazy" style={{ maxWidth:'88vw', maxHeight:'82vh', display:'block', border:'1px solid rgba(160,140,255,0.4)', boxShadow:'0 0 80px rgba(124,77,255,0.3), 0 30px 90px rgba(0,0,0,0.8)' }} alt=""/>
+          <img src={topBild} loading="lazy" style={{ maxWidth:'88vw', maxHeight:'calc(var(--vh, 1vh) * 82)', display:'block', border:'1px solid rgba(var(--accent-rgb),calc(0.4*var(--ka)))', boxShadow:'0 0 80px rgba(var(--purple-rgb),calc(0.3*var(--kp))), 0 30px 90px rgba(var(--shadow-rgb),calc(0.8 * var(--shadow-k)))' }} alt=""/>
           <div style={{ display:'flex', alignItems:'center', gap:14 }}>
-            <span style={{ fontFamily:'var(--font-display)', fontSize:15, letterSpacing:'0.22em', textTransform:'uppercase', color:'#f3eefe' }}>{hex.name || ''}</span>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.2em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>Klick zum Schließen</span>
+            <span style={{ fontFamily:'var(--font-display)', fontSize:15, letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--white)' }}>{hex.name || ''}</span>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.2em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>Klick zum Schließen</span>
           </div>
         </div>
       )}
@@ -926,8 +926,8 @@ function MerMapPlayer() {
     return (
       <div style={{
         position:'fixed', inset:0, display:'flex', alignItems:'center', justifyContent:'center',
-        background:'#05040f', fontFamily:'var(--font-mono)', fontSize:10,
-        letterSpacing:'0.28em', color:'rgba(124,77,255,0.6)', textTransform:'uppercase',
+        background:'var(--bg)', fontFamily:'var(--font-mono)', fontSize:10,
+        letterSpacing:'0.28em', color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))', textTransform:'uppercase',
       }}>◈ Lade Karte …</div>
     );
   }
@@ -936,11 +936,11 @@ function MerMapPlayer() {
     return (
       <div style={{
         position:'fixed', inset:0, display:'flex', alignItems:'center', justifyContent:'center',
-        flexDirection:'column', gap:12, background:'#05040f',
+        flexDirection:'column', gap:12, background:'var(--bg)',
         fontFamily:'var(--font-mono)', letterSpacing:'0.18em', textTransform:'uppercase',
       }}>
-        <div style={{ fontSize:10, color:'rgba(124,77,255,0.5)' }}>◈ Keine Karte verfügbar</div>
-        <div style={{ fontSize:8, color:'rgba(124,77,255,0.3)' }}>Der DM hat noch keine Karte angelegt</div>
+        <div style={{ fontSize:10, color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))' }}>◈ Keine Karte verfügbar</div>
+        <div style={{ fontSize:8, color:'rgba(var(--purple-rgb),calc(0.3*var(--kp) + var(--tb)))' }}>Der DM hat noch keine Karte angelegt</div>
       </div>
     );
   }
@@ -954,10 +954,10 @@ function MerMapPlayer() {
         <span className="mk-subtitle">◈ Die neue Welt</span>
         <span style={{
           marginLeft:10, padding:'3px 9px', borderRadius:3,
-          background: isImageMap ? 'rgba(217,176,107,0.08)' : 'rgba(124,77,255,0.08)',
-          border: `1px solid ${isImageMap ? 'rgba(217,176,107,0.35)' : 'rgba(124,77,255,0.3)'}`,
+          background: isImageMap ? 'rgba(217,176,107,0.08)' : 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))',
+          border: `1px solid ${isImageMap ? 'rgba(217,176,107,0.35)' : 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))'}`,
           fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.18em', textTransform:'uppercase',
-          color: isImageMap ? 'rgba(240,220,170,0.85)' : 'rgba(160,140,255,0.8)',
+          color: isImageMap ? 'color-mix(in srgb, rgba(240,220,170,0.85), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--accent-rgb),calc(0.8*var(--ka)))',
         }}>
           {isImageMap ? '▦' : '⬡'} {depthEbene(mapStack.length)}
         </span>
@@ -975,21 +975,21 @@ function MerMapPlayer() {
                   style={{
                     background:'transparent', border:'none', cursor:'pointer',
                     fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.18em',
-                    color:'rgba(124,77,255,0.6)', textTransform:'uppercase', padding:'2px 4px',
+                    color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))', textTransform:'uppercase', padding:'2px 4px',
                     transition:'color 0.15s',
                   }}
-                  onMouseEnter={e => e.currentTarget.style.color='rgba(200,190,240,0.9)'}
-                  onMouseLeave={e => e.currentTarget.style.color='rgba(124,77,255,0.6)'}
+                  onMouseEnter={e => e.currentTarget.style.color='rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))'}
+                  onMouseLeave={e => e.currentTarget.style.color='rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))'}
                 >{m.name || 'Karte'}</button>
-                <span style={{ color:'rgba(124,77,255,0.3)' }}>›</span>
+                <span style={{ color:'rgba(var(--purple-rgb),calc(0.3*var(--kp) + var(--tb)))' }}>›</span>
               </React.Fragment>
             ))}
-            <span style={{ color:'rgba(160,140,255,0.7)' }}>{currentMapName}</span>
+            <span style={{ color:'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))' }}>{currentMapName}</span>
           </div>
         )}
         <div style={{ flex: 1 }}/>
         {isLoading && (
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(124,77,255,0.5)', textTransform:'uppercase' }}>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>
             ◈ lade …
           </span>
         )}
@@ -1056,7 +1056,7 @@ function MerMapPlayer() {
                     points={a.points.map(p => p.join(',')).join(' ')}
                     style={{
                       fill: sel ? `rgba(${accent},0.3)` : `rgba(${accent},0.1)`,
-                      stroke: sel ? 'rgba(220,210,255,0.95)' : `rgba(${accent},0.7)`,
+                      stroke: sel ? 'rgba(var(--text-rgb),calc(0.95*var(--kt)))' : `rgba(${accent},0.7)`,
                       strokeWidth: 2 / Math.max(camera.zoom, 0.01),
                       strokeDasharray: '14 8',
                       cursor: 'pointer',
@@ -1078,7 +1078,7 @@ function MerMapPlayer() {
                       className="mk-hex-label-floating"
                       style={{ left: cx / n, top: cy / n, '--hex-color': a.typ === 'eingang' ? 'oklch(0.78 0.1 80)' : 'oklch(0.7 0.15 285)' }}
                     >
-                      <div className="mk-hex-label-terr" style={{ color: a.typ === 'eingang' ? 'rgba(217,176,107,0.85)' : 'rgba(160,140,255,0.8)' }}>
+                      <div className="mk-hex-label-terr" style={{ color: a.typ === 'eingang' ? 'color-mix(in srgb, rgba(217,176,107,0.85), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--accent-rgb),calc(0.8*var(--ka)))' }}>
                         {a.typ === 'eingang' ? '⬡ Betretbar' : '◈ POI'}
                       </div>
                       {a.name ? <div className="mk-hex-label-name">{a.name}</div> : null}
@@ -1095,11 +1095,11 @@ function MerMapPlayer() {
           <div style={{
             position:'absolute', top:16, right: panelOpen ? PANEL_W + 16 : 16, zIndex:55,
             display:'flex', alignItems:'center', gap:8,
-            background:'rgba(8,6,22,0.9)', border:'1px solid rgba(124,77,255,0.3)',
+            background:'rgba(var(--panel-rgb),0.9)', border:'1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))',
             borderRadius:4, padding:'6px 10px',
           }}>
             <button className="mk-tool-btn" style={{ width:26, height:26, opacity: floorIdx >= floors.length - 1 ? 0.35 : 1 }} disabled={floorIdx >= floors.length - 1} onClick={() => switchFloor(1)} title="Etage höher">▲</button>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', color:'rgba(160,140,255,0.8)', textTransform:'uppercase' }}>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', color:'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>
               Ebene {floorIdx + 1}/{floors.length} · {floor?.label || ''}
             </span>
             <button className="mk-tool-btn" style={{ width:26, height:26, opacity: floorIdx <= 0 ? 0.35 : 1 }} disabled={floorIdx <= 0} onClick={() => switchFloor(-1)} title="Etage tiefer">▼</button>
@@ -1138,13 +1138,13 @@ function MerMapPlayer() {
       {/* HUD */}
       <div className="mk-hud">
         <div className="mk-hud-row"><span>◇ Zoom</span><span>{(camera.zoom * 100).toFixed(0)}%</span></div>
-        <div className="mk-hud-row" style={{ marginTop:4, paddingTop:8, borderTop:'1px solid rgba(124,77,255,0.18)', color:'rgba(160,140,255,0.55)' }}>
+        <div className="mk-hud-row" style={{ marginTop:4, paddingTop:8, borderTop:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))' }}>
           <span>◇ Mittel-Maustaste</span><span>Karte ziehen</span>
         </div>
-        <div className="mk-hud-row" style={{ color:'rgba(160,140,255,0.55)' }}>
+        <div className="mk-hud-row" style={{ color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))' }}>
           <span>◇ Mausrad</span><span>Zoom</span>
         </div>
-        <div className="mk-hud-row" style={{ color:'rgba(160,140,255,0.55)' }}>
+        <div className="mk-hud-row" style={{ color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))' }}>
           <span>◇ Klick</span><span>Info anzeigen</span>
         </div>
       </div>

@@ -41,7 +41,7 @@ import '../../components/site-gate.jsx';
       ctx.fill();
     }
     var g = ctx.createRadialGradient(W * 0.5, H * 0.38, 0, W * 0.5, H * 0.38, W * 0.44);
-    g.addColorStop(0, 'rgba(124,77,255,0.045)');
+    g.addColorStop(0, `rgba(${themeRgb('--purple-rgb')},0.045)`);
     g.addColorStop(1, 'transparent');
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, W, H);

@@ -74,7 +74,7 @@
     var initials = charName(c).split(/[\s']/).filter(Boolean).slice(0, 2).map(function(w) { return w[0]; }).join('').toUpperCase();
     return h('div', { style: {
       width: size, height: size, flexShrink: 0, borderRadius: 4, overflow: 'hidden',
-      border: '1px solid ' + accent, background: 'rgba(8,6,22,0.9)',
+      border: '1px solid ' + accent, background: 'rgba(var(--panel-rgb),0.9)',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       fontFamily: 'var(--font-display)', fontSize: size * 0.34, color: accent,
     }},
@@ -148,7 +148,7 @@
 
     // ── Styles ──────────────────────────────────────────────────
     var boxStyle = function(color) { return {
-      background: 'rgba(8,6,22,0.8)',
+      background: 'rgba(var(--panel-rgb),0.8)',
       border: '1px solid ' + (color || cA(0.25)),
       borderRadius: 4, padding: '16px 18px', marginTop: 12,
     }; };
@@ -165,41 +165,41 @@
     }; };
 
     var formulaStyle = {
-      fontFamily: 'var(--font-mono)', fontSize: 9, color: 'rgba(160,140,255,0.45)',
+      fontFamily: 'var(--font-mono)', fontSize: 9, color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',
       letterSpacing: '0.1em',
     };
 
     var infoStyle = {
       fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.14em',
-      color: 'rgba(200,190,240,0.6)',
+      color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))',
     };
 
     var noteStyle = {
       fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 300,
-      color: 'rgba(200,190,240,0.55)', marginTop: 10, lineHeight: 1.5,
+      color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', marginTop: 10, lineHeight: 1.5,
     };
 
     function pillBtn(active, onClick, label) {
       return h('button', { key: label, onClick: onClick, style: {
         padding: '5px 10px', cursor: 'pointer', borderRadius: 3,
         fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.1em',
-        background: active ? cA(0.18) : 'rgba(10,8,28,0.5)',
-        border: '1px solid ' + (active ? accent : 'rgba(124,77,255,0.15)'),
-        color: active ? accent : 'rgba(180,170,220,0.6)',
+        background: active ? cA(0.18) : 'rgba(var(--panel-rgb),0.5)',
+        border: '1px solid ' + (active ? accent : 'rgba(var(--purple-rgb),calc(0.15*var(--kp)))'),
+        color: active ? accent : 'color-mix(in srgb, rgba(180,170,220,0.6), rgb(var(--ink-rgb)) var(--cm))',
       }}, label);
     }
 
     // ── Loading ──────────────────────────────────────────────────
     if (loading) {
-      return h('div', { style: { padding: '20px 0', fontFamily: 'var(--font-mono)', fontSize: 9, color: 'rgba(160,140,255,0.4)', letterSpacing: '0.22em', textTransform: 'uppercase' }}, '◈ Lade…');
+      return h('div', { style: { padding: '20px 0', fontFamily: 'var(--font-mono)', fontSize: 9, color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', letterSpacing: '0.22em', textTransform: 'uppercase' }}, '◈ Lade…');
     }
 
     if (!window.SITE_USER) {
-      return h('div', boxStyle(), h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(160,140,255,0.5)', letterSpacing: '0.14em' }}, 'Bitte einloggen, um den Rechner zu nutzen.'));
+      return h('div', boxStyle(), h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', letterSpacing: '0.14em' }}, 'Bitte einloggen, um den Rechner zu nutzen.'));
     }
 
     if (chars.length === 0) {
-      return h('div', boxStyle(), h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(160,140,255,0.5)', letterSpacing: '0.14em' }}, 'Kein Spielercharakter gefunden.'));
+      return h('div', boxStyle(), h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', letterSpacing: '0.14em' }}, 'Kein Spielercharakter gefunden.'));
     }
 
     // Dauer-Auswahl (gilt für beide Richtungen)
@@ -216,8 +216,8 @@
             setTage(isNaN(n) ? 1 : Math.max(1, Math.min(365, n)));
           },
           style: {
-            width: 60, padding: '5px 8px', background: 'rgba(8,6,22,0.9)',
-            border: '1px solid ' + cA(0.3), color: '#f0eeff', borderRadius: 3,
+            width: 60, padding: '5px 8px', background: 'rgba(var(--panel-rgb),0.9)',
+            border: '1px solid ' + cA(0.3), color: 'var(--white)', borderRadius: 3,
             fontFamily: 'var(--font-mono)', fontSize: 10,
           },
         }),
@@ -259,12 +259,12 @@
             var on = !!party[c.id];
             var res = e.scenario === 'PAY' ? { t: '+ ' + fmtHade(e.fee), col: '#80dfb0' }
                     : e.scenario === 'MENTOR' ? { t: '− ' + fmtHade(e.mentorFee), col: '#ff9980' }
-                    : e.scenario ? { t: 'kostenlos', col: 'rgba(200,190,240,0.6)' }
-                    : { t: 'kein Rang', col: 'rgba(200,170,130,0.8)' };
+                    : e.scenario ? { t: 'kostenlos', col: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))' }
+                    : { t: 'kein Rang', col: 'color-mix(in srgb, rgba(200,170,130,0.8), rgb(var(--ink-rgb)) var(--cm))' };
             return h('label', { key: c.id, style: {
               display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', padding: '6px 8px',
-              borderRadius: 4, border: '1px solid ' + (on ? accent : 'rgba(124,77,255,0.15)'),
-              background: on ? cA(0.1) : 'rgba(10,8,28,0.5)',
+              borderRadius: 4, border: '1px solid ' + (on ? accent : 'rgba(var(--purple-rgb),calc(0.15*var(--kp)))'),
+              background: on ? cA(0.1) : 'rgba(var(--panel-rgb),0.5)',
             }},
               h('input', {
                 type: 'checkbox', checked: on,
@@ -277,7 +277,7 @@
               }),
               h(Portrait, { char: c, size: 40, accent: cA(0.5) }),
               h('div', { style: { flex: 1, minWidth: 0 } },
-                h('div', { style: { fontFamily: 'var(--font-mono)', fontSize: 10, color: '#f0eeff', letterSpacing: '0.08em' } }, charName(c)),
+                h('div', { style: { fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--white)', letterSpacing: '0.08em' } }, charName(c)),
                 h('div', { style: infoStyle },
                   ((c.char_data && c.char_data.rank) || '—') + (e.rangNr ? ' (Rang ' + e.rangNr + ')' : '') + ' · ' + (e.playerDiv || '—').replace(/^Die\s+/, ''))
               ),
@@ -310,8 +310,8 @@
           onChange: function(e) { setSelId(e.target.value); },
           style: {
             width: '100%', padding: '7px 10px',
-            background: 'rgba(8,6,22,0.9)', border: '1px solid ' + cA(0.3),
-            color: '#f0eeff', fontFamily: 'var(--font-mono)', fontSize: 10,
+            background: 'rgba(var(--panel-rgb),0.9)', border: '1px solid ' + cA(0.3),
+            color: 'var(--white)', fontFamily: 'var(--font-mono)', fontSize: 10,
             letterSpacing: '0.08em', borderRadius: 3, cursor: 'pointer',
           },
         },
@@ -327,7 +327,7 @@
       selChar && h('div', { style: { display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 } },
         h(Portrait, { char: selChar, size: 72, accent: cA(0.5) }),
         h('div', { style: infoStyle },
-          h('div', { style: { color: '#f0eeff', fontSize: 11, marginBottom: 3 } }, charName(selChar)),
+          h('div', { style: { color: 'var(--white)', fontSize: 11, marginBottom: 3 } }, charName(selChar)),
           (playerRank || '—') + (playerRangNr ? ' (Rang ' + playerRangNr + ')' : '') +
           (playerDiv ? ' · ' + playerDiv.replace(/^Die\s+/, '') : '')
         )
@@ -337,7 +337,7 @@
 
       // Kein Rang gesetzt
       selChar && playerRangNr === null && h('div', boxStyle('rgba(200,120,80,0.3)'),
-        h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(200,170,130,0.8)', letterSpacing: '0.12em' }},
+        h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 10, color: 'color-mix(in srgb, rgba(200,170,130,0.8), rgb(var(--ink-rgb)) var(--cm))', letterSpacing: '0.12em' }},
           'Deinem Charakter ist noch kein Divisionsrang zugewiesen. Bitte im Steckbrief eintragen.'
         )
       ),
@@ -381,7 +381,7 @@
           return h('label', { key: key, style: {
             display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer',
             fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.1em',
-            color: checks[key] ? '#f0eeff' : 'rgba(180,170,220,0.55)',
+            color: checks[key] ? 'var(--white)' : 'color-mix(in srgb, rgba(180,170,220,0.55), rgb(var(--ink-rgb)) var(--cm))',
             marginBottom: 8, userSelect: 'none',
           }},
             h('input', {

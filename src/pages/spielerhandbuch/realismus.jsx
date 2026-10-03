@@ -136,8 +136,8 @@ function hexPts(s) {
 }
 function Oct({
   size = 8,
-  color = 'rgba(124,77,255,0.6)',
-  fill = 'rgba(124,77,255,0.2)',
+  color = 'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',
+  fill = 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))',
   sw = 1,
   style = {}
 }) {
@@ -258,7 +258,7 @@ function scrollToSection(id) {
     behavior: 'smooth'
   });
 }
-const PAGE_HEADER_H = 180 + 52; // PageHeader(180) + nav(52)
+const PAGE_HEADER_H = 52; // nav (the Kopfbild banner was removed)
 
 function Sidebar({
   active,
@@ -269,11 +269,11 @@ function Sidebar({
   const asideRef = useRef(null);
   useEffect(() => {
     const update = () => {
-      const ideal = headerBottom - window.scrollY;
+      const ideal = (headerBottom - window.scrollY) / window.uiZoom();
       const val = Math.max(52, ideal);
       if (asideRef.current) {
         asideRef.current.style.top = val + 'px';
-        asideRef.current.style.height = `calc(100vh - ${val}px)`;
+        asideRef.current.style.height = `calc(calc(var(--vh, 1vh) * 100) - ${val}px)`;
       }
     };
     update();
@@ -296,10 +296,10 @@ function Sidebar({
       position: 'fixed',
       left: 0,
       top: `${headerBottom}px`,
-      height: `calc(100vh - ${headerBottom}px)`,
+      height: `calc(calc(var(--vh, 1vh) * 100) - ${headerBottom}px)`,
       borderRight: `1px solid ${accent}18`,
       padding: '24px 0',
-      background: 'rgba(5,4,15,0.85)',
+      background: 'rgba(var(--bg-rgb),0.85)',
       backdropFilter: 'blur(12px)',
       zIndex: 50,
       overflowY: 'auto'
@@ -336,19 +336,19 @@ function Sidebar({
         fontWeight: on ? '500' : '300',
         fontSize: '12px',
         letterSpacing: '0.06em',
-        color: on ? '#f0eeff' : 'rgba(200,190,240,0.6)',
+        color: on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.6*var(--kt)))',
         transition: 'all 0.15s'
       },
       onMouseEnter: e => {
         if (!on) {
-          e.currentTarget.style.color = '#f0eeff';
+          e.currentTarget.style.color = 'var(--white)';
           e.currentTarget.style.borderLeftColor = `${accent}55`;
           e.currentTarget.style.background = `${accent}08`;
         }
       },
       onMouseLeave: e => {
         if (!on) {
-          e.currentTarget.style.color = 'rgba(200,190,240,0.6)';
+          e.currentTarget.style.color = 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))';
           e.currentTarget.style.borderLeftColor = 'transparent';
           e.currentTarget.style.background = 'transparent';
         }
@@ -373,15 +373,15 @@ function Sidebar({
         fontWeight: '300',
         fontSize: '11px',
         letterSpacing: '0.04em',
-        color: 'rgba(200,190,240,0.45)',
+        color: 'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))',
         transition: 'all 0.12s'
       },
       onMouseEnter: e => {
-        e.currentTarget.style.color = 'rgba(200,190,240,0.85)';
+        e.currentTarget.style.color = 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))';
         e.currentTarget.style.borderLeftColor = `${accent}55`;
       },
       onMouseLeave: e => {
-        e.currentTarget.style.color = 'rgba(200,190,240,0.45)';
+        e.currentTarget.style.color = 'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))';
         e.currentTarget.style.borderLeftColor = `${accent}22`;
       }
     }, sub.label)));
@@ -398,14 +398,14 @@ function SH({
     style: {
       marginBottom: '20px',
       paddingBottom: '11px',
-      borderBottom: '1px solid rgba(124,77,255,0.15)'
+      borderBottom: '1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))'
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '0.3em',
-      color: 'rgba(124,77,255,0.5)',
+      color: 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',
       textTransform: 'uppercase',
       marginBottom: '5px'
     }
@@ -423,14 +423,14 @@ function SH({
       fontSize: '20px',
       fontWeight: '300',
       letterSpacing: '0.2em',
-      color: 'rgba(230,225,255,0.9)',
+      color: 'rgba(var(--text-hi-rgb),calc(0.9*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, title)), /*#__PURE__*/React.createElement("div", {
     style: {
       width: '40px',
       height: '1px',
-      background: 'linear-gradient(90deg,rgba(124,77,255,0.77),transparent)',
+      background: 'linear-gradient(90deg,rgba(var(--purple-rgb),calc(0.77*var(--kp))),transparent)',
       marginTop: '10px',
       animation: 'pulse-glow 3s infinite'
     }
@@ -447,11 +447,11 @@ function SubH({
       fontSize: '13px',
       fontWeight: '400',
       letterSpacing: '0.18em',
-      color: 'rgba(160,140,255,0.85)',
+      color: 'rgba(var(--accent-rgb),calc(0.85*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
       margin: '26px 0 12px',
       paddingBottom: '7px',
-      borderBottom: '1px solid rgba(124,77,255,0.1)',
+      borderBottom: '1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
       scrollMarginTop: '70px'
     }
   }, children);
@@ -461,11 +461,11 @@ function TW({
 }) {
   return /*#__PURE__*/React.createElement("div", {
     style: {
-      border: '1px solid rgba(124,77,255,0.18)',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',
       borderRadius: '3px',
       overflow: 'hidden',
       margin: '12px 0 20px',
-      background: 'rgba(10,8,28,0.6)'
+      background: 'rgba(var(--panel-rgb),0.6)'
     }
   }, children);
 }
@@ -479,7 +479,7 @@ function Txt({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.9',
-      color: 'rgba(200,190,240,0.55)',
+      color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.03em',
       marginBottom: '10px',
       textWrap: 'pretty',
@@ -492,7 +492,7 @@ function Acc({
 }) {
   return /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: 'rgba(160,140,255,0.9)',
+      color: 'rgba(var(--accent-rgb),calc(0.9*var(--ka) + var(--tb)))',
       fontWeight: '500'
     }
   }, c);
@@ -502,7 +502,7 @@ function Hl({
 }) {
   return /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: 'rgba(200,190,240,0.85)',
+      color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))',
       fontWeight: '500'
     }
   }, c);
@@ -512,7 +512,7 @@ function Bad({
 }) {
   return /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: 'rgba(255,110,110,0.8)',
+      color: 'color-mix(in srgb, rgba(255,110,110,0.8), rgb(var(--ink-rgb)) var(--cm))',
       fontWeight: '500'
     }
   }, c);
@@ -536,8 +536,8 @@ function HungerCalc() {
   const res = Math.round((str + kon) * sm[size] * cm),
     neg = res < 0;
   const inp = {
-    background: 'rgba(124,77,255,0.07)',
-    border: '1px solid rgba(124,77,255,0.22)',
+    background: 'rgba(var(--purple-rgb),calc(0.07*var(--kp)))',
+    border: '1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))',
     borderRadius: '3px',
     color: 'var(--white)',
     fontFamily: 'var(--font-mono)',
@@ -548,8 +548,8 @@ function HungerCalc() {
     outline: 'none'
   };
   const sel = {
-    background: 'rgba(8,6,22,0.9)',
-    border: '1px solid rgba(124,77,255,0.22)',
+    background: 'rgba(var(--panel-rgb),0.9)',
+    border: '1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))',
     borderRadius: '3px',
     color: 'var(--white)',
     fontFamily: 'var(--font-mono)',
@@ -562,17 +562,17 @@ function HungerCalc() {
     fontFamily: 'var(--font-mono)',
     fontSize: '8px',
     letterSpacing: '0.18em',
-    color: 'rgba(124,77,255,0.55)',
+    color: 'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',
     textTransform: 'uppercase',
     display: 'block',
     marginBottom: '4px'
   };
   return /*#__PURE__*/React.createElement("div", {
     style: {
-      border: '1px solid rgba(124,77,255,0.2)',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))',
       borderRadius: '3px',
       padding: '18px 20px',
-      background: 'rgba(10,8,28,0.7)',
+      background: 'rgba(var(--panel-rgb),0.7)',
       marginTop: '14px'
     }
   }, /*#__PURE__*/React.createElement("div", {
@@ -580,7 +580,7 @@ function HungerCalc() {
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '0.26em',
-      color: 'rgba(124,77,255,0.45)',
+      color: 'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))',
       textTransform: 'uppercase',
       marginBottom: '13px'
     }
@@ -646,7 +646,7 @@ function HungerCalc() {
     style: inp
   }))), /*#__PURE__*/React.createElement("div", {
     style: {
-      borderTop: '1px solid rgba(124,77,255,0.12)',
+      borderTop: '1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))',
       paddingTop: '13px',
       display: 'flex',
       alignItems: 'center',
@@ -658,7 +658,7 @@ function HungerCalc() {
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '0.22em',
-      color: 'rgba(124,77,255,0.45)',
+      color: 'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))',
       textTransform: 'uppercase',
       marginBottom: '3px'
     }
@@ -667,15 +667,15 @@ function HungerCalc() {
       fontFamily: 'var(--font-display)',
       fontSize: '32px',
       fontWeight: '300',
-      color: neg ? 'rgba(255,100,100,0.85)' : 'var(--white)',
-      textShadow: neg ? 'none' : '0 0 24px rgba(124,77,255,0.35)'
+      color: neg ? 'color-mix(in srgb, rgba(255,100,100,0.85), rgb(var(--ink-rgb)) var(--cm))' : 'var(--white)',
+      textShadow: neg ? 'none' : '0 0 24px rgba(var(--purple-rgb),calc(0.35*var(--kp)))'
     }
   }, res)), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
       fontSize: '11px',
-      color: 'rgba(200,190,240,0.3)',
+      color: 'rgba(var(--text-rgb),calc(0.3*var(--kt) + var(--tb)))',
       fontStyle: 'italic'
     }
   }, "= (", str, "+", kon, ") \xD7 ", sm[size], cond === 'h' ? ' × 2' : cond === 'v' ? ' × (−1)' : cond === 'e' ? ` × ${(1 + 0.1125 * ex).toFixed(3)}` : ''), neg && /*#__PURE__*/React.createElement("div", {
@@ -687,7 +687,7 @@ function HungerCalc() {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
       fontSize: '11px',
-      color: 'rgba(255,150,150,0.7)'
+      color: 'color-mix(in srgb, rgba(255,150,150,0.7), rgb(var(--ink-rgb)) var(--cm))'
     }
   }, "Vergiftet/krank \u2014 kann nicht ges\xE4ttigt werden")));
 }
@@ -784,7 +784,7 @@ function CoinFlip() {
           position: 'absolute',
           left: '20%', top: '20%', width: '60%', height: '60%',
           borderRadius: '50%', objectFit: 'cover',
-          boxShadow: 'inset 0 0 8px rgba(0,0,0,0.3)'
+          boxShadow: 'inset 0 0 8px rgba(var(--shadow-rgb),calc(0.3 * var(--shadow-k)))'
         }
       })
     );
@@ -796,7 +796,7 @@ function CoinFlip() {
   },
     React.createElement('div', {
       style: { fontFamily: 'var(--font-mono)', fontSize: 8, letterSpacing: '0.3em',
-        color: 'rgba(210,160,40,0.5)', textTransform: 'uppercase', marginBottom: 14 }
+        color: 'color-mix(in srgb, rgba(210,160,40,0.5), rgb(var(--ink-rgb)) var(--cm))', textTransform: 'uppercase', marginBottom: 14 }
     }, 'Wirf eine Münze'),
 
     React.createElement('div', { style: { perspective: '600px', width: 120, height: 120, margin: '0 auto 14px' } },
@@ -815,27 +815,27 @@ function CoinFlip() {
 
     React.createElement('div', {
       style: { fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 300,
-        letterSpacing: '0.14em', color: flipping ? 'rgba(200,190,240,0.3)' : 'var(--white)',
+        letterSpacing: '0.14em', color: flipping ? 'rgba(var(--text-rgb),calc(0.3*var(--kt)))' : 'var(--white)',
         minHeight: 26, marginBottom: 4, transition: 'color 0.3s' }
     }, flipping ? 'Wird geworfen…' : result === 'kopf' ? 'Kopf' : result === 'zahl' ? 'Zahl' : '—'),
 
     React.createElement('div', {
       style: { fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: 12,
-        color: 'rgba(210,170,60,0.75)', minHeight: 18, marginBottom: 14 }
+        color: 'color-mix(in srgb, rgba(210,170,60,0.75), rgb(var(--ink-rgb)) var(--cm))', minHeight: 18, marginBottom: 14 }
     },
       !flipping && result === 'kopf' && '— Zwei Samen der Furcht',
       !flipping && result === 'zahl' && '— Ein Samen der Furcht',
-      !flipping && !result && React.createElement('span', { style: { color: 'rgba(200,190,240,0.28)', fontStyle: 'italic', fontSize: 11 } }, 'Noch kein Wurf')
+      !flipping && !result && React.createElement('span', { style: { color: 'rgba(var(--text-rgb),calc(0.28*var(--kt) + var(--tb)))', fontStyle: 'italic', fontSize: 11 } }, 'Noch kein Wurf')
     ),
 
     React.createElement('button', {
       onClick: flip, disabled: flipping,
       style: { background: 'transparent', border: '1px solid rgba(210,160,20,0.4)', borderRadius: 3,
-        color: 'rgba(210,170,50,0.85)', fontFamily: 'var(--font-display)', fontSize: 10,
+        color: 'color-mix(in srgb, rgba(210,170,50,0.85), rgb(var(--ink-rgb)) var(--cm))', fontFamily: 'var(--font-display)', fontSize: 10,
         letterSpacing: '0.2em', textTransform: 'uppercase', padding: '8px 22px',
         cursor: flipping ? 'wait' : 'pointer', transition: 'all 0.2s', opacity: flipping ? 0.4 : 1 },
       onMouseEnter: e => { if (!flipping) { e.currentTarget.style.background = 'rgba(210,160,20,0.14)'; e.currentTarget.style.color = '#f8d860'; } },
-      onMouseLeave: e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'rgba(210,170,50,0.85)'; }
+      onMouseLeave: e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'color-mix(in srgb, rgba(210,170,50,0.85), rgb(var(--ink-rgb)) var(--cm))'; }
     }, result && !flipping ? 'Noch einmal' : 'Münze werfen')
   );
 }
@@ -856,10 +856,10 @@ function RollButton({
       alignItems: 'center',
       gap: lg ? '9px' : '8px',
       padding: lg ? '9px 18px' : '7px 15px',
-      background: 'rgba(124,77,255,0.14)',
-      border: '1px solid rgba(124,77,255,0.4)',
+      background: 'rgba(var(--purple-rgb),calc(0.14*var(--kp)))',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.4*var(--kp)))',
       borderRadius: '3px',
-      color: 'rgba(160,140,255,0.9)',
+      color: 'rgba(var(--accent-rgb),calc(0.9*var(--ka) + var(--tb)))',
       fontFamily: 'var(--font-display)',
       fontSize: lg ? '11px' : '10px',
       letterSpacing: '0.14em',
@@ -869,13 +869,13 @@ function RollButton({
     },
     onMouseEnter: e => {
       if (!rolling) {
-        e.currentTarget.style.background = 'rgba(124,77,255,0.24)';
-        e.currentTarget.style.color = '#f0eeff';
+        e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.24*var(--kp)))';
+        e.currentTarget.style.color = 'var(--white)';
       }
     },
     onMouseLeave: e => {
-      e.currentTarget.style.background = 'rgba(124,77,255,0.14)';
-      e.currentTarget.style.color = 'rgba(160,140,255,0.9)';
+      e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.14*var(--kp)))';
+      e.currentTarget.style.color = 'rgba(var(--accent-rgb),calc(0.9*var(--ka) + var(--tb)))';
     }
   }, /*#__PURE__*/React.createElement("svg", {
     viewBox: "0 0 24 24",
@@ -945,15 +945,15 @@ function MunitionRoller() {
   return /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: '14px',
-      border: '1px solid rgba(124,77,255,0.18)',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',
       borderRadius: '3px',
       overflow: 'hidden'
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '12px 16px',
-      background: 'rgba(124,77,255,0.07)',
-      borderBottom: '1px solid rgba(124,77,255,0.14)',
+      background: 'rgba(var(--purple-rgb),calc(0.07*var(--kp)))',
+      borderBottom: '1px solid rgba(var(--purple-rgb),calc(0.14*var(--kp)))',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
@@ -965,7 +965,7 @@ function MunitionRoller() {
       fontFamily: 'var(--font-display)',
       fontSize: '11px',
       letterSpacing: '0.16em',
-      color: 'rgba(200,190,240,0.9)',
+      color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Munitionsr\xFCckgewinnung"), /*#__PURE__*/React.createElement("div", {
@@ -973,7 +973,7 @@ function MunitionRoller() {
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '0.14em',
-      color: 'rgba(124,77,255,0.5)',
+      color: 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',
       marginTop: '3px'
     }
   }, "nach dem Kampf w\xFCrfeln")), /*#__PURE__*/React.createElement("div", {
@@ -997,7 +997,7 @@ function MunitionRoller() {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
-      color: 'rgba(124,77,255,0.5)',
+      color: 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',
       letterSpacing: '0.2em'
     }
   }, "ERGEBNIS"), /*#__PURE__*/React.createElement("span", {
@@ -1006,14 +1006,14 @@ function MunitionRoller() {
       fontSize: '22px',
       fontWeight: '300',
       color: 'var(--white)',
-      textShadow: '0 0 20px rgba(124,77,255,0.5)'
+      textShadow: '0 0 20px rgba(var(--purple-rgb),calc(0.5*var(--kp)))'
     }
   }, disp)))), active && !rolling && /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '13px 16px',
-      background: 'rgba(124,77,255,0.1)',
-      borderBottom: '1px solid rgba(124,77,255,0.18)',
-      borderLeft: '3px solid rgba(124,77,255,0.9)',
+      background: 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
+      borderBottom: '1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',
+      borderLeft: '3px solid rgba(var(--purple-rgb),calc(0.9*var(--kp)))',
       animation: 'fadeInUp 0.18s ease both'
     }
   }, /*#__PURE__*/React.createElement("div", {
@@ -1022,25 +1022,25 @@ function MunitionRoller() {
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.75',
-      color: 'rgba(220,210,255,0.85)'
+      color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))'
     }
   }, active.pct, "% der Munition kann wieder eingesammelt werden.")), /*#__PURE__*/React.createElement(TW, null, /*#__PURE__*/React.createElement("table", {
     className: "eq-table"
   }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "1W20"), /*#__PURE__*/React.createElement("th", null, "Menge der Munition (abgerundet)"))), /*#__PURE__*/React.createElement("tbody", null, MUNI_RANGES.map(row => /*#__PURE__*/React.createElement("tr", {
     key: row.range,
     style: {
-      background: active && active.min === row.min ? 'rgba(124,77,255,0.18)' : 'transparent',
+      background: active && active.min === row.min ? 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))' : 'transparent',
       transition: 'background 0.3s'
     }
   }, /*#__PURE__*/React.createElement("td", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '11px',
-      color: active && active.min === row.min ? '#f0eeff' : 'rgba(180,165,255,0.85)'
+      color: active && active.min === row.min ? 'var(--white)' : 'rgba(var(--accent-rgb),calc(0.85*var(--ka)))'
     }
   }, row.range), /*#__PURE__*/React.createElement("td", {
     style: {
-      color: active && active.min === row.min ? 'rgba(220,210,255,0.95)' : undefined
+      color: active && active.min === row.min ? 'rgba(var(--text-rgb),calc(0.95*var(--kt)))' : undefined
     }
   }, row.label)))))));
 }
@@ -1155,7 +1155,7 @@ function LangRow({
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("tr", {
     style: {
       cursor: 'pointer',
-      background: isOpen ? 'rgba(124,77,255,0.08)' : 'transparent',
+      background: isOpen ? 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))' : 'transparent',
       transition: 'background 0.2s'
     },
     onClick: () => toggle(lang.name)
@@ -1164,7 +1164,7 @@ function LangRow({
       display: 'flex',
       alignItems: 'center',
       gap: '7px',
-      color: 'rgba(220,210,255,0.9)',
+      color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
       fontWeight: '400'
     }
   }, /*#__PURE__*/React.createElement("span", {
@@ -1175,9 +1175,9 @@ function LangRow({
       width: '14px',
       height: '14px',
       borderRadius: '50%',
-      border: '1px solid rgba(124,77,255,0.44)',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.44*var(--kp)))',
       fontSize: '9px',
-      color: 'rgba(160,140,255,0.8)',
+      color: 'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))',
       flexShrink: 0,
       fontFamily: 'var(--font-mono)',
       transition: 'transform 0.15s',
@@ -1185,20 +1185,20 @@ function LangRow({
     }
   }, "+"), lang.name), /*#__PURE__*/React.createElement("td", {
     style: {
-      color: 'rgba(200,190,240,0.55)'
+      color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))'
     }
   }, lang.typ), /*#__PURE__*/React.createElement("td", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '10px',
-      color: 'rgba(124,77,255,0.7)'
+      color: 'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))'
     }
   }, lang.schrift)), isOpen && /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", {
     colSpan: 3,
     style: {
       padding: '0',
-      background: 'rgba(124,77,255,0.04)',
-      borderTop: '1px solid rgba(124,77,255,0.12)',
+      background: 'rgba(var(--purple-rgb),calc(0.04*var(--kp)))',
+      borderTop: '1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))',
       animation: 'fadeInUp 0.18s ease both'
     }
   }, /*#__PURE__*/React.createElement("div", {
@@ -1221,15 +1221,15 @@ function LangRow({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.8',
-      color: 'rgba(200,190,240,0.55)',
+      color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       marginBottom: lang.dialekte ? '14px' : '0'
     }
   }, lang.desc), lang.dialekte && /*#__PURE__*/React.createElement("div", {
     style: {
-      border: '1px solid rgba(124,77,255,0.2)',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))',
       borderRadius: '3px',
       overflow: 'hidden',
-      background: 'rgba(10,8,28,0.5)'
+      background: 'rgba(var(--panel-rgb),0.5)'
     }
   }, /*#__PURE__*/React.createElement("table", {
     className: "eq-table",
@@ -1243,13 +1243,13 @@ function LangRow({
       fontFamily: 'var(--font-display)',
       fontSize: '11px',
       letterSpacing: '0.1em',
-      color: 'rgba(200,190,240,0.9)',
+      color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
       fontWeight: '400',
       whiteSpace: 'nowrap'
     }
   }, r.d), /*#__PURE__*/React.createElement("td", {
     style: {
-      color: 'rgba(200,190,240,0.5)',
+      color: 'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))',
       whiteSpace: 'nowrap'
     }
   }, r.e), /*#__PURE__*/React.createElement("td", {
@@ -1257,7 +1257,7 @@ function LangRow({
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
       fontSize: '11px',
-      color: 'rgba(200,190,240,0.5)',
+      color: 'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))',
       lineHeight: '1.65'
     }
   }, r.b))))))))));
@@ -1292,7 +1292,7 @@ function KommunikationContent() {
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '0.22em',
-      color: 'rgba(124,77,255,0.55)',
+      color: 'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',
       textTransform: 'uppercase',
       marginBottom: '8px'
     }
@@ -1308,7 +1308,7 @@ function KommunikationContent() {
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '0.22em',
-      color: 'rgba(124,77,255,0.55)',
+      color: 'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',
       textTransform: 'uppercase',
       marginBottom: '8px'
     }
@@ -1362,23 +1362,23 @@ function ZeitContent() {
       onClick: () => setSel(active ? null : i),
       style: {
         padding: '16px 14px',
-        background: active ? 'rgba(124,77,255,0.14)' : 'rgba(124,77,255,0.06)',
-        border: '1px solid rgba(124,77,255,0.14)',
-        borderTop: active ? '2px solid rgba(124,77,255,1)' : '2px solid rgba(124,77,255,0.55)',
+        background: active ? 'rgba(var(--purple-rgb),calc(0.14*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))',
+        border: '1px solid rgba(var(--purple-rgb),calc(0.14*var(--kp)))',
+        borderTop: active ? '2px solid rgba(var(--purple-rgb),calc(1*var(--kp)))' : '2px solid rgba(var(--purple-rgb),calc(0.55*var(--kp)))',
         borderRadius: '0 0 3px 3px',
         transition: 'all 0.2s',
         cursor: 'pointer'
       },
       onMouseEnter: e => {
         if (!active) {
-          e.currentTarget.style.background = 'rgba(124,77,255,0.1)';
-          e.currentTarget.style.borderTopColor = 'rgba(124,77,255,0.9)';
+          e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))';
+          e.currentTarget.style.borderTopColor = 'rgba(var(--purple-rgb),calc(0.9*var(--kp)))';
         }
       },
       onMouseLeave: e => {
         if (!active) {
-          e.currentTarget.style.background = 'rgba(124,77,255,0.06)';
-          e.currentTarget.style.borderTopColor = 'rgba(124,77,255,0.55)';
+          e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))';
+          e.currentTarget.style.borderTopColor = 'rgba(var(--purple-rgb),calc(0.55*var(--kp)))';
         }
       }
     }, /*#__PURE__*/React.createElement("div", {
@@ -1386,7 +1386,7 @@ function ZeitContent() {
         fontFamily: 'var(--font-mono)',
         fontSize: '7px',
         letterSpacing: '0.2em',
-        color: active ? 'rgba(124,77,255,0.9)' : 'rgba(124,77,255,0.55)',
+        color: active ? 'rgba(var(--purple-rgb),calc(0.9*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.55*var(--kp)))',
         textTransform: 'uppercase',
         marginBottom: '5px'
       }
@@ -1404,16 +1404,16 @@ function ZeitContent() {
         fontWeight: '300',
         fontSize: '11px',
         lineHeight: '1.5',
-        color: 'rgba(200,190,240,0.45)'
+        color: 'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))'
       }
     }, c.d));
   })), chosen && /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: '16px',
       padding: '20px 22px',
-      background: 'rgba(124,77,255,0.07)',
-      border: '1px solid rgba(124,77,255,0.22)',
-      borderLeft: '3px solid rgba(124,77,255,0.8)',
+      background: 'rgba(var(--purple-rgb),calc(0.07*var(--kp)))',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))',
+      borderLeft: '3px solid rgba(var(--purple-rgb),calc(0.8*var(--kp)))',
       borderRadius: '0 4px 4px 0',
       animation: 'fadeInUp 0.18s ease both'
     }
@@ -1423,7 +1423,7 @@ function ZeitContent() {
       fontSize: '13px',
       fontWeight: '400',
       letterSpacing: '0.16em',
-      color: 'rgba(160,140,255,0.95)',
+      color: 'rgba(var(--accent-rgb),calc(0.95*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
       marginBottom: '10px'
     }
@@ -1433,14 +1433,14 @@ function ZeitContent() {
       fontWeight: '300',
       fontSize: '13px',
       lineHeight: '1.75',
-      color: 'rgba(200,190,240,0.75)'
+      color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))'
     }
   }, chosen.detail)),
 /*#__PURE__*/React.createElement("div", {
   style: {
     marginTop: '32px',
     paddingTop: '24px',
-    borderTop: '1px solid rgba(124,77,255,0.18)'
+    borderTop: '1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))'
   }
 },
   /*#__PURE__*/React.createElement("div", {
@@ -1448,7 +1448,7 @@ function ZeitContent() {
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '0.22em',
-      color: 'rgba(124,77,255,0.55)',
+      color: 'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',
       textTransform: 'uppercase',
       marginBottom: '4px'
     }
@@ -1475,19 +1475,19 @@ function ZeitContent() {
         key: l,
         style: {
           padding: '12px 10px',
-          background: 'rgba(124,77,255,0.06)',
-          border: '1px solid rgba(124,77,255,0.14)',
+          background: 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))',
+          border: '1px solid rgba(var(--purple-rgb),calc(0.14*var(--kp)))',
           borderRadius: '3px',
           textAlign: 'center'
         }
       },
         /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-display)',fontSize:'22px',fontWeight:'300',color:'var(--white)',marginBottom:'2px'}}, n),
-        /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.15em',textTransform:'uppercase',color:'rgba(124,77,255,0.7)'}}, l),
-        /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-body)',fontSize:'10px',color:'rgba(200,190,240,0.4)',marginTop:'2px'}}, s)
+        /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.15em',textTransform:'uppercase',color:'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))'}}, l),
+        /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-body)',fontSize:'10px',color:'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))',marginTop:'2px'}}, s)
       )
     )
   ),
-  /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'7px',letterSpacing:'0.2em',textTransform:'uppercase',color:'rgba(124,77,255,0.55)',marginBottom:'8px'}}, "Die zwölf Monate"),
+  /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'7px',letterSpacing:'0.2em',textTransform:'uppercase',color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',marginBottom:'8px'}}, "Die zwölf Monate"),
   /*#__PURE__*/React.createElement(TW, null,
     /*#__PURE__*/React.createElement("table", {className:"eq-table"},
       /*#__PURE__*/React.createElement("thead", null,
@@ -1510,7 +1510,7 @@ function ZeitContent() {
       )
     )
   ),
-  /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'7px',letterSpacing:'0.2em',textTransform:'uppercase',color:'rgba(124,77,255,0.55)',marginBottom:'8px',marginTop:'16px'}}, "Die sieben Wochentage"),
+  /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'7px',letterSpacing:'0.2em',textTransform:'uppercase',color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',marginBottom:'8px',marginTop:'16px'}}, "Die sieben Wochentage"),
   /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'grid',
@@ -1524,32 +1524,32 @@ function ZeitContent() {
         key: name,
         style: {
           padding: '8px 6px',
-          background: 'rgba(124,77,255,0.05)',
-          border: '1px solid rgba(124,77,255,0.12)',
+          background: 'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',
+          border: '1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))',
           borderRadius: '3px',
           textAlign: 'center'
         }
       },
-        /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'7px',color:'rgba(124,77,255,0.45)',marginBottom:'3px'}}, 'T'+nr),
+        /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'7px',color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))',marginBottom:'3px'}}, 'T'+nr),
         /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-display)',fontSize:'12px',color:'var(--white)',marginBottom:'2px'}}, name),
-        /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-body)',fontSize:'9px',color:'rgba(200,190,240,0.4)'}}, rolle)
+        /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-body)',fontSize:'9px',color:'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))'}}, rolle)
       )
     )
   ),
-  /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'7px',letterSpacing:'0.2em',textTransform:'uppercase',color:'rgba(124,77,255,0.55)',marginBottom:'8px'}}, "Die zwei Monde"),
+  /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'7px',letterSpacing:'0.2em',textTransform:'uppercase',color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',marginBottom:'8px'}}, "Die zwei Monde"),
   /*#__PURE__*/React.createElement("div", {style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'10px'}},
     /*#__PURE__*/React.createElement("div", {style:{padding:'14px 16px',background:'rgba(217,176,107,0.06)',border:'1px solid rgba(217,176,107,0.2)',borderLeft:'3px solid rgba(217,176,107,0.7)',borderRadius:'0 3px 3px 0'}},
       /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-display)',fontSize:'14px',color:'#d9b06b',marginBottom:'6px'}}, "Goldmond"),
-      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'9px',color:'rgba(217,176,107,0.6)',letterSpacing:'0.1em',marginBottom:'4px'}}, "Zyklus: 28 Tage"),
-      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-body)',fontSize:'11px',color:'rgba(200,190,240,0.55)',lineHeight:'1.5'}}, "Vollmond: Mondsegen (Tag 16) — Der gr\xF6\xDFere, hellere Mond.")
+      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'9px',color:'color-mix(in srgb, rgba(217,176,107,0.6), rgb(var(--ink-rgb)) var(--cm))',letterSpacing:'0.1em',marginBottom:'4px'}}, "Zyklus: 28 Tage"),
+      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-body)',fontSize:'11px',color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',lineHeight:'1.5'}}, "Vollmond: Mondsegen (Tag 16) — Der gr\xF6\xDFere, hellere Mond.")
     ),
     /*#__PURE__*/React.createElement("div", {style:{padding:'14px 16px',background:'rgba(168,182,212,0.06)',border:'1px solid rgba(168,182,212,0.2)',borderLeft:'3px solid rgba(168,182,212,0.7)',borderRadius:'0 3px 3px 0'}},
       /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-display)',fontSize:'14px',color:'#a8b6d4',marginBottom:'6px'}}, "Aschmond"),
-      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'9px',color:'rgba(168,182,212,0.6)',letterSpacing:'0.1em',marginBottom:'4px'}}, "Zyklus: 17 Tage"),
-      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-body)',fontSize:'11px',color:'rgba(200,190,240,0.55)',lineHeight:'1.5'}}, "Vollmond: Aschenhauch (Tag 12) — Kleiner, blasser, schneller.")
+      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'9px',color:'color-mix(in srgb, rgba(168,182,212,0.6), rgb(var(--ink-rgb)) var(--cm))',letterSpacing:'0.1em',marginBottom:'4px'}}, "Zyklus: 17 Tage"),
+      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-body)',fontSize:'11px',color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',lineHeight:'1.5'}}, "Vollmond: Aschenhauch (Tag 12) — Kleiner, blasser, schneller.")
     )
   ),
-  /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-body)',fontSize:'10px',color:'rgba(200,190,240,0.35)',marginTop:'12px',fontStyle:'italic'}},
+  /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-body)',fontSize:'10px',color:'rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))',marginTop:'12px',fontStyle:'italic'}},
     "Doppelte Segensnacht (beide Vollmond): alle ∼2 Jahre · Gro\xDFer Gleichlauf (beide Neumond): alle 476 Tage"
   )
 ));
@@ -1578,7 +1578,7 @@ function HungerContent() {
     className: `tag-${t}`
   }, s)), /*#__PURE__*/React.createElement("td", {
     style: {
-      color: 'rgba(200,190,240,0.6)'
+      color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))'
     }
   }, e))))))), /*#__PURE__*/React.createElement(SubH, {
     id: "sec-hunger-calc"
@@ -1625,7 +1625,7 @@ function DurstContent() {
     className: `tag-${t}`
   }, s)), /*#__PURE__*/React.createElement("td", {
     style: {
-      color: 'rgba(200,190,240,0.6)'
+      color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))'
     }
   }, e))))))), /*#__PURE__*/React.createElement(SubH, {
     id: "sec-hitze"
@@ -1637,13 +1637,13 @@ function DurstContent() {
     className: "tag-ok"
   }, "Hydriert")), /*#__PURE__*/React.createElement("td", {
     style: {
-      color: 'rgba(200,190,240,0.6)'
+      color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))'
     }
   }, "\u2014")), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, "2"), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
     className: "tag-bad"
   }, "Am Verdursten")), /*#__PURE__*/React.createElement("td", {
     style: {
-      color: 'rgba(200,190,240,0.6)'
+      color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))'
     }
   }, "1 Stufe Ersch\xF6pfung. Subtrahiere 1W6. Lange Rast wirkungslos. KON SG 10 oder 0 TP.")))))));
 }
@@ -1682,8 +1682,8 @@ function TraglastCalc() {
     }
   }
   const inp = {
-    background: 'rgba(124,77,255,0.07)',
-    border: '1px solid rgba(124,77,255,0.22)',
+    background: 'rgba(var(--purple-rgb),calc(0.07*var(--kp)))',
+    border: '1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))',
     borderRadius: '3px',
     color: 'var(--white)',
     fontFamily: 'var(--font-mono)',
@@ -1694,8 +1694,8 @@ function TraglastCalc() {
     outline: 'none'
   };
   const sel = {
-    background: 'rgba(8,6,22,0.9)',
-    border: '1px solid rgba(124,77,255,0.22)',
+    background: 'rgba(var(--panel-rgb),0.9)',
+    border: '1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))',
     borderRadius: '3px',
     color: 'var(--white)',
     fontFamily: 'var(--font-mono)',
@@ -1708,7 +1708,7 @@ function TraglastCalc() {
     fontFamily: 'var(--font-mono)',
     fontSize: '8px',
     letterSpacing: '0.18em',
-    color: 'rgba(124,77,255,0.55)',
+    color: 'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',
     textTransform: 'uppercase',
     display: 'block',
     marginBottom: '4px'
@@ -1721,10 +1721,10 @@ function TraglastCalc() {
   };
   return /*#__PURE__*/React.createElement("div", {
     style: {
-      border: '1px solid rgba(124,77,255,0.2)',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))',
       borderRadius: '3px',
       padding: '18px 20px',
-      background: 'rgba(10,8,28,0.7)',
+      background: 'rgba(var(--panel-rgb),0.7)',
       marginTop: '14px'
     }
   }, /*#__PURE__*/React.createElement("div", {
@@ -1732,7 +1732,7 @@ function TraglastCalc() {
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '0.26em',
-      color: 'rgba(124,77,255,0.45)',
+      color: 'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))',
       textTransform: 'uppercase',
       marginBottom: '13px'
     }
@@ -1793,9 +1793,9 @@ function TraglastCalc() {
       key: label,
       style: {
         padding: '12px 13px',
-        background: active ? 'rgba(124,77,255,0.13)' : 'rgba(124,77,255,0.05)',
-        border: '1px solid rgba(124,77,255,0.14)',
-        borderTop: `2px solid ${active ? 'rgba(124,77,255,0.9)' : 'rgba(124,77,255,0.35)'}`,
+        background: active ? 'rgba(var(--purple-rgb),calc(0.13*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',
+        border: '1px solid rgba(var(--purple-rgb),calc(0.14*var(--kp)))',
+        borderTop: `2px solid ${active ? 'rgba(var(--purple-rgb),calc(0.9*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.35*var(--kp)))'}`,
         borderRadius: '0 0 3px 3px',
         transition: 'all 0.2s'
       }
@@ -1804,7 +1804,7 @@ function TraglastCalc() {
         fontFamily: 'var(--font-mono)',
         fontSize: '7px',
         letterSpacing: '0.18em',
-        color: 'rgba(124,77,255,0.5)',
+        color: 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',
         textTransform: 'uppercase',
         marginBottom: '4px'
       }
@@ -1818,13 +1818,13 @@ function TraglastCalc() {
     }, val, " ", /*#__PURE__*/React.createElement("span", {
       style: {
         fontSize: '10px',
-        color: 'rgba(200,190,240,0.4)',
+        color: 'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))',
         fontFamily: 'var(--font-mono)'
       }
     }, "kg")));
   })), w !== null && /*#__PURE__*/React.createElement("div", {
     style: {
-      borderTop: '1px solid rgba(124,77,255,0.12)',
+      borderTop: '1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))',
       paddingTop: '13px',
       display: 'flex',
       alignItems: 'center',
@@ -1836,7 +1836,7 @@ function TraglastCalc() {
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '0.22em',
-      color: 'rgba(124,77,255,0.45)',
+      color: 'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))',
       textTransform: 'uppercase',
       marginBottom: '3px'
     }
@@ -1854,7 +1854,7 @@ function TraglastCalc() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       height: '5px',
-      background: 'rgba(124,77,255,0.1)',
+      background: 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
       borderRadius: '3px',
       overflow: 'hidden',
       marginBottom: '4px'
@@ -1872,7 +1872,7 @@ function TraglastCalc() {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
       fontSize: '10px',
-      color: 'rgba(200,190,240,0.35)',
+      color: 'rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))',
       fontStyle: 'italic'
     }
   }, statusDesc))));
@@ -1898,7 +1898,7 @@ function TraglastContent() {
     className: `tag-${t}`
   }, zu)), /*#__PURE__*/React.createElement("td", {
     style: {
-      color: 'rgba(200,190,240,0.6)'
+      color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))'
     }
   }, e))))))), /*#__PURE__*/React.createElement("div", {
     className: "feat reveal-up"
@@ -1908,7 +1908,7 @@ function TraglastContent() {
     className: "feat-text"
   }, "Getragene R\xFCstung/Kleidung wiegt nur ", /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: 'rgba(200,190,240,0.85)'
+      color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))'
     }
   }, "\u2153"), " des normalen Gewichts. Im Gep\xE4ck tr\xE4gt sie ihr volles Gewicht.")), /*#__PURE__*/React.createElement(SubH, {
     id: "sec-traglast-calc"
@@ -1918,7 +1918,7 @@ function TraglastContent() {
   className: "feat-name"
 }, "Fahrzeuge ziehen"), /*#__PURE__*/React.createElement("div", {
   className: "feat-text"
-}, "Ein Tier, das eine Kutsche, einen Karren, einen Streitwagen, einen Schlitten oder einen Wagen zieht, kann ein Gewicht von bis zu dem ", /*#__PURE__*/React.createElement("strong", {style:{color:'rgba(200,190,240,0.85)'}}, "F\xFCnffachen"), " seiner Grundtragf\xE4higkeit bewegen – einschlie\xDFlich des Gewichts des Fahrzeugs. Wenn mehrere Tiere dasselbe Fahrzeug ziehen, k\xF6nnen sie ihre Tragf\xE4higkeiten addieren.")));
+}, "Ein Tier, das eine Kutsche, einen Karren, einen Streitwagen, einen Schlitten oder einen Wagen zieht, kann ein Gewicht von bis zu dem ", /*#__PURE__*/React.createElement("strong", {style:{color:'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))'}}, "F\xFCnffachen"), " seiner Grundtragf\xE4higkeit bewegen – einschlie\xDFlich des Gewichts des Fahrzeugs. Wenn mehrere Tiere dasselbe Fahrzeug ziehen, k\xF6nnen sie ihre Tragf\xE4higkeiten addieren.")));
 }
 function ReisenContent() {
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(SH, {
@@ -1943,7 +1943,7 @@ function ReisenContent() {
     }
   }, "45 km"), /*#__PURE__*/React.createElement("td", {
     style: {
-      color: 'rgba(255,160,100,0.7)',
+      color: 'color-mix(in srgb, rgba(255,160,100,0.7), rgb(var(--ink-rgb)) var(--cm))',
       fontStyle: 'italic',
       fontSize: '11px'
     }
@@ -1964,7 +1964,7 @@ function ReisenContent() {
     }
   }, "36 km"), /*#__PURE__*/React.createElement("td", {
     style: {
-      color: 'rgba(200,190,240,0.35)'
+      color: 'rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))'
     }
   }, "\u2014")), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, "Langsam"), /*#__PURE__*/React.createElement("td", {
     style: {
@@ -1983,7 +1983,7 @@ function ReisenContent() {
     }
   }, "27 km"), /*#__PURE__*/React.createElement("td", {
     style: {
-      color: 'rgba(94,232,208,0.65)',
+      color: 'color-mix(in srgb, rgba(94,232,208,0.65), rgb(var(--ink-rgb)) var(--cm))',
       fontStyle: 'italic',
       fontSize: '11px'
     }
@@ -2039,12 +2039,12 @@ function ErschoepfungContent() {
       gap: '14px',
       padding: '11px 16px',
       borderLeft: `2px solid ${cols[i]}`,
-      background: 'rgba(124,77,255,0.05)',
+      background: 'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',
       borderRadius: '0 3px 3px 0',
       transition: 'background 0.2s'
     },
-    onMouseEnter: e => e.currentTarget.style.background = 'rgba(124,77,255,0.1)',
-    onMouseLeave: e => e.currentTarget.style.background = 'rgba(124,77,255,0.05)'
+    onMouseEnter: e => e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
+    onMouseLeave: e => e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.05*var(--kp)))'
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-display)',
@@ -2059,7 +2059,7 @@ function ErschoepfungContent() {
       fontFamily: 'var(--font-body)',
       fontWeight: i === 5 ? '500' : '300',
       fontSize: '12px',
-      color: i === 5 ? 'rgba(255,100,100,0.9)' : 'rgba(200,190,240,0.7)'
+      color: i === 5 ? 'color-mix(in srgb, rgba(255,100,100,0.9), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--text-rgb),calc(0.7*var(--kt)))'
     }
   }, eff)))), /*#__PURE__*/React.createElement("div", {
     className: "feat reveal-up"
@@ -2082,7 +2082,7 @@ function parseVerletzung(text) {
       parts.push(/*#__PURE__*/React.createElement("strong", {
         key: key++,
         style: {
-          color: 'rgba(180,160,255,1)',
+          color: 'color-mix(in srgb, rgba(180,160,255,1), rgb(var(--ink-rgb)) var(--cm))',
           fontWeight: '600'
         }
       }, m[1]));
@@ -2090,7 +2090,7 @@ function parseVerletzung(text) {
       parts.push(/*#__PURE__*/React.createElement("strong", {
         key: key++,
         style: {
-          color: 'rgba(180,160,255,1)',
+          color: 'color-mix(in srgb, rgba(180,160,255,1), rgb(var(--ink-rgb)) var(--cm))',
           fontWeight: '600'
         }
       }, m[2]));
@@ -2100,7 +2100,7 @@ function parseVerletzung(text) {
       parts.push(/*#__PURE__*/React.createElement("strong", {
         key: key++,
         style: {
-          color: 'rgba(255,130,100,0.95)',
+          color: 'color-mix(in srgb, rgba(255,130,100,0.95), rgb(var(--ink-rgb)) var(--cm))',
           fontWeight: '600'
         }
       }, cond[0].toUpperCase() + cond.slice(1)));
@@ -2111,7 +2111,7 @@ function parseVerletzung(text) {
         if (/^\s+oder\s+$/.test(sp)) parts.push(sp);else parts.push(/*#__PURE__*/React.createElement("em", {
           key: key++,
           style: {
-            color: 'rgba(255,210,120,0.95)',
+            color: 'color-mix(in srgb, rgba(255,210,120,0.95), rgb(var(--ink-rgb)) var(--cm))',
             fontStyle: 'italic'
           }
         }, sp));
@@ -2223,7 +2223,7 @@ function VerletzungsRoller() {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
-      color: 'rgba(124,77,255,0.5)',
+      color: 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',
       letterSpacing: '0.2em'
     }
   }, "ERGEBNIS"), /*#__PURE__*/React.createElement("span", {
@@ -2232,22 +2232,22 @@ function VerletzungsRoller() {
       fontSize: '24px',
       fontWeight: '300',
       color: 'var(--white)',
-      textShadow: '0 0 20px rgba(124,77,255,0.5)'
+      textShadow: '0 0 20px rgba(var(--purple-rgb),calc(0.5*var(--kp)))'
     }
   }, disp), active && !rolling && /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
       fontSize: '12px',
-      color: 'rgba(160,140,255,0.85)'
+      color: 'rgba(var(--accent-rgb),calc(0.85*var(--ka) + var(--tb)))'
     }
   }, active.name))), active && !rolling && /*#__PURE__*/React.createElement("div", {
     style: {
       marginBottom: '14px',
       padding: '14px 18px',
-      background: 'rgba(124,77,255,0.1)',
-      border: '1px solid rgba(124,77,255,0.35)',
-      borderLeft: '3px solid rgba(124,77,255,0.9)',
+      background: 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.35*var(--kp)))',
+      borderLeft: '3px solid rgba(var(--purple-rgb),calc(0.9*var(--kp)))',
       borderRadius: '0 4px 4px 0',
       animation: 'fadeInUp 0.18s ease both'
     }
@@ -2256,7 +2256,7 @@ function VerletzungsRoller() {
       fontFamily: 'var(--font-display)',
       fontSize: '11px',
       letterSpacing: '0.16em',
-      color: 'rgba(160,140,255,0.95)',
+      color: 'rgba(var(--accent-rgb),calc(0.95*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
       marginBottom: '7px'
     }
@@ -2266,21 +2266,21 @@ function VerletzungsRoller() {
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.75',
-      color: 'rgba(200,190,240,0.75)'
+      color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))'
     }
   }, parseVerletzung(active.desc))), /*#__PURE__*/React.createElement(TW, null, /*#__PURE__*/React.createElement("table", {
     className: "eq-table"
   }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "1W20"), /*#__PURE__*/React.createElement("th", null, "Verletzung"), /*#__PURE__*/React.createElement("th", null, "Effekt"))), /*#__PURE__*/React.createElement("tbody", null, VERLETZUNGEN.map(row => /*#__PURE__*/React.createElement("tr", {
     key: row.range,
     style: {
-      background: active && active.min === row.min ? 'rgba(124,77,255,0.18)' : 'transparent',
+      background: active && active.min === row.min ? 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))' : 'transparent',
       transition: 'background 0.3s'
     }
   }, /*#__PURE__*/React.createElement("td", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '11px',
-      color: active && active.min === row.min ? '#f0eeff' : 'rgba(180,165,255,0.85)',
+      color: active && active.min === row.min ? 'var(--white)' : 'rgba(var(--accent-rgb),calc(0.85*var(--ka)))',
       whiteSpace: 'nowrap'
     }
   }, row.range), /*#__PURE__*/React.createElement("td", {
@@ -2288,12 +2288,12 @@ function VerletzungsRoller() {
       fontFamily: 'var(--font-body)',
       fontWeight: '400',
       fontSize: '12px',
-      color: active && active.min === row.min ? '#f0eeff' : 'rgba(200,190,240,0.85)',
+      color: active && active.min === row.min ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.85*var(--kt)))',
       whiteSpace: 'nowrap'
     }
   }, row.name), /*#__PURE__*/React.createElement("td", {
     style: {
-      color: active && active.min === row.min ? 'rgba(220,210,255,0.9)' : undefined
+      color: active && active.min === row.min ? 'rgba(var(--text-rgb),calc(0.9*var(--kt)))' : undefined
     }
   }, parseVerletzung(row.desc))))))));
 }
@@ -2346,9 +2346,9 @@ function VerletzungenContent() {
     style: {
       marginTop: '14px',
       padding: '16px 20px',
-      border: '1px solid rgba(124,77,255,0.18)',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',
       borderRadius: '3px',
-      background: 'rgba(124,77,255,0.04)',
+      background: 'rgba(var(--purple-rgb),calc(0.04*var(--kp)))',
       display: 'flex',
       alignItems: 'flex-start',
       gap: '14px'
@@ -2358,7 +2358,7 @@ function VerletzungenContent() {
     width: "18",
     height: "18",
     fill: "none",
-    stroke: "rgba(124,77,255,0.45)",
+    stroke: "rgba(var(--purple-rgb),calc(0.45*var(--kp)))",
     strokeWidth: "1.5",
     style: {
       flexShrink: 0,
@@ -2381,7 +2381,7 @@ function VerletzungenContent() {
       fontFamily: 'var(--font-display)',
       fontSize: '10px',
       letterSpacing: '0.16em',
-      color: 'rgba(160,140,255,0.6)',
+      color: 'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
       marginBottom: '4px'
     }
@@ -2390,7 +2390,7 @@ function VerletzungenContent() {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
       fontSize: '11px',
-      color: 'rgba(200,190,240,0.4)',
+      color: 'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))',
       lineHeight: '1.6',
       marginBottom: '12px'
     }
@@ -2415,8 +2415,8 @@ function VerletzungenContent() {
       fontSize: '11px',
       letterSpacing: '0.1em',
       padding: '6px 10px',
-      background: 'rgba(124,77,255,0.06)',
-      border: `1px solid ${error ? 'rgba(220,80,80,0.5)' : 'rgba(124,77,255,0.22)'}`,
+      background: 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))',
+      border: `1px solid ${error ? 'rgba(220,80,80,0.5)' : 'rgba(var(--purple-rgb),calc(0.22*var(--kp)))'}`,
       borderRadius: '3px',
       color: 'var(--white)',
       outline: 'none',
@@ -2424,10 +2424,10 @@ function VerletzungenContent() {
       transition: 'border-color 0.2s'
     },
     onFocus: e => {
-      if (!error) e.target.style.borderColor = 'rgba(124,77,255,0.5)';
+      if (!error) e.target.style.borderColor = 'rgba(var(--purple-rgb),calc(0.5*var(--kp)))';
     },
     onBlur: e => {
-      if (!error) e.target.style.borderColor = 'rgba(124,77,255,0.22)';
+      if (!error) e.target.style.borderColor = 'rgba(var(--purple-rgb),calc(0.22*var(--kp)))';
     }
   }), /*#__PURE__*/React.createElement("button", {
     type: "submit",
@@ -2436,21 +2436,21 @@ function VerletzungenContent() {
       fontSize: '9px',
       letterSpacing: '0.18em',
       padding: '6px 14px',
-      background: 'rgba(124,77,255,0.1)',
-      border: '1px solid rgba(124,77,255,0.28)',
+      background: 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.28*var(--kp)))',
       borderRadius: '3px',
-      color: 'rgba(200,190,240,0.7)',
+      color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',
       cursor: 'pointer',
       textTransform: 'uppercase',
       transition: 'all 0.15s'
     },
     onMouseEnter: e => {
-      e.currentTarget.style.background = 'rgba(124,77,255,0.2)';
+      e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))';
       e.currentTarget.style.color = 'var(--white)';
     },
     onMouseLeave: e => {
-      e.currentTarget.style.background = 'rgba(124,77,255,0.1)';
-      e.currentTarget.style.color = 'rgba(200,190,240,0.7)';
+      e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))';
+      e.currentTarget.style.color = 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))';
     }
   }, "Best\xE4tigen")), error && /*#__PURE__*/React.createElement("div", {
     style: {
@@ -2691,15 +2691,15 @@ function WahnsinnRoller({
   return /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: '18px',
-      border: '1px solid rgba(124,77,255,0.18)',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',
       borderRadius: '3px',
       overflow: 'hidden'
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '12px 16px',
-      background: 'rgba(124,77,255,0.07)',
-      borderBottom: '1px solid rgba(124,77,255,0.14)',
+      background: 'rgba(var(--purple-rgb),calc(0.07*var(--kp)))',
+      borderBottom: '1px solid rgba(var(--purple-rgb),calc(0.14*var(--kp)))',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
@@ -2711,7 +2711,7 @@ function WahnsinnRoller({
       fontFamily: 'var(--font-display)',
       fontSize: '11px',
       letterSpacing: '0.16em',
-      color: 'rgba(200,190,240,0.9)',
+      color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, title), /*#__PURE__*/React.createElement("div", {
@@ -2727,7 +2727,7 @@ function WahnsinnRoller({
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '0.14em',
-      color: 'rgba(124,77,255,0.5)'
+      color: 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))'
     }
   }, duration), durationDice && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
     onClick: doDurRoll,
@@ -2737,10 +2737,10 @@ function WahnsinnRoller({
       alignItems: 'center',
       gap: '4px',
       padding: '2px 8px',
-      background: 'rgba(124,77,255,0.08)',
-      border: '1px solid rgba(124,77,255,0.25)',
+      background: 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))',
       borderRadius: '3px',
-      color: 'rgba(160,140,255,0.7)',
+      color: 'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))',
       fontFamily: 'var(--font-mono)',
       fontSize: '7px',
       letterSpacing: '0.14em',
@@ -2750,13 +2750,13 @@ function WahnsinnRoller({
     },
     onMouseEnter: e => {
       if (!durRolling) {
-        e.currentTarget.style.background = 'rgba(124,77,255,0.18)';
-        e.currentTarget.style.color = 'rgba(210,200,255,0.9)';
+        e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))';
+        e.currentTarget.style.color = 'color-mix(in srgb, rgba(210,200,255,0.9), rgb(var(--ink-rgb)) var(--cm))';
       }
     },
     onMouseLeave: e => {
-      e.currentTarget.style.background = 'rgba(124,77,255,0.08)';
-      e.currentTarget.style.color = 'rgba(160,140,255,0.7)';
+      e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))';
+      e.currentTarget.style.color = 'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))';
     }
   }, /*#__PURE__*/React.createElement("svg", {
     viewBox: "0 0 24 24",
@@ -2808,8 +2808,8 @@ function WahnsinnRoller({
     viewBox: "0 0 48 48"
   }, /*#__PURE__*/React.createElement("polygon", {
     points: hexPts(48),
-    fill: "rgba(124,77,255,0.18)",
-    stroke: "rgba(124,77,255,0.65)",
+    fill: "rgba(var(--purple-rgb),calc(0.18*var(--kp)))",
+    stroke: "rgba(var(--purple-rgb),calc(0.65*var(--kp)))",
     strokeWidth: "1.2"
   }), /*#__PURE__*/React.createElement("text", {
     x: "24",
@@ -2818,13 +2818,13 @@ function WahnsinnRoller({
     fontFamily: "Cinzel,serif",
     fontSize: "15",
     fontWeight: "400",
-    fill: "rgba(230,225,255,0.95)"
+    fill: "rgba(var(--text-hi-rgb),calc(0.95*var(--kt)))"
   }, durVal)), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '0.14em',
-      color: 'rgba(124,77,255,0.6)',
+      color: 'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, durationDice.unit))))), /*#__PURE__*/React.createElement("div", {
@@ -2848,7 +2848,7 @@ function WahnsinnRoller({
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
-      color: 'rgba(124,77,255,0.5)',
+      color: 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',
       letterSpacing: '0.2em'
     }
   }, "ERGEBNIS"), /*#__PURE__*/React.createElement("span", {
@@ -2857,14 +2857,14 @@ function WahnsinnRoller({
       fontSize: '22px',
       fontWeight: '300',
       color: 'var(--white)',
-      textShadow: '0 0 20px rgba(124,77,255,0.5)'
+      textShadow: '0 0 20px rgba(var(--purple-rgb),calc(0.5*var(--kp)))'
     }
   }, fmt(disp))))), active && !rolling && /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '13px 16px',
-      background: 'rgba(124,77,255,0.1)',
-      borderBottom: '1px solid rgba(124,77,255,0.18)',
-      borderLeft: '3px solid rgba(124,77,255,0.9)',
+      background: 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
+      borderBottom: '1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',
+      borderLeft: '3px solid rgba(var(--purple-rgb),calc(0.9*var(--kp)))',
       animation: 'fadeInUp 0.18s ease both'
     }
   }, /*#__PURE__*/React.createElement("div", {
@@ -2873,26 +2873,26 @@ function WahnsinnRoller({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.75',
-      color: 'rgba(220,210,255,0.85)'
+      color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))'
     }
   }, active.desc)), /*#__PURE__*/React.createElement(TW, null, /*#__PURE__*/React.createElement("table", {
     className: "eq-table"
   }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "1W100"), /*#__PURE__*/React.createElement("th", null, col))), /*#__PURE__*/React.createElement("tbody", null, data.map(row => /*#__PURE__*/React.createElement("tr", {
     key: row.range,
     style: {
-      background: active && active.min === row.min ? 'rgba(124,77,255,0.18)' : 'transparent',
+      background: active && active.min === row.min ? 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))' : 'transparent',
       transition: 'background 0.3s'
     }
   }, /*#__PURE__*/React.createElement("td", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '11px',
-      color: active && active.min === row.min ? '#f0eeff' : 'rgba(180,165,255,0.85)',
+      color: active && active.min === row.min ? 'var(--white)' : 'rgba(var(--accent-rgb),calc(0.85*var(--ka)))',
       whiteSpace: 'nowrap'
     }
   }, row.range), /*#__PURE__*/React.createElement("td", {
     style: {
-      color: active && active.min === row.min ? 'rgba(220,210,255,0.9)' : undefined
+      color: active && active.min === row.min ? 'rgba(var(--text-rgb),calc(0.9*var(--kt)))' : undefined
     }
   }, row.desc)))))));
 }
@@ -2954,19 +2954,19 @@ function FurchtContent() {
       display: 'flex',
       gap: '9px',
       padding: '8px 12px',
-      background: 'rgba(124,77,255,0.04)',
-      border: '1px solid rgba(124,77,255,0.1)',
+      background: 'rgba(var(--purple-rgb),calc(0.04*var(--kp)))',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
       borderRadius: '3px',
       transition: 'border-color 0.15s',
       alignItems: 'flex-start'
     },
-    onMouseEnter: e => e.currentTarget.style.borderColor = 'rgba(124,77,255,0.32)',
-    onMouseLeave: e => e.currentTarget.style.borderColor = 'rgba(124,77,255,0.1)'
+    onMouseEnter: e => e.currentTarget.style.borderColor = 'rgba(var(--purple-rgb),calc(0.32*var(--kp)))',
+    onMouseLeave: e => e.currentTarget.style.borderColor = 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))'
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
-      color: 'rgba(124,77,255,0.42)',
+      color: 'rgba(var(--purple-rgb),calc(0.42*var(--kp) + var(--tb)))',
       minWidth: '17px',
       paddingTop: '2px',
       flexShrink: 0
@@ -2977,7 +2977,7 @@ function FurchtContent() {
       fontWeight: '300',
       fontSize: '11px',
       fontStyle: 'italic',
-      color: 'rgba(200,190,240,0.6)',
+      color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))',
       lineHeight: '1.5'
     }
   }, s)))), /*#__PURE__*/React.createElement(SubH, {
@@ -3042,7 +3042,7 @@ function FurchtContent() {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '11px',
-      color: 'rgba(94,232,208,0.85)',
+      color: 'color-mix(in srgb, rgba(94,232,208,0.85), rgb(var(--ink-rgb)) var(--cm))',
       fontWeight: '500'
     }
   }, row.s), /*#__PURE__*/React.createElement("td", {
@@ -3050,7 +3050,7 @@ function FurchtContent() {
       fontFamily: 'var(--font-display)',
       fontSize: '11px',
       letterSpacing: '0.06em',
-      color: 'rgba(200,190,240,0.9)',
+      color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
       fontWeight: '400'
     }
   }, row.z), /*#__PURE__*/React.createElement("td", {
@@ -3058,7 +3058,7 @@ function FurchtContent() {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
       fontSize: '11px',
-      color: 'rgba(200,190,240,0.5)',
+      color: 'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))',
       lineHeight: '1.6'
     }
   }, row.a)))))), /*#__PURE__*/React.createElement(SubH, {
@@ -3190,21 +3190,21 @@ function FurchtContent() {
         fontFamily: 'var(--font-display)',
         fontSize: '11px',
         letterSpacing: '0.06em',
-        color: 'rgba(200,190,240,0.9)',
+        color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
         fontWeight: '400'
       }
     }, row.a), /*#__PURE__*/React.createElement("td", {
       style: {
         fontFamily: 'var(--font-mono)',
         fontSize: '10px',
-        color: 'rgba(160,140,255,0.7)',
+        color: 'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))',
         whiteSpace: 'nowrap'
       }
     }, row.d), /*#__PURE__*/React.createElement("td", {
       style: {
         fontFamily: 'var(--font-mono)',
         fontSize: '10px',
-        color: 'rgba(94,232,208,0.85)',
+        color: 'color-mix(in srgb, rgba(94,232,208,0.85), rgb(var(--ink-rgb)) var(--cm))',
         whiteSpace: 'nowrap',
         fontWeight: '500'
       }
@@ -3212,14 +3212,14 @@ function FurchtContent() {
       style: {
         fontFamily: 'var(--font-body)',
         fontSize: '11px',
-        color: 'rgba(180,165,255,0.65)'
+        color: 'rgba(var(--accent-rgb),calc(0.65*var(--ka) + var(--tb)))'
       }
     }, row.v), /*#__PURE__*/React.createElement("td", {
       style: {
         fontFamily: 'var(--font-body)',
         fontWeight: '300',
         fontSize: '11px',
-        color: 'rgba(200,190,240,0.5)',
+        color: 'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))',
         lineHeight: '1.6'
       }
     }, row.h))))));
@@ -3262,9 +3262,9 @@ function FurchtContent() {
     style: {
       marginTop: '14px',
       padding: '16px 20px',
-      border: '1px solid rgba(124,77,255,0.18)',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',
       borderRadius: '3px',
-      background: 'rgba(124,77,255,0.04)',
+      background: 'rgba(var(--purple-rgb),calc(0.04*var(--kp)))',
       display: 'flex',
       alignItems: 'flex-start',
       gap: '14px'
@@ -3274,7 +3274,7 @@ function FurchtContent() {
     width: "18",
     height: "18",
     fill: "none",
-    stroke: "rgba(124,77,255,0.45)",
+    stroke: "rgba(var(--purple-rgb),calc(0.45*var(--kp)))",
     strokeWidth: "1.5",
     style: {
       flexShrink: 0,
@@ -3297,7 +3297,7 @@ function FurchtContent() {
       fontFamily: 'var(--font-display)',
       fontSize: '10px',
       letterSpacing: '0.16em',
-      color: 'rgba(160,140,255,0.6)',
+      color: 'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
       marginBottom: '4px'
     }
@@ -3306,7 +3306,7 @@ function FurchtContent() {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
       fontSize: '11px',
-      color: 'rgba(200,190,240,0.4)',
+      color: 'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))',
       lineHeight: '1.6',
       marginBottom: '12px'
     }
@@ -3331,8 +3331,8 @@ function FurchtContent() {
       fontSize: '11px',
       letterSpacing: '0.1em',
       padding: '6px 10px',
-      background: 'rgba(124,77,255,0.06)',
-      border: `1px solid ${error ? 'rgba(220,80,80,0.5)' : 'rgba(124,77,255,0.22)'}`,
+      background: 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))',
+      border: `1px solid ${error ? 'rgba(220,80,80,0.5)' : 'rgba(var(--purple-rgb),calc(0.22*var(--kp)))'}`,
       borderRadius: '3px',
       color: 'var(--white)',
       outline: 'none',
@@ -3340,10 +3340,10 @@ function FurchtContent() {
       transition: 'border-color 0.2s'
     },
     onFocus: e => {
-      if (!error) e.target.style.borderColor = 'rgba(124,77,255,0.5)';
+      if (!error) e.target.style.borderColor = 'rgba(var(--purple-rgb),calc(0.5*var(--kp)))';
     },
     onBlur: e => {
-      if (!error) e.target.style.borderColor = 'rgba(124,77,255,0.22)';
+      if (!error) e.target.style.borderColor = 'rgba(var(--purple-rgb),calc(0.22*var(--kp)))';
     }
   }), /*#__PURE__*/React.createElement("button", {
     type: "submit",
@@ -3352,21 +3352,21 @@ function FurchtContent() {
       fontSize: '9px',
       letterSpacing: '0.18em',
       padding: '6px 14px',
-      background: 'rgba(124,77,255,0.1)',
-      border: '1px solid rgba(124,77,255,0.28)',
+      background: 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.28*var(--kp)))',
       borderRadius: '3px',
-      color: 'rgba(200,190,240,0.7)',
+      color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',
       cursor: 'pointer',
       textTransform: 'uppercase',
       transition: 'all 0.15s'
     },
     onMouseEnter: e => {
-      e.currentTarget.style.background = 'rgba(124,77,255,0.2)';
+      e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))';
       e.currentTarget.style.color = 'var(--white)';
     },
     onMouseLeave: e => {
-      e.currentTarget.style.background = 'rgba(124,77,255,0.1)';
-      e.currentTarget.style.color = 'rgba(200,190,240,0.7)';
+      e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))';
+      e.currentTarget.style.color = 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))';
     }
   }, "Best\xE4tigen")), error && /*#__PURE__*/React.createElement("div", {
     style: {
@@ -3402,7 +3402,7 @@ function AbenteuerContent() {
       display: 'flex',
       alignItems: 'center',
       gap: '7px',
-      color: 'rgba(220,210,255,0.9)',
+      color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
       fontWeight: '400'
     }
   }, /*#__PURE__*/React.createElement("span", {
@@ -3413,9 +3413,9 @@ function AbenteuerContent() {
       lineHeight: '14px',
       textAlign: 'center',
       borderRadius: '50%',
-      border: '1px solid rgba(124,77,255,0.44)',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.44*var(--kp)))',
       fontSize: '9px',
-      color: 'rgba(160,140,255,0.8)',
+      color: 'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))',
       flexShrink: 0,
       fontFamily: 'var(--font-mono)',
       transition: 'transform 0.15s',
@@ -3423,7 +3423,7 @@ function AbenteuerContent() {
     }
   }, "+"), ls.name), /*#__PURE__*/React.createElement("td", {
     style: {
-      color: ls.kosten === '—' ? 'rgba(200,190,240,0.35)' : 'rgba(160,140,255,0.85)',
+      color: ls.kosten === '—' ? 'rgba(var(--text-rgb),calc(0.35*var(--kt)))' : 'rgba(var(--accent-rgb),calc(0.85*var(--ka)))',
       fontFamily: 'var(--font-mono)',
       fontSize: '11px'
     }
@@ -3431,8 +3431,8 @@ function AbenteuerContent() {
     colSpan: 2,
     style: {
       padding: '0 14px 12px 34px',
-      background: 'rgba(124,77,255,0.08)',
-      borderBottom: '1px solid rgba(124,77,255,0.1)'
+      background: 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))',
+      borderBottom: '1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))'
     }
   }, /*#__PURE__*/React.createElement("p", {
     style: {
@@ -3440,7 +3440,7 @@ function AbenteuerContent() {
       fontSize: '12px',
       fontWeight: '300',
       lineHeight: '1.8',
-      color: 'rgba(190,180,240,0.65)',
+      color: 'color-mix(in srgb, rgba(190,180,240,0.65), rgb(var(--ink-rgb)) var(--cm))',
       letterSpacing: '0.02em',
       animation: 'fadeInUp 0.2s ease forwards'
     }
@@ -3724,7 +3724,7 @@ function AbenteuerContent() {
         fontFamily: 'var(--font-display)',
         fontSize: '11px',
         letterSpacing: '0.06em',
-        color: 'rgba(200,190,240,0.9)',
+        color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
         fontWeight: '400'
       }
     }, row.u), /*#__PURE__*/React.createElement("td", {
@@ -3738,14 +3738,14 @@ function AbenteuerContent() {
       style: {
         fontFamily: 'var(--font-mono)',
         fontSize: '10px',
-        color: 'rgba(160,140,255,0.7)',
+        color: 'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))',
         whiteSpace: 'nowrap'
       }
     }, row.d), /*#__PURE__*/React.createElement("td", {
       style: {
         fontFamily: 'var(--font-mono)',
         fontSize: '10px',
-        color: 'rgba(94,232,208,0.75)',
+        color: 'color-mix(in srgb, rgba(94,232,208,0.75), rgb(var(--ink-rgb)) var(--cm))',
         whiteSpace: 'nowrap'
       }
     }, row.k), /*#__PURE__*/React.createElement("td", {
@@ -3753,7 +3753,7 @@ function AbenteuerContent() {
         fontFamily: 'var(--font-body)',
         fontWeight: '300',
         fontSize: '11px',
-        color: 'rgba(200,190,240,0.5)',
+        color: 'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))',
         lineHeight: '1.6'
       }
     }, row.h))))));
@@ -3765,7 +3765,7 @@ function AbenteuerContent() {
     className: "feat-text"
   }, "Steht bei einer Materialkomponente ein ", /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: 'rgba(200,190,240,0.85)'
+      color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))'
     }
   }, "Preis"), ", muss das Material gekauft und mitgetragen werden. Es wird nicht verbraucht, es sei denn, der Zauber erw\xE4hnt es explizit. Materialien ohne Preis k\xF6nnen durch einen Materialkomponentenbeutel oder Fokus ersetzt werden.")), /*#__PURE__*/React.createElement(SubH, {
     id: "sec-munition"
@@ -3781,11 +3781,11 @@ function UnterwasserContent() {
     key: 'nahkampf',
     icon: '⚔',
     title: 'Nahkampf',
-    color: 'rgba(124,77,255,1)',
-    colorDim: 'rgba(124,77,255,0.55)',
-    colorBg: 'rgba(124,77,255,0.06)',
-    colorBorder: 'rgba(124,77,255,0.2)',
-    colorBorderLeft: 'rgba(124,77,255,0.8)',
+    color: 'rgba(var(--purple-rgb),calc(1*var(--kp) + var(--tb)))',
+    colorDim: 'rgba(var(--purple-rgb),calc(0.55*var(--kp)))',
+    colorBg: 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))',
+    colorBorder: 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))',
+    colorBorderLeft: 'rgba(var(--purple-rgb),calc(0.8*var(--kp)))',
     summary: 'Nachteil auf Angriffswürfe ohne Schwimmgeschwindigkeit',
     detail: 'Eine Kreatur ohne natürliche oder magische Schwimmgeschwindigkeit hat beim Angriffswurf einen Nachteil.',
     ausnahmen: ['Dolch', 'Speer', 'Kurzschwert', 'Dreizack']
@@ -3793,7 +3793,7 @@ function UnterwasserContent() {
     key: 'fernkampf',
     icon: '🏹',
     title: 'Fernkampf',
-    color: 'rgba(60,180,255,1)',
+    color: 'color-mix(in srgb, rgba(60,180,255,1), rgb(var(--ink-rgb)) var(--cm))',
     colorDim: 'rgba(60,180,255,0.55)',
     colorBg: 'rgba(60,180,255,0.06)',
     colorBorder: 'rgba(60,180,255,0.2)',
@@ -3805,7 +3805,7 @@ function UnterwasserContent() {
     key: 'feuer',
     icon: '🔥',
     title: 'Feuerschaden',
-    color: 'rgba(255,120,40,1)',
+    color: 'color-mix(in srgb, rgba(255,120,40,1), rgb(var(--ink-rgb)) var(--cm))',
     colorDim: 'rgba(255,120,40,0.55)',
     colorBg: 'rgba(255,120,40,0.06)',
     colorBorder: 'rgba(255,120,40,0.2)',
@@ -3857,7 +3857,7 @@ function UnterwasserContent() {
               fontWeight: '300',
               fontSize: '12px',
               lineHeight: '1.75',
-              color: 'rgba(200,190,240,0.65)',
+              color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
               marginBottom: r.ausnahmen ? '12px' : '0'
             }
           }, r.detail),
@@ -3882,10 +3882,10 @@ function UnterwasserContent() {
                     fontFamily: 'var(--font-body)',
                     fontSize: '11px',
                     padding: '2px 9px',
-                    background: 'rgba(124,77,255,0.1)',
-                    border: '1px solid rgba(124,77,255,0.25)',
+                    background: 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
+                    border: '1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))',
                     borderRadius: '2px',
-                    color: 'rgba(200,190,240,0.8)'
+                    color: 'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))'
                   }
                 }, w)
               )
@@ -3979,13 +3979,13 @@ function SichtContent() {
     label: 'Humanoid',
     radius: 120,
     dunkel: false,
-    color: 'rgba(124,77,255,1)',
+    color: 'rgba(var(--purple-rgb),calc(1*var(--kp) + var(--tb)))',
     example: 'Menschen, Goliaths …'
   }, {
     label: 'Elfisch',
     radius: 135,
     dunkel: true,
-    color: 'rgba(80,200,160,1)',
+    color: 'color-mix(in srgb, rgba(80,200,160,1), rgb(var(--ink-rgb)) var(--cm))',
     example: 'Elfen, Halbelfen …'
   }, {
     label: 'Drakonisch',
@@ -3997,31 +3997,31 @@ function SichtContent() {
     label: 'Katzenartig',
     radius: 200,
     dunkel: true,
-    color: 'rgba(216,152,88,1)',
+    color: 'color-mix(in srgb, rgba(216,152,88,1), rgb(var(--ink-rgb)) var(--cm))',
     example: 'Tabaxi'
   }, {
     label: 'Reptilisch',
     radius: 240,
     dunkel: false,
-    color: 'rgba(90,184,120,1)',
+    color: 'color-mix(in srgb, rgba(90,184,120,1), rgb(var(--ink-rgb)) var(--cm))',
     example: 'Echsenmenschen …'
   }, {
     label: 'Vogelartig',
     radius: 300,
     dunkel: false,
-    color: 'rgba(26,184,160,1)',
+    color: 'color-mix(in srgb, rgba(26,184,160,1), rgb(var(--ink-rgb)) var(--cm))',
     example: 'Aarakocra, Kenku'
   }, {
     label: 'Pferd/Stier',
     radius: 330,
     dunkel: false,
-    color: 'rgba(176,144,64,1)',
+    color: 'color-mix(in srgb, rgba(176,144,64,1), rgb(var(--ink-rgb)) var(--cm))',
     example: 'Minotauren, Zentauren'
   }, {
     label: 'Hasenartig',
     radius: 340,
     dunkel: false,
-    color: 'rgba(224,144,160,1)',
+    color: 'color-mix(in srgb, rgba(224,144,160,1), rgb(var(--ink-rgb)) var(--cm))',
     example: 'Harengons'
   }];
   const filtered = allRaces.filter(r => {
@@ -4059,10 +4059,10 @@ function SichtContent() {
     key: et.label,
     className: "reveal-up",
     style: {
-      border: '1px solid rgba(124,77,255,0.13)',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.13*var(--kp)))',
       borderRadius: '4px',
       padding: '14px 10px 10px',
-      background: 'rgba(10,8,28,0.55)',
+      background: 'rgba(var(--panel-rgb),0.55)',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -4077,7 +4077,7 @@ function SichtContent() {
       fontFamily: 'var(--font-display)',
       fontSize: '9px',
       letterSpacing: '0.13em',
-      color: 'rgba(210,200,255,0.88)',
+      color: 'color-mix(in srgb, rgba(210,200,255,0.88), rgb(var(--ink-rgb)) var(--cm))',
       textTransform: 'uppercase',
       textAlign: 'center',
       marginTop: '2px'
@@ -4101,7 +4101,7 @@ function SichtContent() {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '7px',
-      color: 'rgba(100,140,255,0.6)',
+      color: 'color-mix(in srgb, rgba(100,140,255,0.6), rgb(var(--ink-rgb)) var(--cm))',
       textAlign: 'center',
       letterSpacing: '0.08em'
     }
@@ -4110,7 +4110,7 @@ function SichtContent() {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
       fontSize: '9px',
-      color: 'rgba(200,190,240,0.3)',
+      color: 'rgba(var(--text-rgb),calc(0.3*var(--kt) + var(--tb)))',
       textAlign: 'center',
       lineHeight: '1.4',
       marginTop: '2px'
@@ -4139,9 +4139,9 @@ function SichtContent() {
       padding: '4px 11px',
       borderRadius: '2px',
       cursor: 'pointer',
-      border: `1px solid ${filter === id ? 'rgba(124,77,255,0.65)' : 'rgba(124,77,255,0.2)'}`,
-      background: filter === id ? 'rgba(124,77,255,0.15)' : 'transparent',
-      color: filter === id ? 'var(--white)' : 'rgba(200,190,240,0.5)',
+      border: `1px solid ${filter === id ? 'rgba(var(--purple-rgb),calc(0.65*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))'}`,
+      background: filter === id ? 'rgba(var(--purple-rgb),calc(0.15*var(--kp)))' : 'transparent',
+      color: filter === id ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.5*var(--kt)))',
       transition: 'all 0.15s'
     }
   }, label))), /*#__PURE__*/React.createElement(TW, null, /*#__PURE__*/React.createElement("table", {
@@ -4175,7 +4175,7 @@ function SichtContent() {
         fontFamily: 'var(--font-display)',
         fontSize: '11px',
         letterSpacing: '0.06em',
-        color: 'rgba(200,190,240,0.9)',
+        color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
         fontWeight: '400'
       }
     }, r.name, s.wandelform && /*#__PURE__*/React.createElement("span", {
@@ -4192,26 +4192,26 @@ function SichtContent() {
       style: {
         fontFamily: 'var(--font-mono)',
         fontSize: '10px',
-        color: s.wandelform ? 'rgba(180,130,90,0.55)' : 'rgba(94,232,208,0.75)'
+        color: s.wandelform ? 'rgba(180,130,90,0.55)' : 'color-mix(in srgb, rgba(94,232,208,0.75), rgb(var(--ink-rgb)) var(--cm))'
       }
     }, s.wandelform ? '?' : s.weite != null ? `${s.weite} m` : '—'), /*#__PURE__*/React.createElement("td", {
       style: {
         fontFamily: 'var(--font-mono)',
         fontSize: '10px',
-        color: s.wandelform ? 'rgba(180,130,90,0.55)' : 'rgba(160,140,255,0.8)'
+        color: s.wandelform ? 'rgba(180,130,90,0.55)' : 'rgba(var(--accent-rgb),calc(0.8*var(--ka)))'
       }
     }, s.wandelform ? '?' : s.radius != null ? `${s.radius}°` : '—'), /*#__PURE__*/React.createElement("td", {
       style: {
         fontFamily: 'var(--font-mono)',
         fontSize: '10px',
-        color: s.dunkel > 0 ? 'rgba(110,150,255,0.8)' : 'rgba(200,190,240,0.25)'
+        color: s.dunkel > 0 ? 'color-mix(in srgb, rgba(110,150,255,0.8), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--text-rgb),calc(0.25*var(--kt)))'
       }
     }, s.dunkel > 0 ? `${s.dunkel} m` : '—'), /*#__PURE__*/React.createElement("td", {
       style: {
         fontFamily: 'var(--font-body)',
         fontWeight: '300',
         fontSize: '11px',
-        color: 'rgba(200,190,240,0.42)',
+        color: 'rgba(var(--text-rgb),calc(0.42*var(--kt) + var(--tb)))',
         lineHeight: '1.5'
       }
     }, s.notiz || '—'));
@@ -4327,22 +4327,22 @@ function App() {
         fontWeight: isActive ? '500' : '300',
         letterSpacing: '0.08em',
         background: isActive ? `${accent}22` : 'transparent',
-        border: `1px solid ${isActive ? accent + '66' : 'rgba(124,77,255,0.2)'}`,
-        color: isActive ? 'var(--white)' : 'rgba(var(--text-rgb),0.5)',
+        border: `1px solid ${isActive ? accent + '66' : 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))'}`,
+        color: isActive ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.5*var(--kt)))',
         borderRadius: '2px',
         cursor: 'pointer',
         transition: 'all 0.15s'
       },
       onMouseEnter: e => {
         if (!isActive) {
-          e.currentTarget.style.color = 'rgba(var(--text-rgb),0.8)';
+          e.currentTarget.style.color = 'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))';
           e.currentTarget.style.borderColor = `${accent}44`;
         }
       },
       onMouseLeave: e => {
         if (!isActive) {
-          e.currentTarget.style.color = 'rgba(var(--text-rgb),0.5)';
-          e.currentTarget.style.borderColor = 'rgba(124,77,255,0.2)';
+          e.currentTarget.style.color = 'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))';
+          e.currentTarget.style.borderColor = 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))';
         }
       }
     }, cat.label);

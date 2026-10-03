@@ -1,16 +1,32 @@
 *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
   :root {
-    --bg:#05040f; --white:#f0eeff; --silver:#c8c0e8;
-    --card-bg:rgba(11,8,28,0.97);
+      
+    --card-bg:rgba(var(--panel-rgb),0.97);
     --font-display:'Cinzel',serif; --font-body:'Raleway',sans-serif;
     --font-mono:'Share Tech Mono',monospace; --nav-h:52px;
   }
   html,body { width:100%; min-height:100%; background:var(--bg); color:var(--white); font-family:var(--font-body); overflow-x:hidden; }
-  #root { width:100%; min-height:100vh; }
+  #root { width:100%; min-height:calc(var(--vh, 1vh) * 100); }
   body::after { content:''; position:fixed; inset:0; pointer-events:none; z-index:9999;
     background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px); }
   @keyframes slideDown { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)} }
   @keyframes fadeInUp  { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
   @keyframes pulseGlow { 0%,100%{opacity:0.5} 50%{opacity:1} }
   ::-webkit-scrollbar{width:4px} ::-webkit-scrollbar-track{background:transparent}
-  ::-webkit-scrollbar-thumb{background:rgba(124,77,255,0.3);border-radius:2px}
+  ::-webkit-scrollbar-thumb{background:rgba(var(--purple-rgb),calc(0.3*var(--kp)));border-radius:2px}
+
+/* Phones: header stacks, toolbar buttons get touch size, cards are smaller portrait tiles */
+@media (max-width: 768px) {
+  .mc-page[style] { padding: 0 16px 40px !important; }
+  .mc-head[style] { flex-direction: column !important; align-items: stretch !important; gap: 14px; padding: 16px 0 16px !important; }
+  .mc-head-left[style] { flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; }
+  .mc-head-left h1 { font-size: 20px !important; letter-spacing: 0.14em !important; }
+  .mc-tools[style] { flex-wrap: wrap; }
+  .mc-tools button, .mc-head-left a { font-size: 11px !important; padding: 10px 16px !important; min-height: 40px; }
+  .mc-filter[style] { gap: 10px !important; }
+  .mc-filter input { width: 100% !important; font-size: 16px !important; padding: 10px 12px !important; }
+  .mc-filter select, .mc-filter button { font-size: 11px !important; letter-spacing: 0.06em !important; padding: 10px 12px !important; min-height: 40px; flex-shrink: 0; width: auto; max-width: none; }
+  .mc-filter select { padding-right: 30px !important; text-overflow: ellipsis; }
+  .mc-filter > span { flex: 1 0 100%; text-align: right; font-size: 10px !important; }
+  .mc-grid[style] { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important; gap: 12px !important; }
+}
