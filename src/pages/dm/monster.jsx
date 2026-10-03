@@ -164,9 +164,17 @@ function FilterSidebar({
       [key]: arr.includes(val) ? arr.filter(x => x !== val) : [...arr, val]
     };
   });
+  // Unterart: neutral -> include -> exclude -> neutral
+  const cycleUnterart = u => setFilters(f => {
+    const inc = f.unterart || [], exc = f.unterartNot || [];
+    if (inc.includes(u)) return { ...f, unterart: inc.filter(x => x !== u), unterartNot: [...exc, u] };
+    if (exc.includes(u)) return { ...f, unterartNot: exc.filter(x => x !== u) };
+    return { ...f, unterart: [...inc, u] };
+  });
   const reset = () => setFilters({
     art: [],
     unterart: [],
+    unterartNot: [],
     cr: [],
     groesse: [],
     moral: [],
@@ -176,7 +184,7 @@ function FilterSidebar({
     hortaktionen: null,
     sort: 'cr-asc'
   });
-  const hasAny = filters.art.length || filters.unterart.length || filters.cr.length || filters.groesse.length || filters.moral.length || filters.umgebung.length || filters.source.length || filters.legendaer !== null || filters.hortaktionen !== null || filters.sort !== 'cr-asc';
+  const hasAny = filters.art.length || filters.unterart.length || (filters.unterartNot || []).length || filters.cr.length || filters.groesse.length || filters.moral.length || filters.umgebung.length || filters.source.length || filters.legendaer !== null || filters.hortaktionen !== null || filters.sort !== 'cr-asc';
   return /*#__PURE__*/React.createElement("div", {
     ref: dragRef.ref,
     "data-mobile-drawer": "",
@@ -347,10 +355,11 @@ function FilterSidebar({
     }, t));
   }))), /*#__PURE__*/React.createElement(FilterGroup, {
     title: "Unterart",
-    active: (filters.unterart || []).length > 0,
+    active: (filters.unterart || []).length > 0 || (filters.unterartNot || []).length > 0,
     onReset: () => setFilters(f => ({
       ...f,
-      unterart: []
+      unterart: [],
+      unterartNot: []
     })),
     collapsible: true
   }, /*#__PURE__*/React.createElement("div", {
@@ -359,30 +368,55 @@ function FilterSidebar({
       flexDirection: 'column',
       gap: '3px'
     }
-  }, allUnterarten.map(u => /*#__PURE__*/React.createElement("button", {
-    key: u,
-    onClick: () => toggle('unterart', u),
-    style: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '7px',
-      padding: '5px 7px',
-      background: (filters.unterart || []).includes(u) ? 'rgba(var(--accent-rgb),calc(0.08*var(--ka)))' : 'transparent',
-      border: `1px solid ${(filters.unterart || []).includes(u) ? 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))' : 'transparent'}`,
-      borderRadius: '2px',
-      cursor: 'pointer',
-      transition: 'all 0.15s',
-      textAlign: 'left'
-    }
-  }, /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontFamily: 'var(--font-body)',
-      fontSize: '11px',
-      fontWeight: '300',
-      color: (filters.unterart || []).includes(u) ? 'var(--white)' : 'var(--silver)',
-      letterSpacing: '0.03em'
-    }
-  }, u))))), /*#__PURE__*/React.createElement(FilterGroup, {
+  }, allUnterarten.map(u => {
+    const isOn = (filters.unterart || []).includes(u);
+    const isOff = (filters.unterartNot || []).includes(u);
+    const boxBg = isOn ? 'rgba(60,180,90,0.15)' : isOff ? 'rgba(200,60,60,0.12)' : 'transparent';
+    const boxBorder = isOn ? 'rgba(60,200,90,0.5)' : isOff ? 'rgba(220,80,80,0.5)' : 'rgba(var(--accent-rgb),calc(0.2*var(--ka)))';
+    return /*#__PURE__*/React.createElement("button", {
+      key: u,
+      onClick: () => cycleUnterart(u),
+      title: isOn ? 'Nur diese (Klick: ausschließen)' : isOff ? 'Ausgeschlossen (Klick: zurücksetzen)' : 'Klick: nur diese anzeigen',
+      style: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+        padding: '5px 7px',
+        background: isOn ? 'rgba(60,180,90,0.07)' : isOff ? 'rgba(200,60,60,0.07)' : 'transparent',
+        border: `1px solid ${isOn || isOff ? boxBorder : 'transparent'}`,
+        borderRadius: '2px',
+        cursor: 'pointer',
+        transition: 'all 0.18s',
+        textAlign: 'left',
+        width: '100%'
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        width: '14px',
+        height: '14px',
+        border: `1px solid ${boxBorder}`,
+        borderRadius: '2px',
+        background: boxBg,
+        flexShrink: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        transition: 'all 0.18s',
+        fontSize: '9px',
+        color: isOn ? 'rgba(80,220,110,0.9)' : isOff ? 'rgba(230,90,90,0.9)' : 'transparent',
+        fontFamily: 'var(--font-mono)'
+      }
+    }, isOn ? '✓' : isOff ? '✕' : ''), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: 'var(--font-body)',
+        fontSize: '11px',
+        fontWeight: '300',
+        color: isOn || isOff ? 'var(--white)' : 'var(--silver)',
+        letterSpacing: '0.03em',
+        textDecoration: isOff ? 'line-through' : 'none'
+      }
+    }, u));
+  }))), /*#__PURE__*/React.createElement(FilterGroup, {
     title: "Gr\xF6\xDFe",
     active: filters.groesse.length > 0,
     onReset: () => setFilters(f => ({
@@ -2536,6 +2570,7 @@ function App() {
   const [filters, setFilters] = useState({
     art: [],
     unterart: [],
+    unterartNot: [],
     cr: [],
     groesse: [],
     moral: [],
@@ -2587,7 +2622,9 @@ function App() {
     const r = allMonster.filter(m => {
       if (search && !m.name.toLowerCase().includes(search.toLowerCase())) return false;
       if (filters.art.length && !filters.art.includes(m.art)) return false;
-      if ((filters.unterart || []).length && !filters.unterart.some(u => (m.unterart ? m.unterart.split(', ') : []).includes(u))) return false;
+      const mUnter = m.unterart ? m.unterart.split(', ') : [];
+      if ((filters.unterart || []).length && !filters.unterart.some(u => mUnter.includes(u))) return false;
+      if ((filters.unterartNot || []).length && filters.unterartNot.some(u => mUnter.includes(u))) return false;
       if (filters.cr.length && !filters.cr.includes(m.cr)) return false;
       if (filters.groesse.length && !filters.groesse.includes(m.groesse)) return false;
       if (filters.moral.length && !filters.moral.includes(moralAxis(m.gesinnung))) return false;

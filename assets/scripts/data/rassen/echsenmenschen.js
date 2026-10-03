@@ -50,7 +50,7 @@
       { label:'Schuppenfarbe', type:'table',  optionen:['Smaragdgrün','Sandbraun','Dunkelblau','Rostrot','Schwarz','Graubraun','Türkis','Olivgrün','Scharlachrot','Violettgrau','Dunkelgrün','Gelbbraun'] },
       { label:'Schuppenmuster',type:'table',  optionen:['Streifen','Flecken','Einfarbig','Rautenmuster','Zackenmuster','Querstreifen','Irisierend','Farbverlauf'] },
       { label:'Augenfarbe',    type:'table',  optionen:['Rot','Orange','Grau','Blau','Goldgelb','Gelbgrün','Bernstein'] },
-      { label:'Talent',        type:'table',  optionen:['Reptilische Regeneration','Berührung von Sess\'inek','Komodo'] },
+      { label:'Talent',        type:'table',  optionen:['Reptilianische Regeneration','Berührung von Sess\'inek','Komodo'] },
     ],
   },
   beziehungen: [
@@ -126,7 +126,7 @@
       { name:'Intuition der Natur',text:'Du bist in zwei Fertigkeiten deiner Wahl geübt: Heilkunde, Heimlichkeit, Mit Tieren umgehen, Naturkunde, Überlebenskunst oder Wahrnehmung.' },
       { name:'Kaltblütig',         text:'Du bist immun gegen die Auswirkungen von heißen Temperaturen.' },
       { name:'Natürliche Rüstung', text:'Wenn du keine Rüstung trägst, beträgt deine Basis-RK 13 + dein Geschicklichkeitsmodifikator. Nutze diese Rüstung, wenn sie zu einer höheren RK führt als deine getragene Rüstung. Schilde gelten normal.' },
-      { name:'Angeborenes Talent', text:null, talente:['Reptilische Regeneration','Berührung von Sess\'inek','Komodo'] },
+      { name:'Angeborenes Talent', text:null, talente:['Reptilianische Regeneration','Berührung von Sess\'inek','Komodo'] },
     ],
   },
 };
