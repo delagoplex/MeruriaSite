@@ -1,5 +1,6 @@
 // Page entry for /charaktererstellung/neuer-charakter.html
 import '../../components/image-upload.jsx';
+import '../../components/char-age.jsx';
 
 ;(function () {
 (function () {
@@ -724,7 +725,7 @@ function OutputPhase({
   const [showDetails, setShowDetails] = useState(false);
   const [details, setDetails] = useState({
     alter: '', geburtsort: '', groesse: '', gewicht: '',
-    augen: '', haare: '', haut: '', geburtstag_doy: null,
+    augen: '', haare: '', haut: '', geburtstag_doy: null, geburtstag_jahr: null,
     geschichte: '', persoenlichkeit: '', ideal: '', bindung: '', lieblingsfarbe: '',
   });
   const setDet = (k, v) => setDetails(p => ({...p, [k]: v}));
@@ -976,7 +977,9 @@ function OutputPhase({
       zodiac:         tags.sternzeichen || null,
       gender:         tags.geschlecht   || null,
       geburtstag_doy: details.geburtstag_doy || null,
-      age:            details.alter      || null,
+      age:            (() => { const a = window.CharAge.fromBirth(details.geburtstag_jahr, details.geburtstag_doy); return a != null ? String(a) : (details.alter || null); })(),
+      age_ref_abs:    window.CharAge.today(),
+      geburtstag_jahr: details.geburtstag_jahr ?? null,
       birthplace:     details.geburtsort || null,
       height:         details.groesse    || null,
       weight:         details.gewicht    || null,
@@ -1543,7 +1546,7 @@ function OutputPhase({
           /*#__PURE__*/React.createElement("div", {key:k, style:{display:'flex',flexDirection:'column',gap:4}},
             /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.14em',
               color:'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))',textTransform:'uppercase'}}, lbl),
-            /*#__PURE__*/React.createElement("input", {value:details[k], onChange:e=>setDet(k,e.target.value),
+            /*#__PURE__*/React.createElement("input", {value:(k==='alter'&&window.CharAge.fromBirth(details.geburtstag_jahr,details.geburtstag_doy)!=null)?String(window.CharAge.fromBirth(details.geburtstag_jahr,details.geburtstag_doy)):details[k], disabled:(k==='alter'&&window.CharAge.fromBirth(details.geburtstag_jahr,details.geburtstag_doy)!=null), onChange:e=>setDet(k,e.target.value),
               style:{fontFamily:'var(--font-b)',fontSize:'12px',background:'rgba(var(--bg-rgb),.5)',
                 border:'1px solid rgba(var(--accent-rgb),calc(.2*var(--ka)))',borderRadius:3,color:'var(--white)',
                 outline:'none',padding:'6px 9px'},
@@ -1555,8 +1558,10 @@ function OutputPhase({
       /*#__PURE__*/React.createElement("div", {style:{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(160px,1fr))',gap:10,marginBottom:18}},
         /*#__PURE__*/React.createElement("div", {style:{display:'flex',flexDirection:'column',gap:4}},
           /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.14em',
-            color:'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))',textTransform:'uppercase'}}, "Geburtstag"),
-          /*#__PURE__*/React.createElement(BirthdayPicker, {doy:details.geburtstag_doy, onChange:v=>setDet('geburtstag_doy',v)})
+            color:'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))',textTransform:'uppercase'}}, "Geburtsdatum"),
+          /*#__PURE__*/React.createElement(window.CharAge.BirthDatePicker, {doy:details.geburtstag_doy, jahr:details.geburtstag_jahr,
+            onChange:({doy,jahr})=>setDetails(p=>({...p, geburtstag_doy:doy, geburtstag_jahr:jahr})),
+            buttonStyle:{fontFamily:'var(--font-m)', fontSize:'11px', background:'rgba(var(--bg-rgb),.5)', border:'1px solid rgba(var(--accent-rgb),calc(.2*var(--ka)))', borderRadius:3, color:'var(--white)', outline:'none', padding:'6px 10px'}})
         ),
         /*#__PURE__*/React.createElement("div", {style:{display:'flex',flexDirection:'column',gap:4}},
           /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.14em',
@@ -2103,7 +2108,7 @@ function NscOutputPhase({ nscTags, nscPossible }) {
 
   // ── Zusatz-Felder ─────────────────────────────────────────────
   const [extra, setExtra] = useState({
-    titel: '', alter: '', geburtstag_doy: null, wohnort: '',
+    titel: '', alter: '', geburtstag_doy: null, geburtstag_jahr: null, wohnort: '',
     rang: '', organisation: '', kapsel: '', habe: 0,
     unvergesslich: '', eigenschaften: '', talente: '', makel: '',
     motivationen: [], geheimnisse: [],
@@ -2211,7 +2216,9 @@ function NscOutputPhase({ nscTags, nscPossible }) {
         titel:       extra.titel.trim()         || null,
         rasse:       g('rasse'),
         geschlecht:  g('geschlecht'),
-        alter_jahre: extra.alter ? parseInt(extra.alter)||null : null,
+        alter_jahre: (() => { const b = window.CharAge.fromBirth(extra.geburtstag_jahr, extra.geburtstag_doy); return b != null ? b : (extra.alter ? parseInt(extra.alter)||null : null); })(),
+        alter_ref_abs: window.CharAge.today(),
+        geburtstag_jahr: extra.geburtstag_jahr ?? null,
         geburtstag_doy: extra.geburtstag_doy    || null,
         lebensphase: g('lebensphase')            || extra.lebensphase || null,
         beruf:       nscTags.beruf.trim()        || null,
@@ -2386,8 +2393,8 @@ function NscOutputPhase({ nscTags, nscPossible }) {
     // ── Identität (Zusatz) ────────────────────────────────────────────────
     NscSektion("Identit\xE4t \xB7 Details", [
       NscField("Titel", /*#__PURE__*/React.createElement("input", {value:extra.titel, onChange:e=>setEx('titel',e.target.value), style:nscFieldSt, placeholder:"z.B. Stadtkapitän, Ältester…"})),
-      NscField("Alter (Jahre)", /*#__PURE__*/React.createElement("input", {type:"number",value:extra.alter, onChange:e=>setEx('alter',e.target.value), style:{...nscFieldSt,width:90}})),
-      NscField("Geburtstag", /*#__PURE__*/React.createElement(BirthdayPicker, {doy:extra.geburtstag_doy, onChange:v=>setEx('geburtstag_doy',v)})),
+      NscField("Alter (Jahre)", /*#__PURE__*/React.createElement("input", {type:"number",value:(window.CharAge.fromBirth(extra.geburtstag_jahr,extra.geburtstag_doy) ?? extra.alter), disabled:window.CharAge.fromBirth(extra.geburtstag_jahr,extra.geburtstag_doy)!=null, onChange:e=>setEx('alter',e.target.value), style:{...nscFieldSt,width:90}})),
+      NscField("Geburtsdatum", /*#__PURE__*/React.createElement(window.CharAge.BirthDatePicker, {doy:extra.geburtstag_doy, jahr:extra.geburtstag_jahr, onChange:({doy,jahr})=>setExtra(p=>({...p, geburtstag_doy:doy, geburtstag_jahr:jahr})), buttonStyle:{...nscFieldSt, cursor:'pointer', textAlign:'left'}})),
       NscField("Wohnort", /*#__PURE__*/React.createElement("input", {value:extra.wohnort, onChange:e=>setEx('wohnort',e.target.value), style:nscFieldSt, placeholder:"Stadt, Viertel, Adresse…"})),
       NscField("Rang", /*#__PURE__*/React.createElement("input", {value:extra.rang, onChange:e=>setEx('rang',e.target.value), style:nscFieldSt, placeholder:"z.B. Leutnant, Meister…"})),
       NscField("Organisation", /*#__PURE__*/React.createElement("input", {value:extra.organisation, onChange:e=>setEx('organisation',e.target.value), style:nscFieldSt, placeholder:"Gilde, Kult, Gruppe…"})),

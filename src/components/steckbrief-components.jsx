@@ -3,6 +3,7 @@
    Requires globals (set by the page entry): React, mod, fmtMod, attrKey, skillBonus,
                             ImageSlot, SecTitle, Card, Corners, IRow
    ═══════════════════════════════════════════════════════════════ */
+import './char-age.jsx';
 const { useState: useSteckbrief, useRef: useSteckRef, useEffect: useSteckEffect } = React;
 // mod, fmtMod, attrKey, skillBonus, ImageSlot, SecTitle, Card, Corners and IRow are defined by the
 // page entry (see its first section) and looked up as globals while rendering. Do NOT destructure
@@ -77,6 +78,8 @@ function buildChar(d) {
     geburtstag_doy: d.geburtstag_doy || null,
     gender:         d.gender         || '—',
     age:            d.age            || '—',
+    age_ref_abs:    d.age_ref_abs    ?? null,
+    geburtstag_jahr: d.geburtstag_jahr ?? null,
     birthplace:     d.birthplace     || '—',
     height:         d.height         || '—',
     weight:         d.weight         || '—',
@@ -1492,108 +1495,25 @@ function doyToCalText(doy) {
   return '—';
 }
 
-/* ── BirthdayPickerRow ───────────────────── */
+/* ── BirthdayPickerRow: birth date (day, month, year) on the Meruria calendar ───────────────────── */
 function BirthdayPickerRow({ char, upd }) {
-  const doy = char.geburtstag_doy || null;
-
-  const initMonth = () => {
-    if (!doy) return 0;
-    for (let i = MONTHS_MERURIA.length-1; i >= 0; i--)
-      if (doy >= MONTH_START_MERURIA[i]) return i;
-    return 0;
-  };
-  const [open, setOpen] = useSteckbrief(false);
-  const [picMonth, setPicMonth] = useSteckbrief(initMonth);
-  const ref = useSteckRef(null);
-
-  React.useEffect(() => {
-    if (!open) return;
-    const handler = e => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
-  }, [open]);
-
-  function openPicker() {
-    setPicMonth(initMonth());
-    setOpen(true);
-  }
-
-  function pickDay(monthIdx, day) {
-    const newDoy = MONTH_START_MERURIA[monthIdx] + day - 1;
-    upd({
-      birthday: `${day}. ${MONTHS_MERURIA[monthIdx].name}`,
-      geburtstag_doy: newDoy,
-      zodiac: MONTHS_MERURIA[monthIdx].sign,
-    });
-    setOpen(false);
-  }
-
-  function clearDate() {
-    upd({ birthday: '—', geburtstag_doy: null, zodiac: '—' });
-    setOpen(false);
-  }
-
-  const displayText = doy ? doyToCalText(doy) : (char.birthday && char.birthday !== '—' ? char.birthday : null);
-  const M = MONTHS_MERURIA[picMonth];
-  const selectedDay = doy && MONTH_START_MERURIA[picMonth] <= doy && doy < MONTH_START_MERURIA[picMonth] + M.days
-    ? doy - MONTH_START_MERURIA[picMonth] + 1 : null;
-
-  const rowStyle = {display:"flex",alignItems:"center",gap:6,padding:"3px 0",
-    borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.06*var(--kp)))",position:"relative"};
   const labelStyle = {fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",
     color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase",flex:"0 0 80px"};
   const btnStyle = {fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:300,
-    color: displayText ? "var(--white)" : "rgba(var(--text-rgb),calc(0.3*var(--kt)))",
     background:"transparent",border:"none",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))",
-    padding:"1px 4px",flex:1,outline:"none",minWidth:0,cursor:"pointer",textAlign:"left"};
-  const dropStyle = {
-    position:"absolute",top:"calc(100% + 4px)",left:0,zIndex:1200,
-    background:"rgba(var(--panel-rgb),0.99)",border:"1px solid rgba(var(--purple-rgb),calc(0.35*var(--kp)))",
-    borderRadius:4,boxShadow:"0 20px 52px rgba(var(--shadow-rgb),calc(0.75 * var(--shadow-k)))",
-    width:"min(340px,92vw)",overflow:"hidden",
-  };
-  const tabActive  = {fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".1em",padding:"3px 7px",
-    background:"rgba(var(--purple-rgb),calc(0.25*var(--kp)))",border:"1px solid rgba(var(--purple-rgb),calc(0.5*var(--kp)))",borderRadius:2,
-    color:"var(--white)",cursor:"pointer",fontWeight:600};
-  const tabInactive = {...tabActive, background:"transparent",
-    border:"1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))",color:"rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))",fontWeight:300};
-  const dayActive   = {fontFamily:"var(--font-display)",fontSize:12,padding:"6px 2px",
-    background:"rgba(var(--purple-rgb),calc(0.4*var(--kp)))",border:"1px solid rgba(var(--purple-rgb),calc(0.7*var(--kp)))",
-    borderRadius:2,color:"var(--white)",cursor:"pointer",textAlign:"center"};
-  const dayInactive = {...dayActive, background:"rgba(var(--purple-rgb),calc(0.05*var(--kp)))",
-    border:"1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))",color:"rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))"};
-
+    padding:"1px 4px",outline:"none"};
+  function change({ doy, jahr }) {
+    const p = window.CharAge.doyParts(doy);
+    upd(p
+      ? { birthday: `${p.day}. ${p.month}`, geburtstag_doy: doy, zodiac: p.sign, geburtstag_jahr: jahr }
+      : { birthday: '—', geburtstag_doy: null, zodiac: '—', geburtstag_jahr: null });
+  }
   return (
-    <div style={rowStyle} ref={ref}>
+    <div style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",
+      borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.06*var(--kp)))",position:"relative"}}>
       <span style={labelStyle}>Geburtstag</span>
-      <button style={btnStyle} onClick={() => open ? setOpen(false) : openPicker()}>
-        {displayText || 'Kein Datum'} <span style={{fontSize:9,opacity:0.45}}>▾</span>
-      </button>
-      {open && (
-        <div style={dropStyle}>
-          <div style={{display:"flex",flexWrap:"wrap",gap:2,padding:"8px 8px 6px",
-            borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))"}}>
-            {MONTHS_MERURIA.map((m,i) => (
-              <button key={i} style={picMonth===i ? tabActive : tabInactive}
-                onClick={() => setPicMonth(i)}>{m.name}</button>
-            ))}
-          </div>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:2,padding:"8px"}}>
-            {Array.from({length:M.days},(_,i)=>i+1).map(d => (
-              <button key={d} style={selectedDay===d ? dayActive : dayInactive}
-                onClick={() => pickDay(picMonth, d)}>{d}</button>
-            ))}
-          </div>
-          <div style={{padding:"5px 8px 8px",borderTop:"1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))"}}>
-            <button onClick={clearDate}
-              style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".18em",
-                textTransform:"uppercase",color:"rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))",
-                background:"transparent",border:"none",cursor:"pointer",padding:"3px 0"}}>
-              Datum entfernen
-            </button>
-          </div>
-        </div>
-      )}
+      <window.CharAge.BirthDatePicker doy={char.geburtstag_doy || null} jahr={char.geburtstag_jahr ?? null}
+        onChange={change} buttonStyle={btnStyle} />
     </div>
   );
 }
@@ -1855,6 +1775,22 @@ function ERow({ label, field, char, upd, bright }) {
   );
 }
 
+/* ── AgeERow: calendar-derived age; typing sets the age valid for today (locked when a birth year is set) ───── */
+function AgeERow({ char, upd }) {
+  const born = window.CharAge.fromBirth(char.geburtstag_jahr, char.geburtstag_doy);
+  const shown = window.CharAge.age(char.age, char.age_ref_abs, char.geburtstag_doy, char.geburtstag_jahr);
+  return (
+    <div style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.06*var(--kp)))"}}>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase",flex:"0 0 80px"}}>Alter</span>
+      <input value={shown??''} disabled={born != null} title={born != null ? 'Wird aus dem Geburtsdatum berechnet' : undefined}
+        onChange={e=>upd({age:e.target.value, age_ref_abs:window.CharAge.today()})}
+        style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:300,color:"var(--white)",opacity:born != null ? 0.6 : 1,
+          background:"transparent",border:"none",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))",
+          padding:"1px 4px",flex:1,outline:"none",minWidth:0}} />
+    </div>
+  );
+}
+
 /* ── UnitERow (ERow with unit suffix) ───── */
 function UnitERow({ label, field, unit, char, upd }) {
   return (
@@ -1922,6 +1858,7 @@ function EditablePersonality({ char, upd, taStyle }) {
    ─────────────────────────────────────────────────────────── */
 
 function SteckbriefView({ char: charProp = null, entry = null, onBack = null, hasMultiple = false, hideNav = false, extraTopPadding = 0 }) {
+  window.CharAge.useReady();
   const canEdit = !!entry;
   const [char, setChar]     = useSteckbrief(() => entry ? charFromEntry(entry) : (charProp || {}));
   const [editing, setEditing] = useSteckbrief(false);
@@ -2055,16 +1992,16 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
             {E ? <>
               <BirthdayPickerRow char={char} upd={upd} />
               <IRow label="Sternzeichen" value={char.zodiac || '—'} bright />
-              <ERow label="Alter"        field="age"      char={char} upd={upd} />
+              <AgeERow char={char} upd={upd} />
               <UnitERow label="Größe"   field="height" unit="cm"    char={char} upd={upd} />
               <UnitERow label="Gewicht" field="weight" unit="Pfund" char={char} upd={upd} />
               <ERow label="Augen"        field="eyes"     char={char} upd={upd} />
               <ERow label="Haare"        field="hair"     char={char} upd={upd} />
               <ERow label="Haut"         field="skin"     char={char} upd={upd} />
             </> : <>
-              <IRow label="Geburtstag"   value={char.birthday} />
+              <IRow label="Geburtstag"   value={char.geburtstag_jahr != null && char.birthday && char.birthday !== '—' ? `${char.birthday}, ${window.CharAge.yearLabel(char.geburtstag_jahr)}` : char.birthday} />
               <IRow label="Sternzeichen" value={char.zodiac}   bright />
-              <IRow label="Alter"        value={`${char.age} Jahre`} />
+              <IRow label="Alter"        value={`${window.CharAge.age(char.age, char.age_ref_abs, char.geburtstag_doy, char.geburtstag_jahr)} Jahre`} />
               <IRow label="Größe"   value={char.height && char.height !== '—' ? `${char.height} cm` : char.height} />
               <IRow label="Gewicht" value={char.weight && char.weight !== '—' ? `${char.weight} Pfund` : char.weight} />
               <IRow label="Augen"        value={char.eyes} />

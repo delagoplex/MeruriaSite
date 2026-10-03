@@ -2,6 +2,7 @@
 import '../../components/nav.jsx';
 import '../../components/site-gate.jsx';
 import '../parts/nsc-shared.jsx';
+import '../../components/char-age.jsx';
 
 ;(function () {
 /* NSC-Verwaltung v2 — DM-Tool: Anlegen, Bearbeiten, Sichtbarkeit & Freischaltungen.
@@ -54,7 +55,9 @@ function nscToRow(n) {
     rasse: n.rasse || null,
     unterrasse: n.unterrasse || null,
     geschlecht: n.geschlecht || null,
-    alter_jahre: n.alter != null && n.alter !== '' ? (parseInt(n.alter) || null) : null,
+    alter_jahre: (() => { const b = window.CharAge.fromBirth(n.geburtstag_jahr, n.geburtstag_doy); return b != null ? b : (n.alter != null && n.alter !== '' ? (parseInt(n.alter) || null) : null); })(),
+    alter_ref_abs: n.alter != null && n.alter !== '' ? window.CharAge.today() : null,
+    geburtstag_jahr: n.geburtstag_jahr ?? null,
     klasse: n.klasse || null,
     gesinnung: n.gesinnung || null,
     groesse: n.groesse || null,
@@ -103,6 +106,7 @@ function useDMData() {
       sb.from('nscs').select('*').order('name'),
       sb.from('characters').select('id,name,owner_id').eq('type','spieler').order('name'),
       sb.from('profiles').select('id,display_name'),
+      window.CharAge.load(),
     ]);
     setNscs((nscRows || []).map(mapNscRow));
     const profileMap = new Map((profileRows || []).map(p => [p.id, p.display_name || 'Unbekannt']));
@@ -492,14 +496,22 @@ function App() {
 
   const sel = nscs.find(n => n.id === selId) || null;
   const updNsc = (id, patch) => { setNscs(prev => prev.map(n => n.id === id ? { ...n, ...patch } : n)); scheduleSave(id); };
-  const updSel = (k, v) => sel && updNsc(sel.id, { [k]:v });
+  const updSel = (k, v) => {
+    if (!sel) return;
+    const patch = { [k]:v };
+    if (k === 'geburtstag_jahr' || k === 'geburtstag_doy') {
+      const born = window.CharAge.fromBirth(k === 'geburtstag_jahr' ? v : sel.geburtstag_jahr, k === 'geburtstag_doy' ? v : sel.geburtstag_doy);
+      if (born != null) patch.alter = born;
+    }
+    updNsc(sel.id, patch);
+  };
   const toggleFieldVis = key => sel && updNsc(sel.id, { fieldVis:{ ...sel.fieldVis, [key]:(sel.fieldVis || {})[key] !== true } });
   const vis = key => !!sel && (sel.fieldVis || {})[key] === true;
 
   async function createNsc(q) {
     const row = {
       name:q.name.trim(), rasse:q.rasse || null, unterrasse:q.unterrasse || null,
-      geschlecht:q.geschlecht || null, alter_jahre:q.alter ? (parseInt(q.alter) || null) : null,
+      geschlecht:q.geschlecht || null, alter_jahre:q.alter ? (parseInt(q.alter) || null) : null, alter_ref_abs:q.alter ? window.CharAge.today() : null,
       division:q.division || 'Keine', rang:q.division !== 'Keine' ? String(q.rang) : null,
       status:['Lebendig'], visible:false, sections:[],
       makel:[], begleiter:[], geheimnisse:[], gewohnheiten:[],
@@ -749,10 +761,10 @@ function Editor(props) {
       </select>
     </div>
   );
-  const kernInput = (key, label, value, onChange, type, placeholder) => (
+  const kernInput = (key, label, value, onChange, type, placeholder, disabled) => (
     <div key={key}>
       <FieldHead label={label} eye={<Eye on={vis(key)} onClick={() => toggleFieldVis(key)}/>}/>
-      <input type={type || 'text'} value={value ?? ''} placeholder={placeholder} onChange={onChange} style={inpSt}/>
+      <input type={type || 'text'} value={value ?? ''} placeholder={placeholder} onChange={onChange} disabled={disabled} title={disabled ? 'Wird aus dem Geburtsdatum berechnet' : undefined} style={disabled ? { ...inpSt, opacity:0.6 } : inpSt}/>
     </div>
   );
 
@@ -917,7 +929,7 @@ function Editor(props) {
               {kernSelect('gesinnung', 'Gesinnung', sel.gesinnung, T().gesinnungen || [], e => updSel('gesinnung', e.target.value))}
               {kernInput('geschlecht', 'Geschlecht', sel.geschlecht, e => updSel('geschlecht', e.target.value))}
               {kernSelect('groesse', 'Größe', sel.groesse, T().groessen || [], e => updSel('groesse', e.target.value))}
-              {kernInput('alter', 'Alter', sel.alter, e => updSel('alter', e.target.value), 'number')}
+              {kernInput('alter', 'Alter', sel.alter, e => updSel('alter', e.target.value), 'number', undefined, window.CharAge.fromBirth(sel.geburtstag_jahr, sel.geburtstag_doy) != null)}
               {kernInput('beruf', 'Beruf', sel.beruf, e => updSel('beruf', e.target.value))}
               {kernSelect('hintergrund', 'Hintergrund', sel.hintergrund, T().hintergruende || [], e => updSel('hintergrund', e.target.value))}
               {kernInput('wohnort', 'Wohnort', sel.wohnort, e => updSel('wohnort', e.target.value))}
@@ -934,28 +946,14 @@ function Editor(props) {
               {kernInput('kapsel', 'Kapsel', sel.kapsel, e => updSel('kapsel', e.target.value), 'text', 'z.B. WW-S1-K0883')}
               <div>
                 <FieldHead label="Geburtstag" eye={<Eye on={vis('geburtstag')} onClick={() => toggleFieldVis('geburtstag')}/>}/>
-                <div style={{ display:'flex', gap:5 }}>
-                  <select value={gebParts.mon} style={{ ...selSt, flex:1.5 }}
-                    onChange={e => {
-                      const v = e.target.value;
-                      if (v === '') { updSel('geburtstag_doy', null); return; }
-                      const mi = parseInt(v);
-                      const tag = Math.min(gebParts.tag === '' ? 1 : parseInt(gebParts.tag), MERURIA_MONTHS[mi].days);
-                      updSel('geburtstag_doy', MERURIA_MSTARTS[mi] + tag - 1);
-                    }}>
-                    <option value="">— Monat —</option>
-                    {MERURIA_MONTHS.map((m, i) => <option key={i} value={String(i)}>{m.name}</option>)}
-                  </select>
-                  <select value={gebParts.tag} style={{ ...selSt, flex:1 }}
-                    onChange={e => {
-                      const mi = gebParts.mon === '' ? 0 : parseInt(gebParts.mon);
-                      updSel('geburtstag_doy', MERURIA_MSTARTS[mi] + (parseInt(e.target.value) || 1) - 1);
-                    }}>
-                    <option value="">Tag</option>
-                    {Array.from({ length:MERURIA_MONTHS[gebParts.mon === '' ? 0 : parseInt(gebParts.mon)].days }, (_, i) => i + 1)
-                      .map(d => <option key={d} value={String(d)}>{d}</option>)}
-                  </select>
-                </div>
+                <window.CharAge.BirthDatePicker doy={sel.geburtstag_doy} jahr={sel.geburtstag_jahr}
+                  buttonStyle={{ ...inpSt, cursor:'pointer', textAlign:'left' }}
+                  onChange={({ doy, jahr }) => {
+                    const patch = { geburtstag_doy:doy, geburtstag_jahr:jahr };
+                    const born = window.CharAge.fromBirth(jahr, doy);
+                    if (born != null) patch.alter = born;
+                    updNsc(sel.id, patch);
+                  }}/>
                 {gebZ && (
                   <React.Fragment>
                     <div style={{ marginTop:6, fontFamily:MONO, fontSize:8.5, letterSpacing:'0.14em', color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>✦ Sternzeichen: {gebZ.sign}</div>

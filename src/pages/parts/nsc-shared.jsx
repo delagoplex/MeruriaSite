@@ -1,3 +1,4 @@
+import '../../components/char-age.jsx';
 // top-level functions were global in the old classic-script setup
 Object.assign(window, { meruriaDoyParts, meruriaDoyText, meruriaZodiacOf, nscFieldVisible, factsOf, factLabel, defaultUnlockedFor, nscEffectiveStatus, unlockableFactsOf, stageFromUnlocked, mapNscRow, useNSCData, useUnlocks, hexPoints, hexPointsInset, hexClipInset, hexA, effStage, accentOf, romanFor, NavItem, FloatingHexField, ParticleField, useScrollReveal, NSCPortrait, StageBadge, StageProgress, StatusPills, LockedSlot, Field, UnlockToggle });
 
@@ -212,7 +213,8 @@ function mapNscRow(row) {
     rasse:        row.rasse || null,
     unterrasse:   row.unterrasse || null,
     geschlecht:   row.geschlecht || null,
-    alter:        row.alter_jahre ?? null,
+    alter:        window.CharAge.age(row.alter_jahre ?? null, row.alter_ref_abs, row.geburtstag_doy, row.geburtstag_jahr),
+    geburtstag_jahr: row.geburtstag_jahr ?? null,
     lebensphase:  row.lebensphase || null,
     klasse:       row.klasse || null,
     gesinnung:    row.gesinnung || null,
@@ -267,6 +269,7 @@ function useNSCData() {
         sb.from('nscs').select('*').order('name'),
         sb.from('characters').select('id,name,owner_id').eq('type','spieler').order('name'),
         sb.from('profiles').select('id,display_name'),
+        window.CharAge.load(),
       ]);
       setNscs((nscRows || []).map(mapNscRow));
 

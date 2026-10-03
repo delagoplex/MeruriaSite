@@ -1,6 +1,7 @@
 // Page entry for /charaktere/spielercharaktere.html
 import '../../components/nav.jsx';
 import '../../components/site-gate.jsx';
+import '../../components/char-age.jsx';
 
 ;(function () {
 // top-level functions were global in the old classic-script setup
@@ -106,7 +107,7 @@ function rowToCard(row, profileMap) {
     division: d.division || '—',
     gesinnung: d.alignment || '—',
     status: d.status || 'Aktiv',
-    alter: d.age || '—',
+    alter: window.CharAge.age(d.age, d.age_ref_abs, d.geburtstag_doy, d.geburtstag_jahr) || '—',
     geschlecht: d.gender || '—',
     stats: d.stats || { str:10, dex:10, con:10, int:10, wis:10, cha:10 },
     skills: buildSkills(d),
@@ -512,7 +513,10 @@ function App() {
 
   async function load() {
     setLoading(true);
-    const { data: rows } = await window._sb.from('characters').select('*').eq('type', 'spieler').order('created_at');
+    const [{ data: rows }] = await Promise.all([
+      window._sb.from('characters').select('*').eq('type', 'spieler').order('created_at'),
+      window.CharAge.load(),
+    ]);
 
     const ownerIds = [...new Set((rows || []).map(r => r.owner_id))];
     let profileMap = {};
