@@ -120,7 +120,7 @@ function ParticleField({ mouse }) {
         if(p.x<0)p.x=1; if(p.x>1)p.x=0; if(p.y<0)p.y=1; if(p.y>1)p.y=0;
         bgCtx.beginPath();
         bgCtx.arc(p.x*w+bsx, p.y*h+bsy, p.r, 0, Math.PI*2);
-        bgCtx.fillStyle = `rgba(160,140,255,${p.a})`;
+        bgCtx.fillStyle = `rgba(${themeRgb('--accent-rgb')},${p.a})`;
         bgCtx.fill();
       });
       fgCtx.clearRect(0,0,w,h);
@@ -185,7 +185,7 @@ function PortalCard({ p, index }) {
       <div style={{
         position:'relative', overflow:'hidden',
         padding:'28px 22px 24px',
-        background: `repeating-linear-gradient(-45deg, transparent, transparent 12px, ${acStripe} 12px, ${acStripe} 13px), linear-gradient(160deg, rgba(20,12,46,0.85) 0%, rgba(10,7,28,0.92) 100%)`,
+        background: `repeating-linear-gradient(-45deg, transparent, transparent 12px, ${acStripe} 12px, ${acStripe} 13px), linear-gradient(160deg, rgba(var(--panel-rgb),0.85) 0%, rgba(var(--panel-rgb),0.92) 100%)`,
         border: `1px solid ${acBorder}`,
         borderRadius:'4px',
         boxShadow: hover
@@ -197,6 +197,7 @@ function PortalCard({ p, index }) {
         minHeight: 260,
         display:'flex', flexDirection:'column', alignItems:'center',
         textAlign:'center',
+        containerType:'inline-size',
       }}>
         {/* corner brackets */}
         <span style={{position:'absolute',top:-1,left:-1,width:14,height:14,borderTop:`1px solid ${ac}`,borderLeft:`1px solid ${ac}`,opacity:0.75}}/>
@@ -251,8 +252,8 @@ function PortalCard({ p, index }) {
         {/* title */}
         <h3 style={{
           fontFamily:'var(--font-display)', fontWeight:400,
-          fontSize:'21px', letterSpacing:'0.18em',
-          color:'#f3eefe', textTransform:'uppercase',
+          fontSize:'clamp(10px, 5cqi, 21px)', letterSpacing:'0.18em',
+          color:'var(--white)', textTransform:'uppercase',
           textShadow: hover ? `0 0 24px ${acGlow}` : 'none',
           transition:'text-shadow 0.3s',
           marginBottom:8, position:'relative', zIndex:1,
@@ -263,7 +264,7 @@ function PortalCard({ p, index }) {
         <div style={{
           fontFamily:'var(--font-body)', fontWeight:300,
           fontSize:'12px', letterSpacing:'0.04em',
-          color:'rgba(200,190,240,0.62)',
+          color:'rgba(var(--text-rgb),calc(0.62*var(--kt) + var(--tb)))',
           position:'relative', zIndex:1,
           maxWidth:'85%',
           marginBottom:'auto',
@@ -280,7 +281,7 @@ function PortalCard({ p, index }) {
         }}>
           <span style={{
             fontFamily:'var(--font-mono)', fontSize:'8.5px',
-            letterSpacing:'0.28em', color: hover ? acSoft : 'rgba(160,140,255,0.4)',
+            letterSpacing:'0.28em', color: hover ? acSoft : 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))',
             textTransform:'uppercase',
             transition:'color 0.3s',
           }}>
@@ -315,7 +316,7 @@ function MoonIcon({ phaseDay=14, cycleLen=28, vollmondDay=16, color='#d9b06b', s
   const waxing = D <= vollmondDay;
   const r = 9, cx = 11, cy = 11;
   let body;
-  if (ill < 0.02) body = <circle cx={cx} cy={cy} r={r} fill="#0b0820" stroke={color} strokeWidth="1.1"/>;
+  if (ill < 0.02) body = <circle cx={cx} cy={cy} r={r} fill="rgb(var(--panel-rgb))" stroke={color} strokeWidth="1.1"/>;
   else if (ill > 0.98) body = <circle cx={cx} cy={cy} r={r} fill={color} stroke={color} strokeWidth="1.1"/>;
   else {
     const rx = r * Math.abs(1 - 2*ill);
@@ -323,7 +324,7 @@ function MoonIcon({ phaseDay=14, cycleLen=28, vollmondDay=16, color='#d9b06b', s
     const inner = (ill < 0.5) ? (waxing ? 0 : 1) : (waxing ? 1 : 0);
     const path = `M${cx},${cy-r} A${r},${r} 0 0,${outer} ${cx},${cy+r} A${rx},${r} 0 0,${inner} ${cx},${cy-r} Z`;
     body = <React.Fragment>
-      <circle cx={cx} cy={cy} r={r} fill="#0b0820" stroke={color} strokeWidth="1.1"/>
+      <circle cx={cx} cy={cy} r={r} fill="rgb(var(--panel-rgb))" stroke={color} strokeWidth="1.1"/>
       <path d={path} fill={color}/>
     </React.Fragment>;
   }
@@ -336,13 +337,13 @@ function SectionEyebrow({ left, right }) {
     <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:24 }}>
       <span style={{
         fontFamily:'var(--font-mono)', fontSize:'10px',
-        letterSpacing:'0.35em', color:'rgba(124,77,255,0.65)',
+        letterSpacing:'0.35em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))',
         textTransform:'uppercase',
       }}>◈ {left}</span>
-      <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(124,77,255,0.5), rgba(124,77,255,0.05))' }}/>
+      <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.5*var(--kp))), rgba(var(--purple-rgb),calc(0.05*var(--kp))))' }}/>
       {right && <span style={{
         fontFamily:'var(--font-mono)', fontSize:'9px',
-        letterSpacing:'0.28em', color:'rgba(160,140,255,0.4)',
+        letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
         textTransform:'uppercase',
       }}>{right}</span>}
     </div>
@@ -453,15 +454,15 @@ function HeuteStrip() {
   const btnBase = {
     width:30, height:30, padding:0,
     display:'inline-flex', alignItems:'center', justifyContent:'center',
-    background:'rgba(124,77,255,0.10)',
-    border:'1px solid rgba(124,77,255,0.35)',
+    background:'rgba(var(--purple-rgb),calc(0.10*var(--kp)))',
+    border:'1px solid rgba(var(--purple-rgb),calc(0.35*var(--kp)))',
     borderRadius:2,
-    color:'#e0d4ff', fontFamily:'var(--font-mono)', fontSize:14,
+    color:'var(--white)', fontFamily:'var(--font-mono)', fontSize:14,
     cursor:'pointer', transition:'all 0.18s',
     lineHeight:1,
   };
-  const onBtnEnter = e => { e.currentTarget.style.background='rgba(124,77,255,0.28)'; e.currentTarget.style.borderColor='#a78bff'; e.currentTarget.style.color='#fff'; e.currentTarget.style.boxShadow='0 0 14px rgba(124,77,255,0.4)'; };
-  const onBtnLeave = e => { e.currentTarget.style.background='rgba(124,77,255,0.10)'; e.currentTarget.style.borderColor='rgba(124,77,255,0.35)'; e.currentTarget.style.color='#e0d4ff'; e.currentTarget.style.boxShadow='none'; };
+  const onBtnEnter = e => { e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.28*var(--kp)))'; e.currentTarget.style.borderColor='var(--lav2)'; e.currentTarget.style.color='#fff'; e.currentTarget.style.boxShadow='0 0 14px rgba(var(--purple-rgb),calc(0.4*var(--kp)))'; };
+  const onBtnLeave = e => { e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.10*var(--kp)))'; e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.35*var(--kp)))'; e.currentTarget.style.color='var(--white)'; e.currentTarget.style.boxShadow='none'; };
 
   return (
     <div style={{
@@ -470,18 +471,18 @@ function HeuteStrip() {
       gridTemplateColumns:'auto 1fr auto auto auto',
       alignItems:'center', gap:32,
       padding:'22px 28px 22px 36px',
-      background:'linear-gradient(90deg, rgba(20,12,46,0.85) 0%, rgba(10,7,28,0.75) 50%, rgba(20,12,46,0.85) 100%)',
-      border:'1px solid rgba(124,77,255,0.22)',
+      background:'linear-gradient(90deg, rgba(var(--panel-rgb),0.85) 0%, rgba(var(--panel-rgb),0.75) 50%, rgba(var(--panel-rgb),0.85) 100%)',
+      border:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))',
       borderRadius:'4px',
-      boxShadow:'0 12px 36px rgba(0,0,0,0.4)',
+      boxShadow:'0 12px 36px rgba(var(--shadow-rgb),calc(0.4 * var(--shadow-k)))',
       transition:'border-color 0.3s',
     }}>
       {/* Date block */}
       <div style={{ display:'flex', alignItems:'baseline', gap:14, flexShrink:0 }}>
         <span style={{
           fontFamily:'var(--font-display)', fontWeight:300,
-          fontSize:'52px', color:'#f3eefe', lineHeight:1,
-          textShadow:'0 0 30px rgba(124,77,255,0.5)',
+          fontSize:'52px', color:'var(--white)', lineHeight:1,
+          textShadow:'0 0 30px rgba(var(--purple-rgb),calc(0.5*var(--kp)))',
           transition:'opacity 0.2s',
         }}>{today.day}</span>
         <div>
@@ -491,7 +492,7 @@ function HeuteStrip() {
           }}>{today.month}</div>
           <div style={{
             fontFamily:'var(--font-mono)', fontSize:'9px',
-            letterSpacing:'0.25em', color:'rgba(200,190,240,0.55)',
+            letterSpacing:'0.25em', color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
             textTransform:'uppercase', marginTop:3,
           }}>{today.weekday} · {today.year}</div>
         </div>
@@ -501,30 +502,30 @@ function HeuteStrip() {
       <div style={{ minWidth:0 }}>
         <div style={{
           fontFamily:'var(--font-mono)', fontSize:'9px',
-          letterSpacing:'0.3em', color:'rgba(124,77,255,0.6)',
+          letterSpacing:'0.3em', color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',
           textTransform:'uppercase', marginBottom:4,
         }}>Im Zeichen</div>
         <div style={{
           fontFamily:'var(--font-display)', fontWeight:400,
           fontSize:'17px', letterSpacing:'0.14em',
-          color:'rgba(240,235,255,0.92)', textTransform:'uppercase',
+          color:'rgba(var(--text-hi-rgb),calc(0.92*var(--kt) + var(--tb)))', textTransform:'uppercase',
         }}>{today.sign}</div>
         <div style={{
           fontFamily:'var(--font-body)', fontWeight:300,
           fontSize:'11px', letterSpacing:'0.06em',
-          color:'rgba(200,190,240,0.55)', marginTop:3,
+          color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', marginTop:3,
         }}>{today.vibe}</div>
       </div>
 
       {/* Moons */}
-      <div style={{ display:'flex', alignItems:'center', gap:18, flexShrink:0, padding:'0 16px', borderLeft:'1px solid rgba(124,77,255,0.15)', borderRight:'1px solid rgba(124,77,255,0.15)' }}>
+      <div style={{ display:'flex', alignItems:'center', gap:18, flexShrink:0, padding:'0 16px', borderLeft:'1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))', borderRight:'1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))' }}>
         <div style={{ textAlign:'center' }}>
           <MoonIcon phaseDay={today.goldDay} cycleLen={28} vollmondDay={16} color="#d9b06b" size={30}/>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.2em', color:'rgba(217,176,107,0.7)', textTransform:'uppercase', marginTop:6 }}>Goldmond</div>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.2em', color:'color-mix(in srgb, rgba(217,176,107,0.7), rgb(var(--ink-rgb)) var(--cm))', textTransform:'uppercase', marginTop:6 }}>Goldmond</div>
         </div>
         <div style={{ textAlign:'center' }}>
           <MoonIcon phaseDay={today.ashDay} cycleLen={17} vollmondDay={12} color="#a8b6d4" size={26}/>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.2em', color:'rgba(168,182,212,0.7)', textTransform:'uppercase', marginTop:6 }}>Aschmond</div>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.2em', color:'color-mix(in srgb, rgba(168,182,212,0.7), rgb(var(--ink-rgb)) var(--cm))', textTransform:'uppercase', marginTop:6 }}>Aschmond</div>
         </div>
       </div>
 
@@ -532,23 +533,23 @@ function HeuteStrip() {
       <div style={{ textAlign:'right', flexShrink:0 }}>
         <div style={{
           fontFamily:'var(--font-mono)', fontSize:'9px',
-          letterSpacing:'0.3em', color:'rgba(124,77,255,0.6)',
+          letterSpacing:'0.3em', color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',
           textTransform:'uppercase', marginBottom:4,
         }}>Nächstes Fest · in {today.daysUntil} {today.daysUntil === 1 ? 'Tag' : 'Tagen'}</div>
         <div style={{
           fontFamily:'var(--font-display)', fontSize:'15px', fontWeight:400,
-          letterSpacing:'0.14em', color:'#f3eefe', textTransform:'uppercase',
+          letterSpacing:'0.14em', color:'var(--white)', textTransform:'uppercase',
         }}>{today.nextHoliday}</div>
       </div>
 
       {/* Day controls */}
       <div style={{
         display:'flex', flexDirection:'column', alignItems:'center', gap:6,
-        flexShrink:0, paddingLeft:18, borderLeft:'1px solid rgba(124,77,255,0.15)',
+        flexShrink:0, paddingLeft:18, borderLeft:'1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))',
       }}>
         <div style={{
           fontFamily:'var(--font-mono)', fontSize:'7.5px',
-          letterSpacing:'0.28em', color:'rgba(160,140,255,0.55)',
+          letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
           textTransform:'uppercase',
         }}>Tag steuern</div>
         <div style={{ display:'flex', alignItems:'center', gap:6 }}>
@@ -585,7 +586,7 @@ function HeuteStrip() {
         </div>
         <div style={{
           fontFamily:'var(--font-mono)', fontSize:'8px',
-          letterSpacing:'0.2em', color: isToday ? 'rgba(160,140,255,0.4)' : '#d9b06b',
+          letterSpacing:'0.2em', color: isToday ? 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))' : '#d9b06b',
           textTransform:'uppercase', minHeight:10,
         }}>{isToday ? '— Heute —' : (offset > 0 ? `+${offset} Tag${offset===1?'':'e'}` : `${offset} Tag${offset===-1?'':'e'}`)}</div>
       </div>
@@ -598,7 +599,7 @@ function HeuteStrip() {
    (mirrors /spiel/missionsterminal.html, embedded into Meruria home)
    ───────────────────────────────────────────────── */
 var MT_KAT = {
-  Suche:     { color: '#a78bff', glyph: '⬡', label: 'SUCHE' },
+  Suche:     { color: 'var(--lav2)', glyph: '⬡', label: 'SUCHE' },
   Gespraech: { color: '#7fb8ff', glyph: '◇', label: 'GESPRÄCH' },
   Jagd:      { color: '#ff8db5', glyph: '✦', label: 'JAGD' },
 };
@@ -614,7 +615,7 @@ function MTSchwierigkeit({ level, max = 5 }) {
           <svg key={i} width="9" height="10" viewBox="0 0 9 10" style={{ flexShrink:0 }}>
             <polygon points="4.5,0.6 8.3,2.8 8.3,7.2 4.5,9.4 0.7,7.2 0.7,2.8"
               fill={filled ? '#7c4dff' : 'transparent'}
-              stroke={filled ? '#a78bff' : 'rgba(160,140,255,0.22)'}
+              stroke={filled ? 'var(--lav2)' : 'rgba(var(--accent-rgb),calc(0.22*var(--ka)))'}
               strokeWidth="1"/>
           </svg>
         );
@@ -646,13 +647,13 @@ function MTQuestRow({ q, active, onClick }) {
       padding: '9px 18px',
       cursor:'pointer',
       background: active
-        ? 'linear-gradient(90deg, rgba(124,77,255,0.18) 0%, rgba(124,77,255,0.06) 100%)'
+        ? 'linear-gradient(90deg, rgba(var(--purple-rgb),calc(0.18*var(--kp))) 0%, rgba(var(--purple-rgb),calc(0.06*var(--kp))) 100%)'
         : 'transparent',
-      borderLeft: `2px solid ${active ? '#a78bff' : 'transparent'}`,
-      borderBottom: '1px solid rgba(160,140,255,0.05)',
+      borderLeft: `2px solid ${active ? 'var(--lav2)' : 'transparent'}`,
+      borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.05*var(--ka)))',
       transition:'all 0.15s'
     }}
-      onMouseEnter={e => { if (!active) { e.currentTarget.style.background = 'rgba(124,77,255,0.05)'; e.currentTarget.style.borderLeftColor = 'rgba(124,77,255,0.35)'; } }}
+      onMouseEnter={e => { if (!active) { e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.05*var(--kp)))'; e.currentTarget.style.borderLeftColor = 'rgba(var(--purple-rgb),calc(0.35*var(--kp)))'; } }}
       onMouseLeave={e => { if (!active) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderLeftColor = 'transparent'; } }}
     >
       <div style={{ minWidth:0, display:'flex', alignItems:'center', gap:'10px' }}>
@@ -674,7 +675,7 @@ function MTQuestRow({ q, active, onClick }) {
         )}
         <span style={{
           fontFamily:'var(--font-body)', fontWeight: active ? 400 : 300,
-          fontSize:'13.5px', color: active ? '#f0eeff' : 'rgba(220,210,250,0.85)',
+          fontSize:'13.5px', color: active ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.85*var(--kt)))',
           letterSpacing:'0.03em', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis'
         }}>{q.name}</span>
       </div>
@@ -689,15 +690,15 @@ function MTFilterChip({ label, count, active, onClick, color }) {
     <button onClick={onClick} style={{
       fontFamily:'var(--font-mono)', fontSize:'9.5px', letterSpacing:'0.18em',
       padding:'5px 11px', height:'24px',
-      background: active ? 'rgba(124,77,255,0.22)' : 'transparent',
-      border: `1px solid ${active ? 'rgba(160,140,255,0.55)' : 'rgba(160,140,255,0.15)'}`,
-      color: active ? '#f0eeff' : (color || 'rgba(200,190,240,0.55)'),
+      background: active ? 'rgba(var(--purple-rgb),calc(0.22*var(--kp)))' : 'transparent',
+      border: `1px solid ${active ? 'rgba(var(--accent-rgb),calc(0.55*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.15*var(--ka)))'}`,
+      color: active ? 'var(--white)' : (color || 'rgba(var(--text-rgb),calc(0.55*var(--kt)))'),
       cursor:'pointer', borderRadius:'2px',
       textTransform:'uppercase', whiteSpace:'nowrap', flexShrink:0,
       display:'inline-flex', alignItems:'center', gap:'7px', transition:'all 0.15s'
     }}
-      onMouseEnter={e=>{ if (!active) { e.currentTarget.style.borderColor = 'rgba(160,140,255,0.4)'; e.currentTarget.style.color = '#f0eeff'; } }}
-      onMouseLeave={e=>{ if (!active) { e.currentTarget.style.borderColor = 'rgba(160,140,255,0.15)'; e.currentTarget.style.color = color || 'rgba(200,190,240,0.55)'; } }}
+      onMouseEnter={e=>{ if (!active) { e.currentTarget.style.borderColor = 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))'; e.currentTarget.style.color = 'var(--white)'; } }}
+      onMouseLeave={e=>{ if (!active) { e.currentTarget.style.borderColor = 'rgba(var(--accent-rgb),calc(0.15*var(--ka)))'; e.currentTarget.style.color = color || 'rgba(var(--text-rgb),calc(0.55*var(--kt)))'; } }}
     >
       {label}
       <span style={{ opacity:0.55, fontSize:'9px' }}>{count}</span>
@@ -714,14 +715,14 @@ function MTSigil({ name }) {
     }}>
       <svg width="46" height="52" viewBox="0 0 46 52" style={{ position:'absolute', inset:0 }}>
         <polygon points="23,2 43,13 43,39 23,50 3,39 3,13"
-          fill="rgba(124,77,255,0.12)" stroke="rgba(167,139,255,0.6)" strokeWidth="1.2"/>
+          fill="rgba(var(--purple-rgb),calc(0.12*var(--kp)))" stroke="rgba(var(--accent-rgb),calc(0.6*var(--ka)))" strokeWidth="1.2"/>
         <polygon points="23,7 38,15.5 38,36.5 23,45 8,36.5 8,15.5"
-          fill="none" stroke="rgba(167,139,255,0.18)" strokeWidth="0.8"/>
+          fill="none" stroke="rgba(var(--accent-rgb),calc(0.18*var(--ka)))" strokeWidth="0.8"/>
       </svg>
       <span style={{
         position:'relative', zIndex:1,
         fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:500,
-        letterSpacing:'0.05em', color:'#e8e0ff'
+        letterSpacing:'0.05em', color:'var(--white)'
       }}>{initials}</span>
     </div>
   );
@@ -736,7 +737,7 @@ function MTCategoryIcon({ k }) {
     }}>
       <svg width="42" height="46" viewBox="0 0 42 46" style={{position:'absolute', inset:0}}>
         <polygon points="21,2 39,12 39,34 21,44 3,34 3,12"
-          fill="rgba(124,77,255,0.08)" stroke={c} strokeOpacity="0.55" strokeWidth="1.2"/>
+          fill="rgba(var(--purple-rgb),calc(0.08*var(--kp)))" stroke={c} strokeOpacity="0.55" strokeWidth="1.2"/>
       </svg>
       <span style={{ position:'relative', fontSize:'17px', color:c, lineHeight:1 }}>{MT_KAT[k].glyph}</span>
     </div>
@@ -748,14 +749,14 @@ function MTPanelHeader({ children, right }) {
     <div style={{
       position:'relative',
       padding:'12px 20px',
-      borderBottom:'1px solid rgba(160,140,255,0.18)',
-      background:'linear-gradient(180deg, rgba(124,77,255,0.10) 0%, rgba(124,77,255,0.02) 100%)',
+      borderBottom:'1px solid rgba(var(--accent-rgb),calc(0.18*var(--ka)))',
+      background:'linear-gradient(180deg, rgba(var(--purple-rgb),calc(0.10*var(--kp))) 0%, rgba(var(--purple-rgb),calc(0.02*var(--kp))) 100%)',
       display:'flex', alignItems:'center', justifyContent:'space-between', gap:'12px'
     }}>
       <div style={{
         fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:400,
-        letterSpacing:'0.32em', color:'#f0eeff', textTransform:'uppercase',
-        textShadow:'0 0 14px rgba(124,77,255,0.4)'
+        letterSpacing:'0.32em', color:'var(--white)', textTransform:'uppercase',
+        textShadow:'0 0 14px rgba(var(--purple-rgb),calc(0.4*var(--kp)))'
       }}>{children}</div>
       {right}
     </div>
@@ -766,23 +767,23 @@ function MTRewardRow({ icon, label, value, accent }) {
   return (
     <div style={{
       display:'flex', alignItems:'center', justifyContent:'space-between',
-      padding:'8px 0', borderBottom:'1px dashed rgba(160,140,255,0.1)',
+      padding:'8px 0', borderBottom:'1px dashed rgba(var(--accent-rgb),calc(0.1*var(--ka)))',
     }}>
       <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
         <div style={{
           width:'20px', height:'20px', display:'flex',
           alignItems:'center', justifyContent:'center',
-          color: accent || '#a78bff', flexShrink:0
+          color: accent || 'var(--lav2)', flexShrink:0
         }}>{icon}</div>
         <span style={{
           fontFamily:'var(--font-body)', fontWeight:300,
-          fontSize:'12.5px', color:'rgba(220,210,250,0.78)',
+          fontSize:'12.5px', color:'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
           letterSpacing:'0.04em'
         }}>{label}</span>
       </div>
       <span style={{
         fontFamily:'var(--font-mono)', fontSize:'13px',
-        color:'#f0eeff', letterSpacing:'0.08em'
+        color:'var(--white)', letterSpacing:'0.08em'
       }}>{value}</span>
     </div>
   );
@@ -795,8 +796,8 @@ function MTDetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
       <div style={{
         display:'flex', alignItems:'center', gap:'14px',
         padding:'18px 22px',
-        background:`linear-gradient(180deg, ${MT_KAT[q.kategorie].color}22 0%, rgba(10,8,32,0) 100%)`,
-        borderBottom:'1px solid rgba(160,140,255,0.12)'
+        background:`linear-gradient(180deg, ${MT_KAT[q.kategorie].color}22 0%, rgba(var(--panel-rgb),0) 100%)`,
+        borderBottom:'1px solid rgba(var(--accent-rgb),calc(0.12*var(--ka)))'
       }}>
         <MTCategoryIcon k={q.kategorie}/>
         <div style={{ flex:1, minWidth:0 }}>
@@ -807,14 +808,14 @@ function MTDetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
           }}>{MT_KAT[q.kategorie].label} · STUFE {q.lv}</div>
           <div style={{
             fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:400,
-            letterSpacing:'0.06em', color:'#f0eeff',
-            textShadow:'0 0 22px rgba(124,77,255,0.35)',
+            letterSpacing:'0.06em', color:'var(--white)',
+            textShadow:'0 0 22px rgba(var(--purple-rgb),calc(0.35*var(--kp)))',
             whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis'
           }}>{q.name}</div>
         </div>
         <div style={{ textAlign:'right' }}>
           <div style={{
-            fontFamily:'var(--font-mono)', fontSize:'8px', color:'rgba(200,190,240,0.35)',
+            fontFamily:'var(--font-mono)', fontSize:'8px', color:'rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))',
             letterSpacing:'0.2em', textTransform:'uppercase', marginBottom:'4px'
           }}>SCHWIERIGKEIT</div>
           <MTSchwierigkeit level={q.sw}/>
@@ -831,39 +832,39 @@ function MTDetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
             <div style={{
               display:'flex', alignItems:'center', gap:'14px', marginBottom:'18px',
               padding:'12px 14px',
-              background:'rgba(124,77,255,0.06)',
-              border:'1px solid rgba(160,140,255,0.14)',
+              background:'rgba(var(--purple-rgb),calc(0.06*var(--kp)))',
+              border:'1px solid rgba(var(--accent-rgb),calc(0.14*var(--ka)))',
               borderRadius:'3px'
             }}>
               <MTSigil name={q.auftraggeber}/>
               <div>
                 <div style={{
-                  fontFamily:'var(--font-mono)', fontSize:'9px', color:'#a78bff',
+                  fontFamily:'var(--font-mono)', fontSize:'9px', color:'var(--lav2)',
                   letterSpacing:'0.22em', textTransform:'uppercase', marginBottom:'3px'
                 }}>Auftraggeber</div>
                 <div style={{
                   fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:400,
-                  color:'#f0eeff', letterSpacing:'0.08em'
+                  color:'var(--white)', letterSpacing:'0.08em'
                 }}>{q.auftraggeber}</div>
                 <div style={{
                   fontFamily:'var(--font-body)', fontWeight:300, fontStyle:'italic',
-                  fontSize:'11px', color:'rgba(200,190,240,0.55)', marginTop:'2px'
+                  fontSize:'11px', color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', marginTop:'2px'
                 }}>{q.region}</div>
               </div>
             </div>
 
             <div style={{
               fontFamily:'var(--font-body)', fontWeight:300,
-              fontSize:'13px', lineHeight:1.75, color:'rgba(220,210,250,0.82)',
+              fontSize:'13px', lineHeight:1.75, color:'rgba(var(--text-rgb),calc(0.82*var(--kt) + var(--tb)))',
               letterSpacing:'0.02em', marginBottom:'24px',
               textWrap:'pretty'
             }}>{q.desc}</div>
 
             <div style={{
               fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:500,
-              letterSpacing:'0.28em', color:'#a78bff',
+              letterSpacing:'0.28em', color:'var(--lav2)',
               textTransform:'uppercase', marginBottom:'8px',
-              paddingBottom:'4px', borderBottom:'1px solid rgba(160,140,255,0.2)'
+              paddingBottom:'4px', borderBottom:'1px solid rgba(var(--accent-rgb),calc(0.2*var(--ka)))'
             }}>Belohnungen</div>
             <MTRewardRow
               icon={<svg width="14" height="14" viewBox="0 0 14 14"><polygon points="7,1 13,5 11,12 3,12 1,5" fill="none" stroke="currentColor" strokeWidth="1.2"/></svg>}
@@ -890,9 +891,9 @@ function MTDetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
           <div style={{ animation:'fadeInUp 0.25s ease' }}>
             <div style={{
               fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:500,
-              letterSpacing:'0.28em', color:'#a78bff',
+              letterSpacing:'0.28em', color:'var(--lav2)',
               textTransform:'uppercase', marginBottom:'14px',
-              paddingBottom:'4px', borderBottom:'1px solid rgba(160,140,255,0.2)'
+              paddingBottom:'4px', borderBottom:'1px solid rgba(var(--accent-rgb),calc(0.2*var(--ka)))'
             }}>Anweisungen</div>
 
             {q.anweisungen.map((step, i) => {
@@ -902,7 +903,7 @@ function MTDetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
               return (
                 <div key={i} style={{
                   display:'flex', alignItems:'flex-start', gap:'14px',
-                  padding:'12px 0', borderBottom:'1px dashed rgba(160,140,255,0.1)'
+                  padding:'12px 0', borderBottom:'1px dashed rgba(var(--accent-rgb),calc(0.1*var(--ka)))'
                 }}>
                   <button
                     onClick={handleClick}
@@ -919,16 +920,16 @@ function MTDetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
                   >
                     <svg width="22" height="24" viewBox="0 0 22 24" style={{ display:'block', overflow:'visible' }}>
                       <polygon points="11,1.5 19.5,6.5 19.5,17.5 11,22.5 2.5,17.5 2.5,6.5"
-                        fill={done ? 'rgba(124,77,255,0.5)' : (n>0 ? 'rgba(124,77,255,0.18)' : 'rgba(124,77,255,0.06)')}
-                        stroke="#a78bff" strokeWidth="1.1"
-                        style={{ filter: done ? 'drop-shadow(0 0 6px rgba(167,139,255,0.7))' : 'none', transition:'all 0.2s' }}/>
+                        fill={done ? 'rgba(var(--purple-rgb),calc(0.5*var(--kp)))' : (n>0 ? 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))')}
+                        stroke="var(--lav2)" strokeWidth="1.1"
+                        style={{ filter: done ? 'drop-shadow(0 0 6px rgba(var(--accent-rgb),calc(0.7*var(--ka))))' : 'none', transition:'all 0.2s' }}/>
                       {done && (
-                        <path d="M6.5 12 L9.5 15 L15 9" stroke="#f0eeff" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M6.5 12 L9.5 15 L15 9" stroke="var(--white)" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
                       )}
                       {!done && n > 0 && step.max > 1 && (
                         <text x="11" y="15" textAnchor="middle"
                           fontFamily="Share Tech Mono, monospace"
-                          fontSize="9" fill="#f0eeff" style={{letterSpacing:'0.05em'}}>
+                          fontSize="9" fill="var(--white)" style={{letterSpacing:'0.05em'}}>
                           {n}
                         </text>
                       )}
@@ -937,28 +938,28 @@ function MTDetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
                   <div style={{ flex:1 }}>
                     <div style={{
                       fontFamily:'var(--font-body)', fontWeight:300, fontSize:'13px',
-                      color: done ? 'rgba(200,190,240,0.6)' : 'rgba(220,210,250,0.88)',
+                      color: done ? 'rgba(var(--text-rgb),calc(0.6*var(--kt)))' : 'rgba(var(--text-rgb),calc(0.88*var(--kt)))',
                       lineHeight:1.6, letterSpacing:'0.02em',
                       textDecoration: done ? 'line-through' : 'none',
-                      textDecorationColor:'rgba(167,139,255,0.45)',
+                      textDecorationColor:'rgba(var(--accent-rgb),calc(0.45*var(--ka)))',
                       transition:'all 0.2s'
                     }}>{step.txt}</div>
                     {step.max > 1 && (
                       <div style={{ display:'flex', alignItems:'center', gap:'10px', marginTop:'8px' }}>
                         <div style={{
-                          flex:1, height:'3px', background:'rgba(160,140,255,0.1)',
+                          flex:1, height:'3px', background:'rgba(var(--accent-rgb),calc(0.1*var(--ka)))',
                           borderRadius:'1px', overflow:'hidden', maxWidth:'180px'
                         }}>
                           <div style={{
                             height:'100%', width: `${(n/step.max)*100}%`,
-                            background:'linear-gradient(90deg, #7c4dff 0%, #a78bff 100%)',
-                            boxShadow:'0 0 8px rgba(167,139,255,0.6)',
+                            background:'linear-gradient(90deg, #7c4dff 0%, var(--lav2) 100%)',
+                            boxShadow:'0 0 8px rgba(var(--accent-rgb),calc(0.6*var(--ka)))',
                             transition:'width 0.25s ease'
                           }}/>
                         </div>
                         <span style={{
                           fontFamily:'var(--font-mono)', fontSize:'11px',
-                          color: done ? '#a78bff' : '#f0eeff',
+                          color: done ? 'var(--lav2)' : 'var(--white)',
                           letterSpacing:'0.1em'
                         }}>{n} / {step.max}</span>
                       </div>
@@ -974,13 +975,13 @@ function MTDetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
       {/* Accept bar */}
       <div style={{
         padding:'12px 22px',
-        borderTop:'1px solid rgba(160,140,255,0.18)',
-        background:'rgba(5,4,15,0.6)',
+        borderTop:'1px solid rgba(var(--accent-rgb),calc(0.18*var(--ka)))',
+        background:'rgba(var(--bg-rgb),0.6)',
         display:'flex', alignItems:'center', justifyContent:'space-between', gap:'12px'
       }}>
         <div style={{
           fontFamily:'var(--font-mono)', fontSize:'8.5px',
-          color:'rgba(200,190,240,0.35)', letterSpacing:'0.2em', textTransform:'uppercase'
+          color:'rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))', letterSpacing:'0.2em', textTransform:'uppercase'
         }}>
           ID · {q.id.toUpperCase()}
         </div>
@@ -992,17 +993,17 @@ function MTDetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
 function MTPanel({ children, style }) {
   const corner = {
     position:'absolute', width:14, height:14, pointerEvents:'none',
-    border:'1px solid rgba(160,140,255,0.45)'
+    border:'1px solid rgba(var(--accent-rgb),calc(0.45*var(--ka)))'
   };
   return (
     <div style={{
       position:'relative',
-      background:'linear-gradient(180deg, rgba(15,10,40,0.7) 0%, rgba(8,6,22,0.85) 100%)',
-      border:'1px solid rgba(160,140,255,0.18)',
+      background:'linear-gradient(180deg, rgba(var(--panel-rgb),0.7) 0%, rgba(var(--panel-rgb),0.85) 100%)',
+      border:'1px solid rgba(var(--accent-rgb),calc(0.18*var(--ka)))',
       borderRadius:'3px',
       backdropFilter:'blur(8px)',
       display:'flex', flexDirection:'column', minHeight:0, overflow:'hidden',
-      boxShadow:'0 8px 40px rgba(0,0,0,0.5), inset 0 0 60px rgba(124,77,255,0.04)',
+      boxShadow:'0 8px 40px rgba(var(--shadow-rgb),calc(0.5 * var(--shadow-k))), inset 0 0 60px rgba(var(--purple-rgb),calc(0.04*var(--kp)))',
       ...style
     }}>
       <span style={{ ...corner, top:-1, left:-1, borderRight:0, borderBottom:0 }}/>
@@ -1092,14 +1093,14 @@ function MissionsterminalSection() {
       <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:24 }}>
         <span style={{
           fontFamily:'var(--font-mono)', fontSize:'10px',
-          letterSpacing:'0.35em', color:'rgba(124,77,255,0.65)',
+          letterSpacing:'0.35em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))',
           textTransform:'uppercase',
         }}>◈ Missionsterminal</span>
-        <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(124,77,255,0.5), rgba(124,77,255,0.05))' }}/>
+        <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.5*var(--kp))), rgba(var(--purple-rgb),calc(0.05*var(--kp))))' }}/>
         <div style={{
           display:'flex', alignItems:'center', gap:'12px',
           fontFamily:'var(--font-mono)', fontSize:'9px',
-          color:'rgba(200,190,240,0.55)', letterSpacing:'0.22em',
+          color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', letterSpacing:'0.22em',
           textTransform:'uppercase',
         }}>
           <span style={{ display:'inline-flex', alignItems:'center', gap:'7px' }}>
@@ -1110,7 +1111,7 @@ function MissionsterminalSection() {
             }}/>
             {quests.filter(q=>q.status==='neu').length} neue Aufträge
           </span>
-          <span style={{ width:'1px', height:'14px', background:'rgba(160,140,255,0.2)' }}/>
+          <span style={{ width:'1px', height:'14px', background:'rgba(var(--accent-rgb),calc(0.2*var(--ka)))' }}/>
           <span>{filtered.length} / {quests.length} gesamt</span>
         </div>
       </div>
@@ -1129,24 +1130,24 @@ function MissionsterminalSection() {
           {/* Filter bar */}
           <div style={{
             padding:'12px 18px', display:'flex', alignItems:'center', gap:'8px',
-            borderBottom:'1px solid rgba(160,140,255,0.1)',
-            background:'rgba(8,6,22,0.4)',
+            borderBottom:'1px solid rgba(var(--accent-rgb),calc(0.1*var(--ka)))',
+            background:'rgba(var(--panel-rgb),0.4)',
             flexWrap:'wrap',
           }}>
             <MTFilterChip label="Alle" count={counts.alle} active={filter==='alle'} onClick={()=>setFilter('alle')}/>
-            <MTFilterChip label="Suche" count={counts.Suche} color="#a78bff" active={filter==='Suche'} onClick={()=>setFilter('Suche')}/>
+            <MTFilterChip label="Suche" count={counts.Suche} color="var(--lav2)" active={filter==='Suche'} onClick={()=>setFilter('Suche')}/>
             <MTFilterChip label="Gespräch" count={counts.Gespraech} color="#7fb8ff" active={filter==='Gespraech'} onClick={()=>setFilter('Gespraech')}/>
             <MTFilterChip label="Jagd" count={counts.Jagd} color="#ff8db5" active={filter==='Jagd'} onClick={()=>setFilter('Jagd')}/>
             <div style={{ flex:1, minWidth:8 }}/>
             <div style={{
               display:'flex', alignItems:'center', gap:'6px',
               padding:'4px 9px', height:'24px',
-              border:'1px solid rgba(160,140,255,0.18)', borderRadius:'2px',
-              background:'rgba(5,4,15,0.5)'
+              border:'1px solid rgba(var(--accent-rgb),calc(0.18*var(--ka)))', borderRadius:'2px',
+              background:'rgba(var(--bg-rgb),0.5)'
             }}>
               <svg width="11" height="11" viewBox="0 0 12 12" style={{ opacity:0.5 }}>
-                <circle cx="5" cy="5" r="3.5" fill="none" stroke="#a78bff" strokeWidth="1.2"/>
-                <line x1="7.5" y1="7.5" x2="10" y2="10" stroke="#a78bff" strokeWidth="1.2" strokeLinecap="round"/>
+                <circle cx="5" cy="5" r="3.5" fill="none" stroke="var(--lav2)" strokeWidth="1.2"/>
+                <line x1="7.5" y1="7.5" x2="10" y2="10" stroke="var(--lav2)" strokeWidth="1.2" strokeLinecap="round"/>
               </svg>
               <input
                 value={search}
@@ -1155,7 +1156,7 @@ function MissionsterminalSection() {
                 style={{
                   background:'transparent', border:'none', outline:'none',
                   fontFamily:'var(--font-mono)', fontSize:'10px',
-                  color:'#f0eeff', letterSpacing:'0.08em', width:'100px'
+                  color:'var(--white)', letterSpacing:'0.08em', width:'100px'
                 }}
               />
             </div>
@@ -1165,10 +1166,10 @@ function MissionsterminalSection() {
           <div style={{
             display:'grid', gridTemplateColumns:'1fr 120px 96px',
             gap:'12px', padding:'9px 18px',
-            borderBottom:'1px solid rgba(160,140,255,0.12)',
-            background:'rgba(124,77,255,0.04)',
+            borderBottom:'1px solid rgba(var(--accent-rgb),calc(0.12*var(--ka)))',
+            background:'rgba(var(--purple-rgb),calc(0.04*var(--kp)))',
             fontFamily:'var(--font-mono)', fontSize:'8.5px',
-            color:'rgba(200,190,240,0.35)', letterSpacing:'0.22em', textTransform:'uppercase'
+            color:'rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))', letterSpacing:'0.22em', textTransform:'uppercase'
           }}>
             <div>Auftrag</div>
             <div>Kategorie</div>
@@ -1178,7 +1179,7 @@ function MissionsterminalSection() {
           {/* List */}
           <div style={{ flex:1, minHeight:0, overflowY:'auto' }}>
             {loading && (
-              <div style={{ padding:'40px 20px', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(160,140,255,0.4)', letterSpacing:'0.22em', textTransform:'uppercase' }}>
+              <div style={{ padding:'40px 20px', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', letterSpacing:'0.22em', textTransform:'uppercase' }}>
                 ◈ Lade Aufträge…
               </div>
             )}
@@ -1186,7 +1187,7 @@ function MissionsterminalSection() {
               <div style={{
                 padding:'40px 20px', textAlign:'center',
                 fontFamily:'var(--font-body)', fontStyle:'italic',
-                fontSize:'12px', color:'rgba(200,190,240,0.35)'
+                fontSize:'12px', color:'rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))'
               }}>
                 Keine Aufträge im Filter.
               </div>
@@ -1204,11 +1205,11 @@ function MissionsterminalSection() {
           {/* Foot */}
           <div style={{
             padding:'9px 18px',
-            borderTop:'1px solid rgba(160,140,255,0.12)',
+            borderTop:'1px solid rgba(var(--accent-rgb),calc(0.12*var(--ka)))',
             display:'flex', alignItems:'center', justifyContent:'space-between',
             fontFamily:'var(--font-mono)', fontSize:'8.5px',
-            color:'rgba(200,190,240,0.35)', letterSpacing:'0.2em', textTransform:'uppercase',
-            background:'rgba(5,4,15,0.5)'
+            color:'rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))', letterSpacing:'0.2em', textTransform:'uppercase',
+            background:'rgba(var(--bg-rgb),0.5)'
           }}>
             <span>◈ Aktualisiert · Heute</span>
             <span>Angenommen · {acceptedIds.size}</span>
@@ -1223,31 +1224,31 @@ function MissionsterminalSection() {
                 <button onClick={()=>setView('details')} style={{
                   fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em',
                   padding:'4px 10px', height:'24px',
-                  background: view==='details' ? 'rgba(124,77,255,0.25)' : 'transparent',
-                  border:`1px solid ${view==='details' ? 'rgba(167,139,255,0.6)' : 'rgba(160,140,255,0.15)'}`,
-                  color: view==='details' ? '#f0eeff' : 'rgba(200,190,240,0.55)',
+                  background: view==='details' ? 'rgba(var(--purple-rgb),calc(0.25*var(--kp)))' : 'transparent',
+                  border:`1px solid ${view==='details' ? 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.15*var(--ka)))'}`,
+                  color: view==='details' ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.55*var(--kt)))',
                   cursor:'pointer', borderRadius:'2px', textTransform:'uppercase',
                   transition:'all 0.15s'
                 }}>Details</button>
                 <button onClick={()=>setView('anweisungen')} style={{
                   fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em',
                   padding:'4px 10px', height:'24px',
-                  background: view==='anweisungen' ? 'rgba(124,77,255,0.25)' : 'transparent',
-                  border:`1px solid ${view==='anweisungen' ? 'rgba(167,139,255,0.6)' : 'rgba(160,140,255,0.15)'}`,
-                  color: view==='anweisungen' ? '#f0eeff' : 'rgba(200,190,240,0.55)',
+                  background: view==='anweisungen' ? 'rgba(var(--purple-rgb),calc(0.25*var(--kp)))' : 'transparent',
+                  border:`1px solid ${view==='anweisungen' ? 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.15*var(--ka)))'}`,
+                  color: view==='anweisungen' ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.55*var(--kt)))',
                   cursor:'pointer', borderRadius:'2px', textTransform:'uppercase',
                   transition:'all 0.15s'
                 }}>Anweisungen</button>
                 <div style={{ display:'flex', alignItems:'center', gap:'4px', marginLeft:'4px' }}>
                   <span style={{
                     width:'6px', height:'6px', borderRadius:'50%',
-                    background: view==='details' ? '#a78bff' : 'rgba(160,140,255,0.25)',
-                    boxShadow: view==='details' ? '0 0 6px #a78bff' : 'none'
+                    background: view==='details' ? 'var(--lav2)' : 'rgba(var(--accent-rgb),calc(0.25*var(--ka)))',
+                    boxShadow: view==='details' ? '0 0 6px var(--lav2)' : 'none'
                   }}/>
                   <span style={{
                     width:'6px', height:'6px', borderRadius:'50%',
-                    background: view==='anweisungen' ? '#a78bff' : 'rgba(160,140,255,0.25)',
-                    boxShadow: view==='anweisungen' ? '0 0 6px #a78bff' : 'none'
+                    background: view==='anweisungen' ? 'var(--lav2)' : 'rgba(var(--accent-rgb),calc(0.25*var(--ka)))',
+                    boxShadow: view==='anweisungen' ? '0 0 6px var(--lav2)' : 'none'
                   }}/>
                 </div>
               </div>
@@ -1266,7 +1267,7 @@ function MissionsterminalSection() {
               onStepClick={(stepIdx, max) => stepClick(selected.id, stepIdx, max)}
             />
           ) : (
-            <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(160,140,255,0.3)', letterSpacing:'0.22em', textTransform:'uppercase' }}>
+            <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))', letterSpacing:'0.22em', textTransform:'uppercase' }}>
               {loading ? '◈ Verbinde…' : '— keine Aufträge —'}
             </div>
           )}
@@ -1304,7 +1305,7 @@ function RecentCard({ item, idx, total, gold }) {
         border: gold
           ? `1px solid ${hov ? 'oklch(0.82 0.14 80)' : goldA(0.55)}`
           : `1px solid ${hov ? c : cA(0.4)}`,
-        background:'rgba(13,8,38,0.97)',
+        background:'rgba(var(--panel-rgb),0.97)',
         transformOrigin:'center bottom',
         transform: hov ? undefined : 'scale(1)',
         animation: hov ? 'recentCardIdle 2.8s ease-in-out infinite' : 'none',
@@ -1312,7 +1313,7 @@ function RecentCard({ item, idx, total, gold }) {
         opacity: hov ? 1 : 0.82,
         boxShadow: hov
           ? (gold
-            ? `0 22px 60px rgba(0,0,0,0.75), 0 0 36px ${goldA(0.65)}, 0 0 60px ${goldA(0.3)}`
+            ? `0 22px 60px rgba(var(--shadow-rgb),calc(0.75 * var(--shadow-k))), 0 0 36px ${goldA(0.65)}, 0 0 60px ${goldA(0.3)}`
             : `0 22px 60px rgba(0,0,0,0.75), 0 0 32px ${cA(0.6)}, 0 0 60px ${cA(0.25)}`)
           : (gold ? `0 4px 14px rgba(0,0,0,0.5), 0 0 10px ${goldA(0.18)}` : '0 4px 14px rgba(0,0,0,0.5)'),
         transition: hov
@@ -1330,7 +1331,7 @@ function RecentCard({ item, idx, total, gold }) {
 
       {/* striped bg */}
       <div style={{ position:'absolute', inset:0,
-        background:`repeating-linear-gradient(-45deg,transparent,transparent 8px,${cA(0.13)} 8px,${cA(0.13)} 9px),linear-gradient(160deg,rgba(28,16,62,0.97) 0%,rgba(14,9,36,0.98) 100%)`,
+        background:`repeating-linear-gradient(-45deg,transparent,transparent 8px,${cA(0.13)} 8px,${cA(0.13)} 9px),linear-gradient(160deg,rgba(var(--panel-rgb),0.97) 0%,rgba(var(--panel-rgb),0.98) 100%)`,
       }}/>
       <div style={{ position:'absolute', inset:0,
         background:`radial-gradient(ellipse at 50% 40%, ${cA(hov ? 0.32 : 0.18)} 0%, transparent 65%)`,
@@ -1355,13 +1356,13 @@ function RecentCard({ item, idx, total, gold }) {
         <svg viewBox="0 0 100 100" width="52" height="52" stroke={c} fill="none" style={{ color:c, filter:`drop-shadow(0 0 10px ${cA(0.6)})` }}>
           {item.icon}
         </svg>
-        <div style={{ marginTop:10, fontFamily:'var(--font-display)', fontSize:10.5, letterSpacing:'0.1em', color:'#f0eeff', textTransform:'uppercase', lineHeight:1.2, overflowWrap:'anywhere' }}>
+        <div style={{ marginTop:10, fontFamily:'var(--font-display)', fontSize:10.5, letterSpacing:'0.1em', color:'var(--white)', textTransform:'uppercase', lineHeight:1.2, overflowWrap:'anywhere' }}>
           {item.name}
         </div>
         <div style={{ marginTop:6, fontFamily:'var(--font-mono)', fontSize:7, color:cA(0.85), letterSpacing:'0.18em', textTransform:'uppercase' }}>
           {item.cat}
         </div>
-        <div style={{ position:'absolute', bottom:9, left:0, right:0, fontFamily:'var(--font-mono)', fontSize:7, color:'rgba(160,140,255,0.55)', letterSpacing:'0.16em', textTransform:'uppercase' }}>
+        <div style={{ position:'absolute', bottom:9, left:0, right:0, fontFamily:'var(--font-mono)', fontSize:7, color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', letterSpacing:'0.16em', textTransform:'uppercase' }}>
           {item.date}
         </div>
       </div>
@@ -1375,11 +1376,11 @@ function RecentRow({ items, kind, title }) {
       <div style={{ display:'flex', alignItems:'baseline', gap:14, marginBottom:8 }}>
         <span style={{
           fontFamily:'var(--font-mono)', fontSize:9,
-          letterSpacing:'0.3em', color: kind === 'komplett' ? 'oklch(0.82 0.14 80)' : 'rgba(124,77,255,0.65)',
+          letterSpacing:'0.3em', color: kind === 'komplett' ? 'oklch(0.82 0.14 80)' : 'rgba(var(--purple-rgb),calc(0.65*var(--kp)))',
           textTransform:'uppercase',
         }}>{kind === 'komplett' ? '✓' : '◈'} {title}</span>
-        <div style={{ flex:1, height:1, background:`linear-gradient(to right, ${kind === 'komplett' ? 'oklch(0.82 0.14 80 / 0.5)' : 'rgba(124,77,255,0.45)'}, rgba(124,77,255,0.04))` }}/>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.25em', color:'rgba(160,140,255,0.4)', textTransform:'uppercase' }}>
+        <div style={{ flex:1, height:1, background:`linear-gradient(to right, ${kind === 'komplett' ? 'oklch(0.82 0.14 80 / 0.5)' : 'rgba(var(--purple-rgb),calc(0.45*var(--kp)))'}, rgba(var(--purple-rgb),calc(0.04*var(--kp))))` }}/>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.25em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>
           Letzte {items.length}
         </span>
       </div>
@@ -1431,60 +1432,60 @@ function KollektikonSection() {
       <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:24 }}>
         <span style={{
           fontFamily:'var(--font-mono)', fontSize:'10px',
-          letterSpacing:'0.35em', color:'rgba(124,77,255,0.65)',
+          letterSpacing:'0.35em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))',
           textTransform:'uppercase',
         }}>◈ Kollektikon</span>
-        <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(124,77,255,0.5), rgba(124,77,255,0.05))' }}/>
+        <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.5*var(--kp))), rgba(var(--purple-rgb),calc(0.05*var(--kp))))' }}/>
         <span style={{
           fontFamily:'var(--font-mono)', fontSize:'9px',
-          letterSpacing:'0.28em', color:'rgba(160,140,255,0.4)',
+          letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
           textTransform:'uppercase',
         }}>Forschungsstatus · Planet Meruria</span>
       </div>
 
       <div style={{
         position:'relative', overflow:'visible',
-        background:'linear-gradient(135deg, rgba(10,8,28,0.9) 0%, rgba(16,10,38,0.85) 100%)',
-        border:'1px solid rgba(124,77,255,0.22)',
+        background:'linear-gradient(135deg, rgba(var(--panel-rgb),0.9) 0%, rgba(var(--panel-rgb),0.85) 100%)',
+        border:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))',
         borderRadius:'4px',
-        boxShadow:'0 18px 50px rgba(0,0,0,0.5)',
+        boxShadow:'0 18px 50px rgba(var(--shadow-rgb),calc(0.5 * var(--shadow-k)))',
       }}>
         {/* corner brackets */}
-        <span style={{position:'absolute',top:-1,left:-1,width:14,height:14,borderTop:'1px solid rgba(124,77,255,0.65)',borderLeft:'1px solid rgba(124,77,255,0.65)'}}/>
-        <span style={{position:'absolute',top:-1,right:-1,width:14,height:14,borderTop:'1px solid rgba(124,77,255,0.65)',borderRight:'1px solid rgba(124,77,255,0.65)'}}/>
-        <span style={{position:'absolute',bottom:-1,left:-1,width:14,height:14,borderBottom:'1px solid rgba(124,77,255,0.65)',borderLeft:'1px solid rgba(124,77,255,0.65)'}}/>
-        <span style={{position:'absolute',bottom:-1,right:-1,width:14,height:14,borderBottom:'1px solid rgba(124,77,255,0.65)',borderRight:'1px solid rgba(124,77,255,0.65)'}}/>
+        <span style={{position:'absolute',top:-1,left:-1,width:14,height:14,borderTop:'1px solid rgba(var(--purple-rgb),calc(0.65*var(--kp)))',borderLeft:'1px solid rgba(var(--purple-rgb),calc(0.65*var(--kp)))'}}/>
+        <span style={{position:'absolute',top:-1,right:-1,width:14,height:14,borderTop:'1px solid rgba(var(--purple-rgb),calc(0.65*var(--kp)))',borderRight:'1px solid rgba(var(--purple-rgb),calc(0.65*var(--kp)))'}}/>
+        <span style={{position:'absolute',bottom:-1,left:-1,width:14,height:14,borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.65*var(--kp)))',borderLeft:'1px solid rgba(var(--purple-rgb),calc(0.65*var(--kp)))'}}/>
+        <span style={{position:'absolute',bottom:-1,right:-1,width:14,height:14,borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.65*var(--kp)))',borderRight:'1px solid rgba(var(--purple-rgb),calc(0.65*var(--kp)))'}}/>
 
         {/* Header — overall stats */}
         <div style={{
           display:'grid', gridTemplateColumns:'auto 1fr auto',
           gap:24, alignItems:'center',
           padding:'22px 28px',
-          borderBottom:'1px solid rgba(124,77,255,0.18)',
-          background:'rgba(8,6,22,0.5)',
+          borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',
+          background:'rgba(var(--panel-rgb),0.5)',
         }}>
           <div>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.32em', color:'rgba(124,77,255,0.65)', textTransform:'uppercase', marginBottom:6 }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.32em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))', textTransform:'uppercase', marginBottom:6 }}>
               Sammlung der Ressourcen
             </div>
-            <div style={{ fontFamily:'var(--font-display)', fontSize:'17px', fontWeight:400, letterSpacing:'0.22em', color:'#f3eefe', textTransform:'uppercase' }}>
+            <div style={{ fontFamily:'var(--font-display)', fontSize:'17px', fontWeight:400, letterSpacing:'0.22em', color:'var(--white)', textTransform:'uppercase' }}>
               Das Kollektikon
             </div>
           </div>
           <div style={{ position:'relative', height:6 }}>
-            <div style={{ position:'absolute', inset:0, background:'rgba(124,77,255,0.08)', borderRadius:2, overflow:'hidden', border:'1px solid rgba(124,77,255,0.2)' }}>
+            <div style={{ position:'absolute', inset:0, background:'rgba(var(--purple-rgb),calc(0.08*var(--kp)))', borderRadius:2, overflow:'hidden', border:'1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))' }}>
               <div style={{ position:'absolute', left:0, top:0, bottom:0, width:`${overallPct*100}%`,
-                background:'linear-gradient(90deg, rgba(220,215,250,0.18), rgba(240,238,255,0.28))',
+                background:'linear-gradient(90deg, rgba(220,215,250,0.18), rgba(var(--text-hi-rgb),calc(0.28*var(--kt))))',
               }}/>
             </div>
           </div>
           <div style={{ textAlign:'right' }}>
-            <div style={{ fontFamily:'var(--font-display)', fontSize:'30px', fontWeight:300, color:'#f0eeff', lineHeight:1 }}>
-              {totalFound}<span style={{ color:'rgba(160,140,255,0.4)', fontSize:'18px' }}> / {totalAll}</span>
+            <div style={{ fontFamily:'var(--font-display)', fontSize:'30px', fontWeight:300, color:'var(--white)', lineHeight:1 }}>
+              {totalFound}<span style={{ color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', fontSize:'18px' }}> / {totalAll}</span>
             </div>
             <div style={{ marginTop:5, display:'flex', justifyContent:'flex-end', gap:10, fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.18em', textTransform:'uppercase' }}>
-              <span style={{ color:'rgba(240,238,255,0.65)' }}>
-                <span style={{ display:'inline-block', width:7, height:7, background:'rgba(240,238,255,0.85)', marginRight:4, verticalAlign:'middle' }}/>
+              <span style={{ color:'rgba(var(--text-hi-rgb),calc(0.65*var(--kt) + var(--tb)))' }}>
+                <span style={{ display:'inline-block', width:7, height:7, background:'rgba(var(--text-hi-rgb),calc(0.85*var(--kt)))', marginRight:4, verticalAlign:'middle' }}/>
                 {Math.round(overallPct*100)} % Gesichtet
               </span>
             </div>
@@ -1517,40 +1518,40 @@ function _vg_unused() {
         position:'relative',
         display:'grid', gridTemplateColumns:'1.15fr 1fr',
         gap:0,
-        background:'rgba(8,6,22,0.55)',
-        border:'1px solid rgba(124,77,255,0.18)',
+        background:'rgba(var(--panel-rgb),0.55)',
+        border:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',
         borderRadius:'4px', overflow:'hidden',
-        boxShadow:'0 16px 48px rgba(0,0,0,0.5)',
+        boxShadow:'0 16px 48px rgba(var(--shadow-rgb),calc(0.5 * var(--shadow-k)))',
         transition:'border-color 0.4s, box-shadow 0.4s',
       }}
-        onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(124,77,255,0.5)'; e.currentTarget.style.boxShadow='0 18px 60px rgba(0,0,0,0.55), 0 0 80px rgba(124,77,255,0.18)'; }}
-        onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(124,77,255,0.18)'; e.currentTarget.style.boxShadow='0 16px 48px rgba(0,0,0,0.5)'; }}
+        onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.5*var(--kp)))'; e.currentTarget.style.boxShadow='0 18px 60px rgba(var(--shadow-rgb),calc(0.55 * var(--shadow-k))), 0 0 80px rgba(var(--purple-rgb),calc(0.18*var(--kp)))'; }}
+        onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.18*var(--kp)))'; e.currentTarget.style.boxShadow='0 16px 48px rgba(var(--shadow-rgb),calc(0.5 * var(--shadow-k)))'; }}
       >
         {/* Image slot (left) */}
         <div style={{ position:'relative', minHeight:420 }}>
           <div style={{
             position:'absolute', inset:0, pointerEvents:'none',
-            background:'linear-gradient(90deg, rgba(5,4,15,0) 50%, rgba(8,6,22,0.85) 100%)',
+            background:'linear-gradient(90deg, rgba(var(--bg-rgb),0) 50%, rgba(var(--panel-rgb),0.85) 100%)',
           }}/>
           {/* corner brackets */}
-          <span style={{position:'absolute',top:10,left:10,width:18,height:18,borderTop:'1px solid rgba(160,140,255,0.6)',borderLeft:'1px solid rgba(160,140,255,0.6)',pointerEvents:'none'}}/>
-          <span style={{position:'absolute',top:10,right:10,width:18,height:18,borderTop:'1px solid rgba(160,140,255,0.6)',borderRight:'1px solid rgba(160,140,255,0.6)',pointerEvents:'none'}}/>
-          <span style={{position:'absolute',bottom:10,left:10,width:18,height:18,borderBottom:'1px solid rgba(160,140,255,0.6)',borderLeft:'1px solid rgba(160,140,255,0.6)',pointerEvents:'none'}}/>
+          <span style={{position:'absolute',top:10,left:10,width:18,height:18,borderTop:'1px solid rgba(var(--accent-rgb),calc(0.6*var(--ka)))',borderLeft:'1px solid rgba(var(--accent-rgb),calc(0.6*var(--ka)))',pointerEvents:'none'}}/>
+          <span style={{position:'absolute',top:10,right:10,width:18,height:18,borderTop:'1px solid rgba(var(--accent-rgb),calc(0.6*var(--ka)))',borderRight:'1px solid rgba(var(--accent-rgb),calc(0.6*var(--ka)))',pointerEvents:'none'}}/>
+          <span style={{position:'absolute',bottom:10,left:10,width:18,height:18,borderBottom:'1px solid rgba(var(--accent-rgb),calc(0.6*var(--ka)))',borderLeft:'1px solid rgba(var(--accent-rgb),calc(0.6*var(--ka)))',pointerEvents:'none'}}/>
         </div>
 
         {/* Text panel (right) */}
-        <div style={{ position:'relative', padding:'48px 44px 44px', display:'flex', flexDirection:'column', justifyContent:'center', background:'linear-gradient(90deg, rgba(8,6,22,0.5) 0%, rgba(14,10,32,0.85) 100%)' }}>
+        <div style={{ position:'relative', padding:'48px 44px 44px', display:'flex', flexDirection:'column', justifyContent:'center', background:'linear-gradient(90deg, rgba(var(--panel-rgb),0.5) 0%, rgba(var(--panel-rgb),0.85) 100%)' }}>
           {/* Big roman numeral watermark */}
           <div style={{
             position:'absolute', top:18, right:24, pointerEvents:'none',
             fontFamily:'var(--font-display)', fontWeight:300,
             fontSize:'110px', letterSpacing:'0.05em',
-            color:'rgba(124,77,255,0.07)', lineHeight:1,
+            color:'rgba(var(--purple-rgb),calc(0.07*var(--kp) + var(--tb)))', lineHeight:1,
           }}>I</div>
 
           <span style={{
             fontFamily:'var(--font-mono)', fontSize:'10px',
-            letterSpacing:'0.4em', color:'rgba(124,77,255,0.7)',
+            letterSpacing:'0.4em', color:'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))',
             textTransform:'uppercase', marginBottom:14,
             position:'relative', zIndex:1,
           }}>Kapitel I &nbsp;·&nbsp; Vorgeschichte</span>
@@ -1558,21 +1559,21 @@ function _vg_unused() {
           <h2 style={{
             fontFamily:'var(--font-display)', fontWeight:400,
             fontSize:'42px', letterSpacing:'0.06em',
-            color:'#f3eefe', textTransform:'uppercase',
+            color:'var(--white)', textTransform:'uppercase',
             lineHeight:1.05, marginBottom:14,
-            textShadow:'0 0 36px rgba(124,77,255,0.35)',
+            textShadow:'0 0 36px rgba(var(--purple-rgb),calc(0.35*var(--kp)))',
             position:'relative', zIndex:1,
           }}>Der Weiße&nbsp;Wal</h2>
 
           <div style={{
-            width:48, height:1, background:'rgba(124,77,255,0.5)',
+            width:48, height:1, background:'rgba(var(--purple-rgb),calc(0.5*var(--kp)))',
             marginBottom:18,
           }}/>
 
           <p style={{
             fontFamily:'var(--font-body)', fontWeight:300,
             fontSize:'13.5px', lineHeight:1.85,
-            color:'rgba(220,212,250,0.78)', letterSpacing:'0.02em',
+            color:'color-mix(in srgb, rgba(220,212,250,0.78), rgb(var(--ink-rgb)) var(--cm))', letterSpacing:'0.02em',
             textWrap:'pretty', marginBottom:24,
             position:'relative', zIndex:1,
           }}>
@@ -1585,7 +1586,7 @@ function _vg_unused() {
           <div style={{
             display:'flex', alignItems:'center', gap:10,
             fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:400,
-            letterSpacing:'0.28em', color:'#c9b8ff',
+            letterSpacing:'0.28em', color:'var(--lav)',
             textTransform:'uppercase', position:'relative', zIndex:1,
           }}>
             <span>Die ganze Geschichte lesen</span>
@@ -1640,32 +1641,32 @@ function NeuerCharakterButton() {
       style={{ textDecoration:'none', display:'block', position:'relative', height:'100%' }}>
       <div style={{
         position:'relative',
-        background:'linear-gradient(135deg, rgba(40,20,90,0.55) 0%, rgba(15,8,40,0.92) 50%, rgba(5,4,15,0.98) 100%)',
-        border:`1px solid ${hov ? 'rgba(160,140,255,0.65)' : 'rgba(160,140,255,0.3)'}`,
+        background:'linear-gradient(135deg, rgba(40,20,90,0.55) 0%, rgba(var(--panel-rgb),0.92) 50%, rgba(var(--bg-rgb),0.98) 100%)',
+        border:`1px solid ${hov ? 'rgba(var(--accent-rgb),calc(0.65*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.3*var(--ka)))'}`,
         borderRadius:'4px', overflow:'hidden',
         padding:'34px 40px 32px',
         minHeight:'180px', height:'100%',
         transition:'border-color 0.3s, box-shadow 0.3s',
         boxShadow: hov
-          ? '0 0 56px rgba(124,77,255,0.22), inset 0 0 64px rgba(124,77,255,0.08), 0 12px 40px rgba(0,0,0,0.6)'
-          : '0 0 24px rgba(124,77,255,0.08), inset 0 0 40px rgba(124,77,255,0.04), 0 6px 24px rgba(0,0,0,0.45)',
+          ? '0 0 56px rgba(var(--purple-rgb),calc(0.22*var(--kp))), inset 0 0 64px rgba(var(--purple-rgb),calc(0.08*var(--kp))), 0 12px 40px rgba(var(--shadow-rgb),calc(0.6 * var(--shadow-k)))'
+          : '0 0 24px rgba(var(--purple-rgb),calc(0.08*var(--kp))), inset 0 0 40px rgba(var(--purple-rgb),calc(0.04*var(--kp))), 0 6px 24px rgba(0,0,0,0.45)',
       }}>
         <div style={{ position:'absolute', inset:0, pointerEvents:'none',
-          backgroundImage:`repeating-linear-gradient(135deg, transparent, transparent 22px, rgba(160,140,255,0.04) 22px, rgba(160,140,255,0.04) 23px)` }} />
+          backgroundImage:`repeating-linear-gradient(135deg, transparent, transparent 22px, rgba(var(--accent-rgb),calc(0.04*var(--ka))) 22px, rgba(var(--accent-rgb),calc(0.04*var(--ka))) 23px)` }} />
         {/* Sweep on hover (like portal cards) */}
         {hov && <div style={{
           position:'absolute', inset:0, pointerEvents:'none', overflow:'hidden',
         }}>
           <div style={{
             position:'absolute', inset:0,
-            background:'linear-gradient(90deg, transparent 0%, rgba(160,140,255,0.35) 50%, transparent 100%)',
+            background:'linear-gradient(90deg, transparent 0%, rgba(var(--accent-rgb),calc(0.35*var(--ka))) 50%, transparent 100%)',
             opacity:0.5, animation:'sweep 0.9s ease-out forwards',
           }}/>
         </div>}
         {/* Glow on hover, top-left — always rendered so opacity can fade */}
         <div style={{
           position:'absolute', top:'-40px', left:'-40px', width:'320px', height:'320px',
-          background:'radial-gradient(circle, rgba(160,140,255,0.32), transparent 70%)',
+          background:'radial-gradient(circle, rgba(var(--accent-rgb),calc(0.32*var(--ka))), transparent 70%)',
           pointerEvents:'none',
           opacity: hov ? 1 : 0,
           transition:'opacity 0.7s ease-out',
@@ -1681,28 +1682,28 @@ function NeuerCharakterButton() {
         <div style={{ position:'relative', zIndex:2, maxWidth:'88%' }}>
           <div style={{
             fontFamily:'var(--font-mono)', fontSize:'8.5px',
-            letterSpacing:'0.32em', color:'rgba(160,140,255,0.55)',
+            letterSpacing:'0.32em', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
             textTransform:'uppercase', marginBottom:'14px',
             display:'flex', alignItems:'center', gap:'10px',
           }}>
-            <span style={{ width:'24px', height:'1px', background:'rgba(160,140,255,0.4)' }}/>
+            <span style={{ width:'24px', height:'1px', background:'rgba(var(--accent-rgb),calc(0.4*var(--ka)))' }}/>
             Geführter Prozess
           </div>
           <div style={{ position:'relative', display:'inline-block', marginBottom:'14px' }}>
             {glitchActive && <h2 key={`ha-${glitchKey}`} aria-hidden="true" style={{
-              position:'absolute', inset:0, fontFamily:'var(--font-display)', fontSize:'clamp(26px,3vw,36px)', fontWeight:400,
-              letterSpacing:'0.16em', color:'#a78bff', textTransform:'uppercase', lineHeight:1.1,
+              position:'absolute', inset:0, fontFamily:'var(--font-display)', fontSize:'clamp(20px,3vw,36px)', fontWeight:400,
+              letterSpacing:'0.16em', color:'var(--lav2)', textTransform:'uppercase', lineHeight:1.1,
               pointerEvents:'none', zIndex:1, animation:`nc-glitch-a ${dur} ease forwards`,
             }}>Neuer Charakter</h2>}
             {glitchActive && <h2 key={`hb-${glitchKey}`} aria-hidden="true" style={{
-              position:'absolute', inset:0, fontFamily:'var(--font-display)', fontSize:'clamp(26px,3vw,36px)', fontWeight:400,
+              position:'absolute', inset:0, fontFamily:'var(--font-display)', fontSize:'clamp(20px,3vw,36px)', fontWeight:400,
               letterSpacing:'0.16em', color:'#7c4dff', textTransform:'uppercase', lineHeight:1.1,
               pointerEvents:'none', zIndex:1, animation:`nc-glitch-b ${dur} ease forwards`,
             }}>Neuer Charakter</h2>}
             <h2 key={`hmain-${glitchKey}`} style={{
-              fontFamily:'var(--font-display)', fontSize:'clamp(26px,3vw,36px)', fontWeight:400,
-              letterSpacing:'0.16em', color: hov ? '#f0eeff' : '#e8e0ff', textTransform:'uppercase', lineHeight:1.1,
-              textShadow: hov ? '0 0 24px rgba(124,77,255,0.7), 0 0 40px rgba(124,77,255,0.3)' : '0 0 14px rgba(124,77,255,0.3)',
+              fontFamily:'var(--font-display)', fontSize:'clamp(20px,3vw,36px)', fontWeight:400,
+              letterSpacing:'0.16em', color: hov ? 'var(--white)' : 'var(--white)', textTransform:'uppercase', lineHeight:1.1,
+              textShadow: hov ? '0 0 24px rgba(var(--purple-rgb),calc(0.7*var(--kp))), 0 0 40px rgba(var(--purple-rgb),calc(0.3*var(--kp)))' : '0 0 14px rgba(var(--purple-rgb),calc(0.3*var(--kp)))',
               transition: glitchActive ? 'none' : 'color 0.3s, text-shadow 0.3s',
               position:'relative', zIndex:2,
               ...(glitchActive ? { animation:`nc-glitch-main ${dur} ease forwards` } : {}),
@@ -1711,7 +1712,7 @@ function NeuerCharakterButton() {
           <p style={{
             fontFamily:'var(--font-body)', fontWeight:300,
             fontSize:'12.5px', lineHeight:1.85,
-            color:'rgba(220,210,255,0.7)', letterSpacing:'0.03em',
+            color:'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', letterSpacing:'0.03em',
             maxWidth:'500px', marginBottom:'20px', textWrap:'pretty',
           }}>
             Tag-Auswahl, Quiz und am Ende ein vollständiger Charakterbogen — alles in einem geführten Prozess.
@@ -1720,10 +1721,10 @@ function NeuerCharakterButton() {
             {[{n:'01',l:'Tag-Auswahl'},{n:'02',l:'Quiz'},{n:'03',l:'Charakterbogen'}].map((s,i,arr) => (
               <React.Fragment key={s.n}>
                 <div style={{ display:'flex', alignItems:'center', gap:'7px' }}>
-                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.15em', color:'rgba(124,77,255,0.85)', padding:'3px 7px', border:'1px solid rgba(124,77,255,0.45)', borderRadius:'2px', background:'rgba(124,77,255,0.08)' }}>{s.n}</span>
-                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'9.5px', letterSpacing:'0.18em', color:'rgba(220,210,255,0.65)', textTransform:'uppercase' }}>{s.l}</span>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.15em', color:'rgba(var(--purple-rgb),calc(0.85*var(--kp) + var(--tb)))', padding:'3px 7px', border:'1px solid rgba(var(--purple-rgb),calc(0.45*var(--kp)))', borderRadius:'2px', background:'rgba(var(--purple-rgb),calc(0.08*var(--kp)))' }}>{s.n}</span>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'9.5px', letterSpacing:'0.18em', color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))', textTransform:'uppercase' }}>{s.l}</span>
                 </div>
-                {i < arr.length-1 && <span style={{ fontFamily:'var(--font-mono)', fontSize:'10px', color:'rgba(124,77,255,0.4)' }}>→</span>}
+                {i < arr.length-1 && <span style={{ fontFamily:'var(--font-mono)', fontSize:'10px', color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))' }}>→</span>}
               </React.Fragment>
             ))}
           </div>
@@ -1731,14 +1732,14 @@ function NeuerCharakterButton() {
             <span style={{
               fontFamily:'var(--font-display)', fontSize:'10px',
               letterSpacing:'0.28em',
-              color: hov ? '#f0eeff' : '#c9b8ff',
+              color: hov ? 'var(--white)' : 'var(--lav)',
               textTransform:'uppercase',
-              textShadow: hov ? '0 0 12px rgba(124,77,255,0.6)' : 'none',
+              textShadow: hov ? '0 0 12px rgba(var(--purple-rgb),calc(0.6*var(--kp)))' : 'none',
               transition:'color 0.25s, text-shadow 0.25s',
             }}>Erstellung starten</span>
             <span style={{
               fontFamily:'var(--font-mono)', fontSize:'14px',
-              color: hov ? '#f0eeff' : '#c9b8ff',
+              color: hov ? 'var(--white)' : 'var(--lav)',
               transform: hov ? 'translateX(4px)' : 'translateX(0)',
               transition:'transform 0.25s, color 0.25s',
             }}>→</span>
@@ -1773,11 +1774,11 @@ function RecentCharCard({ c }) {
         position:'relative', display:'flex', gap:14,
         padding:'14px 16px',
         background: hov
-          ? 'linear-gradient(135deg, rgba(40,20,90,0.55) 0%, rgba(15,8,40,0.92) 100%)'
-          : 'linear-gradient(135deg, rgba(28,18,68,0.45) 0%, rgba(12,8,32,0.85) 100%)',
-        border:`1px solid ${hov ? 'rgba(160,140,255,0.5)' : 'rgba(160,140,255,0.18)'}`,
+          ? 'linear-gradient(135deg, rgba(40,20,90,0.55) 0%, rgba(var(--panel-rgb),0.92) 100%)'
+          : 'linear-gradient(135deg, rgba(var(--panel-rgb),0.45) 0%, rgba(var(--panel-rgb),0.85) 100%)',
+        border:`1px solid ${hov ? 'rgba(var(--accent-rgb),calc(0.5*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))'}`,
         borderRadius:3, textDecoration:'none',
-        boxShadow: hov ? '0 10px 28px rgba(0,0,0,0.5), 0 0 24px rgba(124,77,255,0.18)' : '0 4px 14px rgba(0,0,0,0.4)',
+        boxShadow: hov ? '0 10px 28px rgba(var(--shadow-rgb),calc(0.5 * var(--shadow-k))), 0 0 24px rgba(var(--purple-rgb),calc(0.18*var(--kp)))' : '0 4px 14px rgba(var(--shadow-rgb),calc(0.4 * var(--shadow-k)))',
         transition:'all 0.22s',
         overflow:'hidden',
       }}
@@ -1802,7 +1803,7 @@ function RecentCharCard({ c }) {
           <span style={{
             position:'relative', zIndex:1,
             fontFamily:'var(--font-display)', fontSize:22, fontWeight:500,
-            letterSpacing:'0.04em', color:'#f0eeff',
+            letterSpacing:'0.04em', color:'var(--white)',
             textShadow:`0 0 14px ${accentEdge}`,
           }}>{c.name.split(' ').map(w=>w[0]).slice(0,2).join('')}</span>
         )}
@@ -1820,13 +1821,13 @@ function RecentCharCard({ c }) {
           }}>{c.kind}</span>
           <span style={{
             fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.22em',
-            color:'rgba(160,140,255,0.45)', textTransform:'uppercase',
+            color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', textTransform:'uppercase',
             whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis',
           }}>vor {c.days} {c.days === 1 ? 'Tag' : 'Tagen'}</span>
         </div>
         <div style={{
           fontFamily:'var(--font-display)', fontSize:14, fontWeight:400,
-          letterSpacing:'0.08em', color: hov ? '#fff' : '#f0eeff',
+          letterSpacing:'0.08em', color: hov ? '#fff' : 'var(--white)',
           textTransform:'uppercase', lineHeight:1.2,
           whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis',
           transition:'color 0.2s',
@@ -1838,7 +1839,7 @@ function RecentCharCard({ c }) {
         }}>{c.rasse} · {c.klasse}{c.div ? ` · ${c.div.replace(/^Die\s+/, '')}` : ''}</div>
         {c.tagline && <div style={{
           fontFamily:'var(--font-body)', fontWeight:300, fontStyle:'italic',
-          fontSize:10.5, color:'rgba(200,190,240,0.55)',
+          fontSize:10.5, color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
           letterSpacing:'0.02em', marginTop:4, lineHeight:1.4,
           whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis',
         }}>„{c.tagline}"</div>}
@@ -1904,10 +1905,10 @@ function RecentCharacters() {
       <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:14 }}>
         <span style={{
           fontFamily:'var(--font-mono)', fontSize:9,
-          letterSpacing:'0.3em', color:'rgba(124,77,255,0.7)',
+          letterSpacing:'0.3em', color:'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))',
           textTransform:'uppercase',
         }}>◇ Zuletzt hinzugefügt</span>
-        <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(124,77,255,0.35), rgba(124,77,255,0.04))' }}/>
+        <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.35*var(--kp))), rgba(var(--purple-rgb),calc(0.04*var(--kp))))' }}/>
       </div>
       <div style={{
         flex:1,
@@ -1915,7 +1916,7 @@ function RecentCharacters() {
         gap:10,
       }}>
         {chars.length === 0
-          ? <div style={{ gridColumn:'1/-1', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(160,140,255,0.3)', letterSpacing:'0.22em', textTransform:'uppercase' }}>◈ Lade…</div>
+          ? <div style={{ gridColumn:'1/-1', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))', letterSpacing:'0.22em', textTransform:'uppercase' }}>◈ Lade…</div>
           : chars.map(c => <RecentCharCard key={c.name + c.kind} c={c}/>)
         }
       </div>
@@ -1950,69 +1951,69 @@ var TAGESKARTE_MAJORS = [
 
 /* Major arcana SVG glyphs — matched to /dm/tarot.html */
 var MAJOR_SVGS = [
-  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 24 52 L 18 22 L 32 38 L 50 14 L 68 38 L 82 22 L 76 52 Z" fill="rgba(124,77,255,0.35)"/><rect x="22" y="52" width="56" height="8" fill="rgba(124,77,255,0.45)"/><circle cx="18" cy="22" r="3.5" fill="rgba(220,210,255,0.9)" stroke-width="1.1"/><circle cx="50" cy="14" r="3.5" fill="rgba(220,210,255,0.9)" stroke-width="1.1"/><circle cx="82" cy="22" r="3.5" fill="rgba(220,210,255,0.9)" stroke-width="1.1"/></svg>`,
-  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 50 10 L 78 70 L 22 70 Z" fill="rgba(124,77,255,0.4)"/><ellipse cx="50" cy="72" rx="36" ry="6" fill="rgba(124,77,255,0.5)"/><polygon points="50,34 53,42 62,42 55,48 58,56 50,50 42,56 45,48 38,42 47,42" fill="rgba(220,210,255,0.95)" stroke-width="0.4"/><circle cx="50" cy="10" r="2.5" fill="rgba(220,210,255,0.95)" stroke="none"/></svg>`,
-  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><polygon points="50,12 86,80 14,80" fill="rgba(124,77,255,0.22)"/><polygon points="50,28 70,68 30,68" fill="rgba(124,77,255,0.4)"/><circle cx="50" cy="54" r="3" fill="rgba(220,210,255,0.95)" stroke="none"/><g stroke-width="0.9" stroke="rgba(160,140,255,0.7)"><line x1="50" y1="4" x2="50" y2="10"/><line x1="30" y1="8" x2="36" y2="14"/><line x1="70" y1="8" x2="64" y2="14"/></g></svg>`,
-  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 24 36 L 32 22 L 40 32 L 50 16 L 60 32 L 68 22 L 76 36 L 70 42 L 30 42 Z" fill="rgba(124,77,255,0.35)"/><circle cx="50" cy="16" r="2" fill="rgba(220,210,255,0.9)" stroke="none"/><path d="M 50,86 C 32,72 26,58 38,52 C 44,49 50,54 50,58 C 50,54 56,49 62,52 C 74,58 68,72 50,86 Z" fill="rgba(124,77,255,0.5)"/></svg>`,
-  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 22 48 L 26 26 L 36 34 L 50 14 L 64 34 L 74 26 L 78 48 Z" fill="rgba(124,77,255,0.42)"/><line x1="22" y1="48" x2="78" y2="48" stroke-width="1.5"/><circle cx="50" cy="14" r="2" fill="rgba(220,210,255,0.95)" stroke="none"/><path d="M 30 58 L 22 86 L 78 86 L 70 58 Z" fill="rgba(124,77,255,0.22)"/><line x1="50" y1="58" x2="50" y2="86" stroke-width="1.4"/></svg>`,
-  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 30 78 L 38 30 L 50 18 L 62 30 L 70 78 Z" fill="rgba(124,77,255,0.32)"/><polygon points="50,8 54,18 64,18 56,24 60,34 50,28 40,34 44,24 36,18 46,18" fill="rgba(124,77,255,0.55)"/><line x1="36" y1="50" x2="64" y2="50" stroke-width="1.1"/><line x1="30" y1="78" x2="70" y2="78" stroke-width="1.4"/></svg>`,
-  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 38,80 C 38,68 14,60 14,42 C 14,32 24,26 32,32 C 35,35 38,38 38,42 C 38,38 41,35 44,32 C 52,26 62,32 62,42 C 62,60 38,68 38,80 Z" fill="rgba(124,77,255,0.42)"/><path d="M 62,80 C 62,68 38,60 38,42 C 38,32 48,26 56,32 C 59,35 62,38 62,42 C 62,38 65,35 68,32 C 76,26 86,32 86,42 C 86,60 62,68 62,80 Z" fill="rgba(124,77,255,0.55)"/></svg>`,
-  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 18 58 L 78 58 L 84 38 L 22 38 Z" fill="rgba(124,77,255,0.38)"/><polygon points="50,16 54,28 64,28 56,34 60,46 50,38 40,46 44,34 36,28 46,28" fill="rgba(124,77,255,0.5)"/><circle cx="34" cy="68" r="11" fill="rgba(124,77,255,0.2)"/><circle cx="66" cy="68" r="11" fill="rgba(124,77,255,0.2)"/><circle cx="34" cy="68" r="2" fill="rgba(220,210,255,0.85)" stroke="none"/><circle cx="66" cy="68" r="2" fill="rgba(220,210,255,0.85)" stroke="none"/></svg>`,
-  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linecap="round"><line x1="50" y1="22" x2="50" y2="82" stroke-width="1.6"/><line x1="42" y1="82" x2="58" y2="82"/><line x1="20" y1="32" x2="80" y2="32" stroke-width="1.4"/><line x1="28" y1="32" x2="28" y2="46"/><line x1="72" y1="32" x2="72" y2="46"/><path d="M 18 46 A 10 6 0 0 0 38 46 Z" fill="rgba(124,77,255,0.35)"/><path d="M 62 46 A 10 6 0 0 0 82 46 Z" fill="rgba(124,77,255,0.35)"/><circle cx="50" cy="32" r="3" fill="rgba(200,190,240,0.95)" stroke="none"/></svg>`,
-  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round"><path d="M 42 22 Q 50 12 58 22" stroke-linecap="round"/><polygon points="50,22 68,32 68,56 50,66 32,56 32,32" fill="rgba(124,77,255,0.25)"/><circle cx="50" cy="44" r="6" fill="rgba(220,210,255,0.9)" stroke-width="1.2"/><line x1="18" y1="44" x2="28" y2="44" stroke-width="0.9"/><line x1="72" y1="44" x2="82" y2="44" stroke-width="0.9"/><line x1="50" y1="74" x2="50" y2="84" stroke-width="0.9"/></svg>`,
-  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4"><circle cx="50" cy="50" r="28"/><circle cx="50" cy="50" r="20" stroke-dasharray="3 2"/><circle cx="50" cy="50" r="6" fill="rgba(124,77,255,0.5)" stroke-width="1.2"/><line x1="50" y1="22" x2="50" y2="78" stroke-width="1.1"/><line x1="22" y1="50" x2="78" y2="50" stroke-width="1.1"/><line x1="30" y1="30" x2="70" y2="70" stroke-width="1.1"/><line x1="70" y1="30" x2="30" y2="70" stroke-width="1.1"/></svg>`,
-  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><circle cx="50" cy="50" r="34" stroke-dasharray="2 4" stroke-width="0.8"/><path d="M 50,76 C 50,66 30,58 30,42 C 30,34 38,30 44,34 C 47,37 50,40 50,42 C 50,40 53,37 56,34 C 62,30 70,34 70,42 C 70,58 50,66 50,76 Z" fill="rgba(124,77,255,0.5)"/></svg>`,
-  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><line x1="14" y1="26" x2="86" y2="26" stroke-width="1.6"/><line x1="50" y1="14" x2="50" y2="26"/><circle cx="50" cy="14" r="2.5" fill="rgba(160,140,255,0.85)" stroke="none"/><polygon points="22,30 78,30 50,82" fill="rgba(124,77,255,0.3)"/><circle cx="50" cy="54" r="4" fill="rgba(160,140,255,0.95)" stroke="none"/></svg>`,
-  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><line x1="34" y1="20" x2="68" y2="84" stroke-width="1.6"/><path d="M 32 22 Q 64 16 72 38 Q 58 32 36 32 Z" fill="rgba(124,77,255,0.4)"/><line x1="62" y1="70" x2="50" y2="78"/><circle cx="34" cy="20" r="2.5" fill="rgba(160,140,255,0.9)" stroke="none"/></svg>`,
-  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M 28 20 Q 18 38 28 46 Q 38 38 28 20 Z" fill="rgba(124,77,255,0.45)"/><path d="M 72 54 Q 62 72 72 80 Q 82 72 72 54 Z" fill="rgba(124,77,255,0.45)"/><path d="M 30 46 Q 50 50 70 54" stroke-dasharray="2 2"/><circle cx="50" cy="50" r="2" fill="rgba(220,210,255,0.9)" stroke="none"/></svg>`,
-  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round"><polygon points="50,84 66,40 22,68 78,68 34,40" fill="rgba(124,77,255,0.3)"/><circle cx="50" cy="62" r="2.5" fill="rgba(160,140,255,0.95)" stroke="none"/><path d="M 32 14 L 28 28 L 38 26 Z" fill="rgba(124,77,255,0.45)"/><path d="M 68 14 L 72 28 L 62 26 Z" fill="rgba(124,77,255,0.45)"/></svg>`,
-  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 36 86 L 36 38 L 64 38 L 64 86 Z" fill="rgba(124,77,255,0.22)"/><path d="M 30 38 L 30 28 L 70 28 L 70 38 Z" fill="rgba(124,77,255,0.42)"/><rect x="45" y="50" width="10" height="14" fill="rgba(255,200,100,0.55)" stroke-width="1.1"/><path d="M 84 8 L 70 30 L 78 32 L 60 54" stroke="rgba(255,235,180,0.95)" stroke-width="1.8" fill="rgba(255,200,100,0.4)"/></svg>`,
-  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"><polygon points="50,8 56,32 80,30 64,46 76,68 56,60 50,82 44,60 24,68 36,46 20,30 44,32" fill="rgba(124,77,255,0.5)"/><circle cx="50" cy="46" r="3" fill="rgba(220,210,255,0.95)" stroke="none"/><path d="M 12 88 Q 22 82 32 88 T 52 88 T 72 88 T 92 88" stroke-width="1.1"/></svg>`,
-  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 60 14 Q 26 18 22 50 Q 26 82 60 86 Q 36 78 36 50 Q 36 22 60 14 Z" fill="rgba(124,77,255,0.4)"/><circle cx="34" cy="40" r="2" fill="rgba(160,140,255,0.55)" stroke="none"/><circle cx="28" cy="56" r="2.5" fill="rgba(160,140,255,0.55)" stroke="none"/><polygon points="80,22 82,28 88,28 83,32 85,38 80,34 75,38 77,32 72,28 78,28" fill="rgba(220,210,255,0.85)" stroke-width="0.4"/></svg>`,
-  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.2" stroke-linecap="round"><circle cx="50" cy="50" r="14" fill="rgba(124,77,255,0.55)"/><line x1="50" y1="12" x2="50" y2="22"/><line x1="50" y1="78" x2="50" y2="88"/><line x1="12" y1="50" x2="22" y2="50"/><line x1="78" y1="50" x2="88" y2="50"/><line x1="22" y1="22" x2="30" y2="30"/><line x1="78" y1="22" x2="70" y2="30"/><line x1="22" y1="78" x2="30" y2="70"/><line x1="78" y1="78" x2="70" y2="70"/><circle cx="50" cy="50" r="3" fill="rgba(220,210,255,0.95)" stroke="none"/></svg>`,
-  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><rect x="22" y="18" width="56" height="22" fill="rgba(124,77,255,0.45)" rx="3"/><rect x="46" y="40" width="8" height="28" fill="rgba(124,77,255,0.4)" rx="2"/><path d="M 14 84 L 22 74 L 78 74 L 86 84 Z" fill="rgba(124,77,255,0.32)"/></svg>`,
-  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.3" stroke-linecap="round"><circle cx="50" cy="50" r="30" stroke-dasharray="6 3"/><circle cx="50" cy="50" r="22" fill="rgba(124,77,255,0.3)" stroke-width="1.4"/><line x1="50" y1="34" x2="50" y2="66" stroke-width="1.4"/><line x1="34" y1="50" x2="66" y2="50" stroke-width="1.4"/><circle cx="50" cy="50" r="3.5" fill="rgba(220,210,255,0.95)" stroke="none"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(var(--accent-rgb),calc(0.85*var(--ka)))" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 24 52 L 18 22 L 32 38 L 50 14 L 68 38 L 82 22 L 76 52 Z" fill="rgba(var(--purple-rgb),calc(0.35*var(--kp)))"/><rect x="22" y="52" width="56" height="8" fill="rgba(var(--purple-rgb),calc(0.45*var(--kp)))"/><circle cx="18" cy="22" r="3.5" fill="rgba(var(--text-rgb),calc(0.9*var(--kt)))" stroke-width="1.1"/><circle cx="50" cy="14" r="3.5" fill="rgba(var(--text-rgb),calc(0.9*var(--kt)))" stroke-width="1.1"/><circle cx="82" cy="22" r="3.5" fill="rgba(var(--text-rgb),calc(0.9*var(--kt)))" stroke-width="1.1"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(var(--accent-rgb),calc(0.85*var(--ka)))" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 50 10 L 78 70 L 22 70 Z" fill="rgba(var(--purple-rgb),calc(0.4*var(--kp)))"/><ellipse cx="50" cy="72" rx="36" ry="6" fill="rgba(var(--purple-rgb),calc(0.5*var(--kp)))"/><polygon points="50,34 53,42 62,42 55,48 58,56 50,50 42,56 45,48 38,42 47,42" fill="rgba(var(--text-rgb),calc(0.95*var(--kt)))" stroke-width="0.4"/><circle cx="50" cy="10" r="2.5" fill="rgba(var(--text-rgb),calc(0.95*var(--kt)))" stroke="none"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(var(--accent-rgb),calc(0.85*var(--ka)))" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><polygon points="50,12 86,80 14,80" fill="rgba(var(--purple-rgb),calc(0.22*var(--kp)))"/><polygon points="50,28 70,68 30,68" fill="rgba(var(--purple-rgb),calc(0.4*var(--kp)))"/><circle cx="50" cy="54" r="3" fill="rgba(var(--text-rgb),calc(0.95*var(--kt)))" stroke="none"/><g stroke-width="0.9" stroke="rgba(var(--accent-rgb),calc(0.7*var(--ka)))"><line x1="50" y1="4" x2="50" y2="10"/><line x1="30" y1="8" x2="36" y2="14"/><line x1="70" y1="8" x2="64" y2="14"/></g></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(var(--accent-rgb),calc(0.85*var(--ka)))" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 24 36 L 32 22 L 40 32 L 50 16 L 60 32 L 68 22 L 76 36 L 70 42 L 30 42 Z" fill="rgba(var(--purple-rgb),calc(0.35*var(--kp)))"/><circle cx="50" cy="16" r="2" fill="rgba(var(--text-rgb),calc(0.9*var(--kt)))" stroke="none"/><path d="M 50,86 C 32,72 26,58 38,52 C 44,49 50,54 50,58 C 50,54 56,49 62,52 C 74,58 68,72 50,86 Z" fill="rgba(var(--purple-rgb),calc(0.5*var(--kp)))"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(var(--accent-rgb),calc(0.85*var(--ka)))" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 22 48 L 26 26 L 36 34 L 50 14 L 64 34 L 74 26 L 78 48 Z" fill="rgba(var(--purple-rgb),calc(0.42*var(--kp)))"/><line x1="22" y1="48" x2="78" y2="48" stroke-width="1.5"/><circle cx="50" cy="14" r="2" fill="rgba(var(--text-rgb),calc(0.95*var(--kt)))" stroke="none"/><path d="M 30 58 L 22 86 L 78 86 L 70 58 Z" fill="rgba(var(--purple-rgb),calc(0.22*var(--kp)))"/><line x1="50" y1="58" x2="50" y2="86" stroke-width="1.4"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(var(--accent-rgb),calc(0.85*var(--ka)))" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 30 78 L 38 30 L 50 18 L 62 30 L 70 78 Z" fill="rgba(var(--purple-rgb),calc(0.32*var(--kp)))"/><polygon points="50,8 54,18 64,18 56,24 60,34 50,28 40,34 44,24 36,18 46,18" fill="rgba(var(--purple-rgb),calc(0.55*var(--kp)))"/><line x1="36" y1="50" x2="64" y2="50" stroke-width="1.1"/><line x1="30" y1="78" x2="70" y2="78" stroke-width="1.4"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(var(--accent-rgb),calc(0.85*var(--ka)))" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 38,80 C 38,68 14,60 14,42 C 14,32 24,26 32,32 C 35,35 38,38 38,42 C 38,38 41,35 44,32 C 52,26 62,32 62,42 C 62,60 38,68 38,80 Z" fill="rgba(var(--purple-rgb),calc(0.42*var(--kp)))"/><path d="M 62,80 C 62,68 38,60 38,42 C 38,32 48,26 56,32 C 59,35 62,38 62,42 C 62,38 65,35 68,32 C 76,26 86,32 86,42 C 86,60 62,68 62,80 Z" fill="rgba(var(--purple-rgb),calc(0.55*var(--kp)))"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(var(--accent-rgb),calc(0.85*var(--ka)))" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 18 58 L 78 58 L 84 38 L 22 38 Z" fill="rgba(var(--purple-rgb),calc(0.38*var(--kp)))"/><polygon points="50,16 54,28 64,28 56,34 60,46 50,38 40,46 44,34 36,28 46,28" fill="rgba(var(--purple-rgb),calc(0.5*var(--kp)))"/><circle cx="34" cy="68" r="11" fill="rgba(var(--purple-rgb),calc(0.2*var(--kp)))"/><circle cx="66" cy="68" r="11" fill="rgba(var(--purple-rgb),calc(0.2*var(--kp)))"/><circle cx="34" cy="68" r="2" fill="rgba(var(--text-rgb),calc(0.85*var(--kt)))" stroke="none"/><circle cx="66" cy="68" r="2" fill="rgba(var(--text-rgb),calc(0.85*var(--kt)))" stroke="none"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(var(--accent-rgb),calc(0.85*var(--ka)))" stroke-width="1.4" stroke-linecap="round"><line x1="50" y1="22" x2="50" y2="82" stroke-width="1.6"/><line x1="42" y1="82" x2="58" y2="82"/><line x1="20" y1="32" x2="80" y2="32" stroke-width="1.4"/><line x1="28" y1="32" x2="28" y2="46"/><line x1="72" y1="32" x2="72" y2="46"/><path d="M 18 46 A 10 6 0 0 0 38 46 Z" fill="rgba(var(--purple-rgb),calc(0.35*var(--kp)))"/><path d="M 62 46 A 10 6 0 0 0 82 46 Z" fill="rgba(var(--purple-rgb),calc(0.35*var(--kp)))"/><circle cx="50" cy="32" r="3" fill="rgba(var(--text-rgb),calc(0.95*var(--kt)))" stroke="none"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(var(--accent-rgb),calc(0.85*var(--ka)))" stroke-width="1.4" stroke-linejoin="round"><path d="M 42 22 Q 50 12 58 22" stroke-linecap="round"/><polygon points="50,22 68,32 68,56 50,66 32,56 32,32" fill="rgba(var(--purple-rgb),calc(0.25*var(--kp)))"/><circle cx="50" cy="44" r="6" fill="rgba(var(--text-rgb),calc(0.9*var(--kt)))" stroke-width="1.2"/><line x1="18" y1="44" x2="28" y2="44" stroke-width="0.9"/><line x1="72" y1="44" x2="82" y2="44" stroke-width="0.9"/><line x1="50" y1="74" x2="50" y2="84" stroke-width="0.9"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(var(--accent-rgb),calc(0.85*var(--ka)))" stroke-width="1.4"><circle cx="50" cy="50" r="28"/><circle cx="50" cy="50" r="20" stroke-dasharray="3 2"/><circle cx="50" cy="50" r="6" fill="rgba(var(--purple-rgb),calc(0.5*var(--kp)))" stroke-width="1.2"/><line x1="50" y1="22" x2="50" y2="78" stroke-width="1.1"/><line x1="22" y1="50" x2="78" y2="50" stroke-width="1.1"/><line x1="30" y1="30" x2="70" y2="70" stroke-width="1.1"/><line x1="70" y1="30" x2="30" y2="70" stroke-width="1.1"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(var(--accent-rgb),calc(0.85*var(--ka)))" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><circle cx="50" cy="50" r="34" stroke-dasharray="2 4" stroke-width="0.8"/><path d="M 50,76 C 50,66 30,58 30,42 C 30,34 38,30 44,34 C 47,37 50,40 50,42 C 50,40 53,37 56,34 C 62,30 70,34 70,42 C 70,58 50,66 50,76 Z" fill="rgba(var(--purple-rgb),calc(0.5*var(--kp)))"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(var(--accent-rgb),calc(0.85*var(--ka)))" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><line x1="14" y1="26" x2="86" y2="26" stroke-width="1.6"/><line x1="50" y1="14" x2="50" y2="26"/><circle cx="50" cy="14" r="2.5" fill="rgba(var(--accent-rgb),calc(0.85*var(--ka)))" stroke="none"/><polygon points="22,30 78,30 50,82" fill="rgba(var(--purple-rgb),calc(0.3*var(--kp)))"/><circle cx="50" cy="54" r="4" fill="rgba(var(--accent-rgb),calc(0.95*var(--ka)))" stroke="none"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(var(--accent-rgb),calc(0.85*var(--ka)))" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><line x1="34" y1="20" x2="68" y2="84" stroke-width="1.6"/><path d="M 32 22 Q 64 16 72 38 Q 58 32 36 32 Z" fill="rgba(var(--purple-rgb),calc(0.4*var(--kp)))"/><line x1="62" y1="70" x2="50" y2="78"/><circle cx="34" cy="20" r="2.5" fill="rgba(var(--accent-rgb),calc(0.9*var(--ka)))" stroke="none"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(var(--accent-rgb),calc(0.85*var(--ka)))" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M 28 20 Q 18 38 28 46 Q 38 38 28 20 Z" fill="rgba(var(--purple-rgb),calc(0.45*var(--kp)))"/><path d="M 72 54 Q 62 72 72 80 Q 82 72 72 54 Z" fill="rgba(var(--purple-rgb),calc(0.45*var(--kp)))"/><path d="M 30 46 Q 50 50 70 54" stroke-dasharray="2 2"/><circle cx="50" cy="50" r="2" fill="rgba(var(--text-rgb),calc(0.9*var(--kt)))" stroke="none"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(var(--accent-rgb),calc(0.85*var(--ka)))" stroke-width="1.4" stroke-linejoin="round"><polygon points="50,84 66,40 22,68 78,68 34,40" fill="rgba(var(--purple-rgb),calc(0.3*var(--kp)))"/><circle cx="50" cy="62" r="2.5" fill="rgba(var(--accent-rgb),calc(0.95*var(--ka)))" stroke="none"/><path d="M 32 14 L 28 28 L 38 26 Z" fill="rgba(var(--purple-rgb),calc(0.45*var(--kp)))"/><path d="M 68 14 L 72 28 L 62 26 Z" fill="rgba(var(--purple-rgb),calc(0.45*var(--kp)))"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(var(--accent-rgb),calc(0.85*var(--ka)))" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 36 86 L 36 38 L 64 38 L 64 86 Z" fill="rgba(var(--purple-rgb),calc(0.22*var(--kp)))"/><path d="M 30 38 L 30 28 L 70 28 L 70 38 Z" fill="rgba(var(--purple-rgb),calc(0.42*var(--kp)))"/><rect x="45" y="50" width="10" height="14" fill="rgba(255,200,100,0.55)" stroke-width="1.1"/><path d="M 84 8 L 70 30 L 78 32 L 60 54" stroke="rgba(255,235,180,0.95)" stroke-width="1.8" fill="rgba(255,200,100,0.4)"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(var(--accent-rgb),calc(0.85*var(--ka)))" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"><polygon points="50,8 56,32 80,30 64,46 76,68 56,60 50,82 44,60 24,68 36,46 20,30 44,32" fill="rgba(var(--purple-rgb),calc(0.5*var(--kp)))"/><circle cx="50" cy="46" r="3" fill="rgba(var(--text-rgb),calc(0.95*var(--kt)))" stroke="none"/><path d="M 12 88 Q 22 82 32 88 T 52 88 T 72 88 T 92 88" stroke-width="1.1"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(var(--accent-rgb),calc(0.85*var(--ka)))" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M 60 14 Q 26 18 22 50 Q 26 82 60 86 Q 36 78 36 50 Q 36 22 60 14 Z" fill="rgba(var(--purple-rgb),calc(0.4*var(--kp)))"/><circle cx="34" cy="40" r="2" fill="rgba(var(--accent-rgb),calc(0.55*var(--ka)))" stroke="none"/><circle cx="28" cy="56" r="2.5" fill="rgba(var(--accent-rgb),calc(0.55*var(--ka)))" stroke="none"/><polygon points="80,22 82,28 88,28 83,32 85,38 80,34 75,38 77,32 72,28 78,28" fill="rgba(var(--text-rgb),calc(0.85*var(--kt)))" stroke-width="0.4"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(var(--accent-rgb),calc(0.85*var(--ka)))" stroke-width="1.2" stroke-linecap="round"><circle cx="50" cy="50" r="14" fill="rgba(var(--purple-rgb),calc(0.55*var(--kp)))"/><line x1="50" y1="12" x2="50" y2="22"/><line x1="50" y1="78" x2="50" y2="88"/><line x1="12" y1="50" x2="22" y2="50"/><line x1="78" y1="50" x2="88" y2="50"/><line x1="22" y1="22" x2="30" y2="30"/><line x1="78" y1="22" x2="70" y2="30"/><line x1="22" y1="78" x2="30" y2="70"/><line x1="78" y1="78" x2="70" y2="70"/><circle cx="50" cy="50" r="3" fill="rgba(var(--text-rgb),calc(0.95*var(--kt)))" stroke="none"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(var(--accent-rgb),calc(0.85*var(--ka)))" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><rect x="22" y="18" width="56" height="22" fill="rgba(var(--purple-rgb),calc(0.45*var(--kp)))" rx="3"/><rect x="46" y="40" width="8" height="28" fill="rgba(var(--purple-rgb),calc(0.4*var(--kp)))" rx="2"/><path d="M 14 84 L 22 74 L 78 74 L 86 84 Z" fill="rgba(var(--purple-rgb),calc(0.32*var(--kp)))"/></svg>`,
+  `<svg viewBox="0 0 100 100" fill="none" stroke="rgba(var(--accent-rgb),calc(0.85*var(--ka)))" stroke-width="1.3" stroke-linecap="round"><circle cx="50" cy="50" r="30" stroke-dasharray="6 3"/><circle cx="50" cy="50" r="22" fill="rgba(var(--purple-rgb),calc(0.3*var(--kp)))" stroke-width="1.4"/><line x1="50" y1="34" x2="50" y2="66" stroke-width="1.4"/><line x1="34" y1="50" x2="66" y2="50" stroke-width="1.4"/><circle cx="50" cy="50" r="3.5" fill="rgba(var(--text-rgb),calc(0.95*var(--kt)))" stroke="none"/></svg>`,
 ];
 
 var TAROT_BACK_SVG = `
   <svg viewBox="0 0 100 170" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <radialGradient id="tb-bg" cx="50%" cy="50%" r="60%">
-        <stop offset="0%" stop-color="#1a0f3e"/>
-        <stop offset="100%" stop-color="#08061a"/>
+        <stop offset="0%" stop-color="rgb(var(--panel-rgb))"/>
+        <stop offset="100%" stop-color="rgb(var(--panel-rgb))"/>
       </radialGradient>
       <pattern id="tb-grid" width="8" height="8" patternUnits="userSpaceOnUse">
-        <path d="M 8 0 L 0 0 0 8" fill="none" stroke="rgba(160,140,255,0.12)" stroke-width="0.4"/>
+        <path d="M 8 0 L 0 0 0 8" fill="none" stroke="rgba(var(--accent-rgb),calc(0.12*var(--ka)))" stroke-width="0.4"/>
       </pattern>
     </defs>
     <rect width="100" height="170" fill="url(#tb-bg)"/>
     <rect width="100" height="170" fill="url(#tb-grid)"/>
-    <rect x="4" y="4" width="92" height="162" fill="none" stroke="rgba(160,140,255,0.65)" stroke-width="0.6"/>
-    <rect x="8" y="8" width="84" height="154" fill="none" stroke="rgba(124,77,255,0.35)" stroke-width="0.3"/>
-    <g fill="none" stroke="rgba(160,140,255,0.7)" stroke-width="0.55">
+    <rect x="4" y="4" width="92" height="162" fill="none" stroke="rgba(var(--accent-rgb),calc(0.65*var(--ka)))" stroke-width="0.6"/>
+    <rect x="8" y="8" width="84" height="154" fill="none" stroke="rgba(var(--purple-rgb),calc(0.35*var(--kp)))" stroke-width="0.3"/>
+    <g fill="none" stroke="rgba(var(--accent-rgb),calc(0.7*var(--ka)))" stroke-width="0.55">
       <polygon points="50,55 64,63 64,77 50,85 36,77 36,63"/>
       <polygon points="50,85 64,93 64,107 50,115 36,107 36,93"/>
       <polygon points="50,40 60,46 60,58 50,64 40,58 40,46"/>
       <polygon points="50,106 60,112 60,124 50,130 40,124 40,112"/>
     </g>
-    <g fill="none" stroke="rgba(124,77,255,0.55)" stroke-width="0.45">
+    <g fill="none" stroke="rgba(var(--purple-rgb),calc(0.55*var(--kp)))" stroke-width="0.45">
       <circle cx="50" cy="85" r="28"/>
       <circle cx="50" cy="85" r="20" stroke-dasharray="2 2"/>
     </g>
-    <g fill="rgba(160,140,255,0.9)">
+    <g fill="rgba(var(--accent-rgb),calc(0.9*var(--ka)))">
       <circle cx="50" cy="85" r="2"/>
       <circle cx="14" cy="14" r="1.5"/>
       <circle cx="86" cy="14" r="1.5"/>
       <circle cx="14" cy="156" r="1.5"/>
       <circle cx="86" cy="156" r="1.5"/>
     </g>
-    <g fill="none" stroke="rgba(160,140,255,0.5)" stroke-width="0.4">
+    <g fill="none" stroke="rgba(var(--accent-rgb),calc(0.5*var(--ka)))" stroke-width="0.4">
       <path d="M50,18 L50,32"/>
       <path d="M50,138 L50,152"/>
     </g>
   </svg>`;
 
-var TAROT_CORNER_SVG = `<svg viewBox="0 0 20 20" fill="none" stroke="rgba(160,140,255,0.85)" stroke-width="1.2"><polygon points="10,2 17,6 17,14 10,18 3,14 3,6"/><circle cx="10" cy="10" r="2" fill="rgba(160,140,255,0.7)"/></svg>`;
+var TAROT_CORNER_SVG = `<svg viewBox="0 0 20 20" fill="none" stroke="rgba(var(--accent-rgb),calc(0.85*var(--ka)))" stroke-width="1.2"><polygon points="10,2 17,6 17,14 10,18 3,14 3,6"/><circle cx="10" cy="10" r="2" fill="rgba(var(--accent-rgb),calc(0.7*var(--ka)))"/></svg>`;
 
 function Tageskarte() {
   const [flipped, setFlipped] = uSx(false);
@@ -2082,7 +2083,7 @@ function Tageskarte() {
 
   const burstAtCard = () => {
     const el = cardRef.current; if (!el) return;
-    const r = el.getBoundingClientRect();
+    const r = window.uiRect(el);
     spawnStarBurst(r.left + r.width/2, r.top + r.height/2);
   };
 
@@ -2111,13 +2112,13 @@ function Tageskarte() {
       <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:24 }}>
         <span style={{
           fontFamily:'var(--font-mono)', fontSize:'10px',
-          letterSpacing:'0.35em', color:'rgba(124,77,255,0.65)',
+          letterSpacing:'0.35em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))',
           textTransform:'uppercase',
         }}>◈ Tageskarte</span>
-        <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(124,77,255,0.5), rgba(124,77,255,0.05))' }}/>
+        <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.5*var(--kp))), rgba(var(--purple-rgb),calc(0.05*var(--kp))))' }}/>
         <span style={{
           fontFamily:'var(--font-mono)', fontSize:'9px',
-          letterSpacing:'0.28em', color:'rgba(160,140,255,0.4)',
+          letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
           textTransform:'uppercase',
         }}>Große Arkana · 22 Karten</span>
       </div>
@@ -2125,22 +2126,22 @@ function Tageskarte() {
       <div style={{
         display:'grid', gridTemplateColumns:'1fr auto 1fr', gap:56,
         alignItems:'center', padding:'30px 36px',
-        background:'radial-gradient(ellipse at center, rgba(20,12,46,0.55) 0%, transparent 70%)',
+        background:'radial-gradient(ellipse at center, rgba(var(--panel-rgb),0.55) 0%, transparent 70%)',
       }}>
         {/* Left text */}
         <div style={{ textAlign:'right' }}>
           <h3 style={{
             fontFamily:'var(--font-display)', fontWeight:400,
             fontSize:'34px', letterSpacing:'0.1em',
-            color:'#f3eefe', textTransform:'uppercase',
+            color:'var(--white)', textTransform:'uppercase',
             lineHeight:1.05, marginBottom:14,
-            textShadow:'0 0 28px rgba(124,77,255,0.35)',
+            textShadow:'0 0 28px rgba(var(--purple-rgb),calc(0.35*var(--kp)))',
           }}>Was hält<br/>der Tag<br/>bereit?</h3>
-          <div style={{ width:42, height:1, background:'rgba(124,77,255,0.6)', marginLeft:'auto', marginBottom:18 }}/>
+          <div style={{ width:42, height:1, background:'rgba(var(--purple-rgb),calc(0.6*var(--kp)))', marginLeft:'auto', marginBottom:18 }}/>
           <p style={{
             fontFamily:'var(--font-body)', fontWeight:300,
             fontSize:'12.5px', lineHeight:1.85,
-            color:'rgba(200,190,240,0.65)',
+            color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
             maxWidth:'280px', marginLeft:'auto',
             textWrap:'pretty',
           }}>
@@ -2172,29 +2173,29 @@ function Tageskarte() {
         <div style={{ textAlign:'left' }}>
           <div style={{
             fontFamily:'var(--font-mono)', fontSize:'9px',
-            letterSpacing:'0.32em', color:'rgba(124,77,255,0.6)',
+            letterSpacing:'0.32em', color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',
             textTransform:'uppercase', marginBottom:14,
           }}>{flipped ? 'Gezogen · ' + card[0] : 'Verdeckt'}</div>
           {flipped && (
             <div style={{
               fontFamily:'var(--font-display)', fontWeight:400,
               fontSize:'22px', letterSpacing:'0.1em',
-              color:'#f3eefe', textTransform:'uppercase',
+              color:'var(--white)', textTransform:'uppercase',
               lineHeight:1.1, marginBottom:10,
-              textShadow:'0 0 18px rgba(124,77,255,0.35)',
+              textShadow:'0 0 18px rgba(var(--purple-rgb),calc(0.35*var(--kp)))',
             }}>{card[1]}</div>
           )}
           <button onClick={draw} style={{
             fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:400,
             letterSpacing:'0.22em', padding:'12px 22px',
-            background:'rgba(124,77,255,0.1)',
-            border:'1px solid rgba(160,140,255,0.45)',
-            color:'#e0d4ff', textTransform:'uppercase',
+            background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
+            border:'1px solid rgba(var(--accent-rgb),calc(0.45*var(--ka)))',
+            color:'var(--white)', textTransform:'uppercase',
             borderRadius:3, cursor:'pointer',
             transition:'all 0.2s', marginBottom:10, display:'block',
           }}
-            onMouseEnter={e => { e.currentTarget.style.background='rgba(124,77,255,0.22)'; e.currentTarget.style.borderColor='rgba(160,140,255,0.8)'; e.currentTarget.style.color='#fff'; }}
-            onMouseLeave={e => { e.currentTarget.style.background='rgba(124,77,255,0.1)'; e.currentTarget.style.borderColor='rgba(160,140,255,0.45)'; e.currentTarget.style.color='#e0d4ff'; }}
+            onMouseEnter={e => { e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.22*var(--kp)))'; e.currentTarget.style.borderColor='rgba(var(--accent-rgb),calc(0.8*var(--ka)))'; e.currentTarget.style.color='#fff'; }}
+            onMouseLeave={e => { e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.1*var(--kp)))'; e.currentTarget.style.borderColor='rgba(var(--accent-rgb),calc(0.45*var(--ka)))'; e.currentTarget.style.color='var(--white)'; }}
           >
             {flipped ? 'Neue Karte ziehen' : 'Karte aufdecken'}
           </button>
@@ -2202,14 +2203,14 @@ function Tageskarte() {
             fontFamily:'var(--font-display)', fontSize:'10px', fontWeight:400,
             letterSpacing:'0.22em', padding:'10px 20px',
             background:'transparent',
-            border:'1px solid rgba(160,140,255,0.22)',
-            color: flipped ? 'rgba(200,190,240,0.7)' : 'rgba(160,140,255,0.25)',
+            border:'1px solid rgba(var(--accent-rgb),calc(0.22*var(--ka)))',
+            color: flipped ? 'rgba(var(--text-rgb),calc(0.7*var(--kt)))' : 'rgba(var(--accent-rgb),calc(0.25*var(--ka)))',
             textTransform:'uppercase',
             borderRadius:3, cursor: flipped ? 'pointer' : 'not-allowed',
             transition:'all 0.2s', marginBottom:18, display:'block',
           }}
-            onMouseEnter={e => { if (flipped) { e.currentTarget.style.color='#f0eeff'; e.currentTarget.style.borderColor='rgba(160,140,255,0.5)'; } }}
-            onMouseLeave={e => { if (flipped) { e.currentTarget.style.color='rgba(200,190,240,0.7)'; e.currentTarget.style.borderColor='rgba(160,140,255,0.22)'; } }}
+            onMouseEnter={e => { if (flipped) { e.currentTarget.style.color='var(--white)'; e.currentTarget.style.borderColor='rgba(var(--accent-rgb),calc(0.5*var(--ka)))'; } }}
+            onMouseLeave={e => { if (flipped) { e.currentTarget.style.color='rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))'; e.currentTarget.style.borderColor='rgba(var(--accent-rgb),calc(0.22*var(--ka)))'; } }}
           >
             Clear
           </button>
@@ -2229,15 +2230,15 @@ function CTAButton({ href, label, glyph='◈' }) {
         display:'inline-flex', alignItems:'center', gap:10,
         fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:400,
         letterSpacing:'0.28em', padding:'9px 24px',
-        background:'rgba(124,77,255,0.22)',
-        border:'1px solid rgba(167,139,255,0.7)',
-        color:'#f0eeff', textDecoration:'none',
+        background:'rgba(var(--purple-rgb),calc(0.22*var(--kp)))',
+        border:'1px solid rgba(var(--accent-rgb),calc(0.7*var(--ka)))',
+        color:'var(--white)', textDecoration:'none',
         textTransform:'uppercase', borderRadius:'2px',
-        boxShadow:'0 0 20px rgba(124,77,255,0.25)',
+        boxShadow:'0 0 20px rgba(var(--purple-rgb),calc(0.25*var(--kp)))',
         transition:'all 0.2s',
       }}
-        onMouseEnter={e=>{ e.currentTarget.style.background='rgba(124,77,255,0.35)'; e.currentTarget.style.borderColor='#a78bff'; e.currentTarget.style.boxShadow='0 0 28px rgba(124,77,255,0.45)'; }}
-        onMouseLeave={e=>{ e.currentTarget.style.background='rgba(124,77,255,0.22)'; e.currentTarget.style.borderColor='rgba(167,139,255,0.7)'; e.currentTarget.style.boxShadow='0 0 20px rgba(124,77,255,0.25)'; }}
+        onMouseEnter={e=>{ e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.35*var(--kp)))'; e.currentTarget.style.borderColor='var(--lav2)'; e.currentTarget.style.boxShadow='0 0 28px rgba(var(--purple-rgb),calc(0.45*var(--kp)))'; }}
+        onMouseLeave={e=>{ e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.22*var(--kp)))'; e.currentTarget.style.borderColor='rgba(var(--accent-rgb),calc(0.7*var(--ka)))'; e.currentTarget.style.boxShadow='0 0 20px rgba(var(--purple-rgb),calc(0.25*var(--kp)))'; }}
       >
         <span style={{
           width:16, height:16, borderRadius:'50%',
@@ -2270,7 +2271,7 @@ function App() {
   }, []);
 
   return (
-    <div onMouseMove={onMove} style={{position:'relative', minHeight:'100vh'}}>
+    <div onMouseMove={onMove} style={{position:'relative', minHeight:'calc(var(--vh, 1vh) * 100)'}}>
       <ParticleField mouse={mouse}/>
 
       <SiteNav/>
@@ -2278,7 +2279,7 @@ function App() {
       {/* ── HERO (full-bleed image background) ── */}
       <section ref={heroRef} style={{
         position:'relative', zIndex:5,
-        minHeight:'calc(100vh - var(--nav-h))',
+        minHeight:'calc(calc(var(--vh, 1vh) * 100) - var(--nav-h))',
         padding:'72px 32px 88px',
         display:'flex', flexDirection:'column',
         alignItems:'center', justifyContent:'center',
@@ -2289,15 +2290,15 @@ function App() {
         <div style={{
           position:'absolute', inset:0, zIndex:1, pointerEvents:'none',
           background:`
-            radial-gradient(ellipse at 50% 45%, transparent 0%, rgba(5,4,15,0.55) 70%, rgba(5,4,15,0.92) 100%),
-            linear-gradient(180deg, rgba(5,4,15,0.35) 0%, transparent 18%, transparent 70%, rgba(5,4,15,0.95) 100%)
+            radial-gradient(ellipse at 50% 45%, transparent 0%, rgba(var(--bg-rgb),0.55) 70%, rgba(var(--bg-rgb),0.92) 100%),
+            linear-gradient(180deg, rgba(var(--bg-rgb),0.35) 0%, transparent 18%, transparent 70%, rgba(var(--bg-rgb),0.95) 100%)
           `,
         }}/>
         <div style={{
           position:'absolute', inset:0, zIndex:1, pointerEvents:'none',
           background:`
-            repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(160,140,255,0.04) 80px, rgba(160,140,255,0.04) 81px),
-            repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(160,140,255,0.03) 60px, rgba(160,140,255,0.03) 61px)
+            repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(var(--accent-rgb),calc(0.04*var(--ka))) 80px, rgba(var(--accent-rgb),calc(0.04*var(--ka))) 81px),
+            repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(var(--accent-rgb),calc(0.03*var(--ka))) 60px, rgba(var(--accent-rgb),calc(0.03*var(--ka))) 61px)
           `,
           mixBlendMode:'screen',
         }}/>
@@ -2319,9 +2320,9 @@ function App() {
           style={{
           position:'relative', display:'inline-block',
           fontFamily:'var(--font-display)', fontWeight:300,
-          fontSize:'clamp(80px, 12vw, 188px)',
-          letterSpacing:'0.18em', color:'#f3eefe',
-          textShadow:'0 0 80px rgba(124,77,255,0.55), 0 0 160px rgba(124,77,255,0.25)',
+          fontSize:'clamp(44px, 12vw, 188px)',
+          letterSpacing:'0.18em', color:'var(--white)',
+          textShadow:'0 0 80px rgba(var(--purple-rgb),calc(0.55*var(--kp))), 0 0 160px rgba(var(--purple-rgb),calc(0.25*var(--kp)))',
           animation:'flicker-mid 13s infinite',
           textTransform:'uppercase',
           marginBottom:'14px',
@@ -2346,15 +2347,15 @@ function App() {
         <div style={{
           display:'flex', alignItems:'center', justifyContent:'center', gap:18,
         }}>
-          <div style={{ width:60, height:1, background:'linear-gradient(to right, transparent, rgba(124,77,255,0.6))' }}/>
+          <div style={{ width:60, height:1, background:'linear-gradient(to right, transparent, rgba(var(--purple-rgb),calc(0.6*var(--kp))))' }}/>
           <div style={{
             fontFamily:'var(--font-display)', fontSize:'12px', fontWeight:400,
-            letterSpacing:'0.5em', color:'rgba(200,190,240,0.65)',
+            letterSpacing:'0.5em', color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
             textTransform:'uppercase',
           }}>
             Die neue Welt
           </div>
-          <div style={{ width:60, height:1, background:'linear-gradient(to left, transparent, rgba(124,77,255,0.6))' }}/>
+          <div style={{ width:60, height:1, background:'linear-gradient(to left, transparent, rgba(var(--purple-rgb),calc(0.6*var(--kp))))' }}/>
         </div>
         </div>
       </section>
@@ -2369,19 +2370,19 @@ function App() {
         <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:36 }}>
           <span style={{
             fontFamily:'var(--font-mono)', fontSize:'10px',
-            letterSpacing:'0.35em', color:'rgba(124,77,255,0.65)',
+            letterSpacing:'0.35em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))',
             textTransform:'uppercase',
           }}>◈ Bereiche</span>
-          <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(124,77,255,0.5), rgba(124,77,255,0.05))', transformOrigin:'left', animation:'line-grow 1.4s ease-out' }}/>
+          <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.5*var(--kp))), rgba(var(--purple-rgb),calc(0.05*var(--kp))))', transformOrigin:'left', animation:'line-grow 1.4s ease-out' }}/>
           <span style={{
             fontFamily:'var(--font-mono)', fontSize:'9px',
-            letterSpacing:'0.28em', color:'rgba(160,140,255,0.4)',
+            letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
             textTransform:'uppercase',
           }}>06 / Übersichtsseiten</span>
         </div>
 
-        <div style={{
-          display:'grid', gridTemplateColumns:'repeat(3, 1fr)',
+        <div className="portal-grid" style={{
+          display:'grid', gridTemplateColumns:'repeat(3, minmax(0, 1fr))',
           gap:20,
         }}>
           {PRTS.map((p,i) => <PortalCard key={p.id} p={p} index={i}/>)}
@@ -2397,13 +2398,13 @@ function App() {
         <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:18 }}>
           <span style={{
             fontFamily:'var(--font-mono)', fontSize:'10px',
-            letterSpacing:'0.35em', color:'rgba(124,77,255,0.65)',
+            letterSpacing:'0.35em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))',
             textTransform:'uppercase',
           }}>◈ Charaktere</span>
-          <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(124,77,255,0.5), rgba(124,77,255,0.05))' }}/>
+          <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.5*var(--kp))), rgba(var(--purple-rgb),calc(0.05*var(--kp))))' }}/>
           <span style={{
             fontFamily:'var(--font-mono)', fontSize:'9px',
-            letterSpacing:'0.28em', color:'rgba(160,140,255,0.4)',
+            letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
             textTransform:'uppercase',
           }}>Spielercharaktere &amp; NSC</span>
         </div>
@@ -2429,13 +2430,13 @@ function App() {
         <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:18 }}>
           <span style={{
             fontFamily:'var(--font-mono)', fontSize:'10px',
-            letterSpacing:'0.35em', color:'rgba(124,77,255,0.65)',
+            letterSpacing:'0.35em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))',
             textTransform:'uppercase',
           }}>◈ Heute in Meruria</span>
-          <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(124,77,255,0.5), rgba(124,77,255,0.05))' }}/>
+          <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.5*var(--kp))), rgba(var(--purple-rgb),calc(0.05*var(--kp))))' }}/>
           <span style={{
             fontFamily:'var(--font-mono)', fontSize:'9px',
-            letterSpacing:'0.28em', color:'rgba(160,140,255,0.4)',
+            letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
             textTransform:'uppercase',
           }}>Zum Kalender</span>
         </div>
@@ -2476,17 +2477,17 @@ function App() {
       </section>
 
       {/* ── CAROUSEL ── */}
-      <section style={{ position:'relative', zIndex:5, marginTop:24, borderTop:'1px solid rgba(124,77,255,0.12)' }}>
+      <section style={{ position:'relative', zIndex:5, marginTop:24, borderTop:'1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))' }}>
         <div style={{ display:'flex', alignItems:'center', gap:16, padding:'18px 48px 8px', maxWidth:'1440px', margin:'0 auto' }}>
           <span style={{
             fontFamily:'var(--font-mono)', fontSize:'10px',
-            letterSpacing:'0.35em', color:'rgba(124,77,255,0.65)',
+            letterSpacing:'0.35em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))',
             textTransform:'uppercase',
           }}>◈ Aus der Galerie</span>
-          <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(124,77,255,0.4), rgba(124,77,255,0.05))' }}/>
+          <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.4*var(--kp))), rgba(var(--purple-rgb),calc(0.05*var(--kp))))' }}/>
           <span style={{
             fontFamily:'var(--font-mono)', fontSize:'9px',
-            letterSpacing:'0.22em', color:'rgba(160,140,255,0.4)',
+            letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
             textTransform:'uppercase',
           }}>Klicken &amp; Ziehen zum Drehen</span>
         </div>

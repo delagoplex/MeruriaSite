@@ -67,7 +67,7 @@ function App() {
   }, /*#__PURE__*/React.createElement("p", null, "Sabrina Rettstadt", /*#__PURE__*/React.createElement("br", null), "Sandberg 4a", /*#__PURE__*/React.createElement("br", null), "21244 Buchholz in der Nordheide"), /*#__PURE__*/React.createElement("p", null, "E-Mail: ", /*#__PURE__*/React.createElement("a", {
     href: "mailto:rettstadtsabrina@gmail.com",
     style: {
-      color: 'rgba(160,140,255,0.75)',
+      color: 'rgba(var(--accent-rgb),calc(0.75*var(--ka) + var(--tb)))',
       textDecoration: 'none'
     }
   }, "rettstadtsabrina@gmail.com")), /*#__PURE__*/React.createElement("p", null, "Diese Website ist ein privates, nicht-kommerzielles Fanprojekt und dient ausschlie\xDFlich dem privaten Gebrauch einer geschlossenen Spielgruppe."))), /*#__PURE__*/React.createElement("div", {
