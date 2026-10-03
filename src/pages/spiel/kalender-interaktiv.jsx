@@ -711,7 +711,7 @@ renderAll();
   if (!window._sb) return;
   const [{ data: chars }, { data: nscs }] = await Promise.all([
     window._sb.from('characters').select('char_data').eq('visible', true),
-    window._sb.from('nsc_public_directory').select('name, bild, geburtstag_doy').not('geburtstag_doy', 'is', null),
+    window._sb.from('nscs').select('name, bild, geburtstag_doy').eq('visible', true).not('geburtstag_doy', 'is', null),
   ]);
   const map = {};
   for (const row of chars || []) {

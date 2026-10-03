@@ -384,19 +384,14 @@ function App() {
   const compactCards = TWEAK_DEFAULTS.compactCards;
   const handleMouseMove = appUC(e => { setMouse({ x: e.clientX/window.innerWidth, y: e.clientY/window.innerHeight }); }, []);
 
+  // NSC-Daten und Blickwinkel aus Supabase
+  const { nscs, perspectives, charPids, players, loading: dataLoading } = useNSCData();
+
   // Aktive Perspektive (welcher Spielercharakter blickt gerade)
   const [perspective, setPerspective] = appUS('alle');
-  const isDm = window.SITE_USER?.role === 'dm';
-
-  // Spieler erhalten nur die für ihre aktive Figur freigegebenen NSC-Fakten.
-  const { nscs, perspectives, charPids, players, loading: dataLoading, loadError, refresh: refreshNscs } = useNSCData(perspective, isDm);
 
   // Fakt-basiertes Freischaltsystem (persistiert in Supabase, pro Perspektive)
   const unlocks = useUnlocks(nscs, charPids, perspective, players);
-
-  appUE(() => {
-    if (!isDm && perspective === 'alle' && charPids.length) setPerspective(charPids[0]);
-  }, [isDm, perspective, charPids]);
 
   // Lookup: NSC-id -> aktuelle berechnete Stufe
   const stageById = appUM(() => {
@@ -538,15 +533,6 @@ function App() {
     <div style={{ position:'fixed', inset:0, background:'var(--bg)', display:'flex', alignItems:'center', justifyContent:'center' }}>
       <div style={{ fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.3em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>
         ◈ Lade NSC-Register …
-      </div>
-    </div>
-  );
-
-  if (loadError) return (
-    <div style={{ minHeight:'100vh', display:'grid', placeItems:'center', padding:24, background:'#05040f' }}>
-      <div role="alert" style={{ maxWidth:560, padding:24, border:'1px solid rgba(227,103,96,0.4)', borderLeft:'3px solid #e36760', background:'rgba(227,103,96,0.06)' }}>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.2em', color:'#e99a93', textTransform:'uppercase', marginBottom:10 }}>NSC-Register konnte nicht geladen werden</div>
-        <div style={{ fontFamily:'var(--font-body)', fontSize:12, lineHeight:1.6, color:'rgba(220,210,255,0.7)' }}>{loadError}</div>
       </div>
     </div>
   );
@@ -857,12 +843,7 @@ function App() {
 
       {/* Detail Panel */}
       <NSCDetailPanel nsc={selected} unlocks={unlocks} gm={false} onClose={() => setSelected(null)}
-        onSelectNsc={(n) => setSelected(n)}
-        characterId={charPids.includes(perspective) ? perspective : null}
-        onFactRevealed={key => {
-          if (selected && charPids.includes(perspective)) unlocks.revealForPid(selected.id, perspective, key);
-          refreshNscs();
-        }} />
+        onSelectNsc={(n) => setSelected(n)} />
 
     </div>
   );

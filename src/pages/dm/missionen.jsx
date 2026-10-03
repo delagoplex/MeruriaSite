@@ -1315,7 +1315,7 @@ function App() {
     setLoading(true);
     const [{ data }, { data: nscData }] = await Promise.all([
       window._sb.from('missions').select('*').order('created_at', { ascending: false }),
-      window._sb.rpc('get_nsc_admin_data')
+      window._sb.from('nscs').select('name,division').order('name')
     ]);
     setMissions(data || []);
     setNscOptions(nscData || []);

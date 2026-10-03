@@ -9,7 +9,7 @@ const { useEffect:dpUE, useRef:dpUR, useState:dpUS } = React;
 const { STAGE_LABELS:dpSL, MAX_STAGE:dpMS,
         hexPoints:dpHex, hexA:dpHA, accentOf:dpAO, romanFor:dpRoman,
         GOLD:dpGOLD, GOLD_GLOW:dpGOLD_GLOW, goldA:dpGoldA,
-  meruriaDoyText:dpDoyText, meruriaZodiacOf:dpZodiacOf, factLabel:dpFactLabel,
+        meruriaDoyText:dpDoyText, meruriaZodiacOf:dpZodiacOf,
         NSCPortrait, StageProgress, StatusPills, UnlockToggle,
         } = window;
 
@@ -431,97 +431,8 @@ function SingletonBlock({ open, gm, acc, onToggle, render, toggleState }) {
   );
 }
 
-const _dpRandomGlyph = () => _DP_GLYPHS[(Math.random() * _DP_GLYPHS.length) | 0];
-
-function NscFactReveal({ text }) {
-  const [display, setDisplay] = dpUS(() => [...text].map(char => char === ' ' || char === '\n' ? char : _dpRandomGlyph()).join(''));
-  dpUE(() => {
-    const chars = [...text];
-    const duration = 460 + Math.min(chars.length * 20, 760);
-    const started = performance.now();
-    let raf;
-    let last = 0;
-    const step = now => {
-      const elapsed = now - started;
-      if (now - last > 32 || elapsed >= duration) {
-        last = now;
-        setDisplay(chars.map((char, index) => {
-          if (char === ' ' || char === '\n') return char;
-          const settlesAt = (index / chars.length) * duration * 0.62 + duration * 0.32;
-          return elapsed >= settlesAt ? char : _dpRandomGlyph();
-        }).join(''));
-      }
-      if (elapsed < duration) raf = requestAnimationFrame(step);
-      else setDisplay(text);
-    };
-    raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
-  }, [text]);
-  return <span aria-live="polite" style={{ color:'rgba(176,200,238,0.95)', overflowWrap:'anywhere' }}>{display}</span>;
-}
-
-function FactGuessForm({ nsc, keys, unlocked, characterId, onCorrect, acc }) {
-  const [factKey, setFactKey] = dpUS('');
-  const [guess, setGuess] = dpUS('');
-  const [status, setStatus] = dpUS('');
-  const [busy, setBusy] = dpUS(false);
-  const [reveal, setReveal] = dpUS(null);
-  const candidates = keys.filter(key => !unlocked.has(key));
-
-  dpUE(() => {
-    setFactKey(candidates[0] || '');
-  }, [nsc.id, candidates.join('|')]);
-
-  const submit = async event => {
-    event.preventDefault();
-    if (!characterId || !factKey || !guess.trim() || busy) return;
-    setBusy(true);
-    setStatus('');
-    const { data, error } = await window._sb.rpc('guess_nsc_fact', {
-      p_nsc_id: nsc.id,
-      p_character_id: characterId,
-      p_fact_key: factKey,
-      p_guess: guess,
-    });
-    setBusy(false);
-    if (error) {
-      setStatus('Der Abgleich ist gerade nicht verfügbar.');
-      return;
-    }
-    const result = Array.isArray(data) ? data[0] : data;
-    if (!result?.matched) {
-      setStatus('Das stimmt noch nicht. Versuch es erneut.');
-      return;
-    }
-    setReveal({ key: factKey, text: result.value || guess.trim() });
-    setGuess('');
-    setStatus('Richtige Vermutung. Der Fakt wurde für diesen Charakter enthüllt.');
-    onCorrect(factKey);
-  };
-
-  if (!candidates.length) return null;
-  return (
-    <div style={{ margin:'18px 0 22px', padding:'14px 16px', border:`1px solid ${dpHA(acc,0.25)}`, borderLeft:`2px solid ${dpHA(acc,0.75)}`, background:dpHA(acc,0.045), borderRadius:2 }}>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.24em', color:dpHA(acc,0.8), textTransform:'uppercase', marginBottom:10 }}>Wissen versuchen</div>
-      {!characterId ? (
-        <div style={{ fontFamily:'var(--font-body)', fontSize:12, color:'rgba(200,190,240,0.6)' }}>Wähle zuerst einen deiner Charaktere als Blickwinkel.</div>
-      ) : (
-        <form onSubmit={submit} style={{ display:'grid', gridTemplateColumns:'minmax(0,1fr) auto', gap:8 }}>
-          <select aria-label="Zu erratende Information" value={factKey} onChange={event => setFactKey(event.target.value)} style={{ gridColumn:'1 / -1', minWidth:0, padding:'8px 9px', border:`1px solid ${dpHA(acc,0.28)}`, borderRadius:2, background:'rgba(5,4,15,0.85)', color:'var(--white)', fontFamily:'var(--font-mono)', fontSize:9 }}>
-            {candidates.map(key => <option key={key} value={key}>{dpFactLabel(key)}</option>)}
-          </select>
-          <input aria-label="Vermutung" value={guess} onChange={event => setGuess(event.target.value)} placeholder="Deine Vermutung …" autoComplete="off" style={{ minWidth:0, padding:'8px 10px', border:`1px solid ${dpHA(acc,0.28)}`, borderRadius:2, background:'rgba(5,4,15,0.85)', color:'var(--white)', fontFamily:'var(--font-body)', fontSize:12 }} />
-          <button type="submit" disabled={busy || !guess.trim()} style={{ padding:'8px 12px', border:`1px solid ${dpHA(acc,0.5)}`, borderRadius:2, background:dpHA(acc,0.12), color:'var(--white)', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.12em', textTransform:'uppercase', cursor:busy ? 'wait' : 'pointer', opacity:busy || !guess.trim() ? 0.55 : 1 }}>{busy ? 'Prüfe …' : 'Prüfen'}</button>
-        </form>
-      )}
-      {status && <div role="status" style={{ marginTop:9, fontFamily:'var(--font-body)', fontSize:11, color:status.startsWith('Richtige') ? 'rgba(95,227,154,0.9)' : 'rgba(200,190,240,0.65)' }}>{status}</div>}
-      {reveal && <div key={reveal.key} style={{ marginTop:10, padding:'9px 11px', border:`1px solid ${dpHA(acc,0.28)}`, background:dpHA(acc,0.06), fontFamily:'var(--font-body)', fontSize:12, lineHeight:1.6 }}><NscFactReveal text={reveal.text}/></div>}
-    </div>
-  );
-}
-
 // ── Detail Panel ─────────────────────────────────────────
-function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [], characterId, onFactRevealed }) {
+function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] }) {
   const scrollRef = dpUR(null);
   // dmTarget: für welche Charaktere gelten die Toggle-Klicks (relevant wenn gm=true)
   const [dmTarget, setDmTarget] = dpUS(() => charPersp.map(p => p.id));
@@ -553,7 +464,7 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [], c
 
   const unlocked = unlocks.unlockedFor(nsc);
   const stage = unlocks.stageFor(nsc);
-  const gehList = nsc.geheimnisse || [];
+  const gehList = (nsc.geheimnisse || []).filter(g => (g.text || '').trim());
   const fieldVis = (k) => ((nsc.fieldVis || {})[k]) === true;
   const isOpen = (k) => {
     const mg = k.match(/^geh-(\d+)$/);
@@ -577,7 +488,7 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [], c
   // Indexierte Fakten-Keys (v2-Schema)
   const geheimnisKeys = gehList.map((_, i) => `geh-${i}`);
   const routineKeys   = (nsc.routine || []).map((_, i) => `rou-${i}`);
-  const ausList       = nsc.ausruestung || [];
+  const ausList       = (nsc.ausruestung || []).filter(e => (e.name || '').trim());
   const ausKeys       = ausList.map((_, i) => `aus-${i}`);
   const motivKeys     = (nsc.motivationen || []).map((_, i) => `mot-${i}`);
   const nameKeys      = (nsc.vollerName || []).map((_, i) => `vna-${i}`);
@@ -585,11 +496,11 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [], c
   const talKeys       = (nsc.talente || []).map((_, i) => `tal-${i}`);
   const makKeys       = (nsc.makel || []).map((_, i) => `mak-${i}`);
   const gewKeys       = (nsc.gewohnheiten || []).map((_, i) => `gew-${i}`);
-  const begList       = nsc.begleiter || [];
+  const begList       = (nsc.begleiter || []).filter(b => (b.name || '').trim());
   const begKeys       = begList.map((_, i) => `beg-${i}`);
-  const famList       = nsc.kontakte?.familie || [];
-  const freList       = nsc.kontakte?.freunde || [];
-  const rivList       = nsc.kontakte?.rivalen || [];
+  const famList       = (nsc.kontakte?.familie || []).filter(p => (p.name || '').trim());
+  const freList       = (nsc.kontakte?.freunde || []).filter(p => (p.name || '').trim());
+  const rivList       = (nsc.kontakte?.rivalen || []).filter(p => (p.name || '').trim());
   const kontaktKeys   = [...famList.map((_, i) => `fam-${i}`), ...freList.map((_, i) => `fre-${i}`), ...rivList.map((_, i) => `riv-${i}`)];
 
   return (
@@ -692,7 +603,6 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [], c
         <div style={{ padding:'12px 26px 40px' }}>
           {/* Stage progress */}
           <StageProgress stage={stage} acc={acc}/>
-          {!gm && <FactGuessForm nsc={nsc} keys={nsc.challengeableKeys || []} unlocked={unlocked} characterId={characterId} onCorrect={onFactRevealed} acc={acc}/>}
 
           {/* Section: Erscheinung & Auftreten */}
           {hasSec('pers') && (nsc.unvergesslich || '').trim() && (

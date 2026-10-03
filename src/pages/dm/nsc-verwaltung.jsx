@@ -100,7 +100,7 @@ function useDMData() {
   useEffect(() => { (async () => {
     const sb = window._sb;
     const [{ data:nscRows }, { data:charRows }, { data:profileRows }] = await Promise.all([
-      sb.rpc('get_nsc_admin_data'),
+      sb.from('nscs').select('*').order('name'),
       sb.from('characters').select('id,name,owner_id').eq('type','spieler').order('name'),
       sb.from('profiles').select('id,display_name'),
     ]);
@@ -505,10 +505,9 @@ function App() {
       makel:[], begleiter:[], geheimnisse:[], gewohnheiten:[],
       kontakte:{ familie:[], freunde:[], rivalen:[] }, field_visibility:{},
     };
-    const { data: inserted, error } = await window._sb.from('nscs').insert(row).select('id').single();
+    const { data, error } = await window._sb.from('nscs').insert(row).select().single();
     if (error) { alert('Anlegen fehlgeschlagen: ' + error.message); return; }
-    const { data: rows } = await window._sb.rpc('get_nsc_admin_data');
-    const n = mapNscRow((rows || []).find(item => item.id === inserted.id));
+    const n = mapNscRow(data);
     setNscs(prev => [n, ...prev]);
     setSelId(n.id); setCreating(false); setView('edit');
   }
@@ -520,11 +519,9 @@ function App() {
       makel:[], begleiter:[], geheimnisse:[], gewohnheiten:[], field_visibility:{},
       kontakte:{ familie:[], freunde:[], rivalen:[], [sub]:[{ name:sel.name, rolle:'' }] },
     };
-    const { data: inserted, error } = await window._sb.from('nscs').insert(row).select('id').single();
+    const { data, error } = await window._sb.from('nscs').insert(row).select().single();
     if (error) { alert('Anlegen fehlgeschlagen: ' + error.message); return; }
-    const { data: rows } = await window._sb.rpc('get_nsc_admin_data');
-    const insertedNsc = (rows || []).find(item => item.id === inserted.id);
-    if (insertedNsc) setNscs(prev => [...prev, mapNscRow(insertedNsc)]);
+    setNscs(prev => [...prev, mapNscRow(data)]);
   }
 
   async function deleteSel() {

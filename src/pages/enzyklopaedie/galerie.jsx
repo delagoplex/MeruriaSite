@@ -372,7 +372,7 @@ function GalleryPage() {
     async function loadChars() {
       const [{ data: chars }, { data: nscs }] = await Promise.all([
         window._sb.from('characters').select('id,name,char_data,created_at,visible').eq('type', 'spieler').order('created_at', { ascending: false }),
-        window._sb.from('nsc_public_directory').select('id,name,bild,created_at,visible').not('bild', 'is', null).order('name'),
+        window._sb.from('nscs').select('id,name,bild,created_at,visible').not('bild', 'is', null).order('name'),
       ]);
 
       const charImgs = (chars || [])

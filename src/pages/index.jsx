@@ -1858,8 +1858,9 @@ function RecentCharacters() {
           .select('id,name,char_data,created_at')
           .eq('type', 'spieler').eq('visible', true)
           .order('created_at', { ascending: false }).limit(4),
-        window._sb.from('nsc_public_directory')
-          .select('id,name,division,bild,created_at')
+        window._sb.from('nscs')
+          .select('id,name,rasse,beruf,rang,division,unvergesslich,bild,created_at')
+          .eq('visible', true)
           .order('created_at', { ascending: false }).limit(4),
       ]);
 
@@ -1884,10 +1885,10 @@ function RecentCharacters() {
         id: r.id,
         kind: 'NSC',
         name: r.name || '—',
-        rasse: '—',
-        klasse: '—',
+        rasse: r.rasse || '—',
+        klasse: r.beruf || r.rang || '—',
         div: r.division || null,
-        tagline: '',
+        tagline: r.unvergesslich || '',
         hue: _charHue(r.name || ''),
         bild: r.bild || null,
         days: _daysAgo(r.created_at),
