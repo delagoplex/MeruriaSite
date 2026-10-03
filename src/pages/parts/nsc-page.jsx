@@ -550,7 +550,7 @@ function App() {
         {/* Breadcrumb + Blickwinkel-Wahl */}
         <div className="reveal-up" style={{ marginBottom:14, display:'flex', alignItems:'center', justifyContent:'space-between', gap:14, flexWrap:'wrap' }}>
           <div style={{ display:'flex', alignItems:'center', gap:10, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))' }}>
-            <a href="Meruria.html" style={{ color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textDecoration:'none' }}>Meruria</a>
+            <a href="/index.html" style={{ color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textDecoration:'none' }}>Meruria</a>
             <span style={{ opacity:0.4 }}>›</span>
             <a href="/charaktere/index.html" style={{ color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textDecoration:'none' }}>Charaktere</a>
             <span style={{ opacity:0.4 }}>›</span>

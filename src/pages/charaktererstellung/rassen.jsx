@@ -363,7 +363,6 @@ function CardInner({
       height: '260px',
       border: `1px solid ${hov ? accent + '88' : accent + '22'}`,
       boxShadow: hov ? `0 12px 48px rgba(var(--shadow-rgb),calc(0.7 * var(--shadow-k))), 0 0 28px ${accent}33, inset 0 1px 0 ${accent}18` : `0 2px 16px rgba(0,0,0,0.55)`,
-      transition: 'border-color 0.2s, box-shadow 0.25s',
       overflow: 'visible',
       transformStyle: 'preserve-3d',
       transform: hov ? `rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)` : `rotateX(0deg) rotateY(0deg)`,
