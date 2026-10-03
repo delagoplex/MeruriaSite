@@ -695,17 +695,75 @@ function HungerCalc() {
 // ── FOOD SECTION ──────────────────────────────────────────────────────────────
 
 // ── COIN FLIP ─────────────────────────────────────────────────────────────────
-// Place custom images at:
-//   assets/images/coin/kopf.png  (or .jpg/.webp)
-//   assets/images/coin/zahl.png
-// If a file is missing the default SVG motif is shown instead.
+// Faces: Kopf (crown) and Zahl (laurel + H) with the "HADE" legend, drawn inline
+// so the Cinzel webfont applies to the legend text.
+
+function CoinFace({ side }) {
+  const isKopf = side === 'kopf';
+  const gold = '#f0c060';
+  const glow = 'url(#g-' + side + ')';
+  const emblem = isKopf ? (
+    <g stroke={gold} filter={glow} transform="translate(64 68) scale(.82) translate(-64 -64)" style={{ strokeWidth: 2.6, strokeLinecap: 'round', strokeLinejoin: 'round' }}>
+      <path d="M44 72 L41 50 L52 59 L64 42 L76 59 L87 50 L84 72 Z" fill={gold} style={{ fillOpacity: 0.22 }} />
+      <path d="M44 72 H84 V79 H44 Z" />
+      <circle cx="41" cy="47" r="2.6" fill={gold} />
+      <circle cx="64" cy="38.5" r="3" fill={gold} />
+      <circle cx="87" cy="47" r="2.6" fill={gold} />
+      <path d="M64 72 L67 75.5 L64 79 L61 75.5 Z" fill={gold} style={{ strokeWidth: 1 }} />
+      <path d="M49 31.5 L49.9 35.1 L53.5 36 L49.9 36.9 L49 40.5 L48.1 36.9 L44.5 36 L48.1 35.1 Z M79 31.5 L79.9 35.1 L83.5 36 L79.9 36.9 L79 40.5 L78.1 36.9 L74.5 36 L78.1 35.1 Z" fill={gold} style={{ strokeWidth: 1, fillOpacity: 0.6 }} />
+      <path d="M50 87 H60 M68 87 H78" style={{ strokeWidth: 1.4 }} />
+      <circle cx="64" cy="87" r="1.6" fill={gold} stroke="none" />
+    </g>
+  ) : (
+    <g stroke={gold} filter={glow} transform="translate(64 66) scale(.82) translate(-64 -64)" style={{ strokeWidth: 2.6, strokeLinecap: 'round', strokeLinejoin: 'round' }}>
+      <g>
+        <path d="M44 90 C34 80 33 58 43 44" />
+        <path d="M40 82 C34 82 31 78 31 75 C35 75 39 78 40 82 Z M37 72 C31 71 29 67 29 64 C33 65 36 68 37 72 Z M37 62 C32 60 31 56 32 53 C35 55 37 58 37 62 Z M40 52 C36 49 36 45 37 42 C40 45 41 48 40 52 Z" fill={gold} style={{ fillOpacity: 0.3, strokeWidth: 1.4 }} />
+      </g>
+      <g transform="translate(128 0) scale(-1 1)">
+        <path d="M44 90 C34 80 33 58 43 44" />
+        <path d="M40 82 C34 82 31 78 31 75 C35 75 39 78 40 82 Z M37 72 C31 71 29 67 29 64 C33 65 36 68 37 72 Z M37 62 C32 60 31 56 32 53 C35 55 37 58 37 62 Z M40 52 C36 49 36 45 37 42 C40 45 41 48 40 52 Z" fill={gold} style={{ fillOpacity: 0.3, strokeWidth: 1.4 }} />
+      </g>
+      <path d="M55 51 L64 44 V82 M54 82 H74" style={{ strokeWidth: 3 }} />
+      <path d="M64 29 L64.9 32.6 L68.5 33.5 L64.9 34.4 L64 38 L63.1 34.4 L59.5 33.5 L63.1 32.6 Z" fill={gold} style={{ strokeWidth: 1, fillOpacity: 0.6 }} />
+      <path d="M50 90 H60 M68 90 H78" style={{ strokeWidth: 1.4 }} />
+      <circle cx="64" cy="90" r="1.6" fill={gold} stroke="none" />
+    </g>
+  );
+  return (
+    <svg viewBox="0 0 128 128" fill="none" style={{ width: '100%', height: '100%', display: 'block' }}>
+      <defs>
+        <radialGradient id={'h-' + side}>
+          <stop offset="0" style={{ stopColor: gold, stopOpacity: 0.28 }} />
+          <stop offset="1" style={{ stopColor: gold, stopOpacity: 0.04 }} />
+        </radialGradient>
+        <filter id={'g-' + side} x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="1.8" result="b" />
+          <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <path id={'arc-' + side} d="M28.49 84.5 A41 41 0 1 1 99.51 84.5" />
+      </defs>
+      <g stroke={gold} filter={glow} style={{ strokeLinecap: 'round', strokeLinejoin: 'round' }}>
+        <circle cx="64" cy="64" r="58" fill={'url(#h-' + side + ')'} style={{ strokeWidth: 2.4 }} />
+        <circle cx="64" cy="64" r="55" style={{ strokeWidth: 3, strokeDasharray: '0.8, 4', strokeOpacity: 0.7 }} />
+        <circle cx="64" cy="64" r="50" style={{ strokeWidth: 1.4 }} />
+        <circle cx="64" cy="64" r="37" style={{ strokeWidth: 1.2 }} />
+        <path d="M64 104.5 L67 107.5 L64 110.5 L61 107.5 Z" fill={gold} style={{ strokeWidth: 1 }} />
+        <circle cx="45.6" cy="103.4" r="1.4" fill={gold} stroke="none" />
+        <circle cx="82.4" cy="103.4" r="1.4" fill={gold} stroke="none" />
+      </g>
+      <text fill={gold} filter={glow} style={{ fontFamily: 'Cinzel, serif', fontSize: 9, letterSpacing: 3 }}>
+        <textPath href={'#arc-' + side} startOffset="50%" textAnchor="middle">✦ HADE ✦</textPath>
+      </text>
+      {emblem}
+    </svg>
+  );
+}
 
 function CoinFlip() {
   const [result, setResult] = useState(null);
   const [flipping, setFlipping] = useState(false);
   const [angle, setAngle] = useState(0);
-  const [kopfErr, setKopfErr] = useState(false);
-  const [zahlErr, setZahlErr] = useState(false);
   const baseAngle = useRef(0);
 
   const flip = () => {
@@ -718,77 +776,24 @@ function CoinFlip() {
     const currentMod = (baseAngle.current % 360 + 360) % 360;
     const diff = (landing - currentMod + 360) % 360;
     const newAngle = baseAngle.current + spins + diff;
+    const from = baseAngle.current;
     baseAngle.current = newAngle;
-    setAngle(newAngle);
-    setTimeout(() => { setResult(r); setFlipping(false); }, 1500);
+    const t0 = performance.now();
+    const step = (now) => {
+      const t = Math.min((now - t0) / 1500, 1);
+      const e = 1 - Math.pow(1 - t, 3);
+      setAngle(from + (newAngle - from) * e);
+      if (t < 1) requestAnimationFrame(step);
+      else { setResult(r); setFlipping(false); }
+    };
+    requestAnimationFrame(step);
   };
 
-  // Build a coin face SVG (120×120 viewBox)
-  const coinFace = (side) => {
-    const isKopf = side === 'kopf';
-    const gradId = isKopf ? 'cg-k' : 'cg-z';
-    const light1 = isKopf ? '#fde87a' : '#f5d45a';
-    const light2 = isKopf ? '#c8920c' : '#be8408';
-    const dark   = isKopf ? '#7a5002' : '#725000';
-    const edge   = '#5a3c02';
-    const ink    = 'rgba(60,38,2,0.82)';
-    const ticks  = Array.from({length: 36}).map((_, i) => {
-      const a = i / 36 * Math.PI * 2 - Math.PI / 2;
-      return React.createElement('line', {
-        key: i,
-        x1: 60 + 54 * Math.cos(a), y1: 60 + 54 * Math.sin(a),
-        x2: 60 + 57 * Math.cos(a), y2: 60 + 57 * Math.sin(a),
-        stroke: 'rgba(90,60,2,0.5)', strokeWidth: i % 3 === 0 ? '1.2' : '0.7'
-      });
-    });
-    const motif = isKopf
-      ? React.createElement(React.Fragment, null,
-          React.createElement('polygon', { points: '60,28 74,36 74,52 60,60 46,52 46,36', fill: 'none', stroke: ink, strokeWidth: '1.2', strokeOpacity: '0.55' }),
-          React.createElement('polygon', { points: '60,36 68,41 68,50 60,55 52,50 52,41', fill: ink, fillOpacity: '0.25' }),
-          React.createElement('circle',  { cx: '60', cy: '46', r: '4', fill: ink, fillOpacity: '0.5' }),
-          React.createElement('text',    { x: '60', y: '79', textAnchor: 'middle', fontFamily: 'var(--font-display,Georgia,serif)', fontSize: '10', fill: ink, fillOpacity: '0.65', letterSpacing: '2' }, 'KOPF')
-        )
-      : React.createElement(React.Fragment, null,
-          React.createElement('circle', { cx: '60', cy: '52', r: '22', fill: 'none', stroke: ink, strokeWidth: '0.8', strokeOpacity: '0.4', strokeDasharray: '2 3' }),
-          React.createElement('text',   { x: '60', y: '64', textAnchor: 'middle', fontFamily: 'Georgia,serif', fontSize: '32', fontWeight: 'bold', fill: ink, fillOpacity: '0.65' }, 'I'),
-          React.createElement('text',   { x: '60', y: '79', textAnchor: 'middle', fontFamily: 'var(--font-display,Georgia,serif)', fontSize: '10', fill: ink, fillOpacity: '0.65', letterSpacing: '2' }, 'ZAHL')
-        );
-    return React.createElement('svg', { viewBox: '0 0 120 120', style: { width: '100%', height: '100%' } },
-      React.createElement('defs', null,
-        React.createElement('radialGradient', { id: gradId, cx: '35%', cy: '30%', r: '65%' },
-          React.createElement('stop', { offset: '0%',   stopColor: light1 }),
-          React.createElement('stop', { offset: '50%',  stopColor: light2 }),
-          React.createElement('stop', { offset: '100%', stopColor: dark })
-        )
-      ),
-      React.createElement('circle',  { cx: '60', cy: '60', r: '58', fill: edge }),
-      React.createElement('circle',  { cx: '60', cy: '60', r: '55', fill: `url(#${gradId})` }),
-      React.createElement('ellipse', { cx: '46', cy: '38', rx: '14', ry: '9', fill: 'rgba(255,240,140,0.18)', transform: 'rotate(-30 46 38)' }),
-      ...ticks,
-      React.createElement('circle', { cx: '60', cy: '60', r: '49', fill: 'none', stroke: ink, strokeWidth: '0.6', strokeOpacity: '0.4' }),
-      React.createElement('circle', { cx: '60', cy: '60', r: '37', fill: 'none', stroke: ink, strokeWidth: '0.8', strokeOpacity: '0.35' }),
-      motif
-    );
-  };
+  // Only one face is rendered at a time (chosen by the rotation angle), because
+  // backface-visibility does not hide the back reliably with SVG filters inside.
+  const showKopf = Math.cos(angle * Math.PI / 180) >= 0;
 
-  // Coin face wrapper: SVG + optional image overlay (from assets/images/coin/)
-  const face = (side) => {
-    const hasImg = side === 'kopf' ? !kopfErr : !zahlErr;
-    return React.createElement('div', { style: { position: 'relative', width: '100%', height: '100%' } },
-      coinFace(side),
-      React.createElement('img', {
-        src: `assets/images/coin/${side}.png`,
-        onError: () => side === 'kopf' ? setKopfErr(true) : setZahlErr(true),
-        style: {
-          display: hasImg ? 'block' : 'none',
-          position: 'absolute',
-          left: '20%', top: '20%', width: '60%', height: '60%',
-          borderRadius: '50%', objectFit: 'cover',
-          boxShadow: 'inset 0 0 8px rgba(var(--shadow-rgb),calc(0.3 * var(--shadow-k)))'
-        }
-      })
-    );
-  };
+  const face = (side) => React.createElement(CoinFace, { side });
 
   return React.createElement('div', {
     style: { background: 'rgba(210,160,20,0.06)', border: '1px solid rgba(210,160,20,0.2)',
@@ -799,17 +804,12 @@ function CoinFlip() {
         color: 'color-mix(in srgb, rgba(210,160,40,0.5), rgb(var(--ink-rgb)) var(--cm))', textTransform: 'uppercase', marginBottom: 14 }
     }, 'Wirf eine Münze'),
 
-    React.createElement('div', { style: { perspective: '600px', width: 120, height: 120, margin: '0 auto 14px' } },
+    React.createElement('div', { style: { perspective: '600px', width: 120, height: 120, margin: '0 auto 14px', filter: 'drop-shadow(0 4px 16px rgba(190,130,0,0.55))' } },
       React.createElement('div', {
-        style: {
-          width: '100%', height: '100%', position: 'relative', transformStyle: 'preserve-3d',
-          transform: `rotateY(${angle}deg)`,
-          transition: flipping ? 'transform 1.5s cubic-bezier(0.2,0.75,0.45,1.0)' : 'none',
-          filter: 'drop-shadow(0 4px 16px rgba(190,130,0,0.55))'
-        }
+        style: { width: '100%', height: '100%', transform: `rotateY(${angle}deg)` }
       },
-        React.createElement('div', { style: { position: 'absolute', inset: 0, backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' } }, face('kopf')),
-        React.createElement('div', { style: { position: 'absolute', inset: 0, backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' } }, face('zahl'))
+        React.createElement('div', { style: { width: '100%', height: '100%', transform: showKopf ? 'none' : 'rotateY(180deg)' } },
+          face(showKopf ? 'kopf' : 'zahl'))
       )
     ),
 
