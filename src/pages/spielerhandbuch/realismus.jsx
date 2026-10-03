@@ -3500,11 +3500,6 @@ function AbenteuerContent() {
     className: "feat-text"
   }, f.text))), (() => {
     const IC = {
-      'Kriegerschule': {
-        bg: 'rgba(220,70,60,0.1)',
-        bd: 'rgba(220,70,60,0.3)',
-        tx: 'rgba(240,120,110,0.9)'
-      },
       'Klingenbastion': {
         bg: 'rgba(200,50,50,0.1)',
         bd: 'rgba(200,50,50,0.3)',
@@ -3515,10 +3510,30 @@ function AbenteuerContent() {
         bd: 'rgba(60,130,200,0.3)',
         tx: 'rgba(110,175,240,0.9)'
       },
-      'Ritterorden': {
-        bg: 'rgba(210,60,55,0.1)',
-        bd: 'rgba(210,60,55,0.3)',
-        tx: 'rgba(235,110,100,0.9)'
+      'Gewölbe': {
+        bg: 'rgba(90,120,230,0.1)',
+        bd: 'rgba(90,120,230,0.3)',
+        tx: 'rgba(140,160,250,0.9)'
+      },
+      'Offenes Haus': {
+        bg: 'rgba(90,200,120,0.1)',
+        bd: 'rgba(90,200,120,0.3)',
+        tx: 'rgba(130,230,155,0.9)'
+      },
+      'Kartenzimmer': {
+        bg: 'rgba(200,150,90,0.1)',
+        bd: 'rgba(200,150,90,0.3)',
+        tx: 'rgba(230,185,130,0.9)'
+      },
+      'Förderhof': {
+        bg: 'rgba(170,130,80,0.1)',
+        bd: 'rgba(170,130,80,0.3)',
+        tx: 'rgba(205,165,115,0.9)'
+      },
+      'Anlegestelle': {
+        bg: 'rgba(50,160,210,0.1)',
+        bd: 'rgba(50,160,210,0.3)',
+        tx: 'rgba(90,190,235,0.9)'
       },
       'Bardenakademie': {
         bg: 'rgba(255,190,40,0.1)',
@@ -3540,7 +3555,7 @@ function AbenteuerContent() {
         bd: 'rgba(70,150,255,0.3)',
         tx: 'rgba(120,185,255,0.9)'
       },
-      'Zunft': {
+      'Schmiede': {
         bg: 'rgba(50,190,110,0.1)',
         bd: 'rgba(50,190,110,0.3)',
         tx: 'rgba(80,220,140,0.9)'
@@ -3569,12 +3584,17 @@ function AbenteuerContent() {
         bg: 'rgba(50,160,210,0.1)',
         bd: 'rgba(50,160,210,0.3)',
         tx: 'rgba(90,190,235,0.9)'
-      },
-      'Schifferakademie': {
-        bg: 'rgba(50,160,210,0.1)',
-        bd: 'rgba(50,160,210,0.3)',
-        tx: 'rgba(90,190,235,0.9)'
       }
+    };
+    const ART = {
+      'Klingenbastion': 'Die Klingenbastion',
+      'Wächterhaus': 'Das Wächterhaus',
+      'Schmiede': 'Die Schmiede',
+      'Gewölbe': 'Das Gewölbe',
+      'Offenes Haus': 'Das Offene Haus',
+      'Kartenzimmer': 'Das Kartenzimmer',
+      'Förderhof': 'Der Förderhof',
+      'Anlegestelle': 'Die Anlegestelle'
     };
     const Inst = ({
       t
@@ -3596,53 +3616,53 @@ function AbenteuerContent() {
           marginRight: '3px',
           marginBottom: '2px'
         }
-      }, t);
+      }, ART[t] || t);
     };
     const rows = [{
       u: 'Einfache Waffen',
-      inst: ['Kriegerschule', 'Privat'],
+      inst: ['Klingenbastion', 'Wächterhaus'],
       d: '4 Wochen',
       k: '30 Hade',
       h: 'Standardwaffen wie Dolche, Keulen oder Speere.'
     }, {
       u: 'Kriegswaffen',
-      inst: ['Klingenbastion', 'Ritterorden'],
+      inst: ['Klingenbastion', 'Wächterhaus'],
       d: '8 Wochen',
       k: '60 Hade',
       h: 'Schwert, Streitaxt, Bogen. Voraussetzung: Übung mit einfachen Waffen.'
     }, {
       u: 'Leichte Rüstung',
-      inst: ['Kriegerschule', 'Zunft'],
+      inst: ['Klingenbastion', 'Wächterhaus', 'Schmiede'],
       d: '4 Wochen',
       k: '35 Hade',
       h: 'Leder, Verstärktes Leder.'
     }, {
       u: 'Mittelschwere Rüstung',
-      inst: ['Wächterhaus'],
+      inst: ['Klingenbastion', 'Wächterhaus'],
       d: '8 Wochen',
       k: '60 Hade',
       h: 'Kettenhemd, Schuppenpanzer. Voraussetzung: leichte Rüstung.'
     }, {
       u: 'Schwere Rüstung',
-      inst: ['Klingenbastion', 'Wächterhaus', 'Ritterorden'],
+      inst: ['Klingenbastion', 'Wächterhaus'],
       d: '16 Wochen',
       k: '100 Hade',
       h: 'Plattenpanzer. Voraussetzung: mittelschwere Rüstung. Nur an wenigen Orten lehrbar.'
     }, {
       u: 'Handwerkzeug',
-      inst: ['Zunft', 'Privat'],
+      inst: ['Schmiede', 'Förderhof'],
       d: '4 Wochen',
       k: '35 Hade',
-      h: 'Schmied-, Tischler-, Kräuterkundewerkzeug u. a. Je nach Zunft.'
+      h: 'Schmied-, Tischler-, Kräuterkundewerkzeug u. a. Je nach Fachgebiet.'
     }, {
       u: 'Medizinische Ausrüstung',
-      inst: ['Tempel', 'Zunft'],
+      inst: ['Tempel', 'Schmiede', 'Offenes Haus'],
       d: '6 Wochen',
       k: '50 Hade',
       h: 'Heilerkit, Chirurgenwerkzeug.'
     }, {
       u: 'Vergiftungsausrüstung',
-      inst: ['Diebesgilde', 'Alchemist'],
+      inst: ['Diebesgilde', 'Alchemist', 'Schmiede'],
       d: '6 Wochen',
       k: '70 Hade',
       h: 'Zugang zur Diebesgilde oder einem diskreten Alchemisten nötig.'
@@ -3660,40 +3680,40 @@ function AbenteuerContent() {
       h: 'Ein Instrument nach Wahl. Bardenakademien kennen auch exotische Instrumente.'
     }, {
       u: 'Spielzeug (Würfel, Karten…)',
-      inst: ['Privat'],
+      inst: ['Diebesgilde'],
       d: '2 Wochen',
       k: '15 Hade',
       h: 'In jeder Taverne zu erlernen. Kein formaler Ausbilder nötig — nur jemand der spielt.'
     }, {
       u: 'Landfahrzeug',
-      inst: ['Privat', 'Zunft'],
+      inst: ['Schmiede', 'Kartenzimmer', 'Förderhof'],
       d: '4 Wochen',
       k: '20 Hade',
       h: 'Kutsche, Reittier, Wagen.'
     }, {
       u: 'Wasserfahrzeug',
-      inst: ['Schifferakademie', 'Kapitän'],
+      inst: ['Kapitän', 'Kartenzimmer'],
       d: '8 Wochen',
       k: '40 Hade',
       h: 'Ruder- und Segelschiffe. Kapitän muss einen an Bord nehmen.'
     }, {
       u: 'Verbreitete Sprache',
-      inst: ['Privat', 'Gelehrter'],
+      inst: ['Gelehrter', 'Gewölbe', 'Offenes Haus', 'Anlegestelle'],
       d: '8 Wochen',
       k: '30 Hade',
       h: 'Gemeinsprache, Zwergisch, Elfisch u. a. Ein Muttersprachler reicht als Lehrer.'
     }, {
       u: 'Seltene Sprache',
-      inst: ['Magierschule', 'Tempel', 'Gelehrter'],
+      inst: ['Magierschule', 'Tempel', 'Gelehrter', 'Gewölbe'],
       d: '16 Wochen',
       k: '60 Hade',
       h: 'Drakonisch, Sylvanisch, Tiefensprache u. a. Tempel und Gelehrte sind günstiger; Magierschulen verlangen deutlich mehr.'
     }, {
       u: 'Arkane / Planare Sprache',
-      inst: ['Magierschule'],
+      inst: ['Magierschule', 'Gewölbe'],
       d: '20 Wochen',
       k: '200 Hade',
-      h: 'Infernalisch, Abyssal, Primordial. Ausschließlich an Magierschulen lehrbar — der Preis spiegelt das wider.'
+      h: 'Infernalisch, Abyssal, Primordial. Nur an Magierschulen und im Gewölbe lehrbar — der Preis spiegelt das wider.'
     }];
     return /*#__PURE__*/React.createElement(TW, null, /*#__PURE__*/React.createElement("table", {
       className: "eq-table",
