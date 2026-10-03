@@ -57,7 +57,7 @@ function OctSvg({
     opacity: opacity
   }));
 }
-function parseRich(text, accent = 'rgba(160,140,255,0.9)') {
+function parseRich(text, accent = 'rgba(var(--accent-rgb),calc(0.9*var(--ka)))') {
   if (!text || !text.includes('**')) return text;
   return text.split(/(\*\*.*?\*\*)/g).map((part, i) => part.startsWith('**') && part.endsWith('**') ? /*#__PURE__*/React.createElement("strong", {
     key: i,
@@ -87,7 +87,7 @@ const TWEAK_DEFAULTS = {
   "cardAccent": "#7c4dff"
 };
 function getPalette(entity) {
-  return entity?.palette ?? ["#0f0a1e", "#3b1f8c", "#7c4dff", "#c9b8ff"];
+  return entity?.palette ?? ["rgb(var(--panel-rgb))", "#3b1f8c", "#7c4dff", "var(--lav)"];
 }
 
 // ── SCROLL REVEAL ──────────────────────────────────────
@@ -224,7 +224,7 @@ function EntityCard({
       borderRadius: '4px',
       height: '260px',
       border: `1px solid ${hov ? accent + '88' : accent + '22'}`,
-      boxShadow: hov ? `0 12px 48px rgba(0,0,0,0.7), 0 0 28px ${accent}33, inset 0 1px 0 ${accent}18` : `0 2px 16px rgba(0,0,0,0.55)`,
+      boxShadow: hov ? `0 12px 48px rgba(var(--shadow-rgb),calc(0.7 * var(--shadow-k))), 0 0 28px ${accent}33, inset 0 1px 0 ${accent}18` : `0 2px 16px rgba(0,0,0,0.55)`,
       overflow: 'visible',
       transformStyle: 'preserve-3d',
       transform: hov ? `rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)` : `rotateX(0deg) rotateY(0deg)`,
@@ -259,7 +259,7 @@ function EntityCard({
     style: {
       position: 'absolute',
       inset: 0,
-      background: 'linear-gradient(to top, rgba(4,2,14,0.98) 0%, rgba(4,2,14,0.88) 50%, rgba(4,2,14,0.65) 100%)',
+      background: 'linear-gradient(to top, rgba(var(--bg-rgb),0.98) 0%, rgba(var(--bg-rgb),0.88) 50%, rgba(var(--bg-rgb),0.65) 100%)',
       opacity: hov ? 1 : 0,
       transition: 'opacity 0.45s ease'
     }
@@ -353,7 +353,7 @@ function EntityCard({
       fontWeight: '300',
       fontSize: '10px',
       lineHeight: 1.75,
-      color: 'rgba(var(--text-rgb),0.65)',
+      color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
       letterSpacing: '0.03em',
       display: '-webkit-box',
       WebkitLineClamp: 3,
@@ -368,7 +368,7 @@ function EntityCard({
       right: 0,
       height: '100px',
       zIndex: 9,
-      background: 'linear-gradient(to top, rgba(2,1,10,0.92) 0%, rgba(2,1,10,0.88) 97%, transparent 99%)',
+      background: 'linear-gradient(to top, rgba(var(--bg-rgb),0.92) 0%, rgba(var(--bg-rgb),0.88) 97%, transparent 99%)',
       opacity: hov ? 0 : 1,
       transition: 'opacity 0.35s ease',
       pointerEvents: 'none'
@@ -382,7 +382,7 @@ function EntityCard({
       height: '80px',
       zIndex: 10,
       transform: 'translateZ(2px)',
-      background: 'linear-gradient(to top, rgba(2,1,10,0.88) 0%, transparent 100%)',
+      background: 'linear-gradient(to top, rgba(var(--bg-rgb),0.88) 0%, transparent 100%)',
       clipPath: 'polygon(0% 40%, 100% 0%, 100% 100%, 0% 100%)',
       opacity: hov ? 1 : 0,
       transition: 'opacity 0.35s ease',
@@ -510,6 +510,7 @@ function EntityDetail({
       __html: entity.symbolSvg
     }
   }), /*#__PURE__*/React.createElement("div", {
+    className: "detail-topbar",
     style: {
       display: 'flex',
       alignItems: 'center',
@@ -556,13 +557,13 @@ function EntityDetail({
       color: pal[2] + '44',
       letterSpacing: '0.2em'
     }
-  }, entity.alignment?.toUpperCase())), /*#__PURE__*/React.createElement("div", {
+  }, entity.alignment?.toUpperCase())), /*#__PURE__*/React.createElement("div", { className: "detail-split",
     style: {
       flex: 1,
       display: 'flex',
       overflow: 'hidden'
     }
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", { className: "detail-portrait",
     style: {
       width: '40%',
       position: 'relative',
@@ -641,7 +642,7 @@ function EntityDetail({
           .entity-nav-arrow { opacity:0.42; animation:arrowBreathe 2.6s ease-in-out infinite; transition:opacity 0.2s, background 0.2s, border-color 0.2s; }
           .entity-nav-arrow:hover { opacity:0.88; }
         `), /*#__PURE__*/React.createElement("div", {
-    className: `detail-scroll-${entity.id}`,
+    className: `detail-content detail-scroll-${entity.id}`,
     style: {
       flex: 1,
       padding: '44px 72px 44px 48px',
@@ -698,7 +699,7 @@ function EntityDetail({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: 1.85,
-      color: 'rgba(var(--text-rgb),0.55)',
+      color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
       fontStyle: 'italic',
       borderLeft: `1px solid ${pal[2]}33`,
@@ -750,7 +751,7 @@ function EntityDetail({
       fontWeight: '300',
       fontSize: '13px',
       lineHeight: 1.85,
-      color: 'rgba(var(--text-rgb),0.78)',
+      color: 'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em'
     }
   }, parseRich(entity.description, pal[pal.length - 1]))), /*#__PURE__*/React.createElement("div", {
@@ -908,56 +909,8 @@ function EntityDetail({
 }
 
 // ── SECTION BANNER ─────────────────────────────────────
-function SectionBanner({
-  accentColor
-}) {
-  const col = accentColor || '#7c4dff';
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: '100%',
-      height: '160px',
-      marginBottom: '20px',
-      borderRadius: '4px',
-      border: `1px dashed ${col}44`,
-      background: `repeating-linear-gradient(-45deg, transparent, transparent 8px, ${col}07 8px, ${col}07 9px), linear-gradient(135deg, ${col}0a 0%, transparent 100%)`,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      overflow: 'hidden',
-      position: 'relative'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'absolute',
-      inset: 0,
-      background: `radial-gradient(ellipse at 50% 50%, ${col}12 0%, transparent 70%)`,
-      pointerEvents: 'none'
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '10px',
-      position: 'relative',
-      zIndex: 1
-    }
-  }, /*#__PURE__*/React.createElement(OctSvg, {
-    size: 28,
-    color: col + '33',
-    strokeWidth: 1
-  }), /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
-      letterSpacing: '0.25em',
-      color: col + '44',
-      textTransform: 'uppercase'
-    }
-  }, "Kopfbild hier ablegen"), /*#__PURE__*/React.createElement(OctSvg, {
-    size: 28,
-    color: col + '33',
-    strokeWidth: 1
-  })));
+function SectionBanner() {
+  return null; // Kopfbild-Platzhalter entfernt
 }
 
 // ── SECTION HEADING ────────────────────────────────────
@@ -1022,11 +975,11 @@ function TOCSidebar({
   const [collapsed, setCollapsed] = useState({});
   useEffect(() => {
     const update = () => {
-      const ideal = (headerBottom || 0) - window.scrollY;
+      const ideal = ((headerBottom || 0) - window.scrollY) / window.uiZoom();
       const val = Math.max(navHeight, ideal);
       if (asideRef.current) {
         asideRef.current.style.top = val + 'px';
-        asideRef.current.style.height = `calc(100vh - ${val}px)`;
+        asideRef.current.style.height = `calc(calc(var(--vh, 1vh) * 100) - ${val}px)`;
       }
     };
     update();
@@ -1116,8 +1069,8 @@ function TOCSidebar({
       position: 'fixed',
       top: `${navHeight}px`,
       left: 0,
-      height: `calc(100vh - ${navHeight}px)`,
-      borderRight: '1px solid rgba(var(--accent-rgb),0.1)',
+      height: `calc(calc(var(--vh, 1vh) * 100) - ${navHeight}px)`,
+      borderRight: '1px solid rgba(var(--accent-rgb),calc(0.1*var(--ka)))',
       padding: '28px 0',
       background: 'rgba(var(--bg-rgb),0.85)',
       backdropFilter: 'blur(12px)',
@@ -1129,7 +1082,7 @@ function TOCSidebar({
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '0.25em',
-      color: 'rgba(var(--accent-rgb),0.4)',
+      color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
       padding: '0 20px',
       marginBottom: '4px'
@@ -1152,18 +1105,18 @@ function TOCSidebar({
       fontSize: '11px',
       letterSpacing: '0.1em',
       fontVariant: 'small-caps',
-      color: entry.isSection ? 'rgba(var(--text-rgb),0.75)' : 'rgba(var(--text-rgb),0.6)',
+      color: entry.isSection ? 'rgba(var(--text-rgb),calc(0.75*var(--kt)))' : 'rgba(var(--text-rgb),calc(0.6*var(--kt)))',
       borderLeft: '2px solid transparent',
       transition: 'all 0.15s',
       lineHeight: 1.55
     },
     onMouseEnter: e => {
       e.currentTarget.style.color = 'var(--white)';
-      e.currentTarget.style.borderLeftColor = 'rgba(124,77,255,0.6)';
-      e.currentTarget.style.background = 'rgba(124,77,255,0.06)';
+      e.currentTarget.style.borderLeftColor = 'rgba(var(--purple-rgb),calc(0.6*var(--kp)))';
+      e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))';
     },
     onMouseLeave: e => {
-      e.currentTarget.style.color = entry.isSection ? 'rgba(var(--text-rgb),0.75)' : 'rgba(var(--text-rgb),0.6)';
+      e.currentTarget.style.color = entry.isSection ? 'rgba(var(--text-rgb),calc(0.75*var(--kt)))' : 'rgba(var(--text-rgb),calc(0.6*var(--kt)))';
       e.currentTarget.style.borderLeftColor = 'transparent';
       e.currentTarget.style.background = 'transparent';
     }
@@ -1180,10 +1133,10 @@ function TOCSidebar({
     }
   }, /*#__PURE__*/React.createElement("polygon", {
     points: "1,1 7,4 1,7",
-    fill: "rgba(var(--accent-rgb),1)"
+    fill: "rgba(var(--accent-rgb),calc(1*var(--ka)))"
   })) : /*#__PURE__*/React.createElement(OctSvg, {
     size: 4,
-    color: "rgba(124,77,255,0.3)",
+    color: "rgba(var(--purple-rgb),calc(0.3*var(--kp) + var(--tb)))",
     fill: "transparent",
     strokeWidth: 1,
     style: {

@@ -1,11 +1,11 @@
 *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
   :root {
-    --bg:#05040f; --white:#f0eeff; --silver:#c8c0e8;
+      
     --font-display:'Cinzel',serif; --font-body:'Raleway',sans-serif; --font-mono:'Share Tech Mono',monospace;
     --nav-h:52px; --accent:#7c4dff;
   }
   html, body { width:100%; min-height:100%; background:var(--bg); color:var(--white); font-family:var(--font-body); overflow-x:hidden; }
-  #root { width:100%; min-height:100vh; }
+  #root { width:100%; min-height:calc(var(--vh, 1vh) * 100); }
   body::after { content:''; position:fixed; inset:0; pointer-events:none; z-index:9999;
     background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px); }
   @keyframes slideDown  { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)} }
@@ -14,4 +14,19 @@
   @keyframes pulseGlow  { 0%,100%{opacity:0.5} 50%{opacity:1} }
   ::-webkit-scrollbar { width:4px; }
   ::-webkit-scrollbar-track { background:transparent; }
-  ::-webkit-scrollbar-thumb { background:rgba(124,77,255,0.3); border-radius:2px; }
+  ::-webkit-scrollbar-thumb { background:rgba(var(--purple-rgb),calc(0.3*var(--kp))); border-radius:2px; }
+
+/* Phones: collection header wraps, image modal stacks image above text */
+@media (max-width: 768px) {
+  .gal-head[style] { flex-wrap: wrap !important; padding: 12px 16px !important; gap: 10px 12px !important; }
+  .gal-head-title[style] { order: 3; flex: 1 0 100% !important; }
+  .gal-head-title h2 { font-size: 15px !important; letter-spacing: 0.14em !important; line-height: 1.35; }
+  .gal-head > span { margin-left: auto; }
+
+  .gal-modal[style] { flex-direction: column !important; overflow-y: auto !important; max-height: calc(var(--vh, 1vh) * 92) !important; }
+  .gal-modal-img[style] { flex: 0 0 auto !important; min-height: 0 !important; }
+  .gal-modal-img img { height: auto !important; max-height: calc(var(--vh, 1vh) * 55); object-fit: contain !important; background: #000; }
+  .gal-modal-info[style] { flex: 0 0 auto !important; overflow: visible !important; padding: 20px 18px 24px !important; }
+  .gal-modal-info h2 { font-size: 16px !important; letter-spacing: 0.14em !important; }
+  .gal-modal-close[style] { position: fixed; top: 14px; right: 14px; z-index: 5; margin: 0 !important; padding: 10px 13px !important; background: rgba(var(--bg-rgb), 0.85) !important; }
+}
