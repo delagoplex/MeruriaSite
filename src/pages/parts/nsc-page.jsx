@@ -32,15 +32,15 @@ function FilterChip({ active, label, count, onClick, accent }) {
       display:'inline-flex', alignItems:'center', gap:'8px',
       padding:'5px 10px',
       fontFamily:'var(--font-mono)', fontSize:'9.5px', letterSpacing:'0.14em', textTransform:'uppercase',
-      background: active ? hexA(ac, 0.18) : 'rgba(10,6,28,0.6)',
-      border: `1px solid ${active ? hexA(ac, 0.7) : 'rgba(160,140,255,0.18)'}`,
-      color: active ? '#f0eeff' : 'rgba(200,190,240,0.65)',
+      background: active ? hexA(ac, 0.18) : 'rgba(var(--panel-rgb),0.6)',
+      border: `1px solid ${active ? hexA(ac, 0.7) : 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))'}`,
+      color: active ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.65*var(--kt)))',
       borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', whiteSpace:'nowrap',
     }}
-    onMouseEnter={e => { if (!active) { e.currentTarget.style.borderColor = hexA(ac, 0.45); e.currentTarget.style.color = '#f0eeff'; } }}
-    onMouseLeave={e => { if (!active) { e.currentTarget.style.borderColor = 'rgba(160,140,255,0.18)'; e.currentTarget.style.color = 'rgba(200,190,240,0.65)'; } }}>
+    onMouseEnter={e => { if (!active) { e.currentTarget.style.borderColor = hexA(ac, 0.45); e.currentTarget.style.color = 'var(--white)'; } }}
+    onMouseLeave={e => { if (!active) { e.currentTarget.style.borderColor = 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))'; e.currentTarget.style.color = 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))'; } }}>
       <span>{label}</span>
-      {typeof count === 'number' && <span style={{ fontSize:'8px', color: active ? hexA(ac, 0.95) : 'rgba(160,140,255,0.45)', fontVariantNumeric:'tabular-nums' }}>{count}</span>}
+      {typeof count === 'number' && <span style={{ fontSize:'8px', color: active ? hexA(ac, 0.95) : 'rgba(var(--accent-rgb),calc(0.45*var(--ka)))', fontVariantNumeric:'tabular-nums' }}>{count}</span>}
     </button>
   );
 }
@@ -52,12 +52,12 @@ function FilterGroup({ title, values, selected, onToggle, getCount, labelFor }) 
         display:'flex', alignItems:'center', justifyContent:'space-between',
         width:'100%', padding:'6px 0', marginBottom:'8px',
         background:'transparent', border:'none', cursor:'pointer',
-        borderBottom:'1px solid rgba(160,140,255,0.1)',
+        borderBottom:'1px solid rgba(var(--accent-rgb),calc(0.1*var(--ka)))',
       }}>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.32em', color:'rgba(124,77,255,0.8)', textTransform:'uppercase' }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.32em', color:'rgba(var(--purple-rgb),calc(0.8*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>
           ◇ {title}
         </span>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:'10px', color:'rgba(160,140,255,0.4)' }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:'10px', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))' }}>
           {expanded ? '−' : '+'}
         </span>
       </button>
@@ -86,12 +86,12 @@ function TraitPills({ items, acc, max=3 }) {
         <span key={i} style={{
           padding:'3px 7px',
           fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.14em', textTransform:'uppercase',
-          color:'rgba(230,225,255,0.85)', background: hexA(acc, 0.1),
+          color:'rgba(var(--text-hi-rgb),calc(0.85*var(--kt) + var(--tb)))', background: hexA(acc, 0.1),
           border:`1px solid ${hexA(acc, 0.3)}`, borderRadius:2,
         }}>{e}</span>
       ))}
       {items.length > max && (
-        <span style={{ padding:'3px 7px', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.14em', color:'rgba(160,140,255,0.55)' }}>
+        <span style={{ padding:'3px 7px', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.14em', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))' }}>
           +{items.length - max}
         </span>
       )}
@@ -131,14 +131,14 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
         <article style={{
           position:'relative',
           background: hov
-            ? `linear-gradient(160deg, ${accBg}, rgba(10,6,28,0.92))`
-            : 'linear-gradient(160deg, rgba(14,8,32,0.78), rgba(8,5,22,0.85))',
-          border: `1px solid ${hov ? acc : (isUnknown ? 'rgba(160,140,255,0.12)' : 'rgba(160,140,255,0.18)')}`,
+            ? `linear-gradient(160deg, ${accBg}, rgba(var(--panel-rgb),0.92))`
+            : 'linear-gradient(160deg, rgba(var(--panel-rgb),0.78), rgba(var(--panel-rgb),0.85))',
+          border: `1px solid ${hov ? acc : (isUnknown ? 'rgba(var(--accent-rgb),calc(0.12*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))')}`,
           borderRadius:'3px',
           padding: compact ? '14px 16px' : '20px 22px 18px',
           transition:'background 0.3s, border-color 0.3s, transform 0.25s, box-shadow 0.3s',
           transform: hov ? 'translateY(-3px)' : 'translateY(0)',
-          boxShadow: hov ? `0 10px 30px rgba(0,0,0,0.5), 0 0 24px ${hexA(acc, 0.22)}` : '0 2px 10px rgba(0,0,0,0.3)',
+          boxShadow: hov ? `0 10px 30px rgba(var(--shadow-rgb),calc(0.5 * var(--shadow-k))), 0 0 24px ${hexA(acc, 0.22)}` : '0 2px 10px rgba(0,0,0,0.3)',
           overflow:'hidden',
           opacity: isDead ? 0.92 : 1,
         }}>
@@ -167,8 +167,8 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
                 <div style={{
                   position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center',
                   fontFamily:'var(--font-mono)', fontSize: compact ? 22 : 28, fontWeight:700,
-                  color:'rgba(124,77,255,0.85)',
-                  textShadow:'0 0 10px rgba(124,77,255,0.7), 0 0 22px rgba(124,77,255,0.4)',
+                  color:'rgba(var(--purple-rgb),calc(0.85*var(--kp) + var(--tb)))',
+                  textShadow:'0 0 10px rgba(var(--purple-rgb),calc(0.7*var(--kp))), 0 0 22px rgba(var(--purple-rgb),calc(0.4*var(--kp)))',
                   animation:'pulse-glow 2.5s ease-in-out infinite',
                   userSelect:'none', pointerEvents:'none',
                 }}>?</div>
@@ -186,8 +186,8 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
                 <h3 style={{
                   fontFamily:'var(--font-mono)', fontSize: compact ? '12px' : '14px',
                   fontWeight:400, letterSpacing:'0.14em',
-                  color:'rgba(160,140,255,0.45)',
-                  textShadow:'0 0 12px rgba(124,77,255,0.55), 0 0 26px rgba(124,77,255,0.25)',
+                  color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',
+                  textShadow:'0 0 12px rgba(var(--purple-rgb),calc(0.55*var(--kp))), 0 0 26px rgba(var(--purple-rgb),calc(0.25*var(--kp)))',
                   lineHeight:1.3, marginBottom:5,
                   userSelect:'none',
                   animation:'unknownDrift 5s ease-in-out infinite',
@@ -195,7 +195,7 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
               ) : (
                 <h3 style={{
                   fontFamily:'var(--font-display)', fontSize: compact ? '14px' : '17px',
-                  fontWeight:400, letterSpacing:'0.06em', color:'#f0eeff',
+                  fontWeight:400, letterSpacing:'0.06em', color:'var(--white)',
                   textShadow: hov ? `0 0 14px ${hexA(acc, 0.55)}` : 'none',
                   lineHeight:1.15, textWrap:'balance',
                   marginBottom:5,
@@ -205,7 +205,7 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
                 <div style={{ display:'flex', alignItems:'center', gap:8, flexWrap:'wrap', marginBottom:7 }}>
                   {headBits.map((b, i) => (
                     <React.Fragment key={i}>
-                      {i > 0 && <span style={{ color:'rgba(160,140,255,0.3)', fontSize:9 }}>·</span>}
+                      {i > 0 && <span style={{ color:'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))', fontSize:9 }}>·</span>}
                       <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em',
                         color: acc, textTransform:'uppercase' }}>{b}</span>
                     </React.Fragment>
@@ -231,7 +231,7 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
               padding:'8px 10px', borderLeft:`2px solid ${hexA(acc, 0.6)}`,
               background: hexA(acc, 0.05),
               fontFamily:'var(--font-body)', fontSize: compact ? 11 : 12.5, fontStyle:'italic',
-              color:'rgba(230,225,255,0.85)',
+              color:'rgba(var(--text-hi-rgb),calc(0.85*var(--kt) + var(--tb)))',
               lineHeight:1.55 }}>
               <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.24em',
                 color: hexA(acc, 0.7), textTransform:'uppercase', marginRight:6 }}>◇</span>
@@ -282,7 +282,7 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
             <div style={{
               position:'relative', zIndex:1, marginTop:10,
               fontFamily:'var(--font-mono)', fontSize:7.5,
-              color:'rgba(160,140,255,0.55)', letterSpacing:'0.20em',
+              color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', letterSpacing:'0.20em',
               textTransform:'uppercase',
             }}>
               ◇ {openFacts} / {totalFacts} Fakten freigeschaltet
@@ -291,10 +291,10 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
           {isUnknown && (
             <div style={{
               position:'relative', zIndex:1, marginTop:10, padding:'6px 10px',
-              border:'1px solid rgba(124,77,255,0.22)',
-              background:'rgba(124,77,255,0.05)',
+              border:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))',
+              background:'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',
               fontFamily:'var(--font-mono)', fontSize:8,
-              color:'rgba(160,140,255,0.6)', letterSpacing:'0.20em',
+              color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))', letterSpacing:'0.20em',
               textTransform:'uppercase',
               animation:'pulse-glow 3.5s ease-in-out infinite',
               userSelect:'none',
@@ -311,10 +311,10 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
 function MetaLine({ label, value, acc, unlocked=true, divisionAccent }) {
   return (
     <div style={{ display:'flex', flexDirection:'column', gap:1, minWidth:0 }}>
-      <span style={{ color:'rgba(160,140,255,0.4)', fontSize:7.5 }}>{label}</span>
+      <span style={{ color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', fontSize:7.5 }}>{label}</span>
       <span style={{
-        color: !unlocked ? 'rgba(160,140,255,0.4)'
-             : divisionAccent ? acc : 'rgba(220,210,255,0.78)',
+        color: !unlocked ? 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))'
+             : divisionAccent ? acc : 'rgba(var(--text-rgb),calc(0.78*var(--kt)))',
         textShadow: unlocked && divisionAccent ? `0 0 10px ${hexA(acc, 0.4)}` : 'none',
         fontStyle: unlocked ? 'normal' : 'italic',
         overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap',
@@ -326,17 +326,17 @@ function MetaLine({ label, value, acc, unlocked=true, divisionAccent }) {
 // ── Stat Tile (clickable filter) ──────────────────────────
 function StatTile({ label, value, color, active, onClick }) {
   const [hov, setHov] = appUS(false);
-  const c = color || '#c9b8ff';
+  const c = color || 'var(--lav)';
   const clickable = !!onClick;
-  const borderCol = active ? c : (color ? `${color}44` : 'rgba(160,140,255,0.2)');
-  const bgCol = active ? (color ? `${color}22` : 'rgba(124,77,255,0.18)') : 'rgba(10,6,28,0.6)';
+  const borderCol = active ? c : (color ? `${color}44` : 'rgba(var(--accent-rgb),calc(0.2*var(--ka)))');
+  const bgCol = active ? (color ? `${color}22` : 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))') : 'rgba(var(--panel-rgb),0.6)';
   return (
     <button type="button" onClick={onClick} disabled={!clickable}
       onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
       style={{
         padding:'6px 10px', minWidth:64,
-        background: clickable && hov && !active ? (color ? `${color}11` : 'rgba(124,77,255,0.08)') : bgCol,
-        border:`1px solid ${clickable && hov && !active ? (color ? `${color}88` : 'rgba(160,140,255,0.4)') : borderCol}`,
+        background: clickable && hov && !active ? (color ? `${color}11` : 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))') : bgCol,
+        border:`1px solid ${clickable && hov && !active ? (color ? `${color}88` : 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))') : borderCol}`,
         borderRadius:3, textAlign:'center', position:'relative',
         cursor: clickable ? 'pointer' : 'default',
         boxShadow: active && color ? `0 0 12px ${color}33, 0 0 0 1px ${color}55 inset` : 'none',
@@ -346,7 +346,7 @@ function StatTile({ label, value, color, active, onClick }) {
         textShadow: color ? `0 0 12px ${color}55` : 'none' }}>
         {value.toString().padStart(2,'0')}
       </div>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:7, letterSpacing:'0.18em', color:'rgba(160,140,255,0.6)', textTransform:'uppercase', whiteSpace:'nowrap' }}>
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:7, letterSpacing:'0.18em', color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))', textTransform:'uppercase', whiteSpace:'nowrap' }}>
         {label}
       </div>
       {active && (
@@ -361,16 +361,16 @@ function ActivePill({ label, onRemove }) {
     <button onClick={onRemove} style={{
       display:'inline-flex', alignItems:'center', gap:6,
       padding:'4px 8px',
-      background:'rgba(124,77,255,0.22)',
-      border:'1px solid rgba(160,140,255,0.55)',
+      background:'rgba(var(--purple-rgb),calc(0.22*var(--kp)))',
+      border:'1px solid rgba(var(--accent-rgb),calc(0.55*var(--ka)))',
       borderRadius:2,
-      color:'#f0eeff',
+      color:'var(--white)',
       fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em',
       cursor:'pointer', textTransform:'uppercase',
       transition:'all 0.15s',
     }}
     onMouseEnter={e => { e.currentTarget.style.background='rgba(227,103,96,0.25)'; e.currentTarget.style.borderColor='rgba(227,103,96,0.7)'; }}
-    onMouseLeave={e => { e.currentTarget.style.background='rgba(124,77,255,0.22)'; e.currentTarget.style.borderColor='rgba(160,140,255,0.55)'; }}>
+    onMouseLeave={e => { e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.22*var(--kp)))'; e.currentTarget.style.borderColor='rgba(var(--accent-rgb),calc(0.55*var(--ka)))'; }}>
       <span>{label}</span>
       <span style={{ fontSize:10, lineHeight:1 }}>×</span>
     </button>
@@ -530,15 +530,15 @@ function App() {
   }, []);
 
   if (dataLoading) return (
-    <div style={{ position:'fixed', inset:0, background:'#05040f', display:'flex', alignItems:'center', justifyContent:'center' }}>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.3em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>
+    <div style={{ position:'fixed', inset:0, background:'var(--bg)', display:'flex', alignItems:'center', justifyContent:'center' }}>
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.3em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>
         ◈ Lade NSC-Register …
       </div>
     </div>
   );
 
   return (
-    <div onMouseMove={handleMouseMove} style={{ position:'relative', minHeight:'100vh' }}>
+    <div onMouseMove={handleMouseMove} style={{ position:'relative', minHeight:'calc(var(--vh, 1vh) * 100)' }}>
       <ParticleField mouseX={mouse.x} mouseY={mouse.y} />
       <FloatingHexField mouseX={mouse.x} mouseY={mouse.y} />
 
@@ -549,15 +549,15 @@ function App() {
       <div style={{ position:'relative', zIndex:5, maxWidth:1380, margin:'0 auto', padding:'46px 36px 80px' }}>
         {/* Breadcrumb + Blickwinkel-Wahl */}
         <div className="reveal-up" style={{ marginBottom:14, display:'flex', alignItems:'center', justifyContent:'space-between', gap:14, flexWrap:'wrap' }}>
-          <div style={{ display:'flex', alignItems:'center', gap:10, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(160,140,255,0.55)' }}>
-            <a href="Meruria.html" style={{ color:'rgba(160,140,255,0.55)', textDecoration:'none' }}>Meruria</a>
+          <div style={{ display:'flex', alignItems:'center', gap:10, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))' }}>
+            <a href="Meruria.html" style={{ color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textDecoration:'none' }}>Meruria</a>
             <span style={{ opacity:0.4 }}>›</span>
-            <a href="/charaktere/index.html" style={{ color:'rgba(160,140,255,0.55)', textDecoration:'none' }}>Charaktere</a>
+            <a href="/charaktere/index.html" style={{ color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textDecoration:'none' }}>Charaktere</a>
             <span style={{ opacity:0.4 }}>›</span>
-            <span style={{ color:'#c9b8ff' }}>NSC</span>
+            <span style={{ color:'var(--lav)' }}>NSC</span>
           </div>
           <div style={{ display:'flex', alignItems:'flex-start', gap:10, flexWrap:'wrap' }}>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.28em', color:'rgba(160,140,255,0.55)', textTransform:'uppercase', paddingTop:7, flexShrink:0 }}>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textTransform:'uppercase', paddingTop:7, flexShrink:0 }}>
               ◇ Blickwinkel
             </span>
             <div style={{ display:'flex', gap:6, flexWrap:'wrap', alignItems:'flex-start' }}>
@@ -565,14 +565,14 @@ function App() {
               <button onClick={() => setPerspective('alle')} style={{
                 fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase',
                 padding:'5px 12px', borderRadius:3, cursor:'pointer', border:'1px solid',
-                background: perspective === 'alle' ? 'rgba(160,140,255,0.2)' : 'rgba(160,140,255,0.05)',
-                borderColor: perspective === 'alle' ? 'rgba(160,140,255,0.7)' : 'rgba(160,140,255,0.25)',
-                color: perspective === 'alle' ? '#f0eeff' : 'rgba(160,140,255,0.5)',
-                boxShadow: perspective === 'alle' ? '0 0 10px rgba(124,77,255,0.2)' : 'none',
+                background: perspective === 'alle' ? 'rgba(var(--accent-rgb),calc(0.2*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.05*var(--ka)))',
+                borderColor: perspective === 'alle' ? 'rgba(var(--accent-rgb),calc(0.7*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.25*var(--ka)))',
+                color: perspective === 'alle' ? 'var(--white)' : 'rgba(var(--accent-rgb),calc(0.5*var(--ka)))',
+                boxShadow: perspective === 'alle' ? '0 0 10px rgba(var(--purple-rgb),calc(0.2*var(--kp)))' : 'none',
                 transition:'all 0.15s',
               }}>Alle</button>
               {/* Separator */}
-              {players.length > 0 && <span style={{ color:'rgba(124,77,255,0.2)', alignSelf:'center', fontSize:12 }}>|</span>}
+              {players.length > 0 && <span style={{ color:'rgba(var(--purple-rgb),calc(0.2*var(--kp) + var(--tb)))', alignSelf:'center', fontSize:12 }}>|</span>}
               {/* Player groups */}
               {players.map(player => {
                 const playerActive = perspective === player.id;
@@ -584,10 +584,10 @@ function App() {
                     <button onClick={() => setPerspective(player.id)} style={{
                       fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.12em', textTransform:'uppercase',
                       padding:'5px 11px', borderRadius:3, cursor:'pointer', border:'1px solid',
-                      background: playerActive ? 'rgba(124,77,255,0.22)' : (anyCharActive ? 'rgba(124,77,255,0.08)' : 'rgba(124,77,255,0.04)'),
-                      borderColor: playerActive ? 'rgba(124,77,255,0.7)' : (anyCharActive ? 'rgba(124,77,255,0.35)' : 'rgba(124,77,255,0.18)'),
-                      color: playerActive ? '#f0eeff' : (anyCharActive ? 'rgba(200,190,240,0.7)' : 'rgba(160,140,255,0.45)'),
-                      boxShadow: playerActive ? '0 0 10px rgba(124,77,255,0.25)' : 'none',
+                      background: playerActive ? 'rgba(var(--purple-rgb),calc(0.22*var(--kp)))' : (anyCharActive ? 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.04*var(--kp)))'),
+                      borderColor: playerActive ? 'rgba(var(--purple-rgb),calc(0.7*var(--kp)))' : (anyCharActive ? 'rgba(var(--purple-rgb),calc(0.35*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))'),
+                      color: playerActive ? 'var(--white)' : (anyCharActive ? 'rgba(var(--text-rgb),calc(0.7*var(--kt)))' : 'rgba(var(--accent-rgb),calc(0.45*var(--ka)))'),
+                      boxShadow: playerActive ? '0 0 10px rgba(var(--purple-rgb),calc(0.25*var(--kp)))' : 'none',
                       transition:'all 0.15s',
                     }}>{player.label}</button>
                     {/* Character chips */}
@@ -597,16 +597,16 @@ function App() {
                         <button key={c.id} onClick={() => setPerspective(c.id)} style={{
                           fontFamily:'var(--font-body)', fontWeight:300, fontSize:11, letterSpacing:'0.04em',
                           padding:'4px 10px', borderRadius:3, cursor:'pointer', border:'1px solid',
-                          background: charActive ? 'rgba(124,77,255,0.18)' : 'rgba(124,77,255,0.04)',
-                          borderColor: charActive ? 'rgba(124,77,255,0.6)' : 'rgba(124,77,255,0.15)',
-                          color: charActive ? '#f0eeff' : 'rgba(180,170,220,0.5)',
-                          boxShadow: charActive ? '0 0 8px rgba(124,77,255,0.2)' : 'none',
+                          background: charActive ? 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.04*var(--kp)))',
+                          borderColor: charActive ? 'rgba(var(--purple-rgb),calc(0.6*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.15*var(--kp)))',
+                          color: charActive ? 'var(--white)' : 'color-mix(in srgb, rgba(180,170,220,0.5), rgb(var(--ink-rgb)) var(--cm))',
+                          boxShadow: charActive ? '0 0 8px rgba(var(--purple-rgb),calc(0.2*var(--kp)))' : 'none',
                           transition:'all 0.15s',
                         }}>{c.label}</button>
                       );
                     })}
                     {players.indexOf(player) < players.length - 1 && (
-                      <span style={{ color:'rgba(124,77,255,0.2)', fontSize:12 }}>|</span>
+                      <span style={{ color:'rgba(var(--purple-rgb),calc(0.2*var(--kp) + var(--tb)))', fontSize:12 }}>|</span>
                     )}
                   </div>
                 );
@@ -618,48 +618,48 @@ function App() {
         {/* Hero */}
         <div className="reveal-up" style={{ display:'flex', alignItems:'flex-end', justifyContent:'space-between', gap:24, marginBottom:36, flexWrap:'wrap' }}>
           <div style={{ maxWidth:620 }}>
-            <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(30px,3.6vw,46px)', fontWeight:300, letterSpacing:'0.20em', color:'#f0eeff', textShadow:'0 0 40px rgba(124,77,255,0.4)', lineHeight:1.1, textTransform:'uppercase', margin:'0 0 14px 0' }}>
+            <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(18px,3.6vw,46px)', fontWeight:300, letterSpacing:'0.20em', color:'var(--white)', textShadow:'0 0 40px rgba(var(--purple-rgb),calc(0.4*var(--kp)))', lineHeight:1.1, textTransform:'uppercase', margin:'0 0 14px 0' }}>
               Nichtspielercharaktere
             </h1>
-            <p style={{ fontFamily:'var(--font-body)', fontWeight:300, fontSize:13, lineHeight:1.85, color:'rgba(220,210,255,0.55)', letterSpacing:'0.04em', textWrap:'pretty', margin:0 }}>
+            <p style={{ fontFamily:'var(--font-body)', fontWeight:300, fontSize:13, lineHeight:1.85, color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', letterSpacing:'0.04em', textWrap:'pretty', margin:0 }}>
               Namenlose Gestalten am Hafen, Mentor*innen in den Hallen der Kuratoren, Feinde im Schatten — das NSC-Register sammelt alle Personen, die euer Weg gekreuzt hat. Mit jedem Fakt, den ihr im Spiel über sie erfahrt, schaltet die Spielleitung einen Eintrag frei und eure Vertrautheit wächst: von Gerüchten bis Eingeweiht.
             </p>
           </div>
           {/* Gesamtfortschritt — im Kollektikon-Stil */}
-          <div style={{ textAlign:'right', minWidth:240 }}>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.28em', color:'rgba(124,77,255,0.55)', textTransform:'uppercase', marginBottom:8 }}>
+          <div className="nsc-progress" style={{ textAlign:'right', minWidth:240 }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.28em', color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))', textTransform:'uppercase', marginBottom:8 }}>
               Gesamtfortschritt
             </div>
-            <div style={{ fontFamily:'var(--font-display)', fontWeight:300, fontSize:42, color:'#f0eeff', lineHeight:1 }}>
-              {knownCount}<span style={{ color:'rgba(160,140,255,0.4)', fontSize:24 }}> / {stats.total}</span>
+            <div style={{ fontFamily:'var(--font-display)', fontWeight:300, fontSize:42, color:'var(--white)', lineHeight:1 }}>
+              {knownCount}<span style={{ color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', fontSize:24 }}> / {stats.total}</span>
             </div>
             <div style={{ marginTop:10, position:'relative', height:6 }}>
               {fullyCount > 0 && (
                 <div style={{ position:'absolute', left:0, top:0, bottom:0, width:`${(fullyCount/stats.total)*100}%`,
-                  boxShadow:'0 0 9px 1px rgba(160,140,255,0.55), 0 0 20px 5px rgba(160,140,255,0.22), 0 0 32px 10px rgba(160,140,255,0.09)',
+                  boxShadow:'0 0 9px 1px rgba(var(--accent-rgb),calc(0.55*var(--ka))), 0 0 20px 5px rgba(var(--accent-rgb),calc(0.22*var(--ka))), 0 0 32px 10px rgba(var(--accent-rgb),calc(0.09*var(--ka)))',
                   borderRadius:2, pointerEvents:'none',
                 }}/>
               )}
-              <div style={{ position:'absolute', inset:0, background:'rgba(124,77,255,0.08)', border:'1px solid rgba(124,77,255,0.22)', borderRadius:2, overflow:'hidden' }}>
+              <div style={{ position:'absolute', inset:0, background:'rgba(var(--purple-rgb),calc(0.08*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))', borderRadius:2, overflow:'hidden' }}>
                 <div style={{ position:'absolute', left:0, top:0, bottom:0, width:`${(knownCount/stats.total)*100}%`,
-                  background:'linear-gradient(90deg, rgba(220,215,250,0.18), rgba(240,238,255,0.28))',
+                  background:'linear-gradient(90deg, rgba(220,215,250,0.18), rgba(var(--text-hi-rgb),calc(0.28*var(--kt))))',
                   transition:'width 0.8s cubic-bezier(.2,.85,.2,1)',
                 }}/>
                 <div style={{ position:'absolute', left:-1, top:-1, bottom:-1, width:`${(fullyCount/stats.total)*100}%`,
-                  background:'linear-gradient(90deg, rgba(140,100,255,1), rgba(200,180,255,1))',
+                  background:'linear-gradient(90deg, rgba(140,100,255,1), rgba(200,180,255,calc(1*var(--ka))))',
                   boxShadow:'inset 0 0 4px rgba(255,255,255,0.45)',
                   borderRadius:2,
                   transition:'width 1s cubic-bezier(.2,.85,.2,1)',
                 }}/>
               </div>
             </div>
-            <div style={{ marginTop:6, display:'flex', justifyContent:'flex-end', gap:14, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase' }}>
-              <span style={{ color:'rgba(240,238,255,0.7)' }}>
-                <span style={{ display:'inline-block', width:8, height:8, background:'rgba(240,238,255,0.85)', marginRight:5, verticalAlign:'middle' }}/>
+            <div className="nsc-progress-legend" style={{ marginTop:6, display:'flex', justifyContent:'flex-end', gap:14, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase' }}>
+              <span style={{ color:'rgba(var(--text-hi-rgb),calc(0.7*var(--kt) + var(--tb)))' }}>
+                <span style={{ display:'inline-block', width:8, height:8, background:'rgba(var(--text-hi-rgb),calc(0.85*var(--kt)))', marginRight:5, verticalAlign:'middle' }}/>
                 {Math.round((knownCount/stats.total)*100)} % Gerüchte
               </span>
-              <span style={{ color:'rgba(190,170,255,0.95)' }}>
-                <span style={{ display:'inline-block', width:8, height:8, background:'rgba(160,140,255,0.95)', marginRight:5, verticalAlign:'middle' }}/>
+              <span style={{ color:'color-mix(in srgb, rgba(190,170,255,0.95), rgb(var(--ink-rgb)) var(--cm))' }}>
+                <span style={{ display:'inline-block', width:8, height:8, background:'rgba(var(--accent-rgb),calc(0.95*var(--ka)))', marginRight:5, verticalAlign:'middle' }}/>
                 {Math.round((fullyCount/stats.total)*100)} % Eingeweiht
               </span>
             </div>
@@ -670,16 +670,16 @@ function App() {
         <div style={{ display:'grid', gridTemplateColumns:'280px 1fr', gap:'28px', alignItems:'flex-start' }}>
           {/* SIDEBAR */}
           <aside style={{ position:'sticky', top:72,
-            background:'linear-gradient(160deg, rgba(14,8,32,0.78), rgba(8,5,22,0.85))',
-            border:'1px solid rgba(160,140,255,0.18)', borderRadius:3, padding:'18px 20px',
-            maxHeight:'calc(100vh - 96px)', overflow:'auto' }}>
+            background:'linear-gradient(160deg, rgba(var(--panel-rgb),0.78), rgba(var(--panel-rgb),0.85))',
+            border:'1px solid rgba(var(--accent-rgb),calc(0.18*var(--ka)))', borderRadius:3, padding:'18px 20px',
+            maxHeight:'calc(calc(var(--vh, 1vh) * 100) - 96px)', overflow:'auto' }}>
             <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:14 }}>
               <div style={{ display:'flex', alignItems:'center', gap:8 }}>
-                <svg width="10" height="10" viewBox="0 0 10 10"><polygon points={hexPoints(10)} fill="#7c4dff" stroke="rgba(160,140,255,0.8)" strokeWidth="0.5"/></svg>
-                <span style={{ fontFamily:'var(--font-display)', fontSize:13, letterSpacing:'0.22em', color:'#f0eeff', textTransform:'uppercase' }}>Filter</span>
+                <svg width="10" height="10" viewBox="0 0 10 10"><polygon points={hexPoints(10)} fill="#7c4dff" stroke="rgba(var(--accent-rgb),calc(0.8*var(--ka)))" strokeWidth="0.5"/></svg>
+                <span style={{ fontFamily:'var(--font-display)', fontSize:13, letterSpacing:'0.22em', color:'var(--white)', textTransform:'uppercase' }}>Filter</span>
                 {activeFilterCount > 0 && (
                   <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.1em',
-                    padding:'2px 6px', background:'rgba(124,77,255,0.25)', border:'1px solid rgba(160,140,255,0.5)', color:'#f0eeff', borderRadius:2 }}>
+                    padding:'2px 6px', background:'rgba(var(--purple-rgb),calc(0.25*var(--kp)))', border:'1px solid rgba(var(--accent-rgb),calc(0.5*var(--ka)))', color:'var(--white)', borderRadius:2 }}>
                     {activeFilterCount}
                   </span>
                 )}
@@ -688,11 +688,11 @@ function App() {
                 <button onClick={clearAll} style={{
                   background:'transparent', border:'none', cursor:'pointer',
                   fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.2em',
-                  color:'rgba(160,140,255,0.55)', textTransform:'uppercase',
+                  color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textTransform:'uppercase',
                   padding:'4px 0', textDecoration:'underline', textUnderlineOffset:3,
                 }}
-                onMouseEnter={e => e.currentTarget.style.color = '#f0eeff'}
-                onMouseLeave={e => e.currentTarget.style.color = 'rgba(160,140,255,0.55)'}>
+                onMouseEnter={e => e.currentTarget.style.color = 'var(--white)'}
+                onMouseLeave={e => e.currentTarget.style.color = 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))'}>
                   Zurücksetzen
                 </button>
               )}
@@ -704,13 +704,13 @@ function App() {
                 placeholder="Name, Beruf, Ort..."
                 style={{
                   width:'100%', padding:'9px 30px 9px 12px',
-                  background:'rgba(5,4,15,0.7)', border:'1px solid rgba(160,140,255,0.22)',
-                  borderRadius:2, color:'#f0eeff',
+                  background:'rgba(var(--bg-rgb),0.7)', border:'1px solid rgba(var(--accent-rgb),calc(0.22*var(--ka)))',
+                  borderRadius:2, color:'var(--white)',
                   fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.06em',
                   outline:'none', transition:'border-color 0.2s, box-shadow 0.2s',
                 }}
-                onFocus={e => { e.target.style.borderColor='rgba(124,77,255,0.7)'; e.target.style.boxShadow='0 0 12px rgba(124,77,255,0.18)'; }}
-                onBlur={e => { e.target.style.borderColor='rgba(160,140,255,0.22)'; e.target.style.boxShadow='none'; }} />
+                onFocus={e => { e.target.style.borderColor='rgba(var(--purple-rgb),calc(0.7*var(--kp)))'; e.target.style.boxShadow='0 0 12px rgba(var(--purple-rgb),calc(0.18*var(--kp)))'; }}
+                onBlur={e => { e.target.style.borderColor='rgba(var(--accent-rgb),calc(0.22*var(--ka)))'; e.target.style.boxShadow='none'; }} />
               <svg width="12" height="12" viewBox="0 0 12 12" style={{ position:'absolute', right:10, top:'50%', transform:'translateY(-50%)', opacity:0.5 }}>
                 <circle cx="5" cy="5" r="3.5" fill="none" stroke="#7c4dff" strokeWidth="1"/>
                 <line x1="7.5" y1="7.5" x2="10.5" y2="10.5" stroke="#7c4dff" strokeWidth="1"/>
@@ -734,27 +734,27 @@ function App() {
             {/* Toolbar */}
             <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:14, marginBottom:18, flexWrap:'wrap' }}>
               <div style={{ display:'flex', alignItems:'center', gap:10 }}>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.28em', color:'rgba(160,140,255,0.7)', textTransform:'uppercase' }}>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>
                   Register
                 </span>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', color:'rgba(160,140,255,0.45)' }}>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))' }}>
                   {filtered.length.toString().padStart(2,'0')} / {nscs.length.toString().padStart(2,'0')} NSC
                 </span>
                 {perspective !== 'alle' && (
                   <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.22em',
-                    padding:'3px 8px', background:'rgba(124,77,255,0.18)', border:'1px solid rgba(160,140,255,0.6)',
-                    color:'#c9b8ff', textTransform:'uppercase', borderRadius:2 }}>
+                    padding:'3px 8px', background:'rgba(var(--purple-rgb),calc(0.18*var(--kp)))', border:'1px solid rgba(var(--accent-rgb),calc(0.6*var(--ka)))',
+                    color:'var(--lav)', textTransform:'uppercase', borderRadius:2 }}>
                     ◇ Blickwinkel: {perspective === 'alle' ? 'Alle' : players.find(p => p.id === perspective)?.label || perspectives.find(p => p.id === perspective)?.label || perspective}
                   </span>
                 )}
               </div>
               <div style={{ display:'flex', alignItems:'center', gap:8 }}>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>Sortieren</span>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>Sortieren</span>
                 <select value={sort} onChange={e => setSort(e.target.value)} style={{
                   padding:'5px 10px',
-                  background:'rgba(5,4,15,0.7)',
-                  border:'1px solid rgba(160,140,255,0.22)',
-                  borderRadius:2, color:'#f0eeff',
+                  background:'rgba(var(--bg-rgb),0.7)',
+                  border:'1px solid rgba(var(--accent-rgb),calc(0.22*var(--ka)))',
+                  borderRadius:2, color:'var(--white)',
                   fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.1em',
                   cursor:'pointer', outline:'none',
                 }}>
@@ -770,8 +770,8 @@ function App() {
             {/* Active filter pills */}
             {activeFilterCount > 0 && (
               <div style={{ display:'flex', flexWrap:'wrap', gap:6, marginBottom:18, padding:'10px 12px',
-                background:'rgba(124,77,255,0.06)', border:'1px dashed rgba(160,140,255,0.25)', borderRadius:2 }}>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.24em', color:'rgba(160,140,255,0.65)', textTransform:'uppercase', padding:'4px 4px 4px 0' }}>Aktiv:</span>
+                background:'rgba(var(--purple-rgb),calc(0.06*var(--kp)))', border:'1px dashed rgba(var(--accent-rgb),calc(0.25*var(--ka)))', borderRadius:2 }}>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.24em', color:'rgba(var(--accent-rgb),calc(0.65*var(--ka) + var(--tb)))', textTransform:'uppercase', padding:'4px 4px 4px 0' }}>Aktiv:</span>
                 {search && <ActivePill label={`„${search}"`} onRemove={() => setSearch('')} />}
                 {Object.entries(filters).map(([group, vals]) =>
                   vals.map(v => (
@@ -789,24 +789,24 @@ function App() {
             {filtered.length === 0 ? (
               <div style={{
                 padding:'60px 30px', textAlign:'center',
-                border:'1px dashed rgba(160,140,255,0.25)', borderRadius:3,
-                background:'rgba(10,6,28,0.4)',
+                border:'1px dashed rgba(var(--accent-rgb),calc(0.25*var(--ka)))', borderRadius:3,
+                background:'rgba(var(--panel-rgb),0.4)',
               }}>
                 <svg width="48" height="48" viewBox="0 0 48 48" style={{ margin:'0 auto 16px', opacity:0.5 }}>
                   <polygon points={hexPoints(48)} fill="none" stroke="#7c4dff" strokeWidth="1" strokeDasharray="3 3"/>
                   <text x="24" y="30" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="14" fill="#7c4dff" opacity="0.7">∅</text>
                 </svg>
-                <div style={{ fontFamily:'var(--font-display)', fontSize:14, letterSpacing:'0.22em', color:'#c9b8ff', textTransform:'uppercase', marginBottom:8 }}>
+                <div style={{ fontFamily:'var(--font-display)', fontSize:14, letterSpacing:'0.22em', color:'var(--lav)', textTransform:'uppercase', marginBottom:8 }}>
                   Keine NSC im Register
                 </div>
-                <div style={{ fontFamily:'var(--font-body)', fontSize:12, color:'rgba(200,190,240,0.55)', marginBottom:14 }}>
+                <div style={{ fontFamily:'var(--font-body)', fontSize:12, color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', marginBottom:14 }}>
                   Mit den aktuellen Filtern bleibt das Archiv leer.
                 </div>
                 <button onClick={clearAll} style={{
                   padding:'7px 16px',
-                  background:'rgba(124,77,255,0.15)',
-                  border:'1px solid rgba(160,140,255,0.5)',
-                  color:'#f0eeff',
+                  background:'rgba(var(--purple-rgb),calc(0.15*var(--kp)))',
+                  border:'1px solid rgba(var(--accent-rgb),calc(0.5*var(--ka)))',
+                  color:'var(--white)',
                   fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.22em',
                   cursor:'pointer', borderRadius:2, textTransform:'uppercase',
                 }}>Filter zurücksetzen</button>
@@ -829,16 +829,16 @@ function App() {
 
         {/* Closing flourish */}
         <div className="reveal-up" style={{ display:'flex', alignItems:'center', gap:14, marginTop:48, justifyContent:'center' }}>
-          <div style={{ width:80, height:1, background:'linear-gradient(270deg, rgba(124,77,255,0.5), transparent)' }} />
-          <svg width="6" height="6" viewBox="0 0 6 6"><polygon points={hexPoints(6)} fill="rgba(124,77,255,0.4)" stroke="rgba(160,140,255,0.5)" strokeWidth="0.5" /></svg>
-          <div style={{ width:80, height:1, background:'linear-gradient(90deg, rgba(124,77,255,0.5), transparent)' }} />
+          <div style={{ width:80, height:1, background:'linear-gradient(270deg, rgba(var(--purple-rgb),calc(0.5*var(--kp))), transparent)' }} />
+          <svg width="6" height="6" viewBox="0 0 6 6"><polygon points={hexPoints(6)} fill="rgba(var(--purple-rgb),calc(0.4*var(--kp)))" stroke="rgba(var(--accent-rgb),calc(0.5*var(--ka)))" strokeWidth="0.5" /></svg>
+          <div style={{ width:80, height:1, background:'linear-gradient(90deg, rgba(var(--purple-rgb),calc(0.5*var(--kp))), transparent)' }} />
         </div>
       </div>
 
       {/* FOOTER */}
-      <div style={{ position:'relative', zIndex:10, padding:'10px 32px', borderTop:'1px solid rgba(160,140,255,0.07)', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:7, color:'rgba(160,140,255,0.22)', letterSpacing:'0.2em' }}>◈ REGISTER-STATUS: NOMINAL ◈ EPOCHE: UNBEKANNT</div>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:7, color:'rgba(160,140,255,0.22)', letterSpacing:'0.2em' }}>MERURIA // NSC-REGISTER</div>
+      <div style={{ position:'relative', zIndex:10, padding:'10px 32px', borderTop:'1px solid rgba(var(--accent-rgb),calc(0.07*var(--ka)))', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:7, color:'rgba(var(--accent-rgb),calc(0.22*var(--ka) + var(--tb)))', letterSpacing:'0.2em' }}>◈ REGISTER-STATUS: NOMINAL ◈ EPOCHE: UNBEKANNT</div>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:7, color:'rgba(var(--accent-rgb),calc(0.22*var(--ka) + var(--tb)))', letterSpacing:'0.2em' }}>MERURIA // NSC-REGISTER</div>
       </div>
 
       {/* Detail Panel */}

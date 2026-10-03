@@ -555,21 +555,21 @@ function NavItem({ tab }) {
   return (
     <div onMouseEnter={show} onMouseLeave={hide} style={{ position:'relative' }}>
       <button
-        style={{ fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:'400', letterSpacing:'0.18em', padding:'10px 20px', background: isActive ? 'rgba(124,77,255,0.1)' : 'transparent', border: isActive ? '1px solid rgba(160,140,255,0.45)' : '1px solid rgba(160,140,255,0.15)', color: isActive ? '#c9b8ff' : 'rgba(200,190,240,0.7)', cursor:'pointer', borderRadius:'3px', transition:'all 0.2s', textTransform:'uppercase', whiteSpace:'nowrap' }}
-        onMouseEnter={e=>{e.currentTarget.style.color='#f0eeff';e.currentTarget.style.borderColor='rgba(160,140,255,0.45)';e.currentTarget.style.background='rgba(124,77,255,0.1)';}}
-        onMouseLeave={e=>{e.currentTarget.style.color=isActive?'#c9b8ff':'rgba(200,190,240,0.7)';e.currentTarget.style.borderColor=isActive?'rgba(160,140,255,0.45)':'rgba(160,140,255,0.15)';e.currentTarget.style.background=isActive?'rgba(124,77,255,0.1)':'transparent';}}>
+        style={{ fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:'400', letterSpacing:'0.18em', padding:'10px 20px', background: isActive ? 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))' : 'transparent', border: isActive ? '1px solid rgba(var(--accent-rgb),calc(0.45*var(--ka)))' : '1px solid rgba(var(--accent-rgb),calc(0.15*var(--ka)))', color: isActive ? 'var(--lav)' : 'rgba(var(--text-rgb),calc(0.7*var(--kt)))', cursor:'pointer', borderRadius:'3px', transition:'all 0.2s', textTransform:'uppercase', whiteSpace:'nowrap' }}
+        onMouseEnter={e=>{e.currentTarget.style.color='var(--white)';e.currentTarget.style.borderColor='rgba(var(--accent-rgb),calc(0.45*var(--ka)))';e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.1*var(--kp)))';}}
+        onMouseLeave={e=>{e.currentTarget.style.color=isActive?'var(--lav)':'rgba(var(--text-rgb),calc(0.7*var(--kt)))';e.currentTarget.style.borderColor=isActive?'rgba(var(--accent-rgb),calc(0.45*var(--ka)))':'rgba(var(--accent-rgb),calc(0.15*var(--ka)))';e.currentTarget.style.background=isActive?'rgba(var(--purple-rgb),calc(0.1*var(--kp)))':'transparent';}}>
         {tab.label}
       </button>
       {open && (
-        <div onMouseEnter={show} onMouseLeave={hide} style={{ position:'absolute', top:'calc(100% + 6px)', left:0, minWidth:'210px', background:'rgba(8,6,22,0.96)', border:'1px solid rgba(160,140,255,0.2)', borderRadius:'4px', boxShadow:'0 8px 32px rgba(0,0,0,0.6)', animation:'slideDown 0.18s ease forwards', zIndex:200, backdropFilter:'blur(12px)', overflow:'hidden' }}>
+        <div onMouseEnter={show} onMouseLeave={hide} style={{ position:'absolute', top:'calc(100% + 6px)', left:0, minWidth:'210px', background:'rgba(var(--panel-rgb),0.96)', border:'1px solid rgba(var(--accent-rgb),calc(0.2*var(--ka)))', borderRadius:'4px', boxShadow:'0 8px 32px rgba(var(--shadow-rgb),calc(0.6 * var(--shadow-k)))', animation:'slideDown 0.18s ease forwards', zIndex:200, backdropFilter:'blur(12px)', overflow:'hidden' }}>
           {tab.items.map((item, i) => (
             <React.Fragment key={i}>
-              <a href={item.href} style={{ display:'block', padding:'10px 18px', fontFamily:'var(--font-body)', fontWeight:item.dividerAfter?'500':'300', fontSize:'12px', letterSpacing:'0.1em', color: item.dividerAfter ? '#c9b8ff' : (item.label === 'NSC' ? '#f0eeff' : 'rgba(200,190,240,0.65)'), background: item.dividerAfter ? 'rgba(124,77,255,0.08)' : (item.label === 'NSC' ? 'rgba(124,77,255,0.18)' : 'transparent'), textDecoration:'none', borderBottom: !item.dividerAfter && i < tab.items.length-1 ? '1px solid rgba(160,140,255,0.08)' : 'none', transition:'all 0.15s' }}
-                onMouseEnter={e=>{e.currentTarget.style.color='#f0eeff';e.currentTarget.style.background='rgba(124,77,255,0.22)';e.currentTarget.style.paddingLeft='24px';}}
-                onMouseLeave={e=>{e.currentTarget.style.color=item.dividerAfter?'#c9b8ff':(item.label==='NSC'?'#f0eeff':'rgba(200,190,240,0.65)');e.currentTarget.style.background=item.dividerAfter?'rgba(124,77,255,0.08)':(item.label==='NSC'?'rgba(124,77,255,0.18)':'transparent');e.currentTarget.style.paddingLeft='18px';}}>
+              <a href={item.href} style={{ display:'block', padding:'10px 18px', fontFamily:'var(--font-body)', fontWeight:item.dividerAfter?'500':'300', fontSize:'12px', letterSpacing:'0.1em', color: item.dividerAfter ? 'var(--lav)' : (item.label === 'NSC' ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.65*var(--kt)))'), background: item.dividerAfter ? 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))' : (item.label === 'NSC' ? 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))' : 'transparent'), textDecoration:'none', borderBottom: !item.dividerAfter && i < tab.items.length-1 ? '1px solid rgba(var(--accent-rgb),calc(0.08*var(--ka)))' : 'none', transition:'all 0.15s' }}
+                onMouseEnter={e=>{e.currentTarget.style.color='var(--white)';e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.22*var(--kp)))';e.currentTarget.style.paddingLeft='24px';}}
+                onMouseLeave={e=>{e.currentTarget.style.color=item.dividerAfter?'var(--lav)':(item.label==='NSC'?'var(--white)':'rgba(var(--text-rgb),calc(0.65*var(--kt)))');e.currentTarget.style.background=item.dividerAfter?'rgba(var(--purple-rgb),calc(0.08*var(--kp)))':(item.label==='NSC'?'rgba(var(--purple-rgb),calc(0.18*var(--kp)))':'transparent');e.currentTarget.style.paddingLeft='18px';}}>
                 {item.label}
               </a>
-              {item.dividerAfter && <div style={{ height:'1px', background:'rgba(160,140,255,0.18)', margin:'2px 0' }} />}
+              {item.dividerAfter && <div style={{ height:'1px', background:'rgba(var(--accent-rgb),calc(0.18*var(--ka)))', margin:'2px 0' }} />}
             </React.Fragment>
           ))}
         </div>
@@ -630,7 +630,7 @@ function ParticleField({ mouseX, mouseY }) {
         p.x += p.vx/w*60; p.y += p.vy/h*60;
         if(p.x<0)p.x=1; if(p.x>1)p.x=0; if(p.y<0)p.y=1; if(p.y>1)p.y=0;
         ctx.beginPath(); ctx.arc(p.x*w+shiftX, p.y*h+shiftY, p.r, 0, Math.PI*2);
-        ctx.fillStyle = `rgba(160,140,255,${p.alpha})`; ctx.fill();
+        ctx.fillStyle = `rgba(${themeRgb('--accent-rgb')},${p.alpha})`; ctx.fill();
       });
       animRef.current = requestAnimationFrame(tick);
     };
@@ -690,7 +690,7 @@ function NSCPortrait({ nsc, stage, acc, size=120 }) {
               backgroundColor: hexA(acc, fully ? 0.03 : 0.06) }} />
             <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center',
               fontFamily:'var(--font-display)', fontSize: size*0.30, fontWeight:300, letterSpacing:'0.05em',
-              color: fully ? 'rgba(200,190,240,0.45)' : '#f0eeff',
+              color: fully ? 'rgba(var(--text-rgb),calc(0.45*var(--kt)))' : 'var(--white)',
               textShadow: fully ? 'none' : `0 0 14px ${acc}, 0 0 6px ${hexA(acc,0.8)}`,
               animation: fully ? 'pulse-glow 2.4s ease-in-out infinite' : 'none',
               fontStyle: fully ? 'italic' : 'normal',
@@ -728,10 +728,10 @@ function StageBadge({ stage, acc, size='compact' }) {
     <div style={{
       display:'inline-flex', alignItems:'center', gap:6,
       padding: size === 'compact' ? '4px 8px' : '6px 10px',
-      border: `1px solid ${isZero ? 'rgba(160,140,255,0.25)' : hexA(acc, 0.55)}`,
-      background: isZero ? 'rgba(124,77,255,0.04)' : hexA(acc, 0.10),
+      border: `1px solid ${isZero ? 'rgba(var(--accent-rgb),calc(0.25*var(--ka)))' : hexA(acc, 0.55)}`,
+      background: isZero ? 'rgba(var(--purple-rgb),calc(0.04*var(--kp)))' : hexA(acc, 0.10),
       fontFamily:'var(--font-mono)', fontSize: size === 'compact' ? '8px' : '9px',
-      color: isZero ? 'rgba(160,140,255,0.5)' : acc,
+      color: isZero ? 'rgba(var(--accent-rgb),calc(0.5*var(--ka)))' : acc,
       letterSpacing:'0.20em', textTransform:'uppercase',
       borderRadius:2, whiteSpace:'nowrap',
     }}>
@@ -777,7 +777,7 @@ function StageProgress({ stage, acc }) {
             <div key={i} style={{ flex:1, minWidth:0 }}>
               <div style={{
                 height:5, borderRadius:2,
-                background: filled ? mainAcc : 'rgba(124,77,255,0.08)',
+                background: filled ? mainAcc : 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))',
                 border:`1px solid ${filled ? aFn(0.9) : aFn(0.2)}`,
                 boxShadow: filled ? `0 0 8px ${aFn(0.5)}, inset 0 0 3px ${aFn(0.3)}` : 'none',
                 transition:'all 0.4s',
@@ -785,7 +785,7 @@ function StageProgress({ stage, acc }) {
               <div style={{
                 marginTop:4, textAlign:'center',
                 fontFamily:'var(--font-mono)', fontSize:7,
-                color: filled ? aFn(0.85) : 'rgba(160,140,255,0.32)',
+                color: filled ? aFn(0.85) : 'rgba(var(--accent-rgb),calc(0.32*var(--ka)))',
                 letterSpacing:'0.10em', textTransform:'uppercase',
                 whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis',
               }}>{STAGE_LABELS[i]}</div>
@@ -837,7 +837,7 @@ function LockedSlot({ requiredStage, acc, compact, hint }) {
       display:'flex', alignItems:'center', gap:8,
       fontFamily:'var(--font-mono)', fontSize: compact ? 8 : 9,
       letterSpacing:'0.18em', textTransform:'uppercase',
-      color:'rgba(160,140,255,0.5)',
+      color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',
     }}>
       <span style={{ width:6, height:6, border:`1px solid ${hexA(acc, 0.45)}`, display:'inline-block' }}/>
       <span>{hint || `Stufe ${requiredStage} nötig`}</span>
@@ -849,12 +849,12 @@ function LockedSlot({ requiredStage, acc, compact, hint }) {
 function Field({ label, value, unlocked = true, requiredStage, acc='#7c4dff' }) {
   return (
     <React.Fragment>
-      <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase', whiteSpace:'nowrap', paddingTop:2 }}>
+      <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase', whiteSpace:'nowrap', paddingTop:2 }}>
         {label}
       </span>
       {unlocked ? (
-        <span style={{ fontFamily:'var(--font-body)', fontWeight:300, fontSize:13, color:'#f0eeff' }}>
-          {value || <span style={{ color:'rgba(160,140,255,0.4)', fontStyle:'italic' }}>—</span>}
+        <span style={{ fontFamily:'var(--font-body)', fontWeight:300, fontSize:13, color:'var(--white)' }}>
+          {value || <span style={{ color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', fontStyle:'italic' }}>—</span>}
         </span>
       ) : (
         <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color:hexA(acc, 0.55), letterSpacing:'0.18em', textTransform:'uppercase', display:'inline-flex', alignItems:'center', gap:6 }}>
@@ -874,9 +874,9 @@ function UnlockToggle({ state, unlocked, onClick, size='sm' }) {
   const isAll = s === 'all';
   const isSome = s === 'some';
   const small = size === 'sm';
-  const bg  = isAll ? 'rgba(255,180,80,0.18)' : isSome ? 'rgba(160,120,255,0.15)' : 'rgba(124,77,255,0.05)';
-  const bdr = isAll ? 'rgba(255,180,80,0.7)'  : isSome ? 'rgba(160,120,255,0.65)' : 'rgba(160,140,255,0.3)';
-  const clr = isAll ? '#ffb850'                : isSome ? '#c8a8ff'                : 'rgba(160,140,255,0.6)';
+  const bg  = isAll ? 'rgba(255,180,80,0.18)' : isSome ? 'rgba(160,120,255,0.15)' : 'rgba(var(--purple-rgb),calc(0.05*var(--kp)))';
+  const bdr = isAll ? 'rgba(255,180,80,0.7)'  : isSome ? 'rgba(160,120,255,0.65)' : 'rgba(var(--accent-rgb),calc(0.3*var(--ka)))';
+  const clr = isAll ? '#ffb850'                : isSome ? '#c8a8ff'                : 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))';
   const icon  = isAll ? '◆' : isSome ? '◈' : '○';
   const label = isAll ? 'Freigegeben' : isSome ? 'Teilweise' : 'Verborgen';
   const title = isAll ? 'Klick: wieder verbergen' : isSome ? 'Klick: für alle freischalten' : 'Klick: freischalten';
