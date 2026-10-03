@@ -14,7 +14,18 @@
     return null;
   }
 
-  var DEFAULT_RANG_PREISE = { 1:500,2:450,3:400,4:350,5:300,6:250,7:200,8:150,9:100,10:50 };
+  // Exponentiell wachsend (Faktor ~1,5 pro Rang); Rang 1 ist der höchste Rang.
+  var DEFAULT_RANG_PREISE = { 1:1920,2:1280,3:855,4:570,5:380,6:255,7:170,8:115,9:75,10:50 };
+
+  var DAUER_PRESETS = [
+    { tage: 1, label: '1 Tag' },
+    { tage: 3, label: '3 Tage' },
+    { tage: 7, label: '1 Woche' },
+    { tage: 14, label: '2 Wochen' },
+    { tage: 30, label: '1 Monat' },
+  ];
+
+  function fmtDauer(tage) { return tage === 1 ? '1 Tag' : tage + ' Tage'; }
 
   // allPreise = { divisionId: { rang: preis } }
   function getRangPreis(allPreise, divisionId, rang) {
@@ -23,13 +34,54 @@
     return DEFAULT_RANG_PREISE[rang] || 50;
   }
 
-  function calcFee(playerRang, nscRang, allPreise, nscDivId) {
-    var preis = getRangPreis(allPreise, nscDivId, nscRang);
-    return (playerRang - nscRang) * preis;
+  function charName(c) { return c.char_data && c.char_data.name ? c.char_data.name : c.name; }
+  function charDiv(c) { return c.char_data && c.char_data.division ? c.char_data.division : c.division || null; }
+
+  function divIdByName(name) {
+    var d = (window.DIVISIONS_DATA || []).find(function(x) { return x.name === name; });
+    return d ? d.id : null;
   }
-  function calcMentorFee(playerRang, nscRang, allPreise, playerDivId) {
-    var preis = getRangPreis(allPreise, playerDivId, playerRang);
-    return (nscRang - playerRang) * preis;
+
+  // Bewertet einen Spielercharakter gegen einen NSC (Division + Rang) für eine Dauer in Tagen.
+  // fee = Spieler zahlt an NSC, mentorFee = NSC zahlt an Spieler (Honorar)
+  function evaluate(c, division, nscRang, allPreise, tage) {
+    var playerDiv = charDiv(c);
+    var rangNr = rankTitleToNumber(c.char_data && c.char_data.rank ? c.char_data.rank : null);
+    var res = { playerDiv: playerDiv, rangNr: rangNr, scenario: null, fee: 0, mentorFee: 0, nscPreis: 0, playerPreis: 0 };
+    if (rangNr === null) return res;
+    var playerDivId = divIdByName(playerDiv) || division.id;
+    res.nscPreis = getRangPreis(allPreise, division.id, nscRang);
+    res.playerPreis = getRangPreis(allPreise, playerDivId, rangNr);
+    if (nscRang < rangNr) {
+      res.scenario = 'PAY';
+      res.fee = (rangNr - nscRang) * res.nscPreis * tage;
+    } else if (playerDiv !== division.name) {
+      res.scenario = 'FREE';
+    } else if (nscRang === rangNr) {
+      res.scenario = 'SAME_FREE';
+    } else {
+      res.scenario = 'MENTOR';
+      res.mentorFee = (nscRang - rangNr) * res.playerPreis * tage;
+    }
+    return res;
+  }
+
+  function fmtHade(n) { return n.toLocaleString('de-DE') + ' Hade'; }
+
+  function Portrait(props) {
+    var c = props.char, size = props.size || 48, accent = props.accent;
+    var bild = c.char_data && c.char_data.bild;
+    var initials = charName(c).split(/[\s']/).filter(Boolean).slice(0, 2).map(function(w) { return w[0]; }).join('').toUpperCase();
+    return h('div', { style: {
+      width: size, height: size, flexShrink: 0, borderRadius: 4, overflow: 'hidden',
+      border: '1px solid ' + accent, background: 'rgba(var(--panel-rgb),0.9)',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      fontFamily: 'var(--font-display)', fontSize: size * 0.34, color: accent,
+    }},
+      bild
+        ? h('img', { src: bild, alt: charName(c), style: { width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }})
+        : initials
+    );
   }
 
   window.Rekrutierungsrechner = function Rekrutierungsrechner(props) {
@@ -43,6 +95,7 @@
     function cA(a) { return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')'; }
 
     var nscTitel = (division.raenge.find(function(x) { return x.rang === nscRang; }) || {}).titel || ('Rang ' + nscRang);
+    var isDM = !!(window.SITE_USER && window.SITE_USER.role === 'dm');
 
     var _chars   = useState([]);              var chars = _chars[0]; var setChars = _chars[1];
     var _selId   = useState(null);            var selId = _selId[0]; var setSelId = _selId[1];
@@ -50,13 +103,20 @@
     var _preise  = useState(null);  var allPreise = _preise[0]; var setPreise = _preise[1];
     var _checks  = useState({ erfolg: false, beschuetzt: false, keinTrauma: false });
     var checks = _checks[0]; var setChecks = _checks[1];
+    var _tage    = useState(1);   var tage = _tage[0]; var setTage = _tage[1];
+    var _mode    = useState('player'); var mode = _mode[0]; var setMode = _mode[1];
+    var _party   = useState({});  var party = _party[0]; var setParty = _party[1];
+
+    var dmMode = isDM && mode === 'nsc';
 
     useEffect(function() {
       var user = window.SITE_USER;
       if (!user || !window._sb) { setLoading(false); return; }
+      var q = window._sb.from('characters').select('id, name, division, char_data')
+        .eq('type', 'spieler').order('name');
+      if (!isDM) q = q.eq('owner_id', user.id);
       Promise.all([
-        window._sb.from('characters').select('id, name, division, char_data')
-          .eq('type', 'spieler').eq('owner_id', user.id).order('name'),
+        q,
         window._sb.from('rekrutierung_preise').select('division_id, rang, preis'),
       ]).then(function(results) {
         var chars = results[0].data || [];
@@ -75,31 +135,16 @@
       });
     }, []);
 
-    // Ausgewählter Charakter
     var selChar = chars.find(function(c) { return c.id === selId; }) || null;
-    var playerDiv   = selChar ? (selChar.char_data && selChar.char_data.division ? selChar.char_data.division : selChar.division || null) : null;
-    var playerRank  = selChar ? (selChar.char_data && selChar.char_data.rank ? selChar.char_data.rank : null) : null;
-    var playerRangNr = rankTitleToNumber(playerRank);
-
-    // Szenario bestimmen
-    var scenario = null;
-    if (playerRangNr !== null) {
-      if (nscRang < playerRangNr) {
-        scenario = 'PAY';           // NSC hat höheren Rang → Spieler zahlt
-      } else if (playerDiv !== division.name) {
-        scenario = 'FREE';          // NSC gleich/niedriger + andere Division → kostenlos
-      } else {
-        scenario = nscRang === playerRangNr ? 'SAME_FREE' : 'MENTOR'; // gleicher Rang = kostenlos, niedriger = Mentor
-      }
-    }
-
-    var playerDivId = (window.DIVISIONS_DATA || []).find(function(d) { return d.name === playerDiv; });
-    playerDivId = playerDivId ? playerDivId.id : null;
-    var fee       = (scenario === 'PAY')    ? calcFee(playerRangNr, nscRang, allPreise, division.id)     : 0;
-    var mentorFee = (scenario === 'MENTOR') ? calcMentorFee(playerRangNr, nscRang, allPreise, playerDivId || division.id) : 0;
-    var nscPreis      = getRangPreis(allPreise, division.id, nscRang);
-    var playerPreis   = getRangPreis(allPreise, playerDivId || division.id, playerRangNr || 5);
+    var ev = selChar ? evaluate(selChar, division, nscRang, allPreise, tage) : null;
+    var scenario = ev ? ev.scenario : null;
+    var playerRangNr = ev ? ev.rangNr : null;
+    var playerRank = selChar && selChar.char_data ? selChar.char_data.rank : null;
+    var playerDiv = ev ? ev.playerDiv : null;
+    var fee = ev ? ev.fee : 0;
+    var mentorFee = ev ? ev.mentorFee : 0;
     var allChecked = checks.erfolg && checks.beschuetzt && checks.keinTrauma;
+    var dauerTxt = fmtDauer(tage);
 
     // ── Styles ──────────────────────────────────────────────────
     var boxStyle = function(color) { return {
@@ -124,6 +169,26 @@
       letterSpacing: '0.1em',
     };
 
+    var infoStyle = {
+      fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.14em',
+      color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))',
+    };
+
+    var noteStyle = {
+      fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 300,
+      color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', marginTop: 10, lineHeight: 1.5,
+    };
+
+    function pillBtn(active, onClick, label) {
+      return h('button', { key: label, onClick: onClick, style: {
+        padding: '5px 10px', cursor: 'pointer', borderRadius: 3,
+        fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.1em',
+        background: active ? cA(0.18) : 'rgba(var(--panel-rgb),0.5)',
+        border: '1px solid ' + (active ? accent : 'rgba(var(--purple-rgb),calc(0.15*var(--kp)))'),
+        color: active ? accent : 'color-mix(in srgb, rgba(180,170,220,0.6), rgb(var(--ink-rgb)) var(--cm))',
+      }}, label);
+    }
+
     // ── Loading ──────────────────────────────────────────────────
     if (loading) {
       return h('div', { style: { padding: '20px 0', fontFamily: 'var(--font-mono)', fontSize: 9, color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', letterSpacing: '0.22em', textTransform: 'uppercase' }}, '◈ Lade…');
@@ -137,18 +202,105 @@
       return h('div', boxStyle(), h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', letterSpacing: '0.14em' }}, 'Kein Spielercharakter gefunden.'));
     }
 
+    // Dauer-Auswahl (gilt für beide Richtungen)
+    var dauerPicker = h('div', { style: { marginBottom: 12 } },
+      h('label', { style: labelStyle }, 'Dauer der Rekrutierung'),
+      h('div', { style: { display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' } },
+        DAUER_PRESETS.map(function(p) {
+          return pillBtn(tage === p.tage, function() { setTage(p.tage); }, p.label);
+        }),
+        h('input', {
+          type: 'number', min: 1, max: 365, value: tage,
+          onChange: function(e) {
+            var n = parseInt(e.target.value, 10);
+            setTage(isNaN(n) ? 1 : Math.max(1, Math.min(365, n)));
+          },
+          style: {
+            width: 60, padding: '5px 8px', background: 'rgba(var(--panel-rgb),0.9)',
+            border: '1px solid ' + cA(0.3), color: 'var(--white)', borderRadius: 3,
+            fontFamily: 'var(--font-mono)', fontSize: 10,
+          },
+        }),
+        h('span', { style: infoStyle }, 'Tage')
+      )
+    );
+
+    var modeToggle = isDM && h('div', { style: { display: 'flex', gap: 6, marginBottom: 14 } },
+      pillBtn(mode === 'player', function() { setMode('player'); }, 'Spieler rekrutiert NSC'),
+      pillBtn(mode === 'nsc', function() { setMode('nsc'); }, 'NSC rekrutiert Spielercharaktere')
+    );
+
+    var nscInfo = h('div', { style: Object.assign({ marginBottom: 12 }, infoStyle) },
+      'Ausgewählter NSC: ',
+      h('span', { style: { color: accent }}, 'Rang ' + nscRang + ' — ' + nscTitel),
+      ' · ',
+      division.name
+    );
+
+    // ── DM-Richtung: NSC rekrutiert Spielercharaktere ────────────
+    if (dmMode) {
+      var picked = chars.filter(function(c) { return party[c.id]; });
+      var totalReceive = 0, totalPay = 0;
+      picked.forEach(function(c) {
+        var e = evaluate(c, division, nscRang, allPreise, tage);
+        totalReceive += e.fee;
+        totalPay += e.mentorFee;
+      });
+      var missingRank = picked.some(function(c) {
+        return evaluate(c, division, nscRang, allPreise, tage).scenario === null;
+      });
+
+      return h('div', null,
+        modeToggle, nscInfo, dauerPicker,
+        h('label', { style: labelStyle }, 'Mitgenommene Spielercharaktere'),
+        h('div', { style: { display: 'flex', flexDirection: 'column', gap: 6, maxHeight: 360, overflowY: 'auto' } },
+          chars.map(function(c) {
+            var e = evaluate(c, division, nscRang, allPreise, tage);
+            var on = !!party[c.id];
+            var res = e.scenario === 'PAY' ? { t: '+ ' + fmtHade(e.fee), col: '#80dfb0' }
+                    : e.scenario === 'MENTOR' ? { t: '− ' + fmtHade(e.mentorFee), col: '#ff9980' }
+                    : e.scenario ? { t: 'kostenlos', col: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))' }
+                    : { t: 'kein Rang', col: 'color-mix(in srgb, rgba(200,170,130,0.8), rgb(var(--ink-rgb)) var(--cm))' };
+            return h('label', { key: c.id, style: {
+              display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', padding: '6px 8px',
+              borderRadius: 4, border: '1px solid ' + (on ? accent : 'rgba(var(--purple-rgb),calc(0.15*var(--kp)))'),
+              background: on ? cA(0.1) : 'rgba(var(--panel-rgb),0.5)',
+            }},
+              h('input', {
+                type: 'checkbox', checked: on,
+                onChange: function(ev2) {
+                  var next = Object.assign({}, party);
+                  next[c.id] = ev2.target.checked;
+                  setParty(next);
+                },
+                style: { accentColor: accent, width: 14, height: 14, flexShrink: 0 },
+              }),
+              h(Portrait, { char: c, size: 40, accent: cA(0.5) }),
+              h('div', { style: { flex: 1, minWidth: 0 } },
+                h('div', { style: { fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--white)', letterSpacing: '0.08em' } }, charName(c)),
+                h('div', { style: infoStyle },
+                  ((c.char_data && c.char_data.rank) || '—') + (e.rangNr ? ' (Rang ' + e.rangNr + ')' : '') + ' · ' + (e.playerDiv || '—').replace(/^Die\s+/, ''))
+              ),
+              h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 10, color: res.col, whiteSpace: 'nowrap' } }, res.t)
+            );
+          })
+        ),
+
+        picked.length > 0 && h('div', { style: boxStyle(cA(0.35)) },
+          h('span', { style: labelStyle }, 'Summe für ' + dauerTxt + ' · ' + picked.length + (picked.length === 1 ? ' Charakter' : ' Charaktere')),
+          h('span', { style: bigNumStyle('#80dfb0') }, '+ ' + fmtHade(totalReceive)),
+          h('span', { style: formulaStyle }, 'Der NSC erhält von den Spielercharakteren'),
+          h('span', { style: bigNumStyle('#ff9980') }, '− ' + fmtHade(totalPay)),
+          h('span', { style: formulaStyle }, 'Der NSC zahlt als Honorar an die Spielercharaktere (wenn der Auftrag gelingt, der NSC beschützt wird und niemand Trauma erleidet)'),
+          missingRank && h('div', { style: noteStyle }, 'Mindestens ein Charakter hat keinen Divisionsrang und wird nicht berechnet.')
+        )
+      );
+    }
+
     return h('div', null,
 
-      // NSC-Info
-      h('div', { style: {
-        fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.14em',
-        color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))', marginBottom: 12,
-      }},
-        'Ausgewählter NSC: ',
-        h('span', { style: { color: accent }}, 'Rang ' + nscRang + ' — ' + nscTitel),
-        ' · ',
-        division.name
-      ),
+      modeToggle,
+      nscInfo,
 
       // Charakter-Picker (nur wenn > 1)
       chars.length > 1 && h('div', { style: { marginBottom: 12 } },
@@ -166,24 +318,22 @@
           chars.map(function(c) {
             var rankTitle = c.char_data && c.char_data.rank ? c.char_data.rank : '—';
             var div = c.char_data && c.char_data.division ? c.char_data.division.replace(/^Die\s+/, '') : '—';
-            return h('option', { key: c.id, value: c.id }, c.char_data && c.char_data.name ? c.char_data.name : c.name, ' · ', rankTitle, ' · ', div);
+            return h('option', { key: c.id, value: c.id }, charName(c), ' · ', rankTitle, ' · ', div);
           })
         )
       ),
 
-      // Charakter-Info (single)
-      chars.length === 1 && selChar && h('div', { style: {
-        fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.14em',
-        color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))', marginBottom: 12,
-      }},
-        'Dein Charakter: ',
-        h('span', { style: { color: 'var(--white)' }},
-          (selChar.char_data && selChar.char_data.name ? selChar.char_data.name : selChar.name) +
-          (playerRank ? ' · ' + playerRank : '') +
-          (playerRangNr ? ' (Rang ' + playerRangNr + ')' : '') +
+      // Gewählter Charakter mit Bild
+      selChar && h('div', { style: { display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 } },
+        h(Portrait, { char: selChar, size: 72, accent: cA(0.5) }),
+        h('div', { style: infoStyle },
+          h('div', { style: { color: 'var(--white)', fontSize: 11, marginBottom: 3 } }, charName(selChar)),
+          (playerRank || '—') + (playerRangNr ? ' (Rang ' + playerRangNr + ')' : '') +
           (playerDiv ? ' · ' + playerDiv.replace(/^Die\s+/, '') : '')
         )
       ),
+
+      dauerPicker,
 
       // Kein Rang gesetzt
       selChar && playerRangNr === null && h('div', boxStyle('rgba(200,120,80,0.3)'),
@@ -194,48 +344,36 @@
 
       // Szenario A: Spieler zahlt
       scenario === 'PAY' && h('div', boxStyle('rgba(200,80,80,0.35)'),
-        h('span', { style: labelStyle }, 'NSC hat höheren Rang · Du zahlst'),
-        h('span', { style: bigNumStyle('#ff9980') }, fee.toLocaleString('de-DE') + ' Hade'),
+        h('span', { style: labelStyle }, 'NSC hat höheren Rang · Du zahlst für ' + dauerTxt),
+        h('span', { style: bigNumStyle('#ff9980') }, fmtHade(fee)),
         h('span', { style: formulaStyle },
-          '(' + playerRangNr + ' − ' + nscRang + ') × ' + nscPreis + ' Hade/Schritt = ' + fee
+          '(' + playerRangNr + ' − ' + nscRang + ') × ' + ev.nscPreis + ' Hade/Schritt × ' + dauerTxt + ' = ' + fee
         ),
-        h('div', { style: {
-          fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 300,
-          color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', marginTop: 10, lineHeight: 1.5,
-        }}, 'Der NSC nimmt die Mission an und leistet sein Bestes.')
+        h('div', { style: noteStyle }, 'Der NSC nimmt die Mission an und leistet sein Bestes.')
       ),
 
       // Szenario B: Kostenlos, andere Division
       scenario === 'FREE' && h('div', boxStyle('rgba(80,180,130,0.3)'),
         h('span', { style: labelStyle }, 'Andere Division · Kostenlos'),
         h('span', { style: bigNumStyle('#80dfb0') }, 'Kostenlos'),
-        h('div', { style: {
-          fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 300,
-          color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', marginTop: 10, lineHeight: 1.5,
-        }}, 'NSC und Spieler befinden sich auf gleichem oder ähnlichem Niveau. Der NSC schließt sich der Mission an und gibt sein Bestes.')
+        h('div', { style: noteStyle }, 'NSC und Spieler befinden sich auf gleichem oder ähnlichem Niveau. Der NSC schließt sich der Mission an und gibt sein Bestes.')
       ),
 
       // Szenario: Gleicher Rang, gleiche Division
       scenario === 'SAME_FREE' && h('div', boxStyle('rgba(80,180,130,0.3)'),
         h('span', { style: labelStyle }, 'Gleiche Division · Gleicher Rang · Kostenlos'),
         h('span', { style: bigNumStyle('#80dfb0') }, 'Kostenlos'),
-        h('div', { style: {
-          fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 300,
-          color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', marginTop: 10, lineHeight: 1.5,
-        }}, 'Gleichrangige Kameraden unterstützen sich gegenseitig ohne Gebühr.')
+        h('div', { style: noteStyle }, 'Gleichrangige Kameraden unterstützen sich gegenseitig ohne Gebühr.')
       ),
 
       // Szenario C: Mentor-Honorar
       scenario === 'MENTOR' && h('div', boxStyle(cA(0.35)),
-        h('span', { style: labelStyle }, 'Gleiche Division · Du bist Mentor · Mögliches Honorar'),
-        h('span', { style: bigNumStyle(accent) }, mentorFee.toLocaleString('de-DE') + ' Hade'),
+        h('span', { style: labelStyle }, 'Gleiche Division · Du bist Mentor · Mögliches Honorar für ' + dauerTxt),
+        h('span', { style: bigNumStyle(accent) }, fmtHade(mentorFee)),
         h('span', { style: formulaStyle },
-          '(' + nscRang + ' − ' + playerRangNr + ') × ' + playerPreis + ' Hade/Schritt = ' + mentorFee
+          '(' + nscRang + ' − ' + playerRangNr + ') × ' + ev.playerPreis + ' Hade/Schritt × ' + dauerTxt + ' = ' + mentorFee
         ),
-        h('div', { style: {
-          fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 300,
-          color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))', marginTop: 10, marginBottom: 12, lineHeight: 1.5,
-        }}, 'Der NSC zahlt dir das Honorar, wenn alle drei Bedingungen nach der Mission erfüllt sind:'),
+        h('div', { style: Object.assign({}, noteStyle, { marginBottom: 12 }) }, 'Der NSC zahlt dir das Honorar, wenn alle drei Bedingungen nach der Mission erfüllt sind:'),
 
         // Checkboxen
         ['erfolg', 'beschuetzt', 'keinTrauma'].map(function(key) {
@@ -265,7 +403,7 @@
           fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.1em',
           color: accent,
         }},
-          '✓ Alle Bedingungen erfüllt — Honorar: ' + mentorFee.toLocaleString('de-DE') + ' Hade'
+          '✓ Alle Bedingungen erfüllt — Honorar: ' + fmtHade(mentorFee)
         )
       )
     );

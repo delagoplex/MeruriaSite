@@ -162,6 +162,7 @@ const NAV = [
       { label: 'Karte', href: '/spiel/karte.html' },
       { label: 'Kalender', href: '/spiel/kalender.html' },
       { label: 'Missionsterminal', href: '/spiel/missionsterminal.html' },
+      { label: 'Rekrutierung', href: '/spiel/rekrutierung.html' },
     ],
   },
   {
@@ -176,6 +177,7 @@ const NAV = [
       { label: 'Charakterverwaltung', href: '/dm/charakterverwaltung.html', locked: true },
       { label: 'Kartenmanagement', href: '/dm/kartenmanagement.html', locked: true },
       { label: 'Kolonisierung & Bau', href: '/dm/kolonisierung-und-bau.html', locked: true },
+      { label: 'Rekrutierungspreise', href: '/dm/rekrutierungspreise.html', locked: true },
     ],
   },
 ];

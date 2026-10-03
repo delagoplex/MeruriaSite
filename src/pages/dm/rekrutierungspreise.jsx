@@ -12,7 +12,7 @@ const useEffect = React.useEffect;
 const { SiteNav, SiteGate, PageHero } = window;
 const DIVS = window.DIVISIONS_DATA || [];
 
-const DEFAULT_RANG_PREISE = {1:500,2:450,3:400,4:350,5:300,6:250,7:200,8:150,9:100,10:50};
+const DEFAULT_RANG_PREISE = {1:1920,2:1280,3:855,4:570,5:380,6:255,7:170,8:115,9:75,10:50};
 
 function getRangPreis(allPreise, divId, rang) {
   var dp = allPreise && allPreise[divId];
@@ -234,9 +234,9 @@ function App() {
         h('div', { style: { padding:'12px 16px', background:'rgba(var(--purple-rgb),calc(0.04*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))', borderRadius:3 } },
           h('span', { style: { fontFamily:'var(--font-body)', fontSize:12, fontWeight:300, color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', lineHeight:1.6 } },
             h('strong', { style: { color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))', fontWeight:500 } }, 'Gebühr: '),
-            '(Spieler-Rang − NSC-Rang) × Grundpreis des NSC-Rangs (NSC-Division)  ·  ',
+            '(Spieler-Rang − NSC-Rang) × Grundpreis des NSC-Rangs (NSC-Division) × Tage  ·  ',
             h('strong', { style: { color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))', fontWeight:500 } }, 'Honorar: '),
-            '(NSC-Rang − Spieler-Rang) × Grundpreis des Spieler-Rangs (Spieler-Division)'
+            '(NSC-Rang − Spieler-Rang) × Grundpreis des Spieler-Rangs (Spieler-Division) × Tage'
           )
         )
       )
