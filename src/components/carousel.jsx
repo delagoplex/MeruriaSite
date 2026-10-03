@@ -100,8 +100,8 @@ function Carousel({ images, reverse }) {
       width:w, height:h, flexShrink:0, borderRadius:4, overflow:'hidden', position:'relative', cursor:'pointer',
       alignSelf:'flex-end',
       transform: hov ? 'scale(1.18) translateY(-12px)' : (tx ? `translateX(${tx}px)` : undefined),
-      boxShadow: hov ? '0 0 26px rgba(124,77,255,0.88),0 0 52px rgba(124,77,255,0.28)' : 'none',
-      border: hov ? '1.5px solid rgba(124,77,255,0.88)' : '1.5px solid rgba(124,77,255,0.12)',
+      boxShadow: hov ? '0 0 26px rgba(var(--purple-rgb),calc(0.88*var(--kp))),0 0 52px rgba(var(--purple-rgb),calc(0.28*var(--kp)))' : 'none',
+      border: hov ? '1.5px solid rgba(var(--purple-rgb),calc(0.88*var(--kp)))' : '1.5px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))',
       zIndex: hov ? 20 : 1,
       transition: 'transform 0.22s ease,box-shadow 0.2s ease,border-color 0.2s ease',
     };
@@ -124,7 +124,7 @@ function Carousel({ images, reverse }) {
                     style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }}/>
                 ) : (
                   <div style={{ width:'100%', height:'100%', position:'relative', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:6,
-                    background:`repeating-linear-gradient(-45deg,transparent,transparent 8px,oklch(0.65 0.18 ${im.hue||270} / 0.13) 8px,oklch(0.65 0.18 ${im.hue||270} / 0.13) 9px),linear-gradient(160deg,rgba(28,16,62,0.97) 0%,rgba(14,9,36,0.98) 100%)`,
+                    background:`repeating-linear-gradient(-45deg,transparent,transparent 8px,oklch(0.65 0.18 ${im.hue||270} / 0.13) 8px,oklch(0.65 0.18 ${im.hue||270} / 0.13) 9px),linear-gradient(160deg,rgba(var(--panel-rgb),0.97) 0%,rgba(var(--panel-rgb),0.98) 100%)`,
                   }}>
                     <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse at 50% 45%,oklch(0.65 0.18 ${im.hue||270} / 0.2) 0%,transparent 60%)` }}/>
                     <svg viewBox="0 0 40 30" width={im.landscape?22:18} height={im.landscape?16:13} fill="none" style={{ opacity:0.55, zIndex:1, flexShrink:0 }}>
@@ -135,36 +135,36 @@ function Carousel({ images, reverse }) {
                     <span style={{ fontFamily:'var(--font-mono)', fontSize:7, letterSpacing:'0.18em', color:`oklch(0.65 0.18 ${im.hue||270} / 0.52)`, textTransform:'uppercase', zIndex:1, textAlign:'center', padding:'0 6px', lineHeight:1.3 }}>artwork</span>
                   </div>
                 )}
-                <div style={{ position:'absolute', bottom:0, left:0, right:0, padding:'5px 7px', background:'rgba(5,4,15,0.83)', borderTop:'1px solid rgba(124,77,255,0.12)' }}>
-                  <div style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(240,238,255,0.6)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{im.title}</div>
+                <div style={{ position:'absolute', bottom:0, left:0, right:0, padding:'5px 7px', background:'rgba(var(--bg-rgb),0.83)', borderTop:'1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))' }}>
+                  <div style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(var(--text-hi-rgb),calc(0.6*var(--kt) + var(--tb)))', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{im.title}</div>
                 </div>
               </div>
             );
           })}
         </div>
-        <div style={{ position:'absolute', top:0, left:0, bottom:0, width:100, background:'linear-gradient(to right,#05040f 40%,transparent)', pointerEvents:'none', zIndex:10 }}/>
-        <div style={{ position:'absolute', top:0, right:0, bottom:0, width:100, background:'linear-gradient(to left,#05040f 40%,transparent)', pointerEvents:'none', zIndex:10 }}/>
+        <div style={{ position:'absolute', top:0, left:0, bottom:0, width:100, background:'linear-gradient(to right,var(--bg) 40%,transparent)', pointerEvents:'none', zIndex:10 }}/>
+        <div style={{ position:'absolute', top:0, right:0, bottom:0, width:100, background:'linear-gradient(to left,var(--bg) 40%,transparent)', pointerEvents:'none', zIndex:10 }}/>
       </div>
 
       {lightbox && ReactDOM.createPortal(
         <div onClick={() => setLightbox(null)} style={{
           position:'fixed', inset:0, zIndex:99999,
-          background:'rgba(5,4,15,0.92)', backdropFilter:'blur(14px)',
+          background:'rgba(var(--bg-rgb),0.92)', backdropFilter:'blur(14px)',
           display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
           cursor:'zoom-out',
         }}>
           <img src={lightbox.img} alt={lightbox.title} loading="eager" onClick={e => e.stopPropagation()} style={{
-            maxWidth:'90vw', maxHeight:'86vh', objectFit:'contain',
-            borderRadius:5, boxShadow:'0 0 80px rgba(124,77,255,0.3), 0 0 0 1px rgba(124,77,255,0.2)',
+            maxWidth:'90vw', maxHeight:'calc(var(--vh, 1vh) * 86)', objectFit:'contain',
+            borderRadius:5, boxShadow:'0 0 80px rgba(var(--purple-rgb),calc(0.3*var(--kp))), 0 0 0 1px rgba(var(--purple-rgb),calc(0.2*var(--kp)))',
           }}/>
           {lightbox.title && (
-            <div style={{ marginTop:16, fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.2em', color:'rgba(200,190,240,0.5)', textTransform:'uppercase' }}>
+            <div style={{ marginTop:16, fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.2em', color:'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))', textTransform:'uppercase' }}>
               {lightbox.title}
             </div>
           )}
           <button onClick={() => setLightbox(null)} style={{
             position:'absolute', top:20, right:24, background:'transparent',
-            border:'1px solid rgba(160,140,255,0.25)', color:'rgba(200,190,240,0.6)',
+            border:'1px solid rgba(var(--accent-rgb),calc(0.25*var(--ka)))', color:'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))',
             borderRadius:3, fontFamily:'var(--font-mono)', fontSize:16, lineHeight:1,
             width:34, height:34, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center',
           }}>×</button>

@@ -39,12 +39,12 @@ function DPSection({ title, acc, count, total, hint }) {
   return (
     <div style={{ marginBottom: 10, marginTop: 22, display:'flex', alignItems:'center', gap:10 }}>
       <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.30em',
-        color: count > 0 ? acc : 'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>
+        color: count > 0 ? acc : 'rgba(var(--accent-rgb),calc(0.5*var(--ka)))', textTransform:'uppercase' }}>
         ◇ {title}
       </span>
-      <div style={{ flex:1, height:1, background: count > 0 ? dpHA(acc, 0.4) : 'rgba(160,140,255,0.12)' }} />
+      <div style={{ flex:1, height:1, background: count > 0 ? dpHA(acc, 0.4) : 'rgba(var(--accent-rgb),calc(0.12*var(--ka)))' }} />
       <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.22em',
-        color: allOpen ? 'rgba(200,190,240,0.7)' : (count > 0 ? 'rgba(200,190,240,0.5)' : 'rgba(160,140,255,0.35)'), textTransform:'uppercase' }}>
+        color: allOpen ? 'rgba(var(--text-rgb),calc(0.7*var(--kt)))' : (count > 0 ? 'rgba(var(--text-rgb),calc(0.5*var(--kt)))' : 'rgba(var(--accent-rgb),calc(0.35*var(--ka)))'), textTransform:'uppercase' }}>
         {hint || (total > 0 ? `${count} / ${total} entdeckt` : '—')}
       </span>
     </div>
@@ -57,10 +57,10 @@ function DPLocked({ acc, hint }) {
     <div style={{
       padding:'10px 14px',
       border:`1px dashed ${dpHA(acc, 0.25)}`,
-      background:'rgba(124,77,255,0.03)', borderRadius:2,
+      background:'rgba(var(--purple-rgb),calc(0.03*var(--kp)))', borderRadius:2,
       display:'flex', alignItems:'center', gap:8,
       fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase',
-      color:'rgba(160,140,255,0.55)',
+      color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
     }}>
       <span style={{ width:6, height:6, border:`1px solid ${dpHA(acc, 0.45)}`, display:'inline-block' }}/>
       <span>{hint || 'Unbekannt'}</span>
@@ -72,15 +72,15 @@ function DPLocked({ acc, hint }) {
 function FactRow({ label, value, isOpen, toggleState, acc, gm, onToggle }) {
   return (
     <React.Fragment>
-      <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase', whiteSpace:'nowrap', paddingTop:2 }}>
+      <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase', whiteSpace:'nowrap', paddingTop:2 }}>
         {label}
       </span>
       <div style={{ display:'flex', alignItems:'center', gap:10, justifyContent:'space-between', flexWrap:'wrap' }}>
         {isOpen || gm ? (
           <span style={{ fontFamily:'var(--font-body)', fontWeight:300, fontSize:13,
-            color: isOpen ? '#f0eeff' : 'rgba(200,190,240,0.5)',
+            color: isOpen ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.5*var(--kt)))',
             fontStyle: isOpen ? 'normal' : 'italic' }}>
-            {value || <span style={{ color:'rgba(160,140,255,0.4)', fontStyle:'italic' }}>—</span>}
+            {value || <span style={{ color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', fontStyle:'italic' }}>—</span>}
           </span>
         ) : (
           <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color:dpHA(acc, 0.55), letterSpacing:'0.18em', textTransform:'uppercase', display:'inline-flex', alignItems:'center', gap:6 }}>
@@ -102,7 +102,7 @@ function Pills({ items, acc }) {
         <span key={i} style={{
           padding:'5px 10px',
           fontFamily:'var(--font-mono)', fontSize:9.5, letterSpacing:'0.16em', textTransform:'uppercase',
-          color:'#f0eeff', background: dpHA(acc, 0.14),
+          color:'var(--white)', background: dpHA(acc, 0.14),
           border:`1px solid ${dpHA(acc, 0.45)}`, borderRadius:2,
         }}>
           {e}
@@ -120,7 +120,7 @@ function Bullets({ items, acc, columns=1 }) {
           padding:'5px 10px 5px 8px',
           borderLeft:`2px solid ${dpHA(acc, 0.55)}`,
           background: dpHA(acc, 0.05),
-          fontFamily:'var(--font-body)', fontSize:12.5, color:'#f0eeff',
+          fontFamily:'var(--font-body)', fontSize:12.5, color:'var(--white)',
         }}>
           <svg width="4" height="4" viewBox="0 0 4 4" style={{ flexShrink:0, transform:'translateY(-1px)' }}>
             <polygon points={dpHex(4)} fill={acc} />
@@ -135,7 +135,7 @@ function Bullets({ items, acc, columns=1 }) {
 // ── Indexierte Liste (jeder Eintrag toggle-bar) ──────────
 function IndexedList({ items, keyPrefix, isOpen, onToggle, toggleState, gm, acc, render, lockedHint }) {
   if (!items || items.length === 0) {
-    return <div style={{ fontFamily:'var(--font-body)', fontStyle:'italic', fontSize:12, color:'rgba(160,140,255,0.45)', padding:'4px 0' }}>—</div>;
+    return <div style={{ fontFamily:'var(--font-body)', fontStyle:'italic', fontSize:12, color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', padding:'4px 0' }}>—</div>;
   }
   const anyVisible = items.some((_, i) => gm || isOpen(`${keyPrefix}-${i}`));
   if (!anyVisible) return <DPLocked acc={acc} hint={lockedHint || 'Unbekannt'}/>;
@@ -161,7 +161,7 @@ function RoutineEntry({ entry, open, acc }) {
   return (
     <div style={{
       padding:'8px 12px',
-      background: open ? dpHA(acc, 0.05) : 'rgba(124,77,255,0.03)',
+      background: open ? dpHA(acc, 0.05) : 'rgba(var(--purple-rgb),calc(0.03*var(--kp)))',
       border:`1px solid ${dpHA(acc, open ? 0.25 : 0.12)}`,
       borderLeft:`2px solid ${dpHA(acc, open ? 0.7 : 0.3)}`,
       borderRadius:2,
@@ -171,13 +171,13 @@ function RoutineEntry({ entry, open, acc }) {
           color:acc, textTransform:'uppercase' }}>{entry.zeit}</span>
         {entry.ort && (
           <React.Fragment>
-            <span style={{ color:'rgba(160,140,255,0.3)', fontSize:9 }}>·</span>
+            <span style={{ color:'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))', fontSize:9 }}>·</span>
             <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em',
-              color:'rgba(200,190,240,0.65)' }}>{entry.ort}</span>
+              color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))' }}>{entry.ort}</span>
           </React.Fragment>
         )}
       </div>
-      <div style={{ fontFamily:'var(--font-body)', fontSize:12.5, color: open ? '#f0eeff' : 'rgba(200,190,240,0.55)', lineHeight:1.55 }}>
+      <div style={{ fontFamily:'var(--font-body)', fontSize:12.5, color: open ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.55*var(--kt)))', lineHeight:1.55 }}>
         {entry.tat}
       </div>
     </div>
@@ -198,7 +198,7 @@ function starPoints(cx, cy, rOut, rIn) {
 // ── Routine-Zeitachse — Sterne, verbunden durch vertikale Linie ──
 function RoutineTimeline({ entries, isOpen, onToggle, toggleState, gm, acc }) {
   if (!entries || entries.length === 0) {
-    return <div style={{ fontFamily:'var(--font-body)', fontStyle:'italic', fontSize:12, color:'rgba(160,140,255,0.45)', padding:'4px 0' }}>—</div>;
+    return <div style={{ fontFamily:'var(--font-body)', fontStyle:'italic', fontSize:12, color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', padding:'4px 0' }}>—</div>;
   }
   const ROW_GAP = 12;        // vertikaler Abstand zwischen Einträgen
   const STAR_R  = 9;         // Stern-Außenradius
@@ -218,7 +218,7 @@ function RoutineTimeline({ entries, isOpen, onToggle, toggleState, gm, acc }) {
       <div style={{ display:'flex', flexDirection:'column', gap: ROW_GAP }}>
         {visibleEntries.map(({ e, i, k, open }) => {
           if (!gm && !open) return null;
-          const starFill   = open ? acc : 'rgba(8,6,22,0.99)';
+          const starFill   = open ? acc : 'rgba(var(--panel-rgb),0.99)';
           const starStroke = open ? acc : dpHA(acc, 0.35);
           return (
             <div key={i} style={{ position:'relative', display:'flex', alignItems:'flex-start', gap:10 }}>
@@ -252,12 +252,12 @@ function AusEntry({ item, open, acc }) {
   return (
     <div style={{
       padding:'10px 12px',
-      background: open ? dpHA(acc, 0.06) : 'rgba(124,77,255,0.03)',
+      background: open ? dpHA(acc, 0.06) : 'rgba(var(--purple-rgb),calc(0.03*var(--kp)))',
       border:`1px solid ${dpHA(acc, open ? 0.30 : 0.12)}`,
       borderLeft:`3px solid ${dpHA(acc, open ? 0.75 : 0.3)}`,
       borderRadius:2,
       fontFamily:'var(--font-display)', fontSize:13, letterSpacing:'0.05em',
-      color: open ? '#f0eeff' : 'rgba(200,190,240,0.55)',
+      color: open ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.55*var(--kt)))',
       lineHeight:1.3,
       minHeight: 60,
       display:'flex', alignItems:'center',
@@ -271,7 +271,7 @@ function AusEntry({ item, open, acc }) {
 // ── Ausrüstungs-Grid (3 Items pro Reihe) ─────────────────
 function AusGrid({ items, isOpen, onToggle, toggleState, gm, acc }) {
   if (!items || items.length === 0) {
-    return <div style={{ fontFamily:'var(--font-body)', fontStyle:'italic', fontSize:12, color:'rgba(160,140,255,0.45)', padding:'4px 0' }}>—</div>;
+    return <div style={{ fontFamily:'var(--font-body)', fontStyle:'italic', fontSize:12, color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', padding:'4px 0' }}>—</div>;
   }
   const visible = items.map((it, i) => ({ it, i, k: `aus-${i}`, open: isOpen(`aus-${i}`) }));
   if (!gm && !visible.some(x => x.open)) {
@@ -304,7 +304,7 @@ function GeheimnisEntry({ text, idx, acc }) {
       border:`1px solid ${dpHA(acc, 0.4)}`,
       background:`linear-gradient(135deg, ${dpHA(acc, 0.10)}, ${dpHA(acc, 0.04)})`,
       borderRadius:2, position:'relative',
-      fontFamily:'var(--font-body)', fontSize:12.5, color:'#f0eeff', lineHeight:1.6,
+      fontFamily:'var(--font-body)', fontSize:12.5, color:'var(--white)', lineHeight:1.6,
     }}>
       <div style={{ position:'absolute', top:-1, left:-1,
         padding:'2px 6px',
@@ -362,12 +362,12 @@ function KontaktEntry({ p, acc, badgeColor, onSelectNsc }) {
         </svg>
         <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center',
           fontFamily:'var(--font-display)', fontSize:11, fontWeight:400, letterSpacing:'0.04em',
-          color: p.verstorben ? 'rgba(180,170,220,0.55)' : '#f0eeff' }}>{initials}</div>
+          color: p.verstorben ? 'color-mix(in srgb, rgba(180,170,220,0.55), rgb(var(--ink-rgb)) var(--cm))' : 'var(--white)' }}>{initials}</div>
       </div>
       <div style={{ flex:1, minWidth:0, display:'flex', flexDirection:'column', gap:2 }}>
         <div style={{ display:'flex', alignItems:'center', gap:8, flexWrap:'wrap' }}>
           <span style={{ fontFamily:'var(--font-display)', fontSize:13, letterSpacing:'0.04em',
-            color: p.verstorben ? 'rgba(200,190,240,0.6)' : '#f0eeff',
+            color: p.verstorben ? 'rgba(var(--text-rgb),calc(0.6*var(--kt)))' : 'var(--white)',
             textDecoration: clickable && hov ? 'underline' : 'none', textUnderlineOffset:2 }}>
             {p.name}
           </span>
@@ -382,7 +382,7 @@ function KontaktEntry({ p, acc, badgeColor, onSelectNsc }) {
           )}
         </div>
         <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.16em',
-          color:'rgba(200,190,240,0.55)', textTransform:'uppercase' }}>
+          color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', textTransform:'uppercase' }}>
           {p.rolle}
         </div>
       </div>
@@ -397,7 +397,7 @@ function KontaktEntry({ p, acc, badgeColor, onSelectNsc }) {
 // ── Begleiter-Karte ──────────────────────────────────────
 function BegleiterCard({ b, acc }) {
   if (!b) {
-    return <div style={{ fontFamily:'var(--font-body)', fontStyle:'italic', fontSize:12, color:'rgba(160,140,255,0.45)', padding:'4px 0' }}>Keiner.</div>;
+    return <div style={{ fontFamily:'var(--font-body)', fontStyle:'italic', fontSize:12, color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', padding:'4px 0' }}>Keiner.</div>;
   }
   return (
     <div style={{ display:'flex', alignItems:'center', gap:14, padding:'10px 12px',
@@ -412,8 +412,8 @@ function BegleiterCard({ b, acc }) {
         </svg>
       </div>
       <div style={{ flex:1, minWidth:0 }}>
-        <div style={{ fontFamily:'var(--font-display)', fontSize:13, letterSpacing:'0.08em', color:'#f0eeff' }}>{b.name}</div>
-        <div style={{ fontFamily:'var(--font-body)', fontSize:11.5, color:'rgba(200,190,240,0.65)', marginTop:2 }}>{b.art}</div>
+        <div style={{ fontFamily:'var(--font-display)', fontSize:13, letterSpacing:'0.08em', color:'var(--white)' }}>{b.name}</div>
+        <div style={{ fontFamily:'var(--font-body)', fontSize:11.5, color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))', marginTop:2 }}>{b.art}</div>
       </div>
     </div>
   );
@@ -504,46 +504,46 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
   const kontaktKeys   = [...famList.map((_, i) => `fam-${i}`), ...freList.map((_, i) => `fre-${i}`), ...rivList.map((_, i) => `riv-${i}`)];
 
   return (
-    <div style={{
+    <div className="nsc-overlay" style={{
       position:'fixed', inset:0, zIndex:600, display:'flex', justifyContent:'flex-end',
-      background:'rgba(4,3,13,0.7)', backdropFilter:'blur(4px)',
+      background:'rgba(var(--bg-rgb),0.7)', backdropFilter:'blur(4px)',
       animation:'fadeIn 0.2s ease',
     }} onClick={onClose}>
-      <div ref={scrollRef} onClick={e=>e.stopPropagation()} style={{
+      <div ref={scrollRef} className="nsc-panel" onClick={e=>e.stopPropagation()} style={{
         width:'min(640px, 96vw)', height:'100%',
-        background:'rgba(8,6,22,0.99)', borderLeft:`1px solid ${dpHA(acc, 0.33)}`,
-        boxShadow:`-20px 0 60px rgba(0,0,0,0.7), -20px 0 80px ${dpHA(acc, 0.13)}`,
+        background:'rgba(var(--panel-rgb),0.99)', borderLeft:`1px solid ${dpHA(acc, 0.33)}`,
+        boxShadow:`-20px 0 60px rgba(var(--shadow-rgb),calc(0.7 * var(--shadow-k))), -20px 0 80px ${dpHA(acc, 0.13)}`,
         animation:'overlayIn 0.32s cubic-bezier(.2,.85,.2,1)',
         overflowY:'auto',
       }}>
         {/* Header */}
-        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'14px 22px',
+        <div className="nsc-panel-head" style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'14px 22px',
           borderBottom:`1px solid ${dpHA(acc, 0.2)}`,
-          position:'sticky', top:0, background:'rgba(8,6,22,0.98)', zIndex:5 }}>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.3em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>
+          position:'sticky', top:0, background:'rgba(var(--panel-rgb),0.98)', zIndex:5 }}>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.3em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>
             № {nsc.id.toUpperCase()} · {visible('division') && nsc.division && nsc.division !== 'Keine' ? `${dpRoman(nsc) ? `${dpRoman(nsc)} · ` : ''}${nsc.division}` : 'NSC'}
-            {gm && <span style={{ marginLeft:10, color:'#ffb850', fontWeight:600 }}>· SPIELLEITUNG</span>}
+            {gm && <span style={{ marginLeft:10, color:'color-mix(in srgb, #ffb850, rgb(var(--ink-rgb)) var(--cm))', fontWeight:600 }}>· SPIELLEITUNG</span>}
           </div>
           <button onClick={onClose} style={{
-            background:'transparent', border:`1px solid ${dpHA(acc, 0.5)}`, color:'rgba(200,190,240,0.7)',
+            background:'transparent', border:`1px solid ${dpHA(acc, 0.5)}`, color:'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',
             cursor:'pointer', padding:'4px 10px',
             fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.2em', textTransform:'uppercase', borderRadius:2,
           }}
-            onMouseEnter={e=>{e.currentTarget.style.color='#f0eeff';e.currentTarget.style.borderColor=acc;e.currentTarget.style.background=dpHA(acc, 0.18);}}
-            onMouseLeave={e=>{e.currentTarget.style.color='rgba(200,190,240,0.7)';e.currentTarget.style.borderColor=dpHA(acc, 0.5);e.currentTarget.style.background='transparent';}}
+            onMouseEnter={e=>{e.currentTarget.style.color='var(--white)';e.currentTarget.style.borderColor=acc;e.currentTarget.style.background=dpHA(acc, 0.18);}}
+            onMouseLeave={e=>{e.currentTarget.style.color='rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))';e.currentTarget.style.borderColor=dpHA(acc, 0.5);e.currentTarget.style.background='transparent';}}
           >ESC ×</button>
         </div>
 
         {/* Hero — Portrait + Name */}
-        <div style={{ display:'flex', gap:22, padding:'24px 26px 14px', alignItems:'flex-start' }}>
+        <div className="nsc-panel-hero" style={{ display:'flex', gap:22, padding:'24px 26px 14px', alignItems:'flex-start' }}>
           <div style={{ position:'relative', flexShrink:0 }}>
             <NSCPortrait nsc={nsc} stage={stage} acc={acc} size={140}/>
             {stage === 0 && (
               <div style={{
                 position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center',
                 fontFamily:'var(--font-mono)', fontSize:36, fontWeight:700,
-                color:'rgba(124,77,255,0.85)',
-                textShadow:'0 0 14px rgba(124,77,255,0.7), 0 0 30px rgba(124,77,255,0.4)',
+                color:'rgba(var(--purple-rgb),calc(0.85*var(--kp) + var(--tb)))',
+                textShadow:'0 0 14px rgba(var(--purple-rgb),calc(0.7*var(--kp))), 0 0 30px rgba(var(--purple-rgb),calc(0.4*var(--kp)))',
                 animation:'pulse-glow 2.5s ease-in-out infinite',
                 userSelect:'none', pointerEvents:'none',
               }}>?</div>
@@ -560,15 +560,15 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
             {stage === 0 ? (
               <h2 style={{
                 fontFamily:'var(--font-mono)', fontWeight:400, fontSize:18, letterSpacing:'0.12em',
-                color:'rgba(160,140,255,0.45)', lineHeight:1.2,
-                textShadow:'0 0 14px rgba(124,77,255,0.55), 0 0 30px rgba(124,77,255,0.25)',
+                color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', lineHeight:1.2,
+                textShadow:'0 0 14px rgba(var(--purple-rgb),calc(0.55*var(--kp))), 0 0 30px rgba(var(--purple-rgb),calc(0.25*var(--kp)))',
                 animation:'unknownDrift 5s ease-in-out infinite',
                 userSelect:'none',
               }}>
                 {_dpScrambleName(nsc.name)}
               </h2>
             ) : (
-              <h2 style={{ fontFamily:'var(--font-display)', fontWeight:400, fontSize:26, letterSpacing:'0.10em', color:'#f0eeff', lineHeight:1.15, textShadow:`0 0 18px ${dpHA(acc, 0.4)}` }}>
+              <h2 style={{ fontFamily:'var(--font-display)', fontWeight:400, fontSize:26, letterSpacing:'0.10em', color:'var(--white)', lineHeight:1.15, textShadow:`0 0 18px ${dpHA(acc, 0.4)}` }}>
                 {nsc.name}
               </h2>
             )}
@@ -580,9 +580,9 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
                   ['alter', nsc.alter ? `${nsc.alter} Jahre` : null],
                 ].filter(([k,v]) => visible(k) && v).map(([k,v], i, a) => (
                   <React.Fragment key={k}>
-                    {i > 0 && <span style={{ color:'rgba(160,140,255,0.3)', fontSize:9 }}>·</span>}
+                    {i > 0 && <span style={{ color:'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))', fontSize:9 }}>·</span>}
                     <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em',
-                      color: isOpen(k) ? acc : 'rgba(200,190,240,0.45)',
+                      color: isOpen(k) ? acc : 'rgba(var(--text-rgb),calc(0.45*var(--kt)))',
                       textTransform:'uppercase', fontStyle: isOpen(k) ? 'normal' : 'italic' }}>
                       {v}
                     </span>
@@ -613,7 +613,7 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
                   <div style={{ padding:'10px 14px', border:`1px solid ${dpHA(acc, 0.25)}`,
                     background: dpHA(acc, 0.04),
                     fontFamily:'var(--font-body)', fontSize:13, lineHeight:1.7,
-                    color: open ? 'var(--silver)' : 'rgba(200,190,240,0.5)',
+                    color: open ? 'var(--silver)' : 'rgba(var(--text-rgb),calc(0.5*var(--kt)))',
                     fontStyle: open ? 'normal' : 'italic' }}>
                     {nsc.unvergesslich}
                   </div>
@@ -635,9 +635,9 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
                       <span style={{
                         padding:'4px 10px',
                         fontFamily:'var(--font-display)', fontSize:14, letterSpacing:'0.06em',
-                        background: open ? dpHA(acc, 0.10) : 'rgba(124,77,255,0.04)',
+                        background: open ? dpHA(acc, 0.10) : 'rgba(var(--purple-rgb),calc(0.04*var(--kp)))',
                         border:`1px solid ${dpHA(acc, open ? 0.45 : 0.18)}`,
-                        color: open ? '#f0eeff' : 'rgba(200,190,240,0.45)',
+                        color: open ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.45*var(--kt)))',
                         fontStyle: open ? 'normal' : 'italic',
                         borderRadius:2,
                       }}>{open ? piece : '· · · · ·'}</span>
@@ -658,7 +658,7 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
                   <div style={{ padding:'12px 16px', border:`1px solid ${dpHA(acc, 0.25)}`,
                     background: dpHA(acc, 0.04),
                     fontFamily:'var(--font-body)', fontSize:13, lineHeight:1.75, whiteSpace:'pre-wrap',
-                    color: open ? 'var(--silver)' : 'rgba(200,190,240,0.5)',
+                    color: open ? 'var(--silver)' : 'rgba(var(--text-rgb),calc(0.5*var(--kt)))',
                     fontStyle: open ? 'normal' : 'italic' }}>
                     {nsc.biografie}
                   </div>
@@ -684,9 +684,9 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
                       display:'grid', gridTemplateColumns:'repeat(3, minmax(0, 1fr))', gap:'10px 26px' }}>
                       {rows.map(r => (
                         <div key={r.k} style={(r.k === 'merkmale' || r.k === 'weiteres') ? { gridColumn:'1 / -1' } : null}>
-                          <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.2em', color:'rgba(160,140,255,0.48)', textTransform:'uppercase', display:'block', marginBottom:2 }}>{r.label}</span>
+                          <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.2em', color:'rgba(var(--accent-rgb),calc(0.48*var(--ka) + var(--tb)))', textTransform:'uppercase', display:'block', marginBottom:2 }}>{r.label}</span>
                           <span style={{ fontFamily:'var(--font-body)', fontSize:13, lineHeight:1.6, whiteSpace:'pre-wrap', display:'block',
-                            color: open ? 'var(--silver)' : 'rgba(200,190,240,0.5)',
+                            color: open ? 'var(--silver)' : 'rgba(var(--text-rgb),calc(0.5*var(--kt)))',
                             fontStyle: open ? 'normal' : 'italic' }}>{r.v}</span>
                         </div>
                       ))}
@@ -757,7 +757,7 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
                     padding:'6px 10px 6px 8px',
                     borderLeft:`2px solid ${dpHA(acc, open ? 0.55 : 0.25)}`,
                     background: dpHA(acc, open ? 0.05 : 0.02),
-                    fontFamily:'var(--font-body)', fontSize:12.5, color: open ? '#f0eeff' : 'rgba(200,190,240,0.55)', lineHeight:1.55,
+                    fontFamily:'var(--font-body)', fontSize:12.5, color: open ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.55*var(--kt)))', lineHeight:1.55,
                   }}>{it}</div>
                 )}/>
             </React.Fragment>
@@ -773,7 +773,7 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
                     padding:'6px 10px 6px 8px',
                     borderLeft:`2px solid ${dpHA(acc, open ? 0.55 : 0.25)}`,
                     background: dpHA(acc, open ? 0.05 : 0.02),
-                    fontFamily:'var(--font-body)', fontSize:12.5, color: open ? '#f0eeff' : 'rgba(200,190,240,0.55)', lineHeight:1.55,
+                    fontFamily:'var(--font-body)', fontSize:12.5, color: open ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.55*var(--kt)))', lineHeight:1.55,
                   }}>{it}</div>
                 )}/>
             </React.Fragment>
@@ -788,7 +788,7 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
                   <span style={{
                     display:'inline-block', padding:'5px 10px',
                     fontFamily:'var(--font-mono)', fontSize:9.5, letterSpacing:'0.16em', textTransform:'uppercase',
-                    color:'#f0eeff', background: dpHA(acc, 0.14),
+                    color:'var(--white)', background: dpHA(acc, 0.14),
                     border:`1px solid ${dpHA(acc, 0.45)}`, borderRadius:2,
                     opacity: open ? 1 : 0.55,
                   }}>{it}</span>
@@ -807,7 +807,7 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
                     padding:'5px 10px 5px 8px',
                     borderLeft:`2px solid ${dpHA(acc, 0.55)}`,
                     background: dpHA(acc, 0.05),
-                    fontFamily:'var(--font-body)', fontSize:12.5, color:'#f0eeff',
+                    fontFamily:'var(--font-body)', fontSize:12.5, color:'var(--white)',
                     opacity: open ? 1 : 0.55,
                   }}>
                     <svg width="4" height="4" viewBox="0 0 4 4" style={{ flexShrink:0, transform:'translateY(-1px)' }}>
@@ -829,7 +829,7 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
                     border:`1px solid ${dpHA('#e36760', 0.4)}`,
                     background:'rgba(227,103,96,0.06)',
                     fontFamily:'var(--font-body)', fontSize:12.5, fontStyle:'italic',
-                    color: open ? 'rgba(240,200,200,0.85)' : 'rgba(240,200,200,0.5)', lineHeight:1.65 }}>
+                    color: open ? 'color-mix(in srgb, rgba(240,200,200,0.85), rgb(var(--ink-rgb)) var(--cm))' : 'color-mix(in srgb, rgba(240,200,200,0.5), rgb(var(--ink-rgb)) var(--cm))', lineHeight:1.65 }}>
                     {it}
                   </div>
                 )}/>
@@ -861,11 +861,11 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
               border:`1px solid rgba(214,178,92,${isOpen('habe') ? 0.5 : 0.25})`,
               background:'linear-gradient(135deg, rgba(214,178,92,0.10), rgba(214,178,92,0.03))',
               boxShadow: isOpen('habe') ? '0 0 18px rgba(214,178,92,0.12)' : 'none' }}>
-              <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.3em', textTransform:'uppercase', color:'rgba(214,178,92,0.8)' }}>◈ Vermögen</span>
+              <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.3em', textTransform:'uppercase', color:'color-mix(in srgb, rgba(214,178,92,0.8), rgb(var(--ink-rgb)) var(--cm))' }}>◈ Vermögen</span>
               <span style={{ flex:1 }}/>
               <span style={isOpen('habe') || gm
-                ? { fontFamily:'var(--font-mono)', fontSize:14, letterSpacing:'0.1em', color:'#e8c878', textShadow:'0 0 10px rgba(214,178,92,0.4)' }
-                : { fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.16em', textTransform:'uppercase', color:'rgba(214,178,92,0.4)' }}>
+                ? { fontFamily:'var(--font-mono)', fontSize:14, letterSpacing:'0.1em', color:'color-mix(in srgb, #e8c878, rgb(var(--ink-rgb)) var(--cm))', textShadow:'0 0 10px rgba(214,178,92,0.4)' }
+                : { fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.16em', textTransform:'uppercase', color:'color-mix(in srgb, rgba(214,178,92,0.4), rgb(var(--ink-rgb)) var(--cm))' }}>
                 {isOpen('habe') || gm ? nsc.habe.toLocaleString('de-DE') + ' Hade' : 'Unbekannt'}
               </span>
               {gm && <UnlockToggle state={ts('habe')} onClick={() => tg('habe')} size="sm"/>}
@@ -878,7 +878,7 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
               <DPSection title="Kontakte" acc={acc} count={cnt(kontaktKeys)} total={kontaktKeys.length}/>
               <div style={{ display:'flex', flexDirection:'column', gap:16 }}>
                 {[
-                  ['Familie', 'fam',  famList, '#c9b8ff', '◇'],
+                  ['Familie', 'fam',  famList, 'var(--lav)', '◇'],
                   ['Freunde', 'fre',  freList, '#5fe39a', '◆'],
                   ['Rivalen', 'riv',  rivList, '#e36760', '⚔'],
                 ].filter(([, , items]) => items.length > 0).map(([title, prefix, items, color, glyph]) => (
@@ -887,7 +887,7 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [] })
                       <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.24em', color, textTransform:'uppercase' }}>
                         {glyph} {title}
                       </span>
-                      <div style={{ flex:1, height:1, background:'rgba(160,140,255,0.12)' }}/>
+                      <div style={{ flex:1, height:1, background:'rgba(var(--accent-rgb),calc(0.12*var(--ka)))' }}/>
                     </div>
                     <IndexedList items={items} keyPrefix={prefix} isOpen={isOpen} onToggle={tg} toggleState={ts} gm={gm} acc={acc}
                       render={(p, i, open) => <KontaktEntry p={p} acc={acc} badgeColor={color} onSelectNsc={onSelectNsc}/>}/>

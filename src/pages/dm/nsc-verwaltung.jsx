@@ -125,14 +125,14 @@ const SEC_OF_PREFIX = NSC_SEC_OF_PREFIX;
 const unlockableKeys = unlockableFactsOf;
 
 // ── Kleine Bausteine ───────────────────────────────────────
-const lbSt = { fontFamily:MONO, fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(160,140,255,0.55)' };
-const inpSt = { width:'100%', padding:'8px 10px', background:'rgba(5,3,15,0.85)', border:'1px solid rgba(124,77,255,0.35)', borderRadius:3, color:'#f0eeff', fontFamily:BODY, fontSize:13, outline:'none', boxSizing:'border-box' };
+const lbSt = { fontFamily:MONO, fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))' };
+const inpSt = { width:'100%', padding:'8px 10px', background:'rgba(var(--bg-rgb),0.85)', border:'1px solid rgba(var(--purple-rgb),calc(0.35*var(--kp)))', borderRadius:3, color:'var(--white)', fontFamily:BODY, fontSize:13, outline:'none', boxSizing:'border-box' };
 const selSt = { ...inpSt, cursor:'pointer' };
 const rmBtnSt = { padding:'0 10px', background:'rgba(227,103,96,0.08)', border:'1px solid rgba(227,103,96,0.3)', borderRadius:3, color:'rgba(227,103,96,0.7)', cursor:'pointer', fontSize:12 };
-const addBtnSt = { padding:'6px 14px', background:'rgba(124,77,255,0.08)', border:'1px dashed rgba(124,77,255,0.4)', borderRadius:3, color:'rgba(200,190,240,0.65)', fontFamily:MONO, fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', cursor:'pointer' };
-const cardSt = { background:'rgba(10,8,28,0.75)', border:'1px solid rgba(124,77,255,0.16)', borderRadius:6, padding:'20px 22px', marginBottom:14, animation:'fadeIn 0.25s ease' };
-const secTitleSt = { fontFamily:MONO, fontSize:9, letterSpacing:'0.3em', color:'rgba(124,77,255,0.75)', textTransform:'uppercase' };
-const eyeSt = on => ({ background:'transparent', border:'none', cursor:'pointer', fontSize:11, padding:'0 2px', lineHeight:1, color:on ? '#5fe39a' : 'rgba(160,140,255,0.3)' });
+const addBtnSt = { padding:'6px 14px', background:'rgba(var(--purple-rgb),calc(0.08*var(--kp)))', border:'1px dashed rgba(var(--purple-rgb),calc(0.4*var(--kp)))', borderRadius:3, color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))', fontFamily:MONO, fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', cursor:'pointer' };
+const cardSt = { background:'rgba(var(--panel-rgb),0.75)', border:'1px solid rgba(var(--purple-rgb),calc(0.16*var(--kp)))', borderRadius:6, padding:'20px 22px', marginBottom:14, animation:'fadeIn 0.25s ease' };
+const secTitleSt = { fontFamily:MONO, fontSize:9, letterSpacing:'0.3em', color:'rgba(var(--purple-rgb),calc(0.75*var(--kp) + var(--tb)))', textTransform:'uppercase' };
+const eyeSt = on => ({ background:'transparent', border:'none', cursor:'pointer', fontSize:11, padding:'0 2px', lineHeight:1, color:on ? '#5fe39a' : 'rgba(var(--accent-rgb),calc(0.3*var(--ka)))' });
 
 function Eye({ on, onClick, pad }) {
   return <button title="Sichtbarkeit für Spieler" onClick={onClick} style={{ ...eyeSt(on), padding:pad || '0 2px' }}>{on ? '◉' : '⊘'}</button>;
@@ -178,7 +178,7 @@ function useRowDnD(rows, commit) {
   });
   const indicator = i => (dragging != null && over && over.i === i) ? (
     <div style={{ position:'absolute', left:0, right:0, [over.after ? 'bottom' : 'top']:-4, height:2, borderRadius:1,
-      background:'linear-gradient(90deg, #7c4dff, rgba(124,77,255,0.25))', boxShadow:'0 0 8px rgba(124,77,255,0.7)',
+      background:'linear-gradient(90deg, #7c4dff, rgba(var(--purple-rgb),calc(0.25*var(--kp))))', boxShadow:'0 0 8px rgba(var(--purple-rgb),calc(0.7*var(--kp)))',
       pointerEvents:'none', zIndex:2 }}/>
   ) : null;
   return { dragging, rowProps, handleProps, indicator };
@@ -196,7 +196,7 @@ function StrList({ list, onChange, placeholder, addLabel, eye, sortable }) {
           {sortable && dnd.indicator(i)}
           {sortable && (
             <span title="Ziehen zum Umsortieren" {...dnd.handleProps(i)}
-              style={{ cursor:'grab', color:'rgba(160,140,255,0.4)', fontSize:13, padding:'0 3px', userSelect:'none' }}>⠿</span>
+              style={{ cursor:'grab', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', fontSize:13, padding:'0 3px', userSelect:'none' }}>⠿</span>
           )}
           <input placeholder={placeholder} value={val}
             onChange={e => { const a = [...rows]; a[i] = e.target.value; onChange(a); }} style={inpSt}/>
@@ -218,10 +218,10 @@ function RangButtons({ value, onPick, division }) {
         return (
           <button key={n} onClick={() => onPick(n)} title={info ? info.titel : 'Rang ' + n}
             style={{ flex:1, minWidth:0, padding:'9px 0', fontFamily:MONO, fontSize:11, cursor:'pointer', borderRadius:3,
-              background:on ? 'rgba(124,77,255,0.28)' : 'rgba(5,3,15,0.7)',
-              border:`1px solid ${on ? 'rgba(124,77,255,0.8)' : 'rgba(124,77,255,0.18)'}`,
-              color:on ? '#f0eeff' : 'rgba(180,170,220,0.45)',
-              boxShadow:on ? '0 0 10px rgba(124,77,255,0.3)' : 'none' }}>{n}</button>
+              background:on ? 'rgba(var(--purple-rgb),calc(0.28*var(--kp)))' : 'rgba(var(--bg-rgb),0.7)',
+              border:`1px solid ${on ? 'rgba(var(--purple-rgb),calc(0.8*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))'}`,
+              color:on ? 'var(--white)' : 'color-mix(in srgb, rgba(180,170,220,0.45), rgb(var(--ink-rgb)) var(--cm))',
+              boxShadow:on ? '0 0 10px rgba(var(--purple-rgb),calc(0.3*var(--kp)))' : 'none' }}>{n}</button>
         );
       })}
     </div>
@@ -231,9 +231,9 @@ function RangInfo({ division, rang }) {
   const info = ((T().raenge || {})[division] || []).find(r => r.rang === rang);
   if (!info) return null;
   return (
-    <div style={{ marginTop:12, padding:'10px 14px', border:'1px solid rgba(124,77,255,0.18)', borderLeft:'2px solid rgba(124,77,255,0.6)', borderRadius:'0 3px 3px 0', background:'rgba(124,77,255,0.05)' }}>
-      <div style={{ fontFamily:MONO, fontSize:8.5, letterSpacing:'0.2em', color:'rgba(124,77,255,0.8)', textTransform:'uppercase', marginBottom:4 }}>◇ Rang {rang} · {info.titel}</div>
-      <div style={{ fontFamily:BODY, fontSize:12, fontWeight:300, color:'rgba(220,210,255,0.7)', lineHeight:1.6 }}>{info.b}</div>
+    <div style={{ marginTop:12, padding:'10px 14px', border:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))', borderLeft:'2px solid rgba(var(--purple-rgb),calc(0.6*var(--kp)))', borderRadius:'0 3px 3px 0', background:'rgba(var(--purple-rgb),calc(0.05*var(--kp)))' }}>
+      <div style={{ fontFamily:MONO, fontSize:8.5, letterSpacing:'0.2em', color:'rgba(var(--purple-rgb),calc(0.8*var(--kp) + var(--tb)))', textTransform:'uppercase', marginBottom:4 }}>◇ Rang {rang} · {info.titel}</div>
+      <div style={{ fontFamily:BODY, fontSize:12, fontWeight:300, color:'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', lineHeight:1.6 }}>{info.b}</div>
     </div>
   );
 }
@@ -244,7 +244,7 @@ function SecHeader({ title, visOn, onVis, onRemove, extra }) {
       {onVis && <Eye on={visOn} onClick={onVis}/>}
       {extra}
       <div style={{ flex:1 }}/>
-      <button onClick={onRemove} style={{ background:'transparent', border:'none', color:'rgba(160,140,255,0.35)', fontFamily:MONO, fontSize:9, letterSpacing:'0.14em', cursor:'pointer', textTransform:'uppercase' }}>× entfernen</button>
+      <button onClick={onRemove} style={{ background:'transparent', border:'none', color:'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))', fontFamily:MONO, fontSize:9, letterSpacing:'0.14em', cursor:'pointer', textTransform:'uppercase' }}>× entfernen</button>
     </div>
   );
 }
@@ -274,27 +274,27 @@ function PerspPicker({ persp, setPersp, charPersp, onPick }) {
         onChange={e => { setQuery(e.target.value); setOpen(true); }}
         onKeyDown={e => { if (e.key === 'Enter' && opts.length === 1) pick(opts[0]); if (e.key === 'Escape') setOpen(false); }}
         placeholder="Perspektive suchen …" title="Aus wessen Sicht die Liste und die Vorschau gezeigt werden"
-        style={{ width:'100%', padding:'6px 22px 6px 8px', background:'rgba(5,3,15,0.85)',
-          border:`1px solid ${isDm ? 'rgba(255,184,80,0.4)' : 'rgba(124,77,255,0.45)'}`, borderRadius:3,
-          color:isDm ? '#ffb850' : '#f0eeff', fontFamily:MONO, fontSize:9.5, letterSpacing:'0.08em',
+        style={{ width:'100%', padding:'6px 22px 6px 8px', background:'rgba(var(--bg-rgb),0.85)',
+          border:`1px solid ${isDm ? 'rgba(255,184,80,0.4)' : 'rgba(var(--purple-rgb),calc(0.45*var(--kp)))'}`, borderRadius:3,
+          color:isDm ? '#ffb850' : 'var(--white)', fontFamily:MONO, fontSize:9.5, letterSpacing:'0.08em',
           outline:'none', boxSizing:'border-box', cursor:'pointer' }}/>
-      <span style={{ position:'absolute', right:7, top:'50%', transform:'translateY(-50%)', fontSize:8, color:'rgba(160,140,255,0.5)', pointerEvents:'none' }}>▾</span>
+      <span style={{ position:'absolute', right:7, top:'50%', transform:'translateY(-50%)', fontSize:8, color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', pointerEvents:'none' }}>▾</span>
       {open && (
         <div style={{ position:'absolute', top:'calc(100% + 3px)', left:0, right:0, zIndex:120,
-          background:'rgba(8,6,22,0.99)', border:'1px solid rgba(124,77,255,0.4)', borderRadius:3,
-          boxShadow:'0 12px 36px rgba(0,0,0,0.7)', overflow:'hidden auto', maxHeight:220 }}>
+          background:'rgba(var(--panel-rgb),0.99)', border:'1px solid rgba(var(--purple-rgb),calc(0.4*var(--kp)))', borderRadius:3,
+          boxShadow:'0 12px 36px rgba(var(--shadow-rgb),calc(0.7 * var(--shadow-k)))', overflow:'hidden auto', maxHeight:220 }}>
           {opts.length === 0 && (
-            <div style={{ padding:'8px 10px', fontFamily:BODY, fontSize:11.5, fontStyle:'italic', color:'rgba(160,140,255,0.45)' }}>Kein Treffer</div>
+            <div style={{ padding:'8px 10px', fontFamily:BODY, fontSize:11.5, fontStyle:'italic', color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))' }}>Kein Treffer</div>
           )}
           {opts.map(o => {
             const on = o.id === persp;
             return (
               <button key={o.id} onClick={() => pick(o)}
                 style={{ display:'block', width:'100%', padding:'7px 10px', textAlign:'left', cursor:'pointer',
-                  background:on ? 'rgba(124,77,255,0.18)' : 'transparent', border:'none',
-                  borderBottom:'1px solid rgba(124,77,255,0.08)',
+                  background:on ? 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))' : 'transparent', border:'none',
+                  borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.08*var(--kp)))',
                   fontFamily:MONO, fontSize:9.5, letterSpacing:'0.08em',
-                  color:o.dm ? '#ffb850' : on ? '#f0eeff' : 'rgba(220,210,255,0.8)' }}>
+                  color:o.dm ? '#ffb850' : on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.8*var(--kt)))' }}>
                 {o.label}
               </button>
             );
@@ -316,12 +316,12 @@ function QuickCreate({ onCreate, canCancel, onCancel }) {
   const raceOpts = [...T().rassen].sort((a, b) => a.name.localeCompare(b.name, 'de'));
   return (
     <div style={{ maxWidth:820, margin:'0 auto', padding:'52px 40px 80px', animation:'fadeIn 0.35s ease' }}>
-      <div style={{ fontFamily:MONO, fontSize:9, letterSpacing:'0.32em', color:'rgba(124,77,255,0.7)', textTransform:'uppercase', marginBottom:6 }}>Schnellanlage</div>
-      <div style={{ fontFamily:DISP, fontSize:30, letterSpacing:'0.05em', color:'#f0eeff', marginBottom:30, textShadow:'0 0 24px rgba(124,77,255,0.35)' }}>Neuer NSC</div>
+      <div style={{ fontFamily:MONO, fontSize:9, letterSpacing:'0.32em', color:'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))', textTransform:'uppercase', marginBottom:6 }}>Schnellanlage</div>
+      <div style={{ fontFamily:DISP, fontSize:30, letterSpacing:'0.05em', color:'var(--white)', marginBottom:30, textShadow:'0 0 24px rgba(var(--purple-rgb),calc(0.35*var(--kp)))' }}>Neuer NSC</div>
 
       <label style={{ ...lbSt, display:'block', marginBottom:6 }}>Name</label>
       <input value={q.name} onChange={e => set('name', e.target.value)} placeholder="Wie heißt diese Person?"
-        style={{ ...inpSt, padding:'14px 16px', fontFamily:DISP, fontSize:21, letterSpacing:'0.04em', border:'1px solid rgba(124,77,255,0.45)', borderRadius:4 }}/>
+        style={{ ...inpSt, padding:'14px 16px', fontFamily:DISP, fontSize:21, letterSpacing:'0.04em', border:'1px solid rgba(var(--purple-rgb),calc(0.45*var(--kp)))', borderRadius:4 }}/>
 
       <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16, marginTop:22 }}>
         <div>
@@ -348,9 +348,9 @@ function QuickCreate({ onCreate, canCancel, onCancel }) {
               return (
                 <button key={g} onClick={() => set('geschlecht', on ? '' : g)}
                   style={{ flex:1, padding:'10px 4px', fontFamily:BODY, fontSize:12.5, cursor:'pointer', borderRadius:3,
-                    background:on ? 'rgba(124,77,255,0.22)' : 'rgba(5,3,15,0.85)',
-                    border:`1px solid ${on ? 'rgba(124,77,255,0.8)' : 'rgba(124,77,255,0.3)'}`,
-                    color:on ? '#f0eeff' : 'rgba(200,190,240,0.55)' }}>{g}</button>
+                    background:on ? 'rgba(var(--purple-rgb),calc(0.22*var(--kp)))' : 'rgba(var(--bg-rgb),0.85)',
+                    border:`1px solid ${on ? 'rgba(var(--purple-rgb),calc(0.8*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))'}`,
+                    color:on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.55*var(--kt)))' }}>{g}</button>
               );
             })}
           </div>
@@ -362,16 +362,16 @@ function QuickCreate({ onCreate, canCancel, onCancel }) {
       </div>
 
       {qi && (
-        <div style={{ marginTop:14, padding:'12px 16px', border:'1px solid rgba(124,77,255,0.22)', borderLeft:'2px solid #7c4dff', borderRadius:'0 4px 4px 0', background:'rgba(124,77,255,0.06)', animation:'fadeIn 0.25s ease' }}>
+        <div style={{ marginTop:14, padding:'12px 16px', border:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))', borderLeft:'2px solid #7c4dff', borderRadius:'0 4px 4px 0', background:'rgba(var(--purple-rgb),calc(0.06*var(--kp)))', animation:'fadeIn 0.25s ease' }}>
           <div style={{ display:'flex', gap:22, flexWrap:'wrap', alignItems:'baseline' }}>
-            <span style={{ fontFamily:MONO, fontSize:9, letterSpacing:'0.2em', color:'rgba(124,77,255,0.8)', textTransform:'uppercase' }}>◇ {q.rasse}</span>
-            <span style={{ fontFamily:BODY, fontSize:12.5, color:'rgba(220,210,255,0.8)' }}>Volljährig: <b style={{ fontWeight:600 }}>{qi.adult}</b></span>
-            <span style={{ fontFamily:BODY, fontSize:12.5, color:'rgba(220,210,255,0.8)' }}>Lebenserwartung: <b style={{ fontWeight:600 }}>{qi.life}</b></span>
+            <span style={{ fontFamily:MONO, fontSize:9, letterSpacing:'0.2em', color:'rgba(var(--purple-rgb),calc(0.8*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>◇ {q.rasse}</span>
+            <span style={{ fontFamily:BODY, fontSize:12.5, color:'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))' }}>Volljährig: <b style={{ fontWeight:600 }}>{qi.adult}</b></span>
+            <span style={{ fontFamily:BODY, fontSize:12.5, color:'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))' }}>Lebenserwartung: <b style={{ fontWeight:600 }}>{qi.life}</b></span>
             {qi.phase && <span style={{ fontFamily:MONO, fontSize:9.5, letterSpacing:'0.14em', textTransform:'uppercase', color:'#5fe39a' }}>Lebensphase: {qi.phase}</span>}
           </div>
           {qi.pct != null && (
-            <div style={{ marginTop:9, height:3, borderRadius:2, background:'rgba(124,77,255,0.14)', overflow:'hidden' }}>
-              <div style={{ height:'100%', width:qi.pct + '%', background:'linear-gradient(90deg, #7c4dff, #c9b8ff)', borderRadius:2, transition:'width 0.3s' }}/>
+            <div style={{ marginTop:9, height:3, borderRadius:2, background:'rgba(var(--purple-rgb),calc(0.14*var(--kp)))', overflow:'hidden' }}>
+              <div style={{ height:'100%', width:qi.pct + '%', background:'linear-gradient(90deg, #7c4dff, var(--lav))', borderRadius:2, transition:'width 0.3s' }}/>
             </div>
           )}
         </div>
@@ -395,9 +395,9 @@ function QuickCreate({ onCreate, canCancel, onCancel }) {
       {(() => {
         const info = ((T().raenge || {})[q.division] || []).find(r => r.rang === q.rang);
         return info ? (
-          <div style={{ marginTop:14, padding:'12px 16px', border:'1px solid rgba(124,77,255,0.22)', borderLeft:'2px solid #7c4dff', borderRadius:'0 4px 4px 0', background:'rgba(124,77,255,0.06)', animation:'fadeIn 0.25s ease' }}>
-            <div style={{ fontFamily:MONO, fontSize:9, letterSpacing:'0.2em', color:'rgba(124,77,255,0.85)', textTransform:'uppercase', marginBottom:5 }}>◇ Rang {q.rang} · {info.titel}</div>
-            <div style={{ fontFamily:BODY, fontSize:12.5, fontWeight:300, color:'rgba(220,210,255,0.75)', lineHeight:1.6 }}>{info.b}</div>
+          <div style={{ marginTop:14, padding:'12px 16px', border:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))', borderLeft:'2px solid #7c4dff', borderRadius:'0 4px 4px 0', background:'rgba(var(--purple-rgb),calc(0.06*var(--kp)))', animation:'fadeIn 0.25s ease' }}>
+            <div style={{ fontFamily:MONO, fontSize:9, letterSpacing:'0.2em', color:'rgba(var(--purple-rgb),calc(0.85*var(--kp) + var(--tb)))', textTransform:'uppercase', marginBottom:5 }}>◇ Rang {q.rang} · {info.titel}</div>
+            <div style={{ fontFamily:BODY, fontSize:12.5, fontWeight:300, color:'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))', lineHeight:1.6 }}>{info.b}</div>
           </div>
         ) : null;
       })()}
@@ -406,13 +406,13 @@ function QuickCreate({ onCreate, canCancel, onCancel }) {
         <button onClick={() => canCreate && onCreate(q)}
           style={{ padding:'13px 30px', borderRadius:4, fontFamily:MONO, fontSize:10, letterSpacing:'0.24em', textTransform:'uppercase',
             cursor:canCreate ? 'pointer' : 'default',
-            background:canCreate ? 'rgba(124,77,255,0.22)' : 'rgba(124,77,255,0.05)',
-            border:`1px solid ${canCreate ? '#7c4dff' : 'rgba(124,77,255,0.2)'}`,
-            color:canCreate ? '#f0eeff' : 'rgba(160,140,255,0.35)' }}>✦ NSC anlegen</button>
+            background:canCreate ? 'rgba(var(--purple-rgb),calc(0.22*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',
+            border:`1px solid ${canCreate ? '#7c4dff' : 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))'}`,
+            color:canCreate ? 'var(--white)' : 'rgba(var(--accent-rgb),calc(0.35*var(--ka)))' }}>✦ NSC anlegen</button>
         {canCancel && (
-          <button onClick={onCancel} style={{ padding:'13px 20px', background:'transparent', border:'1px solid rgba(160,140,255,0.2)', borderRadius:4, color:'rgba(200,190,240,0.5)', fontFamily:MONO, fontSize:9, letterSpacing:'0.2em', textTransform:'uppercase', cursor:'pointer' }}>Abbrechen</button>
+          <button onClick={onCancel} style={{ padding:'13px 20px', background:'transparent', border:'1px solid rgba(var(--accent-rgb),calc(0.2*var(--ka)))', borderRadius:4, color:'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))', fontFamily:MONO, fontSize:9, letterSpacing:'0.2em', textTransform:'uppercase', cursor:'pointer' }}>Abbrechen</button>
         )}
-        <span style={{ fontFamily:BODY, fontSize:12, fontWeight:300, color:'rgba(160,140,255,0.4)', marginLeft:6 }}>Neue NSC sind zunächst für Spieler verborgen.</span>
+        <span style={{ fontFamily:BODY, fontSize:12, fontWeight:300, color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', marginLeft:6 }}>Neue NSC sind zunächst für Spieler verborgen.</span>
       </div>
     </div>
   );
@@ -550,34 +550,34 @@ function App() {
     return String(va).localeCompare(String(vb), 'de') || a.name.localeCompare(b.name, 'de');
   });
   const rassenPresent = [...new Set(nscs.map(n => n.rasse).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'de'));
-  const sideSelSt = { width:'100%', padding:'6px 8px', background:'rgba(5,3,15,0.85)', border:'1px solid rgba(124,77,255,0.25)', borderRadius:3, color:'rgba(220,210,255,0.85)', fontFamily:BODY, fontSize:11, outline:'none', boxSizing:'border-box', cursor:'pointer' };
+  const sideSelSt = { width:'100%', padding:'6px 8px', background:'rgba(var(--bg-rgb),0.85)', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', borderRadius:3, color:'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))', fontFamily:BODY, fontSize:11, outline:'none', boxSizing:'border-box', cursor:'pointer' };
 
   if (loading) return (
-    <div style={{ height:'calc(100vh - var(--nav-h))', display:'flex', alignItems:'center', justifyContent:'center' }}>
-      <div style={{ fontFamily:MONO, fontSize:10, letterSpacing:'0.3em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>◈ Lade NSC-Verwaltung …</div>
+    <div style={{ height:'calc(calc(var(--vh, 1vh) * 100) - var(--nav-h))', display:'flex', alignItems:'center', justifyContent:'center' }}>
+      <div style={{ fontFamily:MONO, fontSize:10, letterSpacing:'0.3em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>◈ Lade NSC-Verwaltung …</div>
     </div>
   );
 
   return (
-    <div className="nscv-shell">
+    <div className="nscv-shell md-body">
       {/* ══ Sidebar ══ */}
-      <aside style={{ width:292, flexShrink:0, display:'flex', flexDirection:'column', borderRight:'1px solid rgba(124,77,255,0.16)', background:'rgba(8,6,22,0.85)' }}>
-        <div style={{ padding:'18px 16px 14px', borderBottom:'1px solid rgba(124,77,255,0.12)' }}>
-          <div style={{ fontFamily:MONO, fontSize:9, letterSpacing:'0.32em', color:'rgba(124,77,255,0.7)', textTransform:'uppercase', marginBottom:4 }}>Meruria · Spielleitung</div>
+      <aside className="md-list" style={{ width:292, flexShrink:0, display:'flex', flexDirection:'column', borderRight:'1px solid rgba(var(--purple-rgb),calc(0.16*var(--kp)))', background:'rgba(var(--panel-rgb),0.85)' }}>
+        <div style={{ padding:'18px 16px 14px', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))' }}>
+          <div style={{ fontFamily:MONO, fontSize:9, letterSpacing:'0.32em', color:'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))', textTransform:'uppercase', marginBottom:4 }}>Meruria · Spielleitung</div>
           <div style={{ display:'flex', alignItems:'baseline', gap:8 }}>
-            <span style={{ fontFamily:DISP, fontSize:19, letterSpacing:'0.06em', color:'#f0eeff' }}>NSC-Verwaltung</span>
-            <span style={{ fontFamily:MONO, fontSize:10, color:'rgba(160,140,255,0.5)' }}>{nscs.length} Einträge</span>
+            <span style={{ fontFamily:DISP, fontSize:19, letterSpacing:'0.06em', color:'var(--white)' }}>NSC-Verwaltung</span>
+            <span style={{ fontFamily:MONO, fontSize:10, color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))' }}>{nscs.length} Einträge</span>
           </div>
         </div>
         <div style={{ padding:'12px 12px 0' }}>
           <div style={{ display:'flex', gap:6 }}>
-            <button onClick={() => { setCreating(true); setSelId(null); }} title="Neuer NSC"
-              style={{ flexShrink:0, padding:'8px 14px', background:'rgba(124,77,255,0.16)', border:'1px solid rgba(124,77,255,0.7)', borderRadius:4, color:'#c9b8ff', fontFamily:MONO, fontSize:10, letterSpacing:'0.18em', textTransform:'uppercase', cursor:'pointer' }}>＋ Neu</button>
+            <button data-md-row onClick={() => { setCreating(true); setSelId(null); }} title="Neuer NSC"
+              style={{ flexShrink:0, padding:'8px 14px', background:'rgba(var(--purple-rgb),calc(0.16*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.7*var(--kp)))', borderRadius:4, color:'var(--lav)', fontFamily:MONO, fontSize:10, letterSpacing:'0.18em', textTransform:'uppercase', cursor:'pointer' }}>＋ Neu</button>
             <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Suchen …"
-              style={{ flex:1, minWidth:0, padding:'8px 10px', background:'rgba(5,3,15,0.85)', border:'1px solid rgba(124,77,255,0.3)', borderRadius:3, color:'#f0eeff', fontFamily:BODY, fontSize:12.5, outline:'none', boxSizing:'border-box' }}/>
+              style={{ flex:1, minWidth:0, padding:'8px 10px', background:'rgba(var(--bg-rgb),0.85)', border:'1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))', borderRadius:3, color:'var(--white)', fontFamily:BODY, fontSize:12.5, outline:'none', boxSizing:'border-box' }}/>
           </div>
           <div style={{ display:'flex', alignItems:'center', gap:6, margin:'10px 0 0' }}>
-            <span style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.2em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase', flexShrink:0 }}>◇ Sicht</span>
+            <span style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.2em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase', flexShrink:0 }}>◇ Sicht</span>
             <PerspPicker persp={persp} setPersp={setPersp} charPersp={charPersp}
               onPick={id => { if (selId) setView(id === '__dm' ? 'edit' : 'preview'); }}/>
           </div>
@@ -586,9 +586,9 @@ function App() {
               <button key={k} onClick={() => setFilter(k)}
                 title={persp === '__dm' ? 'Nach Spieler-Sichtbarkeit filtern' : 'Nach Sichtbarkeit aus Sicht von ' + ((charPersp.find(c => c.id === persp) || {}).label || 'Spieler') + ' filtern'}
                 style={{ flex:1, padding:'5px 4px', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.14em', textTransform:'uppercase', cursor:'pointer', borderRadius:3,
-                  background:filter === k ? 'rgba(124,77,255,0.16)' : 'transparent',
-                  border:`1px solid ${filter === k ? 'rgba(124,77,255,0.55)' : 'rgba(124,77,255,0.15)'}`,
-                  color:filter === k ? '#f0eeff' : 'rgba(200,190,240,0.45)' }}>{label}</button>
+                  background:filter === k ? 'rgba(var(--purple-rgb),calc(0.16*var(--kp)))' : 'transparent',
+                  border:`1px solid ${filter === k ? 'rgba(var(--purple-rgb),calc(0.55*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.15*var(--kp)))'}`,
+                  color:filter === k ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.45*var(--kt)))' }}>{label}</button>
             ))}
           </div>
           <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:5, marginBottom:8 }}>
@@ -630,42 +630,42 @@ function App() {
               cCount = keys.filter(k => cSet.has(k)).length + '/' + keys.length;
             }
             return (
-              <button key={n.id} onClick={() => { setSelId(n.id); setCreating(false); setView(charView ? 'preview' : 'edit'); }}
+              <button key={n.id} data-md-row onClick={() => { setSelId(n.id); setCreating(false); setView(charView ? 'preview' : 'edit'); }}
                 style={{ width:'100%', padding:'10px 14px', display:'flex', alignItems:'center', gap:10, cursor:'pointer', border:'none',
-                  borderBottom:'1px solid rgba(160,140,255,0.08)', borderLeft:`3px solid ${isSel ? acc : 'transparent'}`,
+                  borderBottom:'1px solid rgba(var(--accent-rgb),calc(0.08*var(--ka)))', borderLeft:`3px solid ${isSel ? acc : 'transparent'}`,
                   background:isSel ? hexA(acc, 0.14) : 'transparent', opacity:dead ? 0.65 : 1, transition:'background 0.15s', textAlign:'left' }}>
                 <span style={{ width:32, height:32, flexShrink:0, borderRadius:3, display:'flex', alignItems:'center', justifyContent:'center', overflow:'hidden',
                   background:n.bild ? '#000' : hexA(acc, 0.12), border:`1px solid ${hexA(acc, 0.4)}`, fontFamily:DISP, fontSize:13, color:hexA(acc, 0.9) }}>
                   {n.bild ? <img src={n.bild} alt="" style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'top' }}/> : (n.name[0] || '?').toUpperCase()}
                 </span>
                 <span style={{ flex:1, minWidth:0, display:'flex', flexDirection:'column', gap:2 }}>
-                  <span style={{ fontFamily:DISP, fontSize:13, letterSpacing:'0.04em', color:isSel ? '#f0eeff' : 'rgba(220,210,255,0.85)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{n.name}</span>
-                  <span style={{ fontFamily:MONO, fontSize:8.5, letterSpacing:'0.14em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
+                  <span style={{ fontFamily:DISP, fontSize:13, letterSpacing:'0.04em', color:isSel ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.85*var(--kt)))', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{n.name}</span>
+                  <span style={{ fontFamily:MONO, fontSize:8.5, letterSpacing:'0.14em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
                     {[n.beruf, n.rasse].filter(Boolean).join(' · ') || '—'}
                   </span>
                 </span>
                 <span style={{ display:'flex', flexDirection:'column', alignItems:'flex-end', gap:3, flexShrink:0 }}>
-                  <span style={{ fontFamily:MONO, fontSize:10, color:n.visible ? '#5fe39a' : 'rgba(160,140,255,0.3)' }}>{n.visible ? '◆' : '○'}</span>
+                  <span style={{ fontFamily:MONO, fontSize:10, color:n.visible ? '#5fe39a' : 'rgba(var(--accent-rgb),calc(0.3*var(--ka)))' }}>{n.visible ? '◆' : '○'}</span>
                   {cCount !== null
-                    ? <span title="Freigeschaltete Fakten für diesen Charakter" style={{ fontFamily:MONO, fontSize:8, color:'rgba(200,190,240,0.55)' }}>{cCount}</span>
+                    ? <span title="Freigeschaltete Fakten für diesen Charakter" style={{ fontFamily:MONO, fontSize:8, color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))' }}>{cCount}</span>
                     : <span style={{ fontFamily:MONO, fontSize:8, color:hexA(acc, 0.7) }}>{divOf(n.division).roman}</span>}
                 </span>
               </button>
             );
           })}
         </div>
-        <div style={{ padding:'10px 16px', borderTop:'1px solid rgba(124,77,255,0.1)', fontFamily:MONO, fontSize:8, letterSpacing:'0.14em', color:saveInfo.startsWith('✕') ? '#e36760' : 'rgba(160,140,255,0.35)', textTransform:'uppercase' }}>
+        <div style={{ padding:'10px 16px', borderTop:'1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))', fontFamily:MONO, fontSize:8, letterSpacing:'0.14em', color:saveInfo.startsWith('✕') ? '#e36760' : 'rgba(var(--accent-rgb),calc(0.35*var(--ka)))', textTransform:'uppercase' }}>
           {saveInfo || '◈ Änderungen werden direkt gespeichert'}
         </div>
       </aside>
 
       {/* ══ Hauptbereich ══ */}
-      <main style={{ flex:1, overflowY:'auto', position:'relative' }}>
+      <main className="md-detail" style={{ flex:1, overflowY:'auto', position:'relative' }}>
         {creating && <QuickCreate onCreate={createNsc} canCancel={nscs.length > 0} onCancel={() => { setCreating(false); setSelId(nscs[0] ? nscs[0].id : null); }}/>}
         {!creating && !sel && (
-          <div style={{ height:'100%', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:14, color:'rgba(160,140,255,0.4)' }}>
+          <div style={{ height:'100%', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:14, color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))' }}>
             <div style={{ fontSize:34, opacity:0.5 }}>◇</div>
-            <div style={{ fontFamily:DISP, fontSize:17, letterSpacing:'0.08em', color:'rgba(200,190,240,0.6)' }}>Kein NSC ausgewählt</div>
+            <div style={{ fontFamily:DISP, fontSize:17, letterSpacing:'0.08em', color:'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))' }}>Kein NSC ausgewählt</div>
             <div style={{ fontFamily:BODY, fontSize:13, fontWeight:300 }}>Wähle links einen Eintrag — oder erstelle einen neuen.</div>
           </div>
         )}
@@ -757,20 +757,20 @@ function Editor(props) {
   );
 
   return (
-    <div style={{ maxWidth:880, margin:'0 auto', padding:'30px 40px 90px', animation:'fadeIn 0.3s ease' }}>
+    <div className="nscv-edit" style={{ maxWidth:880, margin:'0 auto', padding:'30px 40px 90px', animation:'fadeIn 0.3s ease' }}>
 
       {/* Kopfzeile + Portrait */}
-      <div style={{ display:'flex', gap:16, alignItems:'stretch' }}>
-        <div style={{ flex:1, minWidth:0, display:'flex', gap:16, alignItems:'flex-start', padding:'18px 20px', borderRadius:6, background:hexA(acc, 0.06), border:`1px solid ${hexA(acc, 0.28)}`, position:'relative', overflow:'hidden' }}>
+      <div className="nscv-hero" style={{ display:'flex', gap:16, alignItems:'stretch' }}>
+        <div className="nscv-hero-info" style={{ flex:1, minWidth:0, display:'flex', gap:16, alignItems:'flex-start', padding:'18px 20px', borderRadius:6, background:hexA(acc, 0.06), border:`1px solid ${hexA(acc, 0.28)}`, position:'relative', overflow:'hidden' }}>
           <span style={{ width:58, height:58, flexShrink:0, borderRadius:4, display:'flex', alignItems:'center', justifyContent:'center', overflow:'hidden',
             background:sel.bild ? '#000' : hexA(acc, 0.14), border:`1px solid ${hexA(acc, 0.5)}`, fontFamily:DISP, fontSize:24, color:hexA(acc, 0.95) }}>
             {sel.bild ? <img src={sel.bild} alt="" style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'top' }}/> : (sel.name[0] || '?').toUpperCase()}
           </span>
           <div style={{ flex:1, minWidth:0, position:'relative', zIndex:1 }}>
             <input value={sel.name || ''} onChange={e => updSel('name', e.target.value)} placeholder="Name" title="Name bearbeiten"
-              style={{ width:'100%', padding:'2px 0', background:'transparent', border:'none', borderBottom:'1px dashed rgba(124,77,255,0.25)', color:'#f0eeff', fontFamily:DISP, fontSize:24, letterSpacing:'0.05em', outline:'none', boxSizing:'border-box' }}/>
+              style={{ width:'100%', padding:'2px 0', background:'transparent', border:'none', borderBottom:'1px dashed rgba(var(--purple-rgb),calc(0.25*var(--kp)))', color:'var(--white)', fontFamily:DISP, fontSize:24, letterSpacing:'0.05em', outline:'none', boxSizing:'border-box' }}/>
             <input value={sel.titel || ''} onChange={e => updSel('titel', e.target.value)} placeholder="Titel oder Beiname (optional)" title="Titel bearbeiten"
-              style={{ width:'100%', marginTop:4, padding:'2px 0', background:'transparent', border:'none', borderBottom:'1px dashed rgba(124,77,255,0.15)', color:'rgba(200,190,240,0.65)', fontFamily:MONO, fontSize:10, letterSpacing:'0.2em', textTransform:'uppercase', outline:'none', boxSizing:'border-box' }}/>
+              style={{ width:'100%', marginTop:4, padding:'2px 0', background:'transparent', border:'none', borderBottom:'1px dashed rgba(var(--purple-rgb),calc(0.15*var(--kp)))', color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))', fontFamily:MONO, fontSize:10, letterSpacing:'0.2em', textTransform:'uppercase', outline:'none', boxSizing:'border-box' }}/>
             {(() => {
               const groups = [
                 ['Zustand', T().statuses.filter(s => !HALTUNGEN.includes(s.name))],
@@ -787,8 +787,8 @@ function Editor(props) {
                   {groups.map(([glabel, defs], gi) => {
                     const names = defs.map(d => d.name);
                     return (
-                      <div key={glabel} style={gi ? { borderLeft:'1px solid rgba(124,77,255,0.22)', paddingLeft:16 } : null}>
-                        <div style={{ fontFamily:MONO, fontSize:7.5, letterSpacing:'0.22em', color:'rgba(160,140,255,0.45)', textTransform:'uppercase', marginBottom:5 }}>{glabel}</div>
+                      <div key={glabel} style={gi ? { borderLeft:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))', paddingLeft:16 } : null}>
+                        <div style={{ fontFamily:MONO, fontSize:7.5, letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', textTransform:'uppercase', marginBottom:5 }}>{glabel}</div>
                         <div style={{ display:'flex', flexWrap:'wrap', gap:5, alignItems:'center' }}>
                           {defs.map(st => {
                             const on = (sel.status || []).includes(st.name);
@@ -796,16 +796,16 @@ function Editor(props) {
                               <button key={st.name} onClick={() => pick(names, st.name, on)}
                                 style={{ padding:'4px 11px', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.12em', textTransform:'uppercase', cursor:'pointer', borderRadius:2,
                                   background:on ? hexA(st.color, 0.18) : 'transparent',
-                                  border:`1px solid ${on ? hexA(st.color, 0.65) : 'rgba(160,140,255,0.18)'}`,
-                                  color:on ? '#f0eeff' : 'rgba(200,190,240,0.4)' }}>{st.glyph} {st.name}</button>
+                                  border:`1px solid ${on ? hexA(st.color, 0.65) : 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))'}`,
+                                  color:on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.4*var(--kt)))' }}>{st.glyph} {st.name}</button>
                             );
                           })}
                           {gi === 1 && (
                             <button onClick={() => setShowHaltungOv(v => !v)} title="Abweichende Haltung für einzelne Charaktere"
                               style={{ padding:'4px 9px', fontFamily:MONO, fontSize:8, letterSpacing:'0.1em', textTransform:'uppercase', cursor:'pointer', borderRadius:2,
                                 background:ovCount ? 'rgba(255,180,80,0.12)' : 'transparent',
-                                border:`1px dashed ${ovCount ? 'rgba(255,180,80,0.6)' : 'rgba(160,140,255,0.3)'}`,
-                                color:ovCount ? '#ffb850' : 'rgba(200,190,240,0.45)' }}>± Ausnahmen{ovCount ? ' · ' + ovCount : ''}</button>
+                                border:`1px dashed ${ovCount ? 'rgba(255,180,80,0.6)' : 'rgba(var(--accent-rgb),calc(0.3*var(--ka)))'}`,
+                                color:ovCount ? '#ffb850' : 'rgba(var(--text-rgb),calc(0.45*var(--kt)))' }}>± Ausnahmen{ovCount ? ' · ' + ovCount : ''}</button>
                           )}
                         </div>
                       </div>
@@ -815,8 +815,8 @@ function Editor(props) {
               );
             })()}
             {showHaltungOv && (
-              <div style={{ marginTop:10, padding:'10px 14px', border:'1px dashed rgba(124,77,255,0.3)', borderRadius:4, background:'rgba(124,77,255,0.04)' }}>
-                <div style={{ fontFamily:MONO, fontSize:7.5, letterSpacing:'0.22em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase', marginBottom:8 }}>Haltung · Ausnahmen pro Charakter — Standard: wie Gruppe</div>
+              <div style={{ marginTop:10, padding:'10px 14px', border:'1px dashed rgba(var(--purple-rgb),calc(0.3*var(--kp)))', borderRadius:4, background:'rgba(var(--purple-rgb),calc(0.04*var(--kp)))' }}>
+                <div style={{ fontFamily:MONO, fontSize:7.5, letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase', marginBottom:8 }}>Haltung · Ausnahmen pro Charakter — Standard: wie Gruppe</div>
                 <input value={haltungOvSearch} onChange={e => setHaltungOvSearch(e.target.value)} placeholder="Charakter suchen …"
                   style={{ ...inpSt, width:220, padding:'5px 9px', fontSize:12, marginBottom:10 }}/>
                 {[...charPersp]
@@ -830,25 +830,25 @@ function Editor(props) {
                   const setOv = name => { const next = { ...(sel.haltungOverrides || {}) }; if (name) next[c.id] = name; else delete next[c.id]; updSel('haltungOverrides', next); };
                   return (
                     <div key={c.id} style={{ display:'grid', gridTemplateColumns:'minmax(120px, 180px) repeat(4, max-content)', alignItems:'center', gap:6, marginBottom:5 }}>
-                      <span title={c.label} style={{ fontFamily:BODY, fontSize:12, color:'#c8c0e8', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{c.label}</span>
+                      <span title={c.label} style={{ fontFamily:BODY, fontSize:12, color:'var(--silver)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{c.label}</span>
                       {['', ...HALTUNGEN].map(name => {
-                        const def = name ? ((STATUS_DEF || {})[name] || { color:'#c8c0e8', glyph:'◇' }) : null;
+                        const def = name ? ((STATUS_DEF || {})[name] || { color:'var(--silver)', glyph:'◇' }) : null;
                         const on = ov === name;
                         const col = def ? def.color : '#a89cd8';
                         return (
                           <button key={name || 'default'} onClick={() => setOv(name)}
                             style={{ padding:'3px 9px', fontFamily:MONO, fontSize:8, letterSpacing:'0.1em', textTransform:'uppercase', cursor:'pointer', borderRadius:2,
                               background:on ? hexA(col, 0.16) : 'transparent',
-                              border:`1px solid ${on ? hexA(col, 0.6) : 'rgba(160,140,255,0.18)'}`,
-                              color:on ? '#f0eeff' : 'rgba(200,190,240,0.4)' }}>{def ? def.glyph + ' ' + name : 'wie Gruppe'}</button>
+                              border:`1px solid ${on ? hexA(col, 0.6) : 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))'}`,
+                              color:on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.4*var(--kt)))' }}>{def ? def.glyph + ' ' + name : 'wie Gruppe'}</button>
                         );
                       })}
                     </div>
                   );
                 })}
-                {!charPersp.length && <div style={{ fontFamily:BODY, fontSize:12, color:'rgba(200,190,240,0.5)' }}>Keine Spielercharaktere gefunden.</div>}
+                {!charPersp.length && <div style={{ fontFamily:BODY, fontSize:12, color:'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))' }}>Keine Spielercharaktere gefunden.</div>}
                 {charPersp.length > 0 && !charPersp.some(c => c.label.toLowerCase().includes(haltungOvSearch.trim().toLowerCase())) &&
-                  <div style={{ fontFamily:BODY, fontSize:12, color:'rgba(200,190,240,0.5)' }}>Kein Charakter passt zu „{haltungOvSearch.trim()}".</div>}
+                  <div style={{ fontFamily:BODY, fontSize:12, color:'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))' }}>Kein Charakter passt zu „{haltungOvSearch.trim()}".</div>}
               </div>
             )}
             <div style={{ display:'flex', flexWrap:'wrap', gap:8, marginTop:12 }}>
@@ -858,9 +858,9 @@ function Editor(props) {
                   await window._sb.from('nscs').upsert({ id:sel.id, visible:v }, { onConflict:'id' });
                 }}
                 style={{ padding:'7px 14px', borderRadius:3, fontFamily:MONO, fontSize:8.5, letterSpacing:'0.16em', textTransform:'uppercase', cursor:'pointer',
-                  background:sel.visible ? 'rgba(95,227,154,0.12)' : 'rgba(124,77,255,0.06)',
-                  border:`1px solid ${sel.visible ? 'rgba(95,227,154,0.55)' : 'rgba(160,140,255,0.3)'}`,
-                  color:sel.visible ? '#5fe39a' : 'rgba(200,190,240,0.5)' }}>
+                  background:sel.visible ? 'rgba(95,227,154,0.12)' : 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))',
+                  border:`1px solid ${sel.visible ? 'rgba(95,227,154,0.55)' : 'rgba(var(--accent-rgb),calc(0.3*var(--ka)))'}`,
+                  color:sel.visible ? '#5fe39a' : 'rgba(var(--text-rgb),calc(0.5*var(--kt)))' }}>
                 {sel.visible ? '◆ Für Spieler sichtbar' : '○ Verborgen'}
               </button>
               <button onClick={deleteSel} style={{ padding:'6px 12px', background:'transparent', border:'1px solid rgba(227,103,96,0.3)', borderRadius:3, color:'rgba(227,103,96,0.65)', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.18em', textTransform:'uppercase', cursor:'pointer' }}>✕ Löschen</button>
@@ -870,13 +870,13 @@ function Editor(props) {
             <span title={sel.division} style={{ position:'absolute', right:15, top:'50%', transform:'translateY(-50%)', width:230, height:230, background:`center / contain no-repeat url("${dv.logo}")`, opacity:0.09, pointerEvents:'none' }}/>
           )}
         </div>
-        <div style={{ flexShrink:0, display:'flex', flexDirection:'column', alignItems:'center', gap:7, padding:'10px 10px 8px', borderRadius:6, background:hexA(acc, 0.06), border:`1px solid ${hexA(acc, 0.35)}`, boxShadow:`0 0 18px ${hexA(acc, 0.12)}` }}>
+        <div className="nscv-portrait" style={{ flexShrink:0, display:'flex', flexDirection:'column', alignItems:'center', gap:7, padding:'10px 10px 8px', borderRadius:6, background:hexA(acc, 0.06), border:`1px solid ${hexA(acc, 0.35)}`, boxShadow:`0 0 18px ${hexA(acc, 0.12)}` }}>
           <div onClick={() => sel.bild && setLightbox(true)} title={sel.bild ? 'Zum Vergrößern klicken' : 'Bildpfad unten eintragen'}
             style={{ position:'relative', width:200, height:250, borderRadius:3, overflow:'hidden', cursor:sel.bild ? 'zoom-in' : 'default',
               background:sel.bild ? '#000' : hexA(acc, 0.08), border:`1px solid ${hexA(acc, 0.3)}`, display:'flex', alignItems:'center', justifyContent:'center' }}>
             {sel.bild
               ? <img src={sel.bild} alt={sel.name} style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'top' }}/>
-              : <span style={{ fontFamily:MONO, fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(160,140,255,0.45)', textAlign:'center', padding:'0 14px' }}>Kein Portrait</span>}
+              : <span style={{ fontFamily:MONO, fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', textAlign:'center', padding:'0 14px' }}>Kein Portrait</span>}
           </div>
           <input value={sel.bild || ''} onChange={e => updSel('bild', e.target.value)} placeholder="assets/images/npc/…"
             style={{ ...inpSt, width:200, fontFamily:MONO, fontSize:9.5, padding:'6px 8px' }}/>
@@ -884,15 +884,15 @@ function Editor(props) {
       </div>
       {lightbox && sel.bild && (
         <div onClick={() => setLightbox(false)} title="Klicken zum Schließen"
-          style={{ position:'fixed', inset:0, zIndex:3000, cursor:'zoom-out', backgroundColor:'rgba(3,2,10,0.95)', backgroundImage:`url("${sel.bild}")`, backgroundSize:'contain', backgroundPosition:'center', backgroundRepeat:'no-repeat', animation:'fadeIn 0.15s ease' }}/>
+          style={{ position:'fixed', inset:0, zIndex:3000, cursor:'zoom-out', backgroundColor:'rgba(var(--bg-rgb),0.95)', backgroundImage:`url("${sel.bild}")`, backgroundSize:'contain', backgroundPosition:'center', backgroundRepeat:'no-repeat', animation:'fadeIn 0.15s ease' }}/>
       )}
 
       {/* Ansicht-Tabs */}
-      <div style={{ display:'flex', gap:4, margin:'20px 0 18px', borderBottom:'1px solid rgba(124,77,255,0.14)' }}>
+      <div style={{ display:'flex', gap:4, margin:'20px 0 18px', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.14*var(--kp)))' }}>
         {[['edit','✎ Bearbeiten'],['preview','◈ Spieler-Vorschau']].map(([k, label]) => (
           <button key={k} onClick={() => setView(k)}
             style={{ padding:'9px 18px', background:'transparent', border:'none', borderBottom:`2px solid ${view === k ? '#7c4dff' : 'transparent'}`,
-              color:view === k ? '#f0eeff' : 'rgba(200,190,240,0.45)', fontFamily:MONO, fontSize:9.5, letterSpacing:'0.2em', textTransform:'uppercase', cursor:'pointer' }}>{label}</button>
+              color:view === k ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.45*var(--kt)))', fontFamily:MONO, fontSize:9.5, letterSpacing:'0.2em', textTransform:'uppercase', cursor:'pointer' }}>{label}</button>
         ))}
       </div>
 
@@ -958,14 +958,14 @@ function Editor(props) {
                 </div>
                 {gebZ && (
                   <React.Fragment>
-                    <div style={{ marginTop:6, fontFamily:MONO, fontSize:8.5, letterSpacing:'0.14em', color:'rgba(160,140,255,0.6)', textTransform:'uppercase' }}>✦ Sternzeichen: {gebZ.sign}</div>
-                    <div style={{ marginTop:2, fontFamily:BODY, fontSize:11, fontWeight:300, color:'rgba(160,140,255,0.45)' }}>{gebZ.traits}</div>
+                    <div style={{ marginTop:6, fontFamily:MONO, fontSize:8.5, letterSpacing:'0.14em', color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>✦ Sternzeichen: {gebZ.sign}</div>
+                    <div style={{ marginTop:2, fontFamily:BODY, fontSize:11, fontWeight:300, color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))' }}>{gebZ.traits}</div>
                   </React.Fragment>
                 )}
               </div>
             </div>
             {ageRaw && (
-              <div style={{ marginTop:12, fontFamily:BODY, fontSize:12, color:'rgba(160,140,255,0.6)' }}>
+              <div style={{ marginTop:12, fontFamily:BODY, fontSize:12, color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))' }}>
                 ◇ {sel.rasse}: volljährig mit {ageRaw.adult} · Lebenserwartung {ageRaw.life}{ageRaw.phase ? ' · Lebensphase: ' + ageRaw.phase : ''}
               </div>
             )}
@@ -1021,8 +1021,8 @@ function Editor(props) {
                         <div style={{ position:'relative' }}>
                           <input type="number" className="ash-num" value={ash[k] || ''} onChange={upd(k)} placeholder={ph} style={{ ...inpSt, paddingRight:86 }}/>
                           <div style={{ position:'absolute', right:6, top:'50%', transform:'translateY(-50%)', display:'flex', alignItems:'center', gap:7 }}>
-                            <span style={{ fontFamily:MONO, fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(160,140,255,0.55)', pointerEvents:'none' }}>{unit}</span>
-                            <div style={{ display:'flex', flexDirection:'column', gap:3, borderLeft:'1px solid rgba(124,77,255,0.25)', paddingLeft:5 }}>
+                            <span style={{ fontFamily:MONO, fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', pointerEvents:'none' }}>{unit}</span>
+                            <div style={{ display:'flex', flexDirection:'column', gap:3, borderLeft:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', paddingLeft:5 }}>
                               <button type="button" tabIndex={-1} className="ash-step" onClick={() => step(1)}>▴</button>
                               <button type="button" tabIndex={-1} className="ash-step" onClick={() => step(-1)}>▾</button>
                             </div>
@@ -1090,7 +1090,7 @@ function Editor(props) {
                     opacity:rouDnd.dragging === i ? 0.35 : 1, transition:'opacity 0.12s' }}>
                   {rouDnd.indicator(i)}
                   <span title="Ziehen zum Umsortieren" {...rouDnd.handleProps(i)}
-                    style={{ cursor:'grab', color:'rgba(160,140,255,0.4)', fontSize:13, padding:'0 3px', userSelect:'none' }}>⠿</span>
+                    style={{ cursor:'grab', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', fontSize:13, padding:'0 3px', userSelect:'none' }}>⠿</span>
                   <input placeholder="Uhrzeit / Tageszeit" value={e.zeit || ''} onChange={ev => updRow('routine', i, 'zeit', ev.target.value)} style={inpSt}/>
                   <input placeholder="Ort" value={e.ort || ''} onChange={ev => updRow('routine', i, 'ort', ev.target.value)} style={inpSt}/>
                   <input placeholder="Tätigkeit" value={e.tat || ''} onChange={ev => updRow('routine', i, 'tat', ev.target.value)} style={inpSt}/>
@@ -1138,11 +1138,11 @@ function Editor(props) {
               <div style={{ display:'flex', alignItems:'center', gap:14, marginTop:8 }}>
                 <button onClick={() => addRow('ausruestung', { name:'', beschreibung:'' })} style={addBtnSt}>+ Gegenstand</button>
                 <div style={{ display:'flex', alignItems:'center', gap:7, marginLeft:'auto' }}>
-                  <label style={{ ...lbSt, color:'rgba(210,175,60,0.6)' }}>Vermögen</label>
+                  <label style={{ ...lbSt, color:'color-mix(in srgb, rgba(210,175,60,0.6), rgb(var(--ink-rgb)) var(--cm))' }}>Vermögen</label>
                   <Eye on={vis('habe')} onClick={() => toggleFieldVis('habe')}/>
                   <input type="number" value={sel.habe || 0} onChange={e => updSel('habe', Math.max(0, parseInt(e.target.value) || 0))}
                     style={{ ...inpSt, width:110, fontFamily:MONO, fontSize:12, border:'1px solid rgba(210,175,60,0.35)' }}/>
-                  <span style={{ fontFamily:MONO, fontSize:9, color:'rgba(210,175,60,0.55)', letterSpacing:'0.1em' }}>HADE</span>
+                  <span style={{ fontFamily:MONO, fontSize:9, color:'color-mix(in srgb, rgba(210,175,60,0.55), rgb(var(--ink-rgb)) var(--cm))', letterSpacing:'0.1em' }}>HADE</span>
                 </div>
               </div>
             </div>
@@ -1171,7 +1171,7 @@ function Editor(props) {
           {has('kontakte') && (
             <div style={cardSt}>
               <SecHeader title="Kontakte" visOn={vis('kontakte')} onVis={() => toggleFieldVis('kontakte')} onRemove={() => rmSec('kontakte')}/>
-              <div style={{ fontFamily:BODY, fontSize:11.5, fontWeight:300, color:'rgba(160,140,255,0.5)', marginBottom:12 }}>
+              <div style={{ fontFamily:BODY, fontSize:11.5, fontWeight:300, color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', marginBottom:12 }}>
                 Tippe einen Namen — bestehende NSC werden vorgeschlagen. Unbekannte Namen kannst du direkt als neuen NSC anlegen.
               </div>
               <datalist id="nsc-namelist">
@@ -1179,7 +1179,7 @@ function Editor(props) {
               </datalist>
               {[['familie','Familie','fam'],['freunde','Freunde','fre'],['rivalen','Rivalen','riv']].map(([sub, title, prefix]) => (
                 <div key={sub} style={{ marginBottom:14 }}>
-                  <div style={{ fontFamily:MONO, fontSize:8.5, letterSpacing:'0.26em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase', marginBottom:7 }}>{title}</div>
+                  <div style={{ fontFamily:MONO, fontSize:8.5, letterSpacing:'0.26em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase', marginBottom:7 }}>{title}</div>
                   {((sel.kontakte || {})[sub] || []).map((p, i) => {
                     const nm = (p.name || '').trim();
                     const target = nm ? nscs.find(n => n.id !== sel.id && n.name === nm) : null;
@@ -1192,7 +1192,7 @@ function Editor(props) {
                         <span title={p.name} style={{ width:31, height:31, flexShrink:0, borderRadius:3, overflow:'hidden', display:'flex', alignItems:'center', justifyContent:'center',
                           background:(target && target.bild) ? '#000' : hexA(kAcc, (target || pcTarget) ? 0.14 : 0.05),
                           border:`1px solid ${hexA(kAcc, (target || pcTarget) ? 0.5 : 0.2)}`, fontFamily:DISP, fontSize:12,
-                          color:(target || pcTarget) ? hexA(kAcc, 0.9) : 'rgba(160,140,255,0.35)' }}>
+                          color:(target || pcTarget) ? hexA(kAcc, 0.9) : 'rgba(var(--accent-rgb),calc(0.35*var(--ka)))' }}>
                           {(target && target.bild) ? <img src={target.bild} alt="" style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'top' }}/> : (nm ? nm[0].toUpperCase() : '?')}
                         </span>
                         <input placeholder="Name" list="nsc-namelist" value={p.name || ''} onChange={ev => updKon(sub, i, 'name', ev.target.value)} style={inpSt}/>
@@ -1202,7 +1202,7 @@ function Editor(props) {
                           onClick={(!active || pcTarget) ? undefined : target ? () => openNsc(target.id) : () => createFromContact(nm, sub)}
                           style={pcTarget
                             ? { padding:'0 12px', whiteSpace:'nowrap', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.12em', textTransform:'uppercase', borderRadius:3, cursor:'default', background:'rgba(255,184,80,0.08)', border:'1px solid rgba(255,184,80,0.4)', color:'#ffb850' }
-                            : { padding:'0 12px', whiteSpace:'nowrap', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.12em', textTransform:'uppercase', borderRadius:3, cursor:active ? 'pointer' : 'default', background:'rgba(124,77,255,0.08)', border:'1px solid rgba(124,77,255,0.35)', color:'rgba(200,190,240,0.65)', opacity:active ? 1 : 0.25, pointerEvents:active ? 'auto' : 'none' }}>
+                            : { padding:'0 12px', whiteSpace:'nowrap', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.12em', textTransform:'uppercase', borderRadius:3, cursor:active ? 'pointer' : 'default', background:'rgba(var(--purple-rgb),calc(0.08*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.35*var(--kp)))', color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))', opacity:active ? 1 : 0.25, pointerEvents:active ? 'auto' : 'none' }}>
                           {pcTarget ? '◈ SC' : target ? '→ öffnen' : '✦ NSC anlegen'}
                         </button>
                         {fi !== null ? <Eye on={vis(`${prefix}-${fi}`)} onClick={() => toggleFieldVis(`${prefix}-${fi}`)}/> : <span style={{ width:15 }}/>}
@@ -1220,7 +1220,7 @@ function Editor(props) {
           {has('geheim') && (
             <div style={cardSt}>
               <SecHeader title="Geheimnisse" onRemove={() => rmSec('geheim')}
-                extra={<span style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.12em', color:'rgba(160,140,255,0.35)', textTransform:'uppercase' }}>· einzeln sichtbar schaltbar</span>}/>
+                extra={<span style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.12em', color:'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>· einzeln sichtbar schaltbar</span>}/>
               {(sel.geheimnisse || []).map((g, i) => (
                 <div key={i} style={{ display:'grid', gridTemplateColumns:'1fr auto auto', gap:8, marginBottom:6, alignItems:'start' }}>
                   <textarea value={g.text || ''} placeholder="Geheimnis …"
@@ -1245,24 +1245,24 @@ function Editor(props) {
                 {[['alle','Alle'],['nsc','NSC'],['monster','Monster']].map(([k, label]) => (
                   <button key={k} onClick={() => setSbFilter(k)}
                     style={{ padding:'0 14px', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.14em', textTransform:'uppercase', cursor:'pointer', borderRadius:3,
-                      background:sbFilter === k ? 'rgba(124,77,255,0.2)' : 'transparent',
-                      border:`1px solid ${sbFilter === k ? 'rgba(124,77,255,0.65)' : 'rgba(124,77,255,0.2)'}`,
-                      color:sbFilter === k ? '#f0eeff' : 'rgba(200,190,240,0.45)' }}>{label}</button>
+                      background:sbFilter === k ? 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))' : 'transparent',
+                      border:`1px solid ${sbFilter === k ? 'rgba(var(--purple-rgb),calc(0.65*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))'}`,
+                      color:sbFilter === k ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.45*var(--kt)))' }}>{label}</button>
                 ))}
               </div>
               {sbMatches.length > 0 && (
-                <div style={{ maxHeight:230, overflowY:'auto', border:'1px solid rgba(124,77,255,0.22)', borderRadius:3, marginBottom:12, background:'rgba(5,3,15,0.7)' }}>
+                <div style={{ maxHeight:230, overflowY:'auto', border:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))', borderRadius:3, marginBottom:12, background:'rgba(var(--bg-rgb),0.7)' }}>
                   {sbMatches.slice(0, 40).map((x, i) => (
                     <button key={i} onClick={() => { setSbSearch(''); setSb(toSteck(x.src, x.art)); }}
-                      style={{ display:'flex', gap:10, alignItems:'baseline', width:'100%', padding:'7px 12px', background:'transparent', border:'none', borderBottom:'1px solid rgba(124,77,255,0.08)', cursor:'pointer', textAlign:'left' }}>
-                      <span style={{ fontFamily:BODY, fontSize:13, color:'rgba(228,222,255,0.9)' }}>{x.src.name}</span>
-                      <span style={{ fontFamily:MONO, fontSize:8.5, letterSpacing:'0.12em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>
+                      style={{ display:'flex', gap:10, alignItems:'baseline', width:'100%', padding:'7px 12px', background:'transparent', border:'none', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.08*var(--kp)))', cursor:'pointer', textAlign:'left' }}>
+                      <span style={{ fontFamily:BODY, fontSize:13, color:'color-mix(in srgb, rgba(var(--text-hi-rgb),0.9), rgb(var(--ink-rgb)) var(--cm))' }}>{x.src.name}</span>
+                      <span style={{ fontFamily:MONO, fontSize:8.5, letterSpacing:'0.12em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>
                         {[x.art, crTxt(x.src.cr), x.src.source].filter(Boolean).join(' · ')}
                       </span>
                     </button>
                   ))}
                   {sbMatches.length > 40 && (
-                    <div style={{ padding:'7px 12px', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.14em', color:'rgba(160,140,255,0.4)', textTransform:'uppercase' }}>… weitere Treffer — Suche verfeinern</div>
+                    <div style={{ padding:'7px 12px', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.14em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>… weitere Treffer — Suche verfeinern</div>
                   )}
                 </div>
               )}
@@ -1270,7 +1270,7 @@ function Editor(props) {
                 <button onClick={() => setSb(emptySteck())} style={{ ...addBtnSt, marginBottom:10, padding:'8px 16px' }}>✎ Leeren Statblock anlegen</button>
               )}
               {sbBase && (
-                <div style={{ border:'1px solid rgba(124,77,255,0.28)', borderRadius:5, padding:'16px 18px', background:'rgba(8,6,22,0.85)', animation:'fadeIn 0.25s ease' }}>
+                <div style={{ border:'1px solid rgba(var(--purple-rgb),calc(0.28*var(--kp)))', borderRadius:5, padding:'16px 18px', background:'rgba(var(--panel-rgb),0.85)', animation:'fadeIn 0.25s ease' }}>
                   <div style={{ display:'grid', gridTemplateColumns:'1fr 1.6fr', gap:10, marginBottom:12 }}>
                     <div><label style={{ ...lbSt, display:'block', marginBottom:4 }}>Name</label>
                       <input value={sbBase.name || ''} onChange={e => setSb({ ...sbBase, name:e.target.value })} style={{ ...inpSt, fontFamily:DISP, fontSize:14, letterSpacing:'0.06em' }}/></div>
@@ -1286,12 +1286,12 @@ function Editor(props) {
                   </div>
                   <div style={{ display:'grid', gridTemplateColumns:'repeat(6,1fr)', gap:4, marginBottom:12 }}>
                     {['STR','DEX','CON','INT','WIS','CHA'].map(k => (
-                      <div key={k} style={{ textAlign:'center', padding:'6px 4px', background:'rgba(124,77,255,0.05)', border:'1px solid rgba(124,77,255,0.1)', borderRadius:3 }}>
-                        <div style={{ fontFamily:MONO, fontSize:7, letterSpacing:'0.14em', color:'rgba(124,77,255,0.55)', textTransform:'uppercase', marginBottom:3 }}>{AD[k]}</div>
+                      <div key={k} style={{ textAlign:'center', padding:'6px 4px', background:'rgba(var(--purple-rgb),calc(0.05*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))', borderRadius:3 }}>
+                        <div style={{ fontFamily:MONO, fontSize:7, letterSpacing:'0.14em', color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))', textTransform:'uppercase', marginBottom:3 }}>{AD[k]}</div>
                         <input type="number" value={(sbBase.attr || {})[k] ?? 10}
                           onChange={e => setSb({ ...sbBase, attr:{ ...sbBase.attr, [k]:parseInt(e.target.value) || 0 } })}
-                          style={{ width:'100%', padding:'4px 2px', textAlign:'center', background:'rgba(5,3,15,0.85)', border:'1px solid rgba(124,77,255,0.25)', borderRadius:2, color:'#f0eeff', fontFamily:MONO, fontSize:13, fontWeight:600, outline:'none', boxSizing:'border-box' }}/>
-                        <div style={{ fontFamily:MONO, fontSize:10, color:'rgba(124,77,255,0.8)', marginTop:2 }}>{fmtM((sbBase.attr || {})[k] ?? 10)}</div>
+                          style={{ width:'100%', padding:'4px 2px', textAlign:'center', background:'rgba(var(--bg-rgb),0.85)', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', borderRadius:2, color:'var(--white)', fontFamily:MONO, fontSize:13, fontWeight:600, outline:'none', boxSizing:'border-box' }}/>
+                        <div style={{ fontFamily:MONO, fontSize:10, color:'rgba(var(--purple-rgb),calc(0.8*var(--kp) + var(--tb)))', marginTop:2 }}>{fmtM((sbBase.attr || {})[k] ?? 10)}</div>
                       </div>
                     ))}
                   </div>
@@ -1311,7 +1311,7 @@ function Editor(props) {
                   ))}
                   <div style={{ display:'flex', alignItems:'center', gap:12, marginTop:6 }}>
                     <button onClick={() => setSb({ ...sbBase, akt:[...(sbBase.akt || []), { n:'', b:'' }] })} style={addBtnSt}>+ Aktion</button>
-                    <span style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.14em', color:'rgba(160,140,255,0.4)', textTransform:'uppercase' }}>
+                    <span style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.14em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>
                       Basis: {sbBase.quelle || '—'} — alle Felder frei anpassbar
                     </span>
                   </div>
@@ -1329,11 +1329,11 @@ function Editor(props) {
             if (!chips.length) return null;
             return (
               <div style={{ marginTop:22 }}>
-                <div style={{ fontFamily:MONO, fontSize:8.5, letterSpacing:'0.28em', color:'rgba(160,140,255,0.45)', textTransform:'uppercase', marginBottom:10 }}>Abschnitt hinzufügen</div>
+                <div style={{ fontFamily:MONO, fontSize:8.5, letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', textTransform:'uppercase', marginBottom:10 }}>Abschnitt hinzufügen</div>
                 <div style={{ display:'flex', flexWrap:'wrap', gap:8 }}>
                   {chips.map(([k, label]) => (
                     <button key={k} onClick={() => { addSec(k); if (k === 'statblock' && !sel.steckbrief) setSb(emptySteck()); }}
-                      style={{ padding:'8px 16px', background:'transparent', border:'1px dashed rgba(124,77,255,0.4)', borderRadius:20, color:'rgba(200,190,240,0.6)', fontFamily:BODY, fontSize:12.5, cursor:'pointer', transition:'all 0.15s' }}>＋ {label}</button>
+                      style={{ padding:'8px 16px', background:'transparent', border:'1px dashed rgba(var(--purple-rgb),calc(0.4*var(--kp)))', borderRadius:20, color:'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))', fontFamily:BODY, fontSize:12.5, cursor:'pointer', transition:'all 0.15s' }}>＋ {label}</button>
                   ))}
                 </div>
               </div>
@@ -1371,7 +1371,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
       <button onClick={gHidden ? undefined : () => tgU(key)}
         title={gHidden ? 'Global verborgen — Auge im Bearbeiten-Tab öffnen' : (on ? 'Freigeschaltet für ' : 'Freischalten für ') + perspName}
         style={{ background:'transparent', border:'none', cursor:gHidden ? 'default' : 'pointer', fontSize:12, padding:'0 3px', lineHeight:1,
-          color:gHidden ? 'rgba(160,140,255,0.22)' : on ? '#5fe39a' : 'rgba(160,140,255,0.45)', flexShrink:0 }}>
+          color:gHidden ? 'rgba(var(--accent-rgb),calc(0.22*var(--ka)))' : on ? '#5fe39a' : 'rgba(var(--accent-rgb),calc(0.45*var(--ka)))', flexShrink:0 }}>
         {gHidden ? '⊘' : on ? '◉' : '○'}
       </button>
     );
@@ -1385,7 +1385,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
       <button onClick={gHidden ? undefined : () => setU(allOn ? [...uSet].filter(k => !keys.includes(k)) : [...new Set([...uSet, ...keys])])}
         title={gHidden ? 'Global verborgen — Auge im Bearbeiten-Tab öffnen' : (allOn ? 'Alle Einträge sperren für ' : 'Alle Einträge freischalten für ') + perspName}
         style={{ background:'transparent', border:'none', cursor:gHidden ? 'default' : 'pointer', fontSize:12, padding:'0 3px', lineHeight:1,
-          color:gHidden ? 'rgba(160,140,255,0.22)' : allOn ? '#5fe39a' : 'rgba(160,140,255,0.45)', flexShrink:0 }}>
+          color:gHidden ? 'rgba(var(--accent-rgb),calc(0.22*var(--ka)))' : allOn ? '#5fe39a' : 'rgba(var(--accent-rgb),calc(0.45*var(--ka)))', flexShrink:0 }}>
         {gHidden ? '⊘' : allOn ? '◉' : '○'}
       </button>
     );
@@ -1411,18 +1411,18 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
 
   const secHead = (title, open, total, tgAll, color) => (
     <div style={{ margin:'22px 0 10px', display:'flex', alignItems:'center', gap:10 }}>
-      <span style={{ fontFamily:MONO, fontSize:9, letterSpacing:'0.30em', color:open > 0 ? (color || acc) : 'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>
+      <span style={{ fontFamily:MONO, fontSize:9, letterSpacing:'0.30em', color:open > 0 ? (color || acc) : 'rgba(var(--accent-rgb),calc(0.5*var(--ka)))', textTransform:'uppercase' }}>
         <span style={{ width:3.5, height:3.5, border:'1px solid currentColor', transform:'rotate(45deg)', display:'inline-block', marginRight:8, marginBottom:1 }}/>{title}
       </span>
-      <div style={{ flex:1, height:1, background:open > 0 ? (color ? 'rgba(227,103,96,0.4)' : hexA(acc, 0.4)) : 'rgba(160,140,255,0.12)' }}/>
+      <div style={{ flex:1, height:1, background:open > 0 ? (color ? 'rgba(227,103,96,0.4)' : hexA(acc, 0.4)) : 'rgba(var(--accent-rgb),calc(0.12*var(--ka)))' }}/>
       {tgAll}
-      <span style={{ fontFamily:MONO, fontSize:7.5, letterSpacing:'0.22em', color:'rgba(200,190,240,0.5)', textTransform:'uppercase' }}>
+      <span style={{ fontFamily:MONO, fontSize:7.5, letterSpacing:'0.22em', color:'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))', textTransform:'uppercase' }}>
         {total > 0 ? `${open} / ${total} entdeckt` : '—'}
       </span>
     </div>
   );
   const lockRow = (
-    <div style={{ padding:'10px 14px', border:`1px dashed ${hexA(acc, 0.25)}`, background:'rgba(124,77,255,0.03)', borderRadius:2, display:'flex', alignItems:'center', gap:8, fontFamily:MONO, fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(160,140,255,0.55)' }}>
+    <div style={{ padding:'10px 14px', border:`1px dashed ${hexA(acc, 0.25)}`, background:'rgba(var(--purple-rgb),calc(0.03*var(--kp)))', borderRadius:2, display:'flex', alignItems:'center', gap:8, fontFamily:MONO, fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))' }}>
       <span style={{ width:6, height:6, border:`1px solid ${hexA(acc, 0.45)}`, display:'inline-block', flexShrink:0 }}/>
       <span>Noch nicht freigeschaltet</span>
     </div>
@@ -1430,7 +1430,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
 
   // Eckdaten
   const lockedVSt = { fontFamily:MONO, fontSize:8.5, color:hexA(acc, 0.45), letterSpacing:'0.14em', textTransform:'uppercase', display:'block' };
-  const openVSt = { fontFamily:BODY, fontWeight:300, fontSize:13, color:'#f0eeff', display:'block', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' };
+  const openVSt = { fontFamily:BODY, fontWeight:300, fontSize:13, color:'var(--white)', display:'block', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' };
   const eckG = { person:[], werdegang:[], zug:[] };
   const eckRow = (group, key, label, value) => {
     if (!value) return;
@@ -1478,7 +1478,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
   const pvAus = mkItems(has('ausr'), 'ausr', 'aus', ausList.map(e => e.name));
   const begList = (sel.begleiter || []).filter(b => (b.name || '').trim());
   const gehList = (sel.geheimnisse || []).filter(g => (g.text || '').trim());
-  const konGroups = [['◇ Familie','familie','fam','#c9b8ff'],['◆ Freunde','freunde','fre','#5fe39a'],['⚔ Rivalen','rivalen','riv','#e36760']]
+  const konGroups = [['◇ Familie','familie','fam','var(--lav)'],['◆ Freunde','freunde','fre','#5fe39a'],['⚔ Rivalen','rivalen','riv','#e36760']]
     .map(([title, sub, prefix, color]) => ({ title, prefix, color, list:((sel.kontakte || {})[sub] || []).filter(p => (p.name || '').trim()) }))
     .filter(g => g.list.length);
   const konKeys = konGroups.flatMap(g => g.list.map((_, i) => g.prefix + '-' + i));
@@ -1519,33 +1519,33 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
         </div>
       )}
       <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:14, flexWrap:'wrap' }}>
-        <span style={{ fontFamily:MONO, fontSize:8.5, letterSpacing:'0.22em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>Ansicht als</span>
+        <span style={{ fontFamily:MONO, fontSize:8.5, letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>Ansicht als</span>
         <span style={dmView
           ? { padding:'6px 13px', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.14em', textTransform:'uppercase', borderRadius:3, background:'rgba(255,184,80,0.16)', border:'1px solid rgba(255,184,80,0.7)', color:'#ffb850' }
-          : { padding:'6px 13px', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.14em', textTransform:'uppercase', borderRadius:3, background:'rgba(124,77,255,0.2)', border:'1px solid rgba(124,77,255,0.7)', color:'#f0eeff' }}>
+          : { padding:'6px 13px', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.14em', textTransform:'uppercase', borderRadius:3, background:'rgba(var(--purple-rgb),calc(0.2*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.7*var(--kp)))', color:'var(--white)' }}>
           {dmView ? '◈ DM (Spielleitung)' : perspName + ' · ' + allKeys.filter(k => uSet.has(k)).length + '/' + allKeys.length}
         </span>
-        <span style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.12em', color:'rgba(160,140,255,0.35)', textTransform:'uppercase' }}>· wechseln über „Sicht" in der Seitenleiste</span>
+        <span style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.12em', color:'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>· wechseln über „Sicht" in der Seitenleiste</span>
         <div style={{ flex:1 }}/>
         {!dmView && (
           <React.Fragment>
             <button onClick={() => setU([...new Set(allKeys)])}
-              style={{ padding:'6px 12px', background:'rgba(95,227,154,0.08)', border:'1px solid rgba(95,227,154,0.35)', borderRadius:3, color:'rgba(95,227,154,0.75)', fontFamily:MONO, fontSize:8, letterSpacing:'0.14em', textTransform:'uppercase', cursor:'pointer' }}>◉ Alles freischalten</button>
+              style={{ padding:'6px 12px', background:'rgba(95,227,154,0.08)', border:'1px solid rgba(95,227,154,0.35)', borderRadius:3, color:'color-mix(in srgb, rgba(95,227,154,0.75), rgb(var(--ink-rgb)) var(--cm))', fontFamily:MONO, fontSize:8, letterSpacing:'0.14em', textTransform:'uppercase', cursor:'pointer' }}>◉ Alles freischalten</button>
             <button onClick={() => setU([])}
-              style={{ padding:'6px 12px', background:'transparent', border:'1px solid rgba(160,140,255,0.25)', borderRadius:3, color:'rgba(200,190,240,0.5)', fontFamily:MONO, fontSize:8, letterSpacing:'0.14em', textTransform:'uppercase', cursor:'pointer' }}>○ Alles sperren</button>
+              style={{ padding:'6px 12px', background:'transparent', border:'1px solid rgba(var(--accent-rgb),calc(0.25*var(--ka)))', borderRadius:3, color:'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))', fontFamily:MONO, fontSize:8, letterSpacing:'0.14em', textTransform:'uppercase', cursor:'pointer' }}>○ Alles sperren</button>
           </React.Fragment>
         )}
       </div>
 
-      <div style={{ background:'rgba(8,6,22,0.99)', border:`1px solid ${hexA(acc, 0.33)}`, borderRadius:6, boxShadow:`0 10px 50px rgba(0,0,0,0.5), 0 0 80px ${hexA(acc, 0.10)}`, overflow:'hidden', position:'relative' }}>
+      <div style={{ background:'rgba(var(--panel-rgb),0.99)', border:`1px solid ${hexA(acc, 0.33)}`, borderRadius:6, boxShadow:`0 10px 50px rgba(var(--shadow-rgb),calc(0.5 * var(--shadow-k))), 0 0 80px ${hexA(acc, 0.10)}`, overflow:'hidden', position:'relative' }}>
         {dv.logo && (
           <span style={{ position:'absolute', right:25, top:20, width:340, height:340, background:`center / contain no-repeat url("${dv.logo}")`, opacity:0.06, pointerEvents:'none' }}/>
         )}
         <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'14px 22px', borderBottom:`1px solid ${hexA(acc, 0.2)}` }}>
-          <span style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.3em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>
+          <span style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.3em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>
             № {String(sel.id).slice(0, 8).toUpperCase()} · {divisionOpen && sel.division !== 'Keine' ? divOf(sel.division).roman + ' · ' + sel.division : 'NSC'} · Ansicht: {perspName}
           </span>
-          <span style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.2em', color:'rgba(160,140,255,0.35)', textTransform:'uppercase' }}>NSC-Register · Spieleransicht</span>
+          <span style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.2em', color:'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>NSC-Register · Spieleransicht</span>
         </div>
         <div style={{ display:'flex', gap:22, padding:'24px 26px 14px', alignItems:'flex-start' }}>
           <div style={{ position:'relative', width:150, height:150, flexShrink:0 }}>
@@ -1557,14 +1557,14 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
               {sel.bild && stage > 0 && <img src={sel.bild} alt="" style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'top' }}/>}
             </div>
             {stage === 0 && (
-              <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:MONO, fontSize:44, fontWeight:700, color:'rgba(124,77,255,0.85)', textShadow:'0 0 14px rgba(124,77,255,0.7), 0 0 30px rgba(124,77,255,0.4)', animation:'pulse-glow 2.5s ease-in-out infinite', pointerEvents:'none', zIndex:4, background:'rgba(5,3,15,0.6)', clipPath:hexClip }}>?</div>
+              <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:MONO, fontSize:44, fontWeight:700, color:'rgba(var(--purple-rgb),calc(0.85*var(--kp) + var(--tb)))', textShadow:'0 0 14px rgba(var(--purple-rgb),calc(0.7*var(--kp))), 0 0 30px rgba(var(--purple-rgb),calc(0.4*var(--kp)))', animation:'pulse-glow 2.5s ease-in-out infinite', pointerEvents:'none', zIndex:4, background:'rgba(var(--bg-rgb),0.6)', clipPath:hexClip }}>?</div>
             )}
           </div>
           <div style={{ flex:1, minWidth:0, paddingTop:6 }}>
             {sel.titel && (
               <div style={{ fontFamily:MONO, fontSize:9, letterSpacing:'0.18em', color:acc, textTransform:'uppercase', marginBottom:4 }}>{sel.titel}</div>
             )}
-            <div style={{ fontFamily:DISP, fontWeight:400, fontSize:26, letterSpacing:'0.10em', color:stage === 0 ? 'rgba(160,140,255,0.45)' : '#f0eeff', lineHeight:1.15, textShadow:`0 0 18px ${hexA(acc, 0.4)}` }}>
+            <div style={{ fontFamily:DISP, fontWeight:400, fontSize:26, letterSpacing:'0.10em', color:stage === 0 ? 'rgba(var(--accent-rgb),calc(0.45*var(--ka)))' : 'var(--white)', lineHeight:1.15, textShadow:`0 0 18px ${hexA(acc, 0.4)}` }}>
               {stage === 0 ? scrName : sel.name}
             </div>
             <div style={{ marginTop:8, display:'flex', flexWrap:'wrap', gap:8, alignItems:'baseline' }}>
@@ -1577,14 +1577,14 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
             </div>
             <div style={{ marginTop:12, display:'flex', flexWrap:'wrap', gap:5 }}>
               {((dmView || !window.nscEffectiveStatus) ? (sel.status || []) : window.nscEffectiveStatus(sel, persp)).map(name => {
-                const def = (STATUS_DEF || {})[name] || { color:'#c8c0e8', glyph:'◇' };
+                const def = (STATUS_DEF || {})[name] || { color:'var(--silver)', glyph:'◇' };
                 return (
                   <span key={name} style={{ fontFamily:MONO, fontSize:8.5, letterSpacing:'0.12em', textTransform:'uppercase', padding:'3px 9px', background:hexA(def.color, 0.12), border:`1px solid ${hexA(def.color, 0.4)}`, borderRadius:2, color:hexA(def.color, 0.95) }}>{def.glyph} {name}</span>
                 );
               })}
               {dmView && charPersp.filter(c => (sel.haltungOverrides || {})[c.id]).map(c => {
                 const name = sel.haltungOverrides[c.id];
-                const def = (STATUS_DEF || {})[name] || { color:'#c8c0e8', glyph:'◇' };
+                const def = (STATUS_DEF || {})[name] || { color:'var(--silver)', glyph:'◇' };
                 return (
                   <span key={'ov-' + c.id} title="Abweichende Haltung für diesen Charakter"
                     style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.1em', textTransform:'uppercase', padding:'3px 8px', border:`1px dashed ${hexA(def.color, 0.5)}`, borderRadius:2, color:hexA(def.color, 0.8) }}>± {c.label}: {name}</span>
@@ -1606,8 +1606,8 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
                 const filled = i <= stage;
                 return (
                   <div key={i} style={{ flex:1, minWidth:0 }}>
-                    <div style={{ height:5, borderRadius:2, background:filled ? mainAcc : 'rgba(124,77,255,0.08)', border:`1px solid ${filled ? aFn(0.9) : aFn(0.2)}`, boxShadow:filled ? `0 0 8px ${aFn(0.5)}, inset 0 0 3px ${aFn(0.3)}` : 'none', transition:'all 0.4s' }}/>
-                    <div style={{ marginTop:4, textAlign:'center', fontFamily:MONO, fontSize:7, color:filled ? aFn(0.85) : 'rgba(160,140,255,0.32)', letterSpacing:'0.10em', textTransform:'uppercase', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{STG[i]}</div>
+                    <div style={{ height:5, borderRadius:2, background:filled ? mainAcc : 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))', border:`1px solid ${filled ? aFn(0.9) : aFn(0.2)}`, boxShadow:filled ? `0 0 8px ${aFn(0.5)}, inset 0 0 3px ${aFn(0.3)}` : 'none', transition:'all 0.4s' }}/>
+                    <div style={{ marginTop:4, textAlign:'center', fontFamily:MONO, fontSize:7, color:filled ? aFn(0.85) : 'rgba(var(--accent-rgb),calc(0.32*var(--ka)))', letterSpacing:'0.10em', textTransform:'uppercase', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{STG[i]}</div>
                   </div>
                 );
               })}
@@ -1619,7 +1619,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
             <React.Fragment>
               {secHead('Erscheinung & Auftreten', unvOpen ? 1 : 0, 1, mkTg('pers', 'unvergesslich'))}
               {unvOpen
-                ? <div style={{ padding:'10px 14px', border:`1px solid ${hexA(acc, 0.25)}`, background:hexA(acc, 0.04), fontFamily:BODY, fontSize:13, lineHeight:1.7, color:'#c8c0e8' }}>{sel.unvergesslich}</div>
+                ? <div style={{ padding:'10px 14px', border:`1px solid ${hexA(acc, 0.25)}`, background:hexA(acc, 0.04), fontFamily:BODY, fontSize:13, lineHeight:1.7, color:'var(--silver)' }}>{sel.unvergesslich}</div>
                 : lockRow}
             </React.Fragment>
           )}
@@ -1632,8 +1632,8 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
                 {pvVna.rows.map((r, i) => (
                   <span key={i} style={{ display:'inline-flex', alignItems:'center', gap:2 }}>
                     <span style={r.open
-                      ? { padding:'4px 10px', fontFamily:DISP, fontSize:14, letterSpacing:'0.06em', background:hexA(acc, 0.10), border:`1px solid ${hexA(acc, 0.45)}`, color:'#f0eeff', borderRadius:2 }
-                      : { padding:'4px 10px', fontFamily:DISP, fontSize:14, fontStyle:'italic', color:'rgba(200,190,240,0.45)', background:'rgba(124,77,255,0.04)', border:'1px solid rgba(124,77,255,0.18)', borderRadius:2 }}>
+                      ? { padding:'4px 10px', fontFamily:DISP, fontSize:14, letterSpacing:'0.06em', background:hexA(acc, 0.10), border:`1px solid ${hexA(acc, 0.45)}`, color:'var(--white)', borderRadius:2 }
+                      : { padding:'4px 10px', fontFamily:DISP, fontSize:14, fontStyle:'italic', color:'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))', background:'rgba(var(--purple-rgb),calc(0.04*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))', borderRadius:2 }}>
                       {r.open ? r.t : '· · · · ·'}
                     </span>
                     {r.tg}
@@ -1648,7 +1648,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
             <React.Fragment>
               {secHead('Biografie', bioOpen ? 1 : 0, 1, mkTg('bio', 'bio'))}
               {bioOpen
-                ? <div style={{ padding:'12px 16px', border:`1px solid ${hexA(acc, 0.25)}`, background:hexA(acc, 0.04), fontFamily:BODY, fontSize:13, lineHeight:1.75, color:'#c8c0e8', whiteSpace:'pre-wrap' }}>{bioText}</div>
+                ? <div style={{ padding:'12px 16px', border:`1px solid ${hexA(acc, 0.25)}`, background:hexA(acc, 0.04), fontFamily:BODY, fontSize:13, lineHeight:1.75, color:'var(--silver)', whiteSpace:'pre-wrap' }}>{bioText}</div>
                 : lockRow}
             </React.Fragment>
           )}
@@ -1661,8 +1661,8 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
                 ? <div style={{ padding:'12px 16px', border:`1px solid ${hexA(acc, 0.25)}`, background:hexA(acc, 0.04), display:'grid', gridTemplateColumns:'repeat(3, minmax(0, 1fr))', gap:'10px 26px' }}>
                     {ashRows.map(r => (
                       <div key={r.k} style={(r.k === 'merkmale' || r.k === 'weiteres') ? { gridColumn:'1 / -1' } : null}>
-                        <span style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.2em', color:'rgba(160,140,255,0.48)', textTransform:'uppercase', display:'block', marginBottom:2 }}>{r.label}</span>
-                        <span style={{ fontFamily:BODY, fontWeight:300, fontSize:13, color:'#f0eeff', lineHeight:1.6, whiteSpace:'pre-wrap', display:'block' }}>{r.v}</span>
+                        <span style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.2em', color:'rgba(var(--accent-rgb),calc(0.48*var(--ka) + var(--tb)))', textTransform:'uppercase', display:'block', marginBottom:2 }}>{r.label}</span>
+                        <span style={{ fontFamily:BODY, fontWeight:300, fontSize:13, color:'var(--white)', lineHeight:1.6, whiteSpace:'pre-wrap', display:'block' }}>{r.v}</span>
                       </div>
                     ))}
                   </div>
@@ -1681,7 +1681,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
                 {rows.map(e => (
                   <div key={e.key} style={{ display:'flex', alignItems:'center', gap:8, padding:'5px 0' }}>
                     <span style={{ flex:1, minWidth:0 }}>
-                      <span style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.2em', color:'rgba(160,140,255,0.48)', textTransform:'uppercase', whiteSpace:'nowrap', display:'block', marginBottom:2 }}>{e.k}</span>
+                      <span style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.2em', color:'rgba(var(--accent-rgb),calc(0.48*var(--ka) + var(--tb)))', textTransform:'uppercase', whiteSpace:'nowrap', display:'block', marginBottom:2 }}>{e.k}</span>
                       <span style={e.vSt}>{e.v}</span>
                     </span>
                     {e.tg}
@@ -1709,9 +1709,9 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
                             <div style={{ padding:'8px 12px', background:hexA(acc, 0.05), border:`1px solid ${hexA(acc, 0.25)}`, borderLeft:`2px solid ${hexA(acc, 0.7)}`, borderRadius:2, opacity:r.open ? 1 : 0.38, flex:1, minWidth:0 }}>
                               <div style={{ display:'flex', alignItems:'baseline', gap:10, flexWrap:'wrap', marginBottom:3 }}>
                                 <span style={{ fontFamily:MONO, fontSize:9, letterSpacing:'0.22em', color:acc, textTransform:'uppercase' }}>{r.e.zeit || '—'}</span>
-                                <span style={{ fontFamily:MONO, fontSize:9, letterSpacing:'0.14em', color:'rgba(200,190,240,0.65)' }}>{r.e.ort || ''}</span>
+                                <span style={{ fontFamily:MONO, fontSize:9, letterSpacing:'0.14em', color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))' }}>{r.e.ort || ''}</span>
                               </div>
-                              <div style={{ fontFamily:BODY, fontSize:12.5, color:'#f0eeff', lineHeight:1.55 }}>{r.e.tat || ''}</div>
+                              <div style={{ fontFamily:BODY, fontSize:12.5, color:'var(--white)', lineHeight:1.55 }}>{r.e.tat || ''}</div>
                             </div>
                             {r.tg}
                           </div>
@@ -1731,7 +1731,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
               <div style={{ display:'flex', flexDirection:'column', gap:6 }}>
                 {pvGew.rows.map((r, i) => (
                   <div key={i} style={{ display:'flex', gap:8, alignItems:'center' }}>
-                    <div style={{ padding:'6px 10px 6px 8px', borderLeft:`2px solid ${hexA(acc, 0.55)}`, background:hexA(acc, 0.05), fontFamily:BODY, fontSize:12.5, color:'#f0eeff', lineHeight:1.55, flex:1, minWidth:0, opacity:r.open ? 1 : 0.38 }}>{r.t}</div>
+                    <div style={{ padding:'6px 10px 6px 8px', borderLeft:`2px solid ${hexA(acc, 0.55)}`, background:hexA(acc, 0.05), fontFamily:BODY, fontSize:12.5, color:'var(--white)', lineHeight:1.55, flex:1, minWidth:0, opacity:r.open ? 1 : 0.38 }}>{r.t}</div>
                     {r.tg}
                   </div>
                 ))}
@@ -1746,7 +1746,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
               <div style={{ display:'flex', flexDirection:'column', gap:6 }}>
                 {pvMot.rows.map((r, i) => (
                   <div key={i} style={{ display:'flex', gap:8, alignItems:'center' }}>
-                    <div style={{ padding:'6px 10px 6px 8px', borderLeft:`2px solid ${hexA(acc, 0.55)}`, background:hexA(acc, 0.05), fontFamily:BODY, fontSize:12.5, color:'#f0eeff', lineHeight:1.55, flex:1, minWidth:0, opacity:r.open ? 1 : 0.38 }}>{r.t}</div>
+                    <div style={{ padding:'6px 10px 6px 8px', borderLeft:`2px solid ${hexA(acc, 0.55)}`, background:hexA(acc, 0.05), fontFamily:BODY, fontSize:12.5, color:'var(--white)', lineHeight:1.55, flex:1, minWidth:0, opacity:r.open ? 1 : 0.38 }}>{r.t}</div>
                     {r.tg}
                   </div>
                 ))}
@@ -1761,7 +1761,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
               <div style={{ display:'flex', flexWrap:'wrap', gap:8, alignItems:'center' }}>
                 {pvEig.rows.map((r, i) => (
                   <span key={i} style={{ display:'inline-flex', alignItems:'center', gap:2 }}>
-                    <span style={{ padding:'5px 10px', fontFamily:MONO, fontSize:9.5, letterSpacing:'0.16em', textTransform:'uppercase', color:'#f0eeff', background:hexA(acc, 0.14), border:`1px solid ${hexA(acc, 0.45)}`, borderRadius:2, opacity:r.open ? 1 : 0.38 }}>{r.t}</span>
+                    <span style={{ padding:'5px 10px', fontFamily:MONO, fontSize:9.5, letterSpacing:'0.16em', textTransform:'uppercase', color:'var(--white)', background:hexA(acc, 0.14), border:`1px solid ${hexA(acc, 0.45)}`, borderRadius:2, opacity:r.open ? 1 : 0.38 }}>{r.t}</span>
                     {r.tg}
                   </span>
                 ))}
@@ -1776,7 +1776,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
               <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'4px 14px' }}>
                 {pvTal.rows.map((r, i) => (
                   <div key={i} style={{ display:'flex', gap:6, alignItems:'center' }}>
-                    <div style={{ display:'block', flex:1, minWidth:0, padding:'5px 10px 5px 8px', borderLeft:`2px solid ${hexA(acc, 0.55)}`, background:hexA(acc, 0.05), fontFamily:BODY, fontSize:12.5, color:'#f0eeff', opacity:r.open ? 1 : 0.38 }}>
+                    <div style={{ display:'block', flex:1, minWidth:0, padding:'5px 10px 5px 8px', borderLeft:`2px solid ${hexA(acc, 0.55)}`, background:hexA(acc, 0.05), fontFamily:BODY, fontSize:12.5, color:'var(--white)', opacity:r.open ? 1 : 0.38 }}>
                       <span style={{ color:acc, fontSize:6, position:'relative', top:-2, display:'inline-block', marginRight:6 }}>⬢</span>{r.t}
                     </div>
                     {r.tg}
@@ -1793,7 +1793,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
               <div style={{ display:'flex', flexDirection:'column', gap:6 }}>
                 {pvMak.rows.map((r, i) => (
                   <div key={i} style={{ display:'flex', gap:8, alignItems:'center' }}>
-                    <div style={{ flex:1, minWidth:0, padding:'10px 14px', border:'1px solid rgba(227,103,96,0.4)', background:'rgba(227,103,96,0.06)', fontFamily:BODY, fontSize:12.5, fontStyle:'italic', color:'rgba(240,200,200,0.85)', lineHeight:1.65, opacity:r.open ? 1 : 0.38 }}>{r.t}</div>
+                    <div style={{ flex:1, minWidth:0, padding:'10px 14px', border:'1px solid rgba(227,103,96,0.4)', background:'rgba(227,103,96,0.06)', fontFamily:BODY, fontSize:12.5, fontStyle:'italic', color:'color-mix(in srgb, rgba(240,200,200,0.85), rgb(var(--ink-rgb)) var(--cm))', lineHeight:1.65, opacity:r.open ? 1 : 0.38 }}>{r.t}</div>
                     {r.tg}
                   </div>
                 ))}
@@ -1815,8 +1815,8 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
                         <div key={i} style={{ display:'flex', alignItems:'center', gap:14, padding:'10px 12px', border:`1px solid ${hexA(acc, 0.3)}`, background:hexA(acc, 0.05), borderRadius:3, opacity:r.open ? 1 : 0.38 }}>
                           <span style={{ width:36, height:36, display:'flex', alignItems:'center', justifyContent:'center', background:hexA(acc, 0.12), border:`1px solid ${hexA(acc, 0.45)}`, borderRadius:'50%', color:acc, fontSize:14, flexShrink:0 }}>◈</span>
                           <span style={{ flex:1, minWidth:0 }}>
-                            <span style={{ display:'block', fontFamily:DISP, fontSize:13, letterSpacing:'0.08em', color:'#f0eeff' }}>{r.b.name}</span>
-                            <span style={{ display:'block', fontFamily:BODY, fontSize:11.5, color:'rgba(200,190,240,0.65)', marginTop:2 }}>{r.b.art || ''}</span>
+                            <span style={{ display:'block', fontFamily:DISP, fontSize:13, letterSpacing:'0.08em', color:'var(--white)' }}>{r.b.name}</span>
+                            <span style={{ display:'block', fontFamily:BODY, fontSize:11.5, color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))', marginTop:2 }}>{r.b.art || ''}</span>
                           </span>
                           {r.tg}
                         </div>
@@ -1835,7 +1835,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
               <div style={{ display:'grid', gridTemplateColumns:'repeat(3, minmax(0, 1fr))', gap:8 }}>
                 {pvAus.rows.map((r, i) => (
                   <div key={i} style={{ display:'flex', flexDirection:'column', gap:4 }}>
-                    <div style={{ padding:'10px 12px', background:hexA(acc, 0.06), border:`1px solid ${hexA(acc, 0.30)}`, borderLeft:`3px solid ${hexA(acc, 0.75)}`, borderRadius:2, fontFamily:DISP, fontSize:13, letterSpacing:'0.05em', color:'#f0eeff', lineHeight:1.3, minHeight:60, display:'flex', alignItems:'center', opacity:r.open ? 1 : 0.38 }}>{r.t}</div>
+                    <div style={{ padding:'10px 12px', background:hexA(acc, 0.06), border:`1px solid ${hexA(acc, 0.30)}`, borderLeft:`3px solid ${hexA(acc, 0.75)}`, borderRadius:2, fontFamily:DISP, fontSize:13, letterSpacing:'0.05em', color:'var(--white)', lineHeight:1.3, minHeight:60, display:'flex', alignItems:'center', opacity:r.open ? 1 : 0.38 }}>{r.t}</div>
                     <div style={{ display:'flex', justifyContent:'flex-end' }}>{r.tg}</div>
                   </div>
                 ))}
@@ -1846,11 +1846,11 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
           {/* Vermögen */}
           {habeShow && (
             <div style={{ display:'flex', alignItems:'center', gap:12, marginTop:14, padding:'12px 16px', borderRadius:3, border:`1px solid rgba(214,178,92,${habeOpen ? 0.5 : 0.25})`, background:'linear-gradient(135deg, rgba(214,178,92,0.10), rgba(214,178,92,0.03))', boxShadow:habeOpen ? '0 0 18px rgba(214,178,92,0.12)' : 'none', opacity:habeOpen ? 1 : 0.75 }}>
-              <span style={{ fontFamily:MONO, fontSize:8.5, letterSpacing:'0.3em', textTransform:'uppercase', color:'rgba(214,178,92,0.8)' }}>◈ Vermögen</span>
+              <span style={{ fontFamily:MONO, fontSize:8.5, letterSpacing:'0.3em', textTransform:'uppercase', color:'color-mix(in srgb, rgba(214,178,92,0.8), rgb(var(--ink-rgb)) var(--cm))' }}>◈ Vermögen</span>
               <span style={{ flex:1 }}/>
               <span style={habeOpen
                 ? { fontFamily:MONO, fontSize:14, letterSpacing:'0.1em', color:'#e8c878', textShadow:'0 0 10px rgba(214,178,92,0.4)' }
-                : { fontFamily:MONO, fontSize:8.5, letterSpacing:'0.16em', textTransform:'uppercase', color:'rgba(214,178,92,0.4)' }}>
+                : { fontFamily:MONO, fontSize:8.5, letterSpacing:'0.16em', textTransform:'uppercase', color:'color-mix(in srgb, rgba(214,178,92,0.4), rgb(var(--ink-rgb)) var(--cm))' }}>
                 {habeOpen ? sel.habe.toLocaleString('de-DE') + ' Hade' : 'Noch nicht freigeschaltet'}
               </span>
               {mkTg('ausr', 'habe')}
@@ -1882,25 +1882,25 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
                         <div key={g.prefix}>
                           <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:6 }}>
                             <span style={{ fontFamily:MONO, fontSize:8.5, letterSpacing:'0.24em', color:g.color, textTransform:'uppercase' }}>{g.title}</span>
-                            <div style={{ flex:1, height:1, background:'rgba(160,140,255,0.12)' }}/>
+                            <div style={{ flex:1, height:1, background:'rgba(var(--accent-rgb),calc(0.12*var(--ka)))' }}/>
                           </div>
                           <div style={{ display:'flex', flexDirection:'column', gap:6 }}>
                             {g.rows.map((r, i) => (
                               <div key={i} onClick={r.linked ? () => openNsc(r.linked.id) : undefined}
                                 style={{ display:'flex', alignItems:'center', gap:12, padding:'8px 10px', background:hexA(acc, 0.025), border:`1px solid ${hexA(acc, 0.18)}`, borderRadius:3, opacity:r.open ? 1 : 0.38, cursor:r.linked ? 'pointer' : 'default' }}>
                                 <span style={{ width:34, height:34, flexShrink:0, borderRadius:3, overflow:'hidden', display:'flex', alignItems:'center', justifyContent:'center',
-                                  background:(r.linked && r.linked.bild) ? '#000' : hexA(r.kCol, 0.12), border:`1px solid ${hexA(r.kCol, 0.55)}`, fontFamily:DISP, fontSize:11, color:'#f0eeff' }}>
+                                  background:(r.linked && r.linked.bild) ? '#000' : hexA(r.kCol, 0.12), border:`1px solid ${hexA(r.kCol, 0.55)}`, fontFamily:DISP, fontSize:11, color:'var(--white)' }}>
                                   {(r.linked && r.linked.bild)
                                     ? <img src={r.linked.bild} alt="" style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'top' }}/>
                                     : ((r.p.name || '').split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase().slice(0, 2) || '?')}
                                 </span>
                                 <span style={{ flex:1, minWidth:0 }}>
-                                  <span style={{ display:'block', fontFamily:DISP, fontSize:13, letterSpacing:'0.04em', color:'#f0eeff' }}>{r.p.name}</span>
-                                  <span style={{ display:'block', fontFamily:MONO, fontSize:9, letterSpacing:'0.16em', color:'rgba(200,190,240,0.55)', textTransform:'uppercase', marginTop:2 }}>
+                                  <span style={{ display:'block', fontFamily:DISP, fontSize:13, letterSpacing:'0.04em', color:'var(--white)' }}>{r.p.name}</span>
+                                  <span style={{ display:'block', fontFamily:MONO, fontSize:9, letterSpacing:'0.16em', color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', textTransform:'uppercase', marginTop:2 }}>
                                     {r.isPc ? (r.p.rolle ? r.p.rolle + ' · Spielercharakter' : 'Spielercharakter') : (r.p.rolle || '')}
                                   </span>
                                 </span>
-                                {r.linked && <span style={{ fontFamily:MONO, fontSize:11, color:'rgba(160,140,255,0.5)', flexShrink:0 }}>→</span>}
+                                {r.linked && <span style={{ fontFamily:MONO, fontSize:11, color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', flexShrink:0 }}>→</span>}
                                 {r.tg}
                               </div>
                             ))}
@@ -1928,18 +1928,18 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
                 return (
                   <React.Fragment>
                     <div style={{ margin:'22px 0 10px', display:'flex', alignItems:'center', gap:10 }}>
-                      <span style={{ fontFamily:MONO, fontSize:9, letterSpacing:'0.30em', color:nOpen ? '#e36760' : 'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>
+                      <span style={{ fontFamily:MONO, fontSize:9, letterSpacing:'0.30em', color:nOpen ? '#e36760' : 'rgba(var(--accent-rgb),calc(0.5*var(--ka)))', textTransform:'uppercase' }}>
                         <span style={{ width:3.5, height:3.5, border:'1px solid currentColor', transform:'rotate(45deg)', display:'inline-block', marginRight:8, marginBottom:1 }}/>Geheimnisse
                       </span>
-                      <div style={{ flex:1, height:1, background:nOpen ? 'rgba(227,103,96,0.4)' : 'rgba(160,140,255,0.12)' }}/>
-                      <span style={{ fontFamily:MONO, fontSize:7.5, letterSpacing:'0.22em', color:'rgba(200,190,240,0.5)', textTransform:'uppercase' }}>{nOpen} / {items.length} entdeckt</span>
+                      <div style={{ flex:1, height:1, background:nOpen ? 'rgba(227,103,96,0.4)' : 'rgba(var(--accent-rgb),calc(0.12*var(--ka)))' }}/>
+                      <span style={{ fontFamily:MONO, fontSize:7.5, letterSpacing:'0.22em', color:'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))', textTransform:'uppercase' }}>{nOpen} / {items.length} entdeckt</span>
                     </div>
                     <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
                       {items.map((x, i) => (
                         <div key={i} style={{ display:'flex', gap:10, alignItems:'flex-start' }}>
                           <div style={{ flex:1, minWidth:0 }}>
                             {x.open ? (
-                              <div style={{ padding:'12px 14px', border:'1px solid rgba(227,103,96,0.4)', background:'linear-gradient(135deg, rgba(227,103,96,0.10), rgba(227,103,96,0.04))', borderRadius:2, position:'relative', fontFamily:BODY, fontSize:12.5, color:'#f0eeff', lineHeight:1.6 }}>
+                              <div style={{ padding:'12px 14px', border:'1px solid rgba(227,103,96,0.4)', background:'linear-gradient(135deg, rgba(227,103,96,0.10), rgba(227,103,96,0.04))', borderRadius:2, position:'relative', fontFamily:BODY, fontSize:12.5, color:'var(--white)', lineHeight:1.6 }}>
                                 <div style={{ position:'absolute', top:-1, left:-1, padding:'2px 6px', background:'rgba(227,103,96,0.20)', border:'1px solid rgba(227,103,96,0.55)', fontFamily:MONO, fontSize:7.5, letterSpacing:'0.22em', color:'#e36760', textTransform:'uppercase' }}>Geheim · {x.num}</div>
                                 <div style={{ marginTop:14 }}>{x.g.text}</div>
                               </div>
@@ -1954,7 +1954,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc 
                             <button onClick={x.gHidden ? undefined : () => tgU(x.key)}
                               title={x.gHidden ? 'Global verborgen — Auge im Bearbeiten-Tab öffnen' : (x.open ? 'Freigeschaltet für ' : 'Freischalten für ') + perspName}
                               style={{ background:'transparent', border:'none', cursor:x.gHidden ? 'default' : 'pointer', fontSize:12, padding:'0 3px', lineHeight:1,
-                                color:x.gHidden ? 'rgba(160,140,255,0.22)' : x.open ? '#5fe39a' : 'rgba(227,103,96,0.55)', flexShrink:0 }}>
+                                color:x.gHidden ? 'rgba(var(--accent-rgb),calc(0.22*var(--ka)))' : x.open ? '#5fe39a' : 'rgba(227,103,96,0.55)', flexShrink:0 }}>
                               {x.gHidden ? '⊘' : x.open ? '◉' : '○'}
                             </button>
                           )}

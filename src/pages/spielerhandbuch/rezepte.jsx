@@ -88,7 +88,7 @@ function ZutatDisplay({ zutat, knownNames }) {
     : <span className="rez-zutat-encrypted" title="Unbekannte Zutat">{d.glyph} <span style={{ opacity: 0.6, fontSize: '9px' }}>[{d.cat}]</span></span>;
   return (
     <div style={{ display: 'flex', gap: '8px', alignItems: 'baseline' }}>
-      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'rgba(160,140,255,0.45)', minWidth: '90px', flexShrink: 0 }}>
+      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', minWidth: '90px', flexShrink: 0 }}>
         {zutat.menge || '–'}
       </span>
       <span>{label}</span>
@@ -102,7 +102,7 @@ function hexPts(size) {
   for (let i = 0; i < 6; i++) { const a = Math.PI / 180 * (60 * i - 30); p.push(`${c + c * Math.cos(a)},${c + c * Math.sin(a)}`); }
   return p.join(' ');
 }
-function Oct({ size = 10, color = 'rgba(124,77,255,0.6)', fill = 'rgba(124,77,255,0.18)', sw = 1 }) {
+function Oct({ size = 10, color = 'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))', fill = 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))', sw = 1 }) {
   return <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ display:'block', flexShrink:0 }}><polygon points={hexPts(size)} fill={fill} stroke={color} strokeWidth={sw}/></svg>;
 }
 
@@ -161,7 +161,7 @@ const CAT_COLORS = {
   mineralien:     { c:'rgba(190,190,210,0.9)',  bg:'rgba(190,190,210,0.07)', bd:'rgba(190,190,210,0.3)' },
   insekten:       { c:'rgba(210,175,80,0.9)',   bg:'rgba(210,175,80,0.07)',  bd:'rgba(210,175,80,0.3)' },
   kreaturenteile: { c:'rgba(220,100,100,0.9)',  bg:'rgba(220,100,100,0.07)', bd:'rgba(220,100,100,0.3)' },
-  default:        { c:'rgba(160,140,255,0.9)',  bg:'rgba(160,140,255,0.07)', bd:'rgba(160,140,255,0.3)' },
+  default:        { c:'rgba(var(--accent-rgb),calc(0.9*var(--ka)))',  bg:'rgba(var(--accent-rgb),calc(0.07*var(--ka)))', bd:'rgba(var(--accent-rgb),calc(0.3*var(--ka)))' },
 };
 
 // ── Recipe Detail Modal ───────────────────────────────────────────────────────
@@ -216,7 +216,7 @@ function RecipeDetailModal({ recipe, knownNames, isDM, playerRevealed, onReveal,
                   )}
                   {confirmDelete && (
                     <>
-                      <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', color:'rgba(240,120,120,0.8)', letterSpacing:'0.14em' }}>Wirklich löschen?</span>
+                      <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', color:'color-mix(in srgb, rgba(240,120,120,0.8), rgb(var(--ink-rgb)) var(--cm))', letterSpacing:'0.14em' }}>Wirklich löschen?</span>
                       <button className="rez-btn rez-btn-sm rez-btn-reject" onClick={() => { onDelete(recipe.id); onClose(); }}>Ja</button>
                       <button className="rez-btn rez-btn-sm" onClick={() => setConfirmDelete(false)}>Nein</button>
                     </>
@@ -279,19 +279,19 @@ function RecipeDetailModal({ recipe, knownNames, isDM, playerRevealed, onReveal,
                 title={testMode && !testRevealedMain ? 'Klicken zum Enthüllen' : undefined}
               >
                 <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="64" height="64">
-                  <path d="M36 34 Q33 26 36 18 Q39 10 36 2"  stroke="rgba(124,77,255,0.35)" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
-                  <path d="M50 32 Q47 24 50 16 Q53  8 50 0"  stroke="rgba(124,77,255,0.28)" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
-                  <path d="M64 34 Q61 26 64 18 Q67 10 64 2"  stroke="rgba(124,77,255,0.35)" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
-                  <ellipse cx="50" cy="44" rx="32" ry="6" fill="rgba(124,77,255,0.07)" stroke="rgba(124,77,255,0.45)" strokeWidth="1.5"/>
-                  <path d="M18 44 Q18 80 50 80 Q82 80 82 44 Z" fill="rgba(124,77,255,0.08)" stroke="rgba(124,77,255,0.4)" strokeWidth="1.5"/>
-                  <path d="M18 46 Q8 46 8 58 Q8 70 18 70" stroke="rgba(124,77,255,0.4)" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
-                  <path d="M82 46 Q92 46 92 58 Q92 70 82 70" stroke="rgba(124,77,255,0.4)" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
-                  <line x1="34" y1="80" x2="30" y2="92" stroke="rgba(124,77,255,0.35)" strokeWidth="1.5" strokeLinecap="round"/>
-                  <line x1="50" y1="80" x2="50" y2="93" stroke="rgba(124,77,255,0.35)" strokeWidth="1.5" strokeLinecap="round"/>
-                  <line x1="66" y1="80" x2="70" y2="92" stroke="rgba(124,77,255,0.35)" strokeWidth="1.5" strokeLinecap="round"/>
-                  <circle cx="40" cy="62" r="1.5" fill="rgba(124,77,255,0.3)"/>
-                  <circle cx="54" cy="58" r="1"   fill="rgba(124,77,255,0.22)"/>
-                  <circle cx="62" cy="66" r="1.2" fill="rgba(124,77,255,0.25)"/>
+                  <path d="M36 34 Q33 26 36 18 Q39 10 36 2"  stroke="rgba(var(--purple-rgb),calc(0.35*var(--kp)))" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+                  <path d="M50 32 Q47 24 50 16 Q53  8 50 0"  stroke="rgba(var(--purple-rgb),calc(0.28*var(--kp)))" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+                  <path d="M64 34 Q61 26 64 18 Q67 10 64 2"  stroke="rgba(var(--purple-rgb),calc(0.35*var(--kp)))" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+                  <ellipse cx="50" cy="44" rx="32" ry="6" fill="rgba(var(--purple-rgb),calc(0.07*var(--kp)))" stroke="rgba(var(--purple-rgb),calc(0.45*var(--kp)))" strokeWidth="1.5"/>
+                  <path d="M18 44 Q18 80 50 80 Q82 80 82 44 Z" fill="rgba(var(--purple-rgb),calc(0.08*var(--kp)))" stroke="rgba(var(--purple-rgb),calc(0.4*var(--kp)))" strokeWidth="1.5"/>
+                  <path d="M18 46 Q8 46 8 58 Q8 70 18 70" stroke="rgba(var(--purple-rgb),calc(0.4*var(--kp)))" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+                  <path d="M82 46 Q92 46 92 58 Q92 70 82 70" stroke="rgba(var(--purple-rgb),calc(0.4*var(--kp)))" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+                  <line x1="34" y1="80" x2="30" y2="92" stroke="rgba(var(--purple-rgb),calc(0.35*var(--kp)))" strokeWidth="1.5" strokeLinecap="round"/>
+                  <line x1="50" y1="80" x2="50" y2="93" stroke="rgba(var(--purple-rgb),calc(0.35*var(--kp)))" strokeWidth="1.5" strokeLinecap="round"/>
+                  <line x1="66" y1="80" x2="70" y2="92" stroke="rgba(var(--purple-rgb),calc(0.35*var(--kp)))" strokeWidth="1.5" strokeLinecap="round"/>
+                  <circle cx="40" cy="62" r="1.5" fill="rgba(var(--purple-rgb),calc(0.3*var(--kp)))"/>
+                  <circle cx="54" cy="58" r="1"   fill="rgba(var(--purple-rgb),calc(0.22*var(--kp)))"/>
+                  <circle cx="62" cy="66" r="1.2" fill="rgba(var(--purple-rgb),calc(0.25*var(--kp)))"/>
                 </svg>
               </div>
               {effRevealed && <div className="rez-plate-scan" />}
@@ -320,8 +320,8 @@ function RecipeDetailModal({ recipe, knownNames, isDM, playerRevealed, onReveal,
             {recipe.sg != null && (
               <div className="rez-panel-sg-hex">
                 <svg viewBox="0 0 100 110">
-                  <polygon points="50,4 92,28 92,82 50,106 8,82 8,28" fill="rgba(124,77,255,0.08)" stroke="rgba(124,77,255,0.5)" strokeWidth="1.5"/>
-                  <polygon points="50,12 85,32 85,78 50,98 15,78 15,32" fill="none" stroke="rgba(124,77,255,0.18)" strokeWidth="1"/>
+                  <polygon points="50,4 92,28 92,82 50,106 8,82 8,28" fill="rgba(var(--purple-rgb),calc(0.08*var(--kp)))" stroke="rgba(var(--purple-rgb),calc(0.5*var(--kp)))" strokeWidth="1.5"/>
+                  <polygon points="50,12 85,32 85,78 50,98 15,78 15,32" fill="none" stroke="rgba(var(--purple-rgb),calc(0.18*var(--kp)))" strokeWidth="1"/>
                 </svg>
                 <div className="rez-panel-sg-overlay">
                   <span className="rez-panel-sg-l">SG</span>
@@ -369,13 +369,13 @@ function RecipeDetailModal({ recipe, knownNames, isDM, playerRevealed, onReveal,
           <PanelSH kick="Resultat" title="Ergebnis" />
           <div className="rez-result-box">
             <div className="rez-result-item">
-              <Oct size={8} color="rgba(124,77,255,0.55)" fill="rgba(124,77,255,0.12)" />
+              <Oct size={8} color="rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))" fill="rgba(var(--purple-rgb),calc(0.12*var(--kp)))" />
               <Scramble tag="div" className="rez-result-name" text={recipe.ergebnis || '—'} revealed={effRevealed}
                 onReveal={testMode && !testRevealedMain ? testRevealMain : undefined} />
             </div>
             {recipe.portionen && (
               <div className="rez-result-item">
-                <Oct size={8} color="rgba(124,77,255,0.55)" fill="rgba(124,77,255,0.12)" />
+                <Oct size={8} color="rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))" fill="rgba(var(--purple-rgb),calc(0.12*var(--kp)))" />
                 <Scramble tag="div" className="rez-result-name" text={recipe.portionen} revealed={effRevealed}
                   onReveal={testMode && !testRevealedMain ? testRevealMain : undefined} />
               </div>
@@ -436,19 +436,19 @@ function RecipeCard({ recipe, knownNames, isDM, playerRevealed, myIngredientReve
         <div className={`rez-card2-thumb-placeholder${!revealed ? ' rez-card2-thumb-placeholder--locked' : ''}`}
              style={revealed ? { display: 'none' } : {}}>
           <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="42" height="42">
-            <path d="M36 34 Q33 26 36 18 Q39 10 36 2"  stroke="rgba(124,77,255,0.35)" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
-            <path d="M50 32 Q47 24 50 16 Q53  8 50 0"  stroke="rgba(124,77,255,0.28)" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
-            <path d="M64 34 Q61 26 64 18 Q67 10 64 2"  stroke="rgba(124,77,255,0.35)" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
-            <ellipse cx="50" cy="44" rx="32" ry="6" fill="rgba(124,77,255,0.07)" stroke="rgba(124,77,255,0.45)" strokeWidth="1.5"/>
-            <path d="M18 44 Q18 80 50 80 Q82 80 82 44 Z" fill="rgba(124,77,255,0.08)" stroke="rgba(124,77,255,0.4)" strokeWidth="1.5"/>
-            <path d="M18 46 Q8 46 8 58 Q8 70 18 70" stroke="rgba(124,77,255,0.4)" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
-            <path d="M82 46 Q92 46 92 58 Q92 70 82 70" stroke="rgba(124,77,255,0.4)" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
-            <line x1="34" y1="80" x2="30" y2="92" stroke="rgba(124,77,255,0.35)" strokeWidth="1.5" strokeLinecap="round"/>
-            <line x1="50" y1="80" x2="50" y2="93" stroke="rgba(124,77,255,0.35)" strokeWidth="1.5" strokeLinecap="round"/>
-            <line x1="66" y1="80" x2="70" y2="92" stroke="rgba(124,77,255,0.35)" strokeWidth="1.5" strokeLinecap="round"/>
-            <circle cx="40" cy="62" r="1.5" fill="rgba(124,77,255,0.3)"/>
-            <circle cx="54" cy="58" r="1"   fill="rgba(124,77,255,0.22)"/>
-            <circle cx="62" cy="66" r="1.2" fill="rgba(124,77,255,0.25)"/>
+            <path d="M36 34 Q33 26 36 18 Q39 10 36 2"  stroke="rgba(var(--purple-rgb),calc(0.35*var(--kp)))" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+            <path d="M50 32 Q47 24 50 16 Q53  8 50 0"  stroke="rgba(var(--purple-rgb),calc(0.28*var(--kp)))" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+            <path d="M64 34 Q61 26 64 18 Q67 10 64 2"  stroke="rgba(var(--purple-rgb),calc(0.35*var(--kp)))" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+            <ellipse cx="50" cy="44" rx="32" ry="6" fill="rgba(var(--purple-rgb),calc(0.07*var(--kp)))" stroke="rgba(var(--purple-rgb),calc(0.45*var(--kp)))" strokeWidth="1.5"/>
+            <path d="M18 44 Q18 80 50 80 Q82 80 82 44 Z" fill="rgba(var(--purple-rgb),calc(0.08*var(--kp)))" stroke="rgba(var(--purple-rgb),calc(0.4*var(--kp)))" strokeWidth="1.5"/>
+            <path d="M18 46 Q8 46 8 58 Q8 70 18 70" stroke="rgba(var(--purple-rgb),calc(0.4*var(--kp)))" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+            <path d="M82 46 Q92 46 92 58 Q92 70 82 70" stroke="rgba(var(--purple-rgb),calc(0.4*var(--kp)))" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+            <line x1="34" y1="80" x2="30" y2="92" stroke="rgba(var(--purple-rgb),calc(0.35*var(--kp)))" strokeWidth="1.5" strokeLinecap="round"/>
+            <line x1="50" y1="80" x2="50" y2="93" stroke="rgba(var(--purple-rgb),calc(0.35*var(--kp)))" strokeWidth="1.5" strokeLinecap="round"/>
+            <line x1="66" y1="80" x2="70" y2="92" stroke="rgba(var(--purple-rgb),calc(0.35*var(--kp)))" strokeWidth="1.5" strokeLinecap="round"/>
+            <circle cx="40" cy="62" r="1.5" fill="rgba(var(--purple-rgb),calc(0.3*var(--kp)))"/>
+            <circle cx="54" cy="58" r="1"   fill="rgba(var(--purple-rgb),calc(0.22*var(--kp)))"/>
+            <circle cx="62" cy="66" r="1.2" fill="rgba(var(--purple-rgb),calc(0.25*var(--kp)))"/>
           </svg>
         </div>
       </div>
@@ -465,7 +465,7 @@ function RecipeCard({ recipe, knownNames, isDM, playerRevealed, myIngredientReve
 
       {/* title */}
       <div className="rez-card2-title-row">
-        <Oct size={8} color="rgba(124,77,255,0.5)" fill="rgba(124,77,255,0.1)" />
+        <Oct size={8} color="rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))" fill="rgba(var(--purple-rgb),calc(0.1*var(--kp)))" />
         <Scramble tag="div" className="rez-card2-name" text={recipe.name} revealed={revealed} />
       </div>
 
@@ -542,7 +542,7 @@ function RejectModal({ recipe, onConfirm, onCancel }) {
       <div className="rez-modal" style={{ maxWidth: '420px' }} onClick={e => e.stopPropagation()}>
         <button className="rez-modal-close" onClick={onCancel}>✕</button>
         <div className="rez-modal-title" style={{ fontSize: '14px' }}>Rezept ablehnen</div>
-        <div style={{ fontFamily: 'var(--font-body)', fontSize: '12px', color: 'rgba(200,190,240,0.65)' }}>
+        <div style={{ fontFamily: 'var(--font-body)', fontSize: '12px', color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))' }}>
           „{recipe.name}" ablehnen?
         </div>
         <div className="rez-form-group">
@@ -712,7 +712,7 @@ function CreatorModal({ isDM, sichtbar, onClose, onSubmit, editRecipe }) {
                 <div key={i} className="rez-zutat-row">
                   <span className="rez-zutat-name">
                     {!z.kollektikon_id && (
-                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', color: 'rgba(160,140,255,0.4)', marginRight: '5px' }}>?</span>
+                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', marginRight: '5px' }}>?</span>
                     )}
                     {z.name}
                   </span>
@@ -762,7 +762,7 @@ function CreatorModal({ isDM, sichtbar, onClose, onSubmit, editRecipe }) {
         </div>
 
         {error && (
-          <div style={{ fontFamily: 'var(--font-body)', fontSize: '11px', color: 'rgba(240,120,120,0.85)' }}>{error}</div>
+          <div style={{ fontFamily: 'var(--font-body)', fontSize: '11px', color: 'color-mix(in srgb, rgba(240,120,120,0.85), rgb(var(--ink-rgb)) var(--cm))' }}>{error}</div>
         )}
 
         <div className="rez-form-actions">

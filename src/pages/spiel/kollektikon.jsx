@@ -849,7 +849,7 @@ function RewardRow({
 }) {
   const goldA = a => `oklch(0.82 0.14 80 / ${a})`;
   const isMaxStage = idx === MS;
-  const accent = unlocked ? isMaxStage ? GD : cMain : 'rgba(160,140,255,0.3)';
+  const accent = unlocked ? isMaxStage ? GD : cMain : 'rgba(var(--accent-rgb),calc(0.3*var(--ka)))';
   const accentA = unlocked ? isMaxStage ? goldA : cA : null;
   return /*#__PURE__*/React.createElement("div", {
     style: {
@@ -860,7 +860,7 @@ function RewardRow({
       padding: '10px 12px',
       background: isCurrent ? cA(0.08) : 'transparent',
       borderLeft: isCurrent ? `2px solid ${cMain}` : '2px solid transparent',
-      borderTop: idx > 1 ? '1px solid rgba(124,77,255,0.08)' : 'none',
+      borderTop: idx > 1 ? '1px solid rgba(var(--purple-rgb),calc(0.08*var(--kp)))' : 'none',
       opacity: unlocked ? 1 : 0.55,
       transition: 'all 0.25s'
     }
@@ -872,7 +872,7 @@ function RewardRow({
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      border: `1px solid ${accentA ? accentA(0.55) : 'rgba(160,140,255,0.18)'}`,
+      border: `1px solid ${accentA ? accentA(0.55) : 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))'}`,
       background: accentA ? accentA(0.12) : 'transparent',
       boxShadow: unlocked ? `0 0 8px ${accentA(0.3)}` : 'none'
     }
@@ -895,22 +895,22 @@ function RewardRow({
       fontSize: 11.5,
       letterSpacing: '0.12em',
       textTransform: 'uppercase',
-      color: unlocked ? '#f0eeff' : 'rgba(180,170,220,0.45)',
+      color: unlocked ? 'var(--white)' : 'color-mix(in srgb, rgba(180,170,220,0.45), rgb(var(--ink-rgb)) var(--cm))',
       marginBottom: 3
     }
   }, reward.title),
   reward.info && /*#__PURE__*/React.createElement("div", {
-    style: { fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: 11, color: unlocked ? 'var(--silver)' : 'rgba(160,140,255,0.35)', lineHeight: 1.5, marginTop: 2 }
+    style: { fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: 11, color: unlocked ? 'var(--silver)' : 'rgba(var(--accent-rgb),calc(0.35*var(--ka)))', lineHeight: 1.5, marginTop: 2 }
   }, '◈ ', reward.info),
   reward.bonus && /*#__PURE__*/React.createElement("div", {
-    style: { fontFamily: 'var(--font-mono)', fontSize: 10, color: unlocked ? (isMaxStage ? GD : accentA(0.9)) : 'rgba(160,140,255,0.3)', marginTop: 3, letterSpacing: '0.04em' }
+    style: { fontFamily: 'var(--font-mono)', fontSize: 10, color: unlocked ? (isMaxStage ? GD : accentA(0.9)) : 'rgba(var(--accent-rgb),calc(0.3*var(--ka)))', marginTop: 3, letterSpacing: '0.04em' }
   }, '◆ ', reward.bonus)), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: 7.5,
       padding: '3px 7px',
       whiteSpace: 'nowrap',
-      border: `1px solid ${unlocked ? isMaxStage ? goldA(0.55) : cA(0.4) : 'rgba(124,77,255,0.18)'}`,
+      border: `1px solid ${unlocked ? isMaxStage ? goldA(0.55) : cA(0.4) : 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))'}`,
       background: unlocked ? isMaxStage ? goldA(0.1) : cA(0.08) : 'transparent',
       color: accent,
       letterSpacing: '0.2em',
@@ -932,7 +932,7 @@ function RewardList({
     style: {
       marginTop: 24,
       border: `1px solid ${isMax ? 'oklch(0.82 0.14 80 / 0.45)' : cA(0.28)}`,
-      background: 'rgba(8,6,22,0.6)',
+      background: 'rgba(var(--panel-rgb),0.6)',
       borderRadius: 3,
       overflow: 'hidden',
       boxShadow: isMax ? `0 0 18px ${GDG}` : 'none'
@@ -959,7 +959,7 @@ function RewardList({
       fontFamily: 'var(--font-mono)',
       fontSize: 8.5,
       letterSpacing: '0.22em',
-      color: 'rgba(200,190,240,0.6)',
+      color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, Math.min(stage, MS), " / ", MS, " freigeschaltet")), /*#__PURE__*/React.createElement("div", null, list.map((r, i) => {
@@ -1105,7 +1105,7 @@ function StageProgress({
       style: {
         height: 5,
         borderRadius: 2,
-        background: filled ? isMax ? GD : cMain : 'rgba(124,77,255,0.08)',
+        background: filled ? isMax ? GD : cMain : 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))',
         border: `1px solid ${filled ? accentA(0.9) : accentA(0.2)}`,
         boxShadow: filled ? `0 0 8px ${accentA(0.5)}, inset 0 0 3px ${accentA(0.3)}` : 'none',
         transition: 'all 0.4s'
@@ -1116,7 +1116,7 @@ function StageProgress({
         textAlign: 'center',
         fontFamily: 'var(--font-mono)',
         fontSize: 6.5,
-        color: filled ? accentA(0.85) : 'rgba(160,140,255,0.32)',
+        color: filled ? accentA(0.85) : 'rgba(var(--accent-rgb),calc(0.32*var(--ka)))',
         letterSpacing: '0.12em',
         textTransform: 'uppercase',
         whiteSpace: 'nowrap',
@@ -1134,15 +1134,15 @@ function MilestoneSection({ overallPct }) {
   const GDA = a => `oklch(0.82 0.14 80 / ${a})`;
   const reachedCount = MILESTONES.filter(m => pct >= m.pct).length;
   return /*#__PURE__*/React.createElement("div", {
-    style: { margin: '20px 28px 0', border: '1px solid rgba(124,77,255,0.18)', borderRadius: 3, overflow: 'hidden', background: 'rgba(8,6,22,0.55)' }
+    style: { margin: '20px 28px 0', border: '1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))', borderRadius: 3, overflow: 'hidden', background: 'rgba(var(--panel-rgb),0.55)' }
   },
     /*#__PURE__*/React.createElement("div", {
       onClick: () => setCollapsed(c => !c),
-      style: { padding: '10px 14px', borderBottom: collapsed ? 'none' : '1px solid rgba(124,77,255,0.1)', fontFamily: 'var(--font-mono)', fontSize: 8, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(160,140,255,0.55)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', userSelect: 'none' }
+      style: { padding: '10px 14px', borderBottom: collapsed ? 'none' : '1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))', fontFamily: 'var(--font-mono)', fontSize: 8, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', userSelect: 'none' }
     },
       /*#__PURE__*/React.createElement("span", null, '◈ Kollektikon-Meilensteine'),
       /*#__PURE__*/React.createElement("span", { style: { display: 'flex', alignItems: 'center', gap: 10 } },
-        /*#__PURE__*/React.createElement("span", { style: { color: reachedCount > 0 ? 'rgba(80,220,120,0.6)' : 'rgba(124,77,255,0.35)', fontSize: 8 } }, reachedCount, ' / ', MILESTONES.length, ' erreicht'),
+        /*#__PURE__*/React.createElement("span", { style: { color: reachedCount > 0 ? 'color-mix(in srgb, rgba(80,220,120,0.6), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--purple-rgb),calc(0.35*var(--kp)))', fontSize: 8 } }, reachedCount, ' / ', MILESTONES.length, ' erreicht'),
         /*#__PURE__*/React.createElement("span", { style: { fontSize: 10, opacity: 0.45, display: 'inline-block', transition: 'transform 0.2s', transform: collapsed ? 'rotate(-90deg)' : 'rotate(0deg)' } }, '▾')
       )
     ),
@@ -1150,29 +1150,29 @@ function MilestoneSection({ overallPct }) {
       MILESTONES.map((m, i) => {
         const reached = pct >= m.pct;
         const isNext = !reached && (i === 0 || pct >= MILESTONES[i - 1].pct);
-        const accent = reached ? (m.pct === 100 ? GDA(1) : 'rgba(200,190,240,0.85)') : isNext ? 'rgba(160,140,255,0.5)' : 'rgba(124,77,255,0.28)';
+        const accent = reached ? (m.pct === 100 ? GDA(1) : 'rgba(var(--text-rgb),calc(0.85*var(--kt)))') : isNext ? 'rgba(var(--accent-rgb),calc(0.5*var(--ka)))' : 'rgba(var(--purple-rgb),calc(0.28*var(--kp)))';
         const isOpen = open === i;
-        return /*#__PURE__*/React.createElement("div", { key: m.pct, style: { borderBottom: i < MILESTONES.length - 1 ? '1px solid rgba(124,77,255,0.07)' : 'none' } },
+        return /*#__PURE__*/React.createElement("div", { key: m.pct, style: { borderBottom: i < MILESTONES.length - 1 ? '1px solid rgba(var(--purple-rgb),calc(0.07*var(--kp)))' : 'none' } },
           /*#__PURE__*/React.createElement("div", {
             onClick: () => m.boni.length > 0 && setOpen(isOpen ? null : i),
-            style: { display: 'grid', gridTemplateColumns: '36px 1fr auto', alignItems: 'center', gap: 10, padding: '8px 14px', cursor: m.boni.length > 0 ? 'pointer' : 'default', background: isOpen ? 'rgba(124,77,255,0.06)' : 'transparent', transition: 'background 0.15s' }
+            style: { display: 'grid', gridTemplateColumns: '36px 1fr auto', alignItems: 'center', gap: 10, padding: '8px 14px', cursor: m.boni.length > 0 ? 'pointer' : 'default', background: isOpen ? 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))' : 'transparent', transition: 'background 0.15s' }
           },
             /*#__PURE__*/React.createElement("div", {
-              style: { fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600, color: reached ? GDA(0.9) : 'rgba(124,77,255,0.35)', textAlign: 'center', letterSpacing: '0.04em' }
+              style: { fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600, color: reached ? GDA(0.9) : 'rgba(var(--purple-rgb),calc(0.35*var(--kp)))', textAlign: 'center', letterSpacing: '0.04em' }
             }, m.pct + ' %'),
             /*#__PURE__*/React.createElement("div", {
               style: { fontFamily: reached ? 'var(--font-body)' : 'var(--font-mono)', fontSize: reached ? 12 : 10, color: accent, letterSpacing: reached ? 'normal' : '0.1em', opacity: reached ? 1 : 0.7 }
             }, m.title),
             reached
-              ? /*#__PURE__*/React.createElement("span", { style: { fontFamily: 'var(--font-mono)', fontSize: 8, color: 'rgba(80,220,120,0.75)', letterSpacing: '0.14em' } }, '✓ AKTIV')
+              ? /*#__PURE__*/React.createElement("span", { style: { fontFamily: 'var(--font-mono)', fontSize: 8, color: 'color-mix(in srgb, rgba(80,220,120,0.75), rgb(var(--ink-rgb)) var(--cm))', letterSpacing: '0.14em' } }, '✓ AKTIV')
               : isNext
-              ? /*#__PURE__*/React.createElement("span", { style: { fontFamily: 'var(--font-mono)', fontSize: 8, color: 'rgba(160,140,255,0.5)', letterSpacing: '0.12em' } }, 'NÄCHSTES')
-              : /*#__PURE__*/React.createElement("span", { style: { fontFamily: 'var(--font-mono)', fontSize: 8, color: 'rgba(124,77,255,0.28)', letterSpacing: '0.12em' } }, 'GESPERRT')
+              ? /*#__PURE__*/React.createElement("span", { style: { fontFamily: 'var(--font-mono)', fontSize: 8, color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', letterSpacing: '0.12em' } }, 'NÄCHSTES')
+              : /*#__PURE__*/React.createElement("span", { style: { fontFamily: 'var(--font-mono)', fontSize: 8, color: 'rgba(var(--purple-rgb),calc(0.28*var(--kp) + var(--tb)))', letterSpacing: '0.12em' } }, 'GESPERRT')
           ),
           isOpen && m.boni.length > 0 && /*#__PURE__*/React.createElement("div", {
             style: { padding: '6px 14px 10px 60px', display: 'flex', flexDirection: 'column', gap: 4 }
           }, m.boni.map((b, j) => /*#__PURE__*/React.createElement("div", {
-            key: j, style: { fontFamily: 'var(--font-body)', fontSize: 11, color: 'rgba(180,170,220,0.65)', lineHeight: 1.4 }
+            key: j, style: { fontFamily: 'var(--font-body)', fontSize: 11, color: 'color-mix(in srgb, rgba(180,170,220,0.65), rgb(var(--ink-rgb)) var(--cm))', lineHeight: 1.4 }
           }, '· ', b)))
         );
       })
@@ -1190,7 +1190,7 @@ Object.assign(window, {
 
 /* Helper — striped bg with hue */
 function mkStripeBg(hue, alpha = 0.13) {
-  return `repeating-linear-gradient(-45deg,transparent,transparent 8px,oklch(0.65 0.18 ${hue} / ${alpha}) 8px,oklch(0.65 0.18 ${hue} / ${alpha}) 9px),linear-gradient(160deg,rgba(28,16,62,0.97) 0%,rgba(14,9,36,0.98) 100%)`;
+  return `repeating-linear-gradient(-45deg,transparent,transparent 8px,oklch(0.65 0.18 ${hue} / ${alpha}) 8px,oklch(0.65 0.18 ${hue} / ${alpha}) 9px),linear-gradient(160deg,rgba(var(--panel-rgb),0.97) 0%,rgba(var(--panel-rgb),0.98) 100%)`;
 }
 
 /* ── Rarity pip row ── */
@@ -1237,7 +1237,7 @@ function EntryCard({
   const cA = a => `oklch(0.72 0.16 ${hue} / ${a})`;
   const isMax = found && stage >= MS;
   const goldA = a => `oklch(0.82 0.14 80 / ${a})`;
-  const cBorder = isMax ? hov || selected ? GD : goldA(0.55) : found ? hov || selected ? `${cA(0.67)}` : `${cA(0.33)}` : 'rgba(124,77,255,0.12)';
+  const cBorder = isMax ? hov || selected ? GD : goldA(0.55) : found ? hov || selected ? `${cA(0.67)}` : `${cA(0.33)}` : 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))';
   const rarObj = RAR[entry.rarity] || RAR.gewoehnlich;
   const rarHue = rarObj.hue;
   const tags = found && stage >= FU.tagsOnCard ? pickCardTags(entry) : [];
@@ -1252,8 +1252,8 @@ function EntryCard({
       overflow: 'hidden',
       cursor: 'pointer',
       border: `1px solid ${cBorder}`,
-      background: found ? 'rgba(13,8,38,0.96)' : 'rgba(10,7,28,0.92)',
-      boxShadow: isMax ? hov || selected ? `0 10px 36px rgba(0,0,0,0.65), 0 0 26px ${goldA(0.45)}` : `0 4px 18px rgba(0,0,0,0.5), 0 0 16px ${goldA(0.22)}` : hov || selected ? found ? `0 10px 36px rgba(0,0,0,0.6), 0 0 22px ${cA(0.2)}` : '0 6px 22px rgba(0,0,0,0.55)' : '0 2px 12px rgba(0,0,0,0.45)',
+      background: found ? 'rgba(var(--panel-rgb),0.96)' : 'rgba(var(--panel-rgb),0.92)',
+      boxShadow: isMax ? hov || selected ? `0 10px 36px rgba(var(--shadow-rgb),calc(0.65 * var(--shadow-k))), 0 0 26px ${goldA(0.45)}` : `0 4px 18px rgba(0,0,0,0.5), 0 0 16px ${goldA(0.22)}` : hov || selected ? found ? `0 10px 36px rgba(0,0,0,0.6), 0 0 22px ${cA(0.2)}` : '0 6px 22px rgba(0,0,0,0.55)' : '0 2px 12px rgba(0,0,0,0.45)',
       transform: hov ? 'translateY(-2px)' : 'translateY(0)',
       transition: hov ? 'all 0.1s linear' : 'all 0.35s cubic-bezier(0.23,1,0.32,1)',
       animation: `fadeInUp 0.4s ease ${Math.min(idx * 0.03, 0.5)}s both`,
@@ -1317,7 +1317,7 @@ function EntryCard({
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      borderBottom: `1px solid ${found ? cA(0.2) : 'rgba(124,77,255,0.1)'}`
+      borderBottom: `1px solid ${found ? cA(0.2) : 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))'}`
     }
   }, found && /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1364,8 +1364,8 @@ function EntryCard({
     viewBox: "0 0 100 100",
     width: "56",
     height: "56",
-    fill: "rgba(124,77,255,0.15)",
-    stroke: "rgba(124,77,255,0.28)",
+    fill: "rgba(var(--purple-rgb),calc(0.15*var(--kp)))",
+    stroke: "rgba(var(--purple-rgb),calc(0.28*var(--kp)))",
     style: {
       animation: 'unknownDrift 4s ease-in-out infinite'
     }
@@ -1375,8 +1375,8 @@ function EntryCard({
       fontFamily: 'var(--font-display)',
       fontSize: 28,
       fontWeight: 300,
-      color: 'rgba(160,140,255,0.5)',
-      textShadow: '0 0 14px rgba(124,77,255,0.4)',
+      color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',
+      textShadow: '0 0 14px rgba(var(--purple-rgb),calc(0.4*var(--kp)))',
       animation: 'pulseGlow 2.4s ease-in-out infinite'
     }
   }, "?")), /*#__PURE__*/React.createElement("div", {
@@ -1386,7 +1386,7 @@ function EntryCard({
       left: 7,
       fontFamily: 'var(--font-mono)',
       fontSize: 6.5,
-      color: found ? cA(0.85) : 'rgba(124,77,255,0.35)',
+      color: found ? cA(0.85) : 'rgba(var(--purple-rgb),calc(0.35*var(--kp)))',
       letterSpacing: '0.16em',
       textTransform: 'uppercase'
     }
@@ -1407,10 +1407,10 @@ function EntryCard({
       top: 5,
       right: 6,
       padding: '2px 6px',
-      border: '1px solid rgba(124,77,255,0.18)',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',
       fontFamily: 'var(--font-mono)',
       fontSize: 6.5,
-      color: 'rgba(160,140,255,0.4)',
+      color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       letterSpacing: '0.2em',
       textTransform: 'uppercase'
     }
@@ -1441,7 +1441,7 @@ function EntryCard({
       fontSize: 11,
       letterSpacing: '0.1em',
       textTransform: 'uppercase',
-      color: found ? '#f0eeff' : 'rgba(180,170,220,0.45)',
+      color: found ? 'var(--white)' : 'color-mix(in srgb, rgba(180,170,220,0.45), rgb(var(--ink-rgb)) var(--cm))',
       lineHeight: 1.25,
       fontStyle: found ? 'normal' : 'italic',
       overflowWrap: 'anywhere'
@@ -1480,7 +1480,7 @@ function EntryCard({
       fontFamily: 'var(--font-mono)',
       fontSize: 7.5,
       letterSpacing: '0.1em',
-      color: found ? `oklch(0.72 0.16 ${rarHue} / 0.95)` : 'rgba(160,140,255,0.4)',
+      color: found ? `oklch(0.72 0.16 ${rarHue} / 0.95)` : 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))',
       textTransform: 'uppercase',
       whiteSpace: 'nowrap'
     }
@@ -1516,7 +1516,7 @@ function EntryCard({
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: 6.5,
-      color: 'rgba(160,140,255,0.4)',
+      color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       letterSpacing: '0.16em',
       textTransform: 'uppercase',
       fontStyle: 'italic',
@@ -1549,32 +1549,34 @@ function DetailPanel({
       zIndex: 600,
       display: 'flex',
       justifyContent: 'flex-end',
-      background: 'rgba(4,3,13,0.7)',
+      background: 'rgba(var(--bg-rgb),0.7)',
       backdropFilter: 'blur(4px)',
       animation: 'fadeIn 0.2s ease'
     },
     onClick: onClose
   }, /*#__PURE__*/React.createElement("div", {
+    className: "nsc-panel",
     onClick: e => e.stopPropagation(),
     style: {
       width: 'min(560px, 92vw)',
       height: '100%',
-      background: 'rgba(8,6,22,0.99)',
+      background: 'rgba(var(--panel-rgb),0.99)',
       borderLeft: `1px solid ${cA(0.33)}`,
-      boxShadow: `-20px 0 60px rgba(0,0,0,0.7), -20px 0 80px ${cA(0.13)}`,
+      boxShadow: `-20px 0 60px rgba(var(--shadow-rgb),calc(0.7 * var(--shadow-k))), -20px 0 80px ${cA(0.13)}`,
       animation: 'overlayIn 0.32s cubic-bezier(.2,.85,.2,1)',
       overflowY: 'auto'
     }
   }, /*#__PURE__*/React.createElement("div", {
+    className: "nsc-panel-head",
     style: {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
       padding: '14px 22px',
-      borderBottom: `1px solid ${found ? cMain + '33' : 'rgba(124,77,255,0.12)'}`,
+      borderBottom: `1px solid ${found ? cMain + '33' : 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))'}`,
       position: 'sticky',
       top: 0,
-      background: 'rgba(8,6,22,0.98)',
+      background: 'rgba(var(--panel-rgb),0.98)',
       zIndex: 5
     }
   }, /*#__PURE__*/React.createElement("div", {
@@ -1582,15 +1584,15 @@ function DetailPanel({
       fontFamily: 'var(--font-mono)',
       fontSize: 8,
       letterSpacing: '0.3em',
-      color: 'rgba(160,140,255,0.5)',
+      color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "\u2116 ", entry.id.toUpperCase(), " \xB7 ", catObj.label), /*#__PURE__*/React.createElement("button", {
     onClick: onClose,
     style: {
       background: 'transparent',
-      border: '1px solid rgba(124,77,255,0.3)',
-      color: 'rgba(200,190,240,0.7)',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))',
+      color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',
       cursor: 'pointer',
       padding: '4px 10px',
       fontFamily: 'var(--font-mono)',
@@ -1600,13 +1602,13 @@ function DetailPanel({
       borderRadius: 2
     },
     onMouseEnter: e => {
-      e.currentTarget.style.color = '#f0eeff';
+      e.currentTarget.style.color = 'var(--white)';
       e.currentTarget.style.borderColor = cMain;
       e.currentTarget.style.background = cMain + '18';
     },
     onMouseLeave: e => {
-      e.currentTarget.style.color = 'rgba(200,190,240,0.7)';
-      e.currentTarget.style.borderColor = 'rgba(124,77,255,0.3)';
+      e.currentTarget.style.color = 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))';
+      e.currentTarget.style.borderColor = 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))';
       e.currentTarget.style.background = 'transparent';
     }
   }, "ESC \xD7")), /*#__PURE__*/React.createElement("div", {
@@ -1617,7 +1619,7 @@ function DetailPanel({
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      borderBottom: `1px solid ${found ? cMain + '33' : 'rgba(124,77,255,0.1)'}`
+      borderBottom: `1px solid ${found ? cMain + '33' : 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))'}`
     }
   }, found && /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1660,15 +1662,15 @@ function DetailPanel({
     viewBox: "0 0 100 100",
     width: "160",
     height: "160",
-    fill: "rgba(124,77,255,0.13)",
-    stroke: "rgba(124,77,255,0.25)"
+    fill: "rgba(var(--purple-rgb),calc(0.13*var(--kp)))",
+    stroke: "rgba(var(--purple-rgb),calc(0.25*var(--kp)))"
   }, CIC[entry.cat]), /*#__PURE__*/React.createElement("span", {
     style: {
       position: 'absolute',
       fontFamily: 'var(--font-display)',
       fontSize: 84,
       fontWeight: 300,
-      color: 'rgba(160,140,255,0.5)',
+      color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',
       animation: 'pulseGlow 2.4s ease-in-out infinite'
     }
   }, "?")), /*#__PURE__*/React.createElement("span", {
@@ -1759,7 +1761,7 @@ function DetailPanel({
       fontWeight: 400,
       fontSize: 24,
       letterSpacing: '0.16em',
-      color: '#f0eeff',
+      color: 'var(--white)',
       textTransform: 'uppercase',
       lineHeight: 1.2,
       fontStyle: found ? 'normal' : 'italic',
@@ -1790,13 +1792,13 @@ function DetailPanel({
     style: {
       marginBottom: 22,
       padding: '14px 16px',
-      border: '1px dashed rgba(124,77,255,0.22)',
-      background: 'rgba(124,77,255,0.03)',
+      border: '1px dashed rgba(var(--purple-rgb),calc(0.22*var(--kp)))',
+      background: 'rgba(var(--purple-rgb),calc(0.03*var(--kp)))',
       fontFamily: 'var(--font-body)',
       fontStyle: 'italic',
       fontWeight: 300,
       fontSize: 12.5,
-      color: 'rgba(180,170,220,0.5)',
+      color: 'color-mix(in srgb, rgba(180,170,220,0.5), rgb(var(--ink-rgb)) var(--cm))',
       lineHeight: 1.7
     }
   }, /*#__PURE__*/React.createElement("span", {
@@ -1875,7 +1877,7 @@ function DetailPanel({
       fontStyle: 'italic',
       fontWeight: 300,
       fontSize: 13,
-      color: 'rgba(180,170,220,0.55)',
+      color: 'color-mix(in srgb, rgba(180,170,220,0.55), rgb(var(--ink-rgb)) var(--cm))',
       lineHeight: 1.75,
       marginBottom: 18
     }
@@ -1885,7 +1887,7 @@ function DetailPanel({
       gridTemplateColumns: 'auto 1fr',
       gap: '10px 18px',
       padding: '18px 0 4px',
-      borderTop: '1px solid rgba(124,77,255,0.18)'
+      borderTop: '1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))'
     }
   }, /*#__PURE__*/React.createElement(Field, {
     label: "Status",
@@ -1903,11 +1905,11 @@ function DetailPanel({
     style: {
       marginTop: 24,
       padding: '12px 14px',
-      border: '1px dashed rgba(124,77,255,0.25)',
-      background: 'rgba(124,77,255,0.04)',
+      border: '1px dashed rgba(var(--purple-rgb),calc(0.25*var(--kp)))',
+      background: 'rgba(var(--purple-rgb),calc(0.04*var(--kp)))',
       fontFamily: 'var(--font-mono)',
       fontSize: 9,
-      color: 'rgba(160,140,255,0.55)',
+      color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
       letterSpacing: '0.16em',
       textTransform: 'uppercase',
       display: 'flex',
@@ -1930,7 +1932,7 @@ function Field({
       fontFamily: 'var(--font-mono)',
       fontSize: 9,
       letterSpacing: '0.22em',
-      color: 'rgba(160,140,255,0.5)',
+      color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
       whiteSpace: 'nowrap',
       paddingTop: 2
@@ -1940,13 +1942,13 @@ function Field({
       fontFamily: 'var(--font-body)',
       fontWeight: 300,
       fontSize: 13,
-      color: '#f0eeff'
+      color: 'var(--white)'
     }
   }, value) : /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: 10,
-      color: 'rgba(160,140,255,0.35)',
+      color: 'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))',
       letterSpacing: '0.18em',
       textTransform: 'uppercase',
       display: 'inline-flex',
@@ -1957,7 +1959,7 @@ function Field({
     style: {
       width: 6,
       height: 6,
-      border: '1px solid rgba(160,140,255,0.35)',
+      border: '1px solid rgba(var(--accent-rgb),calc(0.35*var(--ka)))',
       display: 'inline-block'
     }
   }), "Noch nicht freigeschaltet"));
@@ -1990,8 +1992,8 @@ function CatTab({
         minWidth: 0,
         maxWidth: 240
       }),
-      background: active ? `${cA(0.09)}` : 'rgba(10,8,28,0.7)',
-      border: active ? `1px solid ${cA(0.67)}` : `1px solid ${hov ? cMain + '55' : 'rgba(124,77,255,0.18)'}`,
+      background: active ? `${cA(0.09)}` : 'rgba(var(--panel-rgb),0.7)',
+      border: active ? `1px solid ${cA(0.67)}` : `1px solid ${hov ? cMain + '55' : 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))'}`,
       padding: '14px 16px 12px',
       borderRadius: 3,
       cursor: 'pointer',
@@ -2025,7 +2027,7 @@ function CatTab({
       fontSize: 11,
       letterSpacing: '0.2em',
       fontWeight: 400,
-      color: active ? '#f0eeff' : 'rgba(220,210,250,0.78)',
+      color: active ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.78*var(--kt)))',
       textTransform: 'uppercase',
       minWidth: 0,
       flex: 1,
@@ -2053,7 +2055,7 @@ function CatTab({
     style: {
       position: 'absolute',
       inset: 0,
-      background: 'rgba(124,77,255,0.08)',
+      background: 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))',
       border: `1px solid ${cA(0.13)}`,
       borderRadius: 2,
       overflow: 'hidden'
@@ -2065,7 +2067,7 @@ function CatTab({
       top: 0,
       bottom: 0,
       width: `${pctFound * 100}%`,
-      background: 'linear-gradient(90deg, rgba(220,215,250,0.16), rgba(240,238,255,0.26))',
+      background: 'linear-gradient(90deg, rgba(220,215,250,0.16), rgba(var(--text-hi-rgb),calc(0.26*var(--kt))))',
       transition: 'width 0.6s cubic-bezier(.2,.85,.2,1)'
     }
   }), /*#__PURE__*/React.createElement("div", {
@@ -2091,13 +2093,13 @@ function CatTab({
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: 9,
-      color: 'rgba(200,190,240,0.65)',
+      color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
       letterSpacing: '0.1em',
       whiteSpace: 'nowrap'
     }
   }, /*#__PURE__*/React.createElement("span", {
     style: {
-      color: '#f0eeff'
+      color: 'var(--white)'
     }
   }, foundCount), /*#__PURE__*/React.createElement("span", {
     style: {
@@ -2167,9 +2169,9 @@ function FilterButton({
       letterSpacing: '0.22em',
       padding: '7px 12px',
       textTransform: 'uppercase',
-      background: active ? cA(0.18) : 'rgba(10,8,28,0.5)',
+      background: active ? cA(0.18) : 'rgba(var(--panel-rgb),0.5)',
       border: active ? `1px solid ${c}` : `1px solid ${cA(0.3)}`,
-      color: active ? '#f0eeff' : cA(0.85),
+      color: active ? 'var(--white)' : cA(0.85),
       cursor: 'pointer',
       borderRadius: 2,
       transition: 'all 0.18s',
@@ -2182,7 +2184,7 @@ function FilterButton({
     onMouseEnter: e => {
       if (!active) {
         e.currentTarget.style.borderColor = c;
-        e.currentTarget.style.color = '#f0eeff';
+        e.currentTarget.style.color = 'var(--white)';
       }
     },
     onMouseLeave: e => {
@@ -2208,7 +2210,7 @@ function FilterButton({
       padding: '1px 5px',
       borderRadius: 9,
       background: c,
-      color: '#08061a',
+      color: 'rgb(var(--panel-rgb))',
       fontFamily: 'var(--font-mono)',
       fontSize: 8,
       lineHeight: 1.2,
@@ -2248,12 +2250,12 @@ function FilterPanel({
   if (!facets.length) return null;
   return /*#__PURE__*/React.createElement("div", {
     style: {
-      background: 'rgba(8,6,22,0.85)',
-      border: '1px solid rgba(124,77,255,0.3)',
+      background: 'rgba(var(--panel-rgb),0.85)',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))',
       borderRadius: 3,
       padding: '12px 18px 16px',
       animation: 'slideDown 0.22s ease',
-      boxShadow: '0 12px 36px rgba(0,0,0,0.5)'
+      boxShadow: '0 12px 36px rgba(var(--shadow-rgb),calc(0.5 * var(--shadow-k)))'
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -2262,14 +2264,14 @@ function FilterPanel({
       justifyContent: 'space-between',
       marginBottom: 10,
       paddingBottom: 8,
-      borderBottom: '1px solid rgba(124,77,255,0.12)'
+      borderBottom: '1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))'
     }
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: 8,
       letterSpacing: '0.3em',
-      color: 'rgba(124,77,255,0.6)',
+      color: 'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Filteroptionen"), /*#__PURE__*/React.createElement("button", {
@@ -2277,8 +2279,8 @@ function FilterPanel({
     disabled: totalActive === 0,
     style: {
       background: 'transparent',
-      border: `1px solid rgba(124,77,255,${totalActive ? 0.4 : 0.15})`,
-      color: totalActive ? 'rgba(160,140,255,0.85)' : 'rgba(124,77,255,0.3)',
+      border: `1px solid rgba(var(--purple-rgb),${totalActive ? 0.4 : 0.15})`,
+      color: totalActive ? 'rgba(var(--accent-rgb),calc(0.85*var(--ka)))' : 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))',
       cursor: totalActive ? 'pointer' : 'default',
       padding: '2px 9px',
       borderRadius: 2,
@@ -2853,7 +2855,7 @@ function KollektikonPage() {
   const colMin = density === 'compact' ? 145 : density === 'spacious' ? 200 : 170;
   return /*#__PURE__*/React.createElement("div", {
     style: {
-      minHeight: '100vh',
+      minHeight: 'calc(var(--vh, 1vh) * 100)',
       paddingTop: 'var(--nav-h)'
     }
   }, /*#__PURE__*/React.createElement(SiteNav, null), /*#__PURE__*/React.createElement(DPanel, {
@@ -2864,6 +2866,7 @@ function KollektikonPage() {
     title: "Das Kollektikon",
     sub: /*#__PURE__*/React.createElement(React.Fragment, null, "Vollst\xE4ndige \xDCbersicht \xFCber alle Ressourcen, Lebensformen und Materialien des Planeten Meruria. Eintr\xE4ge werden hinzugef\xFCgt, sobald die ", /*#__PURE__*/React.createElement("em", null, "Bergungsgarde"), ", die ", /*#__PURE__*/React.createElement("em", null, "Quellensucher"), " oder verifizierte Beobachtende eine gesicherte Sichtung melden."),
     right: /*#__PURE__*/React.createElement("div", {
+    className: "nsc-progress",
     style: {
       textAlign: 'right',
       minWidth: 200
@@ -2873,7 +2876,7 @@ function KollektikonPage() {
       fontFamily: 'var(--font-mono)',
       fontSize: 9,
       letterSpacing: '0.28em',
-      color: 'rgba(124,77,255,0.55)',
+      color: 'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',
       textTransform: 'uppercase',
       marginBottom: 8
     }
@@ -2882,12 +2885,12 @@ function KollektikonPage() {
       fontFamily: 'var(--font-display)',
       fontWeight: 300,
       fontSize: 42,
-      color: '#f0eeff',
+      color: 'var(--white)',
       lineHeight: 1
     }
   }, totalFound, /*#__PURE__*/React.createElement("span", {
     style: {
-      color: 'rgba(160,140,255,0.4)',
+      color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       fontSize: 24
     }
   }, " / ", totalAll)), /*#__PURE__*/React.createElement("div", {
@@ -2903,7 +2906,7 @@ function KollektikonPage() {
       top: 0,
       bottom: 0,
       width: `${overallKomplettPct * 100}%`,
-      boxShadow: '0 0 9px 1px rgba(160,140,255,0.55), 0 0 20px 5px rgba(160,140,255,0.22), 0 0 32px 10px rgba(160,140,255,0.09)',
+      boxShadow: '0 0 9px 1px rgba(var(--accent-rgb),calc(0.55*var(--ka))), 0 0 20px 5px rgba(var(--accent-rgb),calc(0.22*var(--ka))), 0 0 32px 10px rgba(var(--accent-rgb),calc(0.09*var(--ka)))',
       borderRadius: 2,
       pointerEvents: 'none'
     }
@@ -2911,8 +2914,8 @@ function KollektikonPage() {
     style: {
       position: 'absolute',
       inset: 0,
-      background: 'rgba(124,77,255,0.08)',
-      border: '1px solid rgba(124,77,255,0.22)',
+      background: 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))',
       borderRadius: 2,
       overflow: 'hidden'
     }
@@ -2923,7 +2926,7 @@ function KollektikonPage() {
       top: 0,
       bottom: 0,
       width: `${overallPct * 100}%`,
-      background: 'linear-gradient(90deg, rgba(220,215,250,0.18), rgba(240,238,255,0.28))',
+      background: 'linear-gradient(90deg, rgba(220,215,250,0.18), rgba(var(--text-hi-rgb),calc(0.28*var(--kt))))',
       transition: 'width 0.8s cubic-bezier(.2,.85,.2,1)'
     }
   }), /*#__PURE__*/React.createElement("div", {
@@ -2933,12 +2936,13 @@ function KollektikonPage() {
       top: -1,
       bottom: -1,
       width: `${overallKomplettPct * 100}%`,
-      background: 'linear-gradient(90deg, rgba(140,100,255,1), rgba(200,180,255,1))',
+      background: 'linear-gradient(90deg, rgba(140,100,255,1), rgba(200,180,255,calc(1*var(--ka))))',
       boxShadow: 'inset 0 0 4px rgba(255,255,255,0.45)',
       borderRadius: 2,
       transition: 'width 1s cubic-bezier(.2,.85,.2,1)'
     }
   }))), /*#__PURE__*/React.createElement("div", {
+    className: "nsc-progress-legend",
     style: {
       marginTop: 6,
       display: 'flex',
@@ -2951,27 +2955,27 @@ function KollektikonPage() {
     }
   }, /*#__PURE__*/React.createElement("span", {
     style: {
-      color: 'rgba(240,238,255,0.7)'
+      color: 'rgba(var(--text-hi-rgb),calc(0.7*var(--kt) + var(--tb)))'
     }
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       display: 'inline-block',
       width: 8,
       height: 8,
-      background: 'rgba(240,238,255,0.85)',
+      background: 'rgba(var(--text-hi-rgb),calc(0.85*var(--kt)))',
       marginRight: 5,
       verticalAlign: 'middle'
     }
   }), Math.round(overallPct * 100), " % In Forschung"), /*#__PURE__*/React.createElement("span", {
     style: {
-      color: 'rgba(190,170,255,0.95)'
+      color: 'color-mix(in srgb, rgba(190,170,255,0.95), rgb(var(--ink-rgb)) var(--cm))'
     }
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       display: 'inline-block',
       width: 8,
       height: 8,
-      background: 'rgba(160,140,255,0.95)',
+      background: 'rgba(var(--accent-rgb),calc(0.95*var(--ka)))',
       marginRight: 5,
       verticalAlign: 'middle'
     }
@@ -3029,7 +3033,7 @@ function KollektikonPage() {
       fontFamily: 'var(--font-display)',
       fontSize: 14,
       letterSpacing: '0.24em',
-      color: '#f0eeff',
+      color: 'var(--white)',
       textTransform: 'uppercase'
     }
   }, catObj.label), /*#__PURE__*/React.createElement("div", {
@@ -3047,6 +3051,7 @@ function KollektikonPage() {
       minWidth: 20
     }
   }), /*#__PURE__*/React.createElement("div", {
+    className: "kol-tools",
     style: {
       display: 'flex',
       flexDirection: 'column',
@@ -3054,6 +3059,7 @@ function KollektikonPage() {
       alignItems: 'flex-end'
     }
   }, /*#__PURE__*/React.createElement("div", {
+    className: "kol-search",
     style: {
       position: 'relative',
       width: 'min(380px, 80vw)'
@@ -3089,9 +3095,9 @@ function KollektikonPage() {
     style: {
       width: '100%',
       padding: '8px 36px 8px 30px',
-      background: search ? cA(0.06) : 'rgba(10,8,28,0.55)',
-      border: search ? `1px solid ${cA(0.7)}` : '1px solid rgba(124,77,255,0.22)',
-      color: '#f0eeff',
+      background: search ? cA(0.06) : 'rgba(var(--panel-rgb),0.55)',
+      border: search ? `1px solid ${cA(0.7)}` : '1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))',
+      color: 'var(--white)',
       fontFamily: 'var(--font-mono)',
       fontSize: 10,
       letterSpacing: '0.12em',
@@ -3103,13 +3109,13 @@ function KollektikonPage() {
     onFocus: e => {
       if (!search) {
         e.currentTarget.style.borderColor = cA(0.45);
-        e.currentTarget.style.background = 'rgba(10,8,28,0.85)';
+        e.currentTarget.style.background = 'rgba(var(--panel-rgb),0.85)';
       }
     },
     onBlur: e => {
       if (!search) {
-        e.currentTarget.style.borderColor = 'rgba(124,77,255,0.22)';
-        e.currentTarget.style.background = 'rgba(10,8,28,0.55)';
+        e.currentTarget.style.borderColor = 'rgba(var(--purple-rgb),calc(0.22*var(--kp)))';
+        e.currentTarget.style.background = 'rgba(var(--panel-rgb),0.55)';
       }
     }
   }), search ? /*#__PURE__*/React.createElement("button", {
@@ -3141,14 +3147,15 @@ function KollektikonPage() {
       fontFamily: 'var(--font-mono)',
       fontSize: 8,
       letterSpacing: '0.12em',
-      color: 'rgba(160,140,255,0.4)',
+      color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
-      border: '1px solid rgba(124,77,255,0.22)',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))',
       padding: '1px 5px',
       borderRadius: 2,
       pointerEvents: 'none'
     }
   }, "\u2318K")), /*#__PURE__*/React.createElement("div", {
+    className: "kol-chips",
     style: {
       display: 'flex',
       gap: 8
@@ -3211,7 +3218,7 @@ function KollektikonPage() {
       fontFamily: 'var(--font-mono)',
       fontSize: 9,
       letterSpacing: '0.18em',
-      color: 'rgba(160,140,255,0.55)',
+      color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, /*#__PURE__*/React.createElement("span", null, "+ ", otherHits.length, " in anderen Kategorien:"), Array.from(new Set(otherHits.map(e => e.cat))).map(cid => {
@@ -3248,7 +3255,7 @@ function KollektikonPage() {
       fontFamily: 'var(--font-mono)',
       fontSize: 10,
       letterSpacing: '0.22em',
-      color: 'rgba(160,140,255,0.55)',
+      color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
       marginBottom: 10
     }
@@ -3257,7 +3264,7 @@ function KollektikonPage() {
       fontFamily: 'var(--font-mono)',
       fontSize: 9,
       letterSpacing: '0.18em',
-      color: 'rgba(160,140,255,0.45)',
+      color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Aber ", otherHits.length, " Treffer in anderen Kategorien \u2014 oben anklicken.")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
@@ -3279,12 +3286,12 @@ function KollektikonPage() {
       fontFamily: 'var(--font-mono)',
       fontSize: 9,
       letterSpacing: '0.2em',
-      color: 'rgba(160,140,255,0.5)',
+      color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, renderedEntries.length, " von ", visibleEntries.length, " \xB7 Suche oder Filter f\xFCr vollst\xE4ndige Ansicht"))), /*#__PURE__*/React.createElement("div", {
     style: {
-      borderTop: '1px solid rgba(124,77,255,0.1)',
+      borderTop: '1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
       padding: '14px 28px',
       display: 'flex',
       justifyContent: 'space-between',
@@ -3294,7 +3301,7 @@ function KollektikonPage() {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: 9,
-      color: 'rgba(124,77,255,0.32)',
+      color: 'rgba(var(--purple-rgb),calc(0.32*var(--kp) + var(--tb)))',
       letterSpacing: '0.18em',
       textTransform: 'uppercase'
     }
@@ -3302,7 +3309,7 @@ function KollektikonPage() {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: 8,
-      color: 'rgba(124,77,255,0.28)',
+      color: 'rgba(var(--purple-rgb),calc(0.28*var(--kp) + var(--tb)))',
       letterSpacing: '0.15em'
     }
   }, C3.length, " Kategorien \xB7 ", totalAll, " Eintr\xE4ge \xB7 ", totalFound, " dokumentiert")));

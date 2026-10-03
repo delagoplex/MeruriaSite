@@ -28,12 +28,12 @@ function ChapterUebersicht({ goTo }) {
           { t:'Freie Reagenzien', d:'Zutaten bestimmen den Effekt — kein starres Rezeptbuch.' },
         ].map((p, i) => (
           <div key={i} style={{
-            padding:'14px 16px',background:'rgba(124,77,255,0.05)',
-            border:'1px solid rgba(124,77,255,0.18)',borderLeft:'2px solid rgba(124,77,255,0.5)',
+            padding:'14px 16px',background:'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',
+            border:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',borderLeft:'2px solid rgba(var(--purple-rgb),calc(0.5*var(--kp)))',
             borderRadius:'0 4px 4px 0',
           }}>
-            <div style={{fontFamily:'var(--font-display)',fontSize:'11px',letterSpacing:'0.18em',color:'rgba(180,155,255,0.95)',textTransform:'uppercase',marginBottom:'5px'}}>{p.t}</div>
-            <div style={{fontFamily:'var(--font-body)',fontSize:'12px',fontWeight:300,color:'rgba(200,190,240,0.7)',lineHeight:1.6}}>{p.d}</div>
+            <div style={{fontFamily:'var(--font-display)',fontSize:'11px',letterSpacing:'0.18em',color:'color-mix(in srgb, rgba(180,155,255,0.95), rgb(var(--ink-rgb)) var(--cm))',textTransform:'uppercase',marginBottom:'5px'}}>{p.t}</div>
+            <div style={{fontFamily:'var(--font-body)',fontSize:'12px',fontWeight:300,color:'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',lineHeight:1.6}}>{p.d}</div>
           </div>
         ))}
       </div>
@@ -111,12 +111,12 @@ function ChapterProzess({ goTo }) {
           { n:'03', t:'Handwerk in 2-h-Blöcken',         d:'Pro Block ein Handwerkswurf. Fortschritt akkumuliert.' },
         ].map((p, i) => (
           <div key={i} style={{
-            padding:'16px 18px',background:'rgba(10,8,28,0.5)',
-            border:'1px solid rgba(124,77,255,0.22)',borderRadius:'4px',
+            padding:'16px 18px',background:'rgba(var(--panel-rgb),0.5)',
+            border:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))',borderRadius:'4px',
           }}>
-            <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.24em',color:'rgba(124,77,255,0.65)',marginBottom:'8px'}}>{p.n}</div>
-            <div style={{fontFamily:'var(--font-display)',fontSize:'13px',color:'rgba(232,225,255,0.95)',letterSpacing:'0.06em',marginBottom:'7px'}}>{p.t}</div>
-            <div style={{fontFamily:'var(--font-body)',fontSize:'12px',fontWeight:300,color:'rgba(200,190,240,0.68)',lineHeight:1.65}}>{p.d}</div>
+            <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.24em',color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))',marginBottom:'8px'}}>{p.n}</div>
+            <div style={{fontFamily:'var(--font-display)',fontSize:'13px',color:'rgba(var(--text-hi-rgb),calc(0.95*var(--kt) + var(--tb)))',letterSpacing:'0.06em',marginBottom:'7px'}}>{p.t}</div>
+            <div style={{fontFamily:'var(--font-body)',fontSize:'12px',fontWeight:300,color:'rgba(var(--text-rgb),calc(0.68*var(--kt) + var(--tb)))',lineHeight:1.65}}>{p.d}</div>
           </div>
         ))}
       </div>
@@ -210,18 +210,18 @@ function ResultBlock({ tone, label, text }) {
   const toneMap = {
     good:    { border:'rgba(120,230,180,0.5)', tag:'rgba(120,230,180,0.9)' },
     crit:    { border:'rgba(255,200,90,0.55)', tag:'rgba(255,200,90,0.95)' },
-    neutral: { border:'rgba(124,77,255,0.4)',  tag:'rgba(180,155,255,0.92)' },
+    neutral: { border:'rgba(var(--purple-rgb),calc(0.4*var(--kp)))',  tag:'rgba(180,155,255,0.92)' },
     bad:     { border:'rgba(255,110,110,0.55)',tag:'rgba(255,110,110,0.92)' },
   };
   const t = toneMap[tone] || toneMap.neutral;
   return (
     <div style={{
-      padding:'12px 14px',background:'rgba(10,8,28,0.4)',
+      padding:'12px 14px',background:'rgba(var(--panel-rgb),0.4)',
       border:`1px solid ${t.border}`,borderLeft:`2px solid ${t.border}`,
       borderRadius:'0 3px 3px 0',
     }}>
       <div style={{fontFamily:'var(--font-display)',fontSize:'10.5px',letterSpacing:'0.18em',color:t.tag,textTransform:'uppercase',marginBottom:'5px'}}>{label}</div>
-      <div style={{fontFamily:'var(--font-body)',fontSize:'12px',fontWeight:300,color:'rgba(200,190,240,0.78)',lineHeight:1.6}}>{text}</div>
+      <div style={{fontFamily:'var(--font-body)',fontSize:'12px',fontWeight:300,color:'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',lineHeight:1.6}}>{text}</div>
     </div>
   );
 }
@@ -361,14 +361,14 @@ function ChapterSammeln({ goTo }) {
 function FishingCard({ title, sg, text }) {
   return (
     <div style={{
-      padding:'12px 14px',background:'rgba(10,8,28,0.5)',
-      border:'1px solid rgba(124,77,255,0.18)',borderRadius:'3px',
+      padding:'12px 14px',background:'rgba(var(--panel-rgb),0.5)',
+      border:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',borderRadius:'3px',
     }}>
       <div style={{display:'flex',alignItems:'baseline',gap:'8px',marginBottom:'6px',flexWrap:'wrap'}}>
-        <span style={{fontFamily:'var(--font-display)',fontSize:'12px',letterSpacing:'0.1em',color:'rgba(232,225,255,0.95)'}}>{title}</span>
-        <span style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.12em',color:'rgba(160,140,255,0.7)'}}>{sg}</span>
+        <span style={{fontFamily:'var(--font-display)',fontSize:'12px',letterSpacing:'0.1em',color:'rgba(var(--text-hi-rgb),calc(0.95*var(--kt) + var(--tb)))'}}>{title}</span>
+        <span style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.12em',color:'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))'}}>{sg}</span>
       </div>
-      <div style={{fontFamily:'var(--font-body)',fontSize:'11.5px',fontWeight:300,color:'rgba(200,190,240,0.68)',lineHeight:1.65}}>{text}</div>
+      <div style={{fontFamily:'var(--font-body)',fontSize:'11.5px',fontWeight:300,color:'rgba(var(--text-rgb),calc(0.68*var(--kt) + var(--tb)))',lineHeight:1.65}}>{text}</div>
     </div>
   );
 }
@@ -486,10 +486,10 @@ function FoodSection() {
   ];
   return (
     <div style={{
-      border:'1px solid rgba(124,77,255,0.18)', borderRadius:'3px',
-      overflow:'hidden', marginBottom:'22px', background:'rgba(10,8,28,0.6)',
+      border:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))', borderRadius:'3px',
+      overflow:'hidden', marginBottom:'22px', background:'rgba(var(--panel-rgb),0.6)',
     }}>
-      <div style={{ background:'rgba(255,255,255,0.02)', borderBottom:'1px solid rgba(124,77,255,0.12)' }}>
+      <div style={{ background:'rgba(255,255,255,0.02)', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))' }}>
         <img src="assets/images/kochen_stufen.png" alt="Mahlzeit-Qualitätsstufen"
              style={{ display:'block', width:'100%', height:'auto' }} />
       </div>
@@ -497,31 +497,31 @@ function FoodSection() {
         {cols.map((col, ci) => (
           <div key={ci} style={{
             padding:'15px 13px',
-            borderRight: ci < 3 ? '1px solid rgba(124,77,255,0.1)' : 'none',
+            borderRight: ci < 3 ? '1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))' : 'none',
           }}>
             <div style={{
               fontFamily:'var(--font-display)', fontSize:'10px', letterSpacing:'0.14em',
-              color:'rgba(160,140,255,0.9)', textTransform:'uppercase',
+              color:'rgba(var(--accent-rgb),calc(0.9*var(--ka) + var(--tb)))', textTransform:'uppercase',
               marginBottom:'12px', paddingBottom:'7px',
-              borderBottom:'1px solid rgba(124,77,255,0.12)',
+              borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))',
             }}>{col.title}</div>
             {col.items.map((item, ii) => (
               <div key={ii} style={{ marginBottom:'10px' }}>
                 <div style={{
                   fontFamily:'var(--font-body)', fontWeight:400, fontSize:'12px',
-                  color: item.bad ? 'rgba(255,110,110,0.85)' : 'rgba(220,210,255,0.88)',
+                  color: item.bad ? 'color-mix(in srgb, rgba(255,110,110,0.85), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--text-rgb),calc(0.88*var(--kt)))',
                   lineHeight:1.4,
                 }}>{item.name}</div>
                 {item.stat && (
                   <div style={{
                     fontFamily:'var(--font-mono)', fontSize:'9.5px', marginTop:'2px',
-                    color: item.bad ? 'rgba(255,140,140,0.7)' : 'rgba(94,232,208,0.72)',
+                    color: item.bad ? 'color-mix(in srgb, rgba(255,140,140,0.7), rgb(var(--ink-rgb)) var(--cm))' : 'color-mix(in srgb, rgba(94,232,208,0.72), rgb(var(--ink-rgb)) var(--cm))',
                   }}>{item.stat}</div>
                 )}
                 {item.warn && (
                   <div style={{
                     fontFamily:'var(--font-mono)', fontSize:'9.5px', marginTop:'2px',
-                    color:'rgba(255,160,100,0.75)',
+                    color:'color-mix(in srgb, rgba(255,160,100,0.75), rgb(var(--ink-rgb)) var(--cm))',
                   }}>+ {item.warn}</div>
                 )}
               </div>
@@ -529,7 +529,7 @@ function FoodSection() {
             {col.note && (
               <div style={{
                 fontFamily:'var(--font-body)', fontWeight:300, fontStyle:'italic',
-                fontSize:'10.5px', color:'rgba(180,165,235,0.55)',
+                fontSize:'10.5px', color:'color-mix(in srgb, rgba(180,165,235,0.55), rgb(var(--ink-rgb)) var(--cm))',
                 marginTop:'10px', lineHeight:1.55, textWrap:'pretty',
               }}>{col.note}</div>
             )}
@@ -588,12 +588,12 @@ function ChapterPflanzen({ goTo }) {
 function RegionCard({ region }) {
   return (
     <div style={{
-      padding:'12px 14px',background:'rgba(10,8,28,0.5)',
-      border:'1px solid rgba(124,77,255,0.18)',borderRadius:'3px',
+      padding:'12px 14px',background:'rgba(var(--panel-rgb),0.5)',
+      border:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',borderRadius:'3px',
     }}>
       <div style={{display:'flex',alignItems:'center',gap:'10px',marginBottom:'10px'}}>
         <span style={{fontSize:'20px'}}>{region.icon}</span>
-        <span style={{fontFamily:'var(--font-display)',fontSize:'13.5px',letterSpacing:'0.18em',color:'rgba(232,225,255,0.95)',textTransform:'uppercase'}}>{region.name}</span>
+        <span style={{fontFamily:'var(--font-display)',fontSize:'13.5px',letterSpacing:'0.18em',color:'rgba(var(--text-hi-rgb),calc(0.95*var(--kt) + var(--tb)))',textTransform:'uppercase'}}>{region.name}</span>
       </div>
       <table style={{width:'100%',borderCollapse:'collapse',fontFamily:'var(--font-body)'}}>
         <tbody>
@@ -607,9 +607,9 @@ function RegionCard({ region }) {
             else if (lo === 20) rarity = 'sehr_selten';
             const rData = window.RARITY_BY[rarity];
             return (
-              <tr key={i} style={{borderBottom:'1px solid rgba(124,77,255,0.06)'}}>
+              <tr key={i} style={{borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.06*var(--kp)))'}}>
                 <td style={{padding:'5px 0',width:'50px',fontFamily:'var(--font-mono)',fontSize:'10.5px',color:rData.hue,letterSpacing:'0.08em'}}>{r.range}</td>
-                <td style={{padding:'5px 0',fontSize:'11.5px',fontWeight:300,color:'rgba(204,194,240,0.78)',letterSpacing:'0.02em'}}>{r.label}</td>
+                <td style={{padding:'5px 0',fontSize:'11.5px',fontWeight:300,color:'color-mix(in srgb, rgba(204,194,240,0.78), rgb(var(--ink-rgb)) var(--cm))',letterSpacing:'0.02em'}}>{r.label}</td>
               </tr>
             );
           })}
@@ -711,11 +711,11 @@ function ChapterAlchemie({ goTo }) {
         ].map((r, i) => (
           <div key={i} style={{
             display:'flex',gap:'10px',padding:'8px 12px',
-            background:'rgba(124,77,255,0.04)',borderLeft:'2px solid rgba(124,77,255,0.4)',
+            background:'rgba(var(--purple-rgb),calc(0.04*var(--kp)))',borderLeft:'2px solid rgba(var(--purple-rgb),calc(0.4*var(--kp)))',
             borderRadius:'0 2px 2px 0',
           }}>
-            <span style={{fontFamily:'var(--font-mono)',fontSize:'9px',color:'rgba(160,140,255,0.55)',marginTop:'2px',letterSpacing:'0.12em'}}>0{i+1}</span>
-            <span style={{fontFamily:'var(--font-body)',fontSize:'12px',fontWeight:300,color:'rgba(200,190,240,0.78)',lineHeight:1.65,flex:1,textWrap:'pretty'}}>{r}</span>
+            <span style={{fontFamily:'var(--font-mono)',fontSize:'9px',color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',marginTop:'2px',letterSpacing:'0.12em'}}>0{i+1}</span>
+            <span style={{fontFamily:'var(--font-body)',fontSize:'12px',fontWeight:300,color:'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',lineHeight:1.65,flex:1,textWrap:'pretty'}}>{r}</span>
           </div>
         ))}
       </div>
@@ -765,14 +765,14 @@ function ChapterAlchemie({ goTo }) {
 function KonkokTypeCard({ icon, label, text }) {
   return (
     <div style={{
-      padding:'14px 16px',background:'rgba(10,8,28,0.5)',
-      border:'1px solid rgba(124,77,255,0.22)',borderRadius:'4px',
+      padding:'14px 16px',background:'rgba(var(--panel-rgb),0.5)',
+      border:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))',borderRadius:'4px',
     }}>
       <div style={{display:'flex',alignItems:'center',gap:'10px',marginBottom:'8px'}}>
         <span style={{fontSize:'22px'}}>{icon}</span>
-        <span style={{fontFamily:'var(--font-display)',fontSize:'13.5px',letterSpacing:'0.2em',color:'rgba(232,225,255,0.95)',textTransform:'uppercase'}}>{label}</span>
+        <span style={{fontFamily:'var(--font-display)',fontSize:'13.5px',letterSpacing:'0.2em',color:'rgba(var(--text-hi-rgb),calc(0.95*var(--kt) + var(--tb)))',textTransform:'uppercase'}}>{label}</span>
       </div>
-      <div style={{fontFamily:'var(--font-body)',fontSize:'12px',fontWeight:300,color:'rgba(200,190,240,0.68)',lineHeight:1.7,textWrap:'pretty'}}>{text}</div>
+      <div style={{fontFamily:'var(--font-body)',fontSize:'12px',fontWeight:300,color:'rgba(var(--text-rgb),calc(0.68*var(--kt) + var(--tb)))',lineHeight:1.7,textWrap:'pretty'}}>{text}</div>
     </div>
   );
 }
@@ -790,7 +790,7 @@ function EffectTable({ familie }) {
       { key:'name', label:'Effekt' },
       { key:'beschreibung', label:'Beschreibung' },
       { key:'r', label:'Seltenheit', align:'right' },
-    ]} rows={rows} />
+    ]} rows={rows} stack />
   );
 }
 
@@ -813,12 +813,12 @@ function ChapterSchmiede({ goTo }) {
           const on = katFilter === k.id;
           return (
             <button key={k.id} onClick={()=>setKatFilter(k.id)} style={{
-              padding:'6px 12px', background: on ? 'rgba(124,77,255,0.2)' : 'rgba(124,77,255,0.05)',
-              border: `1px solid ${on ? 'rgba(124,77,255,0.6)' : 'rgba(124,77,255,0.2)'}`,
+              padding:'6px 12px', background: on ? 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',
+              border: `1px solid ${on ? 'rgba(var(--purple-rgb),calc(0.6*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))'}`,
               borderRadius:'2px', cursor:'pointer',
               fontFamily:'var(--font-mono)', fontSize:'10.5px', letterSpacing:'0.14em',
               textTransform:'uppercase',
-              color: on ? '#f0eeff' : 'rgba(200,190,240,0.7)',
+              color: on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.7*var(--kt)))',
             }}>{k.icon && <span style={{marginRight:'6px'}}>{k.icon}</span>}{k.label}</button>
           );
         })}
@@ -891,25 +891,25 @@ function ChapterSchmiede({ goTo }) {
 function MaterialEffectRow({ mat }) {
   return (
     <div style={{
-      padding:'11px 14px',background:'rgba(10,8,28,0.45)',
-      border:'1px solid rgba(124,77,255,0.15)',borderRadius:'3px',
+      padding:'11px 14px',background:'rgba(var(--panel-rgb),0.45)',
+      border:'1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))',borderRadius:'3px',
       display:'grid',gridTemplateColumns:'170px 1fr 1fr',gap:'14px',
     }}>
       <div>
         <div style={{display:'flex',alignItems:'center',gap:'8px',marginBottom:'4px'}}>
-          <span style={{fontFamily:'var(--font-display)',fontSize:'12.5px',letterSpacing:'0.06em',color:'rgba(232,225,255,0.95)'}}>{mat.name}</span>
+          <span style={{fontFamily:'var(--font-display)',fontSize:'12.5px',letterSpacing:'0.06em',color:'rgba(var(--text-hi-rgb),calc(0.95*var(--kt) + var(--tb)))'}}>{mat.name}</span>
         </div>
         <RarityPill seltenheit={mat.seltenheit} size="sm" />
       </div>
       <div>
-        <div style={{fontFamily:'var(--font-mono)',fontSize:'8.5px',letterSpacing:'0.18em',color:'rgba(160,140,255,0.55)',textTransform:'uppercase',marginBottom:'3px'}}>Rüstung</div>
-        <div style={{fontFamily:'var(--font-body)',fontSize:'11.5px',fontWeight:300,color: mat.ruestung ? 'rgba(204,194,240,0.78)' : 'rgba(120,110,160,0.55)',lineHeight:1.6}}>
+        <div style={{fontFamily:'var(--font-mono)',fontSize:'8.5px',letterSpacing:'0.18em',color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',textTransform:'uppercase',marginBottom:'3px'}}>Rüstung</div>
+        <div style={{fontFamily:'var(--font-body)',fontSize:'11.5px',fontWeight:300,color: mat.ruestung ? 'color-mix(in srgb, rgba(204,194,240,0.78), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(120,110,160,0.55)',lineHeight:1.6}}>
           {mat.ruestung || '—'}
         </div>
       </div>
       <div>
-        <div style={{fontFamily:'var(--font-mono)',fontSize:'8.5px',letterSpacing:'0.18em',color:'rgba(160,140,255,0.55)',textTransform:'uppercase',marginBottom:'3px'}}>Waffe</div>
-        <div style={{fontFamily:'var(--font-body)',fontSize:'11.5px',fontWeight:300,color: mat.waffe ? 'rgba(204,194,240,0.78)' : 'rgba(120,110,160,0.55)',lineHeight:1.6}}>
+        <div style={{fontFamily:'var(--font-mono)',fontSize:'8.5px',letterSpacing:'0.18em',color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',textTransform:'uppercase',marginBottom:'3px'}}>Waffe</div>
+        <div style={{fontFamily:'var(--font-body)',fontSize:'11.5px',fontWeight:300,color: mat.waffe ? 'color-mix(in srgb, rgba(204,194,240,0.78), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(120,110,160,0.55)',lineHeight:1.6}}>
           {mat.waffe || '—'}
         </div>
       </div>
@@ -991,7 +991,7 @@ function ChapterMagisch({ goTo }) {
 
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'14px',marginBottom:'18px'}}>
         <div>
-          <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.2em',color:'rgba(160,140,255,0.6)',textTransform:'uppercase',marginBottom:'8px'}}>Sockel-Slots erstellen</div>
+          <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.2em',color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))',textTransform:'uppercase',marginBottom:'8px'}}>Sockel-Slots erstellen</div>
           <Table
             cols={[
               { key:'r', label:'Seltenheit' },
@@ -1008,7 +1008,7 @@ function ChapterMagisch({ goTo }) {
           />
         </div>
         <div>
-          <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.2em',color:'rgba(160,140,255,0.6)',textTransform:'uppercase',marginBottom:'8px'}}>Edelstein-Sockelsteine</div>
+          <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.2em',color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))',textTransform:'uppercase',marginBottom:'8px'}}>Edelstein-Sockelsteine</div>
           <Table
             cols={[
               { key:'r', label:'Eigenschaft' },
@@ -1053,16 +1053,16 @@ function ChapterMagisch({ goTo }) {
 function MagicItemCard({ name, rarity, type, text }) {
   return (
     <div style={{
-      padding:'14px 16px',background:'rgba(10,8,28,0.5)',
-      border:'1px solid rgba(124,77,255,0.22)',borderLeft:'2px solid rgba(124,77,255,0.5)',
+      padding:'14px 16px',background:'rgba(var(--panel-rgb),0.5)',
+      border:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))',borderLeft:'2px solid rgba(var(--purple-rgb),calc(0.5*var(--kp)))',
       borderRadius:'0 4px 4px 0',
     }}>
-      <div style={{fontFamily:'var(--font-display)',fontSize:'13px',letterSpacing:'0.08em',color:'rgba(232,225,255,0.96)',marginBottom:'5px'}}>{name}</div>
+      <div style={{fontFamily:'var(--font-display)',fontSize:'13px',letterSpacing:'0.08em',color:'rgba(var(--text-hi-rgb),calc(0.96*var(--kt) + var(--tb)))',marginBottom:'5px'}}>{name}</div>
       <div style={{display:'flex',alignItems:'center',gap:'8px',marginBottom:'9px',flexWrap:'wrap'}}>
         <RarityPill seltenheit={rarity} size="sm" />
-        <span style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.14em',color:'rgba(160,140,255,0.6)',textTransform:'uppercase'}}>{type}</span>
+        <span style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.14em',color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))',textTransform:'uppercase'}}>{type}</span>
       </div>
-      <div style={{fontFamily:'var(--font-body)',fontSize:'12px',fontWeight:300,color:'rgba(200,190,240,0.72)',lineHeight:1.7,textWrap:'pretty'}}>{text}</div>
+      <div style={{fontFamily:'var(--font-body)',fontSize:'12px',fontWeight:300,color:'rgba(var(--text-rgb),calc(0.72*var(--kt) + var(--tb)))',lineHeight:1.7,textWrap:'pretty'}}>{text}</div>
     </div>
   );
 }
@@ -1086,15 +1086,15 @@ function ChapterKomplikationen({ goTo }) {
       </Txt>
 
       <div style={{
-        padding:'14px 16px',background:'rgba(10,8,28,0.6)',
-        border:'1px solid rgba(124,77,255,0.3)',borderRadius:'4px',
+        padding:'14px 16px',background:'rgba(var(--panel-rgb),0.6)',
+        border:'1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))',borderRadius:'4px',
         margin:'10px 0 24px',
       }}>
         <div style={{display:'flex',alignItems:'center',gap:'14px',flexWrap:'wrap'}}>
           <DiceButton spec="1W20" label="Komplikation würfeln" size="lg" tone="bad"
             onResult={rollKomp}/>
           {latest && (
-            <span style={{fontFamily:'var(--font-mono)',fontSize:'9.5px',letterSpacing:'0.16em',color:'rgba(160,140,255,0.55)',textTransform:'uppercase'}}>
+            <span style={{fontFamily:'var(--font-mono)',fontSize:'9.5px',letterSpacing:'0.16em',color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',textTransform:'uppercase'}}>
               Komplikation #{latest.n}
             </span>
           )}
@@ -1105,12 +1105,12 @@ function ChapterKomplikationen({ goTo }) {
             background:'rgba(220,80,80,0.06)',borderLeft:'2px solid rgba(220,80,80,0.4)',
             borderRadius:'0 3px 3px 0',
             fontFamily:'var(--font-body)',fontSize:'13px',fontWeight:300,
-            color:'rgba(220,210,250,0.88)',lineHeight:1.75,textWrap:'pretty',
+            color:'rgba(var(--text-rgb),calc(0.88*var(--kt) + var(--tb)))',lineHeight:1.75,textWrap:'pretty',
             animation:'resultPop 0.4s ease',
           }}>
             {latest.text}
             {latest.npc && (
-              <div style={{marginTop:'8px',fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.14em',color:'rgba(255,160,90,0.85)',textTransform:'uppercase'}}>
+              <div style={{marginTop:'8px',fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.14em',color:'color-mix(in srgb, rgba(255,160,90,0.85), rgb(var(--ink-rgb)) var(--cm))',textTransform:'uppercase'}}>
                 ※ Kann einen Rivalen oder wiederkehrenden NSC einbeziehen
               </div>
             )}
@@ -1126,7 +1126,7 @@ function ChapterKomplikationen({ goTo }) {
         ]}
         rows={window.KOMPLIKATIONEN.map(k => ({
           n: k.n,
-          text: <span>{k.text}{k.npc && <span style={{marginLeft:'8px',fontFamily:'var(--font-mono)',fontSize:'8.5px',letterSpacing:'0.12em',color:'rgba(255,160,90,0.8)',textTransform:'uppercase'}}>※ NSC</span>}</span>,
+          text: <span>{k.text}{k.npc && <span style={{marginLeft:'8px',fontFamily:'var(--font-mono)',fontSize:'8.5px',letterSpacing:'0.12em',color:'color-mix(in srgb, rgba(255,160,90,0.8), rgb(var(--ink-rgb)) var(--cm))',textTransform:'uppercase'}}>※ NSC</span>}</span>,
         }))}
         dense
       />
@@ -1138,7 +1138,7 @@ function ChapterKomplikationen({ goTo }) {
       </Txt>
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'14px'}}>
         <div>
-          <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.2em',color:'rgba(160,140,255,0.6)',textTransform:'uppercase',marginBottom:'8px'}}>Verlust</div>
+          <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.2em',color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))',textTransform:'uppercase',marginBottom:'8px'}}>Verlust</div>
           <ul style={{listStyle:'none',padding:0,margin:0,display:'flex',flexDirection:'column',gap:'6px'}}>
             {[
               ['Angriffswurf um 5+ verfehlt', '−1'],
@@ -1146,15 +1146,15 @@ function ChapterKomplikationen({ goTo }) {
               ['Treffer 5+ über RK',           '−1 (Rüstung)'],
               ['Kritischer Treffer gegen dich','−2 (Rüstung)'],
             ].map((row, i) => (
-              <li key={i} style={{display:'flex',justifyContent:'space-between',gap:'10px',padding:'6px 10px',background:'rgba(124,77,255,0.05)',borderLeft:'2px solid rgba(124,77,255,0.35)',fontFamily:'var(--font-body)',fontSize:'12px',color:'rgba(200,190,240,0.78)'}}>
+              <li key={i} style={{display:'flex',justifyContent:'space-between',gap:'10px',padding:'6px 10px',background:'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',borderLeft:'2px solid rgba(var(--purple-rgb),calc(0.35*var(--kp)))',fontFamily:'var(--font-body)',fontSize:'12px',color:'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))'}}>
                 <span>{row[0]}</span>
-                <span style={{fontFamily:'var(--font-mono)',color:'rgba(255,140,140,0.85)',letterSpacing:'0.06em'}}>{row[1]}</span>
+                <span style={{fontFamily:'var(--font-mono)',color:'color-mix(in srgb, rgba(255,140,140,0.85), rgb(var(--ink-rgb)) var(--cm))',letterSpacing:'0.06em'}}>{row[1]}</span>
               </li>
             ))}
           </ul>
         </div>
         <div>
-          <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.2em',color:'rgba(160,140,255,0.6)',textTransform:'uppercase',marginBottom:'8px'}}>Haltbarkeitspunkte nach Materialwert</div>
+          <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.2em',color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))',textTransform:'uppercase',marginBottom:'8px'}}>Haltbarkeitspunkte nach Materialwert</div>
           <Table
             cols={[
               { key:'wert', label:'Wert' },
@@ -1236,24 +1236,24 @@ function ToolPromo({ title, text, action }) {
     <button onClick={action} style={{
       display:'block', width:'100%', textAlign:'left',
       padding:'14px 18px', margin:'18px 0',
-      background:'rgba(124,77,255,0.08)',
-      border:'1px dashed rgba(124,77,255,0.5)',
+      background:'rgba(var(--purple-rgb),calc(0.08*var(--kp)))',
+      border:'1px dashed rgba(var(--purple-rgb),calc(0.5*var(--kp)))',
       borderRadius:'4px', cursor:'pointer',
       transition:'all 0.2s',
     }}
-      onMouseEnter={e=>{e.currentTarget.style.background='rgba(124,77,255,0.14)';e.currentTarget.style.borderStyle='solid';}}
-      onMouseLeave={e=>{e.currentTarget.style.background='rgba(124,77,255,0.08)';e.currentTarget.style.borderStyle='dashed';}}>
-      <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.22em',color:'rgba(160,140,255,0.65)',textTransform:'uppercase',marginBottom:'6px'}}>◇ Werkbank-Tool</div>
+      onMouseEnter={e=>{e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.14*var(--kp)))';e.currentTarget.style.borderStyle='solid';}}
+      onMouseLeave={e=>{e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.08*var(--kp)))';e.currentTarget.style.borderStyle='dashed';}}>
+      <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.22em',color:'rgba(var(--accent-rgb),calc(0.65*var(--ka) + var(--tb)))',textTransform:'uppercase',marginBottom:'6px'}}>◇ Werkbank-Tool</div>
       <div style={{display:'flex',alignItems:'center',gap:'12px',flexWrap:'wrap'}}>
         <div style={{flex:1,minWidth:'180px'}}>
-          <div style={{fontFamily:'var(--font-display)',fontSize:'14px',letterSpacing:'0.12em',color:'rgba(232,225,255,0.95)',textTransform:'uppercase',marginBottom:'4px'}}>{title}</div>
-          <div style={{fontFamily:'var(--font-body)',fontSize:'12.5px',fontWeight:300,color:'rgba(200,190,240,0.72)',lineHeight:1.6}}>{text}</div>
+          <div style={{fontFamily:'var(--font-display)',fontSize:'14px',letterSpacing:'0.12em',color:'rgba(var(--text-hi-rgb),calc(0.95*var(--kt) + var(--tb)))',textTransform:'uppercase',marginBottom:'4px'}}>{title}</div>
+          <div style={{fontFamily:'var(--font-body)',fontSize:'12.5px',fontWeight:300,color:'rgba(var(--text-rgb),calc(0.72*var(--kt) + var(--tb)))',lineHeight:1.6}}>{text}</div>
         </div>
         <span style={{
           fontFamily:'var(--font-display)',fontSize:'12px',letterSpacing:'0.18em',
-          padding:'7px 14px',background:'rgba(124,77,255,0.2)',
-          border:'1px solid rgba(124,77,255,0.5)',
-          borderRadius:'3px',color:'#f0eeff',textTransform:'uppercase',
+          padding:'7px 14px',background:'rgba(var(--purple-rgb),calc(0.2*var(--kp)))',
+          border:'1px solid rgba(var(--purple-rgb),calc(0.5*var(--kp)))',
+          borderRadius:'3px',color:'var(--white)',textTransform:'uppercase',
           whiteSpace:'nowrap',
         }}>Öffnen →</span>
       </div>

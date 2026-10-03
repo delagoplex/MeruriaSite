@@ -128,7 +128,7 @@ function buildChar(d) {
 /* ── Division & Rang ──────────────────────── */
 function DivisionRank({ char }) {
   const div = (window.DIVISIONS_DATA || []).find(d => d.id === char.divisionId) || null;
-  const acc = div?.accent || 'rgba(124,77,255,0.7)';
+  const acc = div?.accent || 'rgba(var(--purple-rgb),calc(0.7*var(--kp)))';
   return (
     <Card style={{marginBottom:11}}>
       <SecTitle label="Division & Rang" />
@@ -139,7 +139,7 @@ function DivisionRank({ char }) {
               filter:`drop-shadow(0 0 5px ${acc}) drop-shadow(0 0 10px ${acc}88)`}}/>
         )}
         <div style={{fontFamily:"var(--font-display)",fontSize:11,letterSpacing:".18em",
-          color:"rgba(210,202,245,0.9)",textTransform:"uppercase"}}>{char.division}</div>
+          color:"color-mix(in srgb, rgba(210,202,245,0.9), rgb(var(--ink-rgb)) var(--cm))",textTransform:"uppercase"}}>{char.division}</div>
       </div>
       <div style={{display:"flex",alignItems:"center",gap:10}}>
         <div style={{display:"flex",gap:4}}>
@@ -148,7 +148,7 @@ function DivisionRank({ char }) {
             return <span key={i} style={{display:"inline-block",width:9,height:9,
               transform:"rotate(45deg)",flexShrink:0,
               background:filled?`${acc}aa`:"transparent",
-              border:`1px solid ${filled?acc:"rgba(124,77,255,0.2)"}`}} />;
+              border:`1px solid ${filled?acc:"rgba(var(--purple-rgb),calc(0.2*var(--kp)))"}`}} />;
           })}
         </div>
         <span style={{fontFamily:"var(--font-mono)",fontSize:10,color:"var(--white)"}}>
@@ -164,7 +164,7 @@ function EditableDivisionRank({ char, upd }) {
   const [open, setOpen] = useSteckbrief(false);
   const divs = window.DIVISIONS_DATA || [];
   const div  = divs.find(d => d.id === char.divisionId) || null;
-  const acc  = div?.accent || 'rgba(124,77,255,0.7)';
+  const acc  = div?.accent || 'rgba(var(--purple-rgb),calc(0.7*var(--kp)))';
 
   function selectDiv(d) {
     const lowest = d.raenge[d.raenge.length - 1];
@@ -184,9 +184,9 @@ function EditableDivisionRank({ char, upd }) {
         <SecTitle label="Division & Rang" />
         <button onClick={()=>setOpen(v=>!v)}
           style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".14em",textTransform:"uppercase",
-            padding:"3px 10px",background:open?"rgba(124,77,255,0.18)":"transparent",
-            border:"1px solid rgba(124,77,255,0.3)",borderRadius:2,cursor:"pointer",
-            color:"rgba(160,140,255,0.8)",transition:"all .15s"}}>
+            padding:"3px 10px",background:open?"rgba(var(--purple-rgb),calc(0.18*var(--kp)))":"transparent",
+            border:"1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))",borderRadius:2,cursor:"pointer",
+            color:"rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))",transition:"all .15s"}}>
           {open ? "✕ Schließen" : "⊞ Wählen"}
         </button>
       </div>
@@ -199,12 +199,12 @@ function EditableDivisionRank({ char, upd }) {
               filter:`drop-shadow(0 0 5px ${acc}) drop-shadow(0 0 10px ${acc}88)`}}/>
           <div>
             <div style={{fontFamily:"var(--font-display)",fontSize:11,letterSpacing:".16em",
-              color:"rgba(210,202,245,0.9)",textTransform:"uppercase",marginBottom:2}}>{div.name}</div>
+              color:"color-mix(in srgb, rgba(210,202,245,0.9), rgb(var(--ink-rgb)) var(--cm))",textTransform:"uppercase",marginBottom:2}}>{div.name}</div>
             <div style={{fontFamily:"var(--font-mono)",fontSize:8,color:acc,letterSpacing:".08em"}}>{char.rank}</div>
           </div>
         </div>
       ) : (
-        <div style={{fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(124,77,255,0.35)",
+        <div style={{fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))",
           letterSpacing:".12em",marginBottom:10}}>— Keine Division gewählt —</div>
       )}
 
@@ -219,12 +219,12 @@ function EditableDivisionRank({ char, upd }) {
                   background:sel?`${acc}22`:"transparent",
                   border:`1px solid ${sel?acc:"transparent"}`,borderRadius:2,
                   cursor:"pointer",textAlign:"left",transition:"all .12s"}}>
-                <span style={{fontFamily:"var(--font-mono)",fontSize:7,color:sel?acc:"rgba(124,77,255,0.3)",
+                <span style={{fontFamily:"var(--font-mono)",fontSize:7,color:sel?acc:"rgba(var(--purple-rgb),calc(0.3*var(--kp)))",
                   letterSpacing:".1em",flexShrink:0,width:14}}>
                   {r.rang === 1 ? "★" : r.rang}
                 </span>
                 <span style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".08em",
-                  color:sel?"var(--white)":"rgba(200,190,240,0.55)",textTransform:"uppercase"}}>
+                  color:sel?"var(--white)":"rgba(var(--text-rgb),calc(0.55*var(--kt)))",textTransform:"uppercase"}}>
                   {r.titel}
                 </span>
               </button>
@@ -235,22 +235,22 @@ function EditableDivisionRank({ char, upd }) {
 
       {/* Divisions-Picker */}
       {open && (
-        <div style={{borderTop:"1px solid rgba(124,77,255,0.14)",paddingTop:12}}>
+        <div style={{borderTop:"1px solid rgba(var(--purple-rgb),calc(0.14*var(--kp)))",paddingTop:12}}>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(80px,1fr))",gap:6}}>
             {divs.map(d => {
               const sel = char.divisionId === d.id;
-              const a   = d.accent || 'rgba(124,77,255,0.7)';
+              const a   = d.accent || 'rgba(var(--purple-rgb),calc(0.7*var(--kp)))';
               return (
                 <button key={d.id} onClick={()=>selectDiv(d)} title={d.name}
                   style={{padding:"8px 4px",display:"flex",flexDirection:"column",alignItems:"center",gap:5,
-                    background:sel?`${a}22`:"rgba(7,4,18,0.7)",
-                    border:`1px solid ${sel?a:"rgba(124,77,255,0.2)"}`,
+                    background:sel?`${a}22`:"rgba(var(--panel-rgb),0.7)",
+                    border:`1px solid ${sel?a:"rgba(var(--purple-rgb),calc(0.2*var(--kp)))"}`,
                     borderRadius:3,cursor:"pointer",transition:"all .15s"}}>
                   <img src={d.logo} alt={d.name}
                     style={{width:38,height:38,objectFit:"contain",
                       filter:`drop-shadow(0 0 4px ${a}) drop-shadow(0 0 8px ${a}${sel?"bb":"55"})`}}/>
                   <span style={{fontFamily:"var(--font-mono)",fontSize:6,letterSpacing:".07em",
-                    color:sel?"var(--white)":"rgba(200,190,240,0.55)",textTransform:"uppercase",
+                    color:sel?"var(--white)":"rgba(var(--text-rgb),calc(0.55*var(--kt)))",textTransform:"uppercase",
                     textAlign:"center",lineHeight:1.3,
                     overflow:"hidden",textOverflow:"ellipsis",maxWidth:"100%"}}>
                     {d.name.replace('Die ','').replace('Der ','')}
@@ -273,10 +273,10 @@ function findGod(id) {
 
 function DeitySymbol({ god, size = 72 }) {
   if (!god) return null;
-  const clr = god.palette?.[2] || 'rgba(124,77,255,0.7)';
+  const clr = god.palette?.[2] || 'rgba(var(--purple-rgb),calc(0.7*var(--kp)))';
   return (
     <div style={{width:size,height:size,flexShrink:0,borderRadius:3,overflow:"hidden",
-      background:"rgba(7,4,18,0.9)",border:`1px solid ${clr}55`}}>
+      background:"rgba(var(--panel-rgb),0.9)",border:`1px solid ${clr}55`}}>
       <img src={god.insigniaSrc} alt={god.name}
         style={{width:"100%",height:"100%",objectFit:"contain",display:"block",
           filter:`drop-shadow(0 0 6px ${clr}) drop-shadow(0 0 12px ${clr}88)`}}/>
@@ -299,7 +299,7 @@ function DeityCard({ char }) {
         }
         <div style={{minWidth:0}}>
           <div style={{fontFamily:"var(--font-display)",fontSize:12,letterSpacing:".16em",color:"var(--white)",textTransform:"uppercase"}}>{name}</div>
-          {god?.title && <div style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".08em",color:"rgba(160,140,255,0.5)",marginTop:4,lineHeight:1.5}}>{god.title}</div>}
+          {god?.title && <div style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".08em",color:"rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))",marginTop:4,lineHeight:1.5}}>{god.title}</div>}
         </div>
       </div>
     </Card>
@@ -323,9 +323,9 @@ function EditableDeityCard({ char, upd }) {
         <SecTitle label="Gottheit" />
         <button onClick={()=>setOpen(v=>!v)}
           style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".14em",textTransform:"uppercase",
-            padding:"3px 10px",background:open?"rgba(124,77,255,0.18)":"transparent",
-            border:"1px solid rgba(124,77,255,0.3)",borderRadius:2,cursor:"pointer",
-            color:"rgba(160,140,255,0.8)",transition:"all .15s"}}>
+            padding:"3px 10px",background:open?"rgba(var(--purple-rgb),calc(0.18*var(--kp)))":"transparent",
+            border:"1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))",borderRadius:2,cursor:"pointer",
+            color:"rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))",transition:"all .15s"}}>
           {open ? "✕ Schließen" : "⊞ Wählen"}
         </button>
       </div>
@@ -335,35 +335,35 @@ function EditableDeityCard({ char, upd }) {
         {god
           ? <DeitySymbol god={god} size={64}/>
           : <div style={{width:64,height:64,flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center",
-              background:"rgba(7,4,18,0.9)",border:"1px solid rgba(124,77,255,0.2)",borderRadius:3,
-              fontFamily:"var(--font-mono)",fontSize:7,color:"rgba(124,77,255,0.3)",letterSpacing:".1em"}}>— —</div>
+              background:"rgba(var(--panel-rgb),0.9)",border:"1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))",borderRadius:3,
+              fontFamily:"var(--font-mono)",fontSize:7,color:"rgba(var(--purple-rgb),calc(0.3*var(--kp) + var(--tb)))",letterSpacing:".1em"}}>— —</div>
         }
         <div style={{minWidth:0}}>
           <div style={{fontFamily:"var(--font-display)",fontSize:12,letterSpacing:".16em",color:"var(--white)",textTransform:"uppercase",marginBottom:3}}>
             {god ? god.name : (char.deity || '—')}
           </div>
-          {god?.title && <div style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".08em",color:"rgba(160,140,255,0.5)",lineHeight:1.5}}>{god.title}</div>}
+          {god?.title && <div style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".08em",color:"rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))",lineHeight:1.5}}>{god.title}</div>}
         </div>
       </div>
 
       {/* Picker */}
       {open && (
-        <div style={{borderTop:"1px solid rgba(124,77,255,0.14)",paddingTop:12}}>
+        <div style={{borderTop:"1px solid rgba(var(--purple-rgb),calc(0.14*var(--kp)))",paddingTop:12}}>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(72px,1fr))",gap:6}}>
             {gods.map(g => {
               const sel = char.deityId === g.id;
-              const clr = g.palette?.[2] || "rgba(124,77,255,0.7)";
+              const clr = g.palette?.[2] || "rgba(var(--purple-rgb),calc(0.7*var(--kp)))";
               return (
                 <button key={g.id} onClick={()=>select(g)} title={g.name}
                   style={{padding:"6px 4px",display:"flex",flexDirection:"column",alignItems:"center",gap:4,
-                    background:sel?"rgba(124,77,255,0.18)":"rgba(7,4,18,0.7)",
-                    border:`1px solid ${sel?clr:"rgba(124,77,255,0.2)"}`,
+                    background:sel?"rgba(var(--purple-rgb),calc(0.18*var(--kp)))":"rgba(var(--panel-rgb),0.7)",
+                    border:`1px solid ${sel?clr:"rgba(var(--purple-rgb),calc(0.2*var(--kp)))"}`,
                     borderRadius:3,cursor:"pointer",transition:"all .15s"}}>
                   <img src={g.insigniaSrc} alt={g.name}
                     style={{width:36,height:36,objectFit:"contain",display:"block",
                       filter:`drop-shadow(0 0 4px ${clr}) drop-shadow(0 0 8px ${clr}${sel?"bb":"55"})`}}/>
                   <span style={{fontFamily:"var(--font-mono)",fontSize:6.5,letterSpacing:".07em",
-                    color:sel?"var(--white)":"rgba(200,190,240,0.55)",textTransform:"uppercase",
+                    color:sel?"var(--white)":"rgba(var(--text-rgb),calc(0.55*var(--kt)))",textTransform:"uppercase",
                     whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis",maxWidth:"100%"}}>
                     {g.name}
                   </span>
@@ -380,10 +380,10 @@ function EditableDeityCard({ char, upd }) {
 /* ── Kampf-Kompakt ────────────────────────── */
 function KampfStatCell({ label, value, dim }) {
   return (
-    <div style={{background:"rgba(7,4,18,0.9)",border:`1px solid rgba(124,77,255,${dim?0.13:0.22})`,borderRadius:3,
+    <div style={{background:"rgba(var(--panel-rgb),0.9)",border:`1px solid rgba(var(--purple-rgb),${dim?0.13:0.22})`,borderRadius:3,
       padding:dim?"5px 6px":"7px 10px",display:"flex",flexDirection:"column",alignItems:"center"}}>
-      <span style={{fontFamily:"var(--font-mono)",fontSize:dim?11:18,color:dim?"rgba(200,190,240,0.7)":"var(--white)",lineHeight:1}}>{value}</span>
-      <span style={{fontFamily:"var(--font-mono)",fontSize:6.5,letterSpacing:".18em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase",marginTop:3}}>{label}</span>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:dim?11:18,color:dim?"rgba(var(--text-rgb),calc(0.7*var(--kt)))":"var(--white)",lineHeight:1}}>{value}</span>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:6.5,letterSpacing:".18em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase",marginTop:3}}>{label}</span>
     </div>
   );
 }
@@ -425,10 +425,10 @@ function EditableCombatCompact({ char, upd }) {
   const pb = calcProfBonus(char.level||1);
   const pw = calcPassiveWahrnehmung(char);
   const autoCell = (label, value) => (
-    <div style={{background:"rgba(7,4,18,0.9)",border:"1px solid rgba(124,77,255,0.13)",borderRadius:3,
+    <div style={{background:"rgba(var(--panel-rgb),0.9)",border:"1px solid rgba(var(--purple-rgb),calc(0.13*var(--kp)))",borderRadius:3,
       padding:"5px 6px",display:"flex",flexDirection:"column",alignItems:"center"}}>
-      <span style={{fontFamily:"var(--font-mono)",fontSize:11,color:"rgba(200,190,240,0.55)",lineHeight:1}}>{value}</span>
-      <span style={{fontFamily:"var(--font-mono)",fontSize:6.5,letterSpacing:".18em",color:"rgba(124,77,255,0.3)",textTransform:"uppercase",marginTop:3}}>{label}</span>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:11,color:"rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))",lineHeight:1}}>{value}</span>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:6.5,letterSpacing:".18em",color:"rgba(var(--purple-rgb),calc(0.3*var(--kp) + var(--tb)))",textTransform:"uppercase",marginTop:3}}>{label}</span>
     </div>
   );
   return (
@@ -436,7 +436,7 @@ function EditableCombatCompact({ char, upd }) {
       <SecTitle label="Kampf" />
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginBottom:6}}>
         {mainFields.map(({key,label,min})=>(
-          <div key={key} style={{background:"rgba(7,4,18,0.9)",border:"1px solid rgba(124,77,255,0.28)",borderRadius:3,
+          <div key={key} style={{background:"rgba(var(--panel-rgb),0.9)",border:"1px solid rgba(var(--purple-rgb),calc(0.28*var(--kp)))",borderRadius:3,
             padding:"6px 8px",display:"flex",flexDirection:"column",alignItems:"center"}}>
             <input type="number" min={min} value={char[key]??0}
               onChange={e=>upd({[key]:parseInt(e.target.value)||0})}
@@ -444,19 +444,19 @@ function EditableCombatCompact({ char, upd }) {
                 background:"transparent",border:"none",textAlign:"center",width:"100%",
                 outline:"none",WebkitAppearance:"none",MozAppearance:"textfield"}}/>
             <span style={{fontFamily:"var(--font-mono)",fontSize:6.5,letterSpacing:".18em",
-              color:"rgba(124,77,255,0.5)",textTransform:"uppercase",marginTop:2}}>{label}</span>
+              color:"rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))",textTransform:"uppercase",marginTop:2}}>{label}</span>
           </div>
         ))}
       </div>
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:6,marginBottom:6}}>
-        <div style={{background:"rgba(7,4,18,0.9)",border:"1px solid rgba(124,77,255,0.28)",borderRadius:3,
+        <div style={{background:"rgba(var(--panel-rgb),0.9)",border:"1px solid rgba(var(--purple-rgb),calc(0.28*var(--kp)))",borderRadius:3,
           padding:"6px 8px",display:"flex",flexDirection:"column",alignItems:"center"}}>
           <input type="number" min={1} max={20} value={char.level||1}
             onChange={e=>{const l=Math.min(20,Math.max(1,parseInt(e.target.value)||1));upd({level:l,profBonus:calcProfBonus(l)});}}
             style={{fontFamily:"var(--font-mono)",fontSize:18,color:"var(--white)",lineHeight:1,
               background:"transparent",border:"none",textAlign:"center",width:"100%",
               outline:"none",WebkitAppearance:"none",MozAppearance:"textfield"}}/>
-          <span style={{fontFamily:"var(--font-mono)",fontSize:6.5,letterSpacing:".18em",color:"rgba(124,77,255,0.5)",textTransform:"uppercase",marginTop:2}}>Stufe</span>
+          <span style={{fontFamily:"var(--font-mono)",fontSize:6.5,letterSpacing:".18em",color:"rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))",textTransform:"uppercase",marginTop:2}}>Stufe</span>
         </div>
         {autoCell('TW', tw||'—')}
         {autoCell('Übungsb.', fmtMod(pb))}
@@ -474,12 +474,12 @@ const WAFFE_EMPTY = () => ({name:'',angriffsart:'Nahkampf',uebung:false,attribut
 function WaffenStatCell({ label, value, accent }) {
   return (
     <div style={{display:"flex",flexDirection:"column",alignItems:"center",minWidth:0,
-      background:"rgba(7,4,18,0.9)",border:"1px solid rgba(124,77,255,0.18)",borderRadius:3,padding:"5px 4px"}}>
+      background:"rgba(var(--panel-rgb),0.9)",border:"1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))",borderRadius:3,padding:"5px 4px"}}>
       <span style={{fontFamily:"var(--font-mono)",fontSize:9,fontWeight:accent?600:400,
-        color:accent?"rgba(124,77,255,0.9)":"var(--white)",lineHeight:1,marginBottom:3,
+        color:accent?"rgba(var(--purple-rgb),calc(0.9*var(--kp)))":"var(--white)",lineHeight:1,marginBottom:3,
         maxWidth:"100%",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{value}</span>
       <span style={{fontFamily:"var(--font-mono)",fontSize:6,letterSpacing:".1em",
-        color:"rgba(124,77,255,0.38)",textTransform:"uppercase",whiteSpace:"nowrap"}}>{label}</span>
+        color:"rgba(var(--purple-rgb),calc(0.38*var(--kp) + var(--tb)))",textTransform:"uppercase",whiteSpace:"nowrap"}}>{label}</span>
     </div>
   );
 }
@@ -494,10 +494,10 @@ function WaffenCard({ char }) {
         const attr = w.attribut || 'str';
         const bonus = mod(char.stats?.[attr] ?? 10) + (w.uebung ? (char.profBonus||2) : 0);
         return (
-          <div key={i} style={{borderBottom:"1px solid rgba(124,77,255,0.08)",paddingBottom:8,marginBottom:8}}>
+          <div key={i} style={{borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.08*var(--kp)))",paddingBottom:8,marginBottom:8}}>
             <div style={{fontFamily:"var(--font-display)",fontSize:11,letterSpacing:".18em",
               textTransform:"uppercase",color:"var(--white)",marginBottom:6,
-              paddingBottom:5,borderBottom:"1px solid rgba(124,77,255,0.15)"}}>{w.name||'—'}</div>
+              paddingBottom:5,borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))"}}>{w.name||'—'}</div>
             <div style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)",gap:4,marginBottom:4}}>
               <WaffenStatCell label="Art"       value={w.angriffsart==='Fernkampf'?'Fern':'Nah'} />
               <WaffenStatCell label="Attribut"  value={WAFFE_ATTR_ABBR[attr]} />
@@ -530,8 +530,8 @@ function parseWaffeVorschlag(item, angriffsart) {
 function EditableWaffenCard({ char, upd }) {
   const weapons = char.weapons || [];
   const iStyle = {fontFamily:"var(--font-body)",fontSize:10.5,color:"var(--white)",background:"transparent",
-    border:"none",borderBottom:"1px solid rgba(124,77,255,0.22)",outline:"none",padding:"1px 3px",width:"100%",minWidth:0};
-  const lbl = {fontFamily:"var(--font-mono)",fontSize:6.5,letterSpacing:".1em",color:"rgba(124,77,255,0.35)",textTransform:"uppercase",marginBottom:2};
+    border:"none",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))",outline:"none",padding:"1px 3px",width:"100%",minWidth:0};
+  const lbl = {fontFamily:"var(--font-mono)",fontSize:6.5,letterSpacing:".1em",color:"rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))",textTransform:"uppercase",marginBottom:2};
   const selStyle = {...iStyle,fontFamily:"var(--font-mono)",fontSize:9,cursor:"pointer",paddingRight:2};
 
   const d = window.AUSRUESTUNG_DATA || {};
@@ -563,25 +563,25 @@ function EditableWaffenCard({ char, upd }) {
     <Card style={{marginBottom:11}}>
       <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:8}}>
         <SecTitle label="Waffen" style={{marginBottom:0}} />
-        <button onClick={addW} style={{fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(124,77,255,0.7)",
-          background:"rgba(124,77,255,0.1)",border:"1px solid rgba(124,77,255,0.3)",borderRadius:2,
+        <button onClick={addW} style={{fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))",
+          background:"rgba(var(--purple-rgb),calc(0.1*var(--kp)))",border:"1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))",borderRadius:2,
           padding:"2px 8px",cursor:"pointer",letterSpacing:".1em"}}>+ Waffe</button>
       </div>
       {weapons.length === 0 && (
-        <div style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(124,77,255,0.28)",letterSpacing:".1em",padding:"4px 0"}}>Keine Waffen</div>
+        <div style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(var(--purple-rgb),calc(0.28*var(--kp) + var(--tb)))",letterSpacing:".1em",padding:"4px 0"}}>Keine Waffen</div>
       )}
       {weapons.map((w,i) => {
         const attr = w.attribut||'str';
         const bonus = mod(char.stats?.[attr] ?? 10) + (w.uebung ? (char.profBonus||2) : 0);
         return (
-          <div key={i} style={{borderBottom:"1px solid rgba(124,77,255,0.1)",paddingBottom:8,marginBottom:8}}>
+          <div key={i} style={{borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))",paddingBottom:8,marginBottom:8}}>
             {/* Zeile 1: Name + Vorlage-Picker + Löschen */}
             <div style={{display:"flex",gap:6,alignItems:"center",marginBottom:5}}>
               <input value={w.name||''} onChange={e=>updW(i,{name:e.target.value})} placeholder="Eigener Name"
-                style={{...iStyle,fontSize:11.5,flex:1,borderBottomColor:"rgba(124,77,255,0.35)"}} />
+                style={{...iStyle,fontSize:11.5,flex:1,borderBottomColor:"rgba(var(--purple-rgb),calc(0.35*var(--kp)))"}} />
               <select value="" onChange={e=>pickVorlage(i,e.target.value)}
-                style={{...selStyle,fontSize:8,background:"rgba(7,4,18,0.8)",flexShrink:0,maxWidth:110,
-                  color:"rgba(124,77,255,0.55)",borderBottomColor:"rgba(124,77,255,0.18)"}}>
+                style={{...selStyle,fontSize:8,background:"rgba(var(--panel-rgb),0.8)",flexShrink:0,maxWidth:110,
+                  color:"rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))",borderBottomColor:"rgba(var(--purple-rgb),calc(0.18*var(--kp)))"}}>
                 <option value="">aus Liste…</option>
                 {waffenKat.map((kat,ki) => kat.items.length > 0 && (
                   <optgroup key={ki} label={kat.label}>
@@ -599,7 +599,7 @@ function EditableWaffenCard({ char, upd }) {
               <div>
                 <div style={lbl}>Art</div>
                 <select value={w.angriffsart||'Nahkampf'} onChange={e=>updW(i,{angriffsart:e.target.value})}
-                  style={{...selStyle,background:"rgba(7,4,18,0.8)"}}>
+                  style={{...selStyle,background:"rgba(var(--panel-rgb),0.8)"}}>
                   <option value="Nahkampf">Nahkampf</option>
                   <option value="Fernkampf">Fernkampf</option>
                 </select>
@@ -607,7 +607,7 @@ function EditableWaffenCard({ char, upd }) {
               <div>
                 <div style={lbl}>Attribut</div>
                 <select value={attr} onChange={e=>updW(i,{attribut:e.target.value})}
-                  style={{...selStyle,background:"rgba(7,4,18,0.8)"}}>
+                  style={{...selStyle,background:"rgba(var(--panel-rgb),0.8)"}}>
                   {WAFFE_ATTRS.map(a=><option key={a} value={a}>{WAFFE_ATTR_ABBR[a]}</option>)}
                 </select>
               </div>
@@ -615,7 +615,7 @@ function EditableWaffenCard({ char, upd }) {
                 <div style={lbl}>Üb</div>
                 <button onClick={()=>updW(i,{uebung:!w.uebung})} title={w.uebung?"Übung":"Keine"}
                   style={{background:"transparent",border:"none",cursor:"pointer",padding:0,lineHeight:1,
-                    color:w.uebung?"rgba(124,77,255,0.78)":"rgba(124,77,255,0.28)",fontSize:12}}>
+                    color:w.uebung?"rgba(var(--purple-rgb),calc(0.78*var(--kp)))":"rgba(var(--purple-rgb),calc(0.28*var(--kp)))",fontSize:12}}>
                   {w.uebung?'◆':'○'}
                 </button>
               </div>
@@ -625,7 +625,7 @@ function EditableWaffenCard({ char, upd }) {
               </div>
               <div>
                 <div style={lbl}>Bonus</div>
-                <span style={{fontFamily:"var(--font-mono)",fontSize:11,color:"rgba(124,77,255,0.8)",fontWeight:600,display:"block",padding:"1px 3px"}}>{fmtMod(bonus)}</span>
+                <span style={{fontFamily:"var(--font-mono)",fontSize:11,color:"rgba(var(--purple-rgb),calc(0.8*var(--kp) + var(--tb)))",fontWeight:600,display:"block",padding:"1px 3px"}}>{fmtMod(bonus)}</span>
               </div>
             </div>
             {/* Zeile 3: Schaden / Typ / Notiz */}
@@ -679,21 +679,21 @@ function normArr(val) {
 
 /* Gemeinsame Pill-Anzeige */
 function UebPills({ items }) {
-  if (!items.length) return <span style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(124,77,255,0.28)"}}>—</span>;
+  if (!items.length) return <span style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(var(--purple-rgb),calc(0.28*var(--kp) + var(--tb)))"}}>—</span>;
   return (
     <div style={{display:"flex",flexWrap:"wrap",gap:3}}>
       {items.map(v=>(
         <span key={v} style={{fontFamily:"var(--font-mono)",fontSize:7.5,padding:"2px 7px",
-          background:"rgba(124,77,255,0.12)",border:"1px solid rgba(124,77,255,0.25)",borderRadius:2,
-          color:"rgba(200,190,240,0.75)",letterSpacing:".06em"}}>{v}</span>
+          background:"rgba(var(--purple-rgb),calc(0.12*var(--kp)))",border:"1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))",borderRadius:2,
+          color:"rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))",letterSpacing:".06em"}}>{v}</span>
       ))}
     </div>
   );
 }
 
-const uebLbl = {fontFamily:"var(--font-mono)",fontSize:7,letterSpacing:".12em",color:"rgba(124,77,255,0.4)",
+const uebLbl = {fontFamily:"var(--font-mono)",fontSize:7,letterSpacing:".12em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",
   textTransform:"uppercase",marginBottom:4};
-const uebSec = {paddingBottom:8,marginBottom:8,borderBottom:"1px solid rgba(124,77,255,0.07)"};
+const uebSec = {paddingBottom:8,marginBottom:8,borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.07*var(--kp)))"};
 
 function UebungenCard({ char }) {
   const u = char.uebungen || {};
@@ -718,8 +718,8 @@ function EditableUebungenCard({ char, upd }) {
   const rüst = normArr(u.ruestungen), waf = normArr(u.waffen);
   const fahr = normArr(u.fahrzeuge), spr = normArr(u.sprachen), werk = normArr(u.werkzeuge);
 
-  const selStyle = {fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(200,190,240,0.8)",width:"100%",
-    background:"rgba(7,4,18,0.9)",border:"1px solid rgba(124,77,255,0.25)",borderRadius:2,
+  const selStyle = {fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))",width:"100%",
+    background:"rgba(var(--panel-rgb),0.9)",border:"1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))",borderRadius:2,
     padding:"4px 6px",cursor:"pointer",outline:"none",marginTop:3};
 
   function ToggleRow({label, arr, opts, field}) {
@@ -733,9 +733,9 @@ function EditableUebungenCard({ char, upd }) {
               <button key={opt} onClick={()=>updU(field,on?arr.filter(x=>x!==opt):[...arr,opt])}
                 style={{fontFamily:"var(--font-mono)",fontSize:7.5,padding:"2px 8px",borderRadius:2,
                   cursor:"pointer",letterSpacing:".06em",transition:"all .12s",
-                  background:on?"rgba(124,77,255,0.22)":"rgba(124,77,255,0.06)",
-                  border:`1px solid rgba(124,77,255,${on?0.55:0.18})`,
-                  color:on?"rgba(200,190,240,0.92)":"rgba(160,140,255,0.45)"}}>
+                  background:on?"rgba(var(--purple-rgb),calc(0.22*var(--kp)))":"rgba(var(--purple-rgb),calc(0.06*var(--kp)))",
+                  border:`1px solid rgba(var(--purple-rgb),${on?0.55:0.18})`,
+                  color:on?"rgba(var(--text-rgb),calc(0.92*var(--kt)))":"rgba(var(--accent-rgb),calc(0.45*var(--ka)))"}}>
                 {opt}
               </button>
             );
@@ -753,8 +753,8 @@ function EditableUebungenCard({ char, upd }) {
         <div style={{display:"flex",flexWrap:"wrap",gap:3,marginBottom:arr.length?5:0}}>
           {arr.map(v=>(
             <span key={v} style={{display:"inline-flex",alignItems:"center",gap:3,fontFamily:"var(--font-mono)",
-              fontSize:7.5,padding:"2px 5px 2px 7px",background:"rgba(124,77,255,0.15)",
-              border:"1px solid rgba(124,77,255,0.3)",borderRadius:2,color:"rgba(200,190,240,0.82)"}}>
+              fontSize:7.5,padding:"2px 5px 2px 7px",background:"rgba(var(--purple-rgb),calc(0.15*var(--kp)))",
+              border:"1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))",borderRadius:2,color:"rgba(var(--text-rgb),calc(0.82*var(--kt) + var(--tb)))"}}>
               {v}
               <button onClick={()=>updU(field,arr.filter(x=>x!==v))}
                 style={{background:"transparent",border:"none",cursor:"pointer",
@@ -810,12 +810,12 @@ function LebensstilCard({ char }) {
         <>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"baseline",marginBottom:6}}>
             <span style={{fontFamily:"var(--font-display)",fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"var(--white)"}}>{ls.name}</span>
-            <span style={{fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(124,77,255,0.7)"}}>{ls.kosten}</span>
+            <span style={{fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))"}}>{ls.kosten}</span>
           </div>
-          <p style={{fontFamily:"var(--font-body)",fontSize:11,fontWeight:300,color:"rgba(200,190,240,0.55)",lineHeight:1.6,margin:0}}>{ls.desc}</p>
+          <p style={{fontFamily:"var(--font-body)",fontSize:11,fontWeight:300,color:"rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))",lineHeight:1.6,margin:0}}>{ls.desc}</p>
         </>
       ) : (
-        <span style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(124,77,255,0.28)"}}>—</span>
+        <span style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(var(--purple-rgb),calc(0.28*var(--kp) + var(--tb)))"}}>—</span>
       )}
     </Card>
   );
@@ -827,8 +827,8 @@ function EditableLebensstilCard({ char, upd }) {
     <Card style={{marginBottom:11}}>
       <SecTitle label="Lebensstil" />
       <select value={char.lebensstil||''} onChange={e=>upd({lebensstil:e.target.value})}
-        style={{fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(200,190,240,0.8)",width:"100%",
-          background:"rgba(7,4,18,0.9)",border:"1px solid rgba(124,77,255,0.25)",borderRadius:2,
+        style={{fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))",width:"100%",
+          background:"rgba(var(--panel-rgb),0.9)",border:"1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))",borderRadius:2,
           padding:"4px 6px",cursor:"pointer",outline:"none",marginBottom:ls?8:0}}>
         <option value="">— wählen —</option>
         {LEBENSSTILE.map(l=>(
@@ -836,7 +836,7 @@ function EditableLebensstilCard({ char, upd }) {
         ))}
       </select>
       {ls && <p style={{fontFamily:"var(--font-body)",fontSize:10.5,fontWeight:300,
-        color:"rgba(200,190,240,0.45)",lineHeight:1.55,margin:0}}>{ls.desc}</p>}
+        color:"rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))",lineHeight:1.55,margin:0}}>{ls.desc}</p>}
     </Card>
   );
 }
@@ -882,18 +882,18 @@ function InventarModal({ char, upd, onClose }) {
   function updItem(i,p) { upd({inventar:inv.map((it,j)=>j===i?{...it,...p}:it)}); }
 
   const iStyle = {fontFamily:"var(--font-body)",fontSize:11,color:"var(--white)",background:"transparent",
-    border:"none",borderBottom:"1px solid rgba(124,77,255,0.2)",outline:"none",padding:"2px 4px",minWidth:0};
+    border:"none",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))",outline:"none",padding:"2px 4px",minWidth:0};
 
   return ReactDOM.createPortal(
-    <div onClick={onClose} style={{position:"fixed",inset:0,zIndex:99990,background:"rgba(5,4,15,0.88)",
+    <div onClick={onClose} style={{position:"fixed",inset:0,zIndex:99990,background:"rgba(var(--bg-rgb),0.88)",
       backdropFilter:"blur(10px)",display:"flex",alignItems:"center",justifyContent:"center"}}>
-      <div onClick={e=>e.stopPropagation()} style={{background:"rgba(8,6,22,0.98)",border:"1px solid rgba(124,77,255,0.35)",
-        borderRadius:8,width:"min(480px,92vw)",maxHeight:"80vh",display:"flex",flexDirection:"column",overflow:"hidden"}}>
+      <div onClick={e=>e.stopPropagation()} style={{background:"rgba(var(--panel-rgb),0.98)",border:"1px solid rgba(var(--purple-rgb),calc(0.35*var(--kp)))",
+        borderRadius:8,width:"min(480px,92vw)",maxHeight:"calc(var(--vh, 1vh) * 80)",display:"flex",flexDirection:"column",overflow:"hidden"}}>
         {/* Header */}
         <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",
-          padding:"12px 16px",borderBottom:"1px solid rgba(124,77,255,0.15)"}}>
+          padding:"12px 16px",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))"}}>
           <span style={{fontFamily:"var(--font-display)",fontSize:12,letterSpacing:".22em",textTransform:"uppercase",color:"var(--white)"}}>Inventar</span>
-          <button onClick={onClose} style={{fontFamily:"var(--font-mono)",fontSize:14,color:"rgba(160,140,255,0.6)",
+          <button onClick={onClose} style={{fontFamily:"var(--font-mono)",fontSize:14,color:"rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))",
             background:"transparent",border:"none",cursor:"pointer",padding:"0 4px",lineHeight:1}}>×</button>
         </div>
         {/* Listenbereich */}
@@ -902,14 +902,14 @@ function InventarModal({ char, upd, onClose }) {
           <div style={{display:"grid",gridTemplateColumns:"1fr 70px 20px",gap:"0 8px",marginBottom:4}}>
             {['Gegenstand','Pfund',''].map((h,i)=>(
               <span key={i} style={{fontFamily:"var(--font-mono)",fontSize:6.5,letterSpacing:".12em",
-                color:"rgba(124,77,255,0.35)",textTransform:"uppercase"}}>{h}</span>
+                color:"rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))",textTransform:"uppercase"}}>{h}</span>
             ))}
           </div>
-          {inv.length===0 && <div style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(124,77,255,0.28)",
+          {inv.length===0 && <div style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(var(--purple-rgb),calc(0.28*var(--kp) + var(--tb)))",
             letterSpacing:".1em",padding:"8px 0"}}>Noch keine Gegenstände.</div>}
           {inv.map((item,i)=>(
             <div key={i} style={{display:"grid",gridTemplateColumns:"1fr 70px 20px",gap:"0 8px",
-              alignItems:"center",padding:"3px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
+              alignItems:"center",padding:"3px 0",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.06*var(--kp)))"}}>
               <input value={item.name||''} onChange={e=>updItem(i,{name:e.target.value})}
                 placeholder="Name" style={{...iStyle,width:"100%"}} />
               <input value={item.pfund||''} onChange={e=>updItem(i,{pfund:e.target.value})}
@@ -921,7 +921,7 @@ function InventarModal({ char, upd, onClose }) {
           ))}
         </div>
         {/* Footer */}
-        <div style={{borderTop:"1px solid rgba(124,77,255,0.15)",padding:"10px 16px"}}>
+        <div style={{borderTop:"1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))",padding:"10px 16px"}}>
           <div style={{display:"flex",gap:6,marginBottom:10,alignItems:"center"}}>
             <select defaultValue="" onChange={e=>{
               if (!e.target.value) return;
@@ -929,8 +929,8 @@ function InventarModal({ char, upd, onClose }) {
               const item = getAusruestungListe()[gi]?.items[ii];
               if (item) upd({inventar:[...inv,{name:item.name, pfund:item.pfund==='—'?'':item.pfund}]});
               e.target.value = '';
-            }} style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(124,77,255,0.65)",flex:1,
-              background:"rgba(7,4,18,0.9)",border:"1px solid rgba(124,77,255,0.25)",borderRadius:2,
+            }} style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))",flex:1,
+              background:"rgba(var(--panel-rgb),0.9)",border:"1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))",borderRadius:2,
               padding:"3px 6px",cursor:"pointer",outline:"none"}}>
               <option value="">Aus Ausrüstung wählen…</option>
               {getAusruestungListe().map((g,gi)=>(
@@ -944,24 +944,24 @@ function InventarModal({ char, upd, onClose }) {
               ))}
             </select>
             <button onClick={addItem} style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".1em",
-              color:"rgba(124,77,255,0.7)",background:"rgba(124,77,255,0.08)",border:"1px solid rgba(124,77,255,0.28)",
+              color:"rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))",background:"rgba(var(--purple-rgb),calc(0.08*var(--kp)))",border:"1px solid rgba(var(--purple-rgb),calc(0.28*var(--kp)))",
               borderRadius:2,padding:"3px 10px",cursor:"pointer",flexShrink:0}}>+ Eigener</button>
           </div>
           {/* Gewicht & Traglast */}
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4}}>
-            <span style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(124,77,255,0.45)",letterSpacing:".1em",textTransform:"uppercase"}}>Getragen</span>
+            <span style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))",letterSpacing:".1em",textTransform:"uppercase"}}>Getragen</span>
             <span style={{fontFamily:"var(--font-mono)",fontSize:11,color:statusC,fontWeight:600}}>
               {totalPfund.toFixed(1)} Pfund</span>
           </div>
-          <div style={{height:4,background:"rgba(124,77,255,0.1)",borderRadius:2,marginBottom:6,overflow:"hidden"}}>
+          <div style={{height:4,background:"rgba(var(--purple-rgb),calc(0.1*var(--kp)))",borderRadius:2,marginBottom:6,overflow:"hidden"}}>
             <div style={{height:"100%",borderRadius:2,background:statusC,
               width:`${Math.min(100,(totalPfund/ueberlastet)*100).toFixed(1)}%`,transition:"width .3s"}} />
           </div>
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:4}}>
             {[['Belastet',belastet],['Sehr belastet',sehrBelastet],['Überlastet',ueberlastet]].map(([l,v])=>(
               <div key={l} style={{textAlign:"center"}}>
-                <div style={{fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(200,190,240,0.6)"}}>{v}</div>
-                <div style={{fontFamily:"var(--font-mono)",fontSize:6,letterSpacing:".1em",color:"rgba(124,77,255,0.35)",textTransform:"uppercase"}}>{l}</div>
+                <div style={{fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))"}}>{v}</div>
+                <div style={{fontFamily:"var(--font-mono)",fontSize:6,letterSpacing:".1em",color:"rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))",textTransform:"uppercase"}}>{l}</div>
               </div>
             ))}
           </div>
@@ -982,7 +982,7 @@ function InventarCard({ char, upd, editing }) {
   const ueberlastet  = Math.round(str * 15 * mult);
   const sehrBelastet = Math.round(str * 10 * mult);
   const belastet     = Math.round(str * 5  * mult);
-  let statusC = 'rgba(124,77,255,0.5)';
+  let statusC = 'rgba(var(--purple-rgb),calc(0.5*var(--kp)))';
   if (totalPfund > ueberlastet)       statusC = 'rgba(220,80,80,0.9)';
   else if (totalPfund > sehrBelastet) statusC = 'rgba(220,160,60,0.9)';
   else if (totalPfund > belastet)     statusC = 'rgba(220,160,60,0.75)';
@@ -992,14 +992,14 @@ function InventarCard({ char, upd, editing }) {
         <SecTitle label="Inventar" style={{marginBottom:0}} />
         <button onClick={()=>setOpen(true)}
           style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".1em",textTransform:"uppercase",
-            color:"rgba(124,77,255,0.7)",background:"rgba(124,77,255,0.08)",
-            border:"1px solid rgba(124,77,255,0.28)",borderRadius:2,padding:"3px 10px",cursor:"pointer"}}>
+            color:"rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))",background:"rgba(var(--purple-rgb),calc(0.08*var(--kp)))",
+            border:"1px solid rgba(var(--purple-rgb),calc(0.28*var(--kp)))",borderRadius:2,padding:"3px 10px",cursor:"pointer"}}>
           {inv.length ? `${inv.length} Items` : 'Öffnen'}
         </button>
       </div>
       {inv.length > 0 && (
         <div style={{display:"flex",alignItems:"center",gap:8}}>
-          <div style={{flex:1,height:3,background:"rgba(124,77,255,0.1)",borderRadius:2,overflow:"hidden"}}>
+          <div style={{flex:1,height:3,background:"rgba(var(--purple-rgb),calc(0.1*var(--kp)))",borderRadius:2,overflow:"hidden"}}>
             <div style={{height:"100%",background:statusC,borderRadius:2,
               width:`${Math.min(100,(totalPfund/ueberlastet)*100).toFixed(1)}%`}} />
           </div>
@@ -1026,7 +1026,7 @@ function HabeCard({ char, upd, editing }) {
             <circle cx="7" cy="7" r="4" stroke={goldC} strokeWidth="0.8" opacity="0.6"/>
             <text x="7" y="10.5" textAnchor="middle" fontFamily="serif" fontSize="7" fill={goldC} opacity="0.9">H</text>
           </svg>
-          <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".2em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase"}}>Habe</span>
+          <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".2em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase"}}>Habe</span>
         </div>
         {editing
           ? <div style={{display:"flex",alignItems:"center",gap:5}}>
@@ -1058,16 +1058,16 @@ const ATTR_DEFS = [
 function AttrBlock({ def, char, hi, lo }) {
   const score = char.stats[def.key];
   const m = mod(score);
-  const borderC = hi ? "rgba(80,200,140,0.55)" : lo ? "rgba(220,80,80,0.45)" : "rgba(124,77,255,0.2)";
+  const borderC = hi ? "rgba(80,200,140,0.55)" : lo ? "rgba(220,80,80,0.45)" : "rgba(var(--purple-rgb),calc(0.2*var(--kp)))";
   const scoreC  = hi ? "rgba(80,200,140,0.95)" : lo ? "rgba(220,100,100,0.9)" : "var(--white)";
-  const modC    = hi ? "rgba(80,200,140,0.85)" : lo ? "rgba(220,100,100,0.75)" : "rgba(124,77,255,0.65)";
+  const modC    = hi ? "rgba(80,200,140,0.85)" : lo ? "rgba(220,100,100,0.75)" : "rgba(var(--purple-rgb),calc(0.65*var(--kp)))";
   return (
     <div style={{ display:"flex",flexDirection:"column",alignItems:"center",flex:1,
-        background:"rgba(7,4,18,0.97)", border:`1px solid ${borderC}`, borderRadius:3,
+        background:"rgba(var(--panel-rgb),0.97)", border:`1px solid ${borderC}`, borderRadius:3,
         padding:"9px 4px 8px", cursor:"default" }}>
-      <span style={{fontFamily:"var(--font-mono)",fontSize:7,letterSpacing:".16em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase",marginBottom:5,textAlign:"center"}}>{def.label}</span>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:7,letterSpacing:".16em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase",marginBottom:5,textAlign:"center"}}>{def.label}</span>
       <span style={{fontFamily:"var(--font-mono)",fontSize:22,color:scoreC,lineHeight:1}}>{score}</span>
-      <div style={{width:"65%",height:1,background:"rgba(124,77,255,0.15)",margin:"5px 0"}} />
+      <div style={{width:"65%",height:1,background:"rgba(var(--purple-rgb),calc(0.15*var(--kp)))",margin:"5px 0"}} />
       <span style={{fontFamily:"var(--font-mono)",fontSize:14,color:modC}}>{fmtMod(m)}</span>
     </div>
   );
@@ -1079,7 +1079,7 @@ function AttributeGrid({ char }) {
   return (
     <Card style={{marginBottom:11}}>
       <SecTitle label="Attribute" />
-      <div style={{display:"flex",gap:6}}>
+      <div className="attr-row" style={{display:"flex",gap:6}}>
         {ATTR_DEFS.map(d => <AttrBlock key={d.key} def={d} char={char} hi={char.stats[d.key]===max} lo={char.stats[d.key]===min} />)}
       </div>
     </Card>
@@ -1109,8 +1109,8 @@ function EditableSkillPills({ char, upd }) {
     upd({ skills: updated });
   }
   const icon  = ['○', '◆', '◈'];
-  const iclr  = ['rgba(124,77,255,0.3)', 'rgba(124,77,255,0.75)', 'rgba(140,210,255,0.85)'];
-  const bclr  = ['rgba(200,190,240,0.5)', 'rgba(124,77,255,0.85)', 'rgba(140,210,255,0.85)'];
+  const iclr  = ['rgba(var(--purple-rgb),calc(0.3*var(--kp)))', 'rgba(var(--purple-rgb),calc(0.75*var(--kp)))', 'rgba(140,210,255,0.85)'];
+  const bclr  = ['rgba(var(--text-rgb),calc(0.5*var(--kt)))', 'rgba(var(--purple-rgb),calc(0.85*var(--kp)))', 'rgba(140,210,255,0.85)'];
   return (
     <Card style={{marginBottom:11}}>
       <SecTitle label="Fertigkeiten" />
@@ -1118,21 +1118,21 @@ function EditableSkillPills({ char, upd }) {
         {skills.map(s => {
           const bonus = skillBonus(s, char.stats, char.profBonus);
           return (
-            <div key={s.name} style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
+            <div key={s.name} style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.06*var(--kp)))"}}>
               <button onClick={() => cycle(s.name)} title={["Keine","Übung","Expertise"][s.prof]}
                 style={{background:"transparent",border:"none",cursor:"pointer",color:iclr[s.prof],
                   fontSize:12,padding:0,lineHeight:1,flexShrink:0,width:16,transition:"color .12s"}}>
                 {icon[s.prof]}
               </button>
               <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".07em",
-                color:"rgba(200,190,240,0.82)",flex:1,textTransform:"uppercase",transition:"color .12s",
+                color:"rgba(var(--text-rgb),calc(0.82*var(--kt) + var(--tb)))",flex:1,textTransform:"uppercase",transition:"color .12s",
                 overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{s.name}</span>
               <span style={{fontFamily:"var(--font-mono)",fontSize:9,color:bclr[s.prof],fontWeight:600,flexShrink:0}}>{fmtMod(bonus)}</span>
             </div>
           );
         })}
       </div>
-      <div style={{fontFamily:"var(--font-mono)",fontSize:7,color:"rgba(124,77,255,0.28)",marginTop:8,letterSpacing:".1em"}}>
+      <div style={{fontFamily:"var(--font-mono)",fontSize:7,color:"rgba(var(--purple-rgb),calc(0.28*var(--kp) + var(--tb)))",marginTop:8,letterSpacing:".1em"}}>
         ○ Keine · ◆ Übung (+{char.profBonus}) · ◈ Expertise (+{char.profBonus * 2})
       </div>
     </Card>
@@ -1142,8 +1142,8 @@ function EditableSkillPills({ char, upd }) {
 function SkillPills({ char }) {
   const skills = mergeSkills(char);
   const icon  = ['○', '◆', '◈'];
-  const iclr  = ['rgba(124,77,255,0.3)', 'rgba(124,77,255,0.75)', 'rgba(140,210,255,0.85)'];
-  const bclr  = ['rgba(200,190,240,0.5)', 'rgba(124,77,255,0.85)', 'rgba(140,210,255,0.85)'];
+  const iclr  = ['rgba(var(--purple-rgb),calc(0.3*var(--kp)))', 'rgba(var(--purple-rgb),calc(0.75*var(--kp)))', 'rgba(140,210,255,0.85)'];
+  const bclr  = ['rgba(var(--text-rgb),calc(0.5*var(--kt)))', 'rgba(var(--purple-rgb),calc(0.85*var(--kp)))', 'rgba(140,210,255,0.85)'];
   return (
     <Card style={{marginBottom:11}}>
       <SecTitle label="Fertigkeiten" />
@@ -1151,16 +1151,16 @@ function SkillPills({ char }) {
         {skills.map(s => {
           const bonus = skillBonus(s, char.stats, char.profBonus);
           return (
-            <div key={s.name} style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
+            <div key={s.name} style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.06*var(--kp)))"}}>
               <span style={{color:iclr[s.prof],fontSize:12,lineHeight:1,flexShrink:0,width:16}}>{icon[s.prof]}</span>
               <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".07em",
-                color:"rgba(200,190,240,0.82)",flex:1,textTransform:"uppercase",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{s.name}</span>
+                color:"rgba(var(--text-rgb),calc(0.82*var(--kt) + var(--tb)))",flex:1,textTransform:"uppercase",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{s.name}</span>
               <span style={{fontFamily:"var(--font-mono)",fontSize:9,color:bclr[s.prof],fontWeight:600,flexShrink:0}}>{fmtMod(bonus)}</span>
             </div>
           );
         })}
       </div>
-      <div style={{fontFamily:"var(--font-mono)",fontSize:7,color:"rgba(124,77,255,0.28)",marginTop:8,letterSpacing:".1em"}}>
+      <div style={{fontFamily:"var(--font-mono)",fontSize:7,color:"rgba(var(--purple-rgb),calc(0.28*var(--kp) + var(--tb)))",marginTop:8,letterSpacing:".1em"}}>
         ○ Keine · ◆ Übung (+{char.profBonus}) · ◈ Expertise (+{char.profBonus * 2})
       </div>
     </Card>
@@ -1181,8 +1181,8 @@ function EditableSavingThrows({ char, upd }) {
     const updated = saves.map(s => s.key === key ? { ...s, prof: s.prof ? 0 : 1 } : s);
     upd({ saves: updated });
   }
-  const iclr = ['rgba(124,77,255,0.3)', 'rgba(124,77,255,0.75)'];
-  const bclr = ['rgba(200,190,240,0.5)', 'rgba(124,77,255,0.85)'];
+  const iclr = ['rgba(var(--purple-rgb),calc(0.3*var(--kp)))', 'rgba(var(--purple-rgb),calc(0.75*var(--kp)))'];
+  const bclr = ['rgba(var(--text-rgb),calc(0.5*var(--kt)))', 'rgba(var(--purple-rgb),calc(0.85*var(--kp)))'];
   return (
     <Card style={{marginBottom:11}}>
       <SecTitle label="Rettungswürfe" />
@@ -1190,21 +1190,21 @@ function EditableSavingThrows({ char, upd }) {
         {saves.map(s => {
           const bonus = mod(char.stats[s.key]) + (s.prof ? char.profBonus : 0);
           return (
-            <div key={s.key} style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
+            <div key={s.key} style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.06*var(--kp)))"}}>
               <button onClick={() => toggle(s.key)} title={s.prof ? "Übung" : "Keine"}
                 style={{background:"transparent",border:"none",cursor:"pointer",color:iclr[s.prof],
                   fontSize:12,padding:0,lineHeight:1,flexShrink:0,width:16,transition:"color .12s"}}>
                 {s.prof ? '◆' : '○'}
               </button>
               <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".07em",
-                color:"rgba(200,190,240,0.82)",flex:1,textTransform:"uppercase",
+                color:"rgba(var(--text-rgb),calc(0.82*var(--kt) + var(--tb)))",flex:1,textTransform:"uppercase",
                 overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{s.label}</span>
               <span style={{fontFamily:"var(--font-mono)",fontSize:9,color:bclr[s.prof],fontWeight:600,flexShrink:0}}>{fmtMod(bonus)}</span>
             </div>
           );
         })}
       </div>
-      <div style={{fontFamily:"var(--font-mono)",fontSize:7,color:"rgba(124,77,255,0.28)",marginTop:8,letterSpacing:".1em"}}>
+      <div style={{fontFamily:"var(--font-mono)",fontSize:7,color:"rgba(var(--purple-rgb),calc(0.28*var(--kp) + var(--tb)))",marginTop:8,letterSpacing:".1em"}}>
         ○ Keine · ◆ Übung (+{char.profBonus})
       </div>
     </Card>
@@ -1213,8 +1213,8 @@ function EditableSavingThrows({ char, upd }) {
 
 function SavingThrows({ char }) {
   const saves = mergeSaves(char);
-  const iclr = ['rgba(124,77,255,0.3)', 'rgba(124,77,255,0.75)'];
-  const bclr = ['rgba(200,190,240,0.5)', 'rgba(124,77,255,0.85)'];
+  const iclr = ['rgba(var(--purple-rgb),calc(0.3*var(--kp)))', 'rgba(var(--purple-rgb),calc(0.75*var(--kp)))'];
+  const bclr = ['rgba(var(--text-rgb),calc(0.5*var(--kt)))', 'rgba(var(--purple-rgb),calc(0.85*var(--kp)))'];
   return (
     <Card style={{marginBottom:11}}>
       <SecTitle label="Rettungswürfe" />
@@ -1222,17 +1222,17 @@ function SavingThrows({ char }) {
         {saves.map(s => {
           const bonus = mod(char.stats[s.key]) + (s.prof ? char.profBonus : 0);
           return (
-            <div key={s.key} style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
+            <div key={s.key} style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.06*var(--kp)))"}}>
               <span style={{color:iclr[s.prof],fontSize:12,lineHeight:1,flexShrink:0,width:16}}>{s.prof ? '◆' : '○'}</span>
               <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".07em",
-                color:"rgba(200,190,240,0.82)",flex:1,textTransform:"uppercase",
+                color:"rgba(var(--text-rgb),calc(0.82*var(--kt) + var(--tb)))",flex:1,textTransform:"uppercase",
                 overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{s.label}</span>
               <span style={{fontFamily:"var(--font-mono)",fontSize:9,color:bclr[s.prof],fontWeight:600,flexShrink:0}}>{fmtMod(bonus)}</span>
             </div>
           );
         })}
       </div>
-      <div style={{fontFamily:"var(--font-mono)",fontSize:7,color:"rgba(124,77,255,0.28)",marginTop:8,letterSpacing:".1em"}}>
+      <div style={{fontFamily:"var(--font-mono)",fontSize:7,color:"rgba(var(--purple-rgb),calc(0.28*var(--kp) + var(--tb)))",marginTop:8,letterSpacing:".1em"}}>
         ○ Keine · ◆ Übung (+{char.profBonus})
       </div>
     </Card>
@@ -1248,7 +1248,7 @@ function PersonalitySection({ char }) {
       <SecTitle label="Persönlichkeit" />
       {items.map(({l,t,acc})=>(
         <div key={l} style={{marginBottom:10}}>
-          <div style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".22em",color:`rgba(124,77,255,${acc?0.65:0.38})`,textTransform:"uppercase",marginBottom:4}}>{l}</div>
+          <div style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".22em",color:`rgba(var(--purple-rgb),${acc?0.65:0.38})`,textTransform:"uppercase",marginBottom:4}}>{l}</div>
           <p style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:300,color:"var(--silver)",lineHeight:1.72,fontStyle:"italic"}}>„{t}"</p>
         </div>
       ))}
@@ -1259,11 +1259,11 @@ function PersonalitySection({ char }) {
 /* ── Quest-Karte ──────────────────────────── */
 function QuestCard({ quest }) {
   return (
-    <div style={{background:"var(--card-bg)",border:"1px solid rgba(124,77,255,0.18)",borderRadius:4,padding:"14px 16px"}}>
+    <div style={{background:"var(--card-bg)",border:"1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))",borderRadius:4,padding:"14px 16px"}}>
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:10,marginBottom:6}}>
-        <span style={{fontFamily:"var(--font-display)",fontSize:11,letterSpacing:".14em",color:"rgba(210,202,245,0.92)",textTransform:"uppercase",flex:1}}>{quest.title}</span>
+        <span style={{fontFamily:"var(--font-display)",fontSize:11,letterSpacing:".14em",color:"color-mix(in srgb, rgba(210,202,245,0.92), rgb(var(--ink-rgb)) var(--cm))",textTransform:"uppercase",flex:1}}>{quest.title}</span>
       </div>
-      <div style={{fontFamily:"var(--font-mono)",fontSize:7.5,color:"rgba(124,77,255,0.4)",letterSpacing:".1em",marginBottom:6}}>{quest.year}</div>
+      <div style={{fontFamily:"var(--font-mono)",fontSize:7.5,color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",letterSpacing:".1em",marginBottom:6}}>{quest.year}</div>
       <p style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:300,color:"var(--silver)",lineHeight:1.65}}>{quest.short}</p>
     </div>
   );
@@ -1272,13 +1272,13 @@ function QuestCard({ quest }) {
 /* ── Begleiter-Karte ──────────────────────── */
 function CompanionCard({ comp }) {
   return (
-    <div style={{display:"flex",gap:12,background:"var(--card-bg)",border:"1px solid rgba(124,77,255,0.2)",borderRadius:4,padding:"13px 14px"}}>
+    <div style={{display:"flex",gap:12,background:"var(--card-bg)",border:"1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))",borderRadius:4,padding:"13px 14px"}}>
       <div style={{width:88,flexShrink:0}}>
         <ImageSlot slotId={comp.id} label={comp.name} height={88} hue={comp.hue||270} portrait />
       </div>
       <div style={{flex:1}}>
         <div style={{fontFamily:"var(--font-display)",fontSize:12,letterSpacing:".16em",color:"var(--white)",textTransform:"uppercase",marginBottom:4}}>{comp.name}</div>
-        <div style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".1em",color:"rgba(124,77,255,0.5)",marginBottom:8}}>{comp.type}</div>
+        <div style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".1em",color:"rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))",marginBottom:8}}>{comp.type}</div>
         <p style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:300,color:"var(--silver)",lineHeight:1.65,fontStyle:"italic"}}>„{comp.desc}"</p>
       </div>
     </div>
@@ -1288,7 +1288,7 @@ function CompanionCard({ comp }) {
 /* ── Kontakte-Tablet ─────────────────────── */
 const RELATION_COL = {
   "Verbündete":  ["rgba(80,200,140,0.78)","rgba(80,200,140,0.1)"],
-  "Vorgesetzter":["rgba(124,77,255,0.82)","rgba(124,77,255,0.12)"],
+  "Vorgesetzter":["rgba(var(--purple-rgb),calc(0.82*var(--kp)))","rgba(var(--purple-rgb),calc(0.12*var(--kp)))"],
   "Neutral":     ["rgba(170,162,210,0.65)","rgba(170,162,210,0.08)"],
   "Unbekannt":   ["rgba(200,145,45,0.82)","rgba(200,145,45,0.1)"],
   "Feind":       ["rgba(220,65,65,0.82)","rgba(220,65,65,0.1)"],
@@ -1298,21 +1298,21 @@ function KontakteTablet({ char }) {
   const [sel, setSel] = useSteckbrief(() => (char.contacts && char.contacts[0]) || null);
   if (!char.contacts || !char.contacts.length) return null;
   return (
-    <div style={{ background:"rgba(5,3,15,0.99)", border:"1px solid rgba(124,77,255,0.38)", borderRadius:8,
-      overflow:"hidden", boxShadow:"0 24px 64px rgba(0,0,0,0.75), inset 0 1px 0 rgba(124,77,255,0.12)" }}>
+    <div style={{ background:"rgba(var(--bg-rgb),0.99)", border:"1px solid rgba(var(--purple-rgb),calc(0.38*var(--kp)))", borderRadius:8,
+      overflow:"hidden", boxShadow:"0 24px 64px rgba(var(--shadow-rgb),calc(0.75 * var(--shadow-k))), inset 0 1px 0 rgba(var(--purple-rgb),calc(0.12*var(--kp)))" }}>
 
       {/* ── header bar ── */}
       <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between",
-        padding:"10px 16px", background:"rgba(10,6,26,0.98)", borderBottom:"1px solid rgba(124,77,255,0.18)" }}>
+        padding:"10px 16px", background:"rgba(var(--panel-rgb),0.98)", borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))" }}>
         <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-          <div style={{ width:7, height:7, borderRadius:"50%", background:"rgba(124,77,255,0.7)", animation:"pulseGlow 2.5s ease-in-out infinite" }} />
-          <span style={{ fontFamily:"var(--font-mono)", fontSize:8.5, letterSpacing:".25em", color:"rgba(124,77,255,0.62)", textTransform:"uppercase" }}>Kontakt-Datenbank</span>
+          <div style={{ width:7, height:7, borderRadius:"50%", background:"rgba(var(--purple-rgb),calc(0.7*var(--kp)))", animation:"pulseGlow 2.5s ease-in-out infinite" }} />
+          <span style={{ fontFamily:"var(--font-mono)", fontSize:8.5, letterSpacing:".25em", color:"rgba(var(--purple-rgb),calc(0.62*var(--kp) + var(--tb)))", textTransform:"uppercase" }}>Kontakt-Datenbank</span>
         </div>
         <div style={{ display:"flex", alignItems:"center", gap:12 }}>
-          <span style={{ fontFamily:"var(--font-mono)", fontSize:7.5, color:"rgba(124,77,255,0.3)", letterSpacing:".1em" }}>{char.name}</span>
-          <button style={{ width:16, height:16, fontFamily:"var(--font-mono)", fontSize:8, color:"rgba(160,140,255,0.7)", background:"rgba(124,77,255,0.12)", border:"1px solid rgba(124,77,255,0.4)", borderRadius:2, cursor:"pointer", padding:0, lineHeight:1, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}
-            onMouseEnter={e=>{e.currentTarget.style.color="#f0eeff";e.currentTarget.style.background="rgba(124,77,255,0.28)";e.currentTarget.style.borderColor="rgba(160,140,255,0.7)";}}
-            onMouseLeave={e=>{e.currentTarget.style.color="rgba(160,140,255,0.7)";e.currentTarget.style.background="rgba(124,77,255,0.12)";e.currentTarget.style.borderColor="rgba(124,77,255,0.4)";}}>
+          <span style={{ fontFamily:"var(--font-mono)", fontSize:7.5, color:"rgba(var(--purple-rgb),calc(0.3*var(--kp) + var(--tb)))", letterSpacing:".1em" }}>{char.name}</span>
+          <button style={{ width:16, height:16, fontFamily:"var(--font-mono)", fontSize:8, color:"rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))", background:"rgba(var(--purple-rgb),calc(0.12*var(--kp)))", border:"1px solid rgba(var(--purple-rgb),calc(0.4*var(--kp)))", borderRadius:2, cursor:"pointer", padding:0, lineHeight:1, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}
+            onMouseEnter={e=>{e.currentTarget.style.color="var(--white)";e.currentTarget.style.background="rgba(var(--purple-rgb),calc(0.28*var(--kp)))";e.currentTarget.style.borderColor="rgba(var(--accent-rgb),calc(0.7*var(--ka)))";}}
+            onMouseLeave={e=>{e.currentTarget.style.color="rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))";e.currentTarget.style.background="rgba(var(--purple-rgb),calc(0.12*var(--kp)))";e.currentTarget.style.borderColor="rgba(var(--purple-rgb),calc(0.4*var(--kp)))";}}>
             ✕
           </button>
         </div>
@@ -1322,23 +1322,23 @@ function KontakteTablet({ char }) {
       <div style={{ display:"flex", height:380 }}>
 
         {/* LEFT — list */}
-        <div style={{ width:236, flexShrink:0, borderRight:"1px solid rgba(124,77,255,0.14)", overflowY:"auto" }}>
+        <div style={{ width:236, flexShrink:0, borderRight:"1px solid rgba(var(--purple-rgb),calc(0.14*var(--kp)))", overflowY:"auto" }}>
           {char.contacts.map(ct => {
             const active = sel && sel.id === ct.id;
             const [rc] = RELATION_COL[ct.relation] || RELATION_COL["Neutral"];
             return (
               <div key={ct.id} onClick={()=>setSel(ct)} style={{ display:"flex", alignItems:"center", gap:10,
                 padding:"10px 14px", cursor:"pointer", transition:"all .18s ease",
-                background: active ? "rgba(124,77,255,0.1)" : "transparent",
-                borderLeft: active ? "2.5px solid rgba(124,77,255,0.65)" : "2.5px solid transparent",
-                borderBottom:"1px solid rgba(124,77,255,0.07)" }}>
+                background: active ? "rgba(var(--purple-rgb),calc(0.1*var(--kp)))" : "transparent",
+                borderLeft: active ? "2.5px solid rgba(var(--purple-rgb),calc(0.65*var(--kp)))" : "2.5px solid transparent",
+                borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.07*var(--kp)))" }}>
                 <div style={{ width:36, height:36, flexShrink:0, borderRadius:3, overflow:"hidden" }}>
                   <ImageSlot slotId={ct.id+"-av"} label="" height={36} hue={ct.hue||270} portrait />
                 </div>
                 <div style={{ flex:1, minWidth:0 }}>
                   <div style={{ fontFamily:"var(--font-body)", fontSize:11.5, fontWeight:active?400:300,
                     color:active?"var(--white)":"var(--silver)", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{ct.name}</div>
-                  <div style={{ fontFamily:"var(--font-mono)", fontSize:7.5, color:"rgba(124,77,255,0.42)", marginTop:2,
+                  <div style={{ fontFamily:"var(--font-mono)", fontSize:7.5, color:"rgba(var(--purple-rgb),calc(0.42*var(--kp) + var(--tb)))", marginTop:2,
                     overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{ct.role}</div>
                 </div>
                 <span style={{ fontFamily:"var(--font-mono)", fontSize:6.5, padding:"1px 5px",
@@ -1357,7 +1357,7 @@ function KontakteTablet({ char }) {
                 <div style={{ flex:1 }}>
                   <h3 style={{ fontFamily:"var(--font-display)", fontSize:15, fontWeight:400, letterSpacing:".18em",
                     color:"var(--white)", textTransform:"uppercase", marginBottom:5 }}>{sel.name}</h3>
-                  <div style={{ fontFamily:"var(--font-mono)", fontSize:8, letterSpacing:".1em", color:"rgba(124,77,255,0.5)", marginBottom:11 }}>{sel.role}</div>
+                  <div style={{ fontFamily:"var(--font-mono)", fontSize:8, letterSpacing:".1em", color:"rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))", marginBottom:11 }}>{sel.role}</div>
                   <div style={{ display:"flex", gap:5, flexWrap:"wrap" }}>
                     {[
                       [sel.relation, RELATION_COL[sel.relation]||RELATION_COL["Neutral"]],
@@ -1373,15 +1373,15 @@ function KontakteTablet({ char }) {
                   <ImageSlot slotId={sel.id+"-portrait"} label={sel.name} height={138} hue={sel.hue||270} portrait />
                 </div>
               </div>
-              <div style={{ height:1, background:"rgba(124,77,255,0.1)", marginBottom:14 }} />
-              <div style={{ fontFamily:"var(--font-mono)", fontSize:7.5, letterSpacing:".22em", color:"rgba(124,77,255,0.42)",
+              <div style={{ height:1, background:"rgba(var(--purple-rgb),calc(0.1*var(--kp)))", marginBottom:14 }} />
+              <div style={{ fontFamily:"var(--font-mono)", fontSize:7.5, letterSpacing:".22em", color:"rgba(var(--purple-rgb),calc(0.42*var(--kp) + var(--tb)))",
                 textTransform:"uppercase", marginBottom:8 }}>Was ich über diese Person denke:</div>
               <p style={{ fontFamily:"var(--font-body)", fontSize:12.5, fontWeight:300, color:"var(--silver)", lineHeight:1.82, fontStyle:"italic" }}>
                 „{sel.note}"</p>
             </div>
           ) : (
             <div style={{ display:"flex", alignItems:"center", justifyContent:"center", height:"100%",
-              fontFamily:"var(--font-mono)", fontSize:9, letterSpacing:".2em", color:"rgba(124,77,255,0.22)", textTransform:"uppercase" }}>
+              fontFamily:"var(--font-mono)", fontSize:9, letterSpacing:".2em", color:"rgba(var(--purple-rgb),calc(0.22*var(--kp) + var(--tb)))", textTransform:"uppercase" }}>
               ← Kontakt auswählen
             </div>
           )}
@@ -1397,31 +1397,31 @@ function FbCard({ item, index, onChange }) {
   const num = String(index+1).padStart(2,"0");
   return (
     <div onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
-      style={{ background:hov?"rgba(16,10,36,0.97)":"var(--card-bg)",
-        border:`1px solid rgba(124,77,255,${hov?0.38:0.15})`,
+      style={{ background:hov?"rgba(var(--panel-rgb),0.97)":"var(--card-bg)",
+        border:`1px solid rgba(var(--purple-rgb),${hov?0.38:0.15})`,
         borderRadius:4, padding:"20px 18px 18px", position:"relative",
         overflow:"hidden", cursor:"default",
         transform:hov?"translateY(-2px)":"none",
-        boxShadow:hov?"0 10px 32px rgba(0,0,0,0.5),0 0 16px rgba(124,77,255,0.07)":"none",
+        boxShadow:hov?"0 10px 32px rgba(var(--shadow-rgb),calc(0.5 * var(--shadow-k))),0 0 16px rgba(var(--purple-rgb),calc(0.07*var(--kp)))":"none",
         transition:"all .25s ease" }}>
       <div style={{ position:"absolute", top:-14, left:10,
         fontFamily:"Georgia,serif", fontSize:96, lineHeight:1,
-        color:"rgba(124,77,255,0.055)", pointerEvents:"none", userSelect:"none",
-        transition:"color .25s", ...(hov&&{color:"rgba(124,77,255,0.09)"}) }}>„</div>
+        color:"rgba(var(--purple-rgb),calc(0.055*var(--kp) + var(--tb)))", pointerEvents:"none", userSelect:"none",
+        transition:"color .25s", ...(hov&&{color:"rgba(var(--purple-rgb),calc(0.09*var(--kp) + var(--tb)))"}) }}>„</div>
       <div style={{ position:"absolute", top:13, right:15,
         fontFamily:"var(--font-mono)", fontSize:8.5, letterSpacing:".08em",
-        color:`rgba(124,77,255,${hov?0.4:0.2})`, transition:"color .25s" }}>{num}</div>
+        color:`rgba(var(--purple-rgb),${hov?0.4:0.2})`, transition:"color .25s" }}>{num}</div>
       <div style={{ fontFamily:"var(--font-mono)", fontSize:8, letterSpacing:".22em",
-        color:`rgba(124,77,255,${hov?0.72:0.5})`, textTransform:"uppercase",
+        color:`rgba(var(--purple-rgb),${hov?0.72:0.5})`, textTransform:"uppercase",
         marginBottom:10, paddingRight:28, transition:"color .25s",
         lineHeight:1.5 }}>{item.frage}</div>
-      <div style={{ width:22, height:1, background:`rgba(124,77,255,${hov?0.45:0.22})`,
+      <div style={{ width:22, height:1, background:`rgba(var(--purple-rgb),${hov?0.45:0.22})`,
         marginBottom:12, transition:"background .25s" }} />
       {onChange
         ? <textarea value={item.antwort||''} onChange={e=>onChange({...item,antwort:e.target.value})}
             style={{fontFamily:"var(--font-body)",fontSize:12.5,fontWeight:300,lineHeight:1.78,
               fontStyle:"italic",color:"var(--silver)",width:"100%",background:"transparent",
-              border:"none",borderBottom:"1px solid rgba(124,77,255,0.2)",outline:"none",
+              border:"none",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))",outline:"none",
               resize:"vertical",padding:"2px 0",minHeight:60}} />
         : <p style={{ fontFamily:"var(--font-body)", fontSize:13, fontWeight:300,
             lineHeight:1.78, fontStyle:"italic",
@@ -1459,9 +1459,9 @@ function saveCharToDB(id, char) {
 function Divider({ label }) {
   return (
     <div style={{display:"flex",alignItems:"center",gap:14,margin:"4px 22px 18px"}}>
-      <div style={{flex:1,height:1,background:"rgba(124,77,255,0.1)"}} />
-      {label && <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".28em",color:"rgba(124,77,255,0.3)",textTransform:"uppercase"}}>{label}</span>}
-      <div style={{flex:1,height:1,background:"rgba(124,77,255,0.1)"}} />
+      <div style={{flex:1,height:1,background:"rgba(var(--purple-rgb),calc(0.1*var(--kp)))"}} />
+      {label && <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".28em",color:"rgba(var(--purple-rgb),calc(0.3*var(--kp) + var(--tb)))",textTransform:"uppercase"}}>{label}</span>}
+      <div style={{flex:1,height:1,background:"rgba(var(--purple-rgb),calc(0.1*var(--kp)))"}} />
     </div>
   );
 }
@@ -1539,29 +1539,29 @@ function BirthdayPickerRow({ char, upd }) {
     ? doy - MONTH_START_MERURIA[picMonth] + 1 : null;
 
   const rowStyle = {display:"flex",alignItems:"center",gap:6,padding:"3px 0",
-    borderBottom:"1px solid rgba(124,77,255,0.06)",position:"relative"};
+    borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.06*var(--kp)))",position:"relative"};
   const labelStyle = {fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",
-    color:"rgba(124,77,255,0.4)",textTransform:"uppercase",flex:"0 0 80px"};
+    color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase",flex:"0 0 80px"};
   const btnStyle = {fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:300,
-    color: displayText ? "var(--white)" : "rgba(200,190,240,0.3)",
-    background:"transparent",border:"none",borderBottom:"1px solid rgba(124,77,255,0.25)",
+    color: displayText ? "var(--white)" : "rgba(var(--text-rgb),calc(0.3*var(--kt)))",
+    background:"transparent",border:"none",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))",
     padding:"1px 4px",flex:1,outline:"none",minWidth:0,cursor:"pointer",textAlign:"left"};
   const dropStyle = {
     position:"absolute",top:"calc(100% + 4px)",left:0,zIndex:1200,
-    background:"rgba(11,8,28,0.99)",border:"1px solid rgba(124,77,255,0.35)",
-    borderRadius:4,boxShadow:"0 20px 52px rgba(0,0,0,0.75)",
+    background:"rgba(var(--panel-rgb),0.99)",border:"1px solid rgba(var(--purple-rgb),calc(0.35*var(--kp)))",
+    borderRadius:4,boxShadow:"0 20px 52px rgba(var(--shadow-rgb),calc(0.75 * var(--shadow-k)))",
     width:"min(340px,92vw)",overflow:"hidden",
   };
   const tabActive  = {fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".1em",padding:"3px 7px",
-    background:"rgba(124,77,255,0.25)",border:"1px solid rgba(124,77,255,0.5)",borderRadius:2,
+    background:"rgba(var(--purple-rgb),calc(0.25*var(--kp)))",border:"1px solid rgba(var(--purple-rgb),calc(0.5*var(--kp)))",borderRadius:2,
     color:"var(--white)",cursor:"pointer",fontWeight:600};
   const tabInactive = {...tabActive, background:"transparent",
-    border:"1px solid rgba(124,77,255,0.12)",color:"rgba(200,190,240,0.45)",fontWeight:300};
+    border:"1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))",color:"rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))",fontWeight:300};
   const dayActive   = {fontFamily:"var(--font-display)",fontSize:12,padding:"6px 2px",
-    background:"rgba(124,77,255,0.4)",border:"1px solid rgba(124,77,255,0.7)",
+    background:"rgba(var(--purple-rgb),calc(0.4*var(--kp)))",border:"1px solid rgba(var(--purple-rgb),calc(0.7*var(--kp)))",
     borderRadius:2,color:"var(--white)",cursor:"pointer",textAlign:"center"};
-  const dayInactive = {...dayActive, background:"rgba(124,77,255,0.05)",
-    border:"1px solid rgba(124,77,255,0.12)",color:"rgba(200,190,240,0.8)"};
+  const dayInactive = {...dayActive, background:"rgba(var(--purple-rgb),calc(0.05*var(--kp)))",
+    border:"1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))",color:"rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))"};
 
   return (
     <div style={rowStyle} ref={ref}>
@@ -1572,7 +1572,7 @@ function BirthdayPickerRow({ char, upd }) {
       {open && (
         <div style={dropStyle}>
           <div style={{display:"flex",flexWrap:"wrap",gap:2,padding:"8px 8px 6px",
-            borderBottom:"1px solid rgba(124,77,255,0.12)"}}>
+            borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))"}}>
             {MONTHS_MERURIA.map((m,i) => (
               <button key={i} style={picMonth===i ? tabActive : tabInactive}
                 onClick={() => setPicMonth(i)}>{m.name}</button>
@@ -1584,10 +1584,10 @@ function BirthdayPickerRow({ char, upd }) {
                 onClick={() => pickDay(picMonth, d)}>{d}</button>
             ))}
           </div>
-          <div style={{padding:"5px 8px 8px",borderTop:"1px solid rgba(124,77,255,0.1)"}}>
+          <div style={{padding:"5px 8px 8px",borderTop:"1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))"}}>
             <button onClick={clearDate}
               style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".18em",
-                textTransform:"uppercase",color:"rgba(200,190,240,0.35)",
+                textTransform:"uppercase",color:"rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))",
                 background:"transparent",border:"none",cursor:"pointer",padding:"3px 0"}}>
               Datum entfernen
             </button>
@@ -1601,13 +1601,13 @@ function BirthdayPickerRow({ char, upd }) {
 /* ── SelectERow (generic dropdown ERow) ─── */
 function SelectERow({ label, field, char, upd, options, bright }) {
   return (
-    <div style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
-      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase",flex:"0 0 80px"}}>{label}</span>
+    <div style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.06*var(--kp)))"}}>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase",flex:"0 0 80px"}}>{label}</span>
       <select
         value={char[field]||''}
         onChange={e => upd({[field]: e.target.value})}
-        style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:bright?400:300,color:"#e8e2ff",
-          background:"#0e0c20",border:"none",borderBottom:"1px solid rgba(124,77,255,0.25)",
+        style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:bright?400:300,color:"var(--white)",
+          background:"rgb(var(--panel-rgb))",border:"none",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))",
           padding:"2px 4px",flex:1,outline:"none",minWidth:0,cursor:"pointer",colorScheme:"dark"}}>
         <option value="">— wählen —</option>
         {options.map(o => <option key={o} value={o}>{o}</option>)}
@@ -1620,13 +1620,13 @@ function SelectERow({ label, field, char, upd, options, bright }) {
 function KlasseSelectRow({ char, upd }) {
   const klassen = window.KLASSEN_DATA?.klassen || [];
   return (
-    <div style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
-      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase",flex:"0 0 80px"}}>Klasse</span>
+    <div style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.06*var(--kp)))"}}>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase",flex:"0 0 80px"}}>Klasse</span>
       <select
         value={char.class||''}
         onChange={e => upd({ class: e.target.value, subclass: '—' })}
-        style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:400,color:"#e8e2ff",
-          background:"#0e0c20",border:"none",borderBottom:"1px solid rgba(124,77,255,0.25)",
+        style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:400,color:"var(--white)",
+          background:"rgb(var(--panel-rgb))",border:"none",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))",
           padding:"2px 4px",flex:1,outline:"none",minWidth:0,cursor:"pointer",colorScheme:"dark"}}>
         <option value="">— wählen —</option>
         {klassen.map(k => <option key={k.id} value={k.name}>{k.name}</option>)}
@@ -1641,12 +1641,12 @@ function SubklasseSelectRow({ char, upd }) {
   const klasseObj = klassen.find(k => k.name === char.class);
   const detail = klasseObj ? (window.KLASSEN_DETAIL || {})[klasseObj.id] : null;
   const unterklassen = detail?.unterklassen || [];
-  const baseStyle = {fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:300,color:"#e8e2ff",
-    background:"#0e0c20",border:"none",borderBottom:"1px solid rgba(124,77,255,0.25)",
+  const baseStyle = {fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:300,color:"var(--white)",
+    background:"rgb(var(--panel-rgb))",border:"none",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))",
     padding:"2px 4px",flex:1,outline:"none",minWidth:0};
   return (
-    <div style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
-      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase",flex:"0 0 80px"}}>Subklasse</span>
+    <div style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.06*var(--kp)))"}}>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase",flex:"0 0 80px"}}>Subklasse</span>
       {unterklassen.length > 0
         ? <select value={char.subclass||'—'} onChange={e => upd({subclass: e.target.value})}
             style={{...baseStyle,cursor:"pointer",colorScheme:"dark",fontWeight:300}}>
@@ -1671,17 +1671,17 @@ function rassentalentOptions(race) {
 function RassentalentRow({ char, upd }) {
   const opts = rassentalentOptions(char.race);
   return (
-    <div style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
-      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase",flex:"0 0 80px"}}>Rassentalent</span>
+    <div style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.06*var(--kp)))"}}>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase",flex:"0 0 80px"}}>Rassentalent</span>
       {opts.length > 0
         ? <select value={char.rassentalent||''} onChange={e => upd({rassentalent: e.target.value||null})}
-            style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:400,color:"#e8e2ff",
-              background:"#0e0c20",border:"none",borderBottom:"1px solid rgba(124,77,255,0.25)",
+            style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:400,color:"var(--white)",
+              background:"rgb(var(--panel-rgb))",border:"none",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))",
               padding:"2px 4px",flex:1,outline:"none",minWidth:0,cursor:"pointer",colorScheme:"dark"}}>
             <option value="">— keines —</option>
             {opts.map(t => <option key={t.id} value={t.name}>{t.name}</option>)}
           </select>
-        : <span style={{fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(124,77,255,0.25)",fontStyle:"italic"}}>
+        : <span style={{fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(var(--purple-rgb),calc(0.25*var(--kp) + var(--tb)))",fontStyle:"italic"}}>
             {char.race ? 'Keine angeborenen Talente für diese Rasse' : 'Erst Volk wählen'}
           </span>
       }
@@ -1708,9 +1708,9 @@ function RassenmerkmaleCard({ char, upd }) {
   const E = !!upd;
   const selectedTalent = opts.find(t => t.name === char.rassentalent);
 
-  const rowStyle = {borderBottom:"1px solid rgba(124,77,255,0.07)",paddingBottom:8,marginBottom:8};
-  const titleStyle = {fontFamily:"var(--font-display)",fontSize:11.5,color:"rgba(200,190,240,0.9)",letterSpacing:".06em"};
-  const textStyle = {fontFamily:"var(--font-body)",fontSize:10.5,fontWeight:300,color:"rgba(200,190,240,0.52)",lineHeight:1.65,margin:"3px 0 0"};
+  const rowStyle = {borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.07*var(--kp)))",paddingBottom:8,marginBottom:8};
+  const titleStyle = {fontFamily:"var(--font-display)",fontSize:11.5,color:"rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))",letterSpacing:".06em"};
+  const textStyle = {fontFamily:"var(--font-body)",fontSize:10.5,fontWeight:300,color:"rgba(var(--text-rgb),calc(0.52*var(--kt) + var(--tb)))",lineHeight:1.65,margin:"3px 0 0"};
 
   return (
     <Card>
@@ -1725,21 +1725,21 @@ function RassenmerkmaleCard({ char, upd }) {
               {isTalent ? (
                 E ? (
                   <select value={char.rassentalent||''} onChange={e => upd({rassentalent: e.target.value||null})}
-                    style={{fontFamily:"var(--font-body)",fontSize:11,color:"#e8e2ff",display:"block",marginTop:5,
-                      background:"#0e0c20",border:"none",borderBottom:"1px solid rgba(124,77,255,0.3)",
+                    style={{fontFamily:"var(--font-body)",fontSize:11,color:"var(--white)",display:"block",marginTop:5,
+                      background:"rgb(var(--panel-rgb))",border:"none",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))",
                       padding:"3px 4px",width:"100%",outline:"none",cursor:"pointer",colorScheme:"dark"}}>
                     <option value="">— keines —</option>
                     {opts.map(t => <option key={t.id} value={t.name}>{t.name}</option>)}
                   </select>
                 ) : selectedTalent ? (
                   <>
-                    <p style={{...textStyle,fontWeight:500,color:"rgba(200,190,240,0.75)"}}>{selectedTalent.name}</p>
+                    <p style={{...textStyle,fontWeight:500,color:"rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))"}}>{selectedTalent.name}</p>
                     {(selectedTalent.vorzuege||selectedTalent.beschreibung||[]).map((v,j) => (
-                      <p key={j} style={{...textStyle,paddingLeft:8,borderLeft:"2px solid rgba(124,77,255,0.2)",marginTop:4}}>{v}</p>
+                      <p key={j} style={{...textStyle,paddingLeft:8,borderLeft:"2px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))",marginTop:4}}>{v}</p>
                     ))}
                   </>
                 ) : (
-                  <p style={{...textStyle,color:"rgba(124,77,255,0.3)",fontStyle:"italic"}}>Kein Talent gewählt</p>
+                  <p style={{...textStyle,color:"rgba(var(--purple-rgb),calc(0.3*var(--kp) + var(--tb)))",fontStyle:"italic"}}>Kein Talent gewählt</p>
                 )
               ) : (
                 <p style={textStyle}>{f.text}</p>
@@ -1758,9 +1758,9 @@ function HintergrundmerkmaleCard({ char }) {
   const bg = hintergruende.find(h => h.name === char.background);
   if (!bg || !bg.merkmal) return null;
 
-  const textStyle = {fontFamily:"var(--font-body)",fontSize:10.5,fontWeight:300,color:"rgba(200,190,240,0.52)",lineHeight:1.65,margin:"3px 0 0"};
-  const titleStyle = {fontFamily:"var(--font-display)",fontSize:11.5,color:"rgba(200,190,240,0.9)",letterSpacing:".06em"};
-  const rowStyle = {borderBottom:"1px solid rgba(124,77,255,0.07)",paddingBottom:8,marginBottom:8};
+  const textStyle = {fontFamily:"var(--font-body)",fontSize:10.5,fontWeight:300,color:"rgba(var(--text-rgb),calc(0.52*var(--kt) + var(--tb)))",lineHeight:1.65,margin:"3px 0 0"};
+  const titleStyle = {fontFamily:"var(--font-display)",fontSize:11.5,color:"rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))",letterSpacing:".06em"};
+  const rowStyle = {borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.07*var(--kp)))",paddingBottom:8,marginBottom:8};
 
   return (
     <Card>
@@ -1774,10 +1774,10 @@ function HintergrundmerkmaleCard({ char }) {
           <div>
             <div style={{display:"flex",alignItems:"baseline",gap:7,marginBottom:3,flexWrap:"wrap"}}>
               <span style={titleStyle}>{bg.merkmalVariante.name}</span>
-              <span style={{fontFamily:"var(--font-mono)",fontSize:7,color:"rgba(124,77,255,0.5)",border:"1px solid rgba(124,77,255,0.3)",padding:"0 4px",borderRadius:2}}>Variante</span>
+              <span style={{fontFamily:"var(--font-mono)",fontSize:7,color:"rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))",border:"1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))",padding:"0 4px",borderRadius:2}}>Variante</span>
             </div>
             {bg.merkmalVariante.bedingung && (
-              <p style={{...textStyle,fontStyle:"italic",color:"rgba(160,140,255,0.35)",marginBottom:4}}>{bg.merkmalVariante.bedingung}</p>
+              <p style={{...textStyle,fontStyle:"italic",color:"rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))",marginBottom:4}}>{bg.merkmalVariante.bedingung}</p>
             )}
             <p style={textStyle}>{bg.merkmalVariante.beschreibung}</p>
           </div>
@@ -1826,13 +1826,13 @@ function KlassenmerkmaleCard({ char }) {
       <SecTitle label="Klassenmerkmale" />
       <div style={{display:"flex",flexDirection:"column",gap:9}}>
         {features.map(m => (
-          <div key={m.id} style={{borderBottom:"1px solid rgba(124,77,255,0.07)",paddingBottom:8}}>
+          <div key={m.id} style={{borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.07*var(--kp)))",paddingBottom:8}}>
             <div style={{display:"flex",alignItems:"baseline",gap:7,marginBottom:3,flexWrap:"wrap"}}>
-              <span style={{fontFamily:"var(--font-display)",fontSize:11.5,color:"rgba(200,190,240,0.9)",letterSpacing:".06em"}}>{m.name}</span>
-              {m.optional && <span style={{fontFamily:"var(--font-mono)",fontSize:7,color:"rgba(124,77,255,0.5)",border:"1px solid rgba(124,77,255,0.3)",padding:"0 4px",borderRadius:2}}>Optional</span>}
-              <span style={{fontFamily:"var(--font-mono)",fontSize:7,color:"rgba(124,77,255,0.35)",letterSpacing:".1em"}}>Stufe {m.stufe}</span>
+              <span style={{fontFamily:"var(--font-display)",fontSize:11.5,color:"rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))",letterSpacing:".06em"}}>{m.name}</span>
+              {m.optional && <span style={{fontFamily:"var(--font-mono)",fontSize:7,color:"rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))",border:"1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))",padding:"0 4px",borderRadius:2}}>Optional</span>}
+              <span style={{fontFamily:"var(--font-mono)",fontSize:7,color:"rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))",letterSpacing:".1em"}}>Stufe {m.stufe}</span>
             </div>
-            <p style={{fontFamily:"var(--font-body)",fontSize:10.5,fontWeight:300,color:"rgba(200,190,240,0.52)",lineHeight:1.65,margin:0}}>
+            <p style={{fontFamily:"var(--font-body)",fontSize:10.5,fontWeight:300,color:"rgba(var(--text-rgb),calc(0.52*var(--kt) + var(--tb)))",lineHeight:1.65,margin:0}}>
               {(m.beschreibung?.[0] || '').slice(0, 200)}{(m.beschreibung?.[0]||'').length > 200 ? '…' : ''}
             </p>
           </div>
@@ -1845,11 +1845,11 @@ function KlassenmerkmaleCard({ char }) {
 /* ── ERow (editable IRow) ────────────────── */
 function ERow({ label, field, char, upd, bright }) {
   return (
-    <div style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
-      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase",flex:"0 0 80px"}}>{label}</span>
+    <div style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.06*var(--kp)))"}}>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase",flex:"0 0 80px"}}>{label}</span>
       <input value={char[field]??''} onChange={e=>upd({[field]:e.target.value})}
         style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:bright?400:300,color:"var(--white)",
-          background:"transparent",border:"none",borderBottom:"1px solid rgba(124,77,255,0.25)",
+          background:"transparent",border:"none",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))",
           padding:"1px 4px",flex:1,outline:"none",minWidth:0}} />
     </div>
   );
@@ -1858,13 +1858,13 @@ function ERow({ label, field, char, upd, bright }) {
 /* ── UnitERow (ERow with unit suffix) ───── */
 function UnitERow({ label, field, unit, char, upd }) {
   return (
-    <div style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
-      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase",flex:"0 0 80px"}}>{label}</span>
+    <div style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.06*var(--kp)))"}}>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase",flex:"0 0 80px"}}>{label}</span>
       <input value={char[field]??''} onChange={e=>upd({[field]:e.target.value})} inputMode="numeric"
         style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:300,color:"var(--white)",
-          background:"transparent",border:"none",borderBottom:"1px solid rgba(124,77,255,0.25)",
+          background:"transparent",border:"none",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))",
           padding:"1px 4px",flex:1,outline:"none",minWidth:0}} />
-      <span style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(124,77,255,0.4)",letterSpacing:".08em",flexShrink:0}}>{unit}</span>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",letterSpacing:".08em",flexShrink:0}}>{unit}</span>
     </div>
   );
 }
@@ -1884,14 +1884,14 @@ function EditableStatsGrid({ char, updStat }) {
           const m = Math.floor((score-10)/2);
           return (
             <div key={key} style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",
-              background:"rgba(7,4,18,0.97)",border:"1px solid rgba(124,77,255,0.32)",borderRadius:3,padding:"9px 4px 8px"}}>
-              <span style={{fontFamily:"var(--font-mono)",fontSize:7,letterSpacing:".16em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase",marginBottom:5,textAlign:"center"}}>{label}</span>
+              background:"rgba(var(--panel-rgb),0.97)",border:"1px solid rgba(var(--purple-rgb),calc(0.32*var(--kp)))",borderRadius:3,padding:"9px 4px 8px"}}>
+              <span style={{fontFamily:"var(--font-mono)",fontSize:7,letterSpacing:".16em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase",marginBottom:5,textAlign:"center"}}>{label}</span>
               <input type="number" min="1" max="30" value={score} onChange={e=>updStat(key,e.target.value)}
                 style={{fontFamily:"var(--font-mono)",fontSize:20,color:"var(--white)",lineHeight:1,
                   background:"transparent",border:"none",textAlign:"center",width:"100%",
                   outline:"none",padding:"2px 0",WebkitAppearance:"none",MozAppearance:"textfield"}} />
-              <div style={{width:"65%",height:1,background:"rgba(124,77,255,0.15)",margin:"5px 0"}} />
-              <span style={{fontFamily:"var(--font-mono)",fontSize:13,color:"rgba(124,77,255,0.6)"}}>{m>=0?"+":""}{m}</span>
+              <div style={{width:"65%",height:1,background:"rgba(var(--purple-rgb),calc(0.15*var(--kp)))",margin:"5px 0"}} />
+              <span style={{fontFamily:"var(--font-mono)",fontSize:13,color:"rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))"}}>{m>=0?"+":""}{m}</span>
             </div>
           );
         })}
@@ -1908,7 +1908,7 @@ function EditablePersonality({ char, upd, taStyle }) {
       <SecTitle label="Persönlichkeit" />
       {items.map(({l,f})=>(
         <div key={f} style={{marginBottom:10}}>
-          <div style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".22em",color:"rgba(124,77,255,0.5)",textTransform:"uppercase",marginBottom:4}}>{l}</div>
+          <div style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".22em",color:"rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))",textTransform:"uppercase",marginBottom:4}}>{l}</div>
           <textarea value={char[f]||''} onChange={e=>upd({[f]:e.target.value})} style={taStyle} />
         </div>
       ))}
@@ -1934,7 +1934,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
 
   const taStyle = {
     fontFamily:"var(--font-body)",fontSize:12,fontWeight:300,color:"var(--silver)",lineHeight:1.75,
-    background:"rgba(124,77,255,0.04)",border:"1px solid rgba(124,77,255,0.2)",borderRadius:2,
+    background:"rgba(var(--purple-rgb),calc(0.04*var(--kp)))",border:"1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))",borderRadius:2,
     padding:"7px 9px",width:"100%",resize:"vertical",outline:"none",minHeight:58,boxSizing:"border-box",
   };
 
@@ -1957,72 +1957,72 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
   const ZauberSect = window.ZauberSection;
 
   return (
-    <div style={{minHeight:"100vh"}}>
+    <div className="steckbrief-root" style={{minHeight:"calc(var(--vh, 1vh) * 100)"}}>
       {!hideNav && SiteNav && <SiteNav />}
 
       {/* ── Kopf ── */}
-      <div style={{padding:"18px 28px 15px",borderBottom:"1px solid rgba(124,77,255,0.1)"}}>
-        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:6}}>
+      <div className="sb-head" style={{padding:"18px 28px 15px",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))"}}>
+        <div className="sb-top" style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:6}}>
           <div style={{display:"flex",alignItems:"center",gap:14}}>
             {hasMultiple && onBack && (
               <button onClick={onBack} style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".18em",
-                color:"rgba(124,77,255,0.5)",background:"transparent",border:"none",cursor:"pointer",padding:0,
+                color:"rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))",background:"transparent",border:"none",cursor:"pointer",padding:0,
                 textTransform:"uppercase",transition:"color .15s"}}
-                onMouseEnter={e=>e.currentTarget.style.color="rgba(160,140,255,0.85)"}
-                onMouseLeave={e=>e.currentTarget.style.color="rgba(124,77,255,0.5)"}>
+                onMouseEnter={e=>e.currentTarget.style.color="rgba(var(--accent-rgb),calc(0.85*var(--ka) + var(--tb)))"}
+                onMouseLeave={e=>e.currentTarget.style.color="rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))"}>
                 ← Auswahl
               </button>
             )}
             {!canEdit && (
               <a href="/charaktere/spielercharaktere.html" style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".18em",
-                color:"rgba(124,77,255,0.5)",textDecoration:"none",textTransform:"uppercase",transition:"color .15s"}}
-                onMouseEnter={e=>e.currentTarget.style.color="rgba(160,140,255,0.85)"}
-                onMouseLeave={e=>e.currentTarget.style.color="rgba(124,77,255,0.5)"}>
+                color:"rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))",textDecoration:"none",textTransform:"uppercase",transition:"color .15s"}}
+                onMouseEnter={e=>e.currentTarget.style.color="rgba(var(--accent-rgb),calc(0.85*var(--ka) + var(--tb)))"}
+                onMouseLeave={e=>e.currentTarget.style.color="rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))"}>
                 ← Charaktere
               </a>
             )}
-            <div style={{fontFamily:"var(--font-mono)",fontSize:9,letterSpacing:".3em",color:"rgba(124,77,255,0.5)",textTransform:"uppercase"}}>
+            <div className="sb-crumb" style={{fontFamily:"var(--font-mono)",fontSize:9,letterSpacing:".3em",color:"rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))",textTransform:"uppercase"}}>
               Meruria · Charaktere
             </div>
           </div>
           {canEdit && (
             <button onClick={()=>setEditing(!E)}
               style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".18em",textTransform:"uppercase",
-                padding:"5px 14px",background:E?"rgba(124,77,255,0.22)":"transparent",
-                border:`1px solid rgba(124,77,255,${E?0.6:0.3})`,borderRadius:3,cursor:"pointer",
-                color:E?"rgba(200,190,240,0.95)":"rgba(124,77,255,0.55)",transition:"all .18s"}}
-              onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(124,77,255,0.7)";e.currentTarget.style.color="rgba(200,190,240,0.9)";}}
-              onMouseLeave={e=>{e.currentTarget.style.borderColor=E?"rgba(124,77,255,0.6)":"rgba(124,77,255,0.3)";e.currentTarget.style.color=E?"rgba(200,190,240,0.95)":"rgba(124,77,255,0.55)";}}>
+                padding:"5px 14px",background:E?"rgba(var(--purple-rgb),calc(0.22*var(--kp)))":"transparent",
+                border:`1px solid rgba(var(--purple-rgb),${E?0.6:0.3})`,borderRadius:3,cursor:"pointer",
+                color:E?"rgba(var(--text-rgb),calc(0.95*var(--kt)))":"rgba(var(--purple-rgb),calc(0.55*var(--kp)))",transition:"all .18s"}}
+              onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(var(--purple-rgb),calc(0.7*var(--kp)))";e.currentTarget.style.color="rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))";}}
+              onMouseLeave={e=>{e.currentTarget.style.borderColor=E?"rgba(var(--purple-rgb),calc(0.6*var(--kp)))":"rgba(var(--purple-rgb),calc(0.3*var(--kp)))";e.currentTarget.style.color=E?"rgba(var(--text-rgb),calc(0.95*var(--kt)))":"rgba(var(--purple-rgb),calc(0.55*var(--kp)))";}}>
               {E ? "✓ Fertig" : "✎ Bearbeiten"}
             </button>
           )}
         </div>
-        <div style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between",flexWrap:"wrap",gap:12}}>
+        <div className="sb-main" style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between",flexWrap:"wrap",gap:12}}>
           <div style={{flex:1}}>
             {E
               ? <input value={char.name||''} onChange={e=>upd({name:e.target.value})}
                   style={{fontFamily:"var(--font-display)",fontWeight:400,fontSize:28,letterSpacing:".22em",
                     color:"var(--white)",textTransform:"uppercase",background:"transparent",border:"none",
-                    borderBottom:"1px solid rgba(124,77,255,0.4)",outline:"none",padding:"0 4px",width:"100%"}} />
-              : <h1 style={{fontFamily:"var(--font-display)",fontWeight:400,fontSize:28,letterSpacing:".22em",
-                    color:"var(--white)",textTransform:"uppercase",textShadow:"0 0 32px rgba(124,77,255,0.2)"}}>{char.name}</h1>
+                    borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.4*var(--kp)))",outline:"none",padding:"0 4px",width:"100%"}} />
+              : <h1 className="sb-name" style={{fontFamily:"var(--font-display)",fontWeight:400,fontSize:28,letterSpacing:".22em",
+                    color:"var(--white)",textTransform:"uppercase",textShadow:"0 0 32px rgba(var(--purple-rgb),calc(0.2*var(--kp)))"}}>{char.name}</h1>
             }
-            <div style={{display:"flex",gap:6,marginTop:8,flexWrap:"wrap"}}>
+            <div className="sb-tags" style={{display:"flex",gap:6,marginTop:8,flexWrap:"wrap"}}>
               {[(char.subclass && char.subclass !== '—' ? `${char.class} · ${char.subclass}` : char.class),`Stufe ${char.level}`,char.race,char.background,
                 `${char.division} · ${char.rank} ${["I","II","III","IV","V"][(char.rankLevel||1)-1]}`]
                 .map((t,i)=>(
                   <span key={i} style={{fontFamily:"var(--font-mono)",fontSize:8.5,padding:"2px 9px",
-                    background:"rgba(124,77,255,0.1)",border:"1px solid rgba(124,77,255,0.28)",borderRadius:2,
-                    color:"rgba(200,190,240,0.82)",letterSpacing:".1em"}}>{t}</span>
+                    background:"rgba(var(--purple-rgb),calc(0.1*var(--kp)))",border:"1px solid rgba(var(--purple-rgb),calc(0.28*var(--kp)))",borderRadius:2,
+                    color:"rgba(var(--text-rgb),calc(0.82*var(--kt) + var(--tb)))",letterSpacing:".1em"}}>{t}</span>
                 ))}
             </div>
           </div>
-          <div style={{textAlign:"right"}}>
-            <div style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".2em",color:"rgba(124,77,255,0.35)",textTransform:"uppercase",marginBottom:2}}>Erfahrungspunkte</div>
-            <div style={{fontFamily:"var(--font-mono)",fontSize:22,color:"rgba(124,77,255,0.65)"}}>{(char.xp||0).toLocaleString("de-DE")}</div>
+          <div className="sb-xp" style={{textAlign:"right"}}>
+            <div style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".2em",color:"rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))",textTransform:"uppercase",marginBottom:2}}>Erfahrungspunkte</div>
+            <div style={{fontFamily:"var(--font-mono)",fontSize:22,color:"rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))"}}>{(char.xp||0).toLocaleString("de-DE")}</div>
           </div>
         </div>
-        <div style={{marginTop:10,width:36,height:1,background:"rgba(124,77,255,0.55)"}} />
+        <div style={{marginTop:10,width:36,height:1,background:"rgba(var(--purple-rgb),calc(0.55*var(--kp)))"}} />
       </div>
 
       {/* ── 3-Spalten-Grid ── */}
@@ -2092,8 +2092,8 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
           <HintergrundmerkmaleCard char={char} />
           {char.companions && char.companions.length > 0 && (
             <div>
-              <div style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".28em",color:"rgba(124,77,255,0.45)",textTransform:"uppercase",marginBottom:8}}>Begleiter</div>
-              <div style={{width:24,height:1,background:"linear-gradient(90deg,rgba(124,77,255,0.65),transparent)",marginBottom:10}} />
+              <div style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".28em",color:"rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))",textTransform:"uppercase",marginBottom:8}}>Begleiter</div>
+              <div style={{width:24,height:1,background:"linear-gradient(90deg,rgba(var(--purple-rgb),calc(0.65*var(--kp))),transparent)",marginBottom:10}} />
               <div style={{display:"flex",flexDirection:"column",gap:10}}>
                 {char.companions.map(comp=><CompanionCard key={comp.id} comp={comp}/>)}
               </div>
@@ -2103,7 +2103,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
 
         {/* RECHTS */}
         <div style={{display:"flex",flexDirection:"column",gap:11}}>
-          <div style={{position:"relative",borderRadius:4,overflow:"hidden",border:"1px solid rgba(124,77,255,0.38)"}}>
+          <div style={{position:"relative",borderRadius:4,overflow:"hidden",border:"1px solid rgba(var(--purple-rgb),calc(0.38*var(--kp)))"}}>
             <Corners op={0.58} sz={18} />
             {E && ImageUpload
               ? <ImageUpload shape="square" imageUrl={char.bild||null}
@@ -2113,14 +2113,14 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
                 ? <img src={char.bild} onClick={()=>setLightboxBild(char.bild)}
                     style={{width:"100%",height:310,objectFit:"cover",objectPosition:"top",display:"block",cursor:"zoom-in"}} alt="" />
                 : <div style={{height:310,display:"flex",alignItems:"center",justifyContent:"center",
-                    background:"linear-gradient(160deg,rgba(20,12,46,0.92),rgba(10,7,28,0.96))"}}>
-                    <span style={{fontFamily:"var(--font-display)",fontSize:64,color:"rgba(124,77,255,0.2)"}}>{char.name?.[0]||'?'}</span>
+                    background:"linear-gradient(160deg,rgba(var(--panel-rgb),0.92),rgba(var(--panel-rgb),0.96))"}}>
+                    <span style={{fontFamily:"var(--font-display)",fontSize:64,color:"rgba(var(--purple-rgb),calc(0.2*var(--kp) + var(--tb)))"}}>{char.name?.[0]||'?'}</span>
                   </div>
             }
           </div>
           {E ? <EditablePersonality char={char} upd={upd} taStyle={taStyle} /> : <PersonalitySection char={char} />}
-          <div style={{background:"var(--card-bg)",borderLeft:"2px solid rgba(124,77,255,0.5)",
-            border:"1px solid rgba(124,77,255,0.2)",borderLeftWidth:3,
+          <div style={{background:"var(--card-bg)",borderLeft:"2px solid rgba(var(--purple-rgb),calc(0.5*var(--kp)))",
+            border:"1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))",borderLeftWidth:3,
             borderRadius:"0 4px 4px 0",padding:"13px 14px",position:"relative"}}>
             <SecTitle label="Meine ersten Tage auf Meruria" />
             {E
@@ -2167,11 +2167,11 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
         <div style={{padding:"22px 22px 24px"}}>
           <div style={{display:"flex",alignItems:"baseline",justifyContent:"space-between",gap:20,marginBottom:20,flexWrap:"wrap"}}>
             <div>
-              <div style={{fontFamily:"var(--font-mono)",fontSize:9,letterSpacing:".28em",color:"rgba(124,77,255,0.45)",textTransform:"uppercase",marginBottom:4}}>Wissenswertes</div>
-              <div style={{width:28,height:1,background:"linear-gradient(90deg,rgba(124,77,255,0.65),transparent)"}} />
+              <div style={{fontFamily:"var(--font-mono)",fontSize:9,letterSpacing:".28em",color:"rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))",textTransform:"uppercase",marginBottom:4}}>Wissenswertes</div>
+              <div style={{width:28,height:1,background:"linear-gradient(90deg,rgba(var(--purple-rgb),calc(0.65*var(--kp))),transparent)"}} />
             </div>
             <p style={{fontFamily:"var(--font-body)",fontSize:12,fontWeight:300,fontStyle:"italic",
-              color:"rgba(190,182,225,0.45)",flex:1,minWidth:220,textAlign:"right"}}>
+              color:"color-mix(in srgb, rgba(190,182,225,0.45), rgb(var(--ink-rgb)) var(--cm))",flex:1,minWidth:220,textAlign:"right"}}>
               Was mich ausmacht — in meinen eigenen Worten.
             </p>
           </div>
@@ -2185,30 +2185,30 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
       )}
 
       {/* ── Footer ── */}
-      <div style={{borderTop:"1px solid rgba(124,77,255,0.07)",margin:"22px 0 0",padding:"13px 28px",display:"flex",justifyContent:"space-between"}}>
-        <span style={{fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(124,77,255,0.26)",letterSpacing:".1em"}}>Meruria — Steckbrief</span>
-        <span style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(124,77,255,0.2)"}}>D&amp;D 5e · {char.race} {char.class} Stufe {char.level}</span>
+      <div style={{borderTop:"1px solid rgba(var(--purple-rgb),calc(0.07*var(--kp)))",margin:"22px 0 0",padding:"13px 28px",display:"flex",justifyContent:"space-between"}}>
+        <span style={{fontFamily:"var(--font-mono)",fontSize:9,color:"rgba(var(--purple-rgb),calc(0.26*var(--kp) + var(--tb)))",letterSpacing:".1em"}}>Meruria — Steckbrief</span>
+        <span style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(var(--purple-rgb),calc(0.2*var(--kp) + var(--tb)))"}}>D&amp;D 5e · {char.race} {char.class} Stufe {char.level}</span>
       </div>
 
       {/* ── Bild-Lightbox ── */}
       {lightboxBild && ReactDOM.createPortal(
         <div onClick={()=>setLightboxBild(null)} style={{
           position:"fixed",inset:0,zIndex:99999,
-          background:"rgba(5,4,15,0.92)",backdropFilter:"blur(14px)",
+          background:"rgba(var(--bg-rgb),0.92)",backdropFilter:"blur(14px)",
           display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",
           cursor:"zoom-out",
         }}>
           <img src={lightboxBild} alt={char.name||""} onClick={e=>e.stopPropagation()} style={{
-            maxWidth:"90vw",maxHeight:"86vh",objectFit:"contain",
-            borderRadius:5,boxShadow:"0 0 80px rgba(124,77,255,0.3),0 0 0 1px rgba(124,77,255,0.2)",
+            maxWidth:"90vw",maxHeight:"calc(var(--vh, 1vh) * 86)",objectFit:"contain",
+            borderRadius:5,boxShadow:"0 0 80px rgba(var(--purple-rgb),calc(0.3*var(--kp))),0 0 0 1px rgba(var(--purple-rgb),calc(0.2*var(--kp)))",
           }}/>
           {char.name && (
             <div style={{marginTop:16,fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".2em",
-              color:"rgba(200,190,240,0.5)",textTransform:"uppercase"}}>{char.name}</div>
+              color:"rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))",textTransform:"uppercase"}}>{char.name}</div>
           )}
           <button onClick={()=>setLightboxBild(null)} style={{
             position:"absolute",top:20,right:24,background:"transparent",
-            border:"1px solid rgba(160,140,255,0.25)",color:"rgba(200,190,240,0.6)",
+            border:"1px solid rgba(var(--accent-rgb),calc(0.25*var(--ka)))",color:"rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))",
             borderRadius:3,fontFamily:"var(--font-mono)",fontSize:16,lineHeight:1,
             width:34,height:34,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",
           }}>×</button>

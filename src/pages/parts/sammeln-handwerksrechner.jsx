@@ -91,12 +91,12 @@ function HandwerksRechner() {
           const on = typ === t.id;
           return (
             <button key={t.id} onClick={()=>setTyp(t.id)} style={{
-              padding:'8px 14px', background: on ? 'rgba(124,77,255,0.18)' : 'rgba(10,8,28,0.4)',
-              border: `1px solid ${on ? 'rgba(124,77,255,0.6)' : 'rgba(124,77,255,0.2)'}`,
+              padding:'8px 14px', background: on ? 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))' : 'rgba(var(--panel-rgb),0.4)',
+              border: `1px solid ${on ? 'rgba(var(--purple-rgb),calc(0.6*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))'}`,
               borderRadius:'3px', cursor:'pointer',
               fontFamily:'var(--font-display)', fontSize:'11px', letterSpacing:'0.16em',
               textTransform:'uppercase',
-              color: on ? '#f0eeff' : 'rgba(200,190,240,0.68)',
+              color: on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.68*var(--kt)))',
             }}>{t.label}</button>
           );
         })}
@@ -108,11 +108,11 @@ function HandwerksRechner() {
       }}>
         {/* Inputs */}
         <div style={{
-          background:'rgba(10,8,28,0.45)',
-          border:'1px solid rgba(124,77,255,0.18)',
+          background:'rgba(var(--panel-rgb),0.45)',
+          border:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',
           borderRadius:'4px', padding:'18px 20px',
         }}>
-          <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.24em',color:'rgba(124,77,255,0.6)',textTransform:'uppercase',marginBottom:'14px'}}>Parameter</div>
+          <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.24em',color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:'14px'}}>Parameter</div>
 
           {showReagenzSelector && (
             <FieldRow label="Anzahl Reagenzien">
@@ -147,7 +147,7 @@ function HandwerksRechner() {
             </FieldRow>
           )}
 
-          <div style={{height:'1px',background:'rgba(124,77,255,0.12)',margin:'18px 0 16px'}}/>
+          <div style={{height:'1px',background:'rgba(var(--purple-rgb),calc(0.12*var(--kp)))',margin:'18px 0 16px'}}/>
 
           <FieldRow label="Handwerks-Bonus" hint="Werkzeug-Übungsbonus + Attributsmodifikator">
             <input type="number" value={bonus} onChange={e=>setBonus(parseInt(e.target.value||'0',10))}
@@ -162,12 +162,12 @@ function HandwerksRechner() {
 
         {/* Output */}
         <div style={{
-          background:'rgba(10,8,28,0.6)',
-          border:`1px solid ${window.RARITY_BY[result.targetSelt] ? window.RARITY_BY[result.targetSelt].hue.replace(/[\d.]+\)$/, '0.4)') : 'rgba(124,77,255,0.22)'}`,
+          background:'rgba(var(--panel-rgb),0.6)',
+          border:`1px solid ${window.RARITY_BY[result.targetSelt] ? window.RARITY_BY[result.targetSelt].hue.replace(/[\d.]+\)$/, '0.4)') : 'rgba(var(--purple-rgb),calc(0.22*var(--kp)))'}`,
           borderRadius:'4px', padding:'18px 20px',
         }}>
           <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'14px',flexWrap:'wrap',gap:'8px'}}>
-            <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.24em',color:'rgba(124,77,255,0.6)',textTransform:'uppercase'}}>Ergebnis</div>
+            <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.24em',color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',textTransform:'uppercase'}}>Ergebnis</div>
             {window.RARITY_BY[result.targetSelt] && <RarityPill seltenheit={result.targetSelt} size="md" />}
           </div>
 
@@ -180,16 +180,16 @@ function HandwerksRechner() {
             {result.istMahlzeit && <BigSpec label="Tagesfortschritt" value="bis 8 h" />}
           </div>
 
-          <div style={{marginTop:'18px',paddingTop:'14px',borderTop:'1px solid rgba(124,77,255,0.12)'}}>
-            <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.18em',color:'rgba(160,140,255,0.55)',textTransform:'uppercase',marginBottom:'10px'}}>
+          <div style={{marginTop:'18px',paddingTop:'14px',borderTop:'1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))'}}>
+            <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.18em',color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',textTransform:'uppercase',marginBottom:'10px'}}>
               Handwerkswurf {result.sg ? `(SG ${result.sg})` : ''}
             </div>
             {sicher ? (
               <div style={{
                 fontFamily:'var(--font-body)',fontWeight:300,fontSize:'12.5px',
-                color:'rgba(200,190,240,0.78)',lineHeight:1.6,fontStyle:'italic',
+                color:'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',lineHeight:1.6,fontStyle:'italic',
               }}>
-                Sicher arbeiten: automatisch <Hl c={`${10 + bonus}`} /> · {result.sg && (10 + bonus >= result.sg ? <span style={{color:'rgba(120,230,180,0.95)'}}>Erfolg</span> : <span style={{color:'rgba(255,120,120,0.95)'}}>Fehlschlag</span>)}
+                Sicher arbeiten: automatisch <Hl c={`${10 + bonus}`} /> · {result.sg && (10 + bonus >= result.sg ? <span style={{color:'color-mix(in srgb, rgba(120,230,180,0.95), rgb(var(--ink-rgb)) var(--cm))'}}>Erfolg</span> : <span style={{color:'color-mix(in srgb, rgba(255,120,120,0.95), rgb(var(--ink-rgb)) var(--cm))'}}>Fehlschlag</span>)}
               </div>
             ) : (
               <div style={{display:'flex',alignItems:'center',gap:'12px',flexWrap:'wrap'}}>
@@ -202,7 +202,7 @@ function HandwerksRechner() {
                     label="Helfer-Wurf"
                     size="sm" tone="good"/>
                 )}
-                <span style={{fontFamily:'var(--font-mono)',fontSize:'9.5px',letterSpacing:'0.12em',color:'rgba(160,140,255,0.55)'}}>
+                <span style={{fontFamily:'var(--font-mono)',fontSize:'9.5px',letterSpacing:'0.12em',color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))'}}>
                   {helfer ? 'Vorteil = der höhere Wurf' : 'pro 2-h-Block'}
                 </span>
               </div>
@@ -212,11 +212,11 @@ function HandwerksRechner() {
           {result.istMahlzeit && (
             <div style={{
               marginTop:'14px',padding:'10px 12px',
-              background:'rgba(124,77,255,0.06)',
-              borderLeft:'2px solid rgba(124,77,255,0.4)',
+              background:'rgba(var(--purple-rgb),calc(0.06*var(--kp)))',
+              borderLeft:'2px solid rgba(var(--purple-rgb),calc(0.4*var(--kp)))',
               borderRadius:'0 3px 3px 0',
               fontFamily:'var(--font-body)',fontSize:'11.5px',fontWeight:300,
-              color:'rgba(200,190,240,0.72)',lineHeight:1.6,
+              color:'rgba(var(--text-rgb),calc(0.72*var(--kt) + var(--tb)))',lineHeight:1.6,
             }}>
               Mahlzeiten haben keine Materialkosten — du brauchst nur die Zutaten selbst (siehe Pflanzentabelle).
               Mit dem Koch-Talent: Zeit halbieren, Portionen = Tabellenwert oder 4 + Übungsbonus (das Höhere).
@@ -231,9 +231,9 @@ function HandwerksRechner() {
 function FieldRow({ label, hint, children }) {
   return (
     <div style={{marginBottom:'14px'}}>
-      <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.18em',color:'rgba(160,140,255,0.7)',textTransform:'uppercase',marginBottom:'6px'}}>{label}</div>
+      <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.18em',color:'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))',textTransform:'uppercase',marginBottom:'6px'}}>{label}</div>
       {hint && (
-        <div style={{fontFamily:'var(--font-body)',fontSize:'10.5px',fontWeight:300,color:'rgba(160,140,255,0.5)',marginBottom:'7px',letterSpacing:'0.03em'}}>{hint}</div>
+        <div style={{fontFamily:'var(--font-body)',fontSize:'10.5px',fontWeight:300,color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',marginBottom:'7px',letterSpacing:'0.03em'}}>{hint}</div>
       )}
       {children}
     </div>
@@ -249,11 +249,11 @@ function SegmentPicker({ value, onChange, options }) {
           <button key={o.value} onClick={()=>onChange(o.value)} title={o.hint}
             style={{
               padding:'5px 12px',
-              background: on ? 'rgba(124,77,255,0.22)' : 'rgba(124,77,255,0.05)',
-              border: `1px solid ${on ? 'rgba(124,77,255,0.6)' : 'rgba(124,77,255,0.2)'}`,
+              background: on ? 'rgba(var(--purple-rgb),calc(0.22*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',
+              border: `1px solid ${on ? 'rgba(var(--purple-rgb),calc(0.6*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))'}`,
               borderRadius:'2px', cursor:'pointer',
               fontFamily:'var(--font-mono)', fontSize:'10.5px', letterSpacing:'0.14em',
-              color: on ? '#f0eeff' : 'rgba(200,190,240,0.7)',
+              color: on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.7*var(--kt)))',
               textTransform:'uppercase',
             }}>{o.label}</button>
         );
@@ -270,18 +270,18 @@ function Toggle({ label, hint, value, onChange }) {
     }}>
       <span style={{
         flexShrink:0, width:'14px', height:'14px', marginTop:'2px',
-        background: value ? 'rgba(124,77,255,0.4)' : 'rgba(0,0,0,0.3)',
-        border: `1px solid ${value ? 'rgba(124,77,255,0.85)' : 'rgba(124,77,255,0.3)'}`,
+        background: value ? 'rgba(var(--purple-rgb),calc(0.4*var(--kp)))' : 'rgba(0,0,0,0.3)',
+        border: `1px solid ${value ? 'rgba(var(--purple-rgb),calc(0.85*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))'}`,
         borderRadius:'2px',
         display:'flex',alignItems:'center',justifyContent:'center',
         transition:'all 0.15s',
       }}>
-        {value && <svg width="10" height="10" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3" fill="none" stroke="#f0eeff" strokeWidth="1.6"/></svg>}
+        {value && <svg width="10" height="10" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3" fill="none" stroke="var(--white)" strokeWidth="1.6"/></svg>}
       </span>
       <input type="checkbox" checked={value} onChange={e=>onChange(e.target.checked)} style={{display:'none'}}/>
       <div style={{flex:1}}>
-        <div style={{fontFamily:'var(--font-body)',fontSize:'12.5px',fontWeight:400,color:'rgba(220,210,250,0.88)',letterSpacing:'0.03em'}}>{label}</div>
-        {hint && <div style={{fontFamily:'var(--font-body)',fontSize:'10.5px',fontWeight:300,color:'rgba(160,140,255,0.55)',marginTop:'2px',letterSpacing:'0.02em'}}>{hint}</div>}
+        <div style={{fontFamily:'var(--font-body)',fontSize:'12.5px',fontWeight:400,color:'rgba(var(--text-rgb),calc(0.88*var(--kt) + var(--tb)))',letterSpacing:'0.03em'}}>{label}</div>
+        {hint && <div style={{fontFamily:'var(--font-body)',fontSize:'10.5px',fontWeight:300,color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',marginTop:'2px',letterSpacing:'0.02em'}}>{hint}</div>}
       </div>
     </label>
   );
@@ -290,22 +290,22 @@ function Toggle({ label, hint, value, onChange }) {
 function BigSpec({ label, value, note }) {
   return (
     <div>
-      <div style={{fontFamily:'var(--font-mono)',fontSize:'8.5px',letterSpacing:'0.18em',color:'rgba(160,140,255,0.55)',textTransform:'uppercase',marginBottom:'4px'}}>{label}</div>
-      <div style={{fontFamily:'var(--font-display)',fontSize:'18px',letterSpacing:'0.06em',color:'rgba(240,235,255,0.96)',fontWeight:400}}>{value}</div>
-      {note && <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.12em',color:'rgba(160,140,255,0.5)',fontStyle:'italic',marginTop:'2px'}}>{note}</div>}
+      <div style={{fontFamily:'var(--font-mono)',fontSize:'8.5px',letterSpacing:'0.18em',color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',textTransform:'uppercase',marginBottom:'4px'}}>{label}</div>
+      <div style={{fontFamily:'var(--font-display)',fontSize:'18px',letterSpacing:'0.06em',color:'rgba(var(--text-hi-rgb),calc(0.96*var(--kt) + var(--tb)))',fontWeight:400}}>{value}</div>
+      {note && <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.12em',color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',fontStyle:'italic',marginTop:'2px'}}>{note}</div>}
     </div>
   );
 }
 
 const inputStyle = {
-  padding:'4px 8px', background:'rgba(0,0,0,0.3)',
-  border:'1px solid rgba(124,77,255,0.3)', borderRadius:'2px',
-  fontFamily:'var(--font-mono)', fontSize:'12px', color:'#f0eeff',
+  padding:'4px 8px', background:'rgba(var(--bg-rgb),0.3)',
+  border:'1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))', borderRadius:'2px',
+  fontFamily:'var(--font-mono)', fontSize:'12px', color:'var(--white)',
 };
 const selectStyle = {
-  padding:'5px 8px', background:'rgba(0,0,0,0.4)',
-  border:'1px solid rgba(124,77,255,0.3)', borderRadius:'2px',
-  fontFamily:'var(--font-body)', fontSize:'12.5px', color:'#f0eeff',
+  padding:'5px 8px', background:'rgba(var(--bg-rgb),0.4)',
+  border:'1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))', borderRadius:'2px',
+  fontFamily:'var(--font-body)', fontSize:'12.5px', color:'var(--white)',
   letterSpacing:'0.04em',
 };
 

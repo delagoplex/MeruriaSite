@@ -123,8 +123,8 @@
           style: {
             width: 32, height: 32, flexShrink: 0,
             border: '1px solid ' + (active ? accent : cA(0.25)),
-            background: active ? cA(0.22) : 'rgba(10,8,28,0.6)',
-            color: active ? accent : 'rgba(180,170,220,0.55)',
+            background: active ? cA(0.22) : 'rgba(var(--panel-rgb),0.6)',
+            color: active ? accent : 'color-mix(in srgb, rgba(180,170,220,0.55), rgb(var(--ink-rgb)) var(--cm))',
             fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: active ? 600 : 400,
             borderRadius: 3, cursor: 'pointer',
             boxShadow: active ? '0 0 10px ' + cA(0.35) : 'none',
@@ -142,20 +142,20 @@
 
     // Statblock panel
     var panel = h('div', { style: {
-      background: 'rgba(8,6,22,0.85)',
+      background: 'rgba(var(--panel-rgb),0.85)',
       border: '1px solid ' + cA(0.28),
       borderRadius: 4,
       padding: '18px 20px',
-      boxShadow: '0 4px 24px rgba(0,0,0,0.55)',
+      boxShadow: '0 4px 24px rgba(var(--shadow-rgb),calc(0.55 * var(--shadow-k)))',
     }},
       // Header
       h('div', { style: { marginBottom: 12 } },
         h('div', { style: {
           fontFamily: 'var(--font-display)', fontSize: 16, letterSpacing: '0.14em',
-          textTransform: 'uppercase', color: '#f0eeff', fontWeight: 400,
+          textTransform: 'uppercase', color: 'var(--white)', fontWeight: 400,
         }}, stats.titel),
         h('div', { style: {
-          fontFamily: 'var(--font-mono)', fontSize: 9, color: 'rgba(180,170,220,0.55)',
+          fontFamily: 'var(--font-mono)', fontSize: 9, color: 'color-mix(in srgb, rgba(180,170,220,0.55), rgb(var(--ink-rgb)) var(--cm))',
           letterSpacing: '0.12em', marginTop: 2,
         }}, 'Mittelgroßer Humanoid · ' + division.name.replace(/^Die\s+/, ''))
       ),
@@ -171,11 +171,11 @@
           { label: 'Übungsbonus',value: stats.fmtMod(stats.prof) },
         ].map(function(item) {
           return h('div', { key: item.label, style: {
-            background: 'rgba(124,77,255,0.06)', border: '1px solid ' + cA(0.15),
+            background: 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))', border: '1px solid ' + cA(0.15),
             borderRadius: 3, padding: '6px 8px',
           }},
             h('div', { style: { fontFamily: 'var(--font-mono)', fontSize: 7.5, letterSpacing: '0.18em', color: cA(0.65), textTransform: 'uppercase', marginBottom: 2 }}, item.label),
-            h('div', { style: { fontFamily: 'var(--font-mono)', fontSize: 11, color: '#f0eeff', fontWeight: 500 }}, item.value)
+            h('div', { style: { fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--white)', fontWeight: 500 }}, item.value)
           );
         })
       ),
@@ -189,11 +189,11 @@
           var m     = stats.mod(score);
           return h('div', { key: s, style: {
             textAlign: 'center', padding: '6px 4px',
-            background: 'rgba(124,77,255,0.05)', borderRadius: 3,
-            border: '1px solid rgba(124,77,255,0.1)',
+            background: 'rgba(var(--purple-rgb),calc(0.05*var(--kp)))', borderRadius: 3,
+            border: '1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
           }},
             h('div', { style: { fontFamily: 'var(--font-mono)', fontSize: 7, letterSpacing: '0.14em', color: cA(0.55), textTransform: 'uppercase', marginBottom: 2 }}, ATTR_DE[s]),
-            h('div', { style: { fontFamily: 'var(--font-mono)', fontSize: 14, color: '#f0eeff', fontWeight: 600, lineHeight: 1.1 }}, score),
+            h('div', { style: { fontFamily: 'var(--font-mono)', fontSize: 14, color: 'var(--white)', fontWeight: 600, lineHeight: 1.1 }}, score),
             h('div', { style: { fontFamily: 'var(--font-mono)', fontSize: 10, color: cA(0.8) }}, stats.fmtMod(m))
           );
         })
@@ -203,7 +203,7 @@
 
       // Saves, Skills, Passive
       (Object.keys(stats.rettungswuerfe).length > 0) && h('div', { style: {
-        fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(220,210,255,0.75)',
+        fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
         letterSpacing: '0.06em', marginBottom: 4,
       }},
         h('span', { style: { color: cA(0.7), marginRight: 6 }}, 'Rettungswürfe'),
@@ -211,7 +211,7 @@
       ),
 
       (Object.keys(stats.fertigkeiten).length > 0) && h('div', { style: {
-        fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(220,210,255,0.75)',
+        fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
         letterSpacing: '0.06em', marginBottom: 4,
       }},
         h('span', { style: { color: cA(0.7), marginRight: 6 }}, 'Fertigkeiten'),
@@ -219,7 +219,7 @@
       ),
 
       h('div', { style: {
-        fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(220,210,255,0.75)',
+        fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
         letterSpacing: '0.06em', marginBottom: 4,
       }},
         h('span', { style: { color: cA(0.7), marginRight: 6 }}, 'Passive Wahrnehmung'),
@@ -227,7 +227,7 @@
       ),
 
       h('div', { style: {
-        fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(220,210,255,0.75)',
+        fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
         letterSpacing: '0.06em', marginBottom: 4,
       }},
         h('span', { style: { color: cA(0.7), marginRight: 6 }}, 'Sprachen'),
@@ -241,11 +241,11 @@
       h('div', { style: { marginBottom: 8 } },
         h('span', { style: {
           fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600,
-          color: '#f0eeff', marginRight: 4,
+          color: 'var(--white)', marginRight: 4,
         }}, stats.besonderheit.name + '.'),
         h('span', { style: {
           fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 300,
-          color: 'rgba(210,200,240,0.8)', lineHeight: 1.55,
+          color: 'color-mix(in srgb, rgba(210,200,240,0.8), rgb(var(--ink-rgb)) var(--cm))', lineHeight: 1.55,
         }}, stats.besonderheit.beschreibung)
       ),
 
@@ -255,11 +255,11 @@
         return h('div', { key: a.name, style: { marginBottom: 8 } },
           h('span', { style: {
             fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600,
-            color: '#f0eeff', marginRight: 4,
+            color: 'var(--white)', marginRight: 4,
           }}, a.name + '.'),
           h('span', { style: {
             fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 300,
-            color: 'rgba(210,200,240,0.8)', lineHeight: 1.55,
+            color: 'color-mix(in srgb, rgba(210,200,240,0.8), rgb(var(--ink-rgb)) var(--cm))', lineHeight: 1.55,
           }}, a.beschreibung)
         );
       })
