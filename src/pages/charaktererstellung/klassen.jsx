@@ -186,7 +186,7 @@ function KlasseCard({
       borderRadius: '4px',
       height: '260px',
       border: `1px solid ${hov ? accent + '88' : accent + '22'}`,
-      boxShadow: hov ? `0 12px 48px rgba(0,0,0,0.7), 0 0 28px ${accent}33, inset 0 1px 0 ${accent}18` : '0 2px 16px rgba(0,0,0,0.55)',
+      boxShadow: hov ? `0 12px 48px rgba(var(--shadow-rgb),calc(0.7 * var(--shadow-k))), 0 0 28px ${accent}33, inset 0 1px 0 ${accent}18` : '0 2px 16px rgba(0,0,0,0.55)',
       overflow: 'visible',
       transformStyle: 'preserve-3d',
       transform: hov ? `rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)` : 'rotateX(0deg) rotateY(0deg)',
@@ -216,7 +216,7 @@ function KlasseCard({
     style: {
       position: 'absolute',
       inset: 0,
-      background: 'linear-gradient(to top, rgba(4,2,14,0.92) 0%, rgba(4,2,14,0.45) 50%, rgba(4,2,14,0.12) 100%)',
+      background: 'linear-gradient(to top, rgba(var(--bg-rgb),0.92) 0%, rgba(var(--bg-rgb),0.45) 50%, rgba(var(--bg-rgb),0.12) 100%)',
       opacity: hov ? 1 : 0,
       transition: 'opacity 0.45s ease'
     }
@@ -326,7 +326,7 @@ function KlasseCard({
       fontWeight: '300',
       fontSize: '10px',
       lineHeight: 1.75,
-      color: 'rgba(var(--text-rgb),0.78)',
+      color: 'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
       letterSpacing: '0.03em',
       display: '-webkit-box',
       WebkitLineClamp: 2,
@@ -342,7 +342,7 @@ function KlasseCard({
       right: 0,
       height: '100px',
       zIndex: 9,
-      background: 'linear-gradient(to top, rgba(2,1,10,0.92) 0%, rgba(2,1,10,0.88) 97%, transparent 99%)',
+      background: 'linear-gradient(to top, rgba(var(--bg-rgb),0.92) 0%, rgba(var(--bg-rgb),0.88) 97%, transparent 99%)',
       opacity: hov ? 0 : 1,
       transition: 'opacity 0.35s ease',
       pointerEvents: 'none'
@@ -356,7 +356,7 @@ function KlasseCard({
       height: '80px',
       zIndex: 10,
       transform: 'translateZ(2px)',
-      background: 'linear-gradient(to top, rgba(2,1,10,0.88) 0%, transparent 100%)',
+      background: 'linear-gradient(to top, rgba(var(--bg-rgb),0.88) 0%, transparent 100%)',
       clipPath: 'polygon(0% 40%, 100% 0%, 100% 100%, 0% 100%)',
       opacity: hov ? 1 : 0,
       transition: 'opacity 0.35s ease',
@@ -401,7 +401,9 @@ function KlasseCard({
 // ── CLASS DETAIL OVERLAY ───────────────────────────────
 function KlasseDetail({
   klasse,
-  onBack
+  onBack,
+  onPrev,
+  onNext
 }) {
   const [visible, setVisible] = useState(false);
   const [leaving, setLeaving] = useState(false);
@@ -416,10 +418,41 @@ function KlasseDetail({
     const t = setTimeout(() => setVisible(true), 30);
     return () => clearTimeout(t);
   }, []);
+  useEffect(() => {
+    setSelectedSubklasse(null);
+    setAnrufungenOpen(false);
+    setOpenAnrufungen(new Set());
+    const c = document.querySelector('.detail-split');
+    if (c) c.scrollTop = 0;
+    const c2 = document.querySelector('.detail-content');
+    if (c2) c2.scrollTop = 0;
+  }, [klasse.id]);
+  useEffect(() => {
+    const onKey = e => {
+      if (e.key === 'ArrowLeft' && onPrev) onPrev();
+      else if (e.key === 'ArrowRight' && onNext) onNext();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onPrev, onNext]);
   const handleBack = () => {
     setLeaving(true);
     setTimeout(onBack, 340);
   };
+  const navArrow = (side, onClick, points) => /*#__PURE__*/React.createElement("div", {
+    style: { position: 'absolute', [side]: '14px', top: '50%', transform: 'translateY(-50%)', zIndex: 10 }
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "entity-nav-arrow",
+    onClick,
+    "aria-label": side === 'left' ? 'Vorherige Klasse' : 'N\xE4chste Klasse',
+    style: {
+      width: '40px', height: '80px', background: `${accent}10`, border: `1px solid ${accent}28`,
+      borderRadius: '4px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: pal[3]
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "14", height: "22", viewBox: "0 0 14 22", fill: "none", stroke: "currentColor",
+    strokeWidth: "1.8", strokeLinecap: "round", strokeLinejoin: "round"
+  }, /*#__PURE__*/React.createElement("polyline", { points }))));
   const s = (delay = 0) => ({
     animation: visible ? `fadeInUp 0.55s ${delay}s both` : 'none',
     opacity: visible ? undefined : 0
@@ -443,7 +476,7 @@ function KlasseDetail({
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
       fontSize: '11px',
-      color: 'rgba(var(--text-rgb),0.75)',
+      color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
       letterSpacing: '0.03em',
       lineHeight: 1.5
     }
@@ -467,6 +500,7 @@ function KlasseDetail({
       backgroundImage: `repeating-linear-gradient(0deg,transparent,transparent 40px,${accent}07 40px,${accent}07 41px),repeating-linear-gradient(90deg,transparent,transparent 40px,${accent}07 40px,${accent}07 41px)`
     }
   }), /*#__PURE__*/React.createElement("div", {
+    className: "detail-topbar",
     style: {
       display: 'flex',
       alignItems: 'center',
@@ -513,13 +547,13 @@ function KlasseDetail({
       color: accent + '44',
       letterSpacing: '0.2em'
     }
-  }, klasse.trefferpunkte)), /*#__PURE__*/React.createElement("div", {
+  }, klasse.trefferpunkte)), /*#__PURE__*/React.createElement("div", { className: "detail-split",
     style: {
       flex: 1,
       display: 'flex',
       overflow: 'hidden'
     }
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", { className: "detail-portrait",
     style: {
       width: '38%',
       position: 'relative',
@@ -596,6 +630,7 @@ function KlasseDetail({
       __html: klasse.symbolSvg
     }
   })), /*#__PURE__*/React.createElement("div", {
+    className: "detail-content",
     style: {
       flex: 1,
       padding: '44px 48px',
@@ -681,7 +716,7 @@ function KlasseDetail({
       fontWeight: '300',
       fontSize: '13px',
       lineHeight: 1.85,
-      color: 'rgba(var(--text-rgb),0.78)',
+      color: 'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em'
     }
   }, klasse.beschreibung)), /*#__PURE__*/React.createElement("div", {
@@ -701,7 +736,7 @@ function KlasseDetail({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: 1.85,
-      color: 'rgba(var(--text-rgb),0.55)',
+      color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
       fontStyle: 'italic',
       borderLeft: `1px solid ${accent}33`,
@@ -778,7 +813,7 @@ function KlasseDetail({
       React.createElement("div", {
         style: {
           display: 'grid',
-          gridTemplateColumns: '40px 44px minmax(120px,1fr) ' + detail.stufentabelle.extraSpalten.map(() => '80px').join(' '),
+          gridTemplateColumns: '40px 44px minmax(120px,1fr) ' + (detail.stufentabelle.extraSpalten || []).map(() => '80px').join(' '),
           padding: '0 4px 6px',
           borderBottom: `1px solid ${accent}33`,
           marginBottom: '2px'
@@ -787,7 +822,7 @@ function KlasseDetail({
         React.createElement("div", { style: { fontFamily: 'var(--font-mono)', fontSize: '7px', color: accent + '88', letterSpacing: '0.15em', textTransform: 'uppercase' } }, "Stufe"),
         React.createElement("div", { style: { fontFamily: 'var(--font-mono)', fontSize: '7px', color: accent + '88', letterSpacing: '0.15em', textTransform: 'uppercase' } }, "\xDCB"),
         React.createElement("div", { style: { fontFamily: 'var(--font-mono)', fontSize: '7px', color: accent + '88', letterSpacing: '0.15em', textTransform: 'uppercase' } }, "Merkmale"),
-        detail.stufentabelle.extraSpalten.map((col, ci) =>
+        (detail.stufentabelle.extraSpalten || []).map((col, ci) =>
           React.createElement("div", { key: ci, style: { fontFamily: 'var(--font-mono)', fontSize: '7px', color: accent + '88', letterSpacing: '0.1em', textTransform: 'uppercase', textAlign: 'right' } }, col)
         )
       ),
@@ -801,7 +836,7 @@ function KlasseDetail({
           key: ri,
           style: {
             display: 'grid',
-            gridTemplateColumns: '40px 44px minmax(120px,1fr) ' + detail.stufentabelle.extraSpalten.map(() => '80px').join(' '),
+            gridTemplateColumns: '40px 44px minmax(120px,1fr) ' + (detail.stufentabelle.extraSpalten || []).map(() => '80px').join(' '),
             padding: '5px 4px',
             borderBottom: `1px solid ${accent}0c`,
             background: ri % 2 === 0 ? accent + '08' : 'transparent'
@@ -809,8 +844,8 @@ function KlasseDetail({
         },
           React.createElement("div", { style: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: pal[3], letterSpacing: '0.1em' } }, row.stufe),
           React.createElement("div", { style: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: accent + '99' } }, '+' + row.uebungsbonus),
-          React.createElement("div", { style: { fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '10px', color: 'rgba(var(--text-rgb),0.7)', lineHeight: 1.3 } }, nameStr || '—'),
-          row.extra.map((val, ei) =>
+          React.createElement("div", { style: { fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '10px', color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', lineHeight: 1.3 } }, nameStr || '—'),
+          (row.extra || []).map((val, ei) =>
             React.createElement("div", { key: ei, style: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: accent + 'bb', textAlign: 'right' } }, val)
           )
         );
@@ -848,7 +883,7 @@ function KlasseDetail({
           (m.beschreibung || []).map((p, pi) =>
             React.createElement("p", {
               key: pi,
-              style: { fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: 1.75, color: 'rgba(var(--text-rgb),0.7)', letterSpacing: '0.01em', margin: '0 0 6px' }
+              style: { fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: 1.75, color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', letterSpacing: '0.01em', margin: '0 0 6px' }
             }, p)
           ),
           isAnrufungSystem && invocationIds.length > 0 ? React.createElement("div", { style: { marginTop: '10px' } },
@@ -883,7 +918,7 @@ function KlasseDetail({
                       background: isOpen ? accent + '18' : accent + '07',
                       padding: '6px 12px', cursor: 'pointer', border: 'none', outline: 'none',
                       fontFamily: 'var(--font-body)', fontSize: '12px',
-                      color: isOpen ? pal[3] : 'rgba(var(--text-rgb),0.68)',
+                      color: isOpen ? pal[3] : 'rgba(var(--text-rgb),calc(0.68*var(--kt)))',
                       textAlign: 'left', transition: 'all 0.12s', letterSpacing: '0.01em'
                     }
                   },
@@ -900,7 +935,7 @@ function KlasseDetail({
                   },
                     (aM.beschreibung || []).map((p, pi) =>
                       React.createElement("p", {
-                        key: pi, style: { fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: 1.75, color: 'rgba(var(--text-rgb),0.7)', letterSpacing: '0.01em', margin: '0 0 6px' }
+                        key: pi, style: { fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: 1.75, color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', letterSpacing: '0.01em', margin: '0 0 6px' }
                       }, p)
                     )
                   ) : null
@@ -949,7 +984,7 @@ function KlasseDetail({
       style: { borderTop: `1px solid ${accent}18`, paddingTop: '18px' }
     },
       selectedUk.beschreibung ? React.createElement("p", {
-        style: { fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: 1.8, color: 'rgba(var(--text-rgb),0.62)', letterSpacing: '0.01em', marginBottom: '20px', fontStyle: 'italic', paddingLeft: '12px', borderLeft: `2px solid ${accent}33` }
+        style: { fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: 1.8, color: 'rgba(var(--text-rgb),calc(0.62*var(--kt) + var(--tb)))', letterSpacing: '0.01em', marginBottom: '20px', fontStyle: 'italic', paddingLeft: '12px', borderLeft: `2px solid ${accent}33` }
       }, selectedUk.beschreibung) : null,
       (selectedUk.merkmaleIds && selectedUk.merkmaleIds.length > 0)
         ? selectedUk.merkmaleIds.map((id, fi) => {
@@ -969,7 +1004,7 @@ function KlasseDetail({
               (m.beschreibung || []).map((p, pi) =>
                 React.createElement("p", {
                   key: pi,
-                  style: { fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: 1.75, color: 'rgba(var(--text-rgb),0.7)', letterSpacing: '0.01em', margin: '0 0 6px' }
+                  style: { fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: 1.75, color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', letterSpacing: '0.01em', margin: '0 0 6px' }
                 }, p)
               )
             );
@@ -987,7 +1022,11 @@ function KlasseDetail({
       style: { fontFamily: 'var(--font-mono)', fontSize: '9px', color: accent + '44', letterSpacing: '0.2em', fontStyle: 'italic' }
     }, "Vollst\xE4ndige Klassendetails folgen.")
   ) : null
-  )));
+  ), /*#__PURE__*/React.createElement("style", null, `
+    @keyframes arrowBreathe { 0%,100%{transform:scale(0.90)} 50%{transform:scale(1.0)} }
+    .entity-nav-arrow { opacity:0.42; animation:arrowBreathe 2.6s ease-in-out infinite; transition:opacity 0.2s; }
+    .entity-nav-arrow:hover { opacity:0.88; }
+  `), onPrev && navArrow('left', onPrev, "10,2 3,11 10,20"), onNext && navArrow('right', onNext, "4,2 11,11 4,20")));
 }
 
 // ── SECTION BANNER ─────────────────────────────────────
@@ -1093,11 +1132,11 @@ function TOCSidebar({
   const asideRef = React.useRef(null);
   useEffect(() => {
     const update = () => {
-      const ideal = (headerBottom || 0) - window.scrollY;
+      const ideal = ((headerBottom || 0) - window.scrollY) / window.uiZoom();
       const val = Math.max(navHeight, ideal);
       if (asideRef.current) {
         asideRef.current.style.top = val + 'px';
-        asideRef.current.style.height = `calc(100vh - ${val}px)`;
+        asideRef.current.style.height = `calc(calc(var(--vh, 1vh) * 100) - ${val}px)`;
       }
     };
     update();
@@ -1140,8 +1179,8 @@ function TOCSidebar({
       position: 'fixed',
       top: `275px`,
       left: 0,
-      height: `calc(100vh - ${navHeight}px)`,
-      borderRight: '1px solid rgba(var(--accent-rgb),0.1)',
+      height: `calc(calc(var(--vh, 1vh) * 100) - ${navHeight}px)`,
+      borderRight: '1px solid rgba(var(--accent-rgb),calc(0.1*var(--ka)))',
       padding: '28px 0',
       background: 'rgba(var(--bg-rgb),0.85)',
       backdropFilter: 'blur(12px)',
@@ -1153,7 +1192,7 @@ function TOCSidebar({
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '0.25em',
-      color: 'rgba(var(--accent-rgb),0.4)',
+      color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
       padding: '0 20px',
       marginBottom: '4px'
@@ -1176,25 +1215,25 @@ function TOCSidebar({
       fontSize: '11px',
       letterSpacing: '0.1em',
       fontVariant: 'small-caps',
-      color: entry.isSection ? 'rgba(var(--text-rgb),0.75)' : 'rgba(var(--text-rgb),0.6)',
+      color: entry.isSection ? 'rgba(var(--text-rgb),calc(0.75*var(--kt)))' : 'rgba(var(--text-rgb),calc(0.6*var(--kt)))',
       borderLeft: '2px solid transparent',
       transition: 'all 0.15s',
       lineHeight: 1.55
     },
     onMouseEnter: e => {
       e.currentTarget.style.color = 'var(--white)';
-      e.currentTarget.style.borderLeftColor = 'rgba(124,77,255,0.6)';
-      e.currentTarget.style.background = 'rgba(124,77,255,0.06)';
+      e.currentTarget.style.borderLeftColor = 'rgba(var(--purple-rgb),calc(0.6*var(--kp)))';
+      e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))';
     },
     onMouseLeave: e => {
-      e.currentTarget.style.color = entry.isSection ? 'rgba(var(--text-rgb),0.75)' : 'rgba(var(--text-rgb),0.6)';
+      e.currentTarget.style.color = entry.isSection ? 'rgba(var(--text-rgb),calc(0.75*var(--kt)))' : 'rgba(var(--text-rgb),calc(0.6*var(--kt)))';
       e.currentTarget.style.borderLeftColor = 'transparent';
       e.currentTarget.style.background = 'transparent';
     }
   }, /*#__PURE__*/React.createElement(OctSvg, {
     size: entry.isSection ? 6 : 4,
-    color: entry.isSection ? 'rgba(124,77,255,0.6)' : 'rgba(124,77,255,0.3)',
-    fill: entry.isSection ? 'rgba(124,77,255,0.3)' : 'transparent',
+    color: entry.isSection ? 'rgba(var(--purple-rgb),calc(0.6*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))',
+    fill: entry.isSection ? 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))' : 'transparent',
     strokeWidth: 1,
     style: {
       flexShrink: 0,
@@ -1242,6 +1281,9 @@ function App() {
   }, [tweaks.headerHeight]);
   useScrollReveal(tweaks.columns);
   const cols = tweaks.columns || 3;
+  const selIdx = klassen.findIndex(k => k.id === selectedKlasse?.id);
+  const onKlassePrev = selIdx > 0 ? () => setSelectedKlasse(klassen[selIdx - 1]) : null;
+  const onKlasseNext = selIdx >= 0 && selIdx < klassen.length - 1 ? () => setSelectedKlasse(klassen[selIdx + 1]) : null;
   const renderGrid = () => {
     const rows = [];
     for (let i = 0; i < klassen.length; i += cols) {
@@ -1309,7 +1351,9 @@ function App() {
     }
   }, renderGrid())))), /*#__PURE__*/React.createElement(SiteFooter, null), selectedKlasse && /*#__PURE__*/React.createElement(KlasseDetail, {
     klasse: selectedKlasse,
-    onBack: () => setSelectedKlasse(null)
+    onBack: () => setSelectedKlasse(null),
+    onPrev: onKlassePrev,
+    onNext: onKlasseNext
   }), /*#__PURE__*/React.createElement(FloatNav, null));
 }
 ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement(App, null)));

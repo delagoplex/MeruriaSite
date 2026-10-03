@@ -9,3 +9,8 @@
 @keyframes fadeInUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
 @keyframes glitch-clip  { 0%{clip-path:inset(40% 0 61% 0);transform:translate(-3px,0)} 25%{clip-path:inset(92% 0 1% 0);transform:translate(3px,0)} 50%{clip-path:inset(25% 0 58% 0);transform:translate(-2px,0)} 75%{clip-path:inset(54% 0 7% 0);transform:translate(2px,0)} 100%{clip-path:inset(43% 0 40% 0);transform:translate(-1px,0)} }
 @keyframes glitch-clip2 { 0%{clip-path:inset(20% 0 70% 0);transform:translate(3px,0) skewX(0.3deg)} 33%{clip-path:inset(60% 0 10% 0);transform:translate(-3px,0) skewX(-0.3deg)} 66%{clip-path:inset(10% 0 50% 0);transform:translate(2px,0)} 100%{clip-path:inset(80% 0 5% 0);transform:translate(-2px,0)} }
+
+/* Race cards: fluid columns on tablets/phones (260px minimum) instead of a fixed 3-column grid */
+@media (max-width: 1100px) {
+  .race-grid.race-grid.race-grid[style] { grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)) !important; }
+}

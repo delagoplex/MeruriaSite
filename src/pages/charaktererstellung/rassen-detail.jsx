@@ -61,7 +61,7 @@ function FovDiagram({ sicht, accent, wandelform = false }) {
   const full = radius >= 360;
   return (
     <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ display:'block', overflow:'hidden', borderRadius:'3px' }}>
-      <rect width={W} height={H} fill="rgba(0,0,10,0.55)" />
+      <rect width={W} height={H} fill="rgba(var(--bg-rgb),0.55)" />
       <circle cx={cx} cy={cy} r={rN}       fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth={1} />
       <circle cx={cx} cy={cy} r={rN * 0.5} fill="none" stroke="rgba(255,255,255,0.03)" strokeWidth={1} />
       {dunkel > 0 && (full
@@ -122,7 +122,7 @@ function SichtSection({ sicht, accent }) {
           ].map(row => (
             <div key={row.label}>
               <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.2em', color:`${accent}55`, textTransform:'uppercase', marginBottom:'3px' }}>{row.label}</div>
-              <div style={{ fontFamily:'var(--font-body)', fontSize:'13px', fontWeight:'300', color:'rgba(var(--text2-rgb),0.85)' }}>{row.value}</div>
+              <div style={{ fontFamily:'var(--font-body)', fontSize:'13px', fontWeight:'300', color:'rgba(var(--text2-rgb),calc(0.85*var(--kt) + var(--tb)))' }}>{row.value}</div>
             </div>
           ))}
           {notiz && (
@@ -151,8 +151,8 @@ function useScrollReveal() {
 // ── NOT FOUND ────────────────────────────────────────────
 function NotFound() {
   return (
-    <div style={{ minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'20px', padding:'40px' }}>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.3em', color:'rgba(var(--accent-rgb),0.5)', textTransform:'uppercase' }}>Rassenarchiv</div>
+    <div style={{ minHeight:'calc(var(--vh, 1vh) * 100)', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'20px', padding:'40px' }}>
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.3em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>Rassenarchiv</div>
       <h1 style={{ fontFamily:'var(--font-display)', fontSize:'32px', fontWeight:'300', letterSpacing:'0.15em', color:'var(--white)', textTransform:'uppercase' }}>
         {RASSE || 'Rasse'} nicht gefunden
       </h1>
@@ -185,13 +185,13 @@ function Hero({ data }) {
           {data.headerImage ? (
             <>
               <img src={data.headerImage} alt="" style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', objectPosition:'center top' }} />
-              <div style={{ position:'absolute', inset:0, background:`linear-gradient(180deg,rgba(3,2,15,0.25) 0%,rgba(3,2,15,0.55) 60%,#03020f 100%)` }} />
+              <div style={{ position:'absolute', inset:0, background:`linear-gradient(180deg,rgba(var(--bg-rgb),0.25) 0%,rgba(var(--bg-rgb),0.55) 60%,rgb(var(--bg-rgb)) 100%)` }} />
               <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse at 30% 80%,${acc(0.18)} 0%,transparent 50%)` }} />
             </>
           ) : (
             <>
               <div style={{ position:'absolute', inset:0,
-                background:`radial-gradient(ellipse at 30% 60%,${acc(0.18)} 0%,transparent 60%),radial-gradient(ellipse at 70% 30%,rgba(${r},${g},${b},0.10) 0%,transparent 55%),linear-gradient(180deg,#03020f 0%,#05040f 100%)`
+                background:`radial-gradient(ellipse at 30% 60%,${acc(0.18)} 0%,transparent 60%),radial-gradient(ellipse at 70% 30%,rgba(${r},${g},${b},0.10) 0%,transparent 55%),linear-gradient(180deg,rgb(var(--bg-rgb)) 0%,var(--bg) 100%)`
               }} />
               <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', opacity:0.05 }} viewBox="0 0 1200 500" preserveAspectRatio="xMidYMid slice">
                 <path d="M200 480 Q300 180 500 90 Q400 290 350 480" fill={acc(1)} />
@@ -243,7 +243,7 @@ function ImgPH({ url, label, caption, width=300, height=360, position='right' })
         /* Real image: no fixed height, adapts to natural aspect ratio */
         <img src={url} alt={label || ''} loading="lazy"
           style={{ width:'100%', height:'auto', display:'block', borderRadius:4,
-            boxShadow:`0 4px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(var(--accent-rgb),0.12)` }}/>
+            boxShadow:`0 4px 24px rgba(var(--shadow-rgb),calc(0.4 * var(--shadow-k))), 0 0 0 1px rgba(var(--accent-rgb),calc(0.12*var(--ka)))` }}/>
       ) : (
         /* Placeholder: fixed height with decorative frame */
         <div className="rd-img-ph reveal-right" style={{ width, height }}>
@@ -315,7 +315,7 @@ function Placeholder({ name }) {
   return (
     <Section label="Charaktererstellung" title={name}>
       <div className="rd-placeholder-box">
-        <p>Der Eintrag für <strong style={{ color:'rgba(var(--accent-rgb),0.7)' }}>{name}</strong> wird noch ausgearbeitet.</p>
+        <p>Der Eintrag für <strong style={{ color:'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))' }}>{name}</strong> wird noch ausgearbeitet.</p>
         <p style={{ marginTop:'10px' }}>Lore, Gesellschaft, bekannte Personen und Spielmechanik folgen in einem späteren Update.</p>
       </div>
     </Section>
@@ -762,12 +762,12 @@ function Radar({ data: rd }) {
         <div className="rd-radar-desc">
           {rd.labels.map((label,i) => (
             <div key={label} style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'10px' }}>
-              <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.15em', color:'rgba(var(--accent-rgb),0.6)', textTransform:'uppercase' }}>{label}</span>
+              <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.15em', color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>{label}</span>
               <div style={{ display:'flex', alignItems:'center', gap:'8px' }}>
-                <div style={{ width:'80px', height:'3px', background:'rgba(var(--accent-rgb),0.1)', borderRadius:'2px', overflow:'hidden' }}>
-                  <div style={{ height:'100%', width:`${rd.values[i]}%`, background:`rgba(var(--accent-rgb),0.75)`, borderRadius:'2px' }} />
+                <div style={{ width:'80px', height:'3px', background:'rgba(var(--accent-rgb),calc(0.1*var(--ka)))', borderRadius:'2px', overflow:'hidden' }}>
+                  <div style={{ height:'100%', width:`${rd.values[i]}%`, background:`rgba(var(--accent-rgb),calc(0.75*var(--ka)))`, borderRadius:'2px' }} />
                 </div>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(var(--text2-rgb),0.5)', width:'28px' }}>{rd.values[i]}</span>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(var(--text2-rgb),calc(0.5*var(--kt) + var(--tb)))', width:'28px' }}>{rd.values[i]}</span>
               </div>
             </div>
           ))}
@@ -817,8 +817,8 @@ function Quiz({ data: qd }) {
         </>
       ) : (
         <div className="rd-quiz-result">
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.3em', color:'rgba(var(--accent-rgb),0.5)', textTransform:'uppercase', marginBottom:'12px' }}>Empfehlung</div>
-          <div className="rd-quiz-result-class" style={{ color:`rgba(var(--accent-rgb),1)` }}>{winner}</div>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.3em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase', marginBottom:'12px' }}>Empfehlung</div>
+          <div className="rd-quiz-result-class" style={{ color:`rgba(var(--accent-rgb),calc(1*var(--ka) + var(--tb)))` }}>{winner}</div>
           <div className="rd-quiz-result-desc">{qd.klassen[winner] || '—'}</div>
           <button className="rd-quiz-reset" onClick={reset}>Nochmal</button>
         </div>
@@ -1057,7 +1057,7 @@ function GebaeudekatalogTab({ race }) {
       <section style={{ marginBottom:'48px' }}>
         <div style={{ display:'flex', alignItems:'center', gap:'10px', marginBottom:'20px' }}>
           <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.3em', color:acc(0.5), textTransform:'uppercase' }}>01 · Steckbrief</span>
-          <div style={{ flex:1, height:'1px', background:`rgba(var(--accent-rgb),0.12)` }}/>
+          <div style={{ flex:1, height:'1px', background:`rgba(var(--accent-rgb),calc(0.12*var(--ka)))` }}/>
         </div>
         <h2 style={{ fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:300, letterSpacing:'0.18em', color:'var(--white)', textTransform:'uppercase', marginBottom:'20px' }}>Habitatprofil</h2>
         <div className="habitat-grid">
@@ -1100,7 +1100,7 @@ function GebaeudekatalogTab({ race }) {
       <section>
         <div style={{ display:'flex', alignItems:'center', gap:'10px', marginBottom:'20px' }}>
           <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.3em', color:acc(0.5), textTransform:'uppercase' }}>02 · Bausystem</span>
-          <div style={{ flex:1, height:'1px', background:`rgba(var(--accent-rgb),0.12)` }}/>
+          <div style={{ flex:1, height:'1px', background:`rgba(var(--accent-rgb),calc(0.12*var(--ka)))` }}/>
         </div>
         <h2 style={{ fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:300, letterSpacing:'0.18em', color:'var(--white)', textTransform:'uppercase', marginBottom:'20px' }}>Gebäudekatalog</h2>
         <div className="filterbar">
@@ -1143,11 +1143,11 @@ function RassenTOC({ items, headerBottom }) {
   // Slide up with hero, lock below nav once hero is past
   useEffect(() => {
     const update = () => {
-      const ideal = (headerBottom || 0) - window.scrollY;
+      const ideal = ((headerBottom || 0) - window.scrollY) / window.uiZoom();
       const val   = Math.max(0, ideal);
       if (navRef.current) {
         navRef.current.style.top    = val + 'px';
-        navRef.current.style.height = `calc(100vh - ${val}px)`;
+        navRef.current.style.height = `calc(calc(var(--vh, 1vh) * 100) - ${val}px)`;
       }
     };
     update();
@@ -1320,7 +1320,7 @@ function App() {
       <div style={{ display: tab === 'gebaeude' ? undefined : 'none' }}>
         {gebRace
           ? <GebaeudekatalogTab race={gebRace} />
-          : <div style={{ padding:'80px 48px', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.2em', color:'rgba(var(--accent-rgb),0.3)', textTransform:'uppercase' }}>Noch keine Gebäudedaten für diese Rasse.</div>
+          : <div style={{ padding:'80px 48px', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.2em', color:'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>Noch keine Gebäudedaten für diese Rasse.</div>
         }
       </div>
       {selectedTalent && <TalentModal talent={selectedTalent} onClose={() => setSelectedTalent(null)} />}
