@@ -162,6 +162,7 @@ const NSC_SEC_OF_PREFIX = { vna:'vname', eig:'pers', tal:'pers', mak:'pers', rou
 // Alle Fakten, die Spieler überhaupt entdecken KÖNNEN:
 // Sektions-Auge und Einzel-Auge müssen explizit geöffnet sein (Opt-in).
 function unlockableFactsOf(nsc) {
+  if (Array.isArray(nsc.challengeableKeys)) return nsc.challengeableKeys;
   const vis = k => (nsc.fieldVis || {})[k] === true;
   return factsOf(nsc).filter(k => {
     const m = k.match(/^([a-z]+)-(\d+)$/);
@@ -244,6 +245,7 @@ function mapNscRow(row) {
     kontakte:     row.kontakte || { familie:[], freunde:[], rivalen:[] },
     sections:     row.sections || [],
     fieldVis:     row.field_visibility || {},
+    challengeableKeys: Array.isArray(row.challengeable_keys) ? row.challengeable_keys : null,
     steckbrief:   row.steckbrief || null,
     bild:         row.bild || null,
     art:          row.art || null,
@@ -254,20 +256,36 @@ function mapNscRow(row) {
 
 // Loads NSCs and player-character perspectives from Supabase.
 // Returns { nscs, perspectives, charPids, players, loading }.
-function useNSCData() {
+function useNSCData(perspective = 'alle', isDm = false) {
   const [nscs, setNscs] = useState([]);
   const [perspectives, setPerspectives] = useState([]);
   const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(null);
+  const [refreshVersion, setRefreshVersion] = useState(0);
+  const requestSignature = useRef(null);
 
   useEffect(() => {
     async function load() {
+      const signature = `${isDm ? 'dm' : 'player'}:${perspective}`;
+      if (requestSignature.current !== signature) {
+        requestSignature.current = signature;
+        setNscs([]);
+        setLoading(true);
+      }
       const sb = window._sb;
-      const [{ data: nscRows }, { data: charRows }, { data: profileRows }] = await Promise.all([
-        sb.from('nscs').select('*').order('name'),
+      try {
+      const [{ data: charRows, error: charError }, { data: profileRows, error: profileError }] = await Promise.all([
         sb.from('characters').select('id,name,owner_id').eq('type','spieler').order('name'),
         sb.from('profiles').select('id,display_name'),
       ]);
+      if (charError) throw charError;
+      if (profileError) throw profileError;
+      const selectedCharacter = (charRows || []).some(c => c.id === perspective) ? perspective : null;
+      const { data: nscRows, error: nscError } = isDm
+        ? await sb.rpc('get_nsc_admin_data')
+        : await sb.rpc('get_nsc_player_data', { p_character_id: selectedCharacter });
+      if (nscError) throw nscError;
       setNscs((nscRows || []).map(mapNscRow));
 
       const profileMap = new Map((profileRows || []).map(p => [p.id, p.display_name || 'Unbekannt']));
@@ -286,14 +304,22 @@ function useNSCData() {
       }
       setPlayers(Array.from(playerMap.values()));
       setPerspectives([{ id:'alle', label:'Alle' }, ...charPersp]);
+      setLoadError(null);
+      } catch (error) {
+        console.error('NSC-Register konnte nicht geladen werden', error);
+        setNscs([]);
+        setLoadError(error?.message || 'Unbekannter Datenbankfehler');
+      } finally {
       setLoading(false);
+      }
     }
     load();
-  }, []);
+  }, [perspective, isDm, refreshVersion]);
 
   const charPids = perspectives.filter(p => p.id !== 'alle').map(p => p.id);
   const updateNsc = (updated) => setNscs(prev => prev.map(n => n.id === updated.id ? updated : n));
-  return { nscs, perspectives, charPids, players, loading, updateNsc };
+  const refresh = () => setRefreshVersion(version => version + 1);
+  return { nscs, perspectives, charPids, players, loading, loadError, updateNsc, refresh };
 }
 
 // Hook für DM-Unlocks mit Supabase-Persistenz.
@@ -428,6 +454,16 @@ function useUnlocks(nscs, charPids, activePerspective='alle', players=[]) {
     });
   };
 
+  const revealForPid = (nscId, pid, key) => {
+    setByPersp(prev => {
+      const next = { ...prev, [pid]: { ...(prev[pid] || {}) } };
+      const keys = new Set(next[pid][nscId] || []);
+      keys.add(key);
+      next[pid][nscId] = keys;
+      return next;
+    });
+  };
+
   const resetForPids = (nscId, pids) => {
     if (!pids || pids.length === 0) return;
     setByPersp(prev => {
@@ -442,7 +478,7 @@ function useUnlocks(nscs, charPids, activePerspective='alle', players=[]) {
   };
 
   return { byPersp, isUnlocked, toggleUnlock, toggleForPids, unlockStateForPids,
-           setKeysForPid, resetForPids, unlockedFor, stageFor, resetAll, activePerspective,
+           setKeysForPid, resetForPids, revealForPid, unlockedFor, stageFor, resetAll, activePerspective,
            effectiveStatusFor: nsc => nscEffectiveStatus(nsc, activePerspective, players) };
 }
 
