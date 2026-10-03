@@ -415,13 +415,13 @@ function FishDetailModal({
       fontSize: '14px',
       letterSpacing: '0.04em',
       marginLeft: '6px',
-      color: mod > 0 ? '#26c6da' : mod < 0 ? 'rgba(200,100,100,0.85)' : 'rgba(var(--text-rgb),0.5)'
+      color: mod > 0 ? '#26c6da' : mod < 0 ? 'rgba(200,100,100,0.85)' : 'rgba(var(--text-rgb),calc(0.5*var(--kt)))'
     }
   }, modStr(mod)), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
-      color: 'rgba(var(--text-rgb),0.28)',
+      color: 'rgba(var(--text-rgb),calc(0.28*var(--kt) + var(--tb)))',
       marginLeft: '3px'
     }
   }, "STR ", s))), /*#__PURE__*/React.createElement("div", {
@@ -436,7 +436,7 @@ function FishDetailModal({
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '13px',
-      color: 'rgba(var(--text-rgb),0.75)',
+      color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
       letterSpacing: '0.06em'
     }
   }, fish.gewicht || '–')), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
@@ -445,7 +445,7 @@ function FishDetailModal({
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '13px',
-      color: 'rgba(255,214,0,0.88)',
+      color: 'color-mix(in srgb, rgba(255,214,0,0.88), rgb(var(--ink-rgb)) var(--cm))',
       letterSpacing: '0.06em'
     }
   }, fish.verkaufspreis || '–'))), /*#__PURE__*/React.createElement("div", {
@@ -465,16 +465,16 @@ function FishDetailModal({
       fontSize: '8px',
       letterSpacing: '0.12em',
       padding: '2px 8px',
-      border: '1px solid rgba(var(--accent-rgb),0.25)',
+      border: '1px solid rgba(var(--accent-rgb),calc(0.25*var(--ka)))',
       borderRadius: '2px',
-      color: 'rgba(var(--text-rgb),0.6)',
+      color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, l))) : /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
-      color: 'rgba(var(--text-rgb),0.2)',
+      color: 'rgba(var(--text-rgb),calc(0.2*var(--kt) + var(--tb)))',
       letterSpacing: '0.14em',
       fontStyle: 'italic'
     }
@@ -510,7 +510,7 @@ function FishDetailModal({
       fontSize: '11px',
       fontWeight: 300,
       lineHeight: 1.75,
-      color: 'rgba(var(--text-rgb),0.52)',
+      color: 'rgba(var(--text-rgb),calc(0.52*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
       margin: 0
     }
@@ -525,7 +525,7 @@ function FishDetailModal({
     className: "fish-recipe-slot",
     onClick: matchingRecipes.length > 0 ? () => setRecipeModal(true) : undefined,
     style: matchingRecipes.length > 0 ? {cursor: 'pointer', borderRadius: '4px'} : undefined
-  }, /*#__PURE__*/React.createElement("div", {className: "fish-recipe-icon"}, '🍳'), /*#__PURE__*/React.createElement("div", {style: {minWidth: 0}}, /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-mono)', fontSize: '7.5px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(38,198,218,0.3)', marginBottom: '3px'}}, "Gericht"), /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-body)', fontSize: '10px', color: matchingRecipes.length > 0 ? 'rgba(38,198,218,0.7)' : 'rgba(var(--text-rgb),0.2)', letterSpacing: '0.03em'}}, matchingRecipes.length > 0 ? matchingRecipes.length + ' Rezept' + (matchingRecipes.length === 1 ? '' : 'e') + ' →' : "Unbekanntes Rezept"))), /*#__PURE__*/React.createElement("div", {className: "fish-recipe-slot"}, /*#__PURE__*/React.createElement("div", {className: "fish-recipe-icon"}, '⚗️'), /*#__PURE__*/React.createElement("div", {style: {minWidth: 0}}, /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-mono)', fontSize: '7.5px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(38,198,218,0.3)', marginBottom: '3px'}}, "Alchemie"), /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-body)', fontSize: '10px', color: 'rgba(var(--text-rgb),0.2)', letterSpacing: '0.03em'}}, "Unbekannte Zutat"))), /*#__PURE__*/React.createElement("div", {className: "fish-recipe-slot"}, /*#__PURE__*/React.createElement("div", {className: "fish-recipe-icon"}, '🧵'), /*#__PURE__*/React.createElement("div", {style: {minWidth: 0}}, /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-mono)', fontSize: '7.5px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(38,198,218,0.3)', marginBottom: '3px'}}, "Handwerk"), /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-body)', fontSize: '10px', color: 'rgba(var(--text-rgb),0.2)', letterSpacing: '0.03em'}}, "Unbekannte Verarbeitung"))), /*#__PURE__*/React.createElement("div", {style: {marginTop: 'auto', paddingTop: '16px', borderTop: '1px solid rgba(38,198,218,0.06)', fontFamily: 'var(--font-mono)', fontSize: '7.5px', color: 'rgba(38,198,218,0.18)', letterSpacing: '0.18em', textTransform: 'uppercase', textAlign: 'center', lineHeight: 1.8}}, matchingRecipes.length === 0 ? /*#__PURE__*/React.createElement(React.Fragment, null, "Rezepte werden", /*#__PURE__*/React.createElement("br", null), "noch ergänzt") : null)))), recipeModal && /*#__PURE__*/React.createElement("div", {onClick: e => { e.stopPropagation(); setRecipeModal(false); }, style: {position: 'fixed', inset: 0, background: 'rgba(5,4,15,0.92)', zIndex: 300, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px'}}, /*#__PURE__*/React.createElement("div", {onClick: e => e.stopPropagation(), style: {background: '#0c0a1e', border: '1px solid rgba(160,140,255,0.18)', borderRadius: '8px', maxWidth: '480px', width: '100%', maxHeight: '70vh', overflowY: 'auto', padding: '24px', position: 'relative', display: 'flex', flexDirection: 'column', gap: '0'}}, /*#__PURE__*/React.createElement("button", {onClick: () => setRecipeModal(false), style: {position: 'absolute', top: '12px', right: '12px', background: 'transparent', border: 'none', color: 'rgba(200,190,240,0.4)', fontSize: '16px', cursor: 'pointer', padding: '4px 8px', borderRadius: '3px', lineHeight: 1}}, '✕'), /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(160,140,255,0.45)', marginBottom: '20px', paddingRight: '32px'}}, 'Rezepte mit ' + fish.name_de), matchingRecipes.map((r, i) => /*#__PURE__*/React.createElement("div", {key: r.id, style: {borderTop: i > 0 ? '1px solid rgba(160,140,255,0.07)' : 'none', paddingTop: i > 0 ? '16px' : '0', marginTop: i > 0 ? '16px' : '0', display: 'flex', flexDirection: 'column', gap: '6px'}}, /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-display)', fontSize: '13px', letterSpacing: '0.06em', color: 'rgba(200,190,240,0.9)'}}, r.name), /*#__PURE__*/React.createElement("div", {style: {display: 'flex', gap: '12px', flexWrap: 'wrap'}}, r.sg != null && /*#__PURE__*/React.createElement("span", {style: {fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '0.16em', color: 'rgba(38,198,218,0.55)'}}, 'SG ' + r.sg), r.ergebnis && /*#__PURE__*/React.createElement("span", {style: {fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 300, color: 'rgba(200,190,240,0.65)'}}, '→ ' + r.ergebnis)), r.effekte && /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 300, color: 'rgba(var(--text-rgb),0.5)', lineHeight: 1.65}}, r.effekte), (r.zutaten || []).length > 0 && /*#__PURE__*/React.createElement("div", {style: {display: 'flex', flexWrap: 'wrap', gap: '5px', marginTop: '2px'}}, (r.zutaten || []).map((z, zi) => /*#__PURE__*/React.createElement("span", {key: zi, style: {fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.1em', padding: '2px 7px', background: 'rgba(160,140,255,0.07)', border: '1px solid rgba(160,140,255,0.14)', borderRadius: '2px', color: 'rgba(200,190,240,0.6)'}}, z.menge ? z.menge + ' ' + z.name : z.name))))))));
+  }, /*#__PURE__*/React.createElement("div", {className: "fish-recipe-icon"}, '🍳'), /*#__PURE__*/React.createElement("div", {style: {minWidth: 0}}, /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-mono)', fontSize: '7.5px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'color-mix(in srgb, rgba(38,198,218,0.3), rgb(var(--ink-rgb)) var(--cm))', marginBottom: '3px'}}, "Gericht"), /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-body)', fontSize: '10px', color: matchingRecipes.length > 0 ? 'color-mix(in srgb, rgba(38,198,218,0.7), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--text-rgb),calc(0.2*var(--kt)))', letterSpacing: '0.03em'}}, matchingRecipes.length > 0 ? matchingRecipes.length + ' Rezept' + (matchingRecipes.length === 1 ? '' : 'e') + ' →' : "Unbekanntes Rezept"))), /*#__PURE__*/React.createElement("div", {className: "fish-recipe-slot"}, /*#__PURE__*/React.createElement("div", {className: "fish-recipe-icon"}, '⚗️'), /*#__PURE__*/React.createElement("div", {style: {minWidth: 0}}, /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-mono)', fontSize: '7.5px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'color-mix(in srgb, rgba(38,198,218,0.3), rgb(var(--ink-rgb)) var(--cm))', marginBottom: '3px'}}, "Alchemie"), /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-body)', fontSize: '10px', color: 'rgba(var(--text-rgb),calc(0.2*var(--kt) + var(--tb)))', letterSpacing: '0.03em'}}, "Unbekannte Zutat"))), /*#__PURE__*/React.createElement("div", {className: "fish-recipe-slot"}, /*#__PURE__*/React.createElement("div", {className: "fish-recipe-icon"}, '🧵'), /*#__PURE__*/React.createElement("div", {style: {minWidth: 0}}, /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-mono)', fontSize: '7.5px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'color-mix(in srgb, rgba(38,198,218,0.3), rgb(var(--ink-rgb)) var(--cm))', marginBottom: '3px'}}, "Handwerk"), /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-body)', fontSize: '10px', color: 'rgba(var(--text-rgb),calc(0.2*var(--kt) + var(--tb)))', letterSpacing: '0.03em'}}, "Unbekannte Verarbeitung"))), /*#__PURE__*/React.createElement("div", {style: {marginTop: 'auto', paddingTop: '16px', borderTop: '1px solid rgba(38,198,218,0.06)', fontFamily: 'var(--font-mono)', fontSize: '7.5px', color: 'color-mix(in srgb, rgba(38,198,218,0.18), rgb(var(--ink-rgb)) var(--cm))', letterSpacing: '0.18em', textTransform: 'uppercase', textAlign: 'center', lineHeight: 1.8}}, matchingRecipes.length === 0 ? /*#__PURE__*/React.createElement(React.Fragment, null, "Rezepte werden", /*#__PURE__*/React.createElement("br", null), "noch ergänzt") : null)))), recipeModal && /*#__PURE__*/React.createElement("div", {onClick: e => { e.stopPropagation(); setRecipeModal(false); }, style: {position: 'fixed', inset: 0, background: 'rgba(var(--bg-rgb),0.92)', zIndex: 300, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px'}}, /*#__PURE__*/React.createElement("div", {onClick: e => e.stopPropagation(), style: {background: 'rgb(var(--panel-rgb))', border: '1px solid rgba(var(--accent-rgb),calc(0.18*var(--ka)))', borderRadius: '8px', maxWidth: '480px', width: '100%', maxHeight: 'calc(var(--vh, 1vh) * 70)', overflowY: 'auto', padding: '24px', position: 'relative', display: 'flex', flexDirection: 'column', gap: '0'}}, /*#__PURE__*/React.createElement("button", {onClick: () => setRecipeModal(false), style: {position: 'absolute', top: '12px', right: '12px', background: 'transparent', border: 'none', color: 'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))', fontSize: '16px', cursor: 'pointer', padding: '4px 8px', borderRadius: '3px', lineHeight: 1}}, '✕'), /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', marginBottom: '20px', paddingRight: '32px'}}, 'Rezepte mit ' + fish.name_de), matchingRecipes.map((r, i) => /*#__PURE__*/React.createElement("div", {key: r.id, style: {borderTop: i > 0 ? '1px solid rgba(var(--accent-rgb),calc(0.07*var(--ka)))' : 'none', paddingTop: i > 0 ? '16px' : '0', marginTop: i > 0 ? '16px' : '0', display: 'flex', flexDirection: 'column', gap: '6px'}}, /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-display)', fontSize: '13px', letterSpacing: '0.06em', color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))'}}, r.name), /*#__PURE__*/React.createElement("div", {style: {display: 'flex', gap: '12px', flexWrap: 'wrap'}}, r.sg != null && /*#__PURE__*/React.createElement("span", {style: {fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '0.16em', color: 'color-mix(in srgb, rgba(38,198,218,0.55), rgb(var(--ink-rgb)) var(--cm))'}}, 'SG ' + r.sg), r.ergebnis && /*#__PURE__*/React.createElement("span", {style: {fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 300, color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))'}}, '→ ' + r.ergebnis)), r.effekte && /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 300, color: 'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))', lineHeight: 1.65}}, r.effekte), (r.zutaten || []).length > 0 && /*#__PURE__*/React.createElement("div", {style: {display: 'flex', flexWrap: 'wrap', gap: '5px', marginTop: '2px'}}, (r.zutaten || []).map((z, zi) => /*#__PURE__*/React.createElement("span", {key: zi, style: {fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.1em', padding: '2px 7px', background: 'rgba(var(--accent-rgb),calc(0.07*var(--ka)))', border: '1px solid rgba(var(--accent-rgb),calc(0.14*var(--ka)))', borderRadius: '2px', color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))'}}, z.menge ? z.menge + ' ' + z.name : z.name))))))));
 }
 
 // ── Fish Card ─────────────────────────────────────────────────────────────────
@@ -624,7 +624,7 @@ function FishCard({
       fontSize: '8px',
       letterSpacing: '0.08em',
       whiteSpace: 'nowrap',
-      color: mod > 0 ? '#26c6da' : mod < 0 ? 'rgba(200,100,100,0.75)' : 'rgba(var(--text-rgb),0.5)'
+      color: mod > 0 ? '#26c6da' : mod < 0 ? 'rgba(200,100,100,0.75)' : 'rgba(var(--text-rgb),calc(0.5*var(--kt)))'
     }
   }, modStr(mod)))), /*#__PURE__*/React.createElement("div", {
     className: "fish-klima"
@@ -724,7 +724,7 @@ function FishSidebar({
       fontFamily: 'var(--font-display)',
       fontSize: '10px',
       letterSpacing: '0.25em',
-      color: 'rgba(38,198,218,0.6)',
+      color: 'color-mix(in srgb, rgba(38,198,218,0.6), rgb(var(--ink-rgb)) var(--cm))',
       textTransform: 'uppercase'
     }
   }, "Filter"), /*#__PURE__*/React.createElement("div", {
@@ -758,7 +758,7 @@ function FishSidebar({
       transform: 'translateY(-50%)',
       background: 'none',
       border: 'none',
-      color: 'rgba(var(--text-rgb),0.45)',
+      color: 'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))',
       cursor: 'pointer',
       padding: 0,
       fontSize: '10px',
@@ -1171,7 +1171,7 @@ function PlaceholderTab({
       alignItems: 'center',
       justifyContent: 'center',
       gap: '16px',
-      color: 'rgba(38,198,218,0.18)',
+      color: 'color-mix(in srgb, rgba(38,198,218,0.18), rgb(var(--ink-rgb)) var(--cm))',
       userSelect: 'none'
     }
   }, /*#__PURE__*/React.createElement("div", {
@@ -1185,14 +1185,14 @@ function PlaceholderTab({
       fontSize: '18px',
       letterSpacing: '0.22em',
       textTransform: 'uppercase',
-      color: 'rgba(38,198,218,0.25)'
+      color: 'color-mix(in srgb, rgba(38,198,218,0.25), rgb(var(--ink-rgb)) var(--cm))'
     }
   }, label), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
       letterSpacing: '0.28em',
-      color: 'rgba(var(--accent-rgb),0.2)',
+      color: 'rgba(var(--accent-rgb),calc(0.2*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Daten folgen"), /*#__PURE__*/React.createElement("div", {
@@ -1285,7 +1285,7 @@ function ResourceDetailModal({
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '13px',
-      color: 'rgba(var(--text-rgb),0.75)',
+      color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
       letterSpacing: '0.06em'
     }
   }, item.gewicht || '–')), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
@@ -1294,7 +1294,7 @@ function ResourceDetailModal({
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '13px',
-      color: 'rgba(255,214,0,0.88)',
+      color: 'color-mix(in srgb, rgba(255,214,0,0.88), rgb(var(--ink-rgb)) var(--cm))',
       letterSpacing: '0.06em'
     }
   }, item.verkaufspreis || '–')), item.groesse && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
@@ -1303,7 +1303,7 @@ function ResourceDetailModal({
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '13px',
-      color: 'rgba(var(--text-rgb),0.75)',
+      color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
       letterSpacing: '0.06em'
     }
   }, item.groesse)), item.wachstumsdauer && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
@@ -1312,7 +1312,7 @@ function ResourceDetailModal({
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '13px',
-      color: 'rgba(var(--text-rgb),0.75)',
+      color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
       letterSpacing: '0.06em'
     }
   }, item.wachstumsdauer))), (item.fundort || []).length > 0 && /*#__PURE__*/React.createElement("div", {
@@ -1412,12 +1412,12 @@ function ResourceDetailModal({
         fontSize: '11px',
         fontWeight: 300,
         lineHeight: 1.5,
-        color: 'rgba(var(--text-rgb),0.6)',
+        color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))',
         letterSpacing: '0.015em'
       }
     }, eg.farbe && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", {
       style: {
-        color: 'rgba(38,198,218,0.55)',
+        color: 'color-mix(in srgb, rgba(38,198,218,0.55), rgb(var(--ink-rgb)) var(--cm))',
         fontFamily: 'var(--font-mono)',
         fontSize: '8.5px',
         letterSpacing: '0.18em',
@@ -1426,7 +1426,7 @@ function ResourceDetailModal({
       }
     }, "Farbe"), eg.farbe), eg.beschaffenheit && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", {
       style: {
-        color: 'rgba(38,198,218,0.55)',
+        color: 'color-mix(in srgb, rgba(38,198,218,0.55), rgb(var(--ink-rgb)) var(--cm))',
         fontFamily: 'var(--font-mono)',
         fontSize: '8.5px',
         letterSpacing: '0.18em',
@@ -1444,7 +1444,7 @@ function ResourceDetailModal({
       fontSize: '11px',
       fontWeight: 300,
       lineHeight: 1.75,
-      color: 'rgba(var(--text-rgb),0.52)',
+      color: 'rgba(var(--text-rgb),calc(0.52*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
       margin: 0
     }
@@ -1458,7 +1458,7 @@ function ResourceDetailModal({
       fontSize: '11px',
       fontWeight: 300,
       lineHeight: 1.75,
-      color: 'rgba(var(--text-rgb),0.52)',
+      color: 'rgba(var(--text-rgb),calc(0.52*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
       margin: 0
     }
@@ -1473,7 +1473,7 @@ function ResourceDetailModal({
     className: "fish-recipe-slot",
     onClick: matchingRecipes.length > 0 ? () => setRecipeModal(true) : undefined,
     style: matchingRecipes.length > 0 ? {cursor: 'pointer', borderRadius: '4px'} : undefined
-  }, /*#__PURE__*/React.createElement("div", {className: "fish-recipe-icon"}, '🍳'), /*#__PURE__*/React.createElement("div", {style: {minWidth: 0}}, /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-mono)', fontSize: '7.5px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(38,198,218,0.3)', marginBottom: '3px'}}, "Kochen"), /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-body)', fontSize: '10px', color: matchingRecipes.length > 0 ? 'rgba(38,198,218,0.7)' : 'rgba(var(--text-rgb),0.2)', letterSpacing: '0.03em'}}, matchingRecipes.length > 0 ? matchingRecipes.length + ' Rezept' + (matchingRecipes.length === 1 ? '' : 'e') + ' →' : "Unbekanntes Rezept"))), /*#__PURE__*/React.createElement("div", {className: "fish-recipe-slot"}, /*#__PURE__*/React.createElement("div", {className: "fish-recipe-icon"}, '⚗️'), /*#__PURE__*/React.createElement("div", {style: {minWidth: 0}}, /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-mono)', fontSize: '7.5px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(38,198,218,0.3)', marginBottom: '3px'}}, "Alchemie"), /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-body)', fontSize: '10px', color: 'rgba(var(--text-rgb),0.2)', letterSpacing: '0.03em'}}, "Unbekannte Zutat"))), /*#__PURE__*/React.createElement("div", {className: "fish-recipe-slot"}, /*#__PURE__*/React.createElement("div", {className: "fish-recipe-icon"}, '🔨'), /*#__PURE__*/React.createElement("div", {style: {minWidth: 0}}, /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-mono)', fontSize: '7.5px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(38,198,218,0.3)', marginBottom: '3px'}}, "Schmieden"), /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-body)', fontSize: '10px', color: 'rgba(var(--text-rgb),0.2)', letterSpacing: '0.03em'}}, "Unbekanntes Rezept"))), /*#__PURE__*/React.createElement("div", {className: "fish-recipe-slot"}, /*#__PURE__*/React.createElement("div", {className: "fish-recipe-icon"}, '🧵'), /*#__PURE__*/React.createElement("div", {style: {minWidth: 0}}, /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-mono)', fontSize: '7.5px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(38,198,218,0.3)', marginBottom: '3px'}}, "Handwerk"), /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-body)', fontSize: '10px', color: 'rgba(var(--text-rgb),0.2)', letterSpacing: '0.03em'}}, "Unbekannte Verarbeitung"))), /*#__PURE__*/React.createElement("div", {style: {marginTop: 'auto', paddingTop: '16px', borderTop: '1px solid rgba(38,198,218,0.06)', fontFamily: 'var(--font-mono)', fontSize: '7.5px', color: 'rgba(38,198,218,0.18)', letterSpacing: '0.18em', textTransform: 'uppercase', textAlign: 'center', lineHeight: 1.8}}, matchingRecipes.length === 0 ? /*#__PURE__*/React.createElement(React.Fragment, null, "Rezepte werden", /*#__PURE__*/React.createElement("br", null), "noch ergänzt") : null)))), recipeModal && /*#__PURE__*/React.createElement("div", {onClick: e => { e.stopPropagation(); setRecipeModal(false); }, style: {position: 'fixed', inset: 0, background: 'rgba(5,4,15,0.92)', zIndex: 300, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px'}}, /*#__PURE__*/React.createElement("div", {onClick: e => e.stopPropagation(), style: {background: '#0c0a1e', border: '1px solid rgba(160,140,255,0.18)', borderRadius: '8px', maxWidth: '480px', width: '100%', maxHeight: '70vh', overflowY: 'auto', padding: '24px', position: 'relative', display: 'flex', flexDirection: 'column', gap: '0'}}, /*#__PURE__*/React.createElement("button", {onClick: () => setRecipeModal(false), style: {position: 'absolute', top: '12px', right: '12px', background: 'transparent', border: 'none', color: 'rgba(200,190,240,0.4)', fontSize: '16px', cursor: 'pointer', padding: '4px 8px', borderRadius: '3px', lineHeight: 1}}, '✕'), /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(160,140,255,0.45)', marginBottom: '20px', paddingRight: '32px'}}, 'Rezepte mit ' + item.name_de), matchingRecipes.map((r, i) => /*#__PURE__*/React.createElement("div", {key: r.id, style: {borderTop: i > 0 ? '1px solid rgba(160,140,255,0.07)' : 'none', paddingTop: i > 0 ? '16px' : '0', marginTop: i > 0 ? '16px' : '0', display: 'flex', flexDirection: 'column', gap: '6px'}}, /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-display)', fontSize: '13px', letterSpacing: '0.06em', color: 'rgba(200,190,240,0.9)'}}, r.name), /*#__PURE__*/React.createElement("div", {style: {display: 'flex', gap: '12px', flexWrap: 'wrap'}}, r.sg != null && /*#__PURE__*/React.createElement("span", {style: {fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '0.16em', color: 'rgba(38,198,218,0.55)'}}, 'SG ' + r.sg), r.ergebnis && /*#__PURE__*/React.createElement("span", {style: {fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 300, color: 'rgba(200,190,240,0.65)'}}, '→ ' + r.ergebnis)), r.effekte && /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 300, color: 'rgba(var(--text-rgb),0.5)', lineHeight: 1.65}}, r.effekte), (r.zutaten || []).length > 0 && /*#__PURE__*/React.createElement("div", {style: {display: 'flex', flexWrap: 'wrap', gap: '5px', marginTop: '2px'}}, (r.zutaten || []).map((z, zi) => /*#__PURE__*/React.createElement("span", {key: zi, style: {fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.1em', padding: '2px 7px', background: 'rgba(160,140,255,0.07)', border: '1px solid rgba(160,140,255,0.14)', borderRadius: '2px', color: 'rgba(200,190,240,0.6)'}}, z.menge ? z.menge + ' ' + z.name : z.name))))))));
+  }, /*#__PURE__*/React.createElement("div", {className: "fish-recipe-icon"}, '🍳'), /*#__PURE__*/React.createElement("div", {style: {minWidth: 0}}, /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-mono)', fontSize: '7.5px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'color-mix(in srgb, rgba(38,198,218,0.3), rgb(var(--ink-rgb)) var(--cm))', marginBottom: '3px'}}, "Kochen"), /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-body)', fontSize: '10px', color: matchingRecipes.length > 0 ? 'color-mix(in srgb, rgba(38,198,218,0.7), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--text-rgb),calc(0.2*var(--kt)))', letterSpacing: '0.03em'}}, matchingRecipes.length > 0 ? matchingRecipes.length + ' Rezept' + (matchingRecipes.length === 1 ? '' : 'e') + ' →' : "Unbekanntes Rezept"))), /*#__PURE__*/React.createElement("div", {className: "fish-recipe-slot"}, /*#__PURE__*/React.createElement("div", {className: "fish-recipe-icon"}, '⚗️'), /*#__PURE__*/React.createElement("div", {style: {minWidth: 0}}, /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-mono)', fontSize: '7.5px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'color-mix(in srgb, rgba(38,198,218,0.3), rgb(var(--ink-rgb)) var(--cm))', marginBottom: '3px'}}, "Alchemie"), /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-body)', fontSize: '10px', color: 'rgba(var(--text-rgb),calc(0.2*var(--kt) + var(--tb)))', letterSpacing: '0.03em'}}, "Unbekannte Zutat"))), /*#__PURE__*/React.createElement("div", {className: "fish-recipe-slot"}, /*#__PURE__*/React.createElement("div", {className: "fish-recipe-icon"}, '🔨'), /*#__PURE__*/React.createElement("div", {style: {minWidth: 0}}, /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-mono)', fontSize: '7.5px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'color-mix(in srgb, rgba(38,198,218,0.3), rgb(var(--ink-rgb)) var(--cm))', marginBottom: '3px'}}, "Schmieden"), /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-body)', fontSize: '10px', color: 'rgba(var(--text-rgb),calc(0.2*var(--kt) + var(--tb)))', letterSpacing: '0.03em'}}, "Unbekanntes Rezept"))), /*#__PURE__*/React.createElement("div", {className: "fish-recipe-slot"}, /*#__PURE__*/React.createElement("div", {className: "fish-recipe-icon"}, '🧵'), /*#__PURE__*/React.createElement("div", {style: {minWidth: 0}}, /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-mono)', fontSize: '7.5px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'color-mix(in srgb, rgba(38,198,218,0.3), rgb(var(--ink-rgb)) var(--cm))', marginBottom: '3px'}}, "Handwerk"), /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-body)', fontSize: '10px', color: 'rgba(var(--text-rgb),calc(0.2*var(--kt) + var(--tb)))', letterSpacing: '0.03em'}}, "Unbekannte Verarbeitung"))), /*#__PURE__*/React.createElement("div", {style: {marginTop: 'auto', paddingTop: '16px', borderTop: '1px solid rgba(38,198,218,0.06)', fontFamily: 'var(--font-mono)', fontSize: '7.5px', color: 'color-mix(in srgb, rgba(38,198,218,0.18), rgb(var(--ink-rgb)) var(--cm))', letterSpacing: '0.18em', textTransform: 'uppercase', textAlign: 'center', lineHeight: 1.8}}, matchingRecipes.length === 0 ? /*#__PURE__*/React.createElement(React.Fragment, null, "Rezepte werden", /*#__PURE__*/React.createElement("br", null), "noch ergänzt") : null)))), recipeModal && /*#__PURE__*/React.createElement("div", {onClick: e => { e.stopPropagation(); setRecipeModal(false); }, style: {position: 'fixed', inset: 0, background: 'rgba(var(--bg-rgb),0.92)', zIndex: 300, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px'}}, /*#__PURE__*/React.createElement("div", {onClick: e => e.stopPropagation(), style: {background: 'rgb(var(--panel-rgb))', border: '1px solid rgba(var(--accent-rgb),calc(0.18*var(--ka)))', borderRadius: '8px', maxWidth: '480px', width: '100%', maxHeight: 'calc(var(--vh, 1vh) * 70)', overflowY: 'auto', padding: '24px', position: 'relative', display: 'flex', flexDirection: 'column', gap: '0'}}, /*#__PURE__*/React.createElement("button", {onClick: () => setRecipeModal(false), style: {position: 'absolute', top: '12px', right: '12px', background: 'transparent', border: 'none', color: 'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))', fontSize: '16px', cursor: 'pointer', padding: '4px 8px', borderRadius: '3px', lineHeight: 1}}, '✕'), /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', marginBottom: '20px', paddingRight: '32px'}}, 'Rezepte mit ' + item.name_de), matchingRecipes.map((r, i) => /*#__PURE__*/React.createElement("div", {key: r.id, style: {borderTop: i > 0 ? '1px solid rgba(var(--accent-rgb),calc(0.07*var(--ka)))' : 'none', paddingTop: i > 0 ? '16px' : '0', marginTop: i > 0 ? '16px' : '0', display: 'flex', flexDirection: 'column', gap: '6px'}}, /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-display)', fontSize: '13px', letterSpacing: '0.06em', color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))'}}, r.name), /*#__PURE__*/React.createElement("div", {style: {display: 'flex', gap: '12px', flexWrap: 'wrap'}}, r.sg != null && /*#__PURE__*/React.createElement("span", {style: {fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '0.16em', color: 'color-mix(in srgb, rgba(38,198,218,0.55), rgb(var(--ink-rgb)) var(--cm))'}}, 'SG ' + r.sg), r.ergebnis && /*#__PURE__*/React.createElement("span", {style: {fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 300, color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))'}}, '→ ' + r.ergebnis)), r.effekte && /*#__PURE__*/React.createElement("div", {style: {fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 300, color: 'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))', lineHeight: 1.65}}, r.effekte), (r.zutaten || []).length > 0 && /*#__PURE__*/React.createElement("div", {style: {display: 'flex', flexWrap: 'wrap', gap: '5px', marginTop: '2px'}}, (r.zutaten || []).map((z, zi) => /*#__PURE__*/React.createElement("span", {key: zi, style: {fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.1em', padding: '2px 7px', background: 'rgba(var(--accent-rgb),calc(0.07*var(--ka)))', border: '1px solid rgba(var(--accent-rgb),calc(0.14*var(--ka)))', borderRadius: '2px', color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))'}}, z.menge ? z.menge + ' ' + z.name : z.name))))))));
 }
 
 // ── Resource Card ─────────────────────────────────────────────────────────────
@@ -1596,7 +1596,7 @@ function ResourceSidebar({
       fontFamily: 'var(--font-display)',
       fontSize: '10px',
       letterSpacing: '0.25em',
-      color: 'rgba(38,198,218,0.6)',
+      color: 'color-mix(in srgb, rgba(38,198,218,0.6), rgb(var(--ink-rgb)) var(--cm))',
       textTransform: 'uppercase'
     }
   }, "Filter"), /*#__PURE__*/React.createElement("div", {
@@ -1630,7 +1630,7 @@ function ResourceSidebar({
       transform: 'translateY(-50%)',
       background: 'none',
       border: 'none',
-      color: 'rgba(var(--text-rgb),0.45)',
+      color: 'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))',
       cursor: 'pointer',
       padding: 0,
       fontSize: '10px',
@@ -1930,7 +1930,7 @@ function DmToggleWrapper({
       fontFamily: 'var(--font-mono)',
       background: visible ? 'rgba(38,198,218,0.85)' : 'rgba(0,0,0,0.65)',
       border: visible ? '1px solid rgba(38,198,218,1)' : '1px solid rgba(255,255,255,0.2)',
-      color: visible ? '#fff' : 'rgba(255,255,255,0.4)',
+      color: visible ? '#fff' : 'color-mix(in srgb, rgba(255,255,255,0.4), rgb(var(--ink-rgb)) var(--cm))',
       transition: 'all 0.15s'
     }
   }, visible ? '✓' : '○'));
@@ -1955,7 +1955,7 @@ function DmBanner({
       fontFamily: 'var(--font-mono)',
       fontSize: 9,
       letterSpacing: '0.28em',
-      color: 'rgba(38,198,218,0.8)',
+      color: 'color-mix(in srgb, rgba(38,198,218,0.8), rgb(var(--ink-rgb)) var(--cm))',
       textTransform: 'uppercase',
       whiteSpace: 'nowrap'
     }
@@ -1963,13 +1963,13 @@ function DmBanner({
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: 9,
-      color: 'rgba(38,198,218,0.5)',
+      color: 'color-mix(in srgb, rgba(38,198,218,0.5), rgb(var(--ink-rgb)) var(--cm))',
       letterSpacing: '0.14em'
     }
   }, vis.fische.size, " Fische \xB7 ", vis.pflanzen.size, " Pflanzen \xB7 ", vis.mineralien.size, " Mineralien \xB7 ", vis.insekten.size, " Insekten", /*#__PURE__*/React.createElement("span", {
     style: {
       marginLeft: 8,
-      color: 'rgba(38,198,218,0.35)'
+      color: 'color-mix(in srgb, rgba(38,198,218,0.35), rgb(var(--ink-rgb)) var(--cm))'
     }
   }, "= ", total, " gesamt sichtbar")), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1979,7 +1979,7 @@ function DmBanner({
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: 8,
-      color: 'rgba(38,198,218,0.35)',
+      color: 'color-mix(in srgb, rgba(38,198,218,0.35), rgb(var(--ink-rgb)) var(--cm))',
       letterSpacing: '0.15em'
     }
   }, "\u25CF Live \xFCbertragen"));
@@ -2134,18 +2134,18 @@ function AccessDenied() {
       fontFamily: 'var(--font-mono)',
       fontSize: 10,
       letterSpacing: '0.22em',
-      color: 'rgba(200,190,240,0.4)',
+      color: 'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))',
       textDecoration: 'none',
       textTransform: 'uppercase'
     },
     onMouseEnter: e => e.currentTarget.style.color = 'var(--white)',
-    onMouseLeave: e => e.currentTarget.style.color = 'rgba(200,190,240,0.4)'
+    onMouseLeave: e => e.currentTarget.style.color = 'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))'
   }, "\u2190 Zur\xFCck"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: 9,
       letterSpacing: '0.42em',
-      color: 'rgba(var(--accent-rgb),0.4)',
+      color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Kein Zugriff"), /*#__PURE__*/React.createElement("div", {
@@ -2153,7 +2153,7 @@ function AccessDenied() {
       fontFamily: 'var(--font-display)',
       fontSize: 14,
       letterSpacing: '0.3em',
-      color: 'rgba(var(--text-rgb),0.25)',
+      color: 'rgba(var(--text-rgb),calc(0.25*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Meruria \u2014 Ressourcen"));
@@ -2240,7 +2240,7 @@ function App() {
     style: {
       display: 'flex',
       flexDirection: 'column',
-      height: '100vh',
+      height: 'calc(var(--vh, 1vh) * 100)',
       overflow: 'hidden',
       position: 'relative'
     }

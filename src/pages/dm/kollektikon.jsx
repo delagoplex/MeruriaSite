@@ -309,7 +309,7 @@ function CountsSection({ countsMap, thresholdsMap, onSaved }) {
           value={search}
           onChange={e => setSearch(e.target.value)}
         />
-        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'rgba(160,140,255,0.45)', whiteSpace: 'nowrap' }}>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', whiteSpace: 'nowrap' }}>
           {found}/{total} entdeckt
         </span>
       </div>
@@ -397,7 +397,7 @@ function App() {
         </div>
 
         {loading ? (
-          <div style={{ fontFamily: 'var(--font-body)', fontSize: '12px', color: 'rgba(160,140,255,0.4)', padding: '24px 0' }}>Lädt…</div>
+          <div style={{ fontFamily: 'var(--font-body)', fontSize: '12px', color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', padding: '24px 0' }}>Lädt…</div>
         ) : activeTab === 'mengen' ? (
           <CountsSection countsMap={countsMap} thresholdsMap={thresholdsMap} onSaved={handleCountSaved} />
         ) : (

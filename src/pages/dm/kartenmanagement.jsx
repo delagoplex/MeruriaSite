@@ -321,10 +321,10 @@ function HexGhost({ parentQ, parentR, dir, onAdd, onDropHex, isDropActive, onPar
         left: px, top: py,
         width:  isDropActive ? 56 : 42, height: isDropActive ? 56 : 42,
         marginLeft: isDropActive ? -28 : -21, marginTop: isDropActive ? -28 : -21,
-        background: isHot ? 'rgba(160,140,255,0.45)' : undefined,
-        borderColor: isHot ? 'rgba(220,210,255,0.95)' : undefined,
-        boxShadow: isHot ? '0 0 24px rgba(160,140,255,0.8), 0 4px 14px rgba(0,0,0,0.5)' : undefined,
-        color: isHot ? '#ffffff' : undefined,
+        background: isHot ? 'rgba(var(--accent-rgb),calc(0.45*var(--ka)))' : undefined,
+        borderColor: isHot ? 'rgba(var(--text-rgb),calc(0.95*var(--kt)))' : undefined,
+        boxShadow: isHot ? '0 0 24px rgba(var(--accent-rgb),calc(0.8*var(--ka))), 0 4px 14px rgba(var(--shadow-rgb),calc(0.5 * var(--shadow-k)))' : undefined,
+        color: isHot ? 'color-mix(in srgb, #ffffff, rgb(var(--ink-rgb)) var(--cm))' : undefined,
         transform: isHot ? 'scale(1.18)' : undefined,
       }}
       onMouseDown={(e) => e.stopPropagation()}
@@ -457,32 +457,32 @@ function BildPosPad({ pos, onChange }) {
   return (
     <div style={{ display:'flex', flexDirection:'column', gap:6 }}>
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between' }}>
-        <label style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(160,140,255,0.6)' }}>Bildposition</label>
+        <label style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))' }}>Bildposition</label>
         <div style={{ display:'flex', alignItems:'center', gap:8 }}>
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(160,140,255,0.4)' }}>{p.x}% · {p.y}%</span>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))' }}>{p.x}% · {p.y}%</span>
           <button
             onClick={() => onChange({ x: 50, y: 50 })}
             title="Bildposition zurücksetzen"
-            style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.12em', textTransform:'uppercase', color:'rgba(160,140,255,0.6)', background:'rgba(124,77,255,0.08)', border:'1px solid rgba(124,77,255,0.22)', borderRadius:3, cursor:'pointer', padding:'2px 7px', lineHeight:1.6, transition:'all 0.15s' }}
-            onMouseEnter={e => { e.currentTarget.style.background='rgba(124,77,255,0.18)'; e.currentTarget.style.borderColor='rgba(124,77,255,0.5)'; e.currentTarget.style.color='rgba(200,190,240,0.9)'; }}
-            onMouseLeave={e => { e.currentTarget.style.background='rgba(124,77,255,0.08)'; e.currentTarget.style.borderColor='rgba(124,77,255,0.22)'; e.currentTarget.style.color='rgba(160,140,255,0.6)'; }}
+            style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.12em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))', background:'rgba(var(--purple-rgb),calc(0.08*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))', borderRadius:3, cursor:'pointer', padding:'2px 7px', lineHeight:1.6, transition:'all 0.15s' }}
+            onMouseEnter={e => { e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.18*var(--kp)))'; e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.5*var(--kp)))'; e.currentTarget.style.color='rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))'; }}
+            onMouseLeave={e => { e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.08*var(--kp)))'; e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.22*var(--kp)))'; e.currentTarget.style.color='rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))'; }}
           >↺ Reset</button>
         </div>
       </div>
       <div
         ref={padRef}
-        style={{ width:'100%', height:72, background:'rgba(8,6,22,0.7)', border:'1px solid rgba(124,77,255,0.25)', borderRadius:3, position:'relative', cursor:'crosshair', userSelect:'none', flexShrink:0 }}
+        style={{ width:'100%', height:72, background:'rgba(var(--panel-rgb),0.7)', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', borderRadius:3, position:'relative', cursor:'crosshair', userSelect:'none', flexShrink:0 }}
         onPointerDown={(e) => { dragging.current = true; e.currentTarget.setPointerCapture(e.pointerId); applyPos(e); }}
         onPointerMove={(e) => { if (dragging.current) applyPos(e); }}
         onPointerUp={() => { dragging.current = false; }}
       >
         {/* Grid lines */}
-        <div style={{ position:'absolute', inset:0, backgroundImage:'linear-gradient(rgba(124,77,255,0.08) 1px,transparent 1px),linear-gradient(90deg,rgba(124,77,255,0.08) 1px,transparent 1px)', backgroundSize:'25% 33.33%', pointerEvents:'none' }}/>
+        <div style={{ position:'absolute', inset:0, backgroundImage:'linear-gradient(rgba(var(--purple-rgb),calc(0.08*var(--kp))) 1px,transparent 1px),linear-gradient(90deg,rgba(var(--purple-rgb),calc(0.08*var(--kp))) 1px,transparent 1px)', backgroundSize:'25% 33.33%', pointerEvents:'none' }}/>
         {/* Center crosshair */}
-        <div style={{ position:'absolute', left:'50%', top:0, bottom:0, width:1, background:'rgba(124,77,255,0.15)', pointerEvents:'none' }}/>
-        <div style={{ position:'absolute', top:'50%', left:0, right:0, height:1, background:'rgba(124,77,255,0.15)', pointerEvents:'none' }}/>
+        <div style={{ position:'absolute', left:'50%', top:0, bottom:0, width:1, background:'rgba(var(--purple-rgb),calc(0.15*var(--kp)))', pointerEvents:'none' }}/>
+        <div style={{ position:'absolute', top:'50%', left:0, right:0, height:1, background:'rgba(var(--purple-rgb),calc(0.15*var(--kp)))', pointerEvents:'none' }}/>
         {/* Focal dot */}
-        <div style={{ position:'absolute', left:`${p.x}%`, top:`${p.y}%`, transform:'translate(-50%,-50%)', width:10, height:10, borderRadius:'50%', background:'rgba(200,180,255,0.95)', boxShadow:'0 0 8px rgba(124,77,255,0.9)', border:'1.5px solid rgba(255,255,255,0.6)', pointerEvents:'none' }}/>
+        <div style={{ position:'absolute', left:`${p.x}%`, top:`${p.y}%`, transform:'translate(-50%,-50%)', width:10, height:10, borderRadius:'50%', background:'rgba(200,180,255,calc(0.95*var(--ka)))', boxShadow:'0 0 8px rgba(var(--purple-rgb),calc(0.9*var(--kp)))', border:'1.5px solid rgba(255,255,255,0.6)', pointerEvents:'none' }}/>
       </div>
     </div>
   );
@@ -499,9 +499,9 @@ function ObjChip({ on, label, onClick }) {
       style={{
         flex:1, padding:'5px 8px', borderRadius:4, cursor:'pointer',
         fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.1em', textTransform:'uppercase',
-        background: on ? 'rgba(40,120,80,0.16)' : 'rgba(20,12,46,0.5)',
-        border: `1px solid ${on ? 'rgba(80,200,140,0.5)' : 'rgba(124,77,255,0.3)'}`,
-        color: on ? 'rgba(120,220,160,0.95)' : 'rgba(160,140,255,0.6)',
+        background: on ? 'rgba(40,120,80,0.16)' : 'rgba(var(--panel-rgb),0.5)',
+        border: `1px solid ${on ? 'rgba(80,200,140,0.5)' : 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))'}`,
+        color: on ? 'color-mix(in srgb, rgba(120,220,160,0.95), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))',
       }}
     >{on ? '✓' : '○'} {label}</button>
   );
@@ -510,7 +510,7 @@ function ObjChip({ on, label, onClick }) {
 function ObjField({ label, value, onCh, placeholder, list, textarea }) {
   return (
     <div style={{ marginBottom:8 }}>
-      <label style={{ display:'block', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.16em', textTransform:'uppercase', color:'rgba(160,140,255,0.55)', marginBottom:3 }}>{label}</label>
+      <label style={{ display:'block', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.16em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', marginBottom:3 }}>{label}</label>
       {textarea
         ? <textarea className="mk-textarea" style={{ minHeight:52 }} value={value} placeholder={placeholder} onChange={e => onCh(e.target.value)}/>
         : <input className="mk-input" type="text" value={value} placeholder={placeholder} list={list} onChange={e => onCh(e.target.value)}/>}
@@ -528,7 +528,7 @@ function KolonieCard({ kol, onUpdate, onDelete }) {
     setRaceInput('');
   };
   return (
-    <div style={{ marginBottom:8, padding:'10px 12px', background:'rgba(10,8,28,0.5)', border:'1px solid rgba(124,77,255,0.22)', borderRadius:3 }}>
+    <div style={{ marginBottom:8, padding:'10px 12px', background:'rgba(var(--panel-rgb),0.5)', border:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))', borderRadius:3 }}>
       <div style={{ display:'flex', gap:6, marginBottom:7 }}>
         <input
           className="mk-input" style={{ flex:1, fontSize:12.5 }} type="text"
@@ -537,14 +537,14 @@ function KolonieCard({ kol, onUpdate, onDelete }) {
         />
         <button
           onClick={onDelete} title="Kolonie entfernen"
-          style={{ width:30, flexShrink:0, fontFamily:'var(--font-mono)', fontSize:10, color:'rgba(220,140,160,0.7)', background:'transparent', border:'1px solid rgba(220,80,120,0.35)', borderRadius:2, cursor:'pointer' }}
+          style={{ width:30, flexShrink:0, fontFamily:'var(--font-mono)', fontSize:10, color:'color-mix(in srgb, rgba(220,140,160,0.7), rgb(var(--ink-rgb)) var(--cm))', background:'transparent', border:'1px solid rgba(220,80,120,0.35)', borderRadius:2, cursor:'pointer' }}
         >×</button>
       </div>
       <div style={{ display:'flex', flexWrap:'wrap', gap:4, marginBottom: rassen.length ? 6 : 0 }}>
         {rassen.map(r => (
-          <span key={r} style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'2px 8px', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.25)', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.1em', color:'rgba(180,165,230,0.8)' }}>
+          <span key={r} style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'2px 8px', background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.1em', color:'color-mix(in srgb, rgba(180,165,230,0.8), rgb(var(--ink-rgb)) var(--cm))' }}>
             {r}
-            <button onClick={() => onUpdate({ ...kol, rassen: rassen.filter(x => x !== r) })} style={{ background:'none', border:'none', cursor:'pointer', color:'rgba(200,140,140,0.7)', fontSize:10, lineHeight:1, padding:0 }}>×</button>
+            <button onClick={() => onUpdate({ ...kol, rassen: rassen.filter(x => x !== r) })} style={{ background:'none', border:'none', cursor:'pointer', color:'color-mix(in srgb, rgba(200,140,140,0.7), rgb(var(--ink-rgb)) var(--cm))', fontSize:10, lineHeight:1, padding:0 }}>×</button>
           </span>
         ))}
       </div>
@@ -555,7 +555,7 @@ function KolonieCard({ kol, onUpdate, onDelete }) {
           onChange={e => setRaceInput(e.target.value)}
           onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addRace(); } }}
         />
-        <button onClick={addRace} style={{ padding:'0 11px', fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(160,140,255,0.8)', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.3)', borderRadius:3, cursor:'pointer' }}>+</button>
+        <button onClick={addRace} style={{ padding:'0 11px', fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))', background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))', borderRadius:3, cursor:'pointer' }}>+</button>
       </div>
     </div>
   );
@@ -574,17 +574,17 @@ function ObjectiveCard({ o, onUpdate, onDelete, startOpen }) {
   const Field = ObjField;
 
   return (
-    <div style={{ marginBottom:10, background:'rgba(8,6,22,0.55)', border:'1px solid rgba(124,77,255,0.18)', borderRadius:5, overflow:'hidden' }}>
+    <div style={{ marginBottom:10, background:'rgba(var(--panel-rgb),0.55)', border:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))', borderRadius:5, overflow:'hidden' }}>
       <div
         onClick={() => setOpen(v => !v)}
-        style={{ display:'flex', alignItems:'center', gap:8, padding:'9px 10px', cursor:'pointer', borderBottom: open ? '1px solid rgba(124,77,255,0.14)' : 'none' }}
+        style={{ display:'flex', alignItems:'center', gap:8, padding:'9px 10px', cursor:'pointer', borderBottom: open ? '1px solid rgba(var(--purple-rgb),calc(0.14*var(--kp)))' : 'none' }}
       >
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'rgba(160,140,255,0.55)' }}>{open ? '▼' : '▶'}</span>
-        <span style={{ flex:1, fontFamily:'var(--font-body)', fontSize:12.5, fontWeight: o.titel ? 400 : 300, color:'rgba(230,222,255,0.9)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))' }}>{open ? '▼' : '▶'}</span>
+        <span style={{ flex:1, fontFamily:'var(--font-body)', fontSize:12.5, fontWeight: o.titel ? 400 : 300, color:'color-mix(in srgb, rgba(var(--text-hi-rgb),0.9), rgb(var(--ink-rgb)) var(--cm))', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
           {o.titel || 'Unbenanntes Ziel'}
         </span>
         {!o.freigeschaltet && (
-          <span title="Für Spieler noch nicht sichtbar" style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', color:'rgba(220,140,160,0.75)' }}>⛒</span>
+          <span title="Für Spieler noch nicht sichtbar" style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', color:'color-mix(in srgb, rgba(220,140,160,0.75), rgb(var(--ink-rgb)) var(--cm))' }}>⛒</span>
         )}
         <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.1em', color: status.c, textTransform:'uppercase' }}>{status.m} {status.l}</span>
       </div>
@@ -652,8 +652,8 @@ function EditorDrawer({
   const removeErk = (i) => upd('erkundung', erk.filter((_, idx) => idx !== i));
 
   const SectionHead = ({ label }) => (
-    <div style={{ display:'flex', alignItems:'center', gap:8, margin:'18px 0 10px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(124,77,255,0.5)' }}>
-      <span>{label}</span><div style={{ flex:1, height:1, background:'rgba(124,77,255,0.18)' }}/>
+    <div style={{ display:'flex', alignItems:'center', gap:8, margin:'18px 0 10px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))' }}>
+      <span>{label}</span><div style={{ flex:1, height:1, background:'rgba(var(--purple-rgb),calc(0.18*var(--kp)))' }}/>
     </div>
   );
 
@@ -664,8 +664,8 @@ function EditorDrawer({
       style={{
         flex:1, padding:'11px 0', background:'transparent', border:'none', cursor:'pointer',
         fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.24em', textTransform:'uppercase',
-        color: tab === id ? (accent || '#f3eefe') : 'rgba(160,140,255,0.55)',
-        borderBottom: `2px solid ${tab === id ? (accent || 'rgba(160,140,255,0.85)') : 'transparent'}`,
+        color: tab === id ? (accent || 'var(--white)') : 'rgba(var(--accent-rgb),calc(0.55*var(--ka)))',
+        borderBottom: `2px solid ${tab === id ? (accent || 'rgba(var(--accent-rgb),calc(0.85*var(--ka)))') : 'transparent'}`,
         transition:'all 0.15s',
       }}
     >{label}</button>
@@ -693,11 +693,11 @@ function EditorDrawer({
       <aside
         className="mk-drawer"
         onMouseDown={(e) => e.stopPropagation()}
-        style={{ width:560, maxWidth:'94vw', background:'linear-gradient(180deg, rgba(14,9,34,0.98) 0%, rgba(8,6,22,0.98) 100%)', borderLeft:'1px solid rgba(217,176,107,0.35)', boxShadow:'-24px 0 60px rgba(0,0,0,0.65)' }}
+        style={{ width:560, maxWidth:'94vw', background:'linear-gradient(180deg, rgba(var(--panel-rgb),0.98) 0%, rgba(var(--panel-rgb),0.98) 100%)', borderLeft:'1px solid rgba(217,176,107,0.35)', boxShadow:'-24px 0 60px rgba(var(--shadow-rgb),calc(0.65 * var(--shadow-k)))' }}
       >
-        <header style={{ padding:'18px 22px 16px', borderBottom:'1px solid rgba(124,77,255,0.18)', display:'flex', alignItems:'flex-start', justifyContent:'space-between', flexShrink:0 }}>
+        <header style={{ padding:'18px 22px 16px', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))', display:'flex', alignItems:'flex-start', justifyContent:'space-between', flexShrink:0 }}>
           <div>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.32em', color:'rgba(217,176,107,0.85)', textTransform:'uppercase' }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.32em', color:'color-mix(in srgb, rgba(217,176,107,0.85), rgb(var(--ink-rgb)) var(--cm))', textTransform:'uppercase' }}>
               {isArea
                 ? `Fläche · ${hex.typ === 'eingang' ? 'Eingang' : 'POI'} · Bearbeiten`
                 : `Hexagon · ${hex.q} · ${-hex.r} · Bearbeiten`}
@@ -710,17 +710,17 @@ function EditorDrawer({
                 onChange={e => upd('name', e.target.value)}
                 onBlur={() => setNameEdit(false)}
                 onKeyDown={e => { if (e.key === 'Enter' || e.key === 'Escape') { e.stopPropagation(); setNameEdit(false); } }}
-                style={{ display:'block', width:'100%', fontFamily:'var(--font-display)', fontWeight:400, fontSize:20, letterSpacing:'0.14em', color:'#f3eefe', textTransform:'uppercase', marginTop:6, background:'transparent', border:'none', borderBottom:'1px dashed rgba(217,176,107,0.5)', outline:'none', padding:0 }}
+                style={{ display:'block', width:'100%', fontFamily:'var(--font-display)', fontWeight:400, fontSize:20, letterSpacing:'0.14em', color:'var(--white)', textTransform:'uppercase', marginTop:6, background:'transparent', border:'none', borderBottom:'1px dashed rgba(217,176,107,0.5)', outline:'none', padding:0 }}
               />
             ) : (
               <div
                 onClick={() => setNameEdit(true)}
                 title="Klicken zum Umbenennen"
-                style={{ fontFamily:'var(--font-display)', fontWeight:400, fontSize:20, letterSpacing:'0.14em', color:'#f3eefe', textTransform:'uppercase', marginTop:6, cursor:'text', borderBottom:'1px dashed transparent' }}
+                style={{ fontFamily:'var(--font-display)', fontWeight:400, fontSize:20, letterSpacing:'0.14em', color:'var(--white)', textTransform:'uppercase', marginTop:6, cursor:'text', borderBottom:'1px dashed transparent' }}
                 onMouseEnter={e => e.currentTarget.style.borderBottomColor = 'rgba(217,176,107,0.4)'}
                 onMouseLeave={e => e.currentTarget.style.borderBottomColor = 'transparent'}
               >
-                {hex.name || 'Unbenannt'} <span style={{ fontSize:11, color:'rgba(217,176,107,0.5)', verticalAlign:'middle' }}>✎</span>
+                {hex.name || 'Unbenannt'} <span style={{ fontSize:11, color:'color-mix(in srgb, rgba(217,176,107,0.5), rgb(var(--ink-rgb)) var(--cm))', verticalAlign:'middle' }}>✎</span>
               </div>
             )}
           </div>
@@ -731,9 +731,9 @@ function EditorDrawer({
             style={{
               height:32, padding:'0 12px',
               background: editMode ? 'rgba(217,176,107,0.16)' : 'transparent',
-              border: `1px solid ${editMode ? 'rgba(217,176,107,0.55)' : 'rgba(160,140,255,0.25)'}`,
+              border: `1px solid ${editMode ? 'rgba(217,176,107,0.55)' : 'rgba(var(--accent-rgb),calc(0.25*var(--ka)))'}`,
               borderRadius:2,
-              color: editMode ? 'rgba(240,220,170,0.95)' : 'rgba(200,190,240,0.75)',
+              color: editMode ? 'color-mix(in srgb, rgba(240,220,170,0.95), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--text-rgb),calc(0.75*var(--kt)))',
               fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.18em', textTransform:'uppercase',
               cursor:'pointer', transition:'all 0.18s',
             }}
@@ -742,15 +742,15 @@ function EditorDrawer({
           >{editMode ? '✓ Ansicht' : '✎ Bearbeiten'}</button>
           <button
             onClick={onClose} title="Schließen (Esc)"
-            style={{ width:32, height:32, flexShrink:0, background:'transparent', border:'1px solid rgba(220,80,120,0.18)', borderRadius:2, color:'rgba(220,140,160,0.4)', fontFamily:'var(--font-mono)', fontSize:14, cursor:'pointer', transition:'all 0.18s' }}
-            onMouseEnter={e => { e.currentTarget.style.color='#ffd0dc'; e.currentTarget.style.borderColor='rgba(220,80,120,0.75)'; e.currentTarget.style.background='rgba(180,40,80,0.16)'; }}
-            onMouseLeave={e => { e.currentTarget.style.color='rgba(220,140,160,0.4)'; e.currentTarget.style.borderColor='rgba(220,80,120,0.18)'; e.currentTarget.style.background='transparent'; }}
+            style={{ width:32, height:32, flexShrink:0, background:'transparent', border:'1px solid rgba(220,80,120,0.18)', borderRadius:2, color:'color-mix(in srgb, rgba(220,140,160,0.4), rgb(var(--ink-rgb)) var(--cm))', fontFamily:'var(--font-mono)', fontSize:14, cursor:'pointer', transition:'all 0.18s' }}
+            onMouseEnter={e => { e.currentTarget.style.color='color-mix(in srgb, #ffd0dc, rgb(var(--ink-rgb)) var(--cm))'; e.currentTarget.style.borderColor='rgba(220,80,120,0.75)'; e.currentTarget.style.background='rgba(180,40,80,0.16)'; }}
+            onMouseLeave={e => { e.currentTarget.style.color='color-mix(in srgb, rgba(220,140,160,0.4), rgb(var(--ink-rgb)) var(--cm))'; e.currentTarget.style.borderColor='rgba(220,80,120,0.18)'; e.currentTarget.style.background='transparent'; }}
           >×</button>
           </div>
         </header>
 
         {/* Tabs */}
-        <div style={{ display:'flex', borderBottom:'1px solid rgba(124,77,255,0.18)', flexShrink:0 }}>
+        <div style={{ display:'flex', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))', flexShrink:0 }}>
           <TabBtn id="details" label="Details"/>
           <TabBtn id="ziele" label={`Ziele · ${objList.length}`} accent="rgba(217,176,107,0.9)"/>
           <TabBtn id="ressourcen" label="Ressourcen"/>
@@ -768,30 +768,30 @@ function EditorDrawer({
               borderRadius:3, cursor:'pointer', transition:'all 0.18s', textAlign:'left',
             }}
           >
-            <span style={{ fontSize:15, color: hex.visible ? 'rgba(120,220,160,0.9)' : 'rgba(220,140,160,0.9)' }}>{hex.visible ? '👁' : '✕'}</span>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.2em', textTransform:'uppercase', color: hex.visible ? 'rgba(120,220,160,0.9)' : 'rgba(220,140,160,0.9)' }}>
+            <span style={{ fontSize:15, color: hex.visible ? 'color-mix(in srgb, rgba(120,220,160,0.9), rgb(var(--ink-rgb)) var(--cm))' : 'color-mix(in srgb, rgba(220,140,160,0.9), rgb(var(--ink-rgb)) var(--cm))' }}>{hex.visible ? '👁' : '✕'}</span>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.2em', textTransform:'uppercase', color: hex.visible ? 'color-mix(in srgb, rgba(120,220,160,0.9), rgb(var(--ink-rgb)) var(--cm))' : 'color-mix(in srgb, rgba(220,140,160,0.9), rgb(var(--ink-rgb)) var(--cm))' }}>
               {hex.visible ? 'Für Spieler sichtbar' : 'Für Spieler verborgen'}
             </span>
             <span style={{ flex:1 }}/>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.14em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>Klick zum Umschalten</span>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.14em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>Klick zum Umschalten</span>
           </button>
 
           {/* ── Ansichtsmodus ── */}
           {!editMode && (<React.Fragment>
             {hex.bild_url && (
-              <img src={hex.bild_url} loading="lazy" style={{ width:'100%', boxSizing:'border-box', height:150, objectFit:'cover', objectPosition: !isArea && hex.bild_pos ? `${hex.bild_pos.x}% ${hex.bild_pos.y}%` : '50% 50%', display:'block', borderRadius:3, border:'1px solid rgba(124,77,255,0.25)' }} alt=""/>
+              <img src={hex.bild_url} loading="lazy" style={{ width:'100%', boxSizing:'border-box', height:150, objectFit:'cover', objectPosition: !isArea && hex.bild_pos ? `${hex.bild_pos.x}% ${hex.bild_pos.y}%` : '50% 50%', display:'block', borderRadius:3, border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))' }} alt=""/>
             )}
             {(hex.tags || []).length > 0 && (
               <div style={{ display:'flex', flexWrap:'wrap', gap:5 }}>
                 {hex.tags.map(t => (
-                  <span key={t} style={{ padding:'3px 9px', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.25)', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.1em', color:'rgba(180,165,230,0.8)' }}>{t}</span>
+                  <span key={t} style={{ padding:'3px 9px', background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.1em', color:'color-mix(in srgb, rgba(180,165,230,0.8), rgb(var(--ink-rgb)) var(--cm))' }}>{t}</span>
                 ))}
               </div>
             )}
             {hex.beschreibung && (
               <div>
-                <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.3em', textTransform:'uppercase', color:'rgba(124,77,255,0.75)', marginBottom:6 }}>Beschreibung</div>
-                <div style={{ fontSize:13, fontWeight:300, fontFamily:'var(--font-body)', color:'rgba(200,190,240,0.7)', lineHeight:1.65 }}>{hex.beschreibung}</div>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.3em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.75*var(--kp) + var(--tb)))', marginBottom:6 }}>Beschreibung</div>
+                <div style={{ fontSize:13, fontWeight:300, fontFamily:'var(--font-body)', color:'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', lineHeight:1.65 }}>{hex.beschreibung}</div>
               </div>
             )}
             {(() => {
@@ -816,13 +816,13 @@ function EditorDrawer({
               });
               return facts.map(([k, v]) => (
                 <div key={k + v} style={{ display:'flex', gap:8, alignItems:'baseline' }}>
-                  <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(124,77,255,0.5)', width:96, flexShrink:0 }}>{k}</span>
-                  <span style={{ fontSize:13, fontWeight:300, fontFamily:'var(--font-body)', color:'rgba(200,190,240,0.75)' }}>{v}</span>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', width:96, flexShrink:0 }}>{k}</span>
+                  <span style={{ fontSize:13, fontWeight:300, fontFamily:'var(--font-body)', color:'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))' }}>{v}</span>
                 </div>
               ));
             })()}
             {!hex.bild_url && !(hex.tags || []).length && !hex.beschreibung && (
-              <div style={{ padding:'14px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(124,77,255,0.35)', textTransform:'uppercase' }}>— noch keine Details · ✎ Bearbeiten oben rechts —</div>
+              <div style={{ padding:'14px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>— noch keine Details · ✎ Bearbeiten oben rechts —</div>
             )}
           </React.Fragment>)}
 
@@ -845,8 +845,8 @@ function EditorDrawer({
               </div>
               {/* Live-Vorschau des Hex-Zuschnitts auf der Karte */}
               <div style={{ flexShrink:0, display:'flex', flexDirection:'column', alignItems:'center', gap:4 }}>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.16em', textTransform:'uppercase', color:'rgba(160,140,255,0.55)' }}>Hex-Vorschau</span>
-                <div style={{ width:88, height:101, clipPath:'polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%)', overflow:'hidden', background:'rgba(8,6,22,0.7)' }}>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.16em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))' }}>Hex-Vorschau</span>
+                <div style={{ width:88, height:101, clipPath:'polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%)', overflow:'hidden', background:'rgba(var(--panel-rgb),0.7)' }}>
                   <img
                     src={hex.bild_url}
                     style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition: hex.bild_pos ? `${hex.bild_pos.x}% ${hex.bild_pos.y}%` : '50% 50%', display:'block' }}
@@ -860,12 +860,12 @@ function EditorDrawer({
           {/* Subkarte anlegen — Typ folgt der festen Hierarchie (Navigation: Footer-Button) */}
           {!hex.has_submap && childEbene && (() => {
             const isOrt = childEbene === 'Ort';
-            const base = isOrt ? 'rgba(217,176,107,0.06)' : 'rgba(124,77,255,0.06)';
-            const hover = isOrt ? 'rgba(217,176,107,0.14)' : 'rgba(124,77,255,0.14)';
+            const base = isOrt ? 'rgba(217,176,107,0.06)' : 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))';
+            const hover = isOrt ? 'rgba(217,176,107,0.14)' : 'rgba(var(--purple-rgb),calc(0.14*var(--kp)))';
             return (
               <button
                 title={isOrt ? 'Ortskarte anlegen (Bild-Karte mit Etagen & Flächen)' : `${childEbene}skarte anlegen (Hex-Karte)`}
-                style={{ width:'100%', marginBottom:4, padding:'9px 8px', fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.16em', textTransform:'uppercase', color: isOrt ? 'rgba(240,220,170,0.85)' : 'rgba(160,140,255,0.75)', background: base, border:`1px dashed ${isOrt ? 'rgba(217,176,107,0.4)' : 'rgba(124,77,255,0.35)'}`, borderRadius:3, cursor:'pointer', transition:'all 0.15s' }}
+                style={{ width:'100%', marginBottom:4, padding:'9px 8px', fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.16em', textTransform:'uppercase', color: isOrt ? 'color-mix(in srgb, rgba(240,220,170,0.85), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--accent-rgb),calc(0.75*var(--ka)))', background: base, border:`1px dashed ${isOrt ? 'rgba(217,176,107,0.4)' : 'rgba(var(--purple-rgb),calc(0.35*var(--kp)))'}`, borderRadius:3, cursor:'pointer', transition:'all 0.15s' }}
                 onClick={() => onCreateSubmap(hex)}
                 onMouseEnter={e => e.currentTarget.style.background = hover}
                 onMouseLeave={e => e.currentTarget.style.background = base}
@@ -894,11 +894,11 @@ function EditorDrawer({
               <div style={{ display:'flex', gap:6, marginBottom:10 }}>
                 <button
                   onClick={() => onChange({ ...hex, entdeckt: !hex.entdeckt, komplettiert: hex.entdeckt ? false : hex.komplettiert })}
-                  style={{ flex:1, padding:'6px 8px', borderRadius:4, cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.1em', textTransform:'uppercase', background: hex.entdeckt ? 'rgba(40,120,80,0.16)' : 'rgba(20,12,46,0.5)', border:`1px solid ${hex.entdeckt ? 'rgba(80,200,140,0.5)' : 'rgba(124,77,255,0.3)'}`, color: hex.entdeckt ? 'rgba(120,220,160,0.95)' : 'rgba(160,140,255,0.6)' }}
+                  style={{ flex:1, padding:'6px 8px', borderRadius:4, cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.1em', textTransform:'uppercase', background: hex.entdeckt ? 'rgba(40,120,80,0.16)' : 'rgba(var(--panel-rgb),0.5)', border:`1px solid ${hex.entdeckt ? 'rgba(80,200,140,0.5)' : 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))'}`, color: hex.entdeckt ? 'color-mix(in srgb, rgba(120,220,160,0.95), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))' }}
                 >{hex.entdeckt ? '✓' : '○'} Entdeckt</button>
                 <button
                   onClick={() => onChange({ ...hex, komplettiert: !hex.komplettiert, entdeckt: !hex.komplettiert ? true : hex.entdeckt })}
-                  style={{ flex:1, padding:'6px 8px', borderRadius:4, cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.1em', textTransform:'uppercase', background: hex.komplettiert ? 'rgba(40,120,80,0.16)' : 'rgba(20,12,46,0.5)', border:`1px solid ${hex.komplettiert ? 'rgba(80,200,140,0.5)' : 'rgba(124,77,255,0.3)'}`, color: hex.komplettiert ? 'rgba(120,220,160,0.95)' : 'rgba(160,140,255,0.6)' }}
+                  style={{ flex:1, padding:'6px 8px', borderRadius:4, cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.1em', textTransform:'uppercase', background: hex.komplettiert ? 'rgba(40,120,80,0.16)' : 'rgba(var(--panel-rgb),0.5)', border:`1px solid ${hex.komplettiert ? 'rgba(80,200,140,0.5)' : 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))'}`, color: hex.komplettiert ? 'color-mix(in srgb, rgba(120,220,160,0.95), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))' }}
                 >{hex.komplettiert ? '✓✓' : '○'} Komplettiert</button>
               </div>
             </React.Fragment>
@@ -910,16 +910,16 @@ function EditorDrawer({
             {tags.length > 0 && (
               <div style={{ display:'flex', flexWrap:'wrap', gap:5, marginBottom:6 }}>
                 {tags.map(t => (
-                  <span key={t} style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'3px 9px', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.25)', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.1em', color:'rgba(180,165,230,0.8)' }}>
+                  <span key={t} style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'3px 9px', background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.1em', color:'color-mix(in srgb, rgba(180,165,230,0.8), rgb(var(--ink-rgb)) var(--cm))' }}>
                     {t}
-                    <button onClick={() => upd('tags', tags.filter(x => x !== t))} style={{ background:'none', border:'none', cursor:'pointer', color:'rgba(200,140,140,0.7)', fontSize:11, lineHeight:1, padding:0 }}>×</button>
+                    <button onClick={() => upd('tags', tags.filter(x => x !== t))} style={{ background:'none', border:'none', cursor:'pointer', color:'color-mix(in srgb, rgba(200,140,140,0.7), rgb(var(--ink-rgb)) var(--cm))', fontSize:11, lineHeight:1, padding:0 }}>×</button>
                   </span>
                 ))}
               </div>
             )}
             <div style={{ display:'flex', gap:6 }}>
               <input className="mk-input" style={{ flex:1 }} type="text" placeholder="z. B. Tropisch, Neblig …" value={tagInput} onChange={e => setTagInput(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addTag(); }}}/>
-              <button onClick={addTag} title="Tag hinzufügen" style={{ padding:'0 12px', fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(160,140,255,0.8)', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.3)', borderRadius:4, cursor:'pointer' }}>+</button>
+              <button onClick={addTag} title="Tag hinzufügen" style={{ padding:'0 12px', fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))', background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))', borderRadius:4, cursor:'pointer' }}>+</button>
             </div>
           </div>
 
@@ -947,7 +947,7 @@ function EditorDrawer({
                 style={{ width:'100%', justifyContent:'center', gap:8, fontSize:11, letterSpacing:'0.12em', marginBottom:4 }}
                 onClick={() => upd('datensonde', !hex.datensonde)}
               >
-                <span style={{ color: hex.datensonde ? 'rgba(80,200,140,0.9)' : 'rgba(200,80,80,0.7)' }}>{hex.datensonde ? '✓' : '✗'}</span>
+                <span style={{ color: hex.datensonde ? 'color-mix(in srgb, rgba(80,200,140,0.9), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(200,80,80,0.7)' }}>{hex.datensonde ? '✓' : '✗'}</span>
                 Datensonde {hex.datensonde ? 'installiert' : 'nicht installiert'}
               </button>
             </React.Fragment>
@@ -962,20 +962,20 @@ function EditorDrawer({
                 <input id="mk-bev" className="mk-input" type="text" placeholder="z. B. ~3.200 · hauptsächlich Nomaden" value={hex.bevoelkerung || ''} onChange={e => upd('bevoelkerung', e.target.value)}/>
               </div>
               {/* Kolonien: Name + Rassen-Tags */}
-              <div style={{ display:'flex', alignItems:'center', gap:8, margin:'14px 0 8px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(124,77,255,0.5)' }}>
+              <div style={{ display:'flex', alignItems:'center', gap:8, margin:'14px 0 8px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))' }}>
                 <span>Kolonien</span>
-                <div style={{ flex:1, height:1, background:'rgba(124,77,255,0.18)' }}/>
+                <div style={{ flex:1, height:1, background:'rgba(var(--purple-rgb),calc(0.18*var(--kp)))' }}/>
                 <button
                   onClick={() => updKolonien([...kolonien, { name: '', rassen: [] }])}
                   title="Kolonie hinzufügen"
-                  style={{ width:24, height:24, border:'1px dashed rgba(124,77,255,0.4)', borderRadius:2, background:'transparent', color:'rgba(160,140,255,0.8)', fontSize:14, cursor:'pointer', lineHeight:1 }}
+                  style={{ width:24, height:24, border:'1px dashed rgba(var(--purple-rgb),calc(0.4*var(--kp)))', borderRadius:2, background:'transparent', color:'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))', fontSize:14, cursor:'pointer', lineHeight:1 }}
                 >+</button>
               </div>
               <datalist id="mk-rassen-list">
                 {(window.RASSEN_DATA || []).filter(r => r && r.name).map(r => <option key={r.name} value={r.name}/>)}
               </datalist>
               {kolonien.length === 0 && (
-                <div style={{ padding:'8px 0 4px', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.2em', color:'rgba(124,77,255,0.35)', textTransform:'uppercase' }}>— keine Kolonien · mit + anlegen —</div>
+                <div style={{ padding:'8px 0 4px', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.2em', color:'rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>— keine Kolonien · mit + anlegen —</div>
               )}
               {kolonien.map((k, i) => (
                 <KolonieCard
@@ -987,36 +987,36 @@ function EditorDrawer({
               ))}
 
               {/* Erkundungsfortschritt: gefunden / gesamt */}
-              <div style={{ display:'flex', alignItems:'center', gap:8, margin:'14px 0 8px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(124,77,255,0.5)' }}>
+              <div style={{ display:'flex', alignItems:'center', gap:8, margin:'14px 0 8px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))' }}>
                 <span>Erkundungsfortschritt</span>
-                <div style={{ flex:1, height:1, background:'rgba(124,77,255,0.18)' }}/>
+                <div style={{ flex:1, height:1, background:'rgba(var(--purple-rgb),calc(0.18*var(--kp)))' }}/>
               </div>
               {erk.map((e, i) => {
                 const total = +e.total || 0;
                 const gefunden = Math.min(+e.gefunden || 0, total || Infinity);
                 const pct = total > 0 ? Math.round(gefunden / total * 100) : 0;
-                const barColor = e.farbe || 'rgba(160,140,255,0.85)';
+                const barColor = e.farbe || 'rgba(var(--accent-rgb),calc(0.85*var(--ka)))';
                 return (
-                  <div key={i} style={{ marginBottom:8, padding:'9px 10px', background:'rgba(10,8,28,0.5)', border:'1px solid rgba(124,77,255,0.22)', borderRadius:3 }}>
+                  <div key={i} style={{ marginBottom:8, padding:'9px 10px', background:'rgba(var(--panel-rgb),0.5)', border:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))', borderRadius:3 }}>
                     <div style={{ display:'flex', gap:6, alignItems:'center' }}>
                       <input className="mk-input" style={{ flex:1, fontSize:12, minWidth:0 }} value={e.name || ''} onChange={ev => updErk(i, 'name', ev.target.value)} placeholder="Kategorie …"/>
                       <input className="mk-input" style={{ width:58, fontSize:11.5, textAlign:'center', flexShrink:0 }} type="number" min="0" value={e.gefunden ?? 0} onChange={ev => updErk(i, 'gefunden', ev.target.value)} title="Gefunden"/>
-                      <span style={{ fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(160,140,255,0.5)', flexShrink:0 }}>/</span>
+                      <span style={{ fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', flexShrink:0 }}>/</span>
                       <input className="mk-input" style={{ width:58, fontSize:11.5, textAlign:'center', flexShrink:0 }} type="number" min="0" value={e.total ?? 0} onChange={ev => updErk(i, 'total', ev.target.value)} title="Gesamtanzahl"/>
-                      <button onClick={() => removeErk(i)} title="Entfernen" style={{ width:28, height:28, flexShrink:0, fontFamily:'var(--font-mono)', fontSize:10, color:'rgba(220,140,160,0.7)', background:'transparent', border:'1px solid rgba(220,80,120,0.35)', borderRadius:2, cursor:'pointer' }}>×</button>
+                      <button onClick={() => removeErk(i)} title="Entfernen" style={{ width:28, height:28, flexShrink:0, fontFamily:'var(--font-mono)', fontSize:10, color:'color-mix(in srgb, rgba(220,140,160,0.7), rgb(var(--ink-rgb)) var(--cm))', background:'transparent', border:'1px solid rgba(220,80,120,0.35)', borderRadius:2, cursor:'pointer' }}>×</button>
                     </div>
 
                     {/* Optional: Farbe (Colorpicker) + Symbol (SVG-Pfad) */}
                     <div style={{ display:'flex', gap:6, alignItems:'center', marginTop:6 }}>
                       <input
                         type="color"
-                        value={e.farbe || '#a08cff'}
+                        value={e.farbe || 'var(--lav2)'}
                         onChange={ev => updErk(i, 'farbe', ev.target.value)}
                         title="Balken-/Symbolfarbe wählen"
-                        style={{ width:30, height:26, padding:0, flexShrink:0, background:'rgba(20,12,46,0.5)', border:`1px solid ${e.farbe ? e.farbe : 'rgba(124,77,255,0.25)'}`, borderRadius:2, cursor:'pointer' }}
+                        style={{ width:30, height:26, padding:0, flexShrink:0, background:'rgba(var(--panel-rgb),0.5)', border:`1px solid ${e.farbe ? e.farbe : 'rgba(var(--purple-rgb),calc(0.25*var(--kp)))'}`, borderRadius:2, cursor:'pointer' }}
                       />
                       {e.farbe && (
-                        <button onClick={() => updErk(i, 'farbe', '')} title="Farbe zurücksetzen (Automatik)" style={{ width:22, height:26, flexShrink:0, fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(160,140,255,0.6)', background:'transparent', border:'1px solid rgba(124,77,255,0.25)', borderRadius:2, cursor:'pointer', padding:0 }}>↺</button>
+                        <button onClick={() => updErk(i, 'farbe', '')} title="Farbe zurücksetzen (Automatik)" style={{ width:22, height:26, flexShrink:0, fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))', background:'transparent', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', borderRadius:2, cursor:'pointer', padding:0 }}>↺</button>
                       )}
                       {(() => {
                         const parsed = window.karteParseIcon(e.icon);
@@ -1042,17 +1042,17 @@ function EditorDrawer({
                     </div>
 
                     <div style={{ display:'flex', alignItems:'center', gap:8, marginTop:6 }}>
-                      <div style={{ flex:1, position:'relative', height:4, background:'rgba(124,77,255,0.08)', border:'1px solid rgba(124,77,255,0.15)', borderRadius:2, overflow:'hidden' }}>
-                        <div style={{ position:'absolute', left:0, top:0, bottom:0, width:`${pct}%`, background: e.farbe ? e.farbe : 'linear-gradient(90deg, rgba(124,100,220,0.9), rgba(160,140,255,0.85))', borderRadius:2, transition:'width 0.4s' }}/>
+                      <div style={{ flex:1, position:'relative', height:4, background:'rgba(var(--purple-rgb),calc(0.08*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))', borderRadius:2, overflow:'hidden' }}>
+                        <div style={{ position:'absolute', left:0, top:0, bottom:0, width:`${pct}%`, background: e.farbe ? e.farbe : 'linear-gradient(90deg, rgba(124,100,220,0.9), rgba(var(--accent-rgb),calc(0.85*var(--ka))))', borderRadius:2, transition:'width 0.4s' }}/>
                       </div>
-                      <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.14em', color:'rgba(160,140,255,0.65)', flexShrink:0 }}>{pct} %</span>
+                      <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.14em', color:'rgba(var(--accent-rgb),calc(0.65*var(--ka) + var(--tb)))', flexShrink:0 }}>{pct} %</span>
                     </div>
                   </div>
                 );
               })}
               <div style={{ display:'flex', gap:6, marginBottom:4 }}>
                 <input className="mk-input" style={{ flex:1 }} type="text" placeholder="Neue Kategorie …" value={newErkName} onChange={e => setNewErkName(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addErk(); }}}/>
-                <button onClick={addErk} style={{ padding:'0 12px', fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(160,140,255,0.8)', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.3)', borderRadius:4, cursor:'pointer' }}>+</button>
+                <button onClick={addErk} style={{ padding:'0 12px', fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))', background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))', borderRadius:4, cursor:'pointer' }}>+</button>
               </div>
             </React.Fragment>
           )}
@@ -1079,20 +1079,20 @@ function EditorDrawer({
               {(window.MONSTER_DATA_MONSTERHANDBUCH || []).map(m => <option key={m.name} value={m.name}/>)}
             </datalist>
             {/* Sektions-Kopf mit + */}
-            <div style={{ display:'flex', alignItems:'center', gap:8, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(124,77,255,0.45)' }}>
+            <div style={{ display:'flex', alignItems:'center', gap:8, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))' }}>
               <span>Ziele</span>
-              <div style={{ flex:1, height:1, background:'rgba(124,77,255,0.15)' }}/>
+              <div style={{ flex:1, height:1, background:'rgba(var(--purple-rgb),calc(0.15*var(--kp)))' }}/>
               <button
                 onClick={() => { onObjAdd(); setEditMode(true); }}
                 title="Neues Ziel hinzufügen"
-                style={{ width:24, height:24, border:'1px dashed rgba(124,77,255,0.4)', borderRadius:2, background:'transparent', color:'rgba(160,140,255,0.8)', fontSize:14, cursor:'pointer', lineHeight:1, transition:'all 0.15s' }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(160,140,255,0.9)'; e.currentTarget.style.background='rgba(124,77,255,0.12)'; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(124,77,255,0.4)'; e.currentTarget.style.background='transparent'; }}
+                style={{ width:24, height:24, border:'1px dashed rgba(var(--purple-rgb),calc(0.4*var(--kp)))', borderRadius:2, background:'transparent', color:'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))', fontSize:14, cursor:'pointer', lineHeight:1, transition:'all 0.15s' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(var(--accent-rgb),calc(0.9*var(--ka)))'; e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.12*var(--kp)))'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.4*var(--kp)))'; e.currentTarget.style.background='transparent'; }}
               >+</button>
             </div>
 
             {objList.length === 0 && (
-              <div style={{ padding:'18px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(124,77,255,0.35)', textTransform:'uppercase' }}>
+              <div style={{ padding:'18px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>
                 — keine Ziele · mit + hinzufügen —
               </div>
             )}
@@ -1107,30 +1107,30 @@ function EditorDrawer({
               const Row = ({ label, color, value, mono }) => (
                 <div style={{ display:'flex', gap:8, alignItems:'baseline', marginTop:5 }}>
                   <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.18em', textTransform:'uppercase', color, width:74, flexShrink:0 }}>{label}</span>
-                  <span style={{ fontFamily: mono ? 'var(--font-mono)' : 'var(--font-body)', fontSize: mono ? 11 : 12, fontWeight:300, color: mono ? 'rgba(240,200,210,0.9)' : 'rgba(200,190,240,0.7)', lineHeight:1.45 }}>{value}</span>
+                  <span style={{ fontFamily: mono ? 'var(--font-mono)' : 'var(--font-body)', fontSize: mono ? 11 : 12, fontWeight:300, color: mono ? 'color-mix(in srgb, rgba(240,200,210,0.9), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--text-rgb),calc(0.7*var(--kt)))', lineHeight:1.45 }}>{value}</span>
                 </div>
               );
               return (
-                <div key={o.id} style={{ flexShrink:0, border:'1px solid rgba(124,77,255,0.22)', borderRadius:3, background:'rgba(10,8,28,0.5)', padding:'12px 14px' }}>
+                <div key={o.id} style={{ flexShrink:0, border:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))', borderRadius:3, background:'rgba(var(--panel-rgb),0.5)', padding:'12px 14px' }}>
                   <div style={{ display:'flex', alignItems:'center', gap:9 }}>
                     <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color: st.c, flexShrink:0 }}>{st.m}</span>
-                    <span style={{ fontFamily:'var(--font-body)', fontSize:14, fontWeight:500, color:'#f3eefe', minWidth:0, flex:1 }}>{o.titel || 'Unbenannt'}</span>
+                    <span style={{ fontFamily:'var(--font-body)', fontSize:14, fontWeight:500, color:'var(--white)', minWidth:0, flex:1 }}>{o.titel || 'Unbenannt'}</span>
                     {!o.freigeschaltet && (
-                      <span title="Für Spieler noch nicht sichtbar" style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', color:'rgba(220,140,160,0.75)', flexShrink:0 }}>⛒ verborgen</span>
+                      <span title="Für Spieler noch nicht sichtbar" style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', color:'color-mix(in srgb, rgba(220,140,160,0.75), rgb(var(--ink-rgb)) var(--cm))', flexShrink:0 }}>⛒ verborgen</span>
                     )}
                     <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.16em', color: st.c, textTransform:'uppercase', flexShrink:0 }}>{st.l}</span>
                   </div>
                   {(o.tags || []).length > 0 && (
                     <div style={{ display:'flex', flexWrap:'wrap', gap:4, marginTop:7 }}>
                       {o.tags.map(t => (
-                        <span key={t} style={{ padding:'2px 8px', background:'rgba(124,77,255,0.1)', border:'1px solid rgba(124,77,255,0.25)', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', color:'rgba(180,165,230,0.8)' }}>{t}</span>
+                        <span key={t} style={{ padding:'2px 8px', background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', color:'color-mix(in srgb, rgba(180,165,230,0.8), rgb(var(--ink-rgb)) var(--cm))' }}>{t}</span>
                       ))}
                     </div>
                   )}
-                  {o.beschreibung && <div style={{ fontSize:12, fontWeight:300, fontFamily:'var(--font-body)', color:'rgba(200,190,240,0.6)', lineHeight:1.5, marginTop:7 }}>{o.beschreibung}</div>}
-                  {o.bedingung && <Row label="Bedingung" color="rgba(217,176,107,0.75)" value={o.bedingung}/>}
-                  {o.belohnung && <Row label="Belohnung" color="rgba(120,220,160,0.75)" value={o.belohnung}/>}
-                  {(o.monster || []).length > 0 && <Row label="Monster" color="rgba(220,140,160,0.7)" value={o.monster.join(', ')} mono/>}
+                  {o.beschreibung && <div style={{ fontSize:12, fontWeight:300, fontFamily:'var(--font-body)', color:'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))', lineHeight:1.5, marginTop:7 }}>{o.beschreibung}</div>}
+                  {o.bedingung && <Row label="Bedingung" color="color-mix(in srgb, rgba(217,176,107,0.75), rgb(var(--ink-rgb)) var(--cm))" value={o.bedingung}/>}
+                  {o.belohnung && <Row label="Belohnung" color="color-mix(in srgb, rgba(120,220,160,0.75), rgb(var(--ink-rgb)) var(--cm))" value={o.belohnung}/>}
+                  {(o.monster || []).length > 0 && <Row label="Monster" color="color-mix(in srgb, rgba(220,140,160,0.7), rgb(var(--ink-rgb)) var(--cm))" value={o.monster.join(', ')} mono/>}
                 </div>
               );
             })}
@@ -1146,16 +1146,16 @@ function EditorDrawer({
               />
             ))}
 
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'rgba(160,140,255,0.4)', letterSpacing:'0.1em', textTransform:'uppercase' }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', letterSpacing:'0.1em', textTransform:'uppercase' }}>
               Monster sehen Spieler nie · Fortschritt berechnet sich automatisch aus den Tags
             </div>
           </React.Fragment>)}
 
           {/* ── Tab: Ressourcen ── */}
           {tab === 'ressourcen' && poolEditable && (<React.Fragment>
-            <div style={{ display:'flex', alignItems:'center', gap:8, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(124,77,255,0.45)' }}>
+            <div style={{ display:'flex', alignItems:'center', gap:8, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))' }}>
               <span>Ressourcen-Pools · Ort {hex.name || ''}</span>
-              <div style={{ flex:1, height:1, background:'rgba(124,77,255,0.15)' }}/>
+              <div style={{ flex:1, height:1, background:'rgba(var(--purple-rgb),calc(0.15*var(--kp)))' }}/>
             </div>
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10 }}>
               {(window.KARTE_POOL_TYPES || []).map(pt => {
@@ -1166,36 +1166,36 @@ function EditorDrawer({
                     onClick={() => onPoolOpen(pt.key)}
                     style={{
                       display:'flex', flexDirection:'column', gap:4, padding:'11px 13px',
-                      background:'rgba(20,12,46,0.5)', border:`1px solid oklch(0.68 0.13 ${pt.hue} / 0.5)`,
+                      background:'rgba(var(--panel-rgb),0.5)', border:`1px solid oklch(0.68 0.13 ${pt.hue} / 0.5)`,
                       borderRadius:3, cursor:'pointer', textAlign:'left', transition:'all 0.18s',
                     }}
-                    onMouseEnter={e => e.currentTarget.style.background = 'rgba(30,20,60,0.7)'}
-                    onMouseLeave={e => e.currentTarget.style.background = 'rgba(20,12,46,0.5)'}
+                    onMouseEnter={e => e.currentTarget.style.background = 'rgba(var(--panel-rgb),0.7)'}
+                    onMouseLeave={e => e.currentTarget.style.background = 'rgba(var(--panel-rgb),0.5)'}
                   >
                     <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.2em', textTransform:'uppercase', color:`oklch(0.78 0.13 ${pt.hue})` }}>{pt.label}</span>
-                    <span style={{ fontFamily:'var(--font-body)', fontSize:11.5, fontWeight:300, color:'rgba(200,190,240,0.75)' }}>
+                    <span style={{ fontFamily:'var(--font-body)', fontSize:11.5, fontWeight:300, color:'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))' }}>
                       {n ? `${n} Arten im Pool` : 'leer — erstellen →'}
                     </span>
                   </button>
                 );
               })}
             </div>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'rgba(160,140,255,0.4)', letterSpacing:'0.1em', textTransform:'uppercase' }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', letterSpacing:'0.1em', textTransform:'uppercase' }}>
               Fang-Status kommt automatisch aus dem Kollektikon
             </div>
           </React.Fragment>)}
 
           {/* Aggregierte Anzeige auf Welt / Region / Gebiet */}
           {tab === 'ressourcen' && !poolEditable && (<React.Fragment>
-            <div style={{ display:'flex', alignItems:'center', gap:8, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(124,77,255,0.45)' }}>
+            <div style={{ display:'flex', alignItems:'center', gap:8, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))' }}>
               <span>Ressourcen · Summe aller Orte darunter</span>
-              <div style={{ flex:1, height:1, background:'rgba(124,77,255,0.15)' }}/>
+              <div style={{ flex:1, height:1, background:'rgba(var(--purple-rgb),calc(0.15*var(--kp)))' }}/>
             </div>
             {!aggPools && (
-              <div style={{ padding:'12px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(124,77,255,0.45)', textTransform:'uppercase' }}>◈ sammle …</div>
+              <div style={{ padding:'12px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>◈ sammle …</div>
             )}
             {aggPools && aggPools.length === 0 && (
-              <div style={{ padding:'12px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(124,77,255,0.35)', textTransform:'uppercase' }}>— noch keine Pools in den Orten —</div>
+              <div style={{ padding:'12px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>— noch keine Pools in den Orten —</div>
             )}
             {aggPools && (window.KARTE_POOL_TYPES || []).map(pt => {
               const items = aggPools.filter(r => r.cat === pt.key);
@@ -1206,54 +1206,54 @@ function EditorDrawer({
                 <React.Fragment key={pt.key}>
                   <div style={{ display:'flex', alignItems:'center', gap:8, margin:'10px 0 4px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase' }}>
                     <span style={{ color:`oklch(0.78 0.13 ${pt.hue})` }}>{pt.label}</span>
-                    <div style={{ flex:1, height:1, background:'rgba(124,77,255,0.15)' }}/>
-                    <span style={{ color:'rgba(160,140,255,0.55)', fontSize:8 }}>{items.length} Arten · {caughtN} erfasst</span>
+                    <div style={{ flex:1, height:1, background:'rgba(var(--purple-rgb),calc(0.15*var(--kp)))' }}/>
+                    <span style={{ color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', fontSize:8 }}>{items.length} Arten · {caughtN} erfasst</span>
                   </div>
                   {items.map(r => {
                     const it = window.karteKatalogItem(pt.key, r.resource_id);
                     const caught = ((kollCounts || {})[`${pt.key}:${r.resource_id}`] || 0) > 0;
                     return (
-                      <div key={`${pt.key}-${r.resource_id}`} style={{ display:'flex', alignItems:'center', gap:10, padding:'4px 2px', borderBottom:'1px solid rgba(124,77,255,0.08)' }}>
-                        <span style={{ fontFamily:'var(--font-body)', fontSize:12.5, fontWeight:300, color:'rgba(220,212,245,0.85)', minWidth:0, flex:1 }}>{it ? it.name : r.resource_id}</span>
+                      <div key={`${pt.key}-${r.resource_id}`} style={{ display:'flex', alignItems:'center', gap:10, padding:'4px 2px', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.08*var(--kp)))' }}>
+                        <span style={{ fontFamily:'var(--font-body)', fontSize:12.5, fontWeight:300, color:'color-mix(in srgb, rgba(220,212,245,0.85), rgb(var(--ink-rgb)) var(--cm))', minWidth:0, flex:1 }}>{it ? it.name : r.resource_id}</span>
                         {it && <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', color: RAR[it.rarity].color, flexShrink:0 }}>{RAR[it.rarity].label}</span>}
-                        <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', color: caught ? 'rgba(120,220,160,0.95)' : 'rgba(160,140,255,0.4)', width:56, textAlign:'right', flexShrink:0 }}>{caught ? '✓ erfasst' : 'offen'}</span>
+                        <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', color: caught ? 'color-mix(in srgb, rgba(120,220,160,0.95), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))', width:56, textAlign:'right', flexShrink:0 }}>{caught ? '✓ erfasst' : 'offen'}</span>
                       </div>
                     );
                   })}
                 </React.Fragment>
               );
             })}
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'rgba(160,140,255,0.4)', letterSpacing:'0.1em', textTransform:'uppercase' }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', letterSpacing:'0.1em', textTransform:'uppercase' }}>
               Ressourcen werden pro Ort gepflegt — öffne den Ort zum Bearbeiten
             </div>
           </React.Fragment>)}
         </div>
 
-        <footer style={{ padding:'10px 22px 12px', borderTop:'1px solid rgba(124,77,255,0.18)', display:'flex', alignItems:'stretch', gap:10, flexShrink:0 }}>
+        <footer style={{ padding:'10px 22px 12px', borderTop:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))', display:'flex', alignItems:'stretch', gap:10, flexShrink:0 }}>
           {hex.has_submap ? (
             <button
               onClick={() => { onNavigateInto(hex); onClose(); }}
-              style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:10, padding:'9px 14px', background:'linear-gradient(135deg, rgba(124,77,255,0.16) 0%, rgba(124,77,255,0.06) 100%)', border:'1px solid rgba(160,140,255,0.45)', borderRadius:3, color:'#f3eefe', cursor:'pointer', transition:'all 0.18s' }}
-              onMouseEnter={e => { e.currentTarget.style.background='linear-gradient(135deg, rgba(124,77,255,0.30) 0%, rgba(124,77,255,0.14) 100%)'; e.currentTarget.style.borderColor='rgba(220,210,255,0.85)'; }}
-              onMouseLeave={e => { e.currentTarget.style.background='linear-gradient(135deg, rgba(124,77,255,0.16) 0%, rgba(124,77,255,0.06) 100%)'; e.currentTarget.style.borderColor='rgba(160,140,255,0.45)'; }}
+              style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:10, padding:'9px 14px', background:'linear-gradient(135deg, rgba(var(--purple-rgb),calc(0.16*var(--kp))) 0%, rgba(var(--purple-rgb),calc(0.06*var(--kp))) 100%)', border:'1px solid rgba(var(--accent-rgb),calc(0.45*var(--ka)))', borderRadius:3, color:'var(--white)', cursor:'pointer', transition:'all 0.18s' }}
+              onMouseEnter={e => { e.currentTarget.style.background='linear-gradient(135deg, rgba(var(--purple-rgb),calc(0.30*var(--kp))) 0%, rgba(var(--purple-rgb),calc(0.14*var(--kp))) 100%)'; e.currentTarget.style.borderColor='rgba(var(--text-rgb),calc(0.85*var(--kt)))'; }}
+              onMouseLeave={e => { e.currentTarget.style.background='linear-gradient(135deg, rgba(var(--purple-rgb),calc(0.16*var(--kp))) 0%, rgba(var(--purple-rgb),calc(0.06*var(--kp))) 100%)'; e.currentTarget.style.borderColor='rgba(var(--accent-rgb),calc(0.45*var(--ka)))'; }}
             >
-              <span style={{ fontFamily:'var(--font-display)', fontSize:16, color:'rgba(220,210,255,0.85)', lineHeight:1 }}>⬡</span>
-              <span style={{ fontFamily:'var(--font-display)', fontSize:12, letterSpacing:'0.18em', textTransform:'uppercase', color:'#f3eefe' }}>{hex.name || 'Subkarte'} öffnen</span>
+              <span style={{ fontFamily:'var(--font-display)', fontSize:16, color:'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))', lineHeight:1 }}>⬡</span>
+              <span style={{ fontFamily:'var(--font-display)', fontSize:12, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--white)' }}>{hex.name || 'Subkarte'} öffnen</span>
             </button>
           ) : (
             <div style={{ flex:1 }}/>
           )}
           <button
             onClick={onDelete}
-            style={{ padding:'9px 14px', border:'1px solid rgba(220,80,120,0.4)', borderRadius:2, background:'transparent', color:'rgba(220,140,160,0.8)', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.24em', textTransform:'uppercase', cursor:'pointer', transition:'all 0.18s' }}
+            style={{ padding:'9px 14px', border:'1px solid rgba(220,80,120,0.4)', borderRadius:2, background:'transparent', color:'color-mix(in srgb, rgba(220,140,160,0.8), rgb(var(--ink-rgb)) var(--cm))', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.24em', textTransform:'uppercase', cursor:'pointer', transition:'all 0.18s' }}
             onMouseEnter={e => { e.currentTarget.style.background='rgba(180,40,80,0.14)'; e.currentTarget.style.borderColor='rgba(220,80,120,0.85)'; }}
             onMouseLeave={e => { e.currentTarget.style.background='transparent'; e.currentTarget.style.borderColor='rgba(220,80,120,0.4)'; }}
           >{isArea ? 'Fläche löschen' : 'Hex löschen'}</button>
           <button
             onClick={onClose}
-            style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.28em', textTransform:'uppercase', padding:'9px 16px', borderRadius:2, cursor:'pointer', border:'1px solid rgba(160,140,255,0.6)', background:'rgba(124,77,255,0.18)', color:'#f3eefe', transition:'all 0.15s' }}
-            onMouseEnter={e => e.currentTarget.style.background='rgba(124,77,255,0.32)'}
-            onMouseLeave={e => e.currentTarget.style.background='rgba(124,77,255,0.18)'}
+            style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.28em', textTransform:'uppercase', padding:'9px 16px', borderRadius:2, cursor:'pointer', border:'1px solid rgba(var(--accent-rgb),calc(0.6*var(--ka)))', background:'rgba(var(--purple-rgb),calc(0.18*var(--kp)))', color:'var(--white)', transition:'all 0.15s' }}
+            onMouseEnter={e => e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.32*var(--kp)))'}
+            onMouseLeave={e => e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.18*var(--kp)))'}
           >Fertig</button>
         </footer>
       </aside>
@@ -1311,47 +1311,47 @@ function PoolModal({ cat, anchorLabel, poolSet, caughtCounts, onToggle, onRandom
     if (picked.length) onRandomAdd(picked.map(it => it.id));
   };
 
-  const filterInput = { background:'rgba(20,12,46,0.5)', border:'1px solid rgba(124,77,255,0.25)', borderRadius:2, padding:'8px 12px', fontFamily:'var(--font-body)', fontSize:13, color:'#f3eefe' };
+  const filterInput = { background:'rgba(var(--panel-rgb),0.5)', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', borderRadius:2, padding:'8px 12px', fontFamily:'var(--font-body)', fontSize:13, color:'var(--white)' };
 
   return (
     <div
-      style={{ position:'fixed', inset:0, zIndex:400, display:'flex', alignItems:'center', justifyContent:'center', background:'rgba(5,4,15,0.72)', backdropFilter:'blur(8px)' }}
+      style={{ position:'fixed', inset:0, zIndex:400, display:'flex', alignItems:'center', justifyContent:'center', background:'rgba(var(--bg-rgb),0.72)', backdropFilter:'blur(8px)' }}
       onClick={onClose}
       onMouseDown={e => e.stopPropagation()}
     >
       <div
-        style={{ width:580, maxWidth:'94vw', maxHeight:'84vh', display:'flex', flexDirection:'column', overflow:'hidden', background:'linear-gradient(180deg, rgba(14,9,34,0.99) 0%, rgba(8,6,22,0.99) 100%)', border:'1px solid rgba(160,140,255,0.4)', borderRadius:3, boxShadow:'0 24px 60px rgba(0,0,0,0.75), 0 0 40px rgba(124,77,255,0.2)' }}
+        style={{ width:580, maxWidth:'94vw', maxHeight:'calc(var(--vh, 1vh) * 84)', display:'flex', flexDirection:'column', overflow:'hidden', background:'linear-gradient(180deg, rgba(var(--panel-rgb),0.99) 0%, rgba(var(--panel-rgb),0.99) 100%)', border:'1px solid rgba(var(--accent-rgb),calc(0.4*var(--ka)))', borderRadius:3, boxShadow:'0 24px 60px rgba(var(--shadow-rgb),calc(0.75 * var(--shadow-k))), 0 0 40px rgba(var(--purple-rgb),calc(0.2*var(--kp)))' }}
         onClick={e => e.stopPropagation()}
       >
         {/* Head */}
-        <header style={{ padding:'16px 20px 14px', borderBottom:'1px solid rgba(124,77,255,0.18)', display:'flex', alignItems:'center', justifyContent:'space-between', flexShrink:0 }}>
+        <header style={{ padding:'16px 20px 14px', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))', display:'flex', alignItems:'center', justifyContent:'space-between', flexShrink:0 }}>
           <div>
             <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.3em', color:`oklch(0.78 0.13 ${pt.hue})`, textTransform:'uppercase' }}>⬡ {pt.label}-Pool-Ersteller</div>
-            <div style={{ fontFamily:'var(--font-display)', fontSize:17, letterSpacing:'0.14em', color:'#f3eefe', textTransform:'uppercase', marginTop:4 }}>{anchorLabel}</div>
+            <div style={{ fontFamily:'var(--font-display)', fontSize:17, letterSpacing:'0.14em', color:'var(--white)', textTransform:'uppercase', marginTop:4 }}>{anchorLabel}</div>
           </div>
           <button
             onClick={onClose} title="Schließen (Esc)"
-            style={{ width:32, height:32, background:'transparent', border:'1px solid rgba(160,140,255,0.25)', borderRadius:2, color:'rgba(200,190,240,0.75)', fontFamily:'var(--font-mono)', fontSize:14, cursor:'pointer' }}
-            onMouseEnter={e => e.currentTarget.style.background = 'rgba(124,77,255,0.15)'}
+            style={{ width:32, height:32, background:'transparent', border:'1px solid rgba(var(--accent-rgb),calc(0.25*var(--ka)))', borderRadius:2, color:'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))', fontFamily:'var(--font-mono)', fontSize:14, cursor:'pointer' }}
+            onMouseEnter={e => e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.15*var(--kp)))'}
             onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
           >×</button>
         </header>
 
         {/* Filters */}
-        <div style={{ padding:'12px 20px', borderBottom:'1px solid rgba(124,77,255,0.12)', display:'flex', gap:10, flexShrink:0 }}>
+        <div style={{ padding:'12px 20px', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))', display:'flex', gap:10, flexShrink:0 }}>
           <input style={{ ...filterInput, flex:1, minWidth:0 }} type="text" placeholder="Suchen …" value={search} onChange={e => setSearch(e.target.value)}/>
           <select style={{ ...filterInput, cursor:'pointer', maxWidth:150 }} value={habFilter} onChange={e => setHabFilter(e.target.value)}>
-            <option value="" style={{ background:'#0a0820' }}>{pt.habLabel}: alle</option>
-            {habOptions.map(h => <option key={h} value={h} style={{ background:'#0a0820' }}>{h}</option>)}
+            <option value="" style={{ background:'rgb(var(--panel-rgb))' }}>{pt.habLabel}: alle</option>
+            {habOptions.map(h => <option key={h} value={h} style={{ background:'rgb(var(--panel-rgb))' }}>{h}</option>)}
           </select>
           <select style={{ ...filterInput, cursor:'pointer', maxWidth:150 }} value={rarFilter} onChange={e => setRarFilter(e.target.value)}>
-            <option value="" style={{ background:'#0a0820' }}>Seltenheit: alle</option>
-            {RAR_ORDER.map(r => <option key={r} value={r} style={{ background:'#0a0820' }}>{RAR[r].label}</option>)}
+            <option value="" style={{ background:'rgb(var(--panel-rgb))' }}>Seltenheit: alle</option>
+            {RAR_ORDER.map(r => <option key={r} value={r} style={{ background:'rgb(var(--panel-rgb))' }}>{RAR[r].label}</option>)}
           </select>
         </div>
 
         {/* Column header */}
-        <div style={{ display:'flex', alignItems:'center', gap:12, padding:'8px 30px 8px 20px', borderBottom:'1px solid rgba(124,77,255,0.2)', fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.2em', color:'rgba(124,77,255,0.65)', textTransform:'uppercase', flexShrink:0 }}>
+        <div style={{ display:'flex', alignItems:'center', gap:12, padding:'8px 30px 8px 20px', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))', fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.2em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))', textTransform:'uppercase', flexShrink:0 }}>
           <span style={{ width:20, flexShrink:0 }}/>
           <span style={{ flex:1 }}>Name</span>
           <span style={{ width:86, flexShrink:0 }}>{pt.habLabel}</span>
@@ -1362,19 +1362,19 @@ function PoolModal({ cat, anchorLabel, poolSet, caughtCounts, onToggle, onRandom
         {/* Rows */}
         <div style={{ flex:1, overflowY:'auto', padding:'4px 20px 10px' }}>
           {rows.length === 0 && (
-            <div style={{ padding:'24px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.2em', color:'rgba(124,77,255,0.4)', textTransform:'uppercase' }}>— keine Treffer —</div>
+            <div style={{ padding:'24px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.2em', color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>— keine Treffer —</div>
           )}
           {rows.map(it => {
             const inPool = poolSet.has(it.id);
             const caught = (caughtCounts[`${cat}:${it.id}`] || 0) > 0;
             return (
-              <div key={it.id} style={{ display:'flex', alignItems:'center', gap:12, padding:'9px 10px 9px 0', borderBottom:'1px solid rgba(124,77,255,0.08)' }}>
+              <div key={it.id} style={{ display:'flex', alignItems:'center', gap:12, padding:'9px 10px 9px 0', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.08*var(--kp)))' }}>
                 <button
                   onClick={() => onToggle(it.id, inPool)}
-                  style={{ width:20, height:20, flexShrink:0, border:`1px solid ${inPool ? 'rgba(160,140,255,0.9)' : 'rgba(124,77,255,0.35)'}`, borderRadius:2, background: inPool ? 'rgba(160,140,255,0.95)' : 'transparent', color:'#05040f', fontSize:13, lineHeight:1, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', transition:'all 0.15s' }}
+                  style={{ width:20, height:20, flexShrink:0, border:`1px solid ${inPool ? 'rgba(var(--accent-rgb),calc(0.9*var(--ka)))' : 'rgba(var(--purple-rgb),calc(0.35*var(--kp)))'}`, borderRadius:2, background: inPool ? 'rgba(var(--accent-rgb),calc(0.95*var(--ka)))' : 'transparent', color:'var(--bg)', fontSize:13, lineHeight:1, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', transition:'all 0.15s' }}
                 >{inPool ? '✓' : ''}</button>
-                <span style={{ fontFamily:'var(--font-body)', fontSize:14, fontWeight: inPool ? 500 : 300, color: inPool ? '#f3eefe' : 'rgba(200,190,240,0.55)', flex:1, minWidth:0, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{it.name}</span>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.12em', color:'rgba(160,140,255,0.6)', textTransform:'uppercase', width:86, flexShrink:0, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{it.habitat}</span>
+                <span style={{ fontFamily:'var(--font-body)', fontSize:14, fontWeight: inPool ? 500 : 300, color: inPool ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.55*var(--kt)))', flex:1, minWidth:0, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{it.name}</span>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.12em', color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))', textTransform:'uppercase', width:86, flexShrink:0, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{it.habitat}</span>
                 <span style={{ width:104, flexShrink:0 }}>
                   <span style={{ display:'inline-block', padding:'2px 9px', border:`1px solid ${RAR[it.rarity].color}`, borderRadius:20, fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.1em', color: RAR[it.rarity].color, textTransform:'uppercase' }}>{RAR[it.rarity].label}</span>
                 </span>
@@ -1382,10 +1382,10 @@ function PoolModal({ cat, anchorLabel, poolSet, caughtCounts, onToggle, onRandom
                   {inPool ? (
                     <span
                       title="Fang-Status kommt automatisch aus dem Kollektikon"
-                      style={{ padding:'3px 9px', border:`1px solid ${caught ? 'rgba(80,200,140,0.55)' : 'rgba(124,77,255,0.3)'}`, borderRadius:20, background: caught ? 'rgba(40,120,80,0.18)' : 'transparent', color: caught ? 'rgba(120,220,160,0.95)' : 'rgba(160,140,255,0.5)', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.12em', textTransform:'uppercase' }}
+                      style={{ padding:'3px 9px', border:`1px solid ${caught ? 'rgba(80,200,140,0.55)' : 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))'}`, borderRadius:20, background: caught ? 'rgba(40,120,80,0.18)' : 'transparent', color: caught ? 'color-mix(in srgb, rgba(120,220,160,0.95), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--accent-rgb),calc(0.5*var(--ka)))', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.12em', textTransform:'uppercase' }}
                     >{caught ? '✓ erfasst' : 'offen'}</span>
                   ) : (
-                    <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(124,77,255,0.25)' }}>—</span>
+                    <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(var(--purple-rgb),calc(0.25*var(--kp) + var(--tb)))' }}>—</span>
                   )}
                 </span>
               </div>
@@ -1394,45 +1394,45 @@ function PoolModal({ cat, anchorLabel, poolSet, caughtCounts, onToggle, onRandom
         </div>
 
         {/* Generator */}
-        <div style={{ padding:'12px 20px', borderTop:'1px solid rgba(124,77,255,0.14)', display:'flex', alignItems:'flex-end', gap:10, flexWrap:'wrap', flexShrink:0 }}>
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.18em', color:'rgba(217,176,107,0.85)', textTransform:'uppercase', paddingBottom:8 }}>⚄ Generator</span>
+        <div style={{ padding:'12px 20px', borderTop:'1px solid rgba(var(--purple-rgb),calc(0.14*var(--kp)))', display:'flex', alignItems:'flex-end', gap:10, flexWrap:'wrap', flexShrink:0 }}>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.18em', color:'color-mix(in srgb, rgba(217,176,107,0.85), rgb(var(--ink-rgb)) var(--cm))', textTransform:'uppercase', paddingBottom:8 }}>⚄ Generator</span>
           {RAR_ORDER.map(r => (
             <div key={r} style={{ display:'flex', flexDirection:'column', gap:3 }}>
               <span style={{ fontFamily:'var(--font-mono)', fontSize:6.5, letterSpacing:'0.12em', color: RAR[r].color, textTransform:'uppercase', textAlign:'center' }}>{RAR[r].label}</span>
               <input
                 type="number" min="0" value={genCounts[r] || ''}
                 onChange={e => setGenCounts(g => ({ ...g, [r]: e.target.value }))}
-                style={{ width:70, boxSizing:'border-box', background:'rgba(20,12,46,0.5)', border:`1px solid ${RAR[r].color}`, borderRadius:2, padding:'6px 4px', fontFamily:'var(--font-mono)', fontSize:10, color: RAR[r].color, textAlign:'center' }}
+                style={{ width:70, boxSizing:'border-box', background:'rgba(var(--panel-rgb),0.5)', border:`1px solid ${RAR[r].color}`, borderRadius:2, padding:'6px 4px', fontFamily:'var(--font-mono)', fontSize:10, color: RAR[r].color, textAlign:'center' }}
               />
             </div>
           ))}
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'rgba(160,140,255,0.5)', textTransform:'uppercase', paddingBottom:8 }}>oder</span>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase', paddingBottom:8 }}>oder</span>
           <div style={{ display:'flex', flexDirection:'column', gap:3 }}>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:6.5, letterSpacing:'0.12em', color:'rgba(160,140,255,0.95)', textTransform:'uppercase', textAlign:'center' }}>Gesamt</span>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:6.5, letterSpacing:'0.12em', color:'rgba(var(--accent-rgb),calc(0.95*var(--ka) + var(--tb)))', textTransform:'uppercase', textAlign:'center' }}>Gesamt</span>
             <input
               type="number" min="0" value={genTotal}
               onChange={e => setGenTotal(e.target.value)}
               title="Gesamtanzahl (beliebige Seltenheit)"
-              style={{ width:70, boxSizing:'border-box', background:'rgba(20,12,46,0.5)', border:'1px solid rgba(124,77,255,0.7)', borderRadius:2, padding:'6px 4px', fontFamily:'var(--font-mono)', fontSize:10, color:'rgba(180,165,230,0.95)', textAlign:'center' }}
+              style={{ width:70, boxSizing:'border-box', background:'rgba(var(--panel-rgb),0.5)', border:'1px solid rgba(var(--purple-rgb),calc(0.7*var(--kp)))', borderRadius:2, padding:'6px 4px', fontFamily:'var(--font-mono)', fontSize:10, color:'color-mix(in srgb, rgba(180,165,230,0.95), rgb(var(--ink-rgb)) var(--cm))', textAlign:'center' }}
             />
           </div>
           <button
             onClick={runGenerator}
-            style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.2em', textTransform:'uppercase', padding:'8px 14px', borderRadius:2, cursor:'pointer', border:'1px solid rgba(217,176,107,0.55)', background:'rgba(217,176,107,0.12)', color:'rgba(240,220,170,0.95)', transition:'all 0.15s' }}
+            style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.2em', textTransform:'uppercase', padding:'8px 14px', borderRadius:2, cursor:'pointer', border:'1px solid rgba(217,176,107,0.55)', background:'rgba(217,176,107,0.12)', color:'color-mix(in srgb, rgba(240,220,170,0.95), rgb(var(--ink-rgb)) var(--cm))', transition:'all 0.15s' }}
             onMouseEnter={e => e.currentTarget.style.background = 'rgba(217,176,107,0.25)'}
             onMouseLeave={e => e.currentTarget.style.background = 'rgba(217,176,107,0.12)'}
           >Generieren</button>
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'rgba(160,140,255,0.4)', letterSpacing:'0.1em', width:'100%', textTransform:'uppercase' }}>Lost zusätzlich zu den bereits festgelegten Ressourcen aus</span>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', letterSpacing:'0.1em', width:'100%', textTransform:'uppercase' }}>Lost zusätzlich zu den bereits festgelegten Ressourcen aus</span>
         </div>
 
         {/* Footer */}
-        <footer style={{ padding:'12px 20px 14px', borderTop:'1px solid rgba(124,77,255,0.18)', display:'flex', alignItems:'center', justifyContent:'space-between', flexShrink:0 }}>
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', color:'rgba(160,140,255,0.65)', textTransform:'uppercase' }}>{inPoolCount} im Pool · {caughtCount} erfasst</span>
+        <footer style={{ padding:'12px 20px 14px', borderTop:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))', display:'flex', alignItems:'center', justifyContent:'space-between', flexShrink:0 }}>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', color:'rgba(var(--accent-rgb),calc(0.65*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>{inPoolCount} im Pool · {caughtCount} erfasst</span>
           <button
             onClick={onClose}
-            style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.28em', textTransform:'uppercase', padding:'9px 18px', borderRadius:2, cursor:'pointer', border:'1px solid rgba(160,140,255,0.6)', background:'rgba(124,77,255,0.18)', color:'#f3eefe' }}
-            onMouseEnter={e => e.currentTarget.style.background = 'rgba(124,77,255,0.32)'}
-            onMouseLeave={e => e.currentTarget.style.background = 'rgba(124,77,255,0.18)'}
+            style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.28em', textTransform:'uppercase', padding:'9px 18px', borderRadius:2, cursor:'pointer', border:'1px solid rgba(var(--accent-rgb),calc(0.6*var(--ka)))', background:'rgba(var(--purple-rgb),calc(0.18*var(--kp)))', color:'var(--white)' }}
+            onMouseEnter={e => e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.32*var(--kp)))'}
+            onMouseLeave={e => e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))'}
           >Fertig</button>
         </footer>
       </div>
@@ -2440,8 +2440,8 @@ function MerMap() {
     return (
       <div style={{
         position:'fixed', inset:0, display:'flex', alignItems:'center', justifyContent:'center',
-        background:'#05040f', fontFamily:'var(--font-mono)', fontSize:10,
-        letterSpacing:'0.28em', color:'rgba(124,77,255,0.6)', textTransform:'uppercase',
+        background:'var(--bg)', fontFamily:'var(--font-mono)', fontSize:10,
+        letterSpacing:'0.28em', color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))', textTransform:'uppercase',
       }}>
         ◈ Lade Karte …
       </div>
@@ -2452,12 +2452,12 @@ function MerMap() {
     return (
       <div style={{
         position:'fixed', inset:0, display:'flex', alignItems:'center', justifyContent:'center',
-        flexDirection:'column', gap:16, background:'#05040f',
+        flexDirection:'column', gap:16, background:'var(--bg)',
         fontFamily:'var(--font-mono)', letterSpacing:'0.18em', textTransform:'uppercase',
       }}>
         <div style={{ fontSize:10, color:'rgba(200,100,100,0.7)' }}>◈ Kein Zugriff</div>
-        <div style={{ fontSize:8, color:'rgba(124,77,255,0.4)' }}>DM-Konto erforderlich</div>
-        <a href="/index.html" style={{ marginTop:8, fontSize:8, color:'rgba(124,77,255,0.5)', textDecoration:'none' }}>◂ zurück</a>
+        <div style={{ fontSize:8, color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))' }}>DM-Konto erforderlich</div>
+        <a href="/index.html" style={{ marginTop:8, fontSize:8, color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', textDecoration:'none' }}>◂ zurück</a>
       </div>
     );
   }
@@ -2484,32 +2484,32 @@ function MerMap() {
                   style={{
                     background:'transparent', border:'none', cursor:'pointer',
                     fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.18em',
-                    color:'rgba(124,77,255,0.6)', textTransform:'uppercase', padding:'2px 4px',
+                    color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))', textTransform:'uppercase', padding:'2px 4px',
                     transition:'color 0.15s',
                   }}
-                  onMouseEnter={e => e.currentTarget.style.color='rgba(200,190,240,0.9)'}
-                  onMouseLeave={e => e.currentTarget.style.color='rgba(124,77,255,0.6)'}
+                  onMouseEnter={e => e.currentTarget.style.color='rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))'}
+                  onMouseLeave={e => e.currentTarget.style.color='rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))'}
                 >{m.name || 'Karte'}</button>
-                <span style={{ color:'rgba(124,77,255,0.3)' }}>›</span>
+                <span style={{ color:'rgba(var(--purple-rgb),calc(0.3*var(--kp) + var(--tb)))' }}>›</span>
               </React.Fragment>
             ))}
-            <span style={{ color:'rgba(160,140,255,0.7)' }}>{currentMapName}</span>
+            <span style={{ color:'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))' }}>{currentMapName}</span>
           </div>
         )}
         {/* Ebene ergibt sich aus der festen Hierarchie (Welt → Region → Gebiet → Ort) */}
         <span style={{
           marginLeft:14, padding:'3px 9px', borderRadius:3,
-          background: isImageMap ? 'rgba(217,176,107,0.08)' : 'rgba(124,77,255,0.08)',
-          border: `1px solid ${isImageMap ? 'rgba(217,176,107,0.35)' : 'rgba(124,77,255,0.3)'}`,
+          background: isImageMap ? 'rgba(217,176,107,0.08)' : 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))',
+          border: `1px solid ${isImageMap ? 'rgba(217,176,107,0.35)' : 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))'}`,
           fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.18em', textTransform:'uppercase',
-          color: isImageMap ? 'rgba(240,220,170,0.85)' : 'rgba(160,140,255,0.8)',
+          color: isImageMap ? 'color-mix(in srgb, rgba(240,220,170,0.85), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--accent-rgb),calc(0.8*var(--ka)))',
         }}>
           {isImageMap ? '▦' : '⬡'} {depthEbene(mapStack.length)}
         </span>
         <div style={{ flex: 1 }}/>
         <span style={{
           fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.28em',
-          color:'rgba(160,140,255,0.55)', textTransform:'uppercase',
+          color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textTransform:'uppercase',
         }}>
           {isLoading ? '◈ lade …'
             : isImageMap ? `${floorAreas.length} Flächen · Ebene ${floors.length ? floorIdx + 1 : 0}/${floors.length}`
@@ -2607,8 +2607,8 @@ function MerMap() {
                     key={a.id}
                     points={a.points.map(p => p.join(',')).join(' ')}
                     style={{
-                      fill: sel ? 'rgba(160,140,255,0.34)' : (a.visible ? 'rgba(124,77,255,0.10)' : 'rgba(220,80,120,0.10)'),
-                      stroke: sel ? 'rgba(220,210,255,0.95)' : (a.visible ? 'rgba(160,140,255,0.75)' : 'rgba(220,80,120,0.6)'),
+                      fill: sel ? 'rgba(var(--accent-rgb),calc(0.34*var(--ka)))' : (a.visible ? 'rgba(var(--purple-rgb),calc(0.10*var(--kp)))' : 'rgba(220,80,120,0.10)'),
+                      stroke: sel ? 'rgba(var(--text-rgb),calc(0.95*var(--kt)))' : (a.visible ? 'rgba(var(--accent-rgb),calc(0.75*var(--ka)))' : 'rgba(220,80,120,0.6)'),
                       strokeWidth: 2 / Math.max(camera.zoom, 0.01),
                       strokeDasharray: a.visible ? '14 8' : '5 7',
                       cursor: sel ? 'move' : 'pointer',
@@ -2672,11 +2672,11 @@ function MerMap() {
                 const rotX = c[0] + Math.cos(ang) * rHandle, rotY = c[1] + Math.sin(ang) * rHandle;
                 return (
                   <React.Fragment>
-                    <polygon points={`${x0},${y0} ${x1},${y0} ${x1},${y1} ${x0},${y1}`} style={{ fill:'none', stroke:'rgba(220,210,255,0.55)', strokeWidth: 2 / z, strokeDasharray:`${8/z} ${6/z}`, pointerEvents:'none' }}/>
-                    <line x1={c[0] + Math.cos(ang) * rBox * 0.6} y1={c[1] + Math.sin(ang) * rBox * 0.6} x2={rotX} y2={rotY} style={{ stroke:'rgba(220,210,255,0.4)', strokeWidth: 2 / z, pointerEvents:'none' }}/>
+                    <polygon points={`${x0},${y0} ${x1},${y0} ${x1},${y1} ${x0},${y1}`} style={{ fill:'none', stroke:'rgba(var(--text-rgb),calc(0.55*var(--kt)))', strokeWidth: 2 / z, strokeDasharray:`${8/z} ${6/z}`, pointerEvents:'none' }}/>
+                    <line x1={c[0] + Math.cos(ang) * rBox * 0.6} y1={c[1] + Math.sin(ang) * rBox * 0.6} x2={rotX} y2={rotY} style={{ stroke:'rgba(var(--text-rgb),calc(0.4*var(--kt)))', strokeWidth: 2 / z, pointerEvents:'none' }}/>
                     <circle
                       cx={rotX} cy={rotY} r={9 / z}
-                      style={{ fill:'rgba(8,6,22,0.9)', stroke:'rgba(217,176,107,0.95)', strokeWidth: 2 / z, cursor:'grab' }}
+                      style={{ fill:'rgba(var(--panel-rgb),0.9)', stroke:'rgba(217,176,107,0.95)', strokeWidth: 2 / z, cursor:'grab' }}
                       onPointerDown={(e) => {
                         if (e.button !== 0) return;
                         e.stopPropagation();
@@ -2684,7 +2684,7 @@ function MerMap() {
                       }}
                     />
                     {handles.map((h, i) => (
-                      <circle key={i} cx={h.x} cy={h.y} r={9 / z} style={{ fill:'rgba(8,6,22,0.9)', stroke:'rgba(220,210,255,0.95)', strokeWidth: 2 / z, cursor: h.cursor }} onPointerDown={h.down}/>
+                      <circle key={i} cx={h.x} cy={h.y} r={9 / z} style={{ fill:'rgba(var(--panel-rgb),0.9)', stroke:'rgba(var(--text-rgb),calc(0.95*var(--kt)))', strokeWidth: 2 / z, cursor: h.cursor }} onPointerDown={h.down}/>
                     ))}
                   </React.Fragment>
                 );
@@ -2702,7 +2702,7 @@ function MerMap() {
                       className="mk-hex-label-floating"
                       style={{ left: c[0], top: c[1], opacity: a.visible ? 1 : 0.6, '--hex-color': a.visible ? (a.typ === 'eingang' ? 'oklch(0.78 0.1 80)' : 'oklch(0.7 0.15 285)') : 'oklch(0.6 0.15 0)' }}
                     >
-                      <div className="mk-hex-label-terr" style={{ color: a.visible ? (a.typ === 'eingang' ? 'rgba(217,176,107,0.85)' : 'rgba(160,140,255,0.8)') : 'rgba(220,80,120,0.8)' }}>
+                      <div className="mk-hex-label-terr" style={{ color: a.visible ? (a.typ === 'eingang' ? 'color-mix(in srgb, rgba(217,176,107,0.85), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--accent-rgb),calc(0.8*var(--ka)))') : 'rgba(220,80,120,0.8)' }}>
                         {a.visible ? (a.typ === 'eingang' ? '⬡ Betretbar' : '◈ POI') : '✕ Verborgen'}
                       </div>
                       {a.name ? <div className="mk-hex-label-name">{a.name}</div> : null}
@@ -2733,7 +2733,7 @@ function MerMap() {
             background:'rgba(217,176,107,0.16)', border:'1px solid rgba(217,176,107,0.5)',
             borderRadius:3, padding:'6px 14px',
             fontFamily:'var(--font-mono)', fontSize:'9.5px', letterSpacing:'0.18em',
-            textTransform:'uppercase', color:'rgba(240,220,170,0.95)',
+            textTransform:'uppercase', color:'color-mix(in srgb, rgba(240,220,170,0.95), rgb(var(--ink-rgb)) var(--cm))',
           }}>
             {drawMode
               ? <React.Fragment>
@@ -2741,11 +2741,11 @@ function MerMap() {
                   <button
                     onClick={(e) => { e.stopPropagation(); finishDraw(); }}
                     disabled={drawPts.length < 3}
-                    style={{ opacity: drawPts.length < 3 ? 0.4 : 1, padding:'2px 10px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.12em', textTransform:'uppercase', color:'rgba(240,220,170,0.95)', background:'rgba(217,176,107,0.2)', border:'1px solid rgba(217,176,107,0.6)', borderRadius:3, cursor:'pointer' }}
+                    style={{ opacity: drawPts.length < 3 ? 0.4 : 1, padding:'2px 10px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.12em', textTransform:'uppercase', color:'color-mix(in srgb, rgba(240,220,170,0.95), rgb(var(--ink-rgb)) var(--cm))', background:'rgba(217,176,107,0.2)', border:'1px solid rgba(217,176,107,0.6)', borderRadius:3, cursor:'pointer' }}
                   >✓ Fertig (Enter)</button>
                   <button
                     onClick={(e) => { e.stopPropagation(); setDrawMode(false); setDrawPts([]); }}
-                    style={{ padding:'2px 10px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.12em', textTransform:'uppercase', color:'rgba(220,140,160,0.9)', background:'transparent', border:'1px solid rgba(220,80,120,0.4)', borderRadius:3, cursor:'pointer' }}
+                    style={{ padding:'2px 10px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.12em', textTransform:'uppercase', color:'color-mix(in srgb, rgba(220,140,160,0.9), rgb(var(--ink-rgb)) var(--cm))', background:'transparent', border:'1px solid rgba(220,80,120,0.4)', borderRadius:3, cursor:'pointer' }}
                   >✕ Abbrechen (Esc)</button>
                 </React.Fragment>
               : <span>{tool === 'rect' ? '▭ Rechteck' : tool === 'circle' ? '◯ Kreis / Ellipse' : '⬡ Hexagon'} · Aufziehen mit gedrückter Maustaste</span>}
@@ -2757,11 +2757,11 @@ function MerMap() {
           <div style={{
             position:'absolute', top:16, right: editing ? DRAWER_W + 16 : 16, zIndex:55,
             display:'flex', alignItems:'center', gap:8,
-            background:'rgba(8,6,22,0.9)', border:'1px solid rgba(124,77,255,0.3)',
+            background:'rgba(var(--panel-rgb),0.9)', border:'1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))',
             borderRadius:4, padding:'6px 10px',
           }}>
             <button className="mk-tool-btn" style={{ width:26, height:26, opacity: floorIdx >= floors.length - 1 ? 0.35 : 1 }} disabled={floorIdx >= floors.length - 1} onClick={() => switchFloor(1)} title="Etage höher">▲</button>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', color:'rgba(160,140,255,0.8)', textTransform:'uppercase' }}>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', color:'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>
               Ebene {floorIdx + 1}/{floors.length} · {floor?.label || ''}
             </span>
             <button className="mk-tool-btn" style={{ width:26, height:26, opacity: floorIdx <= 0 ? 0.35 : 1 }} disabled={floorIdx <= 0} onClick={() => switchFloor(-1)} title="Etage tiefer">▼</button>
@@ -2781,10 +2781,10 @@ function MerMap() {
           <div style={{
             position:'absolute', top:16, left:'50%', transform:'translateX(-50%)',
             zIndex:60, pointerEvents:'none',
-            background:'rgba(124,77,255,0.22)', border:'1px solid rgba(200,180,255,0.45)',
+            background:'rgba(var(--purple-rgb),calc(0.22*var(--kp)))', border:'1px solid rgba(200,180,255,calc(0.45*var(--ka)))',
             borderRadius:3, padding:'6px 18px',
             fontFamily:'var(--font-mono)', fontSize:'9.5px', letterSpacing:'0.22em',
-            textTransform:'uppercase', color:'rgba(220,210,255,0.9)',
+            textTransform:'uppercase', color:'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
           }}>
             Hintergrund-Modus · Ziehen = verschieben · Scrollen = Größe
           </div>
@@ -2811,16 +2811,16 @@ function MerMap() {
       {/* HUD */}
       <div className="mk-hud">
         <div className="mk-hud-row"><span>◇ Zoom</span><span>{(camera.zoom * 100).toFixed(0)}%</span></div>
-        <div className="mk-hud-row" style={{ marginTop:4, paddingTop:8, borderTop:'1px solid rgba(124,77,255,0.18)', color:'rgba(160,140,255,0.55)' }}>
+        <div className="mk-hud-row" style={{ marginTop:4, paddingTop:8, borderTop:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))' }}>
           <span>◇ Mittel-Maustaste</span><span>Karte ziehen</span>
         </div>
-        <div className="mk-hud-row" style={{ color:'rgba(160,140,255,0.55)' }}>
+        <div className="mk-hud-row" style={{ color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))' }}>
           <span>◇ Mausrad</span><span>Zoom</span>
         </div>
-        <div className="mk-hud-row" style={{ color:'rgba(160,140,255,0.55)' }}>
+        <div className="mk-hud-row" style={{ color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))' }}>
           <span>◇ Klick</span><span>Bearbeiten</span>
         </div>
-        <div className="mk-hud-row" style={{ color:'rgba(160,140,255,0.55)' }}>
+        <div className="mk-hud-row" style={{ color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))' }}>
           <span>◇ Grip ziehen</span><span>Ins Lager</span>
         </div>
       </div>
@@ -2932,15 +2932,15 @@ function MerMap() {
             <line x1="2.5" y1="12" x2="19.5" y2="12"/>
             <line x1="11" y1="3" x2="11" y2="9"/>
             <rect x="9.3" y="10.3" width="3.4" height="3.4" fill="currentColor" fillOpacity="0.55"/>
-            <circle cx="11" cy="12" r="0.6" fill="#05040f"/>
+            <circle cx="11" cy="12" r="0.6" fill="var(--bg)"/>
           </svg>
           {stash.length > 0 && (
             <span style={{
               position:'absolute', top:-6, right:-6, minWidth:16, height:16, padding:'0 4px',
-              borderRadius:8, background:'rgba(124,77,255,0.95)', color:'#fff',
+              borderRadius:8, background:'rgba(var(--purple-rgb),calc(0.95*var(--kp)))', color:'#fff',
               fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.05em',
               display:'flex', alignItems:'center', justifyContent:'center',
-              boxShadow:'0 0 8px rgba(160,140,255,0.7)',
+              boxShadow:'0 0 8px rgba(var(--accent-rgb),calc(0.7*var(--ka)))',
             }}>{stash.length}</span>
           )}
         </button>
@@ -2951,12 +2951,12 @@ function MerMap() {
       {isImageMap && floorsPanelOpen && (
         <div style={{
           position:'fixed', right:16, bottom:76, zIndex:120, width:280,
-          background:'rgba(10,7,28,0.97)', border:'1px solid rgba(124,77,255,0.35)',
-          borderRadius:6, padding:'12px 14px', boxShadow:'0 8px 32px rgba(0,0,0,0.5)',
+          background:'rgba(var(--panel-rgb),0.97)', border:'1px solid rgba(var(--purple-rgb),calc(0.35*var(--kp)))',
+          borderRadius:6, padding:'12px 14px', boxShadow:'0 8px 32px rgba(var(--shadow-rgb),calc(0.5 * var(--shadow-k)))',
         }}>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.2em', textTransform:'uppercase', color:'rgba(160,140,255,0.7)', marginBottom:10 }}>▤ Etagen</div>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.2em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))', marginBottom:10 }}>▤ Etagen</div>
           {floors.length === 0 && (
-            <div style={{ fontFamily:'var(--font-body)', fontSize:11.5, fontWeight:300, color:'rgba(200,190,240,0.5)', marginBottom:10 }}>Noch keine Etagen.</div>
+            <div style={{ fontFamily:'var(--font-body)', fontSize:11.5, fontWeight:300, color:'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))', marginBottom:10 }}>Noch keine Etagen.</div>
           )}
           {floors.map((f, i) => (
             <div key={f.id || i} style={{ display:'flex', alignItems:'center', gap:6, marginBottom:6 }}>
@@ -2987,7 +2987,7 @@ function MerMap() {
           <button
             onClick={() => floorFileRef.current?.click()}
             disabled={floorUploading}
-            style={{ width:'100%', marginTop:4, padding:'7px 10px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(160,140,255,0.8)', background:'rgba(124,77,255,0.08)', border:'1px dashed rgba(124,77,255,0.4)', borderRadius:4, cursor:'pointer' }}
+            style={{ width:'100%', marginTop:4, padding:'7px 10px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))', background:'rgba(var(--purple-rgb),calc(0.08*var(--kp)))', border:'1px dashed rgba(var(--purple-rgb),calc(0.4*var(--kp)))', borderRadius:4, cursor:'pointer' }}
           >{floorUploading ? '… lädt hoch' : '+ Etage hinzufügen (Bild)'}</button>
         </div>
       )}
@@ -3127,19 +3127,19 @@ function MerMap() {
       {migrationBanner && (
         <div style={{
           position:'fixed', bottom:24, left:'50%', transform:'translateX(-50%)',
-          background:'rgba(10,7,28,0.97)', border:'1px solid rgba(124,77,255,0.4)',
+          background:'rgba(var(--panel-rgb),0.97)', border:'1px solid rgba(var(--purple-rgb),calc(0.4*var(--kp)))',
           borderRadius:6, padding:'18px 24px', zIndex:500,
           fontFamily:'var(--font-body)', fontSize:13, fontWeight:300,
-          color:'rgba(200,190,240,0.85)', maxWidth:420, textAlign:'center',
-          boxShadow:'0 8px 32px rgba(0,0,0,0.5)',
+          color:'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))', maxWidth:420, textAlign:'center',
+          boxShadow:'0 8px 32px rgba(var(--shadow-rgb),calc(0.5 * var(--shadow-k)))',
         }}>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(124,77,255,0.6)', textTransform:'uppercase', marginBottom:10 }}>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))', textTransform:'uppercase', marginBottom:10 }}>
             Lokale Daten gefunden
           </div>
           <p style={{ margin:'0 0 14px', lineHeight:1.5 }}>
             Es gibt eine gespeicherte Karte aus dem alten Karte-Tool. Soll sie in die Cloud migriert werden?
           </p>
-          <div style={{ fontSize:10, color:'rgba(124,77,255,0.45)', marginBottom:16 }}>
+          <div style={{ fontSize:10, color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))', marginBottom:16 }}>
             Hinweis: Bilder müssen danach neu hochgeladen werden.
           </div>
           <div style={{ display:'flex', gap:10, justifyContent:'center' }}>
@@ -3148,8 +3148,8 @@ function MerMap() {
               style={{
                 fontFamily:'var(--font-display)', fontSize:10, letterSpacing:'0.18em',
                 textTransform:'uppercase', padding:'9px 20px', cursor:'pointer',
-                background:'rgba(124,77,255,0.18)', border:'1px solid rgba(124,77,255,0.5)',
-                borderRadius:3, color:'rgba(200,190,240,0.9)', transition:'all .2s',
+                background:'rgba(var(--purple-rgb),calc(0.18*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.5*var(--kp)))',
+                borderRadius:3, color:'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))', transition:'all .2s',
               }}
             >Migrieren</button>
             <button
@@ -3157,8 +3157,8 @@ function MerMap() {
               style={{
                 fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.18em',
                 textTransform:'uppercase', padding:'9px 16px', cursor:'pointer',
-                background:'transparent', border:'1px solid rgba(124,77,255,0.2)',
-                borderRadius:3, color:'rgba(124,77,255,0.5)', transition:'all .2s',
+                background:'transparent', border:'1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))',
+                borderRadius:3, color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', transition:'all .2s',
               }}
             >Überspringen</button>
           </div>
