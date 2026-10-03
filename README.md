@@ -1,6 +1,6 @@
 # Meruria
 
-Companion website for the tabletop RPG world **Meruria**, deployed at [meruria.de](https://meruria.de) via GitHub Pages.
+Companion website for the tabletop RPG world **Meruria**, deployed at [meruria.de](https://meruria.de) via GitHub Pages (dev copy at [dev.meruria.de](https://dev.meruria.de)).
 
 It documents the world's factions, races, classes and deities, ships a full monster compendium, and contains the table tools the group uses during play (characters, NPCs, map, missions, recipes, …). The site is written in German and is behind a login (Supabase).
 
@@ -54,13 +54,57 @@ To use the real database from localhost anyway: `localStorage.setItem('sb_env', 
 
 Studio (table editor, SQL) of the local stack: http://127.0.0.1:54323. Note that the local stack listens on all network interfaces and Studio has no login; stop it (`npm run db:stop`) on untrusted networks.
 
-## Deployment
+## Environments and deployment
+
+| | Live | Dev |
+|---|---|---|
+| URL | [meruria.de](https://meruria.de) | [dev.meruria.de](https://dev.meruria.de) |
+| Branch | `master` | `devel` |
+| Hosted on | GitHub Pages | Cloudflare (Workers, static assets) |
+| Built by | `.github/workflows/deploy.yml` | Cloudflare Workers Builds |
+| Database | real Supabase project | **the same real Supabase project** |
+
+Typical flow: work on a feature branch → merge into `devel` → check it on dev.meruria.de → open a pull request `devel` → `master`.
+
+> **Heads-up:** dev.meruria.de talks to the **real database**, exactly like the live site. Anything saved or deleted there is real data. Test risky changes against the local database first.
+
+### Live (GitHub Pages)
 
 Pushing to `master` runs `.github/workflows/deploy.yml`: generate the gallery data, `npm run build`, publish `dist/` to GitHub Pages (custom domain via `public/CNAME`). In the repository settings, **Pages → Source** must be **GitHub Actions**.
 
 A second workflow, `generate-galerie.yml`, commits `assets/scripts/data/galerie-data.js` when monster images change.
 
-The **database is not deployed by CI.** Migrations are applied by hand in the Supabase SQL editor of the real project (see below).
+### Dev (Cloudflare)
+
+GitHub Pages serves one site per repository, so the dev copy lives on Cloudflare. Pushing to `devel` builds and deploys it automatically.
+
+- Cloudflare project (**Workers & Pages**) `meruria`, connected to this repository, production branch `devel`.
+- Build command `node tools/generate-galerie-data.mjs && npm run build`, deploy command `npx wrangler deploy`, preview command `npx wrangler versions upload`, environment variable `NODE_VERSION=22` (same Node version as the GitHub workflow).
+- `wrangler.jsonc` in the repo root tells Cloudflare to serve `dist/`. Its `name` must be identical to the Cloudflare project name, otherwise the build fails.
+- The custom domain `dev.meruria.de` is attached under the worker's **Settings → Domains & Routes**.
+- If preview builds are enabled in the Cloudflare project, other branches get their own throw-away URL on `workers.dev`.
+- Supabase **Authentication → URL Configuration → Redirect URLs** must include `https://dev.meruria.de`, otherwise logging in on the dev site can fail or send you back to the live site.
+
+### DNS
+
+`meruria.de` is registered at Namecheap but its **nameservers point to Cloudflare** (Namecheap → Domain → Nameservers → *Custom DNS*). DNS records are managed in Cloudflare.
+
+- The four `A` records for `@` (`185.199.108.153` … `185.199.111.153`) point at GitHub Pages and must stay **DNS only** (grey cloud). If they are proxied, GitHub can no longer issue or renew the HTTPS certificate for the live site.
+- `dev.meruria.de` is created by Cloudflare when the custom domain is added to the worker; don't add it by hand.
+- There is no email service on the domain. If you add one later, add the `MX`/`TXT` records in Cloudflare.
+
+### Branch rules
+
+GitHub rulesets (**Settings → Rules**) protect the long-lived branches:
+
+- `master`: no deleting, no force pushes, changes only through a pull request. The bot commit of `generate-galerie.yml` goes straight to `master`, so the GitHub Actions app must be in the ruleset's **bypass list**, otherwise that workflow can't push.
+- `devel`: no deleting, no force pushes. Don't tick "delete branch" when merging `devel` into `master`; Cloudflare builds this branch.
+
+### Database
+
+Migrations are applied by the **Supabase GitHub integration** (Project Settings → Integrations → GitHub): repository `delagoplex/MeruriaSite`, working directory `.`, *Deploy to production* on, production branch `master`. Merging into `master` applies every new file in `supabase/migrations/` to the real database. Supabase *Branching* (preview databases per pull request) needs the Pro plan and is not used.
+
+See [Database](#database-1) below for how to write a migration safely.
 
 ## Project structure
 
@@ -85,6 +129,7 @@ The **database is not deployed by CI.** Migrations are applied by hand in the Su
 │   └── config.toml             — local stack settings
 ├── tools/                      — maintenance scripts (gallery data, local database config)
 ├── vite.config.js
+├── wrangler.jsonc              — Cloudflare config for the dev deployment (serves dist/)
 └── assets/                     — copied unchanged into the build
     ├── images/
     ├── scripts/
@@ -116,7 +161,15 @@ Vite finds every `.html` file automatically; no config change is needed.
 ## Database
 
 - Migrations in `supabase/migrations/` are applied in file-name order. A new migration takes the **next free number** (`042_…`); never reuse or renumber an existing one.
-- To change the real database: write the migration, test it with `npm run db:reset`, then run **only the new file** in the Supabase SQL editor of the real project.
+- To change the real database: write the migration, test it with `npm run db:reset` (and by logging in as the seed player and DM), then merge it into `master`. The Supabase integration applies the new file automatically; check the result under **Integrations → GitHub → workflow logs** (or **Database → Migrations**).
+- The app is deployed by GitHub Pages and the migration by Supabase, so both land within minutes of each other but not atomically. For a change that would break the running app, ship it in two steps: first a backwards-compatible migration, then the app change.
+- **History baseline:** the real database was created by hand before the integration existed, so its history table `supabase_migrations.schema_migrations` was filled with the versions `001`–`040` without running them (the integration used to fail on `001` with `relation "profiles" already exists`). If you ever apply a migration by hand in the SQL editor, record it the same way, or the integration will try to run it again:
+  ```sql
+  insert into supabase_migrations.schema_migrations (version) values ('042')
+  on conflict (version) do nothing;
+  ```
+- The integration only compares the version (the number in front of the file name), not the file contents. Never edit a migration that has been applied; add a new one instead.
+- Open: the first automatic run after the baseline still has to be confirmed with the next regular migration. Until then, check the workflow log after merging and remove this note once it is green.
 - Access is enforced by Row Level Security in the database, not by the checks in the page code (those only hide UI). New tables need `ENABLE ROW LEVEL SECURITY` and explicit policies; functions marked `SECURITY DEFINER` must check `public.is_dm()` themselves. Details and known gaps: `CLAUDE.md` → "Database security".
 
 ## Troubleshooting
@@ -129,10 +182,15 @@ Vite finds every `.html` file automatically; no config change is needed.
 | `Acquiring an exclusive Navigator LockManager lock … failed` in the console | harmless noise from Supabase when several tabs of the same site are open |
 | `&&` is rejected in PowerShell | run the commands separately (or use Git Bash) |
 | Only the dark login screen after an error | reload; the login form appears again |
+| Cloudflare build fails with "no config" or an assets error | `wrangler.jsonc` is missing on that branch, or its `name` differs from the Cloudflare project name |
+| Login on dev.meruria.de redirects to the live site | add `https://dev.meruria.de` to the Supabase redirect URLs |
+| Live site shows an HTTPS certificate error after DNS changes | the GitHub Pages `A` records must be *DNS only* (grey cloud) in Cloudflare |
+| Supabase integration run fails with `relation … already exists` | a migration is missing from `supabase_migrations.schema_migrations`; see "History baseline" above |
+| `generate-galerie.yml` can't push to `master` | add the GitHub Actions app to the `master` ruleset's bypass list |
 
 ## Tech
 
-React (global vendor build, JSX compiled at build time), Vite multi-page build, Supabase (PostgreSQL, auth, storage), GitHub Pages.
+React (global vendor build, JSX compiled at build time), Vite multi-page build, Supabase (PostgreSQL, auth, storage), GitHub Pages (live), Cloudflare (dev).
 
 ## Features
 

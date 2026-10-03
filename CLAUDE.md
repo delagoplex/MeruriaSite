@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) and other contributo
 
 ## What this project is
 
-A static website for the tabletop RPG world **Meruria**, deployed to `meruria.de` via GitHub Pages. The site is written in German and documents the world's factions, races, classes, and deities.
+A static website for the tabletop RPG world **Meruria**, deployed to `meruria.de` via GitHub Pages (a dev copy of the `devel` branch runs on `dev.meruria.de` via Cloudflare, see "Environments and deployment"). The site is written in German and documents the world's factions, races, classes, and deities.
 
 The site is built with **Vite** (multi-page, every `.html` file is an entry) and deployed by a GitHub Actions workflow (`.github/workflows/deploy.yml`) that runs `npm run build` and publishes `dist/` to GitHub Pages. React, ReactDOM and Supabase stay global vendor scripts in `assets/scripts/vendor/` (no Babel in the browser); JSX is compiled at build time to `React.createElement`.
 
@@ -171,7 +171,31 @@ npm run build
 npm run preview
 ```
 
-Deployment: push to `master` → `.github/workflows/deploy.yml` generates the gallery data (`tools/generate-galerie-data.mjs`), builds and publishes to Pages (Settings → Pages → Source must be "GitHub Actions"). `public/CNAME` carries the custom domain `meruria.de`. `generate-galerie.yml` additionally commits the regenerated `galerie-data.js` when monster images change. **The database is not deployed by CI** — migrations are applied by hand (see below).
+## Environments and deployment
+
+| | Live | Dev |
+|---|---|---|
+| URL | `meruria.de` | `dev.meruria.de` |
+| Branch | `master` | `devel` |
+| Host | GitHub Pages | Cloudflare (Workers with static assets) |
+| Built by | `.github/workflows/deploy.yml` | Cloudflare Workers Builds |
+| Database | real Supabase | **the same real Supabase** (there is no separate dev database) |
+
+Flow: feature branch → `devel` → check on dev.meruria.de → pull request `devel` → `master`. Treat dev as real data: it writes to the production database, so anything risky is tried against the local database first.
+
+**Live:** push to `master` → `.github/workflows/deploy.yml` generates the gallery data (`tools/generate-galerie-data.mjs`), builds and publishes to Pages (Settings → Pages → Source must be "GitHub Actions"). `public/CNAME` carries the custom domain `meruria.de`. `generate-galerie.yml` additionally commits the regenerated `galerie-data.js` to `master` when monster images change.
+
+**Dev:** GitHub Pages can only serve one branch, so `devel` is built by Cloudflare. Settings live in the Cloudflare dashboard, not in the repo, except `wrangler.jsonc`:
+- project/worker `meruria`, production branch `devel`; build `node tools/generate-galerie-data.mjs && npm run build`, deploy `npx wrangler deploy`, preview `npx wrangler versions upload`, variable `NODE_VERSION=22` (keep in sync with `deploy.yml`)
+- `wrangler.jsonc` (root) serves `./dist`; its `name` must equal the Cloudflare project name or the build fails. It must exist on the branch being built.
+- custom domain `dev.meruria.de` is attached in the worker's Settings → Domains & Routes
+- Supabase Auth → URL Configuration → Redirect URLs must contain `https://dev.meruria.de`
+
+**DNS:** `meruria.de` is registered at Namecheap, but the nameservers are Cloudflare's (Custom DNS), so all records are edited in Cloudflare. The four `A` records for `@` (`185.199.108–111.153`) point at GitHub Pages and must stay **DNS only** (grey cloud); proxying them stops GitHub from issuing/renewing the HTTPS certificate. There is no mail on the domain; if it gets any, add `MX`/`TXT` in Cloudflare.
+
+**Branch rules** (GitHub rulesets): `master` – no deletion, no force push, pull request required; the GitHub Actions app is on the bypass list so `generate-galerie.yml` can still push. `devel` – no deletion, no force push (Cloudflare builds it; don't delete it when merging into `master`).
+
+**Database deployment:** the Supabase GitHub integration (Project Settings → Integrations → GitHub; repo `delagoplex/MeruriaSite`, working directory `.`, *Deploy to production* on, branch `master`) applies new `supabase/migrations/` files when something is merged into `master`. Supabase Branching (preview DBs) needs Pro and is not used. See "Changing the real database" below, including the history baseline.
 
 `vite.config.js` auto-discovers all `.html` files as entries. Files that are referenced only at runtime (classic scripts, images, `assets/styles`) are copied unchanged to `dist/assets/` by a small plugin, so URLs are identical in dev and production.
 
@@ -198,7 +222,15 @@ Test accounts (local only) are created by `supabase/seed.sql`; the passwords are
 
 Migrations are applied in file-name order, so new files need the next free number (`042_…`); never reuse or rename an existing number (the CLI requires unique versions).
 
-**Changing the real database:** write the migration, test it with `npm run db:reset` (and by logging in as the seed player and DM), then run **only the new file** in the Supabase SQL editor of the real project, after the app version that needs it is online. Never run `db:reset` or `seed.sql` against the real project. The CLI's runtime folder `supabase/.temp/` is git-ignored and contains local secrets.
+**Changing the real database:** write the migration, test it with `npm run db:reset` (and by logging in as the seed player and DM), then merge it into `master`; the Supabase integration applies it. Check the run under Dashboard → Integrations → GitHub → workflow logs (and Database → Migrations). Never run `db:reset` or `seed.sql` against the real project. The CLI's runtime folder `supabase/.temp/` is git-ignored and contains local secrets.
+- App (GitHub Pages) and migration (Supabase) deploy independently within minutes of each other, not atomically. A migration that would break the running app is shipped in two steps: backwards-compatible migration first, app change afterwards.
+- The integration compares only the **version** (number before the file name) with `supabase_migrations.schema_migrations`, not the file contents. Never edit an applied migration; add a new one.
+- **History baseline:** the real database was created by hand before the integration, so its history table was filled with `001`–`040` without running them (before that every run failed on `001` with `relation "profiles" already exists`). If a migration is ever applied by hand in the SQL editor, record it, otherwise the integration replays it and fails on "already exists":
+  ```sql
+  insert into supabase_migrations.schema_migrations (version) values ('042')
+  on conflict (version) do nothing;
+  ```
+- Open: the first automatic run after the baseline still needs to be confirmed with the next regular migration; check its workflow log and then remove this note.
 
 ## Monster data (`assets/scripts/data/monster/`)
 
