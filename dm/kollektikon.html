@@ -32,6 +32,7 @@
 <script src="/assets/scripts/data/monster/tome-of-beasts-2-data.js"></script>
 <script src="/assets/scripts/data/monster/sonstige-data.js"></script>
 <script src="/assets/scripts/data/monster-data.js"></script>
+<script src="/assets/scripts/shared/ressourcen-katalog.js"></script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { min-height: calc(var(--vh, 1vh) * 100); background: var(--bg); color: var(--white); }
@@ -40,7 +41,7 @@ body { min-height: calc(var(--vh, 1vh) * 100); background: var(--bg); color: var
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(var(--purple-rgb),calc(0.3*var(--kp))); border-radius: 2px; }
 
-.dm-kol-wrap { max-width: 1100px; margin: 0 auto; padding: 80px 24px 80px; }
+.dm-kol-wrap { max-width: 1280px; margin: 0 auto; padding: 80px 24px 80px; }
 
 /* Header */
 .dm-kol-header { margin-bottom: 36px; }
@@ -130,6 +131,18 @@ body { min-height: calc(var(--vh, 1vh) * 100); background: var(--bg); color: var
 .counts-save-btn.saved { border-color: rgba(80,220,120,0.4); color: color-mix(in srgb, rgba(80,220,120,0.8), rgb(var(--ink-rgb)) var(--cm)); }
 .counts-empty { font-family: var(--font-body); font-size: 12px; color: rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb))); padding: 24px 12px; text-align: center; }
 .counts-hint { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.14em; color: rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb))); margin-top: 8px; }
+
+/* Liste + Detailansicht */
+.kol-split { display: grid; grid-template-columns: minmax(280px, 400px) 1fr; gap: 20px; align-items: start; }
+.kol-list { max-height: calc(var(--vh, 1vh) * 100 - 330px); min-height: 280px; overflow-y: auto; border: 1px solid rgba(var(--purple-rgb),calc(0.16*var(--kp))); border-radius: 3px; }
+.kol-list-row { display: flex; align-items: center; gap: 10px; width: 100%; padding: 7px 10px; background: none; border: none; border-bottom: 1px solid rgba(var(--purple-rgb),calc(0.08*var(--kp))); cursor: pointer; text-align: left; color: var(--white); transition: background .12s; }
+.kol-list-row:hover { background: rgba(var(--purple-rgb),calc(0.07*var(--kp))); }
+.kol-list-row.active { background: rgba(var(--purple-rgb),calc(0.16*var(--kp))); box-shadow: inset 2px 0 0 rgba(var(--accent-rgb),calc(0.8*var(--ka))); }
+.kol-list-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-body); font-size: 13.5px; }
+.kol-list-menge { min-width: 34px; text-align: right; font-family: var(--font-mono); font-size: 10px; color: rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb))); }
+.kol-detail { position: sticky; top: 70px; padding: 20px; border: 1px solid rgba(var(--purple-rgb),calc(0.16*var(--kp))); border-radius: 3px; background: rgba(var(--panel-rgb),0.35); }
+.kol-detail .counts-row { flex-wrap: wrap; }
+@media (max-width: 900px) { .kol-split { grid-template-columns: 1fr; } .kol-detail { position: static; } }
 </style>
 </head>
 <body>

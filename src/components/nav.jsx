@@ -170,6 +170,7 @@ const NAV = [
     items: [
       { label: 'Monster', href: '/dm/monster.html', locked: true },
       { label: 'Ressourcen', href: '/dm/ressourcen.html', locked: true },
+      { label: 'Kollektikon-Verwaltung', href: '/dm/kollektikon.html', locked: true },
       { label: 'Tarot', href: '/dm/tarot.html', locked: true },
       { label: 'Kampfsimulation', href: '/dm/kampfsimulation.html', locked: true },
       { label: 'Missionen', href: '/dm/missionen.html', locked: true },
@@ -178,6 +179,8 @@ const NAV = [
       { label: 'Kartenmanagement', href: '/dm/kartenmanagement.html', locked: true },
       { label: 'Kolonisierung & Bau', href: '/dm/kolonisierung-und-bau.html', locked: true },
       { label: 'Rekrutierungspreise', href: '/dm/rekrutierungspreise.html', locked: true },
+      { label: 'Rezeptverwaltung', href: '/dm/rezeptverwaltung.html', locked: true },
+      { label: 'Segen & Flüche', href: '/dm/segen-und-flueche.html', locked: true },
     ],
   },
 ];
