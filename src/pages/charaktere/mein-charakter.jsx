@@ -3,6 +3,8 @@ import '../../components/nav.jsx';
 import '../../components/image-upload.jsx';
 import '../../components/site-gate.jsx';
 import '../../components/steckbrief-components.jsx';
+import '../../components/school-icon.jsx';
+import '../../components/damage-icon.jsx';
 
 ;(function () {
 // top-level functions were global in the old classic-script setup
@@ -129,20 +131,14 @@ function isHealingSpell(z) {
       || /stellt\s+\d+\s+trefferpunkt/i.test(text);
 }
 
-var TYPE_COLORS_SPELL = {
-  Feuer:'#f97316', Blitz:'#a78bfa', Kälte:'#38bdf8', Eis:'#7dd3fc',
-  Gift:'#4ade80', Säure:'#84cc16', Nekrotisch:'#818cf8', Psychisch:'#e879f9',
-  Energie:'#fbbf24', Schall:'#fb923c', Strahlung:'#fde68a', Gleißend:'#fef08a',
-  Heilig:'#fcd34d', Wucht:'#94a3b8', Stich:'#94a3b8', Hieb:'#94a3b8',
-  Variabel:'#c084fc', Strahlend:'#fde68a',
-};
-
 /* ── SpellPicker Modal ──────────────────────────────────────────── */
 function SpellPicker({ onAdd, onClose, defaultKlasse = '' }) {
   const [q, setQ] = useApp('');
   const [filterKlasse, setFilterKlasse] = useApp(defaultKlasse);
   const [filterGrad, setFilterGrad] = useApp('');
   const [mode, setMode] = useApp('alle');
+  const [info, setInfo] = useApp(null);
+  const [filterArt, setFilterArt] = useApp([]);
 
   const allZauber = window.ZAUBER_DATA || [];
 
@@ -162,9 +158,10 @@ function SpellPicker({ onAdd, onClose, defaultKlasse = '' }) {
     let list = base;
     if (filterKlasse) list = list.filter(z => z.klassen?.includes(filterKlasse));
     if (filterGrad !== '') list = list.filter(z => z.grad === Number(filterGrad));
+    if (mode === 'schaden' && filterArt.length) list = list.filter(z => window.spellDamageTypes(z).some(a => filterArt.includes(a)));
     if (q.trim()) { const low = q.toLowerCase(); list = list.filter(z => z.name.toLowerCase().includes(low)); }
     return list.slice(0, 150);
-  }, [q, filterKlasse, filterGrad, base, mode]);
+  }, [q, filterKlasse, filterGrad, filterArt, base, mode]);
 
   function handleAdd(z) {
     if (mode === 'heilung') {
@@ -208,7 +205,7 @@ function SpellPicker({ onAdd, onClose, defaultKlasse = '' }) {
         </div>
         <div style={{display:'flex',borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))'}}>
           {[['alle','Alle'],['schaden','Schaden'],['heilung','Heilung']].map(([m,l]) => (
-            <button key={m} style={tabBtn(mode===m)} onClick={()=>setMode(m)}>{l}</button>
+            <button key={m} style={tabBtn(mode===m)} onClick={()=>{setMode(m);setFilterArt([]);}}>{l}</button>
           ))}
         </div>
         <div style={{padding:'10px 12px',display:'flex',gap:8}}>
@@ -240,6 +237,24 @@ function SpellPicker({ onAdd, onClose, defaultKlasse = '' }) {
             );
           })}
         </div>
+        {mode === 'schaden' && (
+          <div style={{padding:'0 12px 8px',display:'flex',gap:4,flexWrap:'wrap'}}>
+            {window.SCHADENSARTEN.map(a => {
+              const active = filterArt.includes(a);
+              return (
+                <button key={a} title={a} onClick={()=>setFilterArt(f => f.includes(a) ? f.filter(x=>x!==a) : [...f, a])}
+                  style={{display:'flex',alignItems:'center',gap:4,fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.08em',
+                    padding:'2px 7px 2px 4px',borderRadius:2,cursor:'pointer',transition:'all .12s',
+                    background: active ? 'rgba(var(--purple-rgb),calc(0.25*var(--kp)))' : 'transparent',
+                    border: active ? '1px solid rgba(var(--purple-rgb),calc(0.55*var(--kp)))' : '1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))',
+                    color: active ? 'rgba(var(--text-rgb),calc(0.9*var(--kt)))' : 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))'}}>
+                  <window.DamageIcon type={a} size={14} style={{opacity: active ? 1 : 0.7}} />
+                  {a}
+                </button>
+              );
+            })}
+          </div>
+        )}
         <div style={{fontSize:'0.65rem',color:'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))',padding:'0 12px 6px',fontFamily:'var(--font-mono)'}}>
           {results.length} Zauber
         </div>
@@ -251,8 +266,8 @@ function SpellPicker({ onAdd, onClose, defaultKlasse = '' }) {
               onClick={() => handleAdd(z)}>
               {mode === 'heilung'
                 ? <div style={{width:26,height:26,borderRadius:'50%',background:'rgba(80,200,120,0.08)',border:'1px solid rgba(80,200,120,0.2)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'0.7rem',flexShrink:0}}>💚</div>
-                : <div style={{width:26,height:26,borderRadius:'50%',background:'rgba(var(--accent-rgb),calc(0.06*var(--ka)))',border:'1px solid rgba(var(--accent-rgb),calc(0.12*var(--ka)))',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'0.58rem',color:TYPE_COLORS_SPELL[z.schadenTyp]||'rgba(var(--accent-rgb),calc(0.4*var(--ka)))',flexShrink:0,fontWeight:700}}>
-                    {mode==='schaden' ? (z.schadenTyp||'?').substring(0,2) : (z.schule||'?').substring(0,2)}
+                : <div style={{width:26,height:26,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
+                    {mode==='schaden' ? <window.DamageIcon type={z.schadenTyp} size={24} /> : <window.SchoolIcon school={z.schule} size={26} />}
                   </div>
               }
               <span style={{fontFamily:'var(--font-body)',fontSize:12.5,color:'var(--white)',flex:1}}>{z.name}</span>
@@ -261,10 +276,17 @@ function SpellPicker({ onAdd, onClose, defaultKlasse = '' }) {
                   : mode==='schaden' ? `Grad ${z.grad} · ${z.schaden} · ${z.schadenTyp||'?'}`
                   : `Grad ${z.grad} · ${z.schule||'?'}`}
               </span>
+              <button title="Details" onClick={e => { e.stopPropagation(); setInfo(z); }}
+                style={{flexShrink:0,width:18,height:18,borderRadius:'50%',cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',
+                  background:'rgba(var(--accent-rgb),calc(0.08*var(--ka)))',border:'1px solid rgba(var(--accent-rgb),calc(0.2*var(--ka)))',
+                  color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',fontSize:'0.65rem',fontStyle:'italic',fontWeight:600,padding:0,transition:'all .12s'}}
+                onMouseEnter={e=>{e.currentTarget.style.background='rgba(var(--accent-rgb),calc(0.18*var(--ka)))';e.currentTarget.style.borderColor='rgba(var(--accent-rgb),calc(0.5*var(--ka)))';}}
+                onMouseLeave={e=>{e.currentTarget.style.background='rgba(var(--accent-rgb),calc(0.08*var(--ka)))';e.currentTarget.style.borderColor='rgba(var(--accent-rgb),calc(0.2*var(--ka)))';}}>i</button>
             </div>
           ))}
         </div>
       </div>
+      {info && <ZauberPreview zauberEntry={info} onClose={() => setInfo(null)} />}
     </div>
   );
 }
@@ -282,7 +304,7 @@ function ZauberPreview({ zauberEntry, onClose }) {
   const komps = (fullSpell.komponenten || []).map(k => kompMap[k] || k).join(', ');
 
   const isHeil = zauberEntry.istHeilung;
-  const typeColor = TYPE_COLORS_SPELL[fullSpell.schadenTyp] || 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))';
+  const typeColor = window.damageColor(fullSpell.schadenTyp) || 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))';
 
   const metaItems = [
     { label: 'Zeitaufwand',   value: fullSpell.zeitaufwand },
@@ -312,7 +334,7 @@ function ZauberPreview({ zauberEntry, onClose }) {
               {fullSpell.schule && (
                 <span style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.12em',
                   padding:'2px 8px',background:'rgba(var(--purple-rgb),calc(0.08*var(--kp)))',border:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',
-                  borderRadius:2,color:'rgba(var(--accent-rgb),calc(0.65*var(--ka) + var(--tb)))'}}>{fullSpell.schule}</span>
+                  borderRadius:2,color:'rgba(var(--accent-rgb),calc(0.65*var(--ka) + var(--tb)))',display:'inline-flex',alignItems:'center',gap:5}}><window.SchoolIcon school={fullSpell.schule} size={14} />{fullSpell.schule}</span>
               )}
               {fullSpell.ritual && (
                 <span style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.12em',
@@ -362,7 +384,7 @@ function ZauberPreview({ zauberEntry, onClose }) {
               {fullSpell.schaden && (
                 <span style={{fontFamily:'var(--font-mono)',fontSize:9,letterSpacing:'.1em',padding:'4px 10px',
                   background:'rgba(249,115,22,0.07)',border:'1px solid rgba(249,115,22,0.22)',
-                  borderRadius:3,color:typeColor}}>{fullSpell.schaden} {fullSpell.schadenTyp||'Schaden'}</span>
+                  borderRadius:3,color:typeColor,display:'inline-flex',alignItems:'center',gap:6}}><window.DamageIcon type={fullSpell.schadenTyp} size={16} />{fullSpell.schaden} {fullSpell.schadenTyp||'Schaden'}</span>
               )}
               {fullSpell.rettungswurfAttribut && (
                 <span style={{fontFamily:'var(--font-mono)',fontSize:9,letterSpacing:'.1em',padding:'4px 10px',
@@ -449,7 +471,7 @@ function ZauberSection({ zauber, updZauber, editing, charKlasse = '' }) {
         {zauber.map(z => {
           const isHeil = z.istHeilung;
           const isKampf = z.istKampfzauber || z.schaden;
-          const typeColor = TYPE_COLORS_SPELL[z.schadenTyp] || 'rgba(var(--accent-rgb),calc(0.5*var(--ka)))';
+          const typeColor = window.damageColor(z.schadenTyp) || 'rgba(var(--accent-rgb),calc(0.5*var(--ka)))';
           return (
             <div key={z.id}
               onClick={() => setPreview(z)}
@@ -458,11 +480,11 @@ function ZauberSection({ zauber, updZauber, editing, charKlasse = '' }) {
                 borderRadius:3,padding:'7px 11px',transition:'border-color .15s'}}
               onMouseEnter={e=>e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.35*var(--kp)))'}
               onMouseLeave={e=>e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.14*var(--kp)))'}>
-              <div style={{width:22,height:22,borderRadius:'50%',flexShrink:0,display:'flex',alignItems:'center',justifyContent:'center',fontSize:'0.55rem',fontWeight:700,
-                background: isHeil ? 'rgba(80,200,120,0.08)' : 'rgba(var(--accent-rgb),calc(0.06*var(--ka)))',
-                border: isHeil ? '1px solid rgba(80,200,120,0.2)' : '1px solid rgba(var(--accent-rgb),calc(0.12*var(--ka)))',
+              <div style={{width:26,height:26,borderRadius:'50%',flexShrink:0,display:'flex',alignItems:'center',justifyContent:'center',fontSize:'0.55rem',fontWeight:700,
+                background: isHeil ? 'rgba(80,200,120,0.08)' : 'transparent',
+                border: isHeil ? '1px solid rgba(80,200,120,0.2)' : 'none',
                 color: isHeil ? 'color-mix(in srgb, #4ade80, rgb(var(--ink-rgb)) var(--cm))' : (isKampf ? typeColor : 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))')}}>
-                {isHeil ? '💚' : (z.schule||'?').substring(0,2)}
+                {isHeil ? '💚' : <window.SchoolIcon school={z.schule} size={26} />}
               </div>
               <div style={{flex:1,minWidth:0}}>
                 <div style={{fontFamily:'var(--font-body)',fontSize:12.5,color:'var(--white)',fontWeight:400}}>{z.name}</div>
@@ -470,7 +492,7 @@ function ZauberSection({ zauber, updZauber, editing, charKlasse = '' }) {
                   {gradBadge(z.grad)}
                   {z.schule && ` · ${z.schule}`}
                   {isHeil && z.heilung && ` · 💚 ${z.heilung} TP`}
-                  {isKampf && z.schaden && ` · ${z.schaden} ${z.schadenTyp||''}`}
+                  {isKampf && z.schaden && <>{' · '}<window.DamageIcon type={z.schadenTyp} size={14} style={{margin:'0 3px 0 1px'}} />{`${z.schaden} ${z.schadenTyp||''}`}</>}
                 </div>
               </div>
               {editing && (

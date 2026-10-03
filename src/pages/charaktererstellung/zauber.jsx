@@ -3,6 +3,8 @@ import '../../components/nav.jsx';
 import '../../components/site-gate.jsx';
 import '../../components/particle-field.jsx';
 import '../../components/filter-utils.jsx';
+import '../../components/school-icon.jsx';
+import '../../components/damage-icon.jsx';
 
 ;(function () {
 (function () {
@@ -85,19 +87,18 @@ const sortZeitaufwaende = arr => [...arr].sort((a, b) => {
 });
 
 // ─── SCHOOL COLORS ────────────────────────────────────────────────────────────
-const SCHOOL_COLORS = {
-  'Illusion': 'oklch(0.62 0.18 280)',
-  'Bannmagie': 'oklch(0.62 0.18 220)',
-  'Nekromantie': 'oklch(0.58 0.16 160)',
-  'Erkenntnismagie': 'oklch(0.62 0.18 250)',
-  'Beschwörung': 'oklch(0.62 0.18 30)',
-  'Verwandlung': 'oklch(0.62 0.18 130)',
-  'Hervorrufung': 'oklch(0.62 0.18 20)',
-  'Verzauberung': 'oklch(0.62 0.18 340)',
-  'Weissagung': 'oklch(0.62 0.18 200)'
+const { SCHOOL_COLORS, schoolColor, SchoolIcon } = window;
+// ─── ZAUBERTYP / SCHADENSART HELPERS ──────────────────────────────────────────
+const { SCHADENSARTEN, spellDamageTypes } = window;
+const flatText = v => typeof v === 'string' ? v : Array.isArray(v) ? v.map(flatText).join(' ') : v && typeof v === 'object' ? Object.values(v).map(flatText).join(' ') : '';
+const spellText = z => flatText(z.beschreibung) + ' ' + (z.material || '');
+const isHealSpell = z => {
+  const text = flatText(z.beschreibung);
+  return /trefferpunkte[n]?\s+zurück\s+in\s+höhe/i.test(text) || /\d+[Ww]\d+\s+trefferpunkte[n]?\s+wieder\s+her/i.test(text) || /stellt\s+\d+\s+trefferpunkt/i.test(text);
 };
-const schoolColor = s => SCHOOL_COLORS[s] || 'oklch(0.62 0.18 270)';
+const isDamageSpell = z => !!(z.schaden && z.schadenTyp);
 const alpha = (c, a) => c.replace(')', ` / ${a})`);
+
 
 // ─── FILTER CHIP ──────────────────────────────────────────────────────────────
 function Chip({
@@ -130,6 +131,80 @@ function Chip({
   }, label);
 }
 
+// ─── ZAUBERTYP / SCHADENSART FILTER ───────────────────────────────────────────
+function ZaubertypFilters({ filters, setFilters }) {
+  const toggleTyp = t => setFilters(f => {
+    const on = f.typ.includes(t);
+    const typ = on ? f.typ.filter(x => x !== t) : [...f.typ, t];
+    return { ...f, typ, schadensart: typ.includes('schaden') ? f.schadensart : [] };
+  });
+  const toggleArt = a => setFilters(f => ({ ...f, schadensart: f.schadensart.includes(a) ? f.schadensart.filter(x => x !== a) : [...f.schadensart, a] }));
+  const row = (active, extra) => ({
+    display: 'flex', alignItems: 'center', gap: '7px', padding: '5px 7px', width: '100%', textAlign: 'left', cursor: 'pointer',
+    background: active ? 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))' : 'transparent',
+    border: `1px solid ${active ? 'rgba(var(--purple-rgb),calc(0.35*var(--kp)))' : 'transparent'}`,
+    borderRadius: '2px', transition: 'all 0.15s', ...extra
+  });
+  const label = active => ({ fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: '300', color: active ? 'var(--white)' : 'var(--silver)', letterSpacing: '0.03em' });
+  const typen = [['heil', 'Heilzauber', '💚'], ['schaden', 'Schadenszauber', null]];
+  return <>
+    <FilterGroup title="Zaubertyp" active={filters.typ.length > 0}
+      onReset={() => setFilters(f => ({ ...f, typ: [], schadensart: [] }))} collapsible>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+        {typen.map(([id, name, emoji]) => {
+          const active = filters.typ.includes(id);
+          return (
+            <button key={id} onClick={() => toggleTyp(id)} style={row(active)}>
+              <span style={{ width: 18, display: 'flex', justifyContent: 'center', fontSize: '11px', opacity: active ? 1 : 0.6 }}>
+                {emoji || <window.DamageIcon type="Feuer" size={16} />}
+              </span>
+              <span style={label(active)}>{name}</span>
+            </button>
+          );
+        })}
+      </div>
+    </FilterGroup>
+    {filters.typ.includes('schaden') && (
+      <FilterGroup title="Schadensart" active={filters.schadensart.length > 0}
+        onReset={() => setFilters(f => ({ ...f, schadensart: [] }))} collapsible>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+          {SCHADENSARTEN.map(a => {
+            const active = filters.schadensart.includes(a);
+            return (
+              <button key={a} onClick={() => toggleArt(a)} style={row(active)}>
+                <window.DamageIcon type={a} size={18} style={{ opacity: active ? 1 : 0.6 }} />
+                <span style={label(active)}>{a}</span>
+              </button>
+            );
+          })}
+          <div style={{ fontFamily: 'var(--font-body)', fontSize: '10px', fontStyle: 'italic', color: 'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))', padding: '4px 7px 0' }}>
+            Zauber mit wählbarer Schadensart erscheinen bei jeder ihrer Arten.
+          </div>
+        </div>
+      </FilterGroup>
+    )}
+  </>;
+}
+
+function SearchTextToggle({ checked, onChange }) {
+  return (
+    <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', margin: '-6px 0 14px 2px', userSelect: 'none' }}>
+      <input type="checkbox" checked={checked} onChange={e => onChange(e.target.checked)}
+        style={{ position: 'absolute', opacity: 0, width: 0, height: 0 }} />
+      <span style={{
+        width: '14px', height: '14px', flexShrink: 0, borderRadius: '2px',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        fontSize: '9px', lineHeight: 1, fontFamily: 'var(--font-mono)',
+        border: `1px solid ${checked ? 'rgba(var(--purple-rgb),calc(0.7*var(--kp)))' : 'rgba(var(--accent-rgb),calc(0.25*var(--ka)))'}`,
+        background: checked ? 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))' : 'transparent',
+        color: 'var(--white)', transition: 'all 0.18s'
+      }}>{checked ? '✓' : ''}</span>
+      <span style={{ fontFamily: 'var(--font-body)', fontSize: '10.5px', fontWeight: '300', letterSpacing: '0.03em', transition: 'color 0.18s',
+        color: checked ? 'var(--white)' : 'var(--silver)' }}>Auch im Text suchen</span>
+    </label>
+  );
+}
+
 // ─── FILTER SIDEBAR ───────────────────────────────────────────────────────────
 function FilterSidebar({
   filters,
@@ -137,6 +212,8 @@ function FilterSidebar({
   allData,
   search,
   setSearch,
+  searchText,
+  setSearchText,
   dragRef
 }) {
   const schools = useMemo(() => [...new Set(allData.map(z => z.schule))].sort(), [allData]);
@@ -160,6 +237,8 @@ function FilterSidebar({
     }));
   };
   const reset = () => setFilters({
+    typ: [],
+    schadensart: [],
     schule: [],
     grad: [],
     klassen: [],
@@ -169,7 +248,7 @@ function FilterSidebar({
     zeitaufwand: [],
     sort: 'grad-asc'
   });
-  const hasAny = filters.schule.length || filters.grad.length || filters.klassen.length || filters.komponenten.length || filters.konzentration !== null || filters.ritual !== null || filters.zeitaufwand.length || filters.sort !== 'grad-asc';
+  const hasAny = filters.typ.length || filters.schadensart.length || filters.schule.length || filters.grad.length || filters.klassen.length || filters.komponenten.length || filters.konzentration !== null || filters.ritual !== null || filters.zeitaufwand.length || filters.sort !== 'grad-asc';
   return /*#__PURE__*/React.createElement("div", {
     ref: dragRef.ref,
     "data-mobile-drawer": "",
@@ -240,7 +319,10 @@ function FilterSidebar({
     y2: "11",
     stroke: "rgba(var(--accent-rgb),calc(1*var(--ka)))",
     strokeWidth: "1.2"
-  }))), /*#__PURE__*/React.createElement("div", {
+  }))), /*#__PURE__*/React.createElement(SearchTextToggle, {
+    checked: searchText,
+    onChange: setSearchText
+  }), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       alignItems: 'center',
@@ -257,7 +339,10 @@ function FilterSidebar({
     }
   }, "Filter"), hasAny && /*#__PURE__*/React.createElement(XBtn, {
     onClick: reset
-  })), /*#__PURE__*/React.createElement(FilterGroup, {
+  })), /*#__PURE__*/React.createElement(ZaubertypFilters, {
+    filters: filters,
+    setFilters: setFilters
+  }), /*#__PURE__*/React.createElement(FilterGroup, {
     title: "Schule",
     active: filters.schule.length > 0,
     onReset: () => setFilters(f => ({
@@ -280,18 +365,16 @@ function FilterSidebar({
       gap: '7px',
       padding: '5px 7px',
       background: filters.schule.includes(s) ? 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))' : 'transparent',
-      border: `1px solid ${filters.schule.includes(s) ? schoolColor(s) + '66' : 'transparent'}`,
+      border: `1px solid ${filters.schule.includes(s) ? alpha(schoolColor(s), 0.4) : 'transparent'}`,
       borderRadius: '2px',
       cursor: 'pointer',
       transition: 'all 0.15s',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/React.createElement(OctSvg, {
-    size: 8,
-    color: schoolColor(s),
-    fill: filters.schule.includes(s) ? schoolColor(s) : 'none',
-    strokeWidth: 1.2,
-    opacity: filters.schule.includes(s) ? 1 : 0.45
+  }, /*#__PURE__*/React.createElement(SchoolIcon, {
+    school: s,
+    size: 18,
+    opacity: filters.schule.includes(s) ? 1 : 0.6
   }), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-body)',
@@ -844,14 +927,9 @@ function SpellDetail({
       alignItems: 'center',
       gap: '8px'
     }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      width: '8px',
-      height: '8px',
-      borderRadius: '50%',
-      background: sc,
-      flexShrink: 0
-    }
+  }, /*#__PURE__*/React.createElement(SchoolIcon, {
+    school: zauber.schule,
+    size: 22
   }), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
@@ -990,8 +1068,11 @@ function App() {
     y: e.clientY / window.innerHeight
   }), []);
   const [search, setSearch] = useState('');
+  const [searchText, setSearchText] = useState(false);
   const [selected, setSelected] = useState([...allZauber].filter(z => z.grad === 0).sort((a, b) => a.name.localeCompare(b.name))[0] || allZauber[0] || null);
   const [filters, setFilters] = useState({
+    typ: [],
+    schadensart: [],
     schule: [],
     grad: [],
     klassen: [],
@@ -1018,7 +1099,12 @@ function App() {
   // Filter logic
   const filtered = useMemo(() => {
     const r = allZauber.filter(z => {
-      if (search && !z.name.toLowerCase().includes(search.toLowerCase())) return false;
+      if (search) {
+        const low = search.toLowerCase();
+        if (!z.name.toLowerCase().includes(low) && !(searchText && spellText(z).toLowerCase().includes(low))) return false;
+      }
+      if (filters.typ.length && !filters.typ.some(t => t === 'heil' ? isHealSpell(z) : isDamageSpell(z))) return false;
+      if (filters.schadensart.length && !spellDamageTypes(z).some(a => filters.schadensart.includes(a))) return false;
       if (filters.schule.length && !filters.schule.includes(z.schule)) return false;
       if (filters.grad.length && !filters.grad.includes(z.grad)) return false;
       if (filters.klassen.length && !filters.klassen.some(k => z.klassen.includes(k))) return false;
@@ -1045,7 +1131,7 @@ function App() {
       // grad-asc
     }
     return r;
-  }, [allZauber, search, filters, classFilter]);
+  }, [allZauber, search, searchText, filters, classFilter]);
 
   // Auto-select first when filter changes
   useEffect(() => {
@@ -1160,6 +1246,8 @@ function App() {
     allData: allZauber,
     search: search,
     setSearch: setSearch,
+    searchText: searchText,
+    setSearchText: setSearchText,
     dragRef: sidebarDrag
   }), /*#__PURE__*/React.createElement("div", {
     className: "md-list",

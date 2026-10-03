@@ -3,6 +3,7 @@ import '../../components/filter-utils.jsx';
 import '../../components/nav.jsx';
 import '../../components/site-gate.jsx';
 import '../../components/particle-field.jsx';
+import '../../components/school-icon.jsx';
 
 ;(function () {
 (function () {
@@ -728,8 +729,8 @@ function ZauberModal({ zauber, onClose }) {
         }, gradLabel)
       ),
       /*#__PURE__*/React.createElement('div', {
-        style: { fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.12em', color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', textTransform: 'uppercase' }
-      }, zauber.schule)
+        style: { fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.12em', color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '6px' }
+      }, React.createElement(window.SchoolIcon, { school: zauber.schule, size: 16 }), zauber.schule)
     ),
     /*#__PURE__*/React.createElement('div', {
       style: { display: 'flex', flexDirection: 'column', gap: '5px', marginBottom: '18px' }
