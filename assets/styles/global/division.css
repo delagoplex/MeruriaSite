@@ -6,7 +6,7 @@
   position: fixed;
   left: 0;
   top: var(--nav-h);
-  height: calc(100vh - var(--nav-h));
+  height: calc(calc(var(--vh, 1vh) * 100) - var(--nav-h));
   padding: 28px 0;
   backdrop-filter: blur(12px);
   z-index: 50;
@@ -34,6 +34,18 @@
 @media (max-width: 768px) {
   .div-content { padding: 28px 20px 48px; max-width: 100%; }
   .div-section { margin-bottom: 36px; scroll-margin-top: 60px; }
+
+  /* Main text and the "Bekannte" side column stack instead of sitting side by side */
+  .div-body-row { flex-direction: column !important; align-items: stretch !important; }
+  .div-side-col { border-left: none !important; border-top: 1px solid rgba(var(--accent-rgb),calc(0.14*var(--ka))); width: 100%; }
+
+  /* Hero: logo above the title instead of overlapping it */
+  .div-hero-logo { left: 50% !important; top: 22% !important; transform: translate(-50%, 0) !important; }
+  .div-hero-logo svg { width: 132px !important; height: 132px !important; }
+  .div-hero-num { display: none; }
+  .div-hero-title { padding: 20px 20px !important; text-align: center !important; }
+  .div-hero-title h1 { font-size: clamp(24px, 7vw, 36px) !important; letter-spacing: 0.1em !important; overflow-wrap: break-word; }
+  .div-hero-title > div:last-child { justify-content: center !important; }
 }
 @media (max-width: 480px) {
   .div-content { padding: 20px 16px 40px; }

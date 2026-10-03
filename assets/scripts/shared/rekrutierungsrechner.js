@@ -103,7 +103,7 @@
 
     // ── Styles ──────────────────────────────────────────────────
     var boxStyle = function(color) { return {
-      background: 'rgba(8,6,22,0.8)',
+      background: 'rgba(var(--panel-rgb),0.8)',
       border: '1px solid ' + (color || cA(0.25)),
       borderRadius: 4, padding: '16px 18px', marginTop: 12,
     }; };
@@ -120,21 +120,21 @@
     }; };
 
     var formulaStyle = {
-      fontFamily: 'var(--font-mono)', fontSize: 9, color: 'rgba(160,140,255,0.45)',
+      fontFamily: 'var(--font-mono)', fontSize: 9, color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',
       letterSpacing: '0.1em',
     };
 
     // ── Loading ──────────────────────────────────────────────────
     if (loading) {
-      return h('div', { style: { padding: '20px 0', fontFamily: 'var(--font-mono)', fontSize: 9, color: 'rgba(160,140,255,0.4)', letterSpacing: '0.22em', textTransform: 'uppercase' }}, '◈ Lade…');
+      return h('div', { style: { padding: '20px 0', fontFamily: 'var(--font-mono)', fontSize: 9, color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', letterSpacing: '0.22em', textTransform: 'uppercase' }}, '◈ Lade…');
     }
 
     if (!window.SITE_USER) {
-      return h('div', boxStyle(), h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(160,140,255,0.5)', letterSpacing: '0.14em' }}, 'Bitte einloggen, um den Rechner zu nutzen.'));
+      return h('div', boxStyle(), h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', letterSpacing: '0.14em' }}, 'Bitte einloggen, um den Rechner zu nutzen.'));
     }
 
     if (chars.length === 0) {
-      return h('div', boxStyle(), h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(160,140,255,0.5)', letterSpacing: '0.14em' }}, 'Kein Spielercharakter gefunden.'));
+      return h('div', boxStyle(), h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', letterSpacing: '0.14em' }}, 'Kein Spielercharakter gefunden.'));
     }
 
     return h('div', null,
@@ -142,7 +142,7 @@
       // NSC-Info
       h('div', { style: {
         fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.14em',
-        color: 'rgba(200,190,240,0.6)', marginBottom: 12,
+        color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))', marginBottom: 12,
       }},
         'Ausgewählter NSC: ',
         h('span', { style: { color: accent }}, 'Rang ' + nscRang + ' — ' + nscTitel),
@@ -158,8 +158,8 @@
           onChange: function(e) { setSelId(e.target.value); },
           style: {
             width: '100%', padding: '7px 10px',
-            background: 'rgba(8,6,22,0.9)', border: '1px solid ' + cA(0.3),
-            color: '#f0eeff', fontFamily: 'var(--font-mono)', fontSize: 10,
+            background: 'rgba(var(--panel-rgb),0.9)', border: '1px solid ' + cA(0.3),
+            color: 'var(--white)', fontFamily: 'var(--font-mono)', fontSize: 10,
             letterSpacing: '0.08em', borderRadius: 3, cursor: 'pointer',
           },
         },
@@ -174,10 +174,10 @@
       // Charakter-Info (single)
       chars.length === 1 && selChar && h('div', { style: {
         fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.14em',
-        color: 'rgba(200,190,240,0.6)', marginBottom: 12,
+        color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))', marginBottom: 12,
       }},
         'Dein Charakter: ',
-        h('span', { style: { color: '#f0eeff' }},
+        h('span', { style: { color: 'var(--white)' }},
           (selChar.char_data && selChar.char_data.name ? selChar.char_data.name : selChar.name) +
           (playerRank ? ' · ' + playerRank : '') +
           (playerRangNr ? ' (Rang ' + playerRangNr + ')' : '') +
@@ -187,7 +187,7 @@
 
       // Kein Rang gesetzt
       selChar && playerRangNr === null && h('div', boxStyle('rgba(200,120,80,0.3)'),
-        h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(200,170,130,0.8)', letterSpacing: '0.12em' }},
+        h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 10, color: 'color-mix(in srgb, rgba(200,170,130,0.8), rgb(var(--ink-rgb)) var(--cm))', letterSpacing: '0.12em' }},
           'Deinem Charakter ist noch kein Divisionsrang zugewiesen. Bitte im Steckbrief eintragen.'
         )
       ),
@@ -201,7 +201,7 @@
         ),
         h('div', { style: {
           fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 300,
-          color: 'rgba(200,190,240,0.55)', marginTop: 10, lineHeight: 1.5,
+          color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', marginTop: 10, lineHeight: 1.5,
         }}, 'Der NSC nimmt die Mission an und leistet sein Bestes.')
       ),
 
@@ -211,7 +211,7 @@
         h('span', { style: bigNumStyle('#80dfb0') }, 'Kostenlos'),
         h('div', { style: {
           fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 300,
-          color: 'rgba(200,190,240,0.55)', marginTop: 10, lineHeight: 1.5,
+          color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', marginTop: 10, lineHeight: 1.5,
         }}, 'NSC und Spieler befinden sich auf gleichem oder ähnlichem Niveau. Der NSC schließt sich der Mission an und gibt sein Bestes.')
       ),
 
@@ -221,7 +221,7 @@
         h('span', { style: bigNumStyle('#80dfb0') }, 'Kostenlos'),
         h('div', { style: {
           fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 300,
-          color: 'rgba(200,190,240,0.55)', marginTop: 10, lineHeight: 1.5,
+          color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', marginTop: 10, lineHeight: 1.5,
         }}, 'Gleichrangige Kameraden unterstützen sich gegenseitig ohne Gebühr.')
       ),
 
@@ -234,7 +234,7 @@
         ),
         h('div', { style: {
           fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 300,
-          color: 'rgba(200,190,240,0.6)', marginTop: 10, marginBottom: 12, lineHeight: 1.5,
+          color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))', marginTop: 10, marginBottom: 12, lineHeight: 1.5,
         }}, 'Der NSC zahlt dir das Honorar, wenn alle drei Bedingungen nach der Mission erfüllt sind:'),
 
         // Checkboxen
@@ -243,7 +243,7 @@
           return h('label', { key: key, style: {
             display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer',
             fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.1em',
-            color: checks[key] ? '#f0eeff' : 'rgba(180,170,220,0.55)',
+            color: checks[key] ? 'var(--white)' : 'color-mix(in srgb, rgba(180,170,220,0.55), rgb(var(--ink-rgb)) var(--cm))',
             marginBottom: 8, userSelect: 'none',
           }},
             h('input', {

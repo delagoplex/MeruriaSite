@@ -19,9 +19,9 @@ function SectionBanner({ label, accent, style }) {
       <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:hex('77'), textTransform:'uppercase' }}>
         {label}
       </div>
-      <div style={{ flex:1, height:'1px', background:`linear-gradient(90deg, ${hex('44')}, rgba(124,77,255,0.2), transparent)` }} />
+      <div style={{ flex:1, height:'1px', background:`linear-gradient(90deg, ${hex('44')}, rgba(var(--purple-rgb),calc(0.2*var(--kp))), transparent)` }} />
       <svg width="5" height="5" viewBox="0 0 5 5">
-        <polygon points={pts6(5)} fill="rgba(124,77,255,0.3)" stroke="rgba(124,77,255,0.5)" strokeWidth="0.6" />
+        <polygon points={pts6(5)} fill="rgba(var(--purple-rgb),calc(0.3*var(--kp)))" stroke="rgba(var(--purple-rgb),calc(0.5*var(--kp)))" strokeWidth="0.6" />
       </svg>
     </div>
   );

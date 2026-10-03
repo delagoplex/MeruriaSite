@@ -6,7 +6,7 @@ const { useState: _bk_useState } = React;
 
 function _BekannteImg({ label, width, height, accent, style={} }) {
   return (
-    <div style={{ width, height, background:`repeating-linear-gradient(-45deg,transparent,transparent 8px,${accent}08 8px,${accent}08 9px),linear-gradient(160deg,rgba(16,10,40,0.95) 0%,rgba(6,4,18,0.98) 100%)`, border:`1px dashed ${accent}44`, borderRadius:'4px', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'10px', position:'relative', overflow:'hidden', flexShrink:0, ...style }}>
+    <div style={{ width, height, background:`repeating-linear-gradient(-45deg,transparent,transparent 8px,${accent}08 8px,${accent}08 9px),linear-gradient(160deg,rgba(var(--panel-rgb),0.95) 0%,rgba(var(--panel-rgb),0.98) 100%)`, border:`1px dashed ${accent}44`, borderRadius:'4px', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'10px', position:'relative', overflow:'hidden', flexShrink:0, ...style }}>
       <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse at 50% 50%,${accent}0e 0%,transparent 70%)` }} />
       <svg viewBox="0 0 40 40" width="32" height="32" fill="none" style={{ opacity:0.32 }}>
         <circle cx="20" cy="15" r="7" stroke={accent} strokeWidth="1.2"/>
@@ -22,15 +22,15 @@ function _BekanntePopup({ bekannte, divisionName, accent, onClose }) {
     <div style={{ position:'fixed', inset:0, zIndex:500, display:'flex', alignItems:'center', justifyContent:'center', padding:'20px' }}
       onClick={e=>{ if(e.target===e.currentTarget) onClose(); }}>
       <div style={{ position:'absolute', inset:0, background:'rgba(var(--bg-rgb),0.88)', backdropFilter:'blur(6px)' }} onClick={onClose} />
-      <div style={{ position:'relative', zIndex:1, width:'100%', maxWidth:'680px', maxHeight:'80vh', background:'rgba(var(--panel-rgb),0.97)', border:`1px solid ${accent}30`, borderRadius:'6px', display:'flex', flexDirection:'column', boxShadow:'0 24px 80px rgba(0,0,0,0.7)' }}>
+      <div style={{ position:'relative', zIndex:1, width:'100%', maxWidth:'680px', maxHeight:'calc(var(--vh, 1vh) * 80)', background:'rgba(var(--panel-rgb),0.97)', border:`1px solid ${accent}30`, borderRadius:'6px', display:'flex', flexDirection:'column', boxShadow:'0 24px 80px rgba(var(--shadow-rgb),calc(0.7 * var(--shadow-k)))' }}>
         <div style={{ padding:'18px 24px', borderBottom:`1px solid ${accent}18`, display:'flex', alignItems:'center', justifyContent:'space-between', flexShrink:0 }}>
           <div>
             <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:`${accent}77`, textTransform:'uppercase', marginBottom:'4px' }}>Lore · Meruria</div>
             <div style={{ fontFamily:'var(--font-display)', fontSize:'16px', fontWeight:'300', letterSpacing:'0.16em', color:'var(--white)', textTransform:'uppercase' }}>Bekannte Mitglieder · {divisionName}</div>
           </div>
-          <button onClick={onClose} style={{ background:'none', border:'none', cursor:'pointer', color:'rgba(var(--text2-rgb),0.4)', padding:'4px', transition:'color 0.2s', lineHeight:1 }}
+          <button onClick={onClose} style={{ background:'none', border:'none', cursor:'pointer', color:'rgba(var(--text2-rgb),calc(0.4*var(--kt) + var(--tb)))', padding:'4px', transition:'color 0.2s', lineHeight:1 }}
             onMouseEnter={e=>e.currentTarget.style.color='var(--white)'}
-            onMouseLeave={e=>e.currentTarget.style.color='rgba(var(--text2-rgb),0.4)'}>
+            onMouseLeave={e=>e.currentTarget.style.color='rgba(var(--text2-rgb),calc(0.4*var(--kt) + var(--tb)))'}>
             <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M4 4l8 8M12 4l-8 8"/></svg>
           </button>
         </div>

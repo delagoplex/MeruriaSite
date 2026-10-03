@@ -39,7 +39,7 @@ function ImageUpload({ imageUrl, onUploaded, bucket, pathPrefix, shape = 'square
         clipPath,
         borderRadius: shape === 'square' ? 4 : undefined,
         overflow: 'hidden',
-        background: 'linear-gradient(160deg, rgba(20,12,46,0.92), rgba(10,7,28,0.96))',
+        background: 'linear-gradient(160deg, rgba(var(--panel-rgb),0.92), rgba(var(--panel-rgb),0.96))',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
       }}>
         {imageUrl
@@ -47,7 +47,7 @@ function ImageUpload({ imageUrl, onUploaded, bucket, pathPrefix, shape = 'square
           : <div style={{
               display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8,
               fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.18em',
-              color: 'rgba(124,77,255,0.4)', textTransform: 'uppercase',
+              color: 'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))', textTransform: 'uppercase',
             }}>
               {uploading
                 ? <span>hochladen…</span>
@@ -67,7 +67,7 @@ function ImageUpload({ imageUrl, onUploaded, bucket, pathPrefix, shape = 'square
           <div style={{
             position: 'absolute', inset: 0,
             borderRadius: shape === 'circle' ? '50%' : 4,
-            border: '1px solid rgba(124,77,255,0.35)',
+            border: '1px solid rgba(var(--purple-rgb),calc(0.35*var(--kp)))',
             pointerEvents: 'none',
           }}/>
       }
