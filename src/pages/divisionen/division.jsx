@@ -659,7 +659,21 @@ function DivisionPage({
       borderLeft: `1px solid ${accent}22`,
       paddingLeft: '16px'
     }
-  }, division.beschreibung)), /*#__PURE__*/React.createElement("section", {
+  }, division.beschreibung), division.leitspruch && /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontStyle: 'italic',
+      fontWeight: '300',
+      fontSize: '14px',
+      lineHeight: 1.7,
+      letterSpacing: '0.04em',
+      color: `${accent}cc`,
+      marginTop: '20px',
+      paddingLeft: '16px',
+      borderLeft: `2px solid ${accent}55`
+    }
+  }, "\u201E", division.leitspruch, "\u201C")), /*#__PURE__*/React.createElement("section", {
     id: "auftraege",
     className: "div-section"
   }, /*#__PURE__*/React.createElement(SectionBanner, {
@@ -730,7 +744,28 @@ function DivisionPage({
   }, /*#__PURE__*/React.createElement(SectionBanner, {
     label: "Rangsystem",
     accent: accent
-  }), /*#__PURE__*/React.createElement("div", {
+  }), window.DIVISIONS_RANGLOGIK && /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12.5px',
+      lineHeight: 1.8,
+      color: THEME.text,
+      letterSpacing: '0.02em',
+      textWrap: 'pretty',
+      marginBottom: '18px'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.24em',
+      textTransform: 'uppercase',
+      color: `${accent}99`,
+      marginRight: '8px'
+    }
+  }, "Ranglogik"), window.DIVISIONS_RANGLOGIK), /*#__PURE__*/React.createElement("div", {
     className: "rang-list"
   }, division.raenge.map(r => {
     const isTop = r.rang <= 3;
@@ -822,7 +857,35 @@ function DivisionPage({
         color: `rgba(${THEME.dim},${dimAlpha + THEME.dimBoost})`,
         letterSpacing: '0.01em'
       }
-    }, r.beschreibung))), isTop && /*#__PURE__*/React.createElement("div", {
+    }, r.beschreibung)), r.privilegien && r.privilegien.length > 0 && /*#__PURE__*/React.createElement("ul", {
+      style: {
+        position: 'relative',
+        zIndex: 1,
+        listStyle: 'none',
+        margin: '8px 0 0',
+        padding: 0,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '3px'
+      }
+    }, r.privilegien.map((p, i) => /*#__PURE__*/React.createElement("li", {
+      key: i,
+      style: {
+        display: 'flex',
+        gap: '7px',
+        fontFamily: 'var(--font-body)',
+        fontWeight: '300',
+        fontSize: '11.5px',
+        lineHeight: 1.6,
+        color: `rgba(${THEME.dim},${dimAlpha + THEME.dimBoost})`,
+        letterSpacing: '0.01em'
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: {
+        color: `${accent}aa`,
+        flexShrink: 0
+      }
+    }, "\u2192"), p)))), isTop && /*#__PURE__*/React.createElement("div", {
       style: {
         position: 'absolute',
         left: 0,
