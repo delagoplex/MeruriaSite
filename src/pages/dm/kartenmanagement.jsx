@@ -233,7 +233,8 @@ function HexBorder({ selected, hovered, color = DEFAULT_HEX_COLOR, dashed, subma
           <defs>
             <radialGradient id={gid} cx="0.5" cy="0.5" r="0.5">
               <stop offset="0" stopColor="#000" stopOpacity="0"/>
-              <stop offset="1" stopColor="#000" stopOpacity="0.3"/>
+              <stop offset="0.45" stopColor="#000" stopOpacity="0"/>
+              <stop offset="0.93" stopColor="#000" stopOpacity="0.3"/>
             </radialGradient>
           </defs>
           <polygon points={points} fill={`url(#${gid})`} stroke="none"/>
