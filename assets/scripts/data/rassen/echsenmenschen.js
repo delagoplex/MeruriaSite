@@ -98,7 +98,7 @@
       'Waldläufer':  'Natürliche Rüstung, Schwimmen, Naturintuition — du bist für die Wildnis gemacht. Kein anderes Volk passt besser.',
       'Druide':      'Deine Verbindung zur Natur ist keine Magie — sie ist Biologie. Als Druide machst du daraus eine Philosophie.',
       'Barbar':      'Hungriger Kiefer plus Rage: du bist ein Raubtier, das sich nicht versteckt. Deine Schuppen sind deine Rüstung, dein Biss deine Klinge.',
-      'Kämpfer':     'Natürliche Rüstung, Biss, CON-Bonus — du bist robust und kampftauglich. Disziplin macht aus dir eine Naturgewalt.',
+      'Kämpfer':     'Natürliche Rüstung, Biss — du bist robust und kampftauglich. Disziplin macht aus dir eine Naturgewalt.',
       'Schurke':     'Echsenmenschen im Hinterhalt: leise, geduldig, präzise. Du wartest wie ein Krokodil — und dann schlägst du zu.',
       'Kleriker':    'Du dienst einer Gottheit der Natur. Dein Körper ist ihr Tempel — deine Schuppen ihr Zeichen.',
       'Magier':      'Was steckt hinter der mystischen Naturverbindung der Echsenmenschen? Als Magier willst du die Antwort.',
