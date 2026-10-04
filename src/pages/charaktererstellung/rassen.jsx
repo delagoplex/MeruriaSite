@@ -381,7 +381,7 @@ function CardInner({
     style: {
       position: 'absolute',
       inset: 0,
-      backgroundImage: 'url(assets/images/races/placeholder-race.png)',
+      backgroundImage: `url(${(window.RASSEN_DETAIL_INDEX?.[name]?.banner) || 'assets/images/races/placeholder-race.png'})`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       transition: 'filter 0.5s ease'
@@ -1240,9 +1240,28 @@ function App() {
   });
   const tweaks = TWEAK_DEFAULTS;
   const [headerBottom, setHeaderBottom] = useState(0);
-  const [selectedRace, setSelectedRace] = useState(null);
+  // Die geöffnete Rasse steht in der URL (?rasse=<id>), damit ein Neuladen oder ein Link beim Detail bleibt
+  const raceFromUrl = () => {
+    try {
+      const id = new URLSearchParams(location.search).get('rasse');
+      return ENTRIES.find(e => e.type === 'race' && e.id === id) || null;
+    } catch (e) { return null; }
+  };
+  const [selectedRace, setSelectedRace] = useState(raceFromUrl);
   const NAV_H = 52;
-  const handleSelect = useCallback(race => setSelectedRace(race), []);
+  const handleSelect = useCallback(race => {
+    setSelectedRace(race);
+    try { history.pushState(null, '', location.pathname + '?rasse=' + encodeURIComponent(race.id)); } catch (e) {}
+  }, []);
+  const handleClose = useCallback(() => {
+    setSelectedRace(null);
+    try { history.replaceState(null, '', location.pathname); } catch (e) {}
+  }, []);
+  useEffect(() => {
+    const onPop = () => setSelectedRace(raceFromUrl());
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
   const pageTitleRef = useRef(null);
   const handleMouseMove = useCallback(e => {
     setMouse({
@@ -1361,7 +1380,7 @@ function App() {
     return output;
   })())), /*#__PURE__*/React.createElement(SiteFooter, null), selectedRace && /*#__PURE__*/React.createElement(DetailOverlay, {
     race: selectedRace,
-    onClose: () => setSelectedRace(null)
+    onClose: handleClose
   }), !selectedRace && /*#__PURE__*/React.createElement(FloatNav, null));
 }
 ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement(App, null)));
