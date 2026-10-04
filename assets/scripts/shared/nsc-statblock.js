@@ -56,7 +56,7 @@
     function fill(s) {
       return s
         .replace(/\{titel\}/g, titel)
-        .replace(/\{attackBonus\}/g, fmtMod(attackBonus))
+        .replace(/\+?\{attackBonus\}/g, fmtMod(attackBonus))
         .replace(/\{damageDice\}/g, damageDice)
         .replace(/\{DC\}/g, dcSG);
     }
@@ -78,6 +78,8 @@
         .map(function(a) { return { name: a.name, beschreibung: fill(a.beschreibung) }; }),
     };
   }
+
+  window.computeNscStats = computeNscStats;
 
   // ── Sub-components ───────────────────────────────────────────
   function Divider(accent) {

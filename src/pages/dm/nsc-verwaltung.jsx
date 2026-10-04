@@ -457,7 +457,7 @@ function App() {
       const files = ['npc-stats-data.js','monster/monsterhandbuch-data.js','monster/almanach-der-monster-data.js',
         'monster/avernus-data.js','monster/drakkenheim-data.js','monster/flee-mortals-data.js',
         'monster/floral-dragons-data.js','monster/foliant-der-feinde-data.js','monster/ruhm-der-riesen-data.js',
-        'monster/schatzkammer-der-drachen-data.js','monster/sonstige-data.js','monster/spielbare-rassen-data.js','monster/tome-of-beasts-data.js',
+        'monster/schatzkammer-der-drachen-data.js','monster/sonstige-data.js','monster/rekrutierung-data.js','monster/tome-of-beasts-data.js',
         'monster/tome-of-beasts-2-data.js'];
       for (const f of files) {
         try {

@@ -259,9 +259,9 @@ Adding a new book: create `<book>-data.js`, declare the window variable, add it 
 | `schatzkammer-der-drachen-data.js` | `MONSTER_DATA_SCHATZKAMMER_DER_DRACHEN` | `"Schatzkammer der Drachen"` | `monster/schatzkammer/` |
 | `flee-mortals-data.js` | `MONSTER_DATA_FLEE_MORTALS` | `"Flee Mortals"` | `monster/flee-mortals/` |
 | `sonstige-data.js` | `MONSTER_DATA_SONSTIGE` | `"Sonstige"` | `monster/sonstige/` |
-| `spielbare-rassen-data.js` | `MONSTER_DATA_SPIELBARE_RASSEN` | `"Spielbare Rassen"` | Rassenbild aus `images/races/` |
+| `rekrutierung-data.js` | `MONSTER_DATA_REKRUTIERUNG` | `"Rekrutierung"` | Divisionslogo aus `images/divisions/` |
 
-`spielbare-rassen-data.js` ist **generiert**: `node tools/generate-rassen-statblocks.mjs` baut pro Rasse mit `statblock`-Daten (`assets/scripts/data/rassen/*.js`) pro angeborenem Talent einen NSC-Statblock "<Rasse> (Rasse: <Talent>)" (Standard-Humanoider HG 0, Unterart "Rasse", mit Rassenmerkmalen und diesem Talent; Rassen ohne Talentliste bekommen "<Rasse> (Rasse)"). Rassen-Daten ändern und neu generieren, nicht die Ausgabedatei von Hand bearbeiten.
+`rekrutierung-data.js` ist **generiert**: `node tools/generate-rekrutierung-nsc.mjs` baut aus `computeNscStats()` (`assets/scripts/shared/nsc-statblock.js`) und `divisions-data.js` pro Division und Rang (8 × 10) den NSC-Statblock "<Titel> (<Division>, Rang N)" (Humanoid, Unterart "NPC"; HG als Näherung nach der DMG-Tabelle). Werte in `nsc-statblock.js`/`divisions-data.js` ändern und neu generieren, nicht die Ausgabedatei von Hand bearbeiten.
 
 ### `bild` URL — Namenskonvention
 
