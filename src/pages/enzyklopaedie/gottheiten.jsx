@@ -1173,13 +1173,22 @@ function App() {
       y: e.clientY / window.innerHeight
     });
   }, []);
+  // Die geöffnete Gottheit steht in der URL (?gottheit=<id>), damit ein Neuladen oder ein Link beim Detail bleibt
+  const urlSet = (id, push) => {
+    try {
+      const u = location.pathname + (id ? '?gottheit=' + encodeURIComponent(id) : '');
+      if (push) history.pushState(null, '', u); else history.replaceState(null, '', u);
+    } catch (e) {}
+  };
   const handleEntityClick = (entity, type) => {
     setSelectedEntity(entity);
     setSelectedType(type || null);
+    urlSet(entity.id, true);
   };
   const handleBack = () => {
     setSelectedEntity(null);
     setSelectedType(null);
+    urlSet(null, false);
   };
   const allEntities = useMemo(() => {
     const gutIds = ['aurelia', 'elysarion', 'sienna', 'avalaste', 'cecillia', 'lorelei', 'vindeah', 'ferys'];
@@ -1208,12 +1217,25 @@ function App() {
     const p = allEntities[selIdx - 1];
     setSelectedEntity(p.entity);
     setSelectedType(p.type);
+    urlSet(p.entity.id, false);
   } : null;
   const onEntityNext = selIdx < allEntities.length - 1 ? () => {
     const n = allEntities[selIdx + 1];
     setSelectedEntity(n.entity);
     setSelectedType(n.type);
+    urlSet(n.entity.id, false);
   } : null;
+  useEffect(() => {
+    const sync = () => {
+      const id = new URLSearchParams(location.search).get('gottheit');
+      const it = id ? allEntities.find(i => i.entity.id === id) : null;
+      setSelectedEntity(it ? it.entity : null);
+      setSelectedType(it ? it.type : null);
+    };
+    sync();
+    window.addEventListener('popstate', sync);
+    return () => window.removeEventListener('popstate', sync);
+  }, []);
 
   // Measure the absolute document bottom of the page-title block
   useEffect(() => {

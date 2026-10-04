@@ -1252,7 +1252,23 @@ function TOCSidebar({
 
 // ── APP ────────────────────────────────────────────────
 function App() {
-  const [selectedKlasse, setSelectedKlasse] = useState(null);
+  // Die geöffnete Klasse steht in der URL (?klasse=<id>), damit ein Neuladen oder ein Link beim Detail bleibt
+  const klasseAusUrl = () => {
+    try { const id = new URLSearchParams(location.search).get('klasse'); return klassen.find(k => k.id === id) || null; } catch (e) { return null; }
+  };
+  const [selectedKlasse, setSelectedKlasseState] = useState(klasseAusUrl);
+  const setSelectedKlasse = (k, modus) => {
+    setSelectedKlasseState(k);
+    try {
+      const u = location.pathname + (k ? '?klasse=' + encodeURIComponent(k.id) : '');
+      if (k && modus !== 'replace' && !selectedKlasse) history.pushState(null, '', u); else history.replaceState(null, '', u);
+    } catch (e) {}
+  };
+  useEffect(() => {
+    const onPop = () => setSelectedKlasseState(klasseAusUrl());
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
   const [mouse, setMouse] = useState({
     x: 0.5,
     y: 0.5
