@@ -1,7 +1,4 @@
-// Page entry for /dm/rekrutierungspreise.html
-import '../../components/nav.jsx';
-import '../../components/site-gate.jsx';
-import '../../components/page-hero.jsx';
+// Tab "Preise" von /dm/rekrutierung.html (window.RekrutierungPreise)
 
 ;(function () {
 (function () {
@@ -9,36 +6,17 @@ const h         = React.createElement;
 const useState  = React.useState;
 const useEffect = React.useEffect;
 
-const { SiteNav, SiteGate, PageHero } = window;
-const DIVS = window.DIVISIONS_DATA || [];
 
 const DEFAULT_RANG_PREISE = {1:1920,2:1280,3:855,4:570,5:380,6:255,7:170,8:115,9:75,10:50};
 
+// Ein Preissatz für alle Divisionen; gespeichert unter der Division 'kuratoren'.
+const PREIS_DIVISION = 'kuratoren';
+const PREIS_DIV = { id: PREIS_DIVISION, name: 'Alle Divisionen', accent: '#a08cff', raenge: [] };
+
 function getRangPreis(allPreise, divId, rang) {
-  var dp = allPreise && allPreise[divId];
+  var dp = allPreise && allPreise[PREIS_DIVISION];
   if (dp && dp[rang] !== undefined) return dp[rang];
   return DEFAULT_RANG_PREISE[rang] || 50;
-}
-
-// ── DivisionTab ──────────────────────────────────────────────
-function DivisionTab(props) {
-  var div = props.div, active = props.active, onClick = props.onClick;
-  var r = parseInt(div.accent.slice(1,3),16), g = parseInt(div.accent.slice(3,5),16), b = parseInt(div.accent.slice(5,7),16);
-  var cA = function(a) { return 'rgba('+r+','+g+','+b+','+a+')'; };
-  return h('button', { onClick: onClick, style: {
-    display: 'flex', alignItems: 'center', gap: 8, padding: '7px 13px',
-    background: active ? cA(0.18) : 'rgba(var(--panel-rgb),0.5)',
-    border: '1px solid ' + (active ? div.accent : 'rgba(var(--purple-rgb),calc(0.15*var(--kp)))'),
-    borderRadius: 3, cursor: 'pointer', flexShrink: 0,
-    boxShadow: active ? '0 0 12px '+cA(0.22) : 'none', transition: 'all 0.15s',
-  }},
-    h('img', { src: div.logo, width: 20, height: 20, style: { objectFit:'contain', opacity: active?1:0.5 }, alt: '' }),
-    h('span', { style: {
-      fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.16em',
-      textTransform: 'uppercase', color: active ? div.accent : 'color-mix(in srgb, rgba(180,170,220,0.5), rgb(var(--ink-rgb)) var(--cm))',
-      whiteSpace: 'nowrap',
-    }}, div.name.replace(/^Die\s+/,''))
-  );
 }
 
 // ── Preistabelle für eine Division ──────────────────────────
@@ -85,7 +63,7 @@ function PreisTabelle(props) {
       ),
       h('tbody', null,
         [1,2,3,4,5,6,7,8,9,10].map(function(rang) {
-          var titel = (div.raenge.find(function(x){return x.rang===rang;})||{}).titel || ('Rang '+rang);
+          var titel = 'Rang ' + rang;
           var preis = local[rang];
           var isSaving = saving[div.id+':'+rang];
           var isSaved  = saved[div.id+':'+rang];
@@ -145,7 +123,7 @@ function PreisTabelle(props) {
       )
     ),
     // Alle speichern für diese Division
-    h('div', { style: { padding:'12px 16px', borderTop:'1px solid '+cA(0.1) } },
+    h('div', { style: { padding:'12px 16px', borderTop:'1px solid '+cA(0.1), display:'flex', justifyContent:'flex-end' } },
       h('button', {
         onClick: function() { for(var r=1;r<=10;r++) onSave(div.id, r, local[r]); },
         style: {
@@ -154,14 +132,13 @@ function PreisTabelle(props) {
           color: cA(0.85), background: cA(0.1), border: '1px solid '+cA(0.3),
           borderRadius:3, cursor:'pointer', transition:'all 0.15s',
         },
-      }, 'Alle speichern — ' + div.name.replace(/^Die\s+/,''))
+      }, 'Alle speichern')
     )
   );
 }
 
 // ── App ──────────────────────────────────────────────────────
 function App() {
-  var _divIdx  = useState(0);         var divIdx=_divIdx[0]; var setDivIdx=_divIdx[1];
   var _loading = useState(true);      var loading=_loading[0]; var setLoading=_loading[1];
   var _all     = useState(null);      var allPreise=_all[0]; var setAll=_all[1];
   var _saving  = useState({});        var saving=_saving[0]; var setSaving=_saving[1];
@@ -201,51 +178,25 @@ function App() {
       });
   }
 
-  var div = DIVS[divIdx] || DIVS[0];
+  return h('div', { style: { maxWidth:900 } },
 
-  return h(SiteGate, null,
-    h('div', { style: { minHeight:'calc(var(--vh, 1vh) * 100)', background:'var(--bg)' } },
-      h(SiteNav, null),
+    loading
+      ? h('div', { style: { fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))', textTransform:'uppercase', padding:'24px 0' }}, '◈ Lade…')
+      : h(PreisTabelle, { div:PREIS_DIV, allPreise:allPreise, onSave:handleSave, saving:saving, saved:saved }),
 
-      // Header
-      h(PageHero, {
-        kicker: 'Division · Rekrutierung',
-        title:  'Rekrutierungspreise',
-        sub:    'Grundpreis in Hade pro Rang-Schritt — pro Division einstellbar. Gebühr = Rangunterschied × Grundpreis des NSC-Rangs in seiner Division.',
-      }),
-
-      h('div', { style: { maxWidth:900, margin:'0 auto', padding:'40px 24px 80px' } },
-
-        h('div', { style: { height:1, background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.4*var(--kp))), transparent)', marginBottom:24 }}),
-
-        // Division-Picker
-        h('div', { style: { fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))', marginBottom:12 }}, 'Division'),
-        h('div', { style: { display:'flex', flexWrap:'wrap', gap:7, marginBottom:28 } },
-          DIVS.map(function(d, i) {
-            return h(DivisionTab, { key:d.id, div:d, active:i===divIdx, onClick:function(){ setDivIdx(i); } });
-          })
-        ),
-
-        loading
-          ? h('div', { style: { fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))', textTransform:'uppercase', padding:'24px 0' }}, '◈ Lade…')
-          : h(PreisTabelle, { div:div, allPreise:allPreise, onSave:handleSave, saving:saving, saved:saved }),
-
-        // Formel-Erklärung
-        h('div', { style: { padding:'12px 16px', background:'rgba(var(--purple-rgb),calc(0.04*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))', borderRadius:3 } },
-          h('span', { style: { fontFamily:'var(--font-body)', fontSize:12, fontWeight:300, color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', lineHeight:1.6 } },
-            h('strong', { style: { color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))', fontWeight:500 } }, 'Gebühr: '),
-            '(Spieler-Rang − NSC-Rang) × Grundpreis des NSC-Rangs (NSC-Division) × Tage  ·  ',
-            h('strong', { style: { color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))', fontWeight:500 } }, 'Honorar: '),
-            '(NSC-Rang − Spieler-Rang) × Grundpreis des Spieler-Rangs (Spieler-Division) × Tage'
-          )
-        )
+    // Formel-Erklärung
+    h('div', { style: { padding:'12px 16px', background:'rgba(var(--purple-rgb),calc(0.04*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))', borderRadius:3 } },
+      h('span', { style: { fontFamily:'var(--font-body)', fontSize:12, fontWeight:300, color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', lineHeight:1.6 } },
+        h('strong', { style: { color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))', fontWeight:500 } }, 'Gebühr: '),
+        '(Spieler-Rang − NSC-Rang) × Grundpreis des NSC-Rangs × Tage  ·  ',
+        h('strong', { style: { color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))', fontWeight:500 } }, 'Honorar: '),
+        '(NSC-Rang − Spieler-Rang) × Grundpreis des Spieler-Rangs × Tage'
       )
     )
   );
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(h(App, null));
+window.RekrutierungPreise = App;
 })();
 
 })();
-

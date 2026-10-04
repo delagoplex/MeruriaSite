@@ -178,7 +178,7 @@ const NAV = [
       { label: 'Charakterverwaltung', href: '/dm/charakterverwaltung.html', locked: true },
       { label: 'Kartenmanagement', href: '/dm/kartenmanagement.html', locked: true },
       { label: 'Kolonisierung & Bau', href: '/dm/kolonisierung-und-bau.html', locked: true },
-      { label: 'Rekrutierungspreise', href: '/dm/rekrutierungspreise.html', locked: true },
+      { label: 'Rekrutierung', href: '/dm/rekrutierung.html', locked: true },
       { label: 'Rezeptverwaltung', href: '/dm/rezeptverwaltung.html', locked: true },
       { label: 'Segen & Flüche', href: '/dm/segen-und-flueche.html', locked: true },
     ],

@@ -234,5 +234,13 @@
   {
     "from": "Dhampir.html",
     "to": "/charaktererstellung/rassen-detail.html?rasse=Dhampire"
+  },
+  {
+    "from": "dm/rekrutierungspreise.html",
+    "to": "/dm/rekrutierung.html?tab=preise"
+  },
+  {
+    "from": "dm/rekrutierungsanfragen.html",
+    "to": "/dm/rekrutierung.html?tab=anfragen"
   }
 ]
