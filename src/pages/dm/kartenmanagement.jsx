@@ -216,11 +216,11 @@ Object.assign(window, {
 
 var { useState: uS2, useRef: uR2 } = React;
 
-function HexBorder({ selected, hovered, color = DEFAULT_HEX_COLOR, dashed, uid }) {
+function HexBorder({ selected, hovered, color = DEFAULT_HEX_COLOR, invisible, uid }) {
   const w = HEX_W, h = HEX_H;
   const points = `${w/2},0 ${w},${h/4} ${w},${h*3/4} ${w/2},${h} 0,${h*3/4} 0,${h/4}`;
   // Kontur nach Sichtbarkeit (sichtbar grün, unsichtbar orange) und innen auslaufender Verlauf (30 % außen → 0 % innen)
-  const base = dashed ? '#ED7A60' : '#6AF287';
+  const base = invisible ? '#ED7A60' : '#6AF287';
   const strokeColor = selected
     ? `color-mix(in oklch, white 40%, ${base})`
     : (hovered ? `color-mix(in oklch, white 18%, ${base})` : base);
@@ -237,10 +237,10 @@ function HexBorder({ selected, hovered, color = DEFAULT_HEX_COLOR, dashed, uid }
         </radialGradient>
       </defs>
       <polygon points={points} fill={`url(#${gid})`} stroke="none"/>
-      <polygon points={points} fill="none" style={{ stroke: strokeColor, strokeOpacity: opacity }} strokeWidth={sw} strokeLinejoin="miter" strokeDasharray={dashed ? '8 6' : undefined}/>
+      <polygon points={points} fill="none" style={{ stroke: strokeColor, strokeOpacity: opacity }} strokeWidth={sw} strokeLinejoin="miter"/>
       <polygon
         points={`${w/2},6 ${w-5},${h/4+2} ${w-5},${h*3/4-2} ${w/2},${h-6} 5,${h*3/4-2} 5,${h/4+2}`}
-        fill="none" style={{ stroke: strokeColor }} strokeWidth="0.5" strokeOpacity={selected ? 0.45 : 0.2} strokeDasharray={dashed ? '8 6' : undefined}
+        fill="none" style={{ stroke: strokeColor }} strokeWidth="0.5" strokeOpacity={selected ? 0.45 : 0.2}
       />
     </svg>
   );
@@ -255,7 +255,7 @@ function HexTile({ hex, selected, hovered, editing, onSelect, onHoverChange, onG
     left: x - HEX_W/2, top: y - HEX_H/2,
     pointerEvents: 'auto',
     zIndex: selected ? 12 : (hovered ? 8 : 1),
-    opacity: gripDragging ? 0.35 : (hex.visible ? 1 : 0.5),
+    opacity: gripDragging ? 0.35 : 1,
     transition: 'opacity 0.15s',
     '--hex-color': tcolor,
   };
@@ -277,7 +277,7 @@ function HexTile({ hex, selected, hovered, editing, onSelect, onHoverChange, onG
           ) : null}
         </div>
 
-        <HexBorder selected={selected} hovered={hovered} color={tcolor} dashed={!hex.visible} uid={hex.q + '_' + hex.r}/>
+        <HexBorder selected={selected} hovered={hovered} color={tcolor} invisible={!hex.visible} uid={hex.q + '_' + hex.r}/>
 
         {!hex.visible && (
           <div style={{ position:'absolute', top:'22%', left:'50%', transform:'translateX(-50%)', pointerEvents:'none', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(220,80,120,0.75)', textShadow:'0 1px 4px rgba(0,0,0,0.8)' }}>✕ Verborgen</div>
