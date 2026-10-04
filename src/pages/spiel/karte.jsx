@@ -649,9 +649,47 @@ Object.assign(window, { InfoPanel });
 var { useState: uS5, useEffect: uE5, useRef: uR5, useCallback: uC5, useMemo: uM5 } = React;
 
 var MIN_ZOOM = 0.35;
-var MAX_ZOOM = 5;
+var MAX_ZOOM = 5;          // Bild-Karten (Orte)
+var HEX_MAX_ZOOM = 1.5;    // Hex-Karten: höchstens 150 %
+var FOCUS_ZOOM = 1.5;
 var PANEL_W  = 440;
-var FOCUS_ZOOM = 3.2;
+var HEX_INNER_SCALE = 0.955;  // wie .mk-hex-inner in karte.css
+
+/* Umriss für den Hintergrund: nur sichtbare Hexfelder, dazu die Lücken zwischen zwei sichtbaren Nachbarn
+   (Brücke über die gemeinsame Kante) und die Dreiecke, wo drei sichtbare Hexfelder zusammenstoßen. */
+function hexBgClipPolys(list) {
+  const s = HEX_INNER_SCALE;
+  const have = new Map(list.map(h => [hexKey(h.q, h.r), h]));
+  const dirs = NEIGHBORS.map(n => { const p = axialToPixel(n.dq, n.dr); const l = Math.hypot(p.x, p.y); return { dq:n.dq, dr:n.dr, x:p.x / l, y:p.y / l }; });
+  // nach Bildschirmwinkel sortiert: aufeinanderfolgende Richtungen sind echte Nachbarn
+  dirs.sort((a, b) => Math.atan2(a.y, a.x) - Math.atan2(b.y, b.x));
+  const out = [];
+  const pts = a => a.map(p => p[0].toFixed(2) + ',' + p[1].toFixed(2)).join(' ');
+  const shrink = (c, v) => [c.x + s * (v[0] - c.x), c.y + s * (v[1] - c.y)];
+  list.forEach(h => {
+    const c = axialToPixel(h.q, h.r);
+    const corner = i => {  // Ecke zwischen Richtung i und i+1
+      const a = dirs[((i % 6) + 6) % 6], b = dirs[(((i + 1) % 6) + 6) % 6];
+      const mx = a.x + b.x, my = a.y + b.y, l = Math.hypot(mx, my);
+      return [c.x + HEX_SIZE * mx / l, c.y + HEX_SIZE * my / l];
+    };
+    out.push(pts([0, 1, 2, 3, 4, 5].map(i => shrink(c, corner(i)))));
+    dirs.forEach((d, i) => {
+      const nb = have.get(hexKey(h.q + d.dq, h.r + d.dr));
+      if (!nb) return;
+      const nc = axialToPixel(nb.q, nb.r);
+      const va = corner(i - 1), vb = corner(i);   // Endpunkte der gemeinsamen Kante
+      out.push(pts([shrink(c, va), shrink(c, vb), shrink(nc, vb), shrink(nc, va)]));
+      const d2 = dirs[(i + 1) % 6];
+      const nb2 = have.get(hexKey(h.q + d2.dq, h.r + d2.dr));
+      if (nb2) {
+        const nc2 = axialToPixel(nb2.q, nb2.r);
+        out.push(pts([shrink(c, vb), shrink(nc, vb), shrink(nc2, vb)]));
+      }
+    });
+  });
+  return out;
+}
 
 function HexLabel({ hex }) {
   if (!hex.name && !hex.terrain) return null;
@@ -792,8 +830,9 @@ function MerMapPlayer() {
     e.preventDefault(); cancelAnim(); setWorldAnimating(true); setWorldAnimating(false);
     const factor = Math.exp(-e.deltaY * 0.0015);
     setCamera((c) => {
-      const minZoom = mapMetaRef.current.kind === 'image' ? 0.05 : MIN_ZOOM;
-      const nextZoom = Math.max(minZoom, Math.min(MAX_ZOOM, c.zoom * factor));
+      const isImg = mapMetaRef.current.kind === 'image';
+      const minZoom = isImg ? 0.05 : MIN_ZOOM;
+      const nextZoom = Math.max(minZoom, Math.min(isImg ? MAX_ZOOM : HEX_MAX_ZOOM, c.zoom * factor));
       const rect = stageRef.current.getBoundingClientRect();
       const sx = e.clientX - rect.left, sy = e.clientY - rect.top;
       const cx = panelOpen ? (rect.width - PANEL_W) / 2 : rect.width / 2;
@@ -881,8 +920,9 @@ function MerMapPlayer() {
   const zoomBy = (factor) => {
     cancelAnim();
     setCamera((c) => {
-      const minZoom = mapMetaRef.current.kind === 'image' ? 0.05 : MIN_ZOOM;
-      return { ...c, zoom: Math.max(minZoom, Math.min(MAX_ZOOM, c.zoom * factor)) };
+      const isImg = mapMetaRef.current.kind === 'image';
+      const minZoom = isImg ? 0.05 : MIN_ZOOM;
+      return { ...c, zoom: Math.max(minZoom, Math.min(isImg ? MAX_ZOOM : HEX_MAX_ZOOM, c.zoom * factor)) };
     });
   };
 
@@ -907,6 +947,7 @@ function MerMapPlayer() {
   const worldTx = `translate(${centerX}px, ${centerY}px) scale(${camera.zoom}) translate(${-camera.x}px, ${-camera.y}px)`;
 
   const hexList = Object.values(hexes);
+  const bgClip = uM5(() => hexBgClipPolys(hexList), [hexes]);
   const selectedHex = selectedKey ? hexes[selectedKey] : null;
   const isImageMap = mapMeta.kind === 'image';
   const floors = mapMeta.floors || [];
@@ -1005,17 +1046,27 @@ function MerMapPlayer() {
         {!isLoading && !isImageMap && (
           <div ref={worldRef} className={`mk-world${bgUrl ? ' has-bg' : ''}`} style={{ transform: worldTx, '--zoom': camera.zoom, '--label-scale': 1 / Math.pow(camera.zoom, 0.25) }}>
             {bgUrl && (
-              <img
-                src={bgUrl}
-                style={{
-                  position:'absolute', left:0, top:0,
-                  transform:`translate(${bgTransform.x}px,${bgTransform.y}px) scale(${bgTransform.scale}) translate(-50%,-50%)`,
-                  transformOrigin:'0 0',
-                  maxWidth:'none', zIndex:0, pointerEvents:'none', userSelect:'none', opacity:0.9,
-                }}
-                alt=""
-                draggable={false}
-              />
+              <React.Fragment>
+                <svg width="0" height="0" style={{ position:'absolute' }} aria-hidden="true">
+                  <clipPath id="mk-bg-clip" clipPathUnits="userSpaceOnUse">
+                    {bgClip.map((pts, i) => <polygon key={i} points={pts}/>)}
+                  </clipPath>
+                </svg>
+                {/* Hintergrund nur auf sichtbaren Hexfeldern (und den Lücken zwischen sichtbaren Nachbarn) */}
+                <div style={{ position:'absolute', left:0, top:0, width:0, height:0, clipPath:'url(#mk-bg-clip)', zIndex:0, pointerEvents:'none' }}>
+                  <img
+                    src={bgUrl}
+                    style={{
+                      position:'absolute', left:0, top:0,
+                      transform:`translate(${bgTransform.x}px,${bgTransform.y}px) scale(${bgTransform.scale}) translate(-50%,-50%)`,
+                      transformOrigin:'0 0',
+                      maxWidth:'none', userSelect:'none', opacity:0.9,
+                    }}
+                    alt=""
+                    draggable={false}
+                  />
+                </div>
+              </React.Fragment>
             )}
             {hexList.map((h) => (
               <HexTile
