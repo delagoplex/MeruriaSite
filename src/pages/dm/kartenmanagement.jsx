@@ -216,30 +216,27 @@ Object.assign(window, {
 
 var { useState: uS2, useRef: uR2 } = React;
 
-function HexBorder({ selected, hovered, color = DEFAULT_HEX_COLOR, dashed, submap, uid }) {
+function HexBorder({ selected, hovered, color = DEFAULT_HEX_COLOR, dashed, uid }) {
   const w = HEX_W, h = HEX_H;
   const points = `${w/2},0 ${w},${h/4} ${w},${h*3/4} ${w/2},${h} 0,${h*3/4} 0,${h/4}`;
-  // Hex mit Unterkarte: schwarze Kontur und innen auslaufender Schatten (30 % außen → 0 % innen)
+  // Kontur nach Sichtbarkeit (sichtbar grün, unsichtbar orange) und innen auslaufender Verlauf (30 % außen → 0 % innen)
+  const base = dashed ? '#ED7A60' : '#6AF287';
   const strokeColor = selected
-    ? `color-mix(in oklch, white 40%, ${color})`
-    : (hovered ? `color-mix(in oklch, white 18%, ${color})` : (submap ? '#000' : color));
-  const opacity = selected ? 1 : (hovered ? 0.9 : (submap ? 1 : 0.6));
+    ? `color-mix(in oklch, white 40%, ${base})`
+    : (hovered ? `color-mix(in oklch, white 18%, ${base})` : base);
+  const opacity = selected ? 1 : (hovered ? 0.9 : 1);
   const gid = 'mk-sub-' + String(uid || 'x').replace(/[^a-z0-9_-]/gi, '_');
   const sw = selected ? 2.2 : 1.4;
   return (
     <svg className="mk-hex-border" viewBox={`0 0 ${w} ${h}`} width={w} height={h} preserveAspectRatio="none" style={{ overflow: 'visible' }}>
-      {submap && (
-        <React.Fragment>
-          <defs>
-            <radialGradient id={gid} cx="0.5" cy="0.5" r="0.5">
-              <stop offset="0" stopColor="#000" stopOpacity="0"/>
-              <stop offset="0.45" stopColor="#000" stopOpacity="0"/>
-              <stop offset="0.93" stopColor="#000" stopOpacity="0.3"/>
-            </radialGradient>
-          </defs>
-          <polygon points={points} fill={`url(#${gid})`} stroke="none"/>
-        </React.Fragment>
-      )}
+      <defs>
+        <radialGradient id={gid} cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0" stopColor="#21224a" stopOpacity="0"/>
+          <stop offset="0.45" stopColor="#21224a" stopOpacity="0"/>
+          <stop offset="0.93" stopColor="#21224a" stopOpacity="0.3"/>
+        </radialGradient>
+      </defs>
+      <polygon points={points} fill={`url(#${gid})`} stroke="none"/>
       <polygon points={points} fill="none" style={{ stroke: strokeColor, strokeOpacity: opacity }} strokeWidth={sw} strokeLinejoin="miter" strokeDasharray={dashed ? '8 6' : undefined}/>
       <polygon
         points={`${w/2},6 ${w-5},${h/4+2} ${w-5},${h*3/4-2} ${w/2},${h-6} 5,${h*3/4-2} 5,${h/4+2}`}
@@ -280,7 +277,7 @@ function HexTile({ hex, selected, hovered, editing, onSelect, onHoverChange, onG
           ) : null}
         </div>
 
-        <HexBorder selected={selected} hovered={hovered} color={tcolor} dashed={!hex.visible} submap={!!hex.has_submap} uid={hex.q + '_' + hex.r}/>
+        <HexBorder selected={selected} hovered={hovered} color={tcolor} dashed={!hex.visible} uid={hex.q + '_' + hex.r}/>
 
         {!hex.visible && (
           <div style={{ position:'absolute', top:'22%', left:'50%', transform:'translateX(-50%)', pointerEvents:'none', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(220,80,120,0.75)', textShadow:'0 1px 4px rgba(0,0,0,0.8)' }}>✕ Verborgen</div>
