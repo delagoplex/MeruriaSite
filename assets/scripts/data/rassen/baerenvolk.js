@@ -2,7 +2,7 @@
 (window.RASSEN_DETAIL_DATA = window.RASSEN_DETAIL_DATA || {})['Bärenvolk'] = {
   name: 'Bärenvolk', accent: '#8b5e3c',
   subtitle: 'Kinder des Waldes · Hüter der Nadelwälder',
-  tags: ['Humanoid','Mittelgroß','9 m · 4,5 m Klettern','Feiner Geruchssinn','Meistens Rechtschaffen'],
+  tags: ['Humanoid','Mittelgroß','9 m · 9 m Klettern','Feiner Geruchssinn','Meistens Rechtschaffen'],
   headerImage: null,
   lore: {
     intro: [
@@ -110,7 +110,7 @@
     },
   },
   koerperlicherMerkmale: {
-    bewegungsrate:   '9 m (Gehen), 4,5 m (Klettern)',
+    bewegungsrate:   '9 m (Gehen), 9 m (Klettern)',
     volljaehrigkeit: '15 Jahre',
     lebenserwartung: 'bis zu 95 Jahre',
     groesse:  { kategorie:'Mittelgroß', min:'180 cm', max:'210 cm', formel:'198 cm + 2W8 · 0,5 cm' },
@@ -125,11 +125,12 @@
       { name:'Größenkategorie',     text:'Mittelgroß (180–210 cm, 181–250 kg).' },
       { name:'Dunkelsicht',         text:'Du kannst in schwachem Licht innerhalb von 18 Metern so sehen, als wäre es helles Licht, und in Dunkelheit so, als wäre es schwaches Licht. In der Dunkelheit kannst du keine Farben unterscheiden, nur Grautöne.' },
       { name:'Feiner Geruchs- und Gehörsinn', text:'Du hast Vorteil auf Weisheit-(Wahrnehmungs)-Würfe, die auf Schall oder Geruch beruhen.' },
+      { name:'Klimmkrallen',         text:'Du hast eine Kletterbewegungsrate, die deiner Schrittbewegungsrate entspricht.' },
       { name:'Klauen',              text:'Deine großen Klauen gelten als natürliche Waffen, die als unbewaffnete Angriffe eingesetzt werden können. Bei einem Treffer verursachen sie Hiebschaden in Höhe von 1W6 + deinem Stärkemodifikator.' },
       { name:'Natürliche Instinkte', text:'Du hast Übung in den Fertigkeiten Einschüchtern und Überleben.' },
       { name:'Kraftvolle Statur',   text:'Du giltst als eine Größenkategorie größer, wenn das maximale Gewicht bestimmt wird, das du tragen, schieben, ziehen oder heben kannst.' },
       { name:'Bärensprache',        text:'Du kannst einfache Ideen mit Bären durch die Bärenvolkssprache, Gesten und Düfte kommunizieren. Die Bärenvolkssprache ist sehr primitiv und besteht aus gutturalem Grunzen und gelegentlichen Ausrufsbrüllen.' },
-      { name:'Angeborenes Talent',  text:null, talente:[] },
+      { name:'Angeborenes Talent',  text:null, talente:['Wintervorrat', 'Bärenumarmung', 'Hüter des Baus'] },
     ],
   },
 };

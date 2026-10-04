@@ -2949,5 +2949,633 @@ window.TALENTE_DATA = [
     ],
     kategorie: "Allgemein",
     angeboren: true
+  },
+  {
+    id: "alraunenschrei",
+    name: "Alraunenschrei",
+    voraussetzung: "Alraunen",
+    kurzbeschreibung: "Du trägst den Zorn des Bodens, auf dem du gekeimt bist, als Schrei in dir.",
+    beschreibung: [
+      "Die meisten Alraunen lassen ihre Stimme nur leise tönen. Du bist dort gekeimt, wo die Erde laut war, auf einem Schlachtfeld oder einem Richtplatz, und hast den Zorn dieses Bodens als Schrei in dir behalten. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Du kannst als Aktion einen gellenden Ruf ausstoßen. Jede Kreatur in 9 m, die dich hören kann, muss einen Konstitutionsrettungswurf ablegen (SG = 8 + dein Übungsbonus + dein Konstitutionsmodifikator).",
+      "Bei einem Misserfolg hat das Ziel bis zum Ende seines nächsten Zuges Nachteil auf Angriffswürfe und kann keine Reaktionen verwenden. Misslingt der Rettungswurf um 5 oder mehr, ist das Ziel zusätzlich bis zum Ende seines nächsten Zuges betäubt.",
+      "Du kannst diese Fähigkeit so oft einsetzen, wie es deinem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung. Nach dem Ruf bist du selbst bis zum Ende deines nächsten Zuges taub."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "wurzelschlag",
+    name: "Wurzelschlag",
+    voraussetzung: "Alraunen",
+    kurzbeschreibung: "Du wuchsest, wo jeder Halt wegbrach, und krallst dich so tief fest wie keine andere Alraune.",
+    beschreibung: [
+      "Die meisten Alraunen ziehen weiter, sobald ihnen der Boden nicht mehr gefällt. Du bist an einem Hang oder in einem Sturmgebiet aufgewachsen, wo jeder Halt wegbrechen wollte, und hast gelernt, dich so tief festzukrallen, dass dich nichts mehr fortbekommt. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Du kannst als Bonusaktion Wurzeln in natürlichen Boden schlagen. Solange du verwurzelt bist, beträgt deine Bewegungsrate 0 m, und du hast Vorteil auf Rettungswürfe gegen Umgeworfen und Wegstoßen.",
+      "Zu Beginn jedes deiner Züge erhältst du Trefferpunkte in Höhe deines Konstitutionsmodifikators zurück (mindestens 1), solange du mindestens 1 Trefferpunkt hast.",
+      "Als Bonusaktion kannst du die Wurzeln wieder lösen."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "sonnenkind",
+    name: "Sonnenkind",
+    voraussetzung: "Alraunen",
+    kurzbeschreibung: "In kargem Boden gekeimt, nährst du dich vom Licht und welkst ohne es.",
+    beschreibung: [
+      "Die meisten Alraunen leben von Erde und gelegentlichem Licht. Deine Wurzeln fanden in kargem Boden kaum Nahrung, und so lernte dein Blattwerk, das Sonnenlicht fast allein zu trinken. Dafür welkst du, wenn die Sonne zu lange fehlt. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Eine Stunde in direktem Sonnenlicht ersetzt für dich die Nahrung und das Wasser eines Tages.",
+      "Bei Tageslicht hast du Vorteil auf Rettungswürfe gegen Gift und Krankheiten.",
+      "Verbringst du mehr als 24 Stunden ohne Sonnenlicht, erhältst du 1 Stufe Erschöpfung."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "wintervorrat",
+    name: "Wintervorrat",
+    voraussetzung: "Bärenvolk",
+    kurzbeschreibung: "Ein Hungerwinter hat dich gelehrt, Vorrat im Körper anzulegen.",
+    beschreibung: [
+      "Die meisten Bärenvolk fressen sich nur satt. Du hast einen Winter erlebt, der deinen Bau fast verhungern ließ, und dein Körper legt seither Vorrat an, als wüsste er, was kommt. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Hast du zu Beginn einer langen Rast eine volle Mahlzeit gegessen, erhältst du am Ende der Rast temporäre Trefferpunkte in Höhe deiner Stufe + deines Konstitutionsmodifikators.",
+      "Du kommst doppelt so lange ohne Nahrung aus, bevor Mangel dir Erschöpfung bringt.",
+      "Honig oder anderes Süßes als Gabe gibt dir Vorteil auf Charismawürfe gegenüber Bären und bärenartigen Tieren."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "baerenumarmung",
+    name: "Bärenumarmung",
+    voraussetzung: "Bärenvolk",
+    kurzbeschreibung: "Eine alte Matriarchin hat dir beigebracht, einen Gegner nicht mehr loszulassen.",
+    beschreibung: [
+      "Die meisten Bärenvolk schlagen zu und gehen wieder auf Abstand. Du hast von einer alten Matriarchin gelernt, einen Gegner zu umfassen und nicht mehr loszulassen. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Triffst du mit deinen Klauen eine Kreatur, die höchstens eine Größe größer ist als du, kannst du sie als Bonusaktion packen (Athletik gegen deren Athletik oder Akrobatik).",
+      "Solange du packst, erleidet das Ziel zu Beginn deines Zuges Wuchtschaden in Höhe deines Stärkemodifikators (mindestens 1).",
+      "Hältst du jemanden gepackt, kannst du mit deinen Klauen keine anderen Ziele angreifen."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "hueter-des-baus",
+    name: "Hüter des Baus",
+    voraussetzung: "Bärenvolk",
+    kurzbeschreibung: "Du bewachtest einen Bau, dessen Bewohner nie zu Schaden kommen durften.",
+    beschreibung: [
+      "Die meisten Bärenvolk sorgen sich vor allem um ihre eigene Familie. Du hast als Wächter eines Baus gedient, dessen Bewohner nie zu Schaden kommen durften. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Wird ein Verbündeter in 1,5 m von dir getroffen, kannst du als Reaktion dazwischengehen: Der Schaden halbiert sich, und du bewegst dich bis zu 1,5 m. Das geht so oft, wie es deinem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung.",
+      "Fällt ein Verbündeter in 9 m auf 0 Trefferpunkte, hast du bis zum Ende deines nächsten Zuges Vorteil auf Angriffswürfe."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "tiefenwanderer",
+    name: "Tiefenwanderer",
+    voraussetzung: "Cnidaran",
+    kurzbeschreibung: "Du bist an der Tiefseekante aufgewachsen und findest dich im Dunkel zurecht.",
+    beschreibung: [
+      "Die meisten Cnidaran kennen nur das flache Riff. Du bist an der Tiefseekante aufgewachsen, wo kein Licht mehr hinreicht. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Du erhältst Dunkelsicht in einem Umkreis von 18 m.",
+      "Du hast Vorteil auf Rettungswürfe gegen Kälte.",
+      "Unter Wasser bist du nie verloren: Du weißt stets, wo oben ist und in welcher Richtung die nächste Küste liegt."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "giftgeissel",
+    name: "Giftgeißel",
+    voraussetzung: "Cnidaran (Nematocyst)",
+    kurzbeschreibung: "Du hast gelernt, dein Gift in Wellen wirken zu lassen.",
+    beschreibung: [
+      "Die meisten Nematocyst tragen ihr Gift nur auf Waffen. Du hast gelernt, es in dir selbst zu steigern. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Trifft dein Stachelfortsatz, muss das Ziel einen Konstitutionsrettungswurf ablegen (SG = 8 + dein Übungsbonus + dein Konstitutionsmodifikator). Bei einem Misserfolg ist es bis zum Beginn seines nächsten Zuges vergiftet.",
+      "Zu Beginn seines nächsten Zuges wiederholt das Ziel den Rettungswurf. Misslingt auch dieser, ist es bis zum Ende dieses Zuges gelähmt.",
+      "Danach muss dein Stachel bis zur nächsten kurzen Rast regenerieren, bevor du diese Fähigkeit erneut einsetzen kannst."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "peitschender-fortsatz",
+    name: "Peitschender Fortsatz",
+    voraussetzung: "Cnidaran (Nematocyst)",
+    kurzbeschreibung: "Du führst deinen Fortsatz wie eine Peitsche.",
+    beschreibung: [
+      "Die meisten Nematocyst kämpfen mit dem Stachel wie mit einem Dolch. Du führst ihn wie eine Peitsche und hast seine Reichweite auf 3 m gebracht. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Dein Stachelfortsatz hat eine Reichweite von 3 m.",
+      "Statt Schaden zu verursachen, kannst du mit ihm ein Ziel in Reichweite packen und bis zu 3 m zu dir heranziehen.",
+      "Bewegt sich eine Kreatur in deiner Reichweite auf dich zu, kannst du ihr als Reaktion einen Angriff mit dem Stachel geben. Das geht so oft, wie es deinem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "leuchtendes-gespinst",
+    name: "Leuchtendes Gespinst",
+    voraussetzung: "Cnidaran (Shimmerskin)",
+    kurzbeschreibung: "Du webst deine Muster zu einem Bann.",
+    beschreibung: [
+      "Die meisten Shimmerskin nutzen ihre Muster nur, um zu gefallen. Du kannst sie zu einem Bann weben. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Als Aktion lässt du farbige Muster über deinen Körper wandern. Ein Ziel in 9 m, das dich sehen kann, muss einen Weisheitsrettungswurf ablegen (SG = 8 + dein Übungsbonus + dein Charismamodifikator).",
+      "Bei einem Misserfolg ist es bis zum Ende seines nächsten Zuges gebannt und greift niemanden an, es sei denn, es wird bedroht oder verletzt.",
+      "Du kannst diese Fähigkeit so oft einsetzen, wie es deinem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "schillernder-unterhaendler",
+    name: "Schillernder Unterhändler",
+    voraussetzung: "Cnidaran (Shimmerskin)",
+    kurzbeschreibung: "Du hast Handel und Verhandlung zu einer Kunst gemacht.",
+    beschreibung: [
+      "Die meisten Shimmerskin überzeugen mit ihrem Glanz, aber nicht mit ihrem Geschick. Du hast Handel und Verhandlung zu einer Kunst gemacht. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Du erhältst Expertise in Charisma (Überzeugen). Hast du darin noch keine Übung, erhältst du stattdessen Übung.",
+      "Einmal pro lange Rast kannst du nach einem Gespräch erkennen, was dein Gegenüber wirklich begehrt: Du hast Vorteil auf einen Wurf auf Weisheit (Motiv erkennen).",
+      "Solange du sprichst, verbessert dein Muster die Stimmung neutraler Kreaturen um eine Stufe."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "gezaehmter-hunger",
+    name: "Gezähmter Hunger",
+    voraussetzung: "Darakhul",
+    kurzbeschreibung: "Du hast gelernt, den Hunger zu lenken.",
+    beschreibung: [
+      "Die meisten Darakhul werden von ihrem Hunger beherrscht. Du hast gelernt, ihn zu lenken. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Bringst du mit deinem Biss eine Kreatur auf 0 Trefferpunkte, erhältst du Trefferpunkte in Höhe deiner Stufe + deines Konstitutionsmodifikators.",
+      "Ein frisch erlegter Humanoide zählt als deine Fleischmahlzeit des Tages.",
+      "Danach musst du einen Weisheitsrettungswurf (SG 10) bestehen, sonst musst du als Bonusaktion den Leichnam anfressen und kannst bis zum Ende deines Zuges nur noch laufen."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "mantel-der-nacht",
+    name: "Mantel der Nacht",
+    voraussetzung: "Darakhul",
+    kurzbeschreibung: "Du hast gelernt, mit dem Tag zu leben.",
+    beschreibung: [
+      "Die meisten Darakhul meiden den Tag. Du hast gelernt, mit ihm zu leben. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Trägst du einen Mantel mit Kapuze, gilt deine Sonnenlichtsensitivität nur, wenn du direktem Sonnenlicht ungeschützt ausgesetzt bist.",
+      "Verbringst du mehr als eine Stunde am Tag in direktem Sonnenlicht, erhältst du 1 Stufe Erschöpfung."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "wuergegriff-der-gruft",
+    name: "Würgegriff der Gruft",
+    voraussetzung: "Darakhul (Bärenvolk-Erbe)",
+    kurzbeschreibung: "Du lässt nicht los, bevor dein Gegner verstummt ist.",
+    beschreibung: [
+      "Die meisten Darakhul beißen zu und lassen wieder los. Du trägst die Wucht des Bärenvolks in dir und lässt nicht los, bevor dein Gegner verstummt ist. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Triffst du mit deinem Biss eine Kreatur, die höchstens eine Größe größer ist als du, kannst du sie als Bonusaktion packen (Athletik gegen deren Athletik oder Akrobatik).",
+      "Solange du packst, kann das Ziel nicht sprechen und keine Zauber mit verbalen Komponenten wirken.",
+      "Hältst du jemanden gepackt, kannst du mit deinem Biss keine anderen Ziele angreifen."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "aschenatem",
+    name: "Aschenatem",
+    voraussetzung: "Darakhul (Drachengeborenen-Erbe)",
+    kurzbeschreibung: "In dir glimmt der Odem deiner Drachenahnen als kalte Asche weiter.",
+    beschreibung: [
+      "Die meisten Darakhul verlieren mit dem Tod das Erbe ihres Blutes. In dir glimmt der Odem deiner Drachenahnen als kalte Asche weiter. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Einmal pro kurze oder lange Rast kannst du als Aktion einen 4,5-m-Kegel aus kalter Asche ausatmen. Jede Kreatur darin muss einen Konstitutionsrettungswurf ablegen (SG = 8 + dein Übungsbonus + dein Konstitutionsmodifikator) und erleidet 2W6 nekrotischen Schaden, bei Erfolg halb so viel.",
+      "Der Schaden steigt auf 3W6 auf Stufe 5, auf 4W6 auf Stufe 11 und auf 5W6 auf Stufe 17."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "schwarze-faeden",
+    name: "Schwarze Fäden",
+    voraussetzung: "Darakhul (Drow-Erbe)",
+    kurzbeschreibung: "Du kannst die Fäden der Spinnenkönigin noch immer weben.",
+    beschreibung: [
+      "Die meisten Darakhul vergessen, was sie als Drow wussten. Du erinnerst dich an die Fäden der Spinnenkönigin und kannst sie noch immer weben. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Als Bonusaktion schleuderst du klebrige Fäden auf ein Ziel in 9 m. Es muss einen Geschicklichkeitsrettungswurf ablegen (SG = 8 + dein Übungsbonus + dein Konstitutionsmodifikator), sonst beträgt seine Bewegungsrate bis zum Beginn seines nächsten Zuges 0 m.",
+      "Du kannst diese Fähigkeit so oft einsetzen, wie es deinem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "zittern-im-stein",
+    name: "Zittern im Stein",
+    voraussetzung: "Darakhul (Zwerg-Erbe)",
+    kurzbeschreibung: "Du hörst selbst im Grab noch Schritte im Stein.",
+    beschreibung: [
+      "Die meisten Darakhul lassen die Berge hinter sich. Du hast das Gespür der Zwerge für den Stein bewahrt und hörst selbst im Grab noch Schritte. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Solange du Stein oder Erde berührst, hast du Zittersinn in einem Umkreis von 9 m.",
+      "Du hast Vorteil auf Würfe auf Intelligenz (Nachforschungen) und Weisheit (Wahrnehmung), die Steinarbeit, Gänge oder Fundamente betreffen."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "echo-der-toten",
+    name: "Echo der Toten",
+    voraussetzung: "Darakhul (Elfen/Schattenfe-Erbe)",
+    kurzbeschreibung: "An Orten des Todes hörst du die Stimmen der Gestorbenen.",
+    beschreibung: [
+      "Die meisten Darakhul sind taub für die Toten, denen sie ähneln. Du hast den Elfentraum behalten, der dich an Orten des Todes ihre Stimmen hören lässt. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Einmal pro lange Rast kannst du eine Leiche oder einen Ort berühren, an dem in den letzten 7 Tagen jemand gestorben ist. Du erfährst die letzten Sekunden dieses Todes: was die Person sah, hörte und sagte.",
+      "Dein Eindruck ist verschwommen und kann nach Ermessen der Spielleitung falsche Einzelheiten enthalten."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "magische-verdauung",
+    name: "Magische Verdauung",
+    voraussetzung: "Darakhul (Gnom-Erbe)",
+    kurzbeschreibung: "Dein Gnomenhunger richtet sich auf Magie, und du kannst sie schlucken.",
+    beschreibung: [
+      "Die meisten Darakhul hungern nur nach Fleisch. Dein Gnomenhunger richtet sich auf Magie, und du kannst sie schlucken. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Du hast Vorteil auf Rettungswürfe gegen Zauber.",
+      "Bestehst du einen Rettungswurf gegen einen Zauber, erhältst du temporäre Trefferpunkte in Höhe des Zaubergrades (mindestens 1)."
+    ],
+    kategorie: "Magie",
+    angeboren: true
+  },
+  {
+    id: "gestohlenes-glueck",
+    name: "Gestohlenes Glück",
+    voraussetzung: "Darakhul (Halbling-Erbe)",
+    kurzbeschreibung: "Das Glück der Halblinge hast du behalten, aber du nimmst es anderen.",
+    beschreibung: [
+      "Die meisten Darakhul haben kein Glück mehr. Du hast das Glück der Halblinge behalten, musst es aber von anderen nehmen. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Würfelst du bei einem W20-Wurf eine 1, darfst du neu würfeln und musst das neue Ergebnis verwenden. Du kannst diese Fähigkeit so oft einsetzen, wie es deinem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung.",
+      "Jedes Mal, wenn du sie einsetzt, bestimmt die Spielleitung zufällig einen Verbündeten in 9 m: Er hat bei seinem nächsten W20-Wurf Nachteil."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "maske-des-lebens",
+    name: "Maske des Lebens",
+    voraussetzung: "Darakhul (Mensch/Halbelf-Erbe)",
+    kurzbeschreibung: "Du trägst das Leben wie eine Maske.",
+    beschreibung: [
+      "Die meisten Darakhul sind auf den ersten Blick als Tote zu erkennen. Du hast als Mensch gelernt, dich in jede Rolle zu fügen, und trägst das Leben wie eine Maske. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Einmal pro lange Rast kannst du als Aktion bis zu 8 Stunden wie ein Lebender aussehen: Haut, Augen und Zähne wirken gesund.",
+      "Du hast Vorteil auf Charismawürfe (Täuschen), um als Lebender durchzugehen. An dem Tag, an dem du die Maske nutzt, verdoppelt sich dein Bedarf an rohem Fleisch."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "rudeltaktik-der-toten",
+    name: "Rudeltaktik der Toten",
+    voraussetzung: "Darakhul (Kobold-Erbe)",
+    kurzbeschreibung: "Du kämpfst nie ohne Verbündete.",
+    beschreibung: [
+      "Die meisten Darakhul jagen allein. Du hast die Rudelinstinkte der Kobolde bewahrt und kämpfst nie ohne Verbündete. Du erhältst den folgenden Vorteil:"
+    ],
+    vorzuege: [
+      "Du hast Vorteil auf Angriffswürfe mit deinem Biss gegen eine Kreatur, wenn mindestens ein Verbündeter in 1,5 m von ihr steht und nicht handlungsunfähig ist."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "huschen-im-dunkel",
+    name: "Huschen im Dunkel",
+    voraussetzung: "Darakhul (Schattengoblin-Erbe)",
+    kurzbeschreibung: "Du bist noch immer flink und kennst jeden Schatten.",
+    beschreibung: [
+      "Die meisten Darakhul sind schwerfällig geworden. Du bist als Schattengoblin noch immer flink und kennst jeden Schatten. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Als Bonusaktion kannst du die Aktion Rückzug oder Verstecken ausführen.",
+      "Stehst du in dämmrigem oder dunklem Licht, kannst du dich stattdessen bis zu 9 m weit zu einem Punkt teleportieren, den du sehen kannst und der ebenfalls in dämmrigem oder dunklem Licht liegt. Das geht so oft, wie es deinem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "brennender-abgang",
+    name: "Brennender Abgang",
+    voraussetzung: "Darakhul (Teuflingsblut-Erbe)",
+    kurzbeschreibung: "Das teuflische Blut in dir will auch im Untod nicht verlöschen.",
+    beschreibung: [
+      "Die meisten Darakhul sterben still. In dir lodert das teuflische Blut weiter und will auch im Untod nicht verlöschen. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Fällst du auf 0 Trefferpunkte, entlädt sich das Feuer in dir: Jede Kreatur in 3 m muss einen Geschicklichkeitsrettungswurf ablegen (SG = 8 + dein Übungsbonus + dein Konstitutionsmodifikator) und erleidet 2W6 Feuerschaden, bei Erfolg halb so viel.",
+      "Du kannst diese Fähigkeit einmal pro lange Rast einsetzen."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "igelkugel",
+    name: "Igelkugel",
+    voraussetzung: "Erina",
+    kurzbeschreibung: "Du rollst dich zu einer Kugel aus Stacheln ein und trotzt jedem Hieb.",
+    beschreibung: [
+      "Die meisten Erina flüchten, wenn es gefährlich wird. Du hast gelernt, dich zu einer Kugel aus Stacheln einzurollen, und trotzt jedem Hieb. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Als Bonusaktion rollst du dich ein. Bis zum Beginn deines nächsten Zuges hast du Resistenz gegen Wucht-, Stich- und Hiebschaden, und deine Bewegungsrate beträgt 0 m.",
+      "Jede Kreatur, die dich in dieser Zeit im Nahkampf trifft, erleidet 1W4 Stichschaden.",
+      "Solange du eingerollt bist, hast du Nachteil auf Würfe auf Wahrnehmung."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "heilkraeuterkundige",
+    name: "Heilkräuterkundige",
+    voraussetzung: "Erina",
+    kurzbeschreibung: "Du kennst jedes Kraut im Wald und was es heilt.",
+    beschreibung: [
+      "Die meisten Erina wissen nur, welche Pflanzen ihnen selbst nicht schaden. Du kennst jedes Kraut im Wald und was es heilt. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Du hast Vorteil auf Würfe auf Naturkunde und Medizin, die Kräuter betreffen.",
+      "Sammelst du während einer kurzen Rast Kräuter (Wurf auf Naturkunde oder Überleben, SG 12), heilen bis zu so viele Verbündete wie dein Weisheitsmodifikator (mindestens 1) zusätzlich 1W6 Trefferpunkte."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "wurfstacheln",
+    name: "Wurfstacheln",
+    voraussetzung: "Erina",
+    kurzbeschreibung: "Du schleuderst deine Stacheln auf Feinde.",
+    beschreibung: [
+      "Die meisten Erina wehren sich nur, wenn man sie berührt. Du hast gelernt, deine Stacheln zu schleudern. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Als Aktion schleuderst du Stacheln auf ein Ziel in 6/18 m (Fernkampfangriff mit deinem Übungsbonus, 1W4 + Geschicklichkeitsmodifikator Stichschaden).",
+      "Du kannst diese Fähigkeit so oft einsetzen, wie es deinem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung, weil die Stacheln nachwachsen."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "aufziehherz",
+    name: "Aufziehherz",
+    voraussetzung: "Geppettin",
+    kurzbeschreibung: "Du trägst die Handschrift deines Schöpfers und kannst dich selbst flicken.",
+    beschreibung: [
+      "Die meisten Geppettin wissen nicht, wer sie belebt hat. Du trägst die Handschrift deines Schöpfers. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Du erhältst Übung mit einem Handwerkszeug deiner Wahl (die Spur deines Schöpfers).",
+      "Mit diesem Werkzeug kannst du dich als Aktion flicken: Du heilst 1W8 + deinen Übungsbonus an Trefferpunkten. Das geht einmal pro kurze Rast."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "starre-pose",
+    name: "Starre Pose",
+    voraussetzung: "Geppettin",
+    kurzbeschreibung: "Du stehst still wie ein Spielzeug, das niemand gerade bewegt.",
+    beschreibung: [
+      "Die meisten Geppettin wirken auf Kinder lebendig. Du kannst stillstehen wie ein Spielzeug, das niemand gerade bewegt. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Als Bonusaktion erstarrst du in einer Pose. Solange du dich nicht bewegst, erkennt niemand, dass du lebst, es sei denn, er besteht einen Wurf auf Weisheit (Motiv erkennen) oder Intelligenz (Nachforschungen) gegen SG = 8 + dein Übungsbonus + dein Charismamodifikator.",
+      "Du bleibst dir bewusst, was um dich geschieht, und kannst die Pose als Bonusaktion lösen."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "teure-puppe",
+    name: "Teure Puppe",
+    voraussetzung: "Geppettin (Biskuit)",
+    kurzbeschreibung: "Wer dich angreifen will, zögert vor so einem wertvollen Stück.",
+    beschreibung: [
+      "Die meisten Geppettin sind nur Spielzeug. Du bist aus feinstem Porzellan gefertigt, und wer dich angreifen will, zögert vor so einem wertvollen Stück. Du erhältst den folgenden Vorteil:"
+    ],
+    vorzuege: [
+      "Wer dich zum ersten Mal in einem Kampf angreift, muss einen Weisheitsrettungswurf (SG = 8 + dein Übungsbonus + dein Charismamodifikator) bestehen, sonst hat er Nachteil auf diesen Angriff. Das gilt einmal pro Kampf für jeden Angreifer."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "fadenspiel",
+    name: "Fadenspiel",
+    voraussetzung: "Geppettin (Marionette)",
+    kurzbeschreibung: "Du ziehst an deinen Fäden und reißt einen Freund aus der Gefahr.",
+    beschreibung: [
+      "Die meisten Geppettin sind Marionetten ohne Fäden. Du hast deine behalten und kannst mit ihnen mehr bewegen als nur dich selbst. Du erhältst den folgenden Vorteil:"
+    ],
+    vorzuege: [
+      "Als Reaktion ziehst du an deinen Fäden: Ein Verbündeter in 9 m, der angegriffen wird, wird bis zu 3 m weggezogen, ohne Gelegenheitsangriffe auszulösen. Du kannst diese Fähigkeit so oft einsetzen, wie es deinem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "fuellung-und-faden",
+    name: "Füllung und Faden",
+    voraussetzung: "Geppettin (Zerlumpte)",
+    kurzbeschreibung: "Du landest immer weich und flickst dich und andere mit Nadel und Faden.",
+    beschreibung: [
+      "Die meisten Geppettin fürchten die Naht, die reißt. Du bist weich gefüllt und mit Nadel und Faden so oft geflickt worden, dass du immer wieder aufstehst. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Du erleidest nie Sturzschaden.",
+      "Bei einer kurzen Rast mit Nähzeug heilen du und ein weiterer Konstrukt je 1W6 zusätzliche Trefferpunkte."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "lachen-der-hyaene",
+    name: "Lachen der Hyäne",
+    voraussetzung: "Gnoll",
+    kurzbeschreibung: "Dein Lachen im Kampf fährt Feinden in die Glieder.",
+    beschreibung: [
+      "Die meisten Gnolle lachen nur beim Fressen. Du lachst im Kampf, und es fährt Feinden in die Glieder. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Als Aktion stößt du ein gellendes Lachen aus. Jede Kreatur in 9 m, die dich hören kann, muss einen Weisheitsrettungswurf ablegen (SG = 8 + dein Übungsbonus + dein Charismamodifikator), sonst ist sie bis zum Ende ihres nächsten Zuges verängstigt.",
+      "Du kannst diese Fähigkeit so oft einsetzen, wie es deinem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "aasmagen",
+    name: "Aasmagen",
+    voraussetzung: "Gnoll",
+    kurzbeschreibung: "Dein Magen hat sich auf Aas eingestellt.",
+    beschreibung: [
+      "Die meisten Gnolle vertragen Aas nur, weil sie nichts anderes haben. Dein Magen hat sich darauf eingestellt. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Du hast Vorteil auf Rettungswürfe gegen Gift und Krankheiten, die durch Nahrung oder Getränke übertragen werden. Verdorbenes Fleisch zählt für dich als volle Mahlzeit.",
+      "Frisst du bei einer kurzen Rast mindestens 500 g Fleisch, erhältst du 1W6 Trefferpunkte zurück."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "weltgewandt",
+    name: "Weltgewandt",
+    voraussetzung: "Gnoll (Zivilisierter Gnoll)",
+    kurzbeschreibung: "Du kennst Sprachen und Sitten deiner Herren so gut, dass man dich für einen der ihren hält.",
+    beschreibung: [
+      "Die meisten zivilisierten Gnolle lernen nur genug, um nicht aufzufallen. Du hast die Sprachen und Sitten deiner Herren so gründlich gelernt, dass man dich leicht für einen der ihren hält. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Du lernst zwei zusätzliche Sprachen deiner Wahl.",
+      "Du erhältst Übung in Charisma (Auftreten) oder Intelligenz (Geschichte). Hast du beides schon, erhältst du Expertise in einer davon.",
+      "Du erkennst an Kleidung, Haltung und Wortwahl Rang und Stellung einer Person und hast Vorteil auf Würfe auf Weisheit (Motiv erkennen) gegen Mächtigere."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "blutrausch",
+    name: "Blutrausch",
+    voraussetzung: "Gnoll (Wilder Gnoll)",
+    kurzbeschreibung: "Sobald Blut fließt, setzt du nach.",
+    beschreibung: [
+      "Die meisten wilden Gnolle jagen satt oder gar nicht. Du verfällst in Raserei, sobald Blut fließt. Du erhältst den folgenden Vorteil:"
+    ],
+    vorzuege: [
+      "Bringst du eine Kreatur auf 0 Trefferpunkte, kannst du als Bonusaktion bis zur Hälfte deiner Bewegungsrate laufen und einen Angriff mit deinem Biss machen. Das geht einmal pro Zug."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "sandwitterung",
+    name: "Sandwitterung",
+    voraussetzung: "Gnoll (Wüstengnoll)",
+    kurzbeschreibung: "Du riechst Wasser im Sand und fürchtest keinen Sturm.",
+    beschreibung: [
+      "Die meisten Gnolle verdursten in der Wüste. Du riechst Wasser im Sand und fürchtest keinen Sturm. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Du spürst Wasser unter Sand und Erde in 9 m Umkreis.",
+      "Du hast Vorteil auf Würfe auf Weisheit (Überleben) in Wüsten und trockenen Gebieten.",
+      "Sand und Staub in der Luft verursachen bei dir keinen Nachteil auf Würfe auf Wahrnehmung."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "graeberraeubersinn",
+    name: "Gräberräubersinn",
+    voraussetzung: "Gnoll (Nekropolengnoll)",
+    kurzbeschreibung: "Du weißt, wo die Toten liegen.",
+    beschreibung: [
+      "Die meisten Gnolle fürchten Gräber. Du hast in ihnen gelebt und weißt, wo die Toten liegen. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Du spürst Untote und Grabstätten in 18 m Umkreis, auch durch Wände.",
+      "Du hast Vorteil auf Würfe auf Wahrnehmung und Nachforschungen in Gräbern, Gruften und Katakomben.",
+      "Du hast Vorteil auf Rettungswürfe gegen Furcht, die von Untoten ausgelöst wird."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "froschsprung",
+    name: "Froschsprung",
+    voraussetzung: "Grung",
+    kurzbeschreibung: "Du springst nicht von Ast zu Ast, sondern auf deine Gegner.",
+    beschreibung: [
+      "Die meisten Grung springen nur von Ast zu Ast. Du springst auf deine Gegner. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Als Bonusaktion springst du bis zu 6 m auf eine Kreatur zu, die du sehen kannst. Dein nächster Nahkampfangriff in diesem Zug hat Vorteil.",
+      "Ist das Ziel höchstens mittelgroß, muss es einen Stärkerettungswurf ablegen (SG = 8 + dein Übungsbonus + dein Konstitutionsmodifikator), sonst wird es umgeworfen.",
+      "Du kannst diese Fähigkeit so oft einsetzen, wie es deinem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "warnfarbe",
+    name: "Warnfarbe",
+    voraussetzung: "Grung",
+    kurzbeschreibung: "Du lässt deine Haut aufleuchten, wenn dich jemand bedroht.",
+    beschreibung: [
+      "Die meisten Grung zeigen ihre Farbe nur im Stamm. Du lässt sie aufleuchten, wenn jemand dich bedroht. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Greift dich eine Kreatur an, kannst du als Reaktion deine Haut aufleuchten lassen. Das Ziel muss einen Weisheitsrettungswurf ablegen (SG = 8 + dein Übungsbonus + dein Konstitutionsmodifikator), sonst hat es Nachteil auf diesen Angriff.",
+      "Das geht einmal pro kurze Rast."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "feuchte-haut",
+    name: "Feuchte Haut",
+    voraussetzung: "Grung",
+    kurzbeschreibung: "Du kommst mit weniger Wasser aus als andere Grung.",
+    beschreibung: [
+      "Die meisten Grung brauchen täglich ihren Teich. Du hast gelernt, mit weniger auszukommen. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Regen, Nebel und Gischt zählen für deine Wasserabhängigkeit voll als Eintauchen.",
+      "Du hast Vorteil auf Würfe auf Heimlichkeit in Regen, Nebel oder an feuchten Orten."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
   }
 ];

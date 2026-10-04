@@ -123,7 +123,7 @@
       { name:'Stacheln',         text:'Während du eine Kreatur greifst oder von einer Kreatur gegriffen wirst, erleidet die Kreatur zu Beginn deines Zuges 1W4 Stichschaden.' },
       { name:'Scharfe Sinne',    text:'Du hast Übung in der Fertigkeit Wahrnehmung.' },
       { name:'Graben',           text:'Du hast eine Grabgeschwindigkeit von 6 Metern. Du kannst dich nur durch Erde und Sand graben, nicht durch Schlamm, Eis oder Fels.' },
-      { name:'Angeborenes Talent', text:null, talente:[] },
+      { name:'Angeborenes Talent', text:null, talente:["Igelkugel","Heilkräuterkundige","Wurfstacheln"] },
     ],
   },
 };

@@ -138,7 +138,9 @@
       { name:'Harmlos',            text:'Du hast Vorteil auf CHA-(Täuschung)-Würfe, um als gewöhnliches Spielzeug zu erscheinen.' },
       { name:'— Biskuit: Spiegelglanz', text:'1×/kurze Rast, wenn ein Täuschungswurf erkannt wird oder ein Angreifer dich für Beute hält: der Angreifer hat Nachteil auf seinen nächsten Angriffswurf gegen dich.' },
       { name:'— Marionette: Holzrobustheit', text:'Resistenz gegen Wuchtschaden.' },
-      { name:'— Zerlupfte: Stofffaltung', text:'Als Aktion kannst du dich auf Winzig-Größe zusammenfalten (Vorteil auf Heimlichkeit). Als Bonusaktion wieder entfalten. Kein Tragen von Ausrüstung im gefalteten Zustand.' },
+      { name:'— Zerlumpte: Stofffaltung', text:'Als Aktion kannst du dich auf Winzig-Größe zusammenfalten (Vorteil auf Heimlichkeit). Als Bonusaktion wieder entfalten. Kein Tragen von Ausrüstung im gefalteten Zustand.' },
+      { name:'Angeborenes Talent', text:'Wähle eines der allgemeinen oder das Talent deiner Linie.', talente:["Aufziehherz","Starre Pose"] },
+      { name:'Linien-Talente', text:'Je nach gewählter Linie steht dir eines dieser Talente zur Verfügung:', talente:["Teure Puppe","Fadenspiel","Füllung und Faden"] },
     ],
   },
 };

@@ -183,6 +183,8 @@
       { name:'Sonnenlichtsensitivität', text:'Du hast Nachteil auf Angriffswürfe und Weisheit-(Wahrnehmungs)-Würfe, die auf Sicht beruhen, wenn du, dein Ziel oder das Wahrgenommene sich in direktem Sonnenlicht befindet.' },
       { name:'Untote Widerstandsfähigkeit', text:'Resistenz gegen nekrotischen Schaden und Giftschaden. Immunität gegen Krankheiten. Vorteil auf Rettungswürfe gegen Bezauberung oder Vergiftung. Bei einer kurzen Rast kannst du eine Erschöpfungsstufe senken, sofern du in den letzten 24 Stunden mindestens 500 g rohes Fleisch zu dir genommen hast.' },
       { name:'Untote Vitalität',        text:'Du musst nicht atmen und schläfst nicht normal. Stattdessen trittst du täglich für 6 Stunden in einen todesähnlichen Ruhezustand, in dem du halbbewusst bleibst (Nachteil auf Wahrnehmungs-Würfe). Danach erhältst du denselben Vorteil wie ein Mensch nach 8 Stunden Schlaf.' },
+      { name:'Angeborenes Talent', text:'Wähle eines der allgemeinen oder das Talent deines Erbes.', talente:["Gezähmter Hunger","Mantel der Nacht"] },
+      { name:'Erbe-Talente', text:'Je nach gewähltem Erbe steht dir eines dieser Talente zur Verfügung:', talente:["Würgegriff der Gruft","Aschenatem","Schwarze Fäden","Zittern im Stein","Echo der Toten","Magische Verdauung","Gestohlenes Glück","Maske des Lebens","Rudeltaktik der Toten","Huschen im Dunkel","Brennender Abgang"] },
     ],
   },
 };

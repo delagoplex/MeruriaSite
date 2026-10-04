@@ -734,11 +734,13 @@ function VariantCards({ section }) {
           : <div className="rd-vc-img-placeholder">Kein Bild hinterlegt</div>
         }
         <div className="rd-vc-body">
-          <div className="rd-vc-appear">
-            <div className="rd-vc-row"><span className="rd-vc-lbl">Augen</span><span className="rd-vc-val">{v.augenfarbe}</span></div>
-            <div className="rd-vc-row"><span className="rd-vc-lbl">Haut</span><span className="rd-vc-val">{v.hautfarbe}</span></div>
-            <div className="rd-vc-row"><span className="rd-vc-lbl">Haar</span><span className="rd-vc-val">{v.haarfarbe}</span></div>
-          </div>
+          {(v.augenfarbe || v.hautfarbe || v.haarfarbe) && (
+            <div className="rd-vc-appear">
+              {v.augenfarbe && <div className="rd-vc-row"><span className="rd-vc-lbl">Augen</span><span className="rd-vc-val">{v.augenfarbe}</span></div>}
+              {v.hautfarbe && <div className="rd-vc-row"><span className="rd-vc-lbl">Haut</span><span className="rd-vc-val">{v.hautfarbe}</span></div>}
+              {v.haarfarbe && <div className="rd-vc-row"><span className="rd-vc-lbl">Haar</span><span className="rd-vc-val">{v.haarfarbe}</span></div>}
+            </div>
+          )}
           <div className="rd-vc-feats">
             <div className="rd-vc-feat">
               <div className="rd-vc-feat-name">{section.feat1Label || 'Odemwaffe'}</div>
