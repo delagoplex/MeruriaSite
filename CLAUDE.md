@@ -21,7 +21,7 @@ Pages live in topic folders; the folder and file names are the public URLs (lowe
 | `divisionen/` | `index` (overview of the eight divisions), `kuratoren`, `sturmritter`, `sentinels`, `friedenshueter`, `outfitters`, `pathfinders`, `quellensucher`, `bergungsgarde` |
 | `charaktere/` | `index` (hub), `mein-charakter`, `spielercharaktere`, `nsc`, `steckbrief` |
 | `spiel/` | `kollektikon`, `karte`, `kalender`, `kalender-interaktiv`, `missionsterminal`, `rekrutierung` |
-| `dm/` | DM-only pages (access is checked by role, not by path): `monster`, `ressourcen`, `tarot`, `kampfsimulation`, `missionen`, `nsc-verwaltung`, `charakterverwaltung`, `kartenmanagement`, `kolonisierung-und-bau`, `kollektikon`, `rekrutierungspreise`, `rezeptverwaltung`, `segen-und-flueche` |
+| `dm/` | DM-only pages (access is checked by role, not by path): `monster`, `ressourcen`, `tarot`, `kampfsimulation`, `missionen`, `nsc-verwaltung`, `charakterverwaltung`, `kartenmanagement`, `kolonisierung-und-bau`, `kollektikon`, `rekrutierung` (Tabs Anfragen und Preise), `rezeptverwaltung`, `segen-und-flueche` |
 
 Each page consists of:
 - `<folder>/<name>.html` with `<base href="/">` (so `assets/...` works from every folder), `<link>` tags for CSS from `assets/styles/global/` and `assets/styles/pages/<folder>/<name>.css` (kept unbundled and in written order), classic `<script>` tags for vendor libs and data files, and **one** `<script type="module" src="/src/pages/<folder>/<name>.jsx">`
@@ -69,6 +69,7 @@ Access is enforced by Row Level Security, not by the client-side role checks (`w
 | `particle-field.jsx` | `window.ParticleField` | Animated background particles |
 | `shared-helpers.jsx` | `window.hexPoints`, `window.useScrollReveal` | Helpers shared by the hub/overview pages that used identical copies |
 | `filter-utils.jsx` | `window.FilterGroup`, `window.XBtn`, … | Filter UI primitives used by /dm/monster.html |
+| `rasse-picker.jsx` | `window.RassePicker` | Auswahlleiste Rasse / angeborenes Talent / Waffe für NSC-Statblöcke (Monsterseite, Kampfsimulation, Rekrutierung) |
 
 ### Authentication
 
@@ -262,6 +263,20 @@ Adding a new book: create `<book>-data.js`, declare the window variable, add it 
 | `rekrutierung-data.js` | `MONSTER_DATA_REKRUTIERUNG` | `"Rekrutierung"` | Divisionslogo aus `images/divisions/` |
 
 `rekrutierung-data.js` ist **generiert**: `node tools/generate-rekrutierung-nsc.mjs` baut aus `computeNscStats()` (`assets/scripts/shared/nsc-statblock.js`) und `divisions-data.js` pro Division und Rang (8 × 10) den NSC-Statblock "<Titel> (<Division>, Rang N)" (Humanoid, Unterart "NPC"; HG als Näherung nach der DMG-Tabelle). Werte in `nsc-statblock.js`/`divisions-data.js` ändern und neu generieren, nicht die Ausgabedatei von Hand bearbeiten.
+
+Fähigkeiten pro Division stehen in `nscConfig` (`divisions-data.js`): `besonderheit` (Basis, Art über `besonderheitTyp`: Standard Besonderheit, sonst `bonusaktion`/`reaktion`), `aktionen` und `faehigkeiten: [{ typ: 'besonderheit'|'aktion'|'bonusaktion'|'reaktion', minTier, name, beschreibung }]`. `minTier = 10 − Rang`; Platzhalter `{titel}`, `{prof}`, `{DC}`, `{attackBonus}`, `{damageDice}`. Jede Division bekommt bei Rang 7, 4 und 1 je eine zusätzliche Fähigkeit, der Mehrfachangriff kommt ab Rang 5. Optional `hg: { tp, rk, dmg }` an einer Fähigkeit schätzt ihre Wirkung für den HG (zusätzliche effektive TP, RK, Schaden pro Runde).
+
+### Rasse anwenden (NSC-Statblöcke)
+
+Jeder Statblock mit `art: "Humanoid"` und `unterart: "NPC"` kann eine Rasse, ein angeborenes Talent und eine Waffe bekommen. Der fertige Statblock wird **immer berechnet** (nie gespeichert): `window.RasseAnwenden.anwenden(statblock, { rasse, linie, talent, waffe })` in `assets/scripts/shared/rasse-anwenden.js`. Eine Seite braucht dafür die Scripts `data/rassen-struktur-data.js`, `data/ausrüstung-data.js` und `shared/rasse-anwenden.js` (klassisch) sowie `components/rasse-picker.jsx`.
+
+- **Daten:** `assets/scripts/data/rassen-struktur-data.js` (`window.RASSEN_STRUKTUR`) ist von Hand gepflegt, nicht generiert: pro Rasse Größe, Bewegung, Sinne, Resistenzen, Attributsboni (immer +2/+1 oder dreimal +1, außer Menschen), Merkmale und angeborene Talente in dritter Person (`merkmale`, `talentTexte`). Blutlinien/Ahnenlinien stehen unter `varianten` und gelten zusätzlich zur Rasse (eigene Attribute, Resistenzen, `merkmale`, teils abweichende `groesse`/`bewegung`); Rassen, deren Boni an den Linien hängen, gibt es nur mit Linie.
+- **Talente:** `talentTexte[<Talent>].text` ist der Text in dritter Person, `.wirkung` die maschinenlesbare Wirkung (nur eindeutige, unbedingte Effekte: `resistenzen`, `immunitaeten`, `zustandsimmunitaeten`, `bewegungPlus`, `bewegung`, `sinne`, `tpProTW`, `rkBasis`, `fertigkeiten`). Alles andere wirkt nur als Text. Das Talent einer Blutlinie steht in `linienTalente`.
+- **Was angepasst wird:** Attribute und alles Abgeleitete (TP-Würfel, Rettungswürfe, Fertigkeiten, passive Wahrnehmung, RK, Angriffs- und Schadenswerte), Größe, Bewegung, Sinne, Resistenzen, Besonderheiten (Merkmale, Talent) und auf Wunsch die Hauptwaffe (Werte aus `ausrüstung-data.js`, Übungsbonus aus der Vorlage).
+- **Zufall:** `RasseAnwenden.zufall(statblock)` würfelt Rasse (mit Linie), Größe, Talent und Waffe. Die Kampfsimulation hat die Einstellung "NSC-Rasse" (Original / Fest / Zufällig, `NscRasseBox`): im Fenster "Monster hinzufügen" (Standard Original) und bei "Passende Gegner" / "+ 1 Gegner" in Gruppe 2 (Standard Zufällig, pro NSC neu gewürfelt); Doppeln kopiert den fertigen Statblock des Kämpfers.
+- **NSC-Erstellung:** Die Schnellanlage in `/dm/nsc-verwaltung` bietet NSC-Statblöcke (Unterart NPC, auch die Rekrutierungs-NSCs) als Grundlage an, mit Vorschlag passend zu Division und Rang. Die Vorschau folgt der Rasse des NSC; Waffe und Rasse lassen sich einzeln würfeln. Gespeichert wird der fertig berechnete Statblock im Feld `steckbrief`.
+- **Rekrutierungsanfragen:** Auf `/spiel/rekrutierung` kann ein Spieler (Charakter mit Divisionsrang) den gewählten NSC samt Rasse/Talent/Waffe anfragen (Tabelle `rekrutierung_anfragen`, Migration 044; Spieler sehen und löschen nur ihre eigenen offenen Anfragen). `/dm/rekrutierung` (Tab Anfragen) zeigt der SL alle Anfragen; "Annehmen" legt mit Name/Geschlecht/Alter einen NSC mit berechnetem Statblock an (`window.statToSteckbrief` aus `shared/statblock-steckbrief.js`) und markiert die Anfrage. Die Rekrutierungspreise gelten für alle Divisionen gleich und stehen unter der Division `kuratoren` in `rekrutierung_preise`.
+- **Rekrutierungs-NSCs:** `nscToMonster()` in `nsc-statblock.js` rechnet Division/Rang ins Monster-Format um; die Rekrutierungsseite zeigt damit den berechneten Statblock, und `tools/generate-rekrutierung-nsc.mjs` baut daraus die Monsterliste.
 
 ### `bild` URL — Namenskonvention
 
