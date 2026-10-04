@@ -2,6 +2,7 @@
 import '../../components/nav.jsx';
 import '../../components/site-gate.jsx';
 import '../../components/monster-detail.jsx';
+import '../../components/rasse-picker.jsx';
 
 ;(function () {
 (function () {
@@ -371,6 +372,36 @@ function CombatantCard({
 }
 
 // ── Monster Picker ────────────────────────────────────────────────────────────
+// Rasse auf einen NSC-Statblock anwenden: modus 'aus' (Original), 'fest' (opt) oder 'zufall'
+function rasseAnwenden(m, modus, opt) {
+  const R = window.RasseAnwenden;
+  if (!R || !R.istRassenfaehig(m)) return m;
+  if (modus === 'zufall') return R.anwenden(m, R.zufall(m));
+  if (modus === 'fest' && opt) return R.anwenden(m, opt);
+  return m;
+}
+
+// Platzhalter-NSC für die Rassenleiste (die Leiste braucht einen rassenfähigen Statblock)
+const NPC_STUB = { art: 'Humanoid', unterart: 'NPC', aktionen: [{ name: 'Waffe', beschreibung: 'Nahkampf-Waffenangriff' }] };
+
+// Einstellung "NSC-Rasse": Original / fest gewählt / zufällig (Fenster "Monster hinzufügen" und automatische Gegnerwahl)
+function NscRasseBox({ modus, onModus, opt, onOpt }) {
+  const RP = window.RassePicker;
+  if (!RP || !window.RasseAnwenden) return null;
+  const modi = [['aus', 'Original'], ['fest', 'Fest'], ['zufall', 'Zufällig']];
+  return /*#__PURE__*/React.createElement("div", { className: "sim-rasse-box" },
+    /*#__PURE__*/React.createElement("div", { className: "sim-rasse-head" },
+      /*#__PURE__*/React.createElement("span", { className: "sim-section-label", title: "Gilt nur f\xFCr NSC-Statbl\xF6cke (Unterart NPC)" }, "NSC-Rasse"),
+      /*#__PURE__*/React.createElement("div", { className: "sim-seg" }, modi.map(([id, l]) => /*#__PURE__*/React.createElement("button", {
+        key: id,
+        className: `sim-seg-btn${modus === id ? ' active' : ''}`,
+        onClick: () => onModus(id)
+      }, l)))),
+    modus === 'fest' && /*#__PURE__*/React.createElement(RP, { monster: NPC_STUB, value: opt, onChange: onOpt, compact: true, layout: "grid" }),
+    modus === 'zufall' && /*#__PURE__*/React.createElement("div", { className: "sim-rasse-hint" }, "Rasse, Talent, Waffe (und ggf. Gr\xF6\xDFe) werden f\xFCr jeden NSC neu gew\xFCrfelt."),
+    modus !== 'aus' && /*#__PURE__*/React.createElement("div", { className: "sim-rasse-hint dim" }, "HG und XP werden an die ver\xE4nderten Werte angepasst. Gilt nur f\xFCr NSC-Statbl\xF6cke (Unterart NPC)."));
+}
+
 function MonsterPicker({
   onAdd,
   onClose,
@@ -380,6 +411,11 @@ function MonsterPicker({
   onDetail
 }) {
   const [q, setQ] = useState('');
+  const [rasse, setRasse] = useState(null);
+  const [rasseModus, setRasseModus] = useState('aus');
+  const [limit, setLimit] = useState(100); // sichtbare Einträge, wächst beim Scrollen um je 100
+  // NSC-Statblöcke (Unterart NPC) bekommen beim Hinzufügen die gewählte (oder gewürfelte) Rasse
+  const mitRasse = m => rasseAnwenden(m, rasseModus, rasse);
   const all = useMemo(() => (window.MONSTER_DATA || []).filter(m => m.name && m.tp), []);
   const allArts = useMemo(() => [...new Set(all.map(m => m.art).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'de')), [all]);
   const allUnterarts = useMemo(() => [...new Set(all.map(m => m.unterart).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'de')), [all]);
@@ -388,7 +424,7 @@ function MonsterPicker({
     ...f,
     [key]: val
   }));
-  const results = useMemo(() => {
+  const treffer = useMemo(() => {
     let list = all;
     if (monsterFilter?.art) list = list.filter(m => m.art === monsterFilter.art);
     if (monsterFilter?.unterart) list = list.filter(m => m.unterart === monsterFilter.unterart);
@@ -399,8 +435,15 @@ function MonsterPicker({
       const low = q.toLowerCase();
       list = list.filter(m => m.name.toLowerCase().includes(low));
     }
-    return list.slice(0, 100);
+    return list;
   }, [q, all, monsterFilter]);
+  const results = useMemo(() => treffer.slice(0, limit), [treffer, limit]);
+  // Bei neuer Suche oder neuem Filter wieder von vorn
+  useEffect(() => { setLimit(100); }, [q, monsterFilter]);
+  const onListScroll = e => {
+    const el = e.currentTarget;
+    if (el.scrollTop + el.clientHeight >= el.scrollHeight - 120) setLimit(l => (l < treffer.length ? l + 100 : l));
+  };
   const activeFilters = [monsterFilter?.art, monsterFilter?.unterart, monsterFilter?.umgebung, monsterFilter?.crMin, monsterFilter?.crMax].filter(v => v !== '' && v != null).length;
   return /*#__PURE__*/React.createElement("div", {
     className: "sim-overlay",
@@ -495,7 +538,12 @@ function MonsterPicker({
     min: "0",
     max: "30",
     step: "0.125"
-  })), /*#__PURE__*/React.createElement("div", {
+  })), /*#__PURE__*/React.createElement(NscRasseBox, {
+    modus: rasseModus,
+    onModus: setRasseModus,
+    opt: rasse,
+    onOpt: setRasse
+  }), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: '0.68rem',
       color: 'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))',
@@ -504,7 +552,7 @@ function MonsterPicker({
       display: 'flex',
       justifyContent: 'space-between'
     }
-  }, /*#__PURE__*/React.createElement("span", null, results.length, " Monster", activeFilters > 0 ? ` · ${activeFilters} Filter aktiv` : ''), activeFilters > 0 && /*#__PURE__*/React.createElement("button", {
+  }, /*#__PURE__*/React.createElement("span", null, results.length < treffer.length ? `${results.length} von ${treffer.length}` : treffer.length, " Monster", activeFilters > 0 ? ` · ${activeFilters} Filter aktiv` : ''), activeFilters > 0 && /*#__PURE__*/React.createElement("button", {
     style: {
       background: 'none',
       border: 'none',
@@ -521,7 +569,8 @@ function MonsterPicker({
       crMax: ''
     })
   }, "Filter leeren")), /*#__PURE__*/React.createElement("div", {
-    className: "sim-monster-list"
+    className: "sim-monster-list",
+    onScroll: onListScroll
   }, results.map(m => {
     const key = m.name + (m.source || '');
     const count = selected?.get(key) || 0;
@@ -529,7 +578,7 @@ function MonsterPicker({
       key: key,
       className: "sim-monster-row",
       onClick: () => onAdd({
-        ...m,
+        ...mitRasse(m),
         _kind: 'monster'
       })
     }, m.bild ? /*#__PURE__*/React.createElement("img", {
@@ -1404,6 +1453,10 @@ function GroupPanel({
   onMonsterFilter,
   coherent,
   onCoherent,
+  rasseModus,
+  onRasseModus,
+  rasseOpt,
+  onRasseOpt,
   canRevert,
   onRevert
 }) {
@@ -1611,7 +1664,14 @@ function GroupPanel({
       crMin: '',
       crMax: ''
     })
-  }, "Filter leeren")), /*#__PURE__*/React.createElement("div", {
+  }, "Filter leeren")), /*#__PURE__*/React.createElement(NscRasseBox, {
+    modus: rasseModus,
+    onModus: onRasseModus,
+    opt: rasseOpt,
+    onOpt: onRasseOpt
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "sim-section-label"
+  }, "Schwierigkeit"), /*#__PURE__*/React.createElement("div", {
     className: "sim-diff-toggle"
   }, DIFF_OPTS.map(o => /*#__PURE__*/React.createElement("button", {
     key: o.val,
@@ -2068,6 +2128,7 @@ function SimApp() {
     crMax: ''
   });
   const [coherent, setCoherent] = useState(true);
+  const [autoRasse, setAutoRasse] = useState({ modus: 'zufall', opt: null });
   useEffect(() => {
     saveGroups(group1, group2);
   }, [group1, group2]);
@@ -2158,14 +2219,14 @@ function SimApp() {
     saveGroup2Snapshot();
     const opponents = generateMatchingOpponents(fromGroup, difficulty, monsterFilter, coherent);
     setter(opponents.map(m => ({
-      ...m,
+      ...rasseAnwenden(m, autoRasse.modus, autoRasse.opt),
       _uid: uid()
     })));
   }
   function handleAddOpponent() {
     saveGroup2Snapshot();
     const pick = findOneAdditionalOpponent(group1, group2, difficulty, monsterFilter, coherent);
-    if (pick) addToGroup(setGroup2, pick);
+    if (pick) addToGroup(setGroup2, rasseAnwenden(pick, autoRasse.modus, autoRasse.opt));
   }
   function runSimulation() {
     if (!group1.length || !group2.length) return;
@@ -2232,7 +2293,11 @@ function SimApp() {
     monsterFilter: monsterFilter,
     onMonsterFilter: setMonsterFilter,
     coherent: coherent,
-    onCoherent: setCoherent
+    onCoherent: setCoherent,
+    rasseModus: autoRasse.modus,
+    onRasseModus: m => setAutoRasse(a => ({ ...a, modus: m })),
+    rasseOpt: autoRasse.opt,
+    onRasseOpt: o => setAutoRasse(a => ({ ...a, opt: o }))
   })), /*#__PURE__*/React.createElement(EncounterRating, {
     group1: group1,
     group2: group2

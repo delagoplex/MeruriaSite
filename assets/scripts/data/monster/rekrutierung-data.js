@@ -6,8 +6,8 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "unterart": "NPC",
     "groesse": "Mittelgroß",
     "gesinnung": "Jede Gesinnung",
-    "cr": 4,
-    "xp": 1100,
+    "cr": 5,
+    "xp": 1800,
     "rk": 15,
     "ruestungstyp": "Lederrüstung",
     "tp": 114,
@@ -42,25 +42,39 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_01_Kuratoren.png",
-    "beschreibung": [
-      "Archivat, Rang 1 der Division Kuratoren. Leitet die Division und bestimmt Forschungsprioritäten. Genehmigt Großexpeditionen und seltene Materialentnahmen, verwaltet das Große Archiv im Gewölbe und vertritt die Division im Kolonialrat."
-    ],
     "besonderheiten": [
       {
-        "name": "Feldkenntnis",
-        "beschreibung": "Archivat kann als Bonusaktion eine Kreatur, Pflanze oder ein Mineral in Sichtweite automatisch identifizieren, ohne einen Würfelwurf abzulegen."
+        "name": "Schwachstellenkunde",
+        "beschreibung": "Hat Archivat eine Kreatur mit Feldkenntnis identifiziert, richten seine Angriffe gegen sie zusätzlich 5 Schaden an."
       }
     ],
     "aktionen": [
       {
         "name": "Probestab",
-        "beschreibung": "Nahkampfwaffenangriff: +10 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W12+5 Stichschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +10 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 11 (1W12+5) Stichschaden."
+      },
+      {
+        "name": "Betäubungsstaub",
+        "beschreibung": "Ein Staubwurf auf einen Punkt in 9 m. Jede Kreatur in 3 m Umkreis muss einen Konstitutionsrettungswurf (SG 18) ablegen, sonst hat sie bis zum Ende ihres nächsten Zuges Nachteil auf Angriffswürfe. Einmal pro kurze Rast."
       }
     ],
-    "bonusaktionen": [],
-    "reaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Feldkenntnis",
+        "beschreibung": "Archivat kann als Bonusaktion eine Kreatur, Pflanze oder ein Mineral in Sichtweite automatisch identifizieren, ohne einen Würfelwurf abzulegen."
+      }
+    ],
+    "reaktionen": [
+      {
+        "name": "Rasche Analyse",
+        "beschreibung": "Greift eine Kreatur an, die Archivat sehen kann, liest er ihr Muster: Der Angriff hat Nachteil. Einmal pro Kampf."
+      }
+    ],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_01_Kuratoren.png",
+    "beschreibung": [
+      "Archivat, Rang 1 der Division Kuratoren. Leitet die Division und bestimmt Forschungsprioritäten. Genehmigt Großexpeditionen und seltene Materialentnahmen, verwaltet das Große Archiv im Gewölbe und vertritt die Division im Kolonialrat."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -69,8 +83,8 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "unterart": "NPC",
     "groesse": "Mittelgroß",
     "gesinnung": "Jede Gesinnung",
-    "cr": 4,
-    "xp": 1100,
+    "cr": 5,
+    "xp": 1800,
     "rk": 15,
     "ruestungstyp": "Lederrüstung",
     "tp": 104,
@@ -105,25 +119,34 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_01_Kuratoren.png",
-    "beschreibung": [
-      "Chefkurator, Rang 2 der Division Kuratoren. Koordiniert mehrere Expeditionsteams gleichzeitig und überwacht Qualität und Vollständigkeit aller Archiveinträge. Leitet komplexe Dokumentationsprojekte für neue Lebensformen."
-    ],
     "besonderheiten": [
       {
-        "name": "Feldkenntnis",
-        "beschreibung": "Chefkurator kann als Bonusaktion eine Kreatur, Pflanze oder ein Mineral in Sichtweite automatisch identifizieren, ohne einen Würfelwurf abzulegen."
+        "name": "Schwachstellenkunde",
+        "beschreibung": "Hat Chefkurator eine Kreatur mit Feldkenntnis identifiziert, richten seine Angriffe gegen sie zusätzlich 4 Schaden an."
       }
     ],
     "aktionen": [
       {
         "name": "Probestab",
-        "beschreibung": "Nahkampfwaffenangriff: +9 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W12+5 Stichschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +9 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 11 (1W12+5) Stichschaden."
+      },
+      {
+        "name": "Betäubungsstaub",
+        "beschreibung": "Ein Staubwurf auf einen Punkt in 9 m. Jede Kreatur in 3 m Umkreis muss einen Konstitutionsrettungswurf (SG 17) ablegen, sonst hat sie bis zum Ende ihres nächsten Zuges Nachteil auf Angriffswürfe. Einmal pro kurze Rast."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Feldkenntnis",
+        "beschreibung": "Chefkurator kann als Bonusaktion eine Kreatur, Pflanze oder ein Mineral in Sichtweite automatisch identifizieren, ohne einen Würfelwurf abzulegen."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_01_Kuratoren.png",
+    "beschreibung": [
+      "Chefkurator, Rang 2 der Division Kuratoren. Koordiniert mehrere Expeditionsteams gleichzeitig und überwacht Qualität und Vollständigkeit aller Archiveinträge. Leitet komplexe Dokumentationsprojekte für neue Lebensformen."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -132,8 +155,8 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "unterart": "NPC",
     "groesse": "Mittelgroß",
     "gesinnung": "Jede Gesinnung",
-    "cr": 2,
-    "xp": 450,
+    "cr": 3,
+    "xp": 700,
     "rk": 14,
     "ruestungstyp": "Lederrüstung",
     "tp": 85,
@@ -168,25 +191,34 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_01_Kuratoren.png",
-    "beschreibung": [
-      "Expeditionsleiter, Rang 3 der Division Kuratoren. Führt eigenständige Feldexpeditionen mit eigenem Team und verantwortet die sichere Rückführung von Proben. Erstellt vollständige Fundberichte inklusive Kontext und Gefahrenlage."
-    ],
     "besonderheiten": [
       {
-        "name": "Feldkenntnis",
-        "beschreibung": "Expeditionsleiter kann als Bonusaktion eine Kreatur, Pflanze oder ein Mineral in Sichtweite automatisch identifizieren, ohne einen Würfelwurf abzulegen."
+        "name": "Schwachstellenkunde",
+        "beschreibung": "Hat Expeditionsleiter eine Kreatur mit Feldkenntnis identifiziert, richten seine Angriffe gegen sie zusätzlich 4 Schaden an."
       }
     ],
     "aktionen": [
       {
         "name": "Probestab",
-        "beschreibung": "Nahkampfwaffenangriff: +8 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W10+4 Stichschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +8 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 9 (1W10+4) Stichschaden."
+      },
+      {
+        "name": "Betäubungsstaub",
+        "beschreibung": "Ein Staubwurf auf einen Punkt in 9 m. Jede Kreatur in 3 m Umkreis muss einen Konstitutionsrettungswurf (SG 16) ablegen, sonst hat sie bis zum Ende ihres nächsten Zuges Nachteil auf Angriffswürfe. Einmal pro kurze Rast."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Feldkenntnis",
+        "beschreibung": "Expeditionsleiter kann als Bonusaktion eine Kreatur, Pflanze oder ein Mineral in Sichtweite automatisch identifizieren, ohne einen Würfelwurf abzulegen."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_01_Kuratoren.png",
+    "beschreibung": [
+      "Expeditionsleiter, Rang 3 der Division Kuratoren. Führt eigenständige Feldexpeditionen mit eigenem Team und verantwortet die sichere Rückführung von Proben. Erstellt vollständige Fundberichte inklusive Kontext und Gefahrenlage."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -195,8 +227,8 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "unterart": "NPC",
     "groesse": "Mittelgroß",
     "gesinnung": "Jede Gesinnung",
-    "cr": 2,
-    "xp": 450,
+    "cr": 3,
+    "xp": 700,
     "rk": 14,
     "ruestungstyp": "Lederrüstung",
     "tp": 76,
@@ -231,25 +263,34 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_01_Kuratoren.png",
-    "beschreibung": [
-      "Präparator, Rang 4 der Division Kuratoren. Spezialist für Konservierung und Verarbeitung erlegter Bestien. Wertet Gewebe, Organe und Materialien wissenschaftlich aus und bildet Nachwuchs in Präparations- und Entnahmetechniken aus."
-    ],
     "besonderheiten": [
       {
-        "name": "Feldkenntnis",
-        "beschreibung": "Präparator kann als Bonusaktion eine Kreatur, Pflanze oder ein Mineral in Sichtweite automatisch identifizieren, ohne einen Würfelwurf abzulegen."
+        "name": "Schwachstellenkunde",
+        "beschreibung": "Hat Präparator eine Kreatur mit Feldkenntnis identifiziert, richten seine Angriffe gegen sie zusätzlich 4 Schaden an."
       }
     ],
     "aktionen": [
       {
         "name": "Probestab",
-        "beschreibung": "Nahkampfwaffenangriff: +8 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W10+4 Stichschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +8 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 9 (1W10+4) Stichschaden."
+      },
+      {
+        "name": "Betäubungsstaub",
+        "beschreibung": "Ein Staubwurf auf einen Punkt in 9 m. Jede Kreatur in 3 m Umkreis muss einen Konstitutionsrettungswurf (SG 16) ablegen, sonst hat sie bis zum Ende ihres nächsten Zuges Nachteil auf Angriffswürfe. Einmal pro kurze Rast."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Feldkenntnis",
+        "beschreibung": "Präparator kann als Bonusaktion eine Kreatur, Pflanze oder ein Mineral in Sichtweite automatisch identifizieren, ohne einen Würfelwurf abzulegen."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_01_Kuratoren.png",
+    "beschreibung": [
+      "Präparator, Rang 4 der Division Kuratoren. Spezialist für Konservierung und Verarbeitung erlegter Bestien. Wertet Gewebe, Organe und Materialien wissenschaftlich aus und bildet Nachwuchs in Präparations- und Entnahmetechniken aus."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -294,25 +335,30 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_01_Kuratoren.png",
-    "beschreibung": [
-      "Materialkundiger, Rang 5 der Division Kuratoren. Identifiziert und klassifiziert gesammelte Rohstoffe und Proben, bestimmt deren Verwertbarkeit und Gefährlichkeit und führt Bestandsinventuren im Gewölbelager durch."
-    ],
     "besonderheiten": [
       {
-        "name": "Feldkenntnis",
-        "beschreibung": "Materialkundiger kann als Bonusaktion eine Kreatur, Pflanze oder ein Mineral in Sichtweite automatisch identifizieren, ohne einen Würfelwurf abzulegen."
+        "name": "Schwachstellenkunde",
+        "beschreibung": "Hat Materialkundiger eine Kreatur mit Feldkenntnis identifiziert, richten seine Angriffe gegen sie zusätzlich 3 Schaden an."
       }
     ],
     "aktionen": [
       {
         "name": "Probestab",
-        "beschreibung": "Nahkampfwaffenangriff: +7 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W8+4 Stichschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +7 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 8 (1W8+4) Stichschaden."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Feldkenntnis",
+        "beschreibung": "Materialkundiger kann als Bonusaktion eine Kreatur, Pflanze oder ein Mineral in Sichtweite automatisch identifizieren, ohne einen Würfelwurf abzulegen."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_01_Kuratoren.png",
+    "beschreibung": [
+      "Materialkundiger, Rang 5 der Division Kuratoren. Identifiziert und klassifiziert gesammelte Rohstoffe und Proben, bestimmt deren Verwertbarkeit und Gefährlichkeit und führt Bestandsinventuren im Gewölbelager durch."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -357,25 +403,30 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_01_Kuratoren.png",
-    "beschreibung": [
-      "Feldkurator, Rang 6 der Division Kuratoren. Vollwertiges Mitglied mit Recht auf eigenständige Sammelaufträge. Dokumentiert Flora, Fauna und Mineralien im Feld vollständig und trägt Proben ordnungsgemäß ins Archiv ein."
-    ],
     "besonderheiten": [
       {
-        "name": "Feldkenntnis",
-        "beschreibung": "Feldkurator kann als Bonusaktion eine Kreatur, Pflanze oder ein Mineral in Sichtweite automatisch identifizieren, ohne einen Würfelwurf abzulegen."
+        "name": "Schwachstellenkunde",
+        "beschreibung": "Hat Feldkurator eine Kreatur mit Feldkenntnis identifiziert, richten seine Angriffe gegen sie zusätzlich 3 Schaden an."
       }
     ],
     "aktionen": [
       {
         "name": "Probestab",
-        "beschreibung": "Nahkampfwaffenangriff: +6 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W8+3 Stichschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 7 (1W8+3) Stichschaden."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Feldkenntnis",
+        "beschreibung": "Feldkurator kann als Bonusaktion eine Kreatur, Pflanze oder ein Mineral in Sichtweite automatisch identifizieren, ohne einen Würfelwurf abzulegen."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_01_Kuratoren.png",
+    "beschreibung": [
+      "Feldkurator, Rang 6 der Division Kuratoren. Vollwertiges Mitglied mit Recht auf eigenständige Sammelaufträge. Dokumentiert Flora, Fauna und Mineralien im Feld vollständig und trägt Proben ordnungsgemäß ins Archiv ein."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -384,8 +435,8 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "unterart": "NPC",
     "groesse": "Mittelgroß",
     "gesinnung": "Jede Gesinnung",
-    "cr": 0.5,
-    "xp": 100,
+    "cr": 1,
+    "xp": 200,
     "rk": 12,
     "ruestungstyp": "keine Rüstung",
     "tp": 37,
@@ -420,25 +471,30 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_01_Kuratoren.png",
-    "beschreibung": [
-      "Sammler, Rang 7 der Division Kuratoren. Führt standardisierte Sammelaufträge unter Aufsicht durch, dokumentiert Funde korrekt beschriftet und unterstützt Feldkuratoren bei größeren Touren."
-    ],
     "besonderheiten": [
       {
-        "name": "Feldkenntnis",
-        "beschreibung": "Sammler kann als Bonusaktion eine Kreatur, Pflanze oder ein Mineral in Sichtweite automatisch identifizieren, ohne einen Würfelwurf abzulegen."
+        "name": "Schwachstellenkunde",
+        "beschreibung": "Hat Sammler eine Kreatur mit Feldkenntnis identifiziert, richten seine Angriffe gegen sie zusätzlich 3 Schaden an."
       }
     ],
     "aktionen": [
       {
         "name": "Probestab",
-        "beschreibung": "Nahkampfwaffenangriff: +6 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W6+3 Stichschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 6 (1W6+3) Stichschaden."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Feldkenntnis",
+        "beschreibung": "Sammler kann als Bonusaktion eine Kreatur, Pflanze oder ein Mineral in Sichtweite automatisch identifizieren, ohne einen Würfelwurf abzulegen."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_01_Kuratoren.png",
+    "beschreibung": [
+      "Sammler, Rang 7 der Division Kuratoren. Führt standardisierte Sammelaufträge unter Aufsicht durch, dokumentiert Funde korrekt beschriftet und unterstützt Feldkuratoren bei größeren Touren."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -480,25 +536,25 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_01_Kuratoren.png",
-    "beschreibung": [
-      "Beobachter, Rang 8 der Division Kuratoren. Kartiert Flora und Fauna ohne aktiven Eingriff, fertigt erste eigene Skizzen und Beobachtungsnotizen an und begleitet erfahrene Kuratoren auf Lehrexpeditionen."
+    "besonderheiten": [],
+    "aktionen": [
+      {
+        "name": "Probestab",
+        "beschreibung": "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 5 (1W6+2) Stichschaden."
+      }
     ],
-    "besonderheiten": [
+    "bonusaktionen": [
       {
         "name": "Feldkenntnis",
         "beschreibung": "Beobachter kann als Bonusaktion eine Kreatur, Pflanze oder ein Mineral in Sichtweite automatisch identifizieren, ohne einen Würfelwurf abzulegen."
       }
     ],
-    "aktionen": [
-      {
-        "name": "Probestab",
-        "beschreibung": "Nahkampfwaffenangriff: +4 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W6+2 Stichschaden."
-      }
-    ],
-    "bonusaktionen": [],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_01_Kuratoren.png",
+    "beschreibung": [
+      "Beobachter, Rang 8 der Division Kuratoren. Kartiert Flora und Fauna ohne aktiven Eingriff, fertigt erste eigene Skizzen und Beobachtungsnotizen an und begleitet erfahrene Kuratoren auf Lehrexpeditionen."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -540,25 +596,25 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_01_Kuratoren.png",
-    "beschreibung": [
-      "Zeichner, Rang 9 der Division Kuratoren. Unterstützt erfahrene Kuratoren bei Lager- und Laborarbeiten, erlernt Grundlagen der Materialidentifikation und Probenkonservierung und führt einfache Inventuraufgaben unter Anleitung durch."
+    "besonderheiten": [],
+    "aktionen": [
+      {
+        "name": "Probestab",
+        "beschreibung": "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 4 (1W4+2) Stichschaden."
+      }
     ],
-    "besonderheiten": [
+    "bonusaktionen": [
       {
         "name": "Feldkenntnis",
         "beschreibung": "Zeichner kann als Bonusaktion eine Kreatur, Pflanze oder ein Mineral in Sichtweite automatisch identifizieren, ohne einen Würfelwurf abzulegen."
       }
     ],
-    "aktionen": [
-      {
-        "name": "Probestab",
-        "beschreibung": "Nahkampfwaffenangriff: +4 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W4+2 Stichschaden."
-      }
-    ],
-    "bonusaktionen": [],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_01_Kuratoren.png",
+    "beschreibung": [
+      "Zeichner, Rang 9 der Division Kuratoren. Unterstützt erfahrene Kuratoren bei Lager- und Laborarbeiten, erlernt Grundlagen der Materialidentifikation und Probenkonservierung und führt einfache Inventuraufgaben unter Anleitung durch."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -600,25 +656,25 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_01_Kuratoren.png",
-    "beschreibung": [
-      "Anwärter, Rang 10 der Division Kuratoren. Frisch aufgenommen, noch ohne Feldrechte. Nimmt an Einführungsführungen durch das Gewölbe teil und erlernt Grundregeln der Dokumentation und des Umgangs mit Proben."
+    "besonderheiten": [],
+    "aktionen": [
+      {
+        "name": "Probestab",
+        "beschreibung": "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 4 (1W4+2) Stichschaden."
+      }
     ],
-    "besonderheiten": [
+    "bonusaktionen": [
       {
         "name": "Feldkenntnis",
         "beschreibung": "Anwärter kann als Bonusaktion eine Kreatur, Pflanze oder ein Mineral in Sichtweite automatisch identifizieren, ohne einen Würfelwurf abzulegen."
       }
     ],
-    "aktionen": [
-      {
-        "name": "Probestab",
-        "beschreibung": "Nahkampfwaffenangriff: +4 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W4+2 Stichschaden."
-      }
-    ],
-    "bonusaktionen": [],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_01_Kuratoren.png",
+    "beschreibung": [
+      "Anwärter, Rang 10 der Division Kuratoren. Frisch aufgenommen, noch ohne Feldrechte. Nimmt an Einführungsführungen durch das Gewölbe teil und erlernt Grundregeln der Dokumentation und des Umgangs mit Proben."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -627,8 +683,8 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "unterart": "NPC",
     "groesse": "Mittelgroß",
     "gesinnung": "Jede Gesinnung",
-    "cr": 6,
-    "xp": 2300,
+    "cr": 7,
+    "xp": 2900,
     "rk": 18,
     "ruestungstyp": "Schienenrüstung",
     "tp": 114,
@@ -663,14 +719,14 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_02_Sturmritter.png",
-    "beschreibung": [
-      "Kriegsmarschall, Rang 1 der Division Sturmritter. Kommandiert die gesamte Division und setzt Jagdprioritäten. Autorisiert Hochrisikoeinsätze und Apex-Jagden und vertritt die Division im Kolonialrat."
-    ],
     "besonderheiten": [
       {
         "name": "Kampferprobt",
         "beschreibung": "Kriegsmarschall hat Vorteil auf Initiativewürfe und kann nicht überrascht werden, solange er nicht handlungsunfähig ist."
+      },
+      {
+        "name": "Sturmbanner",
+        "beschreibung": "Verbündete in 9 m, die Kriegsmarschall sehen oder hören können, haben Vorteil auf Rettungswürfe gegen Furcht und erhalten +2 auf Initiativewürfe."
       }
     ],
     "aktionen": [
@@ -680,12 +736,26 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Langschwert",
-        "beschreibung": "Nahkampfwaffenangriff: +10 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W12+5 Hiebschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +10 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 11 (1W12+5) Hiebschaden."
       }
     ],
-    "bonusaktionen": [],
-    "reaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Anstürmen",
+        "beschreibung": "Kriegsmarschall bewegt sich bis zu 4,5 m auf eine Kreatur zu, die er sehen kann; sein nächster Nahkampfangriff in diesem Zug hat Vorteil. Einmal pro Kampf."
+      }
+    ],
+    "reaktionen": [
+      {
+        "name": "Parade",
+        "beschreibung": "Wird Kriegsmarschall von einem Nahkampfangriff getroffen, den er sehen kann, verringert er den Schaden um 1W10 + 5."
+      }
+    ],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_02_Sturmritter.png",
+    "beschreibung": [
+      "Kriegsmarschall, Rang 1 der Division Sturmritter. Kommandiert die gesamte Division und setzt Jagdprioritäten. Autorisiert Hochrisikoeinsätze und Apex-Jagden und vertritt die Division im Kolonialrat."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -694,8 +764,8 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "unterart": "NPC",
     "groesse": "Mittelgroß",
     "gesinnung": "Jede Gesinnung",
-    "cr": 5,
-    "xp": 1800,
+    "cr": 6,
+    "xp": 2300,
     "rk": 18,
     "ruestungstyp": "Schienenrüstung",
     "tp": 104,
@@ -730,10 +800,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_02_Sturmritter.png",
-    "beschreibung": [
-      "Sturmhauptmann, Rang 2 der Division Sturmritter. Koordiniert mehrere Jagdtrupps gleichzeitig und leitet Großoperationen gegen koordinierte Kreaturenbedrohungen. Erstellt und pflegt die Gefahrenkarten der Umgebung."
-    ],
     "besonderheiten": [
       {
         "name": "Kampferprobt",
@@ -747,12 +813,26 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Langschwert",
-        "beschreibung": "Nahkampfwaffenangriff: +9 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W12+5 Hiebschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +9 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 11 (1W12+5) Hiebschaden."
       }
     ],
-    "bonusaktionen": [],
-    "reaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Anstürmen",
+        "beschreibung": "Sturmhauptmann bewegt sich bis zu 4,5 m auf eine Kreatur zu, die er sehen kann; sein nächster Nahkampfangriff in diesem Zug hat Vorteil. Einmal pro Kampf."
+      }
+    ],
+    "reaktionen": [
+      {
+        "name": "Parade",
+        "beschreibung": "Wird Sturmhauptmann von einem Nahkampfangriff getroffen, den er sehen kann, verringert er den Schaden um 1W10 + 4."
+      }
+    ],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_02_Sturmritter.png",
+    "beschreibung": [
+      "Sturmhauptmann, Rang 2 der Division Sturmritter. Koordiniert mehrere Jagdtrupps gleichzeitig und leitet Großoperationen gegen koordinierte Kreaturenbedrohungen. Erstellt und pflegt die Gefahrenkarten der Umgebung."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -761,8 +841,8 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "unterart": "NPC",
     "groesse": "Mittelgroß",
     "gesinnung": "Jede Gesinnung",
-    "cr": 4,
-    "xp": 1100,
+    "cr": 5,
+    "xp": 1800,
     "rk": 17,
     "ruestungstyp": "Schienenrüstung",
     "tp": 85,
@@ -797,10 +877,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_02_Sturmritter.png",
-    "beschreibung": [
-      "Klingenführer, Rang 3 der Division Sturmritter. Führt eigenständige Jagdtrupps in mittelschwere Einsätze und verantwortet Sicherheit und Rückzug des eigenen Trupps. Meldet Erkenntnisse und Kreaturenmuster an den Sturmhauptmann."
-    ],
     "besonderheiten": [
       {
         "name": "Kampferprobt",
@@ -814,12 +890,26 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Langschwert",
-        "beschreibung": "Nahkampfwaffenangriff: +8 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W10+4 Hiebschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +8 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 9 (1W10+4) Hiebschaden."
       }
     ],
-    "bonusaktionen": [],
-    "reaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Anstürmen",
+        "beschreibung": "Klingenführer bewegt sich bis zu 4,5 m auf eine Kreatur zu, die er sehen kann; sein nächster Nahkampfangriff in diesem Zug hat Vorteil. Einmal pro Kampf."
+      }
+    ],
+    "reaktionen": [
+      {
+        "name": "Parade",
+        "beschreibung": "Wird Klingenführer von einem Nahkampfangriff getroffen, den er sehen kann, verringert er den Schaden um 1W10 + 4."
+      }
+    ],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_02_Sturmritter.png",
+    "beschreibung": [
+      "Klingenführer, Rang 3 der Division Sturmritter. Führt eigenständige Jagdtrupps in mittelschwere Einsätze und verantwortet Sicherheit und Rückzug des eigenen Trupps. Meldet Erkenntnisse und Kreaturenmuster an den Sturmhauptmann."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -828,8 +918,8 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "unterart": "NPC",
     "groesse": "Mittelgroß",
     "gesinnung": "Jede Gesinnung",
-    "cr": 4,
-    "xp": 1100,
+    "cr": 5,
+    "xp": 1800,
     "rk": 17,
     "ruestungstyp": "Schienenrüstung",
     "tp": 76,
@@ -864,10 +954,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_02_Sturmritter.png",
-    "beschreibung": [
-      "Scharfrichter, Rang 4 der Division Sturmritter. Spezialist für besonders gefährliche Einzelziele – übernimmt gezielte Eliminierungen, die teamtaktisches Vorgehen überfordern, und berät Klingenführer bei schwierigen Gefahrenlagen."
-    ],
     "besonderheiten": [
       {
         "name": "Kampferprobt",
@@ -881,12 +967,26 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Langschwert",
-        "beschreibung": "Nahkampfwaffenangriff: +8 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W10+4 Hiebschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +8 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 9 (1W10+4) Hiebschaden."
       }
     ],
-    "bonusaktionen": [],
-    "reaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Anstürmen",
+        "beschreibung": "Scharfrichter bewegt sich bis zu 4,5 m auf eine Kreatur zu, die er sehen kann; sein nächster Nahkampfangriff in diesem Zug hat Vorteil. Einmal pro Kampf."
+      }
+    ],
+    "reaktionen": [
+      {
+        "name": "Parade",
+        "beschreibung": "Wird Scharfrichter von einem Nahkampfangriff getroffen, den er sehen kann, verringert er den Schaden um 1W10 + 4."
+      }
+    ],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_02_Sturmritter.png",
+    "beschreibung": [
+      "Scharfrichter, Rang 4 der Division Sturmritter. Spezialist für besonders gefährliche Einzelziele – übernimmt gezielte Eliminierungen, die teamtaktisches Vorgehen überfordern, und berät Klingenführer bei schwierigen Gefahrenlagen."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -931,10 +1031,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_02_Sturmritter.png",
-    "beschreibung": [
-      "Hetzjäger, Rang 5 der Division Sturmritter. Kundschaftet aktive Kreaturengebiete vor und liefert Lageberichte. Verfolgt und schwächt Ziele vor dem Hauptangriff und errichtet Frühwarnsysteme in Grenzgebieten."
-    ],
     "besonderheiten": [
       {
         "name": "Kampferprobt",
@@ -948,12 +1044,21 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Langschwert",
-        "beschreibung": "Nahkampfwaffenangriff: +7 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W8+4 Hiebschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +7 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 8 (1W8+4) Hiebschaden."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Anstürmen",
+        "beschreibung": "Hetzjäger bewegt sich bis zu 4,5 m auf eine Kreatur zu, die er sehen kann; sein nächster Nahkampfangriff in diesem Zug hat Vorteil. Einmal pro Kampf."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_02_Sturmritter.png",
+    "beschreibung": [
+      "Hetzjäger, Rang 5 der Division Sturmritter. Kundschaftet aktive Kreaturengebiete vor und liefert Lageberichte. Verfolgt und schwächt Ziele vor dem Hauptangriff und errichtet Frühwarnsysteme in Grenzgebieten."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -962,8 +1067,8 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "unterart": "NPC",
     "groesse": "Mittelgroß",
     "gesinnung": "Jede Gesinnung",
-    "cr": 1,
-    "xp": 200,
+    "cr": 2,
+    "xp": 450,
     "rk": 16,
     "ruestungstyp": "beschlagenes Leder",
     "tp": 51,
@@ -998,10 +1103,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_02_Sturmritter.png",
-    "beschreibung": [
-      "Sturmritter, Rang 6 der Division Sturmritter. Vollwertiges Mitglied mit Recht auf eigenständige Jagdaufträge. Führt standardisierte Eliminierungsaufträge durch und unterstützt höhere Ränge bei Großoperationen."
-    ],
     "besonderheiten": [
       {
         "name": "Kampferprobt",
@@ -1011,12 +1112,21 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "aktionen": [
       {
         "name": "Langschwert",
-        "beschreibung": "Nahkampfwaffenangriff: +6 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W8+3 Hiebschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 7 (1W8+3) Hiebschaden."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Anstürmen",
+        "beschreibung": "Sturmritter bewegt sich bis zu 4,5 m auf eine Kreatur zu, die er sehen kann; sein nächster Nahkampfangriff in diesem Zug hat Vorteil. Einmal pro Kampf."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_02_Sturmritter.png",
+    "beschreibung": [
+      "Sturmritter, Rang 6 der Division Sturmritter. Vollwertiges Mitglied mit Recht auf eigenständige Jagdaufträge. Führt standardisierte Eliminierungsaufträge durch und unterstützt höhere Ränge bei Großoperationen."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -1061,10 +1171,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_02_Sturmritter.png",
-    "beschreibung": [
-      "Jäger, Rang 7 der Division Sturmritter. Führt Eliminierungsaufträge unter Aufsicht eines Klingenführers durch, sichert Gebiete nach erfolgreicher Jagd und trainiert aktiv Kampftechniken gegen meruische Fauna."
-    ],
     "besonderheiten": [
       {
         "name": "Kampferprobt",
@@ -1074,12 +1180,21 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "aktionen": [
       {
         "name": "Langschwert",
-        "beschreibung": "Nahkampfwaffenangriff: +6 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W6+3 Hiebschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 6 (1W6+3) Hiebschaden."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Anstürmen",
+        "beschreibung": "Jäger bewegt sich bis zu 4,5 m auf eine Kreatur zu, die er sehen kann; sein nächster Nahkampfangriff in diesem Zug hat Vorteil. Einmal pro Kampf."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_02_Sturmritter.png",
+    "beschreibung": [
+      "Jäger, Rang 7 der Division Sturmritter. Führt Eliminierungsaufträge unter Aufsicht eines Klingenführers durch, sichert Gebiete nach erfolgreicher Jagd und trainiert aktiv Kampftechniken gegen meruische Fauna."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -1121,10 +1236,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_02_Sturmritter.png",
-    "beschreibung": [
-      "Kundschafter, Rang 8 der Division Sturmritter. Kundschaftet neue Gebiete auf Kreaturenpräsenz ohne Konfrontation, liefert Lageberichte und Aktivitätsmuster und begleitet erfahrene Jäger zur Ausbildung."
-    ],
     "besonderheiten": [
       {
         "name": "Kampferprobt",
@@ -1134,12 +1245,16 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "aktionen": [
       {
         "name": "Langschwert",
-        "beschreibung": "Nahkampfwaffenangriff: +4 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W6+2 Hiebschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 5 (1W6+2) Hiebschaden."
       }
     ],
     "bonusaktionen": [],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_02_Sturmritter.png",
+    "beschreibung": [
+      "Kundschafter, Rang 8 der Division Sturmritter. Kundschaftet neue Gebiete auf Kreaturenpräsenz ohne Konfrontation, liefert Lageberichte und Aktivitätsmuster und begleitet erfahrene Jäger zur Ausbildung."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -1181,10 +1296,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_02_Sturmritter.png",
-    "beschreibung": [
-      "Klingennovize, Rang 9 der Division Sturmritter. Erlernt Kampftechniken und Kreaturenkunde in der Bastion. Unterstützt erfahrene Sturmritter bei Vorbereitungen und Nacharbeiten und absolviert Pflichttraining auf dem Trainingsplatz."
-    ],
     "besonderheiten": [
       {
         "name": "Kampferprobt",
@@ -1194,12 +1305,16 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "aktionen": [
       {
         "name": "Langschwert",
-        "beschreibung": "Nahkampfwaffenangriff: +4 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W4+2 Hiebschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 4 (1W4+2) Hiebschaden."
       }
     ],
     "bonusaktionen": [],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_02_Sturmritter.png",
+    "beschreibung": [
+      "Klingennovize, Rang 9 der Division Sturmritter. Erlernt Kampftechniken und Kreaturenkunde in der Bastion. Unterstützt erfahrene Sturmritter bei Vorbereitungen und Nacharbeiten und absolviert Pflichttraining auf dem Trainingsplatz."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -1241,10 +1356,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_02_Sturmritter.png",
-    "beschreibung": [
-      "Rekrut, Rang 10 der Division Sturmritter. Frisch aufgenommen, Grundausbildung läuft. Nimmt an Einführungsübungen teil, noch ohne eigenständige Aufgaben oder Einsatzgenehmigung."
-    ],
     "besonderheiten": [
       {
         "name": "Kampferprobt",
@@ -1254,12 +1365,16 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "aktionen": [
       {
         "name": "Langschwert",
-        "beschreibung": "Nahkampfwaffenangriff: +4 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W4+2 Hiebschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 4 (1W4+2) Hiebschaden."
       }
     ],
     "bonusaktionen": [],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_02_Sturmritter.png",
+    "beschreibung": [
+      "Rekrut, Rang 10 der Division Sturmritter. Frisch aufgenommen, Grundausbildung läuft. Nimmt an Einführungsübungen teil, noch ohne eigenständige Aufgaben oder Einsatzgenehmigung."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -1268,8 +1383,8 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "unterart": "NPC",
     "groesse": "Mittelgroß",
     "gesinnung": "Jede Gesinnung",
-    "cr": 7,
-    "xp": 2900,
+    "cr": 8,
+    "xp": 3900,
     "rk": 19,
     "ruestungstyp": "Plattenpanzer",
     "tp": 138,
@@ -1304,14 +1419,14 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_03_Sentinels.png",
-    "beschreibung": [
-      "Aegis, Rang 1 der Division Sentinels. Trägt die Gesamtverantwortung für Schutz und Verteidigung der Kolonie. Koordiniert alle Wachposten, Patrouillen und Schutzoperationen und vertritt die Division im Kolonialrat."
-    ],
     "besonderheiten": [
       {
-        "name": "Schutzinstinkt",
-        "beschreibung": "Wird ein Verbündeter in Reichweite 1,5 m im Nahkampf angegriffen, kann Aegis als Reaktion +2 auf dessen Rüstungsklasse bis zum Beginn seines nächsten Zuges gewähren."
+        "name": "Standhaft",
+        "beschreibung": "Aegis hat Vorteil auf Rettungswürfe gegen Umgeworfen und gegen unfreiwillige Bewegung."
+      },
+      {
+        "name": "Unerschütterlich",
+        "beschreibung": "Würde Aegis auf 0 Trefferpunkte fallen, bleibt er stattdessen bei 1 Trefferpunkt. Einmal pro lange Rast."
       }
     ],
     "aktionen": [
@@ -1324,9 +1439,23 @@ window.MONSTER_DATA_REKRUTIERUNG = [
         "beschreibung": "Nahkampfwaffenangriff: +10 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W12+5 Wuchtschaden, und das Ziel muss einen Stärkerettungswurf (SG 18) ablegen oder wird umgeworfen."
       }
     ],
-    "bonusaktionen": [],
-    "reaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Schildwall",
+        "beschreibung": "Bis zum Beginn seines nächsten Zuges hat Aegis +2 auf die Rüstungsklasse, und Verbündete in 1,5 m von ihm erhalten Halbdeckung."
+      }
+    ],
+    "reaktionen": [
+      {
+        "name": "Schutzinstinkt",
+        "beschreibung": "Wird ein Verbündeter in Reichweite 1,5 m im Nahkampf angegriffen, kann Aegis als Reaktion +2 auf dessen Rüstungsklasse bis zum Beginn seines nächsten Zuges gewähren."
+      }
+    ],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_03_Sentinels.png",
+    "beschreibung": [
+      "Aegis, Rang 1 der Division Sentinels. Trägt die Gesamtverantwortung für Schutz und Verteidigung der Kolonie. Koordiniert alle Wachposten, Patrouillen und Schutzoperationen und vertritt die Division im Kolonialrat."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -1335,8 +1464,8 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "unterart": "NPC",
     "groesse": "Mittelgroß",
     "gesinnung": "Jede Gesinnung",
-    "cr": 6,
-    "xp": 2300,
+    "cr": 7,
+    "xp": 2900,
     "rk": 19,
     "ruestungstyp": "Plattenpanzer",
     "tp": 126,
@@ -1371,14 +1500,10 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_03_Sentinels.png",
-    "beschreibung": [
-      "Schirmherr, Rang 2 der Division Sentinels. Leitet größere Rettungs- und Verteidigungsoperationen. Koordiniert Evakuierungsrouten und Notfallpläne und überwacht die Gesamtaufteilung aller Wachschichten."
-    ],
     "besonderheiten": [
       {
-        "name": "Schutzinstinkt",
-        "beschreibung": "Wird ein Verbündeter in Reichweite 1,5 m im Nahkampf angegriffen, kann Schirmherr als Reaktion +2 auf dessen Rüstungsklasse bis zum Beginn seines nächsten Zuges gewähren."
+        "name": "Standhaft",
+        "beschreibung": "Schirmherr hat Vorteil auf Rettungswürfe gegen Umgeworfen und gegen unfreiwillige Bewegung."
       }
     ],
     "aktionen": [
@@ -1391,9 +1516,23 @@ window.MONSTER_DATA_REKRUTIERUNG = [
         "beschreibung": "Nahkampfwaffenangriff: +9 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W12+5 Wuchtschaden, und das Ziel muss einen Stärkerettungswurf (SG 17) ablegen oder wird umgeworfen."
       }
     ],
-    "bonusaktionen": [],
-    "reaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Schildwall",
+        "beschreibung": "Bis zum Beginn seines nächsten Zuges hat Schirmherr +2 auf die Rüstungsklasse, und Verbündete in 1,5 m von ihm erhalten Halbdeckung."
+      }
+    ],
+    "reaktionen": [
+      {
+        "name": "Schutzinstinkt",
+        "beschreibung": "Wird ein Verbündeter in Reichweite 1,5 m im Nahkampf angegriffen, kann Schirmherr als Reaktion +2 auf dessen Rüstungsklasse bis zum Beginn seines nächsten Zuges gewähren."
+      }
+    ],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_03_Sentinels.png",
+    "beschreibung": [
+      "Schirmherr, Rang 2 der Division Sentinels. Leitet größere Rettungs- und Verteidigungsoperationen. Koordiniert Evakuierungsrouten und Notfallpläne und überwacht die Gesamtaufteilung aller Wachschichten."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -1438,14 +1577,10 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_03_Sentinels.png",
-    "beschreibung": [
-      "Bollwerk, Rang 3 der Division Sentinels. Führt Schutzformationen und Rettungstrupps eigenständig, plant und leitet komplexe Rettungsmissionen und bewertet neue Siedlungsgebiete auf Verteidigungsfähigkeit."
-    ],
     "besonderheiten": [
       {
-        "name": "Schutzinstinkt",
-        "beschreibung": "Wird ein Verbündeter in Reichweite 1,5 m im Nahkampf angegriffen, kann Bollwerk als Reaktion +2 auf dessen Rüstungsklasse bis zum Beginn seines nächsten Zuges gewähren."
+        "name": "Standhaft",
+        "beschreibung": "Bollwerk hat Vorteil auf Rettungswürfe gegen Umgeworfen und gegen unfreiwillige Bewegung."
       }
     ],
     "aktionen": [
@@ -1458,9 +1593,23 @@ window.MONSTER_DATA_REKRUTIERUNG = [
         "beschreibung": "Nahkampfwaffenangriff: +8 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W10+4 Wuchtschaden, und das Ziel muss einen Stärkerettungswurf (SG 16) ablegen oder wird umgeworfen."
       }
     ],
-    "bonusaktionen": [],
-    "reaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Schildwall",
+        "beschreibung": "Bis zum Beginn seines nächsten Zuges hat Bollwerk +2 auf die Rüstungsklasse, und Verbündete in 1,5 m von ihm erhalten Halbdeckung."
+      }
+    ],
+    "reaktionen": [
+      {
+        "name": "Schutzinstinkt",
+        "beschreibung": "Wird ein Verbündeter in Reichweite 1,5 m im Nahkampf angegriffen, kann Bollwerk als Reaktion +2 auf dessen Rüstungsklasse bis zum Beginn seines nächsten Zuges gewähren."
+      }
+    ],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_03_Sentinels.png",
+    "beschreibung": [
+      "Bollwerk, Rang 3 der Division Sentinels. Führt Schutzformationen und Rettungstrupps eigenständig, plant und leitet komplexe Rettungsmissionen und bewertet neue Siedlungsgebiete auf Verteidigungsfähigkeit."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -1469,8 +1618,8 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "unterart": "NPC",
     "groesse": "Mittelgroß",
     "gesinnung": "Jede Gesinnung",
-    "cr": 4,
-    "xp": 1100,
+    "cr": 5,
+    "xp": 1800,
     "rk": 18,
     "ruestungstyp": "Plattenpanzer",
     "tp": 94,
@@ -1505,14 +1654,10 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_03_Sentinels.png",
-    "beschreibung": [
-      "Festungsbauer, Rang 4 der Division Sentinels. Spezialist für Planung und Errichtung dauerhafter Verteidigungsanlagen. Bewertet und verstärkt bestehende Stadtmauern und Außenposten und arbeitet mit den Outfitters zusammen."
-    ],
     "besonderheiten": [
       {
-        "name": "Schutzinstinkt",
-        "beschreibung": "Wird ein Verbündeter in Reichweite 1,5 m im Nahkampf angegriffen, kann Festungsbauer als Reaktion +2 auf dessen Rüstungsklasse bis zum Beginn seines nächsten Zuges gewähren."
+        "name": "Standhaft",
+        "beschreibung": "Festungsbauer hat Vorteil auf Rettungswürfe gegen Umgeworfen und gegen unfreiwillige Bewegung."
       }
     ],
     "aktionen": [
@@ -1525,9 +1670,23 @@ window.MONSTER_DATA_REKRUTIERUNG = [
         "beschreibung": "Nahkampfwaffenangriff: +8 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W10+4 Wuchtschaden, und das Ziel muss einen Stärkerettungswurf (SG 16) ablegen oder wird umgeworfen."
       }
     ],
-    "bonusaktionen": [],
-    "reaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Schildwall",
+        "beschreibung": "Bis zum Beginn seines nächsten Zuges hat Festungsbauer +2 auf die Rüstungsklasse, und Verbündete in 1,5 m von ihm erhalten Halbdeckung."
+      }
+    ],
+    "reaktionen": [
+      {
+        "name": "Schutzinstinkt",
+        "beschreibung": "Wird ein Verbündeter in Reichweite 1,5 m im Nahkampf angegriffen, kann Festungsbauer als Reaktion +2 auf dessen Rüstungsklasse bis zum Beginn seines nächsten Zuges gewähren."
+      }
+    ],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_03_Sentinels.png",
+    "beschreibung": [
+      "Festungsbauer, Rang 4 der Division Sentinels. Spezialist für Planung und Errichtung dauerhafter Verteidigungsanlagen. Bewertet und verstärkt bestehende Stadtmauern und Außenposten und arbeitet mit den Outfitters zusammen."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -1572,14 +1731,10 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_03_Sentinels.png",
-    "beschreibung": [
-      "Eskortführer, Rang 5 der Division Sentinels. Leitet Schutzeskorte für Träumer, Karawanen und schutzbedürftige Personen. Bewertet Bedrohungslagen eigenständig und koordiniert die Eskortplanung mit anderen Divisionen."
-    ],
     "besonderheiten": [
       {
-        "name": "Schutzinstinkt",
-        "beschreibung": "Wird ein Verbündeter in Reichweite 1,5 m im Nahkampf angegriffen, kann Eskortführer als Reaktion +2 auf dessen Rüstungsklasse bis zum Beginn seines nächsten Zuges gewähren."
+        "name": "Standhaft",
+        "beschreibung": "Eskortführer hat Vorteil auf Rettungswürfe gegen Umgeworfen und gegen unfreiwillige Bewegung."
       }
     ],
     "aktionen": [
@@ -1593,8 +1748,17 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       }
     ],
     "bonusaktionen": [],
-    "reaktionen": [],
+    "reaktionen": [
+      {
+        "name": "Schutzinstinkt",
+        "beschreibung": "Wird ein Verbündeter in Reichweite 1,5 m im Nahkampf angegriffen, kann Eskortführer als Reaktion +2 auf dessen Rüstungsklasse bis zum Beginn seines nächsten Zuges gewähren."
+      }
+    ],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_03_Sentinels.png",
+    "beschreibung": [
+      "Eskortführer, Rang 5 der Division Sentinels. Leitet Schutzeskorte für Träumer, Karawanen und schutzbedürftige Personen. Bewertet Bedrohungslagen eigenständig und koordiniert die Eskortplanung mit anderen Divisionen."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -1639,14 +1803,10 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_03_Sentinels.png",
-    "beschreibung": [
-      "Sentinel, Rang 6 der Division Sentinels. Vollwertiges Mitglied mit Recht auf eigenständige Schutz- und Rettungsaufträge. Patrouilliert zugewiesene Gebiete und sichert Expeditionsteams anderer Divisionen auf Anfrage."
-    ],
     "besonderheiten": [
       {
-        "name": "Schutzinstinkt",
-        "beschreibung": "Wird ein Verbündeter in Reichweite 1,5 m im Nahkampf angegriffen, kann Sentinel als Reaktion +2 auf dessen Rüstungsklasse bis zum Beginn seines nächsten Zuges gewähren."
+        "name": "Standhaft",
+        "beschreibung": "Sentinel hat Vorteil auf Rettungswürfe gegen Umgeworfen und gegen unfreiwillige Bewegung."
       }
     ],
     "aktionen": [
@@ -1656,8 +1816,17 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       }
     ],
     "bonusaktionen": [],
-    "reaktionen": [],
+    "reaktionen": [
+      {
+        "name": "Schutzinstinkt",
+        "beschreibung": "Wird ein Verbündeter in Reichweite 1,5 m im Nahkampf angegriffen, kann Sentinel als Reaktion +2 auf dessen Rüstungsklasse bis zum Beginn seines nächsten Zuges gewähren."
+      }
+    ],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_03_Sentinels.png",
+    "beschreibung": [
+      "Sentinel, Rang 6 der Division Sentinels. Vollwertiges Mitglied mit Recht auf eigenständige Schutz- und Rettungsaufträge. Patrouilliert zugewiesene Gebiete und sichert Expeditionsteams anderer Divisionen auf Anfrage."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -1702,14 +1871,10 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_03_Sentinels.png",
-    "beschreibung": [
-      "Wächter, Rang 7 der Division Sentinels. Besetzt Wachposten und führt Patrouillendienste durch. Meldet Bedrohungen sofort an höhere Ränge und unterstützt Rettungseinsätze als Teil eines Teams."
-    ],
     "besonderheiten": [
       {
-        "name": "Schutzinstinkt",
-        "beschreibung": "Wird ein Verbündeter in Reichweite 1,5 m im Nahkampf angegriffen, kann Wächter als Reaktion +2 auf dessen Rüstungsklasse bis zum Beginn seines nächsten Zuges gewähren."
+        "name": "Standhaft",
+        "beschreibung": "Wächter hat Vorteil auf Rettungswürfe gegen Umgeworfen und gegen unfreiwillige Bewegung."
       }
     ],
     "aktionen": [
@@ -1719,8 +1884,17 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       }
     ],
     "bonusaktionen": [],
-    "reaktionen": [],
+    "reaktionen": [
+      {
+        "name": "Schutzinstinkt",
+        "beschreibung": "Wird ein Verbündeter in Reichweite 1,5 m im Nahkampf angegriffen, kann Wächter als Reaktion +2 auf dessen Rüstungsklasse bis zum Beginn seines nächsten Zuges gewähren."
+      }
+    ],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_03_Sentinels.png",
+    "beschreibung": [
+      "Wächter, Rang 7 der Division Sentinels. Besetzt Wachposten und führt Patrouillendienste durch. Meldet Bedrohungen sofort an höhere Ränge und unterstützt Rettungseinsätze als Teil eines Teams."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -1762,16 +1936,7 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_03_Sentinels.png",
-    "beschreibung": [
-      "Hüter, Rang 8 der Division Sentinels. Begleitet frisch gerettete Träumer und unterstützt ihre Orientierung. Assistiert bei Rettungseinsätzen und erlernt die Grundlagen der Schutzformation."
-    ],
-    "besonderheiten": [
-      {
-        "name": "Schutzinstinkt",
-        "beschreibung": "Wird ein Verbündeter in Reichweite 1,5 m im Nahkampf angegriffen, kann Hüter als Reaktion +2 auf dessen Rüstungsklasse bis zum Beginn seines nächsten Zuges gewähren."
-      }
-    ],
+    "besonderheiten": [],
     "aktionen": [
       {
         "name": "Schildstoß",
@@ -1779,8 +1944,17 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       }
     ],
     "bonusaktionen": [],
-    "reaktionen": [],
+    "reaktionen": [
+      {
+        "name": "Schutzinstinkt",
+        "beschreibung": "Wird ein Verbündeter in Reichweite 1,5 m im Nahkampf angegriffen, kann Hüter als Reaktion +2 auf dessen Rüstungsklasse bis zum Beginn seines nächsten Zuges gewähren."
+      }
+    ],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_03_Sentinels.png",
+    "beschreibung": [
+      "Hüter, Rang 8 der Division Sentinels. Begleitet frisch gerettete Träumer und unterstützt ihre Orientierung. Assistiert bei Rettungseinsätzen und erlernt die Grundlagen der Schutzformation."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -1822,16 +1996,7 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_03_Sentinels.png",
-    "beschreibung": [
-      "Schildwache, Rang 9 der Division Sentinels. Begleitet erfahrene Sentinels auf Patrouillen und erlernt Grundlagen der Verteidigung, Erste Hilfe und Kommunikation. Übernimmt einfache Wachdienste unter Aufsicht."
-    ],
-    "besonderheiten": [
-      {
-        "name": "Schutzinstinkt",
-        "beschreibung": "Wird ein Verbündeter in Reichweite 1,5 m im Nahkampf angegriffen, kann Schildwache als Reaktion +2 auf dessen Rüstungsklasse bis zum Beginn seines nächsten Zuges gewähren."
-      }
-    ],
+    "besonderheiten": [],
     "aktionen": [
       {
         "name": "Schildstoß",
@@ -1839,8 +2004,17 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       }
     ],
     "bonusaktionen": [],
-    "reaktionen": [],
+    "reaktionen": [
+      {
+        "name": "Schutzinstinkt",
+        "beschreibung": "Wird ein Verbündeter in Reichweite 1,5 m im Nahkampf angegriffen, kann Schildwache als Reaktion +2 auf dessen Rüstungsklasse bis zum Beginn seines nächsten Zuges gewähren."
+      }
+    ],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_03_Sentinels.png",
+    "beschreibung": [
+      "Schildwache, Rang 9 der Division Sentinels. Begleitet erfahrene Sentinels auf Patrouillen und erlernt Grundlagen der Verteidigung, Erste Hilfe und Kommunikation. Übernimmt einfache Wachdienste unter Aufsicht."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -1882,16 +2056,7 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_03_Sentinels.png",
-    "beschreibung": [
-      "Novize, Rang 10 der Division Sentinels. Frisch aufgenommen, Basisausbildung läuft. Nimmt an Pflichtübungen in Schutzformation und Erste Hilfe teil, noch ohne eigenständige Wach- oder Einsatzrechte."
-    ],
-    "besonderheiten": [
-      {
-        "name": "Schutzinstinkt",
-        "beschreibung": "Wird ein Verbündeter in Reichweite 1,5 m im Nahkampf angegriffen, kann Novize als Reaktion +2 auf dessen Rüstungsklasse bis zum Beginn seines nächsten Zuges gewähren."
-      }
-    ],
+    "besonderheiten": [],
     "aktionen": [
       {
         "name": "Schildstoß",
@@ -1899,8 +2064,17 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       }
     ],
     "bonusaktionen": [],
-    "reaktionen": [],
+    "reaktionen": [
+      {
+        "name": "Schutzinstinkt",
+        "beschreibung": "Wird ein Verbündeter in Reichweite 1,5 m im Nahkampf angegriffen, kann Novize als Reaktion +2 auf dessen Rüstungsklasse bis zum Beginn seines nächsten Zuges gewähren."
+      }
+    ],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_03_Sentinels.png",
+    "beschreibung": [
+      "Novize, Rang 10 der Division Sentinels. Frisch aufgenommen, Basisausbildung läuft. Nimmt an Pflichtübungen in Schutzformation und Erste Hilfe teil, noch ohne eigenständige Wach- oder Einsatzrechte."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -1909,8 +2083,8 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "unterart": "NPC",
     "groesse": "Mittelgroß",
     "gesinnung": "Jede Gesinnung",
-    "cr": 4,
-    "xp": 1100,
+    "cr": 5,
+    "xp": 1800,
     "rk": 16,
     "ruestungstyp": "Lederrüstung",
     "tp": 90,
@@ -1945,14 +2119,10 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_04_Friendenshüter.png",
-    "beschreibung": [
-      "Konsul, Rang 1 der Division Friedenshüter. Leitet die Division und vertritt Bürgerinteressen im Kolonialrat. Entscheidet in schwerwiegenden Rechtsfällen und koordiniert das gesamte Netzwerk aus Vertrauenspersonen in der Stadt."
-    ],
     "besonderheiten": [
       {
-        "name": "Deeskalationskunst",
-        "beschreibung": "Einmal pro Runde kann Konsul eine Kreatur, die er sehen kann, zu einem Weisheitsrettungswurf (SG 18) zwingen. Bei einem Misserfolg führt die Kreatur im nächsten Zug keinen Angriff gegen einen Verbündeten aus."
+        "name": "Aufmerksames Ohr",
+        "beschreibung": "Konsul hat Vorteil auf Würfe auf Motiv erkennen und auf Überzeugen, um einen Streit zu schlichten."
       }
     ],
     "aktionen": [
@@ -1962,12 +2132,30 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Knüppel",
-        "beschreibung": "Nahkampfwaffenangriff: +10 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W12+5 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +10 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 11 (1W12+5) Wuchtschaden."
+      },
+      {
+        "name": "Beschwichtigen",
+        "beschreibung": "Bis zu drei Kreaturen in 9 m, die Konsul hören können, müssen einen Weisheitsrettungswurf (SG 18) ablegen, sonst haben sie bis zum Ende ihres nächsten Zuges Nachteil auf Angriffswürfe."
       }
     ],
-    "bonusaktionen": [],
-    "reaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Deeskalationskunst",
+        "beschreibung": "Einmal pro Runde kann Konsul eine Kreatur, die er sehen kann, zu einem Weisheitsrettungswurf (SG 18) zwingen. Bei einem Misserfolg führt die Kreatur im nächsten Zug keinen Angriff gegen einen Verbündeten aus."
+      }
+    ],
+    "reaktionen": [
+      {
+        "name": "Gebot des Friedens",
+        "beschreibung": "Greift eine Kreatur in 9 m an, kann Konsul sie zu einem Weisheitsrettungswurf (SG 18) zwingen. Bei einem Misserfolg schlägt der Angriff fehl. Einmal pro Kampf."
+      }
+    ],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_04_Friendenshüter.png",
+    "beschreibung": [
+      "Konsul, Rang 1 der Division Friedenshüter. Leitet die Division und vertritt Bürgerinteressen im Kolonialrat. Entscheidet in schwerwiegenden Rechtsfällen und koordiniert das gesamte Netzwerk aus Vertrauenspersonen in der Stadt."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -1976,8 +2164,8 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "unterart": "NPC",
     "groesse": "Mittelgroß",
     "gesinnung": "Jede Gesinnung",
-    "cr": 3,
-    "xp": 700,
+    "cr": 4,
+    "xp": 1100,
     "rk": 16,
     "ruestungstyp": "Lederrüstung",
     "tp": 82,
@@ -2012,14 +2200,10 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_04_Friendenshüter.png",
-    "beschreibung": [
-      "Oberrichter, Rang 2 der Division Friedenshüter. Zuständig für schwere Rechtsfälle und Gruppenkonflikte. Leitet Schlichtungsverfahren zwischen rivalisierenden Parteien und koordiniert die Arbeit der Inspektoren und Ermittler."
-    ],
     "besonderheiten": [
       {
-        "name": "Deeskalationskunst",
-        "beschreibung": "Einmal pro Runde kann Oberrichter eine Kreatur, die er sehen kann, zu einem Weisheitsrettungswurf (SG 17) zwingen. Bei einem Misserfolg führt die Kreatur im nächsten Zug keinen Angriff gegen einen Verbündeten aus."
+        "name": "Aufmerksames Ohr",
+        "beschreibung": "Oberrichter hat Vorteil auf Würfe auf Motiv erkennen und auf Überzeugen, um einen Streit zu schlichten."
       }
     ],
     "aktionen": [
@@ -2029,12 +2213,25 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Knüppel",
-        "beschreibung": "Nahkampfwaffenangriff: +9 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W12+5 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +9 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 11 (1W12+5) Wuchtschaden."
+      },
+      {
+        "name": "Beschwichtigen",
+        "beschreibung": "Bis zu drei Kreaturen in 9 m, die Oberrichter hören können, müssen einen Weisheitsrettungswurf (SG 17) ablegen, sonst haben sie bis zum Ende ihres nächsten Zuges Nachteil auf Angriffswürfe."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Deeskalationskunst",
+        "beschreibung": "Einmal pro Runde kann Oberrichter eine Kreatur, die er sehen kann, zu einem Weisheitsrettungswurf (SG 17) zwingen. Bei einem Misserfolg führt die Kreatur im nächsten Zug keinen Angriff gegen einen Verbündeten aus."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_04_Friendenshüter.png",
+    "beschreibung": [
+      "Oberrichter, Rang 2 der Division Friedenshüter. Zuständig für schwere Rechtsfälle und Gruppenkonflikte. Leitet Schlichtungsverfahren zwischen rivalisierenden Parteien und koordiniert die Arbeit der Inspektoren und Ermittler."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -2079,14 +2276,10 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_04_Friendenshüter.png",
-    "beschreibung": [
-      "Vermittler, Rang 3 der Division Friedenshüter. Führt eigenständige Verhandlungen und Schlichtungen zwischen Parteien. Repräsentiert die Division bei Konflikten zwischen Vierteln oder Gruppen und berichtet bei eskalierenden Fällen."
-    ],
     "besonderheiten": [
       {
-        "name": "Deeskalationskunst",
-        "beschreibung": "Einmal pro Runde kann Vermittler eine Kreatur, die er sehen kann, zu einem Weisheitsrettungswurf (SG 16) zwingen. Bei einem Misserfolg führt die Kreatur im nächsten Zug keinen Angriff gegen einen Verbündeten aus."
+        "name": "Aufmerksames Ohr",
+        "beschreibung": "Vermittler hat Vorteil auf Würfe auf Motiv erkennen und auf Überzeugen, um einen Streit zu schlichten."
       }
     ],
     "aktionen": [
@@ -2096,12 +2289,25 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Knüppel",
-        "beschreibung": "Nahkampfwaffenangriff: +8 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W10+4 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +8 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 9 (1W10+4) Wuchtschaden."
+      },
+      {
+        "name": "Beschwichtigen",
+        "beschreibung": "Bis zu drei Kreaturen in 9 m, die Vermittler hören können, müssen einen Weisheitsrettungswurf (SG 16) ablegen, sonst haben sie bis zum Ende ihres nächsten Zuges Nachteil auf Angriffswürfe."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Deeskalationskunst",
+        "beschreibung": "Einmal pro Runde kann Vermittler eine Kreatur, die er sehen kann, zu einem Weisheitsrettungswurf (SG 16) zwingen. Bei einem Misserfolg führt die Kreatur im nächsten Zug keinen Angriff gegen einen Verbündeten aus."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_04_Friendenshüter.png",
+    "beschreibung": [
+      "Vermittler, Rang 3 der Division Friedenshüter. Führt eigenständige Verhandlungen und Schlichtungen zwischen Parteien. Repräsentiert die Division bei Konflikten zwischen Vierteln oder Gruppen und berichtet bei eskalierenden Fällen."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -2110,8 +2316,8 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "unterart": "NPC",
     "groesse": "Mittelgroß",
     "gesinnung": "Jede Gesinnung",
-    "cr": 2,
-    "xp": 450,
+    "cr": 3,
+    "xp": 700,
     "rk": 15,
     "ruestungstyp": "Lederrüstung",
     "tp": 58,
@@ -2146,14 +2352,10 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_04_Friendenshüter.png",
-    "beschreibung": [
-      "Inspektor, Rang 4 der Division Friedenshüter. Leitet Ermittlungen bei Diebstahl, Betrug und anderen Vergehen. Führt Verhöre durch, sammelt Beweise eigenständig und überwacht Träumer-Eingliederungsfälle bei Schwierigkeiten."
-    ],
     "besonderheiten": [
       {
-        "name": "Deeskalationskunst",
-        "beschreibung": "Einmal pro Runde kann Inspektor eine Kreatur, die er sehen kann, zu einem Weisheitsrettungswurf (SG 16) zwingen. Bei einem Misserfolg führt die Kreatur im nächsten Zug keinen Angriff gegen einen Verbündeten aus."
+        "name": "Aufmerksames Ohr",
+        "beschreibung": "Inspektor hat Vorteil auf Würfe auf Motiv erkennen und auf Überzeugen, um einen Streit zu schlichten."
       }
     ],
     "aktionen": [
@@ -2163,12 +2365,25 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Knüppel",
-        "beschreibung": "Nahkampfwaffenangriff: +8 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W10+4 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +8 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 9 (1W10+4) Wuchtschaden."
+      },
+      {
+        "name": "Beschwichtigen",
+        "beschreibung": "Bis zu drei Kreaturen in 9 m, die Inspektor hören können, müssen einen Weisheitsrettungswurf (SG 16) ablegen, sonst haben sie bis zum Ende ihres nächsten Zuges Nachteil auf Angriffswürfe."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Deeskalationskunst",
+        "beschreibung": "Einmal pro Runde kann Inspektor eine Kreatur, die er sehen kann, zu einem Weisheitsrettungswurf (SG 16) zwingen. Bei einem Misserfolg führt die Kreatur im nächsten Zug keinen Angriff gegen einen Verbündeten aus."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_04_Friendenshüter.png",
+    "beschreibung": [
+      "Inspektor, Rang 4 der Division Friedenshüter. Leitet Ermittlungen bei Diebstahl, Betrug und anderen Vergehen. Führt Verhöre durch, sammelt Beweise eigenständig und überwacht Träumer-Eingliederungsfälle bei Schwierigkeiten."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -2213,14 +2428,10 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_04_Friendenshüter.png",
-    "beschreibung": [
-      "Friedenswahrer, Rang 5 der Division Friedenshüter. Eigenständig aktiv in Vermittlung, Ermittlung und Schlichtung. Löst alltägliche Bürgeranliegen vor Ort und baut das Netzwerk der Vertrauenspersonen im eigenen Viertel auf und pflegt es."
-    ],
     "besonderheiten": [
       {
-        "name": "Deeskalationskunst",
-        "beschreibung": "Einmal pro Runde kann Friedenswahrer eine Kreatur, die er sehen kann, zu einem Weisheitsrettungswurf (SG 15) zwingen. Bei einem Misserfolg führt die Kreatur im nächsten Zug keinen Angriff gegen einen Verbündeten aus."
+        "name": "Aufmerksames Ohr",
+        "beschreibung": "Friedenswahrer hat Vorteil auf Würfe auf Motiv erkennen und auf Überzeugen, um einen Streit zu schlichten."
       }
     ],
     "aktionen": [
@@ -2230,12 +2441,21 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Knüppel",
-        "beschreibung": "Nahkampfwaffenangriff: +7 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W8+4 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +7 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 8 (1W8+4) Wuchtschaden."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Deeskalationskunst",
+        "beschreibung": "Einmal pro Runde kann Friedenswahrer eine Kreatur, die er sehen kann, zu einem Weisheitsrettungswurf (SG 15) zwingen. Bei einem Misserfolg führt die Kreatur im nächsten Zug keinen Angriff gegen einen Verbündeten aus."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_04_Friendenshüter.png",
+    "beschreibung": [
+      "Friedenswahrer, Rang 5 der Division Friedenshüter. Eigenständig aktiv in Vermittlung, Ermittlung und Schlichtung. Löst alltägliche Bürgeranliegen vor Ort und baut das Netzwerk der Vertrauenspersonen im eigenen Viertel auf und pflegt es."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -2280,14 +2500,10 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_04_Friendenshüter.png",
-    "beschreibung": [
-      "Friedenshüter, Rang 6 der Division Friedenshüter. Vollwertiges Mitglied mit Recht auf eigenständige Aufträge. Bearbeitet Bürgeranliegen, dokumentiert Beschwerden und begleitet Träumer durch die erste Phase der Eingliederung."
-    ],
     "besonderheiten": [
       {
-        "name": "Deeskalationskunst",
-        "beschreibung": "Einmal pro Runde kann Friedenshüter eine Kreatur, die er sehen kann, zu einem Weisheitsrettungswurf (SG 14) zwingen. Bei einem Misserfolg führt die Kreatur im nächsten Zug keinen Angriff gegen einen Verbündeten aus."
+        "name": "Aufmerksames Ohr",
+        "beschreibung": "Friedenshüter hat Vorteil auf Würfe auf Motiv erkennen und auf Überzeugen, um einen Streit zu schlichten."
       }
     ],
     "aktionen": [
@@ -2297,12 +2513,21 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Knüppel",
-        "beschreibung": "Nahkampfwaffenangriff: +6 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W8+3 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 7 (1W8+3) Wuchtschaden."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Deeskalationskunst",
+        "beschreibung": "Einmal pro Runde kann Friedenshüter eine Kreatur, die er sehen kann, zu einem Weisheitsrettungswurf (SG 14) zwingen. Bei einem Misserfolg führt die Kreatur im nächsten Zug keinen Angriff gegen einen Verbündeten aus."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_04_Friendenshüter.png",
+    "beschreibung": [
+      "Friedenshüter, Rang 6 der Division Friedenshüter. Vollwertiges Mitglied mit Recht auf eigenständige Aufträge. Bearbeitet Bürgeranliegen, dokumentiert Beschwerden und begleitet Träumer durch die erste Phase der Eingliederung."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -2347,14 +2572,10 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_04_Friendenshüter.png",
-    "beschreibung": [
-      "Ermittler, Rang 7 der Division Friedenshüter. Führt Befragungen durch und sammelt Informationen für Inspektoren. Dokumentiert Beschwerden und unterstützt bei der Begleitung von Trägern in der Eingliederungsphase."
-    ],
     "besonderheiten": [
       {
-        "name": "Deeskalationskunst",
-        "beschreibung": "Einmal pro Runde kann Ermittler eine Kreatur, die er sehen kann, zu einem Weisheitsrettungswurf (SG 14) zwingen. Bei einem Misserfolg führt die Kreatur im nächsten Zug keinen Angriff gegen einen Verbündeten aus."
+        "name": "Aufmerksames Ohr",
+        "beschreibung": "Ermittler hat Vorteil auf Würfe auf Motiv erkennen und auf Überzeugen, um einen Streit zu schlichten."
       }
     ],
     "aktionen": [
@@ -2364,12 +2585,21 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Knüppel",
-        "beschreibung": "Nahkampfwaffenangriff: +6 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W6+3 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 6 (1W6+3) Wuchtschaden."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Deeskalationskunst",
+        "beschreibung": "Einmal pro Runde kann Ermittler eine Kreatur, die er sehen kann, zu einem Weisheitsrettungswurf (SG 14) zwingen. Bei einem Misserfolg führt die Kreatur im nächsten Zug keinen Angriff gegen einen Verbündeten aus."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_04_Friendenshüter.png",
+    "beschreibung": [
+      "Ermittler, Rang 7 der Division Friedenshüter. Führt Befragungen durch und sammelt Informationen für Inspektoren. Dokumentiert Beschwerden und unterstützt bei der Begleitung von Trägern in der Eingliederungsphase."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -2411,16 +2641,7 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_04_Friendenshüter.png",
-    "beschreibung": [
-      "Beistand, Rang 8 der Division Friedenshüter. Unterstützt Bürger bei einfachen Anliegen und Orientierungsfragen. Begleitet frisch gerettete Träumer in den ersten Tagen und pflegt schutzbedürftige Bewohner."
-    ],
-    "besonderheiten": [
-      {
-        "name": "Deeskalationskunst",
-        "beschreibung": "Einmal pro Runde kann Beistand eine Kreatur, die er sehen kann, zu einem Weisheitsrettungswurf (SG 12) zwingen. Bei einem Misserfolg führt die Kreatur im nächsten Zug keinen Angriff gegen einen Verbündeten aus."
-      }
-    ],
+    "besonderheiten": [],
     "aktionen": [
       {
         "name": "Verhörtechnik",
@@ -2428,12 +2649,21 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Knüppel",
-        "beschreibung": "Nahkampfwaffenangriff: +4 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W6+2 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 5 (1W6+2) Wuchtschaden."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Deeskalationskunst",
+        "beschreibung": "Einmal pro Runde kann Beistand eine Kreatur, die er sehen kann, zu einem Weisheitsrettungswurf (SG 12) zwingen. Bei einem Misserfolg führt die Kreatur im nächsten Zug keinen Angriff gegen einen Verbündeten aus."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_04_Friendenshüter.png",
+    "beschreibung": [
+      "Beistand, Rang 8 der Division Friedenshüter. Unterstützt Bürger bei einfachen Anliegen und Orientierungsfragen. Begleitet frisch gerettete Träumer in den ersten Tagen und pflegt schutzbedürftige Bewohner."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -2475,16 +2705,7 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_04_Friendenshüter.png",
-    "beschreibung": [
-      "Botschafter, Rang 9 der Division Friedenshüter. Überbringt Nachrichten, Beschlüsse und Einladungen innerhalb der Stadt. Nimmt erste Beschwerden entgegen, leitet sie weiter und baut erste Kontakte zu Bürgerinnen und Bürgern auf."
-    ],
-    "besonderheiten": [
-      {
-        "name": "Deeskalationskunst",
-        "beschreibung": "Einmal pro Runde kann Botschafter eine Kreatur, die er sehen kann, zu einem Weisheitsrettungswurf (SG 12) zwingen. Bei einem Misserfolg führt die Kreatur im nächsten Zug keinen Angriff gegen einen Verbündeten aus."
-      }
-    ],
+    "besonderheiten": [],
     "aktionen": [
       {
         "name": "Verhörtechnik",
@@ -2492,12 +2713,21 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Knüppel",
-        "beschreibung": "Nahkampfwaffenangriff: +4 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W4+2 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 4 (1W4+2) Wuchtschaden."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Deeskalationskunst",
+        "beschreibung": "Einmal pro Runde kann Botschafter eine Kreatur, die er sehen kann, zu einem Weisheitsrettungswurf (SG 12) zwingen. Bei einem Misserfolg führt die Kreatur im nächsten Zug keinen Angriff gegen einen Verbündeten aus."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_04_Friendenshüter.png",
+    "beschreibung": [
+      "Botschafter, Rang 9 der Division Friedenshüter. Überbringt Nachrichten, Beschlüsse und Einladungen innerhalb der Stadt. Nimmt erste Beschwerden entgegen, leitet sie weiter und baut erste Kontakte zu Bürgerinnen und Bürgern auf."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -2539,16 +2769,7 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_04_Friendenshüter.png",
-    "beschreibung": [
-      "Zuhörer, Rang 10 der Division Friedenshüter. Frisch aufgenommen, erlernt aktives Zuhören und Konfliktdeeskalation. Beobachtet erfahrene Mitglieder bei Gesprächen und Einsätzen, noch ohne eigenständige Rechte."
-    ],
-    "besonderheiten": [
-      {
-        "name": "Deeskalationskunst",
-        "beschreibung": "Einmal pro Runde kann Zuhörer eine Kreatur, die er sehen kann, zu einem Weisheitsrettungswurf (SG 12) zwingen. Bei einem Misserfolg führt die Kreatur im nächsten Zug keinen Angriff gegen einen Verbündeten aus."
-      }
-    ],
+    "besonderheiten": [],
     "aktionen": [
       {
         "name": "Verhörtechnik",
@@ -2556,12 +2777,21 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Knüppel",
-        "beschreibung": "Nahkampfwaffenangriff: +4 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W4+2 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 4 (1W4+2) Wuchtschaden."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Deeskalationskunst",
+        "beschreibung": "Einmal pro Runde kann Zuhörer eine Kreatur, die er sehen kann, zu einem Weisheitsrettungswurf (SG 12) zwingen. Bei einem Misserfolg führt die Kreatur im nächsten Zug keinen Angriff gegen einen Verbündeten aus."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_04_Friendenshüter.png",
+    "beschreibung": [
+      "Zuhörer, Rang 10 der Division Friedenshüter. Frisch aufgenommen, erlernt aktives Zuhören und Konfliktdeeskalation. Beobachtet erfahrene Mitglieder bei Gesprächen und Einsätzen, noch ohne eigenständige Rechte."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -2606,10 +2836,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_05_Outfitters.png",
-    "beschreibung": [
-      "Chefschmied, Rang 1 der Division Outfitters. Leitet die Division und genehmigt alle größeren Entwicklungsprojekte. Bestimmt Produktionsprioritäten und Ausrüstungsversorgung und vertritt die Division im Kolonialrat."
-    ],
     "besonderheiten": [
       {
         "name": "Feldlösung",
@@ -2623,12 +2849,30 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Schmiedehammer",
-        "beschreibung": "Nahkampfwaffenangriff: +10 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W12+5 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +10 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 11 (1W12+5) Wuchtschaden."
+      },
+      {
+        "name": "Brandflasche",
+        "beschreibung": "Ein Wurf auf einen Punkt in 18 m. Jede Kreatur in 3 m Umkreis muss einen Geschicklichkeitsrettungswurf (SG 18) ablegen und erleidet 1W12+5 Feuerschaden, bei Erfolg halb so viel. Einmal pro kurze Rast."
       }
     ],
-    "bonusaktionen": [],
-    "reaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Schnellreparatur",
+        "beschreibung": "Chefschmied bessert die Ausrüstung einer Kreatur in 1,5 m nach: Sie erhält bis zum Ende ihres nächsten Zuges +1 auf Angriffswürfe. Einmal pro kurze Rast."
+      }
+    ],
+    "reaktionen": [
+      {
+        "name": "Notfallvorrichtung",
+        "beschreibung": "Wird ein Verbündeter in 9 m getroffen, den Chefschmied sehen kann, verringert eine ausgelöste Schutzvorrichtung den Schaden um 2W6 + 5. Einmal pro kurze Rast."
+      }
+    ],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_05_Outfitters.png",
+    "beschreibung": [
+      "Chefschmied, Rang 1 der Division Outfitters. Leitet die Division und genehmigt alle größeren Entwicklungsprojekte. Bestimmt Produktionsprioritäten und Ausrüstungsversorgung und vertritt die Division im Kolonialrat."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -2637,8 +2881,8 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "unterart": "NPC",
     "groesse": "Mittelgroß",
     "gesinnung": "Jede Gesinnung",
-    "cr": 5,
-    "xp": 1800,
+    "cr": 6,
+    "xp": 2300,
     "rk": 17,
     "ruestungstyp": "Schuppenpanzer",
     "tp": 104,
@@ -2673,10 +2917,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_05_Outfitters.png",
-    "beschreibung": [
-      "Waffenmeister, Rang 2 der Division Outfitters. Entwickelt und prüft bedeutende Waffen- und Rüstungslinien. Leitet Qualitätskontrolle und Rückrufe fehlerhafter Ausrüstung und koordiniert Produktionsteams bei Großaufträgen."
-    ],
     "besonderheiten": [
       {
         "name": "Feldlösung",
@@ -2690,12 +2930,25 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Schmiedehammer",
-        "beschreibung": "Nahkampfwaffenangriff: +9 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W12+5 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +9 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 11 (1W12+5) Wuchtschaden."
+      },
+      {
+        "name": "Brandflasche",
+        "beschreibung": "Ein Wurf auf einen Punkt in 18 m. Jede Kreatur in 3 m Umkreis muss einen Geschicklichkeitsrettungswurf (SG 17) ablegen und erleidet 1W12+5 Feuerschaden, bei Erfolg halb so viel. Einmal pro kurze Rast."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Schnellreparatur",
+        "beschreibung": "Waffenmeister bessert die Ausrüstung einer Kreatur in 1,5 m nach: Sie erhält bis zum Ende ihres nächsten Zuges +1 auf Angriffswürfe. Einmal pro kurze Rast."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_05_Outfitters.png",
+    "beschreibung": [
+      "Waffenmeister, Rang 2 der Division Outfitters. Entwickelt und prüft bedeutende Waffen- und Rüstungslinien. Leitet Qualitätskontrolle und Rückrufe fehlerhafter Ausrüstung und koordiniert Produktionsteams bei Großaufträgen."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -2704,8 +2957,8 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "unterart": "NPC",
     "groesse": "Mittelgroß",
     "gesinnung": "Jede Gesinnung",
-    "cr": 3,
-    "xp": 700,
+    "cr": 4,
+    "xp": 1100,
     "rk": 16,
     "ruestungstyp": "Schuppenpanzer",
     "tp": 85,
@@ -2740,10 +2993,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_05_Outfitters.png",
-    "beschreibung": [
-      "Konstrukteur, Rang 3 der Division Outfitters. Entwirft eigenständig neue Ausrüstungslinien und Prototypen. Koordiniert die Umsetzung von Entwürfen mit den Handwerkern und führt Analysen fehlgeschlagener Feldtests durch."
-    ],
     "besonderheiten": [
       {
         "name": "Feldlösung",
@@ -2757,12 +3006,25 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Schmiedehammer",
-        "beschreibung": "Nahkampfwaffenangriff: +8 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W10+4 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +8 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 9 (1W10+4) Wuchtschaden."
+      },
+      {
+        "name": "Brandflasche",
+        "beschreibung": "Ein Wurf auf einen Punkt in 18 m. Jede Kreatur in 3 m Umkreis muss einen Geschicklichkeitsrettungswurf (SG 16) ablegen und erleidet 1W10+4 Feuerschaden, bei Erfolg halb so viel. Einmal pro kurze Rast."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Schnellreparatur",
+        "beschreibung": "Konstrukteur bessert die Ausrüstung einer Kreatur in 1,5 m nach: Sie erhält bis zum Ende ihres nächsten Zuges +1 auf Angriffswürfe. Einmal pro kurze Rast."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_05_Outfitters.png",
+    "beschreibung": [
+      "Konstrukteur, Rang 3 der Division Outfitters. Entwirft eigenständig neue Ausrüstungslinien und Prototypen. Koordiniert die Umsetzung von Entwürfen mit den Handwerkern und führt Analysen fehlgeschlagener Feldtests durch."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -2771,8 +3033,8 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "unterart": "NPC",
     "groesse": "Mittelgroß",
     "gesinnung": "Jede Gesinnung",
-    "cr": 3,
-    "xp": 700,
+    "cr": 4,
+    "xp": 1100,
     "rk": 16,
     "ruestungstyp": "Schuppenpanzer",
     "tp": 76,
@@ -2807,10 +3069,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_05_Outfitters.png",
-    "beschreibung": [
-      "Alchemist, Rang 4 der Division Outfitters. Entwickelt Tränke, Heilmittel, Gifte und chemische Kampfmittel. Verarbeitet seltene Rohstoffe zu Sondermaterialien für Konstrukteure und nimmt Sonderanfertigungsaufträge an."
-    ],
     "besonderheiten": [
       {
         "name": "Feldlösung",
@@ -2824,12 +3082,25 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Schmiedehammer",
-        "beschreibung": "Nahkampfwaffenangriff: +8 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W10+4 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +8 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 9 (1W10+4) Wuchtschaden."
+      },
+      {
+        "name": "Brandflasche",
+        "beschreibung": "Ein Wurf auf einen Punkt in 18 m. Jede Kreatur in 3 m Umkreis muss einen Geschicklichkeitsrettungswurf (SG 16) ablegen und erleidet 1W10+4 Feuerschaden, bei Erfolg halb so viel. Einmal pro kurze Rast."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Schnellreparatur",
+        "beschreibung": "Alchemist bessert die Ausrüstung einer Kreatur in 1,5 m nach: Sie erhält bis zum Ende ihres nächsten Zuges +1 auf Angriffswürfe. Einmal pro kurze Rast."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_05_Outfitters.png",
+    "beschreibung": [
+      "Alchemist, Rang 4 der Division Outfitters. Entwickelt Tränke, Heilmittel, Gifte und chemische Kampfmittel. Verarbeitet seltene Rohstoffe zu Sondermaterialien für Konstrukteure und nimmt Sonderanfertigungsaufträge an."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -2874,10 +3145,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_05_Outfitters.png",
-    "beschreibung": [
-      "Prüfer, Rang 5 der Division Outfitters. Führt eigenständige Feldtests neuer Ausrüstung unter realen Bedingungen durch. Dokumentiert Stärken, Schwächen und Versagensfälle und erstellt Testberichte für Konstrukteuranpassungen."
-    ],
     "besonderheiten": [
       {
         "name": "Feldlösung",
@@ -2891,12 +3158,21 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Schmiedehammer",
-        "beschreibung": "Nahkampfwaffenangriff: +7 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W8+4 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +7 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 8 (1W8+4) Wuchtschaden."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Schnellreparatur",
+        "beschreibung": "Prüfer bessert die Ausrüstung einer Kreatur in 1,5 m nach: Sie erhält bis zum Ende ihres nächsten Zuges +1 auf Angriffswürfe. Einmal pro kurze Rast."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_05_Outfitters.png",
+    "beschreibung": [
+      "Prüfer, Rang 5 der Division Outfitters. Führt eigenständige Feldtests neuer Ausrüstung unter realen Bedingungen durch. Dokumentiert Stärken, Schwächen und Versagensfälle und erstellt Testberichte für Konstrukteuranpassungen."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -2905,8 +3181,8 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "unterart": "NPC",
     "groesse": "Mittelgroß",
     "gesinnung": "Jede Gesinnung",
-    "cr": 1,
-    "xp": 200,
+    "cr": 2,
+    "xp": 450,
     "rk": 15,
     "ruestungstyp": "Lederrüstung",
     "tp": 51,
@@ -2941,10 +3217,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_05_Outfitters.png",
-    "beschreibung": [
-      "Outfitter, Rang 6 der Division Outfitters. Vollwertiges Mitglied – stellt Standardausrüstung her und liefert sie aus. Bearbeitet Aufträge anderer Divisionen eigenständig und meldet Materialbedarf an den Waffenmeister."
-    ],
     "besonderheiten": [
       {
         "name": "Feldlösung",
@@ -2954,12 +3226,21 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "aktionen": [
       {
         "name": "Schmiedehammer",
-        "beschreibung": "Nahkampfwaffenangriff: +6 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W8+3 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 7 (1W8+3) Wuchtschaden."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Schnellreparatur",
+        "beschreibung": "Outfitter bessert die Ausrüstung einer Kreatur in 1,5 m nach: Sie erhält bis zum Ende ihres nächsten Zuges +1 auf Angriffswürfe. Einmal pro kurze Rast."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_05_Outfitters.png",
+    "beschreibung": [
+      "Outfitter, Rang 6 der Division Outfitters. Vollwertiges Mitglied – stellt Standardausrüstung her und liefert sie aus. Bearbeitet Aufträge anderer Divisionen eigenständig und meldet Materialbedarf an den Waffenmeister."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -2968,8 +3249,8 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "unterart": "NPC",
     "groesse": "Mittelgroß",
     "gesinnung": "Jede Gesinnung",
-    "cr": 0.5,
-    "xp": 100,
+    "cr": 1,
+    "xp": 200,
     "rk": 14,
     "ruestungstyp": "Lederrüstung",
     "tp": 37,
@@ -3004,10 +3285,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_05_Outfitters.png",
-    "beschreibung": [
-      "Handwerker, Rang 7 der Division Outfitters. Fertigt standardisierte Ausrüstungsgegenstände nach Vorlage, repariert beschädigte Ausrüstung anderer Divisionen und unterstützt Konstrukteure bei der Umsetzung neuer Entwürfe."
-    ],
     "besonderheiten": [
       {
         "name": "Feldlösung",
@@ -3017,12 +3294,21 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "aktionen": [
       {
         "name": "Schmiedehammer",
-        "beschreibung": "Nahkampfwaffenangriff: +6 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W6+3 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 6 (1W6+3) Wuchtschaden."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Schnellreparatur",
+        "beschreibung": "Handwerker bessert die Ausrüstung einer Kreatur in 1,5 m nach: Sie erhält bis zum Ende ihres nächsten Zuges +1 auf Angriffswürfe. Einmal pro kurze Rast."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_05_Outfitters.png",
+    "beschreibung": [
+      "Handwerker, Rang 7 der Division Outfitters. Fertigt standardisierte Ausrüstungsgegenstände nach Vorlage, repariert beschädigte Ausrüstung anderer Divisionen und unterstützt Konstrukteure bei der Umsetzung neuer Entwürfe."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -3064,10 +3350,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_05_Outfitters.png",
-    "beschreibung": [
-      "Werkstattgehilfe, Rang 8 der Division Outfitters. Beschafft Rohmaterialien und koordiniert Lieferungen innerhalb der Schmiede. Unterstützt Handwerker bei Routinearbeiten und erlernt Grundlagen der Metallverarbeitung und Rüstungsherstellung."
-    ],
     "besonderheiten": [
       {
         "name": "Feldlösung",
@@ -3077,12 +3359,16 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "aktionen": [
       {
         "name": "Schmiedehammer",
-        "beschreibung": "Nahkampfwaffenangriff: +4 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W6+2 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 5 (1W6+2) Wuchtschaden."
       }
     ],
     "bonusaktionen": [],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_05_Outfitters.png",
+    "beschreibung": [
+      "Werkstattgehilfe, Rang 8 der Division Outfitters. Beschafft Rohmaterialien und koordiniert Lieferungen innerhalb der Schmiede. Unterstützt Handwerker bei Routinearbeiten und erlernt Grundlagen der Metallverarbeitung und Rüstungsherstellung."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -3124,10 +3410,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_05_Outfitters.png",
-    "beschreibung": [
-      "Lehrling, Rang 9 der Division Outfitters. Erlernt Waffenschmiedekunst, Rüstungsherstellung und Grundalchemie unter direkter Anleitung. Assistiert in allen Bereichen der Schmiede."
-    ],
     "besonderheiten": [
       {
         "name": "Feldlösung",
@@ -3137,12 +3419,16 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "aktionen": [
       {
         "name": "Schmiedehammer",
-        "beschreibung": "Nahkampfwaffenangriff: +4 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W4+2 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 4 (1W4+2) Wuchtschaden."
       }
     ],
     "bonusaktionen": [],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_05_Outfitters.png",
+    "beschreibung": [
+      "Lehrling, Rang 9 der Division Outfitters. Erlernt Waffenschmiedekunst, Rüstungsherstellung und Grundalchemie unter direkter Anleitung. Assistiert in allen Bereichen der Schmiede."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -3184,10 +3470,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_05_Outfitters.png",
-    "beschreibung": [
-      "Rohling, Rang 10 der Division Outfitters. Frisch aufgenommen, noch ohne nachgewiesene Fertigkeiten. Führt Hilfsarbeiten durch: Aufräumen, Materialtransport, einfache Handgriffe."
-    ],
     "besonderheiten": [
       {
         "name": "Feldlösung",
@@ -3197,12 +3479,16 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "aktionen": [
       {
         "name": "Schmiedehammer",
-        "beschreibung": "Nahkampfwaffenangriff: +4 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W4+2 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 4 (1W4+2) Wuchtschaden."
       }
     ],
     "bonusaktionen": [],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_05_Outfitters.png",
+    "beschreibung": [
+      "Rohling, Rang 10 der Division Outfitters. Frisch aufgenommen, noch ohne nachgewiesene Fertigkeiten. Führt Hilfsarbeiten durch: Aufräumen, Materialtransport, einfache Handgriffe."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -3247,14 +3533,14 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_06_Pathfinders.png",
-    "beschreibung": [
-      "Kartograph, Rang 1 der Division Pathfinders. Leitet die Division und bestimmt Erkundungsprioritäten. Verantwortet den wachsenden Planetenatlas und die Gesamtkartierung Merurias und vertritt die Division im Kolonialrat."
-    ],
     "besonderheiten": [
       {
         "name": "Geländeläufer",
         "beschreibung": "Kartograph ignoriert schwieriges Gelände in natürlicher Umgebung und hinterlässt keine Spuren, es sei denn, er entscheidet sich dafür."
+      },
+      {
+        "name": "Scharfschütze",
+        "beschreibung": "Halb- und Dreiviertel-Deckung gewähren gegen seine Fernkampfangriffe keinen Bonus, und Ziele in 1,5 m verursachen keinen Nachteil auf seine Fernkampfangriffe."
       }
     ],
     "aktionen": [
@@ -3264,12 +3550,26 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Kurzbogen",
-        "beschreibung": "Fernkampfwaffenangriff: +10 auf den Trefferwurf, Reichweite 24/96 m. Treffer: 1W12+5 Stichschaden."
+        "beschreibung": "Fernkampf-Waffenangriff: +10 zum Treffen, Reichweite 24/96 m, ein Ziel. Treffer: 11 (1W12+5) Stichschaden."
       }
     ],
-    "bonusaktionen": [],
-    "reaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Rückzug",
+        "beschreibung": "Kartograph führt die Aktion Spurt oder Rückzug als Bonusaktion aus."
+      }
+    ],
+    "reaktionen": [
+      {
+        "name": "Entkommen",
+        "beschreibung": "Wird Kartograph von einem Angriff getroffen, den er sehen kann, halbiert er den Schaden und bewegt sich bis zu 3 m, ohne Gelegenheitsangriffe auszulösen. Einmal pro kurze Rast."
+      }
+    ],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_06_Pathfinders.png",
+    "beschreibung": [
+      "Kartograph, Rang 1 der Division Pathfinders. Leitet die Division und bestimmt Erkundungsprioritäten. Verantwortet den wachsenden Planetenatlas und die Gesamtkartierung Merurias und vertritt die Division im Kolonialrat."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -3314,14 +3614,14 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_06_Pathfinders.png",
-    "beschreibung": [
-      "Cheferkunder, Rang 2 der Division Pathfinders. Koordiniert Großexpeditionen und genehmigt die Platzierung wichtiger Datensonden. Analysiert Lagebericht-Rückmeldungen, priorisiert Nachfolgeexpeditionen und leitet die Ausbildung von Geländeführern."
-    ],
     "besonderheiten": [
       {
         "name": "Geländeläufer",
         "beschreibung": "Cheferkunder ignoriert schwieriges Gelände in natürlicher Umgebung und hinterlässt keine Spuren, es sei denn, er entscheidet sich dafür."
+      },
+      {
+        "name": "Scharfschütze",
+        "beschreibung": "Halb- und Dreiviertel-Deckung gewähren gegen seine Fernkampfangriffe keinen Bonus, und Ziele in 1,5 m verursachen keinen Nachteil auf seine Fernkampfangriffe."
       }
     ],
     "aktionen": [
@@ -3331,12 +3631,21 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Kurzbogen",
-        "beschreibung": "Fernkampfwaffenangriff: +9 auf den Trefferwurf, Reichweite 24/96 m. Treffer: 1W12+5 Stichschaden."
+        "beschreibung": "Fernkampf-Waffenangriff: +9 zum Treffen, Reichweite 24/96 m, ein Ziel. Treffer: 11 (1W12+5) Stichschaden."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Rückzug",
+        "beschreibung": "Cheferkunder führt die Aktion Spurt oder Rückzug als Bonusaktion aus."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_06_Pathfinders.png",
+    "beschreibung": [
+      "Cheferkunder, Rang 2 der Division Pathfinders. Koordiniert Großexpeditionen und genehmigt die Platzierung wichtiger Datensonden. Analysiert Lagebericht-Rückmeldungen, priorisiert Nachfolgeexpeditionen und leitet die Ausbildung von Geländeführern."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -3345,8 +3654,8 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "unterart": "NPC",
     "groesse": "Mittelgroß",
     "gesinnung": "Jede Gesinnung",
-    "cr": 3,
-    "xp": 700,
+    "cr": 4,
+    "xp": 1100,
     "rk": 16,
     "ruestungstyp": "beschlagenes Leder",
     "tp": 85,
@@ -3381,14 +3690,14 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_06_Pathfinders.png",
-    "beschreibung": [
-      "Geländeführer, Rang 3 der Division Pathfinders. Führt eigenständige Erkundungstrupps in unbekannte Gebiete. Plant Routen, bewertet Terrain auf Durchquerbarkeit und Gefahren und erstellt vollständige Lageberichte für das Kartenzimmer."
-    ],
     "besonderheiten": [
       {
         "name": "Geländeläufer",
         "beschreibung": "Geländeführer ignoriert schwieriges Gelände in natürlicher Umgebung und hinterlässt keine Spuren, es sei denn, er entscheidet sich dafür."
+      },
+      {
+        "name": "Scharfschütze",
+        "beschreibung": "Halb- und Dreiviertel-Deckung gewähren gegen seine Fernkampfangriffe keinen Bonus, und Ziele in 1,5 m verursachen keinen Nachteil auf seine Fernkampfangriffe."
       }
     ],
     "aktionen": [
@@ -3398,12 +3707,21 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Kurzbogen",
-        "beschreibung": "Fernkampfwaffenangriff: +8 auf den Trefferwurf, Reichweite 24/96 m. Treffer: 1W10+4 Stichschaden."
+        "beschreibung": "Fernkampf-Waffenangriff: +8 zum Treffen, Reichweite 24/96 m, ein Ziel. Treffer: 9 (1W10+4) Stichschaden."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Rückzug",
+        "beschreibung": "Geländeführer führt die Aktion Spurt oder Rückzug als Bonusaktion aus."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_06_Pathfinders.png",
+    "beschreibung": [
+      "Geländeführer, Rang 3 der Division Pathfinders. Führt eigenständige Erkundungstrupps in unbekannte Gebiete. Plant Routen, bewertet Terrain auf Durchquerbarkeit und Gefahren und erstellt vollständige Lageberichte für das Kartenzimmer."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -3412,8 +3730,8 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "unterart": "NPC",
     "groesse": "Mittelgroß",
     "gesinnung": "Jede Gesinnung",
-    "cr": 3,
-    "xp": 700,
+    "cr": 4,
+    "xp": 1100,
     "rk": 16,
     "ruestungstyp": "beschlagenes Leder",
     "tp": 76,
@@ -3448,14 +3766,14 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_06_Pathfinders.png",
-    "beschreibung": [
-      "Sondierer, Rang 4 der Division Pathfinders. Spezialist für Installation, Wartung und Auslesung von Datensonden. Bewertet strategische Standorte für neue Sondenplatzierungen und koordiniert das bestehende Sondennetzwerk."
-    ],
     "besonderheiten": [
       {
         "name": "Geländeläufer",
         "beschreibung": "Sondierer ignoriert schwieriges Gelände in natürlicher Umgebung und hinterlässt keine Spuren, es sei denn, er entscheidet sich dafür."
+      },
+      {
+        "name": "Scharfschütze",
+        "beschreibung": "Halb- und Dreiviertel-Deckung gewähren gegen seine Fernkampfangriffe keinen Bonus, und Ziele in 1,5 m verursachen keinen Nachteil auf seine Fernkampfangriffe."
       }
     ],
     "aktionen": [
@@ -3465,12 +3783,21 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Kurzbogen",
-        "beschreibung": "Fernkampfwaffenangriff: +8 auf den Trefferwurf, Reichweite 24/96 m. Treffer: 1W10+4 Stichschaden."
+        "beschreibung": "Fernkampf-Waffenangriff: +8 zum Treffen, Reichweite 24/96 m, ein Ziel. Treffer: 9 (1W10+4) Stichschaden."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Rückzug",
+        "beschreibung": "Sondierer führt die Aktion Spurt oder Rückzug als Bonusaktion aus."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_06_Pathfinders.png",
+    "beschreibung": [
+      "Sondierer, Rang 4 der Division Pathfinders. Spezialist für Installation, Wartung und Auslesung von Datensonden. Bewertet strategische Standorte für neue Sondenplatzierungen und koordiniert das bestehende Sondennetzwerk."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -3515,10 +3842,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_06_Pathfinders.png",
-    "beschreibung": [
-      "Wegbereiter, Rang 5 der Division Pathfinders. Tritt als Erster in unbekannte Regionen vor und erstellt erste Lageberichte. Führt Erstbegehungen mit kleinem Team durch und identifiziert Orientierungspunkte für den Planetenatlas."
-    ],
     "besonderheiten": [
       {
         "name": "Geländeläufer",
@@ -3532,12 +3855,21 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Kurzbogen",
-        "beschreibung": "Fernkampfwaffenangriff: +7 auf den Trefferwurf, Reichweite 24/96 m. Treffer: 1W8+4 Stichschaden."
+        "beschreibung": "Fernkampf-Waffenangriff: +7 zum Treffen, Reichweite 24/96 m, ein Ziel. Treffer: 8 (1W8+4) Stichschaden."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Rückzug",
+        "beschreibung": "Wegbereiter führt die Aktion Spurt oder Rückzug als Bonusaktion aus."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_06_Pathfinders.png",
+    "beschreibung": [
+      "Wegbereiter, Rang 5 der Division Pathfinders. Tritt als Erster in unbekannte Regionen vor und erstellt erste Lageberichte. Führt Erstbegehungen mit kleinem Team durch und identifiziert Orientierungspunkte für den Planetenatlas."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -3582,10 +3914,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_06_Pathfinders.png",
-    "beschreibung": [
-      "Pathfinder, Rang 6 der Division Pathfinders. Vollwertiges Mitglied – führt eigenständige Erkundungsaufträge durch. Kartiert Gebiete, gibt vollständige Karten und Berichte ab und sichert Wegbereiter bei Erstbegehungen als zweites Teammitglied."
-    ],
     "besonderheiten": [
       {
         "name": "Geländeläufer",
@@ -3595,12 +3923,21 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "aktionen": [
       {
         "name": "Kurzbogen",
-        "beschreibung": "Fernkampfwaffenangriff: +6 auf den Trefferwurf, Reichweite 24/96 m. Treffer: 1W8+3 Stichschaden."
+        "beschreibung": "Fernkampf-Waffenangriff: +6 zum Treffen, Reichweite 24/96 m, ein Ziel. Treffer: 7 (1W8+3) Stichschaden."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Rückzug",
+        "beschreibung": "Pathfinder führt die Aktion Spurt oder Rückzug als Bonusaktion aus."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_06_Pathfinders.png",
+    "beschreibung": [
+      "Pathfinder, Rang 6 der Division Pathfinders. Vollwertiges Mitglied – führt eigenständige Erkundungsaufträge durch. Kartiert Gebiete, gibt vollständige Karten und Berichte ab und sichert Wegbereiter bei Erstbegehungen als zweites Teammitglied."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -3645,10 +3982,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_06_Pathfinders.png",
-    "beschreibung": [
-      "Vorposten, Rang 7 der Division Pathfinders. Sichert erkundete Gebiete und hält Datensonden in Betrieb. Besetzt temporäre Außenposten, meldet Veränderungen und unterstützt Geländeführer bei der Absicherung von Routen."
-    ],
     "besonderheiten": [
       {
         "name": "Geländeläufer",
@@ -3658,12 +3991,21 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "aktionen": [
       {
         "name": "Kurzbogen",
-        "beschreibung": "Fernkampfwaffenangriff: +6 auf den Trefferwurf, Reichweite 24/96 m. Treffer: 1W6+3 Stichschaden."
+        "beschreibung": "Fernkampf-Waffenangriff: +6 zum Treffen, Reichweite 24/96 m, ein Ziel. Treffer: 6 (1W6+3) Stichschaden."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Rückzug",
+        "beschreibung": "Vorposten führt die Aktion Spurt oder Rückzug als Bonusaktion aus."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_06_Pathfinders.png",
+    "beschreibung": [
+      "Vorposten, Rang 7 der Division Pathfinders. Sichert erkundete Gebiete und hält Datensonden in Betrieb. Besetzt temporäre Außenposten, meldet Veränderungen und unterstützt Geländeführer bei der Absicherung von Routen."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -3705,10 +4047,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_06_Pathfinders.png",
-    "beschreibung": [
-      "Spurenleser, Rang 8 der Division Pathfinders. Analysiert Geländemerkmale und erste Anzeichen in neuen Gebieten. Erlernt Navigation, Sondenbedienung und Geländebeurteilung und begleitet erfahrene Pathfinder auf Erkundungstouren."
-    ],
     "besonderheiten": [
       {
         "name": "Geländeläufer",
@@ -3718,12 +4056,16 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "aktionen": [
       {
         "name": "Kurzbogen",
-        "beschreibung": "Fernkampfwaffenangriff: +4 auf den Trefferwurf, Reichweite 24/96 m. Treffer: 1W6+2 Stichschaden."
+        "beschreibung": "Fernkampf-Waffenangriff: +4 zum Treffen, Reichweite 24/96 m, ein Ziel. Treffer: 5 (1W6+2) Stichschaden."
       }
     ],
     "bonusaktionen": [],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_06_Pathfinders.png",
+    "beschreibung": [
+      "Spurenleser, Rang 8 der Division Pathfinders. Analysiert Geländemerkmale und erste Anzeichen in neuen Gebieten. Erlernt Navigation, Sondenbedienung und Geländebeurteilung und begleitet erfahrene Pathfinder auf Erkundungstouren."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -3765,10 +4107,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_06_Pathfinders.png",
-    "beschreibung": [
-      "Orientant, Rang 9 der Division Pathfinders. Erlernt Navigation und Kartierungsgrundlagen im Kartenzimmer. Führt einfache Wartungsaufgaben an Sonden unter Anleitung durch und begleitet erfahrene Pathfinder auf kürzeren Touren."
-    ],
     "besonderheiten": [
       {
         "name": "Geländeläufer",
@@ -3778,12 +4116,16 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "aktionen": [
       {
         "name": "Kurzbogen",
-        "beschreibung": "Fernkampfwaffenangriff: +4 auf den Trefferwurf, Reichweite 24/96 m. Treffer: 1W4+2 Stichschaden."
+        "beschreibung": "Fernkampf-Waffenangriff: +4 zum Treffen, Reichweite 24/96 m, ein Ziel. Treffer: 4 (1W4+2) Stichschaden."
       }
     ],
     "bonusaktionen": [],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_06_Pathfinders.png",
+    "beschreibung": [
+      "Orientant, Rang 9 der Division Pathfinders. Erlernt Navigation und Kartierungsgrundlagen im Kartenzimmer. Führt einfache Wartungsaufgaben an Sonden unter Anleitung durch und begleitet erfahrene Pathfinder auf kürzeren Touren."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -3825,10 +4167,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_06_Pathfinders.png",
-    "beschreibung": [
-      "Neuläufer, Rang 10 der Division Pathfinders. Frisch aufgenommen, Grundausbildung in Überleben und Orientierung. Nimmt an Pflichtübungen im gesicherten Stadtumfeld teil, noch ohne eigenständige Feldrechte."
-    ],
     "besonderheiten": [
       {
         "name": "Geländeläufer",
@@ -3838,12 +4176,16 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "aktionen": [
       {
         "name": "Kurzbogen",
-        "beschreibung": "Fernkampfwaffenangriff: +4 auf den Trefferwurf, Reichweite 24/96 m. Treffer: 1W4+2 Stichschaden."
+        "beschreibung": "Fernkampf-Waffenangriff: +4 zum Treffen, Reichweite 24/96 m, ein Ziel. Treffer: 4 (1W4+2) Stichschaden."
       }
     ],
     "bonusaktionen": [],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_06_Pathfinders.png",
+    "beschreibung": [
+      "Neuläufer, Rang 10 der Division Pathfinders. Frisch aufgenommen, Grundausbildung in Überleben und Orientierung. Nimmt an Pflichtübungen im gesicherten Stadtumfeld teil, noch ohne eigenständige Feldrechte."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -3852,8 +4194,8 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "unterart": "NPC",
     "groesse": "Mittelgroß",
     "gesinnung": "Jede Gesinnung",
-    "cr": 6,
-    "xp": 2300,
+    "cr": 7,
+    "xp": 2900,
     "rk": 17,
     "ruestungstyp": "Schuppenpanzer",
     "tp": 138,
@@ -3888,14 +4230,18 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_07_Quellensucher.png",
-    "beschreibung": [
-      "Quellenmeister, Rang 1 der Division Quellensucher. Leitet die Division und bestimmt Abbauschwerpunkte. Koordiniert langfristige Ressourcenplanung mit dem Kolonialrat und vertritt die Division im Kolonialrat."
-    ],
     "besonderheiten": [
       {
         "name": "Ressourcenspürer",
         "beschreibung": "Quellenmeister erkennt automatisch Rohstoffvorkommen, Mineralien und Wasserquellen in einem Umkreis von 18 m, ohne einen Würfelwurf abzulegen."
+      },
+      {
+        "name": "Felsenfest",
+        "beschreibung": "Quellenmeister hat Vorteil auf Konstitutionsrettungswürfe gegen Gift und gegen Erschöpfung durch Hitze oder Kälte."
+      },
+      {
+        "name": "Bergsinn",
+        "beschreibung": "Quellenmeister bemerkt Bewegungen im Boden in 18 m automatisch und kann von Kreaturen, die sich dort auf Boden oder Fels bewegen, nicht überrascht werden."
       }
     ],
     "aktionen": [
@@ -3905,12 +4251,20 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Spitzhacke",
-        "beschreibung": "Nahkampfwaffenangriff: +10 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W12+5 Stichschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +10 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 11 (1W12+5) Stichschaden."
+      },
+      {
+        "name": "Gesteinssplitter",
+        "beschreibung": "Quellenmeister schlägt auf den Boden. Jede Kreatur in 3 m Umkreis muss einen Stärkerettungswurf (SG 18) ablegen und erleidet 1W12+5 Wuchtschaden und wird umgeworfen; bei Erfolg halb so viel Schaden und nicht umgeworfen. Einmal pro kurze Rast."
       }
     ],
     "bonusaktionen": [],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_07_Quellensucher.png",
+    "beschreibung": [
+      "Quellenmeister, Rang 1 der Division Quellensucher. Leitet die Division und bestimmt Abbauschwerpunkte. Koordiniert langfristige Ressourcenplanung mit dem Kolonialrat und vertritt die Division im Kolonialrat."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -3919,8 +4273,8 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "unterart": "NPC",
     "groesse": "Mittelgroß",
     "gesinnung": "Jede Gesinnung",
-    "cr": 5,
-    "xp": 1800,
+    "cr": 6,
+    "xp": 2300,
     "rk": 17,
     "ruestungstyp": "Schuppenpanzer",
     "tp": 126,
@@ -3955,14 +4309,14 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_07_Quellensucher.png",
-    "beschreibung": [
-      "Chefprospektor, Rang 2 der Division Quellensucher. Koordiniert Großprojekte zur Erschließung neuer Vorkommen und leitet die Planung dauerhafter Förderanlagen. Analysiert Geologenberichte und priorisiert Abbaugebiete."
-    ],
     "besonderheiten": [
       {
         "name": "Ressourcenspürer",
         "beschreibung": "Chefprospektor erkennt automatisch Rohstoffvorkommen, Mineralien und Wasserquellen in einem Umkreis von 18 m, ohne einen Würfelwurf abzulegen."
+      },
+      {
+        "name": "Felsenfest",
+        "beschreibung": "Chefprospektor hat Vorteil auf Konstitutionsrettungswürfe gegen Gift und gegen Erschöpfung durch Hitze oder Kälte."
       }
     ],
     "aktionen": [
@@ -3972,12 +4326,20 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Spitzhacke",
-        "beschreibung": "Nahkampfwaffenangriff: +9 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W12+5 Stichschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +9 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 11 (1W12+5) Stichschaden."
+      },
+      {
+        "name": "Gesteinssplitter",
+        "beschreibung": "Chefprospektor schlägt auf den Boden. Jede Kreatur in 3 m Umkreis muss einen Stärkerettungswurf (SG 17) ablegen und erleidet 1W12+5 Wuchtschaden und wird umgeworfen; bei Erfolg halb so viel Schaden und nicht umgeworfen. Einmal pro kurze Rast."
       }
     ],
     "bonusaktionen": [],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_07_Quellensucher.png",
+    "beschreibung": [
+      "Chefprospektor, Rang 2 der Division Quellensucher. Koordiniert Großprojekte zur Erschließung neuer Vorkommen und leitet die Planung dauerhafter Förderanlagen. Analysiert Geologenberichte und priorisiert Abbaugebiete."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -3986,8 +4348,8 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "unterart": "NPC",
     "groesse": "Mittelgroß",
     "gesinnung": "Jede Gesinnung",
-    "cr": 4,
-    "xp": 1100,
+    "cr": 5,
+    "xp": 1800,
     "rk": 16,
     "ruestungstyp": "Schuppenpanzer",
     "tp": 105,
@@ -4022,14 +4384,14 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_07_Quellensucher.png",
-    "beschreibung": [
-      "Schürfleiter, Rang 3 der Division Quellensucher. Führt eigenständige Abbautrupps in neue Lagerstätten, sichert neue Vorkommen und richtet erste Förderstrukturen ein. Meldet Lagerstättendetails an den Chefprospektor."
-    ],
     "besonderheiten": [
       {
         "name": "Ressourcenspürer",
         "beschreibung": "Schürfleiter erkennt automatisch Rohstoffvorkommen, Mineralien und Wasserquellen in einem Umkreis von 18 m, ohne einen Würfelwurf abzulegen."
+      },
+      {
+        "name": "Felsenfest",
+        "beschreibung": "Schürfleiter hat Vorteil auf Konstitutionsrettungswürfe gegen Gift und gegen Erschöpfung durch Hitze oder Kälte."
       }
     ],
     "aktionen": [
@@ -4039,12 +4401,20 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Spitzhacke",
-        "beschreibung": "Nahkampfwaffenangriff: +8 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W10+4 Stichschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +8 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 9 (1W10+4) Stichschaden."
+      },
+      {
+        "name": "Gesteinssplitter",
+        "beschreibung": "Schürfleiter schlägt auf den Boden. Jede Kreatur in 3 m Umkreis muss einen Stärkerettungswurf (SG 16) ablegen und erleidet 1W10+4 Wuchtschaden und wird umgeworfen; bei Erfolg halb so viel Schaden und nicht umgeworfen. Einmal pro kurze Rast."
       }
     ],
     "bonusaktionen": [],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_07_Quellensucher.png",
+    "beschreibung": [
+      "Schürfleiter, Rang 3 der Division Quellensucher. Führt eigenständige Abbautrupps in neue Lagerstätten, sichert neue Vorkommen und richtet erste Förderstrukturen ein. Meldet Lagerstättendetails an den Chefprospektor."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -4089,14 +4459,14 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_07_Quellensucher.png",
-    "beschreibung": [
-      "Geologe, Rang 4 der Division Quellensucher. Analysiert Gesteinsformationen auf verwertbare Vorkommen und erstellt geologische Gutachten als Entscheidungsgrundlage. Identifiziert unbekannte meruische Mineralformationen und dokumentiert sie."
-    ],
     "besonderheiten": [
       {
         "name": "Ressourcenspürer",
         "beschreibung": "Geologe erkennt automatisch Rohstoffvorkommen, Mineralien und Wasserquellen in einem Umkreis von 18 m, ohne einen Würfelwurf abzulegen."
+      },
+      {
+        "name": "Felsenfest",
+        "beschreibung": "Geologe hat Vorteil auf Konstitutionsrettungswürfe gegen Gift und gegen Erschöpfung durch Hitze oder Kälte."
       }
     ],
     "aktionen": [
@@ -4106,12 +4476,20 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Spitzhacke",
-        "beschreibung": "Nahkampfwaffenangriff: +8 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W10+4 Stichschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +8 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 9 (1W10+4) Stichschaden."
+      },
+      {
+        "name": "Gesteinssplitter",
+        "beschreibung": "Geologe schlägt auf den Boden. Jede Kreatur in 3 m Umkreis muss einen Stärkerettungswurf (SG 16) ablegen und erleidet 1W10+4 Wuchtschaden und wird umgeworfen; bei Erfolg halb so viel Schaden und nicht umgeworfen. Einmal pro kurze Rast."
       }
     ],
     "bonusaktionen": [],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_07_Quellensucher.png",
+    "beschreibung": [
+      "Geologe, Rang 4 der Division Quellensucher. Analysiert Gesteinsformationen auf verwertbare Vorkommen und erstellt geologische Gutachten als Entscheidungsgrundlage. Identifiziert unbekannte meruische Mineralformationen und dokumentiert sie."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -4120,8 +4498,8 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "unterart": "NPC",
     "groesse": "Mittelgroß",
     "gesinnung": "Jede Gesinnung",
-    "cr": 3,
-    "xp": 700,
+    "cr": 4,
+    "xp": 1100,
     "rk": 15,
     "ruestungstyp": "Lederrüstung",
     "tp": 84,
@@ -4156,14 +4534,14 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_07_Quellensucher.png",
-    "beschreibung": [
-      "Förderer, Rang 5 der Division Quellensucher. Eigenständiger Abbauspezialist – betreibt und wartet Förderanlagen und führt regelmäßige Inspektionen aktiver Vorkommen durch. Koordiniert Lieferungen an den Förderhof."
-    ],
     "besonderheiten": [
       {
         "name": "Ressourcenspürer",
         "beschreibung": "Förderer erkennt automatisch Rohstoffvorkommen, Mineralien und Wasserquellen in einem Umkreis von 18 m, ohne einen Würfelwurf abzulegen."
+      },
+      {
+        "name": "Felsenfest",
+        "beschreibung": "Förderer hat Vorteil auf Konstitutionsrettungswürfe gegen Gift und gegen Erschöpfung durch Hitze oder Kälte."
       }
     ],
     "aktionen": [
@@ -4173,12 +4551,16 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Spitzhacke",
-        "beschreibung": "Nahkampfwaffenangriff: +7 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W8+4 Stichschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +7 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 8 (1W8+4) Stichschaden."
       }
     ],
     "bonusaktionen": [],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_07_Quellensucher.png",
+    "beschreibung": [
+      "Förderer, Rang 5 der Division Quellensucher. Eigenständiger Abbauspezialist – betreibt und wartet Förderanlagen und führt regelmäßige Inspektionen aktiver Vorkommen durch. Koordiniert Lieferungen an den Förderhof."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -4223,25 +4605,29 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_07_Quellensucher.png",
-    "beschreibung": [
-      "Quellensucher, Rang 6 der Division Quellensucher. Vollwertiges Mitglied – sucht, sichert und erschließt Vorkommen. Führt Standardabbauaufträge durch, liefert Ressourcen ab und dokumentiert Fundstellen."
-    ],
     "besonderheiten": [
       {
         "name": "Ressourcenspürer",
         "beschreibung": "Quellensucher erkennt automatisch Rohstoffvorkommen, Mineralien und Wasserquellen in einem Umkreis von 18 m, ohne einen Würfelwurf abzulegen."
+      },
+      {
+        "name": "Felsenfest",
+        "beschreibung": "Quellensucher hat Vorteil auf Konstitutionsrettungswürfe gegen Gift und gegen Erschöpfung durch Hitze oder Kälte."
       }
     ],
     "aktionen": [
       {
         "name": "Spitzhacke",
-        "beschreibung": "Nahkampfwaffenangriff: +6 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W8+3 Stichschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 7 (1W8+3) Stichschaden."
       }
     ],
     "bonusaktionen": [],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_07_Quellensucher.png",
+    "beschreibung": [
+      "Quellensucher, Rang 6 der Division Quellensucher. Vollwertiges Mitglied – sucht, sichert und erschließt Vorkommen. Führt Standardabbauaufträge durch, liefert Ressourcen ab und dokumentiert Fundstellen."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -4250,8 +4636,8 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "unterart": "NPC",
     "groesse": "Mittelgroß",
     "gesinnung": "Jede Gesinnung",
-    "cr": 0.5,
-    "xp": 100,
+    "cr": 1,
+    "xp": 200,
     "rk": 14,
     "ruestungstyp": "Lederrüstung",
     "tp": 47,
@@ -4286,25 +4672,29 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_07_Quellensucher.png",
-    "beschreibung": [
-      "Schürfer, Rang 7 der Division Quellensucher. Führt standardisierte Abbauaufträge unter Aufsicht durch, transportiert und sortiert Rohmaterialien auf dem Förderhof und meldet ungewöhnliche Funde an den Geologen."
-    ],
     "besonderheiten": [
       {
         "name": "Ressourcenspürer",
         "beschreibung": "Schürfer erkennt automatisch Rohstoffvorkommen, Mineralien und Wasserquellen in einem Umkreis von 18 m, ohne einen Würfelwurf abzulegen."
+      },
+      {
+        "name": "Felsenfest",
+        "beschreibung": "Schürfer hat Vorteil auf Konstitutionsrettungswürfe gegen Gift und gegen Erschöpfung durch Hitze oder Kälte."
       }
     ],
     "aktionen": [
       {
         "name": "Spitzhacke",
-        "beschreibung": "Nahkampfwaffenangriff: +6 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W6+3 Stichschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 6 (1W6+3) Stichschaden."
       }
     ],
     "bonusaktionen": [],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_07_Quellensucher.png",
+    "beschreibung": [
+      "Schürfer, Rang 7 der Division Quellensucher. Führt standardisierte Abbauaufträge unter Aufsicht durch, transportiert und sortiert Rohmaterialien auf dem Förderhof und meldet ungewöhnliche Funde an den Geologen."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -4346,10 +4736,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_07_Quellensucher.png",
-    "beschreibung": [
-      "Gesteinsleser, Rang 8 der Division Quellensucher. Analysiert bekannte Orientierungspunkte auf Ressourcenpotenzial. Erlernt Gesteinsidentifikation und erste Prospektionsmethoden und begleitet erfahrene Quellensucher auf Erkundungstouren."
-    ],
     "besonderheiten": [
       {
         "name": "Ressourcenspürer",
@@ -4359,12 +4745,16 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "aktionen": [
       {
         "name": "Spitzhacke",
-        "beschreibung": "Nahkampfwaffenangriff: +4 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W6+2 Stichschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 5 (1W6+2) Stichschaden."
       }
     ],
     "bonusaktionen": [],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_07_Quellensucher.png",
+    "beschreibung": [
+      "Gesteinsleser, Rang 8 der Division Quellensucher. Analysiert bekannte Orientierungspunkte auf Ressourcenpotenzial. Erlernt Gesteinsidentifikation und erste Prospektionsmethoden und begleitet erfahrene Quellensucher auf Erkundungstouren."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -4406,10 +4796,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_07_Quellensucher.png",
-    "beschreibung": [
-      "Träger, Rang 9 der Division Quellensucher. Unterstützt erfahrene Mitglieder bei Transport und Abbauarbeiten. Sorgt für Ordnung und Inventar auf dem Förderhof und erlernt grundlegende Abbau- und Sortiertechniken."
-    ],
     "besonderheiten": [
       {
         "name": "Ressourcenspürer",
@@ -4419,12 +4805,16 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "aktionen": [
       {
         "name": "Spitzhacke",
-        "beschreibung": "Nahkampfwaffenangriff: +4 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W4+2 Stichschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 4 (1W4+2) Stichschaden."
       }
     ],
     "bonusaktionen": [],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_07_Quellensucher.png",
+    "beschreibung": [
+      "Träger, Rang 9 der Division Quellensucher. Unterstützt erfahrene Mitglieder bei Transport und Abbauarbeiten. Sorgt für Ordnung und Inventar auf dem Förderhof und erlernt grundlegende Abbau- und Sortiertechniken."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -4466,10 +4856,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_07_Quellensucher.png",
-    "beschreibung": [
-      "Roherz, Rang 10 der Division Quellensucher. Frisch aufgenommen, unerfahrenes Neumitglied. Führt einfache Hilfsarbeiten auf dem Förderhof durch, noch ohne eigenständige Abbaurechte."
-    ],
     "besonderheiten": [
       {
         "name": "Ressourcenspürer",
@@ -4479,12 +4865,16 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "aktionen": [
       {
         "name": "Spitzhacke",
-        "beschreibung": "Nahkampfwaffenangriff: +4 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W4+2 Stichschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 4 (1W4+2) Stichschaden."
       }
     ],
     "bonusaktionen": [],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_07_Quellensucher.png",
+    "beschreibung": [
+      "Roherz, Rang 10 der Division Quellensucher. Frisch aufgenommen, unerfahrenes Neumitglied. Führt einfache Hilfsarbeiten auf dem Förderhof durch, noch ohne eigenständige Abbaurechte."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -4529,14 +4919,14 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_08_Bergungsgarde.png",
-    "beschreibung": [
-      "Bergungsadmiral, Rang 1 der Division Bergungsgarde. Koordiniert alle Bergungsoperationen und verantwortet die Träumerrettung. Genehmigt den Zugang zu schwer zugänglichen Wrackzonen und vertritt die Division im Kolonialrat."
-    ],
     "besonderheiten": [
       {
         "name": "Trümmerläufer",
         "beschreibung": "Bergungsadmiral hat Vorteil auf Athletik-Würfe beim Klettern und auf Geschicklichkeit-Rettungswürfe in Trümmern und instabilen Strukturen."
+      },
+      {
+        "name": "Aufbruchsmeister",
+        "beschreibung": "Bergungsadmiral richtet gegen Objekte doppelten Schaden an und hat Vorteil auf Stärkewürfe, um Türen, Behälter und Wrackteile aufzubrechen."
       }
     ],
     "aktionen": [
@@ -4546,12 +4936,26 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Brecheisen",
-        "beschreibung": "Nahkampfwaffenangriff: +10 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W12+5 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +10 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 11 (1W12+5) Wuchtschaden."
       }
     ],
-    "bonusaktionen": [],
-    "reaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Seilzug",
+        "beschreibung": "Eine Kreatur bis Größe Groß in 9 m, die Bergungsadmiral sehen kann, muss einen Stärkerettungswurf (SG 18) ablegen, sonst wird sie bis zu 4,5 m zu ihm gezogen."
+      }
+    ],
+    "reaktionen": [
+      {
+        "name": "Einsturz abwehren",
+        "beschreibung": "Erleidet Bergungsadmiral oder ein Verbündeter in 3 m Schaden durch herabfallende Trümmer oder einen Sturz, wird der Schaden halbiert."
+      }
+    ],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_08_Bergungsgarde.png",
+    "beschreibung": [
+      "Bergungsadmiral, Rang 1 der Division Bergungsgarde. Koordiniert alle Bergungsoperationen und verantwortet die Träumerrettung. Genehmigt den Zugang zu schwer zugänglichen Wrackzonen und vertritt die Division im Kolonialrat."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -4596,10 +5000,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_08_Bergungsgarde.png",
-    "beschreibung": [
-      "Wrackinspekteur, Rang 2 der Division Bergungsgarde. Bewertet bedeutende Wrackfunde und leitet komplexe Bergungsoperationen. Analysiert Risiken beim Betreten unbekannter Wrackgebiete und koordiniert die Dokumentation aller Fundstellen."
-    ],
     "besonderheiten": [
       {
         "name": "Trümmerläufer",
@@ -4613,12 +5013,26 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Brecheisen",
-        "beschreibung": "Nahkampfwaffenangriff: +9 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W12+5 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +9 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 11 (1W12+5) Wuchtschaden."
       }
     ],
-    "bonusaktionen": [],
-    "reaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Seilzug",
+        "beschreibung": "Eine Kreatur bis Größe Groß in 9 m, die Wrackinspekteur sehen kann, muss einen Stärkerettungswurf (SG 17) ablegen, sonst wird sie bis zu 4,5 m zu ihm gezogen."
+      }
+    ],
+    "reaktionen": [
+      {
+        "name": "Einsturz abwehren",
+        "beschreibung": "Erleidet Wrackinspekteur oder ein Verbündeter in 3 m Schaden durch herabfallende Trümmer oder einen Sturz, wird der Schaden halbiert."
+      }
+    ],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_08_Bergungsgarde.png",
+    "beschreibung": [
+      "Wrackinspekteur, Rang 2 der Division Bergungsgarde. Bewertet bedeutende Wrackfunde und leitet komplexe Bergungsoperationen. Analysiert Risiken beim Betreten unbekannter Wrackgebiete und koordiniert die Dokumentation aller Fundstellen."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -4663,10 +5077,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_08_Bergungsgarde.png",
-    "beschreibung": [
-      "Wrackführer, Rang 3 der Division Bergungsgarde. Führt Bergungstrupps in schwer zugängliche und gefährliche Wrackzonen. Leitet die Erstversorgung geretteter Träumer vor Ort und koordiniert sichere Ein- und Ausgangswege."
-    ],
     "besonderheiten": [
       {
         "name": "Trümmerläufer",
@@ -4680,12 +5090,26 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Brecheisen",
-        "beschreibung": "Nahkampfwaffenangriff: +8 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W10+4 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +8 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 9 (1W10+4) Wuchtschaden."
       }
     ],
-    "bonusaktionen": [],
-    "reaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Seilzug",
+        "beschreibung": "Eine Kreatur bis Größe Groß in 9 m, die Wrackführer sehen kann, muss einen Stärkerettungswurf (SG 16) ablegen, sonst wird sie bis zu 4,5 m zu ihm gezogen."
+      }
+    ],
+    "reaktionen": [
+      {
+        "name": "Einsturz abwehren",
+        "beschreibung": "Erleidet Wrackführer oder ein Verbündeter in 3 m Schaden durch herabfallende Trümmer oder einen Sturz, wird der Schaden halbiert."
+      }
+    ],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_08_Bergungsgarde.png",
+    "beschreibung": [
+      "Wrackführer, Rang 3 der Division Bergungsgarde. Führt Bergungstrupps in schwer zugängliche und gefährliche Wrackzonen. Leitet die Erstversorgung geretteter Träumer vor Ort und koordiniert sichere Ein- und Ausgangswege."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -4730,10 +5154,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_08_Bergungsgarde.png",
-    "beschreibung": [
-      "Kapselorter, Rang 4 der Division Bergungsgarde. Spezialist für das Aufspüren und behutsame Öffnen von Lebenserhaltungskapseln. Führt technische Diagnosen durch, bewertet den Überlebensstatus und koordiniert die Erstversorgung nach der Kapselöffnung."
-    ],
     "besonderheiten": [
       {
         "name": "Trümmerläufer",
@@ -4747,12 +5167,26 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Brecheisen",
-        "beschreibung": "Nahkampfwaffenangriff: +8 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W10+4 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +8 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 9 (1W10+4) Wuchtschaden."
       }
     ],
-    "bonusaktionen": [],
-    "reaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Seilzug",
+        "beschreibung": "Eine Kreatur bis Größe Groß in 9 m, die Kapselorter sehen kann, muss einen Stärkerettungswurf (SG 16) ablegen, sonst wird sie bis zu 4,5 m zu ihm gezogen."
+      }
+    ],
+    "reaktionen": [
+      {
+        "name": "Einsturz abwehren",
+        "beschreibung": "Erleidet Kapselorter oder ein Verbündeter in 3 m Schaden durch herabfallende Trümmer oder einen Sturz, wird der Schaden halbiert."
+      }
+    ],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_08_Bergungsgarde.png",
+    "beschreibung": [
+      "Kapselorter, Rang 4 der Division Bergungsgarde. Spezialist für das Aufspüren und behutsame Öffnen von Lebenserhaltungskapseln. Führt technische Diagnosen durch, bewertet den Überlebensstatus und koordiniert die Erstversorgung nach der Kapselöffnung."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -4797,10 +5231,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_08_Bergungsgarde.png",
-    "beschreibung": [
-      "Wrackläufer, Rang 5 der Division Bergungsgarde. Eigenständiger Erkunder von Wrackgebieten – erstellt Lageberichte und bewertet neue Wracks auf Bergbarkeit und Kapselhinweise. Koordiniert sich mit Pathfindern für schnellen Zugang zu Absturzgebieten."
-    ],
     "besonderheiten": [
       {
         "name": "Trümmerläufer",
@@ -4814,12 +5244,21 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       },
       {
         "name": "Brecheisen",
-        "beschreibung": "Nahkampfwaffenangriff: +7 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W8+4 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +7 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 8 (1W8+4) Wuchtschaden."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Seilzug",
+        "beschreibung": "Eine Kreatur bis Größe Groß in 9 m, die Wrackläufer sehen kann, muss einen Stärkerettungswurf (SG 15) ablegen, sonst wird sie bis zu 4,5 m zu ihm gezogen."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_08_Bergungsgarde.png",
+    "beschreibung": [
+      "Wrackläufer, Rang 5 der Division Bergungsgarde. Eigenständiger Erkunder von Wrackgebieten – erstellt Lageberichte und bewertet neue Wracks auf Bergbarkeit und Kapselhinweise. Koordiniert sich mit Pathfindern für schnellen Zugang zu Absturzgebieten."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -4864,10 +5303,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_08_Bergungsgarde.png",
-    "beschreibung": [
-      "Berger, Rang 6 der Division Bergungsgarde. Vollwertiges Mitglied – führt Bergungsaufträge eigenständig durch. Birgt technische Komponenten, sichert Wrackteile und begleitet gerettete Träumer zur Anlegestelle."
-    ],
     "besonderheiten": [
       {
         "name": "Trümmerläufer",
@@ -4877,12 +5312,21 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "aktionen": [
       {
         "name": "Brecheisen",
-        "beschreibung": "Nahkampfwaffenangriff: +6 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W8+3 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 7 (1W8+3) Wuchtschaden."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Seilzug",
+        "beschreibung": "Eine Kreatur bis Größe Groß in 9 m, die Berger sehen kann, muss einen Stärkerettungswurf (SG 14) ablegen, sonst wird sie bis zu 4,5 m zu ihm gezogen."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_08_Bergungsgarde.png",
+    "beschreibung": [
+      "Berger, Rang 6 der Division Bergungsgarde. Vollwertiges Mitglied – führt Bergungsaufträge eigenständig durch. Birgt technische Komponenten, sichert Wrackteile und begleitet gerettete Träumer zur Anlegestelle."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -4927,10 +5371,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_08_Bergungsgarde.png",
-    "beschreibung": [
-      "Wracksondeur, Rang 7 der Division Bergungsgarde. Durchsucht Wrackteile systematisch nach Materialien und Überlebenszeichen. Sichert gefundene Kapseln, markiert sie für den Transport und dokumentiert alle Fundstücke."
-    ],
     "besonderheiten": [
       {
         "name": "Trümmerläufer",
@@ -4940,12 +5380,21 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "aktionen": [
       {
         "name": "Brecheisen",
-        "beschreibung": "Nahkampfwaffenangriff: +6 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W6+3 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +6 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 6 (1W6+3) Wuchtschaden."
       }
     ],
-    "bonusaktionen": [],
+    "bonusaktionen": [
+      {
+        "name": "Seilzug",
+        "beschreibung": "Eine Kreatur bis Größe Groß in 9 m, die Wracksondeur sehen kann, muss einen Stärkerettungswurf (SG 14) ablegen, sonst wird sie bis zu 4,5 m zu ihm gezogen."
+      }
+    ],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_08_Bergungsgarde.png",
+    "beschreibung": [
+      "Wracksondeur, Rang 7 der Division Bergungsgarde. Durchsucht Wrackteile systematisch nach Materialien und Überlebenszeichen. Sichert gefundene Kapseln, markiert sie für den Transport und dokumentiert alle Fundstücke."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -4987,10 +5436,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_08_Bergungsgarde.png",
-    "beschreibung": [
-      "Aufbrecher, Rang 8 der Division Bergungsgarde. Dringt unter Aufsicht in Wracks vor und sichert Zugangswege. Unterstützt Kapselorter beim Lokalisieren und Transport gesicherter Kapseln und erlernt Bergungsprotokolle aktiv im Einsatz."
-    ],
     "besonderheiten": [
       {
         "name": "Trümmerläufer",
@@ -5000,12 +5445,16 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "aktionen": [
       {
         "name": "Brecheisen",
-        "beschreibung": "Nahkampfwaffenangriff: +4 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W6+2 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 5 (1W6+2) Wuchtschaden."
       }
     ],
     "bonusaktionen": [],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_08_Bergungsgarde.png",
+    "beschreibung": [
+      "Aufbrecher, Rang 8 der Division Bergungsgarde. Dringt unter Aufsicht in Wracks vor und sichert Zugangswege. Unterstützt Kapselorter beim Lokalisieren und Transport gesicherter Kapseln und erlernt Bergungsprotokolle aktiv im Einsatz."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -5047,10 +5496,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_08_Bergungsgarde.png",
-    "beschreibung": [
-      "Berggehilfe, Rang 9 der Division Bergungsgarde. Unterstützt erfahrene Berger bei Transporten, Vorbereitungen und Nacharbeiten. Erlernt Grundlagen der Bergungsprotokolle und Träumererstversorgung und begleitet Aufbrecher zu gesicherten Außenbereichen."
-    ],
     "besonderheiten": [
       {
         "name": "Trümmerläufer",
@@ -5060,12 +5505,16 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "aktionen": [
       {
         "name": "Brecheisen",
-        "beschreibung": "Nahkampfwaffenangriff: +4 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W4+2 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 4 (1W4+2) Wuchtschaden."
       }
     ],
     "bonusaktionen": [],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_08_Bergungsgarde.png",
+    "beschreibung": [
+      "Berggehilfe, Rang 9 der Division Bergungsgarde. Unterstützt erfahrene Berger bei Transporten, Vorbereitungen und Nacharbeiten. Erlernt Grundlagen der Bergungsprotokolle und Träumererstversorgung und begleitet Aufbrecher zu gesicherten Außenbereichen."
+    ],
     "source": "Rekrutierung"
   },
   {
@@ -5107,10 +5556,6 @@ window.MONSTER_DATA_REKRUTIERUNG = [
       "Gemein"
     ],
     "umgebung": [],
-    "bild": "assets/images/divisions/Logo_08_Bergungsgarde.png",
-    "beschreibung": [
-      "Ankömmling, Rang 10 der Division Bergungsgarde. Oft selbst erst kürzlich als Träumer gerettet. Erlernt Grundlagen der Division – Protokoll, Ausrüstung, Verantwortung – und beobachtet erfahrene Berger bei der Arbeit."
-    ],
     "besonderheiten": [
       {
         "name": "Trümmerläufer",
@@ -5120,12 +5565,16 @@ window.MONSTER_DATA_REKRUTIERUNG = [
     "aktionen": [
       {
         "name": "Brecheisen",
-        "beschreibung": "Nahkampfwaffenangriff: +4 auf den Trefferwurf, Reichweite 1,5 m. Treffer: 1W4+2 Wuchtschaden."
+        "beschreibung": "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 4 (1W4+2) Wuchtschaden."
       }
     ],
     "bonusaktionen": [],
     "reaktionen": [],
     "legendaere_aktionen": null,
+    "bild": "assets/images/divisions/Logo_08_Bergungsgarde.png",
+    "beschreibung": [
+      "Ankömmling, Rang 10 der Division Bergungsgarde. Oft selbst erst kürzlich als Träumer gerettet. Erlernt Grundlagen der Division – Protokoll, Ausrüstung, Verantwortung – und beobachtet erfahrene Berger bei der Arbeit."
+    ],
     "source": "Rekrutierung"
   }
 ];

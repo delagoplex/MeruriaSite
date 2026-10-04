@@ -3,6 +3,7 @@ import '../../components/nav.jsx';
 import '../../components/site-gate.jsx';
 import '../../components/particle-field.jsx';
 import '../../components/filter-utils.jsx';
+import '../../components/rasse-picker.jsx';
 
 ;(function () {
 (function () {
@@ -2457,6 +2458,18 @@ function MonsterDetail({
 }
 
 // ─── EMPTY STATE ──────────────────────────────────────────────────────────────
+// NSC-Statblock mit Rasse, Talent und Waffe: Auswahlleiste + berechneter Statblock
+function MonsterMitRasse({ monster }) {
+  const [opt, setOpt] = useState(null);
+  useEffect(() => { setOpt(null); }, [monster.name]);
+  const shown = useMemo(() => (opt && window.RasseAnwenden ? window.RasseAnwenden.anwenden(monster, opt) : monster), [monster, opt]);
+  return (
+    <React.Fragment>
+      <window.RassePicker monster={monster} value={opt} onChange={setOpt} />
+      <MonsterDetail monster={shown} />
+    </React.Fragment>
+  );
+}
 function EmptyState({
   msg
 }) {
@@ -2870,7 +2883,7 @@ function App() {
       overflow: 'hidden',
       background: 'rgba(var(--bg2-rgb),0.4)'
     }
-  }, selected ? /*#__PURE__*/React.createElement(MonsterDetail, {
+  }, selected ? /*#__PURE__*/React.createElement(MonsterMitRasse, {
     monster: selected
   }) : /*#__PURE__*/React.createElement(EmptyState, {
     msg: "Monster ausw\xE4hlen"

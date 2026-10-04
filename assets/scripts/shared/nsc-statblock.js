@@ -58,8 +58,25 @@
         .replace(/\{titel\}/g, titel)
         .replace(/\+?\{attackBonus\}/g, fmtMod(attackBonus))
         .replace(/\{damageDice\}/g, damageDice)
-        .replace(/\{DC\}/g, dcSG);
+        .replace(/\{DC\}/g, dcSG)
+        .replace(/\{prof\}/g, prof);
     }
+
+    // Fähigkeiten nach Art sortiert; Fähigkeiten mit minTier kommen erst ab dieser Stufe dazu
+    var KEY = { besonderheit: 'besonderheiten', aktion: 'aktionen', bonusaktion: 'bonusaktionen', reaktion: 'reaktionen' };
+    var fae = { besonderheiten: [], aktionen: [], bonusaktionen: [], reaktionen: [] };
+    var basis = fill(cfg.besonderheit), schnitt = basis.indexOf('. ');
+    fae[KEY[cfg.besonderheitTyp || 'besonderheit']].push({ name: basis.slice(0, schnitt), beschreibung: basis.slice(schnitt + 2) });
+    cfg.aktionen.forEach(function(a) {
+      if (!a.minTier || tier >= a.minTier) fae.aktionen.push({ name: a.name, beschreibung: fill(a.beschreibung) });
+    });
+    // hgMod: Wirkung der Fähigkeiten auf die HG-Schätzung (effektive TP, RK, Schaden pro Runde)
+    var hgMod = { tp: 0, rk: 0, dmg: 0 };
+    (cfg.faehigkeiten || []).forEach(function(f) {
+      if (f.minTier && tier < f.minTier) return;
+      fae[KEY[f.typ]].push({ name: f.name, beschreibung: fill(f.beschreibung) });
+      if (f.hg) { hgMod.tp += f.hg.tp || 0; hgMod.rk += f.hg.rk || 0; hgMod.dmg += f.hg.dmg || 0; }
+    });
 
     var passiveWahrnehm = 10 + mod(attr.WIS) + (skills['Wahrnehmung'] !== undefined ? prof : 0);
 
@@ -73,13 +90,70 @@
       fertigkeiten: skills,
       passiveWahrnehmung: passiveWahrnehm,
       besonderheit: { name: 'Besonderheit', beschreibung: fill(cfg.besonderheit) },
-      aktionen: cfg.aktionen
-        .filter(function(a) { return !a.minTier || tier >= a.minTier; })
-        .map(function(a) { return { name: a.name, beschreibung: fill(a.beschreibung) }; }),
+      besonderheiten: fae.besonderheiten,
+      aktionen: fae.aktionen,
+      bonusaktionen: fae.bonusaktionen,
+      reaktionen: fae.reaktionen,
+      hgMod: hgMod,
     };
   }
 
   window.computeNscStats = computeNscStats;
+
+  // ── Umrechnung ins Monster-Format (Monsterliste, Rasse anwenden) ──
+  // Herausforderungsgrad als Näherung nach der DMG-Tabelle (TP/RK gegen Schaden/Trefferbonus)
+  var LADDER = [0, 0.125, 0.25, 0.5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  var XP = { 0: 10, 0.125: 25, 0.25: 50, 0.5: 100, 1: 200, 2: 450, 3: 700, 4: 1100, 5: 1800, 6: 2300, 7: 2900, 8: 3900, 9: 5000, 10: 5900 };
+  var HP_MAX = [6, 35, 49, 70, 85, 100, 115, 130, 145, 160, 175, 190, 205, 220];
+  var DMG_MAX = [1, 3, 5, 8, 14, 20, 26, 32, 38, 44, 50, 56, 62, 68];
+  function idxFor(v, table) { for (var i = 0; i < table.length; i++) if (v <= table[i]) return i; return table.length - 1; }
+  function expAC(c) { return c <= 3 ? 13 : c <= 4 ? 14 : c <= 7 ? 15 : 16; }
+  function expAtk(c) { return c <= 2 ? 3 : c <= 4 ? 4 : c <= 7 ? 6 : 7; }
+  function diceAvg(spec) {
+    var m = /^(\d+)W(\d+)(?:([+-])(\d+))?$/.exec(spec);
+    if (!m) return 0;
+    return +m[1] * (+m[2] / 2 + 0.5) + (m[3] ? (m[3] === '-' ? -1 : 1) * +m[4] : 0);
+  }
+  function crFor(s) {
+    var mod = s.hgMod || { tp: 0, rk: 0, dmg: 0 };
+    var di = idxFor(s.tp + mod.tp, HP_MAX);
+    di += Math.trunc((s.rk + mod.rk - expAC(LADDER[di])) / 2);
+    var atk = s.aktionen.filter(function (a) { return /Trefferwurf/.test(a.beschreibung); })[0];
+    var hit = atk ? +/\+(\d+) auf den Trefferwurf/.exec(atk.beschreibung)[1] : 0;
+    var dmg = atk ? diceAvg(/Treffer: (\S+)/.exec(atk.beschreibung)[1]) : 0;
+    var attacks = s.aktionen.some(function (a) { return /greift zweimal an/.test(a.beschreibung); }) ? 2 : 1;
+    var oi = idxFor(dmg * attacks + mod.dmg, DMG_MAX);
+    oi += Math.trunc((hit - expAtk(LADDER[oi])) / 2);
+    var i = Math.max(0, Math.min(LADDER.length - 1, Math.round((di + oi) / 2)));
+    return LADDER[i];
+  }
+  // Angriffstext im Format der Bücher: "Nahkampf-Waffenangriff: +4 zum Treffen, Reichweite 1,5 m, ein Ziel. Treffer: 5 (1W6+2) Hiebschaden."
+  function buchFormat(a) {
+    var m = /^(Nah|Fern)kampfwaffenangriff: \+(\d+) auf den Trefferwurf, Reichweite ([^.]+)\. Treffer: (\S+) (\S+schaden)\.$/.exec(a.beschreibung);
+    if (!m) return a;
+    return { name: a.name, beschreibung: m[1] + 'kampf-Waffenangriff: +' + m[2] + ' zum Treffen, Reichweite ' + m[3] + ', ein Ziel. Treffer: ' + Math.floor(diceAvg(m[4])) + ' (' + m[4] + ') ' + m[5] + '.' };
+  }
+  var SAVE_KEY = { DEX: 'GES', CON: 'KON', WIS: 'WEI' };
+  function nscToMonster(division, rang) {
+    var s = computeNscStats(division, rang);
+    var cr = crFor(s);
+    var saves = {};
+    Object.keys(s.rettungswuerfe).forEach(function (k) { saves[SAVE_KEY[k] || k] = s.rettungswuerfe[k]; });
+    return {
+      titel: s.titel, prof: s.prof,
+      art: 'Humanoid', unterart: 'NPC', groesse: 'Mittelgroß', gesinnung: 'Jede Gesinnung',
+      cr: cr, xp: XP[cr],
+      rk: s.rk, ruestungstyp: s.ruestungstyp, tp: s.tp, tp_wuerfel: s.tp_wuerfel,
+      bewegung: { Gehen: s.bewegung },
+      attribute: s.attribute, rettungswuerfe: saves, fertigkeiten: s.fertigkeiten,
+      schadensresistenzen: [], schadensimmunitaeten: [], verwundbarkeiten: [], zustandsimmunitaeten: [],
+      sinne: [], passiveWahrnehmung: s.passiveWahrnehmung, sprachen: ['Gemein'], umgebung: [],
+      besonderheiten: s.besonderheiten,
+      aktionen: s.aktionen.map(buchFormat),
+      bonusaktionen: s.bonusaktionen, reaktionen: s.reaktionen, legendaere_aktionen: null,
+    };
+  }
+  window.nscToMonster = nscToMonster;
 
   // ── Sub-components ───────────────────────────────────────────
   function Divider(accent) {
@@ -111,6 +185,22 @@
     };
 
     var stats = computeNscStats(division, selectedRang);
+    // Rasse anwenden: aus Rang-Statblock + Auswahl wird der angezeigte Statblock berechnet
+    var R = window.RasseAnwenden, opt = props.rasse || null;
+    var mon = nscToMonster(division, selectedRang);
+    var shown = (opt && R) ? R.anwenden(mon, opt) : mon;
+    var ADJ = { 'Winzig': 'Winziger', 'Klein': 'Kleiner', 'Mittelgroß': 'Mittelgroßer', 'Groß': 'Großer', 'Riesig': 'Riesiger' };
+    var rasseLabel = opt && opt.rasse ? (opt.linie ? opt.rasse + ' – ' + opt.linie : opt.rasse) : null;
+    var bewegungText = Object.keys(shown.bewegung).map(function(k) { return k === 'Gehen' ? shown.bewegung[k] : k + ' ' + shown.bewegung[k]; }).join(', ');
+    function Row(label, text) {
+      return h('div', { key: label, style: {
+        fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
+        letterSpacing: '0.06em', marginBottom: 4,
+      }},
+        h('span', { style: { color: cA(0.7), marginRight: 6 }}, label),
+        text
+      );
+    }
     var ATTRS = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
     var ATTR_DE = { STR: 'STÄ', DEX: 'GES', CON: 'KON', INT: 'INT', WIS: 'WEI', CHA: 'CHA' };
 
@@ -159,7 +249,7 @@
         h('div', { style: {
           fontFamily: 'var(--font-mono)', fontSize: 9, color: 'color-mix(in srgb, rgba(180,170,220,0.55), rgb(var(--ink-rgb)) var(--cm))',
           letterSpacing: '0.12em', marginTop: 2,
-        }}, 'Mittelgroßer Humanoid · ' + division.name.replace(/^Die\s+/, ''))
+        }}, (ADJ[shown.groesse] || shown.groesse) + ' Humanoid · ' + division.name.replace(/^Die\s+/, '') + (rasseLabel ? ' · ' + rasseLabel : ''))
       ),
 
       Divider(accent),
@@ -167,9 +257,9 @@
       // Meta grid: RK, TP, Bewegung, Übungsbonus
       h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8, margin: '10px 0' } },
         [
-          { label: 'RK',         value: stats.rk + (stats.ruestungstyp ? ' (' + stats.ruestungstyp + ')' : '') },
-          { label: 'TP',         value: stats.tp + ' (' + stats.tp_wuerfel + ')' },
-          { label: 'Bewegung',   value: stats.bewegung },
+          { label: 'RK',         value: shown.rk + (shown.ruestungstyp ? ' (' + shown.ruestungstyp + ')' : '') },
+          { label: 'TP',         value: shown.tp + ' (' + shown.tp_wuerfel + ')' },
+          { label: 'Bewegung',   value: bewegungText },
           { label: 'Übungsbonus',value: stats.fmtMod(stats.prof) },
         ].map(function(item) {
           return h('div', { key: item.label, style: {
@@ -187,7 +277,7 @@
       // Ability scores
       h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: 4, margin: '10px 0' } },
         ATTRS.map(function(s) {
-          var score = stats.attribute[s];
+          var score = shown.attribute[s];
           var m     = stats.mod(score);
           return h('div', { key: s, style: {
             textAlign: 'center', padding: '6px 4px',
@@ -204,20 +294,20 @@
       Divider(accent),
 
       // Saves, Skills, Passive
-      (Object.keys(stats.rettungswuerfe).length > 0) && h('div', { style: {
+      (Object.keys(shown.rettungswuerfe).length > 0) && h('div', { style: {
         fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
         letterSpacing: '0.06em', marginBottom: 4,
       }},
         h('span', { style: { color: cA(0.7), marginRight: 6 }}, 'Rettungswürfe'),
-        Object.entries(stats.rettungswuerfe).map(function(kv) { return kv[0] + ' ' + stats.fmtMod(kv[1]); }).join(', ')
+        Object.entries(shown.rettungswuerfe).map(function(kv) { return kv[0] + ' ' + stats.fmtMod(kv[1]); }).join(', ')
       ),
 
-      (Object.keys(stats.fertigkeiten).length > 0) && h('div', { style: {
+      (Object.keys(shown.fertigkeiten).length > 0) && h('div', { style: {
         fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
         letterSpacing: '0.06em', marginBottom: 4,
       }},
         h('span', { style: { color: cA(0.7), marginRight: 6 }}, 'Fertigkeiten'),
-        Object.entries(stats.fertigkeiten).map(function(kv) { return kv[0] + ' ' + stats.fmtMod(kv[1]); }).join(', ')
+        Object.entries(shown.fertigkeiten).map(function(kv) { return kv[0] + ' ' + stats.fmtMod(kv[1]); }).join(', ')
       ),
 
       h('div', { style: {
@@ -225,8 +315,11 @@
         letterSpacing: '0.06em', marginBottom: 4,
       }},
         h('span', { style: { color: cA(0.7), marginRight: 6 }}, 'Passive Wahrnehmung'),
-        stats.passiveWahrnehmung
+        shown.passiveWahrnehmung
       ),
+
+      (shown.sinne && shown.sinne.length > 0) && Row('Sinne', shown.sinne.join(', ')),
+      (shown.schadensresistenzen && shown.schadensresistenzen.length > 0) && Row('Schadensresistenzen', shown.schadensresistenzen.join(', ')),
 
       h('div', { style: {
         fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
@@ -238,37 +331,32 @@
 
       Divider(accent),
 
-      // Besonderheit
-      SBLabel('Besonderheit', cA(0.65)),
-      h('div', { style: { marginBottom: 8 } },
-        h('span', { style: {
-          fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600,
-          color: 'var(--white)', marginRight: 4,
-        }}, stats.besonderheit.name + '.'),
-        h('span', { style: {
-          fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 300,
-          color: 'color-mix(in srgb, rgba(210,200,240,0.8), rgb(var(--ink-rgb)) var(--cm))', lineHeight: 1.55,
-        }}, stats.besonderheit.beschreibung)
-      ),
-
-      // Aktionen
-      SBLabel('Aktionen', cA(0.65)),
-      stats.aktionen.map(function(a) {
-        return h('div', { key: a.name, style: { marginBottom: 8 } },
-          h('span', { style: {
-            fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600,
-            color: 'var(--white)', marginRight: 4,
-          }}, a.name + '.'),
-          h('span', { style: {
-            fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 300,
-            color: 'color-mix(in srgb, rgba(210,200,240,0.8), rgb(var(--ink-rgb)) var(--cm))', lineHeight: 1.55,
-          }}, a.beschreibung)
+      // Besonderheiten, Aktionen, Bonusaktionen, Reaktionen
+      [['Besonderheit', 'Besonderheiten', shown.besonderheiten], ['Aktion', 'Aktionen', shown.aktionen],
+       ['Bonusaktion', 'Bonusaktionen', shown.bonusaktionen], ['Reaktion', 'Reaktionen', shown.reaktionen]].map(function(g) {
+        var list = g[2] || [];
+        if (!list.length) return null;
+        return h('div', { key: g[1] },
+          SBLabel(list.length > 1 ? g[1] : g[0], cA(0.65)),
+          list.map(function(b, i) {
+            return h('div', { key: i, style: { marginBottom: 8 } },
+              h('span', { style: {
+                fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600,
+                color: 'var(--white)', marginRight: 4,
+              }}, b.name + '.'),
+              h('span', { style: {
+                fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 300,
+                color: 'color-mix(in srgb, rgba(210,200,240,0.8), rgb(var(--ink-rgb)) var(--cm))', lineHeight: 1.55,
+              }}, b.beschreibung)
+            );
+          })
         );
       })
     );
 
-    return h('div', null, picker, rankLabel, panel);
+    var rasseLeiste = (props.onRasseChange && window.RassePicker)
+      ? h(window.RassePicker, { monster: mon, value: opt, onChange: props.onRasseChange, compact: true })
+      : null;
+    return h('div', null, picker, rankLabel, rasseLeiste && h('div', { style: { marginBottom: 14, border: '1px solid ' + cA(0.2), borderRadius: 3 } }, rasseLeiste), panel);
   };
-
-  window.computeNscStats = computeNscStats;
 })();

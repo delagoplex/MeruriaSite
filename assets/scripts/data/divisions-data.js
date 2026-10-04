@@ -45,6 +45,12 @@ window.DIVISIONS_DATA = [
       ],
       savingThrows: ['INT', 'WIS'],
       besonderheit: 'Feldkenntnis. {titel} kann als Bonusaktion eine Kreatur, Pflanze oder ein Mineral in Sichtweite automatisch identifizieren, ohne einen Würfelwurf abzulegen.',
+      besonderheitTyp: 'bonusaktion',
+      faehigkeiten: [
+        { typ: 'besonderheit', minTier: 3, name: 'Schwachstellenkunde', hg: { dmg: 3 }, beschreibung: 'Hat {titel} eine Kreatur mit Feldkenntnis identifiziert, richten seine Angriffe gegen sie zusätzlich {prof} Schaden an.' },
+        { typ: 'aktion', minTier: 6, name: 'Betäubungsstaub', hg: { tp: 10 }, beschreibung: 'Ein Staubwurf auf einen Punkt in 9 m. Jede Kreatur in 3 m Umkreis muss einen Konstitutionsrettungswurf (SG {DC}) ablegen, sonst hat sie bis zum Ende ihres nächsten Zuges Nachteil auf Angriffswürfe. Einmal pro kurze Rast.' },
+        { typ: 'reaktion', minTier: 9, name: 'Rasche Analyse', hg: { tp: 10 }, beschreibung: 'Greift eine Kreatur an, die {titel} sehen kann, liest er ihr Muster: Der Angriff hat Nachteil. Einmal pro Kampf.' },
+      ],
       aktionen: [
         { name: 'Probestab', beschreibung: 'Nahkampfwaffenangriff: +{attackBonus} auf den Trefferwurf, Reichweite 1,5 m. Treffer: {damageDice} Stichschaden.' },
       ],
@@ -98,6 +104,11 @@ window.DIVISIONS_DATA = [
       ],
       savingThrows: ['STR', 'CON'],
       besonderheit: 'Kampferprobt. {titel} hat Vorteil auf Initiativewürfe und kann nicht überrascht werden, solange er nicht handlungsunfähig ist.',
+      faehigkeiten: [
+        { typ: 'bonusaktion', minTier: 3, name: 'Anstürmen', hg: { dmg: 2 }, beschreibung: '{titel} bewegt sich bis zu 4,5 m auf eine Kreatur zu, die er sehen kann; sein nächster Nahkampfangriff in diesem Zug hat Vorteil. Einmal pro Kampf.' },
+        { typ: 'reaktion', minTier: 6, name: 'Parade', hg: { tp: 20 }, beschreibung: 'Wird {titel} von einem Nahkampfangriff getroffen, den er sehen kann, verringert er den Schaden um 1W10 + {prof}.' },
+        { typ: 'besonderheit', minTier: 9, name: 'Sturmbanner', hg: { dmg: 2 }, beschreibung: 'Verbündete in 9 m, die {titel} sehen oder hören können, haben Vorteil auf Rettungswürfe gegen Furcht und erhalten +2 auf Initiativewürfe.' },
+      ],
       aktionen: [
         { name: 'Mehrfachangriff', minTier: 5, beschreibung: '{titel} greift zweimal an.' },
         { name: 'Langschwert', beschreibung: 'Nahkampfwaffenangriff: +{attackBonus} auf den Trefferwurf, Reichweite 1,5 m. Treffer: {damageDice} Hiebschaden.' },
@@ -154,6 +165,12 @@ window.DIVISIONS_DATA = [
       ],
       savingThrows: ['CON', 'WIS'],
       besonderheit: 'Schutzinstinkt. Wird ein Verbündeter in Reichweite 1,5 m im Nahkampf angegriffen, kann {titel} als Reaktion +2 auf dessen Rüstungsklasse bis zum Beginn seines nächsten Zuges gewähren.',
+      besonderheitTyp: 'reaktion',
+      faehigkeiten: [
+        { typ: 'besonderheit', minTier: 3, name: 'Standhaft', hg: { tp: 5 }, beschreibung: '{titel} hat Vorteil auf Rettungswürfe gegen Umgeworfen und gegen unfreiwillige Bewegung.' },
+        { typ: 'bonusaktion', minTier: 6, name: 'Schildwall', hg: { rk: 2 }, beschreibung: 'Bis zum Beginn seines nächsten Zuges hat {titel} +2 auf die Rüstungsklasse, und Verbündete in 1,5 m von ihm erhalten Halbdeckung.' },
+        { typ: 'besonderheit', minTier: 9, name: 'Unerschütterlich', hg: { tp: 15 }, beschreibung: 'Würde {titel} auf 0 Trefferpunkte fallen, bleibt er stattdessen bei 1 Trefferpunkt. Einmal pro lange Rast.' },
+      ],
       aktionen: [
         { name: 'Mehrfachangriff', minTier: 5, beschreibung: '{titel} greift zweimal an.' },
         { name: 'Schildstoß', beschreibung: 'Nahkampfwaffenangriff: +{attackBonus} auf den Trefferwurf, Reichweite 1,5 m. Treffer: {damageDice} Wuchtschaden, und das Ziel muss einen Stärkerettungswurf (SG {DC}) ablegen oder wird umgeworfen.' },
@@ -211,6 +228,12 @@ window.DIVISIONS_DATA = [
       ],
       savingThrows: ['WIS', 'CHA'],
       besonderheit: 'Deeskalationskunst. Einmal pro Runde kann {titel} eine Kreatur, die er sehen kann, zu einem Weisheitsrettungswurf (SG {DC}) zwingen. Bei einem Misserfolg führt die Kreatur im nächsten Zug keinen Angriff gegen einen Verbündeten aus.',
+      besonderheitTyp: 'bonusaktion',
+      faehigkeiten: [
+        { typ: 'besonderheit', minTier: 3, name: 'Aufmerksames Ohr', beschreibung: '{titel} hat Vorteil auf Würfe auf Motiv erkennen und auf Überzeugen, um einen Streit zu schlichten.' },
+        { typ: 'aktion', minTier: 6, name: 'Beschwichtigen', hg: { tp: 20 }, beschreibung: 'Bis zu drei Kreaturen in 9 m, die {titel} hören können, müssen einen Weisheitsrettungswurf (SG {DC}) ablegen, sonst haben sie bis zum Ende ihres nächsten Zuges Nachteil auf Angriffswürfe.' },
+        { typ: 'reaktion', minTier: 9, name: 'Gebot des Friedens', hg: { tp: 10 }, beschreibung: 'Greift eine Kreatur in 9 m an, kann {titel} sie zu einem Weisheitsrettungswurf (SG {DC}) zwingen. Bei einem Misserfolg schlägt der Angriff fehl. Einmal pro Kampf.' },
+      ],
       aktionen: [
         { name: 'Verhörtechnik', beschreibung: 'Ein Ziel in 3 m muss einen Weisheitsrettungswurf (SG {DC}) ablegen oder gibt auf Befragen eine wahre Antwort. Funktioniert nur außerhalb des Kampfes.' },
         { name: 'Knüppel', beschreibung: 'Nahkampfwaffenangriff: +{attackBonus} auf den Trefferwurf, Reichweite 1,5 m. Treffer: {damageDice} Wuchtschaden.' },
@@ -266,6 +289,11 @@ window.DIVISIONS_DATA = [
       ],
       savingThrows: ['STR', 'CON'],
       besonderheit: 'Feldlösung. Einmal pro kurze Rast kann {titel} aus vorhandenen Materialien ein improvisiertes Werkzeug, eine einfache Waffe oder ein Hilfsmittel herstellen (1 Minute Arbeit).',
+      faehigkeiten: [
+        { typ: 'bonusaktion', minTier: 3, name: 'Schnellreparatur', hg: { dmg: 2 }, beschreibung: '{titel} bessert die Ausrüstung einer Kreatur in 1,5 m nach: Sie erhält bis zum Ende ihres nächsten Zuges +1 auf Angriffswürfe. Einmal pro kurze Rast.' },
+        { typ: 'aktion', minTier: 6, name: 'Brandflasche', hg: { dmg: 3 }, beschreibung: 'Ein Wurf auf einen Punkt in 18 m. Jede Kreatur in 3 m Umkreis muss einen Geschicklichkeitsrettungswurf (SG {DC}) ablegen und erleidet {damageDice} Feuerschaden, bei Erfolg halb so viel. Einmal pro kurze Rast.' },
+        { typ: 'reaktion', minTier: 9, name: 'Notfallvorrichtung', hg: { tp: 10 }, beschreibung: 'Wird ein Verbündeter in 9 m getroffen, den {titel} sehen kann, verringert eine ausgelöste Schutzvorrichtung den Schaden um 2W6 + {prof}. Einmal pro kurze Rast.' },
+      ],
       aktionen: [
         { name: 'Mehrfachangriff', minTier: 5, beschreibung: '{titel} greift zweimal an.' },
         { name: 'Schmiedehammer', beschreibung: 'Nahkampfwaffenangriff: +{attackBonus} auf den Trefferwurf, Reichweite 1,5 m. Treffer: {damageDice} Wuchtschaden.' },
@@ -321,6 +349,11 @@ window.DIVISIONS_DATA = [
       ],
       savingThrows: ['DEX', 'WIS'],
       besonderheit: 'Geländeläufer. {titel} ignoriert schwieriges Gelände in natürlicher Umgebung und hinterlässt keine Spuren, es sei denn, er entscheidet sich dafür.',
+      faehigkeiten: [
+        { typ: 'bonusaktion', minTier: 3, name: 'Rückzug', hg: { tp: 5 }, beschreibung: '{titel} führt die Aktion Spurt oder Rückzug als Bonusaktion aus.' },
+        { typ: 'besonderheit', minTier: 6, name: 'Scharfschütze', hg: { dmg: 2 }, beschreibung: 'Halb- und Dreiviertel-Deckung gewähren gegen seine Fernkampfangriffe keinen Bonus, und Ziele in 1,5 m verursachen keinen Nachteil auf seine Fernkampfangriffe.' },
+        { typ: 'reaktion', minTier: 9, name: 'Entkommen', hg: { tp: 10 }, beschreibung: 'Wird {titel} von einem Angriff getroffen, den er sehen kann, halbiert er den Schaden und bewegt sich bis zu 3 m, ohne Gelegenheitsangriffe auszulösen. Einmal pro kurze Rast.' },
+      ],
       aktionen: [
         { name: 'Mehrfachangriff', minTier: 5, beschreibung: '{titel} greift zweimal an.' },
         { name: 'Kurzbogen', beschreibung: 'Fernkampfwaffenangriff: +{attackBonus} auf den Trefferwurf, Reichweite 24/96 m. Treffer: {damageDice} Stichschaden.' },
@@ -375,6 +408,11 @@ window.DIVISIONS_DATA = [
       ],
       savingThrows: ['STR', 'CON'],
       besonderheit: 'Ressourcenspürer. {titel} erkennt automatisch Rohstoffvorkommen, Mineralien und Wasserquellen in einem Umkreis von 18 m, ohne einen Würfelwurf abzulegen.',
+      faehigkeiten: [
+        { typ: 'besonderheit', minTier: 3, name: 'Felsenfest', hg: { tp: 5 }, beschreibung: '{titel} hat Vorteil auf Konstitutionsrettungswürfe gegen Gift und gegen Erschöpfung durch Hitze oder Kälte.' },
+        { typ: 'aktion', minTier: 6, name: 'Gesteinssplitter', hg: { dmg: 5 }, beschreibung: '{titel} schlägt auf den Boden. Jede Kreatur in 3 m Umkreis muss einen Stärkerettungswurf (SG {DC}) ablegen und erleidet {damageDice} Wuchtschaden und wird umgeworfen; bei Erfolg halb so viel Schaden und nicht umgeworfen. Einmal pro kurze Rast.' },
+        { typ: 'besonderheit', minTier: 9, name: 'Bergsinn', beschreibung: '{titel} bemerkt Bewegungen im Boden in 18 m automatisch und kann von Kreaturen, die sich dort auf Boden oder Fels bewegen, nicht überrascht werden.' },
+      ],
       aktionen: [
         { name: 'Mehrfachangriff', minTier: 5, beschreibung: '{titel} greift zweimal an.' },
         { name: 'Spitzhacke', beschreibung: 'Nahkampfwaffenangriff: +{attackBonus} auf den Trefferwurf, Reichweite 1,5 m. Treffer: {damageDice} Stichschaden.' },
@@ -431,6 +469,11 @@ window.DIVISIONS_DATA = [
       ],
       savingThrows: ['CON', 'DEX'],
       besonderheit: 'Trümmerläufer. {titel} hat Vorteil auf Athletik-Würfe beim Klettern und auf Geschicklichkeit-Rettungswürfe in Trümmern und instabilen Strukturen.',
+      faehigkeiten: [
+        { typ: 'bonusaktion', minTier: 3, name: 'Seilzug', beschreibung: 'Eine Kreatur bis Größe Groß in 9 m, die {titel} sehen kann, muss einen Stärkerettungswurf (SG {DC}) ablegen, sonst wird sie bis zu 4,5 m zu ihm gezogen.' },
+        { typ: 'reaktion', minTier: 6, name: 'Einsturz abwehren', hg: { tp: 5 }, beschreibung: 'Erleidet {titel} oder ein Verbündeter in 3 m Schaden durch herabfallende Trümmer oder einen Sturz, wird der Schaden halbiert.' },
+        { typ: 'besonderheit', minTier: 9, name: 'Aufbruchsmeister', beschreibung: '{titel} richtet gegen Objekte doppelten Schaden an und hat Vorteil auf Stärkewürfe, um Türen, Behälter und Wrackteile aufzubrechen.' },
+      ],
       aktionen: [
         { name: 'Mehrfachangriff', minTier: 5, beschreibung: '{titel} greift zweimal an.' },
         { name: 'Brecheisen', beschreibung: 'Nahkampfwaffenangriff: +{attackBonus} auf den Trefferwurf, Reichweite 1,5 m. Treffer: {damageDice} Wuchtschaden.' },
