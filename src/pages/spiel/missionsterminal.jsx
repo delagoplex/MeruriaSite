@@ -1285,7 +1285,7 @@ function App() {
         data: []
       }, uid ? window._sb.from('characters').select('id,name,race,class,division,char_data').eq('type', 'spieler') : {
         data: []
-      }, window._sb.from('nscs').select('name,division,bild')]);
+      }, window._sb.from('nsc_public_directory').select('name,division,bild')]);
       const nscMap = {};
       (ndata || []).forEach(n => { nscMap[n.name] = { division: n.division || 'Keine', bild: n.bild || null }; });
       setNscDivisionMap(nscMap);
