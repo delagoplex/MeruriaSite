@@ -4599,8 +4599,33 @@ window.RASSEN_STRUKTUR = {
         "text": "Während sie vollkommen still steht, kann sie eine Aktion nutzen, um unsichtbar zu werden. Die Kreatur wird wieder sichtbar, wenn sie sich bewegt oder eine Aktion ausführt. Die Kreatur kann diese Fähigkeit so oft pro Tag nutzen, wie ihr Übungsbonus beträgt."
       }
     ],
-    "talente": [],
-    "talentTexte": {}
+    "talente": [
+      "Halbschattenhaut",
+      "Schattenzweiter"
+    ],
+    "talentTexte": {
+      "Halbschattenhaut": {
+        "text": "In dämmrigem Licht und Dunkelheit hat die Kreatur Vorteil auf Würfe auf Heimlichkeit. Sie hat Vorteil auf Rettungswürfe gegen Kälte- und Furchteffekte."
+      },
+      "Schattenzweiter": {
+        "text": "Als Aktion kann die Kreatur ihren Schatten für 1 Minute als Späher vorausgehen lassen: Er bewegt sich 18 m pro Zug, und sie sieht und hört durch ihn, solange er sich in 90 m Entfernung befindet. Er kann nichts berühren. Das geht einmal pro lange Rast."
+      },
+      "Zwielichtschritt": {
+        "text": "In dämmrigem Licht oder Dunkelheit kann die Kreatur als Bonusaktion die Aktion Rückzug ausführen und sich durch Räume feindlicher Kreaturen bewegen, solange sie nicht größer sind als sie."
+      },
+      "Gunst der Schattenfe": {
+        "text": "Einmal pro lange Rast kann die Kreatur als Reaktion einen W20-Wurf wiederholen, den sie gerade gemacht hat. Dafür bestimmt die Spielleitung einen ihrer nächsten W20-Würfe, der Nachteil hat."
+      }
+    },
+    "quelle": "Book of Ebon Tides (Kobold Press; Umbral Human), Wortlaut nicht gegen das Buch geprüft",
+    "linienTalente": {
+      "Umbraler Mensch": [
+        "Zwielichtschritt"
+      ],
+      "Die Beschenkten": [
+        "Gunst der Schattenfe"
+      ]
+    }
   },
   "Schleimling": {
     "kreaturentyp": null,

@@ -4150,6 +4150,64 @@ window.TALENTE_DATA = [
     ],
     kategorie: "Allgemein",
     angeboren: true
+  },
+  {
+    id: "halbschattenhaut",
+    name: "Halbschattenhaut",
+    voraussetzung: "Schattenmenschen",
+    kurzbeschreibung: "Deine fahle, lichtdurchlässige Haut verschwindet im Halblicht.",
+    beschreibung: [
+      "Bei manchen Schattenmenschen ist die Haut durch das Schattenreich so fahl und lichtdurchlässig geworden, dass sie im Halblicht beinahe verschwindet. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "In dämmrigem Licht und Dunkelheit hast du Vorteil auf Würfe auf Heimlichkeit.",
+      "Du hast Vorteil auf Rettungswürfe gegen Kälte- und Furchteffekte."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "schattenzweiter",
+    name: "Schattenzweiter",
+    voraussetzung: "Schattenmenschen",
+    kurzbeschreibung: "Dein Schatten löst sich und geht als Späher voraus.",
+    beschreibung: [
+      "Bei einigen Schattenmenschen hat sich der eigene Schatten so weit gelöst, dass er sich einen Herzschlag später bewegt als sein Besitzer. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Als Aktion lässt du deinen Schatten für 1 Minute als Späher vorausgehen: Er bewegt sich 18 m pro Zug, und du siehst und hörst durch ihn, solange er sich in 90 m Entfernung befindet. Er kann nichts berühren.",
+      "Das geht einmal pro lange Rast."
+    ],
+    kategorie: "Magie",
+    angeboren: true
+  },
+  {
+    id: "zwielichtschritt",
+    name: "Zwielichtschritt",
+    voraussetzung: "Schattenmenschen (Umbraler Mensch)",
+    kurzbeschreibung: "Im Halblicht schlüpfst du durch Räume deiner Feinde.",
+    beschreibung: [
+      "Bei den umbralen Menschen ist der Körper über Generationen so schmal und biegsam geworden, dass er im Halblicht durch jede Lücke gleitet. Du erhältst den folgenden Vorteil:"
+    ],
+    vorzuege: [
+      "In dämmrigem Licht oder Dunkelheit kannst du als Bonusaktion die Aktion Rückzug ausführen und dich durch Räume feindlicher Kreaturen bewegen, solange sie nicht größer sind als du."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "gunst-der-schattenfe",
+    name: "Gunst der Schattenfe",
+    voraussetzung: "Schattenmenschen (Die Beschenkten)",
+    kurzbeschreibung: "Die Gunst der Schattenfe wiederholt einen Wurf, aber sie hat ihren Preis.",
+    beschreibung: [
+      "Bei den Beschenkten haben die Rituale der Schattenfe das Blut so verändert, dass sie dir eine Gunst schulden, die sie dafür bei dir einfordern werden. Du erhältst den folgenden Vorteil:"
+    ],
+    vorzuege: [
+      "Einmal pro lange Rast wiederholst du als Reaktion einen W20-Wurf, den du gerade gemacht hast. Dafür bestimmt die Spielleitung einen deiner nächsten W20-Würfe, der Nachteil hat."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
   }
   }
 ];
