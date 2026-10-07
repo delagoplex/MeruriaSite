@@ -394,6 +394,11 @@ function App() {
   // Fakt-basiertes Freischaltsystem (persistiert in Supabase, pro Perspektive)
   const unlocks = useUnlocks(nscs, charPids, perspective, players);
 
+  // Nach dem Neuladen der Daten (z. B. nach einem richtigen Tipp) zeigt das geöffnete Detailfenster die frischen Werte
+  appUE(() => {
+    setSelected(cur => cur ? (nscs.find(n => n.id === cur.id) || cur) : cur);
+  }, [nscs]);
+
   appUE(() => {
     if (!isDm && perspective === 'alle' && charPids.length) setPerspective(charPids[0]);
   }, [isDm, perspective, charPids]);
