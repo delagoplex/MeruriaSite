@@ -4253,6 +4253,52 @@ window.TALENTE_DATA = [
     ],
     kategorie: "Allgemein",
     angeboren: true
+  },
+  {
+    id: "giftkiefer",
+    name: "Giftkiefer",
+    voraussetzung: "Thri-Kreen",
+    kurzbeschreibung: "Giftdrüsen unter den Mandibeln sondern ein lähmendes Gift ab.",
+    beschreibung: [
+      "Bei manchen Thri-Kreen sitzen unter den Mandibeln Giftdrüsen, die ein lähmendes Gift absondern. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Dein Biss ist eine natürliche Waffe für unbewaffnete Angriffe (1W4 Stichschaden). Bei einem Treffer muss das Ziel einen Konstitutionsrettungswurf bestehen (SG = 8 + dein Übungsbonus + dein Konstitutionsmodifikator), sonst ist es bis zum Ende seines nächsten Zuges gelähmt.",
+      "Das geht einmal pro kurze oder lange Rast."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "sprungbeine",
+    name: "Sprungbeine",
+    voraussetzung: "Thri-Kreen",
+    kurzbeschreibung: "Mächtige Hinterbeine tragen dich ohne Anlauf weit.",
+    beschreibung: [
+      "Bei einigen Thri-Kreen sind die Hinterbeine zu mächtigen Sprungbeinen geworden, die ohne Anlauf weit tragen. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Dein Weitsprung beträgt 6 m und dein Hochsprung 3 m, auch ohne Anlauf.",
+      "Als Bonusaktion kannst du dich bis zu 6 m in einem Sprung auf eine Kreatur zubewegen und Vorteil auf deinen nächsten Nahkampfangriff in diesem Zug erhalten. Das geht so oft, wie es deinem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "wuestenpanzer",
+    name: "Wüstenpanzer",
+    voraussetzung: "Thri-Kreen",
+    kurzbeschreibung: "Dein dicker Chitinpanzer wehrt Hitze und Sand ab.",
+    beschreibung: [
+      "Bei manchen Thri-Kreen ist der Chitinpanzer so dick, dass er Hitze und Sand abwehrt, ein Erbe von Generationen in der Wüste. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Du hast Vorteil auf Rettungswürfe gegen Hitze und Erschöpfung durch heiße Umgebung.",
+      "Du brauchst nur ein Drittel der üblichen Wassermenge pro Tag.",
+      "Sandstürme und Staub verursachen bei dir keinen Nachteil auf Wahrnehmungswürfe."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
   }
   }
 ];

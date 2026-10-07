@@ -4809,7 +4809,9 @@ window.RASSEN_STRUKTUR = {
     "bewegung": {
       "Gehen": "9 m"
     },
-    "sinne": [],
+    "sinne": [
+      "Dunkelsicht 18 m"
+    ],
     "resistenzen": [],
     "immunitaeten": [],
     "sprachen": null,
@@ -4817,13 +4819,42 @@ window.RASSEN_STRUKTUR = {
       "DEX": 2,
       "WIS": 1
     },
-    "pruefen": [
-      "keine Merkmalstexte vorhanden, nur Tags ausgewertet"
-    ],
     "attributeQuelle": "thematisch gewählt (bestätigt)",
-    "merkmale": [],
-    "talente": [],
-    "talentTexte": {}
+    "merkmale": [
+      {
+        "name": "Tarn-Panzer",
+        "text": "Trägt die Kreatur keine Rüstung, beträgt ihre Rüstungsklasse 13 + Geschicklichkeitsmodifikator. Als Aktion kann sie die Farbe und Struktur ihres Panzers der Umgebung anpassen und hat dann Vorteil auf Würfe auf Heimlichkeit, um sich dort zu verstecken."
+      },
+      {
+        "name": "Zweites Armpaar",
+        "text": "Die Kreatur hat ein zweites Armpaar. Mit ihm kann sie Gegenstände halten und handhaben, aber keine zusätzlichen Waffenangriffe ausführen."
+      },
+      {
+        "name": "Schlaflos",
+        "text": "Die Kreatur braucht keinen Schlaf, und Magie kann sie nicht in Schlaf versetzen. Sie ruht in 4 Stunden regungslos und halbbewusst und hat danach den Vorteil von 8 Stunden Schlaf."
+      },
+      {
+        "name": "Telepathie",
+        "text": "Die Kreatur kann telepathisch mit Kreaturen in 36 m sprechen, die mindestens eine Sprache verstehen."
+      }
+    ],
+    "talente": [
+      "Giftkiefer",
+      "Sprungbeine",
+      "Wüstenpanzer"
+    ],
+    "talentTexte": {
+      "Giftkiefer": {
+        "text": "Der Biss der Kreatur ist eine natürliche Waffe für unbewaffnete Angriffe (1W4 Stichschaden). Bei einem Treffer muss das Ziel einen Konstitutionsrettungswurf bestehen (SG = 8 + Übungsbonus + Konstitutionsmodifikator der Kreatur), sonst ist es bis zum Ende seines nächsten Zuges gelähmt. Das geht einmal pro kurze oder lange Rast."
+      },
+      "Sprungbeine": {
+        "text": "Der Weitsprung der Kreatur beträgt 6 m und ihr Hochsprung 3 m, auch ohne Anlauf. Als Bonusaktion kann sie sich bis zu 6 m in einem Sprung auf eine Kreatur zubewegen und Vorteil auf ihren nächsten Nahkampfangriff in diesem Zug erhalten. Das geht so oft, wie es ihrem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung."
+      },
+      "Wüstenpanzer": {
+        "text": "Die Kreatur hat Vorteil auf Rettungswürfe gegen Hitze und Erschöpfung durch heiße Umgebung und braucht nur ein Drittel der üblichen Wassermenge pro Tag. Sandstürme und Staub verursachen bei ihr keinen Nachteil auf Wahrnehmungswürfe."
+      }
+    },
+    "quelle": "Spelljammer: Adventures in Space (Wizards of the Coast, 2022); Wortlaut nicht gegen das Buch geprüft"
   },
   "Tiefengnome": {
     "kreaturentyp": "Humanoider",
