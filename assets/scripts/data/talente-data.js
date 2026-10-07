@@ -3806,6 +3806,51 @@ window.TALENTE_DATA = [
     ],
     kategorie: "Allgemein",
     angeboren: true
+  },
+  {
+    id: "gliedmassenregeneration",
+    name: "Gliedmaßenregeneration",
+    voraussetzung: "Lotol",
+    kurzbeschreibung: "Dein Körper lässt Gewebe und Gliedmaßen nachwachsen.",
+    beschreibung: [
+      "Bei manchen Lotol hat sich die Fähigkeit der Salamander erhalten, verlorene Gliedmaßen und beschädigtes Gewebe schnell nachwachsen zu lassen. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Als Bonusaktion heilst du Trefferpunkte in Höhe von 1W8 + deinem Konstitutionsmodifikator. Das geht so oft, wie es deinem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung.",
+      "Verlorene Gliedmaßen wachsen dir innerhalb von 1W4 Tagen ohne Magie nach."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "farbwechselhaut",
+    name: "Farbwechselhaut",
+    voraussetzung: "Lotol",
+    kurzbeschreibung: "Farbzellen in deiner Haut passen sich der Umgebung an.",
+    beschreibung: [
+      "Bei einigen Lotol sitzen in der schuppenlosen Haut Farbzellen, wie bei Amphibien, die ihre Farbe ihrer Umgebung anpassen. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Du hast Vorteil auf Würfe auf Heimlichkeit in Sümpfen, an Ufern, in Wäldern und im Wasser.",
+      "Als Aktion kannst du deine Haut für 1 Stunde an eine Umgebung anpassen und giltst dann für einfache Beobachtung als Teil der Umgebung, solange du dich nicht bewegst."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "giftdruesen",
+    name: "Giftdrüsen",
+    voraussetzung: "Lotol",
+    kurzbeschreibung: "Drüsen in deiner Haut sondern ein abschreckendes Reizgift ab.",
+    beschreibung: [
+      "Bei manchen Lotol sondern Drüsen in der Haut ein Reizgift ab, das Raubtiere abschreckt. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Jede Kreatur, die dich im Nahkampf angreift, muss nach ihrem ersten Angriff in einem Zug einen Konstitutionsrettungswurf bestehen (SG = 8 + dein Übungsbonus + dein Konstitutionsmodifikator), sonst ist sie bis zum Ende ihres nächsten Zuges vergiftet.",
+      "Du bist immun gegen deine eigenen Gifte."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
   }
   }
 ];

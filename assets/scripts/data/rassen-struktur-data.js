@@ -3326,16 +3326,41 @@ window.RASSEN_STRUKTUR = {
     "immunitaeten": [],
     "sprachen": null,
     "attribute": {
-      "DEX": 2,
-      "WIS": 1
+      "WIS": 2,
+      "CON": 1
     },
-    "pruefen": [
-      "keine Merkmalstexte vorhanden, nur Tags ausgewertet"
+    "attributeQuelle": "Heliana's Guide to Monster Hunting (bestätigt)",
+    "merkmale": [
+      {
+        "name": "Unbedarft",
+        "text": "Die Kreatur hat Vorteil auf Weisheitsrettungswürfe gegen Furcht und Bezauberung."
+      },
+      {
+        "name": "Schlüpfrige Haut",
+        "text": "Die Kreatur hat Vorteil auf Attributswürfe und Rettungswürfe, um dem Zustand Gepackt oder Festgesetzt zu entkommen oder ihn zu beenden."
+      },
+      {
+        "name": "Adaptive Polymorphie",
+        "text": "Die Kreatur wählt zwei der folgenden Anpassungen und kann bei einem Stufenaufstieg nach der nächsten langen Rast eine davon ersetzen: Dunkelsicht 18 m, Schwimmgeschwindigkeit 9 m, Zaubertrick Schockgriff (Zauberattribut Weisheit), Haftzehen (Kletterbewegung 9 m), Hautatmung (eine Stunde Atem anhalten und Vorteil gegen Hitze und Austrocknung)."
+      }
     ],
-    "attributeQuelle": "thematisch gewählt (bestätigt)",
-    "merkmale": [],
-    "talente": [],
-    "talentTexte": {}
+    "talente": [
+      "Gliedmaßenregeneration",
+      "Farbwechselhaut",
+      "Giftdrüsen"
+    ],
+    "talentTexte": {
+      "Gliedmaßenregeneration": {
+        "text": "Als Bonusaktion kann die Kreatur Trefferpunkte in Höhe von 1W8 + ihrem Konstitutionsmodifikator heilen. Das geht so oft, wie es ihrem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung. Verlorene Gliedmaßen wachsen ihr innerhalb von 1W4 Tagen ohne Magie nach."
+      },
+      "Farbwechselhaut": {
+        "text": "Die Kreatur hat Vorteil auf Würfe auf Heimlichkeit in Sümpfen, an Ufern, in Wäldern und im Wasser. Als Aktion kann sie ihre Haut für 1 Stunde an eine Umgebung anpassen und gilt dann für einfache Beobachtung als Teil der Umgebung, solange sie sich nicht bewegt."
+      },
+      "Giftdrüsen": {
+        "text": "Jede Kreatur, die die Kreatur im Nahkampf angreift, muss nach ihrem ersten Angriff in einem Zug einen Konstitutionsrettungswurf bestehen (SG = 8 + Übungsbonus + Konstitutionsmodifikator der Kreatur), sonst ist sie bis zum Ende ihres nächsten Zuges vergiftet. Die Kreatur ist immun gegen ihre eigenen Gifte."
+      }
+    },
+    "quelle": "Heliana's Guide to Monster Hunting (Lotol); Wortlaut nicht gegen das Buch geprüft; Haftzehen und Hautatmung sind eigene Ergänzungen"
   },
   "Loxodon": {
     "kreaturentyp": "Humanoider",
