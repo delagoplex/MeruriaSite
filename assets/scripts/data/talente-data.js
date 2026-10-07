@@ -3577,5 +3577,51 @@ window.TALENTE_DATA = [
     ],
     kategorie: "Allgemein",
     angeboren: true
+  },
+  {
+    id: "sturzflug",
+    name: "Sturzflug",
+    voraussetzung: "Hadozee",
+    kurzbeschreibung: "Deine straffen Flughäute geben dem Aufprall zusätzliche Wucht.",
+    beschreibung: [
+      "Bei manchen Hadozee sind die Flughäute zwischen Armen und Beinen straffer gespannt und kräftiger gewachsen, ein Erbe alter Seglerfamilien. Sie tragen dich im Sturz wie ein Segel und geben dem Aufprall zusätzliche Wucht. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Bist du mindestens 3 m gefallen oder geglitten und triffst danach mit einem Nahkampfangriff, richtest du zusätzlich 1W6 Wuchtschaden an.",
+      "Dieser Angriff gilt als Teil deiner Bewegung des Gleitens, du kannst ihn ohne Aktion ausführen (einmal pro Zug)."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "fussfaenger",
+    name: "Fußfänger",
+    voraussetzung: "Hadozee",
+    kurzbeschreibung: "Deine Füße sind zu zweiten Händen geworden und fangen, was dir entgegenfliegt.",
+    beschreibung: [
+      "Bei einigen Hadozee haben sich Zehen und Fußsehnen durch eine Linie ihres Blutes so verlängert und gekräftigt, dass die Füße zu zweiten Händen geworden sind. Du fängst damit auf, was dir entgegenfliegt. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Wirst du von einem Fernkampfangriff getroffen, kannst du als Reaktion das Geschoss mit den Füßen fangen und den Schaden um 1W10 + deinen Geschicklichkeitsmodifikator senken.",
+      "Fällt der Schaden dadurch auf 0, kannst du das Geschoss als Teil der Reaktion zurückwerfen (Fernkampfangriff)."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "federbeine",
+    name: "Federbeine",
+    voraussetzung: "Hadozee",
+    kurzbeschreibung: "Deine Beinmuskeln sind zu Sprungfedern geworden.",
+    beschreibung: [
+      "Bei einigen Hadozee sind die Beinmuskeln zu Sprungfedern geworden, wie bei den Baumspringern ihrer Vorfahren. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Dein Weitsprung ist um 3 m länger, auch ohne Anlauf.",
+      "Als Bonusaktion kannst du dich bis zu 4,5 m weit in einem Sprung bewegen, ohne Gelegenheitsangriffe auszulösen. Das geht so oft, wie es deinem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  }
   }
 ];

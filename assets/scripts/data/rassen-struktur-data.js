@@ -2510,10 +2510,12 @@ window.RASSEN_STRUKTUR = {
   "Hadozee": {
     "kreaturentyp": null,
     "groesse": [
+      "Klein",
       "Mittelgroß"
     ],
     "bewegung": {
-      "Gehen": "9 m"
+      "Gehen": "9 m",
+      "Klettern": "9 m"
     },
     "sinne": [],
     "resistenzen": [],
@@ -2523,13 +2525,38 @@ window.RASSEN_STRUKTUR = {
       "DEX": 2,
       "WIS": 1
     },
-    "pruefen": [
-      "keine Merkmalstexte vorhanden, nur Tags ausgewertet"
-    ],
     "attributeQuelle": "thematisch gewählt (bestätigt)",
-    "merkmale": [],
-    "talente": [],
-    "talentTexte": {}
+    "merkmale": [
+      {
+        "name": "Greiffüße",
+        "text": "Als Bonusaktion kann die Kreatur mit den Füßen einen Gegenstand handhaben, eine Tür oder einen Behälter öffnen oder schließen oder einen winzigen Gegenstand aufheben oder ablegen."
+      },
+      {
+        "name": "Gleiten",
+        "text": "Fällt die Kreatur und ist nicht handlungsunfähig, kann sie als Reaktion gleiten: Sie erleidet keinen Sturzschaden und kann sich pro 1 m Fall bis zu 1,5 m waagerecht bewegen. In mittlerer oder schwerer Rüstung kann sie nicht gleiten."
+      },
+      {
+        "name": "Hadozee-Ausweichen",
+        "text": "Erleidet die Kreatur Schaden, kann sie als Reaktion 1W6 würfeln und den Schaden um das Ergebnis + ihren Übungsbonus senken. Das geht so oft, wie es dem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung."
+      }
+    ],
+    "talente": [
+      "Sturzflug",
+      "Fußfänger",
+      "Federbeine"
+    ],
+    "talentTexte": {
+      "Sturzflug": {
+        "text": "Ist die Kreatur mindestens 3 m gefallen oder geglitten und trifft sie danach mit einem Nahkampfangriff, richtet sie zusätzlich 1W6 Wuchtschaden an. Dieser Angriff gilt als Teil ihrer Bewegung des Gleitens und kostet keine Aktion (einmal pro Zug)."
+      },
+      "Fußfänger": {
+        "text": "Wird die Kreatur von einem Fernkampfangriff getroffen, kann sie als Reaktion das Geschoss mit den Füßen fangen und den Schaden um 1W10 + ihren Geschicklichkeitsmodifikator senken. Fällt der Schaden dadurch auf 0, kann sie das Geschoss als Teil der Reaktion zurückwerfen (Fernkampfangriff)."
+      },
+      "Federbeine": {
+        "text": "Der Weitsprung der Kreatur ist um 3 m länger, auch ohne Anlauf. Als Bonusaktion kann sie sich bis zu 4,5 m weit in einem Sprung bewegen, ohne Gelegenheitsangriffe auszulösen. Das geht so oft, wie es ihrem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung."
+      }
+    },
+    "quelle": "Spelljammer: Adventures in Space (Wizards of the Coast, 2022); Wortlaut nicht gegen das Buch geprüft"
   },
   "Halbelfen": {
     "kreaturentyp": "Humanoider",
