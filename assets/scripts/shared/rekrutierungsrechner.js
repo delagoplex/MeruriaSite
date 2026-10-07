@@ -14,8 +14,11 @@
     return null;
   }
 
-  // Exponentiell wachsend (Faktor ~1,5 pro Rang); Rang 1 ist der höchste Rang.
-  var DEFAULT_RANG_PREISE = { 1:1920,2:1280,3:855,4:570,5:380,6:255,7:170,8:115,9:75,10:50 };
+  // Nur zwei Einstellungen: Basispreis (Rang 10) und Faktor pro Rang. Rang 1 ist der höchste Rang:
+  // preis(rang) = Basispreis × Faktor^(10 − rang). Gespeichert: Zeile rang 10 = Basispreis,
+  // Zeile rang 0 = Faktor in Hundertsteln (150 = ×1,5).
+  var DEFAULT_BASIS = 50;
+  var DEFAULT_FAKTOR = 1.5;
 
   var DAUER_PRESETS = [
     { tage: 1, label: '1 Tag' },
@@ -32,8 +35,9 @@
   var PREIS_DIVISION = 'kuratoren';
   function getRangPreis(allPreise, divisionId, rang) {
     var dp = allPreise && allPreise[PREIS_DIVISION];
-    if (dp && dp[rang] !== undefined) return dp[rang];
-    return DEFAULT_RANG_PREISE[rang] || 50;
+    var basis = dp && dp[10] !== undefined ? dp[10] : DEFAULT_BASIS;
+    var faktor = dp && dp[0] !== undefined ? dp[0] / 100 : DEFAULT_FAKTOR;
+    return Math.round(basis * Math.pow(faktor, 10 - rang));
   }
 
   function charName(c) { return c.char_data && c.char_data.name ? c.char_data.name : c.name; }
