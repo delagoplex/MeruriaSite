@@ -3211,7 +3211,9 @@ window.RASSEN_STRUKTUR = {
     "bewegung": {
       "Gehen": "9,5 m"
     },
-    "sinne": [],
+    "sinne": [
+      "Dunkelsicht 18 m"
+    ],
     "resistenzen": [],
     "immunitaeten": [],
     "sprachen": null,
@@ -3219,13 +3221,38 @@ window.RASSEN_STRUKTUR = {
       "CON": 2,
       "STR": 1
     },
-    "pruefen": [
-      "keine Merkmalstexte vorhanden, nur Tags ausgewertet"
-    ],
     "attributeQuelle": "offiziell (D&D 5e, bestätigt)",
-    "merkmale": [],
-    "talente": [],
-    "talentTexte": {}
+    "merkmale": [
+      {
+        "name": "Klauen",
+        "text": "Die Klauen der Kreatur gelten als natürliche Waffen, die als unbewaffnete Angriffe eingesetzt werden können. Bei einem Treffer verursachen sie Hiebschaden in Höhe von 1W4 + Stärkemodifikator."
+      },
+      {
+        "name": "Jägerinstinkt",
+        "text": "Die Kreatur hat Übung in einer Fertigkeit aus Athletik, Einschüchtern, Wahrnehmung oder Überleben."
+      },
+      {
+        "name": "Einschüchterndes Gebrüll",
+        "text": "Als Bonusaktion kann die Kreatur brüllen. Jede Kreatur in 3 m, die sie hören kann, muss einen Weisheitsrettungswurf bestehen (SG = 8 + Übungsbonus + Konstitutionsmodifikator der Kreatur), sonst ist sie bis zum Ende ihres nächsten Zuges verängstigt. Einmal pro kurze oder lange Rast."
+      }
+    ],
+    "talente": [
+      "Mähne des Rudelführers",
+      "Anspringen",
+      "Rudelgebrüll"
+    ],
+    "talentTexte": {
+      "Mähne des Rudelführers": {
+        "text": "Die Kreatur hat Vorteil auf Würfe auf Einschüchtern und Auftreten gegenüber Kreaturen, die sie zum ersten Mal sehen. Verbündete in 3 m von ihr haben Vorteil auf Rettungswürfe gegen Furcht. Gegen Würgegriffe und Griffe in den Nacken hat sie Vorteil auf Rettungs- und Befreiungswürfe."
+      },
+      "Anspringen": {
+        "text": "Bewegt die Kreatur sich in ihrem Zug mindestens 6 m geradlinig auf eine Kreatur zu und trifft sie mit ihren Klauen, muss das Ziel einen Stärkerettungswurf bestehen (SG = 8 + Übungsbonus + Stärkemodifikator der Kreatur), sonst wird es umgeworfen. Ist das Ziel umgeworfen, kann die Kreatur als Bonusaktion einen weiteren Klauenangriff gegen es ausführen."
+      },
+      "Rudelgebrüll": {
+        "text": "Als Bonusaktion kann die Kreatur brüllen: Verbündete in 9 m, die sie hören können, erhalten temporäre Trefferpunkte in Höhe ihres Übungsbonus + ihres Konstitutionsmodifikators. Feinde in 3 m müssen zusätzlich einen Weisheitsrettungswurf bestehen (SG = 8 + Übungsbonus + Konstitutionsmodifikator der Kreatur), sonst sind sie bis zum Beginn ihres nächsten Zuges verängstigt. Das geht einmal pro kurze oder lange Rast."
+      }
+    },
+    "quelle": "Mythic Odysseys of Theros (Wizards of the Coast, 2020); Wortlaut nicht gegen das Buch geprüft"
   },
   "Locathah": {
     "kreaturentyp": "Humanoider",

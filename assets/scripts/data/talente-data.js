@@ -3712,6 +3712,53 @@ window.TALENTE_DATA = [
     ],
     kategorie: "Allgemein",
     angeboren: true
+  },
+  {
+    id: "maehne-des-rudelfuehrers",
+    name: "Mähne des Rudelführers",
+    voraussetzung: "Leonin",
+    kurzbeschreibung: "Deine mächtige Mähne weckt Ehrfurcht und dämpft Schläge.",
+    beschreibung: [
+      "Bei manchen Leonin wächst über Generationen von Rudelführern eine mächtige, dichte Mähne, die schon von weitem Ehrfurcht weckt und Schläge dämpft. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Du hast Vorteil auf Würfe auf Einschüchtern und Auftreten gegenüber Kreaturen, die dich zum ersten Mal sehen.",
+      "Verbündete in 3 m von dir haben Vorteil auf Rettungswürfe gegen Furcht.",
+      "Gegen Würgegriffe und Griffe in den Nacken hast du Vorteil auf Rettungs- und Befreiungswürfe."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "anspringen",
+    name: "Anspringen",
+    voraussetzung: "Leonin",
+    kurzbeschreibung: "Deine Sprungmuskeln werfen Gegner zu Boden.",
+    beschreibung: [
+      "Bei einigen Leonin sind Rücken- und Beinmuskeln zu Sprungfedern gewachsen, wie bei den großen Katzen der Savanne. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Bewegst du dich in deinem Zug mindestens 6 m geradlinig auf eine Kreatur zu und triffst sie mit deinen Klauen, muss sie einen Stärkerettungswurf bestehen (SG = 8 + dein Übungsbonus + dein Stärkemodifikator), sonst wird sie umgeworfen.",
+      "Ist das Ziel umgeworfen, kannst du als Bonusaktion einen weiteren Klauenangriff gegen es ausführen."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "rudelgebruell",
+    name: "Rudelgebrüll",
+    voraussetzung: "Leonin",
+    kurzbeschreibung: "Dein Brüllen erreicht den ganzen Rudelverband und stärkt ihn.",
+    beschreibung: [
+      "Bei manchen Leonin haben sich Stimmbänder und Brustkorb so weit vergrößert, dass ihr Brüllen den ganzen Rudelverband erreicht und stärkt. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Als Bonusaktion brüllst du: Verbündete in 9 m, die dich hören können, erhalten temporäre Trefferpunkte in Höhe deines Übungsbonus + deines Konstitutionsmodifikators.",
+      "Feinde in 3 m müssen zusätzlich einen Weisheitsrettungswurf bestehen (SG = 8 + dein Übungsbonus + dein Konstitutionsmodifikator), sonst sind sie bis zum Beginn deines nächsten Zuges verängstigt.",
+      "Das geht einmal pro kurze oder lange Rast."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
   }
   }
 ];
