@@ -3954,6 +3954,66 @@ window.TALENTE_DATA = [
     ],
     kategorie: "Kampf",
     angeboren: true
+  },
+  {
+    id: "buschiger-schweif",
+    name: "Buschiger Schweif",
+    voraussetzung: "Ratatosk",
+    kurzbeschreibung: "Dein großer Schweif hilft beim Balancieren und Springen.",
+    beschreibung: [
+      "Bei manchen Ratatosk ist der Schweif so groß und kräftig, dass er beim Balancieren und Springen hilft. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Du hast Vorteil auf Würfe auf Akrobatik und Athletik beim Balancieren und Klettern.",
+      "Du erleidest keinen Schaden durch Stürze bis 6 m.",
+      "Einmal pro kurze Rast kannst du als Reaktion deinen Schweif wirbeln lassen: Ein Angriff gegen dich hat Nachteil."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "lauscher-der-zweige",
+    name: "Lauscher der Zweige",
+    voraussetzung: "Ratatosk",
+    kurzbeschreibung: "Ohren und Schnurrhaare fangen jedes Flüstern auf.",
+    beschreibung: [
+      "Bei einigen Ratatosk sind Ohren und Schnurrhaare so fein, dass sie jedes Flüstern auf weite Entfernung auffangen, ein Erbe der Gerüchtesammler. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Du hast Vorteil auf Würfe auf Wahrnehmung, die auf Gehör beruhen.",
+      "Einmal pro lange Rast fragst du die Spielleitung nach einem Gerücht über den Ort oder die Kreatur, bei der du dich gerade befindest. Du erhältst einen Hinweis, der wahr ist."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "schlupfwinkel",
+    name: "Schlupfwinkel",
+    voraussetzung: "Ratatosk (Ekorre)",
+    kurzbeschreibung: "Dein biegsamer Körper passt durch jede Spalte.",
+    beschreibung: [
+      "Bei den winzigen Ekorre ist der Körper so biegsam, dass sie sich durch jede Spalte zwängen können. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Du passt durch Öffnungen von 15 cm Breite und kannst dich in Taschen und Behältern verstecken.",
+      "Du hast Vorteil auf Würfe auf Heimlichkeit, wenn du dich bewegst."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "banner-des-schweifs",
+    name: "Banner des Schweifs",
+    voraussetzung: "Ratatosk (Tradvakt)",
+    kurzbeschreibung: "Dein Schweif wird zum Banner, das Verbündete anspornt.",
+    beschreibung: [
+      "Bei den Tradvakt ist der Schweif zu einem Banner geworden, das Verbündete auf dem Schlachtfeld anspornt. Du erhältst den folgenden Vorteil:"
+    ],
+    vorzuege: [
+      "Als Bonusaktion stellst du deinen Schweif auf: Verbündete in 9 m haben bis zum Beginn deines nächsten Zuges Vorteil auf ihren ersten Angriff. Das geht so oft, wie es deinem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
   }
   }
 ];

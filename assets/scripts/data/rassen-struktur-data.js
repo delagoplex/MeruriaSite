@@ -4205,8 +4205,33 @@ window.RASSEN_STRUKTUR = {
         "text": "Die Kreatur kann telepathisch mit jeder Kreatur sprechen, die sie sehen kann und die sich innerhalb einer Anzahl von Fuß befindet, die dem Zehnfachen ihrer Stufe entspricht. Die Kreatur muss keine gemeinsame Sprache teilen, aber die Kreatur muss mindestens eine Sprache verstehen."
       }
     ],
-    "talente": [],
-    "talentTexte": {}
+    "talente": [
+      "Buschiger Schweif",
+      "Lauscher der Zweige"
+    ],
+    "talentTexte": {
+      "Buschiger Schweif": {
+        "text": "Die Kreatur hat Vorteil auf Würfe auf Akrobatik und Athletik beim Balancieren und Klettern und erleidet keinen Schaden durch Stürze bis 6 m. Einmal pro kurze Rast kann sie als Reaktion ihren Schweif wirbeln lassen: Ein Angriff gegen sie hat Nachteil."
+      },
+      "Lauscher der Zweige": {
+        "text": "Die Kreatur hat Vorteil auf Würfe auf Wahrnehmung, die auf Gehör beruhen. Einmal pro lange Rast kann sie die Spielleitung nach einem Gerücht über den Ort oder die Kreatur fragen, bei der sie sich gerade befindet, und erhält einen wahren Hinweis."
+      },
+      "Schlupfwinkel": {
+        "text": "Die Kreatur passt durch Öffnungen von 15 cm Breite und kann sich in Taschen und Behältern verstecken. Sie hat Vorteil auf Würfe auf Heimlichkeit, wenn sie sich bewegt."
+      },
+      "Banner des Schweifs": {
+        "text": "Als Bonusaktion kann die Kreatur ihren Schweif aufstellen: Verbündete in 9 m haben bis zum Beginn ihres nächsten Zuges Vorteil auf ihren ersten Angriff. Das geht so oft, wie es ihrem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung."
+      }
+    },
+    "quelle": "Midgard (Kobold Press; Ekorre und Tradvakt)",
+    "linienTalente": {
+      "Ekorre": [
+        "Schlupfwinkel"
+      ],
+      "Tradvakt": [
+        "Banner des Schweifs"
+      ]
+    }
   },
   "Sahuagin": {
     "kreaturentyp": null,
