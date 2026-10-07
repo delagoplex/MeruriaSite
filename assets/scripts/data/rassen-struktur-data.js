@@ -3290,8 +3290,28 @@ window.RASSEN_STRUKTUR = {
         "text": "Die Kreatur kann sowohl Luft als auch Wasser atmen. Die Kreatur muss jedoch mindestens alle 4 Stunden untergetaucht sein — andernfalls beginnt sie zu ersticken."
       }
     ],
-    "talente": [],
-    "talentTexte": {}
+    "talente": [
+      "Schuppenschild",
+      "Seitenlinie",
+      "Strömungsreiter"
+    ],
+    "talentTexte": {
+      "Schuppenschild": {
+        "text": "Wird die Kreatur von einem Angriff getroffen, den sie sehen kann, kann sie als Reaktion ihre Schuppen aufstellen: Ihre Rüstungsklasse steigt um 3 gegen diesen Angriff, und er kann dadurch verfehlen. Das geht so oft, wie es ihrem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung."
+      },
+      "Seitenlinie": {
+        "text": "Unter Wasser hat die Kreatur Blindsicht in einem Umkreis von 9 m. Sie kann Strömungen, Wirbel und Bewegungen großer Kreaturen im Wasser in 18 m Umkreis spüren. An Land hat sie Vorteil auf Würfe auf Wahrnehmung, die auf Erschütterungen oder Luftbewegungen beruhen."
+      },
+      "Strömungsreiter": {
+        "text": "Die Schwimmgeschwindigkeit der Kreatur erhöht sich um 3 m. Unter Wasser kann sie als Bonusaktion die Aktion Spurt ausführen und hat Vorteil auf Würfe auf Athletik, um gegen Strömungen und in Strudeln zu schwimmen.",
+        "wirkung": {
+          "bewegung": {
+            "Schwimmen": "12 m"
+          }
+        }
+      }
+    },
+    "quelle": "Locathah Rising (Wizards of the Coast, 2020)"
   },
   "Lotol": {
     "kreaturentyp": null,

@@ -3759,6 +3759,53 @@ window.TALENTE_DATA = [
     ],
     kategorie: "Kampf",
     angeboren: true
+  },
+  {
+    id: "schuppenschild",
+    name: "Schuppenschild",
+    voraussetzung: "Locathah",
+    kurzbeschreibung: "Deine verdichteten Schuppen stellen sich im Augenblick der Gefahr auf.",
+    beschreibung: [
+      "Bei manchen Locathah haben sich die Schuppen über Generationen der Verfolgung zu dicken, überlappenden Platten verdichtet, die sie im Augenblick der Gefahr aufstellen können. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Wirst du von einem Angriff getroffen, den du sehen kannst, kannst du als Reaktion deine Schuppen aufstellen: Deine Rüstungsklasse steigt um 3 gegen diesen Angriff, und er kann dadurch verfehlen.",
+      "Das geht so oft, wie es deinem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "seitenlinie",
+    name: "Seitenlinie",
+    voraussetzung: "Locathah",
+    kurzbeschreibung: "Feine Sinneshärchen entlang deiner Flanken melden jede Bewegung im Wasser.",
+    beschreibung: [
+      "Bei einigen Locathah ist das Seitenlinienorgan, mit dem Fische Strömungen spüren, besonders ausgeprägt: Feine Sinneshärchen entlang der Flanken melden jede Bewegung im Wasser. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Unter Wasser hast du Blindsicht in einem Umkreis von 9 m.",
+      "Du kannst Strömungen, Wirbel und Bewegungen großer Kreaturen im Wasser in 18 m Umkreis spüren.",
+      "An Land hast du Vorteil auf Würfe auf Wahrnehmung, die auf Erschütterungen oder Luftbewegungen beruhen."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "stroemungsreiter",
+    name: "Strömungsreiter",
+    voraussetzung: "Locathah",
+    kurzbeschreibung: "Kräftige Flossensäume tragen dich schneller durch die Strömung.",
+    beschreibung: [
+      "Bei manchen Locathah sind die Flossensäume an Armen und Beinen kräftiger gewachsen, ein Erbe von Generationen, die vor Jägern fliehen mussten. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Deine Schwimmgeschwindigkeit erhöht sich um 3 m.",
+      "Unter Wasser kannst du als Bonusaktion die Aktion Spurt ausführen.",
+      "Du hast Vorteil auf Würfe auf Athletik, um gegen Strömungen und in Strudeln zu schwimmen."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
   }
   }
 ];
