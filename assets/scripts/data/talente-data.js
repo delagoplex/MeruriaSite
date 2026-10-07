@@ -3851,6 +3851,51 @@ window.TALENTE_DATA = [
     ],
     kategorie: "Kampf",
     angeboren: true
+  },
+  {
+    id: "sporenwolke",
+    name: "Sporenwolke",
+    voraussetzung: "Myzelier",
+    kurzbeschreibung: "Sporenkammern unter deiner Haut öffnen sich bei Gefahr.",
+    beschreibung: [
+      "Bei manchen Myzeliern sitzen unter der Haut dichte Sporenkammern, die sich bei Gefahr öffnen. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Als Aktion lässt du eine Sporenwolke in 3 m Umkreis aufsteigen. Kreaturen darin müssen einen Konstitutionsrettungswurf bestehen (SG = 8 + dein Übungsbonus + dein Konstitutionsmodifikator), sonst sind sie bis zum Ende ihres nächsten Zuges vergiftet.",
+      "Das geht einmal pro kurze oder lange Rast."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "fruchtkoerper",
+    name: "Fruchtkörper",
+    voraussetzung: "Myzelier",
+    kurzbeschreibung: "Essbare Fruchtkörper auf deinem Rücken speichern Nährstoffe.",
+    beschreibung: [
+      "Bei einigen Myzeliern wachsen auf Rücken und Schultern essbare Fruchtkörper, die Nährstoffe speichern. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Als Bonusaktion erntest du einen Fruchtkörper: Eine Kreatur, die ihn isst, erhält temporäre Trefferpunkte in Höhe deiner Stufe + deines Konstitutionsmodifikators.",
+      "Das geht so oft, wie es deinem Übungsbonus entspricht; die Fruchtkörper wachsen nach einer langen Rast nach."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "myzelnetz",
+    name: "Myzelnetz",
+    voraussetzung: "Myzelier",
+    kurzbeschreibung: "Dein weit verzweigtes Wurzelgeflecht erspürt den Boden.",
+    beschreibung: [
+      "Bei manchen Myzeliern ist das Wurzelgeflecht weit verzweigt und wächst durch den Boden in jede Richtung. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Solange du Erde oder Holz berührst, spürst du Pilze, Pflanzenwurzeln und Gänge im Boden in 18 m Umkreis.",
+      "Du hast Vorteil auf Würfe auf Naturkunde und Überleben, die Pilze, Wurzeln und Waldböden betreffen."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
   }
   }
 ];

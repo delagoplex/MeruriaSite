@@ -3873,21 +3873,54 @@ window.RASSEN_STRUKTUR = {
     "bewegung": {
       "Gehen": "9 m"
     },
-    "sinne": [],
-    "resistenzen": [],
+    "sinne": [
+      "Zittersinn 9 m"
+    ],
+    "resistenzen": [
+      "Gift"
+    ],
     "immunitaeten": [],
     "sprachen": null,
     "attribute": {
       "WIS": 2,
       "CON": 1
     },
-    "pruefen": [
-      "keine Merkmalstexte vorhanden, nur Tags ausgewertet"
-    ],
     "attributeQuelle": "thematisch gewählt (bestätigt)",
-    "merkmale": [],
-    "talente": [],
-    "talentTexte": {}
+    "merkmale": [
+      {
+        "name": "Pilzwesen",
+        "text": "Die Kreatur ist ein Humanoider, gilt aber als Pflanze, wenn dies für sie von Nachteil ist. Sie hat Resistenz gegen Giftschaden."
+      },
+      {
+        "name": "Zittersinn",
+        "text": "Die Kreatur hat Zittersinn in 9 m."
+      },
+      {
+        "name": "Pilznetz",
+        "text": "Mit anderen Myzeliern und Pilzen in 1,5 km Umkreis kann die Kreatur kurze Gedanken austauschen."
+      },
+      {
+        "name": "Sporenwirt",
+        "text": "Die Kreatur braucht keinen Schlaf. Sie ruht in 4 Stunden, während sie Wurzelfäden in Erde oder Holz schlägt, und hat danach den Vorteil von 8 Stunden Schlaf."
+      }
+    ],
+    "talente": [
+      "Sporenwolke",
+      "Fruchtkörper",
+      "Myzelnetz"
+    ],
+    "talentTexte": {
+      "Sporenwolke": {
+        "text": "Als Aktion kann die Kreatur eine Sporenwolke in 3 m Umkreis aufsteigen lassen. Kreaturen darin müssen einen Konstitutionsrettungswurf bestehen (SG = 8 + Übungsbonus + Konstitutionsmodifikator der Kreatur), sonst sind sie bis zum Ende ihres nächsten Zuges vergiftet. Das geht einmal pro kurze oder lange Rast."
+      },
+      "Fruchtkörper": {
+        "text": "Als Bonusaktion kann die Kreatur einen Fruchtkörper ernten: Eine Kreatur, die ihn isst, erhält temporäre Trefferpunkte in Höhe der Stufe + des Konstitutionsmodifikators der Kreatur. Das geht so oft, wie es ihrem Übungsbonus entspricht; die Fruchtkörper wachsen nach einer langen Rast nach."
+      },
+      "Myzelnetz": {
+        "text": "Solange die Kreatur Erde oder Holz berührt, spürt sie Pilze, Pflanzenwurzeln und Gänge im Boden in 18 m Umkreis. Sie hat Vorteil auf Würfe auf Naturkunde und Überleben, die Pilze, Wurzeln und Waldböden betreffen."
+      }
+    },
+    "quelle": "Tales of Arcana 5E Race Guide (Arcanomicon, 2021; Mycelian), Merkmale eigene Fassung nach Lore und Schlagworten"
   },
   "Opteran": {
     "kreaturentyp": null,
