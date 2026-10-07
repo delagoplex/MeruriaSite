@@ -4514,8 +4514,23 @@ window.RASSEN_STRUKTUR = {
         "text": "Die Kreatur hat Vorteil auf Rettungswürfe gegen Bezauberung und Magie kann sich nicht einschläfern."
       }
     ],
-    "talente": [],
-    "talentTexte": {}
+    "talente": [
+      "Schattenschritt",
+      "Schattenklauen",
+      "Schattenmantel"
+    ],
+    "talentTexte": {
+      "Schattenschritt": {
+        "text": "Als Bonusaktion kann die Kreatur sich bis zu 18 m weit zu einem Punkt teleportieren, den sie sehen kann und der in dämmrigem Licht oder Dunkelheit liegt. Ihr erster Nahkampfangriff vor dem Ende dieses Zuges hat Vorteil. Das geht so oft, wie es ihrem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung."
+      },
+      "Schattenklauen": {
+        "text": "Die Klauen der Kreatur gelten als natürliche Waffen für unbewaffnete Angriffe (1W4 Hieb, Finesse). Trifft sie mit ihnen eine Kreatur, die sie nicht sehen kann oder vor der sie verborgen ist, verursacht sie zusätzlich 1W6 Schaden (einmal pro Zug)."
+      },
+      "Schattenmantel": {
+        "text": "Als Bonusaktion kann die Kreatur sich in Schatten hüllen. Solange sie in dämmrigem Licht oder Dunkelheit steht, haben Angriffe gegen sie bis zum Beginn ihres nächsten Zuges Nachteil. Das geht so oft, wie es ihrem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung. Sie hat Vorteil auf Würfe auf Heimlichkeit, wenn sie sich im Dämmerlicht bewegt."
+      }
+    },
+    "quelle": "Vermutlich Book of Ebon Tides (Kobold Press); Merkmale eigene Fassung; Anregung durch das Monster Shadow Goblin (Schattenschritt)"
   },
   "Schattenmenschen": {
     "kreaturentyp": null,

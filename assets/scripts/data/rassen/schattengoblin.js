@@ -126,6 +126,7 @@
       { name:'Böser Blick',       text:'Als Aktion führst du eine Kombination aus unhöflichen Gesten und Geräuschen aus. Eine Kreatur in 9 m, die dich hören und sehen kann, muss einen CHA-Rettungswurf (SG 8 + CHA-Mod + Übungsbonus) bestehen oder hat Nachteil auf den nächsten Eigenschaftswurf, Angriffswurf oder Rettungswurf vor Beginn deines nächsten Zuges.' },
       { name:'Sonnenlichtsensitivität', text:'Du hast Nachteil auf Angriffswürfe und Weisheit-(Wahrnehmungs)-Würfe, die auf Sicht beruhen, wenn du, dein Ziel oder das Wahrgenommene sich in direktem Sonnenlicht befindet.' },
       { name:'Unholdsegen',       text:'Du hast Vorteil auf Rettungswürfe gegen Bezauberung und Magie kann dich nicht einschläfern.' },
+      { name:'Angeborenes Talent', text:null, talente:["Schattenschritt","Schattenklauen","Schattenmantel"] },
     ],
   },
 };

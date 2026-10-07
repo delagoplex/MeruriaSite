@@ -4105,6 +4105,51 @@ window.TALENTE_DATA = [
     ],
     kategorie: "Allgemein",
     angeboren: true
+  },
+  {
+    id: "schattenschritt",
+    name: "Schattenschritt",
+    voraussetzung: "Schattengoblin",
+    kurzbeschreibung: "Das Feenblut lässt dich kurz in den eigenen Schatten treten.",
+    beschreibung: [
+      "Bei manchen Schattengoblins hat sich über Generationen in der Feydark die Fähigkeit vererbt, kurz in den eigenen Schatten zu treten. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Als Bonusaktion kannst du dich bis zu 18 m weit zu einem Punkt teleportieren, den du sehen kannst und der in dämmrigem Licht oder Dunkelheit liegt. Dein erster Nahkampfangriff vor dem Ende dieses Zuges hat Vorteil.",
+      "Das geht so oft, wie es deinem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung."
+    ],
+    kategorie: "Magie",
+    angeboren: true
+  },
+  {
+    id: "schattenklauen",
+    name: "Schattenklauen",
+    voraussetzung: "Schattengoblin",
+    kurzbeschreibung: "Lange, schwarze Klauen sind die Waffe der Hinterhaltjäger.",
+    beschreibung: [
+      "Bei einigen Schattengoblins sind die Fingernägel zu langen, schwarzen Klauen gewachsen, wie bei den Hinterhaltjägern des Schattenreichs. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Deine Klauen gelten als natürliche Waffen für unbewaffnete Angriffe (1W4 Hieb, Finesse).",
+      "Triffst du mit ihnen eine Kreatur, die dich nicht sehen kann oder von der du verborgen bist, verursachst du zusätzlich 1W6 Schaden (einmal pro Zug)."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "schattenmantel",
+    name: "Schattenmantel",
+    voraussetzung: "Schattengoblin",
+    kurzbeschreibung: "Deine lichtschluckende Haut lässt deine Umrisse im Dämmerlicht verschwimmen.",
+    beschreibung: [
+      "Bei manchen Schattengoblins schluckt die Haut Licht, sodass ihre Umrisse im Dämmerlicht verschwimmen. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Als Bonusaktion hüllst du dich in Schatten. Solange du in dämmrigem Licht oder Dunkelheit stehst, haben Angriffe gegen dich bis zum Beginn deines nächsten Zuges Nachteil. Das geht so oft, wie es deinem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung.",
+      "Du hast Vorteil auf Würfe auf Heimlichkeit, wenn du dich im Dämmerlicht bewegst."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
   }
   }
 ];
