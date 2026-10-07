@@ -4299,9 +4299,12 @@ window.RASSEN_STRUKTUR = {
       "Mittelgroß"
     ],
     "bewegung": {
-      "Gehen": "9 m"
+      "Gehen": "9 m",
+      "Klettern": "9 m"
     },
-    "sinne": [],
+    "sinne": [
+      "Dunkelsicht 18 m"
+    ],
     "resistenzen": [],
     "immunitaeten": [],
     "sprachen": null,
@@ -4309,13 +4312,43 @@ window.RASSEN_STRUKTUR = {
       "DEX": 2,
       "INT": 1
     },
-    "pruefen": [
-      "keine Merkmalstexte vorhanden, nur Tags ausgewertet"
-    ],
     "attributeQuelle": "thematisch gewählt (bestätigt)",
-    "merkmale": [],
-    "talente": [],
-    "talentTexte": {}
+    "merkmale": [
+      {
+        "name": "Spinnenklettern",
+        "text": "Die Kreatur hat eine Kletterbewegungsrate von 9 m und kann auch an Wänden und kopfüber an Decken klettern."
+      },
+      {
+        "name": "Netzsinn",
+        "text": "Die Kreatur spürt Erschütterungen in Netzen und Fäden in 9 m."
+      },
+      {
+        "name": "Giftbiss",
+        "text": "Der Biss der Kreatur ist eine natürliche Waffe für unbewaffnete Angriffe (1W4 Stichschaden). Bei einem Treffer muss das Ziel einen Konstitutionsrettungswurf bestehen (SG = 8 + Übungsbonus + Konstitutionsmodifikator der Kreatur), sonst ist es bis zum Ende seines nächsten Zuges vergiftet."
+      }
+    ],
+    "talente": [
+      "Spinndrüsen",
+      "Giftzähne",
+      "Achtaugen"
+    ],
+    "talentTexte": {
+      "Spinndrüsen": {
+        "text": "Als Aktion kann die Kreatur ein Netz aus Seide spinnen: Es dient 10 Minuten lang als Seil (bis 15 m) oder als Falle (Kreaturen, die es berühren, müssen einen Geschicklichkeitsrettungswurf bestehen, sonst sind sie festgesetzt). Das geht so oft, wie es ihrem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung."
+      },
+      "Giftzähne": {
+        "text": "Der Biss der Kreatur verursacht 1W6 Stichschaden und zusätzlich 1W4 Giftschaden. Bei einem Treffer muss das Ziel einen Konstitutionsrettungswurf bestehen (SG = 8 + Übungsbonus + Konstitutionsmodifikator der Kreatur), sonst ist es bis zum Ende seines nächsten Zuges gelähmt. Das geht einmal pro kurze Rast."
+      },
+      "Achtaugen": {
+        "text": "Die Kreatur hat Vorteil auf Würfe auf Wahrnehmung, die auf Sicht beruhen. Ihre Dunkelsicht reicht 36 m statt 18 m.",
+        "wirkung": {
+          "sinne": [
+            "Dunkelsicht 36 m"
+          ]
+        }
+      }
+    },
+    "quelle": "Eigene Spinnenfassung (keine Buchquelle); die Satarre von Kobold Press (Book of Ebon Tides) sind eine andere Fassung"
   },
   "Satyrn": {
     "kreaturentyp": "Feenwesen",

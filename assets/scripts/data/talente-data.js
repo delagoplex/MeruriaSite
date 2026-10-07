@@ -4060,6 +4060,51 @@ window.TALENTE_DATA = [
     ],
     kategorie: "Allgemein",
     angeboren: true
+  },
+  {
+    id: "spinndruesen",
+    name: "Spinndrüsen",
+    voraussetzung: "Satarre",
+    kurzbeschreibung: "Kräftige Spinndrüsen erzeugen Fäden von großer Zugkraft.",
+    beschreibung: [
+      "Bei manchen Satarre sitzen unter dem Hinterleib kräftige Spinndrüsen, die Fäden von großer Zugkraft erzeugen. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Als Aktion kannst du ein Netz aus Seide spinnen: Es dient 10 Minuten lang als Seil (bis 15 m) oder als Falle (Kreaturen, die es berühren, müssen einen Geschicklichkeitsrettungswurf bestehen, sonst sind sie festgesetzt).",
+      "Das geht so oft, wie es deinem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "giftzaehne",
+    name: "Giftzähne",
+    voraussetzung: "Satarre",
+    kurzbeschreibung: "Hohle Giftzähne spritzen Gift tief in den Körper des Opfers.",
+    beschreibung: [
+      "Bei einigen Satarre sind die Kieferklauen zu hohlen Giftzähnen verlängert, die ihr Gift tief in den Körper des Opfers spritzen. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Dein Biss verursacht 1W6 Stichschaden und zusätzlich 1W4 Giftschaden.",
+      "Bei einem Treffer muss das Ziel einen Konstitutionsrettungswurf bestehen (SG = 8 + dein Übungsbonus + dein Konstitutionsmodifikator), sonst ist es bis zum Ende seines nächsten Zuges gelähmt. Das geht einmal pro kurze Rast."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "achtaugen",
+    name: "Achtaugen",
+    voraussetzung: "Satarre",
+    kurzbeschreibung: "Zusätzliche Augen durchdringen die Dunkelheit besonders gut.",
+    beschreibung: [
+      "Bei manchen Satarre sind zusätzliche Augen auf Stirn und Schläfen gewachsen, die Dunkelheit besonders gut durchdringen. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Du hast Vorteil auf Würfe auf Wahrnehmung, die auf Sicht beruhen.",
+      "Deine Dunkelsicht reicht 36 m statt 18 m."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
   }
   }
 ];
