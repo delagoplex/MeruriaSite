@@ -3667,6 +3667,51 @@ window.TALENTE_DATA = [
     ],
     kategorie: "Kampf",
     angeboren: true
+  },
+  {
+    id: "adamantinrumpf",
+    name: "Adamantinrumpf",
+    voraussetzung: "Kriegsgeschmiedete",
+    kurzbeschreibung: "Eine Adamantinschicht schützt deinen Rumpf vor den schlimmsten Treffern.",
+    beschreibung: [
+      "Bei manchen Kriegsgeschmiedeten haben die Werkstätten den Rumpf mit einer Adamantinschicht verstärkt, die kein Streich so leicht durchdringt. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Einmal pro kurze Rast wird ein kritischer Treffer gegen dich zu einem normalen Treffer.",
+      "Gegen Schaden durch Sturz, einstürzende Trümmer und Explosionen hast du Resistenz."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "unterarmklinge",
+    name: "Unterarmklinge",
+    voraussetzung: "Kriegsgeschmiedete",
+    kurzbeschreibung: "Eine eingebaute Klinge lässt sich aus dem Unterarm ausfahren.",
+    beschreibung: [
+      "Bei einigen Kriegsgeschmiedeten haben die Schmiede eine Klinge in den Unterarm eingebaut, die sich ausfahren lässt. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Als Bonusaktion fährst du die Klinge aus oder ein. Ausgefahren ist sie eine Nahkampfwaffe (1W8 Hieb, Finesse, du bist geübt), die dir nicht entwaffnet werden kann.",
+      "Triffst du mit ihr, kannst du als Bonusaktion einmal pro Zug einen weiteren Angriff mit ihr ausführen (wie Zweiwaffenkampf, aber ohne Attributsmodifikator auf den Schaden)."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "modulare-platten",
+    name: "Modulare Platten",
+    voraussetzung: "Kriegsgeschmiedete",
+    kurzbeschreibung: "Deine tauschbaren Plattenverbindungen schützen gegen eine Schadensart.",
+    beschreibung: [
+      "Bei manchen Kriegsgeschmiedeten sind die Plattenverbindungen modular gebaut und lassen sich tauschen. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Mit Schmiedewerkzeug und 10 Minuten Arbeit kannst du bis zur nächsten langen Rast Resistenz gegen eine von vier Schadensarten einstellen: Feuer, Kälte, Blitz oder Säure.",
+      "Du hast Vorteil auf Würfe mit Schmiedewerkzeug, um dich oder einen anderen Konstrukt zu reparieren."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
   }
   }
 ];

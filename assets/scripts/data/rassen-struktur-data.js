@@ -3102,20 +3102,51 @@ window.RASSEN_STRUKTUR = {
       "Gehen": "9 m"
     },
     "sinne": [],
-    "resistenzen": [],
+    "resistenzen": [
+      "Gift"
+    ],
     "immunitaeten": [],
     "sprachen": null,
     "attribute": {
       "CON": 2,
       "STR": 1
     },
-    "pruefen": [
-      "keine Merkmalstexte vorhanden, nur Tags ausgewertet"
-    ],
     "attributeQuelle": "thematisch gewählt (bestätigt)",
-    "merkmale": [],
-    "talente": [],
-    "talentTexte": {}
+    "merkmale": [
+      {
+        "name": "Konstruktresistenz",
+        "text": "Die Kreatur hat Vorteil auf Rettungswürfe gegen den Zustand Vergiftet und Resistenz gegen Giftschaden. Sie ist immun gegen Krankheiten, und Magie kann sie nicht in Schlaf versetzen. Sie braucht weder Nahrung noch Wasser, Atemluft oder Schlaf."
+      },
+      {
+        "name": "Wächterruhe",
+        "text": "Statt zu schlafen, verharrt die Kreatur 6 Stunden lang regungslos und halbbewusst und nimmt dabei ihre Umgebung wahr. Danach hat sie den Vorteil von 8 Stunden Schlaf."
+      },
+      {
+        "name": "Integrierter Schutz",
+        "text": "Der Körper der Kreatur ist gepanzert: Sie hat +1 auf die Rüstungsklasse. Eine Rüstung wird Teil ihres Körpers: Das An- und Ablegen dauert eine Stunde, und sie kann ihr nicht gegen ihren Willen abgenommen werden."
+      },
+      {
+        "name": "Spezialisierte Bauweise",
+        "text": "Die Kreatur hat Übung in einer Fertigkeit und einem Werkzeug ihrer Wahl."
+      }
+    ],
+    "talente": [
+      "Adamantinrumpf",
+      "Unterarmklinge",
+      "Modulare Platten"
+    ],
+    "talentTexte": {
+      "Adamantinrumpf": {
+        "text": "Einmal pro kurze Rast wird ein kritischer Treffer gegen die Kreatur zu einem normalen Treffer. Gegen Schaden durch Sturz, einstürzende Trümmer und Explosionen hat sie Resistenz."
+      },
+      "Unterarmklinge": {
+        "text": "Als Bonusaktion kann die Kreatur die Klinge in ihrem Unterarm aus- oder einfahren. Ausgefahren ist sie eine Nahkampfwaffe (1W8 Hieb, Finesse, die Kreatur ist geübt), die ihr nicht entwaffnet werden kann. Trifft sie mit ihr, kann sie als Bonusaktion einmal pro Zug einen weiteren Angriff mit ihr ausführen (wie Zweiwaffenkampf, aber ohne Attributsmodifikator auf den Schaden)."
+      },
+      "Modulare Platten": {
+        "text": "Mit Schmiedewerkzeug und 10 Minuten Arbeit kann die Kreatur bis zur nächsten langen Rast Resistenz gegen eine von vier Schadensarten einstellen: Feuer, Kälte, Blitz oder Säure. Sie hat Vorteil auf Würfe mit Schmiedewerkzeug, um sich oder einen anderen Konstrukt zu reparieren."
+      }
+    },
+    "quelle": "Eberron: Rising from the Last War (Wizards of the Coast, 2019); Wortlaut nicht gegen das Buch geprüft"
   },
   "Leichtfüße": {
     "kreaturentyp": null,
