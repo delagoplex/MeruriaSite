@@ -5783,7 +5783,8 @@ window.RASSEN_STRUKTUR = {
       }
     ],
     "talente": [],
-    "talentTexte": {}
+    "talentTexte": {},
+    "quelle": "Van Richten's Guide to Ravenloft (Wizards of the Coast, 2021; Reborn); Talent stammt von der früheren Rasse, keine eigenen Talente"
   },
   "Yuan-ti": {
     "kreaturentyp": "Humanoider",
