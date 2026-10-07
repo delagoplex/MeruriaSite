@@ -122,6 +122,7 @@
       { name:'Natürliche Rüstung',      text:'Deine RK beträgt 12 + GES-Mod (wenn du keine Rüstung trägst).' },
       { name:'Natürliche Angriffe',     text:'Du hast Übung mit deinen Klauen (1W4 Hiebschaden) und deinem Biss (1W4 Stichschaden).' },
       { name:'Haitelempathie',          text:'Du kannst einem Hai innerhalb von 36 Metern magisch durch begrenzte Telepathie einfache Befehle übermitteln (z. B. „komm her", „verteidige mich", „greif an").' },
+      { name:'Angeborenes Talent', text:null, talente:["Zweites Armpaar","Nachwachsende Haizähne","Gestalt der Malenti"] },
     ],
   },
 };

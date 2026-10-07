@@ -4275,8 +4275,23 @@ window.RASSEN_STRUKTUR = {
         "text": "Die Kreatur kann einem Hai innerhalb von 36 Metern magisch durch begrenzte Telepathie einfache Befehle übermitteln (z. B. „komm her\", „verteidige mich\", „greif an\")."
       }
     ],
-    "talente": [],
-    "talentTexte": {}
+    "talente": [
+      "Zweites Armpaar",
+      "Nachwachsende Haizähne",
+      "Gestalt der Malenti"
+    ],
+    "talentTexte": {
+      "Zweites Armpaar": {
+        "text": "Die Kreatur kann zusätzlich zu einer Waffe oder einem Schild zwei weitere Gegenstände halten. Als Bonusaktion kann sie einmal pro Zug mit einer leichten Waffe in einer ihrer zusätzlichen Hände angreifen, ohne die Regeln des Zweiwaffenkampfs zu benötigen (ohne Attributsmodifikator auf den Schaden). Sie hat Vorteil auf Würfe auf Athletik, um zu packen."
+      },
+      "Nachwachsende Haizähne": {
+        "text": "Der Biss der Kreatur verursacht 1W6 statt 1W4 Stichschaden. Trifft sie mit dem Biss, kann sie einmal pro kurze Rast das Ziel zerfleischen: Es erleidet zusätzlich 1W6 Stichschaden zu Beginn seines nächsten Zuges, wenn es nicht alle Trefferpunkte hat."
+      },
+      "Gestalt der Malenti": {
+        "text": "Die Kreatur hat Vorteil auf Würfe auf Täuschen, um als Landbewohner oder als Elf durchzugehen. Ihre Haut braucht Feuchtigkeit: Verbringt sie mehr als 8 Stunden ohne Wasser, hat sie Nachteil auf Würfe auf Täuschen und Auftreten, bis sie sich befeuchtet hat."
+      }
+    },
+    "quelle": "Monsterhandbuch (Sahuagin-Statblock), Umsetzung als Spielerrasse eigene Fassung"
   },
   "Satarre": {
     "kreaturentyp": null,

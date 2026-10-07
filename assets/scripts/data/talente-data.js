@@ -4014,6 +4014,52 @@ window.TALENTE_DATA = [
     ],
     kategorie: "Kampf",
     angeboren: true
+  },
+  {
+    id: "zweites-armpaar",
+    name: "Zweites Armpaar",
+    voraussetzung: "Sahuagin",
+    kurzbeschreibung: "Eine Mutation in der Blutlinie hat dir ein zweites Armpaar wachsen lassen.",
+    beschreibung: [
+      "Bei manchen Sahuagin tritt in der Blutlinie eine Mutation auf, die ein zweites Paar Arme wachsen lässt. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Du kannst zusätzlich zu einer Waffe oder einem Schild zwei weitere Gegenstände halten.",
+      "Als Bonusaktion kannst du einmal pro Zug mit einer leichten Waffe in einer deiner zusätzlichen Hände angreifen, ohne die Regeln des Zweiwaffenkampfs zu benötigen (ohne Attributsmodifikator auf den Schaden).",
+      "Du hast Vorteil auf Würfe auf Athletik, um zu packen."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "nachwachsende-haizaehne",
+    name: "Nachwachsende Haizähne",
+    voraussetzung: "Sahuagin",
+    kurzbeschreibung: "Mehrere Zahnreihen ersetzen verlorene Zähne sofort.",
+    beschreibung: [
+      "Bei einigen Sahuagin sind mehrere Zahnreihen im Kiefer angelegt, die verlorene Zähne wie bei Haien sofort ersetzen. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Dein Biss verursacht 1W6 statt 1W4 Stichschaden.",
+      "Triffst du mit dem Biss, kannst du einmal pro kurze Rast das Ziel zerfleischen: Es erleidet zusätzlich 1W6 Stichschaden zu Beginn seines nächsten Zuges, wenn es nicht alle Trefferpunkte hat."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "gestalt-der-malenti",
+    name: "Gestalt der Malenti",
+    voraussetzung: "Sahuagin",
+    kurzbeschreibung: "Haut, Gesicht und Statur gleichen denen eines Elfen.",
+    beschreibung: [
+      "Bei manchen Sahuagin kommen Nachkommen zur Welt, die in Haut, Gesichtszügen und Statur Elfen gleichen. Man nennt sie Malenti. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Du hast Vorteil auf Würfe auf Täuschen, um als Landbewohner oder als Elf durchzugehen.",
+      "Deine Haut braucht Feuchtigkeit: Verbringst du mehr als 8 Stunden ohne Wasser, hast du Nachteil auf Würfe auf Täuschen und Auftreten, bis du dich befeuchtet hast."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
   }
   }
 ];
