@@ -269,11 +269,11 @@ DECLARE
   total INT;
   open_count INT;
   k TEXT;
-  owner_id UUID := auth.uid();
+  v_uid UUID := auth.uid();
 BEGIN
-  IF owner_id IS NULL THEN RAISE EXCEPTION 'Anmeldung erforderlich' USING ERRCODE = '42501'; END IF;
+  IF v_uid IS NULL THEN RAISE EXCEPTION 'Anmeldung erforderlich' USING ERRCODE = '42501'; END IF;
   IF p_character_id IS NOT NULL AND NOT EXISTS (
-    SELECT 1 FROM public.characters c WHERE c.id = p_character_id AND c.owner_id = owner_id AND c.type = 'spieler'
+    SELECT 1 FROM public.characters c WHERE c.id = p_character_id AND c.owner_id = v_uid AND c.type = 'spieler'
   ) THEN RAISE EXCEPTION 'Charakter gehört nicht zu diesem Konto' USING ERRCODE = '42501'; END IF;
 
   FOR n IN SELECT * FROM public.nscs WHERE visible = true ORDER BY name LOOP
