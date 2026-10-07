@@ -9,20 +9,20 @@ DECLARE
   i INT;
   compact_i INT;
 BEGIN
-  IF p_nsc.rasse IS NOT NULL AND p_nsc.field_visibility->>'rasse' = 'true' THEN result := result || 'rasse'; END IF;
-  IF p_nsc.geschlecht IS NOT NULL AND p_nsc.field_visibility->>'geschlecht' = 'true' THEN result := result || 'geschlecht'; END IF;
-  IF p_nsc.groesse IS NOT NULL AND p_nsc.field_visibility->>'groesse' = 'true' THEN result := result || 'groesse'; END IF;
-  IF p_nsc.alter_jahre IS NOT NULL AND p_nsc.field_visibility->>'alter' = 'true' THEN result := result || 'alter'; END IF;
-  IF p_nsc.geburtstag_doy IS NOT NULL AND p_nsc.field_visibility->>'geburtstag' = 'true' THEN result := result || 'geburtstag'; END IF;
-  IF p_nsc.gesinnung IS NOT NULL AND p_nsc.field_visibility->>'gesinnung' = 'true' THEN result := result || 'gesinnung'; END IF;
-  IF p_nsc.klasse IS NOT NULL AND p_nsc.field_visibility->>'klasse' = 'true' THEN result := result || 'klasse'; END IF;
-  IF p_nsc.hintergrund IS NOT NULL AND p_nsc.field_visibility->>'hintergrund' = 'true' THEN result := result || 'hintergrund'; END IF;
-  IF p_nsc.beruf IS NOT NULL AND p_nsc.field_visibility->>'beruf' = 'true' THEN result := result || 'beruf'; END IF;
-  IF p_nsc.gottheit IS NOT NULL AND p_nsc.field_visibility->>'gottheit' = 'true' THEN result := result || 'gottheit'; END IF;
-  IF p_nsc.division IS NOT NULL AND p_nsc.division <> 'Keine' AND p_nsc.field_visibility->>'division' = 'true' THEN result := result || 'division'; END IF;
-  IF p_nsc.organisation IS NOT NULL AND p_nsc.field_visibility->>'organisation' = 'true' THEN result := result || 'organisation'; END IF;
-  IF p_nsc.kapsel IS NOT NULL AND p_nsc.field_visibility->>'kapsel' = 'true' THEN result := result || 'kapsel'; END IF;
-  IF p_nsc.wohnort IS NOT NULL AND p_nsc.field_visibility->>'wohnort' = 'true' THEN result := result || 'wohnort'; END IF;
+  IF p_nsc.rasse IS NOT NULL AND p_nsc.field_visibility->>'rasse' = 'true' THEN result := array_append(result, 'rasse'::text); END IF;
+  IF p_nsc.geschlecht IS NOT NULL AND p_nsc.field_visibility->>'geschlecht' = 'true' THEN result := array_append(result, 'geschlecht'::text); END IF;
+  IF p_nsc.groesse IS NOT NULL AND p_nsc.field_visibility->>'groesse' = 'true' THEN result := array_append(result, 'groesse'::text); END IF;
+  IF p_nsc.alter_jahre IS NOT NULL AND p_nsc.field_visibility->>'alter' = 'true' THEN result := array_append(result, 'alter'::text); END IF;
+  IF p_nsc.geburtstag_doy IS NOT NULL AND p_nsc.field_visibility->>'geburtstag' = 'true' THEN result := array_append(result, 'geburtstag'::text); END IF;
+  IF p_nsc.gesinnung IS NOT NULL AND p_nsc.field_visibility->>'gesinnung' = 'true' THEN result := array_append(result, 'gesinnung'::text); END IF;
+  IF p_nsc.klasse IS NOT NULL AND p_nsc.field_visibility->>'klasse' = 'true' THEN result := array_append(result, 'klasse'::text); END IF;
+  IF p_nsc.hintergrund IS NOT NULL AND p_nsc.field_visibility->>'hintergrund' = 'true' THEN result := array_append(result, 'hintergrund'::text); END IF;
+  IF p_nsc.beruf IS NOT NULL AND p_nsc.field_visibility->>'beruf' = 'true' THEN result := array_append(result, 'beruf'::text); END IF;
+  IF p_nsc.gottheit IS NOT NULL AND p_nsc.field_visibility->>'gottheit' = 'true' THEN result := array_append(result, 'gottheit'::text); END IF;
+  IF p_nsc.division IS NOT NULL AND p_nsc.division <> 'Keine' AND p_nsc.field_visibility->>'division' = 'true' THEN result := array_append(result, 'division'::text); END IF;
+  IF p_nsc.organisation IS NOT NULL AND p_nsc.field_visibility->>'organisation' = 'true' THEN result := array_append(result, 'organisation'::text); END IF;
+  IF p_nsc.kapsel IS NOT NULL AND p_nsc.field_visibility->>'kapsel' = 'true' THEN result := array_append(result, 'kapsel'::text); END IF;
+  IF p_nsc.wohnort IS NOT NULL AND p_nsc.field_visibility->>'wohnort' = 'true' THEN result := array_append(result, 'wohnort'::text); END IF;
 
   compact_i := 0;
   FOREACH value IN ARRAY COALESCE(p_nsc.voller_name, '{}') LOOP
@@ -31,13 +31,13 @@ BEGIN
     END IF;
     compact_i := compact_i + 1;
   END LOOP;
-  IF 'bio' = ANY(p_nsc.sections) AND btrim(COALESCE(p_nsc.biografie, '')) <> '' AND p_nsc.field_visibility->>'bio' = 'true' THEN result := result || 'bio'; END IF;
+  IF 'bio' = ANY(p_nsc.sections) AND btrim(COALESCE(p_nsc.biografie, '')) <> '' AND p_nsc.field_visibility->>'bio' = 'true' THEN result := array_append(result, 'bio'::text); END IF;
     IF 'aussehen' = ANY(p_nsc.sections)
       AND EXISTS (SELECT 1 FROM jsonb_each_text(COALESCE(p_nsc.aussehen, '{}'::jsonb)) AS x(key,value) WHERE btrim(x.value) <> '')
-      AND p_nsc.field_visibility->>'aussehen' = 'true' THEN result := result || 'aussehen'; END IF;
+      AND p_nsc.field_visibility->>'aussehen' = 'true' THEN result := array_append(result, 'aussehen'::text); END IF;
 
   IF 'pers' = ANY(p_nsc.sections) THEN
-    IF btrim(COALESCE(p_nsc.unvergesslich, '')) <> '' AND p_nsc.field_visibility->>'pers' = 'true' AND p_nsc.field_visibility->>'unvergesslich' = 'true' THEN result := result || 'unvergesslich'; END IF;
+    IF btrim(COALESCE(p_nsc.unvergesslich, '')) <> '' AND p_nsc.field_visibility->>'pers' = 'true' AND p_nsc.field_visibility->>'unvergesslich' = 'true' THEN result := array_append(result, 'unvergesslich'::text); END IF;
     compact_i := 0;
     FOREACH value IN ARRAY COALESCE(p_nsc.eigenschaften, '{}') LOOP
       IF btrim(value) <> '' AND p_nsc.field_visibility->>'pers' = 'true' AND p_nsc.field_visibility->>('eig-' || compact_i) = 'true' THEN result := result || ('eig-' || compact_i); END IF;
@@ -75,7 +75,7 @@ BEGIN
         compact_i := compact_i + 1;
       END IF;
     END LOOP;
-    IF p_nsc.habe > 0 AND p_nsc.field_visibility->>'ausr' = 'true' AND p_nsc.field_visibility->>'habe' = 'true' THEN result := result || 'habe'; END IF;
+    IF p_nsc.habe > 0 AND p_nsc.field_visibility->>'ausr' = 'true' AND p_nsc.field_visibility->>'habe' = 'true' THEN result := array_append(result, 'habe'::text); END IF;
   END IF;
   IF 'begleiter' = ANY(p_nsc.sections) THEN
     compact_i := 0;
