@@ -2776,7 +2776,9 @@ window.RASSEN_STRUKTUR = {
     "bewegung": {
       "Gehen": "9 m"
     },
-    "sinne": [],
+    "sinne": [
+      "Dunkelsicht 18 m"
+    ],
     "resistenzen": [],
     "immunitaeten": [],
     "sprachen": null,
@@ -2784,13 +2786,37 @@ window.RASSEN_STRUKTUR = {
       "CON": 2,
       "INT": 1
     },
-    "pruefen": [
-      "keine Merkmalstexte vorhanden, nur Tags ausgewertet"
-    ],
     "attributeQuelle": "offiziell (D&D 5e, bestätigt)",
-    "merkmale": [],
-    "talente": [],
-    "talentTexte": {}
+    "merkmale": [
+      {
+        "name": "Kampftraining",
+        "text": "Die Kreatur hat Übung mit zwei Kriegswaffen ihrer Wahl und mit leichter Rüstung."
+      },
+      {
+        "name": "Gesicht wahren",
+        "text": "Verfehlt die Kreatur einen Angriffswurf oder misslingt ihr ein Attributs- oder Rettungswurf, kann sie einen Bonus in Höhe der Zahl ihrer Verbündeten in 9 m addieren (höchstens +5). Einmal pro kurze oder lange Rast."
+      }
+    ],
+    "talente": [
+      "Hornhaut",
+      "Feenschritt",
+      "Feldherrenblick"
+    ],
+    "talentTexte": {
+      "Hornhaut": {
+        "text": "Trägt die Kreatur keine Rüstung, beträgt ihre Rüstungsklasse 13 + ihr Geschicklichkeitsmodifikator. Einen Schild darf sie dabei weiter benutzen. Sie hat Vorteil auf Rettungswürfe gegen Entwaffnet und gegen Schaden durch Hitze oder Reibung (Brand, Feuerblasen).",
+        "wirkung": {
+          "rkBasis": 13
+        }
+      },
+      "Feenschritt": {
+        "text": "Als Bonusaktion kann die Kreatur sich bis zu 9 m weit zu einem Punkt teleportieren, den sie sehen kann. Das geht so oft, wie es ihrem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung. Danach hat sie bis zum Beginn ihres nächsten Zuges Vorteil auf Rettungswürfe gegen Zauber."
+      },
+      "Feldherrenblick": {
+        "text": "Einmal pro Kampf kann die Kreatur als Aktion einen Gegner in 18 m studieren, den sie sehen kann. Die Spielleitung nennt ihr eine seiner Resistenzen, Immunitäten oder Verwundbarkeiten und einen seiner Rettungswürfe, in dem er schwach ist. Die Kreatur merkt sich jede Karte, Aufstellung oder Anordnung, die sie eine Minute lang studiert hat, vollständig."
+      }
+    },
+    "quelle": "Volo's Guide to Monsters (Wizards of the Coast, 2016); Wortlaut nicht gegen das Buch geprüft"
   },
   "Hochelfen": {
     "kreaturentyp": "Humanoider",

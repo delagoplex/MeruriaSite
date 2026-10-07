@@ -3622,6 +3622,51 @@ window.TALENTE_DATA = [
     ],
     kategorie: "Kampf",
     angeboren: true
+  },
+  {
+    id: "hornhaut",
+    name: "Hornhaut",
+    voraussetzung: "Hobgoblins",
+    kurzbeschreibung: "Deine Haut ist über Generationen zu Hornplatten verdickt.",
+    beschreibung: [
+      "Bei manchen Hobgoblins verdickt sich die Haut an Schultern, Brust und Unterarmen über Generationen zu Hornplatten, wie bei Kriegern, deren Blutlinie jahrhundertelang im Schlachtfeld stand. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Trägst du keine Rüstung, beträgt deine Rüstungsklasse 13 + deinen Geschicklichkeitsmodifikator. Einen Schild darfst du dabei weiter benutzen.",
+      "Du hast Vorteil auf Rettungswürfe gegen Entwaffnet und gegen Schaden durch Hitze oder Reibung (Brand, Feuerblasen)."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "feenschritt",
+    name: "Feenschritt",
+    voraussetzung: "Hobgoblins",
+    kurzbeschreibung: "Das reine Feenblut lässt dich zwischen Schatten treten.",
+    beschreibung: [
+      "In einigen Linien der Hobgoblins ist das Blut der Feen so rein geblieben, dass sie sich kurz zwischen die Schatten schieben können, wenn sie wollen. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Als Bonusaktion kannst du dich bis zu 9 m weit zu einem Punkt teleportieren, den du sehen kannst. Das geht so oft, wie es deinem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung.",
+      "Danach schimmert deine Haut für einen Moment silbern: Bis zum Beginn deines nächsten Zuges hast du Vorteil auf Rettungswürfe gegen Zauber."
+    ],
+    kategorie: "Magie",
+    angeboren: true
+  },
+  {
+    id: "feldherrenblick",
+    name: "Feldherrenblick",
+    voraussetzung: "Hobgoblins",
+    kurzbeschreibung: "Tiefe Gedächtnisfurchen lassen dich im Gegner lesen wie in einer Karte.",
+    beschreibung: [
+      "Bei manchen Hobgoblins sind die Gedächtnisfurchen im Gehirn tiefer ausgeprägt, ein Erbe von Generationen von Strategen. Sie merken sich jede Aufstellung und lesen im Gegner wie in einer Karte. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Einmal pro Kampf kannst du als Aktion einen Gegner in 18 m studieren, den du sehen kannst. Die Spielleitung nennt dir eine seiner Resistenzen, Immunitäten oder Verwundbarkeiten und einen seiner Rettungswürfe, in dem er schwach ist.",
+      "Du merkst dir jede Karte, Aufstellung oder Anordnung, die du eine Minute lang studiert hast, vollständig."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
   }
   }
 ];
