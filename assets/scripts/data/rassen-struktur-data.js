@@ -4635,21 +4635,55 @@ window.RASSEN_STRUKTUR = {
     "bewegung": {
       "Gehen": "9 m"
     },
-    "sinne": [],
-    "resistenzen": [],
+    "sinne": [
+      "Blindsicht 9 m",
+      "Dunkelsicht 18 m"
+    ],
+    "resistenzen": [
+      "Säure"
+    ],
     "immunitaeten": [],
     "sprachen": null,
     "attribute": {
       "CON": 2,
       "DEX": 1
     },
-    "pruefen": [
-      "keine Merkmalstexte vorhanden, nur Tags ausgewertet"
-    ],
     "attributeQuelle": "thematisch gewählt (bestätigt)",
-    "merkmale": [],
-    "talente": [],
-    "talentTexte": {}
+    "merkmale": [
+      {
+        "name": "Schlickwesen",
+        "text": "Die Kreatur ist ein Humanoider, gilt aber als Schlick, wenn dies für sie von Nachteil ist. Sie hat Resistenz gegen Säureschaden."
+      },
+      {
+        "name": "Blindsicht und Dunkelsicht",
+        "text": "Die Kreatur hat Blindsicht in 9 m und Dunkelsicht in 18 m."
+      },
+      {
+        "name": "Säurehaut",
+        "text": "Waffenlose Angriffe der Kreatur verursachen 1W4 Säureschaden."
+      },
+      {
+        "name": "Formbar",
+        "text": "Die Kreatur kann sich durch Öffnungen von 2,5 cm Breite pressen und zwei Gegenstände in ihrem Körper verbergen."
+      }
+    ],
+    "talente": [
+      "Verdauungssäfte",
+      "Ableger",
+      "Gallertkörper"
+    ],
+    "talentTexte": {
+      "Verdauungssäfte": {
+        "text": "Als Aktion kann die Kreatur Säure auf ein Ziel in 4,5 m spucken: Es muss einen Geschicklichkeitsrettungswurf bestehen (SG = 8 + Übungsbonus + Konstitutionsmodifikator der Kreatur), sonst erleidet es 2W6 Säureschaden, bei Erfolg die Hälfte. Das geht so oft, wie es ihrem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung."
+      },
+      "Ableger": {
+        "text": "Als Bonusaktion kann die Kreatur einen winzigen Ableger abschnüren (RK 10, 1 TP, Bewegungsrate 4,5 m). Er hält Gegenstände, lenkt Feinde ab (eine Kreatur in 1,5 m von ihm hat Nachteil auf Angriffe gegen andere) und löst sich nach 1 Minute auf. Das geht einmal pro kurze oder lange Rast."
+      },
+      "Gallertkörper": {
+        "text": "Die Kreatur erleidet keinen Schaden durch Stürze bis 9 m. Wuchtschaden von nichtmagischen Angriffen wird um 1W4 + ihren Konstitutionsmodifikator gesenkt (mindestens 1)."
+      }
+    },
+    "quelle": "Tales of Arcana 5E Race Guide (Arcanomicon, 2021; Oozekin), Merkmale eigene Fassung nach Zusammenfassung und Schlagworten"
   },
   "Stämmige": {
     "kreaturentyp": null,

@@ -4208,6 +4208,51 @@ window.TALENTE_DATA = [
     ],
     kategorie: "Allgemein",
     angeboren: true
+  },
+  {
+    id: "verdauungssaefte",
+    name: "Verdauungssäfte",
+    voraussetzung: "Schleimling",
+    kurzbeschreibung: "Aggressive Verdauungssäfte lassen sich gezielt ausspucken.",
+    beschreibung: [
+      "Bei manchen Schleimlingen sind die Verdauungssäfte so aggressiv geworden, dass sie sie gezielt ausspucken können. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Als Aktion spuckst du Säure auf ein Ziel in 4,5 m: Es muss einen Geschicklichkeitsrettungswurf bestehen (SG = 8 + dein Übungsbonus + dein Konstitutionsmodifikator), sonst erleidet es 2W6 Säureschaden, bei Erfolg die Hälfte.",
+      "Das geht so oft, wie es deinem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "ableger",
+    name: "Ableger",
+    voraussetzung: "Schleimling",
+    kurzbeschreibung: "Ein Teil deiner Masse schnürt sich ab und bewegt sich selbständig.",
+    beschreibung: [
+      "Bei einigen Schleimlingen kann sich ein Teil der Masse abschnüren und für kurze Zeit selbständig bewegen. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Als Bonusaktion schnürst du einen winzigen Ableger ab (RK 10, 1 TP, Bewegungsrate 4,5 m). Er hält Gegenstände, lenkt Feinde ab (eine Kreatur in 1,5 m von ihm hat Nachteil auf Angriffe gegen andere) und löst sich nach 1 Minute auf.",
+      "Das geht einmal pro kurze oder lange Rast."
+    ],
+    kategorie: "Magie",
+    angeboren: true
+  },
+  {
+    id: "gallertkoerper",
+    name: "Gallertkörper",
+    voraussetzung: "Schleimling",
+    kurzbeschreibung: "Dein weicher, elastischer Körper dämpft Schläge und Stürze.",
+    beschreibung: [
+      "Bei manchen Schleimlingen ist der Körper so weich und elastisch, dass Schläge und Stürze ihn kaum verletzen. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Du erleidest keinen Schaden durch Stürze bis 9 m.",
+      "Wuchtschaden von nichtmagischen Angriffen wird um 1W4 + deinen Konstitutionsmodifikator gesenkt (mindestens 1)."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
   }
   }
 ];
