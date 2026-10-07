@@ -3938,13 +3938,88 @@ window.RASSEN_STRUKTUR = {
       "DEX": 2,
       "STR": 1
     },
-    "pruefen": [
-      "keine Merkmalstexte vorhanden, nur Tags ausgewertet"
-    ],
     "attributeQuelle": "thematisch gewählt (bestätigt)",
-    "merkmale": [],
-    "talente": [],
-    "talentTexte": {}
+    "merkmale": [
+      {
+        "name": "Metamorphose",
+        "text": "Ab Stufe 5 kann die Kreatur als Larve in 24 Stunden eine Metamorphose durchlaufen und als Erwachsener erwachen. Dabei verliert sie die Merkmale der Larve und erhält die des Erwachsenen."
+      },
+      {
+        "name": "Feenerbe",
+        "text": "Die Kreatur ist ein Humanoider, gilt aber auch als Feenwesen, wenn ein Effekt oder eine Voraussetzung dies verlangt."
+      }
+    ],
+    "talente": [
+      "Facettenaugen",
+      "Chitinpanzer"
+    ],
+    "talentTexte": {
+      "Facettenaugen": {
+        "text": "Die Kreatur kann nicht überrascht werden, solange sie nicht handlungsunfähig ist. Sie hat Vorteil auf Würfe auf Wahrnehmung, die auf Sicht beruhen und Bewegung betreffen."
+      },
+      "Chitinpanzer": {
+        "text": "Trägt die Kreatur keine Rüstung, beträgt ihre Rüstungsklasse 13 + ihr Geschicklichkeitsmodifikator. Einmal pro kurze Rast kann sie als Reaktion den Schaden eines Treffers um 1W6 + ihren Übungsbonus senken.",
+        "wirkung": {
+          "rkBasis": 13
+        }
+      },
+      "Kokonruhe": {
+        "text": "Bei einer kurzen Rast kann die Kreatur sich in einen Kokon spinnen. Ist sie dort verborgen (SG 15 zum Entdecken), heilt sie zusätzlich 1W8 + ihren Konstitutionsmodifikator an Trefferpunkten."
+      },
+      "Flügelschlag": {
+        "text": "Als Aktion kann die Kreatur mit den Flügeln schlagen: Kreaturen in 3 m müssen einen Stärkerettungswurf bestehen (SG = 8 + Übungsbonus + Geschicklichkeitsmodifikator der Kreatur), sonst werden sie 3 m weggestoßen und umgeworfen. Das geht so oft, wie es ihrem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung."
+      }
+    },
+    "quelle": "Opteran (Heliana's Guide to Monster Hunting oder Tales of Arcana 5E Race Guide, noch unklar); Wortlaut nicht gegen das Buch geprüft",
+    "varianten": {
+      "Larve": {
+        "wahl": true,
+        "groesse": [
+          "Klein"
+        ],
+        "bewegung": {
+          "Gehen": "9 m"
+        },
+        "merkmale": [
+          {
+            "name": "Larve: Vielfüßig",
+            "text": "Die Kreatur hat Vorteil auf Attributswürfe, um das Gleichgewicht zu halten, und auf Attributs- und Rettungswürfe, um nicht umgeworfen zu werden."
+          },
+          {
+            "name": "Larve: Spinnfaden",
+            "text": "Als Aktion kann die Kreatur einen klebrigen Faden auf eine Kreatur in 4,5 m schießen. Das Ziel muss einen Geschicklichkeitsrettungswurf bestehen (SG = 8 + Übungsbonus + Konstitutionsmodifikator der Kreatur), sonst ist es 1 Minute lang festgesetzt."
+          }
+        ]
+      },
+      "Erwachsener": {
+        "wahl": true,
+        "groesse": [
+          "Mittelgroß"
+        ],
+        "bewegung": {
+          "Gehen": "9 m",
+          "Fliegen": "6 m"
+        },
+        "merkmale": [
+          {
+            "name": "Erwachsener: Flug",
+            "text": "Die Kreatur hat eine Fliegenbewegungsrate von 6 m."
+          },
+          {
+            "name": "Erwachsener: Strahlender Flügel",
+            "text": "Die Flügel der Kreatur blenden: Sie hat Vorteil auf Würfe auf Auftreten und Einschüchtern gegenüber Zuschauern."
+          }
+        ]
+      }
+    },
+    "linienTalente": {
+      "Larve": [
+        "Kokonruhe"
+      ],
+      "Erwachsener": [
+        "Flügelschlag"
+      ]
+    }
   },
   "Orks": {
     "kreaturentyp": "Humanoider",

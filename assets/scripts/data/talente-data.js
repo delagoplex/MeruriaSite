@@ -3896,6 +3896,64 @@ window.TALENTE_DATA = [
     ],
     kategorie: "Allgemein",
     angeboren: true
+  },
+  {
+    id: "facettenaugen",
+    name: "Facettenaugen",
+    voraussetzung: "Opteran",
+    kurzbeschreibung: "Facettenaugen erfassen jede Bewegung in einem weiten Winkel.",
+    beschreibung: [
+      "Bei manchen Optera sind die Augen zu Facettenaugen gewachsen, die jede Bewegung in einem weiten Winkel erfassen. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Du kannst nicht überrascht werden, solange du nicht handlungsunfähig bist.",
+      "Du hast Vorteil auf Würfe auf Wahrnehmung, die auf Sicht beruhen und Bewegung betreffen."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "chitinpanzer",
+    name: "Chitinpanzer",
+    voraussetzung: "Opteran",
+    kurzbeschreibung: "Deine Haut ist zu einem harten Chitinpanzer erstarrt.",
+    beschreibung: [
+      "Bei einigen Optera ist die Haut zu einem harten Chitinpanzer erstarrt. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Trägst du keine Rüstung, beträgt deine Rüstungsklasse 13 + deinen Geschicklichkeitsmodifikator.",
+      "Einmal pro kurze Rast kannst du als Reaktion den Schaden eines Treffers um 1W6 + deinen Übungsbonus senken."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "kokonruhe",
+    name: "Kokonruhe",
+    voraussetzung: "Opteran (Larve)",
+    kurzbeschreibung: "Du spinnst dich zur Rast in einen Kokon, der heilt.",
+    beschreibung: [
+      "Bei manchen Optera-Larven sind die Spinndrüsen so ausgeprägt, dass sie sich zur Rast in einen festen Kokon hüllen können, in dem der Körper schneller heilt. Du erhältst den folgenden Vorteil:"
+    ],
+    vorzuege: [
+      "Bei einer kurzen Rast kannst du dich in einen Kokon spinnen. Bist du dort verborgen (SG 15 zum Entdecken), heilst du zusätzlich 1W8 + deinen Konstitutionsmodifikator an Trefferpunkten."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "fluegelschlag",
+    name: "Flügelschlag",
+    voraussetzung: "Opteran (Erwachsener)",
+    kurzbeschreibung: "Ein kräftiger Flügelschlag wirft Gegner zurück.",
+    beschreibung: [
+      "Bei einigen erwachsenen Optera sind die Flugmuskeln so kräftig gewachsen, dass ein einziger Flügelschlag einen Windstoß erzeugt, der Gegner zurückwirft. Du erhältst den folgenden Vorteil:"
+    ],
+    vorzuege: [
+      "Als Aktion schlägst du mit den Flügeln: Kreaturen in 3 m müssen einen Stärkerettungswurf bestehen (SG = 8 + dein Übungsbonus + dein Geschicklichkeitsmodifikator), sonst werden sie 3 m weggestoßen und umgeworfen. Das geht so oft, wie es deinem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
   }
   }
 ];
