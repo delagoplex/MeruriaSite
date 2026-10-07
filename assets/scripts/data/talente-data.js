@@ -4299,6 +4299,50 @@ window.TALENTE_DATA = [
     ],
     kategorie: "Allgemein",
     angeboren: true
-  }
+  },
+  {
+    id: "schmiedehufe",
+    name: "Schmiedehufe",
+    voraussetzung: "Zentauren",
+    kurzbeschreibung: "Deine Hufe sind so hart wie geschmiedeter Stahl.",
+    beschreibung: [
+      "Bei manchen Zentauren sind die Hufe so hart wie geschmiedeter Stahl, ein Erbe von Generationen, die auf felsigem Grund gelaufen sind. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Deine Hufe verursachen 1W6 statt 1W4 Wuchtschaden.",
+      "Triffst du mit dem Sturmangriff, kannst du als Bonusaktion einen weiteren Hufangriff gegen das Ziel ausführen."
+    ],
+    kategorie: "Kampf",
+    angeboren: true
+  },
+  {
+    id: "galopp",
+    name: "Galopp",
+    voraussetzung: "Zentauren",
+    kurzbeschreibung: "Lunge und Beinmuskeln tragen dich lange im Galopp.",
+    beschreibung: [
+      "Bei einigen Zentauren sind Lunge und Beinmuskeln so stark, dass sie lange Strecken im Galopp zurücklegen. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Als Bonusaktion kannst du die Aktion Spurt ausführen. Das geht so oft, wie es deinem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung.",
+      "Du kannst pro Tag doppelt so lange reisen wie üblich, ohne Erschöpfung zu bekommen."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
+  },
+  {
+    id: "weitblick",
+    name: "Weitblick",
+    voraussetzung: "Zentauren",
+    kurzbeschreibung: "Weit auseinanderstehende Augen geben dir einen fast vollständigen Rundumblick.",
+    beschreibung: [
+      "Bei manchen Zentauren sitzen die Augen weit auseinander und umfassen einen fast vollständigen Rundumblick, ein Erbe der Herdentiere. Du erhältst die folgenden Vorteile:"
+    ],
+    vorzuege: [
+      "Du kannst nicht überrascht werden, solange du nicht handlungsunfähig bist.",
+      "Fernkampfangriffe auf große Entfernung (bis zum Doppelten der normalen Reichweite) haben bei dir keinen Nachteil."
+    ],
+    kategorie: "Allgemein",
+    angeboren: true
   }
 ];

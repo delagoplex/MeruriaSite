@@ -5863,12 +5863,45 @@ window.RASSEN_STRUKTUR = {
       "STR": 2,
       "WIS": 1
     },
-    "pruefen": [
-      "keine Merkmalstexte vorhanden, nur Tags ausgewertet"
-    ],
     "attributeQuelle": "offiziell (D&D 5e, bestätigt)",
-    "merkmale": [],
-    "talente": [],
-    "talentTexte": {}
+    "merkmale": [
+      {
+        "name": "Feenwesen",
+        "text": "Die Kreatur ist ein Feenwesen."
+      },
+      {
+        "name": "Sturmangriff",
+        "text": "Bewegt sich die Kreatur mindestens 9 m geradlinig auf ein Ziel zu und trifft es danach im selben Zug mit einem Nahkampfangriff, verursacht sie zusätzlich 1W6 Schaden."
+      },
+      {
+        "name": "Hufe",
+        "text": "Die Hufe der Kreatur gelten als natürliche Waffen für unbewaffnete Angriffe. Bei einem Treffer verursachen sie Wuchtschaden in Höhe von 1W4 + Stärkemodifikator."
+      },
+      {
+        "name": "Pferdekörper",
+        "text": "Die Kreatur zählt für Tragen, Schieben, Ziehen und Heben als eine Größe größer. Klettern kostet sie 4 Fuß zusätzliche Bewegung pro Fuß."
+      },
+      {
+        "name": "Überlebender",
+        "text": "Die Kreatur hat Übung in einer Fertigkeit aus Tiere beruhigen, Medizin, Naturkunde und Überleben."
+      }
+    ],
+    "talente": [
+      "Schmiedehufe",
+      "Galopp",
+      "Weitblick"
+    ],
+    "talentTexte": {
+      "Schmiedehufe": {
+        "text": "Die Hufe der Kreatur verursachen 1W6 statt 1W4 Wuchtschaden. Trifft sie mit dem Sturmangriff, kann sie als Bonusaktion einen weiteren Hufangriff gegen das Ziel ausführen."
+      },
+      "Galopp": {
+        "text": "Als Bonusaktion kann die Kreatur die Aktion Spurt ausführen. Das geht so oft, wie es ihrem Übungsbonus entspricht; verbrauchte Einsätze stehen nach einer langen Rast wieder zur Verfügung. Sie kann pro Tag doppelt so lange reisen wie üblich, ohne Erschöpfung zu bekommen."
+      },
+      "Weitblick": {
+        "text": "Die Kreatur kann nicht überrascht werden, solange sie nicht handlungsunfähig ist. Fernkampfangriffe auf große Entfernung (bis zum Doppelten der normalen Reichweite) haben bei ihr keinen Nachteil."
+      }
+    },
+    "quelle": "Mythic Odysseys of Theros / Guildmasters' Guide to Ravnica (Wizards of the Coast); Wortlaut nicht gegen das Buch geprüft; Größe Groß ist eine eigene Abweichung"
   }
 };
